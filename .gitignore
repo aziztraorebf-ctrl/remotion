@@ -1,0 +1,9 @@
+node_modules/
+out/
+dist/
+.env
+.env.local
+*.mp4
+*.webm
+public/audio/
+tmp_*
