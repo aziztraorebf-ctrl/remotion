@@ -1,0 +1,589 @@
+{
+  "topic": "Reactions humaines pendant la Peste Noire de 1347-1353 : Comment les gens reagissaient face a ce qu'ils croyaient etre la fin du monde. Religion extreme et flagellants, pogroms antisemites, fuite des riches vs abandon des pauvres, cadavres dans les rues et effondrement des institutions, medecine delirante (medecins de peste, saignees, parfums), art macabre et Danse de la Mort. Paralleles avec reactions modernes lors du COVID (panique, deni, theories du complot, inegalites). Pour une video YouTube educative de 5 minutes en style pixel art Terminal Tactique Medieval, ton provocateur.",
+  "total_sources": 145,
+  "generated_at": "2026-02-13 19:08:30",
+  "model": "grok-4-1-fast-reasoning",
+  "sub_questions": 8,
+  "sources": [
+    {
+      "url": "https://en.wikipedia.org/wiki/Black_Death",
+      "title": "1"
+    },
+    {
+      "url": "https://www.britannica.com/topic/flagellants",
+      "title": "2"
+    },
+    {
+      "url": "https://www.history.com/articles/black-death",
+      "title": "3"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Flagellant",
+      "title": "4"
+    },
+    {
+      "url": "https://www.worldhistory.org/article/1541/religious-responses-to-the-black-death/",
+      "title": "5"
+    },
+    {
+      "url": "http://www.eyewitnesstohistory.com/flagellants.htm",
+      "title": "6"
+    },
+    {
+      "url": "https://digitalcommons.ncf.edu/cgi/viewcontent.cgi?article=7696&context=theses_etds",
+      "title": "7"
+    },
+    {
+      "url": "https://openresearch.okstate.edu/bitstreams/0a3accc7-bfdd-4c74-9b0b-526cb3ebb869/download",
+      "title": "8"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=GnNUFPdEnts",
+      "title": "9"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ghphtTbWbdo",
+      "title": "10"
+    },
+    {
+      "url": "https://www.newadvent.org/cathen/06089c.htm",
+      "title": "1"
+    },
+    {
+      "url": "https://scholarworks.wmich.edu/cgi/viewcontent.cgi?article=1248&context=hilltopreview",
+      "title": "3"
+    },
+    {
+      "url": "https://referenceworks.brill.com/display/entries/ECO/F134.xml?language=en",
+      "title": "4"
+    },
+    {
+      "url": "https://openresearch.okstate.edu/bitstreams/0a3accc7-bfdd-4c74-9b0b-526cb3ebb869/download",
+      "title": "5"
+    },
+    {
+      "url": "https://web.stanford.edu/class/history13/Readings/MichaelDol.htm",
+      "title": "6"
+    },
+    {
+      "url": "https://www.catholic.com/magazine/online-edition/lessons-from-the-black-death",
+      "title": "7"
+    },
+    {
+      "url": "https://journals.library.brocku.ca/index.php/bujh/article/view/3642/2979",
+      "title": "8"
+    },
+    {
+      "url": "https://www.nber.org/system/files/working_papers/w17113/w17113.pdf",
+      "title": "1"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Basel_Massacre",
+      "title": "2"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Strasbourg_massacre",
+      "title": "3"
+    },
+    {
+      "url": "https://eclass.uth.gr/modules/document/file.php/HA_U_537/Plagues,%20politics,%20pogroms,%20Holy%20Roman%20Empire.pdf",
+      "title": "4"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/History_of_antisemitism",
+      "title": "5"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Blood_libel",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/2022343835230077046",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/2022225588619292801",
+      "title": "8"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Strasbourg_massacre",
+      "title": "1"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Persecution_of_Jews_during_the_Black_Death",
+      "title": "2"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1114361/black-death-jewish-murders-in-plague-outbreak",
+      "title": "3"
+    },
+    {
+      "url": "https://www.jewishhistory.org/the-black-death",
+      "title": "4"
+    },
+    {
+      "url": "https://jewishcurrents.org/january-9-jews-black-death",
+      "title": "5"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Basel_massacre",
+      "title": "6"
+    },
+    {
+      "url": "https://scholarsarchive.byu.edu/cgi/viewcontent.cgi?article=2841&amp;context=facpub",
+      "title": "7"
+    },
+    {
+      "url": "http://www.academia.dk/MedHist/Sygdomme/PDF/Past-and-Present-2007-Cohn-3-36.pdf",
+      "title": "8"
+    },
+    {
+      "url": "https://scholarsarchive.byu.edu/facpub/1813",
+      "title": "9"
+    },
+    {
+      "url": "https://www.pnas.org/doi/10.1073/pnas.0705460105",
+      "title": "1"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4013036/",
+      "title": "2"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC1646284",
+      "title": "3"
+    },
+    {
+      "url": "https://jhanley.biostat.mcgill.ca/c626/Morrison_Monte_delle_doti.PDF",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1934338772205789352",
+      "title": "5"
+    },
+    {
+      "url": "https://trace.tennessee.edu/cgi/viewcontent.cgi?article=2944&context=utk_chanhonoproj",
+      "title": "6"
+    },
+    {
+      "url": "https://www.medievalists.net/2021/06/large-medieval-peasant-families",
+      "title": "7"
+    },
+    {
+      "url": "https://www.researchgate.net/publication/399992586_Who_the_Plague_Chose_Exploring_Intersecting_Social_Risk_in_Black_Death_Mortality",
+      "title": "8"
+    },
+    {
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32472637",
+      "title": "9"
+    },
+    {
+      "url": "https://www.americanscientist.org/article/the-bright-side-of-the-black-death",
+      "title": "10"
+    },
+    {
+      "url": "https://www.bbc.co.uk/history/british/middle_ages/black_01.shtml",
+      "title": "11"
+    },
+    {
+      "url": "https://plagueanthology.com/2020/06/02/boccaccio-describes-the-black-death-florence-1348",
+      "title": "12"
+    },
+    {
+      "url": "https://medieval.ucdavis.edu/20C/Boccaccio.html",
+      "title": "13"
+    },
+    {
+      "url": "https://www.pbs.org/newshour/nation/bubonic-plague-inspired-eerily-similar-reactions-among-the-rich-as-todays-pandemic",
+      "title": "14"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=GFLb5h2O2Ww",
+      "title": "15"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=m5q-PIN3KSE",
+      "title": "16"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6473479/",
+      "title": "1"
+    },
+    {
+      "url": "https://eh.net/encyclopedia/the-economic-impact-of-the-black-death",
+      "title": "2"
+    },
+    {
+      "url": "https://www.science.org/content/article/black-death-fatal-flu-past-pandemics-show-why-people-margins-suffer-most",
+      "title": "4"
+    },
+    {
+      "url": "https://www.nature.com/articles/s41598-025-13198-7",
+      "title": "5"
+    },
+    {
+      "url": "https://rewordify.com/index.php?u=759m7xhzp2k525",
+      "title": "6"
+    },
+    {
+      "url": "https://medieval.ucdavis.edu/20B/Urban.html",
+      "title": "7"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Black_Death_in_France",
+      "title": "1"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1114273/black-death-estimates-deaths-european-cities/",
+      "title": "2"
+    },
+    {
+      "url": "https://fr.wikipedia.org/wiki/Peste_noire",
+      "title": "3"
+    },
+    {
+      "url": "https://hal.science/hal-01238393v1/file/main.pdf",
+      "title": "4"
+    },
+    {
+      "url": "https://users.manchester.edu/facstaff/ssnaragon/kant/lp/Readings/05-Tuchman.pdf",
+      "title": "5"
+    },
+    {
+      "url": "https://storymaps.arcgis.com/stories/64241837a3fc4832a532646731b0d96f",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/1969578801676865810",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ghphtTbWbdo",
+      "title": "8"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=IRKtPrp6_h8",
+      "title": "9"
+    },
+    {
+      "url": "https://x.com/i/status/1875563260998775303",
+      "title": "10"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Black_Death_in_France",
+      "title": "2"
+    },
+    {
+      "url": "https://www.sortiraparis.com/en/what-to-visit-in-paris/history-heritage/articles/258726-ephemeris-of-august-28-in-paris-the-black-death-epidemic",
+      "title": "3"
+    },
+    {
+      "url": "https://storymaps.arcgis.com/stories/64241837a3fc4832a532646731b0d96f",
+      "title": "4"
+    },
+    {
+      "url": "https://hekint.org/2025/12/08/the-popes-and-the-black-death-in-avignon",
+      "title": "5"
+    },
+    {
+      "url": "https://teachingsocialstudies.org/2024/02/25/death-transformed-how-the-black-death-impacted-the-dying-in-the-14th-century",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Pb0xBh1X_uU",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=GmyLpyyOGjE",
+      "title": "8"
+    },
+    {
+      "url": "https://www.thetimes.com/world/europe/article/plague-doctor-mask-black-death-h9bd9xndp?gaa_at=eafs&gaa_n=AWEtsqeGN54qNvSAiBYFGLgtt9hADszHSJgg0stM1uQyO5JvbAH8WZB8zjFh&gaa_sig=HO39qRJjPYBnzE1JRDDuDROevCcmeeJa15LumT049GzRXzSNezoKAsff3N3GoYPxqDJOIS2knNTlBlt5OUFHJA%3D%3D&gaa_ts=698fbeea",
+      "title": "1"
+    },
+    {
+      "url": "https://www.unmc.edu/healthsecurity/transmission/2025/05/21/what-did-people-do-before-eyeglasses",
+      "title": "2"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Plague_doctor",
+      "title": "3"
+    },
+    {
+      "url": "https://www.britannica.com/science/plague-doctor",
+      "title": "4"
+    },
+    {
+      "url": "https://www.historyextra.com/period/stuart/why-did-17th-century-plague-doctors-wear-peculiar-beaked-masks",
+      "title": "5"
+    },
+    {
+      "url": "https://www.uni-muenster.de/Religion-und-Politik/en/aktuelles/schwerpunkte/epidemien/03_Thema_Masken.shtml",
+      "title": "6"
+    },
+    {
+      "url": "https://blogs.loc.gov/loc/2021/04/medieval-pandemic-cures-that-were-medieval",
+      "title": "7"
+    },
+    {
+      "url": "https://www.worldhistory.org/article/1540/medieval-cures-for-the-black-death",
+      "title": "8"
+    },
+    {
+      "url": "https://www.livescience.com/plague-doctors.html",
+      "title": "9"
+    },
+    {
+      "url": "https://www.savemyexams.com/gcse/history/edexcel/24/the-thematic-historic-environment-paper-1/revision-notes/medicine-in-britain-c1250-present/c1250-c1500-the-middle-ages/prevention-of-disease-in-medieval-england",
+      "title": "10"
+    },
+    {
+      "url": "https://juliamartins.co.uk/what-were-the-non-naturals",
+      "title": "11"
+    },
+    {
+      "url": "https://en.wikisource.org/wiki/A_litil_boke_for_the_Pestilence/Introduction",
+      "title": "12"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=oDz0OrRZOZ0",
+      "title": "13"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Mt6Sc1wSIhU",
+      "title": "14"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Pd4KxuavBuM",
+      "title": "15"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ThsNXdbULEE",
+      "title": "16"
+    },
+    {
+      "url": "https://juma.ai/blog/video-script-generators",
+      "title": "17"
+    },
+    {
+      "url": "https://medium.com/@harmonyglobalservices1/how-to-make-10-000-per-month-on-youtube-without-making-videos-in-2026-388835574396",
+      "title": "18"
+    },
+    {
+      "url": "https://www.worldhistory.org/article/1540/medieval-cures-for-the-black-death",
+      "title": "1"
+    },
+    {
+      "url": "https://mancunion.com/2025/02/11/the-black-death-plague-protocol-in-medieval-times-to-the-modern-age",
+      "title": "2"
+    },
+    {
+      "url": "https://www.thecollector.com/the-black-death-medieval-cures",
+      "title": "3"
+    },
+    {
+      "url": "https://www.rcseng.ac.uk/library-and-publications/library/blog/fumigation-and-incense-in-the-battle-against-medieval-plague",
+      "title": "4"
+    },
+    {
+      "url": "https://dental.nyu.edu/content/dam/nyudental/documents/about/rarebooks/16-c/1871-Regimen_sanitatis_Salernitanum.pdf",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=oDz0OrRZOZ0",
+      "title": "6"
+    },
+    {
+      "url": "https://fr.wikipedia.org/wiki/Danse_macabre",
+      "title": "1"
+    },
+    {
+      "url": "https://shs.cairn.info/revue-etudes-sur-la-mort-2015-1-page-94?lang=fr",
+      "title": "2"
+    },
+    {
+      "url": "https://fr.wikipedia.org/wiki/Cimeti%C3%A8re_des_Innocents",
+      "title": "3"
+    },
+    {
+      "url": "https://www.ecoledulouvre.fr/fr/actualites/congres-international-la-danse-macabre-des-saint-innocents-1425-2025",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1864525417949868238",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/2017438072258896169",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Y9aJkitMNcY",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=2rW2Y7KdR70",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/1984246629948645883",
+      "title": "9"
+    },
+    {
+      "url": "http://www.dodedans.com/Eparis.htm",
+      "title": "1"
+    },
+    {
+      "url": "https://www.academia.edu/44662793/La_Danse_macabre_du_cimeti%C3%A8re_des_Saints_Innocents_et_celle_de_deux_livres_dheures_contemporains_propositions_de_liens_de_sources_et_de_commanditaires",
+      "title": "2"
+    },
+    {
+      "url": "https://anr.fr/Projet-ANR-19-CE35-0005",
+      "title": "3"
+    },
+    {
+      "url": "https://www.lemonde.fr/sciences/article/2026/01/26/sur-les-traces-de-la-peste-noire-de-1346-1353-ou-comment-les-scientifiques-menent-l-enquete_6664199_1650684.html",
+      "title": "4"
+    },
+    {
+      "url": "https://danses-macabres-europe.org/",
+      "title": "5"
+    },
+    {
+      "url": "https://calenda.org/1282736",
+      "title": "6"
+    },
+    {
+      "url": "http://blog.apahau.org/82113-2",
+      "title": "7"
+    },
+    {
+      "url": "https://www.saprat.fr/la-danse-macabre-des-saints-innocents-1425-2025",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/2021292725484781646",
+      "title": "9"
+    },
+    {
+      "url": "https://www.reddit.com/r/anime/comments/1nas2z1/animation_student_films_2025",
+      "title": "10"
+    },
+    {
+      "url": "https://x.com/i/status/1864525417949868238",
+      "title": "11"
+    },
+    {
+      "url": "http://www.historymuse.net/readings/VenetteBLACKDEATH.htm",
+      "title": "1"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Jean_de_Venette",
+      "title": "2"
+    },
+    {
+      "url": "https://eclass.uth.gr/modules/document/file.php/HA_U_537/Black%20Death%20and%20Western%20European%20Eschatological%20Mentalities.pdf",
+      "title": "3"
+    },
+    {
+      "url": "https://www.historytoday.com/archive/black-death-greatest-catastrophe-ever",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1915439248397738128",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/c/KingsandGenerals",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/@KingsandGenerals",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ThsNXdbULEE",
+      "title": "8"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=SOZadUVU2BY",
+      "title": "9"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=nECpdIs_9Cg",
+      "title": "10"
+    },
+    {
+      "url": "https://webhelper.brown.edu/decameron/plague/perspectives/de_mussi.php",
+      "title": "1"
+    },
+    {
+      "url": "https://www.the-trench.org/wp-content/uploads/2021/12/HN001-de-Mussi-and-the-siege-of-Caffa-Full.pdf",
+      "title": "2"
+    },
+    {
+      "url": "https://en.wikipedia.org/wiki/Flagellant",
+      "title": "3"
+    },
+    {
+      "url": "http://www.eyewitnesstohistory.com/flagellants.htm",
+      "title": "4"
+    },
+    {
+      "url": "https://www.history.com/topics/middle-ages/black-death-timeline",
+      "title": "5"
+    },
+    {
+      "url": "https://digitalcommons.oberlin.edu/cgi/viewcontent.cgi?article=1141&context=honors",
+      "title": "6"
+    },
+    {
+      "url": "https://egrove.olemiss.edu/cgi/viewcontent.cgi?article=1682&context=hon_thesis",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=ySClB6-OH-Q",
+      "title": "8"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=GmyLpyyOGjE",
+      "title": "9"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8633882/",
+      "title": "1"
+    },
+    {
+      "url": "https://www.imf.org/-/media/files/publications/wp/2021/english/wpiea2021021-print-pdf.pdf",
+      "title": "2"
+    },
+    {
+      "url": "https://blog.degruyter.com/wp-content/uploads/2021/02/DG_13perspectives_humanities.pdf",
+      "title": "3"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8242892/",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1225406621054095360",
+      "title": "5"
+    },
+    {
+      "url": "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2021.630449/full",
+      "title": "1"
+    },
+    {
+      "url": "https://blogs.hsc.edu/sciencejournal/wp-content/uploads/sites/6/2021/04/Isaksen.pdf",
+      "title": "2"
+    },
+    {
+      "url": "https://www.jeserie.org/uploads/The%20Black%20Death%20and%20COVID-19.pdf",
+      "title": "3"
+    },
+    {
+      "url": "https://www.frontiersin.org/journals/public-health/articles/10.3389/fpubh.2021.630449/pdf",
+      "title": "4"
+    }
+  ]
+}

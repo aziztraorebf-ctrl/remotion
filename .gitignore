@@ -5,5 +5,48 @@ dist/
 .env.local
 *.mp4
 *.webm
+*.wav
+*.mp3
 public/audio/
 tmp_*
+
+# Research references (downloaded videos, subtitles, copyrighted material)
+research/references/
+
+# Extracted review frames (large, generated from videos)
+review-frames/
+
+# Generated assets (AI-generated images, previews)
+generated/
+
+# Storyboard generated/test images (large AI-generated files)
+storyboard/bloc-*/
+storyboard/recraft-test/
+storyboard/test/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude memory (private per-user)
+.claude/projects/
+
+# Test frames at root (old iterations)
+brutalist-*.png
+
+# Private pipeline documents
+remotion fal.ai comfy ui/
+
+# Raw purchased assets (not for redistribution)
+new medieval pixel/
+
+# Agent config dirs (IDE-specific)
+.agents/
+.codex/
+.cursor/
+.gemini/
+.opencode/
+.playwright-mcp/
+
+# Purchased asset archives
+*.zip

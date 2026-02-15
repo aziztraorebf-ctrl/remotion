@@ -1,0 +1,549 @@
+{
+  "topic": "Persona et audience cible pour une chaine YouTube francophone educative sur la finance personnelle (credit immobilier, investissement, dette, epargne). Qui sont les spectateurs de chaines comme Stupid Economics, Draw My Economy, Finary en 2025-2026 ? Demographics (age, sexe, CSP, situation familiale), motivations (pourquoi ils regardent, quelles douleurs), comportements de visionnage (duree, frequence, plateforme mobile vs desktop, shorts vs long), ce qui les fait cliquer (thumbnails, titres, angles), ce qui les fait decrocher (patterns de drop-off), et comment ils decouvrent le contenu (search vs recommandation vs partage). Differences entre audience francophone vs anglophone dans cette niche.",
+  "total_sources": 135,
+  "generated_at": "2026-02-11 10:34:35",
+  "model": "grok-4-1-fast-reasoning",
+  "sub_questions": 8,
+  "sources": [
+    {
+      "url": "https://www.youtube.com/c/StupidEconomics-corp/playlists",
+      "title": "1"
+    },
+    {
+      "url": "https://www.youtube.com/c/Drawmyeconomy",
+      "title": "2"
+    },
+    {
+      "url": "https://socialblade.com/youtube/handle/finary",
+      "title": "3"
+    },
+    {
+      "url": "https://socialblade.com/youtube/channel/UCRCCAnVyzDTcqNYh0pDcq7Q",
+      "title": "4"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCyJDHgrsUKuWLe05GvC2lng",
+      "title": "5"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1287137/youtube-global-users-age-gender-distribution?srsltid=AfmBOoo0ER1ws0zIwru6Sh3IUctBZmhE9Jh601KlrKiRBiN4YbykpHpL",
+      "title": "6"
+    },
+    {
+      "url": "https://fr.linkedin.com/in/arnaudgantier",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/1848331042970538071",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/1884332902722285998",
+      "title": "9"
+    },
+    {
+      "url": "https://datareportal.com/essential-youtube-stats",
+      "title": "10"
+    },
+    {
+      "url": "https://socialblade.com/youtube/channel/UCRCCAnVyzDTcqNYh0pDcq7Q",
+      "title": "1"
+    },
+    {
+      "url": "https://fr.youtubers.me/finary/youtuber-stats/en",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/1780902462842651046",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1868340255608504649",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1901959276853334504",
+      "title": "5"
+    },
+    {
+      "url": "https://www.favikon.com/blog/top-economists-france",
+      "title": "6"
+    },
+    {
+      "url": "https://wearesocial.com/wp-content/uploads/2025/02/GDR-2025-v2.pdf",
+      "title": "7"
+    },
+    {
+      "url": "https://www.oxfordeconomics.com/youtubes-creator-economy-impact",
+      "title": "8"
+    },
+    {
+      "url": "https://ymanci.fr/etude-statistique-ymanci-education-financiere-des-francais",
+      "title": "1"
+    },
+    {
+      "url": "https://www.ipsos.com/fr-fr/les-francais-renforcent-leur-epargne-de-precaution-et-sinquietent-de-lavenir-des-retraites",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/1853016680240124309",
+      "title": "3"
+    },
+    {
+      "url": "https://acpr.banque-france.fr/fr/publications-et-statistiques/publications/ndeg-174-le-financement-de-lhabitat-en-2024",
+      "title": "4"
+    },
+    {
+      "url": "https://www.lemonde.fr/argent/article/2025/01/31/ces-influenceurs-de-la-finance-qui-ont-la-cote-sur-les-reseaux-sociaux_6524695_1657007.html",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/1837113394727457132",
+      "title": "6"
+    },
+    {
+      "url": "https://www.etreinvesti.com/top-5-chaines-youtube-finances-personnelles",
+      "title": "7"
+    },
+    {
+      "url": "https://www.flashs.fr/posts/les-francais-et-leur-epargne-en-2024",
+      "title": "1"
+    },
+    {
+      "url": "https://observatoirecetelem.com/consommation/obs-conso-2025",
+      "title": "2"
+    },
+    {
+      "url": "https://www.ifop.com/article/les-francais-et-la-finance-responsable-vague-7",
+      "title": "3"
+    },
+    {
+      "url": "https://www.cafedelabourse.com/devenir-rentier/finfluenceur-influenceurs-finance",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1880973970138190109",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/1813617349918122447",
+      "title": "6"
+    },
+    {
+      "url": "https://www.senat.fr/compte-rendu-commissions/20260112/fin.html",
+      "title": "7"
+    },
+    {
+      "url": "https://datareportal.com/reports/digital-2025-france",
+      "title": "1"
+    },
+    {
+      "url": "https://www.mediametrie.fr/fr/lannee-tv-video-2025",
+      "title": "2"
+    },
+    {
+      "url": "https://www.mediametrie.fr/fr/lannee-internet-2024",
+      "title": "3"
+    },
+    {
+      "url": "https://huntertuber.com/@Finary",
+      "title": "4"
+    },
+    {
+      "url": "https://datareportal.com/reports/digital-2025-global-overview-report",
+      "title": "5"
+    },
+    {
+      "url": "https://www.advanced-television.com/2024/12/20/france-ctv-40-of-youtube-impressions",
+      "title": "6"
+    },
+    {
+      "url": "https://www.tvrev.com/news/tube-trends-over-75-of-youtube-views-came-from-shorts-in-2025-tubular",
+      "title": "7"
+    },
+    {
+      "url": "https://www.reddit.com/r/NewTubers/comments/1idm3bn/avg_view_duration_for_tech_educational_channels",
+      "title": "8"
+    },
+    {
+      "url": "https://www.blogdumoderateur.com/chiffres-youtube",
+      "title": "1"
+    },
+    {
+      "url": "https://www.cybercite.fr/ressources/dossiers/consommation-video-quand-tv-et-digital-font-bon-menage",
+      "title": "2"
+    },
+    {
+      "url": "https://newtrading.fr/meilleures-chaines-youtube-trading",
+      "title": "3"
+    },
+    {
+      "url": "https://lamartingale.io/articles/les-chaines-youtube-finances-a-suivre-en-2025",
+      "title": "4"
+    },
+    {
+      "url": "https://www.teleprompter.com/blog/2025-youtube-statistics",
+      "title": "5"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1256738/youtubecom-monthly-visits-distribution-by-device?srsltid=AfmBOook9aYLHg9GTXneqcdbdDCkXWRdigT03xu7pkgULUBMKC67glBo",
+      "title": "6"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/understanding-youtube-algorithm",
+      "title": "1"
+    },
+    {
+      "url": "https://www.tubebuddy.com/blog/leaked-youtube-ab-testing-title-thumbnail",
+      "title": "2"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/youtube-thumbnail-design-tips",
+      "title": "3"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/youtube-custom-thumbnails-ctr",
+      "title": "4"
+    },
+    {
+      "url": "https://www.tubebuddy.com/blog/secrets-to-creating-high-converting-youtube-thumbnails",
+      "title": "5"
+    },
+    {
+      "url": "https://www.tubebuddy.com/blog/11-youtube-thumbnail-tips-from-big-creators",
+      "title": "6"
+    },
+    {
+      "url": "https://lamartingale.io/articles/les-chaines-youtube-finances-a-suivre-en-2025",
+      "title": "7"
+    },
+    {
+      "url": "https://www.redactionfinanciere.com/l/les-meilleures-chaines-youtube-francaises-sur-la-finance",
+      "title": "8"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/emojis-in-youtube-titles",
+      "title": "9"
+    },
+    {
+      "url": "https://www.410-gone.fr/blog/seo-youtube-incontournable.html",
+      "title": "1"
+    },
+    {
+      "url": "https://www.etreinvesti.com/top-5-chaines-youtube-finances-personnelles",
+      "title": "2"
+    },
+    {
+      "url": "https://blog.gold.fr/les-meilleures-chaines-youtube-sur-la-finance",
+      "title": "3"
+    },
+    {
+      "url": "https://www.youtube.com/@ClementBravo",
+      "title": "4"
+    },
+    {
+      "url": "https://www.youtube.com/c/RomanPaillet",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/@julien-investirenbourse",
+      "title": "6"
+    },
+    {
+      "url": "https://www.ekole.fr/blog/youtube-en-2025-les-chiffres-cles-et-les-opportunites-pour-les-etablissements-scolaires-2",
+      "title": "1"
+    },
+    {
+      "url": "https://www.retentionrabbit.com/blog/2025-youtube-audience-retention-benchmark-report",
+      "title": "2"
+    },
+    {
+      "url": "https://www.redactionfinanciere.com/l/les-meilleures-chaines-youtube-francaises-sur-la-finance",
+      "title": "3"
+    },
+    {
+      "url": "https://www.fscamymoney.co.za/Research%20Documents/202425%20FSCA%20Research/FSCA%20-%20Digital%20Financial%20Lireracy%20and%20Education%20Feasibility%20Study%20-%2020%20Feb%202025.pdf",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/c/EDUCFIBanquedeFrance",
+      "title": "6"
+    },
+    {
+      "url": "https://thunderbit.com/fr/blog/fifty-youtube-key-statistics",
+      "title": "7"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=HyJ0g21hAKg",
+      "title": "8"
+    },
+    {
+      "url": "https://www.swydo.com/blog/video-marketing-metrics",
+      "title": "9"
+    },
+    {
+      "url": "https://longstories.ai/blog/retention-benchmarks-animated-youtube-videos",
+      "title": "1"
+    },
+    {
+      "url": "https://mapsystemsindia.com/resources/improve-youtube-audience-retention.html",
+      "title": "2"
+    },
+    {
+      "url": "https://www.similarweb.com/website/youtube.com",
+      "title": "1"
+    },
+    {
+      "url": "https://datareportal.com/reports/digital-2025-france",
+      "title": "2"
+    },
+    {
+      "url": "https://wearesocial.com/wp-content/uploads/2025/02/GDR-2025-v2.pdf",
+      "title": "3"
+    },
+    {
+      "url": "https://www.similarweb.com/top-websites/france",
+      "title": "4"
+    },
+    {
+      "url": "https://air.io/en/on-air/the-2025-youtube-shift-air-insights-data-for-creators",
+      "title": "5"
+    },
+    {
+      "url": "https://finance.yahoo.com/news/2025-youtube-playbook-backed-air-133400347.html",
+      "title": "6"
+    },
+    {
+      "url": "https://air.io/en/audience-growth/whos-growing-fastest-on-youtube-and-which-niches-are-hot-in-2025",
+      "title": "7"
+    },
+    {
+      "url": "https://www.webrankinfo.com/google/guide-youtube/chiffres-statistiques",
+      "title": "8"
+    },
+    {
+      "url": "https://finary.com/en/product-updates/shareholders-letter-2024",
+      "title": "9"
+    },
+    {
+      "url": "https://theaiinsider.tech/2025/09/30/paypal-ventures-leads-finarys-series-b-funding-round",
+      "title": "10"
+    },
+    {
+      "url": "https://builtin.com/job/scriptwriter/6313603",
+      "title": "11"
+    },
+    {
+      "url": "https://www.lemonde.fr/argent/article/2025/01/31/ces-influenceurs-de-la-finance-qui-ont-la-cote-sur-les-reseaux-sociaux_6524695_1657007.html",
+      "title": "12"
+    },
+    {
+      "url": "https://www.redactionfinanciere.com/l/les-meilleures-chaines-youtube-francaises-sur-la-finance",
+      "title": "13"
+    },
+    {
+      "url": "https://blog.gold.fr/les-meilleures-chaines-youtube-sur-la-finance",
+      "title": "14"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=dJuxkfCgIE0",
+      "title": "15"
+    },
+    {
+      "url": "https://www.speedinvest.com/knowledge/how-finary-turned-youtube-into-its-growth-engine",
+      "title": "1"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=3fmiisA4xno",
+      "title": "2"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=j91uNRCdYO0",
+      "title": "3"
+    },
+    {
+      "url": "https://socialblade.com/youtube/lists/top/50/sb/all/FR",
+      "title": "4"
+    },
+    {
+      "url": "https://finary.com/en/product-updates/shareholder-letter-2025",
+      "title": "5"
+    },
+    {
+      "url": "https://www.statista.com/statistics/280685/number-of-monthly-unique-youtube-users?srsltid=AfmBOoq2w4aJ-wRvu799CGzwCsGUM7hcZwvfoyUOHS6NMF6oPJdxAPY2",
+      "title": "6"
+    },
+    {
+      "url": "https://www.globalmediainsight.com/blog/youtube-users-statistics",
+      "title": "1"
+    },
+    {
+      "url": "https://wearesocial.com/wp-content/uploads/2025/02/GDR-2025-v2.pdf",
+      "title": "2"
+    },
+    {
+      "url": "https://www.statista.com/statistics/280685/number-of-monthly-unique-youtube-users?srsltid=AfmBOornXdHIX7K-q_SAex2Gw7lJRsUNV7zxorHtbXtdrAo7zVDrZIkB",
+      "title": "3"
+    },
+    {
+      "url": "https://socialblade.com/youtube/handle/grahamstephan/realtime",
+      "title": "4"
+    },
+    {
+      "url": "https://home.beacons.ai/blog/personal-finance-youtubers",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/@financelibres",
+      "title": "6"
+    },
+    {
+      "url": "https://videos.feedspot.com/france_finance_youtube_channels",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/1993710957667942795",
+      "title": "8"
+    },
+    {
+      "url": "https://www.statista.com/study/137093/target-audience-followers-of-personal-finance-influencers-in-the-united-states?srsltid=AfmBOoqKg2XDQqrQp33XgLW6THuQ-tVMSfdCi4R2bb_YI3lES_CVgYM1",
+      "title": "9"
+    },
+    {
+      "url": "https://www.etreinvesti.com/top-5-chaines-youtube-finances-personnelles",
+      "title": "10"
+    },
+    {
+      "url": "https://x.com/i/status/1963684560115491207",
+      "title": "11"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCV6KDgJskWaEckne5aPA0aQ",
+      "title": "12"
+    },
+    {
+      "url": "https://socialblade.com/youtube/handle/grahamstephan",
+      "title": "13"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1287137/youtube-global-users-age-gender-distribution?srsltid=AfmBOoqOglHa9ktuSmbN1IW7PYy_YvZkzosRAwuKPobrVW-jdwEiScLc",
+      "title": "1"
+    },
+    {
+      "url": "https://www.statista.com/statistics/457073/youtube-comedy-channels-with-the-most-followers-france?srsltid=AfmBOoo3grsRLqhjnot-yqZ5nA4KlMagkIzQxEBbgSDBUXSTLsVHFZni",
+      "title": "2"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1288840/age-gender-reach-worldwide-learning-videos?srsltid=AfmBOoqAzrCc7SR4I0ckoA0ajqWnD3G3O23hkpji-zL06e9Yr5adRjyN",
+      "title": "3"
+    },
+    {
+      "url": "https://blog.hootsuite.com/social-media-statistics",
+      "title": "4"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1485376/youtube-average-engagement-rate?srsltid=AfmBOorxkmlhhm1-mqNNwVQ3aYJd-E9Ci5B6cicHxDg9twq3i2VvUgcn",
+      "title": "5"
+    },
+    {
+      "url": "https://www.kansascityfed.org/research/payments-system-research-briefings/social-media-for-personal-finances-a-new-trend-for-millennials-and-gen-z",
+      "title": "6"
+    },
+    {
+      "url": "https://www.globalmediainsight.com/blog/youtube-users-statistics",
+      "title": "7"
+    },
+    {
+      "url": "https://www.emarketer.com/industry-kpis/youtube-organic-engagement-rate",
+      "title": "8"
+    },
+    {
+      "url": "https://www.journaldunet.com/adtech/1546091-youtube-france-reunit-43-millions-d-utilisateurs-mensuels-selon-mediametrie",
+      "title": "1"
+    },
+    {
+      "url": "https://www.statista.com/statistics/280685/number-of-monthly-unique-youtube-users?srsltid=AfmBOoqj0mt6hNOuY-YVcSi6YgyJuX-uE8gm-U45cR43Oc2Uz9xCsjqX",
+      "title": "2"
+    },
+    {
+      "url": "https://www.emarketer.com/content/digital-video-forecast-trends-q3-2025",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/2020067590609981804",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1780902462842651046",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/1868340255608504649",
+      "title": "7"
+    },
+    {
+      "url": "https://www.lemonde.fr/argent/article/2025/01/31/ces-influenceurs-de-la-finance-qui-ont-la-cote-sur-les-reseaux-sociaux_6524695_1657007.html",
+      "title": "8"
+    },
+    {
+      "url": "https://www.etreinvesti.com/top-5-chaines-youtube-finances-personnelles",
+      "title": "9"
+    },
+    {
+      "url": "https://www.statista.com/statistics/1474429/youtube-user-distribution-age-gender-france?srsltid=AfmBOor_MilBiIwDyZ2UyXAMeBtQTBPows6FQ245I_pgpnkipfnf3bSf",
+      "title": "10"
+    },
+    {
+      "url": "https://blog.youtube/inside-youtube/2025-youtube-europe-impact-report",
+      "title": "11"
+    },
+    {
+      "url": "https://www.youtube.com/trends/report",
+      "title": "12"
+    },
+    {
+      "url": "https://www.statista.com/statistics/280685/number-of-monthly-unique-youtube-users",
+      "title": "1"
+    },
+    {
+      "url": "https://worldpopulationreview.com/country-rankings/youtube-users-by-country",
+      "title": "2"
+    },
+    {
+      "url": "https://www.emarketer.com/chart/c/358267/france-leads-its-peers-video-programmatic-ad-spending-growth-358267",
+      "title": "3"
+    },
+    {
+      "url": "https://blog.youtube/inside-youtube/2025-youtube-europe-impact-report",
+      "title": "4"
+    },
+    {
+      "url": "https://videos.feedspot.com/france_finance_youtube_channels",
+      "title": "5"
+    },
+    {
+      "url": "https://www.leparisien.fr/economie/votre-argent/qui-sont-les-influenceurs-de-la-finance-ces-nouvelles-stars-du-web-qui-parlent-cash-25-03-2025-6ZL2NNBHWNF7FIRAMWVKFRLF7U.php",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/trends/report/tr25-global-trends-report",
+      "title": "7"
+    },
+    {
+      "url": "https://worldcomgroup.com/insights/snapshot-media-consumption-in-france",
+      "title": "8"
+    },
+    {
+      "url": "https://www.mastercard.com/global/en/news-and-trends/stories/2025/gen-z-innovation-banking.html",
+      "title": "9"
+    },
+    {
+      "url": "https://www.oney.com/en/les-communiques/financial-literacy-week-how-the-french-are-managing-their-money-in-2025-concerns-adjustments-and-new-financial-strategies",
+      "title": "10"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=BSDxls2lACg",
+      "title": "11"
+    }
+  ]
+}

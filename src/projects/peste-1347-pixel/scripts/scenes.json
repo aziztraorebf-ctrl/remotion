@@ -1,0 +1,267 @@
+{
+  "project": "peste-1347-pixel",
+  "title": "1347 - Les Humains Deviennent Fous",
+  "version": "V2 post-Jury AI",
+  "voice": "Chris",
+  "voice_id": "iP95p4xoKVk53GoZ742B",
+  "model": "eleven_v3",
+  "language_code": "fr",
+  "voice_settings": {
+    "stability": 0.0,
+    "similarity_boost": 0.8,
+    "style": 0.8,
+    "use_speaker_boost": true
+  },
+  "text_normalization": "on",
+  "total_duration_target_sec": 225,
+  "scenes": [
+    {
+      "id": "hook_date",
+      "segment": "hook",
+      "preset": "dramatic",
+      "expected_duration_sec": 3,
+      "text": "1347... La MOITI\u00c9 de l'Europe va mourir.",
+      "notes": "Pause longue apr\u00e8s 1347. MOITI\u00c9 en emphasis fort. Ton grave, solennel."
+    },
+    {
+      "id": "hook_reframe",
+      "segment": "hook",
+      "preset": "narrator",
+      "expected_duration_sec": 4,
+      "text": "Mais cette vid\u00e9o ne parle pas de la maladie.",
+      "notes": "Ton calme, presque confidentiel. Contraste avec le dramatic pr\u00e9c\u00e9dent."
+    },
+    {
+      "id": "hook_reveal",
+      "segment": "hook",
+      "preset": "dramatic",
+      "expected_duration_sec": 8,
+      "text": "Elle parle de ce que les HUMAINS ont fait... quand ils ont cru que c'\u00e9tait la fin du monde. Car face \u00e0 l'inconnu... les r\u00e9flexes humains suivent un \u00e9ternel script.",
+      "notes": "HUMAINS en emphasis. Pause longue avant 'quand ils ont cru'. Mont\u00e9e dramatique sur 'la fin du monde'. Deuxi\u00e8me phrase plus pos\u00e9e, comme une th\u00e8se pos\u00e9e calmement. '\u00e9ternel script' appuy\u00e9."
+    },
+    {
+      "id": "flag_intro",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Des foules de centaines -- parfois DIX MILLE personnes -- traversent l'Europe en se fouettant jusqu'au sang.",
+      "notes": "Break de ton avant 'parfois'. DIX MILLE en emphasis fort. 'jusqu'au sang' plus lent, appuy\u00e9."
+    },
+    {
+      "id": "flag_freres",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 7,
+      "text": "Ils s'appellent les Fr\u00e8res de la Croix. Trente-trois jours et demi de marche... un pour chaque ann\u00e9e de la vie du Christ.",
+      "notes": "Fr\u00e8res de la Croix dit avec gravit\u00e9. Pause apr\u00e8s 'marche'. La deuxi\u00e8me phrase comme une r\u00e9v\u00e9lation."
+    },
+    {
+      "id": "flag_seances",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "Trois s\u00e9ances par jour. \u00c0 genoux. En croix. Avec des fouets garnis de pointes de fer.",
+      "notes": "Phrases courtes, staccato. Chaque phrase s\u00e9par\u00e9e. Rythme martel\u00e9. 'pointes de fer' appuy\u00e9."
+    },
+    {
+      "id": "flag_logique",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 7,
+      "text": "Leur logique ? Dieu punit l'humanit\u00e9 par la peste. Donc il faut souffrir PLUS... pour qu'il arr\u00eate.",
+      "notes": "Question rh\u00e9torique. PLUS en emphasis. Pause avant 'pour qu'il arr\u00eate'. Ton l\u00e9g\u00e8rement incr\u00e9dule."
+    },
+    {
+      "id": "flag_spoiler",
+      "segment": "flagellants",
+      "preset": "conversational",
+      "expected_duration_sec": 3,
+      "text": "Spoiler... \u00e7a n'a pas march\u00e9.",
+      "notes": "Ton d\u00e9contract\u00e9, presque amus\u00e9. Contraste total avec le s\u00e9rieux pr\u00e9c\u00e9dent. Pause apr\u00e8s Spoiler."
+    },
+    {
+      "id": "flag_ironie",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "\u00c7a a m\u00eame EMPIR\u00c9 ! Parce que ces processions... propageaient la peste encore plus vite.",
+      "notes": "EMPIR\u00c9 en emphasis avec \u00e9nergie. Pause apr\u00e8s processions. La fin dite avec ironie froide."
+    },
+    {
+      "id": "pogrom_intro",
+      "segment": "pogroms",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Quand les humains ont peur et ne comprennent pas... ils cherchent quelqu'un \u00e0 bl\u00e2mer.",
+      "notes": "Ton pos\u00e9, presque professoral. Pause avant 'ils cherchent'. Phrase universelle."
+    },
+    {
+      "id": "pogrom_rumeur",
+      "segment": "pogroms",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "En 1349, la rumeur se r\u00e9pand -- les Juifs empoisonnent les puits.",
+      "notes": "Break de ton avant l'accusation. L'accusation dite de mani\u00e8re factuelle, pas sensationnaliste."
+    },
+    {
+      "id": "pogrom_strasbourg",
+      "segment": "pogroms",
+      "preset": "dramatic",
+      "expected_duration_sec": 8,
+      "text": "\u00c0 Strasbourg, le quatorze f\u00e9vrier 1349 -- jour de la Saint-Valentin -- on br\u00fble deux mille personnes sur un cimeti\u00e8re.",
+      "notes": "Chiffres en toutes lettres. 'jour de la Saint-Valentin' comme un apart\u00e9 gla\u00e7ant. 'deux mille personnes' appuy\u00e9, grave."
+    },
+    {
+      "id": "pogrom_mayence",
+      "segment": "pogroms",
+      "preset": "dramatic",
+      "expected_duration_sec": 3,
+      "text": "\u00c0 Mayence... six mille en un seul jour.",
+      "notes": "Pause longue apr\u00e8s Mayence. 'six mille' dit lentement. 'un seul jour' comme un coup."
+    },
+    {
+      "id": "pogrom_total",
+      "segment": "pogroms",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Au total, certains historiens d\u00e9nombrent plus de trois cents pogroms. Des communaut\u00e9s enti\u00e8res... effac\u00e9es.",
+      "notes": "Factuel mais nuanc\u00e9. Pause avant 'effac\u00e9es'. Dernier mot isol\u00e9, lourd."
+    },
+    {
+      "id": "pogrom_motif",
+      "segment": "pogroms",
+      "preset": "narrator",
+      "expected_duration_sec": 12,
+      "text": "Le plus tordu ? Les \u00e9lites locales savaient que c'\u00e9tait faux. Mais elles devaient de l'argent aux pr\u00eateurs juifs. Alors elles ont laiss\u00e9 faire le massacre... et les dettes ont disparu avec les victimes.",
+      "notes": "Question rh\u00e9torique. R\u00e9v\u00e9lation progressive. 'laiss\u00e9 faire le massacre' dit avec d\u00e9go\u00fbt contenu. Derni\u00e8re phrase comme un constat froid."
+    },
+    {
+      "id": "riches_intro",
+      "segment": "riches",
+      "preset": "narrator",
+      "expected_duration_sec": 4,
+      "text": "Pendant que les pauvres meurent dans les rues... les riches font leurs valises.",
+      "notes": "Contraste marqu\u00e9 entre les deux parties. Pause au milieu. Ton factuel."
+    },
+    {
+      "id": "riches_boccaccio",
+      "segment": "riches",
+      "preset": "narrator",
+      "expected_duration_sec": 7,
+      "text": "\u00c0 Florence, Boccaccio d\u00e9crit des nobles qui partent s'installer \u00e0 la campagne... pour boire du vin et raconter des histoires.",
+      "notes": "L\u00e9g\u00e8re ironie sur 'boire du vin et raconter des histoires'. Presque amus\u00e9."
+    },
+    {
+      "id": "riches_stat",
+      "segment": "riches",
+      "preset": "dramatic",
+      "expected_duration_sec": 6,
+      "text": "Pendant ce temps, la mortalit\u00e9 chez les pauvres est sans doute bien plus \u00e9lev\u00e9e -- probablement le double -- que chez les riches.",
+      "notes": "Ton grave. 'sans doute' dit naturellement, pas comme une h\u00e9sitation. 'le double' en emphasis."
+    },
+    {
+      "id": "riches_miroir",
+      "segment": "riches",
+      "preset": "conversational",
+      "expected_duration_sec": 2,
+      "text": "\u00c7a vous rappelle quelque chose ?",
+      "notes": "Question directe au spectateur. Ton complice, presque un clin d'oeil."
+    },
+    {
+      "id": "riches_parallele",
+      "segment": "riches",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "\u00celes priv\u00e9es, r\u00e9sidences secondaires, confinement en villa... Les si\u00e8cles passent. Le r\u00e9flexe reste le m\u00eame.",
+      "notes": "\u00c9num\u00e9ration rapide. Puis les deux phrases courtes, martel\u00e9es. 'Le r\u00e9flexe reste le m\u00eame' comme un constat universel."
+    },
+    {
+      "id": "med_transition",
+      "segment": "medecine",
+      "preset": "conversational",
+      "expected_duration_sec": 4,
+      "text": "Et la r\u00e9ponse des m\u00e9decins \u00e0 cette \u00e9poque ? Elle \u00e9tait tout aussi d\u00e9sesp\u00e9r\u00e9e.",
+      "notes": "Question rh\u00e9torique, ton l\u00e9g\u00e8rement amus\u00e9. 'tout aussi d\u00e9sesp\u00e9r\u00e9e' dit avec un sourire noir. Transition douce."
+    },
+    {
+      "id": "med_docteur",
+      "segment": "medecine",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "Les m\u00e9decins de peste portent un masque \u00e0 bec... rempli de fleurs et de vinaigre.",
+      "notes": "Descriptif, presque visuel. Pause apr\u00e8s 'bec'. 'fleurs et vinaigre' dit avec l\u00e9g\u00e8re incr\u00e9dulit\u00e9."
+    },
+    {
+      "id": "med_theorie",
+      "segment": "medecine",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Leur th\u00e9orie ? La maladie vient du mauvais air. Donc si \u00e7a sent bon... \u00e7a gu\u00e9rit.",
+      "notes": "Question rh\u00e9torique. Logique absurde expos\u00e9e factuellement. L\u00e9g\u00e8re ironie."
+    },
+    {
+      "id": "med_remedes",
+      "segment": "medecine",
+      "preset": "conversational",
+      "expected_duration_sec": 16,
+      "text": "Autres rem\u00e8des -- poser un cul de poulet vivant sur les bubons. Boire du vinaigre \u00e0 l'ail... le Vinaigre des Quatre Voleurs. Se faire saigner \u00e0 outrance, pour \"purger\" le mal... en affaiblissant encore plus le malade. Porter des amulettes avec des pri\u00e8res grav\u00e9es... comme si les mots pouvaient arr\u00eater une bact\u00e9rie.",
+      "notes": "Ton amus\u00e9, presque stand-up. 'cul de poulet' dit sans g\u00eane. Chaque rem\u00e8de s\u00e9par\u00e9 par un break. 'saigner \u00e0 outrance' dit avec incr\u00e9dulit\u00e9. Dernier rem\u00e8de (amulettes) avec ironie marqu\u00e9e sur 'comme si les mots'."
+    },
+    {
+      "id": "miroir_recap",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 2,
+      "text": "Alors... R\u00e9capitulons.",
+      "notes": "Pause. Ton qui change, plus pos\u00e9, presque solennel. Transition claire."
+    },
+    {
+      "id": "miroir_remedes",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Face \u00e0 une pand\u00e9mie, les humains cherchent des rem\u00e8des miracles... m\u00eame quand la science dit le contraire.",
+      "notes": "Ton pos\u00e9, universel. Pas accusateur. Constat sur la nature humaine."
+    },
+    {
+      "id": "miroir_boucs",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Ils d\u00e9signent des boucs \u00e9missaires... et les violences suivent toujours le m\u00eame sch\u00e9ma.",
+      "notes": "M\u00eame ton pos\u00e9. 'toujours' appuy\u00e9 l\u00e9g\u00e8rement. Constat, pas accusation."
+    },
+    {
+      "id": "miroir_riches",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 4,
+      "text": "Les plus riches s'isolent... et les plus pauvres meurent en premier.",
+      "notes": "Contraste simple et brutal. Pause au milieu. Factuel."
+    },
+    {
+      "id": "miroir_guerir",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "Et quand l'ignorance pr\u00e9tend gu\u00e9rir... elle fait parfois plus de mal que la maladie.",
+      "notes": "L\u00e9g\u00e8re amertume. 'l'ignorance' appuy\u00e9 — c'est elle le sujet, pas les m\u00e9decins. Constat universel."
+    },
+    {
+      "id": "miroir_conclusion",
+      "segment": "miroir",
+      "preset": "dramatic",
+      "expected_duration_sec": 6,
+      "text": "Six cent soixante-treize ans d'\u00e9cart... Et le script humain... n'a pas chang\u00e9 d'une seule ligne.",
+      "notes": "Chiffre dit lentement. Deux pauses. Derni\u00e8re phrase dite avec poids, presque triste. Rappel du mot 'script' du hook."
+    },
+    {
+      "id": "cta",
+      "segment": "miroir",
+      "preset": "calm",
+      "expected_duration_sec": 6,
+      "text": "La prochaine pand\u00e9mie arrivera... Et TOI... tu r\u00e9agiras comment ?",
+      "notes": "Ton calme, direct. TOI en emphasis. Question ouverte, pas agressive. Laisser le silence apr\u00e8s."
+    }
+  ]
+}

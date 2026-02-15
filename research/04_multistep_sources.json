@@ -1,0 +1,480 @@
+{
+  "total_sources": 118,
+  "generated_at": "2026-02-07 23:53:18",
+  "model": "grok-4-1-fast-reasoning",
+  "sub_questions": 8,
+  "sources": [
+    {
+      "url": "https://www.retentionrabbit.com/blog/2025-youtube-audience-retention-benchmark-report",
+      "title": "1"
+    },
+    {
+      "url": "https://www.georgeblackman.com/write-on-time/how-to-structure-a-massive-youtube-script",
+      "title": "2"
+    },
+    {
+      "url": "https://www.hipclip.ai/workflows/how-to-create-youtube-video-scripts-that-maximize-retention-and-growth-in-2025",
+      "title": "3"
+    },
+    {
+      "url": "https://medium.com/@rotini254/the-psychology-of-high-retention-video-scripts-4927edae35f3",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/2020046522218692740",
+      "title": "5"
+    },
+    {
+      "url": "https://keywordly.ai/blog/youtube-content",
+      "title": "1"
+    },
+    {
+      "url": "https://medium.com/write-your-world/how-long-should-a-youtube-video-be-for-maximum-engagement-ec05568c8522",
+      "title": "2"
+    },
+    {
+      "url": "https://mapsystemsindia.com/resources/improve-youtube-audience-retention.html",
+      "title": "3"
+    },
+    {
+      "url": "https://www.jxtgroup.com/enhance-your-youtube-scriptwriting-with-5-strategies-that-are-working-in-2025",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/2018524047899033693",
+      "title": "1"
+    },
+    {
+      "url": "https://www.retentionrabbit.com/blog/2025-youtube-audience-retention-benchmark-report",
+      "title": "2"
+    },
+    {
+      "url": "https://www.opus.pro/blog/youtube-retention-graphs-explained",
+      "title": "3"
+    },
+    {
+      "url": "https://socialrails.com/blog/youtube-audience-retention-complete-guide",
+      "title": "4"
+    },
+    {
+      "url": "https://www.retentionrabbit.com/blog/ultimate-guide-youtube-audience-retention",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/1985397722363412826",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/1941226097640648744",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/2013629969981751771",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/2019982943931023561",
+      "title": "9"
+    },
+    {
+      "url": "https://backlinko.com/hub/youtube/retention",
+      "title": "10"
+    },
+    {
+      "url": "https://x.com/i/status/1855634944820760832",
+      "title": "11"
+    },
+    {
+      "url": "https://longstories.ai/blog/retention-benchmarks-animated-youtube-videos",
+      "title": "1"
+    },
+    {
+      "url": "https://uppbeat.io/blog/youtube-growth/youtube-analytics/youtube-audience-retention",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/2014353101533163540",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1921931929479237671",
+      "title": "4"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/future-youtube-trends",
+      "title": "1"
+    },
+    {
+      "url": "https://www.tubefilter.com/2025/07/10/youtube-replacing-trending-tab-ranking-charts-popular-content",
+      "title": "2"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/summer-2025-drop",
+      "title": "3"
+    },
+    {
+      "url": "https://www.georgeblackman.com/write-on-time/how-to-write-a-killer-youtube-script-in-2025",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/2019713588068557050",
+      "title": "5"
+    },
+    {
+      "url": "https://www.tubebuddy.com/blog/youtube-trends-2025",
+      "title": "6"
+    },
+    {
+      "url": "https://business.google.com/us/think/search-and-video/2025-youtube-trends",
+      "title": "7"
+    },
+    {
+      "url": "https://www.speechmatics.com/company/articles-and-news/how-to-launch-a-successful-faceless-youtube-channel-for-business",
+      "title": "8"
+    },
+    {
+      "url": "https://arxiv.org/pdf/2510.23645",
+      "title": "9"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/understanding-youtube-algorithm",
+      "title": "1"
+    },
+    {
+      "url": "https://www.georgeblackman.com/write-on-time/the-most-important-scriptwriting-strategy-in-2026",
+      "title": "2"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=KZeIEiBrT_w",
+      "title": "3"
+    },
+    {
+      "url": "https://www.tastyedits.com/best-science-youtube-channels",
+      "title": "4"
+    },
+    {
+      "url": "https://mediacube.io/en-US/blog/youtube-trends-2026",
+      "title": "5"
+    },
+    {
+      "url": "https://www.youtube.com/channel/UCsXVk37bltHxD1rDPwtNM8Q",
+      "title": "6"
+    },
+    {
+      "url": "https://www.jxtgroup.com/enhance-your-youtube-scriptwriting-with-5-strategies-that-are-working-in-2025",
+      "title": "2"
+    },
+    {
+      "url": "https://www.tubebuddy.com/blog/youtube-storytelling-trends-2025-sean-overton",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1821147348510068970",
+      "title": "4"
+    },
+    {
+      "url": "https://www.contentguaranteed.com/?p=730",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=0xS68sl2D70",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/1781019488538055149",
+      "title": "8"
+    },
+    {
+      "url": "https://www.researchgate.net/publication/375566055_Narrative_as_a_Key_Element_for_Learning_Through_Videos",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/2017984095507394907",
+      "title": "3"
+    },
+    {
+      "url": "https://www.linkedin.com/posts/qubitrix_veritasiumted-scienceeducation-innovation2025-activity-7363774288530685953-3x9K",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/1834237514141294905",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/1815811898887061822",
+      "title": "3"
+    },
+    {
+      "url": "https://medium.com/@Kurzgesagt/how-research-and-factchecking-work-at-kurzgesagt-f5b239188255",
+      "title": "4"
+    },
+    {
+      "url": "https://10.studio/the-incredible-amount-of-work-behind-kurzgesagts-beautiful-animated-videos",
+      "title": "5"
+    },
+    {
+      "url": "https://www.reddit.com/r/3Blue1Brown/comments/1edev7h/hard_to_follow_and_understand_the_linear_algebra",
+      "title": "6"
+    },
+    {
+      "url": "https://www.georgeblackman.com/write-on-time/4-years-of-youtube-scriptwriting-in-26-minutes",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/2004598389577593316",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/1952206572882391334",
+      "title": "9"
+    },
+    {
+      "url": "https://x.com/i/status/1836405174094418004",
+      "title": "1"
+    },
+    {
+      "url": "https://x.com/i/status/1998774777868153243",
+      "title": "2"
+    },
+    {
+      "url": "https://podcasts.apple.com/my/podcast/kurzgesagt-podcast-science-revealed/id1802197341",
+      "title": "3"
+    },
+    {
+      "url": "https://www.reddit.com/r/kurzgesagt/comments/1o3set8/the_latest_ai_slop_video_resembles_what_we_do_to",
+      "title": "4"
+    },
+    {
+      "url": "https://www.techsmith.com/blog/2026-video-statistics",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/1959314508612022412",
+      "title": "6"
+    },
+    {
+      "url": "https://terrytao.wordpress.com/2025/02/13/cosmic-distance-ladder-video-with-grant-sanderson-3blue1brown-commentary-and-corrections",
+      "title": "7"
+    },
+    {
+      "url": "https://www.georgeblackman.com/write-on-time/the-most-important-scriptwriting-strategy-in-2026",
+      "title": "8"
+    },
+    {
+      "url": "https://www.scribd.com/document/941069976/YouTube-s-2026-Creator-Strategy-Shift",
+      "title": "9"
+    },
+    {
+      "url": "https://noergia.com/en/blog/2025/04/can-an-ai-write-your-youtube-scripts-better-than-you",
+      "title": "1"
+    },
+    {
+      "url": "https://aizolo.com/blog/best-ai-tools-for-content-creation",
+      "title": "2"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=AiPc4U83jDY",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1988678974692532635",
+      "title": "4"
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/pii/S0360131524001787",
+      "title": "5"
+    },
+    {
+      "url": "https://gisteo.com/blogs/video-production/will-ai-explainer-videos-take-over",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/1978715241060921350",
+      "title": "1"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=RgquxyZL1Ss",
+      "title": "2"
+    },
+    {
+      "url": "https://x.com/i/status/1977197587880198260",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/2013306156207481133",
+      "title": "4"
+    },
+    {
+      "url": "https://x.com/i/status/2018748490885538079",
+      "title": "5"
+    },
+    {
+      "url": "https://creatoreconomy.so/p/chatgpt-vs-claude-vs-gemini-the-best-ai-model-for-each-use-case-2025",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/2020121584149598467",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/1946896462799052884",
+      "title": "8"
+    },
+    {
+      "url": "https://x.com/i/status/1991828395773325337",
+      "title": "9"
+    },
+    {
+      "url": "https://socialblade.com/youtube/handle/notabenemovies",
+      "title": "2"
+    },
+    {
+      "url": "https://hypeauditor.com/youtube/UC6nSFpj9HTCZ5t-N3Rm3-HA",
+      "title": "3"
+    },
+    {
+      "url": "https://www.ekole.fr/blog/youtube-en-2025-les-chiffres-cles-et-les-opportunites-pour-les-etablissements-scolaires-2",
+      "title": "4"
+    },
+    {
+      "url": "https://www.advanced-television.com/2025/11/20/youtube-contributed-e1bn-to-french-gdp-in-2024",
+      "title": "5"
+    },
+    {
+      "url": "https://air.io/en/audience-growth/whos-growing-fastest-on-youtube-and-which-niches-are-hot-in-2025",
+      "title": "6"
+    },
+    {
+      "url": "https://www.sportskeeda.com/us/streamers/news-2025-saved-fans-delighted-vsauce-releases-first-long-form-video-two-years",
+      "title": "7"
+    },
+    {
+      "url": "https://socialblade.com/youtube/handle/notabenemovies/realtime",
+      "title": "8"
+    },
+    {
+      "url": "https://bemultilingual.ca/blog/most-popular-languages-on-youtube-languages-with-the-highest-cpm-and-what",
+      "title": "9"
+    },
+    {
+      "url": "https://x.com/i/status/2014370595849351281",
+      "title": "10"
+    },
+    {
+      "url": "https://x.com/i/status/1996205527861231969",
+      "title": "11"
+    },
+    {
+      "url": "https://kimhandysidesvoiceover.com/2022/08/16/timing-in-elearning-videos",
+      "title": "12"
+    },
+    {
+      "url": "https://x.com/i/status/2018276190713246172",
+      "title": "13"
+    },
+    {
+      "url": "https://x.com/i/status/2020046522218692740",
+      "title": "14"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/youtube-channel-analytics",
+      "title": "1"
+    },
+    {
+      "url": "https://www.linkedin.com/pulse/audience-retention-hacks-boost-your-youtube-rankings-hook-salim-mia-gdmgc",
+      "title": "2"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCHnyfMqiRRG1u-2MsSQLbXA",
+      "title": "3"
+    },
+    {
+      "url": "https://hypeauditor.com/youtube/UCHnyfMqiRRG1u-2MsSQLbXA",
+      "title": "4"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCsXVk37bltHxD1rDPwtNM8Q",
+      "title": "5"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCzMHLUJ8xTqDq6xsk0N5IdQ",
+      "title": "6"
+    },
+    {
+      "url": "https://www.youtube.com/user/dirtybiology",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/2019048740540027096",
+      "title": "8"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCP46_MXP_WG_auH88FnfS1A",
+      "title": "9"
+    },
+    {
+      "url": "https://www.speakrj.com/audit/report/UCP46_MXP_WG_auH88FnfS1A/youtube",
+      "title": "10"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/channel/UCaNlbnghtwlsGF-KzAFThqA",
+      "title": "11"
+    },
+    {
+      "url": "https://hypeauditor.com/top-youtube-education-france",
+      "title": "12"
+    },
+    {
+      "url": "https://www.statista.com/statistics/457073/youtube-comedy-channels-with-the-most-followers-france?srsltid=AfmBOoooNgihT1Uv0U9nIysqwHo0Pzl-8-lujGJpdW4BXmghZYgNHHci",
+      "title": "13"
+    },
+    {
+      "url": "https://vidiq.com/youtube-stats/top/country/fr",
+      "title": "14"
+    },
+    {
+      "url": "https://www.facebook.com/vidIQapp/posts/we-analyzed-900k-youtube-channels-that-started-in-2025-and-reached-1000-subscrib/1303411315164812",
+      "title": "15"
+    },
+    {
+      "url": "https://www.creatorsjet.com/blog/what-works-on-youtube-we-analyzed-10000-videos-to-find-out",
+      "title": "2"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/write-youtube-video-script",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1985397722363412826",
+      "title": "4"
+    },
+    {
+      "url": "https://vidiq.com/blog/post/summer-2025-drop",
+      "title": "5"
+    },
+    {
+      "url": "https://x.com/i/status/2019600015488909734",
+      "title": "6"
+    },
+    {
+      "url": "https://x.com/i/status/1982990755166814512",
+      "title": "7"
+    },
+    {
+      "url": "https://x.com/i/status/1974414209179066692",
+      "title": "8"
+    },
+    {
+      "url": "https://www.opus.pro/blog/youtube-retention-graphs-explained",
+      "title": "2"
+    },
+    {
+      "url": "https://socialrails.com/blog/youtube-audience-retention-complete-guide",
+      "title": "3"
+    },
+    {
+      "url": "https://x.com/i/status/1933937023427195047",
+      "title": "4"
+    }
+  ]
+}

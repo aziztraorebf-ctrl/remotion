@@ -89,7 +89,7 @@ Aziz decrit la scene en francais
 ### Environnement
 - Node.js v24.6.0, npm 11.5.1, Git 2.50.1
 - Pas de bun : utiliser npm exclusivement
-- Windows 11
+- macOS (Darwin 25.2.0)
 
 ### Packages Remotion
 - `@remotion/paths` : animations SVG path
@@ -97,10 +97,26 @@ Aziz decrit la scene en francais
 - `remotion-animated` : animations declaratives
 - `remotion-dev/skills` : skills agent pour Claude Code
 
-### Cles API (Phase 9 - a configurer plus tard)
+### Cles API (dans .env)
 - `ELEVENLABS_API_KEY` : voix-off via 11Labs
 - `AUPHONIC_API_KEY` : polissage audio
+- `OPENAI_API_KEY` : GPT-4o + web search (gpt-5 bloque - verification org requise)
+- `GEMINI_API_KEY` : Deep Research via Interactions API (pas de citations URL via API)
+- `XAI_API_KEY` : Grok + web_search + x_search (retourne URLs dans annotations)
 - Stocker dans `.env` (JAMAIS dans le code ou les commits)
+
+### Scripts de recherche
+- `research/launch_deep_research.py` : Recherche parallele multi-LLM
+- `research/multi_step_research.py` : Pipeline Decompose -> Research -> Expand -> Synthesize
+- Toujours lancer avec `python -u` pour output unbuffered
+
+### Skills
+- `.claude/skills/youtube-scriptwriting/SKILL.md` : Skill scriptwriting YouTube (5 phases)
+  - Phase 0: Discovery Interview
+  - Phase 1: Multi-Angle Research
+  - Phase 2: Multi-Step Synthesis
+  - Phase 3: Script Writing
+  - Phase 4: Quality Review
 
 ---
 
