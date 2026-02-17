@@ -1,5 +1,6 @@
+import { HOOK_TOTAL_FRAMES } from "./hookTiming";
+
 export const FPS = 30;
-export const TOTAL_FRAMES = 2760; // 92s (91s audio + 1s buffer)
 
 // ============================================================
 // Script V2: "Les Humains Deviennent Fous" (Hook + Seg1 + Seg2)
@@ -7,19 +8,22 @@ export const TOTAL_FRAMES = 2760; // 92s (91s audio + 1s buffer)
 // Silence detection: ffmpeg silencedetect noise=-30dB d=0.4
 // ============================================================
 
-// --- Segment boundaries (measured via silence detection) ---
+// --- Segment boundaries ---
 
-// HOOK: "1347... La MOITIE de l'Europe va mourir..."
+// HOOK: Now driven by hookTiming.ts (7 sub-scenes, ~43s provisional)
 export const HOOK_START = 0;
-export const HOOK_END = 510; // 17.0s - gap at 16.1-16.9s
+export const HOOK_END = HOOK_TOTAL_FRAMES; // was 510 (17s), now ~1290 (43s)
 
-// SEGMENT 1: Les Flagellants
-export const SEG1_START = 510;
-export const SEG1_END = 1440; // 48.0s - gap at 47.3-48.1s
+// SEGMENT 1: Les Flagellants (duration preserved from V2: 31s = 930 frames)
+export const SEG1_START = HOOK_END;
+export const SEG1_END = SEG1_START + 930;
 
-// SEGMENT 2: Les Boucs Emissaires
-export const SEG2_START = 1440;
-export const SEG2_END = 2760; // 92.0s
+// SEGMENT 2: Les Boucs Emissaires (duration preserved from V2: 44s = 1320 frames)
+export const SEG2_START = SEG1_END;
+export const SEG2_END = SEG2_START + 1320;
+
+// Total (will be recalculated when all segments have audio)
+export const TOTAL_FRAMES = SEG2_END;
 
 // --- Key voiceover sync cues (frames at 30fps) ---
 

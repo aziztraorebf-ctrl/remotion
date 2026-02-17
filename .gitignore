@@ -41,12 +41,19 @@ remotion fal.ai comfy ui/
 new medieval pixel/
 
 # Agent config dirs (IDE-specific)
+.agent/
 .agents/
 .codex/
 .cursor/
 .gemini/
 .opencode/
 .playwright-mcp/
+
+# Style comparison videos (archived)
+all-styles/
+
+# Storyboard root
+storyboard/
 
 # Purchased asset archives
 *.zip

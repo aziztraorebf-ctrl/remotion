@@ -1,0 +1,60 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-compact-context.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/preflight-check.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/lint-on-edit.sh",
+            "timeout": 30
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/auto-kimi-review.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/notify-waiting.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

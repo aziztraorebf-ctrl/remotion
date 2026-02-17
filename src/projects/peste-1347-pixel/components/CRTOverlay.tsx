@@ -2,7 +2,14 @@ import React from "react";
 import { useCurrentFrame, useVideoConfig, interpolate } from "remotion";
 import { CRT_SETTINGS } from "../config/theme";
 
-export const CRTOverlay: React.FC = () => {
+interface CRTOverlayProps {
+  scanlineOpacity?: number;
+}
+
+export const CRTOverlay: React.FC<CRTOverlayProps> = ({
+  scanlineOpacity,
+}) => {
+  const effectiveScanlineOpacity = scanlineOpacity ?? CRT_SETTINGS.scanlineOpacity;
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
@@ -40,8 +47,8 @@ export const CRTOverlay: React.FC = () => {
             0deg,
             transparent,
             transparent ${CRT_SETTINGS.scanlineSpacing - 1}px,
-            rgba(0, 0, 0, ${CRT_SETTINGS.scanlineOpacity}) ${CRT_SETTINGS.scanlineSpacing - 1}px,
-            rgba(0, 0, 0, ${CRT_SETTINGS.scanlineOpacity}) ${CRT_SETTINGS.scanlineSpacing}px
+            rgba(0, 0, 0, ${effectiveScanlineOpacity}) ${CRT_SETTINGS.scanlineSpacing - 1}px,
+            rgba(0, 0, 0, ${effectiveScanlineOpacity}) ${CRT_SETTINGS.scanlineSpacing}px
           )`,
         }}
       />

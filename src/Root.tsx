@@ -23,7 +23,11 @@ import { PixelWorldV2 } from "./projects/peste-1347-pixel/scenes/PixelWorldV2";
 import { PixelWorldV3 } from "./projects/peste-1347-pixel/scenes/PixelWorldV3";
 import { PixelWorldV4 } from "./projects/peste-1347-pixel/scenes/PixelWorldV4";
 import { PixelWorldV5 } from "./projects/peste-1347-pixel/scenes/PixelWorldV5";
+import { HookScene } from "./projects/peste-1347-pixel/scenes/HookScene";
+import { SpriteUnitTest } from "./projects/peste-1347-pixel/scenes/SpriteUnitTest";
+import { VillageTestScene, VILLAGE_TEST_FPS, VILLAGE_TEST_FRAMES } from "./projects/peste-1347-pixel/scenes/VillageTestScene";
 import { TOTAL_FRAMES as PESTE_TOTAL_FRAMES, FPS as PESTE_FPS } from "./projects/peste-1347-pixel/config/timing";
+import { HOOK_TOTAL_FRAMES } from "./projects/peste-1347-pixel/config/hookTiming";
 
 const speedReadingDuration = getTotalDurationInFrames(speedReadingConfig);
 
@@ -97,6 +101,14 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Folder name="peste-1347-pixel">
+        <Composition
+          id="HookBloc1"
+          component={HookScene}
+          durationInFrames={HOOK_TOTAL_FRAMES}
+          fps={PESTE_FPS}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="PestePixelArt"
           component={PestePixelScene}
@@ -190,6 +202,22 @@ export const RemotionRoot: React.FC = () => {
           component={PixelWorldV5}
           durationInFrames={300}
           fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="SpriteUnitTest"
+          component={SpriteUnitTest}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="VillageTest"
+          component={VillageTestScene}
+          durationInFrames={VILLAGE_TEST_FRAMES}
+          fps={VILLAGE_TEST_FPS}
           width={1920}
           height={1080}
         />

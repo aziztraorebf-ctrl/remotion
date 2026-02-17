@@ -1,7 +1,7 @@
 {
   "project": "peste-1347-pixel",
   "title": "1347 - Les Humains Deviennent Fous",
-  "version": "V2 post-Jury AI",
+  "version": "V3.1 post-Jury AI (GPT-4o + Gemini + Grok + Kimi)",
   "voice": "Chris",
   "voice_id": "iP95p4xoKVk53GoZ742B",
   "model": "eleven_v3",
@@ -13,255 +13,574 @@
     "use_speaker_boost": true
   },
   "text_normalization": "on",
-  "total_duration_target_sec": 225,
+  "total_duration_target_sec": 690,
   "scenes": [
+
     {
-      "id": "hook_date",
+      "id": "hook_01_issyk_kul",
+      "segment": "hook",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "En mille trois cent trente-huit, au bord du lac Issyk-Kul, au Kirghizistan, des gens meurent. On grave sur leurs tombes un seul mot -- \"pestilence.\"",
+      "notes": "Ton pose, presque documentaire. Pause apres Kirghizistan. 'pestilence' dit avec gravite, isole."
+    },
+    {
+      "id": "hook_02_catapulte",
+      "segment": "hook",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "Sept ans plus tard, un khan mongol assiegeait la ville de Caffa, en Crimee. Son armee mourait de cette meme maladie. Alors il a eu une idee... catapulter les cadavres de ses soldats par-dessus les murs.",
+      "notes": "Montee progressive. Pause avant 'catapulter'. Le mot dit avec un melange de degout et de fascination. 'par-dessus les murs' appuye."
+    },
+    {
+      "id": "hook_03_galeres",
+      "segment": "hook",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Les marchands genois ont fui Caffa sur douze galeres. Quand ces navires ont accoste a Messine, en Sicile, en octobre mille trois cent quarante-sept... les marins etaient deja morts ou mourants.",
+      "notes": "'douze galeres' appuye. Pause apres 'quarante-sept'. 'deja morts ou mourants' dit lentement, grave."
+    },
+    {
+      "id": "hook_04_moitie",
       "segment": "hook",
       "preset": "dramatic",
       "expected_duration_sec": 3,
-      "text": "1347... La MOITI\u00c9 de l'Europe va mourir.",
-      "notes": "Pause longue apr\u00e8s 1347. MOITI\u00c9 en emphasis fort. Ton grave, solennel."
+      "text": "En deux ans, la MOITIE de l'Europe allait disparaitre.",
+      "notes": "MOITIE en emphasis fort. Phrase courte, impact. Pause apres."
     },
     {
-      "id": "hook_reframe",
+      "id": "hook_05_reframe",
       "segment": "hook",
+      "preset": "narrator",
+      "expected_duration_sec": 3,
+      "text": "Mais cette video ne parle pas de la maladie.",
+      "notes": "Ton calme, confidentiel. Contraste total avec le dramatic precedent. Break de rythme."
+    },
+    {
+      "id": "hook_06_reveal",
+      "segment": "hook",
+      "preset": "dramatic",
+      "expected_duration_sec": 6,
+      "text": "Elle parle de ce que les HUMAINS ont fait... quand ils ont cru que c'etait la fin du monde.",
+      "notes": "HUMAINS en emphasis. Pause longue avant 'quand ils ont cru'. Montee dramatique sur 'la fin du monde'."
+    },
+    {
+      "id": "hook_07_reflexes",
+      "segment": "hook",
+      "preset": "calm",
+      "expected_duration_sec": 5,
+      "text": "Car a chaque crise... les memes reflexes reviennent. Encore et encore.",
+      "notes": "Ton pose, these posee calmement. 'Encore et encore' dit avec poids, presque las. Silence apres."
+    },
+
+    {
+      "id": "seg1_01_contexte",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "La peste se repand. Les gens meurent. Personne ne comprend pourquoi.",
+      "notes": "Trois phrases courtes, staccato. Rythme martele. Factuel et froid."
+    },
+    {
+      "id": "seg1_02_logique",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Alors des milliers de personnes decident que c'est la faute de l'humanite. Que Dieu punit les pecheurs. Et que la seule reponse... c'est de souffrir ENCORE PLUS.",
+      "notes": "Montee progressive. Chaque phrase plus intense. ENCORE PLUS en emphasis fort. Pause avant."
+    },
+    {
+      "id": "seg1_03_freres",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Ils s'appellent les Freres de la Croix. Des processions de centaines -- parfois DIX MILLE personnes -- traversent l'Europe en se fouettant jusqu'au sang.",
+      "notes": "Freres de la Croix dit avec gravite. Break avant 'parfois'. DIX MILLE en emphasis fort. 'jusqu'au sang' plus lent, appuye."
+    },
+    {
+      "id": "seg1_04_rituel",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Le rituel est precis. Trente-trois jours et demi de marche... un pour chaque annee de la vie du Christ. Trois seances par jour. A genoux. Les bras en croix. Avec des fouets garnis de pointes de fer.",
+      "notes": "Ton descriptif, presque clinique. Pause apres 'marche'. 'un pour chaque annee' comme une revelation. Phrases courtes staccato ensuite. 'pointes de fer' appuye."
+    },
+    {
+      "id": "seg1_05_carte",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "En mille trois cent quarante-neuf, ils sont partout. Dix mille a Parme. Trois mille campes devant les murs d'Erfurt. Six cents debarquent a Londres depuis la Flandre pour se flageller devant la cathedrale Saint-Paul.",
+      "notes": "Enumeration avec gravite croissante. Chaque ville separee. 'Saint-Paul' comme point culminant de l'absurdite geographique."
+    },
+    {
+      "id": "seg1_06_pape",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "Meme le pape est depasse. A Avignon, Clement VI regarde ces processions avec inquietude. Parce que ces foules ne font pas que se frapper -- elles pretendent avoir recu une \"lettre d'ange\" qui leur donne le pouvoir de pardonner les peches. Sans pretre. Sans eglise.",
+      "notes": "Ton narratif qui monte. 'lettre d'ange' avec legerement d'incredulite. 'Sans pretre. Sans eglise.' martele, chaque phrase isolee."
+    },
+    {
+      "id": "seg1_07_laics",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 7,
+      "text": "Soixante-dix pour cent d'entre eux sont des laics. Des artisans desesperes qui ont decide de prendre les choses en main parce que les institutions ont echoue.",
+      "notes": "Stat dite avec poids. 'desesperes' appuye. 'les institutions ont echoue' comme un constat universel."
+    },
+    {
+      "id": "seg1_08_bulle",
+      "segment": "flagellants",
       "preset": "narrator",
       "expected_duration_sec": 4,
-      "text": "Mais cette vid\u00e9o ne parle pas de la maladie.",
-      "notes": "Ton calme, presque confidentiel. Contraste avec le dramatic pr\u00e9c\u00e9dent."
+      "text": "Le vingt octobre mille trois cent quarante-neuf, le pape publie une bulle declarant les flagellants heretiques.",
+      "notes": "Date precise, ton officiel. 'heretiques' appuye."
     },
     {
-      "id": "hook_reveal",
-      "segment": "hook",
+      "id": "seg1_09_fin",
+      "segment": "flagellants",
+      "preset": "narrator",
+      "expected_duration_sec": 3,
+      "text": "Le mouvement meurt. Mais le mal est fait.",
+      "notes": "Deux phrases courtes. Pause entre les deux. 'le mal est fait' dit avec gravite."
+    },
+    {
+      "id": "seg1_10_consequence",
+      "segment": "flagellants",
+      "preset": "dramatic",
+      "expected_duration_sec": 7,
+      "text": "Parce que ces processions ne faisaient pas que repandre du sang... elles repandaient aussi la peste. Et pire encore -- elles repandaient la haine.",
+      "notes": "Revelation en trois temps. Pause apres 'sang'. 'la peste' appuye. Break avant 'Et pire encore'. 'la haine' isole, grave, comme un coup."
+    },
+
+    {
+      "id": "seg2_01_peur",
+      "segment": "boucs_emissaires",
+      "preset": "narrator",
+      "expected_duration_sec": 4,
+      "text": "Quand les humains ont peur et ne comprennent pas... ils cherchent quelqu'un a blamer.",
+      "notes": "Ton pose, presque professoral. Pause avant 'ils cherchent'. Phrase universelle, these."
+    },
+    {
+      "id": "seg2_02_rumeur",
+      "segment": "boucs_emissaires",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "La rumeur se repand a travers l'Europe -- les Juifs empoisonnent les puits. C'est absurde. C'est dementi par le pape lui-meme. Mais ca n'arrete personne. Parce que ce qui va suivre n'est pas de la folie collective spontanee. C'est orchestre.",
+      "notes": "Break avant l'accusation. 'C'est absurde' factuel. 'ca n'arrete personne' avec lassitude. Pause avant 'C'est orchestre.' -- dernier mot isole, lourd. Revelation."
+    },
+    {
+      "id": "seg2_03_bale",
+      "segment": "boucs_emissaires",
+      "preset": "dramatic",
+      "expected_duration_sec": 7,
+      "text": "Bale, seize janvier mille trois cent quarante-neuf. Entre trois cents et six cents personnes brulees vives sur une ile du Rhin. Cent trente enfants arraches a leurs parents et baptises de force.",
+      "notes": "Date et lieu comme un titre. Chiffres dits avec poids. 'brulees vives' grave. 'arraches a leurs parents' avec degout contenu."
+    },
+    {
+      "id": "seg2_04_strasbourg",
+      "segment": "boucs_emissaires",
       "preset": "dramatic",
       "expected_duration_sec": 8,
-      "text": "Elle parle de ce que les HUMAINS ont fait... quand ils ont cru que c'\u00e9tait la fin du monde. Car face \u00e0 l'inconnu... les r\u00e9flexes humains suivent un \u00e9ternel script.",
-      "notes": "HUMAINS en emphasis. Pause longue avant 'quand ils ont cru'. Mont\u00e9e dramatique sur 'la fin du monde'. Deuxi\u00e8me phrase plus pos\u00e9e, comme une th\u00e8se pos\u00e9e calmement. '\u00e9ternel script' appuy\u00e9."
+      "text": "Strasbourg, quatorze fevrier mille trois cent quarante-neuf -- jour de la Saint-Valentin. Jusqu'a deux mille personnes brulees sur un cimetiere pendant six jours. Le chroniqueur Jacob von Konighofen a tout documente.",
+      "notes": "'jour de la Saint-Valentin' comme un aparte glacant. 'deux mille personnes' appuye, grave. 'a tout documente' factuel, presque froid."
     },
     {
-      "id": "flag_intro",
-      "segment": "flagellants",
-      "preset": "narrator",
-      "expected_duration_sec": 8,
-      "text": "Des foules de centaines -- parfois DIX MILLE personnes -- traversent l'Europe en se fouettant jusqu'au sang.",
-      "notes": "Break de ton avant 'parfois'. DIX MILLE en emphasis fort. 'jusqu'au sang' plus lent, appuy\u00e9."
-    },
-    {
-      "id": "flag_freres",
-      "segment": "flagellants",
-      "preset": "narrator",
-      "expected_duration_sec": 7,
-      "text": "Ils s'appellent les Fr\u00e8res de la Croix. Trente-trois jours et demi de marche... un pour chaque ann\u00e9e de la vie du Christ.",
-      "notes": "Fr\u00e8res de la Croix dit avec gravit\u00e9. Pause apr\u00e8s 'marche'. La deuxi\u00e8me phrase comme une r\u00e9v\u00e9lation."
-    },
-    {
-      "id": "flag_seances",
-      "segment": "flagellants",
-      "preset": "narrator",
+      "id": "seg2_05_mayence",
+      "segment": "boucs_emissaires",
+      "preset": "dramatic",
       "expected_duration_sec": 6,
-      "text": "Trois s\u00e9ances par jour. \u00c0 genoux. En croix. Avec des fouets garnis de pointes de fer.",
-      "notes": "Phrases courtes, staccato. Chaque phrase s\u00e9par\u00e9e. Rythme martel\u00e9. 'pointes de fer' appuy\u00e9."
+      "text": "Mayence, vingt-quatre aout mille trois cent quarante-neuf. La plus grande communaute juive d'Allemagne -- entre trois et six mille personnes -- aneantie en une seule journee.",
+      "notes": "Pause longue apres la date. 'la plus grande communaute' dit avec gravite. 'une seule journee' comme un coup."
     },
     {
-      "id": "flag_logique",
-      "segment": "flagellants",
+      "id": "seg2_06_total",
+      "segment": "boucs_emissaires",
       "preset": "narrator",
-      "expected_duration_sec": 7,
-      "text": "Leur logique ? Dieu punit l'humanit\u00e9 par la peste. Donc il faut souffrir PLUS... pour qu'il arr\u00eate.",
-      "notes": "Question rh\u00e9torique. PLUS en emphasis. Pause avant 'pour qu'il arr\u00eate'. Ton l\u00e9g\u00e8rement incr\u00e9dule."
+      "expected_duration_sec": 5,
+      "text": "Au total, les historiens denombrent pres de trois cents pogroms entre mille trois cent quarante-huit et mille trois cent cinquante et un. Des communautes entieres... effacees de la carte.",
+      "notes": "Factuel. Pause avant 'effacees de la carte'. Derniers mots isoles, lourds."
     },
     {
-      "id": "flag_spoiler",
-      "segment": "flagellants",
-      "preset": "conversational",
+      "id": "seg2_07_detail_tordu",
+      "segment": "boucs_emissaires",
+      "preset": "narrator",
       "expected_duration_sec": 3,
-      "text": "Spoiler... \u00e7a n'a pas march\u00e9.",
-      "notes": "Ton d\u00e9contract\u00e9, presque amus\u00e9. Contraste total avec le s\u00e9rieux pr\u00e9c\u00e9dent. Pause apr\u00e8s Spoiler."
+      "text": "Mais voici le detail le plus tordu.",
+      "notes": "Phrase d'accroche. 'tordu' appuye avec un sourire noir. Pause apres -- open loop."
     },
     {
-      "id": "flag_ironie",
-      "segment": "flagellants",
-      "preset": "narrator",
-      "expected_duration_sec": 8,
-      "text": "\u00c7a a m\u00eame EMPIR\u00c9 ! Parce que ces processions... propageaient la peste encore plus vite.",
-      "notes": "EMPIR\u00c9 en emphasis avec \u00e9nergie. Pause apr\u00e8s processions. La fin dite avec ironie froide."
-    },
-    {
-      "id": "pogrom_intro",
-      "segment": "pogroms",
-      "preset": "narrator",
-      "expected_duration_sec": 5,
-      "text": "Quand les humains ont peur et ne comprennent pas... ils cherchent quelqu'un \u00e0 bl\u00e2mer.",
-      "notes": "Ton pos\u00e9, presque professoral. Pause avant 'ils cherchent'. Phrase universelle."
-    },
-    {
-      "id": "pogrom_rumeur",
-      "segment": "pogroms",
-      "preset": "narrator",
-      "expected_duration_sec": 5,
-      "text": "En 1349, la rumeur se r\u00e9pand -- les Juifs empoisonnent les puits.",
-      "notes": "Break de ton avant l'accusation. L'accusation dite de mani\u00e8re factuelle, pas sensationnaliste."
-    },
-    {
-      "id": "pogrom_strasbourg",
-      "segment": "pogroms",
-      "preset": "dramatic",
-      "expected_duration_sec": 8,
-      "text": "\u00c0 Strasbourg, le quatorze f\u00e9vrier 1349 -- jour de la Saint-Valentin -- on br\u00fble deux mille personnes sur un cimeti\u00e8re.",
-      "notes": "Chiffres en toutes lettres. 'jour de la Saint-Valentin' comme un apart\u00e9 gla\u00e7ant. 'deux mille personnes' appuy\u00e9, grave."
-    },
-    {
-      "id": "pogrom_mayence",
-      "segment": "pogroms",
-      "preset": "dramatic",
-      "expected_duration_sec": 3,
-      "text": "\u00c0 Mayence... six mille en un seul jour.",
-      "notes": "Pause longue apr\u00e8s Mayence. 'six mille' dit lentement. 'un seul jour' comme un coup."
-    },
-    {
-      "id": "pogrom_total",
-      "segment": "pogroms",
-      "preset": "narrator",
-      "expected_duration_sec": 5,
-      "text": "Au total, certains historiens d\u00e9nombrent plus de trois cents pogroms. Des communaut\u00e9s enti\u00e8res... effac\u00e9es.",
-      "notes": "Factuel mais nuanc\u00e9. Pause avant 'effac\u00e9es'. Dernier mot isol\u00e9, lourd."
-    },
-    {
-      "id": "pogrom_motif",
-      "segment": "pogroms",
+      "id": "seg2_08_hygiene",
+      "segment": "boucs_emissaires",
       "preset": "narrator",
       "expected_duration_sec": 12,
-      "text": "Le plus tordu ? Les \u00e9lites locales savaient que c'\u00e9tait faux. Mais elles devaient de l'argent aux pr\u00eateurs juifs. Alors elles ont laiss\u00e9 faire le massacre... et les dettes ont disparu avec les victimes.",
-      "notes": "Question rh\u00e9torique. R\u00e9v\u00e9lation progressive. 'laiss\u00e9 faire le massacre' dit avec d\u00e9go\u00fbt contenu. Derni\u00e8re phrase comme un constat froid."
+      "text": "Les Juifs mouraient MOINS de la peste que le reste de la population. Leurs rites d'hygiene -- lavage des mains, eau propre, mise en quarantaine des malades -- les protegeaient partiellement. Et c'est precisement CA qui alimentait la suspicion. \"S'ils ne meurent pas, c'est qu'ils sont responsables.\"",
+      "notes": "MOINS en emphasis. Enumeration rapide des rites. CA en emphasis. La citation finale dite comme un verdict populaire, avec degout."
     },
     {
-      "id": "riches_intro",
-      "segment": "riches",
+      "id": "seg2_09_cologne",
+      "segment": "boucs_emissaires",
+      "preset": "conversational",
+      "expected_duration_sec": 8,
+      "text": "Mais a Cologne et Ratisbonne... c'est l'inverse. Les habitants protegent leurs voisins juifs. Pas par altruisme -- mais parce que les guildes locales ont besoin de leurs competences commerciales. Meme dans l'horreur, le pragmatisme survit.",
+      "notes": "Changement de ton, plus leger. 'c'est l'inverse' comme une surprise. 'Pas par altruisme' avec lucidite. Derniere phrase comme un constat ironique."
+    },
+    {
+      "id": "seg2_10_elites",
+      "segment": "boucs_emissaires",
+      "preset": "narrator",
+      "expected_duration_sec": 12,
+      "text": "Et les elites des autres villes ? Elles savaient que c'etait faux. Mais beaucoup devaient de l'argent aux preteurs juifs. Alors elles ont laisse faire le massacre... et les dettes ont disparu avec les victimes.",
+      "notes": "Question rhetorique. Revelation progressive. 'laisse faire le massacre' dit avec degout contenu. 'les dettes ont disparu avec les victimes' comme un constat froid, glacial."
+    },
+    {
+      "id": "seg2_11_mecanisme",
+      "segment": "boucs_emissaires",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Les patriciens, les guildes, les gens de pouvoir -- ils ont utilise la peur pour effacer leurs creanciers. Le mecanisme est toujours le meme : la precarite nourrit la peur, la peur nourrit les theories, et les theories designent toujours les memes cibles -- ceux qui sont differents.",
+      "notes": "Enumeration rapide. 'le meme' appuye. Triptyque rythme : precarite/peur/theories. 'ceux qui sont differents' isole, universel."
+    },
+    {
+      "id": "seg2_12_effacement",
+      "segment": "boucs_emissaires",
+      "preset": "dramatic",
+      "expected_duration_sec": 7,
+      "text": "A Nuremberg, a Worms, a Bruxelles... les communautes effacees en mille trois cent quarante-neuf n'ont jamais ete reconstruites. Certaines de ces villes n'ont retrouve une population juive que cinq siecles plus tard. La violence ne se contente pas de tuer. Elle efface.",
+      "notes": "Enumeration de villes avec gravite. 'jamais' appuye. 'cinq siecles' dit lentement. Deux dernieres phrases martelees. 'Elle efface' isole comme un verdict."
+    },
+
+    {
+      "id": "seg3_01_transition",
+      "segment": "fuite_elites",
       "preset": "narrator",
       "expected_duration_sec": 4,
-      "text": "Pendant que les pauvres meurent dans les rues... les riches font leurs valises.",
-      "notes": "Contraste marqu\u00e9 entre les deux parties. Pause au milieu. Ton factuel."
+      "text": "La violence efface. Et pendant qu'elle efface... ceux qui ont les moyens de partir... partent.",
+      "notes": "Reprise du dernier mot comme pont. Deux pauses. 'partent' dit simplement, factuel. Transition fluide."
     },
     {
-      "id": "riches_boccaccio",
-      "segment": "riches",
+      "id": "seg3_02_boccaccio",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "A Florence, Giovanni Boccaccio decrit des nobles qui quittent la ville pour s'installer dans leurs villas de campagne. Ils y passent leurs journees a boire du vin, manger des festins et se raconter des histoires. C'est d'ailleurs l'origine du Decameron -- dix personnes, dix jours, cent histoires... pendant que Florence se vide de ses habitants.",
+      "notes": "Ton narratif avec legere ironie. 'boire du vin' avec un sourire. 'Decameron' dit avec respect. 'pendant que Florence se vide' retour au grave."
+    },
+    {
+      "id": "seg3_03_cadavres",
+      "segment": "fuite_elites",
+      "preset": "dramatic",
+      "expected_duration_sec": 5,
+      "text": "Pendant ce temps, les cadavres s'entassent dans les rues. Personne ne les ramasse. Les pauvres n'ont nulle part ou fuir.",
+      "notes": "Contraste brutal avec la scene precedente. Phrases courtes, graves. 'nulle part ou fuir' isole."
+    },
+    {
+      "id": "seg3_04_florence_stat",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "Les chiffres sont clairs. A Florence, les registres du Catasto montrent une mortalite de vingt a trente pour cent chez les riches... contre quarante a cinquante pour cent chez les pauvres.",
+      "notes": "Factuel, pose. Pause avant 'contre'. Le contraste des chiffres parle de lui-meme. 'les pauvres' dit avec poids."
+    },
+    {
+      "id": "seg3_05_londres",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "A Londres, les analyses osteologiques des cimetieres de la peste confirment la meme chose. Les individus malnutris, affaiblis -- les pauvres -- mouraient significativement plus.",
+      "notes": "'osteologiques' dit clairement. 'les pauvres' isole entre tirets comme un verdict. 'significativement plus' appuye."
+    },
+    {
+      "id": "seg3_06_raison",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "La raison est simple. Les quartiers riches avaient de l'espace, de l'air, de l'eau propre. Les quartiers pauvres etaient surpeuples, insalubres, colles les uns aux autres.",
+      "notes": "Ton explicatif. Contraste entre les deux enumerations. 'colles les uns aux autres' avec degout."
+    },
+    {
+      "id": "seg3_07_constante",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 3,
+      "text": "Les siecles changent. Le reflexe reste le meme.",
+      "notes": "Deux phrases courtes, martelees. Universel. Pause entre les deux."
+    },
+    {
+      "id": "seg3_08_venise",
+      "segment": "fuite_elites",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "A Venise, les patriciens evacuaient vers leurs iles. A Londres, les marchands filaient vers la campagne. A chaque crise, ceux qui ont les moyens de fuir... fuient. Et ceux qui restent meurent en premier. C'etait vrai a Florence. C'etait vrai a Londres. C'est une constante.",
+      "notes": "Enumeration de villes. Pause avant 'fuient'. 'meurent en premier' grave. Trois phrases finales martelees, rythme ternaire. 'C'est une constante' comme un verdict."
+    },
+
+    {
+      "id": "seg4_01_transition",
+      "segment": "remedes",
+      "preset": "conversational",
+      "expected_duration_sec": 3,
+      "text": "Et la reponse des medecins ? Elle etait tout aussi desesperee.",
+      "notes": "Question rhetorique, ton legerement amuse. 'tout aussi desesperee' avec un sourire noir."
+    },
+    {
+      "id": "seg4_02_rapport_paris",
+      "segment": "remedes",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "En mille trois cent quarante-huit, le roi de France Philippe VI demande a la faculte de medecine de Paris d'expliquer la peste. Leur rapport officiel, date du six octobre mille trois cent quarante-huit ? La maladie est causee par une conjonction de Saturne, Jupiter et Mars dans le signe du Verseau en mille trois cent quarante-cinq.",
+      "notes": "Ton serieux pour la mise en contexte. Question rhetorique. La 'reponse' dite avec un melange de serieux et d'incredulite. Planetes enumerees clairement."
+    },
+    {
+      "id": "seg4_03_astrologie",
+      "segment": "remedes",
+      "preset": "conversational",
+      "expected_duration_sec": 3,
+      "text": "Oui. Leur reponse scientifique... c'est l'astrologie.",
+      "notes": "'Oui' dit seul, pause. Ton incredule, presque amuse. 'l'astrologie' isole comme une chute."
+    },
+    {
+      "id": "seg4_04_chauliac",
+      "segment": "remedes",
+      "preset": "narrator",
+      "expected_duration_sec": 12,
+      "text": "A Avignon, Guy de Chauliac -- chirurgien du pape -- prescrit de s'asseoir entre deux feux allumes jour et nuit pour purifier l'air. Le pape Clement VI suit ce conseil pendant quatre mois. Il survit. Pas parce que les feux purifiaient quoi que ce soit... mais parce que la chaleur repoussait les puces qui portaient la peste.",
+      "notes": "Ton narratif. 'Il survit' comme une surprise. Pause. La revelation ('repoussait les puces') dite avec un sourire -- ironie du sort."
+    },
+    {
+      "id": "seg4_05_creatifs",
+      "segment": "remedes",
+      "preset": "conversational",
+      "expected_duration_sec": 2,
+      "text": "Les autres remedes sont... creatifs.",
+      "notes": "Pause avant 'creatifs'. Euphemisme delibere, ton amuse. Annonce la liste."
+    },
+    {
+      "id": "seg4_06_liste_remedes",
+      "segment": "remedes",
+      "preset": "conversational",
+      "expected_duration_sec": 15,
+      "text": "Se faire saigner a outrance -- pour \"purger le mal\" -- en affaiblissant encore plus le malade. Boire de la theriaque, une pate epaisse contenant entre autres de la chair de vipere sechee et de l'opium. Avaler des emeraudes pilees dissoutes dans du vin -- un traitement reserve aux riches, evidemment. Poser le derriere d'un poulet vivant, plume, directement sur les bubons pour \"aspirer le poison.\"",
+      "notes": "Ton amuse, presque stand-up. Chaque remede separe par un break. 'purger le mal' avec ironie. 'chair de vipere' avec degout leger. 'reserve aux riches' avec sourire. 'derriere d'un poulet' dit sans gene, factuel. 'aspirer le poison' avec incredulite."
+    },
+    {
+      "id": "seg4_07_foligno",
+      "segment": "remedes",
       "preset": "narrator",
       "expected_duration_sec": 7,
-      "text": "\u00c0 Florence, Boccaccio d\u00e9crit des nobles qui partent s'installer \u00e0 la campagne... pour boire du vin et raconter des histoires.",
-      "notes": "L\u00e9g\u00e8re ironie sur 'boire du vin et raconter des histoires'. Presque amus\u00e9."
+      "text": "A Perouse, le professeur Gentile da Foligno ecrit un traite entier sur la prevention de la peste. Il recommande la theriaque comme remede universel. Il meurt de la peste le dix-huit juin mille trois cent quarante-huit.",
+      "notes": "Ton serieux pour le debut. La troisieme phrase comme une chute brutale. 'Il meurt de la peste' dit simplement, factuel -- l'ironie parle d'elle-meme."
     },
     {
-      "id": "riches_stat",
-      "segment": "riches",
+      "id": "seg4_08_venise_medecins",
+      "segment": "remedes",
       "preset": "dramatic",
-      "expected_duration_sec": 6,
-      "text": "Pendant ce temps, la mortalit\u00e9 chez les pauvres est sans doute bien plus \u00e9lev\u00e9e -- probablement le double -- que chez les riches.",
-      "notes": "Ton grave. 'sans doute' dit naturellement, pas comme une h\u00e9sitation. 'le double' en emphasis."
-    },
-    {
-      "id": "riches_miroir",
-      "segment": "riches",
-      "preset": "conversational",
-      "expected_duration_sec": 2,
-      "text": "\u00c7a vous rappelle quelque chose ?",
-      "notes": "Question directe au spectateur. Ton complice, presque un clin d'oeil."
-    },
-    {
-      "id": "riches_parallele",
-      "segment": "riches",
-      "preset": "narrator",
-      "expected_duration_sec": 6,
-      "text": "\u00celes priv\u00e9es, r\u00e9sidences secondaires, confinement en villa... Les si\u00e8cles passent. Le r\u00e9flexe reste le m\u00eame.",
-      "notes": "\u00c9num\u00e9ration rapide. Puis les deux phrases courtes, martel\u00e9es. 'Le r\u00e9flexe reste le m\u00eame' comme un constat universel."
-    },
-    {
-      "id": "med_transition",
-      "segment": "medecine",
-      "preset": "conversational",
       "expected_duration_sec": 4,
-      "text": "Et la r\u00e9ponse des m\u00e9decins \u00e0 cette \u00e9poque ? Elle \u00e9tait tout aussi d\u00e9sesp\u00e9r\u00e9e.",
-      "notes": "Question rh\u00e9torique, ton l\u00e9g\u00e8rement amus\u00e9. 'tout aussi d\u00e9sesp\u00e9r\u00e9e' dit avec un sourire noir. Transition douce."
+      "text": "A Venise, sur dix-huit medecins, cinq meurent, douze fuient. Il en reste un seul.",
+      "notes": "Enumeration rapide comme un decompte. 'un seul' isole, appuye. Silence apres."
     },
     {
-      "id": "med_docteur",
-      "segment": "medecine",
+      "id": "seg4_09_masque",
+      "segment": "remedes",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "Et le masque a bec du medecin de peste -- cette image iconique qu'on associe au Moyen Age ? Il n'a ete invente qu'en mille six cent dix-neuf par Charles de Lorme. Deux siecles et demi trop tard. Au quatorzieme siecle, les medecins portaient de simples robes, parfois huilees, parfois rien du tout.",
+      "notes": "Question rhetorique. La revelation ('mille six cent dix-neuf') dite comme un scoop. 'Deux siecles et demi trop tard' avec amusement. 'rien du tout' comme une chute."
+    },
+    {
+      "id": "seg4_10_morale",
+      "segment": "remedes",
+      "preset": "calm",
+      "expected_duration_sec": 5,
+      "text": "Quand l'ignorance pretend guerir... elle fait parfois plus de mal que la maladie elle-meme.",
+      "notes": "Ton pose, universel. Legere amertume. 'l'ignorance' appuye. Constat qui resonne au-dela du medieval. Pause apres."
+    },
+
+    {
+      "id": "seg5_01_transition",
+      "segment": "survivants",
+      "preset": "conversational",
+      "expected_duration_sec": 3,
+      "text": "Mais voici ce que personne ne raconte.",
+      "notes": "Changement de ton total. Presque complice. Open loop. Pause apres."
+    },
+    {
+      "id": "seg5_02_catastrophe",
+      "segment": "survivants",
       "preset": "narrator",
       "expected_duration_sec": 6,
-      "text": "Les m\u00e9decins de peste portent un masque \u00e0 bec... rempli de fleurs et de vinaigre.",
-      "notes": "Descriptif, presque visuel. Pause apr\u00e8s 'bec'. 'fleurs et vinaigre' dit avec l\u00e9g\u00e8re incr\u00e9dulit\u00e9."
+      "text": "La peste a tue entre trente et cinquante pour cent de l'Europe. C'est une catastrophe inimaginable. Mais pour ceux qui ont survecu... la vie est devenue meilleure.",
+      "notes": "Chiffres graves. 'catastrophe inimaginable' appuye. Pivot sur 'Mais'. 'meilleure' comme une surprise."
     },
     {
-      "id": "med_theorie",
-      "segment": "medecine",
-      "preset": "narrator",
-      "expected_duration_sec": 5,
-      "text": "Leur th\u00e9orie ? La maladie vient du mauvais air. Donc si \u00e7a sent bon... \u00e7a gu\u00e9rit.",
-      "notes": "Question rh\u00e9torique. Logique absurde expos\u00e9e factuellement. L\u00e9g\u00e8re ironie."
-    },
-    {
-      "id": "med_remedes",
-      "segment": "medecine",
-      "preset": "conversational",
-      "expected_duration_sec": 16,
-      "text": "Autres rem\u00e8des -- poser un cul de poulet vivant sur les bubons. Boire du vinaigre \u00e0 l'ail... le Vinaigre des Quatre Voleurs. Se faire saigner \u00e0 outrance, pour \"purger\" le mal... en affaiblissant encore plus le malade. Porter des amulettes avec des pri\u00e8res grav\u00e9es... comme si les mots pouvaient arr\u00eater une bact\u00e9rie.",
-      "notes": "Ton amus\u00e9, presque stand-up. 'cul de poulet' dit sans g\u00eane. Chaque rem\u00e8de s\u00e9par\u00e9 par un break. 'saigner \u00e0 outrance' dit avec incr\u00e9dulit\u00e9. Dernier rem\u00e8de (amulettes) avec ironie marqu\u00e9e sur 'comme si les mots'."
-    },
-    {
-      "id": "miroir_recap",
-      "segment": "miroir",
-      "preset": "narrator",
+      "id": "seg5_03_beaucoup",
+      "segment": "survivants",
+      "preset": "dramatic",
       "expected_duration_sec": 2,
-      "text": "Alors... R\u00e9capitulons.",
-      "notes": "Pause. Ton qui change, plus pos\u00e9, presque solennel. Transition claire."
+      "text": "Beaucoup meilleure.",
+      "notes": "Isole. Appuye. Comme un titre. Silence avant et apres."
     },
     {
-      "id": "miroir_remedes",
+      "id": "seg5_04_salaires",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 10,
+      "text": "Avant la peste, un laboureur en Angleterre gagnait moins de deux pence par jour. Apres ? Son salaire a double. A Cuxham, un domaine rural, les salaires des laboureurs sont passes de deux shillings a dix shillings en un an. Soixante-sept pour cent d'augmentation pour la moisson dans le Suffolk.",
+      "notes": "Contraste avant/apres. 'double' appuye. 'Soixante-sept pour cent' dit avec impact, comme une stat impressionnante."
+    },
+    {
+      "id": "seg5_05_mathematique",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "La raison est mathematique. Moins de bras... plus de pouvoir de negociation. Pour la premiere fois, les paysans pouvaient dire \"non.\"",
+      "notes": "Logique simple. 'mathematique' appuye. '\"non\"' isole, dit avec force. Moment-cle."
+    },
+    {
+      "id": "seg5_06_panique",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 3,
+      "text": "Et les nobles ? Ils ont panique.",
+      "notes": "Question rhetorique. Reponse courte, directe. Leger amusement."
+    },
+    {
+      "id": "seg5_07_statute",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 8,
+      "text": "En mille trois cent cinquante et un, le roi Edouard III fait voter le Statute of Labourers -- une loi qui gele les salaires au niveau d'avant la peste. Interdiction de demander plus. Interdiction de quitter son seigneur. Peine de prison pour ceux qui refusent de travailler aux anciens tarifs.",
+      "notes": "'Statute of Labourers' dit en anglais. Trois interdictions martelees en staccato. 'Peine de prison' appuye."
+    },
+    {
+      "id": "seg5_08_echec",
+      "segment": "survivants",
+      "preset": "conversational",
+      "expected_duration_sec": 5,
+      "text": "Ca n'a pas marche. On ne peut pas forcer des gens qui savent ce qu'ils valent a accepter d'etre sous-payes.",
+      "notes": "Ton direct, presque amuse. Phrase universelle. 'savent ce qu'ils valent' appuye."
+    },
+    {
+      "id": "seg5_09_frustration",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 3,
+      "text": "Et trente ans plus tard ? La frustration explose.",
+      "notes": "Question rhetorique. 'explose' dit avec energie. Transition."
+    },
+    {
+      "id": "seg5_10_revoltes",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 7,
+      "text": "En mille trois cent cinquante-huit en France, la Jacquerie -- des paysans qui brulent cent cinquante chateaux. En mille trois cent soixante-dix-huit a Florence, la revolte des Ciompi -- les cardeurs de laine, les plus pauvres des pauvres, qui prennent brievement le pouvoir.",
+      "notes": "Enumeration rapide, energique. 'cent cinquante chateaux' appuye. 'les plus pauvres des pauvres' repete pour l'emphasis."
+    },
+    {
+      "id": "seg5_11_wat_tyler",
+      "segment": "survivants",
+      "preset": "dramatic",
+      "expected_duration_sec": 15,
+      "text": "Et en mille trois cent quatre-vingt-un en Angleterre... Wat Tyler mene des dizaines de milliers de paysans jusqu'a Londres. Ils traversent le pont de la ville sans resistance. Ils brulent le palais de Jean de Gand -- l'homme le plus riche d'Angleterre. Mais ils ne pillent rien. Quiconque etait surpris a voler etait execute par les rebelles eux-memes. Ce n'etait pas une emeute. C'etait une revolution avec un code d'honneur.",
+      "notes": "Montee epique. 'dizaines de milliers' appuye. 'sans resistance' avec etonnement. 'l'homme le plus riche' appuye. Pivot sur 'Mais ils ne pillent rien' -- surprise. 'execute par les rebelles eux-memes' dit avec respect. Deux dernieres phrases martelees."
+    },
+    {
+      "id": "seg5_12_slogan",
+      "segment": "survivants",
+      "preset": "dramatic",
+      "expected_duration_sec": 5,
+      "text": "Ils decapitent l'archeveque de Canterbury. Et leur slogan resonne encore -- \"Quand Adam bechait et qu'Eve filait, ou etait donc le gentilhomme ?\"",
+      "notes": "'decapitent' dit avec impact. La citation dite avec force, presque comme un cri de ralliement. Ton epique."
+    },
+    {
+      "id": "seg5_13_servage",
+      "segment": "survivants",
+      "preset": "narrator",
+      "expected_duration_sec": 6,
+      "text": "La peste n'a pas juste tue la moitie de l'Europe. Elle a contribue a tuer le servage. L'historien Postan appelle la periode qui a suivi \"l'age d'or du travail.\"",
+      "notes": "Deux phrases en parallele. 'contribue a tuer le servage' appuye -- nuance historique. 'l'age d'or du travail' dit avec respect, presque admiratif."
+    },
+    {
+      "id": "seg5_14_dignite",
+      "segment": "survivants",
+      "preset": "calm",
+      "expected_duration_sec": 7,
+      "text": "Il a fallu une catastrophe pour que les gens les plus bas de l'echelle obtiennent un peu de dignite. A chaque epoque, les travailleurs finissent par se compter... et par realiser qu'ils sont plus nombreux que ceux qui les exploitent.",
+      "notes": "Ton pose, universel. 'un peu de dignite' dit avec tristesse. Deuxieme phrase comme un constat qui traverse les siecles. 'plus nombreux' appuye."
+    },
+
+    {
+      "id": "seg6_01_ouverture",
       "segment": "miroir",
       "preset": "narrator",
       "expected_duration_sec": 5,
-      "text": "Face \u00e0 une pand\u00e9mie, les humains cherchent des rem\u00e8des miracles... m\u00eame quand la science dit le contraire.",
-      "notes": "Ton pos\u00e9, universel. Pas accusateur. Constat sur la nature humaine."
+      "text": "En sept ans, la peste a traverse un continent. Et elle a revele... exactement ce que les humains font a chaque fois.",
+      "notes": "Ton pose, solennel. Pause avant 'exactement'. 'a chaque fois' appuye, universel."
     },
     {
-      "id": "miroir_boucs",
+      "id": "seg6_02_douleur",
       "segment": "miroir",
       "preset": "narrator",
       "expected_duration_sec": 5,
-      "text": "Ils d\u00e9signent des boucs \u00e9missaires... et les violences suivent toujours le m\u00eame sch\u00e9ma.",
-      "notes": "M\u00eame ton pos\u00e9. 'toujours' appuy\u00e9 l\u00e9g\u00e8rement. Constat, pas accusation."
+      "text": "Certains se sont tournes vers la douleur -- convaincus que souffrir plus fort apaiserait Dieu.",
+      "notes": "Rappel Seg 1. 'souffrir plus fort' avec gravite. Constat, pas jugement."
     },
     {
-      "id": "miroir_riches",
+      "id": "seg6_03_coupables",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 5,
+      "text": "D'autres ont designe des coupables -- et les violences ont suivi le meme schema, avec les memes excuses, dans des centaines de villes.",
+      "notes": "Rappel Seg 2. 'le meme schema' appuye. 'des centaines de villes' dit avec lassitude."
+    },
+    {
+      "id": "seg6_04_isoles",
       "segment": "miroir",
       "preset": "narrator",
       "expected_duration_sec": 4,
-      "text": "Les plus riches s'isolent... et les plus pauvres meurent en premier.",
-      "notes": "Contraste simple et brutal. Pause au milieu. Factuel."
+      "text": "Les plus riches se sont isoles... et les plus pauvres sont morts en premier.",
+      "notes": "Rappel Seg 3. Contraste simple. 'morts en premier' grave."
     },
     {
-      "id": "miroir_guerir",
+      "id": "seg6_05_ignorance",
       "segment": "miroir",
       "preset": "narrator",
       "expected_duration_sec": 5,
-      "text": "Et quand l'ignorance pr\u00e9tend gu\u00e9rir... elle fait parfois plus de mal que la maladie.",
-      "notes": "L\u00e9g\u00e8re amertume. 'l'ignorance' appuy\u00e9 — c'est elle le sujet, pas les m\u00e9decins. Constat universel."
+      "text": "Ceux qui pretendaient guerir ont souvent aggrave les choses -- en s'appuyant sur l'astrologie, la superstition et la pensee magique.",
+      "notes": "Rappel Seg 4. Enumeration de trois. 'la pensee magique' isole comme le pire."
     },
     {
-      "id": "miroir_conclusion",
+      "id": "seg6_06_survivants",
+      "segment": "miroir",
+      "preset": "narrator",
+      "expected_duration_sec": 4,
+      "text": "Et quand la poussiere est retombee... ce sont les survivants les plus vulnerables qui ont change le monde.",
+      "notes": "Rappel Seg 5. Ton plus lumineux. 'change le monde' dit avec admiration."
+    },
+    {
+      "id": "seg6_07_script",
       "segment": "miroir",
       "preset": "dramatic",
-      "expected_duration_sec": 6,
-      "text": "Six cent soixante-treize ans d'\u00e9cart... Et le script humain... n'a pas chang\u00e9 d'une seule ligne.",
-      "notes": "Chiffre dit lentement. Deux pauses. Derni\u00e8re phrase dite avec poids, presque triste. Rappel du mot 'script' du hook."
+      "expected_duration_sec": 8,
+      "text": "Six cent soixante-treize ans d'ecart. Et ce script humain... n'a pas change d'une seule ligne. Parce que face a l'inconnu, on ne reagit pas avec notre intelligence. On reagit avec nos instincts.",
+      "notes": "Chiffre dit lentement. Pause apres 'ecart'. 'script humain' rappel du hook. 'n'a pas change' dit avec poids. Deux dernieres phrases comme une these finale."
     },
     {
-      "id": "cta",
+      "id": "seg6_08_prochaine",
       "segment": "miroir",
       "preset": "calm",
-      "expected_duration_sec": 6,
-      "text": "La prochaine pand\u00e9mie arrivera... Et TOI... tu r\u00e9agiras comment ?",
-      "notes": "Ton calme, direct. TOI en emphasis. Question ouverte, pas agressive. Laisser le silence apr\u00e8s."
+      "expected_duration_sec": 4,
+      "text": "La prochaine crise arrivera. Et ces memes reflexes se reveilleront.",
+      "notes": "Ton calme, factuel. Pas alarmiste. Constat inevitable."
+    },
+    {
+      "id": "seg6_09_cta",
+      "segment": "miroir",
+      "preset": "dramatic",
+      "expected_duration_sec": 5,
+      "text": "La question n'est pas SI... c'est si TOI, tu les reconnaitras a temps.",
+      "notes": "SI en emphasis. Pause. TOI en emphasis fort, direct au spectateur. 'a temps' dit lentement. Silence final."
     }
   ]
 }
