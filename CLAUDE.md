@@ -14,6 +14,36 @@ Claude ecrit TOUT le code. Zero code requis de la part d'Aziz.
 4. Charger les fichiers thematiques pertinents selon la demande (apis, learnings, styles...)
 **Ne JAMAIS affirmer "je ne peux pas" ou "je n'ai pas acces" sans avoir d'abord consulte la memoire.**
 
+### Regle : Doc-First avant toute affirmation sur un outil (NON-NEGOTIABLE)
+
+**Avant d'affirmer quoi que ce soit sur les CAPACITES d'un outil (PixelLab, Aseprite, Phaser, ElevenLabs, ou tout autre outil du projet) :**
+
+1. Consulter la doc MCP via `ToolSearch` (paramètres, options, enums disponibles)
+2. Si pas de MCP : `WebSearch` sur la doc officielle
+3. Seulement apres verification → affirmer avec confiance, OU signaler l'incertitude explicitement
+
+**Signaux obligatoires quand non verifie :**
+- "Je n'ai pas consulte la doc, je ne suis pas certain — laisse-moi verifier d'abord"
+- Ne JAMAIS dire "X ne peut pas faire Y" sans avoir lu les parametres de X
+
+**Exemple d'erreur a ne pas reproduire :** Affirmer "PixelLab ne peut pas generer de batiments en side-view" sans avoir consulte les parametres de `create_map_object` — qui contient `view: "side"` explicitement. Cette affirmation incorrecte a failli faire abandonner la bonne solution.
+
+**La regle s'applique aussi aux recommandations strategiques :** Ne pas recommander d'abandonner un outil ou une approche sans avoir d'abord verifie ses capacites documentees.
+
+---
+
+### Regle : Distinguer connaissance generale vs etat local (NON-NEGOTIABLE)
+
+Deux categories d'affirmations existent. Les confondre cause des erreurs qui se propagent dans les memoires agents.
+
+**Connaissance generale** (patterns, syntaxe, comportement documenté d'un outil) = affirmer avec confiance.
+
+**Etat local de la machine** (chemins de fichiers, versions installees, fichiers presents, binaires disponibles) = TOUJOURS verifier avec Bash avant d'affirmer.
+
+Regle concrète : si une affirmation sur l'environnement local conditionne une decision qui prendra >30 min a corriger, verifier d'abord avec `ls`, `which`, `find`, ou la commande appropriee. Ne pas ecrire dans les memoires agents un verdict sur l'etat local sans l'avoir teste.
+
+Exemple d'erreur a ne pas reproduire : affirmer "Aseprite CLI non disponible" sans avoir verifie tous les chemins possibles (`/Applications/`, `/Volumes/`, Steam, DMG monte). Cette erreur a propage une information fausse dans 5 fichiers memoire.
+
 ### Sauvegarde autonome EN COURS de session
 Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situations :
 
@@ -33,6 +63,23 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 ## Langue
 - Communication : Francais
 - Code et docs techniques : Anglais
+
+---
+
+## Regle : Signalement proactif des decisions problematiques (NON-NEGOTIABLE)
+
+Claude doit signaler AVANT d'implementer — pas attendre qu'Aziz decouvre le probleme au visionnage.
+
+**Declencheurs obligatoires :**
+- Ordre de scenes incohérent avec la logique narrative du script
+- Transition ou effet visuel susceptible de bug technique dans le contexte d'utilisation
+- Decision stylistique qui va a l'encontre de pratiques etablies (ex: transitions lourdes dans un documentaire YouTube)
+- Structure d'assemblage (HookMaster, Series, etc.) qui ne respecte pas l'arc narratif du script
+
+**Format du signalement :**
+"Je remarque un probleme potentiel : [description]. Ma recommandation : [solution]. Tu veux qu'on en discute avant que je code ?"
+
+**Pourquoi :** evite la friction inutile, reduit la charge cognitive d'Aziz, evite de devoir refaire le travail apres visionnage.
 
 ---
 
@@ -132,6 +179,12 @@ Aziz decrit la scene en francais
 - `FAL_KEY` : fal.ai image generation (flux/dev, ESRGAN)
 - Stocker dans `.env` (JAMAIS dans le code ou les commits)
 
+### Regles d'attente async (NON-NEGOTIABLE)
+- **Apres tout `animate_character` ou action async PixelLab** : executer `sleep 120` puis `get_character(...)` dans le MEME flow — jamais laisser une attente sans poll integre
+- **Silent failure pattern** : si `get_character` retourne "Animations: None yet" apres 3+ minutes = relancer le job (pas attendre)
+- **Jamais annoncer "j'attends X minutes" sans executer le sleep** : utiliser `Bash sleep` pour forcer l'attente reelle avant le poll
+- **Toutes les actions async** (PixelLab, renders, generation audio) : meme protocole — sleep -> poll -> verifier -> continuer
+
 ### Capacites Image & Assets (TOUTES PROUVEES - ne pas oublier)
 - **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
 - **Pixel art sprites** : PixelLab MCP (characters, animations, tilesets) + API v2 (concept-to-character, animate-with-text)
@@ -155,6 +208,10 @@ Aziz decrit la scene en francais
 - `.claude/agents/kimi-reviewer.md` : Review video/image via Kimi K2.5 (Moonshot API)
   - Memoire : `.claude/agent-memory/kimi-reviewer/`
   - Script : `scripts/review_with_kimi.py`
+- `.claude/agents/visual-qa.md` : Review screenshots statiques intermediaires via Kimi K2.5
+  - Memoire : `.claude/agent-memory/visual-qa/`
+  - Declenchement : automatique via hook `screenshot-qa.sh` sur tout fichier `preview-*.png`
+  - Analyse 5 dimensions : style coherence, anchoring, atmosphere, composition, technique
 - `.claude/agents/pixellab-expert.md` : Expert PixelLab (19 outils MCP + API v2)
   - Memoire : `.claude/agent-memory/pixellab-expert/`
   - Registre d'erreurs : 10+ compositing/API/asset errors documentes
@@ -171,6 +228,11 @@ Aziz decrit la scene en francais
   - Valide perspective, palette, layering, NPC density AVANT generation
   - Recommande la meilleure VUE par scene (side-view, top-down, iso)
   - 10 regles d'or + 7 erreurs fatales = auto-block
+- `.claude/agents/storyboarder.md` : Producteur du SCENE_TIMING (5eme agent)
+  - Memoire : `.claude/agent-memory/storyboarder/`
+  - Responsabilite UNIQUE : convertir audio mesure + scenes.json -> SCENE_TIMING.ts
+  - BLOQUE si audio non genere et mesure par ffprobe
+  - Enforce par hook : `storyboard-gate.sh` bloque tout edit de fichier scene si Stage 1.8 absent
 
 ### Declenchement des Agents (OBLIGATOIRE - ne PAS oublier)
 
@@ -179,7 +241,8 @@ Aziz decrit la scene en francais
 | Quand | Agent | Mode | Comment |
 |-------|-------|------|---------|
 | Aziz donne une nouvelle direction de scene | `creative-director` | direction | AVANT de coder quoi que ce soit. Produire un Direction Brief. |
-| APRES le Direction Brief, AVANT les assets | `pixel-art-director` | composition | Valider perspective, palette, layers, NPC density. Produire Composition Brief. |
+| APRES le Direction Brief | `pixel-art-director` | composition | Valider perspective, palette, layers, NPC density. Produire Composition Brief. |
+| APRES le Composition Brief, audio genere | `storyboarder` | timing | Produire SCENE_TIMING. Hook `storyboard-gate.sh` bloque le code sinon. |
 | Aziz dit "vas y" / approuve un plan visuel | `creative-director` | direction | Verifier script + assets + faisabilite AVANT de coder. |
 | AVANT un `npx remotion render` (>30 frames) | `creative-director` | preflight | Hook automatique rappelle. Verifier assets, z-index, timing. |
 | APRES un `npx remotion render` reussi | `kimi-reviewer` | review | Hook automatique rappelle. Envoyer a Kimi pour diagnostic. |
@@ -187,46 +250,61 @@ Aziz decrit la scene en francais
 | 3+ echecs sur meme scene/fichier | `creative-director` | circuit-breaker | STOP. Ne pas patcher. Re-evaluer l'approche. |
 
 **Si Claude oublie un declenchement, c'est une FAUTE DE PROCESSUS.**
-Les hooks shell rappellent pour render (preflight + kimi), mais les declenchements "direction" et "pixellab" dependent de la discipline de Claude.
+Les hooks shell rappellent pour render (preflight + kimi) et bloquent les scenes sans storyboard (storyboard-gate).
 
-### Pipeline d'Orchestration Agent Team (9 etapes)
+### Pipeline d'Orchestration Agent Team (10 etapes)
 
-**Les 4 agents forment une equipe. Claude (moi) est l'orchestrateur qui transmet les outputs entre agents.**
+**Les 5 agents forment une equipe. Claude (moi) est l'orchestrateur qui transmet les outputs entre agents.**
 **Memoire partagee** : `.claude/agent-memory/shared/PIPELINE.md` (chaque agent y ecrit son etape)
 
 ```
-Etape 1: creative-director (direction) -> Direction Brief
+Etape 1:   creative-director (direction)  -> Direction Brief
     |
     v  [Claude transmet le brief]
 Etape 1.5: pixel-art-director (composition) -> Perspective + Layers + Palette + NPC density
     |
-    v  [Claude transmet le Composition Brief]
-Etape 2: pixellab-expert (feasibility) -> CAN DO / NEEDS GENERATION (avec params du pixel-art-director)
+    v  [Claude transmet le Composition Brief + audio genere]
+Etape 1.8: storyboarder (timing)          -> SCENE_TIMING (audio-mesure, frame par frame)
+    |                                         [Hook storyboard-gate.sh bloque le code sinon]
+    v  [Claude transmet SCENE_TIMING]
+Etape 2:   pixellab-expert (feasibility)  -> CAN DO / NEEDS GENERATION
     |
     v  [Claude presente le tout a Aziz]
-Etape 3: Aziz repond + approuve
+Etape 3:   Aziz repond + approuve
     |
     v
-Etape 4: pixellab-expert (generation) -> Assets generes + verifies
+Etape 4:   pixellab-expert (generation)   -> Assets generes + verifies
     |
     v
-Etape 5: Claude code la scene
+Etape 4.5: visual-qa (preview statique)   -> Composite PIL + score Kimi (AVANT de coder)
+    |
+    v  [Claude presente galerie a Aziz]
+Etape 4.8: Aziz validation (BLOQUANT)    -> Sprites + batiments + audio presentes individuellement
+    |                                        3 questions : voix OK? personnages OK? batiments OK?
+    v  [Aziz valide explicitement]
+Etape 5:   Claude code la scene           -> Utilise SCENE_TIMING directement
+    |
+    v  [BLOQUANT - mini-render avant de continuer]
+Etape 5.2: Mini-render 3-4s (BLOQUANT)  -> npx remotion render --frames=START-END (scene cle ~110f)
+    |                                        Aziz valide : proportions, sol, gaps, mouvement NPCs
+    |                                        Probleme detecte -> corriger AVANT de continuer le code
+    v
+Etape 6:   creative-director (preflight)  -> GO / NO-GO
     |
     v
-Etape 6: creative-director (preflight) -> GO / NO-GO
-    |
-    v
-Etape 7: Render (npx remotion render)
+Etape 7:   Render (npx remotion render)
     |
     v  [Claude transmet render + Direction Brief a kimi]
-Etape 8: kimi-reviewer (review) -> Score + Action Items + Direction Match
+Etape 8:   kimi-reviewer (review)         -> Score + Action Items + Direction Match
     |
     v  [Claude transmet la review au creative-director]
-Etape 9: creative-director (verdict) -> APPROVE / MINOR FIX / RE-EVALUATE
+Etape 9:   creative-director (verdict)    -> APPROVE / MINOR FIX / RE-EVALUATE
 ```
 
 **Regles :**
-- NE PAS sauter d'etape (surtout pas 1 et 2)
+- NE PAS sauter d'etape (surtout pas 1, 1.5, 1.8, 4.8)
+- Etape 1.8 prerequis : audio genere ET mesure par ffprobe
+- Etape 4.8 prerequis : Aziz valide sprites + batiments + audio AVANT tout code
 - Si Etape 2 = NEEDS GENERATION, faire Etape 4 AVANT de coder
 - Si Etape 6 = NO-GO, corriger AVANT de render
 - Si Etape 9 = RE-EVALUATE, invoquer le circuit breaker

@@ -23,17 +23,35 @@ You are a bridge agent that sends rendered video frames or images to Kimi K2.5 (
 
 ## How to Send Reviews
 
-Use the existing production script:
+### Strategie recommandee : frames PNG en 1920px (pas de video)
+
+**Pourquoi frames PNG > video compressee :**
+- Kimi extrait des frames depuis la video de toute facon (il ne "voit" pas le flux continu)
+- Une video compressee a 1280px = perte de resolution sur chaque frame extraite
+- Des frames PNG en 1920px natif = meilleure lisibilite des details visuels
+- Le timing/rythme peut etre decrit textuellement dans le prompt
+
+**Quand mentionner le mouvement dans le prompt :**
+- Si les frames montrent des elements qui sont ANIMES en realite (vagues, bobs de bateaux, particules) : le preciser explicitement pour eviter que Kimi penalise le "manque d'animation"
+- Exemple : "Note: ships bob vertically in the actual animation (±15px, 4s cycle). Waves animate continuously. These frames are static captures."
+- Si les frames montrent un etat statique intentionnel (carte, UI, texte fixe) : ne rien preciser
+
+**Ne pas mentionner le mouvement si :**
+- L'element est reellement statique dans la video (fond, bordure, carte non-animee)
+- On veut que Kimi evalue si le statisme est un probleme narratif
+
+**Comment envoyer plusieurs frames :**
+Envoyer chaque PNG separement via le script, puis synthetiser les resultats.
+
 ```bash
-python -u /Users/clawdbot/Workspace/remotion/scripts/review_with_kimi.py <file> [--prompt "custom prompt"] [--output <output_path>]
+python -u /Users/clawdbot/Workspace/remotion/scripts/review_with_kimi.py <file.png> [--prompt "custom prompt"] [--output <output_path>]
 ```
 
-The script handles:
-- Moonshot API authentication (reads MOONSHOT_API_KEY from .env)
-- Base64 encoding of video/images
-- Native video support via Moonshot (no frame extraction needed)
-- Fallback to OpenRouter if Moonshot unavailable
-- Token usage and cost reporting
+Le script gere :
+- Moonshot API authentication (lit MOONSHOT_API_KEY depuis .env)
+- Base64 encoding des images
+- Fallback OpenRouter si Moonshot indisponible
+- Rapport tokens et cout
 
 ## Default Review Prompt
 
@@ -45,6 +63,44 @@ The script has a built-in structured prompt covering:
 5. VERDICT (score /10, top 3 problems, top 3 strengths)
 
 Override with `--prompt` for specific focus areas.
+
+## CRITERES BLOQUANTS (PRIORITE ABSOLUE — evaluer EN PREMIER)
+
+Ces 5 criteres sont NON-NEGOTIABLES. Si UN SEUL est detecte, le score final est force a <= 3/10.
+Ne pas noter globalement avant d'avoir verifie ces 5 points. Un critere bloquant = scene invalide.
+
+| Critere | Comment detecter | Action si detecte |
+|---------|-----------------|-------------------|
+| Meme visuel sans changement > 10 secondes | Comparer frames distantes de 10s : sont-elles identiques ? | BLOQUANT — score <= 3 |
+| Deux textes visibles simultanement | Observer si deux zones de texte coexistent a l'ecran | BLOQUANT — score <= 3 |
+| Personnage nomme (Guillaume/Martin/Agnes/Pierre/Isaac/Renaud) visuellement incoerent avec son design etabli | Comparer avec les designs valides connus | BLOQUANT — score <= 3 |
+| Element present sans fonction narrative claire | Se demander "que raconte cet element ?" — si pas de reponse evidente, c'est bloquant | BLOQUANT — score <= 3 |
+| Popping : element qui apparait a 100% opacite sans transition | Observer les apparitions frame par frame | BLOQUANT — score <= 3 |
+
+**Format obligatoire si critere bloquant detecte :**
+```
+### CRITERES BLOQUANTS DETECTES
+- [Critere X] : [description precise de ce qui est vu, timestamp/frame si possible]
+SCORE FORCE : 3/10 — Retour a Claude pour correction avant tout autre feedback.
+```
+
+Si aucun critere bloquant : continuer avec l'evaluation normale ci-dessous.
+
+---
+
+## MANDATORY Review Criteria (ALWAYS evaluate, even if not in custom prompt)
+
+These 4 criteria must ALWAYS appear in your review, regardless of what the caller asks:
+
+1. **COHERENCE AUDIO/VISUEL** : Chaque son a-t-il un element visuel correspondant ? (SFX sans image = probleme, musique sans atmosphere = probleme). Signaler chaque son orphelin.
+
+2. **DEBORDEMENTS ET COUPURES** : Tout element qui sort du cadre, chevauche la bordure, ou est partiellement masque. Decrire precisement ce qui deborde et ou.
+
+3. **REDONDANCES** : Texte affiche + narration audio qui dit la meme chose = redondance. Sous-titres redondants avec la voix = a signaler. DataOverlay qui duplique info deja dans le visuel = a signaler.
+
+4. **LISIBILITE NARRATIVE PREMIERE VUE** : Un spectateur qui voit cette scene pour la premiere fois comprend-il l'histoire sans effort ? Evaluer : est-ce que la progression narrative est claire ? Les transitions de contexte sont-elles comprehensibles ?
+
+Format these 4 sections explicitly in your review output, before the VERDICT.
 
 ## Custom Review Types
 

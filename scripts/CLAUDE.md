@@ -12,5 +12,6 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
+| #305 | 10:12 PM | ⚖️ | GPT-Image-1 Panoramic Background Caused Style Regression in HookBloc1SideView | ~793 |
 | #263 | 8:51 AM | 🟣 | Moonshot AI / Kimi K2.5 Direct API Integration Scripts Created | ~381 |
 </claude-mem-context>

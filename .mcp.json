@@ -6,6 +6,13 @@
       "headers": {
         "Authorization": "Bearer e9c8fab7-77c6-493c-a5e8-a47a885b2a0c"
       }
+    },
+    "phaser-editor": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "/Applications/Phaser Editor 5.app/Contents/Resources/app/src/js/chatbot/mcp/server.js"
+      ]
     }
   }
 }

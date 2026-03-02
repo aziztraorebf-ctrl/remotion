@@ -40,13 +40,446 @@ Stage 7   : Render
 Stage 8   : kimi-reviewer       → Visual review post-render
 Stage 9   : creative-director   → Final verdict
 
+## CIRCUIT BREAKER RE-OPEN: LionEtLaRiviere.tsx — Direction Brief V2 — rebuild from zero avec filtres SVG niveau S06
+
+**Date**: 2026-02-24
+**Agent**: creative-director
+**Motif**: V1 insuffisant par rapport au standard S06Silhouette. Baobabs non reconnaissables, lion illisible, zero filtres SVG, zero profondeur atmospherique.
+**Decision**: Rebuild from zero. Le code LionEtLaRiviere.tsx existant est un point de depart architectural, pas une reference stylistique.
+**Standard cible**: S06Silhouette.tsx — techniques extraites et appliquees scene par scene ci-dessous.
+
+---
+
+### Stage 1 V2: Direction Brief — Le Lion et la Riviere qui Parle (creative-director)
+**Date**: 2026-02-24
+**Verdict**: READY TO CODE — 0 questions bloquantes. Specifications suffisamment precises pour rebuild.
+
+#### Analyse S06 — Techniques a reutiliser (extraites du code)
+
+| Technique | Code S06 | Application Lion |
+|-----------|----------|-----------------|
+| Halo lune | `radialGradient id="s06-moon"` + `filter="url(#s06-glow)"` stdDeviation=18 + feComposite over | S2 lune + S4 soleil levant |
+| Glow filter | feGaussianBlur stdDeviation=18 + feComposite in=SourceGraphic over blur | Tout element lumineux |
+| Soft filter | feGaussianBlur stdDeviation=2 | Ombres au sol + brouillard |
+| Aura de sang | `radialGradient id="s06-red-moon"` stopColor=#7a1a14 | S2 tension riviere + S4 flash |
+| Etoiles scintillantes | 60x cercles, twinkle = 0.4 + Math.sin(frame*0.06 + i*0.8)*0.3 | S2 nuit + S1 premier plan |
+| Fog layers | ellipses cx variables, fill=FOG_COL, filter soft | S1 savane + S2 riviere + S3 aube |
+| Shadow ellipse au sol | `<ellipse filter="url(#s06-soft)" opacity=0.5-0.6>` | Lion + Enfant chaque scene |
+| Fenetre/lueur batiment | rect fill="#2a1a08" opacity=0.7 | Huttes S3+S4 (lueur foyer) |
+| Silhouette robe | path Q curves avec folds lines stroke=1.2 | Lion : criniere avec lignes folds |
+| Flicker lune | moonFlicker = 0.85 + Math.sin(frame*0.07)*0.1 + Math.sin(frame*0.23)*0.05 | S2 lune, S4 soleil |
+| Glint lame | path stroke GLOW opacity=0.6 sur bord tranchant | Griffes lion + tridents S2 |
+
+---
+
+## Direction Brief V2 — Scene par Scene
+
+### S1 : Savane Crepuscule (frames 0-449 / 15s)
+**Texte conte**: "Il etait une fois un lion qui regnait sur la savane..."
+**Moment dramatique**: Lion marche vers droite avec arrogance — camera le suit.
+
+#### Palette S1
+```
+SKY_TOP      = #C0391B   (vermillon brule — crepuscule intense)
+SKY_MID      = #E8621A   (orange feu)
+SKY_BOTTOM   = #D4922A   (or chaud)
+GROUND       = #3D1F08   (terre brune tres sombre)
+HORIZON_GLOW = #F5C842   (lueur horizon)
+SILHOUETTE   = #000000   (noir pur — TOUTES les silhouettes)
+FOG          = #1A0C04   (brume chaude sombre)
+```
+
+#### Filtres SVG S1 — defs a declarer
+```xml
+id="s1-glow"    feGaussianBlur stdDeviation=22 + feComposite over    (halo horizon)
+id="s1-soft"    feGaussianBlur stdDeviation=3                        (ombres sol)
+id="s1-heat"    feTurbulence baseFrequency=0.015 type=fractalNoise + feDisplacementMap scale=6  (chaleur)
+id="s1-sun"     radialGradient cx=50% cy=50% r=50%
+                stop[0%]  #F5C842 opacity=0.9
+                stop[60%] #E8621A opacity=0.5
+                stop[100%] #C0391B opacity=0
+```
+
+#### Gradients S1
+```
+linearGradient id="s1-sky" x1=0 y1=0 x2=0 y2=1
+  stop[0%]   #C0391B
+  stop[40%]  #E8621A
+  stop[75%]  #D4922A
+  stop[100%] #3D1F08
+```
+
+#### Effets atmospheriques S1
+- Soleil couchant : `<circle cx=960 cy=580 r=180 fill="url(#s1-sun)" filter="url(#s1-glow)">` (semi-cache par horizon)
+- Halo horizon : `<ellipse cx=960 cy=GROUND_Y rx=800 ry=120 fill="#F5C842" opacity=0.3 filter="url(#s1-glow)">`
+- 3 couches brouillard : ellipses cx=400/960/1600, cy=GROUND_Y, rx=500-700, ry=50-80, fill=FOG_COL, filter=soft, opacity=0.4-0.6
+- Particules poussiere : 20 cercles r=1-3px, posX aleatoire, posY=GROUND_Y-50 a +20, twinkle Math.sin individuel
+
+#### Silhouettes africaines S1 — geometrie precise
+
+**Baobab V2** (5 instances, scales 0.6-1.4) :
+```
+Tronc : rect width=50*s height=200*s — ventre renflé (bulge) via path quadratique
+  path d="M-25*s,0 Q-40*s,-100*s -25*s,-200*s L25*s,-200*s Q40*s,-100*s 25*s,0 Z"
+  (tronc gonfle caracteristique baobab — JAMAIS un rectangle)
+Couronne : PAS une ellipse — reseau de branches horizontales
+  5 branches path: M0,-200*s Q±80*s*k,-220*s ±120*s*k,-215*s  (vers ext, puis retrousse)
+  Chaque branche = strokeWidth=8-12*s, fill=none, stroke=#000
+  Petites branches terminales : 3-4 par grande branche, length=20-35*s
+  Touffes de feuilles : cercle r=15-25*s a l'extremite, fill=#000
+```
+
+**Lion V2** (corps complet, lisible en silhouette) :
+```
+Corps : ellipse cx=0 cy=0 rx=120 ry=70 (allonge, felin)
+Tete : circle cx=130 cy=-30 r=55 (tete en avant du corps)
+Criniere : path anneau externe autour tete — 12 pics triangulaires
+  Array.from(12).map((i) => triangle pointe vers ext, baseAngle = i*30deg)
+  Chaque pic : path d="M..." longueur=30-45px, irreguliers (pas parfaitement egaux)
+Museau : ellipse cx=170 cy=-20 rx=30 ry=22 (protrusion)
+Machoire : path courbe sous museau, strokeWidth=0 (silhouette)
+4 pattes : path Q curves — pattes avant allongees, pattes arriere plus courtes
+  Patte avant gauche : M-60,-55 Q-70,0 -65,80 (courbe naturelle felin)
+  Patte avant droite : M0,-55 Q10,0 15,80
+  Pattes arriere : plus petites, moins visibles
+Queue : path M150,40 Q180,20 200,-10 Q220,-30 230,-20 (courbe en S, remontante)
+  Touffe au bout : circle r=20 + 3 petits pics
+Ombre sol : ellipse cx=60 cy=90 rx=140 ry=25 fill=#000 opacity=0.4 filter=soft
+```
+
+**Walk cycle lion** : `walkPhase = frame * 0.08` (lent, imposant)
+- Bob vertical : `Math.abs(Math.sin(walkPhase)) * 6` (sur tout le corps)
+- Balancement tete : `Math.sin(walkPhase * 0.5) * 4` (lent)
+- Pattes : rotation alternee ±15deg sur pivot hanche (Math.sin walkPhase / walkPhase+PI)
+- Queue : amplitude oscillation `Math.sin(walkPhase * 0.7) * 12`
+
+**Herbes hautes** (premier plan) :
+```
+30-40 tiges : chacune path M x,GROUND_Y Q x+rand*10,GROUND_Y-80 x+rand*5,GROUND_Y-120
+strokeWidth=3-6, stroke=#000, fill=none
+Oscillation vent : offsetX += Math.sin(frame*0.04 + i*0.5) * 4
+```
+
+#### Timing S1
+- f0-30 : fade in (noir vers scene)
+- f0-449 : lion marche de x=200 vers x=1400 (interpolate, extrapolateRight=clamp)
+- f0-449 : baobabs fixes (lointains) + herbes oscillent (premier plan)
+- f380-449 : fade out (transition vers S2)
+
+---
+
+### S2 : Nuit Bleue — Confrontation Riviere (frames 450-929 / ~16s)
+**Texte conte**: "Mais la riviere n'avait pas peur..."
+**Moment dramatique**: Lion rugit face a l'eau qui monte — tension max f700-800.
+
+#### Palette S2
+```
+SKY_TOP      = #040D2E   (bleu nuit profond)
+SKY_MID      = #1E3A5F   (bleu minimum garanti — regle pixel-art-director)
+SKY_BOTTOM   = #0D2040   (bleu sombre)
+GROUND       = #0A1828   (sol nuit)
+RIVER        = #1A3A6A   (eau reflet clair de lune)
+MOON_COL     = #D8E4F8   (lune blanc-bleu)
+GLOW         = #C8D0E8   (lueurs spectrales)
+FOG          = #080C18   (brume nocturne)
+DANGER_RED   = #7A1A14   (aura danger identique S06)
+```
+
+#### Filtres SVG S2 — defs
+```xml
+id="s2-moon-glow"  feGaussianBlur stdDeviation=18 + feComposite over   (identique s06-glow)
+id="s2-soft"       feGaussianBlur stdDeviation=2.5
+id="s2-water-blur" feGaussianBlur stdDeviation=4                        (eau reflets flous)
+id="s2-red-aura"   feGaussianBlur stdDeviation=25 + feComposite over    (tension lion)
+id="s2-stars-glow" feGaussianBlur stdDeviation=1.5                      (etoiles legeres)
+
+radialGradient id="s2-moon" (identique s06-moon)
+  stop[0%]  #E8F0FF opacity=0.95
+  stop[60%] #C0C8E0 opacity=0.6
+  stop[100%] #C0C8E0 opacity=0
+
+radialGradient id="s2-danger" (identique s06-red-moon)
+  stop[0%]  #7A1A14 opacity=0.7
+  stop[100%] #7A1A14 opacity=0
+
+linearGradient id="s2-river" x1=0 y1=0 x2=0 y2=1
+  stop[0%]  #2A5A9E opacity=0.8   (reflet lune en haut)
+  stop[50%] #1A3A6A opacity=0.9
+  stop[100%] #0A1828 opacity=1    (eau profonde opaque)
+```
+
+#### Lune en croissant (technique S06 exacte)
+```
+Halo     : circle cx=1600 cy=160 r=200 fill="url(#s2-moon)" filter="url(#s2-moon-glow)"
+           opacity = moonFlicker (0.85 + Math.sin(frame*0.07)*0.1 + Math.sin(frame*0.23)*0.05)
+Disque   : circle cx=1600 cy=160 r=65 fill=#D8E4F8 opacity=moonFlicker*0.92
+Ombre    : circle cx=1625 cy=148 r=56 fill=#040D2E opacity=0.65   (decalage -> croissant)
+```
+
+#### Riviere
+```
+Corps    : path sinueux vertical (gauche de l'ecran -> centre)
+  path d="M300,GROUND_Y+200 Q450,GROUND_Y+100 500,GROUND_Y Q480,GROUND_Y-80 500,GROUND_Y-200
+          L600,GROUND_Y-200 Q620,GROUND_Y-80 600,GROUND_Y Q650,GROUND_Y+100 700,GROUND_Y+200 Z"
+  fill="url(#s2-river)"
+Reflets lune : 4-5 ellipses blanches tres fines, opacity=0.15-0.3, filter=water-blur
+  positions variables : cy = GROUND_Y-50 + Math.sin(frame*0.05+i)*20
+Montee eau S2 : riverLevel = interpolate(frame, [450,929], [0,120], clamp)
+  toute la riviere translate cy -= riverLevel (eau monte progressivement)
+```
+
+#### Etoiles S2 (60 etoiles, identique S06)
+```js
+const twinkle = 0.4 + Math.sin(frame * 0.06 + i * 0.8) * 0.3;
+// sy limité à 0-350 (moitié haute du ciel)
+// r = (i%4)*0.6 + 0.6
+```
+
+#### Effets atmospheriques S2
+- Brouillard riviere : 2 ellipses cx=500/600, cy=GROUND_Y, rx=200/180, ry=60, fill=FOG, filter=soft, opacity=0.6-0.7
+- Aura danger lion (f700-800, max f750) :
+  ```
+  redOpacity = interpolate(frame, [700,750,800,850], [0,0.4,0.4,0], clamp)
+  <circle cx=lionX cy=GROUND_Y-200 r=300 fill="url(#s2-danger)" opacity=redOpacity filter="url(#s2-red-aura)">
+  ```
+
+#### Lion S2 — identique V2 mais STOPPE face a la riviere
+- Position finale x=750, face gauche (scaleX=-1 sur le groupe)
+- Tete baissee vers eau (incline -20deg autour pivot corps)
+- Pas de walk cycle apres f550 — lion immobile, queue oscille lentement
+- Rugissement f700 : tete remonte brusquement spring() damping=15 de -20deg vers +10deg
+
+---
+
+### S3 : Aube Rose — Enfant face au Lion (frames 930-1279 / ~11.7s)
+**Texte conte**: "Alors vint un enfant..."
+**Moment dramatique**: L'enfant s'avance. Le lion recule, stupefait.
+
+#### Palette S3
+```
+SKY_TOP      = #1B2A4A   (nuit qui se dissipe — bleu tres sombre)
+SKY_MID      = #C87040   (orange peche — aube)
+SKY_BOTTOM   = #E8A88A   (rose peche chaud)
+GROUND       = #2A1A10   (terre sombre, plus chaude que S2)
+DAWN_GLOW    = #F5C890   (lueur aube horizon)
+FOG          = #180C08   (brume matinale chaude)
+EMBER        = #FF6030   (braises huttes — lueur chaude)
+```
+
+#### Filtres SVG S3
+```xml
+id="s3-dawn-glow"  feGaussianBlur stdDeviation=30 + feComposite over   (grand halo aube)
+id="s3-soft"       feGaussianBlur stdDeviation=2.5
+id="s3-ember"      feGaussianBlur stdDeviation=6                        (lueur foyer)
+
+radialGradient id="s3-dawn" cx=50% cy=100% r=80%
+  stop[0%]  #F5C890 opacity=0.7
+  stop[50%] #E8A88A opacity=0.3
+  stop[100%] #E8A88A opacity=0
+
+linearGradient id="s3-sky"
+  stop[0%]  #1B2A4A (nuit encore en haut)
+  stop[50%] #C87040
+  stop[100%] #E8A88A
+```
+
+#### Grand halo aube (horizon)
+```
+circle cx=960 cy=GROUND_Y r=400 fill="url(#s3-dawn)" filter="url(#s3-dawn-glow)" opacity=0.8
+```
+
+#### Huttes africaines S3 — geometrie precise
+```
+Hutte V2 (3 instances, scales 0.6-1.1) :
+Corps    : path d="M-50,0 Q-55,-40 0,-60 Q55,-40 50,0 Z"  (ellipse aplatie cote — MUR arrondi)
+           fill=#000 (silhouette)
+Toit     : path d="M-60,0 Q0,-80 60,0"  (arc parabolique — toit de chaume courbe, PAS triangle droit)
+           fill=#000
+Epaisseur toit : path offset +10px vers ext, fill=#000 (effet 3D minimal)
+Ouverture: ellipse cx=0 cy=-5 rx=14 ry=20 fill=#1A0A00 (porte sombre)
+Lueur foyer (S3) : circle cx=0 cy=-5 r=8 fill=#FF6030 opacity=0.5 filter="url(#s3-ember)"
+                   opacity = 0.3 + Math.sin(frame*0.2 + hutte_seed)*0.2  (flickering)
+```
+
+#### Enfant — geometrie
+```
+Taille totale : 200px (ratio 1/2.1 du lion — enfant petit mais lisible)
+Corps    : path Q curves (buste droit, pas de robe mais silhouette mince)
+           M0,0 Q-15,-80 0,-120 Q15,-80 0,0  (buste etroit)
+Tete     : circle cx=0 cy=-145 r=28
+           (pas de capuche — silhouette d'enfant, tete proportionnellement grande)
+Bras gauche : path Q M-12,-110 Q-35,-90 -30,-60 (bras le long du corps)
+Bras droit  : path Q M12,-110 Q35,-80 28,-55 (tendu vers lion — geste offrant)
+Jambes   : M-10,0 L-12,60 / M10,0 L12,60 (simples, droites)
+Ombre sol : ellipse cx=0 cy=10 rx=30 ry=10 filter=soft opacity=0.4
+```
+
+**Entree enfant** : spring() damping=200, scale 0->1 a partir de x=1200 (apparition in situ droite)
+
+**Recul lion** : interpolate(frame, [1050,1150], [750,500], clamp) — lion recule vers gauche, etonne
+
+---
+
+### S4 : Aurore Doree — Le Lion s'incline (frames 1280-1799 / ~17s)
+**Texte conte**: "Et le lion s'inclina..."
+**Moment dramatique**: Lion s'incline. Eau descend. Explosion de lumiere f1600.
+
+#### Palette S4
+```
+SKY_TOP      = #F0C060   (or dore — plein levant)
+SKY_MID      = #F5EDD8   (blanc creme chaud)
+SKY_BOTTOM   = #F5C830   (or intense horizon)
+GROUND       = #3D2510   (terre eclairee, rougeatre)
+SUN_COL      = #FFFFFF   (soleil blanc-or)
+SUN_GLOW     = #F5C830   (halo soleil)
+WATER_CALM   = #A0C8E8   (eau apaisee — reflet ciel dore)
+EXPLOSION    = #FFFCE0   (flash lumiere f1600)
+```
+
+#### Filtres SVG S4
+```xml
+id="s4-sun-glow"  feGaussianBlur stdDeviation=35 + feComposite over   (grand halo soleil)
+id="s4-soft"      feGaussianBlur stdDeviation=2
+id="s4-flash"     feGaussianBlur stdDeviation=50                       (explosion f1600)
+
+radialGradient id="s4-sun" cx=50% cy=50% r=50%
+  stop[0%]  #FFFFFF opacity=1
+  stop[40%] #F5C830 opacity=0.8
+  stop[100%] #F5C830 opacity=0
+
+radialGradient id="s4-flash-grad" cx=50% cy=50% r=50%
+  stop[0%]  #FFFCE0 opacity=1
+  stop[100%] #FFFCE0 opacity=0
+```
+
+#### Soleil levant (technique lune S06 adaptee)
+```
+Halo   : circle cx=960 cy=GROUND_Y r=500 fill="url(#s4-sun)" filter="url(#s4-sun-glow)"
+          opacity=sunFlicker (0.7 + Math.sin(frame*0.05)*0.08)
+Disque : circle cx=960 cy=GROUND_Y r=100 fill=#FFFFFF opacity=0.95
+         cy = interpolate(frame,[1280,1500],[GROUND_Y,GROUND_Y-150],clamp)  (soleil qui monte)
+```
+
+#### Explosion lumiere f1600
+```
+flashOpacity = interpolate(frame, [1600,1620,1680,1720], [0,1,1,0], clamp)
+<circle cx=960 cy=400 r=1400 fill="url(#s4-flash-grad)" opacity=flashOpacity filter="url(#s4-flash)">
+```
+
+#### Inclinaison lion S4
+```
+inclineAngle = interpolate(frame, [1300,1420], [0,-35], clamp)
+  (rotation autour pivot cx=750 cy=GROUND_Y — tete et corps avant se baissent)
+Tete : incline supplementaire -20deg (tete penche encore plus)
+Queue : reste haute — spring() damping=12 vers +30deg (queue dressee = soumission respectueuse)
+```
+
+#### Eau qui descend S4
+```
+waterLevel = interpolate(frame, [1280,1600], [120,0], clamp)
+  (inverse de S2 : l'eau redescend a mesure que le lion s'incline)
+Riviere V4 : meme geometrie S2 mais fill="url(#s4-water-calm)" (eau calme, reflet or)
+```
+
+#### Particules finales S4 (f1600-1799)
+```
+20 particules lumineuses :
+  cx = 960 + Math.cos(i*18deg + frame*0.05) * (80 + i*20)
+  cy = GROUND_Y - 200 - (frame-1600)*1.5 - i*15  (monte progressivement)
+  r = 3-8px, fill=#F5C830, opacity=0.6+Math.sin(frame*0.1+i)*0.3
+```
+
+---
+
+## Recapitulatif Technique V2
+
+### Filtres SVG a declarer (tous dans <defs> en debut de composant)
+| ID | Effet | stdDeviation | Usage |
+|----|-------|-------------|-------|
+| s1-glow | halo horizon S1 | 22 | soleil couchant |
+| s1-soft | ombres sol S1 | 3 | ombre lion + herbes |
+| s1-heat | distorsion chaleur | 0.015 baseFreq | atmospherique |
+| s2-moon-glow | halo lune S2 | 18 (=S06) | lune croissant |
+| s2-soft | ombres S2 | 2.5 | sol + riviere |
+| s2-water-blur | reflets eau | 4 | riviere reflets |
+| s2-red-aura | tension danger | 25 | lion rugissement |
+| s3-dawn-glow | halo aube S3 | 30 | horizon aube |
+| s3-soft | ombres S3 | 2.5 | sol + huttes |
+| s3-ember | lueur foyer | 6 | huttes flickering |
+| s4-sun-glow | halo soleil S4 | 35 | grand soleil levant |
+| s4-soft | ombres S4 | 2 | sol eclaire |
+| s4-flash | explosion S4 | 50 | flash f1600 |
+
+### Composants SVG a coder (dans l'ordre)
+1. `<AllDefs>` — tous les filtres + gradients en un seul bloc <defs>
+2. `<Baobab x y scale>` — tronc bulge + branches horizontales + touffes terminales
+3. `<LionSilhouette x y walkPhase inclineAngle scaleX>` — corps felin + criniere pics + pattes Q + queue S
+4. `<EnfantSilhouette x y visible>` — silhouette enfant mince + bras tendu
+5. `<Hutte x y scale withEmber>` — corps arrondi + toit parabolique + lueur optionnelle
+6. `<Riviere level>` — corps sinueux + reflets + montee/descente
+7. `<EtoilesS2 frame>` — 60 etoiles Math.sin twinkle individuel
+8. `<ParticulesFinalS4 frame>` — 20 particules f1600+
+
+### Transitions entre scenes
+- S1->S2 : f420-449 fade out + f450-470 fade in (noir 21 frames)
+- S2->S3 : f900-929 fade out + f930-950 fade in
+- S3->S4 : f1260-1279 fade out + f1280-1300 fade in
+
+### Anti-patterns INTERDITS (rappel)
+- Baobab = ellipses arrondies -> INTERDIT. Utiliser path bulge + branches lineaires.
+- Lion = blob arrondi -> INTERDIT. Utiliser ellipse corps + circle tete separee + criniere pics.
+- Hutte = triangle rectangle -> INTERDIT. Utiliser toit parabolique Q curves.
+- Fond S2 < #1E3A5F -> INTERDIT. Regle pixel-art-director bloquante.
+- Sprites sur background peint CSS -> INTERDIT (rappel global).
+
+**Verdict**: READY TO CODE
+**Next action**: Claude code LionEtLaRiviere.tsx rebuild from zero, dans l'ordre composants liste ci-dessus.
+
+---
+
+## CIRCUIT BREAKER RE-OPEN: LionEtLaRiviere.tsx — Bug technique identifie et resolu
+
+**Date**: 2026-02-24
+**Scene**: LionEtLaRiviere.tsx
+**Cause racine identifiee**: Les composants `<Audio>` etaient places dans des elements SVG `<g>`.
+Remotion rend `<Audio>` comme un element HTML `<audio>`, incompatible avec le namespace SVG.
+Cela cause `TypeError: mediaRef.current?.pause is not a function` dans le studio.
+
+**Solution**: Retirer tous les Audio des SVG (fait via sed), les replacer dans l'AbsoluteFill
+avec des `<Sequence from={...}>` wrappers (HTML space, pas SVG space).
+
+**Ce n'est PAS une boucle de patches** : c'est un bug architectural clairement identifie,
+avec un fix minimal, chirurgical, non-creatif. Aucun changement de style ou de direction.
+
+**Nouvelle approche architecture**: Audio uniquement dans AbsoluteFill (HTML), jamais dans SVG.
+
 ## Current Production Ticket
 
+**Status**: Stage 1.5 COMPLETE — Composition Brief "Le Lion et la Riviere qui Parle"
+**Scene**: Prototype theatre d'ombres africain — 1800 frames (60s @ 30fps)
+**Last Updated**: 2026-02-24
+**Projet**: NOUVEAU PROTOTYPE (hors Peste 1347) — style silhouette SVG
+**Next step**: Aziz confirme Ajustement 1 (fond S2 min #1E3A5F) + Ajustement 2 (tension S1 f120-150) -> audio genere + ffprobe -> Stage 1.8 storyboarder
+
+### Stage 1.5: Composition Review (pixel-art-director)
+**Date**: 2026-02-24
+**Perspective**: Side-view uniforme S1-S4 (theatre d'ombres wayang — aucune exception)
+**Layer Count**: 6 layers (sky / far-bg silhouettes / mid-bg silhouettes / ground line / characters / foreground)
+**Palette**: Fonds uniquement (S1 orange, S2 nuit bleue, S3 rose-peche, S4 or). Silhouettes = noir pur #000000. Halo bleu filter en S2 pour contraste.
+**Character Proportions**: Lion 420px / Enfant 240px (ratio 1.75x minimal pour lisibilite narrative) / Riviere 500px vertical
+**Fatal Errors Found**: Silhouettes invisibles sur fond S2 (#0A1628 trop proche de #000000) — regle fond min #1E3A5F + halo SVG filter
+**Ajustement 1 (BLOQUANT)**: S2 fond min #1E3A5F zone Y=400-800. Aziz doit confirmer.
+**Ajustement 2 (RECOMMANDE)**: S1 element tension a f120-150 (3 options proposees). Aziz choisit.
+**Verdict**: COMPOSITIONALLY SOUND sous reserve confirmation 2 ajustements
+
+---
+
+### [ARCHIVE] Previous Ticket (BlocB Peste 1347)
 **Status**: Stage 1 COMPLETE — Direction Brief BlocB (hook_01+02+03)
 **Scene**: BlocB ParcheminMapEurope — frames 703-1365 (662f total)
 **Last Updated**: 2026-02-22
 **Kimi Score BlocA v3**: 6.7/10 (MINEUR FIX en attente, non bloquant pour BlocB)
-**Next step**: Aziz repond Q1+Q2 bloquantes -> Stage 1.5 pixel-art-director -> Stage 5 code
+**Next step (archive)**: Aziz repond Q1+Q2 bloquantes -> Stage 1.5 pixel-art-director -> Stage 5 code
 
 ---
 
@@ -83,6 +516,46 @@ Stage 9   : creative-director   → Final verdict
 - Q3 (non-bloquante): Galeres — 2-3 ou 12 litteralement ?
 
 **Next action**: Aziz repond Q1+Q2 -> pixel-art-director (Stage 1.5) -> code Stage 5
+
+---
+
+### Stage 1: Direction Brief "Le Lion et la Riviere qui Parle" (creative-director)
+**Date**: 2026-02-24
+**Projet**: Prototype theatre d'ombres africain (hors Peste 1347)
+**Verdict**: NEEDS ANSWERS — 3 questions pour Aziz (non bloquantes sur la direction generale)
+
+**Conte**: Lion assoiffe arrive a une riviere sacree qui parle. Un enfant s'incline. Lion observe. Lion s'incline. L'eau monte. Arc : Arrogance -> Confrontation -> Observation -> Humilite -> Grace.
+
+**4 scenes :**
+- S1 (f0-390)   : Savane crepuscule. Baobabs silhouettes. Lion entre, marche vers gauche.
+- S2 (f390-810) : Nuit, riviere. Lune blanche. Ondulations animees (voix de la riviere). Lion recule.
+- S3 (f810-1260): Aube. Cases rondes. Enfant entre, s'incline. Fleurs SVG sur l'eau. Lion immobile.
+- S4 (f1260-1620): Aurore. Baobab unique. Lion s'incline lentement. L'eau monte en arc.
+- Generique (f1620-1800): Titre + sous-titre stroke-dasharray sur fond noir.
+
+**Palette :**
+- S1 : #E8621A -> #D4922A -> #1A0F05 (crepuscule orange-or)
+- S2 : #0D1B3E -> #C8D8E8 -> #0D1B3E (nuit bleue + reflet lune #F5F0E8)
+- S3 : #1B2A4A -> #E8A88A -> #C8962A (aube rose-ocre)
+- S4 : #F0C060 -> #F5EDD8 -> #2A1A0A (aurore or)
+- Silhouettes : #000000 pur TOUJOURS — couleur uniquement dans les fonds et micro-accents
+
+**Assets SVG pur (zero externe):**
+Lion, Enfant, Baobabs, Riviere animee, Cases rondes, Herbes, Fleurs eau, Lune, Nuages
+
+**Voix-off**: 93 mots, voix grave narrative fr-FR, voix "Nicolas" ElevenLabs, stability 0.75
+
+**Questions pour Aziz:**
+- Q1: Conte mandingue adapte OK, ou preferes un conte connu (Anansi, Soundiata) ?
+- Q2: Silhouettes aplat pur noir, ou quelques details en surbrillance (yeux, bijoux) style wayang kulit ?
+- Q3: Musique kora/balafon : chercher asset libre maintenant, ou prototype sans musique ?
+
+**Defaults si "vas y" sans reponse:**
+- Conte mandingue adapte = OK
+- Aplat pur = OK
+- Prototype sans musique = OK
+
+**Next action**: Aziz repond Q1+Q2+Q3 (ou "vas y") -> Stage 1.5 pixel-art-director -> Stage 1.8 storyboarder (apres audio) -> Stage 5 code
 
 ---
 
@@ -2014,4 +2487,312 @@ Scene bridges BlocD (quantitative shock: 27M deaths) → BlocE (qualitative refr
 **Detailed review**: `.claude/agent-memory/kimi-reviewer/review-hookbloce-v2-2026-02-22.md`
 
 **Cost**: $0.0194 (Moonshot native video)
+
+
+---
+
+## Stage 1 — S3 Fuite des Élites (creative-director)
+**Date**: 2026-02-22
+**Segment**: seg3_01 à seg3_08 — "La Fuite des Élites" (5:20–7:00, ~52s, ~1560f)
+**Verdict**: NEEDS ANSWERS — 3 questions bloquantes avant de passer à Stage 1.5
+
+### Questions bloquantes (réponse d'Aziz requise)
+- Q1 : Corps au sol sous-scène B — silhouette anonyme OU accessoire identifiable (ex: bonnet de Pierre) ?
+- Q2 : Transition A→B — désaturation progressive sur 5s (couleur qui quitte) OU coupure franche en gravure ?
+- Q3 : Guillaume en sous-scène D — scale 0.4 (~88px, métaphore éloignement) OU scale 0.6-0.7 (~130px, plus lisible) ?
+
+### Découpage validé (4 sous-scènes)
+- A : Le Départ (~14s) — ENLUMINURE COULEUR — Guillaume marche, sort à droite. Pierre+Agnès restent.
+- B : L'Abandon (~5s) — TRANSITION vers GRAVURE — Désaturation, corps au sol, vignette légère S5.
+- C : DATA PAUSE (~20s) — GRAVURE MONOCHROME — Graphique mortalité registre médiéval (pas infographie moderne).
+- D : La Constante (~13s) — GRAVURE + retour vermillon sur "constante" — Guillaume silhouette distante.
+
+### Personnages confirmés pour ce segment
+- Guillaume (etat="sain") : présent en A (marche), absent en B, absent en C, silhouette en D
+- Pierre (etat="malade") : présent en A (idle), au sol en B (mort SVG), absent en C et D
+- Agnès (etat="sain") : présente en A (idle), absente en B (le script dit personne ne ramasse)
+- Boccaccio : médaillon portrait fixe en A/seg3_02 uniquement — pas un personnage récurrent
+- Martin, Isaac, Renaud : ABSENTS de ce segment
+
+### Effets validés par scène
+- A : S2 grain overlay (atmosphère village) + S8 marche Guillaume
+- B : S5 vignette légère (radial gradient, opacity 0.4 jour assombri) + désaturation progressive
+- C : Aucun effet — graphique tracé plume S4 (stroke-dasharray barres)
+- D : Retour partiel couleur vermillon sur Guillaume uniquement (interpolate() opacity sur 20f)
+
+### Next action
+Aziz répond Q1+Q2+Q3 → Stage 1.5 pixel-art-director (composition, perspective, layers) → Stage 1.8 storyboarder (après audio S3 généré + ffprobe)
+
+---
+
+## Stage 1 FINAL — S3 Fuite des Élites (creative-director)
+**Date**: 2026-02-22
+**Segment**: seg3_01 à seg3_08 — "La Fuite des Élites" (5:20–7:00, ~52s, ~1560f à 30fps)
+**Verdict**: READY — Toutes questions résolues. En attente audio S3 + ffprobe pour Stage 1.8.
+
+### Réponses Aziz intégrées
+- Q1 RÉSOLUE : Corps au sol = silhouette anonyme en style enluminure (pas le bonnet de Pierre)
+- Q2 RÉSOLUE : Désaturation progressive. Début exactement sur dernière syllabe de "partent". Monochrome complet en 45-60f (1.5-2s).
+- Q3 RÉSOLUE : Guillaume en D = scale 0.55 (~120px). Marche vers droite (anim="walk"), sort progressivement de l'écran.
+
+### Personnages par sous-scène (FINAL)
+| Perso | Sous-scène A | Sous-scène B | Sous-scène C | Sous-scène D |
+|-------|-------------|-------------|-------------|-------------|
+| Guillaume | walk→right→exit (scale 1.1) | ABSENT | ABSENT | walk→right→exit (scale 0.55) |
+| Pierre | idle, etat=malade | ABSENT (corps anonyme SVG au sol) | ABSENT | ABSENT |
+| Agnès | idle, etat=sain | ABSENT | ABSENT | ABSENT |
+| Boccaccio | médaillon f A-seg3_02 seulement | ABSENT | ABSENT | ABSENT |
+| Martin / Isaac / Renaud | ABSENTS | ABSENTS | ABSENTS | ABSENTS |
+
+### Transitions (FINAL)
+- A→B : coupure franche sur "partent." / désaturation commence immédiatement après la coupure
+- B→C : fondu enchaîné 20f
+- C→D : coupure franche sur "Les siècles changent."
+
+### Next action
+Stage 1.5 : pixel-art-director (composition, perspective, layers, NPC density)
+Prerequis Stage 1.8 : audio S3 généré + mesuré ffprobe (BLOQUANT avant code)
+
+---
+
+### Stage 1.5 S3: Composition Brief (pixel-art-director) — SKIP SVG
+**Date**: 2026-02-23
+**Verdict**: SKIPPED — scène 100% SVG enluminure/gravure, aucun asset PixelLab
+**Note**: pixel-art-director ne s'applique qu'aux scènes pixel art. S3 = SVG pur, characters définis dans EnlumCharacters.tsx.
+
+---
+
+### Stage 1.8 S3: SCENE_TIMING_S3 (storyboarder) — [COMPLETE]
+**Date**: 2026-02-23
+**Audio source**: public/audio/peste-pixel/s3/ (8 segments, ffprobe mesuré)
+**Prerequis**: audio généré + mesuré ffprobe — SATISFAIT
+
+```typescript
+// SEGMENT DUREES (ffprobe)
+const SEG3_01_FRAMES = 182;
+const SEG3_02_FRAMES = 631;
+const SEG3_03_FRAMES = 180;
+const SEG3_04_FRAMES = 329;
+const SEG3_05_FRAMES = 338;
+const SEG3_06_FRAMES = 300;
+const SEG3_07_FRAMES = 94;
+const SEG3_08_FRAMES = 535;
+
+// FRAMES CUMULATIFS ABSOLUS
+const SEG3_01_START = 0;    const SEG3_01_END = 181;
+const SEG3_02_START = 182;  const SEG3_02_END = 812;
+const SEG3_03_START = 813;  const SEG3_03_END = 992;
+const SEG3_04_START = 993;  const SEG3_04_END = 1321;
+const SEG3_05_START = 1322; const SEG3_05_END = 1659;
+const SEG3_06_START = 1660; const SEG3_06_END = 1959;
+const SEG3_07_START = 1960; const SEG3_07_END = 2053;
+const SEG3_08_START = 2054; const SEG3_08_END = 2588;
+
+// SOUS-SCENES
+const SCENE_A_START = 0;    const SCENE_A_END = 812;   // Enluminure : Départ Guillaume
+const SCENE_B_START = 813;  const SCENE_B_END = 992;   // Enluminure -> Gravure : Abandon
+const SCENE_C_START = 993;  const SCENE_C_END = 1959;  // Gravure : Data Pause
+const SCENE_D_START = 1960; const SCENE_D_END = 2588;  // Enluminure -> Gravure : La Constante
+
+// DESATURATION (Enluminure -> Gravure)
+const DESAT_START = 178;   // fin "partent." — silencedetect: 5.942s
+const DESAT_END = 230;     // +52f = monochrome complet
+
+// BOCCACCIO (portrait rapide enluminure)
+const BOCCACCIO_IN = 192;   // SEG3_02_START + 10
+const BOCCACCIO_OUT = 792;  // SEG3_02_END - 20
+
+// GUILLAUME EXITS
+const GUILLAUME_EXIT_A = 752;  // SEG3_02_END - 60 (Scene A)
+const GUILLAUME_EXIT_D = 2558; // SEG3_08_END - 30 (Scene D, retour sans culpabilité)
+
+// TRANSITIONS
+const BC_FADE_START = 992;   // SEG3_03_END (fondu enchaîné 20f)
+const BC_FADE_END = 1012;    // +20f
+
+// DATA GRAPHIQUE (Scene C)
+const DATA_BAR_START = 1008; // SEG3_04_START + 15
+const DATA_NUM_LEFT = 1113;  // SEG3_04_START + 120 (20-30% riches)
+const DATA_NUM_RIGHT = 1193; // SEG3_04_START + 200 (40-50% pauvres)
+const DATA_LIST_START = 1680;// SEG3_06_START + 20 (quartiers)
+
+// VERMILLON (retour couleur sous-scene D)
+const VERMILLON_START = 2508; // SEG3_08_END - 80
+const VERMILLON_END = 2528;   // +20f
+
+const TOTAL_FRAMES = 2588;
+const SCENE_TOTAL_WITH_BUFFER = 2620;
+```
+
+**Durées ffprobe validées:**
+- seg3_01: 6.08s = 182f
+- seg3_02: 21.04s = 631f
+- seg3_03: 6.00s = 180f
+- seg3_04: 10.96s = 329f
+- seg3_05: 11.28s = 338f
+- seg3_06: 10.00s = 300f
+- seg3_07: 3.12s = 94f
+- seg3_08: 17.84s = 535f
+- TOTAL: 86.32s = 2590f
+
+**Prêt pour Stage 5: code Seg3Fuite.tsx**
+
+---
+
+## Stage 8: Visual Review (kimi-reviewer) — 2026-02-23
+
+**File**: seg3-fuite-v2.mp4 (24.7 MB)
+**Date**: 2026-02-23
+**Agent**: kimi-reviewer (Moonshot native video)
+**Score**: 8.5/10
+**Cost**: $0.0356
+
+### Mandatory Criteria ✅ ALL PASS
+1. **Cohérence audio/visuel**: 7/10 — Most sync perfect, but 2 orphan sounds (data ticks, map reveal) flagged
+2. **Débordements/coupures**: ✅ CLEAR — Paysan char small on mobile, all else contained
+3. **Redondances**: ✅ NONE — Silent manuscript approach eliminates text/speech collision
+4. **Lisibilité narrative**: 9/10 — Progression (village → citation → stats → map) excellent, minor friction on Boccaccio link
+
+### Direction Match
+**YES** — Enluminure style mastered (9.5/10 authenticity). All Direction Brief elements present and effective:
+- Palette medieval (parchemin, vermillion, lapis, gold) ✅
+- Characters organic bezier (smooth curves) ✅
+- Buildings detailed (stone joints, windows, hatching) ✅
+- Map portolan cartographic (irregular masses, mountains, cities) ✅
+- Guillaume noble + servants differentiated ✅
+
+### Visual Hierarchy ⭐⭐⭐ STRONG
+- Guillaume protagonist clear (high hat, gold plume, centered)
+- Servants differentiated (3 distinct silhouettes)
+- Citation impact strong (vermillion, 5s hold)
+- Data chart immediate (red/blue contrast, large numbers)
+- Map cities recognizable (color-coded: Venice red, Florence gold, London blue, Paris black)
+
+### Animation Quality (Per Scene)
+- **SceneA (village, 0:00-0:27)**: ⭐⭐⭐ NATURAL — Walk cycles, plume motion, building reveal progressive. Minor: clouds static
+- **SceneB (citation, 0:27-0:32)**: ⭐⭐⭐ SMOOTH — Fade transitions work, hold time sufficient
+- **SceneC (data, 0:32-0:54)**: ⭐⭐⭐ SATISFYING — Axes progressive, bar growth ease-out good, paysan static (missed opportunity)
+- **SceneD (map, 1:05-1:26)**: ⭐⭐⭐ POLISHED — Map unfurl, city sequence (Venice→London→Paris→Florence), route trace clear
+
+### Top 3 Strengths
+1. **Authenticity enluminure** — Exceptional medieval style mastery
+2. **Narrative progression** — Clear and persuasive (village → proof → generalization)
+3. **Walk animation** — Natural cycles, social hierarchy readable in motion
+
+### Top 3 Issues (RANKED BY IMPACT)
+1. **Insufficient feedback sound** — Missing ticks for data reveal, parchment crinkle for map (HIGH impact)
+2. **Paysan narrative isolation** — Opportunity lost in data scene (MEDIUM, can strengthen agency)
+3. **Boccaccio/inn link unclear** — No explicit connection to "Couronne" auberge context (MEDIUM, narrative clarity)
+
+### Action Items (Priority)
+| P | Component | Change | Impact |
+|-|-|-|-|
+| 1 | Sound (data+map) | Add mechanical tick for bars (00:33), parchment crinkle for map (01:05), ping for cities | HIGH |
+| 2 | Paysan character | Head turn toward chart OR hand gesture toward bars | MEDIUM |
+| 3 | Boccaccio medallion | Subtle visual link/shadow toward inn OR explicit label | MEDIUM |
+| 4 | Clouds animation | Slow horizontal drift (subtle translateX) | LOW |
+| 5 | Finale transition | Extended fade on map OR return to village for loop | LOW |
+
+### Recommendation
+**APPROVED FOR INTEGRATION** — Direction brief executed correctly. If P1+P2 implemented → 8.7-8.9/10. Current 8.5 acceptable for YouTube (professional standard).
+
+### Next Action
+- **Option A**: Implement P1-P2 → mini-render test (30s key sections) → re-validate Kimi
+- **Option B**: Proceed to integration as-is (8.5 → deliverable) + document P1-P2 as future polish pass
+- **Aziz decision**: Prioritize sound design (P1) for production audio mix, or approve current state?
+
+---
+
+
+---
+
+## Stage 8: Visual Review (kimi-reviewer) — Lion et la Rivière v1
+**Date**: 2026-02-24
+**Render**: `lion-et-la-riviere-v1.mp4`
+**Direction Brief**: African folktale "The Lion and the Talking River" — shadow theater SVG style, 4 scenes with atmospheric color grading (dusk orange → night blue → dawn rose → golden morning)
+**Score**: 8.2/10
+**Status**: APPROVED
+
+### Direction Match
+**YES** — Shadow theater aesthetic fully realized. All Direction Brief elements present:
+- S1 (0-15s): Burnt orange dusk + baobabs + proud lion walking + title ✅
+- S2 (15-31s): Deep navy night + moon + river entity/feminine form ✅
+- S3 (31-42s): Rose/peach dawn + huts + child with arms extended + lion sitting ✅
+- S4 (42-60s): Golden dawn + lion bowing + rising blue water + light particles ✅
+
+### Dimensional Scores
+1. **Silhouette Legibility**: 8/10 — Clear shapes throughout. Minor: river entity lower body merges with water line in S2.
+2. **Atmospheric Coherence**: 9/10 — Each scene maintains distinct color identity. Gradients immersive. Emotional palette precision excellent.
+3. **Transition Fluidity**: 7/10 — Direct cuts between scenes work narratively but feel slightly abrupt. Dissolves would enhance.
+4. **Narrative Clarity**: 7/10 — First-time viewer understands arc (arrogance → confrontation → submission → transformation). Minor: child appears suddenly (no foreshadowing). River entity reads as "presence" rather than "talking river" without audio context.
+5. **Emotional Impact**: 9/10 — Light progression (warm → cool → warm → brilliant) creates genuine catharsis. Particle emergence in S4 provides visual release.
+6. **Technical Quality**: 9/10 — Clean SVG rendering, stable frame rate, smooth gradients, no artifacts.
+
+### Top 3 Strengths
+1. **Atmospheric color mastery** — Emotional precision of each palette + gradient breathing
+2. **Silhouette economy** — Maximum narrative via minimal shape language
+3. **Emotional light arc** — Orange → blue → rose → gold creates authentic cathartic progression
+
+### Top 3 Areas for Improvement
+1. **Transition methodology** — Add dissolves/wipes between scenes for temporal flow (currently abrupt cuts)
+2. **River entity definition** — Clarify boundary between figure + water in S2-S4 (lower body merges)
+3. **Child introduction** — Early foreshadowing needed; S3 appearance feels unmotivated
+
+### Mandatory Criteria Checks
+1. ✅ **Cohérence audio/visuel**: N/A (silent piece). Visual storytelling complete.
+2. ✅ **Débordements/coupures**: All elements within frame, no clipping.
+3. ✅ **Redondances**: None detected (silent piece, no text/audio duplication).
+4. ✅ **Lisibilité narrative première vue**: Clear. Arc readable without dialogue.
+
+### Critical Criteria Check (BLOQUANTS)
+- ✅ No static frames >10s (continuous subtle animation throughout)
+- ✅ No simultaneous text overlays (title S1 only, properly timed)
+- ✅ Character design consistent (all figures coherent)
+- ✅ All elements narrative-functional
+- ✅ No popping (proper fade/animation in)
+
+### Next Action
+**Option A**: Deploy as-is (8.2/10, professional standard for YouTube)
+**Option B**: Implement minor fixes (transitions, river entity clarity, child foreshadowing) → target 8.7/10 → re-validate
+
+**Aziz decision**: Polish now or approve for integration?
+
+---
+
+
+---
+
+## 2026-02-24 | Veilleur v4 (Stage 8: Kimi Review)
+
+**Project**: Le Veilleur de l'Ombre (African-inspired silhouette short, 40s)
+**Date**: 2026-02-24 10:21 AM
+**File**: veilleur-v4.mp4 (3.7 MB)
+**Reviewer**: Kimi K2.5 (Moonshot native video)
+**Score**: 7.2/10
+
+### Review Summary
+- **Sync**: Bird landing LOCKED @ f725 ("se posa sur le toit du Sage") ✓ Excellent
+- **Issues**: 
+  - Silence S3→S4 too brief (1.3s, needs 2-3s with ambient bridge)
+  - House appearance abrupt (geometric fade-in vs organic shadow solidify)
+  - Sage identity weak before house reveal (needs silver outline S2)
+  - Missing ground plane (village floats, needs earth line)
+  - African architectural specificity weak (generic house vs Dogon/Tuareg markers)
+- **Mandatory checks**: All pass (audio sync, no overflow, no redundancy, clear narrative arc)
+
+### Action Items (P1-P6)
+| P | Issue | Est. Time |
+|---|-------|-----------|
+| P1 | Extend silence 15-20f + add ambient tone | 10 min |
+| P2 | Animate house as shadow solidify | 15-20 min |
+| P3 | Add silver outline to Sage (S2) | 10 min |
+| P4 | Add ground plane / earth line | 15 min |
+| P5 | Stagger rainbow flash on buildings | 10 min |
+| P6 | Research Dogon architecture for house | 20 min |
+
+**Recommendation**: APPROVE with revisions (P1+P2+P3 critical for 8.5/10)
+
+**Detailed Review**: `.claude/agent-memory/kimi-reviewer/review-veilleur-v4-2026-02-24.md`
+
+**Next Action**: Implement P1-P3 → mini-render S3-S4 transition → spot-check Kimi → final export
 

@@ -21,6 +21,21 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/circuit-breaker.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/storyboard-gate.sh",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -31,6 +46,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/lint-on-edit.sh",
             "timeout": 30
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/screenshot-qa.sh",
+            "timeout": 10
           }
         ]
       },
@@ -40,6 +60,11 @@
           {
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/auto-kimi-review.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/screenshot-qa.sh",
             "timeout": 10
           }
         ]
