@@ -90,3 +90,6 @@ notebooklm-export/
 .worktrees/
 .security-key
 logs/security/
+
+# Claude runtime state (not code)
+.claude/circuit-breaker-state.json

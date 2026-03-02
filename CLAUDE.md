@@ -343,18 +343,18 @@ Etape 9:   creative-director (verdict)    -> APPROVE / MINOR FIX / RE-EVALUATE
 
 ## Style Visuel du Projet
 
-### Peste 1347 (projet actif)
-- Pixel art medieval : sprites PixelLab (64x64) + tilesets/parallax PixelLab
-- **Perspective par scene** (pixel-art-director decide) :
-  - Scenes carte/propagation : top-down (tilesets grille)
-  - Scenes personnages/action : side-view (parallax 5-6 layers)
-  - Transition entre vues : 4-6 frames noires
-- Pipeline side-view : parallax layers -> sidescroller tileset (sol) -> sprites (2 directions)
-- Pipeline top-down : tileset (sol grille) -> map objects (decor) -> sprites (4-8 directions)
-- INTERDIT : placer sprites CSS sur image peinte (10+ echecs documentes)
-- Palette : 24-32 couleurs max par scene, ramps medieval plague
-- Z-order : side-view = layer order, top-down = Y-sort par pieds
-- Upscale : nearest-neighbor (pas de flou), resolution native x4 = 1920x1080
+### Peste 1347 (projet actif) — PIVOT SVG 2026-02-21
+- **Style actif : SVG enluminure (couleur) + gravure (monochrome)** — pur Remotion, zero pixel art
+- Pipeline : SVG pur React/Remotion (spring, interpolate) — PAS de PixelLab, PAS de sprites
+- Reference style : `memory/svg-enluminure-style-guide.md` + `memory/visual-manifesto.md`
+- Compositions actives : HookBlocA/B/C/D/E, HookMaster, Seg3Fuite, VillageOpeningScene
+- Projets satellites : silhouette-conte/, veilleur-ombre/, style-tests/ (10 styles SVG)
+- Audio : ElevenLabs voix-off, timing derive ffprobe -> storyboarder -> hookTiming.ts
+
+### ARCHIVE — Pipeline pixel art (abandonne 2026-02-21)
+- Pixel art abandonne apres 10+ echecs compositing (CSS sprites sur image peinte)
+- Assets PixelLab conserves dans public/assets/peste-pixel/pixellab/ (reference seulement)
+- Pipeline documente dans memory/pixel-art-assets.md (archive)
 
 ### Style par defaut (autres projets)
 - Personnages colores sur fond pastel (ciel bleu clair, herbe verte douce)
