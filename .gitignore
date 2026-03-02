@@ -34,6 +34,25 @@ Thumbs.db
 # Test frames at root (old iterations)
 brutalist-*.png
 
+# Preview/QA frames at root (Remotion render snapshots, never committed)
+preview-*.png
+preview-*.jpg
+
+# Working documents (HTML briefs, contact sheets)
+creative-brief*.html
+effectslab-*.html
+effectslab-*.png
+
+# Personal progress notes
+progress.md
+
+# Output renders (large MP4s and frames)
+output/
+
+# Web game prototype (out of scope)
+web-game/
+.web-game-tools/
+
 # Private pipeline documents
 remotion fal.ai comfy ui/
 
