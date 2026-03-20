@@ -382,6 +382,23 @@ The skill adapts to different video niches. Each preset modifies hook style, pac
 - [ ] Academic backing from Gemini research is integrated where relevant
 - [ ] Any Aziz-provided materials (NotebookLM notes, personal research) are reflected
 
+## Style References
+
+### Géo/Histoire — Formule César (Culture G)
+Pour tout script de style géographique ou historique (Shorts ou format long), charger :
+- `research/cesar-formula.md` — formule complète disséquée depuis "L'Empire du Mali"
+
+**Quand l'appliquer :** niche GeoAfrique, histoire médiévale, géopolitique narrative, tout sujet où l'angle est "histoire oubliée / réparation narrative".
+
+**Clés à retenir :**
+- Architecture 6 couches (long) / 7 beats 75s (Short) — voir le fichier
+- 10 règles César : sensoriel d'abord, retarder le nom, chiffres précis, triple balancement, indignation collective, épistémique = crédibilité, ponts universels, antithèse structurelle, "tu" direct, bascule nommée
+- 5 sujets prêts à l'emploi (Tombouctou, Reine Nzinga, Abou Bakari II, Abyssinie, Ibn Battûta) avec chiffre + question + épithète pré-formulés
+
+**Compatible avec :** format Long (structure César complète) ET Shorts 60-90s (template compressé dans le fichier).
+
+---
+
 ## Research Foundation
 
 ### Scriptwriting Methodology (permanent reference)

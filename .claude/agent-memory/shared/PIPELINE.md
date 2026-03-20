@@ -2796,3 +2796,72 @@ const SCENE_TOTAL_WITH_BUFFER = 2620;
 
 **Next Action**: Implement P1-P3 → mini-render S3-S4 transition → spot-check Kimi → final export
 
+## 2026-03-17 | Hannibal Alpes Sequence (Stage 8: Kimi Review)
+
+**Project**: Hannibal Series — Alpes Crossing Vertical Epic
+**Date**: 2026-03-17
+**File**: out/hannibal-alpes-sequence.mp4 (17.2 MB)
+**Format**: 1080x1920 (9:16 vertical portrait)
+**Duration**: 18s
+**Reviewer**: Kimi K2.5 (Moonshot native video)
+**Score**: 7.5/10
+**Direction Match**: PARTIAL
+
+### Composition
+- Clip 1 (0-8s): Hannibal turning 180° front→back, army gradual reveal (Kling O3)
+- Clip 2 (8-18s): Full army formation marching into Alps (Kling O3)
+- Text Overlays (Option B): "218 av. J.-C." (mint, 0-3s) | "90 000 hommes" (cream, 9-12s) | "Hannibal traverse les Alpes" (cream, 13.5-18s)
+- Style: Flat 2D illustration, minimalist palette (mint sky, cream snow, navy silhouettes, purple capes)
+
+### Evaluation
+
+| Dimension | Status | Notes |
+|-----------|--------|-------|
+| **Text Timing** | ⚠️ FAIL | "Hannibal traverse les Alpes" extends beyond 18s (frames 390-480 don't exist). Reschedule to frame 270-360 (13.5-18s). |
+| **Text Readability** | ⚠️ Marginal | "218 av. J.-C." (mint) high contrast OK. Both cream texts on white snow need 2px dark outline/shadow for reinforcement. |
+| **Clip Transition (12s mark)** | ⚠️ Verify | Hannibal cape flow direction must remain consistent (turning → walking). Soldier scale proportions must match between clips. Render test required. |
+| **Cinematic Impact** | ✅ Strong | 3-beat structure (isolation → scale → journey) complete in 18s. Vertical 9:16 format enhances epic feeling (tunnel effect). |
+| **Technical Artifacts** | ✅ Clean | No ghosting, color bleed. Layout drift + soldier scale consistency require verification. |
+
+### Critical Checks (All Pass)
+- ✅ Static visual > 10s — Continuous motion (rotation → reveal → march)
+- ✅ Two text simultaneous — Mint 0-3s, cream 9-12s (6s gap), cream 13.5-18s (4.5s gap) — no overlap
+- ✅ Hannibal design coherent — Purple cape consistent, helmet visible in all poses
+- ✅ Element without function — All elements (snow, mountains, soldiers, leader) narrative-functional
+- ✅ Popping — Gradual reveals, no hard cuts
+
+### Top 3 Strengths
+1. **Narrative economy** — Complete historical moment in 18s; 3-beat structure (isolation → scale → journey) textbook cinematic storytelling in vertical format
+2. **Color palette discipline** — Mint/teal/cream/navy/purple distinctive Alpine atmosphere; limited palette unifies disparate elements
+3. **Vertical composition** — 9:16 format becomes asset for epic scale (forced perspective tunnel); mountains tower, soldiers march in narrow corridor
+
+### Top 3 Issues
+| # | Issue | Severity | Est. Fix Time |
+|---|-------|----------|---------------|
+| 1 | "Hannibal traverse les Alpes" exceeds 18s duration | **Medium** | 5 min (reschedule frames) |
+| 2 | Cream text on white snow needs contrast reinforcement | Low-Medium | 5 min (add shadow/outline) |
+| 3 | Clip transition (12s mark) requires verification | **Low** | 10 min (test render) |
+
+### Action Items
+- [ ] P1 (5 min): Reschedule "Hannibal traverse les Alpes" from frame 390-480 to frame 270-360 (13.5-18s, 4.5s duration)
+- [ ] P2 (5 min): Add 2px dark outline/drop shadow to both cream text overlays (Option B)
+- [ ] P3 (10 min, verify): Test render at 12s mark — confirm cape flow continuity + soldier scale consistency between clips
+- [ ] P4 (optional): Verify Hannibal center position doesn't drift horizontally between clips
+
+### Pattern Learning
+- **Vertical format advantage**: Forced perspective tunnel (narrow frame, tall mountains) enhances claustrophobia and challenge of Alpine journey vs landscape
+- **Text timing boundary checks**: Reschedule critical when final duration differs from template design; frames 390-480 → account for actual MP4 length
+- **Cream on white always needs reinforcement**: In flat 2D minimalist style, cream text on white snow requires outline/shadow — no exceptions
+
+### Recommendation
+**APPROVE WITH MINOR FIXES** — All issues actionable and quick. Post-fix target: 8.2-8.5/10. No narrative or composition rework needed.
+
+**Detailed Review**: `.claude/agent-memory/kimi-reviewer/hannibal-alpes-sequence-review-2026-03-17.md`
+
+**Next Action**: 
+1. Implement P1 + P2 (10 min total)
+2. Render test at 12s mark (P3, 10 min)
+3. Spot-check against Kimi brief → final approval
+
+---
+

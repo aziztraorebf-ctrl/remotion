@@ -5,5 +5,5 @@
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #768 | 8:59 AM | ✅ | PES 1347 source image copied into project assets | ~331 |
+| #782 | 9:01 AM | 🟣 | Scene Manifest System Implementation - Beat03 Declarative Configuration | ~524 |
 </claude-mem-context>

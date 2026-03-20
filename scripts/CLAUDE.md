@@ -1,17 +1,10 @@
 <claude-mem-context>
 # Recent Activity
 
-### Feb 16, 2026
+### Mar 17, 2026
 
 | ID | Time | T | Title | Read |
 |----|------|---|-------|------|
-| #226 | 9:12 AM | 🟣 | Integrated Kimi K2.5 as automated video review agent via OpenRouter API | ~374 |
-| #229 | " | 🔴 | Fixed OpenRouter API authentication and video format incompatibility issues | ~388 |
-
-### Feb 17, 2026
-
-| ID | Time | T | Title | Read |
-|----|------|---|-------|------|
-| #305 | 10:12 PM | ⚖️ | GPT-Image-1 Panoramic Background Caused Style Regression in HookBloc1SideView | ~793 |
-| #263 | 8:51 AM | 🟣 | Moonshot AI / Kimi K2.5 Direct API Integration Scripts Created | ~381 |
+| #766 | 8:59 AM | 🔵 | Beat04 Image Generation Script - Critical O3 Animation Constraint | ~500 |
+| #750 | 8:57 AM | 🟣 | Created brainstorm visual generation script for content exploration | ~517 |
 </claude-mem-context>

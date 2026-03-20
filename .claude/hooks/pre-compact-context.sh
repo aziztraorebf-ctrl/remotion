@@ -20,6 +20,15 @@ cat <<CONTEXT
 ## Active Project: Peste 1347
 $PROJ_STATE
 
+## PROJET SATELLITE : GeoAfrique — Abou Bakari II
+- COMPOSANT : src/projects/geoafrique-shorts/AbouBakariShort.tsx (A RECONSTRUIRE beat-by-beat)
+- AUDIO VALIDE : public/audio/abou-bakari/stephyra-v2-noms-fixes.mp3 (54s, Stephyra)
+- STORYBOARD : tmp/storyboard-abou-bakari/ (8 PNG + storyboard.html)
+- SVG MANSA FINAL : tmp/storyboard-abou-bakari/03-mansa-v3.svg (Gemini 3.1 Pro — UTILISER CE FICHIER)
+- TIMINGS : src/projects/geoafrique-shorts/timing.ts (Whisper, 30fps, NE PAS RECALCULER)
+- MEMOIRE COMPLETE : memory/geoafrique-abou-bakari.md (LIRE AVANT DE TOUCHER CE PROJET)
+- METHODE : Beat-by-Frame — coder 1 beat, mini-render, valider, passer au suivant. Storyboard ouvert en reference.
+
 ## AGENTS SPECIALISES (4 agents, DECLENCHEMENT OBLIGATOIRE)
 1. creative-director: AVANT de coder une scene (direction review) + AVANT render >30 frames (preflight)
 2. pixel-art-director: APRES Direction Brief, AVANT assets (composition, perspective, palette)

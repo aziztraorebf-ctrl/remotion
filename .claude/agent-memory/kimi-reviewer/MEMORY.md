@@ -2,6 +2,28 @@
 
 ## Review History
 
+### 2026-03-15 - beat05-moussa-grandeur-v1.mp4 (GeoAfrique Beat05 — Mansa Moussa Succession Crane Shot)
+- **Score**: 7.2/10
+- **Verdict**: MINOR FIX (usable but compromised — character/style perfect, camera movement weak)
+- **Direction Match**: PARTIAL — Flat 2D style ✅, character stability ✅, camera movement ❌
+- **Scene**: 5s Kling V3 Pro succession scene — Mansa Moussa on throne, intended Crane Up + Dolly Out
+- **Main Achievement**: Character design + flat vector style fully realized. Face/crown/beard/robe morphing-free.
+- **5-Dimension Scores**:
+  1. Movement execution: 5/10 — Vertical crane present BUT dolly out weak (character locked at 55%), background sliding effect detected (columns/arches float unnaturally)
+  2. Style preservation: 9/10 — Flat 2D vector maintained perfectly, color palette (burgundy/gold/emerald) consistent, no photorealism drift
+  3. Character stability: 9/10 — Face, crown, beard, robe, hands all rock-solid, zero morphing
+  4. Narrative fit: 6/10 — Rising camera suggests elevation but lacks "scale reveal" essential to succession beat. Feels like vertical pan, not majestic crane.
+  5. Technical cleanliness: 7/10 — Background parallax artifact detected (floor pattern drift), no blocking corruption, no color banding
+- **Critical Issue**: Background sliding/parallax artifact — Kling treated background as 2D layers instead of 3D space. Character shrinkage insufficient (should recede from 55% to 35% frame).
+- **Action Items**:
+  - P1 (blocking): Re-prompt with "true camera crane up 3 meters AND dolly back 4 meters. Subject shrinks to 35% frame. Dramatic perspective shift."
+  - P2: Consider Gen-3 or Runway if Kling can't resolve parallax
+  - P3 (optional): Compositing fix in Remotion (CSS transform + rescaling) if approved for timeline
+- **Status**: APPROVE FOR STYLE/CHARACTER REFERENCE ONLY — BLOCK FOR PRIMARY VIDEO SOURCE
+- **Cost**: $0.0090 (Moonshot native video)
+- **Detailed review**: see `beat05-moussa-grandeur-v1-review-2026-03-15.md`
+- **Pattern Learning**: Kling V3 excellent for character/style preservation, struggles with true 3D camera movements (parallax issues). Works best for: vertical pans, static shots with character animation. Avoid: crane+dolly, complex 3D perspective shifts.
+
 ### 2026-02-22 - hookbloce-v2.mp4 (Reframe + 6 Archetypes - Humans + Reflexes During Crisis)
 - **Score**: 8.5/10 (APPROVED FOR INTEGRATION)
 - **Verdict**: APPROVED FOR INTEGRATION — Direction brief executed with surgical precision
