@@ -655,7 +655,7 @@ const EngraveCharacter: React.FC<EngraveCharProps> = ({
                     Q ${-HEAD_W * 0.08} ${-HEAD_H * 0.96} ${HEAD_W * 0.32} ${-HEAD_H * 0.7}
                     Q ${HEAD_W * 0.56} ${-HEAD_H * 0.52} ${HEAD_W * 0.46} ${-HEAD_H * 0.22} Z`} />
               </clipPath>
-              <rect x={-HEAD_W * 0.5} y={-HEAD_H} w={HEAD_W * 1.0} h={HEAD_H * 0.88}
+              <rect x={-HEAD_W * 0.5} y={-HEAD_H} width={HEAD_W * 1.0} height={HEAD_H * 0.88}
                 fill="url(#crosshatch)" opacity={0.3} clipPath={`url(#hat-${uid})`} />
             </g>
           )}

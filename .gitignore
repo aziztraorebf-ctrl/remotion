@@ -93,3 +93,16 @@ logs/security/
 
 # Claude runtime state (not code)
 .claude/circuit-breaker-state.json
+.mcp.json
+
+# Generated video assets (large binaries — not source code)
+public/assets/geoafrique/*.mp4
+public/assets/geoafrique/*.png
+public/assets/geoafrique/*.webp
+public/assets/geoafrique/characters/
+public/assets/geoafrique/recraft-test/
+public/assets/geoafrique/recraft-v4/
+public/assets/hannibal test/
+public/assets/map-*.png
+public/assets/peste-pixel/peste-scene-*.png
+public/assets/peste-pixel/peste-scene-*.webp

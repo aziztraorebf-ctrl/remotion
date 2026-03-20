@@ -14,6 +14,33 @@ Claude ecrit TOUT le code. Zero code requis de la part d'Aziz.
 4. Charger les fichiers thematiques pertinents selon la demande (apis, learnings, styles...)
 **Ne JAMAIS affirmer "je ne peux pas" ou "je n'ai pas acces" sans avoir d'abord consulte la memoire.**
 
+### Regle : Review visuelle AVANT Kimi (NON-NEGOTIABLE)
+
+**Claude DOIT regarder lui-meme tout render/image/video AVANT d'envoyer a Kimi et AVANT de presenter a Aziz.**
+
+- Utiliser le Read tool sur l'image/video pour l'analyser visuellement
+- Identifier soi-meme : morphing, style drift, elements hors-cadre, texte parasite, composition
+- Former son propre jugement : "cette image est-elle prete pour Kling ?" / "ce clip est-il acceptable ?"
+- Seulement APRES cette analyse personnelle : envoyer a Kimi avec un brief precis de ce qu'on a observe
+- Ne JAMAIS presenter un resultat a Aziz sans l'avoir soi-meme analyse
+
+**Raison :** Kimi n'a pas le contexte complet de ce qu'on cherche (storyboard, objectif narratif, tolerance visuelle). Claude + Kimi ensemble = meilleur filtre. Claude seul sans Kimi = risque de manquer des artefacts subtils.
+
+**Format du brief Kimi :** "J'ai observe [X]. Confirme ou infirme, et cherche aussi [Y]."
+
+---
+
+### Regle : Code existant vs Decision documentee (NON-NEGOTIABLE)
+
+**Si un fichier de code contredit une decision documentee dans COMPACT_CURRENT :**
+- Le fichier est FAUX. La decision prime TOUJOURS.
+- STOP. Signaler le conflit a Aziz en une phrase avant de toucher quoi que ce soit.
+- Ne JAMAIS "continuer sur le code existant" si ce code contredit une decision architecturale.
+
+**Exemple d'erreur a ne pas reproduire :** AbouBakariShort.tsx contenait du code SVG geometrique alors que COMPACT_CURRENT documentait clairement un pipeline Recraft→Kling. Claude a suivi le code au lieu de la decision → perte de temps et confusion.
+
+---
+
 ### Regle : Doc-First avant toute affirmation sur un outil (NON-NEGOTIABLE)
 
 **Avant d'affirmer quoi que ce soit sur les CAPACITES d'un outil (PixelLab, Aseprite, Phaser, ElevenLabs, ou tout autre outil du projet) :**
@@ -176,6 +203,7 @@ Aziz decrit la scene en francais
 - `GEMINI_API_KEY` : Deep Research via Interactions API (pas de citations URL via API)
 - `XAI_API_KEY` : Grok + web_search + x_search (retourne URLs dans annotations)
 - `PIXELLAB_API_KEY` : PixelLab MCP + API v2 (2000 gens/mois)
+- `RECRAFT_API_KEY` : Recraft V4 Vector — generation SVG natif (MCP : `@recraft-ai/mcp-recraft-server`)
 - `FAL_KEY` : fal.ai image generation (flux/dev, ESRGAN)
 - Stocker dans `.env` (JAMAIS dans le code ou les commits)
 
@@ -184,6 +212,20 @@ Aziz decrit la scene en francais
 - **Silent failure pattern** : si `get_character` retourne "Animations: None yet" apres 3+ minutes = relancer le job (pas attendre)
 - **Jamais annoncer "j'attends X minutes" sans executer le sleep** : utiliser `Bash sleep` pour forcer l'attente reelle avant le poll
 - **Toutes les actions async** (PixelLab, renders, generation audio) : meme protocole — sleep -> poll -> verifier -> continuer
+
+### Regle : Langage naturel d'Aziz → Claude traduit (NON-NEGOTIABLE)
+
+**Aziz parle en termes visuels et narratifs. Claude traduit en actions techniques au bon endroit.**
+
+- Aziz dit "change le texte rouge qui arrive à la fin" → Claude va dans le manifest du beat concerné, trouve la ligne, modifie `appearsAt` ou la couleur. Aziz ne dit jamais "manifest", "frame", ni chemin de fichier.
+- Aziz dit "génère une scène avec Abou Bakari" → Claude va chercher le REF canonique dans `public/assets/library/` automatiquement, sans qu'Aziz ait à le mentionner.
+- **Règle absolue** : si Claude demande à Aziz un chemin de fichier, un numéro de frame, ou un nom de variable — Claude fait mal son travail. Claude cherche lui-même.
+
+**Ces systèmes existent pour Claude, pas pour Aziz :**
+- `public/assets/library/` : assets REF canoniques par personnage/projet — Claude consulte à chaque génération d'image
+- `src/projects/*/manifests/` : valeurs visuelles des scènes (timing, couleurs, textes) — Claude consulte et modifie en réponse aux retours visuels d'Aziz
+
+---
 
 ### Capacites Image & Assets (TOUTES PROUVEES - ne pas oublier)
 - **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
@@ -347,7 +389,7 @@ Etape 9:   creative-director (verdict)    -> APPROVE / MINOR FIX / RE-EVALUATE
 - **Style actif : SVG enluminure (couleur) + gravure (monochrome)** — pur Remotion, zero pixel art
 - Pipeline : SVG pur React/Remotion (spring, interpolate) — PAS de PixelLab, PAS de sprites
 - Reference style : `memory/svg-enluminure-style-guide.md` + `memory/visual-manifesto.md`
-- Compositions actives : HookBlocA/B/C/D/E, HookMaster, Seg3Fuite, VillageOpeningScene
+- Compositions actives : HookBlocA/B/C/D/E, HookMaster, Seg3Fuite
 - Projets satellites : silhouette-conte/, veilleur-ombre/, style-tests/ (10 styles SVG)
 - Audio : ElevenLabs voix-off, timing derive ffprobe -> storyboarder -> hookTiming.ts
 

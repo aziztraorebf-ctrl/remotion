@@ -1,24 +1,6 @@
 import { Composition, Folder } from "remotion";
 import { BlankComposition } from "./BlankComposition";
-import { CharacterTest } from "./projects/hello-world/scenes/CharacterTest";
-import { HelloWorld } from "./projects/hello-world/scenes/HelloWorld";
-import { SpeedReading } from "./projects/speed-reading/scenes/SpeedReading";
-import {
-  speedReadingConfig,
-  getTotalDurationInFrames,
-} from "./projects/speed-reading/config/speedReadingConfig";
-import { RetroExplainer } from "./projects/retro-explainer/scenes/RetroExplainer";
-import { DataVizExplainer } from "./projects/data-viz-explainer/scenes/DataVizExplainer";
-import { BrutalistFinance } from "./projects/brutalist-finance/scenes/BrutalistFinance";
-import { SCENE_TIMING } from "./projects/brutalist-finance/config/theme";
-import { PixelWorldV5 } from "./projects/peste-1347-pixel/scenes/PixelWorldV5";
-import { PixelWorldV6 } from "./projects/peste-1347-pixel/scenes/PixelWorldV6";
-import { HookScene } from "./projects/peste-1347-pixel/scenes/HookScene";
-import { HookSceneSideView } from "./projects/peste-1347-pixel/scenes/HookSceneSideView";
-import { IsoVillageScene } from "./projects/peste-1347-pixel/scenes/IsoVillageScene";
-import { VillageOpeningScene } from "./projects/peste-1347-pixel/scenes/VillageOpeningScene";
 import { FPS as PESTE_FPS } from "./projects/peste-1347-pixel/config/timing";
-import { HOOK_TOTAL_FRAMES } from "./projects/peste-1347-pixel/config/hookTiming";
 import { HookBlocA } from "./projects/peste-1347-pixel/scenes/HookBlocA";
 import { HookBlocB } from "./projects/peste-1347-pixel/scenes/HookBlocB";
 import { HookBlocC } from "./projects/peste-1347-pixel/scenes/HookBlocC";
@@ -34,8 +16,6 @@ import StyleCutout from "./projects/style-tests/StyleCutout";
 import StyleMotion from "./projects/style-tests/StyleMotion";
 import StyleEngravings from "./projects/style-tests/StyleEngravings";
 import { SideScrollProto } from "./projects/style-tests/SideScrollProto";
-import { PaperCutProto } from "./projects/style-tests/PaperCutProto";
-import { SideViewPrototypeCodex } from "./projects/style-tests/SideViewPrototypeCodex";
 import { TopDownVillage } from "./projects/style-tests/TopDownVillage";
 import { ParchmentTransition } from "./projects/style-tests/ParchmentTransition";
 import { Enluminure } from "./projects/style-tests/Enluminure";
@@ -45,95 +25,88 @@ import { EnluminureGravureProto } from "./projects/style-tests/EnluminureGravure
 import { ParcheminMapProto } from "./projects/style-tests/ParcheminMapProto";
 import { CharacterSheet } from "./projects/style-tests/CharacterSheet";
 import { EffectsLab } from "./projects/style-tests/EffectsLab";
+import { GeoLabBW } from "./projects/style-tests/GeoLabBW";
+import { RecraftFlotteTest } from "./projects/style-tests/RecraftFlotteTest";
+import { VerticalFlotteShort } from "./projects/geoafrique-shorts/components/VerticalFlotteShort";
+import { GeoStyleShowcase } from "./projects/style-tests/GeoStyleShowcase";
+import { GeoAdvanced } from "./projects/style-tests/GeoAdvanced";
+import { GeoAdvancedV2 } from "./projects/style-tests/GeoAdvancedV2";
+import { GeoShortProto } from "./projects/style-tests/GeoShortProto";
+import { GeoShortV2 } from "./projects/style-tests/GeoShortV2";
+import { GeoShortTaiwan } from "./projects/style-tests/GeoShortTaiwan";
+import { InfoShortDollar } from "./projects/style-tests/InfoShortDollar";
+import { ParcheminLab } from "./projects/style-tests/ParcheminLab";
+import { StickFigureProto } from "./projects/style-tests/StickFigureProto";
+import { CharInteractionDemo } from "./projects/style-tests/CharInteractionDemo";
+import { AmanirenasBattleMap } from "./projects/style-tests/AmanirenasBattleMap";
+import { HannibalNarration } from "./projects/style-tests/HannibalNarration";
+import { HannibalAlpesSequence } from "./projects/style-tests/HannibalAlpesSequence";
 import { StyleShowcase } from "./projects/style-tests/showcase/StyleShowcase";
 import { LionEtLaRiviere } from "./projects/silhouette-conte/scenes/LionEtLaRiviere";
 import { VeilleurOmbre } from "./projects/veilleur-ombre/scenes/VeilleurOmbre";
+import { SilhouetteShowcase } from "./projects/veilleur-ombre/scenes/SilhouetteShowcase";
+import { ColorComparison } from "./projects/veilleur-ombre/scenes/ColorComparison";
+import { ContrastLab } from "./projects/veilleur-ombre/scenes/ContrastLab";
+import { NightPaletteFinal } from "./projects/veilleur-ombre/scenes/NightPaletteFinal";
+import { NightPaletteFinalV2 } from "./projects/veilleur-ombre/scenes/NightPaletteFinalV2";
+import { UnParmiTous } from "./projects/silhouette-questions/scenes/UnParmiTous";
 import { TOTAL_FRAMES as VEILLEUR_FRAMES } from "./projects/veilleur-ombre/config/veilleurTiming";
-
-const speedReadingDuration = getTotalDurationInFrames(speedReadingConfig);
+import { AbouBakariShort } from "./projects/geoafrique-shorts/AbouBakariShort";
+import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
+import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
+import { Beat03FleetManifest } from "./projects/geoafrique-shorts/components/Beat03FleetManifest";
+import { TOTAL_FRAMES_WITH_CTA as ABOU_FRAMES, BEATS } from "./projects/geoafrique-shorts/timing";
 
 export const RemotionRoot: React.FC = () => {
   return (
     <>
-      <Folder name="hello-world">
+      <Folder name="geoafrique-shorts">
         <Composition
-          id="BlankComposition"
-          component={BlankComposition}
-          durationInFrames={90}
+          id="AbouBakariShort"
+          component={AbouBakariShort}
+          durationInFrames={ABOU_FRAMES}
           fps={30}
-          width={1920}
-          height={1080}
+          width={1080}
+          height={1920}
         />
         <Composition
-          id="CharacterTest"
-          component={CharacterTest}
-          durationInFrames={120}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="HelloWorld"
-          component={HelloWorld}
+          id="VerticalFlotteShort"
+          component={VerticalFlotteShort}
           durationInFrames={300}
           fps={30}
-          width={1920}
-          height={1080}
+          width={1080}
+          height={1920}
         />
-      </Folder>
-      <Folder name="brain-challenges">
         <Composition
-          id="SpeedReading"
-          component={SpeedReading}
-          durationInFrames={speedReadingDuration}
+          id="Beat01DollyInTest"
+          component={Beat01DollyInTest}
+          durationInFrames={150}
           fps={30}
-          width={1920}
-          height={1080}
+          width={1080}
+          height={1920}
         />
-      </Folder>
-      <Folder name="retro-explainer">
         <Composition
-          id="RetroExplainer"
-          component={RetroExplainer}
-          durationInFrames={960}
+          id="Beat01OceanOverlayTest"
+          component={Beat01OceanOverlayTest}
+          durationInFrames={408}
           fps={30}
-          width={1920}
-          height={1080}
+          width={1080}
+          height={1920}
         />
-      </Folder>
-      <Folder name="data-viz-explainer">
         <Composition
-          id="DataVizExplainer"
-          component={DataVizExplainer}
-          durationInFrames={2100}
+          id="Beat03FleetManifest"
+          component={Beat03FleetManifest}
+          durationInFrames={BEATS.fleet.end - BEATS.fleet.start}
           fps={30}
-          width={1920}
-          height={1080}
+          width={1080}
+          height={1920}
         />
       </Folder>
-      <Folder name="brutalist-finance">
-        <Composition
-          id="BrutalistFinance"
-          component={BrutalistFinance}
-          durationInFrames={SCENE_TIMING.totalFrames}
-          fps={SCENE_TIMING.fps}
-          width={1920}
-          height={1080}
-        />
-      </Folder>
-      <Folder name="peste-1347-pixel">
+      <Folder name="peste-1347">
         <Composition
           id="HookMaster"
           component={HookMaster}
           durationInFrames={2428}
-          fps={PESTE_FPS}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Seg3Fuite"
-          component={Seg3Fuite}
-          durationInFrames={2620}
           fps={PESTE_FPS}
           width={1920}
           height={1080}
@@ -179,50 +152,10 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="HookBloc1"
-          component={HookScene}
-          durationInFrames={HOOK_TOTAL_FRAMES}
+          id="Seg3Fuite"
+          component={Seg3Fuite}
+          durationInFrames={2588}
           fps={PESTE_FPS}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="HookBloc1SideView"
-          component={HookSceneSideView}
-          durationInFrames={HOOK_TOTAL_FRAMES}
-          fps={PESTE_FPS}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="PixelWorldV5"
-          component={PixelWorldV5}
-          durationInFrames={300}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="PixelWorldV6"
-          component={PixelWorldV6}
-          durationInFrames={300}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="IsoVillage"
-          component={IsoVillageScene}
-          durationInFrames={300}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="VillageOpening"
-          component={VillageOpeningScene}
-          durationInFrames={360}
-          fps={30}
           width={1920}
           height={1080}
         />
@@ -293,24 +226,6 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="SideViewPrototypeCodexClean"
-          component={SideViewPrototypeCodex}
-          durationInFrames={360}
-          fps={30}
-          width={1920}
-          height={1080}
-          defaultProps={{ debug: false }}
-        />
-        <Composition
-          id="SideViewPrototypeCodexDebug"
-          component={SideViewPrototypeCodex}
-          durationInFrames={360}
-          fps={30}
-          width={1920}
-          height={1080}
-          defaultProps={{ debug: true }}
-        />
-        <Composition
           id="TopDownVillage"
           component={TopDownVillage}
           durationInFrames={300}
@@ -375,12 +290,132 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
+          id="GeoLabBW"
+          component={GeoLabBW}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="GeoStyleShowcase"
+          component={GeoStyleShowcase}
+          durationInFrames={2100}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="GeoAdvanced"
+          component={GeoAdvanced}
+          durationInFrames={1200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="GeoAdvancedV2"
+          component={GeoAdvancedV2}
+          durationInFrames={1500}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="GeoShortProto"
+          component={GeoShortProto}
+          durationInFrames={1350}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="GeoShortV2"
+          component={GeoShortV2}
+          durationInFrames={1800}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="GeoShortTaiwan"
+          component={GeoShortTaiwan}
+          durationInFrames={2160}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="InfoShortDollar"
+          component={InfoShortDollar}
+          durationInFrames={2100}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="StickFigureProto"
+          component={StickFigureProto}
+          durationInFrames={1800}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="CharInteractionDemo"
+          component={CharInteractionDemo}
+          durationInFrames={1800}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ParcheminLab"
+          component={ParcheminLab}
+          durationInFrames={3000}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
           id="StyleShowcase"
           component={StyleShowcase}
           durationInFrames={3000}
           fps={30}
           width={1920}
           height={1080}
+        />
+        <Composition
+          id="RecraftFlotteTest"
+          component={RecraftFlotteTest}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="AmanirenasBattleMap"
+          component={AmanirenasBattleMap}
+          durationInFrames={300}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="HannibalNarration"
+          component={HannibalNarration}
+          durationInFrames={300}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="HannibalAlpesSequence"
+          component={HannibalAlpesSequence}
+          durationInFrames={542}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
       <Folder name="silhouette-conte">
@@ -392,6 +427,8 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+      </Folder>
+      <Folder name="veilleur-ombre">
         <Composition
           id="VeilleurOmbre"
           component={VeilleurOmbre}
@@ -400,6 +437,56 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        <Composition
+          id="SilhouetteShowcase"
+          component={SilhouetteShowcase}
+          durationInFrames={1200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ColorComparison"
+          component={ColorComparison}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ContrastLab"
+          component={ContrastLab}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="NightPaletteFinal"
+          component={NightPaletteFinal}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="NightPaletteFinalV2"
+          component={NightPaletteFinalV2}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      </Folder>
+      <Folder name="silhouette-questions">
+        <Composition
+          id="UnParmiTous"
+          component={UnParmiTous}
+          durationInFrames={3600}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
       </Folder>
       <Folder name="effect-lab">
         <Composition
@@ -407,6 +494,14 @@ export const RemotionRoot: React.FC = () => {
           component={HookTransitionProto}
           durationInFrames={90}
           fps={PESTE_FPS}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="BlankComposition"
+          component={BlankComposition}
+          durationInFrames={90}
+          fps={30}
           width={1920}
           height={1080}
         />

@@ -453,7 +453,7 @@ export const ParchmentTransition: React.FC = () => {
               totalLength={width - 160}
               progress={groundProgress}
               stroke={INK}
-              strokeWidth="2.5"
+              strokeWidth={2.5}
             />
 
             {/* Herbe esquissee sous le sol */}
