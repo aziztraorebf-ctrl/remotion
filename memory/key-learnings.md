@@ -1341,6 +1341,29 @@ Ces ajouts sont positifs et coherents avec l'esthetique. Les laisser faire.
 - Style graphique (flat vs semi-realiste)
 - Cohesion visuelle entre personnage principal et soldats secondaires
 
+---
+
+## Gemini chirurgical — Edition image de precision
+
+**Fait** : Gemini (flash image preview / Imagen edit) peut corriger des details precis (oeil ferme, couronne, silhouette, pieds) sur une image existante tout en preservant exactement le reste.
+
+**Regle** : TOUJOURS tenter la correction Gemini avant de regenerer l'image entiere.
+- Regenerer = risque de derive (proportions, palette, style, coherence personnage)
+- Gemini edit = meme image, detail corrige, zero drift
+
+**Cas d'usage confirmes** :
+- Oeil ferme/cicatrice (Amanirenas — deux yeux ouverts corriges)
+- Couronne/bijou repositionne
+- Silhouette de guerrier retouchee
+- Sol/pieds ancres dans le decor
+- Lumiere uniforme sur les armees
+
+**Script pattern** : `scripts/gemini-fix-*.py` et `scripts/gemini-edit-*.py`
+
+**Valide par Aziz** : "Incroyable comment Gemini est capable de vraiment faire des modifications precises et garder l'image. C'est l'un des plus beaux atouts de notre arsenal." (2026-03-16)
+
+---
+
 ### Assets canoniques pour Hannibal
 - Hannibal REF : `tmp/brainstorm/references/hannibal-portrait-REF-CANONICAL.png`
 - Soldat type REF (de dos) : `tmp/brainstorm/references/hannibal-soldier-type-REF.png`

@@ -28,6 +28,11 @@ Claude ecrit TOUT le code. Zero code requis de la part d'Aziz.
 
 **Format du brief Kimi :** "J'ai observe [X]. Confirme ou infirme, et cherche aussi [Y]."
 
+**Hierarchie de decision apres review Kimi :**
+- Le score Kimi est une reference technique, pas un verdict final
+- Quand le score et le ressenti visuel d'Aziz divergent, le jugement d'Aziz prime
+- Kimi detecte les artefacts techniques ; Aziz juge la vision narrative et l'impact
+
 ---
 
 ### Regle : Code existant vs Decision documentee (NON-NEGOTIABLE)
@@ -228,6 +233,7 @@ Aziz decrit la scene en francais
 ---
 
 ### Capacites Image & Assets (TOUTES PROUVEES - ne pas oublier)
+- **Gemini edition chirurgicale** : meilleur outil pour corrections precises (oeil, bijou, couronne, silhouette, pieds) tout en preservant l'image source intacte — TOUJOURS essayer avant de regenerer. Voir `memory/key-learnings.md` § "Gemini chirurgical".
 - **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
 - **Pixel art sprites** : PixelLab MCP (characters, animations, tilesets) + API v2 (concept-to-character, animate-with-text)
 - **Voix-off** : ElevenLabs (voix Chris, fr, markers TTS)
@@ -358,6 +364,7 @@ Etape 9:   creative-director (verdict)    -> APPROVE / MINOR FIX / RE-EVALUATE
 - **spring() > interpolate()** pour mouvements naturels. Configs : `{damping: 200}` (smooth), `{damping: 20, stiffness: 200}` (snappy), `{damping: 8}` (bouncy)
 - **Toujours premountFor sur les Sequence** : `<Sequence premountFor={1 * fps}>` pour precharger les composants
 - **Toujours clamp les interpolations** : `extrapolateRight: 'clamp', extrapolateLeft: 'clamp'`
+- **Mouvements camera geo (pan/dolly)** : utiliser `interpolate()` continu sur toute la plage de frames — jamais segmenter en blocs CSS ou recalculer par segment. Les micro-pauses entre segments causent des saccades visibles.
 
 #### Transitions entre scenes
 - Utiliser `TransitionSeries` de `@remotion/transitions` (fade, slide, wipe, flip, clockWipe)
