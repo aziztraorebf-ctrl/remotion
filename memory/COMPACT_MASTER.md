@@ -90,14 +90,61 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - Etat : **BEATS 01-09 TOUS COMPLETES** — reste musique Suno + render final
 - Details etat : `memory/COMPACT_CURRENT.md`
 
-### GeoAfrique — Shorts Actualite (decisions 2026-03-22)
-- **Format** : Shorts 60-75s geopolitique africaine, 100% genere, sujet issu veille quotidienne
-- **Voix** : narratrice Chris unique (meme que Abou Bakari) — coherence = marque
-- **4 templates rotation** : Le Chiffre / La Carte Vivante / Le Visage / La Question
-- **Assets** : Gemini/GPT-Image (portraits), Gemini (cartes fond), SVG d3-geo (cartes animees), Recraft (icones), SVG pur (geometrique)
-- **Regle cle** : SVG pur pour geometrique, IA generative pour figuratif. Jamais de visage en SVG pur.
-- **Differenciation** : angle editorial ("Ce qu'on ne te dit pas") + rotation templates + style carte enluminure
-- Details complets : `memory/COMPACT_CURRENT.md` § "GeoAfrique Shorts Actualite"
+### GeoAfrique — Shorts Actualite — Architecture (decisions 2026-03-22)
+
+> Decisions validees par Aziz. Le sujet change chaque jour (veille quotidienne), l'architecture reste.
+
+**Concept :**
+- Chaine YouTube Shorts geopolitique africaine — "Le regard depuis le continent"
+- Angle editorial : "Ce qu'on ne te dit pas" + question ouverte en fin de Short
+- 100% genere (pas de B-roll humain, pas de presenter)
+- Sujets issus de la veille quotidienne automatique (Section 2 "Selection editoriale")
+
+**Voix — UNE voix unique pour toute la chaine :**
+- Narratrice GeoAfrique V3 (`Y8XqpS6sj6cx5cCTLp8a`) — accent West Africa subtil
+- Meme voix pour historique ET actualite — coherence = marque
+- Differentiation du ton via : parametres ElevenLabs + ecriture du script (pauses, ponctuation)
+- Deuxieme voix masculine (`ICHuIqamER7XZMdm2HYC`) envisageable plus tard, pas prioritaire
+
+**4 Templates en Rotation (anti-slop) :**
+| Template | Quand | Signature visuelle |
+|----------|-------|--------------------|
+| **Le Chiffre** | Hook = un chiffre frappant (94,82%, 600k morts, 52 ans) | Chiffre geant plein ecran → zoom out → contexte. Typo forte, minimaliste. |
+| **La Carte Vivante** | Conflit territorial (Tigre, Rubaya, Sahel) | Carte stylisee SVG enluminure (PAS Google Earth). Style medieval/manuscrit. |
+| **Le Visage** | Personnage central (Sassou, Traore, Abiy) | Portrait stylise IA (Gemini/GPT-Image) + timeline de pouvoir visuelle. |
+| **La Question** | Angle = question que personne ne pose | Texte manuscrit qui s'ecrit, style tableau noir / carnet journaliste. |
+
+Rotation obligatoire — jamais 2 Shorts consecutifs avec le meme template.
+
+**Pipeline Assets — Qui fait quoi :**
+| Besoin | Outil |
+|--------|-------|
+| Portrait personnage reel (Sassou, Traore) | Gemini / GPT-Image (illustration editoriale) |
+| Personnage historique (Abou Bakari, Mansa Musa) | Recraft V4 / Gemini (style enluminure) |
+| Silhouettes, icones, symboles, drapeaux | SVG pur (Claude) |
+| Carte geographique fond | Gemini (stylise, modifiable vite) |
+| Carte animee (zoom, overlays, highlights) | SVG d3-geo Remotion |
+| Icones/illustrations flat | Recraft V4 Vector (SVG natif) |
+| Texte/chiffres animes | Remotion pur (spring + interpolate) |
+| Graphiques/data | SVG pur Remotion |
+
+**Regle cle : SVG pur pour le geometrique, IA generative pour le figuratif. Jamais de visage en SVG pur.**
+
+**Differenciation vs chaines slop :**
+- L'angle editorial EST la differenciation (pas le format technique)
+- "Ce qu'on ne te dit pas" = systematique, aucune chaine francophone ne le fait
+- Question ouverte en fin = engagement commentaires
+- Rotation de templates = imprevisibilite = retention
+- Style carte enluminure/manuscrit (pas Google Earth) = identite visuelle unique
+
+**Structure type Short actualite (60-75s) :**
+| Segment | Duree | Contenu |
+|---------|-------|---------|
+| Hook | 0-3s | Pattern interrupt (chiffre, fait surprenant) |
+| Contexte minimal | 3-15s | Qui, ou, quand — facts only |
+| Angle non-mainstream | 15-45s | "Ce qu'on ne te dit pas" — l'analyse |
+| Question ouverte | 45-60s | La question que personne ne pose |
+| CTA newsletter | 60-75s | "La veille complete — lien en bio" |
 
 ### Methodes Kling (valides 2026-03-16)
 | Methode | Endpoint | Quand |
