@@ -1143,6 +1143,24 @@ Multi-shot O3 : flotte → dolly out → plan large océan étoilé.
 Format : `"Shot 1 (0-6s): [description + camera]. Shot 2 (6-11s): [description]. Shot 3 (11-15s): [description]."`
 Script de référence : `scripts/generate-beat04-kling-v2.py`
 
+### Multi-shot vs Start-End Frame — NE PAS CONFONDRE (2026-03-22)
+
+**Multi-shot** = plusieurs angles de camera dans UN SEUL clip Kling (jusqu'a 15s).
+- Usage : quand on veut montrer un sujet sous plusieurs angles dans le meme clip
+- Exemple valide : orbiter autour d'un portrait (face → profil → dos)
+- Structure : `"Shot 1 (0-5s): close-up face. Shot 2 (5-10s): side profile. Shot 3 (10-15s): wide establishing."`
+
+**Start-End Frame** = UN SEUL mouvement camera continu entre 2 images.
+- Usage : mouvement camera simple et continu (drone, push-in, pan)
+- Exemple valide : survol aerien d'une ville (5-10s)
+
+**Regle de choix :**
+- Si le beat a besoin de texte/chiffres/overlays animes par-dessus → **Start-End Frame** (1 clip simple) + Remotion gere les overlays
+- Si le beat montre un sujet sous plusieurs angles sans overlay → **Multi-shot**
+- Ne JAMAIS utiliser multi-shot pour "3 idees differentes dans 1 clip" — c'est 3 scenes Remotion separees, pas 3 shots camera
+
+**Erreur corrigee (2026-03-22) :** confondre "3 blocs de contenu narratif" (abolition, referendum, 92%) avec "3 angles camera". Les blocs de contenu = travail Remotion (texte anime par-dessus). Les angles camera = travail Kling (multi-shot).
+
 ### Erreurs récurrentes image source → à éviter systématiquement
 
 | Erreur | Cause | Fix |
