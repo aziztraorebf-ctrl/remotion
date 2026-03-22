@@ -90,6 +90,15 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - Etat : **BEATS 01-09 TOUS COMPLETES** — reste musique Suno + render final
 - Details etat : `memory/COMPACT_CURRENT.md`
 
+### GeoAfrique — Shorts Actualite (decisions 2026-03-22)
+- **Format** : Shorts 60-75s geopolitique africaine, 100% genere, sujet issu veille quotidienne
+- **Voix** : narratrice Chris unique (meme que Abou Bakari) — coherence = marque
+- **4 templates rotation** : Le Chiffre / La Carte Vivante / Le Visage / La Question
+- **Assets** : Gemini/GPT-Image (portraits), Gemini (cartes fond), SVG d3-geo (cartes animees), Recraft (icones), SVG pur (geometrique)
+- **Regle cle** : SVG pur pour geometrique, IA generative pour figuratif. Jamais de visage en SVG pur.
+- **Differenciation** : angle editorial ("Ce qu'on ne te dit pas") + rotation templates + style carte enluminure
+- Details complets : `memory/COMPACT_CURRENT.md` § "GeoAfrique Shorts Actualite"
+
 ### Methodes Kling (valides 2026-03-16)
 | Methode | Endpoint | Quand |
 |---------|----------|-------|

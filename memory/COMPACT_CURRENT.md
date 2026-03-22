@@ -130,11 +130,69 @@ Résultat : pipeline validé avec 2 clips masterpiece. 7 règles critiques déco
 - Lancer quand credits disponibles
 - Si style drift persiste en fin : reduire duree a 7s et utiliser endframe plus proche du startframe visuellement
 
-### Prochaines actions — GeoAfrique (en attente crédits)
+### Prochaines actions — GeoAfrique Abou Bakari (en attente crédits)
 
 1. **Musique** : generer dans Suno avec prompt ci-dessous, looper 30s x3 via ffmpeg
 2. **Mix final** : voix 100% + musique -18dB, ffmpeg merge
 3. **Render final** : `npx remotion render src/index.ts AbouBakariShort out/abou-bakari-final.mp4`
+
+---
+
+## GeoAfrique Shorts Actualite — Decisions Architecture (2026-03-22)
+
+> Decisions validees par Aziz. Le sujet change chaque jour (veille quotidienne), mais l'architecture reste.
+
+### Concept
+- Chaine YouTube Shorts geopolitique africaine — "Le regard depuis le continent"
+- Angle editorial : "Ce qu'on ne te dit pas" + question ouverte en fin de Short
+- 100% genere (pas de B-roll humain, pas de presenter)
+- Sujets issus de la veille quotidienne automatique (Section 2 "Selection editoriale")
+
+### Voix — Decision : UNE voix unique pour toute la chaine
+- Meme narratrice Chris (`Y8XqpS6sj6cx5cCTLp8a`) pour historique ET actualite
+- Differentiation du ton via : parametres ElevenLabs (`stability`, `similarity_boost`, `style`) + ecriture du script (pauses, ponctuation, longueur phrases)
+- PAS de changement de voix entre formats — coherence = marque
+- Deuxieme voix (masculine) envisageable plus tard, pas prioritaire
+
+### 4 Templates en Rotation (anti-slop)
+| Template | Quand | Signature visuelle |
+|----------|-------|--------------------|
+| **Le Chiffre** | Hook = un chiffre frappant (94,82%, 600k morts, 52 ans) | Chiffre geant plein ecran → zoom out → contexte. Typo forte, minimaliste. |
+| **La Carte Vivante** | Conflit territorial (Tigre, Rubaya, Sahel) | Carte stylisee SVG enluminure (PAS Google Earth). Style medieval/manuscrit. |
+| **Le Visage** | Personnage central (Sassou, Traore, Abiy) | Portrait stylise IA (Gemini/GPT-Image) + timeline de pouvoir visuelle. |
+| **La Question** | Angle = question que personne ne pose | Texte manuscrit qui s'ecrit, style tableau noir / carnet journaliste. |
+
+**Regle : rotation obligatoire. Jamais 2 Shorts consecutifs avec le meme template.**
+
+### Pipeline Assets — Qui fait quoi
+| Besoin | Outil | Pourquoi |
+|--------|-------|----------|
+| Portrait personnage reel (Sassou, Traore) | Gemini / GPT-Image | Style illustration editoriale. PNG anime dans Remotion. |
+| Personnage historique (Abou Bakari, Mansa Musa) | Recraft V4 / Gemini | Style artistique/enluminure, coherent avec ton conte. |
+| Silhouettes, icones, symboles, drapeaux | SVG pur (Claude) | Formes simples, pas de visages. |
+| Carte geographique fond | Gemini | Cartes stylisees, modifiables rapidement. |
+| Carte animee (zoom, overlays, highlights) | SVG d3-geo Remotion | Precision, animation frame par frame. |
+| Icones/illustrations flat | Recraft V4 Vector | SVG natif, qualite superieure. |
+| Texte/chiffres animes | Remotion pur | spring() + interpolate(). |
+| Graphiques/data | SVG pur Remotion | Barres, timelines, comparaisons. |
+
+**Regle : SVG pur pour le geometrique, IA generative pour le figuratif. Jamais de visage humain en SVG pur.**
+
+### Differenciation vs chaines slop
+- L'angle editorial EST la differenciation (pas le format technique)
+- "Ce qu'on ne te dit pas" = systematique, aucune chaine francophone ne le fait
+- Question ouverte en fin = engagement commentaires
+- Rotation de templates = imprevisibilite = retention
+- Style carte enluminure/manuscrit (pas Google Earth) = identite visuelle unique
+
+### Structure type Short actualite (60-75s)
+| Segment | Duree | Contenu |
+|---------|-------|---------|
+| Hook | 0-3s | Pattern interrupt (chiffre, fait surprenant) |
+| Contexte minimal | 3-15s | Qui, ou, quand — facts only |
+| Angle non-mainstream | 15-45s | "Ce qu'on ne te dit pas" — l'analyse |
+| Question ouverte | 45-60s | La question que personne ne pose |
+| CTA newsletter | 60-75s | "La veille complete — lien en bio" |
 
 ### Prompt Suno musique (3 variants prepares)
 
