@@ -906,6 +906,16 @@ Shot 3: (0:08-0:12) Visual: [description]. Camera: [locked-off / slow push / etc
 - Reduit les prises inutiles (moins de regenerations)
 - Applicable pour tous les beats GeoAfrique
 
+### Variation d'angle simultanee — technique a tester (non valide)
+
+**Principe** : soumettre la meme image source a Kling avec 3 prompts distincts en parallele, chacun demandant un angle different du MEME moment (close-up, wide shot, low angle). Comparer les 3 sorties → choisir le meilleur angle → lancer la generation finale animee avec ce seul angle retenu.
+
+- Usage : "casting de plan" avant de s'engager sur une generation couteuse
+- Different du multi-shot narratif (qui enchaine des moments distincts dans le temps)
+- Inspire de l'outil "Shots" de Higgsfield qui fait ce meme workflow via leur UI
+- A tester sur Kling O3 via fal.ai avec la meme image source, 3 soumissions paralleles
+- Cout : 3x le prix d'un clip — a utiliser sur les beats ou le choix d'angle est incertain
+
 ### Start/End Frame — technique narrative
 
 - Donner une image de depart ET une image d'arrivee a Kling → anime la transition

@@ -210,6 +210,7 @@ Aziz decrit la scene en francais
 - `PIXELLAB_API_KEY` : PixelLab MCP + API v2 (2000 gens/mois)
 - `RECRAFT_API_KEY` : Recraft V4 Vector — generation SVG natif (MCP : `@recraft-ai/mcp-recraft-server`)
 - `FAL_KEY` : fal.ai image generation (flux/dev, ESRGAN)
+- `VERCEL_RENDER_URL` : URL du renderer Vercel (`https://remotion-renderer-khaki.vercel.app`)
 - Stocker dans `.env` (JAMAIS dans le code ou les commits)
 
 ### Regles d'attente async (NON-NEGOTIABLE)
@@ -237,6 +238,7 @@ Aziz decrit la scene en francais
 - **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
 - **Pixel art sprites** : PixelLab MCP (characters, animations, tilesets) + API v2 (concept-to-character, animate-with-text)
 - **Voix-off** : ElevenLabs (voix Chris, fr, markers TTS)
+- **Remote rendering** : Vercel Sandbox via `scripts/render-on-vercel.py` — rend des compositions Remotion en cloud, retourne un MP4 public. Compositions : `MyComp`, `GeoTest`. Voir `memory/reference_vercel-blob-gallery.md` § "Remotion Vercel Renderer".
 - **Details complets** : `memory/apis-and-tools.md` et `memory/pixellab-api-v2.md`
 
 ### Scripts de recherche
