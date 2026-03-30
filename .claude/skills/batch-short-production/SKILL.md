@@ -100,11 +100,12 @@ Rules:
 
 ### Phase 5: STORYBOARD
 
-Generate visual frames for each beat. Use Kimi's storyboard direction brief as input.
+Generate visual frames for each beat. Use Kimi's simplified descriptions as input.
 
-**Execute**: `python scripts/batch-short-production/generate-storyboard.py --timing <file> --style <style>`
+**Execute**: `python scripts/batch-short-production/generate-storyboard.py --kimi-brief <file> --style <style> --output-dir <dir>`
 
-Default method: Gemini 3x3 grid (1 prompt = 9 frames + 9 video prompts).
+Method: INDIVIDUAL frames via Gemini (one API call per beat). NO grid.
+Each frame is generated at native resolution — no cropping, no upscaling needed.
 Alternative: Aziz provides custom reference images for some or all beats.
 
 Beat types (Claude identifies from the script):
@@ -232,7 +233,7 @@ npx remotion render src/index.ts [CompositionName] out/[name]-preview.mp4
 | 3 | Clips 5s pour beats 15s | playbackRate 0.33 = slow-mo artificiel | Duration matching: beat > 7s = clip 10s |
 | 4 | Texte/chiffres dans frames Gemini | Kling anime le texte = artefacts | NO TEXT hardcode + negative_prompt |
 | 5 | Cut ffmpeg sub-seconde sur audio | 5 tentatives echouees | Regenerer l'audio sans la phrase |
-| 6 | Grille 3x3 = visages clones | Scene inutilisable | Budget 1-2 corrections Gemini editorial |
+| 6 | Grille 3x3 mal croppee | Frames melangees, images trop petites | Generer frames individuelles, PAS de grille |
 | 7 | Mauvais model name Gemini | 404 errors | Verifier via api-reference.md |
 | 8 | Seedance audio non strip | Mots deformes dans le render | Toujours `ffmpeg -an -c:v copy` avant Remotion |
 

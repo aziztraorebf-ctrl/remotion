@@ -220,6 +220,38 @@ REGLES :
 Sois cinematographique et precis. Donne les secondes pour chaque shot."""
 
 
+def build_simplify_prompt(storyboard_text, num_frames):
+    return f"""Tu as produit ce storyboard cinematique pour un YouTube Short :
+
+{storyboard_text}
+
+Maintenant, SIMPLIFIE chaque beat en UNE SEULE image statique optimisee pour la generation AI (Gemini) puis l'animation I2V (Kling/Seedance).
+
+CONTRAINTES DE SIMPLIFICATION (NON-NEGOTIABLE) :
+- **1-3 personnages MAX par frame**. Pas de foules. Pour evoquer "des centaines", utiliser 2-3 silhouettes + profondeur de champ.
+- **1 seul point focal** par frame. L'oeil doit savoir immediatement ou regarder.
+- **ZERO texte, lettre, chiffre, tampon, etiquette** visible. Rien d'ecrit nulle part.
+- **Cartes geographiques = VIERGES**. Contour du continent + frontieres UNIQUEMENT. Aucune fleche, aucun symbole, aucune silhouette sur la carte. Les fleches et annotations seront ajoutees en post-prod Remotion.
+- **Style SOBRE et DIGNE**. Pas de sang visible, pas d'explosions spectaculaires, pas de larmes qui coulent. Evoquer la violence par l'absence, le silence, les ombres, les objets abandonnes — jamais par le gore ou le sensationnalisme.
+- **Fond simple**. Aplats de couleur, gradient, ou decor minimaliste. Pas de details complexes en arriere-plan.
+- **Si un beat a 2-3 shots** : choisir LE shot le plus fort visuellement pour la frame Gemini. Les autres shots seront des variantes ou du mouvement camera sur cette meme image.
+- **UNE image par beat** = UNE cellule dans la grille Gemini. Pas de subdivision.
+
+Pour chaque beat, donne :
+1. **Frame [N]** : description en 1-2 phrases de l'image SIMPLE a generer
+2. **Point focal** : le sujet principal (ex: "mains sur table", "silhouette de dos", "carte Afrique vierge")
+3. **Palette** : 2-3 couleurs dominantes
+4. **Animabilite** : ce qui va bouger dans le clip I2V (ex: "respiration du personnage + lumiere qui change")
+
+Produis exactement {num_frames} frames simplifiees."""
+
+
+SYSTEM_SIMPLIFY = """Tu es un directeur technique specialise dans la traduction de briefs cinematiques en images simples et animables.
+Tu sais que les images seront generees par une IA (Gemini) puis animees par un generateur I2V (Kling/Seedance).
+Les images complexes (foules, explosions, details multiples) produisent des artefacts de morphing en I2V.
+Ton travail : reduire chaque scene a son essence visuelle — 1 sujet, 1 emotion, 1 image propre."""
+
+
 SYSTEM_REVIEW = """Tu es Kimi, directeur artistique et narratif pour des YouTube Shorts historiques animes (60-120s, format 9:16).
 Tu travailles sur des documentaires courts style GeoAfrique : narration francaise, ton grave et cinematique, flat 2D illustration.
 Tu es exigeant sur le rythme, l'impact emotionnel, et la structure narrative."""
@@ -238,6 +270,9 @@ def main():
     parser.add_argument("--output", required=True, help="Output markdown file")
     parser.add_argument("--review-only", action="store_true", help="Only run Pass 1 (script review)")
     parser.add_argument("--storyboard-only", action="store_true", help="Only run Pass 2 (storyboard direction)")
+    parser.add_argument("--simplify-only", action="store_true", help="Only run Pass 3 (simplify for Gemini, requires --storyboard-input)")
+    parser.add_argument("--with-simplify", action="store_true", help="Run Pass 2 + Pass 3 together")
+    parser.add_argument("--storyboard-input", default=None, help="Path to existing storyboard markdown (for --simplify-only)")
     args = parser.parse_args()
 
     load_env()
@@ -302,6 +337,43 @@ def main():
 
         output_parts.append("## Pass 2: Storyboard Direction\n")
         output_parts.append(storyboard)
+        output_parts.append(f"\n*Cost: ${cost:.4f}*\n")
+
+    # Pass 3: Simplify for Gemini
+    run_simplify = args.simplify_only or args.with_simplify
+    if run_simplify:
+        print()
+        print("=" * 60)
+        print("PASS 3: SIMPLIFY FOR GEMINI")
+        print("=" * 60)
+
+        # Get storyboard text from previous pass or file
+        if args.simplify_only and args.storyboard_input:
+            storyboard_text = pathlib.Path(args.storyboard_input).read_text(encoding="utf-8")
+        elif "storyboard" in dir() and storyboard:
+            storyboard_text = storyboard
+        else:
+            print("ERROR: No storyboard to simplify. Run with --with-simplify or provide --storyboard-input")
+            sys.exit(1)
+
+        num_frames = 9
+        if timing_info:
+            num_frames = len(timing_info.get("beats", []))
+
+        print(f"Sending to {BACKENDS[backend_name]['model']} via {backend_name}...")
+
+        simplified, inp, out, cost = call_kimi(
+            backend_name, api_key,
+            SYSTEM_SIMPLIFY,
+            build_simplify_prompt(storyboard_text, num_frames),
+        )
+        total_cost += cost
+        print(f"Tokens: {inp} in + {out} out = ${cost:.4f}")
+        print()
+        print(simplified)
+
+        output_parts.append("## Pass 3: Simplified Frames for Gemini\n")
+        output_parts.append(simplified)
         output_parts.append(f"\n*Cost: ${cost:.4f}*\n")
 
     # Summary
