@@ -11,14 +11,14 @@ description: >
 # Batch Short Production Pipeline
 
 Takes a validated script (from `youtube-scriptwriting` skill or Aziz directly)
-and produces a complete YouTube Short (9:16, 60-120s) through 7 automated phases
+and produces a complete YouTube Short (9:16, 60-120s) through 8 automated phases
 with 4 human checkpoints.
 
 ## PREREQUISITES
 
 - **Input**: Script final valide (structure beats, texte mot-a-mot)
 - **Format**: Short vertical 9:16 (1080x1920) UNIQUEMENT
-- **API keys in .env**: `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `FAL_KEY`, `BLOB_READ_WRITE_TOKEN`
+- **API keys in .env**: `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `FAL_KEY`, `BLOB_READ_WRITE_TOKEN`, `MOONSHOT_API_KEY` (for Kimi review)
 - **Tools**: ffprobe, Python 3.10+, PIL/Pillow, fal_client, remotion CLI
 
 ## PIPELINE — 7 Phases
@@ -63,9 +63,32 @@ Duration matching rule:
 
 **Output**: `[project]/timing.json`
 
+### Phase 2.5: KIMI DIRECTION (~$0.01)
+
+Send script + timing to Kimi K2.5 for artistic direction before storyboarding.
+Two passes, both text-only (no image/video upload needed).
+
+**Execute**: `python scripts/batch-short-production/kimi-script-review.py --script <file> --timing <file>`
+
+**Pass 1 — Script Review**: Kimi evaluates hook strength, pacing, narrative structure.
+Returns score /10 + concrete modifications (with before/after text).
+Aziz decides which suggestions to apply. If script changes, regenerate audio (Phase 1).
+
+**Pass 2 — Storyboard Direction**: Kimi proposes a 9-frame storyboard brief:
+shot types, camera movements, rhythm (fast cuts vs slow reveals), palette progression,
+transitions between frames. This brief becomes the input for Gemini storyboard generation.
+
+Rules:
+- Cost: ~$0.01 total (negligible). Always run both passes.
+- Kimi's script suggestions are PROPOSALS — Aziz decides.
+- Kimi's storyboard direction is GUIDANCE for Gemini — not a replacement.
+- If script changes after Kimi review, go back to Phase 1 (audio-first rule still applies).
+
+**Output**: `[project]/kimi-review.md` (script review + storyboard direction brief)
+
 ### Phase 3: STORYBOARD
 
-Generate visual frames for each beat.
+Generate visual frames for each beat. Use Kimi's storyboard direction brief as input.
 
 **Execute**: `python scripts/batch-short-production/generate-storyboard.py --timing <file> --style <style>`
 
@@ -209,3 +232,4 @@ npx remotion render src/index.ts [CompositionName] out/[name]-preview.mp4
 - `references/prompt-templates.md` — Templates prompts par type de plan
 - `references/api-reference.md` — Endpoints, parametres, voice settings, model names
 - `references/remotion-patterns.md` — Patterns TSX (OffthreadVideo, overlays, carte SVG, vignette)
+- `references/kimi-direction-example.md` — Example output from Kimi script review + storyboard direction (Thiaroye test)
