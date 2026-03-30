@@ -117,7 +117,7 @@ Beat types (Claude identifies from the script):
 
 Beat strategy (determines what to generate):
 - **NARRATIVE / ACTION beats**: generate I2V clips. Always 5-6s clips. A 12s beat = 2 clips of 6s chained in Remotion with hard cut. Gives natural rhythm.
-- **GEO / MAP beats**: Remotion pure (d3-geo, SVG, markers, counters). Costs 0 I2V credits. Use for 10-15s contemplative beats. Every Short should have 1-2 geo beats for visual contrast.
+- **GEO / MAP beats**: Gemini generates blank map image + Remotion animates on top (zoom, arrows, markers, counters, route tracing). Costs 0 I2V credits. Use for 10-15s contemplative beats. Every Short should have 1-2 geo beats for visual contrast.
 - **SYMBOLIC beats**: Remotion pure or single I2V clip depending on complexity.
 - Target ratio per 90s Short: ~6-7 I2V clips (5-6s each) + 1-2 Remotion geo segments (10-15s each).
 
