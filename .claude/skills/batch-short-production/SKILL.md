@@ -21,11 +21,30 @@ with 4 human checkpoints.
 - **API keys in .env**: `ELEVENLABS_API_KEY`, `GEMINI_API_KEY`, `FAL_KEY`, `BLOB_READ_WRITE_TOKEN`, `MOONSHOT_API_KEY` (for Kimi review)
 - **Tools**: ffprobe, Python 3.10+, PIL/Pillow, fal_client, remotion CLI
 
-## PIPELINE — 7 Phases
+## PIPELINE — 8 Phases
 
-### Phase 1: AUDIO
+### Phase 1: KIMI SCRIPT REVIEW (~$0.005)
 
-Generate voice-over from the validated script.
+BEFORE audio generation. Send script V1 to Kimi K2.5 for narrative review.
+
+**Execute**: `python scripts/batch-short-production/kimi-script-review.py --script <file> --review-only`
+
+Kimi evaluates: hook strength, pacing, narrative structure, weaknesses.
+Returns score /10 + concrete modifications (with before/after text).
+
+Rules:
+- Iterate script with Kimi until Aziz is satisfied. This is CHEAP (~$0.005/pass).
+- Kimi's suggestions are PROPOSALS — Aziz decides what to apply.
+- Script is LOCKED after this phase. No changes after audio generation.
+
+> **CHECKPOINT AZIZ**: "Voici les suggestions de Kimi. Quelles modifications tu veux appliquer ?"
+> Iterate until script is final. THEN proceed to audio.
+
+**Output**: `[project]/kimi-script-review.md` + script final
+
+### Phase 2: AUDIO
+
+Generate voice-over from the FINAL script (locked after Phase 1).
 
 **Execute**: `python scripts/batch-short-production/generate-audio.py --script <file>`
 
@@ -45,7 +64,7 @@ Rules:
 
 **Output**: `[project]/audio/voixoff-final.mp3`
 
-### Phase 2: TIMING
+### Phase 3: TIMING
 
 Extract precise beat timestamps from the approved audio.
 
@@ -63,30 +82,23 @@ Duration matching rule:
 
 **Output**: `[project]/timing.json`
 
-### Phase 2.5: KIMI DIRECTION (~$0.01)
+### Phase 4: KIMI STORYBOARD DIRECTION (~$0.005)
 
-Send script + timing to Kimi K2.5 for artistic direction before storyboarding.
-Two passes, both text-only (no image/video upload needed).
+Send script + timing to Kimi K2.5 for storyboard artistic direction.
 
-**Execute**: `python scripts/batch-short-production/kimi-script-review.py --script <file> --timing <file>`
+**Execute**: `python scripts/batch-short-production/kimi-script-review.py --script <file> --timing <file> --storyboard-only`
 
-**Pass 1 — Script Review**: Kimi evaluates hook strength, pacing, narrative structure.
-Returns score /10 + concrete modifications (with before/after text).
-Aziz decides which suggestions to apply. If script changes, regenerate audio (Phase 1).
-
-**Pass 2 — Storyboard Direction**: Kimi proposes a 9-frame storyboard brief:
-shot types, camera movements, rhythm (fast cuts vs slow reveals), palette progression,
-transitions between frames. This brief becomes the input for Gemini storyboard generation.
+Kimi proposes a frame-by-frame storyboard brief: shot types, camera movements,
+rhythm (fast cuts vs slow reveals), palette progression, transitions.
+This brief becomes the input for Gemini storyboard generation.
 
 Rules:
-- Cost: ~$0.01 total (negligible). Always run both passes.
-- Kimi's script suggestions are PROPOSALS — Aziz decides.
 - Kimi's storyboard direction is GUIDANCE for Gemini — not a replacement.
-- If script changes after Kimi review, go back to Phase 1 (audio-first rule still applies).
+- With timing.json, Kimi can propose precise framing per beat duration.
 
-**Output**: `[project]/kimi-review.md` (script review + storyboard direction brief)
+**Output**: `[project]/kimi-storyboard-direction.md`
 
-### Phase 3: STORYBOARD
+### Phase 5: STORYBOARD
 
 Generate visual frames for each beat. Use Kimi's storyboard direction brief as input.
 
@@ -118,7 +130,7 @@ Post-generation:
 
 **Output**: `[project]/frames/frame-01.png` to `frame-NN.png`
 
-### Phase 4: CLIPS VIDEO
+### Phase 6: CLIPS VIDEO
 
 Generate I2V clips from approved frames. Generator-agnostic: Kling, Seedance, or any future tool.
 
@@ -148,7 +160,7 @@ Post-generation:
 
 **Output**: `[project]/clips/frame-01.mp4` to `frame-NN.mp4`
 
-### Phase 5: CORRECTIONS
+### Phase 7: CORRECTIONS
 
 Fix rejected clips from Phase 4.
 
@@ -159,7 +171,7 @@ Methods (try in this order):
 
 Rule: max 2 regeneration rounds per clip. After 2 failures, switch to Remotion-only for that beat.
 
-### Phase 6: ASSEMBLAGE
+### Phase 8: ASSEMBLAGE
 
 Generate Remotion component and render the Short.
 
@@ -198,7 +210,7 @@ npx remotion render src/index.ts [CompositionName] out/[name]-preview.mp4
 
 **Output**: `out/[project]-final.mp4` + Remotion component in `src/projects/`
 
-### Phase 7: REVIEW & DELIVERY
+### Phase 9: REVIEW & DELIVERY
 
 - Upload final render to Vercel Blob for mobile review
 - List remaining manual steps:
@@ -215,7 +227,7 @@ npx remotion render src/index.ts [CompositionName] out/[name]-preview.mp4
 
 | # | Anti-pattern | Consequence | Regle |
 |---|-------------|-------------|-------|
-| 1 | Clips generes AVANT audio | Durees non calees, slow-mo force | Phase 1 AVANT Phase 4. GATE: timing.json doit exister |
+| 1 | Clips generes AVANT audio | Durees non calees, slow-mo force | Phase 2 AVANT Phase 6. GATE: timing.json doit exister |
 | 2 | "Atmospheric movement only" dans prompts | Clips quasi-statiques | Verbes d'action par defaut. "subtle" = flag explicite |
 | 3 | Clips 5s pour beats 15s | playbackRate 0.33 = slow-mo artificiel | Duration matching: beat > 7s = clip 10s |
 | 4 | Texte/chiffres dans frames Gemini | Kling anime le texte = artefacts | NO TEXT hardcode + negative_prompt |
