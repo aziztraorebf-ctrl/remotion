@@ -115,12 +115,17 @@ Beat types (Claude identifies from the script):
   - Remotion SVG animation (d3-geo, markers, counters, route tracing) -- if I2V insufficient
 - **SYMBOLIC**: metaphor, split-screen, comparison -> may be Remotion-only
 
+Beat strategy (determines what to generate):
+- **NARRATIVE / ACTION beats**: generate I2V clips. Always 5-6s clips. A 12s beat = 2 clips of 6s chained in Remotion with hard cut. Gives natural rhythm.
+- **GEO / MAP beats**: Remotion pure (d3-geo, SVG, markers, counters). Costs 0 I2V credits. Use for 10-15s contemplative beats. Every Short should have 1-2 geo beats for visual contrast.
+- **SYMBOLIC beats**: Remotion pure or single I2V clip depending on complexity.
+- Target ratio per 90s Short: ~6-7 I2V clips (5-6s each) + 1-2 Remotion geo segments (10-15s each).
+
 Rules:
 - NO TEXT in any frame. Hardcoded in Gemini prompt + Kling negative_prompt.
   Reimagine any beat that would "naturally" contain text (dates, labels, titles).
 - Style: always "2D vivid flat illustration" as base. Palette varies per project — ask Aziz or derive from the script's tone/era/geography. Do NOT default to sepia/gold/charcoal.
-- Expect 1-2 frames to need correction (cloned faces, artifacts). Budget for it.
-- Gemini is excellent at map/geography frames. Use this for variety between narrative clips.
+- Gemini is excellent at map/geography frames. Use blank maps — all annotations added by Remotion.
 
 Post-generation:
 - Extract individual frames from grid (PIL crop, 336x336 per cell)
