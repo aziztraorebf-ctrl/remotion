@@ -144,42 +144,80 @@ Analyse ce script et donne-moi :
 Sois direct et precis. Pas de complaisance."""
 
 
+def build_timed_script(script_text, timing_info):
+    """Merge script text + timing into a single time-coded document."""
+    beats = timing_info.get("beats", [])
+    timed = []
+    for b in beats:
+        start = b["start_time"]
+        end = b["end_time"]
+        dur = b["duration"]
+        desc = b.get("description", f"Beat {b['beat']}")
+        timed.append(f"BEAT {b['beat']} [{start:.1f}s - {end:.1f}s] (duree: {dur:.1f}s):")
+        timed.append(f'  "{desc}"')
+        timed.append("")
+    return "\n".join(timed)
+
+
 def build_storyboard_prompt(script_text, timing_info=None):
-    timing_section = ""
     num_frames = 9
+
     if timing_info:
         num_frames = len(timing_info.get("beats", []))
-        timing_section = "\nDUREES PAR BEAT (derivees de l'audio) :\n"
-        for b in timing_info["beats"]:
-            timing_section += f"- Beat {b['beat']}: {b['duration']}s — {b.get('description', '')}\n"
+        timed_script = build_timed_script(script_text, timing_info)
+        script_section = f"""SCRIPT AVEC TIMECODES AUDIO (chaque beat = segment narratif mesure par ffprobe):
+---
+{timed_script}
+---
+
+SCRIPT COMPLET (texte de narration):
+---
+{script_text}
+---"""
+        timing_instruction = """
+REGLE CRITIQUE — EXPLOITE LES DUREES:
+- Chaque beat a une duree EXACTE mesuree depuis l'audio. Tes propositions doivent s'y caler.
+- Un beat de 5-7s = 1 plan unique. Pas le temps pour un multi-shot.
+- Un beat de 8-10s = possibilite de 2 plans (ex: wide 5s + close-up 4s avec cut sec).
+- Un beat de 11-15s = 2-3 plans avec transitions (ex: dolly 6s, cut, tracking 4s, freeze 2s).
+- Indique les SECONDES pour chaque shot propose. Ex: "Shot A (0-6s): wide dolly. Shot B (6-10.7s): close-up freeze."
+- Les clips I2V sont generes en 5s ou 10s. Propose des shots qui s'alignent sur ces durees."""
+    else:
+        script_section = f"""SCRIPT:
+---
+{script_text}
+---"""
+        timing_instruction = ""
 
     return f"""Voici le script final d'un YouTube Short historique (~60-120s, 9:16).
 
-SCRIPT:
----
-{script_text}
----
-{timing_section}
+{script_section}
+{timing_instruction}
 
-Propose un storyboard en {num_frames} frames pour ce script.
+Propose un storyboard en {num_frames} beats pour ce script.
 
-Pour chaque frame, donne :
-1. **Beat narratif** : quelle partie du script cette frame illustre
-2. **Type de plan** : close-up / medium / wide / extreme close-up / overhead
-3. **Sujet visuel** : ce qu'on voit (SANS texte, dates, ou chiffres visibles)
-4. **Mouvement camera** : dolly in, pan, tracking, static, zoom out...
-5. **Dynamisme** : lent/atmospherique OU rapide/fast-cut OU impactant/freeze
-6. **Transition vers la frame suivante** : cut sec, fondu, zoom, match cut...
+Pour chaque beat, donne :
+1. **Texte narration** : quelle phrase exacte du script
+2. **Duree** : en secondes (depuis les timecodes)
+3. **Nombre de shots** : 1, 2 ou 3 selon la duree
+4. Pour chaque shot :
+   - **Timecode** : "Shot A (0-6s)" avec secondes relatives au beat
+   - **Type de plan** : close-up / medium / wide / extreme close-up / overhead
+   - **Sujet visuel** : ce qu'on voit (SANS texte, dates, ou chiffres visibles)
+   - **Mouvement camera** : dolly in, pan, tracking, static, zoom out...
+   - **Dynamisme** : lent/atmospherique OU rapide/fast-cut OU impactant/freeze
+5. **Transition vers le beat suivant** : cut sec, fondu, zoom, match cut...
 
 REGLES :
-- Varie les types de plans (pas {num_frames} medium shots)
+- Varie les types de plans (pas {num_frames} medium shots de suite)
 - Au moins 2 fast cuts dans la sequence (pour le rythme)
 - Au moins 1 frame geographique (carte/map) si le sujet s'y prete
 - Le climax visuel doit etre le plus impactant
 - La derniere frame doit etre un portrait fort pour le CTA
 - ZERO texte dans les frames — reimaginer toute scene qui contiendrait du texte
+- Les clips I2V sont generes en 5s ou 10s — aligne tes propositions de shots sur ces durees
 
-Sois cinematographique et precis."""
+Sois cinematographique et precis. Donne les secondes pour chaque shot."""
 
 
 SYSTEM_REVIEW = """Tu es Kimi, directeur artistique et narratif pour des YouTube Shorts historiques animes (60-120s, format 9:16).
