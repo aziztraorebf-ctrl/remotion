@@ -6,13 +6,17 @@ Missing: 3/4 view + back view
 Uses existing REFs as identity anchors to maintain style consistency.
 """
 
+import os
 from google import genai
 from google.genai import types
 from pathlib import Path
 import base64
+from dotenv import load_dotenv
 
-# Config
-API_KEY = "AIzaSyA0TxrLQQO06oRT9IE8L1RnAH-UI8MTTZM"
+load_dotenv(Path(__file__).parent.parent / ".env")
+
+# Config - API key from .env
+API_KEY = os.getenv("GEMINI_API_KEY")
 MODEL = "gemini-3.1-flash-image-preview"
 OUTPUT_DIR = Path("public/assets/library/geoafrique/characters/abou-bakari")
 

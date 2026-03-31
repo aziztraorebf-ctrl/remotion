@@ -7,11 +7,14 @@ Generate complementary assets for Seedance 2.0 test with Abou Bakari.
 All in the same vector/flat style as existing Abou Bakari REFs.
 """
 
+import os
 from google import genai
 from google.genai import types
 from pathlib import Path
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyA0TxrLQQO06oRT9IE8L1RnAH-UI8MTTZM"
+load_dotenv(Path(__file__).parent.parent / ".env")
+
 MODEL = "gemini-3.1-flash-image-preview"
 
 OUTPUT_DIR = Path("public/assets/library/geoafrique/decors")

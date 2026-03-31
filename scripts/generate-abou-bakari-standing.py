@@ -3,16 +3,19 @@ Generate Abou Bakari standing pose for Seedance 2.0 motion test.
 He needs to go from seated (throne) to standing, so we need a standing ref.
 """
 
+import os
 from google import genai
 from google.genai import types
 from pathlib import Path
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyA0TxrLQQO06oRT9IE8L1RnAH-UI8MTTZM"
+load_dotenv(Path(__file__).parent.parent / ".env")
+
 MODEL = "gemini-3.1-flash-image-preview"
 
 CHAR_DIR = Path("public/assets/library/geoafrique/characters/abou-bakari")
 
-client = genai.Client(api_key=API_KEY)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def load_image_part(path):

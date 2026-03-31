@@ -4,16 +4,19 @@ One image with multiple views: front, profile, 3/4, back, standing full body.
 Saves 4 image slots on Seedance 2.0 (1 image instead of 5).
 """
 
+import os
 from google import genai
 from google.genai import types
 from pathlib import Path
+from dotenv import load_dotenv
 
-API_KEY = "AIzaSyA0TxrLQQO06oRT9IE8L1RnAH-UI8MTTZM"
+load_dotenv(Path(__file__).parent.parent / ".env")
+
 MODEL = "gemini-3.1-flash-image-preview"
 
 CHAR_DIR = Path("public/assets/library/geoafrique/characters/abou-bakari")
 
-client = genai.Client(api_key=API_KEY)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 def load_image_part(path):
