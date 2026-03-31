@@ -1380,3 +1380,16 @@ Ces ajouts sont positifs et coherents avec l'esthetique. Les laisser faire.
 - Script generation soldat : `scripts/generate-hannibal-soldier-ref.py`
 - Script Kling avec elements : `scripts/test-hannibal-elements-v1.py`
 - Clip valide reference : `tmp/brainstorm/hannibal-elements-v1.mp4` (9.5/10 Kimi)
+
+---
+
+## ElevenLabs V3 — Accents francais (2026-03-31)
+
+### Probleme
+Script Python sans accents (ex: "hante", "terrifie", "prepare") → ElevenLabs V3 prononce les participes passes sans accent final. "hanté" devient "hant", "terrifié" devient "terrifie". Inaudible pour un francophone.
+
+### Regle
+- TOUJOURS ecrire les textes francais avec tous les accents dans le script Python : é, è, ê, ô, à, ù, etc.
+- Les chiffres (1311, 181) sont mal prononces → les ecrire en toutes lettres ("treize cent onze", "cent quatre-vingt-un")
+- Les `[pause]` et `[long pause]` sont supportes en V3 mais `<break time="Xs" />` ne l'est PAS
+- `[long pause]` = ~1.5-2s de silence. Avec 6-7 long pauses, ca ajoute 10-14s a l'audio. Utiliser `[pause]` sauf intention dramatique explicite.

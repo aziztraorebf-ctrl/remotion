@@ -52,6 +52,8 @@ import { NightPaletteFinalV2 } from "./projects/veilleur-ombre/scenes/NightPalet
 import { UnParmiTous } from "./projects/silhouette-questions/scenes/UnParmiTous";
 import { TOTAL_FRAMES as VEILLEUR_FRAMES } from "./projects/veilleur-ombre/config/veilleurTiming";
 import { AbouBakariShort } from "./projects/geoafrique-shorts/AbouBakariShort";
+import { ThiaroyeShort } from "./projects/geoafrique-shorts/ThiaroyeShort";
+import { SeedanceTest } from "./projects/geoafrique-shorts/SeedanceTest";
 import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
 import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
 import { Beat03FleetManifest } from "./projects/geoafrique-shorts/components/Beat03FleetManifest";
@@ -65,6 +67,14 @@ export const RemotionRoot: React.FC = () => {
           id="AbouBakariShort"
           component={AbouBakariShort}
           durationInFrames={ABOU_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="ThiaroyeShort"
+          component={ThiaroyeShort}
+          durationInFrames={3302}
           fps={30}
           width={1080}
           height={1920}
@@ -92,6 +102,14 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="SeedanceTest"
+          component={SeedanceTest}
+          durationInFrames={450}
+          fps={30}
+          width={1280}
+          height={720}
         />
         <Composition
           id="Beat03FleetManifest"

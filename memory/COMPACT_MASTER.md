@@ -1,5 +1,5 @@
 # COMPACT_MASTER — Remotion Project
-> Mise a jour : 2026-03-09 | Stable — modifier uniquement si decision d'architecture majeure
+> Mise a jour : 2026-03-29 | Stable — modifier uniquement si decision d'architecture majeure
 
 ---
 
@@ -85,10 +85,33 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - Restant : S1 Flagellants → S6 Miroir (~8m30s)
 
 ### GeoAfrique — Abou Bakari II (satellite)
-- Style : **Flat design 2D — Gemini image gen + Kling + Remotion overlays**
-- Pipeline valide : Gemini source → retouche chirurgicale → Kling V3/O3 → integration Remotion
+- Style : **Flat design 2D — Seedance 2.0 (principal) + Kling (4K/API backup) + Remotion overlays**
+- **Pipeline principal (2026-03-31)** : Seedance 2.0 via Dreamina web → ffmpeg strip audio → Remotion OffthreadVideo + Audio ElevenLabs. Format : SECONDS X TO Y + COLOR GRADE.
+- Pipeline legacy : Gemini source → retouche chirurgicale → Kling V3/O3 → integration Remotion (garde pour 4K et quand API Seedance indisponible)
 - Etat : **BEATS 01-09 TOUS COMPLETES** — reste musique Suno + render final
 - Details etat : `memory/COMPACT_CURRENT.md`
+
+### Seedance 2.0 / Dreamina — OUTIL PRINCIPAL (valide 2026-03-31, 7 tests)
+- **Acces** : Dreamina web uniquement (API suspendue overseas). Credits achetables + gratuits journaliers.
+- **Force** : coherence personnage parfaite (0 morphing/7 tests), multi-ref (2 personnages distincts valide), format SECONDS X TO Y = controle de realisateur, POV→3e personne, foule 30+ elements, SFX/musique generes
+- **Faiblesse** : audio uploade re-synthetise (mots deformes), max 15s, 720p en gratuit, pas d'API
+- **Reference complete** : `memory/seedance-reference.md` — tous les tests, regles, lecons, comparaisons Kling
+- **Workflow** : Seedance video → `ffmpeg -an -c:v copy` → Remotion `<OffthreadVideo>` + `<Audio>` ElevenLabs (offset ~9 frames)
+- **Formats prompt** (du simple au precis) : narratif lineaire (~40 mots) | "Shot 1/2/3" (~75 mots) | "SECONDS X TO Y" (~200 mots, timecodes seconde par seconde)
+- **COLOR GRADE** : section en fin de prompt pour ancrer la palette sans ref image (80 credits text-to-video vs 120 avec refs)
+- **POV → 3e personne** : transition de perspective dans un meme clip, sans coupure (valide par createur tiers)
+- **Video-to-video** : uploader video existante + demander ajouts (non teste par nous)
+- **Refs** : plan-sequence = 1 ref max, zero ref decor. Multi-shot = 1-3 refs perso + 1-2 refs decor.
+- **POV → 3e personne VALIDE (2026-03-30)** : transition de perspective dans un seul clip continu. Camera "decolle" du personnage sans cut. Kling incapable — Seedance unique en son genre.
+- **Flotte/foule massive** : Seedance genere 30+ elements coherents en style flat 2D (memes proportions, meme palette). Kling drift apres 3-4 elements. Pour scenes avec multiples navires/soldats/foules → Seedance.
+- **"gradually" = mot-cle anti-artefact** : evite l'apparition soudaine d'elements reveles par la camera. Toujours utiliser dans les segments reveal.
+- **Orbite 180 VALIDEE (2026-03-31)** : "Camera begins a slow orbit clockwise around" avec reperes par segment (face → profil → 3/4 dos → dos). Coherence personnage parfaite sous tous les angles. Ideal pour intro palais, reveal decor. Score 9.5/10.
+- **Audio SFX/musique utilisable** : garder les SFX et musique generes par Seedance + overlay voix ElevenLabs = gain d'une etape production. Ne remplacer que la narration.
+- **Multi-personnage VALIDE (2026-03-31)** : 2 refs, 2 identites, zero fusion pendant 10s. Scenes dialogue/confrontation possibles.
+- **Seedance = ultra-litteral** : "uphill" = pente 45deg, "forward" = horizontale. Specifier chaque axe/direction explicitement.
+- **1 ref max si personnages similaires** : 2 refs trop proches = fusion. Decrire soldats par texte ("silhouettes WITHOUT cape").
+- **Format 9:16 DISPONIBLE** dans Dreamina (confirme Aziz, non encore teste).
+- **Details complets** : `memory/seedance-reference.md` + `research/seedance-examples/REFERENCE.md`
 
 ### Methodes Kling (valides 2026-03-16)
 | Methode | Endpoint | Quand |
@@ -96,11 +119,14 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 | V3 Pro | `v3/pro/image-to-video` | Portrait cinématique, 5-10s |
 | V3 Standard | `v3/standard/image-to-video` | Scene symbolique/locked, economique |
 | O3 Standard | `o3/standard/image-to-video` | Scene epique, start+end frame |
-- cfg_scale 0.3 = plus stable (moins de morphing), 0.4 = plus creatif
+- cfg_scale 0.3 = plus stable (moins de morphing), 0.4 = plus creatif. cfg_scale = adherence au prompt, PAS intensite mouvement.
 - Plan moyen (sujet 50-55% cadre) OBLIGATOIRE pour tout mouvement camera
 - Morphing O3 sur flat 2D : degrade apres ~6-8s — couper avec durationInFrames
+- **Duree clips = duree beats audio (2026-03-29)** : Kling supporte `duration: "5"` et `duration: "10"`. Toujours generer un clip dont la duree approche la duree du beat narratif. Clip 10s pour beat 12s = playbackRate 0.83x (naturel). Clip 5s pour beat 12s = playbackRate 0.42x (slow-mo artificiel, statique).
+- **Mouvement dynamique = prompt engineering (2026-03-29)** : Kling n'a PAS de parametre "motion intensity". Le mouvement se controle UNIQUEMENT par le vocabulaire du prompt. Verbes d'action : "PRESSES", "MARCH", "RUSHES", "STRIKES". Camera : "tracking shot", "whip-pan", "dynamic". JAMAIS "atmospheric movement only" / "subtle" / "gentle" sauf intention explicite de calme. "atmospheric movement only" = quasi-immobilite garantie.
 
 ### Regles Pipeline Vivid Flat 2D + Kling (2026-03-17, VALIDEES)
+- **NO TEXT dans les frames source (NON-NEGOTIABLE, 2026-03-29)** : ZERO texte, chiffre, date, label, tampon, titre visible dans toute image envoyee a Kling ou Seedance. Kling anime le texte et produit des artefacts garantis (lettres qui morphent, dates qui scintillent, ecritures qui se tordent). Correction : regenerer la frame source avec `negative_prompt: "text, writing, letters, numbers, dates, subtitles, captions, watermark"` + prompt explicite "completely blank paper / no text anywhere". Les elements textuels (dates, labels, timelines) appartiennent a Remotion en post-production, jamais dans les frames Kling/Seedance.
 - **Ecart start→end MINIMAL** : meme angle, meme distance camera, UN seul element change. Ecart trop grand = Kling improvise.
 - **Soldats de dos = marche naturelle. Soldats de profil = glissement lateral artificiel.** Toujours orienter les personnages secondaires de face ou de dos.
 - **Frame chaining** : extraire derniere frame du clip valide via ffmpeg → Gemini edit → start frame clip suivant. Continuite parfaite sans regeneration.
@@ -110,6 +136,25 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - **Style ID Recraft = verrouille le style graphique, PAS l'identité du personnage.** Portrait REF separé obligatoire pour coherence inter-clips.
 - Clip masterpiece reference : `tmp/brainstorm/references/hannibal-army-appear-MASTERPIECE.mp4`
 - Details complets : `memory/video-generation-pipeline.md` + `memory/key-learnings.md`
+
+### Pipeline Batch Short YouTube — Ordre Optimal (2026-03-30, v2 apres tests Kimi + Gemini)
+```
+1. Script (Cesar formula / youtube-scriptwriting skill)
+2. Kimi K2.5 script review (~$0.005, iterer jusqu'a satisfaction)
+3. Audio ElevenLabs (voix V3, speed 0.88 pour documentaire)
+4. ffprobe → timestamps exacts par beat narratif
+5. Kimi K2.5 storyboard direction (script time-code → multi-shots avec secondes)
+   + Pass 3 simplification (max 3 persos, 1 focal, zero texte/gore)
+6. Storyboard Gemini INDIVIDUEL (1 appel par beat, PAS de grille 3x3)
+7. Kling clips I2V (duration = duree du beat, prompts dynamiques)
+8. Assemblage Remotion (OffthreadVideo, playbackRate ~0.8-1.0)
+```
+**Skill complet** : `.claude/skills/batch-short-production/` (9 phases, 6 scripts, Kimi 3 passes)
+**Erreurs a ne pas repeter** :
+- Generer clips AVANT audio → durees non calees
+- Grille 3x3 Gemini → crops foireux, images trop petites, layouts imprevisibles
+- Brief Kimi non simplifie → Gemini surcharge (foules, gore, texte, subdivisions)
+- Kimi APRES audio → si le script change, on refait tout
 
 ---
 

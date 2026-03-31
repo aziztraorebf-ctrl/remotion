@@ -9,10 +9,14 @@
 library/
   geoafrique/
     characters/
-      abou-bakari/     ← portraits REF + end frames générés
+      abou-bakari/     ← portraits REF + end frames generés
+      amanirenas/      ← seed v4-patch + startframe/endframe sol-corriges + guerrier
+      hannibal/        ← seed portrait + armee + plans divers
     maps/              ← images de carte réutilisables
     backgrounds/       ← fonds, décors réutilisables
 ```
+
+> Chaque sous-dossier contient un `README.md` avec : seed officiel, palette, gotchas, prompts.
 
 ---
 
@@ -34,3 +38,17 @@ library/
 - Toujours passer `abou-bakari-roi-plan-large-REF.png` comme image de référence Gemini
 - Pour Nano Banana : utiliser `abou-bakari-roi-plan-large-REF.png` comme source
 - Ne jamais générer Abou Bakari from scratch sans REF — dérive garantie (barbe, proportions, kufi)
+
+---
+
+## GeoAfrique — Amanirenas
+
+> Seed : `characters/amanirenas/amanirenas-portrait-REF-v4-patch.png` (eye patch gauche obligatoire)
+> Details complets : `characters/amanirenas/README.md`
+
+---
+
+## GeoAfrique — Hannibal Barca
+
+> Seed : `characters/hannibal/hannibal-vivid-portrait-REF.png` (casque or, eye patch droit)
+> Details complets : `characters/hannibal/README.md`

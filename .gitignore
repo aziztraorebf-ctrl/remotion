@@ -107,3 +107,6 @@ public/assets/map-*.png
 public/assets/peste-pixel/peste-scene-*.png
 public/assets/peste-pixel/peste-scene-*.webp
 tmp/
+
+# Seedance temporary screenshots (UUID names, not canonical REFs)
+public/assets/library/geoafrique/test seedance 2.0/
