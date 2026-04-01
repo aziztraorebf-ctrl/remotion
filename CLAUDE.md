@@ -237,9 +237,21 @@ Aziz decrit la scene en francais
 - **Gemini edition chirurgicale** : meilleur outil pour corrections precises (oeil, bijou, couronne, silhouette, pieds) tout en preservant l'image source intacte — TOUJOURS essayer avant de regenerer. Voir `memory/key-learnings.md` § "Gemini chirurgical".
 - **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
 - **Pixel art sprites** : PixelLab MCP (characters, animations, tilesets) + API v2 (concept-to-character, animate-with-text)
-- **Voix-off** : ElevenLabs (voix Chris, fr, markers TTS)
+- **Voix-off** : ElevenLabs (voix Chris, fr, markers TTS) — **LIRE REGLES TTS CI-DESSOUS avant tout script**
 - **Remote rendering** : Vercel Sandbox via `scripts/render-on-vercel.py` — rend des compositions Remotion en cloud, retourne un MP4 public. Compositions : `MyComp`, `GeoTest`. Voir `memory/reference_vercel-blob-gallery.md` § "Remotion Vercel Renderer".
 - **Details complets** : `memory/apis-and-tools.md` et `memory/pixellab-api-v2.md`
+
+### Regles TTS ElevenLabs francais (NON-NEGOTIABLE — appliquer a CHAQUE script audio)
+
+> **Claude DOIT relire ces regles et scanner le texte AVANT chaque appel ElevenLabs. Pas apres. Pas "on corrigera plus tard". AVANT.**
+
+1. **ZERO participe passe en "e/ee" en fin de groupe** : ElevenLabs drop l'accent final.
+   - INTERDIT : "terrifie", "hante", "obsede", "tente", "prepare", "racontee", "traversee"
+   - CORRECTION : reformuler avec verbe conjugue ("la terreur le saisit", "l'horizon le hante") ou construction sans accent ("qu'on te cache" au lieu de "qu'on ne t'a pas racontee")
+2. **ZERO "ont + voyelle"** : liaison bizarre. Remplacer par passe simple ("ont accosté" → "firent escale")
+3. **Noms de villes "s" final** : liaison bizarre. Ecrire sans "s" phonetique si necessaire
+4. **Nombres en lettres** : "1311" → "treize cent onze" (TTS lit les chiffres de facon robotique)
+5. **Scan obligatoire** : avant generation, lister TOUS les mots en "e/ee" du script et verifier un par un
 
 ### Scripts de recherche
 - `research/launch_deep_research.py` : Recherche parallele multi-LLM
