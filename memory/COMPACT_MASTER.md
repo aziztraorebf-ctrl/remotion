@@ -89,11 +89,17 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - Etat : **BEATS 01-09 TOUS COMPLETES** — reste musique Suno + render final
 
 ### Seedance 2.0 / Dreamina (resume)
-- **Force** : coherence parfaite (0 morphing/9 tests), multi-ref, POV->3e personne, foule 30+, lip sync, duel combat
+- **Force** : coherence parfaite (15/15 tests), multi-ref, POV->3e personne, foule 30+, lip sync francais natif, duel combat, plan-sequence impossible, transitions epoques
 - **Faiblesse** : max 15s, 720p gratuit, pas d'API, audio re-synthetise
 - **Workflow** : Seedance -> ffmpeg strip audio -> Remotion OffthreadVideo + ElevenLabs
-- **Format recommande** : SECONDS X TO Y + COLOR GRADE (personnages), narratif court (paysages)
-- **Reference complete** : `memory/seedance-reference.md`
+- **6 formats de prompt** : Narratif, Storyboard, SECONDS, Plan-sequence, Steadicam, Format 6 (transitions epoques)
+- **Format recommande Shorts** : Format 6 (2-3 scenes par clip x 15s avec transitions slow-mo orbital)
+- **Reference complete** : `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md`
+
+### Thiaroye V2 (nouveau satellite)
+- Style : meme flat design 2D que GeoAfrique, Seedance Format 6
+- Plan complet : `scripts/thiaroye-v2-seedance-plan.md` (7 clips, 560 credits)
+- Clip 1 FAIT (10/10). Audio existant (110s).
 
 ---
 

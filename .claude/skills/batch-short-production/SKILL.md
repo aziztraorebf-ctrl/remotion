@@ -82,21 +82,180 @@ Duration matching rule:
 
 **Output**: `[project]/timing.json`
 
-### Phase 4: KIMI STORYBOARD DIRECTION (~$0.005)
+### Phase 4: KIMI ARTISTIC DIRECTION (~$0.01-0.02)
 
-Send script + timing to Kimi K2.5 for storyboard artistic direction.
+Send script + timing + clip structure to Kimi K2.5 as artistic director. This is the
+most impactful phase for visual quality. Kimi challenges every visual choice BEFORE
+generation, proposes alternatives, and ensures narrative continuity between clips.
 
-**Execute**: `python scripts/batch-short-production/kimi-script-review.py --script <file> --timing <file> --storyboard-only`
+**Execute**: `python scripts/batch-short-production/kimi-da-review.py --script <file> --timing <file> --clips <N>`
 
-Kimi proposes a frame-by-frame storyboard brief: shot types, camera movements,
-rhythm (fast cuts vs slow reveals), palette progression, transitions.
-This brief becomes the input for Gemini storyboard generation.
+The brief sent to Kimi MUST include these 4 sections:
+
+#### Section 1: Generator Constraints (MANDATORY)
+
+Kimi must work WITHIN the technical limits of whatever video generator is used.
+These constraints prevent Kimi from proposing impossible shots.
+
+Include for ANY generator:
+- Max duration per clip (e.g. 15s for Seedance, 10s for Kling)
+- Max scenes per clip (e.g. 2-3 for Format 6)
+- Supported transition types (e.g. slow-mo orbital for Seedance)
+- Style anchor (e.g. "2D vivid flat illustration style")
+- Anti-instructions (e.g. "No text, no banners")
+- Literal interpretation rules (what you write = what you get)
+- Max distinct characters per clip (2-3 typically)
+- Dynamic verb requirements (generator-specific)
+
+If using Seedance: load `memory/tools/seedance-rules.md` and include the 27 rules as constraints.
+If using Kling: load `memory/tools/kling.md` and include cfg_scale, duration, format rules.
+If using another generator: describe its limits explicitly in the brief.
+
+#### Section 2: Moral/Tonal Guidelines
+
+Every project has a tone. Kimi must respect it.
+
+Include:
+- What to AVOID (e.g. caricature, diabolization, victimization)
+- What to PREFER (e.g. systemic injustice over individual cruelty, dignity over pathos)
+- Level of violence/sensitivity appropriate for the platform (YouTube, TikTok, etc.)
+
+Example: "Show systemic bureaucratic violence, not individual cruelty. The spectator
+should feel the injustice without being told who is the villain."
+
+#### Section 3: Frame Chaining (MANDATORY)
+
+Each clip will be generated in sequence. The last frame of clip N becomes the
+reference image for clip N+1. This guarantees visual continuity.
+
+Rules for Kimi to follow:
+- Last ~2 seconds of each clip = STABLE IMAGE, quasi-static, composed like a painting
+- No fast movement at end of clip (last frame must be extractable as ref)
+- The final visual element of clip N must LOGICALLY introduce clip N+1
+- Each clip ending must contain a BRIDGE ELEMENT (object, place, light, character)
+  that is ALSO present at the start of the next clip
+- **CRITICAL**: The bridge element must be DESCRIBED IN THE PROMPT ITSELF, not just
+  in the metadata. Example: if the bridge is "a folded letter", the prompt must contain
+  "the folded letter REMAINS visible at center frame" AND the next clip must start with
+  "the same folded letter from previous frame now..."
+- Each Scene 2 must end with "[element] REMAINS completely still for the final 2 seconds"
+
+Good bridges: same object in new context, same framing with new content, same character in new place.
+Bad bridges: interior->exterior with no shared element, different characters with no link.
+
+For each clip, Kimi must provide:
+- `BRIDGE TO NEXT CLIP:` — the shared visual element
+- `LAST FRAME:` — exact description of the final extractable image
+
+#### Section 4: GeoAfrique Visual Identity (MANDATORY)
+
+Include the visual identity system in the brief so Kimi applies it natively.
+
+**Chromatic Contrast (OBLIGATORY — 1 to 2 clips per Short)**:
+- 1 subject in ONE dominant color, rest of world desaturated (grey/sepia/monochrome)
+- Place at the strongest narrative moments (hook, climax, or conclusion)
+- The contrast is a COLOR TREATMENT on natural tones (skin, fabric, environment)
+  — NOT a magical aura, glow, or special effect
+- Kimi must justify WHY each chosen clip gets the contrast and why others don't
+
+**Geographic Palettes (RECOMMENDED)**:
+- West Africa: gold + indigo + terre rouge (accent: gold)
+- East Africa: green + ochre + sky blue (accent: green)
+- Central Africa: deep green + red + black (accent: red)
+- North Africa: white + blue + sand (accent: blue)
+- Southern Africa: burnt earth + orange + grey (accent: orange)
+- Modern/geopolitical: desaturated + 1 neon accent (accent: neon)
+- Pan-African: green-yellow-red (accent: yellow)
+
+**Temporal Split (OPTIONAL)**: only if the subject explicitly opposes past and present. Justify.
+
+#### Section 5: Prompt Quality Rules (MANDATORY)
+
+Kimi must follow these rules when writing each prompt:
+
+- **Structure**: Scene 1 / Transition / Scene 2 (always this format)
+- **Bridge in the prompt**: each clip STARTS with "the same [X] from the previous frame"
+  and ENDS with "[element] REMAINS completely still for the final 2 seconds"
+- **Anti-instructions**: include "No text, no banners, no signs, no writing visible anywhere.
+  No unnecessary 360-degree turns, without motion distortion." in EVERY prompt
+- **DO NOT include** format/aspect ratio in the prompt (e.g. "vertical 9:16") — this is
+  a generator parameter, not a prompt element
+- **Chromatic contrast = color treatment**: describe which elements KEEP their natural
+  warm tones and which elements DESATURATE to grey. Not "golden aura" or "glowing".
+- **Transition formula**: "Instantly in slow motion, the camera slowly circles around [X].
+  [describe what changes gradually]. The transition is natural and without abrupt changes."
+- **COLOR GRADE section** at end of every prompt
+- **Sound effects section** at end of every prompt (even though audio is replaced in post)
+
+#### Section 6: Full Script + Clip Structure
+
+Include the complete script with timestamps + the clip breakdown table (which clip
+covers which narration segment). Kimi needs the FULL picture to judge continuity.
+
+Also include: what the clip BEFORE and clip AFTER each segment contain (context).
+
+#### Kimi Output Format
+
+For each clip, Kimi returns:
+1. The complete prompt ready to paste into the generator
+2. `BRIDGE TO NEXT CLIP:` line
+3. `LAST FRAME:` line
+4. If chromatic contrast is used: WHY this clip
+
+Plus a global analysis:
+- **Chromatic progression**: does the palette evolve logically across all clips?
+- **Visual redundancies**: are two clips using the same motif? (eliminate)
+- **Narrative gaps**: is any part of the script visually unrepresented?
+- **Arc coherence**: does the emotional arc (visual) match the script (audio)?
+- **Chromatic contrast placement**: which clips and WHY (1-2 per Short)
+
+#### Iteration Protocol
+
+1. First pass: Kimi produces all prompts with visual identity applied
+2. User (Aziz) reviews, gives feedback (tone, nuance, preferences)
+3. If changes needed: send FULL brief again with feedback appended. Never partial.
+4. MAX 3 iterations. After 3, lock the prompts and move to verification.
+
+Cost: ~$0.01-0.02 per full pass (7 clips). Total Phase 4 budget: ~$0.05 max.
 
 Rules:
-- Kimi's storyboard direction is GUIDANCE for Gemini — not a replacement.
-- With timing.json, Kimi can propose precise framing per beat duration.
+- Kimi's proposals are SUGGESTIONS — Aziz decides what to adopt
+- Every prompt must be COMPLETE and ready to paste (no fragments)
+- Kimi must respect the clip breakdown (don't merge or split clips without asking)
+- Generator constraints are NON-NEGOTIABLE — Kimi cannot override them
+- Every iteration sends the FULL brief, not partial updates (Kimi has no memory)
 
-**Output**: `[project]/kimi-storyboard-direction.md`
+> **CHECKPOINT AZIZ**: "Voici la direction artistique de Kimi. Tu valides les prompts ?"
+> Iterate until Aziz approves all prompts. THEN proceed to verification.
+
+**Output**: `[project]/kimi-da-prompts-raw.md` (all prompts from Kimi)
+
+### Phase 4b: PROMPT VERIFICATION (Claude/Agent)
+
+Automated verification pass on Kimi's output. The goal: Kimi should produce
+near-perfect prompts, this pass catches the remaining edge cases.
+
+**Checklist (for each clip):**
+
+| # | Check | What to look for |
+|---|-------|-----------------|
+| 1 | Bridge IN the prompt | Does Scene 1 start with "the same [X] from the previous frame"? |
+| 2 | Bridge OUT coded | Does Scene 2 end with "[element] REMAINS completely still for the final 2 seconds"? |
+| 3 | Anti-instructions present | "No text, no banners..." block present? |
+| 4 | No format in prompt | Remove "vertical 9:16", "720x1280" if present (generator param, not prompt) |
+| 5 | No text-generating content | No "labeled with", "marked with", "numbered" (Seedance generates text) |
+| 6 | No impossible actions | No "impossibly", no overlays, no calendar pages flipping |
+| 7 | Transition formula correct | "Instantly in slow motion, the camera slowly circles around..." present? |
+| 8 | COLOR GRADE section present | At end of prompt? |
+| 9 | Sound effects section present | At end of prompt? |
+| 10 | Chromatic contrast precise | Color treatment on natural tones, NOT aura/glow/magic? |
+| 11 | Scene structure | Scene 1 / Transition / Scene 2 format? |
+| 12 | Dynamic verbs | No "slowly", "gently", "subtle" outside of transition section? |
+
+**If errors found**: fix directly in the prompt (do NOT resend to Kimi).
+**If no errors**: proceed to generation.
+
+**Output**: `[project]/kimi-da-prompts-final.md` (verified prompts, ready to use)
 
 ### Phase 5: STORYBOARD
 
@@ -168,7 +327,7 @@ Post-generation:
 
 ### Phase 7: CORRECTIONS
 
-Fix rejected clips from Phase 4.
+Fix rejected clips from Phase 6.
 
 Methods (try in this order):
 1. **Re-prompt**: Adjust the prompt (more dynamic verbs, different camera angle) and regenerate

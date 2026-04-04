@@ -10,9 +10,25 @@ Claude ecrit TOUT le code. Zero code requis de la part d'Aziz.
 ### Au debut de chaque session
 1. MEMORY.md est auto-charge (index compact avec pointeurs vers fichiers thematiques)
 2. Consulter `episodic-memory` MCP (search) pour le contexte des sessions recentes
-3. Si travail sur le projet actif : lire `memory/current-project.md`
-4. Charger les fichiers thematiques pertinents selon la demande (apis, learnings, styles...)
+3. Si travail sur le projet actif : lire `memory/COMPACT_CURRENT.md`
+4. Charger les fichiers thematiques pertinents selon la demande (voir routage ci-dessous)
 **Ne JAMAIS affirmer "je ne peux pas" ou "je n'ai pas acces" sans avoir d'abord consulte la memoire.**
+
+### Routage outils — LIRE AVANT d'agir (NON-NEGOTIABLE)
+
+Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT d'ecrire du code ou un prompt** :
+
+| Aziz parle de... | Lire ce fichier |
+|-------------------|-----------------|
+| Seedance, Dreamina, prompt video, clip | `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md` |
+| Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
+| Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` |
+| Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
+| ElevenLabs, voix, TTS, audio, narration | `memory/tools/elevenlabs.md` |
+| Remotion, animation, code, spring, render | `memory/tools/remotion.md` |
+| Pipeline, production, ordre des etapes | `memory/pipeline.md` |
+
+**Pourquoi** : ces fichiers contiennent nos regles specifiques, gotchas, et parametres valides par l'experience. Sans les lire, Claude risque d'utiliser des valeurs par defaut incorrectes.
 
 ### Regle : Review visuelle AVANT Kimi (NON-NEGOTIABLE)
 

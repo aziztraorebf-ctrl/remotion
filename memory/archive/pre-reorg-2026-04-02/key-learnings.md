@@ -58,6 +58,27 @@ Ne pas regenerer depuis zero pour un defaut mineur. Gemini 3.1 Flash pour edit c
 - Postures de personnages minuscules : resultat subtil. Accepter et laisser Kling animer via prompt.
 - Excelle sur les changements de perspective (vue sol → vue aerienne).
 
+### Modeles disponibles (avril 2026)
+- `gemini-3.1-flash-image-preview` : = "Nano Banana 2". Generation d'images, character sheets, expressions. Rapide et bon marche.
+- `gemini-3-pro-image-preview` : edition chirurgicale. Respecte la composition source.
+- `nano-banana-pro-preview` : = "Nano Banana Pro". Plus cher, qualite similaire a 3.1 Flash.
+- `imagen-4.0-generate-001` / `imagen-4.0-ultra-generate-001` : generation haute qualite (non teste).
+
+### Character sheets multi-angle (VALIDE 2026-04-01)
+- **Workflow** : fournir 1-2 character sheets existants comme ref de style + prompt decrivant le nouveau personnage
+- **Modele** : `gemini-3.1-flash-image-preview` — genere en ~30-60s
+- **Layout** : "4 head views (front, 3/4, profile, back) + 1 full body standing on the right"
+- **Resultat** : style coherent avec les refs, personnage distinct. Teste sur Christophe Colomb avec refs Abou Bakari + Moussa.
+
+### Expressions en pourcentage (VALIDE 2026-04-01)
+- **Technique** : specifier un blend d'emotions avec pourcentages — "90% rage, 10% tristesse"
+- **Resultat** : Gemini blend reellement les emotions. Teste avec 3 expressions extremes, toutes distinctes et nuancees.
+- **Application** : generer start frames avec l'emotion exacte du beat narratif avant d'envoyer a Seedance.
+- **Prompts exemples** :
+  - "70% determination, 30% hidden anxiety" (depart en expedition)
+  - "90% ecstatic joy, 10% madness" (decouverte de terre)
+  - "50% terror, 50% awestruck wonder" (tempete en mer)
+
 ---
 
 ## Methode Nano Banana — Modification chirurgicale d'asset
@@ -133,6 +154,14 @@ Shot 2 (6-11s): Visual: [description]. Camera: [mouvement].
 - `fal-ai/kling-video/o3/standard/image-to-video` — scenes epiques, start+end frame
 - V3 Std cfg 0.3 + "static locked shot" = vie microscopique sans morphing (ideal scenes symboliques).
 - V1.5/V1.6 = DEFUNCT.
+
+### Seedance Audio-Guided Dialogue (decouverte 2026-04-01)
+- Seedance genere voice-over + dialogues + SFX si on structure le prompt avec sections `Audio:` et `Dialogue:`
+- Lip sync natif synchronise avec l'action visuelle — chaque replique tombe au bon moment
+- Workflow potentiel : ecrire dialogues dans prompt → Seedance lip sync → strip audio → extraire timings (silencedetect) → overlay ElevenLabs
+- Superieur a @Audio upload (qui deforme la voix uploadee)
+- Source : @drjoetw tweet 2038847799794819507 — chat taekwondo avec voice-over + dialogues multi-personnages
+- **A TESTER** sur beat 05 dialogue Abou Bakari / Moussa. Prompt pret dans `tmp/test-audio-guided-dialogue-prompt.md`
 
 ---
 
