@@ -1,7 +1,9 @@
 import React from "react";
 import {
   AbsoluteFill,
+  Audio,
   Img,
+  Sequence,
   useCurrentFrame,
   useVideoConfig,
   interpolate,
@@ -326,6 +328,24 @@ export const HistoricalMapGemini: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#c8d0d8" }}>
+      {/* Narration — demarre a 1s (30 frames) pour laisser le pull back s'installer */}
+      <Sequence from={30}>
+        <Audio src={staticFile("assets/geoafrique/audio/historical-map-narration.mp3")} />
+      </Sequence>
+
+      {/* Musique de fond — demarre au frame 0, volume -18dB sous la voix */}
+      <Audio
+        src={staticFile("assets/geoafrique/audio/historical-map-music-minimax26-v2-30s.mp3")}
+        volume={(f) =>
+          interpolate(
+            f,
+            [0, 30, 870, 900],
+            [0, 0.12, 0.12, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+          )
+        }
+      />
+
       <div
         style={{
           width: W, height: H,
