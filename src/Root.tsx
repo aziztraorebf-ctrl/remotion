@@ -57,6 +57,9 @@ import { SeedanceTest } from "./projects/geoafrique-shorts/SeedanceTest";
 import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
 import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
 import { Beat03FleetManifest } from "./projects/geoafrique-shorts/components/Beat03FleetManifest";
+import { HistoricalMap } from "./projects/geoafrique-shorts/components/HistoricalMap";
+import { HistoricalMapGemini } from "./projects/geoafrique-shorts/components/HistoricalMapGemini";
+import { HybridMapTest } from "./projects/geoafrique-shorts/components/HybridMapTest";
 import { TOTAL_FRAMES_WITH_CTA as ABOU_FRAMES, BEATS } from "./projects/geoafrique-shorts/timing";
 
 export const RemotionRoot: React.FC = () => {
@@ -115,6 +118,30 @@ export const RemotionRoot: React.FC = () => {
           id="Beat03FleetManifest"
           component={Beat03FleetManifest}
           durationInFrames={BEATS.fleet.end - BEATS.fleet.start}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="HistoricalMap"
+          component={HistoricalMap}
+          durationInFrames={900}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="HistoricalMapGemini"
+          component={HistoricalMapGemini}
+          durationInFrames={900}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="HybridMapTest"
+          component={HybridMapTest}
+          durationInFrames={150}
           fps={30}
           width={1080}
           height={1920}
