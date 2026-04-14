@@ -21,6 +21,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | Aziz parle de... | Lire ce fichier |
 |-------------------|-----------------|
 | Seedance, Dreamina, prompt video, clip | `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md` |
+| Seedance storyboard multi-cut (micro-seq 2-4 plans, <15s) | `memory/tools/seedance-storyboard-technique.md` |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
 | Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
@@ -29,6 +30,23 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | Pipeline, production, ordre des etapes | `memory/pipeline.md` |
 
 **Pourquoi** : ces fichiers contiennent nos regles specifiques, gotchas, et parametres valides par l'experience. Sans les lire, Claude risque d'utiliser des valeurs par defaut incorrectes.
+
+### Regle : Templates obligatoires AVANT tout prompt ou image (NON-NEGOTIABLE)
+
+**AVANT d'ecrire un prompt Seedance ou une image Gemini, Claude DOIT :**
+
+1. **LIRE le template correspondant** dans `memory/templates/` :
+   - Scene de combat -> `memory/templates/combat.md`
+   - Scene narrative (discours, voyage, emotion) -> `memory/templates/narratif.md`
+   - Montage rapide / beat sync -> `memory/templates/montage.md`
+   - Exploration de lieu -> `memory/templates/exploration.md`
+2. **UTILISER la structure du template** pour ecrire le prompt
+3. **COCHER la checklist en bas du template** AVANT de presenter
+4. **Afficher le scan** : tableau rapide des points verifies
+
+**ZERO EXCEPTION** : meme pour un "test rapide". Les erreurs les plus couteuses sont arrivees sur des prompts "simples" (diversite visages oubliee 3x le 2026-04-07, ethnicity pas specifiee, enfant dans scene militaire).
+
+**Pourquoi cette regle remplace l'ancienne** : l'ancienne disait "relire les 57 regles". Ca ne marchait pas — trop de regles, pas actionnables en milieu de session. Les templates integrent les regles critiques + techniques DA + angles camera directement dans le workflow. Le template = l'outil de travail.
 
 ### Regle : Review visuelle AVANT Kimi (NON-NEGOTIABLE)
 
@@ -282,110 +300,93 @@ Aziz decrit la scene en francais
   - Phase 3: Script Writing
   - Phase 4: Quality Review
 
-### Agents Specialises (subagents avec memoire persistante)
-- `.claude/agents/kimi-reviewer.md` : Review video/image via Kimi K2.5 (Moonshot API)
-  - Memoire : `.claude/agent-memory/kimi-reviewer/`
-  - Script : `scripts/review_with_kimi.py`
-- `.claude/agents/visual-qa.md` : Review screenshots statiques intermediaires via Kimi K2.5
-  - Memoire : `.claude/agent-memory/visual-qa/`
-  - Declenchement : automatique via hook `screenshot-qa.sh` sur tout fichier `preview-*.png`
-  - Analyse 5 dimensions : style coherence, anchoring, atmosphere, composition, technique
-- `.claude/agents/pixellab-expert.md` : Expert PixelLab (19 outils MCP + API v2)
-  - Memoire : `.claude/agent-memory/pixellab-expert/`
-  - Registre d'erreurs : 10+ compositing/API/asset errors documentes
-  - Pipeline enforce : tileset -> map objects -> sprites (JAMAIS painted bg + CSS sprites)
-  - Registre characters : 8 persos Peste 1347 avec gotchas par character
-- `.claude/agents/creative-director.md` : Directeur creatif / anti-boucle
-  - Memoire : `.claude/agent-memory/creative-director/`
-  - Mode "direction" : challenge la direction artistique AVANT de coder
-  - Mode "preflight" : validation technique AVANT de render
-  - Circuit breaker : force pause apres 3 echecs sur meme scene
-- `.claude/agents/pixel-art-director.md` : Expert composition pixel art
-  - Memoire : `.claude/agent-memory/pixel-art-director/`
-  - Connaissance : 20+ sources (SLYNYRD, Derek Yu, Saint11, LPC)
-  - Valide perspective, palette, layering, NPC density AVANT generation
-  - Recommande la meilleure VUE par scene (side-view, top-down, iso)
-  - 10 regles d'or + 7 erreurs fatales = auto-block
-- `.claude/agents/storyboarder.md` : Producteur du SCENE_TIMING (5eme agent)
-  - Memoire : `.claude/agent-memory/storyboarder/`
-  - Responsabilite UNIQUE : convertir audio mesure + scenes.json -> SCENE_TIMING.ts
-  - BLOQUE si audio non genere et mesure par ffprobe
-  - Enforce par hook : `storyboard-gate.sh` bloque tout edit de fichier scene si Stage 1.8 absent
+### Agents Specialises — 5 agents de production video (refondus 2026-04-13)
+
+Les 5 agents sont **tool-agnostic** (spécialisés par **rôle de production**, pas par outil). Les outils (Seedance, Gemini, Kling, Recraft, PixelLab) évoluent vite — les rôles sont intemporels.
+
+- `.claude/agents/audio-director.md` : Narration TTS + musique + mix (Stage 1)
+  - Mémoire : `.claude/agent-memory/audio-director/`
+  - **Scan TTS français OBLIGATOIRE** avant tout appel ElevenLabs (participes "e/ee", "ont + voyelle", chiffres)
+  - L'agent mesure objectivement — **ne peut PAS écouter**, la validation perceptive reste Aziz
+- `.claude/agents/storyboarder.md` : Script + audio mesuré → `timing.ts` frame-précis (Stage 2)
+  - Mémoire : `.claude/agent-memory/storyboarder/`
+  - Formats supportés : SCENES-only flat (Shorts) + ACTS+SCENES nested (long-form)
+  - Règle absolue : frontières ABSOLUES (start/end), jamais durées relatives
+- `.claude/agents/visual-producer.md` : Assets multi-outils (Gemini, Seedance, Kling, Recraft, fal.ai, PixelLab) (Stages 3-4)
+  - Mémoire : `.claude/agent-memory/visual-producer/`
+  - Propose un **Visual Plan par scène** → Aziz approuve → génère → self-review → livre
+  - **Doc-First** : lire `memory/tools/{outil}.md` AVANT tout prompt
+  - **Preview-before-pay** : montrer refs + prompt + coût AVANT chaque appel API
+- `.claude/agents/remotion-composer.md` : Composition Remotion + mini-render validation (Stage 5)
+  - Mémoire : `.claude/agent-memory/remotion-composer/`
+  - 8 règles non-négociables (audio-derived timing, spring > interpolate, premountFor, clamp, etc.)
+  - Mini-render bloquant AVANT de coder d'autres scènes
+- `.claude/agents/quality-reviewer.md` : Review multi-dimensions + verdict (Stage 6)
+  - Mémoire : `.claude/agent-memory/quality-reviewer/`
+  - Self-review EN PREMIER, puis Kimi en mode "confirm or refute" (scope strict technique)
+  - **Distingue explicitement** ce qui a été validé (mesurable) vs ce qui requiert Aziz (audio perçu, émotion vocale, jugement final)
+
+**Anciens agents archivés** dans `.claude/agents/archive/` (creative-director, pixel-art-director, pixellab-expert, kimi-reviewer, visual-qa). Gardés pour référence (registres de gotchas), pas utilisés en production.
 
 ### Declenchement des Agents (OBLIGATOIRE - ne PAS oublier)
 
 **Ces regles sont NON-NEGOTIABLES. Claude DOIT les suivre meme si Aziz ne le demande pas.**
 
-| Quand | Agent | Mode | Comment |
-|-------|-------|------|---------|
-| Aziz donne une nouvelle direction de scene | `creative-director` | direction | AVANT de coder quoi que ce soit. Produire un Direction Brief. |
-| APRES le Direction Brief | `pixel-art-director` | composition | Valider perspective, palette, layers, NPC density. Produire Composition Brief. |
-| APRES le Composition Brief, audio genere | `storyboarder` | timing | Produire SCENE_TIMING. Hook `storyboard-gate.sh` bloque le code sinon. |
-| Aziz dit "vas y" / approuve un plan visuel | `creative-director` | direction | Verifier script + assets + faisabilite AVANT de coder. |
-| AVANT un `npx remotion render` (>30 frames) | `creative-director` | preflight | Hook automatique rappelle. Verifier assets, z-index, timing. |
-| APRES un `npx remotion render` reussi | `kimi-reviewer` | review | Hook automatique rappelle. Envoyer a Kimi pour diagnostic. |
-| Generation PixelLab (character, tileset, map object) | `pixellab-expert` | validation | Consulter le registre d'erreurs. Verifier les parametres. |
-| 3+ echecs sur meme scene/fichier | `creative-director` | circuit-breaker | STOP. Ne pas patcher. Re-evaluer l'approche. |
+| Quand | Agent | Action |
+|-------|-------|--------|
+| Script locked, besoin audio | `audio-director` | Scan TTS → génère narration → mesure → valide Aziz à l'oreille |
+| Audio mesuré, besoin timing | `storyboarder` | Produit `timing.ts` frame-précis |
+| Timing prêt, besoin plan visuel | `visual-producer` | Propose Visual Plan scene-by-scene |
+| Visual Plan approuvé | `visual-producer` | Génère assets (preview-before-pay) |
+| Assets livrés, besoin composition | `remotion-composer` | Assemble + mini-render validation |
+| Composition + render final fait | `quality-reviewer` | Self-review + Kimi scope + verdict |
+| 3+ problèmes structurels détectés | `quality-reviewer` (circuit-breaker) | STOP. Signal à Claude (main) pour ré-évaluer. Pas patcher. |
 
 **Si Claude oublie un declenchement, c'est une FAUTE DE PROCESSUS.**
-Les hooks shell rappellent pour render (preflight + kimi) et bloquent les scenes sans storyboard (storyboard-gate).
 
-### Pipeline d'Orchestration Agent Team (10 etapes)
+### Pipeline d'Orchestration Agent Team (6 étapes + Aziz final)
 
 **Les 5 agents forment une equipe. Claude (moi) est l'orchestrateur qui transmet les outputs entre agents.**
 **Memoire partagee** : `.claude/agent-memory/shared/PIPELINE.md` (chaque agent y ecrit son etape)
 
 ```
-Etape 1:   creative-director (direction)  -> Direction Brief
-    |
-    v  [Claude transmet le brief]
-Etape 1.5: pixel-art-director (composition) -> Perspective + Layers + Palette + NPC density
-    |
-    v  [Claude transmet le Composition Brief + audio genere]
-Etape 1.8: storyboarder (timing)          -> SCENE_TIMING (audio-mesure, frame par frame)
-    |                                         [Hook storyboard-gate.sh bloque le code sinon]
-    v  [Claude transmet SCENE_TIMING]
-Etape 2:   pixellab-expert (feasibility)  -> CAN DO / NEEDS GENERATION
-    |
-    v  [Claude presente le tout a Aziz]
-Etape 3:   Aziz repond + approuve
+Stage 0  Claude + Aziz       → Script locked
     |
     v
-Etape 4:   pixellab-expert (generation)   -> Assets generes + verifies
+Stage 1  audio-director      → Narration + musique + mix (mesures + validation oreille Aziz)
     |
     v
-Etape 4.5: visual-qa (preview statique)   -> Composite PIL + score Kimi (AVANT de coder)
-    |
-    v  [Claude presente galerie a Aziz]
-Etape 4.8: Aziz validation (BLOQUANT)    -> Sprites + batiments + audio presentes individuellement
-    |                                        3 questions : voix OK? personnages OK? batiments OK?
-    v  [Aziz valide explicitement]
-Etape 5:   Claude code la scene           -> Utilise SCENE_TIMING directement
-    |
-    v  [BLOQUANT - mini-render avant de continuer]
-Etape 5.2: Mini-render 3-4s (BLOQUANT)  -> npx remotion render --frames=START-END (scene cle ~110f)
-    |                                        Aziz valide : proportions, sol, gaps, mouvement NPCs
-    |                                        Probleme detecte -> corriger AVANT de continuer le code
-    v
-Etape 6:   creative-director (preflight)  -> GO / NO-GO
+Stage 2  storyboarder        → timing.ts frame-précis
     |
     v
-Etape 7:   Render (npx remotion render)
+Stage 3  visual-producer     → Visual Plan proposal → Aziz approuve/modifie/rejette
     |
-    v  [Claude transmet render + Direction Brief a kimi]
-Etape 8:   kimi-reviewer (review)         -> Score + Action Items + Direction Match
+    v
+Stage 4  visual-producer     → Assets générés (preview-before-pay chaque appel)
     |
-    v  [Claude transmet la review au creative-director]
-Etape 9:   creative-director (verdict)    -> APPROVE / MINOR FIX / RE-EVALUATE
+    v
+Stage 5  remotion-composer   → Composition + mini-render 3-4s bloquant
+    |
+    v
+Stage 6  quality-reviewer    → Review multi-dim + Kimi scope + verdict
+    |
+    v
+Stage 7  Aziz                → Validation finale oreille + œil + décision créative
+    |
+    v
+Stage 8  Claude (main)       → Fix iteration OU render final + publish
 ```
 
-**Regles :**
-- NE PAS sauter d'etape (surtout pas 1, 1.5, 1.8, 4.8)
-- Etape 1.8 prerequis : audio genere ET mesure par ffprobe
-- Etape 4.8 prerequis : Aziz valide sprites + batiments + audio AVANT tout code
-- Si Etape 2 = NEEDS GENERATION, faire Etape 4 AVANT de coder
-- Si Etape 6 = NO-GO, corriger AVANT de render
-- Si Etape 9 = RE-EVALUATE, invoquer le circuit breaker
+**Règles du pipeline** :
+- NE PAS sauter d'étape
+- Stage 1 prérequis : script LOCKED par Aziz
+- Stage 2 prérequis : audio existant ET mesuré (ffprobe ou Whisper)
+- Stage 3 prérequis : Aziz approuve le Visual Plan AVANT toute génération
+- Stage 4 règle : preview-before-pay pour CHAQUE appel API payant
+- Stage 5 prérequis : mini-render validation AVANT de coder d'autres scènes
+- Stage 6 règle : self-review AVANT Kimi, jamais l'inverse
+- Stage 7 : Aziz prime toujours sur Kimi et sur le verdict de l'agent
+- Stage 8 : le render final est une décision consciente de Claude principal, pas d'un agent
 
 ### Remotion Best Practices (regles extraites des skills installes)
 
