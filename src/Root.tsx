@@ -53,6 +53,8 @@ import { UnParmiTous } from "./projects/silhouette-questions/scenes/UnParmiTous"
 import { TOTAL_FRAMES as VEILLEUR_FRAMES } from "./projects/veilleur-ombre/config/veilleurTiming";
 import { AbouBakariShort } from "./projects/geoafrique-shorts/AbouBakariShort";
 import { ThiaroyeShort } from "./projects/geoafrique-shorts/ThiaroyeShort";
+import { SoundjataCharte, SOUNDJATA_CHARTE_FRAMES } from "./projects/geoafrique-shorts/SoundjataCharte";
+import { SoundjataActeV, SOUNDJATA_ACTE_V_FRAMES } from "./projects/geoafrique-shorts/SoundjataActeV";
 import { SeedanceTest } from "./projects/geoafrique-shorts/SeedanceTest";
 import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
 import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
@@ -60,6 +62,7 @@ import { Beat03FleetManifest } from "./projects/geoafrique-shorts/components/Bea
 import { HistoricalMap } from "./projects/geoafrique-shorts/components/HistoricalMap";
 import { HistoricalMapGemini } from "./projects/geoafrique-shorts/components/HistoricalMapGemini";
 import { HybridMapTest } from "./projects/geoafrique-shorts/components/HybridMapTest";
+import { KirinaDateCard } from "./projects/geoafrique-shorts/components/KirinaDateCard";
 import { TOTAL_FRAMES_WITH_CTA as ABOU_FRAMES, BEATS } from "./projects/geoafrique-shorts/timing";
 
 export const RemotionRoot: React.FC = () => {
@@ -78,6 +81,14 @@ export const RemotionRoot: React.FC = () => {
           id="ThiaroyeShort"
           component={ThiaroyeShort}
           durationInFrames={3302}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataCharte"
+          component={SoundjataCharte}
+          durationInFrames={SOUNDJATA_CHARTE_FRAMES}
           fps={30}
           width={1080}
           height={1920}
@@ -142,6 +153,22 @@ export const RemotionRoot: React.FC = () => {
           id="HybridMapTest"
           component={HybridMapTest}
           durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KirinaDateCard"
+          component={KirinaDateCard}
+          durationInFrames={14}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataActeV"
+          component={SoundjataActeV}
+          durationInFrames={SOUNDJATA_ACTE_V_FRAMES}
           fps={30}
           width={1080}
           height={1920}
