@@ -1,5 +1,5 @@
 # COMPACT_MASTER — Remotion Project
-> Mise a jour : 2026-03-31 | Stable — modifier uniquement si decision d'architecture majeure
+> Mise a jour : 2026-04-04 | Stable — modifier uniquement si decision d'architecture majeure
 
 ---
 
@@ -83,7 +83,8 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - Restant : S1 Flagellants -> S6 Miroir (~8m30s)
 
 ### GeoAfrique — Abou Bakari II (satellite)
-- Style : **Flat design 2D — Seedance 2.0 (principal) + Kling (4K/API backup) + Remotion overlays**
+- **Style principal GeoAfrique (DECIDE 2026-04-08)** : Flat BD illustre semi-detaille. Visages detailles + decors riches + contours nets. Refs : "bataille" (Amanirenas vs Abou Bakari) + "test keita" (Soundjata). Produit via Gemini refs -> Seedance. Vivid shapes = secondaire (thumbnails, statique).
+- Pipeline : **Seedance 2.0 (principal) + Kling (4K/API backup) + Remotion overlays**
 - Pipeline principal : Seedance 2.0 via Dreamina web -> ffmpeg strip audio -> Remotion OffthreadVideo + Audio ElevenLabs
 - Pipeline legacy : Gemini -> Kling V3/O3 (garde pour 4K et quand API Seedance indisponible)
 - Etat : **BEATS 01-09 TOUS COMPLETES** — reste musique Suno + render final
@@ -96,10 +97,10 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 - **Format recommande Shorts** : Format 6 (2-3 scenes par clip x 15s avec transitions slow-mo orbital)
 - **Reference complete** : `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md`
 
-### Thiaroye V2 (nouveau satellite)
-- Style : meme flat design 2D que GeoAfrique, Seedance Format 6
-- Plan complet : `scripts/thiaroye-v2-seedance-plan.md` (7 clips, 560 credits)
-- Clip 1 FAIT (10/10). Audio existant (110s).
+### Thiaroye V4 (satellite — prompts finaux prets)
+- Style : meme flat design 2D, Seedance Format 6 + identite visuelle GeoAfrique
+- **Prompts finaux** : `scripts/thiaroye-v4-final-prompts.md` (7 clips, 800 credits, Kimi DA + verification)
+- Audio existant (110s). En attente credits Dreamina.
 
 ---
 
@@ -259,10 +260,21 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 2. Generation audio ElevenLabs V3
 3. Whisper -> mesure timings reels par segment
 4. timing.ts stable et valide
-5. Generation clips Kling/Seedance (duree = timing reel du beat)
+4b. KIMI DA REVIEW — brief unifie 6 sections → prompts finaux
+4c. VERIFICATION — checklist 12 points (Claude/agent)
+5. Generation clips Seedance/Kling (frame chaining : derniere frame N = ref N+1)
 6. Integration Remotion + mini-render
 ```
 JAMAIS dans un autre ordre. ZERO clip avant timing.ts stable.
 Si le script change apres l'etape 1 -> recommencer depuis l'etape 2.
+Chaque iteration Kimi = brief COMPLET (Kimi n'a pas de memoire).
 
-**Skill complet** : `.claude/skills/batch-short-production/` (details, 9 phases, scripts)
+**Identite visuelle** : contraste chromatique 1-2 scenes/Short + palettes geographiques (inclus dans brief Kimi Section 4)
+
+**Skill complet** : `.claude/skills/batch-short-production/` (details, 9+ phases, scripts)
+
+## Kling — Limites connues (2026-04-04)
+
+- Kling IGNORE le style "2D flat" — rendu toujours realiste/semi-realiste
+- Kling NE GERE PAS les VFX conceptuels (time freeze, shockwave) — teste et echoue
+- Pour ces effets → Seedance uniquement

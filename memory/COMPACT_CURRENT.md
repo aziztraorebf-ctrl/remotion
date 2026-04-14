@@ -1,164 +1,234 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-04-04 (session majeure : reorganisation memoire + 6 tests Seedance + plan Thiaroye V2) | A LIRE EN DEBUT DE SESSION
-> Archive V1 (Thiaroye Kling, Hannibal, Amanirenas, Seedance discovery) : `memory/archive/production-v1.md`
+> Mise a jour : 2026-04-10 soir (6 tests API fal.ai, 69 regles Seedance, chaining resolu, pipeline API clarifie) | A LIRE EN DEBUT DE SESSION
+> Sessions precedentes : tests bataille Lat Dior, exploration styles vivid shapes, workflow Yaroflasher, decision style principal
 
 ---
 
-## CONTEXTE — Ce qui s'est passe cette session
+## CONTEXTE — Ce qui s'est passe ces 3 dernieres sessions
 
-Session la plus productive du projet. Deux chantiers majeurs :
+**Session 2026-04-07** : Tests de combat intensifs. Clip A Lat Dior Dekheule (9.5/10). Format 8 "Battle Ink" decouvert. 9 nouvelles regles Seedance (42-50). Workflow multi-ref Yaroflasher identifie.
 
-**1. Reorganisation memoire** : les anciens monolithes (`seedance-reference.md`, `key-learnings.md`, `video-generation-pipeline.md`) ont ete splits en 8 fichiers thematiques dans `memory/tools/`. Le CLAUDE.md du projet a ete mis a jour avec un tableau de routage automatique (quand Aziz parle de Seedance → lire tools/seedance-prompts.md, etc.). Raison : les fichiers monolithiques melaient tout (prompts + regles + techniques + tests) et Claude ne savait pas quel fichier charger pour quel outil.
+**Session 2026-04-08** : Decision style principal : flat BD illustre. Vivid shapes = secondaire (thumbnails). 4 templates de prompts crees. Pipeline V2 Recraft+Gemini = semi-officiel pour usages statiques.
 
-**2. Reverse engineering + tests Seedance** : analyse de 10+ videos de la communaute (@ChangningL29508, @drjoetw, @aiehon_aya, @liyue_ai), extraction de techniques, puis 6 tests sur notre contenu — tous reussis (moyenne 9.4/10). Decouverte majeure : le Format 6 (transitions slow-mo orbital entre scenes) permet de couvrir 2-3 beats narratifs en 1 seul clip de 15s, eliminant les coutures entre clips.
+**Session 2026-04-09/10** : Session majeure de tests API Seedance 2.0. Objectif : automatiser la generation de clips via API au lieu de Dreamina web manuel. 7 tests realises sur 3 plateformes (Dreamina, fal.ai, Atlas Cloud). Conclusions :
 
-**Decision architecturale validee** : le pipeline "1 beat = 1 clip Kling" est remplace par "1 clip Format 6 = 2-3 beats Seedance avec transitions internes". Pour un Short de 60-110s, ca donne 4-7 clips x 15s au lieu de 9+ clips x 5-10s. Moins de credits, zero couture, meilleure qualite.
+1. **API Seedance 2.0 disponible sur fal.ai** — endpoint officiel, fonctionne, prouve par 3 generations reussies. Prix : $0.30/s (images), $0.18/s (video ref). Reference-to-video avec 3 images + prompt dialogue = meilleur resultat (8.5-9/10).
 
----
+2. **Video Extend/Chaining** : biais "reverse" systematique sur objets tombes (baobab se releve 3/3 tests). First/Last frame = transitions visuelles, PAS storytelling. Chaining sequentiel fonctionne mieux avec prompt directif, mais les 0-3s initiales ont souvent des artefacts.
 
-## Abou Bakari Short V2 — EN COURS (Seedance-native)
+3. **Lip sync francais via API** : valide — "Je suis Soundjata! Fils de Sogolon!" parfaitement synchronise.
 
-### Audio V3 FINAL
-- Fichier : `tmp/audio-abou-bakari-v2/abou-bakari-v2-full-v3.mp3` (**92.6s**)
-- Structure : Partie A narration (0-40s) + Dialogue (40-49s) + Partie B (49-93s)
-- Narratrice V3 speed 0.92, Dialogue : Abou Bakari (`ICHuIqamER7XZMdm2HYC`) + Moussa (`12mpLi4ieFNVlQlAIJ3m`)
+4. **Atlas Cloud** : teste, prix attractif ($0.10/s) mais l'API reference-to-video **ignore les images de reference** — genere du text-to-video deguise. Le playground Atlas ($0.216/s) fonctionne correctement mais prix = fal.ai. Pas d'avantage reel.
 
-### Script V2
-- Fichier : `scripts/abou-bakari-v2-script.md` — 9 beats, ton epique, dialogue Moussa
+5. **Comparatif prix** : Volcengine officiel = $0.14/s (inaccessible, KYC chinois). fal.ai = $0.30/s (accessible, prouve). Dreamina web = ~$0.23/s (accessible, manuel). Atlas Cloud API = $0.10/s (refs ignorees, inutilisable pour nous).
 
-### Beat Table (ancien pipeline 1-beat-1-clip)
-
-| Beat | Contenu | Duree | Clip | Statut |
-|------|---------|-------|------|--------|
-| hookGeo | "En 1311... Sauf un homme." | 10.6s | Remotion V1 | A integrer |
-| empire | "Abou Bakari deux... le hante." | 14s | beat02-empire-v1.mp4 (12s) | **VALIDE** |
-| expedition | "Il fait armer... On ne passe pas." | 8.4s | beat03-expedition-v1.mp4 (10s) | **VALIDE** |
-| decision | "Il ne recule pas... son pouvoir." | 6.9s | beat04-decision-v1.mp4 (7s) | **VALIDE** |
-| dialogue | 3 voix passation Moussa | ~9s | beat05-dialogue-v1.mp4 (10s, silent) | **VALIDE mais 16:9** |
-| moussa | "Son demi-frere... 400 milliards." | ~15s | A GENERER | En attente |
-| depart | "Il monte... jamais." | ~12s | A GENERER | En attente |
-| colomb | "181 ans plus tard... Le decouvreur." | ~9s | A DEFINIR | En attente |
-| cta | "Mais qui a fait... en bio." | ~8s | Remotion pur | A coder |
-
-### NOTE IMPORTANTE — Reconsiderer le pipeline
-
-Les tests de cette session suggerent qu'on pourrait refaire le Short en **3-4 clips Format 6** au lieu de 9 beats individuels. Par exemple :
-- Clip 1 (Format 6) : hookGeo + empire + expedition (3 scenes, transitions slow-mo)
-- Clip 2 (Format 6) : decision + dialogue (2 scenes)
-- Clip 3 (Format 6) : moussa + depart (2 scenes)
-- Clip 4 : colomb + cta (Remotion pur ou Seedance)
-
-**Decision Aziz requise** : continuer le pipeline actuel (beats individuels) ou pivoter vers Format 6 multi-scenes ?
-
-### Clips session 2026-04-03/04 — Inventaire production
-
-**Clips prets pour production immediate (9:16, score >= 9.5) :**
-
-| Clip | Fichier | Format | Score | Usage potentiel |
-|------|---------|--------|-------|-----------------|
-| **Format 6 — 3 epoques** | `~/Downloads/SixFrame.mp4` | 9:16 720x1280 15s | 9.5/10 | Couvre palais->ocean->tempete. Pourrait remplacer beats depart+expedition |
-| **Contraste chromatique** | `~/Downloads/chromatic.mp4` | 9:16 720x1280 10s | 10/10 | Hook alternatif. Roi or parmi foule grise -> marche Tombouctou |
-
-**Clips en 16:9 (a regenerer en 9:16 ou cropper) :**
-
-| Clip | Fichier | Score | Action |
-|------|---------|-------|--------|
-| **Dialogue Abou Bakari/Moussa** | `~/Downloads/dialogue.mp4` | 10/10 | **PRIORITE #1 : regenerer en 9:16 natif.** Prompt dans `tmp/test-audio-guided-dialogue-prompt.md`. 120cr, 2 refs. |
-| Plan-sequence Tombouctou | `~/Downloads/storyline_export.mp4` | 10/10 | Optionnel — cropper suffit |
-| Dialogue croppe (backup) | `/tmp/dialogue-9x16.mp4` | 8/10 | Backup si credits limites |
-| Extension flotte | `~/Downloads/extension.mp4` | 7.5/10 | Retester avec verbes dynamiques si besoin |
-
-### Prochaines actions Abou Bakari
-
-1. **PRIORITE : Regenerer dialogue beat 05 en 9:16 natif** (prompt pret, 120cr)
-2. **Decision : pivoter vers Format 6 multi-scenes ou continuer beats individuels ?**
-3. Beat 06 Moussa : Seedance 80cr
-4. Recaler timing-v2.ts (silencedetect)
-5. Assemblage Remotion
-6. Musique Suno
+6. **6 nouvelles regles Seedance** (58-63) documentees dans `memory/tools/seedance-rules.md`.
 
 ---
 
-## Thiaroye V2 — NOUVEAU PROJET (Seedance Format 6)
+## DECISION STYLE PRINCIPAL (2026-04-08)
 
-### Contexte
-Le test du clip 1 (village->recrutement->bateau) a score 10/10 — sans ref image, 80 credits, one shot. Cela valide le Format 6 pour des sujets historiques africains. Le script V6 existe deja (audio 110s). Un plan complet de 7 clips a ete redige.
+**Style principal GeoAfrique : Flat BD illustre semi-detaille**
 
-### Etat
-- **Clip 1 FAIT** : `~/Downloads/test thiaroye.mp4` (9:16, 15s, 10/10)
-- **Plan complet** : `scripts/thiaroye-v2-seedance-plan.md` — 7 clips avec prompts prets, 560 credits total
-- **Audio existant** : `public/assets/library/geoafrique/thiaroye-1944/thiaroye-voixoff-v6.mp3` (110s)
-- **Script transcrit** : dans le plan (transcription Whisper de l'audio V6)
+Pourquoi : c'est le seul style qui combine (1) dynamisme suffisant pour Seedance, (2) esthetique unique non-generique, (3) adaptabilite tous formats (Shorts, long, news). Les styles ink-wash et vivid shapes sont des outils secondaires.
 
-### Decision requise
-Le clip 1 actuel montre village -> recrutement -> bateau (depart VERS la guerre). Le script parle d'un RETOUR de guerre. Options :
-- A) Garder comme hook visuel (narrativement puissant meme si chronologiquement different)
-- B) Regenerer avec le vrai contexte (retour, camp d'attente)
+| Style | Role | Quand l'utiliser |
+|---|---|---|
+| **Flat BD illustre** (Gemini refs) | **PRINCIPAL** | Toutes les scenes narratives, combat, dialogue, voyage |
+| **Ink-wash Battle** (Format 8) | Secondaire | Scenes de combat haute intensite specifiquement |
+| **Vivid shapes** (Recraft) | Secondaire | Thumbnails, branding, illustrations statiques |
 
-### Prochaine action
-Quand Aziz decide de produire : ouvrir `scripts/thiaroye-v2-seedance-plan.md`, generer clips 2-7 avec les prompts prets.
+References du style principal : videos `Downloads/bataille.mp4` (Amanirenas vs Abou Bakari) et `Downloads/test keita.mp4` (Soundjata barre de fer).
 
 ---
 
-## Reorganisation memoire (FAIT cette session)
+## Serie "Heros Oublies" — 5 SCRIPTS PRETS
 
-### Structure actuelle `memory/tools/`
+| # | Personnage | Script | Test Seedance | Audio |
+|---|-----------|--------|---------------|-------|
+| 1 | Nzinga (Angola) | Valide | Pas encore | En attente |
+| 2 | Lat Dior (Senegal) | Valide | **Bataille 9.5/10** (ink-wash) + vivid 7.5/10 | En attente |
+| 3 | Soundjata (Mali) | Valide | **9.5/10** (barre de fer) | En attente |
+| 4 | Yaa Asantewaa (Ghana) | Valide | 8/10 (V2 best) | En attente |
+| 5 | Hannibal (Carthage) | Valide | Pas encore | En attente |
 
-| Fichier | Contenu | Quand le lire |
-|---------|---------|---------------|
-| `seedance-prompts.md` | **REFERENCE COMPLETE** : 6 formats + camera + VFX + dialogue + pipeline + tests | Quand on parle de Seedance |
-| `seedance-rules.md` | **CHECKLIST** : 27 regles + anti-patterns | Apres avoir ecrit un prompt |
-| `seedance-community.md` | Repos, auteurs, veille | Pour s'inspirer |
-| `kling.md` | Endpoints, cfg_scale, frame chaining | Quand on utilise Kling |
-| `gemini.md` | Chirurgical, character sheets, Nano Banana | Quand on retouche des images |
-| `recraft.md` | Pipeline SVG, vivid_shapes | Quand on genere des assets |
-| `elevenlabs.md` | TTS francais, scan accents | Quand on genere de l'audio |
-| `remotion.md` | Animation, OffthreadVideo, geo effects | Quand on code |
+**Blocker** : Credits ElevenLabs a recharger pour batch audio.
 
-**Routage automatique** ajoute dans `CLAUDE.md` du projet — Claude charge le bon fichier quand Aziz parle d'un outil.
+### Clips bataille Lat Dior (Dekheule) — UTILISABLES
 
-### Anciens fichiers archives
-`memory/archive/pre-reorg-2026-04-02/` : seedance-reference.md, key-learnings.md, video-generation-pipeline.md, learnings-to-test.md, seedance-community-repos.md, seedance-techniques.md
+| Clip | Score | Style | Statut |
+|------|-------|-------|--------|
+| Test 2 (POC) | 8/10 | Ink-wash | Archive — over the top |
+| Test 3 (POC) | 8.5/10 | Ink-wash | Archive — meilleure vue aerienne |
+| **Test 4 (Clip A PROD)** | **9.5/10** | Ink-wash | **UTILISABLE** — charge + combat + finale |
+| Test 5 (Clip B PROD) | 8/10 | Ink-wash | Partiellement utilisable (shots 1-3 + 8-9) |
+| Test vivid shapes | 7.5/10 | Vivid | Archive — trop statique |
+| Test Pipeline V2 (Amanirenas) | 7/10 | Vivid | Archive — beau mais bobbleheads |
 
----
+### Personnages historiquement corriges
 
-## Tests Seedance valides cette session
+Pourquoi : nos personnages avaient des vetements/accessoires modernes ou culturellement incorrects (couronne europeenne sur un roi wolof, couronne egyptienne sur une reine kushite). Recherche historique faite pour 3 personnages.
 
-| # | Test | Score | Technique validee | Credits |
-|---|------|-------|-------------------|---------|
-| 1 | Plan-sequence Tombouctou | 10/10 | Format 4 (plan-sequence impossible) | 80 |
-| 2 | Dialogue francais lip sync | 10/10 | Regle 25 (Audio-Guided Dialogue) | 80-120 |
-| 3 | Format 6 Abou Bakari 3 epoques | 9.5/10 | Format 6 + COLOR GRADE progressif | 80 |
-| 4 | Extension video (V2V) flotte | 7.5/10 | V2V fonctionne mais verbes trop doux | 120 |
-| 5 | Contraste chromatique | 10/10 | Contraste 1 couleur vs monde gris | 80 |
-| 6 | Thiaroye clip 1 | 10/10 | Format 6 SANS ref, nouveau sujet | 80 |
-
-### Regles apprises
-- **Regle 25 VALIDEE** : dialogue francais lip sync natif dans Seedance, sans fournir d'audio
-- **Regle 26** : toujours decrire le mouvement physique de rotation ("slowly turns") sinon morphing snap
-- **Regle 27** : extensions V2V = verbes dynamiques obligatoires, 15s > 10s, 1 changement majeur max
+| Personnage | Correction | Refs generees |
+|---|---|---|
+| **Lat Dior** | Turban wolof (pas couronne), gris-gris, grand boubou brode 3 pieces, boucles d'oreilles tiedo | `tmp/yaroflasher-test/ref1-latdior-historical-sheet.png` |
+| **Abou Bakari II** | Calotte royale malienne, boubou brode islamique volumineux, sceptre or | `tmp/historical-refs/abou-bakari-historical-sheet.png` |
+| **Amanirenas** | Perruque kushite arrondie (pas couronne egyptienne), armure cuir, chale cramoisi, lance+bouclier | `tmp/historical-refs/amanirenas-historical-sheet.png` + `tmp/gemini-from-recraft/amanirenas-4views-gemini.png` |
 
 ---
 
-## Infrastructure (compact)
+## Regles Seedance — Total 69
 
-**Vercel Blob** : `scripts/upload-to-blob.py` — upload, gallery HTML, listing.
-**Vercel Renderer** : `remotion-renderer-khaki.vercel.app` — render remote.
+Regles 1-41 : sessions precedentes (voir `memory/tools/seedance-rules.md`)
+Regles 42-57 : sessions 2026-04-07/08
+Regles 58-63 : session 2026-04-09 (API fal.ai, extend/chaining)
+Regles 64-69 : session 2026-04-10 (tests production API, tagging, scenes calmes)
+
+| Regle | Resume |
+|-------|--------|
+| 42 | Ethnicity/peau = specifier explicitement |
+| 43 | Blessures = progression ou rien |
+| 44 | Format hybride timecode+SHOT+VFX+SFX = valide combat |
+| 45 | Ref plan large > close-up pour style ink-wash |
+| 46 | Vue aerienne concentrique = signature batailles |
+| 47 | Over the top = POC, pas production |
+| 48 | "FALLS forward" + slow-mo = flottement aerien |
+| 49 | Canons/objets lourds = arriere-plan seulement |
+| 50 | Apres blessure mortelle = personnage SEUL |
+| 51 | Vue aerienne leader = specifier position dans le V |
+| 52 | Refs separees par element (methode Yaroflasher) |
+| 53 | Collage close-up + full body / character sheet |
+| 54 | "no words, no music" en fin de prompt |
+| 55 | Limite prompt 1500 chars = Flashboard, probablement plus haute Dreamina |
+| 56 | Duree generation = duree besoin, pas plus |
+| 57 | Clip precedent comme ref video (Omni) |
 
 ---
 
-## Autres projets (status)
+## Pipeline principal (V1 — OFFICIEL)
 
-**Peste 1347** : HookMaster v2 TERMINE (Kimi 9/10). Corps S1-S6 A FAIRE.
+```
+1. Script valide Aziz
+2. Audio ElevenLabs V3
+3. ffprobe timings -> timing.ts
+4b. Kimi DA brief
+4c. Claude dynamisation (Format 3 SECONDS ou Format 8 pour combat)
+4d. Gemini refs : character sheet + decor + secondaires (3-6 refs, methode Yaroflasher)
+5. Seedance generation (Dreamina web, multi-ref) + "no words, no music"
+6. Integration Remotion + mini-render
+```
+
+**Changement par rapport au pipeline precedent** : etape 4d passe de 1 ref (style anchor) a 3-6 refs (personnage + lieu + secondaires + armes + mood). Ajouter "no words, no music" en fin de prompt.
+
+## Pipeline V2 "Recraft + Gemini" (SEMI-OFFICIEL)
+
+Pour style vivid shapes uniquement (thumbnails, branding, illustrations statiques).
+
+```
+Recraft Style ID (1 fois) -> 1 image DNA visuel
+Gemini + ref Recraft -> character sheets, decors, secondaires
+```
+
+Style IDs : Hannibal `22d1274f`, Amanirenas `d28c53cc`
+Credits Recraft restants : 920
 
 ---
 
-## Regles Critiques Transversales
+## Templates de prompts (NOUVEAU 2026-04-08)
 
-- Audio startFrame INTOUCHABLE — derive de mesures ffprobe
-- NO EMOJIS dans .ts/.tsx/.js/.json/.yaml
-- OffthreadVideo : toujours muted, toujours dans Sequence from={BEATS.xxx.start}
-- Audio Seedance = TOUJOURS remplacer narration (garder SFX/musique a -12dB)
-- Gemini retouche chirurgicale avant de regenerer
-- **Reference outils** : `memory/tools/` (routage auto dans CLAUDE.md)
-- **Pipeline Shorts** : Format 6 (2-3 scenes/clip x 15s) > ancienne approche 1 beat/clip
+Pourquoi : Claude oubliait les regles en milieu de session (diversite visages, ethnicity, etc.). Les templates integrent les regles critiques + techniques DA + checklist obligatoire dans un seul fichier par type de scene.
+
+| Template | Fichier | Usage |
+|---|---|---|
+| Combat (Format 8) | `memory/templates/combat.md` | Batailles, charges, duels |
+| Narratif (Format 3) | `memory/templates/narratif.md` | Discours, voyage, negociation |
+| Montage (Format 7) | `memory/templates/montage.md` | Beat sync, sequences rapides |
+| Exploration (Format 4) | `memory/templates/exploration.md` | Lieux, plan-sequence |
+
+**Regle CLAUDE.md** : AVANT tout prompt Seedance/Gemini, LIRE le template -> UTILISER la structure -> COCHER la checklist -> PRESENTER. Zero exception.
+
+---
+
+## API Seedance 2.0 — Etat des lieux (2026-04-10)
+
+### Providers testes
+
+| Provider | Prix/s | Refs respectees | Automatisable | Verdict |
+|----------|--------|----------------|---------------|---------|
+| **fal.ai** | $0.30 | **OUI** | **OUI** | **Meilleur choix API** |
+| Atlas Cloud API | $0.10 | NON (ignorees) | OUI | Inutilisable pour nous |
+| Atlas Cloud playground | $0.216 | OUI | NON (manuel) | Meme prix que fal.ai |
+| Dreamina web | ~$0.23 | OUI | NON (manuel) | Meilleur choix manuel |
+| Volcengine officiel | $0.14 | OUI (presume) | OUI | Inaccessible (KYC chinois) |
+| Replicate | $0.29 | Non teste | OUI | Alternative fal.ai |
+
+### Cle API fal.ai : `FAL_KEY` dans `.env`
+### Cle API Atlas Cloud : `apikey-926b207a14f44ded974d22e6398bb7e7` (dans dashboard atlascloud.ai, pas dans .env — ne pas utiliser l'API pour les refs, seulement le playground)
+
+### Tests realises
+
+| # | Mode | Plateforme | Cout | Score | Fichier |
+|---|------|-----------|------|-------|---------|
+| 1 | First/Last frame 15s | Dreamina | Credits | 3/10 | YouTube shorts |
+| 2 | First/Last frame 10s | Dreamina | Credits | 5/10 | YouTube shorts |
+| 3 | Reference-to-Video 10s (video ref) | fal.ai | ~$3.10 | 7.5/10 | Vercel Blob |
+| 4 | **Multi-ref dialogue 10s (3 images)** | **fal.ai** | **~$3.02** | **8.5-9/10** | **Vercel Blob** |
+| 5 | Text-to-video 5s | Atlas Cloud API | ~$0.50 | 4/10 | Vercel Blob |
+| 6-7 | Multi-ref 10s (3 images) | Atlas Cloud API | ~$2.16 x2 | 5/10 | Downloads/ |
+| 8 | **Multi-ref dialogue 10s (3 images)** | **Atlas Cloud playground** | **$2.16** | **8.5/10** | **Downloads/atlas test 3.mp4** |
+| 9 | Chaining video ref (4s tail) | fal.ai | $0 (echec) | N/A | Content policy violation — video flag "real people" |
+| 10 | **Multi-ref Lat Dior bataille (3 images)** | **fal.ai** | **~$3.02** | **8.5-9/10** | **Vercel Blob** |
+| 11 | **Lip sync griot narration 10s** | **fal.ai** | **~$3.02** | **8.5/10** | **Vercel Blob** |
+| 12 | Chaining image (last frame baobab) | fal.ai | ~$3.02 | 4/10 | Vercel Blob — Seedance rembobine au lieu de continuer |
+| 13 | Chaining 2 refs (Gemini exil + styleref) | fal.ai | ~$3.02 | 5/10 | Vercel Blob — styleref animee en plein milieu |
+| 14 | **1 ref Gemini seule (exil v2)** | **fal.ai** | **~$3.02** | **6/10** | **Vercel Blob — scene correcte mais statique** |
+
+### Learnings tests 10-14 (10 avril soir)
+- Multi-ref 3 images (character + decor + secondaires) via API = qualite comparable a Dreamina web
+- Lip sync francais tient sur 10s de narration, mais Seedance re-synthetise l'audio (mot deforme). Workflow : strip audio + ElevenLabs overlay = parfait
+- Foules : visages clones sans diversite explicite dans le prompt (regle 64)
+- COLOR GRADE : changements de palette entre segments = transition abrupte (regle 65)
+- Chaining via video ref bloque par filtre content policy fal.ai (regle 66)
+- **1 ref Gemini par clip = la bonne approche pour l'API** (regle 67). Zero styleref separee.
+- **Tagging d'images = ne fonctionne PAS**, ni via API ni sur Dreamina web (regle 69)
+- **Scenes calmes = Seedance produit du quasi-statique** (regle 68). Action = bien, contemplation = faible.
+- **Le biais reverse (regle 60) persiste** : tout objet au sol = Seedance le remet debout. Ne pas utiliser d'images avec objets tombes comme ref.
+
+---
+
+## Prochaines actions
+
+**Quoi** : Produire le premier Short Heros Oublies complet (probablement Lat Dior ou Soundjata).
+**Pourquoi** : On a les scripts, les tests visuels valides (9.5/10 bataille, 9.5/10 barre de fer), le style principal decide, et l'API Seedance 2.0 validee (fal.ai multi-ref + dialogue lip sync = 8.5-9/10).
+**Comment** : Recharger credits ElevenLabs -> scan TTS -> generation audio -> Kimi DA -> Claude dynamisation -> Gemini refs multi-ref -> Seedance (fal.ai API ou Dreamina web) -> Remotion assemblage.
+**Decision en attente** : fal.ai ($0.30/s, automatisable) vs Dreamina web (~$0.23/s, manuel). Pour un Short de 60s (6 clips x 10s) : fal.ai = ~$18, Dreamina = ~$14. La difference est ~$4 par Short.
+**Chaining resolu** : pas de chaining inter-clips dans Seedance. Chaque clip = 1 ref Gemini independante. Assemblage dans Remotion. Le chaining par derniere frame ou video ref ne fonctionne pas (biais reverse + content policy + statique).
+
+**Secondaire** : Regenerer les character sheets des 5 heros avec les corrections historiques dans le style flat BD illustre.
+
+---
+
+## Autres projets (status inchange)
+
+**Abou Bakari** : Beats 01-09 completes. Reste musique Suno + render final.
+**Thiaroye** : Clips 1-2 valides, clip 3 a refaire, clips 4-7 a ecrire.
+**Peste 1347** : HookMaster v2 TERMINE. Corps S1-S6 a faire.
+
+---
+
+## Workspace
+
+```
+scripts/heros-oublies/     # 5 scripts serie + README
+scripts/tools/             # 6 scripts Python reutilisables
+tmp/lat-dior-battle/       # 4 refs Gemini ink-wash + 5 clips battle
+tmp/yaroflasher-test/      # Refs character sheets historiques (Lat Dior)
+tmp/historical-refs/       # Character sheets Abou Bakari + Amanirenas
+tmp/gemini-from-recraft/   # Refs Pipeline V2
+tmp/vivid-test-v2/         # Tests vivid shapes avec Style IDs
+tmp/soundjata-frames/      # Frames extraites clip Soundjata (refs pour tests API)
+out/                       # 2 renders finaux (abou-bakari, thiaroye)
+public/assets/library/     # REFs canoniques + clips valides
+memory/tools/              # Regles Seedance (63), Recraft, Gemini, ElevenLabs, Kling, Remotion
+memory/templates/          # 4 templates prompts (combat, narratif, montage, exploration)
+```

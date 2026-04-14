@@ -111,3 +111,4 @@ tmp/
 # Seedance temporary screenshots (UUID names, not canonical REFs)
 public/assets/library/geoafrique/test seedance 2.0/
 *.mov
+.claude/scheduled_tasks.lock

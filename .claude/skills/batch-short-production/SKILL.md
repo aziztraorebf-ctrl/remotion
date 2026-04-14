@@ -169,23 +169,24 @@ Include the visual identity system in the brief so Kimi applies it natively.
 
 **Temporal Split (OPTIONAL)**: only if the subject explicitly opposes past and present. Justify.
 
-#### Section 5: Prompt Quality Rules (MANDATORY)
+#### Section 5: Kimi Output Quality Rules (MANDATORY)
 
-Kimi must follow these rules when writing each prompt:
+Kimi must follow these rules when writing his DIRECTION BRIEF (NOT Seedance prompts):
 
-- **Structure**: Scene 1 / Transition / Scene 2 (always this format)
-- **Bridge in the prompt**: each clip STARTS with "the same [X] from the previous frame"
-  and ENDS with "[element] REMAINS completely still for the final 2 seconds"
-- **Anti-instructions**: include "No text, no banners, no signs, no writing visible anywhere.
-  No unnecessary 360-degree turns, without motion distortion." in EVERY prompt
-- **DO NOT include** format/aspect ratio in the prompt (e.g. "vertical 9:16") — this is
-  a generator parameter, not a prompt element
+- **Output format**: Kimi produces a NARRATIVE DIRECTION per clip, NOT a Seedance prompt.
+  He describes: the emotional arc, the key actions, the objects present, the color treatment,
+  the bridge elements. Claude converts this into Format 3 SECONDS prompts.
+- **Bridge elements**: each clip must specify a BRIDGE OBJECT that connects to the next clip
 - **Chromatic contrast = color treatment**: describe which elements KEEP their natural
-  warm tones and which elements DESATURATE to grey. Not "golden aura" or "glowing".
-- **Transition formula**: "Instantly in slow motion, the camera slowly circles around [X].
-  [describe what changes gradually]. The transition is natural and without abrupt changes."
-- **COLOR GRADE section** at end of every prompt
-- **Sound effects section** at end of every prompt (even though audio is replaced in post)
+  warm tones and which elements DESATURATE to grey. NOT "golden aura", "glowing", "beacon".
+  (Seedance renders light metaphors as literal magical halos in 2D flat style.)
+- **Emotional progression**: Kimi specifies the EMOTION of each segment, not camera moves
+- **COLOR GRADE direction** per clip (palette, not Seedance syntax)
+- **Sound design direction** per clip (mood, not Seedance syntax)
+
+**IMPORTANT**: Kimi's output goes to Claude for dynamisation (Phase 4c), NOT directly to Seedance.
+The old approach (Scene 1 / Transition / Scene 2 prompts from Kimi) produced static, contemplative
+videos scored 3-5/10. The new approach (Kimi direction -> Claude Format 3 SECONDS) scores 9-9.5/10.
 
 #### Section 6: Full Script + Clip Structure
 
@@ -230,30 +231,65 @@ Rules:
 
 **Output**: `[project]/kimi-da-prompts-raw.md` (all prompts from Kimi)
 
-### Phase 4b: PROMPT VERIFICATION (Claude/Agent)
+### Phase 4c: CLAUDE DYNAMISATION (NON-NEGOTIABLE)
 
-Automated verification pass on Kimi's output. The goal: Kimi should produce
-near-perfect prompts, this pass catches the remaining edge cases.
+Claude rewrites Kimi's narrative direction into production-ready Seedance prompts.
+This is the step that makes the difference between 3/10 and 9.5/10 videos.
+
+**Input**: Kimi DA brief (vision narrative per clip)
+**Output**: Format 3 SECONDS prompts ready to paste into Dreamina
+
+**Rules for Claude (EVERY prompt):**
+
+| # | Rule | Explanation |
+|---|------|-------------|
+| 1 | **Format 3 SECONDS X TO Y** | 4 segments of 3-4s each for 15s clips. NEVER Scene 1 + Transition + Scene 2. |
+| 2 | **Verbes explosifs** | SLAMS, SURGES, DROPS, SNAPS, SWEEPS, CRASHES, CUTS, PUSHES. NEVER "stands", "holds", "slowly moves". |
+| 3 | **3-4 mouvements camera VARIES** | aerial, snap zoom, dolly, sweep, pull back, tilt. NEVER orbital-only. |
+| 4 | **Micro-actions CHAQUE segment** | Wind, dust, seagulls, rigging, flags, hair, clothing, expressions. Zero static frame. |
+| 5 | **ZERO metaphore lumineuse** | "beacon", "glow", "catches light", "radiant" = magical halo in 2D flat. Use "contrasts sharply", "the only [color] object". |
+| 6 | **Pas de changement d'echelle brutal** | Medium → close-up mains = morphing. Stay at consistent scale or change gradually. |
+| 7 | **Anti-instructions en en-tete** | "@Image1 is the style reference. 2D vivid flat illustration style, vertical 9:16." + anti-text + anti-rotation |
+| 8 | **COLOR GRADE en fin** | Palette precise, ONLY on [elements], cold [color] on everything else. |
+| 9 | **Sound effects en fin** | Concrete sounds, not mood descriptions. |
+| 10 | **Personnages differencies** | Chaque personnage a une action DISTINCTE (cross arms, shift weight, turn head, clench fists). |
+| 11 | **Environnement vivant** | Le decor BOUGE : vent, fumee, poussiere, drapeaux, oiseaux, ombres qui bougent. |
+| 12 | **Fins stables mais apres crescendo** | Les 2 dernieres secondes sont calmes, mais les 13 premieres sont dynamiques. |
+
+### Phase 4d: GEMINI REF STYLE (1 image par clip)
+
+Generate a style reference image for each clip via Gemini 3.1 Flash.
+
+**Script**: `scripts/generate-thiaroye-styleref.py` (adapt PROMPT per clip)
+**Input**: `frame-03.jpg` (style anchor) + scene description
+**Output**: 1 image 9:16 per clip in `tmp/[project]-styleref/`
+
+Why: Without a ref image, Seedance defaults to photorealism even with "2D flat" in text.
+Validated 2026-04-05: test without ref = photorealistic (3/10), with ref = flat BD style (9.5/10).
+
+### Phase 4e: PROMPT VERIFICATION (automated)
+
+Final check on Claude's Format 3 SECONDS prompts before generation.
 
 **Checklist (for each clip):**
 
 | # | Check | What to look for |
 |---|-------|-----------------|
-| 1 | Bridge IN the prompt | Does Scene 1 start with "the same [X] from the previous frame"? |
-| 2 | Bridge OUT coded | Does Scene 2 end with "[element] REMAINS completely still for the final 2 seconds"? |
-| 3 | Anti-instructions present | "No text, no banners..." block present? |
-| 4 | No format in prompt | Remove "vertical 9:16", "720x1280" if present (generator param, not prompt) |
-| 5 | No text-generating content | No "labeled with", "marked with", "numbered" (Seedance generates text) |
-| 6 | No impossible actions | No "impossibly", no overlays, no calendar pages flipping |
-| 7 | Transition formula correct | "Instantly in slow motion, the camera slowly circles around..." present? |
-| 8 | COLOR GRADE section present | At end of prompt? |
-| 9 | Sound effects section present | At end of prompt? |
-| 10 | Chromatic contrast precise | Color treatment on natural tones, NOT aura/glow/magic? |
-| 11 | Scene structure | Scene 1 / Transition / Scene 2 format? |
-| 12 | Dynamic verbs | No "slowly", "gently", "subtle" outside of transition section? |
+| 1 | Format | Is it SECONDS X TO Y? (NOT Scene 1 / Transition / Scene 2) |
+| 2 | Verbes | Count explosive verbs per segment. Minimum 2 per segment. |
+| 3 | Camera | Are there 3+ DIFFERENT camera movements? (not just orbital) |
+| 4 | Anti-instructions | "@Image1" + "No text, no banners..." + "No unnecessary 360" present? |
+| 5 | No light metaphors | ZERO "beacon", "glow", "catches light", "radiant", "shining"? |
+| 6 | No scale jumps | No medium-to-extreme-close-up in consecutive segments? |
+| 7 | COLOR GRADE | Section present at end? Uses "ONLY on" + "everything else"? |
+| 8 | Sound effects | Section present at end? |
+| 9 | Bridge elements | Kimi's bridge objects preserved in the prompt? |
+| 10 | No text-generating | No "labeled with", "marked with", "numbered"? |
+| 11 | Personnages | Each character has a DISTINCT action? |
+| 12 | Environment | Moving elements in the background? (wind, smoke, dust, flags) |
 
-**If errors found**: fix directly in the prompt (do NOT resend to Kimi).
-**If no errors**: proceed to generation.
+**If errors found**: fix directly.
+**If no errors**: proceed to generation with ref images.
 
 **Output**: `[project]/kimi-da-prompts-final.md` (verified prompts, ready to use)
 

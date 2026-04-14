@@ -1,6 +1,6 @@
 # Pipeline Shorts GeoAfrique — Ordre INVIOLABLE
 > Ne JAMAIS changer cet ordre. Zero clip avant timing.ts stable.
-> Mise a jour : 2026-04-02
+> Mise a jour : 2026-04-06
 
 ---
 
@@ -11,40 +11,92 @@
 2. Generation audio ElevenLabs V3
 3. Whisper -> mesure timings reels par segment
 4. timing.ts stable et valide
-4b. KIMI DA REVIEW — direction artistique sur TOUS les clips
+4b. KIMI DA BRIEF — direction artistique (vision narrative, PAS prompts Seedance)
     Brief structure : contraintes generateur + nuance morale + frame chaining + script complet
-    Output : prompts finaux avec ponts visuels entre clips
+    Output Kimi : arcs narratifs, objets-ponts, placement chromatique, ton par clip
     Max 3 iterations. Cout : ~$0.01-0.02/passe.
     Ref : `.claude/skills/batch-short-production/references/kimi-direction-example.md`
-5. Generation clips Kling/Seedance (duree = timing reel du beat)
-   Frame chaining : extraire derniere frame clip N comme ref clip N+1
+4c. CLAUDE DYNAMISATION — rewrite des prompts Seedance (NON-NEGOTIABLE)
+    **SCRIPT** : `scripts/dynamize-prompts.py kimi-brief.md [--model claude|gemini] [--clips 1,3]`
+    Input : brief Kimi (vision narrative) + regles Seedance documentees
+    Output : prompts Format 3 SECONDS prets pour Dreamina (fichier -dynamized.md)
+    Regles obligatoires :
+    - Format 3 SECONDS X TO Y (JAMAIS Scene 1 + Transition + Scene 2)
+    - Verbes explosifs : SLAMS, SURGES, DROPS, SNAPS, SWEEPS (JAMAIS "stands", "holds", "slowly")
+    - 3-4 mouvements camera VARIES par clip (aerial, snap zoom, dolly, sweep, pull back)
+    - Micro-actions personnages dans CHAQUE segment (vent, poussiere, bras croises, tete qui tourne)
+    - ZERO metaphore lumineuse ("beacon", "glow", "catches light" = halo magique)
+    - Pas de changement d'echelle brutal (medium → close-up mains = morphing)
+    - Anti-instructions obligatoires en en-tete
+    NE JAMAIS donner les prompts Kimi directement a Seedance — ils sont contemplatifs, pas cinematiques.
+4d. GEMINI REF STYLE — generer 1 image de reference par clip
+    **SCRIPT** : `scripts/generate-styleref.py [clip1 clip3]` (editer tableau CLIPS dans le script)
+    Input : frame-03.jpg (style anchor) + description de la scene du clip
+    Output : image 9:16 dans le style flat BD (tmp/styleref/clipN-styleref.png)
+    Modele : gemini-3.1-flash-image-preview
+    Pourquoi : sans ref image, Seedance default vers photoralisme meme avec "2D flat" dans le texte.
+5. Generation clips Seedance (Dreamina web)
+   - Uploader ref Gemini du clip comme image de reference
+   - Coller prompt Claude (Format 3 SECONDS)
+   - Duree : 15s
+   - Frame chaining : `scripts/extract-lastframe.sh clip_N.mp4` -> lastframe_clip_N.png
+     (la ref Gemini sert pour le clip 1 ou si le style drift)
 6. Integration Remotion + mini-render
 ```
 
 Si le script change apres l'etape 1 -> recommencer depuis l'etape 2.
 Si Kimi propose de restructurer les clips -> valider avec Aziz AVANT de regenerer.
 
+### Pourquoi cette separation Kimi / Claude (decision 2026-04-05)
+
+Teste sur Thiaroye clip 1-2 avec 5 generations :
+- Prompts Kimi directs dans Seedance (tests 1-2) : 3-5/10. Statiques, orbite camera unique, photoralisme.
+- Prompts Claude dynamises (tests 3-5) : 9-9.5/10. Dynamiques, multi-camera, style BD maintenu.
+
+Kimi pense en termes de cinema contemplatif (plans-tableaux). Seedance brille avec l'action, les mouvements rapides, les emotions. Claude traduit la vision de Kimi en langage que Seedance comprend.
+
 ---
 
 ## Quel outil pour quel plan ?
 
-| Plan | Outil | Modele/Config |
+| Plan | Outil | Format/Config |
 |------|-------|---------------|
-| Gros plan visage / emotion | Gemini -> Seedance ou Kling V3 Pro | cfg 0.4 |
+| Scene dynamique multi-actions | **Seedance + Format 3 SECONDS** | 80-120 cr, ref Gemini |
+| Gros plan visage / emotion | Seedance (SECONDS, snap zoom) | 80-120 cr |
 | Plan epique / armee / territoire | Recraft vivid_shapes -> Kling O3 | cfg 0.35 |
 | Transition cinematique (dolly in) | Gemini start+end -> Kling O3 | cfg 0.4 |
 | Carte / timeline / data | SVG Remotion spring() pur | -- |
-| Close-up expressions/gestes | Seedance (SECONDS format) | 80-120 cr |
-| Flotte/foule massive | Seedance | 80 cr |
+| Flotte/foule massive | Seedance (SECONDS) | 80 cr |
 | Dialogue lip sync | Seedance (Audio-Guided) | 80-120 cr |
 | POV / transition perspective | Seedance | 80 cr |
+| Multi-epoques meme personnage | Seedance Format 6 (slow-mo orbital) | 80-120 cr |
 | Plan 4K / >15s | Kling | API fal.ai |
 
-**Strategie hybride** : Seedance = close-ups, dialogues, POV, foules, <15s. Kling = plans larges 4K, start+end frame, API.
+**Strategie hybride** : Seedance = action, close-ups, dialogues, POV, foules, <15s. Kling = plans larges 4K, start+end frame, API.
 
-### Architecture Format 6 pour Shorts (VALIDE 2026-04-04)
+### Quel format Seedance pour quel usage ? (decision 2026-04-05)
 
-Pour les Shorts 60-90s, privilegier le Format 6 (2-3 scenes par clip de 15s avec transitions slow-mo internes) au lieu de 1 beat = 1 clip. Avantages : moins de generations, zero couture, transitions cinematographiques naturelles, moins de credits. Audio ElevenLabs + musique Suno en overlay Remotion.
+| Usage | Format | Pourquoi |
+|-------|--------|----------|
+| **Scene d'action / dynamique** | **Format 3 SECONDS** | Multi-camera, verbes explosifs, controle temporel precis |
+| Multi-epoques / transitions tenues | Format 6 (Scene + slow-mo) | La slow-mo orbital donne le temps de transformer vetements/decor |
+| Exploration de lieu | Format 4 (plan-sequence) | Traversee fluide de 5-7 espaces en 15s |
+| Poursuite / suivi | Format 5 (prose steadicam) | Controle continu de vitesse et direction |
+| Scene simple / paysage | Format 1 (narratif) | Court, pas de surdecoupe |
+
+**Format 3 = defaut pour GeoAfrique.** Format 6 uniquement pour transitions d'epoques/tenues.
+
+---
+
+## Musique & SFX (Phase 8 — a automatiser)
+
+**Etat actuel** : Suno, manuel, pas d'API.
+**Futur** : Minimax Music 2.5 via fal.ai (`fal-ai/minimax-music`) — API automatisable.
+- Generer 2-3 pistes par Short, l'agent choisit la meilleure
+- SFX possibles aussi (Minimax ou ElevenLabs Sound Effects)
+- Volume musique : -18dB sous la voix-off
+- Certains sujets = PAS de musique (le silence est un choix de DA valide)
+- **Ne pas integrer avant d'avoir teste la qualite Minimax sur 2-3 Shorts**
 
 ---
 
@@ -55,6 +107,78 @@ Pour les Shorts 60-90s, privilegier le Format 6 (2-3 scenes par clip de 15s avec
 - **Mini-render apres chaque beat** : `npx remotion render --frames=START-END`
 - **Contrat Visuel AVANT code** (toute scene >10s)
 - **Seedance audio = TOUJOURS remplacer** : strip audio ffmpeg + overlay ElevenLabs dans Remotion
+
+---
+
+---
+
+## Style Principal GeoAfrique (DECIDE 2026-04-08)
+
+**Flat BD illustre semi-detaille** — le style des videos "bataille" (Amanirenas vs Abou Bakari) et "test keita" (Soundjata barre de fer).
+
+Caracteristiques :
+- Visages DETAILLES avec expressions (pas silhouettes)
+- Peaux brunes visibles avec traits faciaux
+- Decors RICHES (architecture, vegetation, sols textures)
+- Contours nets style BD/comic
+- Palette chaude africaine (ocre, or, bruns, bleus, cramoisi)
+- Vetements textures avec motifs culturels
+- Personnages secondaires COLORES et VARIES
+
+Pourquoi : Seedance anime bien ce style (mouvement naturel, expressions, tissu, poussiere). Assez detaille pour etre dynamique, assez stylise pour ne pas etre generique. Adaptable Shorts + long + news quotidiennes.
+
+Production : Gemini refs (character sheets + decors + secondaires) -> Seedance multi-ref (methode Yaroflasher).
+
+**Vivid shapes** = style secondaire. Usage : thumbnails, illustrations statiques, identite visuelle, branding. Pas pour scenes animees (trop plat, Seedance n'extrapole pas).
+
+---
+
+## Pipeline V2 "Recraft + Gemini" (EN TEST — 2026-04-07)
+
+Pipeline alternatif pour style vivid shapes. Pas encore officiel — a tester sur une scene complete.
+
+```
+1. Recraft Style ID (1 fois) -> 1-2 images DNA visuel (vivid_shapes + styleID)
+2. Gemini + ref Recraft -> character sheet 4 vues (personnage principal historiquement correct)
+3. Gemini + ref Recraft -> decor vide (lieu de la scene, sans personnages)
+4. Gemini + ref Recraft -> personnages secondaires (avec diversite visages)
+5. 3-5 refs -> Seedance (methode multi-ref Yaroflasher)
+6. Prompt court (<1500 chars) + "no words, no music"
+7. Generer 2-3 variantes, splice les meilleures
+```
+
+**Avantage** : Recraft = 1-2 credits pour le style. Gemini = quasi-gratuit pour toute la production.
+**Style IDs** : Hannibal `22d1274f`, Amanirenas `d28c53cc`
+**Prouve** : Gemini reproduit le style vivid shapes (character sheet + decor). Pas encore teste dans Seedance.
+
+---
+
+## API Seedance 2.0 fal.ai (NOUVEAU 2026-04-09)
+
+### Endpoints disponibles
+
+| Mode | Endpoint | Prix/s (720p) |
+|------|----------|---------------|
+| Text-to-Video | `bytedance/seedance-2.0/text-to-video` | $0.30 |
+| Image-to-Video | `bytedance/seedance-2.0/image-to-video` | $0.30 |
+| Image-to-Video Fast | `bytedance/seedance-2.0/fast/image-to-video` | $0.24 |
+| **Reference-to-Video** | `bytedance/seedance-2.0/reference-to-video` | **$0.18** (avec video ref) |
+
+- Image-to-Video supporte `end_image_url` (first/last frame)
+- Reference-to-Video supporte 9 images + 3 videos + 3 audios
+- **Limite** : duree combinee input video + output video <= 15s
+- Audio genere inclus dans le prix (toggle `generate_audio`)
+- Cle API : `FAL_KEY` dans `.env`
+
+### Resultats tests (2026-04-09)
+
+| Test | Mode | Resultat | Score |
+|------|------|---------|-------|
+| Dreamina first/last frame (15s) | Images | Arbre se releve, bizarre | 3/10 |
+| Dreamina first/last frame (10s) | Images | Arbre se releve, fin OK | 5/10 |
+| **API Reference-to-Video (10s)** | Video ref + prompt | **Arbre se releve 0-3s, reste bon** | **7.5/10** |
+
+Learnings : le biais "reverse" sur objets tombes est un probleme du modele, pas du mode. Reference-to-Video avec prompt directif = meilleur mode pour le chaining. First/last frame = utile pour transitions visuelles, pas pour storytelling.
 
 ---
 

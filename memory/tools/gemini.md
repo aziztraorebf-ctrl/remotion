@@ -30,12 +30,13 @@ Ne pas regenerer depuis zero pour un defaut mineur. Gemini 3 Pro pour edit preci
 
 ---
 
-## Regles modele
+## Regles modele (corrige 2026-04-13)
 
-- **Edition chirurgicale** : `gemini-3-pro-image-preview` OBLIGATOIRE (respecte la composition)
-- **Flash** (`gemini-3.1-flash-image-preview`) : regenere tout — eviter pour corrections, OK pour generation
+- **Edition chirurgicale / modifier un detail** : `gemini-3.1-flash-image-preview` — c'est Flash qu'on utilise pour garder la composition et modifier un detail. Accepte une image source en input + prompt decrivant la modification.
+- **Generation pure / haute qualite sans source** : `gemini-3-pro-image-preview` - plus cher, sans source d'origine. Tendance a etre tres conservateur quand une source est fournie (refuse parfois de modifier). Ne pas utiliser pour edition chirurgicale.
 - Config : `responseModalities: ["image", "text"]` — NE PAS mettre `responseMimeType`
 - Instruction efficace : decrire EXACTEMENT ce qu'on change + lister ce qu'il ne faut PAS toucher
+- Validation 2026-04-13 : tentative d'editer panels 4-5 d'un storyboard avec `gemini-3-pro-image-preview` a produit une image quasi-identique a la source (refus de modifier). Passage a `gemini-3.1-flash-image-preview` resout.
 
 ---
 

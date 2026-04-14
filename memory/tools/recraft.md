@@ -1,6 +1,18 @@
 # Recraft — Assets SVG & Personnages
 > Pipeline SVG, styles, limites, vivid_shapes.
-> Mise a jour : 2026-04-02
+> Mise a jour : 2026-04-13
+
+---
+
+## Regle V3 vs V4 (NON-NEGOTIABLE, ajoute 2026-04-13)
+
+**V3 = Style ID supporte** — utiliser V3 quand un Style ID est etabli pour le projet. Plus fidele, ajoute moins de details parasites, respecte mieux le prompt.
+
+**V4 = Style ID NON supporte encore** — utiliser V4 uniquement quand on n'a PAS de Style ID etabli (nouveau style generatif).
+
+**Regle d'or** : si projet a un Style ID -> V3. Sinon -> V4 ou Gemini.
+
+Cette regle remplace la hierarchie generique "V4 superieur a V3" qui vient par defaut — dans notre workflow, la fidelite au style etabli est prioritaire sur la qualite brute.
 
 ---
 
@@ -62,6 +74,19 @@
 
 - `mcp__recraft__create_style` depuis start frame -> `style_id`
 - Garantit coherence FORMELLE (shapes, style) — PAS la coherence chromatique exacte
+
+### Style IDs sauvegardes (recreees 2026-04-07)
+
+| Style | ID | Source images | Usage |
+|-------|-----|--------------|-------|
+| **Hannibal** (Flat Vector Silhouette) | `22d1274f-08d0-4c17-844b-4e574b0b478b` | 3 images hannibal library | Scenes epiques, armees, silhouettes |
+| **Amanirenas** (Bold Graphic Narrative) | `d28c53cc-7d3d-46af-a697-c0a134e7482d` | 2 images amanirenas library | Polyvalent — portraits, foules, action, news |
+
+### Vivid Shapes + Seedance (VALIDE 2026-04-07)
+- Le style vivid_shapes s'anime parfaitement dans Seedance — formes plates, zero morphing
+- Principe : ref Recraft avec Style ID -> Seedance ajoute mouvement, lumiere, profondeur
+- L'image Recraft est une DIRECTION ARTISTIQUE, pas un produit fini
+- Hybrid optimal : visage semi-detaille (style Amanirenas) + armee en silhouettes (composition Hannibal)
 
 ---
 
