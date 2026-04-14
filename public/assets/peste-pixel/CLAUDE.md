@@ -1,9 +1,0 @@
-<claude-mem-context>
-# Recent Activity
-
-### Mar 17, 2026
-
-| ID | Time | T | Title | Read |
-|----|------|---|-------|------|
-| #768 | 8:59 AM | ✅ | PES 1347 source image copied into project assets | ~331 |
-</claude-mem-context>
