@@ -1,7 +1,7 @@
 # audio-director — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-19 (Voice Remix V3 + Forced Alignment + config max-style)
+> Last updated: 2026-04-22 (Minimax v2.6 valide + hook pattern + Sonjata Short complet)
 
 ---
 
@@ -84,17 +84,88 @@ Five recurring problems encountered during multi-segment audio mixing. **Anticip
 
 ---
 
-## Music prompts validés (Minimax Music 2.6)
+## Minimax Music 2.6 — VALIDE 2026-04-22 (Sonjata session 8)
 
-### Historical Map / Abou Bakari (mandingue griot)
-Prompt qui fonctionne : `"Toumani Diabate style, kora + ngoni, Mandinka traditional, no synths, no electronic elements, acoustic only, contemplative, solo instrumental"`
-Cout : ~$0.50 pour 30s trimmed
-Trim : `ffmpeg -i raw.mp3 -t 30 -c copy music.mp3`
+### Endpoint et payload (confirmes)
+```python
+fal_client.subscribe("fal-ai/minimax-music/v2.6", arguments={
+    "prompt": "<description>",
+    "is_instrumental": True,  # OBLIGATOIRE pour musique de fond
+})
+```
+- Schema : `TextToMusic26Request` — prompt 10-2000 chars, lyrics optionnel, audio_setting optionnel
+- **PAS de `reference_audio_url`** (champ n'existe pas en v2.6, causait 422 sur endpoints anciens)
+- **PAS de `duration_seconds`** (le modele genere 2-9min, trim ffmpeg apres OU Remotion tronque via Sequence)
+- Cout : $0.10/generation, ~3min par job
+- 3 variantes parallele via `fal_client.submit` = ~6min total, $0.30
 
-### Anti-pattern a eviter
-- "cinematic orchestra" -> son synthetique generique
-- "epic soundtrack" -> meme probleme
-- Sans "no synths" -> Minimax ajoute des synths par defaut
+### Formule prompt validee (reconfirmee 2026-04-22)
+1. **Artiste specifique nomme** (ex: "Style of Toumani Diabate")
+2. **1-2 instruments principaux** (PAS 5 empiles)
+3. **Rythme precis** (ex: "gentle 6/8 rhythm", BPM)
+4. **Texture organique** ("warm, acoustic, organic")
+5. **Interdictions OBLIGATOIRES** : "No synthesizers, no electronic sounds"
+6. **Origine culturelle precise** ("Traditional Mande griot music from Mali", PAS "West African")
+
+### Prompts Sonjata session 8 (3 variantes)
+
+**A — Griot intime (RETENU par Aziz)** — 157s genere, kora + balafon
+```
+Traditional Mande griot music from Mali, 13th century empire era.
+Solo kora with slow balafon accents. Style of Toumani Diabate.
+Gentle 6/8 rhythm, acoustic, warm, organic, meditative.
+No synthesizers, no electronic sounds, no drums except soft dundun.
+```
+
+**B — Griot royal** — Sidiki Diabate, kora + djembe + dundun, 168s genere
+**C — Griot guerrier** — Neba Solo, djembe + balafon, 520s genere (long, reutilisable pour versions longues)
+
+Voir `memory/tools/minimax.md` pour le guide complet.
+
+### Anti-pattern confirme (rejete 2026-04-22)
+```
+Epic West African orchestral, kora + djembe + dunun + balafon,
+majestic warm tones, cinematic, 95 BPM
+```
+Resultat : "accents electroniques tres pousses, pas africain ancien" (Aziz).
+**Pourquoi ca echoue** :
+- "orchestral" + "cinematic" poussent vers les synthes
+- 4+ instruments empiles (vs 1-2 nommes)
+- Pas d'artiste de reference
+- Pas d'interdiction explicite
+
+### Gotcha prompt
+NE PAS mettre le mot "instrumental" dans le prompt si `is_instrumental: true` est passe en parametre. Cause 422 de validation (observe 2026-04-22).
+
+---
+
+## HOOK NARRATION PATTERN (valide 2026-04-22)
+
+### Recette phrase-choc
+Formule : **"[Constat impossible]. [Promesse au futur]."**
+
+Exemples :
+- "Cet enfant ne peut pas se lever. Il fondera un empire africain." (Sonjata, 63 chars, 4.32s)
+
+### Contraintes techniques
+- **Max 14 mots** pour tenir en 5s (debit Narratrice GeoAfrique v2)
+- **2 phrases courtes** > 1 phrase longue
+- **Scan TTS obligatoire** : participes "e/ee", "ont+voyelle", chiffres
+- **Config max-style** : stab=0.22, sim=0.55, style=0.55, speed=1.0
+
+### Integration Remotion
+- Hook 5s = Sequence from=0, musique SILENCE pendant hook (Option B)
+- Musique entre a Sequence scene 1 avec fade-in 2s (contraste dramatique)
+- Voir `memory/templates/hook-short.md`
+
+---
+
+## Mix audio (regle projet consolidee)
+- **Volume musique** : 0.15 dans Remotion (~-16.5dB, compatible regle -18dB sous voix)
+- **Fade-in** : 2s (60 frames @30fps) via `interpolate` clamped
+- **Fade-out** : 2s avant fin composition
+- **Option B** : silence musique pendant hook, entree a scene 1
+- Reference implementation : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
 
 ---
 
@@ -121,3 +192,13 @@ Agent cree. Aucune invocation encore.
 
 ### 2026-04-13 PM (5 audio pitfalls identified from Soundjata Acte V)
 Pendant la production Soundjata Acte V (hors agent, fait par Claude principal), 5 problemes audio recurrents ont ete identifies : P1 narration coupee aux frontieres (buffer Whisper), P2 debordement narration sur acte suivant, P3 audio Seedance avec paroles inventees, P4 niveau keep-and-duck a ajuster par scene, P5 drift timestamps Whisper vs ElevenLabs. Documentes dans la section "Known Audio Pitfalls" de l'agent. **A anticiper proactivement** sur tous les futurs mixes audio multi-segments.
+
+### 2026-04-22 (Sonjata session 8 — Minimax v2.6 + hook validation finale)
+**Hors agent, par Claude principal** :
+- Bug Minimax historique resolu : `fal-ai/minimax-music/v2.6` + `is_instrumental: true`, pas de `reference_audio_url`
+- Formule prompt Mande validee : artiste nomme + 1-2 instruments + "no synthesizers" + origine precise
+- 3 variantes Mande generees ($0.30), Aziz choisit A-Toumani (157s kora + balafon)
+- Hook narration 5s genere : "Cet enfant ne peut pas se lever. Il fondera un empire africain." (4.32s)
+- Integration Remotion : musique Sequence from=scene1 (Option B), silence pendant hook
+- Render final 151s valide par Aziz : "tres bon, publiable pending CTA"
+- Seule tache restante : CTA narration apres recharge ElevenLabs

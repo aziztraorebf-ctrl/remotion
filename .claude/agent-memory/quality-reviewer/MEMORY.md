@@ -1,7 +1,7 @@
 # quality-reviewer — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-20 (enrichi avec lecons Claude orchestrateur sessions 1-4 Sonjata Papercraft)
+> Last updated: 2026-04-22 (sessions 7-8 Sonjata + VALIDATION FINALE Short + vision Aziz)
 
 ---
 
@@ -10,6 +10,8 @@
 **Activer le quality-reviewer quand** : le visual-producer peut produire 3+ scenes sans intervention d'Aziz entre chaque etape. L'agent filtre AVANT de presenter a Aziz.
 
 **En attendant** : la review se fait par Claude (orchestrateur) + Aziz en direct. Cette memoire s'enrichit a chaque session pour preparer l'agent.
+
+**Statut 2026-04-22** : PAS encore actif en production. Sonjata complete sans invocation. Seuil pas atteint car visual-producer n'a pas ete teste sur une production autonome 3+ scenes (chaque scene a necessite iteration avec Aziz).
 
 ---
 
@@ -138,6 +140,13 @@ Ces decisions creent un precedent — ne pas re-signaler comme probleme dans les
 | 2026-04-21 | Scene 7B v1 | REJETE : dot-eyes → yeux realistes (V1 Pro) | V1 Pro drift les yeux. Regen avec V2 = dot-eyes maintenus |
 | 2026-04-21 | Scene 7C v1 | REJETE : quasi-statique en start/end frame | i2v classique = tir dynamique visible |
 | 2026-04-21 | Scene 7D | Lance au sol apparue de nulle part | Artefact mineur, accepte — detail cinematographique |
+| 2026-04-21 PM | Scene 8 | Orbite 90 camera + dot-eyes + objets en main | "Parmi les meilleurs clips qu'on a genere" — pipeline rode |
+| 2026-04-21 PM | Scene 8B | Tablette avec inscriptions N'Ko ajoutees via edit chirurgicale | "Ca fait beaucoup plus mieux qu'une tablette vide" |
+| 2026-04-21 PM | Scene 9 | PIL post-process transparence (seuil 160 alpha 0) | Valide pour symboles Gemini fond blanc → transparent |
+| 2026-04-22 | Scene 10A/10C | Fond brun quasi-noir | **Claude avait flag comme probleme → Aziz : "sur mobile ca ne se voit pas"**. Le reviewer etait trop severe. Lecon : noter les doutes mais deferer aux tests reels mobile. |
+| 2026-04-22 | Scene 10B | Split vertical video (scene 2 \| scene 8) sur 9:16 etroit | "L'une des plus spectaculaires, signature a garder" — la double action lisible sur mobile malgre le split etroit |
+| 2026-04-22 | Hook cut | Mot "se lever" legerement tronque au cut hook → scene 1 | **Accepte** : "si cela demande de tout refaire, c'est correct". Micro-detail mineur. |
+| 2026-04-22 | Musique | Volume 0.15 fade-in 2s + fade-out 2s | Couvre les trous sonores (scenes 5A, 9, 10A, 10C) sans dominer narration |
 
 ---
 
@@ -148,8 +157,64 @@ Ces decisions creent un precedent — ne pas re-signaler comme probleme dans les
 3. **Impact narratif** : le clip delivre-t-il l'emotion voulue ?
 4. **Rythme** : le montage est-il trop rapide / trop lent ?
 5. **Choix creatifs** : angles de camera, composition, palette — Aziz a le dernier mot
+6. **Lisibilite mobile reelle** (ajoute 2026-04-22) : ce qui semble problematique sur frame desktop est souvent invisible sur ecran mobile en scroll normal. Exemple : scene 10 fond quasi-noir ou split video 9:16 etroit = Claude avait flag, Aziz a vu sur mobile et a valide.
 
 **Format obligatoire dans le rapport** : section separee "REQUIERT VALIDATION AZIZ" listant explicitement ces points.
+
+**Meta-regle 2026-04-22** : en cas de doute sur un point qui requiert un test mobile reel, NE PAS affirmer "c'est un probleme" mais dire "possible probleme sur desktop, a tester sur mobile AVANT de conclure".
+
+---
+
+## VISION AZIZ (framework de review post-Sonjata)
+
+**Deux casquettes obligatoires lors d'une review finale** :
+
+### Casquette 1 : Spectateur normal (TikTok/Shorts scroll)
+Questions :
+- Les 3 premieres secondes accrochent-elles ? (hook = pattern "constat impossible + promesse")
+- L'histoire est-elle lisible sans connaissance prealable ?
+- Le style visuel est-il **distinct** du feed habituel ?
+- La musique installe-t-elle l'ambiance immediatement ?
+- Y a-t-il un CTA en fin pour convertir l'attention en action ?
+
+Ce que le spectateur ne voit PAS (et qu'il ne faut pas sur-flagger) :
+- Panels legerement decales
+- Main qui morph 2 frames
+- Dot-eye qui devient iris 30 frames
+- Ken Burns statique (norme sur Shorts)
+- Micro-transitions audio entre scenes (si musique continue couvre)
+
+### Casquette 2 : Critique honnete
+Classer les problemes par ordre d'IMPACT SUR LA RETENTION, pas par visibilite absolue :
+- Scene trop longue/lente qui provoque swipe
+- Hook faible qui perd les 3 premieres secondes
+- CTA absent = -30% retention finale
+- Artefacts majeurs (style drift, identity drift)
+
+Artefacts mineurs (morphing bref, figurants clones, couleur hors palette) : noter mais **NE PAS bloquer la publication** si ca ne casse pas la retention.
+
+---
+
+## LECONS SESSION 8 (2026-04-22) — META-LECONS SUR LA REVIEW
+
+### L1 : Ne pas confondre frame desktop et experience mobile
+Claude a flag scene 10A/10C comme "fond quasi-noir = risque swipe dans les 3 dernieres secondes". Aziz sur mobile : invisible comme probleme.
+**Regle** : en cas de doute visuel sur un fond/contraste, dire "a tester mobile AVANT de statuer", pas "c'est un probleme".
+
+### L2 : Hook pattern = retention >> artefacts mineurs
+L'ajout du hook 5s a plus d'impact sur la retention qu'une correction de micro-artefact. Prioriser le hook AVANT les corrections cosmetiques.
+
+### L3 : Micro-gaps audio = acceptables si narration continue
+Le mot "se lever" legerement tronque au cut hook → scene 1 : Aziz accepte "si ca demande de tout refaire, c'est correct". Principe : ne pas refaire un render complet pour un micro-detail audio. Ajouter le signalement pour liste de corrections mineures post-publication.
+
+### L4 : Coherence narration/image = force cachee du Short
+Ce qui semble "normal" (un beat narratif = une action visuelle synchrone) est en realite RARE dans le genre educational Short. La plupart des createurs ont des images generiques qui passent pendant que la narration dit autre chose. Le forced alignment + ancrage mot-par-mot est le **vrai avantage competitif invisible**. A mentionner dans les verdicts positifs comme force du pipeline.
+
+### L5 : "Cas d'ecole" + "Premier Short legitime" = ET, pas OU
+Un projet qui a valide le pipeline est AUSSI un projet publiable. Ne pas dire "c'est juste pour tester" — publier proprement pour mesurer les vraies donnees spectateur.
+
+### L6 : Diagnostic pipeline = rode a 60-70%, pas 100%
+Sonjata = 7 sessions, ~$52, ~25h pour 2min26 avec 6+ regenerations couteuses (V1 Vikings, V1 Mema sabre, prompt Minimax electronique, etc.). Les gates `pipeline_gates.py` existent mais ne sont pas integres comme wrapper obligatoire. Prochaine phase critique : integration gates AVANT Short #2 Abou Bakari.
 
 ---
 
@@ -229,3 +294,20 @@ figurants disparaissent, morphing profil→face, audio manquant V1/start-end, na
 - i2v classique > start/end frame pour action (tir arc, combat)
 - ElevenLabs SFX API comme alternative audio quand pas d'audio Seedance
 - Extraction frames pour comparer V1 Pro vs V2 = methode de diagnostic validee
+
+### 2026-04-21 PM — Session 7 lecons (PAS invoque en production)
+Scenes 8, 9, 10 assemblees. 4 nouvelles decisions jurisprudence :
+- Orbite 90 = pseudo-3D isometrique (4eme confirmation cross-scenes)
+- Edition chirurgicale Gemini pour ajouter inscriptions N'Ko = valide
+- PIL post-process (seuil brightness > 160 → alpha 0) pour transparence symboles Gemini
+- Split vertical video 9:16 fonctionne sur mobile malgre l'etroitesse
+
+### 2026-04-22 — Session 8 lecons META (PAS invoque en production)
+Sonjata Short VALIDE par Aziz en integral. Ajouts memoire critiques :
+- **6 meta-lecons sur la review** (L1-L6) : ne pas confondre desktop/mobile, hook > artefacts mineurs, micro-gaps audio acceptables, coherence narration/image = force cachee, "cas d'ecole" ET "publiable", pipeline rode 60-70%
+- **Framework "2 casquettes"** (spectateur normal + critique honnete) pour structurer toute review finale
+- **Vision Aziz** documentee : prioriser retention (hook, CTA, rythme) sur artefacts cosmetiques
+- **4 nouvelles decisions jurisprudence** hook/musique/fond sombre/split video
+- **Diagnostic honnete** : pipeline pas totalement rode, gates `pipeline_gates.py` non integres comme wrapper bloquant = prochain chantier critique
+
+Status de l'agent apres session 8 : memoire tres riche, checklist + jurisprudence + framework + meta-lecons. **Prochaine etape** : premiere invocation reelle sur Short #2 Abou Bakari (quand visual-producer sera teste autonome 3+ scenes).

@@ -1,7 +1,7 @@
 # visual-producer — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-21 (scene 7 Kirina, V2 > V1 Pro, i2v > start/end pour action, SFX ElevenLabs)
+> Last updated: 2026-04-22 (Sonjata sessions 7-8 : scenes 8-10 + hook visuel + Short VALIDE)
 
 ---
 
@@ -608,6 +608,25 @@ Lecon : quand le storyboard dit N panels, le prompt DOIT dire N shots. Verifier 
 **Character sheets AVANT production** : generer les refs canoniques de tous les personnages recurrents AVANT de produire les scenes. Les passer en input a chaque image Gemini.
 
 **Orbite 180 + start/end frame = combo valide** : l'orbite masque partiellement les artefacts (retrecissement, yeux) car le spectateur suit le mouvement. Teste et valide Scene 4 Sonjata.
+
+### 2026-04-22 (Sonjata Sessions 7-8 — VALIDATION FINALE Short)
+
+**Session 7 (2026-04-21 PM)** — Scenes 8, 9, 10 assemblees :
+- Scene 8 Mansa + Charte (18s) : 2 images Gemini + edition chirurgicale tablette (inscriptions N'Ko ajoutees) + 2 clips Seedance V2 9s. **Orbite 90 camera confirmee = effet pseudo-3D isometrique** (4eme confirmation).
+- Scene 9 Citations Charte (8s) : Remotion pur. Parchemin Gemini + Cinzel Decorative or + 3 symboles Gemini (arbre vie, bouclier, chaines brisees) avec fond transparent via PIL post-process (seuil brightness > 160 → alpha 0) + SFX plume ElevenLabs.
+- Scene 10 Close (16s) : Timeline 1235/1789 + split vertical video (scene 2 | scene 8A simultanes) + signature Cinzel Decorative.
+- Feedback Aziz scene 8 : "parmi les meilleurs clips qu'on a genere" — orbite 90 + dot-eyes tenus + objets en main = pipeline rode.
+
+**Session 8 (2026-04-22)** — Musique + Hook + VALIDATION :
+- **Hook visuel** : extrait de scene 4 (37s-42s = main qui saisit barre + lutte, pas de lever) = pattern reutilisable pour tous les Shorts. Voir `memory/templates/hook-short.md`.
+- **Criteres choix segment hook** : (1) tension sans resolution, (2) close-up debut + plan large ensuite, (3) pas de dialogue, (4) climax preserve.
+- **Zero cout visuel pour le hook** : reutilisation du render existant, pas de nouveau clip Seedance genere.
+- Render final 151s valide par Aziz : **"tres bon, cas d'ecole qui a rode le pipeline, publiable pending CTA"**.
+- Ne reste que : CTA narration (apres recharge ElevenLabs) + Unicode fix SonjataCTA.tsx.
+
+**Diagnostic pipeline post-Sonjata** : ~60-70% rode. Short #2 estime a $20-30 et 4-5 sessions (pas 1 session comme vrai pipeline industriel). Gap principal : gates `pipeline_gates.py` (13 gates) existent mais pas integres comme wrapper bloquant.
+
+---
 
 ### 2026-04-21 (Sonjata Papercraft Session 6 — Scene 7 Kirina, 4 clips)
 
