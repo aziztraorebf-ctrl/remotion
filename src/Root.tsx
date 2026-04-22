@@ -55,6 +55,22 @@ import { AbouBakariShort } from "./projects/geoafrique-shorts/AbouBakariShort";
 import { ThiaroyeShort } from "./projects/geoafrique-shorts/ThiaroyeShort";
 import { SoundjataCharte, SOUNDJATA_CHARTE_FRAMES } from "./projects/geoafrique-shorts/SoundjataCharte";
 import { SoundjataActeV, SOUNDJATA_ACTE_V_FRAMES } from "./projects/geoafrique-shorts/SoundjataActeV";
+import { SoundjataReaction, SoundjataNePlus, TROU_B_FRAMES, TROU_C_FRAMES } from "./projects/geoafrique-shorts/SoundjataTransitions";
+import { SoundjataActeVII, SOUNDJATA_ACTE_VII_FRAMES } from "./projects/geoafrique-shorts/SoundjataActeVII";
+import { SoundjataClose, SOUNDJATA_CLOSE_FRAMES } from "./projects/geoafrique-shorts/SoundjataClose";
+import { SoundjataShort, SOUNDJATA_SHORT_FRAMES } from "./projects/geoafrique-shorts/SoundjataShort";
+import { SoundjataActesI_III, SOUNDJATA_ACTES_I_III_FRAMES, SOUNDJATA_ACTES_I_III_ID } from "./projects/geoafrique-shorts/SoundjataActesI_III";
+import { SonjataPapercraftScene1, SONJATA_PAPERCRAFT_SCENE1_FRAMES, SonjataPapercraftScene2, SONJATA_PAPERCRAFT_SCENE2_FRAMES } from "./projects/geoafrique-shorts/SonjataPapercraft";
+import { SonjataScene5AKenBurns, SCENE5A_DURATION_FRAMES } from "./projects/geoafrique-shorts/SonjataScene5AKenBurns";
+import { SonjataScene5B, SCENE5B_DURATION_FRAMES } from "./projects/geoafrique-shorts/SonjataScene5B";
+import { SonjataScene5, SONJATA_SCENE5_FRAMES } from "./projects/geoafrique-shorts/SonjataScene5";
+import { SonjataScene6, SONJATA_SCENE6_FRAMES } from "./projects/geoafrique-shorts/SonjataScene6";
+import { SonjataScene7, SONJATA_SCENE7_FRAMES } from "./projects/geoafrique-shorts/SonjataScene7";
+import { SonjataScene8, SONJATA_SCENE8_FRAMES } from "./projects/geoafrique-shorts/SonjataScene8";
+import { SonjataScene9, SONJATA_SCENE9_FRAMES } from "./projects/geoafrique-shorts/SonjataScene9";
+import { SonjataScene10, SONJATA_SCENE10_FRAMES } from "./projects/geoafrique-shorts/SonjataScene10";
+import { SonjataCTA, SONJATA_CTA_FRAMES } from "./projects/geoafrique-shorts/SonjataCTA";
+import { SonjataShortFull, SONJATA_SHORT_FULL_FRAMES } from "./projects/geoafrique-shorts/SonjataShortFull";
 import { SeedanceTest } from "./projects/geoafrique-shorts/SeedanceTest";
 import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
 import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
@@ -169,6 +185,150 @@ export const RemotionRoot: React.FC = () => {
           id="SoundjataActeV"
           component={SoundjataActeV}
           durationInFrames={SOUNDJATA_ACTE_V_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataReaction"
+          component={SoundjataReaction}
+          durationInFrames={TROU_B_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataNePlus"
+          component={SoundjataNePlus}
+          durationInFrames={TROU_C_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataActeVII"
+          component={SoundjataActeVII}
+          durationInFrames={SOUNDJATA_ACTE_VII_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataClose"
+          component={SoundjataClose}
+          durationInFrames={SOUNDJATA_CLOSE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoundjataShort"
+          component={SoundjataShort}
+          durationInFrames={SOUNDJATA_SHORT_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id={SOUNDJATA_ACTES_I_III_ID}
+          component={SoundjataActesI_III}
+          durationInFrames={SOUNDJATA_ACTES_I_III_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataPapercraftScene1"
+          component={SonjataPapercraftScene1}
+          durationInFrames={SONJATA_PAPERCRAFT_SCENE1_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataPapercraftScene2"
+          component={SonjataPapercraftScene2}
+          durationInFrames={SONJATA_PAPERCRAFT_SCENE2_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene5AKenBurns"
+          component={SonjataScene5AKenBurns}
+          durationInFrames={SCENE5A_DURATION_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene5B"
+          component={SonjataScene5B}
+          durationInFrames={SCENE5B_DURATION_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene5"
+          component={SonjataScene5}
+          durationInFrames={SONJATA_SCENE5_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene6"
+          component={SonjataScene6}
+          durationInFrames={SONJATA_SCENE6_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene7"
+          component={SonjataScene7}
+          durationInFrames={SONJATA_SCENE7_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene8"
+          component={SonjataScene8}
+          durationInFrames={SONJATA_SCENE8_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene9"
+          component={SonjataScene9}
+          durationInFrames={SONJATA_SCENE9_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataScene10"
+          component={SonjataScene10}
+          durationInFrames={SONJATA_SCENE10_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataCTA"
+          component={SonjataCTA}
+          durationInFrames={SONJATA_CTA_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SonjataShortFull"
+          component={SonjataShortFull}
+          durationInFrames={SONJATA_SHORT_FULL_FRAMES}
           fps={30}
           width={1080}
           height={1920}

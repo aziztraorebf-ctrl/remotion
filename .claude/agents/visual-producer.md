@@ -75,11 +75,25 @@ Tool-agnostic in spirit: picks the right tool for each scene based on the brief.
 | Need | Primary tool | Alternative | Notes |
 |------|-------------|-------------|-------|
 | Dynamic action clip (combat, charge, movement) | **Seedance 2.0 (text-to-video or image-to-video)** | Kling V3 Pro | Seedance format 3 SECONDS for action |
+| **Multi-shot narrative sequence <15s (battle + reaction, preparation + action)** | **Seedance 2.0 Storyboard-to-Video** | — | See `memory/tools/seedance-storyboard-technique.md` — validated 2026-04-13 on Soundjata Acte V |
 | Calm/contemplative scene | **Kling V3 Pro** OR Remotion pure zoom on Gemini image | Seedance (risky for calm scenes — rule 68) | Seedance often produces near-static output for calm scenes |
 | Choreography transfer (reproduce motion from reference video) | **Seedance 2.0 Reference-to-Video** | — | See `memory/motion-reference-transfer.md` — validated 2026-04-13 |
 | Premium 4K clip with exact start/end frames | **Kling V3 Pro** | Seedance | Kling supports 4K and frame chaining |
 | First/last frame interpolation | **Seedance 2.0 image-to-video with end_image_url** | Kling | See seedance-rules §61 |
 | Manual generation when API unstable | **Dreamina Web (Seedance UI)** | — | Fallback, not automated |
+
+### Seedance Technique Selection (decision tree)
+
+Given a scene, use this order to pick the right Seedance technique:
+
+1. **Does the scene chain 2-5 distinct shots with clear composition changes, all under 15s?**
+   → **Storyboard-to-Video** (Gemini storyboard 5-panel sketch + char refs + environment plate → Seedance reference-to-video)
+2. **Is there an existing real video whose motion/timing you want to reproduce with our characters?**
+   → **Motion Reference Transfer** (reference-to-video with video_urls)
+3. **Single-shot action with start-frame visual anchor?**
+   → **image-to-video** (first frame = our Gemini image)
+4. **Pure text-prompt generation, single shot?**
+   → **text-to-video** (fallback, least control)
 
 ### Output Formats Standard
 - Shorts : 1080x1920 (9:16), 30fps
@@ -253,8 +267,90 @@ Write to `.claude/agent-memory/shared/PIPELINE.md` after delivery :
 - **ALWAYS** specify character ethnicity explicitly ("dark brown skin", "pale European skin")
 - Use MAJUSCULES on action verbs (LUNGES, STRIKES, BURSTS) — controls tempo
 - Format 3 SECONDS for action, Format 1/5 for dialogue, Format 4 for exploration
-- Reference-to-video: read `memory/motion-reference-transfer.md` before use
+- Reference-to-video (motion transfer): read `memory/motion-reference-transfer.md` before use
+- **Storyboard-to-video (multi-shot narrative)**: read `memory/tools/seedance-storyboard-technique.md` — validated Soundjata Acte V 2026-04-13
 - See `memory/tools/seedance-rules.md` for the 69+ rules
+
+### Seedance Storyboard-to-Video — Primary capability (2026-04-13)
+
+**Use for**: 2-5 shot narrative sequences under 15s where composition/framing control matters.
+
+**Workflow (non-negotiable)**:
+1. Gemini Nano Banana Pro → storyboard sketch N&B (5 panels horizontal strip) with char refs as input
+2. Generate an environment plate (Gemini, landscape, no characters, matching color palette)
+3. Seedance `reference-to-video` endpoint with 4 images: `[storyboard, char1, char2, environment]`
+4. `aspect_ratio: "9:16"` directly (never generate 16:9 for crop-in-post)
+5. `generate_audio: true` by default (see keep-and-duck in audio-director)
+6. Self-review → Kimi scope → Aziz validation
+
+**Character refs strategy (F2 fix)**:
+- For projects using storyboard-to-video: generate **context-ref** of each character with scene environment suggested behind them (not neutral tan background)
+- Naming: `{character}-context-ref.png` (vs `{character}-combat-ref.png` for portable neutral-bg)
+- Cost: ~$0.16 per project (2 refs × $0.08 Gemini), one-time investment
+- Why: Seedance tends to adopt the char ref background on tight shots. Neutral tan = empty scenes. Context background = rich scenes naturally.
+
+**Known weaknesses + remedies**:
+
+| # | Weakness | Primary remedy |
+|---|----------|----------------|
+| F1 | State transitions weak (aura dying, power fading) | **Explicit prompt clause with VISUAL STATE TRANSITIONS section** — vocabulary strong, final state prioritized, "NEVER preserve initial state across shots" |
+| F2 | Char ref neutral-bg → empty scene on tight shots | **Generate context-refs with scene background suggested** (priority) — only fall back to per-shot environment repetition if context-ref unavailable |
+| F3 | Gemini 5-panel-row layout unreliable (often produces 2×3) | Regenerate with insistent layout prompt, or accept 2×3 and signal Seedance "treat as N shots, ignore empty cell" |
+| F4 | Gemini 3 Pro Image too conservative in edit mode | **Use Gemini 3.1 Flash Image for surgical edits** (validated 2026-04-13) |
+| F5 | Rigid elongated objects (arrow, spear) stretch on close shots with hand movement | **Tight framing** (object partially off-frame) + clause "RIGID, SOLID, NON-DEFORMING shaft — length MUST remain CONSTANT" |
+| F6 | Format mismatch (16:9 vs 9:16) | **Always set `aspect_ratio` to final delivery format in API** — never crop 16:9 → 9:16 in post (destroys ~55%) |
+
+**Visual State Transition clause template (F1)** — use whenever the script contains verbs of transformation (disappears, extinguishes, fades, collapses, transforms):
+
+```
+VISUAL STATE TRANSITIONS — CRITICAL:
+- SHOT [N] START: [character] has [initial visual state]
+- SHOT [N] MID: [transition indicator]
+- SHOT [N+1]: [character] has [final state, strongly described]
+- NEVER preserve the [initial state] across shots. The transition MUST be visible.
+- When in doubt between frames, prefer the FINAL state over the INITIAL.
+```
+
+**Weaknesses reminder for Visual Plan**: if the scene has a magical/narrative state transition at its core, flag in Visual Plan that a Visual State Transition clause (F1) will be required in prompt.
+
+### Shot density — do NOT under-size storyboards (added after Soundjata lesson 2026-04-13)
+
+The source demo @voxelplot uses **9 panels for 10s** (~1.1s/shot). On Soundjata Acte V we used 4-5 panels for 12s (~2.5s/shot) and **under-utilized the technique**. Dense micro-cuts are a feature, not a bug.
+
+**Target shot count by scene type**:
+
+| Scene type | Shots | Layout | Shot duration |
+|------------|-------|--------|---------------|
+| **Action/combat dense** (default for battle scenes) | **7-9** | 3×3 grid | 0.8-1.2s + 1 shot long final 2-3s |
+| Multi-plan narrative | 5-7 | 3×2 grid or 1×5 strip | 1.5-2s |
+| Contemplative/preparation | 4-5 | 2×2 grid | 2-3s |
+| Dialogue simple | 3-4 | 1×4 strip | 3-4s |
+
+**Why dense micro-cuts are better**:
+1. Authentic anime/sakuga rhythm — high-performing YouTube Shorts have ~1s cuts on action
+2. More granular narrative control (each micro-moment dictated, not left to Seedance guesswork)
+3. **Masks Seedance weaknesses automatically** — less time per shot = less drift = less "static pose" problems like F1
+
+**Rule of thumb**: when in doubt between 5 or 8 panels for an action scene, go with 8. Close-ups and reaction shots are cheap to add in the storyboard and hugely improve the dynamism.
+
+### Prompt concision — voxelplot minimal style (hypothesis to validate, 2026-04-13)
+
+**Observation**: source demo @voxelplot uses a ~200-word prompt (not 700-1200 like we did on Soundjata). Structure:
+1. Style anchor (1 line)
+2. References with role (4 lines, one per ref)
+3. Scene summary in 1-2 compact sentences
+4. Absolute priorities (4 lines)
+5. Character + environment descriptions (compact, no shot-by-shot)
+6. Important + anti-patterns (3 lines)
+
+**No SHOT-by-SHOT detailed timecodes**. The storyboard IS the composition-control tool, the prompt is for identity + style + priorities.
+
+**Default strategy for new storyboard-to-video projects**: **start with voxelplot minimal style**. If result disappoints, iterate toward more detail — not the inverse. Reasons:
+- Less noise = Seedance listens better to critical priorities
+- Over-constrained prompts can contradict the storyboard
+- Refs already anchor identity, no need to re-describe
+
+**A/B test planned**: next storyboard-to-video segment, compare minimal (~200 words) vs detailed (~700 words) version. Budget ~$7 for both gens. See `memory/tools/seedance-storyboard-technique.md` rule 14.
 
 ### Kling V3 Pro
 - Use for: 4K output, start/end frame precision, calm/contemplative scenes where Seedance fails

@@ -1,0 +1,119 @@
+{
+  "project": "Thiaroye 1944",
+  "series": "Heros Oublies",
+  "style": "paper-craft-cold",
+  "total_duration_s": 110.08,
+  "fps": 30,
+  "format": "1080x1920 (9:16)",
+  "audio": "assets/library/geoafrique/thiaroye-1944/thiaroye-voixoff-v6.mp3",
+  "created": "2026-04-18",
+  "rules": {
+    "order": "chronological-strict",
+    "storyboard_panels": "4-5 for contemplative/narrative, 7-9 for action only",
+    "style_clause": "STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey-blue-olive palette, simple character shapes with dot-eyes, clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.",
+    "pipeline": "Gemini paper-craft image -> Seedance image-to-video (or storyboard-to-video)"
+  },
+  "characters": {
+    "tirailleur_principal": {
+      "description": "Senegalese tirailleur, tall, dark brown skin, dark beret, khaki-green uniform, French flag patch, brown boots",
+      "charref": null
+    },
+    "officier_francais": {
+      "description": "French officer, lighter skin, dark blue kepi, dark blue uniform, thin mustache, black boots, stern expression",
+      "charref": null
+    }
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Le Retour",
+      "start_s": 0.0,
+      "end_s": 15.0,
+      "duration_s": 15.0,
+      "type": "contemplative",
+      "storyboard_panels": 5,
+      "description": "Port de Dakar 1944, golden hour. Trois tirailleurs debout sur le quai, sacs a leurs pieds. Le monde colonial se desature en gris froid. Les tirailleurs restent en tons chauds. Le soldat central tient une lettre pliee.",
+      "pont_vers_suivant": "La lettre blanche dans la main",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 2,
+      "title": "La Revendication",
+      "start_s": 15.0,
+      "end_s": 30.0,
+      "duration_s": 15.0,
+      "type": "narrative",
+      "storyboard_panels": 5,
+      "description": "Interieur caserne Thiaroye. La lettre ouverte sur une table. Trois tirailleurs assis, l'un gesticule paume ouverte vers le haut (demande legitime). Fenetre barrelee, ombres indigo.",
+      "pont_vers_suivant": "La main ouverte paume vers le haut",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 3,
+      "title": "Le Massacre",
+      "start_s": 28.0,
+      "end_s": 45.0,
+      "duration_s": 17.0,
+      "type": "action",
+      "storyboard_panels": 7,
+      "description": "Cour du camp, aube. La main ouverte TOMBE. Soldats francais en arriere-plan, fusils leves. Le monde se desature sauf le rouge cramoisi qui surgit. Seule couleur dans un monde gris glace.",
+      "pont_vers_suivant": "La poussiere rougeatre du sol",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 4,
+      "title": "L'Effacement",
+      "start_s": 45.0,
+      "end_s": 62.0,
+      "duration_s": 17.0,
+      "type": "contemplative",
+      "storyboard_panels": 4,
+      "description": "Archives militaires francaises. Mains gantees manipulent un dossier. Poussiere rougeatre sur les bords, essuyee. Tiroirs metalliques identiques. Gris bureaucratique total.",
+      "pont_vers_suivant": "Le tiroir d'archive ferme, poignee metallique",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 5,
+      "title": "Le Jugement",
+      "start_s": 62.0,
+      "end_s": 83.0,
+      "duration_s": 21.0,
+      "type": "narrative",
+      "storyboard_panels": 5,
+      "description": "Tribunal moderne 2026. Femme agee noire assise, mains croisees. Avocat tient un document blanc. Patience dignite. Memes tons metalliques que les archives.",
+      "pont_vers_suivant": "Le document blanc tenu en l'air",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 6,
+      "title": "La Verite Prisonniere",
+      "start_s": 83.0,
+      "end_s": 99.0,
+      "duration_s": 16.0,
+      "type": "narrative",
+      "storyboard_panels": 5,
+      "description": "Memorial Thiaroye contemporain. Document blanc sur table. Mur de portraits N&B qui surgissent en couleurs panafricaines (vert-jaune-rouge). Porte ouverte sur l'ocean Atlantique dore.",
+      "pont_vers_suivant": "L'ocean Atlantique visible par la porte",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 7,
+      "title": "Le Souvenir / CTA",
+      "start_s": 99.0,
+      "end_s": 110.0,
+      "duration_s": 11.0,
+      "type": "contemplative",
+      "storyboard_panels": 4,
+      "description": "Cote de Dakar, coucher de soleil. Jeune homme senegalais debout au bord de l'eau, dos a la camera, regard vers l'horizon. Palette pleine restauree (or, indigo, terre rouge). Posture qui fait echo aux tirailleurs du clip 1.",
+      "pont_vers_suivant": null,
+      "status": "todo",
+      "clip_path": null
+    }
+  ]
+}

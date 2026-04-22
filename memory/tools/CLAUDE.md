@@ -13,4 +13,11 @@
 |----|------|---|-------|------|
 | #1088 | 9:49 AM | 🔵 | Seedance 2.0 Production Rules Checklist and Anti-Patterns | ~2594 |
 | #1086 | 9:47 AM | 🔵 | Seedance 2.0 Complete Prompting Reference and Production Techniques | ~1987 |
+
+### Apr 18, 2026
+
+| ID | Time | T | Title | Read |
+|----|------|---|-------|------|
+| #1207 | 8:46 PM | 🔵 | Gemini image generation tooling rules and child drift gotcha | ~804 |
+| #1193 | 10:34 AM | 🔵 | Seedance 2.0 Production Rules Compendium Review | ~834 |
 </claude-mem-context>

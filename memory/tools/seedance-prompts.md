@@ -196,6 +196,7 @@ COLOR GRADE: [palette complete].
 | Meme personnage, plusieurs epoques/lieux/tenues | **Format 6 — Scenes + transitions slow-mo** |
 | **Montage rapide rythme / beat sync** | **Format 7 — SHOT numerote + BPM** |
 | **Scene de bataille / combat intense** | **Format 8 — Timecode + Shot type + VFX + SFX** |
+| **Survol de lieu / establishing shot FPV** | **Format 9 — FPV une phrase ~550 chars (@shushant_l)** |
 | Dialogue lip sync multi-personnages | Format 3 + Dialogue section A |
 | Dialogue lip sync 1 personnage | Format 3 + Dialogue inline B |
 
@@ -227,6 +228,75 @@ COLOR GRADE: [palette complete].
 
 ---
 
+## Format 9 — FPV Establishing Shot (~500-600 chars) — PROUVE @shushant_l (6/6 clips 10/10)
+
+```
+extremely fast-paced cinematic FPV flying through [LIEU + EPOQUE],
+hyper-realistic, 4K, [ECLAIRAGE]-lighting,
+[ARCHITECTURE : materiaux, formes, batiments specifiques],
+[ELEMENTS HUMAINS : guerriers, marchands, pretres, foule, animaux],
+[ELEMENTS CULTURELS : rituels, vetements, objets, musique],
+epic scale, dramatic shadows, volumetric lighting,
+historical accuracy, [PALETTE : warm earthy / ochre / terracotta / etc.],
+high contrast, film-grade color grading,
+smooth continuous movement, [ATMOSPHERE]
+```
+
+### Regles du format
+- **UNE seule phrase** — pas de timecodes, pas de shots, pas de coupes
+- **~500-600 chars** max — la concision est la cle du succes
+- **Pas de "slowly"** — "fast-paced" est dans l'ADN du format
+- **Virgules = rythme** — chaque element ajoute une couche visuelle sans casser le flux
+- **"historical accuracy"** = mot-cle puissant pour eviter les anachronismes
+- **Avec images ref** : le style visuel (2D flat, BD, photorealiste) vient des refs, pas du texte
+
+### Adaptation GeoAfrique (exemples)
+
+**Niani (Soundjata)** :
+```
+extremely fast-paced cinematic FPV flying through the ancient
+Mandinka capital of Niani in 13th century West Africa,
+hyper-realistic, 4K, golden-hour lighting, mud-brick and thatch
+compounds, grand royal palace with carved wooden pillars,
+bustling marketplace with traders and griots playing kora,
+warriors in boubous carrying iron spears, cattle herds,
+women pounding millet, baobab trees towering above,
+fire smoke rising from forges, epic scale, dramatic shadows,
+volumetric lighting, historical accuracy, warm earthy palette
+with ochre and terracotta, high contrast, film-grade color
+grading, smooth continuous movement, authentic West African
+medieval atmosphere
+```
+
+**Tombouctou (Abou Bakari)** :
+```
+extremely fast-paced cinematic FPV flying through the legendary
+city of Timbuktu at its golden age peak in 14th century Mali Empire,
+hyper-realistic, 4K, warm golden-hour lighting, iconic mud-brick
+Sankore Mosque, Djinguereber Mosque minarets, University of Sankore
+with scholars and manuscripts, bustling salt and gold trade caravans,
+Tuareg traders on camels, flowing indigo robes, Niger River boats,
+market stalls with spices and textiles, epic scale, dramatic shadows,
+volumetric lighting, historical accuracy, desert gold and sand palette,
+high contrast, film-grade color grading, smooth continuous movement,
+authentic Saharan intellectual capital atmosphere
+```
+
+### Pourquoi ca marche (analyse @shushant_l)
+- 6 clips produits avec le meme template (Anga, Urartu, Pontus, Gandhara, Kuru, Matsya)
+- **Tous en avril 2026** — version mature de Seedance 2.0
+- **Zero echec documente** — le format est hyper-stable pour Seedance
+- La structure en virgules donne a Seedance un "buffet" d'elements a montrer — il choisit l'ordre du survol
+- Source : https://x.com/shushant_l
+
+### Usage dans notre pipeline
+- **Scene d'etablissement** en debut d'Acte (montrer le lieu avant l'action)
+- **Transition geographique** entre Actes (montrer un nouveau lieu)
+- **Avec video ref** : uploader un clip FPV existant (ex: `fpv-ancient-kingdom-anga-15s.mp4`) + images refs style = Seedance reproduit le mouvement sur NOS visuels
+- **Sans video ref** : le prompt seul suffit — le format est assez precis
+
+---
+
 # PARTIE 2 — TECHNIQUES CAMERA
 
 | Technique | Mot-cle prompt | Statut |
@@ -245,6 +315,7 @@ COLOR GRADE: [palette complete].
 | Drone racing low-angle | "Ultra-fast low-angle tracking shot, weaving rapidly between legs like a racing drone" | Valide (@aiehon_aya) |
 | Snap zoom | "Camera SNAP ZOOMS into eyes" | Valide (@drjoetw) |
 | Fisheye / ultra-wide | "ultra-wide lens distortion as character steps out" | Valide (@drjoetw) |
+| FPV establishing | "extremely fast-paced cinematic FPV flying through [lieu]" | Valide 10/10 (@shushant_l) — 6/6 clips parfaits. Voir Format 9. |
 | Speed ramp | "Camera speed ramps up, then abruptly STOPS" | Valide (@drjoetw) |
 | Whip pan morph | "whip pan morph into street scene" | Valide (@drjoetw) |
 | Bullet-time | "Bullet-time begins. Camera rotates around frozen figures. Only X moves in real time" | Valide (@drjoetw) |

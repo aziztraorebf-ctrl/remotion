@@ -81,12 +81,20 @@ For each scene, note explicitly :
 - Composition quality (rule of thirds, safe zones respected)
 - Alignment with script intent
 
+**Paper-craft specific checks (learned 2026-04-20)** :
+- **Dot-eyes preserved** : Seedance sometimes converts dot-eyes to white sclera eyes during shock/surprise animations. Flag as STRUCTURAL if > 2 scenes affected.
+- **Object rigidity** : check that held objects (sword, spear, bar) maintain size and shape throughout. Seedance shrinks/straightens objects over time (R-RIGID, R-RIGID-REPAIR). Flag last 1-2s of clips especially.
+- **Object continuity** : if an object was added to the image (e.g. spears added to soldiers via Gemini edit), verify it persists throughout the clip. Seedance may generate phantom objects from prompt mentions that don't match the source image (R-OBJECT-VISIBLE).
+- **Crowd consistency** : in start/end frame clips, count figurants in first frame vs last frame. If > 30% lost, flag as MINOR FIX. Seedance loses peripheral characters during dramatic camera transitions (R-STARTEND-CROWD).
+- **Character morphing in perspective transitions** : when camera angle changes (side→top-down, profile→frontal), check for abrupt rotation of the main character's face/body. Expected in start/end frame clips but should not be jarring (R-STARTEND-MORPH).
+
 ### Step 4 — Check narrative alignment
 
 Using script + timing.ts :
 - Scene N starts at frame X = word "Y" in narration → verify the visual at frame X makes sense for the word "Y"
 - Emphasis beats (MAJUSCULES in script) → verify a visual event happens at that beat
 - Scene transitions → verify they fall on phrase boundaries, not mid-sentence
+- **Narration overflow check** (R-NARRATION-CUTOFF) : for each scene, verify `clip_duration` vs `narration_duration`. If clip > narration + 0.5s, verify a fadeout is applied. Otherwise words from the NEXT scene bleed into this clip's audio (confirmed 2026-04-20 : "Mais" from scene 6 bled into scene 5B render).
 
 ### Step 5 — Check audio measurements
 
@@ -145,10 +153,13 @@ If the script does not support `--mode confirm-refute` yet, construct the brief 
 
 ### 1. Visual (agent validates)
 - Style consistency (palette, outlines, cel-shading level)
-- Character identity (matches REF images)
+- Character identity (matches REF images + charsheet canonical)
 - Composition (safe zones respected, no overflow)
 - No text parasites, no accidental elements
 - No morphing / anatomy bugs
+- **Ethnicity check** : all characters must match West African appearance. Flag any European/pale-skinned characters in crowd scenes (confirmed issue 2026-04-20 : scene 7A Soumaoro's army rendered as European soldiers)
+- **Historical accuracy** : no modern elements (t-shirts, plastic, sunglasses) in historical scenes. Flag immediately.
+- **Object held throughout** : if a character holds an object in the source image, verify they hold it in ALL frames. Flag sword-through-arm, object teleportation, or phantom objects appearing.
 
 ### 2. Technical artifacts (agent + Kimi)
 - Pop-in / sudden appearance
@@ -171,6 +182,8 @@ If the script does not support `--mode confirm-refute` yet, construct the brief 
 - Voice RMS vs music RMS ratio
 - Silence detection
 - Clipping detection
+- **Audio stream presence** : verify clip actually HAS an audio stream (ffprobe -select_streams a). Seedance V1 Pro and start/end frame mode generate NO audio despite `generate_audio: True` (confirmed 2026-04-20). Flag missing audio per clip.
+- **Endpoint check** : note which Seedance endpoint was used per clip (from meta.json). V1 Pro = no audio, V2 = audio. If a scene was expected to have ambient audio but doesn't, flag as MINOR FIX.
 
 ### 6. Audio perception + vocal emotion — DEFERRED TO AZIZ
 - The agent does NOT pretend to validate these
@@ -260,11 +273,18 @@ Structural issue examples :
 - Consistent style drift (photorealism creeping in)
 - Audio-video sync off in multiple scenes
 - Direction match failure (video doesn't match approved Visual Plan in spirit)
+- Dot-eyes replaced by white sclera eyes in 2+ scenes (style broken)
+- Ethnicity drift (West African characters rendered as European in crowd)
+- Historical inaccuracy impacting narrative credibility (Soumaoro shown dead vs disappeared)
+- Narration bleeding between scenes without fadeout (R-NARRATION-CUTOFF violation in 2+ scenes)
 
 Cosmetic issue examples (NOT structural) :
 - 1-frame flicker on a weapon
 - Minor palette deviation on a single asset
 - One scene transition slightly too fast
+- Object slightly shrinks in last 1-2s of a clip (R-RIGID)
+- 1-2 figurants lost in a perspective transition (R-STARTEND-CROWD)
+- Brief face rotation morphing during camera transition (R-STARTEND-MORPH)
 
 ---
 

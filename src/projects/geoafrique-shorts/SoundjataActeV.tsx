@@ -42,10 +42,10 @@ export const SOUNDJATA_ACTE_V_FRAMES =
 const SEGMENT_A_START = 0;
 const SEGMENT_B_START = SEGMENT_A_START + SEGMENT_A_DURATION;
 
-// Asset paths (staticFile resolves from public/)
-const SEG_A_VIDEO = "assets/library/geoafrique/soundjata/combat-tests/storyboard-segment-A-v2-1776118172.mp4";
-const SEG_B_VIDEO = "assets/library/geoafrique/soundjata/combat-tests/storyboard-segment-B-v3-1776123132.mp4";
-const NARRATION_FULL = "assets/library/geoafrique/heros-oublies/soundjata/narration-full.mp3";
+// Asset paths (staticFile resolves from public/). Normalized 2026-04-13.
+const SEG_A_VIDEO = "assets/library/geoafrique/heros-oublies/soundjata/clips-validated/acte5-segment-a-v2.mp4";
+const SEG_B_VIDEO = "assets/library/geoafrique/heros-oublies/soundjata/clips-validated/acte5-segment-b-v3.mp4";
+const NARRATION_FULL = "assets/library/geoafrique/heros-oublies/soundjata/audio/narration-full.mp3";
 
 // Narration offsets relative to Acte V start
 // Segment A narration: master 65.52s - 77.57s (full flecheCoq ending "a sa pointe")

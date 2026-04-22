@@ -112,3 +112,19 @@ tmp/
 public/assets/library/geoafrique/test seedance 2.0/
 *.mov
 .claude/scheduled_tasks.lock
+
+# Heavy project asset workspaces (renders, intermediate clips, PoCs)
+public/assets/sonjata-papercraft/
+public/assets/library/references/motion-library/
+public/assets/library/geoafrique/heros-oublies/soundjata/clips-pending/
+public/assets/library/geoafrique/heros-oublies/soundjata/clips-validated/
+public/assets/library/geoafrique/heros-oublies/soundjata/refs/
+public/assets/library/geoafrique/soundjata/combat-refs/
+sonjata-papercraft/
+geo-shorts-template/
+sudan-poc/
+remogen-test/
+
+# Python cache
+__pycache__/
+*.pyc

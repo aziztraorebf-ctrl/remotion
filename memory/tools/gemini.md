@@ -1,12 +1,43 @@
 # Gemini — Generation & Correction d'Images
 > Edition chirurgicale, character sheets, expressions, Nano Banana, cartes geo.
-> Mise a jour : 2026-04-02
+> Mise a jour : 2026-04-14
+
+---
+
+## Piege "enfant drift" en contexte transmission/apprentissage (2026-04-14)
+
+**Observe sur Soundjata Acte VII** : prompt char ref "young griot adulte 25-32" a genere un enfant ~12 ans. Contexte narratif "griots qui transmettent l'epopee" a biaise Gemini vers le tropisme "enfant auditeur emerveille".
+
+**Remedy validee** : forcer l'age adulte **3x** dans le prompt (debut/milieu/fin) + marqueurs anatomiques adultes explicites :
+- Debut : "ADULT MAN aged 25-32 years old. NOT a child. NOT a teenager. NOT a boy."
+- Corps : "Facial features of an adult male (25-32 years): visible adult jawline, defined cheekbones, adult brow, NOT rounded child cheeks"
+- Fin : "CRITICAL: subject is a YOUNG ADULT MAN, not a child. Adult proportions, adult facial structure, adult body."
+
+**Contextes a risque** : toute scene narrative de transmission, apprentissage, conte, famille, ecole. Ecrire juste "adult" ou un age ne suffit PAS — il faut expliciter l'ABSENCE d'enfance ET les marqueurs morphologiques adultes.
+
+---
+
+---
+
+## MODELE UNIQUE — ZERO EXCEPTION (NON-NEGOTIABLE)
+
+**Le SEUL modele Gemini a utiliser dans tout le projet est : `gemini-3.1-flash-image-preview`**
+
+- Generation d'images : `gemini-3.1-flash-image-preview`
+- Edition chirurgicale : `gemini-3.1-flash-image-preview`
+- Character sheets : `gemini-3.1-flash-image-preview`
+- Storyboards : `gemini-3.1-flash-image-preview`
+- Toute operation image : `gemini-3.1-flash-image-preview`
+
+**INTERDIT** : `gemini-2.0-flash-exp`, `gemini-2.0-flash`, `gemini-3-pro-image-preview`, `nano-banana-pro-preview`, ou tout autre modele.
+
+**Pourquoi** : les autres modeles sont soit deprecies (2.0-flash-exp = 404), soit trop conservateurs (3-pro refuse de modifier), soit redondants. 3.1-flash-image-preview fait TOUT ce dont on a besoin. Erreur repetee 3+ fois en production — cette regle met fin au probleme.
 
 ---
 
 ## Principe : correction chirurgicale AVANT regeneration
 
-Ne pas regenerer depuis zero pour un defaut mineur. Gemini 3 Pro pour edit precis.
+Ne pas regenerer depuis zero pour un defaut mineur.
 
 ---
 
@@ -45,6 +76,7 @@ Ne pas regenerer depuis zero pour un defaut mineur. Gemini 3 Pro pour edit preci
 - Pas de seed expose dans l'API publique, pas de style ID
 - L'image source elle-meme EST le seed — la conserver = pouvoir regenerer des variantes coherentes
 - Postures de personnages minuscules : resultat subtil. Laisser Kling animer via prompt.
+- **Storyboard multi-panel : panel blanc aleatoire** — Gemini peut laisser un panel vide (carre blanc) au lieu de generer son contenu, meme si les autres panels sont corrects. Observe 2026-04-18 sur Sonjata scene 3. Correction : regenerer le storyboard complet (l'edition chirurgicale du panel seul echoue — applique R-STORYBOARD-CORR).
 
 ---
 

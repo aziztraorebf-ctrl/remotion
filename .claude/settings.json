@@ -1,4 +1,22 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(ffprobe -v quiet -show_entries format=duration -of csv=p=0 /Users/clawdbot/Workspace/remotion/sonjata-papercraft/clips-production/scene2-assembled.mp4)",
+      "Read(//tmp/flat-sepia-test/**)",
+      "Read(//private/tmp/flat-sepia-test/**)",
+      "Bash(open /tmp/split-candidates/scene2-frame-05.png /tmp/split-candidates/scene8a-frame-01.png)",
+      "Bash(npx remotion:*)",
+      "Bash(ffmpeg -y -i /tmp/sonjata-cta.mp4 -vf \"select='eq\\(n\\\\,15\\)+eq\\(n\\\\,40\\)+eq\\(n\\\\,60\\)+eq\\(n\\\\,100\\)'\" -vsync vfr /tmp/cta-review/frame-%02d.png)",
+      "Bash(mkdir -p /tmp/cta-review)",
+      "Bash(python3 -c ':*)",
+      "Bash(ffprobe -v quiet -print_format json -show_format public/audio/sonjata-papercraft/sonjata-cta-narration.mp3)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Duration: {d[\\\\\"format\\\\\"][\\\\\"duration\\\\\"]}s'\\)\")",
+      "Bash(echo \"[]\")",
+      "Read(//Users/clawdbot/.claude/**)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
+    ]
+  },
   "hooks": {
     "PreCompact": [
       {

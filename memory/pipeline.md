@@ -1,6 +1,46 @@
 # Pipeline Shorts GeoAfrique — Ordre INVIOLABLE
 > Ne JAMAIS changer cet ordre. Zero clip avant timing.ts stable.
-> Mise a jour : 2026-04-06
+> Mise a jour : 2026-04-14
+
+---
+
+## REGLE CRITIQUE (2026-04-14) — Duree clip >= Duree narration
+
+**Contexte** : Soundjata Acte VII, gap 1.17s entre clip Seedance (12s) et narration (13.22s) a force une loop muette en Remotion + 1 mini-render rate. Entierement evitable au Visual Plan.
+
+**Regle non-negociable pour tout Visual Plan** :
+
+1. Avant de proposer `duration` Seedance : **mesurer la narration de l'Acte exactement** (`scene.end - scene.start` dans timing.ts, ou ffprobe)
+2. **Arrondir a la seconde superieure** pour Seedance (paliers 1s, max 15s) :
+   - Narration 13.22s → clip **14s**, PAS 12s
+   - Narration 11.7s → clip 12s
+3. Si narration > 15s : **splitter en 2 clips back-to-back**, JAMAIS combler par boucle muette
+4. **Cross-check bloquant AVANT tout appel API** : `clip_seconds >= narration_seconds`. Sinon STOP et re-evaluer.
+
+Section obligatoire dans tout Visual Plan :
+```
+Narration measured: X.XXs
+Clip Seedance demande: Y.0s (Y >= ceil(X))
+Cross-check: OK / NOT OK
+```
+
+Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0.30-0.60 (1-2s Seedance de plus).
+
+---
+
+---
+
+## REGLE (2026-04-19) — Forced Alignment = outil standard post-ElevenLabs
+
+**Contexte** : Sonjata Papercraft Scene 2 — dialogue Seedance (insulte Sassouma) necessite mute/unmute de la narration au centieme de seconde. Le forced alignment ElevenLabs donne les frontieres exactes de chaque MOT.
+
+**Regle** : apres chaque generation ElevenLabs, lancer le forced alignment sur l'audio pour obtenir les timestamps mot-a-mot. Utiliser les frontieres de MOTS (pas de phrases) pour :
+1. Mute/unmute narration quand un dialogue Seedance prend le relais
+2. Synchro visuelle (caler un clip sur un mot precis)
+3. Sous-titres karaoke mot-a-mot
+4. Debug audio (localiser un mot mal prononce)
+
+**Erreur a ne pas reproduire** : muter la narration sur la frontiere de PHRASE ("humiliait sa mere. Ton fils...") au lieu de la frontiere de MOT ("mere." finit a 20.82s, "Ton" commence a 21.72s). Le mute coupait "sa mere" en plein milieu.
 
 ---
 
@@ -16,6 +56,13 @@
     Output Kimi : arcs narratifs, objets-ponts, placement chromatique, ton par clip
     Max 3 iterations. Cout : ~$0.01-0.02/passe.
     Ref : `.claude/skills/batch-short-production/references/kimi-direction-example.md`
+4b-bis. KIMI CONSULTATION STORYBOARD (OPTIONNEL mais recommande si bloque) :
+    Quand le storyboard rate apres 2 iterations, envoyer a Kimi K2.5 :
+    - Le storyboard actuel + les refs canons + le contexte narratif + les contraintes Seedance
+    - Question : "Si TU etais le DA, quel storyboard proposerais-tu ?"
+    - Kimi propose des angles camera et compositions que Claude ne pense pas toujours
+    - Script : `scripts/tools/kimi-review-acte{N}-storyboard.py` (adaptable)
+    - Cout : ~$0.02. Valide 2026-04-16 (Acte IV Clip 1, propositions galop lateral + OTS validees)
 4c. CLAUDE DYNAMISATION — rewrite des prompts Seedance (NON-NEGOTIABLE)
     **SCRIPT** : `scripts/dynamize-prompts.py kimi-brief.md [--model claude|gemini] [--clips 1,3]`
     Input : brief Kimi (vision narrative) + regles Seedance documentees
@@ -62,17 +109,26 @@ Kimi pense en termes de cinema contemplatif (plans-tableaux). Seedance brille av
 | Plan | Outil | Format/Config |
 |------|-------|---------------|
 | Scene dynamique multi-actions | **Seedance + Format 3 SECONDS** | 80-120 cr, ref Gemini |
+| **Sequence narrative multi-shots <15s (action + reaction, preparation + impact)** | **Seedance Storyboard-to-Video** | 4 refs : storyboard 5 panneaux N&B + 2 char refs + env plate. Voir `tools/seedance-storyboard-technique.md`. Valide 2026-04-13 Soundjata Acte V |
 | Gros plan visage / emotion | Seedance (SECONDS, snap zoom) | 80-120 cr |
 | Plan epique / armee / territoire | Recraft vivid_shapes -> Kling O3 | cfg 0.35 |
 | Transition cinematique (dolly in) | Gemini start+end -> Kling O3 | cfg 0.4 |
 | Carte / timeline / data | SVG Remotion spring() pur | -- |
 | Flotte/foule massive | Seedance (SECONDS) | 80 cr |
 | Dialogue lip sync | Seedance (Audio-Guided) | 80-120 cr |
-| POV / transition perspective | Seedance | 80 cr |
+| POV / transition perspective | Seedance (Storyboard-to-Video excelle aussi) | 80 cr |
 | Multi-epoques meme personnage | Seedance Format 6 (slow-mo orbital) | 80-120 cr |
 | Plan 4K / >15s | Kling | API fal.ai |
 
-**Strategie hybride** : Seedance = action, close-ups, dialogues, POV, foules, <15s. Kling = plans larges 4K, start+end frame, API.
+**Strategie hybride** : Seedance = action, close-ups, dialogues, POV, foules, narratif multi-shots <15s. Kling = plans larges 4K, start+end frame, API.
+
+**Technique Storyboard-to-Video** (ajoute 2026-04-13) :
+- Permet de produire 2-5 shots enchaines cohérents en un seul clip Seedance via storyboard Gemini
+- Identite perso verrouillee entre shots, decors continus, transitions naturelles
+- **Toujours** generer en `aspect_ratio` final (9:16 pour Shorts) — jamais 16:9 cropable
+- **Char refs "context" > neutral-bg** : pour cette technique, generer les char refs avec fond de scene suggere (evite decor vide sur plans serres)
+- **Transitions d'etat narratives** (aura qui meurt, perte de pouvoir) : renforcer la clause de transition dans le prompt (section VISUAL STATE TRANSITIONS), ne PAS s'en remettre au storyboard seul
+- **Audio Seedance** : garder (`generate_audio: true`) et mixer a 30% sous narration (keep-and-duck), voir `feedback_seedance-keep-and-duck.md`
 
 ### Quel format Seedance pour quel usage ? (decision 2026-04-05)
 

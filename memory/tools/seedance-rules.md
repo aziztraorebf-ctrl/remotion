@@ -1,6 +1,6 @@
 # Seedance 2.0 — Regles de Prompt
-> 63 regles + anti-patterns. Consulter AVANT d'ecrire un prompt Seedance.
-> Mise a jour : 2026-04-09
+> 86 regles + anti-patterns. Consulter AVANT d'ecrire un prompt Seedance.
+> Mise a jour : 2026-04-19
 
 ---
 
@@ -113,6 +113,10 @@
 
 21. **Sensibilite contenu variable** : refus aleatoire — relancer tel quel avant de modifier
 
+70. **Vue laterale + deplacement horizontal en 9:16 = sortie de cadre** : un personnage en profil qui avance lateralement traverse les 720px du cadre vertical en 1-2s. Avec "camera TRACKS", Seedance suit le personnage mais regenere/despawn les elements d'arriere-plan = artefact de loop visible. **Fix** : (a) "Camera HOLDS STEADY, fixed position, no movement", (b) "The character STAYS CENTERED in the frame at all times", (c) le personnage fait le mouvement sur place sans traverser le cadre. Valide 2026-04-18 sur Soundjata Acte II crawl (3 tentatives).
+
+71. **"slowly" et synonymes = quasi-statique** : confirme a nouveau 2026-04-18. "He moves slowly" = micro-mouvements a peine visibles sur 5s. Utiliser "steadily" pour un rythme neutre. Jamais "slowly", "gently", "softly" sauf intention explicite de scene figee.
+
 ---
 
 ## Regles de transition (Format 6)
@@ -138,7 +142,7 @@
 58. **Seedance 2.0 API dispo sur fal.ai** : 3 endpoints — `bytedance/seedance-2.0/text-to-video`, `bytedance/seedance-2.0/image-to-video` (first/last frame via `end_image_url`), `bytedance/seedance-2.0/reference-to-video` (Omni : 9 images + 3 videos + 3 audios). Prix : $0.30/s standard, $0.24/s fast, $0.18/s avec video ref. Atlas Cloud API ($0.10/s) existe mais **ignore les refs images** — inutilisable pour notre pipeline. Atlas Cloud playground ($0.216/s) fonctionne mais prix ~= fal.ai et pas automatisable. Volcengine officiel ($0.14/s) inaccessible (KYC chinois). **fal.ai = seul provider API fiable pour multi-ref.** Valide 2026-04-09/10.
 
 59. **Reference-to-Video (Seedance 2.0 Omni) : limites officielles (corrige 2026-04-13)** :
-    - Output : 4 a 15s au choix (parametre `duration`)
+    - Output : 4 a 15s au choix (parametre `duration`, string "4" a "15", par pas de 1 seconde — on peut choisir 14s, pas besoin de "palier" fixe)
     - Input videos : TOTAL CUMULE des videos refs <= 15s (pas input+output)
     - Poids max : 50 MB cumules
     - Jusqu'a 3 videos (@video1/2/3) + 9 images (@image1-9) + 3 audios (@audio1-3), total 12 fichiers
@@ -167,6 +171,44 @@
 68. **Scenes calmes/contemplatives = peu de mouvement** : Seedance excelle dans l'action (charges, combats, collisions) mais produit des clips quasi-statiques pour les scenes calmes (marche, exil, contemplation). Les mouvements de camera (DOLLIES, aerial) et les micro-actions (tourne la tete, main sur l'epaule) sont ignores quand la scene est inheremment calme. Options : (a) dynamiser la scene dans le prompt (tempete, obstacles), (b) accepter le clip statique et l'utiliser comme plan pose dans Remotion (zoom lent + voix-off), (c) utiliser Kling pour ces scenes. Valide 2026-04-10 sur test exil Soundjata.
 
 69. **Le tagging d'images ne fonctionne PAS — ni API ni Dreamina** : Seedance ne fait pas la distinction entre "reference de style" et "scene a animer", peu importe comment on tague l'image (texte dans le prompt ou boutons Dreamina web). Teste sur Dreamina (palais Abou Bakari anime au lieu de reference) et sur API fal.ai (styleref animee). Seule solution : chaque image doit montrer un element CONCRET de la scene a generer. Valide 2026-04-10.
+
+70. **Dreamina web = meme modele Seedance 2.0 que API fal.ai** : la difference de qualite entre Dreamina web et API fal.ai vient du PROMPT, pas de la plateforme. Les deux utilisent le meme generateur video. Prouve par Soundjata Acte IV Clip 1 : meme storyboard + refs, prompt minimaliste via API = rejete 2x, prompt detaille via Dreamina web = valide 1er coup. La plateforme n'est pas le facteur. Valide 2026-04-16.
+
+71. **Dreamina web : filigrane "AI" en haut a gauche** : Dreamina ajoute un petit logo "AI" semi-transparent dans le coin superieur gauche des clips generes via l'interface web. L'API fal.ai ne l'ajoute PAS. Remedy : crop 50px du haut avec ffmpeg (`-vf "crop=w:h-50:0:50"`). Perte de contenu negligeable (un peu de ciel). Valide 2026-04-16.
+
+72. **Dreamina web : limite 4000 caracteres prompt** : impose par l'interface. Recommande aussi pour API fal.ai (meme modele, probablement meme traitement interne). Les prompts >4000 chars semblent etre tronques ou ignores en fin. Sweet spot valide : 3500-3900 chars pour un prompt detaille shot-by-shot de 4 shots. Valide 2026-04-16.
+
+73. **Eviter "slowly/slow/gentle" dans les prompts** : ces mots invitent Seedance au quasi-statique (renforce le biais regle 68). Remplacer par des verbes actifs : "Camera PUSHES IN slowly" → "Camera TIGHTENS on". "slow zoom" → "PULLS BACK to reveal". "gently moves" → "SHIFTS toward". Valide 2026-04-16 nuit (Soundjata Trou A, feedback Aziz).
+
+74. **Technique freeze derniere frame** pour combler gap narration > duree clip : quand la narration depasse la duree du clip de <1.5s, prolonger la video avec un freeze de la derniere frame via ffmpeg (`tpad=stop=-1:stop_mode=clone:stop_duration=X`). Fonctionne bien narrativement quand la derniere image est un beat dramatique (supplication, regard, pose). Au-dela de 1.5s de freeze, ca devient visible — preferer regenerer avec duree plus longue. Valide 2026-04-16.
+
+---
+
+## Regles image-to-video et style fidelity (tests paper-craft 2026-04-18)
+
+75. **Image-to-video >> reference-to-video pour fidelite de style** : reference-to-video traite l'image comme une "inspiration" et recree la scene dans le style par defaut de Seedance (cartoon). Image-to-video utilise l'image comme FRAME 0 et l'anime — style, palette, proportions preserves. Pour tout style non-standard (paper-craft, enluminure, etc.), TOUJOURS utiliser image-to-video. Valide 2026-04-18 (reference-to-video = echec 0/1, image-to-video = succes 5/5).
+
+76. **Clause STRICT STYLE FIDELITY obligatoire pour styles non-standard** : ajouter en tete de prompt : "Animate this exact illustration. STRICT STYLE FIDELITY: maintain the exact visual style [...]. Do NOT add detail or realism." Sans cette clause, meme image-to-video peut deriver. Avec la clause, 5/5 succes. Valide 2026-04-18.
+
+77. **Crane up = Seedance confond mouvement camera et mouvement personnage** : "Camera CRANES UP following his rise" = Seedance fait MONTER le personnage dans les airs au lieu de changer l'ANGLE de la camera. Le personnage flotte. Fix : separer explicitement : "Camera TILTS UP from ground level to eye level. The boy STAYS on the ground — only the camera ANGLE changes, NOT the boy's position." Valide 2026-04-18.
+
+78. **Orbite 180 = meilleur mouvement camera en paper-craft** : "Camera ORBITS around the boy in a 180-degree arc" produit un effet pseudo-3D remarquable — le flat 2D gagne en volume pendant la rotation, comme un diorama. Personnage reste 100% coherent. Valide 2026-04-18 (score 9.5/10).
+
+79. **Dolly in = fonctionne proprement en paper-craft** : "Camera PUSHES IN steadily toward" execute un zoom continu sans artefact. Le style flat reste stable pendant le rapprochement. Valide 2026-04-18 (score 9/10).
+
+80. **Deformation d'objets rigides = Seedance ne sait pas faire** : "the iron bar BENDS under his grip" = la barre reste droite. Confirme la faiblesse F5 (objets rigides). Teste 3x sur paper-craft, 0/3 deformation. Fix : (a) 2 images start/end frame avec l'objet dans les 2 etats, (b) post-prod Remotion overlay SVG anime. Valide 2026-04-18.
+
+81. **Prompt doit decrire l'IMAGE, pas le sujet** : quand on utilise image-to-video, le prompt doit decrire les mouvements des elements VISIBLES dans l'image source, pas une scene inventee basee sur la connaissance du sujet. Erreur couteuse : avoir l'image du village et ecrire un prompt sur la barre de fer (absente de l'image). Regle : lister ce qu'on VOIT dans l'image avant d'ecrire le prompt. Valide 2026-04-18 (erreur attrapee par Aziz avant generation).
+
+82. **Identifier les personnages par vetements+position, pas par attributs vagues** : "the tall woman" = ambigu. "The woman in the elaborate patterned headwrap on the LEFT foreground" = sans ambiguite. Valide 2026-04-18.
+
+83. **Reference-to-video = ECHEC en paper-craft (0/2)** : meme avec image style + video choregraphie + clause "@video1 for choreography ONLY, @image1 for style", Seedance ignore les deux — produit un style different et une action inventee. Ne PAS utiliser reference-to-video pour paper-craft. Alternative validee : start/end frame + prompt dirigiste (regle 85). Valide 2026-04-18.
+
+84. **Start/end frame = parametre `end_image_url` fonctionne sur fal.ai** : l'endpoint `bytedance/seedance-2.0/image-to-video` accepte `end_image_url` en plus de `image_url`. Seedance interpole entre les deux poses tout en suivant le prompt. Les deux frames DOIVENT etre visuellement coherentes (memes personnages, memes vetements — generer END via edition chirurgicale du START). Valide 2026-04-18.
+
+85. **Combat paper-craft = start/end frame + prompt Format 3 SECONDS** : workflow valide pour scenes de combat dynamiques en paper-craft. (1) Generer START frame pose neutre (sol propre, zero effets), (2) generer END frame via Gemini chirurgical du START (pose finale, zero trainee de mouvement), (3) Seedance i2v avec les deux + prompt shot-by-shot SECONDS X TO Y decrivant la choregraphie. Resultat : combat dynamique 8s, style 100% maintenu, choregraphie respectee. Cout ~$2.40/8s. Valide 2026-04-18.
+
+86. **Storyboard-to-video (reference-to-video) = ECHEC en paper-craft (0/3)** : confirme 2026-04-19. Meme avec storyboard EN style paper-craft + char refs paper-craft + env plate paper-craft, le mode reference-to-video produit un style low-poly/flat-3D par defaut. Il ignore TOUTES les refs stylistiques. Ce mode fonctionne en BD flat mais PAS en paper-craft. Alternative validee pour scenes narratives multi-shots : decouper en 3 clips image-to-video de 5s + assembler en Remotion. Valide 2026-04-19 (Thiaroye Scene 1). : "the tall woman" = ambigu, pourrait etre n'importe quelle femme. "The woman in the elaborate patterned headwrap on the LEFT foreground" = sans ambiguite. Toujours identifier par : vetement distinctif + position dans le cadre. Valide 2026-04-18 (feedback Aziz sur scene dialogue).
 
 ---
 

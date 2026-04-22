@@ -256,6 +256,64 @@ Aziz, merci d'ecouter et valider :
 3. Les fades sonnent naturels ?
 ```
 
+### Known Audio Pitfalls (validated 2026-04-13 on Soundjata Acte V)
+
+These 5 audio problems were identified during the first storyboard-to-video production. The agent MUST anticipate them from now on to prevent re-occurrence on future projects.
+
+**P1 — Narration cut at segment boundaries**
+Symptom: extracting a narration segment based on Whisper timestamps (from `timing-*.ts`) cuts the final word mid-syllable OR skips the first word of the next phrase. Cause: Whisper timestamps are approximations; ElevenLabs actual audio boundaries drift by ±200-500ms.
+
+Prevention:
+- Always add a buffer of **-0.3s to -0.5s** at segment start AND **+0.3s to +0.5s** at segment end when cutting narration
+- Rule: if next phrase starts with a short accented word ("Bataille", "Soundjata", "Le") — start extraction **0.5s BEFORE** the Whisper timestamp to secure the attack
+- Verify by ear: listen to the first 500ms AND last 500ms of every segment cut before delivery
+- Never deliver a cut narration without the ear-check
+
+**P2 — Narration overflow: next act bleeding into current act**
+Symptom: extracted 12s of narration from timestamp X, but the 12s duration covered into the next act's opening phrase. Specific example: Soundjata Acte V segment B audio leaked "Soundjata fonde l'Empire du Mali" (Acte VI opening) because narration extraction was sized to video duration rather than to narrative boundary.
+
+Prevention:
+- **Clamp narration extraction on the SCRIPT boundary**, not on video duration
+- Identify the last scene narratively belonging to the segment → extract up to its exact `end` time
+- The tail of the video can and often should be narration-silent (dramatic breathing room)
+- **Test rule**: before delivery, verify that no phrase from the next act appears in the audio of the current act
+- If the video is longer than the narration: the narration silence in the tail is a feature, not a bug
+
+**P3 — Seedance audio contains invented dialogue / parasitic words**
+Symptom: when `generate_audio: true` on Seedance storyboard-to-video, Seedance sometimes generates spoken words (names, exclamations) on top of music and SFX. These can clash with our own narration.
+
+Prevention:
+- Before mixing, extract Seedance audio pure (strip video, listen to audio only)
+- If parasitic speech detected in a zone where narration should dominate:
+  - (a) Mute Seedance audio completely in that zone, OR
+  - (b) Ask visual-producer to regenerate the clip adding clause "no vocal dialogue, no spoken words" to Seedance prompt, OR
+  - (c) Accept if the final mix remains readable (dominant narration covers)
+- Never assume Seedance audio = music + SFX only. It is an unpredictable mix.
+
+**P4 — Keep-and-duck level per scene**
+Observed: 30% Seedance audio under 100% narration is valid as default. But scene-dependent:
+- Battle/crowd scenes: can go up to 35-40% (Seedance SFX are valuable)
+- Intimate/dialogue scenes: drop to 15-20% (music/SFX can distract)
+- Contemplative closing shots: fade Seedance audio toward silence
+
+Prevention:
+- Test audio mix at default 30%, adjust per scene after listen-check
+- Document scene-specific duck levels when they deviate from default
+
+**P5 — Whisper vs ElevenLabs timestamp drift**
+Observed: `timing-*.ts` files are generated from Whisper transcription of ElevenLabs output. These timestamps are approximations of actual audio boundaries. Drift is typically ±200-500ms but can be more.
+
+Prevention:
+- For any cut/split operation: add ±0.3s margin around Whisper timestamps
+- When a cut is critical (segment boundary, narration start), **manually measure** actual boundaries via:
+  - `ffprobe -i narration.mp3 -af silencedetect=n=-30dB:d=0.2` to detect real silences
+  - OR direct listening at expected timestamp ±1s
+- Document measured boundaries in `timing-*.ts` comments when validated by hand
+
+**Escalation rule**: if during a session you detect one of P1-P5 BEFORE delivery → adjust in place. If you detect them AFTER delivery (Aziz listening) → record in the agent memory so the prevention is applied proactively next time.
+
+---
+
 ### Step 10 — Deliver to storyboarder
 
 Handoff complet dans `.claude/agent-memory/shared/PIPELINE.md` :
