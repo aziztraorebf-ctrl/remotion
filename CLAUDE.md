@@ -26,6 +26,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
 | ElevenLabs, voix, TTS, audio, narration | `memory/tools/elevenlabs.md` |
+| **Minimax, musique de fond, kora, griot, Mande** | `memory/tools/minimax.md` |
 | Remotion, animation, code, spring, render | `memory/tools/remotion.md` |
 | Pipeline, production, ordre des etapes | `memory/pipeline.md` |
 

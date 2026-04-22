@@ -144,15 +144,17 @@ Kimi pense en termes de cinema contemplatif (plans-tableaux). Seedance brille av
 
 ---
 
-## Musique & SFX (Phase 8 — a automatiser)
+## Musique & SFX (Phase 8 — VALIDE 2026-04-22)
 
-**Etat actuel** : Suno, manuel, pas d'API.
-**Futur** : Minimax Music 2.5 via fal.ai (`fal-ai/minimax-music`) — API automatisable.
-- Generer 2-3 pistes par Short, l'agent choisit la meilleure
-- SFX possibles aussi (Minimax ou ElevenLabs Sound Effects)
-- Volume musique : -18dB sous la voix-off
+**Minimax Music 2.6 via fal.ai** (`fal-ai/minimax-music/v2.6`) — validee sur Sonjata session 8.
+- Payload : `{"prompt": str, "is_instrumental": True}` (voir `memory/tools/minimax.md`)
+- Generer 2-3 pistes par Short, Aziz choisit (gallery Vercel pour review mobile)
+- Volume musique : 0.15 dans Remotion (~-16.5dB, compatible regle -18dB)
+- Fade-in 2s + fade-out 2s via `<Audio volume={frame => interpolate(...)}>`
+- Option B validee : silence pendant hook, musique entre a scene 1 (contraste dramatique)
+- Cout : $0.10/generation, ~$0.30 pour 3 variantes parallele
+- SFX : ElevenLabs Sound Generation (`eleven_text_to_sound_v2`) pour effets courts <30s
 - Certains sujets = PAS de musique (le silence est un choix de DA valide)
-- **Ne pas integrer avant d'avoir teste la qualite Minimax sur 2-3 Shorts**
 
 ---
 

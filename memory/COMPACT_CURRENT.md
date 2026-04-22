@@ -1,6 +1,49 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-04-21 PM | A LIRE EN DEBUT DE SESSION
-> Session 2026-04-21 PM : Sonjata Papercraft Session 7 — Scenes 8-10 COMPLETES, RENDER COMPLET 146s FAIT. Finitions : musique de fond, normalisation audio, scene 5A anime, CTA.
+> Mise a jour : 2026-04-22 | A LIRE EN DEBUT DE SESSION
+> **SONJATA = READY TO PUBLISH** pending CTA (attente recharge ElevenLabs). Session 2026-04-22 : musique Toumani + hook ajoute + render valide par Aziz.
+
+---
+
+## SESSION 2026-04-22 — SONJATA SESSION 8 (musique + hook + VALIDATION)
+
+### Accompli
+1. **Bug Minimax RESOLU** : endpoint `fal-ai/minimax-music/v2.6` avec `{"prompt": str, "is_instrumental": true}`. Pas de `reference_audio_url`. Schema v2.6 via Context7. Sauve dans `memory/key-learnings.md` L4.
+2. **Formule prompt Mande validee** (recuperee de `archive/checkpoint_2026-04-12.md`) : artiste nomme + 1-2 instruments + interdictions `no synthesizers, no electronic sounds` + origine precise `Mande from Mali`. Prompts generiques ("Epic West African orchestral cinematic") = echec electronique.
+3. **3 variantes Minimax generees** ($0.30, 6min parallele) : A-griot-intime (Toumani), B-griot-royal (Sidiki), C-griot-guerrier (Neba Solo). Aziz choisit **A-Toumani** (157s, rythmes contemplatif + percussions).
+4. **Integration musique** : `SonjataShortFull.tsx` avec `<Audio volume={musicVolume}>`, fade-in 2s + fade-out 2s, volume 0.15 (-16.5dB).
+5. **Hook ajoute** (decision Aziz apres review critique) : 5s d'ouverture avec segment scene 4 (37s-42s, main + lutte, pas de lever) + narration teaser "Cet enfant ne peut pas se lever. Il fondera un empire africain." (E2-court-3, 63 chars, 4.32s). Option B : silence musique pendant hook, entree kora a scene 1.
+6. **Render final** : 151s (5s hook + 146s scenes), 93MB brut / 41MB compresse CRF 28.
+7. **VALIDATION AZIZ** : "c'est tres bon. Short = cas d'ecole qui a rode le pipeline. Publiable pending CTA."
+
+### Feedbacks Aziz cles
+- Coherence narration/image = force cachee du Short (rare dans le genre, avantage competitif)
+- Sonjata est a la fois cas d'ecole ET premier Short legitime de "Heros Oublies"
+- Micro-gap "se lever" coupe au cut hook->scene1 = accepte (pas de refaire)
+- Scene 10A/10C fond sombre : "sur mobile ca ne se voit pas" (mon evaluation critique etait excessive)
+- Scene 10B split video : "l'une des plus spectaculaires, signature a garder"
+
+### Diagnostic critique du pipeline
+**Rode a 60-70%**, pas 100%. Short #2 cout estime ~$20-30 et 4-5 sessions (pas 1 session comme un vrai pipeline industriel). Les gaps :
+- `scripts/pipeline_gates.py` existe mais pas integre dans le flow
+- PREGEN_CHECKLIST skippee sur les "prompts simples" (erreurs les plus couteuses viennent de la)
+- Formule Minimax validee etait enterree dans `archive/` (j'ai failli la rater au debut de session — remontee en actif)
+
+### Cout session
+- 3 variantes Minimax : $0.30
+- 1 narration hook ElevenLabs (63 chars) : ~0 (inclus plan)
+- **Total session** : $0.30
+- **Cout cumule projet** : ~$52.80
+
+### Prochaine session (post-recharge ElevenLabs)
+1. CTA narration (~103 credits) — "Abonne-toi pour decouvrir le prochain heros..."
+2. Corriger Unicode `é` dans SonjataCTA.tsx
+3. Integrer CTA comme scene 11 dans SonjataShortFull.tsx
+4. Render final + publication
+
+### Corrections mineures optionnelles post-publication
+- Scene 5A Ken Burns -> clip Seedance V2 (~$1.80)
+- Normalisation audio ffmpeg loudnorm
+- Extension segment hook a 5.5s pour inclure la queue de "se lever"
 
 ---
 
