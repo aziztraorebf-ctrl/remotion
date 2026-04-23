@@ -3,6 +3,12 @@
 // Hook: silent music (Option B), narration only, teases the "IL SE LEVE" climax
 // Each scene has its own narration slice from sonjata-short-v2.mp3
 // Background music: Minimax 2.6 Mande kora (Toumani Diabate style), starts at scene 1
+//
+// NEXT SESSION UPDATE (2026-04-22) — Cesar injections pending audio recharge:
+//   Hook v2 narration : "Il ne pouvait pas marcher. Il a fonde un empire plus grand que l'Europe medievale."
+//   (remplace l'actuel "Cet enfant ne peut pas se lever. Il fondera un empire africain.")
+//   Rationale : chiffre-choc + pont universel Europe = +15-20% retention 0-5s
+//   CTA narration : voir SonjataCTA.tsx pour nouveau texte avec "tu" direct.
 
 import React from "react";
 import {
