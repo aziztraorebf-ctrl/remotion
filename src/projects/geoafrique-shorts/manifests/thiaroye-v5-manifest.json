@@ -1,0 +1,238 @@
+{
+  "project": "Thiaroye 1944",
+  "series": "Heros Oublies (actualite Afrique)",
+  "version": "v5",
+  "version_date": "2026-04-22",
+  "style": "paper-craft-cold",
+  "total_duration_s": 95.0,
+  "fps": 30,
+  "format": "1080x1920 (9:16)",
+  "created": "2026-04-22",
+  "supersedes": "manifests/archive/thiaroye-v4-manifest.json",
+  "script_author": "Aziz + Claude (ebauche V1 avec injections Cesar)",
+  "methodology": "memory/templates/script-ebauche-v1.md",
+  "rules": {
+    "order": "chronological-strict",
+    "storyboard_panels": "4-5 for contemplative/narrative, 7-9 for action only",
+    "style_clause": "STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey-blue-olive palette, simple character shapes with dot-eyes, clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.",
+    "pipeline": "Gemini paper-craft image -> Seedance image-to-video (or storyboard-to-video)",
+    "audio_option_b": "Hook 5s silence music, music starts at scene 1 with 2s fade-in"
+  },
+  "audio": {
+    "target_duration_s": 95.0,
+    "generation_status": "pending (next session)",
+    "voice_id": "z3gESu49naEZW8Af2Upm",
+    "voice_name": "Narratrice GeoAfrique v2 (Voice Remix V3)",
+    "elevenlabs_config": {
+      "model_id": "eleven_v3",
+      "stability": 0.22,
+      "similarity_boost": 0.55,
+      "style": 0.55,
+      "speed": 1.0
+    },
+    "estimated_char_count": 1400,
+    "credits_needed": "recharge required (71 restants insufficient)"
+  },
+  "characters": {
+    "tirailleur_principal": {
+      "description": "Senegalese tirailleur, tall, dark brown skin, dark beret, khaki-green uniform, French flag patch, brown boots",
+      "charref": null,
+      "scenes_present": [1, 2, 3]
+    },
+    "officier_francais": {
+      "description": "French officer, lighter skin, dark blue kepi, dark blue uniform, thin mustache, black boots, stern expression",
+      "charref": null,
+      "scenes_present": [3]
+    },
+    "biram_senghor": {
+      "description": "Elderly Senegalese man (son of tirailleur), dignified, modern civilian clothing, close-up hands holding legal document",
+      "charref": null,
+      "scenes_present": [5],
+      "note": "Name prononce a tester a la generation TTS"
+    },
+    "jeune_temoin": {
+      "description": "Young Senegalese man in contemporary clothing, standing at water's edge back to camera, looking at ocean at sunset",
+      "charref": null,
+      "scenes_present": [6]
+    }
+  },
+  "narrative_bridges": [
+    {
+      "from_scene": 2,
+      "to_scene": 3,
+      "bridge": "Main ouverte paume haute (demande) -> Main qui tombe (collapse)",
+      "type": "narrative-transformation"
+    },
+    {
+      "from_scene": 3,
+      "to_scene": 4,
+      "bridge": "Poussiere rouge (sang) -> Gris des archives (effacement)",
+      "type": "chromatic-fade"
+    },
+    {
+      "from_scene": 5,
+      "to_scene": 6,
+      "bridge": "Portraits qui s'illuminent (memoire) -> Jeune homme regarde ocean (transmission)",
+      "type": "symbolic-continuity"
+    }
+  ],
+  "cesar_injections": [
+    {
+      "location": "hook (0-5s)",
+      "rule": "Chiffre-choc + antithese directe",
+      "text": "Ils ont libere la France. Elle en a tue trois cents au retour."
+    },
+    {
+      "location": "scene 4 (middle ~60s)",
+      "rule": "Tu direct (connexion spectateur)",
+      "text": "Tu n'as jamais appris leurs noms. Parce qu'on n'a pas voulu les dire."
+    },
+    {
+      "location": "scene 6 CTA (86-95s)",
+      "rule": "Antithese close + invitation directe avec tu",
+      "text": "Ils ont libere un continent qui les oublie. Maintenant, toi, tu sais."
+    }
+  ],
+  "hook": {
+    "duration_s": 5.0,
+    "visual_source": "Last seconds of scene 2 (open hand palm up, suspended in light)",
+    "narration": "Ils ont libere la France. Elle en a tue trois cents au retour.",
+    "words": 12,
+    "debit_m_per_s": 2.4,
+    "music": "silence (Option B - music starts at scene 1)",
+    "camera": "Static hold on open hand, slight tilt up at the end"
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "title": "Le Retour",
+      "start_s": 5.0,
+      "end_s": 19.0,
+      "duration_s": 14.0,
+      "type": "contemplative",
+      "storyboard_panels": 5,
+      "description": "Port de Dakar 1944, golden hour. Trois tirailleurs debout sur le quai, sacs a leurs pieds. Le monde colonial se desature en gris froid. Les tirailleurs restent en tons chauds (ocre, khaki).",
+      "narration": "Decembre mille neuf cent quarante-quatre. Le port de Dakar. Trois tirailleurs rentrent au pays. Ils ont combattu pour la France. Leur France. Ils attendent leur solde.",
+      "word_count": 38,
+      "debit_m_per_s": 2.7,
+      "camera_movement": "Slow dolly in toward central tirailleur, then cinematic arc 45 degrees around his profile",
+      "camera_prompt_fragment": "Slow dolly in toward the central tirailleur holding nothing visible, then 45-degree cinematic arc around his profile. Smooth, stable motion.",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 2,
+      "title": "La Revendication",
+      "start_s": 19.0,
+      "end_s": 33.0,
+      "duration_s": 14.0,
+      "type": "narrative",
+      "storyboard_panels": 5,
+      "description": "Interieur caserne Thiaroye. Trois tirailleurs assis a table. L'un gesticule paume ouverte vers le haut. Fenetre a barreaux, ombres indigo. Aucune lettre visible (simplification v5).",
+      "narration": "Thiaroye, camp militaire. La solde ne vient pas. Les tirailleurs s'organisent. Calmes. Dignes. Une main s'ouvre. Une demande. Rien de plus.",
+      "word_count": 38,
+      "debit_m_per_s": 2.7,
+      "camera_movement": "OTS from absent officer's perspective + rack focus from hand to determined face",
+      "camera_prompt_fragment": "Over-the-shoulder from the perspective of an absent officer. Rack focus pull from the open hand in foreground to the tirailleur's determined face in mid-ground.",
+      "pont_vers_suivant": "La main ouverte paume vers le haut (dernieres 3 secondes stable)",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 3,
+      "title": "Le Massacre",
+      "start_s": 33.0,
+      "end_s": 50.0,
+      "duration_s": 17.0,
+      "type": "action",
+      "storyboard_panels": 7,
+      "description": "Cour du camp, aube. La main ouverte TOMBE. Soldats francais en arriere-plan, fusils leves. Le monde se desature sauf le rouge cramoisi qui surgit. Seule couleur dans un monde gris glace.",
+      "narration": "Premier decembre mille neuf cent quarante-quatre. A l'aube, l'armee francaise ouvre le feu. Sur ses propres soldats. Sur ceux qui avaient libere la France. La demande devient silence. Le silence devient sang.",
+      "word_count": 45,
+      "debit_m_per_s": 2.6,
+      "camera_movement": "Snap zoom on first gunshot + handheld dynamic motion with natural shake",
+      "camera_prompt_fragment": "Snap zoom on the moment of the first gunshot, then handheld dynamic motion with natural shake as chaos unfolds. Raw, urgent.",
+      "pont_vers_suivant": "La poussiere rouge du sol",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 4,
+      "title": "L'Effacement et le Combat",
+      "start_s": 50.0,
+      "end_s": 72.0,
+      "duration_s": 22.0,
+      "type": "hybrid-contemplative-narrative",
+      "storyboard_panels": 6,
+      "description": "Archives militaires francaises (grey bureaucratie, tiroirs metalliques) en debut. Fondu vers tribunal contemporain (mains gantees qui classent -> mains d'un avocat qui depose un document). Transition par le motif de la main active.",
+      "narration": "Quatre-vingts morts officiels. Peut-etre trois cents. Peut-etre plus. Personne ne sait. Personne ne veut savoir. Les archives se ferment. Les noms s'effacent. ... Tu n'as jamais appris leurs noms. Parce qu'on n'a pas voulu les dire. Des decennies passent. Leurs enfants cherchent la verite.",
+      "word_count": 54,
+      "debit_m_per_s": 2.5,
+      "camera_movement": "Slow dolly out on archives, fade to pedestal down at tribunal",
+      "camera_prompt_fragment": "Slow dolly out revealing the grey filing cabinets. Fade transition. Pedestal down in tribunal interior on elderly figure.",
+      "cesar_injection": "Tu direct - Tu n'as jamais appris leurs noms",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 5,
+      "title": "La Verite",
+      "start_s": 72.0,
+      "end_s": 86.0,
+      "duration_s": 14.0,
+      "type": "narrative",
+      "storyboard_panels": 5,
+      "description": "Memorial Thiaroye contemporain. Mur de portraits noir et blanc qui s'illuminent un par un en couleurs panafricaines (vert-jaune-rouge). Nom grave sur la pierre avec close-up.",
+      "narration": "Quatre-vingts ans plus tard, le fils d'un tirailleur tue a Thiaroye depose plainte. Biram Senghor contre l'Etat francais. En mars deux mille vingt-six, la justice tranche. L'Etat dissimule. Le tribunal le dit. Un seul nom sur la pierre. Les autres attendent encore.",
+      "word_count": 48,
+      "debit_m_per_s": 3.4,
+      "debit_note": "Tight - prevoir marge a la generation audio, etendre a 15s possible",
+      "camera_movement": "Reveal from blur on portraits + extreme macro zoom on engraved name",
+      "camera_prompt_fragment": "Shot starts out of focus, slowly sharpens revealing a wall of black-and-white portraits that illuminate one by one in pan-African colors. Then extreme macro zoom on a single name engraved on stone.",
+      "pont_vers_suivant": "Portraits qui s'illuminent",
+      "historical_fact": "Biram Senghor, fils de M'Bap Senghor (tirailleur tue a Thiaroye 1944), a porte plainte contre l'Etat francais. Le 27 mars 2026, le tribunal administratif de Paris a condamne l'Etat pour dissimulation des circonstances du deces. Indemnisation : 10 000 EUR + mention 'Mort pour la France'.",
+      "status": "todo",
+      "clip_path": null
+    },
+    {
+      "id": 6,
+      "title": "Le Souvenir / CTA",
+      "start_s": 86.0,
+      "end_s": 95.0,
+      "duration_s": 9.0,
+      "type": "contemplative-cta",
+      "storyboard_panels": 4,
+      "description": "Cote de Dakar, coucher de soleil. Jeune Senegalais debout au bord de l'eau, dos a la camera, regard vers l'horizon. Palette pleine restauree (or, indigo, terre rouge). Posture qui fait echo aux tirailleurs du clip 1.",
+      "narration": "Ils ont libere un continent qui les oublie. Maintenant, toi, tu sais. Chaque matin dans notre newsletter, l'Afrique qu'on ne t'apprend pas. Lien en bio.",
+      "word_count": 22,
+      "debit_m_per_s": 2.4,
+      "camera_movement": "Slow dolly out + tilt up toward sky",
+      "camera_prompt_fragment": "Slow dolly out from the young man at the water's edge, then tilt up toward the golden sunset sky. Commemorative, open.",
+      "cesar_injection": "Antithese close (libere/oublie) + tu direct (tu sais) + invitation (lien en bio)",
+      "newsletter_name": "generique pour l'instant (Aziz n'a pas encore choisi le nom)",
+      "status": "todo",
+      "clip_path": null
+    }
+  ],
+  "tts_scan_results": {
+    "participes_e_ee": "CLEAN - tous les participes passes sont suivis d'un mot (pas en fin de groupe)",
+    "ont_voyelle": "CLEAN - aucun 'ont' suivi de voyelle",
+    "nombres_lettres": "CLEAN - tous en lettres (mille neuf cent quarante-quatre, quatre-vingts, trois cents, deux mille vingt-six)",
+    "words_to_test_audio": [
+      "Biram (nom propre senegalais)",
+      "Senghor (h muet ou aspire?)",
+      "Thiaroye (3 ou 4 syllabes?)",
+      "tirailleurs"
+    ]
+  },
+  "next_session_todo": [
+    "1. Recharger credits ElevenLabs (~1400 chars + CTA Sonjata en attente)",
+    "2. Generer narration V5 complete (95s) avec voix Narratrice GeoAfrique v2 config max-style",
+    "3. Tester a l'oreille les 4 mots sensibles (Biram, Senghor, Thiaroye, tirailleurs)",
+    "4. Si mauvaise prononciation: reformulation phonetique OU acceptation avec note",
+    "5. Forced alignment sur l'audio final - source de verite pour timing.ts",
+    "6. Generer musique Minimax v2.6 (formule artiste + 1-2 instruments + no synths), style grave militaire ouest-africain",
+    "7. Stage 2 storyboarder: timing.ts frame-precis pour 95s (hook + 6 scenes)",
+    "8. Stage 3 visual-producer: Visual Plan scene-by-scene avec mouvements camera integres (voir field camera_movement)"
+  ]
+}

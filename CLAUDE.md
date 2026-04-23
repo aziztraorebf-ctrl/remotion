@@ -23,6 +23,9 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | Seedance, Dreamina, prompt video, clip | `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md` |
 | Seedance storyboard multi-cut (micro-seq 2-4 plans, <15s) | `memory/tools/seedance-storyboard-technique.md` |
 | **Mouvement camera, orbit, dolly, crane, OTS, tracking** | `memory/tools/camera-movements.md` |
+| **Ecrire un script Short, ebauche V1, nouveau projet** | `memory/templates/script-ebauche-v1.md` |
+| **Hook d'ouverture 5s, teaser, cold open** | `memory/templates/hook-short.md` |
+| **Formule Cesar, 7 beats Shorts, dynamisation script** | `research/cesar-formula.md` |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
 | Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
