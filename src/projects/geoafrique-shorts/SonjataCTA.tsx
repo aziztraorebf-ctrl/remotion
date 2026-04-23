@@ -1,6 +1,12 @@
-// CTA — Call to Action (4s)
+// CTA — Call to Action (10s)
 // Appears after scene 10 close. Same style: Cinzel Decorative gold on dark brown.
 // 3 lines animated in cascade + SVG icons
+//
+// NEXT SESSION UPDATE (2026-04-22) — Cesar injection applied:
+//   Narration v2 : "Et toi, tu savais que les premiers droits de l'homme sont nés en Afrique ?
+//                   Chaque matin dans notre newsletter, l'Afrique qu'on ne t'apprend pas. Lien en bio."
+//   (remplace "Abonne-toi pour découvrir le prochain héros... Et dis-nous en commentaire si tu veux la version longue.")
+//   Rationale : "tu" direct + question rhétorique + fait-clef répété = +10-15% retention dernière 3s + boost commentaires
 
 import React from "react";
 import {
@@ -17,8 +23,8 @@ import { loadFont } from "@remotion/google-fonts/CinzelDecorative";
 import { loadFont as loadCinzel } from "@remotion/google-fonts/Cinzel";
 
 const FPS = 30;
-const TOTAL_DURATION_S = 8;
-const TOTAL_FRAMES = TOTAL_DURATION_S * FPS; // 240
+const TOTAL_DURATION_S = 10;
+const TOTAL_FRAMES = TOTAL_DURATION_S * FPS; // 300
 
 const { fontFamily: cinzelDeco } = loadFont();
 const { fontFamily: cinzel } = loadCinzel();
@@ -181,31 +187,31 @@ export const SonjataCTA: React.FC = () => {
           opacity: bgOpacity,
         }}
       >
-        {/* Line 1: Subscribe — synced with "Abonne-toi" at ~0.2s */}
+        {/* Line 1: Question rhetorique — synced with "Et toi, tu savais..." at ~0.2s */}
         <CTALine
-          text="Abonne-toi"
-          subtext="pour le prochain h\u00E9ros"
+          text="Tu savais ?"
+          subtext="les premiers droits de l'homme nés en Afrique"
           appearFrame={6}
           yPosition={500}
-          icon={<BellIcon />}
+          icon={<HeartIcon />}
           fontSize={42}
         />
 
-        {/* Line 2: Like & comment — synced with "Et dis-nous" at ~3.8s */}
+        {/* Line 2: Newsletter — synced with "Chaque matin dans notre newsletter..." at ~4.2s */}
         <CTALine
-          text="Like & commente"
-          subtext="pour la version longue"
-          appearFrame={Math.round(3.8 * FPS)}
+          text="Newsletter quotidienne"
+          subtext="l'Afrique qu'on ne t'apprend pas"
+          appearFrame={Math.round(4.2 * FPS)}
           yPosition={780}
-          icon={<HeartIcon />}
+          icon={<BellIcon />}
           fontSize={38}
         />
 
-        {/* Line 3: Newsletter link in bio — appears at ~5.5s */}
+        {/* Line 3: Link in bio — synced with "Lien en bio" at ~8.0s */}
         <CTALine
           text="Lien en bio"
-          subtext="histoires g\u00E9opolitiques quotidiennes"
-          appearFrame={Math.round(5.5 * FPS)}
+          subtext="chaque matin, une histoire africaine"
+          appearFrame={Math.round(8.0 * FPS)}
           yPosition={1060}
           icon={<LinkIcon />}
           fontSize={36}

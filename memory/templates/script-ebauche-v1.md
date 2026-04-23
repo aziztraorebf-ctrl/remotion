@@ -31,6 +31,39 @@ Avant toute ecriture :
 - **Voix** (Narrateur/Narratrice GeoAfrique v2)
 - **Newsletter/CTA cible** (serie ? newsletter generique ? abonnement chaine ?)
 
+### Etape 0.5 : DIAGNOSTIC DU TYPE DE SUJET (ajoute 2026-04-22 apres exercice Sonjata-Cesar)
+
+Tous les sujets ne sont pas egaux face a la formule Cesar. Cette etape determine **l'intensite d'injection Cesar** a l'etape 6.
+
+**Typologie validee** :
+
+| Type de sujet | Registre ideal | Intensite Cesar |
+|---|---|---|
+| **Epopee mythique / fondation** (Soundjata, Chaka, Amanirenas) | Conte oral — "il etait une fois" | **3 injections ciblees** (hook chiffre + 1 tu + CTA antithese) |
+| **Fait d'actualite / scandale / massacre** (Thiaroye 2026, Haitian debt) | Journalisme grave | **3 injections ciblees** |
+| **Richesse / records chiffres** (Mansa Moussa, Tombouctou, Ibn Battuta) | Cesar pur | **Formule complete 7 beats + 10 regles** (comme l'original) |
+| **Voyage / exploration / decouverte** (Abou Bakari II, Ibn Battuta) | Mixte | **5-6 injections** (hook, indignation, bascule, pont, tu, close) |
+| **Portrait intime / humain** (reine Nzinga, femme scientist) | Biographie incarnee | **4 injections** (hook, bascule, antithese, close) |
+
+**Exemples concrets appris** :
+- Sonjata (epopee mythique) : Cesar complet aurait detruit le ton conte. **3 injections = optimal**.
+- Thiaroye V5 (actualite grave) : Cesar complet aurait sonne opportuniste. **3 injections = optimal**.
+- Mansa Moussa (richesse record) : Cesar complet = format natif. **7 beats + 10 regles** applicables directement.
+
+**Questions pour determiner le type** :
+- Le sujet est-il **chiffrable** (or, taille empire, nombre morts, dates) ? → penche vers Cesar complet
+- Le sujet est-il **mythique/sacré** (legende, epopee, tradition orale) ? → penche vers 3 injections
+- Le sujet est-il **tragique/polemique** ? → penche vers 3 injections (eviter le ton viral)
+- Le sujet est-il **didactique/documentaire** ? → penche vers formule complete
+
+**Decision notee** dans le manifest comme :
+```json
+{
+  "subject_type": "epopee-mythique | actualite-grave | richesse-record | voyage | portrait-intime",
+  "cesar_intensity": "3-injections | formule-complete | 5-6-injections"
+}
+```
+
 ### Etape 1 : Decoupage en scenes + structure narrative
 
 - Objectif : 5-7 scenes pour un Short 90s (15s moyenne par scene)
@@ -191,8 +224,9 @@ Pour **chaque phrase**, verifier 4 regles (voir `memory/tools/elevenlabs.md`) :
 
 ## Valide sur
 
-- **Thiaroye V5** (2026-04-22) : 95s, 6 scenes + hook, 3 injections Cesar, 3 ponts narratifs. Script LOCKED par Aziz sans iteration majeure apres application de cette methode.
-- **Script a venir** : Abou Bakari II (a tester cette methode desormais)
+- **Thiaroye V5** (2026-04-22) : 95s, 6 scenes + hook, 3 injections Cesar, 3 ponts narratifs. Script LOCKED par Aziz sans iteration majeure apres application de cette methode. Type de sujet : **actualite-grave** → 3 injections.
+- **Sonjata (retrofit 2026-04-22)** : 151s + CTA 10s = 161s, 10 scenes. Type de sujet : **epopee-mythique** → 2 injections appliquees en retrofit (hook + CTA), 3e injection (pont universel scene 8 Charte) non appliquee car audio narration deja produit et valide. Apprentissage : appliquer les injections Cesar EN AMONT evite les retrofits. Si Hook + CTA n'etaient pas encore en audio au moment de la decouverte Cesar, OK — sinon cout eleve.
+- **Script a venir** : Abou Bakari II (a tester cette methode desormais, type **voyage** = 5-6 injections)
 
 ## Ressources referencees
 

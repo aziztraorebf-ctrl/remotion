@@ -1,6 +1,8 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-04-22 | A LIRE EN DEBUT DE SESSION
-> **SONJATA = READY TO PUBLISH** pending CTA (attente recharge ElevenLabs). Session 2026-04-22 : musique Toumani + hook ajoute + render valide par Aziz.
+> Mise a jour : 2026-04-22 PM | A LIRE EN DEBUT DE SESSION
+> **SONJATA = READY TO PUBLISH** pending recharge ElevenLabs (Hook v2 + CTA v2 Cesar, ~240 chars au total).
+> **THIAROYE V5 = SCRIPT LOCKED** (manifest v5, 95s, 3 injections Cesar). Pending audio + production visuelle.
+> **MEMOIRE** : methode script-ebauche-v1.md formalisee + camera-movements.md + minimax.md + hook-short.md.
 
 ---
 
@@ -35,10 +37,32 @@
 - **Cout cumule projet** : ~$52.80
 
 ### Prochaine session (post-recharge ElevenLabs)
-1. CTA narration (~103 credits) — "Abonne-toi pour decouvrir le prochain heros..."
-2. Corriger Unicode `é` dans SonjataCTA.tsx
-3. Integrer CTA comme scene 11 dans SonjataShortFull.tsx
+
+**Sonjata** (~240 chars ElevenLabs necessaires) :
+1. **Hook v2 narration** (~80 chars) — "Il ne pouvait pas marcher. Il a fondé un empire plus grand que l'Europe médiévale." (remplace version 1 "Cet enfant ne peut pas se lever. Il fondera un empire africain.")
+2. **CTA v2 narration** (~160 chars) — "Et toi, tu savais que les premiers droits de l'homme sont nés en Afrique ? Chaque matin dans notre newsletter, l'Afrique qu'on ne t'apprend pas. Lien en bio." (remplace "Abonne-toi pour découvrir le prochain héros...")
+3. Integrer CTA comme scene 11 (10s, TOTAL_FRAMES passe de 4530 a 4830)
 4. Render final + publication
+
+**Thiaroye V5** (~1400 chars supplementaires) :
+- Voir `memory/brief-thiaroye-v5-next-session.md`
+- 95s de narration + forced alignment + production visuelle
+
+### Session 8 PM — Exercice Sonjata-Cesar (2026-04-22 fin de session)
+
+Exercice hypothetique : reecrire Sonjata en formule Cesar pure pour comparer.
+**Decouverte** : 2 injections Cesar "gratuites" possibles car Hook narration v1 + CTA n'etaient pas encore finalises en audio.
+
+**Injections appliquees (texte deja dans le code + brief)** :
+1. **Hook v2** (chiffre-choc + pont universel) : "Il ne pouvait pas marcher. Il a fondé un empire plus grand que l'Europe médiévale."
+2. **CTA v2** (tu direct + question rhetorique + antithese) : "Et toi, tu savais que les premiers droits de l'homme sont nés en Afrique ? ..."
+
+**Fichiers mis a jour** :
+- `SonjataShortFull.tsx` : comment avec nouveau hook
+- `SonjataCTA.tsx` : TOTAL_DURATION 8s -> 10s, 3 lignes cascade reecrites, bug Unicode corrige
+- `memory/brief-next-session-cta.md` : plan detaille
+
+**Apprentissage consolide dans `memory/templates/script-ebauche-v1.md`** : ajout d'une etape 0.5 "diagnostic type de sujet" qui determine l'intensite d'injection Cesar (3 injections pour epopee/conte, formule complete pour richesse/chiffres, 3 pour actualite/fact).
 
 ### Corrections mineures optionnelles post-publication
 - Scene 5A Ken Burns -> clip Seedance V2 (~$1.80)
