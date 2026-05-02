@@ -8,7 +8,7 @@
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring, useVideoConfig } from "remotion";
 import { SHAKA_PALETTE, SHAKA_FONTS } from "../components/AtlasShakaPalette";
-import { AtlasShakaInsert } from "../components/AtlasShakaInsert";
+import { InsertNombre1500 } from "../inserts/InsertNombre1500";
 
 export interface AtlasShakaS1GeoProps {
   durationFrames: number;
@@ -106,7 +106,7 @@ export const AtlasShakaS1Geo: React.FC<AtlasShakaS1GeoProps> = ({
         KwaZulu-Natal
       </div>
 
-      {/* Insert "1 500" overlay */}
+      {/* Insert "1 500" overlay — Remotion pur (InsertNombre1500) */}
       {insertVisible && (
         <div
           style={{
@@ -118,14 +118,7 @@ export const AtlasShakaS1Geo: React.FC<AtlasShakaS1GeoProps> = ({
             from={insertNombre1500.triggerFrameLocal}
             durationInFrames={insertNombre1500.durationFrames}
           >
-            <AtlasShakaInsert
-              bigText="1 500"
-              bigTextColor={SHAKA_PALETTE.OR}
-              bigTextSize={280}
-              sublabel="personnes"
-              sublabelColor={SHAKA_PALETTE.PARCHEMIN}
-              totalDurationFrames={insertNombre1500.durationFrames}
-            />
+            <InsertNombre1500 durationFrames={insertNombre1500.durationFrames} />
           </Sequence>
         </div>
       )}

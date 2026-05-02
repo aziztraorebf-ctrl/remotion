@@ -10,6 +10,7 @@ import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring, useVideoC
 import { SHAKA_PALETTE, SHAKA_FONTS } from "../components/AtlasShakaPalette";
 import { paletteTransition, backgroundTransition } from "../helpers/paletteTransition";
 import { counterSpring } from "../helpers/counterSpring";
+import { InsertNombre4000 } from "../inserts/InsertNombre4000";
 
 export interface AtlasShakaS4NandiProps {
   durationFrames: number;
@@ -93,61 +94,11 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
         }}
       />
 
-      {/* Insert "4 000" compteur sanglant */}
+      {/* Insert "4 000" compteur sanglant — Remotion pur (InsertNombre4000) */}
       {insertVisible && (
-        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-          {/* Compteur */}
-          <div
-            style={{
-              fontSize: 280,
-              fontWeight: 900,
-              fontFamily: SHAKA_FONTS.TITRE,
-              color: SHAKA_PALETTE.BORDEAUX,
-              transform: `scale(${counter.scale})`,
-              textShadow: "0 10px 30px rgba(139, 0, 0, 0.9), 0 20px 60px rgba(139, 0, 0, 0.5)",
-              letterSpacing: "0.02em",
-              filter: "drop-shadow(0 10px 20px rgba(139, 0, 0, 0.8))",
-            }}
-          >
-            {counter.formattedValue}
-          </div>
-
-          {/* Label "Zulus périrent" */}
-          <div
-            style={{
-              fontSize: 56,
-              fontWeight: 700,
-              color: SHAKA_PALETTE.PARCHEMIN,
-              marginTop: 30,
-              opacity: interpolate(frame - insertNombre4000FrameLocal, [15, 30], [0, 1], {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-              }),
-              fontFamily: SHAKA_FONTS.TITRE,
-              letterSpacing: "0.05em",
-            }}
-          >
-            Zulus périrent
-          </div>
-
-          {/* Source JSA */}
-          <div
-            style={{
-              fontSize: 24,
-              fontWeight: 300,
-              color: "#9E9E9E",
-              marginTop: 60,
-              opacity: interpolate(frame - insertNombre4000FrameLocal, [30, 50], [0, 1], {
-                extrapolateLeft: "clamp",
-                extrapolateRight: "clamp",
-              }),
-              fontStyle: "italic",
-              letterSpacing: "0.04em",
-            }}
-          >
-            Source : James Stuart Archive
-          </div>
-        </AbsoluteFill>
+        <Sequence from={insertNombre4000FrameLocal} durationInFrames={insertNombre4000Duration}>
+          <InsertNombre4000 durationFrames={insertNombre4000Duration} />
+        </Sequence>
       )}
 
       {/* Drama line */}

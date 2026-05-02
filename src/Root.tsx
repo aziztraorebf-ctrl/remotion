@@ -81,6 +81,11 @@ import { AtlasShakaS2A4Synthese } from "./projects/shaka-zulu/scenes/AtlasShakaS
 import { AtlasShakaS3Expansion } from "./projects/shaka-zulu/scenes/AtlasShakaS3Expansion";
 import { AtlasShakaS4Nandi } from "./projects/shaka-zulu/scenes/AtlasShakaS4Nandi";
 import { AtlasShakaS5CTA } from "./projects/shaka-zulu/scenes/AtlasShakaS5CTA";
+import { InsertIklwaSchema } from "./projects/shaka-zulu/inserts/InsertIklwaSchema";
+import { InsertBouclierSchema } from "./projects/shaka-zulu/inserts/InsertBouclierSchema";
+import { InsertCornesSchema } from "./projects/shaka-zulu/inserts/InsertCornesSchema";
+import { InsertNombre4000 } from "./projects/shaka-zulu/inserts/InsertNombre4000";
+import { InsertNombre1500 } from "./projects/shaka-zulu/inserts/InsertNombre1500";
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/shaka-zulu/timing";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
@@ -497,6 +502,57 @@ export const RemotionRoot: React.FC = () => {
             shakaFrame: SHAKA_INSERTS.S5_CASCADE_SHAKA.triggerFrame - SHAKA_SEGMENTS.S5_CTA.startFrame,
             abonneToiFrame: Math.round((148.100 - 140.489) * 30),
           }}
+        />
+        {/* Inserts Remotion pur (refait Vague 1B - philosophie Mansa Moussa) */}
+        <Composition
+          id="ShakaInsertIklwaSchema"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={InsertIklwaSchema as any}
+          durationInFrames={150}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 150 }}
+        />
+        <Composition
+          id="ShakaInsertBouclierSchema"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={InsertBouclierSchema as any}
+          durationInFrames={280}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 280 }}
+        />
+        <Composition
+          id="ShakaInsertCornesSchema"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={InsertCornesSchema as any}
+          durationInFrames={220}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 220 }}
+        />
+        <Composition
+          id="ShakaInsertNombre4000"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={InsertNombre4000 as any}
+          durationInFrames={180}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 180 }}
+        />
+        <Composition
+          id="ShakaInsertNombre1500"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={InsertNombre1500 as any}
+          durationInFrames={120}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 120 }}
         />
       </Folder>
       <Folder name="peste-1347">
