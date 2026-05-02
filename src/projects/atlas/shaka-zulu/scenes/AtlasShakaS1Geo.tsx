@@ -53,12 +53,23 @@ export const AtlasShakaS1Geo: React.FC<AtlasShakaS1GeoProps> = ({
   const territoire = shakaData.territoire;
   const places = territoire.places as unknown as Record<string, [number, number]>;
 
-  // ZAF = Afrique du Sud (royaume Zulu) en creme, voisins en terracotta
+  // ZAF = or royal Shaka (lisible sur terracotta), voisins legèrement plus sombres
   const highlightFills: Record<string, string> = {
-    ZAF: "#F5EBD8",
-    SWZ: "#E8D8C0",
-    LSO: "#E8D8C0",
+    ZAF: "#C8A84B",
+    SWZ: "#B89840",
+    LSO: "#B89840",
   };
+
+  // Contour pulse bordeaux sur ZAF — cycle lent 2.5s, subtil
+  const pulseT = (frame % (fps * 2.5)) / (fps * 2.5); // 0 -> 1 cyclique
+  // strokeOpacity pulse doux : 0.55 -> 0.85 -> 0.55
+  const borderOpacity = 0.50 + 0.42 * Math.sin(pulseT * Math.PI * 2);
+  // strokeWidth pulse : 2.5 -> 5 -> 2.5
+  const borderWidth = 2.5 + 2.5 * Math.sin(pulseT * Math.PI * 2);
+
+  const zafPath = (territoire.countries as { iso: string; d: string }[]).find(
+    (c) => c.iso === "ZAF"
+  )?.d ?? "";
 
   return (
     <AbsoluteFill style={{ background: "#1A1F3A", opacity }}>
@@ -83,6 +94,24 @@ export const AtlasShakaS1Geo: React.FC<AtlasShakaS1GeoProps> = ({
           driftY={driftY}
         />
 
+        {/* Contour pulse bordeaux sur le territoire ZAF — subtil, cycle 2.5s */}
+        {/* Transform identique a AtlasMercator pour alignement parfait */}
+        {zafPath && (
+          <g
+            transform={`translate(${360 + driftX} ${640 + driftY}) scale(${scale}) translate(-360 -640)`}
+          >
+            <path
+              d={zafPath}
+              fill="none"
+              stroke={SHAKA_PALETTE.BORDEAUX}
+              strokeWidth={borderWidth}
+              strokeOpacity={borderOpacity}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+            />
+          </g>
+        )}
+
         {/* Marqueur capital Zulu */}
         <AtlasPulseMarker
           coord={places["uMgungundlovu"]}
@@ -99,20 +128,21 @@ export const AtlasShakaS1Geo: React.FC<AtlasShakaS1GeoProps> = ({
           ringOuter={12}
         />
 
-        {/* Labels lieux cles */}
+        {/* Labels lieux cles — espaces pour eviter l'overlap */}
         <AtlasLabel
           coord={places["uMgungundlovu"]}
           text="uMgungundlovu"
           appearAt={30}
-          offsetY={-42}
+          offsetX={45}
+          offsetY={-18}
           fontSize={22}
         />
         <AtlasLabel
           coord={places["GqokliHill"]}
           text="Gqokli Hill"
           appearAt={60}
-          offsetX={-80}
-          offsetY={-38}
+          offsetX={-100}
+          offsetY={-58}
           fontSize={20}
         />
 
