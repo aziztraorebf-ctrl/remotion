@@ -89,6 +89,7 @@ import { InsertNombre1500 } from "./projects/shaka-zulu/inserts/InsertNombre1500
 import { CornesFrameDemo } from "./projects/shaka-zulu/scenes/CornesFrameDemo";
 import { CornesFrameNarrative } from "./projects/shaka-zulu/scenes/CornesFrameNarrative";
 import { PaperGrainDemo } from "./projects/shaka-zulu/scenes/PaperGrainDemo";
+import { MapShakaZuluTest } from "./projects/shaka-zulu/scenes/MapShakaZuluTest";
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/shaka-zulu/timing";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
@@ -587,6 +588,14 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1920}
           defaultProps={{ durationFrames: 90 }}
+        />
+        <Composition
+          id="ShakaMapTest"
+          component={MapShakaZuluTest}
+          durationInFrames={270}
+          fps={SHAKA_FPS}
+          width={720}
+          height={1280}
         />
       </Folder>
       <Folder name="peste-1347">
