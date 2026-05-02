@@ -23,10 +23,19 @@ interface CornesFrameNarrativeProps {
 
 const SPRITE = 220; // taille affichage des sprites 128px sources (Kimi: scale 1.5x sprites lateraux)
 
-// IMPORTANT : les "frames" dans archive/warrior-walk-east et shaka-walk-east
-// ne sont PAS des walk cycles — ce sont 6 designs differents par personnage.
-// On choisit donc UN seul frame statique representatif par perso.
-const WARRIOR_SPRITE = "atlas-shaka-zulu/archive/warrior-walk-east/frame_002.png";
+// Warrior flancs : walk cycle PixelLab reel (6 frames east)
+// Flanc gauche : WALK_EAST + scaleX(-1) pour pointer vers le centre
+// Flanc droit : WALK_EAST normal
+const WALK_EAST = [
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_000.png",
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_001.png",
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_002.png",
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_003.png",
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_004.png",
+  "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_005.png",
+];
+const WALK_SPEED = 4; // frames Remotion par sprite (rapide = mouvement lisible)
+
 const SHAKA_SPRITE = "atlas-shaka-zulu/archive/shaka-walk-east/frame_003.png";
 
 export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ durationFrames }) => {
@@ -67,14 +76,17 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
   const shakaT = spring({ frame, fps, config: { damping: 18, stiffness: 100 }, from: 0, to: 1 });
   const shakaY = 1200 + 60 + 40 * (1 - shakaT);
 
-  // KIMI FIX : Shaka masque apres 60% (focus sur l'ennemi encercle)
-  const shakaFadeOut = interpolate(
-    frame,
-    [durationFrames * 0.6, durationFrames * 0.75],
-    [1, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-  const shakaOpacity = shakaT * shakaFadeOut;
+  // Shaka reste visible tout le long (pas de fade-out)
+  const shakaOpacity = shakaT;
+
+  // Warriors flancs : apparaissent seulement apres 4s (frame 120)
+  // pendant les 4 premieres secondes seules les cornes + ennemi central sont visibles
+  const FLANCS_APPEAR = 120;
+  const WALK_START = 240; // walk cycle demarre a 8s (cornes convergent vers le centre)
+  const flancsOpacity = interpolate(frame, [FLANCS_APPEAR, FLANCS_APPEAR + 20], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   // Ennemi au centre (apparait en premier)
   const enemyT = spring({ frame: frame - 5, fps, config: { damping: 20, stiffness: 140 }, from: 0, to: 1 });
@@ -225,42 +237,42 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
         />
       </div>
 
-      {/* Warrior gauche : regarde vers le centre (sprite source pointe a gauche -> flip pour pointer a droite) */}
-      {phaseLeft > 0.1 && (
+      {/* Warrior flanc gauche : face a droite (vers le centre) — WALK_EAST pointe a droite, pas de flip */}
+      {frame >= 240 && phaseLeft > 0.05 && (
         <div
           style={{
             position: "absolute",
             left: `${(leftPointX - SPRITE / 2) / 1080 * 100}%`,
-            top: `${(leftPointY - SPRITE / 2 + breathLeft) / 1920 * 100}%`,
+            top: `${(leftPointY - SPRITE / 2) / 1920 * 100}%`,
             width: `${SPRITE / 1080 * 100}%`,
             height: `${SPRITE / 1920 * 100}%`,
-            opacity: phaseLeft,
+            opacity: flancsOpacity,
             imageRendering: "pixelated",
-            transform: "scaleX(-1)",
           }}
         >
           <Img
-            src={staticFile(WARRIOR_SPRITE)}
+            src={staticFile(WALK_EAST[frame < WALK_START ? 0 : Math.floor((frame - WALK_START) / WALK_SPEED) % WALK_EAST.length])}
             style={{ width: "100%", height: "100%", imageRendering: "pixelated" }}
           />
         </div>
       )}
 
-      {/* Warrior droit : regarde vers le centre (sprite source pointe a gauche, on garde la direction native) */}
-      {phaseRight > 0.1 && (
+      {/* Warrior flanc droit : face a gauche (vers le centre) — flip WALK_EAST */}
+      {frame >= 120 && phaseRight > 0.05 && (
         <div
           style={{
             position: "absolute",
             left: `${(rightPointX - SPRITE / 2) / 1080 * 100}%`,
-            top: `${(rightPointY - SPRITE / 2 + breathRight) / 1920 * 100}%`,
+            top: `${(rightPointY - SPRITE / 2) / 1920 * 100}%`,
             width: `${SPRITE / 1080 * 100}%`,
             height: `${SPRITE / 1920 * 100}%`,
-            opacity: phaseRight,
+            opacity: flancsOpacity,
             imageRendering: "pixelated",
+            transform: "scaleX(-1)",
           }}
         >
           <Img
-            src={staticFile(WARRIOR_SPRITE)}
+            src={staticFile(WALK_EAST[frame < WALK_START ? 0 : Math.floor((frame - WALK_START) / WALK_SPEED) % WALK_EAST.length])}
             style={{ width: "100%", height: "100%", imageRendering: "pixelated" }}
           />
         </div>
