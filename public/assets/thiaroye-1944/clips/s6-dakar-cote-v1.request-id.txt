@@ -1,0 +1,5 @@
+019dc14b-83f7-7161-b600-b89e983c808d
+# endpoint: bytedance/seedance-2.0/image-to-video
+# image_url: https://v3b.fal.media/files/b/0a9795cc/p3heeHGU8me3AXow9MJV5_scene6-source-v1a.png
+# scene_id: 6
+# saved_at: 2026-04-24 17:00:44

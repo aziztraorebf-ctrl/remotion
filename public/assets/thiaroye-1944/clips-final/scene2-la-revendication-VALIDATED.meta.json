@@ -1,0 +1,31 @@
+{
+  "scene_id": "scene2",
+  "title": "La Revendication",
+  "validated_by": "Aziz",
+  "validated_date": "2026-04-25",
+  "duration_s": 12.10,
+  "target_duration_s": 12.02,
+  "freeze_overhead_s": 0.0,
+  "composition": [
+    {
+      "clip": "scene2-la-revendication.mp4",
+      "duration_s": 7.06,
+      "source": "Aziz manual production via Claude Desktop, 2026-04-25"
+    },
+    {
+      "clip": "scene2-la-revendication-extend.mp4",
+      "duration_s": 5.04,
+      "source": "Seedance 2.0 reference-to-video, request 019dc5b1-ish",
+      "cost": "$0.91",
+      "narrative_function": "OTS Reveal — pivote vers le contre-champ et adopte la perspective subjective des tirailleurs (le spectateur voit l officier comme eux le voient)"
+    }
+  ],
+  "narrative_value_added": [
+    "Confrontation a deux poles : tirailleurs muets / officier muet — le silence devient bilateral",
+    "Subjectivite narrative : la sortie des tirailleurs du cadre adopte LEUR regard sur l officier",
+    "Regard de l officier qui ne croise PAS le tirailleur = non-reconnaissance active (plus dur qu un regard fache)"
+  ],
+  "known_issues": [
+    "Legere derive BD sur le visage de l officier (plus de details que les tirailleurs paper-craft) — juge editorialement positif par Aziz : cree une asymetrie morale visible"
+  ]
+}

@@ -1,0 +1,32 @@
+# scene3a variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['tirailleur_principal', 'officier_francais']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Camp Thiaroye courtyard at dawn, December 1, 1944. Extreme wide shot -- the full courtyard visible. French soldiers form a loose arc across the upper half of the frame, rifles raised. In the lower half: three Senegalese tirailleurs stand their ground at varying distances, the closest in the foreground facing the soldiers squarely.
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture, dot-eyes everywhere.
+
+PALETTE: grey-plomb sky filling the upper third, cold stone ground filling the lower third, muted khaki uniforms on both sides.
+
+COMPOSITION:
+- Wide establishing shot of the full confrontation space
+- French soldiers: background arc, 7-8 figures, rifles at shoulder in varied postures
+- Senegalese tirailleurs: three figures in foreground-to-midground line, staggered in depth
+- Cold dawn mist drifts across the mid-ground
+- Abandoned gear (kit bag, canteen) at bottom frame edge
+- Stone barrack walls at left edge of frame
+
+LIFE IN THE SCENE:
+- Foreground tirailleur: back slightly to camera, facing the soldiers, weight planted, one fist raised briefly at his side
+- Mid-ground tirailleur: profile view, standing straight, chin up
+- Background tirailleur: further away, hands at sides, gaze ahead
+- French soldiers: varied rifle-raise heights, one figure's head angled slightly toward his neighbor
+- Mist drifts at ankle height across the courtyard stones
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes on all figures: single black dot, no iris, no white sclera
+- Flat color fills only, no hatching, no gradients
+- No text, no banners
+- 9:16 vertical (1080x1920)

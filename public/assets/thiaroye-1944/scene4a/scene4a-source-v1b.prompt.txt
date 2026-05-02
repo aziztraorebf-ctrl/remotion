@@ -1,0 +1,25 @@
+# scene4a variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: French military archive interior, 1945. Bird-eye view pulling back: we see the top of ROWS of filing cabinets stretching in perspective to a distant wall. The cabinets recede into depth, row after row, suggesting an infinite bureaucratic space.
+
+Foreground: one open drawer slightly ajar, a folder visible with a blurred stamp (no readable text). A dark-uniformed administrator's hand (gloved) rests on the top of the nearest cabinet, about to close the last open drawer.
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture.
+
+PALETTE: all grey and beige -- grey metal cabinets in different grey tones creating depth, pale yellow-beige folders, black glove, white ceiling with one weak fluorescent light strip (flat aplat).
+
+COMPOSITION:
+- Strong perspective lines: cabinets recede from foreground to background in a vanishing point
+- Hand in foreground-center pushing the ajar drawer closed
+- Infinite rows of sealed cabinets filling the frame -- names erased, facts buried
+- A single small window at the far back wall: cold grey-blue rectangle of winter light
+
+CRITICAL TECHNICAL RULES:
+- Flat color fills only, no hatching, no gradients
+- No readable text on any folder, label, or cabinet
+- The only non-grey: the pale manila folders (beige) and the black glove
+- 9:16 vertical (1080x1920)

@@ -1,0 +1,27 @@
+# scene5a variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['biram_senghor']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Biram Senghor at the Thiaroye Memorial, 2026. Close-up portrait framing -- Biram from chest up, centered in the frame. His face is dignified, jaw set, eyes (dot-eyes) looking slightly off-camera toward the portrait wall at frame right edge.
+
+He holds the folded legal document pressed against his chest with both hands -- not extended, but held close, like a shield or a vow. The document corner is visible at the bottom of the frame.
+
+BACKGROUND: partially visible portrait wall behind him -- a few black-and-white portrait frames visible at both sides, blurred slightly. The cold grey memorial stone wall behind the portraits. One portrait frame catches a glint of the eternal flame light (warm single dot on the frame edge).
+
+STYLE: Match style anchor + Biram charref. Paper-craft, thick black outlines, flat color fills, dot-eyes.
+
+PALETTE: cold memorial grey. Biram in dark navy suit. His dark skin, his suit, and the grey background create strong graphic contrast. The warm accent is the eternal flame glow touching the nearest portrait frame.
+
+COMPOSITION:
+- Biram bust portrait, centered, close-up
+- Document held at chest, hands visible
+- Portrait wall blurred at edges of background
+- Cold directional light from left giving structure without gradients
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes on Biram: single black dot, no iris, no white, no tears
+- Flat color fills only, no hatching, no shading gradients
+- Warmth comes from palette, not from shading
+- 9:16 vertical (1080x1920)

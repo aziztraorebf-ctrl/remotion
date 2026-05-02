@@ -1,0 +1,13 @@
+{
+  "request_id": "019dcb15-31a7-7280-81b3-0ec9cf4deec8",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 10,
+  "generate_audio": false,
+  "seed": 141796835,
+  "video_url": "https://v3b.fal.media/files/b/0a97d600/1RHzQ6HSSQc1ii3x87pwg_video.mp4",
+  "file_size": 8118390,
+  "source_image": "scene-fleet-a-v1.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0a97d5f1/j_QvgsJexO1Ott8o8tD7U_scene-fleet-a-v1.png",
+  "prompt": "Animate this exact illustration. STRICT STYLE FIDELITY paper-craft warm sepia palette: maintain flat layered paper silhouettes, deep navy wave bands, golden sails, no added realism, no texture beyond paper grain.\n\nCamera holds WIDE \u2014 no push-in, no pan. The entire fleet fills the frame from foreground to horizon. Steady, majestic shot.\n\nSECONDS 0 TO 3: The wave bands ROLL in slow continuous undulation left to right. The foreground pirogues RISE and FALL gently with the swell. The golden sails BILLOW slightly in the wind \u2014 fabric SWELLING then RELAXING. Distant pirogues at the horizon SWAY as a mass, tiny but alive.\n\nSECONDS 3 TO 6: The rowing figures in the foreground pirogues PULL their oars in a slow steady rhythm \u2014 FORWARD PULL, LIFT, RECOVER. The sail fabric continues BILLOWING. The fleet advances WESTWARD \u2014 all pirogues drift subtly forward as one.\n\nSECONDS 6 TO 10: The camera TILTS SLIGHTLY upward toward the horizon \u2014 revealing the sheer scale of the fleet stretching endlessly west. Hundreds of golden sails SWAY together. The cream sky BRIGHTENS faintly at the horizon. Clouds DRIFT slowly rightward.\n\nCOLOR GRADE: deep navy blue ocean, warm golden-ochre sails, cream sky \u2014 paper-craft sepia warm palette throughout. No dust motes, no floating particles, no sparkles. No text anywhere.\n",
+  "cost_usd_estimate": 3.0
+}

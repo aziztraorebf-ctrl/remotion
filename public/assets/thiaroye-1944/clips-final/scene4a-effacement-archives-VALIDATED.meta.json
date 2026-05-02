@@ -1,0 +1,26 @@
+{
+  "scene_id": "scene4a",
+  "title": "L'Effacement -- Les Archives",
+  "validated_by": "Aziz",
+  "validated_date": "2026-04-25",
+  "duration_s": 12.12,
+  "target_duration_s": 12.38,
+  "freeze_overhead_s": 0.26,
+  "composition": [
+    {
+      "clip": "scene4a-effacement-archives.mp4",
+      "duration_s": 7.06,
+      "source": "Aziz manual production via Claude Desktop, 2026-04-25"
+    },
+    {
+      "clip": "scene4a-effacement-archives-extend.mp4",
+      "duration_s": 5.04,
+      "source": "Seedance 2.0 reference-to-video, request 019dc5a5-8fa6-7df3-bb3d-545e4361682b",
+      "cost": "$0.91"
+    }
+  ],
+  "known_issues": [
+    "Micro-jump imperceptible a 7.06s (concat sans crossfade) -- a evaluer pendant assemblage Remotion final",
+    "Micro-morphing tres faible : le personnage du fond semble disparaitre derriere les classeurs au lieu de tourner au coin -- juge acceptable par Aziz"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "character": {
+    "id": "33e221bd-5b9c-4e55-b729-cfeb534c1bd1",
+    "name": "Zulu Warrior",
+    "prompt": "Zulu warrior, 19th century, adult male, dark skin, muscular broad shoulders, traditional Zulu regalia, cowhide shield, short iklwa spear, izicwe headring, combat ready stance",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-05-02T02:21:39.466444+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "walking-38346bae": {
+        "east": [
+          "animations/walking-38346bae/east/frame_000.png",
+          "animations/walking-38346bae/east/frame_001.png",
+          "animations/walking-38346bae/east/frame_002.png",
+          "animations/walking-38346bae/east/frame_003.png",
+          "animations/walking-38346bae/east/frame_004.png",
+          "animations/walking-38346bae/east/frame_005.png"
+        ],
+        "north": [
+          "animations/walking-38346bae/north/frame_000.png",
+          "animations/walking-38346bae/north/frame_001.png",
+          "animations/walking-38346bae/north/frame_002.png",
+          "animations/walking-38346bae/north/frame_003.png",
+          "animations/walking-38346bae/north/frame_004.png",
+          "animations/walking-38346bae/north/frame_005.png"
+        ],
+        "south": [
+          "animations/walking-38346bae/south/frame_000.png",
+          "animations/walking-38346bae/south/frame_001.png",
+          "animations/walking-38346bae/south/frame_002.png",
+          "animations/walking-38346bae/south/frame_003.png",
+          "animations/walking-38346bae/south/frame_004.png",
+          "animations/walking-38346bae/south/frame_005.png"
+        ],
+        "west": [
+          "animations/walking-38346bae/west/frame_000.png",
+          "animations/walking-38346bae/west/frame_001.png",
+          "animations/walking-38346bae/west/frame_002.png",
+          "animations/walking-38346bae/west/frame_003.png",
+          "animations/walking-38346bae/west/frame_004.png",
+          "animations/walking-38346bae/west/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-02T04:03:28.006745"
+}

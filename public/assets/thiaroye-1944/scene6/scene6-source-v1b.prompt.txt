@@ -1,0 +1,35 @@
+# scene6 variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['jeune_temoin']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Dakar coast at sunset, present day. Side-profile view of the young Senegalese man -- facing right toward the sea. We see his full face in 3/4 view, eyes (dot-eyes) looking toward the horizon. He holds something loosely in one hand at his side -- an old black-and-white photograph (face down, not readable).
+
+The ocean is behind him and to his right, the shore sand fills the lower third. Sunset fills the upper two-thirds of the frame.
+
+STYLE: Match style anchor + jeune-temoin charref. Paper-craft, thick black outlines, flat color fills, dot-eyes.
+
+PALETTE: full warm restoration -- golden orange sky bleeding to deep violet-indigo at the top, warm red-ochre sand, ocean blue-green. After the grey of war and bureaucracy, full color returns.
+
+COMPOSITION:
+- Young man in profile, center-frame, full figure visible
+- Sunset sky occupying the upper half, the most vivid palette of the entire film
+- Ocean behind him with flat wave-ripple shapes
+- 2-3 bird silhouettes gliding across the sky
+- His photograph held at side, face toward his leg (not shown)
+- Small waves at his feet in the sand
+
+LIFE IN THE SCENE:
+- Wind lifts the front of his open jacket, collar and shirt hem billow
+- Hair lifted by the wind
+- The photograph in his hand flutters slightly at the corner
+- Birds glide across the sunset sky
+- Wave ripples at shoreline
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes: single black dot, no iris, no white
+- Flat color fills only, no hatching, no gradients
+- No text on the photograph or anywhere else
+- Match jeune-temoin charref (young Senegalese man, 20s, dark skin)
+- 9:16 vertical (1080x1920)

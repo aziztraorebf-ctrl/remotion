@@ -1,0 +1,13 @@
+{
+  "request_id": "019dcb25-4337-7411-8249-0b3c051d1fdb",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 6,
+  "generate_audio": true,
+  "seed": 1631037220,
+  "video_url": "https://v3b.fal.media/files/b/0a97d67f/sXPXCRv3Gj5iJQjTNGAFL_video.mp4",
+  "file_size": 8024024,
+  "source_image": "scene-fleet-b-v4.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0a97d65a/tazAYaTzWni1F37huErLr_scene-fleet-b-v4.png",
+  "prompt": "Animate this exact illustration. STRICT STYLE FIDELITY paper-craft sepia palette: maintain flat graphic outlines, dark navy storm clouds, deep blue-grey waves, warm brown wooden hull, no added realism, no texture beyond paper grain.\n\nCamera holds STEADY \u2014 no movement. The figure and wave fill the frame.\n\nSECONDS 0 TO 2: The massive wave is ALREADY mid-crash \u2014 it continues CRASHING FORWARD and DOWNWARD, never pulling back. The captain PLANTS his feet wide on the deck, DARK BROWN skin, body BRACING against the impact \u2014 legs BENDING, torso LEANING into the wave. His arms GRIP the mast tightly throughout.\n\nSECONDS 2 TO 4: White foam BURSTS across the bow. The captain STAGGERS \u2014 weight SHIFTING hard to his right, head TURNING away from the spray. The torn sail WHIPS continuously LEFT TO RIGHT \u2014 never reversing direction. The wooden hull SHUDDERS.\n\nSECONDS 4 TO 6: The boat TILTS sharply. The captain PULLS himself upright, eyes WIDE, scanning the wall of water ahead. Storm clouds CHURN overhead. A second wave RISES on the left \u2014 even larger. He SHOUTS \u2014 mouth OPEN, body TENSED.\n\nNO MORPHING: wave maintains its paper-craft flat graphic form throughout. Hull stays rigid. No objects appear or disappear.\n\nCOLOR GRADE: deep navy storm clouds, dark blue-grey ocean, warm brown hull \u2014 cold dramatic palette. No dust motes, no floating particles, no sparkles. No text anywhere.\n",
+  "cost_usd_estimate": 4.1
+}

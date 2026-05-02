@@ -1,31 +1,24 @@
 # audio-director — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-22 (Minimax v2.6 valide + hook pattern + Sonjata Short complet)
+> Last updated: 2026-04-25 (Thiaroye V5 render final + pre-brief Abou Bakari II + forced-alignment regle NON-NEGOTIABLE)
 
 ---
 
-## MANDATORY PRE-API GATE CHECK (2026-04-17)
+## SCAN TTS FRANCAIS — PROCESS MANUEL OBLIGATOIRE
 
-**BEFORE any ElevenLabs TTS call, run the TTS French scan gate via Bash.**
+Avant chaque appel ElevenLabs francais, scan manuel systematique :
+1. Participes "e/ee" en fin de groupe : lister TOUS les mots, pas echantillon
+2. "ont + voyelle" : liaison bizarre
+3. Chiffres : ecrire en lettres
+4. Accents manquants
+5. Noms de villes avec "s" final
 
-```bash
-python3 -c "
-import sys; sys.path.insert(0, 'scripts')
-from pipeline_gates import pre_elevenlabs_check
-config = {'script': '''<YOUR_FRENCH_SCRIPT>'''}
-ok, results = pre_elevenlabs_check(config)
-for r in results: print(r)
-print('VERDICT:', 'PASS' if ok else 'BLOCKED')
-"
-```
+Trace ecrite obligatoire dans la livraison (table mots scannes + corrections appliquees).
 
-**Gate 9 checks:**
-- Participes passes "e/ee" en fin de groupe (ElevenLabs drop accent)
-- "ont + voyelle" (liaison bizarre)
-- Nombres en chiffres (lecture robotique — ecrire en lettres)
+Note : le script `scripts/pipeline_gates.py` existe mais n'est PAS integre au workflow en pratique. Scan manuel = source de verite.
 
-**If BLOCKED: fix the script BEFORE calling ElevenLabs. Do NOT generate with known issues.**
+Checklist complete a derouler : `./CHECKLIST.md`
 
 ---
 
@@ -43,9 +36,12 @@ Five recurring problems encountered during multi-segment audio mixing. **Anticip
 
 ---
 
-## FORCED ALIGNMENT — OBLIGATOIRE apres chaque generation TTS (2026-04-19)
+## Forced Alignment — Regle Pipeline (NON-NEGOTIABLE — valide 2026-04-25)
 
-**Quoi** : donne audio + texte, retourne timestamps mot-par-mot. Remplace Whisper.
+**Source de verite timing : ElevenLabs forced-alignment API EXCLUSIVEMENT.**
+
+INTERDIT : Whisper pour le timing des beats (drift +-200-500ms inacceptable pour beat-sync)
+INTERDIT : timestamps estimes manuellement
 
 **Endpoint** : `POST https://api.elevenlabs.io/v1/forced-alignment`
 **Format** : multipart form-data (`file` = audio, `text` = plain text sans tags)
@@ -54,88 +50,50 @@ Five recurring problems encountered during multi-segment audio mixing. **Anticip
 **Regles** :
 - Le `text` DOIT etre en plain string — PAS de tags V3, PAS de markdown
 - Faire IMMEDIATEMENT apres generation TTS (meme appel API, meme session)
-- Sauvegarder le JSON dans le meme dossier que l'audio
-- Le fichier JSON sert directement au storyboarder pour le timing.ts
+- Sauvegarder le JSON dans `public/audio/{projet}/` (meme dossier que l'audio)
+- Le fichier JSON sert directement au storyboarder pour timing.ts (source de verite)
+- Script reference : `scripts/tools/generate-thiaroye-v5-alignment.py` (template)
+- Script Abou Bakari II : `scripts/tools/generate-abou-bakari-alignment.py`
 
-**Avantages vs Whisper** :
-- Plus precis (texte exact fourni, pas de transcription)
-- Score de confiance par mot (loss)
-- Detecte les pauses entre mots
+**Pourquoi ElevenLabs > Whisper** :
+- ElevenLabs FA : texte exact fourni → timestamps synchronises a la ms avec la voix generee
+- Whisper : transcription estimee → drift +-200-500ms, inacceptable pour beat-sync
+- Score de confiance par mot (loss) → detecte les mots mal prononces
 - 1 seul appel API
+
+**Workflow obligatoire** :
+1. Generer TTS ElevenLabs → sauvegarder mp3
+2. Appeler forced-alignment avec le texte EXACT passe au TTS (pas le script source)
+3. Extraire start/end de chaque beat depuis le JSON `words[]`
+4. Transmettre JSON au storyboarder → timing.ts mis a jour avec ces valeurs
 
 ---
 
-## Established voices per project
+## Voix actives — source de verite unique
 
-| Project | Voice name | Voice ID | Settings | Status |
-|---------|-----------|----------|----------|--------|
-| GeoAfrique Shorts | Narrateur GeoAfrique | `ICHuIqamER7XZMdm2HYC` | stab=0.30, style=0.25, speed=0.90 | Validated |
-| GeoAfrique (feminin) | Narratrice GeoAfrique originale | `Y8XqpS6sj6cx5cCTLp8a` | stab=0.30, style=0.25, speed=0.92 | **ARCHIVEE — sonne robotique** |
-| **Sonjata Papercraft** | **Narratrice GeoAfrique v2 (ACTIVE)** | `z3gESu49naEZW8Af2Upm` | **stab=0.22, style=0.55, sim=0.55, speed=1.0** | **Validated 2026-04-19** |
-| Abou Bakari | Stephyra (PVC) | `QMNPncWXVcTVhJ9rDEQO` | n/a | **Deprecated** — PVC ignore les tags V3 |
-| Soundjata | Narrateur B3 | `12mpLi4ieFNVlQlAIJ3m` | — | A tester |
-| Soundjata antagoniste | Matrone Froide | `5eScDXbqClEhrA46NN4r` | Voice Design V3 | Validated |
+Source : `memory/tools/elevenlabs.md` section "Voix actives"
+Voix active Sonjata/Thiaroye Shorts : Narratrice v2 `z3gESu49naEZW8Af2Upm`
 
 ### Lecon Voice Design vs Voice Remix (2026-04-19)
 - Voice Design seule = souvent robotique/synthetique avec un "filtre" perceptible
 - Voice Remix = prend une voix existante et la transforme en modele V3 complet
 - **Toujours remixer une voix Voice Design avant production** (prompt_strength 0.45)
-- Config "max-style" (stab=0.22, style=0.55) = meilleure expressivite, validee par Aziz
+- Config "max-style" : voir `memory/tools/elevenlabs.md` (source unique)
 
 ---
 
-## Minimax Music 2.6 — VALIDE 2026-04-22 (Sonjata session 8)
+## Minimax Music 2.6 — source de verite unique
 
-### Endpoint et payload (confirmes)
-```python
-fal_client.subscribe("fal-ai/minimax-music/v2.6", arguments={
-    "prompt": "<description>",
-    "is_instrumental": True,  # OBLIGATOIRE pour musique de fond
-})
-```
-- Schema : `TextToMusic26Request` — prompt 10-2000 chars, lyrics optionnel, audio_setting optionnel
-- **PAS de `reference_audio_url`** (champ n'existe pas en v2.6, causait 422 sur endpoints anciens)
-- **PAS de `duration_seconds`** (le modele genere 2-9min, trim ffmpeg apres OU Remotion tronque via Sequence)
-- Cout : $0.10/generation, ~3min par job
-- 3 variantes parallele via `fal_client.submit` = ~6min total, $0.30
+Source complete : `memory/tools/minimax.md` (endpoint, payload, formule prompt, prompts Sonjata valides, anti-patterns, gotchas)
 
-### Formule prompt validee (reconfirmee 2026-04-22)
-1. **Artiste specifique nomme** (ex: "Style of Toumani Diabate")
-2. **1-2 instruments principaux** (PAS 5 empiles)
-3. **Rythme precis** (ex: "gentle 6/8 rhythm", BPM)
-4. **Texture organique** ("warm, acoustic, organic")
-5. **Interdictions OBLIGATOIRES** : "No synthesizers, no electronic sounds"
-6. **Origine culturelle precise** ("Traditional Mande griot music from Mali", PAS "West African")
+Rappels critiques (non-duplication) :
+- Endpoint : `fal-ai/minimax-music/v2.6` + `is_instrumental: true`
+- PAS de `reference_audio_url` (cause 422)
+- PAS de `duration_seconds` (trim ffmpeg apres)
+- Cout : $0.10/gen, 3 variantes parallele = $0.30 en ~6min
+- Gotcha : ne JAMAIS mettre le mot "instrumental" dans le prompt si `is_instrumental: true` (422)
 
-### Prompts Sonjata session 8 (3 variantes)
-
-**A — Griot intime (RETENU par Aziz)** — 157s genere, kora + balafon
-```
-Traditional Mande griot music from Mali, 13th century empire era.
-Solo kora with slow balafon accents. Style of Toumani Diabate.
-Gentle 6/8 rhythm, acoustic, warm, organic, meditative.
-No synthesizers, no electronic sounds, no drums except soft dundun.
-```
-
-**B — Griot royal** — Sidiki Diabate, kora + djembe + dundun, 168s genere
-**C — Griot guerrier** — Neba Solo, djembe + balafon, 520s genere (long, reutilisable pour versions longues)
-
-Voir `memory/tools/minimax.md` pour le guide complet.
-
-### Anti-pattern confirme (rejete 2026-04-22)
-```
-Epic West African orchestral, kora + djembe + dunun + balafon,
-majestic warm tones, cinematic, 95 BPM
-```
-Resultat : "accents electroniques tres pousses, pas africain ancien" (Aziz).
-**Pourquoi ca echoue** :
-- "orchestral" + "cinematic" poussent vers les synthes
-- 4+ instruments empiles (vs 1-2 nommes)
-- Pas d'artiste de reference
-- Pas d'interdiction explicite
-
-### Gotcha prompt
-NE PAS mettre le mot "instrumental" dans le prompt si `is_instrumental: true` est passe en parametre. Cause 422 de validation (observe 2026-04-22).
+**Biais de recence Sonjata** : le prompt Toumani Diabate / kora / Mande validé pour Sonjata NE DOIT PAS être reutilise automatiquement pour un autre projet. Re-analyser le contexte culturel. Voir section "ATTENTION BIAIS DE RECENCE" ci-dessous.
 
 ---
 
@@ -161,11 +119,46 @@ Exemples :
 ---
 
 ## Mix audio (regle projet consolidee)
-- **Volume musique** : 0.15 dans Remotion (~-16.5dB, compatible regle -18dB sous voix)
+- **Volume musique** : 0.07 valide Thiaroye V5 (0.15 = ancienne ref Sonjata, trop fort si SFX present)
+  - Sonjata (sans SFX) : 0.15 valide
+  - Thiaroye V5 (avec SFX keep-and-duck) : 0.07 valide
+  - Regle : ajuster selon presence ou absence de SFX dans le mix
 - **Fade-in** : 2s (60 frames @30fps) via `interpolate` clamped
 - **Fade-out** : 2s avant fin composition
 - **Option B** : silence musique pendant hook, entree a scene 1
-- Reference implementation : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
+- **SFX keep-and-duck** : duck volume SFX sous narration (scene dependent, voir P4)
+- Reference implementation Sonjata : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
+- Reference implementation Thiaroye : `src/projects/geoafrique-shorts/Thiaroye1944Short.tsx`
+
+## Remotion-native audio (pattern valide Thiaroye V5)
+- Garder pistes separees : narration.mp3 + music.mp3 + sfx/*.aac
+- Mixer dans composition avec `<Audio volume={}>` et `interpolate()` pour fades
+- SFX : `staticFile('audio/thiaroye-1944/sfx/hook-sfx.aac')` + `<Audio>` avec timing Sequence
+- Avantage : flexibilite volume par scene, pas de re-render audio si ajustement
+- Pré-bake ffmpeg : uniquement si flux tres complexe ou livraison externe requise
+
+---
+
+## Projets actifs — pre-brief
+
+### Abou Bakari II
+- **Voix** : Narratrice GeoAfrique v2 — voice_id: `z3gESu49naEZW8Af2Upm` (CONFIRMEE)
+- **Audio existant** : `public/audio/abou-bakari/abou-bakari-narratrice-v1.mp3` (82.80s)
+- **Script** : LOCKED, pas de regeneration audio prevue
+- **Contexte culturel** : Mali XIVe siecle, pelerinage Mansa Musa 1324-1325
+- **Instruments** : kora, balafon, djembe, griot (ne PAS reutiliser prompt Sonjata tel quel)
+- **Statut** : beats 01-09 faits, reste musique + render final
+
+---
+
+## ATTENTION BIAIS DE RECENCE
+
+Ma memoire recente est dominee par Sonjata. Pour tout nouveau projet :
+- Ne PAS reflex Narratrice v2 sans verifier (ex : Thiaroye peut garder, mais le valider)
+- Ne PAS reflex Toumani Diabate / kora / griot Mandinka si le projet n'est pas Mande
+- Ne PAS reflex hook formule "constat impossible + promesse futur" sans verifier le scriptwriter brief
+
+Contre-check obligatoire : lire manifest projet ET script avant de proposer voix/musique.
 
 ---
 
@@ -202,3 +195,12 @@ Pendant la production Soundjata Acte V (hors agent, fait par Claude principal), 
 - Integration Remotion : musique Sequence from=scene1 (Option B), silence pendant hook
 - Render final 151s valide par Aziz : "tres bon, publiable pending CTA"
 - Seule tache restante : CTA narration apres recharge ElevenLabs
+
+### 2026-04-25 (Thiaroye V5 — render final)
+**Hors agent, par Claude principal** :
+- Variant retenu : C (version finale)
+- Volume musique : 0.07 (valide vs 0.05 — decision Aziz pending entre les deux)
+- SFX : duck sous narration (keep-and-duck pattern)
+- hook-sfx.aac : integre en Remotion-native via staticFile() + `<Audio>`
+- Render final : Vercel Blob
+- Integration Remotion-native : narration + musique + SFX separes, pas de pre-bake

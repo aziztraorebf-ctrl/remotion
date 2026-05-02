@@ -23,7 +23,8 @@ if not API_KEY:
     sys.exit(1)
 
 VOICE_ID = "z3gESu49naEZW8Af2Upm"  # Narratrice GeoAfrique v2
-PHRASE = "Cet enfant ne peut pas se lever. Il fondera un empire africain."
+# Hook v2 (injection Cesar 2026-04-22) : chiffre-choc + pont universel Europe medievale
+PHRASE = "Il ne pouvait pas marcher. Il a fondé un empire plus grand que l'Europe médiévale."
 OUT_DIR = ROOT / "public" / "audio" / "sonjata-papercraft"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 OUT_FILE = OUT_DIR / "hook-narration.mp3"

@@ -1,0 +1,81 @@
+{
+  "character": {
+    "id": "8fbe44da-b55a-4dc4-8c4a-a18d0f3f59f5",
+    "name": "medieval merchant, dark coat, hat, carrying a small bag, walking pose, 14th century plague era, worried expression",
+    "prompt": "medieval merchant, dark coat, hat, carrying a small bag, walking pose, 14th century plague era, worried expression",
+    "size": {
+      "width": 64,
+      "height": 64
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-02-18T03:30:35.360862+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9": {
+        "east": [
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_000.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_001.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_002.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_003.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_004.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_005.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_006.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_007.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_008.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_009.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_010.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_011.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_012.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_013.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_014.png",
+          "animations/yelling_piedestrian_to_sell_them_stuffs_transparen-406f95f9/east/frame_015.png"
+        ]
+      },
+      "nervous_hurried_walk-1e04d72a": {
+        "east": [
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_000.png",
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_001.png",
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_002.png",
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_003.png",
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_004.png",
+          "animations/nervous_hurried_walk-1e04d72a/east/frame_005.png"
+        ],
+        "south": [
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_000.png",
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_001.png",
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_002.png",
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_003.png",
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_004.png",
+          "animations/nervous_hurried_walk-1e04d72a/south/frame_005.png"
+        ],
+        "west": [
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_000.png",
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_001.png",
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_002.png",
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_003.png",
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_004.png",
+          "animations/nervous_hurried_walk-1e04d72a/west/frame_005.png"
+        ],
+        "north": [
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_000.png",
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_001.png",
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_002.png",
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_003.png",
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_004.png",
+          "animations/nervous_hurried_walk-1e04d72a/north/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-01T19:28:09.078091"
+}

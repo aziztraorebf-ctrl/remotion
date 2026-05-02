@@ -1,0 +1,5 @@
+file 'narration-partA-v3.mp3'
+file 'silence-transition.mp3'
+file 'dialogue-v3.mp3'
+file 'silence-transition.mp3'
+file 'narration-partB-v3.mp3'

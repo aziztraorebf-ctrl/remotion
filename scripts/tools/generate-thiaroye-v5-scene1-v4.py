@@ -1,0 +1,171 @@
+"""Generate Thiaroye V5 Scene 1 source image -- V4 FORMULE AFFINEE (R-PROMPT-LIBERAL v2).
+
+Pivot 2026-04-23 (apres V3):
+  V1 = ils sont deja arrives (reshoot).
+  V2 = rigide, trinite forcee, pas vivant.
+  V3 = trop minimaliste (~35 lignes) -> liberal OK pour postures MAIS relache technique :
+       - dot-eyes violes
+       - hatching sur uniformes
+       - composition "parade" persistante
+  V4 = formule affinee : LIBERAL sur composition + STRICT sur regles techniques.
+
+Cible V4 (~50-60 lignes) :
+  - Structure claire : SCENE / ANCHORS / LIFE (liberal) / COMPOSITION ANTI-PARADE /
+    ENVIRONMENT / CRITICAL TECHNICAL RULES (strict)
+  - Dot-eyes explicites avec 5 "NO" (single dot, NO iris, NO pupil, NO sclera, NO eyelashes)
+  - Flat fills explicite (NO hatching, NO gradients, NO textured shadows sur uniformes)
+  - Section ANTI-PARADE nouvelle : staggered depth, pas ligne frontale, gaps naturels
+  - Liberal preserve sur postures / activites / expressions
+  - Paper-craft Sonjata style anchor
+  - 9:16 vertical
+
+Model: gemini-3.1-flash-image-preview
+Cost: $0.04 pour 1 image. Depassement marginal accepte par Aziz.
+
+Strategie sortie :
+  - Si V4 reussit (dot-eyes purs + flat fills + staggered composition) -> GO clip Seedance ($3.90)
+  - Si V4 echoue encore sur dot-eyes OU flat fills -> bascule Pan Remotion sur V2 existante. Pas de V5.
+"""
+import asyncio
+import io
+import os
+import sys
+from pathlib import Path
+
+from dotenv import load_dotenv
+from google import genai
+from google.genai import types
+from PIL import Image
+
+ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT / ".env")
+
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+MODEL = "models/gemini-3.1-flash-image-preview"
+
+OUT_DIR = ROOT / "public" / "assets" / "thiaroye-1944" / "scene1"
+OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+# DOUBLE ANCHOR (proven pattern V1/V2/V3) -- on garde les memes refs
+STYLE_ANCHOR_1 = Path("/tmp/thiaroye-v5-style-anchors/scene1-assembled-frame.png")
+STYLE_ANCHOR_2 = (
+    ROOT / "public" / "assets" / "thiaroye-1944" / "refs" / "tirailleur-principal-charsheet.png"
+)
+
+
+# ==========================================================================
+# Prompt V4 -- R-PROMPT-LIBERAL v2 (liberal composition + strict technique)
+# ==========================================================================
+
+PROMPT_V4 = """Paper-craft storybook illustration, 9:16 vertical frame.
+
+SCENE: Cold December morning, 1944. On the deck of a French troop ship approaching the port of Dakar. Senegalese tirailleurs are returning home after fighting for France. The ship is APPROACHING -- not docked. Dakar's colonial waterfront emerges in cold misty distance. A lived-in moment of arrival -- weary, quiet, human.
+
+STYLE ANCHORS:
+- Reference 1: our canonical paper-craft storybook style (thick black outlines, flat color fills, paper kraft texture, rounded cartoon proportions).
+- Reference 2: the exact tirailleur character design (khaki-green uniform, French flag patch, dark green beret, dark brown skin). ALL soldiers in the scene match this exact design. Dot-eyes on EVERY face without exception.
+
+LIFE ON DECK (compose freely, organic):
+- 6 to 8 Senegalese tirailleurs scattered naturally across the deck.
+- Each soldier has his own small moment: some lean on the railing looking toward Dakar, some sit on crates or duffel bags, some stand quietly, some in small conversation of two or three, one perhaps smoking, one perhaps adjusting his kit or his beret, one perhaps looking down lost in thought.
+- Expressions are VARIED and HUMAN: weary, pensive, curious, tired, thoughtful, distant, one slight smile, one frown. NOT all identical, NOT frozen, NOT ceremonial. Each face tells its own small story.
+- All soldiers are West African Senegalese with DARK BROWN skin. No ambiguity with North African or lighter tones. Distinct facial structures -- no two soldiers look like clones.
+
+COMPOSITION -- ANTI-PARADE (critical):
+- NO frontal line composition. NO duo walking synchronously side by side. NO soldiers aligned in row facing the camera.
+- Figures are STAGGERED IN DEPTH at multiple distances from camera: some close to foreground (large in frame), some mid-ground, some deeper near the railing or the ship cabin.
+- Natural grouping with individual GAPS between them -- not clustered tight, not evenly spaced. Organic negative space. Some alone, some in pairs, some in loose group of three.
+- Varied body orientations: some face the shore (backs or 3/4 back to camera), some face each other in profile, some at 3/4 angle, a few facing roughly toward us but at different depths.
+
+ENVIRONMENT:
+- Foreground: weathered wooden deck planks, a few tan canvas duffel bags, maybe a rope coil.
+- Mid/background: the ship's low railing (iron or wood), a hint of the ship's cabin or chimney silhouette on one side, the harbor water with simple flat ripple shapes, Dakar's colonial port silhouette emerging in the cold distance (rooflines, a small lighthouse or warehouse shapes, all desaturated cold greys).
+- PALETTE dual-tone THEMATIC: cold world (sky, water, Dakar buildings, deck surfaces, railings) in desaturated slate grey / cold blue-grey / muted steel / pale overcast; warm pockets (tirailleur uniforms, berets, boots, duffel bags, skin tones) in khaki-green / dark green / brown leather / tan canvas / dark brown skin. Cold overcast morning -- NO golden hour, NO warm sunset glow.
+
+CRITICAL TECHNICAL RULES (NON-NEGOTIABLE -- these override everything else):
+- DOT-EYES STRICT ON EVERY FACE: single small black dot per eye. NO iris visible. NO pupil detail. NO white sclera. NO eyelashes. NO eyebrows drawn as lines with expression detail. Dot-eyes even in profile views (one dot visible). This applies to EVERY soldier, EVERY background figure, without exception.
+- FLAT COLOR FILLS ONLY: NO hatching, NO cross-hatching, NO shading gradients, NO textured shadows on uniforms or faces, NO pencil strokes, NO painterly brushwork. Solid flat color blocks bounded by thick black outlines. Paper kraft texture applies ONLY to background surfaces (sky, distant buildings), NOT to uniforms or characters.
+- Rounded cartoon storybook proportions -- NOT semi-realistic BD, NOT Pixar 3D, NOT photorealism, NOT anime, NOT manga.
+- Thick black outlines on all figures and foreground objects.
+- NO text anywhere: no ship names, no signs, no banners, no writing on flag patches beyond the plain tricolor, no numerals.
+- NO motion lines, NO speed lines, NO drawn wind, NO drawn light rays, NO lens flares, NO emotion marks (no sweat drops, no thought bubbles).
+- 9:16 vertical aspect ratio.
+
+MOOD: lived-in, quiet, human, cold arrival. Let the scene breathe -- natural staggered composition, varied humanity, paper-craft storybook warmth. This is deck life at the end of a long voyage home, not a staged ceremony."""
+
+
+async def generate_scene(anchor1_bytes: bytes, anchor2_bytes: bytes) -> bool:
+    out_path = OUT_DIR / "scene1-source-v4.png"
+
+    print("[scene1 v4] generating with R-PROMPT-LIBERAL v2 (liberal composition + strict technique)...")
+    print(f"[scene1 v4] prompt length: {len(PROMPT_V4)} chars (~{len(PROMPT_V4.split())} words)")
+    try:
+        contents = [
+            types.Part.from_bytes(data=anchor1_bytes, mime_type="image/png"),
+            types.Part.from_bytes(data=anchor2_bytes, mime_type="image/png"),
+            PROMPT_V4,
+        ]
+        response = await asyncio.to_thread(
+            client.models.generate_content,
+            model=MODEL,
+            contents=contents,
+            config=types.GenerateContentConfig(
+                response_modalities=["IMAGE", "TEXT"],
+            ),
+        )
+        for part in response.candidates[0].content.parts:
+            if part.inline_data and part.inline_data.data:
+                img_bytes = part.inline_data.data
+                out_path.write_bytes(img_bytes)
+                img = Image.open(io.BytesIO(img_bytes))
+                print(f"[scene1 v4] SAVED: {out_path} ({img.size[0]}x{img.size[1]})")
+
+                sidecar = OUT_DIR / "scene1-source-v4.prompt.txt"
+                sidecar.write_text(
+                    f"# Scene 1 V4 source image prompt (R-PROMPT-LIBERAL v2)\n"
+                    f"Model: {MODEL}\n"
+                    f"Anchor 1: {STYLE_ANCHOR_1}\n"
+                    f"Anchor 2: {STYLE_ANCHOR_2}\n"
+                    f"Approach: liberal composition + STRICT technical rules, ~60 lines\n"
+                    f"Correction vs V3: dot-eyes explicite 5 NO, flat fills explicite anti-hatching, "
+                    f"section ANTI-PARADE staggered depth\n\n"
+                    f"---PROMPT---\n{PROMPT_V4}\n"
+                )
+                print(f"[scene1 v4] sidecar prompt saved: {sidecar.name}")
+                return True
+
+        print("[scene1 v4] ERROR: no image in response")
+        return False
+    except Exception as e:
+        print(f"[scene1 v4] EXCEPTION: {e}")
+        return False
+
+
+async def main():
+    if not STYLE_ANCHOR_1.exists():
+        print(f"ERROR: style anchor 1 not found: {STYLE_ANCHOR_1}")
+        return 1
+    if not STYLE_ANCHOR_2.exists():
+        print(f"ERROR: style anchor 2 not found: {STYLE_ANCHOR_2}")
+        return 1
+
+    anchor1_bytes = STYLE_ANCHOR_1.read_bytes()
+    anchor2_bytes = STYLE_ANCHOR_2.read_bytes()
+    print(f"Anchor 1: {STYLE_ANCHOR_1.name} (paper-craft canonical)")
+    print(f"Anchor 2: {STYLE_ANCHOR_2.name} (tirailleur charref validated)")
+    print(f"Output: {OUT_DIR}")
+    print(f"[COST PREVIEW] 1 * $0.04 = $0.04")
+    print()
+    print("V4 changes vs V3 (what should be fixed):")
+    print("  - dot-eyes STRICT with 5 explicit NO (iris, pupil, sclera, eyelashes, eyebrow detail)")
+    print("  - flat fills STRICT with explicit anti-hatching / anti-shading on uniforms")
+    print("  - ANTI-PARADE section: staggered depth, varied body orientations, no frontal line")
+    print("  - structure intermediaire ~60 lines (vs 35 V3 / 100+ V2)")
+    print()
+
+    ok = await generate_scene(anchor1_bytes, anchor2_bytes)
+    return 0 if ok else 1
+
+
+if __name__ == "__main__":
+    sys.exit(asyncio.run(main()))

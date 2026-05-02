@@ -1,0 +1,10 @@
+{
+  "request_id": "019de72e-58ae-7830-9edd-2e4204b26b2c",
+  "endpoint": "fal-ai/minimax-music/v2.6",
+  "is_instrumental": true,
+  "duration_s": 430.347029,
+  "size_mb": 13.15,
+  "audio_url": "https://v3b.fal.media/files/b/0a988e2e/w-vFNXCuOnZOv1s3ddR51_output.mp3",
+  "prompt": "Traditional Zulu a cappella male choir from South Africa, soft polyphonic harmonies, deep bass voices and tenor voices interweaving, slow ceremonial pace, ancestral and contemplative mood, evokes nostalgia and memory, style of Ladysmith Black Mambazo. Warm, organic, human voices only. No drums, no percussion, no synthesizers, no electronic sounds, no instruments.",
+  "cost_estimate_usd": 0.1
+}

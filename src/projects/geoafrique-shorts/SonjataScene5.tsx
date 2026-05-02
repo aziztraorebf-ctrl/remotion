@@ -14,6 +14,7 @@ import {
   useCurrentFrame,
   staticFile,
 } from "remotion";
+import { cameraShake, shakeEnvelope } from "./cameraShake";
 
 const FPS = 30;
 
@@ -30,6 +31,7 @@ const KENBURNS_IMAGE =
 const BAOBAB_CLIP =
   "assets/sonjata-papercraft/clips/scene5b-baobab-startend-7s.mp4";
 const NARRATION = "audio/sonjata-papercraft/sonjata-short-v2.mp3";
+const SFX_BAOBAB = "audio/sonjata-papercraft/sfx-baobab-uproot.mp3";
 
 // -- Narration timestamps (forced alignment source of truth) --
 // Scene 5 narration: "La barre" 52.94s -> "sol." 65.02s
@@ -43,6 +45,32 @@ const NARRATION_END_RELATIVE_FRAMES = Math.round(
 ); // ~362
 
 export const SONJATA_SCENE5_FRAMES = TOTAL_FRAMES;
+
+// 5B: Baobab with camera shake on uprooting moment
+// "arracha du sol" at 64.30s -> relative to scene5 start (52.94s) = 11.36s -> frame ~341 in scene5
+// In 5B local frame: 341 - 180 = 161 -> shake starts at local frame 155, peaks 165-190, fades by 210
+const BAOBAB_CLIP_PATH = BAOBAB_CLIP;
+const SHAKE_START = 155;
+const SHAKE_PEAK = 165;
+const SHAKE_END = 215;
+const SHAKE_AMPLITUDE = 12; // pixels
+
+const BaobabWithShake: React.FC = () => {
+  const frame = useCurrentFrame();
+
+  const env = shakeEnvelope(frame, { start: SHAKE_START, peak: SHAKE_PEAK, end: SHAKE_END });
+  const { x, y } = cameraShake(frame, SHAKE_AMPLITUDE * env);
+
+  return (
+    <AbsoluteFill style={{ transform: `translate(${x}px, ${y}px)` }}>
+      <OffthreadVideo
+        src={staticFile(BAOBAB_CLIP_PATH)}
+        muted
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+    </AbsoluteFill>
+  );
+};
 
 // 5A: Ken Burns push-in on bent bar image
 const Scene5AKenBurns: React.FC = () => {
@@ -101,25 +129,26 @@ export const SonjataScene5: React.FC = () => {
         <Scene5AKenBurns />
       </Sequence>
 
-      {/* 5B: Baobab clip (180 - 390 frames) */}
+      {/* 5B: Baobab clip (180 - 390 frames) + camera shake on uprooting */}
       <Sequence
         from={SCENE5A_FRAMES}
         durationInFrames={SCENE5B_FRAMES}
         premountFor={FPS}
       >
-        <AbsoluteFill>
-          <OffthreadVideo
-            src={staticFile(BAOBAB_CLIP)}
-            muted
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        </AbsoluteFill>
+        <BaobabWithShake />
+      </Sequence>
+
+      {/* SFX: tree uprooting — starts ~5 frames before shake peak (frame 335 in scene5 = frame 155 of 5B local) */}
+      {/* SFX file = 4.5s = 135 frames. Volume 0.45 to not overpower narration "il l'arracha du sol" */}
+      <Sequence from={SCENE5A_FRAMES + 150} durationInFrames={Math.round(4.5 * FPS)}>
+        <Audio src={staticFile(SFX_BAOBAB)} volume={0.45} />
       </Sequence>
 
       {/* Narration: continuous from 52.94s, cutoff after "sol." */}
       <Sequence from={0} durationInFrames={TOTAL_FRAMES}>
         <NarrationWithCutoff />
       </Sequence>
+      {/* Subtitles handled globally in SonjataShortFull (one layer over all scenes) */}
     </AbsoluteFill>
   );
 };

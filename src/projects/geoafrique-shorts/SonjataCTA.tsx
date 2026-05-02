@@ -1,12 +1,12 @@
-// CTA — Call to Action (10s)
+// CTA — Call to Action (12.5s)
 // Appears after scene 10 close. Same style: Cinzel Decorative gold on dark brown.
 // 3 lines animated in cascade + SVG icons
 //
-// NEXT SESSION UPDATE (2026-04-22) — Cesar injection applied:
-//   Narration v2 : "Et toi, tu savais que les premiers droits de l'homme sont nés en Afrique ?
-//                   Chaque matin dans notre newsletter, l'Afrique qu'on ne t'apprend pas. Lien en bio."
-//   (remplace "Abonne-toi pour découvrir le prochain héros... Et dis-nous en commentaire si tu veux la version longue.")
-//   Rationale : "tu" direct + question rhétorique + fait-clef répété = +10-15% retention dernière 3s + boost commentaires
+// UPDATE 2026-04-29 — CTA text + audio aligned with real newsletter:
+//   Narration v2 : "Tu savais que les premiers droits de l'homme sont nés en Afrique en mille deux cent trente-cinq ?
+//                   Chaque matin, la newsletter qui te donne un regard différent sur l'actualité africaine — lien en bio."
+//   Audio: sonjata-cta-narration-v2.mp3 (12.24s, forced-alignment calibrated)
+//   Line 1 frame: 4 (0.119s), Line 2 frame: 175 (5.819s), Line 3 frame: 342 (11.399s)
 
 import React from "react";
 import {
@@ -23,8 +23,8 @@ import { loadFont } from "@remotion/google-fonts/CinzelDecorative";
 import { loadFont as loadCinzel } from "@remotion/google-fonts/Cinzel";
 
 const FPS = 30;
-const TOTAL_DURATION_S = 10;
-const TOTAL_FRAMES = TOTAL_DURATION_S * FPS; // 300
+const TOTAL_DURATION_S = 12.5;
+const TOTAL_FRAMES = Math.round(TOTAL_DURATION_S * FPS); // 375
 
 const { fontFamily: cinzelDeco } = loadFont();
 const { fontFamily: cinzel } = loadCinzel();
@@ -187,31 +187,31 @@ export const SonjataCTA: React.FC = () => {
           opacity: bgOpacity,
         }}
       >
-        {/* Line 1: Question rhetorique — synced with "Et toi, tu savais..." at ~0.2s */}
+        {/* Line 1: "Tu savais" — forced-alignment: 0.119s -> frame 4 */}
         <CTALine
           text="Tu savais ?"
-          subtext="les premiers droits de l'homme nés en Afrique"
-          appearFrame={6}
+          subtext="les premiers droits de l'homme en Afrique, en 1235"
+          appearFrame={4}
           yPosition={500}
           icon={<HeartIcon />}
           fontSize={42}
         />
 
-        {/* Line 2: Newsletter — synced with "Chaque matin dans notre newsletter..." at ~4.2s */}
+        {/* Line 2: "Chaque matin" — forced-alignment: 5.819s -> frame 175 */}
         <CTALine
           text="Newsletter quotidienne"
-          subtext="l'Afrique qu'on ne t'apprend pas"
-          appearFrame={Math.round(4.2 * FPS)}
+          subtext="l'actualite africaine sous un angle different"
+          appearFrame={175}
           yPosition={780}
           icon={<BellIcon />}
           fontSize={38}
         />
 
-        {/* Line 3: Link in bio — synced with "Lien en bio" at ~8.0s */}
+        {/* Line 3: "lien en bio" — forced-alignment: 11.399s -> frame 342 */}
         <CTALine
           text="Lien en bio"
-          subtext="chaque matin, une histoire africaine"
-          appearFrame={Math.round(8.0 * FPS)}
+          subtext="chaque matin, un regard different"
+          appearFrame={342}
           yPosition={1060}
           icon={<LinkIcon />}
           fontSize={36}
@@ -237,11 +237,12 @@ export const SonjataCTA: React.FC = () => {
         <Sequence from={0} durationInFrames={TOTAL_FRAMES}>
           <Audio
             src={staticFile(
-              "audio/sonjata-papercraft/sonjata-cta-narration.mp3"
+              "audio/sonjata-papercraft/sonjata-cta-narration-v2.mp3"
             )}
             volume={1.0}
           />
         </Sequence>
+        {/* No subtitles on CTA — the 3 cascading lines (Tu savais? / Newsletter / Lien en bio) serve as visual text */}
       </AbsoluteFill>
     </AbsoluteFill>
   );

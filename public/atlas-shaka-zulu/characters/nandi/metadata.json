@@ -1,0 +1,26 @@
+{
+  "character": {
+    "id": "12715dae-591c-4387-ba0b-419fcf44dd4f",
+    "name": "Nandi",
+    "prompt": "Mature Zulu woman, mother figure, dignified expression. Dark warm brown skin, gray streaks in tightly braided hair, traditional Zulu attire: long brown wrap (umbhaco), beaded necklace and isidwaba leather skirt. Calm and protective posture.",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-05-02T05:34:03.917309+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {}
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-02T05:56:39.350590"
+}

@@ -1,0 +1,90 @@
+# Scene 1 source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Anchor 1: /tmp/thiaroye-v5-style-anchors/scene1-assembled-frame.png
+Anchor 2: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/refs/tirailleur-principal-charsheet.png
+
+---PROMPT---
+Generate a paper-craft scene illustration for a 9:16 vertical frame.
+
+SCENE: Port of Dakar, December 1944, golden hour at sunset. Three Senegalese tirailleurs stand together on a wooden dock quay, having just disembarked from a troop ship after returning from the European front.
+
+STYLE - CRITICAL - MATCH BOTH REFERENCE IMAGES PRECISELY:
+
+You are given TWO reference images that together define the target style.
+
+REFERENCE 1 (Sonjata village scene): our canonical PAPER-CRAFT STORYBOOK ILLUSTRATION style.
+- Observe the thick black outlines around every shape.
+- Observe the flat color fills with no gradients.
+- Observe the paper kraft texture of the background.
+- Observe the rounded cartoon proportions.
+- Observe the PURE DOT EYES on every character, including elderly faces.
+
+REFERENCE 2 (tirailleur character sheet): the exact character appearance required in this scene.
+- The three tirailleurs in the scene you are generating must match this character sheet EXACTLY — same face simplification level, same uniform, same beret, same skin tone, same dot-eyes.
+- Observe especially the PROFILE VIEW (rightmost figure): the eye is ONE BLACK DOT. Not an almond. Not an iris. Not a pupil structure. Just a dot.
+- Skin is completely smooth — no wrinkles, no texture, no age lines even on the older-looking soldier.
+- Outlines are thick and confident. Color fills are flat.
+
+YOU MUST MATCH THIS LEVEL OF SIMPLIFICATION.
+
+STRUCTURAL STYLE (non-negotiable):
+- THICK BLACK OUTLINES around every shape (bold, confident)
+- FLAT COLOR FILLS inside each shape (NO gradients, NO shading, NO soft ambient occlusion)
+- PAPER KRAFT TEXTURE visible in the background (subtle grain)
+- ROUNDED CARTOON PROPORTIONS (rounded heads, simplified bodies — NOT semi-realistic BD)
+- PURE DOT-EYES: each eye is ONE SIMPLE BLACK DOT in ALL views including profile — no iris, no white visible, no pupil structure, no eyelashes, no almond shape
+
+PALETTE — Thiaroye 1944 colonial contrast (dual-tone):
+- COLONIAL WORLD BACKGROUND (dock infrastructure, port buildings, crates, ropes, sky background, distant ships) = DESATURATED COLD palette: slate grey, cold blue-grey, muted steel, washed-out beige, greyish water.
+- TIRAILLEURS (the three soldiers + their duffel bags) = WARM OCHRE-KHAKI tones retained: khaki-green uniforms (same as reference charref), dark brown skin, dark green berets, brown leather boots, tan canvas duffel bags.
+- GOLDEN HOUR SKY = a warm orange-gold horizon behind the tirailleurs, but the glow is applied as FLAT COLOR FIELDS (color of gold, not shaded volumetric light). Warmth comes from palette choice, not from shading gradients.
+- CONTRAST: the colonial infrastructure around them reads as cold/indifferent; the tirailleurs read as warm/human. This is the thematic point — they return to a world that is cold to them.
+
+STRICT RULES:
+- NO photorealism, NO Pixar 3D, NO Disney BD flat
+- NO iris or pupils (just black dots)
+- NO shading gradients (flat fills only, warmth comes from color choice)
+- NO thin lines (bold thick outlines)
+- NO text, NO labels, NO banners, NO writing anywhere (no ship names, no signs, no flags with text)
+
+FORMAT: 1080x1920 vertical (9:16).
+
+COMPOSITION (9:16 vertical, cinematic wide shot):
+- FOREGROUND (lower third): the wooden dock planks, weathered grey-blue (paper-craft flat color), clean surface with NO debris, NO motion blur, NO drawn effects, NO scuff marks. Three canvas TAN duffel bags rest at the feet of the three soldiers, each bag one simple rounded shape with a visible strap.
+- MID-GROUND (center of frame): THREE Senegalese tirailleurs standing in a loose row facing the camera slightly, DIGNIFIED and STILL, upright posture. They have just arrived. They wait.
+  - LEFT soldier: facing slightly left, 3/4 view, hands at sides, looking off-frame-left (toward the city), calm neutral expression.
+  - CENTRAL soldier: tallest, directly facing the camera in full-front view, hands at sides OR one hand resting on the duffel bag strap on his shoulder, gaze forward, calm neutral expression. This is the principal tirailleur — he will be the focus of the camera's dolly-in later.
+  - RIGHT soldier: in partial profile facing right, looking off-frame-right (toward the horizon), hands at sides, calm neutral expression.
+  - All three match the tirailleur character sheet exactly: khaki-green uniform with French flag patch on sleeve, dark green beret, dark brown skin, brown leather boots, PURE DOT EYES (one black dot per eye), NO wrinkles, NO visible age, young adult proportions.
+- BACKGROUND (upper half):
+  - Wooden dock infrastructure extending behind them: simple paper-craft rope bollards, wooden crates stacked in the distance, all in DESATURATED COLD greys and muted steel blues.
+  - A distant colonial port building silhouette on the left edge: flat grey-blue roof outline, no text visible on any facade.
+  - A TROOP SHIP silhouette on the right, far background: simple paper-craft hull shape, flat dark grey-blue, no text, no named ship, no flag with writing visible.
+  - UPPER BACKGROUND: golden hour horizon where the sky meets the harbor water — a warm ORANGE-GOLD band of flat color for the sunset, transitioning upward to pale cold slate-blue upper sky. Warmth is the color itself, NOT a shaded gradient. The clouds are a few simple flat-color shapes.
+  - Harbor water (between dock and ship): muted grey-blue flat color with a few simple flat lighter-grey ripple shapes — NO photoreal reflections, NO shimmering highlights.
+
+CHARACTER POSITION — CRITICAL (R-PC1 neutral start position):
+- The tirailleurs are STILL. Standing. Waiting. No hand gestures, no raised arms, no salutes, no pointing, no tears, no smiles, no extreme expressions. Dignified neutral faces.
+- Motion will be added by the animation step — the SOURCE IMAGE must be a quiet still moment.
+
+CLEAN FRAME — CRITICAL (R-PC6, R-PC7):
+- NO motion lines, NO speed lines, NO dust clouds, NO drawn wind effects, NO debris lifting, NO drawn light rays, NO drawn lens flares.
+- NO drawn musical notes, NO drawn emotion marks, NO action bubbles.
+
+ETHNIC SPECIFICATION (non-negotiable for historical accuracy):
+- All three tirailleurs are West African, Senegalese, DARK BROWN skin.
+- No ambiguity with North African or lighter tones.
+
+ANTI-TROPISM — CRITICAL:
+- NO romantic Western BD flat style (rosy cheeks, gradient shading, detailed hair strands).
+- NO photorealism.
+- NO semi-3D Pixar lighting.
+- NO iris or eyelashes on any face. Pure dot-eyes, including the left and right soldiers' profile views.
+- NO visible text, no banners, no signs, no ship names, no flag text. The French flag patch on the sleeves matches the charref exactly (a small tricolor rectangle, no writing).
+
+FINAL REMINDER:
+- Match the paper-craft style of Reference 1 exactly.
+- Match the tirailleur character design of Reference 2 exactly (same uniform, same face simplification, same dot-eyes, same skin tone).
+- Cold palette for the colonial world around them, warm ochre-khaki retained on the three soldiers themselves.
+- Position is STILL and NEUTRAL. The shot is quiet — camera motion will come later.
+- 9:16 vertical. Clean frame. No text. No motion artifacts.

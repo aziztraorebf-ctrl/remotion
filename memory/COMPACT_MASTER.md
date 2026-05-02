@@ -192,7 +192,7 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 
 ## APIs Actives (cles dans .env)
 
-- `ELEVENLABS_API_KEY` : voix-off (Chris fr)
+- `ELEVENLABS_API_KEY` : voix-off (Narratrice GeoAfrique v2 `z3gESu49naEZW8Af2Upm` = voix canonique chaine, Chris = ancienne voix de tests jamais utilisee en prod)
 - `PIXELLAB_API_KEY` : sprites pixel art (archive)
 - `FAL_KEY` : fal.ai (flux/dev, ESRGAN)
 - `OPENAI_API_KEY` : GPT-4o
@@ -245,7 +245,7 @@ GROUND  = "#060810"   BRUME    = "#10182e"   WARM_EYE = "#ff9933"
 
 ---
 
-## Gotchas ElevenLabs TTS (Chris fr)
+## Gotchas ElevenLabs TTS (Narratrice GeoAfrique v2 fr)
 
 - Participes passes en "e" : drop systematique -> constructions sans accent final
 - "ont + voyelle" -> liaison bizarre -> passe simple

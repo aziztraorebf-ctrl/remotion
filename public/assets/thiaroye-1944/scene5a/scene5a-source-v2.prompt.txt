@@ -1,0 +1,48 @@
+Paper-craft storybook illustration, 9:16 vertical frame.
+
+REFERENCE INSTRUCTIONS:
+- REF 1 is the canonical paper-craft style (PRIMARY STYLE AUTHORITY). REF 1 wins on all style decisions.
+- REF 2 is Biram Senghor's exact character design. Use REF 2 for costume details and skin tone. Face rendering always comes from REF 1.
+
+SCENE: Biram Senghor at the Thiaroye Memorial, 2026. An elderly Senegalese man in a dark navy suit, holding a folded legal document in both hands at chest level. His grip is firm, committed. His gaze is directed toward the portrait wall (three-quarter view, not facing camera directly).
+
+BACKGROUND: a wall of portrait silhouettes in an irregular grid (7-9 frames, varying sizes). Each portrait frame contains a paper-craft silhouette of a tirailleur — simple flat dark shapes. All portraits in muted grey-black tones. Cold overcast memorial lighting from upper left.
+
+Small eternal flame at bottom-right corner: a tiny flat orange aplat shape. No glow. No gradient. Just a flat paper-craft flame shape.
+
+STYLE: Paper-craft STRICT (REF 1 rules). Thick black outlines. Flat color fills only. Paper kraft texture on background wall only.
+
+PALETTE: cold overcast memorial tones. Biram in dark navy suit. Portrait wall in muted grey-black. Eternal flame: small flat orange (ONLY warm element).
+
+COMPOSITION 9:16 VERTICAL:
+- Biram center-left, three-quarter view toward the portraits
+- Portrait wall fills right two-thirds of background
+- Cold directional light from upper left
+- Eternal flame small shape at bottom-right
+- Document held at chest level, both hands gripping firmly
+
+DOT-EYES LOCK (NON-NEGOTIABLE — REPEATED):
+Every face in this image has PURE DOT-EYES: one small solid black dot per eye. That is ALL.
+PURE DOT-EYES. PURE DOT-EYES. PURE DOT-EYES.
+NO iris. NO pupil detail. NO white sclera. NO eyelashes. NO realistic eyes.
+This applies to Biram AND to any tirailleur silhouettes in portrait frames.
+If you are tempted to draw anything other than a solid black dot — STOP. Draw a dot.
+
+FLAT COLOR FILLS LOCK (NON-NEGOTIABLE — REPEATED):
+FLAT COLOR FILLS. FLAT COLOR FILLS. FLAT COLOR FILLS.
+No hatching. No gradients. No cel-shading. No painterly strokes.
+
+CRITICAL RULES:
+- NO readable text anywhere: no names on portraits, no text on document, no captions.
+- NO text of any kind visible anywhere in the image.
+- NO banners, no signs, no writing, no numerals.
+- NO glow effects on the eternal flame.
+- 9:16 vertical aspect ratio.
+- Match Biram charref (REF 2) for costume + skin tone. REF 1 governs style.
+
+LIFE IN THE SCENE:
+- Biram's thumb presses the document edge
+- His torso leans slightly forward, weight committed
+- Portrait silhouette heads at varied angles (profile, frontal, three-quarter)
+
+MOOD: dignified, historic, weighted.

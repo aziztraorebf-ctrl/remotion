@@ -15,6 +15,7 @@ import {
   useCurrentFrame,
   staticFile,
 } from "remotion";
+import { cameraShake, shakeEnvelope } from "./cameraShake";
 
 const FPS = 30;
 
@@ -25,10 +26,10 @@ const SCENE7B_DURATION_S = 5;
 const SCENE7B_FRAMES = SCENE7B_DURATION_S * FPS; // 150
 const SCENE7C_DURATION_S = 7;
 const SCENE7C_FRAMES = SCENE7C_DURATION_S * FPS; // 210
-const SCENE7D_DURATION_S = 6;
-const SCENE7D_FRAMES = SCENE7D_DURATION_S * FPS; // 180
+const SCENE7D_DURATION_S = 8;
+const SCENE7D_FRAMES = SCENE7D_DURATION_S * FPS; // 240
 const TOTAL_FRAMES =
-  SCENE7A_FRAMES + SCENE7B_FRAMES + SCENE7C_FRAMES + SCENE7D_FRAMES; // 720 = 24s
+  SCENE7A_FRAMES + SCENE7B_FRAMES + SCENE7C_FRAMES + SCENE7D_FRAMES; // 780 = 26s
 
 // -- Sub-clip start frames --
 const START_7B = SCENE7A_FRAMES; // 180
@@ -73,6 +74,30 @@ const NarrationWithCutoff: React.FC = () => {
       startFrom={NARRATION_START_FRAMES}
       volume={volume}
     />
+  );
+};
+
+// Camera shake on Soumaoro's fall: "tomba" @ 104.10s -> 7D local frame ~48
+const FALL_SHAKE_START = 42;
+const FALL_SHAKE_PEAK = 50;
+const FALL_SHAKE_END = 100;
+const FALL_SHAKE_AMP = 14;
+
+const Scene7DWithShake: React.FC = () => {
+  const frame = useCurrentFrame();
+
+  const env = shakeEnvelope(frame, { start: FALL_SHAKE_START, peak: FALL_SHAKE_PEAK, end: FALL_SHAKE_END });
+  const { x, y } = cameraShake(frame, FALL_SHAKE_AMP * env);
+
+  return (
+    <AbsoluteFill style={{ transform: `translate(${x}px, ${y}px)` }}>
+      <OffthreadVideo
+        src={staticFile(CLIP_7D)}
+        muted
+        style={{ width: "100%", height: "100%", objectFit: "cover" }}
+      />
+      <Audio src={staticFile(CLIP_7D)} volume={0.3} />
+    </AbsoluteFill>
   );
 };
 
@@ -123,26 +148,21 @@ export const SonjataScene7: React.FC = () => {
         </AbsoluteFill>
       </Sequence>
 
-      {/* 7D: Soumaoro disparait (frames 540-720), Seedance audio at 30% */}
+      {/* 7D: Soumaoro disparait (frames 540-780), camera shake on "tomba" */}
+      {/* "Sumaoro tomba" @ 103.62s -> relative to 83.94s = 19.68s -> scene7 frame ~590 -> 7D local frame ~50 */}
       <Sequence
         from={START_7D}
         durationInFrames={SCENE7D_FRAMES}
         premountFor={FPS}
       >
-        <AbsoluteFill>
-          <OffthreadVideo
-            src={staticFile(CLIP_7D)}
-            muted
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-          <Audio src={staticFile(CLIP_7D)} volume={0.3} />
-        </AbsoluteFill>
+        <Scene7DWithShake />
       </Sequence>
 
       {/* Narration: continuous from 83.94s, cutoff after "jamais." */}
       <Sequence from={0} durationInFrames={TOTAL_FRAMES}>
         <NarrationWithCutoff />
       </Sequence>
+      {/* Subtitles handled globally in SonjataShortFull (one layer over all scenes) */}
     </AbsoluteFill>
   );
 };

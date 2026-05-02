@@ -1,0 +1,18 @@
+{
+  "request_id": "019dcf0f-d040-7de0-b700-6195fa027d7f",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "result": {
+    "video": {
+      "url": "https://v3b.fal.media/files/b/0a97f163/CvYwUR6GumOO1ZWNH0xiC_TO43rVNn.mp4",
+      "content_type": "video/mp4",
+      "file_name": "CvYwUR6GumOO1ZWNH0xiC_TO43rVNn.mp4",
+      "file_size": 5278046,
+      "width": 718,
+      "height": 1284,
+      "fps": 24.0,
+      "duration": 10.122667,
+      "num_frames": 241
+    },
+    "seed": 579900674
+  }
+}

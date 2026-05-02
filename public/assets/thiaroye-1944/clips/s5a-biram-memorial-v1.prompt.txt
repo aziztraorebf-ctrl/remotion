@@ -1,0 +1,39 @@
+# 5a Seedance clip prompt
+Tool: Seedance 2.0 image-to-video
+Source: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene5a/scene5a-source-v1a.png
+Duration: 10s
+Cost: $3.00
+
+---CHECKLIST---
+1_mots_rouges: OK : 12 mots verifies
+2_image_vivante: OK : flamme eternelle (flickers), document (flutter corner), lumiere froide
+3_personnages_vie: OK : Biram (SHIFTS weight, PRESSES document, TURNS head), portrait wall (ILLUMINATES one by one)
+4_timeline: OK : 3 segments (0-3s / 3-6s / 6-10s)
+5_actions_macro: OK : 2-3 verbes MAJUSCULES par segment
+6_camera_sobre: OK : static + tres lent tilt-up
+7_style_clause: OK
+8_anti_morph: OK : document RIGID, flame FLAT flicker shape
+9_environnement: OK : flame FLICKERS, cold light HOLDS, portraits ILLUMINATE
+10_closing: OK
+11_longueur: ~1400 chars
+12_duree: 10s
+13_contradictions: OK
+14_pensees_internes: OK
+15_regles_projet: OK : R75 i2v, no text on portraits, eternal flame kept as flat shape, R68 contemplative (static camera)
+
+---PROMPT---
+Animate this exact illustration. STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey memorial palette, clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.
+
+Camera: Static hold with very slow upward tilt over 10 seconds, near-imperceptible. No pan.
+
+SECONDS 0 TO 3: The elderly man (Biram Senghor) SHIFTS his weight from right foot to left, body SETTLING into a grounded stance. His hands PRESS the document tighter against his chest, thumbs GRIPPING the edge. He TURNS his head slightly toward the upper-left portrait on the wall.
+
+SECONDS 3 TO 6: Biram STRAIGHTENS his posture, chin LIFTING slightly. His right thumb TRACES the document edge. Two portrait frames on the wall catch a warmer light and BRIGHTEN imperceptibly -- as if the faces are being acknowledged. The eternal flame at bottom-right FLICKERS with a single tall pulse of orange-gold, then SETTLES.
+
+SECONDS 6 TO 10: Biram SQUARES his shoulders, body CENTERING toward the portrait wall directly ahead. His grip on the document FIRMS, both hands PRESSING the folded paper flat. The eternal flame FLICKERS once more, a steady organic pulse. The portrait wall holds its grey-black tones, watching.
+
+Continuous throughout: The eternal flame FLICKERS with organic flat paper-craft shapes -- no gradients, just flat orange and yellow aplats shifting. Cold overhead light HOLDS steady. Biram's body continuously micro-shifts with subtle weight transfers.
+
+The document stays folded -- it does not unfold, does not open. Portrait frames stay as paper-craft flat shapes -- no faces change expression. No text, no words, no names visible on portraits or document.
+
+All characters stay engaged, bodies continuously micro-shifting. MAINTAIN flat color fills throughout. Ambient sounds only: distant wind, soft footsteps on stone, no music, no dialogue.

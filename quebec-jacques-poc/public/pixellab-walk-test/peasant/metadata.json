@@ -1,0 +1,81 @@
+{
+  "character": {
+    "id": "35eaaa94-a184-4177-bb90-11dea9accbfb",
+    "name": "medieval peasant woman, simple grey dress, white headscarf, apron, leather shoes, walking pose, 14th century plague era",
+    "prompt": "medieval peasant woman, simple grey dress, white headscarf, apron, leather shoes, walking pose, 14th century plague era",
+    "size": {
+      "width": 64,
+      "height": 64
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-02-18T03:27:03.372166+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "slow_tired_medieval_walk-2e4f15c9": {
+        "west": [
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_000.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_001.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_002.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_003.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_004.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/west/frame_005.png"
+        ],
+        "south": [
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_000.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_001.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_002.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_003.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_004.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/south/frame_005.png"
+        ],
+        "north": [
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_000.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_001.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_002.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_003.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_004.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/north/frame_005.png"
+        ],
+        "east": [
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_000.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_001.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_002.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_003.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_004.png",
+          "animations/slow_tired_medieval_walk-2e4f15c9/east/frame_005.png"
+        ]
+      },
+      "holding_fire_torche_in_hand_furious_expression_rea-c44cbca3": {
+        "east": [
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_000.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_001.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_002.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_003.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_004.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_005.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_006.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_007.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_008.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_009.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_010.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_011.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_012.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_013.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_014.png",
+          "animations/holding_fire_torche_in_hand_furious_expression_rea-c44cbca3/east/frame_015.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-01T19:30:00.287367"
+}

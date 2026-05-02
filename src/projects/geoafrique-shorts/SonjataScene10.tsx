@@ -401,14 +401,37 @@ const CloseSignature: React.FC = () => {
   );
 };
 
-// Narration with cutoff
+// correction audio: phrase 2 replaces "deux siècles avant les Européens"
+const CORRECTION = "audio/sonjata-papercraft/sonjata-correction-s9s10.mp3";
+const CORRECTION_P2_START_S = 5.440;
+const CORRECTION_P2_END_S = 11.639;
+// Bug 2 fix (2026-04-28): correction REPLACES full opening phrase, not just "deux siècles".
+// Master says "ces mots furent prononcés en deux siècles" while correction says
+// "Ces mots furent dit en 1235...". Both start with "ces mots furent" -> double voice.
+// Duck must start at frame 0, not frame 50.
+const DUCK_START = 0;
+// Bug 4 fix (2026-04-28): DUCK_END was 202 frames (master 143.73s) which truncated
+// "Un homme..." (master 143.18 -> 143.82s). Whisper word timestamps confirmed:
+// phrase 1 master ends at 142.28s, silence 142.28-143.18s, "Un homme" starts 143.18s.
+// Correction P2 ends at 6.2s (= scene10 frame 186 = master 143.20s relative to start),
+// which aligns perfectly with master "Un homme" starting at 143.18s. So DUCK_END = 186.
+const DUCK_END = 186;
+
+// Narration with cutoff + duck on "deux siècles" plage (replaced by correction phrase 2)
 const NarrationWithCutoff: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const volume = interpolate(
+  const endFade = interpolate(
     frame,
     [NARRATION_END_RELATIVE_FRAMES - 3, NARRATION_END_RELATIVE_FRAMES],
     [1.0, 0.0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  // Duck master during "deux siècles avant les Européens" (correction takes over)
+  const p2Duck = interpolate(
+    frame,
+    [DUCK_START - 2, DUCK_START, DUCK_END, DUCK_END + 2],
+    [1.0, 0.0, 0.0, 1.0],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
@@ -416,7 +439,7 @@ const NarrationWithCutoff: React.FC = () => {
     <Audio
       src={staticFile(NARRATION)}
       startFrom={NARRATION_START_FRAMES}
-      volume={volume}
+      volume={Math.min(endFade, p2Duck)}
     />
   );
 };
@@ -447,9 +470,21 @@ export const SonjataScene10: React.FC = () => {
         <CloseSignature />
       </Sequence>
 
-      {/* Narration continuous */}
+      {/* Narration (master ducked during "deux siècles" plage) */}
       <Sequence from={0} durationInFrames={TOTAL_FRAMES}>
         <NarrationWithCutoff />
+      </Sequence>
+
+      {/* Correction phrase 2 : "cinq cent cinquante-quatre ans avant la Déclaration des Droits de l'Homme" */}
+      {/* Starts at DUCK_START (same frame master is ducked), plays from 5.440s in correction file */}
+      <Sequence
+        from={DUCK_START}
+        durationInFrames={Math.round((CORRECTION_P2_END_S - CORRECTION_P2_START_S) * FPS)}
+      >
+        <Audio
+          src={staticFile(CORRECTION)}
+          startFrom={Math.round(CORRECTION_P2_START_S * FPS)}
+        />
       </Sequence>
     </AbsoluteFill>
   );

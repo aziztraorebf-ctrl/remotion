@@ -1,0 +1,40 @@
+# scene2 variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['tirailleur_principal', 'officier_francais']
+
+---PROMPT---
+Paper-craft scene illustration, 9:16 vertical frame.
+
+SCENE: Interior of Thiaroye military camp, December 1944. Three Senegalese tirailleurs gathered around a rough wooden table. Foreground right: the shoulder and back of kepi of an absent French officer (blurred OTS silhouette). Barred window behind, cold indigo light filtering. The central tirailleur has his right hand open palm-up, extending toward the officer -- a quiet demand.
+
+STYLE (match style anchor):
+- REF 1 (style anchor): paper-craft storybook -- thick black outlines, flat color fills, paper kraft texture, rounded proportions, dot-eyes.
+- REF 2 (tirailleur charref): uniform, beret, skin tone, dot-eyes.
+- REF 3 (French officer charref): uniform, kepi -- visible only as OTS silhouette shoulder/back.
+
+LIFE IN THE ROOM (vivid, not posed):
+- Left tirailleur: leaning forward on elbows, one hand writing on paper, other hand resting flat on table, head tilted down in concentration
+- Central tirailleur: right hand open palm-up extended forward at chest level, gaze steady on the absent officer, left hand gripping his knee (tension visible)
+- Right tirailleur: mid-speech, lips parted, one hand gesturing toward the central tirailleur, torso turned inward toward the group
+- OTS officer silhouette (foreground right, blurred): shoulder and back of kepi, indistinct dark shape
+
+ENVIRONMENT:
+- Rough wooden table, visible grain lines
+- Barred window back-left: cold indigo-grey light beams crossing the table
+- Stone walls muted grey-beige
+- Papers scattered on the table, a tin cup, a folded army jacket draped on a chair
+- Uniforms retain warm khaki-olive -- only warmth in the cold room
+
+COMPOSITION ANTI-PARADE:
+- Three tirailleurs staggered around the table (not in a line)
+- Different head orientations and postures
+- OTS officer in foreground creates depth
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes: single black dot, no iris, no white sclera, no eyelashes
+- Flat color fills only, no hatching, no shading gradients
+- Warmth comes from palette choice, not from shading
+- Paper-craft Sonjata style, not semi-realistic BD
+- No text, no readable writing on papers (just lines suggesting handwriting)
+- 9:16 vertical (1080x1920)

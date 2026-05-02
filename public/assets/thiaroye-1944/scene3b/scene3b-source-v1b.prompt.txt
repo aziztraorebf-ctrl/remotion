@@ -1,0 +1,29 @@
+# scene3b variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Camp Thiaroye courtyard AFTER the shots. Close-up view. Single focus: the ground-level perspective.
+
+Foreground extreme close: a fallen tirailleur's hand, flat and still, palm facing up on the ochre earth -- paper-craft shape, thick outline, simple. A small piece of folded paper falls from his open fingers (a letter? a list of names?). The paper rests half-open on the ground beside the hand.
+
+Mid-ground: a wide crimson-red aplat pool spreading outward on the stone ground (flat red, no gradient, no photorealism). The edge of another silhouette visible at the pool's far edge.
+
+Background: the stone barrack wall, cold grey, the extinguished lantern at the right.
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture.
+
+PALETTE: grey-ochre ground, cold grey walls, ONE accent: flat crimson-red pool. The hand in khaki-olive uniform sleeve. The letter in pale cream paper.
+
+COMPOSITION:
+- Extreme foreground: hand + letter in sharp paper-craft detail
+- Mid-ground: red pool spreading to frame edges
+- Background: wall and lantern establishing location
+
+CRITICAL TECHNICAL RULES:
+- Flat color fills only, no hatching, no gradients
+- Red pool = flat aplat red, no photorealism
+- No text on the letter -- just the suggestion of handwriting lines
+- No text, no banners
+- 9:16 vertical (1080x1920)

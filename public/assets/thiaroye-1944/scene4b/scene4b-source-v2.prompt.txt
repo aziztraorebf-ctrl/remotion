@@ -1,0 +1,27 @@
+Paper-craft storybook illustration, 9:16 vertical frame.
+
+SCENE: Modern French courtroom interior, 2026.
+Close-up: a lawyer's hands in dark charcoal-grey suit sleeves place a thick folded legal document on a honey-blond wooden desk. The document is cream-beige, thick, folded. The hands are mid-placement — fingers just releasing the paper.
+
+BACKGROUND (blurred, suggested): a tricolor republican flag rendered as three vertical color-aplat stripes (blue / white / red). NO heraldic details. NO coat of arms. NO emblem. NO writing. Just three flat color bands. Wooden paneling suggestion in grey-blue.
+
+STYLE (match REF 1 exactly): Paper-craft STRICT. Thick black outlines on all elements. Flat color fills ONLY — zero gradients, zero hatching, zero shadows, zero shading. Paper kraft texture allowed on background surfaces only.
+
+PALETTE: cold grey-blue courtroom air. Honey-blond desk (flat amber-ochre aplat). Cream-beige document. Dark charcoal-grey suit sleeves. Tricolor flag in background: flat blue / flat white / flat red strips. NOT photorealistic fabric. NOT gradient. Pure aplat.
+
+COMPOSITION 9:16 VERTICAL:
+- Lawyer's hands center-frame, slightly low, document in mid-placement on the desk
+- Desk surface fills mid-frame horizontally
+- Tricolor flag blurred in upper-left background (color bands only)
+- No faces, no bodies visible — hands and sleeves only
+
+CRITICAL RULES (NON-NEGOTIABLE):
+- FLAT COLOR FILLS ONLY. No gradients. No hatching. No shading.
+- Thick black outlines on hands, sleeves, desk edges, document edges.
+- NO readable text on the document — blank cream surface only.
+- Flag = THREE FLAT COLOR STRIPES ONLY. No heraldry. No text. No emblem.
+- No text anywhere in the image.
+- Paper-craft style matches REF 1 exactly: storybook rounded forms, flat fills, thick lines.
+- 9:16 vertical aspect ratio.
+
+MOOD: institutional cold, restrained authority.

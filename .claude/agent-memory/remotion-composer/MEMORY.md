@@ -80,12 +80,7 @@ python3 scripts/tools/upload-to-blob.py /tmp/<name>-compressed.mp4 \
 
 ## Safe zones actually needed per platform
 
-| Platform | Ratio | Top reserved | Bottom reserved | Side reserved |
-|----------|-------|--------------|-----------------|---------------|
-| YouTube Shorts | 9:16 | 100px (title) | 250px (channel + description) | 60px |
-| TikTok | 9:16 | 150px (UI top) | 300px (UI bottom + description) | 80px |
-| Instagram Reels | 9:16 | 100px | 250px | 60px |
-| YouTube long-form horizontal | 16:9 | 60px | 100px (subtitles) | 100px |
+Voir RULES-ACTIVE.md §Safe Zones.
 
 ---
 
@@ -180,17 +175,20 @@ Si on reutilise un segment video d'un render precedent (qui contient deja narrat
 
 ---
 
-## Session log
+## Identite GeoAfrique Shorts
 
-### 2026-04-13 (initial)
-Agent cree. Patterns herites du projet existant (Soundjata Acte VI, Historical Map, Abou Bakari Short) documentes ici.
+- Format : 9:16 (1080x1920)
+- FPS : 30
+- Pipeline video : Seedance/Kling clips + Ken Burns Remotion pour transitions
+- Audio : kora Minimax (musique) + ElevenLabs Narratrice GeoAfrique v2 (narration)
+- Style visuel : paper-craft sepia (depuis Sonjata/Thiaroye)
+- Audio volume musique valide : 0.07
 
-### 2026-04-22 (hors agent, par Claude principal — Sonjata Short session 8)
-Pattern hook + musique Option B implemente sur `SonjataShortFull.tsx` :
-- Hook 5s : Sequence from=0 avec OffthreadVideo muted + Audio narration
-- Scenes 1-10 decalees de HOOK_FRAMES (cumulative initial = 150)
-- Musique dans Sequence from=SCENES_START_FRAME (silence pendant hook)
-- `musicVolume` utilise `interpolate` avec frame relatif 0-based
-- Render local valide (4380 frames @30fps = 151s), MP4 93MB brut / 41MB compresse CRF 28
-- Gotcha decouvert : `public/audio/` gitignored bloque render Vercel Sandbox
-- Gotcha decouvert : `muted` obligatoire sur clip source avec audio natif
+---
+
+## CHANGELOG
+
+- 2026-04-13 : initial setup, 8 regles non-negociables
+- 2026-04-22 : Sonjata session 8, pattern Hook + Option B musique valide (reference : `SonjataShortFull.tsx`)
+- 2026-04-24 : refactor memoire (creation RULES-ACTIVE.md + CHECKLIST-PRE-COMPOSE.md, split Geo vers `memory/tools/remotion-geo.md`)
+- 2026-04-25 : safe zones table -> pointeur RULES-ACTIVE.md ; section Identite GeoAfrique Shorts ajoutee

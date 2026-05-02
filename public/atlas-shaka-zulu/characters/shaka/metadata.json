@@ -1,0 +1,119 @@
+{
+  "character": {
+    "id": "e8c38444-1739-42a5-86ae-40fa0950e947",
+    "name": "Shaka Zulu",
+    "prompt": "Shaka Zulu, 19th century Zulu king, adult male, dark skin, muscular broad shoulders, wearing traditional Zulu warrior regalia, white ostrich feather headdress, leopard skin cloak, cowhide shield, short iklwa spear, proud commanding stance",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "side",
+    "created_at": "2026-05-02T02:21:31.022145+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "walking-ba529e39": {
+        "north": [
+          "animations/walking-ba529e39/north/frame_000.png",
+          "animations/walking-ba529e39/north/frame_001.png",
+          "animations/walking-ba529e39/north/frame_002.png",
+          "animations/walking-ba529e39/north/frame_003.png",
+          "animations/walking-ba529e39/north/frame_004.png",
+          "animations/walking-ba529e39/north/frame_005.png"
+        ],
+        "west": [
+          "animations/walking-ba529e39/west/frame_000.png",
+          "animations/walking-ba529e39/west/frame_001.png",
+          "animations/walking-ba529e39/west/frame_002.png",
+          "animations/walking-ba529e39/west/frame_003.png",
+          "animations/walking-ba529e39/west/frame_004.png",
+          "animations/walking-ba529e39/west/frame_005.png"
+        ],
+        "south": [
+          "animations/walking-ba529e39/south/frame_000.png",
+          "animations/walking-ba529e39/south/frame_001.png",
+          "animations/walking-ba529e39/south/frame_002.png",
+          "animations/walking-ba529e39/south/frame_003.png",
+          "animations/walking-ba529e39/south/frame_004.png",
+          "animations/walking-ba529e39/south/frame_005.png"
+        ],
+        "east": [
+          "animations/walking-ba529e39/east/frame_000.png",
+          "animations/walking-ba529e39/east/frame_001.png",
+          "animations/walking-ba529e39/east/frame_002.png",
+          "animations/walking-ba529e39/east/frame_003.png",
+          "animations/walking-ba529e39/east/frame_004.png",
+          "animations/walking-ba529e39/east/frame_005.png"
+        ]
+      },
+      "animating-d4924c9b": {
+        "west": [
+          "animations/animating-d4924c9b/west/frame_000.png",
+          "animations/animating-d4924c9b/west/frame_001.png",
+          "animations/animating-d4924c9b/west/frame_002.png",
+          "animations/animating-d4924c9b/west/frame_003.png"
+        ],
+        "north": [
+          "animations/animating-d4924c9b/north/frame_000.png",
+          "animations/animating-d4924c9b/north/frame_001.png",
+          "animations/animating-d4924c9b/north/frame_002.png",
+          "animations/animating-d4924c9b/north/frame_003.png"
+        ],
+        "east": [
+          "animations/animating-d4924c9b/east/frame_000.png",
+          "animations/animating-d4924c9b/east/frame_001.png",
+          "animations/animating-d4924c9b/east/frame_002.png",
+          "animations/animating-d4924c9b/east/frame_003.png"
+        ],
+        "south": [
+          "animations/animating-d4924c9b/south/frame_000.png",
+          "animations/animating-d4924c9b/south/frame_001.png",
+          "animations/animating-d4924c9b/south/frame_002.png",
+          "animations/animating-d4924c9b/south/frame_003.png"
+        ]
+      },
+      "animating-a04dc52d": {
+        "south": [
+          "animations/animating-a04dc52d/south/frame_000.png",
+          "animations/animating-a04dc52d/south/frame_001.png",
+          "animations/animating-a04dc52d/south/frame_002.png",
+          "animations/animating-a04dc52d/south/frame_003.png",
+          "animations/animating-a04dc52d/south/frame_004.png",
+          "animations/animating-a04dc52d/south/frame_005.png",
+          "animations/animating-a04dc52d/south/frame_006.png",
+          "animations/animating-a04dc52d/south/frame_007.png"
+        ],
+        "north": [
+          "animations/animating-a04dc52d/north/frame_000.png",
+          "animations/animating-a04dc52d/north/frame_001.png",
+          "animations/animating-a04dc52d/north/frame_002.png",
+          "animations/animating-a04dc52d/north/frame_003.png",
+          "animations/animating-a04dc52d/north/frame_004.png",
+          "animations/animating-a04dc52d/north/frame_005.png",
+          "animations/animating-a04dc52d/north/frame_006.png",
+          "animations/animating-a04dc52d/north/frame_007.png"
+        ],
+        "west": [
+          "animations/animating-a04dc52d/west/frame_000.png",
+          "animations/animating-a04dc52d/west/frame_001.png",
+          "animations/animating-a04dc52d/west/frame_002.png",
+          "animations/animating-a04dc52d/west/frame_003.png",
+          "animations/animating-a04dc52d/west/frame_004.png",
+          "animations/animating-a04dc52d/west/frame_005.png",
+          "animations/animating-a04dc52d/west/frame_006.png",
+          "animations/animating-a04dc52d/west/frame_007.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-02T04:03:17.595965"
+}

@@ -1,0 +1,27 @@
+# scene5b variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Wider view of a stone memorial wall -- the full inscription panel visible. Multiple columns of engraved names as abstract letter silhouettes. The names are dense in some areas, sparse in others (lives cut short at different moments).
+
+One name in the center of the panel is slightly larger or bolder than the others -- set apart by its isolation in a small empty field of stone. No readable text.
+
+At the base of the wall: small offerings left by visitors -- a few paper-craft flower shapes (flat, stylized), a folded piece of paper against the stone base. Cold winter light rakes across the surface from the left.
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture.
+
+PALETTE: cool grey-beige stone wall. The flowers are the only color accents -- one green stem, one red/orange bloom (flat aplat). Cold directional light. Grey-blue sky visible at the very top of the frame.
+
+COMPOSITION:
+- Stone wall fills the full frame, edge to edge
+- Columns of engraving silhouettes visible across the surface
+- One bold name isolated in center-lower area
+- Base offerings in foreground-bottom: flowers, paper
+
+CRITICAL TECHNICAL RULES:
+- NO readable text anywhere
+- Flat color fills only, no hatching, no gradients
+- Flowers: flat paper-craft shapes, no photorealism
+- 9:16 vertical (1080x1920)

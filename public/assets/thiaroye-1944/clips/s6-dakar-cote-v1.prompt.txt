@@ -1,0 +1,39 @@
+# 6 Seedance clip prompt
+Tool: Seedance 2.0 image-to-video
+Source: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene6/scene6-source-v1a.png
+Duration: 7s
+Cost: $2.10
+
+---CHECKLIST---
+1_mots_rouges: OK : 12 mots verifies
+2_image_vivante: OK : vagues, oiseaux, vent dans vetements, reflet soleil, ciel coucher
+3_personnages_vie: OK : jeune homme (SHIFTS weight, jacket BILLOWS, hair LIFTS), oiseaux (GLIDE), vagues (LAP)
+4_timeline: OK : 3 segments (0-2s / 2-4s / 4-7s)
+5_actions_macro: OK : 2-3 verbes MAJUSCULES par segment
+6_camera_sobre: OK : slow dolly-out + tres lent tilt-up
+7_style_clause: OK
+8_anti_morph: OK : jacket RIGID SHAPE, photograph flat
+9_environnement: OK : waves LAP, birds GLIDE, jacket BILLOWS, sun reflection SHIMMERS
+10_closing: OK
+11_longueur: ~1300 chars
+12_duree: 7s sweet spot
+13_contradictions: OK
+14_pensees_internes: OK
+15_regles_projet: OK : R75 i2v, scene calme = dolly-out verso ciel, palette warm restored, oiseaux plats
+
+---PROMPT---
+Animate this exact illustration. STRICT STYLE FIDELITY: flat 2D paper-craft, warm restored sunset palette (gold-orange-indigo sky, red-ochre sand, deep teal ocean), clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.
+
+Camera: Slow dolly-out from the young man over 7 seconds, combined with imperceptible upward tilt toward the sunset sky. Smooth, wide, commemorative movement.
+
+SECONDS 0 TO 2: The young man SHIFTS his weight forward onto his right foot, body LEANING slightly toward the ocean. His jacket BILLOWS outward on the left side as a sea wind PULLS at the fabric. His hair LIFTS at the tips. His arms hang loose at his sides.
+
+SECONDS 2 TO 4: Three birds GLIDE across the upper sky, moving left to right in flat silhouette shapes. Ocean waves LAP at the shoreline with flat paper-craft ripple lines advancing toward the sand. The sun's reflection on the water SHIMMERS -- flat golden-orange ribbon shapes shifting on the teal surface. The young man TURNS his head slightly left, gaze SCANNING toward the horizon.
+
+SECONDS 4 TO 7: The young man SQUARES his stance, both feet planted, body SETTLING. His jacket fabric FLUTTERS once more then SETTLES. More birds GLIDE from right to left across the sky. Waves continue to LAP. The sunset sky HOLDS its warm palette.
+
+Continuous throughout: Ocean waves LAP rhythmically with flat paper-craft shapes. Birds GLIDE in flat silhouette. Wind PULLS at jacket and hair intermittently. Sun reflection SHIMMERS on water.
+
+The photograph on the sand stays flat and face-down -- it does not move on its own. No text, no words visible anywhere.
+
+All elements stay engaged in continuous organic motion. MAINTAIN warm flat color fills throughout, no gradients, no realistic shading. Ambient sounds only: ocean waves, sea wind, distant bird calls, no music, no dialogue.
