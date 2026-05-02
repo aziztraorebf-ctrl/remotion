@@ -71,6 +71,25 @@ import { SonjataScene9, SONJATA_SCENE9_FRAMES } from "./projects/geoafrique-shor
 import { SonjataScene10, SONJATA_SCENE10_FRAMES } from "./projects/geoafrique-shorts/SonjataScene10";
 import { SonjataCTA, SONJATA_CTA_FRAMES } from "./projects/geoafrique-shorts/SonjataCTA";
 import { SonjataShortFull, SONJATA_SHORT_FULL_FRAMES } from "./projects/geoafrique-shorts/SonjataShortFull";
+import { AtlasShakaFull, SHAKA_TOTAL_FRAMES, SHAKA_FPS } from "./projects/shaka-zulu/AtlasShakaFull";
+import { AtlasShakaHook } from "./projects/shaka-zulu/scenes/AtlasShakaHook";
+import { AtlasShakaS1Geo } from "./projects/shaka-zulu/scenes/AtlasShakaS1Geo";
+import { AtlasShakaS2A1Iklwa } from "./projects/shaka-zulu/scenes/AtlasShakaS2A1Iklwa";
+import { AtlasShakaS2A2Bouclier } from "./projects/shaka-zulu/scenes/AtlasShakaS2A2Bouclier";
+import { AtlasShakaS2A3Cornes } from "./projects/shaka-zulu/scenes/AtlasShakaS2A3Cornes";
+import { AtlasShakaS2A4Synthese } from "./projects/shaka-zulu/scenes/AtlasShakaS2A4Synthese";
+import { AtlasShakaS3Expansion } from "./projects/shaka-zulu/scenes/AtlasShakaS3Expansion";
+import { AtlasShakaS4Nandi } from "./projects/shaka-zulu/scenes/AtlasShakaS4Nandi";
+import { AtlasShakaS5CTA } from "./projects/shaka-zulu/scenes/AtlasShakaS5CTA";
+import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/shaka-zulu/timing";
+import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
+import {
+  ThiaroyeShortV5,
+  THIAROYE_V5_FRAMES,
+  THIAROYE_V5_WIDTH,
+  THIAROYE_V5_HEIGHT,
+  THIAROYE_V5_FPS,
+} from "./projects/geoafrique-shorts/ThiaroyeShortV5";
 import { SeedanceTest } from "./projects/geoafrique-shorts/SeedanceTest";
 import { Beat01DollyInTest } from "./projects/geoafrique-shorts/Beat01DollyInTest";
 import { Beat01OceanOverlayTest } from "./projects/geoafrique-shorts/Beat01OceanOverlayTest";
@@ -79,7 +98,8 @@ import { HistoricalMap } from "./projects/geoafrique-shorts/components/Historica
 import { HistoricalMapGemini } from "./projects/geoafrique-shorts/components/HistoricalMapGemini";
 import { HybridMapTest } from "./projects/geoafrique-shorts/components/HybridMapTest";
 import { KirinaDateCard } from "./projects/geoafrique-shorts/components/KirinaDateCard";
-import { TOTAL_FRAMES_WITH_CTA as ABOU_FRAMES, BEATS } from "./projects/geoafrique-shorts/timing";
+import { TOTAL_FRAMES as ABOU_FRAMES } from "./projects/geoafrique-shorts/timing-abou-bakari";
+import { BEATS as OLD_BEATS } from "./projects/geoafrique-shorts/timing";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -144,7 +164,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Beat03FleetManifest"
           component={Beat03FleetManifest}
-          durationInFrames={BEATS.fleet.end - BEATS.fleet.start}
+          durationInFrames={OLD_BEATS.fleet.end - OLD_BEATS.fleet.start}
           fps={30}
           width={1080}
           height={1920}
@@ -326,12 +346,157 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
         />
         <Composition
+          id="SubtitleTest"
+          component={SubtitleTest}
+          durationInFrames={SUBTITLE_TEST_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
           id="SonjataShortFull"
           component={SonjataShortFull}
           durationInFrames={SONJATA_SHORT_FULL_FRAMES}
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="ThiaroyeShortV5"
+          component={ThiaroyeShortV5}
+          durationInFrames={THIAROYE_V5_FRAMES}
+          fps={THIAROYE_V5_FPS}
+          width={THIAROYE_V5_WIDTH}
+          height={THIAROYE_V5_HEIGHT}
+        />
+      </Folder>
+      <Folder name="atlas-shaka-zulu">
+        <Composition
+          id="AtlasShakaFull"
+          component={AtlasShakaFull}
+          durationInFrames={SHAKA_TOTAL_FRAMES}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            imageVariant: "gemini-parchemin" as const,
+            musicVariant: "ingoma" as const,
+            musicVolume: 0.07,
+          }}
+        />
+        <Composition
+          id="AtlasShakaHook"
+          component={AtlasShakaHook}
+          durationInFrames={SHAKA_SEGMENTS.HOOK.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="AtlasShakaS1Geo"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS1Geo as any}
+          durationInFrames={SHAKA_SEGMENTS.S1_GEO.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            durationFrames: SHAKA_SEGMENTS.S1_GEO.durationFrames,
+            insertNombre1500: {
+              triggerFrameLocal: SHAKA_INSERTS.S1_NOMBRE_1500.triggerFrame - SHAKA_SEGMENTS.S1_GEO.startFrame,
+              durationFrames: SHAKA_INSERTS.S1_NOMBRE_1500.durationFrames,
+            },
+          }}
+        />
+        <Composition
+          id="AtlasShakaS2A1Iklwa"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS2A1Iklwa as any}
+          durationInFrames={SHAKA_S2_ACTS.A1_IKLWA.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            imageVariant: "gemini-parchemin" as const,
+            durationFrames: SHAKA_S2_ACTS.A1_IKLWA.durationFrames,
+          }}
+        />
+        <Composition
+          id="AtlasShakaS2A2Bouclier"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS2A2Bouclier as any}
+          durationInFrames={SHAKA_S2_ACTS.A2_BOUCLIER.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            imageVariant: "gemini-parchemin" as const,
+            durationFrames: SHAKA_S2_ACTS.A2_BOUCLIER.durationFrames,
+          }}
+        />
+        <Composition
+          id="AtlasShakaS2A3Cornes"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS2A3Cornes as any}
+          durationInFrames={SHAKA_S2_ACTS.A3_CORNES.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: SHAKA_S2_ACTS.A3_CORNES.durationFrames }}
+        />
+        <Composition
+          id="AtlasShakaS2A4Synthese"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS2A4Synthese as any}
+          durationInFrames={SHAKA_S2_ACTS.A4_GQOKLI_SYNTHESE.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            durationFrames: SHAKA_S2_ACTS.A4_GQOKLI_SYNTHESE.durationFrames,
+            imageVariant: "gemini-parchemin" as const,
+          }}
+        />
+        <Composition
+          id="AtlasShakaS3Expansion"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS3Expansion as any}
+          durationInFrames={SHAKA_SEGMENTS.S3_EXPANSION.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: SHAKA_SEGMENTS.S3_EXPANSION.durationFrames }}
+        />
+        <Composition
+          id="AtlasShakaS4Nandi"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS4Nandi as any}
+          durationInFrames={SHAKA_SEGMENTS.S4_NANDI.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            durationFrames: SHAKA_SEGMENTS.S4_NANDI.durationFrames,
+            nandiMeurtFrameLocal: SHAKA_BEATS.NANDI_MEURT.startFrame - SHAKA_SEGMENTS.S4_NANDI.startFrame,
+            insertNombre4000FrameLocal: SHAKA_INSERTS.S4_NOMBRE_4000.triggerFrame - SHAKA_SEGMENTS.S4_NANDI.startFrame,
+            insertNombre4000Duration: SHAKA_INSERTS.S4_NOMBRE_4000.durationFrames,
+          }}
+        />
+        <Composition
+          id="AtlasShakaS5CTA"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={AtlasShakaS5CTA as any}
+          durationInFrames={SHAKA_SEGMENTS.S5_CTA.durationFrames}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{
+            durationFrames: SHAKA_SEGMENTS.S5_CTA.durationFrames,
+            napoleonFrame: SHAKA_INSERTS.S5_CASCADE_NAPOLEON.triggerFrame - SHAKA_SEGMENTS.S5_CTA.startFrame,
+            alexandreFrame: SHAKA_INSERTS.S5_CASCADE_ALEXANDRE.triggerFrame - SHAKA_SEGMENTS.S5_CTA.startFrame,
+            shakaFrame: SHAKA_INSERTS.S5_CASCADE_SHAKA.triggerFrame - SHAKA_SEGMENTS.S5_CTA.startFrame,
+            abonneToiFrame: Math.round((148.100 - 140.489) * 30),
+          }}
         />
       </Folder>
       <Folder name="peste-1347">
