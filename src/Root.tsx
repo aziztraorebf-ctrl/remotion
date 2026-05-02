@@ -86,6 +86,9 @@ import { InsertBouclierSchema } from "./projects/shaka-zulu/inserts/InsertBoucli
 import { InsertCornesSchema } from "./projects/shaka-zulu/inserts/InsertCornesSchema";
 import { InsertNombre4000 } from "./projects/shaka-zulu/inserts/InsertNombre4000";
 import { InsertNombre1500 } from "./projects/shaka-zulu/inserts/InsertNombre1500";
+import { CornesFrameDemo } from "./projects/shaka-zulu/scenes/CornesFrameDemo";
+import { CornesFrameNarrative } from "./projects/shaka-zulu/scenes/CornesFrameNarrative";
+import { PaperGrainDemo } from "./projects/shaka-zulu/scenes/PaperGrainDemo";
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/shaka-zulu/timing";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
@@ -553,6 +556,37 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1920}
           defaultProps={{ durationFrames: 120 }}
+        />
+        {/* Vague 2 demos */}
+        <Composition
+          id="ShakaCornesFrameDemo"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={CornesFrameDemo as any}
+          durationInFrames={135}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 135 }}
+        />
+        <Composition
+          id="ShakaCornesFrameNarrative"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={CornesFrameNarrative as any}
+          durationInFrames={150}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 150 }}
+        />
+        <Composition
+          id="ShakaPaperGrainDemo"
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          component={PaperGrainDemo as any}
+          durationInFrames={90}
+          fps={SHAKA_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ durationFrames: 90 }}
         />
       </Folder>
       <Folder name="peste-1347">

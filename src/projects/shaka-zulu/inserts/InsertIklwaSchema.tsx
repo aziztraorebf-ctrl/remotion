@@ -11,6 +11,7 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
 import { SHAKA_PALETTE, SHAKA_FONTS } from "../components/AtlasShakaPalette";
+import { SourceCartouche } from "../components/SourceCartouche";
 
 interface InsertIklwaSchemaProps {
   durationFrames: number;
@@ -45,13 +46,31 @@ export const InsertIklwaSchema: React.FC<InsertIklwaSchemaProps> = ({ durationFr
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
+  // KIMI FIX : pulsation lame a l'apparition (signal d'importance narratif)
+  const bladePulse = interpolate(
+    frame - iklwaStart,
+    [0, 8, 16, 30],
+    [1, 1.08, 1.0, 1.0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  // KIMI FIX : croix qui se trace au lieu d'apparaitre (stroke-dashoffset)
+  const crossDashLen = 200;
+  const crossDashOffset = (1 - compareT) * crossDashLen;
+
   return (
-    <AbsoluteFill style={{ background: SHAKA_PALETTE.NOIR_PROFOND, opacity }}>
-      <svg viewBox="0 0 1080 1920" style={{ width: "100%", height: "100%" }}>
+    <AbsoluteFill style={{ opacity }}>
+      <svg viewBox="0 0 1080 1920" style={{ width: "100%", height: "100%", position: "absolute", inset: 0 }}>
         <defs>
+          {/* KIMI FIX : fond CARTE_FOND avec vignettage radial subtle */}
+          <radialGradient id="iklwaBg" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stopColor="#241810" stopOpacity="1" />
+            <stop offset="55%" stopColor="#1A1208" stopOpacity="1" />
+            <stop offset="100%" stopColor="#0D0D0D" stopOpacity="1" />
+          </radialGradient>
           <linearGradient id="bladeGrad" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#7a7a7a" />
-            <stop offset="50%" stopColor="#d8d8d8" />
+            <stop offset="50%" stopColor="#e8e8e8" />
             <stop offset="100%" stopColor="#7a7a7a" />
           </linearGradient>
           <linearGradient id="shaftGrad" x1="0" y1="0" x2="0" y2="1">
@@ -65,7 +84,16 @@ export const InsertIklwaSchema: React.FC<InsertIklwaSchemaProps> = ({ durationFr
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* KIMI FIX : glow argente sur la lame */}
+          <filter id="bladeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="3" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
+        <rect width="1080" height="1920" fill="url(#iklwaBg)" />
 
         {/* === TITRE === */}
         <g
@@ -126,18 +154,21 @@ export const InsertIklwaSchema: React.FC<InsertIklwaSchemaProps> = ({ durationFr
             strokeWidth="1.5"
             opacity={iklwaT}
           />
-          {/* Lame (forme en feuille) */}
-          <path
-            d="M 540 700
-               C 470 660, 470 540, 540 480
-               C 610 540, 610 660, 540 700 Z"
-            fill="url(#bladeGrad)"
-            stroke={SHAKA_PALETTE.OR}
-            strokeWidth="2"
-            strokeDasharray={iklwaPathLen}
-            strokeDashoffset={iklwaDashOffset}
-            opacity={iklwaT}
-          />
+          {/* Lame (forme en feuille) — KIMI FIX : pulsation + glow */}
+          <g transform={`translate(540 590) scale(${bladePulse}) translate(-540 -590)`}>
+            <path
+              d="M 540 700
+                 C 470 660, 470 540, 540 480
+                 C 610 540, 610 660, 540 700 Z"
+              fill="url(#bladeGrad)"
+              stroke={SHAKA_PALETTE.OR}
+              strokeWidth="2"
+              strokeDasharray={iklwaPathLen}
+              strokeDashoffset={iklwaDashOffset}
+              opacity={iklwaT}
+              filter="url(#bladeGlow)"
+            />
+          </g>
           {/* Arete centrale */}
           <line
             x1="540" y1="490" x2="540" y2="695"
@@ -247,20 +278,26 @@ export const InsertIklwaSchema: React.FC<InsertIklwaSchemaProps> = ({ durationFr
             >
               Lance longue (~2,4 m)
             </text>
-            {/* Croix barre rouge */}
+            {/* KIMI FIX : croix BORDEAUX qui se trace (stroke-dasharray) au lieu d'apparition statique */}
             <line
               x1="850" y1="700" x2="950" y2="800"
               stroke={SHAKA_PALETTE.BORDEAUX}
-              strokeWidth="6"
+              strokeWidth="7"
+              strokeDasharray={crossDashLen}
+              strokeDashoffset={crossDashOffset}
               opacity={compareT}
               filter="url(#goldGlow)"
+              strokeLinecap="round"
             />
             <line
               x1="950" y1="700" x2="850" y2="800"
               stroke={SHAKA_PALETTE.BORDEAUX}
-              strokeWidth="6"
+              strokeWidth="7"
+              strokeDasharray={crossDashLen}
+              strokeDashoffset={crossDashOffset}
               opacity={compareT}
               filter="url(#goldGlow)"
+              strokeLinecap="round"
             />
           </g>
         )}
@@ -304,6 +341,14 @@ export const InsertIklwaSchema: React.FC<InsertIklwaSchemaProps> = ({ durationFr
             </text>
           </g>
         )}
+
+        {/* === CARTOUCHE SOURCE ACADEMIQUE === */}
+        <SourceCartouche
+          author="J. Laband"
+          title="The Rise and Fall of the Zulu Kingdom"
+          appearAt={cartoucheStart + 6}
+          parentDurationFrames={durationFrames}
+        />
       </svg>
     </AbsoluteFill>
   );

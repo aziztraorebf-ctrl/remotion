@@ -13,6 +13,7 @@
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
 import { SHAKA_PALETTE, SHAKA_FONTS } from "../components/AtlasShakaPalette";
+import { SourceCartouche } from "../components/SourceCartouche";
 
 interface InsertBouclierSchemaProps {
   durationFrames: number;
@@ -65,10 +66,19 @@ export const InsertBouclierSchema: React.FC<InsertBouclierSchemaProps> = ({ dura
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
+  // KIMI FIX : pulse halo etape 3
+  const pulse3 = 0.5 + 0.5 * Math.sin((frame - step3Start) * 0.4);
+
   return (
-    <AbsoluteFill style={{ background: SHAKA_PALETTE.NOIR_PROFOND, opacity }}>
-      <svg viewBox="0 0 1080 1920" style={{ width: "100%", height: "100%" }}>
+    <AbsoluteFill style={{ opacity }}>
+      <svg viewBox="0 0 1080 1920" style={{ width: "100%", height: "100%", position: "absolute", inset: 0 }}>
         <defs>
+          {/* KIMI FIX : fond CARTE_FOND avec gradient radial */}
+          <radialGradient id="bouclierBg" cx="50%" cy="50%" r="70%">
+            <stop offset="0%" stopColor="#241810" stopOpacity="1" />
+            <stop offset="55%" stopColor="#1A1208" stopOpacity="1" />
+            <stop offset="100%" stopColor="#0D0D0D" stopOpacity="1" />
+          </radialGradient>
           <filter id="redGlow" x="-50%" y="-50%" width="200%" height="200%">
             <feGaussianBlur stdDeviation="8" result="blur" />
             <feMerge>
@@ -77,6 +87,7 @@ export const InsertBouclierSchema: React.FC<InsertBouclierSchemaProps> = ({ dura
             </feMerge>
           </filter>
         </defs>
+        <rect width="1080" height="1920" fill="url(#bouclierBg)" />
 
         {/* === TITRE === */}
         <g
@@ -234,19 +245,27 @@ export const InsertBouclierSchema: React.FC<InsertBouclierSchemaProps> = ({ dura
             </text>
             <ZuluShield x={400} y={1480} scale={0.7} rotation={20} />
             <ZuluShield x={680} y={1480} scale={0.7} rotation={90} opacity={0.6} />
-            {/* Ennemi silhouette + zone fatale rouge */}
+            {/* KIMI FIX : halo danger pulse plus visible (saturate + glow) */}
             <circle
-              cx="780" cy="1480" r="40"
+              cx="780" cy="1480" r={50 + 15 * pulse3}
               fill="none"
-              stroke={SHAKA_PALETTE.BORDEAUX}
-              strokeWidth="4"
-              opacity={fatalPulse}
+              stroke={SHAKA_PALETTE.OR}
+              strokeWidth="2"
+              opacity={step3T * 0.4 * pulse3}
               filter="url(#redGlow)"
             />
             <circle
-              cx="780" cy="1480" r="20"
-              fill={SHAKA_PALETTE.BORDEAUX}
-              opacity={fatalPulse}
+              cx="780" cy="1480" r={40 + 8 * pulse3}
+              fill="none"
+              stroke="#B91C1C"
+              strokeWidth="5"
+              opacity={step3T * (0.5 + 0.5 * pulse3)}
+              filter="url(#redGlow)"
+            />
+            <circle
+              cx="780" cy="1480" r={20 + 4 * pulse3}
+              fill="#B91C1C"
+              opacity={step3T * (0.7 + 0.3 * pulse3)}
             />
             <text
               x="540" y="1640"
@@ -266,7 +285,7 @@ export const InsertBouclierSchema: React.FC<InsertBouclierSchemaProps> = ({ dura
         {/* === CARTOUCHE BAS === */}
         {cartoucheT > 0.05 && (
           <g
-            transform={`translate(540 1820) scale(${0.85 + 0.15 * cartoucheT})`}
+            transform={`translate(540 1760) scale(${0.85 + 0.15 * cartoucheT})`}
             opacity={cartoucheT}
           >
             <rect
@@ -289,6 +308,15 @@ export const InsertBouclierSchema: React.FC<InsertBouclierSchemaProps> = ({ dura
             </text>
           </g>
         )}
+
+        {/* === CARTOUCHE SOURCE ACADEMIQUE === */}
+        <SourceCartouche
+          author="J. Laband"
+          title="The Rise and Fall of the Zulu Kingdom"
+          appearAt={cartoucheStart + 6}
+          parentDurationFrames={durationFrames}
+          y={1860}
+        />
       </svg>
     </AbsoluteFill>
   );
