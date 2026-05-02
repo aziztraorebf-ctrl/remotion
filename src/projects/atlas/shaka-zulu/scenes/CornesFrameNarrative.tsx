@@ -23,9 +23,21 @@ interface CornesFrameNarrativeProps {
 
 const SPRITE = 220; // taille affichage des sprites 128px sources (Kimi: scale 1.5x sprites lateraux)
 
-// Warrior flancs : walk cycle PixelLab reel (6 frames east)
-// Flanc gauche : WALK_EAST + scaleX(-1) pour pointer vers le centre
-// Flanc droit : WALK_EAST normal
+// Warrior flancs — animations
+// Breathing-idle : east (flanc gauche flippe) + west (flanc droit flippe) — 4 frames, lent
+// Walk cycle : east (6 frames, rapide) — declenche a 8s quand cornes convergent
+const IDLE_EAST = [
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/frame_000.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/frame_001.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/frame_002.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/frame_003.png",
+];
+const IDLE_WEST = [
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/frame_000.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/frame_001.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/frame_002.png",
+  "atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/frame_003.png",
+];
 const WALK_EAST = [
   "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_000.png",
   "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_001.png",
@@ -34,7 +46,8 @@ const WALK_EAST = [
   "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_004.png",
   "atlas-shaka-zulu/assets/warrior-walk-cycle/east/frame_005.png",
 ];
-const WALK_SPEED = 4; // frames Remotion par sprite (rapide = mouvement lisible)
+const IDLE_SPEED = 8;  // frames Remotion par sprite idle (lent = respiration)
+const WALK_SPEED = 4;  // frames Remotion par sprite walk (rapide)
 
 const SHAKA_SPRITE = "atlas-shaka-zulu/archive/shaka-walk-east/frame_003.png";
 
@@ -79,14 +92,27 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
   // Shaka reste visible tout le long (pas de fade-out)
   const shakaOpacity = shakaT;
 
-  // Warriors flancs : apparaissent seulement apres 4s (frame 120)
-  // pendant les 4 premieres secondes seules les cornes + ennemi central sont visibles
-  const FLANCS_APPEAR = 120;
-  const WALK_START = 240; // walk cycle demarre a 8s (cornes convergent vers le centre)
+  // Warriors flancs : timing
+  const FLANCS_APPEAR = 120; // 4s — apparition simultanee des deux (idle)
+  const WALK_START = 240;    // 8s — walk cycle demarre (cornes convergent)
+
+  // Opacite identique pour les deux flancs — base sur frame uniquement, pas sur phase
   const flancsOpacity = interpolate(frame, [FLANCS_APPEAR, FLANCS_APPEAR + 20], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+
+  // Sprite a afficher : idle avant WALK_START, walk apres
+  // Flanc gauche : IDLE_EAST (pointe droite, pas de flip necessaire) -> WALK_EAST
+  // Flanc droit  : IDLE_WEST (pointe gauche) -> WALK_EAST + scaleX(-1)
+  const idxIdle = Math.floor(frame / IDLE_SPEED) % IDLE_EAST.length;
+  const idxWalk = Math.floor((frame - WALK_START) / WALK_SPEED) % WALK_EAST.length;
+  const spriteFlanqGauche = frame < WALK_START
+    ? IDLE_EAST[idxIdle]
+    : WALK_EAST[idxWalk];
+  const spriteFlanqDroit = frame < WALK_START
+    ? IDLE_WEST[idxIdle]
+    : WALK_EAST[idxWalk];
 
   // Ennemi au centre (apparait en premier)
   const enemyT = spring({ frame: frame - 5, fps, config: { damping: 20, stiffness: 140 }, from: 0, to: 1 });
@@ -237,8 +263,8 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
         />
       </div>
 
-      {/* Warrior flanc gauche : face a droite (vers le centre) — WALK_EAST pointe a droite, pas de flip */}
-      {frame >= 240 && phaseLeft > 0.05 && (
+      {/* Warrior flanc gauche : face droite (vers centre) — idle east 4s-8s, walk east 8s+ */}
+      {frame >= FLANCS_APPEAR && (
         <div
           style={{
             position: "absolute",
@@ -251,14 +277,14 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
           }}
         >
           <Img
-            src={staticFile(WALK_EAST[frame < WALK_START ? 0 : Math.floor((frame - WALK_START) / WALK_SPEED) % WALK_EAST.length])}
+            src={staticFile(spriteFlanqGauche)}
             style={{ width: "100%", height: "100%", imageRendering: "pixelated" }}
           />
         </div>
       )}
 
-      {/* Warrior flanc droit : face a gauche (vers le centre) — flip WALK_EAST */}
-      {frame >= 120 && phaseRight > 0.05 && (
+      {/* Warrior flanc droit : face gauche (vers centre) — idle west 4s-8s, walk east flippe 8s+ */}
+      {frame >= FLANCS_APPEAR && (
         <div
           style={{
             position: "absolute",
@@ -268,11 +294,11 @@ export const CornesFrameNarrative: React.FC<CornesFrameNarrativeProps> = ({ dura
             height: `${SPRITE / 1920 * 100}%`,
             opacity: flancsOpacity,
             imageRendering: "pixelated",
-            transform: "scaleX(-1)",
+            transform: frame >= WALK_START ? "scaleX(-1)" : undefined,
           }}
         >
           <Img
-            src={staticFile(WALK_EAST[frame < WALK_START ? 0 : Math.floor((frame - WALK_START) / WALK_SPEED) % WALK_EAST.length])}
+            src={staticFile(spriteFlanqDroit)}
             style={{ width: "100%", height: "100%", imageRendering: "pixelated" }}
           />
         </div>
