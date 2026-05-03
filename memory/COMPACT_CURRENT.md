@@ -65,7 +65,7 @@
 | Sprite Koumbi Saleh sur carte | ✅ PixelLab map_object intégré |
 | Cartouches en haut | ✅ règle TOP HALF respectée (bottom = sous-titres) |
 | Zoom espace pivot Koumbi | ✅ vrai zoom continu vers Wagadou (pas centre canvas) |
-| Render final | `out/empire-ghana/beat1-v5.mp4` |
+| Render final | `out/empire-ghana/beat1-v6-final.mp4` (sprite Koumbi animé 4-frames + pulse + halo simultanés) |
 
 ### 5 Fichiers mémoire créés cette session
 1. `feedback_atlas-non-negotiable-rules.md` — 13 règles absolues
@@ -82,16 +82,22 @@
 
 ---
 
-### Prochaine scène = Beat 2 Density (frames 676→1462, ~26s)
+### BEAT 2 DENSITY — VALIDÉ (2026-05-03)
 
-Patterns établis à appliquer :
-- Sprites PixelLab Taghaza (mineurs+bloc-sel), Bambouk (or), Koumbi (caravane), mosquée banco au bon moment
-- Spotlight inserts pour chiffres choc ("90 KG par bloc", "20 000 habitants")
-- Pulse markers + AtlasLabel sur 3 POI à mots-pivots
-- Pan caméra Taghaza→Bambouk→Koumbi (useSpringCamera Mansa Moussa)
-- Cartouches timeline en haut
+| Item | Statut |
+|------|--------|
+| Beat2Density.tsx | ✅ validé Aziz v4 |
+| Render final | `out/empire-ghana/beat2-v4.mp4` (21.7 MB, 786f) |
+| 2 chameaux file indienne | ✅ walk cycle PixelLab SDK, spritesheet 4 frames |
+| Mosquée supprimée | ✅ (sur-chargement carte) |
+| Caravane au bon timing | ✅ mot "caravane" 44.02s → frame 1321 |
 
-Estimation : ~1.5-2h Beat 2 (le plus complexe). Total Beats 2-5 + assemblage : ~5-6h restantes.
+**Nouvelles règles apprises :**
+- Max 3 sprites statiques simultanés sur carte (pas de 4e POI)
+- File indienne = même trajectoire `getChameauPos()` + délai 50f sur le 2e — stagger temporel seul ne suffit pas
+- SDK `animate_with_text` = fallback quand GIF PixelLab non téléchargeable via API (negative_description="" obligatoire, `.pil_image()` pas `.to_image()`)
+
+### Prochaine scène = Beat 3 Silent Barter (frames 1462→2152, ~23s)
 
 ### Skill atlas-video-preproduction activera automatiquement ce workflow
 
