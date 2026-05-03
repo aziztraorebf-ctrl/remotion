@@ -1,104 +1,134 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-05-02 — RESTRUCTURATION WORKSPACE COMPLETE
-> **WORKSPACE REORGANISE** — Nouvelle structure propre executee. ~8 GB liberes. Seedance centralisé dans `public/seedance/`. Atlas composants dans `src/projects/atlas/_shared/`. Mémoire épisodes dans `memory/episodes/`. Voir section "Structure workspace" ci-dessous.
-> **ATLAS SHAKA ZULU = VAGUE 1 TERMINEE** — Structure + timing + inserts solides. Vague 2 = remplacer fake globes CSS par vraie carte d3-geo. Branche `feat/atlas-shaka-zulu-vague1`.
-> **ATLAS MANSA MOUSSA V2 = PRET PUBLICATION** (render final validé 2026-05-01).
-> **THIAROYE V5 = RENDU FINAL SUR VERCEL** (pret Postiz).
-> **SONJATA V7 = RENDU FINAL VALIDE** (pret Postiz).
-> **ABOU BAKARI II = TOUS CLIPS GENERES** (manuel Aziz). Reste assemblage + render.
+> Mise a jour : 2026-05-03 — DECISION STRATEGIQUE : Shaka Zulu en pause + pivot Empire du Ghana
+> **SHAKA ZULU = PAUSE STRATEGIQUE** (mismatch format Atlas / contenu psycho-militaire). Branche `feat/atlas-shaka-zulu-vague1` preserve l'etat. Reprise possible en format Seedance Shorts plus tard.
+> **NOUVEAU PROJET — EMPIRE DU GHANA** (Atlas) : a definir cette session.
+> **PIPELINE ATLAS = MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + Lottie via Claude (NEW) + LightLeaks (NEW) + Forced Alignment ElevenLabs.
+> **3 SHORTS PRETS POSTIZ** : Mansa Moussa V2, Thiaroye V5, Sonjata V7 (dans `out/PRET-PUBLICATION/`).
 
 ---
 
-## STRUCTURE WORKSPACE (post-restructuration 2026-05-02)
+## DECISION SHAKA ZULU PAUSE (2026-05-03)
+
+### Raisons
+1. **Mismatch format/contenu** : Shaka raconte innovation militaire + psychologie + rituels = abstraction tactique + intériorité + culturel. Le format Atlas-carte est mal adapté pour ce type d'histoire (pas territoire/mouvement).
+2. **Production en bagaille** : 9 scènes, dont 6 jamais visuellement validées avant audit 2026-05-03. Le concat audit révèle le manque de cohérence narrative.
+3. **Pipeline Atlas pas encore mature** : on découvrait encore en route. Shaka aurait demandé 2-3 sessions ciblées de finition (6-12h) sans garantie de qualité.
+4. **Format alternatif prouvé** : Sonjata Papercraft V7 (Seedance) = même profil narratif que Shaka. Si retour Shaka un jour, format naturel = Seedance Shorts, pas Atlas.
+5. **Warm-up reseaux 3-4 jours** : opportunite de produire un Atlas qui *merite* la carte (Empire du Ghana) plutot que debugger Shaka.
+
+### Ce qui est preserve (zero perte)
+- **Composants reutilisables Atlas** : `_shared/` (AtlasMercator, AtlasGlobe, AtlasLabel, AtlasCaravane)
+- **Composants Shaka specifiques** : Cornes/Iklwa/Bouclier inserts (reutilisables si Shaka revient)
+- **Pipeline durci** : d3-geo + Natural Earth + walk cycle PixelLab + Lottie + LightLeaks
+- **Audio narration-v5.mp3** : pret a reutiliser si reprise format Seedance
+- **Script Shaka V5 LOCKED** : dans `memory/episodes/shaka-zulu/`
+- **Forced alignment ElevenLabs** : `shaka-alignment.ts` + `timing.ts` pret
+- **Audit visuel complet** : `out/shaka-audit/shaka-zulu-FULL-AUDIT.mp4` (2:26, ref pour reprise)
+- **Branche git** : `feat/atlas-shaka-zulu-vague1` preserve tout
+
+### Comment revenir sur Shaka
+Si reprise un jour :
+- **Option A** (recommandee) : convertir le script V5 LOCKED en Seedance Short style Sonjata Papercraft. Re-utiliser audio + alignment.
+- **Option B** : reprendre Atlas après 2-3 episodes Atlas matures (Ghana, Hannibal, etc.). Avec un pipeline plus solide, Shaka pourrait marcher.
+
+---
+
+## NOUVEAUX OUTILS VALIDES SESSION 2026-05-03
+
+### 1. `@remotion/lottie` via Claude (icones simples)
+- Pattern require() obligatoire (pas fetch + delayRender)
+- Format JSON canonique strict (validé via skill Wiggle)
+- Capacites : couronne, lance, fleche-pulse, bouclier, croissant, etoile, cercles d'echo
+- Limite : ~10 vertices bezier max, max 5 instances simultanees
+- 3 JSON pret a reutiliser : `crown-pulse.json`, `iklwa.json`, `arrow-pulse.json`
+- Refs memoire : `feedback_remotion-lottie-headless-broken.md` + `tools/lottie-claude-inventaire.md`
+
+### 2. `@remotion/light-leaks` (atmosphere)
+- Validé en mini-render (LightLeakTest)
+- Usage : 8-10 frames bref, opacity cap 0.35, complement aux moments emotionnels
+- Pas standalone
+
+### Tests sources preserves
+- `src/projects/atlas/shaka-zulu/tests/LottieTest.tsx`
+- `src/projects/atlas/shaka-zulu/tests/LightLeakTest.tsx`
+- 3 JSON Lottie : `crown-pulse.json`, `iklwa.json`, `arrow-pulse.json`
+- Renders valides : `out/tests/lottie-3-icons.mp4`, `out/tests/light-leak-test-v2.mp4`, `out/tests/lottie-test-crown-v3.mp4`
+
+---
+
+## PROJETS PRETS POSTIZ (3 Shorts)
+
+| Video | Statut | URL Vercel |
+|-------|--------|------------|
+| Sonjata Papercraft V7 | PRET | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/sonjata-papercraft/v7-final/sonjata-final-v7-compressed-M5mA0ElRb3n0LUdzf8gAMmWYuUeZte.mp4 |
+| Thiaroye 1944 V5 | PRET | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/thiaroye-1944/renders/thiaroye-v5-FINAL-compressed-KzMQnwVZtYLExnaGnaOz8PdyFGFBmk.mp4 |
+| Mansa Moussa Atlas V2 | PRET | render local valide 2026-05-01 |
+
+Fichiers locaux : `out/PRET-PUBLICATION/`
+
+**Etat reseau** : warm-up 3-4 jours en cours. Publication attendue post-warm-up.
+
+---
+
+## PROJET EN COURS — EMPIRE DU GHANA (Atlas)
+
+### Pourquoi
+Aziz a choisi (2026-05-03) parmi liste figures Atlas-natives :
+- **Ghana** = Top 2 ranking. Avantage : peu connu = curiosite forte = potentiel viral
+- Ecarte : Hannibal (trop connu, sature YouTube)
+- Format Atlas natif : routes commerciales trans-sahariennes = territoire + mouvement
+
+### Contraintes Aziz pour cet episode (et tous Atlas futurs)
+**RYTHME RAPIDE OBLIGATOIRE** :
+- Format viral YouTube/TikTok/Instagram
+- Pas d'encyclopedie / cours d'histoire
+- Mouvements de camera frequents
+- Beaucoup de faits qui apparaissent
+- Jamais statique
+- Si on n'a pas quoi mettre sur la carte, c'est mauvais signe
+
+### Etat actuel
+- **Recherche/script** : a faire
+- **Audio** : a generer apres script LOCKED
+- **Visuels** : pipeline Atlas mature, prêt
+- **Outils dispo** : d3-geo, AtlasMercator, walk cycle PixelLab, Lottie via Claude, LightLeaks, Gemini, ElevenLabs
+
+### Prochaine action
+1. Recherche brève Empire du Ghana (figures, dates, angles narratifs)
+2. Proposition d'angle (rythmique, non-encyclopedique)
+3. Si valide par Aziz : script V1 selon `memory/templates/script-atlas-v1.md`
+
+---
+
+## STRUCTURE WORKSPACE (post-cleanup 2026-05-03)
 
 ```
 src/projects/
   atlas/
-    _shared/          ← AtlasMercator, AtlasGlobe, AtlasLabel, AtlasCaravane, etc. + ATLAS-COMPOSANTS.md
-    mansa-moussa/     ← AtlasMansaMoussaV2Final.tsx + timing + narration
-    shaka-zulu/       ← AtlasShakaFull.tsx + scenes/ + components/ + inserts/
-    _archive/         ← silhouette-conte, silhouette-questions, veilleur-ombre, peste-1347-pixel
-  geoafrique-shorts/  ← INCHANGE
+    _shared/          ← composants reutilisables Atlas
+    mansa-moussa/     ← V2 PRET PUBLICATION
+    shaka-zulu/       ← PAUSE (preserve, branche feat/atlas-shaka-zulu-vague1)
+      tests/          ← LightLeakTest + LottieTest (réutilisables)
+    _archive/         ← projets anciens
+  geoafrique-shorts/
+  ...
 
-public/seedance/      ← NOUVEAU — tout Seedance centralisé
-  style-refs/         ← images style (gemini/, gpt/, thiaroye/, sonjata-papercraft/, refs canoniques)
-  test-clips/         ← clips bruts (fal-seedance-tests, sonjata-papercraft, yaroflasher, seedance-examples)
-  heros-oublies-refs/ ← character sheets Soundjata, Yaa Asantewaa
-  historical-refs/    ← sheets Abou Bakari, Amanirenas (LoRA training)
-  moodboards/         ← soundjata-charte, lat-dior, vivid-tests, gpt-vs-gemini, thiaroye-backlog
-  INDEX.md            ← guide navigation + fichiers clés pour prompts
-
-memory/episodes/      ← NOUVEAU
-  mansa-moussa/       ← ex atlas-mansa-moussa/
-  shaka-zulu/         ← ex atlas-shaka-zulu/
-memory/atlas/         ← NOUVEAU
-  ATLAS-COMPOSANTS.md ← catalogue composants (aussi dans _shared/)
-
-data/geo/             ← NOUVEAU — données géo centralisées
-  atlas-v2-data.json
-  shaka-zulu-data.json
-
-scripts/atlas/        ← NOUVEAU — scripts precompute
-  precompute-mansa-moussa.mjs
-  precompute-globe-paths.mjs
-  precompute-africa-svg-paths.mjs
-
-out/PRET-PUBLICATION/ ← SEUL DOSSIER DANS out/ (3 MP4 finals)
-lora-training/        ← GARDE (usage futur)
+out/
+  PRET-PUBLICATION/   ← 3 MP4 finals (Mansa Moussa, Thiaroye, Sonjata)
+  shaka-audit/        ← shaka-zulu-FULL-AUDIT.mp4 (ref pause)
+  tests/              ← lottie-3-icons, lottie-test-crown-v3, light-leak-test-v2
 ```
 
 ---
-> **ATLAS MANSA MOUSSA V2 = PRET PUBLICATION** (render final validé 2026-05-01).
-> **THIAROYE V5 = RENDU FINAL SUR VERCEL** (pret Postiz).
-> **SONJATA V7 = RENDU FINAL VALIDE** (pret Postiz).
-> **ABOU BAKARI II = TOUS CLIPS GENERES** (manuel Aziz). Reste assemblage + render.
 
----
+## PROJETS EN ATTENTE (rappel)
 
-## PROJET ACTIF — ATLAS MANSA MOUSSA V2 (BLOCS 1-6 valides)
+### THIAROYE V5
+- STATUT : RENDU FINAL SUR VERCEL. Pret publication Postiz.
 
-### Statut 2026-05-01 fin session
-- Stack : d3-geo + Natural Earth 50m + Historical Basemaps + Remotion vectoriel SVG (zero Mapbox) — VALIDE DEFINITIF
-- **Composition finale** : `AtlasMansaMoussaV2Final` (111.8s, 3355 frames) — EXISTE dans src/
-- **Toutes scenes codees et validees** : Hook, S1, S2, S3, S4, Insert1 Pie, Insert2 Bar, Insert3 Line, CtaScene
-- **Audio inserts generes** : insert-1-bambouk.mp3 (7.84s), insert-2-expeditions.mp3 (8.48s), insert-3-mediterranee.mp3 (6.72s)
-- Render command : `npx remotion render AtlasMansaMoussaV2Final out/... --gl=angle --concurrency=1`
+### SONJATA V7
+- STATUT : RENDU FINAL VALIDE. Pret publication Postiz. Duration 166s.
 
-### DECISIONS ACTEES S4 (session 2026-05-01)
-- Grisaille "Un seul homme" : **Afrique seulement** (pas Europe/Arabie) — Mali or, Egypte rouge, reste Afrique → gris
-- Fleches Mediterranee : **supprimees** — cartouche + glow rouge suffit
-- Medaillon Gizeh : dans groupe tilt/camera (coordonnees mercator Caire), pas ecran fixe
-- Insert 3 cartouche : "AL-UMARI 1338 · AL-MAQRIZI XVe / DUREE DOCUMENTEE ~12 ANS" (sans doublon)
-- CTA abonnement : **scene separee BLOC 8**, pas dans CtaScene comparative
-
-### PROCHAINE ACTION — BLOC 7 karaoke
-Brief complet + starter prompt : `memory/atlas-mansa-moussa/NEXT-SESSION-mansa-moussa-v2-finition.md`
-- Composant `AtlasV2Subtitles` — Whisper word-level, or #D4A574, desactive pendant inserts+CTA
-- Fix audio "marche" (accent aigu drop ElevenLabs) — patch ou regeneration segment
-
-### Cout cumule V2
-~$0.60 (pipeline vectoriel + mini-renders + ElevenLabs inserts).
-
----
-
-## PROJET TERMINE — THIAROYE V5
-
-- **STATUT** : RENDU FINAL SUR VERCEL. Pret publication Postiz.
-- **URL** : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/thiaroye-1944/renders/thiaroye-v5-FINAL-compressed-KzMQnwVZtYLExnaGnaOz8PdyFGFBmk.mp4
-- **Alternative locale** : `out/thiaroye-v5-music-005.mp4` (musique 0.05)
-- Voir MEMORY.md pour details complets.
-
----
-
-## PROJET TERMINE — SONJATA V7 FINAL
-
-- **STATUT** : RENDU FINAL VALIDE. Pret publication Postiz.
-- **URL** : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/sonjata-papercraft/v7-final/sonjata-final-v7-compressed-M5mA0ElRb3n0LUdzf8gAMmWYuUeZte.mp4
-- Duration : 166s. Voir MEMORY.md pour details complets.
-
----
-
-## PROJET EN COURS — ABOU BAKARI II
-
-- **STATUT 2026-04-29** : TOUS CLIPS GENERES manuellement par Aziz. Reste 1-2 extraits + assemblage Remotion + render final.
+### ABOU BAKARI II
+- STATUT 2026-04-29 : TOUS CLIPS GENERES manuellement. Reste assemblage Remotion + render final.
 - Dashboard : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/dashboard/dashboard-bundled-6LXCXjaaPNMOJyWMynqk8dc11JGfy5.html

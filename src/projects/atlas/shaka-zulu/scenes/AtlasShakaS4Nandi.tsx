@@ -1,22 +1,24 @@
 // S4 Nandi — Atlas Shaka Zulu
-// Bascule palette or -> bordeaux + insert "4 000" compteur sanglant spring lourd
+// AtlasMercator projection mourning + MourningWarp + bascule palette or->bordeaux
+// Insert "4 000" compteur sanglant + dramaLine finale
 // Duree : 45.4s (frames 2827 -> 4189 globale, 0 -> 1361 local)
-//
-// VAGUE 1 : palette transition + counter spring + texte JSA + dramaLine
-// VAGUE 2 : ajouter Nandi spectre + fracture carte (Kimi Q4)
 
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring, useVideoConfig } from "remotion";
 import { SHAKA_PALETTE, SHAKA_FONTS } from "../components/AtlasShakaPalette";
+import { MourningWarp } from "../components/MourningWarp";
 import { paletteTransition, backgroundTransition } from "../helpers/paletteTransition";
 import { counterSpring } from "../helpers/counterSpring";
 import { InsertNombre4000 } from "../inserts/InsertNombre4000";
+import {
+  AtlasMercator,
+  AtlasDefs,
+} from "../../_shared/atlas-components";
+import shakaData from "../../_shared/shaka-zulu-data.json";
 
 export interface AtlasShakaS4NandiProps {
   durationFrames: number;
-  // Frame locale a S4 ou Nandi meurt (NARRATIVE_BEATS.NANDI_MEURT - SEGMENTS.S4_NANDI.startFrame)
   nandiMeurtFrameLocal: number;
-  // Frame locale du compteur 4000 (INSERTS.S4_NOMBRE_4000.triggerFrame - S4 startFrame)
   insertNombre4000FrameLocal: number;
   insertNombre4000Duration: number;
 }
@@ -39,7 +41,6 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
     SHAKA_PALETTE.BORDEAUX
   );
 
-  // Fond : assombrissement progressif
   const backgroundColor = backgroundTransition(
     frame,
     nandiMeurtFrameLocal,
@@ -48,25 +49,59 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
     "#0D0000"
   );
 
-  // Compteur 4000 visible
+  // Camera : zoom leger sur ZAF, pull-back progressif (moins agressif que S3)
+  const camScale = interpolate(frame, [0, durationFrames], [1.8, 1.4], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const camX = 360 - 420 * camScale;
+  const camY = 640 - 720 * camScale;
+  const driftX = Math.sin(frame * 0.006) * 3;
+  const driftY = Math.cos(frame * 0.005) * 2;
+
+  // Pays ZAF bascule or -> bordeaux fonce avec la mort de Nandi
+  const mourning = shakaData.mourning;
+  const countries = mourning.countries as { iso: string; d: string }[];
+
+  // Couleur ZAF : or avant Nandi meurt, bordeaux fonce apres
+  function lerpHex(t: number, c1: string, c2: string): string {
+    const r1 = parseInt(c1.slice(1, 3), 16);
+    const g1 = parseInt(c1.slice(3, 5), 16);
+    const b1 = parseInt(c1.slice(5, 7), 16);
+    const r2 = parseInt(c2.slice(1, 3), 16);
+    const g2 = parseInt(c2.slice(3, 5), 16);
+    const b2 = parseInt(c2.slice(5, 7), 16);
+    const r = Math.round(r1 + (r2 - r1) * t);
+    const g = Math.round(g1 + (g2 - g1) * t);
+    const b = Math.round(b1 + (b2 - b1) * t);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  const paletteT = interpolate(
+    frame,
+    [nandiMeurtFrameLocal, nandiMeurtFrameLocal + 90],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  const zafColor = lerpHex(paletteT, "#C8A84B", "#4A0A0A");
+
+  const highlightFills: Record<string, string> = {
+    ZAF: zafColor,
+  };
+
+  // Contour ZAF pulse bordeaux (s'intensifie apres mort Nandi)
+  const pulseT = (frame % (fps * 3)) / (fps * 3);
+  const borderOpacity = interpolate(paletteT, [0, 1], [0.3, 0.7]) +
+    interpolate(paletteT, [0, 1], [0.1, 0.25]) * Math.sin(pulseT * Math.PI * 2);
+  const borderWidth = 1.5 + paletteT * 2;
+  const zafPath = countries.find((c) => c.iso === "ZAF")?.d ?? "";
+
+  // Insert 4000 visible
   const insertVisible =
     frame >= insertNombre4000FrameLocal &&
     frame < insertNombre4000FrameLocal + insertNombre4000Duration;
 
-  // Compteur spring
-  const counter = counterSpring({
-    frame,
-    startFrame: insertNombre4000FrameLocal,
-    target: 4000,
-    counterDurationFrames: 30,
-    fps,
-    mass: 3,
-    damping: 15,
-    stiffness: 100,
-  });
-
-  // DramaLine "Pour n'avoir pas pleuré assez fort." apparait a la fin du counter (~frame 122s = local frame ~880)
-  // En frame Remotion : 122.680s * 30 - S4 start * 30 = (122.680 - 94.240) * 30 = ~853
+  // DramaLine "Pour n'avoir pas pleuré assez fort."
   const dramaLineFrame = 853;
   const dramaLineSpring = spring({
     frame: Math.max(0, frame - dramaLineFrame),
@@ -75,7 +110,6 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
     from: 0,
     to: 1,
   });
-  const dramaLineVisible = frame >= dramaLineFrame;
 
   // Fade global
   const opacity = interpolate(
@@ -87,22 +121,70 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
 
   return (
     <AbsoluteFill style={{ background: backgroundColor, opacity }}>
-      {/* Fond : carte stylisee qui change de palette */}
+
+      {/* Carte mourning avec camera */}
+      <svg
+        width="720"
+        height="1280"
+        viewBox="0 0 720 1280"
+        style={{ position: "absolute", inset: 0 }}
+      >
+        <AtlasDefs />
+        <rect width="720" height="1280" fill="url(#bgGrad)" />
+
+        <g transform={`translate(${camX + driftX} ${camY + driftY}) scale(${camScale})`}>
+
+          <AtlasMercator
+            countries={countries}
+            highlightIso={["ZAF"]}
+            highlightFills={highlightFills}
+            scale={1}
+            driftX={0}
+            driftY={0}
+          />
+
+          {/* Contour bordeaux ZAF */}
+          {zafPath && (
+            <path
+              d={zafPath}
+              fill="none"
+              stroke={SHAKA_PALETTE.BORDEAUX}
+              strokeWidth={borderWidth / camScale}
+              strokeOpacity={borderOpacity}
+              strokeLinejoin="round"
+            />
+          )}
+
+          {/* MourningWarp — cercles concentriques depuis uMgungundlovu */}
+          <MourningWarp
+            startFrame={nandiMeurtFrameLocal}
+            maxIntensity={0.55}
+            ringCount={5}
+            ringDuration={100}
+            ringInterval={35}
+          />
+
+        </g>
+
+        <rect width="720" height="1280" fill="url(#vignette)" />
+      </svg>
+
+      {/* Halo radial accentue apres mort Nandi */}
       <AbsoluteFill
         style={{
-          background: `radial-gradient(ellipse at 50% 50%, ${accentColor}20 0%, ${backgroundColor} 70%)`,
+          background: `radial-gradient(ellipse at 50% 55%, ${accentColor}18 0%, transparent 65%)`,
         }}
       />
 
-      {/* Insert "4 000" compteur sanglant — Remotion pur (InsertNombre4000) */}
+      {/* Insert "4 000" compteur sanglant */}
       {insertVisible && (
         <Sequence from={insertNombre4000FrameLocal} durationInFrames={insertNombre4000Duration}>
           <InsertNombre4000 durationFrames={insertNombre4000Duration} />
         </Sequence>
       )}
 
-      {/* Drama line */}
-      {dramaLineVisible && (
+      {/* Drama line finale */}
+      {frame >= dramaLineFrame && (
         <div
           style={{
             position: "absolute",
@@ -110,7 +192,7 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
             left: 0,
             right: 0,
             textAlign: "center",
-            fontSize: 56,
+            fontSize: 52,
             fontWeight: 700,
             fontFamily: SHAKA_FONTS.TITRE,
             color: SHAKA_PALETTE.BORDEAUX,
@@ -118,6 +200,7 @@ export const AtlasShakaS4Nandi: React.FC<AtlasShakaS4NandiProps> = ({
             opacity: dramaLineSpring,
             transform: `translateY(${(1 - dramaLineSpring) * 20}px)`,
             textShadow: "0 4px 20px rgba(0,0,0,0.9)",
+            padding: "0 60px",
           }}
         >
           Pour n'avoir pas pleuré assez fort.

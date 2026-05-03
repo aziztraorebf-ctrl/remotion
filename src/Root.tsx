@@ -41,6 +41,8 @@ import { CornesFrameNarrative } from "./projects/atlas/shaka-zulu/scenes/CornesF
 import { PaperGrainDemo } from "./projects/atlas/shaka-zulu/scenes/PaperGrainDemo";
 import { MapShakaZuluTest } from "./projects/atlas/shaka-zulu/scenes/MapShakaZuluTest";
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/atlas/shaka-zulu/timing";
+import { LightLeakTest, LIGHT_LEAK_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LightLeakTest";
+import { LottieTest, LOTTIE_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LottieTest";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
   ThiaroyeShortV5,
@@ -327,6 +329,24 @@ export const RemotionRoot: React.FC = () => {
           fps={THIAROYE_V5_FPS}
           width={THIAROYE_V5_WIDTH}
           height={THIAROYE_V5_HEIGHT}
+        />
+      </Folder>
+      <Folder name="tests-isoles">
+        <Composition
+          id="LightLeakTest"
+          component={LightLeakTest}
+          durationInFrames={LIGHT_LEAK_TEST_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="LottieTest"
+          component={LottieTest}
+          durationInFrames={LOTTIE_TEST_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
       <Folder name="atlas-shaka-zulu">

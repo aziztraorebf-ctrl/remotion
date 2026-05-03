@@ -1,6 +1,20 @@
 # Pipeline Shorts GeoAfrique — Ordre INVIOLABLE
 > Ne JAMAIS changer cet ordre. Zero clip avant timing.ts stable.
-> Mise a jour : 2026-04-14
+> Mise a jour : 2026-05-02
+
+---
+
+## UPLOAD MINI-RENDERS — Catbox.moe (Vercel hors service)
+
+**Vercel Blob hors service depuis 2026-05 (indisponible).** Utiliser catbox.moe a la place.
+
+```bash
+curl -F 'reqtype=fileupload' -F 'fileToUpload=@out/chemin/fichier.mp4' 'https://catbox.moe/user/api.php'
+# Retourne un lien public permanent type https://files.catbox.moe/HASH.mp4
+# Aucun compte requis. Limite : 200 MB par fichier.
+```
+
+**Note** : 0x0.st desactive (spam bots IA, mai 2026). Ne plus utiliser.
 
 ---
 

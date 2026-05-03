@@ -44,7 +44,13 @@
       "Bash(/opt/homebrew/bin/yt-dlp -f \"best[height<=480]\" --download-sections \"*0:00-0:30\" -o \"/tmp/donkey-short-clip.%\\(ext\\)s\" \"https://youtube.com/shorts/TAsr3wIN_NY\")",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "mcp__vercel__vercel_blob_put"
+      "mcp__vercel__vercel_blob_put",
+      "mcp__pixellab__animate_character",
+      "mcp__pixellab__get_character",
+      "Bash(curl --fail -L https://api.pixellab.ai/mcp/characters/33e221bd-5b9c-4e55-b729-cfeb534c1bd1/download -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
+      "Bash(unzip -o warrior-update.zip -d warrior-update)",
+      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/east/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/)",
+      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/west/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/)"
     ],
     "additionalDirectories": [
       "/Users/clawdbot/.claude",
