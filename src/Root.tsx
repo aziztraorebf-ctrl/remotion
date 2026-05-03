@@ -44,6 +44,7 @@ import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as 
 import { LightLeakTest, LIGHT_LEAK_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LightLeakTest";
 import { LottieTest, LOTTIE_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LottieTest";
 import { EmpireGhanaHook, EMPIRE_GHANA_HOOK_FRAMES } from "./projects/atlas/empire-ghana/EmpireGhanaHook";
+import { Beat1Setup, BEAT1_SETUP_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat1Setup";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
@@ -601,6 +602,14 @@ export const RemotionRoot: React.FC = () => {
           id="EmpireGhanaHook"
           component={EmpireGhanaHook}
           durationInFrames={EMPIRE_GHANA_HOOK_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="EmpireGhanaBeat1Setup"
+          component={Beat1Setup}
+          durationInFrames={BEAT1_SETUP_FRAMES}
           fps={30}
           width={1080}
           height={1920}

@@ -48,14 +48,14 @@ for (const feat of ne.features) {
   closeCountries.push({ iso, d });
 }
 
-// === 3) POI cles — coordonnees [lon, lat] historiques ===
+// === 3) POI cles — coordonnees [lon, lat] historiques (sources Wikipedia) ===
 const POI_COORDS = {
-  TAGHAZA: [-3.5, 23.0],       // mines de sel, extreme nord Mali
-  BAMBOUK: [-11.5, 12.5],      // mines d'or, entre Mali et Senegal
-  KOUMBI_SALEH: [-7.2, 15.4],  // capitale Wagadou, sud Mauritanie
+  TAGHAZA: [-4.55, 22.69],     // mines de sel, extreme nord Mali (Wikipedia exact)
+  BAMBOUK: [-11.0, 13.0],      // mines d'or, entre Mali et Senegal
+  KOUMBI_SALEH: [-7.97, 15.77], // capitale Wagadou, sud Mauritanie (Wikipedia exact 15.766°N, -7.969°W)
   // Bonus pour CTA / cross-promo
-  TIMBUKTU: [-3.0, 16.8],      // pour positionner reference culturelle
-  CAIRE: [31.2, 30.0],         // si on veut comparer Florence/Venise
+  TIMBUKTU: [-3.0, 16.77],     // pour positionner reference culturelle
+  CAIRE: [31.24, 30.04],       // si on veut comparer Florence/Venise
 };
 
 const projectPOI = (proj) => {
@@ -93,32 +93,21 @@ const routeSel = buildRoute(mercSahelProj, [POI_COORDS.TAGHAZA, POI_COORDS.KOUMB
 const routeOr = buildRoute(mercSahelProj, [POI_COORDS.BAMBOUK, POI_COORDS.KOUMBI_SALEH]);
 const routeAlmoravides = buildRoute(mercSahelProj, [[-5.0, 28.0], POI_COORDS.KOUMBI_SALEH]); // descend du nord-ouest
 
-// === 5) Empire Wagadou approximate (10e siecle apogee) ===
-// Polygone simplifie : sud Mauritanie + ouest Mali + Senegal nord
-// Coordonnees [lon, lat]
-const WAGADOU_BORDERS_LATLON = [
-  [-12.0, 17.5],  // ouest Mauritanie
-  [-9.0, 17.5],   // nord
-  [-5.0, 17.0],   // nord-est
-  [-3.0, 15.0],   // est (vers Tombouctou)
-  [-5.0, 13.0],   // sud-est
-  [-8.0, 12.5],   // sud
-  [-12.0, 13.5],  // sud-ouest
-  [-12.0, 17.5],  // close
-];
+// === 5) Empire Wagadou — DONNEES OPENHISTORICALMAP (relation 2822617) ===
+// Source : OpenHistoricalMap (ODbL), 23 vertices vectorises depuis sources academiques
+// Periode : VIIIe-XIIIe siecle (start_date 200, end_date 1250)
+// Wikidata Q206789, Wikipedia EN "Ghana Empire"
+const wagadouOhm = JSON.parse(fs.readFileSync(
+  "/Users/clawdbot/Workspace/remotion/data/geo/empire-ghana/wagadou_ohm.geojson",
+  "utf8"
+));
+const wagadouFeature = wagadouOhm.features[0];
 
-const buildWagadouPath = (proj) => {
-  const projected = WAGADOU_BORDERS_LATLON.map(p => proj(p));
-  let d = `M ${projected[0][0]} ${projected[0][1]}`;
-  for (let i = 1; i < projected.length; i++) {
-    d += ` L ${projected[i][0]} ${projected[i][1]}`;
-  }
-  d += " Z";
-  return d;
-};
+const wagadouPathSahel = mercSahelPath(wagadouFeature);
+const wagadouPathClose = mercClosePath(wagadouFeature);
 
-const wagadouPathSahel = buildWagadouPath(mercSahelProj);
-const wagadouPathClose = buildWagadouPath(mercCloseProj);
+// Conserver coords lat/lon brutes pour reference
+const WAGADOU_BORDERS_LATLON = wagadouFeature.geometry.coordinates[0];
 
 // === Output ===
 const out = {

@@ -1,9 +1,103 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-05-03 — DECISION STRATEGIQUE : Shaka Zulu en pause + pivot Empire du Ghana
+> Mise a jour : 2026-05-03 fin session — EMPIRE GHANA PRE-PRODUCTION COMPLETE
 > **SHAKA ZULU = PAUSE STRATEGIQUE** (mismatch format Atlas / contenu psycho-militaire). Branche `feat/atlas-shaka-zulu-vague1` preserve l'etat. Reprise possible en format Seedance Shorts plus tard.
-> **NOUVEAU PROJET — EMPIRE DU GHANA** (Atlas) : a definir cette session.
-> **PIPELINE ATLAS = MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + Lottie via Claude (NEW) + LightLeaks (NEW) + Forced Alignment ElevenLabs.
+> **EMPIRE DU GHANA = PRE-PRODUCTION 100% TERMINEE** sur branche `feat/atlas-empire-ghana`. Pret pour production scene par scene en prochaine session.
+> **PIPELINE ATLAS = MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + Lottie via Claude + LightLeaks + Forced Alignment ElevenLabs + here.now hosting.
 > **3 SHORTS PRETS POSTIZ** : Mansa Moussa V2, Thiaroye V5, Sonjata V7 (dans `out/PRET-PUBLICATION/`).
+> **2 SKILLS CREES** : `atlas-video-preproduction` (plein détail, 19 fichiers) + `video-narrative-preproduction` (squelette générique). Voir `feedback_skills-preproduction-created.md`.
+
+---
+
+## EMPIRE DU GHANA — Etat fin session 2026-05-03
+
+### Tout ce qui est PRET pour production
+
+| Phase | Livrable | Statut |
+|-------|----------|--------|
+| Script V3 LOCKED | `memory/episodes/empire-ghana/script-v3-locked.md` (~86.5s, ~190 mots, mention "d'esclaves" Beat 2) | ✅ |
+| Audio narration | `public/audio/atlas-empire-ghana/narration-v1.mp3` (104.9s, ElevenLabs eleven_v3) | ✅ |
+| Forced Alignment | `src/projects/atlas/empire-ghana/ghana-alignment.ts` (loss 0.094, excellent) | ✅ |
+| Whisper word-level | `src/projects/atlas/empire-ghana/whisper-words.ts` (211 mots) | ✅ |
+| timing.ts | `src/projects/atlas/empire-ghana/timing.ts` (6 segments calculés) | ✅ |
+| Musique choisie | `public/audio/atlas-empire-ghana/music/v1-B-marche-or.mp3` (Toumani Diabate style) | ✅ |
+| Carte d3-geo | `data/geo/empire-ghana-data.json` (Sahel + POI Taghaza/Bambouk/Koumbi Saleh) | ✅ |
+| Marchands PixelLab | `public/empire-ghana/characters/sahelien/` + `berbere/` (3 anims × 4 dirs chacun) | ✅ |
+| Palette officielle | `src/projects/atlas/empire-ghana/components/GhanaPalette.ts` (hybride ATLAS_COLORS + GHANA_PALETTE) | ✅ |
+| Lottie balance | `src/projects/atlas/empire-ghana/tests/balance.json` | ✅ |
+| Manifest visuel | `src/projects/atlas/empire-ghana/empire-ghana-manifest.json` (288 lignes) | ✅ |
+| VAGUE 1 LOCKED | `memory/episodes/empire-ghana/VAGUE-1-LOCKED.md` (8 idées validées) | ✅ |
+| DECISIONS LOCKED | `memory/episodes/empire-ghana/DECISIONS-LOCKED.md` (palette + musique + popup style) | ✅ |
+| Jury Pass 1 + 2 | `memory/episodes/empire-ghana/jury-pass1/` + `jury-pass2/` (3 LLMs chacun) | ✅ |
+| Proof-of-concept | `out/tests/silent-barter-v3-production.mp4` (vraie carte + sprites + Lottie + palette) | ✅ |
+| Dashboard live | https://smooth-oyster-6zb2.here.now/ + claim URL dans `memory/episodes/empire-ghana/dashboard-url.md` | ✅ |
+| Branche git | `feat/atlas-empire-ghana` (commit 273108e + pré-production) | ✅ |
+
+### Coût total session
+
+| Item | Coût |
+|------|------|
+| Jury Pass 1 + 2 (3 LLMs × 2) | $0.046 |
+| ElevenLabs narration | ~$0.30 |
+| Forced Alignment | ~$0.05 |
+| Whisper | ~$0.02 |
+| Minimax 3 musiques | ~$1.50 |
+| PixelLab 26 jobs | $0 (forfait 2000/mois) |
+| **TOTAL** | **~$2.00** |
+
+### BEAT 0 HOOK — VALIDÉ (2026-05-03)
+
+| Item | Statut |
+|------|--------|
+| Beat0Hook.tsx | ✅ validé Aziz v8 |
+| AtlasGlobeHook dans _shared | ✅ composant réutilisable créé |
+| Render final | `out/empire-ghana/beat0-v8.mp4` |
+| Commit | bec3a4a |
+
+### BEAT 1 SETUP — VALIDÉ (2026-05-03 session production v1→v5)
+
+| Item | Statut |
+|------|--------|
+| Beat1Setup.tsx | ✅ validé Aziz v5 |
+| Architecture | ✅ forkée Mansa Moussa V2 (SVG racine 720×1280, AtlasGlobe + AtlasMercator) |
+| Données géo | ✅ OpenHistoricalMap relation 2822617 (23 vertices, ODbL) + POI Wikipedia exact |
+| Identité visuelle | ✅ palette Ghana (parchemin/or/bordeaux), Cinzel, hachures duo or/bordeaux |
+| Spotlight insert SEL ⇌ OR | ✅ 3e mode visuel signature inventé (background dim + assets PixelLab) |
+| Sprite Koumbi Saleh sur carte | ✅ PixelLab map_object intégré |
+| Cartouches en haut | ✅ règle TOP HALF respectée (bottom = sous-titres) |
+| Zoom espace pivot Koumbi | ✅ vrai zoom continu vers Wagadou (pas centre canvas) |
+| Render final | `out/empire-ghana/beat1-v5.mp4` |
+
+### 5 Fichiers mémoire créés cette session
+1. `feedback_atlas-non-negotiable-rules.md` — 13 règles absolues
+2. `feedback_atlas-technique-vs-visuel.md` — séparation forker/adapter
+3. `feedback_atlas-spotlight-insert-pattern.md` — pattern signature
+4. `feedback_pixellab-objects-vs-characters.md` — recette gagnante
+5. `feedback_atlas-cartouches-top-only.md` — règle position
++ `episodes/empire-ghana/BEAT-1-COMPLETE.md` (récap complet)
+
+### 13 assets PixelLab catalogués (Beats 1-5)
+- Beat 1 : `koumbi-saleh`, `seal-wagadou`, `sac-or`, `sac-sel`, `gold-ingot-stack`
+- Beats 2-5 (pré-générés) : `mosquee-banco`, `caravane-chameau`, `stand-marche`, `balance-commerciale`, `guerrier-almoravide`, `ruines-banco`, `pieces-or-dinars`, `bloc-sel-mine`
+- Tous dans `public/empire-ghana/assets/pixellab/`
+
+---
+
+### Prochaine scène = Beat 2 Density (frames 676→1462, ~26s)
+
+Patterns établis à appliquer :
+- Sprites PixelLab Taghaza (mineurs+bloc-sel), Bambouk (or), Koumbi (caravane), mosquée banco au bon moment
+- Spotlight inserts pour chiffres choc ("90 KG par bloc", "20 000 habitants")
+- Pulse markers + AtlasLabel sur 3 POI à mots-pivots
+- Pan caméra Taghaza→Bambouk→Koumbi (useSpringCamera Mansa Moussa)
+- Cartouches timeline en haut
+
+Estimation : ~1.5-2h Beat 2 (le plus complexe). Total Beats 2-5 + assemblage : ~5-6h restantes.
+
+### Skill atlas-video-preproduction activera automatiquement ce workflow
+
+Au démarrage prochaine session, le skill `atlas-video-preproduction` charge SKILL.md + checklists pour cadrer la production. Voir `~/.claude/skills/atlas-video-preproduction/checklists/pre-flight-production.md`.
+
+---
 
 ---
 

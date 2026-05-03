@@ -30,10 +30,17 @@
 - **Données** : `atlas-v2-data.json` (Mansa Moussa) · `shaka-zulu-data.json` (Shaka Zulu)
 
 ### AtlasGlobe
-- **Usage** : globe orthographique animé — hook épisodes
-- **Props clés** : `data` (globe JSON), `rotation` (deg/s), `zoomTo` (iso pays cible)
-- **Épisodes** : Hook Mansa Moussa · Hook Shaka Zulu
-- **Données** : `atlas-globe-data.json`
+- **Usage** : globe orthographique bas niveau (SVG `<g>`) — à intégrer dans un SVG parent
+- **Props clés** : `countries`, `highlightFills`, `rotation`, `scale`, `centerX`, `centerY`, `showHalo`, `haloRadius`
+- **Données** : `atlas-v2-data.json` (ortho) ou tout JSON avec `{ iso, d }[]`
+
+### AtlasGlobeHook ← NOUVEAU (2026-05-03)
+- **Usage** : composant clé en main pour hooks épisodiques — globe espace + étoiles + texte cascade 3 lignes
+- **Props clés** : `globeCountries`, `globeRadius`, `highlightFills`, `rotateStart/End`, `svgScale`, `globeOffsetY`, `line1/2/3Text`, `line1/2/3In`, `line1/2/3Color`, `fontSize`, `durationFrames`
+- **Épisodes** : Hook Empire Ghana v8 (validé Aziz 2026-05-03)
+- **Pour réutiliser** : passer les props dans `Beat0Hook.tsx` de l'épisode, ne pas modifier ce composant
+- **Étoiles** : 160 points, LCG déterministe seed=42, scintillement sin(), fond #242B52
+- **Audio** : géré dans le composant scène (Beat0Hook), pas dans AtlasGlobeHook
 
 ### AtlasLabel
 - **Usage** : label pill Cormorant Garamond avec fade-in spring

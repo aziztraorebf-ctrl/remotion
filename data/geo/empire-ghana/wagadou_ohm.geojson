@@ -1,0 +1,174 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "admin_level": "2",
+        "boundary": "administrative",
+        "end_date": "1250",
+        "end_date:edtf": "1250~",
+        "name": "Wagadou",
+        "name:ar": "مملكة غانا",
+        "name:az": "Qana imperiyası",
+        "name:be": "Гана (гістарычная дзяржава)",
+        "name:bg": "Ганайска империя",
+        "name:bm": "Gana Mansamara",
+        "name:ca": "Regne de Ghana",
+        "name:cs": "Ghanská říše",
+        "name:da": "Ghanariget",
+        "name:de": "Reich von Ghana",
+        "name:en": "Ghana Empire",
+        "name:eo": "Ganaa imperio",
+        "name:es": "Imperio de Ghana",
+        "name:et": "Ghana riik",
+        "name:eu": "Ghanako Inperioa",
+        "name:fa": "پادشاهی غنا",
+        "name:ff": "Daular Gana",
+        "name:fi": "Ghanan kuningaskunta",
+        "name:fr": "Empire du Ghana",
+        "name:gl": "Imperio de Ghana",
+        "name:ha": "Daular Ghana",
+        "name:he": "אימפריית גאנה",
+        "name:hi": "घाना साम्राज्य",
+        "name:hr": "Carstvo Gana",
+        "name:hy": "Գանայի թագավորություն",
+        "name:id": "Kekaisaran Ghana",
+        "name:is": "Ganaveldið",
+        "name:it": "Impero del Ghana",
+        "name:ja": "ガーナ王国",
+        "name:ka": "განის იმპერია",
+        "name:ko": "와가두",
+        "name:la": "Regnum Ganae",
+        "name:lt": "Vagadu",
+        "name:mr": "घाना साम्राज्य",
+        "name:nb": "Ghanariket",
+        "name:nl": "Koninkrijk Ghana",
+        "name:nn": "Ghanariket",
+        "name:oc": "Empèri de Ghana",
+        "name:pl": "Imperium Ghany",
+        "name:pt": "Império do Gana",
+        "name:ru": "Империя Гана",
+        "name:sk": "Ghanská ríša",
+        "name:sn": "Humambo hwe Ghana",
+        "name:sr": "Царство Гана",
+        "name:sv": "Ghanariket",
+        "name:sw": "Dola la Ghana",
+        "name:tg": "Подшоҳии Ғано",
+        "name:tl": "Imperyo ng Ghana",
+        "name:tr": "Gana İmparatorluğu",
+        "name:uk": "Імперія Гана",
+        "name:ur": "سلطنت گھانا",
+        "name:vi": "Đế quốc Ghana",
+        "name:wo": "Imbraatóor gu Gana",
+        "name:yo": "Ilẹ̀ ọbalúayé Ghánà",
+        "name:zh": "迦納帝國",
+        "source": "https://commons.wikimedia.org/wiki/File:Ancient_Ghana_map.png",
+        "start_date": "0200",
+        "start_date:edtf": "0200~",
+        "type": "boundary",
+        "wikidata": "Q206789",
+        "wikipedia": "en:Ghana Empire"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -9.0197864,
+              14.2750411
+            ],
+            [
+              -10.3161731,
+              14.5623283
+            ],
+            [
+              -11.1731067,
+              15.1145635
+            ],
+            [
+              -11.6674915,
+              16.0035863
+            ],
+            [
+              -11.7773547,
+              16.8150685
+            ],
+            [
+              -12.1399036,
+              18.2815287
+            ],
+            [
+              -12.2497668,
+              19.2800462
+            ],
+            [
+              -11.6455188,
+              20.6122299
+            ],
+            [
+              -10.7006946,
+              21.5859453
+            ],
+            [
+              -9.1955676,
+              21.8819
+            ],
+            [
+              -7.8222766,
+              21.8513123
+            ],
+            [
+              -5.9436145,
+              21.6574384
+            ],
+            [
+              -4.8449817,
+              21.3610233
+            ],
+            [
+              -3.7463489,
+              20.3755371
+            ],
+            [
+              -2.8564563,
+              19.2074389
+            ],
+            [
+              -2.7026477,
+              17.8846696
+            ],
+            [
+              -2.9992786,
+              17.0778001
+            ],
+            [
+              -3.4277454,
+              16.2990616
+            ],
+            [
+              -3.7573352,
+              15.1993967
+            ],
+            [
+              -4.5044055,
+              14.4134108
+            ],
+            [
+              -5.625011,
+              14.200499
+            ],
+            [
+              -7.9321399,
+              14.0939678
+            ],
+            [
+              -9.0197864,
+              14.2750411
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}
