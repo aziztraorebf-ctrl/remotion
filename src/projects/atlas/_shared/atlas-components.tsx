@@ -3,6 +3,7 @@
 // Validated 2026-04-30 on S3 Climax Hadj Iter2.
 import React from "react";
 import {
+  AbsoluteFill,
   Img,
   staticFile,
   useCurrentFrame,
@@ -714,3 +715,179 @@ export const estimateWaypointsLength = (
 
 // Re-export data for convenience
 export { data as atlasV2Data };
+
+// =============================================================================
+// ATLAS GLOBE HOOK — composant reutilisable pour hooks episodiques
+// Globe orthographique + etoiles espace + texte cascade 3 lignes
+// Valide : Empire Ghana Hook v7 (2026-05-03)
+// Usage : forker les props par episode, ne pas toucher ce composant
+// =============================================================================
+
+export interface AtlasGlobeHookProps {
+  // Globe data (ortho JSON, ex: atlas-v2-data.json ortho ou empire-ghana-data.json ortho)
+  globeCountries: { iso: string; d: string }[];
+  globeRadius: number;
+  // Highlights pays (iso -> couleur)
+  highlightFills?: Record<string, string>;
+  // Rotation globe : angle depart et angle fin sur toute la duree
+  rotateStart?: number;
+  rotateEnd?: number;
+  // Scale SVG (1.85 = globe occupe ~80% largeur sur 1080x1920)
+  svgScale?: number;
+  // Decalage vertical globe (px, negatif = monte)
+  globeOffsetY?: number;
+  // Texte cascade 3 lignes
+  line1Text: string;
+  line2Text: string;
+  line3Text: string;
+  // Frames d'entree de chaque ligne (relatifs a la composition)
+  line1In?: number;
+  line2In?: number;
+  line3In?: number;
+  // Duree totale de la composition (pour fade-out)
+  durationFrames: number;
+  // Couleur des lignes (defaut : ligne 1 blanc, lignes 2+3 or)
+  line1Color?: string;
+  line2Color?: string;
+  line3Color?: string;
+  fontSize?: number;
+}
+
+export const AtlasGlobeHook: React.FC<AtlasGlobeHookProps> = ({
+  globeCountries,
+  globeRadius,
+  highlightFills = {},
+  rotateStart = -30,
+  rotateEnd = -15,
+  svgScale: svgScaleProp = 1.85,
+  globeOffsetY = -80,
+  line1Text,
+  line2Text,
+  line3Text,
+  line1In = 15,
+  line2In = 45,
+  line3In = 100,
+  durationFrames,
+  line1Color = "#F2EAD3",
+  line2Color = "#D4A574",
+  line3Color = "#D4A574",
+  fontSize = 70,
+}) => {
+  const frame = useCurrentFrame();
+  const { fps, width, height } = useVideoConfig();
+
+  const globeScaleAnim = interpolate(frame, [0, durationFrames], [1.0, 1.06], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const svgScale = svgScaleProp * globeScaleAnim;
+  const translateX = (width / svgScale - 720) / 2;
+  const translateY = (height / svgScale - 1280) / 2 + globeOffsetY / svgScale;
+
+  const globeRotation = interpolate(frame, [0, durationFrames], [rotateStart, rotateEnd], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const globeOpacity = interpolate(frame, [0, 20], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const globalOpacity = interpolate(frame, [durationFrames - 10, durationFrames], [1, 0], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+
+  // Etoiles deterministes — plus brillantes, mix de tailles
+  const stars = React.useMemo(() => {
+    const result: { x: number; y: number; r: number; opacity: number }[] = [];
+    let seed = 42;
+    const rand = () => { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return (seed >>> 0) / 0xffffffff; };
+    for (let i = 0; i < 160; i++) {
+      // Quelques etoiles plus grandes et tres brillantes (10% du total)
+      const big = rand() < 0.1;
+      result.push({
+        x: rand() * 1080,
+        y: rand() * 1920,
+        r: big ? rand() * 2.0 + 1.2 : rand() * 1.2 + 0.4,
+        opacity: big ? rand() * 0.3 + 0.7 : rand() * 0.4 + 0.5,
+      });
+    }
+    return result;
+  }, []);
+
+  const starOpacityFor = (base: number, i: number) =>
+    base * (0.8 + 0.2 * Math.sin((frame + i * 17) * 0.06)) * Math.min(1, frame / 20);
+
+  // Texte cascade
+  const makeSpring = (inFrame: number) =>
+    spring({ frame: Math.max(0, frame - inFrame), fps, config: { damping: 20, stiffness: 200 } });
+
+  const l1s = makeSpring(line1In);
+  const l2s = makeSpring(line2In);
+  const l3s = makeSpring(line3In);
+
+  const line1Opacity = interpolate(frame,
+    [line1In, line1In + 6, line2In - 3, line2In + 3],
+    [0, l1s, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  const line2Opacity = interpolate(frame,
+    [line2In, line2In + 6, line3In - 3, line3In + 3],
+    [0, l2s, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  const line3Opacity = frame >= line3In ? l3s : 0;
+
+  const textStyle = (color: string, spring_: number): React.CSSProperties => ({
+    position: "absolute",
+    bottom: 280,
+    left: 50,
+    right: 50,
+    textAlign: "center",
+    fontFamily: "'Cinzel', 'Cormorant Garamond', serif",
+    fontSize,
+    fontWeight: 700,
+    color,
+    letterSpacing: "0.04em",
+    lineHeight: 1.2,
+    textShadow: "0 3px 20px rgba(0,0,0,0.95)",
+    transform: `translateY(${(1 - Math.min(1, spring_)) * 20}px)`,
+  });
+
+  // Fond espace : bleu nuit moins sombre que bgTop (#1A1F3A -> #242B52)
+  const spaceBg = `linear-gradient(180deg, #242B52 0%, #1A2040 50%, #161830 100%)`;
+
+  return (
+    <AbsoluteFill style={{ background: spaceBg, opacity: globalOpacity }}>
+      <div style={{ position: "absolute", top: 0, left: 0, width, height, opacity: globeOpacity }}>
+        <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+          <AtlasDefs />
+          {/* Fond SVG aligné sur le fond CSS — pas de rect bgGrad qui assombrit */}
+          <rect width={width} height={height} fill="transparent" />
+          {stars.map((s, i) => (
+            <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="#ffffff" opacity={starOpacityFor(s.opacity, i)} />
+          ))}
+          <g transform={`scale(${svgScale}) translate(${translateX} ${translateY})`}>
+            <AtlasGlobe
+              countries={globeCountries}
+              highlightFills={highlightFills}
+              rotation={globeRotation}
+              scale={1}
+              centerX={360}
+              centerY={640}
+              showHalo
+              haloRadius={globeRadius}
+            />
+          </g>
+          <rect width={width} height={height} fill="url(#vignette)" />
+        </svg>
+      </div>
+
+      {frame >= line1In && frame < line2In + 6 && (
+        <div style={{ ...textStyle(line1Color, l1s), opacity: line1Opacity }}>{line1Text}</div>
+      )}
+      {frame >= line2In && frame < line3In + 6 && (
+        <div style={{ ...textStyle(line2Color, l2s), opacity: line2Opacity }}>{line2Text}</div>
+      )}
+      {frame >= line3In && (
+        <div style={{ ...textStyle(line3Color, l3s), opacity: line3Opacity }}>{line3Text}</div>
+      )}
+    </AbsoluteFill>
+  );
+};

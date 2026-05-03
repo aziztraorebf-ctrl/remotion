@@ -43,6 +43,7 @@ import { MapShakaZuluTest } from "./projects/atlas/shaka-zulu/scenes/MapShakaZul
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/atlas/shaka-zulu/timing";
 import { LightLeakTest, LIGHT_LEAK_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LightLeakTest";
 import { LottieTest, LOTTIE_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LottieTest";
+import { EmpireGhanaHook, EMPIRE_GHANA_HOOK_FRAMES } from "./projects/atlas/empire-ghana/EmpireGhanaHook";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
@@ -593,6 +594,16 @@ export const RemotionRoot: React.FC = () => {
           fps={SHAKA_FPS}
           width={720}
           height={1280}
+        />
+      </Folder>
+      <Folder name="atlas-empire-ghana">
+        <Composition
+          id="EmpireGhanaHook"
+          component={EmpireGhanaHook}
+          durationInFrames={EMPIRE_GHANA_HOOK_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
     </>
