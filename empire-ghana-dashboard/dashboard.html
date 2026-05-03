@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Empire du Ghana — Production Dashboard</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1a0d0d;
+  --bg-card: #2d1810;
+  --bg-card-hover: #3a2210;
+  --text: #e8dcc0;
+  --text-muted: #8b5e2a;
+  --gold: #d4a574;
+  --gold-vif: #e8b878;
+  --bordeaux: #7a1f1f;
+  --bordeaux-deep: #4a0e0e;
+  --indigo: #2b3a5f;
+  --green: #4caf50;
+  --red: #e53935;
+  --yellow: #ffb300;
+  --border: #5c3a1a;
+  --max-width: 800px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 12px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--gold);
+}
+
+h1 {
+  font-family: 'Cinzel', 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 4px;
+  letter-spacing: 0.04em;
+}
+
+.subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--gold-vif);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--gold);
+  margin: 20px 0 8px;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 4px;
+}
+
+/* Summary */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.summary-value.gold { color: var(--gold-vif); }
+.summary-value.green { color: var(--green); }
+
+.progress {
+  grid-column: 1 / -1;
+  background: var(--bg-card);
+  border-radius: 8px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--gold), var(--gold-vif));
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.4s;
+}
+
+/* Status badges */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge.done { background: rgba(76, 175, 80, 0.2); color: var(--green); border: 1px solid var(--green); }
+.badge.todo { background: rgba(139, 94, 42, 0.2); color: var(--text-muted); border: 1px solid var(--text-muted); }
+.badge.next { background: rgba(212, 165, 116, 0.2); color: var(--gold); border: 1px solid var(--gold); }
+.badge.locked { background: rgba(122, 31, 31, 0.3); color: var(--gold-vif); border: 1px solid var(--bordeaux); }
+
+/* Cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.card-meta {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.card-body {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* Scene grid */
+.scene {
+  display: grid;
+  grid-template-columns: 60px 1fr auto;
+  gap: 10px;
+  align-items: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 6px;
+}
+.scene-num {
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  color: var(--gold);
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+.scene-info {
+  flex: 1;
+  min-width: 0;
+}
+.scene-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+.scene-meta {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* Asset preview */
+.assets-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.asset {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+}
+.asset img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto 6px;
+  background: #000;
+  border-radius: 4px;
+}
+.asset-label {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Music player */
+.music-player {
+  background: var(--bg-card);
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.music-player audio {
+  width: 100%;
+  margin-top: 8px;
+}
+.music-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  color: var(--gold-vif);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.music-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+/* Palette swatches */
+.palette {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-bottom: 12px;
+}
+.swatch {
+  aspect-ratio: 1;
+  border-radius: 6px;
+  position: relative;
+  border: 1px solid var(--border);
+}
+.swatch::after {
+  content: attr(data-name);
+  position: absolute;
+  bottom: 2px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.55rem;
+  color: rgba(255,255,255,0.85);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+}
+
+/* Links */
+a {
+  color: var(--gold-vif);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.link-list {
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+.link-list li {
+  list-style: none;
+  margin-bottom: 4px;
+  padding-left: 16px;
+  position: relative;
+}
+.link-list li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--gold);
+}
+
+/* Video preview */
+video {
+  width: 100%;
+  border-radius: 8px;
+  background: #000;
+  margin-bottom: 8px;
+}
+
+footer {
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>EMPIRE DU GHANA</h1>
+  <div class="subtitle">Le sel qui valait son poids en or</div>
+  <div class="meta">Wagadou · VIIIᵉ — XIIIᵉ siècle · Atlas Short ~104s</div>
+</header>
+
+<!-- ─── SUMMARY ──────────────────────────────────────────────── -->
+<div class="summary">
+  <div class="summary-card">
+    <span class="summary-label">Statut</span>
+    <span class="summary-value gold">PLANIF</span>
+  </div>
+  <div class="summary-card">
+    <span class="summary-label">Durée</span>
+    <span class="summary-value">104.9s</span>
+  </div>
+  <div class="summary-card">
+    <span class="summary-label">Coût total</span>
+    <span class="summary-value">~$2</span>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" style="width: 50%"></div>
+  </div>
+</div>
+
+<!-- ─── ÉTAT GÉNÉRAL ─────────────────────────────────────────── -->
+<h2>État de production</h2>
+<div class="card">
+  <div class="card-body">
+    <strong>Phase actuelle :</strong> Planification terminée → Production scène par scène (prochaine session)<br>
+    <strong>Branche git :</strong> <code>feat/atlas-empire-ghana</code><br>
+    <strong>Source vérité visuelle :</strong> <a href="../src/projects/atlas/empire-ghana/empire-ghana-manifest.json">empire-ghana-manifest.json</a>
+  </div>
+</div>
+
+<!-- ─── SCÈNES ───────────────────────────────────────────────── -->
+<h2>Scènes (6 beats)</h2>
+<div class="scene">
+  <div class="scene-num">B0</div>
+  <div class="scene-info">
+    <div class="scene-title">HOOK — Au cœur du Sahara, on troquait du sel...</div>
+    <div class="scene-meta">0.16s → 5.10s · 148 frames</div>
+  </div>
+  <span class="badge todo">À coder</span>
+</div>
+<div class="scene">
+  <div class="scene-num">B1</div>
+  <div class="scene-info">
+    <div class="scene-title">SETUP — Wagadou, presque personne ne connaît ce nom</div>
+    <div class="scene-meta">7.02s → 22.52s · 465 frames</div>
+  </div>
+  <span class="badge todo">À coder</span>
+</div>
+<div class="scene">
+  <div class="scene-num">B2</div>
+  <div class="scene-info">
+    <div class="scene-title">DENSITY — Taghaza, Bambouk, Koumbi Saleh, 20 000 habitants</div>
+    <div class="scene-meta">22.52s → 48.72s · 786 frames</div>
+  </div>
+  <span class="badge todo">À coder</span>
+</div>
+<div class="scene">
+  <div class="scene-num">B3</div>
+  <div class="scene-info">
+    <div class="scene-title">BARTER — Silent barter, sel contre or au poids égal</div>
+    <div class="scene-meta">48.72s → 71.74s · 690 frames</div>
+  </div>
+  <span class="badge next">Prêt</span>
+</div>
+<div class="scene">
+  <div class="scene-num">B4</div>
+  <div class="scene-info">
+    <div class="scene-title">COLLAPSE — Almoravides 1076, Sundiata 1240</div>
+    <div class="scene-meta">71.74s → 92.94s · 636 frames</div>
+  </div>
+  <span class="badge todo">À coder</span>
+</div>
+<div class="scene">
+  <div class="scene-num">B5</div>
+  <div class="scene-info">
+    <div class="scene-title">CTA — Florence, Venise. Jamais Wagadou.</div>
+    <div class="scene-meta">92.94s → 104.84s · 357 frames</div>
+  </div>
+  <span class="badge todo">À coder</span>
+</div>
+
+<!-- ─── AUDIO ────────────────────────────────────────────────── -->
+<h2>Audio</h2>
+
+<div class="music-player">
+  <div class="music-title">🎙️ Narration v1 — ElevenLabs eleven_v3</div>
+  <div class="music-desc">Narratrice GeoAfrique V2 · 104.9s · Loss alignment 0.094</div>
+  <audio controls preload="none" src="https://files.catbox.moe/cchyv3.mp3"></audio>
+</div>
+
+<div class="music-player">
+  <div class="music-title">🎵 Musique B — Marché de l'or <span class="badge locked">CHOIX</span></div>
+  <div class="music-desc">Kora + balafon, contemplatif/dignifié, Toumani Diabaté style</div>
+  <audio controls preload="none" src="https://files.catbox.moe/cb21xr.mp3"></audio>
+</div>
+
+<details>
+  <summary style="font-family: 'Cormorant Garamond', serif; color: var(--text-muted); cursor: pointer; padding: 6px;">Variantes musique alternatives</summary>
+  <div class="music-player">
+    <div class="music-title">A — Caravane Touareg</div>
+    <div class="music-desc">Imzad fiddle + tinde drum, mystérieux désert (Tinariwen acoustique)</div>
+    <audio controls preload="none" src="https://files.catbox.moe/3s9kwk.mp3"></audio>
+  </div>
+  <div class="music-player">
+    <div class="music-title">C — Empire de l'or</div>
+    <div class="music-desc">Ngoni lute + balafon + dundun, épique cérémonial (Ali Farka Touré)</div>
+    <audio controls preload="none" src="https://files.catbox.moe/naqdwm.mp3"></audio>
+  </div>
+</details>
+
+<!-- ─── ASSETS VISUELS ───────────────────────────────────────── -->
+<h2>Assets visuels</h2>
+
+<div class="card">
+  <div class="card-title">Palette — Hybride ATLAS_COLORS + GHANA_PALETTE</div>
+  <div class="palette">
+    <div class="swatch" style="background:#3A5A7E" data-name="océan"></div>
+    <div class="swatch" style="background:#C97D5A" data-name="terre"></div>
+    <div class="swatch" style="background:#5A3A2A" data-name="frontières"></div>
+    <div class="swatch" style="background:#F5EBD8" data-name="empire"></div>
+    <div class="swatch" style="background:#D4A574" data-name="OR"></div>
+    <div class="swatch" style="background:#4A0E0E" data-name="bordeaux"></div>
+    <div class="swatch" style="background:#E8DCC0" data-name="parchemin"></div>
+    <div class="swatch" style="background:#2B3A5F" data-name="indigo"></div>
+  </div>
+  <div class="card-meta">
+    <a href="https://files.catbox.moe/d9o3au.png">Voir palette complète →</a>
+  </div>
+</div>
+
+<div class="assets-grid">
+  <div class="asset">
+    <img src="https://files.catbox.moe/c91mcv.png" alt="Carte hybride">
+    <div class="asset-label">Carte hybride validée</div>
+  </div>
+  <div class="asset">
+    <img src="https://files.catbox.moe/d9o3au.png" alt="Palette">
+    <div class="asset-label">Palette officielle</div>
+  </div>
+</div>
+
+<h2>Marchands PixelLab</h2>
+<div class="assets-grid">
+  <div class="asset">
+    <img src="https://backblaze.pixellab.ai/file/pixellab-characters/f8cdc988-079e-4974-8050-e75734367867/ef9ac272-1389-430d-9e94-dbd7dd7f9be9/rotations/south.png" alt="Sahélien" style="width:80px;image-rendering:pixelated">
+    <div class="asset-label">Sahélien (apporte l'or)<br><span style="font-size:0.65rem">walking · idle · crouching</span></div>
+  </div>
+  <div class="asset">
+    <img src="https://backblaze.pixellab.ai/file/pixellab-characters/f8cdc988-079e-4974-8050-e75734367867/79865794-abb1-4509-b6d7-580f87acbc4c/rotations/south.png" alt="Berbère" style="width:80px;image-rendering:pixelated">
+    <div class="asset-label">Berbère/Touareg (apporte le sel)<br><span style="font-size:0.65rem">walking · idle · crouching</span></div>
+  </div>
+</div>
+
+<!-- ─── PROOF OF CONCEPT ──────────────────────────────────────── -->
+<h2>Silent Barter — proof of concept</h2>
+<div class="card">
+  <div class="card-title">Test V3 production-ready (palette hybride + carte d3-geo + sprites + Lottie)</div>
+  <video controls preload="metadata" src="https://files.catbox.moe/jkdz8o.mp4"></video>
+  <div class="card-meta">
+    Render 240 frames · 8s · vraie carte Sahel + POI projetés en coordonnées historiques<br>
+    <a href="https://files.catbox.moe/jkdz8o.mp4">Lien direct</a>
+  </div>
+</div>
+
+<!-- ─── VAGUE 1 IDÉES ─────────────────────────────────────────── -->
+<h2>VAGUE 1 — 8 idées validées</h2>
+<div class="card">
+  <ul class="link-list">
+    <li><strong>1.</strong> Balance signature dynamique (toute vidéo) <span class="badge locked">LOCK</span></li>
+    <li><strong>2.</strong> Beat 3 silent barter — danse rituelle (drop-shadow + mix-blend) <span class="badge locked">LOCK</span></li>
+    <li><strong>3.</strong> Beat 4 — ligne front rouge bordeaux Almoravides <span class="badge locked">LOCK</span></li>
+    <li><strong>4.</strong> Beat 4 — sceau Mali sur ruines Sundiata <span class="badge locked">LOCK</span></li>
+    <li><strong>5.</strong> Beat 2 — Pop-up Labels synchronisés <span class="badge locked">LOCK</span></li>
+    <li><strong>6.</strong> Palette bordeaux #4A0E0E pour routes <span class="badge locked">LOCK</span></li>
+    <li><strong>7.</strong> Koumbi Saleh banco (Gemini + Lottie POI) <span class="badge locked">LOCK</span></li>
+    <li><strong>8.</strong> Compteur Richesse Beat 2 (NEW Pass 2) <span class="badge locked">LOCK</span></li>
+  </ul>
+</div>
+
+<!-- ─── COÛTS ─────────────────────────────────────────────────── -->
+<h2>Coûts cumulés</h2>
+<div class="card">
+  <table style="width:100%; font-size: 0.85rem;">
+    <tr><td>Jury Pass 1 (3 LLMs)</td><td style="text-align:right;color:var(--gold-vif)">$0.023</td></tr>
+    <tr><td>Jury Pass 2 (3 LLMs)</td><td style="text-align:right;color:var(--gold-vif)">$0.023</td></tr>
+    <tr><td>ElevenLabs narration v1</td><td style="text-align:right;color:var(--gold-vif)">~$0.30</td></tr>
+    <tr><td>Forced Alignment ElevenLabs</td><td style="text-align:right;color:var(--gold-vif)">~$0.05</td></tr>
+    <tr><td>Whisper word-level</td><td style="text-align:right;color:var(--gold-vif)">~$0.02</td></tr>
+    <tr><td>Minimax 3 musiques</td><td style="text-align:right;color:var(--gold-vif)">~$1.50</td></tr>
+    <tr><td>PixelLab 26 jobs</td><td style="text-align:right;color:var(--gold-vif)">~$0 (forfait 2000/mois)</td></tr>
+    <tr style="border-top: 1px solid var(--border); font-weight:600;"><td>Total session planification</td><td style="text-align:right;color:var(--gold)">~$2.00</td></tr>
+  </table>
+</div>
+
+<!-- ─── LIENS DOCS ───────────────────────────────────────────── -->
+<h2>Documentation</h2>
+<div class="card">
+  <ul class="link-list">
+    <li><a href="../memory/episodes/empire-ghana/script-v3-locked.md">Script V3 LOCKED</a></li>
+    <li><a href="../memory/episodes/empire-ghana/VAGUE-1-LOCKED.md">VAGUE 1 LOCKED (source vérité)</a></li>
+    <li><a href="../memory/episodes/empire-ghana/DECISIONS-LOCKED.md">Décisions verrouillées (palette, musique)</a></li>
+    <li><a href="../memory/episodes/empire-ghana/JURY-SYNTHESE-PASS1.md">Jury Synthèse Pass 1 (Top 7)</a></li>
+    <li><a href="../memory/episodes/empire-ghana/JURY-SYNTHESE-PASS2.md">Jury Synthèse Pass 2 (validation)</a></li>
+    <li><a href="../memory/episodes/empire-ghana/pixellab-ids.md">PixelLab IDs marchands</a></li>
+    <li><a href="../src/projects/atlas/empire-ghana/empire-ghana-manifest.json">Manifest JSON visuel complet</a></li>
+    <li><a href="../src/projects/atlas/empire-ghana/timing.ts">timing.ts (segments)</a></li>
+    <li><a href="../src/projects/atlas/empire-ghana/ghana-alignment.ts">ghana-alignment.ts (Forced Alignment)</a></li>
+  </ul>
+</div>
+
+<footer>
+  Empire du Ghana · Atlas GeoAfrique · Production dashboard v1<br>
+  Dernière maj : 2026-05-03
+</footer>
+
+</body>
+</html>

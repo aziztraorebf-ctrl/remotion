@@ -43,6 +43,9 @@ import { MapShakaZuluTest } from "./projects/atlas/shaka-zulu/scenes/MapShakaZul
 import { S2_ACTS as SHAKA_S2_ACTS, INSERTS as SHAKA_INSERTS, NARRATIVE_BEATS as SHAKA_BEATS, SEGMENTS as SHAKA_SEGMENTS } from "./projects/atlas/shaka-zulu/timing";
 import { LightLeakTest, LIGHT_LEAK_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LightLeakTest";
 import { LottieTest, LOTTIE_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LottieTest";
+import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
+import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
+import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
   ThiaroyeShortV5,
@@ -344,6 +347,30 @@ export const RemotionRoot: React.FC = () => {
           id="LottieTest"
           component={LottieTest}
           durationInFrames={LOTTIE_TEST_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SilentBarterTest"
+          component={SilentBarterTest}
+          durationInFrames={SILENT_BARTER_TEST_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="PaletteShowcase"
+          component={PaletteShowcase}
+          durationInFrames={PALETTE_SHOWCASE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SilentBarterTestV3"
+          component={SilentBarterTestV3}
+          durationInFrames={SILENT_BARTER_V3_FRAMES}
           fps={30}
           width={1080}
           height={1920}

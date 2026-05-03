@@ -1,0 +1,117 @@
+{
+  "character": {
+    "id": "ef9ac272-1389-430d-9e94-dbd7dd7f9be9",
+    "name": "empire-ghana-merchant-sahelien",
+    "prompt": "A Sahelian merchant from medieval West Africa Ghana Empire era. Wearing flowing earth-toned boubou robe in deep ochre and warm brown. Indigo turban head wrap. Dark skin, dignified posture, walking stick in hand, small leather pouch at waist. Sandals. Ancient Mande/Soninke style merchant. Pixel art with sepia warm palette.",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-03T06:38:19.324607+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "animating-00dce42d": {
+        "north": [
+          "animations/animating-00dce42d/north/frame_000.png",
+          "animations/animating-00dce42d/north/frame_001.png",
+          "animations/animating-00dce42d/north/frame_002.png",
+          "animations/animating-00dce42d/north/frame_003.png"
+        ],
+        "west": [
+          "animations/animating-00dce42d/west/frame_000.png",
+          "animations/animating-00dce42d/west/frame_001.png",
+          "animations/animating-00dce42d/west/frame_002.png",
+          "animations/animating-00dce42d/west/frame_003.png"
+        ],
+        "east": [
+          "animations/animating-00dce42d/east/frame_000.png",
+          "animations/animating-00dce42d/east/frame_001.png",
+          "animations/animating-00dce42d/east/frame_002.png",
+          "animations/animating-00dce42d/east/frame_003.png"
+        ],
+        "south": [
+          "animations/animating-00dce42d/south/frame_000.png",
+          "animations/animating-00dce42d/south/frame_001.png",
+          "animations/animating-00dce42d/south/frame_002.png",
+          "animations/animating-00dce42d/south/frame_003.png"
+        ]
+      },
+      "walking-3848d070": {
+        "west": [
+          "animations/walking-3848d070/west/frame_000.png",
+          "animations/walking-3848d070/west/frame_001.png",
+          "animations/walking-3848d070/west/frame_002.png",
+          "animations/walking-3848d070/west/frame_003.png",
+          "animations/walking-3848d070/west/frame_004.png",
+          "animations/walking-3848d070/west/frame_005.png"
+        ],
+        "north": [
+          "animations/walking-3848d070/north/frame_000.png",
+          "animations/walking-3848d070/north/frame_001.png",
+          "animations/walking-3848d070/north/frame_002.png",
+          "animations/walking-3848d070/north/frame_003.png",
+          "animations/walking-3848d070/north/frame_004.png",
+          "animations/walking-3848d070/north/frame_005.png"
+        ],
+        "east": [
+          "animations/walking-3848d070/east/frame_000.png",
+          "animations/walking-3848d070/east/frame_001.png",
+          "animations/walking-3848d070/east/frame_002.png",
+          "animations/walking-3848d070/east/frame_003.png",
+          "animations/walking-3848d070/east/frame_004.png",
+          "animations/walking-3848d070/east/frame_005.png"
+        ],
+        "south": [
+          "animations/walking-3848d070/south/frame_000.png",
+          "animations/walking-3848d070/south/frame_001.png",
+          "animations/walking-3848d070/south/frame_002.png",
+          "animations/walking-3848d070/south/frame_003.png",
+          "animations/walking-3848d070/south/frame_004.png",
+          "animations/walking-3848d070/south/frame_005.png"
+        ]
+      },
+      "crouching-7ca15898": {
+        "south": [
+          "animations/crouching-7ca15898/south/frame_000.png",
+          "animations/crouching-7ca15898/south/frame_001.png",
+          "animations/crouching-7ca15898/south/frame_002.png",
+          "animations/crouching-7ca15898/south/frame_003.png",
+          "animations/crouching-7ca15898/south/frame_004.png"
+        ],
+        "east": [
+          "animations/crouching-7ca15898/east/frame_000.png",
+          "animations/crouching-7ca15898/east/frame_001.png",
+          "animations/crouching-7ca15898/east/frame_002.png",
+          "animations/crouching-7ca15898/east/frame_003.png",
+          "animations/crouching-7ca15898/east/frame_004.png"
+        ],
+        "north": [
+          "animations/crouching-7ca15898/north/frame_000.png",
+          "animations/crouching-7ca15898/north/frame_001.png",
+          "animations/crouching-7ca15898/north/frame_002.png",
+          "animations/crouching-7ca15898/north/frame_003.png",
+          "animations/crouching-7ca15898/north/frame_004.png"
+        ],
+        "west": [
+          "animations/crouching-7ca15898/west/frame_000.png",
+          "animations/crouching-7ca15898/west/frame_001.png",
+          "animations/crouching-7ca15898/west/frame_002.png",
+          "animations/crouching-7ca15898/west/frame_003.png",
+          "animations/crouching-7ca15898/west/frame_004.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-03T14:54:52.902935"
+}

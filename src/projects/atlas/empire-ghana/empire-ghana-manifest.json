@@ -1,0 +1,350 @@
+{
+  "$comment": "Source de vérité VISUELLE Empire du Ghana - VAGUE 1. Aziz parle visuel, Claude traduit en code. Ne PAS modifier sans validation Aziz.",
+  "version": "1.0",
+  "lockedDate": "2026-05-03",
+
+  "project": {
+    "title": "Empire du Ghana — Le sel qui valait son poids en or",
+    "format": "Atlas Short vertical 1080x1920",
+    "totalDurationS": 104.92,
+    "totalFrames": 3148,
+    "fps": 30,
+    "audio": "public/audio/atlas-empire-ghana/narration-v1.mp3",
+    "music": "public/audio/atlas-empire-ghana/music/v1-B-marche-or.mp3",
+    "musicVolumeUnderNarration": 0.07
+  },
+
+  "palette": {
+    "_comment": "Hybride : ATLAS_COLORS (carte) + GHANA_PALETTE (narratif)",
+    "carte": {
+      "ocean": "#3A5A7E",
+      "land": "#C97D5A",
+      "landStroke": "#5A3A2A",
+      "empireFill": "#F5EBD8",
+      "empireOutline": "#D4A574",
+      "labelInk": "#3A2A18"
+    },
+    "narratif": {
+      "routesCommerciales": "#4A0E0E",
+      "sacSel": "#E8E0D0",
+      "sacOr": "#D4A574",
+      "balanceOr": "#D4A574",
+      "balanceGris": "#7A6E66",
+      "sceauMaliOr": "#D4A574",
+      "sceauMaliBordeaux": "#7A1F1F",
+      "almoravidesLineFront": "#4A0E0E",
+      "popupBg": "#E8DCC0",
+      "popupBorder": "#D4A574",
+      "popupTextInk": "#3A2A18"
+    }
+  },
+
+  "fonts": {
+    "titre": "'Cinzel', 'Cormorant Garamond', serif",
+    "serif": "'Cormorant Garamond', 'EB Garamond', serif",
+    "mono": "'JetBrains Mono', 'IBM Plex Mono', monospace",
+    "karaoke": "'Inter', 'Helvetica Neue', sans-serif"
+  },
+
+  "carte": {
+    "projection": "mercSahel",
+    "viewport": {
+      "centerLonLat": [-3, 18],
+      "scale": 1400,
+      "svgWidth": 720,
+      "svgHeight": 1280
+    },
+    "poi": {
+      "_comment": "Coordonnées projetées (depuis empire-ghana-data.json mercSahel)",
+      "TAGHAZA": { "x": 347.78, "y": 509.51, "lonLat": [-3.5, 23.0], "label": "TAGHAZA", "subtitle": "(sel)" },
+      "BAMBOUK": { "x": 152.31, "y": 779.36, "lonLat": [-11.5, 12.5], "label": "BAMBOUK", "subtitle": "(or)" },
+      "KOUMBI_SALEH": { "x": 257.37, "y": 706.33, "lonLat": [-7.2, 15.4], "label": "KOUMBI SALEH", "subtitle": "capitale Wagadou" },
+      "TIMBUKTU": { "x": 360.0, "y": 670.73, "lonLat": [-3.0, 16.8] }
+    },
+    "wagadouEmpire": "voir empire-ghana-data.json mercSahel.wagadouEmpire",
+    "routes": {
+      "sel": "Taghaza -> Koumbi Saleh (bezier dashed bordeaux 6 4)",
+      "or": "Bambouk -> Koumbi Saleh (bezier dashed bordeaux 6 4)",
+      "almoravides": "Nord-ouest -> Koumbi Saleh (apparait Beat 4)"
+    }
+  },
+
+  "balanceSignature": {
+    "lottieFile": "src/projects/atlas/empire-ghana/tests/balance.json",
+    "_comment": "Présente toute la vidéo. Position cible : haut écran au-dessus karaoke. Opacity persistante 0.6-0.8.",
+    "position": { "left": "centre", "top": 200 },
+    "size": { "width": 200, "height": 120 },
+    "behavior": {
+      "0_5s_hook": "penche selon mots sel/or",
+      "5_22s_setup": "subtile, oscillation lente",
+      "22_48s_density": "oscillations marquées aux stats (90kg, 20000)",
+      "48_71s_barter": "équilibre PARFAITEMENT au mot 'sans un mot' (~63.5s)",
+      "71_92s_collapse": "se brise, tilt extrême + saturation grise à mention Almoravides",
+      "92_104s_cta": "fixe horizontale, devient grise/blanche, perd éclat"
+    }
+  },
+
+  "scenes": {
+    "BEAT_0_HOOK": {
+      "label": "Hook - Au cœur du Sahara, on troquait du sel contre de l'or",
+      "startS": 0.159,
+      "endS": 5.10,
+      "startFrame": 5,
+      "endFrame": 153,
+      "durationFrames": 148,
+      "narration": "Au cœur du Sahara, on troquait du sel contre de l'or. Au gramme près.",
+      "elementsVisibles": [
+        "Plein écran : pas de carte, fond NOIR_PROFOND",
+        "Texte hook plein écran cascade : 'Au cœur du Sahara' (frame 5-30) → 'on troquait du sel contre de l'or' (30-90) → 'Au gramme près.' (90-148)",
+        "Balance signature en intro discrète (apparaît frame 60, opacity 0.4)",
+        "Pas de marchands"
+      ],
+      "cameraMoves": "static",
+      "lightLeak": false,
+      "popupLabels": "aucun"
+    },
+
+    "BEAT_1_SETUP": {
+      "label": "Setup geographique - Wagadou inconnu",
+      "startS": 7.019,
+      "endS": 22.519,
+      "startFrame": 211,
+      "endFrame": 676,
+      "durationFrames": 465,
+      "narration": "Wagadou. Aujourd'hui, presque personne ne connaît ce nom. Pourtant, du huitième au treizième siècle, cet empire ouest-africain contrôlait la richesse la plus convoitée du monde médiéval. Et il avait un secret.",
+      "elementsVisibles": [
+        "Carte d3-geo Sahel apparait (fade-in 30 frames)",
+        "Empire Wagadou highlight cream + outline or (frame ~280)",
+        "Cartouche typo serif 'WAGADOU' apparait au mot 'Wagadou' (~7.2s)",
+        "Pas de POI (Taghaza/Bambouk/Koumbi pas encore introduits)",
+        "Balance présente subtile haut écran"
+      ],
+      "cameraMoves": "zoom_in_lent (1.0x → 1.15x sur Wagadou center)",
+      "lightLeak": false,
+      "popupLabels": "aucun"
+    },
+
+    "BEAT_2_DENSITY": {
+      "label": "Densite Cesar - 4 stats trans-sahariennes",
+      "startS": 22.519,
+      "endS": 48.719,
+      "startFrame": 676,
+      "endFrame": 1462,
+      "durationFrames": 786,
+      "narration": "À Taghaza, au nord, le sel était extrait par blocs de quatre-vingt-dix kilos. À Bambouk, au sud, l'or sortait de la terre par poignées. Entre les deux, le désert. Et au centre exact, Koumbi Saleh. Vingt mille habitants. Une mosquée. Et un roi qui taxait chaque caravane — d'or, de sel, et d'esclaves.",
+      "elementsVisibles": [
+        "Carte Sahel reste, pan vers le nord pour montrer Taghaza (~23s)",
+        "POI Taghaza apparait + Pop-up '90 kg par bloc' synchronisé (~28s)",
+        "Pan vers le sud pour montrer Bambouk (~32s)",
+        "POI Bambouk apparait + icône 'poignée or' (~33s)",
+        "Pan retour centre vers Koumbi Saleh (~37s)",
+        "Image Gemini Koumbi Saleh banco en fond opacity 0.6 (idée 7 amendée)",
+        "POI Koumbi Saleh + Lottie pulse-marker (~39s)",
+        "Pop-up '20 000 habitants' (~41s)",
+        "Icône mosquée discrète (~44s)",
+        "Compteur Richesse Beat 2 (idée 8 NEW) : 2 compteurs UI haut droit incrémentent frénétiquement à 'taxait chaque caravane' (~45s)",
+        "Mention 'd'esclaves' : pas d'iconographie spécifique, juste la voix sobre"
+      ],
+      "cameraMoves": "pan_nord (676-840) puis pan_sud (840-1000) puis pan_centre (1000-1300) puis zoom_in (1300-1462)",
+      "lightLeak": false,
+      "popupLabels": [
+        { "trigger": "quatre-vingt-dix kilos", "estimatedFrameTrigger": 855, "text": "90 kg par bloc", "position": "à côté Taghaza" },
+        { "trigger": "Bambouk", "estimatedFrameTrigger": 990, "icon": "poignée or" },
+        { "trigger": "Koumbi Saleh", "estimatedFrameTrigger": 1170, "label": "POI principal" },
+        { "trigger": "vingt mille", "estimatedFrameTrigger": 1230, "text": "20 000 habitants" },
+        { "trigger": "mosquée", "estimatedFrameTrigger": 1305, "icon": "mosquée stylisée" },
+        { "trigger": "taxait chaque caravane", "estimatedFrameTrigger": 1350, "trigger_compteur_richesse": true }
+      ],
+      "compteurRichesse": {
+        "_comment": "Idée 8 NEW Pass 2 — combat encyclopédisme",
+        "position": "haut droit",
+        "compteurs": [
+          { "icon": "sac sel", "from": 0, "to": 90, "unit": "kg", "duration_frames": 15 },
+          { "icon": "lingot or", "from": 0, "to": 1200, "unit": "dinars", "duration_frames": 15 }
+        ],
+        "trigger_frame": 1350,
+        "effect": "incrementation frénétique (kaching)"
+      }
+    },
+
+    "BEAT_3_BARTER": {
+      "label": "Climax silent barter - rituel sel/or",
+      "startS": 48.719,
+      "endS": 71.739,
+      "startFrame": 1462,
+      "endFrame": 2152,
+      "durationFrames": 690,
+      "narration": "Mais le moment qui marque l'histoire, c'est ça. Sur les marchés du sud, les marchands déposaient leur sel. Puis ils s'éloignaient. Les acheteurs venaient. Posaient leur or à côté. Et repartaient sans un mot. Le silent barter. Sel contre or, presque au poids égal.",
+      "elementsVisibles": [
+        "Carte zoom serré sur Koumbi Saleh (~50s, dezoom 2.5x → 1.2x animé)",
+        "Berbère sprite walk south depuis Taghaza (~52s)",
+        "Berbère crouching, dépose sac sel (~55s)",
+        "Sac sel apparaît au point Koumbi (~55s, RESTE)",
+        "Berbère walk north, sort de l'écran (~57s)",
+        "Sahélien sprite walk depuis Bambouk vers Koumbi (~58-62s)",
+        "Sahélien crouching, dépose sac or (~62s)",
+        "Sac or apparaît à côté du sac sel (~62s, RESTE)",
+        "Sahélien walk inverse, sort (~64s)",
+        "Balance équilibre PARFAITEMENT au mot 'sans un mot' (~63.5s)",
+        "LightLeak doré 8-10 frames au midpoint (~63.5s, opacity 0.35)",
+        "Sprites avec drop-shadow doré (recommandation Pass 2)",
+        "Mix-blend-mode: screen + opacity 0.7 (effet fantomatique sans perdre lisibilité)"
+      ],
+      "cameraMoves": "dezoom_dramatique (1462-1500: zoom 2.5x → 1.2x via spring)",
+      "lightLeak": { "trigger_frame": 1905, "duration_frames": 8, "opacity": 0.35, "color": "doré" },
+      "popupLabels": "aucun (focus rituel visuel pur)"
+    },
+
+    "BEAT_4_CONSEQUENCE": {
+      "label": "Effondrement - Almoravides + Sundiata",
+      "startS": 71.739,
+      "endS": 92.939,
+      "startFrame": 2152,
+      "endFrame": 2788,
+      "durationFrames": 636,
+      "narration": "Ce système a tenu cinq cents ans. Puis les Almoravides coupèrent les routes du sel en mille soixante-seize. Sécheresse. Effondrement. Et en mille deux cent quarante, un certain Sundiata Keïta détruit Koumbi Saleh. L'empire du Mali venait de naître sur les cendres de Wagadou.",
+      "elementsVisibles": [
+        "Carte Sahel reste, dezoom doux pour voir tout (~72s)",
+        "Cartouche '500 ans' apparait au mot 'cinq cents ans' (~73s)",
+        "Ligne front rouge bordeaux descend du nord (1076) (~76-80s, stroke-dashoffset)",
+        "La ligne CROISE/COUPE le tracé route du sel (visible)",
+        "Route du sel se désature derrière (effet 'coupé')",
+        "Balance se brise visuellement (tilt extrême + saturation grise) à mention Almoravides (~77s)",
+        "Désaturation territoire Wagadou progressive vers GRIS_DESATURE (~80-87s)",
+        "Cartouche '1240' au moment Sundiata (~89s)",
+        "Fade-to-black partiel sur carte (opacity 1 → 0.3) (~89-91s)",
+        "LightLeak doré 8-10 frames",
+        "Sceau Empire Mali (Lottie ou SVG simple : couronne stylisée or sur fond bordeaux) en surimpression (~91s)",
+        "Cartouche '1240 — Sundiata Keïta · Empire du Mali' (~91s)"
+      ],
+      "cameraMoves": "dezoom_doux (2152-2200) puis static (2200-2700) puis zoom_centre_ruines (2700-2788)",
+      "lightLeak": { "trigger_frame": 2670, "duration_frames": 10, "opacity": 0.4, "color": "doré" },
+      "popupLabels": [
+        { "trigger": "cinq cents ans", "estimatedFrameTrigger": 2200, "text": "500 ANS" },
+        { "trigger": "Almoravides", "estimatedFrameTrigger": 2280, "text": "ALMORAVIDES · 1076" },
+        { "trigger": "mille soixante-seize", "estimatedFrameTrigger": 2385, "text": "1076" },
+        { "trigger": "mille deux cent quarante", "estimatedFrameTrigger": 2625, "text": "1240" },
+        { "trigger": "Sundiata Keïta", "estimatedFrameTrigger": 2655, "text": "SUNDIATA KEÏTA" }
+      ],
+      "ligneFrontAlmoravides": {
+        "_comment": "Idée 3 Top 7 — recette Gemini stroke-dashoffset",
+        "trigger_frame": 2280,
+        "duration_frames": 90,
+        "from": "nord-ouest hors écran",
+        "to": "Koumbi Saleh",
+        "color": "BORDEAUX_PROFOND #4A0E0E",
+        "stroke_width": 3
+      },
+      "sceauMali": {
+        "_comment": "Idée 4 Top 7",
+        "trigger_frame": 2700,
+        "type": "Lottie ou SVG simple",
+        "design": "couronne stylisée or sur fond bordeaux",
+        "position": "centre carte (sur ruines Koumbi)",
+        "scale_in": "0 -> 1.0 via spring overshoot",
+        "duration_frames_visible": 90
+      }
+    },
+
+    "BEAT_5_CTA": {
+      "label": "CTA antithèse - Wagadou cinq siècles",
+      "startS": 92.939,
+      "endS": 104.839,
+      "startFrame": 2788,
+      "endFrame": 3145,
+      "durationFrames": 357,
+      "narration": "Wagadou. Cinq siècles de commerce mondial. Demande qui contrôlait l'or au Moyen-Âge. On te répondra Florence, Venise. Jamais Wagadou.",
+      "elementsVisibles": [
+        "Transition Beat 4 → 5 : désaturation 30 frames vers GRIS_CENDRE + slow zoom out",
+        "Balance signature : perd éclat doré, devient grise (~93s)",
+        "Carte se rétrécit vers vue d'ensemble Sahel + or Wagadou pulse encore une fois (~94s)",
+        "Cartouche typo titre 'WAGADOU' grand au centre (~94-97s)",
+        "Cartouche '5 SIÈCLES DE COMMERCE MONDIAL' (~95s)",
+        "Comparaison visuelle Florence/Venise (silhouettes villes ou cartouches discrets) (~101-103s)",
+        "Conclusion 'JAMAIS WAGADOU' typo dramatique (~104s)",
+        "Logo chaîne + abonnement (~104-105s)"
+      ],
+      "cameraMoves": "zoom_out_lent (2788-2900) puis static (2900-3100) puis fade_out (3100-3145)",
+      "lightLeak": false,
+      "popupLabels": [
+        { "trigger": "Cinq siècles", "estimatedFrameTrigger": 2832, "text": "5 SIÈCLES" },
+        { "trigger": "Florence, Venise", "estimatedFrameTrigger": 3045, "comparaison_visuelle": "silhouettes villes ou cartouches" },
+        { "trigger": "Jamais Wagadou", "estimatedFrameTrigger": 3120, "text": "JAMAIS WAGADOU", "typo": "dramatique grand" }
+      ],
+      "transitionBeat4to5": {
+        "_comment": "Recette unanime jury Pass 2",
+        "duration_frames": 30,
+        "fadeColorTo": "GRIS_CENDRE #7A6E66",
+        "cameraZoomOut": true,
+        "balanceColorTo": "gris",
+        "balanceOscillationDamping": "élevé (mourante)",
+        "audioSilenceBeforeWagadou": "0.5s"
+      }
+    }
+  },
+
+  "popupLabelsStyle": {
+    "_comment": "Style validé Aziz session planification",
+    "background": "#E8DCC0",
+    "border": "2px solid #D4A574",
+    "borderRadius": 6,
+    "padding": "10px 16px",
+    "boxShadow": "0 4px 12px rgba(0,0,0,0.3)",
+    "fontMain": "JetBrains Mono 22px font-weight 700 color #3A2A18",
+    "fontSecondary": "JetBrains Mono 14px font-weight 400 color #8B5E2A",
+    "letterSpacing": "0.05em",
+    "entry": "spring(scale: 0 → 1.2 → 1) - overshoot",
+    "anti_collision": "décaler position si plusieurs simultanées"
+  },
+
+  "assets": {
+    "marchands": {
+      "sahelien": {
+        "characterId": "ef9ac272-1389-430d-9e94-dbd7dd7f9be9",
+        "basePath": "empire-ghana/characters/sahelien",
+        "animations": {
+          "walking": "animations/walking-3848d070 (4 dirs, 6 frames)",
+          "breathing-idle": "animations/animating-00dce42d (4 dirs, 4 frames)",
+          "crouching": "animations/crouching-7ca15898 (4 dirs, 5 frames)"
+        }
+      },
+      "berbere": {
+        "characterId": "79865794-abb1-4509-b6d7-580f87acbc4c",
+        "basePath": "empire-ghana/characters/berbere",
+        "animations": {
+          "walking": "animations/walking-b8b230ef (4 dirs, 6 frames)",
+          "breathing-idle": "animations/animating-63b90882 (4 dirs, 4 frames)",
+          "crouching": "animations/crouching-22bab130 (4 dirs, 5 frames)"
+        }
+      }
+    },
+    "lottie": {
+      "balance": "src/projects/atlas/empire-ghana/tests/balance.json",
+      "_a_creer": ["sceau-mali.json", "pulse-marker.json"]
+    },
+    "geo": "data/geo/empire-ghana-data.json",
+    "audio": "public/audio/atlas-empire-ghana/narration-v1.mp3",
+    "music": "public/audio/atlas-empire-ghana/music/v1-B-marche-or.mp3",
+    "alignment": "src/projects/atlas/empire-ghana/ghana-alignment.ts",
+    "whisperWords": "src/projects/atlas/empire-ghana/whisper-words.ts",
+    "timing": "src/projects/atlas/empire-ghana/timing.ts",
+    "_a_generer": [
+      "Image Gemini Koumbi Saleh banco/pierre (Beat 2 fond)",
+      "Lottie sceau Mali (couronne stylisée)",
+      "Lottie pulse-marker (POI Koumbi Saleh)"
+    ]
+  },
+
+  "vague2Pending": [
+    "Indicateur temporal SVG (barre chronologique bas écran avec dates 1076, 1240) - à tester si manque info temporelle"
+  ],
+
+  "piegesTechniquesAnticipes": [
+    "Sprite drift framerate (30fps OK mais surveiller)",
+    "Surcharge SVG d3-geo - utiliser memo + animer <g> transformations seulement",
+    "Z-Index LightLeaks vs subtitles - pointer-events: none + Subtitles dernier enfant",
+    "Sprites symétrie 4 dirs - max 4 par beat",
+    "Sync alignment ElevenLabs - Whisper API debug si décalage >0.5s",
+    "Lottie >5 instances simultanées - surveiller Beat 4 (sceau + balance + LightLeak = 3)"
+  ]
+}
