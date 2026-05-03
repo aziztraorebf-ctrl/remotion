@@ -342,26 +342,40 @@ const Beat1Content: React.FC<{
                 </g>
               )}
 
-              {/* Sprite Koumbi Saleh ville (PixelLab) */}
-              {localFrame >= KOUMBI_APPEAR_AT && koumbiT > 0.05 && (
-                <g
-                  transform={`translate(${koumbi.x} ${koumbi.y}) scale(${koumbiT * koumbiBreathing})`}
-                  opacity={koumbiT}
-                >
-                  {/* Halo dore subtil */}
-                  <circle cx="0" cy="0" r="55" fill="url(#koumbiHalo)" />
-                  {/* Sprite ville */}
-                  <image
-                    href={staticFile("empire-ghana/assets/pixellab/koumbi-saleh.png")}
-                    x="-44"
-                    y="-44"
-                    width="88"
-                    height="88"
-                    preserveAspectRatio="xMidYMid meet"
-                    style={{ imageRendering: "pixelated" }}
-                  />
-                </g>
-              )}
+              {/* Sprite Koumbi Saleh ville ANIMEE (4 frames spritesheet PixelLab) */}
+              {/* Spritesheet 448x112 = 4 frames de 112x112, cycle ~6.66 fps (= 5 frames Remotion @ 30fps) */}
+              {localFrame >= KOUMBI_APPEAR_AT && koumbiT > 0.05 && (() => {
+                const animFrame = Math.floor((localFrame - KOUMBI_APPEAR_AT) / 5) % 4;
+                const SPRITE_SIZE = 112;
+                const DISPLAY_SIZE = 88;
+                const clipId = `koumbiClip-${animFrame}`;
+                return (
+                  <g
+                    transform={`translate(${koumbi.x} ${koumbi.y}) scale(${koumbiT * koumbiBreathing})`}
+                    opacity={koumbiT}
+                  >
+                    {/* Halo dore subtil */}
+                    <circle cx="0" cy="0" r="55" fill="url(#koumbiHalo)" />
+                    {/* Sprite anime via clip-path qui montre 1 frame a la fois */}
+                    <defs>
+                      <clipPath id={clipId}>
+                        <rect x={-DISPLAY_SIZE / 2} y={-DISPLAY_SIZE / 2} width={DISPLAY_SIZE} height={DISPLAY_SIZE} />
+                      </clipPath>
+                    </defs>
+                    <g clipPath={`url(#${clipId})`}>
+                      <image
+                        href={staticFile("empire-ghana/assets/pixellab/koumbi-saleh-sheet.png")}
+                        x={-DISPLAY_SIZE / 2 - animFrame * DISPLAY_SIZE}
+                        y={-DISPLAY_SIZE / 2}
+                        width={DISPLAY_SIZE * 4}
+                        height={DISPLAY_SIZE}
+                        preserveAspectRatio="none"
+                        style={{ imageRendering: "pixelated" }}
+                      />
+                    </g>
+                  </g>
+                );
+              })()}
             </g>
           </g>
         </g>
