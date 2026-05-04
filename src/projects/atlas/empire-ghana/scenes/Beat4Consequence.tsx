@@ -19,6 +19,7 @@ import {
   AbsoluteFill,
   Audio,
   Img,
+  Sequence,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -98,14 +99,17 @@ const SVG_TAGHAZA_Y = POI.TAGHAZA.y;     // 517.73
 const SVG_BAMBOUK_X = POI.BAMBOUK.x;     // 164.52
 const SVG_BAMBOUK_Y = POI.BAMBOUK.y;     // 766.83
 
-// Sijilmassa (capitale Almoravide nord) — clamp dans le cadre visible
-// Position historique ~31.6°N mais on le décale légèrement pour visibilité
+// Sijilmassa (capitale Almoravide nord) — VRAIE projection d3-geo mercSahel
+// (-4°W, 31.6°N) → (336, 273) via geoMercator().center([-3,18]).scale(1400).translate([360,640])
 const SVG_SIJILMASSA_X = 336;
-const SVG_SIJILMASSA_Y = 350;
+const SVG_SIJILMASSA_Y = 273;
 
-// Nouveau territoire Mali — au sud-est de Wagadou, autour de Bambouk étendu
-// Polygone simple stylisé (sera amélioré au polish)
-const MALI_PATH = "M 140 720 L 220 690 L 290 700 L 340 740 L 360 800 L 340 870 L 280 900 L 200 890 L 130 850 L 100 790 Z";
+// Empire du Mali sous Sundiata (1240) — coordonnées historiques projetées via d3-geo
+// Sources : Wikipedia "Mali Empire", Tarikh es-Soudan, extension initiale englobe
+// Mali actuel + Sénégal + Guinée + sud Mauritanie (avant expansion Mansa Moussa)
+// Projection : geoMercator().center([-3,18]).scale(1400).translate([360,640])
+// Note : approximation basée sur sources tertiaires ; à raffiner via OpenHistoricalMap au besoin
+const MALI_PATH = "M 103.4 791.9 L 66.8 754.3 L 54.6 691.1 L 115.7 652.8 L 189.0 640.0 L 286.7 640.0 L 360.0 665.6 L 408.9 716.5 L 445.5 766.8 L 372.2 804.3 L 262.3 841.6 L 176.7 829.2 L 103.4 791.9 Z";
 
 // Composition scale
 const SVG_W = 720;
@@ -332,6 +336,28 @@ export const Beat4Consequence: React.FC = () => {
         volume={0.07}
         startFrom={SEGMENTS.S4_CONSEQUENCE.startFrame}
       />
+      {/* SFX 3 RETIRÉ — war-cry réservé à Sundiata uniquement (Aziz validation) */}
+      {/* SFX 4 — Impact deep boom sur freeze-frame 1076 (R_1076 = 169) */}
+      <Sequence from={R_1076} durationInFrames={30}>
+        <Audio
+          src={staticFile("audio/atlas-empire-ghana/sfx/04-beat4-1076-impact.mp3")}
+          volume={0.25}
+        />
+      </Sequence>
+      {/* SFX 5 — War-cry triomphant Sundiata (R_SUNDIATA_WAR_CRY = 450) */}
+      <Sequence from={R_SUNDIATA_WAR_CRY} durationInFrames={45}>
+        <Audio
+          src={staticFile("audio/atlas-empire-ghana/sfx/05-beat4-sundiata-warcry.mp3")}
+          volume={0.25}
+        />
+      </Sequence>
+      {/* SFX 6 — Shimmer doré ascendant apparition Niani (R_NIANI_APPEAR = 520) */}
+      <Sequence from={R_NIANI_APPEAR} durationInFrames={30}>
+        <Audio
+          src={staticFile("audio/atlas-empire-ghana/sfx/06-beat4-niani-shimmer.mp3")}
+          volume={0.15}
+        />
+      </Sequence>
 
       <svg
         viewBox="0 0 720 1280"

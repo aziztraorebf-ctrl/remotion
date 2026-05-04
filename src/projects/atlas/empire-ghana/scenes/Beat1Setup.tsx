@@ -12,6 +12,7 @@ import {
   AbsoluteFill,
   Audio,
   Img,
+  Sequence,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -59,6 +60,13 @@ export const Beat1Setup: React.FC = () => {
         volume={0.07}
         startFrom={SEGMENTS.S1_SETUP.startFrame}
       />
+      {/* SFX 1 — Whoosh révélation sur le mot "secret" (frame relatif 415, abs 626 / 20.88s) */}
+      <Sequence from={415} durationInFrames={20}>
+        <Audio
+          src={staticFile("audio/atlas-empire-ghana/sfx/01-beat1-secret-whoosh.mp3")}
+          volume={0.15}
+        />
+      </Sequence>
 
       <svg
         viewBox="0 0 720 1280"

@@ -14,6 +14,7 @@ import {
   AbsoluteFill,
   Audio,
   Img,
+  Sequence,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
@@ -240,6 +241,13 @@ export const Beat3Barter: React.FC = () => {
         volume={0.07}
         startFrom={SEGMENTS.S3_BARTER.startFrame}
       />
+      {/* SFX 2 — Chime balance équilibre sur "égal" (frame relatif 635 / abs 2097 / 69.9s) */}
+      <Sequence from={635} durationInFrames={30}>
+        <Audio
+          src={staticFile("audio/atlas-empire-ghana/sfx/02-beat3-balance-chime.mp3")}
+          volume={0.10}
+        />
+      </Sequence>
 
       <svg
         viewBox="0 0 720 1280"

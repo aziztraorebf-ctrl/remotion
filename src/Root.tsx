@@ -48,10 +48,13 @@ import { Beat1Setup, BEAT1_SETUP_FRAMES } from "./projects/atlas/empire-ghana/sc
 import { Beat2Density, BEAT2_DENSITY_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat2Density";
 import { Beat3Barter, BEAT3_BARTER_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat3Barter";
 import { Beat4Consequence, BEAT4_CONSEQUENCE_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat4Consequence";
+import { Beat5CTA, BEAT5_CTA_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat5CTA";
+import { EmpireGhanaFull, EMPIRE_GHANA_FULL_FRAMES } from "./projects/atlas/empire-ghana/EmpireGhanaFull";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
 import { Conquete1759, CONQUETE_1759_FRAMES } from "./projects/atlas/quebec-poc/Conquete1759";
+import { NouvelleFrance, NOUVELLE_FRANCE_FRAMES } from "./projects/atlas/quebec-poc/NouvelleFrance";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
   ThiaroyeShortV5,
@@ -642,12 +645,36 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1920}
         />
+        <Composition
+          id="EmpireGhanaBeat5CTA"
+          component={Beat5CTA}
+          durationInFrames={BEAT5_CTA_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="EmpireGhanaFull"
+          component={EmpireGhanaFull}
+          durationInFrames={EMPIRE_GHANA_FULL_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
       </Folder>
       <Folder name="Quebec-POC">
         <Composition
           id="QuebecConquete1759"
           component={Conquete1759}
           durationInFrames={CONQUETE_1759_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="QuebecNouvelleFrance"
+          component={NouvelleFrance}
+          durationInFrames={NOUVELLE_FRANCE_FRAMES}
           fps={30}
           width={1920}
           height={1080}

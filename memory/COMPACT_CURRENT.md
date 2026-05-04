@@ -1,10 +1,11 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-05-03 fin session — EMPIRE GHANA PRE-PRODUCTION COMPLETE
-> **SHAKA ZULU = PAUSE STRATEGIQUE** (mismatch format Atlas / contenu psycho-militaire). Branche `feat/atlas-shaka-zulu-vague1` preserve l'etat. Reprise possible en format Seedance Shorts plus tard.
-> **EMPIRE DU GHANA = PRE-PRODUCTION 100% TERMINEE** sur branche `feat/atlas-empire-ghana`. Pret pour production scene par scene en prochaine session.
-> **PIPELINE ATLAS = MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + Lottie via Claude + LightLeaks + Forced Alignment ElevenLabs + here.now hosting.
+> Mise a jour : 2026-05-04 fin session — EMPIRE GHANA 95% COMPLET (3 fixes restants prochaine session)
+> **EMPIRE DU GHANA = 95% COMPLET** — Render v2 validé Aziz : https://files.catbox.moe/lxzqvr.mp4 (105s, 19.1 MB). Branche `feat/atlas-empire-ghana`.
+> **3 fixes restants** (~2-3h prochaine session) : (1) CTA 10s plein écran manquant, (2) écran noir 5-7s entre Hook et Beat 1, (3) vraies frontières Mali via OpenHistoricalMap.
+> **SHAKA ZULU = PAUSE STRATEGIQUE** (mismatch format Atlas / contenu psycho-militaire). Branche `feat/atlas-shaka-zulu-vague1` preserve l'etat.
+> **PIPELINE ATLAS = TRES MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + custom animations PixelLab + map_objects + 7 SFX ElevenLabs + sous-titres karaoke Whisper.
 > **3 SHORTS PRETS POSTIZ** : Mansa Moussa V2, Thiaroye V5, Sonjata V7 (dans `out/PRET-PUBLICATION/`).
-> **2 SKILLS CREES** : `atlas-video-preproduction` (plein détail, 19 fichiers) + `video-narrative-preproduction` (squelette générique). Voir `feedback_skills-preproduction-created.md`.
+> **EMPIRE GHANA = 4e Short** post-CTA.
 
 ---
 

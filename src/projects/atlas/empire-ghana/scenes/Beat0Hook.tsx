@@ -23,7 +23,8 @@ const WAGADOU_HIGHLIGHTS: Record<string, string> = {
 
 export const Beat0Hook: React.FC = () => (
   <AbsoluteFill>
-    <Audio src={staticFile("audio/atlas-empire-ghana/narration-v1.mp3")} startFrom={5} />
+    {/* Narration coupée à frame 153 (fin segment Hook) pour éviter overlap avec Beat 1 audio */}
+    <Audio src={staticFile("audio/atlas-empire-ghana/narration-v1.mp3")} trimBefore={5} trimAfter={153} />
     <Audio src={staticFile("audio/atlas-empire-ghana/music/v1-B-marche-or.mp3")} volume={0.07} />
     <AtlasGlobeHook
       globeCountries={atlasData.ortho.countries}
