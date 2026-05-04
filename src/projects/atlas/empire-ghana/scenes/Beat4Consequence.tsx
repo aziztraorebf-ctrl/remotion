@@ -745,8 +745,45 @@ const Beat4Sprites: React.FC<{
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
+  // ─── TEST Technique 1 : Atlas Mountains overlay ────────────────────────────
+  // Position réelle Atlas Mountains projection mercSahel : (311, 290-374)
+  // Centre montagne : (311, 330) — entre Sijilmassa et Taghaza
+  const ATLAS_MOUNTAINS_X = 311;
+  const ATLAS_MOUNTAINS_Y = 330;
+  const atlasMountainsPos = svgToCompWithCam(ATLAS_MOUNTAINS_X, ATLAS_MOUNTAINS_Y, cam);
+  // Visible pendant la descente du guerrier (apparaît avant lui, persiste)
+  const atlasMountainsVisible = localFrame >= R_GUERRIER_START - 30 && localFrame < R_1076 + 30;
+  const atlasMountainsOpacity = interpolate(
+    localFrame,
+    [R_GUERRIER_START - 30, R_GUERRIER_START - 10, R_1076, R_1076 + 30],
+    [0, 0.85, 0.85, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  // Taille suit zoom caméra
+  const atlasMountainsWidth = 360 * (cam.camZoom / 1.7);
+  const atlasMountainsHeight = atlasMountainsWidth; // image carrée 320×320
+
   return (
     <>
+      {/* TEST — Atlas Mountains overlay (Technique 1 image PNG) */}
+      {atlasMountainsVisible && (
+        <Img
+          src={staticFile("empire-ghana/assets/pixellab/alpes-test.png")}
+          style={{
+            position: "absolute",
+            left: atlasMountainsPos.x - atlasMountainsWidth / 2,
+            top: atlasMountainsPos.y - atlasMountainsHeight / 2,
+            width: atlasMountainsWidth,
+            height: atlasMountainsHeight,
+            imageRendering: "pixelated",
+            objectFit: "contain",
+            filter: "drop-shadow(3px 6px 8px rgba(0,0,0,0.5))",
+            opacity: atlasMountainsOpacity,
+            zIndex: 2,
+          }}
+        />
+      )}
+
       {/* Guerrier almoravide — walk cycle PixelLab 6 frames south, cadence rapide */}
       {guerrierVisible && (
         <Img
@@ -766,6 +803,7 @@ const Beat4Sprites: React.FC<{
             objectFit: "contain",
             filter: SPRITE_FILTER,
             opacity: guerrierOpacity,
+            zIndex: 8,
           }}
         />
       )}
