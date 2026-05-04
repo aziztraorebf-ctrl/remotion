@@ -73,8 +73,10 @@ const SVG_W = 720;
 const COMP_W = 1080;
 const CSS_SCALE = COMP_W / SVG_W;
 
-// ─── Mali path — coordonnées historiques projetées via d3-geo (réutilisé Beat 4)
-const MALI_PATH = "M 103.4 791.9 L 66.8 754.3 L 54.6 691.1 L 115.7 652.8 L 189.0 640.0 L 286.7 640.0 L 360.0 665.6 L 408.9 716.5 L 445.5 766.8 L 372.2 804.3 L 262.3 841.6 L 176.7 829.2 L 103.4 791.9 Z";
+// ─── Mali path — dataset academique aourednik/historical-basemaps annee 1300
+// Projete via d3-geo dans precompute-empire-ghana.mjs (meme projection mercSahel).
+// Voir Beat4Consequence.tsx pour la note source detaillee.
+const MALI_PATH = ghanaData.mercSahel.maliEmpire as string;
 
 // ─── Camera state ────────────────────────────────────────────────────────────
 function computeCameraState(localFrame: number) {

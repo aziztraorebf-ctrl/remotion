@@ -109,6 +109,25 @@ const wagadouPathClose = mercClosePath(wagadouFeature);
 // Conserver coords lat/lon brutes pour reference
 const WAGADOU_BORDERS_LATLON = wagadouFeature.geometry.coordinates[0];
 
+// === 5b) Empire Mali 1300 — DONNEES aourednik/historical-basemaps ===
+// Source : https://github.com/aourednik/historical-basemaps (CC BY-SA 4.0)
+// Annee snapshot : 1300 (~65 ans apres fondation Sundiata 1235)
+// Wikidata Q108150 — MultiPolygon, 52 vertices outer ring
+// Le dataset declare BORDERPRECISION=1 (precision la plus haute du dataset).
+// Couvre Senegambie -> vallee Niger -> Tombouctou -> Bambouk.
+// N'inclut PAS Taghaza (zone d'influence commerciale, pas territoire).
+const maliRaw = JSON.parse(fs.readFileSync(
+  "/Users/clawdbot/Workspace/remotion/data/geo/empire-ghana/mali_1300.geojson",
+  "utf8"
+));
+const maliFeature = maliRaw.features[0];
+
+const maliPathSahel = mercSahelPath(maliFeature);
+const maliPathClose = mercClosePath(maliFeature);
+
+// Coords lat/lon brutes (outer ring polygone 0)
+const MALI_BORDERS_LATLON = maliFeature.geometry.coordinates[0][0];
+
 // === Output ===
 const out = {
   width: W,
@@ -117,6 +136,7 @@ const out = {
     countries: sahelCountries,
     poi: sahelPOI,
     wagadouEmpire: wagadouPathSahel,
+    maliEmpire: maliPathSahel,
     routes: {
       sel: routeSel,
       or: routeOr,
@@ -127,9 +147,11 @@ const out = {
     countries: closeCountries,
     poi: closePOI,
     wagadouEmpire: wagadouPathClose,
+    maliEmpire: maliPathClose,
   },
   poiCoords: POI_COORDS,
   wagadouBordersLatLon: WAGADOU_BORDERS_LATLON,
+  maliBordersLatLon: MALI_BORDERS_LATLON,
 };
 
 const outPath = "/Users/clawdbot/Workspace/remotion/data/geo/empire-ghana-data.json";

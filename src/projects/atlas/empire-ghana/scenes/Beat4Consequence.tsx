@@ -104,12 +104,13 @@ const SVG_BAMBOUK_Y = POI.BAMBOUK.y;     // 766.83
 const SVG_SIJILMASSA_X = 336;
 const SVG_SIJILMASSA_Y = 273;
 
-// Empire du Mali sous Sundiata (1240) — coordonnées historiques projetées via d3-geo
-// Sources : Wikipedia "Mali Empire", Tarikh es-Soudan, extension initiale englobe
-// Mali actuel + Sénégal + Guinée + sud Mauritanie (avant expansion Mansa Moussa)
-// Projection : geoMercator().center([-3,18]).scale(1400).translate([360,640])
-// Note : approximation basée sur sources tertiaires ; à raffiner via OpenHistoricalMap au besoin
-const MALI_PATH = "M 103.4 791.9 L 66.8 754.3 L 54.6 691.1 L 115.7 652.8 L 189.0 640.0 L 286.7 640.0 L 360.0 665.6 L 408.9 716.5 L 445.5 766.8 L 372.2 804.3 L 262.3 841.6 L 176.7 829.2 L 103.4 791.9 Z";
+// Empire du Mali en 1300 — frontières issues du dataset academique
+// aourednik/historical-basemaps (CC BY-SA 4.0), snapshot annee 1300 (~65 ans
+// apres Sundiata). MultiPolygon 52 vertices, projete via geoMercator
+// center([-3,18]).scale(1400).translate([360,640]) dans precompute-empire-ghana.mjs.
+// Source brute : data/geo/empire-ghana/mali_1300.geojson
+// OHM ne contient pas de relation Mali Empire (verifie 2026-05-04).
+const MALI_PATH = ghanaData.mercSahel.maliEmpire as string;
 
 // Composition scale
 const SVG_W = 720;
@@ -745,45 +746,8 @@ const Beat4Sprites: React.FC<{
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
   );
 
-  // ─── TEST Technique 1 : Atlas Mountains overlay ────────────────────────────
-  // Position réelle Atlas Mountains projection mercSahel : (311, 290-374)
-  // Centre montagne : (311, 330) — entre Sijilmassa et Taghaza
-  const ATLAS_MOUNTAINS_X = 311;
-  const ATLAS_MOUNTAINS_Y = 330;
-  const atlasMountainsPos = svgToCompWithCam(ATLAS_MOUNTAINS_X, ATLAS_MOUNTAINS_Y, cam);
-  // Visible pendant la descente du guerrier (apparaît avant lui, persiste)
-  const atlasMountainsVisible = localFrame >= R_GUERRIER_START - 30 && localFrame < R_1076 + 30;
-  const atlasMountainsOpacity = interpolate(
-    localFrame,
-    [R_GUERRIER_START - 30, R_GUERRIER_START - 10, R_1076, R_1076 + 30],
-    [0, 0.85, 0.85, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-  // Taille suit zoom caméra
-  const atlasMountainsWidth = 360 * (cam.camZoom / 1.7);
-  const atlasMountainsHeight = atlasMountainsWidth; // image carrée 320×320
-
   return (
     <>
-      {/* TEST — Atlas Mountains overlay (Technique 1 image PNG) */}
-      {atlasMountainsVisible && (
-        <Img
-          src={staticFile("empire-ghana/assets/pixellab/alpes-test.png")}
-          style={{
-            position: "absolute",
-            left: atlasMountainsPos.x - atlasMountainsWidth / 2,
-            top: atlasMountainsPos.y - atlasMountainsHeight / 2,
-            width: atlasMountainsWidth,
-            height: atlasMountainsHeight,
-            imageRendering: "pixelated",
-            objectFit: "contain",
-            filter: "drop-shadow(3px 6px 8px rgba(0,0,0,0.5))",
-            opacity: atlasMountainsOpacity,
-            zIndex: 2,
-          }}
-        />
-      )}
-
       {/* Guerrier almoravide — walk cycle PixelLab 6 frames south, cadence rapide */}
       {guerrierVisible && (
         <Img

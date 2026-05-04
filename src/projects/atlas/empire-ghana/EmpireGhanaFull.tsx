@@ -9,13 +9,14 @@
 
 import React from "react";
 import { AbsoluteFill, Sequence } from "remotion";
-import { SEGMENTS, TOTAL_FRAMES, AUDIO_DURATION_S } from "./timing";
+import { SEGMENTS, TOTAL_FRAMES, AUDIO_DURATION_S, CTA_START_FRAME, CTA_FRAMES, CTA_HOLD_FRAMES } from "./timing";
 import { EmpireGhanaHook } from "./EmpireGhanaHook";
 import { Beat1Setup } from "./scenes/Beat1Setup";
 import { Beat2Density } from "./scenes/Beat2Density";
 import { Beat3Barter } from "./scenes/Beat3Barter";
 import { Beat4Consequence } from "./scenes/Beat4Consequence";
 import { Beat5CTA } from "./scenes/Beat5CTA";
+import { Beat6CTA } from "./scenes/Beat6CTA";
 import { Subtitles } from "../../geoafrique-shorts/Subtitles";
 import { WHISPER_WORDS } from "./whisper-words";
 
@@ -61,10 +62,12 @@ export const EmpireGhanaFull: React.FC = () => {
         <Beat4Consequence />
       </Sequence>
 
-      {/* Beat 5 CTA : frame 2788 → 3145 (fin) */}
+      {/* Beat 5 CTA : frame 2788 → 3178 (357 frames narration + 30 frames hold final) */}
+      {/* Le hold de 1s apres "Jamais Wagadou" cree la respiration narrative avant CTA. */}
+      {/* Toutes les interpolate de Beat5 ont extrapolateRight clamp = freeze naturel. */}
       <Sequence
         from={SEGMENTS.S5_CTA.startFrame}
-        durationInFrames={SEGMENTS.S5_CTA.durationFrames}
+        durationInFrames={SEGMENTS.S5_CTA.durationFrames + CTA_HOLD_FRAMES}
       >
         <Beat5CTA />
       </Sequence>
@@ -72,7 +75,8 @@ export const EmpireGhanaFull: React.FC = () => {
       {/* Sous-titres karaoke mot-par-mot — démarrent APRÈS le Hook (le Hook a déjà ses sous-titres intégrés) */}
       {/* Couleur : or (Atlas signature, héritage Sonjata V7) */}
       {/* Overrides : Whisper transcrit Wagadou comme "Ouagadou/Ouagadougou", Taghaza comme "Tagaza", Saleh comme "Salé" */}
-      <Sequence from={SEGMENTS.S1_SETUP.startFrame}>
+      {/* Limit : sceneEndS = AUDIO_DURATION_S — ne couvre PAS Beat 6 CTA (ses propres lignes cascade visuelles servent de texte) */}
+      <Sequence from={SEGMENTS.S1_SETUP.startFrame} durationInFrames={CTA_START_FRAME - SEGMENTS.S1_SETUP.startFrame}>
         <Subtitles
           sceneStartS={SEGMENTS.S1_SETUP.startS}
           sceneEndS={AUDIO_DURATION_S}
@@ -87,6 +91,11 @@ export const EmpireGhanaFull: React.FC = () => {
             salé: "Saleh",
           }}
         />
+      </Sequence>
+
+      {/* Beat 6 CTA : frame 3148 → 3568 — plein écran narration newsletter */}
+      <Sequence from={CTA_START_FRAME} durationInFrames={CTA_FRAMES}>
+        <Beat6CTA />
       </Sequence>
     </AbsoluteFill>
   );

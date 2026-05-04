@@ -67,7 +67,21 @@ export const SEGMENTS = {
   },
 } as const;
 
-export const TOTAL_FRAMES = AUDIO_DURATION_FRAMES;
+// Freeze-frame final apres "Jamais Wagadou" — respiration narrative avant CTA (1s)
+// Beat5 Sequence dans EmpireGhanaFull est etendue de 30 frames pour figer la
+// derniere image (toutes les interpolate de Beat5 ont extrapolateRight clamp).
+export const CTA_HOLD_FRAMES = 30;
+
+// CTA Beat 6 ajoute en fin de composition (audio independant cta-narration-v1.mp3)
+// 14.0s = 420 frames. Voir Beat6CTA.tsx.
+export const CTA_FRAMES = 420;
+
+// Beat5 occupe f2788 → f3145 (S5_CTA.endFrame). Hold de 30f → Beat6 demarre a f3175.
+// On utilise S5_CTA.endFrame plutot que AUDIO_DURATION_FRAMES pour eviter les overshoots
+// d'arrondi (AUDIO_DURATION_FRAMES = 3148, endFrame Beat5 = 3145).
+export const CTA_START_FRAME = SEGMENTS.S5_CTA.endFrame + CTA_HOLD_FRAMES; // 3175
+
+export const TOTAL_FRAMES = CTA_START_FRAME + CTA_FRAMES; // 3595
 
 // ─── Mots-pivots clés (pour synchronisation Pop-up Labels et animations) ────
 // Utiles pour Idée 5 (Pop-up Labels Beat 2) et Idée 8 (Compteur Richesse)

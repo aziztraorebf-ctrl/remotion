@@ -1,7 +1,7 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-05-04 fin session — EMPIRE GHANA 95% COMPLET (3 fixes restants prochaine session)
-> **EMPIRE DU GHANA = 95% COMPLET** — Render v2 validé Aziz : https://files.catbox.moe/lxzqvr.mp4 (105s, 19.1 MB). Branche `feat/atlas-empire-ghana`.
-> **3 fixes restants** (~2-3h prochaine session) : (1) CTA 10s plein écran manquant, (2) écran noir 5-7s entre Hook et Beat 1, (3) vraies frontières Mali via OpenHistoricalMap.
+> Mise a jour : 2026-05-04 fin session — **EMPIRE GHANA 100% COMPLET — 4e SHORT PRET POSTIZ**
+> **Render v5 final validé Aziz** : https://files.catbox.moe/hf6lqa.mp4 (120s, 21.8 MB). Local : `out/PRET-PUBLICATION/empire-ghana-FINAL.mp4`. Branche `feat/atlas-empire-ghana`.
+> **3 fixes finalises cette session** : (1) Beat6 CTA newsletter 14s plein ecran avec vraie silhouette Afrique d3-geo + 3 lignes cascade + musique continue + freeze-frame 1s post-"Jamais Wagadou", (2) ecran noir 5-7s eliminé (Beat0Hook etendu de 148 a 211 frames), (3) frontieres Mali Empire 1300 via dataset academique aourednik/historical-basemaps (52 vertices CC BY-SA 4.0), (4) bonus : montage overlay test alpes-test.png supprimé du Beat 4.
 > **SHAKA ZULU = PAUSE STRATEGIQUE** (mismatch format Atlas / contenu psycho-militaire). Branche `feat/atlas-shaka-zulu-vague1` preserve l'etat.
 > **PIPELINE ATLAS = TRES MATURE** : d3-geo + Natural Earth + walk cycle PixelLab + custom animations PixelLab + map_objects + 7 SFX ElevenLabs + sous-titres karaoke Whisper.
 > **3 SHORTS PRETS POSTIZ** : Mansa Moussa V2, Thiaroye V5, Sonjata V7 (dans `out/PRET-PUBLICATION/`).
@@ -182,6 +182,7 @@ Si reprise un jour :
 | Sonjata Papercraft V7 | PRET | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/sonjata-papercraft/v7-final/sonjata-final-v7-compressed-M5mA0ElRb3n0LUdzf8gAMmWYuUeZte.mp4 |
 | Thiaroye 1944 V5 | PRET | https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/thiaroye-1944/renders/thiaroye-v5-FINAL-compressed-KzMQnwVZtYLExnaGnaOz8PdyFGFBmk.mp4 |
 | Mansa Moussa Atlas V2 | PRET | render local valide 2026-05-01 |
+| Empire du Ghana | PRET | https://files.catbox.moe/hf6lqa.mp4 (4e Short, 120s) |
 
 Fichiers locaux : `out/PRET-PUBLICATION/`
 

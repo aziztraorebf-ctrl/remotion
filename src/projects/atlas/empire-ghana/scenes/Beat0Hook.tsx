@@ -40,7 +40,7 @@ export const Beat0Hook: React.FC = () => (
       line1In={15}
       line2In={45}
       line3In={100}
-      durationFrames={SEGMENTS.HOOK.durationFrames}
+      durationFrames={SEGMENTS.S1_SETUP.startFrame}
       line1Color={GHANA_PALETTE.BLANC_OS}
       line2Color={GHANA_PALETTE.OR}
       line3Color={GHANA_PALETTE.OR}
