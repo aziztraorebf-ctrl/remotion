@@ -1,0 +1,53 @@
+{
+  "character": {
+    "id": "46e4511f-c330-4246-a7c6-25239a264ecc",
+    "name": "empire-ghana-sundiata-keita",
+    "prompt": "A 13th century West African Mande warrior-king, the legendary founder of the Mali Empire. Wearing crimson red and gold royal robes with ornate trim, ceremonial cap with gold band, gold neck jewelry. Holding a ceremonial sword raised at side. Dark tan skin. Heroic regal posture. Pixel art with sepia warm palette, deep red robes, gold accents, ornamental detail.",
+    "size": {
+      "width": 132,
+      "height": 132
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-04T02:38:53.965532+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "raising_sword_overhead_in_victorious_war_cry_mouth-6c313619": {
+        "south": [
+          "animations/raising_sword_overhead_in_victorious_war_cry_mouth-6c313619/south/frame_000.png",
+          "animations/raising_sword_overhead_in_victorious_war_cry_mouth-6c313619/south/frame_001.png",
+          "animations/raising_sword_overhead_in_victorious_war_cry_mouth-6c313619/south/frame_002.png",
+          "animations/raising_sword_overhead_in_victorious_war_cry_mouth-6c313619/south/frame_003.png"
+        ]
+      },
+      "animating-6f75dec1": {
+        "north": [
+          "animations/animating-6f75dec1/north/frame_000.png",
+          "animations/animating-6f75dec1/north/frame_001.png",
+          "animations/animating-6f75dec1/north/frame_002.png",
+          "animations/animating-6f75dec1/north/frame_003.png",
+          "animations/animating-6f75dec1/north/frame_004.png",
+          "animations/animating-6f75dec1/north/frame_005.png"
+        ]
+      },
+      "walking_forward_calmly_holding_sword_still_close_t-70738c80": {
+        "north": [
+          "animations/walking_forward_calmly_holding_sword_still_close_t-70738c80/north/frame_000.png",
+          "animations/walking_forward_calmly_holding_sword_still_close_t-70738c80/north/frame_001.png",
+          "animations/walking_forward_calmly_holding_sword_still_close_t-70738c80/north/frame_002.png",
+          "animations/walking_forward_calmly_holding_sword_still_close_t-70738c80/north/frame_003.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-04T03:02:55.989328"
+}

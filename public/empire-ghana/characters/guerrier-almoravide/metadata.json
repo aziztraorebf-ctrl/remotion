@@ -1,0 +1,37 @@
+{
+  "character": {
+    "id": "29659962-898a-4257-be22-1039da8e41f5",
+    "name": "empire-ghana-guerrier-almoravide",
+    "prompt": "An Almoravid Berber warrior from medieval Sahara, 11th century. Wearing white desert robes (boubou) with chainmail glimpses, dark indigo lith\u0101m (face veil covering nose and mouth \u2014 Almoravid signature). Armed with a spear or sabre at side. Dark leather sandals. Stern warrior posture, military bearing. Tan-bronze skin around eyes only. Pixel art with sepia warm palette, white robe + dark indigo veil + steel weapon accents.",
+    "size": {
+      "width": 132,
+      "height": 132
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-04T02:06:20.358534+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "animating-6c924926": {
+        "south": [
+          "animations/animating-6c924926/south/frame_000.png",
+          "animations/animating-6c924926/south/frame_001.png",
+          "animations/animating-6c924926/south/frame_002.png",
+          "animations/animating-6c924926/south/frame_003.png",
+          "animations/animating-6c924926/south/frame_004.png",
+          "animations/animating-6c924926/south/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-04T02:12:47.144616"
+}

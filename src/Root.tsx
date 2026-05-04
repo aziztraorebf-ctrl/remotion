@@ -47,9 +47,11 @@ import { EmpireGhanaHook, EMPIRE_GHANA_HOOK_FRAMES } from "./projects/atlas/empi
 import { Beat1Setup, BEAT1_SETUP_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat1Setup";
 import { Beat2Density, BEAT2_DENSITY_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat2Density";
 import { Beat3Barter, BEAT3_BARTER_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat3Barter";
+import { Beat4Consequence, BEAT4_CONSEQUENCE_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat4Consequence";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
+import { Conquete1759, CONQUETE_1759_FRAMES } from "./projects/atlas/quebec-poc/Conquete1759";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
 import {
   ThiaroyeShortV5,
@@ -631,6 +633,24 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="EmpireGhanaBeat4Consequence"
+          component={Beat4Consequence}
+          durationInFrames={BEAT4_CONSEQUENCE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+      </Folder>
+      <Folder name="Quebec-POC">
+        <Composition
+          id="QuebecConquete1759"
+          component={Conquete1759}
+          durationInFrames={CONQUETE_1759_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
       </Folder>
     </>

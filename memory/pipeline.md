@@ -61,6 +61,15 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
 ## Ordre de production (NON-NEGOTIABLE)
 
 ```
+0. CONCEPT ART — 1 image Gemini par beat majeur (NOUVEAU — 2026-05-03)
+   - Avant l'audio, apres le script locked
+   - 1 image 16:9 par beat : carte, ambiance, composition, cartouches vides
+   - Modele : gemini-3.1-flash-image-preview (~$0.04/image, ~5 images = $0.20)
+   - But : valider la vision visuelle avec Aziz EN 5 MINUTES avant de coder quoi que ce soit
+   - Template prompt : fond + territoire + sprites + cartouches vides + style Atlas
+   - Validation Aziz OBLIGATOIRE avant de passer a l'etape 1
+   Ref : /tmp/quebec-research/atlas-concept-*.png (exemple valide 2026-05-03)
+
 1. Script definitif valide par Aziz
 2. Generation audio ElevenLabs V3
 3. Whisper -> mesure timings reels par segment
