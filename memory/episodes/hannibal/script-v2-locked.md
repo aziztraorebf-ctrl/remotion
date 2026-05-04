@@ -64,7 +64,7 @@ Le froid tue ce que les tribus n'ont pas tué.
 Selon les chroniqueurs de l'époque, Hannibal fit chauffer des rochers et y versa du vinaigre pour ouvrir un passage.
 Après neuf jours de montée, le col est atteint.
 Hannibal arrête l'armée. Il leur montre l'Italie en contrebas.
-"Vous traversez les murs de Rome."
+"Vous traverserez les murs de Rome."
 
 ---
 
@@ -81,7 +81,7 @@ Trente-sept éléphants sont partis. Un seul est là.
 
 **[BEAT 5 — CONSÉQUENCE + CTA 15s]**
 La moitié d'une armée a disparu dans la montagne.
-Et avec ce qui reste, Hannibal va remporter les trois plus grandes défaites de l'histoire de Rome.
+Et avec ce qui reste, Hannibal va remporter les trois plus grandes victoires de sa vie — et les trois plus grandes défaites de l'histoire de Rome.
 La Trébie. Le lac Trasimène. Cannes.
 En une seule journée à Cannes, cinquante mille soldats romains tombent.
 Pose-toi la question : avec une armée complète, qu'est-ce qu'il aurait pu faire ?
