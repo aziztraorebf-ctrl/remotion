@@ -134,6 +134,15 @@ Aucune ne casse les autres. Renu premium impossible avec un asset statique.
 - Spritesheet horizontale uniquement (pour vertical, adapter `y` translate)
 - Loop infini = simple modulo, pas de easing entre frames
 
+## CORRECTION IMPORTANTE (2026-05-04) — vary_object ≠ animate_object
+
+**Le "saccadé" observé en Lab Phase 2 était une erreur de méthode, PAS une limite de PixelLab.**
+
+- `vary_object` (13 états) = variations stylistiques, pas des frames d'animation fluide → saccadé normal
+- `animate_object` (4-8 frames, action description) = animation fluide → comme ville Koumbi + chameaux
+
+**Règle** : pour toute animation d'action (éléphant qui se déplace, rocher qui se fissure, objet qui bouge), utiliser `animate_object` avec description simple. Résultat fluide garanti si frame_count=4-8.
+
 ## Bibliothèque animations Empire Ghana (état 2026-05-03 fin Beat 2)
 
 | Asset | Statique | Animé | Spritesheet |
