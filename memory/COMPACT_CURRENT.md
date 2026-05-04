@@ -113,6 +113,10 @@
 
 ### Prochaine scène = Beat 4 Effondrement (frames 2152→2788, ~21s)
 
+**Brief prochaine session** : `memory/episodes/empire-ghana/NEXT-SESSION-beats-4-5.md` (starter prompt + pistes créatives + règles)
+
+**Décision finale Beat 3** : pas d'insert plein écran. Le pattern marchands animés + camera-track + dolly-out raconte l'histoire complètement. Pattern réutilisable cross-épisodes.
+
 ### Skill atlas-video-preproduction activera automatiquement ce workflow
 
 Au démarrage prochaine session, le skill `atlas-video-preproduction` charge SKILL.md + checklists pour cadrer la production. Voir `~/.claude/skills/atlas-video-preproduction/checklists/pre-flight-production.md`.
