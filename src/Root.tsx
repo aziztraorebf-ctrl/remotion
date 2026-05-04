@@ -49,10 +49,12 @@ import { Beat2Density, BEAT2_DENSITY_FRAMES } from "./projects/atlas/empire-ghan
 import { Beat3Barter, BEAT3_BARTER_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat3Barter";
 import { Beat4Consequence, BEAT4_CONSEQUENCE_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat4Consequence";
 import { Beat5CTA, BEAT5_CTA_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat5CTA";
+import { Beat6CTA, BEAT6_CTA_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat6CTA";
 import { EmpireGhanaFull, EMPIRE_GHANA_FULL_FRAMES } from "./projects/atlas/empire-ghana/EmpireGhanaFull";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
+import { LabPhase1 } from "./projects/atlas/_lab-hannibal/scenes/LabPhase1";
 import { Conquete1759, CONQUETE_1759_FRAMES } from "./projects/atlas/quebec-poc/Conquete1759";
 import { NouvelleFrance, NOUVELLE_FRANCE_FRAMES } from "./projects/atlas/quebec-poc/NouvelleFrance";
 import { SubtitleTest, SUBTITLE_TEST_FRAMES } from "./projects/geoafrique-shorts/SubtitleTest";
@@ -654,6 +656,14 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
         />
         <Composition
+          id="EmpireGhanaBeat6CTA"
+          component={Beat6CTA}
+          durationInFrames={BEAT6_CTA_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
           id="EmpireGhanaFull"
           component={EmpireGhanaFull}
           durationInFrames={EMPIRE_GHANA_FULL_FRAMES}
@@ -678,6 +688,16 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+      </Folder>
+      <Folder name="lab-hannibal">
+        <Composition
+          id="LabHannibalPhase1"
+          component={LabPhase1}
+          durationInFrames={300}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
     </>

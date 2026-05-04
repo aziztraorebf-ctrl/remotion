@@ -112,6 +112,55 @@
 
 ---
 
+## Composants RPG/HUD (cross-épisodes — validés Lab Hannibal Phase 1.5, 2026-05-04)
+
+| Composant | Usage | Statut |
+|-----------|-------|--------|
+| `FocusBubble.tsx` | Zoom + blur sur background, foreground (sprite) reste net. Moments dramatiques | Actif |
+| `StatGauge.tsx` | HUD jauge (icône + label + valeur animée + delta). Prop `hideRanges` pour disparaître pendant focus | Actif |
+
+### Usage `FocusBubble`
+
+```tsx
+import { FocusBubble } from "../../_shared/FocusBubble";
+
+<FocusBubble
+  active={frame >= 150 && frame < 210}
+  startFrame={150}
+  endFrame={210}
+  zoomTarget={1.45}            // 1.4-1.5 dramatique. 1.15-1.25 subtil
+  blurMax={3.5}                // Garder ~3.5px (validé Aziz Phase 1.5)
+  origin={{ x: 540, y: 800 }}  // Centre du zoom (suit le sprite)
+  background={<MapBackground />}
+>
+  <SpriteLayer />              {/* Reste NET pendant le zoom */}
+</FocusBubble>
+```
+
+**Règle Atlas** : à utiliser uniquement pour moments dramatiques (action clé, climax, révélation perso). Pas systématique.
+
+### Usage `StatGauge`
+
+```tsx
+import { StatGauge } from "../../_shared/StatGauge";
+
+<StatGauge
+  label="Armée"
+  icon="⚔"
+  fromValue={50000}
+  toValue={26000}
+  startFrame={20}
+  durationFrames={180}
+  position={{ top: 100, right: 50 }}
+  color="#E6C76E"
+  hideRanges={[[148, 215]]}    // Masque pendant le focus dramatique
+/>
+```
+
+**Règle Atlas** : jauges permanentes dans la vidéo MAIS disparaissent (`hideRanges`) pendant moments dramatiques pour épurer l'écran. SFX d'apparition uniquement, pas continus (validé Aziz).
+
+---
+
 ## Règle d'import pour Shaka Zulu
 
 ```tsx
