@@ -50,7 +50,8 @@
       "Bash(curl --fail -L https://api.pixellab.ai/mcp/characters/33e221bd-5b9c-4e55-b729-cfeb534c1bd1/download -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
       "Bash(unzip -o warrior-update.zip -d warrior-update)",
       "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/east/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/)",
-      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/west/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/)"
+      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/west/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/)",
+      "Bash(/opt/homebrew/bin/yt-dlp --skip-download --write-comments --extractor-args 'youtube:max_comments=150,all,all,all;comment_sort=top' -o '%\\(id\\)s.%\\(ext\\)s' 'https://www.youtube.com/watch?v=__TRACKED_VAR__')"
     ],
     "additionalDirectories": [
       "/Users/clawdbot/.claude",

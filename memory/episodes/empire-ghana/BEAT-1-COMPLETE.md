@@ -9,7 +9,7 @@
 
 | Item | Path | Statut |
 |------|------|--------|
-| Render final Beat 1 | `out/empire-ghana/beat1-v5.mp4` (11.1 MB, 15.5s) | ✅ validé Aziz |
+| Render final Beat 1 | `out/empire-ghana/beat1-v6-final.mp4` (11.3 MB, 15.5s, ville Koumbi animée) | ✅ validé Aziz |
 | Code source | `src/projects/atlas/empire-ghana/scenes/Beat1Setup.tsx` | ✅ |
 | Composition Remotion | `EmpireGhanaBeat1Setup` (1080×1920, 30fps, 465 frames) | ✅ |
 | Données géo précises | `data/geo/empire-ghana-data.json` (regenerée avec OHM + POI Wikipedia) | ✅ |
@@ -24,7 +24,8 @@
 | v2 | ❌ | Lottie ring/lingot/timeline trop pauvres (trapèze géométrique = pas un lingot), pays voisins highlightés sans contexte, zoom toujours raté |
 | v3 | ⚠️ partiel | Architecture forkée Mansa Moussa OK, identité Ghana OK, mais : crossfade au lieu de zoom espace, sceau "richesse" hors contexte narratif, cartouches en bas |
 | v4 | ⚠️ partiel | Spotlight insert SEL ⇌ OR validé, sprite Koumbi Saleh validé, cartouches en haut, MAIS zoom encore centré sur centre canvas (pas Wagadou) |
-| **v5** | **✅ validé** | Fix zoom : pivot scale autour de Koumbi Saleh projeté `(255, 586)` sur globe ortho. Le globe zoome vraiment vers Wagadou maintenant. |
+| v5 | ⚠️ partiel | Fix zoom : pivot scale autour de Koumbi Saleh projeté `(255, 586)` sur globe ortho. Le globe zoome vraiment vers Wagadou. Mais sprite Koumbi statique. |
+| **v6** | **✅ validé final** | Sprite Koumbi Saleh ANIMÉ (spritesheet 4 frames "people walking around") + pulse breathing + halo gradient simultanés. Confirmation : animations multiples sur même asset OK. |
 
 ## Découvertes techniques majeures (à réutiliser)
 
@@ -40,6 +41,12 @@ Voir `feedback_atlas-cartouches-top-only.md`. Bottom écran réservé sous-titre
 ### 4. Données géo OpenHistoricalMap
 Source vectorielle libre (ODbL) pour Wagadou, 23 vertices vs octogone manuel 8 vertices. Source académique vérifiée Wikidata Q206789.
 Recipe applicable à d'autres empires historiques : `https://www.openhistoricalmap.org/relation/<id>` → Overpass API → GeoJSON → projection d3-geo.
+
+### 5bis. Animations PixelLab simultanées sur même asset (validé v6)
+Pattern spritesheet PixelLab GIF → PNG horizontale via ffmpeg → clipPath SVG cycle dans Remotion.
+Combine sans conflit : ville animée 4-frames + pulse breathing scale + halo gradient radial.
+Documenté dans `feedback_pixellab-animations-spritesheet.md`.
+Pipeline réutilisable pour tout asset narratif central.
 
 ### 5. Zoom espace pivot sur POI (vrai zoom continu)
 Au lieu de scale autour du centre canvas (pas de centrage sur cible), calculer la position projetée de la cible sur la projection orthographique et pivoter le scale autour de ces coords :

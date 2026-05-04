@@ -45,6 +45,8 @@ import { LightLeakTest, LIGHT_LEAK_TEST_FRAMES } from "./projects/atlas/shaka-zu
 import { LottieTest, LOTTIE_TEST_FRAMES } from "./projects/atlas/shaka-zulu/tests/LottieTest";
 import { EmpireGhanaHook, EMPIRE_GHANA_HOOK_FRAMES } from "./projects/atlas/empire-ghana/EmpireGhanaHook";
 import { Beat1Setup, BEAT1_SETUP_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat1Setup";
+import { Beat2Density, BEAT2_DENSITY_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat2Density";
+import { Beat3Barter, BEAT3_BARTER_FRAMES } from "./projects/atlas/empire-ghana/scenes/Beat3Barter";
 import { SilentBarterTest, SILENT_BARTER_TEST_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTest";
 import { PaletteShowcase, PALETTE_SHOWCASE_FRAMES } from "./projects/atlas/empire-ghana/tests/PaletteShowcase";
 import { SilentBarterTestV3, SILENT_BARTER_V3_FRAMES } from "./projects/atlas/empire-ghana/tests/SilentBarterTestV3";
@@ -610,6 +612,22 @@ export const RemotionRoot: React.FC = () => {
           id="EmpireGhanaBeat1Setup"
           component={Beat1Setup}
           durationInFrames={BEAT1_SETUP_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="EmpireGhanaBeat2Density"
+          component={Beat2Density}
+          durationInFrames={BEAT2_DENSITY_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="EmpireGhanaBeat3Barter"
+          component={Beat3Barter}
+          durationInFrames={BEAT3_BARTER_FRAMES}
           fps={30}
           width={1080}
           height={1920}

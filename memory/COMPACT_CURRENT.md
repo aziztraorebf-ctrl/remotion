@@ -97,7 +97,21 @@
 - File indienne = même trajectoire `getChameauPos()` + délai 50f sur le 2e — stagger temporel seul ne suffit pas
 - SDK `animate_with_text` = fallback quand GIF PixelLab non téléchargeable via API (negative_description="" obligatoire, `.pil_image()` pas `.to_image()`)
 
-### Prochaine scène = Beat 3 Silent Barter (frames 1462→2152, ~23s)
+### BEAT 3 SILENT BARTER — VALIDÉ (2026-05-03)
+
+| Item | Statut |
+|------|--------|
+| Beat3Barter.tsx | ✅ validé Aziz v4 |
+| Render final | `out/empire-ghana/beat3-v4.mp4` (22 MB, 690f) |
+| Camera-track sprites CSS | ✅ helper `svgToCompWithCam` (projection coords SVG → composition selon caméra) |
+| Zoom amplifié | walk 2.8x, crouch 3.2x (insert détail), dolly-out 2.4→1.0 |
+| Marchands berbere + sahelien | ✅ walk south + crouch + walk north (pattern SilentBarterTestV3 porté) |
+| Sacs au pied du sprite | ✅ drop points séparés du POI Koumbi |
+| Balance PixelLab PNG | ✅ remplace Lottie SVG (plus visible) |
+| Dolly-out final + empire pulse | ✅ OR_VIF fill direct + outline gold (3→11px) + routes glow néon |
+| Cartouche "5 SIÈCLES" | ✅ apparaît pendant pull-back final |
+
+### Prochaine scène = Beat 4 Effondrement (frames 2152→2788, ~21s)
 
 ### Skill atlas-video-preproduction activera automatiquement ce workflow
 
