@@ -404,35 +404,26 @@
     .example-card {
       background: var(--white);
       border-left: 3px solid var(--gold);
-      padding: 32px 28px;
-      box-shadow: 0 4px 20px rgba(20, 25, 48, 0.04);
+      padding: 16px;
+      box-shadow: 0 8px 32px rgba(20, 25, 48, 0.08);
+      max-width: 460px;
+      margin: 0 auto;
     }
 
-    .example-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 500;
-      color: var(--ink);
-      margin-bottom: 18px;
-      line-height: 1.3;
+    .example-card img {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
-    .example-card-label {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 10px;
+    .example-caption {
+      font-size: 12px;
+      color: var(--ink-faint);
+      text-align: center;
+      margin-top: 18px;
+      font-style: italic;
+      letter-spacing: 0.02em;
     }
-
-    .example-card-text {
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--ink-muted);
-      margin-bottom: 16px;
-    }
-    .example-card-text:last-child { margin-bottom: 0; }
 
     /* ───────────────── CTA BAS ───────────────── */
     .cta-band {
@@ -578,11 +569,9 @@
       }
 
       .example-card {
-        padding: 44px 48px;
+        padding: 20px;
+        max-width: 520px;
       }
-
-      .example-card-title { font-size: 26px; }
-      .example-card-text { font-size: 16px; }
 
       .cta-band { padding: 80px 40px; }
 
@@ -668,10 +657,10 @@
 
       <!-- PHONES -->
       <div class="phones-stage" aria-label="Aperçu de la newsletter">
-        <div class="phone-frame phone-back" role="img" aria-label="Tableau de bord du jour">
+        <div class="phone-frame phone-back" role="img" aria-label="Brève sourcée du jour">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <img id="preview-1" src="assets/preview-dashboard.png" alt="Tableau de bord Kora &amp; Cartes">
+            <img id="preview-1" src="assets/preview-proces.png" alt="Brève sourcée — procès des 8 dirigeants GCAP">
             <div id="placeholder-1" class="phone-placeholder" style="display:none">
               <span class="phone-placeholder-label">Aperçu bientôt disponible</span>
             </div>
@@ -730,15 +719,9 @@
     <p class="example-eyebrow">Exemple d'analyse</p>
     <h2 class="example-heading">Un extrait de la dernière édition.</h2>
     <article class="example-card">
-      <h3 class="example-card-title">Mali — Pression logistique autour de Bamako</h3>
-      <p class="example-card-label">Lecture stratégique</p>
-      <p class="example-card-text">
-        Le blocage des axes routiers ne constitue pas uniquement une démonstration de force. Il vise également à tester la dépendance logistique de la capitale.
-      </p>
-      <p class="example-card-text">
-        Le contrôle des corridors devient plus important que l'occupation territoriale. La bataille se joue sur les flux, pas seulement sur les positions.
-      </p>
+      <img src="assets/preview-analyse-jour.png" alt="Analyse du jour — Mali : la stratégie du siège, une constante des conflits sahéliens">
     </article>
+    <p class="example-caption">Édition du mercredi 7 mai 2026 — Analyse du jour.</p>
   </section>
 
   <!-- CTA bottom -->
