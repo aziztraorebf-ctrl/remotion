@@ -374,9 +374,14 @@
 
     /* ───────────────── EXAMPLE ───────────────── */
     .example {
-      max-width: 980px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 64px 20px 48px;
+    }
+
+    .example-heading-block {
+      text-align: center;
+      margin-bottom: 40px;
     }
 
     .example-eyebrow {
@@ -386,7 +391,6 @@
       text-transform: uppercase;
       color: var(--gold);
       margin-bottom: 16px;
-      text-align: center;
     }
 
     .example-heading {
@@ -395,10 +399,51 @@
       font-weight: 400;
       line-height: 1.25;
       color: var(--ink);
-      text-align: center;
       max-width: 640px;
-      margin: 0 auto 36px;
+      margin: 0 auto;
       letter-spacing: -0.01em;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .example-list-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
+    }
+
+    .example-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .example-list li {
+      font-size: 15px;
+      color: var(--ink);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-soft);
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      line-height: 1.5;
+    }
+
+    .example-list li:last-child { border-bottom: none; }
+
+    .example-list li::before {
+      content: "—";
+      color: var(--gold);
+      font-weight: 500;
+      flex-shrink: 0;
     }
 
     .example-card {
@@ -408,6 +453,7 @@
       box-shadow: 0 8px 32px rgba(20, 25, 48, 0.08);
       max-width: 460px;
       margin: 0 auto;
+      width: 100%;
     }
 
     .example-card img {
@@ -568,9 +614,16 @@
         padding: 96px 40px 80px;
       }
 
+      .example-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+      }
+
       .example-card {
         padding: 20px;
-        max-width: 520px;
+        max-width: 460px;
+        margin: 0;
       }
 
       .cta-band { padding: 80px 40px; }
@@ -716,12 +769,29 @@
 
   <!-- EXAMPLE -->
   <section class="example" aria-label="Exemple d'analyse">
-    <p class="example-eyebrow">Exemple d'analyse</p>
-    <h2 class="example-heading">Un extrait de la dernière édition.</h2>
-    <article class="example-card">
-      <img src="assets/preview-analyse-jour.png" alt="Analyse du jour — Mali : la stratégie du siège, une constante des conflits sahéliens">
-    </article>
-    <p class="example-caption">Édition du mercredi 7 mai 2026 — Analyse du jour.</p>
+    <div class="example-heading-block">
+      <p class="example-eyebrow">Exemple d'analyse</p>
+      <h2 class="example-heading">Un extrait de la dernière édition.</h2>
+    </div>
+    <div class="example-grid">
+      <div>
+        <p class="example-list-eyebrow">Ce que vous recevez</p>
+        <ul class="example-list">
+          <li>5 à 7 développements clés</li>
+          <li>Une analyse approfondie</li>
+          <li>Cartes et signaux visuels</li>
+          <li>Contexte historique</li>
+          <li>Impacts régionaux</li>
+          <li>Lecture en moins de 7 minutes</li>
+        </ul>
+      </div>
+      <div>
+        <article class="example-card">
+          <img src="assets/preview-analyse-jour.png" alt="Analyse du jour — Mali : la stratégie du siège, une constante des conflits sahéliens">
+        </article>
+        <p class="example-caption">Édition du mercredi 7 mai 2026 — Analyse du jour.</p>
+      </div>
+    </div>
   </section>
 
   <!-- CTA bottom -->
