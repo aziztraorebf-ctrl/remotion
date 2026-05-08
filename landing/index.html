@@ -7,18 +7,22 @@
   <title>Kora &amp; Cartes — La newsletter arrive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
       --cream: #F5F0E8;
+      --cream-soft: #EFE8DC;
       --ink: #1A1209;
       --ink-muted: #5C4A2A;
       --ink-faint: #8C7355;
       --red: #C0392B;
       --gold: #B8860B;
+      --gold-soft: #D4A93C;
       --navy: #1C2340;
+      --navy-deep: #141930;
       --white: #FFFFFF;
       --border: #DDD5C4;
+      --border-soft: #E5DCC8;
     }
 
     *, *::before, *::after {
@@ -31,6 +35,7 @@
       font-size: 16px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      scroll-behavior: smooth;
     }
 
     body {
@@ -38,47 +43,46 @@
       color: var(--ink);
       font-family: 'Inter', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      overflow-x: hidden;
     }
 
-    /* ── HEADER ── */
-    header {
-      padding: 40px 24px 32px;
-      text-align: center;
+    /* ───────────────── HEADER ───────────────── */
+    .site-header {
+      padding: 22px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 1280px;
+      margin: 0 auto;
     }
 
     .logo-wrap {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 14px;
+      gap: 12px;
     }
 
     .logo-img {
-      width: 52px;
-      height: 52px;
+      width: 44px;
+      height: 44px;
       border-radius: 50%;
       object-fit: cover;
       flex-shrink: 0;
     }
 
-    .logo-img-hidden {
-      display: none;
-    }
-
     .logo-text-wrap {
-      text-align: left;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
     }
 
-    .logo {
+    .logo-name {
       font-family: 'Playfair Display', serif;
-      font-size: 20px;
-      font-weight: 400;
+      font-size: 18px;
+      font-weight: 500;
       letter-spacing: 0.06em;
       color: var(--navy);
       text-transform: uppercase;
-      display: block;
     }
 
     .logo-sub {
@@ -88,88 +92,97 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--gold);
+      margin-top: 4px;
+    }
+
+    .menu-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      cursor: default;
+      opacity: 0.7;
+    }
+
+    .menu-icon span {
       display: block;
-      margin-top: 3px;
-    }
-
-    .logo-rule {
-      width: 40px;
       height: 1.5px;
-      background: var(--red);
-      border: none;
-      margin: 14px auto 0;
+      background: var(--ink);
     }
 
-    /* ── MAIN ── */
-    main {
-      flex: 1;
-      width: 100%;
-      max-width: 680px;
-      margin: 0 auto;
-      padding: 0 24px 64px;
-    }
+    .menu-icon span:nth-child(1) { width: 22px; }
+    .menu-icon span:nth-child(2) { width: 18px; margin-left: auto; }
+    .menu-icon span:nth-child(3) { width: 22px; }
 
-    /* ── HERO ── */
+    /* ───────────────── HERO ───────────────── */
     .hero {
-      padding: 36px 0 44px;
-      text-align: center;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero-text {
+      max-width: 560px;
     }
 
     .hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(28px, 6vw, 46px);
+      font-size: clamp(40px, 9vw, 76px);
       font-weight: 400;
-      line-height: 1.18;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
       color: var(--ink);
-      letter-spacing: -0.01em;
+    }
+
+    .hero-rule {
+      width: 56px;
+      height: 2px;
+      background: var(--gold);
+      border: none;
+      margin: 28px 0;
     }
 
     .hero-subtitle {
-      margin-top: 18px;
-      font-size: 16px;
-      line-height: 1.65;
+      font-size: 17px;
+      line-height: 1.6;
       color: var(--ink-muted);
+      max-width: 460px;
+    }
+
+    /* Form */
+    .form-block {
+      margin-top: 32px;
       max-width: 480px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    /* ── FORM ── */
-    .form-section {
-      background: var(--white);
-      border-top: 3px solid var(--red);
-      padding: 32px 28px;
-      margin-bottom: 56px;
-    }
-
-    .form-label {
-      display: block;
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--ink-faint);
-      margin-bottom: 14px;
     }
 
     .form-row {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .form-input {
       width: 100%;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 17px;
+      font-size: 16px;
       color: var(--ink);
-      background: transparent;
-      border: none;
-      border-bottom: 1.5px solid var(--red);
-      padding: 8px 0;
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 16px 18px;
       outline: none;
-      transition: border-color 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      border-radius: 2px;
     }
 
     .form-input::placeholder {
@@ -177,116 +190,115 @@
     }
 
     .form-input:focus {
-      border-bottom-color: var(--ink);
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(28, 35, 64, 0.08);
     }
 
     .form-btn {
-      width: 100%;
       font-family: 'Inter', sans-serif;
       font-size: 12px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--white);
-      background: var(--red);
+      background: var(--navy);
       border: none;
-      padding: 15px 28px;
+      padding: 16px 28px;
       cursor: pointer;
       transition: background 0.15s;
-      border-radius: 0;
+      border-radius: 2px;
+      white-space: nowrap;
     }
 
-    .form-btn:hover {
-      background: #a93226;
-    }
-
-    .form-btn:disabled {
-      background: var(--ink-faint);
-      cursor: not-allowed;
-    }
+    .form-btn:hover { background: var(--navy-deep); }
+    .form-btn:disabled { background: var(--ink-faint); cursor: not-allowed; }
 
     .form-note {
       margin-top: 14px;
-      font-size: 11px;
+      font-size: 12px;
       color: var(--ink-faint);
-      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-note-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
     }
 
     .form-confirmation {
       display: none;
       align-items: flex-start;
       gap: 12px;
-      padding: 8px 0;
+      padding: 18px 0 0;
     }
-
-    .form-confirmation.visible {
-      display: flex;
-    }
-
+    .form-confirmation.visible { display: flex; }
     .confirm-check {
-      font-size: 20px;
+      font-size: 22px;
       color: var(--gold);
       flex-shrink: 0;
-      line-height: 1.4;
+      line-height: 1.2;
     }
-
     .confirm-text {
       font-size: 15px;
       color: var(--ink-muted);
-      line-height: 1.6;
+      line-height: 1.55;
     }
 
-    /* ── PREVIEWS ── */
-    .previews-section {
-      margin-bottom: 56px;
-    }
-
-    .section-label {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 24px;
-      text-align: center;
-    }
-
-    .phones-grid {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      align-items: flex-start;
-    }
-
-    /* iPhone frame in CSS */
-    .phone-frame {
+    /* ───────────────── PHONES ───────────────── */
+    .phones-stage {
       position: relative;
-      width: 220px;
-      flex-shrink: 0;
-      border-radius: 34px;
-      background: var(--navy);
-      padding: 10px 7px;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.08),
-        0 20px 60px rgba(0,0,0,0.25),
-        0 4px 16px rgba(0,0,0,0.15);
+      width: 100%;
+      max-width: 540px;
+      margin: 0 auto;
+      aspect-ratio: 1 / 1;
     }
 
-    /* Notch */
-    .phone-notch {
+    .phone-frame {
       position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 72px;
-      height: 22px;
-      background: var(--navy);
-      border-radius: 0 0 14px 14px;
+      width: 56%;
+      border-radius: 32px;
+      background: #0c0c10;
+      padding: 9px 7px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.06),
+        0 30px 70px rgba(20, 25, 48, 0.28),
+        0 8px 24px rgba(20, 25, 48, 0.16);
+    }
+
+    .phone-frame.phone-back {
+      top: 4%;
+      left: 8%;
+      transform: rotate(-7deg);
+      z-index: 1;
+    }
+
+    .phone-frame.phone-front {
+      top: 12%;
+      right: 6%;
+      transform: rotate(5deg);
       z-index: 2;
     }
 
+    .phone-notch {
+      position: absolute;
+      top: 9px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38%;
+      height: 18px;
+      background: #0c0c10;
+      border-radius: 0 0 12px 12px;
+      z-index: 3;
+    }
+
     .phone-screen {
-      border-radius: 26px;
+      border-radius: 24px;
       overflow: hidden;
       background: var(--cream);
       display: block;
@@ -300,10 +312,9 @@
       height: auto;
     }
 
-    /* Placeholder shown when image fails to load */
     .phone-placeholder {
       width: 100%;
-      aspect-ratio: 9/17;
+      aspect-ratio: 9/19.5;
       background: #e8e2d6;
       display: flex;
       align-items: center;
@@ -312,142 +323,361 @@
 
     .phone-placeholder-label {
       font-size: 10px;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--ink-faint);
       text-align: center;
       padding: 0 16px;
     }
 
-    .phone-screen img.hidden {
-      display: none;
+    /* ───────────────── PILLARS ───────────────── */
+    .pillars {
+      background: var(--cream-soft);
+      border-top: 1px solid var(--border-soft);
+      border-bottom: 1px solid var(--border-soft);
+      padding: 28px 0;
+      margin-top: 24px;
     }
 
-    /* Second phone offset for visual rhythm */
-    .phone-frame:nth-child(2) {
-      margin-top: 28px;
+    .pillars-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 22px;
     }
 
-    /* ── POSITIONING ── */
-    .positioning {
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .pillar-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.4;
+    }
+
+    .pillar-text {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      line-height: 1.4;
+    }
+
+    /* ───────────────── EXAMPLE ───────────────── */
+    .example {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 64px 20px 48px;
+    }
+
+    .example-eyebrow {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
       text-align: center;
-      padding: 8px 0 0;
     }
 
-    .positioning p {
+    .example-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4vw, 32px);
+      font-weight: 400;
+      line-height: 1.25;
+      color: var(--ink);
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto 36px;
+      letter-spacing: -0.01em;
+    }
+
+    .example-card {
+      background: var(--white);
+      border-left: 3px solid var(--gold);
+      padding: 32px 28px;
+      box-shadow: 0 4px 20px rgba(20, 25, 48, 0.04);
+    }
+
+    .example-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 18px;
+      line-height: 1.3;
+    }
+
+    .example-card-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 10px;
+    }
+
+    .example-card-text {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--ink-muted);
+      margin-bottom: 16px;
+    }
+    .example-card-text:last-child { margin-bottom: 0; }
+
+    /* ───────────────── CTA BAS ───────────────── */
+    .cta-band {
+      background: var(--navy);
+      padding: 56px 20px;
+      margin-top: 24px;
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 4.5vw, 34px);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 28px;
+      letter-spacing: -0.01em;
+    }
+
+    .cta-form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .cta-input {
+      width: 100%;
       font-family: 'Playfair Display', serif;
       font-style: italic;
-      font-size: 17px;
-      color: var(--ink-muted);
-      line-height: 1.6;
+      font-size: 16px;
+      color: var(--ink);
+      background: var(--white);
+      border: none;
+      padding: 16px 18px;
+      outline: none;
+      border-radius: 2px;
     }
 
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px;
+    .cta-input::placeholder { color: var(--ink-faint); }
+
+    .cta-btn {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--navy);
+      background: var(--gold-soft);
+      border: none;
+      padding: 16px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 2px;
+    }
+
+    .cta-btn:hover { background: var(--gold); color: var(--white); }
+    .cta-btn:disabled { background: var(--ink-faint); cursor: not-allowed; }
+
+    .cta-note {
+      margin-top: 18px;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .cta-note-icon {
+      width: 14px;
+      height: 14px;
+      stroke: var(--gold-soft);
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    .cta-confirmation {
+      display: none;
+      color: var(--white);
+      max-width: 480px;
+      margin: 0 auto;
       text-align: center;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    .cta-confirmation.visible { display: block; }
+
+    /* ───────────────── FOOTER ───────────────── */
+    .site-footer {
+      padding: 28px 20px;
+      text-align: center;
+      background: var(--cream);
     }
 
     .footer-copy {
       font-size: 11px;
       color: var(--ink-faint);
-      letter-spacing: 0.04em;
+      letter-spacing: 0.06em;
     }
 
-    /* ── DESKTOP ── */
-    @media (min-width: 600px) {
-      header { padding: 56px 24px 40px; }
-      .hero { padding: 48px 0 56px; }
-      .form-section { padding: 36px 36px; }
-      .form-row { flex-direction: row; align-items: flex-end; gap: 16px; }
+    /* ═══════════════════════ DESKTOP ═══════════════════════ */
+    @media (min-width: 768px) {
+      .site-header {
+        padding: 32px 40px;
+      }
+
+      .logo-img { width: 52px; height: 52px; }
+      .logo-name { font-size: 20px; }
+
+      .hero {
+        padding: 40px 40px 80px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1.05fr 1fr;
+        gap: 40px;
+      }
+
+      .form-row {
+        flex-direction: row;
+        align-items: stretch;
+        gap: 12px;
+      }
+
       .form-input { flex: 1; }
-      .form-btn { width: auto; white-space: nowrap; flex-shrink: 0; }
-      .phone-frame { width: 240px; }
+
+      .pillars-inner {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+      }
+
+      .pillar { flex-direction: row; }
+
+      .example {
+        padding: 96px 40px 80px;
+      }
+
+      .example-card {
+        padding: 44px 48px;
+      }
+
+      .example-card-title { font-size: 26px; }
+      .example-card-text { font-size: 16px; }
+
+      .cta-band { padding: 80px 40px; }
+
+      .cta-form-row {
+        flex-direction: row;
+        gap: 12px;
+      }
+
+      .cta-input { flex: 1; }
     }
 
-    @media (max-width: 380px) {
-      .phone-frame { width: 148px; border-radius: 24px; }
-      .phones-grid { gap: 12px; }
+    @media (min-width: 1024px) {
+      .hero-grid {
+        gap: 64px;
+      }
+
+      .phones-stage {
+        max-width: 600px;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition: none !important; }
+      *, *::before, *::after { transition: none !important; scroll-behavior: auto !important; }
     }
   </style>
 </head>
 <body>
 
-  <header>
+  <header class="site-header">
     <div class="logo-wrap">
-      <img
-        id="logo-img"
-        class="logo-img"
-        src="assets/logo-kora-cartes.png"
-        alt="Kora &amp; Cartes"
-      >
+      <img id="logo-img" class="logo-img" src="assets/logo-kora-cartes.png" alt="Kora &amp; Cartes">
       <div class="logo-text-wrap">
-        <span class="logo">Kora &amp; Cartes</span>
+        <span class="logo-name">Kora &amp; Cartes</span>
         <span class="logo-sub">Veille Stratégique</span>
       </div>
     </div>
-    <hr class="logo-rule">
+    <div class="menu-icon" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
   </header>
 
-  <main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-grid">
 
-    <!-- HERO -->
-    <section class="hero">
-      <h1 class="hero-title" data-pretext>
-        L'info stratégique en Afrique.<br>En quelques minutes, chaque matin.
-      </h1>
-      <p class="hero-subtitle" data-pretext>
-        La newsletter arrive. Laisse ton adresse email pour être parmi les premiers à la recevoir.
-      </p>
-    </section>
+      <div class="hero-text">
+        <h1 class="hero-title">L'Afrique stratégique,<br>chaque matin.</h1>
+        <hr class="hero-rule">
+        <p class="hero-subtitle">
+          Analyse indépendante des dynamiques politiques, sécuritaires et économiques du continent. Décryptée, contextualisée, synthétisée.
+        </p>
 
-    <!-- FORM -->
-    <section class="form-section" aria-label="Inscription liste d'attente">
-      <label class="form-label" for="email-input">Liste d'attente — accès gratuit</label>
-      <div id="form-fields">
-        <div class="form-row">
-          <input
-            id="email-input"
-            class="form-input"
-            type="email"
-            placeholder="votre@email.com"
-            autocomplete="email"
-            aria-label="Adresse email"
-            required
-          >
-          <button id="submit-btn" class="form-btn" type="button" onclick="submitForm()">
-            Rejoindre la liste &rarr;
-          </button>
+        <div class="form-block">
+          <div id="form-fields-1">
+            <form class="form-row" onsubmit="event.preventDefault(); submitForm('email-input-1', 'submit-btn-1', 'form-fields-1', 'form-confirmation-1');">
+              <input
+                id="email-input-1"
+                class="form-input"
+                type="email"
+                placeholder="votre@email.com"
+                autocomplete="email"
+                aria-label="Adresse email"
+                required
+              >
+              <button id="submit-btn-1" class="form-btn" type="submit">
+                Rejoindre la liste &rarr;
+              </button>
+            </form>
+            <p class="form-note">
+              <svg class="form-note-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+              Accès anticipé gratuit. Aucun spam. Désabonnement en un clic.
+            </p>
+          </div>
+          <div class="form-confirmation" id="form-confirmation-1" role="status" aria-live="polite">
+            <span class="confirm-check" aria-hidden="true">&#10003;</span>
+            <p class="confirm-text">Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.</p>
+          </div>
         </div>
-        <p class="form-note">Gratuit. Sans spam. Désabonnement en un clic.</p>
       </div>
-      <div class="form-confirmation" id="form-confirmation" role="status" aria-live="polite">
-        <span class="confirm-check" aria-hidden="true">&#10003;</span>
-        <p class="confirm-text">Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.</p>
-      </div>
-    </section>
 
-    <!-- PREVIEWS -->
-    <section class="previews-section" aria-label="Aperçu de la newsletter">
-      <p class="section-label">Un aperçu</p>
-      <div class="phones-grid">
-
-        <div class="phone-frame" role="img" aria-label="Tableau de bord du jour">
+      <!-- PHONES -->
+      <div class="phones-stage" aria-label="Aperçu de la newsletter">
+        <div class="phone-frame phone-back" role="img" aria-label="Tableau de bord du jour">
           <div class="phone-notch"></div>
           <div class="phone-screen">
-            <img id="preview-1" src="assets/preview-dashboard.png" alt="Tableau de bord GeoAfrique Watch">
+            <img id="preview-1" src="assets/preview-dashboard.png" alt="Tableau de bord Kora &amp; Cartes">
             <div id="placeholder-1" class="phone-placeholder" style="display:none">
               <span class="phone-placeholder-label">Aperçu bientôt disponible</span>
             </div>
           </div>
         </div>
-
-        <div class="phone-frame" role="img" aria-label="Article en profondeur">
+        <div class="phone-frame phone-front" role="img" aria-label="Article en profondeur">
           <div class="phone-notch"></div>
           <div class="phone-screen">
             <img id="preview-2" src="assets/preview-article.png" alt="Article illustré en profondeur">
@@ -456,18 +686,95 @@
             </div>
           </div>
         </div>
-
       </div>
-    </section>
 
-    <!-- POSITIONING -->
-    <section class="positioning" aria-label="Positionnement éditorial">
-      <p>Analyse indépendante. Sources primaires. Regard africain.</p>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- PILLARS -->
+  <section class="pillars" aria-label="Promesse éditoriale">
+    <div class="pillars-inner">
+      <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+          <path d="M14 3v6h6"/>
+          <path d="M9 13h6M9 17h6"/>
+        </svg>
+        <span class="pillar-text">Sources primaires<br>vérifiées</span>
+      </div>
+      <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>
+        </svg>
+        <span class="pillar-text">Lecture<br>régionale</span>
+      </div>
+      <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/>
+          <path d="M12 7v5l3 2"/>
+        </svg>
+        <span class="pillar-text">Synthèse<br>quotidienne</span>
+      </div>
+      <div class="pillar">
+        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M14 3h-3l-2 3-2 1-1 3 1 2-1 3 2 2 1 3h4l2-2 2-1v-3l-1-2 1-3-2-3z"/>
+        </svg>
+        <span class="pillar-text">Perspective<br>africaine</span>
+      </div>
+    </div>
+  </section>
 
-  <footer>
+  <!-- EXAMPLE -->
+  <section class="example" aria-label="Exemple d'analyse">
+    <p class="example-eyebrow">Exemple d'analyse</p>
+    <h2 class="example-heading">Un extrait de la dernière édition.</h2>
+    <article class="example-card">
+      <h3 class="example-card-title">Mali — Pression logistique autour de Bamako</h3>
+      <p class="example-card-label">Lecture stratégique</p>
+      <p class="example-card-text">
+        Le blocage des axes routiers ne constitue pas uniquement une démonstration de force. Il vise également à tester la dépendance logistique de la capitale.
+      </p>
+      <p class="example-card-text">
+        Le contrôle des corridors devient plus important que l'occupation territoriale. La bataille se joue sur les flux, pas seulement sur les positions.
+      </p>
+    </article>
+  </section>
+
+  <!-- CTA bottom -->
+  <section class="cta-band" aria-label="Inscription">
+    <div class="cta-inner">
+      <h2 class="cta-title">Recevez les premières éditions gratuitement.</h2>
+      <div id="form-fields-2">
+        <form class="cta-form-row" onsubmit="event.preventDefault(); submitForm('email-input-2', 'submit-btn-2', 'form-fields-2', 'cta-confirmation-2');">
+          <input
+            id="email-input-2"
+            class="cta-input"
+            type="email"
+            placeholder="votre@email.com"
+            autocomplete="email"
+            aria-label="Adresse email"
+            required
+          >
+          <button id="submit-btn-2" class="cta-btn" type="submit">
+            Rejoindre la liste &rarr;
+          </button>
+        </form>
+        <p class="cta-note">
+          <svg class="cta-note-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+            <path d="m9 12 2 2 4-4"/>
+          </svg>
+          Aucun spam. Désabonnement en un clic.
+        </p>
+      </div>
+      <div class="cta-confirmation" id="cta-confirmation-2" role="status" aria-live="polite">
+        Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
     <p class="footer-copy">&copy; Kora &amp; Cartes 2026</p>
   </footer>
 
@@ -475,12 +782,10 @@
     const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfm5tOIMjpo2DkGbJOUwkVTikwYRuGjVlR-tASHNkMQvvVo5g/formResponse";
     const EMAIL_FIELD = "entry.245646386";
 
-    // Hide logo if file missing
     document.getElementById("logo-img").addEventListener("error", function() {
       this.style.display = "none";
     });
 
-    // Hide preview images and show placeholders if files missing
     [1, 2].forEach(function(n) {
       var img = document.getElementById("preview-" + n);
       var ph = document.getElementById("placeholder-" + n);
@@ -492,9 +797,9 @@
       }
     });
 
-    function submitForm() {
-      var input = document.getElementById("email-input");
-      var btn = document.getElementById("submit-btn");
+    function submitForm(inputId, btnId, fieldsId, confirmId) {
+      var input = document.getElementById(inputId);
+      var btn = document.getElementById(btnId);
       var email = input.value.trim();
 
       if (!email || !email.includes("@")) {
@@ -508,42 +813,13 @@
       var body = new FormData();
       body.append(EMAIL_FIELD, email);
 
-      // Google Forms returns CORS error — expected. Submission goes through before rejection.
       fetch(FORM_ACTION, { method: "POST", body: body, mode: "no-cors" })
         .catch(function() {})
         .finally(function() {
-          document.getElementById("form-fields").style.display = "none";
-          var conf = document.getElementById("form-confirmation");
-          conf.classList.add("visible");
+          document.getElementById(fieldsId).style.display = "none";
+          document.getElementById(confirmId).classList.add("visible");
         });
     }
-
-    document.getElementById("email-input").addEventListener("keydown", function(e) {
-      if (e.key === "Enter") submitForm();
-    });
-
-    // Pretext — resize-aware text layout
-    (async function() {
-      await document.fonts.ready;
-      var mod = await import("https://esm.sh/@chenglou/pretext@0.1.50").catch(function() { return {}; });
-      var prepare = mod.prepare;
-      var layout = mod.layout;
-      if (!prepare || !layout) return;
-      var elements = document.querySelectorAll("[data-pretext]");
-      var prepared = new Map();
-      elements.forEach(function(el) {
-        prepared.set(el, prepare(el.textContent, getComputedStyle(el).font));
-      });
-      function relayout() {
-        prepared.forEach(function(handle, el) {
-          var lh = parseFloat(getComputedStyle(el).lineHeight) || 24;
-          var result = layout(handle, el.clientWidth, lh);
-          el.style.height = result.height + "px";
-        });
-      }
-      new ResizeObserver(relayout).observe(document.body);
-      relayout();
-    })();
   </script>
 
 </body>
