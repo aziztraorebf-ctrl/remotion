@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kora &amp; Cartes — La newsletter de veille stratégique sur l'Afrique. Analyses indépendantes, chaque matin.">
+  <title>Kora &amp; Cartes — La newsletter arrive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F5F0E8;
+      --ink: #1A1209;
+      --ink-muted: #5C4A2A;
+      --ink-faint: #8C7355;
+      --red: #C0392B;
+      --gold: #B8860B;
+      --navy: #1C2340;
+      --white: #FFFFFF;
+      --border: #DDD5C4;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    header {
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .logo-img {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .logo-img-hidden {
+      display: none;
+    }
+
+    .logo-text-wrap {
+      text-align: left;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--navy);
+      text-transform: uppercase;
+      display: block;
+    }
+
+    .logo-sub {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: block;
+      margin-top: 3px;
+    }
+
+    .logo-rule {
+      width: 40px;
+      height: 1.5px;
+      background: var(--red);
+      border: none;
+      margin: 14px auto 0;
+    }
+
+    /* ── MAIN ── */
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 36px 0 44px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 46px);
+      font-weight: 400;
+      line-height: 1.18;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-subtitle {
+      margin-top: 18px;
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ── FORM ── */
+    .form-section {
+      background: var(--white);
+      border-top: 3px solid var(--red);
+      padding: 32px 28px;
+      margin-bottom: 56px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 14px;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .form-input {
+      width: 100%;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink);
+      background: transparent;
+      border: none;
+      border-bottom: 1.5px solid var(--red);
+      padding: 8px 0;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .form-input::placeholder {
+      color: var(--ink-faint);
+    }
+
+    .form-input:focus {
+      border-bottom-color: var(--ink);
+    }
+
+    .form-btn {
+      width: 100%;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--red);
+      border: none;
+      padding: 15px 28px;
+      cursor: pointer;
+      transition: background 0.15s;
+      border-radius: 0;
+    }
+
+    .form-btn:hover {
+      background: #a93226;
+    }
+
+    .form-btn:disabled {
+      background: var(--ink-faint);
+      cursor: not-allowed;
+    }
+
+    .form-note {
+      margin-top: 14px;
+      font-size: 11px;
+      color: var(--ink-faint);
+      line-height: 1.5;
+    }
+
+    .form-confirmation {
+      display: none;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 8px 0;
+    }
+
+    .form-confirmation.visible {
+      display: flex;
+    }
+
+    .confirm-check {
+      font-size: 20px;
+      color: var(--gold);
+      flex-shrink: 0;
+      line-height: 1.4;
+    }
+
+    .confirm-text {
+      font-size: 15px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* ── PREVIEWS ── */
+    .previews-section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .phones-grid {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    /* iPhone frame in CSS */
+    .phone-frame {
+      position: relative;
+      width: 220px;
+      flex-shrink: 0;
+      border-radius: 34px;
+      background: var(--navy);
+      padding: 10px 7px;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 20px 60px rgba(0,0,0,0.25),
+        0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    /* Notch */
+    .phone-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 72px;
+      height: 22px;
+      background: var(--navy);
+      border-radius: 0 0 14px 14px;
+      z-index: 2;
+    }
+
+    .phone-screen {
+      border-radius: 26px;
+      overflow: hidden;
+      background: var(--cream);
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+
+    .phone-screen img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Placeholder shown when image fails to load */
+    .phone-placeholder {
+      width: 100%;
+      aspect-ratio: 9/17;
+      background: #e8e2d6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .phone-placeholder-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      text-align: center;
+      padding: 0 16px;
+    }
+
+    .phone-screen img.hidden {
+      display: none;
+    }
+
+    /* Second phone offset for visual rhythm */
+    .phone-frame:nth-child(2) {
+      margin-top: 28px;
+    }
+
+    /* ── POSITIONING ── */
+    .positioning {
+      text-align: center;
+      padding: 8px 0 0;
+    }
+
+    .positioning p {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 17px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+    }
+
+    .footer-copy {
+      font-size: 11px;
+      color: var(--ink-faint);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 600px) {
+      header { padding: 56px 24px 40px; }
+      .hero { padding: 48px 0 56px; }
+      .form-section { padding: 36px 36px; }
+      .form-row { flex-direction: row; align-items: flex-end; gap: 16px; }
+      .form-input { flex: 1; }
+      .form-btn { width: auto; white-space: nowrap; flex-shrink: 0; }
+      .phone-frame { width: 240px; }
+    }
+
+    @media (max-width: 380px) {
+      .phone-frame { width: 148px; border-radius: 24px; }
+      .phones-grid { gap: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo-wrap">
+      <img
+        id="logo-img"
+        class="logo-img"
+        src="assets/logo-kora-cartes.png"
+        alt="Kora &amp; Cartes"
+      >
+      <div class="logo-text-wrap">
+        <span class="logo">Kora &amp; Cartes</span>
+        <span class="logo-sub">Veille Stratégique</span>
+      </div>
+    </div>
+    <hr class="logo-rule">
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <h1 class="hero-title" data-pretext>
+        L'info stratégique en Afrique.<br>En quelques minutes, chaque matin.
+      </h1>
+      <p class="hero-subtitle" data-pretext>
+        La newsletter arrive. Laisse ton adresse email pour être parmi les premiers à la recevoir.
+      </p>
+    </section>
+
+    <!-- FORM -->
+    <section class="form-section" aria-label="Inscription liste d'attente">
+      <label class="form-label" for="email-input">Liste d'attente — accès gratuit</label>
+      <div id="form-fields">
+        <div class="form-row">
+          <input
+            id="email-input"
+            class="form-input"
+            type="email"
+            placeholder="votre@email.com"
+            autocomplete="email"
+            aria-label="Adresse email"
+            required
+          >
+          <button id="submit-btn" class="form-btn" type="button" onclick="submitForm()">
+            Rejoindre la liste &rarr;
+          </button>
+        </div>
+        <p class="form-note">Gratuit. Sans spam. Désabonnement en un clic.</p>
+      </div>
+      <div class="form-confirmation" id="form-confirmation" role="status" aria-live="polite">
+        <span class="confirm-check" aria-hidden="true">&#10003;</span>
+        <p class="confirm-text">Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.</p>
+      </div>
+    </section>
+
+    <!-- PREVIEWS -->
+    <section class="previews-section" aria-label="Aperçu de la newsletter">
+      <p class="section-label">Un aperçu</p>
+      <div class="phones-grid">
+
+        <div class="phone-frame" role="img" aria-label="Tableau de bord du jour">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img id="preview-1" src="assets/preview-dashboard.png" alt="Tableau de bord GeoAfrique Watch">
+            <div id="placeholder-1" class="phone-placeholder" style="display:none">
+              <span class="phone-placeholder-label">Aperçu bientôt disponible</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-frame" role="img" aria-label="Article en profondeur">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <img id="preview-2" src="assets/preview-article.png" alt="Article illustré en profondeur">
+            <div id="placeholder-2" class="phone-placeholder" style="display:none">
+              <span class="phone-placeholder-label">Aperçu bientôt disponible</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- POSITIONING -->
+    <section class="positioning" aria-label="Positionnement éditorial">
+      <p>Analyse indépendante. Sources primaires. Regard africain.</p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p class="footer-copy">&copy; Kora &amp; Cartes 2026</p>
+  </footer>
+
+  <script>
+    const FORM_ACTION = "https://docs.google.com/forms/d/e/1FAIpQLSfm5tOIMjpo2DkGbJOUwkVTikwYRuGjVlR-tASHNkMQvvVo5g/formResponse";
+    const EMAIL_FIELD = "entry.245646386";
+
+    // Hide logo if file missing
+    document.getElementById("logo-img").addEventListener("error", function() {
+      this.style.display = "none";
+    });
+
+    // Hide preview images and show placeholders if files missing
+    [1, 2].forEach(function(n) {
+      var img = document.getElementById("preview-" + n);
+      var ph = document.getElementById("placeholder-" + n);
+      if (img && ph) {
+        img.addEventListener("error", function() {
+          img.style.display = "none";
+          ph.style.display = "flex";
+        });
+      }
+    });
+
+    function submitForm() {
+      var input = document.getElementById("email-input");
+      var btn = document.getElementById("submit-btn");
+      var email = input.value.trim();
+
+      if (!email || !email.includes("@")) {
+        input.focus();
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "Envoi...";
+
+      var body = new FormData();
+      body.append(EMAIL_FIELD, email);
+
+      // Google Forms returns CORS error — expected. Submission goes through before rejection.
+      fetch(FORM_ACTION, { method: "POST", body: body, mode: "no-cors" })
+        .catch(function() {})
+        .finally(function() {
+          document.getElementById("form-fields").style.display = "none";
+          var conf = document.getElementById("form-confirmation");
+          conf.classList.add("visible");
+        });
+    }
+
+    document.getElementById("email-input").addEventListener("keydown", function(e) {
+      if (e.key === "Enter") submitForm();
+    });
+
+    // Pretext — resize-aware text layout
+    (async function() {
+      await document.fonts.ready;
+      var mod = await import("https://esm.sh/@chenglou/pretext@0.1.50").catch(function() { return {}; });
+      var prepare = mod.prepare;
+      var layout = mod.layout;
+      if (!prepare || !layout) return;
+      var elements = document.querySelectorAll("[data-pretext]");
+      var prepared = new Map();
+      elements.forEach(function(el) {
+        prepared.set(el, prepare(el.textContent, getComputedStyle(el).font));
+      });
+      function relayout() {
+        prepared.forEach(function(handle, el) {
+          var lh = parseFloat(getComputedStyle(el).lineHeight) || 24;
+          var result = layout(handle, el.clientWidth, lh);
+          el.style.height = result.height + "px";
+        });
+      }
+      new ResizeObserver(relayout).observe(document.body);
+      relayout();
+    })();
+  </script>
+
+</body>
+</html>
