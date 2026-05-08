@@ -127,11 +127,11 @@
     .hero-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 48px;
+      gap: 32px;
       align-items: center;
     }
 
-    .hero-text {
+    .hero-headline {
       max-width: 560px;
     }
 
@@ -160,8 +160,7 @@
     }
 
     /* Form */
-    .form-block {
-      margin-top: 32px;
+    .hero-form {
       max-width: 480px;
     }
 
@@ -345,13 +344,19 @@
       padding: 0 20px;
       display: grid;
       grid-template-columns: 1fr;
-      gap: 22px;
+      gap: 0;
     }
 
     .pillar {
       display: flex;
       align-items: center;
       gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .pillar:last-child {
+      border-bottom: none;
     }
 
     .pillar-icon {
@@ -361,6 +366,12 @@
       stroke: var(--gold);
       fill: none;
       stroke-width: 1.4;
+      color: var(--gold);
+    }
+
+    .pillar-icon[data-fill="true"] {
+      stroke: none;
+      fill: var(--gold);
     }
 
     .pillar-text {
@@ -381,35 +392,31 @@
 
     .example-heading-block {
       text-align: center;
-      margin-bottom: 40px;
-    }
-
-    .example-eyebrow {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 16px;
+      margin-bottom: 48px;
     }
 
     .example-heading {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(24px, 4vw, 32px);
+      font-size: clamp(32px, 5.5vw, 44px);
       font-weight: 400;
-      line-height: 1.25;
+      line-height: 1.2;
       color: var(--ink);
       max-width: 640px;
       margin: 0 auto;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
     }
 
     .example-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 32px;
+      gap: 36px;
       align-items: start;
     }
+
+    .example-list-block { order: 2; }
+    .example-image-block { order: 1; }
+
+    .example-divider { display: none; }
 
     .example-list-eyebrow {
       font-size: 11px;
@@ -592,8 +599,16 @@
 
       .hero-grid {
         grid-template-columns: 1.05fr 1fr;
+        grid-template-areas:
+          "headline phones"
+          "form     phones";
         gap: 40px;
+        align-items: start;
       }
+
+      .hero-headline { grid-area: headline; align-self: end; }
+      .phones-stage { grid-area: phones; align-self: center; }
+      .hero-form { grid-area: form; align-self: start; margin-top: 8px; }
 
       .form-row {
         flex-direction: row;
@@ -608,16 +623,37 @@
         gap: 24px;
       }
 
-      .pillar { flex-direction: row; }
+      .pillar {
+        flex-direction: row;
+        padding: 0;
+        border-bottom: none;
+      }
 
       .example {
         padding: 96px 40px 80px;
       }
 
       .example-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 64px;
+        grid-template-columns: 1fr auto 1fr;
+        gap: 56px;
         align-items: center;
+      }
+
+      .example-list-block { order: 1; }
+      .example-image-block { order: 3; }
+      .example-divider { order: 2; }
+
+      .example-divider {
+        display: block;
+        width: 1px;
+        align-self: stretch;
+        background: linear-gradient(to bottom,
+          transparent 0%,
+          var(--border) 15%,
+          var(--gold-soft) 50%,
+          var(--border) 85%,
+          transparent 100%);
+        opacity: 0.8;
       }
 
       .example-card {
@@ -670,42 +706,12 @@
   <section class="hero">
     <div class="hero-grid">
 
-      <div class="hero-text">
+      <div class="hero-headline">
         <h1 class="hero-title">L'Afrique stratégique,<br>chaque matin.</h1>
         <hr class="hero-rule">
         <p class="hero-subtitle">
           Analyse indépendante des dynamiques politiques, sécuritaires et économiques du continent. Décryptée, contextualisée, synthétisée.
         </p>
-
-        <div class="form-block">
-          <div id="form-fields-1">
-            <form class="form-row" onsubmit="event.preventDefault(); submitForm('email-input-1', 'submit-btn-1', 'form-fields-1', 'form-confirmation-1');">
-              <input
-                id="email-input-1"
-                class="form-input"
-                type="email"
-                placeholder="votre@email.com"
-                autocomplete="email"
-                aria-label="Adresse email"
-                required
-              >
-              <button id="submit-btn-1" class="form-btn" type="submit">
-                Rejoindre la liste &rarr;
-              </button>
-            </form>
-            <p class="form-note">
-              <svg class="form-note-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
-                <path d="m9 12 2 2 4-4"/>
-              </svg>
-              Accès anticipé gratuit. Aucun spam. Désabonnement en un clic.
-            </p>
-          </div>
-          <div class="form-confirmation" id="form-confirmation-1" role="status" aria-live="polite">
-            <span class="confirm-check" aria-hidden="true">&#10003;</span>
-            <p class="confirm-text">Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.</p>
-          </div>
-        </div>
       </div>
 
       <!-- PHONES -->
@@ -727,6 +733,36 @@
               <span class="phone-placeholder-label">Aperçu bientôt disponible</span>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="hero-form">
+        <div id="form-fields-1">
+          <form class="form-row" onsubmit="event.preventDefault(); submitForm('email-input-1', 'submit-btn-1', 'form-fields-1', 'form-confirmation-1');">
+            <input
+              id="email-input-1"
+              class="form-input"
+              type="email"
+              placeholder="votre@email.com"
+              autocomplete="email"
+              aria-label="Adresse email"
+              required
+            >
+            <button id="submit-btn-1" class="form-btn" type="submit">
+              Rejoindre la liste &rarr;
+            </button>
+          </form>
+          <p class="form-note">
+            <svg class="form-note-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 2 4 6v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V6l-8-4z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            Accès anticipé gratuit. Aucun spam. Désabonnement en un clic.
+          </p>
+        </div>
+        <div class="form-confirmation" id="form-confirmation-1" role="status" aria-live="polite">
+          <span class="confirm-check" aria-hidden="true">&#10003;</span>
+          <p class="confirm-text">Ton adresse a bien été enregistrée. Tu seras parmi les premiers informés du lancement.</p>
         </div>
       </div>
 
@@ -759,8 +795,8 @@
         <span class="pillar-text">Synthèse<br>quotidienne</span>
       </div>
       <div class="pillar">
-        <svg class="pillar-icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M14 3h-3l-2 3-2 1-1 3 1 2-1 3 2 2 1 3h4l2-2 2-1v-3l-1-2 1-3-2-3z"/>
+        <svg class="pillar-icon" data-fill="true" viewBox="0 0 512 512" aria-hidden="true">
+          <path d="m201.56 19.495l-87.79 9.131l-73.745 94.814v52.676l56.186 61.805l64.615-13.344l49.164 9.832l-10.535 37.926l33.711 61.103l-16.855 42.842l39.79 116.225l53.62-8.768l49.164-55.484l4.213-38.629l31.605-23.879l-6.322-69.531l83.594-106.994l-51.989 7.263l-79.363-138.359l-125.016-8.428zm252.346 319.8l-14.402 20.86l-13.408.496c-11.849 24.321-12.598 38.019-13.907 66.547l17.383 4.471l21.852-52.147z"/>
         </svg>
         <span class="pillar-text">Perspective<br>africaine</span>
       </div>
@@ -770,11 +806,10 @@
   <!-- EXAMPLE -->
   <section class="example" aria-label="Exemple d'analyse">
     <div class="example-heading-block">
-      <p class="example-eyebrow">Exemple d'analyse</p>
-      <h2 class="example-heading">Un extrait de la dernière édition.</h2>
+      <h2 class="example-heading">Exemple d'analyse.</h2>
     </div>
     <div class="example-grid">
-      <div>
+      <div class="example-list-block">
         <p class="example-list-eyebrow">Ce que vous recevez</p>
         <ul class="example-list">
           <li>5 à 7 développements clés</li>
@@ -785,7 +820,8 @@
           <li>Lecture en moins de 7 minutes</li>
         </ul>
       </div>
-      <div>
+      <div class="example-divider" aria-hidden="true"></div>
+      <div class="example-image-block">
         <article class="example-card">
           <img src="assets/preview-analyse-jour.png" alt="Analyse du jour — Mali : la stratégie du siège, une constante des conflits sahéliens">
         </article>
