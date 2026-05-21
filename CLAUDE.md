@@ -327,6 +327,30 @@ Claude doit signaler AVANT d'implementer — pas attendre qu'Aziz decouvre le pr
 
 ---
 
+## Regle : Workflow Visual-Producer (NON-NEGOTIABLE)
+
+**Avant tout lancement de visual-producer (Gemini/Recraft/Seedance/Kling) : montrer le prompt à Aziz et attendre validation explicite.**
+
+- Aziz validera/ajustera/refusera le prompt — souvent il voit un détail que Claude rate
+- Ne JAMAIS générer une image/clip payant sans que le prompt ait été vu
+- Format : "Voici le prompt que je vais envoyer à [outil] : [prompt complet]. Je lance ?"
+
+**Pourquoi :** Aziz a payé 100$+ d'assets ratés à cause de prompts non validés. La validation coûte 30 secondes, le re-gen coûte 5-30 minutes + $.
+
+## Regle : Matière finale d'abord, code ajusté ensuite (PATTERN)
+
+**Quand on intègre des assets visuels (Gemini, Seedance, PixelLab) dans un beat/scène :**
+
+1. Générer la matière finale (assets validés, format final, upload catbox)
+2. Voir la matière réelle dans le contexte du beat
+3. Ajuster le code à l'esthétique réelle de la matière
+
+**Anti-pattern :** coder le placement/animations avec des placeholders puis "remplacer après". L'esthétique réelle change tout (couleurs dominantes, équilibre composition, vide négatif). Le code écrit sur placeholder est presque toujours à refaire.
+
+**Exception :** prototype rapide pour valider la mécanique d'animation (spring timing, transitions) — placeholders OK.
+
+---
+
 ## Configuration Technique
 
 ### Environnement
