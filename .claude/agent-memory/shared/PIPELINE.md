@@ -93,16 +93,17 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ⚡ Actif
 
-- **Maroc Batteries (Mid-form 4-5 min)** — prochain. Pré-prod prête :
-  `memory/STARTER-PROMPT-maroc-batteries-midform.md`. Workflow probable : A (Beat Souverain)
-  ou complet 5-agents selon ambition.
-- **Sénégal Pétrole & Gaz (Mid-form 7 beats 420s)** — Beat1 à recommencer propre.
-  Code des 5 versions abandonnées archivé dans `src/_archive/senegal-attempt-v1-v5/`.
-  Pré-prod intacte : `memory/episodes/souverain/senegal-petrole-gaz/` + audio
-  final validé (`senegal-petrole-auphonic-trimmed.mp3`).
+- **Sénégal Pétrole & Gaz (Mid-form 7 beats 420s)** ⭐ EN COURS (Mid-form actif).
+  Beat1 à recommencer propre. Code des 5 versions abandonnées archivé dans
+  `src/_archive/senegal-attempt-v1-v5/`. Pré-prod intacte :
+  `memory/episodes/souverain/senegal-petrole-gaz/` + audio final validé
+  (`senegal-petrole-auphonic-trimmed.mp3`).
 - **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
   `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
   Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
+- **Maroc Batteries (Mid-form 4-5 min)** — BACKLOG, pas encore commencé.
+  Pré-prod prête : `memory/STARTER-PROMPT-maroc-batteries-midform.md`.
+  À attaquer APRÈS Sénégal.
 
 ### 💤 En pause / dormants
 
