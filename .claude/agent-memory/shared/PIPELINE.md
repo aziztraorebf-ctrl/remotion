@@ -1,109 +1,149 @@
 # Production Pipeline — Shared Workspace (5 agents)
 
-> Fichier partage. Chaque agent ecrit sa section lors de son invocation.
+> Fichier partagé. Chaque agent écrit sa section lors de son invocation.
 > Claude principal orchestre les handoffs.
-> **Recree 2026-04-22** : l'ancien fichier (2881 lignes, Peste 1347 + 6 anciens agents)
-> a ete archive dans `.claude/agent-memory/archive/PIPELINE-obsolete-peste-6agents.md`.
+>
+> **Refondu 2026-05-20 (Grand Ménage)** — l'historique complet des handoffs
+> des sessions Sonjata/Thiaroye/Abou Bakari/Or Africain/Silicon Savannah/etc.
+> est archivé dans `.claude/agent-memory/archive/PIPELINE-snapshot-2026-05-20.md`
+> (491 lignes). Ce fichier reflète l'état actuel et les workflows actifs.
 
 ---
 
-## Agent Team (5 agents — refonte 2026-04-13)
+## Workflows actuellement actifs (depuis ~mi-mai 2026)
+
+Le système agentique 5-stages reste **la référence** pour la production vidéo
+complète et est conservé pour usage futur. Mais depuis ~5 semaines, deux
+workflows allégés sont utilisés en pratique :
+
+### Workflow A — Beat Souverain (`scripts/beat-session.py`)
+
+Pipeline 6 phases automatisées par script, Claude main code en direct :
+```
+1. breakdown    → Gemini 3.1-pro analyse le storyboard (JSON tailwind_layout)
+2. code         → Claude écrit Beat*.tsx avec Tailwind (tokens text-gold, etc.)
+3. self-review  → 23 critères de qualité, seuil 19/23 bloquant
+4. review       → Gemini 3.1-pro vérifie le render (1 seul appel)
+5. corrections  → Itérations autonomes
+6. upload       → Catbox + ntfy mobile Aziz pour validation finale
+```
+
+Documentation complète : `memory/rules-beat-production.md` + section
+"Pipeline Beat Souverain" du CLAUDE.md projet.
+
+### Workflow B — Atlas direct
+
+Claude main + PixelLab MCP + Mapbox + scripts `scripts/atlas-session.py`.
+Pas d'agents intermédiaires. Storyboard markdown → code → render.
+Beats Atlas (Peste 1347 actif) suivent le pattern documenté dans
+`src/projects/atlas/_shared/ATLAS-COMPOSANTS.md`.
+
+### Quand utiliser les 5 agents Stage 1→6 ?
+
+Pour les productions narratives complètes nécessitant le full pipeline :
+- Shorts ambitieux avec narration + storyboard + assets visuels multiples
+- Épisodes Atlas riches (PixelLab characters + tilesets + animations)
+- Quand tu veux la rigueur du multi-agents avec handoffs traçables
+
+Pour les beats simples ou itératifs : Workflow A ou B suffisent.
+
+---
+
+## Agent Team (5 agents — préservés, prêts à l'emploi)
 
 1. **audio-director** — Narration TTS (ElevenLabs V3) + musique (Minimax v2.6) + mix
-2. **storyboarder** — Script + audio mesure → `timing.ts` frame-precis
+2. **storyboarder** — Script + audio mesuré → `timing.ts` frame-précis
 3. **visual-producer** — Assets multi-outils (Gemini, Seedance, Kling, Recraft, fal.ai, PixelLab)
 4. **remotion-composer** — Composition Remotion + mini-render validation
-5. **quality-reviewer** — Review multi-dimensions + verdict
+5. **quality-reviewer** — Review multi-dimensions + verdict APPROVE/MINOR FIX/RE-EVALUATE
 
-**Anciens agents archives** : creative-director, pixel-art-director, pixellab-expert, kimi-reviewer, visual-qa (remplaces par visual-producer + quality-reviewer).
+**Anciens agents archivés** : creative-director, pixel-art-director, pixellab-expert, kimi-reviewer, visual-qa (remplacés par visual-producer + quality-reviewer en avril 2026).
+
+Définitions dans `.claude/agents/` (les `.md` qui décrivent rôle/outils/règles de chaque agent).
 
 ---
 
-## Pipeline Stages
+## Pipeline Stages 5-agents (workflow complet)
 
 ```
 Stage 0  Claude + Aziz       → Script locked
 Stage 1  audio-director      → Narration + musique + mix (scan TTS bloquant)
-Stage 2  storyboarder        → timing.ts frame-precis (audio mesure)
+Stage 2  storyboarder        → timing.ts frame-précis (audio mesuré)
 Stage 3  visual-producer     → Visual Plan proposal → Aziz approuve
-Stage 4  visual-producer     → Assets generes (preview-before-pay)
+Stage 4  visual-producer     → Assets générés (preview-before-pay)
 Stage 5  remotion-composer   → Composition + mini-render 3-4s bloquant
 Stage 6  quality-reviewer    → Review multi-dim + Kimi + verdict
-Stage 7  Aziz                → Validation finale (oreille + oeil + decision creative)
+Stage 7  Aziz                → Validation finale (oreille + œil + décision créative)
 Stage 8  Claude (main)       → Render final OU fix iteration
 ```
 
-**Regles du pipeline** :
+**Règles du pipeline (quand on l'invoque)** :
 - Stage 1 prerequis : script LOCKED par Aziz
-- Stage 2 prerequis : audio existe ET mesure (ffprobe ou forced alignment)
-- Stage 3 prerequis : Aziz approuve Visual Plan AVANT toute generation
-- Stage 4 regle : preview-before-pay pour CHAQUE appel API payant
-- Stage 5 prerequis : mini-render validation AVANT de coder d'autres scenes
-- Stage 6 regle : self-review AVANT Kimi, jamais l'inverse
+- Stage 2 prerequis : audio existe ET mesuré (ffprobe ou forced alignment)
+- Stage 3 prerequis : Aziz approuve Visual Plan AVANT toute génération
+- Stage 4 règle : preview-before-pay pour CHAQUE appel API payant
+- Stage 5 prerequis : mini-render validation AVANT de coder d'autres scènes
+- Stage 6 règle : self-review AVANT Kimi, jamais l'inverse
+
+Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PATTERN.md`.
+
+---
+
+## État actuel des projets (2026-05-20)
+
+### ⚡ Actif
+
+- **Maroc Batteries (Mid-form 4-5 min)** — prochain. Pré-prod prête :
+  `memory/STARTER-PROMPT-maroc-batteries-midform.md`. Workflow probable : A (Beat Souverain)
+  ou complet 5-agents selon ambition.
+- **Sénégal Pétrole & Gaz (Mid-form 7 beats 420s)** — Beat1 à recommencer propre.
+  Code des 5 versions abandonnées archivé dans `src/_archive/senegal-attempt-v1-v5/`.
+  Pré-prod intacte : `memory/episodes/souverain/senegal-petrole-gaz/` + audio
+  final validé (`senegal-petrole-auphonic-trimmed.mp3`).
+- **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
+  `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
+  Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
+
+### 💤 En pause / dormants
+
+- **Hannibal (Atlas)** — Beat 1 livré, Beat 2 Phase C non codée. Dossier mémoire
+  préservé : `memory/episodes/hannibal/`. Code dans `src/_archive/episodes-livres/atlas/hannibal/`.
+- **Vraie Taille Afrique (Souverain Short)** — FINAL livré, conservé en archive pour réf.
+- **Xenophobie SA (Souverain)** — gelé, à reprendre 2-3 mois (memory/episodes/souverain/xenophobie-sa-EXPLORATION/).
+- **Mali blocus carburant (Souverain)** — en pause, reprendre juin 2026+.
+- **Congo Taille (Souverain)** — fact-sheet seul, inactif.
+
+### ✅ Livrés (PRET-PUBLICATION)
+
+8 vidéos dans `out/PRET-PUBLICATION/` :
+niger-uranium, silicon-savannah, or-africain, sonjata-v7, thiaroye-v5,
+mansa-moussa-atlas-v2, empire-ghana-v2, vraie-taille-afrique.
+
+Mémoires épisodes archivées dans `memory/archive/episodes-livres/`.
+Code épisodes archivé dans `src/_archive/episodes-livres/`.
+
+---
+
+## Patterns validés cross-projet (références durables)
+
+- **Hook Short (pattern teaser 5s)** — voir `memory/templates/` et BrutalHookSplit dans `src/projects/_shared/components/layouts/`.
+- **Musique Minimax 2.6** — `memory/tools/minimax.md`. Coût ~$0.30/track 3min.
+- **Narration ElevenLabs V3** — voix GéoAfrique V2 `z3gESu49naEZW8Af2Upm`. Règles TTS françaises NON-NÉGOCIABLES (voir `memory/voices-v3.md` + CLAUDE.md projet).
+- **Integration Remotion audio** — `<Audio src={staticFile(...)} />` + `AUDIO_SEGMENTS` audio-derived timing.
+- **Atlas Blueprints Library (8 patterns)** — `src/projects/atlas/_blueprints/` (walk-to-destination, confrontation, orbital-city, zoom-revelation, shake-impact, alliance, empire-expansion, flashback).
+- **Beat Souverain workflow** — voir `scripts/beat-session.py` + `memory/rules-beat-production.md`.
 
 ---
 
 ## HANDOFF LOG (sessions actives)
 
-### 2026-04-22 — Sonjata Session 8 : Hook + Musique (VALIDATION FINALE)
+> Format : `## Stage N — Agent — Projet — Date [COMPLETE / IN PROGRESS / BLOCKED]`
+>
+> Quand un agent termine son stage, il ajoute son entrée ici.
+> Claude main propose le stage suivant à Aziz quand un handoff `COMPLETE` apparaît.
+>
+> Les handoffs des sessions terminées (Sonjata, Thiaroye, Abou Bakari, Or Africain,
+> Silicon Savannah, Niger Uranium, Zimbabwe Lithium, RDC No Sense, etc.) sont
+> dans le snapshot archivé : `.claude/agent-memory/archive/PIPELINE-snapshot-2026-05-20.md`.
 
-**Stage 1 (audio-director)** :
-- Minimax Music 2.6 validee : endpoint `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}`
-- 3 variantes generees ($0.30) : Toumani Diabate / Sidiki Diabate / Neba Solo
-- Formule validee : artiste + 1-2 instruments + "no synthesizers, no electronic sounds" + origine precise
-- Anti-pattern confirme : "Epic West African orchestral cinematic" = sortie electronique
-- Hook narration : 63 chars, 4.32s, config max-style, voix Narratrice GeoAfrique v2
-
-**Stage 5 (remotion-composer)** :
-- Hook 5s integre dans `SonjataShortFull.tsx` (Sequence from=0, durationInFrames=150)
-- Option B validee : musique COMMENCE a scene 1 (frame 150), silence pendant hook
-- `musicVolume(frame)` avec `interpolate` fade-in 2s + fade-out 2s, volume 0.15 (-16.5dB)
-- Render 151s valide par Aziz
-
-**Stage 7 (Aziz)** :
-- Verdict : "tres bon, Short = cas d'ecole qui a rode le pipeline. Publiable pending CTA."
-- Blocage unique : recharge credits ElevenLabs pour CTA
-- Corrections post-publication optionnelles : scene 5A clip anime, normalisation audio, extension hook 5.5s
-
----
-
-## PATTERNS VALIDES (cross-session)
-
-### Hook Short (pattern teaser 5s)
-- Clip muet extrait d'une scene existante (tension sans climax)
-- Narration 2 phrases courtes, <14 mots, 4-5s total
-- **Option B** : silence pendant hook, musique entre a scene 1 (contraste dramatique)
-- Template : `memory/templates/hook-short.md`
-
-### Musique Minimax 2.6
-- Endpoint : `fal-ai/minimax-music/v2.6`
-- Payload : `{"prompt": str, "is_instrumental": true}` (PAS de reference_audio_url)
-- Formule prompt : artiste + 1-2 instruments + rythme precis + "no synthesizers"
-- Cout : $0.10/gen, 3 variantes parallele = $0.30, ~6min
-- Reference : `memory/tools/minimax.md`
-
-### Narration ElevenLabs V3
-- Voix Sonjata : `z3gESu49naEZW8Af2Upm` (Narratrice GeoAfrique v2, Voice Remix)
-- Config max-style : `{stability: 0.22, similarity: 0.55, style: 0.55, speed: 1.0}`
-- Scan TTS bloquant AVANT generation (participes "e/ee", "ont+voyelle", chiffres)
-- Forced alignment apres generation (source de verite timing)
-
-### Integration Remotion audio
-- Volume musique : 0.15 (~-16.5dB, compatible regle projet -18dB sous voix)
-- Fade-in 2s + fade-out 2s via `<Audio volume={frame => interpolate(...)}>`
-- Reference implementation : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
-
----
-
-## PROCHAINES SESSIONS
-
-### Sonjata finalisation (post-recharge ElevenLabs)
-1. CTA narration (~103 credits)
-2. Unicode fix SonjataCTA.tsx
-3. Integration scene 11
-4. Render final + publication
-
-### Pipeline hardening (avant Short #2 Abou Bakari)
-1. Integrer `scripts/pipeline_gates.py` (13 gates) comme wrapper bloquant pour TOUT appel API
-2. Diagnostic 2026-04-22 : gates existent mais pas integres → erreurs couteuses Sonjata auraient ete bloquees
-3. Creer generic PREGEN_CHECKLIST (le Sonjata-specifique est dans `sonjata-papercraft/PREGEN_CHECKLIST.md`)
+_(Aucun handoff actif. Workflow Beat Souverain (peste-1347, maroc-batteries) ne log pas ici — voir directement les fichiers projet.)_

@@ -1,0 +1,16 @@
+{
+  "tool": "fal-ai/bytedance/seedance-2.0/reference-to-video",
+  "duration": 5,
+  "aspect_ratio": "9:16",
+  "generate_audio": false,
+  "image_refs": [
+    "rhone-traversee.png",
+    "east.png",
+    "elephant-radeau-v2-base.png",
+    "west.png"
+  ],
+  "prompt_chars": 1779,
+  "video_url": "https://v3b.fal.media/files/b/0a9903a6/bdAQ8c6dc0NXxCFGJS3LB_video.mp4",
+  "generation_seconds": 185,
+  "timestamp": "2026-05-05T17:10:28Z"
+}

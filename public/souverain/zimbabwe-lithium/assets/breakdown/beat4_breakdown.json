@@ -1,0 +1,86 @@
+{
+  "scene_description": "A dramatic, slow reveal of the Zimbabwe map outline, drawn with a glowing gold stroke against a deep, smoky navy background, culminating in a provocative text question.",
+  "background_assets_to_generate": [
+    {
+      "filename": "dark_smoky_navy_bg.png",
+      "prompt": "Dark moody navy blue background with subtle smoky cloudy textures, cinematic lighting, deep shadows, subtle vignette, minimalist, 9:16 portrait format, 8k resolution, no text, no borders.",
+      "dimensions": "1080x1920",
+      "transparent": false,
+      "purpose": "Provides a tense, dramatic atmospheric backdrop for the glowing map."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "zimbabwe_map_outline",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 480 320 Q 530 300 580 310 L 650 330 Q 700 350 730 400 L 760 480 Q 780 550 750 620 L 720 680 Q 680 750 600 780 L 520 800 Q 450 810 380 770 L 320 720 Q 250 650 220 580 L 200 500 Q 180 430 240 380 L 320 340 Q 400 300 480 320 Z",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        600,
+        600
+      ],
+      "color_hex": "#ffd700",
+      "z_index": 2
+    },
+    {
+      "element_id": "question_text",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "Mais à quel prix ?",
+      "screen_position_xy": [
+        540,
+        1500
+      ],
+      "size_px": [
+        800,
+        100
+      ],
+      "color_hex": "#ffffff",
+      "z_index": 3
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 30,
+      "element_ids_appearing": [
+        "zimbabwe_map_outline"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "Le Zimbabwe"
+    },
+    {
+      "frame_local": 60,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "zimbabwe_map_outline"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 30,
+      "easing_hint": "linear",
+      "audio_cue_word": "a gagné sa bataille industrielle"
+    },
+    {
+      "frame_local": 90,
+      "element_ids_appearing": [
+        "question_text"
+      ],
+      "element_ids_changing": [
+        "zimbabwe_map_outline"
+      ],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "soft",
+      "audio_cue_word": "Mais à quel prix ?"
+    }
+  ],
+  "permanent_motion": "The dark smoky background image slowly scales from 1.0 to 1.1 over the 150 frames, panning slightly downwards to create a continuous, unsettling atmospheric drift.",
+  "remotion_implementation_notes": "For the map drawing effect, use Remotion's `interpolate` on the current frame to animate the `strokeDashoffset` of the SVG path from its total length down to 0 between frames 30 and 60. Apply a CSS `filter: drop-shadow(0px 0px 15px rgba(255, 215, 0, 0.8))` to the SVG to replicate the neon gold glow seen in the storyboard. The text should fade in using a simple opacity interpolation.",
+  "fidelity_warnings": "The provided SVG path is a simplified polygon placeholder for the Zimbabwe border. For exact geographical fidelity, replace the `filename_or_content` string with a high-resolution SVG path generated via d3-geo using a TopoJSON file of Zimbabwe."
+}

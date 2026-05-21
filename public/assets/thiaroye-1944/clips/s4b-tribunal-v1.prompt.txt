@@ -1,0 +1,39 @@
+# 4b Seedance clip prompt
+Tool: Seedance 2.0 image-to-video
+Source: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene4b/scene4b-source-v1b.png
+Duration: 10s
+Cost: $3.00
+
+---CHECKLIST---
+1_mots_rouges: OK : 12 mots verifies (aucun : slowly/gently/subtly/still/gradually/softly/barely/almost/frozen/motionless/dignified/remains still)
+2_image_vivante: OK : fenetre avec lumiere variable, drapeau tricolore (flutter), silhouettes gallery (micro-shift)
+3_personnages_vie: OK : main avocat (PRESSES, SHIFTS), silhouettes gallery (ADJUST, LEAN)
+4_timeline: OK : 3 segments (0-3s / 3-6s / 6-10s)
+5_actions_macro: OK : 2-3 verbes MAJUSCULES par segment
+6_camera_sobre: OK : static hold + tres lent zoom avant
+7_style_clause: OK : STRICT STYLE FIDELITY paper-craft
+8_anti_morph: OK : mains (RIGID, SOLID), flag (FLAT ribbon shape)
+9_environnement: OK : flag FLUTTERS, window light SHIFTS, gallery silhouettes micro-move
+10_closing: OK : closing rule present
+11_longueur: ~1350 chars
+12_duree: 10s
+13_contradictions: OK : scan effectue, aucune contradiction
+14_pensees_internes: OK : nettoye
+15_regles_projet: OK : R75 i2v, R-STYLE paper-craft, R68 scene calme (dolly slow), flag anti-heraldry
+
+---PROMPT---
+Animate this exact illustration. STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey-blue-honey palette, clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.
+
+Camera: Static hold with imperceptible slow dolly-in over 10 seconds. No pan. No rotation.
+
+SECONDS 0 TO 3: The lawyer's hand on the left PRESSES flat against the podium edge, fingers CURLING slightly inward with tension. The hand on the document SHIFTS its grip, thumb PRESSING on the document corner. In the gallery background, two silhouette figures ADJUST their seated posture.
+
+SECONDS 3 TO 6: The lawyer's left hand RELEASES the podium edge and RESTS open alongside his leg. The right hand LIFTS the document corner slightly then LOWERS it back flat. The French tricolor flag at right FLUTTERS once with a slow wave from bottom to top. Window light DIMS then BRIGHTENS as a cloud passes outside.
+
+SECONDS 6 TO 10: The hand on the document PRESSES down with finality, fingers SPREADING flat. The flag SETTLES. A third silhouette in the gallery LEANS forward slightly, then sits back. The window light holds cold and steady.
+
+Continuous throughout: The tricolor flag FLUTTERS intermittently with long flat ribbon waves. Cold window light SHIFTS imperceptibly. Gallery silhouettes micro-shift in their seats.
+
+The document stays flat on the podium -- it does not lift, does not fold, does not move on its own. The flag shows only color bands -- no heraldry, no writing visible. No text, no banners, no labels anywhere.
+
+All characters stay engaged, bodies continuously micro-shifting. MAINTAIN flat color fills throughout, no gradients, no realistic shading. Ambient sounds only: distant courtroom murmur, paper rustle, no music, no dialogue.

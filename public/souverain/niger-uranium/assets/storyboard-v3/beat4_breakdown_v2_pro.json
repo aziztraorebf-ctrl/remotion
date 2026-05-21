@@ -1,0 +1,482 @@
+{
+  "background_assets_to_generate": [
+    {
+      "filename": "justice_scale.png",
+      "prompt": "Minimalist flat vector illustration of a traditional balance scale of justice, dark navy silhouette with gold accents, isolated on a transparent background.",
+      "dimensions": [
+        800,
+        800
+      ],
+      "transparent": true,
+      "purpose": "Central visual metaphor for Panel 1"
+    },
+    {
+      "filename": "aerial_mine_schematic.png",
+      "prompt": "Aerial top-down vector schematic of an open-pit uranium mine storage facility, geometric rectangular storage blocks filled with neat grid patterns of black dots representing barrels, neutral beige and tan color palette, flat illustration style, no text, transparent background.",
+      "dimensions": [
+        1080,
+        1920
+      ],
+      "transparent": true,
+      "purpose": "Background schematic for Panel 2"
+    },
+    {
+      "filename": "legal_document_icon.png",
+      "prompt": "Minimalist flat vector illustration of a legal document page with horizontal text lines and a circular seal at the bottom right corner, monochrome beige and light tan tones, isolated on transparent background.",
+      "dimensions": [
+        600,
+        800
+      ],
+      "transparent": true,
+      "purpose": "Background icon for the INTERDIT stamp in Panel 4"
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "bg_color_beige",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "background-color: #d8c9a8;",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 0
+    },
+    {
+      "element_id": "justice_scale_img",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "justice_scale.png",
+      "screen_position_xy": [
+        540,
+        800
+      ],
+      "size_px": [
+        600,
+        600
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "niger_pin_p1",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<svg viewBox='0 0 24 24'><path d='M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z' fill='#c08820'/></svg>",
+      "screen_position_xy": [
+        800,
+        1100
+      ],
+      "size_px": [
+        60,
+        60
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 11
+    },
+    {
+      "element_id": "niger_label_p1",
+      "type": "plate_label",
+      "asset_source": "code_only",
+      "filename_or_content": "NIGER",
+      "screen_position_xy": [
+        800,
+        1160
+      ],
+      "size_px": [
+        140,
+        40
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 12,
+      "accent_color": "#c08820",
+      "text_color": "#ffffff",
+      "font": "IBM Plex Mono"
+    },
+    {
+      "element_id": "mine_schematic_bg",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "aerial_mine_schematic.png",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 5
+    },
+    {
+      "element_id": "padlock_icon",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<svg viewBox='0 0 24 24'><path d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z' fill='#0d1525'/></svg>",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        100,
+        100
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 15
+    },
+    {
+      "element_id": "pill_1300t",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='background-color:#0d1525; color:#ffffff; font-family:Bebas Neue; font-size:90px; border-radius:45px; padding:10px 60px; text-align:center;'>1 300 T</div>",
+      "screen_position_xy": [
+        540,
+        780
+      ],
+      "size_px": [
+        400,
+        120
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 16
+    },
+    {
+      "element_id": "pill_250m",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='background-color:#0d1525; color:#ffffff; font-family:Bebas Neue; font-size:90px; border-radius:45px; padding:10px 60px; text-align:center;'>250 M€</div>",
+      "screen_position_xy": [
+        540,
+        1140
+      ],
+      "size_px": [
+        400,
+        120
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 16
+    },
+    {
+      "element_id": "mapbox_layer",
+      "type": "image",
+      "asset_source": "code_only",
+      "filename_or_content": "mapbox_container",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 20
+    },
+    {
+      "element_id": "niger_polygon_fill",
+      "type": "geojson_polygon",
+      "asset_source": "code_only",
+      "filename_or_content": "niger_boundaries.geojson",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": "#c08820",
+      "rotation_deg": 0,
+      "z_index": 21
+    },
+    {
+      "element_id": "arc_niger_moscow",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<path d='M... C... ...' stroke='#0d1525' stroke-width='4' stroke-dasharray='10 10' fill='none' />",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 22
+    },
+    {
+      "element_id": "niger_dot_p3",
+      "type": "map_marker",
+      "asset_source": "code_only",
+      "filename_or_content": "dot",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        16,
+        16
+      ],
+      "color_hex": "#c08820",
+      "rotation_deg": 0,
+      "z_index": 23
+    },
+    {
+      "element_id": "moscow_dot_p3",
+      "type": "map_marker",
+      "asset_source": "code_only",
+      "filename_or_content": "dot",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        16,
+        16
+      ],
+      "color_hex": "#c08820",
+      "rotation_deg": 0,
+      "z_index": 23
+    },
+    {
+      "element_id": "niger_label_p3",
+      "type": "plate_label",
+      "asset_source": "code_only",
+      "filename_or_content": "NIGER",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        120,
+        36
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 24,
+      "accent_color": "#c08820",
+      "text_color": "#ffffff",
+      "font": "IBM Plex Mono"
+    },
+    {
+      "element_id": "moscow_label_p3",
+      "type": "plate_label",
+      "asset_source": "code_only",
+      "filename_or_content": "MOSCOU",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        140,
+        36
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 24,
+      "accent_color": "#c08820",
+      "text_color": "#ffffff",
+      "font": "IBM Plex Mono"
+    },
+    {
+      "element_id": "russian_flag_icon",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<svg viewBox='0 0 9 6'><rect width='9' height='2' fill='#ffffff'/><rect y='2' width='9' height='2' fill='#0039a6'/><rect y='4' width='9' height='2' fill='#d52b1e'/></svg>",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        60,
+        40
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 25
+    },
+    {
+      "element_id": "legal_document_bg",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "legal_document_icon.png",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        600,
+        800
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 30
+    },
+    {
+      "element_id": "interdit_stamp",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:Bebas Neue; font-size:280px; color:#5c1a1a; border:15px solid #5c1a1a; padding:10px 40px; text-transform:uppercase;'>INTERDIT</div>",
+      "screen_position_xy": [
+        540,
+        960
+      ],
+      "size_px": [
+        900,
+        350
+      ],
+      "color_hex": null,
+      "rotation_deg": -15,
+      "z_index": 35
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "bg_color_beige",
+        "justice_scale_img",
+        "niger_pin_p1",
+        "niger_label_p1"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Orano"
+    },
+    {
+      "frame_local": 166,
+      "element_ids_appearing": [
+        "mine_schematic_bg",
+        "padlock_icon"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [
+        "justice_scale_img",
+        "niger_pin_p1",
+        "niger_label_p1"
+      ],
+      "transition_type": "cut",
+      "duration_frames": 0,
+      "easing_hint": "linear",
+      "audio_cue_word": "Mille"
+    },
+    {
+      "frame_local": 189,
+      "element_ids_appearing": [
+        "pill_1300t"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "spring_scale",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "tonnes"
+    },
+    {
+      "frame_local": 280,
+      "element_ids_appearing": [
+        "pill_250m"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "spring_scale",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "Deux"
+    },
+    {
+      "frame_local": 367,
+      "element_ids_appearing": [
+        "mapbox_layer",
+        "niger_polygon_fill",
+        "niger_dot_p3",
+        "niger_label_p3"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [
+        "bg_color_beige",
+        "mine_schematic_bg",
+        "padlock_icon",
+        "pill_1300t",
+        "pill_250m"
+      ],
+      "transition_type": "fade_cross",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "juillet,"
+    },
+    {
+      "frame_local": 393,
+      "element_ids_appearing": [
+        "moscow_dot_p3",
+        "moscow_label_p3",
+        "russian_flag_icon",
+        "arc_niger_moscow"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "draw_line_and_fade",
+      "duration_frames": 30,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Moscou"
+    },
+    {
+      "frame_local": 499,
+      "element_ids_appearing": [
+        "bg_color_beige",
+        "legal_document_bg"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [
+        "mapbox_layer",
+        "niger_polygon_fill",
+        "niger_dot_p3",
+        "niger_label_p3",
+        "moscow_dot_p3",
+        "moscow_label_p3",
+        "russian_flag_icon",
+        "arc_niger_moscow"
+      ],
+      "transition_type": "cut",
+      "duration_frames": 0,
+      "easing_hint": "linear",
+      "audio_cue_word": "septembre,"
+    },
+    {
+      "frame_local": 552,
+      "element_ids_appearing": [
+        "interdit_stamp"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "slam_down_scale",
+      "duration_frames": 12,
+      "easing_hint": "spring",
+      "audio_cue_word": "interdit"
+    }
+  ],
+  "permanent_motion": "Panel 1: Very subtle vertical floating of the justice scale (amplitude 5px). Panel 2: Extremely slow zoom-in on the aerial schematic (scale 1.0 to 1.05). Panel 3: Mapbox camera performs a slow pan from Niger slightly northeast towards Moscow to emphasize the distance. Panel 4: Background beige is static, the stamp text remains fixed once slammed down, minor camera shake on impact.",
+  "fidelity_warnings": "The animated line connecting Niger and Moscow must be calculated as a geodesic curve (great circle) using turf.js or similar to appear correctly curved on the 2D projection. Ensure Mapbox projection is set to 'mercator' to match standard Web Map bounds before drawing the SVG arc overlay.",
+  "remotion_implementation_notes": "Use AbsoluteFill for all major panel layers. Implement spring animations using spring(fps, frame, {damping: 80, stiffness: 60}) with extrapolateRight: 'clamp' for pill pop-ups and the stamp slam effect (scaling from 3.0 down to 1.0). Pre-calculate Mapbox coordinates using project() methods for the SVG overlay dots and arc. Ensure mapbox layer uses premountFor={30} to prevent blank flash on transition. Mapbox constructor MUST include projection: { name: 'mercator' } — never omit or globe rendering activates by default."
+}

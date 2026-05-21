@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GéoAfrique — Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: #f5f0e8;
+      color: #1a1510;
+      min-height: 100vh;
+      padding: 24px 16px 64px;
+    }
+
+    header {
+      text-align: center;
+      padding: 36px 0 40px;
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      margin-bottom: 36px;
+    }
+
+    .logo {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #b8860b;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #1a1510;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 12px;
+      color: rgba(0,0,0,0.35);
+    }
+
+    .section {
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+
+    .section-title {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      margin-bottom: 10px;
+      padding-left: 2px;
+    }
+
+    a.card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+
+    a.card:hover {
+      background: #fffdf5;
+      border-color: rgba(184,134,11,0.35);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+    }
+
+    a.card.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      flex-shrink: 0;
+    }
+
+    .card-body { flex: 1; min-width: 0; }
+
+    .card-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1a1510;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-desc {
+      font-size: 11px;
+      color: rgba(0,0,0,0.38);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      font-weight: 700;
+    }
+
+    .live    { background: rgba(0,160,80,0.1);  color: #007a40; border: 1px solid rgba(0,160,80,0.2); }
+    .wip     { background: rgba(184,134,11,0.1); color: #8a6200; border: 1px solid rgba(184,134,11,0.2); }
+    .pret    { background: rgba(60,120,220,0.1); color: #2a5cb8; border: 1px solid rgba(60,120,220,0.2); }
+    .soon    { background: rgba(0,0,0,0.04);     color: rgba(0,0,0,0.3); border: 1px solid rgba(0,0,0,0.08); }
+
+    /* Backlog table */
+    .backlog {
+      max-width: 580px;
+      margin: 0 auto 36px;
+    }
+
+    .backlog-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 2px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .backlog-row:last-child { border-bottom: none; }
+
+    .backlog-num {
+      font-size: 10px;
+      color: rgba(0,0,0,0.2);
+      width: 16px;
+      flex-shrink: 0;
+      padding-top: 1px;
+    }
+
+    .backlog-body { flex: 1; min-width: 0; }
+
+    .backlog-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1510;
+    }
+
+    .backlog-meta {
+      font-size: 11px;
+      color: rgba(0,0,0,0.38);
+      margin-top: 2px;
+    }
+
+    .backlog-tag {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 700;
+      flex-shrink: 0;
+      align-self: center;
+    }
+
+    .tag-atlas   { background: rgba(60,120,220,0.1);  color: #2a5cb8; border: 1px solid rgba(60,120,220,0.15); }
+    .tag-souv    { background: rgba(200,60,60,0.1);   color: #a03030; border: 1px solid rgba(200,60,60,0.15); }
+    .tag-next    { background: rgba(184,134,11,0.1);  color: #8a6200; border: 1px solid rgba(184,134,11,0.15); }
+
+    footer {
+      text-align: center;
+      padding-top: 32px;
+      font-size: 11px;
+      color: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(0,0,0,0.07);
+      max-width: 580px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">GéoAfrique</div>
+  <h1>Hub</h1>
+  <p>Usage interne · Mis à jour 11 mai 2026 — Vraie Taille Afrique pipeline validé</p>
+</header>
+
+<!-- OUTILS & LIBRAIRIES -->
+<div class="section">
+  <div class="section-title">Outils &amp; Librairies</div>
+
+  <a class="card" href="https://kora-et-cartes.vercel.app/" target="_blank">
+    <div class="icon" style="background:rgba(255,184,0,0.1);">🌍</div>
+    <div class="card-body">
+      <div class="card-name">Landing Page GéoAfrique</div>
+      <div class="card-desc">kora-et-cartes.vercel.app · Newsletter + présentation chaîne</div>
+    </div>
+    <span class="badge live">Live</span>
+  </a>
+
+  <a class="card" href="https://whimsy-rocket-vrne.here.now/" target="_blank">
+    <div class="icon" style="background:rgba(255,100,180,0.1);">🎬</div>
+    <div class="card-body">
+      <div class="card-name">Templates Souverain</div>
+      <div class="card-desc">25 templates · 2 styles globe canoniques · 4 palettes Caspian — Jour 5</div>
+    </div>
+    <span class="badge live">Live</span>
+  </a>
+</div>
+
+<!-- ÉPISODES PUBLIÉS -->
+<div class="section">
+  <div class="section-title">Épisodes — Prêts à publier</div>
+
+  <a class="card" href="https://files.catbox.moe/3261ri.mp4" target="_blank">
+    <div class="icon" style="background:rgba(255,184,0,0.1);">⚱️</div>
+    <div class="card-body">
+      <div class="card-name">Or Africain — Qui vole nos mines ?</div>
+      <div class="card-desc">Souverain · 96s · v7 FINAL validé</div>
+    </div>
+    <span class="badge pret">Prêt</span>
+  </a>
+
+  <a class="card" href="https://files.catbox.moe/3261ri.mp4" target="_blank">
+    <div class="icon" style="background:rgba(100,220,150,0.1);">👑</div>
+    <div class="card-body">
+      <div class="card-name">Empire Ghana — L'or silencieux</div>
+      <div class="card-desc">Atlas Long · 5 beats validés · livrable final rendu</div>
+    </div>
+    <span class="badge pret">Prêt</span>
+  </a>
+
+  <a class="card" href="https://files.catbox.moe/jcn5p6.mp4" target="_blank">
+    <div class="icon" style="background:rgba(200,100,100,0.1);">🩸</div>
+    <div class="card-body">
+      <div class="card-name">Thiaroye 1944</div>
+      <div class="card-desc">Short narratif · v5 FINAL validé</div>
+    </div>
+    <span class="badge pret">Prêt</span>
+  </a>
+
+  <a class="card" href="https://files.catbox.moe/6xphlg.mp4" target="_blank">
+    <div class="icon" style="background:rgba(100,160,255,0.1);">🚢</div>
+    <div class="card-body">
+      <div class="card-name">Mansa Moussa Atlas</div>
+      <div class="card-desc">Atlas Long · v2 FINAL validé</div>
+    </div>
+    <span class="badge pret">Prêt</span>
+  </a>
+
+  <a class="card" href="https://files.catbox.moe/ynraip.mp4" target="_blank">
+    <div class="icon" style="background:rgba(180,130,255,0.1);">⚔️</div>
+    <div class="card-body">
+      <div class="card-name">Sonjata</div>
+      <div class="card-desc">Short narratif · v7 FINAL validé</div>
+    </div>
+    <span class="badge pret">Prêt</span>
+  </a>
+</div>
+
+<!-- EN PRODUCTION -->
+<div class="section">
+  <div class="section-title">En production</div>
+
+  <a class="card" href="https://bright-brook-pmfd.here.now/" target="_blank">
+    <div class="icon" style="background:rgba(200,60,60,0.1);">☢️</div>
+    <div class="card-body">
+      <div class="card-name">Niger Uranium — Hub Production</div>
+      <div class="card-desc">Souverain · 5/7 beats validés · Beats 4 et 6 à refondre</div>
+    </div>
+    <span class="badge wip">En cours</span>
+  </a>
+
+  <a class="card" href="https://trusty-oasis-fy2b.here.now/" target="_blank">
+    <div class="icon" style="background:rgba(100,200,100,0.1);">🌍</div>
+    <div class="card-body">
+      <div class="card-name">La Vraie Taille de l'Afrique — Hub Production</div>
+      <div class="card-desc">Souverain · Pipeline validé · Beat 1 ✓ · Beats 2-5 à coder · Musique A choisie</div>
+    </div>
+    <span class="badge wip">En cours</span>
+  </a>
+
+  <a class="card disabled" href="#">
+    <div class="icon" style="background:rgba(255,140,50,0.1);">🐘</div>
+    <div class="card-body">
+      <div class="card-name">Hannibal — Traversée des Alpes</div>
+      <div class="card-desc">Atlas Long · Beat 1 ✓ · Beat 2 phase A ✓ · phase B-C à faire</div>
+    </div>
+    <span class="badge wip">En cours</span>
+  </a>
+</div>
+
+<!-- BACKLOG ÉDITORIAL -->
+<div class="backlog">
+  <div class="section-title" style="max-width:580px;margin:0 auto 10px;">Backlog éditorial</div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">1</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Battle of Adwa 1896</div>
+      <div class="backlog-meta">Éthiopie vs Italie · "seule armée coloniale battue militairement"</div>
+    </div>
+    <span class="backlog-tag tag-next">Suivant</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">2</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Songhai — Chute de Tombouctou 1591</div>
+      <div class="backlog-meta">Atlas · armée marocaine traverse le Sahara</div>
+    </div>
+    <span class="backlog-tag tag-atlas">Atlas</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">3</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Walls of Benin — 4× la Muraille de Chine</div>
+      <div class="backlog-meta">Atlas · 16 000 km de murs, comparaison échelle</div>
+    </div>
+    <span class="backlog-tag tag-atlas">Atlas</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">4</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Sékou Touré 1958 — Non à de Gaulle</div>
+      <div class="backlog-meta">Souverain · décolonisation + sabotage français documenté</div>
+    </div>
+    <span class="backlog-tag tag-souv">Souverain</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">5</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Great Zimbabwe — Stone Kingdom</div>
+      <div class="backlog-meta">Atlas · architecture sans mortier + routes or-ivoire océan Indien</div>
+    </div>
+    <span class="backlog-tag tag-atlas">Atlas</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">6</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Berlin Conference 1884-85</div>
+      <div class="backlog-meta">Atlas-hybride · découpage cartographique + ethnies coupées</div>
+    </div>
+    <span class="backlog-tag tag-souv">Souverain</span>
+  </div>
+
+  <div class="backlog-row">
+    <div class="backlog-num">7</div>
+    <div class="backlog-body">
+      <div class="backlog-title">Cocoa War — Ghana / Côte d'Ivoire vs Occident</div>
+      <div class="backlog-meta">Souverain · production mondiale, cartel chocolat</div>
+    </div>
+    <span class="backlog-tag tag-souv">Souverain</span>
+  </div>
+
+</div>
+
+<footer>
+  GéoAfrique · Aziz Traoré · Usage interne
+</footer>
+
+</body>
+</html>

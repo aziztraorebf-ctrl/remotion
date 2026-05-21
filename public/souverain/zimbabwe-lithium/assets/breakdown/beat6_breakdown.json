@@ -1,0 +1,190 @@
+{
+  "scene_description": "A dark, stylized Mercator world map centers on the Indian Ocean, framing Africa and Asia. Zimbabwe is highlighted in gold and China in red. A central, provocative question fades in over the ocean between them.",
+  "background_assets_to_generate": [
+    {
+      "filename": "vignette_overlay.png",
+      "prompt": "A subtle, dark vignette gradient, transparent in the center and fading to deep charcoal black at the edges. 1080x1920 resolution.",
+      "dimensions": "1080x1920",
+      "transparent": true,
+      "purpose": "To darken the edges of the map and focus attention on the central text and highlighted countries."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "zimbabwe_polygon",
+      "type": "geojson_polygon",
+      "asset_source": "code_only",
+      "filename_or_content": "GeoJSON data for Zimbabwe boundaries",
+      "screen_position_xy": [350, 1200],
+      "size_px": [100, 100],
+      "color_hex": "#E5B82E",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "china_polygon",
+      "type": "geojson_polygon",
+      "asset_source": "code_only",
+      "filename_or_content": "GeoJSON data for China boundaries",
+      "screen_position_xy": [800, 700],
+      "size_px": [300, 250],
+      "color_hex": "#D32027",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "tension_line",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 350 1200 Q 550 950 800 700",
+      "screen_position_xy": [540, 960],
+      "size_px": [1080, 1920],
+      "color_hex": "#FFFFFF",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "text_line_1",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "QUI A VRAIMENT",
+      "screen_position_xy": [540, 900],
+      "size_px": [900, 100],
+      "color_hex": "#F5F5F0",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_line_2",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "GAGNÉ ?",
+      "screen_position_xy": [540, 1020],
+      "size_px": [900, 100],
+      "color_hex": "#F5F5F0",
+      "rotation_deg": 0,
+      "z_index": 4
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "zimbabwe_polygon",
+        "china_polygon"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "linear",
+      "audio_cue_word": "carte monde"
+    },
+    {
+      "frame_local": 60,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "zimbabwe_polygon"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "Zimbabwe"
+    },
+    {
+      "frame_local": 120,
+      "element_ids_appearing": [
+        "tension_line"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 30,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "force"
+    },
+    {
+      "frame_local": 200,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "zimbabwe_polygon"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 15,
+      "easing_hint": "spring",
+      "audio_cue_word": "regles"
+    },
+    {
+      "frame_local": 260,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "china_polygon"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "Chine"
+    },
+    {
+      "frame_local": 340,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "zimbabwe_polygon",
+        "china_polygon"
+      ],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "linear",
+      "audio_cue_word": "bati"
+    },
+    {
+      "frame_local": 420,
+      "element_ids_appearing": [
+        "text_line_1"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 60,
+      "easing_hint": "linear",
+      "audio_cue_word": "Qui"
+    },
+    {
+      "frame_local": 480,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "text_line_1"
+      ],
+      "transition_type": "fade-in",
+      "duration_frames": 10,
+      "easing_hint": "linear",
+      "audio_cue_word": "vraiment"
+    },
+    {
+      "frame_local": 550,
+      "element_ids_appearing": [
+        "text_line_2"
+      ],
+      "element_ids_changing": [
+        "zimbabwe_polygon",
+        "china_polygon"
+      ],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "linear",
+      "audio_cue_word": "gagne"
+    },
+    {
+      "frame_local": 600,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "zimbabwe_polygon",
+        "china_polygon"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 349,
+      "easing_hint": "linear",
+      "audio_cue_word": "freeze question"
+    }
+  ],
+  "permanent_motion": "The map has an extremely slow, almost imperceptible pan towards the East. After frame 600, the opacity of the Zimbabwe and China polygons slowly oscillates in an alternating pattern (when one is 100%, the other is 80%) to create a continuous visual tension.",
+  "remotion_implementation_notes": "Use a Mapbox GL JS wrapper for React. Set projection to 'mercator'. Center coordinates roughly [65, 10] with a zoom level around 2.5 to fit both countries in portrait mode. Use Mapbox data-driven styling for the country polygons to handle the color highlights and opacity pulses via Remotion's `useCurrentFrame()` and `interpolate()`. The `tension_line` should be an SVG overlay positioned absolutely over the map container, using `interpolate` on `strokeDashoffset` for the draw effect. Use `spring` with stiffness 60, damping 12 for the country pulses.",
+  "fidelity_warnings": "The specific textured deep blue of the ocean in the storyboard might require a custom Mapbox style URL rather than standard Mapbox styles. If a custom style isn't available, use Mapbox 'dark' style and overlay a semi-transparent blue CSS gradient. The 'tension line' needs to be carefully mapped from Geo-coordinates to screen coordinates if the map pans, otherwise, keep the map static and use fixed SVG screen coordinates."
+}

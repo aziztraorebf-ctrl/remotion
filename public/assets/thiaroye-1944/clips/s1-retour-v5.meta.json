@@ -1,0 +1,23 @@
+{
+  "request_id": "019dbd5d-f58d-7070-b868-f31a1bb17005",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 7,
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "generate_audio": true,
+  "seed": 1707733556,
+  "video_url": "https://v3b.fal.media/files/b/0a977c1b/hphFYczsQ5jQTCGhIDqUW_video.mp4",
+  "file_size": 2797032,
+  "source_image": "scene1-source-v4.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0a977c0e/xQw0JV2ajl7x4c9QX6qHF_scene1-source-v4.png",
+  "prompt": "Animate this exact illustration. STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey-blue-olive palette, dot-eyes, clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.\n\nCamera: SLOW subtle dolly-in, barely perceptible forward push over 7 seconds. No pan, no rotation.\n\nSECONDS 0 TO 2: The foreground tirailleur leaning on the railing SHIFTS his weight and LEANS forward, his gaze SCANNING the shore. The two tirailleurs in conversation GESTURE with their hands, one POINTING toward the city.\n\nSECONDS 2 TO 4: The foreground tirailleur TURNS his head to observe further right. The central standing tirailleur LIFTS his beret slightly then LOWERS it. The seated soldier ADJUSTS his posture.\n\nSECONDS 4 TO 7: The foreground tirailleur STRAIGHTENS up from the rail. The central beret tirailleur TURNS his head toward the shore. The conversation pair LEANS slightly against the cabin wall. All tirailleurs stay engaged, bodies continuously micro-shifting.\n\nContinuous throughout: Harbor water RIPPLES around the ship hull. Gulls GLIDE across the distant sky. Pale factory smoke RISES from distant chimneys.\n\nCharacters STAY in their positions on deck -- no one walks, no one leaves frame. MAINTAIN dot-eyes throughout, pure black dot pupils, NO realistic eyes, NO visible iris, NO BD comic drift. No text, no banners.\n\nAmbient: harbor water sounds, distant gull cries, light breeze, no dialogue, no music.\n",
+  "cost_usd_estimate": 2.1,
+  "test_intent": "V5 formule Sonjata 7s choregraphique -- segments condenses, verbes MAJUSCULES par personnage, R-SLOW corrige, dot-eyes renforce",
+  "v5_corrections_vs_v4": [
+    "duration: 7s (was 13s) -- formule Sonjata courte",
+    "segments: 3 blocs (0-2s / 2-4s / 4-7s) au lieu de 4",
+    "no clause '7 tirailleurs' -- laisse Seedance gerer",
+    "R-SLOW: 'over 7 seconds' coherent avec duration",
+    "dot-eyes: 'pure black dot pupils, NO realistic eyes, NO visible iris'"
+  ]
+}

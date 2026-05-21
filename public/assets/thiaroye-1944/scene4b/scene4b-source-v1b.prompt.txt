@@ -1,0 +1,26 @@
+# scene4b variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Modern French courtroom interior, 2026. Wider establishing shot. A lawyer stands at a podium or desk, seen from the waist down only -- dark suit, one hand gripping the podium edge, the other resting flat on a thick legal document.
+
+Background: the courtroom gallery suggested by rows of wooden benches (paper-craft flat shapes), a few indistinct silhouettes of seated figures. A tricolor flag stands tall at the back right. A large arched window brings in grey-blue winter light.
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture.
+
+PALETTE: honey-blond wood in the podium and benches (warmth returning vs. grey archives), cold grey courtroom air, dark navy lawyer's suit, beige legal document, tricolor flag as the only strong color accent.
+
+COMPOSITION:
+- Lawyer from waist down, foreground center
+- Document on the podium surface prominent
+- Courtroom space receding into background with benches and silhouettes
+- High arched window at back providing structural depth
+
+CRITICAL TECHNICAL RULES:
+- No readable text on the document or any surface
+- Flag: three color bands only, no heraldry
+- Silhouettes in gallery: abstract paper-craft shapes, dot-eyes if any faces visible
+- Flat color fills only, no hatching, no gradients
+- 9:16 vertical (1080x1920)

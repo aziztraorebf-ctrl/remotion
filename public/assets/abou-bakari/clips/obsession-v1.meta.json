@@ -1,0 +1,13 @@
+{
+  "request_id": "019dcb38-65dd-7272-800e-2e7b378ebaf3",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 6,
+  "generate_audio": true,
+  "seed": 59175475,
+  "video_url": "https://v3b.fal.media/files/b/0a97d6ea/Yngo_evFk8v9l5FF9Tfrh_video.mp4",
+  "file_size": 3381352,
+  "source_image": "scene-obsession-v3.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0a97d6d8/FrY-t3Q9BIE5rfGIvGRym_scene-obsession-v3.png",
+  "prompt": "Animate this exact illustration. STRICT STYLE FIDELITY paper-craft warm sepia palette: flat graphic outlines, navy blue sail with geometric gold motif, warm brown wooden hull, orange sky, no added realism, no texture beyond paper grain.\n\nCamera: very subtle push-in \u2014 frame tightens slowly toward the two figures throughout.\n\nSECONDS 0 TO 2: The blue sail BILLOWS forward \u2014 fabric PULLING taut then EASING. Abou Bakari STANDS at the bow, DARK BROWN skin, body LEANING slightly into the wind, one hand GRIPPING the mast. The rower PULLS oars through the water, arms EXTENDING then DRAWING back in steady rhythm.\n\nSECONDS 2 TO 4: Abou Bakari SHIFTS weight to his front foot, shoulders SQUARING toward the horizon. His head TURNS left \u2014 scanning the open water. The sail SNAPS then SETTLES. The rower ADJUSTS posture, back STRAIGHTENING between strokes.\n\nSECONDS 4 TO 6: Abou Bakari RAISES one hand to shield his gaze \u2014 searching the horizon ahead. His body TENSES, PLANTED at the bow. The rower SLOWS rhythm, gaze LIFTING briefly toward the horizon then RETURNING to his oars. Clouds DRIFT right at the edge of frame.\n\nNO MORPHING: sail maintains geometric gold motif throughout. Hull stays rigid. No objects appear or disappear.\n\nThroughout: waves RIPPLE continuously beneath the hull, sail FLUTTERS at its edge, clouds SHIFT at upper right.\n\nMAINTAIN dot-eyes on both figures throughout \u2014 no text, no banners, no signs.\nAll characters stay engaged, bodies continuously micro-shifting.\nAmbient sounds only \u2014 water, wind, wood creaking.\n",
+  "cost_usd_estimate": 4.1
+}

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abou Bakari II — Production Dashboard</title>
+<style>
+/* Thiaroye V5 Dashboard — Mobile-first, dark theme, orange accent */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #1a1a1a;
+  --bg-card: #252525;
+  --bg-card-hover: #2d2d2d;
+  --text: #e0e0e0;
+  --text-muted: #888;
+  --accent: #f5a623;
+  --accent-dark: #e8872a;
+  --green: #4caf50;
+  --red: #e53935;
+  --yellow: #ffb300;
+  --blue: #29b6f6;
+  --border: #3a3a3a;
+  --border-active: #555;
+  --max-width: 800px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  padding: 12px;
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+h1 {
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* Summary section */
+.summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.summary-card {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.summary-value {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.progress {
+  grid-column: 1 / -1;
+  background: var(--bg-card);
+  border-radius: 8px;
+  height: 6px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.4s ease;
+}
+
+/* Rules summary */
+.rules-summary {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.rules-summary h2 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rules-summary ul {
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.rules-summary li {
+  padding: 2px 0;
+  padding-left: 12px;
+  position: relative;
+}
+
+.rules-summary li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--green);
+  font-size: 0.7rem;
+}
+
+/* Scene card */
+.scene {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--border);
+  transition: border-left-color 0.3s;
+}
+
+.scene[data-status="done"] { border-left-color: var(--green); }
+.scene[data-status="partial_done"] { border-left-color: var(--yellow); }
+.scene[data-status="image_done"] { border-left-color: var(--blue); }
+.scene[data-status="image_validated"] { border-left-color: #26c6da; }
+.scene[data-status="clip_hors_controle"] { border-left-color: #e57c23; }
+.scene[data-status="todo"] { border-left-color: var(--accent); }
+.scene[data-status="pending"] { border-left-color: var(--text-muted); }
+.scene[data-status="failed"] { border-left-color: var(--red); }
+
+.scene-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.scene-id {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.scene-status-badge {
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.scene[data-status="done"] .scene-status-badge { background: var(--green); color: white; }
+.scene[data-status="partial_done"] .scene-status-badge { background: var(--yellow); color: black; }
+.scene[data-status="image_done"] .scene-status-badge { background: var(--blue); color: black; }
+.scene[data-status="image_validated"] .scene-status-badge { background: #26c6da; color: black; }
+.scene[data-status="clip_hors_controle"] .scene-status-badge { background: #e57c23; color: white; }
+.scene[data-status="todo"] .scene-status-badge { background: var(--accent); color: black; }
+.scene[data-status="pending"] .scene-status-badge { background: var(--text-muted); color: white; }
+.scene[data-status="failed"] .scene-status-badge { background: var(--red); color: white; }
+
+.scene-title {
+  font-size: 1.1rem;
+  color: var(--text);
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.scene-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.scene-timing { font-weight: 500; }
+
+.scene-type {
+  font-style: italic;
+  color: var(--blue);
+}
+
+.scene-narration {
+  font-size: 0.88rem;
+  color: var(--text);
+  font-style: italic;
+  padding: 10px 12px;
+  background: rgba(245, 166, 35, 0.08);
+  border-left: 2px solid var(--accent);
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+/* Expandable sections */
+.scene-section {
+  margin-bottom: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.scene-section summary {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-weight: 500;
+  user-select: none;
+}
+
+.scene-section summary:hover {
+  background: rgba(245, 166, 35, 0.1);
+}
+
+.scene-section > :not(summary) {
+  padding: 10px 12px;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.scene-section pre {
+  font-family: 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+  color: #b8d4e8;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  line-height: 1.4;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  background: #1a1a1a;
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.scene-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.scene-section ul li {
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.scene-section ul li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Camera options special styling */
+.scene-camera-options li[data-camera="SAFE"]::before { content: "🟢"; }
+.scene-camera-options li[data-camera="MEDIUM"]::before { content: "🟡"; }
+.scene-camera-options li[data-camera="RISKY"]::before { content: "🔴"; }
+
+/* Scene image preview */
+.scene-image-preview {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+  background: #111;
+  position: relative;
+}
+
+.scene-image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.scene-image-preview .img-caption {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 4px 0 2px;
+}
+
+/* Lightbox */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+
+.lightbox-overlay.active {
+  display: flex;
+}
+
+.lightbox-overlay img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Refs section */
+.refs-section {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.refs-section h2 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.refs-subsection-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 10px 0 6px;
+  font-weight: 600;
+}
+
+.refs-grid {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.ref-card {
+  flex: 0 0 auto;
+  text-align: center;
+  cursor: pointer;
+}
+
+.ref-card img {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--border);
+  display: block;
+  transition: border-color 0.2s;
+}
+
+.ref-card:hover img {
+  border-color: var(--accent);
+}
+
+.ref-card-label {
+  display: block;
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  max-width: 80px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.style-anchor-grid .ref-card img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+}
+
+/* Assets */
+.scene-assets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.asset-slot {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 0.75rem;
+}
+
+.asset-label {
+  display: block;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.asset-status {
+  display: block;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.asset-status.available { color: var(--green); }
+.asset-status.missing { color: var(--text-muted); }
+.asset-status.hors-controle { color: #e57c23; font-weight: bold; }
+
+/* Budget critical/warning */
+#budget-remaining.budget-critical { color: var(--red); font-weight: bold; }
+#budget-remaining.budget-warning { color: var(--yellow); }
+
+/* Clip warning box */
+.clip-warning {
+  background: rgba(229, 124, 35, 0.12);
+  border: 1px solid #e57c23;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: #e57c23;
+  margin: 8px 0;
+}
+
+/* Image version list */
+.versions-list { padding: 0; list-style: none; }
+.versions-list li { padding: 3px 0 3px 12px; font-size: 0.78rem; position: relative; }
+.versions-list li::before { content: "▸"; position: absolute; left: 0; color: var(--text-muted); }
+.version-selected { color: var(--green) !important; }
+.version-selected::before { color: var(--green) !important; }
+.version-pending { color: var(--yellow) !important; }
+.version-pending::before { color: var(--yellow) !important; }
+.version-warn { color: #e57c23 !important; }
+.version-warn::before { color: #e57c23 !important; }
+
+/* Music section */
+.music-section {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.music-section h2 {
+  font-size: 0.85rem;
+  color: var(--accent);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.music-track {
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+.music-track-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.music-track-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.music-track-badge {
+  font-size: 0.65rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: bold;
+  background: var(--green);
+  color: white;
+  text-transform: uppercase;
+}
+
+.music-track-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-style: italic;
+}
+
+.music-track audio {
+  width: 100%;
+  height: 36px;
+  border-radius: 6px;
+  accent-color: var(--accent);
+}
+
+/* Progress checklist per scene */
+.scene-progress {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+
+.progress-step {
+  font-size: 0.65rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.progress-step.done {
+  background: rgba(76, 175, 80, 0.15);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.progress-step.pending {
+  background: rgba(255, 179, 0, 0.1);
+  border-color: var(--yellow);
+  color: var(--yellow);
+}
+
+.progress-step.todo {
+  opacity: 0.4;
+}
+
+/* Animation strategy line */
+.scene-anim-strategy {
+  font-size: 0.78rem;
+  color: var(--blue);
+  padding: 6px 12px;
+  background: rgba(41, 182, 246, 0.07);
+  border-left: 2px solid var(--blue);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* Correction notes */
+.scene-corrections {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.scene-corrections li {
+  color: var(--text-muted) !important;
+}
+
+.scene-corrections li::before {
+  content: "!" !important;
+  color: var(--yellow) !important;
+}
+
+/* Footer scene */
+.scene-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 8px;
+}
+
+.scene-cost strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.scene-cost-actual strong { color: var(--green); }
+
+/* Notes */
+.scene-notes-text {
+  color: var(--text);
+  font-size: 0.8rem;
+  font-style: italic;
+  padding: 10px 12px;
+}
+
+/* History */
+.scene-history-list li {
+  padding: 6px 0;
+  padding-left: 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.78rem;
+}
+
+.scene-history-list li:last-child { border-bottom: none; }
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 30px 0 20px;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+/* Responsive */
+@media (min-width: 600px) {
+  body { padding: 20px; }
+  h1 { font-size: 1.7rem; }
+  .summary-value { font-size: 1.2rem; }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Abou Bakari II — Production Dashboard</h1>
+  <div class="meta" id="meta-info">Chargement...</div>
+</header>
+
+<section class="summary">
+  <div class="summary-card">
+    <span class="summary-label">Durée totale</span>
+    <span class="summary-value" id="total-duration">—</span>
+  </div>
+  <div class="summary-card">
+    <span class="summary-label">Scènes</span>
+    <span class="summary-value"><span id="scenes-done">0</span> / <span id="scenes-total">0</span></span>
+  </div>
+  <div class="summary-card">
+    <span class="summary-label">Budget restant</span>
+    <span class="summary-value" id="budget-remaining">—</span>
+  </div>
+  <div class="progress">
+    <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
+  </div>
+</section>
+
+<section class="rules-summary">
+  <h2>Règles actives</h2>
+  <ul id="rules-list"></ul>
+</section>
+
+<section class="refs-section" id="refs-section">
+  <h2>Références de style</h2>
+  <p class="refs-subsection-label">Charrefs personnages</p>
+  <div class="refs-grid" id="charrefs-grid"></div>
+  <p class="refs-subsection-label">Style anchor</p>
+  <div class="refs-grid style-anchor-grid" id="style-anchor-grid"></div>
+</section>
+
+<section class="music-section" id="music-section">
+  <h2>Musique selectionnee</h2>
+  <div class="music-track">
+    <div class="music-track-header">
+      <span class="music-track-name">Variante A — Royal Kora + Balafon</span>
+      <span class="music-track-badge">SELECTIONNE</span>
+    </div>
+    <p class="music-track-desc">Toumani Diabate style — grandeur du Mansa qui part. Regal, adventurous, hopeful. Scenes royales + depart.</p>
+    <audio controls preload="none" src="https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/music/variante-A-royal-kora-balafon-OhkuLQBKLgcPJtBbo0YMfnWYpciyuh.mp3"></audio>
+  </div>
+  <div class="music-track">
+    <div class="music-track-header">
+      <span class="music-track-name">Variante E — Contemplatif Ngoni</span>
+      <span class="music-track-badge">SELECTIONNE</span>
+    </div>
+    <p class="music-track-desc">Bassekou Kouyate style — sombre, contemplatif, bittersweet. Un homme qui regarde l'horizon qu'il ne peut pas resister. Scenes ocean + obsession.</p>
+    <audio controls preload="none" src="https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/music/variante-E-royal-contemplatif-ngoni-GCxp1KPcoo227flohOrOk0piYk6Xj2.mp3"></audio>
+  </div>
+</section>
+
+<main id="scenes-container"></main>
+
+<div class="lightbox-overlay" id="lightbox" onclick="this.classList.remove('active')">
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<footer>
+  <p>Dashboard v1.3 — Abou Bakari II Production — 2026-04-26</p>
+</footer>
+
+<!-- Scene card template -->
+<template id="scene-template">
+  <article class="scene" data-scene-id="">
+    <div class="scene-header">
+      <div class="scene-id"></div>
+      <div class="scene-status-badge"></div>
+    </div>
+    <h2 class="scene-title"></h2>
+    <div class="scene-meta">
+      <span class="scene-timing"></span>
+      <span class="scene-type"></span>
+    </div>
+    <div class="scene-progress"></div>
+
+    <div class="scene-image-preview" style="display:none">
+      <img class="scene-main-img" src="" alt="" loading="lazy">
+      <span class="img-caption"></span>
+    </div>
+    <p class="scene-narration"></p>
+    <p class="scene-anim-strategy" style="display:none"></p>
+
+    <details class="scene-section">
+      <summary>Description visuelle</summary>
+      <p class="scene-description"></p>
+    </details>
+
+    <details class="scene-section">
+      <summary>Prompt Gemini (image source)</summary>
+      <pre class="scene-prompt-gemini"></pre>
+    </details>
+
+    <details class="scene-section">
+      <summary>Prompt Seedance (animation clip)</summary>
+      <pre class="scene-prompt-seedance"></pre>
+    </details>
+
+    <details class="scene-section">
+      <summary>Options caméra (SAFE/MEDIUM/RISKY)</summary>
+      <ul class="scene-camera-options"></ul>
+    </details>
+
+    <details class="scene-section">
+      <summary>Mouvements intrinsèques R-DYNAMIC</summary>
+      <ul class="scene-intrinsic-motions"></ul>
+    </details>
+
+    <div class="scene-assets">
+      <div class="asset-slot" data-asset="image">
+        <span class="asset-label">Image source</span>
+        <span class="asset-status"></span>
+      </div>
+      <div class="asset-slot" data-asset="clip">
+        <span class="asset-label">Clip final</span>
+        <span class="asset-status"></span>
+      </div>
+    </div>
+
+    <div class="scene-footer">
+      <span class="scene-cost">Coût estimé: <strong class="scene-cost-est"></strong></span>
+      <span class="scene-cost-actual" style="display:none">Coût réel: <strong class="scene-cost-value"></strong></span>
+    </div>
+
+    <details class="scene-section scene-corrections-section" style="display:none">
+      <summary>Corrections apportees</summary>
+      <ul class="scene-corrections"></ul>
+    </details>
+
+    <details class="scene-section scene-notes">
+      <summary>Notes</summary>
+      <p class="scene-notes-text"></p>
+    </details>
+
+    <details class="scene-section scene-history" style="display:none">
+      <summary>Historique versions</summary>
+      <ul class="scene-history-list"></ul>
+    </details>
+  </article>
+</template>
+
+<script>
+// Thiaroye V5 Dashboard — load and render scenes from scenes.json
+
+async function loadData() {
+  return {"project":"Abou Bakari II Short","version":"1.7","last_updated":"2026-04-26","total_duration_s":88.52,"format":"9:16","style":"paper-craft sepia warm palette","narration_audio":"public/audio/abou-bakari/abou-bakari-narratrice-v1.mp3","forced_alignment":"public/audio/abou-bakari/abou-bakari-alignment.json","voice_id":"z3gESu49naEZW8Af2Upm","music_style":"kora + balafon + djembe griot Mali","budget":{"initial":30.0,"spent_so_far":27.93,"remaining":2.07},"epoch":"Mali XIVe siecle (1311)","charrefs":{"abou_bakari_royal":{"file":"public/assets/abou-bakari/refs/abou-bakari-royal-charref-v1.png","url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/refs/abou-bakari-royal-charref-v1-5xPrxyyPAd6pQNGft00fGVx6YOnDTS.png","status":"validated"},"abou_bakari_marin":{"file":"public/assets/abou-bakari/refs/abou-bakari-marin-charref-v1.png","url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/refs/abou-bakari-marin-charref-v1-XY7veYZWHNdw4Jm4JXiNCWwWhs6JYd.png","status":"validated"},"mansa_moussa":{"file":"public/assets/abou-bakari/refs/mansa-moussa-charref-v2.png","url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/refs/mansa-moussa-charref-v2-vHUPiYqCHGI9b4qKxI79FSZUnXeFlx.png","status":"validated"},"capitaine_pirogue":{"file":"public/assets/abou-bakari/refs/capitaine-pirogue-charref-v3.png","url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/refs/capitaine-pirogue-charref-v3-UDPEaYJMOjkLNMWXJZUNaU3EoYQJV5.png","status":"validated"}},"rules_applied":["R-VIVANT v3 (image vivante + prompt vivant — zero frozen/still/motionless)","R-SONJATA-CHOREGRAPHIQUE (timeline segments + verbes MAJUSCULES + ~1500 chars / 5-7s)","R-REVIEW-BEFORE-SPEND (preview-before-pay — aucun appel API sans GO Aziz)","R-PRE-API-GATES (10 gates avant tout appel Gemini/Seedance)","R-DURATION-MATCH (clip >= narration - 0.5s, splits obligs >10s)","R-VETEMENTS-EPOQUE (boubou indigo/or, pirogues bois, lance + fleche, adobe Djinguereber)","R-CANONICAL-REF (find public/assets/library avant tout charref)","R-CHECKLIST-OBLIGATOIRE (15 items CHECKLIST-PROMPT-SHORT avant chaque prompt)","R-NO-PARTICLES (zero dust motes/particles/sparkles/pollen dans tous les prompts)"],"epoch_spec":{"vetements_royaux":"grand boubou indigo profond avec broderies en fil d'or, turban noue, sandales en cuir, pas de couronne europeenne — diademe en metal dore avec motifs geometriques africains","vetements_communs":"boubou court en coton naturel ecru ou ocre, pagnes rayures, colliers de coquillages cauris, amulettes gris-gris en cuir","armes":"lances en bois de fer avec pointe en fer forge, arcs en bois composite avec carquois en cuir, boucliers ronds en cuir tendu — PAS d'epees europeennes, PAS d'armures metalliques","pirogues":"grandes pirogues de peche en bois sculte (10-20m), coques monoxyles, voiles en natte tressee, rames en bois — PAS de caravelles, PAS de voiles carrees europeennes","architecture":"pisé (banco), arches en adobe arrondies, tours a epis Djinguereber-style, cours ouvertes avec palmiers, murs cremes-ocre avec traces de doigts visibles","palette":"ocre chaud #D4943F, sienna brule #8B4513, creme chaude #F5E6C8, or #D4AF37, indigo nuit #1A1A4E pour ombres et vetements royaux, bleu atlantique profond #0A3D6B"},"scenes":[{"id":"ocean","title":"Le Mur de Brouillard","start_s":0.119,"end_s":13.5,"duration_s":13.381,"narration":"En 1311, l'ocean Atlantique n'est qu'un mur de brouillard. Personne n'ose regarder vers l'ouest. Sauf un homme qui a un ardent desir de savoir.","status":"clip_validated","clip_file":"out/abou-bakari-final.mp4","clip_notes":"SWAP VALIDE 2026-04-26 : animation globe Remotion V2 (13s, Remotion pur, extrait 0-13s de abou-bakari-final.mp4). clip ocean-v1 Seedance deplace vers scene obsession. Video Extend annulee.","type":"hook","image_source":"out/abou-bakari-final.mp4","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/globe-preview-sGcIh7OXc1zS2MQWFHgjrTIGIqtrNc.png","clip_final":null,"clip_needs_complement":true,"clip_strategy":"clip principal 10s Seedance image-to-video + Video Extend 4s post-narration","complement_strategy":"video_extend_seedance","complement_duration_s":4,"complement_note":"Les secondes post-narration sans dialogue sont une respiration cinematographique intentionnelle — la scene continue visuellement","duration_check":"narration 13.38s > 10s max Seedance — split obligatoire. Clip 10s + complement 4s Video Extend Seedance.","epoch_check":{"vetements":"aucun personnage visible — vue horizon atlantique pur","armes":"N/A","architecture":"N/A","pirogues":"N/A — vue depuis la cote, eau seule"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The Atlantic Ocean as seen from the West African coast, 1311. A vast horizon. Three-quarters of the frame is deep blue-black ocean, rippling endlessly. Upper quarter: a thick wall of fog and mist blocking the western horizon — the edge of the known world. The ocean is not calm: it churns with massive swells, whitecaps cresting on the paper-craft waves, each wave a flat graphic silhouette in deep blue-navy with white foam edges.\n\nSTYLE: paper-craft storybook — thick black outlines, flat color fills, paper kraft texture, no photorealism. Organic shapes, hand-cut look.\n\nPALETTE: warm sepia-Atlantic palette. Deep ocean blue #0A3D6B for the sea body. Warm cream-white #F5E6C8 for wave crests and fog wisps. Ochre-gold #D4943F at the horizon sky edge where the African coast light bleeds through. The fog wall is dense warm cream melting into grey at its heart.\n\nCOMPOSITION:\n- Lower two-thirds: churning ocean, 3-4 large wave silhouettes visible, whitecaps on each\n- Upper third: the fog wall — impenetrable, thick, layered wisps of pale cream and grey\n- Horizon line at the one-third mark — warm gold bleeding through from behind the fog\n- Left edge: the faintest silhouette of the African coast shoreline, just rock shapes\n- No human figures — pure nature\n\nLIFE IN THE SCENE (R-VIVANT anchors):\n- Wave crests already mid-motion in the image (paper-craft swoops)\n- Fog wisps overlap and layer in multiple depths\n- Two seabird silhouettes flat shapes at the horizon, wings spread\n- Small whitecap explosions on the foreground waves\n\nCRITICAL TECHNICAL RULES:\n- Strict paper-craft flat fills — no gradient washes, no photorealism\n- No text, no numerals, no writing anywhere\n- No human figures, no boats visible\n- 9:16 vertical (1080x1920)\n- Warm sepia palette — NOT cold Thiaroye palette","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft sepia warm palette: maintain flat layered paper silhouettes, muted blue-grey wave bands, sandy shore, no added realism, no texture beyond paper grain.\n\nCamera PUSHES IN steadily toward the lone figure standing at the shoreline, starting from a wide establishing shot and TIGHTENING to a medium shot centered on his profile. Smooth, stable forward motion.\n\nSECONDS 0 TO 3: The lone figure in the short sand-colored tunic STANDS at the water's edge in LEFT-PROFILE, his gaze fixed on the horizon. He BREATHES visibly — chest RISES and FALLS. His arms SHIFT slightly behind his back. The four wave bands ROLL gently left to right in continuous undulation. The grey fog bank DRIFTS slowly rightward across the upper sky.\n\nSECONDS 3 TO 6: The three silhouette figures in the background LEAN BACK away from the ocean — one RAISES an arm to shield its face, another CROUCHES lower. The lone figure does NOT react to them — he keeps STARING westward, chin LIFTING slightly. Waves continue ROLLING.\n\nSECONDS 6 TO 10: Camera has TIGHTENED to medium profile shot of the lone figure. He INHALES — shoulders RISE — then HOLDS the breath, unmoving but alive. His tunic fabric SHIFTS in wind. The distant horizon fog THICKENS slightly. The baobab on the far right SWAYS at its crown.\n\nCOLOR GRADE: muted blue-grey ocean, sandy warm shore, pale white-grey sky — paper-craft sepia palette throughout. No brightening. All characters stay engaged, bodies continuously micro-shifting. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Slow push-forward into the fog wall (horizon grows)","MEDIUM":"Static frame with organic fog billow expansion + wave surge","RISKY":"Pedestal up from wave surface to reveal fog wall from below"},"camera_movement_choice":"SAFE","intrinsic_motions":["ocean swells surge and crest left to right","whitecaps burst on wave peaks","fog wall billows and churns","fog mass rolls and drifts in dense sheets","two seabirds glide then bank back toward shore","warm golden horizon flickers behind fog","ocean darkens as fog shadow spreads"],"cost_estimated":3.7,"notes":"IMAGE VALIDEE v1. Beat hook fort. 13.38s narration — clip 10s Seedance image-to-video + 4s Video Extend (respiration post-narration). Aucun personnage = aucun risque epoque ni charref. Prompt Seedance mis a jour session 2026-04-26 — version avec lone figure + fog + baobab."},{"id":"empire","title":"Le Roi des Rois","start_s":13.799,"end_s":22.699,"duration_s":8.9,"narration":"Abou Bakari deux. Mansa du Mali. Roi des rois. Il regne sur l'empire le plus riche du monde. Hante par l'horizon.","status":"clip_validated","clip_file":"public/assets/abou-bakari/clips/empire-v1.mp4","clip_notes":"9s, audio ON, valide Aziz.","type":"portrait-royal","charref_needed":"abou_bakari_royal","image_source":"public/assets/abou-bakari/scenes/scene-empire-v2.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-empire-v2-7lo96Vrdyvow6xX7V6KqwHCXeniobC.png","clip_final":null,"clip_needs_complement":false,"duration_check":"narration 8.9s <= 10s max Seedance — un seul clip 9s OK.","epoch_check":{"vetements":"grand boubou indigo profond broderies fil d'or, turban noue en coton blanc casse, sandales en cuir, diademe metal dore motifs geometriques africains — PAS couronne europeenne","armes":"garde avec lances en bois de fer, pointes fer forge — PAS d'epees ni armures metalliques europeens","architecture":"throne room en pisé adobe, arches en banco, ornements geometriques incises dans les murs — PAS d'architecture europeenne"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The throne room of the Mali Empire, 1311. Mansa Abou Bakari II, ruler of the richest empire in the world, seated on a carved ebony throne. He faces slightly right, gaze not toward the viewer but toward an unseen distance — the west, the horizon, the obsession.\n\nPERSONNAGE — ABOU BAKARI II:\n- Dark brown skin, strong broad features, dot-eyes (single black dot, no iris, no white)\n- Grand indigo-blue boubou with gold thread embroidery at collar and cuffs (geometric Mande patterns)\n- Wrapped white-cream turban, loosely folded\n- Gold geometric diadem headband (African design, NOT European crown)\n- Gold armbands, cowrie shell necklace visible at collar\n- Seated but leaning slightly forward, elbows on armrests, one hand resting on knee — NOT rigid\n- Expression: absorbed in thought, jaw set, gaze fixed on something beyond the frame\n\nTHRONE AND ROOM:\n- Carved ebony throne with geometric kente-like patterns in the wood\n- Two standing guards flanking the throne (partial silhouettes at edges), holding wooden lances with forged iron tips\n- Walls: warm ochre adobe pisé with incised geometric patterns\n- Arched adobe doorways in background, light from outside filtering through as warm gold beams\n- Ground: flat terracotta-ochre tiles with geometric motifs\n- Rich textiles hanging on the wall (flat bold stripe patterns — kente-influenced)\n- A carved wooden map-table at his right, with parchment and small calabash ink pot\n\nSTYLE: Match Sonjata paper-craft — thick black outlines, flat color fills, paper kraft texture. WARM sepia palette: ochre, sienna, indigo, gold, warm cream. Strict dot-eyes on all figures.\n\nPALETTE: warm ochre throne room, deep indigo boubou, gold accents, rich crimson textile hanging, warm golden light beams. The richest scene in the film.\n\nLIFE IN THE SCENE (R-VIVANT anchors in composition):\n- Abou Bakari: forward lean, one hand slightly raised off armrest\n- Hanging textiles: billowing slightly at bottom edge\n- Light beams: warm shafts shifting through the doorway arch\n- Guards: varied postures, not mirror-image\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes everywhere\n- Flat color fills only, no hatching, no shading gradients\n- No text, no readable inscriptions, no writing\n- Mali XIVe century: NO European elements (no crosses, no European heraldry, no stone castles)\n- 9:16 vertical (1080x1920)\n- Warm sepia palette ONLY — this is the richest scene","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft warm amber: bold outlines, flat cel-shaded colors, geometric tapestries in indigo and gold, warm torchlight palette, no added realism.\n\nCamera executes a slow cinematic arc — starting frontal, curving 45 degrees to the LEFT to reveal the throne's carved wood details and the tapestries behind. Smooth wide curve.\n\nSECONDS 0 TO 3: The king in the blue-and-gold royal robe SITS on the carved wooden throne, his posture upright and heavy. His large gold necklace CATCHES the light. His RIGHT hand GRIPS the throne armrest — fingers TIGHTEN slightly. His gaze SHIFTS toward the arched window on his LEFT, where the ocean horizon is visible. SKIN: the king has DARK BROWN skin — clearly visible, NOT pale, NOT tan.\n\nSECONDS 3 TO 6: The two courtier figures behind the throne SHIFT weight from foot to foot — one BOWS head slightly, the other CLASPS hands in front. The candle cup on the low table to the left FLICKERS — its small flame bends in a slight draft. The geometric tapestry on the right wall BREATHES minimally, as if a faint wind moves through the room.\n\nSECONDS 6 TO 9: The king TURNS his gaze back to center — not fully, just a partial RETURN — as if pulled back from a daydream. He EXHALES, shoulders DROPPING fractionally. Through the arched window, the ocean color DEEPENS slightly toward night indigo. The courtiers remain PRESENT, bodies alive with micro-movements.\n\nCOLOR GRADE: warm amber adobe walls, deep indigo and gold fabric, golden geometric motifs, warm candlelight tones — paper-craft palette throughout. All characters stay engaged. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Slow dolly-in toward Abou Bakari, barely perceptible forward push","MEDIUM":"Static close-up with camera orbit 20 degrees revealing throne room depth","RISKY":"Tilt up from throne base to face revealing imperial scale"},"camera_movement_choice":"SAFE","intrinsic_motions":["Abou Bakari shifts weight forward on throne","head turns slightly, gaze scans toward west","jaw clenches then relaxes","right hand lifts then clasps","guards adjust lance grips and shift weight","light beams shift through doorway arches","hanging textiles billow then settle","parchment corner lifts in air draft"],"cost_estimated":2.2,"corrections":["v1: style anchor (scene1-village) a ete copie composition-nativity Sonjata — fix: clause STYLE ANCHOR PALETTE ONLY","v1: Abou Bakari pieds nus sur le trone — fix: 'ORNATE LEATHER SANDALS gold details — clearly visible'","v1: trone trop gigantesque — fix: 'THRONE IS NORMAL SIZE proportionate to body'","v1: serviteurs trop petits — fix: 'servants at NORMAL HEIGHT, status shown by posture not size'"],"history":[{"version":"v1","result":"Style copie Sonjata nativity + pieds nus + trone geant"},{"version":"v2","result":"VALIDE — style correct, sandales visibles, proportions normales"}],"notes":"IMAGE VALIDEE v2. Premier plan Abou Bakari. Prompt Seedance mis a jour session 2026-04-26 — version avec arc camera 45 deg gauche + details tapisserie + fenetre ocean. SKIN: DARK BROWN explicite."},{"id":"fleet-a","title":"Les Deux Mille Pirogues — Flotte","start_s":23.059,"end_s":33.059,"duration_s":10.0,"narration":"Il fait preparer deux mille pirogues.","status":"clip_validated","clip_file":"public/assets/abou-bakari/clips/fleet-a-v1.mp4","clip_notes":"10s, audio OFF (content policy workaround — overlay ElevenLabs en post), valide Aziz.","type":"action-epic","image_source":"public/assets/abou-bakari/scenes/scene-fleet-a-v1.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-fleet-a-v1-RVizP7Ss66o1lZpkwcxD8h1c39bU4g.png","clip_final":null,"clip_needs_complement":false,"duration_check":"10s clip Seedance pour la flotte en mer.","epoch_check":{"vetements":"pirogues: bois sculpte monoxyle, coques simples, voiles en natte tressee ou raphia. Rameurs: boubous courts en coton ecru ou torses nus, turbans simples","armes":"N/A pour la flotte — cette scene est maritime","architecture":"INTERDIT dans ce clip — vue en mer pure, pas de port ni de cote visible","pirogues":"CRITIQUE: grandes pirogues de peche en bois (10-20m), coques monoxyles, PAS de caravelles europeennes, PAS de gouvernails metalliques"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The open Atlantic Ocean, 1311. The fleet of 2000 dugout canoes already at sea, in formation, viewed from the open water or slightly elevated — the infinite horizon behind them. NO BEACH. NO PORT. NO DEPARTURE. The fleet IS ALREADY MOVING on the ocean.\n\nCOMPOSITION:\n- Foreground: 3-4 large paper-craft pirogues close to the viewer, crews visible, oars raised or dipping, prows cutting the waves\n- Mid-ground: dozens of pirogues filling the water, overlapping silhouettes receding into depth\n- Background: the fleet merges with the horizon — so many boats they become a texture\n- Upper frame: warm ochre-gold dawn sky over open ocean\n- NO land visible, NO port, NO shore, NO quay — pure ocean and fleet\n\nPIROGUES — CRITICAL ACCURACY:\n- Long narrow dugout canoes in dark stained wood (NOT European caravelles, NOT galleons)\n- Simple woven reed/raffia sails on the larger ones (triangular or square, not European rigging)\n- Wooden oars\n- Paper-craft flat shapes, thick outlines\n\nCREW DETAILS (on the closest 3-4 pirogues):\n- Rameurs (rowers): short cotton boubou or bare-chested, dot-eyes, varied postures (pulling oar, scanning horizon, adjusting sail)\n- VARIED ages, body types, postures — no two alike\n- Dark brown skin tones consistently\n\nSTYLE: Sonjata paper-craft — thick black outlines, flat color fills, paper kraft texture. WARM sepia palette throughout.\n\nPALETTE: dark stained wood for pirogues, warm ochre-gold dawn sky, deep Atlantic blue, white foam at prow cuts, warm cream woven sails.\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes on all crew figures\n- Flat color fills only\n- NO text, NO writing anywhere\n- NO European ship designs (no caravelles, no galleons, no European rigging)\n- NO beach, NO port, NO departure scene — FLEET ALREADY AT SEA\n- Mali XIVe century pirogues ONLY\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft sepia warm palette: flat layered paper waves, saffron-orange sails, stylized wooden pirogues, no added realism, no photographic texture.\n\nCamera PULLS BACK steadily from the foreground pirogues, revealing the full magnitude of the fleet stretching to the horizon. Slow, continuous backward dolly. Single continuous take, no cuts.\n\nSECONDS 0 TO 3: The three foreground pirogues SURGE forward — their hulls PUSH through the wave bands, bows CUTTING left and right with rhythmic motion. The rowers inside PULL their oars in alternating strokes — LEFT side DIPS, RIGHT side LIFTS, continuous cadence. The saffron sails BILLOW and STRAIN against the wind, fabric FILLING and RELEASING in slow pulses.\n\nSECONDS 3 TO 6: The wave bands across the full width of the frame ROLL in continuous left-to-right undulation — all layers moving simultaneously at slightly different speeds. The mid-ground pirogues BOB gently on the swells. The saffron sails throughout the fleet CATCH the same wind, all leaning in the same direction. The beige sky holds its tone — the four paper-cut clouds DRIFT very slowly rightward.\n\nSECONDS 6 TO 8: Camera has PULLED BACK to reveal the full oceanic panorama — pirogues stretching to the vanishing point. The fleet appears ENDLESS. The rowers in the foreground maintain their cadence. All sails BILLOW uniformly. The horizon remains clear.\n\nCOLOR GRADE: saffron-amber sails, deep teal-blue ocean layers, beige warm sky, rich dark wood hulls — paper-craft warm sepia palette. No desaturation. Waves roll continuously throughout. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Pull-back to reveal fleet scale","MEDIUM":"Low angle from water surface looking up at the fleet prows as they pass overhead","RISKY":"Aerial crane down revealing fleet from above"},"camera_movement_choice":"SAFE","intrinsic_motions":["rowers pull oars in rhythmic stroke across fleet","prow foam bursts as each pirogue cuts water","woven sails billow with morning wind","birds scatter from water ahead of prows","dawn sky brightens progressively"],"cost_estimated":2.5,"notes":"IMAGE VALIDEE fleet-a v1. Clip A flotte — DEJA EN MER. Prompt Seedance mis a jour session 2026-04-26 — version pull-back avec saffron sails + rowers cadence."},{"id":"fleet-b","title":"Les Deux Mille Pirogues — Retour du Capitaine","start_s":33.059,"end_s":39.079,"duration_s":6.02,"narration":"Un seul bateau revient. Le capitaine est terrifie. Un courant geant. On ne passe pas.","status":"clip_validated","clip_file":"public/assets/abou-bakari/clips/fleet-b-v1.mp4","clip_notes":"6s, audio ON, valide Aziz 9/10. R-REVIEW-NARRATIF applique (yeux expressifs gros plan action = acceptable).","type":"action-dramatic","charref_needed":"capitaine_pirogue","image_source":"public/assets/abou-bakari/scenes/scene-fleet-b-v4.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-fleet-b-v4-z5mXlByIuNtacENuaAhO91z4bPLKPb.png","clip_final":null,"clip_needs_complement":false,"duration_check":"6s clip Seedance pour le capitaine terrifie.","epoch_check":{"vetements":"capitaine: boubou court coton ecru, torse partiellement visible, dot-eyes, expression terrifiee","armes":"N/A","architecture":"N/A — mer ouverte","pirogues":"pirogue seule, abimee, sur ocean hostile avec grands courants"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The open Atlantic, 1311. A single pirogue returns alone to the Mali coast — the sole survivor of 2000. The ocean around it is vast and hostile.\n\nSCENE: One lone dugout pirogue on churning grey-blue ocean, oars shipped (not rowing), drifting. At the prow: a figure hunched over, hands gripping the prow edge, head down — the terrified captain.\n\nPERSONNAGE — LE CAPITAINE:\n- Dark brown skin, short cotton boubou, torn at one shoulder\n- Hunched posture: shoulders rounded, hands gripping prow, head bowed\n- Dot-eyes (single black dot)\n- Exhausted, traumatized body language: no upright dignity here\n\nOCEAN: The massive Atlantic current visible as swirling deep-blue eddies in the water. Massive swells. Grey-blue horizon, no other boats visible. One seabird circling above.\n\nSTYLE: paper-craft, thick outlines, flat fills. PALETTE: cold ocean blue-grey (contrast with warm fleet scene), pale exhausted sky, warm ochre only on the captain's clothing — last warmth in a cold world.\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes on captain\n- NO other boats visible\n- Ocean current visible as swirling eddies (paper-craft abstract lines)\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft warm sepia: bold flat outlines, stylized storm waves in deep teal and dark navy, torn white sail, dramatic high-contrast composition, no added realism.\n\nCamera HOLDS STEADY — no camera movement. The drama is entirely in the character and the storm. Fixed wide shot of the pirogue in the storm.\n\nSECONDS 0 TO 3: The captain in the pirogue GRIPS the mast with his LEFT hand — knuckles TIGHT against the wood. His RIGHT arm EXTENDS outward for balance, BRACING against the pitch of the boat. His long beard WHIPS sideways in the wind — streaming LEFT. His wide-open eyes SCAN the massive wave crashing on the LEFT. The pirogue TILTS sharply — hull RIDING up the wave face. SKIN: the captain has DARK BROWN skin — clearly visible, NOT pale, NOT light-skinned.\n\nSECONDS 3 TO 6: The massive teal wave on the LEFT CRESTS and CRASHES downward — white foam ERUPTS at the top edge. The torn white sail SNAPS violently — fabric JERKING in one direction then the other. The storm-cloud swirls in the upper frame ROTATE slowly, deepening in darkness. The pirogue DROPS into the wave trough — hull PLUNGING down, water rising on both sides.\n\nSECONDS 6 TO 8: The captain HOLDS ON with both hands now — body LEANING into the mast. His expression is WIDE-EYED, terrified. The wave continues its assault. The sail tears further. The pirogue SURGES upward again on the next swell.\n\nCOLOR GRADE: deep navy and teal storm waves, dark amber-brown pirogue hull, white foam, storm-gold cloud swirls, dark dramatic palette — no brightness, high contrast. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Fixed wide shot — drama in character and storm","MEDIUM":"Dolly-in on captain slowly across 6s","RISKY":"Low angle below waterline looking up at storm waves"},"camera_movement_choice":"SAFE","intrinsic_motions":["lone captain hunches over prow exhausted","ocean eddies swirl around lone pirogue hull","massive wave crests and crashes","torn sail snaps in storm wind","pirogue tilts and plunges in swell"],"cost_estimated":1.8,"corrections":["v1/v2: capitaine debout sur la plage (pas en mer) — fix: 'lone pirogue on churning ocean, NO BEACH'","v2/v3: peau capitaine europeenne malgre charref — fix: 'DARK BROWN skin — NOT pale, NOT light-skinned' (regle R-SKIN-EXPLICITE)","v3: capitaine de dos sans expression — fix: rephraser scene pour montrer terreur visible","v4: version finale avec tempete + capitaine agrippant le mat"],"history":[{"version":"v1","result":"Capitaine debout sur plage — mauvaise composition"},{"version":"v2","result":"En mer mais peau europeenne"},{"version":"v3","result":"Peau sombre mais expression insuffisante"},{"version":"v4","result":"VALIDE — tempete + peau sombre + terreur visible"}],"notes":"IMAGE VALIDEE fleet-b v4. Clip B capitaine terrifie — seul bateau qui revient. Prompt Seedance mis a jour session 2026-04-26 — version avec storm waves teal + capitaine gripping mast."},{"id":"name","title":"Le Depart","start_s":39.139,"end_s":51.999,"duration_s":12.86,"narration":"Abou Bakari ne recule pas. Il abdique. Il quitte son trone, son or, son pouvoir. Il monte lui-meme a bord. Il ne reviendra jamais.","status":"image_validated","type":"action-dramatic","charref_needed":"abou_bakari_marin","image_source":"public/assets/abou-bakari/scenes/scene-name-v6.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-name-v6-KfPsIxG6f83IWJ8VTi55RvwHf4onjM.png","clip_final":null,"clip_needs_complement":true,"complement_strategy":"video_extend_seedance","complement_duration_s":3,"complement_note":"Les secondes post-narration sans dialogue sont une respiration cinematographique intentionnelle — la scene continue visuellement","duration_check":"narration 12.86s — SPLIT OBLIGATOIRE. Clip 10s (abdication + embarquement) + complement 3s Video Extend Seedance.","clip_strategy":"Clip 10s: Abou Bakari descend les marches du palais, pose sa couronne/diademe, s'avance vers la pirogue. Video Extend 3s: la pirogue s'eloigne vers l'horizon.","epoch_check":{"vetements":"Abou Bakari: boubou de voyage (plus simple que throne room — coton ocre/sienna), il quitte les ornements royaux. Pose le diademe en or sur un coussin tenu par un serviteur","armes":"garde d'honneur avec lances, PAS d'epees","architecture":"escaliers en pisé du palais donnant sur le port, palmiers, quai en banco","pirogues":"pirogue royale amarree au quai — plus grande que les autres, ornements geometriques peints sur la coque"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The steps of the Mali palace leading down to the port, 1311. Mansa Abou Bakari II descends the ochre adobe steps, alone, walking toward his royal pirogue. He has shed his royal ornaments: a kneeling servant behind him holds a cushion with the gold diadem just placed on it. Abou Bakari wears a simpler travel boubou — ochre-sienna cotton — but his bearing is unbroken.\n\nCOMPOSITION:\n- Abou Bakari center-frame, three-quarter back view, mid-stride down the steps toward the pirogue\n- Palace steps: wide ochre adobe steps with carved geometric railings\n- Background: the Atlantic port visible below the steps, the royal pirogue moored at the quay with geometric painted hull\n- A small honour guard flanks the steps (silhouette soldiers with wooden lances)\n- Kneeling servant in background-right holding the gold diadem on a cushion\n- A small group of watching palace figures at the top of the steps — varied postures, some with hand over heart\n- Warm morning light from the east, long shadows down the steps\n\nPERSONNAGE — ABOU BAKARI II (SAME AS EMPIRE SCENE):\n- Same dark brown skin, dot-eyes, strong features\n- Now in simpler ochre-sienna travel boubou (NO royal embroidery — he has left it behind)\n- Turban still on but looser\n- Walking posture: determined, weight forward, no hesitation\n- One hand slightly raised as he steps down\n\nSTYLE: Sonjata paper-craft — thick black outlines, flat color fills. WARM sepia palette. More earthy than the throne room — the gold is gone, replaced by ochre and sienna.\n\nPALETTE: ochre adobe steps, sienna-brown travel boubou, warm morning light, deep blue Atlantic port in background, gold diadem as last gold accent on the servant's cushion.\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes on all figures\n- Flat color fills only\n- No text, no writing, no readable inscriptions\n- Mali XIVe century: NO European castle elements, NO European clothing\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft sepia warm palette: flat layered adobe palace walls, bold outlines, warm sandy tones, blue pirogue sail with gold geometric emblem, no added realism.\n\nCamera PUSHES IN steadily toward the figure in the center passageway — from wide shot to medium-wide shot. The figure's back remains to us throughout. Smooth forward dolly.\n\nSECONDS 0 TO 3: The figure in the WHITE TURBAN and BLUE ROBE at the center passageway STANDS with his back to camera, facing the pirogue beyond the gate. He BREATHES — shoulders RISING and FALLING. His posture is deliberate, unhurried. The blue sail with the gold geometric emblem BILLOWS gently in the breeze — fabric FILLING and RELEASING.\n\nSECONDS 3 TO 6: The two rows of GUARDS flanking the passage SHIFT stance — those on the LEFT raise their spears in a formal salute, tips pointing skyward. Those on the RIGHT LOWER their chins in a bow. The guard movements RIPPLE from front to back, like a wave of respect. The figure in blue continues FACING the pirogue — he does not turn back.\n\nSECONDS 6 TO 10: The figure TAKES a first deliberate STEP forward toward the pirogue — weight SHIFTING from right foot to left. His robe SWAYS with the movement. The guards MAINTAIN their salute posture on both sides, holding the gesture. The pirogue in the background holds position, sail BILLOWING. The camera has TIGHTENED to medium-wide — we see his back clearly, the destination clearly.\n\nCOLOR GRADE: warm sandy beige adobe walls, blue robe, white turban, deep blue sail, warm afternoon amber light — paper-craft sepia throughout. All characters stay engaged. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Tracking follow from behind Abou Bakari as he descends steps toward pirogue","MEDIUM":"Side-view tracking shot — we see his face as he walks toward the pirogue","RISKY":"Reverse shot: camera at pirogue level facing the steps, Abou Bakari descends TOWARD us"},"camera_movement_choice":"SAFE","intrinsic_motions":["Abou Bakari strides down steps, boubou swelling with movement","honour guard soldiers rigid at attention with micro-shifts","watching figures lean forward, one raises hand in farewell","palm trees sway above palace wall","Abou Bakari grips prow edge, pauses, then steps aboard","pirogue shifts with his weight, water ripples from hull","servant carries gold diadem cushion back up steps","Abou Bakari squares shoulders toward western horizon"],"cost_estimated":5.2,"corrections":["v1-v3: composition BD — drift style, surcorrection successive","v4: Abou Bakari face camera en train de marcher VERS l'arriere (mauvaise direction) — regle R-DIRECTION-PERSONNAGE manquee","v5: 'FROM BEHIND — his BACK faces the camera' — direction correcte mais medaillon a l'envers","v6 (edit chirurgical): suppression medaillon — temperature=0.5 + PRESERVE EXACTLY","Sandales: edit chirurgical echoue (boubou couvre les pieds depuis le dos) — option A acceptee par Aziz (laisser tel quel)"],"history":[{"version":"v1-v3","result":"Multiples essais avec style drift BD"},{"version":"v4","result":"Bonne composition mais Abou Bakari face camera — direction inversee"},{"version":"v5","result":"De dos correct mais medaillon a l'envers visible"},{"version":"v6","result":"VALIDE — de dos + sans medaillon (edit chirurgical Gemini)"}],"notes":"IMAGE VALIDEE name v6. Beat emotionnellement cle — abdique son empire. Prompt Seedance mis a jour session 2026-04-26 — version avec figure de dos + porte passage + guards salute ripple."},{"id":"abdication","title":"Le Successeur","start_s":53.579,"end_s":66.899,"duration_s":13.32,"narration":"Son demi-frere monte sur le trone. Mansa Moussa. L'homme le plus riche de toute l'histoire humaine. 400 milliards de dollars.","status":"pending_clip","clip_notes":"PLAN VALIDE 2026-04-26 : Seedance 10s (Mansa Moussa trone) + caravane V2 ~4s (extrait abou-bakari-final.mp4 ~65-70s) = ~14s total. Video Extend annulee. Transition Seedance->V2 a gerer au montage Remotion.","type":"narrative-symbolic","charref_needed":"mansa_moussa","image_source":"public/assets/abou-bakari/scenes/scene-abdication-v3.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-abdication-v3-ys6sMZRznyO8MlPAIjnkV9DyU1TAPW.png","clip_final":null,"clip_needs_complement":true,"complement_strategy":"video_extend_seedance","complement_duration_s":4,"complement_note":"Les secondes post-narration sans dialogue sont une respiration cinematographique intentionnelle — la scene continue visuellement","duration_check":"narration 13.32s — SPLIT OBLIGATOIRE. Clip A 10s: Mansa Moussa monte sur le throne. Video Extend 4s post narration.","clip_strategy":"Clip A (10s): Mansa Moussa s'installe sur le throne d'Abou Bakari — meme salle, personnage different. Video Extend 4s: respiration cinematographique post-narration.","epoch_check":{"vetements":"Mansa Moussa: boubou encore plus ornemente que celui d'Abou Bakari — or partout, couronne africaine elaboree, plusieurs colliers","armes":"gardes avec lances, PAS d'epees europeennes","architecture":"MEME salle du trone que beat empire — continuite visuelle forte"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The same Mali throne room as before — now with a different man claiming the throne. Mansa Moussa, the richest human being in all of history, ascends to power.\n\nMANSA MOUSSA ON THE THRONE:\nMansa Moussa seated on the carved ebony throne, in a position of absolute authority. He is visibly more LAVISHLY adorned than Abou Bakari:\n- Dark brown skin, broader build, strong features, dot-eyes\n- Grand boubou in deep gold-yellow with crimson embroidery and geometric patterns — overwhelming richness\n- Elaborate gold diadem (more ornate than Abou Bakari's), gold armbands stacked high, multiple cowrie and gold bead necklaces\n- Seated fully upright, commanding posture, both hands on armrests\n- He is NOT lost in thought — he OWNS the room, gaze forward and assured\n- The same throne room, same guards, but feel is of arrival and consolidation\n- SAME architecture as Empire scene: ochre adobe walls, incised geometric patterns, warm gold beams through arched doorways\n\nSTYLE for both: Sonjata paper-craft — thick black outlines, flat color fills. WARM GOLD palette dominant — this is the richest single image in the film.\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes on Mansa Moussa\n- No text, no writing, no readable inscriptions\n- Mali XIVe century: NO European elements\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft warm amber: bold outlines, flat cel-shaded colors, geometric tapestries in indigo and gold, warm torchlight palette, no added realism.\n\nCamera executes a slow cinematic arc — starting frontal, curving 30 degrees to the RIGHT to reveal the throne's carved wood details and the tapestries behind. Smooth wide curve.\n\nSECONDS 0 TO 3: The king on the throne in WHITE-AND-GOLD robes SITS with composed authority. His posture is UPRIGHT, head LIFTED. He holds a golden scepter in his RIGHT hand — fingers CLOSED firmly around it, scepter RIGID and NON-DEFORMING, length CONSTANT throughout. The gold necklace at his chest CATCHES ambient light. SKIN: the king has DARK BROWN skin — clearly visible.\n\nSECONDS 3 TO 6: The two courtiers standing to the LEFT SHIFT — the one in the front BOWS more deeply, the one behind CLASPS hands. The child figure on the RIGHT side STANDS straight, attentive. The two wall torches FLICKER — left torch flame BENDS right, right torch flame BENDS left, both alive with movement. The geometric indigo tapestries on the back wall BREATHE minimally.\n\nSECONDS 6 TO 10: The king TURNS his gaze slowly toward the camera — a deliberate, regal look. His expression is measured, powerful. The scepter REMAINS in his RIGHT hand, RIGID and UNMOVING in his grip. The courtiers maintain their poses, micro-shifting. The torches continue FLICKERING.\n\nCOLOR GRADE: warm amber adobe walls, deep indigo and gold tapestries, white-gold royal robes, warm torchlight glow — paper-craft palette throughout. All characters stay engaged. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Slow push-in on Mansa Moussa","MEDIUM":"Tilt up from floor to throne to reveal Mansa Moussa arriving","RISKY":"Split-screen / dissolve between Abou Bakari's empty throne and Mansa Moussa claiming it"},"camera_movement_choice":"SAFE","intrinsic_motions":["Mansa Moussa settles onto throne, grips armrests","head lifts and gaze sweeps the room","gold diadem catches doorway light","guards square postures at sides","court figure bows then straightens","light beams shift through doorway arches","wall torches flicker"],"cost_estimated":3.5,"corrections":["v1: composition identique Sonjata nativity (style anchor mal utilise) — meme fix que scene empire","v2: trone surdimensionne (10m de haut) — fix: 'THRONE IS NORMAL SIZE'","v3: proportions normalisees, richesse via ornements pas taille — VALIDE"],"history":[{"version":"v1","result":"Copie composition Sonjata nativity"},{"version":"v2","result":"Trone gigantesque — serviteurs minuscules"},{"version":"v3","result":"VALIDE — proportions correctes, richesse via bijoux et ornements"}],"notes":"IMAGE VALIDEE abdication v3 (Mansa Moussa throne). Prompt Seedance mis a jour session 2026-04-26 — version avec arc camera 30 deg droite + scepter RIGID NON-DEFORMING + torches flickering."},{"id":"obsession","title":"La Seule Obsession","start_s":67.0,"end_s":72.859,"duration_s":5.859,"narration":"Abou Bakari avait tout abandonne pour une seule obsession : savoir ce qu'il y avait a l'ouest.","status":"clip_validated","clip_file":"public/assets/abou-bakari/clips/ocean-v1.mp4","clip_notes":"SWAP VALIDE 2026-04-26 : clip ocean-v1 Seedance (10s, utiliser 0-6s). Homme silhouette face a l'horizon = lecture obsession immediate. obsession-v1.mp4 abandonne (face cam + bateau sur place). Regen non necessaire.","type":"contemplative","charref_needed":"abou_bakari_marin","image_source":"public/assets/abou-bakari/scenes/scene-ocean-v1.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-ocean-v1-nRfo1EFvIws16Olb6ivanCAx89j0Y5.png","clip_final":null,"clip_needs_complement":false,"duration_check":"narration 5.86s — clip 6s Seedance OK.","clip_strategy":"Clip 6s Seedance sur image de la pirogue royale en mer — Abou Bakari sur sa pirogue face a l'horizon.","epoch_check":{"vetements":"Abou Bakari: boubou de voyage ocre-sienna, turban bleu, sans ornements royaux","armes":"N/A","architecture":"N/A — vue depuis la mer","pirogues":"pirogue royale decoree avec voile bleue embleme or"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The open Atlantic, 1311. A single royal pirogue seen from above and behind, moving westward into the fog. The figure of Abou Bakari visible at the prow — small against the vast ocean, his back to us.\n\nCOMPOSITION:\n- The pirogue occupies the lower-center of the frame, moving away from us toward the horizon\n- Abou Bakari at the prow: back to us, standing, arms slightly outstretched toward the western horizon — a figure of pure obsession\n- The western horizon ahead: the fog wall from Scene 1 is there, but now there is a faint warm golden light behind it — something unknown\n- The ocean around the pirogue: deep Atlantic blue-black, churning swells, white foam at the prow\n- Sky: transitioning from warm ochre behind (east, the known world) to deep indigo ahead (west, the unknown)\n\nPALETTE: the scene is split — warm ochre-gold light behind the pirogue (all that was left behind), deep cold indigo ahead (the unknown). The pirogue is the bridge between worlds.\n\nCRITICAL TECHNICAL RULES:\n- No text, no writing\n- Abou Bakari back-to-camera — maintains mystery\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft sepia warm palette: flat layered waves, sand-warm sky, bold outlines, blue sail with gold geometric emblem, minimal palette, no added realism.\n\nCamera holds steady with a very subtle slow push in toward the standing figure at the bow. Smooth, nearly imperceptible dolly.\n\nSECONDS 0 TO 3: The STANDING FIGURE at the bow in BLUE TURBAN and BLUE ROBE FACES the horizon — his back three-quarters to camera, LEFT PROFILE visible. He SCANS the open ocean ahead. His right hand GRIPS the bow rail. The large blue sail with the gold geometric symbol BILLOWS and STRAINS — fabric FILLING against the wind. The seated figure behind him PULLS the oar — LEFT arm REACHES forward, RIGHT arm PULLS back, steady rowing rhythm. SKIN: both figures have DARK BROWN skin — clearly visible.\n\nSECONDS 3 TO 6: The ocean wave bands ROLL in continuous forward motion — all three blue layers advancing toward the horizon. The white cloud mass on the RIGHT SHIFTS slightly. The standing figure LEANS INTO the bow — weight forward, chin LIFTING. His robe RIPPLES in the wind. The sail continues BILLOWING. The seated figure CONTINUES rowing, cadence unbroken.\n\nCOLOR GRADE: warm sandy amber sky, deep blue layered ocean, rich blue sail with gold emblem, muted warm tones — paper-craft sepia palette. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Push-forward following the pirogue as it disappears into fog","MEDIUM":"Slow tilt-up from ocean surface to fog wall as pirogue vanishes below frame","RISKY":"Reverse: camera staying with the African coast, pirogue shrinking to nothing on the horizon"},"camera_movement_choice":"SAFE","intrinsic_motions":["pirogue glides forward on swells","Abou Bakari spreads arms slightly, boubou streams in wind","ocean surges beneath hull, foam trail extends","seabird follows above then banks back east","fog wall brightens then steadies as golden light pulses","pirogue outline blurs as it enters fog","foam trail dissolves into mist"],"cost_estimated":1.6,"corrections":["v1/v2: style drift BD — surcorrection successive des prompts","v2: trop eloigne du style paper-craft sepia — retour aux bases v1","v3: simplification prompt + style anchor strict — VALIDE"],"history":[{"version":"v1","result":"Bonne base mais premiers signes style drift"},{"version":"v2","result":"Style BD — trop eloigne paper-craft"},{"version":"v3","result":"VALIDE — paper-craft sepia correct, pirogue + figure de dos"}],"notes":"IMAGE VALIDEE obsession v3. Beat contemplatif 6s. Prompt Seedance mis a jour session 2026-04-26 — version avec standing figure + blue turban + oarsman + wave bands rolling."},{"id":"colomb","title":"Cent Quatre-Vingt-Un Ans Plus Tard","start_s":72.9,"end_s":79.319,"duration_s":6.419,"narration":"Cent quatre-vingt-un ans plus tard, Christophe Colomb traverse le meme ocean. On l'appelle le decouvreur.","status":"image_validated","type":"narrative-contrast","image_source":"public/assets/abou-bakari/scenes/scene-colomb-v1.png","image_url_vercel":"https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/scenes/scene-colomb-v1-6hfz4jiSUYV0iAf8t877XsTO9NcUT0.png","clip_final":null,"clip_needs_complement":false,"duration_check":"narration 6.42s — clip 7s Seedance OK.","clip_strategy":"Plan unique sur la caravelle europeenne en palette froide contrastant fortement avec les pirogues.","epoch_check":{"vetements":"Christophe Colomb et equipage: uniformes et vetements europeens 1492 — contraste delibere avec le Mali","armes":"armes europeennes — contraste fort avec lances maliennes","architecture":"N/A — mer ouverte","pirogues":"CARAVELLES europeennes 1492: hauts bordages, voiles carrees blanches, croix d'ordre peinte — CONTRASTE avec pirogues du Mali"},"prompt_gemini":"STYLE ANCHOR: public/assets/sonjata-papercraft/clips/scene5a-kenburns-source.png — match this exact paper-craft style.\n\nPaper-craft illustration, 9:16 vertical. SCENE: The Atlantic Ocean, 1492 — 181 years after Abou Bakari. A European caravel under full sail, the Santa Maria or similar vessel, crossing the same Atlantic.\n\nCOMPOSITION: The caravel dominates the upper-center frame, under full sail. Three white square sails, large red cross of the Order of Christ painted on the main sail. High wooden prow and stern castle. European crewmen visible on deck as small paper-craft silhouettes.\n\nKEY CONTRAST ELEMENTS (this is the CONTRAST scene):\n- The ocean is the SAME Atlantic — same deep blue water as Abou Bakari's scenes\n- But the sky is COLDER — no warm ochre, pale grey-blue European sky\n- The ship is massive, complex, loud compared to the pirogue\n- A small inset silhouette in one corner (bottom-left): the ghost outline of a Mali pirogue — the memory of what came before\n\nSTYLE: Sonjata paper-craft — thick black outlines, flat color fills. PALETTE SHIFT: cold European grey-blue palette for the sky, the sails white-grey, the ship dark wood — deliberately contrasting with the warm sepia-gold of all previous scenes.\n\nCRITICAL TECHNICAL RULES:\n- Strict dot-eyes on any crew figures visible\n- No text, no readable writing\n- COLD palette (deliberate break from warm sepia)\n- 9:16 vertical (1080x1920)","prompt_seedance":"Animate this exact illustration. STRICT STYLE FIDELITY paper-craft cool grey palette: flat layers, bold clean outlines, white billowing sails, grey-blue muted tones — maintain this COLD GREY palette, do NOT warm up the colors.\n\nCamera PULLS BACK steadily from the ship, starting at a medium-wide angle and pulling to a wider establishing shot. Smooth, continuous backward dolly.\n\nSECONDS 0 TO 3: The large three-masted European vessel SURGES through the grey ocean — its hull PUSHING through the waves, white foam CURLING at the bow. The three white sails BILLOW outward — each sail FILLS fully, fabric taut and STRAINING. The rigging lines TIGHTEN and VIBRATE. The flag at the top of the main mast SNAPS and STREAMS in the wind. The small figure on the deck — PALE-SKINNED, dark jacket — GRIPS the ship's rail, leaning forward.\n\nSECONDS 3 TO 7: Camera COMPLETES its pull-back — the full scale of the ship visible against the grey-blue ocean. The waves CHOP around the hull — grey water, white foam. The three sails remain FULL. The figure HOLDS his position. The cross-flag continues SNAPPING at the masthead.\n\nCOLOR GRADE: cold blue-grey ocean, white sails, dark grey hull, pale cool sky — deliberately COLD and MONOCHROMATIC, zero warm tones, no amber, no sepia — intentional contrast with the African palette. No dust motes, no floating particles, no sparkles. No text anywhere.","camera_movement_options":{"SAFE":"Slow pull-back on the caravel (cold palette contrast with all previous scenes)","MEDIUM":"Side-on tracking shot of caravel at wave level, prow cutting toward us","RISKY":"Split-screen: pirogue left (warm sepia) / caravel right (cold palette) simultaneous"},"camera_movement_choice":"SAFE","intrinsic_motions":["caravel sails billow and stretch with wind","flag streams and snaps at mast top","crew silhouettes brace against wind on deck","one crew member climbs rigging","ocean waves crest and foam at prow","seabird lands on yard arm then takes off","ghost pirogue silhouette fades in lower corner","ship hull creaks through large swell"],"cost_estimated":1.8,"notes":"IMAGE VALIDEE colomb v1. Beat contrastif — rupture de palette deliberee FROIDE vs sepia chaud. Prompt Seedance mis a jour session 2026-04-26 — version avec pull-back + pale-skinned figure + cold grey palette explicit."},{"id":"close_cta","title":"La Question + Appel a l'Action","start_s":79.419,"end_s":88.52,"duration_s":9.101,"narration_close":"Mais qui a traverse en premier ? Et toi... tu savais ca ?","narration_cta":"Si cette histoire t'a surpris, laisse un commentaire. Et si tu veux la version longue, abonne-toi.","status":"pending","type":"remotion-pure","implementation":"split-screen Remotion","split_left":"clip fleet-a en loop (flotte Abou Bakari)","split_right":"clip colomb en loop (caravelle Colomb)","text_overlay":"Mais qui a traverse en premier ?","cta_text":"Newsletter geopolitique quotidienne — lien en bio","cta_style":"meme graphique textuel que Thiaroye V5 CTA","audio_close":"public/audio/abou-bakari/abou-bakari-narratrice-v1.mp3 (segment 79.419-82.760)","audio_cta":"public/audio/abou-bakari/beat09-cta.mp3 (a regenerer — note: CTA audio actuel est different, regeneration prevue apres clips)","image_source":null,"clip_final":null,"clip_needs_complement":false,"prompt_gemini":null,"prompt_seedance":null,"cost_estimated":0.0,"notes":"FUSION beats close + cta (v1.1 2026-04-25). Split-screen Remotion pur: gauche = clip fleet-a en loop (flotte Abou Bakari, palette sepia chaud), droite = clip colomb en loop (caravelle, palette froide). Text overlay: question rhethorique. CTA en bas selon pattern Thiaroye V5. Aucun appel API Gemini/Seedance necessaire — utilise clips deja generes. Audio CTA a regenerer apres clips valides."}]};
+}
+
+
+function renderHeader(data) {
+  document.getElementById('meta-info').textContent =
+    `v${data.version} — ${data.last_updated} — ${data.style}`;
+
+  document.getElementById('total-duration').textContent =
+    `${data.total_duration_s.toFixed(1)}s`;
+
+  const done = data.scenes.filter(s => s.status === 'done').length;
+  const partial = data.scenes.filter(s => s.status === 'partial_done').length;
+  const imageDone = data.scenes.filter(s => s.status === 'image_done').length;
+  const clipHors = data.scenes.filter(s => s.status === 'clip_hors_controle').length;
+  const clipValidated = data.scenes.filter(s => s.status === 'clip_validated').length;
+  document.getElementById('scenes-done').textContent = done + partial + imageDone + clipHors + clipValidated;
+  document.getElementById('scenes-total').textContent = data.scenes.length;
+
+  const remaining = data.budget.remaining;
+  const budgetEl = document.getElementById('budget-remaining');
+  budgetEl.textContent = `$${remaining.toFixed(2)}`;
+  if (remaining < 8) budgetEl.classList.add('budget-critical');
+  else if (remaining < 15) budgetEl.classList.add('budget-warning');
+
+  const spent = data.budget.spent_so_far;
+  const initial = data.budget.initial;
+  const spentPct = Math.min(100, (spent / initial) * 100);
+  document.getElementById('progress-bar').style.width = `${spentPct}%`;
+  document.getElementById('progress-bar').title = `$${spent.toFixed(2)} / $${initial.toFixed(2)} depense`;
+}
+
+function renderRules(data) {
+  const list = document.getElementById('rules-list');
+  data.rules_applied.forEach(rule => {
+    const li = document.createElement('li');
+    li.textContent = rule;
+    list.appendChild(li);
+  });
+}
+
+function openLightbox(src, alt) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  img.alt = alt || '';
+  lb.classList.add('active');
+}
+
+function renderRefs(data) {
+  const CHARREFS_META = {
+    abou_bakari_royal: 'Abou Bakari Royal',
+    abou_bakari_marin: 'Abou Bakari Marin',
+    mansa_moussa: 'Mansa Moussa',
+    capitaine_pirogue: 'Capitaine pirogue'
+  };
+
+  const STYLE_ANCHORS = [
+    {
+      url: 'https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abou-bakari/refs/style-anchor-scene1-village-jbVNIPNFmcECd7VTMPJ6cqWCgd7MLo.png',
+      label: 'Style anchor scene 1 village'
+    }
+  ];
+
+  const charGrid = document.getElementById('charrefs-grid');
+  if (data.charrefs) {
+    for (const [key, ref] of Object.entries(data.charrefs)) {
+      const url = ref.url_vercel;
+      if (!url) continue;
+      const card = document.createElement('div');
+      card.className = 'ref-card';
+      card.title = CHARREFS_META[key] || key;
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = CHARREFS_META[key] || key;
+      img.loading = 'lazy';
+      img.addEventListener('click', () => openLightbox(url, CHARREFS_META[key] || key));
+      const label = document.createElement('span');
+      label.className = 'ref-card-label';
+      label.textContent = CHARREFS_META[key] || key;
+      card.appendChild(img);
+      card.appendChild(label);
+      charGrid.appendChild(card);
+    }
+  }
+
+  const styleGrid = document.getElementById('style-anchor-grid');
+  STYLE_ANCHORS.forEach(anchor => {
+    const card = document.createElement('div');
+    card.className = 'ref-card';
+    card.title = anchor.label;
+    const img = document.createElement('img');
+    img.src = anchor.url;
+    img.alt = anchor.label;
+    img.loading = 'lazy';
+    img.addEventListener('click', () => openLightbox(anchor.url, anchor.label));
+    const label = document.createElement('span');
+    label.className = 'ref-card-label';
+    label.textContent = anchor.label;
+    card.appendChild(img);
+    card.appendChild(label);
+    styleGrid.appendChild(card);
+  });
+}
+
+function createStrongLine(strongText, afterText) {
+  const strong = document.createElement('strong');
+  strong.textContent = strongText;
+  const frag = document.createDocumentFragment();
+  frag.appendChild(strong);
+  if (afterText) frag.appendChild(document.createTextNode(afterText));
+  return frag;
+}
+
+function statusLabel(status) {
+  const labels = {
+    'done': 'DONE',
+    'partial_done': 'PARTIEL',
+    'image_done': 'IMAGE OK',
+    'image_validated': 'IMAGE VALIDEE',
+    'clip_hors_controle': 'CLIP — A VALIDER',
+    'todo': 'A FAIRE',
+    'pending': 'EN ATTENTE',
+    'failed': 'ECHEC',
+  };
+  return labels[status] || status.replace(/_/g, ' ').toUpperCase();
+}
+
+function renderImageVersions(scene, container) {
+  if (!scene.image_versions) return;
+  const section = document.createElement('details');
+  section.className = 'scene-section';
+  const summary = document.createElement('summary');
+  summary.textContent = 'Versions images disponibles';
+  section.appendChild(summary);
+  const ul = document.createElement('ul');
+  ul.className = 'versions-list';
+  for (const [key, v] of Object.entries(scene.image_versions)) {
+    const li = document.createElement('li');
+    const isSelected = v.status.includes('SELECTIONNEE');
+    const isPending = v.status === 'a_valider';
+    const isWarn = v.status.includes('non_validee');
+    if (isSelected) li.className = 'version-selected';
+    else if (isPending) li.className = 'version-pending';
+    else if (isWarn) li.className = 'version-warn';
+    const badge = isSelected ? ' [SELECTIONNEE AZIZ]' :
+                  isPending ? ' [A VALIDER]' :
+                  isWarn ? ' [non validee — clip HC]' : '';
+    li.appendChild(createStrongLine(`${key}`, `: ${v.file}${badge}`));
+    ul.appendChild(li);
+  }
+  section.appendChild(ul);
+  container.appendChild(section);
+}
+
+function renderClipWarning(scene, container) {
+  if (!scene.clip_warning) return;
+  const warn = document.createElement('div');
+  warn.className = 'clip-warning';
+  const label = document.createElement('strong');
+  label.textContent = 'Clip hors controle : ';
+  warn.appendChild(label);
+  warn.appendChild(document.createTextNode(scene.clip_warning));
+  container.appendChild(warn);
+}
+
+function renderProgressChecklist(scene, container) {
+  const steps = [
+    { key: 'image', label: 'Image' },
+    { key: 'clip', label: 'Clip' },
+    { key: 'validated', label: 'Valide' },
+    { key: 'remotion', label: 'Remotion' },
+  ];
+
+  const imageOk = !!scene.image_source;
+  const clipOk = !!scene.clip_final;
+  const validatedOk = scene.status === 'done' || scene.status === 'image_validated';
+  const remotionOk = scene.status === 'done';
+
+  const stateMap = {
+    image: imageOk ? 'done' : 'todo',
+    clip: clipOk ? 'done' : (imageOk ? 'pending' : 'todo'),
+    validated: validatedOk ? 'done' : 'todo',
+    remotion: remotionOk ? 'done' : (clipOk ? 'pending' : 'todo'),
+  };
+
+  steps.forEach(step => {
+    const el = document.createElement('span');
+    el.className = `progress-step ${stateMap[step.key]}`;
+    const icons = { done: 'done', pending: 'pending', todo: 'todo' };
+    const prefix = stateMap[step.key] === 'done' ? '✓ ' : stateMap[step.key] === 'pending' ? '~ ' : '';
+    el.textContent = prefix + step.label;
+    container.appendChild(el);
+  });
+}
+
+function renderScene(scene, template) {
+  const clone = template.content.cloneNode(true);
+  const article = clone.querySelector('.scene');
+
+  article.dataset.sceneId = scene.id;
+  article.dataset.status = scene.status;
+
+  clone.querySelector('.scene-id').textContent = scene.id.toUpperCase();
+  clone.querySelector('.scene-status-badge').textContent = statusLabel(scene.status);
+  clone.querySelector('.scene-title').textContent = scene.title;
+
+  const timing = `${scene.start_s.toFixed(1)}s -- ${scene.end_s.toFixed(1)}s (${scene.duration_s.toFixed(1)}s)`;
+  clone.querySelector('.scene-timing').textContent = timing;
+  clone.querySelector('.scene-type').textContent = scene.type;
+  clone.querySelector('.scene-narration').textContent = scene.narration;
+
+  // Progress checklist
+  renderProgressChecklist(scene, clone.querySelector('.scene-progress'));
+
+  // Animation strategy summary line
+  if (scene.clip_strategy) {
+    const stratEl = clone.querySelector('.scene-anim-strategy');
+    stratEl.textContent = scene.clip_strategy;
+    stratEl.style.display = 'block';
+  }
+
+  // Scene image preview (from Vercel URL)
+  if (scene.image_url_vercel) {
+    const previewWrap = clone.querySelector('.scene-image-preview');
+    const previewImg = clone.querySelector('.scene-main-img');
+    const caption = clone.querySelector('.scene-image-preview .img-caption');
+    previewImg.src = scene.image_url_vercel;
+    previewImg.alt = scene.title;
+    const filename = scene.image_url_vercel.split('/').pop().split('-').slice(0, -1).join('-') + '.png';
+    caption.textContent = filename;
+    previewImg.addEventListener('click', () => openLightbox(scene.image_url_vercel, scene.title));
+    previewWrap.style.display = 'block';
+  }
+
+  const desc = scene.image_description || scene.note || '';
+  clone.querySelector('.scene-description').textContent = desc || 'Aucune description';
+
+  clone.querySelector('.scene-prompt-gemini').textContent =
+    scene.prompt_gemini_template || scene.prompt_gemini || 'A definir';
+  clone.querySelector('.scene-prompt-seedance').textContent =
+    scene.prompt_seedance_template || scene.prompt_seedance || 'A definir';
+
+  // Camera options
+  const cameraOptionsList = clone.querySelector('.scene-camera-options');
+  if (scene.camera_movement_options) {
+    const choice = scene.camera_movement_choice;
+    for (const [level, description] of Object.entries(scene.camera_movement_options)) {
+      const li = document.createElement('li');
+      li.dataset.camera = level;
+      const badge = level === choice ? ' [CHOIX]' : '';
+      li.appendChild(createStrongLine(`${level}${badge}`, `: ${description}`));
+      cameraOptionsList.appendChild(li);
+    }
+  } else if (scene.camera_movement) {
+    const li = document.createElement('li');
+    li.appendChild(createStrongLine(scene.camera_movement_choice || 'DEFAULT', `: ${scene.camera_movement}`));
+    cameraOptionsList.appendChild(li);
+  }
+
+  // Intrinsic motions
+  const motionsList = clone.querySelector('.scene-intrinsic-motions');
+  (scene.intrinsic_motions || []).forEach(motion => {
+    const li = document.createElement('li');
+    li.textContent = motion;
+    motionsList.appendChild(li);
+  });
+
+  // Assets
+  const imageSlot = clone.querySelector('[data-asset="image"] .asset-status');
+  if (scene.image_source) {
+    imageSlot.textContent = scene.image_source.split('/').pop();
+    imageSlot.classList.add('available');
+  } else {
+    imageSlot.textContent = 'A generer';
+    imageSlot.classList.add('missing');
+  }
+
+  const clipSlot = clone.querySelector('[data-asset="clip"] .asset-status');
+  if (scene.clip_final) {
+    const clipName = scene.clip_final.split('/').pop();
+    const durInfo = scene.clip_duration_s ? ` (${scene.clip_duration_s.toFixed(1)}s)` : '';
+    const warnTag = scene.clip_status === 'HORS_CONTROLE_A_VALIDER' ? ' [HC]' : '';
+    clipSlot.textContent = clipName + durInfo + warnTag;
+    clipSlot.classList.add(scene.clip_status === 'HORS_CONTROLE_A_VALIDER' ? 'hors-controle' : 'available');
+  } else {
+    clipSlot.textContent = 'A generer';
+    clipSlot.classList.add('missing');
+  }
+
+  // Cost
+  clone.querySelector('.scene-cost-est').textContent =
+    `$${(scene.cost_estimated || 0).toFixed(2)}`;
+  if (scene.cost_actual !== undefined && scene.cost_actual > 0) {
+    clone.querySelector('.scene-cost-actual').style.display = 'inline';
+    clone.querySelector('.scene-cost-value').textContent = `$${scene.cost_actual.toFixed(2)}`;
+  }
+
+  // Corrections
+  if (scene.corrections && scene.corrections.length > 0) {
+    const corrSection = clone.querySelector('.scene-corrections-section');
+    corrSection.style.display = 'block';
+    const corrList = clone.querySelector('.scene-corrections');
+    scene.corrections.forEach(c => {
+      const li = document.createElement('li');
+      li.textContent = c;
+      corrList.appendChild(li);
+    });
+  }
+
+  // Notes
+  if (scene.notes) {
+    clone.querySelector('.scene-notes-text').textContent = scene.notes;
+  } else {
+    clone.querySelector('.scene-notes').style.display = 'none';
+  }
+
+  // History
+  if (scene.history && scene.history.length > 0) {
+    const historySection = clone.querySelector('.scene-history');
+    historySection.style.display = 'block';
+    const historyList = clone.querySelector('.scene-history-list');
+    scene.history.forEach(entry => {
+      const li = document.createElement('li');
+      const costStr = entry.cost != null ? ` ($${Number(entry.cost).toFixed(2)})` : '';
+      li.appendChild(createStrongLine(entry.version, `${costStr} — ${entry.result}`));
+      historyList.appendChild(li);
+    });
+  }
+
+  // Insert image versions + clip warning after assets block
+  const assetsBlock = clone.querySelector('.scene-assets');
+  const afterAssets = document.createDocumentFragment();
+  renderImageVersions(scene, afterAssets);
+  renderClipWarning(scene, afterAssets);
+  assetsBlock.after(afterAssets);
+
+  return clone;
+}
+
+async function init() {
+  const data = await loadData();
+  if (!data) return;
+  renderHeader(data);
+  renderRules(data);
+  renderRefs(data);
+
+  const template = document.getElementById('scene-template');
+  const container = document.getElementById('scenes-container');
+  data.scenes.forEach(scene => {
+    container.appendChild(renderScene(scene, template));
+  });
+}
+
+init();
+
+</script>
+</body>
+</html>

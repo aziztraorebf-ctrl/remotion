@@ -1,0 +1,11 @@
+{
+  "request_id": "019de72e-58b0-7f81-a5af-c0a05f9ccb37",
+  "endpoint": "bytedance/seedance-2.0/text-to-video",
+  "duration_s": 5,
+  "aspect_ratio": "16:9",
+  "resolution": "720p",
+  "video_url": "https://v3b.fal.media/files/b/0a988e24/DnDFqRGC3o7yPEmTgN4Yi_video.mp4",
+  "size_mb": 1.43,
+  "prompt": "2D vivid flat paper-craft illustration style, sepia tones, hand-cut paper texture, clean dark outlines, dot-eyes, flat color fills. Style of historical papercraft documentary.\n\nA young muscular Zulu warrior, Shaka kaSenzangakhona, copper-brown skin, traditional Zulu attire (umbhumbhuluzo loincloth, leopard-fur band, black-and-white ostrich feathers in headband), holds a short stabbing iklwa spear (light wood shaft, polished steel blade) in right hand, large oval cowhide shield (brown and white pattern) on left arm. Standing facing camera, three-quarter body shot centered in frame, intense determined gaze locked on the lens.\n\nBackground: deep charcoal black, soft tarnished gold halo (#C8A84B) glowing dimly behind his silhouette, no other elements.\n\nCAMERA: STEADY medium shot, no movement, no zoom, no pan. Locked-off frame.\n\nSECONDS 0 TO 5: Shaka stays planted in stance. His chest RISES and FALLS gently with slow deep breathing. The black-and-white feathers in his headband SWAY softly as if touched by a slight breeze. His shoulders SHIFT minutely. His eyes stay fixed forward, unblinking and intense. Spear and shield held STEADY, NO movement of the weapons. Tarnished gold halo PULSES very subtly in luminance behind him.\n\nCOLOR GRADE: deep charcoal background, copper skin, ochre-tan loincloth, black/white feathers, tarnished gold halo (#C8A84B) low intensity. Sepia-papercraft palette, no vivid saturation.\n\nCRITICAL: maintain dot-eyes throughout, pure black dot pupils, NO realistic eyes, NO visible iris, NO BD comic drift, NO photorealism. No combat, no swinging, no charging \u2014 purely statuesque presence.\n\nNo text, no banners, no signs, no writing visible anywhere. No music, no words, no dialogue.",
+  "cost_estimate_usd": 0.3
+}

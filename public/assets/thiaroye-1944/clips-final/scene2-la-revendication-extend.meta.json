@@ -1,0 +1,12 @@
+{
+  "tool": "bytedance/seedance-2.0/reference-to-video",
+  "request_id": "019dc5b4-a390-7471-a710-670f5953bb10",
+  "source_video": "scene2-la-revendication.mp4",
+  "source_video_url": "https://v3b.fal.media/files/b/0a97b2b4/SG0sVbhko2VXCKNZ8VNib.mp4",
+  "duration": 5,
+  "aspect_ratio": "9:16",
+  "generate_audio": false,
+  "cost_estimate": "$0.91",
+  "date": "2026-04-25T17:39:24Z",
+  "video_url": "https://v3b.fal.media/files/b/0a97b2d4/iHLPAVQHOiqpMtSqdX1IE_video.mp4"
+}

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niger Uranium — Hub Production</title>
+<style>
+  :root {
+    --bg: #0d1525;
+    --bg-elev: #15203a;
+    --bg-card: #18243f;
+    --gold: #c29b26;
+    --gold-light: #e8d5a0;
+    --terracotta: #c26b4d;
+    --green: #4a8b6a;
+    --red: #c44b3a;
+    --text: #ffffff;
+    --text-muted: #9a8a6a;
+    --text-soft: #b8b8b8;
+    --border: rgba(232, 213, 160, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 30px 16px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 30px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  .eyebrow {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  h1 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: clamp(40px, 7vw, 80px);
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+  }
+  .meta-strip {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    margin-top: 18px;
+  }
+  .meta-strip span { padding: 6px 14px; border: 1px solid var(--border); }
+
+  /* Status summary */
+  .status-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+    margin-bottom: 50px;
+  }
+  .status-card {
+    background: var(--bg-elev);
+    border-left: 3px solid var(--gold);
+    padding: 20px 22px;
+  }
+  .status-card .num {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 56px;
+    color: var(--gold-light);
+    line-height: 1;
+    font-weight: 700;
+  }
+  .status-card .lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    margin-top: 6px;
+  }
+  .status-card.green { border-left-color: var(--green); }
+  .status-card.red { border-left-color: var(--red); }
+  .status-card.green .num { color: #6ec094; }
+  .status-card.red .num { color: #d8694e; }
+
+  /* Section header */
+  .section-title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 32px;
+    color: var(--gold-light);
+    letter-spacing: 0.1em;
+    margin: 50px 0 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-title::before {
+    content: "";
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: var(--gold);
+  }
+
+  /* Beats grid */
+  .beats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 28px;
+  }
+  .beat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  .beat-card.todo { border-left-color: var(--red); }
+  .beat-card.validated { border-left-color: var(--green); }
+  .beat-card.pending { border-left-color: var(--gold); }
+
+  .beat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px 14px;
+    gap: 12px;
+  }
+  .beat-badge {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 18px;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 4px 12px;
+    letter-spacing: 0.18em;
+    font-weight: 700;
+  }
+  .beat-status {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    padding: 4px 10px;
+    text-transform: uppercase;
+  }
+  .beat-status.validated { background: var(--green); color: #fff; }
+  .beat-status.pending { background: var(--gold); color: var(--bg); }
+  .beat-status.todo { background: var(--red); color: #fff; }
+
+  .beat-title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 28px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    padding: 0 20px 4px;
+    line-height: 1.1;
+  }
+  .beat-timing {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    padding: 0 20px 14px;
+  }
+  .beat-video-wrap {
+    background: #000;
+    aspect-ratio: 9 / 16;
+    margin: 0 14px 14px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .beat-video-wrap video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .beat-video-wrap.placeholder {
+    background: var(--bg-elev);
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    flex-direction: column;
+    gap: 14px;
+    padding: 30px;
+    text-align: center;
+  }
+  .beat-video-wrap.placeholder .icon {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 64px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .beat-video-wrap.placeholder .msg {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+
+  .beat-vo {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    padding: 14px 20px;
+    margin-top: 0;
+  }
+
+  .beat-links {
+    padding: 0 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+  }
+  .beat-links a {
+    background: rgba(232, 213, 160, 0.1);
+    color: var(--gold-light);
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .beat-links a:hover { background: var(--gold); color: var(--bg); }
+
+  /* Storyboards grid */
+  .storyboards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+  }
+  .sb-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    overflow: hidden;
+  }
+  .sb-card .img-wrap {
+    background: #000;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sb-card img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .sb-card .body { padding: 12px 16px 16px; }
+  .sb-card .title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 20px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+  .sb-card .lbl {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+  }
+
+  /* Audio + assets */
+  .assets-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 22px;
+  }
+  .asset-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 22px 24px;
+  }
+  .asset-card .label {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+  .asset-card .name {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .asset-card audio {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .asset-card .meta {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.18em;
+    line-height: 1.7;
+  }
+
+  /* Script section */
+  .script-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 30px 36px;
+  }
+  .script-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 26px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border);
+  }
+  .script-stats .stat {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+  }
+  .script-stats .stat strong {
+    color: var(--gold-light);
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 22px;
+    display: block;
+    margin-top: 4px;
+    letter-spacing: 0.06em;
+  }
+  .script-beat {
+    margin-bottom: 24px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+  .script-beat:last-child { margin-bottom: 0; }
+  .script-beat .bh {
+    display: flex;
+    gap: 14px;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .script-beat .num {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    background: rgba(194, 155, 38, 0.12);
+    padding: 3px 10px;
+  }
+  .script-beat .ttl {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 18px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+  }
+  .script-beat .vo {
+    font-size: 14px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* Session note */
+  .session-note {
+    background: rgba(196, 75, 58, 0.08);
+    border: 1px solid rgba(196, 75, 58, 0.25);
+    border-left: 3px solid var(--red);
+    padding: 22px 26px;
+    margin-bottom: 40px;
+  }
+  .session-note .lbl {
+    font-size: 11px;
+    color: var(--red);
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+  .session-note .ttl {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+  }
+  .session-note ul {
+    list-style: none;
+    margin-top: 8px;
+  }
+  .session-note ul li {
+    font-size: 13px;
+    color: var(--text-soft);
+    padding-left: 22px;
+    position: relative;
+    margin: 6px 0;
+  }
+  .session-note ul li::before {
+    content: "→";
+    color: var(--red);
+    position: absolute;
+    left: 0;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.3em;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 12px 60px; }
+    .beats-grid, .storyboards-grid { gap: 18px; }
+    .script-block { padding: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">SOUVERAIN — HUB PRODUCTION</div>
+    <h1>NIGER URANIUM</h1>
+    <div class="subtitle">7 BEATS · 96 SECONDES · CASPIAN SEPIA + NOIR</div>
+    <div class="meta-strip">
+      <span>JOUR 7 · 2026-05-10</span>
+      <span>VOIX-OFF GÉOAFRIQUE V2</span>
+      <span>9:16 · 1080×1920 · 30FPS</span>
+    </div>
+  </header>
+
+  <!-- Status summary -->
+  <div class="status-summary">
+    <div class="status-card green">
+      <div class="num">5</div>
+      <div class="lbl">BEATS VALIDÉS</div>
+    </div>
+    <!-- updated to 5 with B1 v2 now validated -->
+
+    <div class="status-card red">
+      <div class="num">2</div>
+      <div class="lbl">À REFONDRE</div>
+    </div>
+    <div class="status-card">
+      <div class="num">96.04s</div>
+      <div class="lbl">DURÉE TOTALE</div>
+    </div>
+    <div class="status-card">
+      <div class="num">7/7</div>
+      <div class="lbl">STORYBOARDS V2</div>
+    </div>
+  </div>
+
+  <!-- Session note -->
+  <div class="session-note">
+    <div class="lbl">⚠ PROCHAINE SESSION</div>
+    <div class="ttl">2 BEATS À REFONDRE AVEC PIPELINE OFFICIEL JOUR 7</div>
+    <ul>
+      <li><strong>Beat 4 — Bras de fer juridique</strong> (22.9s) : appliquer template plates labels + timing arcs Niger↔Moscou + chiffres-pivots (1300 tonnes / 250M€) selon règles Souverain</li>
+      <li><strong>Beat 6 — Climax</strong> (6s) : transition Caspian Sepia → Caspian Noir + plate label NIGER + valider BIG STAT "0€"</li>
+    </ul>
+  </div>
+
+  <!-- BEATS section -->
+  <div class="section-title">BEATS PRODUCTION</div>
+  <div class="beats-grid">
+
+    <article class="beat-card validated">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 1</span>
+        <span class="beat-status validated">v2 · VALIDÉ</span>
+      </div>
+      <div class="beat-title">HOOK · ARLIT</div>
+      <div class="beat-timing">0–12s · GLOBE → MERCATOR ARLIT · BIG STAT 20×</div>
+      <div class="beat-video-wrap">
+        <video controls preload="metadata" src="https://files.catbox.moe/u54h9d.mp4"></video>
+      </div>
+      <div class="beat-vo">"Au Niger, sur le site minier d'Arlit, quatre cents fûts radioactifs dorment dans un hangar. Selon Niamey, vingt fois au-dessus de la norme. Orano conteste sa responsabilité sur ce site précis."</div>
+      <div class="beat-links">
+        <a href="https://files.catbox.moe/u54h9d.mp4" target="_blank">VIDÉO MP4</a>
+      </div>
+    </article>
+
+    <article class="beat-card validated">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 2</span>
+        <span class="beat-status validated">v4 · VALIDÉ</span>
+      </div>
+      <div class="beat-title">CONTEXTE · 53 ANS</div>
+      <div class="beat-timing">13–27s · COMPARAISON 86% / 9,2%</div>
+      <div class="beat-video-wrap">
+        <video controls preload="metadata" src="https://files.catbox.moe/erd4gk.mp4"></video>
+      </div>
+      <div class="beat-vo">"Le Niger extrait de l'uranium depuis cinquante-trois ans. Niamey affirme aujourd'hui que quatre-vingt-six pour cent des bénéfices sont revenus à Orano sur un demi-siècle. Neuf virgule deux pour cent au Niger. Orano conteste ces chiffres."</div>
+      <div class="beat-links">
+        <a href="https://files.catbox.moe/erd4gk.mp4" target="_blank">VIDÉO MP4</a>
+      </div>
+    </article>
+
+    <article class="beat-card validated">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 3</span>
+        <span class="beat-status validated">v4 · VALIDÉ</span>
+      </div>
+      <div class="beat-title">NATIONALISATION · JUIN 2025</div>
+      <div class="beat-timing">28–39s · ENTITY DIAGRAM PIPELINE GEMINI</div>
+      <div class="beat-video-wrap">
+        <video controls preload="metadata" src="https://files.catbox.moe/bo1ye5.mp4"></video>
+      </div>
+      <div class="beat-vo">"En juin deux mille vingt-cinq, le pouvoir militaire nationalise la Somaïr, principal site uranifère du pays. Niamey parle de souveraineté retrouvée. Orano parle d'expropriation."</div>
+      <div class="beat-links">
+        <a href="https://files.catbox.moe/bo1ye5.mp4" target="_blank">VIDÉO MP4</a>
+      </div>
+    </article>
+
+    <article class="beat-card todo">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 4</span>
+        <span class="beat-status todo">v1 · À REFAIRE</span>
+      </div>
+      <div class="beat-title">BRAS DE FER JURIDIQUE</div>
+      <div class="beat-timing">39–62s · NIGER ↔ MOSCOU + TIMELINE</div>
+      <div class="beat-video-wrap placeholder">
+        <div class="icon">B4</div>
+        <div class="msg">VIDÉO À CRÉER<br>PROCHAINE SESSION<br><br>Appliquer pipeline Jour 7 :<br>plates labels + timing arcs<br>+ chiffres-pivots</div>
+      </div>
+      <div class="beat-vo">"Orano saisit le tribunal arbitral de la Banque mondiale et lance plusieurs procédures. Mille trois cents tonnes d'uranium concentré restent sur le site. Deux cent cinquante millions d'euros immobilisés. En juillet, Moscou exprime son intérêt pour reprendre l'exploitation. En septembre, le tribunal interdit au Niger de vendre le stock tant que le litige n'est pas résolu."</div>
+    </article>
+
+    <article class="beat-card validated">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 5</span>
+        <span class="beat-status validated">v4 · VALIDÉ</span>
+      </div>
+      <div class="beat-title">ASYMÉTRIE QUOTIDIENNE</div>
+      <div class="beat-timing">62–82s · SPLIT-SCREEN ILLUS + MAPBOX</div>
+      <div class="beat-video-wrap">
+        <video controls preload="metadata" src="https://files.catbox.moe/fm22rq.mp4"></video>
+      </div>
+      <div class="beat-vo">"Et pendant ce temps, le Niger doit continuer à fonctionner. Payer ses soldats. Contenir une insurrection jihadiste au nord. Nourrir une population sous pression. Orano, lui, voit son actif majeur lui échapper et des centaines de millions gelés. Mais le groupe a déjà sécurisé ses approvisionnements ailleurs — au Canada, au Kazakhstan."</div>
+      <div class="beat-links">
+        <a href="https://files.catbox.moe/fm22rq.mp4" target="_blank">VIDÉO MP4</a>
+      </div>
+    </article>
+
+    <article class="beat-card todo">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 6</span>
+        <span class="beat-status todo">v1 · À REFAIRE</span>
+      </div>
+      <div class="beat-title">CLIMAX · GUERRE D'USURE</div>
+      <div class="beat-timing">83–89s · CASPIAN NOIR + BIG STAT 0€</div>
+      <div class="beat-video-wrap placeholder">
+        <div class="icon">B6</div>
+        <div class="msg">VIDÉO À CRÉER<br>PROCHAINE SESSION<br><br>Transition Sepia → Noir<br>+ plate label NIGER<br>+ BIG STAT "0€"</div>
+      </div>
+      <div class="beat-vo">"Une guerre d'usure devant les tribunaux. Chaque mois de procédure est un mois de recettes qui n'entrent pas à Niamey."</div>
+    </article>
+
+    <article class="beat-card validated">
+      <div class="beat-header">
+        <span class="beat-badge">BEAT 7</span>
+        <span class="beat-status validated">v3 · VALIDÉ</span>
+      </div>
+      <div class="beat-title">VERDICT · DOCUMENT CONTESTÉ</div>
+      <div class="beat-timing">89–96s · KRAFT + TAMPON CONTESTÉ</div>
+      <div class="beat-video-wrap">
+        <video controls preload="metadata" src="https://files.catbox.moe/dpns56.mp4"></video>
+      </div>
+      <div class="beat-vo">"Orano a un portefeuille mondial. Le Niger a une mine. Une partie d'échecs asymétrique. Sans vainqueur. Pour l'instant."</div>
+      <div class="beat-links">
+        <a href="https://files.catbox.moe/dpns56.mp4" target="_blank">VIDÉO MP4</a>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- AUDIO section -->
+  <div class="section-title">AUDIO</div>
+  <div class="assets-row">
+    <div class="asset-card">
+      <div class="label">VOIX-OFF NARRATION</div>
+      <div class="name">NARRATION V5 — LOCKED</div>
+      <audio controls preload="metadata" src="https://files.catbox.moe/bbclg4.mp3"></audio>
+      <div class="meta">
+        VOIX · GÉOAFRIQUE V2 (z3gESu49naEZW8Af2Upm)<br>
+        DURÉE · 96.04S · 477 MOTS · ~298 WPM<br>
+        ALIGNEMENT · WORD-BY-WORD ELEVENLABS<br>
+        FICHIER · narration-niger-uranium-v5.mp3
+      </div>
+    </div>
+    <div class="asset-card">
+      <div class="label">MUSIQUE DE FOND</div>
+      <div class="name">MUSIC V1 — DOCUMENTAIRE</div>
+      <audio controls preload="metadata" src="https://files.catbox.moe/l069bq.mp3"></audio>
+      <div class="meta">
+        VOLUME · 0.10 (FADE IN/OUT 2S)<br>
+        SOURCE · MINIMAX<br>
+        FICHIER · music-v1.mp3
+      </div>
+    </div>
+  </div>
+
+  <!-- STORYBOARDS V2 section -->
+  <div class="section-title">STORYBOARDS V2 — GEMINI 3.1-FLASH-IMAGE</div>
+  <div class="storyboards-grid">
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/ghlh8o.png" alt="Beat 1"></div>
+      <div class="body"><div class="title">HOOK · ARLIT</div><div class="lbl">BEAT 1 · 0–12S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/6n1t8o.png" alt="Beat 2"></div>
+      <div class="body"><div class="title">CONTEXTE · 53 ANS</div><div class="lbl">BEAT 2 · 13–27S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/3ft03z.png" alt="Beat 3"></div>
+      <div class="body"><div class="title">NATIONALISATION</div><div class="lbl">BEAT 3 · 28–39S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/q2jbts.png" alt="Beat 4"></div>
+      <div class="body"><div class="title">BRAS DE FER</div><div class="lbl">BEAT 4 · 39–62S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/pwwmvz.png" alt="Beat 5"></div>
+      <div class="body"><div class="title">ASYMÉTRIE</div><div class="lbl">BEAT 5 · 62–82S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/21yxhg.png" alt="Beat 6"></div>
+      <div class="body"><div class="title">CLIMAX NOIR</div><div class="lbl">BEAT 6 · 83–89S</div></div>
+    </div>
+    <div class="sb-card">
+      <div class="img-wrap"><img src="https://files.catbox.moe/mvkwt0.png" alt="Beat 7"></div>
+      <div class="body"><div class="title">VERDICT · KRAFT</div><div class="lbl">BEAT 7 · 89–96S</div></div>
+    </div>
+  </div>
+
+  <!-- SCRIPT section -->
+  <div class="section-title">SCRIPT V5 — LOCKED</div>
+  <div class="script-block">
+    <div class="script-stats">
+      <div class="stat">DURÉE<strong>96.04s</strong></div>
+      <div class="stat">MOTS<strong>477</strong></div>
+      <div class="stat">WPM<strong>298</strong></div>
+      <div class="stat">BEATS<strong>7</strong></div>
+      <div class="stat">FORMAT<strong>SHORT LONG</strong></div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 1</span><span class="ttl">HOOK · 0–14S</span></div>
+      <div class="vo">Au Niger, sur le site minier d'Arlit, quatre cents fûts radioactifs dorment dans un hangar. Selon Niamey, vingt fois au-dessus de la norme. Orano conteste sa responsabilité sur ce site précis.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 2</span><span class="ttl">CONTEXTE 53 ANS · 14–32S</span></div>
+      <div class="vo">Le Niger extrait de l'uranium depuis cinquante-trois ans. Niamey affirme aujourd'hui que quatre-vingt-six pour cent des bénéfices sont revenus à Orano sur un demi-siècle. Neuf virgule deux pour cent au Niger. Orano conteste ces chiffres.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 3</span><span class="ttl">NATIONALISATION JUIN 2025 · 32–46S</span></div>
+      <div class="vo">En juin deux mille vingt-cinq, le pouvoir militaire nationalise la Somaïr, principal site uranifère du pays. Niamey parle de souveraineté retrouvée. Orano parle d'expropriation.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 4</span><span class="ttl">BRAS DE FER JURIDIQUE · 46–66S</span></div>
+      <div class="vo">Orano saisit le tribunal arbitral de la Banque mondiale et lance plusieurs procédures. Mille trois cents tonnes d'uranium concentré restent sur le site. Deux cent cinquante millions d'euros immobilisés. En juillet, Moscou exprime son intérêt pour reprendre l'exploitation. En septembre, le tribunal interdit au Niger de vendre le stock tant que le litige n'est pas résolu.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 5</span><span class="ttl">ASYMÉTRIE QUOTIDIENNE · 66–82S</span></div>
+      <div class="vo">Et pendant ce temps, le Niger doit continuer à fonctionner. Payer ses soldats. Contenir une insurrection jihadiste au nord. Nourrir une population sous pression. Orano, lui, voit son actif majeur lui échapper et des centaines de millions gelés. Mais le groupe a déjà sécurisé ses approvisionnements ailleurs — au Canada, au Kazakhstan.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 6</span><span class="ttl">CLIMAX · 82–93S</span></div>
+      <div class="vo">Une guerre d'usure devant les tribunaux. Chaque mois de procédure est un mois de recettes qui n'entrent pas à Niamey.</div>
+    </div>
+
+    <div class="script-beat">
+      <div class="bh"><span class="num">BEAT 7</span><span class="ttl">VERDICT / CTA · 93–96S</span></div>
+      <div class="vo">Orano a un portefeuille mondial. Le Niger a une mine. Une partie d'échecs asymétrique. Sans vainqueur. Pour l'instant.</div>
+    </div>
+  </div>
+
+  <footer>
+    SOUVERAIN · NIGER URANIUM · PRODUCTION HUB · RÉGÉNÉRÉ 2026-05-10
+  </footer>
+</div>
+</body>
+</html>

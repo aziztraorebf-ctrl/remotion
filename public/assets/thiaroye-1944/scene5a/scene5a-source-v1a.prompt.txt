@@ -1,0 +1,31 @@
+# scene5a variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['biram_senghor']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Biram Senghor at the Thiaroye Memorial, 2026. Elderly Senegalese man in a dark sober suit, holding a folded legal document in both hands at chest level -- his grip firm, weight committed forward.
+
+BACKGROUND: a wall of black-and-white portrait photographs in an irregular grid (7-10 frames, varying sizes). Faces in the portraits are paper-craft silhouettes with dot-eyes -- the tirailleurs of Thiaroye. Portraits are all in muted grey-black tones.
+
+STYLE: Match style anchor + Biram charref. Paper-craft, thick black outlines, flat color fills, paper kraft texture. Strict dot-eyes on Biram.
+
+PALETTE: cold overcast memorial lighting. Biram in dark navy suit. Portrait wall in muted grey-black. A small eternal flame burns at bottom-right of frame -- the only warm accent.
+
+COMPOSITION:
+- Biram center-left, three-quarter view toward the portraits
+- Portrait wall fills right two-thirds of background
+- Cold light from upper left
+- Eternal flame small flicker shape at bottom-right
+
+LIFE IN THE SCENE (R-DYNAMIC):
+- Biram: thumb pressing document edge, torso leaning slightly forward, chin lifted
+- Portrait silhouettes: heads at varied angles (profile, frontal, 3/4)
+- Eternal flame: flickering paper-craft flame shape
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes on Biram: single black dot, no iris, no white, no tears
+- Flat color fills only, no hatching, no gradients
+- No readable text on document, no readable names on portraits
+- Match Biram charref precisely (elderly, dark skin, sober suit)
+- 9:16 vertical (1080x1920)

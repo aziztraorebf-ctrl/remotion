@@ -1,0 +1,286 @@
+{
+  "scene_description": "A minimalist, data-driven infographic animating Chinese investment in Zimbabwe's lithium sector. A gold-outlined map of Zimbabwe draws on the left, an arrow points to a structured data panel on the right revealing the $400M investment, Huayou Cobalt ownership with a Chinese flag, and production capacity.",
+  "background_assets_to_generate": [
+    {
+      "filename": "chinese_flag_minimal.png",
+      "prompt": "Minimalist flat vector style Chinese flag icon, clean red background with yellow stars, simple geometric, 2d, high contrast, no gradients, isolated on transparent background",
+      "dimensions": "150x100",
+      "transparent": true,
+      "purpose": "To represent Chinese ownership in the data panel next to the company name, adhering to the strict rule of using an image for the flag."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "bg_dot_grid",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "background-color: #141c2e; background-image: radial-gradient(#D4AF37 2px, transparent 2px); background-size: 40px 40px;",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": "#141c2e",
+      "z_index": 0
+    },
+    {
+      "element_id": "zimbabwe_map",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "d3-geo path placeholder for Zimbabwe",
+      "screen_position_xy": [
+        100,
+        760
+      ],
+      "size_px": [
+        400,
+        400
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 1
+    },
+    {
+      "element_id": "investment_400m",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "$400M",
+      "screen_position_xy": [
+        650,
+        700
+      ],
+      "size_px": [
+        350,
+        80
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 2
+    },
+    {
+      "element_id": "connecting_arrow",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 0 20 L 80 20 M 60 0 L 80 20 L 60 40",
+      "screen_position_xy": [
+        520,
+        940
+      ],
+      "size_px": [
+        100,
+        40
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 1
+    },
+    {
+      "element_id": "panel_line_top",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 0 0 L 350 0",
+      "screen_position_xy": [
+        650,
+        800
+      ],
+      "size_px": [
+        350,
+        2
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 1
+    },
+    {
+      "element_id": "panel_line_mid",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 0 0 L 350 0",
+      "screen_position_xy": [
+        650,
+        980
+      ],
+      "size_px": [
+        350,
+        2
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 1
+    },
+    {
+      "element_id": "panel_line_bot",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 0 0 L 350 0",
+      "screen_position_xy": [
+        650,
+        1160
+      ],
+      "size_px": [
+        350,
+        2
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 1
+    },
+    {
+      "element_id": "chinese_flag",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "chinese_flag_minimal.png",
+      "screen_position_xy": [
+        650,
+        840
+      ],
+      "size_px": [
+        90,
+        60
+      ],
+      "color_hex": "#FFFFFF",
+      "z_index": 2
+    },
+    {
+      "element_id": "company_huayou",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "HUAYOU COBALT",
+      "screen_position_xy": [
+        760,
+        850
+      ],
+      "size_px": [
+        240,
+        40
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 2
+    },
+    {
+      "element_id": "capacity_50k",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "50 000 T/AN",
+      "screen_position_xy": [
+        650,
+        1030
+      ],
+      "size_px": [
+        350,
+        60
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 2
+    },
+    {
+      "element_id": "area_40ha",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "40 HECTARES",
+      "screen_position_xy": [
+        650,
+        1210
+      ],
+      "size_px": [
+        350,
+        60
+      ],
+      "color_hex": "#D4AF37",
+      "z_index": 2
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "bg_dot_grid"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "linear",
+      "audio_cue_word": "Deux"
+    },
+    {
+      "frame_local": 60,
+      "element_ids_appearing": [
+        "zimbabwe_map"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 45,
+      "easing_hint": "soft",
+      "audio_cue_word": "usine"
+    },
+    {
+      "frame_local": 120,
+      "element_ids_appearing": [
+        "investment_400m"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "scale-pop",
+      "duration_frames": 20,
+      "easing_hint": "bouncy",
+      "audio_cue_word": "continent"
+    },
+    {
+      "frame_local": 160,
+      "element_ids_appearing": [
+        "connecting_arrow"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 15,
+      "easing_hint": "soft",
+      "audio_cue_word": "ouvre"
+    },
+    {
+      "frame_local": 210,
+      "element_ids_appearing": [
+        "panel_line_top",
+        "panel_line_mid",
+        "panel_line_bot"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-from-right",
+      "duration_frames": 25,
+      "easing_hint": "soft",
+      "audio_cue_word": "appartient"
+    },
+    {
+      "frame_local": 250,
+      "element_ids_appearing": [
+        "chinese_flag",
+        "company_huayou"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "linear",
+      "audio_cue_word": "Huayou"
+    },
+    {
+      "frame_local": 310,
+      "element_ids_appearing": [
+        "capacity_50k"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "count-up",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "Chinoise"
+    },
+    {
+      "frame_local": 380,
+      "element_ids_appearing": [
+        "area_40ha"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "linear",
+      "audio_cue_word": "quatre"
+    }
+  ],
+  "permanent_motion": "Slow continuous vertical panning of the background dot grid using CSS background-position animation. Subtle floating (translateY ±5px) applied to the entire right data panel group.",
+  "remotion_implementation_notes": "Use Remotion's <EvolvePath> for the map and arrow drawing. The background grid must be pure CSS on a div covering the screen. Use a monospaced or technical sans-serif font (like Roboto Mono) for the data text to match the blueprint aesthetic. Ensure the SVG lines have stroke-linecap='round' and stroke-width='2'.",
+  "fidelity_warnings": "Extracting the exact Zimbabwe path from d3-geo requires setting the correct projection (geoMercator) and fitting the extent to the [400, 400] bounding box. The Chinese flag is injected as an image per strict rules, ensure it aligns cleanly with the text baseline."
+}

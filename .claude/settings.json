@@ -1,20 +1,52 @@
 {
   "permissions": {
     "allow": [
-      "Bash(ffprobe -v quiet -show_entries format=duration -of csv=p=0 /Users/clawdbot/Workspace/remotion/sonjata-papercraft/clips-production/scene2-assembled.mp4)",
-      "Read(//tmp/flat-sepia-test/**)",
-      "Read(//private/tmp/flat-sepia-test/**)",
-      "Bash(open /tmp/split-candidates/scene2-frame-05.png /tmp/split-candidates/scene8a-frame-01.png)",
-      "Bash(npx remotion:*)",
-      "Bash(ffmpeg -y -i /tmp/sonjata-cta.mp4 -vf \"select='eq\\(n\\\\,15\\)+eq\\(n\\\\,40\\)+eq\\(n\\\\,60\\)+eq\\(n\\\\,100\\)'\" -vsync vfr /tmp/cta-review/frame-%02d.png)",
-      "Bash(mkdir -p /tmp/cta-review)",
-      "Bash(python3 -c ':*)",
-      "Bash(ffprobe -v quiet -print_format json -show_format public/audio/sonjata-papercraft/sonjata-cta-narration.mp3)",
-      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f'Duration: {d[\\\\\"format\\\\\"][\\\\\"duration\\\\\"]}s'\\)\")",
-      "Bash(echo \"[]\")",
-      "Read(//Users/clawdbot/.claude/**)",
-      "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs"
+      "Read(**)",
+      "Write(**)",
+      "Edit(**)",
+      "Bash(curl *)",
+      "Bash(python3 *)",
+      "Bash(python *)",
+      "Bash(ffmpeg *)",
+      "Bash(ffprobe *)",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(npx *)",
+      "Bash(git *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
+      "Bash(mkdir *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(echo *)",
+      "Bash(cat *)",
+      "Bash(rm *)",
+      "Bash(sleep *)",
+      "Bash(./scripts/*)",
+      "Bash(bash *)",
+      "Bash(sh *)",
+      "Bash(env)",
+      "Bash(which *)",
+      "Bash(source *)",
+      "Bash(export *)",
+      "Bash(cd *)",
+      "Bash(claude *)",
+      "Bash(launchctl *)",
+      "Bash(ccr *)",
+      "mcp__stitch__*",
+      "mcp__pixellab__*",
+      "mcp__mapbox__*",
+      "mcp__playwright__*",
+      "mcp__firecrawl__*",
+      "mcp__github__*"
+    ],
+    "additionalDirectories": [
+      "/Users/clawdbot/.claude",
+      "/Users/clawdbot/Workspace/remotion/tests",
+      "/Users/clawdbot/Workspace/remotion/memory/atlas-shaka-zulu",
+      "/tmp",
+      "/tmp/finary"
     ]
   },
   "hooks": {
@@ -35,7 +67,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/preflight-check.sh",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-final-promotion.sh",
             "timeout": 10
           }
         ]
@@ -50,8 +82,13 @@
           },
           {
             "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/storyboard-gate.sh",
-            "timeout": 10
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/beat-preflight.sh",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/atlas-beat-guard.sh",
+            "timeout": 15
           }
         ]
       }
@@ -64,11 +101,6 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/lint-on-edit.sh",
             "timeout": 30
-          },
-          {
-            "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/screenshot-qa.sh",
-            "timeout": 10
           }
         ]
       },
@@ -77,13 +109,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/auto-kimi-review.sh",
-            "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/screenshot-qa.sh",
-            "timeout": 10
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/beat-gemini-review.sh",
+            "timeout": 120
           }
         ]
       }

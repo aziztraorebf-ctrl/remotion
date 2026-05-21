@@ -1,6 +1,20 @@
 # Pipeline Shorts GeoAfrique — Ordre INVIOLABLE
 > Ne JAMAIS changer cet ordre. Zero clip avant timing.ts stable.
-> Mise a jour : 2026-04-14
+> Mise a jour : 2026-05-02
+
+---
+
+## UPLOAD MINI-RENDERS — Catbox.moe (Vercel hors service)
+
+**Vercel Blob hors service depuis 2026-05 (indisponible).** Utiliser catbox.moe a la place.
+
+```bash
+curl -F 'reqtype=fileupload' -F 'fileToUpload=@out/chemin/fichier.mp4' 'https://catbox.moe/user/api.php'
+# Retourne un lien public permanent type https://files.catbox.moe/HASH.mp4
+# Aucun compte requis. Limite : 200 MB par fichier.
+```
+
+**Note** : 0x0.st desactive (spam bots IA, mai 2026). Ne plus utiliser.
 
 ---
 
@@ -47,6 +61,15 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
 ## Ordre de production (NON-NEGOTIABLE)
 
 ```
+0. CONCEPT ART — 1 image Gemini par beat majeur (NOUVEAU — 2026-05-03)
+   - Avant l'audio, apres le script locked
+   - 1 image 16:9 par beat : carte, ambiance, composition, cartouches vides
+   - Modele : gemini-3.1-flash-image-preview (~$0.04/image, ~5 images = $0.20)
+   - But : valider la vision visuelle avec Aziz EN 5 MINUTES avant de coder quoi que ce soit
+   - Template prompt : fond + territoire + sprites + cartouches vides + style Atlas
+   - Validation Aziz OBLIGATOIRE avant de passer a l'etape 1
+   Ref : /tmp/quebec-research/atlas-concept-*.png (exemple valide 2026-05-03)
+
 1. Script definitif valide par Aziz
 2. Generation audio ElevenLabs V3
 3. Whisper -> mesure timings reels par segment
@@ -243,3 +266,46 @@ Learnings : le biais "reverse" sur objets tombes est un probleme du modele, pas 
 ## Skill complet
 
 `.claude/skills/batch-short-production/` — 9 phases, scripts, checkpoints.
+
+---
+
+## Pattern Remotion-Pur (sans clips video)
+
+> Valide 2026-04-13 sur Soundjata Acte VI (Charte du Manden, 20.5s).
+
+**Quand utiliser :** acte narratif ou informatif (listes, chiffres, dates, documents, cartes) sans action physique de personnage. Look "document historique" ou "infographie premium" — pas de morphing, pas d'artefacts video.
+
+### Pipeline 5 etapes
+
+**1. Whisper API** — `scripts/tools/transcribe-openai.py` → JSON timestamps mot-a-mot. NE PAS utiliser Whisper local (10+ min sur Apple Silicon). API = 10s + ~$0.01 pour 2 min.
+
+**2. timing.ts frame-precis** — Frontieres absolues par segment (pas `{start, duration}` cumulees — erreurs d'arrondi). Le `start` de la suivante = `end` de la precedente.
+
+**3. Generation assets Gemini** — Checklist obligatoire dans chaque prompt :
+- `"pure white background (#FFFFFF)"` (pour conversion PIL alpha transparente)
+- `"No text, no letters, no numerals visible anywhere"`
+- Style coherent serie (ex: "painted 2D illustration, graphic novel aesthetic, bold outlines")
+
+**4. Retouche chirurgicale Gemini** — Si asset proche mais defaut : `"Take this image exactly as it is. Make ONE surgical change: [X]. DO NOT change anything else."` Ne PAS regenerer.
+
+**5. Composition Remotion** — Structure : constantes → SUB_SCENES → composants → AbsoluteFill principal avec Audio + Sequences frame-precises.
+
+### Anti-patterns
+
+- Fond parchemin + carte geo dans le meme plan → deux langages visuels qui se concurrencent
+- Carte d3-geo en overlay sur parchemin → bug viewport, frontieres debordent
+- Timings relatifs (`{start, duration}`) → utiliser frontieres absolues
+
+### Typographie reference (1080x1920)
+
+| Element | Taille |
+|---------|--------|
+| Titre majuscule principal | 90-110px |
+| Chiffre geant (stamp-in) | 280px |
+| Sous-titre italique | 44-54px |
+| Date / decoration | 40-44px |
+| Label icone | 54-58px |
+| Icone minimum | 260x260px |
+| Medaillon minimum | 440x440px |
+
+Police signature : Cormorant Garamond (serif calligraphique), fallback Palatino/Georgia.

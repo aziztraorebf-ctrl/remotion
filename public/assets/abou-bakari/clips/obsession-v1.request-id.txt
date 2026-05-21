@@ -1,0 +1,4 @@
+019dcb38-65dd-7272-800e-2e7b378ebaf3
+# endpoint: bytedance/seedance-2.0/image-to-video
+# image_url: https://v3b.fal.media/files/b/0a97d6d8/FrY-t3Q9BIE5rfGIvGRym_scene-obsession-v3.png
+# saved_at: 2026-04-26 15:16:04

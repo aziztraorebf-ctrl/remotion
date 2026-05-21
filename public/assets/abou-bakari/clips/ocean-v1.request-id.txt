@@ -1,0 +1,4 @@
+019dcafc-589c-72b3-ba2c-60a36cb26a54
+# endpoint: bytedance/seedance-2.0/image-to-video
+# image_url: https://fal.media/files/kangaroo/SYCiywqSPLkp29mppgb2B_scene-ocean-v1.png
+# saved_at: 2026-04-26 14:10:28

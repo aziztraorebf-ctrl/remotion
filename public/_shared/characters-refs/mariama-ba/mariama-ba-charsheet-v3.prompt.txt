@@ -1,0 +1,47 @@
+Model: gemini-3.1-flash-image-preview
+Date: 2026-04-29
+Refs:
+  FACE_PAPERCRAFT: public/assets/library/geoafrique/characters/mariama-ba/femme ref 2.png
+  BODY_PAPERCRAFT: public/assets/library/geoafrique/characters/mariama-ba/femme ref 1.png
+  LAYOUT: public/assets/library/geoafrique/characters/mariama-ba/abu bakari ref.png
+
+Prompt:
+CHARACTER SHEET — generate a NEW original character in the GeoAfrique papercraft style.
+
+REFERENCE IMAGES PROVIDED:
+1. FACE STYLE REFERENCE — Senegalese woman with white headwrap, papercraft style. Copy this exact face rendering: simple DOT EYES (small black filled dots, NO iris, NO pupil, NO realistic eye), thin curved eyebrows, tiny calm closed mouth as a single small curve, simple curved nose line, uniform warm-brown skin, fine confident black outlines, papercraft sepia paper texture.
+2. BODY STYLE REFERENCE — Senegalese woman in ochre wrap with hands joined in front, papercraft style. Copy this exact body rendering: slim feminine silhouette, simple drape, calm posture, fine outlines, flat color fills.
+3. LAYOUT REFERENCE — character sheet showing 3 full body figures aligned horizontally in a row (front, three-quarters, profile). Copy this exact horizontal layout with plain cream background.
+
+CRITICAL STYLE RULE — DOT EYES, NOT REALISTIC EYES:
+The character must have DOT EYES exactly like reference #1 — small black filled dots only. This is the GeoAfrique papercraft signature. Realistic eyes with iris/pupil/eye-white are FORBIDDEN. Faces in this style are iconic, not portrait-like — distinguished by costume and accessories, not by individualized features.
+
+CHARACTER TO GENERATE:
+A dignified adult Senegalese woman in 1970s Dakar attire. Her distinctive attributes:
+- Tall GELE headwrap with simple geometric pattern, ochre and brown tones, tied elegantly upward
+- Long flowing BOUBOU dress in soft cream color with a single thin decorative band at the neckline
+- Small gold hoop earrings
+- Slim slender adult build (NOT a young girl, NOT a warrior physique)
+- Both hands joined gently in front of her at her midsection, holding a small closed BOOK
+- Standing upright, calm, dignified posture
+- Bare feet OR simple leather sandals visible at the bottom
+
+LAYOUT — EXACTLY MATCH REFERENCE #3:
+3 FULL BODY figures aligned HORIZONTALLY in a single row across the canvas, all standing on the same baseline:
+- LEFT figure: front view (facing forward)
+- CENTER figure: three-quarters view (turned slightly right)
+- RIGHT figure: profile view (fully facing right)
+All 3 figures wear the IDENTICAL costume and have the IDENTICAL pose (hands joined holding book), just shown from 3 angles. Same character, 3 views.
+
+Wide horizontal canvas (16:9 or 3:2 aspect ratio). Plain warm cream/beige paper background. Subtle soft paper shadow under each figure. Figures clearly separated, no overlap.
+
+STYLE RULES (NON-NEGOTIABLE):
+- DOT EYES only (small black filled dots) — never realistic eyes
+- Fine confident black outlines — NOT thick BD/comic outlines, NOT thin hesitant lines
+- Flat ochre/terracotta/cream/soft brown palette only — NO blue, NO bright green, NO realistic shading or gradients
+- Uniform skin tone (no modeling), paper grain texture visible
+- Iconic stylized face — NOT portrait-realistic, NOT illustration-painted, NOT BD/comic
+
+NO scenery. NO text. NO labels. NO captions. NO writing. NO annotations of any kind anywhere in the image.
+
+Output format: wide horizontal sheet, plain cream paper background, 3 full body figures of the same character side by side.

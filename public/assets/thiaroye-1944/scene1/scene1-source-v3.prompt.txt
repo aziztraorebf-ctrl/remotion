@@ -1,0 +1,41 @@
+# Scene 1 V3 source image prompt (R-PROMPT-LIBERAL)
+Model: models/gemini-3.1-flash-image-preview
+Anchor 1: /tmp/thiaroye-v5-style-anchors/scene1-assembled-frame.png
+Anchor 2: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/refs/tirailleur-principal-charsheet.png
+Approach: minimalist, compositional freedom, ~35 lines
+
+---PROMPT---
+Paper-craft storybook illustration, 9:16 vertical frame.
+
+SCENE: Cold December morning, 1944. On the deck of a French troop ship arriving at the port of Dakar. Senegalese tirailleurs are returning home after fighting for France. The ship approaches the harbor; Dakar's colonial waterfront emerges in cold misty distance. A lived-in moment of arrival — weary, quiet, human.
+
+REFERENCES:
+- Reference 1: our canonical paper-craft style (thick black outlines, flat color fills, paper kraft texture, rounded cartoon proportions, PURE DOT EYES).
+- Reference 2: the exact tirailleur character design (khaki-green uniform, French flag patch, dark green beret, dark brown skin, dot-eyes). ALL soldiers in the scene match this design.
+
+PEOPLE ON DECK:
+- 6 to 8 Senegalese tirailleurs scattered naturally across the deck. No parade, no formation — organic placement, some closer, some further, some in groups of two or three, some alone.
+- Each soldier has his own moment: some lean on the railing looking toward Dakar, some sit on crates or duffel bags, some stand quietly, some in small conversation, one perhaps smoking, one perhaps adjusting his kit. Let the composition breathe.
+- Expressions are VARIED and HUMAN: weary, pensive, curious, tired, thoughtful, distant. NOT all identical, NOT frozen, NOT ceremonial. Each face tells a slightly different small story.
+- All faces keep PURE DOT EYES (one black dot per eye, even in profile views) — no iris, no pupils, no eyelashes. Smooth skin, no wrinkles.
+- All soldiers are West African Senegalese with DARK BROWN skin. No ambiguity with North African or lighter tones.
+
+PALETTE — thematic dual-tone:
+- Cold world (ship deck surfaces, Dakar buildings in distance, harbor water, sky, railings): desaturated slate grey, cold blue-grey, muted steel, pale overcast cold clouds.
+- Warm pockets (tirailleur uniforms, berets, boots, duffel bags, skin): khaki-green, dark green, brown leather, tan canvas, dark brown skin.
+- This contrast is the thematic point: the men return warm-toned to a world that reads cold. Cold overcast morning, NO golden hour, NO warm sunset glow.
+
+SETTING DETAILS:
+- Foreground: weathered wooden deck planks, a few tan canvas duffel bags.
+- Mid/background: the ship's low railing, a hint of the ship's cabin/chimney silhouette, the harbor water with simple flat ripple shapes, Dakar's colonial port silhouette emerging in the cold distance (rooflines, a small lighthouse or warehouse shapes, all desaturated cold greys).
+- The ship is APPROACHING, not docked. We are ON the ship.
+
+STYLE (NON-NEGOTIABLE):
+- Flat 2D paper-craft. Thick black outlines. Flat color fills, NO gradients, NO shading.
+- Paper kraft texture on background.
+- Rounded cartoon proportions — NOT semi-realistic BD, NOT Pixar 3D, NOT photorealism.
+- Pure dot-eyes on every face, every view including profile.
+- NO text anywhere (no ship names, no signs, no banners, no writing on flag patches beyond the plain tricolor).
+- NO motion lines, NO speed lines, NO dust, NO drawn wind, NO drawn light rays, NO lens flares, NO emotion marks.
+
+MOOD: lived-in, quiet, human, cold arrival. Let the scene breathe — natural composition, organic placement, varied humanity. This is deck life at the end of a long voyage home, not a staged arrival ceremony.

@@ -1,0 +1,25 @@
+# scene4a variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: French military archive interior, 1945. A vast wall of grey metal filing cabinets extending upward and into depth. Foreground center: a gloved black hand of a French administrator in dark uniform cuff, mid-push on a half-closed drawer. Visible inside the drawer: a cardboard folder with a blurred rectangular stamp shape (no readable text, just the stamp silhouette).
+
+STYLE: paper-craft, thick black outlines, flat color fills, paper kraft texture. Strict dot-eyes style applied to any visible figure (the administrator's face should not be visible -- only gloved hand and dark cuff).
+
+PALETTE: cold bureaucratic grey (grey metal cabinets, beige manila folder, black leather glove, muted grey-white plaster wall). No warmth. One thin diagonal beam of weak light crossing the scene, carrying dust motes.
+
+COMPOSITION:
+- Gloved hand on drawer in foreground-right, mid-motion
+- Half-closed drawer center-frame with folder visible inside
+- Wall of cabinets extending up and receding into depth on left
+- Diagonal beam of cold light from upper-left
+- One stack of folders on the floor in background (more work to file)
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes (no face visible here, but style applies to the whole scene)
+- Flat color fills only, no hatching, no shading gradients
+- No readable text on folder, just the stamp shape
+- No text on cabinet labels (just shapes)
+- 9:16 vertical (1080x1920)

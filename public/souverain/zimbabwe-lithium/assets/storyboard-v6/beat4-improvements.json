@@ -1,0 +1,28 @@
+{
+  "current_analysis": "The current storyboard establishes a good typographic hierarchy, but the visual execution is flat. The background is a solid, lifeless black lacking cinematic depth. The map outline is too thin, generic, and gets lost in the composition. There is no visual subtext conveying the 'industrial battle' or the heavy 'cost' mentioned in the voice-over. It feels like a PowerPoint slide rather than a premium documentary frame.",
+  "improvements": [
+    {
+      "element": "Background Atmosphere",
+      "current": "Flat, pure black background with faint, distracting global map lines.",
+      "suggested": "A rich, dark navy/black PNG background featuring a very subtle, out-of-focus texture of industrial smoke or dark metallic grit, framed by a heavy vignette.",
+      "why": "Adds immediate cinematic depth and subliminally communicates the 'industrial' theme without requiring complex animations or distracting from the text.",
+      "feasible_in_remotion": true
+    },
+    {
+      "element": "Central Visual (Map)",
+      "current": "A thin, faint gold line-art outline of a map that lacks presence.",
+      "suggested": "A bold, stylized SVG silhouette of Zimbabwe. The fill should be a very dark navy (almost matching the background) with a crisp, glowing gold stroke (#c8a951) using CSS drop-shadow.",
+      "why": "Creates a strong, premium focal point. Using an SVG allows for crisp scaling and simple CSS animations (like drawing the stroke or a subtle pulse) while keeping the asset lightweight.",
+      "feasible_in_remotion": true
+    },
+    {
+      "element": "Typography Implementation",
+      "current": "Text is burned into the image, mixing a standard serif with a stretched condensed font.",
+      "suggested": "Implement entirely in React/CSS. Top text in an elegant serif (Ivory #f0e8d8), bottom text ('MAIS À QUEL PRIX ?') in a massive, screen-filling bold condensed sans-serif. Use CSS to fade in the top, then slam the bottom text in with a slight scale effect.",
+      "why": "Ensures perfect resolution across devices, respects the strict technical constraints, and allows for dynamic timing with the voice-over for maximum viewer retention.",
+      "feasible_in_remotion": true
+    }
+  ],
+  "improved_storyboard_prompt": "A premium documentary style vertical frame, 9:16 aspect ratio. A dark, moody, cinematic background blending deep navy blue and pitch black, featuring a very subtle, out-of-focus texture of industrial smoke and atmospheric grit. In the center, a bold, minimalist silhouette map of Zimbabwe with a luminous gold outline. High-end aesthetic, dramatic lighting, heavy vignette. NO TEXT IN IMAGE. Clean, minimalist, elegant.",
+  "atmosphere_suggestion": "A deep, rich navy-to-black vignette background PNG. It should contain a very subtle, low-opacity (10-15%) texture of industrial smog or dark, rough terrain to evoke the 'industrial battle'. The center should be slightly lighter deep navy to naturally spotlight the map and text, fading to pure black at the edges to ensure perfect readability for the ivory text."
+}

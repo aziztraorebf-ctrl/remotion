@@ -27,6 +27,13 @@
 <Audio src={...} volume={(f) => interpolate(f, [MUTE_START, MUTE_END], [1, 0], {extrapolateLeft: "clamp", extrapolateRight: "clamp"})} />
 ```
 
+### Musique de fond — valeur par defaut
+
+**0.07** est le volume de depart pour toute musique de fond Souverain/Atlas. Ajuster en hausse ou en baisse selon ressenti, mais toujours commencer a 0.07. Validé Niger Uranium 2026-05-12.
+- Trop discret : monter par paliers de 0.03 (0.10, 0.13...)
+- Trop present : descendre par paliers de 0.02 (0.05, 0.03...)
+- Narration : toujours volume={1.0}, jamais toucher
+
 ---
 
 ## OffthreadVideo + clips Kling/Seedance
@@ -64,21 +71,10 @@
 
 ---
 
-## Geo Visual Effects (implementes dans GeoAdvancedV2.tsx)
+## Geo Visual Effects
 
-| Technique | Usage | Code cle |
-|-----------|-------|----------|
-| Hachures SVG (`<pattern>`) | Zone de menace, territoire | `patternTransform={rotate(45 + frame*0.3)}` |
-| Vignette (radialGradient) | Focalisation, tension, nuit | `vigOpacity = interpolate(frame, [50,150], [0, 0.75])` |
-| Zoom CSS fluide | Changement region geo | `translate(target) scale(zoom) translate(-target)` + Easing.inOut |
-| Draw-on bordure | Revelation frontiere, routes | `strokeDasharray={PATH_LEN} strokeDashoffset={PATH_LEN*(1-progress)}` |
-| Pulse rings cascade | Epicentre, alerte, expansion | `(local - 160) % PERIOD` pour boucle infinie |
-| Transition zoom-blur | Saut temporel, cut dramatique | 18 frames optimal, outScale 1->1.12 |
-
-### Regles d'integration
-- 1 effet dominant par scene max + eventuellement 1 effet subtil de texture
-- Zoom max sur image raster = 2x (au-dela = pixelisation visible)
-- Anti-pattern : D3 re-projection par frame = 8-15ms JS bloquant -> saccades
+Effets geo (hachures SVG, vignette, draw-on, pulse rings, etc.) documentes dans fichier dedie :
+-> **`memory/tools/remotion-geo.md`**
 
 ---
 
@@ -91,6 +87,26 @@
 | `useDrift(i, frame, directionPx, totalFrames?, offset?)` | Deplacement progressif clamp | -> `tx: number` |
 
 **Regle** : Un hook valide par Aziz = il entre dans `index.ts`. Jamais re-coder dans les composants.
+
+---
+
+## Entry point & composition registration
+
+**Entry point** : `src/index.ts` (PAS `src/Root.tsx`)
+- `registerRoot()` est dans `src/index.ts`
+- `Root.tsx` ne contient QUE la liste des compositions — pas de `registerRoot`
+- Tailwind CSS import : dans `src/index.ts` (ex: `import "./styles/global.css"`)
+
+**Render d'une composition par nom** :
+```bash
+npx remotion render src/index.ts Layout-<NomComposition>
+# Exemples validés :
+npx remotion render src/index.ts Layout-RadarScan
+npx remotion render src/index.ts Layout-SplitFlap
+```
+
+**Templates connus dans Root.tsx (ajoutés session 2026-05-14) :**
+RadarScan, RadarPing, PulseNumber, SplitFlap, TimelineFracture, WordExplode, BarRace, StackedBars, TypeReveal, TypeWriter — tous enregistrés sous `Layout-<Nom>`.
 
 ---
 
@@ -108,7 +124,5 @@
 - Palette froide (gris-bleu + blanc terne) = froideur, mecanique
 - C'est une decision narrative, pas esthetique.
 
-### Kimi review
-- Contextualiser les changements v(n)->v(n+1) dans le brief. Sans diff, Kimi mentionne des problemes deja corriges.
-- Score Kimi = reference technique, pas verdict absolu. L'oeil d'Aziz prime.
-- Brief Kimi style flat : "Style is intentionally flat geometric -- smooth shapes are a feature, not a bug."
+<!-- Section "Kimi review" supprimee 2026-04-24 : appartient a quality-reviewer, pas a remotion composition. Voir .claude/agents/quality-reviewer.md -->
+

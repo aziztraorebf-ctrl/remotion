@@ -1,0 +1,28 @@
+# scene3b variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Camp Thiaroye courtyard AFTER the shots. Continuity with previous scene (same courtyard, same lantern, same cold light).
+
+3 to 4 paper-craft silhouettes lie on the ochre ground -- simple flat dark shapes, dignified postures (arms extended, not contorted). A crimson-red pool SPREADS on the earth around one of them (R-PC19: flat red aplat, no gradient, no photorealism -- stylized red suggesting loss).
+
+Foreground center: a single rifle fallen on the ground, muzzle pointing away, bolt open -- synecdoque of the massacre.
+
+STYLE: Match style anchor exactly. Paper-craft, thick black outlines, flat color fills. Silhouettes are simple shapes without facial detail.
+
+PALETTE: cold grey-plomb sky above, grey courtyard ground, muted khaki on silhouettes -- ONE accent color: crimson-red pool (flat aplat). The red is the only warmth. The last life left is this color.
+
+COMPOSITION:
+- Fallen rifle in foreground center (synecdoque)
+- Silhouettes scattered mid-ground at varying distances, postures dignified
+- Background: the lantern from previous scene, now extinguished
+- Cold dawn light holds the scene, long shadows
+
+CRITICAL TECHNICAL RULES:
+- Silhouettes are abstract flat shapes -- no facial detail needed
+- Flat color fills only, no hatching, no shading
+- Red pool is a flat aplat -- no gradient, no photoreal texture
+- No text, no banners
+- 9:16 vertical (1080x1920)

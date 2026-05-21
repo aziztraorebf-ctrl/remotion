@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "updated": "2026-05-09",
+  "templates": [
+    { "name": "smg-cream-start", "url": "https://files.catbox.moe/thnqh7.png", "comp": "Insert-SmallMultiplesGridDemoA-Cream", "frame": 20 },
+    { "name": "smg-cream-mid",   "url": "https://files.catbox.moe/pyw0yw.png", "comp": "Insert-SmallMultiplesGridDemoA-Cream", "frame": 80 },
+    { "name": "smg-cream-end",   "url": "https://files.catbox.moe/pyw0yw.png", "comp": "Insert-SmallMultiplesGridDemoA-Cream", "frame": 140 },
+    { "name": "smg-kraft-mid",   "url": "https://files.catbox.moe/zmuisk.png", "comp": "Insert-SmallMultiplesGridDemoB-Kraft", "frame": 80 },
+    { "name": "smg-kraft-end",   "url": "https://files.catbox.moe/zmuisk.png", "comp": "Insert-SmallMultiplesGridDemoB-Kraft", "frame": 140 },
+    { "name": "kraftcard-cadre-mid",        "url": "https://files.catbox.moe/xzkfd5.png", "comp": "TemplateD-KraftCardShowcase", "frame": 60 },
+    { "name": "kraftcard-cadre-end",        "url": "https://files.catbox.moe/7jskuc.png", "comp": "TemplateD-KraftCardShowcase", "frame": 110 },
+    { "name": "kraftcard-narratif-mid",     "url": "https://files.catbox.moe/s5sx6y.png", "comp": "TemplateD-KraftCardShowcase", "frame": 180 },
+    { "name": "kraftcard-narratif-end",     "url": "https://files.catbox.moe/uc3d6j.png", "comp": "TemplateD-KraftCardShowcase", "frame": 230 },
+    { "name": "kraftcard-docclassifie-mid", "url": "https://files.catbox.moe/rqcvea.png", "comp": "TemplateD-KraftCardShowcase", "frame": 300 },
+    { "name": "kraftcard-docclassifie-end", "url": "https://files.catbox.moe/z1mkbm.png", "comp": "TemplateD-KraftCardShowcase", "frame": 350 },
+    { "name": "docclassifie-subject-portrait", "url": "https://files.catbox.moe/efki9k.png", "comp": "TemplateD-KraftCardDocClassifie-Portrait", "frame": 130 },
+    { "name": "docclassifie-subject-flag",     "url": "https://files.catbox.moe/45oqjg.png", "comp": "TemplateD-KraftCardDocClassifie-Flag",     "frame": 130 },
+    { "name": "atlas3d-niger-end", "url": "https://files.catbox.moe/3ad6qf.png", "comp": "TemplateC-AtlasRealiste3DShowcase", "frame": 179, "webgl": true },
+    { "name": "atlas3d-mali-end",  "url": "https://files.catbox.moe/1vvnvo.png", "comp": "TemplateC-AtlasRealiste3DShowcase", "frame": 359, "webgl": true },
+    { "name": "carto-caspian-end", "url": "https://files.catbox.moe/bmb8mn.png", "comp": "TemplateB-CartoCaspianDemo",        "frame": 159, "webgl": true },
+    { "name": "brutalheadline-noir-mid",      "url": "https://litter.catbox.moe/05vzg6.png", "comp": "Jour4-ShowcaseA-BrutalHeadline-DataCard-BigStat", "frame": 45 },
+    { "name": "brutalheadline-rouge-mid",     "url": "https://litter.catbox.moe/uh9vur.png", "comp": "Jour4-ShowcaseA-BrutalHeadline-DataCard-BigStat", "frame": 135 },
+    { "name": "datacard-kraft-mid",           "url": "https://litter.catbox.moe/jcqxq2.png", "comp": "Jour4-ShowcaseA-BrutalHeadline-DataCard-BigStat", "frame": 225 },
+    { "name": "datacard-dark-mid",            "url": "https://litter.catbox.moe/dlqiht.png", "comp": "Jour4-ShowcaseA-BrutalHeadline-DataCard-BigStat", "frame": 315 },
+    { "name": "bigstat-mid",                  "url": "https://litter.catbox.moe/m3q1kh.png", "comp": "Jour4-ShowcaseA-BrutalHeadline-DataCard-BigStat", "frame": 405 },
+    { "name": "datebar-fullscreen-mid",       "url": "https://litter.catbox.moe/zaqa4z.png", "comp": "Jour4-ShowcaseB-NewsClipping-DateBar", "frame": 135 },
+    { "name": "datebar-bottom-mid",           "url": "https://litter.catbox.moe/c2scj2.png", "comp": "Jour4-ShowcaseB-NewsClipping-DateBar", "frame": 225 },
+    { "name": "newsclipping-v2-creme-mid",    "url": "https://litter.catbox.moe/kg968f.png", "comp": "Jour4-ShowcaseV2-Iterations", "frame": 45 },
+    { "name": "newsclipping-v2-grain-mid",    "url": "https://litter.catbox.moe/6oxic3.png", "comp": "Jour4-ShowcaseV2-Iterations", "frame": 135 },
+    { "name": "brutalheadline-bw-mid",        "url": "https://litter.catbox.moe/x2wk3n.png", "comp": "Jour4-ShowcaseV2-Iterations", "frame": 225 },
+    { "name": "brutalheadline-illus-mid",     "url": "https://litter.catbox.moe/ioglc9.png", "comp": "Jour4-ShowcaseV2-Iterations", "frame": 315 }
+  ]
+}

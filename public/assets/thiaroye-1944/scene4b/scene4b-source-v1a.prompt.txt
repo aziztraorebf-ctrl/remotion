@@ -1,0 +1,23 @@
+# scene4b variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Modern French courtroom interior, 2026. Close-up: a lawyer's hands in dark suit sleeves placing a thick folded legal document on a honey-blond wooden desk. Background blurred: a tricolor republican flag shape, suggestion of wooden paneling.
+
+STYLE: paper-craft continuity with the archive scene. Thick black outlines, flat color fills, paper kraft texture.
+
+PALETTE: cold grey-blue courtroom air, honey-blond desk surface, muted beige document, dark suit -- slight warmth restored vs. the archive scene (the warm wood desk color).
+
+COMPOSITION:
+- Hands center-frame, document mid-placement on the desk
+- Desk surface fills mid-frame
+- Tricolor flag blurred in background-left (color shapes only, no heraldry)
+- No other objects on the desk
+
+CRITICAL TECHNICAL RULES:
+- No readable text on the document
+- Flag shows only color aplats, no heraldry readable
+- Flat color fills only, no hatching, no gradients
+- 9:16 vertical (1080x1920)

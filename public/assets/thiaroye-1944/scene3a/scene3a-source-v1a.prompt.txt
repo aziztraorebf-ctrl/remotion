@@ -1,0 +1,28 @@
+# scene3a variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['tirailleur_principal', 'officier_francais']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Camp Thiaroye courtyard at dawn, December 1, 1944. Grey leaden sky, cold mist crossing the ground. Background left-third: a line of French army soldiers, rifles raised to shoulder level, paper-craft flat silhouette shapes, faces suggested by dot-eyes only. Foreground right-third: one Senegalese tirailleur close to camera, facing the soldiers -- upright, weight planted, gaze fixed straight at the firing line. His arms hang at his sides, fists loosely closed. Stoic. Unbroken.
+
+STYLE: Match style anchor -- paper-craft, thick black outlines, flat color fills, paper kraft texture. Strict dot-eyes on every face, including distant soldiers.
+
+PALETTE: cold grey-plomb sky, muted khaki uniforms, grey courtyard ground, deep cold blue shadows, one subtle warm accent on a lantern at courtyard edge (dying glow).
+
+COMPOSITION:
+- Tirailleur foreground-right, three-quarter view toward the soldiers, body fully visible
+- French soldiers background-left in a staggered line (not geometric), 5-6 figures, rifles raised at varying heights
+- Mid-ground courtyard: empty stone-dust surface, one fallen beret hints at prior confrontation
+- Cold dawn light from upper-right casts long blue shadows
+
+LIFE IN THE SCENE (not posed):
+- Tirailleur: weight committed forward on one foot, jaw set, fists loosely closed at sides -- alive in his stillness
+- French soldiers: not identical -- one leans into his rifle, one glances sideways, one stands rigid, postures varied
+- Wisps of breath visible in cold air from both sides (small white puff shapes)
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes everywhere: single black dot, no iris, no white
+- Flat color fills only, no hatching, no shading gradients
+- No text, no banners, no readable insignia
+- 9:16 vertical (1080x1920)

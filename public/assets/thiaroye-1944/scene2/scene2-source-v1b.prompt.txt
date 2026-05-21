@@ -1,0 +1,35 @@
+# scene2 variation B source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['tirailleur_principal', 'officier_francais']
+
+---PROMPT---
+Paper-craft scene illustration, 9:16 vertical frame.
+
+SCENE: Interior of Thiaroye military camp, December 1944. Close-up perspective from BEHIND the French officer (OTS view dominant, officer shoulder fills foreground left). Across the table: the central tirailleur faces him directly, open palm extended, gaze unwavering. Two other tirailleurs visible to either side of him, one standing, one seated.
+
+STYLE (match style anchor):
+- REF 1 (style anchor): paper-craft storybook -- thick black outlines, flat color fills, paper kraft texture, dot-eyes.
+- REF 2 (tirailleur charref): exact uniform, beret, dark brown skin.
+- REF 3 (French officer charref): uniform and kepi -- seen from behind/side only.
+
+LIFE IN THE ROOM:
+- Officer (foreground, back to camera): rigid shoulders, dark uniform kepi visible at frame left, creates a wall of authority
+- Central tirailleur (facing officer, mid-ground center): palm fully open chest-high, chin raised, expression steady, body leaning slightly forward
+- Left tirailleur (background left): standing, arms crossed loosely, watching the exchange
+- Right tirailleur (seated right): hunched forward on the table, elbows on wood, both hands flat, watching intently
+
+ENVIRONMENT:
+- Rough wooden table between them
+- Cold indigo window light from upper-left, casting long bar shadows on the table surface from the window bars
+- Stone walls, papers on the table, a mess tin near the right tirailleur
+
+COMPOSITION:
+- Strong foreground/background contrast: officer dark silhouette near vs. tirailleurs mid-distance
+- The open palm of the central tirailleur is the focal point -- centered, lit by the window light
+
+CRITICAL TECHNICAL RULES:
+- Strict dot-eyes on every visible face: single black dot, no iris, no white sclera
+- Flat color fills only, no hatching, no gradients
+- No text, no readable writing on papers
+- 9:16 vertical (1080x1920)

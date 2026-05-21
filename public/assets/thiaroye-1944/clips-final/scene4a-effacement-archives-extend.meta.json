@@ -1,0 +1,12 @@
+{
+  "tool": "bytedance/seedance-2.0/reference-to-video",
+  "request_id": "019dc5a5-8fa6-7df3-bb3d-545e4361682b",
+  "source_video": "scene4a-effacement-archives.mp4",
+  "source_video_url": "https://v3b.fal.media/files/b/0a97b251/VQLzhB1ZyZyS136C4i09N.mp4",
+  "duration": 5,
+  "aspect_ratio": "9:16",
+  "generate_audio": false,
+  "cost_estimate": "$0.91",
+  "date": "2026-04-25T17:20:17Z",
+  "video_url": "https://v3b.fal.media/files/b/0a97b261/LFZrF1WZ722feZDvb0Xun_video.mp4"
+}

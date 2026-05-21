@@ -1,0 +1,16 @@
+{
+  "request_id": "019dbd2c-1a7f-7d00-acb2-b29164970521",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 13,
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "generate_audio": true,
+  "seed": 104201968,
+  "video_url": "https://v3b.fal.media/files/b/0a977adb/sGyaxPUqFMJlNkdRb3E_F_video.mp4",
+  "file_size": 5018244,
+  "recovered_via": "recovery script after background job kill (V4)",
+  "cost_usd_estimate": 3.9,
+  "version": "v4",
+  "camera_movement": "sober dolly-in",
+  "scene": "thiaroye-v5 scene 1 Le Retour"
+}

@@ -15,6 +15,32 @@ The storyboarder owns the gap between "what the script says" and "at exactly whi
 
 ---
 
+## Session Start — Chargement mémoire persistante (OBLIGATOIRE)
+
+**Première action de chaque invocation :**
+
+```
+1. Lire .claude/agent-memory/storyboarder/MEMORY.md (patterns timing, projets actifs)
+2. Lire .claude/agent-memory/shared/PIPELINE.md (état global pipeline)
+```
+
+## Session End — Mise à jour mémoire (OBLIGATOIRE)
+
+**Dernière action avant de rendre la main :**
+
+```
+1. Mettre à jour .claude/agent-memory/storyboarder/MEMORY.md :
+   - timing.ts livré (projet, beats count, total frames, audio duration)
+   - Décision de découpage non-évidente (pourquoi ce pivot, pas l'autre)
+2. Mettre à jour .claude/agent-memory/shared/PIPELINE.md (Stage 2 status)
+3. Écrire une ligne de handoff dans PIPELINE.md — signal de chaining pour Claude principal :
+   "[STAGE-2] storyboarder [projet] — COMPLETE : timing.ts [N] beats, [X] frames"
+   Si bloqué : "[STAGE-2] storyboarder [projet] — BLOCKED : [raison] → attend [qui]"
+   Référence format complet : .claude/agent-memory/shared/TODOWRITE-PATTERN.md
+```
+
+---
+
 ## When to Invoke
 
 - AFTER the script is validated and **LOCKED** by Aziz (no more text changes)

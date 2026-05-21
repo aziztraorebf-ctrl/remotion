@@ -1,0 +1,201 @@
+{
+  "version": 8,
+  "name": "Atlas Parchemin Mande",
+  "metadata": {
+    "mapbox:autocomposite": true,
+    "mapbox:type": "default"
+  },
+  "sources": {
+    "country-boundaries": {
+      "type": "vector",
+      "url": "mapbox://mapbox.country-boundaries-v1"
+    },
+    "mapbox-streets": {
+      "type": "vector",
+      "url": "mapbox://mapbox.mapbox-streets-v8"
+    }
+  },
+  "sprite": "mapbox://sprites/mapbox/streets-v12",
+  "glyphs": "mapbox://fonts/mapbox/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "background-ocean",
+      "type": "background",
+      "paint": {
+        "background-color": "#E8DBB0"
+      }
+    },
+    {
+      "id": "land-base",
+      "type": "fill",
+      "source": "country-boundaries",
+      "source-layer": "country_boundaries",
+      "filter": ["==", ["geometry-type"], "Polygon"],
+      "paint": {
+        "fill-color": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          2, "#A85A3A",
+          4, "#A85A3A",
+          6, "#B8633E",
+          8, "#C4995A"
+        ],
+        "fill-opacity": 0.85
+      }
+    },
+    {
+      "id": "land-shadow-east",
+      "type": "fill",
+      "source": "country-boundaries",
+      "source-layer": "country_boundaries",
+      "filter": [
+        "all",
+        ["==", ["geometry-type"], "Polygon"],
+        ["any",
+          ["==", ["get", "iso_3166_1"], "TD"],
+          ["==", ["get", "iso_3166_1"], "CF"],
+          ["==", ["get", "iso_3166_1"], "SD"],
+          ["==", ["get", "iso_3166_1"], "CM"],
+          ["==", ["get", "iso_3166_1"], "NG"]
+        ]
+      ],
+      "paint": {
+        "fill-color": "#5A3A28",
+        "fill-opacity": 0.6
+      }
+    },
+    {
+      "id": "rivers",
+      "type": "line",
+      "source": "mapbox-streets",
+      "source-layer": "waterway",
+      "paint": {
+        "line-color": "#2F3F5C",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3, 1.5,
+          6, 3,
+          9, 5,
+          12, 7
+        ],
+        "line-opacity": 0.95
+      }
+    },
+    {
+      "id": "country-borders",
+      "type": "line",
+      "source": "country-boundaries",
+      "source-layer": "country_boundaries",
+      "filter": ["==", ["get", "disputed"], "false"],
+      "paint": {
+        "line-color": "#1F2A4A",
+        "line-width": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          2, 0.8,
+          5, 1.5,
+          8, 2.2,
+          12, 3
+        ],
+        "line-opacity": 0.95
+      }
+    },
+    {
+      "id": "label-sahara",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "natural_label",
+      "minzoom": 2,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "landform"],
+        ["==", ["get", "name"], "Sahara"]
+      ],
+      "layout": {
+        "text-field": "SAHARA DESERT",
+        "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          2, 14,
+          5, 24,
+          8, 36
+        ],
+        "text-letter-spacing": 0.15
+      },
+      "paint": {
+        "text-color": "#B8923A",
+        "text-halo-color": "#F2E5C8",
+        "text-halo-width": 1.5
+      }
+    },
+    {
+      "id": "label-cities-major",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "place_label",
+      "minzoom": 3,
+      "filter": [
+        "all",
+        ["==", ["get", "type"], "city"],
+        ["==", ["get", "name"], "Timbuktu"]
+      ],
+      "layout": {
+        "text-field": "TOMBOUCTOU",
+        "text-font": ["DIN Pro Bold", "Arial Unicode MS Bold"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          3, 16,
+          6, 30,
+          9, 48
+        ],
+        "text-letter-spacing": 0.1,
+        "text-anchor": "bottom",
+        "text-offset": [0, -0.8]
+      },
+      "paint": {
+        "text-color": "#1A1A1A",
+        "text-halo-color": "#F2E5C8",
+        "text-halo-width": 2
+      }
+    },
+    {
+      "id": "label-rivers-niger",
+      "type": "symbol",
+      "source": "mapbox-streets",
+      "source-layer": "natural_label",
+      "minzoom": 4,
+      "filter": [
+        "all",
+        ["==", ["get", "class"], "river"],
+        ["==", ["get", "name"], "Niger"]
+      ],
+      "layout": {
+        "text-field": "Niger River",
+        "text-font": ["DIN Pro Italic", "Arial Unicode MS Regular"],
+        "text-size": [
+          "interpolate",
+          ["linear"],
+          ["zoom"],
+          4, 14,
+          7, 22,
+          10, 30
+        ],
+        "symbol-placement": "line",
+        "text-letter-spacing": 0.05
+      },
+      "paint": {
+        "text-color": "#1A1A1A",
+        "text-halo-color": "#F2E5C8",
+        "text-halo-width": 1.5
+      }
+    }
+  ]
+}

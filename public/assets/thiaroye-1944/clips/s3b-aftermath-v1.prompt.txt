@@ -1,0 +1,39 @@
+# 3b Seedance clip prompt
+Tool: Seedance 2.0 image-to-video
+Source: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene3b/scene3b-source-v1b.png
+Duration: 7s
+Cost: $2.10
+
+---CHECKLIST---
+1_mots_rouges: OK : 12 mots verifies
+2_image_vivante: OK : lanterne (flamme vacillante), vent (souleve lettre), poussiere fine
+3_personnages_vie: OK : exception R-VIVANT (silhouette tombee = autorisee). Main = immobile (post-massacre, silence voulu).
+4_timeline: OK : 3 segments (0-2s / 2-4s / 4-7s)
+5_actions_macro: OK : 2-3 actions par segment sur environnement
+6_camera_sobre: OK : static hold avec tres lent dolly-in sur la main
+7_style_clause: OK
+8_anti_morph: OK : main FLAT SHAPE, sang FLAT APLAT rouge, pas de morphing
+9_environnement: OK : lanterne FLICKERS, lettre corner LIFTS, dust DRIFTS
+10_closing: OK
+11_longueur: ~1300 chars
+12_duree: 7s (aftermath = court, silence pese)
+13_contradictions: OK : silence voulu post-massacre = exception R-VIVANT explicite
+14_pensees_internes: OK
+15_regles_projet: OK : R75 i2v, R-PC19 silhouettes aplats, sang FLAT APLAT (non-photorealiste), pas de violence supplementaire, drapeau NE PAS bouger (respecter dignite)
+
+---PROMPT---
+Animate this exact illustration. STRICT STYLE FIDELITY: flat 2D paper-craft, cold grey courtyard palette (grey stone, ochre earth, flat crimson-red pool), clean dark outlines, flat color fills, paper texture. Do NOT add detail or realism.
+
+Camera: Static hold with imperceptible slow dolly-in over 7 seconds toward the open hand in foreground. No pan. No rotation. Reverential, slow, weighted.
+
+SECONDS 0 TO 2: The scene holds. The fallen hand lies open palm-up on the grey stone -- flat shape, unmoving, at rest. The letter beside the hand has its corner LIFTING once in a faint cold wind, then SETTLING back flat on the stone. Dust DRIFTS across the courtyard at ankle height, left to right.
+
+SECONDS 2 TO 4: The lantern on the stone wall FLICKERS -- its flame shape PULSES once with a small flat orange shape, then DIMS back to grey cold. The letter corner LIFTS again slightly, then SETTLES. More fine dust DRIFTS across the red pool from left.
+
+SECONDS 4 TO 7: The lantern FLICKERS one final time, then holds its dim cold glow. The letter corner stays flat. The dust settles. The courtyard holds in cold silence. The open palm of the hand faces upward, unmoving, receiving nothing.
+
+Continuous throughout: Fine dust DRIFTS across the stone surface at low height, CROSSING left to right steadily. The lantern flame FLICKERS with small flat organic paper-craft shape pulses.
+
+The crimson-red pool stays as a flat aplat -- no spreading, no movement, no gradient. The hand and arm remain absolutely at rest -- they do not move. No additional violence, no sounds of conflict. No text, no writing visible anywhere.
+
+Bodies continuously at rest. MAINTAIN cold flat color fills throughout. Ambient sounds only: distant wind across stone, absolute silence of aftermath, no music, no voices.

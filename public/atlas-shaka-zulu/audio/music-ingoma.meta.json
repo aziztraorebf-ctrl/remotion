@@ -1,0 +1,10 @@
+{
+  "request_id": "019de72e-58ed-78a3-b634-a8669129a003",
+  "endpoint": "fal-ai/minimax-music/v2.6",
+  "is_instrumental": true,
+  "duration_s": 170.864036,
+  "size_mb": 5.22,
+  "audio_url": "https://v3b.fal.media/files/b/0a988e25/p6-Quou3CKfkNmGamYkiZ_output.mp3",
+  "prompt": "Traditional Zulu war drumming from South Africa, deep djembe and dundun drums, rhythmic warrior stomping pattern in 4/4, low male chanting voices in distance, building ceremonial tension, earthy and tribal mood, percussion-focused. Style of traditional ingoma war dance music. Acoustic, organic, raw. No melody, no synthesizers, no electronic sounds, no modern instruments, no orchestral strings.",
+  "cost_estimate_usd": 0.1
+}

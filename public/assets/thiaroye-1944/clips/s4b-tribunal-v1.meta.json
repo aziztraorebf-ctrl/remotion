@@ -1,0 +1,17 @@
+{
+  "scene_id": "4b",
+  "request_id": "019dc144-eb95-7cf1-8fc1-95321e566d18",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 10,
+  "aspect_ratio": "9:16",
+  "resolution": "720p",
+  "generate_audio": true,
+  "seed": 1295902921,
+  "video_url": "https://v3b.fal.media/files/b/0a9795b2/HuPLeLn2ZvHvIjQPqPjbD_video.mp4",
+  "file_size": 3021240,
+  "source_image": "/Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene4b/scene4b-source-v1b.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0a9795a1/EkRdZqdORbsD3PG3rlGhZ_scene4b-source-v1b.png",
+  "prompt_chars": 1737,
+  "cost_usd_estimate": 3.0,
+  "generated_at": "2026-04-24 16:56:34"
+}

@@ -1,0 +1,411 @@
+{
+  "scene_description": "Mapbox WebGL scene showing the legal battle between Orano and Niger. A dotted arc traces from Niger to Moscow over a Caspian Sepia map. A timeline at the bottom tracks the events from June to September, while large statistics briefly appear to emphasize the frozen assets.",
+  "background_assets_to_generate": [
+    {
+      "filename": "icon-justice-scale.png",
+      "prompt": "Minimalist thin line icon of a justice scale (balance de la justice), dark navy blue #0d1525, centered, flat design, UNIFORM solid CREAM #d4c29d background filling the ENTIRE square frame",
+      "dimensions": "200x200",
+      "transparent": false,
+      "purpose": "Represents the World Bank arbitral tribunal, placed next to Niger"
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "icon_justice",
+      "type": "icon",
+      "asset_source": "to_generate",
+      "filename_or_content": "icon-justice-scale.png",
+      "screen_position_xy": [
+        450,
+        1020
+      ],
+      "size_px": [
+        60,
+        60
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 5,
+      "anchor_geographic": "niger"
+    },
+    {
+      "element_id": "dot_niger",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='10' cy='10' r='10' fill='#d4c29d' />",
+      "screen_position_xy": [
+        560,
+        1020
+      ],
+      "size_px": [
+        20,
+        20
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 10,
+      "anchor_geographic": "niger"
+    },
+    {
+      "element_id": "halo_niger",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='30' cy='30' r='28' fill='none' stroke='#d4c29d' stroke-width='2' />",
+      "screen_position_xy": [
+        560,
+        1020
+      ],
+      "size_px": [
+        60,
+        60
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 9,
+      "anchor_geographic": "niger"
+    },
+    {
+      "element_id": "plate_niger",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='background:rgba(13,21,37,0.92); border-left:3px solid #d4c29d; padding:8px 12px; color:#fff; font-family:\"IBM Plex Mono\"; font-size:17px; transform:translate(-50%, -150%);'>NIGER</div>",
+      "screen_position_xy": [
+        560,
+        1020
+      ],
+      "size_px": [
+        100,
+        40
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 15,
+      "anchor_geographic": "niger"
+    },
+    {
+      "element_id": "dot_moscou",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='10' cy='10' r='10' fill='#d4c29d' />",
+      "screen_position_xy": [
+        820,
+        540
+      ],
+      "size_px": [
+        20,
+        20
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 10,
+      "anchor_geographic": "moscou"
+    },
+    {
+      "element_id": "halo_moscou",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='30' cy='30' r='28' fill='none' stroke='#d4c29d' stroke-width='2' />",
+      "screen_position_xy": [
+        820,
+        540
+      ],
+      "size_px": [
+        60,
+        60
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 9,
+      "anchor_geographic": "moscou"
+    },
+    {
+      "element_id": "plate_moscou",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='background:rgba(13,21,37,0.92); border-right:3px solid #d4c29d; padding:8px 12px; color:#fff; font-family:\"IBM Plex Mono\"; font-size:17px; transform:translate(-180px, -56px);'>MOSCOU</div>",
+      "screen_position_xy": [
+        820,
+        540
+      ],
+      "size_px": [
+        120,
+        40
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 15,
+      "anchor_geographic": "moscou"
+    },
+    {
+      "element_id": "arc_niger_moscou",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<path d='M 560 1020 Q 600 700 820 540' fill='none' stroke='#d4c29d' stroke-width='3' stroke-dasharray='8 8' />",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1080,
+        1920
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 8,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "timeline_container",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='background:rgba(13,21,37,0.85); border:1px solid rgba(212,194,157,0.3); border-radius:8px; display:flex; justify-content:space-between; align-items:center; padding:0 40px;'></div>",
+      "screen_position_xy": [
+        140,
+        1550
+      ],
+      "size_px": [
+        800,
+        80
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 20,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "timeline_juin",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"Bebas Neue\"; font-size:40px; color:#d4c29d; opacity:0.4;'>JUIN</div>",
+      "screen_position_xy": [
+        220,
+        1565
+      ],
+      "size_px": [
+        100,
+        50
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 21,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "timeline_juillet",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"Bebas Neue\"; font-size:40px; color:#d4c29d; opacity:0.4; border-left:2px solid rgba(212,194,157,0.3); padding-left:40px;'>JUILLET</div>",
+      "screen_position_xy": [
+        450,
+        1565
+      ],
+      "size_px": [
+        180,
+        50
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 21,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "timeline_septembre",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"Bebas Neue\"; font-size:40px; color:#d4c29d; opacity:0.4; border-left:2px solid rgba(212,194,157,0.3); padding-left:40px;'>SEPTEMBRE</div>",
+      "screen_position_xy": [
+        700,
+        1565
+      ],
+      "size_px": [
+        200,
+        50
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 21,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "big_stat_1300",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"Bebas Neue\"; font-size:180px; color:#d4c29d; text-align:center; line-height:0.9; text-shadow: 0px 10px 30px rgba(0,0,0,0.5);'>1300<br/><span style='font-size:100px;'>TONNES</span></div>",
+      "screen_position_xy": [
+        540,
+        600
+      ],
+      "size_px": [
+        800,
+        300
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 30,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "big_stat_250m",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"Bebas Neue\"; font-size:180px; color:#d4c29d; text-align:center; line-height:0.9; text-shadow: 0px 10px 30px rgba(0,0,0,0.5);'>250M<br/><span style='font-size:100px;'>EUR GELES</span></div>",
+      "screen_position_xy": [
+        540,
+        600
+      ],
+      "size_px": [
+        800,
+        300
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 30,
+      "anchor_geographic": null
+    },
+    {
+      "element_id": "code_dossier",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "<div style='font-family:\"IBM Plex Mono\"; font-size:14px; color:#d4c29d; opacity:0.5;'>DOSSIER: NER-2025-Σ<br/>STATUS: ARBITRAGE</div>",
+      "screen_position_xy": [
+        850,
+        80
+      ],
+      "size_px": [
+        200,
+        40
+      ],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 5,
+      "anchor_geographic": null
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "dot_niger",
+        "halo_niger",
+        "plate_niger",
+        "icon_justice",
+        "code_dossier"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "Orano"
+    },
+    {
+      "frame_local": 30,
+      "element_ids_appearing": [
+        "timeline_container",
+        "timeline_juin",
+        "timeline_juillet",
+        "timeline_septembre"
+      ],
+      "element_ids_changing": [
+        "timeline_juin"
+      ],
+      "element_ids_disappearing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "linear",
+      "audio_cue_word": "saisit"
+    },
+    {
+      "frame_local": 165,
+      "element_ids_appearing": [
+        "big_stat_1300"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "scale-pop",
+      "duration_frames": 25,
+      "easing_hint": "bouncy",
+      "audio_cue_word": "Mille"
+    },
+    {
+      "frame_local": 215,
+      "element_ids_appearing": [],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [
+        "big_stat_1300"
+      ],
+      "transition_type": "fade-out",
+      "duration_frames": 10,
+      "easing_hint": "linear",
+      "audio_cue_word": null
+    },
+    {
+      "frame_local": 225,
+      "element_ids_appearing": [
+        "big_stat_250m"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "scale-pop",
+      "duration_frames": 25,
+      "easing_hint": "bouncy",
+      "audio_cue_word": "Deux"
+    },
+    {
+      "frame_local": 280,
+      "element_ids_appearing": [],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [
+        "big_stat_250m"
+      ],
+      "transition_type": "fade-out",
+      "duration_frames": 10,
+      "easing_hint": "linear",
+      "audio_cue_word": null
+    },
+    {
+      "frame_local": 290,
+      "element_ids_appearing": [
+        "arc_niger_moscou",
+        "dot_moscou",
+        "plate_moscou"
+      ],
+      "element_ids_changing": [],
+      "element_ids_disappearing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 60,
+      "easing_hint": "soft",
+      "audio_cue_word": null
+    },
+    {
+      "frame_local": 367,
+      "element_ids_appearing": [
+        "halo_moscou"
+      ],
+      "element_ids_changing": [
+        "timeline_juillet"
+      ],
+      "element_ids_disappearing": [],
+      "transition_type": "pulse",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "juillet"
+    },
+    {
+      "frame_local": 498,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "timeline_septembre",
+        "halo_niger"
+      ],
+      "element_ids_disappearing": [],
+      "transition_type": "pulse",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "septembre"
+    }
+  ],
+  "permanent_motion": "Mapbox camera very slowly drifts and zooms in slightly towards the center-right to keep both Niger and Moscow in view. The dotted arc 'arc_niger_moscou' has a continuous marching ants effect via strokeDashoffset decreasing linearly. 'halo_niger' and 'halo_moscou' scale from 1 to 1.5 and fade out to 0 in a continuous 2-second loop. The timeline highlighted text maintains full opacity while non-highlighted stays at 0.4.",
+  "remotion_implementation_notes": "Use `useCurrentFrame()` and `map.project([lon, lat])` inside a `useEffect` to continuously update the `screen_position_xy` for 'dot_niger', 'plate_niger', 'halo_niger', 'icon_justice', 'dot_moscou', 'plate_moscou', and 'halo_moscou'. The 'arc_niger_moscou' SVG path 'd' attribute must be dynamically built each frame using the projected pixel coordinates of Niger and Moscow, calculating a quadratic control point (Q) slightly above the midpoint to create the curve. 'plate_moscou' uses a CSS transform `translate(-180px, -56px)` to sit to the left of its anchor point, while 'plate_niger' uses `translate(-50%, -150%)` to sit above. For the timeline highlights, use `interpolate` on the frame value triggered by the audio cue to animate opacity from 0.4 to 1.0.",
+  "fidelity_warnings": "The dynamic SVG arc between two Mapbox projected points requires precise React state updates to avoid lagging behind the map drift. Ensure the SVG overlay spans the full 1080x1920 viewport and pointer-events are set to 'none'. The BIG STATs are positioned at Y=600 to avoid covering the map dots, but ensure they don't clash with the arc tracing. The timeline is safely placed at Y=1550 to avoid the karaoke subtitle zone (Y>=1700)."
+}

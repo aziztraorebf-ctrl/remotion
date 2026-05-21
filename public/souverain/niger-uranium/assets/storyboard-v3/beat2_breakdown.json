@@ -1,0 +1,205 @@
+{
+  "scene_description": "A split-screen data dashboard comparing two entities. The left side features a yellow pill shape and a large percentage, while the right side features an orange pill shape and a smaller percentage. The layout is divided by thin grid lines over a dark, subtly textured background.",
+  "background_assets_to_generate": [
+    {
+      "filename": "dark_navy_dotted_grid.png",
+      "prompt": "Dark navy blue background with a very subtle, faint, seamlessly repeating dotted grid pattern, minimalist corporate data dashboard style, dark mode, high resolution, flat lighting.",
+      "dimensions": "1080x1920",
+      "transparent": false,
+      "purpose": "Base background texture providing a technical, data-driven atmosphere."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "vertical_divider_line",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='540' y1='0' x2='540' y2='1920' stroke='#ffffff' stroke-width='2' stroke-opacity='0.15' />",
+      "screen_position_xy": [0, 0],
+      "size_px": [1080, 1920],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "horizontal_divider_1",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='40' y1='400' x2='1040' y2='400' stroke='#ffffff' stroke-width='2' stroke-opacity='0.15' />",
+      "screen_position_xy": [0, 0],
+      "size_px": [1080, 1920],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "horizontal_divider_2",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='40' y1='1080' x2='1040' y2='1080' stroke='#ffffff' stroke-width='2' stroke-opacity='0.15' />",
+      "screen_position_xy": [0, 0],
+      "size_px": [1080, 1920],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "horizontal_divider_3",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='40' y1='1720' x2='1040' y2='1720' stroke='#ffffff' stroke-width='2' stroke-opacity='0.15' />",
+      "screen_position_xy": [0, 0],
+      "size_px": [1080, 1920],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "pill_left_yellow",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='440' height='120' rx='60' fill='#c29b26' />",
+      "screen_position_xy": [50, 220],
+      "size_px": [440, 120],
+      "color_hex": "#c29b26",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "pill_right_orange",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='440' height='120' rx='60' fill='#c26b4d' />",
+      "screen_position_xy": [590, 220],
+      "size_px": [440, 120],
+      "color_hex": "#c26b4d",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "text_percent_left",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "0%",
+      "screen_position_xy": [270, 740],
+      "size_px": [400, 300],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_percent_right",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "0%",
+      "screen_position_xy": [810, 740],
+      "size_px": [400, 200],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_label_left",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "Duration\nLabel",
+      "screen_position_xy": [270, 1400],
+      "size_px": [400, 200],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_label_right",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "Lane",
+      "screen_position_xy": [810, 1400],
+      "size_px": [400, 100],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "bottom_progress_bar",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='1000' height='50' fill='#2a3b5c' />",
+      "screen_position_xy": [40, 1780],
+      "size_px": [1000, 50],
+      "color_hex": "#2a3b5c",
+      "rotation_deg": 0,
+      "z_index": 3
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "vertical_divider_line",
+        "horizontal_divider_1",
+        "horizontal_divider_2",
+        "horizontal_divider_3",
+        "bottom_progress_bar"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": null
+    },
+    {
+      "frame_local": 15,
+      "element_ids_appearing": [
+        "pill_left_yellow",
+        "pill_right_orange",
+        "text_label_left",
+        "text_label_right",
+        "text_percent_left",
+        "text_percent_right"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "scale-up-fade",
+      "duration_frames": 25,
+      "easing_hint": "spring",
+      "audio_cue_word": null
+    },
+    {
+      "frame_local": 154,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "text_percent_left"
+      ],
+      "transition_type": "count-up",
+      "duration_frames": 45,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "quatre-vingt-six"
+    },
+    {
+      "frame_local": 317,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "text_percent_right"
+      ],
+      "transition_type": "count-up",
+      "duration_frames": 30,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Neuf"
+    },
+    {
+      "frame_local": 380,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "pill_left_yellow",
+        "text_percent_left"
+      ],
+      "transition_type": "pulse-color-shift",
+      "duration_frames": 20,
+      "easing_hint": "bounce",
+      "audio_cue_word": "conteste"
+    }
+  ],
+  "permanent_motion": "The background dotted grid slowly pans diagonally upwards to the right. Both percentage numbers have a very subtle, continuous breathing effect (scaling between 1.0 and 1.02 every 3 seconds) to keep the data feeling 'live'.",
+  "remotion_implementation_notes": "Use `interpolate` combined with `Math.round()` for the left percentage to count from 0 to 86. For the right percentage, use `.toFixed(1)` to count from 0.0 to 9.2. Text positioning should use CSS Flexbox or absolute positioning with `transform: translate(-50%, -50%)` to ensure the numbers stay perfectly centered while they count up and change width. Use a condensed, bold font like 'Bebas Neue' or 'Oswald' to match the storyboard's typography.",
+  "fidelity_warnings": "The storyboard contains literal placeholder text ('Duration Label' and 'Lane'). I have included them exactly as they appear in the image to maintain strict visual fidelity, but in the final Remotion component, you may want to pass these as props to replace them with contextually accurate labels (e.g., '53 ANS' and 'ORANO' / 'NIGER'). The storyboard image shows '60%' on the left, but the script dictates '86%'; the animation timeline handles this by starting at 0% and counting up to the script-accurate 86%."
+}

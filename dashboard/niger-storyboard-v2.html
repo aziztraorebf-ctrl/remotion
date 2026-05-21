@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niger Uranium — Storyboards V2 (Gemini)</title>
+<style>
+  :root {
+    --bg: #0d1525;
+    --bg-elev: #15203a;
+    --gold: #c29b26;
+    --gold-light: #e8d5a0;
+    --terracotta: #c26b4d;
+    --text: #ffffff;
+    --text-muted: #9a8a6a;
+    --border: rgba(232, 213, 160, 0.15);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    line-height: 1.5;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+  header { text-align: center; padding: 30px 0 50px; border-bottom: 1px solid var(--border); margin-bottom: 50px; }
+  header .eyebrow {
+    font-size: 13px;
+    color: var(--gold);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: clamp(38px, 6vw, 72px);
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    line-height: 1;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+  header .subtitle {
+    font-size: 15px;
+    color: var(--text-muted);
+    letter-spacing: 0.18em;
+  }
+  header .meta {
+    margin-top: 24px;
+    font-size: 12px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+
+  .card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    overflow: hidden;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card:hover { transform: translateY(-3px); border-color: var(--gold); }
+  .card .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    margin: 16px 0 0 16px;
+  }
+  .card .img-wrap {
+    margin: 14px;
+    background: #000;
+    aspect-ratio: 9 / 16;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .card .body { padding: 6px 18px 22px; }
+  .card .title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 28px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 6px;
+    line-height: 1.1;
+  }
+  .card .timing {
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    margin-bottom: 12px;
+  }
+  .card .vo {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 30px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 0.3em;
+  }
+
+  @media (max-width: 600px) {
+    body { padding: 20px 12px 60px; }
+    header { padding: 20px 0 30px; margin-bottom: 30px; }
+    .grid { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="eyebrow">Souverain — Storyboard V2</div>
+    <h1>NIGER URANIUM</h1>
+    <div class="subtitle">7 BEATS · 96 SECONDES · GEMINI 3.1-FLASH-IMAGE</div>
+    <div class="meta">RÉFÉRENCES VISUELLES PRÉ-PRODUCTION · JOUR 7</div>
+  </header>
+
+  <div class="grid">
+
+    <article class="card">
+      <span class="badge">BEAT 1</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/ghlh8o.png" alt="Beat 1 — Hook Globe"></div>
+      <div class="body">
+        <div class="title">HOOK · ARLIT</div>
+        <div class="timing">0–12s · GLOBE → NIGER</div>
+        <div class="vo">Au Niger, sur le site minier d'Arlit, quatre cents fûts radioactifs dorment dans un hangar. Selon Niamey, vingt fois au-dessus de la norme. Orano conteste sa responsabilité sur ce site précis.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 2</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/6n1t8o.png" alt="Beat 2 — Contexte 53 ans"></div>
+      <div class="body">
+        <div class="title">CONTEXTE · 53 ANS</div>
+        <div class="timing">13–27s · COMPARAISON 86% / 9,2%</div>
+        <div class="vo">Le Niger extrait de l'uranium depuis cinquante-trois ans. Niamey affirme que quatre-vingt-six pour cent des bénéfices sont revenus à Orano sur un demi-siècle. Neuf virgule deux pour cent au Niger. Orano conteste ces chiffres.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 3</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/3ft03z.png" alt="Beat 3 — Nationalisation"></div>
+      <div class="body">
+        <div class="title">NATIONALISATION · JUIN 2025</div>
+        <div class="timing">28–39s · ENTITY DIAGRAM</div>
+        <div class="vo">En juin deux mille vingt-cinq, le Niger nationalise la Somaïr — la mine principale exploitée par Orano. Niamey parle de souveraineté retrouvée. Orano parle d'expropriation.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 4</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/q2jbts.png" alt="Beat 4 — Bras de fer juridique"></div>
+      <div class="body">
+        <div class="title">BRAS DE FER JURIDIQUE</div>
+        <div class="timing">39–62s · NIGER ↔ MOSCOU</div>
+        <div class="vo">Orano saisit le tribunal arbitral de la Banque mondiale et lance plusieurs procédures. Mille trois cents tonnes d'uranium concentré restent sur le site. Deux cent cinquante millions d'euros immobilisés. En juillet, Moscou exprime son intérêt pour reprendre l'exploitation. En septembre, le tribunal interdit au Niger de vendre le stock tant que le litige n'est pas résolu.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 5</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/pwwmvz.png" alt="Beat 5 — Asymétrie quotidienne"></div>
+      <div class="body">
+        <div class="title">ASYMÉTRIE QUOTIDIENNE</div>
+        <div class="timing">62–82s · SPLIT-SCREEN</div>
+        <div class="vo">Et pendant ce temps, le Niger doit continuer à fonctionner. Payer ses soldats. Contenir une insurrection jihadiste au nord. Nourrir une population sous pression. Orano, lui, voit son actif majeur lui échapper et des centaines de millions gelés. Mais le groupe a déjà sécurisé ses approvisionnements ailleurs — au Canada, au Kazakhstan.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 6</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/21yxhg.png" alt="Beat 6 — Climax Noir"></div>
+      <div class="body">
+        <div class="title">CLIMAX · GUERRE D'USURE</div>
+        <div class="timing">83–89s · CASPIAN NOIR</div>
+        <div class="vo">Une guerre d'usure devant les tribunaux. Chaque mois de procédure est un mois de recettes qui n'entrent pas à Niamey.</div>
+      </div>
+    </article>
+
+    <article class="card">
+      <span class="badge">BEAT 7</span>
+      <div class="img-wrap"><img src="https://files.catbox.moe/mvkwt0.png" alt="Beat 7 — Verdict CTA"></div>
+      <div class="body">
+        <div class="title">VERDICT · DOCUMENT CONTESTÉ</div>
+        <div class="timing">89–96s · KRAFT + TAMPON</div>
+        <div class="vo">Orano a un portefeuille mondial. Le Niger a une mine. Une partie d'échecs asymétrique. Sans vainqueur. Pour l'instant.</div>
+      </div>
+    </article>
+
+  </div>
+
+  <footer>
+    GEMINI 3.1-FLASH-IMAGE-PREVIEW · I2I AVEC REFS OR AFRICAIN V5 · SOUVERAIN
+  </footer>
+</div>
+</body>
+</html>

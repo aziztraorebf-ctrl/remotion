@@ -1,0 +1,12 @@
+{
+  "tool": "bytedance/seedance-2.0/reference-to-video",
+  "request_id": "019dbfd3-1d9c-7651-bacb-ec70b61773a9",
+  "source_video": "s1-retour-v5.mp4",
+  "source_video_url": "https://v3b.fal.media/files/b/0a978c29/BpWfJxX6RBlt2tPLZQkwu.mp4",
+  "duration": 6,
+  "aspect_ratio": "9:16",
+  "generate_audio": false,
+  "cost_estimate": "$1.09",
+  "date": "2026-04-24T14:12:54Z",
+  "video_url": "https://v3b.fal.media/files/b/0a978c3d/U0pseAg86JxGaniWE8T95_video.mp4"
+}

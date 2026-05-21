@@ -1,0 +1,15 @@
+[Video1] Continue this scene. STRICT STYLE FIDELITY: maintain exact same paper-craft aesthetic -- thick black outlines, flat color fills, cold bureaucratic grey palette, fluorescent flat light, paper kraft texture. NO photorealism, NO gradients, NO depth-of-field blur, NO BD comic drift.
+
+Camera: continue the very slow dolly-out throughout 5 seconds. Smooth and continuous, no shake, no cuts.
+
+SECONDS 0 TO 2: Camera continues pulling back at the same slow pace. The distant figure at the end of the corridor takes one final step, then turns and walks deeper, becoming smaller in the perspective. One fluorescent light overhead FLICKERS once, stabilizes. The corridor reveals slightly more depth at frame edges.
+
+SECONDS 2 TO 4: Camera continues the dolly-out. The distant figure DISAPPEARS around a far corner -- frame absorbs the absence quietly. Two more rows of cabinets become visible at the frame edges as the perspective widens. Another fluorescent FLICKERS further down the corridor, stabilizes.
+
+SECONDS 4 TO 5: Camera HOLDS. Empty corridor remains. Cold flat fluorescent light. Stillness settles. One last distant FLICKER, then steady hum.
+
+CRITICAL CONSTRAINTS: NO new characters entering frame. NO drawers opening on their own. The bureaucratic emptiness is the message.
+
+MAINTAIN paper-craft style throughout. No text visible.
+
+Ambient: low fluorescent hum, one distant flicker-buzz at second 1, faint receding footsteps fading to silence by second 3, then pure fluorescent hum until end. No dialogue, no music.

@@ -1,0 +1,326 @@
+{
+  "scene_description": "Split-screen sequence. The top half illustrates Niger's domestic pressures (military, food) appearing sequentially. At a specific VO cue, the top half dims, and focus shifts to the bottom Mapbox map showing Orano's diversified supply chains lighting up in Canada and Kazakhstan.",
+  "background_assets_to_generate": [
+    {
+      "filename": "top_bg_dunes.png",
+      "prompt": "Minimalist flat vector illustration of beige desert sand dunes on a cream textured paper background. Earthy and sandy tones. Empty space in the foreground. No text, no objects. Aspect ratio roughly square but slightly wider.",
+      "dimensions": "1080x960",
+      "transparent": false,
+      "purpose": "Background for the top half illustration."
+    },
+    {
+      "filename": "soldier_medical.png",
+      "prompt": "Flat vector illustration. Brown and tan silhouette of a modern soldier with a rifle on patrol, standing next to two stacked white medical supply crates with bold red crosses on them. Clean lines, minimalist documentary style. Transparent background. No text.",
+      "dimensions": "500x650",
+      "transparent": true,
+      "purpose": "Represents the military and healthcare burden of Niger on the left side."
+    },
+    {
+      "filename": "grain_sacks.png",
+      "prompt": "Flat vector illustration of two brown burlap grain sacks. One is standing upright with a dark stylized wheat ear symbol printed on it, the other is lying down behind it. Clean minimalist vector graphic. Transparent background. No text.",
+      "dimensions": "400x500",
+      "transparent": true,
+      "purpose": "Represents the civilian population feeding burden on the right side."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "top_header_bar",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "LE NIGER DOIT TENIR",
+      "screen_position_xy": [
+        0,
+        60
+      ],
+      "size_px": [
+        1080,
+        90
+      ],
+      "color_hex": "#D1A94D",
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "soldier_medical",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "soldier_medical.png",
+      "screen_position_xy": [
+        40,
+        310
+      ],
+      "size_px": [
+        450,
+        650
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 20
+    },
+    {
+      "element_id": "grain_sacks",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "grain_sacks.png",
+      "screen_position_xy": [
+        580,
+        400
+      ],
+      "size_px": [
+        400,
+        500
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 20
+    },
+    {
+      "element_id": "vs_badge",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<svg viewBox='0 0 100 100'><polygon points='50,5 95,25 95,75 50,95 5,75 5,25' fill='#D1A94D'/><text x='50' y='55' font-family='sans-serif' font-weight='bold' font-size='30' fill='#1A2634' text-anchor='middle' dominant-baseline='middle'>VS</text></svg>",
+      "screen_position_xy": [
+        490,
+        910
+      ],
+      "size_px": [
+        100,
+        100
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 50
+    },
+    {
+      "element_id": "bottom_caption_box",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "ORANO — APPROVISIONNEMENTS DIVERSIFIÉS",
+      "screen_position_xy": [
+        100,
+        1650
+      ],
+      "size_px": [
+        880,
+        80
+      ],
+      "color_hex": "#FFFFFF",
+      "rotation_deg": 0,
+      "z_index": 40
+    },
+    {
+      "element_id": "bottom_caption_canada",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "CANADA",
+      "screen_position_xy": [
+        240,
+        1750
+      ],
+      "size_px": [
+        200,
+        50
+      ],
+      "color_hex": "#D1A94D",
+      "rotation_deg": 0,
+      "z_index": 40
+    },
+    {
+      "element_id": "bottom_caption_kazakhstan",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "•  KAZAKHSTAN",
+      "screen_position_xy": [
+        460,
+        1750
+      ],
+      "size_px": [
+        400,
+        50
+      ],
+      "color_hex": "#D1A94D",
+      "rotation_deg": 0,
+      "z_index": 40
+    },
+    {
+      "element_id": "dot_niger",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='15' cy='15' r='10' fill='#D1A94D' stroke='#1A2634' stroke-width='3'/>",
+      "screen_position_xy": [
+        520,
+        1420
+      ],
+      "size_px": [
+        30,
+        30
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 35
+    },
+    {
+      "element_id": "arc_canada",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 535 1435 Q 350 1100 150 1200",
+      "screen_position_xy": [
+        0,
+        960
+      ],
+      "size_px": [
+        1080,
+        960
+      ],
+      "color_hex": "#D1A94D",
+      "rotation_deg": 0,
+      "z_index": 30
+    },
+    {
+      "element_id": "dot_canada",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='15' cy='15' r='10' fill='#D1A94D' stroke='#1A2634' stroke-width='3'/>",
+      "screen_position_xy": [
+        135,
+        1185
+      ],
+      "size_px": [
+        30,
+        30
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 35
+    },
+    {
+      "element_id": "arc_kazakhstan",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "M 535 1435 Q 650 1150 780 1250",
+      "screen_position_xy": [
+        0,
+        960
+      ],
+      "size_px": [
+        1080,
+        960
+      ],
+      "color_hex": "#D1A94D",
+      "rotation_deg": 0,
+      "z_index": 30
+    },
+    {
+      "element_id": "dot_kazakhstan",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='15' cy='15' r='10' fill='#D1A94D' stroke='#1A2634' stroke-width='3'/>",
+      "screen_position_xy": [
+        765,
+        1235
+      ],
+      "size_px": [
+        30,
+        30
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 35
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "top_bg_dunes"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Et pendant ce temps,"
+    },
+    {
+      "frame_local": 36,
+      "element_ids_appearing": [
+        "top_header_bar",
+        "vs_badge"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-up-fade",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "le Niger doit"
+    },
+    {
+      "frame_local": 114,
+      "element_ids_appearing": [
+        "soldier_medical"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-up-fade",
+      "duration_frames": 25,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Payer ses soldats."
+    },
+    {
+      "frame_local": 282,
+      "element_ids_appearing": [
+        "grain_sacks"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-up-fade",
+      "duration_frames": 25,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Nourrir une population"
+    },
+    {
+      "frame_local": 378,
+      "element_ids_appearing": [
+        "bottom_caption_box",
+        "dot_niger"
+      ],
+      "element_ids_changing": [
+        "top_bg_dunes",
+        "soldier_medical",
+        "grain_sacks",
+        "top_header_bar",
+        "vs_badge"
+      ],
+      "transition_type": "fade-in",
+      "duration_frames": 30,
+      "easing_hint": "linear",
+      "audio_cue_word": "Orano, lui,"
+    },
+    {
+      "frame_local": 558,
+      "element_ids_appearing": [
+        "arc_canada",
+        "dot_canada",
+        "bottom_caption_canada"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Canada,"
+    },
+    {
+      "frame_local": 588,
+      "element_ids_appearing": [
+        "arc_kazakhstan",
+        "dot_kazakhstan",
+        "bottom_caption_kazakhstan"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Kazakhstan."
+    }
+  ],
+  "permanent_motion": "Top half background has a subtle animated film grain/noise overlay. Bottom Mapbox map executes a very slow, continuous zoom-out/pan. The `dot_niger` element has a continuous CSS pulse-scale animation (1.0 to 1.2 and back) to show it as the focal origin point.",
+  "remotion_implementation_notes": "Use an AbsoluteFill wrapper for the top half (y=0, h=960) and bottom half (y=960, h=960). At frame 378, interpolate the opacity of the top half wrapper from 1.0 down to 0.4. Mapbox highlighting of Canada, Kazakhstan, and Niger should be driven by triggering layer visibility in Mapbox GL JS using standard expressions, synced to Remotion's frame count. The SVG arcs should be rendered in an overlay SVG canvas exactly matching the map viewport, using `strokeDasharray` and `strokeDashoffset` for the 'draw-stroke' effect.",
+  "fidelity_warnings": "The exact projection curvature of the arcs (`arc_canada`, `arc_kazakhstan`) needs to be calculated via D3-geo or a Mapbox utility function projecting geographical lon/lat to screen pixel coordinates on each frame to stay locked to the panning Mapbox layer. Hardcoded SVG paths in the JSON are approximate estimates for the final frame; dynamically generate them in React."
+}

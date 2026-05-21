@@ -41,6 +41,7 @@
 | Tilt up | **BIEN** | Confirme scene 5B baobab (side→top-down) |
 | Lateral track | **BIEN** | Scene 6A Sonjata |
 | Over-the-shoulder (OTS) | **BIEN** | Pas encore teste paper-craft mais documente |
+| **OTS Reveal** (via Video Extend) | **EXCELLENT** | Valide Thiaroye S2 extend 2026-04-25. Voir section dediee bas du fichier. |
 | Handheld dynamic | **BIEN** | Scene 7C arc Sonjata, ajouter "natural shake" |
 | Slow optical zoom | **OK** | Moins intime qu'un dolly — prefer dolly si possible |
 | Reveal from blur | **A TESTER** | Pas encore teste sur paper-craft |
@@ -279,3 +280,49 @@ Nos instincts cinematographiques etaient bons mais on n'avait pas le **vocabulai
 - Notion library de Yannis (paid) : https://yannisashay.gumroad.com/l/cqxop
 - Application Sonjata validee : `memory/tools/minimax.md` (Option B musique + hook pattern)
 - Application Thiaroye a venir : manifest `src/projects/geoafrique-shorts/manifests/thiaroye-manifest.json`
+
+---
+
+## OTS Reveal via Video Extend (Seedance reference-to-video)
+
+**Validee 2026-04-25 sur Thiaroye V5 Scene 2 extend. Cout $0.91 pour 5s.**
+
+### Principe
+
+Le clip source contient un personnage en silhouette OTS (Over-The-Shoulder) avec d'autres personnages au plan moyen. Via Video Extend (`bytedance/seedance-2.0/reference-to-video`), on demande a la camera de glisser lateralement / pivoter vers le contre-champ pour reveler le visage du personnage initialement cache.
+
+Seedance peut interpreter cette consigne de deux facons :
+1. **Orbite litterale 45°** : la camera glisse autour, tous les personnages restent dans le cadre.
+2. **Travelling-cut implicite** : la camera passe d'un plan moyen (table + tirailleurs + officier silhouette) a un close-up du personnage revele, les autres personnages sortent du cadre. C'est ce que Seedance a livre sur Thiaroye S2.
+
+### Pourquoi le travelling-cut est superieur (lecon Aziz 2026-04-25)
+
+La sortie des autres personnages du cadre n'est PAS une perte. Elle cree une **subjectivite narrative implicite** : le spectateur etait avec eux (cote tirailleurs), et quand la camera glisse vers le personnage revele sans eux, on adopte LEUR regard. C'est une premiere personne narrative invisible, beaucoup plus forte qu'une orbite neutre.
+
+### Conditions de succes
+
+- **Source video** : doit contenir le personnage cible en silhouette OTS (epaules, kepi, profil suggere). Sans cette ancre, Seedance ne sait pas qui reveler.
+- **Difference morphologique entre personnages** (ex: officier blanc / tirailleurs noirs) : formuler la contrainte 3 fois dans le prompt sous angles differents — `"WHITE FRENCH OFFICER, pale Caucasian skin"` + `"NO drift to dark skin tone"` + `"skin contrasts visibly with the tirailleurs' skin"`.
+- **Accepter une legere derive BD sur le visage revele** : Seedance complexifie les visages au close-up (plus de traits que les tirailleurs paper-craft). Editorialement positif — cree une asymetrie morale visible entre les deux camps.
+- **Duree ideale** : 5s. Assez long pour que la revelation respire, court assez pour que la grammaire cinematographique tienne.
+
+### Quand l'utiliser
+
+- **Confrontation entre deux poles** : un demandeur et un decideur, un accusateur et un accuse. Le silence partage devient la dramaturgie.
+- **Revelation d'autorite invisible** : l'officier dans Thiaroye, le juge muet, le bureaucrate qui refuse.
+- **Moment ou l'on veut montrer le visage de l'oppresseur** sans changer de scene.
+
+### Quand ne PAS l'utiliser
+
+- Si tu veux garder TOUS les personnages dans le cadre tout au long → preferer Orbit 45° classique en i2v sans video extend (controle plus strict)
+- Si la source ne contient pas la silhouette OTS du personnage cible → Seedance va inventer un nouveau personnage de toutes pieces (drift garanti)
+
+### Insight strategique : Video Extend > regen frames (2026-04-25)
+
+**Aziz lecon** : pour etendre une scene de N secondes a N+5 secondes, **prefere Video Extend a la generation d'une nouvelle image first-frame/last-frame**. Pourquoi :
+- Coherence stylistique 100% preservee (pas de drift entre deux clips i2v independants)
+- Pas besoin de regenerer une image Gemini de continuation
+- Cout : $0.1814/s (0.6x discount vs i2v classique)
+- Seedance suit les prompts de continuation avec fidelite
+
+**Implication pour les futurs dashboards** : pour chaque scene depassant 10s, considerer en option : "clip principal X secondes + Video Extend Ys" plutot que de scinder en 2 clips i2v independants.

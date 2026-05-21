@@ -1,0 +1,24 @@
+# scene5b variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: []
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Macro close-up of a stone memorial wall. Center of frame: a single engraved name -- letter silhouettes only, no readable text. Sharp engraving, shadow line inside the letters (flat dark aplat).
+
+Around the center: 4-5 blurred engraving silhouettes suggesting other names -- just shapes, no detail.
+
+STYLE: paper-craft on stone -- flat color fills (cool grey-beige stone), paper-kraft texture, thick dark outlines around engraved recesses.
+
+PALETTE: cool grey-beige stone. Raking cold light from the left casting long shadows inside the engravings. No color -- stark and monolithic.
+
+COMPOSITION:
+- Central engraved name: sharp letter silhouettes, centered
+- Surrounding names: blurred shapes at varying distances
+- Lower-left corner: a single dried leaf resting on the stone ledge (paper-craft flat shape, dark brown)
+- No other objects
+
+CRITICAL TECHNICAL RULES:
+- NO readable text -- just engraving silhouettes
+- Flat color fills only, no hatching, no gradients
+- 9:16 vertical (1080x1920)

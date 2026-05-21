@@ -1,0 +1,274 @@
+[
+  {
+    "time": "22:12:40",
+    "msg": "=== Shaka Zulu PixelLab Asset Generation ==="
+  },
+  {
+    "time": "22:12:40",
+    "msg": "Output dir: /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/assets"
+  },
+  {
+    "time": "22:12:40",
+    "msg": "\n--- Phase 1: Static sprites ---"
+  },
+  {
+    "time": "22:12:40",
+    "msg": "Generating static: shaka-static..."
+  },
+  {
+    "time": "22:13:07",
+    "msg": "  Saved: shaka-static.png (128x128)"
+  },
+  {
+    "time": "22:13:09",
+    "msg": "Generating static: warrior-static..."
+  },
+  {
+    "time": "22:13:49",
+    "msg": "  Saved: zulu-warrior-static.png (128x128)"
+  },
+  {
+    "time": "22:13:51",
+    "msg": "\n--- Phase 2: Walk cycles ---"
+  },
+  {
+    "time": "22:13:51",
+    "msg": "Generating walk cycle: shaka-walk-east (6 frames)..."
+  },
+  {
+    "time": "22:13:51",
+    "msg": "  Frame 1/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:14:16",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:14:17",
+    "msg": "  Frame 2/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:14:57",
+    "msg": "    Saved frame_001.png (128x128)"
+  },
+  {
+    "time": "22:14:58",
+    "msg": "  Frame 3/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:15:17",
+    "msg": "    Saved frame_002.png (128x128)"
+  },
+  {
+    "time": "22:15:18",
+    "msg": "  Frame 4/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:15:48",
+    "msg": "    Saved frame_003.png (128x128)"
+  },
+  {
+    "time": "22:15:49",
+    "msg": "  Frame 5/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:16:17",
+    "msg": "    Saved frame_004.png (128x128)"
+  },
+  {
+    "time": "22:16:18",
+    "msg": "  Frame 6/6 [shaka-walk-east]..."
+  },
+  {
+    "time": "22:16:48",
+    "msg": "    Saved frame_005.png (128x128)"
+  },
+  {
+    "time": "22:16:51",
+    "msg": "Generating walk cycle: warrior-walk-east (6 frames)..."
+  },
+  {
+    "time": "22:16:51",
+    "msg": "  Frame 1/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:17:20",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:17:22",
+    "msg": "  Frame 2/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:18:03",
+    "msg": "    Saved frame_001.png (128x128)"
+  },
+  {
+    "time": "22:18:05",
+    "msg": "  Frame 3/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:18:30",
+    "msg": "    Saved frame_002.png (128x128)"
+  },
+  {
+    "time": "22:18:31",
+    "msg": "  Frame 4/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:19:22",
+    "msg": "    Saved frame_003.png (128x128)"
+  },
+  {
+    "time": "22:19:24",
+    "msg": "  Frame 5/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:20:15",
+    "msg": "    Saved frame_004.png (128x128)"
+  },
+  {
+    "time": "22:20:16",
+    "msg": "  Frame 6/6 [warrior-walk-east]..."
+  },
+  {
+    "time": "22:21:19",
+    "msg": "    Saved frame_005.png (128x128)"
+  },
+  {
+    "time": "22:21:23",
+    "msg": "\n--- Phase 3: Action animations ---"
+  },
+  {
+    "time": "22:21:23",
+    "msg": "Generating action: shaka-warcry (4 frames)..."
+  },
+  {
+    "time": "22:21:23",
+    "msg": "  Frame 1/4 [shaka-warcry]..."
+  },
+  {
+    "time": "22:22:06",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:22:07",
+    "msg": "  Frame 2/4 [shaka-warcry]..."
+  },
+  {
+    "time": "22:22:49",
+    "msg": "    Saved frame_001.png (128x128)"
+  },
+  {
+    "time": "22:22:50",
+    "msg": "  Frame 3/4 [shaka-warcry]..."
+  },
+  {
+    "time": "22:23:18",
+    "msg": "    Saved frame_002.png (128x128)"
+  },
+  {
+    "time": "22:23:19",
+    "msg": "  Frame 4/4 [shaka-warcry]..."
+  },
+  {
+    "time": "22:23:50",
+    "msg": "    Saved frame_003.png (128x128)"
+  },
+  {
+    "time": "22:23:53",
+    "msg": "Generating action: warrior-warcry (4 frames)..."
+  },
+  {
+    "time": "22:23:53",
+    "msg": "  Frame 1/4 [warrior-warcry]..."
+  },
+  {
+    "time": "22:24:12",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:24:13",
+    "msg": "  Frame 2/4 [warrior-warcry]..."
+  },
+  {
+    "time": "22:24:41",
+    "msg": "    Saved frame_001.png (128x128)"
+  },
+  {
+    "time": "22:24:42",
+    "msg": "  Frame 3/4 [warrior-warcry]..."
+  },
+  {
+    "time": "22:25:12",
+    "msg": "    Saved frame_002.png (128x128)"
+  },
+  {
+    "time": "22:25:14",
+    "msg": "  Frame 4/4 [warrior-warcry]..."
+  },
+  {
+    "time": "22:25:41",
+    "msg": "    Saved frame_003.png (128x128)"
+  },
+  {
+    "time": "22:25:44",
+    "msg": "Generating action: warrior-attack (4 frames)..."
+  },
+  {
+    "time": "22:25:44",
+    "msg": "  Frame 1/4 [warrior-attack]..."
+  },
+  {
+    "time": "22:26:15",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:26:16",
+    "msg": "  Frame 2/4 [warrior-attack]..."
+  },
+  {
+    "time": "22:26:56",
+    "msg": "    Saved frame_001.png (128x128)"
+  },
+  {
+    "time": "22:26:57",
+    "msg": "  Frame 3/4 [warrior-attack]..."
+  },
+  {
+    "time": "22:27:35",
+    "msg": "    Saved frame_002.png (128x128)"
+  },
+  {
+    "time": "22:27:37",
+    "msg": "  Frame 4/4 [warrior-attack]..."
+  },
+  {
+    "time": "22:28:04",
+    "msg": "    Saved frame_003.png (128x128)"
+  },
+  {
+    "time": "22:28:07",
+    "msg": "Generating action: shaka-royal (1 frames)..."
+  },
+  {
+    "time": "22:28:07",
+    "msg": "  Frame 1/1 [shaka-royal]..."
+  },
+  {
+    "time": "22:28:53",
+    "msg": "    Saved frame_000.png (128x128)"
+  },
+  {
+    "time": "22:28:56",
+    "msg": "\n=== GENERATION COMPLETE ==="
+  },
+  {
+    "time": "22:28:56",
+    "msg": "Assets saved to: /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/assets"
+  },
+  {
+    "time": "22:28:56",
+    "msg": "Log: /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/assets/generation-log.json"
+  }
+]

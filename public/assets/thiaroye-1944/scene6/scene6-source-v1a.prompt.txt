@@ -1,0 +1,32 @@
+# scene6 variation A source image prompt
+Model: models/gemini-3.1-flash-image-preview
+Style anchor: /Users/clawdbot/Workspace/remotion/public/assets/thiaroye-1944/scene1/scene1-source-v4.png
+Charrefs: ['jeune_temoin']
+
+---PROMPT---
+Paper-craft illustration, 9:16 vertical. SCENE: Dakar coast at sunset, present day. A young Senegalese man (20s) stands at the water's edge, BACK TO CAMERA, gaze toward the horizon. His posture echoes the tirailleurs from Scene 1 -- dignified, weight committed, feet planted. He wears simple modern clothes (an open jacket over a light shirt, rolled-up jeans).
+
+STYLE: Match style anchor + jeune-temoin charref. Paper-craft, thick black outlines, flat color fills, paper kraft texture. Strict dot-eyes style (not visible from behind, applied to any visible face).
+
+PALETTE: RESTORED full warm palette -- golden sunset sky (warm orange to deep indigo gradient at the top), warm red-ochre earth at his feet, deep ocean blue-green, silver highlights on the water. Warmth returns for the first time in the film.
+
+COMPOSITION:
+- Young man center-foreground, back to camera, three-quarter back view
+- Ocean mid-ground filling horizontal band across the frame
+- Sun low on the horizon, its reflection a warm vertical strip on the water
+- Sky background occupies upper two-thirds -- gradient sunset
+- A few small personal objects at his feet on the sand: an old photograph (face down), a small shell
+- 2-3 bird silhouettes already in the sky
+
+LIFE IN THE SCENE (R-DYNAMIC -- multiple anchors):
+- The young man: shirt collar caught by wind (hem lifting), hair tousled by the wind, one foot slightly forward, weight committed
+- Waves lapping at the shoreline (paper-craft flat ripple lines)
+- Wind in his clothing (visible billow in jacket)
+- Birds in the sky (flat silhouettes)
+- A small piece of driftwood on the shore
+
+CRITICAL TECHNICAL RULES:
+- Flat color fills only, no hatching, no shading gradients
+- Warmth comes from palette choice, not from shading
+- No text visible anywhere
+- 9:16 vertical (1080x1920)

@@ -1,0 +1,37 @@
+{
+  "character": {
+    "id": "640ee1ea-f713-49f6-bef9-7e63deebfb45",
+    "name": "empire-ghana-mande-epeiste",
+    "prompt": "A 13th century Mande warrior of the Mali Empire. Swordsman with shield. Wearing studded leather armor, sandals, fabric headwrap dark green. Carrying a curved iron sword at side and round wooden shield with geometric Mande pattern on left arm. Dark tan skin. Determined warrior posture. Pixel art with sepia warm palette, dark green headwrap, brown leather, iron weapon accents.",
+    "size": {
+      "width": 132,
+      "height": 132
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-04T02:58:01.853736+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "animating-58bffda0": {
+        "north": [
+          "animations/animating-58bffda0/north/frame_000.png",
+          "animations/animating-58bffda0/north/frame_001.png",
+          "animations/animating-58bffda0/north/frame_002.png",
+          "animations/animating-58bffda0/north/frame_003.png",
+          "animations/animating-58bffda0/north/frame_004.png",
+          "animations/animating-58bffda0/north/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-04T03:03:05.029272"
+}

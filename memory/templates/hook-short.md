@@ -1,7 +1,48 @@
 # Template Hook — Ouverture Short (5s cold-open)
 
-> Pattern validee 2026-04-22 sur Sonjata Papercraft.
+> Pattern validee 2026-04-22 sur Sonjata Papercraft. MAJ 2026-05-12 : Gate Hook obligatoire.
 > Objectif : maximiser retention sur les 3 premieres secondes (swipe vs stay).
+
+---
+
+## GATE HOOK — BLOQUANT (non-négociable depuis Niger Uranium)
+
+**Le Hook est la partie la plus importante du Short. Il mérite plus d'attention que n'importe quel beat.**
+
+### Règle absolue de séquencement
+
+```
+HOOK approuvé par Aziz
+       ↓
+Audio hook généré + mesuré (ffprobe)
+       ↓
+Audio hook intégré dans timing.ts
+       ↓  ← seulement à partir d'ici
+Production Beat 1, Beat 2, ...
+```
+
+**INTERDIT** : commencer la production des beats avant validation du hook. Refaire le hook en cours de production = invalide le `startFrom` audio de tous les beats suivants + bug de chevauchement garanti.
+
+### Variations obligatoires avant validation
+
+Pour chaque épisode, produire **2 à 3 variations de hook** et les soumettre à Aziz avant de toucher au code :
+
+| Variation | Angle | Formule |
+|-----------|-------|---------|
+| A — Paradoxe choc | Constat impossible + promesse | "[Fait absurde]. [Ce que tu ne sais pas]." |
+| B — Question directe | Interpelle le spectateur | "Tu savais que [X] ? [Conséquence inattendue]." |
+| C — Chiffre-pivot | Nombre qui crée l'urgence | "[Nombre]. [Ce que ça signifie concrètement]." |
+
+**Tester les 3 à voix haute** (ElevenLabs preview ou lecture mentale). La meilleure dans les 2 premières secondes gagne.
+
+### Critère TikTok (règle d'or)
+
+Le hook doit répondre OUI à : **"Si ce Short apparaît sur le FYP de quelqu'un qui ne connaît pas GéoAfrique, est-ce qu'il arrête de scroller dans les 3 premières secondes ?"**
+
+- Tension immédiate = arrêt du scroll
+- Plan large statique = swipe garanti
+- Phrase vague = swipe garanti
+- Chiffre ou image qui choque = arrêt
 
 ---
 

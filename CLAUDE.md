@@ -5,36 +5,99 @@ Claude est un Expert Video Director specialise dans Remotion.
 Aziz est le realisateur. Il decrit ce qu'il veut en francais. Il ne code pas.
 Claude ecrit TOUT le code. Zero code requis de la part d'Aziz.
 
+## Assets Index — Source de vérité unique (LIRE EN PREMIER)
+
+**`public/_shared/ASSETS-INDEX.md`** est la source de vérité unique pour tous les templates, composants partagés, assets visuels, refs Gemini, motion refs Seedance, SFX et backlog templates.
+
+**Règle obligatoire** :
+1. **Avant toute génération de prompt Gemini/Recraft/Seedance** : consulter cet index pour identifier le template/asset existant à réutiliser
+2. **Avant toute proposition de nouveau composant** : vérifier qu'il n'existe pas déjà dans l'index ou dans le backlog
+3. **Après toute validation Aziz d'un template/asset** : régénérer les previews via `python3 scripts/generate_template_previews.py [filter]` + mettre à jour la section correspondante de l'index
+
+**Pour Gemini i2i** : utiliser les URLs catbox des previews comme image-de-référence (déjà publiques). `public/_shared/previews/_manifest.json` est lisible programmatiquement.
+
+**Format previews** : start/mid/end pour templates animés, mid/end pour templates sans animation start, GIF optionnel uniquement si animation critique nécessite la dynamique.
+
 ## Memory Management (OBLIGATOIRE)
 
-### Au debut de chaque session
-1. MEMORY.md est auto-charge (index compact avec pointeurs vers fichiers thematiques)
-2. Consulter `episodic-memory` MCP (search) pour le contexte des sessions recentes
-3. Si travail sur le projet actif : lire `memory/COMPACT_CURRENT.md`
-4. Charger les fichiers thematiques pertinents selon la demande (voir routage ci-dessous)
+### Session Start — Orchestrateur (Claude principal) — NON-NEGOTIABLE
+
+**Premiere action de chaque session, AVANT toute reponse technique :**
+
+1. `MEMORY.md` est auto-charge — lire l'index et identifier les fichiers thematiques pertinents
+2. **Lire `.claude/agent-memory/shared/PIPELINE.md`** — connaitre l'etat exact de chaque projet actif (quel stage, quel agent a la main, quels blocages)
+3. **Lire PIPELINE.md pour les handoffs de stage** — reperer les stages COMPLETE non encore chainees. Le format de handoff est documente dans `.claude/agent-memory/shared/TODOWRITE-PATTERN.md` (convention de nommage dans PIPELINE.md, pas un mecanisme TodoWrite natif cross-agents).
+4. Charger les fichiers thematiques pertinents selon la demande (routage ci-dessous)
+
+**Sur handoff COMPLETE dans PIPELINE.md — proposer a Aziz de lancer le stage suivant :**
+- `[STAGE-1] COMPLETE` → proposer de spawner storyboarder
+- `[STAGE-2] COMPLETE` → proposer de spawner visual-producer (Visual Plan)
+- `[STAGE-3] APPROVED` → proposer de spawner visual-producer (assets)
+- `[STAGE-4] COMPLETE` → proposer de spawner remotion-composer
+- `[STAGE-5] COMPLETE` → proposer de spawner quality-reviewer
+- `[STAGE-6] APPROVE`  → informer Aziz → render final si accord
+- `[STAGE-6] MINOR FIX` → proposer de spawner l'agent responsable du fix
+- `[STAGE-6] RE-EVALUATE` → STOP → circuit breaker → Aziz decision
+
+Note : le chaining n'est pas automatique en session normale. Il devient autonome uniquement dans une session /goal active avec condition de completion explicite.
+
+**Pourquoi PIPELINE.md en debut de session :** les agents ecrivent leur handoff dans ce fichier. Sans le lire, Claude orchestre dans le vide et peut commander un Stage 4 quand le Stage 3 n'est pas encore validé. C'est la source de vérité inter-agents.
+
 **Ne JAMAIS affirmer "je ne peux pas" ou "je n'ai pas acces" sans avoir d'abord consulte la memoire.**
+
+### Session End — Orchestrateur (mise a jour pipeline)
+
+**Derniere action avant de rendre la main :**
+
+Si un stage a ete complete ou un etat a change durant la session :
+- Mettre a jour `.claude/agent-memory/shared/PIPELINE.md` avec le nouveau statut
+- Format : `## Stage N — Agent — Projet — Date [COMPLETE / IN PROGRESS / BLOCKED]`
+- Ne pas laisser PIPELINE.md en retard sur la realite — les agents downstream lisent ce fichier
 
 ### Routage outils — LIRE AVANT d'agir (NON-NEGOTIABLE)
 
-Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT d'ecrire du code ou un prompt** :
+Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT d'ecrire du code ou un prompt**. Si la ligne mentionne aussi un skill, le consulter en complement (jamais a la place de la memoire projet) :
 
-| Aziz parle de... | Lire ce fichier |
-|-------------------|-----------------|
-| Seedance, Dreamina, prompt video, clip | `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md` |
-| Seedance storyboard multi-cut (micro-seq 2-4 plans, <15s) | `memory/tools/seedance-storyboard-technique.md` |
-| **Mouvement camera, orbit, dolly, crane, OTS, tracking** | `memory/tools/camera-movements.md` |
-| **Ecrire un script Short, ebauche V1, nouveau projet** | `memory/templates/script-ebauche-v1.md` |
-| **Hook d'ouverture 5s, teaser, cold open** | `memory/templates/hook-short.md` |
-| **Formule Cesar, 7 beats Shorts, dynamisation script** | `research/cesar-formula.md` |
-| Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
-| Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` |
-| Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
-| ElevenLabs, voix, TTS, audio, narration | `memory/tools/elevenlabs.md` |
-| **Minimax, musique de fond, kora, griot, Mande** | `memory/tools/minimax.md` |
-| Remotion, animation, code, spring, render | `memory/tools/remotion.md` |
-| Pipeline, production, ordre des etapes | `memory/pipeline.md` |
-
-**Pourquoi** : ces fichiers contiennent nos regles specifiques, gotchas, et parametres valides par l'experience. Sans les lire, Claude risque d'utiliser des valeurs par defaut incorrectes.
+| Aziz parle de... | Lire ce fichier | Skills `.claude/skills/` a consulter aussi |
+|-------------------|-----------------|---------------------------------------------|
+| Seedance, Dreamina, prompt video, clip | `memory/tools/seedance-prompts.md` + `memory/tools/seedance-rules.md` | — |
+| Seedance storyboard multi-cut (micro-seq 2-4 plans, <15s) | `memory/tools/seedance-storyboard-technique.md` | — |
+| **Mouvement camera, orbit, dolly, crane, OTS, tracking** | `memory/tools/camera-movements.md` | — |
+| **Ecrire un script Short narratif (Heros Oublies, conte, tragedie, voyage)** | `memory/templates/script-ebauche-v1.md` | — |
+| **Ecrire un script Atlas (geo, taille, richesse-record, comparaison echelle, inventions chiffrees)** | `memory/templates/script-atlas-v1.md` | — |
+| **Produire un episode Atlas (audio + d3-geo + overlays + render Remotion)** | `memory/templates/atlas-template-v1.md` | `remotion-best-practices/rules/maps.md` |
+| **Coder une scene Atlas (TOUTE nouvelle scene, TOUT nouveau beat)** | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` OBLIGATOIRE avant d'ecrire une ligne de code | — |
+| **Composants Atlas reutilisables (AtlasMercator, AtlasCaravane, svgToComp, etc.)** | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` | — |
+| **Assets Seedance (style-refs, clips bruts, LoRA training)** | `public/seedance/INDEX.md` | — |
+| **Episodes Atlas — lecons + runbooks** | `memory/episodes/mansa-moussa/` ou `memory/episodes/shaka-zulu/` | — |
+| **Regles production Atlas (non-negotiable, patterns, checklist)** | `memory/rules-atlas-production.md` | — |
+| **Regles editoriales Souverain (sources, couleurs, grammaire, script Type B)** | `memory/rules-souverain-editorial.md` | — |
+| **Regles outils techniques (Lottie, PixelLab, Mapbox headless, audio, geo)** | `memory/rules-outils-techniques.md` | — |
+| **Tailwind CSS, layout flex, classes utilitaires, tokens gold/navy/ivory** | `memory/feedback_tailwind-remotion-setup.md` — Tailwind 3.4 INSTALLE. `memory/MEMORY.md` section STACK. Composant defaut : `SplitScreenSouverain.tsx`. Framer Motion INTERDIT. | — |
+| **TOUT nouveau composant Souverain / template / beat** | **STOP — Tailwind OBLIGATOIRE. Zero styles inline pour couleurs/typo/spacing. Utiliser `text-gold`, `text-ivory`, `bg-navy`, `text-stat-lg`, `pt-safe-top`, etc. Lire `tailwind.config.ts` tokens AVANT d'ecrire une ligne.** | — |
+| **Coder un beat Souverain (Beat*.tsx) — ORDRE OBLIGATOIRE** | **Voir section "Pipeline Beat Souverain" ci-dessous — NON-NEGOTIABLE.** Résumé : breakdown → code Tailwind → self-review 19/23 → review Gemini → corrections → upload notify. REGLE R1 : max 8s sans changement visible. | — |
+| **SplitScreen, split 50/50, deux colonnes, carte vs drapeau, entite vs entite** | `src/projects/_shared/components/layouts/SplitScreenSouverain.tsx` — composant generique Tailwind. Consulter ASSETS-INDEX pour props + exemple Zimbabwe. | — |
+| **animations presets, fadeIn, popIn, gentleReveal, countUp, drawPath** | `src/projects/_shared/animations.ts` — 10 presets disponibles. Importer directement. | — |
+| **Lucide, icones, icone React video** | `lucide-react` est installe — `import { Icon } from "lucide-react"`. Compatibles render Remotion. | — |
+| **Regles workflow/processus (jury APIs, collaboration, sujets go/no-go)** | `memory/rules-workflow-processus.md` | — |
+| **Hook d'ouverture 5s, teaser, cold open** | `memory/templates/hook-short.md` | — |
+| **Sous-titres Shorts (TikTok/Karaoke), camera shake** | `memory/templates/subtitles-shorts.md` | — |
+| **Formule Cesar, 7 beats Shorts, dynamisation script** | `memory/tools/seedance-community.md` | — |
+| Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` | — |
+| Gemini, retouche image, character sheet, correction | `memory/tools/gemini.md` | — |
+| Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` | — |
+| ElevenLabs, voix, TTS, audio, narration | `memory/tools/elevenlabs.md` | — |
+| **Minimax, musique de fond, kora, griot, Mande** | `memory/tools/minimax.md` | — |
+| **Remotion, animation, render, GPU, headless, composition** | `memory/tools/remotion.md` | `remotion-best-practices/rules/` (notamment `maps.md`), `remotion-video-toolkit/rules/rendering.md` |
+| **Render cloud Vercel (render > 30s, liberer machine locale)** | `scripts/render-on-vercel.py` — defaut pour tout render long. Mapbox OK. 100GB-h/mois gratuit. | — |
+| **Comparaison surfaces geo (thetruesize.com, pays dans pays, vraie taille)** | `memory/tools/d3-geo-taille-comparative.md` OBLIGATOIRE — pattern precompute + translate lat=0 + clipPath. Composant : `src/projects/_shared/components/inserts/SurfaceComparison.tsx`. Asset : `public/_shared/geo-data/us-48states.json` | — |
+| **Mapbox geocoding, coordonnees, distances, GeoJSON (Atlas + Souverain + tout projet carte)** | `memory/tools/mapbox-mcp.md` OBLIGATOIRE — MCP en premier, API REST seulement si MCP defaillant apres 2-3 essais | — |
+| **Mapbox style.json, design carte, couleurs, typo cartographique, Parchemin Mande** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-cartography`, `mapbox-style-quality` |
+| **Mapbox + React/Remotion, integration, lifecycle, token, perf headless** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-web-integration-patterns`, `mapbox-web-performance-patterns` |
+| **Mapbox data viz, choropleth, heat map, overlays animes, recipe par cas d'usage** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-data-visualization-patterns`, `mapbox-style-patterns` |
+| Pipeline, production, ordre des etapes | `memory/pipeline.md` | — |
+| **Breakdown Gemini 3.1-pro (prompt + schema JSON + checklist)** | `memory/workflow-gemini-breakdown-schema.md` OBLIGATOIRE — lire avant tout script breakdown Souverain | — |
+| **Twelve Labs, analyse video post-render, ton, retention, artefacts, CTA** | `memory/tools/twelve-labs.md` | — |
 
 ### Regle : Templates obligatoires AVANT tout prompt ou image (NON-NEGOTIABLE)
 
@@ -51,7 +114,15 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 
 **ZERO EXCEPTION** : meme pour un "test rapide". Les erreurs les plus couteuses sont arrivees sur des prompts "simples" (diversite visages oubliee 3x le 2026-04-07, ethnicity pas specifiee, enfant dans scene militaire).
 
-**Pourquoi cette regle remplace l'ancienne** : l'ancienne disait "relire les 57 regles". Ca ne marchait pas — trop de regles, pas actionnables en milieu de session. Les templates integrent les regles critiques + techniques DA + angles camera directement dans le workflow. Le template = l'outil de travail.
+### Regle : Downscale AVANT toute analyse visuelle (NON-NEGOTIABLE)
+
+**Avant d'analyser une image ou vidéo render (soi-même ou via Kimi), TOUJOURS passer par le script :**
+```bash
+./scripts/downscale-for-review.sh <fichier.mp4>   # extrait 5 frames 432p → /tmp/review_frames/
+./scripts/downscale-for-review.sh <image.png>     # downscale → image_review.png
+```
+**Pourquoi :** 1 frame full HD = 2125 tokens. 1 frame 432p = 425 tokens. Sur 5 frames = 8500 tokens économisés par review.
+**Exception unique :** vérification de texte pixel-precise ou labels Mapbox fins → passer `MAX_HEIGHT=768` en tête du script.
 
 ### Regle : Review visuelle AVANT Kimi (NON-NEGOTIABLE)
 
@@ -85,55 +156,157 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 
 ---
 
-### Regle : Doc-First avant toute affirmation sur un outil (NON-NEGOTIABLE)
+### Regle : Verification avant affirmation (NON-NEGOTIABLE)
 
-**Avant d'affirmer quoi que ce soit sur les CAPACITES d'un outil (PixelLab, Aseprite, Phaser, ElevenLabs, ou tout autre outil du projet) :**
+Trois cas distincts. Ne pas les confondre.
 
-1. Consulter la doc MCP via `ToolSearch` (paramètres, options, enums disponibles)
-2. Si pas de MCP : `WebSearch` sur la doc officielle
-3. Seulement apres verification → affirmer avec confiance, OU signaler l'incertitude explicitement
+**1. Capacites d'un outil** (PixelLab, ElevenLabs, Mapbox, Remotion, etc.) → consulter la doc AVANT d'affirmer ce que l'outil peut/ne peut pas faire.
+- D'abord MCP via `ToolSearch` (parametres, enums)
+- Sinon `WebSearch` ou skills `.claude/skills/<outil>-*` si disponibles
+- Sinon dire explicitement "Je n'ai pas consulte la doc, laisse-moi verifier"
+- **Ne JAMAIS dire "X ne peut pas faire Y" sans avoir lu les parametres de X.** S'applique aussi aux recommandations strategiques (ne pas recommander d'abandonner un outil sans avoir verifie ses capacites documentees).
+- Erreur passee : "PixelLab ne peut pas generer side-view" affirme sans lire `create_map_object` qui contient `view: "side"` explicitement.
 
-**Signaux obligatoires quand non verifie :**
-- "Je n'ai pas consulte la doc, je ne suis pas certain — laisse-moi verifier d'abord"
-- Ne JAMAIS dire "X ne peut pas faire Y" sans avoir lu les parametres de X
+**2. Etat local de la machine** (chemins, versions installees, fichiers, binaires) → TOUJOURS verifier avec Bash (`ls`, `which`, `find`) avant d'affirmer. Si l'affirmation conditionne une decision >30 min a corriger : verifier d'abord, surtout avant d'ecrire dans une memoire persistante.
+- Erreur passee : "Aseprite CLI non disponible" propage dans 5 fichiers memoire sans avoir teste `/Applications/`, `/Volumes/`, Steam, DMG monte.
 
-**Exemple d'erreur a ne pas reproduire :** Affirmer "PixelLab ne peut pas generer de batiments en side-view" sans avoir consulte les parametres de `create_map_object` — qui contient `view: "side"` explicitement. Cette affirmation incorrecte a failli faire abandonner la bonne solution.
-
-**La regle s'applique aussi aux recommandations strategiques :** Ne pas recommander d'abandonner un outil ou une approche sans avoir d'abord verifie ses capacites documentees.
-
----
-
-### Regle : Distinguer connaissance generale vs etat local (NON-NEGOTIABLE)
-
-Deux categories d'affirmations existent. Les confondre cause des erreurs qui se propagent dans les memoires agents.
-
-**Connaissance generale** (patterns, syntaxe, comportement documenté d'un outil) = affirmer avec confiance.
-
-**Etat local de la machine** (chemins de fichiers, versions installees, fichiers presents, binaires disponibles) = TOUJOURS verifier avec Bash avant d'affirmer.
-
-Regle concrète : si une affirmation sur l'environnement local conditionne une decision qui prendra >30 min a corriger, verifier d'abord avec `ls`, `which`, `find`, ou la commande appropriee. Ne pas ecrire dans les memoires agents un verdict sur l'etat local sans l'avoir teste.
-
-Exemple d'erreur a ne pas reproduire : affirmer "Aseprite CLI non disponible" sans avoir verifie tous les chemins possibles (`/Applications/`, `/Volumes/`, Steam, DMG monte). Cette erreur a propage une information fausse dans 5 fichiers memoire.
+**3. Connaissance generale** (patterns, syntaxe documentee) → affirmer avec confiance, mais signaler explicitement l'incertitude des qu'on sort de ce qu'on connait reellement.
 
 ### Sauvegarde autonome EN COURS de session
 Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situations :
 
-| Declencheur | Action | Fichier cible |
-|-------------|--------|---------------|
-| Nouvelle API/outil decouverte ou prouvee | Ajouter la capacite | `CLAUDE.md` (section Capacites) + `memory/apis-and-tools.md` (details) |
-| Nouvelle cle API ajoutee a .env | Ajouter dans la section Cles API | `CLAUDE.md` |
-| Lecon importante apprise (bug, pattern, anti-pattern) | Documenter | `memory/key-learnings.md` |
-| Changement d'etat du projet (phase, etape, decision) | Mettre a jour | `memory/current-project.md` |
-| Nouveau skill cree ou modifie | Ajouter/mettre a jour | `CLAUDE.md` (section Skills) |
-| Nouvelle decouverte sur un outil existant (gotcha, limite, format) | Ajouter dans le fichier thematique | `memory/*.md` correspondant |
+| Declencheur | Fichier cible |
+|-------------|---------------|
+| Nouvelle API/outil decouverte ou prouvee | `memory/apis-and-tools.md` |
+| Nouvelle cle API ajoutee a `.env` | `memory/apis-and-tools.md` (capacite) ; la cle reste dans `.env` uniquement |
+| Lecon importante apprise (bug, pattern, anti-pattern) | `memory/key-learnings.md` |
+| Changement d'etat du projet (phase, etape, decision) | `memory/COMPACT_CURRENT.md` (projet actif) |
+| Nouvelle decouverte sur un outil existant (gotcha, limite, format) | `memory/tools/<outil>.md` correspondant |
+| Routage outil/skill nouveau a installer | CLAUDE.md (tableau Routage outils) |
 
 **Regle** : Sauvegarder IMMEDIATEMENT apres la decouverte, pas en fin de session.
 **Format** : Bref et factuel. Pas de prose. Juste les faits techniques necessaires pour la prochaine session.
 **Annonce** : Dire a Aziz "Je sauvegarde [X] dans [fichier]" en une ligne, puis continuer le travail.
 
+## Pipeline Beat Souverain (NON-NEGOTIABLE)
+
+> S'applique dès la pré-production — pas seulement au moment de coder.
+> Source de vérité : `scripts/beat-session.py`. Ne jamais improviser en dehors de ce pipeline.
+
+### Pré-production (avant toute session de code)
+
+Avant de planifier, manifester ou coder un beat :
+1. Vérifier si `/tmp/{episode}-beat{N}-breakdown.json` existe déjà
+2. Si non → `python3 scripts/beat-session.py --episode X --beat N --phase breakdown`
+3. Le breakdown Gemini produit les zones en %, tailles, classes Tailwind — **c'est lui la référence**, pas une estimation manuelle
+4. Le manifest technique et le storyboard `.md` découlent du JSON breakdown, pas l'inverse
+
+### Pipeline complet — 6 étapes obligatoires
+
+```
+1. breakdown   → python3 scripts/beat-session.py --episode X --beat N --phase breakdown
+                  → JSON avec tailwind_layout, code_values, segments
+                  → STOP — lire JSON + storyboard image avant de coder
+
+2. code        → Beat*.tsx avec Tailwind OBLIGATOIRE
+                  → h-[X%] + flex + justify-center (jamais position:absolute + paddingTop manuel)
+                  → tokens : text-gold / text-ivory / bg-navy / text-stat-lg / text-entity
+                  → render → out/episodes/{ep}/wip/beat{N}_v1.mp4
+
+3. self-review → python3 scripts/beat-session.py --episode X --beat N --phase self-review --video ...
+                  → 23 critères (remplissage, layout, typo, couleurs, R1, fidélité, Tailwind)
+                  → Seuil : 19/23 minimum — BLOQUANT si score insuffisant
+                  → Corriger + re-render jusqu'à 19/23 AVANT d'appeler Gemini
+
+4. review      → python3 scripts/beat-session.py --episode X --beat N --phase review --video ...
+                  → Appel Gemini 2 (UNIQUE — jamais relancer)
+                  → JSON code_values + corrections précises
+
+5. corrections → Appliquer code_values du JSON review + storyboard comme référence
+                  → Itérer en autonome jusqu'à satisfaction (sans nouvel appel Gemini)
+                  → Extraire frames, comparer storyboard, juger soi-même
+
+6. upload      → python3 scripts/beat-session.py --episode X --beat N --phase upload --video ...
+                  → Upload render + storyboard sur catbox → ntfy Aziz avec liens
+                  → Aziz valide sur mobile → FINAL promu
+```
+
+### Règles absolues
+
+- **2 appels Gemini MAX par beat** : 1 breakdown + 1 review. Jamais plus.
+- **Tailwind partout** : zéro couleur/typo/spacing inline si token existe. Exception : valeurs SVG (fill, stroke, cx, cy) et animations (opacity, transform).
+- **R1 : max 8s** sans changement visuel — glow/float ne comptent PAS.
+- **self-review avant review** : ne jamais appeler `--phase review` sans avoir passé `--phase self-review` >= 19/23.
+- **upload avant présentation** : ne jamais présenter un render à Aziz sans avoir lancé `--phase upload`.
+
+---
+
 ## Langue
 - Communication : Francais
 - Code et docs techniques : Anglais
+
+---
+
+## Regle : Hygiene dossier out/ (NON-NEGOTIABLE)
+
+### Structure permanente — les seuls dossiers autorisés dans out/
+
+```
+out/
+├── PRET-PUBLICATION/          ← livrables complets validés Aziz (1 fichier par épisode, jamais modifier)
+├── episodes/                  ← beats validés, 1 fichier par beat
+│   └── <nom-episode>/
+│       ├── wip/               ← renders de travail session en cours (purger en fin de session)
+│       ├── versions/          ← candidats présentés à Aziz (purger après validation)
+│       └── beat<N>-FINAL.mp4  ← unique fichier validé (promu depuis versions/)
+├── templates-souverain/       ← renders finaux templates (FINAL-*.mp4) + _dev/ frames jury
+└── _r-and-d/                 ← POC, tests techniques, Mapbox R&D (durée de vie implicite 7j)
+```
+
+### Convention de nommage — casse indique le niveau de revue
+
+Inspiré des pipelines VFX professionnels (CAVE Academy / Frame.io) :
+
+| Nommage | Signification | Dossier |
+|---------|--------------|---------|
+| `beat2_v3.mp4` | itération interne de travail | `wip/` |
+| `beat2_V3.mp4` | version présentée à Aziz pour review | `versions/` |
+| `beat2-FINAL.mp4` | validé — ne bouge plus | racine `episodes/<ep>/` |
+| `<episode>-FINAL.mp4` | épisode complet livrable | `PRET-PUBLICATION/` |
+
+### Règles automatiques — Claude applique sans qu'Aziz le demande
+
+**Pendant une session de production** :
+- Renders de travail → `out/episodes/<ep>/wip/beat2_v3.mp4`
+- Avant de présenter à Aziz → copier dans `versions/` avec majuscule : `beat2_V3.mp4`
+- Ne JAMAIS laisser de fichier à la racine de `out/`
+
+**Au moment de la validation** (Aziz dit "c'est bon", "validé", "j'approuve", "ça marche") :
+1. Promouvoir `versions/beat2_V3.mp4` → `out/episodes/<ep>/beat2-FINAL.mp4`
+2. Supprimer tout le contenu de `wip/` et `versions/` pour ce beat
+3. Annoncer : "Beat 2 promu → `out/episodes/<ep>/beat2-FINAL.mp4`, wip/versions purgés."
+
+**Livrables épisode complet** :
+- Déplacer vers `out/PRET-PUBLICATION/<episode>-FINAL.mp4`
+- Vider le dossier épisode (les beats FINAL individuels peuvent rester)
+
+**Interdit absolu** :
+- Fichiers orphelins à la racine de `out/`
+- Dossiers nommés par date de session (`jour4/`, `session-2026-05-09/`)
+- Plus de 3 fichiers dans `wip/` simultanément pour le même beat
+
+### Règle dashboard here.now
+
+Après tout ajout de template validé dans l'ASSETS-INDEX :
+1. Extraire frames mid/end (ffmpeg)
+2. Uploader sur catbox (PNG)
+3. Ajouter l'entrée dans `dashboard/templates-souverain.html`
+4. Mettre à jour via le script en mode UPDATE (slug + claimToken dans `dashboard/dashboard-url.md`) :
+   ```bash
+   ~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh \
+     dashboard/templates-souverain.html <slug> <claimToken>
+   ```
+5. L'URL reste identique — ne pas toucher à `dashboard/dashboard-url.md` (sauf si slug change)
 
 ---
 
@@ -154,79 +327,6 @@ Claude doit signaler AVANT d'implementer — pas attendre qu'Aziz decouvre le pr
 
 ---
 
-## Workflow des 9 Phases (Methode Andy Lo etendue)
-
-**REGLE ABSOLUE : Ne JAMAIS sauter une phase. Validation Aziz obligatoire entre chaque phase.**
-
-### Phase 1 : Fondation Technique
-- Etablir les regles de code, patterns et architecture du projet
-- Creer `rules.md` definissant les standards React/Remotion
-- Validation : confirmation de la structure du dossier
-
-### Phase 2 : Direction Artistique
-- Definir ton, contraintes visuelles, style de mouvement
-- Generer un document d'identite visuelle (couleurs, Google Fonts, espacements)
-- Question a poser : "Quelle est l'URL de reference ou le style voulu ?"
-
-### Phase 3 : Storyboard & Timing
-- Definir les scenes, leur role (hook, message, CTA) et duree precise
-- Rediger un storyboard textuel frame par frame
-- Validation du script et du rythme
-
-### Phase 4 : Inventaire des Assets
-- Lister tous les objets necessaires (logos, images, icones, personnages)
-- Creer `asset_inventory.md`
-- Separer logique de design vs logique de scene
-
-### Phase 5 : Generation des Assets
-- Coder les composants React/SVG concrets
-- **Ordre : decors d'abord, personnages ensuite**
-- Batching : personnages separes des decors pour concentration maximale
-- Utiliser `public/` pour fichiers externes
-
-### Phase 6 : Primitives de Mouvement
-- Creer des hooks d'animation reutilisables (ex: Bob_Marche, Bob_Parle)
-- Utiliser `spring()` et `interpolate()` : mouvements physiques, pas de keyframes manuels
-- Patterns flexibles bases sur la physique
-
-### Phase 7-8 : Assemblage des Composants & Scenes
-- Assembler assets + mouvements dans des composants de scenes
-- Coherence avec le storyboard
-- Pas de "gaps" visuels
-
-### Phase 9 : Rendu Final (+ Audio optionnel)
-- Export MP4 via `npx remotion render`
-- Optionnel : 11Labs pour voix-off, Auphonic pour polissage audio
-- Creer une skill pour repliquer le style exact pour futures videos
-
----
-
-## Principes de Fonctionnement
-
-### Leadership Proactif
-Claude dirige le workflow : "Nous sommes a la Phase X. Voici ce que je vais faire, j'ai besoin de [Infos] pour continuer."
-
-### Plan Mode First
-Pour chaque etape de code, TOUJOURS utiliser le Plan Mode en premier pour valider la logique avant execution.
-
-### Gestion du Contexte
-- **Seuil d'alerte : 50%** d'utilisation du contexte
-- A 50%, prevenir Aziz qu'un refresh est recommande
-- Sessions courtes : 1 phase par session max
-- Le code est toujours sauvegarde localement, rien n'est perdu au refresh
-
-### Boucle de Creation
-```
-Aziz decrit la scene en francais
-  -> Claude planifie (Plan Mode) puis code
-  -> Preview dans le navigateur (localhost:3000)
-  -> Aziz donne du feedback visuel
-  -> Claude ajuste le code
-  -> Quand c'est bon -> Export MP4
-```
-
----
-
 ## Configuration Technique
 
 ### Environnement
@@ -237,20 +337,9 @@ Aziz decrit la scene en francais
 ### Packages Remotion
 - `@remotion/paths` : animations SVG path
 - `@remotion/shapes` : generation de formes SVG
-- `remotion-animated` : animations declaratives
-- `remotion-dev/skills` : skills agent pour Claude Code
 
-### Cles API (dans .env)
-- `ELEVENLABS_API_KEY` : voix-off via 11Labs
-- `AUPHONIC_API_KEY` : polissage audio
-- `OPENAI_API_KEY` : GPT-4o + web search (gpt-5 bloque - verification org requise)
-- `GEMINI_API_KEY` : Deep Research via Interactions API (pas de citations URL via API)
-- `XAI_API_KEY` : Grok + web_search + x_search (retourne URLs dans annotations)
-- `PIXELLAB_API_KEY` : PixelLab MCP + API v2 (2000 gens/mois)
-- `RECRAFT_API_KEY` : Recraft V4 Vector — generation SVG natif (MCP : `@recraft-ai/mcp-recraft-server`)
-- `FAL_KEY` : fal.ai image generation (flux/dev, ESRGAN)
-- `VERCEL_RENDER_URL` : URL du renderer Vercel (`https://remotion-renderer-khaki.vercel.app`)
-- Stocker dans `.env` (JAMAIS dans le code ou les commits)
+### Cles API
+Source de verite : fichier `.env` (racine projet) + `quebec-jacques-poc/.env` (Mapbox). Capacites par cle documentees dans `memory/apis-and-tools.md`. **Ne JAMAIS hardcoder une cle dans le code ou les commits.**
 
 ### Regles d'attente async (NON-NEGOTIABLE)
 - **Apres tout `animate_character` ou action async PixelLab** : executer `sleep 120` puis `get_character(...)` dans le MEME flow — jamais laisser une attente sans poll integre
@@ -272,13 +361,14 @@ Aziz decrit la scene en francais
 
 ---
 
-### Capacites Image & Assets (TOUTES PROUVEES - ne pas oublier)
-- **Gemini edition chirurgicale** : meilleur outil pour corrections precises (oeil, bijou, couronne, silhouette, pieds) tout en preservant l'image source intacte — TOUJOURS essayer avant de regenerer. Voir `memory/key-learnings.md` § "Gemini chirurgical".
-- **Generation d'images** : Gemini 3 Pro, Imagen 4.0, GPT-Image-1, DALL-E 3, fal.ai flux/dev
-- **Pixel art sprites** : PixelLab MCP (characters, animations, tilesets) + API v2 (concept-to-character, animate-with-text)
-- **Voix-off** : ElevenLabs (voix Chris, fr, markers TTS) — **LIRE REGLES TTS CI-DESSOUS avant tout script**
-- **Remote rendering** : Vercel Sandbox via `scripts/render-on-vercel.py` — rend des compositions Remotion en cloud, retourne un MP4 public. Compositions : `MyComp`, `GeoTest`. Voir `memory/reference_vercel-blob-gallery.md` § "Remotion Vercel Renderer".
-- **Details complets** : `memory/apis-and-tools.md` et `memory/pixellab-api-v2.md`
+### Capacites Image & Assets
+
+Details dans `memory/apis-and-tools.md` et `memory/pixellab-api-v2.md`.
+
+- Voix GeoAfrique : `z3gESu49naEZW8Af2Upm` (Narratrice GeoAfrique v2, fr, markers TTS V3) — **LIRE REGLES TTS CI-DESSOUS avant tout script**
+- Gemini : edition chirurgicale AVANT de regenerer (TOUJOURS)
+- PixelLab MCP : characters, animations, tilesets (+ API v2)
+- Remote render : `scripts/render-on-vercel.py` — **UTILISER PAR DEFAUT pour tout render > 30s** (libere la machine locale, 100GB-h/mois gratuit Hobby). Mapbox supporté. Le script envoie le projet, Vercel rend en cloud, retourne le lien MP4 téléchargeable.
 
 ### Regles TTS ElevenLabs francais (NON-NEGOTIABLE — appliquer a CHAQUE script audio)
 
@@ -292,160 +382,40 @@ Aziz decrit la scene en francais
 4. **Nombres en lettres** : "1311" → "treize cent onze" (TTS lit les chiffres de facon robotique)
 5. **Scan obligatoire** : avant generation, lister TOUS les mots en "e/ee" du script et verifier un par un
 
-### Scripts de recherche
-- `research/launch_deep_research.py` : Recherche parallele multi-LLM
-- `research/multi_step_research.py` : Pipeline Decompose -> Research -> Expand -> Synthesize
-- Toujours lancer avec `python -u` pour output unbuffered
-
 ### Skills
-- `.claude/skills/youtube-scriptwriting/SKILL.md` : Skill scriptwriting YouTube (5 phases)
-  - Phase 0: Discovery Interview
-  - Phase 1: Multi-Angle Research
-  - Phase 2: Multi-Step Synthesis
-  - Phase 3: Script Writing
-  - Phase 4: Quality Review
+Skills installes dans `.claude/skills/`. Utilisation systematique via le tableau de routage en haut du fichier (colonne "Skills `.claude/skills/`"). Skill produit par ce projet : `youtube-scriptwriting/SKILL.md` (5 phases : Discovery, Research, Synthesis, Writing, Review).
 
-### Agents Specialises — 5 agents de production video (refondus 2026-04-13)
+### Agents Specialises — Pipeline 6 etapes (NON-NEGOTIABLE)
 
-Les 5 agents sont **tool-agnostic** (spécialisés par **rôle de production**, pas par outil). Les outils (Seedance, Gemini, Kling, Recraft, PixelLab) évoluent vite — les rôles sont intemporels.
+5 agents specialises par role de production. **Pipeline complet + tableau de declenchement : `.claude/agent-memory/shared/PIPELINE.md`** (lire avant tout nouvel episode).
 
-- `.claude/agents/audio-director.md` : Narration TTS + musique + mix (Stage 1)
-  - Mémoire : `.claude/agent-memory/audio-director/`
-  - **Scan TTS français OBLIGATOIRE** avant tout appel ElevenLabs (participes "e/ee", "ont + voyelle", chiffres)
-  - L'agent mesure objectivement — **ne peut PAS écouter**, la validation perceptive reste Aziz
-- `.claude/agents/storyboarder.md` : Script + audio mesuré → `timing.ts` frame-précis (Stage 2)
-  - Mémoire : `.claude/agent-memory/storyboarder/`
-  - Formats supportés : SCENES-only flat (Shorts) + ACTS+SCENES nested (long-form)
-  - Règle absolue : frontières ABSOLUES (start/end), jamais durées relatives
-- `.claude/agents/visual-producer.md` : Assets multi-outils (Gemini, Seedance, Kling, Recraft, fal.ai, PixelLab) (Stages 3-4)
-  - Mémoire : `.claude/agent-memory/visual-producer/`
-  - Propose un **Visual Plan par scène** → Aziz approuve → génère → self-review → livre
-  - **Doc-First** : lire `memory/tools/{outil}.md` AVANT tout prompt
-  - **Preview-before-pay** : montrer refs + prompt + coût AVANT chaque appel API
-- `.claude/agents/remotion-composer.md` : Composition Remotion + mini-render validation (Stage 5)
-  - Mémoire : `.claude/agent-memory/remotion-composer/`
-  - 8 règles non-négociables (audio-derived timing, spring > interpolate, premountFor, clamp, etc.)
-  - Mini-render bloquant AVANT de coder d'autres scènes
-- `.claude/agents/quality-reviewer.md` : Review multi-dimensions + verdict (Stage 6)
-  - Mémoire : `.claude/agent-memory/quality-reviewer/`
-  - Self-review EN PREMIER, puis Kimi en mode "confirm or refute" (scope strict technique)
-  - **Distingue explicitement** ce qui a été validé (mesurable) vs ce qui requiert Aziz (audio perçu, émotion vocale, jugement final)
+Ordre : audio-director → storyboarder → visual-producer (plan) → visual-producer (assets) → remotion-composer → quality-reviewer → Aziz (Stage 7) → Claude main (Stage 8).
 
-**Anciens agents archivés** dans `.claude/agents/archive/` (creative-director, pixel-art-director, pixellab-expert, kimi-reviewer, visual-qa). Gardés pour référence (registres de gotchas), pas utilisés en production.
+Si Claude oublie un declenchement = FAUTE DE PROCESSUS.
 
-### Declenchement des Agents (OBLIGATOIRE - ne PAS oublier)
+### Remotion Best Practices
 
-**Ces regles sont NON-NEGOTIABLES. Claude DOIT les suivre meme si Aziz ne le demande pas.**
+Regles completes dans `memory/rules-outils-techniques.md` Section 4 (audio) et `memory/tools/remotion.md`.
 
-| Quand | Agent | Action |
-|-------|-------|--------|
-| Script locked, besoin audio | `audio-director` | Scan TTS → génère narration → mesure → valide Aziz à l'oreille |
-| Audio mesuré, besoin timing | `storyboarder` | Produit `timing.ts` frame-précis |
-| Timing prêt, besoin plan visuel | `visual-producer` | Propose Visual Plan scene-by-scene |
-| Visual Plan approuvé | `visual-producer` | Génère assets (preview-before-pay) |
-| Assets livrés, besoin composition | `remotion-composer` | Assemble + mini-render validation |
-| Composition + render final fait | `quality-reviewer` | Self-review + Kimi scope + verdict |
-| 3+ problèmes structurels détectés | `quality-reviewer` (circuit-breaker) | STOP. Signal à Claude (main) pour ré-évaluer. Pas patcher. |
+**Rappels critiques :**
+- Audio-derived timing OBLIGATOIRE — `const x = AUDIO_SEGMENTS.foo.startFrame;` jamais hardcode
+- `spring()` > `interpolate()` pour mouvements naturels
+- `premountFor={1 * fps}` sur toutes les `<Sequence>`
+- `extrapolateRight: 'clamp'` toujours
+- Anti-patterns INTERDITS : `CSS transition:`, `setTimeout`, `@keyframes`, `requestAnimationFrame`
+- Safe zones 1920x1080 : marges 100px/60px, sous-titres Y>=850, texte min 32px
 
-**Si Claude oublie un declenchement, c'est une FAUTE DE PROCESSUS.**
-
-### Pipeline d'Orchestration Agent Team (6 étapes + Aziz final)
-
-**Les 5 agents forment une equipe. Claude (moi) est l'orchestrateur qui transmet les outputs entre agents.**
-**Memoire partagee** : `.claude/agent-memory/shared/PIPELINE.md` (chaque agent y ecrit son etape)
-
-```
-Stage 0  Claude + Aziz       → Script locked
-    |
-    v
-Stage 1  audio-director      → Narration + musique + mix (mesures + validation oreille Aziz)
-    |
-    v
-Stage 2  storyboarder        → timing.ts frame-précis
-    |
-    v
-Stage 3  visual-producer     → Visual Plan proposal → Aziz approuve/modifie/rejette
-    |
-    v
-Stage 4  visual-producer     → Assets générés (preview-before-pay chaque appel)
-    |
-    v
-Stage 5  remotion-composer   → Composition + mini-render 3-4s bloquant
-    |
-    v
-Stage 6  quality-reviewer    → Review multi-dim + Kimi scope + verdict
-    |
-    v
-Stage 7  Aziz                → Validation finale oreille + œil + décision créative
-    |
-    v
-Stage 8  Claude (main)       → Fix iteration OU render final + publish
-```
-
-**Règles du pipeline** :
-- NE PAS sauter d'étape
-- Stage 1 prérequis : script LOCKED par Aziz
-- Stage 2 prérequis : audio existant ET mesuré (ffprobe ou Whisper)
-- Stage 3 prérequis : Aziz approuve le Visual Plan AVANT toute génération
-- Stage 4 règle : preview-before-pay pour CHAQUE appel API payant
-- Stage 5 prérequis : mini-render validation AVANT de coder d'autres scènes
-- Stage 6 règle : self-review AVANT Kimi, jamais l'inverse
-- Stage 7 : Aziz prime toujours sur Kimi et sur le verdict de l'agent
-- Stage 8 : le render final est une décision consciente de Claude principal, pas d'un agent
-
-### Remotion Best Practices (regles extraites des skills installes)
-
-#### Animation Timing (OBLIGATOIRE)
-- **Audio-derived timing** : toute animation synchronisee avec la narration DOIT deriver ses frames de la timeline audio (variable, pas hardcode). Pattern correct : `const arrowStart = AUDIO_SEGMENTS.forces[0].startFrame;` Pattern INTERDIT : `const arrowStart = 30;`
-- **spring() > interpolate()** pour mouvements naturels. Configs : `{damping: 200}` (smooth), `{damping: 20, stiffness: 200}` (snappy), `{damping: 8}` (bouncy)
-- **Toujours premountFor sur les Sequence** : `<Sequence premountFor={1 * fps}>` pour precharger les composants
-- **Toujours clamp les interpolations** : `extrapolateRight: 'clamp', extrapolateLeft: 'clamp'`
-- **Mouvements camera geo (pan/dolly)** : utiliser `interpolate()` continu sur toute la plage de frames — jamais segmenter en blocs CSS ou recalculer par segment. Les micro-pauses entre segments causent des saccades visibles.
-
-#### Transitions entre scenes
-- Utiliser `TransitionSeries` de `@remotion/transitions` (fade, slide, wipe, flip, clockWipe)
-- **Calcul duree** : total = somme durees - somme transitions (les transitions overlap les scenes adjacentes)
-- Import : `import {TransitionSeries, linearTiming} from '@remotion/transitions';`
-
-#### Anti-patterns Remotion (INTERDIT dans le code)
-- `CSS transition:` -> utiliser `useCurrentFrame()` + `interpolate()`
-- `setTimeout/setInterval` -> utiliser frames Remotion
-- `@keyframes` -> utiliser `spring()` ou `interpolate()`
-- `requestAnimationFrame` -> utiliser `useCurrentFrame()`
-
-#### Safe Zones Video (1920x1080)
-- Marge gauche/droite minimum : 100px
-- Marge haut/bas minimum : 60px
-- Zone sous-titres : Y >= 850 reservee (ne pas placer de contenu statique)
-- Taille minimum texte : 32px (titres : 48px+)
+**Atlas — Sprites/objets (NON-NEGOTIABLE) :**
+- **Apparition par defaut = Spring Pop** : `interpolate(lf, [0, 12, 45], [0, 3.0, 1.8], {extrapolateLeft:'clamp', extrapolateRight:'clamp'})` ou plus agressif selon contexte. Jamais simplement `opacity` ou `scale` lineaire sauf justification explicite.
+- **Math.max(0, localF) OBLIGATOIRE** avant tout calcul frameIdx sprite : `Math.floor(Math.max(0, localF) / FRAMES_PER_TICK) % frameCount`. Sans ca, `localF` negatif (avant beatStart) donne un index negatif en JS → chemin `frame_-14.png` → icone grise silencieuse.
+- **Verification RGB avant integration** : tout asset PixelLab doit passer `scripts/add-city-asset.sh` — RGB < 80 sur fond OCEAN = invisible.
+- **Verification registration beat** : `python3 scripts/check-beat-registration.py --episode <ep> --beat N --start <f> --end <f>` avant premier render standalone.
+- **Spec table avant code** : `python3 scripts/beat-session.py --episode <ep> --beat N --phase spec-table` — phases narratives + frames audio-ancrees AVANT d'ouvrir le TSX.
 
 ### Scripts QA disponibles
 - `scripts/review_with_kimi.py` : envoie video/image a Kimi K2.5 pour review (Moonshot API)
 - `scripts/generate-audio.ts` : generation voix-off ElevenLabs
 - `scripts/polish-audio.ts` : polissage audio Auphonic
-
----
-
-## Style Visuel du Projet
-
-### Peste 1347 (projet actif) — PIVOT SVG 2026-02-21
-- **Style actif : SVG enluminure (couleur) + gravure (monochrome)** — pur Remotion, zero pixel art
-- Pipeline : SVG pur React/Remotion (spring, interpolate) — PAS de PixelLab, PAS de sprites
-- Reference style : `memory/svg-enluminure-style-guide.md` + `memory/visual-manifesto.md`
-- Compositions actives : HookBlocA/B/C/D/E, HookMaster, Seg3Fuite
-- Projets satellites : silhouette-conte/, veilleur-ombre/, style-tests/ (10 styles SVG)
-- Audio : ElevenLabs voix-off, timing derive ffprobe -> storyboarder -> hookTiming.ts
-
-### ARCHIVE — Pipeline pixel art (abandonne 2026-02-21)
-- Pixel art abandonne apres 10+ echecs compositing (CSS sprites sur image peinte)
-- Assets PixelLab conserves dans public/assets/peste-pixel/pixellab/ (reference seulement)
-- Pipeline documente dans memory/pixel-art-assets.md (archive)
-
-### Style par defaut (autres projets)
-- Personnages colores sur fond pastel (ciel bleu clair, herbe verte douce)
-- Style dessin enfantin, joyeux
-- Couleurs vives pour expressions et actions
-- Stick figures SVG modulaires avec expressions faciales
 
 ---
 

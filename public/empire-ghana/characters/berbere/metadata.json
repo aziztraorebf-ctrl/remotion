@@ -1,0 +1,117 @@
+{
+  "character": {
+    "id": "79865794-abb1-4509-b6d7-580f87acbc4c",
+    "name": "empire-ghana-merchant-berbere",
+    "prompt": "A Berber Tuareg merchant from medieval Sahara desert era. Wearing indigo blue tagelmust face veil and dark indigo robe. Light brown skin visible around eyes. Dignified posture, walking stick in hand. Carrying small bundle at side. Sandals. Saharan caravan trader style. Pixel art with sepia warm palette, blue accents.",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-03T06:38:27.524909+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "animating-63b90882": {
+        "west": [
+          "animations/animating-63b90882/west/frame_000.png",
+          "animations/animating-63b90882/west/frame_001.png",
+          "animations/animating-63b90882/west/frame_002.png",
+          "animations/animating-63b90882/west/frame_003.png"
+        ],
+        "south": [
+          "animations/animating-63b90882/south/frame_000.png",
+          "animations/animating-63b90882/south/frame_001.png",
+          "animations/animating-63b90882/south/frame_002.png",
+          "animations/animating-63b90882/south/frame_003.png"
+        ],
+        "east": [
+          "animations/animating-63b90882/east/frame_000.png",
+          "animations/animating-63b90882/east/frame_001.png",
+          "animations/animating-63b90882/east/frame_002.png",
+          "animations/animating-63b90882/east/frame_003.png"
+        ],
+        "north": [
+          "animations/animating-63b90882/north/frame_000.png",
+          "animations/animating-63b90882/north/frame_001.png",
+          "animations/animating-63b90882/north/frame_002.png",
+          "animations/animating-63b90882/north/frame_003.png"
+        ]
+      },
+      "walking-b8b230ef": {
+        "east": [
+          "animations/walking-b8b230ef/east/frame_000.png",
+          "animations/walking-b8b230ef/east/frame_001.png",
+          "animations/walking-b8b230ef/east/frame_002.png",
+          "animations/walking-b8b230ef/east/frame_003.png",
+          "animations/walking-b8b230ef/east/frame_004.png",
+          "animations/walking-b8b230ef/east/frame_005.png"
+        ],
+        "north": [
+          "animations/walking-b8b230ef/north/frame_000.png",
+          "animations/walking-b8b230ef/north/frame_001.png",
+          "animations/walking-b8b230ef/north/frame_002.png",
+          "animations/walking-b8b230ef/north/frame_003.png",
+          "animations/walking-b8b230ef/north/frame_004.png",
+          "animations/walking-b8b230ef/north/frame_005.png"
+        ],
+        "south": [
+          "animations/walking-b8b230ef/south/frame_000.png",
+          "animations/walking-b8b230ef/south/frame_001.png",
+          "animations/walking-b8b230ef/south/frame_002.png",
+          "animations/walking-b8b230ef/south/frame_003.png",
+          "animations/walking-b8b230ef/south/frame_004.png",
+          "animations/walking-b8b230ef/south/frame_005.png"
+        ],
+        "west": [
+          "animations/walking-b8b230ef/west/frame_000.png",
+          "animations/walking-b8b230ef/west/frame_001.png",
+          "animations/walking-b8b230ef/west/frame_002.png",
+          "animations/walking-b8b230ef/west/frame_003.png",
+          "animations/walking-b8b230ef/west/frame_004.png",
+          "animations/walking-b8b230ef/west/frame_005.png"
+        ]
+      },
+      "crouching-22bab130": {
+        "south": [
+          "animations/crouching-22bab130/south/frame_000.png",
+          "animations/crouching-22bab130/south/frame_001.png",
+          "animations/crouching-22bab130/south/frame_002.png",
+          "animations/crouching-22bab130/south/frame_003.png",
+          "animations/crouching-22bab130/south/frame_004.png"
+        ],
+        "east": [
+          "animations/crouching-22bab130/east/frame_000.png",
+          "animations/crouching-22bab130/east/frame_001.png",
+          "animations/crouching-22bab130/east/frame_002.png",
+          "animations/crouching-22bab130/east/frame_003.png",
+          "animations/crouching-22bab130/east/frame_004.png"
+        ],
+        "north": [
+          "animations/crouching-22bab130/north/frame_000.png",
+          "animations/crouching-22bab130/north/frame_001.png",
+          "animations/crouching-22bab130/north/frame_002.png",
+          "animations/crouching-22bab130/north/frame_003.png",
+          "animations/crouching-22bab130/north/frame_004.png"
+        ],
+        "west": [
+          "animations/crouching-22bab130/west/frame_000.png",
+          "animations/crouching-22bab130/west/frame_001.png",
+          "animations/crouching-22bab130/west/frame_002.png",
+          "animations/crouching-22bab130/west/frame_003.png",
+          "animations/crouching-22bab130/west/frame_004.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-03T14:54:55.839111"
+}

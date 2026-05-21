@@ -1,0 +1,82 @@
+{
+  "component": "PulseNumber",
+  "file": "src/projects/_shared/components/layouts/PulseNumber.tsx",
+  "composition": {
+    "id": "Layout-PulseNumber",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationFrames": 150
+  },
+  "props": {
+    "topLabel": "string",
+    "value": "string",
+    "subtitle": "string"
+  },
+  "constants": {
+    "background": "#060a10",
+    "colors": {
+      "ivory": "#f0e8d8",
+      "gold": "#c8a951",
+      "slate": "#9a8a6a"
+    }
+  },
+  "layout": {
+    "background": "#060a10",
+    "topLabel": {
+      "y": 260,
+      "fontSize": 48,
+      "className": "text-slate uppercase tracking-[0.25em] font-bold text-center w-full absolute",
+      "fontFamily": "'Inter', sans-serif"
+    },
+    "centralNumber": {
+      "fontSize": 340,
+      "fontFamily": "'IBM Plex Mono', 'Inter', monospace",
+      "className": "text-ivory font-black text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full flex items-center justify-center",
+      "halo": {
+        "color": "rgba(200, 169, 81, 0.5)",
+        "blur": "60px",
+        "spread": "20px"
+      },
+      "rings": {
+        "count": 3,
+        "maxRadius": 750,
+        "color": "rgba(200, 169, 81, 0.3)",
+        "opacity": 1
+      }
+    },
+    "bottomSeparator": {
+      "y": 1640,
+      "width": 480,
+      "className": "bg-slate h-[3px] absolute left-1/2 -translate-x-1/2 opacity-60"
+    },
+    "subtitle": {
+      "y": 1700,
+      "fontSize": 52,
+      "className": "text-slate text-center w-full absolute font-medium tracking-wide",
+      "fontFamily": "'Inter', sans-serif"
+    }
+  },
+  "animation": {
+    "pulseScale": {
+      "min": 1,
+      "max": 1.04,
+      "periodFrames": 45
+    },
+    "haloOpacity": {
+      "min": 0.4,
+      "max": 0.9,
+      "periodFrames": 45
+    },
+    "ringsExpand": {
+      "periodFrames": 120,
+      "stagger": 40
+    },
+    "entrySpring": {
+      "damping": 12,
+      "stiffness": 90,
+      "startFrame": 5
+    }
+  },
+  "agentInstructions": "1. Wrapper : Utiliser AbsoluteFill avec style inline backgroundColor: '#060a10'. Ajouter un effet de points subtil via un background image radial-gradient (dots text-slate avec très faible opacité, espacement ~40px).\n2. Typographie : Utiliser les classes Tailwind pour la couleur (text-slate, text-ivory) mais injecter inline fontFamily comme spécifié. Le chiffre central doit avoir une épaisseur visuelle très forte (font-black).\n3. Animation d'entrée : Tous les éléments (topLabel, separator, subtitle) entrent avec un spring() sur opacity (0 à 1) et translateY (+20px à 0). Le chiffre central pop avec un spring() sur le scale (0.5 à 1).\n4. Pulsation (Heartbeat) : Créer une constante 'pulse' avec Math.sin((frame / periodFrames) * Math.PI * 2). Mapper ce sin (-1 à 1) via interpolate() vers les valeurs min/max de pulseScale et haloOpacity spécifiées dans l'animation. Appliquer ce scale dynamiquement au wrapper textuel du chiffre.\n5. Halo : Implémenter le halo non pas comme un text-shadow CSS (qui peut clipper), mais comme un div AbsoluteFill placé DERRIÈRE le texte, contenant exactement le même texte avec text-transparent et un filter: blur() ou text-shadow massif. L'opacité globale de ce div sera animée par le heartbeat.\n6. Anneaux : Créer un array de taille rings.count. Pour chaque index, calculer une boucle d'expansion infinie basée sur le frame courant et le stagger : const progress = ((frame - startFrame - index * stagger) % periodFrames) / periodFrames. Si progress < 0, opacity 0. Sinon, utiliser progress pour interpoler le scale (0 à 1) et l'opacity (se dissipe vers 0 en fin de course). Les anneaux sont des div ronds (rounded-full) avec une border-gold ou border-slate dorée fine absolute centrés au milieu de l'écran."
+}
