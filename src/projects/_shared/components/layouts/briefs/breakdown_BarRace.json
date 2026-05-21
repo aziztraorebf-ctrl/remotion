@@ -1,0 +1,86 @@
+{
+  "component": "BarRace",
+  "file": "src/projects/_shared/components/layouts/BarRace.tsx",
+  "composition": {
+    "id": "Layout-BarRace",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationFrames": 180
+  },
+  "props": {
+    "type": "interface BarRaceProps { title: string; data: Array<{ label: string; value: number; suffix: string }>; maxValue: number; bottomAnnotation?: string; subtitle: string; }",
+    "defaultValues": {
+      "title": "PRODUCTION ANNUELLE",
+      "data": [
+        { "label": "Nigéria", "value": 340, "suffix": "Md" },
+        { "label": "Angola", "value": 240, "suffix": "Md" },
+        { "label": "Ghana", "value": 160, "suffix": "Md" },
+        { "label": "Congo", "value": 88, "suffix": "Md" }
+      ],
+      "maxValue": 340,
+      "bottomAnnotation": "400px",
+      "subtitle": "en milliards USD · 2023"
+    }
+  },
+  "constants": {
+    "BG_COLOR": "#060a10",
+    "GOLD_COLOR": "#c8a951",
+    "IVORY_COLOR": "#f0e8d8",
+    "SLATE_COLOR": "#9a8a6a"
+  },
+  "layout": {
+    "background": "#060a10",
+    "dotGrid": {
+      "css": "radial-gradient(circle, rgba(200,169,81,0.2) 1.5px, transparent 1.5px)",
+      "backgroundSize": "48px 48px"
+    },
+    "topLabel": {
+      "y": 180,
+      "text": "PRODUCTION ANNUELLE",
+      "fontSize": 48,
+      "className": "w-full text-center tracking-widest text-slate",
+      "fontFamily": "Cinzel, serif"
+    },
+    "bars": {
+      "startY": 420,
+      "gap": 220,
+      "height": 84,
+      "borderRadius": "8px",
+      "gradient": {
+        "from": "#a88e40",
+        "to": "#c8a951"
+      },
+      "labelWidth": 260,
+      "labelFontSize": 48,
+      "valueFontSize": 56
+    },
+    "bottomSeparator": {
+      "y": 1600,
+      "width": 400,
+      "height": 4
+    },
+    "subtitle": {
+      "y": 1680,
+      "fontSize": 36
+    }
+  },
+  "animation": {
+    "barSpring": {
+      "damping": 16,
+      "stiffness": 90
+    },
+    "staggerPerBar": 12,
+    "countUpFrames": 45,
+    "entrySpring": {
+      "damping": 14,
+      "stiffness": 100
+    }
+  },
+  "corrections": [
+    "IMPORTANT : Le mockup montre un fond 'crème' (box) derrière les noms des pays. C'est une erreur de design à corriger. Tu DOIS rendre le texte (Nigéria, etc.) en couleur 'ivory' sur un fond transparent.",
+    "La valeur cible maximale (340) doit dicter la largeur maximale (100%) disponible pour la barre. Les autres barres sont calculées en pourcentage de cette largeur max.",
+    "Le texte '400px' au-dessus de la ligne du bas ressemble à une annotation de design, mais doit être rendu en tant que texte décoratif avec une petite police serif dorée."
+  ],
+  "agentInstructions": "Utilise absoluteFill avec backgroundColor inline pour le fond. Crée le grid de points avec un div absolu et backgroundImage. Chaque ligne (pays + barre + valeur) doit être un conteneur Flex. Utilise interpolate() avec extrapolateRight: 'clamp' sur la progression du spring() de la barre pour animer sa largeur (de 0% à cible%) et utiliser cette même progression pour le CountUp de la valeur numérique. La police pour les chiffres doit impérativement être 'IBM Plex Mono'."
+}

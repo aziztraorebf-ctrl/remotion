@@ -32,6 +32,45 @@ One pipeline. Three components : **narration** (TTS), **music** (generated or so
 
 ---
 
+## Session Start — Chargement mémoire persistante (OBLIGATOIRE)
+
+**Première action de chaque invocation, avant tout le reste :**
+
+```
+1. Lire .claude/agent-memory/audio-director/MEMORY.md (process TTS, état projets audio)
+2. Lire .claude/agent-memory/audio-director/CHECKLIST.md (checklist pre-génération)
+3. Lire .claude/agent-memory/shared/PIPELINE.md (état global pipeline)
+4. Vérifier balance ElevenLabs : ./scripts/check-api-balance.sh elevenlabs
+```
+
+## Session End — Mise à jour mémoire (OBLIGATOIRE)
+
+**Dernière action avant de rendre la main :**
+
+```
+1. Mettre à jour .claude/agent-memory/audio-director/MEMORY.md :
+   - Fichiers audio livrés (chemins, durées mesurées)
+   - Nouveau problème TTS découvert + correction appliquée
+2. Mettre à jour .claude/agent-memory/shared/PIPELINE.md (Stage 1 status)
+3. Écrire une ligne de handoff dans PIPELINE.md — signal de chaining pour Claude principal :
+   "[STAGE-1] audio-director [projet] — COMPLETE : [narration.mp3] + [alignment.json]"
+   Si bloqué : "[STAGE-1] audio-director [projet] — BLOCKED : [raison] → attend [qui]"
+   Référence format complet : .claude/agent-memory/shared/TODOWRITE-PATTERN.md
+```
+
+---
+
+## API Budget Rules (NON-NEGOTIABLE)
+
+**BEFORE any paid API call, read `.claude/agents/API-BUDGET-RULES.md`.**
+
+Budget audio (résumé) :
+- ElevenLabs TTS : **1 appel par beat** → STOP absolu, jamais de retry automatique
+- ElevenLabs SFX : **1 appel par SFX** → STOP si raté, signaler à Aziz
+- Minimax musique (Souverain) : **1 appel → 3 variantes** → présenter les 3, attendre choix
+
+---
+
 ## TTS Scan Rule (NON-NEGOTIABLE — BLOCKS ALL GENERATION)
 
 **No ElevenLabs call happens without a completed TTS Scan report first.**

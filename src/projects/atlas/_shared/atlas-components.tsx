@@ -62,6 +62,113 @@ export const NATIONAL_COLORS: Record<string, string> = {
 };
 
 // =============================================================================
+// CAMERA UTILITIES — 2-layer SVG+CSS architecture (standard Atlas >= 2026-05-05)
+//
+// Standard Atlas composition: SVG 720x1280 viewBox, CSS 1080x1920 (CSS_SCALE=1.5)
+// Layer 1: SVG <g transform="translate(CX+drift CY+drift) scale(zoom) translate(-focusX -focusY)">
+// Layer 2: CSS assets positioned via svgToComp()
+//
+// Zoom references (validated Beat3Ghana + Beat1Hannibal):
+//   1.0 = vue large narrative
+//   2.8 = zoom standard POI (ville, personnage en marche)
+//   3.2 = insert détail (gros plan objet, crouch)
+//   MAX without 2-layer arch: ~1.5x (sortie de cadre garantie au-delà)
+// =============================================================================
+
+export const ATLAS_SVG_W = 720;
+export const ATLAS_SVG_H = 1280;
+export const ATLAS_CSS_SCALE = 1.5; // 1080 / 720
+export const ATLAS_CX = ATLAS_SVG_W / 2; // 360
+export const ATLAS_CY = ATLAS_SVG_H / 2; // 640
+
+export interface AtlasCameraState {
+  focusX: number;
+  focusY: number;
+  camZoom: number;
+  driftX: number;
+  driftY: number;
+  scaleY?: number; // perspective tilt — 1.0 default (flat), <1.0 pour effet relief
+}
+
+/**
+ * Convertit coordonnées espace SVG (720×1280) → pixels CSS composition (1080×1920).
+ * Tient compte du focus caméra, zoom, drift et perspective optionnelle.
+ *
+ * Usage:
+ *   const pos = svgToComp(POI_SVG_X, POI_SVG_Y, cam);
+ *   <div style={{ position: "absolute", left: pos.x, top: pos.y }} />
+ */
+export function svgToComp(
+  svgX: number,
+  svgY: number,
+  cam: AtlasCameraState,
+): { x: number; y: number } {
+  const screenSvgX = (svgX - cam.focusX) * cam.camZoom + ATLAS_CX + cam.driftX;
+  const scaleY = cam.scaleY ?? 1.0;
+  const screenSvgY = (svgY - cam.focusY) * cam.camZoom * scaleY + ATLAS_CY + cam.driftY;
+  return { x: screenSvgX * ATLAS_CSS_SCALE, y: screenSvgY * ATLAS_CSS_SCALE };
+}
+
+/**
+ * Calcule le focusX décalé pour garder un POI proche du bord visible à haut zoom.
+ *
+ * Problème: à 2.8x, un POI à x=517 centré exactement → screenX = (517-360)*2.8+360 = 799 SVG = 1199 CSS (hors cadre).
+ * Solution: décaler focusX vers l'intérieur de screenMargin/zoom pixels.
+ *
+ * @param poiSvgX   Coordonnée X du POI en espace SVG (720px)
+ * @param camZoom   Niveau de zoom caméra (ex: 2.8)
+ * @param screenMargin  Marge souhaitée entre le bord du canvas et le POI (défaut: 100px SVG)
+ * @returns focusX décalé à passer à computeCamera()
+ *
+ * Exemple Beat1Hannibal: focusOffsetForPOI(517, 2.8) = 417
+ *   → (517-417)*2.8+360 = 640 SVG = 960 CSS → Rome visible tiers droit ✓
+ */
+export function focusOffsetForPOI(
+  poiSvgX: number,
+  camZoom: number,
+  screenMargin: number = 100,
+): number {
+  return poiSvgX - screenMargin;
+}
+
+// =============================================================================
+// SPRITE ANIMATION UTILITIES — walk cycle + clipPath masking (standard Atlas)
+//
+// Pattern validé Beat3Ghana (Berbere/Sahelien) + Beat1-2 Empire Ghana.
+// Utiliser sin-based hopping pour sprites STATIQUES (pas de vrai walk cycle):
+//   y += Math.abs(Math.sin(frame * 0.3)) * 4  (documenté ATLAS-COMPOSANTS.md)
+// =============================================================================
+
+/**
+ * Calcule le frame d'animation courant pour un sprite en spritesheet horizontale.
+ * @param frame           Frame Remotion courant
+ * @param startFrame      Frame où l'animation commence
+ * @param frameHoldDur    Nombre de frames par frame d'animation (ex: 5 = 6fps à 30fps)
+ * @param totalFrames     Nombre total de frames dans le cycle (ex: 4 pour walk cycle)
+ */
+export function getSpriteAnimFrame(
+  frame: number,
+  startFrame: number,
+  frameHoldDur: number,
+  totalFrames: number,
+): number {
+  if (frame < startFrame) return 0;
+  return Math.floor((frame - startFrame) / frameHoldDur) % totalFrames;
+}
+
+/**
+ * Génère le clipPath CSS pour afficher un frame d'une spritesheet horizontale.
+ * Compatible avec <Img> Remotion + spritesheet PixelLab (frames côte à côte).
+ * @param animFrame    Frame courant (sortie de getSpriteAnimFrame)
+ * @param totalFrames  Nombre total de frames dans la spritesheet
+ */
+export function getSpriteClipPath(animFrame: number, totalFrames: number): string {
+  const pctLeft = (animFrame / totalFrames) * 100;
+  const pctRight = ((totalFrames - animFrame - 1) / totalFrames) * 100;
+  return `inset(0 ${pctRight.toFixed(2)}% 0 ${pctLeft.toFixed(2)}%)`;
+}
+
+// =============================================================================
 // STARS BACKGROUND
 // =============================================================================
 const STARS = Array.from({ length: 60 }, (_, i) => {

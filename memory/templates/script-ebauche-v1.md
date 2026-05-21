@@ -131,6 +131,22 @@ Prendre **3 regles Cesar** a haute valeur de retention et les injecter **sans re
 
 **Regle** : pas d'injection > 3. On garde la sobriete du sujet.
 
+### Etape 6.5 : Stress-test adversarial (OBLIGATOIRE avant scan TTS)
+
+Lire le script en se mettant dans la posture de l'adversaire le plus solide sur ce sujet historique.
+
+**Persona adversarial Héros Oubliés** : un historien sceptique qui accepte les faits documentés mais conteste le traitement — il dira "vous romantisez sans mentionner les violences internes du personnage", "vous anachronisez les valeurs modernes sur une figure médiévale", "vous omettez les contradictions documentées qui nuancent le portrait".
+
+**Protocole** :
+1. Identifier les **3 attaques les plus solides** (pas les plus faciles, les plus solides)
+2. Pour chaque attaque : est-ce qu'elle a une **réponse défendable dans le script lui-même** ?
+3. Si oui → OK, continuer. Si non → **correction minimale d'une phrase maximum**
+4. Si une attaque nécessite plus d'une phrase → remonter à Aziz, c'est un problème structurel
+
+**Différence clé vs Souverain** : pour les Héros Oubliés, le risque n'est pas le biais politique mais la **romantisation historique** — présenter une figure comme pure sans reconnaître sa complexité. Une phrase de nuance suffit souvent à neutraliser cette attaque sans alourdir le récit.
+
+**Durée cible** : 5-10 minutes. Ce n'est pas une réécriture.
+
 ### Etape 7 : Scan TTS francais (bloquant)
 
 Pour **chaque phrase**, verifier 4 regles (voir `memory/tools/elevenlabs.md`) :

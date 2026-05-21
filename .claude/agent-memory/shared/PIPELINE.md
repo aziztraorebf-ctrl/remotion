@@ -43,7 +43,50 @@ Stage 8  Claude (main)       → Render final OU fix iteration
 
 ---
 
+## R&D — Atlas Blueprints Library — 2026-05-14 [COMPLETE]
+
+8 blueprints codés, rendus et validés visuellement en session autonome :
+- `walk-to-destination` — walk cycle + zoom spring vers POI
+- `confrontation` — 2 persos depuis bords opposés face-à-face
+- `orbital-city` — rotation + drift caméra autour du POI
+- `zoom-revelation` — pull-back 4x→1x depuis détail vers carte globale
+- `shake-impact` — secousse caméra sin multifréquence + flash + decay
+- `alliance` — convergence diagonale + cercle doré accord
+- `empire-expansion` — strokeDashoffset path empire + fill fade
+- `flashback` — filtre sepia CSS + skew + vignette sépia (★ le plus impressionnant)
+
+Dossier : `src/projects/atlas/_blueprints/` — README.md complet avec gotchas.
+Compositions enregistrées dans Root.tsx sous Folder `atlas-blueprints` (Atlas-BP-*).
+Renders preview dans `out/templates-souverain/_dev/bp-*.mp4`.
+
+Gotcha majeur découvert : `AtlasMercator` utilise `countries` (pas `data`) + `centerOffsetX/Y`.
+Données atlas : `atlasData.mercWide.countries` (pas `atlasData.countries`).
+
+---
+
 ## HANDOFF LOG (sessions actives)
+
+## Stage 1 — audio-director — RDC No Sense — 2026-05-17 [COMPLETE]
+
+- Project: geoafrique-shorts/rdc-no-sense
+- Script: src/projects/geoafrique-shorts/rdc-no-sense/SCRIPT.md (LOCKED)
+- Narration (déjà existante, non retouchée): audio/narration-v1.mp3 — 178.40s, voix Narratrice GeoAfrique v2
+- Musique générée: audio/music-v1.mp3 — Minimax v2.6, 190.8s, documentary ambient sober (synth pads + light african percussion, no kora/djembe)
+- Mix final: audio/final-mix.mp3 + audio/final-mix.wav — 180.00s exact, 192kbps stéréo 48kHz
+- Levels: mean -19.5 dB, peak -2.8 dB (pas de clipping), narration 0.95, music ~0.10 + sidechain ducking ratio 8:1
+- Layout: 1.0s music pure → narration entre (delay 0.8s pour aligner 1er mot à t=1.0s) → 0.8s tail silence → 180s total
+- Fades: music fade-in 2s, fade-out 3s
+- Coût: ~$0.30 (1 appel Minimax)
+- Handoff → storyboarder: mix prêt. Storyboarder en cours en parallèle peut utiliser narration-v1.mp3 + whisper.json (déjà mesurés). final-mix.mp3 destiné au remotion-composer pour <Audio> de la composition finale.
+
+### Niger Uranium (Souverain) — [COMPLET — PRET-PUBLICATION]
+
+- Project: souverain/niger-uranium
+- Fichier livrable : out/PRET-PUBLICATION/niger-uranium-FINAL.mp4
+- Audio: narration-niger-uranium-v5.mp3 | 96.04s @ 30fps | 7 beats
+- Status: PUBLIÉ — aucune action requise
+
+---
 
 ### 2026-04-30 — Abou Bakari II : Stage 2 Storyboarder [COMPLETE]
 
@@ -224,6 +267,128 @@ Stage 8  Claude (main)       → Render final OU fix iteration
 
 ---
 
+---
+
+## Or Africain (Souverain) — [COMPLET — PRET-PUBLICATION]
+
+- Project: souverain/or-africain
+- Fichier livrable : out/PRET-PUBLICATION/or-africain-FINAL.mp4
+- Audio: narration-or-africain-FINAL.mp3 | 101.0s @ 30fps | 6 beats
+- Status: PUBLIÉ — aucune action requise
+
+---
+
+## Stage 2 — Storyboarder — Vraie Taille de l'Afrique — 2026-05-11 [COMPLETE]
+
+- Project: souverain/vraie-taille-afrique
+- Script: La vraie taille de l'Afrique | Version: LOCKED 2026-05-11
+- Audio: 5 fichiers narration-beat{1-5}.mp3 | Mesurés via ffprobe | FPS: 30
+- Format: BEATS flat (Format A) — 5 beats | Short Souverain ~65s | 1080x1920 vertical
+- Output: src/projects/souverain/vraie-taille-afrique/timing.ts
+- Beat count: 5 | Acts: N/A
+- DURATION_IN_FRAMES: 1950 | TOTAL_SECONDS: 65.0s
+- Validations PASS: R1 (beat5.from+dur===1950), R2 (zero gap), R3 (VO contenue fenêtre), R4 (tous beats >=30f)
+- Constantes exportées: AUDIO_SEGMENTS, BEATS, BEAT{1-5}_START, BEAT{1-5}_VO_END, BEAT{1-5}_SILENCE_FRAMES
+
+| Beat | Fenêtre | VO | Silence post-VO | Notes |
+|------|---------|-----|-----------------|-------|
+| beat1 | 0–150f (5s) | 110f (3.68s) | 40f (1.33s) | Carte Mercator statique, hold |
+| beat2 | 150–750f (20s) | 166f (5.52s) | 434f (14.47s) | Animation silhouettes USA/Chine/Europe/Inde |
+| beat3 | 750–990f (8s) | 89f (2.96s) | 151f (5.03s) | Chiffre 30,3M km² + hold silhouettes |
+| beat4 | 990–1740f (25s) | 684f (22.80s) | 66f (2.20s) | Explication biais Mercator, VO longue |
+| beat5 | 1740–1950f (7s) | 36f (1.20s) | 174f (5.80s) | Punchline finale, hold Afrique plein écran |
+
+- Status: LOCKED — READY FOR STAGE 3 (visual-producer)
+
+---
+
+## Silicon Savannah (Souverain) — 2026-05-19 [FINAL — PRÊT PUBLICATION]
+
+- Fichier : `out/PRET-PUBLICATION/silicon-savannah-FINAL.mp4` — 49.1 MB, 122.1s — VALIDÉ AZIZ
+- Beat3 redesigné : courbe épurée + Nokia centré + 3 badges (300k / 50M+ / 1ER MONDIAL)
+- Beat2 : `beat2/Beat2.tsx` data-driven (Mapbox retiré de la full composition)
+- Sous-titres : SubtitleBar permanent sur beats 2-3-4-5-6
+- Timings : offsets audio-dérivés depuis manifest SEG (3662f = narration exacte, plus de silence final)
+
+---
+
+## Stage 1 — Audio Director — Zimbabwe Lithium — 2026-05-15 [MUSIC COMPLETE — AZIZ VALIDATION PENDING]
+
+- Project: souverain/zimbabwe-lithium
+- Narration existante: public/souverain/zimbabwe-lithium/audio/narration-zimbabwe-v1.mp3 | 86.0s
+- Musique generee: 3 variantes Shona/Ndebele (Zimbabwe) — fal-ai/minimax-music/v2.6
+  - music-A-contemplatif.mp3 — 126.6s — Solo mbira + marimba, style Stella Chiweshe
+  - music-B-geopolitique.mp3 — 227.6s — Mbira dzavadzimu + ngoma, style Forward Kwenda
+  - music-C-tension.mp3 — 255.8s — Mbira + hosho, style Dumisani Maraire
+- Cout: ~$0.30 (3 x $0.10)
+- Script generation: scripts/tools/minimax-zimbabwe-music.py
+- Prochaine etape: Aziz ecoute les 3 variantes → choisit → integration Remotion-native (volume 0.07 si SFX, 0.15 si narration seule)
+- Note: Timing.ts Zimbabwe a des decalages documentes dans PRODUCTION-ZIMBABWE-DETTES.md — a corriger avant assemblage final
+
+## La Peste et le Sahara 1347 (Atlas pur) — 2026-05-16 [IN PRODUCTION — BEAT 3 NEXT]
+
+**PROJET ACTIF — lire en premier**
+
+- Project: atlas/peste-1347
+- Format: Atlas pur (SVG 2D Mercator d3-geo, pas de Mapbox, pas de Tailwind)
+- Script: LOCKED — Angle A "Sahara comme bouclier" — 211 mots
+- Audio: public/atlas/peste-1347/audio/narration-v1.mp3 | 105.12s | 3153 frames @30fps
+- Timing: src/projects/atlas/peste-1347/timing.ts (BEATS/PIVOTS/STATS/CITIES/ROUTES — LOCKED)
+- Musique: public/atlas/peste-1347/audio/music-c-desert.mp3 (vol 0.04)
+- Carte: public/atlas/peste-1347/geo/peste-map-data.json (4 vues: mercLarge/mercEurope/mercMali/mercSahara)
+  - Fix appliqué 2026-05-16 : Natural Earth ISO_A3=-99 → fallback ADM0_A3 (France maintenant présente)
+
+### État beats (ordre séquentiel obligatoire)
+| Beat | Frames | Durée | Statut |
+|------|--------|-------|--------|
+| Beat1 Hook | f2→f225 | 7.5s | ✅ FINAL — `out/episodes/peste-1347/beat1-FINAL.mp4` |
+| Beat2 Setup Géo | f241→f690 | 15s | ✅ FINAL — `out/episodes/peste-1347/beat2-FINAL.mp4` |
+| Beat3 Densité Cesar | f714→f1223 | 17s | ✅ FINAL — `out/episodes/peste-1347/beat3-FINAL.mp4` |
+| Beat4 Climax Bouclier | f1241→f2291 | 35s | ✅ FINAL — `out/episodes/peste-1347/beat4-FINAL.mp4` |
+| Beat5 Mali Vivant | f2323→f2974 | 21s | ⏳ À CODER (PROCHAINE SESSION) |
+| Beat6 Punchline | f2975→f3152 | 6s | ⏳ À faire |
+
+### Règles techniques validées cette session (NON-NEGOTIABLE pour Beat3+)
+1. **makeMapCoord(W, H, scale, driftX, driftY)** — helper obligatoire pour tous les markers/labels. Copier depuis Beat2Setup.tsx. Jamais `poi.x + driftX` seul.
+2. **Audio endAt** : `endAt={BEATS.X_START + BEATS.X_END}` — pas `endAt={BEATS.X_END}`
+3. **Volume callback** : `const lf = f - beatStart` à l'intérieur — `f` est global
+4. **`<image href>` SVG natif** — jamais `<Img>` Remotion dans un `<svg>`
+5. **Ordre codage** : séquentiel Beat3 → Beat4 → Beat5 → Beat6. Pas de saut.
+
+### Assets PixelLab disponibles
+- Mansa Souleymane (eb3d1a3e) — walk east+west 6f
+- Souleymane trônant (cb6d0d56)
+- Rat noir (e2e541a8) — 32x32
+- Bateau génois (0d101547) — 64x48 (utilisé Beat2)
+- Mosquée Tombouctou (53d88ecb) — 64x64
+- Ville européenne deuil (8b6e61d2) — 64x48
+- Marchand berbère assis (e2e06a90) — 4 rotations
+
+### Beat3 — ce qui est prévu
+- Narration: "En Angleterre : 46% de la population meurt. 4,8M → 2,6M. Au Caire : 7000 morts/jour."
+- Vue carte: mercEurope (zoom Europe, scale=700, center=[12,48])
+- Triggers: f718 (46%), f840 (4.8M), f926 (2.6M), f1105 (Le Caire 7000/j)
+- Style: cartouches stats impactantes (rect noir + chiffre blanc bold)
+
+---
+
+## Sénégal Pétrole & Gaz (Souverain Mid-form) — 2026-05-19 [STAGE 2 IN PROGRESS]
+
+- Project: souverain/senegal-petrole-gaz
+- Format: Mid-form 6-7 min | 1920x1080 16:9 | 30fps
+- Script: memory/episodes/souverain/senegal-petrole-gaz/SCRIPT-V2.md — LOCKED
+- Audio narration: memory/episodes/souverain/senegal-petrole-gaz/audio/senegal-petrole-elevenlabs-v1-auphonic.mp3 | 433.3s (7 min 13s) | ElevenLabs V3 + Auphonic denoise
+- Stage 0 (Script): COMPLETE — V2-FINAL, jury 4 LLMs, fact-check Perplexity, 2 corrections appliquées
+- Stage 1 (Audio): COMPLETE — ElevenLabs z3gESu49naEZW8Af2Upm + Auphonic polish. Minimax neutral généré aussi (comparatif A/B, ElevenLabs retenu)
+- Stage 2 (Storyboard): COMPLETE → timing.ts livré, 7 beats, R1-R4 validés
+  - Fichier: src/projects/souverain/senegal-petrole-gaz/timing.ts
+  - 12998 frames @ 30fps | 433.252s | Forced alignment 1924 mots, loss 0.219
+  - 7 beats: acte1(0→1496) / acte2(1496→4177) / acte3_comp(4177→5907) / M1(5907→7334) / M2(7334→8993) / M3(8993→10584) / acte4(10584→12998)
+  - Anchors clés: bigstatReveal=f752, contradictionBeat=f1064, pekinRegarde=f9973, maintenant=f12287
+- Stage 3 (Visual Plan): NEXT → visual-producer
+
+---
+
 ## PROCHAINES SESSIONS
 
 ### Sonjata finalisation (post-recharge ElevenLabs)
@@ -237,6 +402,34 @@ Stage 8  Claude (main)       → Render final OU fix iteration
 2. Diagnostic 2026-04-22 : gates existent mais pas integres → erreurs couteuses Sonjata auraient ete bloquees
 3. Creer generic PREGEN_CHECKLIST (le Sonjata-specifique est dans `sonjata-papercraft/PREGEN_CHECKLIST.md`)
 
+---
+
+## MISE A JOUR INFRASTRUCTURE — SESSION 2026-05-13
+
+### Agent Teams activés
+- `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` dans `~/.claude/settings.json`
+- /goal et /bg disponibles en session interactive Claude Code
+- Les agents peuvent se communiquer directement sans passer par Claude principal
+
+### Règles budget API — fichier source
+- `.claude/agents/API-BUDGET-RULES.md` — lire AVANT tout appel payant
+- `scripts/check-api-balance.sh` — vérifier balances avant génération
+- Balances 2026-05-13 : ElevenLabs 54 425 chars | PixelLab $4.94 USD
+
+### MEMORY.md des 5 agents mis à jour
+Tous les agents ont maintenant la section "NOUVEAUTES SESSION 2026-05-13" avec :
+- Règles budget API par agent
+- Référence check-api-balance.sh
+- Confirmation Agent Teams + /goal /bg
+
+### Session Start orchestrateur (nouvelle règle CLAUDE.md)
+Claude principal doit lire PIPELINE.md en DEBUT de session — ajouté dans CLAUDE.md projet.
+
+### Episodic Memory plugin
+- `episodic-memory@superpowers-marketplace` activé dans settings.json (était false)
+- Permet aux agents d'utiliser le MCP structuré pour lire/écrire leur mémoire
+- Attention : source de vérité reste les fichiers .md — episodic memory = complément, pas remplacement
+
 
 ## Atlas Mansa Moussa V2 - Phase 3 production
 Stage 1.8 — Storyboarder [BYPASSED — timing-mansa-moussa-v2.ts already validated, scenes coded directly]
@@ -247,3 +440,52 @@ Stage 1.8 — Storyboarder [COMPLETE — Atlas V2 timing-mansa-moussa-v2.ts prod
 
 
 CIRCUIT BREAKER RE-OPEN: AtlasV2S1Scene.tsx — Ajout vie sur scene S1 (slow push-in 1.35->1.55 + tilt qui respire +/-2deg + halo Mali pulse plus tot a 5s). Nouveau brief : eviter statisme entre 11s et 19s. Validation visuelle BLOC 1 confirme par Aziz, ces ajouts sont des micro-mouvements sur acquis valides.
+
+---
+
+## RDC No Sense — Project — 2026-05-17 [IN PROGRESS]
+
+**Sujet** : "Pourquoi la geographie de la RDC n'a aucun sens ?" — Short style Jacq Adi
+**Format** : 1920x1080 (16:9) — 30fps — 5400 frames (180s)
+**Audio mix** : final-mix.mp3 (narration ElevenLabs GeoAfrique v2 + musique Minimax) — 180.00s exact
+**Composition ID** : `RdcNoSenseFull`
+**Entry-point** : `src/index-rdc.ts` (mini Root pour render rapide)
+
+### Stage 0 — Script + Fact-check [COMPLETE]
+- Script lock 380 mots, scan TTS ElevenLabs applique
+- Fact-check Perplexity sonar-pro : 14 affirmations verifiees, 4 corrigees (superficie 2.345M km2, longueur Congo 4370km, 170M ha foret, 200+ langues prudence)
+
+### Stage 1 — audio-director [COMPLETE]
+- TTS ElevenLabs `z3gESu49naEZW8Af2Upm` ($0.076, 178.40s)
+- Musique Minimax v2.6 documentary ambient sober ($0.30)
+- Mix final 180.00s : narration + music ducking sidechain 8:1, fade in 2s / out 3s
+- Whisper API OpenAI alignment word-level pour AUDIO_SEGMENTS
+
+### Stage 2 — Storyboard + Manifest [COMPLETE]
+- 8 beats audio-anchored : Hook / Taille / France×4 / Frontieres / Neuf / Berlin / Fleuve / Debit-Equateur / Foret / Diversite / Cobalt-Paradoxe / Chute
+- AUDIO_SEGMENTS frame-precis depuis Whisper word timestamps
+
+### Stage 3 — Composants nouveaux [COMPLETE]
+Reutilisables pour 10+ episodes futurs :
+- `MapboxSatelliteBeat` — wrapper satellite-v9 + highlight + slot children + lerp camera
+- `CountryFlagFill` — drapeau remplit silhouette pays via SVG clipPath + d3-geo + Natural Earth
+- `FlagPin` — drapeau circulaire bounce entry + float idle (flagcdn.com)
+- `CountryStackComparison` — empiler silhouettes pays dans pays pivot (tailles relatives respectees)
+- `useTopology` — hook chargement TopoJSON async avec delayRender
+
+### Stage 4 — Code beats [COMPLETE]
+- `RdcNoSenseFull.tsx` : 8 beats inline (1 fichier compact)
+- Tailwind tokens + Bebas Neue + couleurs PALETTE (gold/orange/navy/cream/forest/river)
+- countUp helpers, spring entries, fade-out final 30f
+- `timing.ts` + `constants.ts` + `STORYBOARD.md` documentation complete
+
+### Stage 5 — Render local [IN PROGRESS]
+- `npx remotion render RdcNoSenseFull ... --gl=angle --concurrency=1 --timeout=180000 --public-dir=/tmp/public-rdc`
+- Mini public-dir 13MB (extrait depuis 2.4GB principal) pour bundle rapide
+- Entry-point isole `src/index-rdc.ts` (evite bundle des 200+ compos Root.tsx)
+- Output : `out/episodes/rdc-no-sense/wip/rdc_v1.mp4`
+- Duree attendue : ~30min (5400 frames @ ~3-5fps render rate)
+
+### Stage 6 — Upload + livraison [PENDING]
+- Upload catbox (si <200MB) ou litterbox 72h
+- ntfy Aziz avec URL + resume

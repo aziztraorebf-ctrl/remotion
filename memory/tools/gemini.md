@@ -1,6 +1,102 @@
 # Gemini — Generation & Correction d'Images
 > Edition chirurgicale, character sheets, expressions, Nano Banana, cartes geo.
-> Mise a jour : 2026-04-25
+> Mise a jour : 2026-05-06
+
+## ⚠️ MODELES OBLIGATOIRES — REGLES DEFINITIVES (NON-NEGOTIABLE)
+
+**DEUX modeles seulement. Zero autre modele. Zero exception.**
+
+| Usage | Modele EXACT |
+|-------|-------------|
+| Toute generation d'image (mockup, storyboard, character sheet, carte, asset) | `gemini-3.1-flash-image-preview` |
+| Analyse vision uniquement — breakdown JSON, diff visuel, hex codes (JAMAIS d'image en output) | `gemini-3.1-pro-preview` |
+
+**INTERDIT ABSOLU (entrainerait 404 ou mauvais resultat) :**
+`gemini-2.5-pro-preview-05-06`, `gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-2.0-flash-exp`, `gemini-3-pro-image-preview`, `nano-banana-pro-preview`, `imagen-*`, tout autre modele.
+
+---
+
+## SDK Python — MIGRATION OBLIGATOIRE (2026-05-14)
+
+`google.generativeai` est **deprecated**. Utiliser le nouveau SDK :
+
+```python
+# INTERDIT (deprecated)
+import google.generativeai as genai
+
+# OBLIGATOIRE
+from google import genai
+from google.genai import types
+
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+```
+
+**Config generation d'image avec nouveau SDK :**
+```python
+response = client.models.generate_content(
+    model="gemini-3.1-flash-image-preview",
+    contents=parts,
+    config=types.GenerateContentConfig(
+        response_modalities=['IMAGE', 'TEXT']
+    ),
+)
+```
+
+**Extraction image :**
+```python
+for part in response.candidates[0].content.parts:
+    if part.inline_data:
+        image_bytes = part.inline_data.data  # bytes directs — PAS base64 a decoder manuellement
+        with open("output.png", "wb") as f:
+            f.write(image_bytes)
+```
+
+**Points critiques :**
+- `responseModalities` passe dans `types.GenerateContentConfig(response_modalities=[...])` — pas dans un dict brut
+- `inline_data.data` = bytes directs (pas base64 encodee). Ne pas faire `base64.b64decode()`.
+- Jury vision (analyse seule) : `genai.types.GenerateContentConfig(max_output_tokens=4000)` — pas `response_modalities`
+
+---
+
+**Config obligatoire pour generation d'image (ancienne syntaxe — NE PAS UTILISER) :**
+```python
+# DEPRECATED — remplacé par types.GenerateContentConfig ci-dessus
+config={"responseModalities": ["image", "text"]}
+```
+
+**GOTCHA — parts=None (prompt refusé) :**
+Si `response.candidates[0].content.parts` retourne `None`, Gemini a refusé de générer l'image.
+Causes fréquentes : prompt trop abstrait ("pure dark", "no shapes", "black background") → reformuler avec description concrète de texture photographique.
+```python
+parts = list(response.candidates[0].content.parts) if response.candidates[0].content.parts else []
+if not parts:
+    print("Génération refusée — reformuler le prompt")
+```
+
+**RÈGLE PROMPTS BACKGROUNDS :**
+- INTERDIT : "pure dark", "noir pur", "no shapes", "no forms", "completely abstract" → Gemini refuse
+- OBLIGATOIRE : descriptions photographiques concrètes : "close-up aged paper texture", "dark brushed concrete surface", "dark stone texture"
+- COULEURS : jamais #000000 ni "noir pur" — utiliser #0d1420, #12192a, #1a1f2e (désaturés sombres)
+- OBJECTIF : texture visible à l'écran mais qui disparaît visuellement quand du texte/graphisme est posé dessus
+
+**Pourquoi :** 3.1-flash-image-preview = seul modele qui genere ET edite des images. 3.1-pro-preview = meilleure vision pour analyse JSON (hex codes exacts, coordonnees SVG precises, 85-90% fidelite vs 40-50% avec 2.5-pro). Imagen = ne comprend pas les layouts UI complexes, genere des screenshots de telephone au lieu de composants vidéo — NE PAS UTILISER pour mockups Remotion.
+
+**Cette regle a ete violee 4+ fois. Elle est definitive.**
+
+---
+
+## Gotcha drapeaux nationaux en contexte "Afrique / souveraineté" (2026-05-06)
+
+Quand on demande des drapeaux de pays occidentaux (USA, UK, Chine, Canada, Australie) dans un contexte narratif lié à l'Afrique ou à la souveraineté, Gemini substitue des drapeaux africains ou régionaux (CEDEAO, Nigeria, Mali, etc.) même si les pays sont explicitement nommés.
+
+**Solution validée** : décrire les drapeaux visuellement EN PLUS de nommer les pays.
+- USA : "drapeau à bandes rouges/blanches horizontales avec carré bleu étoilé en haut à gauche"
+- UK : "drapeau Union Jack — croix rouge et diagonales rouges/blanches sur fond bleu"
+- Chine : "drapeau rouge uni avec étoile jaune grande et 4 petites étoiles jaunes"
+- Canada : "drapeau blanc avec feuille d'érable rouge centrée, bandes rouges aux extrémités"
+- Australie : "drapeau bleu avec Union Jack en haut à gauche et étoiles blanches Southern Cross"
+
+**Cas d'origine** : Storyboard Beat 3 Or Africain, État E — v1 avait substitué des drapeaux africains. Regen avec description visuelle = correct au premier essai.
 
 ---
 
@@ -56,36 +152,9 @@ Exemple : `"NO mask. NO object covering the face. The face area is simply absent
 
 ---
 
-## MODELE UNIQUE — ZERO EXCEPTION (NON-NEGOTIABLE)
-
-**Le SEUL modele Gemini a utiliser dans tout le projet est : `gemini-3.1-flash-image-preview`**
-
-- Generation d'images : `gemini-3.1-flash-image-preview`
-- Edition chirurgicale : `gemini-3.1-flash-image-preview`
-- Character sheets : `gemini-3.1-flash-image-preview`
-- Storyboards : `gemini-3.1-flash-image-preview`
-- Toute operation image : `gemini-3.1-flash-image-preview`
-
-**INTERDIT** : `gemini-2.0-flash-exp`, `gemini-2.0-flash`, `gemini-3-pro-image-preview`, `nano-banana-pro-preview`, ou tout autre modele.
-
-**Pourquoi** : les autres modeles sont soit deprecies (2.0-flash-exp = 404), soit trop conservateurs (3-pro refuse de modifier), soit redondants. 3.1-flash-image-preview fait TOUT ce dont on a besoin. Erreur repetee 3+ fois en production — cette regle met fin au probleme.
-
----
-
 ## Principe : correction chirurgicale AVANT regeneration
 
 Ne pas regenerer depuis zero pour un defaut mineur.
-
----
-
-## Modeles disponibles (avril 2026)
-
-| Modele | Usage |
-|--------|-------|
-| `gemini-3.1-flash-image-preview` | Generation d'images, character sheets, expressions. Rapide. = "Nano Banana 2" |
-| `gemini-3-pro-image-preview` | **Edition chirurgicale OBLIGATOIRE**. Respecte la composition source. |
-| `nano-banana-pro-preview` | Plus cher, qualite similaire a 3.1 Flash |
-| `imagen-4.0-generate-001` | Generation haute qualite (non teste) |
 
 ---
 
@@ -98,13 +167,12 @@ Ne pas regenerer depuis zero pour un defaut mineur.
 
 ---
 
-## Regles modele (corrige 2026-04-13)
+## Regles modele
 
-- **Edition chirurgicale / modifier un detail** : `gemini-3.1-flash-image-preview` — c'est Flash qu'on utilise pour garder la composition et modifier un detail. Accepte une image source en input + prompt decrivant la modification.
-- **Generation pure / haute qualite sans source** : `gemini-3-pro-image-preview` - plus cher, sans source d'origine. Tendance a etre tres conservateur quand une source est fournie (refuse parfois de modifier). Ne pas utiliser pour edition chirurgicale.
+- **Toute generation / edition d'image** : `gemini-3.1-flash-image-preview` — generation ET edition chirurgicale dans le meme modele.
+- **Analyse / breakdown JSON seulement** : `gemini-3.1-pro-preview` — jamais en output image.
 - Config : `responseModalities: ["image", "text"]` — NE PAS mettre `responseMimeType`
 - Instruction efficace : decrire EXACTEMENT ce qu'on change + lister ce qu'il ne faut PAS toucher
-- Validation 2026-04-13 : tentative d'editer panels 4-5 d'un storyboard avec `gemini-3-pro-image-preview` a produit une image quasi-identique a la source (refus de modifier). Passage a `gemini-3.1-flash-image-preview` resout.
 
 ---
 
@@ -114,6 +182,7 @@ Ne pas regenerer depuis zero pour un defaut mineur.
 - L'image source elle-meme EST le seed — la conserver = pouvoir regenerer des variantes coherentes
 - Postures de personnages minuscules : resultat subtil. Laisser Kling animer via prompt.
 - **Storyboard multi-panel : panel blanc aleatoire** — Gemini peut laisser un panel vide (carre blanc) au lieu de generer son contenu, meme si les autres panels sont corrects. Observe 2026-04-18 sur Sonjata scene 3. Correction : regenerer le storyboard complet (l'edition chirurgicale du panel seul echoue — applique R-STORYBOARD-CORR).
+- **Composite (background + personnages associes culturellement) = drift de contexte** — Quand on fournit a Gemini un background Rhone automnal + Hannibal + elephant de guerre, Gemini genere une scene NEIGEUSE/GLACEE (les Alpes). L'association Hannibal + elephant = Alpes est plus forte que le contexte "background riviere" fourni. Observe 2026-05-05 : background vierge automnal + 4 PNG personnages → scene neige/glace totale. Fix : (a) decrire TRES explicitement la saison et le lieu dans le prompt, contre-carrer l'association culturelle ("this is NOT the Alps, this is the Rhone Valley in late autumn, NO snow, NO ice"), (b) alternatively, generer le composite en omettant Hannibal ou l'elephant et les superposer en CSS dans Remotion.
 
 ---
 

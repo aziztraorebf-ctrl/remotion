@@ -5,8 +5,8 @@ import { QuebecFlagSilhouette } from "../QuebecFlagSilhouette";
 // Scene 1 : 0 -> 8.539s = ~256 frames @ 30fps. Slow flat zoom-out on Quebec.
 const KEYFRAMES: CameraKeyframe[] = [
   { frame: 0,   lon: -71, lat: 52, zoom: 4.5 },
-  { frame: 130, lon: -73, lat: 55, zoom: 3.5 },
-  { frame: 256, lon: -75, lat: 58, zoom: 2.6 },
+  { frame: 130, lon: -72, lat: 53, zoom: 3.8 },
+  { frame: 256, lon: -73, lat: 54, zoom: 3.2 },
 ];
 
 const easeInOut = (t: number) =>

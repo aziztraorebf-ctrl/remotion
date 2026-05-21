@@ -27,6 +27,13 @@
 <Audio src={...} volume={(f) => interpolate(f, [MUTE_START, MUTE_END], [1, 0], {extrapolateLeft: "clamp", extrapolateRight: "clamp"})} />
 ```
 
+### Musique de fond — valeur par defaut
+
+**0.07** est le volume de depart pour toute musique de fond Souverain/Atlas. Ajuster en hausse ou en baisse selon ressenti, mais toujours commencer a 0.07. Validé Niger Uranium 2026-05-12.
+- Trop discret : monter par paliers de 0.03 (0.10, 0.13...)
+- Trop present : descendre par paliers de 0.02 (0.05, 0.03...)
+- Narration : toujours volume={1.0}, jamais toucher
+
 ---
 
 ## OffthreadVideo + clips Kling/Seedance
@@ -80,6 +87,26 @@ Effets geo (hachures SVG, vignette, draw-on, pulse rings, etc.) documentes dans 
 | `useDrift(i, frame, directionPx, totalFrames?, offset?)` | Deplacement progressif clamp | -> `tx: number` |
 
 **Regle** : Un hook valide par Aziz = il entre dans `index.ts`. Jamais re-coder dans les composants.
+
+---
+
+## Entry point & composition registration
+
+**Entry point** : `src/index.ts` (PAS `src/Root.tsx`)
+- `registerRoot()` est dans `src/index.ts`
+- `Root.tsx` ne contient QUE la liste des compositions — pas de `registerRoot`
+- Tailwind CSS import : dans `src/index.ts` (ex: `import "./styles/global.css"`)
+
+**Render d'une composition par nom** :
+```bash
+npx remotion render src/index.ts Layout-<NomComposition>
+# Exemples validés :
+npx remotion render src/index.ts Layout-RadarScan
+npx remotion render src/index.ts Layout-SplitFlap
+```
+
+**Templates connus dans Root.tsx (ajoutés session 2026-05-14) :**
+RadarScan, RadarPing, PulseNumber, SplitFlap, TimelineFracture, WordExplode, BarRace, StackedBars, TypeReveal, TypeWriter — tous enregistrés sous `Layout-<Nom>`.
 
 ---
 

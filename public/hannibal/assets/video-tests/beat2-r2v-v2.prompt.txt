@@ -1,0 +1,21 @@
+Pixel art 16-bit SNES RPG style. Square pixels, hard edges, flat shading, limited palette of steel-blue/purple/orange/amber/grey. NO anti-aliasing, NO photorealism, NO smooth gradients, NO cartoon softness. Every element must look like a Super Nintendo RPG battle screen.
+
+@Image1 defines the complete visual environment -- the Rhone river, rocky right cliff with conifers and golden grass, reedy muddy left bank with orange autumn trees, crepuscular purple-orange sky. This is the ONLY environment -- do NOT add or remove landscape elements.
+
+@Image2 is HANNIBAL -- Carthaginian general in red-gold armor and plumed helmet. Place him on the LEFT BANK at the bottom-left of the frame, facing right, watching the river. He CONTINUOUSLY SHIFTS his weight, arms ALTERNATELY crossing and uncrossing, eyes TRACKING the moving raft throughout the entire clip.
+
+@Image3 is the WAR ELEPHANT on a wooden raft. Place it in the CENTER of the river at frame 0. It CONTINUOUSLY DRIFTS rightward throughout the entire clip and EXITS the right edge of the frame completely by second 9. It NEVER stops. It NEVER reaches a bank. It NEVER docks. The elephant's trunk CONTINUOUSLY SWINGS side to side in a steady rhythmic arc from second 0 to second 10, NON-STOP.
+
+@Image4 is also the WAR ELEPHANT on a wooden raft -- place a SECOND smaller version further back in the river, higher in the frame, suggesting distance. This second raft also DRIFTS rightward continuously, slower than the first.
+
+@Image5 is a CARTHAGINIAN SOLDIER. Place 3 of them grouped on the LEFT BANK behind Hannibal, facing right. They SHUFFLE in place, NUDGE each other, shields TAPPING, waiting. One POINTS toward the river.
+
+SECONDS 0 TO 3: Wide establishing shot. Camera HOLDS STEADY with only the faintest micro-breath vibration -- no pan, no tilt, no tracking. The river FLOWS with continuous pixel ripple animations across its entire surface. Two pixel clouds DRIFT slowly rightward across the upper sky throughout the entire clip. Hannibal WATCHES the main raft. Both rafts visible -- one mid-river, one smaller further back.
+
+SECONDS 3 TO 7: The main raft ACCELERATES its rightward drift, now crossing toward the right third of the frame. The elephant's trunk SWINGS in wide arcs. White pixel foam CHURNS continuously around the raft edges. Hannibal UNCROSSES his arms and PLANTS his fist on his hip. The soldiers behind him STIR and MURMUR, one RAISING his spear briefly.
+
+SECONDS 7 TO 10: The main raft SLIDES fully off the right edge of the frame -- last pixel exits by second 9. The river CONTINUES FLOWING with ripples where the raft was. Hannibal NODS once then TURNS slightly toward his troops. The soldiers behind him REACT -- one RAISES his fist. The smaller second raft continues drifting rightward in the background. Clouds continue drifting.
+
+COLOR GRADE: Steel-blue river with grey-white ripple pixels. Amber-gold cliff grass. Dark grey stone cliff. Deep purple-to-orange gradient sky in hard pixel color steps -- NO soft gradients. Orange-rust autumn foliage left bank. Hannibal in red-gold pixels. Soldiers in dark navy-bronze. Hard pixel edges everywhere, zero anti-aliasing.
+
+No text, no banners, no signs, no writing visible anywhere. No words, no dialogue, no music.

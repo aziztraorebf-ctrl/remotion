@@ -1,0 +1,249 @@
+{
+  "scene_description": "A pure graphic comparison illustrating the economic multiplier effect. Raw lithium ore on the left is compared to a finished battery component on the right, separated by a massive 'x15' multiplier in the center.",
+  "background_assets_to_generate": [
+    {
+      "filename": "bg_dark_navy_texture.png",
+      "prompt": "A very dark, almost black, navy blue background with a subtle, elegant, fine-grain texture. Minimalist and cinematic.",
+      "dimensions": "1080x1920",
+      "transparent": false,
+      "purpose": "Base background for the graphic composition"
+    },
+    {
+      "filename": "raw_lithium_hexagons.png",
+      "prompt": "A stylized stack of hexagonal, dark grey, rough-hewn stone blocks representing raw lithium ore. The texture should look like dark marble or slate with subtle lighter veins. 3D isometric perspective, isolated on a transparent background.",
+      "dimensions": "600x800",
+      "transparent": true,
+      "purpose": "Visual representation of raw ore on the left side"
+    },
+    {
+      "filename": "battery_component_gold.png",
+      "prompt": "A stylized, elegant icon of a modern battery cell. It has a glowing, metallic gold outline and is partially filled with a shimmering gold substance at the bottom. Technical, clean lines, isolated on a transparent background.",
+      "dimensions": "500x800",
+      "transparent": true,
+      "purpose": "Visual representation of the processed battery component on the right side"
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "bg_texture",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "bg_dark_navy_texture.png",
+      "screen_position_xy": [540, 960],
+      "size_px": [1080, 1920],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 0
+    },
+    {
+      "element_id": "horizontal_divider",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='0' y1='960' x2='1080' y2='960' stroke='#cda434' stroke-width='2' opacity='0.5'/>",
+      "screen_position_xy": [540, 960],
+      "size_px": [1080, 2],
+      "color_hex": "#cda434",
+      "rotation_deg": 0,
+      "z_index": 1
+    },
+    {
+      "element_id": "text_4th_producer",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "4e PRODUCTEUR MONDIAL",
+      "screen_position_xy": [540, 250],
+      "size_px": [800, 60],
+      "color_hex": "#88929e",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "label_box_left",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='420' height='60' fill='#121a24' rx='4'/>",
+      "screen_position_xy": [250, 1600],
+      "size_px": [420, 60],
+      "color_hex": "#121a24",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "label_text_left",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "MINERAI BRUT • ZIMBABWE",
+      "screen_position_xy": [250, 1600],
+      "size_px": [400, 40],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "ore_graphic",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "raw_lithium_hexagons.png",
+      "screen_position_xy": [280, 920],
+      "size_px": [450, 600],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_price_raw",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "~ 300 $",
+      "screen_position_xy": [280, 1350],
+      "size_px": [300, 60],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 5
+    },
+    {
+      "element_id": "label_box_right",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='420' height='60' fill='#121a24' rx='4'/>",
+      "screen_position_xy": [830, 1600],
+      "size_px": [420, 60],
+      "color_hex": "#121a24",
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "label_text_right",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "COMPOSANT • CHINE",
+      "screen_position_xy": [830, 1600],
+      "size_px": [400, 40],
+      "color_hex": "#887440",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "battery_graphic",
+      "type": "image",
+      "asset_source": "to_generate",
+      "filename_or_content": "battery_component_gold.png",
+      "screen_position_xy": [800, 920],
+      "size_px": [350, 550],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 4
+    },
+    {
+      "element_id": "text_price_battery",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "~ 4 500 $",
+      "screen_position_xy": [800, 1350],
+      "size_px": [350, 60],
+      "color_hex": "#887440",
+      "rotation_deg": 0,
+      "z_index": 5
+    },
+    {
+      "element_id": "text_x15",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "x15",
+      "screen_position_xy": [540, 960],
+      "size_px": [800, 350],
+      "color_hex": "#f0ebd8",
+      "rotation_deg": 0,
+      "z_index": 10
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "bg_texture",
+        "horizontal_divider"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "linear",
+      "audio_cue_word": "start"
+    },
+    {
+      "frame_local": 18,
+      "element_ids_appearing": [
+        "label_box_left",
+        "label_text_left"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-from-left",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Zimbabwe"
+    },
+    {
+      "frame_local": 80,
+      "element_ids_appearing": [
+        "text_4th_producer"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "lithium"
+    },
+    {
+      "frame_local": 170,
+      "element_ids_appearing": [
+        "ore_graphic"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "scale-pop",
+      "duration_frames": 25,
+      "easing_hint": "spring",
+      "audio_cue_word": "brut"
+    },
+    {
+      "frame_local": 240,
+      "element_ids_appearing": [
+        "text_price_raw"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "quelques centaines"
+    },
+    {
+      "frame_local": 290,
+      "element_ids_appearing": [
+        "battery_graphic",
+        "label_box_right",
+        "label_text_right"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide-from-left",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Chine"
+    },
+    {
+      "frame_local": 310,
+      "element_ids_appearing": [
+        "text_x15",
+        "text_price_battery"
+      ],
+      "element_ids_changing": [
+        "text_4th_producer"
+      ],
+      "transition_type": "stamp-impact",
+      "duration_frames": 15,
+      "easing_hint": "spring",
+      "audio_cue_word": "quinze fois"
+    }
+  ],
+  "permanent_motion": "The background texture has a very slow, almost imperceptible upward drift. The 'ore_graphic' and 'battery_graphic' have a subtle, independent vertical floating motion (amplitude 5px, period 4s) to feel alive rather than static.",
+  "remotion_implementation_notes": "For the 'text_x15' stamp-impact at frame 310, use a Remotion spring with high stiffness (e.g., 120) and low damping (e.g., 12) to create a heavy, bouncing impact. Ensure all text elements use absolute positioning within an AbsoluteFill container. The 'text_4th_producer' should fade out as the 'text_x15' impacts to clear the visual hierarchy.",
+  "fidelity_warnings": "The exact 3D shading and texture of the hexagonal rocks might be difficult to perfectly match with AI generation; consider using a high-quality stock 3D render if the generated asset lacks the necessary 'raw' texture. The glowing effect on the battery icon might require CSS drop-shadows applied to the image wrapper in React to enhance the luminosity."
+}

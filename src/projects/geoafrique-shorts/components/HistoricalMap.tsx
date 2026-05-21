@@ -98,7 +98,7 @@ function useMapData() {
   const [handle] = React.useState(() => delayRender("HistoricalMap load"));
 
   React.useEffect(() => {
-    fetch(staticFile("assets/maps/countries-50m.json"))
+    fetch(staticFile("_shared/geo-data/countries-50m.json"))
       .then((r) => r.json())
       .then((topo) => {
         const geo = topojson.feature(

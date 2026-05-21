@@ -1,0 +1,9 @@
+{
+  "request_id": "019df9cc-c95a-7eb3-b8ef-a06ca096e796",
+  "status_url": "https://queue.fal.run/fal-ai/bytedance/requests/019df9cc-c95a-7eb3-b8ef-a06ca096e796/status",
+  "payload_summary": {
+    "duration": "10",
+    "aspect_ratio": "9:16",
+    "generate_audio": false
+  }
+}

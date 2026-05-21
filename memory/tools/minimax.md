@@ -162,3 +162,137 @@ Voir `src/projects/geoafrique-shorts/SonjataShortFull.tsx` pour l'implementation
 - Integration Remotion : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
 - Script test solo : `scripts/tools/minimax-music-test.py`
 - Script 3 variantes : `scripts/tools/minimax-music-3variants.py`
+
+---
+
+# Minimax Speech 2.8 HD + Voice Clone — Guide TTS
+
+> Validé 2026-05-19 (test session R&D sur voix GeoAfrique).
+> Endpoints actifs : `fal-ai/minimax/voice-clone` + `fal-ai/minimax/speech-2.8-hd`
+> **Verdict Aziz** : "Très bon, plus de punch que ElevenLabs sur certains passages. Ne remplace pas ElevenLabs, mais s'ajoute au stack."
+
+## Quand utiliser Minimax TTS (vs ElevenLabs)
+
+- **Comparaison A/B narration** : générer 1 version ElevenLabs + 2 versions Minimax (presets différents) pour le même script. Aziz choisit à l'oreille.
+- **Narrations longues budget-sensible** : Minimax = $0.10 / 1000 chars vs ElevenLabs ~$0.30. Pour un script Atlas 8-15min (~10k chars), économie réelle.
+- **Voix avec punch / énergie** : Aziz a noté que Minimax neutral/happy ont plus de "beats" qu'ElevenLabs équivalent.
+
+## Workflow voice clone (one-shot)
+
+```python
+import fal_client
+
+# 1. Upload privé (PAS catbox — narration interne projet)
+audio_url = fal_client.upload_file("/path/to/sample-25s.mp3")
+
+# 2. Clone
+result = fal_client.subscribe(
+    "fal-ai/minimax/voice-clone",
+    arguments={
+        "audio_url": audio_url,
+        "noise_reduction": True,
+        "need_volume_normalization": True,
+        "model": "speech-02-hd",  # ← OK, le voice_id fonctionne aussi sur 2.8 HD
+    },
+)
+custom_voice_id = result["custom_voice_id"]
+```
+
+**Specs sample source** :
+- Durée : 20-30s suffit (≥10s requis). Trim ffmpeg depuis le milieu d'une narration propre.
+- Mono 44.1kHz MP3 192kbps validé. WAV OK aussi.
+- **Zéro musique, zéro SFX dans le sample** — voix seule.
+
+**Coût** : $1.50 par clonage.
+
+**Persistance** : voice_id expire après **7 jours sans usage TTS**. Pour pin : 1 appel TTS hebdo minimum, ou re-cloner.
+
+## Workflow TTS (Speech 2.8 HD avec voix clonée)
+
+```python
+result = fal_client.subscribe(
+    "fal-ai/minimax/speech-2.8-hd",
+    arguments={
+        "text": TEXT,
+        "voice_setting": {
+            "voice_id": custom_voice_id,
+            "speed": 1.0,
+            "vol": 1.0,
+            "pitch": 0,
+            "emotion": "neutral",  # voir presets validés ci-dessous
+        },
+        "audio_setting": {
+            "sample_rate": 44100,   # INT, pas string
+            "bitrate": 256000,      # INT, pas string
+            "format": "mp3",
+            "channel": 1,           # INT
+        },
+        "language_boost": "French",
+        "output_format": "url",
+    },
+)
+url = result["audio"]["url"]
+```
+
+**Coût** : $0.10 / 1000 chars (~$0.13 pour une narration 1m30, ~$1 pour 10min Atlas).
+
+## Presets emotion validés (Aziz 2026-05-19)
+
+7 valeurs enum : `neutral, happy, sad, angry, fearful, disgusted, surprised`.
+**Aziz préfère** : `neutral` et `happy` (les deux ont le plus de naturel + punch sur narration GeoAfrique). Workflow projet : générer ces 2 + une version ElevenLabs pour A/B.
+
+## Markers texte — GOTCHA CRITIQUE (validé 2026-05-19)
+
+**Seuls 2 markers fonctionnent réellement** sur voix française :
+- `<#0.X#>` (pauses en secondes) — ✅ marche parfaitement
+- `(sighs)` — ✅ produit un soupir audible (sonne plus comme une respiration/arrêt qu'un vrai soupir, mais exploitable)
+
+**Markers PARASITES (prononcés comme du texte, à ÉVITER)** :
+- `(laughs)` → la voix dit "rire" littéralement
+- `(clears throat)` → la voix dit les mots
+- `(gasps)` → idem
+- `(coughs)` `(sniffs)` `(groans)` `(yawns)` → probablement idem (non testés en FR)
+
+**Hypothèse confirmée** : la voix s'**adapte automatiquement** à la sémantique du texte. Sur narration "soixante mille esclaves vêtus de soie persane", `neutral` ralentit et adoucit le ton sans qu'on demande. Sur la chute "ce sont les idées qui restent", il y a un poids naturel. **Donc règle production : texte propre + 2-3 pauses dramatiques bien placées, rien d'autre.**
+
+## Pricing récap
+
+| Action | Coût |
+|---|---|
+| Voice clone (one-shot, voice_id réutilisable 7j) | $1.50 |
+| TTS (1000 chars) | $0.10 |
+| Narration 1m30 (≈1200 chars) | ~$0.12 |
+| Narration 10min Atlas (≈10k chars) | ~$1.00 |
+
+## Limites vs ElevenLabs V3
+
+- ❌ Pas de mix d'émotions inline (1 emotion par appel uniquement)
+- ❌ Pas de markers contextuels riches (`[whispers]`, `[excited]`)
+- ❌ Pour multi-émotions : générer en plusieurs appels et concat ffmpeg
+- ✅ Auto-adaptation sémantique très bonne (compense partiellement le manque de markers)
+- ✅ Pricing 3x moins cher
+- ✅ Voice clone $1.50 one-shot vs ElevenLabs professional voice clone plus complexe
+
+## Schema gotchas
+
+- `audio_setting` : tous les nombres en **INT**, pas strings. `"32000"` → fail 422. `32000` → OK.
+- `voice_setting.voice_id` accepte presets Minimax (`Wise_Woman` etc.) OU `custom_voice_id` retourné par voice-clone.
+- `language_boost: "French"` — required pour qualité optimale FR (sinon prosodie EN par défaut).
+
+## Sample R&D session (2026-05-19)
+
+- Sample source : `public/souverain/niger-uranium/audio/narration-niger-uranium-v5.mp3` trim 15-40s mono 44.1kHz
+- Voice cloné : `Voiced5bd2f9e1779163839` (expire ~2026-05-26 sans usage)
+- Renders test : `out/_r-and-d/minimax-voice-clone-test/`
+  - `clean_neutral.mp3` (74s) — référence narration pure
+  - `clean_happy.mp3` (78s) — alternative validée Aziz
+  - `long_*` — avec markers parasites (mauvais exemple à ne pas reproduire)
+- Coût total session test : **~$2.50** (clone + 12 TTS variantes)
+
+## Workflow recommandé pour future production
+
+1. **Re-cloner** la voix GeoAfrique au début de chaque épisode (sample fresh depuis dernière narration ElevenLabs validée) — $1.50
+2. **Générer 3 versions du même script** : `ElevenLabs (référence)` + `Minimax neutral` + `Minimax happy`
+3. **A/B aveugle** par Aziz, choix de la voix par épisode (pas forcément la même partout)
+4. **Markers à utiliser** : seulement `<#0.X#>` pauses. Zéro `(...)` interjection.
+5. **Pin voice_id** : appel TTS factice 1x/semaine si gap entre épisodes

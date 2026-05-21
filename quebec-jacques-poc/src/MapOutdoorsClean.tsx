@@ -72,6 +72,8 @@ export const MapOutdoorsClean: React.FC = () => {
       zoom: cam.zoom,
       pitch: 0,
       bearing: 0,
+      projection: { name: "mercator" },
+      renderWorldCopies: true,
       interactive: false,
       attributionControl: false,
       preserveDrawingBuffer: true,

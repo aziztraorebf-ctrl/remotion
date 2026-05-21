@@ -1,0 +1,88 @@
+{
+  "component": "TypeReveal",
+  "file": "src/projects/_shared/components/layouts/TypeReveal.tsx",
+  "composition": {
+    "id": "Layout-TypeReveal",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationFrames": 150
+  },
+  "props": {
+    "textBefore": "En 1885, l'Afrique fut ",
+    "keyword": "DIVISÉE",
+    "textAfter": " entre 14",
+    "subtitle": "Conférence de Berlin, 1885"
+  },
+  "constants": {
+    "colors": {
+      "gold": "#c8a951",
+      "ivory": "#f0e8d8",
+      "slate": "#9a8a6a",
+      "bg": "#060a10"
+    }
+  },
+  "layout": {
+    "background": "#060a10",
+    "textZone": {
+      "centerY": 960,
+      "normalFontSize": 64,
+      "keyWordFontSize": 192,
+      "fontFamily": "'Cinzel', serif"
+    },
+    "cursor": {
+      "color": "#c8a951",
+      "width": 4,
+      "height": 64,
+      "blinkPeriodFrames": 15
+    },
+    "midline": {
+      "height": 1,
+      "color": "rgba(200, 169, 81, 0.2)"
+    },
+    "bottomSeparator": {
+      "y": 1650,
+      "width": 300,
+      "height": 2
+    },
+    "subtitle": {
+      "y": 1700,
+      "fontSize": 36,
+      "fontFamily": "'Inter', sans-serif"
+    },
+    "annotations": {
+      "top": {
+        "text": "300px",
+        "fontFamily": "'Space Mono', monospace",
+        "fontSize": 24
+      },
+      "bottom": {
+        "text": "slate (#9a8a6a) 24px",
+        "fontFamily": "'Space Mono', monospace",
+        "fontSize": 20
+      }
+    }
+  },
+  "animation": {
+    "typeSpeedFramesPerChar": 2,
+    "keyWordEntry": {
+      "scaleFrom": 0.3,
+      "scaleTo": 1,
+      "spring": {
+        "damping": 12,
+        "stiffness": 150,
+        "mass": 1
+      }
+    },
+    "cursorBlink": {
+      "periodFrames": 15
+    }
+  },
+  "corrections": [
+    "Le texte doit être centré à y=960 (milieu exact de 1920px) — dans le mockup il est légèrement bas",
+    "Les lettres doivent être plus grandes que dans le mockup — normalFontSize minimum 64px, et le mot clé à 192px (3x)",
+    "Ajouter une fine ligne horizontale très subtile derrière le texte principal (visible sur le mockup au niveau de la barre du 'H' et au milieu de l'écran)",
+    "Le mot-clé doit avoir un textShadow doré léger pour donner l'effet 'glowing' visible sur le mockup"
+  ],
+  "agentInstructions": "1. FOND: Utilise AbsoluteFill avec un inline style backgroundColor: '#060a10' STRICTEMENT. Pas de classe Tailwind pour le background racine.\n2. LOGIQUE TYPING: Calcule le nombre total de caractères affichés en fonction de `frame` et `typeSpeedFramesPerChar`. Découpe ce nombre pour savoir combien de caractères de `textBefore`, puis de `keyword`, puis de `textAfter` doivent être rendus.\n3. LAYOUT INLINE: Utilise un conteneur flex row (`flex flex-row items-center justify-center w-full`) centré absolu à `top: 960`, `translateY: '-50%'`.\n4. MOT CLÉ GÉANT: Lorsque le premier caractère du `keyword` doit s'afficher, déclenche un `spring()` qui passe de 0.3 à 1. Applique ce scale en inline style au conteneur du `keyword`. Le conteneur du keyword doit avoir `fontSize: 192px` (inline), `fontFamily: 'Cinzel'` (inline), et les classes `text-gold font-bold`. Ajoute un text-shadow glow.\n5. TEXTE NORMAL: Les spans pour `textBefore` et `textAfter` ont `fontSize: 64px` (inline), `fontFamily: 'Cinzel'` (inline) et la classe `text-ivory`.\n6. CURSEUR: Un simple `div` (ou `span`) à la toute fin de la chaîne en cours de frappe. Utilise `Math.floor(frame / blinkPeriodFrames) % 2 === 0` pour l'opacité (1 ou 0) afin de le faire clignoter.\n7. DÉTAILS BAS: Crée un bloc en bas (vers y=1650) pour le trait séparateur, le sous-titre ('Conférence de Berlin') en classe `text-slate` et police Inter, encadré par les petites annotations techniques en Space Mono."
+}

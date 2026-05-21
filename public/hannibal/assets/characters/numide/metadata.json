@@ -1,0 +1,45 @@
+{
+  "character": {
+    "id": "34ce6ecf-683c-42f9-a36b-0f5b5fb8edb0",
+    "name": "Numidian cavalryman",
+    "prompt": "Numidian light cavalry rider, ancient North Africa 218 BC, dark skin, short white tunic, no saddle bareback riding, throwing javelin in hand, curly hair, lean athletic build, pixel art RPG",
+    "size": {
+      "width": 68,
+      "height": 68
+    },
+    "template_id": "mannequin",
+    "directions": 4,
+    "view": "low top-down",
+    "created_at": "2026-05-05T05:48:47.942322+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "west": "rotations/west.png",
+      "east": "rotations/east.png",
+      "north": "rotations/north.png"
+    },
+    "animations": {
+      "running-140cdb93": {
+        "north": [
+          "animations/running-140cdb93/north/frame_000.png",
+          "animations/running-140cdb93/north/frame_001.png",
+          "animations/running-140cdb93/north/frame_002.png",
+          "animations/running-140cdb93/north/frame_003.png",
+          "animations/running-140cdb93/north/frame_004.png",
+          "animations/running-140cdb93/north/frame_005.png"
+        ],
+        "east": [
+          "animations/running-140cdb93/east/frame_000.png",
+          "animations/running-140cdb93/east/frame_001.png",
+          "animations/running-140cdb93/east/frame_002.png",
+          "animations/running-140cdb93/east/frame_003.png",
+          "animations/running-140cdb93/east/frame_004.png",
+          "animations/running-140cdb93/east/frame_005.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-05T15:24:02.165793"
+}

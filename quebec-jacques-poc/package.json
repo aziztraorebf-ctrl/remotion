@@ -20,6 +20,7 @@
     "@iconify/react": "^6.0.2",
     "@remotion/bundler": "^4.0.452",
     "@remotion/cli": "^4.0.452",
+    "@turf/turf": "^7.3.5",
     "dotenv": "^17.4.2",
     "mapbox-gl": "^3.22.0",
     "react": "^19.2.5",

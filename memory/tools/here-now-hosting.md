@@ -53,26 +53,41 @@ curl -X POST "<finalizeUrl>" \
 # Retour : {"success":true, "siteUrl":"..."}
 ```
 
-## Script ready-to-use
+## Script ready-to-use (mise à jour 2026-05-09)
 
-`~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh` automatise les 3 étapes :
+`~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh` — 2 modes :
+
 ```bash
+# Nouveau site (première fois)
 ./publish-here-now.sh path/to/dashboard.html
+# → retourne slug + claimToken à sauvegarder dans dashboard-url.md
+
+# Mise à jour site existant (même URL)
+./publish-here-now.sh path/to/dashboard.html <slug> <claimToken>
+# → même URL, contenu remplacé, aucun claim requis
 ```
-Output : URL live + claimUrl à sauvegarder + expiration.
 
-## Règle critique : sauvegarder claimUrl avant 24h
+## Règle critique : sauvegarder slug + claimToken
 
-**Si non-claimé sous 24h** : site supprimé. Le `claimToken` est retourné UNE SEULE FOIS dans la réponse de l'étape 1 — non-récupérable après.
+Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder immédiatement dans `dashboard/dashboard-url.md` avec la commande de mise à jour complète. Après ça, chaque update réutilise ce token — plus jamais de nouveau slug.
 
-**Toujours** sauvegarder `claimUrl` dans `memory/episodes/<project>/dashboard-url.md` immédiatement après publish.
+## Mise à jour sans nouveau lien — confirmé 2026-05-09
 
-## Premier cas validé
+`PUT /api/v1/publish/:slug` avec `claimToken` dans le body = même URL pour toujours. Testé et validé sur slug `united-quasar-n4qp`.
 
-Empire du Ghana dashboard 2026-05-03 :
+## Cas validés
+
+### Empire du Ghana dashboard 2026-05-03
 - Slug : `smooth-oyster-6zb2`
 - URL : https://smooth-oyster-6zb2.here.now/
 - Claim URL sauvegardé dans `memory/episodes/empire-ghana/dashboard-url.md`
+
+### Souverain Templates Library dashboard 2026-05-09
+- Slug : `hollow-desert-9tz6`
+- URL : https://hollow-desert-9tz6.here.now/
+- Claim URL sauvegardé dans `dashboard/dashboard-url.md` (deadline 2026-05-10 19:12 UTC)
+- Source locale : `dashboard/templates-souverain.html` (vanilla HTML, mobile-first, 8 templates avec previews)
+- Workflow update : éditer constante TEMPLATES dans le HTML + republier via `~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh`
 
 ## Récap décisionnel hosting par type
 

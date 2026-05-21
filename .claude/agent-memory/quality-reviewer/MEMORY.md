@@ -1,7 +1,31 @@
 # quality-reviewer — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-25 (nettoyage memoire — jurisprudence Sonjata -> JURISPRUDENCE-SONJATA.md)
+> Last updated: 2026-05-13 (Agent Teams activés, seuil d'activation réévalué)
+
+---
+
+## NOUVEAUTES SESSION 2026-05-13
+
+### Agent Teams activés (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+- Feature activée dans `~/.claude/settings.json`
+- Le quality-reviewer peut être déclenché directement par remotion-composer en fin de Stage 5, sans passer par Claude principal
+- /goal et /bg disponibles en session interactive — permettent de boucler la review jusqu'à APPROVE ou RE-EVALUATE
+
+### Seuil d'activation (mis à jour)
+- Statut précédent : "pas encore actif en production automatique"
+- Statut 2026-05-13 : Agent Teams activé — **le quality-reviewer peut maintenant être invoqué en pipeline autonome** dès que remotion-composer délivre son mini-render validé
+- Condition : visual-producer produit 3+ scènes sans intervention Aziz → quality-reviewer s'active
+
+### Règles budget API
+Le quality-reviewer est un agent $0 (lecture + ffmpeg + Kimi via Moonshot API).
+- Kimi via `scripts/review_with_kimi.py` — coût négligeable (Moonshot API)
+- Ne jamais déclencher de re-génération d'assets depuis cet agent — signaler à Claude principal
+
+### Rappel check-api-balance.sh
+Le quality-reviewer n'appelle pas check-api-balance.sh lui-même (il ne génère rien). Mais il doit vérifier dans PIPELINE.md que audio-director et visual-producer ont bien exécuté leurs checks avant de valider le pipeline.
+
+---
 
 ---
 

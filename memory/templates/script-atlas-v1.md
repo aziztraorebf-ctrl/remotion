@@ -24,6 +24,7 @@ Mais quand le sujet est **richesse-record / géographie / comparaison d'échelle
 | Empires africains avec chiffres records (or Mali, savoir Tombouctou) | **Atlas** |
 | Vraie taille / projection cartographique / comparaison continent | **Atlas** |
 | Géographie physique (Lac Tchad, Sahara, fleuves) | **Atlas** |
+| **Mécanisme géo historique (épidémie, route commerciale, barrière naturelle)** | **Atlas — sous-type "géo mécaniste"** |
 | Inventions précoloniales avec dates et faits chiffrés | **Atlas** |
 | Démographie / économie historique | **Atlas** |
 | Épopée mythique fondatrice (Sonjata, Chaka) | ebauche-v1 |
@@ -290,10 +291,70 @@ D'après l'analyse cross-video Jacques a dit, voici les composants à utiliser d
 
 ---
 
+## Sources footer visuel (CitationFooter) — règle Peste 1347
+
+Les sources s'affichent **discrètement en bas de frame** sur les passages chiffrés clés.
+Elles ne narrent pas — elles crédibilisent silencieusement. C'est la signature différenciante Atlas.
+
+**Format** : texte 16-18px, opacité 0.6-0.7, police neutre (non-decorative). Maximum 2 sources simultanées.
+
+**Règle de placement** : chaque stat importante a sa source associée. Si le chiffre est contesté ou issu d'un débat actif → toujours ajouter source + disclaimer visuel discret.
+
+**Exemple Peste 1347** :
+- Segment Densité Cesar → *Nature* 606 (2022) · al-Maqrizi (source primaire)
+- Segment Climax Bouclier → *Parasites & Vectors* PMC3195756 · *Science* 363:1022 (2019)
+- Segment Mali Vivant → Ibn Battuta *Rihla* (1355) · World History Encyclopedia
+
+**Antipattern** : éviter les URLs longues dans le footer — format court citation académique seulement.
+
+---
+
 ## Validé sur
 
 - **Mali (Mansa Moussa)** brouillon 2026-04-27 : 80s, 6 segments, 9 stats, 3 pivots Atlas, 7 beats Cesar pleinement applicables, ton didactique chaleureux validé par Aziz.
 - **Tombouctou** brouillon 2026-04-27 (en cours) : à valider qu'Atlas généralise au-delà du Mali.
+- **La Peste et le Sahara 1347** — script V3 LOCKED 2026-05-15. **Premier script Atlas historique géographique pur** (sujet : mécanisme protection Sahara vs épidémie). Particularités documentées ci-dessous.
+
+---
+
+## Leçons Peste 1347 — Script historique géographique pur (NOUVEAU type 2026-05-15)
+
+Ce script a révélé un sous-type Atlas non documenté : **Atlas géographique mécaniste** (le mécanisme physique est le héros, pas un personnage humain).
+
+### Ce qui distingue ce sous-type
+
+| Critère | Atlas standard (Mansa Moussa) | Atlas géo mécaniste (Peste 1347) |
+|---------|-------------------------------|----------------------------------|
+| Héros | Personnage historique | Mécanisme géographique (le Sahara) |
+| Stats | Records économiques | Données biologiques + démographiques |
+| Ton | Chaleureux, admiration | Factuel froid + contraste binaire |
+| Climax | Révélation de grandeur | Révélation de protection (l'absence comme fait) |
+| Tu direct | Invitatif recommandé | Zéro "tu" — le sujet se tient seul |
+| Sources | UNESCO, Britannica | Nature, Science, PMC (peer-reviewed) |
+
+### Technique climax "contraste binaire" (validée V3)
+
+Au lieu de décrire le mécanisme en prose, la technique la plus efficace est le **contraste sec** :
+
+```
+En Europe : des milliers de fosses communes.
+Au sud du Sahara : aucune.
+La même époque. Le même pathogène. Un désert entre les deux.
+```
+
+→ Trois phrases. Aucun adjectif. Aucune explication. Le lecteur/auditeur fait lui-même la déduction.
+→ Plus fort que "le Sahara a protégé l'Afrique car..." (explicatif = moins mémorable).
+
+### Objections adversariales — traitement honnête (O1 validé)
+
+Sur les sujets historiques avec débat académique actif :
+- Ne jamais affirmer "la science valide" ou "les archives confirment" si le débat est ouvert
+- Technique : énoncer le fait observable ("aucun charnier documenté") sans en affirmer la causalité définitive
+- Footer source = marker de rigueur visuel, sans sur-affirmer dans la narration
+
+### Zéro "tu" — valide pour ce sous-type
+
+Le sujet géographique pur se tient sans invitation directe au viewer. Le mécanisme est si contre-intuitif que la phrase factuelle seule accroche. Ne pas forcer le "tu" pour cocher la case formule Cesar.
 
 ---
 

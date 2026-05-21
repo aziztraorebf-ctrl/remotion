@@ -1,0 +1,91 @@
+{
+  "background_strategy": "layered_composite",
+  "background_assets_to_generate": [
+    {
+      "filename": "kraft_paper_texture.png",
+      "prompt": "seamless kraft paper texture, high resolution, slightly worn, flat lay, studio light, subtle sepia tone, 1080x1920, documentary aesthetic",
+      "dimensions": "1080x1920",
+      "transparent": false,
+      "purpose": "base texture layer for dossier aesthetic"
+    },
+    {
+      "filename": "sepia_wash_overlay.png",
+      "prompt": "subtle sepia gradient overlay, soft edges, dark brown to light brown, transparent background, 1080x1920, film grain effect, caspian sepia palette",
+      "dimensions": "1080x1920",
+      "transparent": true,
+      "purpose": "color grading and atmospheric overlay"
+    },
+    {
+      "filename": "dossier_vignette.png",
+      "prompt": "dark vignette, subtle grunge texture, soft edges, transparent center, black and deep brown tones, 1080x1920, documentary film look",
+      "dimensions": "1080x1920",
+      "transparent": true,
+      "purpose": "framing effect to deepen the dossier ambiance"
+    }
+  ],
+  "foreground_animatable_elements": [
+    {
+      "element_id": "date_june_2025",
+      "asset_source": "to_generate",
+      "filename_or_existing": "Juin 2025",
+      "animation_description": "soft fade-in with a very slight scale-up (from 0.98 to 1.0) over 0.5 seconds, then hold",
+      "appears_at_seconds": 0.2,
+      "duration_visible_seconds": 10.7,
+      "screen_position_xy": [540, 300],
+      "size_px": [600, 80]
+    },
+    {
+      "element_id": "somair_mine_icon",
+      "asset_source": "existing_icon",
+      "filename_or_existing": "icon-somair-mine.png",
+      "animation_description": "slide in from left with a slight overshoot and settle, then subtle continuous slow float/breathing animation",
+      "appears_at_seconds": 2.67,
+      "duration_visible_seconds": 8.23,
+      "screen_position_xy": [540, 600],
+      "size_px": [200, 200]
+    },
+    {
+      "element_id": "niger_state_icon",
+      "asset_source": "existing_icon",
+      "filename_or_existing": "icon-etat-niger.png",
+      "animation_description": "fade-in with a gentle scale-up (from 0.9 to 1.0), then subtle continuous slow float/breathing animation",
+      "appears_at_seconds": 6.83,
+      "duration_visible_seconds": 4.07,
+      "screen_position_xy": [300, 900],
+      "size_px": [180, 180]
+    },
+    {
+      "element_id": "niamey_slogan_text",
+      "asset_source": "to_generate",
+      "filename_or_existing": "Souveraineté Retrouvée",
+      "animation_description": "soft fade-in (not typewriter) over 0.3 seconds, then hold",
+      "appears_at_seconds": 7.0,
+      "duration_visible_seconds": 3.9,
+      "screen_position_xy": [300, 1100],
+      "size_px": [400, 60]
+    },
+    {
+      "element_id": "orano_corporate_icon",
+      "asset_source": "existing_icon",
+      "filename_or_existing": "icon-orano-corporate.png",
+      "animation_description": "slide in from right with a slight overshoot and settle, then subtle continuous slow float/breathing animation",
+      "appears_at_seconds": 9.1,
+      "duration_visible_seconds": 1.8,
+      "screen_position_xy": [780, 900],
+      "size_px": [180, 180]
+    },
+    {
+      "element_id": "orano_slogan_text",
+      "asset_source": "to_generate",
+      "filename_or_existing": "Expropriation",
+      "animation_description": "soft fade-in (not typewriter) over 0.3 seconds, then hold",
+      "appears_at_seconds": 9.3,
+      "duration_visible_seconds": 1.6,
+      "screen_position_xy": [780, 1100],
+      "size_px": [400, 60]
+    }
+  ],
+  "permanent_motion": "Subtle, continuous film grain overlay shifting across all layers. Background layers (kraft paper, sepia wash, vignette) have a very slow, imperceptible parallax drift. All foreground icons exhibit a gentle, slow 'breathing' scale animation (1.0 to 1.01 and back) and a slight vertical float.",
+  "remotion_implementation_notes": "Utilize `AbsoluteFill` for background layering. Apply CSS filters (sepia, contrast, grain) for the visual style. Implement `spring` for entry animations and `loop` with `interpolate` for continuous subtle motions. Text elements can be rendered directly using Remotion's `Text` component with custom fonts and styling. Use `Sequence` and `useCurrentFrame` for precise timing.",
+  "potential_pitfalls": "Achieving the exact 'Caspian Sepia palette' and 'kraft paper / dark dossier' feel might require fine-tuning CSS filters and color adjustments beyond initial asset generation. Ensuring the 'subtle continuous float' and 'breathing' animations feel organic and not repetitive across multiple elements will require careful easing and timing. Consistent font choice and styling for all text elements to match the documentary aesthetic."
+}

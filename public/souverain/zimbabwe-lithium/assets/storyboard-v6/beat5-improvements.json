@@ -1,0 +1,40 @@
+{
+  "current_analysis": "The split-screen layout effectively contrasts Zimbabwe's raw asset with Chinese corporate processing. However, it violates core constraints: text is burned into the imagery, the map uses a fake 3D gold foil effect instead of precise d3-geo data, and the 3D arrow and bright red flag clash with the premium, minimalist Souverain aesthetic.",
+  "improvements": [
+    {
+      "element": "Background",
+      "current": "Flat split-color dark blue with subtle noise.",
+      "suggested": "Use Background Type A: a unified dark navy (#080d14) with a precise CSS dot grid overlay to unify the composition.",
+      "why": "Establishes the signature Souverain data-viz aesthetic and removes the artificial split-screen line.",
+      "implementation": "React CSS `background-color: #080d14` with a `radial-gradient` repeating pattern for the dots.",
+      "feasible_in_remotion": true
+    },
+    {
+      "element": "Zimbabwe Map",
+      "current": "Embossed 3D gold foil PNG with burned-in text.",
+      "suggested": "Accurate, flat vector silhouette of Zimbabwe with a 2px gold stroke and a semi-transparent dark fill.",
+      "why": "Maintains geographic accuracy and aligns with the flat, premium vector aesthetic.",
+      "implementation": "Use d3-geo with Natural Earth 50m, ISO code = ZWE. Render as an inline SVG `<path>`.",
+      "feasible_in_remotion": true
+    },
+    {
+      "element": "Connection Arrow",
+      "current": "Chunky 3D embossed gold arrow.",
+      "suggested": "Sleek, minimalist geometric arrow.",
+      "why": "Reduces visual clutter and allows for elegant vector animation.",
+      "implementation": "Inline SVG `<path>` or `<line>` with `stroke=\"#c8a951\"` and `strokeWidth=\"3\"`.",
+      "feasible_in_remotion": true
+    },
+    {
+      "element": "Typography & Flag",
+      "current": "Burned-in text and a standard, bright PNG flag.",
+      "suggested": "Remove the flag to maintain the strict color palette. Build the right side as a structured typographic data card using Ivory and Gold.",
+      "why": "Bright colors like the red flag break the moody, premium aesthetic; CSS text ensures crisp rendering and dynamic animation.",
+      "implementation": "React CSS Flexbox layout. Main titles in Ivory (#f0e8d8), numbers/accents in Gold (#c8a951).",
+      "feasible_in_remotion": true
+    }
+  ],
+  "improved_storyboard_prompt": "A premium documentary style storyboard frame in portrait 9:16. Dark navy blue background (#080d14) with a subtle, precise dot grid pattern. Left side: A flat, minimalist, precise map outline of Zimbabwe drawn in thin gold lines (#c8a951). Right side: A minimalist layout with horizontal gold separator lines and abstract geometric placeholders for data. A simple, elegant gold vector arrow connects the map to the right side. Aesthetic is high-end, financial, geopolitical dossier. Deep contrast, flat vector style elements. NO TEXT, NO LETTERS, NO NUMBERS in the image.",
+  "background_asset_prompt": "Pure dark navy blue (#080d14) background with a perfectly uniform, minimalist dot grid pattern in a slightly lighter blue. Absolute geometric perfection, flat, no lighting variations. NO smoke, NO atmospheric textures, NO clouds, NO organic elements, NO fire.",
+  "animation_hints": "The Zimbabwe map outline draws in using SVG stroke-dashoffset over 30 frames. The gold arrow scales in and slides from left to right using a subtle spring physics animation. The right-side text elements fade in and slide up sequentially (staggered by 5 frames each). The $400M and 50,000t numbers dynamically count up using Remotion's interpolate function."
+}

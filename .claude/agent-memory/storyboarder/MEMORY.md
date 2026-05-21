@@ -7,6 +7,25 @@ Never estimate. Never use `expected_duration_sec` as a timing source.
 
 ---
 
+## NOUVEAUTES SESSION 2026-05-13
+
+### Agent Teams activés (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+- Feature activée dans `~/.claude/settings.json`
+- Le storyboarder peut transmettre le timing.ts directement à audio-director et visual-producer via le système d'agent teams, sans passer par Claude principal
+- /goal et /bg disponibles en session interactive Claude Code — permettent de produire timing.ts de façon autonome jusqu'à validation
+
+### Règles budget API
+Le storyboarder est un agent $0 (pas d'appels API payants). Ses seules dépendances payantes :
+- ElevenLabs forced-alignment (1 appel après TTS) — géré par audio-director, pas le storyboarder
+- Le storyboarder consomme uniquement le JSON d'alignment en lecture
+
+### Handoff Pipeline obligatoire
+Après chaque timing.ts produit : écrire dans `.claude/agent-memory/shared/PIPELINE.md` la section Stage 2. Sans ce handoff, les agents downstream n'ont pas de signal automatique — c'est la source de blocages silencieux.
+
+---
+
+---
+
 ## PRE-FLIGHT CHECKLIST (a cocher mentalement AVANT de produire timing.ts)
 
 - [ ] Script LOCKED confirme ? (pas de "on va retoucher apres")

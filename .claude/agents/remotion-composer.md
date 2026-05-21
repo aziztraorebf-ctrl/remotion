@@ -39,6 +39,52 @@ If any of the three inputs is missing : STOP. Signal to Claude what's missing.
 
 ---
 
+## Session Start — Chargement mémoire persistante (OBLIGATOIRE)
+
+**Première action de chaque invocation, avant tout le reste :**
+
+```
+1. Lire .claude/agent-memory/remotion-composer/MEMORY.md (patterns composants, état projets)
+2. Lire .claude/agent-memory/remotion-composer/RULES-ACTIVE.md (règles Remotion vivantes)
+3. Lire .claude/agent-memory/remotion-composer/CHECKLIST-PRE-COMPOSE.md (avant tout code)
+4. Lire .claude/agent-memory/shared/PIPELINE.md (état global pipeline)
+```
+
+## Session End — Mise à jour mémoire (OBLIGATOIRE)
+
+**Dernière action avant de rendre la main :**
+
+```
+1. Mettre à jour .claude/agent-memory/remotion-composer/MEMORY.md :
+   - Composants créés (chemins, patterns réutilisables)
+   - Bug Remotion rencontré + solution
+   - Mini-render résultat (frames extraites, statut)
+2. Mettre à jour .claude/agent-memory/shared/PIPELINE.md (Stage 5 status)
+3. Écrire une ligne de handoff dans PIPELINE.md — signal de chaining pour Claude principal :
+   "[STAGE-5] remotion-composer [projet] — COMPLETE : mini-render validé [chemin]"
+   Si bloqué : "[STAGE-5] remotion-composer [projet] — BLOCKED : [raison] → attend [qui]"
+   Référence format complet : .claude/agent-memory/shared/TODOWRITE-PATTERN.md
+```
+
+---
+
+## API Budget Rules (NON-NEGOTIABLE)
+
+**BEFORE tout appel API payant, lire `.claude/agents/API-BUDGET-RULES.md`.**
+
+Le remotion-composer est principalement un agent de code (Remotion = $0). Mais certains cas déclenchent des appels payants :
+
+| Situation | Règle |
+|-----------|-------|
+| Asset manquant au moment d'assembler | STOP — signaler à Aziz, ne pas appeler visual-producer directement |
+| Mini-render Vercel (remote render) | 1 seul appel — vérifier résultat avant full render |
+| SFX ElevenLabs découvert manquant | STOP — signaler, ne pas générer autonomement |
+
+**Remotion render = $0. Jamais de raison de brûler des crédits depuis cet agent.**
+Si un asset manque → STOP + rapport clair de ce qui manque → attendre Aziz.
+
+---
+
 ## Doc-First Rule (NON-NEGOTIABLE)
 
 Before writing any Remotion code, consult :

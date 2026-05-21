@@ -15,6 +15,9 @@ import { AtlasTombouctouShowcase, ATLAS_SHOWCASE_DURATION_FRAMES } from "./Atlas
 import { AtlasEmpireHaloTest } from "./AtlasEmpireHaloTest";
 import { AtlasMansaMoussaShowcase, MANSA_MOUSSA_DURATION_FRAMES } from "./AtlasMansaMoussaShowcase";
 import { Scene001IntroV3 } from "./scenes/Scene001IntroV3";
+import { GlowingQuebecTest } from "./GlowingQuebecTest";
+import { MaliFlagTest } from "./MaliFlagTest";
+import { POCV4Mali60s, POCV4_DURATION } from "./POCV4Mali60s";
 import { AtlasV2VectorTest } from "./AtlasV2VectorTest";
 import { AtlasV2GlobeTest } from "./AtlasV2GlobeTest";
 import { AtlasV2SceneS3Test, ATLAS_V2_S3_DURATION } from "./AtlasV2SceneS3Test";
@@ -291,6 +294,30 @@ export const RemotionRoot: React.FC = () => {
         width={1280}
         height={720}
         defaultProps={{ startFrame: 0 }}
+      />
+      <Composition
+        id="GlowingQuebecTest"
+        component={GlowingQuebecTest}
+        durationInFrames={240}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="MaliFlagTest"
+        component={MaliFlagTest}
+        durationInFrames={240}
+        fps={30}
+        width={1280}
+        height={720}
+      />
+      <Composition
+        id="POCV4Mali60s"
+        component={POCV4Mali60s}
+        durationInFrames={POCV4_DURATION}
+        fps={30}
+        width={1280}
+        height={720}
       />
       <Composition
         id="AtlasV2MiniTestNoOverlay"

@@ -34,6 +34,53 @@ Tool-agnostic in spirit: picks the right tool for each scene based on the brief.
 
 ---
 
+## Session Start — Chargement mémoire persistante (OBLIGATOIRE)
+
+**Première action de chaque invocation, avant tout le reste :**
+
+```
+1. Lire .claude/agent-memory/visual-producer/MEMORY.md (index + état projets)
+2. Lire .claude/agent-memory/visual-producer/RULES-ACTIVE.md (règles vivantes)
+3. Lire .claude/agent-memory/visual-producer/MOTS-ROUGES-VERTS.md (si prompt Seedance/Short prévu)
+4. Lire .claude/agent-memory/shared/PIPELINE.md (état global pipeline)
+5. Vérifier balance API : ./scripts/check-api-balance.sh all
+```
+
+Ne jamais sauter cette étape. La mémoire contient les gotchas découverts en session, les règles apprises, l'état des projets actifs.
+
+## Session End — Mise à jour mémoire (OBLIGATOIRE)
+
+**Dernière action avant de rendre la main, après chaque livraison :**
+
+```
+1. Mettre à jour .claude/agent-memory/visual-producer/MEMORY.md :
+   - État projet (assets livrés, chemins, seeds)
+   - Nouveau gotcha découvert (outil, symptôme, solution)
+2. Si nouvelle règle apprise → ajouter dans RULES-ACTIVE.md
+3. Mettre à jour .claude/agent-memory/shared/PIPELINE.md (Stage 3 ou 4 status)
+4. Écrire une ligne de handoff dans PIPELINE.md — signal de chaining pour Claude principal :
+   Stage 3 : "[STAGE-3] visual-producer [projet] — APPROVED : Visual Plan validé Aziz"
+   Stage 4 : "[STAGE-4] visual-producer [projet] — COMPLETE : [N] assets livrés public/assets/"
+   Si bloqué : "[STAGE-4] visual-producer [projet] — BLOCKED : [raison] → attend [qui]"
+   Référence format complet : .claude/agent-memory/shared/TODOWRITE-PATTERN.md
+```
+
+Format mise à jour : bref et factuel. Date + fait technique. Pas de prose.
+
+---
+
+## API Budget Rules (NON-NEGOTIABLE)
+
+**BEFORE any paid API call, read `.claude/agents/API-BUDGET-RULES.md`.**
+
+Budget par beat (résumé) :
+- PixelLab character/object/animation : **2 générations max** → STOP + checkpoint
+- Gemini image : **2 générations max** → STOP + checkpoint
+- Seedance / Kling : **0 appel autonome** — préparer prompt + refs + coût → attendre "go" Aziz
+- Checkpoint obligatoire après CHAQUE appel payant (analyser → verdict → présenter → attendre)
+
+---
+
 ## Doc-First Rule (NON-NEGOTIABLE)
 
 **BEFORE writing any prompt for tool X, READ its memory file.** No exceptions.

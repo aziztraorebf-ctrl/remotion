@@ -1,6 +1,20 @@
 # ElevenLabs TTS — Guide complet V3 GeoAfrique
-> Mise a jour : 2026-04-19 (Voice Remixing + Forced Alignment + config max-style)
-> Modele actif : `eleven_v3`
+> Mise a jour : 2026-05-12. Modele actif : `eleven_v3`
+> Structure : Règles critiques (lire chaque session) → Référence complète (consulter au besoin)
+
+---
+
+## CHECKLIST OBLIGATOIRE — scanner avant chaque generation TTS
+
+- [ ] Aucun participe passe en "e/ee" en fin de groupe (`terrifie`, `obsede`, `racontee` → reformuler)
+- [ ] Aucun "ont + voyelle" → passe simple (`firent escale`)
+- [ ] Tous les chiffres en lettres (`1311` → `treize cent onze`)
+- [ ] Tous les accents ecrits (e, a, c cedille) — sinon prononciation fausse
+- [ ] Audio tags places AVANT le mot/phrase (pas apres)
+- [ ] Config max-style si voix Narratrice v2 (`stability: 0.22, style: 0.55`)
+- [ ] Voix = Narratrice v2 (`z3gESu49naEZW8Af2Upm`) ou autre voix validee
+- [ ] **Forced Alignment apres generation** pour timestamps mot-par-mot
+- [ ] Musique de fond : volume par defaut **0.07** (ajuster par paliers de 0.02-0.03)
 
 ---
 
@@ -369,6 +383,55 @@ APRES : Audio -> Forced Alignment (duree + timestamps en 1 appel) -> storyboarde
 
 **L'agent audio-director DOIT utiliser Forced Alignment apres chaque generation TTS.**
 
+### Bug Forced Alignment v1 — timestamps bloques (2026-05-14)
+
+**Symptome** : tous les timestamps retournes sont identiques (ex: `start: 6.56, end: 6.56` pour chaque mot). L'audio est correct mais l'alignement est corrompu.
+
+**Cause** : endpoint v1 (`/v1/forced-alignment`) peut retourner des resultats defectueux sur certains fichiers MP3.
+
+**Solution** : regenerer via endpoint v2 (`/v2/forced-alignment`). Le v2 retourne des timestamps corrects.
+
+```python
+# v1 (peut etre corrompu)
+response = requests.post(
+    "https://api.elevenlabs.io/v1/forced-alignment",
+    headers={"xi-api-key": ELEVENLABS_API_KEY},
+    files={"file": open(audio_path, "rb")},
+    data={"text": plain_text}
+)
+
+# v2 (si v1 corrompu)
+response = requests.post(
+    "https://api.elevenlabs.io/v2/forced-alignment",
+    headers={"xi-api-key": ELEVENLABS_API_KEY},
+    files={"file": open(audio_path, "rb")},
+    data={"text": plain_text}
+)
+```
+
+**Detection automatique du bug** : si `words[0].start == words[1].start == words[2].start` → timestamps bloques → passer en v2 immediatement.
+
+### Whisper — regles d'utilisation (2026-05-14)
+
+**Aziz preference** : utiliser l'API OpenAI Whisper (`openai.audio.transcriptions.create`), pas Whisper en local.
+
+**Pourquoi** : Whisper local = dependances lourdes, GPU optionnel, gestion de process background compliquee. API OpenAI = simple, fiable, meme qualite.
+
+```python
+from openai import OpenAI
+client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+with open(audio_path, "rb") as f:
+    transcript = client.audio.transcriptions.create(
+        model="whisper-1",
+        file=f,
+        response_format="verbose_json",  # pour avoir les timestamps
+        timestamp_granularities=["word"]
+    )
+```
+
+**Usage dans le pipeline** : Forced Alignment ElevenLabs v2 EN PREMIER (plus precis). Whisper API en COMPLEMENT si crossvalidation necessaire (ex: verifier syllabe ambigue). Jamais Whisper local.
+
 ---
 
 ## Voice Design — Guide de prompt (doc officielle 2026-04-19)
@@ -390,19 +453,7 @@ Persona: <2-5 words>. Emotion: <2-3 adjectives>.
 
 ---
 
-## Checklist avant generation
-
-- [ ] Aucun participe passe en "e/ee" en fin de groupe
-- [ ] Aucun "ont + voyelle"
-- [ ] Tous les chiffres en lettres
-- [ ] **TOUS les accents ecrits** (e, a, c cedille, etc.) — sinon ElevenLabs prononce mal
-- [ ] Audio tags places AVANT le mot/phrase (pas apres)
-- [ ] Config max-style si voix Narratrice v2 (stability 0.22, style 0.55)
-- [ ] Voix = Narratrice v2 remixee (z3gESu49naEZW8Af2Upm) ou autre voix validee
-- [ ] Test sur segment court avant generation complete
-- [ ] **Forced Alignment apres generation** pour timestamps mot-par-mot
-
----
+## ─── RÉFÉRENCE — consulter au besoin ───────────────────────────────────
 
 ## Sound Effects API (valide 2026-04-21)
 

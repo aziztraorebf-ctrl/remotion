@@ -93,11 +93,12 @@ const projContext = geoMercator()
   .translate([W / 2, H / 2 + 200]); // Décalé vers le bas pour montrer mer en bas
 
 // === VUE 2 — PAN SUD (Beat 1-2 : Espagne + Rhône) ===
-// Caméra au sud, Espagne visible, Pyrénées et Rhône en haut
+// Centre sur Espagne + Pyrénées visibles en milieu-haut
+// Carthago Nova doit atterrir vers y~900 (milieu-bas), Pyrénées vers y~650
 const projSouth = geoMercator()
-  .center([2.5, 41.5])    // Centre Espagne / Pyrénées
+  .center([2.5, 43.5])    // Centre remonté (+2° lat) pour placer Espagne au milieu
   .scale(2800)
-  .translate([W / 2, H / 2 + 300]);
+  .translate([W / 2, H / 2]);
 
 // === VUE 3 — ALPES FOCUS (Beat 3-4 : traversée montagne + descente) ===
 // Zoom serré sur zone alpine — Rhône à Plaine du Pô

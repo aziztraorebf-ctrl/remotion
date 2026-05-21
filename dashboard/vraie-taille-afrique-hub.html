@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Vraie Taille de l'Afrique — Hub Production</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e1a0e;
+    --bg-elev: #152015;
+    --bg-card: #1a2a1a;
+    --gold: #d4a93c;
+    --gold-light: #f0d98a;
+    --green: #4a8b5a;
+    --green-bright: #6ec07a;
+    --red: #c44b3a;
+    --blue: #3a6a8a;
+    --text: #ffffff;
+    --text-muted: #7a9a6a;
+    --text-soft: #b8c8b0;
+    --border: rgba(212, 169, 60, 0.15);
+    --border-green: rgba(74, 139, 90, 0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'IBM Plex Mono', 'Courier New', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 30px 16px 80px;
+    line-height: 1.55;
+  }
+  .container { max-width: 1280px; margin: 0 auto; }
+
+  /* Header */
+  header {
+    text-align: center;
+    padding: 36px 0 44px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 44px;
+  }
+  .eyebrow {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: clamp(42px, 8vw, 96px);
+    color: var(--gold-light);
+    letter-spacing: 0.05em;
+    line-height: 0.95;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  h1 span { color: var(--green-bright); }
+  .subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-bottom: 24px;
+  }
+  .meta-strip {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    margin-top: 20px;
+  }
+  .meta-strip span { padding: 5px 14px; border: 1px solid var(--border); }
+  .meta-strip .ok { border-color: var(--green); color: var(--green-bright); }
+
+  /* Status summary */
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 14px;
+    margin-bottom: 50px;
+  }
+  .stat-card {
+    background: var(--bg-elev);
+    border-left: 3px solid var(--gold);
+    padding: 18px 20px;
+  }
+  .stat-card.green { border-left-color: var(--green); }
+  .stat-card.red { border-left-color: var(--red); }
+  .stat-card.blue { border-left-color: var(--blue); }
+  .stat-card .num {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 52px;
+    color: var(--gold-light);
+    line-height: 1;
+    font-weight: 700;
+  }
+  .stat-card.green .num { color: var(--green-bright); }
+  .stat-card.red .num { color: #d8694e; }
+  .stat-card.blue .num { color: #7ab4d4; }
+  .stat-card .lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.25em;
+    margin-top: 6px;
+  }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 30px;
+    color: var(--gold-light);
+    letter-spacing: 0.12em;
+    margin: 50px 0 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-title::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .section-title.green::before { background: var(--green); }
+  .section-title.blue::before { background: var(--blue); }
+
+  /* Next session banner */
+  .next-banner {
+    background: rgba(74, 139, 90, 0.1);
+    border: 1px solid var(--border-green);
+    border-left: 4px solid var(--green);
+    padding: 24px 28px;
+    margin-bottom: 44px;
+  }
+  .next-banner .lbl {
+    font-size: 10px;
+    color: var(--green-bright);
+    letter-spacing: 0.35em;
+    margin-bottom: 10px;
+  }
+  .next-banner .ttl {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 24px;
+    color: #fff;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+  }
+  .next-banner ol {
+    list-style: none;
+    counter-reset: steps;
+  }
+  .next-banner ol li {
+    counter-increment: steps;
+    font-size: 13px;
+    color: var(--text-soft);
+    padding: 6px 0 6px 32px;
+    position: relative;
+    border-bottom: 1px solid rgba(74,139,90,0.15);
+  }
+  .next-banner ol li:last-child { border-bottom: none; }
+  .next-banner ol li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    background: var(--green);
+    color: var(--bg);
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 7px;
+  }
+  .next-banner ol li strong { color: var(--gold-light); }
+
+  /* Renders grid */
+  .renders-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 26px;
+  }
+  .render-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--green);
+    overflow: hidden;
+  }
+  .render-card.pending { border-left-color: var(--red); }
+  .render-card.wip { border-left-color: var(--gold); }
+  .render-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px 12px;
+  }
+  .render-badge {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 16px;
+    background: var(--green);
+    color: var(--bg);
+    padding: 3px 10px;
+    letter-spacing: 0.15em;
+  }
+  .render-card.wip .render-badge { background: var(--gold); }
+  .render-card.pending .render-badge { background: var(--red); }
+  .render-status {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    padding: 3px 8px;
+    text-transform: uppercase;
+  }
+  .render-status.ok { background: var(--green); color: #fff; }
+  .render-status.wip { background: var(--gold); color: var(--bg); }
+  .render-status.todo { background: var(--red); color: #fff; }
+  .render-title {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 26px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    padding: 0 18px 4px;
+    line-height: 1.1;
+  }
+  .render-timing {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    padding: 0 18px 14px;
+  }
+  .render-video-wrap {
+    background: #000;
+    aspect-ratio: 9 / 16;
+    margin: 0 12px 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .render-video-wrap video { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .render-video-wrap.placeholder {
+    background: var(--bg-elev);
+    border: 1px dashed var(--border);
+    color: var(--text-muted);
+    flex-direction: column;
+    gap: 12px;
+    padding: 30px;
+    text-align: center;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+  }
+  .render-video-wrap.placeholder .icon {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 56px;
+    color: var(--red);
+    line-height: 1;
+  }
+  .render-vo {
+    font-size: 12px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    font-style: italic;
+    border-top: 1px solid var(--border);
+    padding: 12px 18px;
+  }
+  .render-note {
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 0 18px 18px;
+    letter-spacing: 0.1em;
+    line-height: 1.6;
+  }
+
+  /* Audio grid */
+  .audio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .audio-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 20px 22px;
+  }
+  .audio-card.chosen { border-left-color: var(--green); background: rgba(74,139,90,0.08); }
+  .audio-card .a-label {
+    font-size: 10px;
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    margin-bottom: 6px;
+  }
+  .audio-card.chosen .a-label { color: var(--green-bright); }
+  .audio-card .a-name {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 22px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    line-height: 1.1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .chosen-badge {
+    font-size: 9px;
+    background: var(--green);
+    color: var(--bg);
+    padding: 3px 8px;
+    letter-spacing: 0.2em;
+    font-family: 'IBM Plex Mono', monospace;
+    font-weight: 600;
+  }
+  .audio-card audio { width: 100%; margin-bottom: 10px; }
+  .audio-card .a-meta {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.15em;
+    line-height: 1.7;
+  }
+
+  /* Script block */
+  .script-block {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--gold);
+    padding: 28px 32px;
+  }
+  .script-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .script-stats .st {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+  }
+  .script-stats .st strong {
+    color: var(--gold-light);
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 20px;
+    display: block;
+    margin-top: 3px;
+    letter-spacing: 0.06em;
+  }
+  .script-beat {
+    margin-bottom: 22px;
+    padding-left: 16px;
+    border-left: 2px solid var(--border);
+  }
+  .script-beat:last-child { margin-bottom: 0; }
+  .script-beat .bh {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .script-beat .num {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 0.25em;
+    background: rgba(212,169,60,0.1);
+    padding: 2px 8px;
+  }
+  .script-beat .ttl {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 17px;
+    color: var(--gold-light);
+    letter-spacing: 0.06em;
+  }
+  .script-beat .timing-tag {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    margin-left: auto;
+  }
+  .script-beat .vo {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  /* Tech block */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .tech-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--blue);
+    padding: 18px 20px;
+  }
+  .tech-card .t-label {
+    font-size: 10px;
+    color: #7ab4d4;
+    letter-spacing: 0.3em;
+    margin-bottom: 8px;
+  }
+  .tech-card .t-val {
+    font-size: 13px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+  .tech-card .t-val code {
+    background: rgba(122,180,212,0.1);
+    color: #a0d4f0;
+    padding: 1px 6px;
+    font-size: 11px;
+  }
+  .pill {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    margin: 2px;
+  }
+  .pill.ok { background: rgba(74,139,90,0.2); color: var(--green-bright); border: 1px solid var(--green); }
+  .pill.todo { background: rgba(196,75,58,0.15); color: #e08070; border: 1px solid rgba(196,75,58,0.4); }
+
+  /* Hub link */
+  .hub-link-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-green);
+    border-left: 4px solid var(--green);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 44px;
+  }
+  .hub-link-card .hl-info .lbl {
+    font-size: 10px;
+    color: var(--green-bright);
+    letter-spacing: 0.35em;
+    margin-bottom: 6px;
+  }
+  .hub-link-card .hl-info .ttl {
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: 0.06em;
+  }
+  .hub-link-card a.btn {
+    display: inline-block;
+    background: var(--green);
+    color: var(--bg);
+    padding: 10px 22px;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.2em;
+    text-decoration: none;
+  }
+  .hub-link-card a.btn:hover { background: var(--green-bright); }
+
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+    line-height: 2;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="eyebrow">Souverain · GéoAfrique · Short 65s</div>
+    <h1>La Vraie Taille<br><span>de l'Afrique</span></h1>
+    <div class="subtitle">Hub de Production — Session 2026-05-11</div>
+    <div class="meta-strip">
+      <span class="ok">PIPELINE VALIDÉ</span>
+      <span>65 SECONDES · 30 FPS · 1080×1920</span>
+      <span>5 BEATS</span>
+      <span class="ok">AUDIO TTS ✓</span>
+      <span class="ok">MUSIQUE ✓</span>
+    </div>
+  </header>
+
+  <!-- Hub principal link -->
+  <div class="hub-link-card">
+    <div class="hl-info">
+      <div class="lbl">HUB PRINCIPAL GEOAFRIQUE</div>
+      <div class="ttl">wintry-willow-ehew.here.now</div>
+    </div>
+    <a href="https://wintry-willow-ehew.here.now/" class="btn" target="_blank">OUVRIR HUB →</a>
+  </div>
+
+  <!-- Status summary -->
+  <div class="status-grid">
+    <div class="stat-card green">
+      <div class="num">1</div>
+      <div class="lbl">BEAT VALIDÉ</div>
+    </div>
+    <div class="stat-card">
+      <div class="num">1</div>
+      <div class="lbl">PIPELINE TEST</div>
+    </div>
+    <div class="stat-card red">
+      <div class="num">4</div>
+      <div class="lbl">BEATS À CODER</div>
+    </div>
+    <div class="stat-card green">
+      <div class="num">5</div>
+      <div class="lbl">AUDIOS TTS</div>
+    </div>
+    <div class="stat-card green">
+      <div class="num">3</div>
+      <div class="lbl">VARIANTES MUSIQUE</div>
+    </div>
+    <div class="stat-card blue">
+      <div class="num">65s</div>
+      <div class="lbl">DURÉE TOTALE</div>
+    </div>
+  </div>
+
+  <!-- Prochaine session -->
+  <div class="next-banner">
+    <div class="lbl">PROCHAINE SESSION — ORDRE STRICT</div>
+    <div class="ttl">Production Beats 2→5</div>
+    <ol>
+      <li><strong>Écrire le manifest</strong> (obligatoire avant tout code — chaque beat, animation, timing)</li>
+      <li><strong>Beat 2 complet</strong> — 4 pays séquentiels USA → Chine → Europe → Inde, clip contour Afrique</li>
+      <li><strong>Beat 3</strong> — Chiffre "30,3 M km²" animé, silhouettes en fond</li>
+      <li><strong>Beat 4</strong> — Explication Mercator 25s, permanent motion drift</li>
+      <li><strong>Beat 5</strong> — Punchline finale, Afrique plein cadre, pulse couleur</li>
+      <li><strong>Assemblage + render final</strong> — composition complète avec musique A</li>
+    </ol>
+  </div>
+
+  <!-- Renders -->
+  <div class="section-title green">Renders</div>
+  <div class="renders-grid">
+
+    <!-- Beat 1 validé -->
+    <div class="render-card">
+      <div class="render-header">
+        <span class="render-badge">BEAT 1</span>
+        <span class="render-status ok">VALIDÉ</span>
+      </div>
+      <div class="render-title">Carte Mercator</div>
+      <div class="render-timing">0s → 5s · 150 FRAMES · MAPBOX CARTOCASPIAN</div>
+      <div class="render-video-wrap">
+        <video src="https://files.catbox.moe/d6kolz.mp4" controls playsinline></video>
+      </div>
+      <div class="render-vo">"Voilà l'Afrique. Telle que tu l'as toujours vue."</div>
+      <div class="render-note">Mapbox CartoCaspian · Afrique highlight or · Zoom 2.3→2.6 · render-mapbox.sh</div>
+    </div>
+
+    <!-- Beat 2 pipeline test -->
+    <div class="render-card wip">
+      <div class="render-header">
+        <span class="render-badge">BEAT 2 — TEST PIPELINE</span>
+        <span class="render-status wip">PIPELINE OK</span>
+      </div>
+      <div class="render-title">Validation USA + Inde</div>
+      <div class="render-timing">10s · D3-GEO SVG PUR · PROJECTION LAT=0 CORRIGÉE</div>
+      <div class="render-video-wrap">
+        <video src="https://files.catbox.moe/sz120y.mp4" controls playsinline></video>
+      </div>
+      <div class="render-vo">USA apparaît → Inde arrive → zoom-out final, les deux dans l'Afrique</div>
+      <div class="render-note">
+        Projection corrigée : coordonnées translatées à lat=0 avant projection (principe thetruesize.com) ·
+        USA = 48 états contigus uniquement · Clip sur contour exact Afrique ·
+        Beat 2 final = 4 pays en session prochaine
+      </div>
+    </div>
+
+    <!-- Beats 3-5 placeholders -->
+    <div class="render-card pending">
+      <div class="render-header">
+        <span class="render-badge">BEAT 3</span>
+        <span class="render-status todo">À CODER</span>
+      </div>
+      <div class="render-title">30,3 M km²</div>
+      <div class="render-timing">25s → 33s · 240 FRAMES</div>
+      <div class="render-video-wrap placeholder">
+        <div class="icon">3</div>
+        <div>Chiffre animé · silhouettes en fond léger</div>
+      </div>
+      <div class="render-vo">"Trente virgule trois millions de kilomètres carrés."</div>
+    </div>
+
+    <div class="render-card pending">
+      <div class="render-header">
+        <span class="render-badge">BEAT 4</span>
+        <span class="render-status todo">À CODER</span>
+      </div>
+      <div class="render-title">Explication Mercator</div>
+      <div class="render-timing">33s → 58s · 750 FRAMES · VO 22.8s</div>
+      <div class="render-video-wrap placeholder">
+        <div class="icon">4</div>
+        <div>Carte + drift · explication biais · Groenland ×14</div>
+      </div>
+      <div class="render-vo">"La carte de Mercator, conçue en 1569 pour les navigateurs…"</div>
+    </div>
+
+    <div class="render-card pending">
+      <div class="render-header">
+        <span class="render-badge">BEAT 5</span>
+        <span class="render-status todo">À CODER</span>
+      </div>
+      <div class="render-title">Punchline Finale</div>
+      <div class="render-timing">58s → 65s · 210 FRAMES</div>
+      <div class="render-video-wrap placeholder">
+        <div class="icon">5</div>
+        <div>Afrique plein cadre · pulse · "Maintenant tu sais."</div>
+      </div>
+      <div class="render-vo">"Maintenant tu sais."</div>
+    </div>
+
+  </div>
+
+  <!-- Script -->
+  <div class="section-title">Script — Version v2 post-jury</div>
+  <div class="script-block">
+    <div class="script-stats">
+      <div class="st"><strong>65s</strong> DURÉE TOTALE</div>
+      <div class="st"><strong>5</strong> BEATS</div>
+      <div class="st"><strong>36s</strong> VO TOTALE</div>
+      <div class="st"><strong>9/9</strong> FAITS VÉRIFIÉS PERPLEXITY</div>
+      <div class="st"><strong>GPT-4o + GEMINI</strong> JURY LLM</div>
+    </div>
+    <div class="script-beat">
+      <div class="bh">
+        <span class="num">BEAT 1</span>
+        <span class="ttl">Hook — Carte Mercator</span>
+        <span class="timing-tag">0–5s · 3.7s VO</span>
+      </div>
+      <div class="vo">"Voilà l'Afrique. Telle que tu l'as toujours vue."</div>
+    </div>
+    <div class="script-beat">
+      <div class="bh">
+        <span class="num">BEAT 2</span>
+        <span class="ttl">Retournement progressif</span>
+        <span class="timing-tag">5–25s · 5.5s VO</span>
+      </div>
+      <div class="vo">"Les États-Unis rentrent dedans. La Chine aussi. L'Europe entière. Et l'Inde."</div>
+    </div>
+    <div class="script-beat">
+      <div class="bh">
+        <span class="num">BEAT 3</span>
+        <span class="ttl">Climax chiffré</span>
+        <span class="timing-tag">25–33s · 3.0s VO</span>
+      </div>
+      <div class="vo">"Trente virgule trois millions de kilomètres carrés."</div>
+    </div>
+    <div class="script-beat">
+      <div class="bh">
+        <span class="num">BEAT 4</span>
+        <span class="ttl">Explication Mercator</span>
+        <span class="timing-tag">33–58s · 22.8s VO</span>
+      </div>
+      <div class="vo">"La carte de Mercator, conçue en mil cinq cent soixante-neuf pour les navigateurs, exagère les terres aux pôles. Le Groenland y paraît aussi grand que l'Afrique — en réalité, il est quatorze fois plus petit. Toute projection cartographique déforme."</div>
+    </div>
+    <div class="script-beat">
+      <div class="bh">
+        <span class="num">BEAT 5</span>
+        <span class="ttl">Punchline finale</span>
+        <span class="timing-tag">58–65s · 1.2s VO</span>
+      </div>
+      <div class="vo">"Maintenant tu sais."</div>
+    </div>
+  </div>
+
+  <!-- Audio narration -->
+  <div class="section-title">Audio — Narration (5 beats)</div>
+  <div class="audio-grid">
+    <div class="audio-card">
+      <div class="a-label">NARRATION · BEAT 1</div>
+      <div class="a-name">narration-beat1.mp3</div>
+      <audio src="https://files.catbox.moe/vs16qb.mp3" controls></audio>
+      <div class="a-meta">3.68s · 110 frames · Voix GéoAfrique v2</div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">NARRATION · BEAT 2</div>
+      <div class="a-name">narration-beat2.mp3</div>
+      <audio src="https://files.catbox.moe/4xq3bh.mp3" controls></audio>
+      <div class="a-meta">5.52s · 166 frames</div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">NARRATION · BEAT 3</div>
+      <div class="a-name">narration-beat3.mp3</div>
+      <audio src="https://files.catbox.moe/6kwxn5.mp3" controls></audio>
+      <div class="a-meta">2.96s · 89 frames</div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">NARRATION · BEAT 4 — V2 APPROUVÉE</div>
+      <div class="a-name">narration-beat4-v2.mp3 <span class="chosen-badge">V2</span></div>
+      <audio src="https://files.catbox.moe/a6ujki.mp3" controls></audio>
+      <div class="a-meta">19.44s · 583 frames · Script épuré — fin sur "Toute projection cartographique déforme."<br>Phrase défensive supprimée. +5.5s silence avant Beat 5.</div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">NARRATION · BEAT 5</div>
+      <div class="a-name">narration-beat5.mp3</div>
+      <audio src="https://files.catbox.moe/v2trzc.mp3" controls></audio>
+      <div class="a-meta">1.20s · 36 frames · Punchline</div>
+    </div>
+  </div>
+
+  <!-- Musique -->
+  <div class="section-title green">Musique de fond — 3 variantes Minimax</div>
+  <div class="audio-grid">
+    <div class="audio-card chosen">
+      <div class="a-label">VARIANTE A — CHOISIE PAR AZIZ</div>
+      <div class="a-name">
+        music-A-revelation.mp3
+        <span class="chosen-badge">CHOISI</span>
+      </div>
+      <audio src="https://files.catbox.moe/iwa3xw.mp3" controls></audio>
+      <div class="a-meta">
+        131.7s · Kora solo contemplatif → confiant<br>
+        Style Toumani Diabaté · 6/8 · Organique<br>
+        Volume Remotion : 0.15
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">VARIANTE B — NON RETENUE</div>
+      <div class="a-name">music-B-atlas.mp3</div>
+      <audio src="https://files.catbox.moe/y9as3q.mp3" controls></audio>
+      <div class="a-meta">
+        383.3s · Kora + balafon, majestueux, paysages<br>
+        Style Ballake Sissoko · 4/4 · Grand
+      </div>
+    </div>
+    <div class="audio-card">
+      <div class="a-label">VARIANTE C — NON RETENUE</div>
+      <div class="a-name">music-C-fierte.mp3</div>
+      <audio src="https://files.catbox.moe/twf4ep.mp3" controls></audio>
+      <div class="a-meta">
+        219.3s · Kora + djembe, rythmé, célébratoire<br>
+        Style Oumou Sangaré · 6/8 · Fierté
+      </div>
+    </div>
+  </div>
+
+  <!-- Tech stack -->
+  <div class="section-title blue">Pipeline Technique</div>
+  <div class="tech-grid">
+    <div class="tech-card">
+      <div class="t-label">BEAT 1 — RENDU</div>
+      <div class="t-val">
+        Mapbox GL JS · CartoCaspian original<br>
+        <code>render-mapbox.sh</code> obligatoire (WebGL)<br>
+        <span class="pill ok">VALIDÉ</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">BEAT 2→5 — RENDU</div>
+      <div class="t-val">
+        d3-geo SVG pur · <code>npx remotion render</code><br>
+        Pas de WebGL — rendu standard<br>
+        <span class="pill ok">PIPELINE OK</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">PROJECTION</div>
+      <div class="t-val">
+        <code>geoMercator</code> scale=420<br>
+        center=[20, -5] · translate=[540, 844]<br>
+        Pays translatés à lat=0 avant projection<br>
+        <span class="pill ok">THETRUESIZE.COM PRINCIPLE</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">USA — SHAPEFILE</div>
+      <div class="t-val">
+        48 états contigus uniquement<br>
+        <code>us-48states.json</code> (Alaska/Hawaii exclus)<br>
+        Convention universelle infographies<br>
+        <span class="pill ok">GÉNÉRÉ</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">CLIP SILHOUETTES</div>
+      <div class="t-val">
+        Contour exact Afrique via SVG <code>clipPath</code><br>
+        Source : Natural Earth 1:50m<br>
+        <span class="pill ok">VALIDÉ</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">STYLE VISUEL</div>
+      <div class="t-val">
+        CartoCaspian original<br>
+        Océan <code>#bcd5e3</code> · Terre <code>#ede5d3</code><br>
+        Afrique highlight or <code>#d4a93c</code><br>
+        <span class="pill ok">VALIDÉ</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">FICHIERS CLÉS</div>
+      <div class="t-val">
+        <code>timing.ts</code> LOCKED<br>
+        <code>geo-data.json</code> precomputed<br>
+        <code>Beat1Mercator.tsx</code> validé<br>
+        <code>Beat2Test.tsx</code> pipeline ok<br>
+        <span class="pill todo">Beats 2/3/4/5 complets À CODER</span>
+      </div>
+    </div>
+    <div class="tech-card">
+      <div class="t-label">DONNÉES GÉOGRAPHIQUES</div>
+      <div class="t-val">
+        Natural Earth 1:50m (<code>countries-50m.json</code>)<br>
+        Superficies : Afrique 30.37 Mkm²<br>
+        USA 7.66 Mkm² · Inde 3.29 Mkm²<br>
+        Fact-check Perplexity Sonar Pro 9/9 ✓
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>LA VRAIE TAILLE DE L'AFRIQUE · SOUVERAIN · GEOAFRIQUE</div>
+    <div>Session 2026-05-11 · Hub Production · Pipeline validé</div>
+    <div style="margin-top:12px; color: #4a6a4a;">
+      Dashboard Souverain Templates :
+      <a href="https://whimsy-rocket-vrne.here.now/" style="color: var(--gold);" target="_blank">whimsy-rocket-vrne.here.now</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

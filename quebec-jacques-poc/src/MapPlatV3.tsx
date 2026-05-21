@@ -2,6 +2,7 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig, delayRender, continueRen
 import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { easeInOutExpo } from "./lib/easing";
 
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
@@ -18,9 +19,6 @@ type Props = {
   backgroundColor?: string;
 };
 
-const easeInOut = (t: number) =>
-  t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-
 const interpolateCamera = (
   frame: number,
   keyframes: CameraKeyframe[]
@@ -31,7 +29,7 @@ const interpolateCamera = (
     const b = keyframes[i + 1];
     if (frame >= a.frame && frame <= b.frame) {
       const t = (frame - a.frame) / (b.frame - a.frame);
-      const e = easeInOut(t);
+      const e = easeInOutExpo(t);
       return {
         frame,
         lon: a.lon + (b.lon - a.lon) * e,
@@ -102,6 +100,8 @@ export const MapPlatV3: React.FC<Props> = ({
       zoom: cam.zoom,
       pitch: 0,
       bearing: 0,
+      projection: { name: "mercator" },
+      renderWorldCopies: true,
       interactive: false,
       attributionControl: false,
       preserveDrawingBuffer: true,

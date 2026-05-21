@@ -1,0 +1,61 @@
+{
+  "character": {
+    "id": "4ae3e075-a091-4089-befc-c0f35fd0559d",
+    "name": "Hannibal v4a Minimal",
+    "prompt": "Carthaginian general 218 BC, dark olive skin, black hair black beard, bronze Corinthian helmet with red crest, bronze cuirass, red tunic, red cloak, kopis sword, round bronze shield, side view, pixel art",
+    "size": {
+      "width": 92,
+      "height": 92
+    },
+    "template_id": "mannequin",
+    "directions": 8,
+    "view": "side",
+    "created_at": "2026-05-04T18:43:55.007022+00:00"
+  },
+  "frames": {
+    "rotations": {
+      "south": "rotations/south.png",
+      "south-east": "rotations/south-east.png",
+      "east": "rotations/east.png",
+      "north-east": "rotations/north-east.png",
+      "north": "rotations/north.png",
+      "north-west": "rotations/north-west.png",
+      "west": "rotations/west.png",
+      "south-west": "rotations/south-west.png"
+    },
+    "animations": {
+      "animating-e377f577": {
+        "east": [
+          "animations/animating-e377f577/east/frame_000.png",
+          "animations/animating-e377f577/east/frame_001.png",
+          "animations/animating-e377f577/east/frame_002.png",
+          "animations/animating-e377f577/east/frame_003.png",
+          "animations/animating-e377f577/east/frame_004.png",
+          "animations/animating-e377f577/east/frame_005.png"
+        ],
+        "north": [
+          "animations/animating-e377f577/north/frame_000.png",
+          "animations/animating-e377f577/north/frame_001.png",
+          "animations/animating-e377f577/north/frame_002.png",
+          "animations/animating-e377f577/north/frame_003.png",
+          "animations/animating-e377f577/north/frame_004.png",
+          "animations/animating-e377f577/north/frame_005.png"
+        ]
+      },
+      "animating-c596874c": {
+        "east": [
+          "animations/animating-c596874c/east/frame_000.png",
+          "animations/animating-c596874c/east/frame_001.png",
+          "animations/animating-c596874c/east/frame_002.png",
+          "animations/animating-c596874c/east/frame_003.png",
+          "animations/animating-c596874c/east/frame_004.png",
+          "animations/animating-c596874c/east/frame_005.png",
+          "animations/animating-c596874c/east/frame_006.png",
+          "animations/animating-c596874c/east/frame_007.png"
+        ]
+      }
+    }
+  },
+  "export_version": "2.0",
+  "export_date": "2026-05-05T15:24:04.074216"
+}

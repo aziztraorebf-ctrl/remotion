@@ -1,66 +1,52 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm *)",
-      "Bash(npx *)",
+      "Read(**)",
+      "Write(**)",
+      "Edit(**)",
+      "Bash(curl *)",
+      "Bash(python3 *)",
+      "Bash(python *)",
       "Bash(ffmpeg *)",
       "Bash(ffprobe *)",
-      "Bash(python *)",
-      "Bash(python3 *)",
+      "Bash(npm *)",
+      "Bash(node *)",
+      "Bash(npx *)",
+      "Bash(git *)",
+      "Bash(cp *)",
+      "Bash(mv *)",
       "Bash(mkdir *)",
       "Bash(ls *)",
       "Bash(find *)",
       "Bash(grep *)",
-      "Bash(cat *)",
       "Bash(echo *)",
-      "Bash(sed *)",
-      "Bash(cp *)",
-      "Bash(mv *)",
-      "Bash(open *)",
-      "Bash(base64 *)",
-      "Bash(set -a *)",
+      "Bash(cat *)",
+      "Bash(rm *)",
+      "Bash(sleep *)",
+      "Bash(./scripts/*)",
+      "Bash(bash *)",
+      "Bash(sh *)",
+      "Bash(env)",
+      "Bash(which *)",
       "Bash(source *)",
-      "Read(/tmp/**)",
-      "Read(/private/tmp/**)",
-      "Read(/Users/clawdbot/.claude/**)",
-      "mcp__context7__resolve-library-id",
-      "mcp__context7__query-docs",
-      "Skill(schedule)",
-      "Skill(schedule:*)",
-      "Read(//tmp/**)",
-      "Read(//private/tmp/**)",
-      "WebFetch(domain:fal.ai)",
-      "mcp__pixellab__create_character",
-      "Bash(curl -s -o /dev/null -w '%{http_code}' -X GET https://api.pixellab.ai/v1/balance -H 'Authorization: Bearer e9c8fab7-77c6-493c-a5e8-a47a885b2a0c')",
-      "Bash(curl -s -X GET https://api.pixellab.ai/v1/balance -H 'Authorization: Bearer e9c8fab7-77c6-493c-a5e8-a47a885b2a0c')",
-      "Bash(node -e ' *)",
-      "Bash(node -e *)",
-      "Bash(/opt/homebrew/bin/yt-dlp --write-auto-sub --sub-lang fr,en --skip-download -o \"/tmp/factcheck-short.%\\(ext\\)s\" \"https://youtube.com/shorts/k1981Di8CO4?si=xi_G-3hmqJ4z_8Zq\")",
-      "Bash(/opt/homebrew/bin/yt-dlp --write-auto-sub --sub-lang en --skip-download --sleep-requests 3 -o \"/tmp/factcheck-short.%\\(ext\\)s\" \"https://youtube.com/shorts/k1981Di8CO4\")",
-      "Bash(node /Users/clawdbot/Workspace/remotion/scripts-atlas/precompute-shaka-zulu-data.mjs)",
-      "Bash(/opt/homebrew/bin/yt-dlp --write-auto-sub --sub-lang en --skip-download --sleep-requests 2 -o \"/tmp/donkey-short.%\\(ext\\)s\" \"https://youtube.com/shorts/TAsr3wIN_NY\")",
-      "Bash(/opt/homebrew/bin/yt-dlp --write-auto-sub --sub-lang en --skip-download --sleep-requests 2 -o \"/tmp/donkey-long.%\\(ext\\)s\" \"https://youtu.be/za2VyvLl5T0\")",
-      "Bash(wait)",
-      "Bash(/opt/homebrew/bin/yt-dlp -f \"best[height<=480]\" --download-sections \"*0:00-0:30\" -o \"/tmp/donkey-short-clip.%\\(ext\\)s\" \"https://youtube.com/shorts/TAsr3wIN_NY\")",
-      "Bash(git add *)",
-      "Bash(git commit -m ' *)",
-      "mcp__vercel__vercel_blob_put",
-      "mcp__pixellab__animate_character",
-      "mcp__pixellab__get_character",
-      "Bash(curl --fail -L https://api.pixellab.ai/mcp/characters/33e221bd-5b9c-4e55-b729-cfeb534c1bd1/download -H 'Authorization: Bearer __CMDSUB_OUTPUT__')",
-      "Bash(unzip -o warrior-update.zip -d warrior-update)",
-      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/east/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/east/)",
-      "Bash(cp /tmp/warrior-update/animations/animating-f35b625f/west/*.png /Users/clawdbot/Workspace/remotion/public/atlas-shaka-zulu/characters/warrior/animations/animating-f35b625f/west/)",
-      "Bash(/opt/homebrew/bin/yt-dlp --skip-download --write-comments --extractor-args 'youtube:max_comments=150,all,all,all;comment_sort=top' -o '%\\(id\\)s.%\\(ext\\)s' 'https://www.youtube.com/watch?v=__TRACKED_VAR__')",
-      "Bash(mkdir -p /Users/clawdbot/Workspace/remotion/public/empire-ghana/characters/guerrier-almoravide)",
-      "Bash(curl --fail -sL \"https://api.pixellab.ai/mcp/characters/29659962-898a-4257-be22-1039da8e41f5/download\" -o guerrier-alm.zip)",
-      "Bash(unzip -o -q guerrier-alm.zip -d /Users/clawdbot/Workspace/remotion/public/empire-ghana/characters/guerrier-almoravide/)"
+      "Bash(export *)",
+      "Bash(cd *)",
+      "Bash(claude *)",
+      "Bash(launchctl *)",
+      "Bash(ccr *)",
+      "mcp__stitch__*",
+      "mcp__pixellab__*",
+      "mcp__mapbox__*",
+      "mcp__playwright__*",
+      "mcp__firecrawl__*",
+      "mcp__github__*"
     ],
     "additionalDirectories": [
       "/Users/clawdbot/.claude",
       "/Users/clawdbot/Workspace/remotion/tests",
       "/Users/clawdbot/Workspace/remotion/memory/atlas-shaka-zulu",
-      "/tmp"
+      "/tmp",
+      "/tmp/finary"
     ]
   },
   "hooks": {
@@ -83,6 +69,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/preflight-check.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-final-promotion.sh",
+            "timeout": 10
           }
         ]
       },
@@ -98,6 +89,16 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/storyboard-gate.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/beat-preflight.sh",
+            "timeout": 15
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/atlas-beat-guard.sh",
+            "timeout": 15
           }
         ]
       }
@@ -130,6 +131,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/screenshot-qa.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/beat-gemini-review.sh",
+            "timeout": 120
           }
         ]
       }

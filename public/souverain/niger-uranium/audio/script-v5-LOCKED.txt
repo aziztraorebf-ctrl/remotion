@@ -1,0 +1,23 @@
+SCRIPT V5 LOCKED — Niger uranium vs Orano
+Durée estimée: ~1m40-1m45 (cible Souverain 90-110s, marge OK)
+Validé 2026-05-07 après session LLM externe + 2 ajustements Aziz/Claude
+
+Ajustements vs version LLM externe:
+1. "Le Niger ne peut pas. Une partie d'échecs asymétrique" → "Orano a un portefeuille mondial. Le Niger a une mine. Une partie d'échecs asymétrique" (moins pathos, même asymétrie démontrée)
+2. "Kazakhstan, États-Unis" → "Canada, Kazakhstan" (Cigar Lake / McArthur River = vraie diversification, vs Katco 49% Kazatomprom étatique)
+
+---
+
+[solemn] Au Niger, sur le site minier d'Arlit, quatre cents fûts radioactifs dorment dans un hangar. Selon Niamey, vingt fois au-dessus de la norme. Orano conteste sa responsabilité sur ce site précis.
+
+Le Niger extrait de l'uranium depuis cinquante-trois ans. Niamey affirme aujourd'hui que quatre-vingt-six pour cent des bénéfices sont revenus à Orano sur un demi-siècle. Neuf virgule deux pour cent au Niger. Orano conteste ces chiffres.
+
+[solemn] En juin deux mille vingt-cinq, le pouvoir militaire nationalise la Somaïr, principal site uranifère du pays. Niamey parle de souveraineté retrouvée. Orano parle d'expropriation.
+
+Orano saisit le tribunal arbitral de la Banque mondiale et lance plusieurs procédures. Mille trois cents tonnes d'uranium concentré restent sur le site. Deux cent cinquante millions d'euros immobilisés. [tense] En juillet, Moscou exprime son intérêt pour reprendre l'exploitation. En septembre, le tribunal interdit au Niger de vendre le stock tant que le litige n'est pas résolu.
+
+[solemn] Et pendant ce temps, le Niger doit continuer à fonctionner. Payer ses soldats. Contenir une insurrection jihadiste au nord. Nourrir une population sous pression. Orano, lui, voit son actif majeur lui échapper et des centaines de millions gelés. Mais le groupe a déjà sécurisé ses approvisionnements ailleurs — au Canada, au Kazakhstan.
+
+[dramatic] Une guerre d'usure devant les tribunaux. Chaque mois de procédure est un mois de recettes qui n'entrent pas à Niamey.
+
+[solemn] Orano a un portefeuille mondial. Le Niger a une mine. Une partie d'échecs asymétrique. Sans vainqueur. Pour l'instant.

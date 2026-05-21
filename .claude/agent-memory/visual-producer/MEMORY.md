@@ -1,7 +1,7 @@
 # visual-producer — Agent Memory
 
 > Persistent memory across sessions. Index compact + pointeurs vers fichiers dedies.
-> Last updated: 2026-04-24 (reorganisation memoire : MOTS-ROUGES-VERTS + CHECKLIST-PROMPT-SHORT + RULES-ACTIVE/ARCHIVE crees, MEMORY purge 791→~200 lignes)
+> Last updated: 2026-05-13 (API budget rules + Agent Teams + Session Start/End câblés)
 
 ---
 
@@ -248,6 +248,52 @@ Si BLOCKED → fix AVANT l'API call.
 | Asset | Tool | Seed | Use case |
 |---|---|---|---|
 | Soundjata combat V2 | Seedance 2.0 ref-to-video | (varie) | Choregraphie transfer |
+
+---
+
+## NOUVEAUTES SESSION 2026-05-13 (lire en premier)
+
+### API Budget Rules — NON-NEGOTIABLE
+Fichier source de vérité : `.claude/agents/API-BUDGET-RULES.md`
+
+Budget par beat (réinitialisé à chaque beat) :
+- **PixelLab character** : 2 générations max → STOP + checkpoint
+- **PixelLab object** : 2 générations max → STOP + checkpoint
+- **PixelLab animation** : 2 générations max → STOP + checkpoint
+- **Gemini image** : 2 générations max (retouches chirurgicales comptent) → STOP + checkpoint
+- **Seedance / Kling** : 0 appel autonome — préparer prompt + refs + coût → attendre "go" Aziz
+
+Checkpoint obligatoire après CHAQUE appel payant :
+1. `./scripts/downscale-for-review.sh <fichier>` si besoin
+2. Analyser soi-même (Read tool)
+3. Écrire verdict en une phrase
+4. STOP et présenter à Aziz — même si résultat semble bon
+5. Attendre validation avant de continuer
+
+Format checkpoint :
+```
+CHECKPOINT API — [Outil] [Type]
+Beat : [N] | Génération : [1/2] (budget restant : [N])
+Output : [chemin] | Analyse : [verdict 1 phrase]
+→ Attente validation Aziz
+```
+
+### Vérification balance avant génération
+```bash
+./scripts/check-api-balance.sh all
+# Seuils : PixelLab < $1.00 = STOP | ElevenLabs < 5000 chars = STOP
+```
+Balances actuelles (2026-05-13) : ElevenLabs 54 425 chars restants | PixelLab $4.94 USD
+
+### Agent Teams activé
+`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` dans `~/.claude/settings.json`.
+Ce agent peut maintenant être invoqué comme teammate dans un agent team.
+Communication directe avec remotion-composer possible sans passer par Claude principal.
+
+### /goal et /bg disponibles (v2.1.140)
+- `/goal <condition>` : Claude boucle autonomement jusqu'à condition remplie
+- `/bg` : déplace session en background
+- Utiliser depuis l'intérieur d'une session Claude Code (pas depuis le terminal)
 
 ---
 

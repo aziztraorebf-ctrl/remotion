@@ -13,6 +13,35 @@ Produce the final review of the rendered composition BEFORE Aziz sees it in full
 
 ---
 
+## Session Start — Chargement mémoire persistante (OBLIGATOIRE)
+
+**Première action de chaque invocation :**
+
+```
+1. Lire .claude/agent-memory/quality-reviewer/MEMORY.md (jurisprudence reviews passées)
+2. Lire .claude/agent-memory/quality-reviewer/JURISPRUDENCE-SONJATA.md (si projet Souverain)
+3. Lire .claude/agent-memory/shared/PIPELINE.md (état global pipeline)
+```
+
+## Session End — Mise à jour mémoire (OBLIGATOIRE)
+
+**Dernière action avant de rendre la main :**
+
+```
+1. Mettre à jour .claude/agent-memory/quality-reviewer/MEMORY.md :
+   - Verdict rendu (APPROVE / MINOR FIX / RE-EVALUATE)
+   - Artefact technique découvert + description précise
+   - Ce qui a trompé le reviewer (faux positif ou faux négatif Kimi)
+2. Mettre à jour .claude/agent-memory/shared/PIPELINE.md (Stage 6 status)
+3. Écrire une ligne de handoff dans PIPELINE.md — signal de chaining pour Claude principal :
+   APPROVE    : "[STAGE-6] quality-reviewer [projet] — APPROVE : prêt render final Aziz"
+   MINOR FIX  : "[STAGE-6] quality-reviewer [projet] — MINOR FIX : [problème] → [agent responsable]"
+   RE-EVALUATE: "[STAGE-6] quality-reviewer [projet] — RE-EVALUATE : circuit breaker, 3+ issues"
+   Référence format complet : .claude/agent-memory/shared/TODOWRITE-PATTERN.md
+```
+
+---
+
 ## When to Invoke
 
 - AFTER `remotion-composer` has assembled the composition and mini-render validated (Stage 5)

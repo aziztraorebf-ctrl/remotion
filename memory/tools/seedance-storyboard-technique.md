@@ -387,9 +387,63 @@ Image 1 = storyboard layout. You MUST follow this storyboard EXACTLY:
 
 ---
 
+## Règle 25 — Storyboard 2×2 → image-to-video : VALIDÉ en style illustration BD (2026-05-10, EXPÉRIMENTAL)
+
+**Test réalisé** : storyboard 2×2 (4 panels, griot + kora + baobab, style illustration BD chaude) généré par Gemini → Seedance 2.0 image-to-video 10s.
+
+**Résultats** :
+- Seedance a traité les 4 panels comme des **beats séquentiels** (walk → arrive → prepare → play) — PAS comme une image statique à animer ✅
+- Style flat 2D préservé à 100% sur 10s — aucun drift photoréaliste ✅
+- Identité personnage stable (tunique ocre, bonnet, proportions) ✅
+- Labels P1-P4 du storyboard NON reproduits dans la vidéo ✅
+- Transitions entre panels : **fondus continus** (pas de coupes nettes) — pour scènes contemplatives c'est supérieur, plus naturel ✅
+- Artefact : premier frame = image storyboard brute visible ~0.3s → couper avec ffmpeg `-ss 0.3` ou fade-in 8f dans Remotion
+
+**Limite confirmée** :
+- P3 et P4 fusionnés en un seul plan close-up — Seedance interpole deux beats proches en une animation continue
+- Coupes nettes entre panels impossibles en image-to-video — pour micro-cuts durs → générer chaque panel séparément + assembler Remotion
+
+**Statut : EXPÉRIMENTAL** — validé sur un test, nécessite d'autres tests avant adoption en production.
+
+**Calcul densité panels validé** :
+- 10s ÷ 3s min par panel = **3-4 panels max** pour scène contemplative
+- 2×2 grid (4 panels) = sweet spot pour scènes calmes 8-10s
+- Ne PAS faire 16 panels sur 10s = 0.6s/panel, trop rapide pour animer correctement
+
+**Périmètre d'application (NON-NEGOTIABLE)** :
+
+| Cas d'usage | Storyboard → i2v ? |
+|-------------|-------------------|
+| Héros Oubliés — scènes narratives personnages | **OUI** — validé |
+| Atlas inserts — action impossible en SVG 2D | **OUI** — à tester |
+| Souverain — scènes vidéo avec personnages (témoins, reconstitutions) | **OUI** — à tester |
+| Souverain — cartes, données, overlays, textes animés | **NON** — Remotion pur, pas de Seedance |
+| Souverain — Mapbox, D3-geo, graphiques | **NON** — Remotion pur |
+
+**Prompt Seedance validé pour scène contemplative 4 panels** :
+```
+This image is a 2x2 storyboard grid with 4 panels. Treat each panel as an individual cinematic beat — NOT as one static image to animate. Follow the panel sequence exactly: top-left to top-right, then bottom-left to bottom-right.
+
+PANEL P1 (top-left, seconds 0-2.5): [description beat 1]
+PANEL P2 (top-right, seconds 2.5-5): [description beat 2]
+PANEL P3 (bottom-left, seconds 5-7.5): [description beat 3]
+PANEL P4 (bottom-right, seconds 7.5-10): [description beat 4]
+
+STYLE LOCK — NON-NEGOTIABLE: Preserve the EXACT flat 2D illustration style of the storyboard image throughout. [palette]. Thick black outlines. 2D flat — NO 3D rendering, NO depth of field, NO volumetric lighting, NO photorealism. Do NOT drift from the flat style at any point.
+
+CHARACTER LOCK: [personnage] must remain visually identical across all 4 beats — same face, same costume, same proportions. No deformation, no drift, no style change between panels.
+```
+
+**Assets test** :
+- Storyboard : `/tmp/storyboard-seedance-test-v2.png`
+- Vidéo résultat : `/tmp/seedance-storyboard-test-v1.mp4` (10s, 720p, seed 436715027, ~$6.83)
+
+---
+
 ## Liens
 
 - Post source : https://x.com/voxelplot/status/2043645442597007721
 - Démo locale : `memory/tools/references/seedance-storyboard-voxelplot-demo.mov`
 - Règles Seedance générales : `memory/tools/seedance-rules.md` (appliquent toujours)
 - Prompts Seedance généraux : `memory/tools/seedance-prompts.md`
+- Recherche X API 30 jours (2026-05-10) : `/Users/clawdbot/Documents/Last30Days/seedance-2-0-storyboard-technique-panel-image-to-video-paper-raw.md`

@@ -1,7 +1,32 @@
 # audio-director — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-25 (Thiaroye V5 render final + pre-brief Abou Bakari II + forced-alignment regle NON-NEGOTIABLE)
+> Last updated: 2026-05-13 (Agent Teams activés, règles budget API, check-api-balance.sh)
+
+---
+
+## NOUVEAUTES SESSION 2026-05-13
+
+### Agent Teams activés (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+- Feature activée dans `~/.claude/settings.json`
+- L'audio-director peut désormais recevoir des signaux directs des autres agents (storyboarder → audio-director → visual-producer)
+- /goal et /bg disponibles en session interactive Claude Code — permettent de boucler autonomement jusqu'à condition atteinte
+
+### Règles budget API — source de vérité : `.claude/agents/API-BUDGET-RULES.md`
+| Action | Limite | Si dépassé |
+|--------|--------|------------|
+| ElevenLabs TTS | 1 appel par beat | STOP absolu — jamais de retry automatique |
+| ElevenLabs SFX | 1 appel par SFX | STOP + présenter à Aziz |
+| Minimax musique | 1 appel → 3 variantes | Présenter les 3, attendre choix avant tout re-call |
+| Seedance/Kling | 0 appel autonome | Manuel uniquement |
+
+**Checkpoint obligatoire après chaque appel payant** : analyser → verdict → STOP → présenter à Aziz → attendre validation.
+
+### Balance API vérifiée 2026-05-13
+- ElevenLabs : 54 425 caractères restants (seuil alerte : <5 000)
+- Script de vérification : `./scripts/check-api-balance.sh elevenlabs` (exit 1 = STOP absolu)
+
+---
 
 ---
 
@@ -175,6 +200,21 @@ Contre-check obligatoire : lire manifest projet ET script avant de proposer voix
 
 - **Accents ecrits OBLIGATOIRES** (2026-04-19) : ElevenLabs prononce "Mande" comme "monde", "frappe" comme nom au lieu de participe, "tremblerent" mal articule. TOUS les accents francais doivent etre ecrits dans le script Python (e, a grave, c cedille, etc.). Scanner AVANT chaque generation.
 - **"se mirent a trembler" > "tremblerent"** : reformuler les passes simples problematiques en tournures plus sures.
+
+---
+
+## Projets actifs — Zimbabwe Lithium (musique)
+
+### Zimbabwe Lithium
+- **Narration** : `public/souverain/zimbabwe-lithium/audio/narration-zimbabwe-v1.mp3` (86.0s)
+- **Musique** : 3 variantes generees 2026-05-15 — PENDING VALIDATION AZIZ
+  - A-contemplatif.mp3 (126.6s) — mbira solo + marimba, Stella Chiweshe style
+  - B-geopolitique.mp3 (227.6s) — mbira dzavadzimu + ngoma drum, Forward Kwenda style
+  - C-tension.mp3 (255.8s) — mbira + hosho + marimba, Dumisani Maraire style
+- **Context culturel** : Zimbabwe = Shona/Ndebele — JAMAIS Mande/griot (anti biais-recence)
+- **Cout total musique** : ~$0.30
+- **Mix** : pas encore fait — attente choix Aziz
+- **Timing.ts** : decalages documentes dans PRODUCTION-ZIMBABWE-DETTES.md — a corriger AVANT assemblage
 
 ---
 

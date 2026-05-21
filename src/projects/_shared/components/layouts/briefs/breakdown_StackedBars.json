@@ -1,0 +1,117 @@
+{
+  "component": "StackedBars",
+  "file": "src/projects/_shared/components/layouts/StackedBars.tsx",
+  "composition": {
+    "id": "Layout-StackedBars",
+    "width": 1080,
+    "height": 1920,
+    "fps": 30,
+    "durationFrames": 150
+  },
+  "props": {
+    "interface": "interface StackedBarsProps {\n  bars: Array<{ id: string; label: string; value: number; displayValue: string }>;\n  revealLabelsFrame: number;\n  title: string;\n  subtitle: string;\n}",
+    "defaultValues": {
+      "bars": [
+        { "id": "1", "label": "OR", "value": 340, "displayValue": "340Md" },
+        { "id": "2", "label": "CUIVRE", "value": 210, "displayValue": "210Md" },
+        { "id": "3", "label": "DIAMANT", "value": 134, "displayValue": "134Md" },
+        { "id": "4", "label": "COBALT", "value": 78, "displayValue": "78Md" }
+      ],
+      "revealLabelsFrame": 90,
+      "title": "EXTRACTION MINIÈRE",
+      "subtitle": "par minerai • Afrique 2023"
+    }
+  },
+  "constants": {
+    "colors": {
+      "bgReveal": "#060a10",
+      "goldLight": "#fde08b",
+      "goldDark": "#916a1c",
+      "glow": "rgba(253, 224, 139, 0.35)",
+      "greyBlockGradientStart": "#9ca3af",
+      "greyBlockGradientEnd": "#4b5563"
+    }
+  },
+  "layout": {
+    "background": "#060a10",
+    "topLabel": {
+      "y": 160,
+      "fontSize": 52,
+      "className": "text-gold uppercase tracking-[0.2em] w-full text-center absolute",
+      "fontFamily": "\"Cinzel\", serif"
+    },
+    "barsZone": {
+      "startY": 1560,
+      "endY": 460,
+      "maxHeight": 1100,
+      "barWidth": 140,
+      "xPositions": [140, 360, 580, 800],
+      "gap": 80
+    },
+    "bar": {
+      "gradient": {
+        "from": "#fde08b",
+        "to": "#916a1c"
+      },
+      "borderRadius": "40px",
+      "glowColor": "0 0 50px 10px rgba(253, 224, 139, 0.35)",
+      "hiddenLabel": {
+        "width": 140,
+        "height": 64,
+        "color": "linear-gradient(to bottom, #9ca3af, #4b5563)",
+        "borderRadius": "12px",
+        "offsetBelowBar": 30
+      }
+    },
+    "valueLabel": {
+      "fontSize": 48,
+      "className": "text-ivory absolute text-center w-full",
+      "fontFamily": "\"IBM Plex Mono\", \"Space Mono\", monospace",
+      "offsetAboveBar": 40
+    },
+    "revealedLabel": {
+      "fontSize": 32,
+      "className": "text-slate absolute text-center w-full uppercase tracking-widest font-semibold",
+      "fontFamily": "\"Inter\", \"Nunito Sans\", sans-serif"
+    },
+    "bottomSeparator": {
+      "y": 1700,
+      "width": 800,
+      "height": 4,
+      "className": "bg-gold absolute left-[140px]"
+    },
+    "subtitle": {
+      "y": 1740,
+      "fontSize": 36,
+      "className": "text-slate absolute w-full text-center tracking-wide",
+      "fontFamily": "\"Inter\", \"Nunito Sans\", sans-serif"
+    }
+  },
+  "animation": {
+    "barGrowSpring": {
+      "damping": 16,
+      "stiffness": 90,
+      "mass": 0.8
+    },
+    "staggerPerBar": 12,
+    "labelRevealSpring": {
+      "damping": 14,
+      "stiffness": 110,
+      "startFrame": 90
+    },
+    "glowIntensity": {
+      "min": 0,
+      "max": 1
+    }
+  },
+  "agentInstructions": [
+    "STRUCTURE : Utilise AbsoluteFill comme racine avec un style inline pour le background '#060a10'.",
+    "LAYOUT COLONNES : Crée 4 conteneurs en absolute basés sur xPositions. Chaque conteneur doit avoir `left: x`, `bottom: (1920 - 1560)px`, `width: 140px`.",
+    "HAUTEUR BARRE : Calcule la hauteur max (1560 - 460 = 1100px). La hauteur de chaque barre est `interpolate(springValue, [0, 1], [0, 1100 * (bar.value / maxValue)])`.",
+    "ANIMATION CROISSANCE : Applique la hauteur calculée via style inline `height: ${height}px` sur la div de la barre. Assure-toi que l'ancrage visuel est en bas (le conteneur positionné au bottom gère cela naturellement).",
+    "STYLE BARRE : Utilise un `linear-gradient` inline du haut vers le bas avec les couleurs exactes des constantes. Ajoute un `box-shadow` pour le glow qui s'anime en opacité (multiplie la couche alpha par le spring de croissance).",
+    "LABELS CACHÉS (BLOCS GRIS) : Place-les sous la barre (`top: 100%`, `marginTop: 30px`). Ajoute un `filter: 'blur(4px)'` et une `opacity: 0.7` pour correspondre au look 'flou' du mockup. Ils doivent disparaître en fondu quand `frame >= revealLabelsFrame`.",
+    "LABELS RÉVÉLÉS : Animent leur apparition (opacité 0->1 et léger translateY de 20px vers 0) en utilisant un second spring synchronisé avec `revealLabelsFrame`.",
+    "VALEURS (340Md) : Positionnées au-dessus de la barre animée (`bottom: ${height + 40}px`). Leur opacité doit suivre le spring de croissance de la barre associée."
+  ]
+}

@@ -128,3 +128,4 @@ remogen-test/
 # Python cache
 __pycache__/
 *.pyc
+.gstack/

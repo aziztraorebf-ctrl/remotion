@@ -1,0 +1,351 @@
+[
+  {
+    "panel_id": 1,
+    "frame_start": 0,
+    "frame_end": 165,
+    "background": {
+      "type": "css_solid",
+      "color": "#d8c9a8"
+    },
+    "elements": [
+      {
+        "element_id": "balance_icon",
+        "type": "svg_icon",
+        "description": "thin line scale of justice, centered vertically at ~45% of screen height",
+        "position_xy": [
+          540,
+          860
+        ],
+        "size_px": [
+          320,
+          320
+        ],
+        "color_hex": "#0d1525",
+        "animation": {
+          "appears_at_frame": 0,
+          "transition": "fade-in",
+          "duration_frames": 30
+        }
+      },
+      {
+        "element_id": "niger_pin",
+        "type": "icon_text_group",
+        "description": "Small map pin dot with 'NIGER' text label, centered horizontally below balance icon",
+        "position_xy": [
+          540,
+          1580
+        ],
+        "size_px": [
+          120,
+          48
+        ],
+        "color_hex": "#c08820",
+        "animation": {
+          "appears_at_frame": 30,
+          "transition": "slide-up",
+          "duration_frames": 20
+        }
+      }
+    ],
+    "permanent_motion": null
+  },
+  {
+    "panel_id": 2,
+    "frame_start": 165,
+    "frame_end": 367,
+    "background": {
+      "type": "css_solid",
+      "color": "#d8c9a8"
+    },
+    "elements": [
+      {
+        "element_id": "mine_grid",
+        "type": "vector_schematic",
+        "description": "3 large rectangular blocks of small circles. Left: ~20x30 grid. Center: ~20x30 grid with padlock overlay. Right: ~15x30 grid. Overall layout forms a U-shape open at bottom.",
+        "position_xy": [
+          540,
+          960
+        ],
+        "size_px": [
+          900,
+          1200
+        ],
+        "color_hex": "#b4a686",
+        "animation": {
+          "appears_at_frame": 165,
+          "transition": "fade-in",
+          "duration_frames": 15
+        }
+      },
+      {
+        "element_id": "padlock_icon",
+        "type": "svg_icon",
+        "description": "Closed padlock centered over middle grid block",
+        "position_xy": [
+          540,
+          960
+        ],
+        "size_px": [
+          120,
+          150
+        ],
+        "color_hex": "#0d1525",
+        "animation": {
+          "appears_at_frame": 180,
+          "transition": "scale-up",
+          "duration_frames": 20
+        }
+      },
+      {
+        "element_id": "pill_1300t",
+        "type": "text_pill",
+        "description": "Dark navy rounded rectangle with '1 300 T'",
+        "position_xy": [
+          540,
+          450
+        ],
+        "size_px": [
+          500,
+          180
+        ],
+        "color_hex": "#0d1525",
+        "text_color": "#ffffff",
+        "font": "IBM Plex Mono",
+        "animation": {
+          "appears_at_frame": 200,
+          "transition": "slide-down",
+          "duration_frames": 25
+        }
+      },
+      {
+        "element_id": "pill_250me",
+        "type": "text_pill",
+        "description": "Dark navy rounded rectangle with '250 M€'",
+        "position_xy": [
+          540,
+          1470
+        ],
+        "size_px": [
+          500,
+          180
+        ],
+        "color_hex": "#0d1525",
+        "text_color": "#ffffff",
+        "font": "IBM Plex Mono",
+        "animation": {
+          "appears_at_frame": 220,
+          "transition": "slide-up",
+          "duration_frames": 25
+        }
+      }
+    ],
+    "permanent_motion": null
+  },
+  {
+    "panel_id": 3,
+    "frame_start": 367,
+    "frame_end": 498,
+    "background": {
+      "type": "mapbox_gl",
+      "mapbox_config": {
+        "style": "custom_sepia",
+        "water_color": "#a8c2d4",
+        "land_color": "#d8c9a8",
+        "center_lon": 20.0,
+        "center_lat": 35.0,
+        "zoom": 1.5
+      }
+    },
+    "elements": [
+      {
+        "element_id": "niger_highlight",
+        "type": "geojson_polygon",
+        "description": "Highlight Niger borders",
+        "color_hex": "#c08820",
+        "animation": {
+          "appears_at_frame": 367,
+          "transition": "fade-in",
+          "duration_frames": 10
+        }
+      },
+      {
+        "element_id": "dot_niger",
+        "type": "map_marker",
+        "position_lonlat": [
+          8.0,
+          17.0
+        ],
+        "size_px": [
+          20,
+          20
+        ],
+        "color_hex": "#0d1525",
+        "animation": {
+          "appears_at_frame": 375,
+          "transition": "pop",
+          "duration_frames": 10
+        }
+      },
+      {
+        "element_id": "dot_moscow",
+        "type": "map_marker",
+        "position_lonlat": [
+          37.6,
+          55.75
+        ],
+        "size_px": [
+          20,
+          20
+        ],
+        "color_hex": "#0d1525",
+        "animation": {
+          "appears_at_frame": 385,
+          "transition": "pop",
+          "duration_frames": 10
+        }
+      },
+      {
+        "element_id": "flight_arc",
+        "type": "animated_line",
+        "description": "Dotted arc connecting Niger to Moscow",
+        "start_lonlat": [
+          8.0,
+          17.0
+        ],
+        "end_lonlat": [
+          37.6,
+          55.75
+        ],
+        "color_hex": "#0d1525",
+        "dash_array": [
+          10,
+          10
+        ],
+        "animation": {
+          "appears_at_frame": 395,
+          "transition": "draw-line",
+          "duration_frames": 60
+        }
+      },
+      {
+        "element_id": "flag_russia",
+        "type": "image_rect",
+        "description": "Russian flag (3 horizontal stripes: white/blue/red), positioned slightly east of Moscow dot for legibility",
+        "position_lonlat": [
+          42.0,
+          57.0
+        ],
+        "size_px": [
+          120,
+          80
+        ],
+        "animation": {
+          "appears_at_frame": 405,
+          "transition": "fade-in",
+          "duration_frames": 15
+        }
+      },
+      {
+        "element_id": "label_niger",
+        "type": "plate_label",
+        "description": "Dark navy rect + left gold bar + 'NIGER'",
+        "position_xy": [
+          250,
+          1700
+        ],
+        "size_px": [
+          200,
+          60
+        ],
+        "color_hex": "#0d1525",
+        "accent_color": "#c08820",
+        "text_color": "#ffffff",
+        "font": "IBM Plex Mono",
+        "animation": {
+          "appears_at_frame": 380,
+          "transition": "slide-right",
+          "duration_frames": 15
+        }
+      },
+      {
+        "element_id": "label_moscow",
+        "type": "plate_label",
+        "description": "Dark navy rect + right gold bar + 'MOSCOU'",
+        "position_xy": [
+          600,
+          600
+        ],
+        "size_px": [
+          220,
+          60
+        ],
+        "color_hex": "#0d1525",
+        "accent_color": "#c08820",
+        "text_color": "#ffffff",
+        "font": "IBM Plex Mono",
+        "animation": {
+          "appears_at_frame": 390,
+          "transition": "slide-left",
+          "duration_frames": 15
+        }
+      }
+    ],
+    "permanent_motion": null
+  },
+  {
+    "panel_id": 4,
+    "frame_start": 498,
+    "frame_end": 687,
+    "background": {
+      "type": "css_solid",
+      "color": "#d8c9a8"
+    },
+    "elements": [
+      {
+        "element_id": "document_icon",
+        "type": "svg_icon",
+        "description": "Stylized document page with text lines and a seal — OPTIONAL per Aziz brief (beige background only is sufficient)",
+        "optional": true,
+        "position_xy": [
+          540,
+          960
+        ],
+        "size_px": [
+          600,
+          800
+        ],
+        "color_hex": "#c4b596",
+        "animation": {
+          "appears_at_frame": 498,
+          "transition": "fade-in",
+          "duration_frames": 20
+        }
+      },
+      {
+        "element_id": "stamp_interdit",
+        "type": "text_stamp",
+        "description": "INTERDIT text with thin border, rotated",
+        "text": "INTERDIT",
+        "position_xy": [
+          540,
+          960
+        ],
+        "size_px": [
+          900,
+          350
+        ],
+        "rotation_deg": -15,
+        "color_hex": "#5c1a1a",
+        "font": "Bebas Neue",
+        "font_size_px": 280,
+        "border_width_px": 8,
+        "animation": {
+          "appears_at_frame": 520,
+          "transition": "stamp-slam",
+          "duration_frames": 10
+        }
+      }
+    ],
+    "permanent_motion": null
+  }
+]

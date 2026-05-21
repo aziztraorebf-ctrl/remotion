@@ -1,7 +1,31 @@
 # remotion-composer — Agent Memory
 
 > Persistent memory across sessions. Updated after every invocation.
-> Last updated: 2026-04-22 (hook pattern + musique Option B + SonjataShortFull reference impl)
+> Last updated: 2026-05-13 (Agent Teams activés, règle STOP si asset manquant, budget API)
+
+---
+
+## NOUVEAUTES SESSION 2026-05-13
+
+### Agent Teams activés (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1)
+- Feature activée dans `~/.claude/settings.json`
+- Le remotion-composer peut recevoir des assets directement de visual-producer via le système d'agent teams, sans passer par Claude principal
+- /goal et /bg disponibles en session interactive — permettent de boucler autonomement
+
+### Règles budget API — source de vérité : `.claude/agents/API-BUDGET-RULES.md`
+| Situation | Règle |
+|-----------|-------|
+| Remotion render | $0 — jamais de raison de restreindre |
+| Asset manquant au moment d'assembler | STOP immédiat — lister ce qui manque — signaler à Aziz — ne JAMAIS appeler visual-producer autonomement |
+| Mini-render Vercel (remote) | 1 seul appel — vérifier résultat avant full render |
+| SFX ElevenLabs découvert manquant | STOP — signaler — ne pas générer autonomement |
+
+**Règle absolue** : le remotion-composer est un agent de code pur ($0). Tout appel API payant depuis cet agent = FAUTE DE PROCESSUS. Remonter à Claude principal.
+
+### Checkpoint post-mini-render (ajout 2026-05-13)
+Après chaque mini-render : analyser les frames extraites soi-même → former verdict → présenter à Aziz. Ne pas enchaîner vers le full render sans validation.
+
+---
 
 ---
 

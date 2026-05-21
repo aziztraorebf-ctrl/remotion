@@ -1,0 +1,17 @@
+@Image1 defines the visual environment and pixel art style. STRICT STYLE FIDELITY: maintain EXACT 16-bit pixel art aesthetic -- square pixels, hard edges, flat shading, limited palette of blues/greys/oranges, NO anti-aliasing, NO photorealism, NO smooth gradients, NO cartoon softness. Every element must look like a Super Nintendo RPG screen.
+
+@Image2 is HANNIBAL -- Carthaginian general in red-gold armor. Place him on the LEFT BANK (bottom-left of frame), standing on muddy ground near the reeds, facing right, WATCHING the river.
+
+@Image3 is the WAR ELEPHANT on a wooden raft. Place it in the RIVER CENTER (middle of frame), floating on the water surface. The raft DRIFTS steadily toward the right bank.
+
+@Image4 is a VOLQUE WARRIOR. Place 2 of them on the RIGHT CLIFF (upper-right of frame), standing on the plateau edge, facing left, HOLDING spears upright.
+
+SECONDS 0 TO 2: Wide establishing shot. The river FLOWS with gentle pixel ripples. Hannibal STANDS still on the left bank, arms crossed, watching. The raft with the elephant is visible mid-river. The two Volque warriors STAND on the right cliff, shields raised.
+
+SECONDS 2 TO 4: The raft DRIFTS steadily rightward. Water CHURNS in pixel foam around the raft edges. The elephant SHIFTS its weight, trunk SWINGING once. Hannibal TURNS his head slightly to track the raft.
+
+SECONDS 4 TO 5: The raft REACHES the right bank. The two Volque warriors RAISE their spears upward in unison. Camera HOLDS STEADY throughout -- NO lateral tracking, NO pan, NO camera movement.
+
+COLOR GRADE: pixel art palette -- steel blue river, warm amber cliffs, deep orange sunset sky, muted earth tones on the banks. Hard pixel edges everywhere.
+
+No text, no banners, no signs, no writing visible anywhere. No music, no words, no dialogue.

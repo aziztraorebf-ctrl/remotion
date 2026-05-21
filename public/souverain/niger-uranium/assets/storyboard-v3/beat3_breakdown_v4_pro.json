@@ -1,0 +1,240 @@
+{
+  "scene_description": "A dark blue textured background with a red 'DOSSIER' stamp. Three circular nodes representing Niger State, Somair, and Orano appear sequentially, connected by lines and arrows denoting nationalization and contested claims.",
+  "background_assets_to_generate": [
+    {
+      "filename": "bg-dark-navy-paper.png",
+      "prompt": "Dark navy blue textured paper background, subtle grunge and vignette, solid color base #161c24, high resolution, 9:16 aspect ratio",
+      "dimensions": "1080x1920",
+      "transparent": false,
+      "purpose": "Base background texture"
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "dossier_stamp_box",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<rect width='400' height='120' rx='10' fill='none' stroke='#a33333' stroke-width='8'/><rect width='380' height='100' x='10' y='10' rx='5' fill='none' stroke='#a33333' stroke-width='4'/>",
+      "screen_position_xy": [250, 150],
+      "size_px": [400, 120],
+      "color_hex": null,
+      "rotation_deg": -12,
+      "z_index": 2
+    },
+    {
+      "element_id": "dossier_stamp_text",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "DOSSIER",
+      "screen_position_xy": [250, 150],
+      "size_px": [380, 100],
+      "color_hex": "#a33333",
+      "rotation_deg": -12,
+      "z_index": 3
+    },
+    {
+      "element_id": "node_niger_bg",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='200' cy='200' r='190' fill='#d4c29d' stroke='#c8a951' stroke-width='15'/>",
+      "screen_position_xy": [540, 550],
+      "size_px": [400, 400],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "icon_niger_state",
+      "type": "icon",
+      "asset_source": "existing_icon",
+      "filename_or_content": "icon-etat-niger.png",
+      "screen_position_xy": [540, 500],
+      "size_px": [200, 200],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "label_niger",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "ÉTAT NIGER",
+      "screen_position_xy": [540, 650],
+      "size_px": [300, 60],
+      "color_hex": "#1a2430",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "node_somair_bg",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='150' cy='150' r='145' fill='#d4c29d' stroke='none'/>",
+      "screen_position_xy": [250, 1250],
+      "size_px": [300, 300],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "icon_somair_mine",
+      "type": "icon",
+      "asset_source": "existing_icon",
+      "filename_or_content": "icon-somair-mine.png",
+      "screen_position_xy": [250, 1210],
+      "size_px": [180, 180],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "label_somair",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "SOMAÏR",
+      "screen_position_xy": [250, 1450],
+      "size_px": [200, 50],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "arrow_nationalisation",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<path d='M 450 750 L 300 1050' stroke='#d4c29d' stroke-width='15' fill='none'/><polygon points='280,1090 280,1030 330,1060' fill='#d4c29d'/>",
+      "screen_position_xy": [375, 900],
+      "size_px": [200, 350],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 1
+    },
+    {
+      "element_id": "label_nationalisation",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "NATIONALISATION",
+      "screen_position_xy": [220, 920],
+      "size_px": [250, 40],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "node_orano_bg",
+      "type": "svg_shape",
+      "asset_source": "code_only",
+      "filename_or_content": "<circle cx='150' cy='150' r='145' fill='#d4c29d' stroke='none'/>",
+      "screen_position_xy": [830, 1250],
+      "size_px": [300, 300],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 2
+    },
+    {
+      "element_id": "icon_orano_corp",
+      "type": "icon",
+      "asset_source": "existing_icon",
+      "filename_or_content": "icon-orano-corporate.png",
+      "screen_position_xy": [830, 1210],
+      "size_px": [180, 180],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "label_orano",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "ORANO",
+      "screen_position_xy": [830, 1450],
+      "size_px": [200, 50],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "line_contested",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='630' y1='750' x2='780' y2='1100' stroke='#d4c29d' stroke-width='4'/>",
+      "screen_position_xy": [705, 925],
+      "size_px": [150, 350],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 1
+    },
+    {
+      "element_id": "label_contested",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "CONTESTED",
+      "screen_position_xy": [850, 920],
+      "size_px": [200, 40],
+      "color_hex": "#d4c29d",
+      "rotation_deg": 0,
+      "z_index": 3
+    },
+    {
+      "element_id": "line_tension_dashed",
+      "type": "svg_path",
+      "asset_source": "code_only",
+      "filename_or_content": "<line x1='400' y1='1250' x2='680' y2='1250' stroke='#a33333' stroke-width='8' stroke-dasharray='20, 15'/>",
+      "screen_position_xy": [540, 1250],
+      "size_px": [280, 10],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 1
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": ["node_niger_bg", "icon_niger_state", "label_niger"],
+      "element_ids_changing": [],
+      "transition_type": "fade-in",
+      "duration_frames": 15,
+      "easing_hint": "soft",
+      "audio_cue_word": "setup"
+    },
+    {
+      "frame_local": 6,
+      "element_ids_appearing": ["dossier_stamp_box", "dossier_stamp_text"],
+      "element_ids_changing": [],
+      "transition_type": "stamp-impact",
+      "duration_frames": 10,
+      "easing_hint": "bouncy",
+      "audio_cue_word": "juin"
+    },
+    {
+      "frame_local": 80,
+      "element_ids_appearing": ["node_somair_bg", "icon_somair_mine", "label_somair", "arrow_nationalisation", "label_nationalisation"],
+      "element_ids_changing": [],
+      "transition_type": "draw-stroke",
+      "duration_frames": 25,
+      "easing_hint": "linear",
+      "audio_cue_word": "nationalise"
+    },
+    {
+      "frame_local": 205,
+      "element_ids_appearing": [],
+      "element_ids_changing": ["node_niger_bg"],
+      "transition_type": "pulse",
+      "duration_frames": 30,
+      "easing_hint": "soft",
+      "audio_cue_word": "souveraineté retrouvée"
+    },
+    {
+      "frame_local": 273,
+      "element_ids_appearing": ["node_orano_bg", "icon_orano_corp", "label_orano", "line_contested", "label_contested", "line_tension_dashed"],
+      "element_ids_changing": [],
+      "transition_type": "scale-pop",
+      "duration_frames": 20,
+      "easing_hint": "bouncy",
+      "audio_cue_word": "Orano"
+    }
+  ],
+  "permanent_motion": "Subtle film grain overlay shifting continuously. The three circular nodes float gently on the Y-axis (±3px over 3 seconds). The red dashed line 'line_tension_dashed' uses a marching ants animation (stroke-dashoffset) continuously after appearing to indicate active tension.",
+  "remotion_implementation_notes": "Use Remotion's `spring` for the stamp-impact and scale-pop node reveals. Use `interpolate` with `strokeDashoffset` to animate the drawing of lines and arrows. CSS text should use a condensed, bold sans-serif font (like Oswald or Roboto Condensed) to match the dossier aesthetic.",
+  "fidelity_warnings": "The organic, slightly imperfect hand-drawn texture of the lines and circles in the storyboard is difficult to replicate purely with crisp SVG paths. Workaround: Apply an SVG filter (feTurbulence/feDisplacementMap) to the SVG shapes to give them slightly roughened edges, or keep them clean but rely on the textured background to sell the analog feel."
+}
