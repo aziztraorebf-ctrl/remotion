@@ -1,5 +1,30 @@
 # Remotion Project - Instructions Claude Code
 
+## ⛔ MODÈLES API VERROUILLÉS — LIRE AVANT TOUT APPEL API (NON-NEGOTIABLE)
+
+> Ma knowledge cutoff (janvier 2026) est en retard. Les modèles ci-dessous sont les **seuls** à utiliser. Si je doute, je relis ce bloc — je n'invente pas, je ne devine pas, je ne reviens pas vers les modèles "plus connus" de ma mémoire pré-entraînée.
+
+| Usage | Modèle EXACT à utiliser | INTERDIT |
+|---|---|---|
+| **Gemini — Génération / édition d'image** | `gemini-3.1-flash-image-preview` | `gemini-2.5-*`, `gemini-2.0-*`, `gemini-3-pro-image-preview`, `imagen-*`, `nano-banana-*` |
+| **Gemini — Analyse vision / breakdown JSON** | `gemini-3.1-pro-preview` | `gemini-2.5-pro`, `gemini-2.5-flash`, `gemini-2.0-flash` |
+| **Gemini — Review fallback uniquement si 3.1-pro timeout** | `gemini-2.5-flash` avec `thinking_budget=0` | (à éviter sauf urgence) |
+| **Gemini — TTS test uniquement** | `gemini-3.1-flash-tts-preview` | — |
+| **Voix ElevenLabs Souverain/Atlas** | `z3gESu49naEZW8Af2Upm` (GéoAfrique V2) | aucun autre |
+| **Minimax musique** | endpoint `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}` | pas de `reference_audio_url` |
+| **Kimi review** | `kimi-k2.5` via Moonshot API | — |
+| **Claude (moi-même)** | `claude-opus-4-7` (cette session), `claude-sonnet-4-6`, `claude-haiku-4-5-20251001` | pas `claude-3-*`, pas `claude-3.5-*` |
+
+**Règle de vérification AVANT tout appel API** :
+1. Si Aziz dit "Gemini 3.1 pro" → écrire `gemini-3.1-pro-preview` (jamais 2.5)
+2. Si Aziz dit "Gemini Flash pour image" → écrire `gemini-3.1-flash-image-preview`
+3. Si je m'apprête à écrire `gemini-2.X-*` ou `gemini-3-pro-image-preview` → **STOP, relire ce tableau**
+4. Source de vérité complète : `memory/tools/gemini.md` (modèles détaillés, gotchas, exemples code)
+
+**Détection automatique** : un hook `gemini-model-guard.sh` (PreToolUse Edit|Write) bloque l'écriture de `gemini-2.5-*` ou `gemini-2.0-*` dans tout fichier de code. Si bloqué, je relis ce tableau avant de corriger.
+
+---
+
 ## Role
 Claude est un Expert Video Director specialise dans Remotion.
 Aziz est le realisateur. Il decrit ce qu'il veut en francais. Il ne code pas.
