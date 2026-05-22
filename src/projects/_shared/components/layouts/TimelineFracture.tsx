@@ -9,6 +9,7 @@ export interface TimelineFractureProps {
   eventLabel?: string;
   icon?: FractureIcon;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const ICON_MAP: Record<FractureIcon, React.FC<{ size?: number; color?: string }>> = {
@@ -36,9 +37,10 @@ export const TimelineFracture: React.FC<TimelineFractureProps> = ({
   eventLabel = "FONDATION",
   icon       = "crown",
   subtitle   = "EMPIRE MALI",
+  bgColor    = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
   // --- Line draw-in (frame 0-30) ---
   const drawProgress = interpolate(frame, [0, 30], [0, 1], {
@@ -64,9 +66,9 @@ export const TimelineFracture: React.FC<TimelineFractureProps> = ({
   });
   const fracSeparation = fracProgress * 40;
 
-  const CX = 540;
-  const CY = 960;
-  const HALF_LINE = 540; // half of 1080
+  const CX = width / 2;
+  const CY = height / 2;
+  const HALF_LINE = width / 2;
 
   // Left segment: draws from (CX - HALF_LINE * drawProgress) to CX
   // After fracture: right edge retracts by fracSeparation
@@ -154,7 +156,7 @@ export const TimelineFracture: React.FC<TimelineFractureProps> = ({
   };
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div style={dotGridStyle} />
@@ -179,8 +181,8 @@ export const TimelineFracture: React.FC<TimelineFractureProps> = ({
 
       {/* SVG layer — line + shards */}
       <svg
-        width={1080}
-        height={1920}
+        width={width}
+        height={height}
         style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
       >
         {/* Left line segment */}
@@ -268,7 +270,7 @@ export const TimelineFracture: React.FC<TimelineFractureProps> = ({
           position: "absolute",
           left: 0,
           right: 0,
-          top: 610,
+          top: Math.round(height * 0.318),
           display: "flex",
           flexDirection: "column",
           alignItems: "center",

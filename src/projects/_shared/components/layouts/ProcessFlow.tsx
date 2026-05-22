@@ -48,6 +48,7 @@ export interface ProcessFlowProps {
   title?: string;
   steps?: FlowStep[];
   subtitle?: string;
+  bgColor?: string;
 }
 
 const DEFAULT_STEPS: FlowStep[] = [
@@ -60,15 +61,15 @@ const DEFAULT_STEPS: FlowStep[] = [
 const GOLD = "#c4a053";
 const GOLD_DIM = "rgba(196,160,83,0.35)";
 const SLATE = "#64748b";
-const CIRCLE_CX = 400; // position X du centre des cercles (légèrement à gauche du centre)
 
 export const ProcessFlow: React.FC<ProcessFlowProps> = ({
   title = "CIRCUIT",
   steps = DEFAULT_STEPS,
   subtitle = "FLUX",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
   const titleSpring = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
   const titleOpacity = interpolate(titleSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
@@ -77,7 +78,9 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
   const footerSpring = spring({ frame: frame - 20, fps, config: { damping: 18, stiffness: 70 } });
   const footerOpacity = interpolate(footerSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
 
-  const H = 1920;
+  const cx = width * 0.37; // cx as fraction of width
+
+  const H = height;
   const TITLE_H = 220;
   const FOOTER_H = 200;
   const availableH = H - TITLE_H - FOOTER_H;
@@ -91,7 +94,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
   const CR_DEFAULT = 78;
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0b1220" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div
@@ -118,7 +121,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
       </div>
 
       {/* SVG — connecteurs + flèches */}
-      <svg className="absolute inset-0" width={1080} height={1920} style={{ overflow: "visible" }}>
+      <svg className="absolute inset-0" width={width} height={height} style={{ overflow: "visible" }}>
         <defs>
           <marker id="pf-arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
             <path d="M0,0 L8,4 L0,8 Z" fill={GOLD} opacity="0.7" />
@@ -148,8 +151,8 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
           return (
             <g key={i}>
               <line
-                x1={CIRCLE_CX} y1={startY}
-                x2={CIRCLE_CX} y2={curEndY}
+                x1={cx} y1={startY}
+                x2={cx} y2={curEndY}
                 stroke={GOLD}
                 strokeWidth={2}
                 strokeOpacity={0.5}
@@ -158,7 +161,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
               {/* Chevron visuel au milieu */}
               {lineProg > 0.5 && (
                 <text
-                  x={CIRCLE_CX}
+                  x={cx}
                   y={midY}
                   textAnchor="middle"
                   dominantBaseline="middle"
@@ -173,7 +176,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
               {/* Edge label — à gauche de la ligne pour éviter débordement droite */}
               {nextEdgeLabel && lineProg > 0.6 && (
                 <text
-                  x={CIRCLE_CX - 30}
+                  x={cx - 30}
                   y={midY}
                   fontSize={28}
                   fill={GOLD}
@@ -215,7 +218,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
             <div
               className="absolute flex items-center justify-center"
               style={{
-                left: CIRCLE_CX - CR,
+                left: cx - CR,
                 top: cy - CR,
                 width: CR * 2,
                 height: CR * 2,
@@ -262,7 +265,7 @@ export const ProcessFlow: React.FC<ProcessFlowProps> = ({
             <div
               className="absolute font-mono uppercase tracking-wider"
               style={{
-                left: CIRCLE_CX + CR + 36,
+                left: cx + CR + 36,
                 top: cy - 22,
                 fontSize: isActive ? 38 : 30,
                 color: isActive ? "#f5efe0" : SLATE,

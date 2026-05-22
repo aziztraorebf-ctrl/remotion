@@ -21,14 +21,16 @@ interface StackedBarsProps {
   revealLabelsFrame?: number;
   title?: string;
   subtitle?: string;
+  bgColor?: string;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const BAR_MAX_HEIGHT = 1100;
-const BAR_WIDTH = 140;
-const X_POSITIONS = [140, 360, 580, 800];
-const BARS_BOTTOM_Y = 1920 - 1560; // = 360px from top → bottom anchor at y=1560
+// Base values designed for 1920h × 1080w — scaled at runtime via useVideoConfig
+const BASE_BAR_MAX_HEIGHT = 1100;
+const BASE_BAR_WIDTH = 140;
+const BASE_X_POSITIONS = [140, 360, 580, 800];
+const BASE_BARS_BOTTOM_OFFSET = 360; // distance from bottom where bars are anchored
 const STAGGER_PER_BAR = 12;
 
 const BAR_SPRING_CONFIG = { damping: 16, stiffness: 90, mass: 0.8 };
@@ -48,6 +50,10 @@ interface SingleBarProps {
   isTop: boolean;
   revealLabelsFrame: number;
   fps: number;
+  barMaxHeight: number;
+  barWidth: number;
+  xPos: number;
+  barsBottomOffset: number;
 }
 
 const SingleBar: React.FC<SingleBarProps> = ({
@@ -57,6 +63,10 @@ const SingleBar: React.FC<SingleBarProps> = ({
   isTop,
   revealLabelsFrame,
   fps,
+  barMaxHeight,
+  barWidth,
+  xPos,
+  barsBottomOffset,
 }) => {
   const frame = useCurrentFrame();
 
@@ -73,7 +83,7 @@ const SingleBar: React.FC<SingleBarProps> = ({
   const barHeight = interpolate(
     barSpring,
     [0, 1],
-    [0, BAR_MAX_HEIGHT * (bar.value / maxValue)],
+    [0, barMaxHeight * (bar.value / maxValue)],
     { extrapolateRight: "clamp" }
   );
 
@@ -107,7 +117,6 @@ const SingleBar: React.FC<SingleBarProps> = ({
     extrapolateRight: "clamp",
   });
 
-  const xPos = X_POSITIONS[index];
   const glowColor = isTop
     ? "0 0 70px 16px rgba(253, 224, 139, 0.55)"
     : "0 0 50px 10px rgba(253, 224, 139, 0.35)";
@@ -117,8 +126,8 @@ const SingleBar: React.FC<SingleBarProps> = ({
       style={{
         position: "absolute",
         left: `${xPos}px`,
-        bottom: `${BARS_BOTTOM_Y}px`,
-        width: `${BAR_WIDTH}px`,
+        bottom: `${barsBottomOffset}px`,
+        width: `${barWidth}px`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -143,7 +152,7 @@ const SingleBar: React.FC<SingleBarProps> = ({
       {/* Bar itself — grows upward by anchoring to bottom */}
       <div
         style={{
-          width: `${BAR_WIDTH}px`,
+          width: `${barWidth}px`,
           height: `${barHeight}px`,
           backgroundImage: BAR_GRADIENT,
           borderRadius: "40px",
@@ -157,7 +166,7 @@ const SingleBar: React.FC<SingleBarProps> = ({
       <div
         style={{
           marginTop: "30px",
-          width: `${BAR_WIDTH}px`,
+          width: `${barWidth}px`,
           height: "64px",
           borderRadius: "10px",
           background: "linear-gradient(180deg, #C4C4C4 0%, #5A5A5A 100%)",
@@ -174,7 +183,7 @@ const SingleBar: React.FC<SingleBarProps> = ({
         style={{
           position: "absolute",
           bottom: "-94px",
-          width: `${BAR_WIDTH}px`,
+          width: `${barWidth}px`,
           textAlign: "center",
           fontFamily: '"IBM Plex Mono", monospace',
           fontSize: "28px",
@@ -203,9 +212,18 @@ export const StackedBars: React.FC<StackedBarsProps> = ({
   revealLabelsFrame = 90,
   title = "EXTRACTION MINIÈRE",
   subtitle = "par minerai · Afrique 2023",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
+
+  const scaleW = width / 1080;
+  const scaleH = height / 1920;
+
+  const BAR_MAX_HEIGHT = Math.round(BASE_BAR_MAX_HEIGHT * scaleH);
+  const BAR_WIDTH = Math.round(BASE_BAR_WIDTH * scaleW);
+  const X_POSITIONS = BASE_X_POSITIONS.map((x) => Math.round(x * scaleW));
+  const BARS_BOTTOM_OFFSET = Math.round(BASE_BARS_BOTTOM_OFFSET * scaleH);
 
   const maxValue = Math.max(...bars.map((b) => b.value));
 
@@ -233,8 +251,8 @@ export const StackedBars: React.FC<StackedBarsProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0d1420",
-        background: "radial-gradient(ellipse at 50% 60%, rgba(181,165,125,0.12) 0%, rgba(10,15,20,1) 70%)",
+        backgroundColor: bgColor,
+        background: bgColor === "transparent" ? undefined : "radial-gradient(ellipse at 50% 60%, rgba(181,165,125,0.12) 0%, rgba(10,15,20,1) 70%)",
       }}
     >
 
@@ -270,6 +288,10 @@ export const StackedBars: React.FC<StackedBarsProps> = ({
             isTop={i === 0}
             revealLabelsFrame={revealLabelsFrame}
             fps={fps}
+            barMaxHeight={BAR_MAX_HEIGHT}
+            barWidth={BAR_WIDTH}
+            xPos={X_POSITIONS[i]}
+            barsBottomOffset={BARS_BOTTOM_OFFSET}
           />
         ))}
       </div>
@@ -278,7 +300,7 @@ export const StackedBars: React.FC<StackedBarsProps> = ({
       <div
         style={{
           position: "absolute",
-          top: 1700,
+          top: Math.round(1700 * scaleH),
           left: "10%",
           right: "10%",
           opacity: subtitleOpacity,

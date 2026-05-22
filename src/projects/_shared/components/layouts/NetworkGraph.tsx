@@ -39,21 +39,21 @@ export interface SatelliteNode {
 export interface NetworkGraphProps {
   centralLabel?: string;
   centralIcon?: NodeIcon;
-  nodes?: SatelliteNode[];
+  nodes?: SatelliteNode[] | null;
   subtitle?: string;
+  bgColor?: string;
 }
 
-const DEFAULT_NODES: SatelliteNode[] = [
-  { cx: 540, cy: 380, label: "RESSOURCES", icon: "pickaxe", lineWeight: "thin" },
-  { cx: 870, cy: 630, label: "FINANCES", icon: "bank", edgeLabel: "$4.2B", lineWeight: "thick" },
-  { cx: 870, cy: 1210, label: "COMMERCE", icon: "ship", lineWeight: "thin" },
-  { cx: 540, cy: 1440, label: "INDUSTRIE", icon: "factory", lineWeight: "medium" },
-  { cx: 160, cy: 1210, label: "INFLUENCE", icon: "flag", lineWeight: "thin" },
-  { cx: 160, cy: 630, label: "MINES", icon: "pickaxe", edgeLabel: "85M T", lineWeight: "medium" },
-];
-
-const W = 1080;
-const H = 1920;
+function makeDefaultNodes(w: number, h: number): SatelliteNode[] {
+  return [
+    { cx: 0.5   * w, cy: 0.198 * h, label: "RESSOURCES", icon: "pickaxe", lineWeight: "thin" },
+    { cx: 0.806 * w, cy: 0.328 * h, label: "FINANCES",   icon: "bank",    edgeLabel: "$4.2B", lineWeight: "thick" },
+    { cx: 0.806 * w, cy: 0.630 * h, label: "COMMERCE",   icon: "ship",    lineWeight: "thin" },
+    { cx: 0.5   * w, cy: 0.75  * h, label: "INDUSTRIE",  icon: "factory", lineWeight: "medium" },
+    { cx: 0.148 * w, cy: 0.630 * h, label: "INFLUENCE",  icon: "flag",    lineWeight: "thin" },
+    { cx: 0.148 * w, cy: 0.328 * h, label: "MINES",      icon: "pickaxe", edgeLabel: "85M T", lineWeight: "medium" },
+  ];
+}
 
 const LINE_WIDTHS = { thin: 2, medium: 3.5, thick: 5.5 };
 const GOLD = "#D4AF37";
@@ -63,17 +63,20 @@ const SLATE = "#8e95a5";
 export const NetworkGraph: React.FC<NetworkGraphProps> = ({
   centralLabel = "EMPIRE\nCONNECTIONS",
   centralIcon = "crown",
-  nodes = DEFAULT_NODES,
+  nodes = null,
   subtitle = "réseau de pouvoir",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
-  // Centre
-  const cx = 540;
-  const cy = 960;
-  const CR = 105; // rayon noeud central
-  const SR = 68;  // rayon noeuds satellites
+  const resolvedNodes: SatelliteNode[] = nodes ?? makeDefaultNodes(width, height);
+
+  const cx = width / 2;
+  const cy = height / 2;
+  const scale = Math.min(width, height) / 1080;
+  const CR = Math.round(105 * scale);
+  const SR = Math.round(68 * scale);
 
   // Titre entry
   const titleSpring = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
@@ -86,7 +89,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
 
   // Lignes draw-in (une par noeud, délai croissant)
   // Noeuds satellites (révélation séquentielle)
-  const nodeAnimations = nodes.map((_, i) => {
+  const nodeAnimations = resolvedNodes.map((_, i) => {
     const lineDelay = 18 + i * 12;
     const nodeDelay = lineDelay + 8;
     const lineSpring = spring({ frame: frame - lineDelay, fps, config: { damping: 22, stiffness: 60 } });
@@ -107,7 +110,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
   const footerOpacity = interpolate(footerSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div
@@ -146,8 +149,8 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
       {/* SVG — arcs + noeuds */}
       <svg
         className="absolute inset-0"
-        width={W}
-        height={H}
+        width={width}
+        height={height}
         style={{ overflow: "visible" }}
       >
         <defs>
@@ -158,7 +161,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
         </defs>
 
         {/* Arcs centre → satellites */}
-        {nodes.map((node, i) => {
+        {resolvedNodes.map((node, i) => {
           const { lineProg } = nodeAnimations[i];
           const lw = LINE_WIDTHS[node.lineWeight ?? "thin"];
 
@@ -231,7 +234,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
         </g>
 
         {/* Noeuds satellites */}
-        {nodes.map((node, i) => {
+        {resolvedNodes.map((node, i) => {
           const { nodeOpacity, nodeScale } = nodeAnimations[i];
           return (
             <g
@@ -262,7 +265,7 @@ export const NetworkGraph: React.FC<NetworkGraphProps> = ({
       </div>
 
       {/* Icônes + labels noeuds satellites */}
-      {nodes.map((node, i) => {
+      {resolvedNodes.map((node, i) => {
         const { nodeOpacity, nodeScale } = nodeAnimations[i];
         const IconComp = ICON_MAP[node.icon];
 

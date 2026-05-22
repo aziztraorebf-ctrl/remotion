@@ -1,5 +1,5 @@
-import React from "react";
-import { AbsoluteFill, useCurrentFrame, interpolate, spring } from "remotion";
+import React, { useMemo } from "react";
+import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from "remotion";
 import { Diamond, Crown, Globe, Zap, TrendingUp, Building2, Users, Flag } from "lucide-react";
 
 export type ShatterIcon = "diamond" | "crown" | "globe" | "zap" | "trending" | "building" | "users" | "flag";
@@ -10,6 +10,7 @@ export interface ShatterReformProps {
   stat?: string;
   label?: string;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const GOLD = "#c4a053";
@@ -24,28 +25,31 @@ function pseudoRandom(seed: number): number {
   return x - Math.floor(x);
 }
 
-// Build fragment data once (stable across renders)
-const fragments = Array.from({ length: 45 }, (_, i) => {
-  const col = i % 5;
-  const row = Math.floor(i / 5);
+function buildFragments(width: number, height: number) {
+  const COLS = 5;
+  const ROWS = 9;
+  const cellW = width / COLS;
+  const cellH = (height * 0.75) / ROWS;
+  const gridTopOffset = height * 0.135;
 
-  // Target position: center of each cell in the grid
-  const targetX = 90 + col * 180 + 90;
-  const targetY = 260 + row * 155 + 77;
+  return Array.from({ length: COLS * ROWS }, (_, i) => {
+    const col = i % COLS;
+    const row = Math.floor(i / COLS);
 
-  // Initial dispersed position
-  const initX = pseudoRandom(i * 3.7) * 1080;
-  const initY = pseudoRandom(i * 5.3) * 1920;
+    const targetX = col * cellW + cellW / 2;
+    const targetY = gridTopOffset + row * cellH + cellH / 2;
 
-  // Delay: fragments closest to center reform first
-  const distToCenter = Math.sqrt((col - 2) ** 2 + (row - 4) ** 2);
-  const delay = 30 + distToCenter * 8;
+    const initX = pseudoRandom(i * 3.7) * width;
+    const initY = pseudoRandom(i * 5.3) * height;
 
-  // Initial rotation offset (dispersed state)
-  const initRotation = pseudoRandom(i * 11) * 60 - 30;
+    const distToCenter = Math.sqrt((col - 2) ** 2 + (row - 4) ** 2);
+    const delay = 30 + distToCenter * 8;
 
-  return { col, row, targetX, targetY, initX, initY, delay, initRotation };
-});
+    const initRotation = pseudoRandom(i * 11) * 60 - 30;
+
+    return { col, row, targetX, targetY, initX, initY, delay, initRotation, cellW, cellH };
+  });
+}
 
 function resolveIcon(icon: ShatterIcon, size: number): React.ReactNode {
   const style = {
@@ -82,8 +86,11 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
   stat = "80%",
   label = "CONTROLE",
   subtitle = "RESSOURCES NATURELLES",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
+  const fragments = useMemo(() => buildFragments(width, height), [width, height]);
 
   // Crack lines opacity: visible at start, disappear as grid reforms
   const crackOpacity = interpolate(frame, [0, 90], [0.6, 0], {
@@ -128,7 +135,7 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: BG, fontFamily: "Cinzel, serif", overflow: "hidden" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor, fontFamily: "Cinzel, serif", overflow: "hidden" }}>
 
       {/* === Layer 1: Fragment grid === */}
       <AbsoluteFill>
@@ -153,15 +160,17 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
             ? Math.sin(((frame - 150) / 12) * Math.PI) * 0.015 + 1
             : 1;
 
+          const fragW = frag.cellW - 4;
+          const fragH = frag.cellH - 4;
           return (
             <div
               key={i}
               style={{
                 position: "absolute",
-                width: 170,
-                height: 145,
-                left: currentX - 85,
-                top: currentY - 72,
+                width: fragW,
+                height: fragH,
+                left: currentX - fragW / 2,
+                top: currentY - fragH / 2,
                 background: `linear-gradient(135deg, rgba(196,160,83,0.08) 0%, rgba(196,160,83,0.04) 100%)`,
                 border: `1px solid rgba(196,160,83,${borderOpacity.toFixed(3)})`,
                 borderRadius: 3,
@@ -180,19 +189,22 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
       {crackOpacity > 0 && (
         <AbsoluteFill style={{ opacity: crackOpacity, pointerEvents: "none" }}>
           <svg
-            width={1080}
-            height={1920}
+            width={width}
+            height={height}
             style={{ position: "absolute", inset: 0 }}
           >
             {cracks.map((crack, i) => {
               const angleRad = (crack.angle * Math.PI) / 180;
-              const x2 = 540 + Math.cos(angleRad) * crack.length;
-              const y2 = 960 + Math.sin(angleRad) * crack.length;
+              const scaledLen = crack.length * Math.min(width, height) / 1080;
+              const cx = width / 2;
+              const cy = height / 2;
+              const x2 = cx + Math.cos(angleRad) * scaledLen;
+              const y2 = cy + Math.sin(angleRad) * scaledLen;
               return (
                 <g key={i}>
                   <line
-                    x1={540}
-                    y1={960}
+                    x1={cx}
+                    y1={cy}
                     x2={x2}
                     y2={y2}
                     stroke={GOLD}
@@ -201,10 +213,10 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
                   />
                   {/* Secondary micro-crack branching */}
                   <line
-                    x1={540 + Math.cos(angleRad) * crack.length * 0.5}
-                    y1={960 + Math.sin(angleRad) * crack.length * 0.5}
-                    x2={540 + Math.cos(angleRad + 0.5) * crack.length * 0.3}
-                    y2={960 + Math.sin(angleRad + 0.5) * crack.length * 0.3}
+                    x1={cx + Math.cos(angleRad) * scaledLen * 0.5}
+                    y1={cy + Math.sin(angleRad) * scaledLen * 0.5}
+                    x2={cx + Math.cos(angleRad + 0.5) * scaledLen * 0.3}
+                    y2={cy + Math.sin(angleRad + 0.5) * scaledLen * 0.3}
                     stroke={GOLD}
                     strokeWidth={0.8}
                     strokeLinecap="round"
@@ -214,7 +226,7 @@ export const ShatterReform: React.FC<ShatterReformProps> = ({
               );
             })}
             {/* Center shard point */}
-            <circle cx={540} cy={960} r={3} fill={GOLD} opacity={0.8} />
+            <circle cx={width / 2} cy={height / 2} r={3} fill={GOLD} opacity={0.8} />
           </svg>
         </AbsoluteFill>
       )}

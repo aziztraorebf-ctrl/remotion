@@ -40,6 +40,7 @@ export interface IconStatProps {
   stat?: string;
   contextLabel?: string;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const GOLD = "#dfb65b";
@@ -52,9 +53,13 @@ export const IconStat: React.FC<IconStatProps> = ({
   stat = "67%",
   contextLabel = "ADOPTION",
   subtitle = "KENYA · 2024",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, height } = useVideoConfig();
+
+  // Scale sizing relative to height (designed for 1920h)
+  const scale = height / 1920;
 
   const entrySpring = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
   const entryOpacity = interpolate(entrySpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
@@ -77,10 +82,10 @@ export const IconStat: React.FC<IconStatProps> = ({
   const ctxOpacity = interpolate(ctxSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
 
   const IconComp = ICONS[icon];
-  const ICON_SIZE = 280;
+  const ICON_SIZE = Math.round(280 * scale);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0b121f" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div
@@ -95,8 +100,8 @@ export const IconStat: React.FC<IconStatProps> = ({
       <div
         className="absolute left-0 right-0 text-center tracking-[0.32em] uppercase"
         style={{
-          top: 120,
-          fontSize: 44,
+          top: Math.round(120 * scale),
+          fontSize: Math.round(44 * scale),
           color: GOLD,
           fontFamily: "Cinzel, serif",
           opacity: entryOpacity,
@@ -114,11 +119,11 @@ export const IconStat: React.FC<IconStatProps> = ({
         {/* Séparateur haut */}
         <div
           style={{
-            width: 700,
+            width: Math.round(700 * scale),
             height: 1,
             backgroundColor: GOLD,
             opacity: entryOpacity * 0.6,
-            marginBottom: 80,
+            marginBottom: Math.round(80 * scale),
           }}
         />
 
@@ -126,20 +131,20 @@ export const IconStat: React.FC<IconStatProps> = ({
         <div
           className="flex items-center justify-center"
           style={{
-            width: ICON_SIZE + 80,
-            height: ICON_SIZE + 80,
+            width: ICON_SIZE + Math.round(80 * scale),
+            height: ICON_SIZE + Math.round(80 * scale),
             opacity: iconScale,
             transform: `scale(${iconScale})`,
             position: "relative",
-            marginBottom: 60,
+            marginBottom: Math.round(60 * scale),
           }}
         >
           {/* Glow background */}
           <div
             className="absolute"
             style={{
-              width: ICON_SIZE + 80,
-              height: ICON_SIZE + 80,
+              width: ICON_SIZE + Math.round(80 * scale),
+              height: ICON_SIZE + Math.round(80 * scale),
               borderRadius: "50%",
               backgroundColor: `rgba(223,182,91,${glowPulse * 0.18})`,
               filter: "blur(30px)",
@@ -151,18 +156,18 @@ export const IconStat: React.FC<IconStatProps> = ({
         {/* Séparateur bas */}
         <div
           style={{
-            width: 700,
+            width: Math.round(700 * scale),
             height: 1,
             backgroundColor: GOLD,
             opacity: entryOpacity * 0.6,
-            marginBottom: 60,
+            marginBottom: Math.round(60 * scale),
           }}
         />
 
         {/* Stat centrale */}
         <div
           style={{
-            fontSize: 260,
+            fontSize: Math.round(260 * scale),
             color: IVORY,
             fontFamily: "Cinzel, serif",
             lineHeight: 1,
@@ -178,9 +183,9 @@ export const IconStat: React.FC<IconStatProps> = ({
         <div
           className="font-mono uppercase tracking-[0.28em]"
           style={{
-            fontSize: 48,
+            fontSize: Math.round(48 * scale),
             color: SLATE,
-            marginTop: 24,
+            marginTop: Math.round(24 * scale),
             opacity: ctxOpacity,
           }}
         >
@@ -191,12 +196,12 @@ export const IconStat: React.FC<IconStatProps> = ({
       {/* Footer */}
       <div
         className="absolute left-0 right-0 flex flex-col items-center"
-        style={{ bottom: 100, gap: 18, opacity: ctxOpacity }}
+        style={{ bottom: Math.round(100 * scale), gap: 18, opacity: ctxOpacity }}
       >
-        <div style={{ width: 320, height: 1, backgroundColor: GOLD, opacity: 0.4 }} />
+        <div style={{ width: Math.round(320 * scale), height: 1, backgroundColor: GOLD, opacity: 0.4 }} />
         <div
           className="font-mono text-center tracking-widest uppercase"
-          style={{ fontSize: 28, color: SLATE }}
+          style={{ fontSize: Math.round(28 * scale), color: SLATE }}
         >
           {subtitle}
         </div>

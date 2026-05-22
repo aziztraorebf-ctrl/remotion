@@ -12,6 +12,7 @@ export interface TimelineProps {
   events?: TimelineEvent[];
   activeIndex?: number;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const DEFAULT_EVENTS: TimelineEvent[] = [
@@ -28,9 +29,10 @@ export const Timeline: React.FC<TimelineProps> = ({
   events = DEFAULT_EVENTS,
   activeIndex = 1,
   subtitle = "explorer l'histoire",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, height } = useVideoConfig();
 
   const titleSpring = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
   const titleOpacity = interpolate(titleSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
@@ -44,7 +46,7 @@ export const Timeline: React.FC<TimelineProps> = ({
   const footerOpacity = interpolate(footerSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div
@@ -112,7 +114,7 @@ export const Timeline: React.FC<TimelineProps> = ({
           const glowOpacity = interpolate(glowSpring, [0, 1], [0, 0.55], { extrapolateRight: "clamp" });
 
           // Position verticale répartie uniformément dans la zone visible
-          const totalH = 1200; // zone effective (laisse marge avant footer)
+          const totalH = height - 260 - 200; // zone entre top:260 et bottom:200
           const topFrac = events.length > 1 ? i / (events.length - 1) : 0.5;
           const nodeTop = 80 + topFrac * (totalH - 160);
 

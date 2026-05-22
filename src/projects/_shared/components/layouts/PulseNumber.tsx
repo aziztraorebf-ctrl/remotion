@@ -10,11 +10,10 @@ export interface PulseNumberProps {
   topLabel?: string;
   value?: string;
   subtitle?: string;
+  bgColor?: string;
 }
 
-const CX = 540;
-const CY = 960;
-const MAX_RING_RADIUS = 750;
+const MAX_RING_RADIUS_RATIO = 750 / 960; // as fraction of half-height
 const RING_PERIOD = 120;
 const RING_STAGGER = 40;
 
@@ -22,9 +21,14 @@ export const PulseNumber: React.FC<PulseNumberProps> = ({
   topLabel = "MILLIARDS EXTRAITS",
   value = "$2.3T",
   subtitle = "depuis 1960",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
+
+  const CX = width / 2;
+  const CY = height / 2;
+  const MAX_RING_RADIUS = Math.min(width, height) * MAX_RING_RADIUS_RATIO;
 
   // --- Heartbeat pulse ---
   const sinePulse = Math.sin((frame / 45) * Math.PI * 2);
@@ -78,14 +82,14 @@ export const PulseNumber: React.FC<PulseNumberProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0C121A",
+        backgroundColor: bgColor,
         backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)",
         backgroundSize: "24px 24px",
       }}
     >
       {/* SVG rings layer — behind everything */}
       <svg
-        viewBox="0 0 1080 1920"
+        viewBox={`0 0 ${width} ${height}`}
         width="100%"
         height="100%"
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
@@ -194,7 +198,7 @@ export const PulseNumber: React.FC<PulseNumberProps> = ({
       {/* Bottom separator + subtitle */}
       <div
         className="absolute left-0 right-0 flex flex-col items-center"
-        style={{ top: 1640, opacity: labelOpacity }}
+        style={{ bottom: 80, opacity: labelOpacity }}
       >
         <div
           style={{ width: 250, height: 1.5, backgroundColor: "#C4A661", opacity: 0.8 }}

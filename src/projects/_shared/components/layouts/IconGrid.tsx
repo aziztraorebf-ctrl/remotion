@@ -45,6 +45,7 @@ export interface IconGridProps {
   items?: GridItem[];
   cols?: 2;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const DEFAULT_ITEMS: GridItem[] = [
@@ -66,9 +67,10 @@ export const IconGrid: React.FC<IconGridProps> = ({
   items = DEFAULT_ITEMS,
   cols = 2,
   subtitle = "PRODUCTION",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
   const titleSpring = spring({ frame, fps, config: { damping: 18, stiffness: 80 } });
   const titleOpacity = interpolate(titleSpring, [0, 1], [0, 1], { extrapolateRight: "clamp" });
@@ -82,15 +84,13 @@ export const IconGrid: React.FC<IconGridProps> = ({
   const PAD_TOP = 240;
   const PAD_BOT = 200;
   const GAP = 32;
-  const W = 1080;
-  const H = 1920;
-  const availableH = H - PAD_TOP - PAD_BOT;
-  const availableW = W - PAD_H * 2;
+  const availableH = height - PAD_TOP - PAD_BOT;
+  const availableW = width - PAD_H * 2;
   const cardW = (availableW - GAP * (cols - 1)) / cols;
   const cardH = (availableH - GAP * (rows - 1)) / rows;
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid */}
       <div

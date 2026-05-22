@@ -14,6 +14,7 @@ export interface SplitFlapProps {
   header?: string;
   lines?: SplitFlapLine[];
   footer?: string;
+  bgColor?: string;
 }
 
 const ROLL_DURATION = 20; // frames each cell rolls before locking
@@ -254,6 +255,7 @@ export const SplitFlap: React.FC<SplitFlapProps> = ({
     { text: "AP JC", startFrame: 100, size: "normal" },
   ],
   footer = "EMPIRE MEDIEVAL",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
 
@@ -290,7 +292,7 @@ export const SplitFlap: React.FC<SplitFlapProps> = ({
   }
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
       {/* Dot grid background */}
       <svg
         style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}

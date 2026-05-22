@@ -10,6 +10,7 @@ export interface GlitchRevealProps {
   contextLabel?: string;
   icon?: GlitchIcon;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const GLITCH_CHARS = "!@#$%^&*<>?/|\\[]{}0123456789ABCDEF";
@@ -50,9 +51,10 @@ export const GlitchReveal: React.FC<GlitchRevealProps> = ({
   contextLabel = "EXTRACTION",
   icon = "diamond",
   subtitle = "AFRIQUE · 2024",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
 
   // Phase boundaries
   const PHASE_BLANK_END = 8;
@@ -105,13 +107,13 @@ export const GlitchReveal: React.FC<GlitchRevealProps> = ({
   const glitchSkewX = glitchIntensity > 0 ? (pseudoRandom(frame, 55) - 0.5) * 4 * glitchIntensity : 0;
 
   // Scanline
-  const scanlineTop = (frame * 18) % 1920;
+  const scanlineTop = (frame * 18) % height;
   const scanlineOpacity = isRevealed ? 0.04 : 0.12 * glitchIntensity + 0.04;
 
   // Glitch blocks (only during glitch/stab phases)
   const glitchBlocks = Array.from({ length: 7 }, (_, i) => ({
-    top: pseudoRandom(frame + i, i * 13) * 1800,
-    left: pseudoRandom(frame + i, i * 7) * 900,
+    top: pseudoRandom(frame + i, i * 13) * (height * 0.94),
+    left: pseudoRandom(frame + i, i * 7) * (width * 0.83),
     width: 20 + pseudoRandom(frame, i * 11) * 180,
     height: 2 + pseudoRandom(frame, i * 5) * 6,
     color: i % 3 === 0 ? "#00fff0" : i % 3 === 1 ? "#ff00ff" : "#c4a053",
@@ -155,9 +157,9 @@ export const GlitchReveal: React.FC<GlitchRevealProps> = ({
   return (
     <div
       style={{
-        width: 1080,
-        height: 1920,
-        background: "#0d1420",
+        width,
+        height,
+        background: bgColor,
         position: "relative",
         overflow: "hidden",
         opacity: rootOpacity,
@@ -190,7 +192,7 @@ export const GlitchReveal: React.FC<GlitchRevealProps> = ({
           position: "absolute",
           top: scanlineTop,
           left: 0,
-          width: 1080,
+          width: "100%",
           height: 2,
           background: `rgba(196,160,83,${scanlineOpacity})`,
           pointerEvents: "none",

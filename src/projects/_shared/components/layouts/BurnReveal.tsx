@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, interpolate } from "remotion";
+import { AbsoluteFill, useCurrentFrame, interpolate, useVideoConfig } from "remotion";
 import { Diamond, Crown, Zap, Globe, Flag, TrendingUp, Users } from "lucide-react";
 
 export type BurnIcon = "diamond" | "crown" | "zap" | "flame" | "globe" | "flag" | "trending" | "users";
@@ -10,6 +10,7 @@ export interface BurnRevealProps {
   stat?: string;
   label?: string;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const GOLD = "#c4a053";
@@ -65,8 +66,10 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
   stat = "$1.2T",
   label = "RICHESSE CACHEE",
   subtitle = "AFRIQUE · SOUS-SOL",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
+  const { width, height } = useVideoConfig();
 
   // Burn progress: frames 15-150 — overlay retreats upward
   const burnProgress = interpolate(frame, [15, 150], [0, 1], {
@@ -75,7 +78,7 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
   });
 
   // Height of revealed area (from bottom), in px
-  const revealedHeight = burnProgress * 1920;
+  const revealedHeight = burnProgress * height;
   // Overlay covers from top to (1920 - revealedHeight)
   const overlayHeight = Math.max(0, 1920 - revealedHeight);
 
@@ -100,7 +103,7 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
   // Sparks: 8 particles rising from the flame line
   const sparks = Array.from({ length: 8 }, (_, i) => {
     const seed = Math.abs(Math.sin(i * 7.3)) * 0.5 + 0.25;
-    const x = 80 + seed * 920;
+    const x = width * 0.074 + seed * (width * 0.852);
     const lifetime = 40;
     const age = (frame + i * 13) % lifetime;
     const yOffset = -age * 7;
@@ -114,7 +117,7 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
     "radial-gradient(circle, rgba(196,160,83,0.12) 1px, transparent 1px)";
 
   return (
-    <AbsoluteFill style={{ backgroundColor: BG, fontFamily: "Cinzel, serif" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor, fontFamily: "Cinzel, serif" }}>
       {/* --- Layer 1: Content (below burn overlay) --- */}
       <AbsoluteFill
         style={{
@@ -279,8 +282,8 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
 
           {/* Flame SVG line at the bottom edge */}
           <svg
-            viewBox={`0 0 1080 60`}
-            width={1080}
+            viewBox={`0 0 ${width} 60`}
+            width={width}
             height={60}
             style={{
               position: "absolute",
@@ -292,11 +295,11 @@ export const BurnReveal: React.FC<BurnRevealProps> = ({
             preserveAspectRatio="none"
           >
             <path
-              d={buildFlamePath(frame, 1080)}
+              d={buildFlamePath(frame, width)}
               fill="rgba(255,120,15,0.85)"
             />
             <path
-              d={buildFlamePath(frame + 4, 1080)}
+              d={buildFlamePath(frame + 4, width)}
               fill="rgba(255,160,30,0.45)"
             />
           </svg>

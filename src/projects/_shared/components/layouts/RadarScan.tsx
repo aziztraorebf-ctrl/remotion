@@ -14,6 +14,7 @@ export interface RadarScanProps {
   title?: string;
   targets?: RadarTarget[];
   subtitle?: string;
+  bgColor?: string;
 }
 
 const DEFAULT_TARGETS: RadarTarget[] = [
@@ -35,50 +36,52 @@ const ICON_MAP: Record<RadarTarget["icon"], React.FC<{ size: number; color: stri
   zap: ({ size, color, strokeWidth }) => <Zap size={size} color={color} strokeWidth={strokeWidth} />,
 };
 
-const R = 420;
-const CX = 540;
-const CY = 960;
 const GOLD = "#c4a053";
 const SECTOR_WIDTH_DEG = 60;
 
-function getSweepPath(sweepAngleDeg: number): string {
+function getSweepPath(sweepAngleDeg: number, cx: number, cy: number, r: number): string {
   const sweepRad = (sweepAngleDeg - 90) * (Math.PI / 180);
   const endRad = sweepRad - (SECTOR_WIDTH_DEG * Math.PI) / 180;
 
-  const x1 = CX + R * Math.cos(sweepRad);
-  const y1 = CY + R * Math.sin(sweepRad);
-  const x2 = CX + R * Math.cos(endRad);
-  const y2 = CY + R * Math.sin(endRad);
+  const x1 = cx + r * Math.cos(sweepRad);
+  const y1 = cy + r * Math.sin(sweepRad);
+  const x2 = cx + r * Math.cos(endRad);
+  const y2 = cy + r * Math.sin(endRad);
 
-  return `M ${CX} ${CY} L ${x1} ${y1} A ${R} ${R} 0 0 0 ${x2} ${y2} Z`;
+  return `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y2} Z`;
 }
 
-function getTrailArcPath(sweepAngleDeg: number, offsetDeg: number): string {
+function getTrailArcPath(sweepAngleDeg: number, offsetDeg: number, cx: number, cy: number, r: number): string {
   const startRad = (sweepAngleDeg - offsetDeg - 90) * (Math.PI / 180);
   const endRad = (sweepAngleDeg - offsetDeg - SECTOR_WIDTH_DEG - 90) * (Math.PI / 180);
 
-  const x1 = CX + R * Math.cos(startRad);
-  const y1 = CY + R * Math.sin(startRad);
-  const x2 = CX + R * Math.cos(endRad);
-  const y2 = CY + R * Math.sin(endRad);
+  const x1 = cx + r * Math.cos(startRad);
+  const y1 = cy + r * Math.sin(startRad);
+  const x2 = cx + r * Math.cos(endRad);
+  const y2 = cy + r * Math.sin(endRad);
 
-  return `M ${CX} ${CY} L ${x1} ${y1} A ${R} ${R} 0 0 0 ${x2} ${y2} Z`;
+  return `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 0 0 ${x2} ${y2} Z`;
 }
 
 export const RadarScan: React.FC<RadarScanProps> = ({
   title = "DETECTION",
   targets = DEFAULT_TARGETS,
   subtitle = "SYSTEME · ACTIF",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
+
+  const CX = width / 2;
+  const CY = height / 2;
+  const R = Math.min(width, height) * 0.39;
 
   const sweepAngle = (frame * 3.6) % 360;
 
   return (
     <AbsoluteFill
       style={{
-        background: "#0b1220",
+        background: bgColor,
         backgroundImage: "radial-gradient(rgba(0,255,100,0.08) 1px, transparent 1px)",
         backgroundSize: "30px 30px",
         fontFamily: "Cinzel, serif",
@@ -139,7 +142,7 @@ export const RadarScan: React.FC<RadarScanProps> = ({
           </defs>
 
           {/* Concentric rings */}
-          {[105, 210, 315].map((r) => (
+          {[R * 0.25, R * 0.5, R * 0.75].map((r) => (
             <circle
               key={r}
               cx={CX}
@@ -151,19 +154,19 @@ export const RadarScan: React.FC<RadarScanProps> = ({
               opacity={0.2}
             />
           ))}
-          <circle cx={CX} cy={CY} r={420} fill="none" stroke={GOLD} strokeWidth={2} opacity={0.5} />
+          <circle cx={CX} cy={CY} r={R} fill="none" stroke={GOLD} strokeWidth={2} opacity={0.5} />
 
           {/* Cross axes */}
           <line x1={CX - R} y1={CY} x2={CX + R} y2={CY} stroke={GOLD} strokeWidth={1} opacity={0.15} />
           <line x1={CX} y1={CY - R} x2={CX} y2={CY + R} stroke={GOLD} strokeWidth={1} opacity={0.15} />
 
           {/* Trailing glow arcs */}
-          <path d={getTrailArcPath(sweepAngle, 20)} fill="#00ff88" opacity={0.15} />
-          <path d={getTrailArcPath(sweepAngle, 40)} fill="#00ff88" opacity={0.08} />
-          <path d={getTrailArcPath(sweepAngle, 60)} fill="#00ff88" opacity={0.04} />
+          <path d={getTrailArcPath(sweepAngle, 20, CX, CY, R)} fill="#00ff88" opacity={0.15} />
+          <path d={getTrailArcPath(sweepAngle, 40, CX, CY, R)} fill="#00ff88" opacity={0.08} />
+          <path d={getTrailArcPath(sweepAngle, 60, CX, CY, R)} fill="#00ff88" opacity={0.04} />
 
           {/* Main sweep sector */}
-          <path d={getSweepPath(sweepAngle)} fill="url(#sweepGrad)" />
+          <path d={getSweepPath(sweepAngle, CX, CY, R)} fill="url(#sweepGrad)" />
 
           {/* Sweep leading edge line */}
           {(() => {

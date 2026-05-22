@@ -24,6 +24,7 @@ interface OdometerFlipProps {
   spinStartFrame?: number;
   spinStagger?: number;
   spinDuration?: number;
+  bgColor?: string;
 }
 
 // ─── Single digit case ────────────────────────────────────────────────────────
@@ -190,6 +191,7 @@ export function OdometerFlip({
   spinStartFrame = 20,
   spinStagger = 12,
   spinDuration = 30,
+  bgColor = "transparent",
 }: OdometerFlipProps) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -200,7 +202,7 @@ export function OdometerFlip({
   }));
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#060a10" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
       {/* Label decoratif */}
       {label && (
         <div

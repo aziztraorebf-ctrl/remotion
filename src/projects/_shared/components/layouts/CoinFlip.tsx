@@ -65,6 +65,7 @@ export interface CoinFlipProps {
   faceA?: FaceContent;
   faceB?: FaceContent;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const DEFAULT_FACE_A: FaceContent = {
@@ -208,6 +209,7 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
   faceA = DEFAULT_FACE_A,
   faceB = DEFAULT_FACE_B,
   subtitle = DEFAULT_SUBTITLE,
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -274,7 +276,7 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: COLOR_BG,
+        backgroundColor: bgColor,
         overflow: "hidden",
       }}
     >

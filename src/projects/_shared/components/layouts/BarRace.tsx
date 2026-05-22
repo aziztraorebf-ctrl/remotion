@@ -12,6 +12,7 @@ interface BarRaceProps {
   data?: Array<{ label: string; value: number; suffix: string }>;
   maxValue?: number;
   subtitle?: string;
+  bgColor?: string;
 }
 
 const STAGGER_PER_BAR = 12;
@@ -138,6 +139,7 @@ export const BarRace: React.FC<BarRaceProps> = ({
   ],
   maxValue = 340,
   subtitle = "en milliards USD · 2023",
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -157,7 +159,7 @@ export const BarRace: React.FC<BarRaceProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#0d1420",
+        backgroundColor: bgColor,
         backgroundImage: "radial-gradient(rgba(212,175,55,0.42) 1.5px, transparent 1.5px)",
         backgroundSize: "30px 30px",
       }}

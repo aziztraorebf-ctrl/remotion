@@ -19,6 +19,7 @@ export interface RadarPingProps {
   stats?: RadarStat[];
   startFrame?: number;
   durationFrames?: number;
+  bgColor?: string;
 }
 
 const DEFAULT_STATS: RadarStat[] = [
@@ -26,8 +27,6 @@ const DEFAULT_STATS: RadarStat[] = [
   { value: "54",    label: "PAYS",     angle: 345, revealDelay: 65, ringRadius: 390 },
 ];
 
-const CX = 540;
-const CY = 960;
 const MAX_PING_R = 420;
 const PING_PERIOD = 90;
 const PING_STAGGER = 20;
@@ -37,9 +36,13 @@ export const RadarPing: React.FC<RadarPingProps> = ({
   stats = DEFAULT_STATS,
   startFrame = 0,
   durationFrames = 150,
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, width, height } = useVideoConfig();
+
+  const CX = width / 2;
+  const CY = height / 2;
 
   const relFrame = Math.max(0, frame - startFrame);
 
@@ -74,7 +77,7 @@ export const RadarPing: React.FC<RadarPingProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: "#060a10",
+        backgroundColor: bgColor,
         backgroundImage:
           "radial-gradient(circle, rgba(200,169,81,0.08) 1px, transparent 1px)",
         backgroundSize: "32px 32px",
@@ -82,7 +85,7 @@ export const RadarPing: React.FC<RadarPingProps> = ({
     >
       {/* SVG layer — rings, center dot */}
       <svg
-        viewBox="0 0 1080 1920"
+        viewBox={`0 0 ${width} ${height}`}
         width="100%"
         height="100%"
         style={{ position: "absolute", inset: 0 }}
@@ -155,8 +158,8 @@ export const RadarPing: React.FC<RadarPingProps> = ({
         {stats.map((stat, i) => {
           const radius = stat.ringRadius ?? 390;
           const rad = (stat.angle * Math.PI) / 180;
-          const leftPct = ((CX + Math.cos(rad) * radius) / 1080) * 100;
-          const topPct  = ((CY + Math.sin(rad) * radius) / 1920) * 100;
+          const leftPct = ((CX + Math.cos(rad) * radius) / width) * 100;
+          const topPct  = ((CY + Math.sin(rad) * radius) / height) * 100;
           const progress = statSprings[i];
           const opacity = interpolate(progress, [0, 1], [0, 1]);
           const translateY = interpolate(progress, [0, 1], [16, 0]);

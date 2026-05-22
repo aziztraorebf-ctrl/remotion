@@ -9,6 +9,7 @@ export interface ScaleShockProps {
   labelRightSub?: string;
   subtitle?: string;
   ratioScale?: number;
+  bgColor?: string;
 }
 
 const LEFT_R = 55; // rayon petit cercle (Belgique) en px
@@ -22,6 +23,7 @@ export const ScaleShock: React.FC<ScaleShockProps> = ({
   labelRightSub = "30 370 000 km²",
   subtitle = "superficie comparée",
   ratioScale = 30,
+  bgColor = "transparent",
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -57,7 +59,7 @@ export const ScaleShock: React.FC<ScaleShockProps> = ({
   const labelY = interpolate(labelSpring, [0, 1], [20, 0], { extrapolateRight: "clamp" });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#0d1420" }}>
+    <AbsoluteFill style={{ backgroundColor: bgColor }}>
 
       {/* Dot grid background */}
       <div

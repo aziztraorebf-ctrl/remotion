@@ -44,6 +44,15 @@ import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
 import { Beat4Climax } from "./projects/atlas/peste-1347/Beat4Climax";
 import { Beat5MaliVivant } from "./projects/atlas/peste-1347/Beat5MaliVivant";
+import { Prototype_A_MapboxSatelliteSenegal } from "./projects/_proto-16-9/Prototype_A_MapboxSatelliteSenegal";
+import { Prototype_B_OdometerDataHero } from "./projects/_proto-16-9/Prototype_B_OdometerDataHero";
+import { Prototype_C_CompositionTest } from "./projects/_proto-16-9/Prototype_C_CompositionTest";
+import { Prototype_D_MapboxStyleComparison } from "./projects/_proto-16-9/Prototype_D_MapboxStyleComparison";
+import { Prototype_E_BackgroundsShowcase } from "./projects/_proto-16-9/Prototype_E_BackgroundsShowcase";
+import { Prototype_F_Vague2Showcase } from "./projects/_proto-16-9/Prototype_F_Vague2Showcase";
+import { Prototype_G_Vague3Showcase } from "./projects/_proto-16-9/Prototype_G_Vague3Showcase";
+import { Prototype_H_Vague3bShowcase } from "./projects/_proto-16-9/Prototype_H_Vague3bShowcase";
+import { Prototype_I_Vague3cShowcase } from "./projects/_proto-16-9/Prototype_I_Vague3cShowcase";
 import { TickerTapeHistoryDemo, TICKER_TAPE_DEMO_FRAMES } from "./projects/_shared/components/inserts/TickerTapeHistory";
 import { CrossSectionDemo, CROSS_SECTION_DEMO_FRAMES } from "./projects/_shared/components/inserts/CrossSection";
 import { WealthScaleDemo, WEALTH_SCALE_DEMO_FRAMES } from "./projects/_shared/components/inserts/WealthScale";
@@ -78,6 +87,53 @@ import { BurnReveal } from "./projects/_shared/components/layouts/BurnReveal";
 import { ShatterReform } from "./projects/_shared/components/layouts/ShatterReform";
 import { TypeWriter } from "./projects/_shared/components/layouts/TypeWriter";
 import { WordExplode } from "./projects/_shared/components/layouts/WordExplode";
+import { LineChartDrawOn } from "./projects/_shared/components/layouts/LineChartDrawOn";
+import { HighlightedQuote } from "./projects/_shared/components/layouts/HighlightedQuote";
+import { StatComparisonGrid } from "./projects/_shared/components/layouts/StatComparisonGrid";
+import { FlowArrowsMap } from "./projects/_shared/components/layouts/FlowArrowsMap";
+import { ParadigmShiftTimeline } from "./projects/_shared/components/layouts/ParadigmShiftTimeline";
+import { CountryIsolateWithHatch } from "./projects/_shared/components/layouts/CountryIsolateWithHatch";
+import { LaCalebasse } from "./projects/_shared/components/layouts/LaCalebasse";
+import { LeCadranSolaire } from "./projects/_shared/components/layouts/LeCadranSolaire";
+import { Stratigraphie } from "./projects/_shared/components/layouts/Stratigraphie";
+import { LeSceau } from "./projects/_shared/components/layouts/LeSceau";
+import { PolyrythmieData } from "./projects/_shared/components/layouts/PolyrythmieData";
+import { NoeudTisserand } from "./projects/_shared/components/layouts/NoeudTisserand";
+import { LeSemeur } from "./projects/_shared/components/layouts/LeSemeur";
+import { Palimpseste } from "./projects/_shared/components/layouts/Palimpseste";
+import { ArbreAPalabres } from "./projects/_shared/components/layouts/ArbreAPalabres";
+import { Caviardage } from "./projects/_shared/components/layouts/Caviardage";
+import { FilRouge } from "./projects/_shared/components/layouts/FilRouge";
+import { SovereignEclipse } from "./projects/_shared/components/layouts/SovereignEclipse";
+import { Prototype_J_Vague4Showcase } from "./projects/_proto-16-9/Prototype_J_Vague4Showcase";
+import { Prototype_K_Vague5Showcase } from "./projects/_proto-16-9/Prototype_K_Vague5Showcase";
+import { Prototype_L_Vague6Showcase } from "./projects/_proto-16-9/Prototype_L_Vague6Showcase";
+import { Prototype_M_Vague7Showcase } from "./projects/_proto-16-9/Prototype_M_Vague7Showcase";
+import { Prototype_N_Vague8Showcase } from "./projects/_proto-16-9/Prototype_N_Vague8Showcase";
+import { Prototype_O_Vague6ExpShowcase } from "./projects/_proto-16-9/Prototype_O_Vague6ExpShowcase";
+import { ParallaxeDiorama } from "./projects/_shared/components/layouts/ParallaxeDiorama";
+import { MosaiqueWax } from "./projects/_shared/components/layouts/MosaiqueWax";
+import { MetamorphoseFiduciaire } from "./projects/_shared/components/layouts/MetamorphoseFiduciaire";
+import { OrigamiCarto } from "./projects/_shared/components/layouts/OrigamiCarto";
+import { LoomWeaver } from "./projects/_shared/components/layouts/LoomWeaver";
+import { PortraitEditorial } from "./projects/_shared/components/layouts/PortraitEditorial";
+import { TrombinoscapeStrategique } from "./projects/_shared/components/layouts/TrombinoscapeStrategique";
+import { PortraitSilhouette } from "./projects/_shared/components/layouts/PortraitSilhouette";
+import { MosaiqueActeurs } from "./projects/_shared/components/layouts/MosaiqueActeurs";
+import { PassationPouvoir } from "./projects/_shared/components/layouts/PassationPouvoir";
+import { VoixDuPeuple } from "./projects/_shared/components/layouts/VoixDuPeuple";
+import { FaceAFace } from "./projects/_shared/components/layouts/FaceAFace";
+import { PortraitDossier } from "./projects/_shared/components/layouts/PortraitDossier";
+import { TextChoc } from "./projects/_shared/components/layouts/TextChoc";
+import { SourceProuve } from "./projects/_shared/components/layouts/SourceProuve";
+import { ChiffreChoc } from "./projects/_shared/components/layouts/ChiffreChoc";
+import { CalqueDechire } from "./projects/_shared/components/layouts/CalqueDechire";
+import { ScanInfrarouge } from "./projects/_shared/components/layouts/ScanInfrarouge";
+import { EffetDomino } from "./projects/_shared/components/layouts/EffetDomino";
+import { LoomWipe } from "./projects/_shared/components/layouts/LoomWipe";
+import { Prototype_P_Vague4bShowcase } from "./projects/_proto-16-9/Prototype_P_Vague4bShowcase";
+import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Prototype_Q_Vague3CompleteShowcase";
+import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -672,27 +728,54 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Layout-MilitaryMarchLine" component={MilitaryMarchLineDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
         <Composition id="Layout-FillScreen" component={FillScreenDemo} durationInFrames={90} fps={30} width={1080} height={1920} />
         <Composition id="Layout-OdometerFlip" component={OdometerFlipDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-OdometerFlip" component={OdometerFlipDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-RadarPing" component={RadarPingDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-RadarPing" component={RadarPingDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-BarRace" component={BarRaceDemo} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="Template-BarRace" component={BarRaceDemo} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="Layout-PulseNumber" component={PulseNumberDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-PulseNumber" component={PulseNumberDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-TypeReveal" component={() => <TypeReveal />} durationInFrames={150} fps={30} width={1080} height={1920} />
         <Composition id="Layout-StackedBars" component={StackedBarsDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-StackedBars" component={StackedBarsDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-ScaleShock" component={ScaleShockDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-ScaleShock" component={ScaleShockDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-Timeline" component={TimelineDemo} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="Template-Timeline" component={TimelineDemo} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="Layout-NetworkGraph" component={NetworkGraphDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-NetworkGraph" component={NetworkGraphDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-IconGrid" component={IconGridDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-IconGrid" component={IconGridDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-IconStat" component={IconStatDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-IconStat" component={IconStatDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-ProcessFlow" component={ProcessFlowDemo} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="Template-ProcessFlow" component={ProcessFlowDemo} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout-CoinFlip" component={CoinFlipDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-CoinFlip" component={CoinFlipDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-GlitchReveal" component={GlitchRevealDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-GlitchReveal" component={GlitchRevealDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-SplitFlap" component={SplitFlapDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-SplitFlap" component={SplitFlapDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-TimelineFracture" component={TimelineFractureDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-TimelineFracture" component={TimelineFractureDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-ScaleTilt" component={ScaleTiltDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
         <Composition id="Layout-RadarScan" component={RadarScanDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-RadarScan" component={RadarScanDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-BurnReveal" component={BurnRevealDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-BurnReveal" component={BurnRevealDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-ShatterReform" component={ShatterReformDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Template-ShatterReform" component={ShatterReformDemo} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="Layout-TypeWriter" component={TypeWriterDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
         <Composition id="Layout-WordExplode" component={WordExplodeDemo} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="Layout16-LineChartDrawOn" component={() => <LineChartDrawOn />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-HighlightedQuote" component={() => <HighlightedQuote />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-StatComparisonGrid" component={() => <StatComparisonGrid />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-FlowArrowsMap" component={() => <FlowArrowsMap />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-ParadigmShiftTimeline" component={() => <ParadigmShiftTimeline />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-CountryIsolateWithHatch" component={() => <CountryIsolateWithHatch />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-LaCalebasse" component={() => <LaCalebasse />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-LeCadranSolaire" component={() => <LeCadranSolaire />} durationInFrames={270} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-Stratigraphie" component={() => <Stratigraphie />} durationInFrames={180} fps={30} width={1920} height={1080} />
         {/* ── SILICON SAVANNAH ── */}
         
         
@@ -716,9 +799,430 @@ export const RemotionRoot: React.FC = () => {
         
       </Folder>
 
-      
+      <Folder name="proto-16-9">
+        <Composition
+          id="ProtoA-MapboxSatelliteSenegal"
+          component={Prototype_A_MapboxSatelliteSenegal}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoB1-OdometerKraft"
+          component={Prototype_B_OdometerDataHero}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ variant: "kraft" as const }}
+        />
+        <Composition
+          id="ProtoB2-OdometerIvoire"
+          component={Prototype_B_OdometerDataHero}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ variant: "ivoire" as const }}
+        />
+        <Composition
+          id="ProtoB3-OdometerSlate"
+          component={Prototype_B_OdometerDataHero}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ variant: "slate" as const }}
+        />
+        <Composition
+          id="ProtoC-CompositionTest"
+          component={Prototype_C_CompositionTest}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoD-MapboxStyleComparison"
+          component={Prototype_D_MapboxStyleComparison}
+          durationInFrames={450}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoE-BackgroundsShowcase"
+          component={Prototype_E_BackgroundsShowcase}
+          durationInFrames={600}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoF-Vague2Showcase"
+          component={Prototype_F_Vague2Showcase}
+          durationInFrames={1080}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoG-Vague3Showcase"
+          component={Prototype_G_Vague3Showcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoH-Vague3b-Showcase"
+          component={Prototype_H_Vague3bShowcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LaCalebasse"
+          component={LaCalebasse}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LeCadranSolaire"
+          component={LeCadranSolaire}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-Stratigraphie"
+          component={Stratigraphie}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LeSceau"
+          component={LeSceau}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-PolyrythmieData"
+          component={PolyrythmieData}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-NoeudTisserand"
+          component={NoeudTisserand}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoI-Vague3c-Showcase"
+          component={Prototype_I_Vague3cShowcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LeSemeur"
+          component={LeSemeur}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-Palimpseste"
+          component={Palimpseste}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-ArbreAPalabres"
+          component={ArbreAPalabres}
+          durationInFrames={270}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoJ-Vague4-Showcase"
+          component={Prototype_J_Vague4Showcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-Caviardage"
+          component={Caviardage}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-FilRouge"
+          component={FilRouge}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-SovereignEclipse"
+          component={SovereignEclipse}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoK-Vague5-Showcase"
+          component={Prototype_K_Vague5Showcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-VoixDuPeuple"
+          component={VoixDuPeuple}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-FaceAFace"
+          component={FaceAFace}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-PortraitDossier"
+          component={PortraitDossier}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoL-Vague6-Showcase"
+          component={Prototype_L_Vague6Showcase}
+          durationInFrames={720}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-TextChoc"
+          component={TextChoc}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-SourceProuve"
+          component={SourceProuve}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-ChiffreChoc"
+          component={ChiffreChoc}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoM-Vague7-Showcase"
+          component={Prototype_M_Vague7Showcase}
+          durationInFrames={810}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-PortraitSilhouette"
+          component={PortraitSilhouette}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-MosaiqueActeurs"
+          component={MosaiqueActeurs}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-PassationPouvoir"
+          component={PassationPouvoir}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoN-Vague8-Showcase"
+          component={Prototype_N_Vague8Showcase}
+          durationInFrames={540}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-PortraitEditorial"
+          component={PortraitEditorial}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-TrombinoscapeStrategique"
+          component={TrombinoscapeStrategique}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoO-Vague6Exp-Showcase"
+          component={Prototype_O_Vague6ExpShowcase}
+          durationInFrames={1200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-ParallaxeDiorama"
+          component={ParallaxeDiorama}
+          durationInFrames={200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-MosaiqueWax"
+          component={MosaiqueWax}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-MetamorphoseFiduciaire"
+          component={MetamorphoseFiduciaire}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-OrigamiCarto"
+          component={OrigamiCarto}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LoomWeaver"
+          component={LoomWeaver}
+          durationInFrames={220}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
 
-      
+        {/* Vague 4 manquants */}
+        <Composition
+          id="ProtoP-Vague4b-Showcase"
+          component={Prototype_P_Vague4bShowcase}
+          durationInFrames={660}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-CalqueDechire"
+          component={CalqueDechire}
+          durationInFrames={180}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-ScanInfrarouge"
+          component={ScanInfrarouge}
+          durationInFrames={200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-EffetDomino"
+          component={EffetDomino}
+          durationInFrames={210}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-LoomWipe"
+          component={LoomWipe}
+          durationInFrames={90}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoQ-Vague3-Complete-Showcase"
+          component={Prototype_Q_Vague3CompleteShowcase}
+          durationInFrames={2430}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoR-Vague1-Refactor-Showcase"
+          component={Prototype_R_Vague1RefactorShowcase}
+          durationInFrames={PROTO_R_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      </Folder>
+
     </>
   );
 };
