@@ -1,10 +1,28 @@
 ---
 name: Backgrounds Souverain — règle fond + lisibilité mobile
-description: PIVOT 2026-05-13 — abandon du style 100% dark. Les fonds sombres (#060a10) sont interdits pour les templates data-viz. Nouveau standard : dark navy lisible (#0d1420) ou fond clair selon le template.
+description: Standard backgrounds Souverain — 5 DarkCssBg validés (2026-05-21) + KraftCard clairs. Le background doit être invisible — c'est le graphisme qui porte, pas le fond.
 type: feedback
 ---
 
 # Backgrounds Souverain — règle definitive
+
+## UPDATE 2026-05-21 — 5 DarkCssBg validés pour templates 16:9
+
+Suite à la Vague 1.5 (Phase 3 templates), 5 variants CSS dark sont validés et codés dans `SouverainScene.tsx` :
+
+| Variant | Couleur base | Texture | Usage cible |
+|---------|-------------|---------|------------|
+| `dark-dots-navy` | `#1a2535` | dot grid doré 12% | Niger Uranium style, pétrole, minerais |
+| `dark-dots-brown` | `#2d2015` | dot grid ivoire 8% | Or Africain style, histoire, commerce |
+| `kraft-dark` | `#1e1a12` | double grain papier | Nuit profonde, archives |
+| `slate-medium` | `#252d3a` | dot grid blanc 6% | Neutre, tech, géopolitique moderne |
+| `paper-warm-dark` | `#1a1208` | PNG papier-ancien ×0.35 | Texture la plus riche, parchemin sombre |
+
+**Principe validé par Aziz :** "le background doit permettre de faire ressortir les graphismes — c'est le graphisme qui porte, pas le fond." Les 5 variants sont intentionnellement sobres. On pourra les enrichir (dots plus denses, motifs supplémentaires) mais sans jamais dominer le contenu.
+
+**Évolutions futures possibles :** ajout de dots plus visibles, motifs géométriques légers, grain animé — mais toujours en servant le graphisme, jamais en le concurrençant.
+
+**Fichier source :** `src/projects/_shared/components/SouverainScene.tsx` — `DARK_CSS_BG_MAP`
 
 **PIVOT MAJEUR 2026-05-13** : Le style 100% dark (#060a10) est ABANDONNÉ pour les templates data-viz et layouts Souverain.
 

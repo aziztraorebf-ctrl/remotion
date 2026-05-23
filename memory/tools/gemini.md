@@ -11,6 +11,9 @@
 | Toute generation d'image (mockup, storyboard, character sheet, carte, asset) | `gemini-3.1-flash-image-preview` |
 | Analyse vision uniquement — breakdown JSON, diff visuel, hex codes (JAMAIS d'image en output) | `gemini-3.1-pro-preview` |
 
+**Nouveau modèle disponible (2026-05-19) :**
+`gemini-3.5-flash` — texte/agentic/coding, lancé à Google I/O. Capacités vision à confirmer. Candidat potentiel pour remplacer `gemini-3.1-pro-preview` sur les breakdowns JSON, mais NON validé encore pour ce projet.
+
 **INTERDIT ABSOLU (entrainerait 404 ou mauvais resultat) :**
 `gemini-2.5-pro-preview-05-06`, `gemini-2.5-flash`, `gemini-2.0-flash`, `gemini-2.0-flash-exp`, `gemini-3-pro-image-preview`, `nano-banana-pro-preview`, `imagen-*`, tout autre modele.
 

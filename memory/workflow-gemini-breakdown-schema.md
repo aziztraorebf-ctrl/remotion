@@ -4,6 +4,68 @@ description: Référence blindée pour reproduire le pipeline breakdown à 85-90
 type: reference
 ---
 
+## Contraintes OBLIGATOIRES dans le prompt Gemini storyboard (ajoutées 2026-05-22)
+
+Deux contraintes manquaient dans les premiers appels Sénégal et Gemini a ignoré la géographie :
+
+1. **60% Mapbox minimum** — écrire explicitement dans le prompt : "Au moins 3 beats sur 5 doivent utiliser Mapbox plein écran."
+2. **Règle R1 explicite** — écrire : "R1 OBLIGATOIRE : max 8 secondes sans événement visuel fort. Les `r1_events` timestamps sont bloquants, pas optionnels."
+3. **Champ `sfx[]` par beat** — ajouter au schéma JSON demandé (voir `feedback_sfx-dans-json-gemini.md`)
+4. **STACK TECHNIQUE COMPLÈTE** — TOUJOURS coller le bloc "Stack disponible" ci-dessous dans le prompt (ajouté 2026-05-23). Sans ça, Gemini propose des mécaniques génériques (SVG primitif uniquement) au lieu d'exploiter D3/Three/Lottie/Mapbox/composants existants.
+
+### Bloc "Stack disponible" à COLLER dans tout prompt breakdown Gemini
+
+```
+STACK TECHNIQUE À TA DISPOSITION (utilise-la pour proposer les meilleures mécaniques) :
+
+Rendu vidéo :
+- Remotion (React/TypeScript, render headless) — framework principal
+- Tailwind CSS (tokens : text-gold #c8a951, text-ivory #f2ebd9, bg-navy #16213a)
+
+Cartographie :
+- Mapbox GL JS (frame-driven, pattern "1 seule Map continue", Pull Back Reveal, Whip Pan 60f)
+- d3-geo (projections, Natural Earth datasets)
+
+Data-viz (NOUVEAU 2026-05-23) :
+- D3.js (d3-scale, d3-array, d3-format) pour graphiques data-driven : StackedBars, ProcessFlow, comparaisons multi-pays, axes, échelles, formatters monétaires
+- Pattern : D3 utility-only + rendu SVG/React + animations Remotion
+
+3D / motion :
+- @remotion/three (Three.js intégré) pour 3D premium
+- @remotion/lottie (animations After Effects/Rive importées)
+- @remotion/paths, @remotion/shapes (SVG)
+
+Génération assets :
+- Gemini 3.1-flash-image-preview (images)
+- Recraft (SVG)
+- Seedance / Kling (clips vidéo)
+- PixelLab (pixel art)
+- ElevenLabs (TTS) + Whisper (forced alignment)
+
+Composants Souverain réutilisables (à proposer si pertinent) :
+- SplitScreenSouverain, BrutalHookSplit, PulseNumber, SurfaceComparison
+- MapboxBase + applyGeoAfriqueV5
+- Animations presets (fadeIn, popIn, gentleReveal, countUp, drawPath)
+- Lucide-react (icônes)
+
+Outils ÉCARTÉS (ne pas proposer) :
+- Motion Canvas, Revideo, Shotstack, Creatomate, Framer Motion
+```
+
+→ Cette stack est aussi documentée dans `memory/DOCTRINE-SOUVERAIN.md` section 9.
+
+Format JSON `sfx` attendu dans chaque beat :
+```json
+"sfx": [
+  { "trigger": "0s", "sound": "map-zoom-in", "description": "caméra s'approche du gisement" },
+  { "trigger": "8s", "sound": "highlight-pop", "description": "impact quand le highlight pays apparaît" }
+]
+```
+
+Sans ces 3 contraintes dans le prompt, Gemini produit un storyboard sans Mapbox et sans rythme.
+
+---
+
 ## Checklist anti-récidive — 6 erreurs systématiques (scanner avant chaque beat)
 
 **Source : Niger Uranium Jour 7, 4-5 corrections Aziz sur les mêmes patterns.**
@@ -207,3 +269,30 @@ Avant de passer le JSON au code, vérifier chaque point. Si un point échoue →
 
 **Pour un beat Mapbox** (arcs, multi-pays) : Beat 5 est la référence.
 **Pour un beat data-viz** (chiffres, diagrammes, documents) : Beat 3 est la référence.
+
+---
+
+## Règle : 1 appel par acte — NON-NÉGOCIABLE (ajouté 2026-05-22)
+
+**Erreur commise Acte 2 Sénégal :** 4 appels Flash (1 storyboard par beat) + 4 appels 3.1-pro (1 breakdown par beat) = 8 appels pour un seul acte.
+
+**Règle correcte :**
+1. **1 seul appel Flash** — storyboard en grille (ex: 2x2 panels pour 4 beats) dans une seule image
+2. **1 seul appel 3.1-pro** — l'image grille + toute la voix-off de l'acte + tous les timestamps → JSON avec array de beats `{ "beats": [ {beat_A}, {beat_B}, ... ] }`
+
+**Avantages :**
+- 3.1-pro voit tous les beats ensemble → cohérence visuelle inter-beats garantie
+- Respecte l'esprit "2 appels max" (1 storyboard + 1 breakdown par acte, pas par beat)
+- Moins cher, moins de tokens
+
+**Format JSON attendu pour un acte complet :**
+```json
+{
+  "beats": [
+    { "beat_id": "A", "duration_s": 17.0, "animation_timeline": [...], "sfx": [...], ... },
+    { "beat_id": "B", "duration_s": 35.8, "animation_timeline": [...], "sfx": [...], ... }
+  ]
+}
+```
+
+**S'applique dès l'Acte 3.**

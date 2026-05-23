@@ -25,6 +25,21 @@
 
 ---
 
+## ⛔ DOCTRINE SOUVERAIN — LIRE AVANT TOUT CODE SOUVERAIN (NON-NEGOTIABLE)
+
+> Décisions durables consolidées : **`memory/DOCTRINE-SOUVERAIN.md`**.
+> Avant toute production Souverain (Sénégal, Or Africain, Maroc Batteries, etc.) : **LIRE ce fichier en entier**. Il est court (9 sections) et contient toutes les règles validées par Aziz au fil des sessions.
+
+**Les 3 règles les plus importantes (résumé non substituable à la lecture complète) :**
+
+1. **Premium d'abord, contraintes ensuite** — JAMAIS la solution facile pour rendre vite. Toujours viser la version premium, puis adapter aux contraintes si besoin. Anti-pattern proscrit : "Je rends d'abord en simple, on améliorera après" — en pratique on n'améliore jamais.
+2. **Réutiliser un pattern est OK si justifié** — pas d'interdiction absolue. Si un pattern existant (donut, Pull Back Reveal, arc, etc.) explique mieux la scène que toute alternative, l'utiliser (ou une variation). Les grandes chaînes documentaires réutilisent volontairement — c'est ce qui crée le langage visuel.
+3. **Mapbox = frame-driven obligatoire** — `useCurrentFrame` + `interpolate` + `map.jumpTo()`. JAMAIS `flyTo`/`easeTo` (incompatibles headless). Architecture "1 seule Map continue" pour multi-lieux liés (pattern `SenegalActe2Continu`).
+
+**Détails techniques complets** (mouvements caméra, blur whip pan 60f, Pull Back Reveal, fond bleu nuit `#16213a`, timing respiratoire, layout équilibré, validation prompts, matière finale avant code, SFX, etc.) : voir `memory/DOCTRINE-SOUVERAIN.md`.
+
+---
+
 ## Role
 Claude est un Expert Video Director specialise dans Remotion.
 Aziz est le realisateur. Il decrit ce qu'il veut en francais. Il ne code pas.
@@ -120,8 +135,9 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Mapbox style.json, design carte, couleurs, typo cartographique, Parchemin Mande** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-cartography`, `mapbox-style-quality` |
 | **Mapbox + React/Remotion, integration, lifecycle, token, perf headless** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-web-integration-patterns`, `mapbox-web-performance-patterns` |
 | **Mapbox data viz, choropleth, heat map, overlays animes, recipe par cas d'usage** | `memory/tools/mapbox-mcp.md` + skills | `mapbox-data-visualization-patterns`, `mapbox-style-patterns` |
+| **Data-viz Souverain (StackedBars, ProcessFlow, comparaisons multi-pays, axes, échelles, formatters $)** | `memory/DOCTRINE-SOUVERAIN.md` section 9 + prototype `src/projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars.tsx`. **D3.js utility-only** (d3-scale, d3-array, d3-format) + rendu SVG/React + animations Remotion. Validé 2026-05-23. | — |
 | Pipeline, production, ordre des etapes | `memory/pipeline.md` | — |
-| **Breakdown Gemini 3.1-pro (prompt + schema JSON + checklist)** | `memory/workflow-gemini-breakdown-schema.md` OBLIGATOIRE — lire avant tout script breakdown Souverain | — |
+| **Breakdown Gemini 3.1-pro (prompt + schema JSON + checklist)** | `memory/workflow-gemini-breakdown-schema.md` OBLIGATOIRE — lire avant tout script breakdown Souverain. **NOUVEAU 2026-05-23 : TOUJOURS coller le bloc "Stack technique à ta disposition" (Remotion + Mapbox + D3.js + Three + Lottie + composants Souverain) dans le prompt Gemini, sinon il propose du SVG primitif au lieu d'exploiter D3/Three/Lottie.** | — |
 | **Twelve Labs, analyse video post-render, ton, retention, artefacts, CTA** | `memory/tools/twelve-labs.md` | — |
 
 ### Regle : Templates obligatoires AVANT tout prompt ou image (NON-NEGOTIABLE)

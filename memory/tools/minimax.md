@@ -58,6 +58,41 @@ Les prompts generiques produisent une sortie ELECTRONIQUE non-africaine. Le mode
 5. **Interdictions directes** — "No synthesizers, no electronic sounds" **OBLIGATOIRE**
 6. **Origine culturelle precise** — "Traditional Mande griot music from Mali", PAS "West African"
 
+### Prompts valides — Sénégal Pétrole & Gaz (2026-05-22)
+
+Ton : documentaire analytique moderne, souveraineté africaine, tension géopolitique. PAS Mande médiéval.
+
+**A — Ambient Souverain** (Ballaké Sissoko, kora + basse ambient, 72 BPM, 321s générée)
+```
+Modern African documentary score. Sparse kora melody over slow, deep ambient bass.
+Style of Ballake Sissoko. Slow 4/4 rhythm, 72 BPM.
+Warm, minimal, dignified, introspective. Tension underneath.
+No synthesizers, no electronic beats, no orchestral strings, no chorus.
+```
+Fichier : `public/souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3`
+
+**B — Kora + Percussions** (Toumani Diabate doc score, 68 BPM, 184s générée)
+```
+Contemporary African score blending traditional kora with slow deep percussion.
+Style of Toumani Diabate meets a documentary film score.
+Deep dundun bass rhythm at 68 BPM. Kora melody on top, meditative.
+Sparse, serious, organic. No synthesizers, no hi-hats, no electronic elements.
+```
+Fichier : `public/souverain/senegal-petrole-gaz/audio/music-B-kora-percussion.mp3`
+
+**C — Sabar Cinématique** (Youssou N'Dour film score, 75 BPM, 258s générée)
+```
+Slow cinematic Afrobeat documentary score from Senegal.
+Sabar drum pattern at 75 BPM, acoustic bass, sparse guitar melody.
+Style of Youssou N'Dour film score. Dignified, modern, grounded.
+No synthesizers, no electronic elements, no vocals, no upbeat energy.
+```
+Fichier : `public/souverain/senegal-petrole-gaz/audio/music-C-sabar-cinematique.mp3`
+
+Script dédié : `scripts/tools/minimax-senegal-music.py` — réutiliser comme template pour chaque nouvel épisode (changer `OUT_DIR` + `VARIANTS`).
+
+---
+
 ### Prompts valides (Sonjata session 8, 2026-04-22)
 
 **A — Griot intime (retenu)** — Toumani Diabate, solo kora + balafon

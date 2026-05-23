@@ -147,4 +147,15 @@ Code épisodes archivé dans `src/_archive/episodes-livres/`.
 > Silicon Savannah, Niger Uranium, Zimbabwe Lithium, RDC No Sense, etc.) sont
 > dans le snapshot archivé : `.claude/agent-memory/archive/PIPELINE-snapshot-2026-05-20.md`.
 
-_(Aucun handoff actif. Workflow Beat Souverain (peste-1347, maroc-batteries) ne log pas ici — voir directement les fichiers projet.)_
+## Sénégal Pétrole & Gaz — Acte 2 — 2026-05-23 [COMPLETE]
+
+**Acte 1 VALIDÉ** (Beat1+2+3+5, 42.3s, `out/episodes/senegal-petrole-gaz/senegal-acte1-FINAL.mp4`)
+
+**Acte 2 VALIDÉ 2026-05-23** (`out/episodes/senegal-petrole-gaz/acte2-FINAL.mp4`, 88.3s, 48.9 MB)
+- `SenegalActe2Continu.tsx` (2134f) — une seule Map Mapbox, 5 phases : Sangomar / Trans Pull Back / GTA / Trans Whip / Yakaar
+- `Beat9.tsx v5` (516f) — donut SVG animé 9s, fond bleu nuit clair, split gauche/droite
+- Composition assemblée : `SenegalActe2Full.tsx` (id `Senegal-Acte2-Full`)
+- Audio : voix-off offset 43.30s + musique A 18% fade-out 4s
+- Catbox final : https://files.catbox.moe/ck11k7.mp4
+- **Backlog SFX** consigné dans `memory/episodes/souverain/senegal-petrole-gaz/CORRECTIONS-MINEURES.md` — à intégrer avant assemblage 4 actes final
+- **NEXT** : Acte 3 (à produire)

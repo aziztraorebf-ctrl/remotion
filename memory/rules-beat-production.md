@@ -1,7 +1,31 @@
 # Règles Beat Production — CHARGÉES PAR HOOK (NON-NEGOTIABLE)
 
 > Ce fichier est lu mécaniquement avant tout Write/Edit sur un Beat*.tsx.
-> 10 règles. Si une est violée = le beat n'est pas prêt à être codé.
+> 11 règles. Si une est violée = le beat n'est pas prêt à être codé.
+
+---
+
+## R0 — AUDIT FAISABILITÉ AVANT TOUT CODE (BLOQUANT)
+
+**Avant de coder un seul beat : score de fidélité estimé pour chaque template du storyboard.**
+
+Pour chaque beat, répondre à :
+1. Le composant existe-t-il dans `_shared/components/layouts/` ?
+2. Fait-il exactement ce que le storyboard montre (mécanique, pas juste le nom) ?
+3. Score estimé de fidélité : 0-100%
+
+**Seuil obligatoire : 95% minimum.**
+
+Si un beat est sous 95% : décision explicite AVANT de coder — trois options seulement :
+- **A — Coder ce qui manque** : identifier précisément les delta (props manquants, mécanique absente) et les coder
+- **B — Remplacer le template** : choisir un template existant qui atteint 95%+ avec le même impact narratif — justifier en 1 phrase
+- **C — Accepter la dégradation** : documenter explicitement ce qui sera différent du storyboard et pourquoi c'est acceptable
+
+**Jamais commencer le code sans avoir tranché sur chaque beat sous 95%.**
+
+Exemple de delta typique à documenter :
+- "BrutalHookSplit attend une image statique — pas un Mapbox live → Delta : modifier le composant pour accepter `mapboxConfig` prop"
+- "ScaleShock existant = deux cercles, pas une balance → Delta : recoder from scratch ou remplacer par ChiffreChoc"
 
 ---
 
