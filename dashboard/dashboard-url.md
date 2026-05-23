@@ -1,5 +1,24 @@
 # GéoAfrique — URLs publiées
 
+## Strategie Templates 16:9 — Phase 1 (2026-05-21)
+
+**Live URL** : https://onyx-monsoon-mrar.here.now/
+**Slug** : `onyx-monsoon-mrar`
+**claimToken** : `dd5a8de6e5c4edcf1921ded8121eb35e1b9f446e41689720b873c633a9b3c1ea`
+**Expire claim** : 2026-05-22T05:24:51 UTC
+
+**Contenu** : audit 33 templates + benchmark 7 videos doc (Caspian/JH/Vox/PolyMatter/Map Men/Wendover/RLL) + 5 frames refs visuelles + V1 MapboxSatelliteSenegal validee + roadmap Phase 2-4.
+
+**Commande mise à jour :**
+```bash
+~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh \
+  dashboard/strategie-16-9-phase1.html \
+  onyx-monsoon-mrar \
+  dd5a8de6e5c4edcf1921ded8121eb35e1b9f446e41689720b873c633a9b3c1ea
+```
+
+---
+
 ## Silicon Savannah Beat 3 — Storyboard Phase 1 (2026-05-14)
 
 **Live URL** : https://dusky-echo-k4sw.here.now/
@@ -89,26 +108,28 @@ Hub complet : 7 beats (vidéos + statut) + audio narration v5 + musique v1 + sto
 
 # Dashboard Souverain — URL & Claim
 
-## Version actuelle (2026-05-14 — 31 templates, +10 impact)
+## Version actuelle (2026-05-21 — +Vague 5 : VoixDuPeuple, FaceAFace, PortraitDossier | +Vague 6 : TextChoc, SourceProuve, ChiffreChoc)
 
-**Live URL** : https://sturdy-breeze-8ppy.here.now/
-**Slug** : `sturdy-breeze-8ppy`
-**claimToken** : `2c110f6420a2cbb335d3aaba3bca35810c147f0a080d05388bd8674c14f93129`
-**Expire claim** : 2026-05-15T05:33:33 UTC — claim avant ce délai
+**Live URL** : https://sunny-nimbus-qycq.here.now/
+**Slug** : `sunny-nimbus-qycq`
+**claimToken** : `e142c0f742f15612c398ebae9f9642faf8c113d3cf153ae8bcc1d06127e325ab`
+**Expire claim** : 2026-05-22T19:18:05 UTC — claim avant ce délai
 
 **Commande mise à jour :**
 ```bash
 ~/.claude/skills/atlas-video-preproduction/scripts/publish-here-now.sh \
   dashboard/templates-souverain.html \
-  sturdy-breeze-8ppy \
-  2c110f6420a2cbb335d3aaba3bca35810c147f0a080d05388bd8674c14f93129
+  sunny-nimbus-qycq \
+  e142c0f742f15612c398ebae9f9642faf8c113d3cf153ae8bcc1d06127e325ab
 ```
 
 ## Historique
 
 | Version | URL | Statut |
 |---------|-----|--------|
-| 2026-05-11 republié | https://whimsy-rocket-vrne.here.now/ | **ACTIF** |
+| 2026-05-21 — Vague 4 | https://sunny-nimbus-qycq.here.now/ | **ACTIF** |
+| 2026-05-14 — 31 templates | https://sturdy-breeze-8ppy.here.now/ | expiré |
+| 2026-05-11 republié | https://whimsy-rocket-vrne.here.now/ | expiré |
 | Jour 4b — 21 templates | https://united-quasar-n4qp.here.now/ | expiré |
 | Jour 4 — 17 templates | https://zen-raven-f6gg.here.now/ | expiré |
 | Jour 3 — 8 templates | https://hollow-desert-9tz6.here.now/ | expiré |

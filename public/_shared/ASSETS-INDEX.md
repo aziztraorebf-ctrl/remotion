@@ -2,7 +2,7 @@
 
 > **Fichier vivant** — mis à jour à chaque validation d'asset/template (règle CLAUDE.md).
 > Couvre code (`src/projects/_shared/`) + assets visuels & audio (`public/_shared/`).
-> Dernière mise à jour : 2026-05-14 (+4 layouts "fun" : CoinFlip, GlitchReveal, SplitFlap, TimelineFracture — templates surprise impact fort).
+> Dernière mise à jour : 2026-05-21 (+3 layouts Vague 7 : PortraitSilhouette, MosaïqueActeurs, PassationPouvoir — templates personnages & réseaux).
 > **Règle visuelle** : texte à l'écran = erreur par défaut. Icônes Lucide > texte. Max 1-2 mots par élément. Jamais de phrase.
 
 ## 🎨 Mockups Gemini — blueprints de design
@@ -171,6 +171,382 @@ import { applyAtlasRealiste3D, addCountryFocus, ATLAS3D_PALETTE } from "../mapbo
 applyAtlasRealiste3D(map);                        // satellite + hillshade
 addCountryFocus(map, "NER", ATLAS3D_PALETTE.accentOr);
 ```
+
+---
+
+### Template C-bis — MapboxSatelliteSenegal (16:9 cinématique camera flyTo)
+
+**Path code** : `src/projects/_proto-16-9/Prototype_A_MapboxSatelliteSenegal.tsx`
+**Composition Remotion** : `ProtoA-MapboxSatelliteSenegal` (1920×1080, 180 frames / 6s)
+**Status** : ✅ V1 validé Aziz 2026-05-21 — premier template Mapbox 16:9 cinématique du projet
+**Cas d'usage** : ouverture mid-form documentaire — zoom continent → pays → zone offshore avec pitch progressif (0→55°) + bearing (0→-20°). Look Caspian Report / Johnny Harris.
+**Backlog améliorations** : [`memory/backlog-ameliorations-mapbox-satellite.md`](../../memory/backlog-ameliorations-mapbox-satellite.md) — V2 prioritaire : éclaircir océan (trop sombre actuellement)
+
+**Anatomie** :
+- Style satellite-v9 + applyAtlasRealiste3D (hillshade)
+- 3 keyframes camera (start → mid → end) avec lerp linéaire
+- Sénégal highlight or `#d4a93c` à 55% opacity
+- Vignettage radial gradient (rgba(0,0,0,0.55) sur bords)
+- Cartouche haut-gauche "SÉNÉGAL / BLOC SANGOMAR" spring entry
+- Label bas-droite "100 km offshore — Opérateur Woodside Energy" fade-in
+
+| Phase | Preview |
+|---|---|
+| Mid (zoom intermédiaire côte Atlantique) | ![senegal-mid](https://files.catbox.moe/hnvai5.png) |
+| End (zoom final Sangomar pitch 55°) | ![senegal-end](https://files.catbox.moe/1zm06w.png) |
+
+**Vidéo complète (6s)** : https://files.catbox.moe/zdramv.mp4
+**Render local FINAL** : `out/templates-souverain/FINAL-MapboxSatelliteSenegal-v1-16x9.mp4`
+
+**Render obligatoire via script** :
+```bash
+./scripts/render-mapbox.sh ProtoA-MapboxSatelliteSenegal out/render.mp4
+```
+⚠️ JAMAIS `npx remotion render` direct — voir [`memory/feedback_mapbox-render-pattern-canonique.md`](../../memory/feedback_mapbox-render-pattern-canonique.md)
+
+**Adaptation pour autre pays** : copier le fichier, changer ISO (`addCountryFocus(map, "MAR"...)`) + coordonnées CAM_START/MID/END pour cibler la zone.
+
+---
+
+## 🎨 Templates 16:9 — Vague 3 (Mécaniques signature)
+
+> Codés sur specs JSON Gemini 3.1-pro. Tous transparents (`bgColor="transparent"`). Utilisés via `<SouverainScene>` + `DarkCssBg`.
+> Showcase 3D-3F : `out/templates-souverain/FINAL-ProtoH-Vague3b-Showcase-v1-16x9.mp4`
+> Showcase 3G-3I : `out/templates-souverain/FINAL-ProtoI-Vague3c-Showcase-v1-16x9.mp4`
+> **ProtoQ — Showcase complet 9 templates (81s)** : [ProtoQ-Vague3-Complete-Showcase-v1.mp4](https://files.catbox.moe/0gpkz1.mp4)
+
+---
+
+### Template Vague3A — LaCalebasse (Capacity Fill)
+
+**Quand l'utiliser** : Remplir une jauge de façon non conventionnelle — réserves d'uranium vs demande, caisses État post-exploitation, taux d'utilisation d'un port. Alternative au pie chart, beaucoup plus mémorable.
+
+**Path code** : `src/projects/_shared/components/layouts/LaCalebasse.tsx`
+**Composition Remotion** : `Template-LaCalebasse` (240f, 1920×1080)
+
+**Props clés** :
+- `percentage` : 0-100 (défaut 67)
+- `label` : texte principal (ex: `"RÉSERVES URANIUM"`)
+- `sublabel` : contexte (ex: `"VS DEMANDE MONDIALE 2030"`)
+- `liquidColor` : couleur de remplissage (défaut gold)
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : contour SVG draw-on, vague ondulante clipPath, odometer %, crosshairs aux coins.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| MP4 render | [LaCalebasse-v1.mp4](https://i.imgur.com/EiKCOGD.mp4) |
+
+---
+
+### Template Vague3B — LeCadranSolaire (Ombre Équatoriale)
+
+**Quand l'utiliser** : Frises chronologiques avec sensation de passage du temps — transition énergétique, ères pré/post-indépendance, cycle de 10/50/100 ans. L'ombre qui tourne = le temps qui avance.
+
+**Path code** : `src/projects/_shared/components/layouts/LeCadranSolaire.tsx`
+**Composition Remotion** : `Template-LeCadranSolaire` (270f, 1920×1080)
+
+**Props clés** :
+- `era1Label` / `era2Label` : noms des deux périodes (ex: `"ÈRE COLONIALE"` / `"ÈRE SOUVERAINE"`)
+- `pivotYear` : année charnière affichée au centre
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : cercle draw-on, aiguille spring mécanique, glitch 3 frames à l'inversion, bascule colorimétrique active/inactive.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| MP4 render | [LeCadranSolaire-v1.mp4](https://i.imgur.com/gIxIqCu.mp4) |
+
+---
+
+### Template Vague3C — Stratigraphie (Resource Cut)
+
+**Quand l'utiliser** : Tout ce qui est sous la surface — forages Sangomar, mines uranium Niger, nappes phréatiques, strates géologiques. Coupe transversale qui révèle ce que la carte ne montre pas.
+
+**Path code** : `src/projects/_shared/components/layouts/Stratigraphie.tsx`
+**Composition Remotion** : `Template-Stratigraphie` (270f, 1920×1080)
+
+**Props clés** :
+- `layers` : array `{ label, depth, color, resource? }`
+- `title` : titre du forage (ex: `"BLOC SANGOMAR — PROFIL GÉOLOGIQUE"`)
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : scan clipPath descendant, couches géologiques ondulées, pulse ressource, bloc info latéral.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| MP4 render | [Stratigraphie-v1.mp4](https://i.imgur.com/xrVKuub.mp4) |
+
+---
+
+### Template Vague3D — LeSceau (Treaty Stamp)
+
+**Quand l'utiliser** : Annoncer un acte officiel avec du poids dramatique — signature de contrat pétrolier, sanctions CEDEAO, ratification ZLECAf, résolution ONU. **Moment de pause** dans le flux narratif, équivalent d'un coup de tampon sur un document.
+
+**Exemple en production** : narration *"En 2023, BP signe avec l'État sénégalais un contrat d'exploitation de 25 ans"* → coupe sur Le Sceau → cercle gold se trace → étoile pop → **"CONTRAT D'EXPLOITATION — SANGOMAR"** frappe l'écran.
+
+**Path code** : `src/projects/_shared/components/layouts/LeSceau.tsx`
+**Composition Remotion** : `Template-LeSceau` (240f, 1920×1080)
+
+**Props clés** :
+- `title` : texte central principal (ex: `"SANCTIONS ÉCONOMIQUES"`)
+- `subtitle` : texte circulaire sur pourtour (ex: `"COMMUNAUTÉ ÉCONOMIQUE DES ÉTATS DE L'AFRIQUE DE L'OUEST"`)
+- `institution` : badge sous le titre (ex: `"CEDEAO"`)
+- `date` : ligne analytique bas (ex: `"JANVIER · 2024"`)
+- `sealColor` : couleur du sceau (défaut gold `#c8a951`)
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : cercle SVG draw-on (stroke-dashoffset), texte circulaire sur textPath SVG, étoile 4 branches spring pop, impact stamp overshooting (scale 1.4→1.0), glitch titre 3 frames, date fadeIn bleu analytique.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (sceau complet pré-impact) | ![sceau-mid](https://i.imgur.com/WJr79U8.jpeg) |
+| End (titre + date visibles) | ![sceau-end](https://i.imgur.com/fbQY52d.jpeg) |
+
+---
+
+### Template Vague3E — PolyrythmieData (Syncopated Reveal)
+
+**Quand l'utiliser** : Comparaisons entre 5-8 entités où l'ordre d'apparition raconte lui-même l'inégalité. Les barres arrivent en rythme syncopé (pas régulier — groove djembé), la dernière à arriver est la plus haute = révélation dramatique.
+
+**Exemple en production** : *"Le déséquilibre économique de la CEDEAO est saisissant"* → MALI pop, silence, BURKINA pop, NIGER pop, silence long, SÉNÉGAL pop, GUINÉE pop, CÔTE D'IVOIRE pop en dernier (la plus haute) → ligne de moyenne bleue tranche visuellement les petites économies.
+
+**Cas d'usage** : PIB comparé CEDEAO, productions minières (uranium Niger vs Congo vs Zambie), parts de marché pétrole africain, budgets défense vs éducation par pays.
+
+**Path code** : `src/projects/_shared/components/layouts/PolyrythmieData.tsx`
+**Composition Remotion** : `Template-PolyrythmieData` (240f, 1920×1080)
+
+**Props clés** :
+- `bars` : `Array<{ label: string; value: number; displayValue: string }>` (6 barres max recommandé)
+- `maxValue` : valeur maximale de l'axe Y
+- `title` : titre IBM Plex Mono en haut gauche
+- `thresholdValue` : valeur de la ligne de seuil/moyenne (optionnel)
+- `thresholdLabel` : label de cette ligne (ex: `"MOYENNE RÉGIONALE"`)
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : lignes de grille draw-on (staff musical), barres spring pop depuis bas avec délais syncopés `[20, 35, 45, 60, 70, 85]` (pattern 3+2+3), labels pays bleu analytique, valeurs gold, ligne de seuil tiretée draw-on.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (5 barres visibles, seuil absent) | ![polyrythmie-mid](https://i.imgur.com/EqHegtm.jpeg) |
+| End (6 barres + ligne moyenne) | ![polyrythmie-end](https://i.imgur.com/W8mkRoM.jpeg) |
+
+---
+
+### Template Vague3F — NoeudTisserand (Bottleneck)
+
+**Quand l'utiliser** : Visualiser un goulot d'étranglement — plusieurs flux entrent, un seul sort (ou sort réduit). Monopole batteries Chine, dépendance corridor Mali-Burkina-Niger vers port Dakar, choke point détroit, concentration d'une chaîne de valeur.
+
+**Exemple en production** : *"100% des exportations du Mali, du Burkina et du Niger transitent par un seul port"* → 3 fils bezier or/bleu/ivoire convergent vers un cercle rouge "GOULOT" → "PORT DE DAKAR" → fil de sortie rouge unique + indicateur "BLOQUÉ".
+
+**Path code** : `src/projects/_shared/components/layouts/NoeudTisserand.tsx`
+**Composition Remotion** : `Template-NoeudTisserand` (270f, 1920×1080)
+
+**Props clés** :
+- `inputFlows` : `Array<{ label: string; percentage: number; color?: string; side: "left" }>` (3 flux max)
+- `bottleneckEntity` : nom du goulot (ex: `"PORT DE DAKAR"`)
+- `bottleneckLabel` : label dans le cercle (ex: `"GOULOT"`)
+- `outputLabel` : destination sortie (ex: `"TRANSIT INTERNATIONAL"`)
+- `blocked` : `true` = rouge bloqué / `false` = vert fluide
+- `bgColor` : défaut `"transparent"`
+
+**Mécaniques visuelles** : paths SVG cubic bezier draw-on, épaisseur fil ∝ pourcentage, nœud central pulsant spring, squeeze animation (fils s'épaississent à l'entrée), labels + % fadeIn.
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (fils dessinés, nœud apparu) | ![noeud-mid](https://i.imgur.com/MEYjg9Y.jpeg) |
+| End (labels % + BLOQUÉ) | ![noeud-end](https://i.imgur.com/JnUZRBU.jpeg) |
+
+---
+
+### Template Vague3G — LeSemeur (Awalé Shift)
+
+**Quand l'utiliser** : Montrer que de la valeur quitte un endroit pour aller ailleurs — fuite de capitaux, IDE, fuite des cerveaux, transferts ZLECAf. La métaphore Awalé rend le flux concret et culturellement ancré : les graines bougent, tu vois exactement d'où elles partent et où elles arrivent.
+
+**Ce qui est unique** : C'est le seul template qui montre un transfert comme un jeu de stratégie. Les fosses se vident en haut (origine) et se remplissent en bas (destination). L'animation des graines qui voyagent le long de courbes bezier est immédiatement lisible sans légende.
+
+**Exemples en production** :
+- *"En 2023, $2.3B d'IDE quittent l'Afrique de l'Ouest vers l'Europe"* → MALI/SÉNÉGAL/NIGER se vident vers FRANCE/SUISSE/UK
+- *"La fuite des cerveaux : 35% des diplômés sénégalais travaillent à l'étranger"* → fosses pays africains → fosses villes européennes
+- *"ZLECAf : les échanges intra-africains encore faibles"* → fosses pays → fosses pays, graines très peu nombreuses
+
+**Path code** : `src/projects/_shared/components/layouts/LeSemeur.tsx`
+**Composition Remotion** : `Template-LeSemeur` (270f, 1920×1080)
+
+**Props clés** :
+- `cups` : `Array<{ id, label, seeds, role: "source"|"destination", x, y }>` — 4 sources bas + 4 destinations haut
+- `totalValue` : valeur totale affichée au centre à la fin (ex: `"$2.3B"`)
+- `title` / `subtitle`
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (graines en transit, destinations qui se remplissent) | ![semeur-mid](https://i.imgur.com/guKypqg.jpeg) |
+| End (labels visibles, fosses remplies) | ![semeur-end](https://i.imgur.com/YTxeSA7.jpeg) |
+
+---
+
+### Template Vague3H — Palimpseste (Frontières Dissolvantes)
+
+**Quand l'utiliser** : Montrer que les découpages anciens (coloniaux, administratifs) sont devenus obsolètes face aux réalités modernes — corridors commerciaux, zones d'influence, routes de transit. Le mot "palimpseste" = parchemin réécrit par-dessus l'ancien texte.
+
+**Ce qui est unique** : La séquence en deux temps est le cœur du template. D'abord les frontières rigides gold s'impriment sur l'écran (comme tracées à la règle — c'est voulu, ça évoque Berlin 1885). Puis elles se dissolvent, s'effacent, et des lignes courbes bleu vif les traversent librement. Le titre lui-même glitch pour changer. C'est une **contradiction animée**.
+
+**Exemples en production** :
+- *"La ZLECAf ignore les frontières coloniales"* → frontières AOF/AEF → corridors commerciaux continentaux
+- *"Les routes transsahariennes relient ce que Berlin avait séparé"* → découpage Sahel colonial → routes caravanières modernes
+- *"Les zones d'influence de Wagner traversent 5 pays"* → frontières officielles → zones de présence réelle
+
+**Path code** : `src/projects/_shared/components/layouts/Palimpseste.tsx`
+**Composition Remotion** : `Template-Palimpseste` (270f, 1920×1080)
+
+**Props clés** :
+- `colonialLines` : `Array<{ x1, y1, x2, y2, label, labelX, labelY }>` — lignes rigides à la règle
+- `modernFlows` : `Array<{ path: string (SVG bezier), label, labelX, labelY, color? }>` — lignes organiques
+- `titleColonial` / `titleModern` : les deux titres (avant/après glitch)
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (frontières coloniales gold tracées) | ![palimpseste-mid](https://i.imgur.com/T1XTJcR.jpeg) |
+| End (corridors bleu par-dessus frontières dissoutes) | ![palimpseste-end](https://i.imgur.com/9yQfxZq.jpeg) |
+
+---
+
+### Template Vague3I — ArbreAPalabres (Stakeholder Constellation)
+
+**Quand l'utiliser** : Cartographier qui est autour de la table — et surtout de quel côté chacun se trouve. L'arbre à palabres africain est le lieu où les décisions se prennent en cercle. Ici, le sujet central rayonne vers tous ses acteurs, colorés selon leur alignement.
+
+**Ce qui est unique** : La légende de couleur (gold = allié, bleu = neutre, rouge = adversaire) transforme une liste d'acteurs en **carte de pouvoir**. D'un seul regard, on voit qui s'oppose à qui. Les connexions entre acteurs périphériques révèlent les alliances cachées. C'est le template le plus politique de la bibliothèque.
+
+**Exemples en production** :
+- *"Autour du pétrole de Sangomar, six acteurs aux intérêts divergents"* → État/Petrosen (gold) vs Communautés/ONG (rouge) vs Woodside/sous-traitants (bleu)
+- *"La crise au Niger : qui veut quoi ?"* → JUNTA (centre) → CEDEAO (adversaire rouge), France (adversaire rouge), Wagner (neutre bleu), populations (neutre bleu), AES (allié gold)
+- *"Les acteurs du lithium zimbabwéen"* → LITHIUM ZIMBABWE (centre) → 6 acteurs miniers + État + ONG
+
+**Path code** : `src/projects/_shared/components/layouts/ArbreAPalabres.tsx`
+**Composition Remotion** : `Template-ArbreAPalabres` (270f, 1920×1080)
+
+**Props clés** :
+- `centralLabel` : texte centre, supporte `\n` pour deux lignes (ex: `"PÉTROLE\nSANGOMAR"`)
+- `actors` : `Array<{ id, label, role?, angle, x, y, weight: 1|2|3, alignment: "ally"|"neutral"|"adversary", branchPath }>` — les coordonnées x/y et branchPath sont pré-calculées depuis angle + rayon
+- `connections` : `Array<{ from, to, path }>` — arcs entre acteurs périphériques
+- `bgColor` : défaut `"transparent"`
+
+**Note production** : les `x`, `y` et `branchPath` de chaque acteur doivent être calculés depuis `angle` et `radius` (le breakdown Gemini le fait automatiquement — lui donner le nombre d'acteurs et il retourne les coordonnées exactes).
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (centre + premières branches) | ![arbre-mid](https://i.imgur.com/IL9G5yU.jpeg) |
+| End (constellation complète + connexions + légende) | ![arbre-end](https://i.imgur.com/eutr1sZ.jpeg) |
+
+---
+
+## 🎨 Templates 16:9 — Vague 4 (Mécaniques FUN — Investigation & Transition)
+
+> Showcase complet (4A-4C) : `out/templates-souverain/FINAL-ProtoJ-Vague4-Showcase-v1-16x9.mp4`
+> GIF animé showcase (27s, 12fps) : https://i.imgur.com/lwJ7MMa.gif
+> Workflow Gemini-first : specs reçues le 2026-05-21 depuis `gemini-3.1-pro-preview`.
+
+### Template Vague4A — Caviardage (Document Déclassifié)
+
+**Concept** : Un document officiel ivoire. Un marqueur noir barre progressivement les mots de langue de bois. Dessous apparaissent les vrais mots en gold. À la fin : tampon rouge "DÉCLASSIFIÉ" frappe au centre.
+
+**Quand utiliser** : révéler le décalage discours officiel / réalité. Contrats miniers, communiqués diplomatiques, promesses de campagne vs résultats.
+
+**Ce qui est unique** : le mouvement du marqueur est linéaire et brutal (pas de spring — comme un vrai coup de feutre). La vibration de 3 frames sur le texte barré donne un effet de choc physique. La lecture "officiel barré / vrai révélé" est immédiate.
+
+**Exemples production** :
+- "PARTENARIAT STRATÉGIQUE" → "DETTE SOUVERAINE"
+- "DÉVELOPPEMENT DURABLE" → "EXTRACTION TOTALE"
+- Bulletin de vote : "ÉLECTION LIBRE" → "FRAUDE ORGANISÉE"
+
+**Path code** : `src/projects/_shared/components/layouts/Caviardage.tsx`
+**Composition Remotion** : `Template-Caviardage` (210f, 1920×1080)
+
+**Props clés** :
+- `lines` : `Array<{ official: string; real: string }>` — max 4-5 lignes
+- `stampText` : défaut `"DECLASSIFIE"` (sans accents pour compatibilité monospace)
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| GIF animé (séquence complète) | ![cav-gif](https://i.imgur.com/lwJ7MMa.gif) |
+| Mid (barres navy + vrais mots gold) | ![cav-mid](https://i.imgur.com/Ohmz794.jpeg) |
+| End (tampon rouge DÉCLASSIFIÉ) | ![cav-end](https://i.imgur.com/wfdHESo.jpeg) |
+
+---
+
+### Template Vague4B — FilRouge (Tableau d'Enquête)
+
+**Concept** : Un tableau d'investigation sombre. Des fiches ivoire apparaissent une à une (spring pop + punaise rouge). Un fil rouge se trace entre elles en zigzag. La dernière fiche — "BÉNÉFICIAIRE FINAL / INCONNU" avec "?" — se révèle en bleu.
+
+**Quand utiliser** : révéler un réseau caché (corruption, trafic, flux financiers opaques). Chaque fiche = un acteur. Le fil = la chaîne de connexion. La révélation finale = le vrai bénéficiaire.
+
+**Ce qui est unique** : le stroke-dashoffset du fil se trace en temps réel (polyline length calculée dynamiquement). La tension du fil s'épaissit via spring au dernier nœud. Les fiches apparaissent à des intervalles non réguliers (enquête qui progresse).
+
+**Exemples production** :
+- Réseau d'extraction minier : ministre → société écran → banque offshore → bénéficiaire inconnu
+- Flux d'aide détournée : ONG → sous-traitant → compte Caïmans → ?
+- Chaîne de commandement dans un coup d'État
+
+**Path code** : `src/projects/_shared/components/layouts/FilRouge.tsx`
+**Composition Remotion** : `Template-FilRouge` (240f, 1920×1080)
+
+**Props clés** :
+- `nodes` : `Array<{ label, role, value?, x, y, isTarget? }>` — 4-6 nœuds. isTarget=true sur le dernier (révélation finale)
+- `threadPath` : path SVG polyline reliant les nœuds (`"M x y L x y L x y ..."`) — à calculer depuis les coordonnées x,y des nœuds
+- `title` : titre en haut à gauche (défaut `"RESEAU D'EXTRACTION"`)
+- `bgColor` : défaut `"#1a2535"` (le dark est la palette naturelle du tableau)
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| GIF animé (séquence complète) | ![fil-gif](https://i.imgur.com/lwJ7MMa.gif) |
+| Mid (fil en cours de tracé, 4 fiches) | ![fil-mid](https://i.imgur.com/i5xwnPF.jpeg) |
+| End (5 fiches + révélation "?" bleu) | ![fil-end](https://i.imgur.com/muuYiY9.jpeg) |
+
+---
+
+### Template Vague4C — SovereignEclipse (Transition Chapitre)
+
+**Concept** : Un disque noir glisse de gauche, recouvre l'écran. Au pic : un anneau gold éclate du centre avec 6 arcs fragmentés qui partent en étoile. Le texte du chapitre apparaît au centre. Puis le disque repart vers la droite, révélant la scène suivante.
+
+**Quand utiliser** : transition entre grandes parties d'un documentaire. Marque un tournant narratif fort. Vibe Vox/Caspian mais avec signature solaire africaine.
+
+**Ce qui est unique** : le disque entre en interpolation cubique (régulier, inéluctable — pas spring). L'anneau éclate en spring haute stiffness (choc visuel au peak). Les 6 arcs fragmentés partent radialement comme une couronne solaire. Effet ciné premium.
+
+**Exemples production** :
+- "CHAPITRE II — L'EXTRACTION" entre deux phases d'un documentaire pétrole
+- "ACTE III — LA RÉSISTANCE" dans un récit historique
+- Transition "AVANT / APRÈS" dans une analyse économique
+
+**Path code** : `src/projects/_shared/components/layouts/SovereignEclipse.tsx`
+**Composition Remotion** : `Template-SovereignEclipse` (180f, 1920×1080)
+
+**Props clés** :
+- `chapterLabel` : ligne supérieure (ex: `"CHAPITRE II"`)
+- `chapterTitle` : titre principal (ex: `"L'EXTRACTION"`)
+- `eclipseColor` : couleur du disque (défaut `"#1a2535"`)
+- `ringColor` : couleur de l'anneau (défaut `"#c8a951"`)
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| GIF animé (séquence complète) | ![eclipse-gif](https://i.imgur.com/lwJ7MMa.gif) |
+| Mid (anneau gold + fragments + texte chapitre) | ![eclipse-mid](https://i.imgur.com/SH0ctB2.jpeg) |
+| End (disque sorti, scène suivante révélée) | ![eclipse-end](https://i.imgur.com/lZcHPRS.jpeg) |
 
 ---
 
@@ -1420,6 +1796,515 @@ Détails complets dans `public/_shared/characters-refs/<personnage>/README.md` q
 |---|---|---|
 | Génération previews automatique | `scripts/generate_template_previews.py` | `python3 scripts/generate_template_previews.py [filter]` — render + upload catbox + manifest JSON |
 | Jury LLM 3 modèles (templates) | `scripts/jury_3llms_jour3.py` | Évaluation parallèle Kimi+GPT+Gemini sur frames |
+
+---
+
+## 🎨 Templates 16:9 — Vague 5 (Mécaniques Personnages & Confrontation)
+
+> Showcase complet (5A-5C) : `out/templates-souverain/FINAL-ProtoK-Vague5-Showcase-v1-16x9.mp4`
+> Workflow Gemini-first : specs reçues le 2026-05-21 depuis `gemini-3.1-pro-preview`.
+
+### Template Vague5A — VoixDuPeuple (Testimonial Citation)
+
+**Concept** : Une grande citation apparaît mot par mot (spring pop par ligne). Guillemets en gold massive de chaque côté. Ligne séparatrice gold tracée. Bloc identité (nom + rôle + année) slide-in. Pouls subtil après apparition.
+
+**Quand utiliser** : citation d'un acteur historique, discours clé, témoignage qui incarne le propos. Le fond doit être sobre (slate-medium ou dark-dots-navy).
+
+**Path code** : `src/projects/_shared/components/layouts/VoixDuPeuple.tsx`
+**Composition Remotion** : `Template-VoixDuPeuple` (210f, 1920×1080)
+
+**Props clés** :
+- `quote` : texte de la citation (wrappé auto ~42 chars/ligne)
+- `speaker` : nom en majuscules
+- `role` : titre/fonction en gold
+- `year` : année en bleu analytique
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (citation complète, identité visible) | https://files.catbox.moe/pdqwee.png |
+
+---
+
+### Template Vague5B — FaceAFace (Confrontation Comparaison)
+
+**Concept** : Écran splitté par une ligne verticale centrale. Entité A (gold) à gauche, Entité B (bleu) à droite. 3 stats chacun (valeur grande + label). Médaillon VS au centre avec verdict optionnel.
+
+**Quand utiliser** : comparaison de deux pays/acteurs/données, duel économique, bilan avant/après.
+
+**Path code** : `src/projects/_shared/components/layouts/FaceAFace.tsx`
+**Composition Remotion** : `Template-FaceAFace` (240f, 1920×1080)
+
+**Props clés** :
+- `entityA` / `entityB` : `{ name: string, stats: [{value, label}] }` — 3 stats chacun
+- `verdict` : `{ symbol: string, label?: string }` — médaillon central (défaut "VS")
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (entités + stats + médaillon VS) | https://files.catbox.moe/9hk9ta.png |
+
+---
+
+### Template Vague5C — PortraitDossier (Fiche Intelligence)
+
+**Concept** : Cadre polygonal (coins coupés) à gauche avec silhouette. 5 champs info (label bleu + valeur ivory) avec underscore draw-on. Ligne de scan bleue. Bannière statut plein écran en bas (ACTIF/RECHERCHE/DECEDE).
+
+**Quand utiliser** : présenter un acteur clé (politicien, entrepreneur, personnage historique) façon dossier d'enquête.
+
+**Path code** : `src/projects/_shared/components/layouts/PortraitDossier.tsx`
+**Composition Remotion** : `Template-PortraitDossier` (240f, 1920×1080)
+
+**Props clés** :
+- `name` / `role` / `nationality` / `period` / `keyFact` : champs du dossier
+- `status` : `"ACTIF"` (gold) | `"RECHERCHE"` (rouge) | `"DECEDE"` (gris)
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End (dossier complet + bannière RECHERCHE) | https://files.catbox.moe/uc65z9.png |
+
+---
+
+## 🎨 Templates 16:9 — Vague 6 (Mécaniques Impact & Preuve)
+
+> Showcase complet (6A-6C) : `out/templates-souverain/FINAL-ProtoL-Vague6-Showcase-v1-16x9.mp4`
+> GIF animé showcase : https://files.catbox.moe/nmu5kj.gif
+> Workflow Gemini-first : specs reçues le 2026-05-21 depuis `gemini-3.1-pro-preview`.
+
+### Template Vague6A — TextChoc (Phrase Impact Mot à Mot)
+
+**Concept** : Une phrase courte frappe mot par mot en spring pop individuel (scale+opacity). Les délais s'accélèrent = impression d'urgence montante. Le dernier mot (ou mot désigné) frappe en couleur accent (gold ou rouge). Soulignage qui se trace sous le mot accent.
+
+**Quand utiliser** : moment choc, révélation narrative, chiffre qui scandalise mis en contexte. Très efficace sur fond dark-dots-navy ou b-roll.
+
+**Ce qui est unique** : délais non-réguliers (premiers mots espacés, derniers rapides = urgence). Spring snappy damping=14/stiffness=120. Soulignage stroke-dashoffset 8 frames après l'accent.
+
+**Exemples production** :
+- "ILS ONT VOLÉ 63 MILLIARDS AU PEUPLE" → PEUPLE en rouge
+- "UNE SEULE FAMILLE CONTRÔLE TOUT" → TOUT en gold
+- "LA RÉPONSE EST 47 ANS" → 47 ANS en gold
+
+**Path code** : `src/projects/_shared/components/layouts/TextChoc.tsx`
+**Composition Remotion** : `Template-TextChoc` (150f, 1920×1080)
+
+**Props clés** :
+- `words` : `string[]` — chaque mot séparé (permet ciblage accent par index)
+- `accentIndex` : index du mot accent (défaut : dernier mot)
+- `accentColor` : `"#c8a951"` gold | `"#e63946"` rouge (défaut rouge)
+- `fontSize` : défaut 96px
+- `underlineAccent` : défaut true
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (phrase en cours) | https://files.catbox.moe/pdqwee.png |
+| End (phrase complète + accent rouge souligné) | https://files.catbox.moe/9hk9ta.png |
+| GIF (séquence complète) | https://files.catbox.moe/nmu5kj.gif |
+
+---
+
+### Template Vague6B — SourceProuve (Article Highlight)
+
+**Concept** : Rectangle ivoire représentant un article de presse. Slide-in depuis le bas (spring). Nom publication en rouge, date en gris, titre en navy. Un rectangle gold semi-transparent glisse horizontalement sous la phrase-clé.
+
+**Quand utiliser** : ancrer une affirmation dans une source crédible. Montrer "l'article dit ça". Investigation documentaire. Très efficace juste avant ou après un ChiffreChoc.
+
+**Ce qui est unique** : le rectangle gold glisse en interpolate (pas spring) = lecture de gauche à droite comme surligner avec un surligneur. L'article a une ombre portée (effet "document posé sur le fond").
+
+**Path code** : `src/projects/_shared/components/layouts/SourceProuve.tsx`
+**Composition Remotion** : `Template-SourceProuve` (180f, 1920×1080)
+
+**Props clés** :
+- `publication` : nom source (ex: `"REUTERS"`, `"FINANCIAL TIMES"`)
+- `headline` : titre article (wrappé auto ~50 chars/ligne, max 3 lignes)
+- `highlightText` : phrase à surligner (doit correspondre au début d'une ligne du headline wrappé)
+- `date` : ex: `"12 MAI 2024"`
+- `publicationColor` : défaut rouge `"#e63946"`
+- `bgColor` : défaut `"transparent"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End (article complet + surlignage gold) | https://files.catbox.moe/uc65z9.png |
+| GIF (slide-in + surlignage en direct) | https://files.catbox.moe/nmu5kj.gif |
+
+---
+
+### Template Vague6C — ChiffreChoc (Stat Fullscreen Impact)
+
+**Concept** : Un seul chiffre massif (220px) prend tout l'écran sur fond navy quadrillé. Spring overshoot (damping=8, stiffness=150 = rebond visible). Préfixe en gold plus petit arrive 5 frames avant. Ligne séparatrice trace. Deux lignes de contexte (WHAT + SO WHAT) fade-in séquentiel.
+
+**Quand utiliser** : LE moment de l'épisode — le chiffre que le spectateur retient. Différent de PulseNumber (insert) : celui-ci est fullscreen, standalone, sans concurrent visuel.
+
+**Ce qui est unique** : le fond navy avec grille (opacity 0.06) est toujours visible même si bgColor est passé en prop. L'overshoot spring est calibré pour un léger rebond (pas un spring amorti classique). Le préfixe et la valeur sont alignés baseline dynamiquement (calcul widths charW).
+
+**Exemples production** :
+- `prefix="$"` + `value="63B"` + `context1="REVENUS PETROLIERS DÉTOURNÉS"`
+- `prefix="-"` + `value="47%"` + `valueColor="#e63946"` + `context1="CHUTE DU PIB EN 3 ANS"`
+- `prefix=""` + `value="9 000"` + `context1="DOCUMENTS CLASSIFIÉS FUITES"`
+
+**Path code** : `src/projects/_shared/components/layouts/ChiffreChoc.tsx`
+**Composition Remotion** : `Template-ChiffreChoc` (150f, 1920×1080)
+
+**Props clés** :
+- `value` : valeur principale (ex: `"63B"`, `"47%"`, `"9 000"`)
+- `prefix` : symbole avant (ex: `"$"`, `"-"`, `"×"`, `""`)
+- `context1` : ligne WHAT (majuscules, letterSpacing 6)
+- `context2` : ligne SO WHAT optionnelle (ton plus doux, opacity 0.7)
+- `valueColor` : défaut gold `"#c8a951"`, rouge pour alarme `"#e63946"`
+- `bgColor` : défaut `"#1a2535"` (la grille est toujours rendue)
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| Mid (chiffre apparu, ligne en cours) | https://files.catbox.moe/9hk9ta.png |
+| End (chiffre + ligne + 2 contextes) | https://files.catbox.moe/uc65z9.png |
+| GIF (overshoot + tracé + fade contextes) | https://files.catbox.moe/nmu5kj.gif |
+
+---
+
+## 🎨 Templates 16:9 — Vague 7 (Personnages & Réseaux)
+
+> Showcase complet (7A-7C) : `out/templates-souverain/FINAL-ProtoM-Vague7-Showcase-v1-16x9.mp4`
+> Showcase MP4 (72h) : https://litter.catbox.moe/vd9kby.mp4
+> GIF animé showcase : https://files.catbox.moe/wuf4sk.gif
+> Workflow Gemini-first : specs reçues le 2026-05-21 depuis `gemini-3.1-pro-preview`.
+> Validé Aziz : 2026-05-21
+
+### Template Vague7A — PortraitSilhouette (Profil Acteur Plein Écran)
+
+**Concept** : Split vertical gold. Gauche : cadre octogonal bleu avec silhouette géométrique (tête cercle + épaules trapèze, gradient navy). Badge pays en or. Droite : NOM (72px ivory, spring), TITRE (gold), PAYS (bleu), 3 faits numérotés slide-in séquentiel. Badge statut en bas.
+
+**Quand utiliser** : présenter un acteur-clé en début de segment. Le fond SouverainScene fait le reste — le template est entièrement transparent.
+
+**Path code** : `src/projects/_shared/components/layouts/PortraitSilhouette.tsx`
+**Composition Remotion** : `Template-PortraitSilhouette` (240f, 1920×1080)
+
+**Props clés** :
+- `name` / `title` / `country` / `countryCode` : identité
+- `facts` : `string[]` — max 3 faits courts
+- `status` : `"EN FONCTION"` | `"OPPOSANT"` | `"EXILE"` | `"DECEDE"`
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End (portrait complet + statut EN FONCTION) | https://files.catbox.moe/c682o3.png |
+| MP4 render (72h) | https://litter.catbox.moe/0gj2dd.mp4 |
+| GIF (reveal complet) | https://files.catbox.moe/wuf4sk.gif |
+
+---
+
+### Template Vague7B — MosaïqueActeurs (Grille Réseau d'Acteurs)
+
+**Concept** : Grille 2×3 de fiches acteurs sur fond slate. Chaque fiche = nom + rôle + badge statut coloré (ALLIÉ bleu / NEUTRE gold / ANTAGONISTE rouge / CIBLE rouge). Rotations fixes légères (-1.5° à +1.2°) donnent l'effet "punaisé sur tableau". Connexions gold dessinées au stroke-dashoffset après les cartes.
+
+**Quand utiliser** : révéler un réseau (corruption, alliance, acteurs d'un dossier pétrolier). Chaque connexion gold = lien entre acteurs.
+
+**Path code** : `src/projects/_shared/components/layouts/MosaiqueActeurs.tsx`
+**Composition Remotion** : `Template-MosaiqueActeurs` (240f, 1920×1080)
+
+**Props clés** :
+- `title` : titre du réseau
+- `actors` : `Array<{name, role, status, statusColor?}>` — max 6
+- `connections` : `[number, number][]` — paires d'indices à relier en gold
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End (6 fiches + connexions gold) | https://files.catbox.moe/kbcgcz.png |
+| MP4 render (72h) | https://litter.catbox.moe/70dayt.mp4 |
+| GIF (apparition séquentielle + tracé connexions) | https://files.catbox.moe/wuf4sk.gif |
+
+---
+
+### Template Vague7C — PassationPouvoir (Transition de Leadership)
+
+**Concept** : Sortant grisé à gauche (recule + s'efface), Entrant en couleurs à droite (prend de l'espace). Ligne gold centrale avec badge année. Flash gold éclate au moment de la bascule. Timeline DÉPART/ARRIVÉE en bas.
+
+**Quand utiliser** : transition de présidence, changement de gouvernement, fin d'ère. Un des templates les plus narrativement forts de la bibliothèque.
+
+**Path code** : `src/projects/_shared/components/layouts/PassationPouvoir.tsx`
+**Composition Remotion** : `Template-PassationPouvoir` (240f, 1920×1080)
+
+**Props clés** :
+- `outgoing` / `incoming` : `{name, role, period}`
+- `transitionYear` : année affichée au centre (badge gold)
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End (Macky grisé + Diomaye en couleurs + 2024 + timeline) | https://files.catbox.moe/sztnce.png |
+| MP4 render (72h) | https://litter.catbox.moe/y6pv4j.mp4 |
+| GIF (flash + bascule complète) | https://files.catbox.moe/wuf4sk.gif |
+
+---
+
+---
+
+## 🎨 Templates 16:9 — Vague 8 (Éditorial & Pouvoir)
+
+> Showcase complet (8A-8B) : `out/templates-souverain/FINAL-ProtoN-Vague8-Showcase-v1-16x9.mp4`
+> Showcase MP4 (72h) : https://litter.catbox.moe/7i8npl.mp4
+> Workflow Gemini-first : specs reçues le 2026-05-21 depuis `gemini-3.1-pro-preview`.
+> Validé Aziz : 2026-05-21
+
+### Template Vague8A — PortraitEditorial (Une de Magazine Analytique)
+
+**Concept** : Split gauche/droite. Gauche : zone photo 700×900px (ou placeholder silhouette géométrique navy) + cadre gold stroke-dashoffset. Droite : bloc éditorial complet — rubrique rouge, séparateur or, titre 52px ivory 2 lignes, sous-titre gold, 3 mini-stats avec barre gold, badge SOURCE en bas.
+
+**Quand utiliser** : ouverture de dossier d'investigation. Peut recevoir une photo réelle (Gemini ou asset externe) via `imageUrl`. Sans photo : placeholder silhouette premium suffisant.
+
+**Path code** : `src/projects/_shared/components/layouts/PortraitEditorial.tsx`
+**Composition Remotion** : `Template-PortraitEditorial` (180f, 1920×1080)
+
+**Props clés** :
+- `imageUrl?` : URL image (optionnel — silhouette auto si absent)
+- `rubrique?` : catégorie rouge en haut (défaut "INVESTIGATION")
+- `titre` : `string[]` — 1-2 lignes
+- `sousTitre?` : ligne gold sous le titre
+- `stats` : `Array<{label, valeur}>` — max 3
+- `source?` : texte badge SOURCE
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End — rubrique + titre + stats + source | https://litter.catbox.moe/y3xnfa.png |
+| MP4 render (72h) | https://litter.catbox.moe/1c4288.mp4 |
+
+---
+
+### Template Vague8B — TrombinoscapeStrategique (Cartographie du Pouvoir)
+
+**Concept** : Grille 4-6 portraits (300×300px chacun) avec disposition auto (2×2, 3+2, 3×2). Chaque portrait : placeholder géométrique (losange + point central coloré) + barre accent couleur statut en haut + nom + rôle + barre de pouvoir 0-100% colorée. Arcs SVG courbes gold entre portraits sélectionnés (stroke-dashoffset séquentiel).
+
+**Quand utiliser** : cartographie d'un conseil, d'un réseau de décision, d'un organigramme de pouvoir. Fonctionne sans photos — les couleurs de statut (rouge/bleu/gold) encodent le type de pouvoir.
+
+**Path code** : `src/projects/_shared/components/layouts/TrombinoscapeStrategique.tsx`
+**Composition Remotion** : `Template-TrombinoscapeStrategique` (210f, 1920×1080)
+
+**Props clés** :
+- `titre?` : titre global (défaut "CARTOGRAPHIE DU POUVOIR")
+- `portraits` : `Array<{name, role, pouvoir: 0-100, statutColor?, imageUrl?}>` — 4 à 6
+- `arcs?` : `[number, number][]` — paires d'indices à relier
+
+**Previews** :
+| Frame | Preview |
+|---|---|
+| End — 6 portraits grille 3×2 + arcs gold | https://litter.catbox.moe/gqtbd2.png |
+| MP4 render (72h) | https://litter.catbox.moe/ut71oe.mp4 |
+
+---
+
+## 🎨 Templates 16:9 — Vague 6 Expérimentale (Textures & Systèmes Vivants)
+
+> Codés : 2026-05-21. Renders : Litterbox 72h (catbox.moe down ce jour).
+> **Nature** : abstraits par design — nécessitent un contexte narratif précis pour devenir premium.
+> **Workflow upgrade** : envoyer v1 + storyboard + previews à Gemini 3.1-pro → `code_values` ciblés → scène 2x premium. Voir `memory/feedback_gemini-v2-upgrade-workflow.md`.
+
+### Template Vague6Exp-A — ParallaxeDiorama (Profondeur 3 Couches)
+
+**Path code** : `src/projects/_shared/components/layouts/ParallaxeDiorama.tsx`
+**Composition Remotion** : `Template-ParallaxeDiorama` (200f, 1920×1080)
+**Showcase** : `ProtoO-Vague6Exp-Showcase` (1200f = 5 scènes × 240f)
+
+**Cas d'usage** : intro cinématique à révélation lente — paysage géographique, panorama économique, ouverture d'épisode.
+
+**Anatomie :**
+- 3 couches SVG rectangulaires avec parallaxe différentielle : layer0 tx=−12px, layer1 tx=−30px, layer2 tx=−60px (sur 180f)
+- Fade stagger : [0-20f], [10-30f], [20-40f]
+- Drop-shadow SVG + radialGradient vignette
+- `label` + `caption` en overlay
+
+**Props** : `label?`, `caption?`, `bgColor?` (défaut transparent — SouverainScene gère le fond)
+
+| Frame | Preview |
+|---|---|
+| MP4 render (72h) | https://litter.catbox.moe/nxd0xf.mp4 |
+
+---
+
+### Template Vague6Exp-B — MosaïqueWax (Tissu Vivant)
+
+**Path code** : `src/projects/_shared/components/layouts/MosaiqueWax.tsx`
+**Composition Remotion** : `Template-MosaiqueWax` (210f, 1920×1080)
+
+**Cas d'usage** : diversité culturelle, textile, identité africaine, alliances tribales, multiplicité d'acteurs.
+
+**Anatomie :**
+- 24 triangles calculés depuis hexagone régulier r=400 centré (960,540)
+- Spring pop stagger delays [0,4,8,...92], config {damping:10, stiffness:180, mass:0.8}
+- 5 couleurs wax cycliques : #e63946, #c8a951, #4a9eff, #2d9e6b, #f2ebd9
+- Scale ancré au centroïde de chaque triangle (moyenne des 3 sommets)
+- Badge titre à f150+ avec spring
+
+**Props** : `title?`, `subtitle?`, `colors?` (5 couleurs personnalisables), `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render (72h) | https://litter.catbox.moe/tay7fd.mp4 |
+
+---
+
+### Template Vague6Exp-C — MétamorphoseFiduciaire (Symbole → Symbole)
+
+**Path code** : `src/projects/_shared/components/layouts/MetamorphoseFiduciaire.tsx`
+**Composition Remotion** : `Template-MetamorphoseFiduciaire` (180f, 1920×1080)
+
+**Cas d'usage** : transition monétaire (Franc CFA → autre devise), conversion d'alliances économiques, changement d'ère.
+
+**Anatomie :**
+- Symbole A fade 40-80f
+- 15 gouttes d'encre spring depuis le centre, delays 40-82 step 3, config {damping:8, stiffness:200}
+- ClipPath cercle rayon 0→550px (80-120f) révèle Symbole B en gold sur disque navy
+- Gouttes fade 120-150f
+- Fond gradient ivoire
+
+**Props** : `symbolA?` ("₣"), `symbolB?` ("¥"), `inkColor?` (#1a2535), `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render (72h) | https://litter.catbox.moe/1k24tn.mp4 |
+
+---
+
+### Template Vague6Exp-D — OrigamiCarto (4 Quadrants)
+
+**Path code** : `src/projects/_shared/components/layouts/OrigamiCarto.tsx`
+**Composition Remotion** : `Template-OrigamiCarto` (180f, 1920×1080)
+
+**Cas d'usage** : cartographie des enjeux géopolitiques, 4 axes narratifs d'un épisode, 4 acteurs d'un conflit.
+
+**Anatomie :**
+- 4 volets 960×540 se déploient depuis le centre (960,540) en spring scale
+- Stagger : Q1(0-40f), Q2(10-50f), Q3(20-60f), Q4(30-70f), config {damping:14, stiffness:120}
+- ClipPath par volet — pas de débordement pendant l'animation
+- Croix de pliure gold (ligne x=960 + y=540) disparaît 60-90f
+- Titre global au-dessus après déploiement
+
+**Props** : `title?`, `labels?: string[4]` (un label par quadrant cardinal), `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render (72h) | https://litter.catbox.moe/rzspra.mp4 |
+
+---
+
+### Template Vague6Exp-E — LoomWeaver (Tisser les Alliances)
+
+**Path code** : `src/projects/_shared/components/layouts/LoomWeaver.tsx`
+**Composition Remotion** : `Template-LoomWeaver` (220f, 1920×1080)
+
+**Cas d'usage** : alliances géopolitiques, interdépendances économiques, réseau d'acteurs, flux commerciaux.
+
+**Anatomie :**
+- 8 fils warp (horizontaux) : dashoffset 1920→0, stagger [0,8,...56]
+- 8 fils weft (verticaux) : dashoffset 1080→0, stagger [40,50,...110]
+- 64 nœuds aux intersections : spring config {damping:12, stiffness:150, mass:0.8}, delay = 120 + (xi+yi)×2
+- Couleurs par quadrant : tl=#4a9eff, tr=#c8a951, bl=#e63946, br=#2d9e6b
+- Badge titre à f160+
+
+**Props** : `title?`, `nodeColors?` ({tl,tr,bl,br}), `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render (72h) | https://litter.catbox.moe/742vdq.mp4 |
+
+**Showcase complet Vague 6 exp (ProtoO)** : https://litter.catbox.moe/plttdy.mp4
+
+---
+
+## 🎨 Templates 16:9 — Vague 4 Manquants (FUN Investigation & Transition)
+
+> Codés : 2026-05-21. Renders : Litterbox 72h (catbox.moe down ce jour).
+
+### Template Vague4-bis-A — CalqueDechire (Torn Veil)
+
+**Path code** : `src/projects/_shared/components/layouts/CalqueDechire.tsx`
+**Composition Remotion** : `Template-CalqueDechire` (180f, 1920×1080)
+
+**Cas d'usage** : déconstruire la communication officielle — révéler la dette cachée derrière un méga-projet, le double discours d'un communiqué.
+
+**Anatomie :**
+- Phase 1 (0-40f) : document ivoire centré "COMMUNIQUÉ OFFICIEL" + 3 lignes langue de bois
+- Phase 2 (40-70f) : déchirure SVG irrégulière — moitié gauche translate(−860px) + rotate(−8°), droite +860px +8° spring sec {damping:14, stiffness:280}
+- Phase 3 (70-180f) : fond navy révélé + stat rouge + source gold fade-in spring
+
+**Props** : `officialText?`, `bodyLines?: string[]`, `statLabel?`, `sourceLabel?`, `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render | https://i.imgur.com/O5MxaUm.mp4 |
+
+---
+
+### Template Vague4-bis-B — ScanInfrarouge (UV Truth)
+
+**Path code** : `src/projects/_shared/components/layouts/ScanInfrarouge.tsx`
+**Composition Remotion** : `Template-ScanInfrarouge` (200f, 1920×1080)
+
+**Cas d'usage** : révéler la présence cachée de forces étrangères, concessions minières non publiées, accords confidentiels.
+
+**Anatomie :**
+- Surface normale : fond navy + grille discrète + 3 data points officiels (opacité 45%)
+- Ligne de scan : 3px bleu électrique + glow, descend 0→1080px (f40→f160)
+- Zone révélée en dessous : fond vert #0d3a22 + grille bleue + points rouges pulsants + labels gold
+- 4 points cachés avec `triggerFrame` individuels — apparaissent au passage du scan
+
+**Props** : `hiddenPoints?: ScanPoint[]`, `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render | https://i.imgur.com/xCLRZIk.mp4 |
+
+---
+
+### Template Vague4-bis-D — EffetDomino (Tipping Point)
+
+**Path code** : `src/projects/_shared/components/layouts/EffetDomino.tsx`
+**Composition Remotion** : `Template-EffetDomino` (210f, 1920×1080)
+
+**Cas d'usage** : contagion géopolitique, succession coups d'État Sahel, effet domino économique.
+
+**Anatomie :**
+- 5 piliers drapeaux 2D (3 bandes de couleur) alignés horizontalement
+- Labels code + nom pays au-dessus de chaque pilier
+- Cascade déclenchée : chaque chute démarre quand le précédent atteint 45° (délai 27f)
+- Spring chute {damping:8, stiffness:120} — effet poids réaliste
+- Texte d'impact après f165 : spring {damping:18, stiffness:150}
+
+**Props** : `piliers?: DominoPilier[]`, `impactText?`, `impactSubText?`, `bgColor?`
+
+| Frame | Preview |
+|---|---|
+| MP4 render | https://i.imgur.com/x89R2LJ.mp4 |
+
+---
+
+### Template Vague4-T1 — LoomWipe (Transition Tissage Signature)
+
+**Path code** : `src/projects/_shared/components/layouts/LoomWipe.tsx`
+**Composition Remotion** : `Template-LoomWipe` (90f, 1920×1080)
+
+**Cas d'usage** : transition entre chapitres — élégante, ancrage culturel subtil (métaphore tissu/pagne).
+
+**Anatomie :**
+- 4 bandes horizontales (h=270px) : alternent gold/navy, glissent de gauche/droite alternativement
+- 4 bandes verticales (w=480px) : alternent navy/gold, glissent de haut/bas alternativement
+- Convergence à f=42, écran couvert f45→f50, sortie symétrique f50→f88
+- Overlay toujours opaque (pas de bgColor — c'est une transition)
+
+**Props** : `bandColorA?` (#c8a951), `bandColorB?` (#1a2535)
+
+| Frame | Preview |
+|---|---|
+| MP4 render | https://i.imgur.com/DElPL70.mp4 |
+
+**Showcase complet Vague 4 bis (ProtoP)** : https://i.imgur.com/AdddtKp.mp4
 
 ---
 

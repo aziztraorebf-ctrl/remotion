@@ -1,3 +1,4 @@
+import React from "react";
 import {
   AbsoluteFill,
   interpolate,
@@ -11,6 +12,7 @@ export interface PulseNumberProps {
   value?: string;
   subtitle?: string;
   bgColor?: string;
+  mapboxChildren?: React.ReactNode;
 }
 
 const MAX_RING_RADIUS_RATIO = 750 / 960; // as fraction of half-height
@@ -22,6 +24,7 @@ export const PulseNumber: React.FC<PulseNumberProps> = ({
   value = "$2.3T",
   subtitle = "depuis 1960",
   bgColor = "transparent",
+  mapboxChildren,
 }) => {
   const frame = useCurrentFrame();
   const { fps, width, height } = useVideoConfig();
@@ -82,11 +85,37 @@ export const PulseNumber: React.FC<PulseNumberProps> = ({
   return (
     <AbsoluteFill
       style={{
-        backgroundColor: bgColor,
-        backgroundImage: "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)",
+        backgroundColor: mapboxChildren ? "transparent" : bgColor,
+        backgroundImage: mapboxChildren ? "none" : "radial-gradient(rgba(255,255,255,0.07) 1px, transparent 1px)",
         backgroundSize: "24px 24px",
       }}
     >
+      {/* Mapbox fond — derrière tout */}
+      {mapboxChildren && (
+        <>
+          <div style={{ position: "absolute", inset: 0 }}>
+            {mapboxChildren}
+          </div>
+          {/* Vignette navy pour lisibilité des textes */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background: "radial-gradient(circle at center, rgba(26,37,53,0.45) 0%, rgba(26,37,53,0.75) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+          {/* Dot grid subtil par-dessus Mapbox */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage: "radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px)",
+              backgroundSize: "24px 24px",
+            }}
+          />
+        </>
+      )}
+
       {/* SVG rings layer — behind everything */}
       <svg
         viewBox={`0 0 ${width} ${height}`}

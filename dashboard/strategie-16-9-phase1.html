@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0a">
+<title>Souverain · Strategie 16:9 Phase 1</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0a0a;
+    --bg-card: #14110d;
+    --bg-card-hover: #1c1813;
+    --kraft: #d9c8a4;
+    --or: #d4a93c;
+    --or-soft: #c8963c;
+    --tampon: #c83838;
+    --text: #f0ece0;
+    --text-mid: #a09684;
+    --text-dim: #6a6358;
+    --border: #2a2620;
+  }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding-bottom: 80px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+  h1 {
+    font-size: clamp(28px, 5vw, 46px);
+    color: var(--or);
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    font-weight: 700;
+  }
+  .subtitle {
+    color: var(--text-mid);
+    font-style: italic;
+    font-size: clamp(15px, 2.2vw, 19px);
+    margin-bottom: 8px;
+  }
+  .meta {
+    color: var(--text-dim);
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+  h2 {
+    color: var(--or);
+    font-size: clamp(22px, 3.5vw, 30px);
+    margin-top: 56px;
+    margin-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+  }
+  h3 {
+    color: var(--kraft);
+    font-size: clamp(18px, 2.6vw, 22px);
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+  p { margin-bottom: 14px; color: var(--text); }
+  ul, ol { margin-left: 20px; margin-bottom: 16px; }
+  li { margin-bottom: 6px; color: var(--text); }
+  .lead {
+    font-size: clamp(16px, 2.2vw, 19px);
+    color: var(--text-mid);
+    margin-bottom: 28px;
+    border-left: 3px solid var(--or);
+    padding: 10px 20px;
+    background: rgba(212,169,60,0.06);
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .card-validee { border-left: 4px solid #6ec880; }
+  .card-todo    { border-left: 4px solid var(--or); }
+  .card-bench   { border-left: 4px solid #6a8ec0; }
+  .frame-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .frame {
+    background: #000;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    border-radius: 4px;
+  }
+  .frame img, .frame video {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .frame-caption {
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-mid);
+    font-style: italic;
+    background: var(--bg-card);
+  }
+  .frame-caption strong { color: var(--kraft); font-style: normal; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  th {
+    color: var(--or);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+  td.num { font-family: 'IBM Plex Mono', monospace; color: var(--or-soft); text-align: right; }
+  .badge {
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 3px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    font-family: 'IBM Plex Mono', monospace;
+    text-transform: uppercase;
+  }
+  .badge-ok { background: rgba(110,200,128,0.18); color: #6ec880; }
+  .badge-warn { background: rgba(212,169,60,0.18); color: var(--or); }
+  .badge-err { background: rgba(200,56,56,0.18); color: #e07878; }
+  a { color: var(--or); text-decoration: none; border-bottom: 1px dotted var(--or-soft); }
+  a:hover { color: var(--kraft); border-bottom-style: solid; }
+  .priorite {
+    display: inline-block;
+    padding: 1px 8px;
+    margin-right: 6px;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--tampon);
+    color: #fff;
+    border-radius: 2px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Strategie Templates 16:9 &mdash; Phase 1</h1>
+<div class="subtitle">Pivot mid-form documentaire style Vox / Johnny Harris / Polymatter / Caspian Report</div>
+<div class="meta">Souverain &middot; 2026-05-21</div>
+
+<div class="lead">
+Audit complet de la bibliothèque (33 templates) + benchmark 7 vidéos référence + identification des 22 mécaniques visuelles cibles + V1 du premier template Mapbox 16:9 cinématique validée. Document de synthèse pour cadrer la suite (Phase 2 brainstorm Kimi/Gemini, Phase 3 R&amp;D, Phase 4 intégration Sénégal Beat1).
+</div>
+
+<h2>1. Victoire concrete &mdash; V1 MapboxSatelliteSenegal validee</h2>
+
+<div class="card card-validee">
+<h3>Premier template Mapbox 16:9 cinematique du projet</h3>
+<p>Pattern reproduisant la grammaire <strong>Caspian Report</strong> : satellite tilted + camera flyTo enchaine (zoom continent &rarr; pays &rarr; zone offshore) + pitch progressif 0&rarr;55&deg; + bearing 0&rarr;-20&deg;. Highlight pays focus en or, vignettage subtil, cartouche editorial.</p>
+
+<div class="frame-grid">
+  <div class="frame">
+    <video controls preload="metadata" poster="https://files.catbox.moe/hnvai5.png">
+      <source src="https://files.catbox.moe/zdramv.mp4" type="video/mp4">
+    </video>
+    <div class="frame-caption"><strong>V1 complete (6s)</strong> &mdash; zoom Atlantique &rarr; Sangomar pitch 55&deg;</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/hnvai5.png" alt="Senegal mid">
+    <div class="frame-caption"><strong>Mid</strong> &mdash; zoom intermediaire cote Atlantique</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/1zm06w.png" alt="Senegal end">
+    <div class="frame-caption"><strong>End</strong> &mdash; zoom final Sangomar (pitch 55&deg;, bearing -20&deg;)</div>
+  </div>
+</div>
+
+<p><span class="badge badge-ok">Statut</span> V1 valide Aziz 2026-05-21. Look "Caspian Report / Johnny Harris" obtenu.</p>
+<p><span class="priorite">V2 prio</span> Eclaircir l'ocean (actuellement trop sombre). 4 options techniques pre-analysees dans le <a href="#">backlog ameliorations Mapbox</a>.</p>
+</div>
+
+<h2>2. Etat reel de la bibliotheque (33 templates)</h2>
+
+<div class="card">
+<h3>Responsivite format (16:9 vs vertical Shorts)</h3>
+<table>
+<tr><th>Statut</th><th class="num">Nombre</th><th>Action</th></tr>
+<tr><td><span class="badge badge-ok">Responsive natif</span></td><td class="num">19</td><td>Utilisables 16:9 sans modif</td></tr>
+<tr><td><span class="badge badge-warn">Partiel</span></td><td class="num">9</td><td>Fix mineur (useVideoConfig)</td></tr>
+<tr><td><span class="badge badge-err">Hardcoded vertical</span></td><td class="num">1</td><td>Laisser pour Shorts (SplitFlap)</td></tr>
+</table>
+<p>Verdict : ~80% de la bibliotheque est responsive en intention. Le pivot 16:9 ne demande pas de tout refaire.</p>
+</div>
+
+<div class="card">
+<h3>Composition (composabilite sur fond custom)</h3>
+<table>
+<tr><th>Statut</th><th class="num">Nombre</th><th>Implication</th></tr>
+<tr><td><span class="badge badge-err">OPAQUE</span></td><td class="num">17</td><td>Refactor obligatoire pour pipeline 16:9 documentaire</td></tr>
+<tr><td><span class="badge badge-ok">TRANSPARENT</span></td><td class="num">6</td><td>Composable directement</td></tr>
+<tr><td><span class="badge badge-warn">CONDITIONNEL</span></td><td class="num">3</td><td>Composable via prop</td></tr>
+<tr><td><span class="badge">Non audite</span></td><td class="num">7</td><td>Phase 3</td></tr>
+</table>
+<p><strong>Anti-pattern detecte 2026-05-21</strong> : OdometerFlip (et 16 autres) posent un <code>&lt;AbsoluteFill backgroundColor="..."&gt;</code> opaque en root, masquant tout fond parent (Kraftcard, Mapbox, etc.). Refactor : ajouter prop <code>bgColor?: string</code> default "transparent". ~5 min par template &times; 17 = 1h30 total, no-risk.</p>
+</div>
+
+<div class="card">
+<h3>Templates "motion design pro signature" sous-exploites</h3>
+<p>Insight 2026-05-21 : ces templates sont du niveau After Effects mais ont ete traites comme blocs Shorts isoles au lieu d'un langage signature. A reintegrer comme mecaniques signature dans la grammaire mid-form 16:9.</p>
+<ul>
+<li><strong>OdometerFlip</strong> &mdash; compteur mecanique flip &rarr; "100 000 barils/jour"</li>
+<li><strong>GlitchReveal</strong> &mdash; reveal glitch &rarr; bascule narrative</li>
+<li><strong>BurnReveal</strong> &mdash; carte/doc qui brule &rarr; document classifie</li>
+<li><strong>CoinFlip</strong> &mdash; pile/face card flip &rarr; choix binaire</li>
+<li><strong>ShatterReform</strong> &mdash; brisure puis reformation &rarr; "l'illusion de la souverainete"</li>
+<li><strong>RadarPing / RadarScan</strong> &mdash; balayage radar &rarr; alerte / focus</li>
+<li><strong>TimelineFracture</strong> &mdash; timeline qui se brise &rarr; rupture historique</li>
+<li><strong>SplitFlap</strong> &mdash; flip-cards horloge gare &rarr; annonce / verdict</li>
+</ul>
+</div>
+
+<h2>3. Benchmark 7 videos documentaires premium</h2>
+
+<div class="card card-bench">
+<h3>Corpus &mdash; 70 frames analysees</h3>
+<table>
+<tr><th>Chaine</th><th>Video</th><th>Style dominant</th></tr>
+<tr><td><strong>Caspian Report</strong></td><td>Greenland is only the beginning</td><td><strong>Mapbox 3D satellite + drapeaux + hachures &mdash; reference directe</strong></td></tr>
+<tr><td>Johnny Harris</td><td>The Internet Didn't Fail</td><td>PTC cinema + maps + archive</td></tr>
+<tr><td>Vox</td><td>Tolkien / Palantir</td><td>Collage culturel + interviews + caption</td></tr>
+<tr><td>PolyMatter</td><td>Puerto Rico Economy</td><td>Charts long-tenus + B-roll thematique</td></tr>
+<tr><td>Real Life Lore</td><td>NH Geography Glitch</td><td>Mapbox 3D continu + animations intra-shot</td></tr>
+<tr><td>Map Men</td><td>World's most annoying road</td><td>Two-presenter + cartoon maps</td></tr>
+<tr><td>Wendover</td><td>Car Dealerships Scam</td><td>B-roll terrain + macbook tilted + maps</td></tr>
+</table>
+</div>
+
+<div class="card card-bench">
+<h3>5 frames cles &mdash; references visuelles directes</h3>
+<div class="frame-grid">
+  <div class="frame">
+    <img src="https://files.catbox.moe/mthni1.jpg" alt="Caspian">
+    <div class="frame-caption"><strong>Caspian Report</strong> &mdash; Mapbox 3D + bateaux + cones radar + label "Lomonosov Ridge" + hachures EEZ</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/616os7.jpg" alt="Johnny Harris">
+    <div class="frame-caption"><strong>Johnny Harris</strong> &mdash; surlignage jaune fluo anime sur citation/texte scanne, parallax + zoom continu</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/5029d8.jpg" alt="PolyMatter">
+    <div class="frame-caption"><strong>PolyMatter</strong> &mdash; chart line-draw signature, fond rouge mat, legend inline, disclaimer technique</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/u0bzlz.jpg" alt="Vox">
+    <div class="frame-caption"><strong>Vox</strong> &mdash; triptyque eclate "X holders" + caption surlignee jaune bande noire arrondie</div>
+  </div>
+  <div class="frame">
+    <img src="https://files.catbox.moe/34bw1y.jpg" alt="Real Life Lore">
+    <div class="frame-caption"><strong>Real Life Lore</strong> &mdash; Mapbox 3D satellite tilted, labels rouges progressifs cascade</div>
+  </div>
+</div>
+</div>
+
+<div class="card card-bench">
+<h3>Insights majeurs (4)</h3>
+<ol>
+<li><strong>Le rythme "5-8s" n'est PAS du cut.</strong> PolyMatter tient des shots 30s mais fait evoluer le contenu <em>a l'interieur</em> (labels en cascade, lignes qui se tracent, camera qui zoom). Pour Remotion : chaque <code>&lt;Sequence&gt;</code> doit porter 2-3 micro-evenements espaces, pas un asset statique tenu. C'est ce que OdometerFlip, RadarPing, WordExplode savent deja faire.</li>
+<li><strong>Caspian Report = reference directe pour Atlas/Souverain.</strong> Mapbox 3D satellite tilted (pitch 55&deg;, bearing -20&deg;) + drapeaux pin + hachures + badges noirs. <strong>5 patterns par minute.</strong> V1 MapboxSatelliteSenegal reproduit deja cette grammaire.</li>
+<li><strong>Anti-pattern confirme.</strong> Aucune des 7 chaines premium n'utilise de transitions tape-a-l'oeil (whoosh, glitches lourds, lens flares). 100% cuts francs ou crossfade subtil. Coherent avec la charte Souverain.</li>
+<li><strong>Densite densite densite.</strong> Ratio ~40% B-roll cinema reel / 60% animation infographique chez Caspian/PolyMatter. Pour Souverain : viser 40% B-roll (Pexels/footage) + 60% animation Remotion.</li>
+</ol>
+</div>
+
+<h2>4. Top 6 templates a coder en priorite</h2>
+
+<div class="card card-todo">
+<p>Tous faisables avec stack actuel (Mapbox + Recraft + SVG natif), aucun plugin externe.</p>
+<table>
+<tr><th>#</th><th>Template</th><th>Statut</th><th>Apparitions corpus</th></tr>
+<tr><td class="num">1</td><td><strong>MapboxSatelliteSenegal</strong> (pattern adaptable)</td><td><span class="badge badge-ok">V1 livree 2026-05-21</span></td><td class="num">4/7</td></tr>
+<tr><td class="num">2</td><td><strong>CountryIsolatePin</strong> (pays + drapeau + badge)</td><td><span class="badge badge-warn">A coder</span></td><td class="num">6/7</td></tr>
+<tr><td class="num">3</td><td><strong>HighlightedQuote</strong> (surlignage jaune + bande noire)</td><td><span class="badge badge-warn">A coder</span></td><td class="num">4/7</td></tr>
+<tr><td class="num">4</td><td><strong>LineChartDrawOn</strong> (stroke anime + legend inline)</td><td><span class="badge badge-warn">A coder</span></td><td class="num">2/7</td></tr>
+<tr><td class="num">5</td><td><strong>HatchedZone</strong> (rectangle + hachures SVG)</td><td><span class="badge badge-warn">A coder</span></td><td class="num">3/7</td></tr>
+<tr><td class="num">6</td><td><strong>TripleCollage</strong> (3 medias + caption pop-on)</td><td><span class="badge badge-warn">A coder</span></td><td class="num">3/7</td></tr>
+</table>
+</div>
+
+<h2>5. Plan d'execution Phase 2 &rarr; 4</h2>
+
+<div class="card">
+<h3>Phase 2 &mdash; Brainstorm Kimi + Gemini (parallele)</h3>
+<p>Inputs : audit + benchmark + audit composants opaques. Output : shortlist 10-12 templates 16:9 enrichie + idees creatives non couvertes par le corpus.</p>
+
+<h3>Phase 3 &mdash; R&amp;D vagues</h3>
+<ul>
+<li><strong>Vague 1</strong> : refactor 17 composants OPAQUE &rarr; COMPOSABLE (~1h30, no-risk)</li>
+<li><strong>Vague 2</strong> : coder les 5 templates manquants (CountryIsolatePin, HighlightedQuote, HatchedZone, LineChartDrawOn, TripleCollage)</li>
+<li><strong>Vague 3</strong> : explorer Recraft (Hand-drawn overlay style Johnny Harris)</li>
+</ul>
+
+<h3>Phase 4 &mdash; Integration Senegal Beat1</h3>
+<p>Test grandeur reelle. Combine MapboxSatelliteSenegal V2 (ocean eclairci) + 2-3 nouveaux templates Phase 3 sur l'audio Senegal Petrole deja valide.</p>
+</div>
+
+<h2>6. Liens de reference</h2>
+
+<div class="card">
+<ul>
+<li><strong>Audit complet</strong> : <code>memory/audit-templates-16-9.md</code></li>
+<li><strong>Backlog ameliorations V2 Mapbox</strong> : <code>memory/backlog-ameliorations-mapbox-satellite.md</code></li>
+<li><strong>Pattern canonique render Mapbox (2 pieges)</strong> : <code>memory/feedback_mapbox-render-pattern-canonique.md</code></li>
+<li><strong>Code V1 MapboxSatelliteSenegal</strong> : <code>src/projects/_proto-16-9/Prototype_A_MapboxSatelliteSenegal.tsx</code></li>
+<li><strong>Index complet templates Souverain</strong> : <code>public/_shared/ASSETS-INDEX.md</code> Template C-bis</li>
+<li><strong>Render obligatoire</strong> : <code>./scripts/render-mapbox.sh ProtoA-MapboxSatelliteSenegal out/...mp4</code></li>
+</ul>
+</div>
+
+</div>
+</body>
+</html>

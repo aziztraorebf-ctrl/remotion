@@ -2,14 +2,18 @@
  * BrutalHookSplit — Template hook Souverain validé Silicon Savannah Beat1
  *
  * Structure :
- *   - Haut (PHOTO_RATIO %) : photo Ken Burns diagonal (zoom + drift latéral)
+ *   - Haut (PHOTO_RATIO %) : photo Ken Burns OU composant Mapbox (via mapboxChildren)
  *   - Bas (1 - PHOTO_RATIO) : fond sombre avec lignes typewriter + accent Bebas Neue
+ *                             OU frappes brutales (via brutalLines)
  *
  * Paramètres :
- *   - photoSrc        : chemin staticFile() vers la photo (objectFit cover)
+ *   - photoSrc        : chemin staticFile() vers la photo (optionnel si mapboxChildren fourni)
+ *   - mapboxChildren  : React.ReactNode — remplace la zone photo (ex: <MapboxBase .../>)
  *   - bgSrc           : chemin staticFile() vers le background texture (optionnel)
- *   - lines           : tableau de lignes narration (null = spacer)
+ *   - lines           : tableau de lignes narration typewriter (null = spacer)
  *   - lineTriggers    : frame d'apparition de chaque ligne (même index que lines)
+ *   - brutalLines     : frappes brutales — remplace typewriter si fourni
+ *                       [{text, color, triggerFrame, size?}]
  *   - accentText      : texte Bebas Neue doré (ex: "LE KENYA.")
  *   - accentTrigger   : frame d'apparition de l'accent
  *   - sourceLabel     : texte source discret en bas (ex: "GSMA · WORLD BANK 2025")
@@ -32,13 +36,22 @@ import {
   useVideoConfig,
 } from "remotion";
 
+export interface BrutalLine {
+  text: string;
+  color: string;
+  triggerFrame: number;
+  size?: number;
+}
+
 export interface BrutalHookSplitProps {
-  photoSrc: string;
+  photoSrc?: string;
+  mapboxChildren?: React.ReactNode;
   bgSrc?: string;
-  lines: (string | null)[];
-  lineTriggers: number[];
-  accentText: string;
-  accentTrigger: number;
+  lines?: (string | null)[];
+  lineTriggers?: number[];
+  brutalLines?: BrutalLine[];
+  accentText?: string;
+  accentTrigger?: number;
   sourceLabel?: string;
   tagLabel?: string;
   accentColor?: string;
@@ -53,9 +66,11 @@ const BG_DEFAULT = "#0a0a0a";
 
 export const BrutalHookSplit: React.FC<BrutalHookSplitProps> = ({
   photoSrc,
+  mapboxChildren,
   bgSrc,
   lines,
   lineTriggers,
+  brutalLines,
   accentText,
   accentTrigger,
   sourceLabel,
@@ -112,7 +127,7 @@ export const BrutalHookSplit: React.FC<BrutalHookSplitProps> = ({
         />
       )}
 
-      {/* Zone photo — Ken Burns diagonal dans overflow:hidden */}
+      {/* Zone haute — Mapbox OU photo Ken Burns */}
       <div
         style={{
           position: "absolute",
@@ -123,17 +138,23 @@ export const BrutalHookSplit: React.FC<BrutalHookSplitProps> = ({
           overflow: "hidden",
         }}
       >
-        <Img
-          src={photoSrc}
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            transform: `scale(${kbScale}) translate(${kbX}px, ${kbY}px)`,
-            transformOrigin: "center center",
-          }}
-        />
-        {/* Gradient bas photo → fond sombre */}
+        {mapboxChildren ? (
+          <div style={{ width: "100%", height: "100%", position: "relative" }}>
+            {mapboxChildren}
+          </div>
+        ) : photoSrc ? (
+          <Img
+            src={photoSrc}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: `scale(${kbScale}) translate(${kbX}px, ${kbY}px)`,
+              transformOrigin: "center center",
+            }}
+          />
+        ) : null}
+        {/* Gradient bas zone haute → fond sombre */}
         <div
           style={{
             position: "absolute",
@@ -183,36 +204,58 @@ export const BrutalHookSplit: React.FC<BrutalHookSplitProps> = ({
           overflow: "hidden",
         }}
       >
-        {/* Lignes narration */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
-          {lines.map((line, i) => {
-            if (line === null) return <div key={i} style={{ height: 16 }} />;
-            return (
-              <TypeLine
+        {brutalLines ? (
+          /* Mode frappes brutales */
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {brutalLines.map((bl, i) => (
+              <BrutalStrike
                 key={i}
-                text={line}
-                triggerFrame={lineTriggers[i]}
+                text={bl.text}
+                color={bl.color}
+                triggerFrame={bl.triggerFrame}
+                size={bl.size ?? 96}
                 frame={frame}
                 fps={fps}
               />
-            );
-          })}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <>
+            {/* Mode typewriter classique */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+              {(lines ?? []).map((line, i) => {
+                if (line === null) return <div key={i} style={{ height: 16 }} />;
+                return (
+                  <TypeLine
+                    key={i}
+                    text={line}
+                    triggerFrame={(lineTriggers ?? [])[i] ?? 0}
+                    frame={frame}
+                    fps={fps}
+                  />
+                );
+              })}
+            </div>
 
-        {/* Accent Bebas Neue */}
-        <AccentLine
-          text={accentText}
-          triggerFrame={accentTrigger}
-          frame={frame}
-          fps={fps}
-          color={accentColor}
-        />
-
-        {/* Barre dorée */}
-        <SubBar frame={frame} fps={fps} triggerFrame={accentTrigger + 10} color={accentColor} />
+            {accentText && accentTrigger !== undefined && (
+              <>
+                <AccentLine
+                  text={accentText}
+                  triggerFrame={accentTrigger}
+                  frame={frame}
+                  fps={fps}
+                  color={accentColor}
+                />
+                <SubBar frame={frame} fps={fps} triggerFrame={accentTrigger + 10} color={accentColor} />
+              </>
+            )}
+          </>
+        )}
 
         {/* Source discrète */}
-        {sourceLabel && <SubLabel frame={frame} fps={fps} text={sourceLabel} triggerFrame={accentTrigger - 40} />}
+        {sourceLabel && accentTrigger !== undefined && (
+          <SubLabel frame={frame} fps={fps} text={sourceLabel} triggerFrame={accentTrigger - 40} />
+        )}
       </div>
     </AbsoluteFill>
   );
@@ -346,6 +389,46 @@ const SubLabel: React.FC<{ frame: number; fps: number; text: string; triggerFram
         color: "#ffffff",
         letterSpacing: "0.15em",
         textTransform: "uppercase",
+        opacity,
+      }}
+    >
+      {text}
+    </div>
+  );
+};
+
+// ── Frappe brutale — apparition instantanée avec spring overshoot ──
+const BrutalStrike: React.FC<{
+  text: string;
+  color: string;
+  triggerFrame: number;
+  size: number;
+  frame: number;
+  fps: number;
+}> = ({ text, color, triggerFrame, size, frame, fps }) => {
+  const p = spring({
+    frame: frame - triggerFrame,
+    fps,
+    config: { damping: 12, stiffness: 200, mass: 0.8 },
+    durationInFrames: 20,
+  });
+  const scale = interpolate(p, [0, 1], [0.6, 1], { extrapolateRight: "clamp" });
+  const opacity = interpolate(p, [0, 0.3, 1], [0, 1, 1], { extrapolateRight: "clamp" });
+
+  if (frame < triggerFrame) return null;
+
+  return (
+    <div
+      style={{
+        color,
+        fontFamily: "'IBM Plex Mono', monospace",
+        fontSize: size,
+        fontWeight: 700,
+        letterSpacing: "0.04em",
+        textTransform: "uppercase",
+        lineHeight: 1.05,
+        transform: `scale(${scale})`,
+        transformOrigin: "left center",
         opacity,
       }}
     >

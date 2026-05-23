@@ -134,6 +134,20 @@ import { LoomWipe } from "./projects/_shared/components/layouts/LoomWipe";
 import { Prototype_P_Vague4bShowcase } from "./projects/_proto-16-9/Prototype_P_Vague4bShowcase";
 import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Prototype_Q_Vague3CompleteShowcase";
 import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
+import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
+import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
+import { Beat3 as SenegalBeat3 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat3";
+import { Beat5 as SenegalBeat5 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat5";
+import { Beat6 as SenegalBeat6 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat6";
+import { Beat7 as SenegalBeat7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat7";
+import { Beat8 as SenegalBeat8 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat8";
+import { Beat9 as SenegalBeat9 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat9";
+import { Beat10 as SenegalBeat10 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat10";
+import { SenegalActe2, SENEGAL_ACTE2_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2";
+import { SenegalPreviewActes12, SENEGAL_PREVIEW_ACTES12_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalPreviewActes12";
+import { SenegalActe2Continu } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2Continu";
+import { SenegalActe2Full, SENEGAL_ACTE2_FULL_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2Full";
+import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -708,7 +722,121 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
       <Folder name="souverain">
-        
+        <Folder name="senegal-petrole-gaz">
+          <Composition
+            id="Senegal-Beat1"
+            component={SenegalBeat1}
+            durationInFrames={554}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat2"
+            component={SenegalBeat2}
+            durationInFrames={313}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat3"
+            component={SenegalBeat3}
+            durationInFrames={139}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat5"
+            component={SenegalBeat5}
+            durationInFrames={260}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat6"
+            component={SenegalBeat6}
+            durationInFrames={512}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat7"
+            component={SenegalBeat7}
+            durationInFrames={1071}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat8"
+            component={SenegalBeat8}
+            durationInFrames={546}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat9"
+            component={SenegalBeat9}
+            durationInFrames={516}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat10"
+            component={SenegalBeat10}
+            durationInFrames={1703}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Acte2"
+            component={SenegalActe2}
+            durationInFrames={SENEGAL_ACTE2_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Preview-Actes12"
+            component={SenegalPreviewActes12}
+            durationInFrames={SENEGAL_PREVIEW_ACTES12_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Acte2-Continu"
+            component={SenegalActe2Continu}
+            durationInFrames={2134}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Acte2-Full"
+            component={SenegalActe2Full}
+            durationInFrames={SENEGAL_ACTE2_FULL_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Proto-D3-StackedBars"
+            component={PrototypeD3StackedBars}
+            durationInFrames={450}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+        </Folder>
+
         
         
         
