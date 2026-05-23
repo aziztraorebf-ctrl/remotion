@@ -1,0 +1,117 @@
+{
+  "background_assets_to_generate": [],
+  "foreground_visual_elements": [
+    {
+      "element_id": "dot_yakaar",
+      "type": "DataPoint",
+      "asset_source": "remotion_component",
+      "filename_or_content": "<GlowingDot />",
+      "screen_position_xy": [
+        960,
+        540
+      ],
+      "size_px": [
+        30,
+        30
+      ],
+      "color_hex": "#a3d2e6",
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "question_mark_overlay",
+      "type": "Typography",
+      "asset_source": "text",
+      "filename_or_content": "?",
+      "screen_position_xy": [
+        960,
+        320
+      ],
+      "size_px": [
+        400,
+        500
+      ],
+      "color_hex": "#88929c",
+      "rotation_deg": 0,
+      "z_index": 20
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "dot_yakaar"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_and_scale",
+      "duration_frames": 30,
+      "easing_hint": "spring(damping:15, stiffness:150)",
+      "audio_cue_word": "Et il y a"
+    },
+    {
+      "frame_local": 161,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "dot_yakaar"
+      ],
+      "transition_type": "color_shift_and_pulse_slowdown",
+      "duration_frames": 45,
+      "easing_hint": "easeOutSine",
+      "audio_cue_word": "Yakaar-Teranga."
+    },
+    {
+      "frame_local": 267,
+      "element_ids_appearing": [
+        "question_mark_overlay"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in_scale_up",
+      "duration_frames": 26,
+      "easing_hint": "spring(damping:20, stiffness:120)",
+      "audio_cue_word": "personne n'a encore décidé"
+    },
+    {
+      "frame_local": 293,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "dot_yakaar",
+        "question_mark_overlay"
+      ],
+      "transition_type": "opacity_max_pulse_minimum",
+      "duration_frames": 30,
+      "easing_hint": "easeOutCubic",
+      "audio_cue_word": "Il attend."
+    },
+    {
+      "frame_local": 413,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "dot_yakaar"
+      ],
+      "transition_type": "rapid_vibration_xy",
+      "duration_frames": 60,
+      "easing_hint": "linear_loop",
+      "audio_cue_word": "capitales"
+    }
+  ],
+  "permanent_motion": "Slow continuous Mapbox camera drift south-west (Mercator projection). The cyan dot emits a constant, soft radial glow that slowly expands and retracts.",
+  "fidelity_warnings": "Despite standard instructions dictating a gold dot (#c8a951), the forced-alignment text explicitly requests 'dot bleu-cyan' for Yakaar-Teranga to distinguish it visually in the narrative. Implemented as #a3d2e6. Question mark font should be sans-serif, heavily weighted but with a soft opacity/blur to blend with the dark background without completely obscuring the map.",
+  "remotion_implementation_notes": "Use Mapbox GL JS for the base layer with absolute Mercator positioning. The '?' typography should use absolute positioning translated by -50% -50% to center precisely at [960,320]. For the dot_yakaar vibration starting at frame 413, apply a React hook tying the frame number to a small Math.sin() and Math.cos() offset on the X/Y translation.",
+  "sfx": [
+    {
+      "trigger": "frame_0",
+      "sound": "sonar_ping_high_pitch.wav",
+      "description": "A slightly higher, cooler-toned sonar ping to distinguish this cyan dot from previous gold ones."
+    },
+    {
+      "trigger": "frame_267",
+      "sound": "low_sub_bass_drop.wav",
+      "description": "A deep, resonant, somewhat ominous sub-bass hit as the massive question mark appears."
+    },
+    {
+      "trigger": "frame_413",
+      "sound": "subtle_geiger_clicks.wav",
+      "description": "Very low volume, rapid clicking or vibration sound reflecting the 'multiple capitals watching' tension."
+    }
+  ]
+}

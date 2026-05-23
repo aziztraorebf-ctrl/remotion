@@ -1,0 +1,233 @@
+{
+  "background_assets_to_generate": [],
+  "foreground_visual_elements": [
+    {
+      "element_id": "map_base",
+      "type": "mapbox_layer",
+      "asset_source": "code",
+      "filename_or_content": "mapbox://styles/mapbox/dark-v11",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1920,
+        1080
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 0
+    },
+    {
+      "element_id": "dot_sangomar",
+      "type": "svg",
+      "asset_source": "code",
+      "filename_or_content": "<circle cx='20' cy='20' r='12' fill='#c8a951' filter='url(#glow)'/>",
+      "screen_position_xy": [
+        810,
+        540
+      ],
+      "size_px": [
+        40,
+        40
+      ],
+      "color_hex": "#c8a951",
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "dot_glow",
+      "type": "css_effect",
+      "asset_source": "code",
+      "filename_or_content": "box-shadow: 0 0 50px 20px rgba(200,169,81,0.2)",
+      "screen_position_xy": [
+        810,
+        540
+      ],
+      "size_px": [
+        40,
+        40
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 9
+    },
+    {
+      "element_id": "label_plate",
+      "type": "html",
+      "asset_source": "code",
+      "filename_or_content": "<div style='background-color:#0d1525; border-left: 8px solid #c8a951; height: 100%; display: flex; flex-direction: column; justify-content: center; padding: 0 20px;'></div>",
+      "screen_position_xy": [
+        890,
+        460
+      ],
+      "size_px": [
+        410,
+        150
+      ],
+      "color_hex": null,
+      "rotation_deg": 0,
+      "z_index": 20
+    },
+    {
+      "element_id": "label_title",
+      "type": "text",
+      "asset_source": "code",
+      "filename_or_content": "SANGOMAR",
+      "screen_position_xy": [
+        920,
+        495
+      ],
+      "size_px": [
+        350,
+        60
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 21
+    },
+    {
+      "element_id": "label_subtitle",
+      "type": "text",
+      "asset_source": "code",
+      "filename_or_content": "PÉTROLE BRUT",
+      "screen_position_xy": [
+        920,
+        560
+      ],
+      "size_px": [
+        350,
+        30
+      ],
+      "color_hex": "#e0e0e0",
+      "rotation_deg": 0,
+      "z_index": 21
+    },
+    {
+      "element_id": "label_operator",
+      "type": "text",
+      "asset_source": "code",
+      "filename_or_content": "OPÉRATEUR: WOODSIDE",
+      "screen_position_xy": [
+        920,
+        595
+      ],
+      "size_px": [
+        350,
+        20
+      ],
+      "color_hex": "#8892b0",
+      "rotation_deg": 0,
+      "z_index": 21
+    },
+    {
+      "element_id": "label_share",
+      "type": "text",
+      "asset_source": "code",
+      "filename_or_content": "PETROSEN 18%",
+      "screen_position_xy": [
+        920,
+        620
+      ],
+      "size_px": [
+        350,
+        20
+      ],
+      "color_hex": "#c8a951",
+      "rotation_deg": 0,
+      "z_index": 21
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "map_base"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 30,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Le"
+    },
+    {
+      "frame_local": 130,
+      "element_ids_appearing": [
+        "dot_sangomar",
+        "dot_glow"
+      ],
+      "element_ids_changing": [
+        "map_base"
+      ],
+      "transition_type": "scale_spring",
+      "duration_frames": 25,
+      "easing_hint": "spring(damping:8, stiffness:350)",
+      "audio_cue_word": "Sangomar,"
+    },
+    {
+      "frame_local": 145,
+      "element_ids_appearing": [
+        "label_plate",
+        "label_title"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_right_spring",
+      "duration_frames": 20,
+      "easing_hint": "spring(damping:18, stiffness:200)",
+      "audio_cue_word": "Sangomar,"
+    },
+    {
+      "frame_local": 196,
+      "element_ids_appearing": [
+        "label_subtitle"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "typewriter",
+      "duration_frames": 15,
+      "easing_hint": "linear",
+      "audio_cue_word": "pétrole brut"
+    },
+    {
+      "frame_local": 261,
+      "element_ids_appearing": [
+        "label_operator"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 10,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Woodside"
+    },
+    {
+      "frame_local": 348,
+      "element_ids_appearing": [
+        "label_share"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_up_fade",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "Petrosen"
+    }
+  ],
+  "permanent_motion": "Mapbox camera very slowly pans west (-0.1 deg/sec) to reveal ocean context. Dot emits a subtle slow pulse.",
+  "fidelity_warnings": "Ensure Mapbox layer uses a dark custom style similar to the reference, focusing on ocean depth and country borders, hiding non-essential labels. Projection must be Mercator.",
+  "remotion_implementation_notes": "Use Remotion's Spring component for the label plate's entry. Mapbox should be implemented using absolute positioning and fixed zoom/center with a slow interpolate over the 510 frames. The dot glow can be achieved with CSS drop-shadow or a pseudo-element with radial-gradient.",
+  "sfx": [
+    {
+      "trigger": 130,
+      "sound": "deep_sonar_ping",
+      "description": "Low frequency ping as the Sangomar dot appears."
+    },
+    {
+      "trigger": 145,
+      "sound": "ui_slide_in",
+      "description": "Mechanical slide sound for the label plate."
+    },
+    {
+      "trigger": 196,
+      "sound": "ui_typewriter",
+      "description": "Short typewriter burst for subtitle."
+    }
+  ]
+}

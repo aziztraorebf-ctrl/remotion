@@ -1,0 +1,177 @@
+{
+  "background_assets_to_generate": [
+    {
+      "id": "navy_texture_bg",
+      "type": "image",
+      "description": "Navy blue background (#0d1525) with a subtle, dark noise or paper texture overlay to match the cinematic documentary style."
+    }
+  ],
+  "foreground_visual_elements": [
+    {
+      "element_id": "huge_text_60",
+      "type": "text",
+      "asset_source": "content",
+      "filename_or_content": "60%",
+      "screen_position_xy": [
+        250,
+        300
+      ],
+      "size_px": [
+        1200,
+        800
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "text_scandale",
+      "type": "text",
+      "asset_source": "content",
+      "filename_or_content": "NI UN SCANDALE.",
+      "screen_position_xy": [
+        1100,
+        560
+      ],
+      "size_px": [
+        800,
+        100
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 11
+    },
+    {
+      "element_id": "text_jackpot",
+      "type": "text",
+      "asset_source": "content",
+      "filename_or_content": "NI UN JACKPOT.",
+      "screen_position_xy": [
+        1100,
+        690
+      ],
+      "size_px": [
+        800,
+        100
+      ],
+      "color_hex": "#ffffff",
+      "rotation_deg": 0,
+      "z_index": 11
+    },
+    {
+      "element_id": "gold_divider_line",
+      "type": "shape",
+      "asset_source": "content",
+      "filename_or_content": "horizontal_line",
+      "screen_position_xy": [
+        960,
+        820
+      ],
+      "size_px": [
+        1630,
+        4
+      ],
+      "color_hex": "#c8a951",
+      "rotation_deg": 0,
+      "z_index": 12
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "navy_texture_bg"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 15,
+      "easing_hint": "easeOut",
+      "audio_cue_word": "Sur le papier"
+    },
+    {
+      "frame_local": 72,
+      "element_ids_appearing": [
+        "huge_text_60"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_in_scale",
+      "duration_frames": 25,
+      "easing_hint": "spring(damping:15, stiffness:250)",
+      "audio_cue_word": "soixante pour cent"
+    },
+    {
+      "frame_local": 219,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "huge_text_60"
+      ],
+      "transition_type": "pulse",
+      "duration_frames": 15,
+      "easing_hint": "spring(damping:10, stiffness:300)",
+      "audio_cue_word": "Soixante pour cent."
+    },
+    {
+      "frame_local": 312,
+      "element_ids_appearing": [
+        "text_scandale"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_up_fade",
+      "duration_frames": 20,
+      "easing_hint": "easeOutCubic",
+      "audio_cue_word": "Ni un scandale"
+    },
+    {
+      "frame_local": 350,
+      "element_ids_appearing": [
+        "text_jackpot"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_up_fade",
+      "duration_frames": 20,
+      "easing_hint": "easeOutCubic",
+      "audio_cue_word": "ni un jackpot."
+    },
+    {
+      "frame_local": 449,
+      "element_ids_appearing": [
+        "gold_divider_line"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "scale_x",
+      "duration_frames": 30,
+      "easing_hint": "easeInOutCubic",
+      "audio_cue_word": "voilà où ça devient"
+    }
+  ],
+  "permanent_motion": "Very subtle, slow continuous scaling (1.0 to 1.03) and slight drift on the '60%' text after it appears to keep the frame alive. The background texture should have a very slow pan or rotation.",
+  "fidelity_warnings": "The storyboard uses a heavily condensed, bold sans-serif font for the '60%' which contrasts with the specified IBM Plex Mono for the standard text. To achieve exact visual parity, a font like Impact, Arial Narrow Bold, or Helvetica Condensed must be explicitly loaded for the 'huge_text_60' element.",
+  "remotion_implementation_notes": "Use `interpolate` and `spring` for the '60%' explosion effect. For `huge_text_60`, set `transformOrigin: 'left center'` so it visually pushes out from the left edge. For the `gold_divider_line`, animate `scaleX` from 0 to 1 with `transformOrigin: 'center'` or 'left' depending on the exact desired reveal direction (centered expansion usually looks best for a divider line). Text lines should be strictly left-aligned within their flex/absolute containers.",
+  "sfx": [
+    {
+      "trigger": 72,
+      "sound": "heavy_impact_whoosh",
+      "description": "A deep, sudden whoosh or bass drop to emphasize the sheer size of the '60%' figure."
+    },
+    {
+      "trigger": 219,
+      "sound": "subtle_heartbeat_thump",
+      "description": "A quick, low-frequency thump syncing with the visual pulse."
+    },
+    {
+      "trigger": 312,
+      "sound": "clean_ui_slide",
+      "description": "A crisp, short sliding sound or subtle mechanical clack."
+    },
+    {
+      "trigger": 350,
+      "sound": "clean_ui_slide",
+      "description": "Matching crisp sound for the second line appearing."
+    },
+    {
+      "trigger": 449,
+      "sound": "metallic_draw_line",
+      "description": "A sleek, quick metallic scrape or resonant chime to accompany the gold line drawing across."
+    }
+  ]
+}

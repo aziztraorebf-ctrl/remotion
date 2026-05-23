@@ -1,0 +1,304 @@
+{
+  "background_assets_to_generate": [],
+  "foreground_visual_elements": [
+    {
+      "element_id": "gta_dot",
+      "type": "map_marker",
+      "asset_source": "css",
+      "filename_or_content": "circle",
+      "screen_position_xy": [
+        1226,
+        747
+      ],
+      "size_px": [
+        24,
+        24
+      ],
+      "color_hex": "#FAD145",
+      "rotation_deg": 0,
+      "z_index": 10
+    },
+    {
+      "element_id": "gta_glow",
+      "type": "shape",
+      "asset_source": "css",
+      "filename_or_content": "radial_gradient",
+      "screen_position_xy": [
+        1226,
+        747
+      ],
+      "size_px": [
+        48,
+        48
+      ],
+      "color_hex": "rgba(250, 209, 69, 0.4)",
+      "rotation_deg": 0,
+      "z_index": 9
+    },
+    {
+      "element_id": "gta_label",
+      "type": "text",
+      "asset_source": "text",
+      "filename_or_content": "GTA / GAZ NATUREL",
+      "screen_position_xy": [
+        1180,
+        747
+      ],
+      "size_px": [
+        250,
+        30
+      ],
+      "color_hex": "#FAD145",
+      "rotation_deg": 0,
+      "z_index": 12
+    },
+    {
+      "element_id": "secondary_dot",
+      "type": "map_marker",
+      "asset_source": "css",
+      "filename_or_content": "circle",
+      "screen_position_xy": [
+        1286,
+        853
+      ],
+      "size_px": [
+        18,
+        18
+      ],
+      "color_hex": "#C8A951",
+      "rotation_deg": 0,
+      "z_index": 8
+    },
+    {
+      "element_id": "secondary_glow",
+      "type": "shape",
+      "asset_source": "css",
+      "filename_or_content": "radial_gradient",
+      "screen_position_xy": [
+        1286,
+        853
+      ],
+      "size_px": [
+        36,
+        36
+      ],
+      "color_hex": "rgba(200, 169, 81, 0.3)",
+      "rotation_deg": 0,
+      "z_index": 7
+    },
+    {
+      "element_id": "date_overlay",
+      "type": "text",
+      "asset_source": "text",
+      "filename_or_content": "FÉV. 2025 - 1ÈRE CARGAISON",
+      "screen_position_xy": [
+        960,
+        990
+      ],
+      "size_px": [
+        400,
+        24
+      ],
+      "color_hex": "#A0A0A0",
+      "rotation_deg": 0,
+      "z_index": 15
+    },
+    {
+      "element_id": "export_arc",
+      "type": "path",
+      "asset_source": "css",
+      "filename_or_content": "M 1226 747 Q 1150 400 1520 180",
+      "screen_position_xy": [
+        0,
+        0
+      ],
+      "size_px": [
+        1920,
+        1080
+      ],
+      "color_hex": "#E0C872",
+      "rotation_deg": 0,
+      "z_index": 5
+    },
+    {
+      "element_id": "label_frontiere",
+      "type": "plate_label",
+      "asset_source": "code_only",
+      "filename_or_content": "FRONTIÈRE SN / MR",
+      "screen_position_xy": [
+        900,
+        280
+      ],
+      "size_px": [
+        280,
+        48
+      ],
+      "color_hex": "#0d1525",
+      "accent_color": "#c8a951",
+      "text_color": "#ffffff",
+      "font": "IBM Plex Mono",
+      "rotation_deg": 0,
+      "z_index": 35
+    },
+    {
+      "element_id": "label_bp",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "BP — OPÉRATEUR",
+      "screen_position_xy": [
+        900,
+        340
+      ],
+      "size_px": [
+        240,
+        32
+      ],
+      "color_hex": "rgba(242,235,217,0.65)",
+      "rotation_deg": 0,
+      "z_index": 34
+    },
+    {
+      "element_id": "indicator_production",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "PRODUCTION ACTIVE",
+      "screen_position_xy": [
+        760,
+        420
+      ],
+      "size_px": [
+        280,
+        32
+      ],
+      "color_hex": "#c8a951",
+      "rotation_deg": 0,
+      "z_index": 33
+    },
+    {
+      "element_id": "text_fournisseur",
+      "type": "css_text",
+      "asset_source": "code_only",
+      "filename_or_content": "FOURNISSEUR RÉEL",
+      "screen_position_xy": [
+        760,
+        460
+      ],
+      "size_px": [
+        320,
+        36
+      ],
+      "color_hex": "rgba(242,235,217,0.80)",
+      "rotation_deg": 0,
+      "z_index": 32
+    }
+  ],
+  "animation_timeline": [
+    {
+      "frame_local": 0,
+      "element_ids_appearing": [
+        "gta_dot",
+        "gta_glow",
+        "gta_label",
+        "secondary_dot",
+        "secondary_glow"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in_spring",
+      "duration_frames": 20,
+      "easing_hint": "spring(damping: 15, stiffness: 180)",
+      "audio_cue_word": "GTA"
+    },
+    {
+      "frame_local": 46,
+      "element_ids_appearing": [
+        "label_frontiere"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "slide_in",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "frontière maritime"
+    },
+    {
+      "frame_local": 152,
+      "element_ids_appearing": [
+        "label_bp"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 15,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "BP"
+    },
+    {
+      "frame_local": 291,
+      "element_ids_appearing": [
+        "date_overlay"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 15,
+      "easing_hint": "easeOut",
+      "audio_cue_word": "février 2025"
+    },
+    {
+      "frame_local": 406,
+      "element_ids_appearing": [
+        "indicator_production"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "scale_up",
+      "duration_frames": 20,
+      "easing_hint": "spring",
+      "audio_cue_word": "produire"
+    },
+    {
+      "frame_local": 573,
+      "element_ids_appearing": [],
+      "element_ids_changing": [
+        "date_overlay"
+      ],
+      "transition_type": "text_highlight",
+      "duration_frames": 10,
+      "easing_hint": "linear",
+      "audio_cue_word": "première cargaison"
+    },
+    {
+      "frame_local": 726,
+      "element_ids_appearing": [
+        "text_fournisseur"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "fade_in",
+      "duration_frames": 20,
+      "easing_hint": "ease-out",
+      "audio_cue_word": "fournisseur réel"
+    },
+    {
+      "frame_local": 822,
+      "element_ids_appearing": [
+        "export_arc"
+      ],
+      "element_ids_changing": [],
+      "transition_type": "draw_path",
+      "duration_frames": 90,
+      "easing_hint": "easeInOutCubic",
+      "audio_cue_word": "acheteurs au bout"
+    }
+  ],
+  "permanent_motion": "Slow, constant pulsing of `gta_glow` and `secondary_glow` opacities to indicate active production zones. The ocean background remains static, but a subtle global map drift could be applied if needed for visual interest, though not strictly required here.",
+  "fidelity_warnings": "The 'GTA / GAZ NATUREL' text in the image uses a specific condensed sans-serif font (looks like Bebas Neue or similar), while the prompt specifies IBM Plex Mono for plate labels. Will use a clean sans-serif matching the image visual closely for this specific label to maintain fidelity, while keeping the bottom date overlay in a monospaced or tracking-spaced font. The export arc is a Bezier curve; the exact SVG path parameters provided are an estimation to match the visual curve from Senegal to Europe.",
+  "remotion_implementation_notes": "Use Mapbox GL JS for the base map with a custom dark theme (ocean #1c3552, land #4a4a4a, borders #ffffff). The dots and labels should be React components positioned absolutely over the Mapbox canvas, using projected coordinates if the map pans, or just fixed coordinates if static. Animate the `stroke-dasharray` of the SVG `<path>` for the `export_arc` to simulate the line drawing over time.",
+  "sfx": [
+    {
+      "trigger": "frame 0",
+      "sound": "sonar_ping_deep",
+      "description": "Deep sonar blip as the main GTA dot lights up."
+    },
+    {
+      "trigger": "frame 822",
+      "sound": "whoosh_light_airy",
+      "description": "Airy whoosh sound accompanying the drawing of the export arc."
+    }
+  ]
+}
