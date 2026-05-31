@@ -21,6 +21,10 @@ export interface CarouselSlideHybridProps {
   totalSlides: number;
   /** position verticale du bloc texte : "bottom" (défaut) ou "top" */
   textAnchor?: "bottom" | "top";
+  /** mode hook : titre éditorial + sous-titre gold + filets dorés */
+  isHook?: boolean;
+  /** sous-titre (mode hook) */
+  subtitle?: string;
 }
 
 const GOLD = "#c8a951";
@@ -50,6 +54,8 @@ export const CarouselSlideHybrid: React.FC<CarouselSlideHybridProps> = ({
   slideIndex,
   totalSlides,
   textAnchor = "bottom",
+  isHook = false,
+  subtitle,
 }) => {
   const frame = useCurrentFrame();
   const textOpacity = interpolate(frame, [4, 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -89,38 +95,77 @@ export const CarouselSlideHybrid: React.FC<CarouselSlideHybridProps> = ({
           display: "flex",
           flexDirection: "column",
           justifyContent: textAnchor === "bottom" ? "flex-end" : "flex-start",
+          alignItems: isHook ? "center" : "stretch",
+          textAlign: isHook ? "center" : "left",
           padding: textAnchor === "bottom" ? "0 64px 190px" : "180px 64px 0",
           opacity: textOpacity,
         }}
       >
-        {highlight && (
-          <h2
-            style={{
-              fontFamily: "Georgia, serif",
-              fontSize: 96,
-              fontWeight: 700,
-              color: GOLD,
-              lineHeight: 1,
-              margin: "0 0 20px",
-              textShadow: "0 2px 22px rgba(0,0,0,0.7)",
-            }}
-          >
-            {highlight}
-          </h2>
+        {isHook ? (
+          <>
+            <div style={{ width: 60, height: 3, backgroundColor: GOLD, borderRadius: 2, marginBottom: 28 }} />
+            <h1
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: 64,
+                fontWeight: 700,
+                color: "#f5efe0",
+                lineHeight: 1.18,
+                margin: "0 0 22px",
+                textShadow: "0 2px 22px rgba(0,0,0,0.9)",
+              }}
+            >
+              {body}
+            </h1>
+            {subtitle && (
+              <p
+                style={{
+                  fontFamily: "Georgia, serif",
+                  fontStyle: "italic",
+                  fontSize: 38,
+                  lineHeight: 1.3,
+                  color: GOLD,
+                  margin: 0,
+                  textShadow: "0 2px 16px rgba(0,0,0,0.85)",
+                }}
+              >
+                {subtitle}
+              </p>
+            )}
+            <div style={{ width: 60, height: 3, backgroundColor: GOLD, borderRadius: 2, marginTop: 28 }} />
+          </>
+        ) : (
+          <>
+            {highlight && (
+              <h2
+                style={{
+                  fontFamily: "Georgia, serif",
+                  fontSize: 96,
+                  fontWeight: 700,
+                  color: GOLD,
+                  lineHeight: 1,
+                  margin: "0 0 20px",
+                  textShadow: "0 2px 22px rgba(0,0,0,0.7)",
+                }}
+              >
+                {highlight}
+              </h2>
+            )}
+            <p
+              style={{
+                fontFamily: "Georgia, serif",
+                fontSize: 52,
+                lineHeight: 1.32,
+                fontWeight: 500,
+                color: "#f5efe0",
+                margin: 0,
+                textShadow: "0 2px 18px rgba(0,0,0,0.85)",
+              }}
+            >
+              {body}
+            </p>
+          </>
         )}
-        <p
-          style={{
-            fontFamily: "Georgia, serif",
-            fontSize: 52,
-            lineHeight: 1.32,
-            fontWeight: 500,
-            color: "#f5efe0",
-            margin: 0,
-            textShadow: "0 2px 18px rgba(0,0,0,0.85)",
-          }}
-        >
-          {body}
-        </p>
       </AbsoluteFill>
 
       {/* Footer */}

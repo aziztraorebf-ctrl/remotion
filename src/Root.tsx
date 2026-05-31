@@ -3,6 +3,7 @@ import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/co
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
 import { Beat3bMapClean } from "./projects/souverain/carousels/hybrid/Beat3bMapClean";
+import { Beat1HookClean } from "./projects/souverain/carousels/hybrid/Beat1HookClean";
 import { CarouselSlideHybrid } from "./projects/souverain/carousels/hybrid/CarouselSlideHybrid";
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
@@ -1626,7 +1627,16 @@ export const RemotionRoot: React.FC = () => {
       </Folder>
 
       <Folder name="CarouselHybridTest">
-        {/* Étape 2 — Map propre (rendre via render-mapbox.sh) en 4:5 */}
+        {/* Hook propre — compteur prix (rendre normal, pas Mapbox) */}
+        <Composition
+          id="hybrid-hook-clean"
+          component={Beat1HookClean}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        {/* Map propre 6 pays (rendre via render-mapbox.sh) en 4:5 */}
         <Composition
           id="hybrid-map-clean-6pays"
           component={Beat3bMapClean}
@@ -1635,7 +1645,25 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1350}
         />
-        {/* Étape 4 — slide hybride finale (clip propre + texte premium) */}
+        {/* Slide 1 — Hook (compteur propre + titre) */}
+        <Composition
+          id="hybrid-slide-hook"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-hook-clean.mp4",
+            body: "Le Ghana a signé l'accord que 6 pays refusaient.",
+            subtitle: "Et a tout changé pour l'Afrique.",
+            slideIndex: 0,
+            totalSlides: 8,
+            textAnchor: "bottom",
+            isHook: true,
+          }}
+        />
+        {/* Slide 4 — "6 pays" (carte monde) */}
         <Composition
           id="hybrid-slide-6pays"
           component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
