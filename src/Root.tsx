@@ -1,4 +1,10 @@
 import { Composition, Folder } from "remotion";
+import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
+import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
+import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
+import { Beat3bMapClean } from "./projects/souverain/carousels/hybrid/Beat3bMapClean";
+import { CarouselSlideHybrid } from "./projects/souverain/carousels/hybrid/CarouselSlideHybrid";
+import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
 import { SmallMultiplesGridDemoA, SmallMultiplesGridDemoB, SMALL_MULTIPLES_GRID_DEMO_FRAMES } from "./projects/_shared/demos/SmallMultiplesGridDemo";
@@ -134,6 +140,8 @@ import { LoomWipe } from "./projects/_shared/components/layouts/LoomWipe";
 import { Prototype_P_Vague4bShowcase } from "./projects/_proto-16-9/Prototype_P_Vague4bShowcase";
 import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Prototype_Q_Vague3CompleteShowcase";
 import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
+import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche";
+import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
 import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
 import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
 import { Beat3 as SenegalBeat3 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat3";
@@ -143,11 +151,30 @@ import { Beat7 as SenegalBeat7 } from "./projects/souverain/senegal-petrole-gaz/
 import { Beat8 as SenegalBeat8 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat8";
 import { Beat9 as SenegalBeat9 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat9";
 import { Beat10 as SenegalBeat10 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat10";
+import { Beat11 as SenegalBeat11 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat11";
+import { Beat12 as SenegalBeat12 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat12";
+import { Beat13 as SenegalBeat13 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat13";
+import { Beat14 as SenegalBeat14 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat14";
+import { Beat14PhaseC } from "./projects/souverain/senegal-petrole-gaz/beats/Beat14PhaseC";
+import { Beat12SvgDemo, BEAT12_SVG_DEMO_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/Beat12SvgDemo";
 import { SenegalActe2, SENEGAL_ACTE2_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2";
 import { SenegalPreviewActes12, SENEGAL_PREVIEW_ACTES12_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalPreviewActes12";
 import { SenegalActe2Continu } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2Continu";
 import { SenegalActe2Full, SENEGAL_ACTE2_FULL_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2Full";
 import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars";
+import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxCameraLab";
+import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
+import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
+import { MapboxLottieShowcase, MAPBOX_LOTTIE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/MapboxLottieShowcase";
+import { PetrolePatience, PETROLE_PATIENCE_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatience";
+import { PetrolePatienceShort, PETROLE_PATIENCE_SHORT_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatienceShort";
+import { AfriqueNumeriqueShort, AFRIQUE_NUMERIQUE_SHORT_FRAMES } from "./projects/_demos/afrique-numerique/AfriqueNumeriqueShort";
+import { CobaltRDCShort, COBALT_RDC_SHORT_FRAMES } from "./projects/_demos/cobalt-rdc/CobaltRDCShort";
+import { LAnomalieMontreal, ANOMALIE_MONTREAL_FRAMES } from "./projects/_demos/anomalie-montreal/LAnomalieMontreal";
+import { ThumbnailBaril } from "./projects/_demos/petrole-patience/ThumbnailBaril";
+import { ThumbnailNiger } from "./projects/_demos/niger-uranium/ThumbnailNiger";
+import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
+import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -724,6 +751,22 @@ export const RemotionRoot: React.FC = () => {
       <Folder name="souverain">
         <Folder name="senegal-petrole-gaz">
           <Composition
+            id="Senegal-Beat0-Accroche"
+            component={SenegalBeat0}
+            durationInFrames={1095}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat0-PlaqueProto"
+            component={SenegalBeat0Proto}
+            durationInFrames={360}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="Senegal-Beat1"
             component={SenegalBeat1}
             durationInFrames={554}
@@ -790,7 +833,55 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Senegal-Beat10"
             component={SenegalBeat10}
-            durationInFrames={1703}
+            durationInFrames={1836}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat11"
+            component={SenegalBeat11}
+            durationInFrames={1473}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat12-SvgDemo"
+            component={Beat12SvgDemo}
+            durationInFrames={BEAT12_SVG_DEMO_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat12"
+            component={SenegalBeat12}
+            durationInFrames={1618}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat13"
+            component={SenegalBeat13}
+            durationInFrames={1540}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat14-PhaseC-Test"
+            component={Beat14PhaseC}
+            durationInFrames={461}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Senegal-Beat14"
+            component={SenegalBeat14}
+            durationInFrames={2307}
             fps={30}
             width={1920}
             height={1080}
@@ -814,7 +905,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Senegal-Acte2-Continu"
             component={SenegalActe2Continu}
-            durationInFrames={2134}
+            durationInFrames={1760}
             fps={30}
             width={1920}
             height={1080}
@@ -835,13 +926,164 @@ export const RemotionRoot: React.FC = () => {
             width={1920}
             height={1080}
           />
+          <Composition
+            id="Mapbox-Camera-Lab"
+            component={MapboxCameraLab}
+            durationInFrames={MAPBOX_CAMERA_LAB_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Mapbox-Overlay-Lab"
+            component={MapboxOverlayLab}
+            durationInFrames={MAPBOX_OVERLAY_LAB_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Mapbox-Overlay-Lab-V2"
+            component={MapboxOverlayLabV2}
+            durationInFrames={MAPBOX_OVERLAY_LAB_V2_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Mapbox-Lottie-Showcase"
+            component={MapboxLottieShowcase}
+            durationInFrames={MAPBOX_LOTTIE_SHOWCASE_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Petrole-Patience"
+            component={PetrolePatience}
+            durationInFrames={PETROLE_PATIENCE_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Petrole-Patience-Short"
+            component={PetrolePatienceShort}
+            durationInFrames={PETROLE_PATIENCE_SHORT_FRAMES}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="Afrique-Numerique-Short"
+            component={AfriqueNumeriqueShort}
+            durationInFrames={AFRIQUE_NUMERIQUE_SHORT_FRAMES}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="Cobalt-RDC-Short"
+            component={CobaltRDCShort}
+            durationInFrames={COBALT_RDC_SHORT_FRAMES}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="L-Anomalie-Montreal"
+            component={LAnomalieMontreal}
+            durationInFrames={ANOMALIE_MONTREAL_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          {/* Thumbnails Sénégal Pétrole — variantes A/B/C */}
+          <Composition
+            id="Thumb-Senegal-A"
+            component={ThumbnailBaril}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 18, variant: "A" as const }}
+          />
+          <Composition
+            id="Thumb-Senegal-B"
+            component={ThumbnailBaril}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 18, variant: "B" as const }}
+          />
+          <Composition
+            id="Thumb-Senegal-C"
+            component={ThumbnailBaril}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 18, variant: "C" as const }}
+          />
+
+          {/* Thumbnails Niger Uranium — test système réutilisable */}
+          <Composition
+            id="Thumb-Niger-A"
+            component={ThumbnailNiger}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 12, variant: "A" as const }}
+          />
+          <Composition
+            id="Thumb-Niger-B"
+            component={ThumbnailNiger}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 12, variant: "B" as const }}
+          />
+          <Composition
+            id="Thumb-Niger-C"
+            component={ThumbnailNiger}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ ratio: 12, variant: "C" as const }}
+          />
+
+          {/* Thumbnail Atlas — Mansa Moussa */}
+          <Composition
+            id="Thumb-Mansa-A"
+            component={ThumbnailMansa}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ variant: "A" as const }}
+          />
+
+          {/* Thumbnail Sonjata — Empire Mandé 1235 */}
+          <Composition
+            id="Thumb-Sonjata-A"
+            component={ThumbnailSonjataDemo}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
+            defaultProps={{ variant: "A" as const }}
+          />
         </Folder>
 
-        
-        
-        
-        
-        
+
+
+
+
+
         
         
         
@@ -1348,6 +1590,67 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+      </Folder>
+
+      <Folder name="Carousels">
+        {CAROUSELS.flatMap((carousel) =>
+          carousel.slides.map((_, slideIndex) => (
+            <Composition
+              key={`${carousel.id}-slide-${slideIndex}`}
+              id={`carousel-${carousel.id}-slide-${slideIndex}`}
+              component={CarouselSouverain as unknown as React.ComponentType<Record<string, unknown>>}
+              durationInFrames={30}
+              fps={30}
+              width={1080}
+              height={1920}
+              defaultProps={{
+                slides: carousel.slides,
+                slideIndex,
+                totalSlides: carousel.slides.length,
+              }}
+            />
+          ))
+        )}
+      </Folder>
+
+      <Folder name="MarocBatteries">
+        <Composition
+          id="MarocBatteries-Beat0-Hook"
+          component={Beat0Hook}
+          durationInFrames={MAROC_SEGMENTS.beat0_hook.endFrame - MAROC_SEGMENTS.beat0_hook.startFrame}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+      </Folder>
+
+      <Folder name="CarouselHybridTest">
+        {/* Étape 2 — Map propre (rendre via render-mapbox.sh) en 4:5 */}
+        <Composition
+          id="hybrid-map-clean-6pays"
+          component={Beat3bMapClean}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        {/* Étape 4 — slide hybride finale (clip propre + texte premium) */}
+        <Composition
+          id="hybrid-slide-6pays"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-6pays-map-clean.mp4",
+            highlight: "6 pays",
+            body: "ont refusé de rejoindre l'accord. Trop risqué, disaient-ils.",
+            slideIndex: 3,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
         />
       </Folder>
 
