@@ -18,6 +18,21 @@ Distribution : **Postiz** (déjà en place). CTA des 10 premières vidéos = "cl
 
 ---
 
+## ⛔ RÈGLE SOURCE DE VÉRITÉ — LE TRANSCRIPT VIDÉO, RIEN D'AUTRE (NON-NEGOTIABLE)
+
+> Établie 2026-05-31 après avoir refait le carrousel Or Africain à cause de chiffres faux dans `carousel-data.ts`.
+
+**La vidéo finale publiée EST la source de vérité unique pour tout carrousel/dérivé.**
+- Nos vidéos sont déjà fact-checkées rigoureusement (ex: Or Africain = fact-check Perplexity 2026-05-07). Quand une vidéo atteint sa version FINALE publiée, ses faits/chiffres/dates SONT vérifiés. Point.
+- **AVANT d'écrire un carrousel, lire le transcript/narration de la vidéo source** (whisper words, narration ElevenLabs) et n'utiliser QUE ces faits. Reconstruire le texte : `grep word: src/.../whisper-words-*.ts` ou transcript.
+- **NE JAMAIS faire confiance à `carousel-data.ts`** ni à un brouillon : ils peuvent contenir des chiffres antérieurs au fact-check. Or Africain en avait 3 (3% au lieu de 5%, "2023/10%" au lieu de "janvier 2026 / 5%→12%", "48%" non sourcé).
+- Chiffre/date/fait dans un carrousel ≠ exactement ce que dit la vidéo → c'est le carrousel qui est FAUX, on le corrige sur la vidéo.
+- Coût d'avoir ignoré ça une fois : carrousel Or Africain entièrement refait. Ne pas reproduire.
+
+**Pour les 3 carrousels restants (Thiaroye, Mansa Moussa, Vraie Taille) : aligner CHAQUE slide sur le transcript de la vidéo dès le départ.** Vérifier avant de coder, pas après.
+
+---
+
 ## ⭐ PIPELINE CARROUSEL HYBRIDE ANIMÉ — V2 VALIDÉE (2026-05-31)
 
 > Standard de qualité validé par Aziz sur la slide test "6 pays" (Or Africain).

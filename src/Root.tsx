@@ -1809,7 +1809,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="hybrid-slide-cta"
           component={CarouselCtaSlide as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={120}
+          durationInFrames={150}
           fps={30}
           width={1080}
           height={1350}

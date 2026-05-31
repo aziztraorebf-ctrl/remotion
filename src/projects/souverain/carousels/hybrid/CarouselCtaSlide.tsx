@@ -27,9 +27,29 @@ function ProgressBar({ total }: { total: number }) {
   );
 }
 
+// Cadence typewriter : 1 lettre toutes les CHARS_PER_FRAME frames
+const TYPE_START = 14;          // début de la frappe (laisse le temps à la flèche d'apparaître)
+const FRAMES_PER_CHAR = 1.6;    // ~19 lettres/s à 30fps — lisible mais soutenu
+
 export const CarouselCtaSlide: React.FC<CarouselCtaSlideProps> = ({ line1, line2, totalSlides }) => {
   const frame = useCurrentFrame();
-  const op = interpolate(frame, [4, 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const fadeIn = interpolate(frame, [4, 18], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Typewriter ligne 1
+  const charsTyped = Math.max(0, Math.floor((frame - TYPE_START) / FRAMES_PER_CHAR));
+  const typedText = line1.slice(0, Math.min(charsTyped, line1.length));
+  const typingDone = charsTyped >= line1.length;
+  const typeEndFrame = TYPE_START + line1.length * FRAMES_PER_CHAR;
+
+  // Curseur clignotant pendant la frappe
+  const cursorOn = !typingDone && Math.floor(frame / 8) % 2 === 0;
+
+  // Ligne 2 apparaît après la frappe (fade + léger slide depuis le bas)
+  const line2Op = interpolate(frame, [typeEndFrame + 6, typeEndFrame + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const line2Y = interpolate(frame, [typeEndFrame + 6, typeEndFrame + 24], [16, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // Flèche play : pulse doux une fois la ligne 2 visible
+  const arrowPulse = typingDone ? 1 + 0.06 * Math.sin((frame / 14) * Math.PI * 2) : 1;
 
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY }}>
@@ -44,14 +64,17 @@ export const CarouselCtaSlide: React.FC<CarouselCtaSlideProps> = ({ line1, line2
       </div>
 
       {/* Centre : flèche play + message */}
-      <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 80px", opacity: op }}>
-        <div style={{ width: 96, height: 96, borderRadius: "50%", border: `3px solid ${GOLD}`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 48 }}>
+      <AbsoluteFill style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "0 80px", opacity: fadeIn }}>
+        <div style={{ width: 96, height: 96, borderRadius: "50%", border: `3px solid ${GOLD}`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 48, transform: `scale(${arrowPulse})` }}>
           <div style={{ width: 0, height: 0, borderTop: "18px solid transparent", borderBottom: "18px solid transparent", borderLeft: `30px solid ${GOLD}`, marginLeft: 8 }} />
         </div>
-        <h2 style={{ fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 700, color: IVORY, lineHeight: 1.25, textAlign: "center", margin: "0 0 28px" }}>
-          {line1}
+        {/* Ligne 1 — typewriter (hauteur réservée pour éviter le saut de layout) */}
+        <h2 style={{ fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 700, color: IVORY, lineHeight: 1.25, textAlign: "center", margin: "0 0 28px", minHeight: 140 }}>
+          {typedText}
+          <span style={{ opacity: cursorOn ? 1 : 0, color: GOLD, fontWeight: 400 }}>|</span>
         </h2>
-        <p style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 40, color: GOLD, textAlign: "center", lineHeight: 1.3, margin: 0 }}>
+        {/* Ligne 2 — apparaît après la frappe */}
+        <p style={{ fontFamily: "Georgia, serif", fontStyle: "italic", fontSize: 40, color: GOLD, textAlign: "center", lineHeight: 1.3, margin: 0, opacity: line2Op, transform: `translateY(${line2Y}px)` }}>
           {line2}
         </p>
       </AbsoluteFill>
