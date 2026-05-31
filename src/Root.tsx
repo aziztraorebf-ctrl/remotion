@@ -1730,8 +1730,8 @@ export const RemotionRoot: React.FC = () => {
           height={1350}
           defaultProps={{
             bgClip: "_carousel-test/or-curve-clean.mp4",
-            highlight: "3%",
-            body: "C'est ce que les mines versaient aux États africains pendant 70 ans.",
+            highlight: "5%",
+            body: "Depuis 2010, c'est tout ce que le Ghana touchait sur son or — que le prix soit à 1 000 ou 5 000 dollars l'once.",
             slideIndex: 1,
             totalSlides: 8,
             textAnchor: "bottom",
@@ -1747,8 +1747,8 @@ export const RemotionRoot: React.FC = () => {
           height={1350}
           defaultProps={{
             bgClip: "_carousel-test/or-ghana-clean.mp4",
-            highlight: "10%",
-            body: "En 2023, le Ghana a exigé 10% de royalties — plus 20% de participation directe dans les mines.",
+            highlight: "5% → 12%",
+            body: "En janvier 2026, l'or dépasse 5 000 dollars l'once. Le Ghana impose des royalties progressives selon le cours.",
             slideIndex: 2,
             totalSlides: 8,
             textAnchor: "bottom",
@@ -1764,7 +1764,8 @@ export const RemotionRoot: React.FC = () => {
           height={1350}
           defaultProps={{
             bgClip: "_carousel-test/or-afrique-clean.mp4",
-            body: "Le Ghana a signé seul. Les investisseurs ont accepté. Les autres pays ont suivi.",
+            highlight: "Signé.",
+            body: "Le Ghana a signé quand même. Les investisseurs ont suivi.",
             slideIndex: 4,
             totalSlides: 8,
             textAnchor: "bottom",
@@ -1779,9 +1780,9 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/or-ghana-clean.mp4",
-            highlight: "48%",
-            body: "L'or représente presque la moitié des revenus d'exportation ghanéens.",
+            bgClip: "_carousel-test/or-afrique-clean.mp4",
+            highlight: "4 pays",
+            body: "Mali, Burkina, Niger, Ghana : depuis deux ans, l'Afrique reprend le contrôle de son sous-sol.",
             slideIndex: 5,
             totalSlides: 8,
             textAnchor: "bottom",
@@ -1796,9 +1797,9 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/or-afrique-clean.mp4",
-            highlight: "1 accord.",
-            body: "Un pays. Une décision. Toute une stratégie de souveraineté économique.",
+            bgClip: "_carousel-test/or-ghana-clean.mp4",
+            highlight: "1 signal.",
+            body: "Discrètement, l'Afrique commence à changer les règles de son propre sous-sol.",
             slideIndex: 6,
             totalSlides: 8,
             textAnchor: "bottom",
@@ -1814,7 +1815,7 @@ export const RemotionRoot: React.FC = () => {
           height={1350}
           defaultProps={{
             line1: "La vidéo complète est sur notre profil.",
-            line2: "Clique sur notre avatar @koraetcartes en haut de ce post.",
+            line2: "Clique sur notre nom @koraetcartes pour la regarder.",
             totalSlides: 8,
           }}
         />

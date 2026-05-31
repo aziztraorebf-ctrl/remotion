@@ -97,7 +97,7 @@ export const CarouselSlideHybrid: React.FC<CarouselSlideHybridProps> = ({
           justifyContent: textAnchor === "bottom" ? "flex-end" : "flex-start",
           alignItems: isHook ? "center" : "stretch",
           textAlign: isHook ? "center" : "left",
-          padding: textAnchor === "bottom" ? "0 64px 190px" : "180px 64px 0",
+          padding: textAnchor === "bottom" ? "0 64px 250px" : "180px 64px 0",
           opacity: textOpacity,
         }}
       >
