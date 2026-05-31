@@ -39,6 +39,8 @@ Distribution : **Postiz** (déjà en place). CTA des 10 premières vidéos = "cl
 > Code : `src/projects/souverain/carousels/hybrid/` (Beat3bMapClean.tsx + CarouselSlideHybrid.tsx).
 > Render Mapbox propre : https://files.catbox.moe/lbecs5.mp4 (V2 ref).
 
+**Composants réutilisables + recette complète** : `src/projects/souverain/carousels/hybrid/README.md` (index compact : 7 composants, quel render, specs V2). ← consulter AVANT de coder un carrousel.
+
 **Principe fondateur (Aziz)** : toutes nos vidéos sont DÉJÀ animées (Remotion ou Mapbox). Le carrousel hybride RÉUTILISE l'animation existante — pas de re-render spécial systématique. 3 cas :
 1. **Slide sur séquence Mapbox** (ex "6 pays") → re-render PROPRE sans overlays (sous-titres karaoké + labels incrustés à retirer). Variante du beat sans `CountryLabel`/`CountriesCounter`/`Subtitles`/`ProgressBar`/`Audio`. Seul cas qui exige un vrai re-render.
 2. **Slide sur graphique Remotion** (Hook, stats "3%"/"48%") → animation premium déjà codée, on la réutilise (re-render composant propre ou extrait segment vidéo).
