@@ -2,9 +2,14 @@ import { Composition, Folder } from "remotion";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
+import { Beat1Phosphate } from "./projects/souverain/maroc-batteries/beats/Beat1Phosphate";
 import { Beat3bMapClean } from "./projects/souverain/carousels/hybrid/Beat3bMapClean";
 import { Beat1HookClean } from "./projects/souverain/carousels/hybrid/Beat1HookClean";
+import { CurveChartClean } from "./projects/souverain/carousels/hybrid/CurveChartClean";
+import { GhanaMapClean } from "./projects/souverain/carousels/hybrid/GhanaMapClean";
+import { AfriqueOuestMapClean } from "./projects/souverain/carousels/hybrid/AfriqueOuestMapClean";
 import { CarouselSlideHybrid } from "./projects/souverain/carousels/hybrid/CarouselSlideHybrid";
+import { CarouselCtaSlide } from "./projects/souverain/carousels/hybrid/CarouselCtaSlide";
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
@@ -1624,6 +1629,14 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1920}
         />
+        <Composition
+          id="MarocBatteries-Beat1-Phosphate"
+          component={Beat1Phosphate}
+          durationInFrames={MAROC_SEGMENTS.beat1_phosphate.endFrame - MAROC_SEGMENTS.beat1_phosphate.startFrame}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
       </Folder>
 
       <Folder name="CarouselHybridTest">
@@ -1640,6 +1653,33 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="hybrid-map-clean-6pays"
           component={Beat3bMapClean}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        {/* Courbe propre (slide 2) — render normal */}
+        <Composition
+          id="hybrid-curve-clean"
+          component={CurveChartClean}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        {/* Carte Ghana propre (slide 3) — render via render-mapbox.sh */}
+        <Composition
+          id="hybrid-ghana-clean"
+          component={GhanaMapClean}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        {/* Carte Afrique Ouest propre (slide 5) — render via render-mapbox.sh */}
+        <Composition
+          id="hybrid-afrique-clean"
+          component={AfriqueOuestMapClean}
           durationInFrames={180}
           fps={30}
           width={1080}
@@ -1678,6 +1718,104 @@ export const RemotionRoot: React.FC = () => {
             slideIndex: 3,
             totalSlides: 8,
             textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 2 — "3%" (courbe) */}
+        <Composition
+          id="hybrid-slide-2"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-curve-clean.mp4",
+            highlight: "3%",
+            body: "C'est ce que les mines versaient aux États africains pendant 70 ans.",
+            slideIndex: 1,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 3 — "10%" (carte Ghana) */}
+        <Composition
+          id="hybrid-slide-3"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-ghana-clean.mp4",
+            highlight: "10%",
+            body: "En 2023, le Ghana a exigé 10% de royalties — plus 20% de participation directe dans les mines.",
+            slideIndex: 2,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 5 — "signé seul" (carte Afrique Ouest) */}
+        <Composition
+          id="hybrid-slide-5"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-afrique-clean.mp4",
+            body: "Le Ghana a signé seul. Les investisseurs ont accepté. Les autres pays ont suivi.",
+            slideIndex: 4,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 6 — "48%" (carte Ghana réutilisée) */}
+        <Composition
+          id="hybrid-slide-6"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-ghana-clean.mp4",
+            highlight: "48%",
+            body: "L'or représente presque la moitié des revenus d'exportation ghanéens.",
+            slideIndex: 5,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 7 — "1 accord" (carte Afrique Ouest réutilisée) */}
+        <Composition
+          id="hybrid-slide-7"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={180}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/or-afrique-clean.mp4",
+            highlight: "1 accord.",
+            body: "Un pays. Une décision. Toute une stratégie de souveraineté économique.",
+            slideIndex: 6,
+            totalSlides: 8,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 8 — CTA statique */}
+        <Composition
+          id="hybrid-slide-cta"
+          component={CarouselCtaSlide as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            line1: "La vidéo complète est sur notre profil.",
+            line2: "Clique sur notre avatar @koraetcartes en haut de ce post.",
+            totalSlides: 8,
           }}
         />
       </Folder>
