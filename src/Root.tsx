@@ -14,6 +14,11 @@ import { GhanaMapClean } from "./projects/souverain/carousels/hybrid/GhanaMapCle
 import { AfriqueOuestMapClean } from "./projects/souverain/carousels/hybrid/AfriqueOuestMapClean";
 import { CarouselSlideHybrid } from "./projects/souverain/carousels/hybrid/CarouselSlideHybrid";
 import { CarouselCtaSlide } from "./projects/souverain/carousels/hybrid/CarouselCtaSlide";
+import { CarouselSlideAtlas } from "./projects/souverain/carousels/hybrid/CarouselSlideAtlas";
+import { AtlasFormat1SplitScreen } from "./projects/souverain/carousels/hybrid/AtlasFormat1SplitScreen";
+import { AtlasFormat2CarteDeJeu } from "./projects/souverain/carousels/hybrid/AtlasFormat2CarteDeJeu";
+import { AtlasFormat3SmartCrop } from "./projects/souverain/carousels/hybrid/AtlasFormat3SmartCrop";
+import { AtlasFormat4PanneauOpaque } from "./projects/souverain/carousels/hybrid/AtlasFormat4PanneauOpaque";
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
@@ -2004,6 +2009,255 @@ export const RemotionRoot: React.FC = () => {
             line1: "La vidéo complète est sur notre profil.",
             line2: "Clique sur notre nom @koraetcartes pour la regarder.",
             totalSlides: 9,
+          }}
+        />
+      </Folder>
+
+      <Folder name="CarouselHybridMansaMoussa">
+        <Composition
+          id="mansa-slide-01-hook"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide1-hook.mp4",
+            body: "Il a fait s'effondrer le cours de l'or.",
+            subtitle: "Pendant 12 ans.",
+            slideIndex: 0,
+            totalSlides: 9,
+            textAnchor: "bottom",
+            isHook: true,
+          }}
+        />
+        <Composition
+          id="mansa-slide-02-mali"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide2-mali.mp4",
+            highlight: "Mali, 1324",
+            body: "L'Empire du Mali. Plus grand que l'Europe occidentale.",
+            slideIndex: 1,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-03-empire"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide3-empire.mp4",
+            highlight: "50%",
+            body: "de l'or mondial circulait depuis cet empire. La moitié.",
+            slideIndex: 2,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-04-pie"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide4-pie.mp4",
+            body: "Tombouctou comptait plus de bibliothèques que Paris. L'université de Sankoré : 25 000 étudiants.",
+            slideIndex: 3,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-05-tombouctou"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide5-tombouctou.mp4",
+            highlight: "60 000 hommes",
+            body: "Il part à La Mecque. 80 chameaux portant chacun 150 kg d'or pur.",
+            slideIndex: 4,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-06-caravane"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide6-caravane.mp4",
+            highlight: "12 tonnes d'or",
+            body: "Il distribue tant d'or au Caire que l'économie égyptienne s'effondre.",
+            slideIndex: 5,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-07-bar"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide7-bar.mp4",
+            highlight: "12 ans",
+            body: "Le prix de l'or chute dans toute la Méditerranée. Un seul homme.",
+            slideIndex: 6,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-08-portrait"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/mansa-moussa/slide8-portrait.mp4",
+            body: "On te répond Rockefeller, Bezos, Musk. La vraie réponse : Mansa Moussa.",
+            slideIndex: 7,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        <Composition
+          id="mansa-slide-09-cta"
+          component={CarouselCtaSlide as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            line1: "La vidéo complète est sur notre profil.",
+            line2: "Clique sur notre nom @koraetcartes pour la regarder.",
+            totalSlides: 9,
+          }}
+        />
+      </Folder>
+
+      <Folder name="CarouselAtlasTest">
+        {/* FORMAT 1 — Split-Screen Éditorial */}
+        <Composition
+          id="atlas-f1-split"
+          component={AtlasFormat1SplitScreen as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/frames/caravane-clean.jpg",
+            highlight: "12 tonnes d'or",
+            body: "En 1324, il traverse l'Afrique vers La Mecque. 60 000 personnes.",
+            slideIndex: 4,
+            totalSlides: 8,
+            imageHeightPct: 48,
+          }}
+        />
+        {/* FORMAT 2 — Carte de Jeu (image statique) */}
+        <Composition
+          id="atlas-f2-carte"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/frames/caravane-clean.jpg",
+            highlight: "12 tonnes d'or",
+            body: "En 1324, il traverse l'Afrique vers La Mecque. 60 000 personnes.",
+            slideIndex: 4,
+            totalSlides: 8,
+          }}
+        />
+        {/* FORMAT 2 — Carte de Jeu (clip vidéo bar chart animé) */}
+        <Composition
+          id="atlas-f2-carte-video"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/clip-barchart.mp4",
+            isVideo: true,
+            highlight: "12 tonnes d'or",
+            body: "Marco Polo, Colomb, Vasco de Gama réunis. Mansa Moussa les dépasse tous.",
+            slideIndex: 4,
+            totalSlides: 8,
+          }}
+        />
+        {/* FORMAT 3 — Smart Crop (zoom sur Mansa, labels hors cadre) */}
+        <Composition
+          id="atlas-f3-smartcrop"
+          component={AtlasFormat3SmartCrop as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/frames/caravane-clean.jpg",
+            highlight: "12 tonnes d'or",
+            body: "En 1324, il traverse l'Afrique vers La Mecque. 60 000 personnes.",
+            slideIndex: 4,
+            totalSlides: 8,
+            zoomScale: 2.4,
+            zoomX: -0.2,
+            zoomY: 0.1,
+          }}
+        />
+        {/* FORMAT 4a — Panneau Opaque bas */}
+        <Composition
+          id="atlas-f4a-panneau-bas"
+          component={AtlasFormat4PanneauOpaque as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/frames/caravane-clean.jpg",
+            highlight: "12 tonnes d'or",
+            body: "En 1324, il traverse l'Afrique vers La Mecque. 60 000 personnes.",
+            slideIndex: 4,
+            totalSlides: 8,
+            panelPosition: "bottom",
+          }}
+        />
+        {/* FORMAT 4b — Panneau Opaque droite */}
+        <Composition
+          id="atlas-f4b-panneau-droite"
+          component={AtlasFormat4PanneauOpaque as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/frames/caravane-clean.jpg",
+            highlight: "12 tonnes d'or",
+            body: "En 1324, il traverse l'Afrique vers La Mecque. 60 000 personnes.",
+            slideIndex: 4,
+            totalSlides: 8,
+            panelPosition: "right",
           }}
         />
       </Folder>
