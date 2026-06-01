@@ -140,6 +140,28 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Breakdown Gemini 3.1-pro (prompt + schema JSON + checklist)** | `memory/workflow-gemini-breakdown-schema.md` OBLIGATOIRE — lire avant tout script breakdown Souverain. **NOUVEAU 2026-05-23 : TOUJOURS coller le bloc "Stack technique à ta disposition" (Remotion + Mapbox + D3.js + Three + Lottie + composants Souverain) dans le prompt Gemini, sinon il propose du SVG primitif au lieu d'exploiter D3/Three/Lottie.** | — |
 | **Twelve Labs, analyse video post-render, ton, retention, artefacts, CTA** | `memory/tools/twelve-labs.md` | — |
 
+### Routage PROCÉDÉS → SKILLS — LANCER le skill, ne pas juste lire (NON-NEGOTIABLE)
+
+> Nos procédés SONT des skills exécutables. Quand un procédé démarre, LANCER le skill correspondant (via Skill tool) — ne pas se contenter de lire un `.md`. Vaut pour Claude principal ET les agents autonomes. Compact par design : 1 ligne = 1 procédé.
+
+| Quand Aziz / un agent veut... | LANCER ce skill |
+|---|---|
+| **Démarrer la préproduction d'un Short Souverain** (90s, éco/géopo Afrique) | `souverain-preproduction` |
+| **Démarrer la préproduction d'un épisode Atlas** (cartographie, géo, richesse) | `atlas-video-preproduction` |
+| **Démarrer la préproduction d'une vidéo narrative** (Seedance, personnages, portrait) | `video-narrative-preproduction` |
+| **Écrire/structurer un script YouTube** (8-15min animé) | `youtube-scriptwriting` |
+| **Coder un beat Souverain** (production beat par beat) | `/beat` (= `beat-session.py`, voir Pipeline Beat Souverain) |
+| **Produire un Short en lot** (batch) | `batch-short-production` |
+| **Écrire un carrousel / caption / réécriture d'un contenu déjà en vidéo** | `verif-factuelle` D'ABORD (aligner sur transcript vidéo), puis `src/projects/souverain/carousels/hybrid/README.md` |
+| **Analyser une chaîne YouTube** (style, rétention, learnings) | `analyze-channel` |
+| **Intégrer un feedback / corrections post-review** | `integrate-feedback` |
+| **Bilan/checkpoint de session** | `checkpoint` (Souverain) ou `atlas-session` (Atlas) |
+| **Bug Remotion/Mapbox qui résiste à la 1ère tentative** | `superpowers:systematic-debugging` (ou `investigate`) |
+| **Gros chantier multi-étapes** (nouvel épisode, pipeline, refactor) | `superpowers:writing-plans` |
+| **Avant de dire "c'est fait/terminé"** | `superpowers:verification-before-completion` |
+
+**Anti-friction** : NE PAS lancer un skill pour du trivial (1 slide, fix 1 ligne, question simple). Le skill se lance quand la tâche a la FORME du procédé, pas par réflexe.
+
 ### Regle : Templates obligatoires AVANT tout prompt ou image (NON-NEGOTIABLE)
 
 **AVANT d'ecrire un prompt Seedance ou une image Gemini, Claude DOIT :**
