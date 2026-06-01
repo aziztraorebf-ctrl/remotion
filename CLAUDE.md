@@ -150,6 +150,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Démarrer la préproduction d'un épisode Atlas** (cartographie, géo, richesse) | `atlas-video-preproduction` |
 | **Démarrer la préproduction d'une vidéo narrative** (Seedance, personnages, portrait) | `video-narrative-preproduction` |
 | **Écrire/structurer un script YouTube** (8-15min animé) | `youtube-scriptwriting` |
+| **Coder un Short Souverain Mapbox** (90s, 6 actes, 1 fichier TSX) | `memory/SOUVERAIN-SHORT-DEMARRAGE.md` (procédure) + `memory/SOUVERAIN-SHORT-SKELETON.md` (squelette technique). Base à copier : `MarocBatteriesShort.tsx` (plus récent/épuré). Vérifié à jour 2026-06-01. |
 | **Coder un beat Souverain** (production beat par beat) | `/beat` (= `beat-session.py`, voir Pipeline Beat Souverain) |
 | **Produire un Short en lot** (batch) | `batch-short-production` |
 | **Écrire un carrousel / caption / réécriture d'un contenu déjà en vidéo** | `verif-factuelle` D'ABORD (aligner sur transcript vidéo), puis `src/projects/souverain/carousels/hybrid/README.md` |
