@@ -10,7 +10,7 @@ import { AbsoluteFill, OffthreadVideo, useCurrentFrame, interpolate, staticFile 
  */
 
 export interface CarouselSlideHybridProps {
-  /** chemin staticFile du clip de fond (déjà au ratio 4:5) */
+  /** chemin staticFile du clip de fond */
   bgClip: string;
   /** texte highlight optionnel (gros, doré) — ex : "6 pays" */
   highlight?: string;
@@ -25,6 +25,8 @@ export interface CarouselSlideHybridProps {
   isHook?: boolean;
   /** sous-titre (mode hook) */
   subtitle?: string;
+  /** objectFit du clip de fond : "cover" (défaut) ou "contain" (letterbox sur fond navy) */
+  bgFit?: "cover" | "contain";
 }
 
 const GOLD = "#c8a951";
@@ -56,6 +58,7 @@ export const CarouselSlideHybrid: React.FC<CarouselSlideHybridProps> = ({
   textAnchor = "bottom",
   isHook = false,
   subtitle,
+  bgFit = "cover",
 }) => {
   const frame = useCurrentFrame();
   const textOpacity = interpolate(frame, [4, 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -66,7 +69,7 @@ export const CarouselSlideHybrid: React.FC<CarouselSlideHybridProps> = ({
       <OffthreadVideo
         src={staticFile(bgClip)}
         muted
-        style={{ position: "absolute", width: "100%", height: "100%", objectFit: "cover" }}
+        style={{ position: "absolute", width: "100%", height: "100%", objectFit: bgFit }}
       />
 
       {/* Voile dégradé navy pour lisibilité (plus dense côté texte) */}

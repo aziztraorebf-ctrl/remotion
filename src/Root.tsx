@@ -3,6 +3,10 @@ import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/co
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
 import { Beat1Phosphate } from "./projects/souverain/maroc-batteries/beats/Beat1Phosphate";
+import { Beat3Acteurs } from "./projects/souverain/maroc-batteries/beats/Beat3Acteurs";
+import { Beat4Geographie } from "./projects/souverain/maroc-batteries/beats/Beat4Geographie";
+import { Beat5Question } from "./projects/souverain/maroc-batteries/beats/Beat5Question";
+import { MarocBatteriesShort, MAROC_SHORT_FRAMES } from "./projects/souverain/maroc-batteries/MarocBatteriesShort";
 import { Beat3bMapClean } from "./projects/souverain/carousels/hybrid/Beat3bMapClean";
 import { Beat1HookClean } from "./projects/souverain/carousels/hybrid/Beat1HookClean";
 import { CurveChartClean } from "./projects/souverain/carousels/hybrid/CurveChartClean";
@@ -1622,6 +1626,14 @@ export const RemotionRoot: React.FC = () => {
 
       <Folder name="MarocBatteries">
         <Composition
+          id="MarocBatteries-Short"
+          component={MarocBatteriesShort}
+          durationInFrames={MAROC_SHORT_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
           id="MarocBatteries-Beat0-Hook"
           component={Beat0Hook}
           durationInFrames={MAROC_SEGMENTS.beat0_hook.endFrame - MAROC_SEGMENTS.beat0_hook.startFrame}
@@ -1633,6 +1645,30 @@ export const RemotionRoot: React.FC = () => {
           id="MarocBatteries-Beat1-Phosphate"
           component={Beat1Phosphate}
           durationInFrames={MAROC_SEGMENTS.beat1_phosphate.endFrame - MAROC_SEGMENTS.beat1_phosphate.startFrame}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="MarocBatteries-Beat3-Acteurs"
+          component={Beat3Acteurs}
+          durationInFrames={MAROC_SEGMENTS.beat3_acteurs.endFrame - MAROC_SEGMENTS.beat3_acteurs.startFrame}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="MarocBatteries-Beat4-Geographie"
+          component={Beat4Geographie}
+          durationInFrames={MAROC_SEGMENTS.beat4_geographie.endFrame - MAROC_SEGMENTS.beat4_geographie.startFrame}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="MarocBatteries-Beat5-Question"
+          component={Beat5Question}
+          durationInFrames={MAROC_SEGMENTS.beat5_question.endFrame - MAROC_SEGMENTS.beat5_question.startFrame}
           fps={30}
           width={1080}
           height={1920}
@@ -1817,6 +1853,157 @@ export const RemotionRoot: React.FC = () => {
             line1: "La vidéo complète est sur notre profil.",
             line2: "Clique sur notre nom @koraetcartes pour la regarder.",
             totalSlides: 8,
+          }}
+        />
+      </Folder>
+
+      <Folder name="CarouselHybridThiaroye">
+        {/* Slide 1 — Hook : soldat agenouillé au camp (contain = fond navy) */}
+        <Composition
+          id="thiaroye-slide-01-hook"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide1-hook.mp4",
+            body: "Ils ont libéré la France.",
+            subtitle: "300 sont tombés au retour.",
+            slideIndex: 0,
+            totalSlides: 9,
+            textAnchor: "bottom",
+            isHook: true,
+          }}
+        />
+        {/* Slide 2 — Port de Dakar, retour */}
+        <Composition
+          id="thiaroye-slide-02-bateau"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide2-bateau.mp4",
+            highlight: "Décembre 1944",
+            body: "Ils ont combattu pour la France. Ils rentrent au pays.",
+            slideIndex: 1,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 3 — Négociation : 3 soldats autour de la table */}
+        <Composition
+          id="thiaroye-slide-03-nego"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide3-nego.mp4",
+            body: "Ils attendent leur solde. Calmes. Dignes. Une main s'ouvre, une demande. Rien de plus.",
+            slideIndex: 2,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 4 — Fusillade */}
+        <Composition
+          id="thiaroye-slide-04-fusillade"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide4-fusillade.mp4",
+            highlight: "1er décembre 1944",
+            body: "À l'aube, l'armée française ouvre le feu. Sur ses propres soldats.",
+            slideIndex: 3,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 5 — Mains au sol, douilles (la demande devient silence) */}
+        <Composition
+          id="thiaroye-slide-05-mains"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide5-mains.mp4",
+            highlight: "80 morts officiels",
+            body: "Peut-être 300. Peut-être plus. Personne ne sait. Personne ne veut savoir.",
+            slideIndex: 4,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 6 — Photo effacée, visages blancs */}
+        <Composition
+          id="thiaroye-slide-06-photo"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide6-photo.mp4",
+            body: "Les archives se ferment. Les noms s'effacent. Tu n'as jamais appris leurs noms.",
+            slideIndex: 5,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 7 — Biram Senghor, mur de portraits */}
+        <Composition
+          id="thiaroye-slide-07-biram"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide7-biram.mp4",
+            highlight: "80 ans après",
+            body: "Le fils d'un des 300 de Thiaroye dépose plainte. En mars 2026, la justice tranche.",
+            slideIndex: 6,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 8 — Pierre tombale, un seul nom */}
+        <Composition
+          id="thiaroye-slide-08-pierre"
+          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgClip: "_carousel-test/thiaroye/slide8-pierre.mp4",
+            body: "L'État dissimule. Le tribunal le dit. Un seul nom sur la pierre. Les autres attendent encore.",
+            slideIndex: 7,
+            totalSlides: 9,
+            textAnchor: "bottom",
+          }}
+        />
+        {/* Slide 9 — CTA */}
+        <Composition
+          id="thiaroye-slide-09-cta"
+          component={CarouselCtaSlide as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            line1: "La vidéo complète est sur notre profil.",
+            line2: "Clique sur notre nom @koraetcartes pour la regarder.",
+            totalSlides: 9,
           }}
         />
       </Folder>
