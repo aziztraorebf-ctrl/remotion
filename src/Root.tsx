@@ -30,6 +30,7 @@ import { AtlasFormat3SmartCrop } from "./projects/souverain/carousels/hybrid/Atl
 import { AtlasFormat4PanneauOpaque } from "./projects/souverain/carousels/hybrid/AtlasFormat4PanneauOpaque";
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
+import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
 import { SmallMultiplesGridDemoA, SmallMultiplesGridDemoB, SMALL_MULTIPLES_GRID_DEMO_FRAMES } from "./projects/_shared/demos/SmallMultiplesGridDemo";
 import { AtlasRealiste3DDemo, ATLAS_REALISTE_3D_DEMO_FRAMES } from "./projects/_shared/demos/AtlasRealiste3DDemo";
@@ -376,6 +377,14 @@ export const RemotionRoot: React.FC = () => {
       
       
       <Folder name="atlas-peste-1347">
+        <Composition
+          id="HeroDataShowcase"
+          component={HeroDataShowcase}
+          durationInFrames={HERO_DATA_SHOWCASE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
         <Composition
           id="PesteMapPreview"
           component={PesteMapPreview}

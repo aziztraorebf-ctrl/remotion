@@ -22,6 +22,8 @@ export interface CountdownRevealProps {
   fillDegrees?: number;
   startFrame: number;
   revealFrame: number;
+  /** HERO DATA (P5) : point lumineux pulsant sur l'extrémité de l'arc (effet "vivant"). Défaut false. */
+  pingNode?: boolean;
 }
 
 export const CountdownReveal: React.FC<CountdownRevealProps> = ({
@@ -35,6 +37,7 @@ export const CountdownReveal: React.FC<CountdownRevealProps> = ({
   fillDegrees = 340,
   startFrame,
   revealFrame,
+  pingNode = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -138,6 +141,24 @@ export const CountdownReveal: React.FC<CountdownRevealProps> = ({
             strokeDashoffset={dashOffset}
             transform={`rotate(-90, ${half}, ${half})`}
           />
+          {/* HERO DATA P5 — ping-node pulsant sur l'extrémité de l'arc rempli */}
+          {pingNode && (() => {
+            const filledDeg = interpolate(frame, [startFrame, revealFrame], [0, fillDegrees], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            });
+            const angleRad = ((filledDeg - 90) * Math.PI) / 180;
+            const px = half + RING_RADIUS * Math.cos(angleRad);
+            const py = half + RING_RADIUS * Math.sin(angleRad);
+            const pulse = interpolate(frame % 30, [0, 15, 29], [0.8, 1.6, 0.8]);
+            const pulseOp = interpolate(frame % 30, [0, 15, 29], [0.9, 0.4, 0.9]);
+            return (
+              <>
+                <circle cx={px} cy={py} r={18 * pulse} fill="none" stroke={accentColor} strokeWidth={3} opacity={pulseOp} />
+                <circle cx={px} cy={py} r={10} fill={accentColor} />
+              </>
+            );
+          })()}
         </svg>
 
         {/* Value overlay centré dans le ring */}

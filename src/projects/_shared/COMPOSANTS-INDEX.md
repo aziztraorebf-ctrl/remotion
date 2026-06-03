@@ -96,6 +96,7 @@
 | `PulsingRegionFill` N3.4 | mapbox | "Ce territoire est sous tension / respire" — zone entière pulse (opacity sin). Différent du dot pulse. Props: `countries[]({iso,color,period,opacityMin,opacityMax,showGlow})` |
 | `ContagionFlagSpread` ⭐ N4.1 | mapbox/flagCanvas | "L'alliance s'étend de pays en pays" — flash couleur + drapeau remplace (DominoContagionFill + FlagFill). AES, CEDEAO, BRICS Africa. Props: `waves[][]`, `waveGap`, `flagDelay` |
 | `GeoCountryPlaque` ⭐ | mapbox | "Annoncer un pays avec sa donnée ET sa source" — pilule nom + stat gold + source (ex: "$430M — Bloomberg"). Complément aux dots, épuré. + `GeoProgressCounter` (X/N) + `GeoClimaxOverlay` (titre final). Pattern Or Africain. Props: `name`, `stat`, `source`, `appearAt`, `hideAt`, `pos` |
+| `useClipFlags` ⭐⭐ | mapbox | "Projeter un VRAI drapeau dans un pays" — hook + `<ClipFlagsLayer>`. Vraies images HD clippées SVG, net à toute échelle (étoile entière, pas carrelé). LA bonne technique drapeau (PAS `drawFlagCanvas` qui est approximatif). Props ClipFlag: `{iso, geoNames, flagFile, at, bgColor, mainlandBox}`. `mainlandBox` obligatoire pour pays à outre-mer (France) |
 
 ---
 
@@ -224,6 +225,24 @@
 | `LeSceau` | layouts | Sceau officiel / cachet institutionnel |
 | `LeSemeur` | layouts | Dispersion de données / semis de points |
 | `ParallaxeDiorama` | layouts | Vue diorama avec parallaxe (profondeur de champ) |
+
+---
+
+## HERO DATA — data-viz premium (doctrine SOUVERAIN-REMOTION-PLAYBOOK)
+
+> Briques codifiées 2026-06-02 depuis Silicon Savannah + analyse Gemini. Pour beats **graphisme/data-viz/hero-data** (pas carte). Charte navy/gold, secondary motion, métaphore physique. Squelette assemblage : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
+
+| Composant | Import | Quand Aziz dit... |
+|---|---|---|
+| `CountUp` (preset `bounce` + `decimals`) | ui | "Le chiffre clé monte et claque" — count-up 0→target + overshoot physique + glow (P1). `decimals` pour "0.22%" |
+| `HeroMirrorBars` | layouts | "Plus tu es petit plus tu paies" — 2 barres miroir rouge/vert + count-up + verdict (vibration/pulse) + slot central (P7) |
+| `FloatingHeroObject` | layouts | "Un objet/icône qui flotte, vivant" — float sin + halo oscillant + ping-ring. Image OU enfant Lucide/SVG (P5) |
+| `Badge` (mode `satellite`) | ui | "Des stats qui gravitent autour" — badge navy/gold pop staggeré autour d'un hero. `sublabel` optionnel (P5) |
+| `CountdownReveal` (prop `pingNode`) | layouts | "7 ANS — le cadran se remplit" — arc SVG progressif + count-up + flash + ping-node lumineux |
+| `TextChoc` | layouts | "La punchline s'écrit mot par mot" — reveal typo séquentiel + underline accent (P6). Réutilisable tel quel |
+| `SubtitleBarSouverain` | ui | "Sous-titre persistant en bas" — ref-based, opacité cascade, jamais de trou (P3) |
+
+**Helpers** (`_shared/animations.ts`) : `heroBouncePop` (overshoot P1) · `appearOrganic` (reveal P3) · `floatSin`/`glowOscillate`/`pingRing` (secondary motion P5).
 
 ---
 
