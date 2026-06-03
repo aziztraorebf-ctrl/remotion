@@ -56,7 +56,7 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 | **A5 Géographie (Mapbox)** | ❌ **STUB — À PRODUIRE** | `Beat4Geographie.tsx` = placeholder |
 | A6 Question (Remotion) | ✅ FINAL | `a6-question-FINAL.mp4` (PHOSPHATE—ET—ASSEMBLAGE → question) |
 
-**NEXT (2 tâches) :**
+**NEXT (2 tâches) — STARTER COMPLET : `memory/STARTER-PROMPT-maroc-a5-geographie.md`** (scan templates + enchaînement premium + 3 signalements déjà faits) :
 1. **A5 Géographie** (~37s, MAPBOX — beat le plus stratégique). Texte : « Pour le Maroc sortir du rôle de fournisseur... Pour l'Europe réduire la dépendance Chine... Le Maroc devient l'endroit où les deux fabriquent ensemble. Ce n'est pas de la diplomatie, c'est de la géographie industrielle. » → 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité 2h Espagne, Volkswagen) / **triangle Maroc—Europe—Chine** (flux convergents). Climax visuel = le triangle. Pipeline Mapbox (`mapbox-session.py`).
 2. **Assemblage final** : ffmpeg concat des 6 beats dans l'ordre (Beat0→A2→A3→A4→A5→A6) + 1 narration globale + mix. Voir `SOUVERAIN-REMOTION-SKELETON.md` (pattern audio) + `SFX-INDEX.md`.
 
