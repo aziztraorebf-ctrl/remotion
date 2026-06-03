@@ -24,11 +24,9 @@
 | `sfx-swoosh-pullback.mp3` | Whoosh Pull Back Reveal (dezoom) | ~1s | Or Africain, Sénégal Beat10 |
 | `sfx-swoosh-zoomin.mp3` | Whoosh Zoom In / Dolly In | ~1s | Or Africain |
 | `sfx-map-ping.mp3` | Ping / pop apparition d'un point sur carte | ~0.5s | Or Africain |
-| `sfx-whip-pan-1.mp3` | Whip pan / SWITCH de pays (swipe air punchy) — variation 1 | 0.68s | Petrole Patience (ElevenLabs, 2026-06-03) |
-| `sfx-whip-pan-2.mp3` | Whip pan / SWITCH de pays (swipe net court) — variation 2 | 0.60s | Petrole Patience |
-| `sfx-whip-pan-3.mp3` | Whip pan / SWITCH de pays (swipe + thud final) — variation 3 | 0.80s | Petrole Patience |
+| `sfx-whip-pan-1.mp3` | Whip pan / SWITCH de pays (swipe air punchy) — SEUL valide (ElevenLabs) | 0.68s | Petrole Patience (2026-06-03) |
 
-**Règle** : `sfx-swoosh-pullback` = fin du dezoom. `sfx-swoosh-zoomin` = début d'un VRAI zoom. `sfx-whip-pan-{1,2,3}` = CHANGEMENT de pays/lieu (whip pan latéral) — utiliser en ROTATION pour éviter la répétition. Ne PAS confondre zoom et switch.
+**Règle** : `sfx-swoosh-pullback` = fin du dezoom. `sfx-swoosh-zoomin` = début d'un VRAI zoom. `sfx-whip-pan-1` = CHANGEMENT de pays/lieu (whip pan latéral). Ne PAS confondre zoom et switch. (Variations 2 et 3 supprimées 2026-06-03 : ElevenLabs avait rendu des sons de laser/ping au lieu de whoosh.)
 
 ---
 
