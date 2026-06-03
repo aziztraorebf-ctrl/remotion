@@ -10,6 +10,18 @@
 
 ---
 
+## Système Beat Remotion HERO DATA — 2026-06-03 [COMPLETE]
+
+Parité avec le système Mapbox. Doctrine `SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes + SFX),
+catalogue HERO DATA (`COMPOSANTS-INDEX.md`), pipeline `beat-session.py` durci (phase 0 SCAN
+complet + gate storyboard Gemini multi-panels obligatoire). Briques : CountUp(bounce),
+HeroMirrorBars, HeroVerticalBars, FloatingHeroObject(clipCircle/spin), Badge(satellite),
+SubtitleBarSouverain, TextChoc. Assemblage : `SOUVERAIN-REMOTION-SKELETON.md`.
+**1er beat produit (preuve bout-en-bout)** : A3 Cailloux Maroc → `out/episodes/maroc-batteries/a3-cailloux-FINAL.mp4`.
+Branche : `feat/systeme-remotion-hero-data` (6 commits, à merger dans master quand Aziz valide).
+
+---
+
 ## Workflows actuellement actifs (depuis ~mi-mai 2026)
 
 Le système agentique 5-stages reste **la référence** pour la production vidéo
@@ -101,9 +113,13 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 - **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
   `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
   Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
-- **Maroc Batteries (Mid-form 4-5 min)** — BACKLOG, pas encore commencé.
-  Pré-prod prête : `memory/STARTER-PROMPT-maroc-batteries-midform.md`.
-  À attaquer APRÈS Sénégal.
+- **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
+  Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).
+  URL catbox : https://files.catbox.moe/jyrlj1.mp3. Format visuel : Template B Hybride.
+  État complet + checklist production : `memory/episodes/souverain/maroc-batteries-kenitra/PREPRODUCTION-SHORT.md`.
+  NEXT : storyboard visuel → forced alignment → beats Remotion.
+- **Maroc Batteries Mid-form 4-5 min** — BACKLOG, après Short.
+  Pré-prod : `memory/STARTER-PROMPT-maroc-batteries-midform.md`.
 
 ### 💤 En pause / dormants
 
@@ -146,6 +162,183 @@ Code épisodes archivé dans `src/_archive/episodes-livres/`.
 > Les handoffs des sessions terminées (Sonjata, Thiaroye, Abou Bakari, Or Africain,
 > Silicon Savannah, Niger Uranium, Zimbabwe Lithium, RDC No Sense, etc.) sont
 > dans le snapshot archivé : `.claude/agent-memory/archive/PIPELINE-snapshot-2026-05-20.md`.
+
+## Maroc Batteries — BLOC CARTE (Mapbox) TERMINÉ — 2026-06-03 [COMPLETE]
+
+**Session : fill-pattern lib + Beat 3 from scratch + corrections Beat 0/1. Bloc carte bouclé.**
+
+3 beats Mapbox FINAL (les corrections SFX + vrais drapeaux appliquées) :
+- Beat 0 Hook ✅ https://files.catbox.moe/otcfyz.mp4 — SweepRevealTerritory (SFX recalibrés, swoosh-zoom retiré car carte fixe)
+- Beat 1 Phosphate ✅ https://files.catbox.moe/r30wee.mp4 — vrais drapeaux clip SVG (useClipFlags), SFX Sequence
+- Beat 3 Acteurs ✅ https://files.catbox.moe/ivv7d8.mp4 — pull back planétaire vue monde + 3 drapeaux statiques synchro voix + lignes connexion + GeoCountryPlaque
+
+**Créé cette session (tout référencé dans les 3 catalogues Mapbox) :**
+- 11 templates fill-pattern N1-N4 + `flagCanvas.ts` (45 drapeaux + `countryFilter`) + `resourceTextures.ts` (6 textures).
+- **`useClipFlags.tsx`** ⭐⭐ — vrais drapeaux HD clippés SVG, net à toute échelle (`mainlandBox` pour outre-mer). LA technique drapeau.
+- **`GeoCountryPlaque.tsx`** (+ counter + climax) — plaque nom+stat+SOURCE (pattern Or Africain généralisé).
+- `camCountryApproach` (pitch 32 relief) dans MapboxBase. Drapeaux HD Wikimedia dans `public/_shared/flags/`.
+
+**3 leçons critiques sauvegardées** (`memory/feedback_sfx-sequence-et-drapeaux-reels.md`) :
+1. SFX : `<Sequence from durationInFrames>` OBLIGATOIRE, jamais `{frame===X}` (ne joue pas en render). ⚠️ Beat0/1 avaient le bug → corrigé.
+2. Drapeaux : vraies images Wikimedia, JAMAIS `drawFlagCanvas` (dessins approximatifs) pour drapeau visible.
+3. Bbox outre-mer (France=Guyane+Réunion) casse le clip → `mainlandBox`.
+
+**NEXT : BLOC REMOTION** (Beat 2 Cailloux assets Gemini à valider, Beat 4, Beat 5) puis assemblage. Philo 2-blocs : `feedback_philosophie-mapbox-puis-remotion.md`.
+
+## Maroc Batteries — Chaîne production Mapbox premium — 2026-06-01 [SYSTÈME CRÉÉ, BEAT 1 À REFAIRE — OBSOLÈTE, voir entrée 06-03]
+
+**Session structurante — on a bâti toute la chaîne de production Mapbox premium, pas juste un beat.**
+
+Créé cette session :
+- `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md` — doctrine cartographique premium (Gemini 3.1 Pro, 6 réfs + 4 nos vidéos). 5 principes + anti-clonage + template storyboard 7 champs.
+- `scripts/mapbox-session.py` — système beat Mapbox scoré (miroir de beat-session.py pour Remotion).
+- `scripts/tools/gemini-mapbox-review.py` — review vidéo Mapbox → JSON scoré (seuil 8/10).
+- `scripts/tools/gemini-visual-playbook.py` — génère le Playbook (2 appels Gemini).
+- Routage CLAUDE.md : 2 lignes distinctes beat Mapbox vs Remotion + 2 blocs Pipeline.
+
+Beat 1 Maroc (A2 Phosphate) : codé en v4, Gemini 4→6.5/10. CAS-TEST. **À REFAIRE** proprement avec storyboard Playbook validé en amont (drift continu + anti-gris + séquentiel dès la conception).
+
+Brouillons `beats/*.tsx` supprimés (sauf Beat0Hook référence). Beat0 Hook reste FINAL.
+
+**FAIT cette session (suite) :**
+- Chantier A ✅ : pré-prod réordonnée — `souverain-preproduction` SKILL : nouvelle Étape 3.5 "Pensée visuelle Mapbox (Playbook)" entre jury et audio (pour informer cues audio + ajuster script). Règle EFFET VIVANT + règle INVOCATION UNIVERSELLE gravées dans CLAUDE.md.
+- Règle ALTITUDE PAR DÉFAUT ajoutée au Playbook (P2bis) : rester en hauteur, frontières lisibles ; gros zoom sol = exception. Erreur Beat 1 = avoir commencé au sol.
+- Chantier B ✅ : gap analysis templates (`scripts/tools/gemini-template-gap.py` → /tmp/template-gap.json). Axe = EFFET VIVANT (couleur/frontières/projection/Lottie), pas 3D.
+  - SOUS-UTILISÉS à réactiver : CountryFlagFill, CountryIsolateWithHatch (déjà dans Root 16:9), Lottie off-screen, FlowArrowsMap.
+  - À CRÉER (priorité HAUTE) : BichromyPolygonProjector (projection image bichromie), SequentialBorderPulse (frontières synchro syllabe). MOYENNE : LottieGeoAura, GlassmorphismGeoPopup. Tous hybrides V+H.
+
+**NEXT — Chantier C (prochaine session, lot de 2 testés à fond V+H) :**
+1. Réactiver/tester CountryFlagFill (192 l, PAS dans Root) + CountryIsolateWithHatch (433 l, dans Root 16:9). Les rendre hybrides V+H, render preview vertical + horizontal, valider Aziz.
+2. SEULEMENT si gap reste après réactivation : créer BichromyPolygonProjector + SequentialBorderPulse.
+3. PUIS refaire Beat 1 Maroc A2 avec système complet (storyboard Playbook + altitude par défaut + 1 template effet vivant obligatoire). Puis A3-A6.
+Décision Aziz : commencer par RÉACTIVER l'existant (moins cher) avant de créer. Lot de 2 max, qualité > quantité.
+
+## Beat 0 — Hook — Maroc Batteries — 2026-06-02 [COMPLETE]
+
+- Fichier : src/projects/souverain/maroc-batteries/beats/Beat0Hook.tsx
+- Render FINAL : out/episodes/maroc-batteries/beat0-FINAL.mp4
+- Catbox : https://files.catbox.moe/jx3e4s.mp4
+- Templates utilisés : SweepRevealTerritory (showHatching=true)
+- Forced alignment : MAROC_WORDS (maroc-words.ts) — tous les mots
+- Validé par Aziz : oui
+
+## Beat 1 — Phosphate — Maroc Batteries — 2026-06-02 [COMPLETE]
+
+- Fichier : src/projects/souverain/maroc-batteries/beats/Beat1Phosphate.tsx
+- Render FINAL : out/episodes/maroc-batteries/beat1-FINAL.mp4
+- Catbox : https://files.catbox.moe/n9jxx7.mp4
+- Templates utilisés : FlagFill Multi-Pays (drapeaux MAR/ESP/FRA/DEU projetés) + slam SVG 70% + arcs export + dots CSS
+- Review Gemini : 8 vidéos (6 refs + 2 nos beats) analysées → corrections appliquées
+- Validé par Aziz : oui (template B "tous drapeaux")
+
+## ⭐ DÉCOUVERTE FlagFill — 2026-06-02 [TEMPLATES PHASE 1 CARTE VIVANTE]
+
+2 templates FlagFill créés — la solution N°1 pour colorer une carte Mapbox (règle pour TOUTE scène future) :
+- Template A (Focus-Un-Pays) : `out/templates-souverain/FINAL-FlagFill-FocusUn-V.mp4` — 1 drapeau principal + couleurs unies secondaires
+- Template B (Multi-Pays) : `out/templates-souverain/FINAL-FlagFill-MultiPays-V.mp4` — tous les pays avec drapeau projeté
+- Doc : `memory/feedback_flagfill-templates-decouverte.md`
+- Drapeaux locaux : `public/_shared/flags/` (es/fr/de.png + Maroc canvas pur)
+
+## NEXT — Maroc Batteries
+
+1. ⚠️ SESSION FILL-PATTERN d'abord (bibliothèque drapeaux/textures + helpers réutilisables)
+2. Beat 2 Cailloux (f932→f1300, pur Remotion) — assets Gemini à valider avant
+
+## RÈGLE FORMALISÉE — Recherche templates avant code
+
+Ajoutée à CLAUDE.md + `memory/feedback_recherche-templates-obligatoire.md` : Claude DOIT scanner les catalogues AVANT de coder. Évite les itérations (leçon : 18 versions Beat 1 car FlagFill pas cherché au départ).
+
+## Chantier C — Templates Mapbox hybrides V+H — 2026-06-02 [LOT COMPLET, EN ATTENTE VALIDATION AZIZ]
+
+Lot de templates Mapbox premium (vraie carte vivante, hybrides V+H, render headless via render-mapbox.sh).
+Tous dans `src/projects/_shared/mapbox/`. Compositions enregistrées dans Root.tsx.
+
+**Créés cette session :**
+1. `MapboxFlagFill.tsx` ✅ VALIDÉ — drapeau (ou toute image) clippé en SVG dans la silhouette d'un pays, sur carte vivante (drift, altitude, voisins ivory). Technique = clip SVG + reprojection map.project() frame-driven (PAS fill-pattern qui carrelle). Prop `geoName` accepte tableau → fusionne géométries (ex: ["Morocco","W. Sahara"] remplit le Maroc entier). `bichromie` 0→1.
+2. `MapboxIsolateZone.tsx` ✅ VALIDÉ — isolation pays (spotlight) + zone offshore hachurée (fill-pattern cyan) + badge pin geo + bloc stat. Zone Sangomar agrandie/contrastée.
+3. `SequentialBorderPulse.tsx` ✅ — frontières qui s'allument en séquence (synchro syllabe via prop `at`), flash+glow, reste allumé, drift adaptatif V/H.
+4. `GlassmorphismGeoPopup.tsx` ✅ VALIDÉ Aziz ("excellent") — encarts navy translucide + bordure or reliés par ligne fine au point geo (SVG projeté). NOTE: backdrop-filter blur NE rend PAS en headless → fond translucide solide (acceptable).
+5. `SequentialFlagReveal.tsx` ✅ (V2 demandée Aziz) — pays s'allument EN SÉQUENCE avec LEUR DRAPEAU clippé dans la silhouette, reste allumé (technique chaînes). Combine FlagFill + BorderPulse. Prop `countries[]` réutilisable (CEDEAO, Sahel...).
+6. `LottieGeoAura.tsx` + `src/projects/_shared/lottie/premiumLottieAssets.ts` — 3 assets Lottie premium navy/gold générés par code (shockwaveDiscovery, networkFlow, orbitalDataCrown) ancrés à un point geo. Lottie off-screen → goToAndStop frame-driven → overlay. À JUGER EN VIDÉO (Lottie temporel). Verdict perso : shockwave excellent, orbital crown bon, networkFlow correct après fix phase.
+
+**Plan Gemini (4 templates manquants) — état :** BichromyPolygonProjector = couvert par MapboxFlagFill (projette toute image). SequentialBorderPulse ✅. GlassmorphismGeoPopup ✅. LottieGeoAura ✅ (+ vrai gap = assets premium, générés).
+
+**Previews catbox (dernière version) :**
+- FlagFill Maroc : V https://files.catbox.moe/80ti00.mp4 · H https://files.catbox.moe/xay797.mp4
+- IsolateZone Sénégal : V https://files.catbox.moe/nv5azm.mp4 · H https://files.catbox.moe/npq08b.mp4
+- BorderPulse Maghreb : V https://files.catbox.moe/3lcys8.mp4 · H https://files.catbox.moe/flk7c8.mp4
+- GlassPopup Sénégal : V https://files.catbox.moe/p6f31u.mp4 · H https://files.catbox.moe/04tkmg.mp4
+- FlagReveal Maghreb : V https://files.catbox.moe/i7bq1e.mp4 · H https://files.catbox.moe/tyat4h.mp4
+- LottieGeoAura : V https://files.catbox.moe/kqybi6.mp4 · H https://files.catbox.moe/jxkicc.mp4
+
+**Chantier C v2 — 3 templates DYNAMIQUES (idees Gemini, axe Aziz : dynamisme+couleur) — 2026-06-02 :**
+Consultation Gemini 3.1 Pro (6 frames validees jointes) → 6 idees (sauvegardees `memory/tools/gemini-template-ideas-v2-2026-06-02.json`). Aziz a retenu les 3 "haute" :
+7. `SweepRevealTerritory.tsx` ✅ — faisceau lumineux gold qui TRAVERSE un pays et revele sa couleur au passage (scanner/lever de soleil). Gradient SVG anime clippe dans la silhouette reprojetee. Direction adaptative V(vertical)/H(horizontal). V https://files.catbox.moe/g1bvis.mp4 · H https://files.catbox.moe/m96rpq.mp4
+8. `DominoContagionFill.tsx` ✅ — la couleur CONTAMINE les pays de proche en proche par VAGUES (prop waves[][]) depuis un epicentre, onde concentrique. Raconte une expansion d'influence sans fleches. V https://files.catbox.moe/3f2shf.mp4 · H https://files.catbox.moe/spjlqt.mp4
+9. `FiberOpticBorderDraw.tsx` ✅ — la frontiere se DESSINE comme un laser dore (stroke-dasharray anime + glow feGaussianBlur), puis fill interieur monte. Salle de controle. V https://files.catbox.moe/be2pd0.mp4 · H https://files.catbox.moe/7k3zf6.mp4
+
+**Idees Gemini NON encore codees (backlog, si besoin) :** TensionHeatZone (heatmap chauffe), HexGridAnalysis (grille hexa egaliseur), GeoRippleExpansion (ondes epousant le littoral). + tes 3 fondamentaux : Choropleth, Texture ressource, Flux inter-pays.
+
+**Chantier HOOK — templates d'ouverture (2026-06-02) :** Aziz souvent insatisfait des débuts de vidéo → templates spécialisés 5-30s, rapides, punch frame 0 (assumé "TikTok" dans le rythme, charte navy/gold). Contrainte Mapbox : caméra fluide (drift OK), PAS de mouvement épileptique ; énergie en overlay.
+Consultation Gemini hooks (10 frames + GeoLayers 3) → 5 idées (`memory/tools/gemini-hook-ideas-2026-06-02.json`). Codés :
+- `FiberOpticFlagInvade.tsx` ⭐ — frontière se trace PUIS drapeau envahit, séquentiel (= V2 demandée Aziz). V https://files.catbox.moe/6jtjc7.mp4 H https://files.catbox.moe/v0ot0h.mp4
+- `KineticMaskSlam.tsx` ⭐ — chiffre géant, carte DANS le texte, zoom dans le "0". V https://files.catbox.moe/9hu9oe.mp4 H https://files.catbox.moe/6zivbg.mp4
+- `RapidFireCountries.tsx` — rafale de pays (cut sec) puis freeze. V https://files.catbox.moe/a09vsm.mp4 H https://files.catbox.moe/yamy5v.mp4
+- `ClassifiedRedactReveal.tsx` ⭐ — TOP SECRET + censure qui glisse + target lock. V https://files.catbox.moe/z95wbs.mp4 H https://files.catbox.moe/noljgi.mp4
+Hooks backlog : TacticalRadarScan, EpicenterShockwave, SatelliteTargetLock, GlitchMapIntro.
+
+**Chantier INSERTS + COMBOS (2026-06-02, suite) :** Aziz a reclassé RapidFire+ClassifiedRedact en INSERTS (pas hooks) et identifié 2 patterns puissants : (a) le CUTAWAY générique, (b) la COMBINAISON de primitives.
+- `MapCutaway.tsx` ⭐⭐ — INSERT réutilisable : carte → overlay plein écran → retour carte + target lock. 4 modes : image/stat/reveal/flag. Textes en TYPEWRITER. LE template le plus réutilisable (chaque vidéo). Previews : Stat https://files.catbox.moe/pbjdzd.mp4 Image https://files.catbox.moe/88s176.mp4 Flag https://files.catbox.moe/rg4j0i.mp4 Reveal https://files.catbox.moe/5ech8j.mp4
+- `components/TypewriterText.tsx` — texte lettre-par-lettre réutilisable (curseur gold), extrait de TypeWriter.tsx.
+- 3 COMBOS (hooks par assemblage) : `ComboMaskSweep` (choc→révélation→focus) https://files.catbox.moe/h75bhk.mp4 · `ComboSweepDominoFlag` (déclencheur→propagation→drapeaux) https://files.catbox.moe/httrq8.mp4 · `ComboFiberAuraPopup` (où→quoi→combien) https://files.catbox.moe/4byelm.mp4
+
+**INVENTAIRE TOTAL templates Mapbox (17 créés cette session)** : 6 statiques/séquentiels (FlagFill, IsolateZone, BorderPulse, GlassPopup, FlagReveal, LottieGeoAura) + 3 dynamiques (Sweep, Domino, FiberOptic) + 2 hooks (FiberOpticFlagInvade, KineticMaskSlam) + 2 inserts (RapidFire, ClassifiedRedact) + 1 cutaway générique (MapCutaway) + 3 combos (MaskSweep, SweepDominoFlag, FiberAuraPopup). + TypewriterText réutilisable. Tous référencés COMPOSANTS-INDEX + MAPBOX-COMPOSANTS + ASSETS-INDEX. Lottie assets : `lottie/premiumLottieAssets.ts`. Idées Gemini backlog : `memory/tools/gemini-template-ideas-v2-2026-06-02.json` + `gemini-hook-ideas-2026-06-02.json`.
+
+**NEXT après validation Aziz :** refaire Beat 1 Maroc A2 avec cet arsenal (gap P4 + hooks couverts) + storyboard Playbook. Renders dev dans `out/templates-souverain/_dev/`.
+
+## Carrousel "Good News" #1 — 2026-06-02 [PUBLIÉ]
+
+Nouveau 3e type de carrousel (bonnes nouvelles macro Afrique, indépendant d'une vidéo).
+Charte LUMINEUSE (ivoire/or/navy), 100% Remotion animé. Briques réutilisables : `gauge`, `flow` (icônes Lucide), `bars`, `map` (Mapbox Caspian beige).
+Carrousel #1 (Maroc/Kenya/Algérie) programmé 3 juin sur IG+FB (carrousel) + TikTok (vidéo unique).
+Pipeline + briques consolidés : `src/projects/souverain/carousels/good-news/README.md`. Décisions : `memory/STARTER-PROMPT-carrousel-good-news.md`.
+NEXT possible : script d'automatisation hebdo (last30days → briques → Postiz), semi-auto avec validation humaine.
+Fix collatéral : `scripts/render-mapbox.sh` (chemin chrome-headless-shell) + stubs beats Maroc Batteries manquants (dette repo).
+
+## Sénégal Pétrole & Gaz — Acte 3 S2 (Beat11) — 2026-05-23 [COMPLETE]
+
+**Beat11 VALIDÉ** (`out/episodes/senegal-petrole-gaz/beat11-FINAL.mp4`, 44.9s, 5.4MB)
+- Architecture : fond kraft + D3 StackedBars SVG, 4 phases (doc classifié → barre gold → Cost Recovery → 3 segments → révélation)
+- Tailwind migré : tokens `font-mono`, `flex`, `tracking-widest`, etc. Labels sur fonds colorés opaques (rouge/brun/or) pour lisibilité kraft
+- Audio : `narration-v1-clean.mp3` `startFrom={5755}` (skip "mécanisme 1,", démarre sur "le contrat.")
+- Chiffres vivants + sweep lumineux + ghost trailing 60%
+- Imgur final : https://i.imgur.com/6RGSGND.mp4
+- **NEXT** : Beat12 (S3 — Mécanisme 2 : FONSIS + dette) ou Beat13 (S4 — Mécanisme 3 : Yakaar/géopolitique)
+
+## Sénégal Pétrole & Gaz — Acte 3 S1 (Beat10) — 2026-05-23 [COMPLETE]
+
+**Beat10 VALIDÉ** (`out/episodes/senegal-petrole-gaz/beat10-FINAL.mp4`, 61s, 67MB)
+- Architecture : 1 seule Map Mapbox continue, 6 phases (Norvège → Congo → Botswana → Crane Up)
+- Coloration pays : NOR=gold, COG=orange, BWA=vert — persistent sur vue finale
+- Audio : `narration-v1-congo-brazzaville.mp3` (splice "Le Congo" → "Le Congo-Brazzaville"), `endAt={5718}` pour couper avant "Mécanisme 1"
+- Catbox final : https://files.catbox.moe/yx177g.mp4
+- **Leçons R11 ajoutées** dans `memory/rules-beat-production.md` (splice audio, endAt, public-dir minimal, renders parallèles)
+- **NEXT** : Beat11 (Mécanisme 1) + suite Acte 3
+
+## Sénégal Pétrole & Gaz — ÉPISODE COMPLET — 2026-05-25 [TOUS BEATS VALIDÉS — ASSEMBLAGE RESTANT]
+
+**Tous les beats produits et validés :**
+- Beat0  → `out/episodes/senegal-petrole-gaz/beat0-FINAL.mp4` (36.5s) ← VALIDÉ 2026-05-25
+- Acte 1 → `out/episodes/senegal-petrole-gaz/senegal-acte1-FINAL.mp4` (42.3s)
+- Acte 2 → `out/episodes/senegal-petrole-gaz/acte2-FINAL.mp4` (88.3s)
+- Beat10 → `out/episodes/senegal-petrole-gaz/beat10-FINAL.mp4` (61s)
+- Beat11 → `out/episodes/senegal-petrole-gaz/beat11-FINAL.mp4` (44.9s)
+- Beat12 → `out/episodes/senegal-petrole-gaz/beat12-FINAL.mp4`
+- Beat13 → `out/episodes/senegal-petrole-gaz/beat13-FINAL.mp4`
+
+**Prochaine session — 2 tâches restantes (dans cet ordre) :**
+1. **SFX** — effets sonores frame-précis sur mouvements caméra Mapbox, pop plates, slashes, reveals. Backlog existant dans `memory/episodes/souverain/senegal-petrole-gaz/CORRECTIONS-MINEURES.md`
+2. **Assemblage final** — concaténation ffmpeg de tous les beats dans l'ordre (Beat0 → Acte1 → Acte2 → Beat10 → Beat11 → Beat12 → Beat13) → `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4`
 
 ## Sénégal Pétrole & Gaz — Acte 2 — 2026-05-23 [COMPLETE]
 
