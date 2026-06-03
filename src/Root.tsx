@@ -73,6 +73,7 @@ import { WaypointMarch } from "./projects/atlas/_blueprints/waypoint-march/Waypo
 import { DutchTiltCollapse } from "./projects/atlas/_blueprints/dutch-tilt-collapse/DutchTiltCollapse";
 import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
 import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
+import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
 import { Beat1Hook as P1347_Beat1Hook } from "./projects/atlas/peste-1347/Beat1Hook";
 import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
@@ -417,6 +418,14 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="AtlasAttackArrowDemo"
           component={AtlasAttackArrowDemo}
+          durationInFrames={220}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="AtlasEncirclementDemo"
+          component={AtlasEncirclementDemo}
           durationInFrames={220}
           fps={30}
           width={720}

@@ -28,17 +28,24 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
 **batailles = NOTRE exclusivite PixelLab.** PixelLab = differentiel par DEFAUT (pas plan B).
 mapanimation = banc R&D, jamais livraison. Fleche `AtlasAttackArrow` = OK, paramétrable, premium.
 
-**3 chantiers ouverts (ordre suggere) :**
-1. **PROTOTYPER UNE BATAILLE PixelLab** — le vrai differentiel, sans concurrent. 2 formations
+**Chantiers (ordre suggere) :**
+1. ✅ **FAIT 2026-06-03 — Enrichir AtlasAttackArrow** (multi-fleches + friction projection).
+   `AtlasEncirclement.tsx` + `pincerArrows` (tenaille cle-en-main) + `geoUtils.bezierRoute`
+   (route courbe pour l'enveloppement). Projection = FACTORY parametree (`makeLngLatToSvg`,
+   `centeredProjection`, catalogue `PROJECTIONS.{mali,mediterranee,cannae,europe,grece}`).
+   PROUVE EN RENDER : Cannes (catbox 806sj2) — le cas ou mapanimation echoue, battu en pur
+   d3-geo. Zero regression demo Mali. Detail : `feedback_atlas-inspiration-externe-faisabilite.md`.
+   Branche `feat/atlas-arrow-multi-encirclement` (a merger).
+2. **PROTOTYPER UNE BATAILLE PixelLab** — le SUR-differentiel (sprites = acteurs). 2 formations
    sprites face a face sur carte + terrain + rapport de force + pulse de choc. Cas : Cannes
-   (enveloppement) ou Thermopyles (defile). ~50 assets PixelLab existants (PIXELLAB-MASTER-INDEX).
-2. **PLAYBOOK ATLAS** — miroir d3-geo du SOUVERAIN-VISUAL-PLAYBOOK. Consolider les 5 mecaniques
+   (le diagramme tactique est deja pret → ajouter les sprites dessus) ou Thermopyles. ~50 assets
+   PixelLab existants (PIXELLAB-MASTER-INDEX).
+3. **PLAYBOOK ATLAS** — miroir d3-geo du SOUVERAIN-VISUAL-PLAYBOOK. Consolider les 5 mecaniques
    decodees + echelle escalade N0 primitives / N1 marqueur / N2 sprite PixelLab.
-3. **Enrichir AtlasAttackArrow** — multi-fleches coordonnees (encerclement), + regler la
-   FRICTION projection : `lngLatToSvg` est REGIONALE (ancrages Afrique Ouest) → prevoir ancrages
-   par episode pour Hannibal/Napoleon hors zone.
 
-**Polish mineur backlog :** AtlasAttackArrowDemo gardee en ref (Root.tsx). Couleurs/tete fleche OK.
+**Backlog enrichissement arrow restant :** ancres reelles a calibrer pour `.europe`/`.grece`
+quand on attaquera Napoleon/Thermopyles (les valeurs actuelles sont des estimations centrees,
+a verifier sur un vrai render). `AtlasEncirclementDemo` gardee en ref R&D (Root.tsx).
 
 ---
 

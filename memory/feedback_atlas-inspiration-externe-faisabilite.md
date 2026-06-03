@@ -84,12 +84,36 @@ puis Gao→Agadez). Démo = `AtlasAttackArrowDemo.tsx` (compo Root R&D, à retir
 Polish appliqué : têtes fines, carte LIGHT (nouveau mode via props `oceanColor/landColor/
 strokeColor` ajoutées à AtlasMercator, défaut inchangé = zéro régression).
 
-**FRICTION TECHNIQUE à connaître (playbook) : la projection `lngLatToSvg` de geoUtils est
-RÉGIONALE — ancrages Afrique de l'Ouest (Mali, lon -8/-3, lat 11/16).** Elle ne projette PAS
-correctement l'Europe (villes russes/grecques tombent hors champ). De même `peste-map-data` est
-une projection Afrique/Méditerranée distincte. Pour un épisode hors zone (Hannibal Alpes,
-Napoléon, Thermopyles) : prévoir des ancrages adaptés OU la carte projetée de l'épisode. Chaque
-épisode Atlas a SA projection — ne pas réutiliser les ancrages Mali aveuglément.
+**FRICTION TECHNIQUE — RÉSOLUE 2026-06-03 (voir ci-dessous).** La projection `lngLatToSvg` était
+RÉGIONALE (ancrages Mali figés). Elle est désormais une FACTORY paramétrée :
+- `makeLngLatToSvg(anchorA, anchorB)` — projection Mercator depuis 2 ancres écran connues.
+- `centeredProjection(centerLon, centerLat, pxPerDegLon)` — plus intuitive pour une NOUVELLE
+  région sans carte pré-projetée (on donne centre + échelle, idéal pour cadrer une bataille).
+- Catalogue `PROJECTIONS` : `.mali` (défaut, = ancienne projection figée, ZÉRO régression),
+  `.mediterranee` (Hannibal vue large), `.cannae` (échelle locale plaine), `.europe`, `.grece`.
+- Les helpers de route (`positionAlongRoute`, `bearingAlongRoute`, `caravanePositions`) et
+  `AtlasAttackArrow` / `AtlasEncirclement` acceptent une prop `projection` optionnelle.
+Règle inchangée : chaque épisode hors zone passe SA projection — ne jamais réutiliser Mali
+aveuglément. Mais c'est maintenant 1 ligne (`projection={PROJECTIONS.cannae}`), pas un refactor.
+
+## ENRICHISSEMENT 2026-06-03 — Multi-flèches + projection paramétrée (DIFFÉRENTIEL prouvé)
+
+`AtlasEncirclement.tsx` — orchestrateur de N flèches tactiques coordonnées (encerclement,
+tenaille, enveloppement). Chaque flèche = `AtlasAttackArrow` piloté par sa fenêtre
+[delay, delay+duration], MÊME projection injectée. Helper `pincerArrows(spec)` = manœuvre en
+tenaille clé-en-main (2 ailes + centre appât). `geoUtils.bezierRoute(waypoints)` = route COURBE
+(spline Catmull-Rom en coords géo) pour les ailes qui contournent (un great-circle reste droit
+à l'échelle d'une plaine — il fallait courber la route, pas juste lisser le path).
+
+**PROUVÉ EN RENDER : Cannes (216 av. J.-C.)** — `out/_r-and-d/mapanimation/atlas-test/encirclement/
+cannae-demo.mp4` (catbox 806sj2). Séquençage frame-précis : Rome avance au centre (appât), PUIS
+les 2 ailes puniques se referment en arc derrière elle, le piège flashe. C'EST le cas où
+mapanimation échoue (flèches minuscules, enveloppement illisible) → notre exclusivité confirmée
+SANS PixelLab, en pur d3-geo. PixelLab reste le sur-différentiel (sprites = acteurs), mais le
+diagramme tactique seul suffit déjà à les battre sur les batailles.
+
+Zéro régression : `AtlasAttackArrowDemo` (Mali) re-rendue identique. Le lissage Catmull-Rom de
+`toPathD` adoucit juste les jonctions multi-waypoints (amélioration discrète).
 
 ## Conséquence : B = enrichissement ciblé, PAS refonte
 
