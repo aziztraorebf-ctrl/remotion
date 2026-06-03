@@ -1,4 +1,4 @@
-import { Composition, Folder } from "remotion";
+import { Composition, Folder, staticFile as staticFileRoot } from "remotion";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
@@ -13,6 +13,15 @@ import { CurveChartClean } from "./projects/souverain/carousels/hybrid/CurveChar
 import { GhanaMapClean } from "./projects/souverain/carousels/hybrid/GhanaMapClean";
 import { AfriqueOuestMapClean } from "./projects/souverain/carousels/hybrid/AfriqueOuestMapClean";
 import { CarouselSlideHybrid } from "./projects/souverain/carousels/hybrid/CarouselSlideHybrid";
+import { GoodNewsCarousel } from "./projects/souverain/carousels/good-news/GoodNewsCarousel";
+import { GoodNewsSlideLight } from "./projects/souverain/carousels/good-news/GoodNewsSlideLight";
+import { GoodNewsSlideMap } from "./projects/souverain/carousels/good-news/GoodNewsSlideMap";
+import {
+  hookProps as gnHook, ctaProps as gnCta,
+  news0FactProps as gnN0F, news0MacroProps as gnN0M,
+  news1FactProps as gnN1F, news1MacroProps as gnN1M,
+  news2FactProps as gnN2F, news2MacroProps as gnN2M,
+} from "./projects/souverain/carousels/good-news/slide-props";
 import { CarouselCtaSlide } from "./projects/souverain/carousels/hybrid/CarouselCtaSlide";
 import { CarouselSlideAtlas } from "./projects/souverain/carousels/hybrid/CarouselSlideAtlas";
 import { AtlasFormat1SplitScreen } from "./projects/souverain/carousels/hybrid/AtlasFormat1SplitScreen";
@@ -181,6 +190,34 @@ import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/ma
 import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
 import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
 import { MapboxLottieShowcase, MAPBOX_LOTTIE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/MapboxLottieShowcase";
+import { MapboxFlagFill } from "./projects/_shared/mapbox/MapboxFlagFill";
+import { MapboxIsolateZone } from "./projects/_shared/mapbox/MapboxIsolateZone";
+import { SequentialBorderPulse } from "./projects/_shared/mapbox/SequentialBorderPulse";
+import { GlassmorphismGeoPopup } from "./projects/_shared/mapbox/GlassmorphismGeoPopup";
+import { SequentialFlagReveal } from "./projects/_shared/mapbox/SequentialFlagReveal";
+import { LottieGeoAura } from "./projects/_shared/mapbox/LottieGeoAura";
+import { SweepRevealTerritory } from "./projects/_shared/mapbox/SweepRevealTerritory";
+import { DominoContagionFill } from "./projects/_shared/mapbox/DominoContagionFill";
+import { FiberOpticBorderDraw } from "./projects/_shared/mapbox/FiberOpticBorderDraw";
+import { FiberOpticFlagInvade } from "./projects/_shared/mapbox/FiberOpticFlagInvade";
+import { KineticMaskSlam } from "./projects/_shared/mapbox/KineticMaskSlam";
+import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
+import { ClassifiedRedactReveal } from "./projects/_shared/mapbox/ClassifiedRedactReveal";
+import { MapCutaway } from "./projects/_shared/mapbox/MapCutaway";
+import { ComboMaskSweep } from "./projects/_shared/mapbox/ComboMaskSweep";
+import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
+import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
+// ── N1-N4 Fill-Pattern templates (session 2026-06-03)
+import { FlagFillStatic } from "./projects/_shared/mapbox/FlagFillStatic";
+import { FlagFillSequence } from "./projects/_shared/mapbox/FlagFillSequence";
+import { ResourceTextureFill } from "./projects/_shared/mapbox/ResourceTextureFill";
+import { HeatGradientFill, PALETTE_PETROLE, PALETTE_LITHIUM } from "./projects/_shared/mapbox/HeatGradientFill";
+import { WavingFlagFill } from "./projects/_shared/mapbox/WavingFlagFill";
+import { FlagDissolveTransition } from "./projects/_shared/mapbox/FlagDissolveTransition";
+import { ImageProjectionFill } from "./projects/_shared/mapbox/ImageProjectionFill";
+import { PulsingRegionFill } from "./projects/_shared/mapbox/PulsingRegionFill";
+import { ContagionFlagSpread } from "./projects/_shared/mapbox/ContagionFlagSpread";
+import { GeoCountryPlaqueShowcase, GEO_COUNTRY_PLAQUE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/GeoCountryPlaqueShowcase";
 import { PetrolePatience, PETROLE_PATIENCE_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatience";
 import { PetrolePatienceShort, PETROLE_PATIENCE_SHORT_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatienceShort";
 import { AfriqueNumeriqueShort, AFRIQUE_NUMERIQUE_SHORT_FRAMES } from "./projects/_demos/afrique-numerique/AfriqueNumeriqueShort";
@@ -1158,6 +1195,83 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="Layout16-FlowArrowsMap" component={() => <FlowArrowsMap />} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="Layout16-ParadigmShiftTimeline" component={() => <ParadigmShiftTimeline />} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="Layout16-CountryIsolateWithHatch" component={() => <CountryIsolateWithHatch />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        {/* ── CHANTIER C — Templates Mapbox hybrides V+H (Playbook P2/P2bis/P3/P4/P5) ── */}
+        <Composition id="MapboxFlagFill-Maroc-V" component={() => <MapboxFlagFill countryIso="MAR" boundaryIsos={["ESH"]} geoName={["Morocco", "W. Sahara"]} center={[-9.5, 28.5]} baseZoom={4.7} flagCode="ma" label="MAROC" />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="MapboxFlagFill-Maroc-H" component={() => <MapboxFlagFill countryIso="MAR" boundaryIsos={["ESH"]} geoName={["Morocco", "W. Sahara"]} center={[-9.5, 28.5]} baseZoom={4.7} flagCode="ma" label="MAROC" />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="MapboxIsolateZone-Senegal-V" component={() => <MapboxIsolateZone countryIso="SEN" center={[-15.5, 14.2]} baseZoom={5.6} badge="SANGOMAR" badgeCoord={[-17.15, 13.45]} statValue="2,4 MDS $" statLabel="PRODUCTION ANNUELLE" countryName="SENEGAL" />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="MapboxIsolateZone-Senegal-H" component={() => <MapboxIsolateZone countryIso="SEN" center={[-15.5, 14.2]} baseZoom={5.6} badge="SANGOMAR" badgeCoord={[-17.15, 13.45]} statValue="2,4 MDS $" statLabel="PRODUCTION ANNUELLE" countryName="SENEGAL" />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="SequentialBorderPulse-Maghreb-V" component={() => <SequentialBorderPulse center={[-3, 29]} baseZoom={4.2} sequence={[{ iso: "MAR", at: 12, label: "MAROC" }, { iso: "DZA", at: 50, label: "ALGERIE" }, { iso: "MRT", at: 90, label: "MAURITANIE" }]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="SequentialBorderPulse-Maghreb-H" component={() => <SequentialBorderPulse center={[-3, 29]} baseZoom={4.2} sequence={[{ iso: "MAR", at: 12, label: "MAROC" }, { iso: "DZA", at: 50, label: "ALGERIE" }, { iso: "MRT", at: 90, label: "MAURITANIE" }]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="GlassmorphismGeoPopup-Senegal-V" component={() => <GlassmorphismGeoPopup center={[-15.2, 14.8]} baseZoom={5.4} highlightIso="SEN" points={[{ coord: [-17.15, 13.45], at: 14, title: "SANGOMAR", value: "100 000 b/j" }, { coord: [-16.9, 16.5], at: 56, title: "GTA", value: "2,5 Tcf gaz" }]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="GlassmorphismGeoPopup-Senegal-H" component={() => <GlassmorphismGeoPopup center={[-15.2, 14.8]} baseZoom={5.4} highlightIso="SEN" points={[{ coord: [-17.15, 13.45], at: 14, title: "SANGOMAR", value: "100 000 b/j" }, { coord: [-16.9, 16.5], at: 56, title: "GTA", value: "2,5 Tcf gaz" }]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="SequentialFlagReveal-Maghreb-V" component={() => <SequentialFlagReveal center={[-5, 27]} baseZoom={3.9} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 12, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 60, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 108, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="SequentialFlagReveal-Maghreb-H" component={() => <SequentialFlagReveal center={[-5, 27]} baseZoom={3.9} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 12, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 60, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 108, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="LottieGeoAura-Showcase-V" component={() => <LottieGeoAura center={[-14.5, 15.0]} baseZoom={5.6} highlightIso="SEN" auras={[{ coord: [-17.0, 14.7], asset: "shockwaveDiscovery", at: 8, sizeVmin: 42, label: "DECOUVERTE" }, { coord: [-13.5, 15.6], asset: "orbitalDataCrown", at: 36, sizeVmin: 38, label: "RESERVES" }, { coord: [-15.2, 13.4], asset: "networkFlow", at: 64, sizeVmin: 44, label: "EXPORT" }]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="LottieGeoAura-Showcase-H" component={() => <LottieGeoAura center={[-14.5, 15.0]} baseZoom={5.6} highlightIso="SEN" auras={[{ coord: [-17.0, 14.7], asset: "shockwaveDiscovery", at: 8, sizeVmin: 42, label: "DECOUVERTE" }, { coord: [-13.5, 15.6], asset: "orbitalDataCrown", at: 36, sizeVmin: 38, label: "RESERVES" }, { coord: [-15.2, 13.4], asset: "networkFlow", at: 64, sizeVmin: 44, label: "EXPORT" }]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        {/* ── CHANTIER C v2 — idees Gemini (dynamisme + couleur) ── */}
+        <Composition id="SweepRevealTerritory-Maroc-V" component={() => <SweepRevealTerritory countryIso="MAR" geoName={["Morocco", "W. Sahara"]} boundaryIsos={["ESH"]} center={[-9, 28.5]} baseZoom={4.6} label="MAROC" sweepAt={10} sweepDur={50} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="SweepRevealTerritory-Maroc-H" component={() => <SweepRevealTerritory countryIso="MAR" geoName={["Morocco", "W. Sahara"]} boundaryIsos={["ESH"]} center={[-9, 28.5]} baseZoom={4.6} label="MAROC" sweepAt={10} sweepDur={50} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="DominoContagionFill-Sahel-V" component={() => <DominoContagionFill center={[3, 16]} baseZoom={3.0} epicenterIso="MLI" epicenterLabel="MALI" waves={[["MLI"], ["BFA", "NER", "MRT", "DZA"], ["TCD", "NGA", "SEN", "GIN", "CIV"]]} waveAt={12} waveGap={26} />} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="DominoContagionFill-Sahel-H" component={() => <DominoContagionFill center={[3, 16]} baseZoom={3.0} epicenterIso="MLI" epicenterLabel="MALI" waves={[["MLI"], ["BFA", "NER", "MRT", "DZA"], ["TCD", "NGA", "SEN", "GIN", "CIV"]]} waveAt={12} waveGap={26} />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="FiberOpticBorderDraw-Senegal-V" component={() => <FiberOpticBorderDraw countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" drawAt={8} drawDur={50} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="FiberOpticBorderDraw-Senegal-H" component={() => <FiberOpticBorderDraw countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" drawAt={8} drawDur={50} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="FiberOpticFlagInvade-Maghreb-V" component={() => <FiberOpticFlagInvade center={[-5, 27]} baseZoom={3.9} drawDur={22} invadeDur={20} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 6, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 56, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 106, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="FiberOpticFlagInvade-Maghreb-H" component={() => <FiberOpticFlagInvade center={[-5, 27]} baseZoom={3.9} drawDur={22} invadeDur={20} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 6, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 56, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 106, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        {/* ── CHANTIER HOOK — templates d'ouverture (punch frame 0) ── */}
+        <Composition id="KineticMaskSlam-Maroc-V" component={() => <KineticMaskSlam center={[-7, 31]} baseZoom={4.6} bigText="70%" subText="DU PHOSPHATE MONDIAL" focusIso="MAR" />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="KineticMaskSlam-Maroc-H" component={() => <KineticMaskSlam center={[-7, 31]} baseZoom={4.6} bigText="70%" subText="DU PHOSPHATE MONDIAL" focusIso="MAR" />} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="RapidFireCountries-Afrique-V" component={() => <RapidFireCountries center={[0, 12]} baseZoom={3.0} cutFrames={5} flash={[{ code: "ng", name: "NIGERIA" }, { code: "gh", name: "GHANA" }, { code: "ci", name: "COTE D'IVOIRE" }, { code: "ml", name: "MALI" }, { code: "dz", name: "ALGERIE" }, { code: "ke", name: "KENYA" }]} focus={{ iso: "SEN", code: "sn", name: "SENEGAL" }} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="RapidFireCountries-Afrique-H" component={() => <RapidFireCountries center={[0, 12]} baseZoom={3.0} cutFrames={5} flash={[{ code: "ng", name: "NIGERIA" }, { code: "gh", name: "GHANA" }, { code: "ci", name: "COTE D'IVOIRE" }, { code: "ml", name: "MALI" }, { code: "dz", name: "ALGERIE" }, { code: "ke", name: "KENYA" }]} focus={{ iso: "SEN", code: "sn", name: "SENEGAL" }} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="ClassifiedRedactReveal-Senegal-V" component={() => <ClassifiedRedactReveal center={[-14.5, 14.5]} baseZoom={5.4} focusIso="SEN" stampText="CLASSIFIED" teaseText="CE QU'ON VOUS CACHE" />} durationInFrames={130} fps={30} width={1080} height={1920} />
+        <Composition id="ClassifiedRedactReveal-Senegal-H" component={() => <ClassifiedRedactReveal center={[-14.5, 14.5]} baseZoom={5.4} focusIso="SEN" stampText="CLASSIFIED" teaseText="CE QU'ON VOUS CACHE" />} durationInFrames={130} fps={30} width={1920} height={1080} />
+        {/* ── MapCutaway — insert reutilisable 4 modes (carte -> overlay -> retour) ── */}
+        <Composition id="MapCutaway-Stat-V" component={() => <MapCutaway center={[-14.5, 14.5]} baseZoom={5.4} focusIso="SEN" mode="stat" bigText="2,4 MDS $" subText="PRODUCTION ANNUELLE" inAt={18} outAt={70} />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="MapCutaway-Image-V" component={() => <MapCutaway center={[-2, 17]} baseZoom={4.6} focusIso="MLI" mode="image" image="_shared/flags-portraits/countries/mali-portrait.png" bigText="LE MALI" subText="COEUR DU SAHEL" inAt={18} outAt={70} />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="MapCutaway-Flag-V" component={() => <MapCutaway center={[-1, 8]} baseZoom={5.0} focusIso="GHA" mode="flag" flagCode="gh" bigText="GHANA" inAt={18} outAt={70} />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="MapCutaway-Reveal-V" component={() => <MapCutaway center={[-14.5, 14.5]} baseZoom={5.4} focusIso="SEN" mode="reveal" bigText="UN CONTRAT A 50 ANS" subText="SIGNE EN SECRET" inAt={18} outAt={70} />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="MapCutaway-Stat-H" component={() => <MapCutaway center={[-14.5, 14.5]} baseZoom={5.4} focusIso="SEN" mode="stat" bigText="2,4 MDS $" subText="PRODUCTION ANNUELLE" inAt={18} outAt={70} />} durationInFrames={120} fps={30} width={1920} height={1080} />
+        {/* ── COMBOS — hooks par assemblage de primitives ── */}
+        <Composition id="ComboMaskSweep-Maroc-V" component={() => <ComboMaskSweep center={[-9, 28.5]} baseZoom={4.4} bigText="70%" subText="DU PHOSPHATE MONDIAL" geoName={["Morocco", "W. Sahara"]} boundaryIsos={["MAR", "ESH"]} label="MAROC" />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="ComboMaskSweep-Maroc-H" component={() => <ComboMaskSweep center={[-9, 28.5]} baseZoom={4.4} bigText="70%" subText="DU PHOSPHATE MONDIAL" geoName={["Morocco", "W. Sahara"]} boundaryIsos={["MAR", "ESH"]} label="MAROC" />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="ComboSweepDominoFlag-Sahel-V" component={() => <ComboSweepDominoFlag center={[3, 16]} baseZoom={2.9} waves={[["MLI"], ["BFA", "NER"], ["DZA", "MRT"]]} flags={{ MLI: { geoName: "Mali", code: "ml" }, BFA: { geoName: "Burkina Faso", code: "bf" }, NER: { geoName: "Niger", code: "ne" }, DZA: { geoName: "Algeria", code: "dz" }, MRT: { geoName: "Mauritania", code: "mr" } }} />} durationInFrames={200} fps={30} width={1080} height={1920} />
+        <Composition id="ComboSweepDominoFlag-Sahel-H" component={() => <ComboSweepDominoFlag center={[3, 16]} baseZoom={2.9} waves={[["MLI"], ["BFA", "NER"], ["DZA", "MRT"]]} flags={{ MLI: { geoName: "Mali", code: "ml" }, BFA: { geoName: "Burkina Faso", code: "bf" }, NER: { geoName: "Niger", code: "ne" }, DZA: { geoName: "Algeria", code: "dz" }, MRT: { geoName: "Mauritania", code: "mr" } }} />} durationInFrames={200} fps={30} width={1920} height={1080} />
+        <Composition id="ComboFiberAuraPopup-Senegal-V" component={() => <ComboFiberAuraPopup countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" point={[-17.15, 13.45]} popupTitle="SANGOMAR" popupValue="100 000 b/j" />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="ComboFiberAuraPopup-Senegal-H" component={() => <ComboFiberAuraPopup countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" point={[-17.15, 13.45]} popupTitle="SANGOMAR" popupValue="100 000 b/j" />} durationInFrames={150} fps={30} width={1920} height={1080} />
+
+        {/* ── N1 FONDATIONS ── */}
+        <Composition id="FlagFillStatic-Maroc-V" component={() => <FlagFillStatic mainIso="MAR" mainBoundaryIsos={["ESH"]} center={[-5.5,32.0]} baseZoom={4.8} secondaryCountries={[{iso:"ESP",color:"#c60b1e"},{iso:"FRA",color:"#002395"},{iso:"DEU",color:"#dd0000"},{iso:"PRT",color:"#006600"}]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="FlagFillStatic-Maroc-H" component={() => <FlagFillStatic mainIso="MAR" mainBoundaryIsos={["ESH"]} center={[-5.5,32.0]} baseZoom={4.8} secondaryCountries={[{iso:"ESP",color:"#c60b1e"},{iso:"FRA",color:"#002395"},{iso:"DEU",color:"#dd0000"},{iso:"PRT",color:"#006600"}]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="FlagFillSequence-CEDEAO-V" component={() => <FlagFillSequence center={[-5,10]} baseZoom={4.2} countries={[{iso:"SEN",at:0},{iso:"MLI",at:30},{iso:"BFA",at:60},{iso:"NGA",at:90},{iso:"GHA",at:120},{iso:"CIV",at:150}]} />} durationInFrames={240} fps={30} width={1080} height={1920} />
+        <Composition id="FlagFillSequence-CEDEAO-H" component={() => <FlagFillSequence center={[-5,10]} baseZoom={4.2} countries={[{iso:"SEN",at:0},{iso:"MLI",at:30},{iso:"BFA",at:60},{iso:"NGA",at:90},{iso:"GHA",at:120},{iso:"CIV",at:150}]} />} durationInFrames={240} fps={30} width={1920} height={1080} />
+
+        {/* ── N2 TEXTURES ── */}
+        <Composition id="ResourceTextureFill-Maroc-Phosphate-V" component={() => <ResourceTextureFill center={[-5,31]} baseZoom={5.5} countries={[{iso:"MAR",boundaryIsos:["ESH"],resource:"phosphate",at:0}]} secondary={[{iso:"ESP",color:"#c60b1e",at:30},{iso:"DZA",color:"#006233",at:30}]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="ResourceTextureFill-Maroc-Phosphate-H" component={() => <ResourceTextureFill center={[-5,31]} baseZoom={5.5} countries={[{iso:"MAR",boundaryIsos:["ESH"],resource:"phosphate",at:0}]} secondary={[{iso:"ESP",color:"#c60b1e",at:30},{iso:"DZA",color:"#006233",at:30}]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="ResourceTextureFill-Afrique-V" component={() => <ResourceTextureFill center={[20,5]} baseZoom={3.5} countries={[{iso:"DZA",resource:"oil",at:0},{iso:"NGA",resource:"oil",at:30},{iso:"COD",resource:"lithium",at:60},{iso:"ZMB",resource:"lithium",at:90},{iso:"GHA",resource:"gold",at:120}]} />} durationInFrames={240} fps={30} width={1080} height={1920} />
+        <Composition id="ResourceTextureFill-Afrique-H" component={() => <ResourceTextureFill center={[20,5]} baseZoom={3.5} countries={[{iso:"DZA",resource:"oil",at:0},{iso:"NGA",resource:"oil",at:30},{iso:"COD",resource:"lithium",at:60},{iso:"ZMB",resource:"lithium",at:90},{iso:"GHA",resource:"gold",at:120}]} />} durationInFrames={240} fps={30} width={1920} height={1080} />
+        <Composition id="HeatGradientFill-Petrole-V" component={() => <HeatGradientFill center={[20,5]} baseZoom={3.5} countries={[{iso:"NGA",intensity:1.0,at:0,rampFrames:90,palette:PALETTE_PETROLE},{iso:"LBY",intensity:0.85,at:30,rampFrames:80,palette:PALETTE_PETROLE},{iso:"DZA",intensity:0.75,at:50,rampFrames:80,palette:PALETTE_PETROLE},{iso:"AGO",intensity:0.70,at:70,rampFrames:75,palette:PALETTE_PETROLE}]} />} durationInFrames={200} fps={30} width={1080} height={1920} />
+        <Composition id="HeatGradientFill-Petrole-H" component={() => <HeatGradientFill center={[20,5]} baseZoom={3.5} countries={[{iso:"NGA",intensity:1.0,at:0,rampFrames:90,palette:PALETTE_PETROLE},{iso:"LBY",intensity:0.85,at:30,rampFrames:80,palette:PALETTE_PETROLE},{iso:"DZA",intensity:0.75,at:50,rampFrames:80,palette:PALETTE_PETROLE},{iso:"AGO",intensity:0.70,at:70,rampFrames:75,palette:PALETTE_PETROLE}]} />} durationInFrames={200} fps={30} width={1920} height={1080} />
+
+        {/* ── N3 EFFETS AVANCES ── */}
+        <Composition id="WavingFlagFill-Maroc-V" component={() => <WavingFlagFill mainIso="MAR" mainBoundaryIsos={["ESH"]} center={[-5,31]} baseZoom={5.0} secondary={[{iso:"ESP",color:"#c60b1e"},{iso:"DZA",color:"#006233"}]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="WavingFlagFill-Maroc-H" component={() => <WavingFlagFill mainIso="MAR" mainBoundaryIsos={["ESH"]} center={[-5,31]} baseZoom={5.0} secondary={[{iso:"ESP",color:"#c60b1e"},{iso:"DZA",color:"#006233"}]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="FlagDissolveTransition-AES-V" component={() => <FlagDissolveTransition center={[-1,14]} baseZoom={4.5} countries={[{iso:"MLI",fromIso:"FRA",toIso:"RUS",dissolveAt:60,dissolveDur:50},{iso:"BFA",fromIso:"FRA",toIso:"RUS",dissolveAt:90,dissolveDur:50}]} />} durationInFrames={200} fps={30} width={1080} height={1920} />
+        <Composition id="FlagDissolveTransition-AES-H" component={() => <FlagDissolveTransition center={[-1,14]} baseZoom={4.5} countries={[{iso:"MLI",fromIso:"FRA",toIso:"RUS",dissolveAt:60,dissolveDur:50},{iso:"BFA",fromIso:"FRA",toIso:"RUS",dissolveAt:90,dissolveDur:50}]} />} durationInFrames={200} fps={30} width={1920} height={1080} />
+        <Composition id="PulsingRegionFill-Sahel-V" component={() => <PulsingRegionFill center={[20,12]} baseZoom={3.8} countries={[{iso:"MLI",color:"#e63946",at:0,period:55,opacityMin:0.20,opacityMax:0.65,showGlow:true},{iso:"BFA",color:"#e63946",at:15,period:60,opacityMin:0.20,opacityMax:0.60,showGlow:true},{iso:"NER",color:"#ff7800",at:30,period:70,opacityMin:0.15,opacityMax:0.50}]} />} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="PulsingRegionFill-Sahel-H" component={() => <PulsingRegionFill center={[20,12]} baseZoom={3.8} countries={[{iso:"MLI",color:"#e63946",at:0,period:55,opacityMin:0.20,opacityMax:0.65,showGlow:true},{iso:"BFA",color:"#e63946",at:15,period:60,opacityMin:0.20,opacityMax:0.60,showGlow:true},{iso:"NER",color:"#ff7800",at:30,period:70,opacityMin:0.15,opacityMax:0.50}]} />} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ImageProjectionFill-Maroc-V" component={() => <ImageProjectionFill center={[-5,31]} baseZoom={5.2} countries={[{iso:"MAR",boundaryIsos:["ESH"],imageSrc:staticFileRoot("_shared/refs/textures/khouribga-mine-satellite.png"),goldColor:"#c8a951",navyColor:"#16213a",contrast:1.3,at:0}]} secondary={[{iso:"ESP",color:"#c60b1e"},{iso:"DZA",color:"#006233"}]} />} durationInFrames={150} fps={30} width={1080} height={1920} />
+        <Composition id="ImageProjectionFill-Maroc-H" component={() => <ImageProjectionFill center={[-5,31]} baseZoom={5.2} countries={[{iso:"MAR",boundaryIsos:["ESH"],imageSrc:staticFileRoot("_shared/refs/textures/khouribga-mine-satellite.png"),goldColor:"#c8a951",navyColor:"#16213a",contrast:1.3,at:0}]} secondary={[{iso:"ESP",color:"#c60b1e"},{iso:"DZA",color:"#006233"}]} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+
+        {/* ── PATTERN OR AFRICAIN généralisé : plaque pays + source + compteur + climax + pitch 32 ── */}
+        <Composition id="GeoCountryPlaqueShowcase-V" component={GeoCountryPlaqueShowcase} durationInFrames={GEO_COUNTRY_PLAQUE_SHOWCASE_FRAMES} fps={30} width={1080} height={1920} />
+        <Composition id="GeoCountryPlaqueShowcase-H" component={GeoCountryPlaqueShowcase} durationInFrames={GEO_COUNTRY_PLAQUE_SHOWCASE_FRAMES} fps={30} width={1920} height={1080} />
+
+        {/* ── N4 COMBOS ── */}
+        <Composition id="ContagionFlagSpread-AES-V" component={() => <ContagionFlagSpread center={[-1,14]} baseZoom={4.5} waves={[["MLI"],["BFA"],["NER"],["TCD","MRT"]]} waveAt={15} waveGap={30} epicenterIso="MLI" />} durationInFrames={240} fps={30} width={1080} height={1920} />
+        <Composition id="ContagionFlagSpread-AES-H" component={() => <ContagionFlagSpread center={[-1,14]} baseZoom={4.5} waves={[["MLI"],["BFA"],["NER"],["TCD","MRT"]]} waveAt={15} waveGap={30} epicenterIso="MLI" />} durationInFrames={240} fps={30} width={1920} height={1080} />
+        <Composition id="ContagionFlagSpread-BRICS-V" component={() => <ContagionFlagSpread center={[20,5]} baseZoom={3.5} waves={[["ZAF"],["EGY","ETH"],["NGA","DZA"],["COD","TZA","AGO"]]} waveAt={10} waveGap={35} epicenterIso="ZAF" />} durationInFrames={280} fps={30} width={1080} height={1920} />
+        <Composition id="ContagionFlagSpread-BRICS-H" component={() => <ContagionFlagSpread center={[20,5]} baseZoom={3.5} waves={[["ZAF"],["EGY","ETH"],["NGA","DZA"],["COD","TZA","AGO"]]} waveAt={10} waveGap={35} epicenterIso="ZAF" />} durationInFrames={280} fps={30} width={1920} height={1080} />
+
         <Composition id="Layout16-LaCalebasse" component={() => <LaCalebasse />} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="Layout16-LeCadranSolaire" component={() => <LeCadranSolaire />} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="Layout16-Stratigraphie" component={() => <Stratigraphie />} durationInFrames={180} fps={30} width={1920} height={1080} />
@@ -2013,136 +2127,126 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
-      <Folder name="CarouselHybridMansaMoussa">
+      <Folder name="CarouselMansaMoussa">
+        {/* Slide 1 — Hook : globe animé + titre "L'HOMME LE PLUS RICHE" */}
         <Composition
-          id="mansa-slide-01-hook"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
+          id="mansa-v2-slide-01-hook"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
           fps={30}
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide1-hook.mp4",
-            body: "Il a fait s'effondrer le cours de l'or.",
-            subtitle: "Pendant 12 ans.",
+            bgImage: "_carousel-test/mansa-moussa/mm-slide1-globe.mp4",
+            isVideo: true,
+            body: "Il a fait s'effondrer le cours de l'or mondial.",
+            highlight: "Pendant 12 ans.",
             slideIndex: 0,
-            totalSlides: 9,
-            textAnchor: "bottom",
-            isHook: true,
+            totalSlides: 8,
           }}
         />
+        {/* Slide 2 — Pie chart en animation (camembert s'ouvre) */}
         <Composition
-          id="mansa-slide-02-mali"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
+          id="mansa-v2-slide-02-pie-anim"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
           fps={30}
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide2-mali.mp4",
-            highlight: "Mali, 1324",
-            body: "L'Empire du Mali. Plus grand que l'Europe occidentale.",
-            slideIndex: 1,
-            totalSlides: 9,
-            textAnchor: "bottom",
-          }}
-        />
-        <Composition
-          id="mansa-slide-03-empire"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
-          fps={30}
-          width={1080}
-          height={1350}
-          defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide3-empire.mp4",
+            bgImage: "_carousel-test/mansa-moussa/mm-slide2-pie-anim.mp4",
+            isVideo: true,
             highlight: "50%",
-            body: "de l'or mondial circulait depuis cet empire. La moitié.",
+            body: "de l'or mondial venait d'un seul empire. Le Mali.",
+            slideIndex: 1,
+            totalSlides: 8,
+          }}
+        />
+        {/* Slide 3 — Pie chart complet 50%/50% */}
+        <Composition
+          id="mansa-v2-slide-03-pie-full"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/mm-slide3-pie-full.mp4",
+            isVideo: true,
+            body: "Tombouctou comptait plus de bibliothèques que Paris. 25 000 étudiants à l'université de Sankoré.",
             slideIndex: 2,
-            totalSlides: 9,
-            textAnchor: "bottom",
+            totalSlides: 8,
           }}
         />
+        {/* Slide 4 — Bar chart animé 3.6t→12t (validé) */}
         <Composition
-          id="mansa-slide-04-pie"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
+          id="mansa-v2-slide-04-barchart"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
           fps={30}
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide4-pie.mp4",
-            body: "Tombouctou comptait plus de bibliothèques que Paris. L'université de Sankoré : 25 000 étudiants.",
-            slideIndex: 3,
-            totalSlides: 9,
-            textAnchor: "bottom",
-          }}
-        />
-        <Composition
-          id="mansa-slide-05-tombouctou"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
-          fps={30}
-          width={1080}
-          height={1350}
-          defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide5-tombouctou.mp4",
-            highlight: "60 000 hommes",
-            body: "Il part à La Mecque. 80 chameaux portant chacun 150 kg d'or pur.",
-            slideIndex: 4,
-            totalSlides: 9,
-            textAnchor: "bottom",
-          }}
-        />
-        <Composition
-          id="mansa-slide-06-caravane"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
-          fps={30}
-          width={1080}
-          height={1350}
-          defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide6-caravane.mp4",
+            bgImage: "_carousel-test/mansa-moussa/mm-slide4-barchart.mp4",
+            isVideo: true,
             highlight: "12 tonnes d'or",
-            body: "Il distribue tant d'or au Caire que l'économie égyptienne s'effondre.",
+            body: "Marco Polo, Colomb, Vasco de Gama réunis. Mansa Moussa les dépasse tous.",
+            slideIndex: 3,
+            totalSlides: 8,
+          }}
+        />
+        {/* Slide 5 — Courbe prix de l'or −50% (animée) */}
+        <Composition
+          id="mansa-v2-slide-05-linechart"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/mm-slide5-linechart.mp4",
+            isVideo: true,
+            highlight: "−50%",
+            body: "Le prix de l'or au Caire s'effondre. L'économie égyptienne met 12 ans à se remettre.",
+            slideIndex: 4,
+            totalSlides: 8,
+          }}
+        />
+        {/* Slide 6 — Portrait + comparaison Rockefeller/Bezos/Musk */}
+        <Composition
+          id="mansa-v2-slide-06-portrait"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={{
+            bgImage: "_carousel-test/mansa-moussa/mm-slide6-portrait.mp4",
+            isVideo: true,
+            body: "Rockefeller, Bezos, Musk. La vraie réponse : Mansa Moussa. $400+ Mds. Inestimable.",
             slideIndex: 5,
-            totalSlides: 9,
-            textAnchor: "bottom",
+            totalSlides: 8,
           }}
         />
+        {/* Slide 7 — Carte finale "Tu savais ?" */}
         <Composition
-          id="mansa-slide-07-bar"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
+          id="mansa-v2-slide-07-cta-scene"
+          component={AtlasFormat2CarteDeJeu as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
           fps={30}
           width={1080}
           height={1350}
           defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide7-bar.mp4",
-            highlight: "12 ans",
-            body: "Le prix de l'or chute dans toute la Méditerranée. Un seul homme.",
+            bgImage: "_carousel-test/mansa-moussa/mm-slide7-cta-scene.mp4",
+            isVideo: true,
+            body: "L'Afrique regorge de figures comme lui. Tu n'en as probablement jamais entendu parler.",
             slideIndex: 6,
-            totalSlides: 9,
-            textAnchor: "bottom",
+            totalSlides: 8,
           }}
         />
+        {/* Slide 8 — CTA */}
         <Composition
-          id="mansa-slide-08-portrait"
-          component={CarouselSlideHybrid as unknown as React.ComponentType<Record<string, unknown>>}
-          durationInFrames={90}
-          fps={30}
-          width={1080}
-          height={1350}
-          defaultProps={{
-            bgClip: "_carousel-test/mansa-moussa/slide8-portrait.mp4",
-            body: "On te répond Rockefeller, Bezos, Musk. La vraie réponse : Mansa Moussa.",
-            slideIndex: 7,
-            totalSlides: 9,
-            textAnchor: "bottom",
-          }}
-        />
-        <Composition
-          id="mansa-slide-09-cta"
+          id="mansa-v2-slide-08-cta"
           component={CarouselCtaSlide as unknown as React.ComponentType<Record<string, unknown>>}
           durationInFrames={150}
           fps={30}
@@ -2151,7 +2255,7 @@ export const RemotionRoot: React.FC = () => {
           defaultProps={{
             line1: "La vidéo complète est sur notre profil.",
             line2: "Clique sur notre nom @koraetcartes pour la regarder.",
-            totalSlides: 9,
+            totalSlides: 8,
           }}
         />
       </Folder>
@@ -2259,6 +2363,89 @@ export const RemotionRoot: React.FC = () => {
             totalSlides: 8,
             panelPosition: "right",
           }}
+        />
+      </Folder>
+
+      <Folder name="CarouselGoodNews">
+        <Composition
+          id="gn-preview"
+          component={GoodNewsCarousel as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={150 * 8}
+          fps={30}
+          width={1080}
+          height={1350}
+        />
+        <Composition
+          id="gn-00-hook"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={165}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnHook}
+        />
+        <Composition
+          id="gn-01-maroc-fait"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN0F}
+        />
+        <Composition
+          id="gn-02-maroc-macro"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN0M}
+        />
+        <Composition
+          id="gn-03-kenya-fait"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN1F}
+        />
+        <Composition
+          id="gn-04-kenya-macro"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN1M}
+        />
+        <Composition
+          id="gn-05-algerie-fait"
+          component={GoodNewsSlideMap as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN2F}
+        />
+        <Composition
+          id="gn-06-algerie-macro"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={120}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnN2M}
+        />
+        <Composition
+          id="gn-07-cta"
+          component={GoodNewsSlideLight as unknown as React.ComponentType<Record<string, unknown>>}
+          durationInFrames={150}
+          fps={30}
+          width={1080}
+          height={1350}
+          defaultProps={gnCta}
         />
       </Folder>
 
