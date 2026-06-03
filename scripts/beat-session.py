@@ -111,25 +111,36 @@ def phase_preflight(episode: str, beat_num: int) -> dict:
     print(SECURITY_BANNER)
     print(f"=== GATE PRE-VOL {episode} Beat{beat_num} ===\n")
 
-    # 1. Manifest
+    # 1. Manifest OU constantes inline dans Beat*.tsx (pattern Souverain Mid-form Beat11/12/13)
     manifest = beat_src / "manifest.ts"
-    if not manifest.exists():
+    beat_tsx_parent = beat_src.parent / f"Beat{beat_num}.tsx"
+
+    if manifest.exists():
+        manifest_content = manifest.read_text()
+        print(f"  [OK] manifest.ts present")
+        if "SEG" not in manifest_content or "DURATION_FRAMES" not in manifest_content:
+            stop(
+                f"manifest.ts incomplet — SEG ou DURATION_FRAMES manquant. "
+                "Verifier que le manifest contient les timings corrects.",
+                beat
+            )
+        print(f"  [OK] manifest.ts valide (SEG + DURATION_FRAMES presents)")
+    elif beat_tsx_parent.exists():
+        # Pattern Souverain Mid-form : constantes F_*_END inline dans BeatN.tsx
+        tsx_content = beat_tsx_parent.read_text()
+        if "F_A_END" not in tsx_content and "F_END" not in tsx_content:
+            stop(
+                f"Ni manifest.ts ni constantes inline (F_A_END/F_END) trouves dans {beat_tsx_parent}. "
+                "Definir les timings avant de continuer.",
+                beat
+            )
+        print(f"  [OK] constantes inline detectees dans {beat_tsx_parent.name} (pattern Souverain Mid-form)")
+    else:
         stop(
-            f"manifest.ts ABSENT dans {beat_src}. "
-            "Le manifest est la source de verite des timings — le creer avant de continuer.",
+            f"Ni manifest.ts ({beat_src}) ni Beat{beat_num}.tsx ({beat_tsx_parent}) trouves. "
+            "Le beat doit avoir une source de verite de timings.",
             beat
         )
-
-    manifest_content = manifest.read_text()
-    print(f"  [OK] manifest.ts present")
-
-    if "SEG" not in manifest_content or "DURATION_FRAMES" not in manifest_content:
-        stop(
-            f"manifest.ts incomplet — SEG ou DURATION_FRAMES manquant. "
-            "Verifier que le manifest contient les timings corrects.",
-            beat
-        )
-    print(f"  [OK] manifest.ts valide (SEG + DURATION_FRAMES presents)")
 
     # 2. Storyboard PNG
     storyboard_candidates = [
@@ -393,9 +404,96 @@ def phase_spec_table(episode: str, beat_num: int) -> None:
     print(f"     Pipeline débloqué pour --phase self-review.")
 
 
+def scan_marker_path(episode: str, beat_num: int) -> Path:
+    return Path(f"/tmp/{episode}-beat{beat_num}-scan.md")
+
+
+CATALOGUES_REMOTION = [
+    ("INDEX-DES-INDEX (point d'entree maitre)", "src/projects/_shared/INDEX-DES-INDEX.md"),
+    ("COMPOSANTS-INDEX (71+ composants par cas d'usage + section HERO DATA)", "src/projects/_shared/COMPOSANTS-INDEX.md"),
+    ("PLAYBOOK data-viz (8 principes + template storyboard 10 champs)", "memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md"),
+    ("SKELETON assemblage (1 narration globale, CutFade navy)", "memory/SOUVERAIN-REMOTION-SKELETON.md"),
+]
+
+
+def phase_scan(episode: str, beat_num: int) -> None:
+    """
+    Phase 0 — SCAN TEMPLATES (miroir de la phase 0 mapbox-session.py).
+    OBLIGATOIRE avant breakdown. Force Claude a :
+      1. lire les catalogues de composants
+      2. identifier les templates pertinents pour le besoin narratif du beat
+      3. PROPOSER des combinaisons (hero + satellites + verdict, etc.)
+      4. recommander un choix justifie
+    Produit /tmp/{episode}-beat{N}-scan.md (gate : phase_breakdown bloque sans lui).
+    """
+    beat = f"beat{beat_num}"
+    output = scan_marker_path(episode, beat_num)
+
+    print(f"\n=== SCAN TEMPLATES — {episode} Beat{beat_num} (Phase 0, OBLIGATOIRE) ===\n")
+    print(">>> AVANT d'ecrire une ligne de code, LIRE ces catalogues et presenter a Aziz")
+    print(">>> les templates pertinents + des COMBINAISONS. Reutiliser > coder from scratch.\n")
+    for label, path in CATALOGUES_REMOTION:
+        exists = (PROJECT_ROOT / path).exists()
+        flag = "OK " if exists else "!! "
+        print(f"  [{flag}] {label}")
+        print(f"         {path}")
+    print()
+    print(">>> DOCTRINE data-viz : memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md")
+    print(">>>   8 principes (chiffre-evenement, secondary motion, metaphore physique, transitions seamless...)")
+    print(">>>   Briques HERO DATA pretes : CountUp(bounce), HeroMirrorBars, FloatingHeroObject,")
+    print(">>>   Badge(satellite), CountdownReveal(pingNode), TextChoc, SubtitleBarSouverain.\n")
+    print(f">>> Ecrire le scan dans : {output}")
+    print(">>> Format attendu (rempli par Claude, puis valide par Aziz) :")
+    print("""
+    # Scan templates — {ep} Beat{n}
+    ## Besoin narratif
+    Ce beat doit montrer : ...
+    ## Templates pertinents (lus dans les catalogues)
+    - [Composant X] (cat) — fait [quoi] — pertinent car [raison]
+    - [Composant Y] — alternative
+    ## Combinaisons proposees
+    - hook [A] -> corps [B] -> verdict [C]
+    ## Recommandation
+    [choix] car [raison narrative + doctrine playbook]
+    """.format(ep=episode, n=beat_num))
+
+    # Pre-creer un squelette si absent (Claude le remplit)
+    if not output.exists():
+        output.write_text(
+            f"# Scan templates — {episode} Beat{beat_num}\n\n"
+            f"> Phase 0 OBLIGATOIRE. Remplir AVANT le breakdown.\n"
+            f"> Catalogues : COMPOSANTS-INDEX.md + INDEX-DES-INDEX.md + SOUVERAIN-REMOTION-PLAYBOOK.md\n\n"
+            f"## Besoin narratif\n(ce beat doit montrer ...)\n\n"
+            f"## Templates pertinents (lus dans les catalogues)\n- \n\n"
+            f"## Combinaisons proposees\n- \n\n"
+            f"## Recommandation\n(choix + justification doctrine)\n"
+        )
+        print(f"\n[OK] Squelette scan cree : {output}")
+        print(f"     Claude le remplit, le presente a Aziz, PUIS lance --phase breakdown.")
+    else:
+        print(f"\n[OK] Scan deja present : {output}")
+
+
 def phase_breakdown(episode: str, beat_num: int, gate: dict) -> dict:
     beat = f"beat{beat_num}"
     output = f"/tmp/{episode}-beat{beat_num}-breakdown.json"
+
+    # --- Gate scan : bloquant si absent ou non rempli ---
+    scan = scan_marker_path(episode, beat_num)
+    if not scan.exists():
+        print(f"\n[BLOQUE] Scan templates absent : {scan}", file=sys.stderr)
+        print(f"  La phase 0 SCAN est OBLIGATOIRE avant le breakdown (parite avec le pipeline Mapbox).")
+        print(f"  Lancer d'abord :")
+        print(f"    python3 scripts/beat-session.py --episode {episode} --beat {beat_num} --phase scan")
+        sys.exit(1)
+    scan_content = scan.read_text()
+    # Detecter un scan non rempli (squelette laisse vide)
+    if "(ce beat doit montrer ...)" in scan_content or scan_content.count("- \n") >= 2:
+        print(f"\n[BLOQUE] Scan templates present mais NON REMPLI : {scan}", file=sys.stderr)
+        print(f"  Remplir le scan (besoin narratif + templates pertinents + combinaisons + reco)")
+        print(f"  et le presenter a Aziz AVANT de lancer le breakdown.")
+        sys.exit(1)
+    print(f"[OK] Scan templates rempli : {scan}")
 
     print(f"\n=== BREAKDOWN GEMINI {episode} Beat{beat_num} (Appel Gemini 1) ===\n")
 
@@ -928,9 +1026,9 @@ def main():
                         help='Slug épisode (ex: silicon-savannah, niger-uranium)')
     parser.add_argument('--beat', type=int, required=True,
                         help='Numéro du beat (ex: 6)')
-    parser.add_argument('--phase', choices=['preflight', 'breakdown', 'spec-table', 'self-review', 'review', 'upload', 'full'],
+    parser.add_argument('--phase', choices=['scan', 'preflight', 'breakdown', 'spec-table', 'self-review', 'review', 'upload', 'full'],
                         default='preflight',
-                        help='Phase à exécuter (défaut: preflight)')
+                        help='Phase à exécuter (défaut: preflight). scan = Phase 0 templates (OBLIGATOIRE avant breakdown)')
     parser.add_argument('--video', type=str, default=None,
                         help='Chemin vidéo rendue (requis pour --phase review ou full)')
     parser.add_argument('--resolve-assets', action='store_true',
@@ -944,9 +1042,14 @@ def main():
     if args.resolve_assets:
         phase_resolve_assets(args.episode, args.beat, args.resolution)
 
+    elif args.phase == 'scan':
+        phase_scan(args.episode, args.beat)
+        print(f"\n[NEXT] Remplir le scan + presenter a Aziz, PUIS :")
+        print(f"       python3 scripts/beat-session.py --episode {args.episode} --beat {args.beat} --phase breakdown")
+
     elif args.phase == 'preflight':
         gate = phase_preflight(args.episode, args.beat)
-        print(f"\n[NEXT] Lancer : python3 scripts/beat-session.py --episode {args.episode} --beat {args.beat} --phase breakdown")
+        print(f"\n[NEXT] Lancer la Phase 0 SCAN (OBLIGATOIRE) : python3 scripts/beat-session.py --episode {args.episode} --beat {args.beat} --phase scan")
 
     elif args.phase == 'breakdown':
         gate = phase_preflight(args.episode, args.beat)

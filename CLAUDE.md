@@ -163,7 +163,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Démarrer la préproduction d'un épisode Atlas** (cartographie, géo, richesse) | `atlas-video-preproduction` |
 | **Démarrer la préproduction d'une vidéo narrative** (Seedance, personnages, portrait) | `video-narrative-preproduction` |
 | **Écrire/structurer un script YouTube** (8-15min animé) | `youtube-scriptwriting` |
-| **Coder un beat / Short Souverain MAPBOX** (carte animée, getCam, overlays) | **SYSTÈME : `scripts/mapbox-session.py`** (discipline scorée, voir "Pipeline Beat Mapbox" ci-dessous). Storyboard = Production Brief validé Aziz AVANT code (Camera + Overlays + SFX). Validation = `scripts/tools/gemini-mapbox-review.py` (JSON scoré, seuil 8/10). MAX 2 appels Gemini. Squelette technique : `memory/SOUVERAIN-SHORT-SKELETON.md`. Base : `MarocBatteriesShort.tsx`. |
+| **Coder un beat / Short Souverain MAPBOX** (carte animée, getCam, overlays) | **SYSTÈME : `scripts/mapbox-session.py`** (discipline scorée, voir "Pipeline Beat Mapbox" ci-dessous). Storyboard = Production Brief validé Aziz AVANT code. **Self-review SCRIPTÉE bloquante : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (phase 3, 0 ERROR avant Gemini).** Review = `scripts/tools/gemini-mapbox-review.py` ⚠️ CONSULTATIF jamais juge (Gemini hallucine). MAX 2 appels Gemini. Drapeau = `useClipFlags` (vraies images). Base : `MarocBatteriesShort.tsx`. |
 | **Coder un beat Souverain REMOTION/Tailwind** (graphisme, data-viz, texte, image) | **SYSTÈME : `/beat` (= `scripts/beat-session.py`, mode défaut), voir "Pipeline Beat Souverain" ci-dessous.** DOCTRINE À LIRE D'ABORD : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes data-viz + template storyboard 10 champs). Storyboard PNG layout validé Aziz AVANT code. self-review 19/23 → review Gemini. MAX 2 appels Gemini. |
 | **Produire un Short en lot** (batch) | `batch-short-production` |
 | **Écrire un carrousel / caption / réécriture d'un contenu déjà en vidéo** | `verif-factuelle` D'ABORD (aligner sur transcript vidéo), puis `src/projects/souverain/carousels/hybrid/README.md` |
@@ -249,15 +249,16 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 > **DOCTRINE À LIRE D'ABORD : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`** — 8 principes premium data-viz (chiffre-événement, discipline chromatique, séquençage 8s, contraste d'échelle, secondary motion, highlight typo sync, métaphore physique, transitions seamless) + règle anti-clonage + template storyboard 10 champs. Le storyboard SE REMPLIT avec ce template. Briques codées : section "HERO DATA" de `COMPOSANTS-INDEX.md`. Squelette assemblage : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
 
 ```
+0. scan       → beat-session.py --phase scan  → SCAN TEMPLATES (catalogues HERO DATA + COMPOSANTS-INDEX) + COMBINAISONS validées Aziz. GATE : breakdown bloqué sans scan rempli.
 1. breakdown  → beat-session.py --phase breakdown  → JSON layout Tailwind. LIRE avant de coder.
-2. code       → Beat*.tsx Tailwind. h-[X%] + flex. Tokens: text-gold/ivory/bg-navy. → wip/beat{N}_v1.mp4
+2. code       → Beat*.tsx Tailwind. h-[X%] + flex. Tokens: text-gold/ivory/bg-navy. Briques HERO DATA. → wip/beat{N}_v1.mp4
 3. self-review → --phase self-review  → 23 critères. Seuil 19/23 BLOQUANT. Corriger avant Gemini.
 4. review     → --phase review  → 1 seul appel Gemini. JSON code_values.
 5. corrections → Appliquer code_values. Itérer sans nouvel appel Gemini.
 6. upload     → --phase upload  → catbox + ntfy Aziz. OBLIGATOIRE avant toute présentation.
 ```
 
-**Règles absolues :** 2 appels Gemini MAX (1 breakdown + 1 review) · Tailwind partout (exception SVG/animations) · R1 : max 8s sans changement visuel · self-review >= 19/23 avant review · upload avant présentation.
+**Règles absolues :** Phase 0 SCAN TEMPLATES OBLIGATOIRE (gate bloquant, parité Mapbox) · 2 appels Gemini MAX (1 breakdown + 1 review) · Tailwind partout (exception SVG/animations) · R1 : max 8s sans changement visuel · self-review >= 19/23 avant review · upload avant présentation.
 
 ---
 
@@ -276,13 +277,17 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
                 = l'équivalent du storyboard PNG, mais pour une carte animée.
                 SFX : plancher 0.50 (voir DOCTRINE section 6). Caméra : pitch 32 relief si focus 1-4 pays (camCountryApproach).
 2. code       → getCam(frame) + ShortOverlays dans le fichier UNIQUE. → wip/animatic_aN_v1.mp4 (scale 0.35)
-3. self-review → cocher critères Mapbox AVANT Gemini : clipping/buffering, collision labels,
-                anti-gris (zone/highlight/frontières), R1, frame-driven jumpTo, zoom 2-14, SFX volumes.
-4. review     → gemini-mapbox-review.py → JSON scoré (mouvements/clarté/rétention_anti_gris/style_premium).
-                1 SEUL appel. Seuil global 8/10.
-5. corrections → appliquer fix_code + ameliorations. Itérer SANS nouvel appel Gemini.
+3. self-review → SCRIPTÉE D'ABORD : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` —
+                assertions automatiques (SFX dans <Sequence>, drapeaux = useClipFlags/vraies images PAS drawFlagCanvas,
+                getCam frame-driven, pas de filter:blur CSS, mainlandBox si pays à outre-mer). BLOQUANT : 0 erreur avant review.
+                PUIS cocher critères visuels : clipping, collision labels, anti-gris, R1, zoom 2-14.
+4. review     → gemini-mapbox-review.py → JSON scoré. ⚠️ CONSULTATIF, JAMAIS JUGE (voir règle ci-dessous).
+                1 SEUL appel. Appliquer ce qui est VRAI, ignorer les hallucinations, STOP.
+5. corrections → appliquer fix_code VRAIS. Itérer SANS nouvel appel Gemini (pas de boucle Gemini→fix→Gemini).
 6. upload     → catbox + présenter à Aziz (décisions de goût : couleurs, glow, vignette).
 ```
+
+**⛔ RÈGLE GEMINI = SIGNAL, JAMAIS JUGE (NON-NEGOTIABLE)** : le score `gemini-mapbox-review.py` est CONSULTATIF. Gemini analyse des frames échantillonnées sans le son → il HALLUCINE régulièrement sur le mouvement (ex. 2026-06-03 : a noté 4/10 un Beat 3 bon, croyant un pull back = "cut brutal" et niant un arc présent). PROCÉDURE OBLIGATOIRE : 1 seul appel → vérifier CHAQUE point contre les frames réelles → appliquer SEULEMENT ce qui est factuellement vrai → ignorer le reste → STOP → présenter à Aziz. **JAMAIS de boucle Gemini→correction→Gemini** (le code dérive vers pire pour satisfaire un score faux). Un score bas n'invalide PAS un beat : le jugement d'Aziz prime toujours sur Gemini. Gemini accélère, Aziz décide.
 
 **Règles absolues :** 2 appels Gemini MAX (storyboard discuté + 1 review) · Production Brief validé Aziz AVANT code · self-review coché AVANT review · animatic 25-35% pour itérer vite · décisions de goût = jugement Aziz prime sur score. Catalogue overlays + réfs premium = dans `gemini-mapbox-review.py`.
 
