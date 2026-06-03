@@ -164,7 +164,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Démarrer la préproduction d'une vidéo narrative** (Seedance, personnages, portrait) | `video-narrative-preproduction` |
 | **Écrire/structurer un script YouTube** (8-15min animé) | `youtube-scriptwriting` |
 | **Coder un beat / Short Souverain MAPBOX** (carte animée, getCam, overlays) | **SYSTÈME : `scripts/mapbox-session.py`** (discipline scorée, voir "Pipeline Beat Mapbox" ci-dessous). Storyboard = Production Brief validé Aziz AVANT code (Camera + Overlays + SFX). Validation = `scripts/tools/gemini-mapbox-review.py` (JSON scoré, seuil 8/10). MAX 2 appels Gemini. Squelette technique : `memory/SOUVERAIN-SHORT-SKELETON.md`. Base : `MarocBatteriesShort.tsx`. |
-| **Coder un beat Souverain REMOTION/Tailwind** (graphisme, data-viz, texte, image) | **SYSTÈME : `/beat` (= `scripts/beat-session.py`, mode défaut), voir "Pipeline Beat Souverain" ci-dessous.** Storyboard PNG layout validé Aziz AVANT code. self-review 19/23 → review Gemini. MAX 2 appels Gemini. |
+| **Coder un beat Souverain REMOTION/Tailwind** (graphisme, data-viz, texte, image) | **SYSTÈME : `/beat` (= `scripts/beat-session.py`, mode défaut), voir "Pipeline Beat Souverain" ci-dessous.** DOCTRINE À LIRE D'ABORD : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes data-viz + template storyboard 10 champs). Storyboard PNG layout validé Aziz AVANT code. self-review 19/23 → review Gemini. MAX 2 appels Gemini. |
 | **Produire un Short en lot** (batch) | `batch-short-production` |
 | **Écrire un carrousel / caption / réécriture d'un contenu déjà en vidéo** | `verif-factuelle` D'ABORD (aligner sur transcript vidéo), puis `src/projects/souverain/carousels/hybrid/README.md` |
 | **Carrousel "Good News" (bonnes nouvelles macro Afrique, indépendant d'une vidéo)** | `src/projects/souverain/carousels/good-news/README.md` (pipeline + briques) + `memory/STARTER-PROMPT-carrousel-good-news.md` (décisions). Charte LUMINEUSE, 100% Remotion animé (briques gauge/flow/bars/map). **DATA-DRIVEN** : contenu dans `carousel-data.ts` (`CURRENT_EDITION`), tout en dérive. Workflow hebdo : `scripts/prepare-goodnews-weekly.py` (recherche→BRIEF) → Claude remplit carousel-data.ts → `scripts/render-goodnews-carousel.sh` → `scripts/schedule-goodnews-carousel.py` (IG+FB) + `schedule-goodnews-tiktok.py` (TikTok). |
@@ -246,6 +246,7 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 ## Pipeline Beat Souverain (NON-NEGOTIABLE)
 
 > Source de vérité : `scripts/beat-session.py`. 6 phases séquentielles. Lancer `/beat` pour démarrer.
+> **DOCTRINE À LIRE D'ABORD : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`** — 8 principes premium data-viz (chiffre-événement, discipline chromatique, séquençage 8s, contraste d'échelle, secondary motion, highlight typo sync, métaphore physique, transitions seamless) + règle anti-clonage + template storyboard 10 champs. Le storyboard SE REMPLIT avec ce template. Briques codées : section "HERO DATA" de `COMPOSANTS-INDEX.md`. Squelette assemblage : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
 
 ```
 1. breakdown  → beat-session.py --phase breakdown  → JSON layout Tailwind. LIRE avant de coder.
