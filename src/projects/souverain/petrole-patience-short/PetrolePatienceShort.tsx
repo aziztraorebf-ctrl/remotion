@@ -693,17 +693,17 @@ export const PetrolePatienceShort: React.FC = () => {
       {/* Tous les SFX uniformément à 0.35 (musique kora à basses -> éviter de masquer/distraire) */}
       <Sfx at={8}             file="camera/sfx-map-ping.mp3"   vol={0.35} />
       <Sfx at={138}           file="camera/sfx-map-ping.mp3"   vol={0.35} />
-      <Sfx at={150}           file="impact/impact.mp3"        vol={0.35} />
+      <Sfx at={150}           file="camera/sfx-map-ping.mp3"  vol={0.35} />{/* slam $1500B (ping au lieu de boom) */}
       <Sfx at={F.A2_START}    file="ui/plate-pop.mp3"         vol={0.35} />{/* allumage drapeau NGA */}
       <Sfx at={F.A2_START + 222} file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch NGA -> AGO */}
       <Sfx at={F.A2_START + 322} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau AGO */}
       <Sfx at={F.A3_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Norvege */}
       <Sfx at={F.A3_START + 70} file="ui/plate-pop.mp3"       vol={0.35} />{/* allumage drapeau NOR */}
-      <Sfx at={F.A3_START + 55} file="impact/impact.mp3"      vol={0.35} />{/* plaque $1700B */}
+      <Sfx at={F.A3_START + 55} file="camera/sfx-map-ping.mp3" vol={0.35} />{/* plaque $1700B (ping) */}
       <Sfx at={F.A4_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Senegal */}
       <Sfx at={F.A4_START + 130} file="camera/sfx-swoosh-zoomin.mp3" vol={0.35} />{/* vrai zoom sur Sangomar */}
       <Sfx at={F.A4_START + 110} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau SEN */}
-      <Sfx at={F.A5_START}    file="impact/impact.mp3"        vol={0.35} />{/* plaque 18/82 */}
+      <Sfx at={F.A5_START}    file="camera/sfx-map-ping.mp3"  vol={0.35} />{/* plaque 18/82 (ping) */}
       <Sfx at={F.A6_START + 130} file="camera/sfx-swoosh-pullback.mp3" vol={0.35} />{/* dezoom final */}
 
       <MapboxBrandingHide />
