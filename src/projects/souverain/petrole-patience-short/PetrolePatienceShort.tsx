@@ -41,7 +41,8 @@ export const F = {
   A4_START: 1314,  //  43.80s
   A5_START: 1683,  //  56.10s
   A6_START: 2169,  //  72.30s
-  END:      2404,  //  80.16s
+  A7_START: 2404,  //  80.16s — CTA teaser mid-form (voix cta-v1 = 196f + marge)
+  END:      2610,  //  87.00s
 };
 
 export const PETROLE_PATIENCE_SHORT_FRAMES = F.END;
@@ -220,27 +221,39 @@ function getCam(frame: number): Cam & { blur: number } {
       blur: 0,
     };
   }
-  // A6 (2169-2404) — Drift + Pull Back final
-  const dur = F.END - F.A6_START;
-  const pullStart = F.A6_START + Math.round(dur * 0.55);
+  // A6 (2169-2404) — Drift + Pull Back final (vers l'Afrique)
+  if (frame < F.A7_START) {
+    const dur = F.A7_START - F.A6_START;
+    const pullStart = F.A6_START + Math.round(dur * 0.55);
 
-  if (frame < pullStart) {
-    const t = clamp01((frame - F.A6_START) / (pullStart - F.A6_START));
+    if (frame < pullStart) {
+      const t = clamp01((frame - F.A6_START) / (pullStart - F.A6_START));
+      return {
+        lon: LOC.senegal[0] + Math.sin(t * Math.PI * 0.5) * 0.15,
+        lat: LOC.senegal[1] + t * 0.1,
+        zoom: interpolate(t, [0, 1], [5.0, 4.5]),
+        pitch: 25, bearing: t * 8, blur: 0,
+      };
+    }
+    const t = clamp01((frame - pullStart) / (F.A7_START - pullStart));
+    const e = easeInOut(t);
     return {
-      lon: LOC.senegal[0] + Math.sin(t * Math.PI * 0.5) * 0.15,
-      lat: LOC.senegal[1] + t * 0.1,
-      zoom: interpolate(t, [0, 1], [5.0, 4.5]),
-      pitch: 25, bearing: t * 8, blur: 0,
+      lon: interpolate(e, [0, 1], [LOC.senegal[0], LOC.africa[0]]),
+      lat: interpolate(e, [0, 1], [LOC.senegal[1] + 0.1, LOC.africa[1]]),
+      zoom: interpolate(e, [0, 1], [4.5, 3.0]),
+      pitch: interpolate(e, [0, 1], [25, 0]),
+      bearing: interpolate(e, [0, 1], [8, 0]),
+      blur: 0,
     };
   }
-  const t = clamp01((frame - pullStart) / (F.END - pullStart));
-  const e = easeInOut(t);
+  // A7 (2404-2610) — CTA teaser : carte large stable, drift très doux (la carte se calme)
+  const t = clamp01((frame - F.A7_START) / (F.END - F.A7_START));
   return {
-    lon: interpolate(e, [0, 1], [LOC.senegal[0], LOC.africa[0]]),
-    lat: interpolate(e, [0, 1], [LOC.senegal[1] + 0.1, LOC.africa[1]]),
-    zoom: interpolate(e, [0, 1], [4.5, 3.0]),
-    pitch: interpolate(e, [0, 1], [25, 0]),
-    bearing: interpolate(e, [0, 1], [8, 0]),
+    lon: LOC.africa[0] + Math.sin(t * Math.PI * 0.5) * 0.6,
+    lat: LOC.africa[1] + t * 0.3,
+    zoom: interpolate(t, [0, 1], [3.0, 2.85]),
+    pitch: 0,
+    bearing: interpolate(t, [0, 1], [0, -2]),
     blur: 0,
   };
 }
@@ -622,7 +635,15 @@ export const PetrolePatienceShort: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: C.navy }}>
-      <Audio src={staticFile("_demos/petrole-patience/audio/narration-short-v1.mp3")} />
+      {/* Narration principale — conteneur isolé, coupe NET à A7_START (évite la bave
+          du "...on saura" qui débordait sur le CTA) */}
+      <Sequence from={0} durationInFrames={F.A7_START}>
+        <Audio src={staticFile("_demos/petrole-patience/audio/narration-short-v1.mp3")} />
+      </Sequence>
+      {/* Voix CTA teaser — conteneur séparé, démarre après une respiration nette */}
+      <Sequence from={F.A7_START + 22} durationInFrames={F.END - F.A7_START - 22}>
+        <Audio src={staticFile("_demos/petrole-patience/audio/cta-v1.mp3")} volume={1} />
+      </Sequence>
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-B-kora-percussion.mp3")}
         volume={(f) => {
@@ -819,21 +840,83 @@ const ShortOverlays: React.FC<{
   }
 
   // A6 — Question finale (bloc bas "SOUVERAIN / Dans dix ans" retiré : conflit futurs sous-titres)
-  const p = spring({ frame: frame - F.A6_START, fps, config: { damping: 18 }, durationInFrames: 30 });
+  if (frame < F.A7_START) {
+    const p = spring({ frame: frame - F.A6_START, fps, config: { damping: 18 }, durationInFrames: 30 });
+    // fade-out de la question dans les 20 dernières frames avant le CTA
+    const out = interpolate(frame, [F.A7_START - 20, F.A7_START], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return (
+      <div style={{
+        position: "absolute", top: 200, left: 60, right: 60,
+        textAlign: "center",
+        opacity: p * out, transform: `translateY(${(1 - p) * 20}px)`,
+      }}>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 22,
+          color: C.gold, letterSpacing: 5, textTransform: "uppercase",
+        }}>La question</div>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 600,
+          color: C.ivory, marginTop: 24, lineHeight: 1.3,
+        }}>Échapper à la<br/>malédiction ?</div>
+      </div>
+    );
+  }
+
+  // A7 — CTA teaser (plaque @koraetcartes + "Bientôt : l'enquête complète"), synchro voix CTA
+  return <CtaPlaque frame={frame} fps={fps} />;
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// A7 — Plaque CTA teaser mid-form (apparaît avec la voix cta-v1)
+// ═══════════════════════════════════════════════════════════════════════════════
+const CtaPlaque: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
+  const local = frame - F.A7_START;
+  const pIn = spring({ frame: local - 18, fps, config: { damping: 18 }, durationInFrames: 28 });
+  const pSub = spring({ frame: local - 80, fps, config: { damping: 18 }, durationInFrames: 28 });
   return (
     <div style={{
-      position: "absolute", top: 200, left: 60, right: 60,
-      textAlign: "center",
-      opacity: p, transform: `translateY(${(1 - p) * 20}px)`,
+      position: "absolute", inset: 0,
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      pointerEvents: "none",
     }}>
+      {/* Voile sombre pour faire ressortir le CTA (carte chargée de drapeaux en fond) */}
       <div style={{
-        fontFamily: "Georgia, serif", fontSize: 22,
-        color: C.gold, letterSpacing: 5, textTransform: "uppercase",
-      }}>La question</div>
+        position: "absolute", inset: 0,
+        background: "rgba(13,21,32,0.62)",
+        opacity: interpolate(local, [0, 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+      }} />
+
+      {/* Pilule handle */}
       <div style={{
-        fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 600,
-        color: C.ivory, marginTop: 24, lineHeight: 1.3,
-      }}>Échapper à la<br/>malédiction ?</div>
+        position: "relative",
+        opacity: pIn, transform: `translateY(${(1 - pIn) * 24}px)`,
+        background: "rgba(0,0,0,0.78)",
+        border: `2px solid ${C.gold}`,
+        borderRadius: 12,
+        padding: "16px 40px",
+        boxShadow: `0 0 30px ${C.gold}50`,
+      }}>
+        <div style={{
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 40, fontWeight: 700,
+          color: C.goldHi, letterSpacing: 3,
+        }}>@koraetcartes</div>
+      </div>
+
+      {/* Sous-texte teaser */}
+      <div style={{
+        position: "relative", marginTop: 34,
+        opacity: pSub, transform: `translateY(${(1 - pSub) * 20}px)`,
+        textAlign: "center",
+      }}>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 26,
+          color: C.gold, letterSpacing: 4, textTransform: "uppercase", marginBottom: 12,
+        }}>Bientôt</div>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 52, fontWeight: 700,
+          color: C.ivory, textShadow: "0 4px 18px rgba(0,0,0,0.6)",
+        }}>L'enquête complète</div>
+      </div>
     </div>
   );
 };
