@@ -134,8 +134,9 @@ export const BeatN: React.FC<{ globalMusic?: boolean; globalAudio?: boolean }> =
 | Brique | Import | Pattern playbook |
 |---|---|---|
 | `CountUp` (preset `bounce` + `decimals`) | ui | P1 Chiffre-événement |
-| `HeroMirrorBars` | layouts | P7 Métaphore physique (barres miroir) |
-| `FloatingHeroObject` | layouts | P5 Secondary motion (objet flottant + halo + ping-ring) |
+| `HeroMirrorBars` | layouts | P7 Métaphore physique (barres miroir horizontales) |
+| `HeroVerticalBars` | layouts | P7 Métaphore physique (barres verticales — déséquilibre de hauteur, anti-vide) |
+| `FloatingHeroObject` (`clipCircle`, `spin`) | layouts | P5 Secondary motion (objet flottant + halo + ping-ring + rotation) |
 | `Badge` (mode `satellite`) | ui | P5 Badges satellites |
 | `CountdownReveal` (prop `pingNode`) | layouts | Cadran arc + ping-node |
 | `TextChoc` | layouts | P6 Reveal typo mot-par-mot + underline |

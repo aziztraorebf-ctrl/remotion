@@ -131,6 +131,29 @@ Par scène / plan :
 
 ---
 
+## 3bis. SFX & AUDIO (NON-NEGOTIABLE — un beat muet n'est pas fini)
+
+> Ajouté 2026-06-03 (le système data-viz l'avait omis, contrairement au Mapbox). Un beat data-viz a un design sonore au même titre qu'une carte. Catalogue : `public/_shared/sfx/SFX-INDEX.md`. Plancher volume SFX = **0.5**.
+
+**Règle d'assemblage audio (pattern skeleton) :**
+- **Narration globale** au niveau de l'assemblage (`<Episode>Full`). Pour tester un beat/segment isolé : `<Audio src={narration} startFrom={frameDébutSegmentDansNarrationGlobale} />`.
+- **Musique** : même offset, volume bas (~0.08).
+- **SFX ponctuels** via `<Sequence from={frame}><Audio volume={>=0.5} /></Sequence>`.
+
+**SFX par événement HERO DATA (mapping type) :**
+| Événement | SFX (catalogue) | Volume |
+|---|---|---|
+| Objet hero apparaît (FloatingHeroObject) | `ui/reveal.mp3` | 0.6 |
+| Barres montent (HeroVerticalBars / MirrorBars) | `ui/whoosh.mp3` | 0.55 |
+| Count-up des chiffres | `data/counter-tick.mp3` / `tick-counter.mp3` | 0.5 |
+| Verdict / barre dominante (impact) | `impact/impact.mp3` | 0.65 |
+| Cartouche / plaque qui claque | `ui/stamp-dossier.mp3` / `ui/plate-pop.mp3` | 0.6 |
+| Transition seamless (zoom intra-élément) | `ui/whoosh.mp3` / `camera/sfx-swoosh-*.mp3` | 0.55 |
+
+**Le storyboard (template §3) DOIT remplir le champ 10 (SFX / AUDIO CUE) — aucun beat ne se code sans son design sonore prévu.**
+
+---
+
 ## 4. ÉCART AU PREMIUM — chantiers d'amélioration (arbitrés Gemini)
 
 | Constat | Réf premium | Comment combler dans notre stack |

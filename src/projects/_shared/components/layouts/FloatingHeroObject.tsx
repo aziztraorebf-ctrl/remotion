@@ -16,6 +16,10 @@ interface FloatingHeroObjectProps {
   ring?: boolean;
   /** Amplitude du float vertical (px). Défaut 6. */
   floatAmplitude?: number;
+  /** Masque l'image en cercle (évite le carré visible d'un PNG sur fond non transparent). Défaut false. */
+  clipCircle?: boolean;
+  /** Balancement rotatif doux (rotateY sinusoïdal) — 2e secondary motion, donne du relief. Défaut false. */
+  spin?: boolean;
 }
 
 /**
@@ -36,6 +40,8 @@ export const FloatingHeroObject: React.FC<FloatingHeroObjectProps> = ({
   color = "#c8a951",
   ring = true,
   floatAmplitude = 6,
+  clipCircle = false,
+  spin = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -50,8 +56,14 @@ export const FloatingHeroObject: React.FC<FloatingHeroObjectProps> = ({
   const float = floatSin(frame, floatAmplitude, 110);
   const glowRadius = glowOscillate(frame, 20, 80);
   const ringState = pingRing(frame);
+  // 2e secondary motion : balancement rotatif doux (±12° en Y) — relief sans tour gadget
+  const spinDeg = spin ? Math.sin(frame / 75) * 12 : 0;
 
   const baseTransform = `translateY(${float}px) scale(${scale})`;
+  // L'objet (image/enfant) reçoit en plus le balancement rotatif ; le halo/ring restent stables.
+  const objectTransform = spin
+    ? `${baseTransform} perspective(800px) rotateY(${spinDeg}deg)`
+    : baseTransform;
 
   return (
     <div
@@ -86,7 +98,20 @@ export const FloatingHeroObject: React.FC<FloatingHeroObjectProps> = ({
       {/* Objet hero : image OU enfant (icône/SVG) */}
       <div
         className="relative flex items-center justify-center"
-        style={{ width: size, height: size, transform: baseTransform }}
+        style={{
+          width: size,
+          height: size,
+          transform: objectTransform,
+          ...(clipCircle
+            ? {
+                borderRadius: "50%",
+                overflow: "hidden",
+                // Masque radial doux : le carré du PNG se fond dans le fond
+                maskImage: "radial-gradient(circle at 50% 50%, #000 58%, transparent 72%)",
+                WebkitMaskImage: "radial-gradient(circle at 50% 50%, #000 58%, transparent 72%)",
+              }
+            : {}),
+        }}
       >
         {src ? (
           <Img

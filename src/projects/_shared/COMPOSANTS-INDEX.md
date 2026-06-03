@@ -235,8 +235,9 @@
 | Composant | Import | Quand Aziz dit... |
 |---|---|---|
 | `CountUp` (preset `bounce` + `decimals`) | ui | "Le chiffre clé monte et claque" — count-up 0→target + overshoot physique + glow (P1). `decimals` pour "0.22%" |
-| `HeroMirrorBars` | layouts | "Plus tu es petit plus tu paies" — 2 barres miroir rouge/vert + count-up + verdict (vibration/pulse) + slot central (P7) |
-| `FloatingHeroObject` | layouts | "Un objet/icône qui flotte, vivant" — float sin + halo oscillant + ping-ring. Image OU enfant Lucide/SVG (P5) |
+| `HeroMirrorBars` | layouts | "Plus tu es petit plus tu paies" — 2 barres miroir HORIZONTALES rouge/vert + count-up + verdict (vibration/pulse) + slot central (P7) |
+| `HeroVerticalBars` | layouts | "L'un écrase l'autre" — 2 barres VERTICALES qui montent (le contraste de hauteur = le déséquilibre) + count-up + verdict + slot central. Meuble l'espace vertical (P7). Frère vertical de HeroMirrorBars |
+| `FloatingHeroObject` | layouts | "Un objet/icône qui flotte, vivant" — float sin + halo oscillant + ping-ring. Props : `clipCircle` (masque rond, anti-carré PNG), `spin` (balancement rotatif 2e motion). Image OU enfant Lucide/SVG (P5) |
 | `Badge` (mode `satellite`) | ui | "Des stats qui gravitent autour" — badge navy/gold pop staggeré autour d'un hero. `sublabel` optionnel (P5) |
 | `CountdownReveal` (prop `pingNode`) | layouts | "7 ANS — le cadran se remplit" — arc SVG progressif + count-up + flash + ping-node lumineux |
 | `TextChoc` | layouts | "La punchline s'écrit mot par mot" — reveal typo séquentiel + underline accent (P6). Réutilisable tel quel |

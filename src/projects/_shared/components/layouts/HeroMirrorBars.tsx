@@ -161,9 +161,10 @@ export const HeroMirrorBars: React.FC<HeroMirrorBarsProps> = ({
 }) => {
   const alarm = alarmColor ?? left.color;
 
+  // Colonnes symétriques (flex-1) → le slot central est TOUJOURS pile au milieu de l'écran.
   return (
     <div className="flex flex-row items-center justify-center w-full px-12">
-      <div className="flex flex-col items-end justify-center" style={{ flex: "0 0 35%", paddingRight: 24 }}>
+      <div className="flex-1 flex flex-col items-end justify-center" style={{ paddingRight: 24 }}>
         <BarCol
           side={left}
           appearFrame={appearFrame}
@@ -174,11 +175,11 @@ export const HeroMirrorBars: React.FC<HeroMirrorBarsProps> = ({
         />
       </div>
 
-      <div className="flex items-center justify-center shrink-0" style={{ width: 350 }}>
+      <div className="flex items-center justify-center shrink-0" style={{ width: 300 }}>
         {centerSlot}
       </div>
 
-      <div className="flex flex-col items-start justify-center" style={{ flex: "0 0 35%", paddingLeft: 24 }}>
+      <div className="flex-1 flex flex-col items-start justify-center" style={{ paddingLeft: 24 }}>
         <BarCol
           side={right}
           appearFrame={appearFrame}

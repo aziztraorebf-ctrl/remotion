@@ -31,6 +31,7 @@ import { AtlasFormat4PanneauOpaque } from "./projects/souverain/carousels/hybrid
 import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries/timing";
 import { BlankComposition } from "./BlankComposition";
 import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
+import { A3Cailloux, A3_CAILLOUX_FRAMES } from "./projects/souverain/maroc-batteries/A3Cailloux";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
 import { SmallMultiplesGridDemoA, SmallMultiplesGridDemoB, SMALL_MULTIPLES_GRID_DEMO_FRAMES } from "./projects/_shared/demos/SmallMultiplesGridDemo";
 import { AtlasRealiste3DDemo, ATLAS_REALISTE_3D_DEMO_FRAMES } from "./projects/_shared/demos/AtlasRealiste3DDemo";
@@ -221,6 +222,7 @@ import { ContagionFlagSpread } from "./projects/_shared/mapbox/ContagionFlagSpre
 import { GeoCountryPlaqueShowcase, GEO_COUNTRY_PLAQUE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/GeoCountryPlaqueShowcase";
 import { PetrolePatience, PETROLE_PATIENCE_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatience";
 import { PetrolePatienceShort, PETROLE_PATIENCE_SHORT_FRAMES } from "./projects/_demos/petrole-patience/PetrolePatienceShort";
+import { PetrolePatienceShort as PetrolePatienceShortV2, PETROLE_PATIENCE_SHORT_FRAMES as PETROLE_PATIENCE_SHORT_V2_FRAMES } from "./projects/souverain/petrole-patience-short/PetrolePatienceShort";
 import { AfriqueNumeriqueShort, AFRIQUE_NUMERIQUE_SHORT_FRAMES } from "./projects/_demos/afrique-numerique/AfriqueNumeriqueShort";
 import { CobaltRDCShort, COBALT_RDC_SHORT_FRAMES } from "./projects/_demos/cobalt-rdc/CobaltRDCShort";
 import { LAnomalieMontreal, ANOMALIE_MONTREAL_FRAMES } from "./projects/_demos/anomalie-montreal/LAnomalieMontreal";
@@ -381,6 +383,14 @@ export const RemotionRoot: React.FC = () => {
           id="HeroDataShowcase"
           component={HeroDataShowcase}
           durationInFrames={HERO_DATA_SHOWCASE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="A3Cailloux"
+          component={A3Cailloux}
+          durationInFrames={A3_CAILLOUX_FRAMES}
           fps={30}
           width={1080}
           height={1920}
@@ -1031,6 +1041,14 @@ export const RemotionRoot: React.FC = () => {
             id="Petrole-Patience-Short"
             component={PetrolePatienceShort}
             durationInFrames={PETROLE_PATIENCE_SHORT_FRAMES}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="Petrole-Patience-Short-V2"
+            component={PetrolePatienceShortV2}
+            durationInFrames={PETROLE_PATIENCE_SHORT_V2_FRAMES}
             fps={30}
             width={1080}
             height={1920}

@@ -1,0 +1,144 @@
+# SFX Index — Bibliothèque partagée
+
+> Source de vérité unique. Lire AVANT de chercher ou créer un SFX.
+> Tous les fichiers sont dans `public/_shared/sfx/`.
+> Usage Remotion : `staticFile("_shared/sfx/<categorie>/<fichier>.mp3")`
+
+---
+
+## ⛔ FICHIERS CORROMPUS — NE PAS UTILISER
+
+> Réflexe : vérifier la DURÉE avant usage (`ffprobe`). Un SFX UI/impact propre fait < 2s.
+> Durée anormale (>5s) = fichier contaminé, souvent une VOIX au lieu d'un son pur.
+
+| Fichier | Problème | Remplacer par |
+|---------|----------|---------------|
+| `ui/reveal.mp3` (neutralisé → `.CORROMPU-voix-fantome`) | **18.4s — VOIX masculine fantôme** ("et voici la vérité qu'on ne te dira jamais"), jouait par-dessus la narration. Détecté 2026-06-03 (A3 Maroc) + signalé session antérieure. | `ui/node-appear.mp3` (0.48s) ou `camera/sfx-map-ping.mp3` |
+
+---
+
+## camera/ — Mouvements de caméra Mapbox
+
+| Fichier | Description | Durée | Utilisé dans |
+|---------|-------------|-------|--------------|
+| `sfx-swoosh-pullback.mp3` | Whoosh Pull Back Reveal (dezoom) | ~1s | Or Africain, Sénégal Beat10 |
+| `sfx-swoosh-zoomin.mp3` | Whoosh Zoom In / Dolly In | ~1s | Or Africain |
+| `sfx-map-ping.mp3` | Ping / pop apparition d'un point sur carte | ~0.5s | Or Africain |
+| `sfx-whip-pan-1.mp3` | Whip pan / SWITCH de pays (swipe air punchy) — variation 1 | 0.68s | Petrole Patience (ElevenLabs, 2026-06-03) |
+| `sfx-whip-pan-2.mp3` | Whip pan / SWITCH de pays (swipe net court) — variation 2 | 0.60s | Petrole Patience |
+| `sfx-whip-pan-3.mp3` | Whip pan / SWITCH de pays (swipe + thud final) — variation 3 | 0.80s | Petrole Patience |
+
+**Règle** : `sfx-swoosh-pullback` = fin du dezoom. `sfx-swoosh-zoomin` = début d'un VRAI zoom. `sfx-whip-pan-{1,2,3}` = CHANGEMENT de pays/lieu (whip pan latéral) — utiliser en ROTATION pour éviter la répétition. Ne PAS confondre zoom et switch.
+
+---
+
+## ui/ — Interfaces, textes, reveals
+
+| Fichier | Description | Durée | Utilisé dans |
+|---------|-------------|-------|--------------|
+| `whoosh.mp3` | Whoosh court, transition texte/slide | ~0.4s | Data-viz explainer |
+| `reveal.mp3` | ⛔ NE PAS UTILISER — fichier de 18.4s (contient une voix/nappe longue, PAS un reveal court). Utiliser `plate-pop.mp3` ou `node-appear.mp3`. | 18.4s | (banni 2026-06-03, voix fantôme Petrole Patience) |
+| `stamp-dossier.mp3` | Tampon / claquement sec sur document | ~0.3s | Niger Uranium |
+| `node-appear.mp3` | Apparition noeud réseau / bubble | ~0.4s | Niger Uranium |
+| `blip-bubble.mp3` | Blip léger, apparition donnée | ~0.3s | Hannibal |
+
+---
+
+## impact/ — Impacts, tensions, drama
+
+| Fichier | Description | Durée | Utilisé dans |
+|---------|-------------|-------|--------------|
+| `impact.mp3` | Impact sourd, choc visuel | ~0.5s | Data-viz explainer, Brutalist Finance |
+| `tension-pulse.mp3` | Pulsation tension, beat lourd | ~1s | Niger Uranium |
+
+---
+
+## data/ — Compteurs, statistiques, graphiques
+
+| Fichier | Description | Durée | Utilisé dans |
+|---------|-------------|-------|--------------|
+| `counter-tick.mp3` | Tick compteur numérique | ~0.1s | Data-viz explainer |
+| `tick-counter.mp3` | Tick compteur alternatif (plus sec) | ~0.1s | Niger Uranium |
+| `stat-tick.mp3` | Tick stat, plus doux | ~0.1s | Hannibal |
+
+---
+
+## SFX épisode-spécifiques (non partagés)
+
+Ces SFX sont narratifs/thématiques — ils restent dans leur dossier épisode.
+
+| Dossier | Contenu |
+|---------|---------|
+| `public/audio/sonjata-papercraft/sfx/` | Drums de guerre, feu, arc |
+| `public/audio/peste-pixel/sfx/` | Galère, cloche, catapulte |
+| `public/audio/atlas-empire-ghana/sfx/` | Whoosh secret, impact 1076, cri de guerre |
+| `public/atlas/peste-1347/audio/sfx-*.mp3` | Marker, inkdraw, thud |
+| `public/audio/silhouette-questions/sfx-*.mp3` | Contamination, éveil, foule |
+
+---
+
+## Convention de nommage pour nouveaux SFX
+
+```
+camera/   sfx-[mouvement]-[qualificatif].mp3   ex: sfx-swoosh-crane-up.mp3
+ui/       [action]-[element].mp3                ex: slash-appear.mp3
+impact/   [type]-[intensite].mp3                ex: thud-heavy.mp3
+data/     [element]-[action].mp3                ex: bar-grow.mp3
+ambiance/ [lieu]-[etat].mp3                     ex: ocean-calm.mp3
+```
+
+## SFX manquants identifiés (backlog)
+
+- `camera/sfx-whip-pan.mp3` — transition rapide gauche/droite (Beat13 Yakaar)
+- `camera/sfx-crane-up.mp3` — montée lente de caméra (fin Beat10)
+
+---
+
+## Guide assemblage — Sénégal Pétrole & Gaz (LIRE avant la session d'assemblage)
+
+### SFX recommandés par beat
+
+| Beat | Moment | SFX recommandé | Chemin |
+|------|--------|----------------|--------|
+| Beat14 Phase A | Apparition plaque FONSIS (f240) | `plate-pop.mp3` | `_shared/sfx/ui/plate-pop.mp3` |
+| Beat14 Phase A | Apparition plaque ITIE (f330) | `plate-pop.mp3` | idem |
+| Beat14 Phase A | Apparition plaque LOI (f420) | `plate-pop.mp3` | idem |
+| Beat14 Phase B | Slash rouge sur FONSIS | `slash-red.mp3` | `_shared/sfx/ui/slash-red.mp3` |
+| Beat14 Phase B | Slash rouge sur ITIE | `slash-red.mp3` | idem |
+| Beat14 Phase B | Slash rouge sur LOI | `slash-red.mp3` | idem |
+| Beat10 | Pull Back Reveal fin dezoom | `sfx-swoosh-pullback.mp3` | `_shared/sfx/camera/` |
+| Beat10 | Ping apparition point pays | `sfx-map-ping.mp3` | `_shared/sfx/camera/` |
+| Beat13 | Zoom Yakaar / Sangomar | `sfx-swoosh-zoomin.mp3` | `_shared/sfx/camera/` |
+
+### Usage Remotion — PATTERN `<Sequence>` OBLIGATOIRE (NON-NEGOTIABLE)
+```tsx
+<Sequence from={F_PING} durationInFrames={20}>
+  <Audio src={staticFile("_shared/sfx/ui/plate-pop.mp3")} volume={0.50} />
+</Sequence>
+```
+⛔ **NE JAMAIS utiliser `{frame === X && <Audio/>}` ni `{frame >= X && frame < X+15 && <Audio/>}`** — un `<Audio>` monté une seule frame (ou conditionnellement) NE DÉMARRE PAS en render (son inaudible). Bug confirmé 2026-06-03 sur Beat3 Maroc (Aziz n'entendait aucun SFX). Toujours `<Sequence from={F} durationInFrames={20-30}>` autour du `<Audio>` (pattern Or Africain Beat4). Voir `memory/feedback_sfx-sequence-et-drapeaux-reels.md`.
+
+### ⛔ VOLUME SFX — PLANCHER 0.50 (RÉVISÉ 2026-06-03, NON-NEGOTIABLE)
+**Tous les SFX (ping, tick, snap, plate-pop, impact, whoosh, swoosh, drone) : 0.50 minimum, JAMAIS en dessous.** Peut monter à 0.60 sur les gros moments cinématiques (swoosh caméra descend/monte, impact). Musique fond 0.12-0.15 (baisser si elle masque). L'ancienne valeur 0.35 / fourchette 0.25-0.35 était trop basse → SFX inaudibles, Aziz devait monter le son. Source de vérité : `memory/DOCTRINE-SOUVERAIN.md` section 6.
+
+### 🎯 QUEL SFX selon le mouvement caméra (règle 2026-06-03)
+**Un SFX doit correspondre à un ÉVÉNEMENT VISUEL RÉEL. Pas de SFX "par habitude".**
+- `sfx-swoosh-zoomin` → SEULEMENT si vrai zoom-in caméra. PAS sur carte fixe (ex: SweepReveal) ni beat démarrant à altitude fixe.
+- `sfx-swoosh-pullback` → SEULEMENT si pull back RAPIDE et marqué. PAS sur dézoom lent/continu (imperceptible → SFX retiré).
+- `sfx-map-ping` → apparition d'un point/pays/dot (événement ponctuel net). Toujours OK.
+- `plate-pop` → apparition d'une plaque/label. `stat-tick` → slam d'un chiffre. `impact` → choc visuel fort.
+- Principe : si le spectateur ne "voit" pas l'événement, pas de SFX. Cas Maroc Beat0/1 : swoosh retirés car carte fixe / dézoom lent.
+
+### Ordre d'assemblage ffmpeg (session suivante)
+```bash
+ffmpeg -i senegal-acte1-FINAL.mp4 \
+       -i acte2-FINAL.mp4 \
+       -i beat10-FINAL.mp4 \
+       -i beat11-FINAL.mp4 \
+       -i beat12-FINAL.mp4 \
+       -i beat13-FINAL.mp4 \
+       -i beat14-FINAL.mp4 \
+       -filter_complex "[0][1][2][3][4][5][6]concat=n=7:v=1:a=1" \
+       out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4
+```
+Tous les fichiers source : `out/episodes/senegal-petrole-gaz/`
