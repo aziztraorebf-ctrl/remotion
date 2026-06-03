@@ -25,6 +25,7 @@ import {
   type ClipFlag,
 } from "../../_shared/mapbox/useClipFlags";
 import { GeoCountryPlaque } from "../../_shared/mapbox/GeoCountryPlaque";
+import { SubtitleBarSouverain, type SubLine } from "../../_shared/components/ui/SubtitleBarSouverain";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PetrolePatienceShort — 1080×1920 vertical, 80s, 6 actes
@@ -41,8 +42,8 @@ export const F = {
   A4_START: 1314,  //  43.80s
   A5_START: 1683,  //  56.10s
   A6_START: 2169,  //  72.30s
-  A7_START: 2404,  //  80.16s — CTA teaser mid-form (voix cta-v1 = 196f + marge)
-  END:      2610,  //  87.00s
+  A7_START: 2404,  //  80.16s — CTA teaser mid-form (voix cta-v1 = 196f, démarre +22 -> finit ~2622)
+  END:      2730,  //  91.00s — laisse la voix CTA finir (2622) + ~3.6s de queue (musique fade naturel)
 };
 
 export const PETROLE_PATIENCE_SHORT_FRAMES = F.END;
@@ -59,6 +60,37 @@ const FLAGS: ClipFlag[] = [
   // mainlandBox : Norvege continentale uniquement (exclut Svalbard/Jan Mayen/Bouvet -> bbox geante)
   { iso: "NOR", geoNames: ["Norway"],  flagFile: "no.png", at: F.A3_START + 70,   bgColor: "#ba0c2f", fadeFrames: 24, mainlandBox: [4, 57, 32, 72] },
   { iso: "SEN", geoNames: ["Senegal"], flagFile: "sn.png", at: F.A4_START + 110,  bgColor: "#00853f", fadeFrames: 24 },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SOUS-TITRES — segments Whisper (narration, secondes->frames @30) + voix CTA.
+// Bas d'écran (zone laissée libre : le texte A6 a été retiré pour ça).
+// ─────────────────────────────────────────────────────────────────────────────
+const SUBTITLES: SubLine[] = [
+  { start: 0, end: 156, text: "Depuis l'an 2000, l'Afrique a extrait pour 1 500 milliards de dollars de pétrole." },
+  { start: 156, end: 282, text: "Mais aucune des grandes nations productrices n'a vu sa richesse augmenter." },
+  { start: 282, end: 411, text: "Comment fait-on pour découvrir une fortune et rester pauvre ?" },
+  { start: 411, end: 507, text: "Le Nigeria pompe 2 millions de barils par jour." },
+  { start: 507, end: 600, text: "Son revenu par habitant a stagné pendant 20 ans." },
+  { start: 600, end: 801, text: "L'Angola dépend du pétrole pour 75% de ses recettes publiques." },
+  { start: 801, end: 906, text: "Les économistes appellent ça la malédiction des ressources." },
+  { start: 906, end: 1038, text: "À 7 000 kilomètres au nord, la Norvège a fait un autre choix." },
+  { start: 1038, end: 1122, text: "Chaque baril vendu finance un fonds souverain." },
+  { start: 1122, end: 1224, text: "Aujourd'hui, ce fonds gère 1 700 milliards de dollars." },
+  { start: 1224, end: 1314, text: "Un trésor qui appartient aux générations futures." },
+  { start: 1314, end: 1434, text: "Le Sénégal a découvert son gaz en 2014." },
+  { start: 1434, end: 1572, text: "Première production en juin 2024, sur le champ de Sangomar." },
+  { start: 1572, end: 1683, text: "Le pays a choisi de ne pas répéter le scénario nigérian." },
+  { start: 1683, end: 1830, text: "Petrosen, sa compagnie nationale, garde 18% du projet." },
+  { start: 1830, end: 1974, text: "Le chiffre semble modeste face aux 82% qui partent à l'export." },
+  { start: 1974, end: 2097, text: "Mais c'est plus qu'aucun autre projet pétrolier ouest-africain de cette taille" },
+  { start: 2097, end: 2169, text: "n'a jamais accordé à son pays hôte." },
+  { start: 2169, end: 2310, text: "Suffira-t-il de garder une plus grosse part pour échapper à la malédiction ?" },
+  { start: 2310, end: 2403, text: "Le Sénégal pense que oui. Dans dix ans, on saura." },
+  // Voix CTA (démarre à A7_START + 22 = 2426)
+  { start: 2426, end: 2492, text: "Le Sénégal a fait son pari." },
+  { start: 2492, end: 2574, text: "L'analyse complète arrive très bientôt." },
+  { start: 2574, end: 2640, text: "Abonne-toi pour ne pas la manquer." },
 ];
 
 const LOC = {
@@ -689,6 +721,9 @@ export const PetrolePatienceShort: React.FC = () => {
       <ClipFlagsLayer width={width} height={height} flags={FLAGS} paths={flagPaths} frame={frame} />
 
       <ShortOverlays frame={frame} fps={fps} geoPos={geoPos} />
+
+      {/* Sous-titres persistants (narration + CTA), bas d'écran */}
+      <SubtitleBarSouverain lines={SUBTITLES} bottomPx={150} />
     </AbsoluteFill>
   );
 };
