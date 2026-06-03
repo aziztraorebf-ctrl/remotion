@@ -1,0 +1,615 @@
+{
+  "beats": [
+    {
+      "beat_id": "beat0_hook",
+      "duration_s": 8.14,
+      "duration_frames": 244,
+      "visual_concept": "A stark, cinematic hook. A glowing high-tech battery cell emerges from raw desert sand, establishing the contrast between raw earth and future technology.",
+      "technique": "image_asset",
+      "background_assets": [
+        {
+          "filename": "battery_in_sand.jpg",
+          "prompt": "Cinematic macro shot of a glowing, futuristic EV battery cell half-buried in dark, raw desert sand. Dramatic studio lighting, deep shadows, photorealistic, 8k resolution, vertical composition.",
+          "dimensions": "1080x1920",
+          "purpose": "Background visual for the hook"
+        }
+      ],
+      "visual_elements": [
+        {
+          "element_id": "hook_text_1",
+          "type": "css_text",
+          "content": "DANS 2 ANS",
+          "screen_position_xy": [540, 400],
+          "size_px": [900, 150],
+          "color_hex": "#f2ebd9",
+          "appears_at_s": 0.14,
+          "appears_at_word": "Dans"
+        },
+        {
+          "element_id": "hook_plate_1",
+          "type": "plate_label",
+          "content": "NOUVELLE USINE",
+          "screen_position_xy": [540, 1500],
+          "size_px": [400, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 6.0,
+          "appears_at_word": "usine"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 0.14,
+          "frame_local": 4,
+          "event": "Text 'DANS 2 ANS' appears",
+          "element_ids": ["hook_text_1"],
+          "transition": "popIn",
+          "audio_cue_word": "Dans"
+        },
+        {
+          "time_s": 3.64,
+          "frame_local": 109,
+          "event": "Battery image slowly scales up",
+          "element_ids": [],
+          "transition": "gentleReveal",
+          "audio_cue_word": "sortira"
+        },
+        {
+          "time_s": 6.0,
+          "frame_local": 180,
+          "event": "Plate 'NOUVELLE USINE' slides in",
+          "element_ids": ["hook_plate_1"],
+          "transition": "fadeIn",
+          "audio_cue_word": "usine"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 0.14, "event": "Initial text hook" },
+        { "time_s": 3.64, "event": "Visual shift on battery" },
+        { "time_s": 6.0, "event": "Plate label appears" }
+      ],
+      "sfx": [
+        { "trigger_s": 0.14, "sound": "deep_sub_boom", "description": "Heavy cinematic impact for the hook" },
+        { "trigger_s": 6.0, "sound": "digital_lock", "description": "Crisp UI sound for plate label" }
+      ],
+      "permanent_motion": "Slow continuous scale-in of the background image (1.0 to 1.05).",
+      "remotion_notes": "Use BrutalHookSplit component if needed, but full screen image with overlay is preferred. Ensure IBM Plex Mono for the plate label."
+    },
+    {
+      "beat_id": "beat1_phosphate",
+      "duration_s": 20.3,
+      "duration_frames": 609,
+      "visual_concept": "Full screen Mapbox zooming into Morocco's phosphate basin (Khouribga), with a massive 70% data visualization pulsing over the terrain.",
+      "technique": "mapbox",
+      "mapbox_config": {
+        "center_lonlat": [-6.91, 32.88],
+        "zoom": 6.5,
+        "style": "sepia",
+        "movement": "Static jumpTo at start, frame-driven slow pan south-west using jumpTo in useFrame."
+      },
+      "background_assets": [],
+      "visual_elements": [
+        {
+          "element_id": "stat_70",
+          "type": "stat_number",
+          "content": "70%",
+          "screen_position_xy": [540, 800],
+          "size_px": [800, 300],
+          "color_hex": "#c8a951",
+          "appears_at_s": 11.6,
+          "appears_at_word": "soixante-dix"
+        },
+        {
+          "element_id": "plate_reserves",
+          "type": "plate_label",
+          "content": "RÉSERVES MONDIALES",
+          "screen_position_xy": [540, 1050],
+          "size_px": [500, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 13.88,
+          "appears_at_word": "phosphate"
+        },
+        {
+          "element_id": "plate_2040",
+          "type": "plate_label",
+          "content": "HORIZON 2040",
+          "screen_position_xy": [540, 1600],
+          "size_px": [350, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 18.76,
+          "appears_at_word": "deux mille quarante"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 9.58,
+          "frame_local": 0,
+          "event": "Mapbox initializes on Khouribga",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "Sous"
+        },
+        {
+          "time_s": 11.6,
+          "frame_local": 60,
+          "event": "70% stat pulses in",
+          "element_ids": ["stat_70"],
+          "transition": "countUp",
+          "audio_cue_word": "soixante-dix"
+        },
+        {
+          "time_s": 13.88,
+          "frame_local": 129,
+          "event": "Reserves plate appears",
+          "element_ids": ["plate_reserves"],
+          "transition": "popIn",
+          "audio_cue_word": "phosphate"
+        },
+        {
+          "time_s": 18.76,
+          "frame_local": 275,
+          "event": "2040 plate appears",
+          "element_ids": ["plate_2040"],
+          "transition": "fadeIn",
+          "audio_cue_word": "deux mille quarante"
+        },
+        {
+          "time_s": 25.0,
+          "frame_local": 462,
+          "event": "D3 grid overlay of battery cells appears over map",
+          "element_ids": [],
+          "transition": "gentleReveal",
+          "audio_cue_word": "génération"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 9.58, "event": "Mapbox cut" },
+        { "time_s": 11.6, "event": "70% stat appears" },
+        { "time_s": 18.76, "event": "2040 plate appears" },
+        { "time_s": 25.0, "event": "Battery grid overlay" }
+      ],
+      "sfx": [
+        { "trigger_s": 11.6, "sound": "data_counter", "description": "Rapid ticking for the 70% count up" },
+        { "trigger_s": 18.76, "sound": "tech_ping", "description": "Subtle ping for 2040 horizon" }
+      ],
+      "permanent_motion": "Mapbox slow frame-driven drift. D3 grid slowly scales.",
+      "remotion_notes": "Use PulseNumber component for the 70%. Mapbox must be full screen, text overlays absolutely positioned."
+    },
+    {
+      "beat_id": "beat2_cailloux",
+      "duration_s": 12.3,
+      "duration_frames": 369,
+      "visual_concept": "Data viz / Image split. Left/Top: Raw, cheap phosphate rocks. Right/Bottom: High-value refined battery cells. An arrow shows the value extraction leaving the country.",
+      "technique": "data_viz",
+      "background_assets": [
+        {
+          "filename": "raw_phosphate.jpg",
+          "prompt": "Macro photography of raw, dusty phosphate rocks, grey and beige tones, harsh lighting, industrial feel, 8k.",
+          "dimensions": "1080x960",
+          "purpose": "Top half visual"
+        },
+        {
+          "filename": "refined_battery.jpg",
+          "prompt": "Sleek, highly polished EV battery cells, glowing blue LED accents, clean room environment, hyper-realistic, 8k.",
+          "dimensions": "1080x960",
+          "purpose": "Bottom half visual"
+        }
+      ],
+      "visual_elements": [
+        {
+          "element_id": "plate_cailloux",
+          "type": "plate_label",
+          "content": "MATIÈRE BRUTE",
+          "screen_position_xy": [540, 400],
+          "size_px": [400, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 35.64,
+          "appears_at_word": "cailloux"
+        },
+        {
+          "element_id": "plate_valeur",
+          "type": "plate_label",
+          "content": "VALEUR AJOUTÉE",
+          "screen_position_xy": [540, 1400],
+          "size_px": [450, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 42.44,
+          "appears_at_word": "valeur ajoutée"
+        },
+        {
+          "element_id": "arrow_flow",
+          "type": "svg_shape",
+          "content": "downward_arrow",
+          "screen_position_xy": [540, 960],
+          "size_px": [100, 300],
+          "color_hex": "#c08820",
+          "appears_at_s": 39.4,
+          "appears_at_word": "transformaient"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 31.06,
+          "frame_local": 0,
+          "event": "Top image (raw rocks) fades in",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "Pendant"
+        },
+        {
+          "time_s": 35.64,
+          "frame_local": 137,
+          "event": "Plate 'MATIÈRE BRUTE' appears",
+          "element_ids": ["plate_cailloux"],
+          "transition": "popIn",
+          "audio_cue_word": "cailloux"
+        },
+        {
+          "time_s": 39.4,
+          "frame_local": 250,
+          "event": "Bottom image and downward arrow appear",
+          "element_ids": ["arrow_flow"],
+          "transition": "drawPath",
+          "audio_cue_word": "transformaient"
+        },
+        {
+          "time_s": 42.44,
+          "frame_local": 341,
+          "event": "Plate 'VALEUR AJOUTÉE' appears",
+          "element_ids": ["plate_valeur"],
+          "transition": "popIn",
+          "audio_cue_word": "valeur ajoutée"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 31.06, "event": "Cut to raw rocks" },
+        { "time_s": 35.64, "event": "Label appears" },
+        { "time_s": 39.4, "event": "Bottom half reveals with arrow" },
+        { "time_s": 42.44, "event": "Value added label appears" }
+      ],
+      "sfx": [
+        { "trigger_s": 31.06, "sound": "rock_crumble", "description": "Subtle gravel sound" },
+        { "trigger_s": 39.4, "sound": "energy_hum", "description": "High-tech hum for the battery reveal" }
+      ],
+      "permanent_motion": "Images slowly pan in opposite directions (top pans left, bottom pans right).",
+      "remotion_notes": "Use SurfaceComparison component. The arrow should use D3 or SVG with stroke-dashoffset animation."
+    },
+    {
+      "beat_id": "beat3_acteurs",
+      "duration_s": 15.9,
+      "duration_frames": 477,
+      "visual_concept": "Mapbox centered on Kénitra. D3 lines draw in from China (Gotion) and Germany (VW) converging on the Moroccan gigafactory.",
+      "technique": "mapbox",
+      "mapbox_config": {
+        "center_lonlat": [-6.58, 34.26],
+        "zoom": 5.0,
+        "style": "sepia",
+        "movement": "Static jumpTo on Kénitra, slight zoom out to 4.5 over time to show incoming lines."
+      },
+      "background_assets": [],
+      "visual_elements": [
+        {
+          "element_id": "plate_kenitra",
+          "type": "plate_label",
+          "content": "KÉNITRA, MAROC",
+          "screen_position_xy": [540, 960],
+          "size_px": [400, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 45.54,
+          "appears_at_word": "Kénitra"
+        },
+        {
+          "element_id": "plate_hectares",
+          "type": "plate_label",
+          "content": "156 HECTARES",
+          "screen_position_xy": [540, 1060],
+          "size_px": [350, 60],
+          "color_hex": "#c8a951",
+          "appears_at_s": 48.76,
+          "appears_at_word": "hectares"
+        },
+        {
+          "element_id": "plate_gotion",
+          "type": "plate_label",
+          "content": "GOTION (CHINE)",
+          "screen_position_xy": [800, 600],
+          "size_px": [350, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 51.02,
+          "appears_at_word": "Gotion"
+        },
+        {
+          "element_id": "plate_vw",
+          "type": "plate_label",
+          "content": "VOLKSWAGEN (40%)",
+          "screen_position_xy": [280, 400],
+          "size_px": [450, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 53.64,
+          "appears_at_word": "Volkswagen"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 44.72,
+          "frame_local": 0,
+          "event": "Mapbox cuts to Kénitra",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "Aujourd'hui"
+        },
+        {
+          "time_s": 45.54,
+          "frame_local": 24,
+          "event": "Kénitra plate appears",
+          "element_ids": ["plate_kenitra"],
+          "transition": "popIn",
+          "audio_cue_word": "Kénitra"
+        },
+        {
+          "time_s": 48.76,
+          "frame_local": 121,
+          "event": "156 Hectares plate appears",
+          "element_ids": ["plate_hectares"],
+          "transition": "fadeIn",
+          "audio_cue_word": "hectares"
+        },
+        {
+          "time_s": 51.02,
+          "frame_local": 189,
+          "event": "Line draws from East (China) + Gotion plate",
+          "element_ids": ["plate_gotion"],
+          "transition": "drawPath",
+          "audio_cue_word": "Gotion"
+        },
+        {
+          "time_s": 53.64,
+          "frame_local": 267,
+          "event": "Line draws from North (Germany) + VW plate",
+          "element_ids": ["plate_vw"],
+          "transition": "drawPath",
+          "audio_cue_word": "Volkswagen"
+        },
+        {
+          "time_s": 57.18,
+          "frame_local": 373,
+          "event": "Pulse animation at intersection (Kénitra)",
+          "element_ids": [],
+          "transition": "gentleReveal",
+          "audio_cue_word": "Démarrage"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 44.72, "event": "Mapbox cut to Kénitra" },
+        { "time_s": 48.76, "event": "Hectares label" },
+        { "time_s": 51.02, "event": "China line draws" },
+        { "time_s": 53.64, "event": "Germany line draws" },
+        { "time_s": 57.18, "event": "Intersection pulse" }
+      ],
+      "sfx": [
+        { "trigger_s": 51.02, "sound": "whoosh_digital", "description": "Fast whoosh for China line" },
+        { "trigger_s": 53.64, "sound": "whoosh_digital", "description": "Fast whoosh for Germany line" },
+        { "trigger_s": 57.18, "sound": "heavy_impact", "description": "Impact sound for the convergence" }
+      ],
+      "permanent_motion": "D3 lines have a continuous glowing stroke animation moving towards Kénitra.",
+      "remotion_notes": "Use MapboxBase. D3 geoPath for the lines. Calculate screen coordinates from lon/lat using Mapbox project() function in Remotion."
+    },
+    {
+      "beat_id": "beat4_geographie",
+      "duration_s": 37.4,
+      "duration_frames": 1122,
+      "visual_concept": "Dynamic Mapbox sequence in 3 parts: A) OCP integration in Morocco, B) Proximity to Europe via Strait of Gibraltar, C) Zoom out to reveal the geopolitical triangle.",
+      "technique": "mapbox",
+      "mapbox_config": {
+        "center_lonlat": [-6.91, 32.88],
+        "zoom": 5.5,
+        "style": "sepia",
+        "movement": "Sub-moment A: [-6.91, 32.88]. Sub-moment B: jumpTo [-5.48, 36.0]. Sub-moment C: jumpTo [0.0, 40.0] zoom 3."
+      },
+      "background_assets": [],
+      "visual_elements": [
+        {
+          "element_id": "plate_ocp",
+          "type": "plate_label",
+          "content": "OCP : INTÉGRATION LOCALE",
+          "screen_position_xy": [540, 1400],
+          "size_px": [550, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 66.02,
+          "appears_at_word": "L'OCP"
+        },
+        {
+          "element_id": "plate_europe",
+          "type": "plate_label",
+          "content": "MARCHÉ EUROPÉEN",
+          "screen_position_xy": [540, 400],
+          "size_px": [450, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 75.46,
+          "appears_at_word": "l'Europe"
+        },
+        {
+          "element_id": "plate_bateau",
+          "type": "plate_label",
+          "content": "14 KM / 2 HEURES",
+          "screen_position_xy": [540, 960],
+          "size_px": [400, 80],
+          "color_hex": "#c8a951",
+          "appears_at_s": 84.18,
+          "appears_at_word": "deux heures de bateau"
+        },
+        {
+          "element_id": "text_geo",
+          "type": "css_text",
+          "content": "GÉOGRAPHIE INDUSTRIELLE",
+          "screen_position_xy": [540, 960],
+          "size_px": [900, 200],
+          "color_hex": "#c8a951",
+          "appears_at_s": 96.56,
+          "appears_at_word": "géographie industrielle"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 60.64,
+          "frame_local": 0,
+          "event": "SUB-MOMENT A: Mapbox on Morocco. Focus on OCP.",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "Maroc"
+        },
+        {
+          "time_s": 66.02,
+          "frame_local": 161,
+          "event": "OCP plate appears",
+          "element_ids": ["plate_ocp"],
+          "transition": "popIn",
+          "audio_cue_word": "L'OCP"
+        },
+        {
+          "time_s": 75.46,
+          "frame_local": 444,
+          "event": "SUB-MOMENT B: Mapbox jumpTo Strait of Gibraltar. Europe plate appears.",
+          "element_ids": ["plate_europe"],
+          "transition": "fadeIn",
+          "audio_cue_word": "l'Europe"
+        },
+        {
+          "time_s": 84.18,
+          "frame_local": 706,
+          "event": "D3 line draws across strait (Tanger to Algeciras). Bateau plate appears.",
+          "element_ids": ["plate_bateau"],
+          "transition": "drawPath",
+          "audio_cue_word": "deux heures de bateau"
+        },
+        {
+          "time_s": 87.34,
+          "frame_local": 801,
+          "event": "SUB-MOMENT C: Mapbox jumpTo wide view (Europe/Africa).",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "choisit"
+        },
+        {
+          "time_s": 91.86,
+          "frame_local": 936,
+          "event": "Triangle overlay (Morocco, Germany, China edge) illuminates.",
+          "element_ids": [],
+          "transition": "gentleReveal",
+          "audio_cue_word": "fabriquent ensemble"
+        },
+        {
+          "time_s": 96.56,
+          "frame_local": 1077,
+          "event": "Massive text 'GÉOGRAPHIE INDUSTRIELLE' overlays the map.",
+          "element_ids": ["text_geo"],
+          "transition": "popIn",
+          "audio_cue_word": "géographie industrielle"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 60.64, "event": "Sub-moment A start" },
+        { "time_s": 66.02, "event": "OCP label" },
+        { "time_s": 72.0, "event": "Visual pulse on phosphate basin" },
+        { "time_s": 75.46, "event": "Sub-moment B start (jumpTo Strait)" },
+        { "time_s": 80.5, "event": "VW icon highlights in Europe" },
+        { "time_s": 84.18, "event": "Strait crossing line draws" },
+        { "time_s": 87.34, "event": "Sub-moment C start (jumpTo wide)" },
+        { "time_s": 91.86, "event": "Geopolitical triangle illuminates" },
+        { "time_s": 96.56, "event": "Climax text appears" }
+      ],
+      "sfx": [
+        { "trigger_s": 75.46, "sound": "map_swoosh", "description": "Transition sound for map jump" },
+        { "trigger_s": 84.18, "sound": "ship_horn_distant", "description": "Very subtle, distant ship horn" },
+        { "trigger_s": 87.34, "sound": "map_swoosh", "description": "Transition sound for wide map jump" },
+        { "trigger_s": 96.56, "sound": "cinematic_braam", "description": "Heavy brass/synth hit for the climax phrase" }
+      ],
+      "permanent_motion": "Each sub-moment has a very slow frame-driven pan to keep the map alive.",
+      "remotion_notes": "Crucial: Use map.jumpTo() triggered by Remotion frame thresholds for the sub-moments. Do not use flyTo. The triangle overlay in sub-moment C should be a D3 polygon."
+    },
+    {
+      "beat_id": "beat5_question",
+      "duration_s": 10.3,
+      "duration_frames": 309,
+      "visual_concept": "Stark, tense typographic conclusion on a deep navy background. No map. Just the unresolved geopolitical question.",
+      "technique": "text_layout",
+      "background_assets": [],
+      "visual_elements": [
+        {
+          "element_id": "plate_question",
+          "type": "plate_label",
+          "content": "LA QUESTION",
+          "screen_position_xy": [540, 400],
+          "size_px": [300, 80],
+          "color_hex": "#ffffff",
+          "appears_at_s": 99.9,
+          "appears_at_word": "question"
+        },
+        {
+          "element_id": "text_equation",
+          "type": "css_text",
+          "content": "PHOSPHATE + ASSEMBLAGE",
+          "screen_position_xy": [540, 800],
+          "size_px": [900, 100],
+          "color_hex": "#f2ebd9",
+          "appears_at_s": 105.08,
+          "appears_at_word": "phosphate ET l'assemblage"
+        },
+        {
+          "element_id": "text_prix",
+          "type": "css_text",
+          "content": "QUI FIXE LE PRIX ?",
+          "screen_position_xy": [540, 1100],
+          "size_px": [900, 150],
+          "color_hex": "#c8a951",
+          "appears_at_s": 108.16,
+          "appears_at_word": "prix"
+        }
+      ],
+      "animation_timeline": [
+        {
+          "time_s": 99.22,
+          "frame_local": 0,
+          "event": "Cut to deep navy background (#16213a)",
+          "element_ids": [],
+          "transition": "fadeIn",
+          "audio_cue_word": "Et ça pose"
+        },
+        {
+          "time_s": 99.9,
+          "frame_local": 20,
+          "event": "Plate 'LA QUESTION' appears",
+          "element_ids": ["plate_question"],
+          "transition": "popIn",
+          "audio_cue_word": "question"
+        },
+        {
+          "time_s": 105.08,
+          "frame_local": 175,
+          "event": "Equation text appears",
+          "element_ids": ["text_equation"],
+          "transition": "fadeIn",
+          "audio_cue_word": "phosphate ET l'assemblage"
+        },
+        {
+          "time_s": 108.16,
+          "frame_local": 268,
+          "event": "Final question text slams in",
+          "element_ids": ["text_prix"],
+          "transition": "popIn",
+          "audio_cue_word": "prix"
+        }
+      ],
+      "r1_events": [
+        { "time_s": 99.22, "event": "Cut to dark background" },
+        { "time_s": 99.9, "event": "Question plate" },
+        { "time_s": 105.08, "event": "Equation text" },
+        { "time_s": 108.16, "event": "Final question text" }
+      ],
+      "sfx": [
+        { "trigger_s": 108.16, "sound": "deep_sub_boom", "description": "Final heavy cinematic boom, leaving a ringing tail" }
+      ],
+      "permanent_motion": "Very slow scale up of the typography to increase tension.",
+      "remotion_notes": "Pure CSS/HTML layout. Background must be exactly #16213a. Font IBM Plex Mono. Ensure the final text 'QUI FIXE LE PRIX ?' is the largest element on screen."
+    }
+  ]
+}

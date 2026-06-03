@@ -76,3 +76,68 @@ Ne jamais ajouter de marge arbitraire >30 frames. L'overlap avec le beat suivant
 ## R10 — NO EMOJIS IN CODE
 Interdit dans tout fichier .ts, .tsx, .js, .json, .yaml, .sh
 Autorisé uniquement dans .md, .txt
+
+---
+
+## R11 — WHISPER : TOUJOURS VIA API OPENAI (NON-NEGOTIABLE)
+
+**Jamais `whisper` CLI local.** Toujours l'API OpenAI Whisper pour la rapidité.
+
+```python
+import openai, os
+client = openai.OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+with open("/tmp/segment.mp3", "rb") as f:
+    result = client.audio.transcriptions.create(
+        model="whisper-1",
+        file=f,
+        language="fr",
+        response_format="verbose_json",
+        timestamp_granularities=["word"],
+    )
+for w in result.words:
+    print(f"{w.start + OFFSET:.3f}s : '{w.word}'")
+```
+
+---
+
+## R12 — SPLICE AUDIO : PROTOCOLE OBLIGATOIRE (appris Beat10 2026-05-23)
+
+### Avant tout splice ffmpeg
+
+1. **Forced alignment word-level AVANT de couper** — whisper `--word_timestamps True` sur la zone ±5s autour du point de coupe. Jamais estimer les timestamps depuis le forced alignment global.
+2. **Point de coupe = avant le premier mot à remplacer** — avec 50ms de marge silence. Ex : "Le" commence à 154.940s → couper à 154.850s.
+3. **Point de reprise = après le dernier mot commun entre fragment et original + 200ms** — le fragment et l'original finissent souvent par le même mot ("époque.") → reprise dans l'original APRÈS ce mot + 200ms.
+4. **Vérifier la jonction** après splice : whisper word-level sur ±3s autour de la jonction. Chercher les doublons.
+
+### `endAt` et `startFrom` dans Remotion
+
+- `endAt` est en **frames globales du fichier audio** (pas frames du beat) : `endAt = startFrom + frames_beat_de_coupure`
+- Ne JAMAIS utiliser `volume()` fade pour éliminer un mot indésirable — le décodeur MP3 lit en avance et laisse passer des artefacts. Utiliser `endAt` pour une coupe nette.
+- Toujours valider avec un mini-render (`--frames=F_coupure-300:F_fin`) AVANT le render complet.
+
+### R11.1 — Phases d'un beat = Whisper word-level OBLIGATOIRE (NON-NEGOTIABLE)
+
+**Ne JAMAIS estimer les frames d'une phase de beat à l'œil.** Lecons Beat12 et Beat13 : estimation = désalignement de 1-3s sur chaque phase = beat à refaire.
+
+**Workflow** pour tout nouveau beat avec audio :
+1. Whisper word-level sur la zone du beat (`timestamp_granularities=["word"]`)
+2. Identifier les mots-pivots qui marquent les phases narratives ("Mais voilà", "Ce champ attend", etc.)
+3. Calculer : `frame_phase = (timestamp_mot - startFrom_seconds) * 30`
+4. Coder les constantes `F_A_END`, `F_B_END`, etc. depuis ces frames calculées, jamais estimées
+5. Commentaire en tête du beat : tableau Whisper avec timestamps → frames (voir Beat13.tsx lignes 20-29)
+
+### Render : public-dir minimal OBLIGATOIRE
+
+- `public/` contient 2.3GB d'assets. Chaque render copie tout → +20 min inutiles.
+- **Créer `/tmp/public-beat<N>/` avec seulement les fichiers audio du beat** avant tout render :
+  ```bash
+  mkdir -p /tmp/public-beat10/souverain/<episode>/audio/
+  cp public/souverain/<episode>/audio/narration-*.mp3 /tmp/public-beat10/...
+  cp public/souverain/<episode>/audio/music-*.mp3 /tmp/public-beat10/...
+  ```
+- Passer `--public-dir=/tmp/public-beat<N>` à chaque render.
+
+### Renders parallèles : interdit absolu
+
+- Avant tout render : `pkill -f "remotion render"` + vérifier `ps aux | grep "remotion render"` = 0.
+- Deux renders simultanés sur le même fichier = corruption moov atom garantie.

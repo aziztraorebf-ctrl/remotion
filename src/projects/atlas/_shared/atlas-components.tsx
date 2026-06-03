@@ -587,6 +587,12 @@ export interface AtlasMercatorProps {
   rotation?: number; // degrees, autour du centre viewBox
   width?: number;
   height?: number;
+  /** override couleurs (defaut = charte Atlas classique terracotta/navy).
+   *  Pour le mode "diagramme tactique" light (cf. ref Napoleon mapanimation),
+   *  passer oceanColor="#dcd2bd" landColor="#efe7d4" strokeColor="#9c8f73". */
+  oceanColor?: string;
+  landColor?: string;
+  strokeColor?: string;
 }
 
 export const AtlasMercator: React.FC<AtlasMercatorProps> = ({
@@ -602,6 +608,9 @@ export const AtlasMercator: React.FC<AtlasMercatorProps> = ({
   rotation = 0,
   width = 720,
   height = 1280,
+  oceanColor = ATLAS_COLORS.oceanDeep,
+  landColor = ATLAS_COLORS.land,
+  strokeColor = ATLAS_COLORS.landStroke,
 }) => {
   const cx = width / 2;
   const cy = height / 2;
@@ -609,7 +618,7 @@ export const AtlasMercator: React.FC<AtlasMercatorProps> = ({
   const getFill = (iso: string): string => {
     if (highlightFills[iso]) return highlightFills[iso];
     if (useNationalColors && NATIONAL_COLORS[iso]) return NATIONAL_COLORS[iso];
-    return ATLAS_COLORS.land;
+    return landColor;
   };
 
   return (
@@ -621,14 +630,14 @@ export const AtlasMercator: React.FC<AtlasMercatorProps> = ({
         y="-300"
         width={width + 600}
         height={height + 600}
-        fill={ATLAS_COLORS.oceanDeep}
+        fill={oceanColor}
       />
       {countries.map((c) => (
         <path
           key={c.iso}
           d={c.d}
           fill={getFill(c.iso)}
-          stroke={ATLAS_COLORS.landStroke}
+          stroke={strokeColor}
           strokeWidth="0.6"
           strokeOpacity="0.7"
         />

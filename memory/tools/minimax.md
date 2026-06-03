@@ -1,8 +1,52 @@
 # Minimax Music 2.6 — Guide complet
 
-> Mise a jour : 2026-04-22 (apres validation Sonjata Short)
-> Endpoint actif : `fal-ai/minimax-music/v2.6`
+> Mise a jour : 2026-05-24
+> Endpoint musique : `fal-ai/minimax-music/v2.6`
+> Endpoint TTS : `fal-ai/minimax/speech-2.8-hd` (validé 2026-05-24)
 > **Note** : consulter ce fichier AVANT tout appel Minimax
+
+## Minimax TTS — speech-2.8-hd (validé 2026-05-24)
+
+```python
+import fal_client, os
+os.environ['FAL_KEY'] = '...'
+
+result = fal_client.subscribe(
+    'fal-ai/minimax/speech-2.8-hd',
+    arguments={
+        'text': 'Votre texte ici',
+        'voice_id': 'French_Calm_Woman',  # voix FR neutre validée
+        'speed': 1.0,
+        'emotion': 'neutral'
+    },
+    with_logs=True
+)
+# result['audio']['url'] → MP3 téléchargeable
+```
+
+**Voix FR disponibles** : `French_Calm_Woman` (neutre, posée)
+**Durée** : ~35s pour un script de 26s lu (débit naturel légèrement plus lent qu'ElevenLabs)
+**Gotcha** : ne pas mettre de tags `[solemn]` etc. — Minimax TTS ne les interprète pas comme ElevenLabs
+
+## Minimax Voice Clone — fal-ai/minimax/voice-clone
+
+```python
+result = fal_client.subscribe(
+    'fal-ai/minimax/voice-clone',
+    arguments={
+        'audio_url': 'https://files.catbox.moe/ienj91.mp3',  # sample 30s narratrice
+        'text': SCRIPT,
+        'speed': 1.0
+    }
+)
+# result['custom_voice_id'] → réutilisable pour appels suivants
+# result['audio']['url'] → MP3 final
+```
+
+**Voix GéoAfrique clonée** :
+- Sample source : `https://files.catbox.moe/ienj91.mp3` (30s depuis narration-v1-clean.mp3, offset 5s)
+- custom_voice_id : `Voicebbc56c501780172741` (généré 2026-05-24 — peut expirer, recloner si besoin)
+- Résultat validé accroche Sénégal Beat0
 
 ---
 

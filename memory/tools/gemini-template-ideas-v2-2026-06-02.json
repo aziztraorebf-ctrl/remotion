@@ -1,0 +1,66 @@
+{
+  "observations_sur_nos_frames": "L'identité visuelle est solidement ancrée : le contraste navy/gold est d'une élégance redoutable, la typographie ivoire est lisible, et les masques (FlagFill/Isolate) sont d'une grande propreté géométrique. Cependant, ces états valident des 'poses' statiques (des blocs de couleurs pleins) ; il manque encore la 'respiration' et la cinétique interne pour que la carte devienne un véritable organisme vivant sous les yeux du spectateur.",
+  "idees_nouvelles": [
+    {
+      "nom_propose": "SweepRevealTerritory (Balayage Lumineux)",
+      "dimension": "lumiere",
+      "description": "Un faisceau lumineux (gradient gold transparent vers opaque) traverse un ou plusieurs pays d'un bout à l'autre (ex: d'Ouest en Est). Au passage du faisceau, le territoire s'allume ou change d'état géopolitique. L'effet imite un scanner stratégique ou le lever du soleil sur une nouvelle alliance.",
+      "pourquoi_premium": "C'est l'antithèse du pop-up brutal. Le mouvement est fluide, organique et justifie l'apparition des données sans surcharger l'écran. C'est du motion design pur appliqué à la cartographie.",
+      "technique": "Superposition d'un SVG/Canvas avec un 'linearGradient' animé via Remotion (déplacement des stop-colors frame par frame) qui sert de masque (mask/clip-path) sur le layer Mapbox du pays ciblé.",
+      "hybride_VH": "Le vecteur du balayage s'adapte : balayage vertical (Haut/Bas) privilégié en format Short (V), balayage horizontal (Gauche/Droite) en format paysage (H).",
+      "priorite": "haute",
+      "cas_usage_souverain": "Montrer l'avancée de l'influence d'une superpuissance (ex: la route de la soie chinoise) balayant l'Afrique d'Est en Ouest."
+    },
+    {
+      "nom_propose": "DominoContagionFill (Propagation Organique)",
+      "dimension": "relations",
+      "description": "Au lieu d'allumer un bloc de pays d'un coup, la couleur (gold) 'contamine' les territoires de proche en proche. Le pays source pulse, puis la couleur déborde sur ses voisins directs, puis les voisins des voisins, créant une onde de choc géopolitique.",
+      "pourquoi_premium": "Rend la carte extrêmement dynamique et raconte une histoire de contagion ou d'influence sans utiliser une seule flèche. L'œil est captivé par la réaction en chaîne.",
+      "technique": "Utilisation de Turf.js pour calculer l'adjacence des polygones GeoJSON. Dans Remotion, on séquence l'animation de l'opacité (fill-opacity) de chaque pays avec un délai (stagger) basé sur sa distance topologique par rapport au point d'origine.",
+      "hybride_VH": "Fonctionne nativement sur les deux formats puisque l'animation suit la géométrie réelle des frontières, la caméra driftant pour garder le front de propagation au centre.",
+      "priorite": "haute",
+      "cas_usage_souverain": "L'expansion de l'Alliance des États du Sahel (AES) ou la propagation d'une crise sécuritaire depuis un épicentre."
+    },
+    {
+      "nom_propose": "FiberOpticBorderDraw (Frontières Néon Actives)",
+      "dimension": "lumiere",
+      "description": "La frontière d'un pays ou d'une zone ne s'affiche pas d'un coup : elle se 'dessine' à toute vitesse comme un laser ou une fibre optique dorée qui court le long du tracé géographique, avant de pulser et de remplir légèrement l'intérieur.",
+      "pourquoi_premium": "Attire l'œil instantanément sur la complexité et la beauté du tracé frontalier. C'est nerveux, technologique et haut de gamme (style salle de contrôle).",
+      "technique": "Extraction du GeoJSON de la frontière. Dans un overlay SVG, utilisation de 'stroke-dasharray' et 'stroke-dashoffset' animés par Remotion pour simuler le tracé. Ajout d'un filtre 'drop-shadow' pour le glow.",
+      "hybride_VH": "Le tracé s'adapte parfaitement. En V, on peut commencer le tracé par le point le plus bas ou le plus haut pour accompagner le regard.",
+      "priorite": "haute",
+      "cas_usage_souverain": "Délimiter une zone économique exclusive (ZEE) contestée ou tracer la frontière d'un nouveau corridor commercial avant d'en parler.",
+    },
+    {
+      "nom_propose": "TensionHeatZone (Chauffe Thermique)",
+      "dimension": "matiere",
+      "description": "Une zone spécifique de la carte (qui ne respecte pas forcément les frontières étatiques) commence à 'chauffer'. Le fond navy devient progressivement rouge sombre puis gold incandescent, avec une légère pulsation d'opacité, comme une braise.",
+      "pourquoi_premium": "Remplace les icônes d'explosion ou les hachures agressives par un traitement colorimétrique subtil mais très lisible. C'est viscéral et anxiogène sans être cheap.",
+      "technique": "Layer Mapbox de type 'heatmap' alimenté par un nuage de points GeoJSON concentrés sur la zone. Remotion anime dynamiquement les propriétés 'heatmap-intensity' et 'heatmap-opacity' pour créer la pulsation thermique.",
+      "hybride_VH": "Le drift de la caméra centre la 'zone de chaleur'. L'effet est un shader de fond, donc totalement agnostique du ratio V/H.",
+      "priorite": "moyenne",
+      "cas_usage_souverain": "Illustrer la concentration des groupes armés dans la zone des trois frontières (Mali/Burkina/Niger) ou une zone de stress hydrique extrême."
+    },
+    {
+      "nom_propose": "HexGridAnalysis (Matrice de Données)",
+      "dimension": "sous-divisions",
+      "description": "Un pays ciblé ne se remplit pas d'une couleur unie, mais se fragmente en une grille hexagonale (ou points de trame) dorée. Les hexagones s'animent en taille (scale) comme un égaliseur audio ou une vague, donnant l'impression que le pays est en cours d'analyse chiffrée.",
+      "pourquoi_premium": "Apporte une texture mathématique et analytique très 'War Room' qui casse l'aplat de couleur classique, tout en évitant l'extrusion 3D. C'est l'esthétique de la data pure.",
+      "technique": "Génération d'une grille hexagonale via Turf.js (hexGrid) masquée par le polygone du pays. Dans Remotion, on anime le 'transform: scale()' de chaque hexagone en fonction de sa position ou d'une fonction sinus (wave).",
+      "hybride_VH": "La taille des hexagones est calculée dynamiquement selon le niveau de zoom, s'adaptant parfaitement à la largeur de l'écran (V ou H).",
+      "priorite": "moyenne",
+      "cas_usage_souverain": "Évaluer le potentiel démographique ou la densité d'infrastructures d'un pays comme le Nigeria."
+    },
+    {
+      "nom_propose": "GeoRippleExpansion (Ondes Topographiques)",
+      "dimension": "espace",
+      "description": "Contrairement à l'Aura Lottie (qui est un cercle parfait), ici des ondes dorées émanent d'un point stratégique mais épousent la forme du littoral ou des frontières au fur et à mesure de leur expansion (isochrones).",
+      "pourquoi_premium": "L'onde n'est pas bêtement géométrique, elle réagit au terrain. Cela montre une maîtrise technique supérieure et ancre l'effet dans la réalité géographique.",
+      "technique": "Pré-calcul de buffers concentriques (Turf.js) ou d'isochrones découpés par les lignes de côte. Animation séquentielle de l'opacité (fade in/out) de ces polygones en 'line-color' via Remotion pour simuler l'onde.",
+      "hybride_VH": "L'expansion remplit l'écran disponible, le drift caméra accompagne l'onde vers le haut (V) ou vers les côtés (H).",
+      "priorite": "basse",
+      "cas_usage_souverain": "Montrer la zone d'influence et de projection de puissance d'un port en eau profonde (ex: Tanger Med ou Dakhla Atlantique)."
+    }
+  ],
+  "synthese": "La prochaine frontière pour le playbook Souverain est de passer de la 'géométrie statique' à la 'matière vivante'. En utilisant la lumière (balayages, néons) et la propagation (contagion, ondes) comme moteurs principaux, la carte ne se contente plus d'afficher des informations : elle les performe de manière organique, captivant l'œil à chaque frame sans jamais trahir notre doctrine minimaliste premium."
+}

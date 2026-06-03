@@ -3,10 +3,14 @@
 > **À lire OBLIGATOIREMENT avant tout code Souverain.**
 > Ce fichier consolide les décisions techniques, éditoriales et de processus prises au fil des sessions Souverain (Or Africain, Sénégal Pétrole & Gaz, etc.). Elles s'appliquent à TOUTES les vidéos style Souverain — pas seulement Sénégal.
 >
-> **Mis à jour** : 2026-05-23 (session Sénégal Acte 2 validation)
+> **Mis à jour** : 2026-05-27 (session Templates Shorts + Angle Macro)
 > **Référencé depuis** : `CLAUDE.md` (section "DOCTRINE SOUVERAIN")
 >
 > **Ne pas dupliquer ce contenu dans d'autres fichiers `memory/feedback_*.md`.** Tout ce qui est durable et applicable à Souverain doit être ici, ou ajouté ici quand validé.
+>
+> **Extensions Shorts (2026-05-27) :**
+> - **Angle Macro** (audit obligatoire avant tout script Souverain) → [`ANGLE-MACRO-SOUVERAIN.md`](ANGLE-MACRO-SOUVERAIN.md). Question d'audit : « Pourquoi un viewer à Montréal/Paris/Tokyo cliquerait sur ce sujet ? »
+> - **3 Templates Shorts** (planning visuel — A Géographe Mapbox / B Hybride Or Africain / C Analyste pure data) → [`out/SHOWCASES/templates-souverain/README.md`](../out/SHOWCASES/templates-souverain/README.md). Vocabulaire flexible, pas structure fixe.
 
 ---
 
@@ -104,6 +108,43 @@ map.easeTo({ ... }); // ⛔
 - **Référence code** : `src/projects/souverain/senegal-petrole-gaz/SenegalActe2Continu.tsx`
 - **Quotas** : 1 map load par render de composition (pas par frame). Plan gratuit = 50 000/mois. Aucun risque dans notre usage.
 
+### 3.7 Camera Brief — OBLIGATOIRE avant getCam() (validé 2026-06-01)
+
+**Problème récurrent** : Claude écrit `getCam()` sans validation préalable → surprise au render → refaire le travail.
+
+**Règle** : avant d'écrire une ligne de `getCam()`, produire ce tableau et attendre la validation d'Aziz :
+
+```
+| Acte | Mouvement           | Depuis → Vers          | Zoom début→fin | Durée | Blur |
+|------|---------------------|------------------------|----------------|-------|------|
+| A1   | Zoom+Freeze         | Atlantique → Kénitra   | 4.2 → 7.0      | 8s    | non  |
+| A2   | Whip Pan 60f        | Kénitra → Ouarzazate   | 7 → 9          | 7s    | oui  |
+| A3   | Orbit lent 90°      | autour Tanger Med      | 8 → 8          | 10s   | non  |
+| A4   | Pull Back Reveal    | Kénitra → Maroc entier | 9 → 4          | 6s    | non  |
+| A5   | Statique            | Kénitra fixe           | 8              | 8s    | non  |
+| A6   | Pull Back Planétaire| Maroc → globe          | 4 → 2          | 10s   | non  |
+```
+
+Vocabulaire : Camera Lab v2 (https://files.catbox.moe/v0v4e6.mp4) — 12 mouvements validés headless.
+Animatic optionnel : `bash scripts/render-mapbox.sh <Id> /tmp/anim.mp4 --frames A-B --scale 0.25` (10s, voir voyage avant overlays).
+
+### 3.8 Checklist Mapbox-in-Beat (préflight obligatoire)
+Avant de render un beat avec Mapbox, vérifier :
+1. **Watermark masqué** : importer et placer `<MapboxBrandingHide />` (composant partagé `src/projects/_shared/mapbox/MapboxBase.tsx`) en premier enfant du `<AbsoluteFill>` racine. NE PAS inliner le `<style>` (anti-duplication). Attribution = description vidéo YouTube/TikTok. Voir [feedback_mapbox-branding-hide-pattern.md](../../../.claude/projects/-Users-clawdbot-Workspace-remotion/memory/feedback_mapbox-branding-hide-pattern.md).
+2. **Style** : `MAPBOX_STYLES.dark` (jamais `satellite-v9` en headless — tuiles trop lentes)
+3. **Pas de `delayRender`** : useEffect simple, retour cleanup `map.remove()`
+4. **Audio en boucle si `startFrom` tardif** : si `startFrom_sec > durée_piste - durée_beat`, doubler `<Audio src=...startFrom={0} volume={interpolate(frame,[loop_start,loop_start+20],[0,vol])}/>` au-delà du point de fin. Exemple Beat13 : piste 321s, `startFrom=8851` (295s) → 26s dispo, beat 49s → loop à f780.
+5. **Render via `scripts/render-mapbox.sh`** (jamais `remotion render` direct — chrome-headless-shell + slim public-dir nécessaires)
+
+### 3.9 FlagFill — Carte colorée = RÈGLE N°1 (validé 2026-06-02, NON-NEGOTIABLE)
+**Une carte Mapbox DOIT être colorée dès le départ.** Le gris/vide n'est pas un style, c'est un vide qu'on ne remplit pas. La technique reine : projeter drapeaux/couleurs dans les silhouettes de pays (fill-pattern canvas + fill-color filtré par ISO).
+- **Drapeaux locaux uniquement** : `public/_shared/flags/` via `staticFile()`. JAMAIS de fetch `flagcdn.com` (échoue en headless). Pays principal = canvas pur sans fetch (dispo à f0).
+- **Dots par-dessus les fills** : ajouter les `circle` layers EN DERNIER dans `style.load`. Pour les dots critiques sur fond de drapeau, utiliser `div` CSS via `map.project()` (les circle Mapbox se cachent sous fill-pattern).
+- **2 templates validés** : Focus-Un-Pays (1 drapeau + couleurs unies) et Multi-Pays (tous drapeaux). Voir [feedback_flagfill-templates-decouverte.md](feedback_flagfill-templates-decouverte.md).
+
+### 3.10 Recherche templates AVANT code (validé 2026-06-02, NON-NEGOTIABLE)
+Avant d'écrire une ligne de code pour un beat, Claude scanne les catalogues (`INDEX-DES-INDEX.md` → `CATALOGUE-CARTE-VIVANTE.md` + `COMPOSANTS-INDEX.md`) et présente à Aziz ce qui existe déjà. Aziz ne peut pas mémoriser 70+ composants — Claude le peut en une fraction de seconde. Ne JAMAIS coder un effet custom sans vérifier l'existant. Voir [feedback_recherche-templates-obligatoire.md](feedback_recherche-templates-obligatoire.md). (Leçon : 18 versions Beat 1 Maroc car FlagFill pas cherché au départ.)
+
 ---
 
 ## 4. STORYBOARD & BREAKDOWN
@@ -151,11 +192,10 @@ map.easeTo({ ... }); // ⛔
 
 - Backlog SFX consigné par épisode dans `memory/episodes/souverain/<episode>/CORRECTIONS-MINEURES.md`
 - **À intégrer AVANT assemblage final** des 4 actes, pas pendant la production beat-par-beat
-- Volume mix recommandé :
+- Volume mix recommandé (RÉVISÉ 2026-06-03 — Aziz : "je dois toujours monter le son") :
   - Voix-off : 1.0
-  - SFX UI (ping, tick, snap) : 0.25-0.35
-  - SFX cinématiques (whoosh, drone) : 0.40-0.55
-  - Musique de fond : 0.15-0.20
+  - **SFX : PLANCHER 0.50 — JAMAIS en dessous.** Tous les SFX (ping, tick, snap, whoosh, swoosh, drone) à 0.50 minimum. Peut monter à 0.60 sur les gros moments cinématiques (swoosh caméra qui descend/monte, impact). L'ancienne fourchette UI 0.25-0.35 était trop basse → SFX inaudibles. Référence validée : volume où Aziz entend chaque SFX même sur haut-parleur sans monter le son.
+  - Musique de fond : 0.12-0.15 (baisser si elle masque les SFX)
 
 ---
 

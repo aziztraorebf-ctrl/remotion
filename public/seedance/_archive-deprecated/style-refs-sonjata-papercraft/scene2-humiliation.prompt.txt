@@ -1,0 +1,26 @@
+Model: gemini-3.1-flash-image-preview
+Date: 2026-04-19
+Style ref: sonjata-papercraft/clips-existants/papercraft1-cercle-barre-fer-frame1.png
+
+Prompt:
+Use the attached image ONLY as a STYLE REFERENCE. Match its visual style exactly: thick black outlines, warm sepia aged paper texture, chibi proportions with dot-eyes, flat color fills, simple shapes, muted earth tones, papercraft storybook look.
+
+Generate a NEW image — portrait orientation (9:16 ratio, 1080x1920).
+
+Medium-wide shot of a West African village courtyard scene of humiliation and childhood suffering.
+
+CENTER: a small African boy (dark brown skin, curly black hair, red sash at waist) crawling on hands and knees on red-orange soil. His face shows DEFIANCE — furrowed brow, clenched jaw, determined dot-eyes looking forward. NOT sad, NOT crying. His small fists grip the ground with intensity. Chibi proportions.
+
+LEFT FOREGROUND: a tall imposing West African woman (Sassouma — dark brown skin, elaborate patterned headwrap with geometric designs, long ornate robe with bold geometric patterns, gold jewelry at wrists). She stands with arrogant posture, chest puffed out, chin raised. Her RIGHT arm is extended with ONE index finger POINTING DOWN toward the crawling boy. Her left hand rests on her hip. She is the tallest figure in the scene.
+
+RIGHT OF CENTER: a hunched West African woman (Sogolon — dark brown skin, simple plain brown cloth wrap, head bowed, shoulders drooping, expression of quiet endurance). She stands with arms close to her body. NO tears, NO crying — just silent resignation. Smaller and shorter than Sassouma.
+
+AROUND THE CRAWLING BOY: 3-4 African children of VARIED ages (roughly 5-10 years), genders, body types and facial features — no two faces alike. They are in RUNNING poses — legs mid-stride, arms swinging. They run past the crawling boy, creating a visual contrast: they can run, he cannot.
+
+BACKGROUND: 3-4 West African villagers standing as witnesses — VARIED ages, genders, body types. Some look away uncomfortably, one covers mouth. 2-3 round mud-brick huts with thatched conical roofs. 1 large baobab tree. Rolling hills in the far background. Pale yellow sky with soft white clouds.
+
+Red-orange African soil throughout. Warm sepia aged paper texture.
+
+All characters have dark brown skin appropriate to West African Mandinka people. Chibi proportions with large heads and small bodies throughout.
+
+No text, no letters, no numerals, no banners, no signs, no writing visible anywhere in the image.

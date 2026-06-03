@@ -1,38 +1,278 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-05-17 — **Peste 1347 Beats 1+2+3 FINAUX. Beat4 Vecteur à coder.**
+> Mise a jour : 2026-06-02 — **Maroc Batteries : Beat 0 + Beat 1 FINAL.** Architecture beats séparés (compositions Root.tsx). Découverte majeure : FlagFill = règle N°1 carte vivante. 2 templates FlagFill créés. PROCHAIN : session Fill-Pattern (bibliothèque drapeaux/textures) AVANT Beat 2.
 
 ---
 
-## PROJET ACTIF — La Peste et le Sahara 1347 (Atlas pur)
+## 🇲🇦 Maroc Batteries Short — En cours (2026-06-02)
 
-Format : Atlas pur SVG 2D (d3-geo Mercator). Répertoire : `src/projects/atlas/peste-1347/`
+**Statut :** Beat 0 Hook FINAL ✅ + Beat 1 Phosphate FINAL ✅
+- `out/episodes/maroc-batteries/beat0-FINAL.mp4` (https://files.catbox.moe/jx3e4s.mp4)
+- `out/episodes/maroc-batteries/beat1-FINAL.mp4` (https://files.catbox.moe/n9jxx7.mp4)
 
-| Beat | Frames | Statut |
-|------|--------|--------|
-| Beat1 Hook | f2→f225 | ✅ FINAL |
-| Beat2 Setup Géo | f241→f690 | ✅ FINAL |
-| Beat3 Densité | f714→f1223 | ✅ FINAL |
-| Beat4 Vecteur | f1241→f2291 | ⏳ PROCHAINE SESSION |
-| Beat5 Sahara Bouclier | f2323→f2974 | ⏳ À faire |
-| Beat6 Punchline | f2975→f3152 | ⏳ À faire |
+**Architecture (CHANGEMENT vs 2026-05-31) :** beats SÉPARÉS, 1 composition Root.tsx par beat (`Beat0Hook.tsx`, `Beat1Phosphate.tsx`). L'ancien `MarocBatteriesShort.tsx` = stub. Ancienne version archivée `src/_archive/MarocBatteriesShort_OLD_2026-06-02.tsx`.
 
-**Script Beat4 :** "La bactérie voyage avec les rats, les puces, les bateaux."
-**Assets Beat4 à générer EN DÉBUT DE SESSION :**
-- Rat animé : PixelLab `create_object`, vue `side`, 8 frames, ref i2i `cities-v2/caire/static.png`
-- Bateau génois médiéval : PixelLab `create_map_object`, vue `high top-down`, même style villes
+**Prochaine session :** ⚠️ **SESSION FILL-PATTERN d'abord** (bibliothèque drapeaux/textures réutilisables) PUIS Beat 2 Cailloux (f932→f1300, pur Remotion, split phosphate brut/cathode + balance + stat "5,6 Md$"). Assets Gemini Beat 2 non générés — valider prompts avec Aziz avant.
 
-**Assets Beat3 validés (réutilisables) :**
-- `cities-v2/caire/` — 17 frames smoke ✅ | `cities-v2/londres/` — 9 frames smoke ✅
-- Palette : `PLAGUE_RED #8b1a1a` | `MALI_GOLD #c9a84c` | `OCEAN #03224c` | `PARCHMENT #d4c29d`
-- `StatParchment` composant : slide-in vertical + glow pulse — réutiliser tel quel Beat4+
+**Assets prêts :**
+- Audio : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109.48s)
+- Forced alignment Whisper OpenAI fait → `maroc-words.ts` + `timing.ts` (SEGMENTS beat0-beat5)
+- Drapeaux locaux : `public/_shared/flags/` (es.png, fr.png, de.png — générés Python Pillow)
 
-**RÈGLES NON-NEGOTIABLE apprises session Beat3 (DENSITÉ CESAR) : FINAL
+**Techniques validées cette session :**
+- `SweepRevealTerritory` (Beat 0) avec prop `showHatching` ajoutée (hachures ivory)
+- FlagFill : `pushCanvas` drapeau canvas pur (Maroc) + PNG locaux `staticFile()` (ESP/FRA/DEU)
+- Dots CSS React via `map.project()` (les circle Mapbox se cachent sous fill-pattern)
+- Layers dots ajoutés EN DERNIER dans style.load (ordre z-index Mapbox)
+- Slam SVG mask "70%" : `translate/scale/translate` (pas transformOrigin, headless)
+- Karaoké : MAROC_WORDS filtré (tous les mots), JAMAIS WORD_ANCHORS seuls
+- SFX volumes : cinématique 0.50-0.55, UI 0.40-0.45, musique 0.12
+
+**Découverte majeure :** voir `memory/feedback_flagfill-templates-decouverte.md` — la carte Mapbox DOIT être colorée dès le départ (fill-pattern/fill-color). Règle N°1.
+
+---
+
+---
+
+## 📐 Stack Carousels Instagram (décision d'architecture — 2026-05-31)
+
+**Carousels Instagram = Gemini Flash Image uniquement. Remotion/Tailwind abandonné pour ce cas.**
+
+- Modèle : `gemini-3.1-flash-image-preview` — ~$0.04/slide, ~$0.32/carousel
+- Remotion génère de bons layouts HTML mais Gemini produit des compositions visuelles premium supérieures pour les images statiques Instagram
+- Remotion reste supérieur pour la vidéo animée — pas de changement sur ce point
+- Règles complètes : `memory/tools/gemini.md` section "Pipeline Carousel Instagram"
+
+---
+
+## 🎨 Carousels Instagram — En cours (2026-05-31)
+
+**Pipeline validé :** Gemini Flash Image, 8 slides par carousel, ~$0.32/carousel. Règles complètes dans `memory/tools/gemini.md`.
+
+**Statut :** Or Africain ✅ | Thiaroye ✅ | Mansa Moussa ✅ | Niger ❌ | Restants : Empire Ghana, Soundjata, Silicon Savannah, Vraie Taille Afrique, Sénégal.
+
+**Prochaine action :** Vraie Taille Afrique EN PREMIER (sort le 4 juin — urgent), puis Empire Ghana, Soundjata, Silicon Savannah, Sénégal.
+
+**Nouveaux fichiers créés cette session :**
+- `scripts/schedule-postiz.py` — script scheduling Postiz (9 vidéos planifiées)
+- `scripts/generate-carousels.py` — générateur PNG Remotion (abandonné, remplacé par Gemini)
+- `src/projects/_shared/components/layouts/CarouselSouverain.tsx` — template Remotion carousel (abandonné)
+- `src/projects/souverain/carousels/carousel-data.ts` — données 9 carousels
+- `memory/STARTER-PROMPT-carousels-suite.md` — starter prompt prochaine session
+
+---
+
+## 🏆 MILESTONE — Lancement Kora & Cartes (2026-05-29)
+
+**Chaîne officiellement lancée.** 9 vidéos planifiées via Postiz API.
+
+### Calendrier de publication (lun/mer/ven, 15h00 UTC)
+
+| Date | Titre | Durée |
+|------|-------|-------|
+| Lun 2 juin | Le Ghana a signé l'accord que 6 pays refusaient | 1m39s |
+| Mer 4 juin | Les USA, la Chine et l'Europe tiennent dans l'Afrique | 1m12s |
+| Ven 6 juin | Ils ont libéré la France. Elle les a massacrés. | 1m38s |
+| Lun 9 juin | Le Niger recevait 9 centimes sur l'euro depuis 53 ans | 1m41s |
+| Mer 11 juin | Il a fait s'effondrer l'or mondial. Par accident. | 2m01s |
+| Ven 13 juin | Au Sahara, le sel valait autant que l'or | 1m44s |
+| Lun 16 juin | Il était paralysé. Il a fondé le plus grand empire d'Afrique de l'Ouest | 2m46s |
+| Mer 18 juin | Le pays qui a inventé le paiement mobile avant Apple | 2m02s |
+| Sam 20 juin | Comment le Sénégal évite le piège du Niger | 7m39s |
+
+### Stack de publication
+- **Outil** : Postiz (API) — script `scripts/schedule-postiz.py`
+- **Plateformes** : YouTube + Instagram + TikTok + Facebook simultanément
+- **Titres** : règle hybride 2 couches (Test Tokyo + format empirique 50 car. max)
+- **Captions** : adaptées par plateforme (YouTube long-form, TikTok court, IG avec emojis)
+- **Handle uniforme** : @koraetcartes sur les 4 plateformes
+
+### Décisions stratégiques validées ce jour
+- **Short-first confirmé** : Paperlore (8770 abonnés en 2 mois) valide le modèle
+- **Cadence** : 3 vidéos/semaine (lun/mer/ven) pour les 3 premières semaines
+- **Stratégie long terme** : mid-form → short autonome condense, pas teaser
+- **Facebook** : cross-post automatique via Postiz, canal secondaire
+- **Concurrents analysés** : Rook (AI slop, modèle fragile), Paperlore (Seedance 2.0, paper cut)
+
+---
+
+## 🆕 Session exploratoire 2026-05-25 → 2026-05-28 — Infrastructure compounding
+
+**Aucun travail sur le projet actif Sénégal pendant cette période.** Session de construction d'assets long-terme :
+
+### Templates Souverain Shorts (3 validés)
+- **A "Géographe"** (Mapbox) — démo Pétrole patience Short + Mid
+- **B "Hybride Or Africain"** (Mapbox + briques + bandeau signature) — démo Cobalt RDC
+- **C "Analyste"** (data-viz pure Sequences) — démo Afrique numérique
+- Showcases archivés : `out/SHOWCASES/templates-souverain/` (4 README + 4 .mp4)
+- Cadence cible 2-3 Shorts/semaine validée
+
+### Pipeline thumbnails YouTube (2 pipelines, 4 références)
+- **Pipeline A** edit chirurgical (Souverain, Atlas Mansa Moussa) — $0.04-0.12
+- **Pipeline B** création guidée multi-images (Sonjata, illustrations spécifiques) — $0.04
+- 4 PNG références pérennes dans `public/_shared/thumbnails-library/`
+- Scripts : `scripts/tools/gemini-thumbnail-{edit,create-from-refs}.py`
+- Code modulaire : `src/projects/_shared/thumbnails/` (3 wrappers + 4 icons)
+
+### POCs Mapbox / Lottie (9 productions)
+- Camera Lab v2 (12 mouvements) · Overlay Lab v1+v2 (11 techniques) · Lottie Showcase
+- Pétrole patience Mid (16:9, 2min16s) + Short (9:16, 80s)
+- Afrique numérique Short (Template C)
+- Cobalt RDC Short (Template B)
+- L'Anomalie Montréal (POC portabilité canadienne) — pas livrable, juste preuve
+
+### Assets musicaux Minimax (8 pistes catbox)
+- 5 Québec (ambient/folk/hivernal/aurore/percussion, BPM 70-95) — projet long terme différé
+- 3 EDM (trailer/techno/hybrid orchestral, BPM 110-128) — disponibles pour Shorts/hooks
+
+### Mémoire enrichie
+- `memory/ANGLE-MACRO-SOUVERAIN.md` (ratio 70/30 macro/micro)
+- `memory/tools/gemini.md` étendu (Pipeline A + B thumbnails)
+- 2 nouveaux feedback : stratégie YouTube vs chaînes étudiées + vérifier style vidéo source AVANT thumbnail
+- `out/SHOWCASES/templates-souverain/README.md` (4 README + bibliothèque)
+
+### 3 chaînes YouTube étudiées (décisions stratégiques durables)
+- Nathan Canadian Finance (1.7K subs) → **NE PAS copier** modèle hit-and-run
+- Caspian Report (1.84M subs, 16 ans) → vraie référence, solo→équipe au fil du temps
+- Guinée en Données (410 subs, 3 mois) → **benchmark direct** (objectif les dépasser en 6 mois)
+- Détails : `feedback_strategie-vs-chaines-youtube-2026-05.md`
+
+---
+
+---
+
+## PROJET ACTIF — Sénégal Pétrole & Gaz (Mid-form 4 actes ~385s)
+
+Format : Mid-form 16:9 Souverain. Répertoire : `src/projects/souverain/senegal-petrole-gaz/`
+
+| Acte | Durée | Statut | Fichier livrable |
+|------|-------|--------|------------------|
+| Acte 1 (Beats 1+2+3+5) | 42.3s | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/senegal-acte1-FINAL.mp4` |
+| Acte 2 (Continu + Beat9) | 88.3s | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/acte2-FINAL.mp4` |
+| Acte 3 S1 (Beat10) | 61s | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/beat10-FINAL.mp4` |
+| Acte 3 S2 (Beat11) | 44.9s | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/beat11-FINAL.mp4` |
+| Acte 3 S3 (Beat12) | — | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/beat12-FINAL.mp4` |
+| Acte 3 S4 (Beat13) | — | ✅ VALIDÉ | `out/episodes/senegal-petrole-gaz/beat13-FINAL.mp4` |
+| Acte 4 (Beat14) | 77s | ✅ VALIDÉ 2026-05-24 | `out/episodes/senegal-petrole-gaz/beat14-FINAL.mp4` |
+
+**BEATS 100% COMPLETS. Il reste 2 tâches avant livraison :**
+1. **SFX** — effets sonores sur mouvements caméra, pop plates, slashes, reveals (backlog dans `CORRECTIONS-MINEURES.md`)
+2. **Assemblage final** — ffmpeg concat → `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4`
+
+### Architecture Acte 2 (innovation majeure validée)
+- `SenegalActe2Continu.tsx` (2134f / 71.1s) — **une seule Map Mapbox**, 5 phases enchaînées sans cut
+- `Beat9.tsx v5` (516f / 17.2s) — donut SVG 9s, fond bleu nuit `#16213a`
+- `SenegalActe2Full.tsx` — assemblage avec audio mix (voix-off + musique A 18%)
+- Comp Remotion id : `Senegal-Acte2-Full` (2650f)
+- Catbox final : https://files.catbox.moe/ck11k7.mp4
+
+### Acte 3 — Préparation (briefing complet prêt)
+**Briefing** : `memory/STARTER-PROMPT-senegal-acte3.md` — coller en début de prochaine session.
+
+Structure 4 sous-sections :
+- **S1** Comparatif Norvège/Congo/Botswana (~30s) — nouvelle mécanique à inventer (choroplèthe ou split 3 colonnes)
+- **S2** Mécanisme 1 Contrat (~30s) — **✅ PROTOTYPE D3 EXISTANT** : `prototypes/PrototypeD3StackedBars.tsx` (cost recovery Woodside, 70% prêt)
+- **S3** Mécanisme 2 FONSIS + dette (~40s) — coffre-fort + ProcessFlow
+- **S4** Mécanisme 3 Yakaar coulisses (~30s) — reprise carte Mapbox Acte 2 + CoinFlip Europe/Chine
+
+### Backlog SFX (à intégrer AVANT assemblage 4 actes final)
+Voir `memory/episodes/souverain/senegal-petrole-gaz/CORRECTIONS-MINEURES.md` — frame-précis pour Phase A/B/C/Beat9.
+
+---
+
+## DOCTRINE SOUVERAIN — Source de vérité unique (NOUVEAU 2026-05-23)
+
+**Fichier** : `memory/DOCTRINE-SOUVERAIN.md` (référencé depuis CLAUDE.md, impossible à ignorer)
+
+**Les 3 règles les plus importantes** :
+1. **Premium d'abord, contraintes ensuite** — JAMAIS la solution facile pour rendre vite
+2. **Réutiliser un pattern est OK si justifié** — pas d'interdiction absolue, variations valides
+3. **Mapbox = frame-driven obligatoire** — `useCurrentFrame` + `interpolate` + `map.jumpTo()` (jamais flyTo/easeTo)
+
+**Mouvements caméra Mapbox nommés et validés** : Crane Down, Dolly In, Orbit, **Pull Back Reveal** (60f), **Whip Pan** (60f), Counter-rotation, Tilt.
+
+**Architecture "1 seule Map continue"** validée pour multi-lieux narrativement liés (référence : `SenegalActe2Continu`).
+
+---
+
+## STACK TECHNIQUE — Outils validés/écartés (NOUVEAU 2026-05-23)
+
+### Retenus
+- **Remotion** (principal) + **Mapbox GL JS** + **Tailwind**
+- **D3.js** ✅ VALIDÉ — utility-only (calculs) + SVG/React (rendu) + Remotion (animations)
+  - Modules installés : `d3-scale`, `d3-array`, `d3-format`, `d3-geo`
+  - Pattern : `memory/feedback_d3-pattern-utility-only.md`
+  - Prototype réf : `src/projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars.tsx`
+- **@remotion/three** (3D), **@remotion/lottie** (animations AE/Rive)
+
+### Écartés (détails DOCTRINE section 9)
+- Motion Canvas (pas de Mapbox, stagnation 17 mois, paradigme générateurs)
+- Revideo, Shotstack, Creatomate (perdent écosystème React/composants custom)
+- Theatre.js (à reconsidérer SI projet 3D dédié)
+
+### Règle Gemini (NON-NEGOTIABLE)
+Avant tout breakdown Gemini : **TOUJOURS coller le bloc "Stack technique à ta disposition"** documenté dans `memory/workflow-gemini-breakdown-schema.md` (contrainte n°4). Sans ça, Gemini propose du SVG primitif.
+
+---
+
+## SESSION 2026-05-23 — Sénégal Acte 2 + DOCTRINE + D3.js
+
+### Code produit
+- `SenegalActe2Continu.tsx` (NEW, 770 lignes) + `SenegalActe2Full.tsx` (NEW)
+- `Beat9.tsx` v5 réécrit (donut SVG 9s) + `Beat6/7/8.tsx` corrections drift caméra agressifs
+- `prototypes/PrototypeD3StackedBars.tsx` (NEW)
+- `Root.tsx` : registrations `Senegal-Acte2-Continu`, `Senegal-Acte2-Full`, `Senegal-Proto-D3-StackedBars`
+
+### Documentation produite
+- `memory/DOCTRINE-SOUVERAIN.md` (NEW, 224 lignes, 10 sections)
+- `memory/STARTER-PROMPT-senegal-acte3.md` (NEW, briefing prochaine session)
+- `memory/feedback_d3-pattern-utility-only.md` (NEW)
+- `memory/episodes/souverain/senegal-petrole-gaz/CORRECTIONS-MINEURES.md` (backlog SFX)
+- `CLAUDE.md` enrichi : section DOCTRINE SOUVERAIN + ligne data-viz D3 + consigne Gemini
+- `memory/workflow-gemini-breakdown-schema.md` : contrainte n°4 (bloc Stack obligatoire)
+
+### Décisions architecturales prises cette session
+| Décision | Justification | Statut |
+|----------|---------------|--------|
+| Architecture "1 seule Map continue" Acte 2 | Élimine cuts entre beats, transitions caméra cinématiques | ✅ Validé |
+| Pull Back Reveal (calqué Or Africain) | Plus impactant que cut entre Sangomar et GTA | ✅ Validé |
+| Whip pans = 60 frames (pas 90+) | Au-delà mollit, en deçà saccade | ✅ Validé |
+| Beat9 : donut SVG (pas barre) | Équilibre layout, espace pour 60% + verdict | ✅ Validé |
+| Fond Souverain `#16213a` (pas `#0d1525`) | Lisibilité, sortir du quasi-noir | ✅ Validé |
+| Animations qui respirent (arc 9s vs 3s) | Sync avec voix-off, ne pas précipiter | ✅ Validé |
+| D3.js intégré stack | Standard data-viz (Bloomberg/NYT), pilotable comme React | ✅ Validé |
+| Motion Canvas écarté | Pas de Mapbox, projet stagnant, paradigme incompatible | ✅ Validé |
+
+### Commits produits
+- `41d7c7b` feat(senegal): Acte 1+2 validés + prototype D3 StackedBars
+- `cb46ffd` docs(doctrine): DOCTRINE-SOUVERAIN + D3.js intégré stack + Motion Canvas écarté
+- `ff23870` chore(stack): D3 deps + Root.tsx prototypes + assets sessions précédentes
+- Push origin/master : ✅
+
+### Prochaine action recommandée
+Démarrer session Acte 3 en collant : *"Production Acte 3 Sénégal Pétrole & Gaz. Lis `memory/STARTER-PROMPT-senegal-acte3.md`."*
+
+Le prototype D3 StackedBars (Mécanisme 1) est déjà à 70% — adapter au timing audio Acte 3 (forced alignment Whisper d'abord) puis polir.
+
+---
+
+## PROJET BACKLOG — Peste 1347 (Atlas, en pause)
+
+Beats 1+2+3 FINAUX. Beat4 Vecteur en attente. Storyboard prêt :
+`public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Démarrage :
+`python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
+
+**Règles non-négociables Atlas (apprises Peste Beat3, toujours valides)** :
 1. `durationInFrames` Root.tsx = durée beat seul. Render standalone = `--frames=BEAT_START-BEAT_END`
 2. `Math.floor(Math.max(0, localF) / FRAMES_PER_TICK) % frameCount` — jamais sans `Math.max(0,lf)`
 3. Vérifier pixels asset AVANT intégration : `img.getpixel((64,64))` — RGB < 80 = trop sombre → régénérer
 4. Tableau de spécification OBLIGATOIRE avant tout code (phases, frames audio-ancrées, coords stations)
-5. Élément visuel doit être nommé dans le script audio — sinon → beat suivant (leçon rats Beat3)
+5. Élément visuel doit être nommé dans le script audio — sinon → beat suivant
 6. Image de référence i2i obligatoire pour tout nouvel asset PixelLab
+
+**Assets Beat3 validés (réutilisables Beat4+)** :
+- `cities-v2/caire/` (17 frames smoke) | `cities-v2/londres/` (9 frames smoke)
+- Palette : `PLAGUE_RED #8b1a1a` | `MALI_GOLD #c9a84c` | `OCEAN #03224c` | `PARCHMENT #d4c29d`
+- `StatParchment` composant : slide-in vertical + glow pulse
 
 ---
 

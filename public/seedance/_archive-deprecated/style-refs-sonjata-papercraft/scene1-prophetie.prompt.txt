@@ -1,0 +1,20 @@
+Model: gemini-3.1-flash-image-preview
+Date: 2026-04-19
+Style ref: sonjata-papercraft/clips-existants/papercraft1-cercle-barre-fer-frame1.png
+
+Prompt:
+Use the attached image ONLY as a STYLE REFERENCE. Match its visual style exactly: thick black outlines, warm sepia aged paper texture, chibi proportions with dot-eyes, flat color fills, simple shapes, muted earth tones, papercraft storybook look.
+
+Generate a NEW image — portrait orientation (9:16 ratio, 1080x1920).
+
+Wide establishing shot of a peaceful West African village.
+
+Center-left: an elderly West African diviner (dark brown skin, long white beard, wooden staff in right hand, cowrie shell necklaces, simple brown robe). He stands facing the Mande king seated on a rustic wooden throne beneath a large baobab tree. The king wears a white boubou with gold geometric patterns and a simple gold circlet.
+
+Right side: a round mud-brick hut with thatched roof. A West African midwife emerges from the doorway holding a small baby wrapped in white cloth.
+
+Background: 5-6 West African villagers of VARIED ages, genders, body types and facial features — no two faces alike. 3 round thatched-roof huts. Red-orange African soil. Pale yellow sky with soft white clouds.
+
+All characters in NEUTRAL standing positions, arms at sides or resting naturally. No dramatic gestures.
+
+No text, no letters, no numerals, no banners, no signs, no writing visible anywhere in the image.

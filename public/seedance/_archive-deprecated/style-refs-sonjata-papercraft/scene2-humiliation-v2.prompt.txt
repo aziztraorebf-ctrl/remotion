@@ -1,0 +1,34 @@
+Model: gemini-3.1-flash-image-preview
+Style ref: sonjata-papercraft/clips-existants/papercraft1-cercle-barre-fer-frame1.png
+Date: 2026-04-19
+Purpose: Scene 2 humiliation - ALL characters in NEUTRAL positions (R-PC1 compliant start frame)
+
+Prompt:
+Using the attached image as the EXACT style reference. Match this style PRECISELY: thick black outlines, warm sepia aged paper texture, chibi proportions with simple dot-eyes, flat color fills, simple shapes, muted earth tones. Papercraft storybook illustration.
+
+Generate a NEW image in 9:16 portrait format (1080x1920).
+
+Scene: West African village courtyard, 13th century. Round thatched-roof huts with mud walls, one large baobab tree in background, red-orange laterite soil, pale yellow sky with soft clouds.
+
+CHARACTERS - ALL IN NEUTRAL STANDING/SITTING POSITIONS (this is a START FRAME, no action yet):
+
+CENTER-BOTTOM: Soundjata - a small African boy (dark brown skin, curly black hair, red cloth sash/belt around waist) sitting on the ground on his hands and knees, palms flat on the soil, looking straight ahead with a neutral determined expression. He is completely still, NOT actively crawling or moving. Simple neutral face.
+
+LEFT FOREGROUND: Sassouma Berete - a tall imposing African woman (dark brown skin) with an elaborate geometric-patterned headwrap and long patterned dress in deep blue/indigo tones. Standing perfectly straight with BOTH ARMS relaxed AT HER SIDES. Chin slightly raised. She is NOT pointing, NOT gesturing. Her authority comes only from her tall posture and raised chin.
+
+RIGHT MIDDLE: Sogolon - a hunched African woman (dark brown skin) in simple beige/cream cloth wrap. Standing with ARMS AT HER SIDES, head slightly bowed, looking at the ground. No visible reaction or gesture. Simply standing still.
+
+AROUND SOUNDJATA: Three children of VARIED ages (one small ~5, one medium ~8, one taller ~11, all dark brown skin, varied simple clothing) standing still in different positions around the boy. Some face him, some look elsewhere. They are NOT running, NOT laughing, NOT in any action. Just standing.
+
+BACKGROUND: 3-4 adult villagers (dark brown skin, VARIED ages and body types - one old thin man, one sturdy woman, etc.) standing normally with hands at their sides or clasped in front. Observing passively. NOT covering mouths, NOT whispering, NOT reacting.
+
+CRITICAL RULES:
+- Every single character must be in a NEUTRAL resting position
+- NO pointed fingers, NO raised hands, NO covering mouths, NO running
+- Thick black outlines on everything
+- Warm sepia/aged paper background texture
+- Chibi/simplified proportions with dot-eyes
+- Flat color fills, no gradients, no glow effects
+- No text, no letters, no writing, no signs, no banners visible ANYWHERE
+- Muted earth tone palette: ochre, sienna, beige, indigo, terracotta
+- All characters have dark brown skin (West African)

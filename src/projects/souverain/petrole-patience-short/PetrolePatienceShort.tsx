@@ -25,6 +25,7 @@ import {
   type ClipFlag,
 } from "../../_shared/mapbox/useClipFlags";
 import { GeoCountryPlaque } from "../../_shared/mapbox/GeoCountryPlaque";
+import { SubtitleBarSouverain, type SubLine } from "../../_shared/components/ui/SubtitleBarSouverain";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PetrolePatienceShort — 1080×1920 vertical, 80s, 6 actes
@@ -41,7 +42,8 @@ export const F = {
   A4_START: 1314,  //  43.80s
   A5_START: 1683,  //  56.10s
   A6_START: 2169,  //  72.30s
-  END:      2404,  //  80.16s
+  A7_START: 2404,  //  80.16s — CTA teaser mid-form (voix cta-v1 = 196f, démarre +22 -> finit ~2622)
+  END:      2730,  //  91.00s — laisse la voix CTA finir (2622) + ~3.6s de queue (musique fade naturel)
 };
 
 export const PETROLE_PATIENCE_SHORT_FRAMES = F.END;
@@ -58,6 +60,37 @@ const FLAGS: ClipFlag[] = [
   // mainlandBox : Norvege continentale uniquement (exclut Svalbard/Jan Mayen/Bouvet -> bbox geante)
   { iso: "NOR", geoNames: ["Norway"],  flagFile: "no.png", at: F.A3_START + 70,   bgColor: "#ba0c2f", fadeFrames: 24, mainlandBox: [4, 57, 32, 72] },
   { iso: "SEN", geoNames: ["Senegal"], flagFile: "sn.png", at: F.A4_START + 110,  bgColor: "#00853f", fadeFrames: 24 },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SOUS-TITRES — segments Whisper (narration, secondes->frames @30) + voix CTA.
+// Bas d'écran (zone laissée libre : le texte A6 a été retiré pour ça).
+// ─────────────────────────────────────────────────────────────────────────────
+const SUBTITLES: SubLine[] = [
+  { start: 0, end: 156, text: "Depuis l'an 2000, l'Afrique a extrait pour 1 500 milliards de dollars de pétrole." },
+  { start: 156, end: 282, text: "Mais aucune des grandes nations productrices n'a vu sa richesse augmenter." },
+  { start: 282, end: 411, text: "Comment fait-on pour découvrir une fortune et rester pauvre ?" },
+  { start: 411, end: 507, text: "Le Nigeria pompe 2 millions de barils par jour." },
+  { start: 507, end: 600, text: "Son revenu par habitant a stagné pendant 20 ans." },
+  { start: 600, end: 801, text: "L'Angola dépend du pétrole pour 75% de ses recettes publiques." },
+  { start: 801, end: 906, text: "Les économistes appellent ça la malédiction des ressources." },
+  { start: 906, end: 1038, text: "À 7 000 kilomètres au nord, la Norvège a fait un autre choix." },
+  { start: 1038, end: 1122, text: "Chaque baril vendu finance un fonds souverain." },
+  { start: 1122, end: 1224, text: "Aujourd'hui, ce fonds gère 1 700 milliards de dollars." },
+  { start: 1224, end: 1314, text: "Un trésor qui appartient aux générations futures." },
+  { start: 1314, end: 1434, text: "Le Sénégal a découvert son gaz en 2014." },
+  { start: 1434, end: 1572, text: "Première production en juin 2024, sur le champ de Sangomar." },
+  { start: 1572, end: 1683, text: "Le pays a choisi de ne pas répéter le scénario nigérian." },
+  { start: 1683, end: 1830, text: "Petrosen, sa compagnie nationale, garde 18% du projet." },
+  { start: 1830, end: 1974, text: "Le chiffre semble modeste face aux 82% qui partent à l'export." },
+  { start: 1974, end: 2097, text: "Mais c'est plus qu'aucun autre projet pétrolier ouest-africain de cette taille" },
+  { start: 2097, end: 2169, text: "n'a jamais accordé à son pays hôte." },
+  { start: 2169, end: 2310, text: "Suffira-t-il de garder une plus grosse part pour échapper à la malédiction ?" },
+  { start: 2310, end: 2403, text: "Le Sénégal pense que oui. Dans dix ans, on saura." },
+  // Voix CTA (démarre à A7_START + 22 = 2426)
+  { start: 2426, end: 2492, text: "Le Sénégal a fait son pari." },
+  { start: 2492, end: 2574, text: "L'analyse complète arrive très bientôt." },
+  { start: 2574, end: 2640, text: "Abonne-toi pour ne pas la manquer." },
 ];
 
 const LOC = {
@@ -220,27 +253,39 @@ function getCam(frame: number): Cam & { blur: number } {
       blur: 0,
     };
   }
-  // A6 (2169-2404) — Drift + Pull Back final
-  const dur = F.END - F.A6_START;
-  const pullStart = F.A6_START + Math.round(dur * 0.55);
+  // A6 (2169-2404) — Drift + Pull Back final (vers l'Afrique)
+  if (frame < F.A7_START) {
+    const dur = F.A7_START - F.A6_START;
+    const pullStart = F.A6_START + Math.round(dur * 0.55);
 
-  if (frame < pullStart) {
-    const t = clamp01((frame - F.A6_START) / (pullStart - F.A6_START));
+    if (frame < pullStart) {
+      const t = clamp01((frame - F.A6_START) / (pullStart - F.A6_START));
+      return {
+        lon: LOC.senegal[0] + Math.sin(t * Math.PI * 0.5) * 0.15,
+        lat: LOC.senegal[1] + t * 0.1,
+        zoom: interpolate(t, [0, 1], [5.0, 4.5]),
+        pitch: 25, bearing: t * 8, blur: 0,
+      };
+    }
+    const t = clamp01((frame - pullStart) / (F.A7_START - pullStart));
+    const e = easeInOut(t);
     return {
-      lon: LOC.senegal[0] + Math.sin(t * Math.PI * 0.5) * 0.15,
-      lat: LOC.senegal[1] + t * 0.1,
-      zoom: interpolate(t, [0, 1], [5.0, 4.5]),
-      pitch: 25, bearing: t * 8, blur: 0,
+      lon: interpolate(e, [0, 1], [LOC.senegal[0], LOC.africa[0]]),
+      lat: interpolate(e, [0, 1], [LOC.senegal[1] + 0.1, LOC.africa[1]]),
+      zoom: interpolate(e, [0, 1], [4.5, 3.0]),
+      pitch: interpolate(e, [0, 1], [25, 0]),
+      bearing: interpolate(e, [0, 1], [8, 0]),
+      blur: 0,
     };
   }
-  const t = clamp01((frame - pullStart) / (F.END - pullStart));
-  const e = easeInOut(t);
+  // A7 (2404-2610) — CTA teaser : carte large stable, drift très doux (la carte se calme)
+  const t = clamp01((frame - F.A7_START) / (F.END - F.A7_START));
   return {
-    lon: interpolate(e, [0, 1], [LOC.senegal[0], LOC.africa[0]]),
-    lat: interpolate(e, [0, 1], [LOC.senegal[1] + 0.1, LOC.africa[1]]),
-    zoom: interpolate(e, [0, 1], [4.5, 3.0]),
-    pitch: interpolate(e, [0, 1], [25, 0]),
-    bearing: interpolate(e, [0, 1], [8, 0]),
+    lon: LOC.africa[0] + Math.sin(t * Math.PI * 0.5) * 0.6,
+    lat: LOC.africa[1] + t * 0.3,
+    zoom: interpolate(t, [0, 1], [3.0, 2.85]),
+    pitch: 0,
+    bearing: interpolate(t, [0, 1], [0, -2]),
     blur: 0,
   };
 }
@@ -622,14 +667,22 @@ export const PetrolePatienceShort: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: C.navy }}>
-      <Audio src={staticFile("_demos/petrole-patience/audio/narration-short-v1.mp3")} />
+      {/* Narration principale — conteneur isolé, coupe NET à A7_START (évite la bave
+          du "...on saura" qui débordait sur le CTA) */}
+      <Sequence from={0} durationInFrames={F.A7_START}>
+        <Audio src={staticFile("_demos/petrole-patience/audio/narration-short-v1.mp3")} />
+      </Sequence>
+      {/* Voix CTA teaser — conteneur séparé, démarre après une respiration nette */}
+      <Sequence from={F.A7_START + 22} durationInFrames={F.END - F.A7_START - 22}>
+        <Audio src={staticFile("_demos/petrole-patience/audio/cta-v1.mp3")} volume={1} />
+      </Sequence>
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-B-kora-percussion.mp3")}
         volume={(f) => {
-          // Fade in 2s, body, fade out 2s
-          if (f < 60) return interpolate(f, [0, 60], [0, 0.18]);
-          if (f > F.END - 60) return interpolate(f, [F.END - 60, F.END], [0.18, 0]);
-          return 0.18;
+          // Musique discrète (kora riche en basses) : 0.10 pour ne pas masquer voix/SFX
+          if (f < 60) return interpolate(f, [0, 60], [0, 0.10]);
+          if (f > F.END - 60) return interpolate(f, [F.END - 60, F.END], [0.10, 0]);
+          return 0.10;
         }}
       />
 
@@ -637,20 +690,21 @@ export const PetrolePatienceShort: React.FC = () => {
            Convention : whoosh = changement de pays (switch), zoom-in = vrai zoom,
            pullback = dezoom, plate-pop = allumage drapeau, impact = reveal chiffre.
            (reveal.mp3 BANNI : 18.4s avec voix — cf SFX-INDEX) */}
-      <Sfx at={8}             file="camera/sfx-map-ping.mp3"   vol={0.5} />
-      <Sfx at={138}           file="camera/sfx-map-ping.mp3"   vol={0.5} />
-      <Sfx at={150}           file="impact/impact.mp3"        vol={0.6} />
-      <Sfx at={F.A2_START}    file="ui/plate-pop.mp3"         vol={0.55} />{/* allumage drapeau NGA */}
-      <Sfx at={F.A2_START + 222} file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch NGA -> AGO */}{/* whip-pan-1 = seul valide (2/3 etaient des lasers/ping) */}
-      <Sfx at={F.A2_START + 322} file="ui/plate-pop.mp3"      vol={0.55} />{/* allumage drapeau AGO */}
-      <Sfx at={F.A3_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch -> Norvege */}
-      <Sfx at={F.A3_START + 70} file="ui/plate-pop.mp3"       vol={0.5} />{/* allumage drapeau NOR */}
-      <Sfx at={F.A3_START + 55} file="impact/impact.mp3"      vol={0.5} />{/* plaque $1700B */}
-      <Sfx at={F.A4_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch -> Senegal */}
-      <Sfx at={F.A4_START + 130} file="camera/sfx-swoosh-zoomin.mp3" vol={0.5} />{/* vrai zoom sur Sangomar */}
-      <Sfx at={F.A4_START + 110} file="ui/plate-pop.mp3"      vol={0.55} />{/* allumage drapeau SEN */}
-      <Sfx at={F.A5_START}    file="impact/impact.mp3"        vol={0.5} />{/* plaque 18/82 */}
-      <Sfx at={F.A6_START + 130} file="camera/sfx-swoosh-pullback.mp3" vol={0.6} />{/* dezoom final */}
+      {/* Tous les SFX uniformément à 0.35 (musique kora à basses -> éviter de masquer/distraire) */}
+      <Sfx at={8}             file="camera/sfx-map-ping.mp3"   vol={0.35} />
+      <Sfx at={138}           file="camera/sfx-map-ping.mp3"   vol={0.35} />
+      <Sfx at={150}           file="camera/sfx-map-ping.mp3"  vol={0.35} />{/* slam $1500B (ping au lieu de boom) */}
+      <Sfx at={F.A2_START}    file="ui/plate-pop.mp3"         vol={0.35} />{/* allumage drapeau NGA */}
+      <Sfx at={F.A2_START + 222} file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch NGA -> AGO */}
+      <Sfx at={F.A2_START + 322} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau AGO */}
+      <Sfx at={F.A3_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Norvege */}
+      <Sfx at={F.A3_START + 70} file="ui/plate-pop.mp3"       vol={0.35} />{/* allumage drapeau NOR */}
+      <Sfx at={F.A3_START + 55} file="camera/sfx-map-ping.mp3" vol={0.35} />{/* plaque $1700B (ping) */}
+      <Sfx at={F.A4_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Senegal */}
+      <Sfx at={F.A4_START + 130} file="camera/sfx-swoosh-zoomin.mp3" vol={0.35} />{/* vrai zoom sur Sangomar */}
+      <Sfx at={F.A4_START + 110} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau SEN */}
+      <Sfx at={F.A5_START}    file="camera/sfx-map-ping.mp3"  vol={0.35} />{/* plaque 18/82 (ping) */}
+      <Sfx at={F.A6_START + 130} file="camera/sfx-swoosh-pullback.mp3" vol={0.35} />{/* dezoom final */}
 
       <MapboxBrandingHide />
 
@@ -668,6 +722,9 @@ export const PetrolePatienceShort: React.FC = () => {
       <ClipFlagsLayer width={width} height={height} flags={FLAGS} paths={flagPaths} frame={frame} />
 
       <ShortOverlays frame={frame} fps={fps} geoPos={geoPos} />
+
+      {/* Sous-titres persistants (narration + CTA), bas d'écran */}
+      <SubtitleBarSouverain lines={SUBTITLES} bottomPx={150} />
     </AbsoluteFill>
   );
 };
@@ -819,21 +876,83 @@ const ShortOverlays: React.FC<{
   }
 
   // A6 — Question finale (bloc bas "SOUVERAIN / Dans dix ans" retiré : conflit futurs sous-titres)
-  const p = spring({ frame: frame - F.A6_START, fps, config: { damping: 18 }, durationInFrames: 30 });
+  if (frame < F.A7_START) {
+    const p = spring({ frame: frame - F.A6_START, fps, config: { damping: 18 }, durationInFrames: 30 });
+    // fade-out de la question dans les 20 dernières frames avant le CTA
+    const out = interpolate(frame, [F.A7_START - 20, F.A7_START], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return (
+      <div style={{
+        position: "absolute", top: 200, left: 60, right: 60,
+        textAlign: "center",
+        opacity: p * out, transform: `translateY(${(1 - p) * 20}px)`,
+      }}>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 22,
+          color: C.gold, letterSpacing: 5, textTransform: "uppercase",
+        }}>La question</div>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 600,
+          color: C.ivory, marginTop: 24, lineHeight: 1.3,
+        }}>Échapper à la<br/>malédiction ?</div>
+      </div>
+    );
+  }
+
+  // A7 — CTA teaser (plaque @koraetcartes + "Bientôt : l'enquête complète"), synchro voix CTA
+  return <CtaPlaque frame={frame} fps={fps} />;
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// A7 — Plaque CTA teaser mid-form (apparaît avec la voix cta-v1)
+// ═══════════════════════════════════════════════════════════════════════════════
+const CtaPlaque: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
+  const local = frame - F.A7_START;
+  const pIn = spring({ frame: local - 18, fps, config: { damping: 18 }, durationInFrames: 28 });
+  const pSub = spring({ frame: local - 80, fps, config: { damping: 18 }, durationInFrames: 28 });
   return (
     <div style={{
-      position: "absolute", top: 200, left: 60, right: 60,
-      textAlign: "center",
-      opacity: p, transform: `translateY(${(1 - p) * 20}px)`,
+      position: "absolute", inset: 0,
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      pointerEvents: "none",
     }}>
+      {/* Voile sombre pour faire ressortir le CTA (carte chargée de drapeaux en fond) */}
       <div style={{
-        fontFamily: "Georgia, serif", fontSize: 22,
-        color: C.gold, letterSpacing: 5, textTransform: "uppercase",
-      }}>La question</div>
+        position: "absolute", inset: 0,
+        background: "rgba(13,21,32,0.62)",
+        opacity: interpolate(local, [0, 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+      }} />
+
+      {/* Pilule handle */}
       <div style={{
-        fontFamily: "Georgia, serif", fontSize: 56, fontWeight: 600,
-        color: C.ivory, marginTop: 24, lineHeight: 1.3,
-      }}>Échapper à la<br/>malédiction ?</div>
+        position: "relative",
+        opacity: pIn, transform: `translateY(${(1 - pIn) * 24}px)`,
+        background: "rgba(0,0,0,0.78)",
+        border: `2px solid ${C.gold}`,
+        borderRadius: 12,
+        padding: "16px 40px",
+        boxShadow: `0 0 30px ${C.gold}50`,
+      }}>
+        <div style={{
+          fontFamily: "'IBM Plex Mono', monospace", fontSize: 40, fontWeight: 700,
+          color: C.goldHi, letterSpacing: 3,
+        }}>@koraetcartes</div>
+      </div>
+
+      {/* Sous-texte teaser */}
+      <div style={{
+        position: "relative", marginTop: 34,
+        opacity: pSub, transform: `translateY(${(1 - pSub) * 20}px)`,
+        textAlign: "center",
+      }}>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 26,
+          color: C.gold, letterSpacing: 4, textTransform: "uppercase", marginBottom: 12,
+        }}>Bientôt</div>
+        <div style={{
+          fontFamily: "Georgia, serif", fontSize: 52, fontWeight: 700,
+          color: C.ivory, textShadow: "0 4px 18px rgba(0,0,0,0.6)",
+        }}>L'enquête complète</div>
+      </div>
     </div>
   );
 };

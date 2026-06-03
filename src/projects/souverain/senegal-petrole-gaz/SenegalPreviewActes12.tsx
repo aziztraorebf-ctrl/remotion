@@ -1,5 +1,5 @@
 import React from "react";
-import { AbsoluteFill, Audio, Sequence, staticFile, useVideoConfig } from "remotion";
+import { AbsoluteFill, Audio, interpolate, Sequence, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 import { Beat1 } from "./beats/Beat1";
 import { Beat2 } from "./beats/Beat2";
 import { Beat3 } from "./beats/Beat3";
@@ -31,11 +31,17 @@ const B8 = 2849;
 const B9 = 3395;
 const TOTAL = 3911;
 
-// Musique : volume 18%, fade-out 6s avant la fin
+// Musique : volume 5%, fade-out 6s avant la fin
 const MUSIC_FADE_START_S = (TOTAL / 30) - 6;
 
 export const SenegalPreviewActes12: React.FC = () => {
   const { fps } = useVideoConfig();
+  const frame = useCurrentFrame();
+
+  const fadeInOpacity = interpolate(frame, [0, 20], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#0d1520" }}>
@@ -47,16 +53,16 @@ export const SenegalPreviewActes12: React.FC = () => {
         volume={1.0}
       />
 
-      {/* Musique A — 18%, fade-out 6s avant fin */}
+      {/* Musique A — 5%, fade-out 6s avant fin */}
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
         volume={(f) => {
           const s = f / fps;
           if (s >= MUSIC_FADE_START_S) {
             const t = (s - MUSIC_FADE_START_S) / 6;
-            return 0.18 * Math.max(0, 1 - t);
+            return 0.05 * Math.max(0, 1 - t);
           }
-          return 0.18;
+          return 0.05;
         }}
       />
 
@@ -87,6 +93,11 @@ export const SenegalPreviewActes12: React.FC = () => {
       <Sequence from={B9} durationInFrames={TOTAL - B9}>
         <Beat9 />
       </Sequence>
+
+      {/* Fade-in depuis noir — 20 frames pour adoucir l'entrée après Beat0 */}
+      {frame <= 20 && (
+        <AbsoluteFill style={{ backgroundColor: "#000", opacity: fadeInOpacity, pointerEvents: "none" }} />
+      )}
 
     </AbsoluteFill>
   );

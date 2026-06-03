@@ -1,0 +1,66 @@
+{
+  "observations": "Nos 10 templates actuels sont visuellement somptueux (premium, atlas) mais trop 'polis' pour la seconde 0 ; ils s'installent au lieu d'exploser. Le 'FiberOpticFlagInvade' est notre meilleure base, mais pour le HOOK, il nous manque l'agressivité visuelle : des typographies cinétiques géantes, des masques de transition radicaux et des éléments UI plein écran qui masquent la carte grise initiale pour forcer l'attention avant de révéler la géographie.",
+  "hooks": [
+    {
+      "nom_propose": "KineticMaskSlam (Le Chiffre Choc)",
+      "punch": "Un texte/chiffre GÉANT ivory/gold frappe l'écran en 2 frames. La carte n'est visible qu'À L'INTÉRIEUR du texte. Puis le texte zoome à l'infini pour devenir une fenêtre révélant la carte complète.",
+      "mecanique": "0-0.5s : Fond navy uni, un chiffre géant ('90%') slamme au centre (effet rebond). 0.5-1.5s : La typo sert de masque (clip-path), on voit la carte bouger dedans. 1.5-2.5s : Scale extrême de la typo jusqu'à ce que le 'trou' d'une lettre (ex: le 0) remplisse l'écran, révélant la carte. 2.5s+ : La carte s'allume (pays en gold).",
+      "carte_mapbox": "Mouvement fluide continu (drift bearing +0.1/frame). Aucune secousse. La carte vit sa vie paisiblement en dessous.",
+      "overlay_energie": "Animation Remotion pure sur la typographie (scale, easing brutal type 'spring', mask SVG).",
+      "accroche_texte": "90% DES RÉSERVES MONDIALES",
+      "technique": "Mapbox headless génère la vidéo de fond en drift. Remotion applique un <Mask> SVG texte par-dessus avec une animation d'échelle exponentielle.",
+      "hybride_VH": "Parfait pour les deux. En Vertical, le texte est empilé sur 3 lignes. En Horizontal, sur 1 seule ligne massive.",
+      "priorite": "haute",
+      "cas_usage": "Sujet sur les minerais critiques au Congo ou le phosphate marocain. Le chiffre énorme crée la curiosité instantanée."
+    },
+    {
+      "nom_propose": "TacticalRadarScan (Le Balayage Stratégique)",
+      "punch": "L'écran commence dans un bleu navy quasi noir. Une ligne laser dorée intense balaie l'écran de haut en bas à toute vitesse, 'allumant' la carte et les données sur son passage.",
+      "mecanique": "0-0.5s : Carte sombre (opacité 20%). 0.5-1.5s : Ligne horizontale gold (avec glow) descend. Au-dessus de la ligne, la carte reste sombre ; en dessous, la carte s'illumine instantanément (pays visés en gold, frontières ivory, pop-ups qui poppent pile quand la ligne les touche).",
+      "carte_mapbox": "Pano lent vers le Sud (center y incrémenté) + drift. Rendu Mapbox standard mais assombri.",
+      "overlay_energie": "Ligne SVG avec filtre glow + masque de révélation (clip-path rectangle) synchronisé en Remotion pour dévoiler la version 'lumineuse' de la carte.",
+      "accroche_texte": "LA NOUVELLE ROUTE DU GAZ",
+      "technique": "Superposition de deux rendus Mapbox (un sombre, un éclairé avec data) révélés par un masque Remotion animé de haut en bas, plus un trait Canvas/SVG pour le laser.",
+      "hybride_VH": "V : Balayage haut-bas très rapide. H : Peut se faire de gauche à droite (balayage Ouest-Est).",
+      "priorite": "haute",
+      "cas_usage": "Gazoduc Nigéria-Maroc ou exploration offshore Sénégal. Donne un effet 'War Room / Renseignement' immédiat."
+    },
+    {
+      "nom_propose": "EpicenterShockwave (L'Onde de Choc)",
+      "punch": "Un impact visuel brutal sur un point précis déclenche une onde de choc géométrique qui se propage, forçant les pays voisins à réagir (changement de couleur).",
+      "mecanique": "0-0.2s : Carte calme. 0.2s : Flash blanc/gold sur une capitale. 0.2-1s : 3 cercles concentriques fins s'étendent très vite. 1-2s : Chaque frontière touchée par l'onde s'illumine une fraction de seconde (DominoContagionFill mais ultra-accéléré).",
+      "carte_mapbox": "Zoom arrière très lent (effet de recul face à l'impact).",
+      "overlay_energie": "Cercles SVG animés en scale avec opacité décroissante (Remotion). L'effet domino sur les pays peut être géré par un layer Mapbox dont les couleurs changent frame-par-frame selon le rayon.",
+      "accroche_texte": "LE POINT DE BASCULE",
+      "technique": "Mapbox pour les pays (Turf.js pour calculer la distance à l'épicentre et allumer au bon moment) + Remotion pour l'onde de choc graphique par-dessus.",
+      "hybride_VH": "Très bien en V (l'onde remplit vite la largeur) et H (l'onde voyage loin).",
+      "priorite": "haute",
+      "cas_usage": "Coup d'état au Niger, impact sur toute la zone CEDEAO. L'onde matérialise la déstabilisation."
+    },
+    {
+      "nom_propose": "ClassifiedRedactReveal (Le Dossier Confidentiel)",
+      "punch": "L'écran est rempli de texte 'documents secrets' ou de barres noires de censure. Elles glissent violemment hors du cadre pour révéler la carte.",
+      "mecanique": "0-1s : Écran obstrué par des rectangles noirs/navy et des textes type 'CLASSIFIED / TOP SECRET' en gold. 1-1.5s : Bruitage de déchirure/swipe, les blocs glissent à des vitesses différentes (gauche, droite, haut). 1.5s+ : La carte apparaît en dessous, déjà en mouvement, avec un target lock sur la zone.",
+      "carte_mapbox": "Drift standard + rotation. La carte est déjà 'active' pendant que les blocs se retirent.",
+      "overlay_energie": "Gros blocs géométriques SVG gérés dans Remotion avec des easings très secs (back.out ou expo.inOut).",
+      "accroche_texte": "CE QU'ON VOUS CACHE SUR...",
+      "technique": "Mapbox headless classique en fond. Remotion gère tout l'overlay de censure et son animation de sortie.",
+      "hybride_VH": "S'adapte parfaitement. En V, les blocs glissent de haut en bas ; en H, de gauche à droite.",
+      "priorite": "moyenne",
+      "cas_usage": "Contrats miniers opaques, bases militaires étrangères au Sahel. Installe un ton investigation/thriller géopolitique."
+    },
+    {
+      "nom_propose": "SatelliteTargetLock (L'Acquisition de Cible)",
+      "punch": "Une interface HUD (Head-Up Display) de drone/satellite très complexe s'affiche d'un coup. Des curseurs tournent frénétiquement et verrouillent un pays avec un gros 'LOCK'.",
+      "mecanique": "0-0.5s : Croix de visée géante au centre, chiffres qui défilent vite (latitude/longitude). 0.5-1s : Rotation agressive de l'UI (pas de la carte) qui s'enclenche avec un flash. 1-2s : Le pays ciblé s'extrude (effet 3D) ou se remplit de hachures gold.",
+      "carte_mapbox": "Zoom avant très lent et régulier. Aucune secousse Mapbox.",
+      "overlay_energie": "UI vectorielle complexe (SVG) : cercles en pointillés, réticules, coordonnées textuelles qui s'animent frénétiquement dans Remotion.",
+      "accroche_texte": "CIBLE : [NOM DU PAYS]",
+      "technique": "Mapbox en base. Remotion pour l'overlay HUD synchronisé avec des SFX de télémétrie.",
+      "hybride_VH": "Fonctionne bien. Le HUD s'adapte au ratio (cercle central reste parfait, les data s'empilent en V ou s'étalent en H).",
+      "priorite": "moyenne",
+      "cas_usage": "Focus soudain sur une zone de conflit précise (ex: Nord Kivu) ou un port stratégique."
+    }
+  ],
+  "synthese": "Notre HOOK signature est le 'Tableau de bord stratégique qui se réveille brutalement'. Au lieu de secouer la caméra (qui resterait cheap et casserait Mapbox), on maintient un drift majestueux de la carte et on confie toute la violence cinétique aux OVERLAYS (Remotion/SVG) : typographies titanesques qui masquent l'écran, balayages lasers rapides, ou ondes de choc géométriques. C'est l'alliance d'une base géographique noble (navy) et d'une interface data ultra-agressive (gold)."
+}

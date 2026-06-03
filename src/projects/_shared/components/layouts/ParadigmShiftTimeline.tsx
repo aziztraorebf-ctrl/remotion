@@ -7,6 +7,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { getLength } from "@remotion/paths";
+import { GridOverlay } from "../overlays/GridOverlay";
 
 export interface EraEvent {
   year: string | number;
@@ -207,17 +208,8 @@ export const ParadigmShiftTimeline: React.FC<ParadigmShiftTimelineProps> = ({
 
   return (
     <AbsoluteFill style={{ backgroundColor: bgColor, overflow: "hidden" }}>
-      {/* Subtle dot grid */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "radial-gradient(circle, rgba(200,169,81,0.10) 1px, transparent 1px)",
-          backgroundSize: "36px 36px",
-          pointerEvents: "none",
-        }}
-      />
+      {/* Grille architecturale fine — style graphique financier */}
+      <GridOverlay opacity={0.05} spacing={80} color="#c8a951" noiseOpacity={0.022} />
 
       {/* Era titles — top section */}
       <div
@@ -350,15 +342,7 @@ export const ParadigmShiftTimeline: React.FC<ParadigmShiftTimelineProps> = ({
             strokeDashoffset={strokeDashoffset}
           />
 
-          {/* === BEFORE ERA separator tint band (left half) === */}
-          <rect
-            x={LINE_X1}
-            y={LINE_Y - FLASH_H_HALF * 2.5}
-            width={SHIFT_X - LINE_X1}
-            height={FLASH_H_HALF * 5}
-            fill="rgba(242,235,217,0.03)"
-            rx="0"
-          />
+          {/* tint band removed — grille couvre la separation visuelle */}
 
           {/* === FLASH — vertical rupture bar (kept for scaleY transition) === */}
           {flashScaleY > 0 && (
@@ -404,7 +388,7 @@ export const ParadigmShiftTimeline: React.FC<ParadigmShiftTimelineProps> = ({
               [0, 1],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
             );
-            const evOpacity = evProgress * 0.35;
+            const evOpacity = evProgress * 0.72;
             const isAbove = i % 2 === 0;
             const labelY = isAbove
               ? LINE_Y - LABEL_ABOVE_OFFSET
@@ -630,45 +614,65 @@ export const ParadigmShiftTimeline: React.FC<ParadigmShiftTimelineProps> = ({
             );
           })}
 
-          {/* === SHIFT YEAR label (center) === */}
+          {/* === SHIFT YEAR label (center) — boite point focal imposante === */}
           {flashScaleY > 0 && (
             <g
               opacity={shiftLabelOpacity}
               transform={`translate(${SHIFT_X}, ${LINE_Y}) scale(${shiftYearScale})`}
             >
-              {/* Year badge */}
+              {/* Halo glow derriere la boite */}
               <rect
-                x={-72}
-                y={FLASH_H_HALF + 18}
-                width={144}
-                height={50}
-                rx="4"
-                fill="rgba(11,13,23,0.85)"
+                x={-100}
+                y={FLASH_H_HALF + 6}
+                width={200}
+                height={74}
+                rx="6"
+                fill={colorAfter}
+                opacity={0.08}
+                filter="url(#pst-glow)"
+              />
+              {/* Boite principale — fond tres sombre, bordure gold epaisse */}
+              <rect
+                x={-96}
+                y={FLASH_H_HALF + 10}
+                width={192}
+                height={66}
+                rx="5"
+                fill="rgba(8,10,20,0.96)"
                 stroke={colorAfter}
-                strokeWidth={1.5}
+                strokeWidth={2.5}
+              />
+              {/* Barre gold gauche — accent structure */}
+              <rect
+                x={-96}
+                y={FLASH_H_HALF + 10}
+                width={6}
+                height={66}
+                rx="3"
+                fill={colorAfter}
               />
               <text
                 x={0}
-                y={FLASH_H_HALF + 52}
+                y={FLASH_H_HALF + 54}
                 textAnchor="middle"
                 fontFamily="Cinzel, serif"
-                fontSize={Math.round(SVG_W * 0.022)}
+                fontSize={Math.round(SVG_W * 0.026)}
                 fill={colorAfter}
                 fontWeight="700"
-                letterSpacing="0.1em"
+                letterSpacing="0.12em"
               >
                 {shiftYear}
               </text>
               {/* Shift label below */}
               <text
                 x={0}
-                y={FLASH_H_HALF + 90}
+                y={FLASH_H_HALF + 102}
                 textAnchor="middle"
                 fontFamily="IBM Plex Mono, monospace"
-                fontSize={Math.round(SVG_W * 0.012)}
+                fontSize={Math.round(SVG_W * 0.013)}
                 fill="#f2ebd9"
-                opacity={0.8}
-                letterSpacing="0.12em"
+                opacity={0.9}
+                letterSpacing="0.14em"
               >
                 {shiftLabel}
               </text>
