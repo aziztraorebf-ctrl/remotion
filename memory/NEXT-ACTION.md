@@ -43,20 +43,24 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **Ma recommandation** : produire le carrousel #2 la semaine prochaine via le pipeline (1er vrai test du workflow automatisé de bout en bout).
 **Demarrer** : `python3 scripts/prepare-goodnews-weekly.py` puis suivre le BRIEF généré.
 
-### 1. Maroc Batteries Short — BLOC CARTE TERMINÉ ✅, place au BLOC REMOTION
-**PHILOSOPHIE (2026-06-03)** : 2 BLOCS séparés. Mapbox d'abord (FAIT), PUIS Remotion, PUIS assemblage. Voir `feedback_philosophie-mapbox-puis-remotion.md`.
+### 1. Maroc Batteries Short — RESTE A5 GÉOGRAPHIE + ASSEMBLAGE (vérifié 2026-06-03)
+**PHILOSOPHIE** : 2 BLOCS séparés. Mapbox d'abord, PUIS Remotion, PUIS assemblage. Voir `feedback_philosophie-mapbox-puis-remotion.md`.
 
-**BLOC 1 — CARTE (Mapbox) : ✅ TERMINÉ (les 3 FINAL, SFX + vrais drapeaux corrigés 2026-06-03)**
-- Beat 0 Hook : FINAL ✅ https://files.catbox.moe/otcfyz.mp4 — SweepRevealTerritory
-- Beat 1 Phosphate : FINAL ✅ https://files.catbox.moe/r30wee.mp4 — vrais drapeaux clip SVG (Maroc+ESP/FRA/DEU)
-- Beat 3 Acteurs : FINAL ✅ https://files.catbox.moe/ivv7d8.mp4 — pull back planétaire + 3 drapeaux + lignes connexion + GeoCountryPlaque
+**ÉTAT EXACT (vérifié render par render 2026-06-03) :**
+| Beat | État | Render |
+|------|------|--------|
+| Beat 0 Hook (Mapbox) | ✅ FINAL | `beat0-FINAL.mp4` |
+| A2 Phosphate (Mapbox) | ✅ FINAL | `beat1-FINAL.mp4` |
+| A3 Cailloux (Remotion) | ✅ FINAL | `a3-cailloux-FINAL.mp4` (HeroVerticalBars + caillou Gemini) |
+| A4 Acteurs (Mapbox) | ✅ FINAL | `beat3-FINAL.mp4` |
+| **A5 Géographie (Mapbox)** | ❌ **STUB — À PRODUIRE** | `Beat4Geographie.tsx` = placeholder |
+| A6 Question (Remotion) | ✅ FINAL | `a6-question-FINAL.mp4` (PHOSPHATE—ET—ASSEMBLAGE → question) |
 
-**BLOC 2 — REMOTION : ⬜ NEXT**
-- **Beat 2 Cailloux** (~12s) — split phosphate/cathode + balance + 5,6 Md$. ⚠️ Assets Gemini à valider AVANT code.
-- Beat 4 Géographie (~37s) · Beat 5 Question finale (~10s)
-- PUIS assemblage final ffmpeg + mix.
+**NEXT (2 tâches) :**
+1. **A5 Géographie** (~37s, MAPBOX — beat le plus stratégique). Texte : « Pour le Maroc sortir du rôle de fournisseur... Pour l'Europe réduire la dépendance Chine... Le Maroc devient l'endroit où les deux fabriquent ensemble. Ce n'est pas de la diplomatie, c'est de la géographie industrielle. » → 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité 2h Espagne, Volkswagen) / **triangle Maroc—Europe—Chine** (flux convergents). Climax visuel = le triangle. Pipeline Mapbox (`mapbox-session.py`).
+2. **Assemblage final** : ffmpeg concat des 6 beats dans l'ordre (Beat0→A2→A3→A4→A5→A6) + 1 narration globale + mix. Voir `SOUVERAIN-REMOTION-SKELETON.md` (pattern audio) + `SFX-INDEX.md`.
 
-**Acquis session 2026-06-03 (réutilisables)** : `useClipFlags` (vrais drapeaux ⭐⭐), `GeoCountryPlaque` (plaque+source), `camCountryApproach` (pitch 32), 11 templates fill-pattern N1-N4, SFX `<Sequence>` plancher 0.50. Tout référencé dans catalogues + STATUS épisode.
+**Acquis Mapbox réutilisables pour A5** : `useClipFlags` (vrais drapeaux ⭐⭐), `GeoCountryPlaque`, `camCountryApproach`, flux/lignes connexion (cf. A4 Acteurs), SFX `<Sequence>` plancher 0.50.
 **Architecture** : beats SÉPARÉS (1 composition Root.tsx chacun).
 
 ### 1bis. Arsenal templates Mapbox — TERMINÉ (2026-06-02/03)

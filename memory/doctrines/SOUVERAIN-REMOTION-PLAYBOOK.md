@@ -131,6 +131,42 @@ Par scène / plan :
 
 ---
 
+## 2ter. TAILLES & OCCUPATION DE L'ESPACE (NON-NEGOTIABLE — codifié 2026-06-03)
+
+> **Erreur récurrente de Claude : faire les textes/graphismes TROP PETITS et TROP TARDIFS au premier jet.**
+> Résultat : Aziz doit systématiquement demander « agrandis, occupe l'espace, démarre plus tôt ».
+> Cette section EST la réponse — viser ces valeurs DÈS LE PREMIER CODE, ne plus attendre le retour.
+
+### Tailles minimales (1080×1920) — viser le HAUT de la fourchette par défaut
+| Élément | Taille (px) | Tokens Tailwind |
+|---|---|---|
+| Chiffre HERO (le seul chiffre du plan) | **180-220** | `text-stat-xl` / `text-stat-2xl` |
+| Chiffre important (barres, comparaison) | **96-120** | `text-stat-lg` |
+| Mot-clé / entité HERO (PHOSPHATE, un nom) | **88-110** | `text-entity` |
+| Question / punchline (TextChoc, verdict) | **110-150** | — |
+| Titre de section / label au-dessus d'un hero | **35-44** | `text-label` |
+| Sous-label / contexte (sous un mot-clé) | **22-28** | `text-mono-sm` |
+| Source (bas écran, discret) | **20** opacity-40 | `text-mono-sm` |
+
+**Règle d'or : l'élément HERO occupe 40-60% de la largeur OU de la hauteur de l'écran.** Si après render il "flotte" petit au milieu avec beaucoup de vide → il est TROP PETIT, agrandir.
+
+### Occuper l'espace (anti-vide) — 4 leviers
+1. **Agrandir le hero** (cf. tailles ci-dessus) — le plus simple, le plus oublié.
+2. **Disposition qui remplit** : empilement vertical (mots reliés), barres verticales (hauteur), grille — plutôt qu'un petit élément centré.
+3. **Fond actif** : dégradé radial central + `GridOverlay` + vignette périphérique + particules ambiantes (cf. A3/A6). Jamais un aplat navy.
+4. **Marges safe mais pleines** : marges 60px, mais le contenu DOIT s'approcher des bords (un hero à 108px touche presque les marges en 1080 — c'est voulu).
+
+### Rythme de démarrage (R1 appliqué au début du beat)
+- **Le 1er élément visuel apparaît AVANT ~1-1.5s** (frame ~20-45), JAMAIS à 5s.
+- Caler les apparitions sur les mots de la voix-off (forced-alignment) — pas de temps mort en ouverture.
+- Si les 3 premières secondes sont vides → recaler le segment audio (`SEG_START_FRAME`) sur la phrase-clé.
+
+### Pas de redondance
+- **Sous-titre INUTILE quand le texte hero EST déjà à l'écran en grand** (question, punchline, mot-clé). Le retirer.
+- Sous-titre utile uniquement quand la voix dit autre chose que ce qui est affiché.
+
+---
+
 ## 3bis. SFX & AUDIO (NON-NEGOTIABLE — un beat muet n'est pas fini)
 
 > Ajouté 2026-06-03 (le système data-viz l'avait omis, contrairement au Mapbox). Un beat data-viz a un design sonore au même titre qu'une carte. Catalogue : `public/_shared/sfx/SFX-INDEX.md`. Plancher volume SFX = **0.5**.

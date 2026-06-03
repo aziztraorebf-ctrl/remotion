@@ -32,6 +32,7 @@ import { SEGMENTS as MAROC_SEGMENTS } from "./projects/souverain/maroc-batteries
 import { BlankComposition } from "./BlankComposition";
 import { HeroDataShowcase, HERO_DATA_SHOWCASE_FRAMES } from "./projects/_shared/demos/HeroDataShowcase";
 import { A3Cailloux, A3_CAILLOUX_FRAMES } from "./projects/souverain/maroc-batteries/A3Cailloux";
+import { A6Question, A6_QUESTION_FRAMES } from "./projects/souverain/maroc-batteries/A6Question";
 import { CartoCaspianDemo, CARTO_CASPIAN_DEMO_FRAMES } from "./projects/_shared/demos/CartoCaspianDemo";
 import { SmallMultiplesGridDemoA, SmallMultiplesGridDemoB, SMALL_MULTIPLES_GRID_DEMO_FRAMES } from "./projects/_shared/demos/SmallMultiplesGridDemo";
 import { AtlasRealiste3DDemo, ATLAS_REALISTE_3D_DEMO_FRAMES } from "./projects/_shared/demos/AtlasRealiste3DDemo";
@@ -391,6 +392,14 @@ export const RemotionRoot: React.FC = () => {
           id="A3Cailloux"
           component={A3Cailloux}
           durationInFrames={A3_CAILLOUX_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="A6Question"
+          component={A6Question}
+          durationInFrames={A6_QUESTION_FRAMES}
           fps={30}
           width={1080}
           height={1920}

@@ -44,6 +44,12 @@ PALETTE = {"gold": "#c8a951", "ivory": "#f0e8d8", "navy": "#112240", "dark": "#0
 
 SECURITY_BANNER = """
 === CONTRAINTES DE SECURITE SOUVERAIN ===
+TAILLES   : HERO chiffre 180-220px / mot-cle 88-110px / question 110-150px.
+            L'element hero occupe 40-60% largeur OU hauteur. Viser GROS des le 1er jet
+            (erreur recurrente = textes trop petits). Voir PLAYBOOK section 2ter.
+DEMARRAGE : 1er element visible AVANT ~1.5s (frame ~20-45), JAMAIS a 5s.
+ANTI-VIDE : si le hero flotte petit avec du vide -> AGRANDIR. Fond actif (radial+grid+vignette).
+SOUS-TITRE: inutile si le texte hero est deja a l'ecran en grand -> le retirer.
 R1        : max 8s sans changement visuel (glow/float ne comptent PAS)
 +30%      : frames review a segment_start + 30% duree -- JAMAIS a t=0
 No-Black  : jamais #000000 -- minimum #0d1420 partout
