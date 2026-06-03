@@ -10,6 +10,11 @@
 
 ---
 
+## Short "Petrole de la patience" — 2026-06-03 [COMPLETE — PUBLIE]
+Showcase `_demos` refondu en livrable `src/projects/souverain/petrole-patience-short/`.
+FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s). Programme Postiz 9 juin 15h UTC (4 plateformes) = teaser du mid-form. Niger uranium retire du 9 juin (standby).
+⚠️ Mid-form Senegal programme le 20 juin pointe vers fichier 25 mai (pre-FC-2/FC-4) — a corriger avant le 20.
+
 ## Système Beat Remotion HERO DATA — 2026-06-03 [COMPLETE]
 
 Parité avec le système Mapbox. Doctrine `SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes + SFX),

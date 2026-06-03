@@ -70,8 +70,13 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 - Backlog idées non codées : TensionHeatZone, HexGrid, GeoRipple + hooks TacticalRadar/EpicenterShockwave/SatelliteTargetLock/GlitchMapIntro (`memory/tools/gemini-*-ideas-*.json`).
 **Pour produire un beat carto** : Phase 0 SCAN templates (CLAUDE.md) → CATALOGUE-CARTE-VIVANTE.
 
+### 1ter. Short "Petrole de la patience" — PUBLIE (programme 9 juin 2026)
+**Etat** : FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s, 1080x1920). Source `src/projects/souverain/petrole-patience-short/`. Programme Postiz lundi 9 juin 15h UTC (4 plateformes), titre "Decouvrir une fortune et rester pauvre : le pari du Senegal". = TEASER du mid-form. Niger uranium retire du 9 juin (standby, a reprogrammer).
+**Fait depuis le showcase** : drapeaux useClipFlags, hook FiberOptic+gold, plaques GeoCountryPlaque (Norvege+Senegal), CTA voix+plaque @koraetcartes, sous-titres, audio (musique 0.10 / SFX 0.35 / boom->ping).
+
 ### 2. Senegal Petrole & Gaz — Assemblage final (PRIORITE 2)
 **Etat** : Tous beats valides. Reste : assemblage + SFX + correction dette sonore 70%→132%.
+**⚠️ ALERTE PUBLICATION** : le mid-form est programme Postiz le **20 juin 15h UTC** mais pointe vers `senegal-petrole-gaz-FINAL-compressed.mp4` du **25 mai** (PRE-corrections FC-2 dette 132% + FC-4 Beat0). AVANT le 20 juin : assembler la version corrigee + re-uploader/remplacer le media Postiz, sinon une version fausse part en ligne.
 **Decision en attente** : aucune — executer directement.
 **Demarrer** : lire `memory/STARTER-PROMPT-senegal-assemblage-final.md`
 
