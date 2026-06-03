@@ -72,6 +72,7 @@ import { FormationMarch } from "./projects/atlas/_blueprints/formation-march/For
 import { WaypointMarch } from "./projects/atlas/_blueprints/waypoint-march/WaypointMarch";
 import { DutchTiltCollapse } from "./projects/atlas/_blueprints/dutch-tilt-collapse/DutchTiltCollapse";
 import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
+import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
 import { Beat1Hook as P1347_Beat1Hook } from "./projects/atlas/peste-1347/Beat1Hook";
 import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
@@ -202,6 +203,7 @@ import { LottieGeoAura } from "./projects/_shared/mapbox/LottieGeoAura";
 import { SweepRevealTerritory } from "./projects/_shared/mapbox/SweepRevealTerritory";
 import { DominoContagionFill } from "./projects/_shared/mapbox/DominoContagionFill";
 import { FiberOpticBorderDraw } from "./projects/_shared/mapbox/FiberOpticBorderDraw";
+import { GeoFlowConnection } from "./projects/_shared/mapbox/GeoFlowConnection";
 import { FiberOpticFlagInvade } from "./projects/_shared/mapbox/FiberOpticFlagInvade";
 import { KineticMaskSlam } from "./projects/_shared/mapbox/KineticMaskSlam";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
@@ -408,6 +410,14 @@ export const RemotionRoot: React.FC = () => {
           id="PesteMapPreview"
           component={PesteMapPreview}
           durationInFrames={150}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="AtlasAttackArrowDemo"
+          component={AtlasAttackArrowDemo}
+          durationInFrames={220}
           fps={30}
           width={720}
           height={1280}
@@ -1251,6 +1261,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="DominoContagionFill-Sahel-H" component={() => <DominoContagionFill center={[3, 16]} baseZoom={3.0} epicenterIso="MLI" epicenterLabel="MALI" waves={[["MLI"], ["BFA", "NER", "MRT", "DZA"], ["TCD", "NGA", "SEN", "GIN", "CIV"]]} waveAt={12} waveGap={26} />} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="FiberOpticBorderDraw-Senegal-V" component={() => <FiberOpticBorderDraw countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" drawAt={8} drawDur={50} />} durationInFrames={150} fps={30} width={1080} height={1920} />
         <Composition id="FiberOpticBorderDraw-Senegal-H" component={() => <FiberOpticBorderDraw countryIso="SEN" geoName="Senegal" center={[-14.5, 14.4]} baseZoom={5.8} label="SENEGAL" drawAt={8} drawDur={50} />} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="GeoFlowConnection-SilkRoad-H" component={() => <GeoFlowConnection title="THE SILK ROAD" accentColor="#e8c34a" sprite="plane" drawStartFrame={20} drawPerSegment={48} durationFrames={450} waypoints={[{ name: "Milan", coord: [9.19, 45.46], labelDy: 18 }, { name: "Venice", coord: [12.33, 45.44], labelDy: 28 }, { name: "Istanbul", coord: [28.98, 41.01], labelDy: 22 }, { name: "Tehran", coord: [51.39, 35.69], labelDy: 22 }, { name: "Mashhad", coord: [59.61, 36.3] }, { name: "Samarkand", coord: [66.97, 39.65], labelDy: -16 }, { name: "Kashgar", coord: [75.99, 39.47], labelDy: -16 }, { name: "Amritsar", coord: [74.87, 31.63], labelDx: 12 }]} />} durationInFrames={450} fps={30} width={1920} height={1080} />
+        <Composition id="GeoFlowConnection-SilkRoad-V" component={() => <GeoFlowConnection title="THE SILK ROAD" accentColor="#e8c34a" sprite="plane" drawStartFrame={20} drawPerSegment={48} durationFrames={450} waypoints={[{ name: "Milan", coord: [9.19, 45.46], labelDy: 18 }, { name: "Venice", coord: [12.33, 45.44], labelDy: 28 }, { name: "Istanbul", coord: [28.98, 41.01], labelDy: 22 }, { name: "Tehran", coord: [51.39, 35.69], labelDy: 22 }, { name: "Mashhad", coord: [59.61, 36.3] }, { name: "Samarkand", coord: [66.97, 39.65], labelDy: -16 }, { name: "Kashgar", coord: [75.99, 39.47], labelDy: -16 }, { name: "Amritsar", coord: [74.87, 31.63], labelDx: 12 }]} />} durationInFrames={450} fps={30} width={1080} height={1920} />
         <Composition id="FiberOpticFlagInvade-Maghreb-V" component={() => <FiberOpticFlagInvade center={[-5, 27]} baseZoom={3.9} drawDur={22} invadeDur={20} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 6, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 56, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 106, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="FiberOpticFlagInvade-Maghreb-H" component={() => <FiberOpticFlagInvade center={[-5, 27]} baseZoom={3.9} drawDur={22} invadeDur={20} countries={[{ iso: "MAR", geoName: ["Morocco", "W. Sahara"], boundaryIsos: ["ESH"], flagCode: "ma", at: 6, label: "MAROC" }, { iso: "DZA", geoName: "Algeria", flagCode: "dz", at: 56, label: "ALGERIE" }, { iso: "MRT", geoName: "Mauritania", flagCode: "mr", at: 106, label: "MAURITANIE" }]} />} durationInFrames={180} fps={30} width={1920} height={1080} />
         {/* ── CHANTIER HOOK — templates d'ouverture (punch frame 0) ── */}
