@@ -211,6 +211,41 @@ Les nouveautés ne s'inventent pas avant de coder — elles émergent naturellem
 - **Blur acceptable** uniquement pour des distances intercontinentales (Maroc→Chine, Afrique→Europe)
 - **Jamais flyTo/easeTo** — uniquement `map.jumpTo()` frame-driven
 
+## Doctrine visuelle premium (LIRE EN PREMIER)
+
+> **`memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`** — la doctrine cartographique premium.
+> 5 principes (drift continu · séquentiel synchro syllabe · anti-gris remplissage actif · projection images bichromie navy/gold · habillage narratif flux animés) + règle anti-clonage (jamais satellite/emojis) + template storyboard 7 champs.
+> Le Camera Brief ci-dessous est le champ #3 du template storyboard complet du Playbook.
+
+---
+
+## Camera Brief — règle de production (NON-NEGOTIABLE)
+
+**AVANT d'écrire getCam(), Claude produit ce tableau et attend la validation d'Aziz :**
+
+```
+| Acte | Mouvement (Camera Lab v2) | Depuis → Vers | Zoom début→fin | Durée | Blur |
+|------|--------------------------|---------------|----------------|-------|------|
+| A1   | …                        | …             | …              | …     | …    |
+| A2   | …                        | …             | …              | …     | …    |
+| A3   | …                        | …             | …              | …     | …    |
+| A4   | …                        | …             | …              | …     | …    |
+| A5   | …                        | …             | …              | …     | …    |
+| A6   | …                        | …             | …              | …     | …    |
+```
+
+Mouvements disponibles (Camera Lab v2 validé headless) :
+Drift · Orbit+Dolly · Whip Pan 60f · Zoom+Freeze · Tilt · Counter-Rotation · Blur Atmo · Pull Back Planétaire · Zoom Sol 3D · Fade Style Switch · Pull Back Reveal
+
+Règles de remplissage :
+- Zoom jamais < 2 (planétaire) ni > 14 (sol)
+- Blur uniquement sur distances intercontinentales
+- A6 = toujours Pull Back ou drift — finir large, pas serré
+
+getCam() est écrit APRÈS validation du tableau, pas avant.
+
+---
+
 ## Ce qui change d'un épisode à l'autre
 
 | Fixe (copier tel quel) | Variable (adapter) |

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { AbsoluteFill, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import { SourceTag } from "../../../_shared/components/overlays/SourceTag";
 import mapboxgl from "mapbox-gl";
 import {
   MapboxBrandingHide,
@@ -248,6 +249,8 @@ export const Beat6: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <SourceTag source="Woodside Energy — Rapport annuel 2024" startFrame={F_WOODSIDE} endFrame={511} />
     </AbsoluteFill>
   );
 };

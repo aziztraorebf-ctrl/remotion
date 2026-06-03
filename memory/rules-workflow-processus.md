@@ -305,3 +305,17 @@ Appliquer dès que ffprobe donne la durée VO, avant d'écrire le timing.
 La musique de fond se gère UNIQUEMENT au niveau de la composition principale.
 Les composants Beat* ne montent jamais d'Audio musique — seulement leur VO propre.
 Avant tout render : `grep -n "music\|music-A\|music-B" src/projects/*/Beat*.tsx` → si trouvé = bug.
+
+### R-INTEGRATE-BEFORE-ADD (validée 2026-05-27)
+**Avant d'écrire une "nouvelle procédure" ou "nouvelle règle" : vérifier d'abord si elle existe déjà** dans skills, mémoire ou règles. Si oui → intégrer / référencer / étendre, jamais dupliquer.
+
+**Pattern à éviter** : créer un nouveau workflow qui chevauche 80% d'un existant.
+**Pattern correct** : ajouter une référence ciblée au bon endroit dans le système existant.
+
+**Checklist 30 secondes avant d'ajouter** :
+1. `ls memory/` et `grep` mots-clés du sujet
+2. `ls ~/.claude/skills/` pour skills existants
+3. Si chevauchement → étendre l'existant, pas créer
+4. Si vraiment nouveau → créer mais cross-link depuis l'existant
+
+Erreurs passées corrigées par Aziz : duplication fact-check Perplexity (existait Charte règle #2), duplication procédure Shorts (existait skills pré-prod).

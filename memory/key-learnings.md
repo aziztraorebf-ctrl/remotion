@@ -42,6 +42,25 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 **Règle 5 — DIMENSIONS EXPLICITES EN PX (NON-NEGOTIABLE) :**
 - Tout élément central doit avoir ses dimensions écrites en px dans le brief, non-réductibles
 - Exemples validés : OdometerFlip CASE_WIDTH=240, CASE_HEIGHT=300, fontSize=220, nbCases=4
+
+---
+
+### 2026-06-02 — Workflow Beat Mapbox avec templates catalogue
+
+**Leçon :** Partir d'un template catalogue existant (SweepRevealTerritory) au lieu de coder custom donne un résultat satisfaisant dès le premier render — au lieu de 5-8 itérations habituelles.
+
+**Ce qui a changé :**
+- Page blanche + choix template AVANT de coder (storyboard 7 champs Playbook)
+- MAROC_WORDS (tous les mots) au lieu de WORD_ANCHORS (anchors seulement) pour le karaoké
+- showHatching prop ajoutée à SweepRevealTerritory — hachures ivory visibles sur gold
+- SFX volumes : cinématique 0.50-0.55 (pas 0.35), musique 0.12 (pas 0.07)
+
+**Workflow amélioré identifié par Aziz :**
+1. Render → auto-review Claude → appliquer premiums évidents AVANT Gemini
+2. Envoyer à Gemini avec les premiums déjà intégrés → score de départ plus haut → feedback plus incisif
+3. Objectif : atteindre 8/10 avant validation au lieu de 7/10
+
+**Anti-pattern confirmé :** Ne jamais continuer sur du code existant non-template — archiver et repartir à zéro avec la bonne architecture.
 - FillScreen centralValue fontSize=280px minimum
 - Écrire dans le brief : `"dimensionsNonReductibles": { "caseWidth": 240, "caseHeight": 300, "fontSize": 220, "nbCases": 4 }` — l'agent ne peut pas descendre en dessous
 

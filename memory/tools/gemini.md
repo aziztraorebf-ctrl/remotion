@@ -345,3 +345,277 @@ response = client.models.generate_content(
 **Brief structure qui marche** (validee Atlas Mansa Moussa V2 S3) : contexte projet + style target + tech stack + observations creator deja vues + mission exhaustive 10 sections (bugs critiques, sync audio, camera, palette, narrative clarity, what works, missing, priority fix list, production decision).
 
 **ROI** : Gemini reperer 2 bugs additionnels que creator + Claude n'avaient pas vu en 18s analyse pour $0.005. Pattern a appliquer apres chaque mini-render avant production complete. Script reutilisable : `quebec-jacques-poc/scripts-atlas/review-s3-iter1-with-gemini.py`
+
+
+---
+
+## Workflow Thumbnails YouTube — Pipeline hybride Remotion + Gemini (validé 2026-05-28)
+
+### Principe général
+
+Remotion = structure géométrique + ratios + composition + texte typographique préservé
+Gemini 3.1 Flash Image = matière photoréaliste / illustration cartoon / esthétique spécifique
+
+Combiner les deux donne un thumbnail YouTube de niveau éditorial international pour $0.04-0.12 par image.
+
+### Deux pipelines complémentaires selon le type de sujet
+
+| Pipeline | Quand l'utiliser | Input | Référence éditoriale |
+|----------|------------------|-------|---------------------|
+| **A — Edit chirurgical** | Sujet à métaphore **géométrique** (objet symbolique mesurable, carte stylisée) | 1 image SVG détaillée Remotion | Bloomberg / Nat Geo / éditorial pro |
+| **B — Création guidée par références** | Sujet à esthétique **très singulière** impossible à coder en SVG (cartoon, illustration, papercraft) | 1 croquis SVG ultra-épuré + N frames de référence | Imite l'esthétique d'une vidéo existante |
+
+**Règle de choix** :
+- L'objet narratif est **mesurable** (ratio 18%, jauge, comparaison) → Pipeline A
+- L'esthétique de la vidéo est **plus importante que la mesure** → Pipeline B
+
+**Anti-piège (validé 2026-05-28)** : ne pas forcer Pipeline A sur un sujet qui appelle Pipeline B. Symptôme = Gemini produit du photoréaliste alors que la vidéo source est cartoon, et le thumbnail "sort" de l'univers visuel du contenu.
+
+### Architecture code
+
+```
+src/projects/_shared/thumbnails/
+  ├── ThumbnailSouverain.tsx       ← générique (fond bleu nuit + texte + variants A/B/C + palette flags)
+  └── icons/
+      ├── BarilJaugeIcon.tsx       ← Sénégal pétrole (validé)
+      ├── AmpouleIcon.tsx          ← Niger uranium (validé)
+      └── [futurs : CoffreFort, Sablier, MainTenant, Balance, Pylone...]
+```
+
+Wrapper par sujet : `src/projects/_demos/<sujet>/Thumbnail<Sujet>.tsx` (~10 lignes)
+Register : 3 compositions A/B/C dans Root.tsx avec defaultProps
+
+### Pipeline 6 étapes
+
+| # | Étape | Outil | Coût | Temps |
+|---|-------|-------|------|-------|
+| 1 | Choisir métaphore + ratio narratif | Humain | $0 | 10 min |
+| 2 | Coder icône SVG dans icons/ | Claude | $0 | 15 min |
+| 3 | Wrapper Composition + register Root.tsx | Claude | $0 | 5 min |
+| 4 | Render PNG base 1280×720 | `npx remotion still` | $0 | 1 min |
+| 5 | Brief Gemini chirurgical structuré | Claude | $0 | 5 min |
+| 6 | Run `scripts/tools/gemini-thumbnail-edit.py` | Gemini 3.1 Flash Image | $0.04 | 30 sec |
+| (7) | 2e passe Gemini si ajustement micro | Gemini | $0.04 | 30 sec |
+
+**Total : 30-40 min + $0.04-0.12 par thumbnail premium signature.**
+
+### Script Python validé
+
+`scripts/tools/gemini-thumbnail-edit.py` :
+- Input : PNG base Remotion + clé brief
+- Output : PNG édité Gemini
+- Briefs définis dans le dict `BRIEFS` (ajouter une clé par nouveau sujet)
+- Modèle : `gemini-3.1-flash-image-preview`
+
+### Formule brief chirurgical thumbnails
+
+```
+Edit this image with surgical improvements only -- preserve the overall composition.
+
+PRESERVE EXACTLY:
+- [liste précise de tout ce qui doit rester intact : fond, texte, position, couleurs identifiantes]
+
+IMPROVE:
+- [liste précise de ce qu'on veut transformer : matière, lumière, réalisme, détails 3D]
+
+The result should look like [référence éditoriale visée — ex: "high-quality editorial photograph for a YouTube documentary thumbnail"].
+```
+
+### Règles design Souverain pour briefs Gemini
+
+1. **Toujours préciser le fond** comme "PRESERVE EXACTLY" : `dark navy blue background with subtle dot grid texture`
+2. **Toujours préserver le texte typographique** ("PRESERVE EXACTLY: text in gold/cream serif on the right side")
+3. **Toujours préserver les couleurs de drapeau** (signal identité culturelle subliminale)
+4. **Pour IMPROVE matière** : utiliser vocabulaire photographique pro (brushed steel, specular highlights, tungsten filament, warm golden glow, brass screw base, etc.)
+5. **Référence finale toujours éditoriale** ("editorial photograph" / "magazine cover" / "Bloomberg-style") — jamais "3D render" qui pousse vers le cartoon
+
+### Validation 2026-05-28
+
+- Sénégal pétrole baril photoréaliste : https://files.catbox.moe/z2u6nv.png (2 passes Gemini)
+- Niger uranium ampoule tungstène : https://files.catbox.moe/tf3tu0.png (1 passe Gemini)
+- Coût total : $0.12 pour 2 thumbnails niveau éditorial international
+
+### Anti-patterns identifiés
+
+- **Ne PAS** demander à Gemini de gérer le texte typographique — la qualité Remotion (Georgia serif rendu pixel-perfect) est supérieure et stable
+- **Ne PAS** demander à Gemini de gérer la composition globale — laisser Remotion poser la grille de base
+- **Ne PAS** demander à Gemini de générer "from scratch" sans base Remotion — perte de contrôle sur ratios narratifs et identité de marque
+- **Ne PAS** itérer plus de 2 passes Gemini sur la même image — au-delà, perte de fidélité cumulative (Charte 2-4 max validée Thiaroye V5, mais pour thumbnails 1-2 suffit)
+
+---
+
+## Pipeline B — Création guidée par références (validé 2026-05-28 Sonjata)
+
+### Quand l'utiliser
+
+Pipeline B se déclenche quand le sujet a une **esthétique très singulière impossible à coder en SVG primitif** :
+- Cartoon storybook (Sonjata, Disney-like, dessin animé chaud)
+- Illustration papercraft (style Thiaroye, Cut-paper)
+- Style pictural très spécifique (peinture, aquarelle, encre)
+- Tout univers visuel défini par une vidéo existante qu'on veut imiter
+
+**Symptôme d'erreur Pipeline A → B nécessaire** : Gemini produit du photoréaliste/cinématique alors que la vidéo source est cartoon, et le thumbnail "sort" de l'univers visuel du contenu (cas Sonjata avant correction).
+
+### Architecture script
+
+`scripts/tools/gemini-thumbnail-create-from-refs.py` :
+- Input #1 : croquis SVG ultra-épuré rendu Remotion (1 PNG) — cadrage + texte préservé
+- Input #2-N : frames de la vidéo cible (PNG) — esthétique de référence
+- Input N+1 : brief textuel
+- Output : 1 PNG final via Gemini 3.1 Flash Image multi-images
+
+### Croquis SVG attendu (Pipeline B)
+
+```tsx
+// SonjataCroquisIcon.tsx — ultra-épuré
+// - Zones de fond (rectangles colorés palette cible)
+// - Zone vide centrale (Gemini la remplira)
+// - Texte typographique déjà posé (préservé)
+// - PAS de personnages SVG, PAS d'objets complexes
+```
+
+Le croquis sert juste à **fixer le cadrage** et **préserver le texte**. Le contenu visuel est entièrement créé par Gemini en imitant les références.
+
+### Formule brief Pipeline B
+
+```
+You are creating a YouTube thumbnail by combining a layout draft with a target art style.
+
+INPUT IMAGE 1 (CROQUIS — layout draft):
+- [Décrire les zones du croquis : fond, couleurs, zone vide pour le contenu]
+- The TEXT on [position] MUST BE PRESERVED EXACTLY — same position, font, color, size
+- The [zone] is INTENTIONALLY EMPTY — this is where you must add the illustrated scene
+
+INPUT IMAGES 2-N (STYLE REFERENCES — [source vidéo] frames):
+- These show the EXACT visual style to reproduce
+- Notice the characters: [détails clés du style : proportions, traits, couleurs, expressions]
+- Notice the setting: [détails décor : objets, ambiance]
+- Notice the color palette: [palette exacte des refs]
+- Notice the art style: [style spécifique : flat 2D cartoon, papercraft, watercolor, etc.]
+
+YOUR TASK:
+Create a scene in the EMPTY area depicting:
+- [Élément central : décrire personnage/objet principal]
+- [Éléments secondaires : décor, contexte]
+- All elements drawn in [style EXACT des refs]
+
+ABSOLUTE RULES:
+- PRESERVE the text on [position] exactly as in image 1
+- PRESERVE the background colors [colors]
+- DO NOT make it [anti-pattern : photoréaliste, dramatique, etc.]
+- DO match the [style cible] of the reference frames EXACTLY
+
+The result should look like a still frame from the same animated video as the references — same artist, same style.
+```
+
+### Règles design Pipeline B
+
+1. **3 frames de référence variées** > 1 seule frame (gros plan + plan large + scène d'action)
+2. **Frames récupérées via ffmpeg** à différents moments de la vidéo source (~5, ~25, ~120s typique)
+3. **Toujours inclure dans le brief** : "DO NOT make it photorealistic" et "DO NOT make it dramatic cinematic"
+4. **Référence éditoriale visée** = "still frame from the same animated video as the references"
+5. **Le croquis SVG doit être propre** : pas d'annotations visibles dans le render final (showAnnotations={false})
+
+### Validation 2026-05-28 Sonjata
+
+- Tentative Pipeline A (silhouette dramatique SVG complexe + Gemini "Kirikou poster") → ❌ Hors esthétique V7
+- Tentative Pipeline B (croquis épuré + 3 frames V7 + brief "flat cartoon storybook") → ✅ Parfait au 1er coup
+- Lien final : https://files.catbox.moe/uthppp.png
+- Coût : $0.04 (1 seule passe multi-images)
+
+### Anti-patterns Pipeline B identifiés
+
+- **Ne PAS** mettre un dessin SVG complexe dans le croquis — Gemini va essayer de "respecter" le SVG approximatif au lieu d'imiter les références
+- **Ne PAS** oublier les anti-règles dans le brief ("DO NOT make it photorealistic") — sans ça, Gemini glisse vers son défaut (illustration éditoriale dramatique)
+- **Ne PAS** mélanger styles dans les frames de référence — choisir 3 frames du même univers visuel cohérent
+- **Ne PAS** demander à Gemini de "créer un nouveau personnage" — préciser "in the EXACT style of the characters in references 2-N"
+
+### Coûts comparatifs Pipeline A vs B
+
+| Pipeline | Coût typique | Itérations moyennes | Réussite 1er coup |
+|----------|--------------|---------------------|-------------------|
+| A (edit chirurgical) | $0.04-0.08 | 1-2 | 80% |
+| B (création guidée multi-refs) | $0.04 | 1 | 95% (quand bien briefé) |
+
+Pipeline B est **plus fiable** que A quand on dispose d'images de référence de la vidéo source.
+
+---
+
+## Pipeline Carousel Instagram — Validé 2026-05-31
+
+**Contexte :** Générer des carousels Instagram 8 slides (1080×1920px) pour Kora & Cartes à partir des frames des vidéos publiées.
+
+**Modèle :** `gemini-3.1-flash-image-preview` — 1 appel par slide (~$0.04), ~$0.32 par carousel.
+
+### Règles obligatoires (toutes les slides)
+
+**Header fixe :**
+- Logo "K&C" centré en gold (#c8a951)
+- UNE SEULE rangée de 8 barres fines gold (barre active = pleine, autres = 25% opacité)
+- PAS de texte "SLIDE X/8". PAS de chiffres sous les barres.
+- Footer : "@koraetcartes" centré en gold
+
+**Palette :** fond `#16213a` | accent `#c8a951` | texte `#F5E6C8`
+
+**Langue :** Ajouter SYSTÉMATIQUEMENT dans chaque brief : "Tout le texte en français uniquement. Zéro mot anglais autorisé." — Gemini génère parfois de l'anglais sans cette instruction.
+
+### Règle géographie (NON-NEGOTIABLE)
+
+Jamais demander à Gemini de **dessiner** une carte — il hallucine les frontières. Toujours injecter une frame Mapbox extraite de nos vidéos comme référence image.
+
+### Préparation des frames de référence
+
+Rogner les 18% inférieurs pour éliminer les sous-titres brûlés :
+```python
+cropped = img.crop((0, 0, w, int(h * 0.82)))
+```
+
+### Slides avec graphiques (type barres comparatives)
+
+**Option A (overlay fort 60-65%)** : les textes structurels restent visibles en filigrane — NON satisfaisant.
+**Option B (génération libre)** : Gemini génère un visuel original (balance, lingots, icône) — RECOMMANDÉ.
+
+Règle : si le graphique a des textes intégrés dans sa structure (labels de barres, titres), utiliser Option B.
+
+### Structure slides comparatives (type Rockefeller vs Mansa Moussa)
+
+Toujours structurer ainsi pour éviter l'ambiguïté :
+1. Référence connue + chiffre ("ROCKEFELLER EN 1913 / $400 Mds")
+2. Label explicatif ("La fortune la plus connue de l'histoire.")
+3. Ligne séparatrice gold
+4. La révélation ("Mansa Moussa la dépassait. De loin.")
+
+### CTA universelle (slide 8 de tous les carousels)
+
+"La vidéo complète est sur notre compte. / Cherche @koraetcartes"
+
+**Pourquoi pas YouTube :** Instagram pénalise algorithmiquement les posts pointant vers des liens externes. Pointer vers le compte Instagram lui-même = zéro pénalité.
+
+### Artefacts à surveiller
+
+- **Bérets/uniformes modifiés** : Gemini peut changer des détails visuels (couleur béret, insignes) même avec instruction de fidélité. Inspecter systématiquement les slides avec personnages historiques.
+- **Correction chirurgicale i2i** : envoyer la slide + frame originale + instruction précise de correction.
+- **Double rangée de barres** : préciser "UNE SEULE rangée de barres" — Gemini peut générer 2 rangées.
+- **Chiffres sous les barres** : préciser "PAS de chiffres sous les barres".
+
+### Contact sheet (validation Aziz)
+
+```python
+from PIL import Image
+# 4×2 grid, 270×480px par thumb, fond #16213a, GAP 12px
+sheet = Image.new("RGB", (4*270+5*12, 2*480+3*12), (22, 33, 58))
+```
+
+### Carousels Kora & Cartes — Statut
+
+| Carousel | Date pub | Statut |
+|---|---|---|
+| Or Africain | 2 juin | ✅ VALIDÉ |
+| Thiaroye | 6 juin | ✅ VALIDÉ |
+| Niger Uranium | 9 juin | ❌ ABANDONNÉ (contenu trop complexe) |
+| Mansa Moussa | 11 juin | ✅ VALIDÉ |
+| Empire Ghana | 13 juin | pending |
+| Soundjata | 16 juin | pending |
+| Silicon Savannah | 18 juin | pending |
+| Vraie Taille Afrique | 4 juin | pending |
+| Sénégal Pétrole | 20 juin | pending |

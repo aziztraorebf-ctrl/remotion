@@ -76,6 +76,59 @@ Si quelqu'un a publié dans les 30 derniers jours avec angle quasi-identique →
 }
 ```
 
+### Étape 0.6 : Formule de titrage (ajoutée 2026-05-30, learning MDVL_mindset)
+
+Le titre est une mécanique de distribution algorithmique. Pour les sujets Atlas (données, géo, économie), les 4 patterns classés par efficacité Souverain économique :
+
+| Pattern | Principe | Exemple Atlas/Souverain |
+|---------|----------|-------------------------|
+| **Pont anachronique** | [sujet africain] + [tension contemporaine universelle] | "Comment le Niger a financé l'énergie française pendant 53 ans" / "Ce que le Sénégal sait que Wall Street ignore" |
+| **Titre-contradiction** | Renverser une croyance sur les ressources africaines | "L'uranium africain n'enrichit pas l'Afrique" / "Tu te trompes sur qui profite du pétrole sénégalais" |
+| **Défi 2e personne** | Mise en jeu directe du viewer | "Tu ne réalises pas à quel point l'Afrique finance l'Occident" / "Ce que tu crois savoir sur les contrats pétroliers est faux" |
+| **Mot-clé émotionnel CAPS** | Emphase vocale sur le twist central | "Le Sénégal a signé. Et a TOUT perdu." / "Mali était PLUS riche que l'Europe" |
+
+**Règle prioritaire** pour les sujets géopolitiques/économiques (Niger uranium, Sénégal pétrole, Maroc batteries) : le pont anachronique est le pattern le plus fort — il ancre la problématique africaine dans une question que le viewer se pose déjà sur son propre monde.
+
+**Différence avec ebauche-v1** : les sujets Atlas supportent des titres plus directs sur les inégalités économiques car la base factuelle est vérifiable et chiffrée — pas de risque de romantisation.
+
+### Règles empiriques titres (données 2025-2026 — NON-NEGOTIABLE)
+
+Issues d'études sur 60 000 à 800 000 vidéos YouTube. Pas des opinions — des mesures.
+
+1. **Zéro date dans le titre** — Les titres avec une année (ex: "en 2007", "depuis 1944") reçoivent 53% moins de vues médianes. La date vieillit le titre, l'algorithme le distribue moins au fil du temps. Les dates vont dans la description ou les captions visuelles.
+
+2. **Cible 50 caractères, maximum 55** — La longueur de titre suit une courbe monotone : plus court = mieux distribué + mieux affiché mobile. La plage 60-70 caractères = déjà -59% de performance vs un titre sous 20 caractères. Chaque mot inutile coûte de la distribution.
+
+3. **Chiffre précis en unités quotidiennes** — Les titres avec un chiffre précis surperforment de 23% dans les niches éducatives (VidIQ 2025). Mais le chiffre doit être en unités compréhensibles physiquement : "9 centimes sur l'euro" pas "9,2%". "16 millions d'habitants" pas "petit pays africain".
+
+4. **Tension binaire courte en priorité** — Deux faits opposés dans le même titre battent la formulation descriptive. Format : "[Fait A]. [Fait B contradictoire]." ou "[Entité A] a [action]. [Entité B] a [action contraire]." Zéro terme à décoder pour le viewer.
+
+5. **Formules mortes à proscrire** — Ces patterns ont chuté de 34% en CTR entre 2023 et 2025 et signalent du contenu conspirationniste qui tue la crédibilité éducative :
+   - "Nobody talks about this"
+   - "What they're hiding" / "Ce qu'ils cachent"
+   - "The real reason X" / "La vraie raison de X"
+   - "What nobody tells you" / "Ce qu'on ne te dit pas"
+   - "They don't want you to know" / "Ils ne veulent pas que tu saches"
+   - Titres en ALL-CAPS intégral
+
+**Test rapide avant de valider un titre :** (1) contient une date ? → retirer. (2) dépasse 55 caractères ? → compresser. (3) contient une des formules mortes ? → réécrire. (4) les deux faits en tension sont-ils dans les 48 premiers caractères ? → sinon réordonner.
+
+**Anti-pattern absolu** : "Le pétrole du Sénégal", "L'uranium nigérien" — titre descriptif = invisibilité algorithmique + double audience ratée.
+
+**OBLIGATOIRE — Appliquer AUSSI la règle du titre hybride (Section 9 de `memory/rules-souverain-editorial.md`) :**
+Les règles techniques ci-dessus valident le FORMAT. La règle hybride valide le PRINCIPE. Les deux sont obligatoires simultanément.
+Résumé règle hybride : tout titre doit passer le **Test Tokyo** — "quelqu'un à Tokyo/Paris/Montréal qui ne s'intéresse pas à l'Afrique a une raison de cliquer ?" Si non → reformuler avec ancrage mondial.
+Exemples fusionnant les deux couches : "Le Niger recevait 9 centimes sur l'euro depuis 53 ans" ✅ — "Le pays qui a inventé le paiement mobile avant Apple" ✅ — "Le Maroc détient 70% des batteries de demain" ✅
+
+**Documenter dans le manifest** :
+```json
+{
+  "titre_choisi": "...",
+  "pattern_applique": "pont-anachronique | titre-contradiction | defi-2e-personne | caps-emotionnel",
+  "double_audience_ciblée": "passionné géopolitique | grand public question contemporaine"
+}
+```
+
 ### Étape 1 : Découpage en 6 segments (structure Atlas fixe)
 
 Pour un Short 80-90s :
@@ -92,12 +145,22 @@ Pour un Short 80-90s :
 **Règle climax** : entre 35% et 50% du Short.
 **Règle équilibre** : pré-climax ≥ post-climax (sinon le spectateur swipe).
 
+**Note sur l'ordre émotionnel (learning MDVL_mindset 2026-05-30)** : ne pas ouvrir par la donnée brute ou le contexte historique. Pour les sujets géopolitiques/économiques, la structure émotionnellement efficace est :
+1. **Situation absurde ou conséquence humaine** (hook) — "Il y a 1 300 tonnes d'uranium bloquées dans le désert. Elles valent 250 millions. Personne ne peut y toucher."
+2. **Contexte minimal** (setup) — qui, où, quand en 2-3 phrases
+3. **Mécanisme** (densité Cesar) — comment c'est arrivé, les chiffres
+4. **Conséquence** — l'effet domino
+→ Ne jamais ouvrir par "En 1968, le Niger signait un accord..." — l'ordre chronologique anesthésie. Réserver la chronologie au segment Setup (segment 1), jamais au Hook (segment 0).
+
 ### Étape 2 : Écriture première passe segment par segment
 
 - **Densité cible** : 2.0-2.4 mots/s (plus lent qu'ebauche-v1 car la densité Cesar demande respiration)
 - **Phrases courtes** (3-7 mots majoritaires)
 - **Pivots Atlas** à utiliser (voir étape 6)
 - **Sources implicites** : tous les chiffres doivent être vérifiables (pas d'approximation)
+- **Une stat centrale, en unités de vie quotidienne (learning MDVL_mindset 2026-05-30)** : identifier LA stat qui résume tout le sujet. La convertir en unité physique ou quotidienne compréhensible immédiatement. Ex: "neuf centimes sur l'euro reviennent au Niger" plutôt que "le taux de redevance est de 9,2%". Ex: "la valeur d'un immeuble de sept étages pour chaque kilomètre de pipeline" plutôt que "280 000 dollars par kilomètre". Les autres chiffres passent en captions visuelles, pas en narration. Règle : **1 stat centrale parlée + stats secondaires visuelles**.
+- **Termes techniques : jamais seuls (jury LLM 2026-05-30)** : les acronymes et termes spécialisés (LFP, OCP, cathodes, fer-phosphate, redevance ad valorem, etc.) ne s'utilisent en voix-off que de deux façons — soit remplacés par leur description fonctionnelle ("le géant public marocain des phosphates", "batteries nouvelle génération"), soit introduits avec leur définition inline la première fois ("L'OCP — le géant public marocain des phosphates —"). Jamais balancés seuls sans contexte. Les sujets économiques/géopolitiques chiffrés sont particulièrement exposés à ce risque.
+- **Conditionnel en hook : ancre temporelle obligatoire (jury LLM 2026-05-30)** : "sortira peut-être d'ici" en première phrase = le viewer perçoit le sujet comme hypothétique, il ne s'investit pas. Si un conditionnel est nécessaire dans le hook, le précéder d'une ancre temporelle précise qui crée la certitude de calendrier. ❌ "sortira peut-être d'ici" → ✅ "Dans deux ans, sortira peut-être d'ici" ou ✅ "est en construction" / "sort de terre" (présent réel).
 
 ### Étape 3 : Critique proactive Claude
 
@@ -230,6 +293,7 @@ C'est exactement le piège des chaînes "histoire cachée" / "qu'on t'a caché" 
 - **Densité chiffrée mise en perspective** — chaque stat est CONTEXTUALISÉE (pas balancée)
 - **CTA invitation factuelle** — "demande autour de toi", "pose-toi la question" (pas accusateur, pas présomptif)
 - **Pas d'humour gratuit** — l'émotion vient du chiffre, pas de la blague
+- **Mélange de registres autorisé (learning MDVL_mindset 2026-05-30)** — l'émotion vient du contraste entre rigueur factuelle et proximité directe. Une suite de chiffres peut être suivie d'une phrase courte et directe sans jargon. Ex: "Quarante-trois ans de contrat. Renouvelé deux fois. Sans appel d'offres." — le registre familier-direct après les faits n'affaiblit pas la crédibilité, il humanise. Ce qui est interdit : l'argot ou l'humour auto-dérision. Ce qui est autorisé : des formulations directes et vives qui tranchent avec la densité chiffrée.
 
 ### CE QUI N'EST PAS Atlas
 - ❌ **Humour blagueur Jacques** ("la Croatie est égoïste") — risqué en LLM, ratio rate/réussite mauvais
@@ -288,6 +352,12 @@ D'après l'analyse cross-video Jacques a dit, voici les composants à utiliser d
 6. **Tu direct >3 fois** — devient intrusif, casse le ton didactique.
 7. **Tu présomptif** ("tu n'avais jamais entendu", "tu ne savais pas") — exclut les viewers informés, condescendant, registre conspirationniste qui plafonne à 200-700 vues. Voir règle "Tu invitatif vs présomptif".
 8. **CTA accusateur** ("on t'a menti", "on te cache") — registre conspirationniste. Atlas reste sur invitations factuelles ("demande autour de toi", "pose-toi la question").
+9. **Ping-pong de contestation (learning MDVL_mindset 2026-05-30)** — neutralité éditoriale ne signifie pas interrompre chaque information par sa contestation immédiate. "Niamey dit X / Orano dit non / Niamey répond Y / Orano conteste" = rythme haché qui brouille la compréhension et semble ne pas prendre position. Technique correcte : construire deux blocs séparés et cohérents — d'abord les faits documentés, ensuite les positions des parties. Ex Sénégal pétrole : segment 2 (données contrat), segment 3 (position gouvernement), segment 4 (position compagnies) — pas d'alternance ligne à ligne.
+10. **Ouverture par donnée brute** (learning MDVL_mindset 2026-05-30) — "Selon le FMI, le taux de redevance est de 9,2%" en première phrase ne crée pas d'engagement. La donnée brute informe sans impliquer. Voir l'Étape 1 note sur l'ordre émotionnel — la situation absurde ou conséquence humaine TOUJOURS avant les données.
+11. **Termes techniques balancés seuls (jury LLM 2026-05-30)** — acronymes et jargon sans contexte immédiat (LFP, OCP, fer-phosphate, cathodes) sont opaques pour 90% des viewers. Deux options : description fonctionnelle à la place ("batteries nouvelle génération", "le géant public marocain des phosphates") ou définition inline à la première occurrence ("L'OCP — le géant public marocain des phosphates —"). ❌ "Gotion, LFP, cathodes lithiées." → ✅ "Des batteries à base de fer et de phosphate — plus stables, moins chères — produites par Gotion."
+12. **Style télégraphique sur données factuelles sèches (jury LLM 2026-05-30)** — les fragments courts séparés par des points fonctionnent pour les images physiques et les contrastes émotionnels, pas pour les listes de faits neutres. ✅ "Des cailloux. À bas prix." (image + contraste) / ✅ "Payer ses soldats. Nourrir sa population." (conséquences humaines en cascade). ❌ "Gotion High-Tech, chinois. Volkswagen, quarante pour cent actionnaire. Démarrage 2026." (liste de faits sans lien émotionnel = bulletin d'information). Règle : style télégraphique réservé aux moments d'impact émotionnel. Les données factuelles s'écrivent en phrases complètes.
+13. **Stats de réserves/ressources sans projection (jury LLM 2026-05-30)** — "soixante-dix pour cent des réserves mondiales" seul reste abstrait même en l'absence de jargon. Toujours ajouter une projection en unités compréhensibles qui calibre l'échelle. ❌ "soixante-dix pour cent des réserves mondiales de phosphates" → ✅ "soixante-dix pour cent des réserves mondiales — assez pour équiper toutes les voitures électriques prévues d'ici deux mille quarante". Extension de la règle "1 stat centrale en unités quotidiennes" : quand la stat est une part de réserve/ressource, la projection temporelle ou d'usage est l'unité compréhensible.
+14. **Tension binaire avec registres déséquilibrés (jury LLM 2026-05-30)** — quand deux perspectives s'affrontent en blocs séparés (Maroc / Europe, Niger / Orano, Sénégal / Total), les deux blocs doivent avoir le même registre émotionnel. Si le premier a un verbe actif et une conséquence tangible, le second aussi. ❌ "Pour le Maroc : sortir du piège de l'exportation brute. Pour l'Europe : une assurance." ("assurance" = plat, sans conséquence). ✅ "Pour le Maroc : sortir enfin du rôle de fournisseur de matière première. Pour l'Europe : réduire sa dépendance à la Chine sans délocaliser à l'autre bout du monde."
 
 ---
 

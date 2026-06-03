@@ -16,6 +16,7 @@ export interface LaCalebasseProps {
   sublabel?: string;
   liquidColor?: string;
   strokeColor?: string;
+  textColor?: string;
   bgColor?: string;
   startFrame?: number;
 }
@@ -75,6 +76,7 @@ export function LaCalebasse({
   sublabel = "URANIUM NIGER · 2024",
   liquidColor = "#c8a951",
   strokeColor = "#f2ebd9",
+  textColor = "#4a9eff",
   bgColor = "transparent",
   startFrame = 0,
 }: LaCalebasseProps) {
@@ -94,10 +96,12 @@ export function LaCalebasse({
 
   // ─── Liquid fill — vertical translate (frames 15-75) ─────────────────────
 
+  // Cap fill at 100% visually; overflow handled via drip animation
+  const fillPct = Math.min(percentage, 100);
   const liquidTranslateY = interpolate(
     f,
     [15, 75],
-    [500, 500 - (percentage / 100) * 450],
+    [500, 500 - (fillPct / 100) * 450],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
@@ -107,6 +111,16 @@ export function LaCalebasse({
   // ─── Liquid fill — horizontal wave (frames 15-infinity, deterministic) ───
 
   const waveTranslateX = -(((f - 15) * 3) % 400);
+
+  // ─── Overflow drips (only when percentage > 100) ─────────────────────────
+
+  const isOverflow = percentage > 100;
+  const drips = isOverflow ? [0, 22, 44].map((offset) => {
+    const cycle = 70;
+    const t = f > 75 ? ((f - 75 + offset) % cycle) / cycle : 0;
+    const dripsOp = interpolate(f, [75, 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return { t, opacity: dripsOp };
+  }) : [];
 
   // ─── Count-up odometer (frames 40-70) ────────────────────────────────────
 
@@ -194,6 +208,24 @@ export function LaCalebasse({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
+
+            {/* Overflow drips — 3 drops falling from rim when percentage > 100 */}
+            {drips.map((drip, i) => {
+              const xPositions = [110, 200, 290];
+              const dropY = 46 + drip.t * 100;
+              const dropSize = 1 - drip.t * 0.5;
+              return (
+                <ellipse
+                  key={i}
+                  cx={xPositions[i]}
+                  cy={dropY}
+                  rx={10 * dropSize}
+                  ry={16 * dropSize}
+                  fill={liquidColor}
+                  opacity={drip.opacity * (1 - drip.t * 0.5)}
+                />
+              );
+            })}
           </svg>
         </div>
 
@@ -260,7 +292,7 @@ export function LaCalebasse({
                 fontFamily: FONT_MONO,
                 fontSize: 32,
                 fontWeight: 400,
-                color: "#4a9eff",
+                color: textColor,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 textAlign: "center",

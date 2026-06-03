@@ -39,7 +39,9 @@
       "mcp__mapbox__*",
       "mcp__playwright__*",
       "mcp__firecrawl__*",
-      "mcp__github__*"
+      "mcp__github__*",
+      "Bash(python3 -c \"import ast; ast.parse\\(open\\('scripts/beat-session.py'\\).read\\(\\)\\); print\\('beat-session.py : syntaxe OK'\\)\")",
+      "Bash(python3 scripts/beat-session.py --help)"
     ],
     "additionalDirectories": [
       "/Users/clawdbot/.claude",

@@ -1,6 +1,10 @@
 # Souverain — Règles éditoriales (consolidé)
 > Fusion de : feedback_souverain-* (7 fichiers), feedback_grille-sources-3-niveaux, feedback_typeB-script-rules, feedback_storyboard-souverain-refs-or-africain
 > Mis à jour : 2026-05-13
+>
+> **Extensions 2026-05-27 :**
+> - **Angle Macro** (audit obligatoire à l'étape validation sujet) → [`ANGLE-MACRO-SOUVERAIN.md`](ANGLE-MACRO-SOUVERAIN.md)
+> - **3 Templates Shorts validés** (planning visuel — A Géographe / B Hybride Or Africain / C Analyste) → [`out/SHOWCASES/templates-souverain/README.md`](../out/SHOWCASES/templates-souverain/README.md)
 
 ---
 
@@ -302,6 +306,33 @@ Reformuler tout sujet africain comme enjeu mondial — jamais comme affaire inte
 **Pourquoi :** Le titre hybride attire audience internationale (CPM 3-5x plus élevé), évite l'étiquette militante, reste 100% factuel.
 
 **Test de validation avant lock du titre :** "Est-ce que quelqu'un à Tokyo, Paris ou Montréal qui ne s'intéresse pas *a priori* à l'Afrique clique dessus ?" Si non → reformuler.
+
+**OBLIGATOIRE — Appliquer AUSSI les règles techniques de format (2026-05-30) :**
+Le Test Tokyo valide le PRINCIPE du titre. Les règles ci-dessous valident le FORMAT. Les deux couches sont obligatoires simultanément.
+
+| Règle technique | Contrainte | Pourquoi |
+|---|---|---|
+| Longueur | Cible 50 car., max 55 | Troncature mobile à ~50 car. — au-delà invisible |
+| Date dans le titre | INTERDITE | Pénalité -53% vues mesurée sur 60k vidéos |
+| Chiffre | En unités quotidiennes | "9 centimes sur l'euro" > "9,2%" — +23% CTR niches éducatives |
+| Tension | Binaire dans les 48 premiers car. | Friction cognitive = décision de clic |
+| Formules mortes | INTERDITES | -34% CTR : "Ce qu'ils cachent", "La vraie raison de X", "Nobody talks about this" |
+
+**Test de fusion (les deux couches) — avant tout lock :**
+1. Test Tokyo : quelqu'un hors Afrique a une raison de cliquer ? → si non, reformuler
+2. Longueur ≤55 car. ? → si non, compresser
+3. Date calendaire présente ? → retirer
+4. Tension binaire ou chiffre quotidien dans les 48 premiers car. ? → si non, réordonner
+
+**Référence complète règles techniques :** `memory/templates/script-atlas-v1.md` Étape 0.6 + `memory/templates/script-ebauche-v1.md` Étape 0.6
+
+**Titres validés session 2026-05-30 (exemples fusionnant les deux couches) :**
+- "Ils ont libéré la France. Elle les a massacrés." (Thiaroye, 49 car.) ✅
+- "Le Niger recevait 9 centimes sur l'euro depuis 53 ans" (Niger, 52 car.) ✅
+- "Le pays qui a inventé le paiement mobile avant Apple" (Silicon Savannah, 52 car.) ✅
+- "Les USA, la Chine et l'Europe tiennent dans l'Afrique" (Vraie Taille, 50 car.) ✅
+- "16 millions d'habitants ont fait trembler Tesla" (Zimbabwe, 48 car.) ✅
+- "Le Maroc détient 70% des batteries de demain" (Maroc Batteries, 43 car.) ✅
 
 ---
 

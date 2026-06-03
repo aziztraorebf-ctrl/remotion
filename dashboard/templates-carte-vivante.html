@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Templates Carte Vivante — Souverain</title>
+<style>
+  :root {
+    --navy: #16213a;
+    --navy-deep: #0f1729;
+    --navy-card: #1b2942;
+    --navy-card-hover: #223150;
+    --gold: #c8a951;
+    --gold-soft: #b6963f;
+    --ivory: #f2ebd9;
+    --ivory-mid: #b9b39f;
+    --ivory-dim: #7c7866;
+    --border: #2a3a57;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--navy-deep);
+    color: var(--ivory);
+    font-family: 'Georgia', 'Times New Roman', serif;
+    line-height: 1.5;
+    padding: 0 24px 80px;
+    background-image: radial-gradient(circle at 20% 0%, rgba(200, 169, 81, 0.06), transparent 55%),
+                      radial-gradient(circle at 80% 10%, rgba(22, 33, 58, 0.8), transparent 60%);
+  }
+
+  .wrap { max-width: 1320px; margin: 0 auto; }
+
+  header {
+    padding: 48px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 36px;
+  }
+
+  header .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.32em;
+    font-size: 12px;
+    color: var(--gold);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+
+  header h1 {
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+    line-height: 1.1;
+  }
+  header h1 span { color: var(--gold); }
+
+  .meta {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 13px;
+    color: var(--ivory-mid);
+  }
+  .meta .chip {
+    border: 1px solid var(--border);
+    background: var(--navy-card);
+    border-radius: 999px;
+    padding: 7px 16px;
+  }
+  .meta .chip strong { color: var(--gold); font-weight: 700; }
+
+  .intro {
+    margin: 28px 0 0;
+    max-width: 760px;
+    font-size: 15px;
+    color: var(--ivory-mid);
+    font-style: italic;
+  }
+
+  section { margin-top: 56px; }
+
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 28px;
+  }
+  .section-head h2 {
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
+    color: var(--gold);
+  }
+  .section-head .sub {
+    font-size: 14px;
+    color: var(--ivory-dim);
+    font-style: italic;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 24px;
+  }
+
+  .card {
+    background: var(--navy-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 20px 22px;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  }
+  .card:hover {
+    border-color: var(--gold);
+    background: var(--navy-card-hover);
+    transform: translateY(-2px);
+  }
+
+  .card .title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 21px;
+    color: var(--ivory);
+    margin-bottom: 6px;
+  }
+  .card .title .star { color: var(--gold); font-size: 14px; letter-spacing: -2px; }
+
+  .card .desc {
+    font-size: 14px;
+    color: var(--ivory-mid);
+    min-height: 42px;
+    margin-bottom: 16px;
+  }
+
+  .videos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .vid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .vid .lbl {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+  }
+  video {
+    display: block;
+    background: #000;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    width: 100%;
+  }
+  .vid.vertical { flex: 0 0 130px; }
+  .vid.vertical video { aspect-ratio: 1080 / 1920; }
+  .vid.horizontal { flex: 1 1 220px; min-width: 220px; }
+  .vid.horizontal video { aspect-ratio: 1920 / 1080; }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    font-size: 12px;
+    color: var(--ivory-dim);
+    text-align: center;
+  }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .vid.vertical { flex: 0 0 110px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Souverain · Mapbox Carte Vivante</div>
+    <h1>Templates <span>Carte Vivante</span></h1>
+    <div class="meta">
+      <div class="chip"><strong id="count">17</strong> templates</div>
+      <div class="chip">6 catégories</div>
+      <div class="chip">Mise à jour <strong>2026-06-02</strong></div>
+      <div class="chip">Hybrides V + H</div>
+    </div>
+    <p class="intro">Vraie carte Mapbox — drift fluide, altitude pays, océan navy #16213a, voisins ivory, accents gold. Chaque template existe en vertical (1080×1920) et horizontal (1920×1080).</p>
+  </header>
+
+  <!-- HOOKS -->
+  <section>
+    <div class="section-head">
+      <h2>🎬 Hooks</h2>
+      <span class="sub">Ouverture de vidéo — punch dès la frame 0 (5-30s)</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title"><span class="star">★</span> KineticMaskSlam</div>
+        <div class="desc">Chiffre/mot géant slamme, carte visible DANS le texte, zoom dans le "0" révèle la carte. Ouvrir sur un chiffre choc.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/9hu9oe.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/6zivbg.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title"><span class="star">★</span> FiberOpticFlagInvade</div>
+        <div class="desc">Frontière se trace en laser PUIS le drapeau envahit le pays, séquentiel multi-pays. Présenter un bloc régional.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/6jtjc7.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/v0ot0h.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- COMBOS -->
+  <section>
+    <div class="section-head">
+      <h2>🔗 Combos</h2>
+      <span class="sub">Hooks par assemblage — progression narrative</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title"><span class="star">★</span> ComboMaskSweep</div>
+        <div class="desc">Chiffre choc → révèle carte → faisceau allume le pays. Le hook 3 temps le plus abouti.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/h75bhk.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/n9f3u3.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">ComboSweepDominoFlag</div>
+        <div class="desc">Déclencheur → propagation par vagues → chaque pays reçoit son drapeau. Raconter une dynamique régionale (AES, CEDEAO).</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/httrq8.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/yyfa3a.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">ComboFiberAuraPopup</div>
+        <div class="desc">Frontière (où) → onde du point (quoi) → encart donnée relié (combien). Data storytelling premium.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/4byelm.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/ypg7vp.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- INSERTS -->
+  <section>
+    <div class="section-head">
+      <h2>🎞️ Inserts</h2>
+      <span class="sub">Couper la carte puis revenir — pendant la narration</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title"><span class="star">★★</span> MapCutaway</div>
+        <div class="desc">Carte → overlay plein écran → retour carte + target lock. Textes TYPEWRITER. 4 modes : stat, image, flag, reveal. Le plus réutilisable.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Mode Stat</span><video src="https://files.catbox.moe/pbjdzd.mp4" controls preload="metadata"></video></div>
+          <div class="vid vertical"><span class="lbl">Mode Image</span><video src="https://files.catbox.moe/88s176.mp4" controls preload="metadata"></video></div>
+          <div class="vid vertical"><span class="lbl">Mode Flag</span><video src="https://files.catbox.moe/rg4j0i.mp4" controls preload="metadata"></video></div>
+          <div class="vid vertical"><span class="lbl">Mode Reveal</span><video src="https://files.catbox.moe/5ech8j.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">RapidFireCountries</div>
+        <div class="desc">Rafale de pays (drapeau+nom, cut sec) puis freeze sur LE pays. Énergie d'introduction d'un pays.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/a09vsm.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/yamy5v.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">ClassifiedRedactReveal</div>
+        <div class="desc">Écran TOP SECRET + censure qui glisse → révèle carte + target lock. Révélation, ton investigation.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/z95wbs.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/noljgi.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TERRITOIRE -->
+  <section>
+    <div class="section-head">
+      <h2>🌍 Territoire</h2>
+      <span class="sub">Couleur / drapeau / zone dans les pays — corps de vidéo</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title">MapboxFlagFill</div>
+        <div class="desc">Drapeau OU toute image clippé(e) dans la silhouette du pays + bichromie. "Le drapeau/la texture remplit le pays".</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/80ti00.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/xay797.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">MapboxIsolateZone</div>
+        <div class="desc">Spotlight pays (reste assombri) + zone offshore hachurée + badge + stat. "On isole ce pays et sa zone".</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/nv5azm.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/npq08b.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">SequentialFlagReveal</div>
+        <div class="desc">Pays s'allument avec leur drapeau en séquence, restent allumés. "Les pays X, Y, Z avec leur drapeau".</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/i7bq1e.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/tyat4h.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">GlassmorphismGeoPopup</div>
+        <div class="desc">Encarts données (navy translucide + or) reliés au point geo par ligne fine. "Afficher des chiffres ancrés sur la carte".</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/p6f31u.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/04tkmg.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DYNAMIQUES -->
+  <section>
+    <div class="section-head">
+      <h2>⚡ Dynamiques</h2>
+      <span class="sub">Mouvement de couleur sur les territoires — accroche l'œil</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title"><span class="star">★</span> SweepRevealTerritory</div>
+        <div class="desc">Faisceau lumineux traverse le pays et révèle sa couleur (scanner). Révéler un pays avec dynamisme.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/g1bvis.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/m96rpq.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">DominoContagionFill</div>
+        <div class="desc">Couleur contamine les pays de proche en proche par vagues. Montrer une propagation d'influence.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/3f2shf.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/spjlqt.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title"><span class="star">★</span> FiberOpticBorderDraw</div>
+        <div class="desc">Frontière se dessine en laser doré (dasharray + glow) puis fill. Tracer une frontière/ZEE avec style.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/be2pd0.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/7k3zf6.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SEQUENTIEL -->
+  <section>
+    <div class="section-head">
+      <h2>🎯 Séquentiel / Allumage</h2>
+      <span class="sub">Allumage rythmé, synchro syllabe</span>
+    </div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="title">SequentialBorderPulse</div>
+        <div class="desc">Frontières s'allument en séquence (synchro syllabe), restent allumées. "Les pays s'allument un par un".</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/3lcys8.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/flk7c8.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="title">LottieGeoAura</div>
+        <div class="desc">Lottie premium (onde de choc / anneau HUD / flux) ancré à un point geo. Effet animé premium sur un site.</div>
+        <div class="videos">
+          <div class="vid vertical"><span class="lbl">Vertical</span><video src="https://files.catbox.moe/kqybi6.mp4" controls preload="metadata"></video></div>
+          <div class="vid horizontal"><span class="lbl">Horizontal</span><video src="https://files.catbox.moe/jxkicc.mp4" controls preload="metadata"></video></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    Souverain — <span>Carte Vivante</span> · Source : src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md · Render : scripts/render-mapbox.sh
+  </footer>
+
+</div>
+</body>
+</html>

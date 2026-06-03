@@ -1,0 +1,33 @@
+Tu es directeur artistique senior en motion design cartographique premium. Objectif : pousser ce beat vers 8/10 minimum.
+
+BEAT 1 — PHOSPHATE (21 secondes)
+Voix-off : "Sous le sol marocain dort 70% des réserves mondiales de phosphate, assez pour équiper toutes les voitures électriques prévues d'ici 2040. Le phosphate est l'ingrédient clé des batteries nouvelle génération, celles qui équiperont la majorité des voitures électriques d'entrée et milieu de gamme."
+
+CORRECTIONS DÉJÀ FAITES (ne pas re-suggérer) :
+- Maroc gold immédiat dès f0
+- Slam "70%" SVG mask centré, tient dans le cadre vertical
+- Caméra dynamique : orbit → zoom Khouribga → Pull Back → drift large
+- Labels géolocalisés via map.project() — suivent les points sur la carte
+- Ligne rouge Khouribga→Kénitra avec glow
+- Dot Kénitra rouge (usine) vs Khouribga gold (mine)
+
+CONTRAINTES STRICTES :
+- Headless Mapbox, jumpTo() uniquement
+- Palette navy #16213a + gold #c8a951 + ivory #f2ebd9 + red #e63946
+- 1 seule Map continue, pas d'archives vidéo
+- Remotion React/TypeScript
+
+TEMPLATES DISPONIBLES (catalogue validé) :
+- DominoContagionFill : couleur propage pays par pays
+- SequentialBorderPulse : frontières s'allument en séquence
+- GlassmorphismGeoPopup : encart glassmorphism ancré géo
+- LottieGeoAura : effet Lottie ancré point géo
+- fill-color layers Mapbox filtrés par ISO : colorer n'importe quel pays
+
+QUESTION NARRATIVE CENTRALE (critère #1) :
+"Le Maroc a 70% du phosphate mondial — ce phosphate devient les batteries des voitures électriques mondiales." Est-ce que cette histoire est lisible en 21s ? Qu'est-ce qui la casse ?
+
+QUESTION COULEURS CARTE (critère #2) :
+Comment colorer les pays voisins de façon narrative ? L'Espagne/Europe en bleu acier pour représenter le marché importateur ? Ça fonctionne selon toi ?
+
+Réponds en JSON avec : score_actuel (1-10), verdict, histoire_lisible (oui/non + pourquoi), ce_qui_casse_la_narrative (liste), corrections_pour_8_sur_10 (max 4, avec priorite/probleme/solution/technique/effort/impact_narrative), solution_couleurs_carte (approche + pays_a_colorer avec iso/couleur/raison), suggestion_differenciante.

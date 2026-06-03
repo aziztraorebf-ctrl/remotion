@@ -135,3 +135,172 @@ S'applique à **Atlas, Souverain, et tout projet futur avec Mapbox**.
 Le bug Niger (label décalé par rapport au polygone) vient de coordonnées hardcodées approximatives.
 Avec `search_and_geocode_tool`, le centroïde correspond exactement aux vraies frontières Mapbox
 → label toujours centré sur le bon territoire, quel que soit le projet.
+
+---
+
+## Caméra & projection — règles validées (2026-05-26)
+
+### Mercator obligatoire (NON-NÉGOCIABLE)
+Mapbox GL JS v3+ utilise `projection: "globe"` par défaut → vues sphériques non documentaires.
+Toujours forcer Mercator dans `style.load` ET après chaque `setStyle()` :
+```ts
+map.on("style.load", () => {
+  try { (map as any).setProjection?.("mercator"); } catch {}
+  applyGeoAfriqueV5(map);
+});
+```
+Sans ça : aux zooms ≤ 3, la carte se courbe en globe — incohérent avec le langage documentaire (Caspian, JH, Vox sont tous en Mercator).
+
+### Zoom max safe headless
+- **dark-v11 + GéoAfrique V5** : zoom max **5.8** sans tuiles grises
+- Au-delà (6+), les tuiles ne chargent pas assez vite en chrome-headless-shell → écran gris
+- **satellite-streets-v12 + pitch 60-70°** : zoom 14-15 OK (atterrissage ville)
+- Pour effet "zoom rapide + freeze", capper à 5.8 même si visuellement on voudrait plus
+
+### Mouvements caméra catalogués (Camera Lab v2)
+Référence : https://files.catbox.moe/v0v4e6.mp4 (12 scènes × 10s = 2 min)
+1. Drift Continu — bearing slow + lon sine wave
+2. Orbit + Dolly In — bearing 0→-180° + zoom 4.5→6.2
+3. Multi-Stop Whip Pan — blur 14px au pic du transit
+4. Zoom Rapide + Freeze — zoom 3.2→5.8 en 30% scène
+5. Tilt + Pull Back — pitch 0→60° puis zoom 5.5→3.0
+6. Counter-Rotation + Orbit — pitch 40°, bearing 0→-45°→35°
+7. Drift Lent + Blur Atmosphère — `filter: blur(1.5px)` permanent
+8. Pull Back Reveal Planétaire — zoom 5.5→2.8 en 60f
+9. Zoom Sol 3D — `satellite-streets-v12`, zoom 4→14, pitch 0→65°
+10. Fade CSS Style Switch — opacity 1→0→1 autour de `setStyle()`
+11. Whip Pan + Style Switch — blur 14px cache le changement
+12. Zoom Out + Style Switch + Zoom In — pull back continent → switch → redolly
+
+### Transitions de style (3 techniques validées)
+`setStyle()` est async → ne jamais switcher sans masquer le délai :
+- **Fade CSS** (simple, sobre) : `opacity` du container 1→0 sur 15f, switch, 0→1 sur 15f
+- **Whip pan + switch** : blur 14px atteint son pic au moment du `setStyle()` → invisible
+- **Zoom out + switch + zoom in** : pull back zoom 2, switch au creux, redolly satellite
+
+Toujours réappliquer `setProjection("mercator")` + `applyGeoAfriqueV5()` après chaque switch vers dark.
+
+---
+
+## Techniques overlay validées headless (2026-05-26)
+
+Toutes testées dans `MapboxOverlayLab` — render chrome-headless-shell confirmé.
+
+### Champ ISO obligatoire — country-boundaries-v1
+- **TOUJOURS** `iso_3166_1_alpha_3` : `"SEN"`, `"NGA"`, `"GHA"`, etc.
+- **JAMAIS** `iso_3166_1_numeric` ("686", "566"...) — ne filtre pas en headless
+- Source partagée : `mapbox://mapbox.country-boundaries-v1`, source-layer : `country_boundaries`
+
+### Fill-pattern (drapeau sur territoire)
+```ts
+map.addImage("flag-sn", { width, height, data: ctx.getImageData(...).data });
+map.addLayer({ type: "fill", paint: { "fill-pattern": "flag-sn" },
+  filter: ["==", ["get", "iso_3166_1_alpha_3"], "SEN"] });
+// Tiling automatique sur toute la superficie
+// Opacité animable via setPaintProperty("fill-opacity", t)
+```
+
+### Canvas animé (drapeau ondulant frame par frame)
+- `map.updateImage("id", { width, height, data })` **fonctionne en headless** ✅
+- Appeler à chaque frame dans le useEffect sans deps
+- Fallback : si `updateImage` throw → removeImage + addImage
+- Résultat : mosaïque de l'image canvas qui ondule sur tout le territoire
+
+### Fill-extrusion 3D
+```ts
+map.addLayer({ type: "fill-extrusion", paint: {
+  "fill-extrusion-color": "#c8a951",
+  "fill-extrusion-height": 0,   // animer via setPaintProperty
+  "fill-extrusion-opacity": 0.85,
+}});
+// Pitch ≥ 30° obligatoire pour que l'effet soit visible
+// Hauteurs en mètres — Nigeria PIB ~ 180000, Ghana ~ 80000, Sénégal ~ 45000
+```
+
+### Line dasharray tracé progressif
+```ts
+// dasharray [filled, gap] — faire varier filled de 0→20 sur tScene
+const drawn = easeInOut(tScene) * 20;
+map.setPaintProperty("layer", "line-dasharray", [drawn, Math.max(0, 20 - drawn)]);
+```
+
+### Markers spring pop séquentiel
+```ts
+// DOM marker + transform scale via el.style.transform = `scale(${springBounce(t)})`
+// Délai par index : tLocal = clamp01((tScene - i * 0.08) / 0.3)
+// Pulse continu après apparition : scale = 1 + sin(t * PI * 4) * 0.15
+```
+
+### Gradient canvas animé (vague, radial, multi-pays)
+```ts
+// Gradient vague horizontal — phase = (frame/fps) * 0.6
+const grad = ctx.createLinearGradient(waveX - w*0.3, 0, waveX + w*0.5, 0);
+grad.addColorStop(0, "rgba(0,0,0,0)"); grad.addColorStop(0.6, "rgba(200,169,81,0.85)");
+
+// Gradient radial pulsant — pulse = (sin(t * PI * 1.2) + 1) / 2
+const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, maxR);
+// Le tiling Mapbox crée une mosaïque de halos = effet premium
+```
+
+### Noise organique (territoire vivant)
+```ts
+// Pseudo-Perlin via sin harmoniques — canvas 256×256 pour résolution correcte
+const noise = sin(nx*8 + t*2.1)*0.35 + sin(ny*6 + t*1.7)*0.25 + ...
+// Peindre pixel par pixel via ctx.createImageData() + putImageData()
+// Palette or/ambre : R=180+v*60, G=120+v*60, B=20+v*30, A=v*200
+```
+
+### Watermark SVG texte répété
+```ts
+// Canvas 200×150, grille 2×2, texte incliné -PI/8
+ctx.font = `bold ${h*0.28}px monospace`;
+ctx.rotate(-Math.PI / 8);
+ctx.fillText("$47B", ...);
+// Résultat : chiffre clé en mosaïque dense sur tout le territoire
+```
+
+### Lottie + fill-pattern : quoi utiliser quand (2026-05-26)
+- **fill-pattern Mapbox = TILING mosaïque** — l'image se répète sur le territoire
+- **OK ✅** : textures organiques continues qui couvrent tout le canvas
+  - Fumée (smoke.json premium dans `public/_shared/lottie/smoke.json`) → champ pétrolier, pollution, production
+  - Eau, vagues, feu, particules denses → atmosphère
+  - Gradients, noise → effets de surface
+- **PAS OK ❌** : éléments localisés (pulse anneaux, markers, points uniques)
+  - Le tiling répète l'élément en grille → perd son sens de "point unique"
+  - Solution alternative : **DOM markers Mapbox** (technique Spring Pop validée Overlay v1)
+- Showcase narratif v1 : https://files.catbox.moe/bj078h.mp4 (S2 smoke = star, autres scènes = leçon)
+
+### Lottie off-screen — RÉSOLU headless (2026-05-26) ✅
+- `lottie-web` installé, import statique : `import lottie from "lottie-web"`
+- **Pattern validé headless chrome-headless-shell :**
+```ts
+// 1. Container div caché dans le body — Lottie EXIGE un container DOM
+const lottieContainer = document.createElement("div");
+lottieContainer.style.cssText = "position:absolute;opacity:0;left:-9999px;top:-9999px;width:128px;height:128px;";
+document.body.appendChild(lottieContainer);
+
+// 2. loadAnimation SANS context — Lottie crée son propre canvas
+const anim = lottie.loadAnimation({
+  container: lottieContainer, animationData: lottiJson,
+  renderer: "canvas", loop: true, autoplay: false,
+  rendererSettings: { clearCanvas: true, progressiveLoad: false },
+} as any);
+
+// 3. Récupérer le canvas créé par Lottie dans le container
+anim.addEventListener("DOMLoaded", () => {
+  const created = lottieContainer.querySelector("canvas") as HTMLCanvasElement;
+  if (created) lottieCanvasRef.current = created;
+});
+
+// 4. Par frame : goToAndStop puis pushCanvas → updateImage vers Mapbox
+anim.goToAndStop(sceneFrame % 30, true);
+pushCanvas(map, "img-lottie", lottieCanvasRef.current);
+```
+- **Erreur piège** : passer `context` dans `rendererSettings` → Lottie l'ignore et crée quand même son canvas → notre canvas reste vide
+- **Erreur piège** : `require("lottie-web")` dans useEffect → objet vide (bundler ESM) → utiliser import statique
+- Résultat : mosaïque de l'animation Lottie qui se tile sur tout le territoire
+
+### Gestion layers entre scènes
+- Les layers s'accumulent sur la même map instance — en production, cleanup explicite à chaque entrée de scène
+- Pattern : `if (map.getLayer(id)) map.removeLayer(id)` avant `addLayer`
+- Source `cb-source` partagée entre toutes les scènes, créée une seule fois

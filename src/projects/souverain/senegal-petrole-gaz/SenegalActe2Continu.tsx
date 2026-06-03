@@ -3,6 +3,7 @@ import {
   AbsoluteFill, Audio, interpolate, spring,
   staticFile, useCurrentFrame, useVideoConfig,
 } from "remotion";
+import { SourceTag } from "../../_shared/components/overlays/SourceTag";
 import mapboxgl from "mapbox-gl";
 import {
   MapboxBrandingHide,
@@ -793,6 +794,9 @@ export const SenegalActe2Continu: React.FC = () => {
           )}
         </>
       )}
+
+      <SourceTag source="ITIE Sénégal — Rapport 2023" startFrame={FA_LABEL} endFrame={F_A_END} />
+      <SourceTag source="Woodside Energy — Rapport annuel 2024" startFrame={FA_WOODSIDE} endFrame={F_AB_END} />
     </AbsoluteFill>
   );
 };

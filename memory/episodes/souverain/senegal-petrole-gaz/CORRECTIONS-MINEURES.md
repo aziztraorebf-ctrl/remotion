@@ -1,7 +1,66 @@
 # Sénégal Pétrole & Gaz — Corrections mineures (post-Acte 1)
 
 > Créé 2026-05-22 après validation Acte 1 V5 → FINAL.
+> Mis à jour 2026-05-24 : ajout section fact-check post-production (4 corrections mineures).
 > À traiter en fin de production (après validation tous les actes), avant mix final.
+
+---
+
+## Corrections fact-check (2026-05-24) — Labels overlay, PAS de re-génération audio
+
+> Décision Aziz : l'audio ne sera PAS re-généré. Ces 4 points seront corrigés via labels overlay discrets au montage final. Approche standard documentaire (Caspian Report, Vox).
+
+### FC-1 — "8 millions de dollars par jour" (Acte 1, ~0:25)
+
+- **Dans le script** : "Huit millions de dollars par jour."
+- **Réalité** : Sangomar produit 100 000 barils/jour. À ~80$/baril = ~8M$/jour est plausible mais pas sourcé officiellement. Le chiffre officiel Woodside est volumétrique (100 000 b/j), pas monétaire.
+- **Correction** : Label overlay discret sous le BigStat : `"(estimation au cours de marché — Woodside : 100 000 b/j)"`
+- **Timing narration** : ~0:25 dans `narration-v1-clean.mp3`
+- **Beat concerné** : Acte 1 / Beat1 — BigStat "8 000 000 $/jour"
+- **Priorité** : basse
+
+### FC-2 — "Dette 70% → 132% du PIB" (Acte 3 / Mécanisme 2 / Beat11) ⚠️ PRIORITÉ HAUTE
+
+- **Dans le script audio** : "une dette publique qui équivaut à soixante-dix pour cent de la richesse annuelle du pays"
+- **Réalité (chiffre officiel actuel)** : **132%** du PIB — chiffre officiellement reconnu et publié (révision post-audit Cour des comptes + FMI 2025). Ce n'est plus un chiffre contesté, c'est le chiffre officiel.
+- **Impact visuel** : Beat11 utilise `LaCalebasse` (graphisme calebasse SVG interne). La calebasse représentant 70% devra être mise à jour à 132% — ce qui implique une **calebasse qui déborde** (niveau > 100%). Animation possible : gouttes qui tombent sur les bords pour signifier l'excès.
+- **Correction requise (dans l'ordre)** :
+  1. **Re-narration audio** : le mot "soixante-dix" est dit à l'oral — il FAUT re-générer ou splicer ce segment audio. Options :
+     - Re-générer uniquement la phrase avec ElevenLabs + force-alignment Whisper pour recaler
+     - Splicer : couper la phrase, insérer "cent trente-deux" sur le même tempo
+  2. **Visuel** : modifier Beat11 — calebasse niveau 132% (débordement) + animation gouttes qui tombent
+  3. **Chiffre affiché** : remplacer "70%" par "132%" dans tous les overlays Beat11
+- **Beat concerné** : Beat11 (Beat12 si la dette est aussi mentionnée là)
+- **Priorité** : **HAUTE — RE-RENDER obligatoire** (audio + visuel, pas juste un label overlay)
+
+### FC-3 — "Fonds norvégien 1 500 milliards — 280 000 $ par Norvégien" (Acte 3, ~2:50)
+
+- **Dans le script** : "ce fonds vaut mille cinq cents milliards de dollars — soit deux cent quatre-vingts mille dollars par Norvégien"
+- **Réalité** : Le fonds vaut aujourd'hui **plus de 2 000 milliards** (~2T$), soit ~390 000 $ par Norvégien (CNBC, jan 2026). Les chiffres du script étaient probablement vrais à la date d'écriture mais dépassés.
+- **Correction** : "1 500 milliards" reste techniquement vrai comme minimum historique — aucun label nécessaire si on garde la formulation. OU label : `"(plus de 2 000 milliards $ en 2026 — source : NBIM)"`
+- **Timing narration** : ~2:50 dans `narration-v1-clean.mp3`
+- **Beat concerné** : Beat10 / SmallMultiplesGrid Norvège
+- **Priorité** : basse (valeur historique toujours vraie)
+
+### FC-4 — Beat0 Accroche — Yakaar et dissolution gouvernement (événements distincts)
+
+- **Dans le Beat0** : les deux événements étaient présentés comme simultanés (22 mai 2026)
+- **Réalité** :
+  - Yakaar : accord signé **22-23 avril 2026** (Sonko annonce retrait Kosmos + transfert PETROSEN)
+  - Dissolution gouvernement : **22 mai 2026** (décret n°2026-1128, Diomaye révoque Sonko)
+  - Ce sont deux événements distincts séparés d'un mois
+- **Correction** : Réécrire le script du Beat0 pour distinguer les deux dates. Ne pas relier comme un seul événement.
+- **Impact** : Beat0 doit être recodé de toute façon (refonte visuelle en cours) — corriger dans le nouveau script.
+- **Priorité** : haute (correction à intégrer dans la v3 du Beat0, avant audio)
+
+### FC-5 — Botswana "dès 1966" (Acte 3, ~2:55)
+
+- **Dans le script** : "Le Botswana a fait la même chose avec ses diamants dès 1966"
+- **Réalité** : Indépendance 1966, diamants découverts 1967, fonds souverain formel (Pula Fund) créé 1993. La phrase est narrativement correcte (même époque = indépendance + premières découvertes) mais techniquement imprécise.
+- **Correction** : Aucune — la formulation "dès 1966" désigne l'époque de l'indépendance, pas le fonds. Acceptable en documentaire grand public.
+- **Priorité** : nulle
+
+---
 
 ---
 
@@ -23,6 +82,32 @@
   - Ajouter un fade-in de 10-15 frames sur le conteneur Mapbox de Beat 2 (`opacity: interpolate(frame, [0, 15], [0, 1])`) pour masquer le chargement
   - Ou ajouter `premountFor` si Remotion le supporte pour les compositions imbriquées
 - **Priorité** : moyenne (visible au cut)
+
+---
+
+## Backlog — Short YouTube 90s (après assemblage final)
+
+> Décision 2026-05-25 : produire un Short ~90s pour diriger vers la version longue au moment de la publication.
+
+**Effort estimé** : ~80% du travail déjà fait (assets, charte, composants Remotion). Reste : script (~120 mots), voix-off ElevenLabs (15min), composition assemblage (1-2h).
+
+**Structure validée (5 séquences)** :
+
+| Segment | Durée | Source | Contenu |
+|---------|-------|--------|---------|
+| Hook choc | 0-8s | Beat0 intégral | AVRIL + flip + Yakaar + GOUVERNEMENT DISSOUS |
+| Le pétrole arrive | 8-22s | Acte 1 condensé | Flyover Sangomar + BigStat 100k b/j + première cargaison |
+| Les règles du jeu | 22-42s | Beat11 + Beat12 | Calebasse dette + Cost Recovery — le cœur explicatif |
+| Yakaar, partie ouverte | 42-58s | Beat13 condensé | Carte + bascule Europe→Chine + "?" géant |
+| Phrase clé | 58-75s | Acte 4 | "Les décisions des 5 prochaines années..." — fond navy, Cinzel gold |
+| CTA | 75-90s | Nouveau | Titre version longue + flèche + durée |
+
+**Principe** : zéro nouvel asset visuel — extraits via `startFrom`/`endAt` dans une nouvelle composition Remotion. La section [22-42s] (mécanisme) est ce qui différencie un Short substantiel d'un simple teaser.
+
+**À faire au moment de produire** :
+1. Écrire le script condensé (~120 mots) avec Aziz
+2. Générer voix-off ElevenLabs + Whisper force-alignment
+3. Nouvelle composition Remotion `SenegalShort90.tsx`
 
 ---
 
@@ -79,6 +164,21 @@ ffmpeg -y \
 ## Backlog SFX (à intégrer avant render final complet)
 
 > Validé par Aziz 2026-05-23 — ajouts non bloquants, à faire à la toute fin (avant assemblage 4 actes).
+
+### Beat0 — Accroche (f0→f1095) — À décider avant assemblage
+
+> Aucun SFX actuellement dans Beat0. À traiter en priorité car c'est le premier beat — l'impact sonore dès le départ est crucial.
+
+**Pistes à explorer (chercher dans `public/_shared/sfx/` d'abord)** :
+
+- **Acte 1 — OdometerFlip (f30→f120)** : son mécanique de compteur/flipboard qui tourne — cliquetis rapide type "reel spinning" synchronisé avec les cases. Peut être un loop court (0.3s) répété. Priorité : haute — c'est le premier son de l'épisode.
+- **Acte 1 — Apparition "AVRIL" (f10)** : fade-in discret ou silence. Peut-être rien si le flip couvre déjà.
+- **Acte 2 — Mapbox in (f240)** : ambiance sous-marine légère ou bruit de vent océanique à l'apparition de la carte (Yakaar est offshore).
+- **Acte 3 — Slide drapeau (f660)** : whoosh léger de glissement horizontal (rapide, ~0.5s) synchronisé avec le slide depuis la gauche.
+- **Acte 3 — Stamp "SÉNÉGAL" (f750)** : impact "tampon" — son sourd et sec type cachet officiel. Fort mais court. Clé de la scène.
+- **Acte 3 — "Gouvernement dissous" (f870)** : vibration grave type "verdict" ou cloche funèbre courte — marque l'aspect politique et solennel.
+
+**Décision à prendre avec Aziz** : écouter les SFX disponibles dans `public/_shared/sfx/` et choisir case par case. Si manquants, générer via ElevenLabs Sound Effects (prompt court) ou chercher sur freesound.org CC0.
 
 ### Acte 2 — SenegalActe2Continu + Beat9
 

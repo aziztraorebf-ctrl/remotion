@@ -10,6 +10,15 @@
 
 ---
 
+## Veille mapanimation.io + Doctrine "inspiration externe" — 2026-06-03 [COMPLETE — R&D]
+
+Session R&D (pas de production). Decode complet du concurrent mapanimation.io (89 templates, 13 premium analyses) = AI text-to-map-video sur NOTRE stack (Mapbox+renderer serveur), pas d'After Effects, sprites = images posees. Reproductible.
+**Cree** : `GeoFlowConnection.tsx` + `AnimatedRouteOverlay.tsx` (routes animees, sprite avion/cargo/dot, headless-safe). Comble le gap "Flux inter-pays".
+**Doctrine "inspiration externe"** gravee dans `SOUVERAIN-VISUAL-PLAYBOOK.md` section 2bis PUIS corrigee apres 2 tests : complementarite (pas densite), suit-la-voix, lisibilite, plafond simultaneite 9:16 (max 2 couches), 2D-flat-eux vs 3D-pitch-nous, sequentiel pas metronome.
+**2 tests valides la methode** : (1) test reel beat A5 Maroc (V4 surcharge → rejete → revenu V3) a corrige la doctrine ; (2) agent vierge a trouve 4 dettes → toutes corrigees (self-review scriptee cablee dans mapbox-session.py, seuil Gemini neutralise = signal pas juge, warnings sprite/pitch, plafond chiffre).
+Memoires : `_r-and-d-mapanimation-{catalog.json,ANALYSE.md,PREMIUM-DECODE.md}` + `feedback_mapanimation-veille-et-geoflow.md`.
+**NEXT (voir NEXT-ACTION)** : (A) double audit doctrine en session propre ; (B) 2e voie Atlas Pur (friction projection nulle car Atlas deja 2D flat).
+
 ## Short "Petrole de la patience" — 2026-06-03 [COMPLETE — PUBLIE]
 Showcase `_demos` refondu en livrable `src/projects/souverain/petrole-patience-short/`.
 FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s). Programme Postiz 9 juin 15h UTC (4 plateformes) = teaser du mid-form. Niger uranium retire du 9 juin (standby).

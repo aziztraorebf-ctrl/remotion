@@ -31,7 +31,7 @@ MOONSHOT_URL = 'https://api.moonshot.ai/v1/chat/completions'
 OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions'
 
 QWEN_MODEL = 'qwen/qwen3-vl-235b-a22b-thinking'
-KIMI_MODEL = 'kimi-k2.5'
+KIMI_MODEL = 'moonshotai/kimi-k2.5'  # OpenRouter model ID (toujours via OpenRouter — Moonshot direct retourne content=null)
 
 SOUVERAIN_JSON_PROMPT = """Tu es expert en production de Shorts YouTube verticaux (1080x1920) pour la série "Souverain" par GéoAfrique — data journalism africain premium.
 
@@ -145,38 +145,52 @@ def build_content(filepath, prompt, n_frames=5):
 
 
 def send_to_kimi(content, filepath):
-    """Kimi K2.5 via Moonshot — narrative/creative DA mode."""
-    if not MOONSHOT_API_KEY:
-        print("No MOONSHOT_API_KEY — skipping Kimi")
+    """Kimi K2.5 via OpenRouter — TOUJOURS OpenRouter (Moonshot direct = content null bug).
+
+    Bug connu 2026-05-31 : Moonshot direct retourne message.content=null (mode thinking only,
+    contenu dans reasoning uniquement). OpenRouter avec moonshotai/kimi-k2.5 = finish_reason:stop OK.
+    """
+    if not OPENROUTER_API_KEY:
+        print("No OPENROUTER_API_KEY — cannot call Kimi")
         return None
 
-    print("Sending to Kimi K2.5 (Moonshot)...")
+    print("Sending to Kimi K2.5 (OpenRouter)...")
     try:
         resp = requests.post(
-            MOONSHOT_URL,
-            headers={'Authorization': f'Bearer {MOONSHOT_API_KEY}', 'Content-Type': 'application/json'},
+            OPENROUTER_URL,
+            headers={
+                'Authorization': f'Bearer {OPENROUTER_API_KEY}',
+                'Content-Type': 'application/json',
+                'HTTP-Referer': 'https://geoafrique.com',
+                'X-Title': 'GeoAfrique Souverain'
+            },
             json={'model': KIMI_MODEL, 'messages': [{'role': 'user', 'content': content}],
-                  'max_tokens': 2000, 'temperature': 1},
-            timeout=120
+                  'max_tokens': 3000, 'temperature': 1},
+            timeout=180
         )
         if resp.status_code != 200:
             print(f"Kimi error {resp.status_code}: {resp.text[:300]}")
             return None
 
         result = resp.json()
-        tokens_in = result['usage']['prompt_tokens']
-        tokens_out = result['usage']['completion_tokens']
+        choice = result['choices'][0]
+        msg = choice['message']
+        # Fallback reasoning si content est null (bug Venice provider)
+        text = msg.get('content') or msg.get('reasoning') or ''
+        finish = choice.get('finish_reason', '?')
+
+        tokens_in = result.get('usage', {}).get('prompt_tokens', 0)
+        tokens_out = result.get('usage', {}).get('completion_tokens', 0)
         cost = (tokens_in * 0.60 + tokens_out * 3.00) / 1_000_000
-        text = result['choices'][0]['message']['content']
 
         print(f"\n{'='*80}")
-        print(f"KIMI K2.5 — NARRATIVE REVIEW")
+        print(f"KIMI K2.5 (OpenRouter) — finish: {finish}")
         print(f"Tokens: {tokens_in} in + {tokens_out} out = ${cost:.4f}")
         print(f"{'='*80}\n")
         print(text)
         print(f"\n{'='*80}\n")
         return {'text': text, 'tokens_in': tokens_in, 'tokens_out': tokens_out,
-                'cost': cost, 'provider': 'kimi-moonshot'}
+                'cost': cost, 'provider': 'kimi-openrouter'}
     except Exception as e:
         print(f"Kimi request failed: {e}")
         return None

@@ -64,6 +64,56 @@ Tous les sujets ne sont pas egaux face a la formule Cesar. Cette etape determine
 }
 ```
 
+### Etape 0.6 : Formule de titrage (ajoutee 2026-05-30, learning MDVL_mindset)
+
+Le titre est une mecanique de distribution algorithmique, pas une description du contenu. Choisir parmi 4 patterns valides :
+
+| Pattern | Principe | Exemple MDVL | Exemple Souverain |
+|---------|----------|--------------|-------------------|
+| **Pont anachronique** | [sujet historique] + [concept contemporain reconnaissable] | "Did Medieval Knights Get PTSD?" | "Comment Thiaroye a vu venir ce que la France nie encore" |
+| **Titre-contradiction** | Renverser une croyance supposee du viewer | "Medieval Life Wasn't So Bad" | "Tu te trompes sur la fidelite de Sonjata" |
+| **Defi 2e personne** | Provocation directe — ego du viewer en jeu | "You Couldn't Handle Anglo-Saxon Women" | "Tu ne realises pas ce que Yaa Asantewaa a reussi" |
+| **Mot-cle emotionnel CAPS** | Emphase vocale transcrite visuellement | "Medieval Kings Were DEVOUT" | "Amanirenas a GAGNE contre Rome" |
+
+**Regle de selection** : choisir LE pattern qui correspond au type de sujet (Etape 0.5). Les sujets epopee-mythique tolerent mieux le defi 2e personne. Les sujets actualite-grave tolerent mieux la contradiction ou le pont anachronique.
+
+### Règles empiriques titres (données 2025-2026 — NON-NEGOTIABLE)
+
+Issues d'études sur 60 000 à 800 000 vidéos YouTube. Pas des opinions — des mesures.
+
+1. **Zéro date dans le titre** — Les titres avec une année (ex: "en 2007", "depuis 1944") reçoivent 53% moins de vues médianes. La date vieillit le titre, l'algorithme le distribue moins au fil du temps. Les dates vont dans la description ou les captions visuelles.
+
+2. **Cible 50 caractères, maximum 55** — La longueur de titre suit une courbe monotone : plus court = mieux distribué + mieux affiché mobile. La plage 60-70 caractères = déjà -59% de performance vs un titre sous 20 caractères. Chaque mot inutile coûte de la distribution.
+
+3. **Chiffre précis en unités quotidiennes** — Les titres avec un chiffre précis surperforment de 23% dans les niches éducatives (VidIQ 2025). Mais le chiffre doit être en unités compréhensibles physiquement : "9 centimes sur l'euro" pas "9,2%". "16 millions d'habitants" pas "petit pays africain".
+
+4. **Tension binaire courte en priorité** — Deux faits opposés dans le même titre battent la formulation descriptive. Format : "[Fait A]. [Fait B contradictoire]." ou "[Entité A] a [action]. [Entité B] a [action contraire]." Zéro terme à décoder pour le viewer.
+
+5. **Formules mortes à proscrire** — Ces patterns ont chuté de 34% en CTR entre 2023 et 2025 et signalent du contenu conspirationniste qui tue la crédibilité éducative :
+   - "Nobody talks about this"
+   - "What they're hiding" / "Ce qu'ils cachent"
+   - "The real reason X" / "La vraie raison de X"
+   - "What nobody tells you" / "Ce qu'on ne te dit pas"
+   - "They don't want you to know" / "Ils ne veulent pas que tu saches"
+   - Titres en ALL-CAPS intégral
+
+**Test rapide avant de valider un titre :** (1) contient une date ? → retirer. (2) dépasse 55 caractères ? → compresser. (3) contient une des formules mortes ? → réécrire. (4) les deux faits en tension sont-ils dans les 48 premiers caractères ? → sinon réordonner.
+
+**Anti-pattern absolu** : le titre descriptif ("L'epopee de Sonjata Keita", "La bataille de Thiaroye 1944") — invisibilite algorithmique garantie.
+
+**OBLIGATOIRE — Appliquer AUSSI la règle du titre hybride (Section 9 de `memory/rules-souverain-editorial.md`) :**
+Les règles techniques ci-dessus valident le FORMAT. La règle hybride valide le PRINCIPE. Les deux sont obligatoires simultanément.
+Résumé règle hybride : tout titre doit passer le **Test Tokyo** — "quelqu'un à Tokyo/Paris/Montréal qui ne s'intéresse pas à l'Afrique a une raison de cliquer ?" Si non → reformuler avec ancrage mondial.
+Exemples fusionnant les deux couches : "Ils ont libéré la France. Elle les a massacrés." (Thiaroye, 49 car.) ✅ — "Il a crashé l'économie du Caire par générosité" (Mansa Musa, 47 car.) ✅
+
+**Documenter le titre finalise dans le manifest** :
+```json
+{
+  "titre_choisi": "...",
+  "pattern_applique": "pont-anachronique | titre-contradiction | defi-2e-personne | caps-emotionnel"
+}
+```
+
 ### Etape 1 : Decoupage en scenes + structure narrative
 
 - Objectif : 5-7 scenes pour un Short 90s (15s moyenne par scene)
@@ -74,6 +124,8 @@ Tous les sujets ne sont pas egaux face a la formule Cesar. Cette etape determine
 - Regle absolue : **climax entre 30% et 50% du Short**
 - Regle absolue : **post-climax plus court ou egal au pre-climax** (sinon densite perd le spectateur)
 
+**Note sur l'ordre emotionnel (learning MDVL_mindset 2026-05-30)** : ne pas suivre l'ordre chronologique sauf si la chronologie EST le twist. Privilegier l'ordre emotionnel : image concrete ou consequence humaine → contexte → mecanisme → resolution. Pour les sujets Heros Oublies : commencer par la scene la plus forte emotionnellement, pas par "né en X dans la region Y". Exemple pour Amanirenas : commencer par "les legions romaines qui reculent" avant d'expliquer pourquoi.
+
 ### Etape 2 : Ecriture premiere passe scene par scene
 
 - **Une scene a la fois**, pas tout d'un coup
@@ -81,6 +133,8 @@ Tous les sujets ne sont pas egaux face a la formule Cesar. Cette etape determine
 - **Densite cible** : 2.5-2.8 mots/s (soit ~40 mots pour 14s)
 - Forme : phrases courtes (2-5 mots), pauses naturelles, pas de sous-phrases compliquees
 - Zero metaphore alambiquee — clarete > poesie
+- **Hook : personnage nomme + ancre contemporaine (learning MDVL_mindset 2026-05-30)** : si le sujet le permet, nommer le personnage central des les 2 premieres phrases avec une comparaison moderne en 1 phrase. Le cerveau s'attache aux individus. Ex: "Il s'appelait Musa Keita. Pour une journee, il a fait s'effondrer les prix de l'or sur trois continents." — pas : "Au XIVe siecle, le Mali etait un empire puissant...". Application Heros Oublies : valable pour Amanirenas, Yaa Asantewaa, Nehanda Charwe — pas pour les sujets collectifs (Thiaroye) ou mythiques distants (Sonjata).
+- **Termes techniques en voix-off (jury LLM 2026-05-30)** : pour les sujets Heros Oublies croisant des realites institutionnelles ou militaires, les acronymes et noms d'organisations (tirailleurs senegalais, GIC, corps expeditionnaire) doivent etre introduits avec leur contexte immédiat la premiere fois. Ne jamais presupposer que le viewer connait le referent. Ex : "les tirailleurs senegalais — ces soldats africains recrutes de force dans les rangs de l'armee coloniale —" a la premiere mention, puis "les tirailleurs" ensuite.
 
 ### Etape 3 : Critique proactive par Claude (avant validation Aziz)
 
@@ -235,6 +289,11 @@ Pour **chaque phrase**, verifier 4 regles (voir `memory/tools/elevenlabs.md`) :
 5. **CTA generique serie alors qu'il s'agit de newsletter** — ajuster le CTA au vrai produit (serie vs newsletter vs abonnement chaine).
 6. **Climax trop tot** (avant 25%) = le reste tombe a plat. Climax trop tard (apres 50%) = le spectateur a swipe.
 7. **Post-climax plus long que pre-climax** = densite mal equilibree, Sonjata et Thiaroye V4 avaient ce probleme.
+8. **Hook avec donnee brute en premiere phrase** (learning MDVL_mindset 2026-05-30) — "Selon l'INSEE, 300 soldats sont morts" ne cree pas d'ancrage emotionnel. La donnee brute n'engage pas, elle informe. Commencer par la consequence humaine ou la situation concrète : "Ils avaient libere Paris. Trois semaines plus tard, la France les executait."
+9. **Titre descriptif** — "L'histoire de [Nom]" ou "La bataille de [Lieu]" = zero differentiation algorithmique. Appliquer obligatoirement l'Etape 0.6 avant de figer le titre.
+10. **Registre uniforme du debut a la fin** — alterner deliberement rigueur factuelle et proximite directe. Un chiffre factuel peut etre suivi d'une phrase directe courte. L'emotion vient du contraste, pas d'une seule note maintenue.
+11. **Style telegraphique sur donnees factuelles seches (jury LLM 2026-05-30)** — les fragments courts fonctionnent quand ils portent une image physique ou un contraste emotionnel. ✅ "Des cailloux. A bas prix." / ✅ "Payer ses soldats. Nourrir sa population." Mais une liste de faits neutres en style telegraphique sonne comme un bulletin d'information. ❌ "Gotion High-Tech, chinois. Volkswagen, quarante pour cent actionnaire. Demarrage 2026." Regle : style telegraphique = moments d'impact emotionnel uniquement. Faits informatifs = phrases completes.
+12. **Conditionnel en hook sans ancre temporelle (jury LLM 2026-05-30)** — un conditionnel en premiere phrase ("sortira peut-etre", "pourrait devenir") signale un sujet hypothetique, le viewer ne s'investit pas. Si le conditionnel est necessaire, le preceder d'une ancre temporelle precise qui cree une certitude de calendrier. ❌ "sortira peut-etre d'ici" → ✅ "Dans deux ans, sortira peut-etre d'ici" ou ✅ "est en construction" / "sort de terre" (present reel). Pour les sujets Heros Oublies : le hook doit etre ancre dans un fait certain — une date, un lieu, une action documentee.
 
 ---
 

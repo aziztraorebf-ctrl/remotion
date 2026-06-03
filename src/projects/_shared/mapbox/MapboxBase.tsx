@@ -127,6 +127,30 @@ export const CAM_PRESETS: Record<string, CamState> = {
 };
 
 // ---------------------------------------------------------------------------
+// STANDARD APPROCHE PAYS (validé Aziz 2026-06-03, d'après Or Africain Beat4)
+// Le "relief 3D" qu'Aziz aime = pitch 25-35° + zoom 4.5-4.8 + léger bearing.
+// À utiliser comme DÉFAUT pour focus 1-4 pays (futurs beats). Différent de
+// "altitude plate pitch 0" (Maroc Beat0/1) qui perd le relief.
+// camCountryApproach génère un CamState centré sur un pays, incliné, avec
+// un léger bearing pour le mouvement vivant.
+// ---------------------------------------------------------------------------
+export const CAM_COUNTRY_APPROACH_DEFAULTS = { zoom: 4.7, pitch: 32, bearing: 5 };
+
+export const camCountryApproach = (
+  center: [number, number],
+  opts?: Partial<Pick<CamState, "zoom" | "pitch" | "bearing">>,
+): CamState => ({
+  lon: center[0],
+  lat: center[1],
+  zoom:    opts?.zoom    ?? CAM_COUNTRY_APPROACH_DEFAULTS.zoom,
+  pitch:   opts?.pitch   ?? CAM_COUNTRY_APPROACH_DEFAULTS.pitch,
+  bearing: opts?.bearing ?? CAM_COUNTRY_APPROACH_DEFAULTS.bearing,
+});
+
+// Vue "pull back" pour cadrer plusieurs pays au climax (recul + dé-incline)
+export const CAM_MULTI_PULLBACK_DEFAULTS = { zoom: 3.4, pitch: 15, bearing: 0 };
+
+// ---------------------------------------------------------------------------
 // Supprimer tous les labels (noms pays, villes, routes)
 // Appeler dans map.on("style.load", ...) pour carte épurée
 // ---------------------------------------------------------------------------
@@ -231,6 +255,7 @@ export const COUNTRY_CENTERS: Record<string, [number, number]> = {
   ETH: [ 40.489,  9.145],
   EGY: [ 30.802, 26.820],
   MAR: [ -7.092, 31.791],
+  DZA: [  2.632, 28.034],
   MRT: [-10.940, 20.250],
   COD: [ 23.656,  -2.877],
 };

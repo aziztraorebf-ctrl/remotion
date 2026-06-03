@@ -208,6 +208,24 @@ addCountryFocus(map, "NER", ATLAS3D_PALETTE.accentOr);
 
 ---
 
+## 🗺️ Templates Mapbox CARTE VIVANTE — Chantier C (2026-06-02, hybrides V+H)
+
+> 9 templates premium dans `src/projects/_shared/mapbox/`. Vraie carte vivante (drift, altitude pays, océan navy, voisins ivory), charte navy/gold. Render via `scripts/render-mapbox.sh`. **Détails complets + previews + cas d'usage : `src/projects/_shared/mapbox/MAPBOX-COMPOSANTS.md` et `src/projects/_shared/COMPOSANTS-INDEX.md` (section CARTE/GÉO).**
+
+- `MapboxFlagFill` — drapeau/image clippé(e) dans la silhouette (projette toute image + bichromie)
+- `MapboxIsolateZone` — spotlight pays + zone offshore hachurée + badge + stat
+- `SequentialBorderPulse` — frontières s'allument en séquence
+- `GlassmorphismGeoPopup` — encarts données ancrés au point geo
+- `SequentialFlagReveal` — pays s'allument avec leur drapeau (séquentiel, technique chaînes)
+- `LottieGeoAura` — Lottie premium ancré au point (assets `lottie/premiumLottieAssets.ts`)
+- `SweepRevealTerritory` ⭐ — faisceau lumineux révèle le pays (scanner)
+- `DominoContagionFill` — couleur contamine les pays par vagues
+- `FiberOpticBorderDraw` ⭐ — frontière se dessine en laser doré
+
+Backlog idées Gemini : `memory/tools/gemini-template-ideas-v2-2026-06-02.json`.
+
+---
+
 ## 🎨 Templates 16:9 — Vague 3 (Mécaniques signature)
 
 > Codés sur specs JSON Gemini 3.1-pro. Tous transparents (`bgColor="transparent"`). Utilisés via `<SouverainScene>` + `DarkCssBg`.
@@ -2305,6 +2323,23 @@ Détails complets dans `public/_shared/characters-refs/<personnage>/README.md` q
 | MP4 render | https://i.imgur.com/DElPL70.mp4 |
 
 **Showcase complet Vague 4 bis (ProtoP)** : https://i.imgur.com/AdddtKp.mp4
+
+---
+
+---
+
+## 🎬 Lottie disponibles (`public/_shared/lottie/`)
+
+| Fichier | Usage | Source | Statut |
+|---------|-------|--------|--------|
+| `smoke.json` | Fumée vectorielle organique — pollution, raffinerie, production pétrolière | LottieFiles (existant projet) | ✅ Validé headless 2026-05-26 |
+
+**Règle d'usage Lottie + Mapbox fill-pattern** :
+- ✅ Textures organiques continues (fumée, eau, feu) qui couvrent tout le canvas → idéal pour fill-pattern tilé sur territoire
+- ❌ Éléments localisés (markers, pulses, points uniques) → utiliser DOM markers Mapbox à la place
+
+Pattern technique complet : `memory/tools/mapbox-mcp.md` section "Lottie off-screen".
+Showcase narratif : https://files.catbox.moe/bj078h.mp4
 
 ---
 

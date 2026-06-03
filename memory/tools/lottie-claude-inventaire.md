@@ -153,3 +153,19 @@ Bibliothèque actuelle (Shaka Zulu) :
 - `crown-pulse.json` — couronne royale qui pulse
 - `iklwa.json` — lance zulu qui oscille
 - `arrow-pulse.json` — flèche bordeaux + écho doré (territoire/conquête)
+
+---
+
+## Assets premium Souverain navy/gold (Chantier C, 2026-06-02)
+
+Générés par code dans `src/projects/_shared/lottie/premiumLottieAssets.ts` (fonctions paramétrables couleur, format 5.7.8, renderer canvas headless OK). Ancrés à un point geo via `MapboxLottieGeoAura.tsx` (Lottie off-screen → goToAndStop frame-driven → overlay à map.project(coord)).
+
+- `shockwaveDiscovery()` — onde de choc "découverte" : flash central + 3 anneaux en cascade (easing out cubic). VERDICT : excellent (à juger en vidéo, paraît faible sur frame fixe entre 2 pulses).
+- `orbitalDataCrown()` — anneau de ticks rotatifs (repeater) + contre-rotation, look HUD war-room. VERDICT : bon, lisible même en frame fixe.
+- `networkFlow()` — particules dorées le long d'une route dasharray, taille/opacité variables. VERDICT : correct.
+
+### Gotcha critique (appris 2026-06-02) — décalage de phase
+`goToAndStop(frame)` force une frame ABSOLUE sur la timeline → le décalage de layers via `st`/`ip`/`op` négatifs (start-time) est IGNORÉ. Pour étaler des particules dans le temps, décaler les KEYFRAMES (t:) de chaque layer dans la MÊME timeline, pas le start-time du layer. Erreur initiale networkFlow : particules invisibles car offset via `st` négatif.
+
+### Règle : Lottie se juge EN VIDÉO, jamais en frame fixe
+Le Lottie est temporel. Une frame fixe peut tomber entre 2 pulses et donner une fausse impression de faiblesse. Toujours valider sur la vidéo rendue.
