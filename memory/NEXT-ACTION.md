@@ -1,6 +1,44 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-02. A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-03. A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## ✅ FAIT 2026-06-03 — A (double audit) + B (faisabilite Atlas) — voir suite pour NEXT
+
+### A. DOUBLE AUDIT doctrine "inspiration externe" — ✅ TERMINE (commit b110ac9)
+Croise Claude principal + agent vierge. 7 trous corriges + testes : E1 SFX (3 faux negatifs),
+self-review `--file` requis + gate marqueur, E4 blur->ERROR, E2 non auto-desarme, seuil 10/12
+reel, prompt Gemini parametre, plafond simultaneite requalifie (non outille = honnete).
+Branche `fix/audit-gates-mapbox-inspiration-externe`. A MERGER dans master quand Aziz valide.
+
+### B. FAISABILITE Atlas — ✅ GO PROUVE (commit 90c0fe0)
+Aziz a pris le Route Pack mapanimation (19,99$, 40 generations). Decode 7 refs. **Verdict :
+d3-geo headless = bon moteur (clipPath deja eprouve en render, mieux que Mapbox).** Brique
+`AtlasAttackArrow.tsx` codee + polishee + validee render (fleche tactique sequentielle, mode
+carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-faisabilite.md`
++ `atlas-pixellab-differentiel.md`.
+
+## ⏳ PROCHAINE SESSION — suite voie B Atlas (le differentiel)
+
+> Contexte complet : `feedback_atlas-inspiration-externe-faisabilite.md` + `atlas-pixellab-differentiel.md`.
+> Refs decodees : `out/_r-and-d/mapanimation/atlas-test/` (hannibal, mali, route_comet, napoleon, cargo x2, thermopylae, cannae).
+
+**ACQUIS verrouille :** leur outil ECHOUE sur les batailles (Thermopyles + Cannes prouves) →
+**batailles = NOTRE exclusivite PixelLab.** PixelLab = differentiel par DEFAUT (pas plan B).
+mapanimation = banc R&D, jamais livraison. Fleche `AtlasAttackArrow` = OK, paramétrable, premium.
+
+**3 chantiers ouverts (ordre suggere) :**
+1. **PROTOTYPER UNE BATAILLE PixelLab** — le vrai differentiel, sans concurrent. 2 formations
+   sprites face a face sur carte + terrain + rapport de force + pulse de choc. Cas : Cannes
+   (enveloppement) ou Thermopyles (defile). ~50 assets PixelLab existants (PIXELLAB-MASTER-INDEX).
+2. **PLAYBOOK ATLAS** — miroir d3-geo du SOUVERAIN-VISUAL-PLAYBOOK. Consolider les 5 mecaniques
+   decodees + echelle escalade N0 primitives / N1 marqueur / N2 sprite PixelLab.
+3. **Enrichir AtlasAttackArrow** — multi-fleches coordonnees (encerclement), + regler la
+   FRICTION projection : `lngLatToSvg` est REGIONALE (ancrages Afrique Ouest) → prevoir ancrages
+   par episode pour Hannibal/Napoleon hors zone.
+
+**Polish mineur backlog :** AtlasAttackArrowDemo gardee en ref (Root.tsx). Couleurs/tete fleche OK.
 
 ---
 
