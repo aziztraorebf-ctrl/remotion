@@ -249,8 +249,9 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 > **DOCTRINE À LIRE D'ABORD : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`** — 8 principes premium data-viz (chiffre-événement, discipline chromatique, séquençage 8s, contraste d'échelle, secondary motion, highlight typo sync, métaphore physique, transitions seamless) + règle anti-clonage + template storyboard 10 champs. Le storyboard SE REMPLIT avec ce template. Briques codées : section "HERO DATA" de `COMPOSANTS-INDEX.md`. Squelette assemblage : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
 
 ```
-0. scan       → beat-session.py --phase scan  → SCAN TEMPLATES (catalogues HERO DATA + COMPOSANTS-INDEX) + COMBINAISONS validées Aziz. GATE : breakdown bloqué sans scan rempli.
-1. breakdown  → beat-session.py --phase breakdown  → JSON layout Tailwind. LIRE avant de coder.
+0. scan       → beat-session.py --phase scan  → SCAN COMPLET (TOUT COMPOSANTS-INDEX, 71+ composants) + >=2 COMBINAISONS validées Aziz. GATE : breakdown bloqué sans scan rempli.
+0bis. storyboard → STORYBOARD GEMINI VISUEL multi-panels OBLIGATOIRE (gemini-storyboard-panels.py) montrant la progression. Validé Aziz AVANT breakdown. C'est de lui qu'on tire le JSON.
+1. breakdown  → beat-session.py --phase breakdown  → JSON layout Tailwind (depuis le storyboard). LIRE avant de coder.
 2. code       → Beat*.tsx Tailwind. h-[X%] + flex. Tokens: text-gold/ivory/bg-navy. Briques HERO DATA. → wip/beat{N}_v1.mp4
 3. self-review → --phase self-review  → 23 critères. Seuil 19/23 BLOQUANT. Corriger avant Gemini.
 4. review     → --phase review  → 1 seul appel Gemini. JSON code_values.

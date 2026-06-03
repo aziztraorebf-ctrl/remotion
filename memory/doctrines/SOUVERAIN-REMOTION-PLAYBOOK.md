@@ -86,6 +86,33 @@ Traduire une donnée abstraite par un comportement physique : balance qui penche
 
 ---
 
+## 2bis. ORDRE DU PIPELINE (NON-NEGOTIABLE — ne jamais sauter une étape)
+
+```
+Phase 0 SCAN        → lire COMPOSANTS-INDEX EN ENTIER (71+, pas juste HERO DATA)
+                       → identifier templates pertinents + proposer >= 2 COMBINAISONS
+                       → présenter à Aziz. (beat-session.py --phase scan, gate bloquant)
+        ↓
+STORYBOARD GEMINI   → storyboard VISUEL multi-panels (Gemini Flash) montrant la PROGRESSION
+  (OBLIGATOIRE)        du beat (intro → développement → climax/verdict).
+                       → prompt rédigé depuis le scan, VALIDÉ Aziz, puis :
+                         scripts/tools/gemini-storyboard-panels.py
+                       → présenter le PNG à Aziz. C'est ce qui permet de coder sans hésiter
+                         ET d'où on tire le breakdown JSON. JAMAIS coder sans ce storyboard.
+        ↓
+BREAKDOWN JSON      → Gemini 3.1 Pro lit le storyboard → JSON "comment coder" (Tailwind, timing)
+        ↓
+CODE                → assembler les briques (combinaison, pas 1 seul template) selon le breakdown
+        ↓
+SELF-REVIEW 19/23 → REVIEW GEMINI (1 appel) → CORRECTIONS → UPLOAD
+```
+
+**Deux règles de scan (les plus oubliées) :**
+1. **Scan COMPLET** : lire TOUT `COMPOSANTS-INDEX.md` (toutes les sections), pas seulement HERO DATA. Aziz ne mémorise pas 71 composants — Claude le fait.
+2. **Combinaison obligatoire** : un beat premium = plusieurs templates assemblés (corps + insert + overlay + sous-titre). Jamais un seul template tout du long.
+
+---
+
 ## 3. TEMPLATE STORYBOARD BEAT REMOTION (le master)
 
 > Phase storyboard du `beat-session.py`. Remplir AVANT le code. **Règle d'or : aucun champ ne reste vide.** Force à concevoir riche dès le départ (physique, vide, continuité) plutôt que réparer après. Issu de Gemini (10 champs).

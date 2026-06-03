@@ -157,8 +157,13 @@ def phase_preflight(episode: str, beat_num: int) -> dict:
     if not storyboard_found:
         stop(
             f"Storyboard PNG ABSENT pour {episode} Beat{beat_num}. "
-            f"Chemin attendu : public/souverain/{episode}/beat{beat_num}/storyboard-gemini.png. "
-            "Generer via Gemini image AVANT de coder.",
+            f"Chemin attendu : public/souverain/{episode}/beat{beat_num}/storyboard-gemini.png.\n"
+            f"        STORYBOARD GEMINI VISUEL OBLIGATOIRE (NON-NEGOTIABLE) — multi-panels montrant la progression :\n"
+            f"          1. Rediger le prompt depuis le scan (templates + combinaisons), le faire valider par Aziz\n"
+            f"          2. python3 scripts/tools/gemini-storyboard-panels.py --episode {episode} --beat {beat_num} \\\n"
+            f"               --prompt-file /tmp/{episode}-beat{beat_num}-storyboard-prompt.txt\n"
+            f"          3. Presenter le PNG a Aziz pour validation AVANT le breakdown.\n"
+            f"        Le storyboard est ce qui permet de coder sans hesiter ET d'en tirer le breakdown JSON.",
             beat,
             event="storyboard_ready"
         )
@@ -438,6 +443,16 @@ def phase_scan(episode: str, beat_num: int) -> None:
         print(f"  [{flag}] {label}")
         print(f"         {path}")
     print()
+    print(">>> REGLE SCAN COMPLET (NON-NEGOTIABLE) :")
+    print(">>>   LIRE l'INTEGRALITE de COMPOSANTS-INDEX.md (71+ composants, TOUTES les sections),")
+    print(">>>   PAS seulement la section HERO DATA. Aziz ne peut pas memoriser 71 composants — Claude OUI.")
+    print(">>>   Parcourir : Chiffre/Stat, Comparaison, Timeline, Carte, Revelation, Citation, Portrait,")
+    print(">>>   Preuve, Reseau, Hook, Data-viz, HERO DATA, Utilitaires.")
+    print()
+    print(">>> REGLE COMBINAISON (NON-NEGOTIABLE) :")
+    print(">>>   Un beat premium = PLUSIEURS templates assembles (corps + insert + overlay + sous-titre),")
+    print(">>>   JAMAIS un seul template tout du long. Proposer >= 2 combinaisons distinctes a Aziz.")
+    print()
     print(">>> DOCTRINE data-viz : memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md")
     print(">>>   8 principes (chiffre-evenement, secondary motion, metaphore physique, transitions seamless...)")
     print(">>>   Briques HERO DATA pretes : CountUp(bounce), HeroMirrorBars, FloatingHeroObject,")
@@ -462,14 +477,19 @@ def phase_scan(episode: str, beat_num: int) -> None:
         output.write_text(
             f"# Scan templates — {episode} Beat{beat_num}\n\n"
             f"> Phase 0 OBLIGATOIRE. Remplir AVANT le breakdown.\n"
-            f"> Catalogues : COMPOSANTS-INDEX.md + INDEX-DES-INDEX.md + SOUVERAIN-REMOTION-PLAYBOOK.md\n\n"
+            f"> Catalogues SCANNES EN ENTIER : COMPOSANTS-INDEX.md (71+ composants, TOUTES sections)\n"
+            f"> + INDEX-DES-INDEX.md + SOUVERAIN-REMOTION-PLAYBOOK.md\n\n"
             f"## Besoin narratif\n(ce beat doit montrer ...)\n\n"
-            f"## Templates pertinents (lus dans les catalogues)\n- \n\n"
-            f"## Combinaisons proposees\n- \n\n"
-            f"## Recommandation\n(choix + justification doctrine)\n"
+            f"## Templates pertinents (scan COMPLET, toutes sections de l'index)\n"
+            f"- [Composant] (section) — fait [quoi] — pertinent car [raison]\n\n"
+            f"## Combinaisons proposees (>= 2, plusieurs templates assembles)\n"
+            f"- Option A : [corps] + [insert] + [overlay] + [sous-titre]\n"
+            f"- Option B : [alternative]\n\n"
+            f"## Recommandation\n(choix + justification doctrine playbook)\n"
         )
         print(f"\n[OK] Squelette scan cree : {output}")
-        print(f"     Claude le remplit, le presente a Aziz, PUIS lance --phase breakdown.")
+        print(f"     Claude le remplit (scan COMPLET + >=2 combinaisons), le presente a Aziz,")
+        print(f"     PUIS genere le storyboard Gemini, PUIS lance --phase breakdown.")
     else:
         print(f"\n[OK] Scan deja present : {output}")
 
