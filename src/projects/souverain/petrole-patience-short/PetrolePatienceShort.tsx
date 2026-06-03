@@ -679,10 +679,10 @@ export const PetrolePatienceShort: React.FC = () => {
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-B-kora-percussion.mp3")}
         volume={(f) => {
-          // Fade in 2s, body, fade out 2s
-          if (f < 60) return interpolate(f, [0, 60], [0, 0.18]);
-          if (f > F.END - 60) return interpolate(f, [F.END - 60, F.END], [0.18, 0]);
-          return 0.18;
+          // Musique discrète (kora riche en basses) : 0.10 pour ne pas masquer voix/SFX
+          if (f < 60) return interpolate(f, [0, 60], [0, 0.10]);
+          if (f > F.END - 60) return interpolate(f, [F.END - 60, F.END], [0.10, 0]);
+          return 0.10;
         }}
       />
 
@@ -690,20 +690,21 @@ export const PetrolePatienceShort: React.FC = () => {
            Convention : whoosh = changement de pays (switch), zoom-in = vrai zoom,
            pullback = dezoom, plate-pop = allumage drapeau, impact = reveal chiffre.
            (reveal.mp3 BANNI : 18.4s avec voix — cf SFX-INDEX) */}
-      <Sfx at={8}             file="camera/sfx-map-ping.mp3"   vol={0.5} />
-      <Sfx at={138}           file="camera/sfx-map-ping.mp3"   vol={0.5} />
-      <Sfx at={150}           file="impact/impact.mp3"        vol={0.6} />
-      <Sfx at={F.A2_START}    file="ui/plate-pop.mp3"         vol={0.55} />{/* allumage drapeau NGA */}
-      <Sfx at={F.A2_START + 222} file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch NGA -> AGO */}{/* whip-pan-1 = seul valide (2/3 etaient des lasers/ping) */}
-      <Sfx at={F.A2_START + 322} file="ui/plate-pop.mp3"      vol={0.55} />{/* allumage drapeau AGO */}
-      <Sfx at={F.A3_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch -> Norvege */}
-      <Sfx at={F.A3_START + 70} file="ui/plate-pop.mp3"       vol={0.5} />{/* allumage drapeau NOR */}
-      <Sfx at={F.A3_START + 55} file="impact/impact.mp3"      vol={0.5} />{/* plaque $1700B */}
-      <Sfx at={F.A4_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.6} />{/* switch -> Senegal */}
-      <Sfx at={F.A4_START + 130} file="camera/sfx-swoosh-zoomin.mp3" vol={0.5} />{/* vrai zoom sur Sangomar */}
-      <Sfx at={F.A4_START + 110} file="ui/plate-pop.mp3"      vol={0.55} />{/* allumage drapeau SEN */}
-      <Sfx at={F.A5_START}    file="impact/impact.mp3"        vol={0.5} />{/* plaque 18/82 */}
-      <Sfx at={F.A6_START + 130} file="camera/sfx-swoosh-pullback.mp3" vol={0.6} />{/* dezoom final */}
+      {/* Tous les SFX uniformément à 0.35 (musique kora à basses -> éviter de masquer/distraire) */}
+      <Sfx at={8}             file="camera/sfx-map-ping.mp3"   vol={0.35} />
+      <Sfx at={138}           file="camera/sfx-map-ping.mp3"   vol={0.35} />
+      <Sfx at={150}           file="impact/impact.mp3"        vol={0.35} />
+      <Sfx at={F.A2_START}    file="ui/plate-pop.mp3"         vol={0.35} />{/* allumage drapeau NGA */}
+      <Sfx at={F.A2_START + 222} file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch NGA -> AGO */}
+      <Sfx at={F.A2_START + 322} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau AGO */}
+      <Sfx at={F.A3_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Norvege */}
+      <Sfx at={F.A3_START + 70} file="ui/plate-pop.mp3"       vol={0.35} />{/* allumage drapeau NOR */}
+      <Sfx at={F.A3_START + 55} file="impact/impact.mp3"      vol={0.35} />{/* plaque $1700B */}
+      <Sfx at={F.A4_START}    file="camera/sfx-whip-pan-1.mp3" vol={0.35} />{/* switch -> Senegal */}
+      <Sfx at={F.A4_START + 130} file="camera/sfx-swoosh-zoomin.mp3" vol={0.35} />{/* vrai zoom sur Sangomar */}
+      <Sfx at={F.A4_START + 110} file="ui/plate-pop.mp3"      vol={0.35} />{/* allumage drapeau SEN */}
+      <Sfx at={F.A5_START}    file="impact/impact.mp3"        vol={0.35} />{/* plaque 18/82 */}
+      <Sfx at={F.A6_START + 130} file="camera/sfx-swoosh-pullback.mp3" vol={0.35} />{/* dezoom final */}
 
       <MapboxBrandingHide />
 
