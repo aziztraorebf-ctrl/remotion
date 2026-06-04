@@ -48,6 +48,8 @@
 |---------|-------------|-------|--------------|
 | `impact.mp3` | Impact sourd, choc visuel | ~0.5s | Data-viz explainer, Brutalist Finance |
 | `tension-pulse.mp3` | Pulsation tension, beat lourd | ~1s | Niger Uranium |
+| `../sfx-clash-impact.mp3` | Choc de 2 armées, armes/boucliers qui s'entrechoquent (ElevenLabs 2026-06-04) | 1.36s | Atlas confrontation/armées (face-à-face, choc des lignes) |
+| `../sfx-army-charge.mp3` | Cri de guerre + ruée de soldats à la charge (ElevenLabs 2026-06-04) | 2.0s | Atlas armées (déclenchement de la charge) |
 
 ---
 

@@ -52,7 +52,7 @@ public/<episode>/characters/<perso>/
 |---|---|---|---|
 | `mansa-moussa` (couronné, robe or) | walk_cycle + royal_pose | east, west (walk) ; south (royal_pose) | 6 walk + 4 pose |
 | `porteur-mali` | walk_cycle | east, west | 6 |
-| `soldat-mali` | walk_cycle | east, west | 6 |
+| `soldat-mali` ⭐ | walk_cycle + **charge** + **spear_attack** + **death** (2026-06-04) | east, west (4 dirs natives) | 6/6/7/7 |
 | `chameau` | walk_cycle | east, west | 4 (animal) |
 
 Autres assets PixelLab/persos dans le repo : `public/hannibal/assets/map-objects/` (soldats-carthaginois,
@@ -138,6 +138,18 @@ const activeCamX = atDestination
 const camZoom = interpolate(frame, [start, zoomInEnd, end, poseEnd], [1, 2, 2, 1], clamp);
 // + annuler le tilt au zoom pour la lisibilité : effectiveTilt = tiltDeg → 8
 ```
+
+### Recette E — BATAILLE multi-sprites (file→ligne→combat) ⭐⭐ (validée 2026-06-04)
+LE différentiel Atlas absolu (mapanimation échoue dessus). Détail complet :
+[[feedback_atlas-bataille-multisprites-technique]]. Résumé :
+- N sprites/camp via `getState(camp, idx)` (fonction pure, zéro React state).
+- File indienne (Recette A) → déploiement file→ligne EN VAGUE (`dStart=deploy+idx*stagger`).
+- **Direction déduite du dx** (`x(frame)-x(frame-1)`) = anti-moonwalk sur tous les sprites mobiles.
+- Phases combat : `charge` (ruée) → `clash` (estoc spear_attack **play-once**, séq/simul) → `death`
+  (camp perdant tombe + fade). SFX charge/clash en `<Sequence>`.
+- **`AtlasPixelChar` props `loop` (false=play-once) + `animStartAt`** : indispensables pour estoc/mort
+  qui ne doivent PAS boucler. `loop=false` clampe à la dernière frame.
+Template : `AtlasV2ArmyDeployScene.tsx`.
 
 ### Recette D (Ghana) — Drop d'objet au crouch (silent barter)
 Sprite walk → crouch (change d'anim) → un objet PixelLab (sac) APPARAÎT à son pied au moment du

@@ -20,8 +20,14 @@ interface AtlasPixelCharProps {
   direction?: "east" | "west" | "south" | "north";
   // Animation control
   animated?: boolean;      // true = walk cycle, false = static sprite
-  appearAt?: number;       // visual frame when sprite appears (fade in)
+  appearAt?: number;       // visual frame when sprite appears (fade in + guard)
   frameCount?: number;     // frames per walk cycle (default 6)
+  // PLAY-ONCE : si false, l'anim joue UNE fois puis reste sur la derniere frame
+  // (clamp au lieu de %). Pour un estoc/une mort qui ne doit PAS boucler. Defaut true.
+  loop?: boolean;
+  // Recale le compteur d'anim a un autre frame que appearAt (ex: l'attaque demarre
+  // a `clash` alors que le fade-in/guard reste sur `march`). Defaut = appearAt.
+  animStartAt?: number;
   // Flip horizontal SEULEMENT pour les persos generes face EST uniquement (ex: Hannibal).
   // PAR DEFAUT false : on charge la frame native de `direction`. La PLUPART des persos Atlas
   // (Mansa, Ghana berbere/sahelien) ont de VRAIES frames west/ -> les flipper = moonwalk
@@ -41,6 +47,8 @@ export const AtlasPixelChar: React.FC<AtlasPixelCharProps> = ({
   appearAt = 0,
   frameCount = WALK_FRAMES,
   flipForWest = false,
+  loop = true,
+  animStartAt,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -53,10 +61,15 @@ export const AtlasPixelChar: React.FC<AtlasPixelCharProps> = ({
   });
   if (frame < appearAt) return null;
 
-  // Walk cycle frame index
-  const animFrame = animated
-    ? Math.floor(((frame - appearAt) / fps) * WALK_FPS) % frameCount
-    : 0;
+  // Compteur d'anim : recale sur animStartAt si fourni (sinon appearAt).
+  const cycleOrigin = animStartAt ?? appearAt;
+  const rawAnimFrame = Math.floor(((frame - cycleOrigin) / fps) * WALK_FPS);
+  // loop=true -> modulo (boucle) ; loop=false -> clamp a la derniere frame (play-once).
+  const animFrame = !animated
+    ? 0
+    : loop
+      ? ((rawAnimFrame % frameCount) + frameCount) % frameCount
+      : Math.min(Math.max(0, rawAnimFrame), frameCount - 1);
   const frameStr = String(animFrame).padStart(3, "0");
 
   // Paths

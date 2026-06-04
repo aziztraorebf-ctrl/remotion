@@ -23,11 +23,28 @@
 - Persos PixelLab à compléter (directions manquantes) : Hannibal (numide, v4a = est-seul), volque
   (ouest-seul), épéiste/lancier/sundiata/almoravide (1 dir). À régénérer en 4 dirs si réutilisés.
 
-## Prochaine action
+## Beats système validés (preuves que le système guide)
 
-CONTINUER À TESTER LE SYSTÈME sur d'autres patterns de beat (confrontation 2 sprites / empire qui
-s'étend / Spotlight Insert chiffre). Voir NEXT-ACTION. Démarrer par le point d'entrée :
-`src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md`.
+1. **Drop-objet** — `AtlasV2SaharanDropScene` (porteur dépose l'or, repart, l'or persiste). catbox znmqfr.
+2. **Confrontation 1v1** — `AtlasV2ConfrontationScene` (2 sprites sens opposés + Spotlight Insert chiffré). catbox 736mwf.
+3. **BATAILLE 2 ARMÉES** ⭐⭐ — `AtlasV2ArmyDeployScene` (2026-06-04, "ne pas perdre ça" Aziz). LE template avancé :
+   file indienne x2 → déploiement file→ligne (dir déduite du dx, anti-moonwalk sur 8 sprites) → Spotlight Insert →
+   CHARGE → estoc spear_attack PLAY-ONCE (séquentiel/simultané) → PERTES (camp perdant tombe + fade). catbox 2fycin.
+   Compositions Root : `AtlasV2ArmyDeploy` (simultané), `AtlasV2ArmyDeploySeq` (séquentiel).
+
+## Assets PixelLab générés cette session (soldat-mali, ID d378d0f2-2704-4f4e-bf60-3a8475b2fb16)
+
+4 anims maintenant : walk_cycle (6f) + **charge** (running-6f) + **spear_attack** (7f, estoc lance) + **death** (falling-back, 7f).
+Toutes est+ouest natives. Dossiers : `public/atlas-mansa-moussa/characters/soldat-mali/animations/`.
+SFX générés (ElevenLabs) : `public/_shared/sfx/sfx-clash-impact.mp3` (1.36s) + `sfx-army-charge.mp3` (2.0s).
+
+## Prochaine action (templates proposés par Aziz 2026-06-04)
+
+Voir NEXT-ACTION section "templates Atlas à créer". 3 familles : (a) **objets sur la map** (villes/objets,
+différentes manières d'apparaître/révéler) ; (b) template dédié **Peste 1347** (valider/améliorer beats existants) ;
+(c) template dédié **Hannibal** (se débloque fort avec la bataille — sprites numide/volque + AtlasAttackArrow).
+BACKLOG avancé : **multi-lignes séquentielles** (rangs qui avancent pour combler les morts — demande un moteur d'état).
+Démarrer par le point d'entrée : `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md`.
 
 ## Techniques apprises (raccordées au système)
 

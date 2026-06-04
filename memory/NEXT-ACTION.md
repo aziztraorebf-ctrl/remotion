@@ -58,10 +58,25 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
 **Branche : `feat/atlas-playbook-retour-aux-sources` (11 commits) — A MERGER quand Aziz valide.**
 **Fiche reprise : `memory/episodes/atlas-systeme/STATUS.md`.**
 
-**PROCHAINS CHANTIERS (ordre suggere) :**
-1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats (Aziz veut eprouver) — varier les patterns :
-   une confrontation 2 sprites, un empire qui s'etend, un Spotlight Insert chiffre. Chaque beat teste
-   une partie differente du systeme et nourrit la biblio. Le 1er (drop-objet) = VALIDE.
+**FAIT 2026-06-04 — 2 nouveaux beats systeme + couche combat (session marquante) :**
+- **Confrontation 1v1** (`AtlasV2ConfrontationScene`, catbox 736mwf) + **Spotlight Insert chiffre** reutilisable.
+- **BATAILLE 2 ARMEES** (`AtlasV2ArmyDeployScene`, catbox 2fycin) ⭐⭐ — Aziz "ne pas perdre ca". File->ligne->
+  charge->estoc play-once (seq/simul)->pertes (morts+fade). 4 anims PixelLab generees (walk/charge/spear_attack/
+  death) + 2 SFX ElevenLabs. Technique complete : `feedback_atlas-bataille-multisprites-technique.md`.
+- `AtlasPixelChar` enrichi : props `loop` (play-once) + `animStartAt`. A PROMOUVOIR vers `_shared`.
+
+**TEMPLATES ATLAS A CREER (proposes par Aziz 2026-06-04, ordre a decider) :**
+1. **Objets sur la map** — villes / objets / map-objects : differentes manieres d'APPARAITRE et de REVELER
+   (pop, build-up, halo, etc.). Famille de templates "habiller la carte d'objets vivants".
+2. **Template dedie PESTE 1347** — pour valider/ameliorer les beats existants (Beat 5 Mali Vivant en attente).
+3. **Template dedie HANNIBAL** ⭐ — se DEBLOQUE fort avec la bataille (Aziz). Sprites numide/volque/hannibal-v4a
+   (a completer en 4 dirs) + AtlasAttackArrow/Encirclement + le moteur bataille. Reprendre Beat 2 Phase C.
+
+**BACKLOG avance** : multi-lignes sequentielles (rangs qui avancent pour combler les morts) = moteur d'etat,
+pas trivial. Voir `feedback_atlas-bataille-multisprites-technique.md` section BACKLOG.
+
+**ANCIEN chantier (toujours valide) :**
+1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats — empire qui s'etend pas encore teste.
 2. **OUTILLER le demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py) + selfreview,
    depuis `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable (le scan force, comme /beat Souverain).
 3. **EXTRAIRE en composants partages** (grep-usage AVANT) : SpotlightInsert (GHANA sel/or), AtlasPixelChar
