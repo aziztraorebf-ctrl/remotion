@@ -74,6 +74,8 @@ import { DutchTiltCollapse } from "./projects/atlas/_blueprints/dutch-tilt-colla
 import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
 import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
 import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
+import { AtlasCannesScene } from "./projects/atlas/_shared/AtlasCannesScene";
+import { AtlasCannesHannibal } from "./projects/atlas/_shared/AtlasCannesHannibal";
 import { Beat1Hook as P1347_Beat1Hook } from "./projects/atlas/peste-1347/Beat1Hook";
 import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
@@ -430,6 +432,22 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={720}
           height={1280}
+        />
+        <Composition
+          id="AtlasCannesScene"
+          component={AtlasCannesScene}
+          durationInFrames={290}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="AtlasCannesHannibal"
+          component={AtlasCannesHannibal}
+          durationInFrames={600}
+          fps={30}
+          width={1080}
+          height={1920}
         />
         <Composition
           id="PesteBeat1Hook"
