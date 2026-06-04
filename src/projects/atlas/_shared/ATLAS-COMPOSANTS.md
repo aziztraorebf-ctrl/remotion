@@ -112,11 +112,19 @@ function memberPosition(frame, spawnX, spawnY, destX, destY, walkStart, walkEnd,
 - **Props clés** : `x`, `y`, `color`, `size`, `startFrame`
 - **Épisodes** : tous (capitales, lieux narratifs)
 
-### AtlasCaravane
-- **Usage** : sprite PNG qui suit un path Bezier avec hopping vertical
-- **Props clés** : `spriteSrc`, `path` (SVG path string), `durationFrames`, `startFrame`, `hopAmplitude`
-- **RÈGLE** : walk cycle multi-frames = bug bbox → garder UN frame unique + `Math.abs(Math.sin(frame * speed)) * amplitude`
+### AtlasCaravane — CHIBI sur path (vue large)
+- **Usage** : petit sprite chibi qui suit un path Bezier avec hopping vertical. Pour vue LARGE (perso petit, on voit le trajet). PAS pour gros plan acteur (→ AtlasPixelChar).
+- **Props clés** : `chibiSrc`, `pathD`, `waypoints`, `startFrame`/`endFrame`, `hopAmplitude`, `walkFrames` (optionnel), `tOffset` (retard pour cortège)
+- **RÈGLE (locale au chibi)** : pour un chibi animé en walk multi-frames, attention au bbox → soit `walkFrames` maîtrisé, soit 1 frame + `Math.abs(Math.sin(frame*speed))*amplitude` (hop). CETTE RÈGLE NE S'APPLIQUE PAS à `AtlasPixelChar` (voir ci-dessous).
 - **Épisodes** : S3 Mansa Moussa (caravane Mali→La Mecque) · S3 Shaka Zulu (impi expansion)
+
+### AtlasPixelChar — SPRITE-ACTEUR plein cadre (gros plan) ⭐
+- **Code** : `src/projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasPixelChar.tsx`. Doctrine complète : `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md`.
+- **Usage** : l'ACTEUR du récit incarné sur la carte (Mansa marche, l'armée avance). Walk cycle multi-frames qui MARCHE en production (≠ la règle bbox du chibi ci-dessus, qui ne le concerne pas).
+- **Mécaniques** : cadence 8fps DÉCOUPLÉE du 30fps vidéo (`Math.floor((frame-appearAt)/fps*8)%frameCount`), ancrage-PIED (`y-size`), entrée fade spring, `imageRendering:pixelated`, flip-ouest `scale(-1,1)`.
+- **Convention dossier** : `public/<episode>/characters/<perso>/animations/<anim>/<dir>/frame_NNN.png`.
+- **Recettes** : cortège (offset de path), switch anim contextuel (walk→pose), caméra qui track. Voir ATLAS-PIXELLAB-PLAYBOOK §3.
+- **Sprites restaurés** : `public/atlas-mansa-moussa/characters/` (mansa-moussa, porteur, soldat, chameau). Autres épisodes : Ghana (6), Hannibal (4), Shaka (3), Peste (6) — voir audit `memory/atlas-decode/audit/`.
 
 ### AtlasEmpire
 - **Usage** : overlay territoire empire avec hachures ou fill semi-transparent
