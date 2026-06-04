@@ -12,7 +12,7 @@
 | **Composant Remotion général** (stat, comparaison, timeline, hook, portrait, preuve, réseau...) | `src/projects/_shared/COMPOSANTS-INDEX.md` | 71 composants par cas d'usage ("quand Aziz dit...") |
 | **Template carte Mapbox** (hook carto, insert, couleur/drapeau sur territoire, combo, fill-pattern, plaque+source) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` | 28 templates carte vivante + helpers. Drapeau dans un pays = `useClipFlags` ⭐⭐ (vraies images, jamais drawFlagCanvas). Plaque nom+stat+source = `GeoCountryPlaque`. Galerie : `dashboard/templates-carte-vivante.html` |
 | **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber, OdometerFlip...) | `memory/tools/CATALOGUE-GEMINI.md` | 40+ templates animés, format prompt Gemini |
-| **Blueprint Atlas** (marche, confrontation, alliance, empire, zoom-révélation...) | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` | ~25 blueprints + helpers caméra 2 couches |
+| **TOUT Atlas** (d3-geo, cartographie, sprites PixelLab, empires, batailles) — POINT D'ENTRÉE | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ | Carte maître Atlas : doctrine (ATLAS-PLAYBOOK), composants (COMPOSANTS-INDEX), assets (ATLAS-ASSETS-INDEX 568 sprites), 13 blueprints, démarrage beat |
 | **Asset PixelLab** (personnage, objet pixel art) | `memory/tools/PIXELLAB-MASTER-INDEX.md` | ~50 characters + objects avec IDs |
 | **Mouvement caméra — clip AI** (Seedance/Kling/Veo, prompt) | `memory/tools/camera-movements.md` | 30 mouvements + filtres validés |
 | **Mouvement caméra — Atlas/Remotion** (code, zéro-cost) | `memory/tools/atlas-camera-movements.md` | 16 mouvements validés/à tester |
