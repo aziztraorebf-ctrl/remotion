@@ -22,6 +22,12 @@ interface AtlasPixelCharProps {
   animated?: boolean;      // true = walk cycle, false = static sprite
   appearAt?: number;       // visual frame when sprite appears (fade in)
   frameCount?: number;     // frames per walk cycle (default 6)
+  // Flip horizontal SEULEMENT pour les persos generes face EST uniquement (ex: Hannibal).
+  // PAR DEFAUT false : on charge la frame native de `direction`. La PLUPART des persos Atlas
+  // (Mansa, Ghana berbere/sahelien) ont de VRAIES frames west/ -> les flipper = moonwalk
+  // (le sprite regarde a droite en allant a gauche). Mettre true UNIQUEMENT si le perso n'a
+  // pas de dossier west/ et qu'on veut deriver l'ouest depuis l'est.
+  flipForWest?: boolean;
 }
 
 export const AtlasPixelChar: React.FC<AtlasPixelCharProps> = ({
@@ -34,6 +40,7 @@ export const AtlasPixelChar: React.FC<AtlasPixelCharProps> = ({
   animated = true,
   appearAt = 0,
   frameCount = WALK_FRAMES,
+  flipForWest = false,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -58,8 +65,11 @@ export const AtlasPixelChar: React.FC<AtlasPixelCharProps> = ({
   );
   const staticSrc = staticFile(`${charPath}/static-${direction}.png`);
 
-  // Flip west via transform (sprites are generated facing east)
-  const flipTransform = direction === "west" ? `scale(-1, 1) translate(${-x * 2 - size} 0)` : "";
+  // Flip horizontal : UNIQUEMENT si flipForWest=true (perso est-seulement). Sinon on
+  // charge la frame native de `direction` (ex: frames west/ reelles pour Mansa) sans flip.
+  // Miroir autour de l'axe x (point d'ancrage) pour ne pas deplacer le sprite.
+  const flipTransform =
+    flipForWest && direction === "west" ? `translate(${2 * x} 0) scale(-1 1)` : "";
 
   return (
     <g opacity={fadeIn} transform={flipTransform}>
@@ -84,7 +94,8 @@ export const AtlasPixelStatic: React.FC<{
   y: number;
   size?: number;
   appearAt?: number;
-}> = ({ charPath, direction = "south", x, y, size = 64, appearAt = 0 }) => {
+  flipForWest?: boolean;
+}> = ({ charPath, direction = "south", x, y, size = 64, appearAt = 0, flipForWest = false }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -96,7 +107,9 @@ export const AtlasPixelStatic: React.FC<{
   if (frame < appearAt) return null;
 
   const src = staticFile(`${charPath}/static-${direction}.png`);
-  const flipTransform = direction === "west" ? `scale(-1, 1) translate(${-x * 2 - size} 0)` : "";
+  // flip opt-in seulement (perso est-seulement) — voir AtlasPixelChar, fix moonwalk 2026-06-03
+  const flipTransform =
+    flipForWest && direction === "west" ? `translate(${2 * x} 0) scale(-1 1)` : "";
 
   return (
     <g opacity={fadeIn} transform={flipTransform}>

@@ -11,6 +11,25 @@ récit, on l'incarne.
 
 ---
 
+## §0 — RÈGLE DE GÉNÉRATION (NON-NEGOTIABLE, Aziz 2026-06-03)
+
+**Quand on génère un personnage/animation PixelLab, TOUJOURS générer les 4 directions natives :
+est, ouest, sud, nord.** Surtout pour les cycles de marche. Ainsi on a toujours la bonne frame
+pour chaque direction, et **on n'a JAMAIS besoin de flipper**.
+
+Pourquoi c'est la vraie solution (et pas le flip) : les frames natives `west/` regardent déjà à
+gauche. Flipper une frame west (la retourner) la fait regarder à droite → le sprite "moonwalke"
+(marche à reculons). Le bug du 1er beat venait de là : le code flippait des frames west natives.
+**Pas de flip = pas de bug de flip possible.** Le flip n'était qu'un contournement pour des persos
+générés incomplets (est-seulement, ex: Hannibal). Si on génère les 4 directions, ce contournement
+disparaît.
+
+`AtlasPixelChar` charge donc TOUJOURS la frame native de `direction`. Le prop `flipForWest`
+(défaut `false`) existe uniquement comme fallback déprécié pour un vieux perso est-seulement —
+à ne PAS utiliser sur un perso généré correctement. **Sprites Atlas existants à compléter si
+direction manquante** : Hannibal (numide, hannibal-v4a) = est-seulement, volque = ouest-seulement,
+épéiste/lancier/sundiata/almoravide = 1 seule direction. Mansa (tous) + Ghana berbère/sahélien = 4 dirs OK.
+
 ## §1 — CONVENTION DE DOSSIERS (NON-NEGOTIABLE)
 
 ```
@@ -65,13 +84,11 @@ DOM `<Img>` de Ghana qui exige `svgToCompWithCam()`). Les 5 mécaniques clés :
 4. **Ancrage au PIED** (crucial — le perso "marche sur" la carte, ne flotte pas) :
    `x={x - size/2} y={y - size}` → (x,y) = point au SOL, le sprite est dessiné au-dessus.
 
-5. **Flip Ouest par transform** (PixelLab ne génère bien que l'Est) :
-   `direction === "west" ? translate(${2*x} 0) scale(-1 1) : ""` — miroir AUTOUR de l'axe x
-   (point d'ancrage). ⚠️ **CORRIGÉ 2026-06-03** : l'ancienne formule `scale(-1,1) translate(-x*2-size 0)`
-   réfléchissait autour d'un point décalé de size/2 → le sprite "moonwalkait" (marchait à reculons
-   en glissant) quand il repartait vers l'ouest. La bonne formule réfléchit autour de x sans
-   déplacer le sprite. Leçon : un flip de sprite DANS un `<g transform caméra>` (scale+skew) doit
-   se faire autour du point d'ancrage exact, jamais d'un offset approximatif.
+5. **Direction = frame native, PAS de flip** (voir §0, règle Aziz). `AtlasPixelChar` charge
+   `animations/<anim>/<direction>/frame_NNN.png` — la frame native. On génère les 4 directions
+   (§0) donc le flip est inutile. `flipForWest` reste un fallback déprécié (perso est-seulement).
+   Historique du bug (2026-06-03) : le code flippait par défaut les frames west, or elles sont
+   natives et regardent déjà à gauche → moonwalk. Résolu en chargeant la frame native sans flip.
 
 **Gotcha à connaître** : `staticSrc` est calculé mais le rendu affiche TOUJOURS `animSrc` (pas de
 vrai fallback). Si une frame manque, `onError` est vide → trou. Pour un sprite statique pur, utiliser
