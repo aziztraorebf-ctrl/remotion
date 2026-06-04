@@ -76,6 +76,8 @@ import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowD
 import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
 import { AtlasCannesScene } from "./projects/atlas/_shared/AtlasCannesScene";
 import { AtlasCannesHannibal } from "./projects/atlas/_shared/AtlasCannesHannibal";
+import { AtlasMansaMoussaV2Final } from "./projects/atlas/_reference/mansa-moussa-v2/AtlasMansaMoussaV2Final";
+import { TOTAL_DURATION_FRAMES as MANSA_V2_FRAMES } from "./projects/atlas/_reference/mansa-moussa-v2/timing-mansa-moussa-v2";
 import { Beat1Hook as P1347_Beat1Hook } from "./projects/atlas/peste-1347/Beat1Hook";
 import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
@@ -448,6 +450,14 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="AtlasMansaMoussaV2"
+          component={AtlasMansaMoussaV2Final}
+          durationInFrames={MANSA_V2_FRAMES}
+          fps={30}
+          width={720}
+          height={1280}
         />
         <Composition
           id="PesteBeat1Hook"

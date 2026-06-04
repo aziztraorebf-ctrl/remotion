@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { ATLAS_V2_NARRATION_WORDS } from "../atlas-v2-narration-words";
-import { T, AUDIO_SEGMENTS } from "../../../../../_archive/episodes-livres/atlas/mansa-moussa/timing-mansa-moussa-v2";
+import { T, AUDIO_SEGMENTS } from "../timing-mansa-moussa-v2";
 
 const HIGHLIGHT_COLOR = "#D4A574";
 const FONT_SIZE = 38;

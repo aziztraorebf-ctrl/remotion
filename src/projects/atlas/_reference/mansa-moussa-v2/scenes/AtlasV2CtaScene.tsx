@@ -8,7 +8,7 @@ import {
   staticFile,
 } from "remotion";
 import { ATLAS_COLORS } from "../atlas-v2-components";
-import { T } from "../../../../../_archive/episodes-livres/atlas/mansa-moussa/timing-mansa-moussa-v2";
+import { T } from "../timing-mansa-moussa-v2";
 
 interface CtaSceneProps {
   startFrame: number;
