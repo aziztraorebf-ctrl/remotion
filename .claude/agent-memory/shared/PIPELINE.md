@@ -366,3 +366,14 @@ Fix collatéral : `scripts/render-mapbox.sh` (chemin chrome-headless-shell) + st
 - Catbox final : https://files.catbox.moe/ck11k7.mp4
 - **Backlog SFX** consigné dans `memory/episodes/souverain/senegal-petrole-gaz/CORRECTIONS-MINEURES.md` — à intégrer avant assemblage 4 actes final
 - **NEXT** : Acte 3 (à produire)
+
+---
+
+## CIRCUIT BREAKER RE-OPEN: AtlasCannesScene — rendu 2-echelles, direction confirmee (2026-06-03)
+
+Pas une boucle aveugle. Phases A (carte regionale Italie + marqueur Cannae) et B (terrain
+tactique + encerclement) deja rendues et lisibles. 2 ajustements ciblES restants, valeurs
+calculees numeriquement (d3-geo), pas tatonnees :
+1. scale tactique 190000→150000 + wingMid lat 41.45/41.19→41.41/41.23 (arcs debordaient).
+2. titleOpacity s'efface au zoom f95-120 (titre se superposait a l'aile haute).
+Apres : render video complet + upload + presentation Aziz.

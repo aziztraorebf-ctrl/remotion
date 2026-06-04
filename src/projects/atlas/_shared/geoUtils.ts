@@ -20,44 +20,95 @@ import type { Feature, LineString } from "geojson";
 const SVG_W = 720;
 const SVG_H = 1280;
 
-// Ancres calibration (issues de peste-map-data.json)
-const ANCHOR1 = { lon: -8.386, lat: 11.379, x: 210.56, y: 737.35 };
-const ANCHOR2 = { lon: -3.014, lat: 16.787, x: 249.94, y: 696.46 };
+// Fonction de projection WGS84 → SVG (720×1280). Toute projection Atlas a ce type.
+export type Projection = (lon: number, lat: number) => [number, number];
 
-// Coefficient X (longitude → SVG x) — linéaire en Mercator standard
-const mercatorLonToX = (lon: number): number => {
-  const dx = ANCHOR2.x - ANCHOR1.x;
-  const dLon = ANCHOR2.lon - ANCHOR1.lon;
-  const scale = dx / dLon;
-  return ANCHOR1.x + (lon - ANCHOR1.lon) * scale;
-};
+// Point d'ancrage de calibration : une coord géo connue ET sa position écran connue.
+export interface ProjAnchor {
+  lon: number;
+  lat: number;
+  x: number;
+  y: number;
+}
 
-// Coefficient Y (latitude → SVG y) — logarithmique en Mercator standard
-const mercatorLatScale = (() => {
-  const latToMerc = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
-  const m1 = latToMerc(ANCHOR1.lat);
-  const m2 = latToMerc(ANCHOR2.lat);
-  return (ANCHOR2.y - ANCHOR1.y) / (m2 - m1);
-})();
+const latToMerc = (lat: number): number =>
+  Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
 
-const mercatorLatOffset = (() => {
-  const latToMerc = (lat: number) => Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
-  return ANCHOR1.y - mercatorLatScale * latToMerc(ANCHOR1.lat);
-})();
-
-const mercatorLatToY = (lat: number): number => {
-  const m = Math.log(Math.tan(Math.PI / 4 + (lat * Math.PI) / 360));
-  return mercatorLatScale * m + mercatorLatOffset;
+/**
+ * FACTORY — construit une projection Mercator linéaire à partir de 2 ancres connues.
+ * X est linéaire en longitude, Y logarithmique en latitude (Mercator standard).
+ * C'est la généralisation de l'ancienne projection figée : chaque épisode/région
+ * Atlas a SA paire d'ancres (voir PROJECTION_ANCHORS). Ne JAMAIS réutiliser les
+ * ancres d'une région pour une autre — les coords tomberaient hors champ.
+ *
+ *   const proj = makeLngLatToSvg(anchorA, anchorB);
+ *   const [x, y] = proj(lon, lat);
+ */
+export const makeLngLatToSvg = (a: ProjAnchor, b: ProjAnchor): Projection => {
+  // X linéaire
+  const xScale = (b.x - a.x) / (b.lon - a.lon);
+  const lonToX = (lon: number) => a.x + (lon - a.lon) * xScale;
+  // Y logarithmique (Mercator)
+  const yScale = (b.y - a.y) / (latToMerc(b.lat) - latToMerc(a.lat));
+  const yOffset = a.y - yScale * latToMerc(a.lat);
+  const latToY = (lat: number) => yScale * latToMerc(lat) + yOffset;
+  return (lon, lat) => [lonToX(lon), latToY(lat)];
 };
 
 /**
- * Convertit des coordonnées géographiques WGS84 en coordonnées SVG Atlas (720×1280).
- * Appliquer ensuite makeMapCoord(camScale, driftX, driftY)(svgX, svgY) pour l'écran.
+ * FACTORY ALTERNATIVE — projection centrée plus intuitive pour une NOUVELLE région
+ * sans carte pré-projetée : on donne le centre géo (placé au milieu du cadre) et
+ * une échelle en pixels par degré de longitude. Y reste Mercator (correct aux
+ * latitudes moyennes). Pratique pour cadrer une bataille (Cannes, Thermopyles)
+ * dont on connaît le centre et l'emprise voulue, sans avoir 2 ancres écran.
  */
-export const lngLatToSvg = (lon: number, lat: number): [number, number] => [
-  mercatorLonToX(lon),
-  mercatorLatToY(lat),
-];
+export const centeredProjection = (
+  centerLon: number,
+  centerLat: number,
+  pxPerDegLon: number,
+  cx = SVG_W / 2,
+  cy = SVG_H / 2,
+): Projection => {
+  // 1° lon = pxPerDegLon px. En Mercator, l'échelle Y suit la même densité au centre.
+  const mercCenter = latToMerc(centerLat);
+  // dériver px par unité Mercator pour que l'échelle soit isotrope au centre :
+  // d(merc)/d(lat) au centre = 1/cos(lat) en rad ; px/° lat ≈ px/° lon → on aligne
+  // via la densité Mercator pour rester cohérent verticalement.
+  const pxPerMerc = (pxPerDegLon * 180) / Math.PI; // unités Mercator → px
+  return (lon, lat) => [
+    cx + (lon - centerLon) * pxPerDegLon,
+    cy - (latToMerc(lat) - mercCenter) * pxPerMerc,
+  ];
+};
+
+// ─── CATALOGUE D'ANCRAGES PAR RÉGION ─────────────────────────────────────────
+// Chaque épisode Atlas hors Afrique de l'Ouest a SA projection. Ajouter ici les
+// régions au fur et à mesure (1 entrée = 1 projection prête à l'emploi).
+export const PROJECTIONS = {
+  // Afrique de l'Ouest (Mali / Peste 1347) — ancres historiques peste-map-data.json.
+  // = l'ancienne projection figée, conservée à l'identique (zéro régression).
+  mali: makeLngLatToSvg(
+    { lon: -8.386, lat: 11.379, x: 210.56, y: 737.35 }, // Niani
+    { lon: -3.014, lat: 16.787, x: 249.94, y: 696.46 }, // Tombouctou
+  ),
+  // Méditerranée occidentale (Hannibal, vue large Carthage→Rome) — centrée Italie sud.
+  mediterranee: centeredProjection(15.5, 41.0, 90),
+  // Bataille de Cannes (échelle LOCALE plaine, ~3 km de front) — centrée sur le
+  // dispositif tactique. Étalement ~180×230 px, centré cadre. Pour le multi-flèches
+  // d'encerclement (cas où mapanimation échoue : confrontation localisée sans trajet).
+  cannae: centeredProjection(16.1, 41.32, 1100),
+  // Europe (Napoléon) — centrée Europe centrale, échelle moyenne continentale.
+  europe: centeredProjection(15.0, 48.0, 26),
+  // Grèce (Thermopyles) — centrée golfe Maliaque, échelle locale très serrée.
+  grece: centeredProjection(22.5, 38.9, 130),
+} as const satisfies Record<string, Projection>;
+
+/**
+ * Projection par DÉFAUT (Afrique de l'Ouest / Mali). Conservée pour zéro régression :
+ * tout code existant qui importe lngLatToSvg garde exactement le même résultat.
+ * Pour une autre région, passer une projection de PROJECTIONS aux helpers de route.
+ */
+export const lngLatToSvg: Projection = PROJECTIONS.mali;
 
 // ─── TYPES ──────────────────────────────────────────────────────────────────
 
@@ -96,13 +147,14 @@ export const routeLengthKm = (route: Feature<LineString>): number => {
  */
 export const positionAlongRoute = (
   route: Feature<LineString>,
-  progress: number
+  progress: number,
+  proj: Projection = lngLatToSvg
 ): [number, number] => {
   const totalKm = routeLengthKm(route);
   const distKm = Math.max(0, Math.min(1, progress)) * totalKm;
   const pt = turf.along(route, distKm, { units: "kilometers" });
   const [lon, lat] = pt.geometry.coordinates;
-  return lngLatToSvg(lon, lat);
+  return proj(lon, lat);
 };
 
 // ─── ORIENTATION : bearing pour orienter un sprite ──────────────────────────
@@ -169,7 +221,8 @@ export const caravanePositions = (
   route: Feature<LineString>,
   progress: number,
   count: number,
-  spacingKm = 0.3
+  spacingKm = 0.3,
+  proj: Projection = lngLatToSvg
 ): Array<[number, number]> => {
   const totalKm = routeLengthKm(route);
   const leaderKm = Math.max(0, Math.min(1, progress)) * totalKm;
@@ -177,7 +230,7 @@ export const caravanePositions = (
     const memberKm = Math.max(0, leaderKm - i * spacingKm);
     const pt = turf.along(route, memberKm, { units: "kilometers" });
     const [lon, lat] = pt.geometry.coordinates;
-    return lngLatToSvg(lon, lat);
+    return proj(lon, lat);
   });
 };
 
@@ -208,6 +261,53 @@ export const greatCircleRoute = (
     return turf.lineString(coords);
   }
   return gc as Feature<LineString>;
+};
+
+// ─── ROUTE COURBE (spline) PAR WAYPOINTS — pour l'enveloppement ───────────────
+
+/**
+ * Génère un LineString GeoJSON COURBE passant par des waypoints, via une spline
+ * Catmull-Rom évaluée en coords géo (lon/lat). Contrairement à buildRoute (polyligne
+ * à angles secs) et greatCircleRoute (2 points seulement), donne un arc DOUX à 3+
+ * points — indispensable pour une aile d'enveloppement qui contourne (Cannes).
+ *
+ * @param waypoints - min 2 points (2 → ligne droite)
+ * @param npointsPerSeg - densité d'échantillonnage par segment (def 24)
+ */
+export const bezierRoute = (
+  waypoints: GeoPoint[],
+  npointsPerSeg = 24,
+): Feature<LineString> => {
+  if (waypoints.length < 3) return buildRoute(waypoints);
+  const pts = waypoints.map((p) => [p.lon, p.lat] as [number, number]);
+  const out: [number, number][] = [];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] ?? pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2] ?? p2;
+    for (let s = 0; s < npointsPerSeg; s++) {
+      const t = s / npointsPerSeg;
+      const t2 = t * t;
+      const t3 = t2 * t;
+      // Catmull-Rom (tension 0.5)
+      const lon =
+        0.5 *
+        (2 * p1[0] +
+          (-p0[0] + p2[0]) * t +
+          (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * t2 +
+          (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * t3);
+      const lat =
+        0.5 *
+        (2 * p1[1] +
+          (-p0[1] + p2[1]) * t +
+          (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * t2 +
+          (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * t3);
+      out.push([lon, lat]);
+    }
+  }
+  out.push(pts[pts.length - 1]);
+  return turf.lineString(out);
 };
 
 // ─── ROUTES PRÉDÉFINIES PESTE 1347 ──────────────────────────────────────────

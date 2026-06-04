@@ -19,26 +19,59 @@ d3-geo headless = bon moteur (clipPath deja eprouve en render, mieux que Mapbox)
 carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-faisabilite.md`
 + `atlas-pixellab-differentiel.md`.
 
-## ⏳ PROCHAINE SESSION — suite voie B Atlas (le differentiel)
+## ⏳ PROCHAINE SESSION — ATLAS : retour aux sources FAIT, place au playbook vivant
 
-> Contexte complet : `feedback_atlas-inspiration-externe-faisabilite.md` + `atlas-pixellab-differentiel.md`.
-> Refs decodees : `out/_r-and-d/mapanimation/atlas-test/` (hannibal, mali, route_comet, napoleon, cargo x2, thermopylae, cannae).
+> **VIRAGE MAJEUR 2026-06-03 (Aziz)** : le playbook Atlas se derive de Ghana + Mansa Moussa
+> (nos 2 Atlas validees), PAS de mapanimation (externe) ni de sujets hypothetiques (Cannes/Hannibal).
+> Doctrine : `feedback_atlas-retour-aux-sources-ghana-mansa.md`. Playbooks : `memory/doctrines/ATLAS-*.md`.
 
-**ACQUIS verrouille :** leur outil ECHOUE sur les batailles (Thermopyles + Cannes prouves) →
-**batailles = NOTRE exclusivite PixelLab.** PixelLab = differentiel par DEFAUT (pas plan B).
-mapanimation = banc R&D, jamais livraison. Fleche `AtlasAttackArrow` = OK, paramétrable, premium.
+**FAIT cette session :**
+1. ✅ Fleches tactiques (`AtlasAttackArrow` + `AtlasEncirclement` + projections geoUtils) — GARDE
+   comme template "enrichissement" (idee mapanimation, codee par nous). Demos Cannes en R&D.
+2. ✅ **DECODAGE Ghana + Mansa Moussa** (code integral + frames) → `memory/atlas-decode/DECODE-*.md`.
+3. ✅ **RESTAURE Mansa Moussa** (purge au Menage) : code `_reference/mansa-moussa-v2/` + 79 assets
+   PixelLab `public/atlas-mansa-moussa/` (4 sprites : mansa couronne, porteur, soldat, chameau).
+4. ✅ **PLAYBOOK ATLAS ecrit** (3 fichiers, `memory/doctrines/ATLAS-*.md`) : doctrine visuelle +
+   couche PixelLab + checklist demarrage. Indexes (MEMORY.md + CLAUDE.md routage).
+5. ✅ **AUDIT bibliotheque** (3 agents) → `memory/atlas-decode/audit/`. Atlas a la matiere
+   (13 blueprints, 568 sprites/19 persos, 8 composants) mais pas l'organisation.
+6. ✅ **NETTOYAGE verifie** : clarif AtlasCaravane(chibi)/AtlasPixelChar(acteur) ; les "doublons"
+   atlas-components vs atlas-v2-components sont 2 VERSIONS vivantes (Peste vs Mansa) — NE PAS merger.
+7. ✅ **BIBLIOTHEQUE ORGANISEE (parite Souverain)** : 3 catalogues dans `src/projects/atlas/_shared/` :
+   `ATLAS-INDEX-DES-INDEX.md` (carte maitre) + `COMPOSANTS-INDEX.md` ("quand Aziz dit") +
+   `ATLAS-ASSETS-INDEX.md` (568 sprites/11 JSON geo). Branches dans INDEX Souverain + CLAUDE.md.
+8. ✅ **MANSA MOUSSA AUTONOME + VALIDE EN RENDER** : orchestrateur+timing dans `_reference/`,
+   enregistre Root.tsx (`AtlasMansaMoussaV2`). Render preuve : caravane PixelLab (Mansa couronne +
+   suiveurs sur route doree) + overlays + 2 inserts dataviz + FlagFill + medaillon = TOUT REND.
+   Restauration code+assets PROUVEE. Frames : `out/_r-and-d/atlas-decode/mansa-rerender/PREUVE/`.
 
-**3 chantiers ouverts (ordre suggere) :**
-1. **PROTOTYPER UNE BATAILLE PixelLab** — le vrai differentiel, sans concurrent. 2 formations
-   sprites face a face sur carte + terrain + rapport de force + pulse de choc. Cas : Cannes
-   (enveloppement) ou Thermopyles (defile). ~50 assets PixelLab existants (PIXELLAB-MASTER-INDEX).
-2. **PLAYBOOK ATLAS** — miroir d3-geo du SOUVERAIN-VISUAL-PLAYBOOK. Consolider les 5 mecaniques
-   decodees + echelle escalade N0 primitives / N1 marqueur / N2 sprite PixelLab.
-3. **Enrichir AtlasAttackArrow** — multi-fleches coordonnees (encerclement), + regler la
-   FRICTION projection : `lngLatToSvg` est REGIONALE (ancrages Afrique Ouest) → prevoir ancrages
-   par episode pour Hannibal/Napoleon hors zone.
+9. ✅ **TEST SYSTEME REUSSI (1er beat via agent vierge)** : un agent SANS contexte a produit le beat
+   "porteur depose un sac d'or au Sahara, repart, l'or persiste" (Silent Barter sur carte Mansa) en
+   suivant UNIQUEMENT la doc. Le routage l'a guide de bout en bout. Beat valide en render + APPROUVE
+   Aziz (zoom, marche point-fixe sans fleche, or+pulse, SFX pas excellents). `AtlasV2SaharanDropScene`
+   + `AtlasV2SaharanDropDemo`. catbox znmqfr. PREUVE que le systeme guide un nouveau venu.
+10. ✅ **FIX moonwalk** : flip-ouest d'`AtlasPixelChar` corrige (miroir autour de x, pas offset
+    decale) → corrige TOUS les futurs beats. Zero regression Mansa (va vers l'est). Insights raccordes :
+    COMPOSANTS-INDEX (nouveau template drop-objet), ATLAS-PIXELLAB-PLAYBOOK (lecon flip + friction
+    projection geoUtils!=paths json), SFX-INDEX (backlog sfx-gold-coins-drop).
 
-**Polish mineur backlog :** AtlasAttackArrowDemo gardee en ref (Root.tsx). Couleurs/tete fleche OK.
+**Branche : `feat/atlas-playbook-retour-aux-sources` (11 commits) — A MERGER quand Aziz valide.**
+**Fiche reprise : `memory/episodes/atlas-systeme/STATUS.md`.**
+
+**PROCHAINS CHANTIERS (ordre suggere) :**
+1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats (Aziz veut eprouver) — varier les patterns :
+   une confrontation 2 sprites, un empire qui s'etend, un Spotlight Insert chiffre. Chaque beat teste
+   une partie differente du systeme et nourrit la biblio. Le 1er (drop-objet) = VALIDE.
+2. **OUTILLER le demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py) + selfreview,
+   depuis `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable (le scan force, comme /beat Souverain).
+3. **EXTRAIRE en composants partages** (grep-usage AVANT) : SpotlightInsert (GHANA sel/or), AtlasPixelChar
+   (→ _shared), inserts charts Mansa, composants Shaka. Backlog dans COMPOSANTS-INDEX.
+
+**Backlog mineur :** SFX `atlas/sfx-gold-coins-drop.mp3` a generer (drop d'or). Anim crouch pour
+porteur-mali NON necessaire (Aziz : le perso qui s'arrete suffit). Ancres `.europe`/`.grece` projections
+fleches (si Napoleon). Bug lisibilite Cannes Hannibal (zoom x80 carte figee). Render background peut
+se bloquer au bundling grosse compo → stills directs pour valider vite. Workflow tool : un agent peut
+oublier StructuredOutput en fin → recuperer le travail des transcripts si ca plante.
 
 ---
 

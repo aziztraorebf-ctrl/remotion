@@ -30,11 +30,14 @@
 import React from "react";
 import {
   buildRoute,
+  bezierRoute,
   greatCircleRoute,
   positionAlongRoute,
   bearingAlongRoute,
   rotationFromBearing,
+  lngLatToSvg,
   type GeoPoint,
+  type Projection,
 } from "./geoUtils";
 
 export interface AtlasAttackArrowProps {
@@ -56,28 +59,49 @@ export interface AtlasAttackArrowProps {
   curved?: boolean;
   /** échantillonnage de l'arc (densité de points pour le path) */
   samples?: number;
+  /**
+   * Projection géo→SVG à utiliser. Défaut = lngLatToSvg (ancres Mali / Afrique Ouest).
+   * Pour un épisode hors zone (Hannibal, Napoléon, Cannes), passer une projection de
+   * PROJECTIONS (geoUtils) — sinon les waypoints tombent hors champ.
+   */
+  projection?: Projection;
 }
 
 // échantillonne la route en N points SVG le long de progress (0..reveal)
 function sampleSvgPath(
   routeFeature: ReturnType<typeof buildRoute>,
   reveal: number,
-  samples: number
+  samples: number,
+  proj: Projection
 ): [number, number][] {
   const n = Math.max(2, Math.floor(samples * Math.max(0.02, reveal)));
   const pts: [number, number][] = [];
   for (let i = 0; i <= n; i++) {
     const p = (i / n) * reveal;
-    pts.push(positionAlongRoute(routeFeature, p));
+    pts.push(positionAlongRoute(routeFeature, p, proj));
   }
   return pts;
 }
 
+// Path lissé par splines Catmull-Rom → Bézier cubiques. Évite les angles secs
+// quand la route a un waypoint médian (enveloppement). Dégénère en ligne pour 2 pts.
 function toPathD(pts: [number, number][]): string {
   if (pts.length < 2) return "";
+  if (pts.length === 2) {
+    return `M ${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)} L ${pts[1][0].toFixed(2)} ${pts[1][1].toFixed(2)}`;
+  }
   let d = `M ${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)}`;
-  for (let i = 1; i < pts.length; i++) {
-    d += ` L ${pts[i][0].toFixed(2)} ${pts[i][1].toFixed(2)}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[i - 1] ?? pts[i];
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2] ?? p2;
+    // points de contrôle Catmull-Rom (tension 1/6)
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6;
+    const c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6;
+    const c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += ` C ${c1x.toFixed(2)} ${c1y.toFixed(2)} ${c2x.toFixed(2)} ${c2y.toFixed(2)} ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
   }
   return d;
 }
@@ -92,18 +116,24 @@ export const AtlasAttackArrow: React.FC<AtlasAttackArrowProps> = ({
   opacity = 1,
   curved = true,
   samples = 80,
+  projection = lngLatToSvg,
 }) => {
   if (waypoints.length < 2) return null;
   const reveal = Math.max(0, Math.min(1, progress));
   if (reveal <= 0) return null;
 
-  // construire la route : arc géodésique si 2 points + curved, sinon polyligne
+  // construire la route :
+  //  - 2 points + curved → arc géodésique (great-circle)
+  //  - 3+ points + curved → spline douce (enveloppement qui contourne, Cannes)
+  //  - sinon → polyligne à angles
   const routeFeature =
-    waypoints.length === 2 && curved
+    curved && waypoints.length === 2
       ? greatCircleRoute(waypoints[0], waypoints[1], 64)
-      : buildRoute(waypoints);
+      : curved && waypoints.length >= 3
+        ? bezierRoute(waypoints, 24)
+        : buildRoute(waypoints);
 
-  const pts = sampleSvgPath(routeFeature, reveal, samples);
+  const pts = sampleSvgPath(routeFeature, reveal, samples, projection);
   const d = toPathD(pts);
   if (!d) return null;
 
