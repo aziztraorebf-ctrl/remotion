@@ -31,23 +31,34 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
 2. ✅ **DECODAGE Ghana + Mansa Moussa** (code integral + frames) → `memory/atlas-decode/DECODE-*.md`.
 3. ✅ **RESTAURE Mansa Moussa** (purge au Menage) : code `_reference/mansa-moussa-v2/` + 79 assets
    PixelLab `public/atlas-mansa-moussa/` (4 sprites : mansa couronne, porteur, soldat, chameau).
-4. ✅ **PLAYBOOK ATLAS ecrit** (3 fichiers) : `ATLAS-PLAYBOOK.md` (doctrine visuelle) +
-   `ATLAS-PIXELLAB-PLAYBOOK.md` (couche personnages) + `ATLAS-BEAT-DEMARRAGE.md` (checklist scan).
-   Indexes (MEMORY.md + CLAUDE.md routage). Branche `feat/atlas-playbook-retour-aux-sources`.
+4. ✅ **PLAYBOOK ATLAS ecrit** (3 fichiers, `memory/doctrines/ATLAS-*.md`) : doctrine visuelle +
+   couche PixelLab + checklist demarrage. Indexes (MEMORY.md + CLAUDE.md routage).
+5. ✅ **AUDIT bibliotheque** (3 agents) → `memory/atlas-decode/audit/`. Atlas a la matiere
+   (13 blueprints, 568 sprites/19 persos, 8 composants) mais pas l'organisation.
+6. ✅ **NETTOYAGE verifie** : clarif AtlasCaravane(chibi)/AtlasPixelChar(acteur) ; les "doublons"
+   atlas-components vs atlas-v2-components sont 2 VERSIONS vivantes (Peste vs Mansa) — NE PAS merger.
+7. ✅ **BIBLIOTHEQUE ORGANISEE (parite Souverain)** : 3 catalogues dans `src/projects/atlas/_shared/` :
+   `ATLAS-INDEX-DES-INDEX.md` (carte maitre) + `COMPOSANTS-INDEX.md` ("quand Aziz dit") +
+   `ATLAS-ASSETS-INDEX.md` (568 sprites/11 JSON geo). Branches dans INDEX Souverain + CLAUDE.md.
+8. ✅ **MANSA MOUSSA AUTONOME + VALIDE EN RENDER** : orchestrateur+timing dans `_reference/`,
+   enregistre Root.tsx (`AtlasMansaMoussaV2`). Render preuve : caravane PixelLab (Mansa couronne +
+   suiveurs sur route doree) + overlays + 2 inserts dataviz + FlagFill + medaillon = TOUT REND.
+   Restauration code+assets PROUVEE. Frames : `out/_r-and-d/atlas-decode/mansa-rerender/PREUVE/`.
+
+**Branche : `feat/atlas-playbook-retour-aux-sources` (9 commits) — A MERGER quand Aziz valide.**
 
 **PROCHAINS CHANTIERS (ordre suggere) :**
-1. **RE-RENDRE Mansa Moussa restaure** (verifier que code+assets re-rendent : copier orchestrateur
-   + timing dans `_reference/`, enregistrer Root.tsx, render court). Valide la restauration de bout en bout.
-2. **OUTILLER le systeme de demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py)
-   + `atlas-selfreview.py` depuis la checklist `ATLAS-BEAT-DEMARRAGE.md`.
-3. **1er BEAT ATLAS via le nouveau systeme** (sujet reel a choisir avec Aziz) — eprouver le playbook
-   sur une vraie production, pas un test hypothetique. Decoder Ghana code-source si besoin (les
-   patterns Spotlight Insert / empire hachure / globe-carte sont references mais pas encore en composants partages).
-4. **DECODER Ghana plus finement** si besoin pour le 1er beat (son code vit dans `_archive/.../empire-ghana/`,
-   pas encore extrait en composants `_shared`).
+1. **OUTILLER le systeme de demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py)
+   + `atlas-selfreview.py` depuis la checklist `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable.
+2. **EXTRAIRE en composants partages** ce qui est encore en _archive/_reference (grep-usage AVANT) :
+   SpotlightInsert (GHANA, l'encadre sel/or), AtlasPixelChar (→ _shared), inserts charts Mansa,
+   composants Shaka (MourningWarp/CornesFrame/PaperGrain). Voir backlog COMPOSANTS-INDEX.
+3. **1er BEAT ATLAS via le nouveau systeme** (sujet reel avec Aziz) — eprouver le playbook sur une
+   vraie production. Decoder Ghana code-source plus finement si besoin (patterns pas encore en _shared).
 
-**Backlog mineur :** ancres `.europe`/`.grece` des projections fleches a calibrer si on refait
-Napoleon/Thermopyles. Bug lisibilite Cannes Hannibal (zoom x80 carte figee) documente — reprojeter local.
+**Backlog mineur :** ancres `.europe`/`.grece` projections fleches (si Napoleon/Thermopyles).
+Bug lisibilite Cannes Hannibal (zoom x80 carte figee) documente — reprojeter local. Render background
+peut se bloquer au bundling d'une grosse compo → preferer stills directs pour valider vite.
 
 ---
 
