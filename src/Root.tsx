@@ -81,6 +81,7 @@ import { TOTAL_DURATION_FRAMES as MANSA_V2_FRAMES } from "./projects/atlas/_refe
 import { AtlasV2SaharanDropDemo, SAHARAN_DROP_DEMO_FRAMES } from "./projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasV2SaharanDropDemo";
 import { AtlasV2ConfrontationDemo, CONFRONTATION_DEMO_FRAMES } from "./projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasV2ConfrontationDemo";
 import { AtlasV2ArmyDeployDemo, AtlasV2ArmyDeploySeqDemo, ARMY_DEPLOY_DEMO_FRAMES } from "./projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasV2ArmyDeployDemo";
+import { AtlasV2EncerclementDemo, ENCERCLEMENT_DEMO_FRAMES } from "./projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasV2EncerclementDemo";
 import { Beat1Hook as P1347_Beat1Hook } from "./projects/atlas/peste-1347/Beat1Hook";
 import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
@@ -490,6 +491,14 @@ export const RemotionRoot: React.FC = () => {
           id="AtlasV2ArmyDeploySeq"
           component={AtlasV2ArmyDeploySeqDemo}
           durationInFrames={ARMY_DEPLOY_DEMO_FRAMES}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="AtlasV2Encerclement"
+          component={AtlasV2EncerclementDemo}
+          durationInFrames={ENCERCLEMENT_DEMO_FRAMES}
           fps={30}
           width={720}
           height={1280}
