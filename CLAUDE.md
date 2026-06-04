@@ -117,7 +117,9 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Ecrire un script Short narratif (Heros Oublies, conte, tragedie, voyage)** | `memory/templates/script-ebauche-v1.md` | — |
 | **Ecrire un script Atlas (geo, taille, richesse-record, comparaison echelle, inventions chiffrees)** | `memory/templates/script-atlas-v1.md` | — |
 | **Produire un episode Atlas (audio + d3-geo + overlays + render Remotion)** | `memory/templates/atlas-template-v1.md` | `remotion-best-practices/rules/maps.md` |
-| **Coder une scene Atlas (TOUTE nouvelle scene, TOUT nouveau beat)** | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` OBLIGATOIRE avant d'ecrire une ligne de code | — |
+| **Coder une scene/beat Atlas (doctrine visuelle, AVANT tout code)** ⭐ | `memory/doctrines/ATLAS-PLAYBOOK.md` OBLIGATOIRE — derive de Ghana + Mansa Moussa (nos 2 Atlas validees). 7 principes + grammaire mouvement + routage par besoin + catalogue. Puis `memory/doctrines/ATLAS-BEAT-DEMARRAGE.md` (checklist scan phase 0). | — |
+| **Personnage/sprite PixelLab dans un beat Atlas (acteur du recit)** ⭐ | `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md` OBLIGATOIRE — convention dossiers + AtlasPixelChar + cortege/track + echelle N0/N1/N2. Code : `src/projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasPixelChar.tsx`. Sprites restaures : `public/atlas-mansa-moussa/characters/`. | — |
+| **Coder une scene Atlas (composants reutilisables)** | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` OBLIGATOIRE avant d'ecrire une ligne de code | — |
 | **Composants Atlas reutilisables (AtlasMercator, AtlasCaravane, svgToComp, etc.)** | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` | — |
 | **Assets Seedance (style-refs, clips bruts, LoRA training)** | `public/seedance/INDEX.md` | — |
 | **Episodes Atlas — lecons + runbooks** | `memory/episodes/mansa-moussa/` ou `memory/episodes/shaka-zulu/` | — |

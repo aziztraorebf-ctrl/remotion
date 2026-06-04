@@ -19,33 +19,35 @@ d3-geo headless = bon moteur (clipPath deja eprouve en render, mieux que Mapbox)
 carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-faisabilite.md`
 + `atlas-pixellab-differentiel.md`.
 
-## ⏳ PROCHAINE SESSION — suite voie B Atlas (le differentiel)
+## ⏳ PROCHAINE SESSION — ATLAS : retour aux sources FAIT, place au playbook vivant
 
-> Contexte complet : `feedback_atlas-inspiration-externe-faisabilite.md` + `atlas-pixellab-differentiel.md`.
-> Refs decodees : `out/_r-and-d/mapanimation/atlas-test/` (hannibal, mali, route_comet, napoleon, cargo x2, thermopylae, cannae).
+> **VIRAGE MAJEUR 2026-06-03 (Aziz)** : le playbook Atlas se derive de Ghana + Mansa Moussa
+> (nos 2 Atlas validees), PAS de mapanimation (externe) ni de sujets hypothetiques (Cannes/Hannibal).
+> Doctrine : `feedback_atlas-retour-aux-sources-ghana-mansa.md`. Playbooks : `memory/doctrines/ATLAS-*.md`.
 
-**ACQUIS verrouille :** leur outil ECHOUE sur les batailles (Thermopyles + Cannes prouves) →
-**batailles = NOTRE exclusivite PixelLab.** PixelLab = differentiel par DEFAUT (pas plan B).
-mapanimation = banc R&D, jamais livraison. Fleche `AtlasAttackArrow` = OK, paramétrable, premium.
+**FAIT cette session :**
+1. ✅ Fleches tactiques (`AtlasAttackArrow` + `AtlasEncirclement` + projections geoUtils) — GARDE
+   comme template "enrichissement" (idee mapanimation, codee par nous). Demos Cannes en R&D.
+2. ✅ **DECODAGE Ghana + Mansa Moussa** (code integral + frames) → `memory/atlas-decode/DECODE-*.md`.
+3. ✅ **RESTAURE Mansa Moussa** (purge au Menage) : code `_reference/mansa-moussa-v2/` + 79 assets
+   PixelLab `public/atlas-mansa-moussa/` (4 sprites : mansa couronne, porteur, soldat, chameau).
+4. ✅ **PLAYBOOK ATLAS ecrit** (3 fichiers) : `ATLAS-PLAYBOOK.md` (doctrine visuelle) +
+   `ATLAS-PIXELLAB-PLAYBOOK.md` (couche personnages) + `ATLAS-BEAT-DEMARRAGE.md` (checklist scan).
+   Indexes (MEMORY.md + CLAUDE.md routage). Branche `feat/atlas-playbook-retour-aux-sources`.
 
-**Chantiers (ordre suggere) :**
-1. ✅ **FAIT 2026-06-03 — Enrichir AtlasAttackArrow** (multi-fleches + friction projection).
-   `AtlasEncirclement.tsx` + `pincerArrows` (tenaille cle-en-main) + `geoUtils.bezierRoute`
-   (route courbe pour l'enveloppement). Projection = FACTORY parametree (`makeLngLatToSvg`,
-   `centeredProjection`, catalogue `PROJECTIONS.{mali,mediterranee,cannae,europe,grece}`).
-   PROUVE EN RENDER : Cannes (catbox 806sj2) — le cas ou mapanimation echoue, battu en pur
-   d3-geo. Zero regression demo Mali. Detail : `feedback_atlas-inspiration-externe-faisabilite.md`.
-   Branche `feat/atlas-arrow-multi-encirclement` (a merger).
-2. **PROTOTYPER UNE BATAILLE PixelLab** — le SUR-differentiel (sprites = acteurs). 2 formations
-   sprites face a face sur carte + terrain + rapport de force + pulse de choc. Cas : Cannes
-   (le diagramme tactique est deja pret → ajouter les sprites dessus) ou Thermopyles. ~50 assets
-   PixelLab existants (PIXELLAB-MASTER-INDEX).
-3. **PLAYBOOK ATLAS** — miroir d3-geo du SOUVERAIN-VISUAL-PLAYBOOK. Consolider les 5 mecaniques
-   decodees + echelle escalade N0 primitives / N1 marqueur / N2 sprite PixelLab.
+**PROCHAINS CHANTIERS (ordre suggere) :**
+1. **RE-RENDRE Mansa Moussa restaure** (verifier que code+assets re-rendent : copier orchestrateur
+   + timing dans `_reference/`, enregistrer Root.tsx, render court). Valide la restauration de bout en bout.
+2. **OUTILLER le systeme de demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py)
+   + `atlas-selfreview.py` depuis la checklist `ATLAS-BEAT-DEMARRAGE.md`.
+3. **1er BEAT ATLAS via le nouveau systeme** (sujet reel a choisir avec Aziz) — eprouver le playbook
+   sur une vraie production, pas un test hypothetique. Decoder Ghana code-source si besoin (les
+   patterns Spotlight Insert / empire hachure / globe-carte sont references mais pas encore en composants partages).
+4. **DECODER Ghana plus finement** si besoin pour le 1er beat (son code vit dans `_archive/.../empire-ghana/`,
+   pas encore extrait en composants `_shared`).
 
-**Backlog enrichissement arrow restant :** ancres reelles a calibrer pour `.europe`/`.grece`
-quand on attaquera Napoleon/Thermopyles (les valeurs actuelles sont des estimations centrees,
-a verifier sur un vrai render). `AtlasEncirclementDemo` gardee en ref R&D (Root.tsx).
+**Backlog mineur :** ancres `.europe`/`.grece` des projections fleches a calibrer si on refait
+Napoleon/Thermopyles. Bug lisibilite Cannes Hannibal (zoom x80 carte figee) documente — reprojeter local.
 
 ---
 
