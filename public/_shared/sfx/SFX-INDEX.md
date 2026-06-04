@@ -89,6 +89,7 @@ ambiance/ [lieu]-[etat].mp3                     ex: ocean-calm.mp3
 
 - `camera/sfx-whip-pan.mp3` — transition rapide gauche/droite (Beat13 Yakaar)
 - `camera/sfx-crane-up.mp3` — montée lente de caméra (fin Beat10)
+- `atlas/sfx-gold-coins-drop.mp3` — chute/dépôt d'un sac de pièces d'or (Atlas Silent Barter / drop d'objet, beat AtlasV2SaharanDrop). Demandé 2026-06-03 : pas de SFX coins dans la sonothèque. `sfx-footsteps.mp3` couvre déjà la marche.
 
 ---
 

@@ -45,20 +45,33 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
    suiveurs sur route doree) + overlays + 2 inserts dataviz + FlagFill + medaillon = TOUT REND.
    Restauration code+assets PROUVEE. Frames : `out/_r-and-d/atlas-decode/mansa-rerender/PREUVE/`.
 
-**Branche : `feat/atlas-playbook-retour-aux-sources` (9 commits) — A MERGER quand Aziz valide.**
+9. ✅ **TEST SYSTEME REUSSI (1er beat via agent vierge)** : un agent SANS contexte a produit le beat
+   "porteur depose un sac d'or au Sahara, repart, l'or persiste" (Silent Barter sur carte Mansa) en
+   suivant UNIQUEMENT la doc. Le routage l'a guide de bout en bout. Beat valide en render + APPROUVE
+   Aziz (zoom, marche point-fixe sans fleche, or+pulse, SFX pas excellents). `AtlasV2SaharanDropScene`
+   + `AtlasV2SaharanDropDemo`. catbox znmqfr. PREUVE que le systeme guide un nouveau venu.
+10. ✅ **FIX moonwalk** : flip-ouest d'`AtlasPixelChar` corrige (miroir autour de x, pas offset
+    decale) → corrige TOUS les futurs beats. Zero regression Mansa (va vers l'est). Insights raccordes :
+    COMPOSANTS-INDEX (nouveau template drop-objet), ATLAS-PIXELLAB-PLAYBOOK (lecon flip + friction
+    projection geoUtils!=paths json), SFX-INDEX (backlog sfx-gold-coins-drop).
+
+**Branche : `feat/atlas-playbook-retour-aux-sources` (11 commits) — A MERGER quand Aziz valide.**
+**Fiche reprise : `memory/episodes/atlas-systeme/STATUS.md`.**
 
 **PROCHAINS CHANTIERS (ordre suggere) :**
-1. **OUTILLER le systeme de demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py)
-   + `atlas-selfreview.py` depuis la checklist `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable.
-2. **EXTRAIRE en composants partages** ce qui est encore en _archive/_reference (grep-usage AVANT) :
-   SpotlightInsert (GHANA, l'encadre sel/or), AtlasPixelChar (→ _shared), inserts charts Mansa,
-   composants Shaka (MourningWarp/CornesFrame/PaperGrain). Voir backlog COMPOSANTS-INDEX.
-3. **1er BEAT ATLAS via le nouveau systeme** (sujet reel avec Aziz) — eprouver le playbook sur une
-   vraie production. Decoder Ghana code-source plus finement si besoin (patterns pas encore en _shared).
+1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats (Aziz veut eprouver) — varier les patterns :
+   une confrontation 2 sprites, un empire qui s'etend, un Spotlight Insert chiffre. Chaque beat teste
+   une partie differente du systeme et nourrit la biblio. Le 1er (drop-objet) = VALIDE.
+2. **OUTILLER le demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py) + selfreview,
+   depuis `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable (le scan force, comme /beat Souverain).
+3. **EXTRAIRE en composants partages** (grep-usage AVANT) : SpotlightInsert (GHANA sel/or), AtlasPixelChar
+   (→ _shared), inserts charts Mansa, composants Shaka. Backlog dans COMPOSANTS-INDEX.
 
-**Backlog mineur :** ancres `.europe`/`.grece` projections fleches (si Napoleon/Thermopyles).
-Bug lisibilite Cannes Hannibal (zoom x80 carte figee) documente — reprojeter local. Render background
-peut se bloquer au bundling d'une grosse compo → preferer stills directs pour valider vite.
+**Backlog mineur :** SFX `atlas/sfx-gold-coins-drop.mp3` a generer (drop d'or). Anim crouch pour
+porteur-mali NON necessaire (Aziz : le perso qui s'arrete suffit). Ancres `.europe`/`.grece` projections
+fleches (si Napoleon). Bug lisibilite Cannes Hannibal (zoom x80 carte figee). Render background peut
+se bloquer au bundling grosse compo → stills directs pour valider vite. Workflow tool : un agent peut
+oublier StructuredOutput en fin → recuperer le travail des transcripts si ca plante.
 
 ---
 

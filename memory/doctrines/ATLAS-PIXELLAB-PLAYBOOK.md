@@ -66,11 +66,22 @@ DOM `<Img>` de Ghana qui exige `svgToCompWithCam()`). Les 5 mécaniques clés :
    `x={x - size/2} y={y - size}` → (x,y) = point au SOL, le sprite est dessiné au-dessus.
 
 5. **Flip Ouest par transform** (PixelLab ne génère bien que l'Est) :
-   `direction === "west" ? scale(-1, 1) translate(${-x*2 - size} 0) : ""`.
+   `direction === "west" ? translate(${2*x} 0) scale(-1 1) : ""` — miroir AUTOUR de l'axe x
+   (point d'ancrage). ⚠️ **CORRIGÉ 2026-06-03** : l'ancienne formule `scale(-1,1) translate(-x*2-size 0)`
+   réfléchissait autour d'un point décalé de size/2 → le sprite "moonwalkait" (marchait à reculons
+   en glissant) quand il repartait vers l'ouest. La bonne formule réfléchit autour de x sans
+   déplacer le sprite. Leçon : un flip de sprite DANS un `<g transform caméra>` (scale+skew) doit
+   se faire autour du point d'ancrage exact, jamais d'un offset approximatif.
 
 **Gotcha à connaître** : `staticSrc` est calculé mais le rendu affiche TOUJOURS `animSrc` (pas de
 vrai fallback). Si une frame manque, `onError` est vide → trou. Pour un sprite statique pur, utiliser
 `AtlasPixelStatic` (même fichier).
+
+**Friction PROJECTION (trouvée au 1er beat système, 2026-06-03)** : `geoUtils.PROJECTIONS.mali`
+renvoie des coords DIFFÉRENTES du repère des paths du json `atlas-v2-data.json` (mercWide). Ex :
+Tombouctou = ~[187,672] dans les paths, mais ~[249,696] via geoUtils. **Pour placer un sprite/objet
+ON-MAP sur une carte Mansa : interpoler le long des `caravaneWaypoints` EXISTANTS du json** (repère
+natif garanti), ne PAS utiliser geoUtils sur cette carte. Chaque carte a SON repère.
 
 ---
 

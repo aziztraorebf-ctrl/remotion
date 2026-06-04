@@ -42,6 +42,7 @@
 | `Confrontation` | _bp/confrontation | "deux camps s'affrontent bord à bord" |
 | `DualEntitySequential` | _bp/dual-entity-sequential | "l'un agit, puis l'autre" — 2 persos séquentiels, focus caméra change |
 | `Alliance` | _bp/alliance | "deux forces convergent / s'allient" — convergence vers un point |
+| `AtlasV2SaharanDropScene` ⭐ | _ref/scenes/AtlasV2SaharanDropScene | "un perso arrive, dépose un objet, repart (l'objet PERSISTE)" — Silent Barter sur carte Mansa. Walk east → fige → objet spring-in au pied → walk west. Caméra track + zoom 1→2→1, tilt annulé. Valeur de référence du pattern drop-objet. Validé render 2026-06-03 |
 | Helpers sprite | _shared (`getSpriteAnimFrame`, `getSpriteClipPath`) | spritesheet horizontale (cycle via clipPath). Pour frames-PNG → AtlasPixelChar |
 
 ## OVERLAYS / ENCADRÉS — afficher un chiffre, un nom, une donnée
