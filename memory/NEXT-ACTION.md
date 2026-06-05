@@ -1,6 +1,50 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-03. A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-05. A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🆕 3e PILIER VALIDE (2026-06-05) — War-Map / Carte temporelle vivante
+
+Prototype Soudan COMPLET validE. C'est le **3e pilier** (apres Souverain + Atlas), a structurer aux
+MEMES procedures rigoureuses. Toutes les briques + regles sont sauvegardees :
+- **Doctrine** : [[doctrines/WARMAP-PLAYBOOK]] (differentiel + 4 briques + R1-R6 regles design + recette sprites + ouvertures).
+- **Etat/compositions** : [[episodes/warmap-daybyday/STATUS.md]]. **Decode genre** : [[DECODE-daybyday-warmap]].
+- Routage CLAUDE.md ajoute. Base code : `src/projects/_rnd/sudan-warmap/` (`SudanWarMapEpic60` = culmination, catbox 4dwqit).
+
+**⭐ PROCHAINE SESSION = consacree a ce pilier, en 2 axes :**
+1. **PHASE RECHERCHE (massif, le coeur)** : garantir les BONNES infos AVANT de construire. Sources OSINT
+   (ISW/ACLED/LiveUAmap/DeepStateMap), jalons par date, verif factuelle, schema de donnees (1 fichier
+   jalons -> tout en derive). C'est ce qui rend le pipeline recurrent realiste (code fait 1x, donnees repetees).
+2. **STRUCTURER le pilier sans reinventer la roue** : skill `warmap-preproduction` (miroir
+   souverain/atlas-preproduction), pipeline beat scorE si pertinent, basculer moteur sur d3-geo pur.
+
+Les briques/templates sont DEJA fournis (ne pas reconstruire) — la prochaine session = recherche + structure.
+
+---
+
+## 🆕 IDEE A ESSAYER (Aziz 2026-06-05) — Vue top-down "manoeuvre tactique" pour Hannibal/Cannes
+
+Ne sortira PAS pendant la session courante (prototype Sudan war-map). A reprendre plus tard.
+
+**L'idee** : le moteur top-down qu'on vient de batir pour la war-map (unites posees a plat sur
+carte parchemin, deplacees en coordonnees, orientees selon la marche) comble le REGISTRE MANQUANT
+de Hannibal : la **manoeuvre tactique de masses** (Cannes = double-enveloppement, ligne courbe). Ni
+voyage (carte strategique d3-geo), ni melee (PixelLab lateral) — l'echelle intermediaire qui ne se
+lit QUE du dessus. Retirer les overlays "morts estimes" etc. -> registre Atlas pur.
+
+**Forme des unites** (garde-fou) : PAS un sprite-soldat top-down (= tache illisible, raison du rejet
+BazBattles d'hier). Utiliser des **cercles/jetons avec un still dedans** OU une **plaque-etendard de
+manipule** (le "bloc a nous" cherche dans [[DECODE-bazbattles-manoeuvres]], pas un rectangle).
+**Recette Gemini validee** ([[feedback_sprites-topdown-gemini-vs-recraft]]) + idee Aziz : donner en
+REFERENCE nos persos PixelLab existants a Gemini -> jetons coherents avec nos acteurs.
+
+**Vocabulaire de manoeuvre** : deja decode ([[DECODE-bazbattles-manoeuvres]] — ligne courbe = Cannes,
+flanquement, echelon). **Differentiel** : alterner top-down (manoeuvre lisible) <-> PixelLab lateral
+(melee incarnee) = l'echelle que BazBattles ne fait pas. Les 3 registres coexistent dans une scene.
+
+Base technique reutilisable : `src/projects/_rnd/sudan-warmap/` (SudanWarMapFlat + warmapVehicles +
+sprites Gemini top-down). Voir [[DECODE-daybyday-warmap]].
 
 ---
 
@@ -65,6 +109,16 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
   death) + 2 SFX ElevenLabs. Technique complete : `feedback_atlas-bataille-multisprites-technique.md`.
 - `AtlasPixelChar` enrichi : props `loop` (play-once) + `animStartAt`. A PROMOUVOIR vers `_shared`.
 
+**FAIT 2026-06-04 (soir) — ORDER OF BATTLE (R&D bataille grande echelle) + PONT GEMINI->PIXELLAB :**
+> Inspiration BazBattles (5 batailles decodees). Branche `rnd/atlas-order-of-battle` + POC `src/projects/atlas/_rnd/order-of-battle/`.
+> Memoires : `DECODE-bazbattles-manoeuvres.md` + 3 `feedback_pixellab-*.md`.
+- **Bloc top-down REJETE** (copier-coller BazBattles, sans identite) → SWITCH valide : moteur de manoeuvre + **sprites incarnes**.
+- **8 directions = deblocage** (carre parfait catbox diyf4o). Vue **low top-down** retenue (masque artefact lance). Mode **standard** pour la troupe.
+- **3 REGLES gravees** : 8 dir = decision de CREATION · troupe `size 64` (V3 reserve heros, detail = outil narratif) · pont ref via API REST.
+- ⭐⭐ **PONT GEMINI->PIXELLAB PROUVE** (catbox sdkrne) : Gemini sheet → Recraft detoure → PixelLab REST `/rotate` → 8 dir coherentes du MEME perso custom. Script `scripts/tools/pixellab-rotate.py`. = persos custom exacts sans artefacts texte.
+- **Casting 8-dir existant retrouve** (recuperable) : Hannibal v4a/v4c/v3, War Elephant Carthage, businessman.
+- **NEXT Order of Battle** : (a) tester le VRAI systeme de manoeuvre complete (flanquement multi-unites avec les 8 dir) ; (b) industrialiser le pont en 1 script `gemini-to-pixellab.py` (sheet→detour→resize128→rotate x7→animate) + `/animate-with-text` ; (c) promouvoir OobPixelChar/UnitBlock si reutilises.
+
 **TEMPLATES ATLAS A CREER (proposes par Aziz 2026-06-04, ordre a decider) :**
 1. **Objets sur la map** — villes / objets / map-objects : differentes manieres d'APPARAITRE et de REVELER
    (pop, build-up, halo, etc.). Famille de templates "habiller la carte d'objets vivants".
@@ -74,6 +128,29 @@ carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-fa
 
 **BACKLOG avance** : multi-lignes sequentielles (rangs qui avancent pour combler les morts) = moteur d'etat,
 pas trivial. Voir `feedback_atlas-bataille-multisprites-technique.md` section BACKLOG.
+
+**⭐ DECODE CHAINES DE REFERENCE — BazBattles + Kings & Generals (session recherche 2026-06-04) :**
+> Analyse de 5 batailles BazBattles + 5 videos K&G (frames vues de mes propres yeux). MATIERE PRESERVEE
+> (durable, pas besoin de re-telecharger) : `out/_r-and-d/decode-channels/` (README + contact sheets baz + kg).
+> DECODE tactique : `memory/atlas-decode/DECODE-bazbattles-manoeuvres.md`.
+
+**Conclusion validee Aziz : on a DEJA presque tout en composants (ne pas recreer). 3 SEULS vrais apports
+(orchestration, pas code) a integrer au playbook — et ils alimentent DIRECTEMENT le point 1 "Objets sur la map" ci-dessus :**
+1. **Grammaire d'apparition des objets** (★ ce qui interesse Aziz) : forced-alignment sur les pop + <=6 objets/ecran
+   + 1 pop/3-5s jamais simultane + pop pres du dernier point nomme + atterrissage spring. → option hook `useObjectChoreography`.
+2. **EvidenceBoard** — ✅ CODE + VALIDE Aziz 2026-06-04. `src/projects/atlas/_shared/AtlasEvidenceBoard.tsx` +
+   `AtlasEvidenceBoardDemo` (Root: `AtlasEvidenceBoardDemo`). Tableau d'enquete persistant data-driven `{nodes,links,notes}`,
+   placement declaratif, fils animes colores (relation/flow), fiches surlignees, fonds retenus flat-parch (beige)+slate (navy),
+   drift seul (PAS de camera-focus, distrait). Assets Gemini gravis : `public/atlas/_shared/evidence-board/`.
+   Demo finale : files.catbox.moe/fk4hlm.mp4. Indexe COMPOSANTS-INDEX + ATLAS-PLAYBOOK §3. APPRENTISSAGE : sur fond sombre
+   eviter tone "ink" (invisible) ; or ressort mal sur beige.
+3. **Doctrine "tenir 20min sans devenir TikTok"** : rotation de ~6 registres (carte/incarnation/insert/spotlight/bataille/
+   respiration), jamais 2x consecutif, change tous les ~30-45s. Doctrinal.
+
+**Modeles opposes (durable) : BazBattles = artisan SOLO (rarete=evenement) ; K&G = STUDIO/equipe (variete=anti-fatigue).
+Notre double avantage : incarnation PixelLab (qu'AUCUN n'a) + assemblage PROGRAMMABLE Remotion (eux=manuel AE).**
+**Decision Aziz : pas de fichier-cimetiere ; tout est ici + dans le README preserve. Quand on reprendra le point "Objets
+sur la map", relire `out/_r-and-d/decode-channels/README.md` (5 regles + frames). Aziz se reserve de re-explorer des templates.**
 
 **ANCIEN chantier (toujours valide) :**
 1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats — empire qui s'etend pas encore teste.
@@ -172,10 +249,12 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **Ma recommandation** : Senegal Petrole d'abord — la video vient d'etre publiee, la matiere est fraiche.
 **Demarrer** : lire `memory/STARTER-PROMPT-carrousels-hybrides.md`
 
-### 4. Peste 1347 Atlas — Beat 5 Mali Vivant (EN PAUSE)
-**Etat** : Storyboard pret. Beat 5 non commence.
-**Decision en attente** : aucune — executer quand Souverain est calme.
-**Demarrer** : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`
+### 4. Peste 1347 Atlas — REFONTE AU PLAYBOOK QUASI TERMINÉE (2026-06-05) ⭐
+**Etat** : Beats 1-4 **FINAL premium** (refaits cette session). Beat 5 V9 **COMPLET** (1ère fois en 9 tentatives) mais pas encore FINAL.
+**Decision en attente** : verdict global Aziz sur Beat5 (bilan demandé avant) + générer anims NORTH premium caravane (pont PixelLab).
+**NEXT** : (1) anims north caravane ; (2) retouches Beat5 ; (3) FINAL Beat5 ; (4) assemblage 5 beats + narration + SFX.
+**Reprise** : lire `memory/episodes/peste-1347/STATUS.md` (état détaillé par beat + méthode qui a débloqué).
+**Méthode validée** : phase par phase + œil Gemini (`gemini-beat5-review.py`) sur beat qui résiste + systematic-debugging + réutiliser templates (CHECK A6 du hook force ça maintenant).
 
 ---
 

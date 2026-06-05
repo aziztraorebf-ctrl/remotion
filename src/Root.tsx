@@ -242,6 +242,7 @@ import { ThumbnailBaril } from "./projects/_demos/petrole-patience/ThumbnailBari
 import { ThumbnailNiger } from "./projects/_demos/niger-uranium/ThumbnailNiger";
 import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
+import { SudanWarMapFlat, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/_rnd/sudan-warmap/SudanWarMapFlat";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2575,6 +2576,47 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1350}
           defaultProps={gnCta}
+        />
+      </Folder>
+
+      <Folder name="rnd-warmap">
+        {/* TEMPLATE PRINCIPAL VERTICAL (overlay Remotion, carte claire) — 3e pilier */}
+        <Composition
+          id="SudanWarMapVertical"
+          component={SudanWarMapFlat}
+          durationInFrames={SUDAN_OVERLAY_DURATION}
+          fps={SUDAN_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ withOverlay: true }}
+        />
+        {/* CULMINATION 60s — tout le stack combine */}
+        <Composition
+          id="SudanWarMapEpic60"
+          component={SudanWarMapFlat}
+          durationInFrames={SUDAN_EPIC_DURATION}
+          fps={SUDAN_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ epic: true }}
+        />
+        {/* 16:9 (long) + variante cercles-personnages */}
+        <Composition
+          id="SudanWarMapFlat"
+          component={SudanWarMapFlat}
+          durationInFrames={SUDAN_FLAT_DURATION}
+          fps={SUDAN_FPS}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="SudanWarMapTokensVertical"
+          component={SudanWarMapFlat}
+          durationInFrames={SUDAN_FLAT_DURATION}
+          fps={SUDAN_FPS}
+          width={1080}
+          height={1920}
+          defaultProps={{ unitStyle: "token" as const }}
         />
       </Folder>
 

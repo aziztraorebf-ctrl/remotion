@@ -166,6 +166,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 |---|---|
 | **Démarrer la préproduction d'un Short Souverain** (90s, éco/géopo Afrique) | `souverain-preproduction` |
 | **Démarrer la préproduction d'un épisode Atlas** (cartographie, géo, richesse) | `atlas-video-preproduction` |
+| **Coder/produire une WAR-MAP / carte temporelle vivante** (3e pilier : front jour-par-jour, contrôle territorial, déroulé temporel sur carte — guerre OU éco/ressources/histoire) | DOCTRINE À LIRE D'ABORD : `memory/doctrines/WARMAP-PLAYBOOK.md` (différentiel + 4 briques + R1-R6 règles design + recette sprites Gemini). État + compositions : `memory/episodes/warmap-daybyday/STATUS.md`. Base code : `src/projects/_rnd/sudan-warmap/` (`SudanWarMapEpic60` = culmination). Skill `warmap-preproduction` À CRÉER (miroir souverain/atlas). |
 | **Démarrer la préproduction d'une vidéo narrative** (Seedance, personnages, portrait) | `video-narrative-preproduction` |
 | **Écrire/structurer un script YouTube** (8-15min animé) | `youtube-scriptwriting` |
 | **Coder un beat / Short Souverain MAPBOX** (carte animée, getCam, overlays) | **SYSTÈME : `scripts/mapbox-session.py`** (discipline scorée, voir "Pipeline Beat Mapbox" ci-dessous). Storyboard = Production Brief validé Aziz AVANT code. **Self-review SCRIPTÉE bloquante : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (phase 3, 0 ERROR avant Gemini).** Review = `scripts/tools/gemini-mapbox-review.py` ⚠️ CONSULTATIF jamais juge (Gemini hallucine). MAX 2 appels Gemini. Drapeau = `useClipFlags` (vraies images). Base : `MarocBatteriesShort.tsx`. |
@@ -176,11 +177,23 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Analyser une chaîne YouTube** (style, rétention, learnings) | `analyze-channel` |
 | **Intégrer un feedback / corrections post-review** | `integrate-feedback` |
 | **Bilan/checkpoint de session** | `checkpoint` (Souverain) ou `atlas-session` (Atlas) |
-| **Bug Remotion/Mapbox qui résiste à la 1ère tentative** | `superpowers:systematic-debugging` (ou `investigate`) |
+| **Bug Remotion/Mapbox — 2e tentative de fix ÉCHOUE = OBLIGATOIRE, pas optionnel** | `superpowers:systematic-debugging`. SEUIL DUR (leçon Beat5 2026-06-05) : dès qu'un 2e fix sur le MÊME symptôme échoue, STOP tout changement → lancer le skill → instrumenter (prouver la valeur réelle, ex. un div debug) AVANT de fixer. JAMAIS dire "c'est l'environnement/le cache" sans preuve. JAMAIS inventer un problème non signalé par Aziz. |
+| **Beat vidéo qui échoue 2+ fois (visuel)** | AVANT de re-coder : `scripts/tools/gemini-beat5-review.py` (œil externe Gemini sur la vidéo ratée) — généralisable. Gagne un œil au lieu de bâtir à l'aveugle. |
 | **Gros chantier multi-étapes** (nouvel épisode, pipeline, refactor) | `superpowers:writing-plans` |
 | **Avant de dire "c'est fait/terminé"** | `superpowers:verification-before-completion` |
 
 **Anti-friction** : NE PAS lancer un skill pour du trivial (1 slide, fix 1 ligne, question simple). Le skill se lance quand la tâche a la FORME du procédé, pas par réflexe.
+
+### Regle : Trancher le technique, regrouper le goût (NON-NEGOTIABLE — tout le projet, Aziz 2026-06-05)
+
+Le test pour CHAQUE décision : *« la réponse dépend-elle du GOÛT/de la VISION d'Aziz, ou y a-t-il une bonne réponse technique objective ? »*
+
+- **Réponse technique objective** (frameCount, imports, nom de variable, fix évident, choix d'API documenté) → **TRANCHER seul, faire, mentionner en 1 ligne.** Ne PAS demander.
+- **Goût / vision / narratif** (couleurs, structure d'un beat, quel effet, conclusion) OU **coûteux à défaire** (asset payant, refaire un beat, direction structurante) → demander.
+- **REGROUPER les questions de goût** : au lieu d'une question tous les 1-2 tours, accumuler les décisions de goût/vision et les poser ENSEMBLE en UN point de contrôle espacé (AskUserQuestion multi-questions), PUIS exécuter longtemps sans interrompre. Aziz veut des questions « de temps en temps, les plus critiques », pas en continu.
+- Toujours mettre MA recommandation en 1ère option. Aziz peut ajuster en cours de route sans devoir répondre à tout.
+
+**Pourquoi** : poser trop de questions transfère sur Aziz une charge cognitive que Claude doit porter. Mais trancher du goût à sa place = refaire. L'équilibre = trancher le technique (fluide) + regrouper le goût (contrôle sans friction).
 
 ### Regle : Templates obligatoires AVANT tout prompt ou image (NON-NEGOTIABLE)
 
@@ -229,6 +242,9 @@ Trois cas distincts. Ne pas les confondre.
 
 **2. Etat local de la machine** (chemins, versions installees, fichiers, binaires) → TOUJOURS verifier avec Bash (`ls`, `which`, `find`) avant d'affirmer. Si l'affirmation conditionne une decision >30 min a corriger : verifier d'abord, surtout avant d'ecrire dans une memoire persistante.
 - Erreur passee : "Aseprite CLI non disponible" propage dans 5 fichiers memoire sans avoir teste `/Applications/`, `/Volumes/`, Steam, DMG monte.
+
+**4. Verdict d'un AGENT/workflow** (review, stress test, "bug detecte X") → VERIFIER dans le code reel AVANT de le presenter a Aziz comme un fait. Un agent ne connait pas les decisions architecturales d'Aziz et hallucine (Gemini sur le mouvement, agents sur la palette). Lire les lignes citees, confirmer ou infirmer. Distinguer "l'agent dit X" de "X est vrai".
+- Erreurs passees (2026-06-04/05) : verdict agent "palette bleu-nuit Souverain" pris au mot (c'etait le backgroundColor, pas la carte) ; "bug cartouche 2-6j" qui etait une DECISION Aziz ; et j'ai INVENTE un probleme "caravane trop petite" qu'Aziz n'avait jamais signale. Ne JAMAIS confabuler un probleme ni sur-corriger.
 
 **3. Connaissance generale** (patterns, syntaxe documentee) → affirmer avec confiance, mais signaler explicitement l'incertitude des qu'on sort de ce qu'on connait reellement.
 
