@@ -57,7 +57,23 @@ tokens 0y6uzb · overlay fqwfoo · epic60 v1 fyksjo · v2 (chars+45%) 5ovre7 · 
 - **Le moteur = SEGMENT ATLAS, pas qu'une video autonome.** Comble le manque "deroule temporel sur carte" dans les Atlas (ex. expansion Mali sur 80 ans). Parle deja la langue Atlas (parchemin, d3-geo en prod). Nouvelle brique du vocabulaire Atlas (segment 15-20s).
 - **Angle mort honnete** : non-violent = editorialement superieur MAIS algorithmiquement plus dur (pas de tension "qui gagne ?" gratuite). Pour les sujets positifs, la couche humaine + overlays NE SONT PAS un bonus, ils sont OBLIGATOIRES (ils creent la tension absente). Sujets conflit = se vendent seuls ; sujets construction = ont besoin de la narration.
 
-## NEXT — PROCHAINE SESSION = PHASE RECHERCHE (massif)
+## FAIT 2026-06-05 (session 2) — PIPELINE DE RECHERCHE + SCHEMA CANONIQUE ⭐
+Branche `feat/warmap-research-pipeline` (depuis master). Industrialise la phase donnees.
+- **Schema canonique** `src/projects/warmap/schema.ts` (`WarMapDataset` = superset contrat moteur
+  + PROVENANCE par fait) + `adapter.ts` (`canonicalToEngine`, bridge zero-risque) + 1ere instance
+  `data/sudan.warmap.json` (ACLED-derivee).
+- **Pipeline** `scripts/warmap/` : `acled_connector` (OAuth password grant + fixture fallback, CODE),
+  `aggregate` (events->jalons admin-1 : point-in-polygon + acteur->faction + dominance ponderee +
+  carry-forward + snap), `llm_synthesis` (sonar-pro), `factcheck` (gemini juge + convergence >=2 sources
+  -> verified), `build_warmap_data` (orchestrateur). Stubs : ucdp/github_geojson/web_preresearch.
+- **Fixtures + golden test** : `aggregate --fixtures-only` == `expected_jalons.json` (zero reseau).
+- **Refactor** `sudanControlData.ts` -> re-export depuis l'adapter. **GATE non-regression PASSE** :
+  render frame 200 `SudanWarMapVertical` byte-identique (controle inchange ; pertes desormais data-derivees).
+- **Doctrine** `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` (4 etapes + fiabilite sources + acces OAuth/CSV).
+- **A toi Aziz** : creds ACLED myACLED en `.env` (`ACLED_USERNAME`/`ACLED_PASSWORD`) ; UCDP token email OU GED CSV.
+- **NEXT** : brancher ACLED reel + implementer web_preresearch (Firecrawl MCP) ; skill `warmap-preproduction` ; d3-geo pur.
+
+## NEXT — (ANCIEN) PHASE RECHERCHE = en grande partie outillee ci-dessus
 1. **Structurer le 3e pilier aux memes procedures que Souverain** (NE PAS reinventer la roue) :
    - Skill preproduction `warmap-preproduction` (miroir `souverain-preproduction`/`atlas-video-preproduction`).
    - Doctrine `doctrines/WARMAP-PLAYBOOK.md` (miroir SOUVERAIN/ATLAS-PLAYBOOK) = consolider R1-R5 + 4 briques + analyse strategique.

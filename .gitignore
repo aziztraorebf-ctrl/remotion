@@ -129,3 +129,4 @@ remogen-test/
 __pycache__/
 *.pyc
 .gstack/
+.claude/worktrees/
