@@ -93,12 +93,18 @@ def _load_fixture():
 
 
 def fetch_events(country="Sudan", date_start=None, date_end=None, force_fixture=False):
-    """Return normalized ACLED events for country/date-range. Fixture fallback if no creds."""
+    """Return normalized ACLED events for country/date-range. Fixture fallback if no creds or auth fails."""
     if force_fixture or not _have_creds():
         return _load_fixture()
 
     import requests
-    token = get_token()
+    try:
+        token = get_token()
+    except Exception as exc:
+        print(f"[acled] OAuth failed ({exc}). "
+              "Check ACLED_USERNAME/ACLED_PASSWORD are your myACLED account credentials "
+              "(email + password at acleddata.com, NOT the old API key). Using fixture.")
+        return _load_fixture()
     headers = {"Authorization": f"Bearer {token}"}
     params = {"country": country, "limit": 0}  # limit=0 -> all (paginated by API)
     if date_start and date_end:
