@@ -21,6 +21,16 @@ MEMES procedures rigoureuses. Toutes les briques + regles sont sauvegardees :
 
 Les briques/templates sont DEJA fournis (ne pas reconstruire) — la prochaine session = recherche + structure.
 
+**🎨 DECISION POLISH OUVERTE (Aziz, a trancher) — l'horloge sous la date.**
+Le 2e chiffre sous la date (ex. `18:46:58`) est une FAUSSE horloge cosmetique (formule `frame*137+8h % 24h`,
+ne mesure RIEN) — emprunt au genre mapsinanutshell pour la sensation "temps reel". Probleme : c'est un
+mensonge visuel, or notre differentiel = honnetete/comprehension. **Remplacer par (reco Claude #1) :
+`JOUR 543`** = nb de jours depuis le debut du conflit (vrai, se calcule date courante - date debut,
+defile comme l'horloge mais avec du SENS : "543 jours que ca dure"). Alternatives : `RSF 58% · SAF 42%`
+(% controle territorial, plus analyste mais charge avec le compteur morts) · label phase (redondant avec
+bandeau bas) · rien (epurer). Changement = ~2 lignes dans `SudanWarMapFlat.tsx` (bloc `totalSecondsFake`).
+A inscrire dans WARMAP-PLAYBOOK une fois tranche.
+
 ---
 
 ## 🆕 IDEE A ESSAYER (Aziz 2026-06-05) — Vue top-down "manoeuvre tactique" pour Hannibal/Cannes
