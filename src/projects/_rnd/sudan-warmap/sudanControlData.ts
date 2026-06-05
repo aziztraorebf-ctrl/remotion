@@ -25,13 +25,24 @@ export type Jalon = {
   casualties: number;
 };
 
-// Etats (cle = name du geojson)
-export const SUDAN_STATES = [
-  "Northern", "River Nile", "Red Sea", "Kassala", "Gedarif",
-  "Khartoum", "Gezira", "White Nile", "Blue Nile", "Sennar",
-  "North Kordufan", "South Kordufan",
-  "North Darfur", "Western Darfur", "Central Darfur", "Southern Darfur", "Eastern Darfur",
-] as const;
+// ---------------------------------------------------------------------------
+// REFACTOR 2026-06-05 : la donnee provient desormais du SCHEMA CANONIQUE
+// (src/projects/warmap/data/sudan.warmap.json) via l'adapter. SUDAN_STATES,
+// JALONS, controlAt, jalonAt, CITIES sont RE-EXPORTES depuis le bundle.
+// Ce fichier ne garde QUE les couleurs (COLORS/ATLAS, presentation).
+// Voir memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md.
+// Le JALONS hand-authored historique est conserve plus bas en reference (_LEGACY).
+// ---------------------------------------------------------------------------
+import sudanDataset from "../../warmap/data/sudan.warmap.json";
+import { canonicalToEngine } from "../../warmap/adapter";
+import type { WarMapDataset } from "../../warmap/schema";
+
+const _bundle = canonicalToEngine(sudanDataset as unknown as WarMapDataset);
+export const SUDAN_STATES = _bundle.SUDAN_STATES;
+export const CITIES = _bundle.CITIES;
+export const JALONS = _bundle.JALONS;
+export const controlAt = _bundle.controlAt;
+export const jalonAt = _bundle.jalonAt;
 
 // Helper : construit un control map en partant d'un defaut SAF et en listant les exceptions
 const ctrl = (rsf: string[], contested: string[] = []): Record<string, ControlVal> => {
@@ -42,7 +53,8 @@ const ctrl = (rsf: string[], contested: string[] = []): Record<string, ControlVa
   return m;
 };
 
-export const JALONS: Jalon[] = [
+// _LEGACY : jalons hand-authored d'origine (reference, plus consommes par le moteur).
+const _LEGACY_JALONS: Jalon[] = [
   {
     // Avant-guerre : tout "neutre" -> on demarre SAF-tenu nominal
     date: "2023.04.15",
@@ -102,15 +114,6 @@ export const JALONS: Jalon[] = [
   },
 ];
 
-// Villes-cle pour les marqueurs flottants (lon, lat)
-export const CITIES: { name: string; lon: number; lat: number }[] = [
-  { name: "Khartoum", lon: 32.53, lat: 15.50 },
-  { name: "Port-Soudan", lon: 37.22, lat: 19.62 },
-  { name: "El Fasher", lon: 25.35, lat: 13.63 },
-  { name: "Nyala", lon: 24.88, lat: 12.05 },
-  { name: "Wad Madani", lon: 33.52, lat: 14.40 },
-];
-
 export const COLORS = {
   saf: "#2f6db5",      // bleu armee
   rsf: "#c0392b",      // rouge paramilitaire
@@ -135,23 +138,6 @@ export const ATLAS = {
   contested: "#C99A3A",  // or conteste
 } as const;
 
-// Interpole la valeur de controle d'un etat a une date-fraction globale (0..1)
-export const controlAt = (state: string, tGlobal: number): ControlVal => {
-  const n = JALONS.length;
-  const x = Math.max(0, Math.min(1, tGlobal)) * (n - 1);
-  const i = Math.floor(x);
-  const f = x - i;
-  if (i >= n - 1) return JALONS[n - 1].control[state] ?? 1;
-  const a = JALONS[i].control[state] ?? 1;
-  const b = JALONS[i + 1].control[state] ?? 1;
-  return a + (b - a) * f;
-};
-
-// Renvoie l'index de jalon courant + fraction, pour date/label/casualties
-export const jalonAt = (tGlobal: number) => {
-  const n = JALONS.length;
-  const x = Math.max(0, Math.min(1, tGlobal)) * (n - 1);
-  const i = Math.min(n - 1, Math.floor(x));
-  const f = x - Math.floor(x);
-  return { i, f, jalon: JALONS[i] };
-};
+// controlAt / jalonAt sont re-exportes depuis le bundle (haut du fichier).
+// Reference _LEGACY conservee pour audit : void _LEGACY_JALONS.
+void _LEGACY_JALONS;

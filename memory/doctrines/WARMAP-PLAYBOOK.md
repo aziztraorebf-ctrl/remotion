@@ -84,6 +84,11 @@ dates/horloge mono tabular. Filtre papier `feTurbulence` natif (zero asset).
 
 ## §8 — NEXT : structurer le pilier (NE PAS reinventer la roue)
 
+> ⭐ La couche DONNEES (phase recherche) a sa propre doctrine : [[doctrines/WARMAP-RESEARCH-PLAYBOOK]]
+> (4 etapes ACLED->synthese->fact-check, classement fiabilite, contrat schema canonique, acces OAuth/CSV).
+> Pipeline `scripts/warmap/` + schema `src/projects/warmap/schema.ts` codes 2026-06-05 (connecteur ACLED
+> fixture-first, render Soudan byte-identique prouve).
+
 Aux memes procedures que Souverain/Atlas (prochaine session) :
 - Skill `warmap-preproduction` (miroir `souverain-preproduction` / `atlas-video-preproduction`).
 - Pipeline beat scorE si pertinent (miroir mapbox-session.py / beat-session.py).
