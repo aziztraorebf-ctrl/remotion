@@ -47,14 +47,35 @@ def synthesize_vignette(jalon, events, articles, fixtures_only=False):
         }
 
     import requests
-    state_lines = ", ".join(f"{s} (controle={v})" for s, v in flips[:6]) or "aucun changement majeur"
+    from datetime import date, timedelta
+    from .config import WINDOW_DAYS
+
+    # top events from UCDP/ACLED in the window to give Sonar-Pro concrete anchors
+    D = date.fromisoformat(jalon["date"])
+    w_start = D - timedelta(days=WINDOW_DAYS)
+    window_events = [
+        e for e in events
+        if e.get("event_date") and w_start <= date.fromisoformat(e["event_date"]) <= D
+        and e.get("admin1") in [s for s, _ in flips]
+    ][:12]
+    event_lines = "\n".join(
+        f"  - {e['event_date']} | {e['admin1']} | {e['actor1']} vs {e['actor2']} | {e['fatalities']} morts"
+        for e in window_events
+    ) or "  (aucun evenement localise dans la fenetre)"
+
+    state_lines = ", ".join(f"{s} (controle={v:.1f})" for s, v in flips[:6]) or "aucun changement majeur"
     prompt = (
-        "Tu es analyste pour la chaine Kora & Cartes (angle macro africain, ton sobre, factuel).\n"
-        f"Date du jalon: {jalon['date']} — evenement: {jalon['label']}.\n"
-        f"Etats non tenus par l'armee a cette date: {state_lines}.\n"
-        f"Pertes cumulees estimees (ACLED): {jalon['casualties']}.\n\n"
-        "En 2 phrases maximum (francais), explique POURQUOI le front a bouge a cette date. "
-        "Cite tes sources. Reponds en JSON: {\"vignette\": \"...\", \"sources\": [\"url\", ...]}."
+        "Tu es analyste senior pour la chaine documentaire Kora & Cartes (angle macro africain, "
+        "ton factuel et sobre — pas de sensationnalisme).\n\n"
+        f"JALON : {jalon['date']} — {jalon['label']}\n"
+        f"Etats non controles par l'armee soudanaise a cette date : {state_lines}\n"
+        f"Pertes cumulees estimees : {jalon['casualties']}\n\n"
+        f"Evenements UCDP/ACLED dans les 30 jours precedant ce jalon :\n{event_lines}\n\n"
+        "QUESTION : en 2 phrases maximum en francais, explique POURQUOI le front a evolue "
+        "a cette date — les causes militaires, politiques ou humanitaires qui expliquent "
+        "le mouvement des lignes. Appuie-toi sur des sources verifiables.\n\n"
+        "Reponds UNIQUEMENT en JSON valide (pas de markdown) : "
+        "{\"vignette\": \"2 phrases max\", \"sources\": [\"url1\", \"url2\"]}"
     )
     try:
         resp = requests.post(

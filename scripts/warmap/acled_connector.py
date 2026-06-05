@@ -41,6 +41,7 @@ def get_token():
             "password": ACLED_PASSWORD,
             "grant_type": "password",
             "client_id": ACLED_CLIENT_ID,
+            "scope": "authenticated",
         },
         headers={"Content-Type": "application/x-www-form-urlencoded"},
         timeout=30,

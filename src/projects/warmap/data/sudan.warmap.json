@@ -476,19 +476,23 @@
           },
           {
             "kind": "press",
-            "ref": "https://www.lemonde.fr/afrique/article/2024/04/15/le-soudan-dechire-par-une-annee-de-guerre_6227890_3212.html"
-          },
-          {
-            "kind": "press",
             "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
           },
           {
             "kind": "press",
-            "ref": "https://unric.org/fr/crise-au-soudan-la-reponse-de-lonu/"
+            "ref": "https://www.hrw.org/fr/world-report/2024/country-chapters/sudan"
           },
           {
             "kind": "press",
-            "ref": "https://www.ritimo.org/Le-Soudan-apres-2021-et-la-guerre-de-2023"
+            "ref": "https://news.un.org/fr/story/2025/02/1153146"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.iris-france.org/175398-soudan-quels-sont-les-facteurs-a-lorigine-des-affrontements/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.amnesty.org/fr/latest/news/2023/10/sudan-civilians-still-being-killed-and-displaced-after-six-months-of-conflict/"
           }
         ],
         "confidence": 0.8,
@@ -496,7 +500,7 @@
         "method": "acled-agg",
         "notes": "anomaly: Implausible casualty jump: 3,820 casualties recorded on the very first day of the conflict."
       },
-      "vignette": "Le front se déplace brutalement ce 15 avril 2023 parce que les Forces de soutien rapide lancent des attaques surprises coordonnées contre des sites stratégiques à Khartoum (aéroport, palais présidentiel, QG de l’armée), rompant de fait leur alliance avec le général al-Burhan et cherchant à s’emparer du pouvoir par la force.[2][3] Cette offensive éclair dans la capitale transforme une rivalité politico-militaire larvée en guerre ouverte entre l’armée régulière et les FSR, faisant basculer Khartoum dans la bataille et entraînant l’extension rapide des combats à l’ensemble du pays.[2][3][4][5]"
+      "vignette": "Le 15 avril 2023, les Forces de soutien rapide lancent des attaques coordonnées contre des infrastructures clés de Khartoum, après plusieurs mois de tensions croissantes avec l’état-major autour de leur intégration dans l’armée régulière et du partage du pouvoir, faisant basculer la capitale dans la guerre ouverte.[1][8][10][12] Ce passage de la rivalité politique et institutionnelle à l’affrontement armé direct entre les généraux al-Burhan et Hemedti provoque l’effondrement du fragile processus de transition et entraîne la militarisation généralisée de l’espace urbain à Khartoum.[1][4][8][10]"
     },
     {
       "date": "2023-08-01",
@@ -935,23 +939,39 @@
           },
           {
             "kind": "press",
-            "ref": "https://www.france24.com/fr/afrique/20230427-soudan-violents-combats-%C3%A0-khartoum-et-au-darfour-n%C3%A9gociations-en-cours-pour-prolonger-la-tr%C3%AAve"
+            "ref": "https://en.wikipedia.org/wiki/Sudanese_civil_war_(2023%E2%80%93present)"
           },
           {
             "kind": "press",
-            "ref": "https://adf-magazine.com/fr/2023/11/les-avancees-des-rsf-leur-permettent-de-controler-plus-de-la-moitie-du-soudan/"
+            "ref": "https://en.wikipedia.org/wiki/Battle_of_Khartoum_(2023%E2%80%932025)"
           },
           {
             "kind": "press",
-            "ref": "https://digitallibrary.un.org/record/4039195/files/S_2024_65-FR.pdf"
+            "ref": "https://en.wikipedia.org/wiki/Darfur_campaign_(2023%E2%80%932025)"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.adf-magazine.com/fr/2023/11/les-avancees-des-rsf-leur-permettent-de-controler-plus-de-la-moitie-du-soudan/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.hrw.org/fr/feature/2025/04/14/le-conflit-au-soudan-deux-ans-deja/des-millions-de-vies-brisees-des-dizaines-de"
+          },
+          {
+            "kind": "press",
+            "ref": "https://europe-solidaire.org/spip.php?article70556"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Forces_de_soutien_rapide"
           }
         ],
         "confidence": 0.8,
         "verified": true,
         "method": "acled-agg",
-        "notes": "anomaly: Impossible territorial flip: Southern, Eastern, Central, and Western Darfur did not fall to non-SAF forces until October/November 2023, and North Darfur remained contested."
+        "notes": "anomaly: Impossible territorial flip: Western, Central, Southern, and Eastern Darfur states were not captured by non-SAF forces (RSF) until late October and November 2023.; Inaccurate control: North Darfur and North Kordofan remained heavily contested with SAF holding major capitals (El Fasher, El Obeid)."
       },
-      "vignette": "Le front bascule à Khartoum et au Darfour à ce moment-là parce que les Forces de soutien rapide, mieux préparées pour une guerre urbaine et disposant de relais locaux au Darfour, lancent dès la mi-avril une offensive coordonnée contre les principales infrastructures militaires et quartiers stratégiques, prenant de court une armée régulière fragmentée par les rivalités entre al-Burhan et Hemedti.[3][5] En quelques semaines, la désorganisation du commandement de l’armée, la faible cohésion de certaines unités et le recours des FSR à des lignes d’approvisionnement transfrontalières vers le Tchad et la Libye permettent aux paramilitaires de consolider leurs gains dans la capitale et de s’emparer de la majeure partie du Darfour.[1][3][4]"
+      "vignette": "A l’été 2023, les RSF, issues des milices janjawid et déjà fortement implantées au Darfour, profitent de l’éclatement du conflit avec l’armée régulière pour consolider leur bastion occidental et étendre leur contrôle sur Khartoum, dans une logique de prise de la capitale et de continuité territoriale entre Darfour et centre du pays.[3][4][5][11][15] Cette avancée est facilitée par le repli stratégique de l’armée vers l’Est (Port-Soudan) et l’effondrement de l’administration centrale, dans un contexte de violences massives contre les civils au Darfour qui vident certaines zones de leurs populations et réduisent la résistance locale.[5][6][10][14]"
     },
     {
       "date": "2023-12-18",
@@ -1390,27 +1410,39 @@
           },
           {
             "kind": "press",
+            "ref": "https://sudantribune.com/article280478/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://sudantribune.com/article280499/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/pidgin/articles/c8027jp537ro"
+          },
+          {
+            "kind": "press",
+            "ref": "https://efe.com/latest-news/2023-12-19/up-to-300000-flee-war-madani-to-escape-intense-fighting-in-sudans-aid-hub/"
+          },
+          {
+            "kind": "press",
             "ref": "https://www.msf.fr/actualites/soudan-apres-avoir-fui-wad-madani-des-centaines-de-milliers-de-deplaces-sans-acces-aux-soins"
           },
           {
             "kind": "press",
-            "ref": "https://information.tv5monde.com/afrique/la-prise-de-wad-madani-marque-t-elle-un-tournant-dans-la-guerre-au-soudan-2684096"
+            "ref": "https://english.news.cn/africa/20231220/9b9eef8520f044eeb253bcb9d6e38319/c.html"
           },
           {
             "kind": "press",
-            "ref": "https://www.unocha.org/publications/report/sudan/sudan-clashes-wad-madani-between-sudanese-armed-forces-saf-and-rapid-support-forces-rsf-flash-update-no-03-18-december-2023-enar"
-          },
-          {
-            "kind": "press",
-            "ref": "https://arabnews.fr/node/455441/monde-arabe"
+            "ref": "https://www.amnesty.org/fr/latest/news/2023/12/sudan-fresh-fears-for-civilians-as-fighting-extends-to-wad-madani/"
           }
         ],
         "confidence": 0.8,
         "verified": true,
         "method": "acled-agg",
-        "notes": "anomaly: Impossible territorial flip: White Nile remained under SAF control and never fell to RSF. Sennar did not fall to non-SAF forces until mid-2024."
+        "notes": "anomaly: Impossible territorial flip: White Nile and Sennar were not controlled by non-SAF forces in December 2023 (Sennar faced offensives much later in mid-2024, and White Nile remained SAF-held)."
       },
-      "vignette": "Le front se déplace car les RSF, profitant de colonnes parties de Khartoum et d’une armée soudanaise affaiblie, lancent le 15 décembre une offensive éclair qui balaye la principale garnison de Wad Madani et fait tomber en quelques jours la capitale de l’État d’Al-Jazirah, pivot logistique de la SAF.[3][2][6] Cette prise leur permet de couper des lignes d’approvisionnement vers Khartoum et d’ouvrir l’accès vers le centre-est et le sud (Sennar, Nil Blanc), transformant une zone jusqu’alors sanctuaire humanitaire en nouveau théâtre d’opérations et poussant le front hors de la seule région de Khartoum.[3][8][10]"
+      "vignette": "La chute de Wad Madani s’explique d’abord par une offensive coordonnée des RSF depuis Khartoum et le Darfour, facilitée par le retrait précipité – et désormais objet d’enquête – de la 1re division de l’armée soudanaise, qui a abandonné la ville quasiment sans combat et ouvert un nouveau front au centre du pays.[1][8][13] Cette percée répond aussi à un calcul politico‑militaire des RSF cherchant à contrôler un nœud logistique et humanitaire majeur, refuge de centaines de milliers de déplacés, afin de peser sur le rapport de force national dans un contexte d’échec des médiations et d’embrasement général du conflit.[1][5][10][11][14]"
     },
     {
       "date": "2024-10-01",
@@ -1845,31 +1877,19 @@
           },
           {
             "kind": "press",
-            "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
+            "ref": "https://adf-magazine.com/fr/2024/02/larmee-soudanaise-souhaite-regagner-du-terrain-et-le-soutien-du-public-contre-les-rsf/"
           },
           {
             "kind": "press",
-            "ref": "https://unric.org/fr/crise-au-soudan-la-reponse-de-lonu/"
-          },
-          {
-            "kind": "press",
-            "ref": "https://www.lemonde.fr/afrique/article/2024/04/15/le-soudan-dechire-par-une-annee-de-guerre_6227890_3212.html"
-          },
-          {
-            "kind": "press",
-            "ref": "https://www.ifri.org/fr/presse-contenus-repris-sur-le-site/milices-exactions-fragmentation-du-pays-que-se-passe-t-il-au"
-          },
-          {
-            "kind": "press",
-            "ref": "https://www.radiofrance.fr/franceculture/podcasts/la-revue-de-presse-internationale/la-revue-de-presse-internationale-emission-du-samedi-02-novembre-2024-8361319"
+            "ref": "https://www.amnesty.org/fr/projects/sudan-conflict/"
           }
         ],
         "confidence": 0.8,
         "verified": true,
         "method": "acled-agg",
-        "notes": "anomaly: Ordering error: Future date beyond currently available verifiable data.; Unexplained territorial flip: Sennar and White Nile silently revert from non-SAF states."
+        "notes": "anomaly: Timeline error: Date is in the future relative to currently available empirical ACLED data.; Unexplained territorial flip: White Nile and Sennar disappear from the non-SAF list without a historical SAF recapture.; Synthetic data artifact: Casualties artificially increase by ~3,800 per data row regardless of the time elapsed (9.5-month gap here vs. 3.5-month gap previously)."
       },
-      "vignette": "Le déplacement du front à l’automne 2024 s’explique par la volonté de l’armée soudanaise de reconquérir, à partir de ses bastions de l’est, les régions centrales et de reprendre l’initiative après une année où les FSR avaient consolidé leurs gains au Darfour et autour de Khartoum.[1][4] Cette contre‑offensive répond aussi à l’impératif politique et économique de sécuriser les corridors orientaux encore tenus par l’armée, alors que la poursuite de la guerre et l’extension des exactions des FSR en Gezira et au Darfour ont fait plus de 15 000 morts et plongé le pays dans une crise humanitaire majeure.[1][2][3][8]"
+      "vignette": "Au 1er octobre 2024, le front évolue surtout parce que l’armée soudanaise reprend l’initiative depuis l’est, profitant de lignes de ravitaillement plus sûres et d’une pression accrue sur des positions des FSR déjà fragilisées par des mois d’usure, tandis que les combats restent très violents au Darfour et au Kordofan[1][10]. Cette progression s’inscrit dans une guerre qui a provoqué une catastrophe humanitaire majeure — déplacements massifs, effondrement des services et famine dans plusieurs zones — mais les sources disponibles ne montrent pas un cessez-le-feu politique, seulement une dynamique militaire de reconquête et de contre-offensive[3][8][12]."
     },
     {
       "date": "2025-03-26",
@@ -2284,23 +2304,31 @@
           },
           {
             "kind": "press",
-            "ref": "https://www.aljazeera.com/news/2025/1/12/could-the-sudanese-armys-capture-of-wad-madani-be-a-turning-point-of-war"
-          },
-          {
-            "kind": "press",
             "ref": "https://www.lemonde.fr/afrique/article/2025/01/11/au-soudan-l-armee-reprend-une-importante-capitale-provinciale-aux-paramilitaires_6493607_3212.html"
           },
           {
             "kind": "press",
-            "ref": "https://fr.wikipedia.org/wiki/Bataille_de_Khartoum"
+            "ref": "https://www.rfi.fr/fr/afrique/20240321-guerre-au-soudan-l-arm%C3%A9e-prend-peu-%C3%A0-peu-le-dessus-le-pays-au-bord-de-l-ab%C3%AEme-humanitaire"
+          },
+          {
+            "kind": "press",
+            "ref": "https://lediplomate.media/2025/01/analyse-soudan-la-bataille-de-wad-madani-et-loffensive-sur-khartoum/sylvain-ferreira/monde/afrique/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.lemonde.fr/afrique/article/2025/03/28/au-soudan-khartoum-totalement-reprise-aux-paramilitaires-annonce-l-armee_6587231_3212.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://news.un.org/fr/story/2025/01/1152216"
           }
         ],
         "confidence": 0.6,
         "verified": true,
         "method": "acled-agg",
-        "notes": "anomaly: Ordering error: Future date.; Unexplained territorial flip: Khartoum and Gezira revert to SAF without corresponding casualty spike."
+        "notes": "anomaly: Timeline error: Date is in the future.; Unexplained territorial flip: Khartoum and Gezira drop from the non-SAF control list."
       },
-      "vignette": "Le déplacement du front s’explique par la montée en puissance progressive de l’armée soudanaise, qui a regroupé des forces régulières et des groupes alliés pour reprendre d’abord Wad Madani, nœud stratégique des routes d’approvisionnement du centre-est, affaiblissant ainsi le dispositif des FSR dans l’État d’Al-Jazira et en direction de Khartoum.[6][7] Dans la foulée, cette supériorité retrouvée en hommes, en appuis régionaux et en contrôle du nord et de l’est du pays a permis à l’armée de pousser son avantage vers la capitale, déjà entamée par des mois d’attrition, jusqu’à en reprendre le contrôle après près de deux ans de combats.[2][6][7]"
+      "vignette": "La reprise de Wad Madani puis de Khartoum s’explique par une offensive coordonnée de l’armée, appuyée par des groupes alliés et une supériorité aérienne croissante, qui lui a permis de concentrer ses forces sur ces centres urbains après avoir stabilisé le nord et l’est du pays.[2][5][6][10] Parallèlement, l’enlisement des FSR sur plusieurs fronts, la pression internationale liée au risque de famine massive et l’intensification des combats au Darfour ont contribué à disperser leurs moyens, facilitant la reconquête de ces villes par les forces régulières.[2][5][9][10]"
     },
     {
       "date": "2026-05-01",
@@ -2715,27 +2743,47 @@
           },
           {
             "kind": "press",
-            "ref": "https://acleddata.com/early-warning/2024/04/25/the-war-in-sudan-one-year-on-mapping-the-conflict-and-critical-trends/"
+            "ref": "https://fr.africanews.com/2026/04/14/soudan-un-conflit-enlise-qui-menace-de-diviser-durablement-le-pays/"
           },
           {
             "kind": "press",
-            "ref": "https://acleddata.com/conflict-location/sudan/"
+            "ref": "https://www.fides.org/fr/news/76487-AFRIQUE_SOUDAN_Vers_un_partage_du_Soudan"
           },
           {
             "kind": "press",
-            "ref": "https://issafrica.org/iss-today/after-a-year-of-war-sudan-is-on-the-brink-of-collapse-and-partition"
+            "ref": "https://www.lesemeurs.com/Article.aspx?ID=18816"
           },
           {
             "kind": "press",
-            "ref": "https://www.crisisgroup.org/africa/horn-africa/sudan/war-sudan-how-avoid-getting-dragged-into-catastrophe"
+            "ref": "https://raids.fr/premium/soudan-vers-la-partition/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.wsws.org/fr/articles/2025/04/25/swtx-a25.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.afriquesenlutte.org/afrique-de-l-est/soudan/article/le-soudan-vers-la-partition"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.trt.global/afrika-fran%C3%A7ais/article/e1cd8cd66577"
+          },
+          {
+            "kind": "press",
+            "ref": "https://entrevue.fr/le-soudan-bascule-dans-une-double-souverainete-les-paramilitaires-des-rsf-forment-un-gouvernement-parallele/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
           }
         ],
         "confidence": 0.6,
         "verified": true,
         "method": "acled-agg",
-        "notes": "anomaly: Ordering error: Future date.; Implausible casualty jump: Synthetic linear progression adds exactly 3,770 casualties over a 1-month interval, identically matching the numerical increases of previous multi-month intervals."
+        "notes": "anomaly: Timeline error: Date is in the future.; Synthetic data artifact: Artificial increase of exactly 3,770 casualties over a 13-month interval, identical to the fixed absolute increase of previous, much shorter intervals."
       },
-      "vignette": "Le front se fige autour d’une partition de fait à cette date parce que, après un an de guerre, le RSF a consolidé sa mainmise sur l’Ouest (notamment l’ensemble du Darfour) tandis que l’armée, affaiblie par la perte de Khartoum et la désagrégation de ses forces dans les Kordofan, s’est repliée sur un axe Est–Centre qu’elle contrôle plus efficacement. Cette ligne de rupture reflète à la fois la géographie des bastions sociaux des deux camps, le contrôle par le RSF des corridors saharo-sahéliens de contrebande et d’or au Darfour, et le verrouillage par l’armée des ports et des villes de la vallée du Nil, ce qui transforme une guerre de conquête nationale en conflit de zones d’influence régionales."
+      "vignette": "Le basculement vers une partition de fait à cette date s’explique par la prise d’El-Fasher et du dernier verrou militaire de l’armée au Darfour par les RSF, qui achève la conquête de l’ouest soudanais et consacre leur contrôle continu sur l’ensemble du Darfour appuyé par un siège de longue durée et une stratégie d’encerclement des garnisons loyalistes.[3][7][13] En parallèle, l’armée soudanaise a recentré ses forces sur Khartoum et l’est du pays (Port-Soudan et le corridor de la mer Rouge), abandonnant de facto l’ouest après l’échec des médiations internationales et la formation d’un gouvernement parallèle par les RSF, ce qui a cristallisé la dualité de pouvoir entre un bloc oriental tenu par les SAF et un bloc occidental administré par Hemedti.[1][2][5][6][9][11]"
     }
   ],
   "vehicles": [
