@@ -65,9 +65,9 @@ tokens 0y6uzb · overlay fqwfoo · epic60 v1 fyksjo · v2 (chars+45%) 5ovre7 · 
 
 ## FAIT 2026-06-05 (session 2) — PIPELINE DE RECHERCHE + SCHEMA CANONIQUE ⭐
 Branche `feat/warmap-research-pipeline` (depuis master). Industrialise la phase donnees.
-- **Schema canonique** `src/projects/warmap/schema.ts` (`WarMapDataset` = superset contrat moteur
-  + PROVENANCE par fait) + `adapter.ts` (`canonicalToEngine`, bridge zero-risque) + 1ere instance
-  `data/sudan.warmap.json` (ACLED-derivee).
+- **Schema canonique** `src/projects/warmap/data/schema.ts` (`WarMapDataset` = superset contrat moteur
+  + PROVENANCE par fait) + `data/adapter.ts` (`canonicalToEngine`, bridge zero-risque) + 1ere instance
+  `src/projects/warmap/data/sudan.warmap.json` (ACLED-derivee). [chemins MAJ apres reorg 2026-06-05]
 - **Pipeline** `scripts/warmap/` : `acled_connector` (OAuth password grant + fixture fallback, CODE),
   `aggregate` (events->jalons admin-1 : point-in-polygon + acteur->faction + dominance ponderee +
   carry-forward + snap), `llm_synthesis` (sonar-pro), `factcheck` (gemini juge + convergence >=2 sources
