@@ -23,7 +23,7 @@ Une video evolue en duree pendant l'iteration. Pour une musique qui colle a chaq
 4. Render v2 = version finale (ne pas rendre une v3 sauf retour Aziz)
 5. NE JAMAIS présenter un v1 à Aziz sans avoir fait le diff LLM d'abord
 
-**Modèle à utiliser :** `gemini-3.1-pro-preview` (analyse vision/diff précis — modèle VERROUILLÉ par CLAUDE.md, voir tableau modèles API). `gemini-2.5-*` INTERDIT. Flash uniquement pour brainstorm, jamais pour diff visuel précis.
+**Modèle à utiliser :** `gemini-3.1-pro-preview` (analyse vision/diff précis — modèle VERROUILLÉ par CLAUDE.md, voir tableau modèles API). Les anciens modèles Gemini 2.x sont INTERDITS. Flash uniquement pour brainstorm, jamais pour diff visuel précis.
 
 **S'applique à :** tout nouveau composant Remotion, tout nouveau template, tout beat avec layout custom.
 
