@@ -1,0 +1,33 @@
+{
+  "queries": [
+    "africa map animated",
+    "lobito corridor",
+    "africa china minerals",
+    "africa economy explained",
+    "war map africa",
+    "africa resources geopolitics",
+    "sahel explained",
+    "africa empire history map"
+  ],
+  "outliers": [
+    {
+      "id": "F19_pz8lGhE",
+      "title": "Africa (Toto)... but it lists every country in Africa... on a map!",
+      "url": "https://www.youtube.com/watch?v=F19_pz8lGhE",
+      "views": 107172,
+      "channel_handle": "samuelhoskins9983",
+      "channel_title": "Samuel Hoskins (thecartographyguy)",
+      "published": "3 months ago",
+      "length_s": 101,
+      "query": "africa map animated",
+      "channel_median": 1523,
+      "ratio": 70.36900853578463
+    }
+  ],
+  "params": {
+    "queries": null,
+    "min_ratio": 1.8,
+    "max_age_days": 120,
+    "min_views": 30000
+  }
+}
