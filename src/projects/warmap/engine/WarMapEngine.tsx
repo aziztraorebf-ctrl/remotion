@@ -57,19 +57,23 @@ const T_END = SUDAN_FLAT_DURATION - Math.round(2.2 * SUDAN_FPS);
 // ===========================================================================
 export const SUDAN_EPIC_DURATION = 60 * SUDAN_FPS; // 1800 frames = 60s
 // fenetres de pause (start, hold, type). start = frame absolu dans le 60s.
-type EpicWindow = { start: number; hold: number; kind: "overlay" | "figure"; data: any };
-// REGLE Aziz affinee (2026-06-05) : le PLEIN ECRAN est reserve aux infos SANS
-// equivalent sur la carte. La crise des refugies est DEJA montree par les
-// jetons-visage qui fuient + une plaque-texte breve SUR la carte -> pas d'overlay
-// plein ecran (doublon supprime). La FAMINE n'a pas de representation
-// cartographique -> overlay plein ecran justifie (seul temps fort de respiration).
+type EpicWindow = { start: number; hold: number; kind: "overlay" | "figure" | "explicatif"; data: any };
+// 2 freezes :
+// 1. ~24s : overlay EXPLICATIF "L'exode" + portrait civil (fige l'action, centre,
+//    introduit le visage avant qu'il apparaisse sur la carte comme jeton-refugie).
+// 2. ~50s : overlay DONNEE famine 25M (sans equivalent carto -> plein ecran justifie).
 export const EPIC_WINDOWS: EpicWindow[] = [
-  // ~50s : overlay famine (avant climax partition) — SEUL plein ecran
+  {
+    start: 24 * SUDAN_FPS, hold: 8 * SUDAN_FPS, kind: "explicatif",
+    data: { title: "L'exode", text: "Des millions fuient vers les frontières", portrait: "portrait-civil",
+            source: "Source : OCHA / HCR Soudan 2023" },
+  },
   { start: 50 * SUDAN_FPS, hold: 7 * SUDAN_FPS, kind: "overlay", data: { variant: "famine" } },
 ];
-// fenetre du texte-refugies sur la carte (pas de freeze, l'action continue)
-const REFUGEE_TEXT_START = 26 * SUDAN_FPS;
-const REFUGEE_TEXT_HOLD = 7 * SUDAN_FPS;
+// REFUGEE_TEXT conserve pour compatibilite (inutilise desormais : l'action explicatif
+// est maintenant geree via EPIC_WINDOWS avec freeze)
+const REFUGEE_TEXT_START = 999999; // desactive
+const REFUGEE_TEXT_HOLD = 0;
 const EPIC_FREEZE_TOTAL = EPIC_WINDOWS.reduce((a, w) => a + w.hold, 0);
 // duree "carte qui bouge" = 60s - somme des freezes. La carte progresse 0->1 sur ce span.
 const EPIC_MAP_SPAN = SUDAN_EPIC_DURATION - EPIC_FREEZE_TOTAL;
@@ -386,10 +390,13 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
     JALONS[jIndex].casualties +
       (JALONS[Math.min(JALONS.length - 1, jIndex + 1)].casualties - JALONS[jIndex].casualties) * jFrac
   );
-  const totalSecondsFake = (frame * 137 + 8 * 3600) % (24 * 3600);
-  const hh = String(Math.floor(totalSecondsFake / 3600)).padStart(2, "0");
-  const mm = String(Math.floor((totalSecondsFake % 3600) / 60)).padStart(2, "0");
-  const ss = String(Math.floor(totalSecondsFake % 60)).padStart(2, "0");
+  // JOUR N depuis le debut de la guerre (15 avril 2023 = JOUR 1).
+  // Interpole entre les jalons pour un compteur qui monte en continu.
+  const WAR_START_DAYS = [0, 108, 247, 535, 711, 1112]; // jours depuis 2023-04-15 par jalon
+  const jourN = Math.round(
+    WAR_START_DAYS[jIndex] +
+    (((WAR_START_DAYS[Math.min(JALONS.length - 1, jIndex + 1)] ?? WAR_START_DAYS[jIndex]) - WAR_START_DAYS[jIndex]) * jFrac)
+  ) + 1; // JOUR 1 au lieu de JOUR 0
 
   const introOp = interpolate(frame, [0, 6, T_START - 6, T_START + 4], [0, 1, 1, 0], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
@@ -565,16 +572,6 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
 
       {/* TEXTE-REFUGIES sur la carte (mode epic) — WarMapOverlayExplicatif (composant
           generique, extrait vers _shared/). R2 semi-transparent, R4 pas de voile noir. */}
-      {epic && (
-        <WarMapOverlayExplicatif
-          startFrame={REFUGEE_TEXT_START}
-          holdFrames={REFUGEE_TEXT_HOLD}
-          title="L'exode"
-          text="Des millions fuient vers les frontières"
-          topOffset={portrait ? 250 : 150}
-        />
-      )}
-
       {/* Villes — plaques parchemin (signature Atlas : MAJUSCULES sur plaque) */}
       {ready &&
         cityPx
@@ -604,8 +601,8 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
               <div style={{ fontSize: 58, fontWeight: 800, fontVariantNumeric: "tabular-nums", letterSpacing: 1, fontFamily: "Georgia, serif", lineHeight: 1 }}>
                 {jalon.date}
               </div>
-              <div style={{ fontSize: 28, fontWeight: 600, opacity: 0.7, fontVariantNumeric: "tabular-nums", fontFamily: "Georgia, serif", marginTop: 4 }}>
-                {hh}:{mm}:{ss}
+              <div style={{ fontSize: 26, fontWeight: 700, opacity: 0.65, letterSpacing: 3, fontFamily: "Georgia, serif", marginTop: 6, textTransform: "uppercase" }}>
+                JOUR {jourN}
               </div>
             </div>
           </div>
@@ -653,8 +650,8 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
               <div style={{ fontSize: 44, fontWeight: 800, fontVariantNumeric: "tabular-nums", letterSpacing: 1, fontFamily: "Georgia, serif" }}>
                 {jalon.date}
               </div>
-              <div style={{ fontSize: 24, fontWeight: 600, opacity: 0.7, fontVariantNumeric: "tabular-nums", fontFamily: "Georgia, serif" }}>
-                {hh}:{mm}:{ss}
+              <div style={{ fontSize: 20, fontWeight: 700, opacity: 0.65, letterSpacing: 3, fontFamily: "Georgia, serif", marginTop: 4, textTransform: "uppercase" }}>
+                JOUR {jourN}
               </div>
             </div>
           </div>
@@ -690,12 +687,26 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
         <WarMapDataOverlay startFrame={OVERLAY_START} holdFrames={OVERLAY_HOLD} fps={SUDAN_FPS} />
       )}
 
-      {/* MODE EPIC : overlays data uniquement (deplaces + famine). La figure du
-          deplace est desormais un jeton qui se deplace SUR la carte (regle Aziz). */}
+      {/* MODE EPIC : overlays par type (explicatif avec portrait, ou donnee) */}
       {epic &&
-        EPIC_WINDOWS.map((w, i) => (
-          <WarMapDataOverlay key={i} startFrame={w.start} holdFrames={w.hold} fps={SUDAN_FPS} variant={w.data.variant} />
-        ))}
+        EPIC_WINDOWS.map((w, i) => {
+          if (w.kind === "explicatif") {
+            return (
+              <WarMapOverlayExplicatif
+                key={i}
+                startFrame={w.start}
+                holdFrames={w.hold}
+                title={w.data.title}
+                text={w.data.text}
+                portrait={w.data.portrait}
+                source={w.data.source}
+              />
+            );
+          }
+          return (
+            <WarMapDataOverlay key={i} startFrame={w.start} holdFrames={w.hold} fps={SUDAN_FPS} variant={w.data.variant} />
+          );
+        })}
     </AbsoluteFill>
   );
 };

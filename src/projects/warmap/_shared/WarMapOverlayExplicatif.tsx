@@ -1,105 +1,146 @@
 /**
- * WarMapOverlayExplicatif — overlay EXPLICATIF generique (type R2 semi-transparent).
+ * WarMapOverlayExplicatif — overlay EXPLICATIF generique (type R2).
  *
- * Regle R2 (WARMAP-PLAYBOOK) : ce qui se passe sur la carte = fond SEMI-TRANSPARENT,
- * CENTRE (jamais en haut), coupe l'action le temps d'expliquer. L'action CONTINUE
- * derriere (pas de freeze — c'est la difference avec WarMapOverlayData).
+ * Version redesignee Session A (2026-06-06) sur direction Aziz :
+ * - CENTRE comme l'overlay donnee (meme gravite visuelle)
+ * - FIGE l'action pendant sa duree (l'action s'arrete, le texte s'installe, reprend)
+ * - Portrait civil optionnel en intro : introduit le visage avant qu'il
+ *   apparaisse sur la carte, cree une continuite narrative (on comprend
+ *   pourquoi le jeton sera pose sur la carte ensuite).
  *
- * Extrait du bloc "texte-refugies" inline dans WarMapEngine (mode epic). Generalise :
- * titre + texte configurables, position verticale ajustable, wobble optionnel.
+ * Regle R2 : fond SEMI-TRANSPARENT cream (pas solide — la carte reste visible
+ * en silhouette derriere, ce qui rappelle qu'on parle de ce lieu).
+ * Regle R4 : voile cream clair, jamais noir.
+ * Regle R3 : l'action est figee pendant l'overlay (gestion dans WarMapEngine
+ * via EPIC_WINDOWS — ajouter cette fenetre dans le tableau).
  *
- * Usage minimal :
- *   <WarMapOverlayExplicatif startFrame={400} holdFrames={180} fps={30}
- *     title="L'exode" text="Des millions fuient vers les frontieres" />
- *
- * Regle R4 : fond cream semi-transparent (jamais noir). Niveau opacity voile = 0
- * (pas de voile sur la carte — c'est ce qui distingue de l'overlay donnee).
- * Regle R3 : ne pas empiler ce composant avec des mouvements simultanees de sprites
- * sauf au moment-cle fort (exception R3 explicite).
+ * Usage :
+ *   Dans EPIC_WINDOWS :
+ *     { start: REFUGEE_TEXT_START, hold: REFUGEE_TEXT_HOLD, kind: "explicatif",
+ *       data: { title: "L'exode", text: "Des millions fuient...", portrait: "portrait-civil" } }
+ *   Puis dans le JSX :
+ *     <WarMapOverlayExplicatif startFrame={X} holdFrames={Y}
+ *       title="L'exode" text="Des millions fuient vers les frontieres"
+ *       portrait="portrait-civil" />
  */
 
 import React from "react";
-import { interpolate, useCurrentFrame, Easing } from "remotion";
+import { AbsoluteFill, interpolate, staticFile, useCurrentFrame, Easing } from "remotion";
 
 const ATLAS = {
-  cream: "#F2E5C8",
-  ink: "#3A2A18",
+  cream:     "#F2E5C8",
+  ink:       "#3A2A18",
+  gold:      "#D4A574",
 } as const;
 
 type Props = {
   startFrame: number;
   holdFrames: number;
-  fps?: number;
-  title: string;           // ex: "L'exode" (UPPERCASE rendu via CSS)
+  title: string;           // ex: "L'exode"
   text: string;            // ex: "Des millions fuient vers les frontieres"
-  topOffset?: number;      // position verticale px depuis le haut (defaut: 180)
-  wobble?: boolean;        // rotation papier subtile (defaut: true)
-  maxWidth?: number;       // px (defaut: 820)
+  portrait?: string;       // nom du PNG dans public/_shared/sprites/warmap/ (sans extension)
+                           // ex: "portrait-civil". Si absent : overlay texte seul.
+  source?: string;         // ligne source optionnelle
 };
-
-const WOBBLE_AMP = 0.45; // degres max de rotation papier
 
 export const WarMapOverlayExplicatif: React.FC<Props> = ({
   startFrame, holdFrames,
-  title, text,
-  topOffset = 180,
-  wobble = true,
-  maxWidth = 820,
+  title, text, portrait, source,
 }) => {
   const frame = useCurrentFrame();
   const local = frame - startFrame;
   if (local < 0 || local > holdFrames) return null;
 
   const op = Math.min(
-    interpolate(local, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+    interpolate(local, [0, 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
     interpolate(local, [holdFrames - 14, holdFrames], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
   );
   if (op <= 0) return null;
 
-  const slideIn = interpolate(local, [0, 16], [-28, 0], {
+  // montee de la plaque (meme ressort que WarMapDataOverlay)
+  const rise = interpolate(local, [0, 18], [50, 0], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
     easing: Easing.bezier(0.2, 0.9, 0.25, 1),
   });
 
-  // rotation papier subtile (sin base sur frame pour mouvement vivant)
-  const rot = wobble ? Math.sin(frame * 0.018) * WOBBLE_AMP : 0;
+  // portrait : apparait apres la plaque (decalage 8 frames) pour que le texte
+  // soit lu d'abord, puis le visage confirme
+  const portraitOp = portrait
+    ? interpolate(local, [8, 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+    : 0;
+  const portraitScale = portrait
+    ? interpolate(local, [8, 22], [0.75, 1], {
+        extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        easing: Easing.bezier(0.2, 0.9, 0.25, 1),
+      })
+    : 0;
 
   return (
-    <div style={{
-      position: "absolute",
-      top: topOffset,
-      left: 0, right: 0,
-      display: "flex",
-      justifyContent: "center",
-      opacity: op,
-      padding: "0 50px",
-      transform: `translateY(${slideIn}px)`,
-      pointerEvents: "none",
-      fontFamily: "'Cormorant Garamond', Georgia, serif",
-    }}>
-      {/* PAS de voile sur la carte (R2 explicatif = semi-transparent = plaque seule,
-          la carte reste entierement lisible derriere) */}
-      <div style={{
-        background: `${ATLAS.cream}E8`,  // semi-transparent : cream + alpha E8 (~91%)
-        border: `2px solid ${ATLAS.ink}`,
-        borderRadius: 8,
-        padding: "14px 28px",
-        color: ATLAS.ink,
-        textAlign: "center",
-        maxWidth,
-        boxShadow: "0 6px 22px rgba(0,0,0,0.28)",
-        transform: `rotate(${rot}deg)`,
-      }}>
+    <AbsoluteFill style={{ opacity: op, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+      {/* voile semi-transparent cream (R4 + R2 : rappelle le lieu, pas de noir) */}
+      <AbsoluteFill style={{ background: `${ATLAS.cream}72` }} />
+
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: "0 60px" }}>
         <div style={{
-          fontSize: 17, letterSpacing: 2.5, fontWeight: 700,
-          textTransform: "uppercase", opacity: 0.65,
+          display: "flex", flexDirection: "column", alignItems: "center",
+          gap: 28, transform: `translateY(${rise}px)`, width: "100%", maxWidth: 860,
         }}>
-          {title}
+
+          {/* portrait civil (intro soft — le visage avant le jeton sur la carte) */}
+          {portrait && (
+            <div style={{
+              opacity: portraitOp,
+              transform: `scale(${portraitScale})`,
+              width: 200, height: 200, borderRadius: "50%",
+              overflow: "hidden", flexShrink: 0,
+              border: `4px solid ${ATLAS.ink}`,
+              boxShadow: `0 0 0 3px ${ATLAS.cream}, 0 12px 40px rgba(0,0,0,0.4)`,
+              background: ATLAS.cream,
+            }}>
+              <img
+                src={staticFile(`_shared/sprites/warmap/${portrait}.png`)}
+                style={{ width: "120%", height: "120%", objectFit: "cover",
+                         objectPosition: "50% 16%", position: "relative",
+                         left: "-10%", top: "-6%" }}
+              />
+            </div>
+          )}
+
+          {/* plaque explicatif — fond semi-transparent (pas solide : R2) */}
+          <div style={{
+            background: `${ATLAS.cream}E8`,
+            border: `2.5px solid ${ATLAS.ink}`,
+            borderRadius: 10,
+            padding: "28px 40px",
+            textAlign: "center",
+            width: "100%",
+            boxShadow: "0 12px 40px rgba(0,0,0,0.3)",
+          }}>
+            {/* separateur or */}
+            <div style={{ width: 48, height: 3, background: ATLAS.gold, margin: "0 auto 18px", borderRadius: 2 }} />
+
+            <div style={{
+              fontSize: 20, letterSpacing: 4, fontWeight: 700,
+              textTransform: "uppercase", opacity: 0.6, color: ATLAS.ink,
+            }}>
+              {title}
+            </div>
+
+            <div style={{
+              fontSize: 36, fontWeight: 600, marginTop: 10,
+              color: ATLAS.ink, lineHeight: 1.25,
+            }}>
+              {text}
+            </div>
+
+            {source && (
+              <div style={{ fontSize: 15, marginTop: 16, opacity: 0.5, fontStyle: "italic", color: ATLAS.ink }}>
+                {source}
+              </div>
+            )}
+          </div>
         </div>
-        <div style={{ fontSize: 30, fontWeight: 600, marginTop: 4, lineHeight: 1.2 }}>
-          {text}
-        </div>
-      </div>
-    </div>
+      </AbsoluteFill>
+    </AbsoluteFill>
   );
 };

@@ -26,6 +26,7 @@ const CONTENT = {
     big: 12, unit: "millions",
     sub: "de personnes déplacées",
     tagline: "La plus grave crise de déplacement au monde",
+    source: "OCHA Soudan · Rapport humanitaire 2024",
     fillRatio: 1,
   },
   famine: {
@@ -33,6 +34,7 @@ const CONTENT = {
     big: 25, unit: "millions",
     sub: "en insécurité alimentaire aiguë",
     tagline: "La moitié du pays a faim",
+    source: "PAM / OCHA · Analyse IPC Soudan · Jan 2025",
     fillRatio: 0.85,
   },
 } as const;
@@ -115,7 +117,7 @@ export const WarMapDataOverlay: React.FC<Props> = ({ startFrame, holdFrames, fps
             {C.tagline}
           </div>
           <div style={{ fontSize: 16, marginTop: 16, opacity: 0.55 }}>
-            Chiffres estimés · Sources OSINT (ACLED, ONU)
+            {C.source}
           </div>
         </div>
       </AbsoluteFill>
