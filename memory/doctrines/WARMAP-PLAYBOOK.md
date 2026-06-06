@@ -3,6 +3,9 @@
 > Cree 2026-06-05. 3e PILIER Kora & Cartes (apres Souverain + Atlas). Miroir de
 > `SOUVERAIN-VISUAL-PLAYBOOK` / `ATLAS-PLAYBOOK`. A LIRE avant toute video war-map.
 > **DERIVE DE CE QUI MARCHE** : prototype Soudan valide en session (2026-06-05).
+> ⭐ **POINT D'ENTREE CODE : `src/projects/warmap/WARMAP-INDEX.md`** (carte maitre — quel fichier pour quoi).
+> ⭐ **LA REFERENCE = composition `SudanWarMapEpic60`** (60s, tout combine, catbox `4dwqit`). Les variantes
+> plus courtes ne sont PAS la reference.
 > Sources : [[DECODE-daybyday-warmap]] (genre), [[episodes/warmap-daybyday/STATUS.md]] (etat),
 > [[feedback_sprites-topdown-gemini-vs-recraft]] (recette sprites).
 

@@ -4,7 +4,7 @@
  * Prouve que le moteur warmap (pilier 3) est le bon outil pour représenter
  * un FLUX économique géoréférencé — pas le pilier Atlas (conçu pour l'histoire/PixelLab).
  *
- * Architecture : réutilise EXACTEMENT le moteur SudanWarMapFlat (Mapbox pitch 0,
+ * Architecture : réutilise EXACTEMENT le moteur WarMapEngine (Mapbox pitch 0,
  * sprites PNG top-down, trainée directionnelle auto, positionnement map.project()).
  * Seuls le fichier de données et les sprites changent.
  *
@@ -154,7 +154,7 @@ export const LobitoWarmapScene: React.FC = () => {
   const tGlobal = toTGlobal(frame);
 
   // ---------------------------------------------------------------------------
-  // Init Mapbox (pitch 0 — identique SudanWarMapFlat)
+  // Init Mapbox (pitch 0 — identique WarMapEngine)
   // ---------------------------------------------------------------------------
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -176,7 +176,7 @@ export const LobitoWarmapScene: React.FC = () => {
     mapRef.current = map;
 
     map.on("style.load", async () => {
-      // Reskin parchemin (même recette SudanWarMapFlat)
+      // Reskin parchemin (même recette WarMapEngine)
       const layers = map.getStyle().layers ?? [];
       for (const l of layers) {
         if (l.type === "symbol") map.setLayoutProperty(l.id, "visibility", "none");
@@ -277,7 +277,7 @@ export const LobitoWarmapScene: React.FC = () => {
       {/* Carte Mapbox */}
       <div ref={containerRef} style={{ width, height, position: "absolute", opacity: globalOpacity }} />
 
-      {/* Grain papier multiply (identique SudanWarMapFlat) */}
+      {/* Grain papier multiply (identique WarMapEngine) */}
       <AbsoluteFill style={{ filter: "url(#paperLobito)", opacity: 0.28, pointerEvents: "none", mixBlendMode: "multiply" }} />
 
       {/* Vignette douce */}

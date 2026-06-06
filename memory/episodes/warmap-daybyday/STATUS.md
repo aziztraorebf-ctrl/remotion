@@ -11,15 +11,21 @@ Atlas flat top-down, data-driven, sprites Gemini top-down, overlays Remotion pre
 incarnation (objets/visages, pas blocs) + cote HUMAIN (consequences, pas explosions) + explicatifs
 (comprehension, pas defilement muet). Angle africain sous-exploite (Soudan, RDC, Sahel).
 
-## Compositions (dans `rnd-warmap`, Root.tsx)
-- **`SudanWarMapVertical`** ⭐ TEMPLATE PRINCIPAL (9:16, overlay Remotion, carte CLAIRE). withOverlay.
-- **`SudanWarMapEpic60`** ⭐ CULMINATION 60s (tout le stack : acte1 vehicules + texte-exode sur carte + refugies mouvants + acte2 + overlay famine plein ecran + climax partition). epic.
-- `SudanWarMapTokensVertical` — variante cercles-personnages (USAGE PONCTUEL).
-- `SudanWarMapFlat` (16:9) ; `SudanWarMap` (16:9 satellite, DEPRECATED).
+## ⭐ POINT D'ENTREE : `src/projects/warmap/WARMAP-INDEX.md` (carte maitre — LIRE EN PREMIER)
 
-Fichiers : `src/projects/_rnd/sudan-warmap/` — SudanWarMapFlat.tsx (moteur, props unitStyle/withOverlay/epic) ;
-sudanControlData.ts (jalons OSINT + palette ATLAS + controlAt/jalonAt) ; warmapVehicles.ts (VEHICLES + REFUGEES + paths) ;
-WarMapDataOverlay.tsx (overlay data + WarMapFigureOverlay) ; VehicleSymbols.tsx (SVG fallback, deprecated par Gemini).
+## Compositions (folder `rnd-warmap`, Root.tsx)
+- **`SudanWarMapEpic60`** ⭐⭐ **LA REFERENCE UNIQUE DU PILIER** (60s, tout le stack : acte1 vehicules + texte-exode sur carte + refugies mouvants + acte2 + overlay famine plein ecran + climax partition). epic. C'est CETTE video qu'on montre/ameliore. Catbox v4 `4dwqit`.
+- `SudanWarMapVertical` — variante SHORT 30s (9:16, withOverlay). Format viral, PAS la reference.
+- `SudanWarMapTokensVertical` — variante cercles-personnages (USAGE PONCTUEL).
+- `SudanWarMapFlat` (16:9) — variante long format.
+- (satellite `SudanWarMap` SUPPRIME 2026-06-05 — satellite 3D rejete, decision tracee.)
+
+Code (structure UNIFIEE 2026-06-05) : `src/projects/warmap/` —
+- `engine/WarMapEngine.tsx` (moteur generique, props unitStyle/withOverlay/epic ; ex-SudanWarMapFlat) ;
+  `engine/sudanControlData.ts` (data Soudan, re-export adapter) ; `engine/warmapVehicles.ts` (VEHICLES + REFUGEES) ;
+  `engine/WarMapDataOverlay.tsx` (overlay data + figure) ; `engine/VehicleSymbols.tsx` (SVG fallback deprecated).
+- `data/schema.ts` + `data/adapter.ts` + `data/sudan.warmap.json` (pipeline donnees).
+- Scripts data : `scripts/warmap/`. Assets : `public/_shared/{sprites/warmap, audio/sudan-warmap, geo-data/sudan}`.
 
 ## Les 4 briques (toutes validees, combinables, SEQUENTIELLES)
 1. **Carte parchemin data-driven** — 17 etats Soudan (Natural Earth), control 0=RSF rouge / 0.5=or conteste / 1=SAF bleu, interpole par frame. Front glow sur etats en bascule. Palette ATLAS (cream #F2E5C8, ocean #3A5A7E, encre #3A2A18, gold #D4A574). pitch 0 top-down. Grain papier 0.28 multiply + vignette 0.20 (allege pour luminosite, Aziz).

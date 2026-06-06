@@ -3,7 +3,7 @@
  *
  * Single source of truth: one WarMapDataset (1 jalons file) -> the engine derives EVERYTHING
  * via adapter.ts (canonicalToEngine). This schema is a SUPERSET of the engine's runtime data
- * contract (SudanWarMapFlat.tsx) plus PROVENANCE (where each fact comes from, confidence, verified).
+ * contract (WarMapEngine.tsx) plus PROVENANCE (where each fact comes from, confidence, verified).
  *
  * Design rules:
  *  - control accepts EITHER a bare number OR {value, prov} so hand-authored data stays terse

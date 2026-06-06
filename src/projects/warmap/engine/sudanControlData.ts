@@ -33,9 +33,9 @@ export type Jalon = {
 // Voir memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md.
 // Le JALONS hand-authored historique est conserve plus bas en reference (_LEGACY).
 // ---------------------------------------------------------------------------
-import sudanDataset from "../../warmap/data/sudan.warmap.json";
-import { canonicalToEngine } from "../../warmap/adapter";
-import type { WarMapDataset } from "../../warmap/schema";
+import sudanDataset from "../data/sudan.warmap.json";
+import { canonicalToEngine } from "../data/adapter";
+import type { WarMapDataset } from "../data/schema";
 
 const _bundle = canonicalToEngine(sudanDataset as unknown as WarMapDataset);
 export const SUDAN_STATES = _bundle.SUDAN_STATES;

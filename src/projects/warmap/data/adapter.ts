@@ -1,7 +1,7 @@
 /**
  * warmap/adapter.ts — zero-risk bridge: WarMapDataset (canonical) -> the engine's runtime shape.
  *
- * The validated engine (SudanWarMapFlat.tsx) imports {SUDAN_STATES, CITIES, JALONS, controlAt,
+ * The validated engine (WarMapEngine.tsx) imports {SUDAN_STATES, CITIES, JALONS, controlAt,
  * jalonAt} and {VEHICLES, REFUGEES}. This adapter rebuilds those EXACT shapes + the SAME
  * interpolation math from sudanControlData.ts (lines 139-157), so refactoring the data source
  * changes nothing on screen.

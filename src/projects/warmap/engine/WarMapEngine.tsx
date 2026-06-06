@@ -1,5 +1,5 @@
 /**
- * SudanWarMapFlat — variante FLAT TOP-DOWN PARCHEMIN (style Mansa Moussa / Ghana).
+ * WarMapEngine — variante FLAT TOP-DOWN PARCHEMIN (style Mansa Moussa / Ghana).
  *
  * Decision Aziz 2026-06-05 : le satellite 3D incline se bat contre la donnee.
  * Flat top-down parchemin = le fond se tait, la donnee parle + plan carte = plan
@@ -101,7 +101,7 @@ const lerpHex = (a: string, b: string, t: number) => {
 const paperWobble = (frame: number, seed = 0) =>
   Math.sin((frame + seed) * 0.08) * 0.4;
 
-export type SudanWarMapFlatProps = {
+export type WarMapEngineProps = {
   // "vehicle" = sprites char/technical (defaut) ; "token" = jetons ronds portraits
   unitStyle?: "vehicle" | "token";
   // si true : a l'apogee RSF, la carte se FIGE + overlay data premium ~10s
@@ -114,7 +114,7 @@ export type SudanWarMapFlatProps = {
 const OVERLAY_START = 230;
 const OVERLAY_HOLD = 300; // ~10s
 
-export const SudanWarMapFlat: React.FC<SudanWarMapFlatProps> = ({ unitStyle = "vehicle", withOverlay = false, epic = false }) => {
+export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle", withOverlay = false, epic = false }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   // PORTRAIT auto-detecte (9:16) -> camera + boxing HUD adaptes. Meme source.
@@ -135,7 +135,7 @@ export const SudanWarMapFlat: React.FC<SudanWarMapFlatProps> = ({ unitStyle = "v
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [handle] = useState(() =>
-    delayRender("SudanWarMapFlat", { timeoutInMilliseconds: 60000 })
+    delayRender("WarMapEngine", { timeoutInMilliseconds: 60000 })
   );
   const [ready, setReady] = useState(false);
   const [cityPx, setCityPx] = useState<{ name: string; x: number; y: number }[]>([]);

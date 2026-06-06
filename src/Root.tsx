@@ -242,7 +242,7 @@ import { ThumbnailBaril } from "./projects/_demos/petrole-patience/ThumbnailBari
 import { ThumbnailNiger } from "./projects/_demos/niger-uranium/ThumbnailNiger";
 import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
-import { SudanWarMapFlat, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/_rnd/sudan-warmap/SudanWarMapFlat";
+import { WarMapEngine, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/warmap/engine/WarMapEngine";
 import { LobitoWarmapScene, LOBITO_WARMAP_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoWarmapScene";
 import { LobitoVersionA, LOBITO_A_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionA";
 import { LobitoVersionB, LOBITO_B_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionB";
@@ -2611,7 +2611,7 @@ export const RemotionRoot: React.FC = () => {
         {/* TEMPLATE PRINCIPAL VERTICAL (overlay Remotion, carte claire) — 3e pilier */}
         <Composition
           id="SudanWarMapVertical"
-          component={SudanWarMapFlat}
+          component={WarMapEngine}
           durationInFrames={SUDAN_OVERLAY_DURATION}
           fps={SUDAN_FPS}
           width={1080}
@@ -2621,7 +2621,7 @@ export const RemotionRoot: React.FC = () => {
         {/* CULMINATION 60s — tout le stack combine */}
         <Composition
           id="SudanWarMapEpic60"
-          component={SudanWarMapFlat}
+          component={WarMapEngine}
           durationInFrames={SUDAN_EPIC_DURATION}
           fps={SUDAN_FPS}
           width={1080}
@@ -2630,8 +2630,8 @@ export const RemotionRoot: React.FC = () => {
         />
         {/* 16:9 (long) + variante cercles-personnages */}
         <Composition
-          id="SudanWarMapFlat"
-          component={SudanWarMapFlat}
+          id="WarMapEngine"
+          component={WarMapEngine}
           durationInFrames={SUDAN_FLAT_DURATION}
           fps={SUDAN_FPS}
           width={1920}
@@ -2639,7 +2639,7 @@ export const RemotionRoot: React.FC = () => {
         />
         <Composition
           id="SudanWarMapTokensVertical"
-          component={SudanWarMapFlat}
+          component={WarMapEngine}
           durationInFrames={SUDAN_FLAT_DURATION}
           fps={SUDAN_FPS}
           width={1080}

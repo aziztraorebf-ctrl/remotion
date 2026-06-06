@@ -1,5 +1,5 @@
 /**
- * warmapVehicles — couche vehicules top-down pour SudanWarMapFlat (Etape B).
+ * warmapVehicles — couche vehicules top-down pour WarMapEngine (Etape B).
  *
  * Variante "PRESENTS" : plusieurs vehicules par faction defilent le long du
  * front. Chaque vehicule a un chemin geo (lon/lat) parametré par tGlobal :
