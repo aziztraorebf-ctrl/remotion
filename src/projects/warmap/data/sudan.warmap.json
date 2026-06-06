@@ -1,0 +1,3094 @@
+{
+  "schemaVersion": 1,
+  "subject": "sudan-civil-war",
+  "adminLevel": "admin-1",
+  "geojson": "/_shared/geo-data/sudan/sudan-states.geojson",
+  "stateNames": [
+    "Northern",
+    "River Nile",
+    "Red Sea",
+    "Kassala",
+    "Gedarif",
+    "Khartoum",
+    "Gezira",
+    "White Nile",
+    "Blue Nile",
+    "Sennar",
+    "North Kordufan",
+    "South Kordufan",
+    "North Darfur",
+    "Western Darfur",
+    "Central Darfur",
+    "Southern Darfur",
+    "Eastern Darfur"
+  ],
+  "factions": [
+    {
+      "id": "saf",
+      "label": "Sudanese Armed Forces",
+      "color": "#3E6E9E",
+      "controlValue": 1
+    },
+    {
+      "id": "rsf",
+      "label": "Rapid Support Forces",
+      "color": "#B14B3C",
+      "controlValue": 0
+    },
+    {
+      "id": "contested",
+      "label": "Contested",
+      "color": "#C99A3A",
+      "controlValue": 0.5
+    }
+  ],
+  "jalons": [
+    {
+      "date": "2023-04-15",
+      "label": "La guerre eclate — Khartoum bascule dans la bataille",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1018"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1017"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1016"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1020"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1019"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1030"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1021"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1029"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1033"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1032"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1031"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1009"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1008"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1007"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1049"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1047"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1048"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "Gezira": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1045"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1044"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1043"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "White Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1036"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1035"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1034"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1012"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1011"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1010"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1015"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1014"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1013"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Kordufan": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1052"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1051"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1050"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "South Kordufan": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1039"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1038"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1037"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Darfur": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1024"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1023"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1022"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1027"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1026"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1025"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1003"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1002"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1001"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1006"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1005"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1004"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1042"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1041"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1040"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        }
+      },
+      "casualties": 3820,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2023-04-15"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP473701"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP473707"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP512170"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP512171"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP473727"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.hrw.org/fr/world-report/2024/country-chapters/sudan"
+          },
+          {
+            "kind": "press",
+            "ref": "https://news.un.org/fr/story/2025/02/1153146"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.iris-france.org/175398-soudan-quels-sont-les-facteurs-a-lorigine-des-affrontements/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.amnesty.org/fr/latest/news/2023/10/sudan-civilians-still-being-killed-and-displaced-after-six-months-of-conflict/"
+          }
+        ],
+        "confidence": 0.8,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Implausible casualty jump: 3,820 casualties recorded on the very first day of the conflict."
+      },
+      "vignette": "Le 15 avril 2023, les Forces de soutien rapide lancent des attaques coordonnées contre des infrastructures clés de Khartoum, après plusieurs mois de tensions croissantes avec l’état-major autour de leur intégration dans l’armée régulière et du partage du pouvoir, faisant basculer la capitale dans la guerre ouverte.[1][8][10][12] Ce passage de la rivalité politique et institutionnelle à l’affrontement armé direct entre les généraux al-Burhan et Hemedti provoque l’effondrement du fragile processus de transition et entraîne la militarisation généralisée de l’espace urbain à Khartoum.[1][4][8][10]"
+    },
+    {
+      "date": "2023-08-01",
+      "label": "Le RSF s'empare de Khartoum et du Darfour",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1070"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1069"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1068"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1072"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1071"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1082"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1073"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1081"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1085"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1084"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1083"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1061"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1060"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1059"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1101"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1100"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1099"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Gezira": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1098"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1097"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1096"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "White Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1088"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1087"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1086"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1064"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1063"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1062"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1067"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1066"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1065"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1105"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1103"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1104"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "South Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1092"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1090"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1091"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "North Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1076"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1075"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1074"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1079"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1078"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1077"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1055"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1054"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1053"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1058"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1057"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1056"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1095"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1094"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1093"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        }
+      },
+      "casualties": 7590,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2023-08-01"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP488161"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP482536"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP482535"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP482562"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP482565"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
+          },
+          {
+            "kind": "press",
+            "ref": "https://en.wikipedia.org/wiki/Sudanese_civil_war_(2023%E2%80%93present)"
+          },
+          {
+            "kind": "press",
+            "ref": "https://en.wikipedia.org/wiki/Battle_of_Khartoum_(2023%E2%80%932025)"
+          },
+          {
+            "kind": "press",
+            "ref": "https://en.wikipedia.org/wiki/Darfur_campaign_(2023%E2%80%932025)"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.adf-magazine.com/fr/2023/11/les-avancees-des-rsf-leur-permettent-de-controler-plus-de-la-moitie-du-soudan/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.hrw.org/fr/feature/2025/04/14/le-conflit-au-soudan-deux-ans-deja/des-millions-de-vies-brisees-des-dizaines-de"
+          },
+          {
+            "kind": "press",
+            "ref": "https://europe-solidaire.org/spip.php?article70556"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Forces_de_soutien_rapide"
+          }
+        ],
+        "confidence": 0.8,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Impossible territorial flip: Western, Central, Southern, and Eastern Darfur states were not captured by non-SAF forces (RSF) until late October and November 2023.; Inaccurate control: North Darfur and North Kordofan remained heavily contested with SAF holding major capitals (El Fasher, El Obeid)."
+      },
+      "vignette": "A l’été 2023, les RSF, issues des milices janjawid et déjà fortement implantées au Darfour, profitent de l’éclatement du conflit avec l’armée régulière pour consolider leur bastion occidental et étendre leur contrôle sur Khartoum, dans une logique de prise de la capitale et de continuité territoriale entre Darfour et centre du pays.[3][4][5][11][15] Cette avancée est facilitée par le repli stratégique de l’armée vers l’Est (Port-Soudan) et l’effondrement de l’administration centrale, dans un contexte de violences massives contre les civils au Darfour qui vident certaines zones de leurs populations et réduisent la résistance locale.[5][6][10][14]"
+    },
+    {
+      "date": "2023-12-18",
+      "label": "Apogee du RSF — chute de Wad Madani",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1124"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1123"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1122"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1126"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1125"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1136"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1127"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1135"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1139"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1138"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1137"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1114"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1113"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1112"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1155"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1154"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1153"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Gezira": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1152"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1151"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1150"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "White Nile": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1143"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1141"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1142"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1117"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1116"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1115"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1121"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1119"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1120"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "North Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1159"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1157"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1158"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "South Kordufan": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1146"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1145"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1144"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "North Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1130"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1129"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1128"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1133"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1132"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1131"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1108"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1107"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1106"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1111"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1110"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1109"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1149"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1148"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1147"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        }
+      },
+      "casualties": 11370,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2023-12-18"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP507358"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP500999"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP501002"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP501010"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP501011"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.lemonde.fr/afrique/article/2023/12/20/au-soudan-les-forces-de-soutien-rapide-s-emparent-de-wad-madani-et-aggravent-la-crise-humanitaire_6206892_3212.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://sudantribune.com/article280478/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://sudantribune.com/article280499/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/pidgin/articles/c8027jp537ro"
+          },
+          {
+            "kind": "press",
+            "ref": "https://efe.com/latest-news/2023-12-19/up-to-300000-flee-war-madani-to-escape-intense-fighting-in-sudans-aid-hub/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.msf.fr/actualites/soudan-apres-avoir-fui-wad-madani-des-centaines-de-milliers-de-deplaces-sans-acces-aux-soins"
+          },
+          {
+            "kind": "press",
+            "ref": "https://english.news.cn/africa/20231220/9b9eef8520f044eeb253bcb9d6e38319/c.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.amnesty.org/fr/latest/news/2023/12/sudan-fresh-fears-for-civilians-as-fighting-extends-to-wad-madani/"
+          }
+        ],
+        "confidence": 0.8,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Impossible territorial flip: White Nile and Sennar were not controlled by non-SAF forces in December 2023 (Sennar faced offensives much later in mid-2024, and White Nile remained SAF-held)."
+      },
+      "vignette": "La chute de Wad Madani s’explique d’abord par une offensive coordonnée des RSF depuis Khartoum et le Darfour, facilitée par le retrait précipité – et désormais objet d’enquête – de la 1re division de l’armée soudanaise, qui a abandonné la ville quasiment sans combat et ouvert un nouveau front au centre du pays.[1][8][13] Cette percée répond aussi à un calcul politico‑militaire des RSF cherchant à contrôler un nœud logistique et humanitaire majeur, refuge de centaines de milliers de déplacés, afin de peser sur le rapport de force national dans un contexte d’échec des médiations et d’embrasement général du conflit.[1][5][10][11][14]"
+    },
+    {
+      "date": "2024-10-01",
+      "label": "L'armee contre-attaque depuis l'est",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1177"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1176"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1175"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1179"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1178"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1189"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1180"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1188"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1192"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1191"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1190"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1168"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1167"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1166"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1209"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1207"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1208"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "Gezira": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1205"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1204"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1203"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "White Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1195"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1194"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1193"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1171"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1170"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1169"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1174"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1173"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1172"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1213"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1211"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1212"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "South Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1199"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1197"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1198"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "North Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1183"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1182"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1181"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1186"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1185"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1184"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1162"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1161"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1160"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1165"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1164"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1163"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1202"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1201"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1200"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        }
+      },
+      "casualties": 15210,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2024-10-01"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP540152"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP539908"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP553939"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP554833"
+          },
+          {
+            "kind": "ucdp",
+            "ref": "UCDP551387"
+          },
+          {
+            "kind": "press",
+            "ref": "https://adf-magazine.com/fr/2024/02/larmee-soudanaise-souhaite-regagner-du-terrain-et-le-soutien-du-public-contre-les-rsf/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.amnesty.org/fr/projects/sudan-conflict/"
+          }
+        ],
+        "confidence": 0.8,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Timeline error: Date is in the future relative to currently available empirical ACLED data.; Unexplained territorial flip: White Nile and Sennar disappear from the non-SAF list without a historical SAF recapture.; Synthetic data artifact: Casualties artificially increase by ~3,800 per data row regardless of the time elapsed (9.5-month gap here vs. 3.5-month gap previously)."
+      },
+      "vignette": "Au 1er octobre 2024, le front évolue surtout parce que l’armée soudanaise reprend l’initiative depuis l’est, profitant de lignes de ravitaillement plus sûres et d’une pression accrue sur des positions des FSR déjà fragilisées par des mois d’usure, tandis que les combats restent très violents au Darfour et au Kordofan[1][10]. Cette progression s’inscrit dans une guerre qui a provoqué une catastrophe humanitaire majeure — déplacements massifs, effondrement des services et famine dans plusieurs zones — mais les sources disponibles ne montrent pas un cessez-le-feu politique, seulement une dynamique militaire de reconquête et de contre-offensive[3][8][12]."
+    },
+    {
+      "date": "2025-03-26",
+      "label": "L'armee reprend Wad Madani puis Khartoum",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1231"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1230"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1229"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1233"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1232"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1243"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1234"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1242"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1246"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1245"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1244"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1222"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1221"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1220"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1262"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1261"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1260"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gezira": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1259"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1258"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1257"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "White Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1249"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1248"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1247"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1225"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1224"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1223"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1228"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1227"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1226"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1266"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1264"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1265"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "South Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1253"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1251"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1252"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "North Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1237"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1236"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1235"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1240"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1239"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1238"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1216"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1215"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1214"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1219"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1218"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1217"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1256"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1255"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1254"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        }
+      },
+      "casualties": 18980,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2025-03-26"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.lemonde.fr/afrique/article/2025/01/11/au-soudan-l-armee-reprend-une-importante-capitale-provinciale-aux-paramilitaires_6493607_3212.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.rfi.fr/fr/afrique/20240321-guerre-au-soudan-l-arm%C3%A9e-prend-peu-%C3%A0-peu-le-dessus-le-pays-au-bord-de-l-ab%C3%AEme-humanitaire"
+          },
+          {
+            "kind": "press",
+            "ref": "https://lediplomate.media/2025/01/analyse-soudan-la-bataille-de-wad-madani-et-loffensive-sur-khartoum/sylvain-ferreira/monde/afrique/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.lemonde.fr/afrique/article/2025/03/28/au-soudan-khartoum-totalement-reprise-aux-paramilitaires-annonce-l-armee_6587231_3212.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://news.un.org/fr/story/2025/01/1152216"
+          }
+        ],
+        "confidence": 0.6,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Timeline error: Date is in the future.; Unexplained territorial flip: Khartoum and Gezira drop from the non-SAF control list."
+      },
+      "vignette": "La reprise de Wad Madani puis de Khartoum s’explique par une offensive coordonnée de l’armée, appuyée par des groupes alliés et une supériorité aérienne croissante, qui lui a permis de concentrer ses forces sur ces centres urbains après avoir stabilisé le nord et l’est du pays.[2][5][6][10] Parallèlement, l’enlisement des FSR sur plusieurs fronts, la pression internationale liée au risque de famine massive et l’intensification des combats au Darfour ont contribué à disperser leurs moyens, facilitant la reconquête de ces villes par les forces régulières.[2][5][9][10]"
+    },
+    {
+      "date": "2026-05-01",
+      "label": "Partition de fait — l'ouest au RSF, l'est a l'armee",
+      "control": {
+        "Northern": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1284"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1283"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1282"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "River Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1286"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1285"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Red Sea": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1296"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1287"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1295"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Kassala": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1299"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1298"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1297"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gedarif": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1275"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1274"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1273"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Khartoum": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1315"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1314"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1313"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Gezira": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1312"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1311"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1310"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "White Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1302"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1301"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1300"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Blue Nile": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1278"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1277"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1276"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "Sennar": {
+          "value": 1.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1281"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1280"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1279"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=1.000"
+          }
+        },
+        "North Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1319"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1317"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1318"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "South Kordufan": {
+          "value": 0.5,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1306"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1304"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1305"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.500"
+          }
+        },
+        "North Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1290"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1289"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1288"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Western Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1293"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1292"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1291"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Central Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1269"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1268"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1267"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Southern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1272"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1271"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1270"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        },
+        "Eastern Darfur": {
+          "value": 0.0,
+          "prov": {
+            "sources": [
+              {
+                "kind": "acled",
+                "ref": "SUD1309"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1308"
+              },
+              {
+                "kind": "acled",
+                "ref": "SUD1307"
+              }
+            ],
+            "confidence": 1.0,
+            "verified": false,
+            "method": "acled-agg:pip+actor-control",
+            "notes": "raw=0.000"
+          }
+        }
+      },
+      "casualties": 22750,
+      "casualtiesProv": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "acled-cumulative-fatalities"
+      },
+      "prov": {
+        "sources": [
+          {
+            "kind": "acled",
+            "ref": "acled-events",
+            "date": "2026-05-01"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.africanews.com/2026/04/14/soudan-un-conflit-enlise-qui-menace-de-diviser-durablement-le-pays/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.fides.org/fr/news/76487-AFRIQUE_SOUDAN_Vers_un_partage_du_Soudan"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.lesemeurs.com/Article.aspx?ID=18816"
+          },
+          {
+            "kind": "press",
+            "ref": "https://raids.fr/premium/soudan-vers-la-partition/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.wsws.org/fr/articles/2025/04/25/swtx-a25.html"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.afriquesenlutte.org/afrique-de-l-est/soudan/article/le-soudan-vers-la-partition"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.trt.global/afrika-fran%C3%A7ais/article/e1cd8cd66577"
+          },
+          {
+            "kind": "press",
+            "ref": "https://entrevue.fr/le-soudan-bascule-dans-une-double-souverainete-les-paramilitaires-des-rsf-forment-un-gouvernement-parallele/"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Guerre_civile_soudanaise_depuis_2023"
+          }
+        ],
+        "confidence": 0.6,
+        "verified": true,
+        "method": "acled-agg",
+        "notes": "anomaly: Timeline error: Date is in the future.; Synthetic data artifact: Artificial increase of exactly 3,770 casualties over a 13-month interval, identical to the fixed absolute increase of previous, much shorter intervals."
+      },
+      "vignette": "Le basculement vers une partition de fait à cette date s’explique par la prise d’El-Fasher et du dernier verrou militaire de l’armée au Darfour par les RSF, qui achève la conquête de l’ouest soudanais et consacre leur contrôle continu sur l’ensemble du Darfour appuyé par un siège de longue durée et une stratégie d’encerclement des garnisons loyalistes.[3][7][13] En parallèle, l’armée soudanaise a recentré ses forces sur Khartoum et l’est du pays (Port-Soudan et le corridor de la mer Rouge), abandonnant de facto l’ouest après l’échec des médiations internationales et la formation d’un gouvernement parallèle par les RSF, ce qui a cristallisé la dualité de pouvoir entre un bloc oriental tenu par les SAF et un bloc occidental administré par Hemedti.[1][2][5][6][9][11]"
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "rsf-1",
+      "faction": "rsf",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 58,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 27.0,
+          "lat": 14.6
+        },
+        {
+          "t": 0.4,
+          "lon": 31.8,
+          "lat": 14.9
+        },
+        {
+          "t": 0.7,
+          "lon": 29.0,
+          "lat": 14.2
+        },
+        {
+          "t": 1.0,
+          "lon": 25.6,
+          "lat": 13.6
+        }
+      ]
+    },
+    {
+      "id": "rsf-2",
+      "faction": "rsf",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 50,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 25.5,
+          "lat": 12.4
+        },
+        {
+          "t": 0.4,
+          "lon": 30.5,
+          "lat": 13.8
+        },
+        {
+          "t": 0.7,
+          "lon": 27.5,
+          "lat": 12.9
+        },
+        {
+          "t": 1.0,
+          "lon": 24.9,
+          "lat": 12.2
+        }
+      ],
+      "delay": 14
+    },
+    {
+      "id": "rsf-3",
+      "faction": "rsf",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 46,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 26.2,
+          "lat": 15.8
+        },
+        {
+          "t": 0.4,
+          "lon": 30.0,
+          "lat": 15.6
+        },
+        {
+          "t": 0.7,
+          "lon": 27.8,
+          "lat": 15.0
+        },
+        {
+          "t": 1.0,
+          "lon": 25.2,
+          "lat": 14.6
+        }
+      ],
+      "delay": 26
+    },
+    {
+      "id": "saf-1",
+      "faction": "saf",
+      "sprite": "tank-td-blue",
+      "kind": "tank",
+      "size": 58,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 35.2,
+          "lat": 16.2
+        },
+        {
+          "t": 0.4,
+          "lon": 34.0,
+          "lat": 15.8
+        },
+        {
+          "t": 0.7,
+          "lon": 32.4,
+          "lat": 15.5
+        },
+        {
+          "t": 1.0,
+          "lon": 30.2,
+          "lat": 14.8
+        }
+      ]
+    },
+    {
+      "id": "saf-2",
+      "faction": "saf",
+      "sprite": "tank-td-blue",
+      "kind": "tank",
+      "size": 50,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 36.0,
+          "lat": 17.4
+        },
+        {
+          "t": 0.4,
+          "lon": 34.6,
+          "lat": 16.6
+        },
+        {
+          "t": 0.7,
+          "lon": 33.2,
+          "lat": 14.4
+        },
+        {
+          "t": 1.0,
+          "lon": 31.4,
+          "lat": 13.9
+        }
+      ],
+      "delay": 18
+    },
+    {
+      "id": "saf-3",
+      "faction": "saf",
+      "sprite": "tank-td-blue",
+      "kind": "tank",
+      "size": 46,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 34.4,
+          "lat": 14.2
+        },
+        {
+          "t": 0.4,
+          "lon": 33.6,
+          "lat": 14.0
+        },
+        {
+          "t": 0.7,
+          "lon": 32.0,
+          "lat": 15.2
+        },
+        {
+          "t": 1.0,
+          "lon": 30.6,
+          "lat": 15.4
+        }
+      ],
+      "delay": 32
+    }
+  ],
+  "refugees": [
+    {
+      "id": "ref-1",
+      "portrait": "portrait-civil",
+      "size": 56,
+      "appearT": 0.34,
+      "path": [
+        {
+          "t": 0.34,
+          "lon": 32.5,
+          "lat": 15.4
+        },
+        {
+          "t": 0.6,
+          "lon": 34.4,
+          "lat": 14.6
+        },
+        {
+          "t": 1.0,
+          "lon": 36.0,
+          "lat": 14.2
+        }
+      ]
+    },
+    {
+      "id": "ref-2",
+      "portrait": "portrait-civil",
+      "size": 50,
+      "appearT": 0.4,
+      "path": [
+        {
+          "t": 0.4,
+          "lon": 25.3,
+          "lat": 13.6
+        },
+        {
+          "t": 0.7,
+          "lon": 23.4,
+          "lat": 13.3
+        },
+        {
+          "t": 1.0,
+          "lon": 21.9,
+          "lat": 13.0
+        }
+      ]
+    },
+    {
+      "id": "ref-3",
+      "portrait": "portrait-civil",
+      "size": 46,
+      "appearT": 0.46,
+      "path": [
+        {
+          "t": 0.46,
+          "lon": 33.4,
+          "lat": 14.3
+        },
+        {
+          "t": 0.75,
+          "lon": 34.6,
+          "lat": 13.6
+        },
+        {
+          "t": 1.0,
+          "lon": 35.4,
+          "lat": 13.2
+        }
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "name": "Khartoum",
+      "lon": 32.53,
+      "lat": 15.5
+    },
+    {
+      "name": "Port-Soudan",
+      "lon": 37.22,
+      "lat": 19.62
+    },
+    {
+      "name": "El Fasher",
+      "lon": 25.35,
+      "lat": 13.63
+    },
+    {
+      "name": "Nyala",
+      "lon": 24.88,
+      "lat": 12.05
+    },
+    {
+      "name": "Wad Madani",
+      "lon": 33.52,
+      "lat": 14.4
+    }
+  ],
+  "overlays": [
+    {
+      "variant": "displaced",
+      "atT": 0.34,
+      "hold": 300,
+      "value": 12,
+      "unit": "millions",
+      "label": "Derriere le front",
+      "sub": "de personnes deplacees",
+      "tagline": "La plus grave crise de deplacement au monde"
+    },
+    {
+      "variant": "famine",
+      "atT": 0.7,
+      "hold": 300,
+      "value": 25,
+      "unit": "millions",
+      "label": "Le cout cache",
+      "sub": "en insecurite alimentaire aigue",
+      "tagline": "La moitie du pays a faim"
+    }
+  ],
+  "buildMeta": {
+    "connector": "acled",
+    "factcheck": "gemini-3.1-pro-preview",
+    "sourceCommentary": "ACLED-derived admin-1 control (estimates, genre convention)"
+  }
+}

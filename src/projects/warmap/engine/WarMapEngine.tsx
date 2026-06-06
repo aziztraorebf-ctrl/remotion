@@ -1,5 +1,5 @@
 /**
- * SudanWarMapFlat — variante FLAT TOP-DOWN PARCHEMIN (style Mansa Moussa / Ghana).
+ * WarMapEngine — variante FLAT TOP-DOWN PARCHEMIN (style Mansa Moussa / Ghana).
  *
  * Decision Aziz 2026-06-05 : le satellite 3D incline se bat contre la donnee.
  * Flat top-down parchemin = le fond se tait, la donnee parle + plan carte = plan
@@ -39,6 +39,7 @@ import {
 } from "./sudanControlData";
 import { VEHICLES, vehiclePos, REFUGEES, refugeePos } from "./warmapVehicles";
 import { WarMapDataOverlay } from "./WarMapDataOverlay";
+import { WarMapOverlayExplicatif } from "../_shared/WarMapOverlayExplicatif";
 
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
@@ -101,7 +102,7 @@ const lerpHex = (a: string, b: string, t: number) => {
 const paperWobble = (frame: number, seed = 0) =>
   Math.sin((frame + seed) * 0.08) * 0.4;
 
-export type SudanWarMapFlatProps = {
+export type WarMapEngineProps = {
   // "vehicle" = sprites char/technical (defaut) ; "token" = jetons ronds portraits
   unitStyle?: "vehicle" | "token";
   // si true : a l'apogee RSF, la carte se FIGE + overlay data premium ~10s
@@ -114,7 +115,7 @@ export type SudanWarMapFlatProps = {
 const OVERLAY_START = 230;
 const OVERLAY_HOLD = 300; // ~10s
 
-export const SudanWarMapFlat: React.FC<SudanWarMapFlatProps> = ({ unitStyle = "vehicle", withOverlay = false, epic = false }) => {
+export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle", withOverlay = false, epic = false }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
   // PORTRAIT auto-detecte (9:16) -> camera + boxing HUD adaptes. Meme source.
@@ -135,7 +136,7 @@ export const SudanWarMapFlat: React.FC<SudanWarMapFlatProps> = ({ unitStyle = "v
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
   const [handle] = useState(() =>
-    delayRender("SudanWarMapFlat", { timeoutInMilliseconds: 60000 })
+    delayRender("WarMapEngine", { timeoutInMilliseconds: 60000 })
   );
   const [ready, setReady] = useState(false);
   const [cityPx, setCityPx] = useState<{ name: string; x: number; y: number }[]>([]);
@@ -562,26 +563,17 @@ export const SudanWarMapFlat: React.FC<SudanWarMapFlatProps> = ({ unitStyle = "v
           );
         })}
 
-      {/* TEXTE-REFUGIES sur la carte (mode epic) — explicatif bref, SANS figer
-          l'action (regle Aziz : l'explicatif se passe sur la carte). */}
-      {epic && (() => {
-        const op = interpolate(frame, [REFUGEE_TEXT_START, REFUGEE_TEXT_START + 12, REFUGEE_TEXT_START + REFUGEE_TEXT_HOLD - 14, REFUGEE_TEXT_START + REFUGEE_TEXT_HOLD], [0, 1, 1, 0], {
-          extrapolateLeft: "clamp", extrapolateRight: "clamp",
-        });
-        if (op <= 0) return null;
-        return (
-          <div style={{ position: "absolute", top: portrait ? 250 : 150, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: op, padding: "0 50px" }}>
-            <div style={{ background: ATLAS.cream, border: `2px solid ${ATLAS.ink}`, borderRadius: 8, padding: "12px 24px", color: ATLAS.ink, textAlign: "center", maxWidth: 820, boxShadow: "0 6px 22px rgba(0,0,0,0.3)", transform: `rotate(${paperWobble(frame, 5)}deg)` }}>
-              <div style={{ fontSize: 17, letterSpacing: 2.5, fontWeight: 700, textTransform: "uppercase", opacity: 0.65 }}>
-                L'exode
-              </div>
-              <div style={{ fontSize: 30, fontWeight: 600, marginTop: 2 }}>
-                Des millions fuient vers les frontières
-              </div>
-            </div>
-          </div>
-        );
-      })()}
+      {/* TEXTE-REFUGIES sur la carte (mode epic) — WarMapOverlayExplicatif (composant
+          generique, extrait vers _shared/). R2 semi-transparent, R4 pas de voile noir. */}
+      {epic && (
+        <WarMapOverlayExplicatif
+          startFrame={REFUGEE_TEXT_START}
+          holdFrames={REFUGEE_TEXT_HOLD}
+          title="L'exode"
+          text="Des millions fuient vers les frontières"
+          topOffset={portrait ? 250 : 150}
+        />
+      )}
 
       {/* Villes — plaques parchemin (signature Atlas : MAJUSCULES sur plaque) */}
       {ready &&

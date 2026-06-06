@@ -375,3 +375,26 @@ url = result["audio"]["url"]
 3. **A/B aveugle** par Aziz, choix de la voix par épisode (pas forcément la même partout)
 4. **Markers à utiliser** : seulement `<#0.X#>` pauses. Zéro `(...)` interjection.
 5. **Pin voice_id** : appel TTS factice 1x/semaine si gap entre épisodes
+
+---
+
+## Pattern : musique 1 morceau → plusieurs durées vidéo (fenêtre + fade) — validé 2026-06-05
+
+**Problème** : une vidéo évolue en durée (22s → 32s → 60s pendant l'itération). Il faut une musique qui colle à CHAQUE durée sans coupure brutale ni raccord audible.
+
+**Solution validée (war-map Soudan)** : générer UN seul morceau, en garder le brut complet, puis découper une fenêtre par durée avec fondu de sortie. JAMAIS assembler plusieurs morceaux (raccords audibles) ni régénérer (ambiances différentes).
+
+1. **Générer 1 fois** via Minimax v2.6 (`is_instrumental: true`). Le modèle sort 2-9 min (typique ~146s). **Garder le brut complet** (`music_raw.mp3`).
+2. **Découper une fenêtre par durée** depuis le MÊME brut + fade out :
+```bash
+# 60s : prend les 60 premières secondes du morceau + fondu in 1.5s + fondu out 3s
+ffmpeg -i music_raw.mp3 -t 60 -af "afade=t=in:st=0:d=1.5,afade=t=out:st=57:d=3,volume=0.9" -c:a libmp3lame -b:a 192k score-epic.mp3
+```
+3. Nommer par durée : `score.mp3` (22s) / `score-long.mp3` (32s) / `score-epic.mp3` (60s). Le code choisit selon le mode (ex. `epic ? "score-epic" : ...`).
+
+**Pourquoi ça sonne parfait, jamais coupé** :
+- Même morceau = même beat/tonalité/instrumentation du début à la fin, zéro transition à raccorder.
+- Le brut (146s) >> la vidéo (60s) → on coupe en plein développement, jamais à un endroit "fini".
+- Le `afade=out` (2-3s) masque la coupure : l'oreille perçoit une CONCLUSION, pas un arrêt net.
+
+**Limite** : marche tant que la vidéo < durée du brut. Pour 3+ min : générer un morceau plus long OU vraie boucle (point de boucle calé sur le beat, pattern Remotion 2e `<Audio>` `startFrom` — voir feedback_audio-music-loop-startfrom-tardif).

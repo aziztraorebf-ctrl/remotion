@@ -4,9 +4,15 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ---
 
+### 2026-06-05 — Musique 1 morceau -> plusieurs durees video (fenetre + fade)
+
+Une video evolue en duree pendant l'iteration. Pour une musique qui colle a chaque duree SANS coupure : generer 1 SEUL morceau Minimax (brut ~146s, le garder), puis decouper une fenetre par duree + fondu de sortie (`ffmpeg -t N -af afade=out`). MEME morceau partout = zero raccord, le fade masque la coupure (l'oreille entend une conclusion). JAMAIS assembler plusieurs morceaux ni regenerer. Recette complete : `memory/tools/minimax.md` section "musique 1 morceau -> plusieurs durees".
+
+---
+
 ### 2026-05-13 — Règle 6 — GEMINI DIFF VISUEL OBLIGATOIRE APRÈS PREMIER RENDER (NON-NEGOTIABLE)
 
-**Règle :** Après chaque premier render d'un nouveau composant, TOUJOURS envoyer le render + le mockup original à Gemini 3.1 Pro (`gemini-2.5-pro-preview-05-06`) pour analyse diff avant toute itération manuelle.
+**Règle :** Après chaque premier render d'un nouveau composant, TOUJOURS envoyer le render + le mockup original à Gemini 3.1 Pro (`gemini-3.1-pro-preview`) pour analyse diff avant toute itération manuelle.
 
 **Pourquoi :** Itérer à l'aveugle sur 3 composants = 9+ passes. Gemini diff en une passe = corrections exactes en une passe. Fidélité mockup passée de ~60% à ~90% en un seul pass.
 
@@ -17,7 +23,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 4. Render v2 = version finale (ne pas rendre une v3 sauf retour Aziz)
 5. NE JAMAIS présenter un v1 à Aziz sans avoir fait le diff LLM d'abord
 
-**Modèle à utiliser :** `gemini-2.5-pro-preview-05-06` (le seul qui retourne des hex codes complets et des coords SVG exactes). `gemini-flash` pour brainstorm uniquement, jamais pour diff visuel précis.
+**Modèle à utiliser :** `gemini-3.1-pro-preview` (analyse vision/diff précis — modèle VERROUILLÉ par CLAUDE.md, voir tableau modèles API). Les anciens modèles Gemini 2.x sont INTERDITS. Flash uniquement pour brainstorm, jamais pour diff visuel précis.
 
 **S'applique à :** tout nouveau composant Remotion, tout nouveau template, tout beat avec layout custom.
 

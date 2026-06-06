@@ -11,15 +11,21 @@ Atlas flat top-down, data-driven, sprites Gemini top-down, overlays Remotion pre
 incarnation (objets/visages, pas blocs) + cote HUMAIN (consequences, pas explosions) + explicatifs
 (comprehension, pas defilement muet). Angle africain sous-exploite (Soudan, RDC, Sahel).
 
-## Compositions (dans `rnd-warmap`, Root.tsx)
-- **`SudanWarMapVertical`** ⭐ TEMPLATE PRINCIPAL (9:16, overlay Remotion, carte CLAIRE). withOverlay.
-- **`SudanWarMapEpic60`** ⭐ CULMINATION 60s (tout le stack : acte1 vehicules + texte-exode sur carte + refugies mouvants + acte2 + overlay famine plein ecran + climax partition). epic.
-- `SudanWarMapTokensVertical` — variante cercles-personnages (USAGE PONCTUEL).
-- `SudanWarMapFlat` (16:9) ; `SudanWarMap` (16:9 satellite, DEPRECATED).
+## ⭐ POINT D'ENTREE : `src/projects/warmap/WARMAP-INDEX.md` (carte maitre — LIRE EN PREMIER)
 
-Fichiers : `src/projects/_rnd/sudan-warmap/` — SudanWarMapFlat.tsx (moteur, props unitStyle/withOverlay/epic) ;
-sudanControlData.ts (jalons OSINT + palette ATLAS + controlAt/jalonAt) ; warmapVehicles.ts (VEHICLES + REFUGEES + paths) ;
-WarMapDataOverlay.tsx (overlay data + WarMapFigureOverlay) ; VehicleSymbols.tsx (SVG fallback, deprecated par Gemini).
+## Compositions (folder `rnd-warmap`, Root.tsx)
+- **`SudanWarMapEpic60`** ⭐⭐ **LA REFERENCE UNIQUE DU PILIER** (60s, tout le stack : acte1 vehicules + texte-exode sur carte + refugies mouvants + acte2 + overlay famine plein ecran + climax partition). epic. C'est CETTE video qu'on montre/ameliore. Catbox v4 `4dwqit`.
+- `SudanWarMapVertical` — variante SHORT 30s (9:16, withOverlay). Format viral, PAS la reference.
+- `SudanWarMapTokensVertical` — variante cercles-personnages (USAGE PONCTUEL).
+- `SudanWarMapFlat` (16:9) — variante long format.
+- (satellite `SudanWarMap` SUPPRIME 2026-06-05 — satellite 3D rejete, decision tracee.)
+
+Code (structure UNIFIEE 2026-06-05) : `src/projects/warmap/` —
+- `engine/WarMapEngine.tsx` (moteur generique, props unitStyle/withOverlay/epic ; ex-SudanWarMapFlat) ;
+  `engine/sudanControlData.ts` (data Soudan, re-export adapter) ; `engine/warmapVehicles.ts` (VEHICLES + REFUGEES) ;
+  `engine/WarMapDataOverlay.tsx` (overlay data + figure) ; `engine/VehicleSymbols.tsx` (SVG fallback deprecated).
+- `data/schema.ts` + `data/adapter.ts` + `data/sudan.warmap.json` (pipeline donnees).
+- Scripts data : `scripts/warmap/`. Assets : `public/_shared/{sprites/warmap, audio/sudan-warmap, geo-data/sudan}`.
 
 ## Les 4 briques (toutes validees, combinables, SEQUENTIELLES)
 1. **Carte parchemin data-driven** — 17 etats Soudan (Natural Earth), control 0=RSF rouge / 0.5=or conteste / 1=SAF bleu, interpole par frame. Front glow sur etats en bascule. Palette ATLAS (cream #F2E5C8, ocean #3A5A7E, encre #3A2A18, gold #D4A574). pitch 0 top-down. Grain papier 0.28 multiply + vignette 0.20 (allege pour luminosite, Aziz).
@@ -57,7 +63,23 @@ tokens 0y6uzb · overlay fqwfoo · epic60 v1 fyksjo · v2 (chars+45%) 5ovre7 · 
 - **Le moteur = SEGMENT ATLAS, pas qu'une video autonome.** Comble le manque "deroule temporel sur carte" dans les Atlas (ex. expansion Mali sur 80 ans). Parle deja la langue Atlas (parchemin, d3-geo en prod). Nouvelle brique du vocabulaire Atlas (segment 15-20s).
 - **Angle mort honnete** : non-violent = editorialement superieur MAIS algorithmiquement plus dur (pas de tension "qui gagne ?" gratuite). Pour les sujets positifs, la couche humaine + overlays NE SONT PAS un bonus, ils sont OBLIGATOIRES (ils creent la tension absente). Sujets conflit = se vendent seuls ; sujets construction = ont besoin de la narration.
 
-## NEXT — PROCHAINE SESSION = PHASE RECHERCHE (massif)
+## FAIT 2026-06-05 (session 2) — PIPELINE DE RECHERCHE + SCHEMA CANONIQUE ⭐
+Branche `feat/warmap-research-pipeline` (depuis master). Industrialise la phase donnees.
+- **Schema canonique** `src/projects/warmap/data/schema.ts` (`WarMapDataset` = superset contrat moteur
+  + PROVENANCE par fait) + `data/adapter.ts` (`canonicalToEngine`, bridge zero-risque) + 1ere instance
+  `src/projects/warmap/data/sudan.warmap.json` (ACLED-derivee). [chemins MAJ apres reorg 2026-06-05]
+- **Pipeline** `scripts/warmap/` : `acled_connector` (OAuth password grant + fixture fallback, CODE),
+  `aggregate` (events->jalons admin-1 : point-in-polygon + acteur->faction + dominance ponderee +
+  carry-forward + snap), `llm_synthesis` (sonar-pro), `factcheck` (gemini juge + convergence >=2 sources
+  -> verified), `build_warmap_data` (orchestrateur). Stubs : ucdp/github_geojson/web_preresearch.
+- **Fixtures + golden test** : `aggregate --fixtures-only` == `expected_jalons.json` (zero reseau).
+- **Refactor** `sudanControlData.ts` -> re-export depuis l'adapter. **GATE non-regression PASSE** :
+  render frame 200 `SudanWarMapVertical` byte-identique (controle inchange ; pertes desormais data-derivees).
+- **Doctrine** `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` (4 etapes + fiabilite sources + acces OAuth/CSV).
+- **A toi Aziz** : creds ACLED myACLED en `.env` (`ACLED_USERNAME`/`ACLED_PASSWORD`) ; UCDP token email OU GED CSV.
+- **NEXT** : brancher ACLED reel + implementer web_preresearch (Firecrawl MCP) ; skill `warmap-preproduction` ; d3-geo pur.
+
+## NEXT — (ANCIEN) PHASE RECHERCHE = en grande partie outillee ci-dessus
 1. **Structurer le 3e pilier aux memes procedures que Souverain** (NE PAS reinventer la roue) :
    - Skill preproduction `warmap-preproduction` (miroir `souverain-preproduction`/`atlas-video-preproduction`).
    - Doctrine `doctrines/WARMAP-PLAYBOOK.md` (miroir SOUVERAIN/ATLAS-PLAYBOOK) = consolider R1-R5 + 4 briques + analyse strategique.

@@ -3,6 +3,9 @@
 > Cree 2026-06-05. 3e PILIER Kora & Cartes (apres Souverain + Atlas). Miroir de
 > `SOUVERAIN-VISUAL-PLAYBOOK` / `ATLAS-PLAYBOOK`. A LIRE avant toute video war-map.
 > **DERIVE DE CE QUI MARCHE** : prototype Soudan valide en session (2026-06-05).
+> ⭐ **POINT D'ENTREE CODE : `src/projects/warmap/WARMAP-INDEX.md`** (carte maitre — quel fichier pour quoi).
+> ⭐ **LA REFERENCE = composition `SudanWarMapEpic60`** (60s, tout combine, catbox `4dwqit`). Les variantes
+> plus courtes ne sont PAS la reference.
 > Sources : [[DECODE-daybyday-warmap]] (genre), [[episodes/warmap-daybyday/STATUS.md]] (etat),
 > [[feedback_sprites-topdown-gemini-vs-recraft]] (recette sprites).
 
@@ -83,6 +86,11 @@ conteste or `#C99A3A`. Typo : titres/chiffres Georgia/Cormorant Garamond 700, la
 dates/horloge mono tabular. Filtre papier `feTurbulence` natif (zero asset).
 
 ## §8 — NEXT : structurer le pilier (NE PAS reinventer la roue)
+
+> ⭐ La couche DONNEES (phase recherche) a sa propre doctrine : [[doctrines/WARMAP-RESEARCH-PLAYBOOK]]
+> (4 etapes ACLED->synthese->fact-check, classement fiabilite, contrat schema canonique, acces OAuth/CSV).
+> Pipeline `scripts/warmap/` + schema `src/projects/warmap/data/schema.ts` codes 2026-06-05 (connecteur ACLED
+> fixture-first, render Soudan byte-identique prouve).
 
 Aux memes procedures que Souverain/Atlas (prochaine session) :
 - Skill `warmap-preproduction` (miroir `souverain-preproduction` / `atlas-video-preproduction`).
