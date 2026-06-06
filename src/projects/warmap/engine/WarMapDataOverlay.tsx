@@ -31,11 +31,11 @@ const CONTENT = {
   },
   famine: {
     kicker: "Le coût caché",
-    big: 25, unit: "millions",
-    sub: "en insécurité alimentaire aiguë",
-    tagline: "La moitié du pays a faim",
-    source: "PAM / OCHA · Analyse IPC Soudan · Jan 2025",
-    fillRatio: 0.85,
+    big: 30, unit: "millions",
+    sub: "ont besoin d'aide humanitaire",
+    tagline: "La plus grave crise humanitaire du monde",
+    source: "OCHA · Rapport humanitaire Soudan 2025",
+    fillRatio: 1,
   },
 } as const;
 

@@ -55,7 +55,7 @@ const T_END = SUDAN_FLAT_DURATION - Math.round(2.2 * SUDAN_FPS);
 // Timeline = carte qui avance + 3 fenetres "freeze" (overlay deplaces, figure
 // civile, overlay famine). La carte gele pendant chaque fenetre puis reprend.
 // ===========================================================================
-export const SUDAN_EPIC_DURATION = 60 * SUDAN_FPS; // 1800 frames = 60s
+export const SUDAN_EPIC_DURATION = 64 * SUDAN_FPS; // 1920 frames = 64s (58s voix + 3s carte + 3s CTA)
 // fenetres de pause (start, hold, type). start = frame absolu dans le 60s.
 type EpicWindow = { start: number; hold: number; kind: "overlay" | "figure" | "explicatif"; data: any };
 // 2 freezes :
@@ -423,7 +423,8 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
   return (
     <AbsoluteFill style={{ backgroundColor: ATLAS.ocean, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
       <MapboxBrandingHide />
-      <Audio src={staticFile(`_shared/audio/sudan-warmap/${epic ? "score-epic" : withOverlay ? "score-long" : "score"}.mp3`)} />
+      <Audio src={staticFile(`_shared/audio/sudan-warmap/${epic ? "score-epic" : withOverlay ? "score-long" : "score"}.mp3`)} volume={0.12} />
+      {epic && <Audio src={staticFile("_shared/audio/sudan-warmap/narration-v3.mp3")} />}
       {/* filtre papier sepia subtil */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="paperFlat">
@@ -707,6 +708,48 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
             <WarMapDataOverlay key={i} startFrame={w.start} holdFrames={w.hold} fps={SUDAN_FPS} variant={w.data.variant} />
           );
         })}
+
+      {/* CTA final — apparait apres la voix, pendant les 4 dernieres secondes */}
+      {epic && (() => {
+        const CTA_START = 60 * SUDAN_FPS; // frame 1800 = 60s
+        const CTA_HOLD = 4 * SUDAN_FPS;   // 4s
+        const local = frame - CTA_START;
+        if (local < 0 || local > CTA_HOLD) return null;
+        const op = Math.min(
+          interpolate(local, [0, 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
+          interpolate(local, [CTA_HOLD - 12, CTA_HOLD], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+        );
+        return (
+          <AbsoluteFill style={{ opacity: op, justifyContent: "center", alignItems: "center",
+                                 fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
+            <div style={{
+              background: `${ATLAS.cream}D0`,
+              border: `2px solid ${ATLAS.ink}`,
+              borderRadius: 10,
+              padding: "22px 40px",
+              textAlign: "center",
+              color: ATLAS.ink,
+              maxWidth: 820,
+              boxShadow: "0 8px 30px rgba(0,0,0,0.25)",
+            }}>
+              <div style={{ fontSize: 16, letterSpacing: 4, fontWeight: 700,
+                            textTransform: "uppercase", opacity: 0.55, marginBottom: 10 }}>
+                Analyse complète
+              </div>
+              <div style={{ fontSize: 26, fontWeight: 600, lineHeight: 1.3 }}>
+                Le conflit soudanais
+              </div>
+              <div style={{ fontSize: 22, fontWeight: 500, opacity: 0.75, marginTop: 4 }}>
+                — bientôt sur la chaîne —
+              </div>
+              <div style={{ marginTop: 14, fontSize: 20, fontWeight: 700,
+                            letterSpacing: 2, opacity: 0.65 }}>
+                @koraetcartes
+              </div>
+            </div>
+          </AbsoluteFill>
+        );
+      })()}
     </AbsoluteFill>
   );
 };
