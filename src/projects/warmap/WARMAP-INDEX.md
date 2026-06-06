@@ -76,6 +76,17 @@ factcheck, build_warmap_data + fixtures + golden test). Voir WARMAP-RESEARCH-PLA
 2. **Ouvrir** `src/projects/warmap/engine/WarMapEngine.tsx` (le moteur) — la référence vivante est `SudanWarMapEpic60`.
 3. **Pour un nouveau sujet** : produire un `<sujet>.warmap.json` (via `scripts/warmap/`), pas toucher au moteur.
 
+## 🗂️ INSTANCES (sujets traités avec ce moteur)
+
+| Sujet | État | Où | Note |
+|---|---|---|---|
+| **Soudan** (guerre RSF/SAF) | ✅ RÉFÉRENCE (`SudanWarMapEpic60`) | `engine/` + `data/sudan.warmap.json` | 1ère instance, validée |
+| **Lobito Corridor** (éco/ressources) | 🚧 EN COURS (session pipeline) | `src/projects/_rnd/lobito-corridor/` | 2e sujet (non-violent). Réutilise `WarMapEngine`. À PROMOUVOIR hors `_rnd/` quand stabilisé + à brancher ici. Voir `_HANDOFF-SESSION-PIPELINE.md` |
+
+> ⚠️ Lobito est encore sous `_rnd/` (brouillon) alors que le pilier a été promu hors `_rnd/`. Incohérence
+> à résoudre quand la session pipeline aura stabilisé Lobito : le déplacer vers `src/projects/warmap/instances/lobito/`
+> (ou équivalent) et l'inscrire dans STATUS.
+
 ## ⏳ NEXT (structurer le pilier aux procédures Souverain/Atlas)
 - Skill `warmap-preproduction` (miroir `souverain-preproduction` / `atlas-video-preproduction`) — À CRÉER.
 - Découpler moteur/donnée au 2e sujet. Basculer moteur sur d3-geo pur (socle Atlas).

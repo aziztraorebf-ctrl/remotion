@@ -10,7 +10,7 @@ Prototype Soudan COMPLET validE. C'est le **3e pilier** (apres Souverain + Atlas
 MEMES procedures rigoureuses. Toutes les briques + regles sont sauvegardees :
 - **Doctrine** : [[doctrines/WARMAP-PLAYBOOK]] (differentiel + 4 briques + R1-R6 regles design + recette sprites + ouvertures).
 - **Etat/compositions** : [[episodes/warmap-daybyday/STATUS.md]]. **Decode genre** : [[DECODE-daybyday-warmap]].
-- Routage CLAUDE.md ajoute. Base code : `src/projects/_rnd/sudan-warmap/` (`SudanWarMapEpic60` = culmination, catbox 4dwqit).
+- ⭐ POINT D'ENTREE : `src/projects/warmap/WARMAP-INDEX.md`. Base code : `src/projects/warmap/engine/WarMapEngine.tsx`. LA reference = compo `SudanWarMapEpic60` (60s, catbox 4dwqit).
 
 **⭐ PROCHAINE SESSION = consacree a ce pilier, en 2 axes :**
 1. **PHASE RECHERCHE (massif, le coeur)** : garantir les BONNES infos AVANT de construire. Sources OSINT
@@ -28,7 +28,7 @@ mensonge visuel, or notre differentiel = honnetete/comprehension. **Remplacer pa
 `JOUR 543`** = nb de jours depuis le debut du conflit (vrai, se calcule date courante - date debut,
 defile comme l'horloge mais avec du SENS : "543 jours que ca dure"). Alternatives : `RSF 58% · SAF 42%`
 (% controle territorial, plus analyste mais charge avec le compteur morts) · label phase (redondant avec
-bandeau bas) · rien (epurer). Changement = ~2 lignes dans `SudanWarMapFlat.tsx` (bloc `totalSecondsFake`).
+bandeau bas) · rien (epurer). Changement = ~2 lignes dans `src/projects/warmap/engine/WarMapEngine.tsx` (bloc `totalSecondsFake`).
 A inscrire dans WARMAP-PLAYBOOK une fois tranche.
 
 ---
@@ -53,7 +53,7 @@ REFERENCE nos persos PixelLab existants a Gemini -> jetons coherents avec nos ac
 flanquement, echelon). **Differentiel** : alterner top-down (manoeuvre lisible) <-> PixelLab lateral
 (melee incarnee) = l'echelle que BazBattles ne fait pas. Les 3 registres coexistent dans une scene.
 
-Base technique reutilisable : `src/projects/_rnd/sudan-warmap/` (SudanWarMapFlat + warmapVehicles +
+Base technique reutilisable : `src/projects/warmap/engine/` (WarMapEngine + warmapVehicles +
 sprites Gemini top-down). Voir [[DECODE-daybyday-warmap]].
 
 ---
