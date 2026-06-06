@@ -88,3 +88,9 @@ Branche `feat/warmap-research-pipeline` (depuis master). Industrialise la phase 
 2. **Phase RECHERCHE = le coeur de la prochaine session.** Comment garantir les BONNES infos AVANT de construire : sources OSINT (ISW/ACLED/LiveUAmap GeoJSON ~85$/an/DeepStateMap), jalons par date, verif factuelle, schema de donnees (1 fichier de jalons -> tout en derive). C'est ce qui rend le pipeline recurrent realiste (code fait 1x, donnees repetees).
 3. Voie production : basculer moteur sur **d3-geo pur** (socle Atlas) au lieu de Mapbox reskinne.
 4. Idee Cannes/manoeuvre top-down (voir NEXT-ACTION.md).
+
+## MERGE MASTER 2026-06-05 (fin de session)
+feat/warmap-research-pipeline mergee dans master (commit f0736db).
+CSV UCDP gitignore (239MB, re-telechargeable : ucdp.uu.se/downloads GED 25.1).
+Render de reference upload : https://files.catbox.moe/usceu1.mp4 (SudanWarMapVertical, UCDP+Sonar-Pro).
+ACLED OAuth : flood-blocked, a retester avec creds myACLED corriges (voir .env).
