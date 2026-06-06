@@ -2,7 +2,7 @@
 
 > Cree 2026-06-05. Complement DATA de [[doctrines/WARMAP-PLAYBOOK]] (qui couvre le VISUEL).
 > Repond a la question N1 du pilier : "comment garantir les BONNES infos AVANT de construire ?"
-> Code fait 1x, donnees repetees par sujet. Pipeline : `scripts/warmap/`. Schema : `src/projects/warmap/schema.ts`.
+> Code fait 1x, donnees repetees par sujet. Pipeline : `scripts/warmap/`. Schema : `src/projects/warmap/data/schema.ts`.
 
 ## §1 — Principe : la donnee AVANT le pixel
 Le prototype Soudan a ete nourri en recherche legere (estimations). Pour un pilier RECURRENT et
@@ -36,7 +36,7 @@ passe `verified=true` SEULEMENT si **>=2 TYPES de sources independants** concord
 ACLED seul -> `verified=false`, confidence plafonnee a 0.6. (La vignette LLM ne compte PAS comme source.)
 
 ## §4 — Le contrat SCHEMA (1 fichier -> tout en derive)
-`src/projects/warmap/schema.ts` = `WarMapDataset` superset du contrat moteur + PROVENANCE.
+`src/projects/warmap/data/schema.ts` = `WarMapDataset` superset du contrat moteur + PROVENANCE.
 - **jalons[]** : `{date ISO, label, control:Record<state, number|{value,prov}>, casualties, vignette?, prov}`.
   control 0=faction B (RSF rouge) / 0.5=conteste (or) / 1=faction A (SAF bleu).
 - **provenance** par fait : `{sources[], confidence 0..1, verified, method, notes}`.
