@@ -130,3 +130,4 @@ __pycache__/
 *.pyc
 .gstack/
 .claude/worktrees/
+scripts/warmap/fixtures/ucdp/*.csv

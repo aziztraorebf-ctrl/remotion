@@ -39,6 +39,7 @@ import {
 } from "./sudanControlData";
 import { VEHICLES, vehiclePos, REFUGEES, refugeePos } from "./warmapVehicles";
 import { WarMapDataOverlay } from "./WarMapDataOverlay";
+import { WarMapOverlayExplicatif } from "../_shared/WarMapOverlayExplicatif";
 
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
@@ -562,26 +563,17 @@ export const WarMapEngine: React.FC<WarMapEngineProps> = ({ unitStyle = "vehicle
           );
         })}
 
-      {/* TEXTE-REFUGIES sur la carte (mode epic) — explicatif bref, SANS figer
-          l'action (regle Aziz : l'explicatif se passe sur la carte). */}
-      {epic && (() => {
-        const op = interpolate(frame, [REFUGEE_TEXT_START, REFUGEE_TEXT_START + 12, REFUGEE_TEXT_START + REFUGEE_TEXT_HOLD - 14, REFUGEE_TEXT_START + REFUGEE_TEXT_HOLD], [0, 1, 1, 0], {
-          extrapolateLeft: "clamp", extrapolateRight: "clamp",
-        });
-        if (op <= 0) return null;
-        return (
-          <div style={{ position: "absolute", top: portrait ? 250 : 150, left: 0, right: 0, display: "flex", justifyContent: "center", opacity: op, padding: "0 50px" }}>
-            <div style={{ background: ATLAS.cream, border: `2px solid ${ATLAS.ink}`, borderRadius: 8, padding: "12px 24px", color: ATLAS.ink, textAlign: "center", maxWidth: 820, boxShadow: "0 6px 22px rgba(0,0,0,0.3)", transform: `rotate(${paperWobble(frame, 5)}deg)` }}>
-              <div style={{ fontSize: 17, letterSpacing: 2.5, fontWeight: 700, textTransform: "uppercase", opacity: 0.65 }}>
-                L'exode
-              </div>
-              <div style={{ fontSize: 30, fontWeight: 600, marginTop: 2 }}>
-                Des millions fuient vers les frontières
-              </div>
-            </div>
-          </div>
-        );
-      })()}
+      {/* TEXTE-REFUGIES sur la carte (mode epic) — WarMapOverlayExplicatif (composant
+          generique, extrait vers _shared/). R2 semi-transparent, R4 pas de voile noir. */}
+      {epic && (
+        <WarMapOverlayExplicatif
+          startFrame={REFUGEE_TEXT_START}
+          holdFrames={REFUGEE_TEXT_HOLD}
+          title="L'exode"
+          text="Des millions fuient vers les frontières"
+          topOffset={portrait ? 250 : 150}
+        />
+      )}
 
       {/* Villes — plaques parchemin (signature Atlas : MAJUSCULES sur plaque) */}
       {ready &&

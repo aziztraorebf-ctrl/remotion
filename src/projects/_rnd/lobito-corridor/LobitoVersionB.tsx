@@ -24,14 +24,12 @@ import {
 import {
   ATLAS_COLORS,
   AtlasMercator,
-  AtlasCartouche,
-  AtlasLabel,
   AtlasPulseMarker,
   AtlasSubtleStars,
 } from "../../atlas/_shared/atlas-components";
 import { AtlasSharedDefs } from "../../atlas/_reference/mansa-moussa-v2/atlas-v2-shared-defs";
 import { AtlasAttackArrow } from "../../atlas/_shared/AtlasAttackArrow";
-import { centeredProjection } from "../../atlas/_shared/geoUtils";
+import { makeLngLatToSvg } from "../../atlas/_shared/geoUtils";
 import atlasData from "../../atlas/_shared/atlas-v2-data.json";
 import {
   JALONS,
@@ -44,10 +42,14 @@ import {
 } from "./lobitoFluxData";
 
 // ===========================================================================
-// PROJECTION LOBITO — centrée Copperbelt, couvre Lobito→Dar es Salaam
-// centre : 26.5°E, -11°N. pxPerDeg : 22 → couvre ~33° = 726px (pleine largeur)
+// PROJECTION LOBITO — repère mercWide exact (calibré sur ancres connues).
+// makeLngLatToSvg avec 2 ancres issues du repère atlas-v2-data.json mercWide.
+// Toutes les villes du corridor tombent dans le viewport à zoom 2.1.
 // ===========================================================================
-const PROJ_LOBITO = centeredProjection(26.5, -11.0, 22);
+const PROJ_LOBITO = makeLngLatToSvg(
+  { lon: 27.48, lat: -11.67, x: 479.8, y: 948.9 }, // Lubumbashi
+  { lon: 39.28, lat: -6.82,  x: 593.0, y: 901.7 }, // Dar es Salaam
+);
 
 // ===========================================================================
 // PALETTE "assombri" (validée Aziz 2026-06-05)
@@ -61,10 +63,11 @@ const PAL = {
 // TIMING
 // ===========================================================================
 const FPS = 30;
-export const LOBITO_B_FRAMES = 30 * FPS; // 900f
+// Durée calée sur la narration réelle (narration-a3.mp3 = 10.40s)
+export const LOBITO_B_FRAMES = Math.round(10.4 * FPS); // 312f
 
-const T_START = Math.round(1.6 * FPS);
-const T_END   = LOBITO_B_FRAMES - Math.round(2.0 * FPS);
+const T_START = Math.round(0.4 * FPS);  // démarrage rapide
+const T_END   = LOBITO_B_FRAMES - Math.round(0.5 * FPS);
 
 // ===========================================================================
 // WAYPOINTS FLÈCHES (lngLat réels — projetés par PROJ_LOBITO dans AtlasAttackArrow)
@@ -105,7 +108,7 @@ export const LobitoVersionB: React.FC = () => {
   const localF = Math.max(0, frame - T_START);
   const driftX = Math.sin(localF * 0.014) * 9;
   const driftY = Math.cos(localF * 0.011) * 6;
-  const camZoom = interpolate(localF, [0, 80, T_END - T_START], [1.80, 2.10, 2.10], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const camZoom = interpolate(localF, [0, 80, T_END - T_START], [3.00, 3.30, 3.30], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const tilt = 5;
   const skewX = tilt * 0.15;
   const scaleY = 1 - tilt * 0.008;
@@ -115,12 +118,13 @@ export const LobitoVersionB: React.FC = () => {
   const focusX = 450, focusY = 940;
   const camT = `translate(${360 + driftX} ${640 + driftY}) scale(${camZoom} ${camZoom * scaleY}) skewX(${skewX}) translate(${-focusX} ${-focusY})`;
 
-  // Progress des flèches
+  // Progress des flèches — présentes dès T_START, se dessinent progressivement
   const avgFlux = fluxAt("COD", tGlobal);
-  const eastProgress = interpolate(tGlobal, [0.0, 0.5], [0.25, 1.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const westProgress = interpolate(tGlobal, [0.35, 0.9], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const arrowWestOp = interpolate(avgFlux, [0.1, 0.5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const arrowEastOp = interpolate(avgFlux, [0.0, 0.3], [1, 0.4], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const eastProgress = interpolate(tGlobal, [0.0, 0.35], [0.1, 1.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const westProgress = interpolate(tGlobal, [0.20, 0.75], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Les deux visibles dès le début — l'est s'atténue quand l'ouest s'ouvre
+  const arrowEastOp = Math.max(0.25, interpolate(avgFlux, [0.0, 0.85], [1.0, 0.25], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
+  const arrowWestOp = interpolate(avgFlux, [0.05, 0.45], [0, 1.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // Pulse marker Copperbelt (point source)
   const copperbeltSvg = PROJ_LOBITO(27.48, -11.67);
@@ -128,7 +132,8 @@ export const LobitoVersionB: React.FC = () => {
   // HUD
   const hudOp = interpolate(frame, [T_START - 2, T_START + 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
     * interpolate(frame, [LOBITO_B_FRAMES - 20, LOBITO_B_FRAMES], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const introOp = interpolate(frame, [0, 6, T_START - 6, T_START + 4], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Pas d'intro sur 10s — on démarre directement sur la carte
+  const introOp = 0;
 
   const SVG_W = 720, SVG_H = 1280;
 
@@ -186,19 +191,11 @@ export const LobitoVersionB: React.FC = () => {
             curved={false}
           />
 
-          {/* Point source : Copperbelt */}
+          {/* Pulse marker seul — petit point discret, sans label */}
           <AtlasPulseMarker
             coord={[copperbeltSvg[0], copperbeltSvg[1]]}
-            beatStart={T_START + 20}
+            beatStart={T_START + 6}
             color={ATLAS_COLORS.empireGold}
-          />
-
-          {/* Labels */}
-          <AtlasLabel
-            coord={[copperbeltSvg[0], copperbeltSvg[1]]}
-            text="COPPERBELT"
-            appearAt={T_START + 30}
-            fontSize={14}
           />
         </g>
 

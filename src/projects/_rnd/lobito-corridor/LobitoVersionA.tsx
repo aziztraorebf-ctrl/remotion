@@ -126,12 +126,13 @@ export const LobitoVersionA: React.FC = () => {
 
   // flux moyen pour opacité des flèches
   const avgFluxCOD = fluxAt("COD", tGlobal);
-  const arrowWestOp = interpolate(avgFluxCOD, [0.1, 0.5], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const arrowEastOp = interpolate(avgFluxCOD, [0.0, 0.3], [1, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Flèches toujours visibles dès le début — l'est s'estompe quand l'ouest s'ouvre
+  const arrowEastOp = Math.max(0.3, interpolate(avgFluxCOD, [0.0, 0.85], [1.0, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
+  const arrowWestOp = interpolate(avgFluxCOD, [0.05, 0.4], [0, 1.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // progress de dessin des flèches (se dessinent progressivement avec tGlobal)
-  const westProgress = interpolate(tGlobal, [0.4, 0.9], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const eastProgress = interpolate(tGlobal, [0.0, 0.5], [0.3, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Progress de dessin — présentes dès T_START
+  const eastProgress = interpolate(tGlobal, [0.0, 0.3], [0.1, 1.0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const westProgress = interpolate(tGlobal, [0.15, 0.7], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ---------------------------------------------------------------------------
   // Init Mapbox
@@ -334,13 +335,14 @@ export const LobitoVersionA: React.FC = () => {
     const hy2 = last.y - headLen * Math.sin(ang + 0.4);
     return (
       <g key={id} opacity={opacity}>
-        {/* Halo glow */}
-        <path d={d} fill="none" stroke={color} strokeWidth={12} strokeLinecap="round" opacity={0.18} />
-        {/* Tracé principal */}
-        <path d={d} fill="none" stroke={color} strokeWidth={4.5} strokeLinecap="round" strokeDasharray="0" />
-        {/* Tête */}
+        {/* Outline encre foncée (lisibilité sur tout fond, clair ou sombre) */}
+        <path d={d} fill="none" stroke={ATLAS.ink} strokeWidth={8} strokeLinecap="round" opacity={0.55} />
         <path d={`M ${last.x},${last.y} L ${hx1},${hy1} M ${last.x},${last.y} L ${hx2},${hy2}`}
-          fill="none" stroke={color} strokeWidth={4.5} strokeLinecap="round" />
+          fill="none" stroke={ATLAS.ink} strokeWidth={8} strokeLinecap="round" opacity={0.55} />
+        {/* Tracé blanc cassé par-dessus */}
+        <path d={d} fill="none" stroke={color} strokeWidth={5} strokeLinecap="round" />
+        <path d={`M ${last.x},${last.y} L ${hx1},${hy1} M ${last.x},${last.y} L ${hx2},${hy2}`}
+          fill="none" stroke={color} strokeWidth={5} strokeLinecap="round" />
       </g>
     );
   };
@@ -375,8 +377,9 @@ export const LobitoVersionA: React.FC = () => {
 
       {/* FLÈCHES SVG superposées */}
       <svg style={{ position: "absolute", top: 0, left: 0, width, height, pointerEvents: "none" }}>
-        {drawArrow("east", eastPts, FLUX_COLORS.china, eastProgress, arrowEastOp * hudOp)}
-        {drawArrow("west", westPts, FLUX_COLORS.lobito, westProgress, arrowWestOp * hudOp)}
+        {/* Flèches en blanc cassé + outline encre — contrastent sur TOUT fond coloré */}
+        {drawArrow("east", eastPts, "#F2E5C8", eastProgress, arrowEastOp * hudOp)}
+        {drawArrow("west", westPts, "#F2E5C8", westProgress, arrowWestOp * hudOp)}
       </svg>
 
       {/* HUD PORTRAIT — date + compteur (style Sudan exact) */}
