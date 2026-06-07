@@ -38,10 +38,15 @@ Gemini (mais TROP similaires, à différencier) · 6 SFX war-map · **DA-BRIEF-G
 **⭐ SESSION DÉDIÉE — 3 phases (ARRÊTER DE DEVINER) :**
 1. **RECHERCHE RÉELLE** : yt-dlp + TubeLab + study days + skills + décodages existants →
    densité couleur / intro éléments (cercle, flèches) / différenciation unités.
-2. **REVIEW EXTERNE déjà lancée** session 3 (Gemini+Kimi, LISIBILITÉ + **AI-SLOP**) :
-   résultats `/tmp/da-refs/da-acte1-aislop-{gemini,kimi}.md` — RELIRE EN PREMIER (⚠️ /tmp peut
-   être purgé → si absent, relancer `scripts/warmap/review-acte1-aislop.txt`).
+2. ⭐ **LIRE EN ENTIER les 4 reviews** (persistées `memory/episodes/warmap-sahel/review-acte1/`,
+   PAS juste la synthèse — toutes très complètes) : SYNTHESE-REVIEW.md (vue d'ensemble) PUIS
+   `da-acte1-aislop-*` (AI-slop) + `da-acte1-expert-*` (EXPERT, aussi bons) + `da-compare-sudan-sahel-*`
+   (comparatif décisif palette=faux coupable).
 3. **Reposer DOCTRINE Acte 1** (fondation série) puis reconstruire proprement.
+
+**⚠️ VÉHICULES = différentiel, PAS amateur (Aziz 2026-06-07) :** ne pas gober le "camions 2D =
+amateur" des modèles. Les véhicules sont notre incarnation signature (le Soudan en utilise, ça marche).
+Vrai pb = mauvaise exécution (taille/intégration/différenciation/statiques). GARDER + bien exécuter.
 
 **Idées-clés à creuser** (3 ajouts Claude) : "contraste par le calme" (couleur = projecteur
 local sur la zone parlée, ni neutre vide ni tout coloré) · "1 élément = 1 fonction narrative

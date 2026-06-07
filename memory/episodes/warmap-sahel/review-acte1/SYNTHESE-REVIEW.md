@@ -113,9 +113,15 @@ n'est PAS les éléments mais l'ABSENCE de mouvement continu + easing. Gratuit e
    (NB : on a une caméra narrative mais pas assez perceptible/continue → revoir amplitude.)
 2. ⭐ VIGNETTAGE GÉOGRAPHIQUE manquant : assombrir tout ce qui n'est PAS l'AES (polygone
    inversé noir ~40% sur pays voisins) → fait ressortir le Sahel. = "contraste par le calme".
-3. ⭐ VÉHICULES camions 2D = "red flag amateur / jeu mobile" (LES DEUX le disent). Pro =
-   symbologie abstraite (chevrons, flèches pleines, ondes de choc SVG). ⚠️ NUANCE notre choix
-   de véhicules réels Gemini — À REDISCUTER avec Aziz en session dédiée (garder ? abstrait ?).
+3. ⭐ VÉHICULES — les modèles disent "camions 2D = red flag amateur, préférer l'abstrait".
+   ⚠️⚠️ VERDICT AZIZ (NE PAS GOBER le modèle, cf. règle CLAUDE.md L254) : les véhicules NE
+   sont PAS amateur — ils sont NOTRE DIFFÉRENTIEL (incarnation que les chaînes de réf n'ont
+   pas ; le Soudan validé en utilise et ça marche). Ce que les experts ont VRAIMENT pointé =
+   MAUVAISE EXÉCUTION, pas le concept : trop gros (échelle vs micro-régions) · mal intégrés
+   (flottent sans poids/ombre) · pas différenciés (rouge sur rouge) · STATIQUES 20s sans but.
+   → GARDER les véhicules, mais BIEN EXÉCUTER : taille fixe raisonnable + ombre cohérente +
+   MOUVEMENT réel avec but narratif (jamais plantés) + différenciation forte (forme+couleur+
+   contour). "Véhicule mal exécuté = amateur ; véhicule bien exécuté = différentiel." (Aziz 2026-06-07)
 4. EASING non-linéaires partout (elastic/ease-in-out/spring) + ANTICIPATION (frontière
    s'illumine AVANT le mot). Pop mécaniques actuels = amateur.
 5. UI qui s'EFFACE : légende disparaît après frame 1, cartons intégrés (pas de bordures

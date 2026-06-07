@@ -40,9 +40,17 @@ Détail complet + 3 corrections rentables : `review-acte1/SYNTHESE-REVIEW.md`.
 **PLAN SESSION DÉDIÉE ACTE 1 (fondatrice de la série) :**
 1. RECHERCHE RÉELLE (arrêter de deviner) : yt-dlp + TubeLab + study days + skills + ce qu'on a
    déjà décodé → comment les meilleures chaînes gèrent densité couleur / intro éléments / diff unités.
-2. REVIEW EXTERNE Gemini+Kimi ciblée LISIBILITÉ + **AI-SLOP** (brief lancé session 3, résultats
-   dans /tmp/da-refs/da-acte1-aislop-{gemini,kimi}.md — À RELIRE en début de session dédiée).
+2. ⭐ LIRE EN ENTIER (pas juste la synthèse) les 4 reviews — toutes très complètes :
+   `review-acte1/SYNTHESE-REVIEW.md` (vue d'ensemble) PUIS les bruts (persistés dans review-acte1/) :
+   `da-acte1-aislop-{gemini,kimi}.md` · `da-acte1-expert-{gemini,kimi}.md` (EXPERT aussi bons que
+   l'AI-slop, lire intégralement) · `da-compare-sudan-sahel-{gemini,kimi}.md` (comparatif décisif).
 3. Reposer la DOCTRINE Acte 1 comme fondation, puis reconstruire proprement.
+
+**⚠️ VÉHICULES — NE PAS GOBER le verdict modèles (Aziz 2026-06-07) :** les experts disent "camions
+2D = amateur". FAUX dans notre cas — les véhicules = NOTRE DIFFÉRENTIEL (incarnation que les chaînes
+de réf n'ont pas ; le Soudan validé en utilise et ça marche). Vrai problème = MAUVAISE EXÉCUTION
+(trop gros / mal intégrés / pas différenciés / statiques), pas le concept. → GARDER + bien exécuter
+(taille fixe, ombre cohérente, mouvement avec but, différenciation forte). Détail : SYNTHESE-REVIEW.md pt.3.
 
 **Honnêteté Claude (limite scope) :** je devine trop, je n'ai pas de boucle de validation
 perceptive (je juge l'esthétique sur frames, pas la compréhension en mouvement+son). D'où
