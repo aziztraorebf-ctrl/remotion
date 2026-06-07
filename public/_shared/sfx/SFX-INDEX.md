@@ -53,6 +53,21 @@
 
 ---
 
+## warmap/ — War-Map (Sahel + réutilisables, ElevenLabs 2026-06-07)
+
+| Fichier | Description | Durée | Utilisé dans |
+|---------|-------------|-------|--------------|
+| `warmap/boom-coup.mp3` | Impact sub-bass sourd, grave, sec — coup d'état / événement lourd | 1.2s | ⭐ Sahel Acte 1 hook (×3 allumage pays) |
+| `warmap/cedeao-snap.mp3` | Snap électrique + silence, néon qui grille — rupture institutionnelle | 1.0s | ⭐ Sahel Acte 1 hook (mort anneau CEDEAO) |
+| `warmap/liptako-gong.mp3` | Gong grave + résonance longue — convergence de forces | 2.5s | ⭐ Sahel Acte 1 hook (impact convergence Liptako) |
+| `warmap/arrow-whoosh.mp3` | Whoosh bas et sec, mouvement sur carte | 0.6s | Banque — flèches tactiques (Act 2-3) |
+| `warmap/tension-drone.mp3` | Drone grave continu, ambiance archives, seamless | 8s | Banque — fond de tension (à tester vs musique) |
+| `warmap/ink-spread.mp3` | Encre qui s'étale sur le papier, texture organique | 1.5s | Banque — apparition zones (ink-bleed JNIM/EIGS) |
+
+**Note mix war-map** : avec musique de fond (Soudan) + voix, garder MAX 3 SFX ponctuels par acte pour éviter la concurrence sonore. Le drone est à tester (peut être redondant avec la musique).
+
+---
+
 ## data/ — Compteurs, statistiques, graphiques
 
 | Fichier | Description | Durée | Utilisé dans |

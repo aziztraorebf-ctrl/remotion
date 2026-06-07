@@ -35,6 +35,8 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   AbsoluteFill,
   Audio,
+  Loop,
+  Sequence,
   continueRender,
   delayRender,
   interpolate,
@@ -508,28 +510,60 @@ export const SahelWarMapEngine: React.FC = () => {
   // LOGIQUE HOOK — ACTE 1 (script-first, tracé phrase par phrase)
   // ============================================================
 
-  // SCRIPT: "Ils ont expulsé leurs partenaires militaires." → Mali blanc (f150)
-  const hookMaliOp = interpolate(frame, [F_HOOK_MALI, F_HOOK_MALI + 12, F_HOOK_MALI + 90, F_HOOK_MALI + 120], [0, 0.85, 0.85, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  // SCRIPT: "Rompu leurs alliances historiques." → Burkina blanc (f231)
-  const hookBurkinaOp = interpolate(frame, [F_HOOK_BURKINA, F_HOOK_BURKINA + 12, F_HOOK_BURKINA + 90, F_HOOK_BURKINA + 120], [0, 0.85, 0.85, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  // SCRIPT: "Quitté la principale organisation régionale du continent." → Niger blanc (f301)
-  const hookNigerOp = interpolate(frame, [F_HOOK_NIGER, F_HOOK_NIGER + 12, F_HOOK_NIGER + 90, F_HOOK_NIGER + 120], [0, 0.85, 0.85, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
+  // ============================================================
+  // ALLUMAGE PREMIUM "trace → infuse" (DA-BRIEF-GATE Acte 1, consensus Gemini+Kimi)
+  // Au lieu d'un flash blanc plat : le halo coloré (couleur faction, PAS blanc)
+  // infuse depuis la capitale, monte net, puis se MAINTIENT (les 3 pays restent
+  // allumés jusqu'au freeze — ils forment le triangle qui se fige).
+  // ============================================================
+  // Phase "infuse" : montée 0→1 sur 14 frames, puis maintien (pas de fade-out :
+  // le pays reste allumé jusqu'au freeze, signature du hook).
+  const ignite = (start: number) =>
+    interpolate(frame, [start, start + 14], [0, 1], {
+      extrapolateLeft: "clamp", extrapolateRight: "clamp",
+    });
+  // SCRIPT: "Ils ont expulsé" → Mali infuse (f150)
+  const hookMaliOp = ignite(F_HOOK_MALI);
+  // SCRIPT: "Rompu leurs alliances" → Burkina infuse (f231)
+  const hookBurkinaOp = ignite(F_HOOK_BURKINA);
+  // SCRIPT: "Quitté la principale organisation" → Niger infuse (f301)
+  const hookNigerOp = ignite(F_HOOK_NIGER);
+  // "trace" : le contour se dessine vite (0→1 sur 10 frames) juste avant l'infuse
+  const trace = (start: number) =>
+    interpolate(frame, [start, start + 10], [0, 1], {
+      extrapolateLeft: "clamp", extrapolateRight: "clamp",
+    });
+  const hookMaliTrace = trace(F_HOOK_MALI);
+  const hookBurkinaTrace = trace(F_HOOK_BURKINA);
+  const hookNigerTrace = trace(F_HOOK_NIGER);
+  // Heartbeat : une fois allumés, les pays "respirent" légèrement (opacité oscille).
+  // Démarre après le 3e allumage, subtil (amplitude 0.08), continue dans le freeze.
+  const hookHeartbeat = frame > F_HOOK_NIGER + 14
+    ? 0.92 + 0.08 * Math.sin((frame - F_HOOK_NIGER) * 0.10)
+    : 1;
 
-  // SCRIPT: "continent." → anneau CEDEAO clignote orange puis s'éteint (f382)
+  // SCRIPT: "continent." → anneau CEDEAO "néon qui grille" (f382)
+  // 3 pulses francs (scale + opacité) → SNAP → gris cendre mort.
+  // (choix Aziz 2026-06-07 : néon qui grille, pas fissure ni fondu doux)
+  const CEDEAO_PULSES_END = F_HOOK_CEDEAO + 60; // 3 pulses sur 60 frames (2s)
+  const CEDEAO_DEAD = CEDEAO_PULSES_END + 12;   // snap puis gris cendre
   const cedeaoOp = (() => {
     if (frame < F_HOOK_CEDEAO) return 0;
-    if (frame > F_HOOK_CEDEAO + 90) return 0;
-    // clignote 3 fois sur 90 frames puis s'éteint
-    const local = frame - F_HOOK_CEDEAO;
-    const blink = Math.sin(local * Math.PI * 3 / 45); // 3 cycles sur 90 frames
-    return Math.max(0, blink) * 0.75;
+    if (frame > CEDEAO_DEAD + 30) return 0; // disparait apres le freeze
+    return 1; // toujours visible une fois apparu (la COULEUR change, pas l'opacité)
   })();
+  // Intensité orange du pulse (0 = éteint, 1 = plein orange). 3 cycles sur 60f.
+  const cedeaoPulse = (() => {
+    if (frame < F_HOOK_CEDEAO || frame > CEDEAO_PULSES_END) return 0;
+    const local = frame - F_HOOK_CEDEAO;
+    return Math.max(0, Math.sin(local * Math.PI * 3 / 60)) * 0.9;
+  })();
+  // Scale du pulse (1.0 → 1.06 au pic de chaque cycle)
+  const cedeaoScale = 1 + cedeaoPulse * 0.06;
+  // Transition vers gris cendre après le snap (0 = orange vivant, 1 = cendre mort)
+  const cedeaoDeath = interpolate(frame, [CEDEAO_PULSES_END, CEDEAO_DEAD], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
 
   // SCRIPT: "quelque chose de nouveau." → vecteurs capitales convergent + Liptako pulse or (f502)
   const liptakoProgress = interpolate(frame, [F_HOOK_LIPTAKO, F_HOOK_LIPTAKO + 45], [0, 1], {
@@ -675,6 +709,36 @@ export const SahelWarMapEngine: React.FC = () => {
       {/* Narration principale */}
       <Audio src={staticFile("_shared/audio/sahel-warmap/narration-v1.mp3")} />
 
+      {/* Musique de fond (score Soudan reutilise, 60s -> loop sur 439s).
+          Volume bas pour laisser respirer voix + SFX. */}
+      <Loop durationInFrames={60 * SAHEL_FPS}>
+        <Audio src={staticFile("_shared/audio/sudan-warmap/score-epic.mp3")} volume={0.10} />
+      </Loop>
+
+      {/* ======================================================
+          SFX HOOK — 3 signature uniquement (anti-surcharge mix).
+          Sequence (jamais frame===X — regle projet). Volumes calibres
+          pour ne pas concurrencer la voix + musique.
+          ====================================================== */}
+      {/* boom sourd x3 — allumage des 3 pays */}
+      <Sequence from={F_HOOK_MALI} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+      </Sequence>
+      <Sequence from={F_HOOK_BURKINA} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+      </Sequence>
+      <Sequence from={F_HOOK_NIGER} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+      </Sequence>
+      {/* snap electrique — mort de l'anneau CEDEAO (au moment du pic du 3e pulse) */}
+      <Sequence from={F_HOOK_CEDEAO + 60} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
+        <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.50} />
+      </Sequence>
+      {/* gong grave — impact convergence Liptako (au freeze) */}
+      <Sequence from={F_HOOK_FREEZE} durationInFrames={Math.ceil(2.5 * SAHEL_FPS)}>
+        <Audio src={staticFile("_shared/sfx/warmap/liptako-gong.mp3")} volume={0.58} />
+      </Sequence>
+
       {/* Filtre papier sepia */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="paperSahel">
@@ -701,75 +765,73 @@ export const SahelWarMapEngine: React.FC = () => {
           Chaque événement tracé depuis le script V4 phrase par phrase
           ====================================================== */}
 
-      {/* SCRIPT: "Ils ont expulsé" → Mali flash blanc (f150) */}
-      {hookMaliOp > 0 && (
-        <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen" }}>
-          {/* Flash blanc sur le Mali — overlay centré sur Bamako */}
+      {/* SCRIPT: allumage "trace → infuse" des 3 pays (couleur faction, PAS blanc).
+          Halo bleu état qui infuse depuis la capitale + glow par double-cercle
+          (stroke épais opacité basse, JAMAIS filter:blur). Heartbeat une fois allumé.
+          Les 3 restent allumés jusqu'au freeze (forment le triangle qui se fige). */}
+      {[
+        { op: hookMaliOp, tr: hookMaliTrace, px: hookPx.bamako, r: 150, fallback: { left: "20%", top: "55%" } },
+        { op: hookBurkinaOp, tr: hookBurkinaTrace, px: hookPx.ouaga, r: 120, fallback: { left: "47%", top: "58%" } },
+        { op: hookNigerOp, tr: hookNigerTrace, px: hookPx.niamey, r: 130, fallback: { left: "60%", top: "52%" } },
+      ].map((c, i) => c.op > 0 && (
+        <AbsoluteFill key={`ignite-${i}`} style={{ pointerEvents: "none" }}>
+          {/* INFUSE : halo bleu état qui monte depuis la capitale */}
           <div style={{
             position: "absolute",
-            left: hookPx.bamako ? hookPx.bamako.x - 160 : "20%",
-            top: hookPx.bamako ? hookPx.bamako.y - 120 : "55%",
-            width: 320, height: 240,
-            background: "radial-gradient(ellipse, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 70%)",
-            opacity: hookMaliOp,
+            left: c.px ? c.px.x - c.r : c.fallback.left,
+            top: c.px ? c.px.y - c.r : c.fallback.top,
+            width: c.r * 2, height: c.r * 2,
+            background: `radial-gradient(circle, rgba(62,110,158,${c.op * 0.55 * hookHeartbeat}) 0%, rgba(62,110,158,${c.op * 0.18}) 45%, rgba(62,110,158,0) 72%)`,
             borderRadius: "50%",
           }} />
+          {/* GLOW : anneau stroke épais opacité basse (pas de blur CSS) */}
+          {c.px && (
+            <div style={{
+              position: "absolute",
+              left: c.px.x - c.r * 0.7, top: c.px.y - c.r * 0.7,
+              width: c.r * 1.4, height: c.r * 1.4,
+              border: `${6 * c.tr}px solid rgba(62,110,158,${c.op * 0.22})`,
+              borderRadius: "50%",
+            }} />
+          )}
         </AbsoluteFill>
-      )}
+      ))}
 
-      {/* SCRIPT: "Rompu leurs alliances" → Burkina flash blanc (f231) */}
-      {hookBurkinaOp > 0 && (
-        <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen" }}>
-          <div style={{
-            position: "absolute",
-            left: hookPx.ouaga ? hookPx.ouaga.x - 140 : "47%",
-            top: hookPx.ouaga ? hookPx.ouaga.y - 110 : "58%",
-            width: 280, height: 220,
-            background: "radial-gradient(ellipse, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 70%)",
-            opacity: hookBurkinaOp,
-            borderRadius: "50%",
-          }} />
-        </AbsoluteFill>
-      )}
-
-      {/* SCRIPT: "Quitté la principale organisation" → Niger flash blanc (f301) */}
-      {hookNigerOp > 0 && (
-        <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "screen" }}>
-          <div style={{
-            position: "absolute",
-            left: hookPx.niamey ? hookPx.niamey.x - 130 : "60%",
-            top: hookPx.niamey ? hookPx.niamey.y - 110 : "52%",
-            width: 260, height: 210,
-            background: "radial-gradient(ellipse, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0) 70%)",
-            opacity: hookNigerOp,
-            borderRadius: "50%",
-          }} />
-        </AbsoluteFill>
-      )}
-
-      {/* SCRIPT: "continent." → anneau CEDEAO clignote orange (f382) */}
-      {cedeaoOp > 0 && ready && hookPx.niamey && (
-        <AbsoluteFill style={{ pointerEvents: "none" }}>
-          {/* Cercle englobant les 3 pays — centré sur Liptako */}
-          <div style={{
-            position: "absolute",
-            left: hookPx.liptako ? hookPx.liptako.x - 310 : "38%",
-            top: hookPx.liptako ? hookPx.liptako.y - 220 : "35%",
-            width: 620, height: 440,
-            border: `4px solid rgba(255,140,0,${cedeaoOp})`,
-            borderRadius: "50%",
-            boxShadow: `0 0 18px 4px rgba(255,140,0,${cedeaoOp * 0.45})`,
-          }} />
-          <div style={{
-            position: "absolute",
-            left: hookPx.liptako ? hookPx.liptako.x - 68 : "46%",
-            top: hookPx.liptako ? hookPx.liptako.y - 270 : "28%",
-            fontSize: 14, fontWeight: 700, letterSpacing: 3,
-            color: `rgba(255,140,0,${cedeaoOp})`,
-            textTransform: "uppercase" as const,
-          }}>CEDEAO</div>
-        </AbsoluteFill>
-      )}
+      {/* SCRIPT: "continent." → anneau CEDEAO "néon qui grille" (f382)
+          3 pulses orange francs (scale + glow) → SNAP → gris cendre mort.
+          Couleur interpolée orange vivant → cendre via cedeaoDeath. */}
+      {cedeaoOp > 0 && ready && hookPx.liptako && (() => {
+        // orange vivant (255,140,0) → gris cendre (139,115,85)
+        const r = Math.round(255 + (139 - 255) * cedeaoDeath);
+        const g = Math.round(140 + (115 - 140) * cedeaoDeath);
+        const b = Math.round(0 + (85 - 0) * cedeaoDeath);
+        const ringColor = `rgb(${r},${g},${b})`;
+        const baseAlpha = 0.35 + cedeaoPulse; // pulse fait briller le trait
+        const deadAlpha = 0.5 * (1 - cedeaoDeath) + 0.28 * cedeaoDeath;
+        const alpha = Math.min(1, Math.max(deadAlpha, baseAlpha));
+        return (
+          <AbsoluteFill style={{ pointerEvents: "none" }}>
+            <div style={{
+              position: "absolute",
+              left: hookPx.liptako.x - 330, top: hookPx.liptako.y - 235,
+              width: 660, height: 470,
+              border: `${3 + cedeaoPulse * 2}px solid ${ringColor}`,
+              opacity: alpha,
+              borderRadius: "50%",
+              transform: `scale(${cedeaoScale})`,
+              // glow par stroke épais derrière (PAS filter:blur) : box-shadow inset/outset léger
+              boxShadow: `0 0 ${cedeaoPulse * 22}px ${cedeaoPulse * 5}px rgba(255,140,0,${cedeaoPulse * 0.4})`,
+            }} />
+            <div style={{
+              position: "absolute",
+              left: hookPx.liptako.x - 36, top: hookPx.liptako.y - 290,
+              fontSize: 15, fontWeight: 700, letterSpacing: 3,
+              color: ringColor, opacity: alpha,
+              textTransform: "uppercase" as const,
+            }}>CEDEAO</div>
+          </AbsoluteFill>
+        );
+      })()}
 
       {/* SCRIPT: "quelque chose de nouveau." → 3 flèches capitales → Liptako + pulse or (f502)
           Upgrade : SahelAttackArrow (flèches qui POUSSENT) au lieu de <line> statiques */}
