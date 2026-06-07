@@ -36,16 +36,25 @@ plus courtes. Catbox : `4dwqit` (v4 final). Composition dans `src/Root.tsx` (fol
 ```
 src/projects/warmap/
 ├── WARMAP-INDEX.md          ← CE FICHIER (point d'entrée)
-├── engine/                  ← le MOTEUR vidéo (générique)
-│   ├── WarMapEngine.tsx      ⭐ moteur unique. Props : unitStyle (vehicle|token) / withOverlay / epic
+├── _shared/                 ← COMPOSANTS GÉNÉRIQUES réutilisables (créé 2026-06-07)
+│   ├── SahelAttackArrow.tsx  ⭐ flèche tactique Mapbox (map.project, progress 0→1, marching ants)
+│   ├── TerritorialExpansion.tsx  expansion organique (blobs fill-opacity progressif, delays)
+│   ├── RefugeeFlow.tsx           flux de déplacés (rubans SVG stroke-dasharray animés)
+│   ├── WarMapOverlayData.tsx     overlay donnée solide (parchemin centré)
+│   └── WarMapOverlayExplicatif.tsx  overlay explicatif (semi-transparent)
+├── engine/                  ← les MOTEURS vidéo par instance
+│   ├── WarMapEngine.tsx      ⭐ moteur Soudan (référence = SudanWarMapEpic60)
+│   ├── SahelWarMapEngine.tsx ⭐ moteur Sahel V3 (16:9 long format, Map Animation intégré)
+│   ├── MapAnimationShowcase.tsx  showcase 40s des 3 briques _shared/ (validation visuelle)
 │   ├── WarMapDataOverlay.tsx   overlays (data solide + explicatif + figure)
 │   ├── VehicleSymbols.tsx      fallback SVG (déprécié par sprites Gemini)
 │   ├── warmapVehicles.ts       VEHICLES + REFUGEES + paths géo
-│   └── sudanControlData.ts     DATA Soudan (1ère instance) — re-export depuis l'adapter
+│   └── sudanControlData.ts     DATA Soudan — re-export depuis l'adapter
 └── data/                    ← la COUCHE DONNÉES (pipeline)
     ├── schema.ts             WarMapDataset (contrat moteur + provenance)
     ├── adapter.ts            canonicalToEngine (bridge JSON → moteur)
-    └── sudan.warmap.json     1ère instance (ACLED-dérivée)
+    ├── sudan.warmap.json     instance Soudan (ACLED-dérivée)
+    └── sahel.warmap.json     instance Sahel AES (15 jalons + 6 véhicules + 3 réfugiés)
 ```
 
 Pipeline data (scripts) : `scripts/warmap/` (acled_connector, ucdp_connector, aggregate, llm_synthesis,

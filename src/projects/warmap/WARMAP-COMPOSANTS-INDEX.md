@@ -10,6 +10,23 @@
 
 ---
 
+## ⭐ NOUVEAUX COMPOSANTS `_shared/` — Sahel Session 2026-06-07
+
+> `src/projects/warmap/_shared/` est maintenant CRÉÉ avec 3 composants génériques réutilisables.
+> Headless-safe (opacité uniquement, jamais filter:blur), frame-driven (progress via interpolate).
+> Différence clé vs AtlasAttackArrow : projection via `map.project()` (Mapbox) et non d3-geo.
+
+| Quand tu veux... | Composant | Où | Props clés |
+|---|---|---|---|
+| **Flèche tactique qui pousse progressivement** (axe d'offensive, convergence, tenaille) sur carte Mapbox | `SahelAttackArrow` | `warmap/_shared/SahelAttackArrow.tsx` | `map`, `waypoints: [number,number][]`, `progress: 0→1`, `color`, `strokeWidth`, `headType`, `marchingFrame` |
+| **Zones de contrôle qui grandissent organiquement** (expansion territoriale, contamination) | `TerritorialExpansion` | `warmap/_shared/TerritorialExpansion.tsx` | `map`, `regions: ExpansionRegion[]`, `startFrame`, `endFrame`, `frame`, `color`, `maxOpacity`. Données Act2 JNIM incluses dans `EXPANSION_REGIONS_ACT2` |
+| **Flux de déplacés / migration en rubans animés** (corridors humanitaires, flux population) | `RefugeeFlow` | `warmap/_shared/RefugeeFlow.tsx` | `map`, `flows: FlowCorridor[]`, `frame`, `color`, `baseWidth`. Données Act4 Sahel incluses dans `REFUGEE_FLOWS_ACT4` |
+
+**Showcase de validation** : `MapAnimationShowcase` (composition Root.tsx) — 40s, 3 segments.
+Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
+
+---
+
 ## 🧩 LES BRIQUES ACTUELLES (dans `engine/`)
 
 | Quand tu veux... | Brique / mécanisme | Où | Règle |
@@ -50,9 +67,11 @@ Pour ne pas re-disperser le pilier quand il grandit :
 - **Donnée d'un sujet** (jalons, paths, fenêtres narratives) → `engine/<sujet>Data.ts` + `data/<sujet>.warmap.json`.
 - **Une instance complète** (Soudan, Lobito...) → aujourd'hui dans `engine/` (Soudan) ; convention cible `src/projects/warmap/instances/<sujet>/` quand on découplera.
 - **Un asset** (sprite, audio, géo) → `public/_shared/{sprites/warmap, audio/<sujet>, geo-data/<sujet>}`.
-- **Enrichissement mapanimation** → réutiliser les composants Atlas tactiques ci-dessus, ne pas recoder.
+- **Enrichissement mapanimation** → `warmap/_shared/SahelAttackArrow.tsx` (Mapbox, FAIT) ou `AtlasAttackArrow` (d3-geo, Atlas). Ne PAS recoder depuis zéro.
 
-## ⏳ À FAIRE quand le pilier grandit (ne PAS sur-construire à 1 instance)
-- Au **2e sujet** : extraire les briques génériques de `WarMapEngine` vers `_shared/` (overlays, HUD, jetons).
-- **Previews visuelles** (start/mid/end, manifest) quand il y aura ≥3 templates réutilisables à montrer.
-- Brancher `AtlasAttackArrow`/`AtlasEncirclement` dans un beat war-map réel (1er usage mapanimation concret).
+## ⏳ À FAIRE quand le pilier grandit
+
+- ✅ `_shared/` créé avec 3 composants (2026-06-07) — seuil atteint
+- Extraire les briques génériques de `WarMapEngine` vers `_shared/` (overlays, HUD, jetons) au 2e sujet.
+- **Previews visuelles** (start/mid/end, manifest) — `MapAnimationShowcase` est le premier preview.
+- River Flow animation (fleuve Niger SVG animé) — 4e template, priorité basse, non encore codé.

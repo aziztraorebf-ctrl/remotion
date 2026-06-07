@@ -244,6 +244,7 @@ import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
 import { WarMapEngine, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/warmap/engine/WarMapEngine";
 import { SahelWarMapEngine, SAHEL_FPS, SAHEL_DURATION } from "./projects/warmap/engine/SahelWarMapEngine";
+import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
 import { LobitoWarmapScene, LOBITO_WARMAP_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoWarmapScene";
 import { LobitoVersionA, LOBITO_A_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionA";
 import { LobitoVersionB, LOBITO_B_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionB";
@@ -2656,6 +2657,15 @@ export const RemotionRoot: React.FC = () => {
           component={SahelWarMapEngine}
           durationInFrames={SAHEL_DURATION}
           fps={SAHEL_FPS}
+          width={1920}
+          height={1080}
+        />
+        {/* SHOWCASE Map Animation — 3 briques visuelles en 40s */}
+        <Composition
+          id="MapAnimationShowcase"
+          component={MapAnimationShowcase}
+          durationInFrames={SHOWCASE_DURATION}
+          fps={SHOWCASE_FPS}
           width={1920}
           height={1080}
         />

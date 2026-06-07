@@ -118,20 +118,15 @@ Tillabéri (lat 14.21, lon 1.45) → Niamey (lat 13.51, lon 2.12) : fuite vers l
 
 ---
 
-## Plan de session parallèle
+## Statut d'exécution (session 2026-06-07)
 
-**Ordre d'exécution :**
-1. Template 3 (Army Arrows) — base qui sert pour Act 1 + Act 3
-2. Template 1 (Territorial Expansion) — Act 2 le plus dense visuellement
-3. Template 2 (Refugee Flow) — Act 4 humanitaire
-4. Template 4 (River Flow) — si temps restant
+| Template | Statut | Fichier réel | Intégré moteur |
+|---|---|---|---|
+| Template 3 — Army Arrows | ✅ CODÉ + INTÉGRÉ | `warmap/_shared/SahelAttackArrow.tsx` | Hook f502 + Act2 Libye + Act3 tenaille Kidal + contre-off |
+| Template 1 — Territorial Expansion | ✅ CODÉ + INTÉGRÉ | `warmap/_shared/TerritorialExpansion.tsx` | Act2 f2630→f4800, 8 régions JNIM |
+| Template 2 — Refugee Flow | ✅ CODÉ + INTÉGRÉ | `warmap/_shared/RefugeeFlow.tsx` | Act4 f10294+, 3 corridors |
+| Template 4 — River Flow | NON FAIT | — | Priorité basse, optionnel |
 
-**Architecture cible :**
-```
-src/projects/warmap/_shared/
-├── SahelAttackArrow.tsx    (Template 3 — adapté Mapbox)
-├── TerritorialExpansion.tsx (Template 1 — fill progressif)
-└── RefugeeFlow.tsx         (Template 2 — ruban animé)
-```
+**Showcase rendu** : `MapAnimationShowcase` (40s) — litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
 
-**Condition d'intégration :** chaque composant doit rendre en animatic isolé (@35%, 10s) avant d'être branché dans SahelWarMapEngine.tsx.
+**Différence vs plan initial** : `SahelAttackArrow` est une version Mapbox (map.project) — pas un portage d3-geo. Suffisant pour la war-map Long Format. La version d3-geo (`AtlasAttackArrow`) reste pour Atlas.

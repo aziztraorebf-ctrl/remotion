@@ -64,10 +64,11 @@ type EpicWindow = { start: number; hold: number; kind: "overlay" | "figure" | "e
 // 2. ~50s : overlay DONNEE famine 25M (sans equivalent carto -> plein ecran justifie).
 export const EPIC_WINDOWS: EpicWindow[] = [
   {
-    start: 24 * SUDAN_FPS, hold: 8 * SUDAN_FPS, kind: "explicatif",
+    start: 24 * SUDAN_FPS, hold: 5 * SUDAN_FPS, kind: "explicatif",
     data: { title: "L'exode", text: "Des millions fuient vers les frontières", portrait: "portrait-civil",
             source: "Source : OCHA / HCR Soudan 2023" },
   },
+  // famine decale : 24+5=29s libre, famine reste a ~50s (inchange)
   { start: 50 * SUDAN_FPS, hold: 7 * SUDAN_FPS, kind: "overlay", data: { variant: "famine" } },
 ];
 // REFUGEE_TEXT conserve pour compatibilite (inutilise desormais : l'action explicatif
