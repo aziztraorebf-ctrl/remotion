@@ -127,10 +127,14 @@ def call_kimi(prompt, frames, max_tokens, results):
 
 
 def parse_frame(arg):
-    """Parse 'path/to/frame.png:caption' -> (path, caption)."""
-    if ":" in arg and not arg[1:3] == ":\\":
-        path, caption = arg.rsplit(":", 1)
-        return path.strip(), caption.strip()
+    """Parse 'path/to/frame.png:caption' -> (path, caption).
+    Split sur le ':' qui suit l'extension image (le caption peut contenir des ':'
+    ex '9:16'). On cherche '.jpg:'/'.png:'/'.jpeg:' plutot qu'un rsplit naif."""
+    import re
+    m = re.search(r"\.(png|jpg|jpeg|webp):", arg, re.IGNORECASE)
+    if m:
+        cut = m.end()  # juste apres le ':'
+        return arg[:cut - 1].strip(), arg[cut:].strip()
     return arg.strip(), "frame de reference"
 
 
