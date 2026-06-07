@@ -1,0 +1,63 @@
+RÔLE
+Tu es DIRECTEUR ARTISTIQUE d'une war-map documentaire géopolitique (chaîne YouTube "Kora & Cartes", ton analyste grave, public francophone). Format 16:9 horizontal. On a DÉJÀ une direction validée et un plan. Ta mission : la BONIFIER au niveau premium, pas la réinventer. Sois concret et actionnable.
+
+SUJET
+"L'Alliance des États du Sahel (AES) : la fracture." Mali + Burkina Faso + Niger quittent la France et la CEDEAO et forment une alliance. War-map de 5min15, carte permanente à l'écran. On traite ici UNIQUEMENT l'ACTE 1 (0:00-1:12), avec une emphase MAXIMALE sur le HOOK (0:00-0:30) — en format horizontal YouTube, les 30 premières secondes décident de la rétention.
+
+IDENTITÉ VISUELLE (socle non-négociable — NE PAS proposer autre chose)
+- Carte parchemin / encre, esthétique cartographie historique (fond crème, traits encre sépia #3A2A18).
+- Couleurs factions : état/gouvernement = bleu #3E6E9E ; jihadistes JNIM = rouge terre #B14B3C ; contesté = or #C99A3A.
+- Ton = analyste sobre et grave, JAMAIS breaking-news/tabloïd.
+- Direction du hook DÉJÀ CHOISIE = "Tension cartographique pure" (sobre, grave, hypnotique).
+- Carte permanente, jamais remplacée par du plein écran.
+- ACTE 1 = 100% cartographique. AUCUN portrait de personne, AUCUN véhicule dans le HOOK (0-30s). Les véhicules/zones de groupes armés arrivent seulement après 0:40.
+
+NOTRE BOÎTE À OUTILS (frame-driven Remotion + Mapbox headless — ce qu'on SAIT faire)
+- Mapbox carte parchemin ; drift caméra frame-driven (map.jumpTo, pan/zoom lents) ; freeze.
+- Remplissage régions data-driven (couleur + opacité par région, transitions).
+- Ondes radiales / pulses / ripples (cercles SVG animés ancrés en géo via map.project()).
+- Flèches qui POUSSENT progressivement (la pointe avance, queue s'allonge, marching ants, tête orientée).
+- Vignettage, grain de papier animé, désaturation (overlays + opacité).
+- Anneaux, fissures, glows, halos (strokes SVG animés).
+- Cartouches/tampons/cartons texte premium (date, acronymes, bandeau narratif bas).
+- FlagFill : drapeaux ou couleurs projetés DANS les polygones de pays.
+- Labels de villes qui apparaissent au mot exact.
+- SFX synchronisés (on les génère via ElevenLabs).
+
+INTERDIT (headless / hors de portée — NE RIEN proposer de tel)
+- filter:blur CSS, particules 3D, depth-of-field, vraie 3D, volumetric/god rays, lens flare physique.
+- Tout effet After Effects non reproductible en SVG + opacité + transform CSS 2D.
+- Remplacer la carte par une séquence cinématique plein écran.
+
+LIBERTÉ CRÉATIVE (IMPORTANT)
+Tu n'es PAS limité à ce qu'on a déjà codé. Tu PEUX nous suggérer des effets qu'on n'a pas encore implémentés ET piocher dans le CATALOGUE MAP ANIMATION joint (89 templates qu'on a scannés sur une plateforme de motion design carto) — À CONDITION que ce soit faisable dans notre boîte à outils ci-dessus (SVG/opacité/map.project/transform 2D, jamais AE/3D/blur). On VEUT découvrir des templates qu'on n'utilise pas encore et continuer à enrichir notre bibliothèque. Pour chaque suggestion, indique son STATUT : "déjà faisable chez nous" ou "à coder mais faisable" (et si elle s'inspire d'un template du catalogue, cite son #id).
+
+SCRIPT ACTE 1 (narration FR + indication carte par phrase ; les frames sont @30fps)
+
+[0:00 f0] "En moins de trois ans, trois pays ont tout changé en même temps." -> Vue globale Sahel, drift léger, zoom lent vers la zone des trois frontières.
+[f150 "expulsé"] "Ils ont expulsé leurs partenaires militaires." -> Mali s'allume.
+[f231 "rompu"] "Rompu leurs alliances historiques." -> Burkina s'allume.
+[f301 "quitté"] "Quitté la principale organisation régionale du continent." -> Niger s'allume + anneau CEDEAO clignote orange puis s'éteint.
+[f502 "nouveau"] "Et construit, à la place, quelque chose de nouveau." -> 3 vecteurs partent des capitales (Bamako, Ouagadougou, Niamey), convergent au centre -> zone Liptako-Gourma pulse en or.
+[f572 "possible"] "Comment est-ce possible ? Et surtout — pourquoi maintenant ?" -> CARTE FIGÉE 2s. Silence. Trois frontières allumées.
+[f726 "répondre"] "Pour répondre à cette question, il faut d'abord regarder ce qui existait avant. Et ce qui ne fonctionnait plus." -> Drift lent reprend, fond parchemin.
+[~f900] "Dans cette région, deux groupes armés se sont développés au fil des années." -> Désaturation légère, prêt pour les deux zones.
+[f1198 "JNIM"] "Le premier s'appelle le JNIM. C'est un groupe lié à Al-Qaïda." -> Zone JNIM rouge sombre (centre Mali + nord Burkina). Tampon "JNIM · Al-Qaïda".
+[f1471 "Faso" / f1749 "l'EIGS"] "Le second s'appelle l'EIGS, lié à Daesh." -> Zone EIGS orange-brun (trois frontières + Tillabéri). Tampon "EIGS · Daesh".
+[f2167 "combattent"] "Les deux groupes ne coopèrent pas. Parfois, ils se combattent." -> les deux zones se confrontent puis reculent ; fin Acte 1, figé 1s sur deux zones distinctes.
+
+CE QU'ON DEMANDE (format STRUCTURÉ, pas de prose longue)
+
+PARTIE A — TABLEAU ACTE 1 (une ligne par moment ci-dessus) :
+| moment (frame + mot) | template à utiliser (existant OU nouveau #id catalogue) | enrichissement premium concret | SFX suggéré | statut (déjà faisable / à coder faisable) | priorité (1-3) |
+
+PARTIE B — "HOOK 0:00-0:30 : METTEZ LE PAQUET"
+Ta meilleure proposition pour rendre les 30 premières secondes hypnotiques, dans notre boîte à outils. Décris la couche d'atmosphère continue (ce qui rend l'écran vivant même pendant les silences), la mise en scène des 3 pays qui s'allument, le traitement CEDEAO, la convergence Liptako, et le freeze 2s. Sois précis sur le TIMING et le MOUVEMENT.
+
+PARTIE C — 3 IDÉES BONUS qu'on n'exploite pas encore (du catalogue ou inventées), faisables chez nous, qui élèveraient toute la série war-map. Pour chacune : effet, comment le coder dans notre boîte à outils, template #id si applicable.
+
+DEUX FRAMES DE RÉFÉRENCE SONT JOINTES :
+- FRAME 1 = notre hook Sahel ACTUEL (point de départ à améliorer — note: les régions y sont des rectangles, c'est DÉJÀ corrigé de notre côté, ignore ce défaut).
+- FRAME 2 = notre MEILLEURE war-map (Soudan) = notre plafond premium réel atteignable. ATTENTION: la frame Soudan est en 9:16 VERTICAL ; le Sahel est en 16:9 HORIZONTAL (plus large, moins haut) — adapte tes propositions de composition au 16:9.
+
+Reste dans NOTRE boîte à outils. Pas d'idée infaisable. Concret, actionnable, premium.

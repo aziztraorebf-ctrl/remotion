@@ -116,6 +116,8 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Mouvement camera, orbit, dolly, crane, OTS, tracking** | `memory/tools/camera-movements.md` | — |
 | **Ecrire un script Short narratif (Heros Oublies, conte, tragedie, voyage)** | `memory/templates/script-ebauche-v1.md` | — |
 | **Ecrire un script Atlas (geo, taille, richesse-record, comparaison echelle, inventions chiffrees)** | `memory/templates/script-atlas-v1.md` | — |
+| **Ecrire / valider TOUT script (Short, Mid-form, Atlas, War-Map, tout format) — niveau oral OBLIGATOIRE** | `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` ⭐ **UNIVERSEL** — 7 regles : phrase max 22 mots, test "et alors ?", verbes avec sujet, tampons acronymes, question centrale <20s, liaisons inter-actes, checklist audio lock. S'applique AVANT audio lock sur tout script sans exception. | — |
+| **Ecrire / produire un War-Map Long (5-7min, 16:9, format analytique geopolitique)** | `memory/doctrines/WARMAP-LONG-DOCTRINE.md` ⭐ — carte permanente ecran, overlays semi-transparents 3 niveaux, structure 5 actes, hook contradiction+carte, 3 regimes audio-visuel. Distinct de War-Map Short (9:16/60s) et Souverain Mid-form. Pipeline complet inclus. | — |
 | **Produire un episode Atlas (audio + d3-geo + overlays + render Remotion)** | `memory/templates/atlas-template-v1.md` | `remotion-best-practices/rules/maps.md` |
 | **"quel catalogue Atlas ?", demarrer un beat Atlas, doute sur ou chercher** ⭐ **POINT D'ENTREE** | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` — carte maitre de TOUS les catalogues Atlas (doctrine, composants, blueprints, assets, PixelLab, camera). Lire EN PREMIER quand on ne sait pas quel catalogue ouvrir. | — |
 | **"quel catalogue War-Map ?", demarrer une war-map / carte temporelle, doute sur ou chercher** ⭐ **POINT D'ENTREE** | `src/projects/warmap/WARMAP-INDEX.md` — carte maitre du 3e pilier (doctrine design + données, moteur, briques, assets, LA référence `SudanWarMapEpic60`). Lire EN PREMIER. | — |
@@ -147,6 +149,9 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` | — |
 | ElevenLabs, voix, TTS, audio, narration | `memory/tools/elevenlabs.md` | — |
 | **Minimax, musique de fond, kora, griot, Mande** | `memory/tools/minimax.md` | — |
+| **Publier / programmer sur YouTube, Instagram, Facebook (TryPost)** | `memory/tools/trypost.md` OBLIGATOIRE — rôle, limites 50 MB, IDs comptes, workflow MCP 5 étapes, erreurs. JAMAIS utiliser REST `/api/uploads` (404). | — |
+| **Publier / programmer sur TikTok (Postiz)** | `memory/tools/postiz.md` OBLIGATOIRE — TikTok UNIQUEMENT, pas de limite taille, workflow REST 2 étapes, ID intégration TikTok, coverB obligatoire. | — |
+| **Calendrier éditorial Kora & Cartes (IDs posts, dates, statuts)** | `memory/episodes/lancement-kora/CALENDRIER-EDITORIAL-JUIN-2026.md` — source de vérité juin 2026. IDs TryPost + Postiz de chaque vidéo. | — |
 | **Remotion, animation, render, GPU, headless, composition** | `memory/tools/remotion.md` | `remotion-best-practices/rules/` (notamment `maps.md`), `remotion-video-toolkit/rules/rendering.md` |
 | **Render cloud Vercel (render > 30s, liberer machine locale)** | `scripts/render-on-vercel.py` — defaut pour tout render long. Mapbox OK. 100GB-h/mois gratuit. | — |
 | **Comparaison surfaces geo (thetruesize.com, pays dans pays, vraie taille)** | `memory/tools/d3-geo-taille-comparative.md` OBLIGATOIRE — pattern precompute + translate lat=0 + clipPath. Composant : `src/projects/_shared/components/inserts/SurfaceComparison.tsx`. Asset : `public/_shared/geo-data/us-48states.json` | — |
@@ -183,6 +188,7 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **Beat vidéo qui échoue 2+ fois (visuel)** | AVANT de re-coder : `scripts/tools/gemini-beat5-review.py` (œil externe Gemini sur la vidéo ratée) — généralisable. Gagne un œil au lieu de bâtir à l'aveugle. |
 | **Gros chantier multi-étapes** (nouvel épisode, pipeline, refactor) | `superpowers:writing-plans` |
 | **Avant de dire "c'est fait/terminé"** | `superpowers:verification-before-completion` |
+| **⭐ AVANT de coder un acte/beat (vision validée + assets décidés)** | **DA-BRIEF-GATE — `memory/doctrines/DA-BRIEF-GATE.md` (LIRE) + `scripts/tools/da-brief.py`.** Review créative AMONT : brief DA contraint (socle + boîte à outils + interdits + liberté cadrée + catalogue + 2 frames downscalées) → Gemini 3.1 Pro + Kimi K2.5 en parallèle → Claude synthétise/vérifie (CONVERGE / unique / écarté) → Aziz tranche le goût → code. NON-NEGOTIABLE tous projets (Souverain/Atlas/War-Map). MAX 1 appel/modèle/acte. Évite les allers-retours, rend premium dès le 1er jet. |
 
 **Anti-friction** : NE PAS lancer un skill pour du trivial (1 slide, fix 1 ligne, question simple). Le skill se lance quand la tâche a la FORME du procédé, pas par réflexe.
 
@@ -275,6 +281,7 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 0. scan       → beat-session.py --phase scan  → SCAN COMPLET (TOUT COMPOSANTS-INDEX, 71+ composants) + >=2 COMBINAISONS validées Aziz. GATE : breakdown bloqué sans scan rempli.
 0bis. storyboard → STORYBOARD GEMINI VISUEL multi-panels OBLIGATOIRE (gemini-storyboard-panels.py) montrant la progression. Validé Aziz AVANT breakdown. C'est de lui qu'on tire le JSON.
 1. breakdown  → beat-session.py --phase breakdown  → JSON layout Tailwind (depuis le storyboard). LIRE avant de coder.
+1bis. DA-BRIEF-GATE → review créative AMONT (Gemini+Kimi via scripts/tools/da-brief.py). Voir memory/doctrines/DA-BRIEF-GATE.md. Synthèse Claude → Aziz tranche le goût → PUIS code. (skippable si beat trivial.)
 2. code       → Beat*.tsx Tailwind. h-[X%] + flex. Tokens: text-gold/ivory/bg-navy. Briques HERO DATA. → wip/beat{N}_v1.mp4
 3. self-review → --phase self-review  → 23 critères. Seuil 19/23 BLOQUANT. Corriger avant Gemini.
 4. review     → --phase review  → 1 seul appel Gemini. JSON code_values.
@@ -300,6 +307,7 @@ Claude DOIT sauvegarder automatiquement, SANS qu'Aziz le demande, dans ces situa
 1. storyboard → Production Brief par acte (Camera + Overlays + SFX). VALIDÉ PAR AZIZ avant code.
                 = l'équivalent du storyboard PNG, mais pour une carte animée.
                 SFX : plancher 0.50 (voir DOCTRINE section 6). Caméra : pitch 32 relief si focus 1-4 pays (camCountryApproach).
+1bis. DA-BRIEF-GATE → review créative AMONT (Gemini+Kimi via scripts/tools/da-brief.py). Voir memory/doctrines/DA-BRIEF-GATE.md. Synthèse Claude → Aziz tranche le goût → PUIS code. (skippable si beat trivial.)
 2. code       → getCam(frame) + ShortOverlays dans le fichier UNIQUE. → wip/animatic_aN_v1.mp4 (scale 0.35)
 3. self-review → SCRIPTÉE D'ABORD : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` —
                 assertions automatiques (SFX dans <Sequence>, drapeaux = useClipFlags/vraies images PAS drawFlagCanvas,
