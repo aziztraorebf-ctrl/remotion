@@ -44,6 +44,9 @@ import {
   Easing,
 } from "remotion";
 import { MapboxBrandingHide } from "../../_shared/mapbox/MapboxBase";
+import { SahelAttackArrow } from "../_shared/SahelAttackArrow";
+import { TerritorialExpansion, EXPANSION_REGIONS_ACT2 } from "../_shared/TerritorialExpansion";
+import { RefugeeFlow, REFUGEE_FLOWS_ACT4 } from "../_shared/RefugeeFlow";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -100,6 +103,33 @@ const F_GAO           = 4056;  // "Gao,"
 const F_MENAKA_BASE   = 4082;  // "Ménaka," (base militaire)
 const F_NIAMEY_BASE   = 4112;  // "Niamey."
 const F_DJIBO_REF     = 10294; // "Djibo," (réfugiés)
+
+// ============================================================
+// TRIGGERS MAP ANIMATION — Act 2 + Act 3
+// ============================================================
+
+// SCRIPT: Act 2 — "s'embrase" → expansion territoriale JNIM 2012→2022
+const F_EXPANSION_START = 2630; // "s'embrase"
+const F_EXPANSION_END   = 4800; // "2022" (environ)
+
+// SCRIPT: Act 2 — onde armes Libye → nord Mali (contexte ébullition)
+const F_LIBYE_ARMES = 2630; // même déclencheur "s'embrase"
+
+// SCRIPT: Act 3 — offensive FAMa + Africa Corps depuis Gao+Ménaka → Kidal (f8218→f8683)
+const F_KIDAL_OFFENSIVE = 8218; // début offensive
+const F_KIDAL_FLAG_VISIBLE = 8683; // "flotte" → flèches montrent le résultat
+
+// SCRIPT: Act 3 — contre-offensive JNIM+CSP → Kidal (f9477)
+const F_KIDAL_COUNTER = 9477;
+
+// Coordonnées pour flèches tactiques Act 3
+const GAO_COORD    = [-0.04, 16.27] as [number, number];
+const MENAKA_COORD = [2.40, 15.92] as [number, number];
+const KIDAL_COORD  = [1.44, 18.43] as [number, number];
+
+// Coordonnées Libye (source armes) pour Act 2
+const LIBYE_COORD  = [13.18, 32.90] as [number, number]; // Tripoli approximatif
+const NORD_MALI_COORD = [1.44, 18.43] as [number, number]; // Kidal = porte d'entrée nord Mali
 
 // ============================================================
 // TRIGGERS HOOK — Acte 1 (depuis forced alignment narration-v1)
@@ -523,6 +553,63 @@ export const SahelWarMapEngine: React.FC = () => {
   const hookFreezeActive = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
 
   // ============================================================
+  // MAP ANIMATION — FLÈCHES TACTIQUES (Act 2 + Act 3 + hook upgrade)
+  // ============================================================
+
+  // SCRIPT: Act 2 — onde armes Libye → nord Mali (f2630 "s'embrase")
+  // Flèche unique Libye→Kidal, se dessine en 60 frames
+  const libArrowProgress = interpolate(
+    frame,
+    [F_LIBYE_ARMES, F_LIBYE_ARMES + 60],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  // Disparaît après 5s (150 frames) pour ne pas polluer l'écran
+  const libArrowOp = interpolate(
+    frame,
+    [F_LIBYE_ARMES + 120, F_LIBYE_ARMES + 180],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  // SCRIPT: Act 3 — FAMa depuis Gao → Kidal (f8218, 45 frames)
+  const famaArrowProgress = interpolate(
+    frame,
+    [F_KIDAL_OFFENSIVE, F_KIDAL_OFFENSIVE + 45],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  // Gao part 30 frames avant Ménaka (doctrine : délai entre les deux branches de la tenaille)
+  const africaCorpsProgress = interpolate(
+    frame,
+    [F_KIDAL_OFFENSIVE + 30, F_KIDAL_OFFENSIVE + 75],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  // Les deux flèches s'effacent après que le drapeau malien flotte (f8683 + 60)
+  const kidalArrowOp = interpolate(
+    frame,
+    [F_KIDAL_FLAG_VISIBLE + 30, F_KIDAL_FLAG_VISIBLE + 90],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  // SCRIPT: Act 3 — contre-offensive JNIM+CSP → Kidal (f9477)
+  // Direction inverse : Kidal → est (contre-attaque)
+  const counterProgress = interpolate(
+    frame,
+    [F_KIDAL_COUNTER, F_KIDAL_COUNTER + 45],
+    [0, 1],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+  const counterOp = interpolate(
+    frame,
+    [F_KIDAL_COUNTER + 90, F_KIDAL_COUNTER + 150],
+    [1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
+
+  // ============================================================
   // OPACITES HUD
   // ============================================================
   const hudOp = interpolate(frame, [T_START - 2, T_START + 12], [0, 1], {
@@ -684,37 +771,51 @@ export const SahelWarMapEngine: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* SCRIPT: "quelque chose de nouveau." → 3 vecteurs capitales → Liptako + pulse or (f502) */}
-      {liptakoProgress > 0 && ready && hookPx.liptako && hookPx.bamako && hookPx.ouaga && hookPx.niamey && (
-        <AbsoluteFill style={{ pointerEvents: "none" }}>
-          <svg style={{ position: "absolute", width: "100%", height: "100%", overflow: "visible" }}>
-            {/* Vecteur Bamako → Liptako */}
-            <line
-              x1={hookPx.bamako.x} y1={hookPx.bamako.y}
-              x2={hookPx.bamako.x + (hookPx.liptako.x - hookPx.bamako.x) * liptakoProgress}
-              y2={hookPx.bamako.y + (hookPx.liptako.y - hookPx.bamako.y) * liptakoProgress}
-              stroke={SAHEL_COLORS.contested} strokeWidth="2.5"
-              strokeDasharray="6 4" opacity="0.85"
-            />
-            {/* Vecteur Ouagadougou → Liptako */}
-            <line
-              x1={hookPx.ouaga.x} y1={hookPx.ouaga.y}
-              x2={hookPx.ouaga.x + (hookPx.liptako.x - hookPx.ouaga.x) * liptakoProgress}
-              y2={hookPx.ouaga.y + (hookPx.liptako.y - hookPx.ouaga.y) * liptakoProgress}
-              stroke={SAHEL_COLORS.contested} strokeWidth="2.5"
-              strokeDasharray="6 4" opacity="0.85"
-            />
-            {/* Vecteur Niamey → Liptako */}
-            <line
-              x1={hookPx.niamey.x} y1={hookPx.niamey.y}
-              x2={hookPx.niamey.x + (hookPx.liptako.x - hookPx.niamey.x) * liptakoProgress}
-              y2={hookPx.niamey.y + (hookPx.liptako.y - hookPx.niamey.y) * liptakoProgress}
-              stroke={SAHEL_COLORS.contested} strokeWidth="2.5"
-              strokeDasharray="6 4" opacity="0.85"
-            />
-          </svg>
+      {/* SCRIPT: "quelque chose de nouveau." → 3 flèches capitales → Liptako + pulse or (f502)
+          Upgrade : SahelAttackArrow (flèches qui POUSSENT) au lieu de <line> statiques */}
+      {liptakoProgress > 0 && ready && (
+        <>
+          {/* Flèche Bamako → Liptako */}
+          <SahelAttackArrow
+            map={mapRef.current}
+            waypoints={[BAMAKO_COORD, LIPTAKO_CENTER]}
+            progress={liptakoProgress}
+            color={SAHEL_COLORS.contested}
+            strokeWidth={3}
+            headType="arrow"
+            marchingFrame={frame}
+            opacity={0.88}
+            width={width}
+            height={height}
+          />
+          {/* Flèche Ouagadougou → Liptako (légère décalée) */}
+          <SahelAttackArrow
+            map={mapRef.current}
+            waypoints={[OUAGA_COORD, LIPTAKO_CENTER]}
+            progress={Math.max(0, liptakoProgress - 0.15)}
+            color={SAHEL_COLORS.contested}
+            strokeWidth={3}
+            headType="arrow"
+            marchingFrame={frame}
+            opacity={0.85}
+            width={width}
+            height={height}
+          />
+          {/* Flèche Niamey → Liptako (décalée davantage) */}
+          <SahelAttackArrow
+            map={mapRef.current}
+            waypoints={[NIAMEY_COORD, LIPTAKO_CENTER]}
+            progress={Math.max(0, liptakoProgress - 0.30)}
+            color={SAHEL_COLORS.contested}
+            strokeWidth={3}
+            headType="arrow"
+            marchingFrame={frame}
+            opacity={0.82}
+            width={width}
+            height={height}
+          />
           {/* Pulse or Liptako-Gourma */}
-          {liptakoPulse > 0 && (
+          {liptakoPulse > 0 && hookPx.liptako && (
             <div style={{
               position: "absolute",
               left: hookPx.liptako.x - 55,
@@ -722,9 +823,10 @@ export const SahelWarMapEngine: React.FC = () => {
               width: 110, height: 110,
               background: `radial-gradient(circle, rgba(201,154,58,${liptakoPulse * 0.8}) 0%, rgba(201,154,58,0) 70%)`,
               borderRadius: "50%",
+              pointerEvents: "none",
             }} />
           )}
-        </AbsoluteFill>
+        </>
       )}
 
       {/* SCRIPT: "Comment est-ce possible ?" → carton figé sur la carte (f572, 2s) */}
@@ -750,6 +852,111 @@ export const SahelWarMapEngine: React.FC = () => {
             Comment est-ce possible ?
           </div>
         </div>
+      )}
+
+      {/* ======================================================
+          MAP ANIMATION — ACT 2 : EXPANSION TERRITORIALE JNIM
+          SCRIPT: "s'embrase" f2630 → expansion rouge 2012→2022
+          ====================================================== */}
+      {ready && frame >= F_EXPANSION_START && (
+        <TerritorialExpansion
+          map={mapRef.current}
+          regions={EXPANSION_REGIONS_ACT2}
+          startFrame={F_EXPANSION_START}
+          endFrame={F_EXPANSION_END}
+          frame={frame}
+          color={SAHEL_COLORS.jnim}
+          maxOpacity={0.42}
+          width={width}
+          height={height}
+        />
+      )}
+
+      {/* ======================================================
+          MAP ANIMATION — ACT 2 : ONDE ARMES LIBYE → NORD MALI
+          SCRIPT: "s'embrase" f2630 — flux armements depuis Libye
+          ====================================================== */}
+      {ready && libArrowProgress > 0 && (
+        <SahelAttackArrow
+          map={mapRef.current}
+          waypoints={[LIBYE_COORD, NORD_MALI_COORD]}
+          progress={libArrowProgress}
+          color="#6B3A2A"
+          strokeWidth={3}
+          headType="arrow"
+          marchingFrame={frame}
+          opacity={Math.min(libArrowProgress, libArrowOp)}
+          width={width}
+          height={height}
+        />
+      )}
+
+      {/* ======================================================
+          MAP ANIMATION — ACT 3 : TENAILLE KIDAL (FAMa + Africa Corps)
+          SCRIPT: f8218 → offensive depuis Gao + Ménaka → Kidal
+          ====================================================== */}
+      {ready && famaArrowProgress > 0 && (
+        <SahelAttackArrow
+          map={mapRef.current}
+          waypoints={[GAO_COORD, KIDAL_COORD]}
+          progress={famaArrowProgress}
+          color={SAHEL_COLORS.etat}
+          strokeWidth={5}
+          headType="arrow"
+          marchingFrame={frame}
+          opacity={kidalArrowOp}
+          width={width}
+          height={height}
+        />
+      )}
+      {ready && africaCorpsProgress > 0 && (
+        <SahelAttackArrow
+          map={mapRef.current}
+          waypoints={[MENAKA_COORD, KIDAL_COORD]}
+          progress={africaCorpsProgress}
+          color={SAHEL_COLORS.etat}
+          strokeWidth={4}
+          headType="arrow"
+          marchingFrame={frame}
+          opacity={kidalArrowOp}
+          width={width}
+          height={height}
+        />
+      )}
+
+      {/* ======================================================
+          MAP ANIMATION — ACT 3 : CONTRE-OFFENSIVE JNIM+CSP
+          SCRIPT: f9477 — contre-offensive depuis l'est
+          ====================================================== */}
+      {ready && counterProgress > 0 && (
+        <SahelAttackArrow
+          map={mapRef.current}
+          waypoints={[MENAKA_COORD, KIDAL_COORD]}
+          progress={counterProgress}
+          color={SAHEL_COLORS.jnim}
+          strokeWidth={4}
+          headType="arrow"
+          marchingFrame={frame}
+          opacity={counterOp}
+          width={width}
+          height={height}
+        />
+      )}
+
+      {/* ======================================================
+          MAP ANIMATION — ACT 4 : FLUX RÉFUGIÉS
+          SCRIPT: f10294 "Djibo" / f10349 "Ménaka" / f10783 "réel."
+          ====================================================== */}
+      {ready && frame >= F_REF_DJIBO && (
+        <RefugeeFlow
+          map={mapRef.current}
+          flows={REFUGEE_FLOWS_ACT4}
+          frame={frame}
+          color="#3A2A18"
+          baseWidth={5}
+          width={width}
+          height={height}
+        />
       )}
 
       {/* ======================================================
