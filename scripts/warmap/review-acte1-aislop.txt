@@ -1,0 +1,31 @@
+RÔLE
+Tu es un critique exigeant de motion design cartographique documentaire (war-map géopolitique, style chaînes YouTube type "day-by-day war map"). Format 16:9 horizontal. On te montre 4 frames de l'ACTE 1 d'une war-map sur l'Alliance des États du Sahel (Mali + Burkina + Niger). On veut un retour BRUTAL et HONNÊTE, pas poli.
+
+CONTEXTE TECHNIQUE (ce qui est censé se passer dans ces frames)
+- Frame 1 (hook ~5s) : narration "Ils ont expulsé leurs partenaires" — le Mali est censé être surligné (frontière dorée pulsante) pour montrer DE QUEL pays on parle. Carte colorée par contrôle territorial (bleu=gouvernement, rouge=jihadistes JNIM, or=contesté).
+- Frame 2 (~16s) : narration "quelque chose de nouveau" — un anneau orange (la CEDEAO qu'ils quittent) + 3 flèches dorées convergent vers le centre (Liptako-Gourma = naissance de l'alliance).
+- Frame 3 (~41s) : narration présente le JNIM — zone rouge + carton central "JNIM / lié à Al-Qaïda" + petits véhicules (pickups armés) qui patrouillent.
+- Frame 4 (~73s) : narration "ils se combattent" — véhicules JNIM (rouge) et EIGS (orange-brun) qui se rapprochent.
+
+DEUX QUESTIONS PRÉCISES (réponds aux DEUX, séparément)
+
+=== QUESTION 1 — AI-SLOP / MANQUE DE SAVOIR-FAIRE ===
+Qu'est-ce qui, dans ces frames, CRIE "généré programmatiquement par quelqu'un qui ne maîtrise pas vraiment le métier du motion design cartographique" ? Qu'est-ce qui trahit le manque d'effort humain / d'œil de directeur artistique / de connaissance des codes du genre ?
+Mets-toi dans la peau d'un spectateur AVERTI (ou adverse) qui regarde et pense "c'est de l'IA / c'est amateur". Sois SPÉCIFIQUE et TECHNIQUE :
+- Couleurs (saturation, palette, contraste, surcharge ?)
+- Typographie / cartouches (placement, hiérarchie, redondance ?)
+- Éléments graphiques (cercles, flèches, halos : justifiés ? compris ? bien intégrés ?)
+- Composition / équilibre / espace négatif
+- Ce qui fait "template générique" vs "travail intentionnel"
+- Tout détail qui trahit le procédural mal maîtrisé
+
+=== QUESTION 2 — LISIBILITÉ / COMPRÉHENSION ===
+En tant que spectateur lambda qui regarde en 16:9, qu'est-ce qui est CONFUS, ILLISIBLE ou REDONDANT ?
+- Comprend-on de quoi on parle à chaque instant ?
+- Les éléments (cercle, flèches, halos, véhicules) : leur fonction est-elle claire SANS le son ?
+- Y a-t-il trop d'éléments simultanés (surcharge) ?
+- Qu'est-ce qui ne sert à rien / pourrait être retiré ?
+- Les 2 types de véhicules sont-ils assez DIFFÉRENCIÉS ?
+
+FORMAT DE RÉPONSE
+Pour chaque question : liste de points concrets, classés du plus grave au moins grave. Pour chacun : le PROBLÈME + une PISTE de correction réaliste (dans une stack Remotion/Mapbox : SVG, opacité, couleurs, timing — pas d'After Effects/3D). Sois direct, on préfère la vérité dure à la politesse.

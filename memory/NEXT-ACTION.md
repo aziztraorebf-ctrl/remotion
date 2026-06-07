@@ -4,32 +4,50 @@
 
 ---
 
-## 🔧 CHANTIER OUVERT (2026-06-06) — Reprise lancement Kora & Cartes
+## ✅ LANCEMENT KORA & CARTES — TERMINE DEFINITIF (2026-06-07)
 
-Le lancement initial (9 videos Postiz) etait un FAUX DEPART : thumbnails vides ont tue la traction IG/TikTok. Diagnostic + solution faits cette session. **RESTE A FINIR (court) :**
-1. Generer cover frame 0 (variante B) pour or-africain + vraie-taille (les 5 autres + senegal-short = deja faites dans `out/episodes/_r-and-d/covers-B/`).
-2. Definir dates de republication (2 posts/jour, eviter burst red flag).
-3. Publier : TryPost (YT/FB/IG via MCP — outils charges au PROCHAIN redemarrage Claude) + Postiz (TikTok).
-4. Session SEPAREE : passe editoriale angle militant.
-- Source de verite : `memory/episodes/lancement-kora/ARCHITECTURE-DISTRIBUTION-FINALE.md`.
+Architecture finale validée : **TryPost (MCP) = YT+IG+FB** | **Postiz (REST) = TikTok ONLY**
+7/7 vidéos programmées sur les 2 outils, coverB (frame 0 forte) partout.
+
+| Date | Video | TryPost (YT+IG+FB) | TikTok (Postiz) |
+|------|-------|---------------------|------------------|
+| 9 juin | or-africain | ✅ | ✅ |
+| 9 juin | vraie-taille | ✅ IG+FB seulement | ✅ |
+| 11 juin | senegal-short | ✅ | ✅ |
+| 11 juin | mansa-moussa | ✅ | ✅ |
+| 13 juin | empire-ghana | ✅ | ✅ |
+| 13 juin | sonjata | ✅ | ✅ |
+| 16 juin | silicon-savannah | ✅ | ✅ |
+
+Logs : `scripts/tiktok-schedule-log.json` (Postiz TikTok) + IDs TryPost dans ORDRE-POSTS-POSTIZ-SAUVEGARDE.md.
+**SESSION SEPAREE en attente** : passe editoriale angle militant (`TODO-PASSE-EDITORIALE-ANGLE-MILITANT.md`).
 
 ---
 
-## 🔥 EN COURS (2026-06-07 session 2) — War-Map Sahel/AES : MOTEUR V3 + MAP ANIMATION
+## 🔥 PROCHAINE SESSION = SESSION DÉDIÉE ACTE 1 War-Map Sahel (FONDATRICE série)
 
-**Session 2026-06-07 session 2 : MAP ANIMATION INTÉGRÉ.**
-- 3 templates codés en isolé : SahelAttackArrow + TerritorialExpansion + RefugeeFlow
-- Moteur V3 : hook upgrade (flèches qui poussent vs <line> statiques), Act2 expansion JNIM, Act3 tenaille Kidal, Act4 flux réfugiés
-- Commit : 9663560
+> Session 3 (2026-06-07) : Acte 1 prototypé (catbox wuadef.mp4). Gros progrès MAIS Aziz
+> identifie un problème de fond : on a empilé des effets sans que chacun soit COMPRIS.
+> Décision : refondre l'Acte 1 en session dédiée fraîche (il pose les bases de TOUTE la série,
+> ne pas le bricoler). Détails complets + 6 commentaires : `memory/episodes/warmap-sahel/STATUS.md`.
 
-**⭐ PROCHAINE SESSION — Render + Validation :**
-1. **Animatic complet 439s** via `scripts/render-on-vercel.py` — c'est LA priorité absolue
-2. **Validation Aziz** : review timing Map Animation sur narration réelle, ajuster opacités/durées
-3. **GeoJSON réel** : sahel-admin1.geojson = bbox rectangles → Natural Earth/GADM (`python3 scripts/warmap/generate-sahel-admin1.py`)
-4. **Portraits réfugiés Sahel** Gemini (3 visages distincts — homme/femme/enfant, traits ouest-africains)
-5. **River Flow** (optionnel) : fleuve Niger SVG animé
+**✅ ACQUIS session 3 (gardés) :** GeoJSON Sahel admin-1 RÉEL (32 régions) · véhicules JNIM/EIGS
+Gemini (mais TROP similaires, à différencier) · 6 SFX war-map · **DA-BRIEF-GATE formalisé**
+(`scripts/tools/da-brief.py` + doctrine) · caméra narrative + séquentiel (bonne base technique).
 
-**Fiche reprise** : `memory/episodes/warmap-sahel/STATUS.md`
+**⭐ SESSION DÉDIÉE — 3 phases (ARRÊTER DE DEVINER) :**
+1. **RECHERCHE RÉELLE** : yt-dlp + TubeLab + study days + skills + décodages existants →
+   densité couleur / intro éléments (cercle, flèches) / différenciation unités.
+2. **REVIEW EXTERNE déjà lancée** session 3 (Gemini+Kimi, LISIBILITÉ + **AI-SLOP**) :
+   résultats `/tmp/da-refs/da-acte1-aislop-{gemini,kimi}.md` — RELIRE EN PREMIER (⚠️ /tmp peut
+   être purgé → si absent, relancer `scripts/warmap/review-acte1-aislop.txt`).
+3. **Reposer DOCTRINE Acte 1** (fondation série) puis reconstruire proprement.
+
+**Idées-clés à creuser** (3 ajouts Claude) : "contraste par le calme" (couleur = projecteur
+local sur la zone parlée, ni neutre vide ni tout coloré) · "1 élément = 1 fonction narrative
+claire" · différencier factions par FORME/symbole pas juste couleur.
+
+**Fiche reprise complète** : `memory/episodes/warmap-sahel/STATUS.md` (verdict session 3).
 
 ---
 

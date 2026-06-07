@@ -1,7 +1,45 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-07 (session 2 — Map Animation)
-**Session active :** Production moteur Sahel V3 + Map Animation intégré
+**Dernière mise à jour :** 2026-06-07 (session 3 — Acte 1 prototype + verdict Aziz)
+**Session active :** Acte 1 prototypé. VERDICT : bases à refondre en session dédiée.
+
+---
+
+## ⚠️ VERDICT SESSION 3 (2026-06-07) — ACTE 1 = PROTOTYPE, À REFONDRE EN SESSION DÉDIÉE
+
+Acte 1 v1 rendu (catbox wuadef.mp4). Gros progrès vs départ MAIS Aziz identifie un
+problème de FOND : **on a empilé des effets "intéressants" sans que chacun soit COMPRIS
+par le spectateur.** Décision : NE PAS bricoler l'Acte 1 en fin de session (il pose les
+bases de TOUTE la série). Session dédiée fraîche avec recherche + review externe.
+
+**6 commentaires Aziz (à traiter en session dédiée) :**
+1. **Trop de couleurs partout = nuit à la lisibilité** (surtout 16:9). Le pulse de frontière
+   ne ressort pas car pas de calme contre lequel contraster. CHANGEMENT DE PARADIGME à creuser.
+2. **Cercle CEDEAO + boom = incompréhensible** : cercle abstrait qui se brise, le spectateur
+   ne sait pas que c'est la CEDEAO qu'on quitte. Esthétique mais pas pédagogique.
+3. **Flèches convergence restent 15s sans rien faire** : doivent converger PUIS disparaître.
+4. **Cartons redondants avec la voix** ("JNIM lié à Al-Qaïda" pendant que la voix le dit).
+5. **Véhicules JNIM/EIGS trop similaires** (même silhouette, juste teinte) + **statiques 20s**
+   (apparaissent et restent plantés = ne racontent rien).
+6. **Cercles/halos semi-transparents inexpliqués** : polluent sans fonction claire.
+
+**3 ajouts Claude (corpus) pour la session dédiée :**
+- "Contraste par le calme" : carte majoritairement sobre, couleur = PROJECTEUR local sur la
+  zone dont on parle à l'instant T (ni neutre vide, ni tout coloré). À valider en recherche.
+- Règle dure série : "1 élément = 1 fonction narrative claire". Avant d'ajouter un effet :
+  "qu'est-ce que le spectateur comprend grâce à lui ?" Si rien que la voix ne dise = on n'ajoute pas.
+- Différencier les factions par la FORME/symbole, pas juste la couleur (se confond en mouvement).
+
+**PLAN SESSION DÉDIÉE ACTE 1 (fondatrice de la série) :**
+1. RECHERCHE RÉELLE (arrêter de deviner) : yt-dlp + TubeLab + study days + skills + ce qu'on a
+   déjà décodé → comment les meilleures chaînes gèrent densité couleur / intro éléments / diff unités.
+2. REVIEW EXTERNE Gemini+Kimi ciblée LISIBILITÉ + **AI-SLOP** (brief lancé session 3, résultats
+   dans /tmp/da-refs/da-acte1-aislop-{gemini,kimi}.md — À RELIRE en début de session dédiée).
+3. Reposer la DOCTRINE Acte 1 comme fondation, puis reconstruire proprement.
+
+**Honnêteté Claude (limite scope) :** je devine trop, je n'ai pas de boucle de validation
+perceptive (je juge l'esthétique sur frames, pas la compréhension en mouvement+son). D'où
+l'importance des yeux Aziz + reviews externes. Ne plus deviner les "meilleures manières".
 
 ---
 
