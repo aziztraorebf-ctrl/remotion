@@ -2660,6 +2660,77 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* TEST 10s socle visuel Acte 1 (session dédiée 2026-06-07) — DA-BRIEF-GATE.
+            Même frame de contrôle (pire mosaïque 2022-09-30) + même cadre que la version
+            isolée, pour comparer apples-to-apples l'effet des 3 corrections.
+            A = original isolé (corrections OFF) · B = corrigé (fusion + vignette + caméra). */}
+        <Composition
+          id="SahelActe1Test10s-A-Original"
+          component={SahelWarMapEngine}
+          defaultProps={{
+            fusionRegions: false,
+            geoVignette: false,
+            camStatic: { lon: -0.5, lat: 14.6, zoom: 4.55 },
+            controlFrameOverride: 2861,
+          }}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="SahelActe1Test10s-B-Corrige"
+          component={SahelWarMapEngine}
+          defaultProps={{
+            fusionRegions: true,
+            geoVignette: true,
+            geoVignetteOpacity: 0.42,
+            camStatic: { lon: -0.5, lat: 14.6, zoom: 4.55 },
+            controlFrameOverride: 2861,
+          }}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* B2 — vraie fusion territoriale (union Turf) + vignette + caméra.
+            La fusion-styling (B) ne suffisait pas : union des polygones par faction. */}
+        <Composition
+          id="SahelActe1Test10s-B2-Fusion"
+          component={SahelWarMapEngine}
+          defaultProps={{
+            fusionRegions: true,
+            geoVignette: true,
+            geoVignetteOpacity: 0.42,
+            camStatic: { lon: -0.5, lat: 14.6, zoom: 4.55 },
+            controlFrameOverride: 2861,
+          }}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* B3 — allumage séquentiel + points-villes pulsants beige + fronts draw-in.
+            Sur B2 (fusion+vignette+caméra) on ajoute : la carte SE CONSTRUIT au rythme
+            du récit (Mali→Burkina→Niger), villes liées à l'allumage de leur état. */}
+        <Composition
+          id="SahelActe1Test10s-B3-Sequentiel"
+          component={SahelWarMapEngine}
+          defaultProps={{
+            fusionRegions: true,
+            geoVignette: true,
+            geoVignetteOpacity: 0.42,
+            camStatic: { lon: -0.5, lat: 14.6, zoom: 4.55 },
+            controlFrameOverride: 2861,
+            sequentialIgnite: { MLI: 20, BFA: 110, NER: 200 },
+            cityPulse: true,
+            frontDraw: true,
+          }}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* SHOWCASE Map Animation — 3 briques visuelles en 40s */}
         <Composition
           id="MapAnimationShowcase"

@@ -59,8 +59,66 @@ import {
   SAHEL_COLORS,
 } from "./SahelControlData";
 import type { Vehicle as SchemaVehicle, Refugee as SchemaRefugee, GeoPathPoint } from "../data/schema";
+import { union } from "@turf/union";
+import { featureCollection as turfFC } from "@turf/helpers";
 
 // Helpers d'interpolation geo-path (meme logique que warmapVehicles.ts)
+
+// ============================================================
+// FUSION TERRITORIALE (B2) — dissout les régions admin-1 en grandes aires
+// de contrôle par faction (union Turf). Règle d'or des reviews :
+// "plus le découpage est fin, plus la couleur doit être UNIE". Memoïsé par
+// signature de contrôle (ne recalcule l'union que si l'état change).
+// bucket : 0=jnim, 0.5=conteste, 1=etat (on snap le ctrl continu au plus proche).
+// ============================================================
+const _fusionCache = new Map<string, any>();
+const snapFaction = (c: number): number => (c < 0.25 ? 0 : c < 0.75 ? 0.5 : 1);
+
+// byCountry=true → union par (pays, faction) : chaque masse appartient à 1 pays
+// (nécessaire pour l'allumage séquentiel par pays). Sinon union par faction seule.
+function buildFusedFC(
+  baseFeatures: any[],
+  ctrlByName: Record<string, number>,
+  byCountry = false,
+): any {
+  const sig =
+    (byCountry ? "C" : "F") +
+    baseFeatures.map((f) => snapFaction(ctrlByName[f.properties.name] ?? 1)).join("");
+  const cached = _fusionCache.get(sig);
+  if (cached) return cached;
+
+  const groups: Record<string, any[]> = {};
+  for (const f of baseFeatures) {
+    const fac = snapFaction(ctrlByName[f.properties.name] ?? 1);
+    const key = byCountry ? `${f.properties.country}|${fac}` : String(fac);
+    (groups[key] ||= []).push(f);
+  }
+  const fused: any[] = [];
+  for (const key of Object.keys(groups)) {
+    const polys = groups[key];
+    let merged = polys[0];
+    for (let i = 1; i < polys.length; i++) {
+      try {
+        const u = union(turfFC([merged, polys[i]]) as any);
+        if (u) merged = u;
+      } catch {
+        // union échouée (géométrie invalide) → on garde tel quel
+      }
+    }
+    const ctrlVal = byCountry ? parseFloat(key.split("|")[1]) : parseFloat(key);
+    const country = byCountry ? key.split("|")[0] : null;
+    merged.properties = {
+      ctrl: ctrlVal,
+      front: 1 - 2 * Math.abs(ctrlVal - 0.5),
+      fused: true,
+      country,
+    };
+    fused.push(merged);
+  }
+  const fc = { type: "FeatureCollection", features: fused };
+  _fusionCache.set(sig, fc);
+  return fc;
+}
 const interpPath = (path: GeoPathPoint[], t: number): [number, number] => {
   const x = Math.max(0, Math.min(1, t));
   if (x <= path[0].t) return [path[0].lon, path[0].lat];
@@ -247,6 +305,14 @@ const CITY_SCHEDULE: CityConfig[] = [
 const paperWobble = (frame: number, seed = 0) =>
   Math.sin((frame + seed) * 0.08) * 0.3;
 
+// B3 : ville-clé par pays — apparaît AVEC l'allumage de l'état (cause→effet).
+// "1 élément = 1 fonction narrative" : le point pulse = le foyer de l'état qui s'active.
+const COUNTRY_KEY_CITY: Record<string, string> = {
+  MLI: "Bamako",
+  BFA: "Ouagadougou",
+  NER: "Niamey",
+};
+
 // ============================================================
 // ICONES RESSOURCES geo-ancrees
 // ============================================================
@@ -306,12 +372,41 @@ const ResourceSVG: React.FC<{ kind: ResourceIcon["kind"]; size?: number }> = ({ 
 // ============================================================
 // COMPOSANT PRINCIPAL
 // ============================================================
-export const SahelWarMapEngine: React.FC = () => {
+// Props de TEST (off par défaut → zéro impact sur la compo SahelWarMap réelle).
+// Servent au test 10s "socle visuel" (DA-BRIEF-GATE Acte 1, session dédiée 2026-06-07) :
+//   - fusionRegions : masque les frontières inter-régions de MÊME faction (aplats unis)
+//   - geoVignette   : assombrit (sépia ~0.42) tout ce qui n'est PAS l'AES (3 pays)
+//   - camStatic     : fige la caméra sur une frame donnée (isole l'effet des corrections)
+export type SahelTestProps = {
+  fusionRegions?: boolean;
+  geoVignette?: boolean;
+  geoVignetteOpacity?: number;
+  camStatic?: { lon: number; lat: number; zoom: number } | null;
+  controlFrameOverride?: number | null; // force l'état de contrôle d'une frame précise
+  // B3 : allumage séquentiel des masses + points-villes pulsants + fronts draw-in.
+  // sequentialIgnite mappe pays → frame d'allumage (test : Mali f20, BFA f110, NER f200).
+  sequentialIgnite?: Record<string, number> | null;
+  cityPulse?: boolean; // points-villes beige avec anneau pulsant, liés à l'allumage
+  frontDraw?: boolean; // fronts entre factions qui se dessinent (dashoffset) en beige
+};
+
+export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
+  fusionRegions = false,
+  geoVignette = false,
+  geoVignetteOpacity = 0.42,
+  camStatic = null,
+  controlFrameOverride = null,
+  sequentialIgnite = null,
+  cityPulse = false,
+  frontDraw = false,
+}) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
 
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  // B2 : features admin-1 brutes conservées pour recalculer la fusion quand le contrôle change.
+  const baseFeaturesRef = useRef<any[] | null>(null);
   const [handle] = useState(() =>
     delayRender("SahelWarMapEngine", { timeoutInMilliseconds: 60000 })
   );
@@ -320,6 +415,10 @@ export const SahelWarMapEngine: React.FC = () => {
   const [vehPx, setVehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
   const [refPx, setRefPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
   const [iconPx, setIconPx] = useState<{ id: string; x: number; y: number }[]>([]);
+  // CORRECTION B (test) : silhouette AES reprojetée en pixels (paths SVG) pour le masque vignette.
+  const [aesPaths, setAesPaths] = useState<string[]>([]);
+  // B3 frontDraw : contours des masses fusionnées reprojetés, groupés par pays (draw-in).
+  const [frontPaths, setFrontPaths] = useState<{ country: string; d: string; len: number }[]>([]);
   const [hookPx, setHookPx] = useState<{
     bamako: { x: number; y: number } | null;
     ouaga: { x: number; y: number } | null;
@@ -404,6 +503,8 @@ export const SahelWarMapEngine: React.FC = () => {
         f.properties.ctrl = 1;
         f.properties.front = 0;
       }
+      // B2 : conserver une copie profonde des features admin-1 brutes pour la fusion.
+      baseFeaturesRef.current = JSON.parse(JSON.stringify(fc.features));
       map.addSource("sahel", { type: "geojson", data: fc });
 
       // Remplissage data-driven : 0=jnim (rouge), 0.5=conteste (or), 1=etat (bleu)
@@ -421,7 +522,11 @@ export const SahelWarMapEngine: React.FC = () => {
             1,    SAHEL_COLORS.etat,
           ],
           "fill-color-transition": { duration: 400, delay: 0 },
-          "fill-opacity": 0.82,
+          // B3 : si allumage séquentiel, l'opacité vient de igniteOp (par pays).
+          // Sinon 0.82 constant. coalesce → fallback si la prop est absente.
+          "fill-opacity": sequentialIgnite
+            ? (["coalesce", ["get", "igniteOp"], 0] as any)
+            : 0.82,
         } as any,
       });
 
@@ -438,12 +543,23 @@ export const SahelWarMapEngine: React.FC = () => {
         },
       });
 
-      // Frontieres inter-regions (attenuees)
+      // Frontieres inter-regions (attenuees).
+      // CORRECTION A (fusion) : si fusionRegions, on quasi-supprime ces lignes internes
+      // → les régions de MÊME faction forment un aplat uni (effet "macro-zone" du Soudan).
+      // Les vraies séparations restent lisibles par le changement de couleur de faction.
       map.addLayer({
         id: "sahel-line",
         type: "line",
         source: "sahel",
-        paint: { "line-color": SAHEL_COLORS.outline, "line-width": 0.8, "line-opacity": 0.25 },
+        // En mode fusion, la source ne contient QUE les masses dissoutes →
+        // cette ligne trace les FRONTS entre factions (lisible, pas la mosaïque).
+        // B3 frontDraw : le front beige est dessiné en SVG (draw-in dashoffset),
+        // donc on éteint cette ligne Mapbox pour éviter le double tracé.
+        paint: {
+          "line-color": SAHEL_COLORS.outline,
+          "line-width": fusionRegions ? 1.4 : 0.8,
+          "line-opacity": frontDraw ? 0 : fusionRegions ? 0.55 : 0.25,
+        },
       });
 
       // Contour national epais
@@ -508,19 +624,76 @@ export const SahelWarMapEngine: React.FC = () => {
     const map = mapRef.current;
     if (!ready || !map) return;
 
+    // TEST : controlFrameOverride fige l'état territorial sur une frame donnée
+    // (pour le test 10s on isole l'effet des corrections sur le PIRE cas de mosaïque).
+    const ctrlSpan = T_END - T_START;
+    const ctrlLocal =
+      controlFrameOverride != null
+        ? Math.max(0, Math.min(ctrlSpan, controlFrameOverride - T_START))
+        : local;
+    const ctrlTGlobal = ctrlLocal / ctrlSpan;
+
     // Mettre a jour les couleurs de controle
     const src = map.getSource("sahel") as mapboxgl.GeoJSONSource | undefined;
-    if (src && (src as any)._data) {
-      const data = (src as any)._data;
-      for (const f of data.features) {
-        const name = f.properties.name as string;
-        if (SAHEL_STATES.includes(name)) {
-          const c = sahelControlAt(name, tGlobal);
-          f.properties.ctrl = c;
-          f.properties.front = 1 - 2 * Math.abs(c - 0.5);
+    if (src) {
+      if (fusionRegions && baseFeaturesRef.current) {
+        // B2/B3 : fusion territoriale (union Turf, memoïsée). 3 masses (ou par pays si séquentiel).
+        const ctrlByName: Record<string, number> = {};
+        for (const name of SAHEL_STATES) ctrlByName[name] = sahelControlAt(name, ctrlTGlobal);
+        const byCountry = !!sequentialIgnite;
+        const fusedFC = buildFusedFC(baseFeaturesRef.current, ctrlByName, byCountry);
+        // B3 : opacité d'allumage par pays (montée 0→0.82 sur 22 frames depuis igniteFrame)
+        if (sequentialIgnite) {
+          for (const f of (fusedFC as any).features) {
+            const ign = sequentialIgnite[f.properties.country as string];
+            f.properties.igniteOp =
+              ign == null
+                ? 0.82
+                : interpolate(frame, [ign, ign + 22], [0, 0.82], {
+                    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+                  });
+          }
         }
+        src.setData(fusedFC as any);
+
+        // B3 frontDraw : reprojeter les contours des masses en paths SVG (par pays)
+        // pour le draw-in (stroke-dashoffset). Longueur estimée pour le dasharray.
+        if (frontDraw) {
+          const fps2: { country: string; d: string; len: number }[] = [];
+          for (const feat of (fusedFC as any).features) {
+            const ctry = (feat.properties.country as string) || "AES";
+            const geom = feat.geometry;
+            const polys = geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+            for (const poly of polys) {
+              for (const ring of poly) {
+                let d = "";
+                let len = 0;
+                let prev: { x: number; y: number } | null = null;
+                for (let i = 0; i < ring.length; i++) {
+                  const p = map.project(ring[i] as [number, number]);
+                  d += (i === 0 ? "M" : "L") + p.x.toFixed(1) + "," + p.y.toFixed(1);
+                  if (prev) len += Math.hypot(p.x - prev.x, p.y - prev.y);
+                  prev = p;
+                }
+                d += "Z";
+                fps2.push({ country: ctry, d, len: Math.max(len, 1) });
+              }
+            }
+          }
+          setFrontPaths(fps2);
+        }
+      } else if ((src as any)._data) {
+        const data = (src as any)._data;
+        for (const f of data.features) {
+          const name = f.properties.name as string;
+          if (SAHEL_STATES.includes(name)) {
+            const c = sahelControlAt(name, ctrlTGlobal);
+            f.properties.ctrl = c;
+            f.properties.front = 1 - 2 * Math.abs(c - 0.5);
+          }
+        }
+        src.setData(data);
       }
-      src.setData(data);
     }
 
     // CARTE COLORÉE DÈS LE DÉPART (décision Aziz 2026-06-07, revenant sur "neutre") :
@@ -557,9 +730,45 @@ export const SahelWarMapEngine: React.FC = () => {
     // CAMÉRA NARRATIVE serrée (getSahelCam) — suit l'action acte par acte.
     // FIGÉE pendant "Comment est-ce possible?" (f572→f632 = 2s).
     const hookFreeze = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
-    const cam = hookFreeze ? getSahelCam(F_HOOK_FREEZE) : getSahelCam(frame);
-    const camLon = cam.lon, camLat = cam.lat, camZoom = cam.zoom;
+    let camLon: number, camLat: number, camZoom: number;
+    if (camStatic) {
+      // CORRECTION C (test) : caméra qui GLISSE en continu — léger zoom-in + dérive
+      // douce vers le centre sur ~10s (300 frames), easing ease-in-out.
+      const e = interpolate(frame, [0, 300], [0, 1], {
+        extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        easing: Easing.inOut(Easing.cubic),
+      });
+      camLon = camStatic.lon;
+      camLat = camStatic.lat + e * 0.25; // dérive douce vers le nord (Liptako)
+      camZoom = camStatic.zoom + e * 0.55; // zoom-in continu
+    } else {
+      const cam = hookFreeze ? getSahelCam(F_HOOK_FREEZE) : getSahelCam(frame);
+      camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
+    }
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: 0, bearing: 0 });
+
+    // CORRECTION B (test) : reprojeter la silhouette AES (3 pays) en paths SVG pixels
+    // pour le masque-trou de la vignette géographique.
+    if (geoVignette && srcC && (srcC as any)._data) {
+      const fcC = (srcC as any)._data;
+      const paths: string[] = [];
+      for (const feat of fcC.features) {
+        const geom = feat.geometry;
+        const polys = geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+        for (const poly of polys) {
+          for (const ring of poly) {
+            let d = "";
+            for (let i = 0; i < ring.length; i++) {
+              const p = map.project(ring[i] as [number, number]);
+              d += (i === 0 ? "M" : "L") + p.x.toFixed(1) + "," + p.y.toFixed(1);
+            }
+            d += "Z";
+            paths.push(d);
+          }
+        }
+      }
+      setAesPaths(paths);
+    }
 
     // Projections pivots hook (capitales + Liptako-Gourma)
     const pBamako  = map.project(BAMAKO_COORD);
@@ -868,6 +1077,58 @@ export const SahelWarMapEngine: React.FC = () => {
       </svg>
 
       <div ref={containerRef} style={{ width, height, position: "absolute" }} />
+
+      {/* ======================================================
+          CORRECTION B (test) — VIGNETTAGE GÉOGRAPHIQUE
+          Sépia sombre sur tout ce qui n'est PAS l'AES (3 pays). Fait "popper"
+          le Sahel = contraste par le calme. Masque-trou = silhouette AES reprojetée.
+          Placé SOUS la couche narrative → véhicules/labels restent nets sur l'AES.
+          ====================================================== */}
+      {geoVignette && aesPaths.length > 0 && (
+        <svg width={width} height={height}
+          style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+          <defs>
+            <mask id="aesHole">
+              <rect x="0" y="0" width={width} height={height} fill="white" />
+              {aesPaths.map((d, i) => (
+                <path key={i} d={d} fill="black" />
+              ))}
+            </mask>
+          </defs>
+          {/* couche sépia sombre, trouée sur l'AES */}
+          <rect x="0" y="0" width={width} height={height}
+            fill="#241809"
+            fillOpacity={geoVignetteOpacity}
+            mask="url(#aesHole)" />
+        </svg>
+      )}
+
+      {/* ======================================================
+          B3 — FRONTS QUI SE DESSINENT (draw-in stroke-dashoffset)
+          Le contour de chaque masse se trace en beige quand son pays s'allume.
+          Mouvement continu + sens (la ligne de contrôle s'établit). Réf FiberOpticBorderDraw.
+          ====================================================== */}
+      {frontDraw && frontPaths.length > 0 && (
+        <svg width={width} height={height}
+          style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+          {frontPaths.map((fp, i) => {
+            const ignF = sequentialIgnite?.[fp.country] ?? 0;
+            // draw-in sur 40 frames depuis l'allumage du pays
+            const draw = interpolate(frame, [ignF, ignF + 40], [0, 1], {
+              extrapolateLeft: "clamp", extrapolateRight: "clamp",
+              easing: Easing.inOut(Easing.cubic),
+            });
+            if (draw <= 0) return null;
+            const offset = fp.len * (1 - draw);
+            return (
+              <path key={i} d={fp.d} fill="none" stroke="#F3E9C8" strokeWidth={2.2}
+                strokeLinejoin="round" strokeLinecap="round"
+                strokeDasharray={fp.len} strokeDashoffset={offset}
+                style={{ filter: "drop-shadow(0 0 3px rgba(243,233,200,0.5))" }} />
+            );
+          })}
+        </svg>
+      )}
 
       {/* Grain papier */}
       <AbsoluteFill style={{ filter: "url(#paperSahel)", opacity: 0.25, pointerEvents: "none", mixBlendMode: "multiply" }} />
@@ -1319,10 +1580,52 @@ export const SahelWarMapEngine: React.FC = () => {
         })}
 
       {/* ======================================================
+          B3 — POINTS-VILLES PULSANTS liés à l'allumage de l'état.
+          Quand un état s'allume, sa ville-clé apparaît : point beige plein +
+          anneau qui pulse (scale+opacity). Cause→effet lisible sans la voix.
+          ====================================================== */}
+      {ready && cityPulse && sequentialIgnite &&
+        Object.entries(sequentialIgnite).map(([country, ignF]) => {
+          const cityName = COUNTRY_KEY_CITY[country];
+          if (!cityName) return null;
+          const cityPos = cityPx.find((c) => c.name === cityName);
+          if (!cityPos || frame < ignF) return null;
+          const appearOp = interpolate(frame, [ignF, ignF + 16], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
+          // anneau pulsant : période ~50f, scale 1→2.4, opacité 0.7→0
+          const t = ((frame - ignF) % 50) / 50;
+          const ringScale = 1 + t * 1.4;
+          const ringOp = (1 - t) * 0.7 * appearOp;
+          const BEIGE = "#F3E9C8"; // beige clair lumineux (demande Aziz)
+          return (
+            <div key={`pulse-${country}`} style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
+                transform: "translate(-50%, -50%)", opacity: appearOp, pointerEvents: "none" }}>
+              {/* anneau pulsant */}
+              <div style={{ position: "absolute", left: "50%", top: "50%",
+                width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
+                border: `2.5px solid ${BEIGE}`,
+                transform: `scale(${ringScale})`, opacity: ringOp }} />
+              {/* point plein beige + halo doux */}
+              <div style={{ position: "absolute", left: "50%", top: "50%",
+                width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
+                background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
+                boxShadow: `0 0 8px ${BEIGE}` }} />
+              {/* label ville */}
+              <div style={{ ...plaque, position: "absolute", left: "50%", top: 14,
+                transform: "translateX(-50%)", marginTop: 6, padding: "3px 10px", fontSize: 16,
+                fontWeight: 700, letterSpacing: 1.1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                {cityName}
+              </div>
+            </div>
+          );
+        })}
+
+      {/* ======================================================
           VILLES — apparition progressive liee a l'audio
           Chaque ville pop exactement quand la narration la cite.
           ====================================================== */}
-      {ready &&
+      {ready && !cityPulse &&
         CITY_SCHEDULE.map(({ name, appearFrame, hold }) => {
           const cityPos = cityPx.find((c) => c.name === name);
           if (!cityPos) return null;
