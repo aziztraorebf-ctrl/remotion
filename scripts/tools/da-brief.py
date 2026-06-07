@@ -94,14 +94,48 @@ ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infai
 """
 
 
-def build_prompt(brief_path, catalog_path, aislop=True, expert=False):
+# ── VARIANTES UPSTREAM (mode PRÉVENTIF — review du PLAN avant d'écrire du code) ──
+# Idée Aziz 2026-06-07 : utiliser les mêmes piliers EN AMONT, sur le plan (script verrouillé +
+# templates choisis + assets décidés), pas sur un rendu. On PRÉVIENT l'AI-slop au lieu de le
+# détecter après coup, et l'expert CONSEILLE LA CONSTRUCTION au lieu de juger un rendu.
+
+AISLOP_BLOCK_UPSTREAM = """
+
+=== SECTION OBLIGATOIRE — ÉVITER L'AI-SLOP (préventif, sur le PLAN) ===
+On ne te montre PAS un rendu — on te montre un PLAN (script verrouillé + templates choisis +
+assets décidés), AVANT d'écrire la moindre ligne de code. Ta mission : empêcher l'AI-slop EN AMONT.
+D'après ce plan, qu'est-ce qui RISQUE de "crier généré par IA / amateur / procédural mal maîtrisé"
+une fois codé ? Anticipe les pièges : couleurs (surcharge/saturation), typo (générique/redondante
+avec la voix), éléments graphiques sans fonction claire, manque d'espace négatif, effets "template".
+Pour CHAQUE risque : la PARADE concrète à appliquer dès la conception, dans NOTRE stack
+(Remotion/Mapbox : SVG, opacité, couleurs, timing — PAS d'After Effects/3D/blur).
+"""
+
+EXPERT_BLOCK_UPSTREAM = """
+
+=== SECTION OBLIGATOIRE — EXPERT CONSTRUCTEUR (préventif, sur le PLAN) ===
+Tu es un EXPERT reconnu du motion design cartographique documentaire. On ne te montre pas un
+rendu mais un PLAN à construire. Réponds à TROIS questions :
+1. NOS TEMPLATES CHOISIS : ton 2e avis dessus. Sont-ils les bons pour ces moments ? Si tu connais
+   le catalogue Map Animation joint, lesquels tu utiliserais/combinerais autrement, et pourquoi ?
+2. SI TU CONSTRUISAIS ÇA DE ZÉRO : par quoi tu commencerais, dans quel ordre, quelles animations/
+   transitions tu mettrais où, pour atteindre le niveau pro ? Quels pièges éviter dès le départ ?
+3. ENCHAÎNEMENT POUR LA COMPRÉHENSION : comment séquencer pour qu'un SPECTATEUR lambda (qui ne
+   connaît pas le sujet) comprenne tout, sans surcharge, à chaque instant ? Où mettre les respirations ?
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (Remotion/Mapbox : SVG, opacité, couleurs,
+caméra frame-driven, timing). PAS de 3D/geo-layers complexes/particules/After Effects/volumétrique.
+Ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
+"""
+
+
+def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=False):
     prompt = open(brief_path, encoding="utf-8").read()
     if catalog_path and os.path.exists(catalog_path):
         prompt += "\n\n=== CATALOGUE D'INSPIRATION (format compact) ===\n" + open(catalog_path, encoding="utf-8").read()
     if aislop:
-        prompt += AISLOP_BLOCK
+        prompt += AISLOP_BLOCK_UPSTREAM if upstream else AISLOP_BLOCK
     if expert:
-        prompt += EXPERT_BLOCK
+        prompt += EXPERT_BLOCK_UPSTREAM if upstream else EXPERT_BLOCK
     return prompt
 
 
@@ -184,7 +218,12 @@ def main():
     ap.add_argument("--max-tokens", type=int, default=8000)
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop (ON par défaut)")
     ap.add_argument("--expert", action="store_true", help="Ajouter le bloc point-de-vue expert")
+    ap.add_argument("--upstream", action="store_true",
+                    help="Mode PRÉVENTIF : review du PLAN avant code (blocs prospectifs). Active --expert par défaut.")
     args = ap.parse_args()
+    # En mode upstream, l'expert-constructeur est le coeur de la valeur -> ON par défaut.
+    if args.upstream:
+        args.expert = True
 
     load_env()
     if not os.path.exists(args.brief):
@@ -200,8 +239,9 @@ def main():
         frames.append((sm, caption))
         print(f"[frame] {path} -> {sm} ({os.path.getsize(sm)//1024} Ko) | {caption}")
 
-    prompt = build_prompt(args.brief, args.catalog, aislop=not args.no_aislop, expert=args.expert)
+    prompt = build_prompt(args.brief, args.catalog, aislop=not args.no_aislop, expert=args.expert, upstream=args.upstream)
     blocks = []
+    if args.upstream: blocks.append("UPSTREAM")
     if not args.no_aislop: blocks.append("ai-slop")
     if args.expert: blocks.append("expert")
     print(f"\n[brief] {len(prompt)} chars + {len(frames)} frame(s) [{'+'.join(blocks) or 'base'}] -> "

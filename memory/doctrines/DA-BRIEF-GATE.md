@@ -17,6 +17,26 @@ zéro aller-retour coûteux.
 
 ---
 
+## DEUX MOMENTS D'USAGE (idée Aziz 2026-06-07)
+
+Les 3 piliers (AI-slop, expert, comparatif) servent à DEUX moments — la vraie puissance
+est de les utiliser AUSSI en préventif, pas seulement en correctif :
+
+1. **AMONT / PRÉVENTIF (`--upstream`)** — sur le PLAN, AVANT d'écrire une ligne de code.
+   Une fois le script verrouillé + templates choisis + assets décidés. On envoie le PLAN
+   (pas un rendu) à Gemini+Kimi :
+   - AI-slop prospectif : "qu'est-ce qui RISQUE de faire amateur une fois codé → la parade".
+   - Expert-CONSTRUCTEUR : "2e avis sur nos templates + (si tu connais Map Animation) lesquels
+     autrement · si tu construisais ça de zéro, dans quel ordre · comment enchaîner pour qu'un
+     spectateur comprenne tout sans surcharge". `--upstream` active `--expert` par défaut.
+   - But : PRÉVENIR l'AI-slop dès la conception, premium dès le 1er jet, zéro aller-retour.
+
+2. **AVAL / CORRECTIF (mode normal)** — sur un RENDU (frames downscalées ou vidéo).
+   AI-slop + expert jugent ce qui EST rendu ; comparatif (`da-compare.py`) isole la vraie cause
+   vs une référence validée. But : diagnostiquer ce qui ne marche pas.
+
+---
+
 ## QUAND le déclencher
 
 Juste **APRÈS** "vision validée + assets décidés" et **AVANT** "code".
@@ -76,6 +96,11 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
    - `--expert` : injecte le bloc POINT DE VUE EXPERT — fait jouer aux modèles un expert du métier
      (que regarderait-il ? que jugerait-il raté ? + le point de vue spectateur). CONTRAINT à notre
      stack (pas de "il faudrait de la 3D"). Idée Aziz 2026-06-07. À activer pour les reviews approfondies.
+   - `--upstream` : mode PRÉVENTIF — bascule AI-slop + expert en PROSPECTIF (juge le PLAN, pas un
+     rendu). À utiliser AVANT de coder (script verrouillé + templates + assets décidés) : "comment
+     éviter l'AI-slop dès la conception" + "expert-constructeur : 2e avis templates · si tu
+     construisais de zéro · comment enchaîner pour la compréhension". Active `--expert` par défaut.
+     Le brief passé contient alors le PLAN (script + templates choisis + assets), pas des frames.
    - Sorties : `/tmp/da-refs/da-<label>-{gemini,kimi}.md`.
 
 **2. `scripts/tools/da-compare.py`** — test COMPARATIF (vs référence validée). Gemini SEUL
