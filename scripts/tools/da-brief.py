@@ -62,10 +62,46 @@ def b64(path):
     return base64.b64encode(open(path, "rb").read()).decode()
 
 
-def build_prompt(brief_path, catalog_path):
+# Bloc AI-SLOP — injecté par défaut dans tout brief (DA-BRIEF-GATE).
+# Force les modèles à pointer ce qui trahit le procédural mal maîtrisé.
+AISLOP_BLOCK = """
+
+=== SECTION OBLIGATOIRE — TEST AI-SLOP ===
+Mets-toi dans la peau d'un spectateur AVERTI (ou adverse) qui regarde et pense
+"c'est généré par IA / c'est amateur / fait par quelqu'un qui ne maîtrise pas le métier".
+Qu'est-ce qui, ICI, CRIE "généré programmatiquement sans œil de directeur artistique" ?
+Sois SPÉCIFIQUE et TECHNIQUE : couleurs (saturation/contraste/surcharge), typographie
+(placement/hiérarchie/redondance), éléments graphiques (justifiés ? compris ? bien intégrés ?),
+composition/espace négatif, ce qui fait "template générique" vs "travail intentionnel".
+Pour chaque point : le PROBLÈME + une PISTE de correction réaliste dans NOTRE stack
+(Remotion/Mapbox : SVG, opacité, couleurs, timing — PAS d'After Effects/3D/blur).
+"""
+
+# Bloc EXPERT — point de vue d'un expert du métier (idée Aziz). À contraindre à notre stack.
+EXPERT_BLOCK = """
+
+=== SECTION OBLIGATOIRE — POINT DE VUE DE L'EXPERT ===
+Joue le rôle d'un EXPERT reconnu du motion design cartographique documentaire (le genre des
+meilleures chaînes du domaine). Sans concession. Réponds à DEUX points de vue distincts :
+1. L'EXPERT qui connaît le métier : qu'est-ce qu'il regarderait en premier ? Quelles parties
+   il jugerait ratées / amateures ? Qu'est-ce qui manque qui ferait la différence pro/amateur ?
+   Quelles animations/transitions un pro mettrait là où on ne met rien (ou l'inverse) ?
+2. LE SPECTATEUR lambda : qu'est-ce qu'il cherche, comprend, ressent ? Où décroche-t-il ?
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (Remotion/Mapbox : SVG, opacité, couleurs,
+caméra frame-driven, timing). NE PROPOSE PAS de 3D, de geo-layers complexes, de particules,
+d'After Effects, d'effets volumétriques. L'expertise doit s'exprimer DANS nos contraintes —
+ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
+"""
+
+
+def build_prompt(brief_path, catalog_path, aislop=True, expert=False):
     prompt = open(brief_path, encoding="utf-8").read()
     if catalog_path and os.path.exists(catalog_path):
         prompt += "\n\n=== CATALOGUE D'INSPIRATION (format compact) ===\n" + open(catalog_path, encoding="utf-8").read()
+    if aislop:
+        prompt += AISLOP_BLOCK
+    if expert:
+        prompt += EXPERT_BLOCK
     return prompt
 
 
@@ -146,6 +182,8 @@ def main():
     ap.add_argument("--frame", action="append", default=[], help="path:caption (repetable, auto-downscale)")
     ap.add_argument("--only", choices=["gemini", "kimi"], default=None, help="Un seul modele")
     ap.add_argument("--max-tokens", type=int, default=8000)
+    ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop (ON par défaut)")
+    ap.add_argument("--expert", action="store_true", help="Ajouter le bloc point-de-vue expert")
     args = ap.parse_args()
 
     load_env()
@@ -162,8 +200,11 @@ def main():
         frames.append((sm, caption))
         print(f"[frame] {path} -> {sm} ({os.path.getsize(sm)//1024} Ko) | {caption}")
 
-    prompt = build_prompt(args.brief, args.catalog)
-    print(f"\n[brief] {len(prompt)} chars + {len(frames)} frame(s) -> "
+    prompt = build_prompt(args.brief, args.catalog, aislop=not args.no_aislop, expert=args.expert)
+    blocks = []
+    if not args.no_aislop: blocks.append("ai-slop")
+    if args.expert: blocks.append("expert")
+    print(f"\n[brief] {len(prompt)} chars + {len(frames)} frame(s) [{'+'.join(blocks) or 'base'}] -> "
           f"{'+'.join([m for m in ('gemini','kimi') if not args.only or args.only==m])}\n")
 
     results = {}

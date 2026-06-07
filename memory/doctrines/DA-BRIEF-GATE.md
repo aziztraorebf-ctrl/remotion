@@ -68,11 +68,29 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
 
 ---
 
-## L'OUTIL
+## LES OUTILS
 
-`scripts/tools/da-brief.py` (générique, paramétrable par projet/acte).
-Prototype d'origine : `scripts/warmap/da-brief-acte1.py` (War-Map Sahel Acte 1).
-Sorties : `/tmp/da-refs/da-<label>-gemini.md` + `da-<label>-kimi.md`.
+**1. `scripts/tools/da-brief.py`** — review créative AMONT (Gemini + Kimi, frames). Générique.
+   - `--aislop` (ON PAR DÉFAUT) : injecte le bloc AI-SLOP — "qu'est-ce qui crie généré par IA /
+     amateur ?". Test le plus révélateur sans concession (idée Aziz 2026-06-07). `--no-aislop` pour désactiver.
+   - `--expert` : injecte le bloc POINT DE VUE EXPERT — fait jouer aux modèles un expert du métier
+     (que regarderait-il ? que jugerait-il raté ? + le point de vue spectateur). CONTRAINT à notre
+     stack (pas de "il faudrait de la 3D"). Idée Aziz 2026-06-07. À activer pour les reviews approfondies.
+   - Sorties : `/tmp/da-refs/da-<label>-{gemini,kimi}.md`.
+
+**2. `scripts/tools/da-compare.py`** — test COMPARATIF (vs référence validée). Gemini SEUL
+   (Files API → ingère les VIDÉOS complètes, capte mouvement+rythme, pas juste des frames).
+   - `--ref <pilier|chemin.mp4>` : la référence qui MARCHE (étalon). Piliers : `warmap`=Soudan
+     (à compléter : `atlas`=Mansa/Ghana, `souverain`=beat validé). Table dans le script.
+   - `--new chemin.mp4` : le nouveau travail. Brief : "même stack, la réf marche / le new non —
+     qu'est-ce qui DIFFÈRE ?". Isole la VRAIE cause (évite les faux coupables).
+   - Hérite `--aislop`/`--expert` (mêmes blocs, source unique da-brief.py).
+   - À lancer aux MOMENTS-CLÉS (doute niveau, validation acte/template), PAS à chaque fix.
+   - **Preuve de valeur (2026-06-07)** : a tranché "palette vs cadrage" sur le Sahel → palette =
+     FAUX coupable, vrai pb = fragmentation géographique. A évité de refaire la palette pour rien.
+
+Prototypes d'origine : `scripts/warmap/da-brief-acte1.py` + briefs `review-acte1-aislop.txt` /
+`compare-sudan-sahel.txt` (War-Map Sahel).
 
 ---
 
