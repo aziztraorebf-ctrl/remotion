@@ -24,12 +24,16 @@ Logs : `scripts/tiktok-schedule-log.json` (Postiz TikTok) + IDs TryPost dans ORD
 
 ---
 
-## 🔥 PROCHAINE SESSION = SESSION DÉDIÉE ACTE 1 War-Map Sahel (FONDATRICE série)
+## 🔥 PROCHAINE SESSION = RECODER L'ACTE 1 War-Map Sahel (plan validé, prêt)
 
-> Session 3 (2026-06-07) : Acte 1 prototypé (catbox wuadef.mp4). Gros progrès MAIS Aziz
-> identifie un problème de fond : on a empilé des effets sans que chacun soit COMPRIS.
-> Décision : refondre l'Acte 1 en session dédiée fraîche (il pose les bases de TOUTE la série,
-> ne pas le bricoler). Détails complets + 6 commentaires : `memory/episodes/warmap-sahel/STATUS.md`.
+> ⭐⭐ LIRE EN PREMIER : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-07.md`
+> (brief de passation complet). Il pointe les réponses upstream BRUTES de Gemini+Kimi à lire
+> intégralement (da-acte1-construction-{gemini,kimi}.md) + le PLAN-CONSTRUCTION-ACTE1.md.
+>
+> Session 4 (2026-06-07) : on a un PLAN DE CONSTRUCTION de l'Acte 1 validé par les 2 experts
+> (mode --upstream, AVANT code). Le socle visuel (6 mécaniques) a été appliqué par la session
+> parallèle d'Aziz et est BEAUCOUP plus propre. PROCHAINE ÉTAPE = recoder l'Acte 1 en suivant
+> l'ordre de construction (caméra → cut → easings → chrome), après avoir confronté les bruts avec Aziz.
 
 **✅ ACQUIS session 3 (gardés) :** GeoJSON Sahel admin-1 RÉEL (32 régions) · véhicules JNIM/EIGS
 Gemini (mais TROP similaires, à différencier) · 6 SFX war-map · **DA-BRIEF-GATE formalisé**
