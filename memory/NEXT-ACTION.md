@@ -1,6 +1,43 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-05. A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-06. A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🔧 CHANTIER OUVERT (2026-06-06) — Reprise lancement Kora & Cartes
+
+Le lancement initial (9 videos Postiz) etait un FAUX DEPART : thumbnails vides ont tue la traction IG/TikTok. Diagnostic + solution faits cette session. **RESTE A FINIR (court) :**
+1. Generer cover frame 0 (variante B) pour or-africain + vraie-taille (les 5 autres + senegal-short = deja faites dans `out/episodes/_r-and-d/covers-B/`).
+2. Definir dates de republication (2 posts/jour, eviter burst red flag).
+3. Publier : TryPost (YT/FB/IG via MCP — outils charges au PROCHAIN redemarrage Claude) + Postiz (TikTok).
+4. Session SEPAREE : passe editoriale angle militant.
+- Source de verite : `memory/episodes/lancement-kora/ARCHITECTURE-DISTRIBUTION-FINALE.md`.
+
+---
+
+## 🔥 EN COURS (2026-06-07) — War-Map Sahel/AES : MOTEUR V2 + HOOK CODÉ
+
+**Session 2026-06-07 : MOTEUR V2 + DOCTRINE SCRIPT-FIRST.**
+- Hook Act 1 codé script-first (7 triggers forced alignment) — render 30s : litter.catbox.moe/nl5u0g.mp4
+- Villes progressives, caméra drift visible, véhicules ×2.5 audio-triggered, freeze hook f572→f632
+- Règle script-first ajoutée WARMAP-LONG-DOCTRINE.md (traçabilité `// SCRIPT:` obligatoire dans le code)
+- Sprites tous confirmés présents (`tech-td-red.png`, `tank-td-blue.png`, `portrait-civil.png`)
+
+**⭐ PROCHAINE SESSION — 2 phases :**
+
+**Phase A (session parallèle AVANT) — Map Animation 4 templates à coder :**
+1. Territorial Expansion organique (zone qui grandit — Act 2, expansion 2012→2022)
+2. Refugee Flow en rubans (flux animé Djibo/Ménaka/Tillabéri — Act 4)
+3. Army Arrows Mapbox (AtlasAttackArrow adapté — flèches qui poussent, pas qui apparaissent)
+4. River Flow animation (fleuve Niger — Act 2)
+
+**Phase B (après Phase A) — Intégration + render final :**
+1. Intégrer les 4 templates dans SahelWarMapEngine.tsx (hook arrows, Act 2 expansion, Act 3 Kidal tenaille, Act 4 rubans)
+2. GeoJSON réel admin-1 (Natural Earth/GADM — bbox actuels = rectangles)
+3. Portraits réfugiés Sahel Gemini (3 visages distincts)
+4. Animatic complet (439s) via render-on-vercel.py + validation Aziz
+
+**Fiche reprise** : `memory/episodes/warmap-sahel/STATUS.md`
 
 ---
 

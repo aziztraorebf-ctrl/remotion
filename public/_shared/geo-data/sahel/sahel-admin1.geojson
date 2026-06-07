@@ -1,0 +1,1164 @@
+{
+  "type": "FeatureCollection",
+  "name": "sahel-admin1",
+  "crs": {
+    "type": "name",
+    "properties": {
+      "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+    }
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kidal",
+        "name_fr": "Kidal",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.8,
+              17.5
+            ],
+            [
+              4.2,
+              17.5
+            ],
+            [
+              4.2,
+              24.0
+            ],
+            [
+              0.8,
+              24.0
+            ],
+            [
+              0.8,
+              17.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ménaka",
+        "name_fr": "Ménaka",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              1.8,
+              14.5
+            ],
+            [
+              4.2,
+              14.5
+            ],
+            [
+              4.2,
+              17.5
+            ],
+            [
+              1.8,
+              17.5
+            ],
+            [
+              1.8,
+              14.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gao",
+        "name_fr": "Gao",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.2,
+              15.0
+            ],
+            [
+              1.8,
+              15.0
+            ],
+            [
+              1.8,
+              19.5
+            ],
+            [
+              -1.2,
+              19.5
+            ],
+            [
+              -1.2,
+              15.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tombouctou",
+        "name_fr": "Tombouctou",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.5,
+              16.0
+            ],
+            [
+              -1.2,
+              16.0
+            ],
+            [
+              -1.2,
+              25.0
+            ],
+            [
+              -4.5,
+              25.0
+            ],
+            [
+              -4.5,
+              16.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Taoudénit",
+        "name_fr": "Taoudénit",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.5,
+              22.0
+            ],
+            [
+              0.8,
+              22.0
+            ],
+            [
+              0.8,
+              25.0
+            ],
+            [
+              -4.5,
+              25.0
+            ],
+            [
+              -4.5,
+              22.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Mopti",
+        "name_fr": "Mopti",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.5,
+              13.5
+            ],
+            [
+              -1.2,
+              13.5
+            ],
+            [
+              -1.2,
+              16.0
+            ],
+            [
+              -4.5,
+              16.0
+            ],
+            [
+              -4.5,
+              13.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Ségou",
+        "name_fr": "Ségou",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -7.0,
+              12.5
+            ],
+            [
+              -4.5,
+              12.5
+            ],
+            [
+              -4.5,
+              15.5
+            ],
+            [
+              -7.0,
+              15.5
+            ],
+            [
+              -7.0,
+              12.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Koulikoro",
+        "name_fr": "Koulikoro",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -9.0,
+              11.5
+            ],
+            [
+              -7.0,
+              11.5
+            ],
+            [
+              -7.0,
+              15.5
+            ],
+            [
+              -9.0,
+              15.5
+            ],
+            [
+              -9.0,
+              11.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Kayes",
+        "name_fr": "Kayes",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -12.3,
+              12.0
+            ],
+            [
+              -9.0,
+              12.0
+            ],
+            [
+              -9.0,
+              15.5
+            ],
+            [
+              -12.3,
+              15.5
+            ],
+            [
+              -12.3,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sikasso",
+        "name_fr": "Sikasso",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -7.5,
+              10.5
+            ],
+            [
+              -4.5,
+              10.5
+            ],
+            [
+              -4.5,
+              12.5
+            ],
+            [
+              -7.5,
+              12.5
+            ],
+            [
+              -7.5,
+              10.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Bamako",
+        "name_fr": "Bamako",
+        "country": "MLI",
+        "iso_a2": "ML"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -8.2,
+              12.4
+            ],
+            [
+              -7.7,
+              12.4
+            ],
+            [
+              -7.7,
+              12.9
+            ],
+            [
+              -8.2,
+              12.9
+            ],
+            [
+              -8.2,
+              12.4
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sahel",
+        "name_fr": "Sahel",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.5,
+              13.5
+            ],
+            [
+              2.4,
+              13.5
+            ],
+            [
+              2.4,
+              15.1
+            ],
+            [
+              -0.5,
+              15.1
+            ],
+            [
+              -0.5,
+              13.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Nord",
+        "name_fr": "Nord",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -2.8,
+              13.0
+            ],
+            [
+              -0.5,
+              13.0
+            ],
+            [
+              -0.5,
+              14.5
+            ],
+            [
+              -2.8,
+              14.5
+            ],
+            [
+              -2.8,
+              13.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centre-Nord",
+        "name_fr": "Centre-Nord",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.5,
+              12.5
+            ],
+            [
+              0.5,
+              12.5
+            ],
+            [
+              0.5,
+              14.0
+            ],
+            [
+              -1.5,
+              14.0
+            ],
+            [
+              -1.5,
+              12.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Est",
+        "name_fr": "Est",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.5,
+              11.0
+            ],
+            [
+              2.4,
+              11.0
+            ],
+            [
+              2.4,
+              14.0
+            ],
+            [
+              0.5,
+              14.0
+            ],
+            [
+              0.5,
+              11.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Boucle du Mouhoun",
+        "name_fr": "Boucle du Mouhoun",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.5,
+              11.5
+            ],
+            [
+              -2.0,
+              11.5
+            ],
+            [
+              -2.0,
+              13.5
+            ],
+            [
+              -4.5,
+              13.5
+            ],
+            [
+              -4.5,
+              11.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Hauts-Bassins",
+        "name_fr": "Hauts-Bassins",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.5,
+              10.5
+            ],
+            [
+              -3.5,
+              10.5
+            ],
+            [
+              -3.5,
+              12.5
+            ],
+            [
+              -5.5,
+              12.5
+            ],
+            [
+              -5.5,
+              10.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centre",
+        "name_fr": "Centre",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.8,
+              12.0
+            ],
+            [
+              -0.8,
+              12.0
+            ],
+            [
+              -0.8,
+              13.0
+            ],
+            [
+              -1.8,
+              13.0
+            ],
+            [
+              -1.8,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centre-Est",
+        "name_fr": "Centre-Est",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -0.5,
+              11.5
+            ],
+            [
+              1.0,
+              11.5
+            ],
+            [
+              1.0,
+              13.0
+            ],
+            [
+              -0.5,
+              13.0
+            ],
+            [
+              -0.5,
+              11.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centre-Ouest",
+        "name_fr": "Centre-Ouest",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -3.0,
+              11.5
+            ],
+            [
+              -1.5,
+              11.5
+            ],
+            [
+              -1.5,
+              13.0
+            ],
+            [
+              -3.0,
+              13.0
+            ],
+            [
+              -3.0,
+              11.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Centre-Sud",
+        "name_fr": "Centre-Sud",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.5,
+              10.5
+            ],
+            [
+              0.0,
+              10.5
+            ],
+            [
+              0.0,
+              12.0
+            ],
+            [
+              -1.5,
+              12.0
+            ],
+            [
+              -1.5,
+              10.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Cascades",
+        "name_fr": "Cascades",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -5.5,
+              9.5
+            ],
+            [
+              -3.5,
+              9.5
+            ],
+            [
+              -3.5,
+              11.0
+            ],
+            [
+              -5.5,
+              11.0
+            ],
+            [
+              -5.5,
+              9.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Plateau-Central",
+        "name_fr": "Plateau-Central",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -1.0,
+              12.0
+            ],
+            [
+              0.5,
+              12.0
+            ],
+            [
+              0.5,
+              13.5
+            ],
+            [
+              -1.0,
+              13.5
+            ],
+            [
+              -1.0,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Sud-Ouest",
+        "name_fr": "Sud-Ouest",
+        "country": "BFA",
+        "iso_a2": "BF"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -4.5,
+              9.5
+            ],
+            [
+              -2.5,
+              9.5
+            ],
+            [
+              -2.5,
+              11.5
+            ],
+            [
+              -4.5,
+              11.5
+            ],
+            [
+              -4.5,
+              9.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Agadez",
+        "name_fr": "Agadez",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              5.0,
+              14.0
+            ],
+            [
+              16.0,
+              14.0
+            ],
+            [
+              16.0,
+              23.5
+            ],
+            [
+              5.0,
+              23.5
+            ],
+            [
+              5.0,
+              14.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tahoua",
+        "name_fr": "Tahoua",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              3.0,
+              13.5
+            ],
+            [
+              7.5,
+              13.5
+            ],
+            [
+              7.5,
+              18.5
+            ],
+            [
+              3.0,
+              18.5
+            ],
+            [
+              3.0,
+              13.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Tillabéri",
+        "name_fr": "Tillabéri",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              0.2,
+              12.5
+            ],
+            [
+              3.5,
+              12.5
+            ],
+            [
+              3.5,
+              15.5
+            ],
+            [
+              0.2,
+              15.5
+            ],
+            [
+              0.2,
+              12.5
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dosso",
+        "name_fr": "Dosso",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2.5,
+              12.0
+            ],
+            [
+              5.0,
+              12.0
+            ],
+            [
+              5.0,
+              14.5
+            ],
+            [
+              2.5,
+              14.5
+            ],
+            [
+              2.5,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Maradi",
+        "name_fr": "Maradi",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              6.5,
+              13.0
+            ],
+            [
+              9.0,
+              13.0
+            ],
+            [
+              9.0,
+              15.5
+            ],
+            [
+              6.5,
+              15.5
+            ],
+            [
+              6.5,
+              13.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Zinder",
+        "name_fr": "Zinder",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              8.5,
+              13.0
+            ],
+            [
+              14.5,
+              13.0
+            ],
+            [
+              14.5,
+              16.5
+            ],
+            [
+              8.5,
+              16.5
+            ],
+            [
+              8.5,
+              13.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Diffa",
+        "name_fr": "Diffa",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              12.0,
+              12.0
+            ],
+            [
+              15.5,
+              12.0
+            ],
+            [
+              15.5,
+              15.0
+            ],
+            [
+              12.0,
+              15.0
+            ],
+            [
+              12.0,
+              12.0
+            ]
+          ]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Niamey",
+        "name_fr": "Niamey",
+        "country": "NER",
+        "iso_a2": "NE"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              2.0,
+              13.3
+            ],
+            [
+              2.3,
+              13.3
+            ],
+            [
+              2.3,
+              13.7
+            ],
+            [
+              2.0,
+              13.7
+            ],
+            [
+              2.0,
+              13.3
+            ]
+          ]
+        ]
+      }
+    }
+  ]
+}

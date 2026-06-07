@@ -243,6 +243,7 @@ import { ThumbnailNiger } from "./projects/_demos/niger-uranium/ThumbnailNiger";
 import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
 import { WarMapEngine, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/warmap/engine/WarMapEngine";
+import { SahelWarMapEngine, SAHEL_FPS, SAHEL_DURATION } from "./projects/warmap/engine/SahelWarMapEngine";
 import { LobitoWarmapScene, LOBITO_WARMAP_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoWarmapScene";
 import { LobitoVersionA, LOBITO_A_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionA";
 import { LobitoVersionB, LOBITO_B_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionB";
@@ -2645,6 +2646,18 @@ export const RemotionRoot: React.FC = () => {
           width={1080}
           height={1920}
           defaultProps={{ unitStyle: "token" as const }}
+        />
+      </Folder>
+
+      <Folder name="warmap-sahel">
+        {/* SAHEL AES — War-Map Long Format 7min19s — narration forced-aligned */}
+        <Composition
+          id="SahelWarMap"
+          component={SahelWarMapEngine}
+          durationInFrames={SAHEL_DURATION}
+          fps={SAHEL_FPS}
+          width={1920}
+          height={1080}
         />
       </Folder>
 

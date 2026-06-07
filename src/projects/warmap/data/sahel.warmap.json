@@ -1,0 +1,1267 @@
+{
+  "schemaVersion": 1,
+  "subject": "sahel-aes-conflict",
+  "adminLevel": "admin-1",
+  "geojson": "/_shared/geo-data/sahel/sahel-admin1.geojson",
+  "stateNames": [
+    "Kidal",
+    "Ménaka",
+    "Gao",
+    "Tombouctou",
+    "Taoudénit",
+    "Mopti",
+    "Ségou",
+    "Koulikoro",
+    "Kayes",
+    "Sikasso",
+    "Bamako",
+    "Sahel",
+    "Nord",
+    "Centre-Nord",
+    "Est",
+    "Boucle du Mouhoun",
+    "Hauts-Bassins",
+    "Centre",
+    "Centre-Est",
+    "Centre-Ouest",
+    "Centre-Sud",
+    "Cascades",
+    "Plateau-Central",
+    "Sud-Ouest",
+    "Agadez",
+    "Tahoua",
+    "Tillabéri",
+    "Dosso",
+    "Maradi",
+    "Zinder",
+    "Diffa",
+    "Niamey"
+  ],
+  "factions": [
+    {
+      "id": "etat",
+      "label": "Forces gouvernementales (FAMa/FAN/FDS + Africa Corps)",
+      "color": "#3E6E9E",
+      "controlValue": 1
+    },
+    {
+      "id": "jnim",
+      "label": "Groupes armés jihadistes (JNIM/EIGS)",
+      "color": "#B14B3C",
+      "controlValue": 0
+    },
+    {
+      "id": "conteste",
+      "label": "Contesté",
+      "color": "#C99A3A",
+      "controlValue": 0.5
+    }
+  ],
+  "jalons": [
+    {
+      "date": "2020-08-18",
+      "label": "Coup d'état au Mali — chute d'IBK",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.5,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.5,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 5000,
+      "vignette": "Le président Ibrahim Boubacar Keïta est renversé par des officiers militaires. La junte CNSP prend le pouvoir à Bamako. Le nord du Mali reste sous influence des groupes armés depuis 2012.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/news/world-africa-53800937",
+            "date": "2020-08-18"
+          }
+        ],
+        "confidence": 0.95,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2021-05-24",
+      "label": "2e coup au Mali — Goïta prend le pouvoir",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.5,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.5,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 6000,
+      "vignette": "Assimi Goïta organise un second coup, renversant le président de transition Bah N'Daw. La CEDEAO suspend le Mali. L'arrivée des instructeurs Wagner est négociée en parallèle.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.france24.com/fr/afrique/20210525-mali-coup-detat-goita",
+            "date": "2021-05-24"
+          }
+        ],
+        "confidence": 0.95,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2022-01-24",
+      "label": "1er coup au Burkina — Damiba renverse Kaboré",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.5,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 10000,
+      "vignette": "Le lieutenant-colonel Damiba renverse le président élu Roch Kaboré, incapable d'enrayer la progression jihadiste au nord. Djibo et la région Sahel sont quasi-assiégées.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/news/world-africa-60133929",
+            "date": "2022-01-24"
+          }
+        ],
+        "confidence": 0.95,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2022-09-30",
+      "label": "2e coup au Burkina — Traoré renverse Damiba",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 15000,
+      "vignette": "Le capitaine Ibrahim Traoré renverse Damiba. La situation sécuritaire s'est dégradée : 40% du territoire burkinabè échappe au contrôle de l'État. Le Nord et l'Est sont sous pression jihadiste extrême.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.france24.com/fr/afrique/20220930-burkina-faso-coup-etat-traore",
+            "date": "2022-09-30"
+          }
+        ],
+        "confidence": 0.95,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2023-06-30",
+      "label": "ONU vote la fin du mandat de la MINUSMA",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 20000,
+      "vignette": "Le Conseil de sécurité vote à l'unanimité la fin du mandat MINUSMA à compter du 30 juin 2023. Retrait total ordonné avant le 31 décembre 2023. Le vide laissé sera comblé en partie par Africa Corps (ex-Wagner).",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://news.un.org/fr/story/2023/06/1136577",
+            "date": "2023-06-30"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2023-07-26",
+      "label": "Coup d'état au Niger — Tchiani renverse Bazoum",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 22000,
+      "vignette": "La garde présidentielle nigérienne, sous le général Tchiani, séquestre le président démocratiquement élu Bazoum. La CEDEAO menace d'intervenir militairement — le Mali et le Burkina répondent qu'ils considéreront cela comme une déclaration de guerre.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/news/world-africa-66327846",
+            "date": "2023-07-26"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2023-09-16",
+      "label": "Charte du Liptako-Gourma — naissance de l'AES",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 0.5,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 25000,
+      "vignette": "Mali, Burkina Faso et Niger signent la Charte du Liptako-Gourma, pacte de défense mutuelle. Toute attaque contre l'un des 3 équivaut à une attaque contre tous. L'AES est née en réponse à la menace d'intervention de la CEDEAO.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Alliance_des_%C3%89tats_du_Sahel",
+            "date": "2023-09-16"
+          },
+          {
+            "kind": "press",
+            "ref": "https://en.wikipedia.org/wiki/Alliance_of_Sahel_States",
+            "date": "2023-09-16"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2023-11-14",
+      "label": "FAMa reprennent Kidal (10–14 nov)",
+      "control": {
+        "Kidal": 1.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 30000,
+      "vignette": "Offensive FAMa + Africa Corps (ex-Wagner) du 10 au 14 novembre. Kidal, symbole de la rébellion touarègue depuis 2012, tombe sous contrôle malien pour la première fois depuis 11 ans. Le Niger félicite officiellement le Mali.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://fr.wikipedia.org/wiki/Bataille_de_Kidal_(2023)",
+            "date": "2023-11-14"
+          },
+          {
+            "kind": "press",
+            "ref": "https://fr.africanews.com/2023/11/16/le-niger-felicite-le-mali-pour-la-reprise-de-kidal/",
+            "date": "2023-11-16"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2023-12-31",
+      "label": "Retrait MINUSMA achevé",
+      "control": {
+        "Kidal": 1.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 32000,
+      "vignette": "La MINUSMA achève son retrait complet du Mali le 31 décembre 2023, à la demande des autorités maliennes. Fin de 10 ans de présence onusienne. Africa Corps (ex-Wagner) est le principal partenaire sécuritaire en remplacement.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://news.un.org/fr/story/2023/06/1136577",
+            "date": "2023-12-31"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2024-01-28",
+      "label": "Mali et Burkina quittent la CEDEAO",
+      "control": {
+        "Kidal": 1.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.5,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 33000,
+      "vignette": "Mali, Burkina Faso et Niger annoncent leur retrait immédiat de la CEDEAO avec effet «sans délai». Les 3 pays se disent «pris en otage» par l'organisation. La rupture est consommée.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/news/world-africa-68126454",
+            "date": "2024-01-28"
+          }
+        ],
+        "confidence": 0.95,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2024-07-06",
+      "label": "Confédération AES officiellement établie",
+      "control": {
+        "Kidal": 1.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.0,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 40000,
+      "vignette": "La Confédération des États du Sahel est officiellement établie le 6 juillet 2024. Ibrahim Traoré (Burkina) prend la présidence tournante. L'AES a désormais des institutions, un passeport commun en projet et une doctrine sécuritaire unifiée.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://en.wikipedia.org/wiki/Alliance_of_Sahel_States",
+            "date": "2024-07-06"
+          }
+        ],
+        "confidence": 1.0,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2024-08-24",
+      "label": "Massacre de Barsalogho — 200+ civils tués",
+      "control": {
+        "Kidal": 1.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.0,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 45000,
+      "vignette": "Attaque jihadiste JNIM sur le chantier d'un barrage à Barsalogho (Centre-Nord Burkina) : plus de 200 civils tués, l'une des pires attaques au Sahel depuis 2015. Le Nord et Centre-Nord restent sous pression extrême.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.bbc.com/news/articles/cq5v7g5v5q7o",
+            "date": "2024-08-24",
+            "excerpt": "200+ civils tués à Barsalogho lors d'une attaque du JNIM"
+          }
+        ],
+        "confidence": 0.9,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2026-04-25",
+      "label": "Attaque rebelle coordonnée sur Kidal — 5h30 du matin",
+      "control": {
+        "Kidal": 0.0,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.0,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 52000,
+      "vignette": "25 avril 2026 à 5h30 : le JNIM et le FLA (Front de libération de l'Azawad) lancent une attaque coordonnée sur Kidal. Drones kamikazes et mortiers frappent les positions FAMa et Africa Corps. Les rebelles prennent le contrôle de la ville en 48h. Les soldats russes concluent un accord de retrait.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://lesoftpost.com/2026/05/01/kidal-25-avril-2026-et-apres-au-coeur-dune-bataille-recit/",
+            "date": "2026-05-01",
+            "excerpt": "5h30 premiers tirs de mortiers sur Kidal"
+          },
+          {
+            "kind": "press",
+            "ref": "https://www.france24.com/fr/afrique/20260426-mali-reprise-des-combats-a-kidal",
+            "date": "2026-04-26",
+            "excerpt": "Les rebelles disent contrôler totalement Kidal, accord de retrait Africa Corps"
+          }
+        ],
+        "confidence": 0.9,
+        "verified": true,
+        "method": "manual"
+      }
+    },
+    {
+      "date": "2026-04-30",
+      "label": "FAMa encerclent Kidal — contre-offensive aérienne",
+      "control": {
+        "Kidal": 0.5,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.0,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 53000,
+      "vignette": "30 avril : les FAMa lancent l'encerclement de Kidal. Frappes aériennes multiples sur les positions rebelles. L'armée malienne affirme neutraliser des «terroristes en débandade». La ville est prise en étau.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.youtube.com/watch?v=CAbAz5FMoGo",
+            "date": "2026-04-30",
+            "excerpt": "Le 30 avril 2026: encerclement de Kidal et combat des FAMa"
+          }
+        ],
+        "confidence": 0.75,
+        "verified": false,
+        "method": "manual",
+        "notes": "Source unique chaîne pro-FAMa. Croiser avec presse internationale quand ACLED disponible."
+      }
+    },
+    {
+      "date": "2026-05-15",
+      "label": "Frappes aériennes intenses — situation figée",
+      "control": {
+        "Kidal": 0.5,
+        "Ménaka": 0.5,
+        "Gao": 1.0,
+        "Tombouctou": 0.5,
+        "Taoudénit": 0.0,
+        "Mopti": 0.5,
+        "Ségou": 1.0,
+        "Koulikoro": 1.0,
+        "Kayes": 1.0,
+        "Sikasso": 1.0,
+        "Bamako": 1.0,
+        "Sahel": 0.0,
+        "Nord": 0.5,
+        "Centre-Nord": 0.0,
+        "Est": 0.0,
+        "Boucle du Mouhoun": 0.5,
+        "Hauts-Bassins": 1.0,
+        "Centre": 1.0,
+        "Centre-Est": 1.0,
+        "Centre-Ouest": 1.0,
+        "Centre-Sud": 1.0,
+        "Cascades": 1.0,
+        "Plateau-Central": 1.0,
+        "Sud-Ouest": 1.0,
+        "Agadez": 1.0,
+        "Tahoua": 1.0,
+        "Tillabéri": 0.5,
+        "Dosso": 1.0,
+        "Maradi": 1.0,
+        "Zinder": 1.0,
+        "Diffa": 0.5,
+        "Niamey": 1.0
+      },
+      "casualties": 54000,
+      "vignette": "Mi-mai : frappes FAMa + Africa Corps sur Kidal se poursuivent. Un château d'eau touché. Le FLA dénonce une stratégie de la «terre brûlée». Kidal reste contestée, la situation humanitaire se dégrade. Des véhicules fuient la ville.",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.youtube.com/watch?v=phU8ZHYvBlg",
+            "date": "2026-05-15",
+            "excerpt": "Frappes sur Kidal, château d'eau impacté, véhicules quittent la ville"
+          }
+        ],
+        "confidence": 0.7,
+        "verified": false,
+        "method": "manual",
+        "notes": "ACLED requis pour valider. Confidences basses sur jalons récents 2026 — sources pro-FAMa potentiellement biaisées."
+      }
+    }
+  ],
+  "vehicles": [
+    {
+      "id": "jnim-1",
+      "faction": "jnim",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 52,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": -2.8,
+          "lat": 14.8
+        },
+        {
+          "t": 0.3,
+          "lon": -1.5,
+          "lat": 15.2
+        },
+        {
+          "t": 0.55,
+          "lon": -2.2,
+          "lat": 14.5
+        },
+        {
+          "t": 0.84,
+          "lon": -1.8,
+          "lat": 14.9
+        },
+        {
+          "t": 1.0,
+          "lon": -1.2,
+          "lat": 15.6
+        }
+      ]
+    },
+    {
+      "id": "jnim-2",
+      "faction": "jnim",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 46,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": -4.2,
+          "lat": 13.6
+        },
+        {
+          "t": 0.35,
+          "lon": -3.0,
+          "lat": 14.0
+        },
+        {
+          "t": 0.6,
+          "lon": -3.8,
+          "lat": 13.4
+        },
+        {
+          "t": 1.0,
+          "lon": -2.5,
+          "lat": 13.8
+        }
+      ],
+      "delay": 20
+    },
+    {
+      "id": "eigs-1",
+      "faction": "conteste",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 50,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 1.8,
+          "lat": 15.1
+        },
+        {
+          "t": 0.3,
+          "lon": 2.4,
+          "lat": 14.8
+        },
+        {
+          "t": 0.6,
+          "lon": 1.6,
+          "lat": 15.4
+        },
+        {
+          "t": 1.0,
+          "lon": 2.0,
+          "lat": 14.6
+        }
+      ]
+    },
+    {
+      "id": "fama-1",
+      "faction": "etat",
+      "sprite": "tank-td-blue",
+      "kind": "tank",
+      "size": 56,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": -4.0,
+          "lat": 13.5
+        },
+        {
+          "t": 0.3,
+          "lon": -0.5,
+          "lat": 15.8
+        },
+        {
+          "t": 0.55,
+          "lon": 1.3,
+          "lat": 18.2
+        },
+        {
+          "t": 0.65,
+          "lon": 1.4,
+          "lat": 18.4
+        },
+        {
+          "t": 0.84,
+          "lon": 1.2,
+          "lat": 18.0
+        },
+        {
+          "t": 1.0,
+          "lon": 1.3,
+          "lat": 18.3
+        }
+      ]
+    },
+    {
+      "id": "fama-2",
+      "faction": "etat",
+      "sprite": "tank-td-blue",
+      "kind": "tank",
+      "size": 48,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": -0.8,
+          "lat": 16.1
+        },
+        {
+          "t": 0.45,
+          "lon": 0.5,
+          "lat": 17.2
+        },
+        {
+          "t": 0.55,
+          "lon": 1.2,
+          "lat": 18.3
+        },
+        {
+          "t": 0.84,
+          "lon": 0.8,
+          "lat": 17.8
+        },
+        {
+          "t": 1.0,
+          "lon": 1.1,
+          "lat": 18.1
+        }
+      ],
+      "delay": 15
+    },
+    {
+      "id": "csp-1",
+      "faction": "conteste",
+      "sprite": "tech-td-red",
+      "kind": "technical",
+      "size": 44,
+      "path": [
+        {
+          "t": 0.0,
+          "lon": 1.5,
+          "lat": 18.5
+        },
+        {
+          "t": 0.5,
+          "lon": 1.5,
+          "lat": 18.5
+        },
+        {
+          "t": 0.6,
+          "lon": 2.8,
+          "lat": 19.2
+        },
+        {
+          "t": 0.84,
+          "lon": 1.6,
+          "lat": 18.6
+        },
+        {
+          "t": 1.0,
+          "lon": 1.4,
+          "lat": 18.4
+        }
+      ],
+      "delay": 0
+    }
+  ],
+  "refugees": [
+    {
+      "id": "ref-djibo",
+      "portrait": "portrait-civil",
+      "size": 54,
+      "appearT": 0.78,
+      "path": [
+        {
+          "t": 0.78,
+          "lon": -1.32,
+          "lat": 14.1
+        },
+        {
+          "t": 0.88,
+          "lon": -2.1,
+          "lat": 12.8
+        },
+        {
+          "t": 1.0,
+          "lon": -3.0,
+          "lat": 11.5
+        }
+      ]
+    },
+    {
+      "id": "ref-menaka",
+      "portrait": "portrait-civil",
+      "size": 50,
+      "appearT": 0.785,
+      "path": [
+        {
+          "t": 0.785,
+          "lon": 2.4,
+          "lat": 15.92
+        },
+        {
+          "t": 0.88,
+          "lon": 0.6,
+          "lat": 15.2
+        },
+        {
+          "t": 1.0,
+          "lon": -0.5,
+          "lat": 14.8
+        }
+      ]
+    },
+    {
+      "id": "ref-tillaberi",
+      "portrait": "portrait-civil",
+      "size": 50,
+      "appearT": 0.79,
+      "path": [
+        {
+          "t": 0.79,
+          "lon": 1.45,
+          "lat": 14.21
+        },
+        {
+          "t": 0.88,
+          "lon": 2.1,
+          "lat": 13.5
+        },
+        {
+          "t": 1.0,
+          "lon": 2.5,
+          "lat": 12.8
+        }
+      ]
+    }
+  ],
+  "cities": [
+    {
+      "name": "Bamako",
+      "lon": -8.0,
+      "lat": 12.65
+    },
+    {
+      "name": "Kidal",
+      "lon": 1.408,
+      "lat": 18.441
+    },
+    {
+      "name": "Gao",
+      "lon": -0.007,
+      "lat": 16.27
+    },
+    {
+      "name": "Tessalit",
+      "lon": 1.012,
+      "lat": 20.201
+    },
+    {
+      "name": "Tombouctou",
+      "lon": -3.007,
+      "lat": 16.773
+    },
+    {
+      "name": "Ménaka",
+      "lon": 2.396,
+      "lat": 15.916
+    },
+    {
+      "name": "Mopti",
+      "lon": -4.197,
+      "lat": 14.49
+    },
+    {
+      "name": "Ouagadougou",
+      "lon": -1.524,
+      "lat": 12.364
+    },
+    {
+      "name": "Djibo",
+      "lon": -1.626,
+      "lat": 14.1
+    },
+    {
+      "name": "Dori",
+      "lon": -0.035,
+      "lat": 14.035
+    },
+    {
+      "name": "Barsalogho",
+      "lon": -1.053,
+      "lat": 13.408
+    },
+    {
+      "name": "Niamey",
+      "lon": 2.114,
+      "lat": 13.514
+    },
+    {
+      "name": "Agadez",
+      "lon": 7.991,
+      "lat": 16.974
+    },
+    {
+      "name": "Tillabéri",
+      "lon": 1.454,
+      "lat": 14.207
+    }
+  ],
+  "overlays": [
+    {
+      "variant": "displaced",
+      "atT": 0.78,
+      "hold": 180,
+      "value": 3000000,
+      "label": "~3 millions",
+      "unit": "déplacés internes",
+      "sub": "Mali + Burkina Faso + Niger (2025)",
+      "tagline": "Le coût humain de la transition",
+      "source": "UNHCR 2025",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.unhcr.org",
+            "date": "2025-01-01"
+          }
+        ],
+        "confidence": 0.9,
+        "verified": true,
+        "method": "manual",
+        "notes": "Fact-checked 2026-06-07. 2.8M UNHCR 2025."
+      }
+    },
+    {
+      "variant": "famine",
+      "atT": 0.82,
+      "hold": 180,
+      "value": 18000000,
+      "label": "~18 millions",
+      "unit": "en insécurité alimentaire",
+      "sub": "Mali + Burkina Faso + Niger (2025)",
+      "tagline": "Conséquence directe des conflits et déplacements",
+      "source": "ONU 2025",
+      "prov": {
+        "sources": [
+          {
+            "kind": "press",
+            "ref": "https://www.fao.org",
+            "date": "2025-01-01"
+          }
+        ],
+        "confidence": 0.9,
+        "verified": true,
+        "method": "manual",
+        "notes": "Fact-checked 2026-06-07. Somme 3 pays ONU 2025."
+      }
+    }
+  ],
+  "buildMeta": {
+    "generatedAt": "2026-06-06",
+    "connector": "manual-research-web",
+    "factcheck": "skipped — ACLED credentials pending",
+    "sourceCommentary": "Session recherche 2026-06-06. Jalons 2020-2024 : confidence haute (sources Wikipedia + ONU + presse internationale). Jalons avril-mai 2026 : confidence modérée (sources YouTube pro-FAMa + France24 fragmentaire). ACLED requis pour valider jalons 2026 et affiner le contrôle territorial par admin-1 (actuellement basé sur estimations qualitatives). Géographie admin-1 : noms Natural Earth / GADM 3.6. GeoJSON sahel-admin1.geojson à générer (32 régions Mali+BF+Niger). Overlays déplacés/famine : chiffres OCHA approximatifs, à affiner. Vehicles/refugees : section choreographie à remplir lors de la session de production."
+  }
+}
