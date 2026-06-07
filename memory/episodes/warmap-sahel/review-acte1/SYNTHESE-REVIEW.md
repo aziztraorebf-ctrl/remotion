@@ -95,3 +95,43 @@ complexe et petit, plus la couleur doit être UNIE (fusion des bordures) et l'UI
 - **Véhicules** : repenser (SVG symbole ? ou garder PNG mais taille fixe + diff forme + ombre +
   traînée + ne pas laisser statique). À trancher en recherche (voir ce que font les vraies chaînes).
 - **Chaque effet (cercle, flèches, glow, halos)** : refondre pour qu'il soit COMPRIS, ou retirer.
+
+---
+
+## 🎓 TEST EXPERT (point de vue pro + spectateur) — Gemini + Kimi CONVERGENT
+> Test --expert (1er usage du flag formalisé). Bruts : da-acte1-expert-{gemini,kimi}.md.
+> Complémentaire de l'AI-slop : l'AI-slop dit "ce qui trahit l'amateur", l'expert dit
+> "ce qu'un pro ferait/verrait". Plus riche que prévu. Kimi (vision artistique) excellent.
+
+**RÉVÉLATION CENTRALE (Kimi, confirmée Gemini) :** "Vous avez des ÉTATS, il manque les
+TRANSITIONS." = "4 diapos PowerPoint avec effets CSS basiques". Le vrai écart pro/amateur
+n'est PAS les éléments mais l'ABSENCE de mouvement continu + easing. Gratuit en Remotion.
+
+**CONSENSUS expert (priorité) :**
+1. ⭐ CAMÉRA MORTE = red flag amateur n°1. 4 plans fixes coupés net. Pro = caméra qui GLISSE
+   en continu (Mali → zoom out CEDEAO → dérive est JNIM → plongée sud confrontation).
+   (NB : on a une caméra narrative mais pas assez perceptible/continue → revoir amplitude.)
+2. ⭐ VIGNETTAGE GÉOGRAPHIQUE manquant : assombrir tout ce qui n'est PAS l'AES (polygone
+   inversé noir ~40% sur pays voisins) → fait ressortir le Sahel. = "contraste par le calme".
+3. ⭐ VÉHICULES camions 2D = "red flag amateur / jeu mobile" (LES DEUX le disent). Pro =
+   symbologie abstraite (chevrons, flèches pleines, ondes de choc SVG). ⚠️ NUANCE notre choix
+   de véhicules réels Gemini — À REDISCUTER avec Aziz en session dédiée (garder ? abstrait ?).
+4. EASING non-linéaires partout (elastic/ease-in-out/spring) + ANTICIPATION (frontière
+   s'illumine AVANT le mot). Pop mécaniques actuels = amateur.
+5. UI qui s'EFFACE : légende disparaît après frame 1, cartons intégrés (pas de bordures
+   épaisses Wikipedia, fond léger backdrop-blur).
+6. "EXHALATION" synchronisée narration : à "quelque chose de nouveau" → zoom out doux.
+   Chaque beat visuel doit accompagner la voix (le visuel "respire" avec le récit).
+
+**Apports uniques :**
+- Kimi : compteur dates animé (odometer, pas de cut) · grain parchemin animé (seed change) ·
+  flash blanc + shake caméra à la collision · texte type-on (clipPath révèle) · letter-spacing animé.
+- Gemini : anneau CEDEAO = ONDE DE CHOC INVERSÉE (grand cercle qui se rétracte violemment pour
+  "lâcher" les 3 pays = rupture) — bien plus parlant que le néon actuel. Onde de choc SVG (spring)
+  pour les affrontements au lieu de camions.
+
+**RECOUPEMENT 3 tests (AI-slop + comparatif + expert) — tout converge vers :**
+- Fragmentation géo (comparatif) + surcharge/couleur partout (AI-slop) + manque de transitions/
+  caméra/vignettage (expert). Les 3 angles sont complémentaires et pointent une même direction :
+  SIMPLIFIER (fusionner régions, vignetter, UI qui s'efface) + ANIMER EN CONTINU (caméra, easing,
+  beats synchronisés). Le tout DANS notre stack (zéro 3D/AE demandé — brief bien contraint).
