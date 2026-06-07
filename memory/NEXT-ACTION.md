@@ -15,27 +15,19 @@ Le lancement initial (9 videos Postiz) etait un FAUX DEPART : thumbnails vides o
 
 ---
 
-## 🔥 EN COURS (2026-06-07) — War-Map Sahel/AES : MOTEUR V2 + HOOK CODÉ
+## 🔥 EN COURS (2026-06-07 session 2) — War-Map Sahel/AES : MOTEUR V3 + MAP ANIMATION
 
-**Session 2026-06-07 : MOTEUR V2 + DOCTRINE SCRIPT-FIRST.**
-- Hook Act 1 codé script-first (7 triggers forced alignment) — render 30s : litter.catbox.moe/nl5u0g.mp4
-- Villes progressives, caméra drift visible, véhicules ×2.5 audio-triggered, freeze hook f572→f632
-- Règle script-first ajoutée WARMAP-LONG-DOCTRINE.md (traçabilité `// SCRIPT:` obligatoire dans le code)
-- Sprites tous confirmés présents (`tech-td-red.png`, `tank-td-blue.png`, `portrait-civil.png`)
+**Session 2026-06-07 session 2 : MAP ANIMATION INTÉGRÉ.**
+- 3 templates codés en isolé : SahelAttackArrow + TerritorialExpansion + RefugeeFlow
+- Moteur V3 : hook upgrade (flèches qui poussent vs <line> statiques), Act2 expansion JNIM, Act3 tenaille Kidal, Act4 flux réfugiés
+- Commit : 9663560
 
-**⭐ PROCHAINE SESSION — 2 phases :**
-
-**Phase A (session parallèle AVANT) — Map Animation 4 templates à coder :**
-1. Territorial Expansion organique (zone qui grandit — Act 2, expansion 2012→2022)
-2. Refugee Flow en rubans (flux animé Djibo/Ménaka/Tillabéri — Act 4)
-3. Army Arrows Mapbox (AtlasAttackArrow adapté — flèches qui poussent, pas qui apparaissent)
-4. River Flow animation (fleuve Niger — Act 2)
-
-**Phase B (après Phase A) — Intégration + render final :**
-1. Intégrer les 4 templates dans SahelWarMapEngine.tsx (hook arrows, Act 2 expansion, Act 3 Kidal tenaille, Act 4 rubans)
-2. GeoJSON réel admin-1 (Natural Earth/GADM — bbox actuels = rectangles)
-3. Portraits réfugiés Sahel Gemini (3 visages distincts)
-4. Animatic complet (439s) via render-on-vercel.py + validation Aziz
+**⭐ PROCHAINE SESSION — Render + Validation :**
+1. **Animatic complet 439s** via `scripts/render-on-vercel.py` — c'est LA priorité absolue
+2. **Validation Aziz** : review timing Map Animation sur narration réelle, ajuster opacités/durées
+3. **GeoJSON réel** : sahel-admin1.geojson = bbox rectangles → Natural Earth/GADM (`python3 scripts/warmap/generate-sahel-admin1.py`)
+4. **Portraits réfugiés Sahel** Gemini (3 visages distincts — homme/femme/enfant, traits ouest-africains)
+5. **River Flow** (optionnel) : fleuve Niger SVG animé
 
 **Fiche reprise** : `memory/episodes/warmap-sahel/STATUS.md`
 
