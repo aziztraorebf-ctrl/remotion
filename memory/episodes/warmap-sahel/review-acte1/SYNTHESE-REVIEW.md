@@ -57,6 +57,38 @@ TOUT converge. Aziz avait raison sur les 6 points. Les modèles ajoutent surtout
 palette/grading (le plus grave), typo, texture de fond, technique de glow, z-index labels.
 L'ajout Claude "différencier par forme pas couleur" est CONFIRMÉ par les deux.
 
+## ⭐⭐ VERDICT COMPARATIF SOUDAN vs SAHEL (test décisif — Gemini + Kimi CONVERGENT)
+
+> Test : "même palette + même moteur, Soudan marche / Sahel non — qu'est-ce qui DIFFÈRE ?"
+> Bruts : da-compare-sudan-sahel-{gemini,kimi}.md. Intuition Aziz (cadrage) CONFIRMÉE.
+
+**LA PALETTE EST UN FAUX COUPABLE.** Les couleurs sont excellentes (marchent au Soudan).
+Le vrai problème n°1, dans l'ordre (consensus total) :
+
+1. **FRAGMENTATION GÉOGRAPHIQUE = LA cause** ⭐ "Soudan = carte de BLOCS / Sahel = carte de
+   PIXELS". Le Sahel a 30+ micro-régions admin-1 inégales qui se touchent → "haute fréquence
+   spatiale" = bouillie / effet carte électorale. Le Soudan a de grandes macro-zones nettes.
+   → On a appliqué une DA pensée pour macro-zones sur une mosaïque de confettis.
+2. **FORMAT 16:9 (intuition Aziz confirmée)** : pour faire rentrer 3 pays étalés sur 28° lon,
+   le horizontal a forcé à DÉZOOMER → déclenche tout le reste (éléments géants vs micro-régions,
+   perte d'espace négatif). Le 9:16 Soudan cadrait serré un pays compact.
+3. **RATIO ESPACE NÉGATIF** : Soudan ~40-60% de parchemin neutre autour / Sahel sature 75-85%
+   l'écran de couleur → pas de repos visuel.
+4. **ÉCHELLE éléments** : véhicules/labels géants vs micro-régions (zoom lointain).
+
+**LES 3 CORRECTIONS LES PLUS RENTABLES (consensus, à faire en session dédiée) :**
+- **A. FUSIONNER les micro-régions** en 8-10 grandes aires de contrôle (= "80% du problème
+  réglé", Gemini). Soit dissoudre dans le GeoJSON (regrouper régions de même contrôle), soit
+  styling (supprimer/atténuer bordures internes entre régions de MÊME couleur faction).
+- **B. FRONTIÈRES INTERNES à opacité ~0.2** (ou supprimées) : zones colorées "flottent sans cage",
+  ne garder que frontières nationales + lignes de front.
+- **C. PLUS D'ESPACE NÉGATIF** : fill-opacity -10/15%, retirer halos parasites, réduire échelle
+  véhicules -20/30%, dézoomer légèrement pour marge parchemin. (+ assombrir/tamiser pays voisins.)
+
+**RÈGLE D'OR (Gemini, à graver dans la doctrine war-map) :** "Plus le découpage territorial est
+complexe et petit, plus la couleur doit être UNIE (fusion des bordures) et l'UI MINIMALISTE."
+→ Ceci recoupe l'ajout Claude "contraste par le calme" : la fusion crée les grandes zones de calme.
+
 ## DIRECTION pour la session dédiée (ne plus deviner — valider en recherche)
 - **Palette + grading** = chantier #1 (désaturation + blend + assombrir hors-focus + grain).
 - **"Contraste par le calme"** (ajout Claude) recoupe "hiérarchiser / baisser opacité hors-focus".

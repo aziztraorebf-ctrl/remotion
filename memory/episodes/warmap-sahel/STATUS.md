@@ -12,6 +12,13 @@ problème de FOND : **on a empilé des effets "intéressants" sans que chacun so
 par le spectateur.** Décision : NE PAS bricoler l'Acte 1 en fin de session (il pose les
 bases de TOUTE la série). Session dédiée fraîche avec recherche + review externe.
 
+**⭐⭐ VERDICT DÉCISIF (test comparatif Soudan vs Sahel, Gemini+Kimi convergent) :**
+La PALETTE est un FAUX COUPABLE. Le vrai problème n°1 = **FRAGMENTATION GÉOGRAPHIQUE**
+("Soudan = carte de blocs / Sahel = carte de pixels" — 30+ micro-régions admin-1 qui se
+touchent = bouillie). Amplifié par le 16:9 qui force à dézoomer (intuition Aziz confirmée).
+Correction n°1 = FUSIONNER les micro-régions en 8-10 grandes aires ("80% du problème réglé").
+Détail complet + 3 corrections rentables : `review-acte1/SYNTHESE-REVIEW.md`.
+
 **6 commentaires Aziz (à traiter en session dédiée) :**
 1. **Trop de couleurs partout = nuit à la lisibilité** (surtout 16:9). Le pulse de frontière
    ne ressort pas car pas de calme contre lequel contraster. CHANGEMENT DE PARADIGME à creuser.
