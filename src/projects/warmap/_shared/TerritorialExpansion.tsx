@@ -65,6 +65,9 @@ export interface TerritorialExpansionProps {
   color?: string;
   /** Opacité max atteinte quand la région est pleine */
   maxOpacity?: number;
+  /** Frames de fade-out après endFrame (les halos s'effacent — le contrôle réel
+      des régions a pris le relais via la couche Mapbox colorée). Défaut 90. */
+  fadeOutFrames?: number;
   width?: number;
   height?: number;
 }
@@ -120,12 +123,24 @@ export const TerritorialExpansion: React.FC<TerritorialExpansionProps> = ({
   frame,
   color = "#8B1A1A",
   maxOpacity = 0.5,
+  fadeOutFrames = 90,
   width = 1920,
   height = 1080,
 }) => {
   if (!map || frame < startFrame) return null;
 
   const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+
+  // Fade-out global après endFrame : les halos d'expansion s'effacent (le contrôle
+  // réel des régions a pris le relais via la couche Mapbox colorée). Évite les
+  // taches floues qui traînent sur les actes suivants (fix Aziz 2026-06-07).
+  const globalFade = interpolate(
+    frame,
+    [endFrame, endFrame + fadeOutFrames],
+    [1, 0],
+    clamp
+  );
+  if (globalFade <= 0) return null;
 
   return (
     <svg
@@ -137,6 +152,7 @@ export const TerritorialExpansion: React.FC<TerritorialExpansionProps> = ({
         height,
         pointerEvents: "none",
         overflow: "visible",
+        opacity: globalFade,
       }}
       viewBox={`0 0 ${width} ${height}`}
     >

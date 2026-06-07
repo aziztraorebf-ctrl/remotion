@@ -106,6 +106,11 @@ const F_MENAKA_BASE   = 4082;  // "Ménaka," (base militaire)
 const F_NIAMEY_BASE   = 4112;  // "Niamey."
 const F_DJIBO_REF     = 10294; // "Djibo," (réfugiés)
 
+// SCRIPT: "Dans cette région, deux groupes armés se sont développés" (~f900)
+// → la carte se COLORE (couleurs factions infusent). Avant : parchemin neutre (hook).
+// Décision Aziz 2026-06-07 : carte neutre pendant tout le hook, montée du vide au plein.
+const F_FACTIONS_INFUSE = 900;
+
 // ============================================================
 // TRIGGERS MAP ANIMATION — Act 2 + Act 3
 // ============================================================
@@ -156,19 +161,86 @@ const OUAGA_COORD    = [-1.52, 12.37] as [number, number];
 const NIAMEY_COORD   = [2.12, 13.51] as [number, number];
 
 // ============================================================
+// CAMÉRA NARRATIVE — serrée sur le cœur du conflit, se déplace par acte
+// (Décision Aziz 2026-06-07 : reproduire l'effet Soudan — vue serrée et lisible,
+//  caméra qui suit l'action acte par acte, PAS la vue large lointaine.)
+// Soudan référence : zoom 4.55-5.12. Sahel plus large -> on serre sur le cœur
+// narratif (Liptako/Kidal/Ménaka), on n'essaie PAS de tout montrer.
+// Keyframes [frame, lon, lat, zoom] — interpolées en continu (drift doux entre).
+// ============================================================
+type CamKey = { f: number; lon: number; lat: number; zoom: number };
+// ZOOM UNIFORME niveau hook (~4.75, décision Aziz 2026-06-07 : ne pas dépasser —
+// sur écran large c'est lisible, on voit les chars, serrer plus = bruyant + perd
+// le territoire). Drift TRÈS doux. La caméra se recentre par acte mais garde ~4.75.
+const SAHEL_CAM_KEYS: CamKey[] = [
+  // HOOK : cœur Liptako-Gourma
+  { f: 0,     lon: -0.5, lat: 14.8, zoom: 4.75 },
+  { f: 502,   lon: -0.5, lat: 14.8, zoom: 4.78 }, // convergence Liptako
+  { f: 572,   lon: -0.5, lat: 14.7, zoom: 4.8 },  // freeze (figé)
+  { f: 632,   lon: -0.5, lat: 14.7, zoom: 4.8 },  // fin freeze
+  // ACTE 1 suite — deux groupes armés : centre Mali + nord Burkina
+  { f: 900,   lon: -1.0, lat: 15.0, zoom: 4.75 },
+  { f: 2167,  lon: -0.5, lat: 15.2, zoom: 4.78 }, // "combattent"
+  // ACTE 2 — embrasement / bases
+  { f: 2630,  lon: 0.0,  lat: 15.8, zoom: 4.7 },
+  { f: 4100,  lon: 0.3,  lat: 15.6, zoom: 4.72 }, // bases militaires
+  { f: 6322,  lon: -0.3, lat: 15.0, zoom: 4.75 }, // "déclencheur"
+  { f: 7014,  lon: -0.3, lat: 14.9, zoom: 4.75 }, // AES née
+  // ACTE 3 — Kidal : recentre vers le nord mais MÊME zoom (pas de sur-zoom)
+  { f: 7279,  lon: 0.6,  lat: 16.2, zoom: 4.75 }, // Kidal s'allume
+  { f: 8218,  lon: 0.8,  lat: 16.6, zoom: 4.8 },  // offensive Kidal
+  { f: 8683,  lon: 0.9,  lat: 16.8, zoom: 4.82 }, // drapeau flotte
+  { f: 9477,  lon: 0.85, lat: 16.6, zoom: 4.8 },  // contre-offensive
+  // ACTE 4 — réfugiés
+  { f: 10294, lon: 0.0,  lat: 15.0, zoom: 4.72 }, // jetons réfugiés
+  { f: 11122, lon: 1.0,  lat: 15.0, zoom: 4.7 },  // ressources
+  // ACTE 5 — perspective
+  { f: 12183, lon: -0.5, lat: 15.2, zoom: 4.68 },
+  { f: 13150, lon: -0.5, lat: 15.5, zoom: 4.65 },
+];
+
+const getSahelCam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  const keys = SAHEL_CAM_KEYS;
+  if (frame <= keys[0].f) return keys[0];
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      // easing doux (smoothstep) pour un drift cinématique sans à-coups
+      const e = t * t * (3 - 2 * t);
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
+// ============================================================
 // VILLES — apparition progressive liee a l'audio
 // Chaque ville apparait quand la narration la mentionne pour la premiere fois.
 // ============================================================
-type CityConfig = { name: string; appearFrame: number };
+// SÉQUENTIEL STRICT (anti-overcharging, décision Aziz 2026-06-07) :
+// chaque ville a une FENÊTRE DE VIE [appear, hold] puis s'efface. Jamais
+// d'accumulation permanente — à tout instant, 1-2 villes max à l'écran.
+// hold = frame jusqu'à laquelle la ville reste, puis fade-out 30f.
+type CityConfig = { name: string; appearFrame: number; hold: number };
 const CITY_SCHEDULE: CityConfig[] = [
-  { name: "Bamako",      appearFrame: T_START },       // present des le debut (capitale Mali)
-  { name: "Kidal",       appearFrame: F_KIDAL_ALONE }, // f7279 "Kidal."
-  { name: "Gao",         appearFrame: F_GAO },          // f4056 "Gao,"
-  { name: "Ménaka",      appearFrame: F_MENAKA_BASE },  // f4082 "Ménaka,"
-  { name: "Niamey",      appearFrame: F_NIAMEY_BASE },  // f4112 "Niamey."
-  { name: "Djibo",       appearFrame: F_DJIBO_REF },    // f10294 "Djibo,"
-  { name: "Ouagadougou", appearFrame: F_BURKINA },      // f1471 "Faso"
-  { name: "Tillabéri",   appearFrame: F_ICON_PETRO },   // f11122 avec ressources Niger
+  // Bamako = ancre capitale, reste pendant le hook puis s'efface à l'entrée Acte 2
+  { name: "Bamako",      appearFrame: T_START,        hold: 2600 },
+  // Acte 2 — bases militaires (citées ensemble f4056-4112), s'effacent avant Kidal
+  { name: "Gao",         appearFrame: F_GAO,          hold: 7200 },
+  { name: "Ménaka",      appearFrame: F_MENAKA_BASE,  hold: 7200 },
+  { name: "Niamey",      appearFrame: F_NIAMEY_BASE,  hold: 5800 },
+  { name: "Ouagadougou", appearFrame: F_BURKINA,      hold: 2600 },
+  // Acte 3 — Kidal seul (foyer narratif unique), reste tout l'acte Kidal
+  { name: "Kidal",       appearFrame: F_KIDAL_ALONE,  hold: 9900 },
+  // Acte 4 — villes réfugiés (citées au moment des flux)
+  { name: "Djibo",       appearFrame: F_DJIBO_REF,    hold: 11800 },
+  { name: "Tillabéri",   appearFrame: F_ICON_PETRO,   hold: 12200 },
 ];
 
 // micro-wobble papier (signature Atlas)
@@ -382,6 +454,39 @@ export const SahelWarMapEngine: React.FC = () => {
         paint: { "line-color": SAHEL_COLORS.outline, "line-width": 2.6, "line-opacity": 0.9 },
       });
 
+      // PULSE DE FRONTIÈRE NATIONALE (idée Aziz 2026-06-07) : surligne le pays cité
+      // au mot exact, en doré, avec largeur/opacité animées par frame. Réutilisable.
+      // Source = contours nationaux dissous (Mali/Burkina/Niger).
+      try {
+        const resC = await fetch(staticFile("_shared/geo-data/sahel/sahel-countries.geojson"));
+        const fcC = await resC.json();
+        for (const f of fcC.features) f.properties.pulse = 0; // 0 = invisible
+        map.addSource("sahel-countries", { type: "geojson", data: fcC });
+        // glow large (dessous)
+        map.addLayer({
+          id: "sahel-country-pulse-glow",
+          type: "line",
+          source: "sahel-countries",
+          paint: {
+            "line-color": "#E8B84B",
+            "line-width": ["interpolate", ["linear"], ["get", "pulse"], 0, 0, 1, 16],
+            "line-opacity": ["interpolate", ["linear"], ["get", "pulse"], 0, 0, 1, 0.35],
+            "line-blur": 4,
+          },
+        });
+        // trait net (dessus)
+        map.addLayer({
+          id: "sahel-country-pulse",
+          type: "line",
+          source: "sahel-countries",
+          paint: {
+            "line-color": "#E8B84B",
+            "line-width": ["interpolate", ["linear"], ["get", "pulse"], 0, 0, 1, 5],
+            "line-opacity": ["interpolate", ["linear"], ["get", "pulse"], 0, 0, 1, 1],
+          },
+        });
+      } catch (e) { console.warn("[Sahel] country pulse layer skipped:", e); }
+
       setReady(true);
       map.once("idle", () => {
         if (safety) { clearTimeout(safety); safety = null; }
@@ -418,38 +523,42 @@ export const SahelWarMapEngine: React.FC = () => {
       src.setData(data);
     }
 
-    // SCRIPT: caméra hook (Act 1 — 0:00-0:55)
-    // Vue globale Sahel stable pendant les 3 éclairs de pays (f0→f502)
-    // FIGÉE pendant "Comment est-ce possible?" (f572→f632 = 2s)
-    // Drift progressif reprend après f726 "répondre"
-    const hookFreeze = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
-    let camLon: number, camLat: number, camZoom: number;
-    if (frame < F_HOOK_FREEZE) {
-      // Hook : vue fixe centrée sur le Sahel pour voir les 3 pays s'allumer
-      camLon = -1.5;
-      camLat = 15.0;
-      camZoom = 4.0;
-    } else if (hookFreeze) {
-      // FIGÉE 2s — carte immobile
-      camLon = -1.5;
-      camLat = 15.0;
-      camZoom = 4.0;
-    } else {
-      // Drift progressif sur la durée totale
-      // Act 1-2 (f632→Act3) : léger pan vers nord-est (zone JNIM)
-      // Act 3 : zoom Kidal
-      // Act 4-5 : retour global
-      const driftStart = F_HOOK_DRIFT;
-      const driftProgress = Math.max(0, Math.min(1, (frame - driftStart) / (T_END - driftStart)));
-      camLon = interpolate(driftProgress, [0, 0.45, 0.65, 1], [-2.5, 0.5, 1.4, -2.0]);
-      camLat = interpolate(driftProgress, [0, 0.45, 0.65, 1], [14.2, 15.8, 18.5, 14.8]);
-      camZoom = interpolate(
-        frame,
-        [driftStart, Math.round(0.45 * span + T_START), Math.round(0.65 * span + T_START), T_END, SAHEL_DURATION],
-        [4.1, 4.5, 5.0, 4.4, 4.3],
-        { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-      );
+    // CARTE COLORÉE DÈS LE DÉPART (décision Aziz 2026-06-07, revenant sur "neutre") :
+    // ce qui rendait le Soudan lisible = territoire coloré dès le jour 1, ressort sur
+    // le parchemin. La carte neutre rendait le hook abstrait/illisible. On garde donc
+    // fill-opacity 0.82 constant (défini dans le style de la couche).
+
+    // PULSE DE FRONTIÈRE NATIONALE — surligne le pays cité au mot exact (hook).
+    // Mali f151, Burkina f231, Niger f301. Pulse fort ~1.5s puis retombe.
+    const srcC = map.getSource("sahel-countries") as mapboxgl.GeoJSONSource | undefined;
+    if (srcC && (srcC as any)._data) {
+      const dataC = (srcC as any)._data;
+      const pulseFor = (start: number) => {
+        // montée 12f → tient 30f → descente 30f (pulse net puis calme)
+        const p = interpolate(frame, [start, start + 12, start + 42, start + 72], [0, 1, 1, 0.15], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        // léger battement pendant le maintien
+        const beat = frame > start + 12 && frame < start + 42 ? 1 + 0.12 * Math.sin((frame - start) * 0.4) : 1;
+        return frame < start ? 0 : p * beat;
+      };
+      let changed = false;
+      for (const f of dataC.features) {
+        const cc = f.properties.country;
+        const newPulse =
+          cc === "MLI" ? pulseFor(F_HOOK_MALI) :
+          cc === "BFA" ? pulseFor(F_HOOK_BURKINA) :
+          cc === "NER" ? pulseFor(F_HOOK_NIGER) : 0;
+        if (f.properties.pulse !== newPulse) { f.properties.pulse = newPulse; changed = true; }
+      }
+      if (changed) srcC.setData(dataC);
     }
+
+    // CAMÉRA NARRATIVE serrée (getSahelCam) — suit l'action acte par acte.
+    // FIGÉE pendant "Comment est-ce possible?" (f572→f632 = 2s).
+    const hookFreeze = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
+    const cam = hookFreeze ? getSahelCam(F_HOOK_FREEZE) : getSahelCam(frame);
+    const camLon = cam.lon, camLat = cam.lat, camZoom = cam.zoom;
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: 0, bearing: 0 });
 
     // Projections pivots hook (capitales + Liptako-Gourma)
@@ -670,6 +779,17 @@ export const SahelWarMapEngine: React.FC = () => {
   };
 
   // ============================================================
+  // TAMPONS ACRONYMES ACTE 1 — cartouches CENTRE semi-transparents
+  // (apparaît au mot exact, tient ~4s, disparaît). BEAT 3 JNIM / BEAT 4 EIGS.
+  // ============================================================
+  const stampOp = (start: number) =>
+    interpolate(frame, [start, start + 12, start + 110, start + 140], [0, 1, 1, 0], {
+      extrapolateLeft: "clamp", extrapolateRight: "clamp",
+    });
+  const jnimStampOp = stampOp(F_JNIM_ZONE);   // f1198 "JNIM."
+  const eigsStampOp = stampOp(1749);          // f1749 "l'EIGS."
+
+  // ============================================================
   // LOGIQUE KIDAL (s'allume en or a F_KIDAL_ALONE, reste bleu a F_KIDAL_FLAG)
   // Cela se fait via le controle territorial (deja dans le JSON),
   // mais on peut aussi ajouter un highlight visuel supplementaire
@@ -837,16 +957,16 @@ export const SahelWarMapEngine: React.FC = () => {
           Upgrade : SahelAttackArrow (flèches qui POUSSENT) au lieu de <line> statiques */}
       {liptakoProgress > 0 && ready && (
         <>
-          {/* Flèche Bamako → Liptako */}
+          {/* Flèche Bamako → Liptako (or profond + épaisse pour contraste sur parchemin) */}
           <SahelAttackArrow
             map={mapRef.current}
             waypoints={[BAMAKO_COORD, LIPTAKO_CENTER]}
             progress={liptakoProgress}
-            color={SAHEL_COLORS.contested}
-            strokeWidth={3}
+            color="#A8791E"
+            strokeWidth={5}
             headType="arrow"
             marchingFrame={frame}
-            opacity={0.88}
+            opacity={0.95}
             width={width}
             height={height}
           />
@@ -855,11 +975,11 @@ export const SahelWarMapEngine: React.FC = () => {
             map={mapRef.current}
             waypoints={[OUAGA_COORD, LIPTAKO_CENTER]}
             progress={Math.max(0, liptakoProgress - 0.15)}
-            color={SAHEL_COLORS.contested}
-            strokeWidth={3}
+            color="#A8791E"
+            strokeWidth={5}
             headType="arrow"
             marchingFrame={frame}
-            opacity={0.85}
+            opacity={0.92}
             width={width}
             height={height}
           />
@@ -868,25 +988,47 @@ export const SahelWarMapEngine: React.FC = () => {
             map={mapRef.current}
             waypoints={[NIAMEY_COORD, LIPTAKO_CENTER]}
             progress={Math.max(0, liptakoProgress - 0.30)}
-            color={SAHEL_COLORS.contested}
-            strokeWidth={3}
+            color="#A8791E"
+            strokeWidth={5}
             headType="arrow"
             marchingFrame={frame}
-            opacity={0.82}
+            opacity={0.90}
             width={width}
             height={height}
           />
-          {/* Pulse or Liptako-Gourma */}
+          {/* Pulse or Liptako-Gourma (climax) — halo + onde de choc à l'impact */}
           {liptakoPulse > 0 && hookPx.liptako && (
-            <div style={{
-              position: "absolute",
-              left: hookPx.liptako.x - 55,
-              top: hookPx.liptako.y - 55,
-              width: 110, height: 110,
-              background: `radial-gradient(circle, rgba(201,154,58,${liptakoPulse * 0.8}) 0%, rgba(201,154,58,0) 70%)`,
-              borderRadius: "50%",
-              pointerEvents: "none",
-            }} />
+            <>
+              {/* Halo doré pulsant */}
+              <div style={{
+                position: "absolute",
+                left: hookPx.liptako.x - 90,
+                top: hookPx.liptako.y - 90,
+                width: 180, height: 180,
+                background: `radial-gradient(circle, rgba(168,121,30,${liptakoPulse * 0.85}) 0%, rgba(201,154,58,${liptakoPulse * 0.35}) 40%, rgba(201,154,58,0) 72%)`,
+                borderRadius: "50%",
+                pointerEvents: "none",
+              }} />
+              {/* Onde de choc dorée à l'impact (f572 = arrivée des flèches) : cercle qui s'étend */}
+              {(() => {
+                const shock = interpolate(frame, [F_HOOK_FREEZE, F_HOOK_FREEZE + 30], [0, 1], {
+                  extrapolateLeft: "clamp", extrapolateRight: "clamp",
+                });
+                if (shock <= 0 || shock >= 1) return null;
+                const sz = 80 + shock * 260;
+                return (
+                  <div style={{
+                    position: "absolute",
+                    left: hookPx.liptako.x - sz / 2,
+                    top: hookPx.liptako.y - sz / 2,
+                    width: sz, height: sz,
+                    border: `${4 * (1 - shock)}px solid rgba(168,121,30,${(1 - shock) * 0.9})`,
+                    borderRadius: "50%",
+                    pointerEvents: "none",
+                  }} />
+                );
+              })()}
+            </>
           )}
         </>
       )}
@@ -920,7 +1062,7 @@ export const SahelWarMapEngine: React.FC = () => {
           MAP ANIMATION — ACT 2 : EXPANSION TERRITORIALE JNIM
           SCRIPT: "s'embrase" f2630 → expansion rouge 2012→2022
           ====================================================== */}
-      {ready && frame >= F_EXPANSION_START && (
+      {ready && frame >= F_EXPANSION_START && frame < F_EXPANSION_END + 100 && (
         <TerritorialExpansion
           map={mapRef.current}
           regions={EXPANSION_REGIONS_ACT2}
@@ -929,6 +1071,7 @@ export const SahelWarMapEngine: React.FC = () => {
           frame={frame}
           color={SAHEL_COLORS.jnim}
           maxOpacity={0.42}
+          fadeOutFrames={90}
           width={width}
           height={height}
         />
@@ -1028,23 +1171,44 @@ export const SahelWarMapEngine: React.FC = () => {
         (SAHEL_VEHICLES as SchemaVehicle[]).map((v) => {
           const pos = vehPx.find((p) => p.id === v.id);
           if (!pos) return null;
-          // Apparition liee a l'audio : JNIM/EIGS des F_JNIM_ZONE, FAMa des F_KIDAL_ALONE, CSP des F_KIDAL_FLAG
+          // SÉQUENTIEL STRICT (fix Aziz 2026-06-07) : chaque véhicule a une FENÊTRE
+          // DE VIE [appear, disappear] puis s'estompe. Plus de véhicules qui traînent
+          // tout le long. Les JNIM/EIGS de l'Acte 1 vivent pendant leur séquence
+          // (zone armée → confrontation f2167 → s'estompent f2299).
           const fId = v.faction as string;
-          const audioTrigger =
-            fId === "jnim" || fId === "conteste" && v.id === "eigs-1" ? F_JNIM_ZONE :
-            fId === "etat" ? F_KIDAL_ALONE :
-            fId === "conteste" ? F_KIDAL_FLAG :
-            F_JNIM_ZONE;
-          const appear = audioTrigger + (v.delay ?? 0);
-          const pop = interpolate(frame, [appear, appear + 20], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp",
-            easing: Easing.bezier(0.2, 0.9, 0.3, 1),
-          });
+          const isEigs = v.id === "eigs-1";
+          let appear: number, disappear: number;
+          if (fId === "jnim") {
+            // JNIM : apparaît avec sa zone (BEAT 3 f1396 "centre Mali"), part fin confrontation
+            appear = 1396; disappear = 2299;
+          } else if (isEigs) {
+            // EIGS : apparaît BEAT 4 (f1815 "l'est"), part fin confrontation
+            appear = 1815; disappear = 2299;
+          } else if (fId === "etat") {
+            // FAMa : Acte 3 Kidal (tenaille), part après le drapeau
+            appear = F_KIDAL_OFFENSIVE; disappear = F_KIDAL_FLAG_VISIBLE + 120;
+          } else {
+            // CSP / conteste : Acte 3 contre-offensive
+            appear = F_KIDAL_COUNTER; disappear = F_KIDAL_COUNTER + 240;
+          }
+          appear += (v.delay ?? 0);
+          // fenêtre de vie : pop-in 20f → maintien → fade-out 30f à disappear
+          const pop = interpolate(
+            frame,
+            [appear, appear + 20, disappear, disappear + 30],
+            [0, 1, 1, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp",
+              easing: Easing.bezier(0.2, 0.9, 0.3, 1) }
+          );
           if (pop <= 0) return null;
           const mag = Math.hypot(pos.dx, pos.dy);
           const moving = mag > 0.1;
           const ang = Math.atan2(pos.dy, pos.dx);
-          const headingDeg = moving ? (ang * 180) / Math.PI + 90 : 0;
+          // Offset d'orientation du sprite : les technical-* Sahel pointent vers la
+          // DROITE (offset 0) ; les sprites Soudan (tank-td-*, tech-td-*) pointent
+          // vers le HAUT (offset +90). On adapte selon le sprite.
+          const spritePointsUp = v.sprite.startsWith("tank-td") || v.sprite.startsWith("tech-td");
+          const headingDeg = moving ? (ang * 180) / Math.PI + (spritePointsUp ? 90 : 0) : 0;
           const trailLen = Math.min(38, mag * 6 + 8);
           // couleur de la trainee selon faction
           const factionId = v.faction as string;
@@ -1159,13 +1323,17 @@ export const SahelWarMapEngine: React.FC = () => {
           Chaque ville pop exactement quand la narration la cite.
           ====================================================== */}
       {ready &&
-        CITY_SCHEDULE.map(({ name, appearFrame }) => {
+        CITY_SCHEDULE.map(({ name, appearFrame, hold }) => {
           const cityPos = cityPx.find((c) => c.name === name);
           if (!cityPos) return null;
-          if (frame < appearFrame) return null;
-          const cityOp = interpolate(frame, [appearFrame, appearFrame + 18], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          }) * hudOp;
+          if (frame < appearFrame || frame > hold + 30) return null;
+          // fenêtre de vie : fade-in 18f → maintien → fade-out 30f à hold (séquentiel)
+          const cityOp = interpolate(
+            frame,
+            [appearFrame, appearFrame + 18, hold, hold + 30],
+            [0, 1, 1, 0],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+          ) * hudOp;
           if (cityOp <= 0) return null;
           return (
             <div key={name} style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
@@ -1225,23 +1393,57 @@ export const SahelWarMapEngine: React.FC = () => {
       {/* ======================================================
           OVERLAY AES NEE (frame ~7014)
           ====================================================== */}
+      {/* TAMPONS ACRONYMES ACTE 1 — CENTRE semi-transparent (BEAT 3/4) */}
+      {jnimStampOp > 0 && (
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
+            opacity: jnimStampOp * 0.92, pointerEvents: "none" }}>
+          <div style={{ ...plaque, padding: "16px 34px", textAlign: "center",
+              background: "rgba(245,239,214,0.86)", borderColor: SAHEL_COLORS.jnim, borderWidth: 2,
+              transform: `rotate(${paperWobble(frame, 4)}deg)` }}>
+            <div style={{ fontSize: 30, fontWeight: 800, color: SAHEL_COLORS.jnim, letterSpacing: 1 }}>
+              JNIM
+            </div>
+            <div style={{ fontSize: 16, marginTop: 4, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase" }}>lié à Al-Qaïda</div>
+          </div>
+        </AbsoluteFill>
+      )}
+      {eigsStampOp > 0 && (
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
+            opacity: eigsStampOp * 0.92, pointerEvents: "none" }}>
+          <div style={{ ...plaque, padding: "16px 34px", textAlign: "center",
+              background: "rgba(245,239,214,0.86)", borderColor: "#9C5A2E", borderWidth: 2,
+              transform: `rotate(${paperWobble(frame, 6)}deg)` }}>
+            <div style={{ fontSize: 30, fontWeight: 800, color: "#9C5A2E", letterSpacing: 1 }}>
+              EIGS
+            </div>
+            <div style={{ fontSize: 16, marginTop: 4, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase" }}>lié à Daesh</div>
+          </div>
+        </AbsoluteFill>
+      )}
+
+      {/* Cartouche AES au CENTRE, semi-transparent (décision Aziz 2026-06-07 :
+          les cartouches narratifs apparaissent au centre où est l'œil, pas sur le bord). */}
       {aesOverlayOp > 0 && (
-        <div style={{ position: "absolute", right: 60, top: "40%", transform: "translateY(-50%)",
-            opacity: aesOverlayOp, pointerEvents: "none" }}>
-          <div style={{ ...plaque, padding: "18px 28px", textAlign: "center", maxWidth: 320,
-              borderColor: SAHEL_COLORS.contested, borderWidth: 2 }}>
-            <div style={{ fontSize: 14, letterSpacing: 4, fontWeight: 700,
+        <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
+            opacity: aesOverlayOp * 0.92, pointerEvents: "none" }}>
+          <div style={{ ...plaque, padding: "22px 40px", textAlign: "center",
+              background: "rgba(245,239,214,0.86)",
+              borderColor: SAHEL_COLORS.contested, borderWidth: 2,
+              transform: `rotate(${paperWobble(frame, 5)}deg)` }}>
+            <div style={{ fontSize: 15, letterSpacing: 4, fontWeight: 700,
               textTransform: "uppercase", opacity: 0.65, marginBottom: 6 }}>
               16 septembre 2023
             </div>
-            <div style={{ fontSize: 28, fontWeight: 800, color: SAHEL_COLORS.contested, lineHeight: 1.1 }}>
+            <div style={{ fontSize: 34, fontWeight: 800, color: SAHEL_COLORS.contested, lineHeight: 1.1 }}>
               Alliance des États<br />du Sahel
             </div>
-            <div style={{ fontSize: 16, marginTop: 8, opacity: 0.75, fontWeight: 500 }}>
+            <div style={{ fontSize: 17, marginTop: 8, opacity: 0.75, fontWeight: 500 }}>
               Charte du Liptako-Gourma
             </div>
           </div>
-        </div>
+        </AbsoluteFill>
       )}
 
       {/* ======================================================

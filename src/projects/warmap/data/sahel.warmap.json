@@ -865,7 +865,7 @@
     {
       "id": "jnim-1",
       "faction": "jnim",
-      "sprite": "tech-td-red",
+      "sprite": "technical-jnim",
       "kind": "technical",
       "size": 52,
       "path": [
@@ -899,7 +899,7 @@
     {
       "id": "jnim-2",
       "faction": "jnim",
-      "sprite": "tech-td-red",
+      "sprite": "technical-jnim",
       "kind": "technical",
       "size": 46,
       "path": [
@@ -929,7 +929,7 @@
     {
       "id": "eigs-1",
       "faction": "conteste",
-      "sprite": "tech-td-red",
+      "sprite": "technical-eigs",
       "kind": "technical",
       "size": 50,
       "path": [
