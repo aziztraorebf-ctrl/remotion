@@ -88,9 +88,25 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
 
 ---
 
+## ⭐ SOCLE D'ANGLES OBLIGATOIRES (garantit "le même résultat partout" — créé 2026-06-07)
+
+Notre succès repose sur 5 ANGLES posés à CHAQUE review. Ils sont maintenant FIGÉS dans un socle
+unique (`ANGLES_BLOCK` dans da-brief.py), injecté par défaut dans TOUT mode (brief ET compare) et
+TOUT pilier. Le pilier ne change QUE le contexte technique (stack, axes), JAMAIS ces angles :
+1. **SPECTATEUR LAMBDA** — que comprend qqn qui ne connaît pas le sujet ? Où décroche-t-il ?
+2. **NARRATION / SYNCHRO** — ce qui apparaît à l'écran suit-il la voix ? (1 beat visuel/idée, pas redondant)
+3. **TRANSITIONS vs ÉTATS** — vraies transitions animées ou "diapos" figées ? cuts secs / temps morts ?
+4. **AI-SLOP** — qu'est-ce qui crie généré par IA / amateur ?
+5. **EXPERT DU MÉTIER** — qu'est-ce qu'un pro jugerait raté / ferait autrement ?
+
+> Pourquoi : avant, les angles étaient éparpillés selon le flag/mode (la narration n'était garantie
+> NULLE PART, da-compare était hardcodé Mapbox). Une instance hors-Sahel devait improviser → résultats
+> variables. Le socle figé corrige ça. `--no-angles` existe mais DÉCONSEILLÉ.
+
 ## LES OUTILS
 
 **1. `scripts/tools/da-brief.py`** — review créative AMONT (Gemini + Kimi, frames). Générique.
+   - Socle ANGLES_BLOCK injecté par défaut (les 5 angles ci-dessus). `--no-angles` pour désactiver.
    - `--aislop` (ON PAR DÉFAUT) : injecte le bloc AI-SLOP — "qu'est-ce qui crie généré par IA /
      amateur ?". Test le plus révélateur sans concession (idée Aziz 2026-06-07). `--no-aislop` pour désactiver.
    - `--expert` : injecte le bloc POINT DE VUE EXPERT — fait jouer aux modèles un expert du métier
@@ -105,11 +121,18 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
 
 **2. `scripts/tools/da-compare.py`** — test COMPARATIF (vs référence validée). Gemini SEUL
    (Files API → ingère les VIDÉOS complètes, capte mouvement+rythme, pas juste des frames).
-   - `--ref <pilier|chemin.mp4>` : la référence qui MARCHE (étalon). Piliers : `warmap`=Soudan
-     (à compléter : `atlas`=Mansa/Ghana, `souverain`=beat validé). Table dans le script.
-   - `--new chemin.mp4` : le nouveau travail. Brief : "même stack, la réf marche / le new non —
-     qu'est-ce qui DIFFÈRE ?". Isole la VRAIE cause (évite les faux coupables).
-   - Hérite `--aislop`/`--expert` (mêmes blocs, source unique da-brief.py).
+   - `--ref <pilier|chemin.mp4>` : la référence qui MARCHE (étalon). Piliers : `warmap`=Soudan,
+     `atlas`=Mansa Moussa (à compléter : `souverain`=beat validé). Table dans le script.
+   - **GABARIT FIGÉ + contexte par pilier (fix 2026-06-07)** : la STRUCTURE de question est figée
+     universelle (rôle, "même stack donc pas le coupable", classement, corrections, verdict+faux
+     coupable). Seul le CONTEXTE technique change selon le pilier (`CONTEXT_BY_PILLAR` :
+     warmap=Mapbox/granularité · atlas=d3-geo/sprites-mouvement · souverain=data-viz). Déduit de
+     `--ref` (ou forcé par `--pillar`). Plus de question hardcodée Mapbox → mêmes résultats sur tous
+     les piliers SANS improviser. `--question` reste l'échappatoire pour un cas 100% spécial.
+   - Socle ANGLES_BLOCK injecté par défaut (spectateur/narration/transitions/aislop/expert).
+   - Hérite `--aislop`/`--expert` (approfondissements, source unique da-brief.py).
+   - ⚠️ Gemini SEUL (Kimi ne lit pas la vidéo). Double œil Kimi-sur-frames en comparatif = backlog
+     (à tester avant intégration). Pour le double œil complet, utiliser da-brief (frames) en complément.
    - À lancer aux MOMENTS-CLÉS (doute niveau, validation acte/template), PAS à chaque fix.
    - **Preuve de valeur (2026-06-07)** : a tranché "palette vs cadrage" sur le Sahel → palette =
      FAUX coupable, vrai pb = fragmentation géographique. A évité de refaire la palette pour rien.

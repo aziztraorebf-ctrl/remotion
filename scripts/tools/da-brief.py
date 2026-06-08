@@ -62,6 +62,30 @@ def b64(path):
     return base64.b64encode(open(path, "rb").read()).decode()
 
 
+# ════════════════════════════════════════════════════════════════════════════
+# SOCLE D'ANGLES OBLIGATOIRES (source unique — partagé da-brief + da-compare)
+# Ces 5 angles ont fait notre succès (session 2026-06-07). Ils DOIVENT être posés
+# dans TOUTE review, quel que soit le mode (brief/compare) ou le pilier (warmap/
+# atlas/souverain). Le pilier ne change QUE le contexte technique, JAMAIS ces angles.
+# Garantit "exactement le même résultat" partout. NE PAS retirer un angle sans réflexion.
+# ════════════════════════════════════════════════════════════════════════════
+ANGLES_BLOCK = """
+
+=== ANGLES OBLIGATOIRES (réponds à CHACUN, c'est le coeur de la review) ===
+1. SPECTATEUR LAMBDA : quelqu'un qui ne connaît PAS le sujet — que comprend-il à chaque instant ?
+   Où décroche-t-il ? Sait-il toujours où regarder (hiérarchie du regard) ?
+2. NARRATION / SYNCHRO : ce qui APPARAÎT à l'écran suit-il la voix ? Le visuel accompagne-t-il le
+   récit (un "beat" visuel par idée), ou est-il en décalage / redondant avec ce que la voix dit déjà ?
+3. TRANSITIONS vs ÉTATS : a-t-on des ÉTATS figés ("diapos") ou de vraies TRANSITIONS animées ?
+   Les enchaînements entre moments fonctionnent-ils, ou y a-t-il des cuts secs / temps morts ?
+4. AI-SLOP : qu'est-ce qui CRIE "généré par IA / amateur / procédural mal maîtrisé" ? (couleurs,
+   typo, éléments sans fonction, surcharge, manque d'espace négatif, easing robotique). Sois technique.
+5. EXPERT DU MÉTIER : qu'est-ce qu'un pro reconnu du genre jugerait raté / ferait autrement / mettrait
+   là où il n'y a rien (ou retirerait) ? Ce qui fait la différence pro/amateur.
+Pour CHAQUE point : le problème + une PISTE concrète dans NOTRE stack (pas d'After Effects/3D/blur CSS).
+"""
+
+
 # Bloc AI-SLOP — injecté par défaut dans tout brief (DA-BRIEF-GATE).
 # Force les modèles à pointer ce qui trahit le procédural mal maîtrisé.
 AISLOP_BLOCK = """
@@ -74,7 +98,7 @@ Sois SPÉCIFIQUE et TECHNIQUE : couleurs (saturation/contraste/surcharge), typog
 (placement/hiérarchie/redondance), éléments graphiques (justifiés ? compris ? bien intégrés ?),
 composition/espace négatif, ce qui fait "template générique" vs "travail intentionnel".
 Pour chaque point : le PROBLÈME + une PISTE de correction réaliste dans NOTRE stack
-(Remotion/Mapbox : SVG, opacité, couleurs, timing — PAS d'After Effects/3D/blur).
+(dans NOTRE stack : SVG, opacité, couleurs, timing, caméra frame-driven — PAS d'After Effects/3D/blur CSS).
 """
 
 # Bloc EXPERT — point de vue d'un expert du métier (idée Aziz). À contraindre à notre stack.
@@ -87,7 +111,7 @@ meilleures chaînes du domaine). Sans concession. Réponds à DEUX points de vue
    il jugerait ratées / amateures ? Qu'est-ce qui manque qui ferait la différence pro/amateur ?
    Quelles animations/transitions un pro mettrait là où on ne met rien (ou l'inverse) ?
 2. LE SPECTATEUR lambda : qu'est-ce qu'il cherche, comprend, ressent ? Où décroche-t-il ?
-CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (Remotion/Mapbox : SVG, opacité, couleurs,
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (SVG, opacité, couleurs,
 caméra frame-driven, timing). NE PROPOSE PAS de 3D, de geo-layers complexes, de particules,
 d'After Effects, d'effets volumétriques. L'expertise doit s'exprimer DANS nos contraintes —
 ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
@@ -108,7 +132,7 @@ D'après ce plan, qu'est-ce qui RISQUE de "crier généré par IA / amateur / pr
 une fois codé ? Anticipe les pièges : couleurs (surcharge/saturation), typo (générique/redondante
 avec la voix), éléments graphiques sans fonction claire, manque d'espace négatif, effets "template".
 Pour CHAQUE risque : la PARADE concrète à appliquer dès la conception, dans NOTRE stack
-(Remotion/Mapbox : SVG, opacité, couleurs, timing — PAS d'After Effects/3D/blur).
+(dans NOTRE stack : SVG, opacité, couleurs, timing, caméra frame-driven — PAS d'After Effects/3D/blur CSS).
 """
 
 EXPERT_BLOCK_UPSTREAM = """
@@ -122,16 +146,21 @@ rendu mais un PLAN à construire. Réponds à TROIS questions :
    transitions tu mettrais où, pour atteindre le niveau pro ? Quels pièges éviter dès le départ ?
 3. ENCHAÎNEMENT POUR LA COMPRÉHENSION : comment séquencer pour qu'un SPECTATEUR lambda (qui ne
    connaît pas le sujet) comprenne tout, sans surcharge, à chaque instant ? Où mettre les respirations ?
-CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (Remotion/Mapbox : SVG, opacité, couleurs,
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (SVG, opacité, couleurs,
 caméra frame-driven, timing). PAS de 3D/geo-layers complexes/particules/After Effects/volumétrique.
 Ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
 """
 
 
-def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=False):
+def build_prompt(brief_path, catalog_path, aislop=True, expert=False, upstream=False, angles=True):
     prompt = open(brief_path, encoding="utf-8").read()
     if catalog_path and os.path.exists(catalog_path):
         prompt += "\n\n=== CATALOGUE D'INSPIRATION (format compact) ===\n" + open(catalog_path, encoding="utf-8").read()
+    # SOCLE ANGLES OBLIGATOIRES : toujours injecté (les 5 angles qui ont fait notre succès,
+    # dont la narration). Garantit le même résultat quel que soit le mode/pilier.
+    if angles:
+        prompt += ANGLES_BLOCK
+    # Approfondissements optionnels (détaillent les angles 4 et 5) :
     if aislop:
         prompt += AISLOP_BLOCK_UPSTREAM if upstream else AISLOP_BLOCK
     if expert:

@@ -32,33 +32,68 @@ GEMINI_MODEL = "gemini-3.1-pro-preview"
 # Mettre à jour quand une nouvelle référence est validée par Aziz.
 REFERENCES = {
     "warmap": "out/_r-and-d/sudan-warmap-epic60-v4.mp4",   # Soudan = étalon war-map (catbox 4dwqit)
-    # "atlas": "...",     # à remplir : Mansa Moussa ou Ghana validé
+    "atlas": "out/PRET-PUBLICATION/mansa-moussa-atlas-v2-FINAL.mp4",  # Mansa Moussa = etalon Atlas (caravane/route/or)
     # "souverain": "...", # à remplir : un beat Souverain validé
 }
 
-DEFAULT_QUESTION = """RÔLE
-Tu es directeur artistique expert en motion design cartographique documentaire. On te soumet
-une énigme de diagnostic. Analyste, pas flatteur.
+# Contexte technique PAR PILIER (figé, modifiable). Seul le contexte change selon --ref ;
+# la STRUCTURE de question + le socle d'angles restent identiques -> mêmes résultats partout.
+CONTEXT_BY_PILLAR = {
+    "warmap": {
+        "desc": "war-map géopolitique : carte permanente, contrôle territorial, sprites top-down",
+        "stack": "Remotion + Mapbox reskin parchemin",
+        "axes": "cadrage/format · granularité géographique · densité d'éléments simultanés · "
+                "ratio carte/espace négatif · échelle des éléments · rythme/mouvement",
+        "outils": "SVG, opacité, couleurs, cadrage, densité, timing, caméra frame-driven",
+    },
+    "atlas": {
+        "desc": "style Atlas : cartes verticales, géographie historique, sprites pixel art",
+        "stack": "Remotion + d3-geo carte parchemin terracotta + sprites PixelLab (or = prospérité)",
+        "axes": "usage des SPRITES en mouvement (échelle, ancrage au sol, rapport caméra/sprite, "
+                "vitesse, cadence d'anim, direction, transitions entre trajets) · enchaînement/rythme "
+                "(respiration, temps morts, climax) · lisibilité/hiérarchie",
+        "outils": "d3-geo, SVG, PixelLab, opacité, couleurs, cadrage, timing, track caméra",
+    },
+    "souverain": {
+        "desc": "data-viz documentaire premium : chiffres-événements, comparaisons",
+        "stack": "Remotion + Tailwind + D3 utility-only, rendu SVG/React",
+        "axes": "hiérarchie data-viz · contraste d'échelle · séquençage · transitions seamless · "
+                "discipline chromatique · lisibilité des chiffres",
+        "outils": "Tailwind, D3 (scale/array/format), SVG, opacité, timing, spring",
+    },
+}
+
+# Gabarit FIGÉ universel (la structure qui a produit nos bons résultats). {placeholders} = contexte pilier.
+COMPARE_TEMPLATE = """RÔLE
+Tu es directeur artistique expert en motion design cartographique documentaire ({desc}).
+Analyste lucide, sans concession, pas flatteur.
 
 CONTEXTE
-Deux vidéos faites avec EXACTEMENT le même moteur/stack (Remotion + Mapbox reskin parchemin),
-la même palette, les mêmes types d'éléments.
-- VIDÉO 1 (RÉFÉRENCE) : celle-ci FONCTIONNE — lisible, premium, on comprend l'action.
-- VIDÉO 2 (NOUVEAU TRAVAIL) : celle-ci marche MOINS bien — chargée/confuse/moins premium.
+Les DEUX vidéos sont faites avec EXACTEMENT le même moteur/stack ({stack}), la même palette,
+la même grammaire visuelle. Elles racontent peut-être des choses DIFFÉRENTES — ne compare pas
+"la même histoire", compare la MAÎTRISE DE LA GRAMMAIRE.
+- VIDÉO 1 (RÉFÉRENCE) = un travail VALIDÉ qui FONCTIONNE de bout en bout. L'étalon de qualité.
+- VIDÉO 2 (NOUVEAU) = ne décolle PAS — sans qu'on sache exactement pourquoi.
 
 QUESTION CENTRALE
-Puisque stack et palette sont IDENTIQUES, ces facteurs ne peuvent PAS seuls expliquer l'écart.
-=> Qu'est-ce qui DIFFÈRE RÉELLEMENT et explique que la 1 marche et la 2 non ?
-Analyse : cadrage/format, granularité géographique, densité d'éléments simultanés, ratio
-carte/espace négatif, échelle des éléments, rythme/mouvement (tu vois les vidéos en entier).
+Puisque stack et palette sont IDENTIQUES, ils n'expliquent PAS l'écart. Qu'est-ce que la
+RÉFÉRENCE fait bien que le NOUVEAU rate ? Axes spécifiques à ce pilier : {axes}.
 
 FORMAT
 1. Classement des différences, de LA PLUS DÉTERMINANTE à la moins importante.
-2. Les 3 corrections les PLUS RENTABLES pour rapprocher la vidéo 2 du niveau de la 1
-   (réalisables en Remotion/Mapbox : SVG, opacité, couleurs, cadrage, densité, timing —
-   PAS d'After Effects/3D).
-3. Verdict tranché : quel est le VRAI problème n°1 ? Y a-t-il un FAUX coupable évident ?
+2. Diagnostic SPÉCIFIQUE du point qui bloque (mouvement / rythme / lisibilité) : qu'est-ce qui le
+   rend "raté", et comment la référence fait-elle mieux ? Très concret.
+3. Les 3-4 corrections les PLUS RENTABLES pour amener le NOUVEAU au niveau de la référence
+   (réalisables dans la stack : {outils} — PAS d'After Effects/3D).
+4. VERDICT TRANCHÉ : le VRAI problème n°1 ? Y a-t-il un FAUX coupable (qu'on croit être le pb mais
+   qui n'en est pas un — ex. la palette pour le Sahel) ? Sauvable par ajustements, ou CONCEPT à repenser ?
 Sois précis et honnête, on veut la VRAIE cause."""
+
+
+def build_default_question(pillar):
+    """Construit la question depuis le gabarit figé + contexte du pilier."""
+    ctx = CONTEXT_BY_PILLAR.get(pillar, CONTEXT_BY_PILLAR["warmap"])
+    return COMPARE_TEMPLATE.format(**ctx)
 
 
 def load_env():
@@ -72,13 +107,19 @@ def load_env():
 
 
 def resolve_ref(ref):
+    """Retourne (chemin_ref, pilier). Si --ref est un pilier connu -> contexte auto.
+    Si c'est un chemin .mp4, on tente d'inférer le pilier depuis le chemin, défaut warmap."""
     if ref in REFERENCES:
         path = os.path.join(ROOT, REFERENCES[ref])
         if not os.path.exists(path):
             print(f"[ERREUR] référence pilier '{ref}' introuvable: {path}"); sys.exit(1)
-        return path
+        return path, ref
     if os.path.exists(ref):
-        return ref
+        low = ref.lower()
+        pillar = ("atlas" if "atlas" in low or "mansa" in low or "ghana" in low or "peste" in low
+                  else "souverain" if "souverain" in low or "senegal" in low or "maroc" in low
+                  else "warmap")
+        return ref, pillar
     print(f"[ERREUR] --ref doit être un pilier {list(REFERENCES)} ou un chemin .mp4 valide"); sys.exit(1)
 
 
@@ -87,9 +128,12 @@ def main():
     ap.add_argument("--ref", required=True, help=f"Pilier {list(REFERENCES)} ou chemin .mp4 référence")
     ap.add_argument("--new", required=True, help="Chemin .mp4 du nouveau travail à comparer")
     ap.add_argument("--label", required=True, help="Label de sortie")
-    ap.add_argument("--question", default=None, help="Question custom (sinon défaut diagnostic)")
-    ap.add_argument("--expert", action="store_true", help="Ajouter le point de vue expert")
-    ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop")
+    ap.add_argument("--question", default=None, help="Question custom (sinon gabarit figé du pilier)")
+    ap.add_argument("--pillar", choices=list(CONTEXT_BY_PILLAR), default=None,
+                    help="Forcer le pilier (sinon déduit de --ref)")
+    ap.add_argument("--expert", action="store_true", help="Approfondir le point de vue expert")
+    ap.add_argument("--no-aislop", action="store_true", help="Désactiver l'approfondissement AI-slop")
+    ap.add_argument("--no-angles", action="store_true", help="Désactiver le socle d'angles obligatoires (déconseillé)")
     ap.add_argument("--max-tokens", type=int, default=7000)
     args = ap.parse_args()
 
@@ -97,20 +141,28 @@ def main():
     key = os.getenv("GEMINI_API_KEY")
     if not key:
         print("[ERREUR] GEMINI_API_KEY absente"); sys.exit(1)
-    ref_path = resolve_ref(args.ref)
+    ref_path, pillar = resolve_ref(args.ref)
+    if args.pillar:
+        pillar = args.pillar
     if not os.path.exists(args.new):
         print(f"[ERREUR] --new introuvable: {args.new}"); sys.exit(1)
 
-    # Importer les blocs depuis da-brief (source unique de vérité)
+    # Importer le socle d'angles + blocs depuis da-brief (source unique de vérité)
     import importlib.util
     spec = importlib.util.spec_from_file_location("dab", os.path.join(os.path.dirname(__file__), "da-brief.py"))
     dab = importlib.util.module_from_spec(spec); spec.loader.exec_module(dab)
 
-    prompt = args.question or DEFAULT_QUESTION
+    # Gabarit figé + contexte du pilier (ou question 100% custom si fournie)
+    prompt = args.question or build_default_question(pillar)
+    # SOCLE D'ANGLES OBLIGATOIRES (spectateur/narration/transitions/aislop/expert) — toujours.
+    if not args.no_angles:
+        prompt += dab.ANGLES_BLOCK
     if not args.no_aislop:
         prompt += dab.AISLOP_BLOCK
     if args.expert:
         prompt += dab.EXPERT_BLOCK
+    print(f"[compare] pilier={pillar} · angles={'OFF' if args.no_angles else 'ON'} · "
+          f"aislop={'OFF' if args.no_aislop else 'ON'} · expert={'ON' if args.expert else 'OFF'}")
 
     try:
         from google import genai
