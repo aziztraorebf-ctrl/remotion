@@ -1110,8 +1110,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     interpolate(frame, [start, start + 12, start + 110, start + 140], [0, 1, 1, 0], {
       extrapolateLeft: "clamp", extrapolateRight: "clamp",
     });
-  const jnimStampOp = stampOp(F_JNIM_ZONE);   // f1198 "JNIM."
-  const eigsStampOp = stampOp(1749);          // f1749 "l'EIGS."
+  // acte1Final : décalage +25f (le tampon apparaît au mot "Al-Qaïda"/"Daesh",
+  // pas en même temps que la zone — anti-redondance avec la voix, plan upstream).
+  const stampDelay = acte1Final ? 25 : 0;
+  const jnimStampOp = stampOp(F_JNIM_ZONE + stampDelay);   // f1198 (+25) "JNIM."
+  const eigsStampOp = stampOp(1749 + stampDelay);          // f1749 (+25) "l'EIGS."
 
   // ============================================================
   // LOGIQUE KIDAL (s'allume en or a F_KIDAL_ALONE, reste bleu a F_KIDAL_FLAG)
@@ -1720,10 +1723,40 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         })}
 
       {/* ======================================================
+          ACTE 1 FINAL — ONDES DE FRICTION (f2167 "combattent")
+          Entre la zone JNIM et la zone EIGS : ondes de choc SVG concentriques
+          qui pulsent au point de contact (PAS d'explosion — "répulsion").
+          ====================================================== */}
+      {acte1Final && showChrome && frame >= A1.FRICTION && frame < A1.END + 20 && (() => {
+        // point de friction = entre les véhicules JNIM (ouest) et EIGS (est).
+        const jnim = vehPx.find((p) => p.id === "jnim-1");
+        const eigs = vehPx.find((p) => p.id === "eigs-1");
+        if (!jnim || !eigs) return null;
+        const fx = (jnim.x + eigs.x) / 2, fy = (jnim.y + eigs.y) / 2;
+        // 3 ondes décalées, period 30f
+        return (
+          <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+            {[0, 1, 2].map((k) => {
+              const local = (frame - A1.FRICTION - k * 10) % 36;
+              if (local < 0) return null;
+              const t = local / 36;
+              return (
+                <circle key={k} cx={fx} cy={fy} r={8 + t * 40} fill="none"
+                  stroke="#F3E9C8" strokeWidth={2.4} opacity={(1 - t) * 0.65} />
+              );
+            })}
+            {/* flash bref au centre toutes les ~36f */}
+            <circle cx={fx} cy={fy} r={6} fill="#F3E9C8"
+              opacity={0.5 * (1 - ((frame - A1.FRICTION) % 36) / 36)} />
+          </svg>
+        );
+      })()}
+
+      {/* ======================================================
           REFUGIES — jetons-visage geo-ancres (Djibo/Menaka/Tillaberi)
           Chaque jeton a son propre trigger frame audio
           ====================================================== */}
-      {showChrome &&
+      {showChrome && !acte1Final &&
         (SAHEL_REFUGEES as SchemaRefugee[]).map((r) => {
           const pos = refPx.find((p) => p.id === r.id);
           if (!pos) return null;
@@ -1939,8 +1972,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           OVERLAY AES NEE (frame ~7014)
           ====================================================== */}
-      {/* TAMPONS ACRONYMES ACTE 1 — CENTRE semi-transparent (BEAT 3/4) */}
-      {jnimStampOp > 0 && (
+      {/* TAMPONS ACRONYMES ACTE 1.
+          - Actes 2-5 (legacy) : centrés semi-transparents.
+          - acte1Final : DÉCALÉS (haut-droite) avec liseré faction, ne cachent PAS la
+            zone (plan upstream : "ne pas couvrir la zone dont on parle"). Le tampon
+            apparaît au mot (stampOp décalé). */}
+      {jnimStampOp > 0 && !acte1Final && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
             opacity: jnimStampOp * 0.92, pointerEvents: "none" }}>
           <div style={{ ...plaque, padding: "16px 34px", textAlign: "center",
@@ -1954,7 +1991,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </div>
         </AbsoluteFill>
       )}
-      {eigsStampOp > 0 && (
+      {eigsStampOp > 0 && !acte1Final && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
             opacity: eigsStampOp * 0.92, pointerEvents: "none" }}>
           <div style={{ ...plaque, padding: "16px 34px", textAlign: "center",
@@ -1967,6 +2004,29 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
               textTransform: "uppercase" }}>lié à Daesh</div>
           </div>
         </AbsoluteFill>
+      )}
+      {/* acte1Final : tampons décalés haut-droite, n'occultent pas la zone d'action. */}
+      {acte1Final && jnimStampOp > 0 && (
+        <div style={{ position: "absolute", top: 110, right: 60, opacity: jnimStampOp * 0.95,
+            pointerEvents: "none" }}>
+          <div style={{ ...plaque, padding: "12px 24px", textAlign: "left",
+              background: "rgba(245,239,214,0.9)", borderColor: SAHEL_COLORS.jnim, borderWidth: 2 }}>
+            <div style={{ fontSize: 26, fontWeight: 800, color: SAHEL_COLORS.jnim, letterSpacing: 1 }}>JNIM</div>
+            <div style={{ fontSize: 14, marginTop: 2, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase" }}>lié à Al-Qaïda</div>
+          </div>
+        </div>
+      )}
+      {acte1Final && eigsStampOp > 0 && (
+        <div style={{ position: "absolute", top: 200, right: 60, opacity: eigsStampOp * 0.95,
+            pointerEvents: "none" }}>
+          <div style={{ ...plaque, padding: "12px 24px", textAlign: "left",
+              background: "rgba(245,239,214,0.9)", borderColor: "#3E2A18", borderWidth: 2 }}>
+            <div style={{ fontSize: 26, fontWeight: 800, color: "#3E2A18", letterSpacing: 1 }}>EIGS</div>
+            <div style={{ fontSize: 14, marginTop: 2, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase" }}>lié à Daesh</div>
+          </div>
+        </div>
       )}
 
       {/* Cartouche AES au CENTRE, semi-transparent (décision Aziz 2026-06-07 :
