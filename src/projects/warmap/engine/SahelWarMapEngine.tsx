@@ -198,6 +198,32 @@ const interpA1Vehicle = (wp: A1Vehicle["wp"], frame: number): [number, number] =
   return [last.lon, last.lat];
 };
 
+// Génère un path SVG de "tache" autour de (cx,cy). variant 'organic' = bords irréguliers
+// doux (JNIM rural) ; 'angular' = contour plus géométrique/militaire (EIGS).
+const blobPath = (cx: number, cy: number, r: number, variant: "organic" | "angular"): string => {
+  const N = variant === "organic" ? 10 : 7;
+  const seedAmp = variant === "organic" ? 0.28 : 0.12;
+  const pts: [number, number][] = [];
+  for (let i = 0; i < N; i++) {
+    const a = (i / N) * Math.PI * 2;
+    // rayon pseudo-aléatoire déterministe (pas de Math.random — sin-based)
+    const wob = 1 + seedAmp * Math.sin(i * 12.9898 + (variant === "organic" ? 1.3 : 4.7));
+    pts.push([cx + Math.cos(a) * r * wob, cy + Math.sin(a) * r * wob]);
+  }
+  if (variant === "angular") {
+    // contour anguleux : lignes droites
+    return pts.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("") + "Z";
+  }
+  // organique : courbes lissées (quadratiques entre milieux de segments)
+  let d = `M${((pts[0][0] + pts[N - 1][0]) / 2).toFixed(1)},${((pts[0][1] + pts[N - 1][1]) / 2).toFixed(1)}`;
+  for (let i = 0; i < N; i++) {
+    const next = pts[(i + 1) % N];
+    const mid: [number, number] = [(pts[i][0] + next[0]) / 2, (pts[i][1] + next[1]) / 2];
+    d += `Q${pts[i][0].toFixed(1)},${pts[i][1].toFixed(1)} ${mid[0].toFixed(1)},${mid[1].toFixed(1)}`;
+  }
+  return d + "Z";
+};
+
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
 export const SAHEL_FPS = 30;
@@ -343,14 +369,15 @@ const ACTE1_CAM_KEYS: CamKey[] = [
   { f: 572,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // "possible" : arrivée freeze
   { f: 632,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // FREEZE identique (figé 2s)
   { f: 726,  lon: -0.6, lat: 14.9, zoom: 4.70 }, // "répondre" : drift reprend, reset doux
-  // --- 2e moitié : drift continu + recentrages marqués sur événements ---
-  { f: 960,  lon: -0.9, lat: 15.05, zoom: 4.71 }, // drift doux vers centre Mali (transition)
-  { f: 1198, lon: -1.1, lat: 15.2, zoom: 4.74 }, // "JNIM" : recentre marqué centre Mali + zoom léger
-  { f: 1450, lon: -0.8, lat: 15.1, zoom: 4.73 }, // drift continu pendant patrouille JNIM
-  { f: 1749, lon:  0.5, lat: 15.0, zoom: 4.74 }, // "EIGS" : recentre marqué trois-frontières est
-  { f: 1980, lon:  0.2, lat: 15.0, zoom: 4.74 }, // drift continu pendant patrouille EIGS
-  { f: 2167, lon: -0.1, lat: 15.05, zoom: 4.82 }, // "combattent" : resserre marqué sur friction
-  { f: 2299, lon: -0.1, lat: 15.05, zoom: 4.82 }, // "séparément" : freeze final
+  // --- 2e moitié : ZOOM TACTIQUE (review zone2) — on DESCEND sur le terrain ---
+  { f: 960,  lon: -0.85, lat: 15.05, zoom: 4.95 }, // transition : push-in commence
+  { f: 1198, lon: -0.95, lat: 15.1,  zoom: 5.30 }, // "JNIM" : push-in MALI central (zoom tactique)
+  { f: 1450, lon: -0.75, lat: 15.15, zoom: 5.32 }, // drift pendant patrouille JNIM (serré)
+  { f: 1620, lon: -0.2,  lat: 15.1,  zoom: 5.20 }, // pan vers l'est (transition continue O->E)
+  { f: 1749, lon:  0.45, lat: 15.05, zoom: 5.28 }, // "EIGS" : trois-frontières est (zoom tactique)
+  { f: 1980, lon:  0.15, lat: 15.05, zoom: 5.25 }, // drift pendant avancée EIGS
+  { f: 2167, lon: -0.15, lat: 15.05, zoom: 5.18 }, // "combattent" : recule un peu pour voir les 2
+  { f: 2299, lon: -0.15, lat: 15.05, zoom: 5.18 }, // "séparément" : freeze final
 ];
 
 const getActe1Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
@@ -574,8 +601,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const [aesPaths, setAesPaths] = useState<string[]>([]);
   // B3 frontDraw : contours des masses fusionnées reprojetés, groupés par pays (draw-in).
   const [frontPaths, setFrontPaths] = useState<{ country: string; d: string; len: number }[]>([]);
-  // ACTE 1 FINAL : véhicules pilotés par frame absolue (position + direction).
-  const [a1VehPx, setA1VehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
+  // ACTE 1 FINAL : véhicules pilotés par frame absolue (position + direction + traînée).
+  const [a1VehPx, setA1VehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number; trail: {x:number;y:number}[] }[]>([]);
+  // ACTE 1 FINAL : foyers des taches d'influence (JNIM centre Mali, EIGS est) reprojetés.
+  const [a1ZonePx, setA1ZonePx] = useState<{ jnim: {x:number;y:number}|null; eigs: {x:number;y:number}|null }>({ jnim: null, eigs: null });
   const [hookPx, setHookPx] = useState<{
     bamako: { x: number; y: number } | null;
     ouaga: { x: number; y: number } | null;
@@ -983,9 +1012,20 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         const [lon2, lat2] = interpA1Vehicle(v.wp, frame - 2);
         const p = map.project([lon, lat]);
         const pPrev = map.project([lon2, lat2]);
-        return { id: v.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y };
+        // traînée : positions échantillonnées sur les ~50 dernières frames (review zone2).
+        const trail: {x:number;y:number}[] = [];
+        for (let dk = 6; dk <= 54; dk += 8) {
+          const [tl, ta] = interpA1Vehicle(v.wp, frame - dk);
+          const tp = map.project([tl, ta]);
+          trail.push({ x: tp.x, y: tp.y });
+        }
+        return { id: v.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y, trail };
       });
       setA1VehPx(a1proj);
+      // Foyers des taches d'influence (review zone2) : projeter pour échelle px constante.
+      const pJ = map.project([-1.3, 14.9] as [number, number]); // centre Mali (JNIM rural)
+      const pE = map.project([0.9, 14.9] as [number, number]);  // est trois-frontières (EIGS)
+      setA1ZonePx({ jnim: { x: pJ.x, y: pJ.y }, eigs: { x: pE.x, y: pE.y } });
     }
 
     // Projeter les refugies
@@ -1258,6 +1298,17 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const politicalDim = interpolate(frame, [A1.DRIFT, A1.DRIFT + 40], [1, 0.42], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
+
+  // TACHES D'INFLUENCE (review zone2) : grandissent depuis le foyer, se touchent à f2167
+  // puis se REPOUSSENT légèrement (rétraction). JNIM dès f1198, EIGS dès f1749.
+  const jnimZoneGrow = interpolate(frame,
+    [A1.JNIM, A1.JNIM + 260, A1.FRICTION, A1.FRICTION + 40],
+    [0, 1, 1, 0.88], // grandit puis se rétracte un peu au contact
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const eigsZoneGrow = interpolate(frame,
+    [A1.EIGS, A1.EIGS + 230, A1.FRICTION, A1.FRICTION + 40],
+    [0, 1, 1, 0.88],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
 
   return (
     <AbsoluteFill style={{ backgroundColor: SAHEL_COLORS.ocean, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
@@ -1719,6 +1770,31 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
+          ACTE 1 FINAL — TACHES D'INFLUENCE (review zone2)
+          Zones de contrôle qui GRANDISSENT depuis le foyer (JNIM rouge organique
+          centre Mali / EIGS sombre géométrique est). Donnent du sens au mouvement
+          des véhicules + comblent le vide. Sous les véhicules (qui roulent dessus).
+          ====================================================== */}
+      {acte1Final && showChrome && (jnimZoneGrow > 0 || eigsZoneGrow > 0) && (
+        <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+          {/* JNIM : tache rouge organique, bords irréguliers, semi-transparente */}
+          {jnimZoneGrow > 0 && a1ZonePx.jnim && (
+            <path d={blobPath(a1ZonePx.jnim.x, a1ZonePx.jnim.y, 95 * jnimZoneGrow, "organic")}
+              fill={SAHEL_COLORS.jnim} fillOpacity={0.30 * Math.min(1, jnimZoneGrow * 2)}
+              stroke={SAHEL_COLORS.jnim} strokeOpacity={0.45 * Math.min(1, jnimZoneGrow * 2)}
+              strokeWidth={1.5} />
+          )}
+          {/* EIGS : tache sombre anguleuse (militaire) */}
+          {eigsZoneGrow > 0 && a1ZonePx.eigs && (
+            <path d={blobPath(a1ZonePx.eigs.x, a1ZonePx.eigs.y, 78 * eigsZoneGrow, "angular")}
+              fill="#3E2A18" fillOpacity={0.30 * Math.min(1, eigsZoneGrow * 2)}
+              stroke="#3E2A18" strokeOpacity={0.5 * Math.min(1, eigsZoneGrow * 2)}
+              strokeWidth={1.5} />
+          )}
+        </svg>
+      )}
+
+      {/* ======================================================
           VEHICULES (JNIM/EIGS rouge, FAMa bleu, CSP or) — legacy Actes 2-5.
           En acte1Final, on utilise ACTE1_VEHICLES (frame-driven) à la place.
           ====================================================== */}
@@ -1814,27 +1890,37 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           const ang = Math.atan2(pos.dy, pos.dx);
           // sprites technical-* pointent vers le HAUT -> offset +90 par rapport au cap.
           const headingDeg = moving ? (ang * 180) / Math.PI + 90 : 0;
-          const trailLen = Math.min(40, mag * 8 + 6);
-          const col = v.faction === "jnim" ? SAHEL_COLORS.jnim : "#3E2A18";
+          const col = v.faction === "jnim" ? SAHEL_COLORS.jnim : "#6B5538";
+          const trail = pos.trail ?? [];
           return (
-            <div key={v.id} style={{ position: "absolute", left: pos.x, top: pos.y,
-                transform: `translate(-50%, -50%) scale(${pop})`, opacity: pop, pointerEvents: "none" }}>
-              {moving && (
-                <div style={{ position: "absolute", left: 0, top: 0, width: trailLen, height: 6,
-                  transform: `translate(-100%, -50%) rotate(${(ang * 180) / Math.PI}deg)`,
-                  transformOrigin: "100% 50%",
-                  background: `linear-gradient(90deg, rgba(0,0,0,0), ${col})`,
-                  borderRadius: 4, opacity: 0.4 }} />
+            <React.Fragment key={v.id}>
+              {/* TRAÎNÉE (review zone2) : polyline qui s'estompe = mémoire du passage */}
+              {moving && trail.length > 1 && (
+                <svg width={width} height={height}
+                  style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+                  {trail.slice(0, -1).map((tp, i) => {
+                    const nx = trail[i + 1];
+                    const op = (1 - i / trail.length) * 0.5 * pop;
+                    return (
+                      <line key={i} x1={i === 0 ? pos.x : tp.x} y1={i === 0 ? pos.y : tp.y}
+                        x2={nx.x} y2={nx.y} stroke={col} strokeWidth={4 - i * 0.4}
+                        strokeLinecap="round" opacity={op} />
+                    );
+                  })}
+                </svg>
               )}
-              {/* ombre portée */}
-              <div style={{ position: "absolute", left: "50%", top: "56%", width: v.size * 0.6,
-                height: v.size * 0.24, transform: "translate(-50%,-50%)",
-                background: "rgba(26,18,9,0.25)", borderRadius: "50%", filter: "blur(3px)" }} />
-              <img src={staticFile(`_shared/sprites/warmap/${v.sprite}.png`)}
-                style={{ width: v.size, height: v.size, objectFit: "contain", display: "block",
-                  transform: `rotate(${headingDeg}deg)`,
-                  filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
-            </div>
+              <div style={{ position: "absolute", left: pos.x, top: pos.y,
+                  transform: `translate(-50%, -50%) scale(${pop})`, opacity: pop, pointerEvents: "none" }}>
+                {/* ombre portée */}
+                <div style={{ position: "absolute", left: "50%", top: "56%", width: v.size * 0.6,
+                  height: v.size * 0.24, transform: "translate(-50%,-50%)",
+                  background: "rgba(26,18,9,0.25)", borderRadius: "50%", filter: "blur(3px)" }} />
+                <img src={staticFile(`_shared/sprites/warmap/${v.sprite}.png`)}
+                  style={{ width: v.size, height: v.size, objectFit: "contain", display: "block",
+                    transform: `rotate(${headingDeg}deg)`,
+                    filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
+              </div>
+            </React.Fragment>
           );
         })}
 

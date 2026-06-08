@@ -1,0 +1,58 @@
+CONTEXTE
+War-Map documentaire géopolitique Sahel (16:9 horizontal verrouillé), stack Remotion + Mapbox
+(carte parchemin) + SVG + sprites PixelLab top-down. Identité "carte temporelle vivante" façon
+Atlas. La PALETTE (bleu état #3E6E9E, or contesté #C99A3A, rouge JNIM #B14B3C, beige UI #F3E9C8,
+vignette sépia voisins) et la GRAMMAIRE sont VALIDÉES et NE doivent PAS changer.
+
+CE QU'ON REGARDE : la 2e MOITIÉ de l'Acte 1 (de 25s à 1:16, frames f750→f2299). La 1re moitié
+(allumage séquentiel des 3 pays + anneau CEDEAO qui se rompt + flèches convergence + freeze) est
+VALIDÉE et fonctionne. C'est cette 2e zone qui pose problème : elle est plus VIDE, moins rythmée.
+
+CE QUE DIT LA VOIX SUR CETTE ZONE (narration réelle, à suivre BEAT par BEAT) :
+"Il faut d'abord regarder ce qui existait avant. Et ce qui ne fonctionnait plus.
+ Dans cette région, deux groupes armés se sont développés au fil des années. Et ils n'ont pas
+ grand-chose en commun.
+ Le premier s'appelle le JNIM. C'est un groupe lié à Al-Qaïda. Il opère surtout dans les zones
+ rurales — le centre du Mali, le nord du Burkina Faso — là où des tensions anciennes entre
+ communautés d'éleveurs et d'agriculteurs lui ont fourni un terreau.
+ Le second s'appelle l'EIGS. Lui est lié à Daesh. Il préfère l'est — la zone des trois frontières,
+ le nord-ouest du Niger.
+ Les deux groupes ne coopèrent pas. Parfois, ils se combattent.
+ Pour lire la carte correctement, il faut les voir séparément."
+
+CE QUI EST DÉJÀ EN PLACE DANS CETTE ZONE (frames jointes) :
+- Transition f726 : les couleurs politiques s'atténuent (nettoyage cognitif) pour faire place à
+  la couche tactique.
+- f1198 "JNIM" : tampon compact semi-transparent "JNIM — lié à Al-Qaïda" centre-haut + 2 véhicules
+  pickup ROUGES (technical, sprites différenciés) qui patrouillent au centre Mali (mouvement
+  erratique en courbes).
+- f1749 "EIGS" : tampon "EIGS — lié à Daesh" + 1 véhicule BLINDÉ sombre (silhouette nettement
+  différente du pickup) qui avance de l'est (Niger) en ligne droite.
+- f2167 "se combattent" : JNIM et EIGS convergent vers un point de contact, ondes de choc SVG
+  beige (répulsion), puis reculent.
+- Caméra : drift continu doux + recentrages sur JNIM (centre Mali) puis EIGS (est).
+
+LE PROBLÈME (mots du réalisateur) :
+"La zone est vide, les véhicules bougent comme des MOUVEMENTS FANTÔMES. Le défi : combler ce vide,
+garder l'intérêt, que ça suive la voix, et rendre le tout PREMIUM pour le spectateur — sans casser
+ce qui marche déjà." Les véhicules se déplacent mais ça ne suffit pas à porter ~50s de récit.
+
+CE QU'ON CHERCHE (review constructive, exécutable dans la stack — PAS d'After Effects/3D) :
+1. Comment COMBLER LE VIDE de cette zone de 50s tout en gardant la lisibilité (un foyer à la fois) ?
+   Quels éléments AJOUTER qui suivent la voix beat par beat (zones rurales JNIM vs est EIGS,
+   "tensions éleveurs/agriculteurs", "trois frontières", "se combattent") ?
+2. Comment donner du SENS au mouvement des véhicules pour qu'ils ne soient pas des "fantômes" qui
+   glissent ? (trajectoires signifiantes, traînées, zones d'opération qui s'étendent, etc.)
+3. Le RYTHME : comment alterner/respirer sur 50s pour ne pas perdre l'attention, façon documentaire
+   premium (Arte / 7 jours sur Terre / Financial Times) ?
+4. Quels éléments de la GRAMMAIRE qu'on a déjà (zones colorées, fronts beige, tampons, ondes,
+   caméra) peut-on RÉUTILISER autrement ici plutôt que d'inventer ?
+
+FORMAT DE RÉPONSE :
+1. Diagnostic : pourquoi cette zone "sonne vide" vs la 1re moitié (qui marche).
+2. Plan BEAT PAR BEAT pour f750→f2299 : pour CHAQUE phrase de la voix, quel événement visuel
+   (en réutilisant notre grammaire), avec quel timing relatif.
+3. Le traitement spécifique des 2 groupes armés : comment incarner "JNIM rural ouest" vs "EIGS est
+   trois-frontières" et leur opposition, de façon premium et lisible.
+4. Les 3-4 ajouts les PLUS RENTABLES pour combler le vide sans surcharger.
+5. Verdict : la structure de cette zone est-elle bonne (juste à enrichir) ou faut-il la repenser ?
