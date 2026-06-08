@@ -1886,24 +1886,41 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           centre Mali / EIGS sombre géométrique est). Donnent du sens au mouvement
           des véhicules + comblent le vide. Sous les véhicules (qui roulent dessus).
           ====================================================== */}
-      {acte1Final && showChrome && (jnimZoneGrow > 0 || eigsZoneGrow > 0) && (
+      {acte1Final && showChrome && (jnimZoneGrow > 0 || eigsZoneGrow > 0) && a1ZonePx.jnim && a1ZonePx.eigs && (() => {
+        // FRONT = milieu entre les 2 foyers. Les taches S'ARRÊTENT au front (clipPath)
+        // → plus de "muddy overlap" brun trouble au centre (décision Aziz). Ligne beige nette.
+        const frontX = (a1ZonePx.jnim.x + a1ZonePx.eigs.x) / 2;
+        return (
         <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          {/* JNIM : tache rouge organique, bords irréguliers, semi-transparente */}
-          {jnimZoneGrow > 0 && a1ZonePx.jnim && (
+          <defs>
+            <clipPath id="clipJnim"><rect x={0} y={0} width={frontX} height={height} /></clipPath>
+            <clipPath id="clipEigs"><rect x={frontX} y={0} width={width - frontX} height={height} /></clipPath>
+          </defs>
+          {/* JNIM : tache rouge organique, clippée à GAUCHE du front */}
+          {jnimZoneGrow > 0 && (
             <path d={blobPath(a1ZonePx.jnim.x, a1ZonePx.jnim.y, 200 * jnimZoneGrow, "organic")}
-              fill={SAHEL_COLORS.jnim} fillOpacity={0.30 * Math.min(1, jnimZoneGrow * 2)}
+              clipPath="url(#clipJnim)"
+              fill={SAHEL_COLORS.jnim} fillOpacity={0.32 * Math.min(1, jnimZoneGrow * 2)}
               stroke={SAHEL_COLORS.jnim} strokeOpacity={0.45 * Math.min(1, jnimZoneGrow * 2)}
               strokeWidth={1.5} />
           )}
-          {/* EIGS : tache sombre anguleuse (militaire) */}
-          {eigsZoneGrow > 0 && a1ZonePx.eigs && (
+          {/* EIGS : tache sombre anguleuse, clippée à DROITE du front */}
+          {eigsZoneGrow > 0 && (
             <path d={blobPath(a1ZonePx.eigs.x, a1ZonePx.eigs.y, 165 * eigsZoneGrow, "angular")}
-              fill="#3E2A18" fillOpacity={0.30 * Math.min(1, eigsZoneGrow * 2)}
+              clipPath="url(#clipEigs)"
+              fill="#3E2A18" fillOpacity={0.32 * Math.min(1, eigsZoneGrow * 2)}
               stroke="#3E2A18" strokeOpacity={0.5 * Math.min(1, eigsZoneGrow * 2)}
               strokeWidth={1.5} />
           )}
+          {/* Ligne de front beige nette là où elles se touchent (visible quand les 2 grandes) */}
+          {jnimZoneGrow > 0.3 && eigsZoneGrow > 0.3 && (
+            <line x1={frontX} y1={a1ZonePx.jnim.y - 130} x2={frontX} y2={a1ZonePx.jnim.y + 130}
+              stroke="#F3E9C8" strokeWidth={2.5} strokeDasharray="8 5"
+              opacity={0.55 * Math.min(1, eigsZoneGrow * 2)} />
+          )}
         </svg>
-      )}
+        );
+      })()}
 
       {/* ======================================================
           VEHICULES (JNIM/EIGS rouge, FAMa bleu, CSP or) — legacy Actes 2-5.
@@ -2254,14 +2271,17 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         </div>
       </div>
 
-      {/* Evenement bas */}
-      <div style={{ position: "absolute", bottom: 50, left: 0, right: 0, textAlign: "center",
-          opacity: hudOp, padding: "0 80px" }}>
-        <div style={{ ...plaque, display: "inline-block", padding: "12px 28px", fontSize: 26,
-          fontWeight: 600, letterSpacing: 0.3, maxWidth: 960 }}>
-          {jalon.label}
+      {/* Evenement bas — VIRÉ en acte1Final (décision Aziz : confusant + raconte les
+          coups d'État, autre histoire que la voix Acte 1. On garde juste légende + date). */}
+      {!acte1Final && (
+        <div style={{ position: "absolute", bottom: 50, left: 0, right: 0, textAlign: "center",
+            opacity: hudOp, padding: "0 80px" }}>
+          <div style={{ ...plaque, display: "inline-block", padding: "12px 28px", fontSize: 26,
+            fontWeight: 600, letterSpacing: 0.3, maxWidth: 960 }}>
+            {jalon.label}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Source bas droite */}
       <div style={{ position: "absolute", bottom: 20, right: 30, fontSize: 12,
