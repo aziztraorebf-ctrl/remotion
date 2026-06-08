@@ -663,6 +663,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const [a1ZonePx, setA1ZonePx] = useState<{ jnim: {x:number;y:number}|null; eigs: {x:number;y:number}|null }>({ jnim: null, eigs: null });
   // ACTE 1 FINAL : jetons-combattants reprojetés (position + direction).
   const [fighterPx, setFighterPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
+  // ACTE 1 FINAL : "graines" (futures positions des jetons) reprojetées — comblent le trou 25-40s.
+  const [seedPx, setSeedPx] = useState<{ id: string; faction: string; x: number; y: number }[]>([]);
   const [hookPx, setHookPx] = useState<{
     bamako: { x: number; y: number } | null;
     ouaga: { x: number; y: number } | null;
@@ -1093,6 +1095,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         return { id: ft.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y };
       });
       setFighterPx(fproj);
+      // graines : projetées aux positions de DÉPART des jetons (où ils vont éclore).
+      const sproj = FIGHTERS.map((ft) => {
+        const p = map.project([ft.wp[0].lon, ft.wp[0].lat]);
+        return { id: ft.id, faction: ft.faction, x: p.x, y: p.y };
+      });
+      setSeedPx(sproj);
     }
 
     // Projeter les refugies
@@ -1835,6 +1843,41 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           width={width}
           height={height}
         />
+      )}
+
+      {/* ======================================================
+          ACTE 1 FINAL — GRAINES (comblent le trou 25-40s, review jetons)
+          Avant l'éclosion des jetons : petits points pulsants aux futures positions
+          (= "deux groupes se sont développés au fil des années"). Apparaissent f750,
+          pulsent, puis s'éteignent quand leur jeton éclot. Suivent la voix.
+          ====================================================== */}
+      {acte1Final && showChrome && frame >= 750 && (
+        <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+          {seedPx.map((s) => {
+            const ft = FIGHTERS.find((f) => f.id === s.id);
+            if (!ft) return null;
+            // graine visible de f750 jusqu'à l'éclosion du jeton (ft.appear + 6)
+            const seedStart = ft.faction === "jnim" ? 760 : 1360; // JNIM dès 25s, EIGS plus tard
+            if (frame < seedStart || frame > ft.appear + 6) return null;
+            const sIn = interpolate(frame, [seedStart, seedStart + 20], [0, 1],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            const sOut = interpolate(frame, [ft.appear - 10, ft.appear + 6], [1, 0],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            const op = sIn * sOut;
+            const seed = s.id.charCodeAt(1) * 11;
+            const pulse = 0.6 + 0.4 * Math.sin((frame + seed) * 0.12);
+            const col = s.faction === "jnim" ? SAHEL_COLORS.jnim : "#2E2A1E";
+            return (
+              <g key={s.id} opacity={op}>
+                {/* anneau pulsant */}
+                <circle cx={s.x} cy={s.y} r={6 + pulse * 7} fill="none"
+                  stroke={col} strokeWidth={1.5} opacity={0.5 * (1 - pulse * 0.5)} />
+                {/* point central */}
+                <circle cx={s.x} cy={s.y} r={4} fill={col} opacity={0.85} />
+              </g>
+            );
+          })}
+        </svg>
       )}
 
       {/* ======================================================
