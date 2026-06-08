@@ -1,165 +1,55 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-07 (session 3 — Acte 1 prototype + verdict Aziz)
-**Session active :** Acte 1 prototypé. VERDICT : bases à refondre en session dédiée.
+**Dernière mise à jour :** 2026-06-08 (session reconstruction Acte 1 COMPLÈTE)
+**Branche :** `feat/da-brief-gate-warmap-sahel`
 
 ---
 
-## ⚠️ VERDICT SESSION 3 (2026-06-07) — ACTE 1 = PROTOTYPE, À REFONDRE EN SESSION DÉDIÉE
+## ⭐ ÉTAT : ACTE 1 RECONSTRUIT (à valider en full HD, puis Acte 2)
 
-Acte 1 v1 rendu (catbox wuadef.mp4). Gros progrès vs départ MAIS Aziz identifie un
-problème de FOND : **on a empilé des effets "intéressants" sans que chacun soit COMPRIS
-par le spectateur.** Décision : NE PAS bricoler l'Acte 1 en fin de session (il pose les
-bases de TOUTE la série). Session dédiée fraîche avec recherche + review externe.
+L'Acte 1 a été ENTIÈREMENT reconstruit cette session (parti d'une "bouillie illisible").
+Composition : **`SahelActe1-Final`** (prop `acte1Final`), f0-2299 (77s), isolée des Actes 2-5.
+Dernier render : `out/episodes/warmap-sahel/wip/acte1-FINAL-v3.mp4` (scale 0.5) + corrections après
+(barre virée, taches au front) PAS encore re-rendues en complet.
+Dernières frames full HD validées : `FULLHD-f1400.png` (netteté OK) + `FULLHD-f2167.png` (front).
 
-**⭐⭐ VERDICT DÉCISIF (test comparatif Soudan vs Sahel, Gemini+Kimi convergent) :**
-La PALETTE est un FAUX COUPABLE. Le vrai problème n°1 = **FRAGMENTATION GÉOGRAPHIQUE**
-("Soudan = carte de blocs / Sahel = carte de pixels" — 30+ micro-régions admin-1 qui se
-touchent = bouillie). Amplifié par le 16:9 qui force à dézoomer (intuition Aziz confirmée).
-Correction n°1 = FUSIONNER les micro-régions en 8-10 grandes aires ("80% du problème réglé").
-Détail complet + 3 corrections rentables : `review-acte1/SYNTHESE-REVIEW.md`.
+### Ce qui est DANS l'Acte 1 (tout codé + validé en frames)
+**Phase 1 (0-24s)** — allumage séquentiel Mali->Burkina->Niger (fusion Turf + vignette + ville pulse +
+front draw beige) · CEDEAO anneau qui se ROMPT (fissure) · flèches Liptako draw-in + soudure or · FREEZE f572.
+**Phase 2-3 (24-77s)** — nettoyage cognitif f726 (couleurs politiques 0.82->0.42) · GRAINES pulsantes
+(comblent le trou 25-40s) · JETONS-COMBATTANTS (2 archétypes, voir ci-dessous) qui éclosent, se déploient
+dispersés, avancent au front, reculent · TACHES D'INFLUENCE qui grandissent (clippées au front, plus de
+muddy overlap) · friction f2167.
 
-**6 commentaires Aziz (à traiter en session dédiée) :**
-1. **Trop de couleurs partout = nuit à la lisibilité** (surtout 16:9). Le pulse de frontière
-   ne ressort pas car pas de calme contre lequel contraster. CHANGEMENT DE PARADIGME à creuser.
-2. **Cercle CEDEAO + boom = incompréhensible** : cercle abstrait qui se brise, le spectateur
-   ne sait pas que c'est la CEDEAO qu'on quitte. Esthétique mais pas pédagogique.
-3. **Flèches convergence restent 15s sans rien faire** : doivent converger PUIS disparaître.
-4. **Cartons redondants avec la voix** ("JNIM lié à Al-Qaïda" pendant que la voix le dit).
-5. **Véhicules JNIM/EIGS trop similaires** (même silhouette, juste teinte) + **statiques 20s**
-   (apparaissent et restent plantés = ne racontent rien).
-6. **Cercles/halos semi-transparents inexpliqués** : polluent sans fonction claire.
-
-**3 ajouts Claude (corpus) pour la session dédiée :**
-- "Contraste par le calme" : carte majoritairement sobre, couleur = PROJECTEUR local sur la
-  zone dont on parle à l'instant T (ni neutre vide, ni tout coloré). À valider en recherche.
-- Règle dure série : "1 élément = 1 fonction narrative claire". Avant d'ajouter un effet :
-  "qu'est-ce que le spectateur comprend grâce à lui ?" Si rien que la voix ne dise = on n'ajoute pas.
-- Différencier les factions par la FORME/symbole, pas juste la couleur (se confond en mouvement).
-
-**PLAN SESSION DÉDIÉE ACTE 1 (fondatrice de la série) :**
-1. RECHERCHE RÉELLE (arrêter de deviner) : yt-dlp + TubeLab + study days + skills + ce qu'on a
-   déjà décodé → comment les meilleures chaînes gèrent densité couleur / intro éléments / diff unités.
-2. ⭐ LIRE EN ENTIER (pas juste la synthèse) les 4 reviews — toutes très complètes :
-   `review-acte1/SYNTHESE-REVIEW.md` (vue d'ensemble) PUIS les bruts (persistés dans review-acte1/) :
-   `da-acte1-aislop-{gemini,kimi}.md` · `da-acte1-expert-{gemini,kimi}.md` (EXPERT aussi bons que
-   l'AI-slop, lire intégralement) · `da-compare-sudan-sahel-{gemini,kimi}.md` (comparatif décisif).
-3. Reposer la DOCTRINE Acte 1 comme fondation, puis reconstruire proprement.
-
-**⚠️ VÉHICULES — NE PAS GOBER le verdict modèles (Aziz 2026-06-07) :** les experts disent "camions
-2D = amateur". FAUX dans notre cas — les véhicules = NOTRE DIFFÉRENTIEL (incarnation que les chaînes
-de réf n'ont pas ; le Soudan validé en utilise et ça marche). Vrai problème = MAUVAISE EXÉCUTION
-(trop gros / mal intégrés / pas différenciés / statiques), pas le concept. → GARDER + bien exécuter
-(taille fixe, ombre cohérente, mouvement avec but, différenciation forte). Détail : SYNTHESE-REVIEW.md pt.3.
-
-**Honnêteté Claude (limite scope) :** je devine trop, je n'ai pas de boucle de validation
-perceptive (je juge l'esthétique sur frames, pas la compréhension en mouvement+son). D'où
-l'importance des yeux Aziz + reviews externes. Ne plus deviner les "meilleures manières".
+### PROCHAINE ACTION (session fraîche)
+1. **Render Acte 1 COMPLET en FULL HD (scale=1)** : `./scripts/render-mapbox.sh SahelActe1-Final
+   out/episodes/warmap-sahel/wip/acte1-FULLHD.mp4` (PAS de --scale → 1920x1080, ~30 min).
+   Vérifier que tout fonctionne (jetons nets, taches au front, barre bas absente, graines, sync voix).
+2. Si OK → l'Acte 1 devient la RÉFÉRENCE DE STYLE. Aligner Actes 2-5 dessus (passe ultérieure).
+3. **Acte 2** : utiliser DA-BRIEF-GATE upstream (review du plan AVANT code) + downstream (review du rendu).
 
 ---
 
-## État actuel
-
-| Composant | Statut | Notes |
-|-----------|--------|-------|
-| Script V4-final | FINAL | `SCRIPT-V4-FINAL-2026-06-07.md` |
-| Audio narration V1 | FINAL | `narration-v1.mp3` (439.37s, 7:19) |
-| Forced alignment | FINAL | `narration-v1-alignment.json` (2099 mots, loss=0.2965) |
-| Timing triggers | FINAL | `TIMING-V1-2026-06-07.md` (27 triggers) |
-| sahel.warmap.json | FINAL | 15 jalons + 6 véhicules + 3 réfugiés + 2 overlays |
-| SahelControlData.ts | FINAL | Import JSON via adapter canonique |
-| SahelWarMapEngine.tsx | **V3 OPÉRATIONNEL** | Map Animation intégré : flèches hook + expansion Act2 + tenaille Act3 + flux Act4 |
-| Hook Acte 1 | V3 RENDU | catbox litter.catbox.moe/nl5u0g.mp4 (30s @50%) — flèches hook encore en <line> sur ce rendu, V3 non rendu |
-| SahelAttackArrow.tsx | **CRÉÉ** | `src/projects/warmap/_shared/` — flèches Mapbox via map.project(), marching ants, tête orientée |
-| TerritorialExpansion.tsx | **CRÉÉ** | `src/projects/warmap/_shared/` — zones colorées qui grandissent, données Act 2 JNIM incluses |
-| RefugeeFlow.tsx | **CRÉÉ** | `src/projects/warmap/_shared/` — rubans SVG animés, 3 corridors Act 4 inclus |
-| GeoJSON admin-1 | APPROXIMATIF | Bbox 5-pts — formes réelles à générer |
-| Sprites véhicules | PRÉSENTS | `tech-td-red.png` + `tank-td-blue.png` confirmés dans `public/_shared/sprites/warmap/` |
-| Sprites réfugiés | PRÉSENT (générique) | `portrait-civil.png` existe — 3 visages Sahel distincts restent à générer Gemini |
-| Doctrine script-first | AJOUTÉE | `WARMAP-LONG-DOCTRINE.md` section "RÈGLE ABSOLUE" + traçabilité `// SCRIPT:` obligatoire |
+## ⚠️ AFFINAGES MINEURS OUVERTS (à juger sur le full HD, pas bloquants)
+- Dispersion jetons JNIM : encore un peu groupés au centre (j1 lon -2.4 devrait ressortir plus à l'ouest).
+- Chevauchement résiduel des taches : clippées au front mais vérifier qu'il ne reste pas de zone trouble.
+- Onde de friction f2167 : codée mais peu visible sur frames statiques (juger en mouvement).
 
 ---
 
-## Ce qui fonctionne (validé V2)
+## ASSETS CLÉS (réutilisables)
+- **Jetons-combattants** : `public/_shared/sprites/warmap/fighter-jnim.png` (chèche clair rural touareg) +
+  `fighter-eigs.png` (cagoule sombre militaire Daesh). Style encre hachuré. Script : `scripts/warmap/gen-sahel-fighters.py`.
+- **Véhicules** (ABANDONNÉS pour format long, gardés pour short) : `technical-jnim/eigs.png`.
+- GeoJSON RÉEL admin-1 : `public/_shared/geo-data/sahel/sahel-admin1.geojson` (32 régions) + `sahel-countries.geojson`.
+- Audio : `public/_shared/audio/sahel-warmap/narration-v1.mp3` (439s) + alignment JSON.
+- Moteur : `src/projects/warmap/engine/SahelWarMapEngine.tsx` (props test : `acte1Final`, `acte1CameraOnly`, etc.).
 
-- Carte Sahel parchemin centrée Mali+Burkina+Niger
-- Couleurs factions : bleu (état), rouge (JNIM), or (contesté)
-- Légende 3 factions haut-gauche
-- Date + label jalon haut-droite
-- Labels villes **progressifs** (apparaissent au mot exact de la narration)
-- Drift caméra **perceptible** (amplitude ×3 vs V1)
-- Caméra **figée 2s** pendant "Comment est-ce possible ?" (f572→f632)
-- **Hook Act 1 codé script-first** : 3 flashs pays blancs + anneau CEDEAO + vecteurs capitales → Liptako or + carton freeze
-- HUD parchemin (même esthétique Sudan)
-- Véhicules **taille ×2.5** (lisibles en 16:9)
-- Véhicules **audio-triggered** (JNIM f1198, FAMa f7279, CSP f8683)
-- Overlay AES née (f7014)
-- CTA final (f13200)
-- Composition enregistrée `SahelWarMap` dans Root.tsx
+## TRIGGERS RÉELS Acte 1 (constante A1 dans le moteur)
+Mali f150 · Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · FREEZE f572-632 · drift f726 ·
+JNIM f1198 · EIGS f1749 · friction f2167 · fin f2299.
 
----
-
-## Triggers hook Act 1 (depuis forced alignment)
-
-| Frame | Mot | Événement codé |
-|-------|-----|----------------|
-| f150 | "expulsé" | Flash blanc radial Mali |
-| f231 | "Rompu" | Flash blanc radial Burkina |
-| f301 | "Quitté" | Flash blanc radial Niger |
-| f382 | "continent." | Anneau CEDEAO clignote orange × 3 → s'éteint |
-| f502 | "nouveau." | 3 vecteurs capitales → Liptako pulse or |
-| f572 | "possible" | CARTE FIGÉE 2s + carton "Comment est-ce possible ?" |
-| f726 | "répondre" | Drift reprend |
-
----
-
-## Problèmes ouverts (à corriger avant render final)
-
-1. **GeoJSON approximatif** : sahel-admin1.geojson = bbox rectangulaires. Générer le vrai GeoJSON Natural Earth/GADM admin-1 Mali+BF+Niger. Script : `python3 scripts/warmap/generate-sahel-admin1.py`
-
-2. **Portraits réfugiés Sahel** : `portrait-civil.png` générique Sudan utilisé — 3 visages sahéliens distincts (homme/femme/enfant, traits ouest-africains) à générer Gemini pour la version finale.
-
-3. **Overlay AES née** : apparaît frame ~7014 — à valider visuellement au bon timing sur rendu complet.
-
-4. **River Flow animation** (Template 4, non fait) : fleuve Niger SVG path animé — optionnel, enrichissement esthétique.
-
-5. **Animatic complet non rendu** : render 439s nécessaire pour valider timing Map Animation sur narration réelle.
-
----
-
-## Map Animation — INTÉGRÉ V3 (session 2026-06-07 session 2)
-
-| Template | Statut | Fichier | Intégration moteur |
-|---|---|---|---|
-| Army Arrows (SahelAttackArrow) | **CODÉ + INTÉGRÉ** | `warmap/_shared/SahelAttackArrow.tsx` | Hook f502 (3 flèches), Act2 Libye f2630, Act3 tenaille f8218+f8248, contre-off f9477 |
-| Territorial Expansion | **CODÉ + INTÉGRÉ** | `warmap/_shared/TerritorialExpansion.tsx` | Act2 f2630→f4800, 8 régions JNIM avec delays |
-| Refugee Flow | **CODÉ + INTÉGRÉ** | `warmap/_shared/RefugeeFlow.tsx` | Act4 f10294+, 3 corridors (Djibo/Ménaka/Tillabéri) |
-| River Flow (Niger) | NON FAIT | — | Priorité 4, optionnel |
-
----
-
-## Fichiers clés
-
-- **Moteur** : `src/projects/warmap/engine/SahelWarMapEngine.tsx`
-- **Data** : `src/projects/warmap/data/sahel.warmap.json`
-- **Control** : `src/projects/warmap/engine/SahelControlData.ts`
-- **Audio** : `public/_shared/audio/sahel-warmap/narration-v1.mp3`
-- **GeoJSON** : `public/_shared/geo-data/sahel/sahel-admin1.geojson` (bbox approximatif)
-- **Alignment** : `public/_shared/audio/sahel-warmap/narration-v1-alignment.json`
-- **Doctrine** : `memory/doctrines/WARMAP-LONG-DOCTRINE.md` (règle script-first ajoutée)
-- **Renders WIP** : `out/episodes/warmap-sahel/wip/`
-  - `sahel_hook_v3.mp4` — Hook 30s @50% — catbox litter.catbox.moe/nl5u0g.mp4
-
----
-
-## Prochaines actions (ordre priorité)
-
-1. **Animatic complet (439s)** : `scripts/render-on-vercel.py` — valider timing Map Animation sur narration réelle
-2. **Validation Aziz** : review animatic complet, ajuster opacités/timings flèches/expansion
-3. **GeoJSON réel** : remplacer bbox par formes admin-1 Natural Earth/GADM (`python3 scripts/warmap/generate-sahel-admin1.py`)
-4. **Portraits réfugiés Gemini** : 3 visages sahéliens distincts
-5. **River Flow** (optionnel) : fleuve Niger SVG animé si temps
-3. **Générer vrai GeoJSON** admin-1 Sahel (Natural Earth / GADM)
-4. **Générer portraits réfugiés** Gemini (3 visages Sahel distincts)
-5. **Animatic complet** (439s) via render-on-vercel.py
-6. **Validation Aziz** sur l'animatic complet
+## REVIEWS PERSISTÉES (relire avant Acte 2)
+- `review-acte1/` : diagnostic initial (palette=faux coupable, fragmentation=vrai pb).
+- `review-zone2/SYNTHESE-ZONE2.md` + `da-zone2-*` : syndrome aquarium → taches/zoom/traînées.
+- `review-zone2/da-jetons-*` + `DECISION-jetons-vs-vehicules.md` : virage jetons validé.

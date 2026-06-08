@@ -24,39 +24,26 @@ Logs : `scripts/tiktok-schedule-log.json` (Postiz TikTok) + IDs TryPost dans ORD
 
 ---
 
-## 🔥 PROCHAINE SESSION = RECODER L'ACTE 1 War-Map Sahel (plan validé, prêt)
+## 🔥 PROCHAINE SESSION = Valider Acte 1 War-Map Sahel en FULL HD, puis ACTE 2
 
-> ⭐⭐ LIRE EN PREMIER : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-07.md`
-> (brief de passation complet). Il pointe les réponses upstream BRUTES de Gemini+Kimi à lire
-> intégralement (da-acte1-construction-{gemini,kimi}.md) + le PLAN-CONSTRUCTION-ACTE1.md.
->
-> Session 4 (2026-06-07) : on a un PLAN DE CONSTRUCTION de l'Acte 1 validé par les 2 experts
-> (mode --upstream, AVANT code). Le socle visuel (6 mécaniques) a été appliqué par la session
-> parallèle d'Aziz et est BEAUCOUP plus propre. PROCHAINE ÉTAPE = recoder l'Acte 1 en suivant
-> l'ordre de construction (caméra → cut → easings → chrome), après avoir confronté les bruts avec Aziz.
+> ✅ **ACTE 1 RECONSTRUIT (session 2026-06-07/08).** Parti d'une "bouillie illisible" -> acte structure
+> premium. Composition `SahelActe1-Final`. **STARTER : `memory/STARTER-PROMPT-warmap-sahel-acte2.md`.**
 
-**✅ ACQUIS session 3 (gardés) :** GeoJSON Sahel admin-1 RÉEL (32 régions) · véhicules JNIM/EIGS
-Gemini (mais TROP similaires, à différencier) · 6 SFX war-map · **DA-BRIEF-GATE formalisé**
-(`scripts/tools/da-brief.py` + doctrine) · caméra narrative + séquentiel (bonne base technique).
+**DEMARRER PAR :** render Acte 1 en FULL HD (scale=1) pour valider la qualite finale :
+`./scripts/render-mapbox.sh SahelActe1-Final out/episodes/warmap-sahel/wip/acte1-FULLHD.mp4` (~30 min, background).
+Puis ACTE 2 avec DA-BRIEF-GATE **upstream + downstream** (demande Aziz).
 
-**⭐ SESSION DÉDIÉE — 3 phases (ARRÊTER DE DEVINER) :**
-1. **RECHERCHE RÉELLE** : yt-dlp + TubeLab + study days + skills + décodages existants →
-   densité couleur / intro éléments (cercle, flèches) / différenciation unités.
-2. ⭐ **LIRE EN ENTIER les 4 reviews** (persistées `memory/episodes/warmap-sahel/review-acte1/`,
-   PAS juste la synthèse — toutes très complètes) : SYNTHESE-REVIEW.md (vue d'ensemble) PUIS
-   `da-acte1-aislop-*` (AI-slop) + `da-acte1-expert-*` (EXPERT, aussi bons) + `da-compare-sudan-sahel-*`
-   (comparatif décisif palette=faux coupable).
-3. **Reposer DOCTRINE Acte 1** (fondation série) puis reconstruire proprement.
+**Ce qui a ete fait (Acte 1) :** allumage sequentiel + CEDEAO fissure + fleches + freeze (phase 1) ·
+graines comblant le trou + JETONS-COMBATTANTS (virage valide) + taches d'influence + friction (phase 2-3).
 
-**⚠️ VÉHICULES = différentiel, PAS amateur (Aziz 2026-06-07) :** ne pas gober le "camions 2D =
-amateur" des modèles. Les véhicules sont notre incarnation signature (le Soudan en utilise, ça marche).
-Vrai pb = mauvaise exécution (taille/intégration/différenciation/statiques). GARDER + bien exécuter.
+**DECISION STRUCTURANTE — JETONS, PAS VEHICULES (format LONG) :** les vehicules-sprites = echelle
+absurde en plan large 16:9 (probleme STRUCTUREL, pas un reglage). Format long = jetons circulaires
+(abstraction lisible a toute echelle). Format short serre = vehicules OK. Voir
+`DECISION-jetons-vs-vehicules.md`. Les jetons SE DEPLACENT avec intention. 2 archetypes differencies
+par PERSONNAGE (cheche clair JNIM / cagoule sombre EIGS).
 
-**Idées-clés à creuser** (3 ajouts Claude) : "contraste par le calme" (couleur = projecteur
-local sur la zone parlée, ni neutre vide ni tout coloré) · "1 élément = 1 fonction narrative
-claire" · différencier factions par FORME/symbole pas juste couleur.
-
-**Fiche reprise complète** : `memory/episodes/warmap-sahel/STATUS.md` (verdict session 3).
+**Fiches reprise :** `STATUS.md` + `LECONS-RECONSTRUCTION-ACTE1.md` (erreurs a ne pas refaire) +
+reviews persistees (`review-acte1/` + `review-zone2/`).
 
 ---
 
@@ -314,6 +301,12 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **Decision en attente** : commencer par Mansa Moussa ou Senegal Petrole ?
 **Ma recommandation** : Senegal Petrole d'abord — la video vient d'etre publiee, la matiere est fraiche.
 **Demarrer** : lire `memory/STARTER-PROMPT-carrousels-hybrides.md`
+
+### 4bis. Peste 1347 — MI-FORME HORIZONTAL (CONCEPT VALIDÉ 2026-06-07 — BACKLOG)
+**Statut** : concept validé, backlog — NE PAS commencer avant fin AES + Maroc Batteries.
+**Angle** : "pourquoi la Peste noire n'a pas touché l'Afrique sub-saharienne" — zéro concurrent YT toutes langues (TubeLab confirmé). Stop scroller validé Aziz sur 3 frames mockup Gemini.
+**Format** : 8-12 min, 16:9, moteur SahelWarMapEngine (~80% réutilisable), narration doctrine Tremblay.
+**Fiche complète** : `memory/projects/peste-1347-midform.md`.
 
 ### 4. Peste 1347 Atlas — REFONTE AU PLAYBOOK QUASI TERMINÉE (2026-06-05) ⭐
 **Etat** : Beats 1-4 **FINAL premium** (refaits cette session). Beat 5 V9 **COMPLET** (1ère fois en 9 tentatives) mais pas encore FINAL.
