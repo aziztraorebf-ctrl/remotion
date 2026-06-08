@@ -182,6 +182,62 @@ const ACTE1_VEHICLES: A1Vehicle[] = [
       { f: 2299, lon: 0.1, lat: 15.0 },
     ] },
 ];
+// ============================================================
+// ACTE 1 FINAL — JETONS-COMBATTANTS (remplacent les véhicules sur ce format LONG).
+// Décision Aziz 2026-06-07 + review Gemini+Kimi : véhicule = échelle absurde en plan
+// large ; jeton circulaire = abstraction lisible à toute échelle. Les jetons SE DÉPLACENT
+// AVEC INTENTION (arrivent → déploient/prennent territoire → front → reculent → se séparent).
+// JNIM 4 jetons dispersés (rural ouest) · EIGS 3 jetons triangle serré (est trois-frontières).
+// ============================================================
+type Fighter = {
+  id: string; faction: "jnim" | "eigs"; appear: number;
+  wp: { f: number; lon: number; lat: number }[];
+};
+// Triggers : graines/arrivée AVANT la voix (JNIM nommé f1198, EIGS f1749).
+// DISPERSION : positions bien espacées (>=0.5° entre jetons d'une faction) pour éviter
+// l'agglutination. JNIM couvre un large arc rural ouest (Mopti->Centre-Nord BFA).
+// EIGS occupe l'est (Ménaka/Tillabéri/Liptako est). Le front est à ~lon -0.2..0.2.
+const FIGHTERS: Fighter[] = [
+  // --- JNIM : 4 jetons DISPERSÉS sur le centre Mali + nord Burkina (rural diffus) ---
+  { id: "j1", faction: "jnim", appear: 1000, wp: [ // ouest profond (Mopti/Ségou nord)
+    { f: 1000, lon: -2.4, lat: 14.9 }, { f: 1198, lon: -2.6, lat: 15.0 },
+    { f: 2167, lon: -2.5, lat: 15.0 }, { f: 2299, lon: -2.6, lat: 14.95 } ] },
+  { id: "j2", faction: "jnim", appear: 1030, wp: [ // centre (avance vers le front à f2167)
+    { f: 1030, lon: -1.5, lat: 15.4 }, { f: 1198, lon: -1.6, lat: 15.5 },
+    { f: 2050, lon: -1.0, lat: 15.2 }, { f: 2167, lon: -0.35, lat: 15.05 }, { f: 2230, lon: -0.9, lat: 15.2 } ] },
+  { id: "j3", faction: "jnim", appear: 1060, wp: [ // nord Burkina (Sahel/Djibo)
+    { f: 1060, lon: -1.3, lat: 14.3 }, { f: 1198, lon: -1.4, lat: 14.2 },
+    { f: 2167, lon: -1.2, lat: 14.3 }, { f: 2299, lon: -1.4, lat: 14.25 } ] },
+  { id: "j4", faction: "jnim", appear: 1090, wp: [ // centre-est (avance au front)
+    { f: 1090, lon: -0.8, lat: 14.7 }, { f: 1198, lon: -0.9, lat: 14.75 },
+    { f: 2050, lon: -0.6, lat: 14.85 }, { f: 2167, lon: -0.3, lat: 14.9 }, { f: 2230, lon: -0.7, lat: 14.8 } ] },
+  // --- EIGS : 3 jetons DISPERSÉS sur l'est (triangle large : Ménaka/Tillabéri/Liptako-est) ---
+  { id: "e1", faction: "eigs", appear: 1560, wp: [ // pointe ouest EIGS (avance au front)
+    { f: 1560, lon: 1.0, lat: 15.0 }, { f: 1749, lon: 0.8, lat: 15.05 },
+    { f: 2050, lon: 0.4, lat: 15.0 }, { f: 2167, lon: 0.05, lat: 15.0 }, { f: 2230, lon: 0.5, lat: 15.0 } ] },
+  { id: "e2", faction: "eigs", appear: 1585, wp: [ // sud-est (Tillabéri Niger)
+    { f: 1585, lon: 1.7, lat: 14.6 }, { f: 1749, lon: 1.8, lat: 14.55 },
+    { f: 2167, lon: 1.6, lat: 14.6 }, { f: 2299, lon: 1.8, lat: 14.55 } ] },
+  { id: "e3", faction: "eigs", appear: 1610, wp: [ // nord-est (Ménaka)
+    { f: 1610, lon: 1.5, lat: 15.5 }, { f: 1749, lon: 1.6, lat: 15.6 },
+    { f: 2167, lon: 1.4, lat: 15.5 }, { f: 2299, lon: 1.6, lat: 15.55 } ] },
+];
+
+const interpFighter = (wp: Fighter["wp"], frame: number): [number, number] => {
+  if (frame <= wp[0].f) return [wp[0].lon, wp[0].lat];
+  const last = wp[wp.length - 1];
+  if (frame >= last.f) return [last.lon, last.lat];
+  for (let i = 0; i < wp.length - 1; i++) {
+    if (frame >= wp[i].f && frame <= wp[i + 1].f) {
+      const t = (frame - wp[i].f) / (wp[i + 1].f - wp[i].f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return [wp[i].lon + (wp[i + 1].lon - wp[i].lon) * e,
+              wp[i].lat + (wp[i + 1].lat - wp[i].lat) * e];
+    }
+  }
+  return [last.lon, last.lat];
+};
+
 const interpA1Vehicle = (wp: A1Vehicle["wp"], frame: number): [number, number] => {
   if (frame <= wp[0].f) return [wp[0].lon, wp[0].lat];
   const last = wp[wp.length - 1];
@@ -605,6 +661,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const [a1VehPx, setA1VehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number; trail: {x:number;y:number}[] }[]>([]);
   // ACTE 1 FINAL : foyers des taches d'influence (JNIM centre Mali, EIGS est) reprojetés.
   const [a1ZonePx, setA1ZonePx] = useState<{ jnim: {x:number;y:number}|null; eigs: {x:number;y:number}|null }>({ jnim: null, eigs: null });
+  // ACTE 1 FINAL : jetons-combattants reprojetés (position + direction).
+  const [fighterPx, setFighterPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
   const [hookPx, setHookPx] = useState<{
     bamako: { x: number; y: number } | null;
     ouaga: { x: number; y: number } | null;
@@ -1023,9 +1081,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       });
       setA1VehPx(a1proj);
       // Foyers des taches d'influence (review zone2) : projeter pour échelle px constante.
-      const pJ = map.project([-1.3, 14.9] as [number, number]); // centre Mali (JNIM rural)
-      const pE = map.project([0.9, 14.9] as [number, number]);  // est trois-frontières (EIGS)
+      const pJ = map.project([-1.4, 14.9] as [number, number]); // centre de l'arc JNIM (rural ouest)
+      const pE = map.project([1.3, 15.0] as [number, number]);  // centre du triangle EIGS (est)
       setA1ZonePx({ jnim: { x: pJ.x, y: pJ.y }, eigs: { x: pE.x, y: pE.y } });
+      // jetons-combattants (frame-driven, se déplacent avec intention)
+      const fproj = FIGHTERS.map((ft) => {
+        const [lon, lat] = interpFighter(ft.wp, frame);
+        const [lon2, lat2] = interpFighter(ft.wp, frame - 3);
+        const p = map.project([lon, lat]);
+        const pPrev = map.project([lon2, lat2]);
+        return { id: ft.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y };
+      });
+      setFighterPx(fproj);
     }
 
     // Projeter les refugies
@@ -1299,15 +1366,16 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
 
-  // TACHES D'INFLUENCE (review zone2) : grandissent depuis le foyer, se touchent à f2167
-  // puis se REPOUSSENT légèrement (rétraction). JNIM dès f1198, EIGS dès f1749.
+  // TACHES D'INFLUENCE : grandissent AVEC l'arrivée des jetons (le territoire se prend
+  // au fur et à mesure que les combattants se déploient), se touchent à f2167 puis se
+  // REPOUSSENT. JNIM dès f1000 (arrivée jetons), EIGS dès f1560.
   const jnimZoneGrow = interpolate(frame,
-    [A1.JNIM, A1.JNIM + 260, A1.FRICTION, A1.FRICTION + 40],
-    [0, 1, 1, 0.88], // grandit puis se rétracte un peu au contact
+    [1000, 1000 + 320, A1.FRICTION, A1.FRICTION + 40],
+    [0, 1, 1, 0.85],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   const eigsZoneGrow = interpolate(frame,
-    [A1.EIGS, A1.EIGS + 230, A1.FRICTION, A1.FRICTION + 40],
-    [0, 1, 1, 0.88],
+    [1560, 1560 + 280, A1.FRICTION, A1.FRICTION + 40],
+    [0, 1, 1, 0.85],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
 
   return (
@@ -1779,14 +1847,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
           {/* JNIM : tache rouge organique, bords irréguliers, semi-transparente */}
           {jnimZoneGrow > 0 && a1ZonePx.jnim && (
-            <path d={blobPath(a1ZonePx.jnim.x, a1ZonePx.jnim.y, 95 * jnimZoneGrow, "organic")}
+            <path d={blobPath(a1ZonePx.jnim.x, a1ZonePx.jnim.y, 200 * jnimZoneGrow, "organic")}
               fill={SAHEL_COLORS.jnim} fillOpacity={0.30 * Math.min(1, jnimZoneGrow * 2)}
               stroke={SAHEL_COLORS.jnim} strokeOpacity={0.45 * Math.min(1, jnimZoneGrow * 2)}
               strokeWidth={1.5} />
           )}
           {/* EIGS : tache sombre anguleuse (militaire) */}
           {eigsZoneGrow > 0 && a1ZonePx.eigs && (
-            <path d={blobPath(a1ZonePx.eigs.x, a1ZonePx.eigs.y, 78 * eigsZoneGrow, "angular")}
+            <path d={blobPath(a1ZonePx.eigs.x, a1ZonePx.eigs.y, 165 * eigsZoneGrow, "angular")}
               fill="#3E2A18" fillOpacity={0.30 * Math.min(1, eigsZoneGrow * 2)}
               stroke="#3E2A18" strokeOpacity={0.5 * Math.min(1, eigsZoneGrow * 2)}
               strokeWidth={1.5} />
@@ -1873,52 +1941,53 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         })}
 
       {/* ======================================================
-          ACTE 1 FINAL — VÉHICULES frame-driven (mouvement réel + but narratif).
-          JNIM pickup rouge (erratique) · EIGS blindé sombre (linéaire). Orientés
-          selon la trajectoire, traînée de poussière, ombre portée.
+          ACTE 1 FINAL — JETONS-COMBATTANTS (remplacent les véhicules).
+          Cercle parchemin + bordure faction + silhouette hachurée. Apparition
+          spring + onde de choc. Se DÉPLACENT avec intention (déploiement/front/recul).
+          Respiration organique (scale sin, phase par jeton). Pas de glissement sans but.
           ====================================================== */}
       {acte1Final && showChrome &&
-        ACTE1_VEHICLES.map((v) => {
-          const pos = a1VehPx.find((p) => p.id === v.id);
-          if (!pos) return null;
-          const pop = interpolate(frame, [v.appear, v.appear + 20, v.disappear, v.disappear + 30],
-            [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp",
-              easing: Easing.bezier(0.2, 0.9, 0.3, 1) });
-          if (pop <= 0) return null;
-          const mag = Math.hypot(pos.dx, pos.dy);
-          const moving = mag > 0.05;
-          const ang = Math.atan2(pos.dy, pos.dx);
-          // sprites technical-* pointent vers le HAUT -> offset +90 par rapport au cap.
-          const headingDeg = moving ? (ang * 180) / Math.PI + 90 : 0;
-          const col = v.faction === "jnim" ? SAHEL_COLORS.jnim : "#6B5538";
-          const trail = pos.trail ?? [];
+        FIGHTERS.map((ft) => {
+          const pos = fighterPx.find((p) => p.id === ft.id);
+          if (!pos || frame < ft.appear) return null;
+          // apparition : spring-like (scale 0 -> overshoot -> 1) sur 22 frames
+          const ap = interpolate(frame, [ft.appear, ft.appear + 12, ft.appear + 22],
+            [0, 1.12, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp",
+              easing: Easing.out(Easing.cubic) });
+          const fadeIn = interpolate(frame, [ft.appear, ft.appear + 10], [0, 1],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          // respiration (phase décalée par id pour éviter le sync robotique)
+          const seed = ft.id.charCodeAt(1) * 7;
+          const breathe = 1 + 0.05 * Math.sin((frame + seed) * 0.08);
+          const D = 58; // diamètre écran-constant (lisible toute échelle)
+          const border = ft.faction === "jnim" ? SAHEL_COLORS.jnim : "#2E2A1E";
+          const sprite = ft.faction === "jnim" ? "fighter-jnim" : "fighter-eigs";
+          // onde de choc au spawn (cercle qui part du jeton, 15f)
+          const ripple = interpolate(frame, [ft.appear, ft.appear + 15], [0, 1],
+            { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
-            <React.Fragment key={v.id}>
-              {/* TRAÎNÉE (review zone2) : polyline qui s'estompe = mémoire du passage */}
-              {moving && trail.length > 1 && (
-                <svg width={width} height={height}
-                  style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-                  {trail.slice(0, -1).map((tp, i) => {
-                    const nx = trail[i + 1];
-                    const op = (1 - i / trail.length) * 0.5 * pop;
-                    return (
-                      <line key={i} x1={i === 0 ? pos.x : tp.x} y1={i === 0 ? pos.y : tp.y}
-                        x2={nx.x} y2={nx.y} stroke={col} strokeWidth={4 - i * 0.4}
-                        strokeLinecap="round" opacity={op} />
-                    );
-                  })}
+            <React.Fragment key={ft.id}>
+              {ripple > 0 && ripple < 1 && (
+                <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+                  <circle cx={pos.x} cy={pos.y} r={D * 0.5 + ripple * D * 0.9}
+                    fill="none" stroke={border} strokeWidth={2.5} opacity={(1 - ripple) * 0.7} />
                 </svg>
               )}
               <div style={{ position: "absolute", left: pos.x, top: pos.y,
-                  transform: `translate(-50%, -50%) scale(${pop})`, opacity: pop, pointerEvents: "none" }}>
-                {/* ombre portée */}
-                <div style={{ position: "absolute", left: "50%", top: "56%", width: v.size * 0.6,
-                  height: v.size * 0.24, transform: "translate(-50%,-50%)",
-                  background: "rgba(26,18,9,0.25)", borderRadius: "50%", filter: "blur(3px)" }} />
-                <img src={staticFile(`_shared/sprites/warmap/${v.sprite}.png`)}
-                  style={{ width: v.size, height: v.size, objectFit: "contain", display: "block",
-                    transform: `rotate(${headingDeg}deg)`,
-                    filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
+                  transform: `translate(-50%, -50%) scale(${ap * breathe})`,
+                  opacity: fadeIn, pointerEvents: "none" }}>
+                {/* ombre portée (pose le jeton sur le parchemin) */}
+                <div style={{ position: "absolute", left: "50%", top: "62%", width: D * 0.7, height: D * 0.2,
+                  transform: "translate(-50%,-50%)", background: "rgba(46,31,10,0.3)",
+                  borderRadius: "50%", filter: "blur(4px)" }} />
+                {/* jeton circulaire : fond parchemin + silhouette clippée + bordure faction */}
+                <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden",
+                  background: SAHEL_COLORS.cream, border: `3.5px solid ${border}`,
+                  boxShadow: "0 2px 5px rgba(0,0,0,0.35)" }}>
+                  <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+                    style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
+                      transform: "translate(-8%, 2%)", display: "block" }} />
+                </div>
               </div>
             </React.Fragment>
           );
@@ -1930,9 +1999,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           qui pulsent au point de contact (PAS d'explosion — "répulsion").
           ====================================================== */}
       {acte1Final && showChrome && frame >= A1.FRICTION && frame < A1.END + 20 && (() => {
-        // point de friction = entre les véhicules JNIM (ouest) et EIGS (est).
-        const jnim = a1VehPx.find((p) => p.id === "a1-jnim-1");
-        const eigs = a1VehPx.find((p) => p.id === "a1-eigs-1");
+        // point de friction = entre le jeton JNIM le plus à l'est (j2) et EIGS le plus à l'ouest (e1).
+        const jnim = fighterPx.find((p) => p.id === "j2");
+        const eigs = fighterPx.find((p) => p.id === "e1");
         if (!jnim || !eigs) return null;
         const fx = (jnim.x + eigs.x) / 2, fy = (jnim.y + eigs.y) / 2;
         // 3 ondes décalées, period 30f
