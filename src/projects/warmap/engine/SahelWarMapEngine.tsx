@@ -257,6 +257,64 @@ const SAHEL_CAM_KEYS: CamKey[] = [
   { f: 13150, lon: -0.5, lat: 15.5, zoom: 4.65 },
 ];
 
+// ============================================================
+// ACTE 1 — TRACK CAMÉRA DÉDIÉ (plan validé upstream Gemini+Kimi 2026-06-07)
+// Beats calés sur les triggers RÉELS du forced-alignment (pas les approx du plan).
+// Principe : drift continu doux, pan Ouest->Est (Mali->Burkina->Niger = logique du
+// regard), zoom subtil (décision Aziz : ne pas sur-zoomer). FREEZE total f572-632.
+// Phase 1 choc politique (0-726) · Phase 2/3 groupes armés (726-2299).
+// ============================================================
+const ACTE1_CAM_KEYS: CamKey[] = [
+  { f: 0,    lon: -1.2, lat: 15.2, zoom: 4.62 }, // installation : vue large, drift lent
+  { f: 150,  lon: -2.0, lat: 14.6, zoom: 4.78 }, // "expulsé" Mali : recentre ouest + zoom léger
+  { f: 231,  lon: -0.8, lat: 14.8, zoom: 4.74 }, // "Rompu" Burkina : pan est
+  { f: 301,  lon:  0.6, lat: 15.2, zoom: 4.70 }, // "Quitté" Niger : pan est encore
+  { f: 382,  lon: -0.4, lat: 15.0, zoom: 4.55 }, // "continent" CEDEAO : zoom-OUT (voir les 3)
+  { f: 502,  lon: -0.4, lat: 14.7, zoom: 4.74 }, // "nouveau" Liptako : recentre + zoom léger
+  { f: 572,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // "possible" : arrivée freeze
+  { f: 632,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // FREEZE identique (figé 2s)
+  { f: 726,  lon: -0.6, lat: 14.9, zoom: 4.70 }, // "répondre" : drift reprend, reset doux
+  { f: 1198, lon: -1.0, lat: 15.2, zoom: 4.72 }, // "JNIM" : centre Mali
+  { f: 1749, lon:  0.4, lat: 15.0, zoom: 4.72 }, // "EIGS" : trois-frontières est
+  { f: 2167, lon: -0.2, lat: 15.0, zoom: 4.80 }, // "combattent" : resserre friction
+  { f: 2299, lon: -0.2, lat: 15.0, zoom: 4.80 }, // "séparément" : freeze final
+];
+
+const getActe1Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  const keys = ACTE1_CAM_KEYS;
+  if (frame <= keys[0].f) return keys[0];
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep (drift cinématique)
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
+// Nom du beat courant (HUD debug du track caméra seul)
+const acte1BeatName = (frame: number): string => {
+  if (frame < 150) return "f0 · installation (drift lent)";
+  if (frame < 231) return "f150 · MALI 'expulsé' (recentre O + zoom)";
+  if (frame < 301) return "f231 · BURKINA 'Rompu' (pan E)";
+  if (frame < 382) return "f301 · NIGER 'Quitté' (pan E)";
+  if (frame < 502) return "f382 · CEDEAO 'continent' (zoom-OUT)";
+  if (frame < 572) return "f502 · LIPTAKO 'nouveau' (recentre + zoom)";
+  if (frame < 632) return "f572 · FREEZE 'possible' (2s figé)";
+  if (frame < 1198) return "f726 · transition 'répondre' (reset)";
+  if (frame < 1749) return "f1198 · JNIM (centre Mali)";
+  if (frame < 2167) return "f1749 · EIGS (trois-frontières E)";
+  if (frame < 2299) return "f2167 · 'combattent' (friction)";
+  return "f2299 · 'séparément' (freeze final)";
+};
+
 const getSahelCam = (frame: number): { lon: number; lat: number; zoom: number } => {
   const keys = SAHEL_CAM_KEYS;
   if (frame <= keys[0].f) return keys[0];
@@ -388,6 +446,9 @@ export type SahelTestProps = {
   sequentialIgnite?: Record<string, number> | null;
   cityPulse?: boolean; // points-villes beige avec anneau pulsant, liés à l'allumage
   frontDraw?: boolean; // fronts entre factions qui se dessinent (dashoffset) en beige
+  // ÉTAPE 1 reconstruction Acte 1 : track caméra SEUL (ordre Gemini).
+  // Active le nouveau track ACTE1_CAM_KEYS + masque TOUT data/chrome + HUD debug.
+  acte1CameraOnly?: boolean;
 };
 
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
@@ -399,6 +460,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   sequentialIgnite = null,
   cityPulse = false,
   frontDraw = false,
+  acte1CameraOnly = false,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -635,7 +697,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
     // Mettre a jour les couleurs de controle
     const src = map.getSource("sahel") as mapboxgl.GeoJSONSource | undefined;
-    if (src) {
+    if (acte1CameraOnly) {
+      // ÉTAPE 1 : carte NEUTRE (aucune donnée territoriale) — on valide le rythme caméra nu.
+      if (src) src.setData({ type: "FeatureCollection", features: [] } as any);
+    } else if (src) {
       if (fusionRegions && baseFeaturesRef.current) {
         // B2/B3 : fusion territoriale (union Turf, memoïsée). 3 masses (ou par pays si séquentiel).
         const ctrlByName: Record<string, number> = {};
@@ -718,7 +783,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       let changed = false;
       for (const f of dataC.features) {
         const cc = f.properties.country;
-        const newPulse =
+        // ÉTAPE 1 : pulse national désactivé en track caméra seul (carte pure).
+        const newPulse = acte1CameraOnly ? 0 :
           cc === "MLI" ? pulseFor(F_HOOK_MALI) :
           cc === "BFA" ? pulseFor(F_HOOK_BURKINA) :
           cc === "NER" ? pulseFor(F_HOOK_NIGER) : 0;
@@ -731,7 +797,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // FIGÉE pendant "Comment est-ce possible?" (f572→f632 = 2s).
     const hookFreeze = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
     let camLon: number, camLat: number, camZoom: number;
-    if (camStatic) {
+    if (acte1CameraOnly) {
+      // ÉTAPE 1 : track caméra dédié Acte 1, FREEZE total f572-632 (figé sur f572).
+      const a1Freeze = frame >= 572 && frame < 632;
+      const cam = a1Freeze ? getActe1Cam(572) : getActe1Cam(frame);
+      camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
+    } else if (camStatic) {
       // CORRECTION C (test) : caméra qui GLISSE en continu — léger zoom-in + dérive
       // douce vers le centre sur ~10s (300 frames), easing ease-in-out.
       const e = interpolate(frame, [0, 300], [0, 1], {
@@ -1031,6 +1102,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     return Math.min(fadeIn, fadeOut);
   })();
 
+  // ÉTAPE 1 : en mode track caméra seul, on masque TOUTE la couche narrative
+  // (hook, flèches, véhicules, villes, HUD) pour valider le rythme caméra nu.
+  const showChrome = ready && !acte1CameraOnly;
+
   return (
     <AbsoluteFill style={{ backgroundColor: SAHEL_COLORS.ocean, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
       <MapboxBrandingHide />
@@ -1049,24 +1124,29 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Sequence (jamais frame===X — regle projet). Volumes calibres
           pour ne pas concurrencer la voix + musique.
           ====================================================== */}
-      {/* boom sourd x3 — allumage des 3 pays */}
-      <Sequence from={F_HOOK_MALI} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
-      </Sequence>
-      <Sequence from={F_HOOK_BURKINA} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
-      </Sequence>
-      <Sequence from={F_HOOK_NIGER} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-        <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
-      </Sequence>
-      {/* snap electrique — mort de l'anneau CEDEAO (au moment du pic du 3e pulse) */}
-      <Sequence from={F_HOOK_CEDEAO + 60} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
-        <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.50} />
-      </Sequence>
-      {/* gong grave — impact convergence Liptako (au freeze) */}
-      <Sequence from={F_HOOK_FREEZE} durationInFrames={Math.ceil(2.5 * SAHEL_FPS)}>
-        <Audio src={staticFile("_shared/sfx/warmap/liptako-gong.mp3")} volume={0.58} />
-      </Sequence>
+      {/* SFX gated : masqués en mode track caméra seul (on valide le rythme nu). */}
+      {!acte1CameraOnly && (
+        <>
+          {/* boom sourd x3 — allumage des 3 pays */}
+          <Sequence from={F_HOOK_MALI} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+          </Sequence>
+          <Sequence from={F_HOOK_BURKINA} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+          </Sequence>
+          <Sequence from={F_HOOK_NIGER} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+          </Sequence>
+          {/* snap electrique — mort de l'anneau CEDEAO (au moment du pic du 3e pulse) */}
+          <Sequence from={F_HOOK_CEDEAO + 60} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.50} />
+          </Sequence>
+          {/* gong grave — impact convergence Liptako (au freeze) */}
+          <Sequence from={F_HOOK_FREEZE} durationInFrames={Math.ceil(2.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/liptako-gong.mp3")} volume={0.58} />
+          </Sequence>
+        </>
+      )}
 
       {/* Filtre papier sepia */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
@@ -1150,7 +1230,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Halo bleu état qui infuse depuis la capitale + glow par double-cercle
           (stroke épais opacité basse, JAMAIS filter:blur). Heartbeat une fois allumé.
           Les 3 restent allumés jusqu'au freeze (forment le triangle qui se fige). */}
-      {[
+      {!acte1CameraOnly && [
         { op: hookMaliOp, tr: hookMaliTrace, px: hookPx.bamako, r: 150, fallback: { left: "20%", top: "55%" } },
         { op: hookBurkinaOp, tr: hookBurkinaTrace, px: hookPx.ouaga, r: 120, fallback: { left: "47%", top: "58%" } },
         { op: hookNigerOp, tr: hookNigerTrace, px: hookPx.niamey, r: 130, fallback: { left: "60%", top: "52%" } },
@@ -1181,7 +1261,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* SCRIPT: "continent." → anneau CEDEAO "néon qui grille" (f382)
           3 pulses orange francs (scale + glow) → SNAP → gris cendre mort.
           Couleur interpolée orange vivant → cendre via cedeaoDeath. */}
-      {cedeaoOp > 0 && ready && hookPx.liptako && (() => {
+      {cedeaoOp > 0 && showChrome && hookPx.liptako && (() => {
         // orange vivant (255,140,0) → gris cendre (139,115,85)
         const r = Math.round(255 + (139 - 255) * cedeaoDeath);
         const g = Math.round(140 + (115 - 140) * cedeaoDeath);
@@ -1216,7 +1296,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* SCRIPT: "quelque chose de nouveau." → 3 flèches capitales → Liptako + pulse or (f502)
           Upgrade : SahelAttackArrow (flèches qui POUSSENT) au lieu de <line> statiques */}
-      {liptakoProgress > 0 && ready && (
+      {liptakoProgress > 0 && showChrome && (
         <>
           {/* Flèche Bamako → Liptako (or profond + épaisse pour contraste sur parchemin) */}
           <SahelAttackArrow
@@ -1323,7 +1403,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           MAP ANIMATION — ACT 2 : EXPANSION TERRITORIALE JNIM
           SCRIPT: "s'embrase" f2630 → expansion rouge 2012→2022
           ====================================================== */}
-      {ready && frame >= F_EXPANSION_START && frame < F_EXPANSION_END + 100 && (
+      {showChrome && frame >= F_EXPANSION_START && frame < F_EXPANSION_END + 100 && (
         <TerritorialExpansion
           map={mapRef.current}
           regions={EXPANSION_REGIONS_ACT2}
@@ -1342,7 +1422,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           MAP ANIMATION — ACT 2 : ONDE ARMES LIBYE → NORD MALI
           SCRIPT: "s'embrase" f2630 — flux armements depuis Libye
           ====================================================== */}
-      {ready && libArrowProgress > 0 && (
+      {showChrome && libArrowProgress > 0 && (
         <SahelAttackArrow
           map={mapRef.current}
           waypoints={[LIBYE_COORD, NORD_MALI_COORD]}
@@ -1361,7 +1441,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           MAP ANIMATION — ACT 3 : TENAILLE KIDAL (FAMa + Africa Corps)
           SCRIPT: f8218 → offensive depuis Gao + Ménaka → Kidal
           ====================================================== */}
-      {ready && famaArrowProgress > 0 && (
+      {showChrome && famaArrowProgress > 0 && (
         <SahelAttackArrow
           map={mapRef.current}
           waypoints={[GAO_COORD, KIDAL_COORD]}
@@ -1375,7 +1455,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           height={height}
         />
       )}
-      {ready && africaCorpsProgress > 0 && (
+      {showChrome && africaCorpsProgress > 0 && (
         <SahelAttackArrow
           map={mapRef.current}
           waypoints={[MENAKA_COORD, KIDAL_COORD]}
@@ -1394,7 +1474,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           MAP ANIMATION — ACT 3 : CONTRE-OFFENSIVE JNIM+CSP
           SCRIPT: f9477 — contre-offensive depuis l'est
           ====================================================== */}
-      {ready && counterProgress > 0 && (
+      {showChrome && counterProgress > 0 && (
         <SahelAttackArrow
           map={mapRef.current}
           waypoints={[MENAKA_COORD, KIDAL_COORD]}
@@ -1413,7 +1493,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           MAP ANIMATION — ACT 4 : FLUX RÉFUGIÉS
           SCRIPT: f10294 "Djibo" / f10349 "Ménaka" / f10783 "réel."
           ====================================================== */}
-      {ready && frame >= F_REF_DJIBO && (
+      {showChrome && frame >= F_REF_DJIBO && (
         <RefugeeFlow
           map={mapRef.current}
           flows={REFUGEE_FLOWS_ACT4}
@@ -1428,7 +1508,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           VEHICULES (JNIM/EIGS rouge, FAMa bleu, CSP or)
           ====================================================== */}
-      {ready &&
+      {showChrome &&
         (SAHEL_VEHICLES as SchemaVehicle[]).map((v) => {
           const pos = vehPx.find((p) => p.id === v.id);
           if (!pos) return null;
@@ -1506,7 +1586,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           REFUGIES — jetons-visage geo-ancres (Djibo/Menaka/Tillaberi)
           Chaque jeton a son propre trigger frame audio
           ====================================================== */}
-      {ready &&
+      {showChrome &&
         (SAHEL_REFUGEES as SchemaRefugee[]).map((r) => {
           const pos = refPx.find((p) => p.id === r.id);
           if (!pos) return null;
@@ -1551,7 +1631,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           ICONES RESSOURCES geo-ancrees
           ====================================================== */}
-      {ready &&
+      {showChrome &&
         RESOURCE_ICONS.map((icon) => {
           if (frame < icon.appearFrame) return null;
           const pos = iconPx.find((p) => p.id === icon.id);
@@ -1584,7 +1664,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Quand un état s'allume, sa ville-clé apparaît : point beige plein +
           anneau qui pulse (scale+opacity). Cause→effet lisible sans la voix.
           ====================================================== */}
-      {ready && cityPulse && sequentialIgnite &&
+      {showChrome && cityPulse && sequentialIgnite &&
         Object.entries(sequentialIgnite).map(([country, ignF]) => {
           const cityName = COUNTRY_KEY_CITY[country];
           if (!cityName) return null;
@@ -1625,7 +1705,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           VILLES — apparition progressive liee a l'audio
           Chaque ville pop exactement quand la narration la cite.
           ====================================================== */}
-      {ready && !cityPulse &&
+      {showChrome && !cityPulse &&
         CITY_SCHEDULE.map(({ name, appearFrame, hold }) => {
           const cityPos = cityPx.find((c) => c.name === name);
           if (!cityPos) return null;
@@ -1653,8 +1733,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         })}
 
       {/* ======================================================
-          HUD PRINCIPAL — legende + date + evenement
+          HUD PRINCIPAL — legende + date + evenement (masqué en track caméra seul)
           ====================================================== */}
+      {!acte1CameraOnly && <>
       {/* Legende factions — haut gauche */}
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOp,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
@@ -1692,6 +1773,20 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           color: SAHEL_COLORS.cream, opacity: hudOp * 0.65 }}>
         Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR
       </div>
+      </>}
+
+      {/* ======================================================
+          ÉTAPE 1 — HUD DEBUG (track caméra seul) : frame + nom du beat.
+          Pour valider le rythme du drift + pause f572 + reprise.
+          ====================================================== */}
+      {acte1CameraOnly && (
+        <div style={{ position: "absolute", bottom: 36, left: "50%", transform: "translateX(-50%)",
+            fontFamily: "monospace", fontSize: 22, fontWeight: 700, color: "#F3E9C8",
+            background: "rgba(36,24,9,0.82)", padding: "10px 24px", borderRadius: 6,
+            letterSpacing: 1, whiteSpace: "nowrap" }}>
+          {`f${String(frame).padStart(4, "0")}  ·  ${acte1BeatName(frame)}`}
+        </div>
+      )}
 
       {/* ======================================================
           OVERLAY AES NEE (frame ~7014)
@@ -1728,7 +1823,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* Cartouche AES au CENTRE, semi-transparent (décision Aziz 2026-06-07 :
           les cartouches narratifs apparaissent au centre où est l'œil, pas sur le bord). */}
-      {aesOverlayOp > 0 && (
+      {aesOverlayOp > 0 && !acte1CameraOnly && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
             opacity: aesOverlayOp * 0.92, pointerEvents: "none" }}>
           <div style={{ ...plaque, padding: "22px 40px", textAlign: "center",

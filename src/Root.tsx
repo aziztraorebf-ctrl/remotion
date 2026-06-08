@@ -2731,6 +2731,19 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* RECONSTRUCTION ACTE 1 — ÉTAPE 1 : track caméra SEUL (ordre Gemini).
+            Carte neutre + nouveau track ACTE1_CAM_KEYS + HUD debug. On valide le
+            rythme nu (drift O->E, pause f572, reprise) AVANT toute donnée/chrome.
+            f0->2299 = fin Acte 1. Narration ON (sync voix), SFX/chrome OFF. */}
+        <Composition
+          id="SahelActe1-Step1-CameraTrack"
+          component={SahelWarMapEngine}
+          defaultProps={{ acte1CameraOnly: true }}
+          durationInFrames={2300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* SHOWCASE Map Animation — 3 briques visuelles en 40s */}
         <Composition
           id="MapAnimationShowcase"
