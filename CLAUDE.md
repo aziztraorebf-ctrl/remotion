@@ -433,6 +433,8 @@ Règles complètes : `memory/rules-outils-techniques.md` + `memory/tools/remotio
 - INTERDIT : `CSS transition:`, `setTimeout`, `@keyframes`, `requestAnimationFrame`
 - Safe zones 1920×1080 : marges 100/60px, sous-titres Y≥850, texte min 32px
 - Atlas sprites : Spring Pop par défaut · `Math.max(0, localF)` OBLIGATOIRE · RGB check avant intégration
+- **Netteté = full HD only (NON-NEGOTIABLE)** : juger la netteté/qualité visuelle UNIQUEMENT sur un render `scale=1` (1920×1080). Les renders de validation rapides (`scale=0.4-0.5`) sont FLOUS et font douter du design à tort (textes, jetons, bordures). Avant de conclure "c'est moche/flou" → rendre 1 frame en full HD. Le flou vient quasi toujours du scale, pas du design. (Sahel 2026-06-07)
+- **Mouvement = intention narrative (NON-NEGOTIABLE)** : un élément qui se déplace sur la carte (jeton, sprite, flux) = OK SEULEMENT s'il a une intention claire (prendre un territoire, fuir vers un camp, avancer au front). Le "glissement SANS BUT" (sprite qui dérive vers nulle part) = le vrai problème, jamais le mouvement en soi. (Sahel 2026-06-07)
 
 ---
 
