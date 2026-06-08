@@ -29,35 +29,43 @@ if not RECRAFT_KEY:
 # Top-down strict, pointant vers le HAUT. DIFFÉRENCIATION PAR TYPE DE VÉHICULE
 # (pas juste teinte) : JNIM = pickup technical léger/agile · EIGS = blindé trapu/massif.
 # Lecture instantanée même à petite échelle en mouvement (anti-camouflage rouge-sur-rouge).
+# Cachet MILITAIRE net (réf : tank-td-blue Soudan validé — détails propres, lisible,
+# contours nets façon planche d'identification militaire). Pas "clipart".
 COMMON_TAIL = (
     "STRICTLY from directly straight above, orthographic, looking straight down. "
     "No perspective, no side view, no 3/4 angle. "
     "The vehicle is oriented pointing toward the TOP of the image. "
-    "Clean flat illustration style, bold confident dark brown #2a1a0a outlines and shadows, "
-    "slightly weathered/dusty look (Sahel desert). "
+    "MILITARY VEHICLE IDENTIFICATION PLATE style: crisp clean technical illustration, "
+    "precise panel-line details, mechanical parts clearly drawn (hatches, plating seams, "
+    "gun mount), bold confident dark #2a1a0a outlines, subtle cel-shading. "
+    "Looks like a real military vehicle recognition chart, NOT a cartoon or clipart toy. "
+    "Slightly weathered/dusty (Sahel). "
     "UNIFORM solid CREAM background color #d4c29d, edge to edge, "
     "WITHOUT any transparency, checkered pattern, gradient, "
     "WITHOUT any map, roads, grid, compass rose, terrain, or decorative elements."
 )
 
-# JNIM — pickup technical LÉGER et élancé (guérilla mobile, Al-Qaïda)
+# JNIM — pickup technical armé, MILITAIRE et soigné (guérilla mobile, Al-Qaïda)
 JNIM_PROMPT = (
-    "A top-down bird's eye view illustration of a LIGHT, AGILE armed pickup truck (a 'technical', "
-    "a slim 4x4 pickup with a machine gun on the rear bed). The silhouette is NARROW and ELONGATED. "
-    "You see from above: a small rectangular cabin roof at the front (top), an open rear cargo bed behind it "
-    "with a mounted machine gun on a pivot (a small dark cross/T shape), four wheels as small dark rectangles. "
-    "A small BLACK banner/flag detail on the cabin roof. "
-    "Color: BRICK RED #B14B3C truck body, dark gunmetal #2a2a2a gun. " + COMMON_TAIL
+    "A top-down military recognition illustration of an armed pickup truck ('technical', "
+    "a 4x4 pickup with a heavy machine gun on the rear bed). Slim, agile silhouette. "
+    "From above you clearly see: the cabin roof with a hatch detail at the front (top), "
+    "the open rear cargo bed with a MOUNTED HEAVY MACHINE GUN on a pivot ring (clear gun barrel "
+    "pointing toward the top, ammo box detail), four detailed wheels with visible tread. "
+    "A small BLACK jihadist banner detail on the cabin. Realistic military proportions. "
+    "Color: BRICK RED #B14B3C body with darker red panel lines, gunmetal #2a2a2a weapon. " + COMMON_TAIL
 )
 
-# EIGS — véhicule BLINDÉ trapu et massif (faction lourde, distincte)
+# EIGS — véhicule blindé tout-terrain, MILITAIRE net, taille RAISONNABLE (pas géant)
 EIGS_PROMPT = (
-    "A top-down bird's eye view illustration of a HEAVY, BULKY armored military vehicle "
-    "(a wide armored 4x4 / light MRAP-style vehicle, NOT a pickup). The silhouette is BROAD, SQUARE and MASSIVE, "
-    "clearly wider and heavier than a pickup. "
-    "You see from above: visible armor plating panels on the hull, a compact turret with a short gun barrel "
-    "in the center pointing toward the top, four LARGE chunky wheels at the corners. "
-    "Color: DARK DESATURATED BROWN-BLACK #3E2A18 armored body, dark gunmetal #2a2a2a turret. " + COMMON_TAIL
+    "A top-down military recognition illustration of an armored 4x4 combat vehicle "
+    "(an armed reconnaissance/patrol armored car with a small turret). Compact and sturdy, "
+    "only SLIGHTLY larger than a pickup — NOT a giant tank, reasonable size. "
+    "From above you clearly see: armored hull with visible welded armor panel seams and hatches, "
+    "a CENTRAL TURRET with a clear gun barrel pointing toward the top, four armored wheels with tread. "
+    "Realistic military proportions, looks purposeful and dangerous. "
+    "Color: DARK DESATURATED GREEN-BLACK #2E2A1E armored body with darker panel lines, "
+    "gunmetal #2a2a2a turret and gun. " + COMMON_TAIL
 )
 
 SPRITES = [

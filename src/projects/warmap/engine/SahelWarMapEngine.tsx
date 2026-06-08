@@ -132,6 +132,72 @@ const interpPath = (path: GeoPathPoint[], t: number): [number, number] => {
   return [path[path.length - 1].lon, path[path.length - 1].lat];
 };
 
+// Triggers RÉELS Acte 1 (forced-alignment) — partagés par toutes les couches finales.
+const A1 = {
+  MALI: 150, BURKINA: 231, NIGER: 301, CEDEAO: 382, LIPTAKO: 502,
+  FREEZE: 572, FREEZE_END: 632, DRIFT: 726,
+  JNIM: 1198, EIGS: 1749, FRICTION: 2167, END: 2299,
+} as const;
+
+// ============================================================
+// ACTE 1 FINAL — véhicules pilotés par FRAME ABSOLUE (fix immobilité tGlobal).
+// JNIM = mouvement erratique (courbes, guérilla mobile). EIGS = linéaire (discipliné).
+// Chaque véhicule : waypoints [frame, lon, lat]. Position = interpolation par frame.
+// ============================================================
+type A1Vehicle = {
+  id: string; sprite: string; faction: "jnim" | "eigs";
+  size: number; // px d'affichage (EIGS plus petit pour équilibrer)
+  appear: number; disappear: number;
+  wp: { f: number; lon: number; lat: number }[];
+};
+// Zone Liptako-Gourma (centre Mali / nord Burkina / ouest Niger), lon ~-1..2, lat ~13..16.
+const ACTE1_VEHICLES: A1Vehicle[] = [
+  // JNIM #1 : patrouille erratique centre Mali, converge vers point friction (lon -0.35)
+  { id: "a1-jnim-1", sprite: "technical-jnim", faction: "jnim", size: 56,
+    appear: A1.JNIM, disappear: A1.END,
+    wp: [
+      { f: 1198, lon: -1.6, lat: 14.9 }, { f: 1400, lon: -1.1, lat: 15.2 },
+      { f: 1600, lon: -1.5, lat: 15.0 }, { f: 1800, lon: -0.9, lat: 15.1 },
+      { f: 2000, lon: -0.7, lat: 14.95 }, { f: 2100, lon: -0.5, lat: 15.0 },
+      { f: 2167, lon: -0.42, lat: 15.0 }, // arrive au contact (ouest du point friction)
+      { f: 2230, lon: -0.6, lat: 15.0 },  // RECULE (répulsion ease-out-back)
+      { f: 2299, lon: -0.65, lat: 14.95 },
+    ] },
+  // JNIM #2 : seconde patrouille, plus au nord, reste en retrait
+  { id: "a1-jnim-2", sprite: "technical-jnim", faction: "jnim", size: 54,
+    appear: A1.JNIM + 60, disappear: A1.END,
+    wp: [
+      { f: 1258, lon: -0.9, lat: 15.3 }, { f: 1500, lon: -0.5, lat: 15.45 },
+      { f: 1750, lon: -0.8, lat: 15.5 }, { f: 2000, lon: -0.6, lat: 15.3 },
+      { f: 2167, lon: -0.5, lat: 15.25 }, { f: 2299, lon: -0.55, lat: 15.3 },
+    ] },
+  // EIGS : avance LINÉAIRE depuis l'est (Niger) vers le point friction (lon -0.28)
+  { id: "a1-eigs-1", sprite: "technical-eigs", faction: "eigs", size: 46,
+    appear: A1.EIGS, disappear: A1.END,
+    wp: [
+      { f: 1749, lon: 1.5, lat: 15.0 }, { f: 1950, lon: 0.7, lat: 15.0 },
+      { f: 2100, lon: 0.0, lat: 15.0 },
+      { f: 2167, lon: -0.14, lat: 15.0 }, // arrive au contact (est du point friction)
+      { f: 2230, lon: 0.05, lat: 15.0 },  // RECULE (répulsion)
+      { f: 2299, lon: 0.1, lat: 15.0 },
+    ] },
+];
+const interpA1Vehicle = (wp: A1Vehicle["wp"], frame: number): [number, number] => {
+  if (frame <= wp[0].f) return [wp[0].lon, wp[0].lat];
+  const last = wp[wp.length - 1];
+  if (frame >= last.f) return [last.lon, last.lat];
+  for (let i = 0; i < wp.length - 1; i++) {
+    if (frame >= wp[i].f && frame <= wp[i + 1].f) {
+      const t = (frame - wp[i].f) / (wp[i + 1].f - wp[i].f);
+      // easing doux (smoothstep) pour un déplacement non-robotique
+      const e = t * t * (3 - 2 * t);
+      return [wp[i].lon + (wp[i + 1].lon - wp[i].lon) * e,
+              wp[i].lat + (wp[i + 1].lat - wp[i].lat) * e];
+    }
+  }
+  return [last.lon, last.lat];
+};
+
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
 export const SAHEL_FPS = 30;
@@ -463,13 +529,6 @@ export type SahelTestProps = {
   acte1Final?: boolean;
 };
 
-// Triggers RÉELS Acte 1 (forced-alignment) — partagés par toutes les couches finales.
-const A1 = {
-  MALI: 150, BURKINA: 231, NIGER: 301, CEDEAO: 382, LIPTAKO: 502,
-  FREEZE: 572, FREEZE_END: 632, DRIFT: 726,
-  JNIM: 1198, EIGS: 1749, FRICTION: 2167, END: 2299,
-} as const;
-
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   fusionRegions = false,
   geoVignette = false,
@@ -515,6 +574,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const [aesPaths, setAesPaths] = useState<string[]>([]);
   // B3 frontDraw : contours des masses fusionnées reprojetés, groupés par pays (draw-in).
   const [frontPaths, setFrontPaths] = useState<{ country: string; d: string; len: number }[]>([]);
+  // ACTE 1 FINAL : véhicules pilotés par frame absolue (position + direction).
+  const [a1VehPx, setA1VehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number }[]>([]);
   const [hookPx, setHookPx] = useState<{
     bamako: { x: number; y: number } | null;
     ouaga: { x: number; y: number } | null;
@@ -914,6 +975,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       return { id: v.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y };
     });
     setVehPx(vproj);
+
+    // ACTE 1 FINAL : projeter les véhicules pilotés par FRAME absolue (mouvement réel).
+    if (acte1Final) {
+      const a1proj = ACTE1_VEHICLES.map((v) => {
+        const [lon, lat] = interpA1Vehicle(v.wp, frame);
+        const [lon2, lat2] = interpA1Vehicle(v.wp, frame - 2);
+        const p = map.project([lon, lat]);
+        const pPrev = map.project([lon2, lat2]);
+        return { id: v.id, x: p.x, y: p.y, dx: p.x - pPrev.x, dy: p.y - pPrev.y };
+      });
+      setA1VehPx(a1proj);
+    }
 
     // Projeter les refugies
     const rproj = (SAHEL_REFUGEES as SchemaRefugee[]).map((r) => {
@@ -1646,9 +1719,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
-          VEHICULES (JNIM/EIGS rouge, FAMa bleu, CSP or)
+          VEHICULES (JNIM/EIGS rouge, FAMa bleu, CSP or) — legacy Actes 2-5.
+          En acte1Final, on utilise ACTE1_VEHICLES (frame-driven) à la place.
           ====================================================== */}
-      {showChrome &&
+      {showChrome && !acte1Final &&
         (SAHEL_VEHICLES as SchemaVehicle[]).map((v) => {
           const pos = vehPx.find((p) => p.id === v.id);
           if (!pos) return null;
@@ -1723,14 +1797,56 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         })}
 
       {/* ======================================================
+          ACTE 1 FINAL — VÉHICULES frame-driven (mouvement réel + but narratif).
+          JNIM pickup rouge (erratique) · EIGS blindé sombre (linéaire). Orientés
+          selon la trajectoire, traînée de poussière, ombre portée.
+          ====================================================== */}
+      {acte1Final && showChrome &&
+        ACTE1_VEHICLES.map((v) => {
+          const pos = a1VehPx.find((p) => p.id === v.id);
+          if (!pos) return null;
+          const pop = interpolate(frame, [v.appear, v.appear + 20, v.disappear, v.disappear + 30],
+            [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp",
+              easing: Easing.bezier(0.2, 0.9, 0.3, 1) });
+          if (pop <= 0) return null;
+          const mag = Math.hypot(pos.dx, pos.dy);
+          const moving = mag > 0.05;
+          const ang = Math.atan2(pos.dy, pos.dx);
+          // sprites technical-* pointent vers le HAUT -> offset +90 par rapport au cap.
+          const headingDeg = moving ? (ang * 180) / Math.PI + 90 : 0;
+          const trailLen = Math.min(40, mag * 8 + 6);
+          const col = v.faction === "jnim" ? SAHEL_COLORS.jnim : "#3E2A18";
+          return (
+            <div key={v.id} style={{ position: "absolute", left: pos.x, top: pos.y,
+                transform: `translate(-50%, -50%) scale(${pop})`, opacity: pop, pointerEvents: "none" }}>
+              {moving && (
+                <div style={{ position: "absolute", left: 0, top: 0, width: trailLen, height: 6,
+                  transform: `translate(-100%, -50%) rotate(${(ang * 180) / Math.PI}deg)`,
+                  transformOrigin: "100% 50%",
+                  background: `linear-gradient(90deg, rgba(0,0,0,0), ${col})`,
+                  borderRadius: 4, opacity: 0.4 }} />
+              )}
+              {/* ombre portée */}
+              <div style={{ position: "absolute", left: "50%", top: "56%", width: v.size * 0.6,
+                height: v.size * 0.24, transform: "translate(-50%,-50%)",
+                background: "rgba(26,18,9,0.25)", borderRadius: "50%", filter: "blur(3px)" }} />
+              <img src={staticFile(`_shared/sprites/warmap/${v.sprite}.png`)}
+                style={{ width: v.size, height: v.size, objectFit: "contain", display: "block",
+                  transform: `rotate(${headingDeg}deg)`,
+                  filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.4))" }} />
+            </div>
+          );
+        })}
+
+      {/* ======================================================
           ACTE 1 FINAL — ONDES DE FRICTION (f2167 "combattent")
           Entre la zone JNIM et la zone EIGS : ondes de choc SVG concentriques
           qui pulsent au point de contact (PAS d'explosion — "répulsion").
           ====================================================== */}
       {acte1Final && showChrome && frame >= A1.FRICTION && frame < A1.END + 20 && (() => {
         // point de friction = entre les véhicules JNIM (ouest) et EIGS (est).
-        const jnim = vehPx.find((p) => p.id === "jnim-1");
-        const eigs = vehPx.find((p) => p.id === "eigs-1");
+        const jnim = a1VehPx.find((p) => p.id === "a1-jnim-1");
+        const eigs = a1VehPx.find((p) => p.id === "a1-eigs-1");
         if (!jnim || !eigs) return null;
         const fx = (jnim.x + eigs.x) / 2, fy = (jnim.y + eigs.y) / 2;
         // 3 ondes décalées, period 30f
@@ -2005,26 +2121,32 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </div>
         </AbsoluteFill>
       )}
-      {/* acte1Final : tampons décalés haut-droite, n'occultent pas la zone d'action. */}
+      {/* acte1Final : tampons COMPACTS + semi-transparents, centre-haut (au-dessus de la
+          zone d'action située vers le bas-centre). Visible où est l'œil, sans cacher
+          les véhicules. S'efface vite (géré par stampOp). */}
       {acte1Final && jnimStampOp > 0 && (
-        <div style={{ position: "absolute", top: 110, right: 60, opacity: jnimStampOp * 0.95,
-            pointerEvents: "none" }}>
-          <div style={{ ...plaque, padding: "12px 24px", textAlign: "left",
-              background: "rgba(245,239,214,0.9)", borderColor: SAHEL_COLORS.jnim, borderWidth: 2 }}>
-            <div style={{ fontSize: 26, fontWeight: 800, color: SAHEL_COLORS.jnim, letterSpacing: 1 }}>JNIM</div>
-            <div style={{ fontSize: 14, marginTop: 2, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
-              textTransform: "uppercase" }}>lié à Al-Qaïda</div>
+        <div style={{ position: "absolute", top: "26%", left: "50%",
+            transform: "translateX(-50%)", opacity: jnimStampOp * 0.95, pointerEvents: "none" }}>
+          <div style={{ display: "inline-flex", alignItems: "baseline", gap: 10,
+              padding: "8px 20px", borderRadius: 5,
+              background: "rgba(40,28,14,0.78)", border: `2px solid ${SAHEL_COLORS.jnim}` }}>
+            <span style={{ fontSize: 26, fontWeight: 800, color: "#F3E9C8", letterSpacing: 1,
+              fontFamily: "'Roboto Condensed', sans-serif" }}>JNIM</span>
+            <span style={{ fontSize: 14, opacity: 0.82, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase", color: "#F3E9C8" }}>lié à Al-Qaïda</span>
           </div>
         </div>
       )}
       {acte1Final && eigsStampOp > 0 && (
-        <div style={{ position: "absolute", top: 200, right: 60, opacity: eigsStampOp * 0.95,
-            pointerEvents: "none" }}>
-          <div style={{ ...plaque, padding: "12px 24px", textAlign: "left",
-              background: "rgba(245,239,214,0.9)", borderColor: "#3E2A18", borderWidth: 2 }}>
-            <div style={{ fontSize: 26, fontWeight: 800, color: "#3E2A18", letterSpacing: 1 }}>EIGS</div>
-            <div style={{ fontSize: 14, marginTop: 2, opacity: 0.7, fontWeight: 600, letterSpacing: 2,
-              textTransform: "uppercase" }}>lié à Daesh</div>
+        <div style={{ position: "absolute", top: "26%", left: "50%",
+            transform: "translateX(-50%)", opacity: eigsStampOp * 0.95, pointerEvents: "none" }}>
+          <div style={{ display: "inline-flex", alignItems: "baseline", gap: 10,
+              padding: "8px 20px", borderRadius: 5,
+              background: "rgba(40,28,14,0.78)", border: "2px solid #8a7a55" }}>
+            <span style={{ fontSize: 26, fontWeight: 800, color: "#F3E9C8", letterSpacing: 1,
+              fontFamily: "'Roboto Condensed', sans-serif" }}>EIGS</span>
+            <span style={{ fontSize: 14, opacity: 0.82, fontWeight: 600, letterSpacing: 2,
+              textTransform: "uppercase", color: "#F3E9C8" }}>lié à Daesh</span>
           </div>
         </div>
       )}
