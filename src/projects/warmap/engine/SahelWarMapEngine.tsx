@@ -539,17 +539,23 @@ const getPartie1Cam = (frame: number): { lon: number; lat: number; zoom: number 
 // (bases Gao/Ménaka/Tessalit) pour l'installation FR/ONU → léger pull-back pour l'échec
 // (timeline + expansion rouge) → push-in singularisé pendant l'extinction → pan SUD pour le
 // débordement Burkina → cadre élargi Niger/CEDEAO (pont Partie 3). Caméra = chef d'orchestre.
+// REFONTE PREMIUM 2026-06-11 : caméra SERRÉE qui SUIT l'action (modèle 2.4 validé, zoom ~5.6-6.4).
+// Plus de vue large à 4.2 (trop vide). Chaque beat = un foyer cadré. Drift permanent (smoothstep).
+// Le 2.4 reprend la trajectoire serrée du proto validé (push-in Gao → PAN Ménaka → remonte Tessalit).
 const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 2940, lon: -0.6,  lat: 15.3,  zoom: 5.05 }, // = fin Partie 1 (raccord exact)
-  { f: 3196, lon:  0.6,  lat: 16.8,  zoom: 4.55 }, // 2.1 Serval : cadre nord-Mali (bases Gao/Ménaka/Tessalit)
-  { f: 3443, lon:  0.2,  lat: 16.6,  zoom: 4.35 }, // 2.2 présence FR : léger pull-back (convergence régionale)
-  { f: 3660, lon:  0.0,  lat: 16.4,  zoom: 4.45 }, // 2.3 MINUSMA : recentre (points ONU)
-  { f: 3887, lon: -0.4,  lat: 16.0,  zoom: 4.20 }, // 2.4 échec : pull-back large (timeline + rouge + extinction)
-  { f: 4200, lon: -0.2,  lat: 15.8,  zoom: 4.30 }, // 2.4 mid : léger push-in (singularise l'extinction)
-  { f: 4421, lon: -0.6,  lat: 15.2,  zoom: 4.45 }, // 2.5 villes/campagnes : centre Mali rural
-  { f: 4955, lon: -1.0,  lat: 14.2,  zoom: 4.55 }, // 2.6 Burkina : pan SUD (débordement frontière)
-  { f: 5380, lon:  0.4,  lat: 14.0,  zoom: 4.35 }, // Niger bascule : pan EST (Niamey)
-  { f: 5640, lon: -0.3,  lat: 14.4,  zoom: 4.15 }, // CEDEAO : élargi (pont Partie 3)
+  { f: 3196, lon:  0.6,  lat: 16.9,  zoom: 5.70 }, // 2.1 Serval : cadre serré nord-Mali (bases apparaissent)
+  { f: 3443, lon: -0.4,  lat: 16.4,  zoom: 5.45 }, // 2.2 présence FR : léger élargissement (forces autour)
+  { f: 3660, lon:  0.0,  lat: 17.2,  zoom: 5.55 }, // 2.3 MINUSMA : remonte nord (points ONU Kidal/Tombouctou)
+  { f: 3887, lon:  0.30, lat: 16.60, zoom: 6.00 }, // 2.4 T1 : cadre serré le triangle (l'étau monte)
+  { f: 3980, lon:  0.05, lat: 16.35, zoom: 6.35 }, // 2.4 T2 : push-in Gao (1re extinction)
+  { f: 4050, lon:  1.20, lat: 16.10, zoom: 6.20 }, // 2.4 T3a : PAN est → Ménaka
+  { f: 4110, lon:  1.20, lat: 18.20, zoom: 5.95 }, // 2.4 T3b : remonte nord → Tessalit
+  { f: 4200, lon:  0.80, lat: 17.40, zoom: 5.70 }, // 2.4 FIN : léger pull-back, les 3 bases mortes
+  { f: 4421, lon: -1.20, lat: 15.60, zoom: 5.55 }, // 2.5 villes/campagnes : centre Mali rural
+  { f: 4955, lon: -0.60, lat: 13.60, zoom: 5.55 }, // 2.6 Burkina : pan SUD (débordement frontière)
+  { f: 5380, lon:  2.00, lat: 13.70, zoom: 5.60 }, // Niger bascule : pan EST (Niamey)
+  { f: 5640, lon:  0.40, lat: 12.60, zoom: 5.00 }, // CEDEAO : léger élargissement (pont Partie 3)
 ];
 const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
   if (frame <= PARTIE2_CAM_KEYS[0].f) return getActe1Cam(frame);
@@ -1836,10 +1842,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
   // ÉTAPE 1 : en mode track caméra seul, on masque TOUTE la couche narrative
   // (hook, flèches, véhicules, villes, HUD) pour valider le rythme caméra nu.
-  // proto24 = TABLE RASE : on masque tout le chrome narratif legacy (jetons-combattants,
+  // proto24/partie2 = TABLE RASE : on masque tout le chrome narratif legacy (jetons-combattants,
   // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
-  // Seule la couche <Proto24Extinction> + le fill calme proto24 s'affichent. (Anti-saturation #2)
-  const showChrome = ready && !acte1CameraOnly && !proto24;
+  // Seules les couches <Proto24Extinction>/<Partie2Blocage> + le fill calme s'affichent. (Anti-saturation #2)
+  // P2 premium (2026-06-11) suit le modèle 2.4 validé : zones statiques + sprites Gemini, sans chrome legacy.
+  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -2868,7 +2875,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           HUD PRINCIPAL — legende + date + evenement (masqué en track caméra seul)
           ====================================================== */}
-      {!acte1CameraOnly && !proto24 && <>
+      {!acte1CameraOnly && !proto24 && !partie2 && <>
       {/* Legende factions — haut gauche */}
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>

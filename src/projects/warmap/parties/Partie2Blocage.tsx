@@ -1,37 +1,41 @@
-// Partie 2 — LE BLOCAGE (intervention FR/ONU qui echoue sur 10 ans).
+// PARTIE 2 — LE BLOCAGE (intervention FR/ONU massive, et pourtant le territoire perdu grandit).
 //
-// Couche PURE par-dessus la carte du moteur (pattern <PartieX>, voir Partie1Origine).
-// Recoit SahelRenderContext. Ne possede PAS la map.
+// REFONTE PREMIUM (2026-06-11) sur le modèle VALIDÉ du beat 2.4 (Proto24Extinction). La version
+// précédente (étoiles/cercles/points SVG niveau-1) a été REJETÉE par Aziz. Voie premium actée :
+//   - Marqueurs = SPRITES GEMINI (encre fine, ancrés au pied) — base-fr-td, fr-epervier/licorne/sabre.
+//   - Zones d'emprise = STATIQUES (buildStaticZone : installation unique puis figé, contour déchiqueté
+//     IMMOBILE). PAS de blob qui ondule. Le mouvement vient des marqueurs/effets, pas du contour.
+//   - Effets organiques = PixelLab (fumée fx-smoke, ping-pong ambiant).
+//   - Disparition = effacement TOTAL (territoire perdu = plus aucune présence).
+//   - Discipline anti-saturation : 1 foyer à la fois, pitch flat (analytique), caméra serrée (moteur).
 //
-// OSSATURE VISUELLE (DA upstream 3 voix convergent — SYNTHESE-DA-UPSTREAM-P2.md) :
-//   POINTS RIGIDES (FR/ONU = geometrie nette fixe) SUR SURFACES FLUIDES (jihadisme = paths
-//   organiques rouge qui s'infiltrent). Distinction par MORPHOLOGIE, pas couleur.
-//   EXTINCTION = REACTION a l'encerclement : le rouge coule SOUS les bases, les entoure ->
-//   elles s'eteignent (cage refermee, pas defaite). "effort massif / echec" sans un mot.
-//   Beat 2.4 SEQUENCE (pas simultane). Anti-biais : extinction analytique, jamais pathos.
+// Couche PURE par-dessus la carte (pattern <PartieX>). Reçoit SahelRenderContext. Ne possède PAS la map.
 //
-// Beats (triggers V5 alignment, x30fps) :
-//   2.1 Serval/Barkhane  f3196/f3268  bases FR (Gao/Menaka/Tessalit), etoiles, "2013"
-//   2.2 presence FR      f3419/f3443  overlay GeoConvergence (lignes fines convergent), SOBRE
-//   2.3 MINUSMA          f3660        points bleu-ONU (Kidal/Tombouctou/Mopti)
-//   2.4 echec 10 ans     f3887        timeline 2013->2022 + rouge s'etend + bases s'eteignent 1 a 1
-//   2.5 villes/campagnes f4384/f4421  villes = points tenus ; rouge progresse dans le rural
-//   2.6 Burkina deborde  f4955/f4976  rouge franchit Mali->Burkina, "2015", "40%"
-//   (fin) Niger/CEDEAO   f5380/f5639  Niamey bascule, anneau CEDEAO (pont Partie 3)
+// Beats (triggers V5 alignment, ×30fps) :
+//   2.1 Serval/Barkhane  f3196/f3268  bases FR (Gao/Ménaka/Tessalit) sprites + "2013"
+//   2.2 présence FR      f3419/f3443  forces pré-positionnées (epervier/licorne/sabre) convergent, SOBRE
+//   2.3 MINUSMA          f3660        points ONU soignés (Kidal/Tombouctou/Mopti), halo bleu
+//   2.4 échec 10 ans     f3887        ZONE rouge statique + bases s'effacent + fumée (modèle validé)
+//   2.5 villes/campagnes f4384/f4421  villes tenues (points) ; zone rouge rurale statique
+//   2.6 Burkina déborde  f4955/f4976  zone rouge franchit Mali→Burkina, "2015"
+//   (fin) Niger/CEDEAO   f5380/f5639  Niamey bascule (flash net) + anneau CEDEAO (pont Partie 3)
 
 import React from "react";
-import { AbsoluteFill, interpolate, Easing } from "remotion";
+import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
+import {
+  PAL, buildStaticZone, smoothClosedPath, smokePingPong, type Pt,
+} from "./warmapPremiumKit";
 
 // ============================================================
-// TRIGGERS V5 (alignment, x30fps)
+// TRIGGERS V5 (alignment, ×30fps)
 // ============================================================
 const F_SERVAL = 3196;
 const F_BARKHANE = 3268;
 const F_PRESENTE = 3419;
 const F_AUTOUR = 3443;
 const F_MINUSMA = 3660;
-const F_ECHEC = 3887;     // "dix" ans plus tard
+const F_ECHEC = 3887;     // "dix ans plus tard"
 const F_VILLES = 4384;
 const F_CAMPAGNES = 4421;
 const F_DEBORDENT = 4955;
@@ -39,326 +43,293 @@ const F_BURKINA = 4976;
 const F_NIGER = 5380;
 const F_CEDEAO = 5639;
 
-// Palette (decisions Aziz)
-const INK = "#2A1C0E";
-const FR_STEEL = "#4A6B8A";  // bleu-acier vieilli (bases FR Serval/Barkhane)
-const UN_BLUE = "#6E8FB0";   // bleu-ONU plus clair (MINUSMA, distinct des bases FR)
-const RED = "#8B3A3A";       // rouge-violence (jihadisme, surfaces fluides)
-const SAHEL_LAND = "#F5EFD6"; // parchemin (halo reserve labels)
-const STEEL_DEAD = "#9A9387"; // bleu-acier désaturé (base éteinte)
+// ============================================================
+// GÉOGRAPHIE
+// ============================================================
+type FrBase = { id: string; name: string; coord: [number, number]; appearAt: number; extinctAt: number };
+// Bases FR : apparaissent au 2.1 (Serval/Barkhane), s'éteignent au 2.4 (échec). Staggered.
+const FR_BASES: FrBase[] = [
+  { id: "gao", name: "GAO", coord: [-0.04, 16.27], appearAt: F_SERVAL + 12, extinctAt: F_ECHEC + 100 },
+  { id: "menaka", name: "MÉNAKA", coord: [2.40, 15.92], appearAt: F_SERVAL + 30, extinctAt: F_ECHEC + 175 },
+  { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], appearAt: F_BARKHANE + 12, extinctAt: F_ECHEC + 240 },
+];
 
-// BEAT 2.4 — surfaces rouges DÉDIÉES P2 (jihadisme = fluide qui s'infiltre). Foyers
-// organiques qui grandissent pendant l'échec 10 ans, "encerclent" les bases FR.
-const RED_BLOBS: { coord: [number, number]; rMax: number; growDelay: number }[] = [
-  { coord: [0.3, 16.5], rMax: 100, growDelay: 0 },   // entre Gao et Ménaka (coeur)
-  { coord: [1.2, 19.2], rMax: 75, growDelay: 90 },   // remonte vers Tessalit (nord)
-  { coord: [-2.0, 15.4], rMax: 85, growDelay: 55 },  // ouest (vers centre/Mopti)
+// Forces FR pré-positionnées (2.2). Sprites réels (epervier/licorne/sabre) géo-ancrés AUTOUR du Mali.
+// Correction Sonar #5 : PAS de total chiffré faux — on montre les forces nommées sans nombre.
+type Force = { id: string; sprite: string; label: string; coord: [number, number]; delay: number };
+const FORCES: Force[] = [
+  { id: "epervier", sprite: "fr-epervier", label: "ÉPERVIER", coord: [15.05, 12.10], delay: 0 },   // Tchad (E)
+  { id: "licorne", sprite: "fr-licorne", label: "LICORNE", coord: [-5.55, 7.54], delay: 14 },        // Côte d'Ivoire (S)
+  { id: "sabre", sprite: "fr-sabre", label: "SABRE", coord: [2.12, 13.51], delay: 28 },              // Niger/Niamey (E)
 ];
-// Extinction des bases : delay après F_ECHEC (quand le rouge l'a encerclée). Staggered.
-const BASE_EXTINCTION: Record<string, number> = {
-  GAO: 130, MENAKA: 175, TESSALIT: 230,
-};
-// BEAT 2.6 — débordement Burkina : foyers rouges qui franchissent la frontière Mali->Burkina.
-const BURKINA_BLOBS: { coord: [number, number]; rMax: number; delay: number }[] = [
-  { coord: [-1.0, 13.5], rMax: 70, delay: 0 },   // nord Burkina (Sahel/Djibo)
-  { coord: [0.2, 12.8], rMax: 55, delay: 25 },   // est Burkina
-];
-// Capitales qui basculent.
-const OUAGA: [number, number] = [-1.52, 12.37];
-const NIAMEY: [number, number] = [2.12, 13.51];
+const MALI_CENTER: [number, number] = [-1.5, 16.5];
 
-// Bases FR (geometrie rigide). appear = frame d'apparition (apres le mot, decale +12).
-const FR_BASES: { coord: [number, number]; name: string; appear: number; dy: number }[] = [
-  { coord: [-0.04, 16.27], name: "GAO", appear: F_SERVAL + 12, dy: 28 },
-  { coord: [2.40, 15.92], name: "MENAKA", appear: F_SERVAL + 30, dy: 28 },
-  { coord: [1.01, 20.20], name: "TESSALIT", appear: F_BARKHANE + 12, dy: -22 },
-];
-// Points MINUSMA (ONU). Teinte bleu-ONU, apparaissent au beat 2.3.
+// Points MINUSMA (ONU) — marqueurs secondaires soignés (point + double halo bleu), distincts des bases FR.
 const MINUSMA_PTS: { coord: [number, number]; name: string; delay: number }[] = [
   { coord: [1.44, 18.43], name: "KIDAL", delay: 0 },
   { coord: [-3.01, 16.79], name: "TOMBOUCTOU", delay: 12 },
   { coord: [-4.20, 14.49], name: "MOPTI", delay: 24 },
 ];
-// BEAT 2.2 — convergence régionale (présence FR pré-positionnée TOUT AUTOUR). Lignes fines
-// pointillées depuis les voisins vers un point central Mali. Origines = pays limitrophes.
-const MALI_CENTER: [number, number] = [-1.5, 16.5];
-const CONVERGENCE_FROM: { coord: [number, number]; delay: number }[] = [
-  { coord: [-7.5, 21.0], delay: 0 },   // Mauritanie (NO)
-  { coord: [3.0, 23.0], delay: 8 },    // Algérie (N)
-  { coord: [8.5, 17.5], delay: 16 },   // Niger (E)
-  { coord: [-2.0, 12.5], delay: 24 },  // Burkina (S)
-  { coord: [-8.0, 13.0], delay: 32 },  // Sénégal/ouest (O)
+
+// Villes tenues (2.5) — les armées tiennent les villes, pas les campagnes. Points bleus nets.
+const HELD_CITIES: { coord: [number, number]; name: string }[] = [
+  { coord: [-0.04, 16.27], name: "GAO" },
+  { coord: [-3.01, 16.79], name: "TOMBOUCTOU" },
+  { coord: [-4.20, 14.49], name: "MOPTI" },
 ];
 
-// Helper : interpolation linéaire entre 2 couleurs hex (#rrggbb).
-function lerpHex(a: string, b: string, t: number): string {
-  const ah = a.replace("#", ""), bh = b.replace("#", "");
-  const ar = parseInt(ah.slice(0, 2), 16), ag = parseInt(ah.slice(2, 4), 16), ab = parseInt(ah.slice(4, 6), 16);
-  const br = parseInt(bh.slice(0, 2), 16), bg = parseInt(bh.slice(2, 4), 16), bb = parseInt(bh.slice(4, 6), 16);
-  const r = Math.round(ar + (br - ar) * t), g = Math.round(ag + (bg - ag) * t), bl = Math.round(ab + (bb - ab) * t);
-  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${bl.toString(16).padStart(2, "0")}`;
-}
+// Capitales qui basculent (fin).
+const NIAMEY: [number, number] = [2.12, 13.51];
+// Pays CEDEAO autour (anneau menace, pont P3). Centroïdes approx.
+const CEDEAO_RING: [number, number][] = [
+  [-1.52, 12.37],  // Ouaga (déjà AES mais voisin)
+  [-4.00, 9.50],   // Côte d'Ivoire
+  [-1.20, 7.95],   // Ghana
+  [2.30, 9.30],    // Bénin
+  [8.10, 9.10],    // Nigeria (O)
+];
 
-// Helper : path d'une étoile à N branches (marqueur militaire rigide), centrée (cx,cy).
-function starPath(cx: number, cy: number, rOuter: number, rInner: number, points = 5): string {
-  let d = "";
-  for (let i = 0; i < points * 2; i++) {
-    const r = i % 2 === 0 ? rOuter : rInner;
-    const a = (Math.PI / points) * i - Math.PI / 2;
-    const x = cx + r * Math.cos(a);
-    const y = cy + r * Math.sin(a);
-    d += (i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1);
-  }
-  return d + "Z";
-}
+// ============================================================
+// ZONES D'EMPRISE STATIQUES (modèle 2.4) — jihadisme = territoire posé, immobile.
+// ============================================================
+// 2.4 : grande zone qui encercle le triangle des bases FR (centrée nord-Mali).
+const ZONE_ECHEC = { center: [0.9, 16.9] as [number, number], rLon: 4.2, rLat: 4.2, startF: F_ECHEC };
+// 2.5 : zone rurale (entre-deux) — le rural perdu pendant que les villes tiennent. Plus large, plus sud.
+const ZONE_RURAL = { center: [-1.2, 15.6] as [number, number], rLon: 5.0, rLat: 3.4, startF: F_VILLES };
+// 2.6 : débordement Burkina — zone qui franchit la frontière sud (nord Burkina).
+const ZONE_BURKINA = { center: [-0.6, 13.4] as [number, number], rLon: 3.2, rLat: 2.4, startF: F_DEBORDENT };
 
-type Props = {
-  ctx: SahelRenderContext | null;
-};
+const BASE_RATIO = 0.56; // hauteur/largeur du sprite base-fr-td
+
+type Props = { ctx: SahelRenderContext | null };
 
 export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
+  const { fps } = useVideoConfig();
   if (!ctx) return null;
   const { frame, width, height, project } = ctx;
+  const vmin = Math.min(width, height);
 
-  // -------- BEAT 2.1 : bases FR Serval/Barkhane (géométrie rigide, bleu-acier) --------
-  // Étoiles militaires qui "frappent" la carte (scale overshoot), staggered Gao→Ménaka→Tessalit.
-  // Repère "2013" (encre). Les bases sont FIXES (l'ordre, l'institution).
-  const an2013 = interpolate(frame, [F_SERVAL, F_SERVAL + 20], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
+  const baseSprite = staticFile("_shared/sprites/warmap/base-fr-td.png");
 
-  // -------- BEAT 2.2 : convergence régionale (présence FR pré-positionnée) --------
-  // Lignes fines pointillées depuis les voisins vers le centre Mali (tracé état-major).
-  // SOBRE (DA) : encre 50%, stroke-dashoffset, fade-out à l'arrivée. Idée abstraite -> overlay OK.
-  const pCenter = project(MALI_CENTER[0], MALI_CENTER[1]);
-  const convFade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 40, F_MINUSMA], [0, 1, 1, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
+  // ── Helper : rendre une zone statique projetée en path ──
+  const zonePath = (z: typeof ZONE_ECHEC): { d: string; op: number } | null => {
+    if (frame < z.startF) return null;
+    const ring = buildStaticZone({ frame, startF: z.startF, center: z.center, rLon: z.rLon, rLat: z.rLat });
+    const px: Pt[] = ring.map(([lon, lat]) => project(lon, lat));
+    const d = smoothClosedPath(px);
+    const op = interpolate(frame, [z.startF, z.startF + 22], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return { d, op };
+  };
 
-  // -------- BEAT 2.3 : MINUSMA (points bleu-ONU) --------
-  // board clearing léger déjà géré moteur. Points ONU distincts des bases FR (bleu plus clair).
+  const zEchec = zonePath(ZONE_ECHEC);
+  const zRural = zonePath(ZONE_RURAL);
+  const zBurkina = zonePath(ZONE_BURKINA);
 
-  // -------- BEAT 2.6 : débordement Burkina + "40%" --------
-  const pct40 = interpolate(frame, [F_BURKINA, F_BURKINA + 24], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  // -------- FIN : Niger bascule + anneau CEDEAO (pont Partie 3) --------
-  const niameyFall = interpolate(frame, [F_NIGER, F_NIGER + 30], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  const cedeaoRing = interpolate(frame, [F_CEDEAO, F_CEDEAO + 30], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
+  // ── 2.1/2013 cartouche ──
+  const an2013 = interpolate(frame, [F_SERVAL, F_SERVAL + 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ── 2.6/2015 cartouche ──
+  const an2015 = interpolate(frame, [F_DEBORDENT, F_DEBORDENT + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ── fin : Niamey flash + CEDEAO ──
+  const niameyFall = interpolate(frame, [F_NIGER, F_NIGER + 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const cedeaoT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const pNiamey = project(NIAMEY[0], NIAMEY[1]);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      <svg width={width} height={height}
-        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+      <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
+        <defs>
+          <radialGradient id="p2-zone" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stopColor={PAL.RED_DEEP} stopOpacity={0.15} />
+            <stop offset="72%" stopColor={PAL.RED_INK} stopOpacity={0.30} />
+            <stop offset="100%" stopColor={PAL.RED_INK} stopOpacity={0.48} />
+          </radialGradient>
+          <pattern id="p2-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="7" stroke={PAL.RED_INK} strokeWidth="1.4" strokeOpacity="0.4" />
+          </pattern>
+        </defs>
 
-        {/* BEAT 2.4+2.6 — surfaces rouges (jihadisme fluide). SOUS les bases (z-index).
-            DA fix #5 : TOUS les foyers dans UN groupe avec opacité au GROUPE (pas par cercle)
-            -> surface UNIE homogène (territoire), pas un empilement "Venn" additif.
-            Le flou + multiply donne le rendu fluide/organique. */}
-        {frame >= F_ECHEC && (() => {
-          // tous les foyers (Mali + Burkina) projetés avec leur rayon courant
-          const foyers: { x: number; y: number; r: number }[] = [];
-          for (const blob of RED_BLOBS) {
-            const start = F_ECHEC + blob.growDelay;
-            const g = interpolate(frame, [start, start + 220], [0, 1], {
-              extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-            });
-            if (g <= 0) continue;
-            const c = project(blob.coord[0], blob.coord[1]);
-            const breath = 1 + 0.04 * Math.sin((frame - start) * 0.06);
-            foyers.push({ x: c.x, y: c.y, r: blob.rMax * g * breath });
-          }
-          if (frame >= F_DEBORDENT) {
-            for (const blob of BURKINA_BLOBS) {
-              const start = F_DEBORDENT + blob.delay;
-              const g = interpolate(frame, [start, start + 120], [0, 1], {
-                extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-              });
-              if (g <= 0) continue;
-              const c = project(blob.coord[0], blob.coord[1]);
-              foyers.push({ x: c.x, y: c.y, r: blob.rMax * g });
-            }
-          }
-          if (!foyers.length) return null;
-          return (
-            // opacité au GROUPE -> les chevauchements ne s'additionnent pas (surface unie)
-            <g style={{ mixBlendMode: "multiply" }} opacity={0.42}>
-              {/* halo diffus (sous-couche floue, opacité pleine dans le groupe) */}
-              {foyers.map((f, i) => (
-                <circle key={`rh-${i}`} cx={f.x} cy={f.y} r={f.r * 1.3} fill={RED}
-                  style={{ filter: "blur(14px)" }} />
-              ))}
-              {/* corps de la surface (cercles pleins, mais opacité gérée par le groupe) */}
-              {foyers.map((f, i) => (
-                <circle key={`rb-${i}`} cx={f.x} cy={f.y} r={f.r} fill={RED} />
-              ))}
+        {/* ============ ZONES D'EMPRISE STATIQUES (sous les marqueurs) ============ */}
+        {[zEchec, zRural, zBurkina].map((z, i) =>
+          z && z.d ? (
+            <g key={`zone-${i}`} opacity={z.op}>
+              <path d={z.d} fill="url(#p2-zone)" />
+              <path d={z.d} fill="url(#p2-hatch)" opacity={0.45} />
+              <path d={z.d} fill="none" stroke={PAL.RED_INK} strokeWidth={2} strokeOpacity={0.55} />
             </g>
-          );
-        })()}
-
-        {/* BEAT 2.2 — convergence régionale (lignes pointillées état-major, SOBRE).
-            Trace pointillée (dash 2/5) qui se DESSINE du voisin vers le centre via un point
-            d'avancée (le "head"), puis fade-out. Idée abstraite (présence pré-positionnée). */}
-        {convFade > 0 && CONVERGENCE_FROM.map((src, i) => {
-          const p0 = project(src.coord[0], src.coord[1]);
-          const t = interpolate(frame, [F_PRESENTE + src.delay, F_PRESENTE + src.delay + 40], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
-          });
-          if (t <= 0) return null;
-          // point d'avancée (head) interpolé du voisin vers le centre
-          const hx = p0.x + (pCenter.x - p0.x) * t;
-          const hy = p0.y + (pCenter.y - p0.y) * t;
-          return (
-            <g key={`conv-${i}`} style={{ mixBlendMode: "multiply" }}>
-              {/* trace pointillée parcourue (du voisin au head) */}
-              <line x1={p0.x} y1={p0.y} x2={hx} y2={hy}
-                stroke={INK} strokeWidth={1.2} strokeOpacity={0.45 * convFade}
-                strokeLinecap="round" strokeDasharray="2 5" />
-              {/* petit point d'avancée */}
-              <circle cx={hx} cy={hy} r={2.2} fill={INK} fillOpacity={0.55 * convFade} />
-            </g>
-          );
-        })}
-
-        {/* BEAT 2.3 — points MINUSMA (bleu-ONU, distincts des bases FR). */}
-        {frame >= F_MINUSMA && MINUSMA_PTS.map((pt, i) => {
-          const p = project(pt.coord[0], pt.coord[1]);
-          const t = interpolate(frame, [F_MINUSMA + pt.delay, F_MINUSMA + pt.delay + 16], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-          });
-          if (t <= 0) return null;
-          return (
-            <g key={`un-${i}`}>
-              {/* halo ONU doux */}
-              <circle cx={p.x} cy={p.y} r={18} fill={UN_BLUE} fillOpacity={0.10 * t} />
-              {/* double anneau ONU (béret bleu) + point */}
-              <circle cx={p.x} cy={p.y} r={12} fill="none" stroke={UN_BLUE}
-                strokeWidth={2.4} strokeOpacity={0.9 * t} />
-              <circle cx={p.x} cy={p.y} r={6} fill={UN_BLUE} fillOpacity={0.95 * t}
-                stroke={INK} strokeWidth={1} strokeOpacity={0.7 * t} />
-            </g>
-          );
-        })}
-
-        {/* BEAT 2.1 — bases FR (étoiles bleu-acier rigides, "frappent" la carte). */}
-        {FR_BASES.map((base, i) => {
-          if (frame < base.appear) return null;
-          const p = project(base.coord[0], base.coord[1]);
-          // overshoot d'apparition (la base "frappe")
-          const t = interpolate(frame, [base.appear, base.appear + 14], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(2)),
-          });
-          if (t <= 0) return null;
-          const rO = 13 * Math.min(1.12, t);
-          const rI = rO * 0.42;
-          // BEAT 2.4 — EXTINCTION : quand le rouge a encerclé la base (F_ECHEC + delay),
-          // désaturation (steel -> gris mort) + opacity baisse + petit "×" (analytique, pas pathos).
-          const extStart = F_ECHEC + (BASE_EXTINCTION[base.name] ?? 999999);
-          const ext = interpolate(frame, [extStart, extStart + 40], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
-          });
-          // DA fix #3 : extinction LISIBLE. Base vivante = étoile pleine bleu-acier.
-          // Base éteinte = étoile FANTÔME (contour seul) + "×" encre à HALO PARCHEMIN qui
-          // perce le rouge. Transition : l'étoile se vide, le × apparaît (micro-délai = beat).
-          const alive = 1 - ext;       // 1 vivante -> 0 éteinte
-          const xAppear = interpolate(frame, [extStart + 14, extStart + 34], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          });
-          return (
-            <g key={`frbase-${i}`}>
-              {/* halo d'ancrage (disparaît à l'extinction) */}
-              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t * alive} />
-              {/* étoile : pleine quand vivante -> contour-fantôme quand éteinte */}
-              <path d={starPath(p.x, p.y, rO, rI)}
-                fill={FR_STEEL} fillOpacity={0.92 * t * alive}
-                stroke={lerpHex(INK, STEEL_DEAD, ext)} strokeWidth={1.4 + ext}
-                strokeOpacity={(0.85 * alive + 0.6 * ext) * t} strokeLinejoin="round" />
-              {/* "×" de retrait — encre + halo parchemin (perce le rouge), apparaît après la désat */}
-              {xAppear > 0 && (
-                <g stroke={INK} strokeWidth={3} strokeOpacity={0.9 * xAppear} strokeLinecap="round"
-                  paintOrder="stroke">
-                  <line x1={p.x - 7} y1={p.y - 7} x2={p.x + 7} y2={p.y + 7}
-                    stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.7 * xAppear} />
-                  <line x1={p.x - 7} y1={p.y + 7} x2={p.x + 7} y2={p.y - 7}
-                    stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.7 * xAppear} />
-                  <line x1={p.x - 7} y1={p.y - 7} x2={p.x + 7} y2={p.y + 7} />
-                  <line x1={p.x - 7} y1={p.y + 7} x2={p.x + 7} y2={p.y - 7} />
-                </g>
-              )}
-              {/* label base — DA fix #4 : DISPARAÎT à l'extinction (l'histoire n'est plus là). */}
-              {alive > 0.15 && (
-                <text x={p.x} y={p.y + base.dy} textAnchor="middle"
-                  fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={16} fontWeight={700}
-                  letterSpacing={1.5} fill={INK} fillOpacity={t * alive}
-                  stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t * alive} paintOrder="stroke">
-                  {base.name}
-                </text>
-              )}
-            </g>
-          );
-        })}
-
-        {/* BEAT 2.1+2.4 — repère temporel bas-gauche. "2013" fixe à l'installation, PUIS
-            l'année DÉFILE 2013->2022 pendant l'échec 10 ans (timeline filigrane). */}
-        {an2013 > 0 && (() => {
-          // année courante : 2013 jusqu'à F_ECHEC, puis défile vers 2022 sur ~250 frames
-          const yearF = interpolate(frame, [F_ECHEC, F_ECHEC + 250], [2013, 2022], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          });
-          const year = Math.round(yearF);
-          return (
-            <text x={120} y={height - 70} opacity={an2013} style={{ mixBlendMode: "multiply" }}
-              fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={56} fontWeight={700}
-              fill={INK} letterSpacing={4}>
-              {year}
-            </text>
-          );
-        })()}
-
-        {/* BEAT 2.6 — "40%" donnée ancrée (DA fix #6 : encre + halo parchemin ÉPAIS pour percer
-            le rouge, posé au SUD-Burkina, zone moins chargée). Registre 3 (overlay ancré, pas plein écran). */}
-        {pct40 > 0 && (() => {
-          const pBf = project(-0.8, 12.6); // sud-Burkina (sous la zone rouge, moins de collisions)
-          return (
-            <g opacity={pct40}>
-              <text x={pBf.x} y={pBf.y} textAnchor="middle"
-                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={42} fontWeight={800}
-                fill={INK} stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.85} paintOrder="stroke"
-                letterSpacing={1}>
-                40%
-              </text>
-              <text x={pBf.x} y={pBf.y + 24} textAnchor="middle"
-                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={13} fontWeight={600}
-                fill={INK} stroke={SAHEL_LAND} strokeWidth={4} strokeOpacity={0.85} paintOrder="stroke"
-                letterSpacing={2} style={{ textTransform: "uppercase" }}>
-                du territoire
-              </text>
-            </g>
-          );
-        })()}
-
-        {/* FIN — Niamey bascule (DA fix #1 : PAS de label NIAMEY, la basemap l'affiche déjà
-            -> on évite le doublon. Juste le point qui vire au rouge). */}
-        {niameyFall > 0 && (
-          <circle cx={pNiamey.x} cy={pNiamey.y} r={9 + niameyFall * 4} fill={RED}
-            fillOpacity={0.55 * niameyFall} style={{ mixBlendMode: "multiply" }} />
+          ) : null
         )}
-        {/* anneau CEDEAO — DA fix : tension diffuse (pas une "cible"). Opacité basse (pont P3). */}
-        {cedeaoRing > 0 && (() => {
-          const cx = (project(OUAGA[0], OUAGA[1]).x + pNiamey.x) / 2;
-          const cy = (project(OUAGA[0], OUAGA[1]).y + pNiamey.y) / 2;
+
+        {/* ============ 2.2 — FORCES FR PRÉ-POSITIONNÉES : traits fins de présence vers le Mali ============
+            Idée abstraite (présence ancienne tout autour). Trait encre du sprite-force vers le centre Mali,
+            se dessine puis reste discret. Les sprites eux-mêmes sont rendus en <img> (hors SVG). */}
+        {frame >= F_PRESENTE && FORCES.map((f, i) => {
+          const p0 = project(f.coord[0], f.coord[1]);
+          const pc = project(MALI_CENTER[0], MALI_CENTER[1]);
+          const t = interpolate(frame, [F_PRESENTE + f.delay, F_PRESENTE + f.delay + 36], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+          });
+          // fade-out global quand MINUSMA arrive (le beat 2.2 se solde)
+          const fade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 30, F_MINUSMA], [0, 1, 1, 0.2], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
+          if (t <= 0 || fade <= 0) return null;
+          const hx = p0.x + (pc.x - p0.x) * t;
+          const hy = p0.y + (pc.y - p0.y) * t;
           return (
-            <circle cx={cx} cy={cy} r={155 * cedeaoRing} fill="none"
-              stroke={INK} strokeWidth={2} strokeOpacity={0.32 * cedeaoRing}
-              strokeDasharray="3 7" style={{ mixBlendMode: "multiply" }} />
+            <g key={`force-line-${i}`} style={{ mixBlendMode: "multiply" }}>
+              <line x1={p0.x} y1={p0.y} x2={hx} y2={hy}
+                stroke={PAL.INK} strokeWidth={1.3} strokeOpacity={0.42 * fade}
+                strokeLinecap="round" strokeDasharray="2 5" />
+            </g>
           );
-        })()}
+        })}
+
+        {/* ============ 2.3 — POINTS MINUSMA (ONU) : point + double halo bleu, soignés ============ */}
+        {frame >= F_MINUSMA && MINUSMA_PTS.map((m, i) => {
+          const p = project(m.coord[0], m.coord[1]);
+          const ap = spring({ frame: frame - (F_MINUSMA + m.delay), fps, config: { damping: 13 }, durationInFrames: 16 });
+          if (ap <= 0.02) return null;
+          // halo ONU vivant (respiration lente)
+          const pulse = 1 + 0.10 * Math.sin((frame - F_MINUSMA) * 0.10);
+          const r = 0.012 * vmin;
+          return (
+            <g key={`un-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
+              <circle r={r * 2.6 * pulse} fill="none" stroke={PAL.UN_BLUE} strokeWidth={1.4} strokeOpacity={0.35} />
+              <circle r={r * 1.7} fill="none" stroke={PAL.UN_BLUE} strokeWidth={1.6} strokeOpacity={0.6} />
+              <circle r={r} fill={PAL.UN_BLUE} fillOpacity={0.9} />
+            </g>
+          );
+        })}
+
+        {/* ============ 2.5 — VILLES TENUES (points bleus nets dans la zone rurale rouge) ============ */}
+        {frame >= F_VILLES && HELD_CITIES.map((c, i) => {
+          const p = project(c.coord[0], c.coord[1]);
+          const ap = spring({ frame: frame - (F_VILLES + i * 8), fps, config: { damping: 14 }, durationInFrames: 16 });
+          if (ap <= 0.02) return null;
+          const r = 0.011 * vmin;
+          return (
+            <g key={`held-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
+              {/* anneau de tenue (la ville résiste dans le rouge) */}
+              <circle r={r * 2.2} fill="none" stroke={PAL.STEEL} strokeWidth={1.6} strokeOpacity={0.55} />
+              <circle r={r} fill={PAL.STEEL} fillOpacity={0.95} />
+            </g>
+          );
+        })}
+
+        {/* ============ BASES FR — halo d'ancrage acier au sol (sous le fortin) ============
+            Apparaît au 2.1, s'éteint au 2.4. Le fortin lui-même est en <img> hors-SVG. */}
+        {FR_BASES.map((b) => {
+          const p = project(b.coord[0], b.coord[1]);
+          const ap = spring({ frame: frame - b.appearAt, fps, config: { damping: 14 }, durationInFrames: 18 });
+          if (ap <= 0.02) return null;
+          const rel = frame - b.extinctAt;
+          const halo = ap * interpolate(rel, [0, 40], [1, 0], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+          });
+          if (halo <= 0.02) return null;
+          const rHalo = 0.07 * vmin;
+          const pulse = 1 + 0.06 * Math.sin((frame - b.appearAt) * 0.12);
+          return (
+            <g key={`halo-${b.id}`} transform={`translate(${p.x},${p.y})`}>
+              <ellipse rx={rHalo * pulse} ry={rHalo * 0.5 * pulse}
+                fill="none" stroke={PAL.STEEL} strokeWidth={1.8} strokeOpacity={0.42 * halo} />
+            </g>
+          );
+        })}
+
+        {/* ============ FIN — NIAMEY BASCULE (flash net SVG) + ANNEAU CEDEAO ============ */}
+        {niameyFall > 0 && (
+          <g transform={`translate(${pNiamey.x},${pNiamey.y})`}>
+            {/* flash de bascule (one-shot net : un coup d'État = rupture) */}
+            <circle r={0.05 * vmin * interpolate(niameyFall, [0, 0.4], [0.2, 1], { extrapolateRight: "clamp" })}
+              fill="none" stroke="#E8DCC0" strokeWidth={2.4}
+              strokeOpacity={interpolate(niameyFall, [0, 0.3, 1], [0, 0.8, 0], { extrapolateRight: "clamp" })} />
+            <circle r={0.014 * vmin} fill="#E8DCC0" fillOpacity={0.95 * niameyFall} />
+          </g>
+        )}
+        {cedeaoT > 0 && CEDEAO_RING.map((c, i) => {
+          const p = project(c[0], c[1]);
+          const ap = interpolate(frame, [F_CEDEAO + i * 6, F_CEDEAO + i * 6 + 24], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
+          if (ap <= 0) return null;
+          const r = 0.012 * vmin;
+          return (
+            <g key={`cedeao-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
+              <circle r={r} fill={PAL.CEDEAO} fillOpacity={0.85} />
+              {/* flèche de menace vers Niamey (pont P3) */}
+              <line x1={0} y1={0} x2={(pNiamey.x - p.x) * 0.4} y2={(pNiamey.y - p.y) * 0.4}
+                stroke={PAL.CEDEAO} strokeWidth={2} strokeOpacity={0.6} strokeDasharray="4 4" />
+            </g>
+          );
+        })}
       </svg>
+
+      {/* ============ SPRITES FORCES FR (2.2) — epervier/licorne/sabre ancrés ============ */}
+      {frame >= F_PRESENTE && FORCES.map((f) => {
+        const p = project(f.coord[0], f.coord[1]);
+        const ap = spring({ frame: frame - (F_PRESENTE + f.delay), fps, config: { damping: 14 }, durationInFrames: 18 });
+        const fade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 30, F_MINUSMA], [0, 1, 1, 0.25], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        const op = ap * fade;
+        if (op <= 0.02) return null;
+        const w = 0.11 * vmin * ap;
+        return (
+          <img key={`force-${f.id}`} src={staticFile(`_shared/sprites/warmap/${f.sprite}.png`)}
+            style={{
+              position: "absolute", left: p.x - w / 2, top: p.y - w * 0.62, width: w, height: w,
+              opacity: op, filter: "drop-shadow(0 2px 5px rgba(60,40,20,0.3))", pointerEvents: "none",
+            }} />
+        );
+      })}
+
+      {/* ============ SPRITES BASES FR (base-fr-td) — apparition 2.1, EFFACEMENT TOTAL au 2.4 ============ */}
+      {FR_BASES.map((b) => {
+        const p = project(b.coord[0], b.coord[1]);
+        const ap = spring({ frame: frame - b.appearAt, fps, config: { damping: 14 }, durationInFrames: 18 });
+        if (ap <= 0.02) return null;
+        const rel = frame - b.extinctAt;
+        // disparition complète (territoire perdu = plus aucune présence FR) sur 50f.
+        const deadT = interpolate(rel, [0, 50], [0, 1], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+        });
+        const wBase = 0.22 * vmin;
+        const scale = ap * (1 - deadT * 0.14);
+        const w = wBase * scale;
+        const h = w * BASE_RATIO;
+        const op = ap * (1 - deadT);
+        if (op <= 0.02) return null;
+        const grayscale = deadT;
+        const brightness = 1 - deadT * 0.22;
+        const shadowAlpha = 0.3 * (1 - deadT);
+        return (
+          <img key={`base-${b.id}`} src={baseSprite}
+            style={{
+              position: "absolute", left: p.x - w / 2, top: p.y - h * 0.62, width: w, height: h,
+              opacity: op,
+              filter: `grayscale(${grayscale}) brightness(${brightness}) drop-shadow(0 ${2 * (1 - deadT) + 1}px ${6 * (1 - deadT) + 2}px rgba(80,30,20,${shadowAlpha}))`,
+              pointerEvents: "none",
+            }} />
+        );
+      })}
+
+      {/* ============ FUMÉE (ambiant ping-pong) — chaque base éteinte fume depuis le sol vide ============ */}
+      {FR_BASES.map((b) => {
+        const sm = smokePingPong({ frame, startF: b.extinctAt, fps });
+        if (!sm) return null;
+        const p = project(b.coord[0], b.coord[1]);
+        const sw = 0.16 * vmin;
+        return (
+          <img key={`smoke-${b.id}`} src={staticFile(`_shared/sprites/warmap/fx-smoke/${sm.idx}.png`)}
+            style={{
+              position: "absolute", left: p.x - sw / 2, top: p.y - sw * 0.82, width: sw, height: sw,
+              opacity: sm.op, imageRendering: "pixelated", pointerEvents: "none",
+            }} />
+        );
+      })}
     </AbsoluteFill>
   );
 };
+
+export default Partie2Blocage;
