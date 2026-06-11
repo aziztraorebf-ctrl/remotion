@@ -54,13 +54,13 @@ const FR_BASES: FrBase[] = [
   { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], appearAt: F_BARKHANE + 12, extinctAt: F_ECHEC + 240 },
 ];
 
-// Forces FR pré-positionnées (2.2). Sprites réels (epervier/licorne/sabre) géo-ancrés AUTOUR du Mali.
-// Correction Sonar #5 : PAS de total chiffré faux — on montre les forces nommées sans nombre.
-type Force = { id: string; sprite: string; label: string; coord: [number, number]; delay: number };
+// Présence FR pré-positionnée (2.2) — origines régionales AUTOUR du Mali (sobre, marqueurs encre + traits).
+// Décision Aziz : pas de sprites portraits. Correction Sonar #5 : pas de total chiffré faux.
+type Force = { id: string; coord: [number, number]; delay: number };
 const FORCES: Force[] = [
-  { id: "epervier", sprite: "fr-epervier", label: "ÉPERVIER", coord: [15.05, 12.10], delay: 0 },   // Tchad (E)
-  { id: "licorne", sprite: "fr-licorne", label: "LICORNE", coord: [-5.55, 7.54], delay: 14 },        // Côte d'Ivoire (S)
-  { id: "sabre", sprite: "fr-sabre", label: "SABRE", coord: [2.12, 13.51], delay: 28 },              // Niger/Niamey (E)
+  { id: "epervier", coord: [15.05, 12.10], delay: 0 },   // Tchad (E)
+  { id: "licorne", coord: [-5.55, 7.54], delay: 14 },     // Côte d'Ivoire (S)
+  { id: "sabre", coord: [2.12, 13.51], delay: 28 },       // Niger/Niamey (E)
 ];
 const MALI_CENTER: [number, number] = [-1.5, 16.5];
 
@@ -159,41 +159,61 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           ) : null
         )}
 
-        {/* ============ 2.2 — FORCES FR PRÉ-POSITIONNÉES : traits fins de présence vers le Mali ============
-            Idée abstraite (présence ancienne tout autour). Trait encre du sprite-force vers le centre Mali,
-            se dessine puis reste discret. Les sprites eux-mêmes sont rendus en <img> (hors SVG). */}
+        {/* ============ 2.2 — PRÉSENCE FR PRÉ-POSITIONNÉE (SOBRE, voix minimale, l'overlay porte) ============
+            Décision Aziz 2026-06-11 : PAS de sprites (fr-epervier/licorne/sabre = portraits, incohérents
+            top-down). Présence abstraite = petit marqueur encre à chaque origine régionale + trait fin
+            pointillé qui se DESSINE vers le centre Mali (la France est déjà là, tout autour). Le point Mali
+            persiste à la sortie. Aucun total chiffré (correction Sonar #5). */}
         {frame >= F_PRESENTE && FORCES.map((f, i) => {
           const p0 = project(f.coord[0], f.coord[1]);
           const pc = project(MALI_CENTER[0], MALI_CENTER[1]);
-          const t = interpolate(frame, [F_PRESENTE + f.delay, F_PRESENTE + f.delay + 36], [0, 1], {
+          const t = interpolate(frame, [F_PRESENTE + f.delay, F_PRESENTE + f.delay + 40], [0, 1], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
           });
-          // fade-out global quand MINUSMA arrive (le beat 2.2 se solde)
-          const fade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 30, F_MINUSMA], [0, 1, 1, 0.2], {
+          // fade-out global quand MINUSMA arrive (le beat 2.2 se solde) — le point Mali reste via la couche bases.
+          const fade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 20, F_MINUSMA + 30], [0, 1, 1, 0], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp",
           });
           if (t <= 0 || fade <= 0) return null;
           const hx = p0.x + (pc.x - p0.x) * t;
           const hy = p0.y + (pc.y - p0.y) * t;
+          const ap0 = interpolate(frame, [F_PRESENTE + f.delay, F_PRESENTE + f.delay + 14], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
           return (
-            <g key={`force-line-${i}`} style={{ mixBlendMode: "multiply" }}>
+            <g key={`force-line-${i}`} opacity={fade}>
+              {/* trait fin pointillé qui se dessine de l'origine vers le Mali */}
               <line x1={p0.x} y1={p0.y} x2={hx} y2={hy}
-                stroke={PAL.INK} strokeWidth={1.3} strokeOpacity={0.42 * fade}
-                strokeLinecap="round" strokeDasharray="2 5" />
+                stroke={PAL.INK} strokeWidth={1.4} strokeOpacity={0.5}
+                strokeLinecap="round" strokeDasharray="2 5" style={{ mixBlendMode: "multiply" }} />
+              {/* marqueur d'origine : petit losange encre (présence pré-positionnée) */}
+              <g transform={`translate(${p0.x},${p0.y}) rotate(45)`} opacity={ap0}>
+                <rect x={-3.4} y={-3.4} width={6.8} height={6.8} fill={PAL.STEEL} fillOpacity={0.85}
+                  stroke={PAL.INK} strokeWidth={0.8} strokeOpacity={0.6} />
+              </g>
+              {/* tête d'avancée discrète */}
+              <circle cx={hx} cy={hy} r={2} fill={PAL.INK} fillOpacity={0.5} />
             </g>
           );
         })}
 
-        {/* ============ 2.3 — POINTS MINUSMA (ONU) : point + double halo bleu, soignés ============ */}
-        {frame >= F_MINUSMA && MINUSMA_PTS.map((m, i) => {
+        {/* ============ 2.3 — POINTS MINUSMA (ONU) : point + double halo bleu, soignés ============
+            Présents au 2.4 (l'argument : "malgré toutes ces forces") MAIS en RETRAIT (anti-saturation :
+            le foyer du 2.4 = l'extinction). Retrait à 35% à l'arrivée du 2.4. Disparaissent à la fin du 2.4. */}
+        {frame >= F_MINUSMA && frame < F_VILLES && MINUSMA_PTS.map((m, i) => {
           const p = project(m.coord[0], m.coord[1]);
           const ap = spring({ frame: frame - (F_MINUSMA + m.delay), fps, config: { damping: 13 }, durationInFrames: 16 });
           if (ap <= 0.02) return null;
-          // halo ONU vivant (respiration lente)
+          // retrait pendant le 2.4 (présent mais discret) puis fade-out à la fin du beat.
+          const recede = interpolate(frame, [F_ECHEC - 30, F_ECHEC + 20, F_ECHEC + 280, F_ECHEC + 340], [1, 0.35, 0.35, 0], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
+          const op = ap * recede;
+          if (op <= 0.02) return null;
           const pulse = 1 + 0.10 * Math.sin((frame - F_MINUSMA) * 0.10);
           const r = 0.012 * vmin;
           return (
-            <g key={`un-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
+            <g key={`un-${i}`} transform={`translate(${p.x},${p.y})`} opacity={op}>
               <circle r={r * 2.6 * pulse} fill="none" stroke={PAL.UN_BLUE} strokeWidth={1.4} strokeOpacity={0.35} />
               <circle r={r * 1.7} fill="none" stroke={PAL.UN_BLUE} strokeWidth={1.6} strokeOpacity={0.6} />
               <circle r={r} fill={PAL.UN_BLUE} fillOpacity={0.9} />
@@ -264,25 +284,6 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           );
         })}
       </svg>
-
-      {/* ============ SPRITES FORCES FR (2.2) — epervier/licorne/sabre ancrés ============ */}
-      {frame >= F_PRESENTE && FORCES.map((f) => {
-        const p = project(f.coord[0], f.coord[1]);
-        const ap = spring({ frame: frame - (F_PRESENTE + f.delay), fps, config: { damping: 14 }, durationInFrames: 18 });
-        const fade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 30, F_MINUSMA], [0, 1, 1, 0.25], {
-          extrapolateLeft: "clamp", extrapolateRight: "clamp",
-        });
-        const op = ap * fade;
-        if (op <= 0.02) return null;
-        const w = 0.11 * vmin * ap;
-        return (
-          <img key={`force-${f.id}`} src={staticFile(`_shared/sprites/warmap/${f.sprite}.png`)}
-            style={{
-              position: "absolute", left: p.x - w / 2, top: p.y - w * 0.62, width: w, height: w,
-              opacity: op, filter: "drop-shadow(0 2px 5px rgba(60,40,20,0.3))", pointerEvents: "none",
-            }} />
-        );
-      })}
 
       {/* ============ SPRITES BASES FR (base-fr-td) — apparition 2.1, EFFACEMENT TOTAL au 2.4 ============ */}
       {FR_BASES.map((b) => {

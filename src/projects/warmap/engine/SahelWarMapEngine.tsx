@@ -545,8 +545,9 @@ const getPartie1Cam = (frame: number): { lon: number; lat: number; zoom: number 
 const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 2940, lon: -0.6,  lat: 15.3,  zoom: 5.05 }, // = fin Partie 1 (raccord exact)
   { f: 3196, lon:  0.6,  lat: 16.9,  zoom: 5.70 }, // 2.1 Serval : cadre serré nord-Mali (bases apparaissent)
-  { f: 3443, lon: -0.4,  lat: 16.4,  zoom: 5.45 }, // 2.2 présence FR : léger élargissement (forces autour)
-  { f: 3660, lon:  0.0,  lat: 17.2,  zoom: 5.55 }, // 2.3 MINUSMA : remonte nord (points ONU Kidal/Tombouctou)
+  { f: 3443, lon: -0.5,  lat: 14.6,  zoom: 4.35 }, // 2.2 présence FR : ÉLARGISSEMENT (forces régionales tout autour visibles)
+  { f: 3640, lon: -0.5,  lat: 14.6,  zoom: 4.35 }, // 2.2 hold : la présence régionale s'installe (le temps de lire)
+  { f: 3700, lon:  0.0,  lat: 17.2,  zoom: 5.55 }, // 2.3 MINUSMA : re-resserre nord (points ONU Kidal/Tombouctou)
   { f: 3887, lon:  0.30, lat: 16.60, zoom: 6.00 }, // 2.4 T1 : cadre serré le triangle (l'étau monte)
   { f: 3980, lon:  0.05, lat: 16.35, zoom: 6.35 }, // 2.4 T2 : push-in Gao (1re extinction)
   { f: 4050, lon:  1.20, lat: 16.10, zoom: 6.20 }, // 2.4 T3a : PAN est → Ménaka
