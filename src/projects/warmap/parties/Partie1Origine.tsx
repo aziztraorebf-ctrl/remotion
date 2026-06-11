@@ -28,6 +28,7 @@ import type { SahelRenderContext } from "../engine/SahelContext";
 const F_2012 = 2102;   // "bascule"
 const F_LIBYE = 2178;  // "Libye"
 const F_PULSE = 2210;  // "s'effondre" -> pulse Libye (effondrement)
+const F_TRAIT = 2305;  // "flot d'armes" -> trait d'encre Libye->Mali + taches
 
 // Encre parchemin (coherence palette Sahel)
 const INK = "#3A2A18";
@@ -36,6 +37,23 @@ const INK_DEEP = "#2A1C0E";
 // Coordonnees geo (lon, lat)
 const LIBYE_LABEL_COORD: [number, number] = [16.0, 27.5];   // sud-Libye (label, zone source)
 const LIBYE_SOURCE_COORD: [number, number] = [14.4, 27.0];  // Sebha (foyer de l'effondrement / source armes)
+
+// Route REELLE du trafic d'armes (Aziz: pas de ligne droite). Sebha -> Ghat ->
+// Salvador Pass (tri-frontiere) -> NE Mali -> Kidal. Corridor documente.
+const ARMS_ROUTE: [number, number][] = [
+  [14.4, 27.0],  // Sebha (sud-Libye)
+  [10.2, 24.9],  // region Ghat
+  [5.8, 21.0],   // Passe de Salvador (Niger/Libye/Algerie)
+  [3.0, 19.5],   // nord-est Mali
+  [1.44, 18.43], // Kidal (porte d'entree nord Mali)
+];
+// 3 foyers d'impact (taches d'encre rouge-sombre). Kidal/Gao/Tombouctou.
+const IMPACTS: { coord: [number, number]; delay: number }[] = [
+  { coord: [1.44, 18.43], delay: 0 },   // Kidal (arrivee du trait)
+  { coord: [-0.04, 16.27], delay: 6 },  // Gao
+  { coord: [-3.01, 16.79], delay: 12 }, // Tombouctou
+];
+const IMPACT_COLOR = "#8B3A3A"; // rouge-sombre encre (PAS flammes)
 
 type Props = {
   ctx: SahelRenderContext | null;
@@ -70,6 +88,33 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
   const libyeHeat = interpolate(frame, [F_PULSE, F_PULSE + 40], [0, 0.22], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
+
+  // -------- BEAT 1.2 : trait d'encre Libye->Mali + taches d'impact --------
+  // Route reelle projetee en px. Path lisse (courbe quadratique entre waypoints).
+  // Trace anime via stroke-dashoffset. Epaisseur degressive source->pointe (via 2 traces).
+  const routePx = ARMS_ROUTE.map(([lon, lat]) => project(lon, lat));
+  // construire un path lisse (midpoints quadratiques) pour un rendu "encre" organique
+  let traitD = "";
+  if (routePx.length > 1) {
+    traitD = `M${routePx[0].x.toFixed(1)},${routePx[0].y.toFixed(1)}`;
+    for (let i = 1; i < routePx.length - 1; i++) {
+      const mx = (routePx[i].x + routePx[i + 1].x) / 2;
+      const my = (routePx[i].y + routePx[i + 1].y) / 2;
+      traitD += ` Q${routePx[i].x.toFixed(1)},${routePx[i].y.toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
+    }
+    const last = routePx[routePx.length - 1];
+    traitD += ` L${last.x.toFixed(1)},${last.y.toFixed(1)}`;
+  }
+  // longueur approx (somme segments) pour caler le dash
+  let routeLen = 0;
+  for (let i = 1; i < routePx.length; i++) {
+    routeLen += Math.hypot(routePx[i].x - routePx[i - 1].x, routePx[i].y - routePx[i - 1].y);
+  }
+  const traitDur = 70; // ~2.3s pour descendre Libye->Kidal
+  const traitT = interpolate(frame, [F_TRAIT, F_TRAIT + traitDur], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+  });
+  const F_IMPACT = F_TRAIT + traitDur - 6; // taches a l'arrivee du trait
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -117,6 +162,53 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
               strokeOpacity={op}
               style={{ mixBlendMode: "multiply" }}
             />
+          );
+        })}
+
+        {/* BEAT 1.2 — trait d'encre Libye->Mali (route reelle, trace anime). */}
+        {traitT > 0 && routeLen > 0 && traitD && (
+          <g style={{ mixBlendMode: "multiply" }}>
+            {/* trace large attenuee (source epaisse) */}
+            <path
+              d={traitD}
+              fill="none"
+              stroke={INK_DEEP}
+              strokeWidth={5}
+              strokeOpacity={0.18}
+              strokeLinecap="round"
+              strokeDasharray={routeLen}
+              strokeDashoffset={routeLen * (1 - traitT)}
+            />
+            {/* trace nette (encre) */}
+            <path
+              d={traitD}
+              fill="none"
+              stroke={INK_DEEP}
+              strokeWidth={2.4}
+              strokeOpacity={0.85}
+              strokeLinecap="round"
+              strokeDasharray={routeLen}
+              strokeDashoffset={routeLen * (1 - traitT)}
+            />
+          </g>
+        )}
+
+        {/* BEAT 1.2 — taches d'impact (Kidal/Gao/Tombouctou), scale overshoot decale. */}
+        {frame >= F_IMPACT && IMPACTS.map((imp, i) => {
+          const p = project(imp.coord[0], imp.coord[1]);
+          const t = interpolate(frame, [F_IMPACT + imp.delay, F_IMPACT + imp.delay + 16], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(1.7)),
+          });
+          if (t <= 0) return null;
+          const r = 13 * Math.min(1.15, t); // overshoot via back easing
+          return (
+            <g key={`impact-${i}`} style={{ mixBlendMode: "multiply" }}>
+              {/* halo diffus */}
+              <circle cx={p.x} cy={p.y} r={r * 1.8} fill={IMPACT_COLOR} fillOpacity={0.22 * t}
+                style={{ filter: "blur(4px)" }} />
+              {/* tache nette */}
+              <circle cx={p.x} cy={p.y} r={r} fill={IMPACT_COLOR} fillOpacity={0.7 * t} />
+            </g>
           );
         })}
 
