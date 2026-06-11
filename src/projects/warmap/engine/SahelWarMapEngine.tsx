@@ -1303,9 +1303,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // (board clearing f3050), pour que les bases FR + surfaces rouges DÉDIÉES P2 (couche
     // <Partie2Blocage>) se lisent clairement par-dessus. Reste calme tout P2.
     if (partie2 && map.getLayer("sahel-fill")) {
-      const calmFactor = interpolate(frame, [3050, 3120], [1, 0.28], {
-        extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
-      });
+      // DA fix #2 (priorité absolue) : Frame A doit être CLINIQUEMENT propre (bleu dominant,
+      // rouge quasi invisible) pour que l'explosion rouge du beat 2.4 soit un choc. Le fill de
+      // contrôle (rouge/orange) tombe très bas à l'install (0.10), puis REMONTE un peu au beat
+      // 2.4 (l'État conteste) tandis que les surfaces rouges DÉDIÉES explosent par-dessus.
+      const calmFactor = interpolate(frame,
+        [3050, 3120, F_ECHEC, F_ECHEC + 120],
+        [1, 0.10, 0.10, 0.22],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
       const baseOp: any = effSeqIgnite
         ? ["coalesce", ["get", "igniteOp"], 0]
         : 0.82;
@@ -1845,7 +1850,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     ? interpolate(frame, [P1_CLEAR_A, P1_CLEAR_B], [1, 0.05],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : partie2
-    ? interpolate(frame, [P2_CLEAR_A, P2_CLEAR_B], [1, 0.12],
+    ? interpolate(frame, [P2_CLEAR_A, P2_CLEAR_B], [1, 0],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : 1;
 

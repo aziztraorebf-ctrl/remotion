@@ -9,7 +9,29 @@
 
 ---
 
-## ▶ REPRISE IMMÉDIATE (2026-06-11 soir) — CODER LA PARTIE 2
+## ✅ PARTIE 2 CODÉE (2026-06-11) — les 6 beats faits, en attente validation Aziz
+
+`src/projects/warmap/parties/Partie2Blocage.tsx` + hooks moteur. Mode `partie2` + `getPartie2Cam`
++ compo Root `SahelPartie2`. Pattern `<PartieX>` suivi. Triggers V5 calés (Serval f3196 ... CEDEAO f5639).
+- 2.1 bases FR (étoiles bleu-acier #4A6B8A rigides, staggered Gao/Ménaka/Tessalit) + board clearing P2 (jetons→0.15)
+  + carte calme (fill→0.28, "sécurité apparente") + "2013".
+- 2.2 convergence régionale (lignes pointillées état-major depuis 5 voisins → centre Mali, sobre, fade à l'arrivée).
+- 2.3 MINUSMA (points bleu-ONU #6E8FB0, double anneau béret, distincts des bases FR).
+- 2.4 ÉCHEC 10 ANS (cœur) : surfaces rouges dédiées P2 (foyers organiques) qui ENCERCLENT les bases →
+  EXTINCTION = réaction (désaturation steel→gris + opacity↓ + petit ×), staggered. Timeline année défile 2013→2022.
+- 2.6 débordement Burkina (foyers rouges franchissent frontière sud) + "40% du territoire" (overlay ancré).
+- fin : Niamey bascule (point rouge) + anneau CEDEAO pointillé (menace, pont Partie 3).
+- Render full HD `out/episodes/warmap-sahel/wip/partie2-fullhd.mp4` (f3000-5690).
+- À surveiller (jugement Aziz full HD) : fin un peu chargée (40%+Niamey+Ouaga+CEDEAO se chevauchent au zoom),
+  extinction des bases (× + désaturation) subtile au zoom large → juger en full HD.
+
+Briques nouvelles réutilisables P3-P4 : `lerpHex` (interpolation couleur, ex: extinction), `starPath` (étoile),
+surfaces rouges organiques (foyers blur+multiply), points institutionnels (étoile rigide vs anneau ONU),
+convergence pointillée (lignes état-major), donnée ancrée (overlay registre 3).
+
+---
+
+## ▶ REPRISE IMMÉDIATE (2026-06-11 soir) — CODER LA PARTIE 2 [FAIT — voir ci-dessus]
 
 **Tout est prêt pour coder la Partie 2 "Le Blocage". DA-brief amont FAIT, décisions Aziz prises.**
 1. **Lire** `reviews-p2/SYNTHESE-DA-UPSTREAM-P2.md` (ossature visuelle validée 3 voix) + `BEATS-V5.md` section PARTIE 2.

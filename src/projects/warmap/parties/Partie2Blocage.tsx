@@ -156,44 +156,50 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
       <svg width={width} height={height}
         style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
 
-        {/* BEAT 2.4 — surfaces rouges (jihadisme fluide) qui s'infiltrent. SOUS les bases
-            (z-index : le rouge coule sous, les bases dessus -> on voit l'encerclement). */}
-        {frame >= F_ECHEC && RED_BLOBS.map((blob, i) => {
-          const c = project(blob.coord[0], blob.coord[1]);
-          // croissance organique (pulsation lente), démarrée à F_ECHEC + growDelay
-          const start = F_ECHEC + blob.growDelay;
-          const g = interpolate(frame, [start, start + 220], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-          });
-          if (g <= 0) return null;
-          const breath = 1 + 0.04 * Math.sin((frame - start) * 0.06);
-          const r = blob.rMax * g * breath;
+        {/* BEAT 2.4+2.6 — surfaces rouges (jihadisme fluide). SOUS les bases (z-index).
+            DA fix #5 : TOUS les foyers dans UN groupe avec opacité au GROUPE (pas par cercle)
+            -> surface UNIE homogène (territoire), pas un empilement "Venn" additif.
+            Le flou + multiply donne le rendu fluide/organique. */}
+        {frame >= F_ECHEC && (() => {
+          // tous les foyers (Mali + Burkina) projetés avec leur rayon courant
+          const foyers: { x: number; y: number; r: number }[] = [];
+          for (const blob of RED_BLOBS) {
+            const start = F_ECHEC + blob.growDelay;
+            const g = interpolate(frame, [start, start + 220], [0, 1], {
+              extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+            });
+            if (g <= 0) continue;
+            const c = project(blob.coord[0], blob.coord[1]);
+            const breath = 1 + 0.04 * Math.sin((frame - start) * 0.06);
+            foyers.push({ x: c.x, y: c.y, r: blob.rMax * g * breath });
+          }
+          if (frame >= F_DEBORDENT) {
+            for (const blob of BURKINA_BLOBS) {
+              const start = F_DEBORDENT + blob.delay;
+              const g = interpolate(frame, [start, start + 120], [0, 1], {
+                extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+              });
+              if (g <= 0) continue;
+              const c = project(blob.coord[0], blob.coord[1]);
+              foyers.push({ x: c.x, y: c.y, r: blob.rMax * g });
+            }
+          }
+          if (!foyers.length) return null;
           return (
-            <g key={`blob-${i}`} style={{ mixBlendMode: "multiply" }}>
-              <circle cx={c.x} cy={c.y} r={r * 1.25} fill={RED} fillOpacity={0.12 * g}
-                style={{ filter: "blur(8px)" }} />
-              <circle cx={c.x} cy={c.y} r={r} fill={RED} fillOpacity={0.30 * g} />
+            // opacité au GROUPE -> les chevauchements ne s'additionnent pas (surface unie)
+            <g style={{ mixBlendMode: "multiply" }} opacity={0.42}>
+              {/* halo diffus (sous-couche floue, opacité pleine dans le groupe) */}
+              {foyers.map((f, i) => (
+                <circle key={`rh-${i}`} cx={f.x} cy={f.y} r={f.r * 1.3} fill={RED}
+                  style={{ filter: "blur(14px)" }} />
+              ))}
+              {/* corps de la surface (cercles pleins, mais opacité gérée par le groupe) */}
+              {foyers.map((f, i) => (
+                <circle key={`rb-${i}`} cx={f.x} cy={f.y} r={f.r} fill={RED} />
+              ))}
             </g>
           );
-        })}
-
-        {/* BEAT 2.6 — débordement Burkina (le rouge franchit la frontière sud). */}
-        {frame >= F_DEBORDENT && BURKINA_BLOBS.map((blob, i) => {
-          const c = project(blob.coord[0], blob.coord[1]);
-          const start = F_DEBORDENT + blob.delay;
-          const g = interpolate(frame, [start, start + 120], [0, 1], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-          });
-          if (g <= 0) return null;
-          const r = blob.rMax * g;
-          return (
-            <g key={`bf-blob-${i}`} style={{ mixBlendMode: "multiply" }}>
-              <circle cx={c.x} cy={c.y} r={r * 1.25} fill={RED} fillOpacity={0.12 * g}
-                style={{ filter: "blur(7px)" }} />
-              <circle cx={c.x} cy={c.y} r={r} fill={RED} fillOpacity={0.28 * g} />
-            </g>
-          );
-        })}
+        })()}
 
         {/* BEAT 2.2 — convergence régionale (lignes pointillées état-major, SOBRE).
             Trace pointillée (dash 2/5) qui se DESSINE du voisin vers le centre via un point
@@ -256,29 +262,43 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           const ext = interpolate(frame, [extStart, extStart + 40], [0, 1], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
           });
-          const fillCol = lerpHex(FR_STEEL, STEEL_DEAD, ext);
-          const aliveOp = (1 - 0.6 * ext); // opacity 1 -> 0.4
+          // DA fix #3 : extinction LISIBLE. Base vivante = étoile pleine bleu-acier.
+          // Base éteinte = étoile FANTÔME (contour seul) + "×" encre à HALO PARCHEMIN qui
+          // perce le rouge. Transition : l'étoile se vide, le × apparaît (micro-délai = beat).
+          const alive = 1 - ext;       // 1 vivante -> 0 éteinte
+          const xAppear = interpolate(frame, [extStart + 14, extStart + 34], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
           return (
             <g key={`frbase-${i}`}>
               {/* halo d'ancrage (disparaît à l'extinction) */}
-              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t * (1 - ext)} />
-              {/* étoile militaire (désature + s'efface à l'extinction) */}
-              <path d={starPath(p.x, p.y, rO, rI)} fill={fillCol} fillOpacity={0.92 * t * aliveOp}
-                stroke={INK} strokeWidth={1.4} strokeOpacity={0.85 * t * aliveOp} strokeLinejoin="round" />
-              {/* petit "×" de retrait (apparaît à l'extinction) */}
-              {ext > 0.3 && (
-                <g stroke={INK} strokeWidth={2} strokeOpacity={0.8 * ext} strokeLinecap="round">
-                  <line x1={p.x - 6} y1={p.y - 6} x2={p.x + 6} y2={p.y + 6} />
-                  <line x1={p.x - 6} y1={p.y + 6} x2={p.x + 6} y2={p.y - 6} />
+              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t * alive} />
+              {/* étoile : pleine quand vivante -> contour-fantôme quand éteinte */}
+              <path d={starPath(p.x, p.y, rO, rI)}
+                fill={FR_STEEL} fillOpacity={0.92 * t * alive}
+                stroke={lerpHex(INK, STEEL_DEAD, ext)} strokeWidth={1.4 + ext}
+                strokeOpacity={(0.85 * alive + 0.6 * ext) * t} strokeLinejoin="round" />
+              {/* "×" de retrait — encre + halo parchemin (perce le rouge), apparaît après la désat */}
+              {xAppear > 0 && (
+                <g stroke={INK} strokeWidth={3} strokeOpacity={0.9 * xAppear} strokeLinecap="round"
+                  paintOrder="stroke">
+                  <line x1={p.x - 7} y1={p.y - 7} x2={p.x + 7} y2={p.y + 7}
+                    stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.7 * xAppear} />
+                  <line x1={p.x - 7} y1={p.y + 7} x2={p.x + 7} y2={p.y - 7}
+                    stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.7 * xAppear} />
+                  <line x1={p.x - 7} y1={p.y - 7} x2={p.x + 7} y2={p.y + 7} />
+                  <line x1={p.x - 7} y1={p.y + 7} x2={p.x + 7} y2={p.y - 7} />
                 </g>
               )}
-              {/* label base (s'estompe aussi à l'extinction) */}
-              <text x={p.x} y={p.y + base.dy} textAnchor="middle"
-                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={16} fontWeight={700}
-                letterSpacing={1.5} fill={INK} fillOpacity={t * (1 - 0.5 * ext)}
-                stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t * (1 - 0.5 * ext)} paintOrder="stroke">
-                {base.name}
-              </text>
+              {/* label base — DA fix #4 : DISPARAÎT à l'extinction (l'histoire n'est plus là). */}
+              {alive > 0.15 && (
+                <text x={p.x} y={p.y + base.dy} textAnchor="middle"
+                  fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={16} fontWeight={700}
+                  letterSpacing={1.5} fill={INK} fillOpacity={t * alive}
+                  stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t * alive} paintOrder="stroke">
+                  {base.name}
+                </text>
+              )}
             </g>
           );
         })}
@@ -300,20 +320,21 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           );
         })()}
 
-        {/* BEAT 2.6 — "40%" donnée ancrée près du Burkina (overlay registre 3, pas plein écran). */}
+        {/* BEAT 2.6 — "40%" donnée ancrée (DA fix #6 : encre + halo parchemin ÉPAIS pour percer
+            le rouge, posé au SUD-Burkina, zone moins chargée). Registre 3 (overlay ancré, pas plein écran). */}
         {pct40 > 0 && (() => {
-          const pBf = project(-1.0, 13.2);
+          const pBf = project(-0.8, 12.6); // sud-Burkina (sous la zone rouge, moins de collisions)
           return (
             <g opacity={pct40}>
               <text x={pBf.x} y={pBf.y} textAnchor="middle"
-                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={34} fontWeight={800}
-                fill={RED} stroke={SAHEL_LAND} strokeWidth={4} strokeOpacity={0.75} paintOrder="stroke"
+                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={42} fontWeight={800}
+                fill={INK} stroke={SAHEL_LAND} strokeWidth={6} strokeOpacity={0.85} paintOrder="stroke"
                 letterSpacing={1}>
                 40%
               </text>
-              <text x={pBf.x} y={pBf.y + 22} textAnchor="middle"
+              <text x={pBf.x} y={pBf.y + 24} textAnchor="middle"
                 fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={13} fontWeight={600}
-                fill={INK} stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7} paintOrder="stroke"
+                fill={INK} stroke={SAHEL_LAND} strokeWidth={4} strokeOpacity={0.85} paintOrder="stroke"
                 letterSpacing={2} style={{ textTransform: "uppercase" }}>
                 du territoire
               </text>
@@ -321,27 +342,20 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           );
         })()}
 
-        {/* FIN — Niamey bascule (point qui vire au rouge) + anneau CEDEAO (menace, pont P3). */}
+        {/* FIN — Niamey bascule (DA fix #1 : PAS de label NIAMEY, la basemap l'affiche déjà
+            -> on évite le doublon. Juste le point qui vire au rouge). */}
         {niameyFall > 0 && (
-          <g style={{ mixBlendMode: "multiply" }}>
-            <circle cx={pNiamey.x} cy={pNiamey.y} r={10 + niameyFall * 4} fill={RED}
-              fillOpacity={0.55 * niameyFall} />
-            <text x={pNiamey.x} y={pNiamey.y - 16} textAnchor="middle"
-              fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={15} fontWeight={700}
-              fill={INK} fillOpacity={niameyFall} stroke={SAHEL_LAND} strokeWidth={3}
-              strokeOpacity={0.7 * niameyFall} paintOrder="stroke" letterSpacing={1.5}>
-              NIAMEY
-            </text>
-          </g>
+          <circle cx={pNiamey.x} cy={pNiamey.y} r={9 + niameyFall * 4} fill={RED}
+            fillOpacity={0.55 * niameyFall} style={{ mixBlendMode: "multiply" }} />
         )}
-        {/* anneau CEDEAO (cercle pointillé menaçant autour des 3 capitales sahéliennes). */}
+        {/* anneau CEDEAO — DA fix : tension diffuse (pas une "cible"). Opacité basse (pont P3). */}
         {cedeaoRing > 0 && (() => {
           const cx = (project(OUAGA[0], OUAGA[1]).x + pNiamey.x) / 2;
           const cy = (project(OUAGA[0], OUAGA[1]).y + pNiamey.y) / 2;
           return (
-            <circle cx={cx} cy={cy} r={150 * cedeaoRing} fill="none"
-              stroke={INK} strokeWidth={2.4} strokeOpacity={0.55 * cedeaoRing}
-              strokeDasharray="6 8" style={{ mixBlendMode: "multiply" }} />
+            <circle cx={cx} cy={cy} r={155 * cedeaoRing} fill="none"
+              stroke={INK} strokeWidth={2} strokeOpacity={0.32 * cedeaoRing}
+              strokeDasharray="3 7" style={{ mixBlendMode: "multiply" }} />
           );
         })()}
       </svg>
