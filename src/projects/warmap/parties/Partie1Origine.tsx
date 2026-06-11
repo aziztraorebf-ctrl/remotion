@@ -130,7 +130,7 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
   // Hachures (pattern diagonal) fade-in au mot "tensions" (f2844), dans le vide.
-  const hachuresOp = interpolate(frame, [F_TENSIONS, F_TENSIONS + 30], [0, 0.35], {
+  const hachuresOp = interpolate(frame, [F_TENSIONS, F_TENSIONS + 30], [0, 0.55], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
   const voidPx = VOID_ZONE.map(([lon, lat]) => project(lon, lat));
@@ -151,9 +151,9 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
             <rect x={0} y={0} width={width * y2012Fill} height={height} />
           </clipPath>
           {/* hachures diagonales (tension) */}
-          <pattern id="p1-hachures" width={9} height={9} patternUnits="userSpaceOnUse"
+          <pattern id="p1-hachures" width={7} height={7} patternUnits="userSpaceOnUse"
             patternTransform="rotate(45)">
-            <line x1={0} y1={0} x2={0} y2={9} stroke={INK_DEEP} strokeWidth={1.1} />
+            <line x1={0} y1={0} x2={0} y2={7} stroke={INK_DEEP} strokeWidth={1.7} />
           </pattern>
           {/* clip = zone du vide (pour borner les hachures) */}
           <clipPath id="p1-void-clip">
