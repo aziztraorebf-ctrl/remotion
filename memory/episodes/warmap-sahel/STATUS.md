@@ -9,6 +9,48 @@
 
 ---
 
+## ⭐ PARTIE 1 VALIDÉE + PATTERN `<PartieX>` (2026-06-11) — LIRE AVANT DE CODER P2-P4
+
+**Partie 1 (canari) VALIDÉE par Aziz.** Render final : `out/episodes/warmap-sahel/wip/partie1-fullhd-v3.mp4`
+(catbox `m12kke`). Direction soustraction + propagation Kidal→Gao/Tombouctou + pulse villes + hachures rouges.
+
+### 🔑 LE PATTERN POUR CODER UNE PARTIE (réutiliser tel quel pour P2, P3, P4)
+La War-Map a un ÉTAT CONTINU → on ne concatène PAS des fichiers. Architecture = **moteur conteneur +
+1 fichier React par Partie, en COUCHE isolée**. Pour ajouter une Partie :
+1. **Créer** `src/projects/warmap/parties/PartieN<Nom>.tsx` — composant pur `({ ctx }: { ctx: SahelRenderContext | null })`.
+   Reçoit `ctx.frame`, `ctx.project(lon,lat)→{x,y}` (closure map courante), `ctx.width/height`, `ctx.controlAt`, `ctx.breathe`.
+   Dessine SA couche SVG par-dessus la carte. Ne possède PAS la map. Modèle complet : `Partie1Origine.tsx`.
+2. **Moteur** `SahelWarMapEngine.tsx` : ajouter prop `partieN?: boolean` → l'inclure dans `isFinalLook`
+   (hérite du look Acte 1) → ajouter `getPartieNCam` (raccord exact depuis fin Partie précédente, JAMAIS de coupe)
+   dans la sélection caméra (`camFn = partieN ? getPartieNCam : ...`) → injecter `{partieN && <PartieN ctx={sahelCtx} />}`
+   avant le bloc grain/vignette → gater les blocs legacy sur `!partieN` si besoin.
+3. **Root.tsx** : enregistrer compo `SahelPartieN` avec `defaultProps={{ partieN: true }}`.
+4. **Hooks moteur pour effets carte** (fill-opacity, board clearing) : multiplier l'expression existante par un
+   facteur gaté `partieN` dans la boucle frame (ex: vide d'État P1 = `setPaintProperty("sahel-fill","fill-opacity", ["*", baseOp, voidFactor])`).
+5. **Triggers** : TOUJOURS recalés sur `narration-v5-alignment.json` (mot × 30 fps = frame). Lire le JSON (`D["words"]`).
+
+### Briques réutilisables P2-P4 (dans `Partie1Origine.tsx`)
+- `buildSmoothPath(pts)` → {d, len} : path SVG lisse + longueur (traits stroke-dashoffset).
+- Trait d'encre route réelle (brun = source externe) vs trait rouge (propagation/violence interne).
+- Pulse ville = onde radar à la chute + teinte rouge persistante. Pulse région = onde concentrique.
+- Labels géo-ancrés avec halo réserve parchemin (`paintOrder=stroke`, PAS de boîte blanche).
+- Hachures tension = pattern rouge-sombre + teinte diffuse sous-jacente (l'encre seule ne se lit pas).
+
+### Règles de goût VERROUILLÉES (Aziz 2026-06-11)
+- **War-Map = 100% carte, ZÉRO plein écran** (voir `WARMAP-LONG-DOCTRINE.md`). Moments forts = PAR la carte
+  (caméra, pulses, vide d'opacité, assombrissement). Plein écran = Souverain Mid-form uniquement.
+- 3 registres d'enrichissement autorisés sans quitter la carte : portraits/visages projetés · objets Gemini
+  encre top-down (P3-P4) · données animées dans overlay ancré (jamais plein écran).
+- Board clearing P1 = 0.05 (table rase, retour 2012). Trait route réelle (pas ligne droite/flèche TikTok).
+
+### DETTE différée (NE PAS faire maintenant — quand P2-P4 couvriront l'Acte 2)
+- Legacy `acte2` (avion/convoi/bases) GARDÉ comme filet + référence visuelle pour coder P2-P4. À supprimer plus tard.
+- Cartouches blancs sous labels de ville (BAMAKO/NIAMEY) = anti-parchemin hérité Acte 1 → corriger avec le recalage Acte 1.
+- Recaler triggers Acte 1 sur audio V5 + retirer sa timeline graduée (déjà masquée en mode partie1).
+- Bug corrigé : `<Audio narration-v2.mp3>` (supprimé) → repointé `narration-v5-expressive.mp3` (synchro Acte1 à recaler).
+
+---
+
 ## ✅ ÉTAT ACTUEL (2026-06-10)
 
 ### Script — V5 LINÉAIRE LOCKED

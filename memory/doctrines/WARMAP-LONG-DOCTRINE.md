@@ -59,6 +59,23 @@ Trois niveaux d'overlay sur la carte, selon la densité d'information :
 
 **Anti-pattern absolu :** data-viz plein écran, graphique qui remplace la carte, insert séparé de la carte. Ces éléments appartiennent à Souverain Mid-form, pas à War-Map Long.
 
+**DÉCISION VERROUILLÉE (Aziz 2026-06-11) — War-Map = 100% carte, ZÉRO plein écran.**
+Question posée explicitement (faut-il des scènes plein écran façon King & Generals docs ?). Réponse tranchée :
+NON. La War-Map ne quitte JAMAIS la carte. C'est la SIGNATURE et l'avantage concurrentiel (le plan-séquence
+cartographique continu est rare et difficile ; le "carte + cutaway plein écran" est le standard documentaire
+banal). Le plein écran (portraits, BigStat, headlines, HERO DATA) reste réservé au **Souverain Mid-form**.
+Les "moments forts" en War-Map se font PAR la carte : mouvements caméra (pull-back/push-in), board clearing,
+pulses, assombrissement, vide d'opacité — pas par une coupe hors-carte. Risque évité : une fois UNE scène
+plein écran autorisée, on s'autorise la facilité dès qu'un beat est dur à rendre sur la carte → érosion de l'identité.
+
+**Les 3 registres d'enrichissement AUTORISÉS (sans quitter la carte) — validés 2026-06-11 :**
+1. **Portraits/visages projetés SUR la carte** — médaillon encre ancré à un lieu (façon jeton-visage du
+   différentiel War-Map). Ajoute l'humain (chef de groupe, président) sans rompre la relation spatiale.
+2. **Objets Gemini encre top-down** — drapeau qui se déploie, lingots d'or, cristal uranium, goutte pétrole,
+   posés au bon lieu (recette Gemini encre). Déjà prévu Parties 3-4 (registre sous-utilisé à enrichir).
+3. **Données animées DANS un overlay ancré** — chiffre/courbe/mini-graphe façon K&G, mais en cartouche
+   semi-transparent géo-ancré, JAMAIS en plein écran. Peut être poussé plus loin (mini-graphes animés).
+
 **Hiérarchie des calques — règle de priorité (validée Aziz 2026-06-07) :**
 1. **Objet géo-ancré sur la carte** — si l'information a une localisation précise, elle devient un objet sur la carte (jeton-visage, icône ressource, sprite char). Jamais un overlay texte flottant pour remplacer quelque chose qui peut être montré directement sur la carte.
 2. **Overlay texte** — uniquement si l'information n'a pas d'équivalent spatial précis : chiffre global sur 3 pays, concept monétaire, tampon acronyme première apparition, date jalon.
@@ -226,6 +243,43 @@ Ce script est la référence canonique à imiter sur :
 - **Chiffres fact-checkés** : 5 corrections appliquées (Moura cinq jours, budget Barkhane ~1Md€/an, uranium "fournissait une part significative", 3 millions déplacés, 18 millions insécurité alimentaire)
 
 **Pour démarrer un nouveau script War-Map Long :** lire ce fichier complet AVANT de rédiger. Puis appliquer la structure 5 actes + checklist ci-dessus.
+
+---
+
+## ⭐ BLUEPRINT VISUEL — dérivé de l'Acte 1 Sahel (validé Aziz 2026-06-08)
+
+> L'Acte 1 Sahel (`SahelActe1-Final`, render `acte1-FINAL.mp4`, catbox `6zixyj`) est la
+> **RÉFÉRENCE DE STYLE** de la série. Toutes les briques ci-dessous sont codées en
+> `acte1Final` dans `SahelWarMapEngine.tsx` et à REPORTER sur les Actes 2-5.
+> Validé par downstream DA-brief (Gemini+Kimi convergents) : ce sont les "piliers signature".
+
+**SIGNATURE À REPORTER (ne pas réinventer) :**
+1. **Grammaire "voix nomme → zone pulse"** : quand la narration nomme un territoire, sa
+   silhouette admin-1 s'embrase 2-3s (contour + glow couleur faction) puis s'apaise.
+   Table `A1_REGION_PULSES` (trigger forced-align + regions[] + faction). Carte cognitive immédiate.
+   ⚠️ HIÉRARCHISER sur 5 actes (sinon lassitude) : lieu mineur = surbrillance contour 1s ;
+   région majeure = contour + glow interne 2-3s.
+2. **Timeline graduée glissante** (bas-écran) : curseur continu sur axe temporel de l'acte,
+   année sur le curseur, encoches aux événements qui FLASHENT au passage du curseur.
+   Remplace tout compteur de date précise (qui "saute" = confusion). Position remontée →
+   source préservée dessous. Adapter AX_Y0/AX_Y1 + encoches par acte.
+3. **Jetons-combattants incarnés** : cercle parchemin + bordure faction + silhouette hachurée +
+   ombre portée (flottent au-dessus = "plateau d'état-major"). Différenciés par PERSONNAGE.
+   Taches d'influence = `blobPath` (organic JNIM / angular EIGS), clippées au front (anti muddy-overlap).
+4. **Couple vignette cinéma + grain papier** (overlays SVG plein écran) = "état-major premium,
+   distingue de Google Maps". + respiration finale (assombrissement de suspension entre actes).
+5. **Légende factions** (haut-gauche) permanente. **Hiérarchie frontières** : contour national
+   épais (source `sahel-countries` dissoute) + régions internes discrètes (opacity 0.30).
+
+**CONSEILS ACTE 2+ (DA-brief, à appliquer) :**
+- **Règle "Fade to Background"** : tout élément qui n'est plus le sujet de la voix >5s → opacité ~40%.
+  La carte se remplit vite (bases, Kidal, réfugiés, ressources) → gestion du vide = arme anti-chaos.
+- **Nouveaux registres pour ne pas faire "5× le même acte"** : formes géométriques statiques
+  (carrés/hexagones) pour infrastructures FIXES (bases, Kidal) ≠ jetons ronds mobiles ;
+  flèches `stroke-dasharray` animées pour FLUX réfugiés ≠ zones de couleur ;
+  "suture" SVG englobante pour naissance AES (inverse de la fissure CEDEAO).
+- ⚠️ Gemini HALLUCINE sur les frames downscalées (a cru voir des cercles parfaits = c'étaient
+  des blobPath organiques). Toujours VÉRIFIER dans le code avant d'appliquer un fix DA.
 
 ---
 
