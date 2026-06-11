@@ -162,7 +162,7 @@ export const Beat3Densite: React.FC = () => {
   const beatStart = BEATS.DENSITE_START;
   const beatEnd = BEATS.DENSITE_END;
   const beatDur = beatEnd - beatStart;
-  const localF = frame - beatStart;
+  const localF = frame;
 
   // ── Frames locales calées sur audio (forced-alignment) ───────────────────
   const F_ANGL   = STATS.ANGLETERRE_46PCT - beatStart;  // 4
@@ -278,19 +278,11 @@ export const Beat3Densite: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: OCEAN }}>
-      {/* Narration : enveloppée dans Sequence(from=beatStart) pour que l'Audio
-          démarre à f714 absolu de composition tout en lisant le segment 714-1222
-          du fichier source — fix bug "voix absente" sur render isolé. */}
-      <Sequence from={beatStart}>
-        <Audio
-          src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
-          startFrom={audioStart} endAt={audioEnd} volume={1}
-        />
-      </Sequence>
       <Audio
-        src={staticFile("atlas/peste-1347/audio/music-c-desert.mp3")}
-        startFrom={0} volume={0.04}
+        src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
+        startFrom={audioStart} trimAfter={audioEnd} volume={1}
       />
+      {/* Musique retirée : posée en 1 piste continue au concat final. */}
 
       {/* SFX — calés -3f avant le mot (convention manifeste) */}
       <Sequence from={STATS.ANGLETERRE_46PCT - 3} durationInFrames={20}>
@@ -310,6 +302,12 @@ export const Beat3Densite: React.FC = () => {
       </Sequence>
 
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ opacity: mapOpacity }}>
+        <defs>
+          <clipPath id="europeClipB3">
+            <rect x={118} y={236} width={470} height={328} />
+          </clipPath>
+        </defs>
+
         <rect x={0} y={0} width={W} height={H} fill={OCEAN} />
 
         <AtlasMercator
@@ -318,6 +316,17 @@ export const Beat3Densite: React.FC = () => {
           driftX={driftX} driftY={driftY} scale={camScale}
           width={W} height={H}
         />
+
+        {/* Clip Europe continentale : FRA/NOR/NLD/PRT ont des territoires lointains
+            (Guyane, Svalbard, Caraïbes, Açores) qui rougissent en pleine mer sans ce clip. */}
+        <g transform={`translate(${W/2+driftX} ${H/2+driftY}) scale(${camScale}) translate(${-W/2} ${-H/2})`}
+           clipPath="url(#europeClipB3)">
+          {(MERC_LARGE.countries as Array<{iso:string;d:string}>)
+            .filter(c => ISO_PLAGUE.includes(c.iso as typeof ISO_PLAGUE[number]) && c.iso !== "GBR")
+            .map(c => (
+              <path key={c.iso} d={c.d} fill={PLAGUE_COUNTRY_COLOR} />
+            ))}
+        </g>
 
         {/* Angleterre highlight */}
         {gbrCountry && angleterreFinalOpacity > 0 && (
@@ -464,6 +473,35 @@ export const Beat3Densite: React.FC = () => {
           </text>
         )}
       </svg>
+
+      {/* ── SOURCE — apparaît avec "7000 morts" (al-Maqrizi), reste jusqu'à la fin ── */}
+      {localF >= F_7000 && (() => {
+        const srcOpacity = interpolate(localF, [F_7000, F_7000 + 15], [0, 1], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        return (
+          <div style={{
+            position: "absolute", bottom: 28, left: 0, right: 0,
+            display: "flex", justifyContent: "center",
+            opacity: srcOpacity, pointerEvents: "none",
+          }}>
+            <div style={{
+              background: PARCHMENT,
+              borderTop: `1.5px solid ${PARCHMENT_DARK}`,
+              borderBottom: `1.5px solid ${PARCHMENT_DARK}`,
+              padding: "3px 14px",
+            }}>
+              <span style={{
+                fontFamily: "Georgia, 'Times New Roman', serif",
+                fontSize: 11, color: PARCHMENT_INK,
+                letterSpacing: "0.04em", fontWeight: 600,
+              }}>
+                al-Maqrizi · Britannica, &quot;Black Death&quot;
+              </span>
+            </div>
+          </div>
+        );
+      })()}
     </AbsoluteFill>
   );
 };

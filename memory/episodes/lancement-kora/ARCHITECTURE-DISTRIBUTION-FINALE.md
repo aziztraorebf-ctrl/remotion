@@ -31,20 +31,21 @@ Retire du calendrier de lancement. Garde sur disque. A ressortir dans un futur l
 ## Mid-form Senegal 7min34 (paysage)
 YouTube uniquement, HORS rotation Shorts.
 
-## Covers frame 0 generees (out/episodes/_r-and-d/covers-B/)
+## Covers frame 0 generees (out/episodes/_r-and-d/covers-B/) — TOUTES FAITES ✅
+- or-africain : 9s "$5,589 RECORD HISTORIQUE" — genere 2026-06-07
+- vraie-taille : 50s Afrique rouge Mercator — genere 2026-06-06
 - senegal-short : 22s "$1500B"
 - mansa-moussa : caravane vers Le Caire 60s
 - empire-ghana : lingot "90 KG" 31s
 - sonjata : main + barre de fer 0s (choix Aziz)
 - silicon-savannah : M-Pesa "5% vs 0.22%" 61s
-- A FAIRE : or-africain (teste : A=kw0vat, B=032j67) + vraie-taille en cover B (pour republication IG/TikTok).
-
-## Frames de couverture des autres (candidates retenues, dans /tmp/frame0-candidates au moment de la session)
-or-africain 9s ($5,589) · vraie-taille 50s (Afrique rouge Mercator).
 Planche HD des 8 : files.catbox.moe/mkgcd1.png
 
-## RESTE A FAIRE
-1. Generer cover B pour or-africain + vraie-taille.
-2. Definir dates exactes de republication (2 posts/jour, eviter burst red flag).
-3. Publier : TryPost (YT/FB/IG via MCP au prochain redemarrage Claude) + Postiz (TikTok).
-4. SESSION SEPAREE : passe editoriale angle militant (Mansa Moussa "plus riche que Rockefeller", Thiaroye titrage).
+## STATUT FINAL — TERMINE (2026-06-07) ✅
+Architecture réelle : TryPost (MCP) = YT+IG+FB. Postiz (REST) = TikTok ONLY.
+7/7 vidéos programmées TryPost + 7/7 TikTok Postiz. Frame 0 coverB intégrée partout.
+Logs : `scripts/tiktok-schedule-log.json` (TikTok) + TryPost IDs dans ORDRE-POSTS-POSTIZ-SAUVEGARDE.md.
+
+## SESSION SEPAREE EN ATTENTE
+Passe editoriale angle militant (Mansa Moussa "plus riche que Rockefeller", Thiaroye titrage).
+Voir : `TODO-PASSE-EDITORIALE-ANGLE-MILITANT.md`.

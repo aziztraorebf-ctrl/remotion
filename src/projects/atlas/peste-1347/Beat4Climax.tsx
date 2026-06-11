@@ -6,6 +6,7 @@ import React from "react";
 import {
   AbsoluteFill,
   Audio,
+  Easing,
   interpolate,
   Sequence,
   staticFile,
@@ -44,6 +45,9 @@ const ISO_SUBSAHARAN_SAFE = new Set([
 ]);
 
 const ISO_SAHARA = ["DZA", "LBY", "TUN", "MAR", "ESH", "MRT", "MLI", "NER", "TCD", "SDN"];
+
+// Frontière contrastée sur les zones or (le stroke MALI_GOLD se fondait dans le fill).
+const GOLD_BORDER = "#7a4e10";
 
 const PLAGUE_PROPAGATION_ORDER = [
   "UKR", "GRC", "ITA", "ESP", "PRT", "FRA",
@@ -274,8 +278,11 @@ const Caravane: React.FC<CaravaneProps> = ({
 }) => {
   if (localF < appearAt - 5 || localF > hideAt + 20) return null;
 
+  // Easing ease-in-out : départ lent (la caravane s'ébranle), glisse, ralentit à l'arrivée.
+  // Mouvement naturel d'une marche (retour : éviter la vitesse linéaire robotique).
   const progress = interpolate(localF, [appearAt, hideAt], [0, 1], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
+    easing: Easing.bezier(0.4, 0, 0.6, 1),
   });
   const baseX = startScreenX + (endScreenX - startScreenX) * progress;
 
@@ -283,18 +290,39 @@ const Caravane: React.FC<CaravaneProps> = ({
   const fadeOut = interpolate(localF, [hideAt - 15, hideAt + 15], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const opacity = Math.min(fadeIn, fadeOut);
 
-  // Flèche de direction — précède la tête de file
-  const arrowX = baseX + 30;
-  const arrowOpacity = opacity * interpolate(localF, [appearAt + 10, appearAt + 30], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
+  // TRACE DE PROGRESSION — chemin doré qui se dessine du DÉPART à la position courante.
+  // Remplace le triangle (trop géométrique) : la caravane "trace" sa route dans le sable.
+  // Dégradé d'opacité = la trace s'estompe vers le départ (sable qui efface les pas).
+  const tailX = startScreenX - 4.5 * CARAVANE_GAP; // derrière le dernier membre
+  const traceHeadX = baseX - 8;                      // juste derrière la tête de file
+  const traceLen = Math.max(1, traceHeadX - tailX);
 
   return (
     <g opacity={opacity}>
-      {/* Flèche dorée avant la caravane */}
-      <g transform={`translate(${arrowX} ${screenY - 28})`} opacity={arrowOpacity}>
-        <polygon points="0,-8 14,0 0,8" fill={MALI_GOLD} opacity={0.85} />
-      </g>
+      <defs>
+        <linearGradient id="caravaneTrail" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor={MALI_GOLD} stopOpacity={0} />
+          <stop offset="70%" stopColor={MALI_GOLD} stopOpacity={0.4} />
+          <stop offset="100%" stopColor="#ffe7a0" stopOpacity={0.85} />
+        </linearGradient>
+      </defs>
+      {/* Trace parcourue : trait dégradé qui s'efface vers le départ */}
+      <rect
+        x={tailX} y={screenY + 1}
+        width={traceLen} height={2.5}
+        rx={1.25}
+        fill="url(#caravaneTrail)"
+        opacity={opacity * 0.8}
+      />
+      {/* Petits points de halte le long du chemin (pas dans le sable) */}
+      {[0.3, 0.55, 0.8].map((t, i) => (
+        <circle key={i}
+          cx={tailX + traceLen * t} cy={screenY + 2}
+          r={1.6}
+          fill={MALI_GOLD}
+          opacity={opacity * 0.5}
+        />
+      ))}
 
       {/* Membres de la file */}
       {CARAVANE_MEMBERS.map((m, i) => (
@@ -325,7 +353,7 @@ export const Beat4Climax: React.FC = () => {
   const beatStart = BEATS.CLIMAX_START;
   const beatEnd   = BEATS.CLIMAX_END;
   const beatDur   = beatEnd - beatStart;
-  const localF    = frame >= beatStart ? frame - beatStart : frame;
+  const localF    = frame;
 
   // ── Frames locales ────────────────────────────────────────────────────────
   const F_RATS      = 0;
@@ -340,9 +368,23 @@ export const Beat4Climax: React.FC = () => {
   const F_MALI_APPEAR = F_AU_SUD;
 
   // ── CAMÉRA — 4 phases ────────────────────────────────────────────────────
+  // Helper : viser un point SVG BRUT (pas une station nommée) à un zoom donné.
+  // Reproduit la formule cameraTo : driftX = (CENTER.x - pointX) * scale.
+  const CAM_CENTER_X = 360, CAM_CENTER_Y = 640;
+  const camToPoint = (px: number, py: number, scale: number, dx = 0, dy = 0) => ({
+    scale,
+    driftX: (CAM_CENTER_X - px) * scale + dx,
+    driftY: (CAM_CENTER_Y - py) * scale + dy,
+  });
+
   const camMed       = cameraTo("SICILE", 1.20, { dx: -30, dy: 20 });
   const camSahara    = cameraTo("MAGHREB", 1.45, { dx: 10, dy: -50 });
-  const camCaravane  = cameraTo("MAGHREB", 1.75, { dx: 20, dy: -60 });
+  // ZOOM AGRESSIF sur la caravane : centré sur le trajet (y=630), zoom 2.5.
+  // La caméra SUIT la caravane : cible le point d'ENTRÉE en début de traversée,
+  // le point de SORTIE en fin → translation horizontale = sensation de marche.
+  const CARAVANE_Y_CAM = 630;
+  const camCaravaneIn  = camToPoint(295, CARAVANE_Y_CAM, 2.5);   // début traversée (ouest)
+  const camCaravaneOut = camToPoint(415, CARAVANE_Y_CAM, 2.5);   // fin traversée (est)
   const camContraste = { scale: 0.95, driftX: 0, driftY: 30 };
 
   const camFrames = [
@@ -355,22 +397,22 @@ export const Beat4Climax: React.FC = () => {
   const camScaleVals = [
     INHERITED_FROM_BEAT2.scale, camMed.scale,
     camMed.scale, camSahara.scale,
-    camSahara.scale, camCaravane.scale,
-    camCaravane.scale, camContraste.scale,
+    camSahara.scale, camCaravaneIn.scale,
+    camCaravaneOut.scale, camContraste.scale,
     camContraste.scale,
   ];
   const driftXVals = [
     INHERITED_FROM_BEAT2.driftX, camMed.driftX,
     camMed.driftX, camSahara.driftX,
-    camSahara.driftX, camCaravane.driftX,
-    camCaravane.driftX, camContraste.driftX,
+    camSahara.driftX, camCaravaneIn.driftX,
+    camCaravaneOut.driftX, camContraste.driftX,
     camContraste.driftX,
   ];
   const driftYVals = [
     INHERITED_FROM_BEAT2.driftY, camMed.driftY,
     camMed.driftY, camSahara.driftY,
-    camSahara.driftY, camCaravane.driftY,
-    camCaravane.driftY, camContraste.driftY,
+    camSahara.driftY, camCaravaneIn.driftY,
+    camCaravaneOut.driftY, camContraste.driftY,
     camContraste.driftY,
   ];
 
@@ -497,15 +539,13 @@ export const Beat4Climax: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: OCEAN }}>
       {/* Narration */}
-      <Sequence from={frame >= beatStart ? beatStart : 0}>
-        <Audio
-          src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
-          startFrom={beatStart} endAt={beatStart + beatDur} volume={1}
-        />
-      </Sequence>
+      <Audio
+        src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
+        startFrom={beatStart} trimAfter={beatStart + beatDur} volume={1}
+      />
 
       {/* Musique tension */}
-      <Audio src={staticFile("atlas/peste-1347/audio/music-b-tension.mp3")} startFrom={0} volume={0.05} />
+      {/* Musique retirée : posée en 1 piste continue au concat final. */}
 
       {/* SFX */}
       <Sequence from={ROUTES.ROUTES_MARITIMES - 3} durationInFrames={20}>
@@ -524,6 +564,9 @@ export const Beat4Climax: React.FC = () => {
           <clipPath id="b4-wave-clip">
             <rect x={-W} y={-H * 2} width={W * 3} height={SAHARA_CLIP_SCREEN_Y + H * 2} />
           </clipPath>
+          <clipPath id="europeClipB4">
+            <rect x={118} y={236} width={470} height={328} />
+          </clipPath>
         </defs>
         <rect x={0} y={0} width={W} height={H} fill={OCEAN} />
 
@@ -535,8 +578,10 @@ export const Beat4Climax: React.FC = () => {
           width={W} height={H}
         />
 
-        {/* Propagation rouge séquencée */}
-        <g transform={`translate(${W / 2 + driftX} ${H / 2 + driftY}) scale(${camScale}) translate(${-W / 2} ${-H / 2})`}>
+        {/* Propagation rouge séquencée — clippée à l'Europe continentale
+            (FRA/NOR/NLD/PRT ont des territoires lointains qui rougissaient en pleine mer) */}
+        <g transform={`translate(${W / 2 + driftX} ${H / 2 + driftY}) scale(${camScale}) translate(${-W / 2} ${-H / 2})`}
+           clipPath="url(#europeClipB4)">
           {(MERC_LARGE.countries as Array<{ iso: string; d: string }>)
             .filter((c) => PLAGUE_PROPAGATION_ORDER.includes(c.iso))
             .map((c) => {
@@ -551,9 +596,10 @@ export const Beat4Climax: React.FC = () => {
           }
         </g>
 
-        {/* Phase G — Europe pulsante */}
+        {/* Phase G — Europe pulsante — même clip continental */}
         {europePulse > 0.01 && (
-          <g transform={`translate(${W / 2 + driftX} ${H / 2 + driftY}) scale(${camScale}) translate(${-W / 2} ${-H / 2})`}>
+          <g transform={`translate(${W / 2 + driftX} ${H / 2 + driftY}) scale(${camScale}) translate(${-W / 2} ${-H / 2})`}
+             clipPath="url(#europeClipB4)">
             {(MERC_LARGE.countries as Array<{ iso: string; d: string }>)
               .filter((c) => PLAGUE_PROPAGATION_ORDER.includes(c.iso))
               .map((c) => (
@@ -570,8 +616,8 @@ export const Beat4Climax: React.FC = () => {
               .filter((c) => ISO_SAHARA.includes(c.iso))
               .map((c) => (
                 <path key={c.iso} d={c.d}
-                      fill={MALI_GOLD} fillOpacity={saharaOpacity}
-                      stroke={MALI_GOLD} strokeOpacity={saharaOpacity * 0.5} strokeWidth={0.5} />
+                      fill={MALI_GOLD} fillOpacity={saharaOpacity * 0.82}
+                      stroke={GOLD_BORDER} strokeOpacity={saharaOpacity * 0.9} strokeWidth={0.9} />
               ))
             }
           </g>
@@ -584,8 +630,8 @@ export const Beat4Climax: React.FC = () => {
               .filter((c) => ISO_SUBSAHARAN_SAFE.has(c.iso))
               .map((c) => (
                 <path key={c.iso} d={c.d}
-                      fill={MALI_GOLD} fillOpacity={maliGlowOpacity * 0.55}
-                      stroke={MALI_GOLD} strokeOpacity={maliGlowOpacity * 0.2} strokeWidth={0.3} />
+                      fill={MALI_GOLD} fillOpacity={maliGlowOpacity * 0.48}
+                      stroke={GOLD_BORDER} strokeOpacity={maliGlowOpacity * 0.7} strokeWidth={0.7} />
               ))
             }
           </g>

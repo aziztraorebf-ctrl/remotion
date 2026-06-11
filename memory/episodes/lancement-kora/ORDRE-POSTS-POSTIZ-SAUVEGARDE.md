@@ -10,19 +10,46 @@
 - Offsets script (jours depuis le 2 juin) : 0, 2, 4, 7, 9, 11, 14, 16, 18.
   NOTE : les 3 derniers (14/16/18) tombent Dim/Mar/Jeu, pas Lun/Mer/Ven — decalage 3e semaine.
 
-## Ordre (NE PAS PERDRE)
+## Ordre ORIGINAL Postiz (photo du systeme avant suppression — NE reflete PAS les decisions editoriales recentes)
 
-| # | Date | Fichier | Titre YouTube | Statut 6 juin |
-|---|------|---------|---------------|---------------|
-| 1 | 2 juin  | or-africain-FINAL.mp4 | L'empire qui produisait la moitie de l'or mondial | PUBLIE |
-| 2 | 4 juin  | vraie-taille-afrique-FINAL.mp4 | La vraie taille de l'Afrique va vous surprendre | PUBLIE |
-| 3 | 6 juin  | thiaroye-v5-FINAL.mp4 | Thiaroye 1944 : le massacre que l'histoire a efface | AUJOURD'HUI 15h UTC |
-| 4 | 8 juin  | niger-uranium-FINAL.mp4 | Le Niger et l'uranium : ce que la France ne dit pas | A VENIR |
-| 5 | 10 juin | mansa-moussa-atlas-v2-FINAL.mp4 | Mansa Moussa : l'homme le plus riche de tous les temps | A VENIR |
-| 6 | 12 juin | empire-ghana-FINAL-v2.mp4 | L'Empire du Ghana : la puissance oubliee de l'Afrique de l'Ouest | A VENIR |
-| 7 | 14 juin | sonjata-v7-FINAL.mp4 | Soundjata Keita : le fondateur de l'empire qui domina l'Afrique | A VENIR |
-| 8 | 16 juin | silicon-savannah-FINAL.mp4 | Silicon Savannah : quand l'Afrique invente la tech de demain | A VENIR |
-| 9 | 18 juin | senegal-petrole-gaz-FINAL-compressed.mp4 | Senegal petrole et gaz : la souverainete en jeu | A VENIR |
+| # | Date | Fichier | Statut reel |
+|---|------|---------|-------------|
+| 1 | 2 juin  | or-africain-FINAL.mp4 | PUBLIE |
+| 2 | 4 juin  | vraie-taille-afrique-FINAL.mp4 | PUBLIE |
+| 3 | 6 juin  | thiaroye-v5-FINAL.mp4 | PUBLIE (6 juin, vrai thumbnail, 122 vues) |
+| 4 | 8 juin  | niger-uranium-FINAL.mp4 | REMPLACE (voir calendrier a jour) |
+| 5 | 10 juin | mansa-moussa-atlas-v2-FINAL.mp4 | a republier |
+| 6 | 12 juin | empire-ghana-FINAL-v2.mp4 | a republier |
+| 7 | 14 juin | sonjata-v7-FINAL.mp4 | a republier |
+| 8 | 16 juin | silicon-savannah-FINAL.mp4 | a republier |
+| 9 | 18 juin | senegal-petrole-gaz-FINAL-compressed.mp4 | MID-FORM paysage -> YouTube uniquement, HORS lot Shorts |
+
+## CALENDRIER A JOUR (decisions Aziz 2026-06-06) — SOURCE DE VERITE
+
+> Le snapshot ci-dessus = ancien plan Postiz. CE bloc = la verite editoriale actuelle.
+
+Decisions :
+- Thiaroye = DEJA PUBLIE (6 juin) -> sort de la liste a republier.
+- 8 juin : SWITCH Niger -> **Short Senegal** (`petrole-patience-short-FINAL.mp4`, 91s, 1080x1920 vertical). Niger retire/decale.
+- Senegal mid-form 7min34 (`senegal-petrole-gaz-FINAL*.mp4`, 1920x1080 paysage) = YouTube uniquement, PAS dans la rotation Shorts IG/TikTok.
+
+## REPUBLICATION PHASE 2 — TERMINE (2026-06-07) ✅
+
+Architecture finale : TryPost = YT+IG+FB (MCP Claude). Postiz = TikTok ONLY (API REST).
+Logs : `scripts/republish-kora-log.json` (anciens posts Postiz supprimés) + `scripts/tiktok-schedule-log.json` (TikTok Postiz).
+
+| Date | Short | TryPost (YT+IG+FB) | Postiz TikTok | CoverB |
+|------|-------|---------------------|----------------|--------|
+| 9 juin 15h UTC | or-africain | `019ea307-bb9f-73d8-a678-6fdab6e357f4` IG+FB | `cmq41coaf07x2mv0yx40udl8g` | or-africain ($5,589 frame 9s) |
+| 9 juin 15h UTC | vraie-taille | `019ea309-1f1c-7141-a0bb-85d12caf4176` IG+FB | `cmq41crd107x3mv0yrvwwjjkq` | vraie-taille (Afrique rouge 50s) |
+| 11 juin 15h UTC | senegal-short | `019ea309-9698-705a-9c2f-8f2443965fce` YT+IG+FB | `cmq41d2i407x4mv0yqsol08zn` | senegal-short ($1500B 22s) |
+| 11 juin 15h UTC | mansa-moussa | `019ea30a-1176-72a4-b8cf-228dd2c9749f` YT+IG+FB | `cmq41dfn507x6mv0yen6aiyg5` | mansa-moussa (caravane 60s) |
+| 13 juin 15h UTC | empire-ghana | `019ea30a-8d38-703d-b20e-d102a8d26eaa` YT+IG+FB | `cmq41dls107x8mv0ym7eb19ee` | empire-ghana (lingot 90KG 31s) |
+| 13 juin 15h UTC | sonjata | `019ea30b-10a2-7150-97d5-05327f74903b` YT+IG+FB | `cmq41e2iz07xamv0y09a4t7qd` | sonjata (main+barre 0s) |
+| 16 juin 15h UTC | silicon-savannah | `019ea30b-9c71-70cc-be71-933554847b27` YT+IG+FB | `cmq41e96j07xbmv0yll7wscr6` | silicon-savannah (M-Pesa 61s) |
+
+Niger : retire du lot de lancement, garde sur disque pour futur lot.
+Session separee en attente : passe editoriale angle militant.
 
 ## postId Postiz (pour suppression programmatique si besoin)
 Voir `scripts/postiz-schedule-log.json` — chaque entree a 4 postId (1 par plateforme).

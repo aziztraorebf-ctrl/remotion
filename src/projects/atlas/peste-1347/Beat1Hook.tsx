@@ -43,7 +43,7 @@ export const Beat1Hook: React.FC = () => {
   const beatStart = BEATS.HOOK_START;
   const beatEnd = BEATS.HOOK_END;
   const beatDur = beatEnd - beatStart;
-  const localF = frame - beatStart;
+  const localF = frame;
 
   // ── Fade in carte (0→30f)
   const mapOpacity = interpolate(localF, [0, 30], [0, 1], {
@@ -121,20 +121,12 @@ export const Beat1Hook: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: OCEAN }}>
       <Audio
         src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
-        startFrom={BEATS.HOOK_START}
-        endAt={BEATS.HOOK_START + BEATS.HOOK_END}
+        startFrom={beatStart}
+        trimAfter={beatStart + beatDur}
         volume={1}
       />
-      <Audio
-        src={staticFile("atlas/peste-1347/audio/music-c-desert.mp3")}
-        startFrom={0}
-        volume={(f) =>
-          interpolate(f, [0, 60, beatDur - 60, beatDur], [0, 0.04, 0.04, 0], {
-            extrapolateLeft: "clamp",
-            extrapolateRight: "clamp",
-          })
-        }
-      />
+      {/* Musique retirée des beats : posée en 1 piste continue au concat final
+          (évite les coupures/raccords entre beats). */}
 
       <svg
         width={W}

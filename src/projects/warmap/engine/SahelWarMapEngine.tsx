@@ -1836,7 +1836,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
   // ÉTAPE 1 : en mode track caméra seul, on masque TOUTE la couche narrative
   // (hook, flèches, véhicules, villes, HUD) pour valider le rythme caméra nu.
-  const showChrome = ready && !acte1CameraOnly;
+  // proto24 = TABLE RASE : on masque tout le chrome narratif legacy (jetons-combattants,
+  // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
+  // Seule la couche <Proto24Extinction> + le fill calme proto24 s'affichent. (Anti-saturation #2)
+  const showChrome = ready && !acte1CameraOnly && !proto24;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -2865,7 +2868,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           HUD PRINCIPAL — legende + date + evenement (masqué en track caméra seul)
           ====================================================== */}
-      {!acte1CameraOnly && <>
+      {!acte1CameraOnly && !proto24 && <>
       {/* Legende factions — haut gauche */}
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>

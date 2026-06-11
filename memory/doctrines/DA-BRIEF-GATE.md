@@ -1,4 +1,4 @@
-# DA-BRIEF-GATE — Review créative AMONT (Kimi + Gemini) avant de coder un acte/beat
+# DA-BRIEF-GATE — Review créative AMONT (Gemini + Kimi + DeepSeek 3e voix) avant de coder un acte/beat
 
 > Créé 2026-06-07 (session War-Map Sahel). Validé Aziz.
 > **NON-NEGOTIABLE pour tout acte/beat substantiel — TOUS projets (Souverain, Atlas, War-Map).**
@@ -117,7 +117,23 @@ TOUT pilier. Le pilier ne change QUE le contexte technique (stack, axes), JAMAIS
      éviter l'AI-slop dès la conception" + "expert-constructeur : 2e avis templates · si tu
      construisais de zéro · comment enchaîner pour la compréhension". Active `--expert` par défaut.
      Le brief passé contient alors le PLAN (script + templates choisis + assets), pas des frames.
-   - Sorties : `/tmp/da-refs/da-<label>-{gemini,kimi}.md`.
+   - **`--with-deepseek` / `--no-deepseek` : 3e voix CONCEPTUELLE (DeepSeek V4, `deepseek/deepseek-v4-pro`
+     via OpenRouter, ~10-20x moins cher).** AUTO-ON en `--upstream`, OFF en downstream (voir doctrine
+     ci-dessous). DeepSeek est **TEXTE ONLY** (pas de vision) → les frames lui sont passées en CAPTIONS
+     textuelles (pas l'image). Donc valeur sur le CONCEPTUEL, pas le jugement visuel.
+   - Sorties : `/tmp/da-refs/da-<label>-{gemini,kimi,deepseek}.md`.
+
+   ### ⭐ DOCTRINE 3e VOIX DeepSeek V4 (validée 2026-06-09, voir key-learnings)
+   **QUAND l'utiliser** : par défaut sur tout brief **UPSTREAM/conception** (narratif, séquencier,
+   structure, logique) — la vision compte peu, le coût est quasi nul, il apporte un 3e angle. **OFF par
+   défaut en DOWNSTREAM/visuel** (juger un rendu : couleurs, compo, AI-slop) car il est AVEUGLE.
+   **SA VRAIE VALEUR** : conceptuel = 80-90% de Gemini/Kimi pour une fraction du prix. A déjà apporté
+   des idées neuves (ex: chaîne logistique complète qu'aucun des deux n'avait vue).
+   **FORCES** : séquenciers détaillés, logique narrative, structure, incohérences (temporelles, échelles).
+   **FAIBLESSES** : (1) aucune vision → ne juge pas le visuel ; (2) sans description fidèle des frames,
+   il DÉRIVE/confabule (a inventé une narration différente une fois) → TOUJOURS soigner les captions ;
+   (3) détails géo/factuels à vérifier. **Règle** : DeepSeek = 3e angle conceptuel, jamais juge du visuel ;
+   Gemini/Kimi restent indispensables pour l'œil (jusqu'au multimodal DeepSeek).
 
 **2. `scripts/tools/da-compare.py`** — test COMPARATIF (vs référence validée). Gemini SEUL
    (Files API → ingère les VIDÉOS complètes, capte mouvement+rythme, pas juste des frames).
@@ -149,3 +165,17 @@ allumage "trace→infuse→label" (pas de pop), glow sans blur (stroke épais op
 CEDEAO "néon qui grille", convergence Liptako comète + ripple, freeze VIVANT (heartbeat),
 ink-bleed pour zones de groupes armés. Idées uniques retenues : ombre portée faux-3D (Gemini),
 cartouches tiroirs latéraux 16:9 (Kimi). Zéro hallucination AE/3D des deux côtés (brief bien cadré).
+
+---
+
+## Nouveau cas d'usage validé (2026-06-10) — DA upstream sur le SCRIPT ENTIER
+
+**Leçon War-Map Sahel** : un symptôme LOCAL (un segment "B1" confus au montage) peut révéler un problème
+GLOBAL de structure. AVANT de patcher le segment, lancer un DA upstream sur le SCRIPT COMPLET
+(`--upstream --expert`, 3 voix) avec pour critère central le **show-don't-tell** : "pour chaque idée,
+peut-on la MONTRER avant de la dire ? sinon elle est mal placée / du tell pur / de trop".
+- Les 3 modèles ont convergé : surcharge non isolée à B1, Acte 2 ET Acte 4 saturés, chronologie à linéariser.
+- Cadrage clé (évite le piège) : déclarer FIGÉ = esthétique + assets déjà payés ; OUVERT = script, découpage,
+  ordre, coupes. "Ne ménage pas le texte : si un passage passe mal en visuel, dis-le et réécris."
+- Résultat : refonte structurelle (chronologie linéaire) qui a AUSSI réglé un bug technique (timeline qui
+  reculait) — preuve qu'un bon découpage narratif résout des problèmes de prod en amont.

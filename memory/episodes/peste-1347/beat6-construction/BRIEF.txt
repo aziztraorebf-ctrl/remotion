@@ -1,0 +1,76 @@
+BRIEF DE CONSTRUCTION — Beat 6 (FINALE) de l'episode Atlas "Peste 1347"
+Mode : UPSTREAM (review du PLAN avant d'ecrire une ligne de code).
+
+=== 1. ROLE ===
+Tu es directeur artistique d'une chaine YouTube de cartographie historique (style Atlas : cartes
+animees verticales, geographie, sprites pixel art). Tu BONIFIES une direction de depart DEJA posee
+pour la scene FINALE d'un episode — tu ne la reinventes pas. Notre vision est le SOCLE ; tu
+l'ameliores, tu ne la remplaces pas. Analyste lucide, pas flatteur.
+
+=== 2. SUJET + FORMAT + CIBLE ===
+Beat 6 = la CONCLUSION de l'episode "Peste 1347" (la peste noire de 1347 en Europe vs le Mali qui
+prospere). Format vertical 9:16. Cible : grand public curieux d'histoire/geographie. C'est LA scene
+de cloture, le moment qui doit RESONNER et rester en tete. Duree ~6.5s.
+
+=== 3. IDENTITE VISUELLE — SOCLE NON-NEGOCIABLE ===
+- Carte parchemin terracotta (#c97d5a env.), ocean bleu nuit, OR pour le Mali (prospere), ROUGE SANG
+  (#8b1a1a) pour l'Europe pestiferee. Encre sombre pour les frontieres/typo.
+- Micro-drift permanent de la carte (jamais figee morte). Mouvement justifie par le recit, jamais metronome.
+- Typo : serif historique (Georgia/Cinzel) pour les rares textes. Sobre.
+- NE PAS proposer une autre palette ni un autre univers. NE PAS partir sur du neon/cyber/moderne.
+
+=== 4. BOITE A OUTILS EXACTE (ce qu'on SAIT coder) ===
+- Carte d3-geo precalculee en SVG, frame-driven (drift, zoom, pan, projection Mercator).
+- Coloration de pays/zones par fill+opacity anime (ex: Europe qui rougit, Mali qui dore).
+- AtlasGeoBarrier : un CONTOUR/une LIGNE qui se DESSINE progressivement (stroke-dasharray) + glow
+  par strokes concentriques (headless-safe, PAS de filter:blur). Deja utilise pour tracer une "digue".
+- AtlasGeoAntithesis : deux groupes de territoires en etats opposes (declin rouge / prospere or+glow).
+- Propagation graduelle d'une couleur par distance a un point (tache d'encre).
+- Texte/typo SVG ou HTML qui s'inscrit (fade, ou trace lettre-par-lettre via stroke-dasharray).
+- Cartouche/bandeau bas (fond parchemin, texte serif) deja utilise pour les annotations.
+- Vignettage (assombrir les bords par un gradient SVG/overlay), drift, pull-back lent (zoom out).
+- SFX possibles (legers, sobres). Musique de fond desert deja en place.
+
+=== 5. INTERDIT (ne RIEN proposer de tel) ===
+- filter:blur CSS (ne rend PAS en headless), particules, vraie 3D, depth-of-field, volumetric,
+  lens flare, motion blur, tout effet After Effects non reproductible en SVG/Remotion frame-driven.
+- Mapbox (on est en Atlas d3-geo pur). Pas de texture noise procedurale (rend mal headless).
+
+=== 6. LIBERTE CREATIVE CADREE ===
+Tu PEUX suggerer des effets non encore codes A CONDITION qu'ils soient faisables dans la boite a
+outils ci-dessus. Pour chaque suggestion, indique le STATUT : "deja faisable" ou "a coder mais faisable".
+
+=== 7. MATERIAU REEL (la voix de cette scene, calee frame par frame) ===
+La scene PRECEDENTE (Beat 5) se termine sur une carte LARGE montrant : l'Europe entierement ROUGE
+(peste), le Mali OR (prospere) au sud, l'Afrique entiere et les continents visibles, une route doree
+Niani->Maghreb->Venise tracee. Le Beat 6 ENCHAINE directement sur cette image.
+
+Voix du Beat 6 (~6.5s), 4 segments :
+  "Deux epidemies, deux destins."      (~0.0 - 1.5s)
+  "Un desert entre les deux."          (~1.7 - 3.4s)
+  "La geographie n'est pas neutre."    (~3.9 - 6.5s)   <- LA phrase de cloture, le punchline de tout l'episode
+
+C'est sur "la geographie n'est pas neutre" que l'EPISODE SE TERMINE. Ce sont les derniers mots.
+
+=== 8. DIRECTION DE DEPART (le SOCLE a bonifier, pas a remplacer) ===
+Notre intuition : PROLONGER la carte finale du Beat 5 et la SUBLIMER pour la cloture.
+- "Deux epidemies, deux destins" : on tient l'antithese Europe rouge / Mali or, bien lisible, calme.
+- "Un desert entre les deux" : le SAHARA devient le SUJET — une digue/barriere doree se trace entre
+  le rouge et l'or (AtlasGeoBarrier), materialisant le "desert entre les deux". Le vide du Sahara
+  separe physiquement les deux destins.
+- "La geographie n'est pas neutre" : pull-back lent + la phrase s'inscrit (typo serif), un temps de
+  respiration final pour laisser resonner avant le fade. Peut-etre vignettage pour focaliser.
+
+=== 9. CE QU'ON CHERCHE DE TOI (sortie structuree, PAS de prose) ===
+PARTIE A — tableau : pour chacun des 3 segments de voix -> quel template/effet (existant ou a coder
+  faisable) -> enrichissement concret -> SFX eventuel -> statut (deja faisable / a coder) -> priorite.
+PARTIE B — "[MOMENT FORT] la phrase finale 'la geographie n'est pas neutre'" : mets le paquet. Comment
+  rendre ces 2.5 dernieres secondes MEMORABLES (c'est la signature de fin de tout l'episode) sans
+  tomber dans l'esbroufe ni l'AI-slop ? Dans notre charte sobre.
+PARTIE C — 3 idees bonus faisables qui eleveraient cette cloture (ou seraient reutilisables comme
+  signature de fin pour les prochains episodes Atlas).
+
+Questions specifiques : (a) notre direction de depart (prolonger+sublimer la carte) est-elle la
+bonne, ou une scene plus epuree/typographique serait-elle plus forte pour une CONCLUSION ?
+(b) la digue Sahara qui se trace : bonne idee pour "un desert entre les deux" ou cliche ?
+(c) comment eviter que la phrase finale qui s'inscrit fasse "slide PowerPoint" ?

@@ -94,6 +94,55 @@ IMPROVE:
 The result should look like a high-quality editorial photograph of an oil drum with a Senegalese identity, suitable for a YouTube documentary thumbnail.
 """,
 
+    "aes_dark_map": """Transform this image into a dramatic cinematic war room map of West Africa.
+
+The image shows a dark navy background with a golden blob shape representing the AES alliance countries (Mali + Burkina Faso + Niger). Transform it as follows:
+
+BACKGROUND: Keep the deep navy/black background exactly as is. Do NOT change it to parchment or light colors.
+
+TRANSFORM the golden blob into GEOGRAPHICALLY ACCURATE country shapes:
+- Replace the schematic blob with the real geographic shapes of Mali (large, rectangular-ish with a notch at top), Burkina Faso (small, roughly circular, south of Mali), and Niger (large, eastern, irregular shape)
+- These three countries should glow in warm gold/amber tones (#c8a951 to #e8c472 gradient)
+- Add subtle fill texture inside each country — like a faintly glowing illuminated surface
+- Show the internal borders between the three countries as thin dashed gold lines
+- The surrounding African countries (Senegal, Guinea, Ivory Coast, Ghana, Togo, Benin, Nigeria, Chad, Algeria, Mauritania) should be BARELY VISIBLE as very dark, almost-invisible faint outlines on the dark background — ghost countries
+
+GLOW AND DRAMA:
+- Add a strong warm golden halo/aura emanating from the center of the three-country bloc, as if the AES territory is radiating power/heat
+- The glow should be most intense at the center and fade outward
+- Keep the small central gold circle/seal from the original image
+
+STYLE: Cinematic war room tactical map — like something from a geopolitical thriller film. Dark, dramatic, the three countries as the focal point of light in a dark continent silhouette.
+
+NO text, NO labels, NO legend, NO timeline, NO sprites — pure geographic visual drama on dark background.
+""",
+
+    "aes_warmap": """Edit this war map image to create a dramatic clean thumbnail.
+
+REMOVE ENTIRELY (erase completely, leaving only the map underneath):
+- The white legend box in the top-left corner (with 'CONTROLE TERRITORIAL' header and color legend text)
+- The entire timeline bar at the bottom (the horizontal bar with years 2021, 2022 and event markers)
+- ALL circular character sprite tokens/medallions on the map (the illustrated warrior/figure circles)
+- ALL city text labels: BAMAKO, OUAGADOUGOU, NIAMEY
+- The data sources credit text in the bottom-right corner
+
+KEEP AND ENHANCE:
+- The parchment/parchemin map base texture (beige, warm, aged paper feel)
+- The territorial color zones: blue government zones, amber/beige contested zones, red-brown JNIM zones
+- The country border lines
+- The geographic shape of West Africa
+
+ENHANCE the colors to be more dramatic and vivid:
+- Intensify the amber/gold contested zones to a warm rich gold (#c8a951 tone)
+- Deepen the blue government-controlled zones to a deep saturated navy/midnight blue
+- Make the red-brown JNIM zones a deeper, more dramatic dark red
+- Increase contrast between zones so the territorial division reads clearly
+
+ADD a subtle dark vignette around all edges (darker corners fading to center) to give depth and drama.
+
+The result should be a CLEAN DRAMATIC WAR MAP thumbnail with NO text, NO UI overlays, NO character sprites — pure territorial geography visualization with vivid, cinematic colors on an aged parchment-style map. Think movie poster meets National Geographic war coverage.
+""",
+
     "niger": """Edit this image to transform the visual metaphor while preserving the layout.
 
 PRESERVE EXACTLY:
@@ -174,7 +223,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", required=True, help="Chemin vers image PNG d'entrée")
     parser.add_argument("--output", required=True, help="Chemin de sortie")
-    parser.add_argument("--brief", required=True, choices=list(BRIEFS.keys()))
+    parser.add_argument("--brief", required=True, choices=list(BRIEFS.keys()), metavar="BRIEF")
     args = parser.parse_args()
 
     sys.exit(edit_image(Path(args.input), Path(args.output), args.brief))

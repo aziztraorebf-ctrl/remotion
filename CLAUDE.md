@@ -13,6 +13,7 @@
 | **Voix ElevenLabs Souverain/Atlas** | `z3gESu49naEZW8Af2Upm` (GéoAfrique V2) | aucun autre |
 | **Minimax musique** | endpoint `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}` | pas de `reference_audio_url` |
 | **Kimi review** | `kimi-k2.5` via Moonshot API | — |
+| **DeepSeek — 3e voix CONCEPTUELLE DA-brief upstream (pas chère, TEXTE only, PAS de vision)** | `deepseek/deepseek-v4-pro` via OpenRouter | variantes non testées |
 | **Claude (moi-même)** | `claude-opus-4-7` (cette session), `claude-sonnet-4-6`, `claude-haiku-4-5-20251001` | pas `claude-3-*`, pas `claude-3.5-*` |
 
 **Règle de vérification AVANT tout appel API** :

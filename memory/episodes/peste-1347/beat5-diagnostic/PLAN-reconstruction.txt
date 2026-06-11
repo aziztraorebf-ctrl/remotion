@@ -1,0 +1,76 @@
+PLAN DE RECONSTRUCTION — Beat 5 "Mali Vivant" (Peste 1347, Atlas pur)
+
+CONTEXTE : derniere scene (~24s) d'un episode Atlas. Tentee ~12 fois, jamais validee. Diagnostic
+croise Gemini-video + Kimi-frames (verifie contre le code) : le concept, les assets pixel art et la
+palette terracotta/or sont BONS (faux coupable = vouloir les changer). Le VRAI probleme = ABSENCE DE
+CHOREGRAPHIE du mouvement. Les sprites "glissent comme des stickers sur une vitre". On REUTILISE le
+pattern PROUVE de la scene de reference Mansa Moussa S3 (caravane+route+track), qui elle FONCTIONNE.
+
+STACK IMPOSEE : Remotion + d3-geo (carte parchemin SVG precalculee), sprites PixelLab (AtlasPixelChar),
+SVG. PAS de Mapbox, PAS d'After Effects, PAS de 3D, PAS de particules (charte Atlas sobre, headless-safe).
+
+=========================================================================================
+LE PROPOS (inchange) : pendant que l'Europe meurt de la peste, le Mali prospere. Caravane d'or
+monte Niani->Maghreb, bateau porte l'or Maghreb->Venise, l'Europe vire au rouge, le Mali reste or,
+separes par le Sahara. Climax : "la geographie n'est pas neutre".
+
+VOIX (calee, frames locales beatStart=2323) : gouverne f62 · commerce f209 · or/caravane f325 ·
+Maghreb f382 · bateau f425 · Florence f459 · Venise f497 · Europe s'effondre f529 · monnaies f616.
+
+=========================================================================================
+CE QUE LA REFERENCE (Mansa S3) FAIT ET QUE LE BEAT 5 NE FAIT PAS (a copier) :
+1. La caravane suit des WAYPOINTS COURBES (vraie trajectoire geo), pas une ligne droite A->B.
+2. Les membres se suivent EN FILE avec un RETARD DE PHASE le long du meme path (mansaT-0.06, -0.10,
+   -0.14) => serpentin organique, PAS une grille rigide qui translate en bloc.
+3. La camera TRACK : zoom-in en arrivant sur la zone, accompagne, puis zoom-out (resolution).
+4. Un leger TILT fausse-3D donne du relief au sol (la carte n'est pas un mur plat).
+
+=========================================================================================
+LES 6 CORRECTIONS DU PLAN (de la plus determinante a la moins) :
+
+C1 — ANCRER LE MOUVEMENT : ROUTE TRACEE + FILE EN SERPENTIN (cause n1 du "bizarre")
+  - Tracer la route de l'or AVANT/PENDANT que la caravane avance : ligne SVG (stroke-dasharray +
+    dashoffset anime) qui se DESSINE de Niani vers le Maghreb, en parchemin dore pointille. La
+    caravane marche DESSUS (plus de glissement dans le vide).
+  - Remplacer la grille rigide (2 colonnes x offset fixe) par une FILE qui suit le path avec retard
+    de phase (chaque membre = position(t - k*0.05) sur les memes waypoints). 6 porteurs + ane = 7
+    decalages. Resultat : ils se suivent en serpentin, jamais en bloc.
+  - Waypoints courbes Niani->Maghreb (2-3 points intermediaires) au lieu du segment droit actuel.
+
+C2 — EASING DU VOYAGE (tuer le "robotique")
+  - La progression caravane n'est plus lineaire : easing (accel au depart, deceleration a l'arrivee
+    au Maghreb) via interpolate + Easing.bezier, ou spring sur la progression. Idem bateau.
+  - Depart non simultane (deja gere par le retard de phase C1).
+
+C3 — REDUIRE LE GLOW MALI (il ecrase la caravane, le sujet)
+  - Baisser fortement l'opacite/force du halo dore de l'empire pendant que la caravane marche
+    (le sujet = la caravane, pas la tache). Garder un fill subtil + stroke net (pas d'aureole baveuse).
+  - Le pulse fort revient seulement quand la caravane n'est plus le focus (phases E/F).
+
+C4 — TRACK CAMERA PLUS AFFIRME + TILT (la carte devient un espace, pas un fond d'ecran)
+  - Renforcer le zoom track sur la caravane puis le bateau (la ref zoome franchement, suit, dezoome).
+  - Ajouter un leger tilt fausse-3D (skewX/scaleY faible, pattern Atlas) pendant les trajets.
+  - Transition CONTINUE caravane->bateau (un seul mouvement camera qui passe du Maghreb a la mer),
+    pas un cut entre les deux segments (le spectateur perd le lien sinon).
+
+C5 — OMBRES AU SOL DES SPRITES (anti-"collage")
+  - Petite ellipse sombre semi-transparente sous chaque sprite (ancrage-pied), legere. Headless-safe.
+
+C6 — LISIBILITE DU LIEN BATEAU->EUROPE (le spectateur ne comprend pas pourquoi l'Europe rougit)
+  - Quand le bateau accoste (Venise/Italie), faire DEMARRER la propagation rouge DEPUIS ce point de
+    contact (le rouge nait au port touche puis s'etale) => lien cause/effet visuel clair.
+  - (La propagation graduelle 55f existe deja en v12 ; la RACCORDER au point d'accostage du bateau.)
+
+=========================================================================================
+CE QU'ON NE TOUCHE PAS (faux coupables, valides par le diagnostic) :
+  - Les sprites pixel art (porteur-mali, ane) : bons. La palette terracotta/or/bleu : bonne.
+  - Le concept antithese + digue Sahara + conclusion : bon.
+  - On a deja : direction north, bateau maritime+track, respiration finale, propagation graduelle.
+
+ORDRE DE CONSTRUCTION PROPOSE : C1 (route+file serpentin) -> C2 (easing) -> render verif -> C3+C5
+(glow+ombres) -> C4 (track+tilt+transition continue) -> C6 (raccord rouge) -> render final.
+
+QUESTION AUX EXPERTS (mode upstream) : ce plan attaque-t-il la VRAIE cause ? Manque-t-il une
+correction determinante ? Un de ces 6 points risque-t-il d'empirer (surcharge, anti-charte) ? Dans
+quel ORDRE construire pour valider vite ? Y a-t-il un piege connu de ce type de scene (caravane+bateau
++antithese) qu'on ne voit pas ? Reste-t-on dans une charte Atlas SOBRE (pas de sur-effet) ?

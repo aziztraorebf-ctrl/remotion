@@ -1,33 +1,72 @@
 {
   "queries": [
-    "africa map animated",
-    "lobito corridor",
-    "africa china minerals",
-    "africa economy explained",
-    "war map africa",
-    "africa resources geopolitics",
-    "sahel explained",
-    "africa empire history map"
+    "africa china",
+    "africa resources",
+    "sahel coup",
+    "west africa news",
+    "africa economy",
+    "niger uranium",
+    "congo cobalt",
+    "africa map explained"
   ],
   "outliers": [
     {
-      "id": "F19_pz8lGhE",
-      "title": "Africa (Toto)... but it lists every country in Africa... on a map!",
-      "url": "https://www.youtube.com/watch?v=F19_pz8lGhE",
-      "views": 107172,
-      "channel_handle": "samuelhoskins9983",
-      "channel_title": "Samuel Hoskins (thecartographyguy)",
+      "id": "uts-cOZzwCA",
+      "title": "West Asia War: South Africa, Nigeria, Ghana, and Uganda Issue Travel Advisories | Firstpost Africa",
+      "url": "https://www.youtube.com/watch?v=uts-cOZzwCA",
+      "views": 40413,
+      "channel_handle": "Firstpost",
+      "channel_title": "Firstpost",
       "published": "3 months ago",
-      "length_s": 101,
-      "query": "africa map animated",
-      "channel_median": 1523,
-      "ratio": 70.36900853578463
+      "length_s": 652,
+      "query": "west africa news",
+      "channel_median": 3741.0,
+      "ratio": 10.802726543704892
+    },
+    {
+      "id": "6xp5v3t90bg",
+      "title": "How South Africa Became 3rd World",
+      "url": "https://www.youtube.com/watch?v=6xp5v3t90bg",
+      "views": 204625,
+      "channel_handle": "frontpagechannel",
+      "channel_title": "Front Page",
+      "published": "1 month ago",
+      "length_s": 2594,
+      "query": "africa economy",
+      "channel_median": 71550.0,
+      "ratio": 2.859888190076869
+    },
+    {
+      "id": "1IgkEGWj9Iw",
+      "title": "Africa's Natural Resources Aren't Exclusive to Africa",
+      "url": "https://www.youtube.com/watch?v=1IgkEGWj9Iw",
+      "views": 46320,
+      "channel_handle": "BantuCityDiaries",
+      "channel_title": "BantuCityDiaries",
+      "published": "2 months ago",
+      "length_s": 516,
+      "query": "africa resources",
+      "channel_median": 17768,
+      "ratio": 2.6069338135974784
+    },
+    {
+      "id": "gRHKk0g6RxQ",
+      "title": "After 58 Years, Niger Finally Sends Home France’s Largest Uranium Company 🇳🇪🔥",
+      "url": "https://www.youtube.com/watch?v=gRHKk0g6RxQ",
+      "views": 30126,
+      "channel_handle": "toontumnetwork",
+      "channel_title": "ToonTum Network",
+      "published": "2 weeks ago",
+      "length_s": 654,
+      "query": "niger uranium",
+      "channel_median": 12736.5,
+      "ratio": 2.3653279943469556
     }
   ],
   "params": {
-    "queries": null,
-    "min_ratio": 1.8,
-    "max_age_days": 120,
+    "queries": "africa china,africa resources,sahel coup,west africa news,africa economy,niger uranium,congo cobalt,africa map explained",
+    "min_ratio": 2.0,
+    "max_age_days": 90,
     "min_views": 30000
   }
 }

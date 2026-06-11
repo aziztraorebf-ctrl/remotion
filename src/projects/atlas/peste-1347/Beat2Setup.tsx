@@ -138,7 +138,7 @@ export const Beat2Setup: React.FC = () => {
   const beatStart = BEATS.SETUP_START;
   const beatEnd = BEATS.SETUP_END;
   const beatDur = beatEnd - beatStart;
-  const localF = frame - beatStart;
+  const localF = frame;
 
   // ── Fade in
   const mapOpacity = interpolate(localF, [0, 20], [0, 1], {
@@ -171,19 +171,18 @@ export const Beat2Setup: React.FC = () => {
   const plagueOpacity = interpolate(localF, [PLAGUE_FADE_START, PLAGUE_FADE_END], [0, 1], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
-  if (plagueOpacity > 0.05) {
-    // Interpolation couleur ocean → rouge terne (mix simple R/G/B)
-    const mixHex = (hex: string, t: number): string => {
-      const r = parseInt(hex.slice(1, 3), 16);
-      const g = parseInt(hex.slice(3, 5), 16);
-      const b = parseInt(hex.slice(5, 7), 16);
-      const baseR = 160, baseG = 105, baseB = 75; // ton terre carte de base
-      const nr = Math.round(baseR + (r - baseR) * t);
-      const ng = Math.round(baseG + (g - baseG) * t);
-      const nb = Math.round(baseB + (b - baseB) * t);
-      return `#${nr.toString(16).padStart(2, "0")}${ng.toString(16).padStart(2, "0")}${nb.toString(16).padStart(2, "0")}`;
-    };
-    const plagueColor = mixHex(PLAGUE_COUNTRY_COLOR, plagueOpacity);
+  const mixHex = (hex: string, t: number): string => {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    const baseR = 160, baseG = 105, baseB = 75;
+    const nr = Math.round(baseR + (r - baseR) * t);
+    const ng = Math.round(baseG + (g - baseG) * t);
+    const nb = Math.round(baseB + (b - baseB) * t);
+    return `#${nr.toString(16).padStart(2, "0")}${ng.toString(16).padStart(2, "0")}${nb.toString(16).padStart(2, "0")}`;
+  };
+  const plagueColor = plagueOpacity > 0.05 ? mixHex(PLAGUE_COUNTRY_COLOR, plagueOpacity) : null;
+  if (plagueColor) {
     ISO_PLAGUE.forEach((iso) => {
       if (!highlightFills[iso]) highlightFills[iso] = plagueColor;
     });
@@ -273,26 +272,27 @@ export const Beat2Setup: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: OCEAN }}>
       <Audio
         src={staticFile("atlas/peste-1347/audio/narration-v1.mp3")}
-        startFrom={BEATS.SETUP_START}
-        endAt={BEATS.SETUP_START + BEATS.SETUP_END}
+        startFrom={beatStart}
+        trimAfter={beatStart + beatDur}
         volume={1}
       />
-      <Audio
-        src={staticFile("atlas/peste-1347/audio/music-c-desert.mp3")}
-        startFrom={0}
-        volume={(f) => {
-          const lf = f - beatStart;
-          return interpolate(lf, [0, 30, beatDur - 30, beatDur], [0.04, 0.04, 0.04, 0], {
-            extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          });
-        }}
-      />
+      {/* Musique retirée : posée en 1 piste continue au concat final. */}
 
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ opacity: mapOpacity }}>
         <defs>
           <clipPath id="wave-north-clip">
             <rect x={-W} y={-H} width={W * 3} height={SAHARA_CLIP_Y + H} />
           </clipPath>
+          <clipPath id="europeClipB2">
+            <rect x={118} y={236} width={470} height={328} />
+          </clipPath>
+          {/* Pattern hachures diagonales — matérialise le Sahara en BARRIÈRE aride/hostile
+              (au lieu d'un aplat or plat). Trait ocre sombre, dense. */}
+          <pattern id="saharaBarrier" patternUnits="userSpaceOnUse"
+                   width={10} height={10} patternTransform="rotate(45)">
+            <rect width={10} height={10} fill="none" />
+            <line x1={0} y1={0} x2={0} y2={10} stroke="#8a5a14" strokeWidth={2.2} />
+          </pattern>
         </defs>
 
         <rect x={0} y={0} width={W} height={H} fill={OCEAN} />
@@ -307,16 +307,37 @@ export const Beat2Setup: React.FC = () => {
           height={H}
         />
 
-        {/* Sahara overlay doré */}
+        {/* Clip Europe continentale : FRA/NOR/NLD/PRT ont des territoires lointains
+            (Guyane, Svalbard, Caraïbes, Açores) qui rougissent en pleine mer sans ce clip. */}
+        {plagueColor && (
+          <g transform={`translate(${W/2+driftX} ${H/2+driftY}) scale(${camScale}) translate(${-W/2} ${-H/2})`}
+             clipPath="url(#europeClipB2)">
+            {(data.countries as Array<{iso:string;d:string}>)
+              .filter(c => ISO_PLAGUE.includes(c.iso as typeof ISO_PLAGUE[number]))
+              .map(c => (
+                <path key={c.iso} d={c.d} fill={plagueColor} />
+              ))}
+          </g>
+        )}
+
+        {/* Sahara overlay doré + hachures = BARRIÈRE aride matérialisée */}
         {saharaOpacity > 0 && (
-          <path
-            d={data.saharaPath}
-            fill={MALI_GOLD}
-            fillOpacity={saharaOpacity}
-            stroke={MALI_GOLD}
-            strokeWidth={1}
-            strokeOpacity={saharaPulse * 0.6}
-          />
+          <>
+            <path
+              d={data.saharaPath}
+              fill={MALI_GOLD}
+              fillOpacity={saharaOpacity}
+              stroke={MALI_GOLD}
+              strokeWidth={1}
+              strokeOpacity={saharaPulse * 0.6}
+            />
+            {/* Hachures diagonales — zone infranchissable, intensité suit le pulse */}
+            <path
+              d={data.saharaPath}
+              fill="url(#saharaBarrier)"
+              fillOpacity={saharaOpacity * 1.6}
+            />
+          </>
         )}
 
         {/* Vague rouge clippée au nord du Sahara */}
