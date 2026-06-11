@@ -41,14 +41,24 @@ TTS V3 = 1 crédit/char · STS = 1000 crédits/min. 1 narration ~8 700 crédits.
 
 ---
 
-## ▶ PROCHAINE ÉTAPE (session SAHEL)
-1. **Re-découpage en beats** par partie (timing show-don't-tell, avec `narration-v5-alignment.json`).
-   Le storyboard show-don't-tell est dans le script V5 (chaque bloc AUDIO a sa note `> CARTE : ...`).
-2. **Coder Partie 1 d'abord (canari)** → valider → enchaîner. Moteur = `SahelWarMapEngine.tsx`.
-3. **Acte 1 visuel INTACT** (retirer seulement la timeline curseur + re-caler triggers sur le nouvel alignment).
+## ▶ PROCHAINE ÉTAPE (session SAHEL — CODE) — ⭐ PLAN PRÊT
+**Le découpage beats + le plan visuel Partie 1 sont FAITS et VALIDÉS. Reste = exécuter le refactor + coder.**
 
-> NB code : le mode `acte2`/B1 actuel dans `SahelWarMapEngine.tsx` est du LEGACY (ancien plan B1 sprites,
-> abandonné). À refondre selon le V5 linéaire + `WARMAP-VIVANTE-GRAMMAIRE.md`.
+1. **Découpage beats** : `BEATS-V5.md` (5 parties, ~30 beats, frame-précis sur `narration-v5-alignment.json`). FAIT.
+2. **Plan visuel Partie 1 (canari)** validé DA 3 voix + Aziz : direction SOUSTRACTION (flux d'encre Libye→Mali +
+   taches d'impact + vide d'État par chute d'opacité + hachures tensions). PAS d'overlay, PAS d'objets (P1 abstraite).
+   Détail : `BEATS-V5.md` section CANARI + `reviews-p1/da-sahel-p1-upstream-{gemini,kimi,deepseek}.md`. FAIT.
+3. **⭐ PLAN DE REFACTOR : `docs/plans/2026-06-10-warmap-sahel-refactor-parties.md`** (Tasks 0-8).
+   Décision Aziz : refactorer le moteur monolithique (3261 lignes) → moteur-fin + 1 fichier par Partie
+   (résout le problème "tout casser à chaque édition"). Acte 1 INTACT. Démarrer par Task 0 (baseline non-régression).
+
+### ⚠️ DÉCOUVERTE CRITIQUE (vérifiée) : triggers moteur DÉCALÉS vs audio V5 final
+Le code V5 déjà câblé dans le moteur est calé sur un audio ANTÉRIEUR. Écarts mesurés vs `narration-v5-alignment.json` :
+Kidal f7279→**f7084** (-195) · flotte f8683→**f8132** (-551) · Djibo f10294→**f9790** (-504) · uranium →**f10804**.
+TOUT trigger récit doit être recalé sur l'alignment V5. (Source de vérité unique = `narration-v5-alignment.json`.)
+
+> NB : le mode `acte2`/B1 actuel = LEGACY (avion/convoi, ancien plan abandonné). Sera supprimé en Task 8 après
+> validation Partie 1. Du code V5 (F_KIDAL_*/F_REF_*/F_ICON_*) est déjà câblé dans le monolithe → le refactor le RÉORGANISE.
 
 ---
 

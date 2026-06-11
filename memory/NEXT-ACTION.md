@@ -96,12 +96,16 @@ Logs : `scripts/tiktok-schedule-log.json` (Postiz TikTok) + IDs TryPost dans ORD
   (`narration-v5-p0→p4.mp3`) + forced alignment (`narration-v5-alignment.json`, loss 0.167).
 - Plan EL : passé à **Creator** ($22). 1 narration ~8700 crédits.
 
-**← PROCHAINE ÉTAPE (session SAHEL, code) :**
-1. **Re-découpage en beats** par partie (timing show-don't-tell, avec l'alignment V5). Storyboard = notes
-   `> CARTE :` du script V5.
-2. **Coder Partie 1 d'abord (canari)** → valider → enchaîner. Moteur = `SahelWarMapEngine.tsx`.
-   Le mode `acte2`/B1 actuel = LEGACY à refondre selon V5 + `WARMAP-VIVANTE-GRAMMAIRE.md` (R-V1..R-V4).
-3. **Acte 1 visuel INTACT** (retirer seulement timeline curseur + re-caler triggers sur alignment V5).
+**← PROCHAINE ÉTAPE (session SAHEL, code) : EXÉCUTER LE PLAN DE REFACTOR.**
+- ⭐ **PLAN : `docs/plans/2026-06-10-warmap-sahel-refactor-parties.md`** (Tasks 0-8). DÉMARRER PAR Task 0
+  (render baseline Acte 1 = filet non-régression) puis Task 1.
+- Décision Aziz : refactorer le moteur monolithique (3261 lignes) → moteur-fin + 1 fichier par Partie.
+  La War-Map a un ÉTAT CONTINU (≠ Atlas/Souverain beats indépendants) → 1 moteur conteneur + `<PartieX ctx={...}/>`.
+- **Découpage beats FAIT** : `BEATS-V5.md` (5 parties, frame-précis). **Plan visuel Partie 1 FAIT** (DA 3 voix + Aziz) :
+  SOUSTRACTION (flux d'encre + taches d'impact + vide par opacité + hachures). PAS d'overlay/objets en P1.
+- ⚠️ **Triggers moteur DÉCALÉS** vs audio V5 (Kidal -195, flotte -551, Djibo -504). Recaler sur `narration-v5-alignment.json`.
+- Acte 1 visuel INTACT (le refactor ne le touche pas ; retirer timeline curseur + recaler ses triggers plus tard).
+- **Registre à enrichir (Aziz)** : objets Gemini encre top-down sur la carte (drapeau P3 "flotte", or/uranium P4) — à générer le moment venu.
 
 **DÉCISION STRUCTURANTE conservée — JETONS, PAS VÉHICULES (format LONG) :** jetons circulaires (abstraction
 lisible à toute échelle). 2 archétypes (chèche clair JNIM / cagoule sombre EIGS). Voir `DECISION-jetons-vs-vehicules.md`.

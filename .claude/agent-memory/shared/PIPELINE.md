@@ -10,6 +10,34 @@
 
 ---
 
+## War-Map Sahel — SCRIPT V5 refondu + AUDIO + PIPELINE VOIX validé — 2026-06-10 [SCRIPT LOCKED, voix résolue]
+
+Session longue et décisive. B1 confus = symptôme d'une SURCHARGE NARRATIVE de tout le script.
+**Refonte complète :** DA upstream 3 voix (show-don't-tell) → script V5 LINÉAIRE → fact-check Sonar Pro
+(1 erreur + 5 imprécisions + ajout confédération 2024) → SCRIPT V5 LOCKED → audio V5 généré (7min28).
+Décodage Infographics Show (8 leçons grammaire d'explication) intégré.
+**Pipeline VOIX résolu** (problème monotonie GéoAfrique) : ElevenLabs V3 + tags → Speech-to-Speech vers
+GéoAfrique. Benchmark complet (Hume/Google/clonage écartés). Doctrine : `PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+**NEXT :** Session voix (recherche expressivité V3 + pricing EL + industrialiser pipeline → régénérer audio
+Sahel vivant) PUIS session Sahel (alignment → re-découpage beats → coder Partie 1 canari).
+⭐ BRIEF DE PASSATION : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-10.md`. STATUS + NEXT-ACTION à jour.
+3 leçons durables gravées (key-learnings : chrono linéaire, fact-check systématique, persister réponses modèles).
+
+## Peste 1347 — Beat5 débloqué + Beat6 finale créée — 2026-06-08 [COMPLETE — 6 beats FINAL]
+
+Session marquante. **Les 6 beats de Peste 1347 sont FINAL.**
+- **Beat5 Mali Vivant** débloqué via DA-BRIEF-GATE (après ~15 essais à l'aveugle) : da-compare vs
+  Mansa Moussa + da-brief Kimi → diagnostic = CHORÉGRAPHIE (pas les assets) → plan validé --upstream
+  → reconstruction par couches (serpentin path courbe, track continu, easing, rouge depuis port,
+  frontières Mali, ralenti, musique, zoom). `beat5-FINAL.mp4` (v17).
+- **Beat6 Conclusion** ("la géographie n'est pas neutre") = FINALE, 1er beat conçu 100% en amont
+  (plan Gemini+Kimi validé AVANT code). Faille Sahara + phrase écriture-plume + désaturation. `beat6-FINAL.mp4` (v5).
+- **2 bugs corrigés (key-learnings.md)** : audio `trimAfter` absolu (voix absente non vue 3 renders) +
+  territoires d'outre-mer rouges (clipPath Europe).
+- Diagnostics/plans : `memory/episodes/peste-1347/{beat5-diagnostic,beat6-construction}/`.
+- **NEXT (plan Aziz)** : gros render 6 beats → review Gemini up+downstream + AUDIT GÉO colorations
+  Europe rouge sur TOUS les beats (vérifier bug territoires lointains pas reproduit) → PUIS assemblage.
+
 ## Veille mapanimation.io + Doctrine "inspiration externe" — 2026-06-03 [COMPLETE — R&D]
 
 Session R&D (pas de production). Decode complet du concurrent mapanimation.io (89 templates, 13 premium analyses) = AI text-to-map-video sur NOTRE stack (Mapbox+renderer serveur), pas d'After Effects, sprites = images posees. Reproductible.
