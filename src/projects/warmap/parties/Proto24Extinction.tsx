@@ -28,6 +28,9 @@ import type { SahelRenderContext } from "../engine/SahelContext";
 // FX fumée/effondrement — frames PixelLab (animation par prompt, doctrine Gemini/PixelLab 2026-06-11).
 // 9 frames top-down sépia, jouées une fois puis maintenues en fond (la base brûle).
 const SMOKE_FRAMES = 9;
+// FX explosion — frames PixelLab PONCTUELLES (one-shot + fade, doctrine ponctuel/ambiant 2026-06-11).
+// 9 frames top-down sépia/orange. Joue UNE FOIS à l'instant de la chute puis DISPARAÎT (jamais de boucle).
+const EXPLO_FRAMES = 9;
 
 // ============================================================
 // TRIGGERS + GÉOGRAPHIE
@@ -145,6 +148,7 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
   // Doctrine : effet organique = PixelLab animé par prompt (pas de Lottie codé). La séquence joue une
   // fois (montée) au moment de l'extinction puis se fige sur la dernière frame (foyer qui couve).
   const SMOKE_FPS = 12; // cadence de lecture des frames PixelLab
+  const EXPLO_HOLD = Math.round(fps * 0.9); // fenêtre totale de l'explosion (séquence + fade-out) ~27f @30
   // PING-PONG : 0→1→…→8→7→…→1→0→1… boucle SANS raccord dur (la fumée bouge en continu).
   // Période = 2*(N-1) frames de cycle. Pas de fige : le panache vit tant que la base brûle.
   const PINGPONG = SMOKE_FRAMES > 1 ? (SMOKE_FRAMES - 1) * 2 : 1;
@@ -154,7 +158,24 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
     const playFrame = Math.floor((rel / fps) * SMOKE_FPS);
     const phase = playFrame % PINGPONG;
     const idx = phase < SMOKE_FRAMES ? phase : PINGPONG - phase; // montée puis redescente
-    const op = interpolate(rel, [0, 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    // la fumée n'apparaît qu'APRÈS le souffle de l'explosion (laisse le one-shot respirer)
+    const op = interpolate(rel, [EXPLO_HOLD * 0.6, EXPLO_HOLD * 0.6 + 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return { idx, op };
+  };
+
+  // ── FX EXPLOSION PONCTUELLE : joue les 9 frames UNE fois à l'instant de la chute, puis disparaît ──
+  // Doctrine ponctuel : 0→N puis opacity→0. JAMAIS de boucle (une explosion ne se dé-explose pas).
+  // C'est le "moment de la chute" — le souffle d'amorce avant que la fumée ambiante prenne le relais.
+  const EXPLO_FPS = 15;                                    // cadence de lecture (souffle rapide)
+  const EXPLO_PLAY = (EXPLO_FRAMES / EXPLO_FPS) * fps;     // durée de la séquence en frames vidéo (~18f @30)
+  const exploFor = (b: FrBase): { idx: number; op: number } | null => {
+    const rel = frame - b.extinctAt;
+    if (rel < 0 || rel >= EXPLO_HOLD) return null;
+    const idx = Math.min(EXPLO_FRAMES - 1, Math.floor((rel / fps) * EXPLO_FPS)); // 0→8, clamp à la dernière
+    // fade-in quasi instantané (flash) puis fade-out sur la fin de la fenêtre (le souffle se dissipe).
+    const op = interpolate(rel, [0, 2, EXPLO_PLAY, EXPLO_HOLD], [0, 1, 1, 0], {
+      extrapolateLeft: "clamp", extrapolateRight: "clamp",
+    });
     return { idx, op };
   };
 
@@ -237,6 +258,32 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
               height: h,
               opacity: op,
               filter: `grayscale(${grayscale}) brightness(${brightness}) drop-shadow(0 ${2 * (1 - deadT) + 1}px ${6 * (1 - deadT) + 2}px rgba(80,30,20,${shadowAlpha}))`,
+              pointerEvents: "none",
+            }}
+          />
+        );
+      })}
+
+      {/* FX EXPLOSION PixelLab — PONCTUEL : souffle d'amorce au moment exact de la chute de chaque base.
+          One-shot + fade (doctrine ponctuel/ambiant). Plus gros que la fumée, centré sur le fortin. */}
+      {FR_BASES.map((b) => {
+        const ex = exploFor(b);
+        if (!ex) return null;
+        const p = project(b.coord[0], b.coord[1]);
+        const ew = 0.26 * vmin;            // largeur du souffle (plus large que la base 0.22, le couvre)
+        const eh = ew;                      // sprite carré
+        return (
+          <img
+            key={`explo-${b.id}`}
+            src={staticFile(`_shared/sprites/warmap/fx-explosion/${ex.idx}.png`)}
+            style={{
+              position: "absolute",
+              left: p.x - ew / 2,
+              top: p.y - eh * 0.55,        // centré sur le corps du fortin (légèrement haut)
+              width: ew,
+              height: eh,
+              opacity: ex.op,
+              imageRendering: "pixelated",
               pointerEvents: "none",
             }}
           />
