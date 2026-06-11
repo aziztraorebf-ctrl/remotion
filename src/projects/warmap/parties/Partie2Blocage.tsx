@@ -45,6 +45,19 @@ const FR_STEEL = "#4A6B8A";  // bleu-acier vieilli (bases FR Serval/Barkhane)
 const UN_BLUE = "#6E8FB0";   // bleu-ONU plus clair (MINUSMA, distinct des bases FR)
 const RED = "#8B3A3A";       // rouge-violence (jihadisme, surfaces fluides)
 const SAHEL_LAND = "#F5EFD6"; // parchemin (halo reserve labels)
+const STEEL_DEAD = "#9A9387"; // bleu-acier désaturé (base éteinte)
+
+// BEAT 2.4 — surfaces rouges DÉDIÉES P2 (jihadisme = fluide qui s'infiltre). Foyers
+// organiques qui grandissent pendant l'échec 10 ans, "encerclent" les bases FR.
+const RED_BLOBS: { coord: [number, number]; rMax: number; growDelay: number }[] = [
+  { coord: [0.3, 16.5], rMax: 100, growDelay: 0 },   // entre Gao et Ménaka (coeur)
+  { coord: [1.2, 19.2], rMax: 75, growDelay: 90 },   // remonte vers Tessalit (nord)
+  { coord: [-2.0, 15.4], rMax: 85, growDelay: 55 },  // ouest (vers centre/Mopti)
+];
+// Extinction des bases : delay après F_ECHEC (quand le rouge l'a encerclée). Staggered.
+const BASE_EXTINCTION: Record<string, number> = {
+  GAO: 130, MENAKA: 175, TESSALIT: 230,
+};
 
 // Bases FR (geometrie rigide). appear = frame d'apparition (apres le mot, decale +12).
 const FR_BASES: { coord: [number, number]; name: string; appear: number; dy: number }[] = [
@@ -68,6 +81,15 @@ const CONVERGENCE_FROM: { coord: [number, number]; delay: number }[] = [
   { coord: [-2.0, 12.5], delay: 24 },  // Burkina (S)
   { coord: [-8.0, 13.0], delay: 32 },  // Sénégal/ouest (O)
 ];
+
+// Helper : interpolation linéaire entre 2 couleurs hex (#rrggbb).
+function lerpHex(a: string, b: string, t: number): string {
+  const ah = a.replace("#", ""), bh = b.replace("#", "");
+  const ar = parseInt(ah.slice(0, 2), 16), ag = parseInt(ah.slice(2, 4), 16), ab = parseInt(ah.slice(4, 6), 16);
+  const br = parseInt(bh.slice(0, 2), 16), bg = parseInt(bh.slice(2, 4), 16), bb = parseInt(bh.slice(4, 6), 16);
+  const r = Math.round(ar + (br - ar) * t), g = Math.round(ag + (bg - ag) * t), bl = Math.round(ab + (bb - ab) * t);
+  return `#${r.toString(16).padStart(2, "0")}${g.toString(16).padStart(2, "0")}${bl.toString(16).padStart(2, "0")}`;
+}
 
 // Helper : path d'une étoile à N branches (marqueur militaire rigide), centrée (cx,cy).
 function starPath(cx: number, cy: number, rOuter: number, rInner: number, points = 5): string {
@@ -112,6 +134,27 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg width={width} height={height}
         style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+
+        {/* BEAT 2.4 — surfaces rouges (jihadisme fluide) qui s'infiltrent. SOUS les bases
+            (z-index : le rouge coule sous, les bases dessus -> on voit l'encerclement). */}
+        {frame >= F_ECHEC && RED_BLOBS.map((blob, i) => {
+          const c = project(blob.coord[0], blob.coord[1]);
+          // croissance organique (pulsation lente), démarrée à F_ECHEC + growDelay
+          const start = F_ECHEC + blob.growDelay;
+          const g = interpolate(frame, [start, start + 220], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+          });
+          if (g <= 0) return null;
+          const breath = 1 + 0.04 * Math.sin((frame - start) * 0.06);
+          const r = blob.rMax * g * breath;
+          return (
+            <g key={`blob-${i}`} style={{ mixBlendMode: "multiply" }}>
+              <circle cx={c.x} cy={c.y} r={r * 1.25} fill={RED} fillOpacity={0.12 * g}
+                style={{ filter: "blur(8px)" }} />
+              <circle cx={c.x} cy={c.y} r={r} fill={RED} fillOpacity={0.30 * g} />
+            </g>
+          );
+        })}
 
         {/* BEAT 2.2 — convergence régionale (lignes pointillées état-major, SOBRE).
             Trace pointillée (dash 2/5) qui se DESSINE du voisin vers le centre via un point
@@ -168,32 +211,55 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           if (t <= 0) return null;
           const rO = 13 * Math.min(1.12, t);
           const rI = rO * 0.42;
+          // BEAT 2.4 — EXTINCTION : quand le rouge a encerclé la base (F_ECHEC + delay),
+          // désaturation (steel -> gris mort) + opacity baisse + petit "×" (analytique, pas pathos).
+          const extStart = F_ECHEC + (BASE_EXTINCTION[base.name] ?? 999999);
+          const ext = interpolate(frame, [extStart, extStart + 40], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+          });
+          const fillCol = lerpHex(FR_STEEL, STEEL_DEAD, ext);
+          const aliveOp = (1 - 0.6 * ext); // opacity 1 -> 0.4
           return (
             <g key={`frbase-${i}`}>
-              {/* halo d'ancrage discret */}
-              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t} />
-              {/* étoile militaire (rigide, contour encre) */}
-              <path d={starPath(p.x, p.y, rO, rI)} fill={FR_STEEL} fillOpacity={0.92 * t}
-                stroke={INK} strokeWidth={1.4} strokeOpacity={0.85 * t} strokeLinejoin="round" />
-              {/* label base (encre + halo réserve parchemin) */}
+              {/* halo d'ancrage (disparaît à l'extinction) */}
+              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t * (1 - ext)} />
+              {/* étoile militaire (désature + s'efface à l'extinction) */}
+              <path d={starPath(p.x, p.y, rO, rI)} fill={fillCol} fillOpacity={0.92 * t * aliveOp}
+                stroke={INK} strokeWidth={1.4} strokeOpacity={0.85 * t * aliveOp} strokeLinejoin="round" />
+              {/* petit "×" de retrait (apparaît à l'extinction) */}
+              {ext > 0.3 && (
+                <g stroke={INK} strokeWidth={2} strokeOpacity={0.8 * ext} strokeLinecap="round">
+                  <line x1={p.x - 6} y1={p.y - 6} x2={p.x + 6} y2={p.y + 6} />
+                  <line x1={p.x - 6} y1={p.y + 6} x2={p.x + 6} y2={p.y - 6} />
+                </g>
+              )}
+              {/* label base (s'estompe aussi à l'extinction) */}
               <text x={p.x} y={p.y + base.dy} textAnchor="middle"
                 fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={16} fontWeight={700}
-                letterSpacing={1.5} fill={INK} fillOpacity={t}
-                stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t} paintOrder="stroke">
+                letterSpacing={1.5} fill={INK} fillOpacity={t * (1 - 0.5 * ext)}
+                stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t * (1 - 0.5 * ext)} paintOrder="stroke">
                 {base.name}
               </text>
             </g>
           );
         })}
 
-        {/* BEAT 2.1 — repère "2013" (encre, bas-gauche, comme "2012" en P1). */}
-        {an2013 > 0 && (
-          <text x={120} y={height - 70} opacity={an2013} style={{ mixBlendMode: "multiply" }}
-            fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={56} fontWeight={700}
-            fill={INK} letterSpacing={4}>
-            2013
-          </text>
-        )}
+        {/* BEAT 2.1+2.4 — repère temporel bas-gauche. "2013" fixe à l'installation, PUIS
+            l'année DÉFILE 2013->2022 pendant l'échec 10 ans (timeline filigrane). */}
+        {an2013 > 0 && (() => {
+          // année courante : 2013 jusqu'à F_ECHEC, puis défile vers 2022 sur ~250 frames
+          const yearF = interpolate(frame, [F_ECHEC, F_ECHEC + 250], [2013, 2022], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
+          const year = Math.round(yearF);
+          return (
+            <text x={120} y={height - 70} opacity={an2013} style={{ mixBlendMode: "multiply" }}
+              fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={56} fontWeight={700}
+              fill={INK} letterSpacing={4}>
+              {year}
+            </text>
+          );
+        })()}
       </svg>
     </AbsoluteFill>
   );
