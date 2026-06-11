@@ -315,17 +315,26 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
         );
       })}
 
-      {/* ============ FUMÉE (ambiant ping-pong) — chaque base éteinte fume depuis le sol vide ============ */}
+      {/* ============ FUMÉE (ambiant ping-pong) — chaque base éteinte fume puis SE DISPERSE ============
+          Le foyer couve ~12s après l'extinction puis s'estompe (la fumée ne brûle pas éternellement —
+          sinon 3 panaches saturent les beats 2.5/2.6/fin). Fade-out sur [+9s, +15s]. */}
       {FR_BASES.map((b) => {
         const sm = smokePingPong({ frame, startF: b.extinctAt, fps });
         if (!sm) return null;
+        const rel = frame - b.extinctAt;
+        // dispersion : la fumée s'estompe entre +9s et +15s après l'extinction (foyer qui couve puis retombe).
+        const disperse = interpolate(rel, [fps * 9, fps * 15], [1, 0], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        const op = sm.op * disperse;
+        if (op <= 0.02) return null;
         const p = project(b.coord[0], b.coord[1]);
         const sw = 0.16 * vmin;
         return (
           <img key={`smoke-${b.id}`} src={staticFile(`_shared/sprites/warmap/fx-smoke/${sm.idx}.png`)}
             style={{
               position: "absolute", left: p.x - sw / 2, top: p.y - sw * 0.82, width: sw, height: sw,
-              opacity: sm.op, imageRendering: "pixelated", pointerEvents: "none",
+              opacity: op, imageRendering: "pixelated", pointerEvents: "none",
             }} />
         );
       })}
