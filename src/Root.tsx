@@ -244,6 +244,7 @@ import { ThumbnailBaril } from "./projects/_demos/petrole-patience/ThumbnailBari
 import { ThumbnailNiger } from "./projects/_demos/niger-uranium/ThumbnailNiger";
 import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
+import { ThumbnailAES } from "./projects/_demos/warmap-sahel/ThumbnailAES";
 import { WarMapEngine, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/warmap/engine/WarMapEngine";
 import { SahelWarMapEngine, SAHEL_FPS, SAHEL_DURATION } from "./projects/warmap/engine/SahelWarMapEngine";
 import { SahelFriseOverlayDemo } from "./projects/warmap/_shared/SahelFriseOverlayDemo";
@@ -1287,6 +1288,16 @@ export const RemotionRoot: React.FC = () => {
             width={1280}
             height={720}
             defaultProps={{ variant: "A" as const }}
+          />
+
+          {/* Thumbnail AES — "Ils ont chassé la France, l'ONU et la CEDEAO. Et après ?" */}
+          <Composition
+            id="Thumb-AES"
+            component={ThumbnailAES}
+            durationInFrames={1}
+            fps={30}
+            width={1280}
+            height={720}
           />
         </Folder>
 
@@ -2809,6 +2820,27 @@ export const RemotionRoot: React.FC = () => {
           component={SahelWarMapEngine}
           defaultProps={{ partie2: true }}
           durationInFrames={5700}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO 2.4 Sahel — extinction d'une base FR encerclée (refonte PREMIUM P2).
+            2 versions à comparer : à-plat (pitch 0) vs relief 3D (pitch 32).
+            Rendre la plage --frames=3850-4250 (le beat 2.4 vit là, frames absolues V5). */}
+        <Composition
+          id="SahelProto24Flat"
+          component={SahelWarMapEngine}
+          defaultProps={{ proto24: true, proto24Pitch: 0 }}
+          durationInFrames={4260}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="SahelProto24Pitch"
+          component={SahelWarMapEngine}
+          defaultProps={{ proto24: true, proto24Pitch: 32 }}
+          durationInFrames={4260}
           fps={30}
           width={1920}
           height={1080}

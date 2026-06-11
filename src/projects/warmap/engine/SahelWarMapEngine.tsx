@@ -52,6 +52,7 @@ import { RefugeeFlow, REFUGEE_FLOWS_ACT4 } from "../_shared/RefugeeFlow";
 import { GeoConvergenceOverlay, GeoForce } from "../_shared/GeoConvergenceOverlay";
 import { Partie1Origine } from "../parties/Partie1Origine";
 import { Partie2Blocage } from "../parties/Partie2Blocage";
+import { Proto24Extinction } from "../parties/Proto24Extinction";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -569,6 +570,41 @@ const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number 
   return keys[keys.length - 1];
 };
 
+// ============================================================
+// PROTO 2.4 CAMÉRA — extinction des bases FR encerclées (refonte premium P2).
+// Caméra SERRÉE qui SUIT l'action (jamais vue continentale/vide), drift permanent.
+// Le beat 2.4 va de f3887 ("dix ans") à ~f4200. Trajectoire :
+//   T1 encerclement : cadre le triangle Gao/Ménaka (zoom 6.0, push-in lent)
+//   T2 bascule Gao  : pousse vers Gao [-0.04,16.27] (zoom 6.4, le coeur de l'étreinte)
+//   T3 propagation  : PAN vers Ménaka [2.40,15.92] puis remonte Tessalit [1.01,20.20]
+//   FIN pull-back léger : révèle le "cimetière" des 3 bases (zoom 5.6).
+// Zoom serré 5.6-6.4 partout (jamais < 5.5 = pas de vue continentale).
+const PROTO24_CAM_KEYS: CamKey[] = [
+  { f: 3887, lon: 0.30, lat: 16.60, zoom: 6.00 },  // T1 : cadre Gao+Ménaka, l'étau monte
+  { f: 3980, lon: 0.05, lat: 16.35, zoom: 6.35 },  // T2 : push-in Gao (1re extinction)
+  { f: 4050, lon: 1.20, lat: 16.10, zoom: 6.20 },  // T3a : PAN est → Ménaka
+  { f: 4110, lon: 1.20, lat: 18.20, zoom: 5.95 },  // T3b : remonte nord → Tessalit
+  { f: 4160, lon: 0.80, lat: 17.60, zoom: 5.60 },  // FIN : léger pull-back, les 3 bases mortes
+];
+const getProto24Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  const keys = PROTO24_CAM_KEYS;
+  if (frame <= keys[0].f) return keys[0];
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
 // Prolonge l'Acte 1 : avant f2299 = getActe1Cam (continuité parfaite).
 // RÈGLE R-V3 : ZOOM CONSTANT (~5.0), PAN SERRÉ uniquement, JAMAIS de pull-back continental.
 //   (vérifié : à zoom 5.0 on voit ~38° lon — Bamako→Arlit tient sans dézoomer. Le pull-back
@@ -814,6 +850,11 @@ export type SahelTestProps = {
   // REFACTOR V5 — mode Partie 2 (le blocage). Look Acte 1 + couche <Partie2Blocage>.
   // Legacy B1 OFF. Récit V5, "effort massif / échec" (points rigides sur surfaces fluides).
   partie2?: boolean;
+  // PROTO 2.4 — prototype premium de l'extinction d'une base FR encerclée (refonte P2).
+  // Look Acte 1 + couche <Proto24Extinction>. Caméra serrée dédiée. `proto24Pitch` permet
+  // de comparer à-plat (0) vs pitch 3D (~32). Isolé : ne touche ni P1 ni P2.
+  proto24?: boolean;
+  proto24Pitch?: number;
 };
 
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
@@ -831,6 +872,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   prepoVeil = 0.70, // validé Aziz 2026-06-09 (carte en sourdine, overlay net)
   partie1 = false,
   partie2 = false,
+  proto24 = false,
+  proto24Pitch = 0,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -840,9 +883,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || proto24;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
-  const isPartie = partie1 || partie2;
+  const isPartie = partie1 || partie2 || proto24;
 
   // VERSION FINALE Acte 1 : dérive les sous-mécaniques du socle validé.
   // Allumage séquentiel calé sur les triggers RÉELS (Mali f150, BFA f231, NER f301).
@@ -1262,7 +1305,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
-      const camFn = partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
+      const camFn = proto24 ? getProto24Cam : partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
       const cam = a1Freeze ? camFn(A1.FREEZE) : camFn(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     } else if (camStatic) {
@@ -1279,7 +1322,13 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       const cam = hookFreeze ? getSahelCam(F_HOOK_FREEZE) : getSahelCam(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     }
-    map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: 0, bearing: 0 });
+    // PROTO 2.4 : pitch variable (0 = à-plat comme P1, ~32 = relief 3D) pour comparer.
+    // Léger drift de bearing en mode pitch (la caméra "respire" sur le relief).
+    const effPitch = proto24 ? proto24Pitch : 0;
+    const effBearing = proto24 && proto24Pitch > 0
+      ? interpolate(frame, [3887, 4160], [-4, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+      : 0;
+    map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: effPitch, bearing: effBearing });
 
     // PARTIE 1 (V5) — VIDE D'ÉTAT (beat 1.3) : au mot "absent" (f2743), l'opacité du
     // fill de contrôle CHUTE (l'État rural s'évapore). On multiplie l'expression
@@ -1307,9 +1356,28 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // rouge quasi invisible) pour que l'explosion rouge du beat 2.4 soit un choc. Le fill de
       // contrôle (rouge/orange) tombe très bas à l'install (0.10), puis REMONTE un peu au beat
       // 2.4 (l'État conteste) tandis que les surfaces rouges DÉDIÉES explosent par-dessus.
+      const F_ECHEC = 3887; // "dix ans plus tard" (trigger V5, miroir Partie2Blocage)
       const calmFactor = interpolate(frame,
         [3050, 3120, F_ECHEC, F_ECHEC + 120],
         [1, 0.10, 0.10, 0.22],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+      const baseOp: any = effSeqIgnite
+        ? ["coalesce", ["get", "igniteOp"], 0]
+        : 0.82;
+      try {
+        map.setPaintProperty("sahel-fill", "fill-opacity",
+          (["*", baseOp, calmFactor] as any));
+      } catch {}
+    }
+
+    // PROTO 2.4 — CARTE CALME (miroir partie2) : le fill de contrôle Acte 1 reste très bas
+    // pendant l'install, puis REMONTE légèrement au beat 2.4 (l'État conteste) tandis que
+    // les surfaces rouges DÉDIÉES (couche <Proto24Extinction>) explosent par-dessus.
+    if (proto24 && map.getLayer("sahel-fill")) {
+      const F_ECHEC = 3887;
+      const calmFactor = interpolate(frame,
+        [3750, 3820, F_ECHEC, F_ECHEC + 140],
+        [0.30, 0.12, 0.12, 0.26],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
       const baseOp: any = effSeqIgnite
         ? ["coalesce", ["get", "igniteOp"], 0]
@@ -3393,6 +3461,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
+      {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
       {isFinalLook && (() => {
         // RESPIRATION FINALE : sur les ~2.5 dernières secondes (f2220→END),

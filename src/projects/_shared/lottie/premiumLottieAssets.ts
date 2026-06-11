@@ -472,10 +472,151 @@ export function orbitalDataCrown(color: RGB = GOLD_RGB, fr = 30) {
   };
 }
 
+/**
+ * extinctionCollapse — l'INVERSE de l'onde de decouverte (War-Map Sahel, beat 2.4).
+ *
+ * Au lieu d'une onde qui rayonne vers l'exterieur (triomphe/decouverte), 2 anneaux
+ * qui se RETRACTENT vers le centre (l'etreinte se referme) + un flash sombre central
+ * qui s'effondre (la base s'eteint). Rouge-brique par defaut. Symbolise l'encerclement
+ * qui aboutit a l'extinction, jamais une explosion.
+ *
+ * Couleur passee par le composant (RED_INK ~ #8B3A3A normalise). fr 30.
+ */
+export const RED_INK_RGB = [139 / 255, 58 / 255, 58 / 255]; // #8B3A3A
+
+export function extinctionCollapse(color: RGB = RED_INK_RGB, fr = 30) {
+  const total = 75;
+  const layers: object[] = [];
+
+  // 2 anneaux qui se RETRACTENT (grand -> petit) en se renforcant : l'etau se ferme.
+  const ringSpecs = [
+    { delay: 0, op: 85, w: 6, from: 460, to: 60 },
+    { delay: 10, op: 60, w: 4, from: 360, to: 40 },
+  ];
+  ringSpecs.forEach((s, i) => {
+    layers.push({
+      ddd: 0,
+      ind: i,
+      ty: 4,
+      nm: `collapse${i}`,
+      sr: 1,
+      ks: {
+        o: {
+          a: 1,
+          k: [
+            { t: s.delay, s: [0], ...EASE_OUT },
+            { t: s.delay + 6, s: [s.op] },
+            { t: s.delay + 40, s: [s.op * 0.5] },
+            { t: s.delay + 52, s: [0] },
+          ],
+        },
+        r: { a: 0, k: 0 },
+        p: { a: 0, k: [256, 256, 0] },
+        a: { a: 0, k: [0, 0, 0] },
+        s: {
+          a: 1,
+          // se RETRACTE : from -> to (au lieu de grandir)
+          k: [
+            { t: s.delay, s: [s.from, s.from], ...EASE_INOUT },
+            { t: s.delay + 48, s: [s.to, s.to] },
+          ],
+        },
+      },
+      ao: 0,
+      shapes: [
+        { ty: "el", p: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, nm: "c" },
+        {
+          ty: "st",
+          c: { a: 0, k: col(color, 1) },
+          o: { a: 0, k: 100 },
+          w: { a: 0, k: s.w },
+          lc: 2,
+          lj: 1,
+          nm: "stroke",
+        },
+        {
+          ty: "tr",
+          p: { a: 0, k: [0, 0] },
+          a: { a: 0, k: [0, 0] },
+          s: { a: 0, k: [100, 100] },
+          r: { a: 0, k: 0 },
+          o: { a: 0, k: 100 },
+        },
+      ],
+      ip: 0,
+      op: total,
+      st: 0,
+      bm: 0,
+    });
+  });
+
+  // Flash sombre central : un petit disque qui apparait au moment de la fermeture
+  // (les anneaux atteignent le centre) puis s'eteint. = l'instant de l'extinction.
+  layers.push({
+    ddd: 0,
+    ind: 2,
+    ty: 4,
+    nm: "darkflash",
+    sr: 1,
+    ks: {
+      o: {
+        a: 1,
+        k: [
+          { t: 36, s: [0], ...EASE_OUT },
+          { t: 44, s: [70] },
+          { t: 66, s: [0] },
+        ],
+      },
+      r: { a: 0, k: 0 },
+      p: { a: 0, k: [256, 256, 0] },
+      a: { a: 0, k: [0, 0, 0] },
+      s: {
+        a: 1,
+        k: [
+          { t: 36, s: [80, 80], ...EASE_OUT },
+          { t: 60, s: [20, 20] },
+        ],
+      },
+    },
+    ao: 0,
+    shapes: [
+      { ty: "el", p: { a: 0, k: [0, 0] }, s: { a: 0, k: [100, 100] }, nm: "c" },
+      { ty: "fl", c: { a: 0, k: col(color, 1) }, o: { a: 0, k: 100 }, nm: "fill" },
+      {
+        ty: "tr",
+        p: { a: 0, k: [0, 0] },
+        a: { a: 0, k: [0, 0] },
+        s: { a: 0, k: [100, 100] },
+        r: { a: 0, k: 0 },
+        o: { a: 0, k: 100 },
+      },
+    ],
+    ip: 0,
+    op: total,
+    st: 0,
+    bm: 0,
+  });
+
+  return {
+    v: "5.7.8",
+    fr,
+    ip: 0,
+    op: total,
+    w: 512,
+    h: 512,
+    nm: "extinctionCollapse",
+    ddd: 0,
+    assets: [],
+    layers,
+  };
+}
+
 export const PREMIUM_LOTTIE = {
   shockwaveDiscovery,
   networkFlow,
   orbitalDataCrown,
+  extinctionCollapse,
   GOLD_RGB,
   IVORY_RGB,
+  RED_INK_RGB,
 };
