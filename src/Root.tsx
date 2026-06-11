@@ -2791,6 +2791,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* PARTIE 1 Sahel — canari/origine 2012 (refactor V5, direction soustraction).
+            Look Acte 1 + couche <Partie1Origine>. Legacy B1 (acte2) OFF. */}
+        <Composition
+          id="SahelPartie1"
+          component={SahelWarMapEngine}
+          defaultProps={{ partie1: true }}
+          durationInFrames={2940}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* Overlay frise — DEMO isolée (valider design avant intégration carte) */}
         <Composition
           id="SahelFriseOverlayDemo"

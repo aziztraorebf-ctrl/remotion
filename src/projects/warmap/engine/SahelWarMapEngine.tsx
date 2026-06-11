@@ -50,6 +50,7 @@ import { SahelAttackArrow } from "../_shared/SahelAttackArrow";
 import { TerritorialExpansion, EXPANSION_REGIONS_ACT2 } from "../_shared/TerritorialExpansion";
 import { RefugeeFlow, REFUGEE_FLOWS_ACT4 } from "../_shared/RefugeeFlow";
 import { GeoConvergenceOverlay, GeoForce } from "../_shared/GeoConvergenceOverlay";
+import { Partie1Origine } from "../parties/Partie1Origine";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -739,6 +740,10 @@ export type SahelTestProps = {
   acte2?: boolean;
   // Overlay pré-positionnement (D-9 premium) : opacité du voile sur la carte (test léger vs moyen).
   prepoVeil?: number;
+  // REFACTOR V5 — mode Partie 1 (canari/origine 2012). Active le look Acte 1
+  // (jetons/taches/palette/grain) MAIS désactive les blocs B1 legacy (acte2) et
+  // rend la couche <Partie1Origine> par-dessus. Récit V5, direction soustraction.
+  partie1?: boolean;
 };
 
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
@@ -754,6 +759,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   acte1Final = false,
   acte2 = false,
   prepoVeil = 0.70, // validé Aziz 2026-06-09 (carte en sourdine, overlay net)
+  partie1 = false,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -761,7 +767,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // ACTE 2 prolonge l'Acte 1 : tout le LOOK acte1Final s'applique aussi en acte2.
   // `isFinalLook` = pilote le rendu visuel (jetons, taches, palette, fusion, grain).
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
-  const isFinalLook = acte1Final || acte2;
+  // partie1 hérite du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
+  // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
+  const isFinalLook = acte1Final || acte2 || partie1;
 
   // VERSION FINALE Acte 1 : dérive les sous-mécaniques du socle validé.
   // Allumage séquentiel calé sur les triggers RÉELS (Mali f150, BFA f231, NER f301).
@@ -3240,6 +3248,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Ordre : grain papier → vignette cinéma → respiration finale.
           Posés au sommet de la pile = au-dessus de toute la carte.
           ====================================================== */}
+      {/* REFACTOR V5 — couche Partie 1 (canari/origine 2012), SOUS le grain papier.
+          Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
+      {partie1 && <Partie1Origine ctx={sahelCtx} />}
+
       {isFinalLook && (() => {
         // RESPIRATION FINALE : sur les ~2.5 dernières secondes (f2220→END),
         // léger assombrissement progressif = suspension avant l'Acte 2.
