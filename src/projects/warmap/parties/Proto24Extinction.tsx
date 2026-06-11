@@ -165,8 +165,11 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
 
-  // ── Sprites base-france + état d'extinction ──
-  const baseSprite = staticFile("_shared/sprites/warmap/base-france.png");
+  // ── Sprites base FR (fortin isométrique Gemini, ombre intégrée) + état d'extinction ──
+  // Asset base-fr-td.png = enceinte hesco + tente + bunker + drapeau tricolore (vue 75°).
+  // Ratio ~1.9:1 (plus large que haut). Remplace l'ancienne rose-des-vents (= étoile rejetée).
+  const baseSprite = staticFile("_shared/sprites/warmap/base-fr-td.png");
+  const BASE_RATIO = 0.56; // hauteur / largeur du sprite
 
   // ── Lottie : rendre l'onde d'extinction de la base la plus récemment éteinte ──
   // Garde-fou #3 : une seule onde active à la fois (la dernière déclenchée), espacées ≥75f.
@@ -220,29 +223,23 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
           </g>
         )}
 
-        {/* BASES FR — sprites à ombre, désaturation à l'extinction (garde-fous #4 #5) */}
+        {/* BASES FR — halo d'ancrage acier au SOL (sous le fortin), s'éteint à la mort.
+            Le fortin lui-même est rendu en <img> hors-SVG (filtre CSS). (garde-fous #4 #5) */}
         {FR_BASES.map((b) => {
           const p = project(b.coord[0], b.coord[1]);
-          // apparition : les bases sont déjà là au début du beat (installées en P2). Spring léger d'arrivée.
           const appear = spring({ frame: frame - F_ECHEC, fps, config: { damping: 14 }, durationInFrames: 18 });
           const rel = frame - b.extinctAt;
-          // extinction : sur 40f, grayscale + opacity + perte d'ombre.
-          const deadT = interpolate(rel, [0, 40], [0, 1], {
+          const halo = appear * interpolate(rel, [0, 40], [1, 0], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
           });
-          const sizeBase = 0.062 * vmin;
-          // micro-effondrement du sprite au moment de l'extinction (scale 1 → 0.86)
-          const scale = appear * (1 - deadT * 0.14);
-          const op = appear * (1 - deadT * 0.55); // morte = opacity 0.45 (fantôme grisé, pas disparue)
-          const sz = sizeBase * scale;
-          const halo = (1 - deadT); // halo d'ancrage disparaît à la mort
+          if (halo <= 0.02) return null;
+          const rHalo = 0.062 * vmin;
+          // onde de respiration lente du halo (la base "vit" tant qu'elle n'est pas tombée)
+          const pulse = 1 + 0.06 * Math.sin((frame - F_ECHEC) * 0.12);
           return (
-            <g key={b.id} transform={`translate(${p.x},${p.y})`} opacity={op}>
-              {/* halo d'ancrage vivant (anneau acier discret) */}
-              {halo > 0.02 && (
-                <circle r={sz * 0.92} fill="none" stroke={STEEL} strokeWidth={1.6}
-                  strokeOpacity={0.4 * halo} />
-              )}
+            <g key={b.id} transform={`translate(${p.x},${p.y})`}>
+              <ellipse cx={0} cy={0} rx={rHalo * pulse} ry={rHalo * 0.5 * pulse}
+                fill="none" stroke={STEEL} strokeWidth={1.8} strokeOpacity={0.42 * halo} />
             </g>
           );
         })}
@@ -256,28 +253,29 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
         const deadT = interpolate(rel, [0, 40], [0, 1], {
           extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
         });
-        const sizeBase = 0.072 * vmin;
+        const wBase = 0.17 * vmin;          // largeur du fortin (plus large que haut)
         const scale = appear * (1 - deadT * 0.14);
+        const w = wBase * scale;
+        const h = w * BASE_RATIO;
         const op = appear * (1 - deadT * 0.55);
-        const sz = sizeBase * scale;
         if (op <= 0.02) return null;
-        // ombre : chaude et présente quand vivante, s'éteint à la mort.
-        const shadowAlpha = 0.45 * (1 - deadT);
+        // ombre légère (le sprite a déjà son ombre intégrée — on ajoute juste un ancrage chaud léger).
+        const shadowAlpha = 0.3 * (1 - deadT);
         // désaturation : grayscale monte, légère teinte sépia-mort.
         const grayscale = deadT;
-        const brightness = 1 - deadT * 0.25;
+        const brightness = 1 - deadT * 0.22;
         return (
           <img
             key={b.id}
             src={baseSprite}
             style={{
               position: "absolute",
-              left: p.x - sz / 2,
-              top: p.y - sz / 2,
-              width: sz,
-              height: sz,
+              left: p.x - w / 2,
+              top: p.y - h * 0.62, // ancrage au pied du fortin (drapeau dépasse en haut)
+              width: w,
+              height: h,
               opacity: op,
-              filter: `grayscale(${grayscale}) brightness(${brightness}) drop-shadow(0 ${3 * (1 - deadT) + 1}px ${8 * (1 - deadT) + 2}px rgba(80,30,20,${shadowAlpha}))`,
+              filter: `grayscale(${grayscale}) brightness(${brightness}) drop-shadow(0 ${2 * (1 - deadT) + 1}px ${6 * (1 - deadT) + 2}px rgba(80,30,20,${shadowAlpha}))`,
               pointerEvents: "none",
             }}
           />
