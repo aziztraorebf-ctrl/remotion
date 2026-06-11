@@ -60,6 +60,7 @@ import {
   SAHEL_COLORS,
 } from "./SahelControlData";
 import type { Vehicle as SchemaVehicle, Refugee as SchemaRefugee, GeoPathPoint } from "../data/schema";
+import type { SahelRenderContext } from "./SahelContext";
 import { union } from "@turf/union";
 import { featureCollection as turfFC } from "@turf/helpers";
 
@@ -821,6 +822,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     liptako: { x: number; y: number } | null;
   }>({ bamako: null, ouaga: null, niamey: null, liptako: null });
 
+  // REFACTOR V5 : contexte passe aux <PartieX>. Rempli dans la boucle frame
+  // (apres jumpTo), expose project() (closure capturant la map courante) + etat.
+  const [sahelCtx, setSahelCtx] = useState<SahelRenderContext | null>(null);
+
   // tGlobal : fraction 0..1 sur la duree utile (T_START -> T_END)
   const span = T_END - T_START;
   const local = Math.max(0, Math.min(span, frame - T_START));
@@ -1402,6 +1407,22 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     });
     setIconPx(iproj);
 
+    // REFACTOR V5 : construire le contexte passe aux <PartieX>. La closure
+    // project() capture la `map` courante (deja positionnee par jumpTo ci-dessus).
+    // breathe = battement lent partage (color-pacing). controlAt = tGlobal pour l'instant.
+    const breathe = 0.5 + 0.5 * Math.sin(frame * 0.05);
+    setSahelCtx({
+      frame,
+      width,
+      height,
+      project: (lon: number, lat: number) => {
+        const p = map.project([lon, lat] as [number, number]);
+        return { x: p.x, y: p.y };
+      },
+      controlAt: tGlobal,
+      breathe,
+    });
+
     const h = delayRender(`sahel-frame-${frame}`, { timeoutInMilliseconds: 40000 });
     let done = false;
     const finish = () => { if (!done) { done = true; continueRender(h); } };
@@ -1695,8 +1716,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     <AbsoluteFill style={{ backgroundColor: SAHEL_COLORS.ocean, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
       <MapboxBrandingHide />
 
-      {/* Narration principale */}
-      <Audio src={staticFile("_shared/audio/sahel-warmap/narration-v2.mp3")} />
+      {/* Narration principale — audio V5 (narration-v2.mp3 supprimé au ménage 2026-06-10).
+          NB : l'Acte 1 est encore calé sur les triggers V1/V2 ; la SYNCHRO V5 sera recalée en Task 8.
+          Pour le baseline non-régression on render --muted (audio sans effet sur les pixels). */}
+      <Audio src={staticFile("_shared/audio/sahel-warmap/narration-v5-expressive.mp3")} />
 
       {/* Musique de fond (score Soudan reutilise, 60s -> loop sur 439s).
           Volume bas pour laisser respirer voix + SFX. */}
