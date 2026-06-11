@@ -27,13 +27,15 @@ import type { SahelRenderContext } from "../engine/SahelContext";
 // ============================================================
 const F_2012 = 2102;   // "bascule"
 const F_LIBYE = 2178;  // "Libye"
+const F_PULSE = 2210;  // "s'effondre" -> pulse Libye (effondrement)
 
 // Encre parchemin (coherence palette Sahel)
 const INK = "#3A2A18";
 const INK_DEEP = "#2A1C0E";
 
 // Coordonnees geo (lon, lat)
-const LIBYE_LABEL_COORD: [number, number] = [16.0, 27.5]; // sud-Libye (zone source, pas Tripoli)
+const LIBYE_LABEL_COORD: [number, number] = [16.0, 27.5];   // sud-Libye (label, zone source)
+const LIBYE_SOURCE_COORD: [number, number] = [14.4, 27.0];  // Sebha (foyer de l'effondrement / source armes)
 
 type Props = {
   ctx: SahelRenderContext | null;
@@ -58,6 +60,17 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
   });
   const pLibye = project(LIBYE_LABEL_COORD[0], LIBYE_LABEL_COORD[1]);
 
+  // -------- BEAT 1.1 : pulse Libye (effondrement) --------
+  // Onde-radar lente (3 cercles concentriques opacity decroissante), encre, ~2.5s.
+  // Apres le pulse, Libye reste "chaude" (teinte fixe legere) = foyer persistant.
+  const pSource = project(LIBYE_SOURCE_COORD[0], LIBYE_SOURCE_COORD[1]);
+  const RINGS = [0, 18, 36]; // decalage d'amorce entre les 3 ondes (frames)
+  const pulseDur = 75; // ~2.5s
+  // teinte "chaude" persistante (monte pendant le pulse, reste ensuite)
+  const libyeHeat = interpolate(frame, [F_PULSE, F_PULSE + 40], [0, 0.22], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg
@@ -71,6 +84,41 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
             <rect x={0} y={0} width={width * y2012Fill} height={height} />
           </clipPath>
         </defs>
+
+        {/* BEAT 1.1 — foyer "chaud" persistant sur la Libye (sous les ondes). */}
+        {libyeHeat > 0 && (
+          <circle
+            cx={pSource.x}
+            cy={pSource.y}
+            r={46}
+            fill={INK_DEEP}
+            fillOpacity={libyeHeat}
+            style={{ mixBlendMode: "multiply", filter: "blur(10px)" }}
+          />
+        )}
+
+        {/* BEAT 1.1 — onde-radar effondrement (3 cercles concentriques lents). */}
+        {frame >= F_PULSE && frame < F_PULSE + pulseDur + 40 && RINGS.map((delay, i) => {
+          const t = interpolate(frame, [F_PULSE + delay, F_PULSE + delay + pulseDur], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+          });
+          if (t <= 0 || t >= 1) return null;
+          const r = 8 + t * 120;
+          const op = (1 - t) * 0.5;
+          return (
+            <circle
+              key={`pulse-${i}`}
+              cx={pSource.x}
+              cy={pSource.y}
+              r={r}
+              fill="none"
+              stroke={INK_DEEP}
+              strokeWidth={2.2 - t * 1.4}
+              strokeOpacity={op}
+              style={{ mixBlendMode: "multiply" }}
+            />
+          );
+        })}
 
         {/* "2012" — cartouche date en encre, ancre bas-gauche (ou la timeline Acte 1
             etait). Se remplit au mot "bascule". Repere temporel du redemarrage du recit. */}
