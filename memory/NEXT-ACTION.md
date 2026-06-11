@@ -4,24 +4,24 @@
 
 ---
 
-## 🔴 PRIORITÉ — WAR-MAP SAHEL : Partie 1 VALIDÉE · Partie 2 REJETÉE → REFONTE PREMIUM (2026-06-11)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL : VOIE PREMIUM TROUVÉE (proto 2.4 validé) → généraliser la P2 (2026-06-11)
 
-> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-11-soir.md`** — autonome,
-> reprend TOUT (ce qui est fait, rejeté, et la prochaine action). Puis `STATUS.md` (section "REPRISE" en tête).
+> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/STATUS.md`** (section "REPRISE PROCHAINE SESSION" en tête,
+> à jour 2026-06-11) + `memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md` (la doctrine actée).
 
-**ÉTAT (2026-06-11) :**
-- ✅ **Refactor moteur** fait : `SahelContext.ts` + `parties/Partie1Origine.tsx` + `parties/Partie2Blocage.tsx`
-  + modes `partie1`/`partie2` + `getPartieXCam`. Pattern `<PartieX>` documenté (réutilisable P3/P4).
-- ✅ **Partie 1 "Origine 2012" (canari) VALIDÉE Aziz** (premium, soustraction). Render catbox `m12kke`.
-- ✅ **Doctrine verrouillée** : War-Map = 100% carte, ZÉRO plein écran (`WARMAP-LONG-DOCTRINE.md`).
-- ❌ **Partie 2 "Le Blocage" CODÉE (6 beats) MAIS REJETÉE** par Aziz (trop plate/morte, cercles+étoiles SVG
-  niveau-1, caméra plan large vide). Gemini confirme 4/10. → NE PAS patcher, REFAIRE en premium.
+**ÉTAT (2026-06-11 — session voie premium) :**
+- ✅ **Proto beat 2.4 "extinction base FR encerclée" VALIDÉ Aziz** ("on a trouvé la voie, vraiment bonne").
+  Render : `out/episodes/warmap-sahel/wip/proto24-v4-loop-FULLHD.mp4` (catbox `v7hlwj`). Fichier modèle :
+  `src/projects/warmap/parties/Proto24Extinction.tsx`.
+- ✅ **DOCTRINE GEMINI/PIXELLAB actée** (`memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`) :
+  Gemini = marqueurs/persos/véhicules (animés par nous) · PixelLab = effets organiques (feu/fumée/explosion,
+  animés PAR PROMPT, loop PING-PONG) · **pont Gemini→PixelLab** = effets premium à notre identité (validé : explosion).
+- ✅ **Partie 1 "Origine 2012" VALIDÉE** (premium, soustraction). Render catbox `m12kke`.
+- ✅ Caméra serrée qui suit + pitch MIXTE selon beat · front déchiqueté procédural · table rase legacy (showChrome off).
+- ❌ **Partie 2 "Le Blocage" (6 beats) = version REJETÉE** (plate, SVG niveau-1) → à REFONDRE avec la voie validée.
 
-**▶ PROCHAINE ACTION = PROTOTYPE PREMIUM du beat 2.4 (extinction d'une base FR encerclée).**
-Plan complet : `memory/episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md` (inventaire capacités +
-15 techniques chaînes premium). Décisions Aziz : sprites à ombre (pas étoiles) · Lottie SUR-MESURE · caméra
-SERRÉE qui suit l'action · front mouvant organique · 2 versions à-plat vs pitch 3D · "40%" en data-viz ou supprimé.
-Workflow : coder proto → DA upstream (Gemini+Kimi) → Aziz tranche → généraliser à toute la P2.
+**▶ PROCHAINE ACTION = GÉNÉRALISER la voie aux 5 autres beats P2** (refondre `Partie2Blocage.tsx`) → brancher le
+proto dans le flux P2 → re-render P2 → finir. Modèle = `Proto24Extinction.tsx`. Détail complet : `STATUS.md`.
 
 **LEÇON gravée (`key-learnings.md`)** : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat". Premium d'abord.
 

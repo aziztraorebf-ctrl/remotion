@@ -1,32 +1,51 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-10 (refonte script V5 linéaire + pipeline voix vivante + audio découpé par parties)
+**Dernière mise à jour :** 2026-06-11 (PROTO 2.4 PREMIUM VALIDÉ + doctrine Gemini/PixelLab actée)
 **Branche :** `feat/da-brief-gate-warmap-sahel`
 **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (pipeline expressif V3→STS).
 
-> ⭐ **REPRISE AU RETOUR : section "ÉTAT ACTUEL" ci-dessous.** Le chantier voix est BOUCLÉ.
-> Prochaine étape = re-découpage en beats (avec alignment V5) puis coder Partie 1 (canari).
+> ⭐ **REPRISE AU RETOUR : section "REPRISE PROCHAINE SESSION" ci-dessous.**
 
 ---
 
-## ⛔ REPRISE PROCHAINE SESSION (2026-06-11 soir) — PROTOTYPE PREMIUM beat 2.4
+## ⛔ REPRISE PROCHAINE SESSION (2026-06-11 soir) — GÉNÉRALISER LA P2 (voie validée)
 
-**La Partie 2 est CODÉE mais REJETÉE par Aziz** (trop plate/morte/niveau-1 : cercles+étoiles+X SVG). Gemini
-confirme (analyse vidéo : 4/10, "trop plate et statique"). NE PAS la patcher davantage — REFONTE premium.
+**LE PROTO 2.4 EST VALIDÉ Aziz.** ("On a trouvé la voie, vraiment vraiment bonne.") La voie premium est
+arrêtée. Reste = **généraliser à toute la P2** (les 6 beats) avec cette voie, puis finaliser.
 
-**▶ PROCHAINE ACTION = prototyper LE BEAT 2.4 (extinction d'une base FR encerclée) en PREMIUM COMPLET.**
-Plan + techniques + inventaire capacités = `REFONTE-PREMIUM-P2-techniques.md` (TOUT y est, lire en premier).
-Décisions Aziz : (1) prototype = beat 2.4 extinction. (2) tester DEUX versions : à-plat (pitch 0) VS pitch 3D (~32).
-(3) Lottie SUR-MESURE à créer. (4) sprites à ombre (base-france) pas étoiles SVG. (5) caméra SERRÉE qui suit
-l'action, jamais de vue continentale vide. (6) front mouvant organique pas cercle qui scale. (7) "40%" → data-viz
-ou supprimé (voix suffit). Après proto validé → appliquer aux autres beats P2.
+**▶ PROCHAINE ACTION = appliquer la voie validée aux autres beats de la Partie 2**, puis re-render P2 complète.
+Fichier proto de référence : `src/projects/warmap/parties/Proto24Extinction.tsx` (← le modèle à généraliser).
+Render final validé : `out/episodes/warmap-sahel/wip/proto24-v4-loop-FULLHD.mp4` (catbox `v7hlwj`).
 
-Capacités prêtes (vérifiées) : `LottieGeoAura` + `premiumLottieAssets` · sprites `public/_shared/sprites/warmap/`
-(base-france, base-africacorps...) · `CAM_COUNTRY_APPROACH` pitch 32 · 30+ composants `CATALOGUE-CARTE-VIVANTE.md`
-(ContagionFlagSpread, PulsingRegionFill, DominoContagionFill, GeoCountryPlaque...). Workflow DA = upstream sur le
-proto (Gemini+Kimi) avant de généraliser. Triggers V5 P2 : voir section "PARTIE 2 CODÉE" ci-dessous.
+### ⭐ LA VOIE PREMIUM VALIDÉE (doctrine actée — `memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`)
+1. **Caméra SERRÉE qui suit l'action** (`getProto24Cam` dans le moteur), pitch MIXTE selon le beat
+   (pitch ~32 sur tension/bascule, plat sur analytique — décision Aziz). Jamais de vue continentale vide.
+2. **Marqueurs/bases/persos/véhicules = Gemini** (encre fine) + animés PAR NOUS (track/path/walk Remotion).
+   Asset base FR : `public/_shared/sprites/warmap/base-fr-td.png` (fortin Gemini, AGRANDI 0.22vmin = lisible).
+3. **Effets organiques (feu/fumée/explosion) = PixelLab animé PAR PROMPT** (zéro Lottie). Frames archivées :
+   `public/_shared/sprites/warmap/fx-smoke/` (9f) + `fx-explosion/` (9f + `_source-gemini.png`).
+   **LOOP = PING-PONG** (0→8→0 sans raccord dur) — JAMAIS "joue une fois puis fige" (= fumée statique, rejeté).
+4. **Pont Gemini→PixelLab POUR LES EFFETS PREMIUM** (validé) : générer l'effet via Gemini (NOTRE look sépia) →
+   le passer en `background_image` à `create_map_object` (inpainting rectangle 0.9) → PixelLab garde notre style
+   et l'anime. = effet premium à notre identité, pas générique. Explosion `fx-explosion/` faite ainsi.
+5. **Front mouvant = zone DÉCHIQUETÉE procédurale** (`buildFrontRing` : 20pts + bruit + ondulation), pas un ovale.
+6. **Anti-saturation (table rase)** : `proto24` ⇒ `showChrome=false` (masque jetons/taches/légende/pulses legacy).
 
-> LEÇON gravée (key-learnings) : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat/pauvre". Premium d'abord.
+### Décisions Aziz verrouillées cette session
+- "On a trouvé la voie." Proto 2.4 validé. Le pixel ne se voit pas sur du feu/fumée (matière chaotique) → OK.
+- Objets Gemini = plus gros sur la carte (lisibilité). Fait : fortin 0.22vmin.
+- Pixel art = réservé aux EFFETS, pas aux marqueurs (Gemini reste l'identité encre fine).
+
+### Reste à faire pour finir (prochaine session, contexte frais)
+- **Généraliser aux 5 autres beats P2** (2.1 bases, 2.2 convergence, 2.3 MINUSMA, 2.5 villes/campagnes, 2.6 Burkina/CEDEAO)
+  en suivant Proto24Extinction comme modèle (= refondre `Partie2Blocage.tsx`, qui était la version rejetée).
+- **Brancher le proto 2.4 dans la Partie 2** (actuellement compo séparée `SahelProto24*`). Intégrer au flux P2.
+- **Triggers V5 P2** : Serval f3196 · Barkhane f3268 · présente f3419 · MINUSMA f3660 · échec f3887 · villes f4384 · Burkina f4976 · Niger f5380 · CEDEAO f5639.
+- Optionnel : DA-brief upstream sur le proto avant de généraliser (Aziz : "on a déjà notre réponse" → peut sauter).
+- Effets à générer le moment venu (pont Gemini→PixelLab) : convoi uranium qui roule, poussière, foules réfugiés.
+
+> LEÇON gravée : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat/pauvre". Premium d'abord.
+> Compos proto : `SahelProto24Flat` (pitch 0) + `SahelProto24Pitch` (pitch 32), rendre `--frames=3850-4250`.
 
 ---
 
