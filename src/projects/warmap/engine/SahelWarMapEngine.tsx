@@ -51,6 +51,7 @@ import { TerritorialExpansion, EXPANSION_REGIONS_ACT2 } from "../_shared/Territo
 import { RefugeeFlow, REFUGEE_FLOWS_ACT4 } from "../_shared/RefugeeFlow";
 import { GeoConvergenceOverlay, GeoForce } from "../_shared/GeoConvergenceOverlay";
 import { Partie1Origine } from "../parties/Partie1Origine";
+import { Partie2Blocage } from "../parties/Partie2Blocage";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -533,6 +534,41 @@ const getPartie1Cam = (frame: number): { lon: number; lat: number; zoom: number 
   return keys[keys.length - 1];
 };
 
+// PARTIE 2 (V5) — "Le Blocage". Raccord exact depuis fin Partie 1 (f2940). Cadre nord-Mali
+// (bases Gao/Ménaka/Tessalit) pour l'installation FR/ONU → léger pull-back pour l'échec
+// (timeline + expansion rouge) → push-in singularisé pendant l'extinction → pan SUD pour le
+// débordement Burkina → cadre élargi Niger/CEDEAO (pont Partie 3). Caméra = chef d'orchestre.
+const PARTIE2_CAM_KEYS: CamKey[] = [
+  { f: 2940, lon: -0.6,  lat: 15.3,  zoom: 5.05 }, // = fin Partie 1 (raccord exact)
+  { f: 3196, lon:  0.6,  lat: 16.8,  zoom: 4.55 }, // 2.1 Serval : cadre nord-Mali (bases Gao/Ménaka/Tessalit)
+  { f: 3443, lon:  0.2,  lat: 16.6,  zoom: 4.35 }, // 2.2 présence FR : léger pull-back (convergence régionale)
+  { f: 3660, lon:  0.0,  lat: 16.4,  zoom: 4.45 }, // 2.3 MINUSMA : recentre (points ONU)
+  { f: 3887, lon: -0.4,  lat: 16.0,  zoom: 4.20 }, // 2.4 échec : pull-back large (timeline + rouge + extinction)
+  { f: 4200, lon: -0.2,  lat: 15.8,  zoom: 4.30 }, // 2.4 mid : léger push-in (singularise l'extinction)
+  { f: 4421, lon: -0.6,  lat: 15.2,  zoom: 4.45 }, // 2.5 villes/campagnes : centre Mali rural
+  { f: 4955, lon: -1.0,  lat: 14.2,  zoom: 4.55 }, // 2.6 Burkina : pan SUD (débordement frontière)
+  { f: 5380, lon:  0.4,  lat: 14.0,  zoom: 4.35 }, // Niger bascule : pan EST (Niamey)
+  { f: 5640, lon: -0.3,  lat: 14.4,  zoom: 4.15 }, // CEDEAO : élargi (pont Partie 3)
+];
+const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  if (frame <= PARTIE2_CAM_KEYS[0].f) return getActe1Cam(frame);
+  const keys = PARTIE2_CAM_KEYS;
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
 // Prolonge l'Acte 1 : avant f2299 = getActe1Cam (continuité parfaite).
 // RÈGLE R-V3 : ZOOM CONSTANT (~5.0), PAN SERRÉ uniquement, JAMAIS de pull-back continental.
 //   (vérifié : à zoom 5.0 on voit ~38° lon — Bamako→Arlit tient sans dézoomer. Le pull-back
@@ -775,6 +811,9 @@ export type SahelTestProps = {
   // (jetons/taches/palette/grain) MAIS désactive les blocs B1 legacy (acte2) et
   // rend la couche <Partie1Origine> par-dessus. Récit V5, direction soustraction.
   partie1?: boolean;
+  // REFACTOR V5 — mode Partie 2 (le blocage). Look Acte 1 + couche <Partie2Blocage>.
+  // Legacy B1 OFF. Récit V5, "effort massif / échec" (points rigides sur surfaces fluides).
+  partie2?: boolean;
 };
 
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
@@ -791,6 +830,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   acte2 = false,
   prepoVeil = 0.70, // validé Aziz 2026-06-09 (carte en sourdine, overlay net)
   partie1 = false,
+  partie2 = false,
 }) => {
   const frame = useCurrentFrame();
   const { width, height } = useVideoConfig();
@@ -798,9 +838,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // ACTE 2 prolonge l'Acte 1 : tout le LOOK acte1Final s'applique aussi en acte2.
   // `isFinalLook` = pilote le rendu visuel (jetons, taches, palette, fusion, grain).
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
-  // partie1 hérite du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
+  // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2;
+  // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
+  const isPartie = partie1 || partie2;
 
   // VERSION FINALE Acte 1 : dérive les sous-mécaniques du socle validé.
   // Allumage séquentiel calé sur les triggers RÉELS (Mali f150, BFA f231, NER f301).
@@ -1220,7 +1262,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
-      const camFn = partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
+      const camFn = partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
       const cam = a1Freeze ? camFn(A1.FREEZE) : camFn(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     } else if (camStatic) {
@@ -2769,8 +2811,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && showChrome && !partie1 && (() => {
-        // PARTIE 1 (V5) : timeline Acte 1 MASQUÉE — le récit V5 redémarre la timeline à 2012
+      {isFinalLook && showChrome && !isPartie && (() => {
+        // PARTIE 1/2 (V5) : timeline Acte 1 MASQUÉE — le récit V5 redémarre la timeline à 2012
         // (cartouche encre "2012" de <Partie1Origine> suffit). Évite le chevauchement.
         // B1 V3 (D-4 timeline vivante) : en acte2, l'axe se RÉ-ÉTALONNE sur la période de
         // l'enjeu français (2013 Serval → 2024 AES). Le curseur GLISSE pendant tout B1
@@ -3314,9 +3356,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Ordre : grain papier → vignette cinéma → respiration finale.
           Posés au sommet de la pile = au-dessus de toute la carte.
           ====================================================== */}
-      {/* REFACTOR V5 — couche Partie 1 (canari/origine 2012), SOUS le grain papier.
+      {/* REFACTOR V5 — couches Partie (canari/blocage), SOUS le grain papier.
           Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
+      {partie2 && <Partie2Blocage ctx={sahelCtx} />}
 
       {isFinalLook && (() => {
         // RESPIRATION FINALE : sur les ~2.5 dernières secondes (f2220→END),

@@ -2802,6 +2802,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* PARTIE 2 Sahel — le blocage (intervention FR/ONU qui échoue 10 ans).
+            Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides. */}
+        <Composition
+          id="SahelPartie2"
+          component={SahelWarMapEngine}
+          defaultProps={{ partie2: true }}
+          durationInFrames={5700}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* Overlay frise — DEMO isolée (valider design avant intégration carte) */}
         <Composition
           id="SahelFriseOverlayDemo"
