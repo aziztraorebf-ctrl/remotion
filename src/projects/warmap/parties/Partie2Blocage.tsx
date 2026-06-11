@@ -58,6 +58,16 @@ const MINUSMA_PTS: { coord: [number, number]; name: string; delay: number }[] = 
   { coord: [-3.01, 16.79], name: "TOMBOUCTOU", delay: 12 },
   { coord: [-4.20, 14.49], name: "MOPTI", delay: 24 },
 ];
+// BEAT 2.2 — convergence régionale (présence FR pré-positionnée TOUT AUTOUR). Lignes fines
+// pointillées depuis les voisins vers un point central Mali. Origines = pays limitrophes.
+const MALI_CENTER: [number, number] = [-1.5, 16.5];
+const CONVERGENCE_FROM: { coord: [number, number]; delay: number }[] = [
+  { coord: [-7.5, 21.0], delay: 0 },   // Mauritanie (NO)
+  { coord: [3.0, 23.0], delay: 8 },    // Algérie (N)
+  { coord: [8.5, 17.5], delay: 16 },   // Niger (E)
+  { coord: [-2.0, 12.5], delay: 24 },  // Burkina (S)
+  { coord: [-8.0, 13.0], delay: 32 },  // Sénégal/ouest (O)
+];
 
 // Helper : path d'une étoile à N branches (marqueur militaire rigide), centrée (cx,cy).
 function starPath(cx: number, cy: number, rOuter: number, rInner: number, points = 5): string {
@@ -87,10 +97,65 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
 
+  // -------- BEAT 2.2 : convergence régionale (présence FR pré-positionnée) --------
+  // Lignes fines pointillées depuis les voisins vers le centre Mali (tracé état-major).
+  // SOBRE (DA) : encre 50%, stroke-dashoffset, fade-out à l'arrivée. Idée abstraite -> overlay OK.
+  const pCenter = project(MALI_CENTER[0], MALI_CENTER[1]);
+  const convFade = interpolate(frame, [F_PRESENTE, F_PRESENTE + 20, F_MINUSMA - 40, F_MINUSMA], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+
+  // -------- BEAT 2.3 : MINUSMA (points bleu-ONU) --------
+  // board clearing léger déjà géré moteur. Points ONU distincts des bases FR (bleu plus clair).
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg width={width} height={height}
         style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+
+        {/* BEAT 2.2 — convergence régionale (lignes pointillées état-major, SOBRE).
+            Trace pointillée (dash 2/5) qui se DESSINE du voisin vers le centre via un point
+            d'avancée (le "head"), puis fade-out. Idée abstraite (présence pré-positionnée). */}
+        {convFade > 0 && CONVERGENCE_FROM.map((src, i) => {
+          const p0 = project(src.coord[0], src.coord[1]);
+          const t = interpolate(frame, [F_PRESENTE + src.delay, F_PRESENTE + src.delay + 40], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+          });
+          if (t <= 0) return null;
+          // point d'avancée (head) interpolé du voisin vers le centre
+          const hx = p0.x + (pCenter.x - p0.x) * t;
+          const hy = p0.y + (pCenter.y - p0.y) * t;
+          return (
+            <g key={`conv-${i}`} style={{ mixBlendMode: "multiply" }}>
+              {/* trace pointillée parcourue (du voisin au head) */}
+              <line x1={p0.x} y1={p0.y} x2={hx} y2={hy}
+                stroke={INK} strokeWidth={1.2} strokeOpacity={0.45 * convFade}
+                strokeLinecap="round" strokeDasharray="2 5" />
+              {/* petit point d'avancée */}
+              <circle cx={hx} cy={hy} r={2.2} fill={INK} fillOpacity={0.55 * convFade} />
+            </g>
+          );
+        })}
+
+        {/* BEAT 2.3 — points MINUSMA (bleu-ONU, distincts des bases FR). */}
+        {frame >= F_MINUSMA && MINUSMA_PTS.map((pt, i) => {
+          const p = project(pt.coord[0], pt.coord[1]);
+          const t = interpolate(frame, [F_MINUSMA + pt.delay, F_MINUSMA + pt.delay + 16], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+          });
+          if (t <= 0) return null;
+          return (
+            <g key={`un-${i}`}>
+              {/* halo ONU doux */}
+              <circle cx={p.x} cy={p.y} r={18} fill={UN_BLUE} fillOpacity={0.10 * t} />
+              {/* double anneau ONU (béret bleu) + point */}
+              <circle cx={p.x} cy={p.y} r={12} fill="none" stroke={UN_BLUE}
+                strokeWidth={2.4} strokeOpacity={0.9 * t} />
+              <circle cx={p.x} cy={p.y} r={6} fill={UN_BLUE} fillOpacity={0.95 * t}
+                stroke={INK} strokeWidth={1} strokeOpacity={0.7 * t} />
+            </g>
+          );
+        })}
 
         {/* BEAT 2.1 — bases FR (étoiles bleu-acier rigides, "frappent" la carte). */}
         {FR_BASES.map((base, i) => {

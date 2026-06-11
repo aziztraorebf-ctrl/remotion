@@ -1303,7 +1303,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // (board clearing f3050), pour que les bases FR + surfaces rouges DÉDIÉES P2 (couche
     // <Partie2Blocage>) se lisent clairement par-dessus. Reste calme tout P2.
     if (partie2 && map.getLayer("sahel-fill")) {
-      const calmFactor = interpolate(frame, [3050, 3120], [1, 0.42], {
+      const calmFactor = interpolate(frame, [3050, 3120], [1, 0.28], {
         extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
       });
       const baseOp: any = effSeqIgnite
