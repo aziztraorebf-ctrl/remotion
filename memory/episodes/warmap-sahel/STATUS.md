@@ -9,6 +9,31 @@
 
 ---
 
+## ▶ REPRISE IMMÉDIATE (2026-06-11 soir) — CODER LA PARTIE 2
+
+**Tout est prêt pour coder la Partie 2 "Le Blocage". DA-brief amont FAIT, décisions Aziz prises.**
+1. **Lire** `reviews-p2/SYNTHESE-DA-UPSTREAM-P2.md` (ossature visuelle validée 3 voix) + `BEATS-V5.md` section PARTIE 2.
+2. **Pattern** : suivre `<PartieX>` ci-dessous. Créer `parties/Partie2Blocage.tsx` + prop `partie2` + `getPartie2Cam`
+   (raccord exact depuis fin Partie 1 ~f2940) + compo Root `SahelPartie2`. Modèle = `Partie1Origine.tsx`.
+3. **Triggers V5 réels** (alignment, ×30fps) : Serval f3196 · Barkhane f3268 · présente f3419 · autour f3443 ·
+   MINUSMA f3660 · "dix" (échec) f3887 · villes f4384 · campagnes f4421 · débordent f4955 · Burkina f4976 ·
+   Niger f5380 · bascule f5395 · CEDEAO f5639. (Partie 2 audio f2940→~f5640.)
+4. **Ossature visuelle (DA 3 voix convergent — c'est LA méthode)** :
+   - POINTS RIGIDES (FR/ONU = symboles géométriques nets fixes) SUR SURFACES FLUIDES (jihadisme = paths
+     organiques rouge #8B3A3A qui s'infiltrent). Distinction par MORPHOLOGIE, pas couleur.
+   - EXTINCTION = RÉACTION à l'encerclement : le rouge coule SOUS les bases, les entoure → elles s'éteignent
+     (cage refermée, pas défaite). C'est "effort massif/échec" rendu sans un mot.
+   - Beat 2.4 SÉQUENCÉ (pas simultané) : timeline défile → rouge s'étend → bases s'éteignent 1 à 1.
+   - Caméra chef d'orchestre. GeoConvergence (2.2) SOBRE (5-6 lignes pointillées stroke-dashoffset, encre 50%).
+   - Anti-biais : extinction analytique, jamais pathos/drapeaux FR.
+5. **Décisions Aziz GRAVÉES** : couleur bases FR = **bleu-acier #4A6B8A** (distinct ONU + rouge) ·
+   extinction = **désaturation + opacity↓ + petit ×** (simple). Ton = contraste "effort massif/échec".
+   Beat 2.4 = timeline + rouge + bases s'éteignent 1 à 1 (les 3, mais séquencés).
+6. **Assets existants** : `base-france.png`, `fighter-france.png`, `GeoConvergenceOverlay.tsx`, `jeton-fama.png`.
+   Overlay GeoConvergence existe déjà (présence FR pré-positionnée). MINUSMA = points bleu-ONU à créer (simple).
+
+---
+
 ## ⭐ PARTIE 1 VALIDÉE + PATTERN `<PartieX>` (2026-06-11) — LIRE AVANT DE CODER P2-P4
 
 **Partie 1 (canari) VALIDÉE par Aziz.** Render final : `out/episodes/warmap-sahel/wip/partie1-fullhd-v3.mp4`
