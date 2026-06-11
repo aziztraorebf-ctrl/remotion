@@ -34,9 +34,22 @@ Le seul vrai défaut du pixel pur = un feu "générique jeu vidéo". Solution : 
 `style_image` sur bitforge, ou `style_images` sur create object) → PixelLab ne fait QUE l'animer.
 On contrôle le LOOK (Gemini), PixelLab fait le MOUVEMENT. Meilleur des deux pour les effets.
 
+## ⭐ RÈGLE PONCTUEL vs AMBIANT (classer AVANT d'animer — Aziz 2026-06-11, non-négociable)
+
+Toutes les animations d'effet ne se jouent PAS de la même façon. Avant d'intégrer un effet PixelLab, le classer :
+
+| Régime | Exemples | Lecture | Mécanique Remotion |
+|---|---|---|---|
+| **PONCTUEL (one-shot)** | explosion, impact, flash, largage, tir | joue UNE FOIS puis **DISPARAÎT** | 0→N puis `opacity→0`. JAMAIS de boucle (une explosion ne se "dé-explose" pas). |
+| **AMBIANT (continu)** | fumée qui monte, feu qui brûle, drapeau qui ondule, poussière, brume | **BOUCLE tant que la condition dure** | ping-pong (0→N→0) ou loop seamless. JAMAIS figer (= effet statique = rejeté). |
+
+Règle d'or : **ne jamais boucler un ponctuel, ne jamais figer un ambiant.** Le proto 2.4 : fumée = ambiant
+(ping-pong) ; une explosion d'amorce sur la base = ponctuel (one-shot + fade). Discipline anti-saturation
+maintenue : 1 foyer d'attention à la fois, ne pas multiplier les effets simultanés.
+
 ## Garde-fous techniques
 
-- **Loop seamless** : un effet persistant (base qui brûle 4s) doit boucler sans saut visible. PixelLab v3 ne
+- **Loop seamless (ambiant)** : un effet continu (base qui brûle 4s) doit boucler sans saut visible. PixelLab v3 ne
   garantit pas toujours le raccord frame N→0. Vérifier ; si ça saute → ping-pong (0→N→0) ou crossfade au raccord.
 - **PixelLab est LENT** (~6 min/animation en charge). Lancer en async, programmer un réveil, jamais bloquer.
 - **Bug lib REST locale** : utiliser le MCP PixelLab (la lib pip plante au parsing sur abonnement). Voir `memory/tools/pixellab.md`.

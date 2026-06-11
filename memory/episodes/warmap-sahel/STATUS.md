@@ -43,6 +43,9 @@ Render final validé : `out/episodes/warmap-sahel/wip/proto24-v4-loop-FULLHD.mp4
 - **Triggers V5 P2** : Serval f3196 · Barkhane f3268 · présente f3419 · MINUSMA f3660 · échec f3887 · villes f4384 · Burkina f4976 · Niger f5380 · CEDEAO f5639.
 - Optionnel : DA-brief upstream sur le proto avant de généraliser (Aziz : "on a déjà notre réponse" → peut sauter).
 - Effets à générer le moment venu (pont Gemini→PixelLab) : convoi uranium qui roule, poussière, foules réfugiés.
+- **RAFFINEMENT prévu beat 2.4** (règle ponctuel/ambiant) : ajouter une EXPLOSION ponctuelle (one-shot + fade,
+  asset `fx-explosion/` déjà prêt) au moment où chaque base tombe, PUIS la fumée ambiante (ping-pong) qui persiste.
+  Actuellement seule la fumée ambiante est posée. L'explosion d'amorce = le "moment de la chute" plus net.
 
 > LEÇON gravée : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat/pauvre". Premium d'abord.
 > Compos proto : `SahelProto24Flat` (pitch 0) + `SahelProto24Pitch` (pitch 32), rendre `--frames=3850-4250`.
