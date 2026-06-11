@@ -50,12 +50,13 @@ const ARMS_ROUTE: [number, number][] = [
   [1.44, 18.43], // Kidal (porte d'entree nord Mali)
 ];
 // 3 foyers d'impact (taches d'encre rouge-sombre). Kidal/Gao/Tombouctou.
-const IMPACTS: { coord: [number, number]; delay: number }[] = [
-  { coord: [1.44, 18.43], delay: 0 },   // Kidal (arrivee du trait)
-  { coord: [-0.04, 16.27], delay: 6 },  // Gao
-  { coord: [-3.01, 16.79], delay: 12 }, // Tombouctou
+const IMPACTS: { coord: [number, number]; delay: number; name: string; dy: number }[] = [
+  { coord: [1.44, 18.43], delay: 0, name: "KIDAL", dy: -26 },        // arrivee du trait, label au-dessus
+  { coord: [-0.04, 16.27], delay: 6, name: "GAO", dy: 30 },          // label en-dessous
+  { coord: [-3.01, 16.79], delay: 12, name: "TOMBOUCTOU", dy: -26 }, // label au-dessus
 ];
 const IMPACT_COLOR = "#8B3A3A"; // rouge-sombre encre (PAS flammes)
+const SAHEL_LAND = "#F5EFD6";   // parchemin clair (= SAHEL_COLORS.land) pour halo reserve labels
 
 // Zone du VIDE (rural nord/centre Mali + Liptako) — hachures de tension.
 // Polygone geo grossier (lon,lat) couvrant le vide d'Etat.
@@ -233,12 +234,34 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           if (t <= 0) return null;
           const r = 13 * Math.min(1.15, t); // overshoot via back easing
           return (
-            <g key={`impact-${i}`} style={{ mixBlendMode: "multiply" }}>
-              {/* halo diffus */}
-              <circle cx={p.x} cy={p.y} r={r * 1.8} fill={IMPACT_COLOR} fillOpacity={0.22 * t}
-                style={{ filter: "blur(4px)" }} />
-              {/* tache nette */}
-              <circle cx={p.x} cy={p.y} r={r} fill={IMPACT_COLOR} fillOpacity={0.7 * t} />
+            <g key={`impact-${i}`}>
+              <g style={{ mixBlendMode: "multiply" }}>
+                {/* halo diffus */}
+                <circle cx={p.x} cy={p.y} r={r * 1.8} fill={IMPACT_COLOR} fillOpacity={0.22 * t}
+                  style={{ filter: "blur(4px)" }} />
+                {/* tache nette */}
+                <circle cx={p.x} cy={p.y} r={r} fill={IMPACT_COLOR} fillOpacity={0.7 * t} />
+              </g>
+              {/* DA-downstream A : micro-label ville (encre), ancre le recit (quelle ville tombe).
+                  Halo de reserve parchemin pour lisibilite sur taches/hachures (pas de boite blanche). */}
+              <text
+                x={p.x}
+                y={p.y + imp.dy}
+                textAnchor="middle"
+                fontFamily="'Cormorant Garamond', Georgia, serif"
+                fontSize={19}
+                fontWeight={700}
+                letterSpacing={2}
+                fill={INK_DEEP}
+                fillOpacity={t}
+                stroke={SAHEL_LAND}
+                strokeWidth={3}
+                strokeOpacity={0.7 * t}
+                paintOrder="stroke"
+                style={{ mixBlendMode: "normal" }}
+              >
+                {imp.name}
+              </text>
             </g>
           );
         })}
