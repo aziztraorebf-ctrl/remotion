@@ -28,6 +28,10 @@ export interface ConvergingFlowsProps {
   destColor?: string;
   // Glow sur destination
   destGlow?: boolean;
+  // Dimensions du canvas (viewBox SVG). Défaut 1080×1920 (vertical, rétrocompat Maroc).
+  // Passer width/height pour les compos horizontales (ex: War-Map 1920×1080).
+  width?: number;
+  height?: number;
 }
 
 const DEFAULT_COLOR    = "#c8a951";
@@ -88,6 +92,8 @@ export const ConvergingFlows: React.FC<ConvergingFlowsProps> = ({
   destPulseAt,
   destColor,
   destGlow = true,
+  width = 1080,
+  height = 1920,
 }) => {
   if (!map) return null;
 
@@ -106,7 +112,7 @@ export const ConvergingFlows: React.FC<ConvergingFlowsProps> = ({
       <svg
         width="100%"
         height="100%"
-        viewBox="0 0 1080 1920"
+        viewBox={`0 0 ${width} ${height}`}
         style={{ position: "absolute", inset: 0 }}
         preserveAspectRatio="none"
       >

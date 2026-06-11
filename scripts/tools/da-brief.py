@@ -33,6 +33,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 OUT_DIR = "/tmp/da-refs"
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 KIMI_MODEL = "moonshotai/kimi-k2.5"
+DEEPSEEK_MODEL = "deepseek/deepseek-v4-pro"  # 3e voix CONCEPTUELLE, ~10-20x moins cher. TEXTE ONLY (pas de vision).
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 
 
@@ -225,6 +226,41 @@ def call_kimi(prompt, frames, max_tokens, results):
         print(f"[kimi] ERREUR: {e}")
 
 
+def call_deepseek(prompt, frames, max_tokens, results):
+    """3e voix CONCEPTUELLE (séquencier, structure, logique narrative). ~10-20x moins cher.
+    DeepSeek V4 n'a PAS de vision → walkaround : les frames sont injectées comme CAPTIONS TEXTUELLES
+    (leur description, pas l'image). Donc valeur sur le conceptuel, PAS sur le jugement visuel.
+    Leçon 2026-06-09 : sans description fidèle, il dérive du réel → toujours soigner les captions."""
+    key = os.getenv("OPENROUTER_API_KEY")
+    if not key:
+        results["deepseek"] = "[ERREUR] OPENROUTER_API_KEY absente"
+        return
+    # Frames -> texte (DeepSeek ne voit pas les images : on liste leurs captions comme contexte)
+    frame_note = ""
+    if frames:
+        frame_note = ("\n\n=== CONTEXTE VISUEL (DeepSeek ne voit pas les images — voici leurs descriptions) ===\n"
+                      + "\n".join(f"- {caption}" for _, caption in frames)
+                      + "\n(Raisonne sur ces descriptions. NE PRÉTENDS PAS voir des détails non décrits.)\n")
+    payload = {"model": DEEPSEEK_MODEL,
+               "messages": [{"role": "user", "content": prompt + frame_note}],
+               "max_tokens": max_tokens, "temperature": 0.4}
+    try:
+        print("[deepseek] envoi...")
+        req = urllib.request.Request(
+            OPENROUTER_URL, data=json.dumps(payload).encode(),
+            headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json",
+                     "HTTP-Referer": "https://kora-cartes.local", "X-Title": "Kora Cartes DA Brief"},
+        )
+        with urllib.request.urlopen(req, timeout=300) as r:
+            data = json.loads(r.read().decode())
+        msg = data["choices"][0]["message"]
+        results["deepseek"] = msg.get("content") or msg.get("reasoning") or "[vide]"
+        print("[deepseek] OK")
+    except Exception as e:
+        results["deepseek"] = f"[ERREUR deepseek] {e}"
+        print(f"[deepseek] ERREUR: {e}")
+
+
 def parse_frame(arg):
     """Parse 'path/to/frame.png:caption' -> (path, caption).
     Split sur le ':' qui suit l'extension image (le caption peut contenir des ':'
@@ -243,16 +279,23 @@ def main():
     ap.add_argument("--label", required=True, help="Label de sortie (ex: warmap-acte1)")
     ap.add_argument("--catalog", default=None, help="Catalogue d'inspiration compact (texte)")
     ap.add_argument("--frame", action="append", default=[], help="path:caption (repetable, auto-downscale)")
-    ap.add_argument("--only", choices=["gemini", "kimi"], default=None, help="Un seul modele")
+    ap.add_argument("--only", choices=["gemini", "kimi", "deepseek"], default=None, help="Un seul modele")
     ap.add_argument("--max-tokens", type=int, default=8000)
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop (ON par défaut)")
     ap.add_argument("--expert", action="store_true", help="Ajouter le bloc point-de-vue expert")
     ap.add_argument("--upstream", action="store_true",
-                    help="Mode PRÉVENTIF : review du PLAN avant code (blocs prospectifs). Active --expert par défaut.")
+                    help="Mode PRÉVENTIF : review du PLAN avant code (blocs prospectifs). Active --expert + DeepSeek 3e voix par défaut.")
+    ap.add_argument("--with-deepseek", dest="with_deepseek", action="store_true",
+                    help="Forcer DeepSeek V4 (3e voix CONCEPTUELLE pas chère, TEXTE only). Auto-ON en --upstream.")
+    ap.add_argument("--no-deepseek", dest="no_deepseek", action="store_true",
+                    help="Désactiver DeepSeek même en upstream.")
     args = ap.parse_args()
     # En mode upstream, l'expert-constructeur est le coeur de la valeur -> ON par défaut.
     if args.upstream:
         args.expert = True
+    # DeepSeek = 3e voix CONCEPTUELLE par défaut en UPSTREAM (brief narratif/séquencier, vision peu utile,
+    # coût quasi nul). OFF en downstream (jugement visuel = il est aveugle). Override : --with/--no-deepseek.
+    use_deepseek = (args.with_deepseek or args.upstream) and not args.no_deepseek
 
     load_env()
     if not os.path.exists(args.brief):
@@ -273,8 +316,11 @@ def main():
     if args.upstream: blocks.append("UPSTREAM")
     if not args.no_aislop: blocks.append("ai-slop")
     if args.expert: blocks.append("expert")
+    active = [m for m in ("gemini", "kimi") if not args.only or args.only == m]
+    if (use_deepseek and not args.only) or args.only == "deepseek":
+        active.append("deepseek")
     print(f"\n[brief] {len(prompt)} chars + {len(frames)} frame(s) [{'+'.join(blocks) or 'base'}] -> "
-          f"{'+'.join([m for m in ('gemini','kimi') if not args.only or args.only==m])}\n")
+          f"{'+'.join(active)}\n")
 
     results = {}
     targets = []
@@ -282,11 +328,13 @@ def main():
         targets.append(threading.Thread(target=call_gemini, args=(prompt, frames, args.max_tokens, results)))
     if args.only in (None, "kimi"):
         targets.append(threading.Thread(target=call_kimi, args=(prompt, frames, args.max_tokens, results)))
+    if "deepseek" in active:
+        targets.append(threading.Thread(target=call_deepseek, args=(prompt, frames, args.max_tokens, results)))
     for t in targets: t.start()
     for t in targets: t.join()
 
     os.makedirs(OUT_DIR, exist_ok=True)
-    for name in ("gemini", "kimi"):
+    for name in ("gemini", "kimi", "deepseek"):
         if name in results:
             out = os.path.join(OUT_DIR, f"da-{args.label}-{name}.md")
             open(out, "w", encoding="utf-8").write(results[name])

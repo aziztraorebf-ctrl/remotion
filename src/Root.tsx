@@ -87,6 +87,8 @@ import { Beat2Setup } from "./projects/atlas/peste-1347/Beat2Setup";
 import { Beat3Densite } from "./projects/atlas/peste-1347/Beat3Densite";
 import { Beat4Climax } from "./projects/atlas/peste-1347/Beat4Climax";
 import { Beat5MaliVivant } from "./projects/atlas/peste-1347/Beat5MaliVivant";
+import { Beat6Conclusion } from "./projects/atlas/peste-1347/Beat6Conclusion";
+import { PesteSubtitles } from "./projects/atlas/peste-1347/PesteSubtitles";
 import { Prototype_A_MapboxSatelliteSenegal } from "./projects/_proto-16-9/Prototype_A_MapboxSatelliteSenegal";
 import { Prototype_B_OdometerDataHero } from "./projects/_proto-16-9/Prototype_B_OdometerDataHero";
 import { Prototype_C_CompositionTest } from "./projects/_proto-16-9/Prototype_C_CompositionTest";
@@ -244,10 +246,18 @@ import { ThumbnailMansa } from "./projects/_demos/mansa-moussa/ThumbnailMansa";
 import { ThumbnailSonjataDemo } from "./projects/_demos/sonjata/ThumbnailSonjataDemo";
 import { WarMapEngine, SUDAN_FPS, SUDAN_FLAT_DURATION, SUDAN_OVERLAY_DURATION, SUDAN_EPIC_DURATION } from "./projects/warmap/engine/WarMapEngine";
 import { SahelWarMapEngine, SAHEL_FPS, SAHEL_DURATION } from "./projects/warmap/engine/SahelWarMapEngine";
+import { SahelFriseOverlayDemo } from "./projects/warmap/_shared/SahelFriseOverlayDemo";
+import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepositionnementDemo";
+import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
 import { LobitoWarmapScene, LOBITO_WARMAP_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoWarmapScene";
 import { LobitoVersionA, LOBITO_A_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionA";
 import { LobitoVersionB, LOBITO_B_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionB";
+import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
+import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
+import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
+import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/GoldRouteAtlasZoom";
+import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -520,7 +530,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="PesteBeat2Setup"
           component={Beat2Setup}
-          durationInFrames={691}
+          durationInFrames={449}
           fps={30}
           width={720}
           height={1280}
@@ -528,7 +538,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="PesteBeat3Densite"
           component={Beat3Densite}
-          durationInFrames={1223}
+          durationInFrames={509}
           fps={30}
           width={720}
           height={1280}
@@ -545,6 +555,22 @@ export const RemotionRoot: React.FC = () => {
           id="PesteBeat5MaliVivant"
           component={Beat5MaliVivant}
           durationInFrames={651}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="PesteBeat6Conclusion"
+          component={Beat6Conclusion}
+          durationInFrames={210}
+          fps={30}
+          width={720}
+          height={1280}
+        />
+        <Composition
+          id="PesteSubtitles"
+          component={PesteSubtitles}
+          durationInFrames={3120}
           fps={30}
           width={720}
           height={1280}
@@ -2755,12 +2781,93 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* ACTE 2 Sahel — PROLONGE l'Acte 1 (même moteur). B1 = enjeu caché (bases + flux). */}
+        <Composition
+          id="SahelActe2"
+          component={SahelWarMapEngine}
+          defaultProps={{ acte2: true }}
+          durationInFrames={4200}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Overlay frise — DEMO isolée (valider design avant intégration carte) */}
+        <Composition
+          id="SahelFriseOverlayDemo"
+          component={SahelFriseOverlayDemo}
+          durationInFrames={300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Overlay pré-positionnement — DEMO isolée (valider design avant intégration carte) */}
+        <Composition
+          id="SahelPrepositionnementDemo"
+          component={SahelPrepositionnementDemo}
+          durationInFrames={280}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* GeoConvergence — DEMO isolée (template DA : rayon d'action -> convergence le jour même) */}
+        <Composition
+          id="GeoConvergenceDemo"
+          component={GeoConvergenceDemo}
+          durationInFrames={290}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* SHOWCASE Map Animation — 3 briques visuelles en 40s */}
         <Composition
           id="MapAnimationShowcase"
           component={MapAnimationShowcase}
           durationInFrames={SHOWCASE_DURATION}
           fps={SHOWCASE_FPS}
+          width={1920}
+          height={1080}
+        />
+        {/* TEMPLATES travel-map (R&D autonomie freelance) — fonds Mapbox réels */}
+        <Composition
+          id="Template-MotoVintageMap"
+          component={MotoVintageMap}
+          durationInFrames={450}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Template-SatelliteTravelMap"
+          component={SatelliteTravelMap}
+          durationInFrames={450}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Version NOTRE STACK : route de l'or Atlas (carte parchemin + caravane + HUD éditorial) */}
+        <Composition
+          id="Template-GoldRouteAtlas"
+          component={GoldRouteAtlas}
+          durationInFrames={450}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Variante zoom agressif + territoires teintés or au passage (16:9) */}
+        <Composition
+          id="Template-GoldRouteAtlasZoom"
+          component={GoldRouteAtlasZoom}
+          durationInFrames={450}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Version COMPLETE : marchand PixelLab 8 directions (orienté selon la route) */}
+        <Composition
+          id="Template-GoldRoute8Dir"
+          component={GoldRoute8Dir}
+          durationInFrames={450}
+          fps={30}
           width={1920}
           height={1080}
         />

@@ -478,3 +478,20 @@ Persona: <2-5 words>. Emotion: <2-3 adjectives>.
 - Feu intense : "Intense crackling fire, burning village, wood snapping, embers popping, roaring flames in the distance"
 - Ambiance : "Ambient crackling campfire with distant burning, soft flames licking wood, occasional ember pops"
 - Village brule : "A village burning in the distance, crackling wood, roaring fire, wind carrying smoke, devastation ambiance, no music no voices"
+
+---
+
+## Pipeline TTS-safe long format (Sahel V5, 2026-06-10)
+
+**Limite 5000 caractères/appel** (`eleven_v3`) : un script mid-form (7min ~7000 chars) DÉPASSE.
+→ Découper en 2+ segments à un `[pause]` naturel → générer chacun → concat ffmpeg (re-encode
+libmp3lame, PAS copy, pour éviter glitch de concat MP3). Modèle : `scripts/generate-sahel-narration-v5.py`.
+
+**Scan anti-pièges AVANT appel (scriptable)** : regex `\bont\s+[voyelle]` (liaison) + `\b\d+\b` (chiffres
+arabes → écrire en lettres) + participes `-é/-ée/-és/-ées` en fin de groupe (drop d'accent). Reformuler :
+- participe fin de groupe → verbe présent actif ("routes coupées" → "on y coupait les routes").
+- "ont + voyelle" → présent ("ils ont expulsé" → "ils chassent") ou auxiliaire sans liaison voyelle.
+- "n'a encore tranchée" → "encore en suspens". "ont échoué" → "avaient échoué".
+
+**Réglages expressivité** : `stability` BAS = plus de variation émotionnelle (0.22 défaut Sahel ; tester
+0.10/0.05 + style 0.75-0.90 si trop monotone). Voir benchmark `memory/tools/TTS-VOIX-VIVANTE-BENCHMARK-2026-06.md`.

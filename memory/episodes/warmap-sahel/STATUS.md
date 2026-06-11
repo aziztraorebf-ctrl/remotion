@@ -1,55 +1,82 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-08 (session reconstruction Acte 1 COMPLÈTE)
+**Dernière mise à jour :** 2026-06-10 (refonte script V5 linéaire + pipeline voix vivante + audio découpé par parties)
 **Branche :** `feat/da-brief-gate-warmap-sahel`
+**Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (pipeline expressif V3→STS).
+
+> ⭐ **REPRISE AU RETOUR : section "ÉTAT ACTUEL" ci-dessous.** Le chantier voix est BOUCLÉ.
+> Prochaine étape = re-découpage en beats (avec alignment V5) puis coder Partie 1 (canari).
 
 ---
 
-## ⭐ ÉTAT : ACTE 1 RECONSTRUIT (à valider en full HD, puis Acte 2)
+## ✅ ÉTAT ACTUEL (2026-06-10)
 
-L'Acte 1 a été ENTIÈREMENT reconstruit cette session (parti d'une "bouillie illisible").
-Composition : **`SahelActe1-Final`** (prop `acte1Final`), f0-2299 (77s), isolée des Actes 2-5.
-Dernier render : `out/episodes/warmap-sahel/wip/acte1-FINAL-v3.mp4` (scale 0.5) + corrections après
-(barre virée, taches au front) PAS encore re-rendues en complet.
-Dernières frames full HD validées : `FULLHD-f1400.png` (netteté OK) + `FULLHD-f2167.png` (front).
+### Script — V5 LINÉAIRE LOCKED
+`SCRIPT-V5-LINEAIRE-2026-06-10.md` = le script validé Aziz. Chronologie LINÉAIRE 2012→2026 (règle le bug
+"timeline qui recule"), ton Tremblay, 4 parties + ouverture. Fact-check Sonar Pro appliqué
+(`FACTCHECK-SONAR-V5-2026-06-10.md`). DA upstream 3 voix (`reviews-script-v5/`). Leçons Infographics Show
+(`DECODE-INFOGRAPHICS-SHOW.md`). **NE PAS re-litiger le texte** (Aziz a tranché).
 
-### Ce qui est DANS l'Acte 1 (tout codé + validé en frames)
-**Phase 1 (0-24s)** — allumage séquentiel Mali->Burkina->Niger (fusion Turf + vignette + ville pulse +
-front draw beige) · CEDEAO anneau qui se ROMPT (fissure) · flèches Liptako draw-in + soudure or · FREEZE f572.
-**Phase 2-3 (24-77s)** — nettoyage cognitif f726 (couleurs politiques 0.82->0.42) · GRAINES pulsantes
-(comblent le trou 25-40s) · JETONS-COMBATTANTS (2 archétypes, voir ci-dessous) qui éclosent, se déploient
-dispersés, avancent au front, reculent · TACHES D'INFLUENCE qui grandissent (clippées au front, plus de
-muddy overlap) · friction f2167.
+> Le plan "B1 sprites vivants" original est ABANDONNÉ : le problème B1 était STRUCTUREL (surcharge narrative
+> de tout le script, pas juste B1). Tout a été refondu en V5 linéaire. Brouillons B1 supprimés au ménage 06-10.
 
-### PROCHAINE ACTION (session fraîche)
-1. **Render Acte 1 COMPLET en FULL HD (scale=1)** : `./scripts/render-mapbox.sh SahelActe1-Final
-   out/episodes/warmap-sahel/wip/acte1-FULLHD.mp4` (PAS de --scale → 1920x1080, ~30 min).
-   Vérifier que tout fonctionne (jetons nets, taches au front, barre bas absente, graines, sync voix).
-2. Si OK → l'Acte 1 devient la RÉFÉRENCE DE STYLE. Aligner Actes 2-5 dessus (passe ultérieure).
-3. **Acte 2** : utiliser DA-BRIEF-GATE upstream (review du plan AVANT code) + downstream (review du rendu).
+### Voix — PIPELINE VIVANT VALIDÉ + AUDIO GÉNÉRÉ
+- Pipeline : texte taggé V3 → Océane V3 (`CqTrL0ThT2GJVJEIiLcY`) → STS GéoAfrique (`z3gESu49naEZW8Af2Upm`,
+  `eleven_multilingual_sts_v2`, **stability 0.45**). Doctrine : `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+- Script industrialisé : `scripts/generate-narration-expressive.py` (`--dry-run`, `--sample`, `--only-part`,
+  `--sts-stability`). GÉNÉRATION PAR PARTIES (règle Aziz : jamais en bloc → réparation chirurgicale).
+- Texte taggé : `SCRIPT-V5-TAGGED.txt` (5 parties marquées `### PARTIE`, tags sobres, 4 ellipses ciblées).
+- **Audio FINAL généré + validé Aziz** : `public/_shared/audio/sahel-warmap/narration-v5-expressive.mp3`
+  (7min26, GéoAfrique vivante). Micro-coupures non bloquantes (disparaissent sous SFX/musique).
+- **Forced alignment** : `narration-v5-alignment.json` (loss 0.167, 1096 mots). Script : `sahel-align-and-split-v5.py`.
+- **Découpé en 5 parties** (frontières narratives, timestamps alignment) :
+  - `narration-v5-p0.mp3` (62,8s) — ouverture : hook + les 2 groupes (≈ recouvre l'Acte 1)
+  - `narration-v5-p1.mp3` (35,2s) — origine 2012 / Libye / vide d'État
+  - `narration-v5-p2.mp3` (104,1s) — blocage : Serval/Barkhane → échec 10 ans → Niger → CEDEAO
+  - `narration-v5-p3.mp3` (111,8s) — rupture : AES naît → Kidal → reprise → Moura → 2026
+  - `narration-v5-p4.mp3` (132,1s) — coût/levier/perspective : réfugiés → ressources → confédération → chute
+
+### Coût voix (vérifié API)
+TTS V3 = 1 crédit/char · STS = 1000 crédits/min. 1 narration ~8 700 crédits. Plan **Creator** ($22, 100k/mois).
 
 ---
 
-## ⚠️ AFFINAGES MINEURS OUVERTS (à juger sur le full HD, pas bloquants)
-- Dispersion jetons JNIM : encore un peu groupés au centre (j1 lon -2.4 devrait ressortir plus à l'ouest).
-- Chevauchement résiduel des taches : clippées au front mais vérifier qu'il ne reste pas de zone trouble.
-- Onde de friction f2167 : codée mais peu visible sur frames statiques (juger en mouvement).
+## ▶ PROCHAINE ÉTAPE (session SAHEL)
+1. **Re-découpage en beats** par partie (timing show-don't-tell, avec `narration-v5-alignment.json`).
+   Le storyboard show-don't-tell est dans le script V5 (chaque bloc AUDIO a sa note `> CARTE : ...`).
+2. **Coder Partie 1 d'abord (canari)** → valider → enchaîner. Moteur = `SahelWarMapEngine.tsx`.
+3. **Acte 1 visuel INTACT** (retirer seulement la timeline curseur + re-caler triggers sur le nouvel alignment).
+
+> NB code : le mode `acte2`/B1 actuel dans `SahelWarMapEngine.tsx` est du LEGACY (ancien plan B1 sprites,
+> abandonné). À refondre selon le V5 linéaire + `WARMAP-VIVANTE-GRAMMAIRE.md`.
 
 ---
 
-## ASSETS CLÉS (réutilisables)
-- **Jetons-combattants** : `public/_shared/sprites/warmap/fighter-jnim.png` (chèche clair rural touareg) +
-  `fighter-eigs.png` (cagoule sombre militaire Daesh). Style encre hachuré. Script : `scripts/warmap/gen-sahel-fighters.py`.
-- **Véhicules** (ABANDONNÉS pour format long, gardés pour short) : `technical-jnim/eigs.png`.
-- GeoJSON RÉEL admin-1 : `public/_shared/geo-data/sahel/sahel-admin1.geojson` (32 régions) + `sahel-countries.geojson`.
-- Audio : `public/_shared/audio/sahel-warmap/narration-v1.mp3` (439s) + alignment JSON.
-- Moteur : `src/projects/warmap/engine/SahelWarMapEngine.tsx` (props test : `acte1Final`, `acte1CameraOnly`, etc.).
+## ✅ ACTE 1 VALIDÉ COMME RÉFÉRENCE/BLUEPRINT
+Aziz a validé l'Acte 1 (`SahelActe1-Final`) comme référence de style de la série.
+**RENDER : `out/episodes/warmap-sahel/acte1-FINAL.mp4`** (1920×1080, 2300f, 77s, catbox `slchjv`).
+Contient : allumage séquentiel Mali→Burkina→Niger, CEDEAO qui se rompt, flèches Liptako, jetons-combattants
+(2 archétypes JNIM chèche clair / EIGS cagoule sombre), taches d'influence, friction. Timeline graduée
+bas-écran (à RETIRER en V5 : le récit V5 redémarre la timeline à 2012 en Partie 1).
 
-## TRIGGERS RÉELS Acte 1 (constante A1 dans le moteur)
-Mali f150 · Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · FREEZE f572-632 · drift f726 ·
-JNIM f1198 · EIGS f1749 · friction f2167 · fin f2299.
+### Briques blueprint réutilisables (Parties 2-4)
+Dispersion jetons en losange, pulse région-précise au nommage (`A1_REGION_PULSES`), grain papier
+(`paper-grain.png`), vignette cinéma, respiration finale, ombres jetons. Triggers Acte 1 : Mali f150 ·
+Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · JNIM f1198 · EIGS f1749 · friction f2167 · fin f2299.
 
-## REVIEWS PERSISTÉES (relire avant Acte 2)
-- `review-acte1/` : diagnostic initial (palette=faux coupable, fragmentation=vrai pb).
-- `review-zone2/SYNTHESE-ZONE2.md` + `da-zone2-*` : syndrome aquarium → taches/zoom/traînées.
-- `review-zone2/da-jetons-*` + `DECISION-jetons-vs-vehicules.md` : virage jetons validé.
+---
+
+## ASSETS (réutilisables)
+**Jetons-combattants** : `fighter-jnim.png` (chèche clair) + `fighter-eigs.png` (cagoule sombre).
+**France** : `fighter-france.png` (jeton soldats FR) + `fr-epervier/licorne/sabre.png` + `base-france.png`.
+**Acte 2 (beats à venir)** : `jeton-fama.png`, `jeton-csp.png`, `base-africacorps.png`, `convoi-uranium.png`,
+5 `refugie-*.png` (Djibo/Ménaka/Tillabéri Partie 4). Overlay : `GeoConvergenceOverlay.tsx` (présence FR).
+**GeoJSON** : `public/_shared/geo-data/sahel/sahel-admin1.geojson` (32 régions) + `sahel-countries.geojson`.
+**Faits** : `FACTS-PREPOSITIONNEMENT-2013.md` (bases FR pré-positionnées, ressert Partie 2).
+
+---
+
+## DOCTRINES LIÉES
+- `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — format long (carte permanente, overlays 3 niveaux, 5 actes).
+- `memory/doctrines/WARMAP-VIVANTE-GRAMMAIRE.md` — dynamisme (R-V1..R-V4, board clearing, Ken Burns, 1 transfo/plan).
+- `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` + doctrine Tremblay — niveau oral du script.

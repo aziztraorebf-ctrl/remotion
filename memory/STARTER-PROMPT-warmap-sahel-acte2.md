@@ -1,40 +1,35 @@
-# STARTER — War-Map Sahel : valider Acte 1 full HD, puis Acte 2
+# STARTER — War-Map Sahel : coder les Parties (script V5 + voix bouclés)
 
-> Session fraîche. L'Acte 1 a été reconstruit (session 2026-06-07/08). À VALIDER en full HD, puis Acte 2.
-> Branche : `feat/da-brief-gate-warmap-sahel`.
+> Branche : `feat/da-brief-gate-warmap-sahel`. Le script V5 LINÉAIRE et la VOIX sont terminés (2026-06-10).
+> Reste = re-découper en beats puis CODER les Parties 1-4 (Acte 1 visuel intact).
 
 ## À LIRE EN PREMIER (dans cet ordre)
-1. `memory/episodes/warmap-sahel/STATUS.md` — état complet + prochaine action.
-2. `memory/episodes/warmap-sahel/LECONS-RECONSTRUCTION-ACTE1.md` — erreurs à ne pas refaire + patterns concluants.
-3. `memory/episodes/warmap-sahel/DECISION-jetons-vs-vehicules.md` — pourquoi jetons (pas véhicules) en format long.
-4. `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — doctrine format War-Map Long.
+1. `memory/episodes/warmap-sahel/STATUS.md` — état complet + assets + prochaine étape.
+2. `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` — LE script validé (notes `> CARTE :` = storyboard).
+3. `memory/doctrines/WARMAP-VIVANTE-GRAMMAIRE.md` — R-V1..R-V4 (board clearing, Ken Burns, 1 transfo/plan).
+4. `memory/episodes/warmap-sahel/DECISION-jetons-vs-vehicules.md` — jetons (pas véhicules) en format long.
+5. `memory/episodes/warmap-sahel/LECONS-RECONSTRUCTION-ACTE1.md` — erreurs à ne pas refaire.
 
-## ÉTAPE 1 (démarrage immédiat) — RENDER ACTE 1 FULL HD
-```
-./scripts/render-mapbox.sh SahelActe1-Final out/episodes/warmap-sahel/wip/acte1-FULLHD.mp4
-```
-(PAS de --scale → 1920x1080 natif, ~30 min. Lancer en background.)
-**Vérifier** : jetons nets + lisibles · 2 archétypes distincts (chèche clair JNIM / cagoule sombre EIGS) ·
-taches d'influence s'arrêtent au front (pas de bouillie brune) · barre événement bas ABSENTE · graines
-pulsantes f750-1000 · allumage séquentiel Mali->Burkina->Niger · CEDEAO fissure · sync voix.
-**Affinages mineurs possibles** (voir STATUS) : dispersion jetons, chevauchement résiduel, onde friction.
+## AUDIO PRÊT (généré + découpé)
+`public/_shared/audio/sahel-warmap/` : `narration-v5-expressive.mp3` (7min26, validé Aziz) +
+`narration-v5-p0→p4.mp3` (5 parties) + `narration-v5-alignment.json` (loss 0.167, triggers frames).
 
-## ÉTAPE 2 — ACTE 2 (après validation Acte 1)
-Le moteur `SahelWarMapEngine.tsx` contient déjà les Actes 2-5 (ancien code). L'Acte 1 est la RÉFÉRENCE
-DE STYLE — aligner les Actes 2-5 sur ses mécaniques (jetons, taches, fusion, vignette, caméra vivante).
-**PROCÉDÉ Acte 2 (demande Aziz) : DA-BRIEF-GATE upstream + downstream.**
-- UPSTREAM : `scripts/tools/da-brief.py --upstream` (review du PLAN de l'Acte 2 AVANT de coder, sur la
-  narration réelle de l'Acte 2 beat par beat). Gemini + Kimi valident l'approche.
-- DOWNSTREAM : `da-brief.py` (review du rendu) ou `da-compare.py` pour comparer à la référence.
-- Toujours : Gemini/Kimi = signal jamais juge. Aziz tranche le goût.
+## ÉTAPE 1 — re-découpage en beats
+À partir de `narration-v5-alignment.json` + notes `> CARTE :` du script V5 : définir les beats de chaque
+partie (timing show-don't-tell). Une partie = un bloc de la narration découpée.
 
-## CONTEXTE NARRATION (pour situer)
-Acte 1 (fait) = "deux groupes armés JNIM + EIGS, il faut les voir séparément".
-Acte 2+ = suite du récit AES (embrasement, bases militaires, naissance AES, Kidal, réfugiés, ressources).
-Triggers Actes 2-5 déjà dans le moteur (F_EXPANSION_START f2630, etc.) — voir SahelWarMapEngine.tsx.
+## ÉTAPE 2 — coder Partie 1 (canari)
+Moteur `src/projects/warmap/engine/SahelWarMapEngine.tsx`. Le mode `acte2`/B1 actuel = LEGACY (ancien plan
+sprites, abandonné) → refondre selon V5 + grammaire vivante. Acte 1 visuel INTACT (retirer timeline curseur
++ re-caler triggers sur alignment V5). Valider Partie 1 en render → enchaîner Parties 2-4.
 
-## OUTILS
-- Render : `./scripts/render-mapbox.sh <CompoId> <out.mp4> [--scale=N] [--frames=A-B]`. remotion still NE
-  marche PAS pour Mapbox (WebGL). Full HD = pas de --scale. Validation rapide = --scale=0.4.
+## DA-BRIEF-GATE (procédé Aziz, par partie)
+- UPSTREAM `scripts/tools/da-brief.py --upstream` : review du PLAN d'une partie AVANT de coder.
+- DOWNSTREAM `da-brief.py` / `da-compare.py` : review du rendu (vs Acte 1 référence).
+- Gemini/Kimi = signal jamais juge. Aziz tranche le goût.
+
+## OUTILS / RÈGLES
+- Render : `./scripts/render-mapbox.sh <CompoId> <out.mp4> [--scale=N]`. Mapbox = WebGL, `remotion still` NE marche PAS.
 - ⚠️ Juger la NETTETÉ uniquement en full HD (scale 0.4 = flou, fait douter du design à tort).
-- DA-BRIEF-GATE : `scripts/tools/da-brief.py` (--upstream / --expert) + `da-compare.py`.
+- Voix : refaire une partie = `generate-narration-expressive.py --only-part pX` (réparation chirurgicale).
+- Jetons circulaires (2 archétypes JNIM/EIGS), 1 transformation à la fois, board clearing entre beats, caméra jamais statique.

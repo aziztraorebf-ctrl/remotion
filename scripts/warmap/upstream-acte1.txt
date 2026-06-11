@@ -1,0 +1,70 @@
+CONTEXTE
+War-map documentaire "L'Alliance des États du Sahel : la fracture" (Mali + Burkina + Niger),
+format 16:9 horizontal, chaîne YouTube "Kora & Cartes", ton analyste grave. Stack : Remotion +
+Mapbox reskin parchemin. On te montre des frames de l'ÉTAT ACTUEL de l'Acte 1 (déjà bien amélioré)
++ le plan complet. On VA recoder l'Acte 1 proprement — ta mission est de nous aider à le construire
+PARFAITEMENT du premier coup, AVANT qu'on écrive le code. Tu n'évalues pas un produit fini, tu
+CONSEILLES LA CONSTRUCTION.
+
+CE QU'ON A DÉJÀ CORRIGÉ / VALIDÉ PAR RENDER (NE PAS re-diagnostiquer ça — c'est PROUVÉ) :
+Un socle correctif a été testé itérativement (A→B→B2→B3) et validé à l'image. Les frames + la
+vidéo B3 jointes montrent CET état actuel. 6 mécaniques en place :
+1. FUSION territoriale (Turf union) : 32 micro-régions → 3 grandes masses nettes par faction
+   (fragmentation = réglée, fini la "bouillie"). Règle d'or : découpage fin → couleur UNIE.
+2. VIGNETTAGE géographique : voisins hors-AES en sépia ~42% → le Sahel POPE ("contraste par le calme").
+3. CAMÉRA continue : glissement + zoom-in doux (fini les plans fixes "PowerPoint").
+4. ALLUMAGE SÉQUENTIEL : la carte SE CONSTRUIT au rythme du récit (Mali → Burkina → Niger),
+   fill-opacity 0→0.82 par pays depuis son trigger. C'est le hook.
+5. POINTS-VILLES PULSANTS liés à l'allumage (Mali→Bamako, BFA→Ouaga, NER→Niamey).
+6. FRONTS qui se DESSINENT (draw-in stroke-dashoffset) en BEIGE #F3E9C8 quand le pays s'allume.
+Décisions de goût validées Aziz : contours/villes = BEIGE #F3E9C8 (l'or se confondait avec l'or
+contesté) · vignette sépia #241809 42% · allumage séquentiel retenu · palette factions INCHANGÉE
+(bleu #3E6E9E état, rouge #B14B3C JNIM, or #C99A3A contesté — excellente, marche au Soudan).
+- Véhicules réels top-down (JNIM rouge / EIGS orange-brun) = NOTRE DIFFÉRENTIEL assumé. GARDÉS,
+  bien exécutés (taille/intégration/mouvement avec but/différenciation). Ne propose PAS de les retirer.
+
+NB timing : les frames de test utilisent un timing ARTIFICIEL (valide la MÉCANIQUE). Dans l'Acte 1
+final les triggers seront calés sur le forced-alignment réel (Mali f151, Burkina f231, Niger f301).
+
+NOTRE STACK (boîte à outils — reste DEDANS) :
+Mapbox carte parchemin, drift caméra frame-driven (map.jumpTo), remplissage régions data-driven,
+ondes radiales/pulses SVG (map.project), flèches qui poussent (marching ants), vignettage, grain,
+désaturation, anneaux/glows SVG, cartouches/tampons texte, FlagFill, labels villes au mot exact,
+SFX synchronisés, easing non-linéaires (spring/cubic). INTERDIT : filter:blur CSS, 3D, particules,
+depth-of-field, After Effects, volumétrique, geo-layers complexes.
+
+SCRIPT ACTE 1 (narration FR + frame exacte @30fps de chaque mot-clé) :
+[f0] "En moins de trois ans, trois pays ont tout changé en même temps." (vue Sahel, drift)
+[f151 "expulsé"] "Ils ont expulsé leurs partenaires militaires." (Mali surligné)
+[f231 "Rompu"] "Rompu leurs alliances historiques." (Burkina)
+[f302 "Quitté"] "Quitté la principale organisation régionale du continent." (Niger + anneau CEDEAO clignote/s'éteint)
+[f423 "construit"] "Et construit, à la place, quelque chose de nouveau." (3 vecteurs capitales convergent → Liptako-Gourma pulse or)
+[f572 "possible"] "Comment est-ce possible ? Et surtout — pourquoi maintenant ?" (CARTE FIGÉE 2s, silence)
+[f727 "répondre"] "Pour répondre... il faut regarder ce qui existait avant. Et ce qui ne fonctionnait plus." (drift reprend)
+[f1014] "Dans cette région, deux groupes armés se sont développés au fil des années. Et ils n'ont pas grand-chose en commun."
+[f1164 "premier" / f1198 "JNIM"] "Le premier s'appelle le JNIM. C'est un groupe lié à Al-Qaïda." (zone JNIM rouge centre Mali + nord Burkina + tampon)
+[f1396 "centre"] "Il opère surtout dans les zones rurales — le centre du Mali, le nord du Burkina — terreau de tensions éleveurs/agriculteurs." (véhicules JNIM patrouillent)
+[f1717 "second" / f1749 "l'EIGS"] "Le second s'appelle l'EIGS. Lui est lié à Daesh." (zone EIGS orange-brun trois-frontières + Tillabéri + tampon)
+[f1815 "est" / f1876 "préfère"] "Il préfère l'est — la zone des trois frontières, le nord-ouest du Niger." (véhicules EIGS)
+[f2167 "combattent"] "Les deux groupes ne coopèrent pas. Parfois, ils se combattent." (JNIM et EIGS se rapprochent → friction → reculent)
+[f2299 "séparément"] "Pour lire la carte correctement, il faut les voir séparément." (véhicules s'estompent, 2 zones distinctes, figé 1s — FIN ACTE 1)
+
+CE QU'ON DEMANDE (3 volets — réponds aux 3, c'est une review LARGE en une fois) :
+
+VOLET A — ENCHAÎNEMENT BEAT PAR BEAT (le plus important)
+Si TU étais l'expert qui construit cet Acte 1 : donne l'enchaînement IDÉAL, beat par beat, en
+suivant le timing ci-dessus. Pour chaque moment : qu'apparaît/s'anime, dans quel ORDRE, avec quel
+type d'animation/easing, qu'est-ce qui s'efface, où sont les RESPIRATIONS. Objectif : qu'un
+spectateur lambda (qui ne connaît pas le Sahel) comprenne TOUT à chaque instant, sans surcharge.
+
+VOLET B — NOS TEMPLATES + CATALOGUE
+2e avis sur nos choix (allumage frontière dorée, anneau CEDEAO, flèches convergence, tampons
+centraux, véhicules). Si tu connais le catalogue Map Animation joint, lesquels tu utiliserais/
+combinerais autrement pour ces moments, et pourquoi ? Qu'est-ce qui manque dans notre plan ?
+
+VOLET C — ÉVITER L'AI-SLOP (préventif)
+D'après ce plan + l'état actuel, qu'est-ce qui RISQUE encore de faire "amateur / généré par IA"
+une fois codé ? Pour chaque risque : la parade concrète à appliquer dès la conception.
+
+FORMAT : structuré, concret, actionnable. Chaque suggestion DANS notre stack. Pas de prose vague.
+On filtre ensuite — donne-nous le maximum de valeur en une passe.

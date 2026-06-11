@@ -1,6 +1,64 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-06. A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-10. A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🔴 PRIORITÉ — WAR-MAP SAHEL : SCRIPT V5 LOCKED + AUDIO GÉNÉRÉ (2026-06-10, session majeure)
+
+**VIRAGE : B1 n'était qu'un symptôme. On a refondu TOUT le script (surcharge narrative globale).**
+> ⭐ REPRISE : lire `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` (LE script validé) +
+> `STATUS.md` (état détaillé). Tout le travail de cette session y est consolidé.
+
+**FAIT cette session :**
+- DA upstream 3 voix sur SCRIPT COMPLET → re-découpage show-don't-tell. Base **DeepSeek (chrono LINÉAIRE)**.
+- Décodage Infographics Show (grammaire d'explication) → `DECODE-INFOGRAPHICS-SHOW.md` (8 leçons).
+- **Fact-check Sonar Pro complet** → 1 erreur + 5 imprécisions corrigées + ajout confédération/force conjointe 2024.
+- **SCRIPT V5 LOCKED** (linéaire + Tremblay anti-télégraphique + factuel + sources à l'écran prévues).
+- **AUDIO V5 généré** : `public/_shared/audio/sahel-warmap/narration-v5.mp3` (7min28, catbox phmh9q).
+  Acte 1 visuel INTACT (sauf retrait timeline) ; réécriture = Parties 1-4. Chute = résister/construire/durer.
+
+**CHANTIER VOIX — RÉSOLU (pipeline validé Aziz) :**
+- ⭐ **PIPELINE RETENU : ElevenLabs V3 + tags → Speech-to-Speech vers GéoAfrique.** Doctrine complète :
+  `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`. Écrire texte taggé (`[whispers]`/`[solemn]`/`[dramatic]`)
+  → générer voix V3 FR (Océane `CqTrL0ThT2GJVJEIiLcY`) → convertir vers GéoAfrique (`z3gESu49naEZW8Af2Upm`)
+  via `eleven_multilingual_sts_v2`. L'émotion se transmet au timbre de marque. VALIDÉ à l'oreille.
+- Écarté : Hume (O1 accent FR, O2 ≈ EL), Google seul (trop lent/conteur), clonage pro EL, Auphonic.
+- Benchmarks : `TTS-EXPRESSIVITE-RECHERCHE-2026-06.md` + `TTS-VOIX-VIVANTE-BENCHMARK-2026-06.md` + `hume-octave.md`.
+
+> ⭐⭐ **BRIEF DE PASSATION COMPLET (pour session parallèle) : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-10.md`** — autonome, reprend tout le contexte.
+
+**NEXT (2 sessions) :**
+- **Session VOIX** : (1) WebSearch techniques expressivité max V3 (CAPS, `...`, tags avancés) ;
+  (2) WebSearch/calcul PRICING ElevenLabs (+5$ crédits API vs palier sup, Aziz proche du cap) ;
+  (3) industrialiser pipeline en 1 script → régénérer narration-v5 Sahel en version vivante.
+- **Session SAHEL** : forced alignment → re-découpage beats (show-don't-tell, 4 parties) → coder Partie 1
+  (canari) → enchaîner. Assets réutilisés. Acte 1 visuel intact (retirer timeline + re-caler triggers).
+
+---
+
+## ✅ PESTE 1347 — ASSEMBLAGE COMPLET (2026-06-08, 3 sessions) — EN ATTENTE RETOURS
+
+**Mid-form Atlas COMPLET et assemblé.** Livrable : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4` (1min43s).
+**Lien render final (Aziz l'a gardé) : https://litter.catbox.moe/xl5tmz.mp4 (litterbox 72h → expire ~11 juin).**
+
+**Tout ce qui a été fait (3 sessions 06-08) :**
+- Bugs corrigés : écrans noirs (localF standalone), queues mortes (durationInFrames absolu),
+  caravane brisée (assets empire-ghana), outre-mer rouges (clipPath Europe Beat2/3/4).
+- Améliorations Gemini downstream (da-compare ×2 vs Mansa Moussa, TOUTES validées) : zoom caméra suit
+  la caravane · trace dorée (remplace triangle) · frontières Mali ocre · bateau Beat5 agrandi+ralenti ·
+  easing caravane Beat4 · zoom continu Beat5 · musique CONTINUE (1 morceau au concat, fini les coupures).
+- 3 sources affichées (Beat3 al-Maqrizi+Britannica, Beat4 Parasites&Vectors+JHU, Beat5 Ibn Battuta+WHE).
+- Sous-titres sobres analyste (forced-alignment EL + couche Remotion ProRes overlay, ffmpeg local sans libass).
+
+**⏳ PROCHAINE SESSION = COURTE.** Aziz visionne en parallèle, donnera ses observations s'il reste des
+retouches. Il pense que c'est complet. Reprise : `memory/episodes/peste-1347/STATUS.md` (3 sessions détaillées)
++ `key-learnings.md` (4 learnings durables 06-08). Beats finaux dans wip/ : beat1/2/6-v5, beat3/4/5-v6.
+Assemblage = `/tmp/peste-concat-v8.txt` + musique music-c-desert + overlay /tmp/peste-subs.mov
+(NB : /tmp purgé au reboot → re-générer la couche subs via compo `PesteSubtitles` si besoin).
+
+**NON BLOQUANT (avis Gemini, si Aziz veut une passe) :** propagation peste = aplat rouge (vs tracé SVG
+organique), encarts texte (signature Atlas — désaccord goût), océan sans texture.
 
 ---
 
@@ -24,26 +82,32 @@ Logs : `scripts/tiktok-schedule-log.json` (Postiz TikTok) + IDs TryPost dans ORD
 
 ---
 
-## 🔥 PROCHAINE SESSION = Valider Acte 1 War-Map Sahel en FULL HD, puis ACTE 2
+## 🔥 WAR-MAP SAHEL — script V5 + voix BOUCLÉS, place au CODE (2026-06-10)
 
-> ✅ **ACTE 1 RECONSTRUIT (session 2026-06-07/08).** Parti d'une "bouillie illisible" -> acte structure
-> premium. Composition `SahelActe1-Final`. **STARTER : `memory/STARTER-PROMPT-warmap-sahel-acte2.md`.**
+> ⭐ **LIRE `memory/episodes/warmap-sahel/STATUS.md` EN PREMIER** — état complet à jour.
 
-**DEMARRER PAR :** render Acte 1 en FULL HD (scale=1) pour valider la qualite finale :
-`./scripts/render-mapbox.sh SahelActe1-Final out/episodes/warmap-sahel/wip/acte1-FULLHD.mp4` (~30 min, background).
-Puis ACTE 2 avec DA-BRIEF-GATE **upstream + downstream** (demande Aziz).
+**Le chantier VOIX est terminé.** Acquis cette session :
+- **Script V5 LINÉAIRE LOCKED** (`SCRIPT-V5-LINEAIRE-2026-06-10.md`) — refonte structurelle (le problème B1
+  était une surcharge narrative de TOUT le script, pas juste B1). Fact-check Sonar appliqué. Plan B1 sprites ABANDONNÉ.
+- **Pipeline voix vivante** validé + industrialisé : `scripts/generate-narration-expressive.py` (texte taggé
+  V3 Océane → STS GéoAfrique stability 0.45). Doctrine : `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+  Règle gravée : générer PAR PARTIES, jamais en bloc (réparation chirurgicale `--only-part`).
+- **Audio FINAL généré + validé Aziz** : `narration-v5-expressive.mp3` (7min26) + découpé en 5 parties
+  (`narration-v5-p0→p4.mp3`) + forced alignment (`narration-v5-alignment.json`, loss 0.167).
+- Plan EL : passé à **Creator** ($22). 1 narration ~8700 crédits.
 
-**Ce qui a ete fait (Acte 1) :** allumage sequentiel + CEDEAO fissure + fleches + freeze (phase 1) ·
-graines comblant le trou + JETONS-COMBATTANTS (virage valide) + taches d'influence + friction (phase 2-3).
+**← PROCHAINE ÉTAPE (session SAHEL, code) :**
+1. **Re-découpage en beats** par partie (timing show-don't-tell, avec l'alignment V5). Storyboard = notes
+   `> CARTE :` du script V5.
+2. **Coder Partie 1 d'abord (canari)** → valider → enchaîner. Moteur = `SahelWarMapEngine.tsx`.
+   Le mode `acte2`/B1 actuel = LEGACY à refondre selon V5 + `WARMAP-VIVANTE-GRAMMAIRE.md` (R-V1..R-V4).
+3. **Acte 1 visuel INTACT** (retirer seulement timeline curseur + re-caler triggers sur alignment V5).
 
-**DECISION STRUCTURANTE — JETONS, PAS VEHICULES (format LONG) :** les vehicules-sprites = echelle
-absurde en plan large 16:9 (probleme STRUCTUREL, pas un reglage). Format long = jetons circulaires
-(abstraction lisible a toute echelle). Format short serre = vehicules OK. Voir
-`DECISION-jetons-vs-vehicules.md`. Les jetons SE DEPLACENT avec intention. 2 archetypes differencies
-par PERSONNAGE (cheche clair JNIM / cagoule sombre EIGS).
+**DÉCISION STRUCTURANTE conservée — JETONS, PAS VÉHICULES (format LONG) :** jetons circulaires (abstraction
+lisible à toute échelle). 2 archétypes (chèche clair JNIM / cagoule sombre EIGS). Voir `DECISION-jetons-vs-vehicules.md`.
 
-**Fiches reprise :** `STATUS.md` + `LECONS-RECONSTRUCTION-ACTE1.md` (erreurs a ne pas refaire) +
-reviews persistees (`review-acte1/` + `review-zone2/`).
+**Acte 1 = référence/blueprint validée** (`acte1-FINAL.mp4`, catbox `slchjv`). Briques réutilisables : pulse
+région au nommage, grain papier, vignette, dispersion jetons losange, ombres. Détail : `STATUS.md`.
 
 ---
 
