@@ -41,64 +41,62 @@ const FR_BASES: FrBase[] = [
   { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], extinctAt: F_ECHEC + 240 }, // remonte nord T3b
 ];
 
-// FRONT MOUVANT : key-shapes du bord d'attaque jihadiste (lon/lat), interpolés dans le temps.
-// Le front part du Liptako (sud-est, foyer historique) et REMONTE/ENSERRE le triangle FR.
-// Chaque "shape" = anneau de points géo qui décrivent le bord de la zone contrôlée. On interpole
-// point à point entre 2 shapes consécutives (même longueur) → morphing organique.
-// 3 états : large (lâche, sud) → moyen (monte) → serré (a englobé Gao/Ménaka).
+// FRONT MOUVANT DÉCHIQUETÉ — généré PROCÉDURALEMENT (pas un ovale lisse).
+// Un vrai front grignote : bord irrégulier, croît dans le temps, vibre légèrement.
+// Centre = barycentre décalé sud-est (origine Liptako). Rayon de base croissant + bruit
+// déterministe par angle (déchiqueté) + ondulation animée (le front "respire" en avançant).
 type GeoRing = [number, number][];
-const FRONT_SHAPES: { at: number; ring: GeoRing }[] = [
-  {
-    at: F_ECHEC, // état 0 : front lâche au sud-est (Liptako)
-    ring: [
-      [-1.5, 14.2], [1.0, 13.8], [3.5, 14.0], [4.5, 15.5],
-      [3.8, 17.0], [2.0, 17.2], [0.0, 16.8], [-1.8, 16.0],
-    ],
-  },
-  {
-    at: F_ECHEC + 90, // état 1 : remonte, enveloppe Gao/Ménaka
-    ring: [
-      [-2.2, 14.5], [0.8, 14.0], [3.8, 14.6], [5.0, 16.2],
-      [4.2, 18.4], [2.2, 18.8], [-0.4, 18.0], [-2.6, 16.5],
-    ],
-  },
-  {
-    at: F_ECHEC + 220, // état 2 : étreinte serrée tout le triangle (jusqu'à Tessalit)
-    ring: [
-      [-2.6, 14.6], [1.0, 14.2], [4.4, 15.0], [5.6, 17.5],
-      [4.6, 20.6], [1.6, 21.2], [-1.4, 20.2], [-3.0, 17.0],
-    ],
-  },
+const FRONT_CENTER: [number, number] = [0.9, 16.4];     // entre Gao/Ménaka, décalé est
+const FRONT_N = 20;                                       // nb de points (plus = plus découpé)
+// Rayons lon/lat de base (la zone est plus large en lon qu'en lat), croissants dans le temps.
+const FRONT_GROW: { at: number; rLon: number; rLat: number }[] = [
+  { at: F_ECHEC, rLon: 2.6, rLat: 2.0 },        // lâche au départ (sud-est)
+  { at: F_ECHEC + 90, rLon: 3.6, rLat: 2.8 },   // remonte, enveloppe Gao/Ménaka
+  { at: F_ECHEC + 220, rLon: 4.4, rLat: 4.0 },  // étreinte serrée jusqu'à Tessalit
 ];
+// Bruit déterministe par index d'angle (déchiqueture fixe du contour) — pseudo-aléatoire stable.
+function jag(i: number): number {
+  const s = Math.sin(i * 12.9898) * 43758.5453;
+  return (s - Math.floor(s)) * 2 - 1; // [-1, 1]
+}
+// Construit l'anneau géo déchiqueté au temps `frame`.
+function buildFrontRing(frame: number): GeoRing {
+  // rayon de base interpolé (croissance)
+  let rLon = FRONT_GROW[FRONT_GROW.length - 1].rLon;
+  let rLat = FRONT_GROW[FRONT_GROW.length - 1].rLat;
+  if (frame <= FRONT_GROW[0].at) { rLon = FRONT_GROW[0].rLon; rLat = FRONT_GROW[0].rLat; }
+  else for (let i = 0; i < FRONT_GROW.length - 1; i++) {
+    const a = FRONT_GROW[i], b = FRONT_GROW[i + 1];
+    if (frame >= a.at && frame <= b.at) {
+      const t = (frame - a.at) / (b.at - a.at);
+      const e = t * t * (3 - 2 * t);
+      rLon = a.rLon + (b.rLon - a.rLon) * e;
+      rLat = a.rLat + (b.rLat - a.rLat) * e;
+      break;
+    }
+  }
+  const ring: GeoRing = [];
+  for (let i = 0; i < FRONT_N; i++) {
+    const ang = (i / FRONT_N) * Math.PI * 2;
+    // déchiqueture : ±22% de rayon, modulée par une ondulation animée lente (grignotage)
+    const noise = jag(i) * 0.22 + 0.10 * Math.sin(ang * 3 + frame * 0.05);
+    const f = 1 + noise;
+    ring.push([
+      FRONT_CENTER[0] + Math.cos(ang) * rLon * f,
+      FRONT_CENTER[1] + Math.sin(ang) * rLat * f,
+    ]);
+  }
+  return ring;
+}
 
 // Palette
 const RED_INK = "#8B3A3A";     // rouge-brique (front, décision Aziz)
 const RED_DEEP = "#5A2424";    // rouge sourd (arrière du front, acquis)
 const STEEL = "#5E7FA0";       // bleu-acier (base vivante)
-const STEEL_DEAD = "#8A857B";  // gris-brun (base morte)
 
 // ============================================================
 // HELPERS
 // ============================================================
-// Interpolation d'un anneau géo entre 2 shapes (même nb de points), au temps `frame`.
-function interpRing(frame: number): GeoRing {
-  const shapes = FRONT_SHAPES;
-  if (frame <= shapes[0].at) return shapes[0].ring;
-  if (frame >= shapes[shapes.length - 1].at) return shapes[shapes.length - 1].ring;
-  for (let i = 0; i < shapes.length - 1; i++) {
-    const a = shapes[i], b = shapes[i + 1];
-    if (frame >= a.at && frame <= b.at) {
-      const t = (frame - a.at) / (b.at - a.at);
-      const e = t * t * (3 - 2 * t); // smoothstep
-      return a.ring.map((p, k) => [
-        p[0] + (b.ring[k][0] - p[0]) * e,
-        p[1] + (b.ring[k][1] - p[1]) * e,
-      ]);
-    }
-  }
-  return shapes[shapes.length - 1].ring;
-}
-
 // Path SVG lisse (Catmull-Rom → bezier) fermé, à partir de points écran.
 function smoothClosedPath(pts: { x: number; y: number }[]): string {
   if (pts.length < 3) return "";
@@ -156,8 +154,8 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
   if (!ctx) return null;
   const { frame, width, height, project } = ctx;
 
-  // ── FRONT MOUVANT : anneau géo interpolé → projeté → path lisse ──
-  const ring = interpRing(frame);
+  // ── FRONT MOUVANT : anneau géo déchiqueté procédural → projeté → path lisse ──
+  const ring = buildFrontRing(frame);
   const ringPx = ring.map(([lon, lat]) => project(lon, lat));
   const frontPath = smoothClosedPath(ringPx);
   // Le front apparaît à F_ECHEC (fade-in court).
