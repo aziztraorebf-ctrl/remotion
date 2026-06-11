@@ -1239,6 +1239,23 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     }
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: 0, bearing: 0 });
 
+    // PARTIE 1 (V5) — VIDE D'ÉTAT (beat 1.3) : au mot "absent" (f2743), l'opacité du
+    // fill de contrôle CHUTE (l'État rural s'évapore). On multiplie l'expression
+    // d'opacité existante par un facteur décroissant (garde la structure coalesce).
+    if (partie1 && map.getLayer("sahel-fill")) {
+      const F_ABSENT = 2743;
+      const voidFactor = interpolate(frame, [F_ABSENT, F_ABSENT + 70], [1, 0.16], {
+        extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+      });
+      const baseOp: any = effSeqIgnite
+        ? ["coalesce", ["get", "igniteOp"], 0]
+        : 0.82;
+      try {
+        map.setPaintProperty("sahel-fill", "fill-opacity",
+          (["*", baseOp, voidFactor] as any));
+      } catch {}
+    }
+
     // CORRECTION B (test) : reprojeter la silhouette AES (3 pays) en paths SVG pixels
     // pour le masque-trou de la vignette géographique.
     if (effVignette && srcC && (srcC as any)._data) {

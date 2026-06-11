@@ -29,6 +29,8 @@ const F_2012 = 2102;   // "bascule"
 const F_LIBYE = 2178;  // "Libye"
 const F_PULSE = 2210;  // "s'effondre" -> pulse Libye (effondrement)
 const F_TRAIT = 2305;  // "flot d'armes" -> trait d'encre Libye->Mali + taches
+const F_ABSENT = 2743; // "absent" -> vide d'Etat (gere par le moteur via partieVoid)
+const F_TENSIONS = 2844; // "tensions" -> hachures dans le vide
 
 // Encre parchemin (coherence palette Sahel)
 const INK = "#3A2A18";
@@ -54,6 +56,12 @@ const IMPACTS: { coord: [number, number]; delay: number }[] = [
   { coord: [-3.01, 16.79], delay: 12 }, // Tombouctou
 ];
 const IMPACT_COLOR = "#8B3A3A"; // rouge-sombre encre (PAS flammes)
+
+// Zone du VIDE (rural nord/centre Mali + Liptako) — hachures de tension.
+// Polygone geo grossier (lon,lat) couvrant le vide d'Etat.
+const VOID_ZONE: [number, number][] = [
+  [-3.5, 17.4], [1.8, 18.0], [2.6, 15.4], [0.2, 13.9], [-3.2, 14.6], [-4.2, 16.0],
+];
 
 type Props = {
   ctx: SahelRenderContext | null;
@@ -116,6 +124,20 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
   });
   const F_IMPACT = F_TRAIT + traitDur - 6; // taches a l'arrivee du trait
 
+  // -------- BEAT 1.3 : veine persistante + hachures tensions --------
+  // Le trait 1.2 -> veine fine (opacity 0.2) persistante apres la pose des taches.
+  const veineOp = interpolate(frame, [F_IMPACT + 30, F_IMPACT + 60], [0, 0.2], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  // Hachures (pattern diagonal) fade-in au mot "tensions" (f2844), dans le vide.
+  const hachuresOp = interpolate(frame, [F_TENSIONS, F_TENSIONS + 30], [0, 0.35], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const voidPx = VOID_ZONE.map(([lon, lat]) => project(lon, lat));
+  const voidD = voidPx.length
+    ? "M" + voidPx.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z"
+    : "";
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg
@@ -127,6 +149,15 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           {/* mask de remplissage pour "2012" (revele gauche->droite) */}
           <clipPath id="p1-2012-fill">
             <rect x={0} y={0} width={width * y2012Fill} height={height} />
+          </clipPath>
+          {/* hachures diagonales (tension) */}
+          <pattern id="p1-hachures" width={9} height={9} patternUnits="userSpaceOnUse"
+            patternTransform="rotate(45)">
+            <line x1={0} y1={0} x2={0} y2={9} stroke={INK_DEEP} strokeWidth={1.1} />
+          </pattern>
+          {/* clip = zone du vide (pour borner les hachures) */}
+          <clipPath id="p1-void-clip">
+            {voidD && <path d={voidD} />}
           </clipPath>
         </defs>
 
@@ -211,6 +242,19 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
             </g>
           );
         })}
+
+        {/* BEAT 1.3 — veine persistante (le trait 1.2 attenue, reste a l'ecran). */}
+        {veineOp > 0 && traitD && (
+          <path d={traitD} fill="none" stroke={INK_DEEP} strokeWidth={1.4}
+            strokeOpacity={veineOp} strokeLinecap="round" style={{ mixBlendMode: "multiply" }} />
+        )}
+
+        {/* BEAT 1.3 — hachures de tension dans le vide d'Etat. */}
+        {hachuresOp > 0 && voidD && (
+          <g clipPath="url(#p1-void-clip)" style={{ mixBlendMode: "multiply" }} opacity={hachuresOp}>
+            <path d={voidD} fill="url(#p1-hachures)" />
+          </g>
+        )}
 
         {/* "2012" — cartouche date en encre, ancre bas-gauche (ou la timeline Acte 1
             etait). Se remplit au mot "bascule". Repere temporel du redemarrage du recit. */}
