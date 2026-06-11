@@ -9,7 +9,28 @@
 
 ---
 
-## ✅ PARTIE 2 CODÉE (2026-06-11) — les 6 beats faits, en attente validation Aziz
+## ⛔ REPRISE PROCHAINE SESSION (2026-06-11 soir) — PROTOTYPE PREMIUM beat 2.4
+
+**La Partie 2 est CODÉE mais REJETÉE par Aziz** (trop plate/morte/niveau-1 : cercles+étoiles+X SVG). Gemini
+confirme (analyse vidéo : 4/10, "trop plate et statique"). NE PAS la patcher davantage — REFONTE premium.
+
+**▶ PROCHAINE ACTION = prototyper LE BEAT 2.4 (extinction d'une base FR encerclée) en PREMIUM COMPLET.**
+Plan + techniques + inventaire capacités = `REFONTE-PREMIUM-P2-techniques.md` (TOUT y est, lire en premier).
+Décisions Aziz : (1) prototype = beat 2.4 extinction. (2) tester DEUX versions : à-plat (pitch 0) VS pitch 3D (~32).
+(3) Lottie SUR-MESURE à créer. (4) sprites à ombre (base-france) pas étoiles SVG. (5) caméra SERRÉE qui suit
+l'action, jamais de vue continentale vide. (6) front mouvant organique pas cercle qui scale. (7) "40%" → data-viz
+ou supprimé (voix suffit). Après proto validé → appliquer aux autres beats P2.
+
+Capacités prêtes (vérifiées) : `LottieGeoAura` + `premiumLottieAssets` · sprites `public/_shared/sprites/warmap/`
+(base-france, base-africacorps...) · `CAM_COUNTRY_APPROACH` pitch 32 · 30+ composants `CATALOGUE-CARTE-VIVANTE.md`
+(ContagionFlagSpread, PulsingRegionFill, DominoContagionFill, GeoCountryPlaque...). Workflow DA = upstream sur le
+proto (Gemini+Kimi) avant de généraliser. Triggers V5 P2 : voir section "PARTIE 2 CODÉE" ci-dessous.
+
+> LEÇON gravée (key-learnings) : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat/pauvre". Premium d'abord.
+
+---
+
+## ✅ PARTIE 2 CODÉE (2026-06-11) — les 6 beats faits MAIS rejetés (refonte premium, voir ci-dessus)
 
 `src/projects/warmap/parties/Partie2Blocage.tsx` + hooks moteur. Mode `partie2` + `getPartie2Cam`
 + compo Root `SahelPartie2`. Pattern `<PartieX>` suivi. Triggers V5 calés (Serval f3196 ... CEDEAO f5639).
