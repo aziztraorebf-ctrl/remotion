@@ -31,6 +31,10 @@ const SMOKE_FRAMES = 9;
 // FX explosion — frames PixelLab PONCTUELLES (one-shot + fade, doctrine ponctuel/ambiant 2026-06-11).
 // 9 frames top-down sépia/orange. Joue UNE FOIS à l'instant de la chute puis DISPARAÎT (jamais de boucle).
 const EXPLO_FRAMES = 9;
+// Aziz 2026-06-11 : l'explosion N'APPORTE PAS à CE beat (faisabilité prouvée, mais la fumée seule suffit
+// + bases qui disparaissent complètement). DÉSACTIVÉE ici. L'asset fx-explosion/ + la mécanique exploFor
+// restent ACQUIS au catalogue pour un futur beat où une détonation a du sens (tir/IED/largage).
+const USE_EXPLOSION = false;
 
 // ============================================================
 // TRIGGERS + GÉOGRAPHIE
@@ -45,46 +49,36 @@ const FR_BASES: FrBase[] = [
   { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], extinctAt: F_ECHEC + 240 }, // remonte nord T3b
 ];
 
-// FRONT MOUVANT DÉCHIQUETÉ — généré PROCÉDURALEMENT (pas un ovale lisse).
-// Un vrai front grignote : bord irrégulier, croît dans le temps, vibre légèrement.
-// Centre = barycentre décalé sud-est (origine Liptako). Rayon de base croissant + bruit
-// déterministe par angle (déchiqueté) + ondulation animée (le front "respire" en avançant).
+// ZONE D'EMPRISE STATIQUE (Aziz 2026-06-11) — le territoire perdu est une TACHE POSÉE, pas un blob vivant.
+// Décision : retirer tout mouvement de contour (l'ondulation animée + la croissance continue distrayaient,
+// "gros blob qui bouge dans tous les sens"). Le seul mouvement à l'écran = bases qui tombent + fumée qui monte.
+// La zone s'installe en UNE croissance courte (~30f) quand le front arrive, PUIS se fige définitivement.
+// Forme organique déchiquetée (identité parchemin, pas un cercle géométrique froid) mais IMMOBILE.
 type GeoRing = [number, number][];
-const FRONT_CENTER: [number, number] = [0.9, 16.4];     // entre Gao/Ménaka, décalé est
+const FRONT_CENTER: [number, number] = [0.9, 16.9];     // centré sur le triangle des bases (légèrement nord)
 const FRONT_N = 20;                                       // nb de points (plus = plus découpé)
-// Rayons lon/lat de base (la zone est plus large en lon qu'en lat), croissants dans le temps.
-const FRONT_GROW: { at: number; rLon: number; rLat: number }[] = [
-  { at: F_ECHEC, rLon: 2.6, rLat: 2.0 },        // lâche au départ (sud-est)
-  { at: F_ECHEC + 90, rLon: 3.6, rLat: 2.8 },   // remonte, enveloppe Gao/Ménaka
-  { at: F_ECHEC + 220, rLon: 4.4, rLat: 4.0 },  // étreinte serrée jusqu'à Tessalit
-];
-// Bruit déterministe par index d'angle (déchiqueture fixe du contour) — pseudo-aléatoire stable.
+// Rayon final de la zone (englobe les 3 bases : Gao/Ménaka au sud, Tessalit au nord).
+const ZONE_RLON = 4.2;
+const ZONE_RLAT = 4.2;
+const ZONE_INSTALL = 30;  // durée de l'installation (croissance unique) puis figé
+// Bruit déterministe par index d'angle (déchiqueture FIXE du contour) — pseudo-aléatoire stable, immobile.
 function jag(i: number): number {
   const s = Math.sin(i * 12.9898) * 43758.5453;
   return (s - Math.floor(s)) * 2 - 1; // [-1, 1]
 }
-// Construit l'anneau géo déchiqueté au temps `frame`.
+// Construit l'anneau géo déchiqueté STATIQUE. Croissance courte au début (scale 0.4→1) puis figé.
 function buildFrontRing(frame: number): GeoRing {
-  // rayon de base interpolé (croissance)
-  let rLon = FRONT_GROW[FRONT_GROW.length - 1].rLon;
-  let rLat = FRONT_GROW[FRONT_GROW.length - 1].rLat;
-  if (frame <= FRONT_GROW[0].at) { rLon = FRONT_GROW[0].rLon; rLat = FRONT_GROW[0].rLat; }
-  else for (let i = 0; i < FRONT_GROW.length - 1; i++) {
-    const a = FRONT_GROW[i], b = FRONT_GROW[i + 1];
-    if (frame >= a.at && frame <= b.at) {
-      const t = (frame - a.at) / (b.at - a.at);
-      const e = t * t * (3 - 2 * t);
-      rLon = a.rLon + (b.rLon - a.rLon) * e;
-      rLat = a.rLat + (b.rLat - a.rLat) * e;
-      break;
-    }
-  }
+  // facteur d'installation : la zone grandit une fois (0.4→1) sur ZONE_INSTALL frames, puis reste à 1.
+  const grow = interpolate(frame, [F_ECHEC, F_ECHEC + ZONE_INSTALL], [0.4, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+  });
+  const rLon = ZONE_RLON * grow;
+  const rLat = ZONE_RLAT * grow;
   const ring: GeoRing = [];
   for (let i = 0; i < FRONT_N; i++) {
     const ang = (i / FRONT_N) * Math.PI * 2;
-    // déchiqueture : ±22% de rayon, modulée par une ondulation animée lente (grignotage)
-    const noise = jag(i) * 0.22 + 0.10 * Math.sin(ang * 3 + frame * 0.05);
-    const f = 1 + noise;
+    // déchiqueture FIXE : ±22% de rayon, déterministe par angle. AUCUNE dépendance à frame = contour immobile.
+    const f = 1 + jag(i) * 0.22;
     ring.push([
       FRONT_CENTER[0] + Math.cos(ang) * rLon * f,
       FRONT_CENTER[1] + Math.sin(ang) * rLat * f,
@@ -158,8 +152,8 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
     const playFrame = Math.floor((rel / fps) * SMOKE_FPS);
     const phase = playFrame % PINGPONG;
     const idx = phase < SMOKE_FRAMES ? phase : PINGPONG - phase; // montée puis redescente
-    // la fumée n'apparaît qu'APRÈS le souffle de l'explosion (laisse le one-shot respirer)
-    const op = interpolate(rel, [EXPLO_HOLD * 0.6, EXPLO_HOLD * 0.6 + 12], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    // fade-in dès la chute (explosion désactivée sur ce beat). La fumée monte du sol vide.
+    const op = interpolate(rel, [0, 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     return { idx, op };
   };
 
@@ -232,14 +226,17 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
         const p = project(b.coord[0], b.coord[1]);
         const appear = spring({ frame: frame - F_ECHEC, fps, config: { damping: 14 }, durationInFrames: 18 });
         const rel = frame - b.extinctAt;
-        const deadT = interpolate(rel, [0, 40], [0, 1], {
+        // DISPARITION COMPLÈTE (Aziz 2026-06-11) : la base s'efface TOTALEMENT (territoire perdu =
+        // plus aucune présence FR), il ne reste que la fumée qui monte du sol vide. Fenêtre allongée
+        // (50f) pour un effacement progressif, pas brutal.
+        const deadT = interpolate(rel, [0, 50], [0, 1], {
           extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
         });
         const wBase = 0.22 * vmin;          // largeur du fortin (plus gros = plus lisible, Aziz 2026-06-11)
         const scale = appear * (1 - deadT * 0.14);
         const w = wBase * scale;
         const h = w * BASE_RATIO;
-        const op = appear * (1 - deadT * 0.55);
+        const op = appear * (1 - deadT);    // → 0 : effacement total du fortin
         if (op <= 0.02) return null;
         // ombre légère (le sprite a déjà son ombre intégrée — on ajoute juste un ancrage chaud léger).
         const shadowAlpha = 0.3 * (1 - deadT);
@@ -264,9 +261,9 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
         );
       })}
 
-      {/* FX EXPLOSION PixelLab — PONCTUEL : souffle d'amorce au moment exact de la chute de chaque base.
-          One-shot + fade (doctrine ponctuel/ambiant). Plus gros que la fumée, centré sur le fortin. */}
-      {FR_BASES.map((b) => {
+      {/* FX EXPLOSION PixelLab — PONCTUEL (DÉSACTIVÉE sur ce beat, USE_EXPLOSION=false — voir note en tête).
+          Mécanique conservée : souffle one-shot + fade au moment exact de la chute. Réutilisable ailleurs. */}
+      {USE_EXPLOSION && FR_BASES.map((b) => {
         const ex = exploFor(b);
         if (!ex) return null;
         const p = project(b.coord[0], b.coord[1]);
