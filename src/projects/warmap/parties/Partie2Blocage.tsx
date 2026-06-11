@@ -58,6 +58,14 @@ const RED_BLOBS: { coord: [number, number]; rMax: number; growDelay: number }[] 
 const BASE_EXTINCTION: Record<string, number> = {
   GAO: 130, MENAKA: 175, TESSALIT: 230,
 };
+// BEAT 2.6 — débordement Burkina : foyers rouges qui franchissent la frontière Mali->Burkina.
+const BURKINA_BLOBS: { coord: [number, number]; rMax: number; delay: number }[] = [
+  { coord: [-1.0, 13.5], rMax: 70, delay: 0 },   // nord Burkina (Sahel/Djibo)
+  { coord: [0.2, 12.8], rMax: 55, delay: 25 },   // est Burkina
+];
+// Capitales qui basculent.
+const OUAGA: [number, number] = [-1.52, 12.37];
+const NIAMEY: [number, number] = [2.12, 13.51];
 
 // Bases FR (geometrie rigide). appear = frame d'apparition (apres le mot, decale +12).
 const FR_BASES: { coord: [number, number]; name: string; appear: number; dy: number }[] = [
@@ -130,6 +138,19 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
   // -------- BEAT 2.3 : MINUSMA (points bleu-ONU) --------
   // board clearing léger déjà géré moteur. Points ONU distincts des bases FR (bleu plus clair).
 
+  // -------- BEAT 2.6 : débordement Burkina + "40%" --------
+  const pct40 = interpolate(frame, [F_BURKINA, F_BURKINA + 24], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  // -------- FIN : Niger bascule + anneau CEDEAO (pont Partie 3) --------
+  const niameyFall = interpolate(frame, [F_NIGER, F_NIGER + 30], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const cedeaoRing = interpolate(frame, [F_CEDEAO, F_CEDEAO + 30], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const pNiamey = project(NIAMEY[0], NIAMEY[1]);
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg width={width} height={height}
@@ -152,6 +173,24 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
               <circle cx={c.x} cy={c.y} r={r * 1.25} fill={RED} fillOpacity={0.12 * g}
                 style={{ filter: "blur(8px)" }} />
               <circle cx={c.x} cy={c.y} r={r} fill={RED} fillOpacity={0.30 * g} />
+            </g>
+          );
+        })}
+
+        {/* BEAT 2.6 — débordement Burkina (le rouge franchit la frontière sud). */}
+        {frame >= F_DEBORDENT && BURKINA_BLOBS.map((blob, i) => {
+          const c = project(blob.coord[0], blob.coord[1]);
+          const start = F_DEBORDENT + blob.delay;
+          const g = interpolate(frame, [start, start + 120], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+          });
+          if (g <= 0) return null;
+          const r = blob.rMax * g;
+          return (
+            <g key={`bf-blob-${i}`} style={{ mixBlendMode: "multiply" }}>
+              <circle cx={c.x} cy={c.y} r={r * 1.25} fill={RED} fillOpacity={0.12 * g}
+                style={{ filter: "blur(7px)" }} />
+              <circle cx={c.x} cy={c.y} r={r} fill={RED} fillOpacity={0.28 * g} />
             </g>
           );
         })}
@@ -258,6 +297,51 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
               fill={INK} letterSpacing={4}>
               {year}
             </text>
+          );
+        })()}
+
+        {/* BEAT 2.6 — "40%" donnée ancrée près du Burkina (overlay registre 3, pas plein écran). */}
+        {pct40 > 0 && (() => {
+          const pBf = project(-1.0, 13.2);
+          return (
+            <g opacity={pct40}>
+              <text x={pBf.x} y={pBf.y} textAnchor="middle"
+                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={34} fontWeight={800}
+                fill={RED} stroke={SAHEL_LAND} strokeWidth={4} strokeOpacity={0.75} paintOrder="stroke"
+                letterSpacing={1}>
+                40%
+              </text>
+              <text x={pBf.x} y={pBf.y + 22} textAnchor="middle"
+                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={13} fontWeight={600}
+                fill={INK} stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7} paintOrder="stroke"
+                letterSpacing={2} style={{ textTransform: "uppercase" }}>
+                du territoire
+              </text>
+            </g>
+          );
+        })()}
+
+        {/* FIN — Niamey bascule (point qui vire au rouge) + anneau CEDEAO (menace, pont P3). */}
+        {niameyFall > 0 && (
+          <g style={{ mixBlendMode: "multiply" }}>
+            <circle cx={pNiamey.x} cy={pNiamey.y} r={10 + niameyFall * 4} fill={RED}
+              fillOpacity={0.55 * niameyFall} />
+            <text x={pNiamey.x} y={pNiamey.y - 16} textAnchor="middle"
+              fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={15} fontWeight={700}
+              fill={INK} fillOpacity={niameyFall} stroke={SAHEL_LAND} strokeWidth={3}
+              strokeOpacity={0.7 * niameyFall} paintOrder="stroke" letterSpacing={1.5}>
+              NIAMEY
+            </text>
+          </g>
+        )}
+        {/* anneau CEDEAO (cercle pointillé menaçant autour des 3 capitales sahéliennes). */}
+        {cedeaoRing > 0 && (() => {
+          const cx = (project(OUAGA[0], OUAGA[1]).x + pNiamey.x) / 2;
+          const cy = (project(OUAGA[0], OUAGA[1]).y + pNiamey.y) / 2;
+          return (
+            <circle cx={cx} cy={cy} r={150 * cedeaoRing} fill="none"
+              stroke={INK} strokeWidth={2.4} strokeOpacity={0.55 * cedeaoRing}
+              strokeDasharray="6 8" style={{ mixBlendMode: "multiply" }} />
           );
         })()}
       </svg>
