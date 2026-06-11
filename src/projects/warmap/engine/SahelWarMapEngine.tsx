@@ -2673,10 +2673,15 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                 width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
                 background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
                 boxShadow: `0 0 8px ${BEIGE}` }} />
-              {/* label ville */}
-              <div style={{ ...plaque, position: "absolute", left: "50%", top: 14,
-                transform: "translateX(-50%)", marginTop: 6, padding: "3px 10px", fontSize: 16,
-                fontWeight: 700, letterSpacing: 1.1, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+              {/* label ville — ENCRE sur halo réserve parchemin (anti-slop, DA downstream :
+                  plus de cartouche blanc qui "flotte" sur le parchemin). */}
+              <div style={{ position: "absolute", left: "50%", top: 14,
+                transform: "translateX(-50%)", marginTop: 6, fontSize: 16,
+                fontWeight: 700, letterSpacing: 1.1, textTransform: "uppercase", whiteSpace: "nowrap",
+                color: SAHEL_COLORS.ink,
+                WebkitTextStroke: `3px ${SAHEL_COLORS.land}`,
+                paintOrder: "stroke fill",
+                textShadow: `0 1px 2px ${SAHEL_COLORS.land}` }}>
                 {cityName}
               </div>
             </div>
