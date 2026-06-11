@@ -59,12 +59,77 @@ const MINUSMA_PTS: { coord: [number, number]; name: string; delay: number }[] = 
   { coord: [-4.20, 14.49], name: "MOPTI", delay: 24 },
 ];
 
+// Helper : path d'une étoile à N branches (marqueur militaire rigide), centrée (cx,cy).
+function starPath(cx: number, cy: number, rOuter: number, rInner: number, points = 5): string {
+  let d = "";
+  for (let i = 0; i < points * 2; i++) {
+    const r = i % 2 === 0 ? rOuter : rInner;
+    const a = (Math.PI / points) * i - Math.PI / 2;
+    const x = cx + r * Math.cos(a);
+    const y = cy + r * Math.sin(a);
+    d += (i === 0 ? "M" : "L") + x.toFixed(1) + "," + y.toFixed(1);
+  }
+  return d + "Z";
+}
+
 type Props = {
   ctx: SahelRenderContext | null;
 };
 
 export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
-  // Coquille vide (scaffold). Beats 2.1->fin arrivent ensuite.
   if (!ctx) return null;
-  return <AbsoluteFill style={{ pointerEvents: "none" }} />;
+  const { frame, width, height, project } = ctx;
+
+  // -------- BEAT 2.1 : bases FR Serval/Barkhane (géométrie rigide, bleu-acier) --------
+  // Étoiles militaires qui "frappent" la carte (scale overshoot), staggered Gao→Ménaka→Tessalit.
+  // Repère "2013" (encre). Les bases sont FIXES (l'ordre, l'institution).
+  const an2013 = interpolate(frame, [F_SERVAL, F_SERVAL + 20], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <svg width={width} height={height}
+        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+
+        {/* BEAT 2.1 — bases FR (étoiles bleu-acier rigides, "frappent" la carte). */}
+        {FR_BASES.map((base, i) => {
+          if (frame < base.appear) return null;
+          const p = project(base.coord[0], base.coord[1]);
+          // overshoot d'apparition (la base "frappe")
+          const t = interpolate(frame, [base.appear, base.appear + 14], [0, 1], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.back(2)),
+          });
+          if (t <= 0) return null;
+          const rO = 13 * Math.min(1.12, t);
+          const rI = rO * 0.42;
+          return (
+            <g key={`frbase-${i}`}>
+              {/* halo d'ancrage discret */}
+              <circle cx={p.x} cy={p.y} r={rO * 1.5} fill={FR_STEEL} fillOpacity={0.10 * t} />
+              {/* étoile militaire (rigide, contour encre) */}
+              <path d={starPath(p.x, p.y, rO, rI)} fill={FR_STEEL} fillOpacity={0.92 * t}
+                stroke={INK} strokeWidth={1.4} strokeOpacity={0.85 * t} strokeLinejoin="round" />
+              {/* label base (encre + halo réserve parchemin) */}
+              <text x={p.x} y={p.y + base.dy} textAnchor="middle"
+                fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={16} fontWeight={700}
+                letterSpacing={1.5} fill={INK} fillOpacity={t}
+                stroke={SAHEL_LAND} strokeWidth={3} strokeOpacity={0.7 * t} paintOrder="stroke">
+                {base.name}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* BEAT 2.1 — repère "2013" (encre, bas-gauche, comme "2012" en P1). */}
+        {an2013 > 0 && (
+          <text x={120} y={height - 70} opacity={an2013} style={{ mixBlendMode: "multiply" }}
+            fontFamily="'Cormorant Garamond', Georgia, serif" fontSize={56} fontWeight={700}
+            fill={INK} letterSpacing={4}>
+            2013
+          </text>
+        )}
+      </svg>
+    </AbsoluteFill>
+  );
 };

@@ -1298,6 +1298,23 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       } catch {}
     }
 
+    // PARTIE 2 (V5) — CARTE CALME pour l'installation FR/ONU (DA : "sécurité apparente"
+    // avant la tempête). Le fill de contrôle (rouge/orange Acte 1) baisse à ~0.42 au début
+    // (board clearing f3050), pour que les bases FR + surfaces rouges DÉDIÉES P2 (couche
+    // <Partie2Blocage>) se lisent clairement par-dessus. Reste calme tout P2.
+    if (partie2 && map.getLayer("sahel-fill")) {
+      const calmFactor = interpolate(frame, [3050, 3120], [1, 0.42], {
+        extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+      });
+      const baseOp: any = effSeqIgnite
+        ? ["coalesce", ["get", "igniteOp"], 0]
+        : 0.82;
+      try {
+        map.setPaintProperty("sahel-fill", "fill-opacity",
+          (["*", baseOp, calmFactor] as any));
+      } catch {}
+    }
+
     // CORRECTION B (test) : reprojeter la silhouette AES (3 pays) en paths SVG pixels
     // pour le masque-trou de la vignette géographique.
     if (effVignette && srcC && (srcC as any)._data) {
@@ -1806,11 +1823,19 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // Fondu f2055→f2115 (~2s). Taches d'influence → 0.05 idem.
   const P1_CLEAR_A = 2055;
   const P1_CLEAR_B = 2115;
+  // PARTIE 2 (V5) : board clearing LÉGER avant Serval (f3196). Jetons Acte1 → 0.15
+  // (fantômes) pour installer les bases FR sur une carte lisible. Le rouge (jihadisme)
+  // REVIENT en surfaces dédiées P2 au beat 2.4. Fondu f3050→f3120 (~2.3s).
+  const P2_CLEAR_A = 3050;
+  const P2_CLEAR_B = 3120;
   const b1FighterClear = acte2
     ? interpolate(frame, [2630, 2690], [1, 0.18],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : partie1
     ? interpolate(frame, [P1_CLEAR_A, P1_CLEAR_B], [1, 0.05],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
+    : partie2
+    ? interpolate(frame, [P2_CLEAR_A, P2_CLEAR_B], [1, 0.15],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : 1;
   const b1ZoneClear = acte2
@@ -1818,6 +1843,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : partie1
     ? interpolate(frame, [P1_CLEAR_A, P1_CLEAR_B], [1, 0.05],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
+    : partie2
+    ? interpolate(frame, [P2_CLEAR_A, P2_CLEAR_B], [1, 0.12],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : 1;
 
