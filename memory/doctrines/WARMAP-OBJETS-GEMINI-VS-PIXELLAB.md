@@ -34,6 +34,14 @@ Le seul vrai défaut du pixel pur = un feu "générique jeu vidéo". Solution : 
 `style_image` sur bitforge, ou `style_images` sur create object) → PixelLab ne fait QUE l'animer.
 On contrôle le LOOK (Gemini), PixelLab fait le MOUVEMENT. Meilleur des deux pour les effets.
 
+### ⚠️ LIMITE du pont (vérifiée 2026-06-11) : effets DENSES oui, DIFFUS non
+Le pont marche pour les effets avec un **centre net / une masse** : explosion, fumée qui monte, feu.
+Il **rate sur les effets DIFFUS/vaporeux** (poussière au sol, brume éparse) : `create_map_object` veut une
+FORME solide → il "remplit" le panache vaporeux en **boule pleine** (test poussière déploiement 2.1 = sphère
+ocre type planète, raté). Pour du diffus : soit accepter un effet plat SVG (gradient/particules codées main),
+soit renoncer (souvent "sobre = mieux", cf. décision Aziz de retirer le mouvement superflu). Ne PAS forcer le
+pont sur un effet sans masse.
+
 ## ⭐ RÈGLE PONCTUEL vs AMBIANT (classer AVANT d'animer — Aziz 2026-06-11, non-négociable)
 
 Toutes les animations d'effet ne se jouent PAS de la même façon. Avant d'intégrer un effet PixelLab, le classer :
