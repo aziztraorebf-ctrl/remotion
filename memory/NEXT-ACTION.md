@@ -1,39 +1,29 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-10. A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-11 (soir). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🔴 PRIORITÉ — WAR-MAP SAHEL : SCRIPT V5 LOCKED + AUDIO GÉNÉRÉ (2026-06-10, session majeure)
+## 🔴 PRIORITÉ — WAR-MAP SAHEL : Partie 1 VALIDÉE · Partie 2 REJETÉE → REFONTE PREMIUM (2026-06-11)
 
-**VIRAGE : B1 n'était qu'un symptôme. On a refondu TOUT le script (surcharge narrative globale).**
-> ⭐ REPRISE : lire `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` (LE script validé) +
-> `STATUS.md` (état détaillé). Tout le travail de cette session y est consolidé.
+> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-11-soir.md`** — autonome,
+> reprend TOUT (ce qui est fait, rejeté, et la prochaine action). Puis `STATUS.md` (section "REPRISE" en tête).
 
-**FAIT cette session :**
-- DA upstream 3 voix sur SCRIPT COMPLET → re-découpage show-don't-tell. Base **DeepSeek (chrono LINÉAIRE)**.
-- Décodage Infographics Show (grammaire d'explication) → `DECODE-INFOGRAPHICS-SHOW.md` (8 leçons).
-- **Fact-check Sonar Pro complet** → 1 erreur + 5 imprécisions corrigées + ajout confédération/force conjointe 2024.
-- **SCRIPT V5 LOCKED** (linéaire + Tremblay anti-télégraphique + factuel + sources à l'écran prévues).
-- **AUDIO V5 généré** : `public/_shared/audio/sahel-warmap/narration-v5.mp3` (7min28, catbox phmh9q).
-  Acte 1 visuel INTACT (sauf retrait timeline) ; réécriture = Parties 1-4. Chute = résister/construire/durer.
+**ÉTAT (2026-06-11) :**
+- ✅ **Refactor moteur** fait : `SahelContext.ts` + `parties/Partie1Origine.tsx` + `parties/Partie2Blocage.tsx`
+  + modes `partie1`/`partie2` + `getPartieXCam`. Pattern `<PartieX>` documenté (réutilisable P3/P4).
+- ✅ **Partie 1 "Origine 2012" (canari) VALIDÉE Aziz** (premium, soustraction). Render catbox `m12kke`.
+- ✅ **Doctrine verrouillée** : War-Map = 100% carte, ZÉRO plein écran (`WARMAP-LONG-DOCTRINE.md`).
+- ❌ **Partie 2 "Le Blocage" CODÉE (6 beats) MAIS REJETÉE** par Aziz (trop plate/morte, cercles+étoiles SVG
+  niveau-1, caméra plan large vide). Gemini confirme 4/10. → NE PAS patcher, REFAIRE en premium.
 
-**CHANTIER VOIX — RÉSOLU (pipeline validé Aziz) :**
-- ⭐ **PIPELINE RETENU : ElevenLabs V3 + tags → Speech-to-Speech vers GéoAfrique.** Doctrine complète :
-  `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`. Écrire texte taggé (`[whispers]`/`[solemn]`/`[dramatic]`)
-  → générer voix V3 FR (Océane `CqTrL0ThT2GJVJEIiLcY`) → convertir vers GéoAfrique (`z3gESu49naEZW8Af2Upm`)
-  via `eleven_multilingual_sts_v2`. L'émotion se transmet au timbre de marque. VALIDÉ à l'oreille.
-- Écarté : Hume (O1 accent FR, O2 ≈ EL), Google seul (trop lent/conteur), clonage pro EL, Auphonic.
-- Benchmarks : `TTS-EXPRESSIVITE-RECHERCHE-2026-06.md` + `TTS-VOIX-VIVANTE-BENCHMARK-2026-06.md` + `hume-octave.md`.
+**▶ PROCHAINE ACTION = PROTOTYPE PREMIUM du beat 2.4 (extinction d'une base FR encerclée).**
+Plan complet : `memory/episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md` (inventaire capacités +
+15 techniques chaînes premium). Décisions Aziz : sprites à ombre (pas étoiles) · Lottie SUR-MESURE · caméra
+SERRÉE qui suit l'action · front mouvant organique · 2 versions à-plat vs pitch 3D · "40%" en data-viz ou supprimé.
+Workflow : coder proto → DA upstream (Gemini+Kimi) → Aziz tranche → généraliser à toute la P2.
 
-> ⭐⭐ **BRIEF DE PASSATION COMPLET (pour session parallèle) : `memory/episodes/warmap-sahel/BRIEF-PASSATION-2026-06-10.md`** — autonome, reprend tout le contexte.
-
-**NEXT (2 sessions) :**
-- **Session VOIX** : (1) WebSearch techniques expressivité max V3 (CAPS, `...`, tags avancés) ;
-  (2) WebSearch/calcul PRICING ElevenLabs (+5$ crédits API vs palier sup, Aziz proche du cap) ;
-  (3) industrialiser pipeline en 1 script → régénérer narration-v5 Sahel en version vivante.
-- **Session SAHEL** : forced alignment → re-découpage beats (show-don't-tell, 4 parties) → coder Partie 1
-  (canari) → enchaîner. Assets réutilisés. Acte 1 visuel intact (retirer timeline + re-caler triggers).
+**LEÇON gravée (`key-learnings.md`)** : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat". Premium d'abord.
 
 ---
 
