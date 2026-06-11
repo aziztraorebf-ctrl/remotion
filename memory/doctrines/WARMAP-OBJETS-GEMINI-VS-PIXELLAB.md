@@ -16,6 +16,33 @@ la question n'est PAS "lequel est meilleur" mais "quel outil pour quel TYPE d'ob
 | **Marqueurs / jetons / personnages / véhicules** (formes nettes, identité forte, déplacement avec intention narrative) | **Gemini** (`gemini-3.1-flash-image-preview`) + détourage Recraft | **NOUS-MÊMES** dans Remotion : track/path frame-driven, walk-cycle, drift, rotation tangente, spring. On maîtrise déjà. |
 | **Effets organiques** (feu, flammes, fumée, explosion, poussière, onde de souffle, débris) | **PixelLab** (`create_map_object` + `animate_object`) | **PAR PROMPT** : PixelLab génère les frames depuis une phrase ("la fumée monte"). Fin de la friction Lottie/JSON. |
 
+## ⭐⭐ 3 RÈGLES STRUCTURELLES (Aziz 2026-06-11, non-négociables, TOUTE War-Map)
+
+Tirées du retour P2. S'appliquent à P3/P4 ET aux vidéos futures. À respecter dès le 1er jet.
+
+### R-OBJ-1 — Taille ANCRÉE À LA CARTE (jamais dimensionner en unités-écran)
+Un objet posé sur la carte (sprite, marqueur) doit être dimensionné en **unités géographiques**, pas en
+`vmin` fixe. Sinon, quand la caméra DÉZOOME, la carte rétrécit mais l'objet garde sa taille écran →
+il paraît GROSSIR par rapport au terrain (bug vu en P2 : les bases grandissaient au pull-back).
+**Fix** : dériver la taille du `zoom` courant (ex. `taille = base * 2^(zoom - zoomRef)`) pour que l'objet
+reste ancré à la géographie (un fortin de 50 km reste 50 km, qu'on zoome ou non). Le `ctx` doit exposer le
+zoom courant. Vaut pour TOUS les objets carte.
+
+### R-OBJ-2 — Un objet = une IMAGE Gemini, JAMAIS un dot/point SVG
+Plus de points/cercles bleus « infographie froide » (= le niveau-1 qu'on a fui). Tout ce qui marque un lieu
+(base, mission ONU, ville tenue, capitale, ressource) = un **sprite Gemini top-down** posé sur la carte (comme
+les bases FR). Ça donne vie + ça ouvre les effacements/animations PixelLab ensuite. On ne fait PAS cheap :
+si un marqueur manque, on le GÉNÈRE (Gemini), on ne tombe pas sur un dot par défaut. Exception unique : le
+point EST littéralement le propos et aucun sprite ne ferait mieux (rare).
+
+### R-OBJ-3 — Zones d'emprise TRANSITOIRES, jamais cumulatives
+Une zone rouge (territoire perdu) apparaît QUAND on en parle, puis **s'estompe** quand on passe au beat suivant
+(comme la fumée). JAMAIS laisser toutes les zones affichées en permanence : elles s'empilent (taches + ronds
+transparents superposés) = brouillon (bug vu en P2 : 3 zones cumulées 40s→1min29). Le spectateur suit l'action
+EN COURS — pas besoin de lui rappeler un territoire mentionné 20s avant. **1 seule emprise active à la fois.**
+Et la zone doit PROGRESSER avec intention (le rouge AVANCE dans le rural, FRANCHIT la frontière), pas juste
+popper en état figé — sinon c'est statique.
+
 ## Pourquoi ce découpage (la logique)
 
 1. **Le pixel ne se "voit" que là où il ne dérange pas.** Un effet de feu/fumée est une matière CHAOTIQUE —

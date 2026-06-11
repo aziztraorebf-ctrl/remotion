@@ -14,6 +14,29 @@ import { interpolate, Easing } from "remotion";
 
 export type GeoRing = [number, number][];
 export type Pt = { x: number; y: number };
+export type ProjectFn = (lon: number, lat: number) => Pt;
+// Zone d'emprise transitoire (R-OBJ-3) : apparaît à startF, s'estompe à endF (1 active à la fois).
+export type Zone = { center: [number, number]; rLon: number; rLat: number; startF: number; endF: number };
+
+// ── ÉCHELLE CARTE LOCALE (R-OBJ-1 : taille ancrée à la carte, jamais à l'écran) ──
+// Mesure combien de PIXELS représente 1° de longitude à (lon,lat) à la frame courante.
+// Quand la caméra DÉZOOME, cette valeur diminue → les sprites dimensionnés avec elle rétrécissent
+// proportionnellement à la carte (un objet de N km reste N km, ne grossit plus au pull-back).
+// Usage : `const w = kmToPx(project, lon, lat) * widthInDegrees;` ou via mapScalePx ci-dessous.
+export function mapScalePx(project: ProjectFn, lon: number, lat: number): number {
+  const a = project(lon, lat);
+  const b = project(lon + 0.5, lat); // 0.5° de longitude
+  return Math.hypot(b.x - a.x, b.y - a.y) / 0.5; // px par degré de longitude
+}
+
+// Taille d'un sprite ancrée à la carte : `degWidth` = largeur voulue de l'objet en DEGRÉS de longitude.
+// Renvoie la largeur en px à la frame courante. Borne min/max pour rester lisible aux zooms extrêmes.
+export function spriteMapWidth(project: ProjectFn, lon: number, lat: number, degWidth: number,
+  bounds?: { min: number; max: number }): number {
+  const w = mapScalePx(project, lon, lat) * degWidth;
+  if (!bounds) return w;
+  return Math.max(bounds.min, Math.min(bounds.max, w));
+}
 
 // ── Palette premium P2 (décisions Aziz) ──
 export const PAL = {
