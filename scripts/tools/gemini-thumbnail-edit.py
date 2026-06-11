@@ -94,6 +94,23 @@ IMPROVE:
 The result should look like a high-quality editorial photograph of an oil drum with a Senegalese identity, suitable for a YouTube documentary thumbnail.
 """,
 
+    "aes_focal_clean": """Edit this map image with surgical precision — isolate the focal territories.
+
+KEEP EXACTLY AS IS:
+- The three central AES country territories (Mali, Burkina Faso, Niger) with ALL their current color fills, textures, and borders between them — do not touch these at all
+
+REMOVE ENTIRELY from the surrounding area:
+- All internal border lines of neighboring countries (Senegal, Guinea, Ivory Coast, Ghana, Togo, Benin, Nigeria, Chad, Algeria, Mauritania, Libya — erase ALL their subdivision and border lines)
+- All text labels anywhere in the image
+- All remaining UI elements, legends, timelines
+
+REPLACE the surrounding area (everything outside Mali + Burkina Faso + Niger) with:
+- A clean, smooth, dark navy background (#06101e) — completely empty, no lines, no texture, no country outlines
+- The transition from the AES territories to the dark background should be a soft, slightly blurred edge — not a hard cut
+
+RESULT: The three colored AES territories should appear as a vivid dramatic focal island floating on a clean empty dark background. Strong contrast between the rich colored center and the empty dark surround. Add a subtle dark vignette on the outer edges.
+""",
+
     "aes_dark_map": """Transform this image into a dramatic cinematic war room map of West Africa.
 
 The image shows a dark navy background with a golden blob shape representing the AES alliance countries (Mali + Burkina Faso + Niger). Transform it as follows:

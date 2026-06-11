@@ -11,7 +11,16 @@ type: reference
 - **SDK Python v1** : `pip install pixellab`
 - **Auth** : `PixelLabClient(secret='...')` — champ `secret`, PAS `api_key`
 - **MCP PixelLab** : abonnement mensuel SEPARÉ des crédits USD. MCP = walk cycles automatiques. SDK = génération image frame par frame.
-- **Clé** : dans `.env` sous `PIXELLAB_SECRET`
+- **Clé** : dans `.env` sous `PIXELLAB_SECRET` (aussi lisible via `PIXELLAB_API_KEY`)
+
+## ⚠️ BUG LIB REST LOCALE vs MCP (2026-06-11, vérifié)
+- **`pixellab` (pip, lib Python locale) PLANTE au parsing de réponse sur un abonnement** : l'API renvoie
+  `usage={'type':'generations','generations':1.0}` mais la lib attend `usage.type='usd'` → `ValidationError`.
+  **L'image EST générée côté serveur** (générations décomptées) mais la lib ne la retourne pas. Ne PAS s'y fier.
+- **→ Utiliser le MCP PixelLab** (`create_map_object`/`animate_object`/`get_map_object`) qui gère le bon format.
+- **Enums divergents lib vs MCP** : `detail` = `"highly detailed"` côté lib REST MAIS `"high detail"` côté MCP.
+- **Rate-limit 429** : ne pas enchaîner les appels rapprochés (relances) → attendre ~45s entre lots.
+- **Lenteur** : MCP chargé peut donner ETA ~450s+ par objet. Lancer en async, programmer un réveil, ne pas bloquer.
 
 ## Génération sprites statiques (SDK)
 

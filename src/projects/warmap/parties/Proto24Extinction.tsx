@@ -21,12 +21,13 @@
 //
 // Triggers V5 (alignment, ×30fps) : F_ECHEC = 3887 ("dix ans plus tard").
 
-import mapboxgl from "mapbox-gl";
-import lottie from "lottie-web";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { AbsoluteFill, interpolate, spring, useVideoConfig, staticFile, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
-import { extinctionCollapse, RED_INK_RGB } from "../../_shared/lottie/premiumLottieAssets";
+
+// FX fumée/effondrement — frames PixelLab (animation par prompt, doctrine Gemini/PixelLab 2026-06-11).
+// 9 frames top-down sépia, jouées une fois puis maintenues en fond (la base brûle).
+const SMOKE_FRAMES = 9;
 
 // ============================================================
 // TRIGGERS + GÉOGRAPHIE
@@ -121,36 +122,6 @@ type Props = { ctx: SahelRenderContext | null };
 export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
   const { fps } = useVideoConfig();
 
-  // ── Lottie extinctionCollapse off-screen (1 instance partagée, frame-driven) ──
-  const lottieRef = useRef<{ anim: any; canvas: HTMLCanvasElement | null; container: HTMLDivElement } | null>(null);
-  const [, force] = useState(0);
-  useEffect(() => {
-    if (lottieRef.current) return;
-    const container = document.createElement("div");
-    container.style.cssText = "position:absolute;width:512px;height:512px;left:-9999px;top:-9999px;opacity:0;";
-    document.body.appendChild(container);
-    try {
-      const anim = lottie.loadAnimation({
-        container,
-        animationData: extinctionCollapse(RED_INK_RGB),
-        renderer: "canvas",
-        loop: false,
-        autoplay: false,
-        rendererSettings: { clearCanvas: true, progressiveLoad: false },
-      } as any);
-      lottieRef.current = { anim, canvas: null, container };
-      anim.addEventListener("DOMLoaded", () => {
-        const cv = container.querySelector("canvas") as HTMLCanvasElement | null;
-        if (cv && lottieRef.current) { lottieRef.current.canvas = cv; force((n) => n + 1); }
-      });
-    } catch {}
-    return () => {
-      try { lottieRef.current?.anim?.destroy?.(); } catch {}
-      try { if (lottieRef.current) document.body.removeChild(lottieRef.current.container); } catch {}
-      lottieRef.current = null;
-    };
-  }, []);
-
   if (!ctx) return null;
   const { frame, width, height, project } = ctx;
 
@@ -169,31 +140,19 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
   const baseSprite = staticFile("_shared/sprites/warmap/base-fr-td.png");
   const BASE_RATIO = 0.56; // hauteur / largeur du sprite
 
-  // ── Lottie : rendre l'onde d'extinction de la base la plus récemment éteinte ──
-  // Garde-fou #3 : une seule onde active à la fois (la dernière déclenchée), espacées ≥75f.
-  let activeWave: { base: FrBase; rel: number } | null = null;
-  for (const b of FR_BASES) {
-    const rel = frame - b.extinctAt;
-    if (rel >= 0 && rel < 75) {
-      // si plusieurs candidates (ne devrait pas arriver, espacées 75f), garder la plus récente
-      if (!activeWave || b.extinctAt > activeWave.base.extinctAt) activeWave = { base: b, rel };
-    }
-  }
-  let waveDataUrl: string | null = null;
-  let wavePos: { x: number; y: number } | null = null;
-  if (activeWave && lottieRef.current?.canvas) {
-    try {
-      const inst = lottieRef.current;
-      const cv = inst.canvas;
-      const totalF = inst.anim.totalFrames || 75;
-      const lf = (activeWave.rel * (inst.anim.frameRate || 30)) / fps;
-      inst.anim.goToAndStop(Math.min(lf, totalF - 1), true);
-      waveDataUrl = cv ? cv.toDataURL("image/png") : null;
-      wavePos = project(activeWave.base.coord[0], activeWave.base.coord[1]);
-    } catch {}
-  }
   const vmin = Math.min(width, height);
-  const waveSize = 0.42 * vmin;
+  // ── FX FUMÉE PixelLab : chaque base éteinte émet une fumée qui MONTE puis persiste (la base brûle) ──
+  // Doctrine : effet organique = PixelLab animé par prompt (pas de Lottie codé). La séquence joue une
+  // fois (montée) au moment de l'extinction puis se fige sur la dernière frame (foyer qui couve).
+  const SMOKE_FPS = 12; // cadence de lecture des frames PixelLab
+  const smokeFor = (b: FrBase): { idx: number; op: number } | null => {
+    const rel = frame - b.extinctAt;
+    if (rel < 0) return null;
+    const playFrame = Math.floor((rel / fps) * SMOKE_FPS);
+    const idx = Math.min(playFrame, SMOKE_FRAMES - 1); // joue une fois puis fige
+    const op = interpolate(rel, [0, 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return { idx, op };
+  };
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -231,7 +190,7 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
             extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
           });
           if (halo <= 0.02) return null;
-          const rHalo = 0.062 * vmin;
+          const rHalo = 0.078 * vmin;
           // onde de respiration lente du halo (la base "vit" tant qu'elle n'est pas tombée)
           const pulse = 1 + 0.06 * Math.sin((frame - F_ECHEC) * 0.12);
           return (
@@ -251,7 +210,7 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
         const deadT = interpolate(rel, [0, 40], [0, 1], {
           extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
         });
-        const wBase = 0.17 * vmin;          // largeur du fortin (plus large que haut)
+        const wBase = 0.22 * vmin;          // largeur du fortin (plus gros = plus lisible, Aziz 2026-06-11)
         const scale = appear * (1 - deadT * 0.14);
         const w = wBase * scale;
         const h = w * BASE_RATIO;
@@ -280,20 +239,31 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
         );
       })}
 
-      {/* ONDE D'EXTINCTION (Lottie sur-mesure) — un événement à la fois (garde-fou #3) */}
-      {waveDataUrl && wavePos && (
-        <img
-          src={waveDataUrl}
-          style={{
-            position: "absolute",
-            left: wavePos.x - waveSize / 2,
-            top: wavePos.y - waveSize / 2,
-            width: waveSize,
-            height: waveSize,
-            pointerEvents: "none",
-          }}
-        />
-      )}
+      {/* FX FUMÉE PixelLab — chaque base éteinte émet sa fumée (montée puis foyer qui couve).
+          Effet organique généré par prompt (doctrine Gemini/PixelLab). Ancré au pied du fortin. */}
+      {FR_BASES.map((b) => {
+        const sm = smokeFor(b);
+        if (!sm) return null;
+        const p = project(b.coord[0], b.coord[1]);
+        const sw = 0.16 * vmin;           // largeur de la fumée
+        const sh = sw;                     // sprite carré 128x128
+        return (
+          <img
+            key={`smoke-${b.id}`}
+            src={staticFile(`_shared/sprites/warmap/fx-smoke/${sm.idx}.png`)}
+            style={{
+              position: "absolute",
+              left: p.x - sw / 2,
+              top: p.y - sh * 0.82,        // base de la fumée au pied du fortin, panache monte au-dessus
+              width: sw,
+              height: sh,
+              opacity: sm.op,
+              imageRendering: "pixelated", // pixel art net (pas de lissage)
+              pointerEvents: "none",
+            }}
+          />
+        );
+      })}
     </AbsoluteFill>
   );
 };
