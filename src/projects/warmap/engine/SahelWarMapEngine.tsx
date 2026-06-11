@@ -2764,7 +2764,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && showChrome && (() => {
+      {isFinalLook && showChrome && !partie1 && (() => {
+        // PARTIE 1 (V5) : timeline Acte 1 MASQUÉE — le récit V5 redémarre la timeline à 2012
+        // (cartouche encre "2012" de <Partie1Origine> suffit). Évite le chevauchement.
         // B1 V3 (D-4 timeline vivante) : en acte2, l'axe se RÉ-ÉTALONNE sur la période de
         // l'enjeu français (2013 Serval → 2024 AES). Le curseur GLISSE pendant tout B1
         // (f2630→f4162 mappé 2013→2022) → fini le curseur figé de V2 (critique Aziz #1).

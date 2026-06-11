@@ -41,6 +41,29 @@ TTS V3 = 1 crédit/char · STS = 1000 crédits/min. 1 narration ~8 700 crédits.
 
 ---
 
+## ▶ ÉTAT REFACTOR (2026-06-11) — Tasks 0-6 FAITES, Task 7 en cours
+
+**Le refactor moteur-fin + Partie 1 (4 beats) est CODÉ.** Branche `feat/da-brief-gate-warmap-sahel`.
+- **Task 0-2** : baseline non-régression Acte 1 (`out/episodes/warmap-sahel/_refactor-baseline/`) +
+  `SahelContext.ts` (type + closure `project`) + coquille `<Partie1Origine>` + mode `partie1` + compo `SahelPartie1`.
+- **Task 3-6 (4 beats Partie 1)** dans `src/projects/warmap/parties/Partie1Origine.tsx` + hooks moteur :
+  - 1.0 board clearing jetons→0.05 (décision Aziz) + cartouche encre "2012" + repère "LIBYE" + `getPartie1Cam`
+    (raccord exact fin Acte 1 f2102 → PULL BACK corridor Libye→Mali → push-in Mali central).
+  - 1.1 pulse Libye (onde-radar encre + foyer chaud) au mot "s'effondre" (f2210).
+  - 1.2 trait d'encre route réelle Sebha→Ghat→Salvador→Kidal (stroke-dashoffset) + 3 taches impact #8B3A3A.
+  - 1.3 vide d'État (fill `sahel-fill` →0.16 au mot "absent" f2743) + veine persistante + hachures (f2844).
+  - Timeline Acte 1 masquée en `partie1` (gate `!partie1`).
+- **Triggers V5 Partie 1** (alignment) : bascule f2102 · Libye f2178 · s'effondre f2210 · flot f2305 · absent f2743 · tensions f2844.
+- **Task 7** : render full HD `SahelPartie1` f2055-2940 muet → présentation Aziz (jugement goût).
+- **Task 8** (après validation) : supprimer legacy `acte2` + recaler triggers Acte 1 sur audio V5 + documenter pattern.
+
+### ⚠️ BUG LATENT CORRIGÉ : `<Audio narration-v2.mp3>` (supprimé au ménage) → l'Acte 1 ne rendait plus.
+Repointé vers `narration-v5-expressive.mp3` (ligne ~1722). Mais Acte 1 encore calé triggers V1/V2 → synchro V5 à recaler (Task 8).
+
+### Astuce render : `--frames=AAAA-BBBB` rend une plage en secondes (check non-régression instantané vs re-render 2300f).
+
+---
+
 ## ▶ PROCHAINE ÉTAPE (session SAHEL — CODE) — ⭐ PLAN PRÊT
 **Le découpage beats + le plan visuel Partie 1 sont FAITS et VALIDÉS. Reste = exécuter le refactor + coder.**
 
