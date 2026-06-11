@@ -145,11 +145,15 @@ export const Proto24Extinction: React.FC<Props> = ({ ctx }) => {
   // Doctrine : effet organique = PixelLab animé par prompt (pas de Lottie codé). La séquence joue une
   // fois (montée) au moment de l'extinction puis se fige sur la dernière frame (foyer qui couve).
   const SMOKE_FPS = 12; // cadence de lecture des frames PixelLab
+  // PING-PONG : 0→1→…→8→7→…→1→0→1… boucle SANS raccord dur (la fumée bouge en continu).
+  // Période = 2*(N-1) frames de cycle. Pas de fige : le panache vit tant que la base brûle.
+  const PINGPONG = SMOKE_FRAMES > 1 ? (SMOKE_FRAMES - 1) * 2 : 1;
   const smokeFor = (b: FrBase): { idx: number; op: number } | null => {
     const rel = frame - b.extinctAt;
     if (rel < 0) return null;
     const playFrame = Math.floor((rel / fps) * SMOKE_FPS);
-    const idx = Math.min(playFrame, SMOKE_FRAMES - 1); // joue une fois puis fige
+    const phase = playFrame % PINGPONG;
+    const idx = phase < SMOKE_FRAMES ? phase : PINGPONG - phase; // montée puis redescente
     const op = interpolate(rel, [0, 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     return { idx, op };
   };
