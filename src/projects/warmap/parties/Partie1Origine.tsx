@@ -3,25 +3,136 @@
 // Couche PURE dessinee par-dessus la carte du moteur. Recoit le contexte
 // SahelRenderContext (frame, project lon/lat->px, etat). Ne possede PAS la map.
 //
-// Beats (recales sur narration-v5-alignment.json) :
-//   1.0 board clearing (jetons Acte 1 -> fantomes) + reperes "LIBYE" + "2012"
+// Beats (recales sur narration-v5-alignment.json @30fps) :
+//   1.0 board clearing (jetons Acte 1 -> 0.05, gere par le moteur) + reperes "LIBYE" + "2012"
 //   1.1 pulse Libye (effondrement)
-//   1.2 trait d'encre Libye->Mali + taches d'impact Kidal/Gao/Tombouctou
+//   1.2 trait d'encre Libye->Mali (route reelle Sebha->Salvador->Kidal) + taches Kidal/Gao/Tombouctou
 //   1.3 vide d'Etat (chute opacite fill rural) + hachures tensions
 //
 // REGLE P1 : PAS d'overlay, PAS d'objets (origine 2012 = abstraite, 100% cartographiable).
 // Encre/taches en mixBlendMode multiply, palette parchemin. PAS de particules TikTok.
 
 import React from "react";
-import { AbsoluteFill } from "remotion";
+import { AbsoluteFill, interpolate, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
+
+// ============================================================
+// TRIGGERS V5 (alignment narration-v5-alignment.json, x30fps)
+//   "bascule"     f2102  -> board clearing (moteur) + "2012" s'inscrit
+//   "Libye"       f2178  -> repere LIBYE
+//   "s'effondre"  f2210  / "effondrement" f2272 -> pulse Libye (beat 1.1)
+//   "flot"        f2305  / "d'armes" f2311      -> trait + taches (beat 1.2)
+//   "absent"      f2743  -> vide d'Etat (beat 1.3)
+//   "tensions"    f2844  -> hachures
+// ============================================================
+const F_2012 = 2102;   // "bascule"
+const F_LIBYE = 2178;  // "Libye"
+
+// Encre parchemin (coherence palette Sahel)
+const INK = "#3A2A18";
+const INK_DEEP = "#2A1C0E";
+
+// Coordonnees geo (lon, lat)
+const LIBYE_LABEL_COORD: [number, number] = [16.0, 27.5]; // sud-Libye (zone source, pas Tripoli)
 
 type Props = {
   ctx: SahelRenderContext | null;
 };
 
 export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
-  // Coquille vide (Task 2). Les beats 1.0->1.3 arrivent en Tasks 3-6.
   if (!ctx) return null;
-  return <AbsoluteFill style={{ pointerEvents: "none" }} />;
+  const { frame, width, height, project } = ctx;
+
+  // -------- BEAT 1.0 : reperes "2012" (encre qui se remplit) + "LIBYE" --------
+  // "2012" : apparait au mot "bascule", mask de remplissage gauche->droite (encre).
+  const y2012Fill = interpolate(frame, [F_2012, F_2012 + 24], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+  });
+  const y2012Op = interpolate(frame, [F_2012, F_2012 + 12], [0, 1], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+
+  // "LIBYE" : repere geo-ancre (texte encre opacity 0.6) qui apparait au nommage.
+  const libyeOp = interpolate(frame, [F_LIBYE, F_LIBYE + 18], [0, 0.6], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const pLibye = project(LIBYE_LABEL_COORD[0], LIBYE_LABEL_COORD[1]);
+
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <svg
+        width={width}
+        height={height}
+        style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}
+      >
+        <defs>
+          {/* mask de remplissage pour "2012" (revele gauche->droite) */}
+          <clipPath id="p1-2012-fill">
+            <rect x={0} y={0} width={width * y2012Fill} height={height} />
+          </clipPath>
+        </defs>
+
+        {/* "2012" — cartouche date en encre, ancre bas-gauche (ou la timeline Acte 1
+            etait). Se remplit au mot "bascule". Repere temporel du redemarrage du recit. */}
+        {y2012Op > 0 && (
+          <g opacity={y2012Op} style={{ mixBlendMode: "multiply" }}>
+            {/* trace fantome (toujours visible une fois pose) */}
+            <text
+              x={120}
+              y={height - 70}
+              fontFamily="'Cormorant Garamond', Georgia, serif"
+              fontSize={64}
+              fontWeight={700}
+              fill={INK}
+              fillOpacity={0.18}
+              letterSpacing={4}
+            >
+              2012
+            </text>
+            {/* remplissage encre (clip anime) */}
+            <text
+              x={120}
+              y={height - 70}
+              fontFamily="'Cormorant Garamond', Georgia, serif"
+              fontSize={64}
+              fontWeight={700}
+              fill={INK_DEEP}
+              letterSpacing={4}
+              clipPath="url(#p1-2012-fill)"
+            >
+              2012
+            </text>
+          </g>
+        )}
+
+        {/* "LIBYE" — repere geo-ancre sur la zone sud-libyenne (source). */}
+        {libyeOp > 0 && (
+          <g opacity={libyeOp} style={{ mixBlendMode: "multiply" }}>
+            <text
+              x={pLibye.x}
+              y={pLibye.y}
+              textAnchor="middle"
+              fontFamily="'Cormorant Garamond', Georgia, serif"
+              fontSize={30}
+              fontWeight={700}
+              fill={INK_DEEP}
+              letterSpacing={6}
+            >
+              LIBYE
+            </text>
+            {/* petit tiret de reperage sous le label */}
+            <line
+              x1={pLibye.x - 26}
+              y1={pLibye.y + 10}
+              x2={pLibye.x + 26}
+              y2={pLibye.y + 10}
+              stroke={INK_DEEP}
+              strokeWidth={1.5}
+              strokeOpacity={0.8}
+            />
+          </g>
+        )}
+      </svg>
+    </AbsoluteFill>
+  );
 };

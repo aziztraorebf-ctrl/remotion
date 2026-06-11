@@ -502,6 +502,37 @@ const acte1BeatName = (frame: number): string => {
 
 // ============================================================
 // ACTE 2 — CAMÉRA B1 V2 (refonte 2026-06-09 selon WARMAP-VIVANTE-GRAMMAIRE R-V3).
+// PARTIE 1 (V5) — track caméra dédié. Avant f2102 = getActe1Cam (continuité parfaite,
+// pas de coupe). Puis PULL BACK pour révéler le corridor Libye→Mali (source des armes),
+// HOLD large pendant pulse + trait d'encre, puis push-in lent vers Mali central (vide d'État).
+const PARTIE1_CAM_KEYS: CamKey[] = [
+  { f: 2102, lon: -0.15, lat: 15.05, zoom: 5.18 }, // = fin Acte 1 (raccord exact)
+  { f: 2200, lon:  3.5,  lat: 19.8,  zoom: 4.05 }, // PULL BACK : pan NE + zoom-out (Libye sud + nord Mali)
+  { f: 2300, lon:  6.0,  lat: 21.5,  zoom: 3.75 }, // corridor complet (Sebha haut → Kidal bas dans le cadre)
+  { f: 2520, lon:  4.5,  lat: 20.0,  zoom: 3.85 }, // HOLD large, drift lent (trait d'encre descend)
+  { f: 2640, lon:  1.0,  lat: 17.6,  zoom: 4.55 }, // push-in vers nord Mali (taches posées)
+  { f: 2743, lon: -0.6,  lat: 15.6,  zoom: 4.95 }, // "absent" : Mali central / nord Burkina
+  { f: 2940, lon: -0.6,  lat: 15.3,  zoom: 5.05 }, // Ken Burns lent (vide d'État + hachures)
+];
+const getPartie1Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  if (frame <= PARTIE1_CAM_KEYS[0].f) return getActe1Cam(frame);
+  const keys = PARTIE1_CAM_KEYS;
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep (drift cinématique)
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
 // Prolonge l'Acte 1 : avant f2299 = getActe1Cam (continuité parfaite).
 // RÈGLE R-V3 : ZOOM CONSTANT (~5.0), PAN SERRÉ uniquement, JAMAIS de pull-back continental.
 //   (vérifié : à zoom 5.0 on voit ~38° lon — Bamako→Arlit tient sans dézoomer. Le pull-back
@@ -1189,7 +1220,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
-      const camFn = acte2 ? getActe2Cam : getActe1Cam;
+      const camFn = partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
       const cam = a1Freeze ? camFn(A1.FREEZE) : camFn(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     } else if (camStatic) {
@@ -1711,12 +1742,23 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // Geste "gel/pierre" (vibrance Aziz) : désaturation rapide perçue via la chute d'opacité.
   // f2630 (début Acte 2) → f2780 (~5s).
   // B1 V3 : board clearing COURT (2s, f2630→f2690) — transition rapide, PAS 19s de vide (critique Aziz #2).
+  // PARTIE 1 (V5) : board clearing recalé sur "bascule" (f2102, alignment V5).
+  // Décision Aziz : table rase quasi-totale (jetons → 0.05, on revient à 2012).
+  // Fondu f2055→f2115 (~2s). Taches d'influence → 0.05 idem.
+  const P1_CLEAR_A = 2055;
+  const P1_CLEAR_B = 2115;
   const b1FighterClear = acte2
     ? interpolate(frame, [2630, 2690], [1, 0.18],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
+    : partie1
+    ? interpolate(frame, [P1_CLEAR_A, P1_CLEAR_B], [1, 0.05],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : 1;
   const b1ZoneClear = acte2
     ? interpolate(frame, [2630, 2690], [1, 0.12],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
+    : partie1
+    ? interpolate(frame, [P1_CLEAR_A, P1_CLEAR_B], [1, 0.05],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
     : 1;
 
