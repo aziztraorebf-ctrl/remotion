@@ -49,11 +49,24 @@ const ARMS_ROUTE: [number, number][] = [
   [3.0, 19.5],   // nord-est Mali
   [1.44, 18.43], // Kidal (porte d'entree nord Mali)
 ];
-// 3 foyers d'impact (taches d'encre rouge-sombre). Kidal/Gao/Tombouctou.
+// Coords des 3 villes touchees.
+const KIDAL_C: [number, number] = [1.44, 18.43];      // porte d'entree (arrivee trait Libye)
+const GAO_C: [number, number] = [-0.04, 16.27];
+const TOMBOUCTOU_C: [number, number] = [-3.01, 16.79];
+
+// Foyers d'impact. Kidal = entree (delay 0). Gao/Tombouctou = arrivee de la PROPAGATION
+// (delay calé sur l'arrivée des traits secondaires depuis Kidal).
 const IMPACTS: { coord: [number, number]; delay: number; name: string; dy: number }[] = [
-  { coord: [1.44, 18.43], delay: 0, name: "KIDAL", dy: -26 },        // arrivee du trait, label au-dessus
-  { coord: [-0.04, 16.27], delay: 6, name: "GAO", dy: 30 },          // label en-dessous
-  { coord: [-3.01, 16.79], delay: 12, name: "TOMBOUCTOU", dy: -26 }, // label au-dessus
+  { coord: KIDAL_C, delay: 0, name: "KIDAL", dy: -26 },             // arrivee du trait Libye
+  { coord: GAO_C, delay: 42, name: "GAO", dy: 30 },                 // arrivee propagation Kidal->Gao
+  { coord: TOMBOUCTOU_C, delay: 50, name: "TOMBOUCTOU", dy: -26 },  // arrivee propagation Kidal->Tombouctou
+];
+// PROPAGATION (Aziz): apres Kidal, 2 traits ROUGE-SOMBRE partent de Kidal vers Gao et
+// Tombouctou = contagion interne (distincte du trait d'encre brune = armes venues de Libye).
+// Routes legerement courbees (waypoint intermediaire pour eviter la ligne droite).
+const PROPAGATION: { route: [number, number][]; startDelay: number; dur: number }[] = [
+  { route: [KIDAL_C, [0.6, 17.4], GAO_C], startDelay: 14, dur: 34 },        // Kidal -> Gao
+  { route: [KIDAL_C, [-0.9, 17.7], TOMBOUCTOU_C], startDelay: 20, dur: 38 }, // Kidal -> Tombouctou
 ];
 const IMPACT_COLOR = "#8B3A3A"; // rouge-sombre encre (PAS flammes)
 const SAHEL_LAND = "#F5EFD6";   // parchemin clair (= SAHEL_COLORS.land) pour halo reserve labels
@@ -63,6 +76,25 @@ const SAHEL_LAND = "#F5EFD6";   // parchemin clair (= SAHEL_COLORS.land) pour ha
 const VOID_ZONE: [number, number][] = [
   [-3.5, 17.4], [1.8, 18.0], [2.6, 15.4], [0.2, 13.9], [-3.2, 14.6], [-4.2, 16.0],
 ];
+
+// Helper : construit un path SVG lisse (courbes quadratiques via midpoints) + sa longueur
+// approx, depuis une liste de points ecran. Utilise pour le trait Libye ET la propagation.
+function buildSmoothPath(pts: { x: number; y: number }[]): { d: string; len: number } {
+  if (pts.length < 2) return { d: "", len: 0 };
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  for (let i = 1; i < pts.length - 1; i++) {
+    const mx = (pts[i].x + pts[i + 1].x) / 2;
+    const my = (pts[i].y + pts[i + 1].y) / 2;
+    d += ` Q${pts[i].x.toFixed(1)},${pts[i].y.toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
+  }
+  const last = pts[pts.length - 1];
+  d += ` L${last.x.toFixed(1)},${last.y.toFixed(1)}`;
+  let len = 0;
+  for (let i = 1; i < pts.length; i++) {
+    len += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+  }
+  return { d, len };
+}
 
 type Props = {
   ctx: SahelRenderContext | null;
@@ -102,28 +134,26 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
   // Route reelle projetee en px. Path lisse (courbe quadratique entre waypoints).
   // Trace anime via stroke-dashoffset. Epaisseur degressive source->pointe (via 2 traces).
   const routePx = ARMS_ROUTE.map(([lon, lat]) => project(lon, lat));
-  // construire un path lisse (midpoints quadratiques) pour un rendu "encre" organique
-  let traitD = "";
-  if (routePx.length > 1) {
-    traitD = `M${routePx[0].x.toFixed(1)},${routePx[0].y.toFixed(1)}`;
-    for (let i = 1; i < routePx.length - 1; i++) {
-      const mx = (routePx[i].x + routePx[i + 1].x) / 2;
-      const my = (routePx[i].y + routePx[i + 1].y) / 2;
-      traitD += ` Q${routePx[i].x.toFixed(1)},${routePx[i].y.toFixed(1)} ${mx.toFixed(1)},${my.toFixed(1)}`;
-    }
-    const last = routePx[routePx.length - 1];
-    traitD += ` L${last.x.toFixed(1)},${last.y.toFixed(1)}`;
-  }
-  // longueur approx (somme segments) pour caler le dash
-  let routeLen = 0;
-  for (let i = 1; i < routePx.length; i++) {
-    routeLen += Math.hypot(routePx[i].x - routePx[i - 1].x, routePx[i].y - routePx[i - 1].y);
-  }
+  const { d: traitD, len: routeLen } = buildSmoothPath(routePx);
   const traitDur = 70; // ~2.3s pour descendre Libye->Kidal
   const traitT = interpolate(frame, [F_TRAIT, F_TRAIT + traitDur], [0, 1], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
   });
-  const F_IMPACT = F_TRAIT + traitDur - 6; // taches a l'arrivee du trait
+  // Kidal (entree) tombe a l'arrivee du trait Libye. Les 2 autres villes tombent a
+  // l'arrivee de la PROPAGATION (traits rouges depuis Kidal). F_IMPACT = base Kidal.
+  const F_IMPACT = F_TRAIT + traitDur - 6;
+
+  // PROPAGATION (Aziz) : 2 traits rouge-sombre Kidal->Gao et Kidal->Tombouctou, qui
+  // partent APRES la chute de Kidal (contagion interne). Calcules par frame.
+  const propagation = PROPAGATION.map((prop) => {
+    const pts = prop.route.map(([lon, lat]) => project(lon, lat));
+    const { d, len } = buildSmoothPath(pts);
+    const start = F_IMPACT + prop.startDelay;
+    const t = interpolate(frame, [start, start + prop.dur], [0, 1], {
+      extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+    });
+    return { d, len, t };
+  });
 
   // -------- BEAT 1.3 : veine persistante + hachures tensions --------
   // Le trait 1.2 -> veine fine (opacity 0.2) persistante apres la pose des taches.
@@ -151,10 +181,11 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           <clipPath id="p1-2012-fill">
             <rect x={0} y={0} width={width * y2012Fill} height={height} />
           </clipPath>
-          {/* hachures diagonales (tension) */}
-          <pattern id="p1-hachures" width={7} height={7} patternUnits="userSpaceOnUse"
+          {/* hachures diagonales (tension) — rouge-sombre (visible sur parchemin pale, sens
+              'violence/tension' coherent avec les taches). Croisillon: 2 directions. */}
+          <pattern id="p1-hachures" width={8} height={8} patternUnits="userSpaceOnUse"
             patternTransform="rotate(45)">
-            <line x1={0} y1={0} x2={0} y2={7} stroke={INK_DEEP} strokeWidth={1.7} />
+            <line x1={0} y1={0} x2={0} y2={8} stroke={IMPACT_COLOR} strokeWidth={1.8} />
           </pattern>
           {/* clip = zone du vide (pour borner les hachures) */}
           <clipPath id="p1-void-clip">
@@ -225,6 +256,35 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           </g>
         )}
 
+        {/* BEAT 1.2 — PROPAGATION : traits rouge-sombre Kidal->Gao/Tombouctou (contagion
+            interne). Couleur des taches (#8B3A3A) pour distinguer des armes venues de Libye. */}
+        {propagation.map((prop, i) =>
+          prop.t > 0 && prop.len > 0 && prop.d ? (
+            <g key={`prop-${i}`} style={{ mixBlendMode: "multiply" }}>
+              <path
+                d={prop.d}
+                fill="none"
+                stroke={IMPACT_COLOR}
+                strokeWidth={3.4}
+                strokeOpacity={0.22}
+                strokeLinecap="round"
+                strokeDasharray={prop.len}
+                strokeDashoffset={prop.len * (1 - prop.t)}
+              />
+              <path
+                d={prop.d}
+                fill="none"
+                stroke={IMPACT_COLOR}
+                strokeWidth={1.8}
+                strokeOpacity={0.8}
+                strokeLinecap="round"
+                strokeDasharray={prop.len}
+                strokeDashoffset={prop.len * (1 - prop.t)}
+              />
+            </g>
+          ) : null
+        )}
+
         {/* BEAT 1.2 — taches d'impact (Kidal/Gao/Tombouctou), scale overshoot decale. */}
         {frame >= F_IMPACT && IMPACTS.map((imp, i) => {
           const p = project(imp.coord[0], imp.coord[1]);
@@ -233,8 +293,32 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           });
           if (t <= 0) return null;
           const r = 13 * Math.min(1.15, t); // overshoot via back easing
+          const fall = F_IMPACT + imp.delay; // frame de chute de cette ville
+          // PULSE VILLE (Aziz) : onde radar a la chute + teinte persistante apres.
+          const cityRings = [0, 16]; // 2 ondes decalees
+          // teinte persistante (monte a la chute, reste = zone durablement touchee -> sert le vide d'Etat)
+          const cityTint = interpolate(frame, [fall, fall + 24], [0, 0.16], {
+            extrapolateLeft: "clamp", extrapolateRight: "clamp",
+          });
           return (
             <g key={`impact-${i}`}>
+              {/* PULSE VILLE — teinte persistante diffuse (zone touchee durablement) */}
+              {cityTint > 0 && (
+                <circle cx={p.x} cy={p.y} r={42} fill={IMPACT_COLOR} fillOpacity={cityTint}
+                  style={{ mixBlendMode: "multiply", filter: "blur(11px)" }} />
+              )}
+              {/* PULSE VILLE — onde radar a la chute (2 cercles concentriques) */}
+              {frame >= fall && frame < fall + 60 && cityRings.map((delay, ri) => {
+                const rt = interpolate(frame, [fall + delay, fall + delay + 42], [0, 1], {
+                  extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
+                });
+                if (rt <= 0 || rt >= 1) return null;
+                return (
+                  <circle key={`ring-${ri}`} cx={p.x} cy={p.y} r={10 + rt * 52} fill="none"
+                    stroke={IMPACT_COLOR} strokeWidth={2.4 - rt * 1.6} strokeOpacity={(1 - rt) * 0.55}
+                    style={{ mixBlendMode: "multiply" }} />
+                );
+              })}
               <g style={{ mixBlendMode: "multiply" }}>
                 {/* halo diffus */}
                 <circle cx={p.x} cy={p.y} r={r * 1.8} fill={IMPACT_COLOR} fillOpacity={0.22 * t}
@@ -272,10 +356,16 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
             strokeOpacity={veineOp} strokeLinecap="round" style={{ mixBlendMode: "multiply" }} />
         )}
 
-        {/* BEAT 1.3 — hachures de tension dans le vide d'Etat. */}
+        {/* BEAT 1.3 — hachures de tension dans le vide d'Etat. Teinte rouge diffuse SOUS
+            les hachures = la zone "respire" la tension meme avant que les traits se lisent. */}
         {hachuresOp > 0 && voidD && (
-          <g clipPath="url(#p1-void-clip)" style={{ mixBlendMode: "multiply" }} opacity={hachuresOp}>
-            <path d={voidD} fill="url(#p1-hachures)" />
+          <g clipPath="url(#p1-void-clip)" style={{ mixBlendMode: "multiply" }}>
+            {/* teinte diffuse */}
+            <path d={voidD} fill={IMPACT_COLOR} fillOpacity={0.10 * hachuresOp} />
+            {/* hachures */}
+            <g opacity={hachuresOp}>
+              <path d={voidD} fill="url(#p1-hachures)" />
+            </g>
           </g>
         )}
 
