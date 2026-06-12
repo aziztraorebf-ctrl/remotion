@@ -12,7 +12,12 @@
 
 **ÉTAT : Acte1 ✅ + P1 ✅ + P2 NARRATIVE ✅ VALIDÉE Aziz ("très bon point d'équilibre").**
 Reste sur la vidéo : **P3 "La Rupture" + P4 "Coût/Perspective" + assemblage final.** ~la moitié est derrière.
-Render P2 final : `out/episodes/warmap-sahel/wip/p2-FINAL-v2-FULLHD.mp4` (audio embarqué).
+Render P2 final : `out/episodes/warmap-sahel/p2-FINAL.mp4` (audio embarqué, catbox gfsa3h).
+
+> ⭐⭐ **LIRE EN PREMIER AVANT DE CODER P3 : `memory/doctrines/WARMAP-GRAMMAIRE-CAUSALE.md`** — LA doctrine
+> qui évite le "bordel confus du départ" (Aziz). Règle CAUSE avant EFFET + catalogue des 5 techniques causales
+> validées (avancée jetons+sillage · chute base 3 temps · donnée qui se MONTRE par remplissage du pays ·
+> contour flash · casser la grammaire pour acteur différent). C'est le standard non-négociable.
 
 ### ⭐⭐ LA MÉTHODE QUI A MARCHÉ (à appliquer SYSTÉMATIQUEMENT P3/P4) — leçon majeure de la session
 La P2 a été refaite 4 fois avant de marcher. Ce qui a débloqué = **partir de l'AUDIO, raconter une action
@@ -47,92 +52,17 @@ superflu · SFX seulement si support visuel (cedeao-snap retiré faute de visuel
 
 ---
 
-## (archive 2026-06-11) — P2 premium 1ère passe (rejetée puis refondue narrative ci-dessus)
+## (archive — historique P2, NE PAS coder depuis ici) — voir REPRISE en tête
 
-### ⭐⭐ LE SYSTÈME PREMIUM EST EN PLACE (réutilisable P3/P4 + vidéos futures)
-Cette session a construit le SYSTÈME, pas juste la P2. P3/P4 = du CONTENU, pas de la R&D :
-1. **`src/projects/warmap/parties/warmapPremiumKit.ts`** — briques importables : `buildStaticZone` (zone
-   d'emprise statique déchiquetée), `smoothClosedPath`, `smokePingPong` (fumée ambiante), `PAL` (palette),
-   `lerpHex`. P3/P4 les importent directement.
-2. **Pattern `<PartieX>` rodé** : couche pure `({ ctx })` + branchement moteur (mode `partieN`, table rase
-   `showChrome`+HUD off, `getPartieNCam` serrée). Recette mécanique — copier `Partie2Blocage.tsx`.
-3. **Doctrine verrouillée** (`WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`) : Gemini=marqueurs / PixelLab=effets,
-   ponctuel vs ambiant, zones STATIQUES (pas de blob qui ondule), effacement TOTAL (territoire perdu = plus rien).
-4. **Assets P3/P4 déjà là** : jeton-fama/csp (AES), base-africacorps (Wagner/Russie), convoi-uranium +
-   wagon-cargo-or/rouge (ressources P4), 5 refugie-* (P4). Voir section ASSETS.
-
-### Leçons gravées cette session (anti-erreurs P3/P4)
-- **fr-epervier/licorne/sabre = PORTRAITS de visages** (vue de face), PAS des marqueurs top-down. Ne PAS les
-  poser comme jetons sur la carte (incohérent). Présence abstraite = traits encre + marqueurs simples.
-- **Pont Gemini→PixelLab RATE sur effets DIFFUS** (poussière = boule pleine). Marche sur denses (explosion/fumée).
-- **Fumée doit se DISPERSER** (~+9-15s) sinon les panaches saturent les beats suivants. Pas de feu éternel.
-- **Plan détaillé** : `memory/episodes/warmap-sahel/PLAN-GENERALISATION-P2.md` (modèle pour P3/P4).
-
-### ▶ PROCHAINE ACTION
-1. Valider le re-render P2 corrigé (`p2-premium-v2-FULLHD.mp4`) avec Aziz.
-2. Coder P3 "La Rupture" sur le modèle P2 (pattern + kit). Triggers V5 dans `BEATS-V5.md` / `narration-v5-alignment.json`.
-   Beats P3 : AES naît (Liptako or) · Kidal repris · reprise · Moura · 2026. Assets : jeton-fama/csp, base-africacorps.
-3. Puis P4, puis assemblage (Acte1+P1+P2+P3+P4 + narration V5 + SFX + musique).
-
-### Réf modèle (ne pas re-litiger)
-Proto 2.4 validé : `Proto24Extinction.tsx` (compo test `SahelProto24Flat`, intacte). P2 = `Partie2Blocage.tsx`.
-
-### ⭐ LA VOIE PREMIUM VALIDÉE (doctrine actée — `memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`)
-1. **Caméra SERRÉE qui suit l'action** (`getProto24Cam` dans le moteur), pitch MIXTE selon le beat
-   (pitch ~32 sur tension/bascule, plat sur analytique — décision Aziz). Jamais de vue continentale vide.
-2. **Marqueurs/bases/persos/véhicules = Gemini** (encre fine) + animés PAR NOUS (track/path/walk Remotion).
-   Asset base FR : `public/_shared/sprites/warmap/base-fr-td.png` (fortin Gemini, AGRANDI 0.22vmin = lisible).
-3. **Effets organiques (feu/fumée/explosion) = PixelLab animé PAR PROMPT** (zéro Lottie). Frames archivées :
-   `public/_shared/sprites/warmap/fx-smoke/` (9f) + `fx-explosion/` (9f + `_source-gemini.png`).
-   **LOOP = PING-PONG** (0→8→0 sans raccord dur) — JAMAIS "joue une fois puis fige" (= fumée statique, rejeté).
-4. **Pont Gemini→PixelLab POUR LES EFFETS PREMIUM** (validé) : générer l'effet via Gemini (NOTRE look sépia) →
-   le passer en `background_image` à `create_map_object` (inpainting rectangle 0.9) → PixelLab garde notre style
-   et l'anime. = effet premium à notre identité, pas générique. Explosion `fx-explosion/` faite ainsi.
-5. **Front mouvant = zone DÉCHIQUETÉE procédurale** (`buildFrontRing` : 20pts + bruit + ondulation), pas un ovale.
-6. **Anti-saturation (table rase)** : `proto24` ⇒ `showChrome=false` (masque jetons/taches/légende/pulses legacy).
-
-### Décisions Aziz verrouillées cette session
-- "On a trouvé la voie." Proto 2.4 validé. Le pixel ne se voit pas sur du feu/fumée (matière chaotique) → OK.
-- Objets Gemini = plus gros sur la carte (lisibilité). Fait : fortin 0.22vmin.
-- Pixel art = réservé aux EFFETS, pas aux marqueurs (Gemini reste l'identité encre fine).
-
-### Reste à faire pour finir (prochaine session, contexte frais)
-- **Généraliser aux 5 autres beats P2** (2.1 bases, 2.2 convergence, 2.3 MINUSMA, 2.5 villes/campagnes, 2.6 Burkina/CEDEAO)
-  en suivant Proto24Extinction comme modèle (= refondre `Partie2Blocage.tsx`, qui était la version rejetée).
-- **Brancher le proto 2.4 dans la Partie 2** (actuellement compo séparée `SahelProto24*`). Intégrer au flux P2.
-- **Triggers V5 P2** : Serval f3196 · Barkhane f3268 · présente f3419 · MINUSMA f3660 · échec f3887 · villes f4384 · Burkina f4976 · Niger f5380 · CEDEAO f5639.
-- Optionnel : DA-brief upstream sur le proto avant de généraliser (Aziz : "on a déjà notre réponse" → peut sauter).
-- Effets à générer le moment venu (pont Gemini→PixelLab) : convoi uranium qui roule, poussière, foules réfugiés.
-- **RAFFINEMENT prévu beat 2.4** (règle ponctuel/ambiant) : ajouter une EXPLOSION ponctuelle (one-shot + fade,
-  asset `fx-explosion/` déjà prêt) au moment où chaque base tombe, PUIS la fumée ambiante (ping-pong) qui persiste.
-  Actuellement seule la fumée ambiante est posée. L'explosion d'amorce = le "moment de la chute" plus net.
-
-> LEÇON gravée : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat/pauvre". Premium d'abord.
-> Compos proto : `SahelProto24Flat` (pitch 0) + `SahelProto24Pitch` (pitch 32), rendre `--frames=3850-4250`.
+> ⚠️ ANTI-CONFUSION (trou détecté test agent vierge 2026-06-12) : cette zone décrit des ÉTATS PÉRIMÉS
+> de la P2 (1ère passe SVG rejetée, proto 2.4, "généraliser depuis Proto24"). **TOUT CELA EST DÉPASSÉ.**
+> La VÉRITÉ ACTUELLE = section REPRISE en tête : **`Partie2Blocage.tsx` EST la P2 narrative VALIDÉE**.
+> `Proto24Extinction.tsx` = compo de test historique (proto du beat 2.4), NE PAS la prendre comme modèle —
+> le modèle est `Partie2Blocage.tsx`. Le mode moteur `proto24` est LEGACY (à ignorer pour P3/P4).
+> Historique condensé : P2 refondue 4× → SVG plat (rejeté 4/10) → premium "états" (confus) → grammaire causale (validé).
 
 ---
 
-## ✅ PARTIE 2 CODÉE (2026-06-11) — les 6 beats faits MAIS rejetés (refonte premium, voir ci-dessus)
-
-`src/projects/warmap/parties/Partie2Blocage.tsx` + hooks moteur. Mode `partie2` + `getPartie2Cam`
-+ compo Root `SahelPartie2`. Pattern `<PartieX>` suivi. Triggers V5 calés (Serval f3196 ... CEDEAO f5639).
-- 2.1 bases FR (étoiles bleu-acier #4A6B8A rigides, staggered Gao/Ménaka/Tessalit) + board clearing P2 (jetons→0.15)
-  + carte calme (fill→0.28, "sécurité apparente") + "2013".
-- 2.2 convergence régionale (lignes pointillées état-major depuis 5 voisins → centre Mali, sobre, fade à l'arrivée).
-- 2.3 MINUSMA (points bleu-ONU #6E8FB0, double anneau béret, distincts des bases FR).
-- 2.4 ÉCHEC 10 ANS (cœur) : surfaces rouges dédiées P2 (foyers organiques) qui ENCERCLENT les bases →
-  EXTINCTION = réaction (désaturation steel→gris + opacity↓ + petit ×), staggered. Timeline année défile 2013→2022.
-- 2.6 débordement Burkina (foyers rouges franchissent frontière sud) + "40% du territoire" (overlay ancré).
-- fin : Niamey bascule (point rouge) + anneau CEDEAO pointillé (menace, pont Partie 3).
-- Render full HD `out/episodes/warmap-sahel/wip/partie2-fullhd.mp4` (f3000-5690).
-- À surveiller (jugement Aziz full HD) : fin un peu chargée (40%+Niamey+Ouaga+CEDEAO se chevauchent au zoom),
-  extinction des bases (× + désaturation) subtile au zoom large → juger en full HD.
-
-Briques nouvelles réutilisables P3-P4 : `lerpHex` (interpolation couleur, ex: extinction), `starPath` (étoile),
-surfaces rouges organiques (foyers blur+multiply), points institutionnels (étoile rigide vs anneau ONU),
-convergence pointillée (lignes état-major), donnée ancrée (overlay registre 3).
-
----
 
 ## ⭐ PARTIE 1 VALIDÉE + PATTERN `<PartieX>` (2026-06-11) — LIRE AVANT DE CODER P2-P4
 

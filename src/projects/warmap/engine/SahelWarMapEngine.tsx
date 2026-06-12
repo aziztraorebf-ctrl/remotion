@@ -855,12 +855,14 @@ export type SahelTestProps = {
   // (jetons/taches/palette/grain) MAIS désactive les blocs B1 legacy (acte2) et
   // rend la couche <Partie1Origine> par-dessus. Récit V5, direction soustraction.
   partie1?: boolean;
-  // REFACTOR V5 — mode Partie 2 (le blocage). Look Acte 1 + couche <Partie2Blocage>.
-  // Legacy B1 OFF. Récit V5, "effort massif / échec" (points rigides sur surfaces fluides).
+  // REFACTOR V5 — mode Partie 2 (le blocage). ⭐ MODÈLE DE RÉFÉRENCE pour P3/P4 : couche <Partie2Blocage>
+  // (grammaire causale validée Aziz 2026-06-12 : jetons avancent → sillage → chute). Table rase (showChrome
+  // + HUD off), timeline graduée pleine largeur, SFX dédiés, getPartie2Cam serrée. POUR CODER P3 : copier
+  // ce mode (partie2) + Partie2Blocage.tsx, PAS proto24 ci-dessous.
   partie2?: boolean;
-  // PROTO 2.4 — prototype premium de l'extinction d'une base FR encerclée (refonte P2).
-  // Look Acte 1 + couche <Proto24Extinction>. Caméra serrée dédiée. `proto24Pitch` permet
-  // de comparer à-plat (0) vs pitch 3D (~32). Isolé : ne touche ni P1 ni P2.
+  // ⚠️ PROTO 2.4 — LEGACY (compo de test historique, prototype du beat 2.4 avant la P2 narrative).
+  // NE PAS prendre comme modèle pour P3/P4 (le modèle = partie2). Conservé isolé : ne touche ni P1 ni P2.
+  // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
   proto24?: boolean;
   proto24Pitch?: number;
 };
@@ -2915,6 +2917,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           HUD PRINCIPAL — legende + date + evenement (masqué en track caméra seul)
           ====================================================== */}
+      {/* ⚠️ PIÈGE (leçon P2) : ce fragment <> englobe la légende ET la timeline graduée plus bas. Si on
+          gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
+          → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
       {!acte1CameraOnly && !proto24 && <>
       {/* Legende factions — haut gauche (masquée en partie2 : table rase, les jetons parlent d'eux-mêmes) */}
       {!partie2 && (
