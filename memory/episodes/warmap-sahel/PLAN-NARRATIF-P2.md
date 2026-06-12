@@ -83,6 +83,23 @@
 3. **Frise temporelle** : OUI — frise/compteur **2013→2022 qui défile** pendant la phrase 4 (rend visible "dix ans").
 4. **40% Burkina** : **data-viz animée** — compteur qui monte vers 40% + jauge ancrée (registre analyste).
 
+## AJOUTS DA-BRIEF UPSTREAM (Gemini+Kimi, vérifiés, validés Aziz 2026-06-11)
+Les 2 modèles convergent : grammaire causale validée ("PowerPoint → carte de bataille"). 3 ajouts INTÉGRÉS :
+1. **SILLAGE PROGRESSIF (pas pop)** : la zone rouge se RÉVÈLE derrière le jeton via mask/clip-path animé
+   (≥45 frames de sillage visible avant de devenir zone pleine). "Wet ink" : le territoire diffuse depuis
+   la trace du jeton, il ne pop pas. `mix-blend-mode: multiply` sur les zones (anti-aplat procédural).
+2. **NIGER = CASSER LA GRAMMAIRE** : le coup d'État ne doit PAS ressembler au rouge jihadiste (sinon le
+   spectateur croit "les jihadistes ont pris le Niger"). Junte = marqueur INSTITUTIONNEL (sprite/drapeau
+   militaire) qui se pose sur Niamey + onde de choc GÉOMÉTRIQUE froide (kaki/gris-fer, PAS rouge-sang),
+   recolore les frontières d'un coup, SANS sillage. Contraste total avec la progression virale jihadiste.
+3. **CHUTE DES BASES EN 3 TEMPS + FRISE MÉTRONOME** : Approche (jetons s'arrêtent près de la base) →
+   Pression (pulse d'alerte rouge qui bat sur la base ~30f) → Chute (explosion + fumée + base en ruine).
+   La frise 2013→2022 DICTE le rythme : lent 2013-2015, ACCÉLÈRE 2017-2022 (rend sensible l'enlisement).
+   + Hiérarchie du regard : assombrir légèrement le reste de la carte quand l'action se concentre.
+
+> FILTRÉ (les modèles hallucinaient sur frames floues) : "remplacer les bases par des dessins 2D" (= nos
+> sprites Gemini validés, on garde) · cadrans/jauges/ratios chiffrés partout (sature, on reste sobre).
+
 ## RÈGLE TRANSVERSALE (la leçon de cette session)
 **Chaque scène combine l'ARSENAL, pas un seul asset.** Jetons (acteurs) + zones (conséquence) + overlays
 (contexte) + Gemini (lieux) + PixelLab (effets) + frise (temps) ENSEMBLE. La cause (action des jetons) doit
