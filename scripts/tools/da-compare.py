@@ -31,7 +31,11 @@ GEMINI_MODEL = "gemini-3.1-pro-preview"
 # Références validées par pilier (LA vidéo qui MARCHE, étalon de qualité).
 # Mettre à jour quand une nouvelle référence est validée par Aziz.
 REFERENCES = {
-    "warmap": "out/_r-and-d/sudan-warmap-epic60-v4.mp4",   # Soudan = étalon war-map (catbox 4dwqit)
+    # ETALON WAR-MAP = Sahel P2 (grammaire causale validée Aziz 2026-06-12) : jetons qui avancent -> sillage
+    # rouge -> chute des bases · timeline pleine largeur · contours flash · plaques parchemin · SFX. Montre ~80%
+    # de ce qu'on sait faire. Fallback Acte 1 si P2 absente. Catbox P2 gfsa3h.
+    "warmap": "out/episodes/warmap-sahel/p2-FINAL.mp4",
+    "warmap_acte1": "out/episodes/warmap-sahel/acte1-FINAL.mp4",   # hook allumage pays + jetons + friction (catbox slchjv)
     "atlas": "out/PRET-PUBLICATION/mansa-moussa-atlas-v2-FINAL.mp4",  # Mansa Moussa = etalon Atlas (caravane/route/or)
     # "souverain": "...", # à remplir : un beat Souverain validé
 }
@@ -40,11 +44,17 @@ REFERENCES = {
 # la STRUCTURE de question + le socle d'angles restent identiques -> mêmes résultats partout.
 CONTEXT_BY_PILLAR = {
     "warmap": {
-        "desc": "war-map géopolitique : carte permanente, contrôle territorial, sprites top-down",
+        "desc": "war-map géopolitique : carte parchemin permanente, contrôle territorial, GRAMMAIRE CAUSALE "
+                "(les acteurs AGISSENT -> le territoire change ; jamais d'état qui pop)",
         "stack": "Remotion + Mapbox reskin parchemin",
-        "axes": "cadrage/format · granularité géographique · densité d'éléments simultanés · "
-                "ratio carte/espace négatif · échelle des éléments · rythme/mouvement",
-        "outils": "SVG, opacité, couleurs, cadrage, densité, timing, caméra frame-driven",
+        "axes": "lisibilité oeil-neuf (la cause est-elle visible ?) · combinaison de l'arsenal · "
+                "rythme audio/visuel · échelle ancrée carte · densité (1 foyer à la fois)",
+        "outils": "ARSENAL DISPONIBLE (combiner, jamais 1 seul) : jetons circulaires qui avancent par waypoints "
+                  "(acteurs) · sillage rouge révélé derrière eux par mask (territoire qui NAÎT de l'action) · "
+                  "sprites Gemini ancrés carte (bases/villes/junte) · effets PixelLab (fumée/explosion) · "
+                  "timeline graduée pleine largeur (curseur date) · contour de territoire qui se dessine + flash "
+                  "(couleur porteuse de sens) · plaques de noms parchemin (WarMapPlaque) · data qui se MONTRE "
+                  "(contour qui se remplit, jamais overlay chiffré) · SFX si support visuel · caméra serrée frame-driven",
     },
     "atlas": {
         "desc": "style Atlas : cartes verticales, géographie historique, sprites pixel art",
