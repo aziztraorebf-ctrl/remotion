@@ -89,10 +89,12 @@ const MINUSMA_RATIO = 0.55;    // h/w sprite base-minusma-td
 const VILLE_RATIO = 0.55;      // h/w sprite ville-tenue-td
 
 // Largeur des marqueurs en DEGRÉS de longitude (ancrage carte — ne grossit pas au dézoom).
-const BASE_DEG = 2.4;          // fortin FR
-const MINUSMA_DEG = 1.7;       // avant-poste ONU (un peu plus petit)
-const VILLE_DEG = 2.0;         // ville tenue
-const SPRITE_BOUNDS = { min: 60, max: 460 }; // bornes px sécurité aux zooms extrêmes
+// Calibré : à zoom serré (2.4) la taille est juste ; aux zooms larges (2.2/2.3) le plancher `min` garde
+// la lisibilité sans recréer le bug "grossit au dézoom" (le plancher est un filet, pas la règle).
+const BASE_DEG = 3.0;          // fortin FR (lisible)
+const MINUSMA_DEG = 2.4;       // avant-poste ONU
+const VILLE_DEG = 2.6;         // ville tenue
+const SPRITE_BOUNDS = { min: 120, max: 320 }; // plancher de lisibilité haut + plafond anti-géant
 
 type Props = { ctx: SahelRenderContext | null };
 
