@@ -8,14 +8,74 @@
 
 ---
 
-## ⛔ REPRISE PROCHAINE SESSION (2026-06-11 soir) — GÉNÉRALISER LA P2 (voie validée)
+## ⛔ REPRISE PROCHAINE SESSION (2026-06-12) — P2 NARRATIVE VALIDÉE, place à P3 (session parallèle)
 
-**LE PROTO 2.4 EST VALIDÉ Aziz.** ("On a trouvé la voie, vraiment vraiment bonne.") La voie premium est
-arrêtée. Reste = **généraliser à toute la P2** (les 6 beats) avec cette voie, puis finaliser.
+**ÉTAT : Acte1 ✅ + P1 ✅ + P2 NARRATIVE ✅ VALIDÉE Aziz ("très bon point d'équilibre").**
+Reste sur la vidéo : **P3 "La Rupture" + P4 "Coût/Perspective" + assemblage final.** ~la moitié est derrière.
+Render P2 final : `out/episodes/warmap-sahel/wip/p2-FINAL-v2-FULLHD.mp4` (audio embarqué).
 
-**▶ PROCHAINE ACTION = appliquer la voie validée aux autres beats de la Partie 2**, puis re-render P2 complète.
-Fichier proto de référence : `src/projects/warmap/parties/Proto24Extinction.tsx` (← le modèle à généraliser).
-Render final validé : `out/episodes/warmap-sahel/wip/proto24-v4-loop-FULLHD.mp4` (catbox `v7hlwj`).
+### ⭐⭐ LA MÉTHODE QUI A MARCHÉ (à appliquer SYSTÉMATIQUEMENT P3/P4) — leçon majeure de la session
+La P2 a été refaite 4 fois avant de marcher. Ce qui a débloqué = **partir de l'AUDIO, raconter une action
+CAUSALE, combiner l'arsenal complet**. Séquence obligatoire avant de coder une Partie :
+1. **ÉCOUTER l'audio phrase par phrase** → pour chaque phrase : "que doit COMPRENDRE un œil neuf ?"
+   (PLAN-NARRATIF-P2.md = le modèle). Le timing technique (triggers) ne suffit pas — il faut le SENS.
+2. **CAUSE avant EFFET** : ne jamais faire apparaître un RÉSULTAT (zone rouge, base qui tombe) sans montrer
+   sa CAUSE (les jetons qui avancent/encerclent). "État qui pop" = incompréhensible = rejeté.
+3. **COMBINER l'arsenal** (jamais 1 seul asset) : jetons (acteurs) + zones (conséquence) + sprites Gemini
+   (lieux) + PixelLab (effets) + frise/timeline (temps) + contours flash + plaques. C'est l'ensemble qui crée le sens.
+4. **DA-brief upstream** sur le plan narratif AVANT de coder (Gemini+Kimi, signal jamais juge).
+
+### Briques P2 RÉUTILISABLES P3/P4 (toutes dans `parties/`)
+- `warmapPremiumKit.ts` : buildStaticZone, smoothClosedPath, smokePingPong, **interpWaypoints** (jetons qui
+  avancent), **countryOutline** (contour territoire qui se dessine + flash), spriteMapWidth (ancrage carte), PAL.
+- `WarMapPlaque.tsx` : plaque de nom parchemin élégante (adaptation GeoCountryPlaque), pos projetée.
+- `sahelCountries.ts` : vrais contours Mali/Niger/Burkina (décimés).
+- **chip()** (dans Partie2Blocage) : jeton circulaire (cercle parchemin + bordure faction + portrait clippé).
+- **Sillage causal** : mask de cercles flouté aux positions PASSÉES des jetons → territoire rouge révélé.
+- **Chute base 3 temps** : alerte (pulse) → chute → fumée. **Junte = jeton institutionnel** (jeton-junte).
+- **Timeline graduée** : réactivée pour partie2 dans le moteur (pleine largeur, curseur date dès le début).
+- **SFX banque warmap/** : ink-spread (sillage), impact (chute), boom-coup (coup d'État), arrow-whoosh, drone.
+
+### 3 RÈGLES STRUCTURELLES gravées (doctrine WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md)
+R-OBJ-1 taille ANCRÉE CARTE (jamais vmin) · R-OBJ-2 objet = IMAGE Gemini jamais dot · R-OBJ-3 zones TRANSITOIRES.
++ technique systématique : **contour du territoire nommé qui se dessine + flash** (couleur porteuse de sens).
+
+### Décisions de goût Aziz verrouillées (P2)
+Jetons circulaires (pas portraits nus) · bases tombent en fumée APRÈS attaque visible · villes = points NOMMÉS
+(pas sprite-bâtiment) · 40% Burkina se MONTRE (remplissage contour, pas overlay chiffré) · plaques SANS stat
+superflu · SFX seulement si support visuel (cedeao-snap retiré faute de visuel CEDEAO) · silencieux sur poses/avancées.
+
+---
+
+## (archive 2026-06-11) — P2 premium 1ère passe (rejetée puis refondue narrative ci-dessus)
+
+### ⭐⭐ LE SYSTÈME PREMIUM EST EN PLACE (réutilisable P3/P4 + vidéos futures)
+Cette session a construit le SYSTÈME, pas juste la P2. P3/P4 = du CONTENU, pas de la R&D :
+1. **`src/projects/warmap/parties/warmapPremiumKit.ts`** — briques importables : `buildStaticZone` (zone
+   d'emprise statique déchiquetée), `smoothClosedPath`, `smokePingPong` (fumée ambiante), `PAL` (palette),
+   `lerpHex`. P3/P4 les importent directement.
+2. **Pattern `<PartieX>` rodé** : couche pure `({ ctx })` + branchement moteur (mode `partieN`, table rase
+   `showChrome`+HUD off, `getPartieNCam` serrée). Recette mécanique — copier `Partie2Blocage.tsx`.
+3. **Doctrine verrouillée** (`WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`) : Gemini=marqueurs / PixelLab=effets,
+   ponctuel vs ambiant, zones STATIQUES (pas de blob qui ondule), effacement TOTAL (territoire perdu = plus rien).
+4. **Assets P3/P4 déjà là** : jeton-fama/csp (AES), base-africacorps (Wagner/Russie), convoi-uranium +
+   wagon-cargo-or/rouge (ressources P4), 5 refugie-* (P4). Voir section ASSETS.
+
+### Leçons gravées cette session (anti-erreurs P3/P4)
+- **fr-epervier/licorne/sabre = PORTRAITS de visages** (vue de face), PAS des marqueurs top-down. Ne PAS les
+  poser comme jetons sur la carte (incohérent). Présence abstraite = traits encre + marqueurs simples.
+- **Pont Gemini→PixelLab RATE sur effets DIFFUS** (poussière = boule pleine). Marche sur denses (explosion/fumée).
+- **Fumée doit se DISPERSER** (~+9-15s) sinon les panaches saturent les beats suivants. Pas de feu éternel.
+- **Plan détaillé** : `memory/episodes/warmap-sahel/PLAN-GENERALISATION-P2.md` (modèle pour P3/P4).
+
+### ▶ PROCHAINE ACTION
+1. Valider le re-render P2 corrigé (`p2-premium-v2-FULLHD.mp4`) avec Aziz.
+2. Coder P3 "La Rupture" sur le modèle P2 (pattern + kit). Triggers V5 dans `BEATS-V5.md` / `narration-v5-alignment.json`.
+   Beats P3 : AES naît (Liptako or) · Kidal repris · reprise · Moura · 2026. Assets : jeton-fama/csp, base-africacorps.
+3. Puis P4, puis assemblage (Acte1+P1+P2+P3+P4 + narration V5 + SFX + musique).
+
+### Réf modèle (ne pas re-litiger)
+Proto 2.4 validé : `Proto24Extinction.tsx` (compo test `SahelProto24Flat`, intacte). P2 = `Partie2Blocage.tsx`.
 
 ### ⭐ LA VOIE PREMIUM VALIDÉE (doctrine actée — `memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`)
 1. **Caméra SERRÉE qui suit l'action** (`getProto24Cam` dans le moteur), pitch MIXTE selon le beat

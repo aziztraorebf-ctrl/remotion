@@ -210,3 +210,47 @@ pitch 3D optionnel, séquentiel synchro voix. Réf complète : `episodes/warmap-
 
 **Méta-leçon** : "sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Premium d'abord (doctrine Aziz).
 Quand Aziz dit "rends vivant", ce n'est pas optionnel — c'est le standard minimal.
+
+---
+
+## GRAMMAIRE CAUSALE + AUDIO-FIRST : LE STANDARD WAR-MAP (2026-06-12, leçon MAJEURE transversale)
+
+**Suite directe de la leçon précédente.** Après avoir rendu la P2 Sahel "premium" (jolie), Aziz l'a quand même
+trouvée CONFUSE : "c'est beau mais je ne comprends pas pourquoi une tache rouge apparaît, pourquoi les bases
+brûlent sans attaquant". Le polish ne suffit pas — il manquait le SENS.
+
+**LA CAUSE RACINE** : j'avais codé des ÉTATS qui apparaissent (zone rouge qui pop, base qui s'efface) au lieu
+d'ACTIONS CAUSALES (A fait X → donc Y). Et j'avais pris les triggers (frames) de l'alignment SANS écouter
+l'audio pour me demander "que doit montrer cette phrase ?". Synchronisé techniquement, vide narrativement.
+
+**CE QUI A DÉBLOQUÉ (4 itérations + DA-brief)** :
+1. **PARTIR DE L'AUDIO, phrase par phrase** → pour chaque phrase, "que doit COMPRENDRE un œil neuf ?".
+   C'est l'audio-lock de la doctrine, mais appliqué au SENS visuel, pas juste au timing. Outil : un PLAN
+   NARRATIF texte (PLAN-NARRATIF-P2.md) validé Aziz AVANT de coder.
+2. **CAUSE AVANT EFFET** : les jetons jihadistes AVANCENT (waypoints) → leur SILLAGE colore le territoire →
+   les bases tombent là où ils arrivent. La zone rouge NAÎT de l'action, elle ne pop jamais.
+3. **COMBINER L'ARSENAL** (jamais 1 seul asset) : jetons (acteurs) + zones (conséquence) + sprites Gemini
+   (lieux) + PixelLab (effets) + timeline (temps) + contours flash + plaques. L'ensemble crée le sens.
+   Test d'Aziz : "on n'utilise pas à 100% ce qu'on a — c'est l'ensemble qui rend puissant."
+4. **DA-brief upstream sur le PLAN** (pas juste sur le render) : Gemini+Kimi ont validé la grammaire causale
+   et ajouté 3 gestes clés (sillage progressif par mask, Niger=junte institutionnelle ≠ rouge jihadiste,
+   chute en 3 temps). Signal jamais juge : j'ai filtré leurs hallucinations (ils voulaient retirer nos sprites
+   validés en croyant à du Freepik 3D sur frames floues).
+
+**TEST DE LISIBILITÉ FINAL (Kimi, à réutiliser)** : "coupe le son. Si tu comprends 'des gens avancent,
+assiègent des forts, le territoire devient rouge' → gagné. Si tu vois juste des taches apparaître → AI-slop narratif."
+
+**ERREURS SPÉCIFIQUES À NE PAS REFAIRE** :
+- Afficher un sprite-PORTRAIT nu (fighter-jnim = buste de face) sur une carte top-down = incohérent.
+  Le JETON = cercle parchemin + bordure faction + portrait CLIPPÉ dedans (modèle Acte 1, helper chip()).
+- Pont Gemini→PixelLab RATE sur effets DIFFUS (poussière = boule pleine). Marche sur denses (explosion/fumée).
+- Données qui se MONTRENT, jamais qui s'écrivent : le "40% du Burkina" = le CONTOUR DU PAYS QUI SE REMPLIT
+  de rouge, PAS un overlay chiffré hors-centre qui répète la voix.
+- Forme abstraite (losange/étoile) = cheap sur une carte riche. Tout marqueur = jeton/sprite à notre identité.
+- SFX seulement si SUPPORT VISUEL (retiré cedeao-snap : on ne voit pas la CEDEAO se fracturer).
+- Un élément graphique enfermé dans un fragment JSX gaté peut disparaître même si sa propre condition est vraie
+  (bug timeline P2 : enfermée dans le HUD gaté !partie2 → systematic-debugging + rect debug magenta pour prouver).
+
+**MÉTA** : cette méthode (audio→plan narratif→DA-brief→arsenal causal→corrections itératives) est le STANDARD
+War-Map désormais. Elle s'applique à P3/P4 et à toute war-map future. Elle rend non seulement premium mais
+COMPRÉHENSIBLE — les deux sont indissociables. Réf : `episodes/warmap-sahel/PLAN-NARRATIF-P2.md`.

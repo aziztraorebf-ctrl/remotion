@@ -4,26 +4,25 @@
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL : VOIE PREMIUM TROUVÉE (proto 2.4 validé) → généraliser la P2 (2026-06-11)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 NARRATIVE ✅ VALIDÉE (2026-06-12) → P3 (session PARALLÈLE)
 
-> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/STATUS.md`** (section "REPRISE PROCHAINE SESSION" en tête,
-> à jour 2026-06-11) + `memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md` (la doctrine actée).
+> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/STATUS.md`** (section "REPRISE" en tête, réécrite 06-12)
+> + `PLAN-NARRATIF-P2.md` (LE modèle de méthode) + `key-learnings.md` (leçon grammaire causale, majeure).
 
-**ÉTAT (2026-06-11 — session voie premium) :**
-- ✅ **Proto beat 2.4 "extinction base FR encerclée" VALIDÉ Aziz** ("on a trouvé la voie, vraiment bonne").
-  Render : `out/episodes/warmap-sahel/wip/proto24-v4-loop-FULLHD.mp4` (catbox `v7hlwj`). Fichier modèle :
-  `src/projects/warmap/parties/Proto24Extinction.tsx`.
-- ✅ **DOCTRINE GEMINI/PIXELLAB actée** (`memory/doctrines/WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md`) :
-  Gemini = marqueurs/persos/véhicules (animés par nous) · PixelLab = effets organiques (feu/fumée/explosion,
-  animés PAR PROMPT, loop PING-PONG) · **pont Gemini→PixelLab** = effets premium à notre identité (validé : explosion).
-- ✅ **Partie 1 "Origine 2012" VALIDÉE** (premium, soustraction). Render catbox `m12kke`.
-- ✅ Caméra serrée qui suit + pitch MIXTE selon beat · front déchiqueté procédural · table rase legacy (showChrome off).
-- ❌ **Partie 2 "Le Blocage" (6 beats) = version REJETÉE** (plate, SVG niveau-1) → à REFONDRE avec la voie validée.
+**ÉTAT (2026-06-12) — P2 NARRATIVE VALIDÉE Aziz ("très bon point d'équilibre, on garde").**
+La P2 refondue 4 fois : SVG plat (rejeté) → premium "états" (confus, œil neuf ne comprend pas) → grammaire
+CAUSALE (validé). Render final : `out/episodes/warmap-sahel/wip/p2-FINAL-v2-FULLHD.mp4` (audio embarqué).
+Reste sur la vidéo : **P3 + P4 + assemblage**. ~moitié derrière. Tout le SYSTÈME est rodé (briques + méthode).
 
-**▶ PROCHAINE ACTION = GÉNÉRALISER la voie aux 5 autres beats P2** (refondre `Partie2Blocage.tsx`) → brancher le
-proto dans le flux P2 → re-render P2 → finir. Modèle = `Proto24Extinction.tsx`. Détail complet : `STATUS.md`.
+**▶ PROCHAINE ACTION = P3 "La Rupture" — SESSION PARALLÈLE (pas la session courante, contexte chargé).**
+Appliquer LA MÉTHODE rodée : audio-first → plan narratif phrase par phrase → DA-brief upstream → arsenal causal.
+1. Écouter `narration-v5-p3.mp3`, écrire PLAN-NARRATIF-P3 (modèle = PLAN-NARRATIF-P2.md).
+2. P3 = AES naît (Liptako or) · Kidal repris · reprise · Moura · 2026. Assets prêts : jeton-fama/csp,
+   base-africacorps, jeton-junte. Briques prêtes : warmapPremiumKit (interpWaypoints, countryOutline, chip,
+   sillage), WarMapPlaque, sahelCountries, timeline moteur, SFX warmap/. Réutiliser pattern Partie2Blocage.tsx.
 
-**LEÇON gravée (`key-learnings.md`)** : scanner CATALOGUE-CARTE-VIVANTE AVANT de coder. "Sobre" ≠ "plat". Premium d'abord.
+**LEÇONS gravées (`key-learnings.md` 06-12)** : grammaire CAUSALE (jetons avancent→sillage→effet) · audio-first ·
+combiner l'arsenal · jeton=cercle (pas portrait nu) · donnée se MONTRE (contour qui se remplit) · SFX si support visuel.
 
 ---
 
