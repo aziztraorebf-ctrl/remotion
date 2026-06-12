@@ -129,6 +129,31 @@ export function smokePingPong(opts: {
   return { idx, op };
 }
 
+// ── WAYPOINTS jetons (acteurs qui avancent, frame-driven smoothstep) ──
+// Repris du mécanisme Acte 1 (interpFighter). Un jeton = une liste de {f, lon, lat}.
+export type Waypoint = { f: number; lon: number; lat: number };
+export function interpWaypoints(wp: Waypoint[], frame: number): [number, number] {
+  if (wp.length === 0) return [0, 0];
+  if (frame <= wp[0].f) return [wp[0].lon, wp[0].lat];
+  const last = wp[wp.length - 1];
+  if (frame >= last.f) return [last.lon, last.lat];
+  for (let i = 0; i < wp.length - 1; i++) {
+    if (frame >= wp[i].f && frame <= wp[i + 1].f) {
+      const t = (frame - wp[i].f) / (wp[i + 1].f - wp[i].f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return [wp[i].lon + (wp[i + 1].lon - wp[i].lon) * e, wp[i].lat + (wp[i + 1].lat - wp[i].lat) * e];
+    }
+  }
+  return [last.lon, last.lat];
+}
+// Cap (orientation) du jeton à la frame courante, en px écran (pour flip ouest / rotation).
+export function waypointHeadingPx(project: ProjectFn, wp: Waypoint[], frame: number): number {
+  const [lon1, lat1] = interpWaypoints(wp, frame - 3);
+  const [lon2, lat2] = interpWaypoints(wp, frame + 3);
+  const a = project(lon1, lat1), b = project(lon2, lat2);
+  return Math.atan2(b.y - a.y, b.x - a.x);
+}
+
 // ── Interpolation couleur hex (#rrggbb) ──
 export function lerpHex(a: string, b: string, t: number): string {
   const ah = a.replace("#", ""), bh = b.replace("#", "");
