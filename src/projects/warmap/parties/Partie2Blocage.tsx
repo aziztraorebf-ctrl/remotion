@@ -24,6 +24,7 @@ import {
   PAL, spriteMapWidth, smokePingPong, interpWaypoints, countryOutline, type Waypoint,
 } from "./warmapPremiumKit";
 import { NIGER_RING, BURKINA_RING } from "./sahelCountries";
+import { WarMapPlaque } from "./WarMapPlaque";
 
 // ============================================================
 // TRIGGERS V5
@@ -129,9 +130,9 @@ const CEDEAO_RING: [number, number][] = [
 // FRISE temporelle : étapes affichées. La barre se remplit de F_ECHEC à ~F_DEBORDENT (les "dix ans").
 // (Frise = timeline graduée pleine largeur rendue par le MOTEUR pour partie2 — pas ici.)
 
-const BASE_DEG = 3.0, MINUSMA_DEG = 2.4, VILLE_DEG = 2.6;
+const BASE_DEG = 3.0, MINUSMA_DEG = 2.4;
 const SPRITE_BOUNDS = { min: 120, max: 320 };
-const BASE_RATIO = 0.56, MINUSMA_RATIO = 0.55, VILLE_RATIO = 0.55;
+const BASE_RATIO = 0.56, MINUSMA_RATIO = 0.55;
 const JETON_DEG = 1.4;                          // acteurs plus présents (ce sont eux le sujet du 2.4)
 const JETON_BOUNDS = { min: 64, max: 150 };
 
@@ -145,7 +146,6 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
 
   const baseSprite = staticFile("_shared/sprites/warmap/base-fr-td.png");
   const minusmaSprite = staticFile("_shared/sprites/warmap/base-minusma-td.png");
-  const villeSprite = staticFile("_shared/sprites/warmap/ville-tenue-td.png");
 
   // ── Positions courantes des jetons actifs (pour le sillage + le rendu) ──
   const activeJetons = JETONS.filter((j) => frame >= j.appear && frame <= j.disappear)
@@ -321,25 +321,32 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
 
         {/* CONTOURS FLASH (technique systématique Aziz) : le territoire nommé se DESSINE + flash, guide l'œil.
             Burkina = rouge (débordement) · Niger = kaki (junte). Couleur porteuse de sens. */}
+        {/* RENFORCÉS (Aziz 2026-06-12) : trait plus épais + halo flash plus marqué + double trait (glow). */}
         {(() => {
           const bk = countryOutline({ ring: BURKINA_RING, project, frame, startF: F_DEBORDENT, drawDur: 38, holdDur: 300 });
           if (!bk) return null;
           return (
             <g opacity={bk.op}>
-              {bk.flash > 0.05 && <path d={bk.d} fill={PAL.RED_INK} opacity={0.10 * bk.flash} />}
-              <path d={bk.d} fill="none" stroke={PAL.RED_INK} strokeWidth={2.6 + 1.5 * bk.flash}
-                strokeOpacity={0.7} strokeDasharray={bk.len} strokeDashoffset={bk.dashOffset} strokeLinejoin="round" />
+              {bk.flash > 0.05 && <path d={bk.d} fill={PAL.RED_INK} opacity={0.18 * bk.flash} />}
+              {/* glow sous-jacent */}
+              <path d={bk.d} fill="none" stroke={PAL.RED_INK} strokeWidth={7 + 4 * bk.flash} strokeOpacity={0.22}
+                strokeDasharray={bk.len} strokeDashoffset={bk.dashOffset} strokeLinejoin="round" />
+              <path d={bk.d} fill="none" stroke={PAL.RED_INK} strokeWidth={3.6 + 2 * bk.flash}
+                strokeOpacity={0.92} strokeDasharray={bk.len} strokeDashoffset={bk.dashOffset} strokeLinejoin="round" />
             </g>
           );
         })()}
         {(() => {
           const ng = countryOutline({ ring: NIGER_RING, project, frame, startF: F_NIGER, drawDur: 40, holdDur: 240 });
           if (!ng) return null;
+          const KK = "#6E5E33";
           return (
             <g opacity={ng.op}>
-              {ng.flash > 0.05 && <path d={ng.d} fill="#6E5E33" opacity={0.10 * ng.flash} />}
-              <path d={ng.d} fill="none" stroke="#6E5E33" strokeWidth={2.6 + 1.5 * ng.flash}
-                strokeOpacity={0.75} strokeDasharray={ng.len} strokeDashoffset={ng.dashOffset} strokeLinejoin="round" />
+              {ng.flash > 0.05 && <path d={ng.d} fill={KK} opacity={0.18 * ng.flash} />}
+              <path d={ng.d} fill="none" stroke={KK} strokeWidth={7 + 4 * ng.flash} strokeOpacity={0.22}
+                strokeDasharray={ng.len} strokeDashoffset={ng.dashOffset} strokeLinejoin="round" />
+              <path d={ng.d} fill="none" stroke={KK} strokeWidth={3.6 + 2 * ng.flash}
+                strokeOpacity={0.95} strokeDasharray={ng.len} strokeDashoffset={ng.dashOffset} strokeLinejoin="round" />
             </g>
           );
         })()}
@@ -373,12 +380,11 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           const r = 0.011 * vmin;
           return (
             <g key={c.id} opacity={op}>
-              {/* halo de tenue (la ville résiste dans le rouge) */}
-              <circle cx={p.x} cy={p.y} r={r * 2.4 * pulse} fill="none" stroke={PAL.STEEL} strokeWidth={2} strokeOpacity={0.5} />
+              {/* halo de tenue qui PULSE (la ville résiste dans le rouge) — double anneau */}
+              <circle cx={p.x} cy={p.y} r={r * 2.8 * pulse} fill="none" stroke={PAL.STEEL} strokeWidth={1.6} strokeOpacity={0.35} />
+              <circle cx={p.x} cy={p.y} r={r * 1.9} fill="none" stroke={PAL.STEEL} strokeWidth={2} strokeOpacity={0.6} />
               <circle cx={p.x} cy={p.y} r={r} fill={PAL.STEEL} fillOpacity={0.95} />
-              {/* nom géo-ancré (halo réserve parchemin, pas de boîte) */}
-              <text x={p.x} y={p.y - r * 2.4 - 8} fontSize={18} fill={PAL.INK} fontFamily="Georgia, serif"
-                textAnchor="middle" paintOrder="stroke" stroke="#F5EFD6" strokeWidth={3} strokeLinejoin="round">{c.name}</text>
+              {/* le NOM est rendu en WarMapPlaque hors-SVG (plaque parchemin élégante) */}
             </g>
           );
         })}
@@ -387,6 +393,22 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
       {/* ============ SPRITES LIEUX (bases FR + MINUSMA, ancrés carte) ============ */}
       {MINUSMA.map((m) => renderBase(m, minusmaSprite, MINUSMA_DEG, MINUSMA_RATIO))}
       {FR_BASES.map((b) => renderBase(b, baseSprite, BASE_DEG, BASE_RATIO))}
+
+      {/* ============ PLAQUES DE NOMS (WarMapPlaque parchemin élégante) ============ */}
+      {/* Villes tenues (2.5) */}
+      {HELD_CITIES.map((c, i) => {
+        const p = project(c.coord[0], c.coord[1]);
+        return (
+          <WarMapPlaque key={`plaque-${c.id}`} frame={frame} name={c.name} pos={p}
+            appearAt={c.appearAt + i * 6 + 8} hideAt={F_DEBORDENT} accent={PAL.STEEL} size={17} yOffset={26} />
+        );
+      })}
+      {/* Burkina (2.6) — plaque pays + date */}
+      <WarMapPlaque frame={frame} name="BURKINA FASO" pos={project(-1.5, 12.3)}
+        appearAt={F_DEBORDENT + 30} hideAt={F_NIGER} accent={PAL.RED_INK} stat="2015 · 40%" size={20} yOffset={20} />
+      {/* Niger (bascule) — plaque pays + date */}
+      <WarMapPlaque frame={frame} name="NIGER" pos={project(8.5, 17.6)}
+        appearAt={F_NIGER + 30} hideAt={F_CEDEAO + 40} accent="#6E5E33" stat="Juillet 2023 · CNSP" size={22} yOffset={20} />
 
       {/* ============ JETONS FR PRÉ-POSITIONNÉS (2.2) — le zoom out révèle la présence FR tout autour
            (retour Aziz : plus de vide). Bordure bleu-acier FR. Repartent à l'arrivée MINUSMA. ============ */}
