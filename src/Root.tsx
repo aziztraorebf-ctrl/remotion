@@ -2824,6 +2824,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* PARTIE 3 Sahel — la rupture (AES naît, Kidal repris, Moura, attaques 2026 repoussées).
+            Look Acte 1 + couche <Partie3Rupture>. Inversion chromatique : l'avancée FAMa colore en BLEU. */}
+        <Composition
+          id="SahelPartie3"
+          component={SahelWarMapEngine}
+          defaultProps={{ partie3: true }}
+          durationInFrames={9560}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* PROTO 2.4 Sahel — extinction d'une base FR encerclée (refonte PREMIUM P2).
             2 versions à comparer : à-plat (pitch 0) vs relief 3D (pitch 32).
             Rendre la plage --frames=3850-4250 (le beat 2.4 vit là, frames absolues V5). */}

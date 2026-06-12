@@ -52,6 +52,7 @@ import { RefugeeFlow, REFUGEE_FLOWS_ACT4 } from "../_shared/RefugeeFlow";
 import { GeoConvergenceOverlay, GeoForce } from "../_shared/GeoConvergenceOverlay";
 import { Partie1Origine } from "../parties/Partie1Origine";
 import { Partie2Blocage } from "../parties/Partie2Blocage";
+import { Partie3Rupture } from "../parties/Partie3Rupture";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import {
   SAHEL_STATES,
@@ -579,6 +580,47 @@ const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number 
 };
 
 // ============================================================
+// PARTIE 3 CAMÉRA — "La Rupture" (raccord depuis fin P2 f5690 : vue Niger/Niamey).
+// Trajectoire : union AES (3 pays, élargi) → zoom serré sur Kidal (cristallisation) → reprise (push Kidal)
+// → flashback Moura (centre Mali) → retour Kidal → zoom arrière vue AES (pont P4). Caméra qui SUIT l'action.
+// ============================================================
+const PARTIE3_CAM_KEYS: CamKey[] = [
+  { f: 6118, lon: 2.00, lat: 13.40, zoom: 4.30 },  // Ph1 raccord P2 : vue Niger/Niamey (CEDEAO se brise)
+  { f: 6300, lon: 0.30, lat: 14.50, zoom: 4.05 },  // Ph1 fin : élargit sur les 3 pays AES
+  { f: 6616, lon: 0.60, lat: 14.40, zoom: 4.20 },  // Ph2 Liptako : centre le triangle (naissance AES, figé)
+  { f: 6760, lon: 0.60, lat: 14.40, zoom: 4.20 },  // hold figé 2s
+  { f: 6950, lon: 1.20, lat: 16.80, zoom: 5.10 },  // Ph3 transition : zoom vers le nord
+  { f: 7083, lon: 1.44, lat: 18.43, zoom: 6.10 },  // Ph4 "Kidal." : serré sur Kidal
+  { f: 7319, lon: 1.44, lat: 18.43, zoom: 5.95 },  // Ph5 statu quo : léger pull pour voir touaregs+ONU
+  { f: 7794, lon: 0.90, lat: 17.60, zoom: 5.70 },  // Ph6 offensive : cadre l'axe Gao→Kidal
+  { f: 8132, lon: 1.44, lat: 18.43, zoom: 6.15 },  // Ph7 reprise : push-in Kidal (drapeau, figé)
+  { f: 8300, lon: 1.44, lat: 18.43, zoom: 6.15 },  // hold reprise
+  { f: 8580, lon: -3.95, lat: 14.92, zoom: 5.60 }, // Ph8 Moura : pan vers centre Mali (flashback)
+  { f: 8900, lon: -3.95, lat: 14.92, zoom: 5.60 }, // hold Moura
+  { f: 9121, lon: -1.00, lat: 14.80, zoom: 4.40 }, // Ph9 attaques : vue large (points à travers le pays)
+  { f: 9372, lon: 0.40, lat: 15.20, zoom: 3.95 },  // Ph9 "conserver" : zoom arrière vue AES (pont P4)
+  { f: 9560, lon: 0.40, lat: 15.20, zoom: 3.90 },  // fin
+];
+const getPartie3Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  if (frame <= PARTIE3_CAM_KEYS[0].f) return PARTIE3_CAM_KEYS[0];
+  const keys = PARTIE3_CAM_KEYS;
+  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return {
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      };
+    }
+  }
+  return keys[keys.length - 1];
+};
+
+// ============================================================
 // PROTO 2.4 CAMÉRA — extinction des bases FR encerclées (refonte premium P2).
 // Caméra SERRÉE qui SUIT l'action (jamais vue continentale/vide), drift permanent.
 // Le beat 2.4 va de f3887 ("dix ans") à ~f4200. Trajectoire :
@@ -860,6 +902,10 @@ export type SahelTestProps = {
   // + HUD off), timeline graduée pleine largeur, SFX dédiés, getPartie2Cam serrée. POUR CODER P3 : copier
   // ce mode (partie2) + Partie2Blocage.tsx, PAS proto24 ci-dessous.
   partie2?: boolean;
+  // REFACTOR V5 — mode Partie 3 (la rupture). Couche <Partie3Rupture> (grammaire causale, inversion
+  // chromatique : l'avancée FAMa colore en BLEU = l'État reprend Kidal). Même architecture que partie2
+  // (table rase chrome/HUD, timeline graduée, SFX dédiés, getPartie3Cam serrée). Raccord depuis fin P2.
+  partie3?: boolean;
   // ⚠️ PROTO 2.4 — LEGACY (compo de test historique, prototype du beat 2.4 avant la P2 narrative).
   // NE PAS prendre comme modèle pour P3/P4 (le modèle = partie2). Conservé isolé : ne touche ni P1 ni P2.
   // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
@@ -882,6 +928,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   prepoVeil = 0.70, // validé Aziz 2026-06-09 (carte en sourdine, overlay net)
   partie1 = false,
   partie2 = false,
+  partie3 = false,
   proto24 = false,
   proto24Pitch = 0,
 }) => {
@@ -893,9 +940,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || proto24;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || proto24;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
-  const isPartie = partie1 || partie2 || proto24;
+  const isPartie = partie1 || partie2 || partie3 || proto24;
 
   // VERSION FINALE Acte 1 : dérive les sous-mécaniques du socle validé.
   // Allumage séquentiel calé sur les triggers RÉELS (Mali f150, BFA f231, NER f301).
@@ -1315,7 +1362,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
-      const camFn = proto24 ? getProto24Cam : partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
+      const camFn = proto24 ? getProto24Cam : partie3 ? getPartie3Cam : partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
       const cam = a1Freeze ? camFn(A1.FREEZE) : camFn(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     } else if (camStatic) {
@@ -1370,6 +1417,23 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       const calmFactor = interpolate(frame,
         [3050, 3120, F_ECHEC, F_ECHEC + 120],
         [1, 0.10, 0.10, 0.22],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+      const baseOp: any = effSeqIgnite
+        ? ["coalesce", ["get", "igniteOp"], 0]
+        : 0.82;
+      try {
+        map.setPaintProperty("sahel-fill", "fill-opacity",
+          (["*", baseOp, calmFactor] as any));
+      } catch {}
+    }
+
+    // PARTIE 3 — CARTE CALME (miroir partie2) : le fill de contrôle (rouge jihadiste Acte 1) reste BAS
+    // toute la P3 (le sujet = la reconquête bleue de Kidal, pas l'emprise rouge). Très léger sursaut au
+    // Ph9 (attaques 2026, f9121) puis retombe (refoulées). La couche <Partie3Rupture> porte tout le récit.
+    if (partie3 && map.getLayer("sahel-fill")) {
+      const calmFactor = interpolate(frame,
+        [6118, 6180, 9121, 9200, 9372],
+        [0.12, 0.12, 0.12, 0.20, 0.10],
         { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
       const baseOp: any = effSeqIgnite
         ? ["coalesce", ["get", "igniteOp"], 0]
@@ -1850,7 +1914,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
   // Seules les couches <Proto24Extinction>/<Partie2Blocage> + le fill calme s'affichent. (Anti-saturation #2)
   // P2 premium (2026-06-11) suit le modèle 2.4 validé : zones statiques + sprites Gemini, sans chrome legacy.
-  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2;
+  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -2051,6 +2115,28 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.58} />
           </Sequence>
           {/* (SFX cedeao-snap RETIRÉ — Aziz : pas de support visuel CEDEAO, le son n'a pas lieu d'être.) */}
+        </>
+      )}
+
+      {/* ======================================================
+          SFX PARTIE 3 — 3 moments structurants (décision Aziz : SFX seulement si support visuel fort).
+          Gong naissance AES (Liptako f6616) · impact "Kidal." (f7083) · whoosh reprise "flotte" (f8132).
+          PAS de SFX sur attaques 2026 (pulses dispersés/refoulés = support visuel diffus). Tous <Sequence>.
+          ====================================================== */}
+      {partie3 && !acte1CameraOnly && (
+        <>
+          {/* gong de naissance AES (pulse or Liptako) */}
+          <Sequence from={6616} durationInFrames={Math.ceil(2.0 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/liptako-gong.mp3")} volume={0.55} />
+          </Sequence>
+          {/* impact sourd sur "Kidal." (moment fort, silence appuyé) */}
+          <Sequence from={7083} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} />
+          </Sequence>
+          {/* whoosh/montée à la reprise de Kidal (drapeau qui flotte) */}
+          <Sequence from={8132} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.52} />
+          </Sequence>
         </>
       )}
 
@@ -2921,8 +3007,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
           → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
       {!acte1CameraOnly && !proto24 && <>
-      {/* Legende factions — haut gauche (masquée en partie2 : table rase, les jetons parlent d'eux-mêmes) */}
-      {!partie2 && (
+      {/* Legende factions — haut gauche (masquée en partie2/partie3 : table rase, les jetons parlent d'eux-mêmes) */}
+      {!partie2 && !partie3 && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
         <div style={{ ...plaque, padding: "12px 20px" }}>
@@ -2969,14 +3055,22 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && (showChrome || partie2) && !partie1 && !proto24 && (() => {
+      {isFinalLook && (showChrome || partie2 || partie3) && !partie1 && !proto24 && (() => {
         // PARTIE 2 (V5) : timeline graduée Acte 1 RÉACTIVÉE (Aziz 2026-06-12 : la frise doit être pleine
         // largeur, présente DÈS LE DÉBUT de la P2, exactement comme l'Acte 1). Axe 2013→2024, curseur
         // qui glisse sur toute la P2 (f3000→f5690 mappé 2013→2024). Encoches aux événements P2.
+        // PARTIE 3 : axe 2023→2026 (la rupture), curseur f6118→f9372. RECULE visiblement à Moura (flashback
+        // mars 2022 — le curseur sort à gauche, marqueur de flashback validé DA). Encoches AES/Kidal/2026.
         // PARTIE 1 garde son cartouche "2012" (frise masquée). Acte 1 (non-acte2) garde son axe 2020.5→2022.2.
-        const AX_Y0 = (acte2 || partie2) ? 2013 : 2020.5;
-        const AX_Y1 = (acte2 || partie2) ? 2024 : 2022.2;
-        const yearNow = partie2
+        const AX_Y0 = partie3 ? 2022 : (acte2 || partie2) ? 2013 : 2020.5;
+        const AX_Y1 = partie3 ? 2026.3 : (acte2 || partie2) ? 2024 : 2022.2;
+        const yearNow = partie3
+          // glisse 2023→2026, mais RECULE à Moura (f8580→f8900 = 2022, flashback) puis revient
+          ? interpolate(frame,
+              [6118, 8132, 8580, 8900, 9000, 9372],
+              [2023, 2023.9, 2022.0, 2022.0, 2023.9, 2026],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : partie2
           ? interpolate(frame, [3000, 5690], [2013, 2024], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
           : acte2
           ? interpolate(frame, [2630, B1A.END], [2013, 2022], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
@@ -2985,8 +3079,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         const X0 = 175, X1 = width - 250, Y = height - 96;
         const span = AX_Y1 - AX_Y0;
         const tx = (yr: number) => X0 + ((yr - AX_Y0) / span) * (X1 - X0);
-        const YEARS = (acte2 || partie2) ? [2014, 2017, 2020, 2023] : [2021, 2022];
-        const EV: { yr: number; lbl: string; col: string }[] = partie2
+        const YEARS = partie3 ? [2022, 2023, 2024, 2025, 2026] : (acte2 || partie2) ? [2014, 2017, 2020, 2023] : [2021, 2022];
+        const EV: { yr: number; lbl: string; col: string }[] = partie3
+          ? [
+              { yr: 2023, lbl: "AES", col: "#C9A24B" },
+              { yr: 2023.9, lbl: "Kidal repris", col: SAHEL_COLORS.etat },
+              { yr: 2026, lbl: "Attaques", col: SAHEL_COLORS.jnim },
+            ]
+          : partie2
           ? [
               { yr: 2013, lbl: "Serval", col: "#2E3A59" },
               { yr: 2015, lbl: "Burkina", col: SAHEL_COLORS.contested },
@@ -3003,8 +3103,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
               { yr: interpolate(A1.FRICTION, [A1.MALI, A1.END], [AX_Y0, AX_Y1]), lbl: "Friction", col: SAHEL_COLORS.contested },
             ];
         const cx = tx(yearNow);
-        // apparition douce du bandeau. En P2 : visible dès le début (op plein, pas lié au hudOpEff legacy).
-        const op = partie2 ? interpolate(frame, [3000, 3030], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : hudOpEff;
+        // apparition douce du bandeau. En P2/P3 : visible dès le début (op plein, pas lié au hudOpEff legacy).
+        const op = partie3
+          ? interpolate(frame, [6118, 6150], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : partie2 ? interpolate(frame, [3000, 3030], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : hudOpEff;
         return (
           <div style={{ position: "absolute", left: 0, top: 0, width, height, opacity: op, pointerEvents: "none", zIndex: 50 }}>
             <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0 }}>
@@ -3125,7 +3227,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* acte1Final : tampons COMPACTS + semi-transparents, centre-haut (au-dessus de la
           zone d'action située vers le bas-centre). Visible où est l'œil, sans cacher
           les véhicules. S'efface vite (géré par stampOp). */}
-      {isFinalLook && jnimStampOp > 0 && (
+      {isFinalLook && !partie3 && jnimStampOp > 0 && (
         <div style={{ position: "absolute", top: "26%", left: "50%",
             transform: "translateX(-50%)", opacity: jnimStampOp * 0.95, pointerEvents: "none" }}>
           <div style={{ display: "inline-flex", alignItems: "baseline", gap: 10,
@@ -3138,7 +3240,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </div>
         </div>
       )}
-      {isFinalLook && eigsStampOp > 0 && (
+      {isFinalLook && !partie3 && eigsStampOp > 0 && (
         <div style={{ position: "absolute", top: "26%", left: "50%",
             transform: "translateX(-50%)", opacity: eigsStampOp * 0.95, pointerEvents: "none" }}>
           <div style={{ display: "inline-flex", alignItems: "baseline", gap: 10,
@@ -3154,7 +3256,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* Cartouche AES au CENTRE, semi-transparent (décision Aziz 2026-06-07 :
           les cartouches narratifs apparaissent au centre où est l'œil, pas sur le bord). */}
-      {aesOverlayOp > 0 && !acte1CameraOnly && (
+      {aesOverlayOp > 0 && !acte1CameraOnly && !partie3 && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
             opacity: aesOverlayOp * 0.92, pointerEvents: "none" }}>
           <div style={{ ...plaque, padding: "22px 40px", textAlign: "center",
@@ -3520,6 +3622,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
+      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
       {isFinalLook && (() => {

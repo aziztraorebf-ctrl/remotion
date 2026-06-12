@@ -24,5 +24,18 @@ type: feedback
 ## How to apply
 Tout asset "token de carte vu du dessus" (véhicule, unité, icône posée sur une carte top-down) -> Gemini avec cette recette. Recraft pour le latéral stylisé. Voir [[feedback_gemini-assets-fond-transparent]] et le DECODE [[DECODE-daybyday-warmap]].
 
+## ⚠️ PIÈGE EMBLÈME (Sahel P3, 2026-06-12) — quand le sujet a un LOGO connu
+Demander un asset nommé d'après une entité à forte identité visuelle (Wagner/Africa Corps, un État, une
+marque) → l'IA génère le LOGO/emblème héraldique (étoile-crâne pour Wagner), PAS un objet-au-sol. Sur une
+carte = logo incongru qui flotte.
+**Parade (verrou principal)** : interdits explicites dans le prompt — `NO flag, NO emblem, NO logo, NO skull,
+NO star symbol, NO text`. Décrire l'OBJET physique vu du dessus (campement HESCO, tentes, véhicules, tour),
+jamais l'organisation. Script : `scripts/gen-africacorps-base.py` (réutilisable).
+**Cohérence de perspective** : matcher l'asset de référence DÉJÀ sur la carte. Gotcha : `base-minusma-td.png`
+est en réalité ISO 3/4 (pas top-down strict) → un nouveau top-down strict à côté crée une légère dissonance
+de famille. Vérifier la perspective de la réf AVANT de prompter, pas seulement l'échelle.
+
 ## Assets produits
 `public/_shared/sprites/warmap/tank-td-blue.png` + `tech-td-red.png` (top-down transparent, prototype Sudan).
+`base-africacorps.png` (Sahel P3 — fortin paramilitaire top-down, remplace l'emblème étoile-crâne sauvegardé
+en `base-africacorps-emblem.png`). Drapeau Mali canvas pur : `public/_shared/flags/ml.png` (3 bandes).
