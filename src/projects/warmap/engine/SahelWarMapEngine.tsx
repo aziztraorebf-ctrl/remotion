@@ -2048,10 +2048,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={5380} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.58} />
           </Sequence>
-          {/* menace CEDEAO — snap institutionnel */}
-          <Sequence from={5639} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.5} />
-          </Sequence>
+          {/* (SFX cedeao-snap RETIRÉ — Aziz : pas de support visuel CEDEAO, le son n'a pas lieu d'être.) */}
         </>
       )}
 

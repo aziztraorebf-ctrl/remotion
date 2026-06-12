@@ -403,12 +403,12 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
             appearAt={c.appearAt + i * 6 + 8} hideAt={F_DEBORDENT} accent={PAL.STEEL} size={17} yOffset={26} />
         );
       })}
-      {/* Burkina (2.6) — plaque pays + date */}
+      {/* Burkina (2.6) — plaque pays seule (stat retirée, Aziz : l'encadré 2015/40% n'a pas lieu d'être) */}
       <WarMapPlaque frame={frame} name="BURKINA FASO" pos={project(-1.5, 12.3)}
-        appearAt={F_DEBORDENT + 30} hideAt={F_NIGER} accent={PAL.RED_INK} stat="2015 · 40%" size={20} yOffset={20} />
-      {/* Niger (bascule) — plaque pays + date */}
+        appearAt={F_DEBORDENT + 30} hideAt={F_NIGER} accent={PAL.RED_INK} size={20} yOffset={20} />
+      {/* Niger (bascule) — plaque pays seule (stat retirée) */}
       <WarMapPlaque frame={frame} name="NIGER" pos={project(8.5, 17.6)}
-        appearAt={F_NIGER + 30} hideAt={F_CEDEAO + 40} accent="#6E5E33" stat="Juillet 2023 · CNSP" size={22} yOffset={20} />
+        appearAt={F_NIGER + 30} hideAt={F_CEDEAO + 40} accent="#6E5E33" size={22} yOffset={20} />
 
       {/* ============ JETONS FR PRÉ-POSITIONNÉS (2.2) — le zoom out révèle la présence FR tout autour
            (retour Aziz : plus de vide). Bordure bleu-acier FR. Repartent à l'arrivée MINUSMA. ============ */}
