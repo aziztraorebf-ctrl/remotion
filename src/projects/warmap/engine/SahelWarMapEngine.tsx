@@ -2876,8 +2876,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           HUD PRINCIPAL — legende + date + evenement (masqué en track caméra seul)
           ====================================================== */}
-      {!acte1CameraOnly && !proto24 && !partie2 && <>
-      {/* Legende factions — haut gauche */}
+      {!acte1CameraOnly && !proto24 && <>
+      {/* Legende factions — haut gauche (masquée en partie2 : table rase, les jetons parlent d'eux-mêmes) */}
+      {!partie2 && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
         <div style={{ ...plaque, padding: "12px 20px" }}>
@@ -2888,6 +2889,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <FactionLegend color={SAHEL_COLORS.jnim}      label="JNIM / EIGS" />
         </div>
       </div>
+      )}
 
       {/* Date + jalon — haut droite (compteur précis qui SAUTE).
           ACTE 1 FINAL : remplacé par la TIMELINE GRADUÉE bas-écran (curseur qui glisse
@@ -2923,28 +2925,30 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && showChrome && !isPartie && (() => {
-        // PARTIE 1/2 (V5) : timeline Acte 1 MASQUÉE — le récit V5 redémarre la timeline à 2012
-        // (cartouche encre "2012" de <Partie1Origine> suffit). Évite le chevauchement.
-        // B1 V3 (D-4 timeline vivante) : en acte2, l'axe se RÉ-ÉTALONNE sur la période de
-        // l'enjeu français (2013 Serval → 2024 AES). Le curseur GLISSE pendant tout B1
-        // (f2630→f4162 mappé 2013→2022) → fini le curseur figé de V2 (critique Aziz #1).
-        // Acte 1 (non-acte2) garde son axe 2020.5→2022.2.
-        const AX_Y0 = acte2 ? 2013 : 2020.5;
-        const AX_Y1 = acte2 ? 2024 : 2022.2;
-        const yearNow = acte2
-          ? interpolate(frame, [2630, B1A.END], [2013, 2022], {
-              extrapolateLeft: "clamp", extrapolateRight: "clamp",
-            })
-          : interpolate(frame, [A1.MALI, A1.END], [AX_Y0, AX_Y1], {
-              extrapolateLeft: "clamp", extrapolateRight: "clamp",
-            });
+      {isFinalLook && (showChrome || partie2) && !partie1 && !proto24 && (() => {
+        // PARTIE 2 (V5) : timeline graduée Acte 1 RÉACTIVÉE (Aziz 2026-06-12 : la frise doit être pleine
+        // largeur, présente DÈS LE DÉBUT de la P2, exactement comme l'Acte 1). Axe 2013→2024, curseur
+        // qui glisse sur toute la P2 (f3000→f5690 mappé 2013→2024). Encoches aux événements P2.
+        // PARTIE 1 garde son cartouche "2012" (frise masquée). Acte 1 (non-acte2) garde son axe 2020.5→2022.2.
+        const AX_Y0 = (acte2 || partie2) ? 2013 : 2020.5;
+        const AX_Y1 = (acte2 || partie2) ? 2024 : 2022.2;
+        const yearNow = partie2
+          ? interpolate(frame, [3000, 5690], [2013, 2024], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : acte2
+          ? interpolate(frame, [2630, B1A.END], [2013, 2022], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : interpolate(frame, [A1.MALI, A1.END], [AX_Y0, AX_Y1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         // géométrie du bandeau
         const X0 = 175, X1 = width - 250, Y = height - 96;
         const span = AX_Y1 - AX_Y0;
         const tx = (yr: number) => X0 + ((yr - AX_Y0) / span) * (X1 - X0);
-        const YEARS = acte2 ? [2014, 2017, 2020, 2023] : [2021, 2022];
-        const EV: { yr: number; lbl: string; col: string }[] = acte2
+        const YEARS = (acte2 || partie2) ? [2014, 2017, 2020, 2023] : [2021, 2022];
+        const EV: { yr: number; lbl: string; col: string }[] = partie2
+          ? [
+              { yr: 2013, lbl: "Serval", col: "#2E3A59" },
+              { yr: 2015, lbl: "Burkina", col: SAHEL_COLORS.contested },
+              { yr: 2023, lbl: "Niger", col: "#6E5E33" },
+            ]
+          : acte2
           ? [
               { yr: 2013, lbl: "France", col: "#2E3A59" },
               { yr: 2015, lbl: "MINUSMA", col: "#3B5E7B" },
@@ -2955,10 +2959,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
               { yr: interpolate(A1.FRICTION, [A1.MALI, A1.END], [AX_Y0, AX_Y1]), lbl: "Friction", col: SAHEL_COLORS.contested },
             ];
         const cx = tx(yearNow);
-        // apparition douce du bandeau (suit le HUD ; masqué pendant l'overlay GeoConvergence)
-        const op = hudOpEff;
+        // apparition douce du bandeau. En P2 : visible dès le début (op plein, pas lié au hudOpEff legacy).
+        const op = partie2 ? interpolate(frame, [3000, 3030], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : hudOpEff;
         return (
-          <div style={{ position: "absolute", left: 0, top: 0, width, height, opacity: op, pointerEvents: "none" }}>
+          <div style={{ position: "absolute", left: 0, top: 0, width, height, opacity: op, pointerEvents: "none", zIndex: 50 }}>
             <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0 }}>
               {/* plaque de fond */}
               <rect x={X0 - 28} y={Y - 36} width={(X1 + 32) - (X0 - 28)} height={76} rx={8}

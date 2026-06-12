@@ -48,10 +48,11 @@ const FR_BASES: Base[] = [
   { id: "menaka", name: "MÉNAKA", coord: [2.40, 15.92], appearAt: F_SERVAL + 30, fallAt: F_ECHEC + 230 },
   { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], appearAt: F_BARKHANE + 12, fallAt: F_ECHEC + 310 },
 ];
+// MINUSMA part dès la FIN du 2.4 (Aziz : alléger le 2.5, les ONU ont joué leur rôle 2.3-2.4).
 const MINUSMA: Base[] = [
-  { id: "kidal", name: "KIDAL", coord: [1.44, 18.43], appearAt: F_MINUSMA, fallAt: F_VILLES + 40 },
-  { id: "tombouctou", name: "TOMBOUCTOU", coord: [-3.01, 16.79], appearAt: F_MINUSMA + 14, fallAt: F_VILLES + 40 },
-  { id: "mopti", name: "MOPTI", coord: [-4.20, 14.49], appearAt: F_MINUSMA + 28, fallAt: F_VILLES + 40 },
+  { id: "kidal", name: "KIDAL", coord: [1.44, 18.43], appearAt: F_MINUSMA, fallAt: F_ECHEC + 330 },
+  { id: "tombouctou", name: "TOMBOUCTOU", coord: [-3.01, 16.79], appearAt: F_MINUSMA + 14, fallAt: F_ECHEC + 345 },
+  { id: "mopti", name: "MOPTI", coord: [-4.20, 14.49], appearAt: F_MINUSMA + 28, fallAt: F_ECHEC + 360 },
 ];
 const HELD_CITIES: { id: string; name: string; coord: [number, number]; appearAt: number }[] = [
   { id: "ville-gao", name: "GAO", coord: [-0.04, 16.27], appearAt: F_VILLES },
@@ -131,9 +132,7 @@ const CEDEAO_RING: [number, number][] = [
 ];
 
 // FRISE temporelle : étapes affichées. La barre se remplit de F_ECHEC à ~F_DEBORDENT (les "dix ans").
-const FRISE_START = F_ECHEC;
-const FRISE_END = F_DEBORDENT;        // 2013→2022 couvert sur cette plage
-const FRISE_YEARS = [2013, 2015, 2018, 2020, 2022];
+// (Frise = timeline graduée pleine largeur rendue par le MOTEUR pour partie2 — pas ici.)
 
 const BASE_DEG = 3.0, MINUSMA_DEG = 2.4, VILLE_DEG = 2.6;
 const SPRITE_BOUNDS = { min: 120, max: 320 };
@@ -202,8 +201,6 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
   };
 
   // ── Frise métronome ──
-  const friseT = interpolate(frame, [FRISE_START, FRISE_END], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const showFrise = frame >= FRISE_START - 20 && frame <= F_DEBORDENT + 80;
 
   // (Overlay 40% SUPPRIMÉ — retour Aziz : il répétait la voix, hors-centre, inutile. Le 40% se MONTRE
   //  par le remplissage du contour du Burkina ci-dessus.)
@@ -422,32 +419,9 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
         );
       })}
 
-      {/* ============ FRISE MÉTRONOME (2013→2022, bas écran, ancrée écran) ============ */}
-      {showFrise && (() => {
-        const fop = interpolate(frame, [FRISE_START - 20, FRISE_START, F_DEBORDENT + 30, F_DEBORDENT + 80], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-        const barX = width * 0.16, barW = width * 0.68, barY = height - 78;
-        return (
-          <div style={{ position: "absolute", inset: 0, opacity: fop, pointerEvents: "none" }}>
-            <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
-              <line x1={barX} y1={barY} x2={barX + barW} y2={barY} stroke={PAL.INK} strokeWidth={2} strokeOpacity={0.35} />
-              <line x1={barX} y1={barY} x2={barX + barW * friseT} y2={barY} stroke={PAL.RED_INK} strokeWidth={3} strokeOpacity={0.8} />
-              {FRISE_YEARS.map((yr, i) => {
-                const yt = i / (FRISE_YEARS.length - 1);
-                const lit = friseT >= yt - 0.02;
-                const x = barX + barW * yt;
-                return (
-                  <g key={yr} opacity={lit ? 1 : 0.3}>
-                    <circle cx={x} cy={barY} r={lit ? 5 : 3} fill={lit ? PAL.RED_INK : PAL.INK} />
-                    <text x={x} y={barY + 24} fontSize={20} fill={PAL.INK} fontFamily="Georgia, serif" textAnchor="middle" opacity={0.85}>{yr}</text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
-        );
-      })()}
-
-      {/* (Data-viz 40% jauge SUPPRIMÉE — le 40% se MONTRE par le remplissage du contour du Burkina.) */}
+      {/* FRISE : la timeline graduée pleine largeur (curseur date qui glisse dès le début de la P2) est
+          REND PAR LE MOTEUR (timeline Acte 1 réactivée pour partie2, Aziz 2026-06-12). Plus de frise maison.
+          Data-viz 40% jauge SUPPRIMÉE — le 40% se MONTRE par le remplissage du contour du Burkina. */}
     </AbsoluteFill>
   );
 };
