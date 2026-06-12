@@ -154,6 +154,43 @@ export function waypointHeadingPx(project: ProjectFn, wp: Waypoint[], frame: num
   return Math.atan2(b.y - a.y, b.x - a.x);
 }
 
+// ── CONTOUR DE TERRITOIRE NOMMÉ (technique systématique, Aziz 2026-06-12) ──
+// Quand on nomme un pays/territoire, on DESSINE son contour (stroke-dashoffset qui se trace) + un FLASH
+// (halo qui pulse une fois) pour guider l'œil. Couleur porteuse de sens (rouge=menace, kaki=junte, or=AES).
+// Retourne le path + les props d'animation. `t` = avancement 0→1 (du début à la fin du tracé).
+export function countryOutline(opts: {
+  ring: [number, number][];
+  project: ProjectFn;
+  frame: number;
+  startF: number;
+  drawDur?: number;   // durée du tracé (frames)
+  holdDur?: number;   // durée d'affichage plein avant fade (frames)
+}): { d: string; len: number; dashOffset: number; flash: number; op: number } | null {
+  const { ring, project, frame, startF } = opts;
+  const drawDur = opts.drawDur ?? 40;
+  const holdDur = opts.holdDur ?? 240;
+  if (frame < startF) return null;
+  const pts = ring.map(([lon, lat]) => project(lon, lat));
+  let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+  let len = 0;
+  for (let i = 1; i < pts.length; i++) {
+    d += `L${pts[i].x.toFixed(1)},${pts[i].y.toFixed(1)}`;
+    len += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+  }
+  d += "Z";
+  const draw = (frame - startF) / drawDur; // 0→1
+  const drawC = Math.max(0, Math.min(1, draw));
+  const dashOffset = len * (1 - drawC);
+  // flash : pic à la fin du tracé puis retombe
+  const flash = frame < startF ? 0 : Math.max(0, 1 - Math.abs((frame - startF) - drawDur) / 20);
+  const op = (() => {
+    const fadeOut = startF + drawDur + holdDur;
+    if (frame <= startF + drawDur) return drawC;
+    return Math.max(0, 1 - (frame - (startF + drawDur)) / holdDur);
+  })();
+  return { d, len, dashOffset, flash, op };
+}
+
 // ── Interpolation couleur hex (#rrggbb) ──
 export function lerpHex(a: string, b: string, t: number): string {
   const ah = a.replace("#", ""), bh = b.replace("#", "");

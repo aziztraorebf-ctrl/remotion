@@ -555,8 +555,9 @@ const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 4200, lon:  0.80, lat: 17.40, zoom: 5.70 }, // 2.4 FIN : léger pull-back, les 3 bases mortes
   { f: 4421, lon: -1.20, lat: 15.60, zoom: 5.55 }, // 2.5 villes/campagnes : centre Mali rural
   { f: 4955, lon: -1.50, lat: 12.40, zoom: 4.80 }, // 2.6 Burkina : cadre le PAYS ENTIER (voir le remplissage rouge 40%)
-  { f: 5380, lon:  2.12, lat: 13.51, zoom: 5.80 }, // Niger bascule : push-in NIAMEY (jeton junte)
-  { f: 5640, lon:  0.40, lat: 12.60, zoom: 5.00 }, // CEDEAO : léger élargissement (pont Partie 3)
+  { f: 5380, lon:  8.50, lat: 16.50, zoom: 4.05 }, // Niger bascule : cadre le NIGER ENTIER (le contour flash a du sens) + jeton junte à Niamey (SO)
+  { f: 5520, lon:  6.00, lat: 15.00, zoom: 4.15 }, // hold Niger : léger drift, on lit le pays
+  { f: 5640, lon:  2.00, lat: 12.80, zoom: 4.30 }, // CEDEAO : pan SO vers les pays côtiers (menace converge vers Niamey)
 ];
 const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
   if (frame <= PARTIE2_CAM_KEYS[0].f) return getActe1Cam(frame);

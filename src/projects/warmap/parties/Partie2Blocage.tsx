@@ -21,8 +21,9 @@ import React from "react";
 import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
 import {
-  PAL, spriteMapWidth, smokePingPong, interpWaypoints, type Waypoint,
+  PAL, spriteMapWidth, smokePingPong, interpWaypoints, countryOutline, type Waypoint,
 } from "./warmapPremiumKit";
+import { NIGER_RING, BURKINA_RING } from "./sahelCountries";
 
 // ============================================================
 // TRIGGERS V5
@@ -119,14 +120,8 @@ const F_FR_PRESENCE_OUT = F_MINUSMA + 20; // les jetons FR pré-positionnés s'e
 // ============================================================
 const NIAMEY: [number, number] = [2.12, 13.51];
 
-// ============================================================
-// BURKINA — le "40%" se MONTRE (retour Aziz) : contour du pays qui se remplit de rouge au fur et à mesure,
-// jetons jihadistes posés DESSUS. Plus d'overlay chiffré. Polygone simplifié du Burkina (lon,lat).
-// ============================================================
-const BURKINA_POLY: [number, number][] = [
-  [-5.5, 9.4], [-2.9, 9.5], [-2.8, 11.0], [0.2, 11.0], [2.4, 11.7], [2.0, 13.1],
-  [0.0, 13.0], [-0.8, 15.1], [-3.5, 13.7], [-5.5, 12.0], [-5.5, 9.4],
-];
+// BURKINA — le "40%" se MONTRE : VRAI contour du pays (sahelCountries) qui se remplit de rouge + contour flash.
+const BURKINA_POLY = BURKINA_RING;
 const CEDEAO_RING: [number, number][] = [
   [-4.00, 9.50], [-1.20, 7.95], [2.30, 9.30], [8.10, 9.10],  // CI, Ghana, Bénin, Nigeria
 ];
@@ -320,6 +315,31 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
               <g clipPath="url(#p2-burkina-clip)" style={{ mixBlendMode: "multiply" }}>
                 <rect x={0} y={fillTop} width={width} height={maxY - fillTop} fill={PAL.RED_INK} opacity={0.45} />
               </g>
+            </g>
+          );
+        })()}
+
+        {/* CONTOURS FLASH (technique systématique Aziz) : le territoire nommé se DESSINE + flash, guide l'œil.
+            Burkina = rouge (débordement) · Niger = kaki (junte). Couleur porteuse de sens. */}
+        {(() => {
+          const bk = countryOutline({ ring: BURKINA_RING, project, frame, startF: F_DEBORDENT, drawDur: 38, holdDur: 300 });
+          if (!bk) return null;
+          return (
+            <g opacity={bk.op}>
+              {bk.flash > 0.05 && <path d={bk.d} fill={PAL.RED_INK} opacity={0.10 * bk.flash} />}
+              <path d={bk.d} fill="none" stroke={PAL.RED_INK} strokeWidth={2.6 + 1.5 * bk.flash}
+                strokeOpacity={0.7} strokeDasharray={bk.len} strokeDashoffset={bk.dashOffset} strokeLinejoin="round" />
+            </g>
+          );
+        })()}
+        {(() => {
+          const ng = countryOutline({ ring: NIGER_RING, project, frame, startF: F_NIGER, drawDur: 40, holdDur: 240 });
+          if (!ng) return null;
+          return (
+            <g opacity={ng.op}>
+              {ng.flash > 0.05 && <path d={ng.d} fill="#6E5E33" opacity={0.10 * ng.flash} />}
+              <path d={ng.d} fill="none" stroke="#6E5E33" strokeWidth={2.6 + 1.5 * ng.flash}
+                strokeOpacity={0.75} strokeDasharray={ng.len} strokeDashoffset={ng.dashOffset} strokeLinejoin="round" />
             </g>
           );
         })()}
