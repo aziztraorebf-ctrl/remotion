@@ -2014,6 +2014,47 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         </>
       )}
 
+      {/* ======================================================
+          SFX PARTIE 2 (NARRATIVE) — 5 ponctuels forts + drone de tension (Aziz 2026-06-12).
+          Silencieux sur poses/avancées (réservé aux moments forts). Tous dans <Sequence> (règle projet).
+          Triggers V5 : sillage F_ECHEC=3887 · chutes bases ~4037/4117/4197 · Burkina F_DEBORDENT=4955 ·
+          Niger F_NIGER=5380 · CEDEAO F_CEDEAO=5639.
+          ====================================================== */}
+      {partie2 && !acte1CameraOnly && (
+        <>
+          {/* drone de tension très bas pendant l'avancée jihadiste (2.4) — assise sonore continue */}
+          <Sequence from={3880} durationInFrames={Math.ceil(8.0 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.12} />
+          </Sequence>
+          {/* sillage = l'encre rouge s'étale (apparition du territoire au 2.4) */}
+          <Sequence from={3887} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} />
+          </Sequence>
+          {/* chute des 3 bases — impact sourd (espacés) */}
+          <Sequence from={4037} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={4117} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.48} />
+          </Sequence>
+          <Sequence from={4197} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.48} />
+          </Sequence>
+          {/* contour Burkina qui se dessine — whoosh */}
+          <Sequence from={4955} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.5} />
+          </Sequence>
+          {/* bascule Niger — coup d'État = boom sourd lourd */}
+          <Sequence from={5380} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.58} />
+          </Sequence>
+          {/* menace CEDEAO — snap institutionnel */}
+          <Sequence from={5639} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.5} />
+          </Sequence>
+        </>
+      )}
+
       {/* Filtre papier sepia */}
       <svg style={{ position: "absolute", width: 0, height: 0 }}>
         <filter id="paperSahel">
