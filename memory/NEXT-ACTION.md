@@ -6,6 +6,11 @@
 
 ## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 NARRATIVE ✅ VALIDÉE (2026-06-12) → P3 (session PARALLÈLE)
 
+> 🔄 **SYNCHRO (2026-06-12 a-m)** : DEUX sessions ont tourné sur P3 (même branche). La session PLAN a finalisé
+> `PLAN-NARRATIF-P3.md` + DA-brief 3 voix (commit 3073214). La session CODING (Partie3Rupture.tsx déjà commencée)
+> DOIT `git pull` puis confronter son code au plan (drapeau ondulation, Moura abstraction, anachronisme sépia,
+> raccord ONU→FAMa, bleu désaturé, easing Ph9). Détail : STATUS.md section "SYNCHRO DEUX SESSIONS P3".
+
 > 🟢🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** (brief
 > autonome, sans ambiguïté : quel fichier copier, triggers, assets, ordre strict). Puis `WARMAP-GRAMMAIRE-CAUSALE.md`
 > (doctrine) + `PLAN-NARRATIF-P2.md` (modèle de plan). STATUS section REPRISE = état complet.

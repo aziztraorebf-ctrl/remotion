@@ -8,6 +8,24 @@
 
 ---
 
+## 🔄 SYNCHRO DEUX SESSIONS P3 (2026-06-12 après-midi) — LIRE SI TU CODES P3
+
+> **Deux sessions ont tourné en parallèle sur P3 sur la MÊME branche `feat/da-brief-gate-warmap-sahel` :**
+> - Session A (coding) : a commencé `Partie3Rupture.tsx` + branché `partie3` dans `SahelWarMapEngine.tsx` + `Root.tsx`.
+> - Session B (plan + DA-brief) : a finalisé `PLAN-NARRATIF-P3.md` + tranché 2 décisions de goût + 4 angles morts. **COMMITÉ (3073214).**
+>
+> **➡️ LA SESSION DE CODING DOIT `git pull` PUIS CONFRONTER son code au plan à jour.** Le plan PRIME sur le code.
+> Points à vérifier dans le code déjà écrit (détail complet dans `PLAN-NARRATIF-P3.md` sections Ph6/Ph7/Ph8/Ph9 + "DÉCISIONS DA-BRIEF P3") :
+> 1. **Drapeau Kidal (Ph7)** : fill clippé `useClipFlags` + MICRO-ONDULATION du clip-path SVG (PAS de sprite généré). Drapeau ondule seul pendant le figé 2s.
+> 2. **Moura (Ph8)** : abstraction pure, point rouge `#6B1A1A` + halo bordeaux STATIQUE 20%, AUCUN visage.
+> 3. **Anachronisme Moura** : carte "état altéré" (fondu sépia + Kidal-bleu opacité 20% + timeline anthracite recule 2022).
+> 4. **Raccord ONU→FAMa (Ph6)** : chevauchement (1er waypoint FAMa quand dernier point ONU à ~50% opacité).
+> 5. **Anti AI-slop chromatique** : bleu Mali DÉSATURÉ `#2B4F7C` fill 40-60% (jamais 100%), or AES mat, rouge `#6B1A1A`.
+> 6. **Easing Ph9** : sprites jihadistes (technical-jnim/fighter-jnim/fighter-eigs) avance vite → arrêt net → recul lent effiloché. PAS de halos rouges qui poppent (ancien plan abandonné).
+> Aucun nouvel asset à générer (tout sur disque). Réutilisation jetons/bases/contours/sillage = justifiée (confirmée par les 3 voix).
+
+---
+
 ## ⛔ REPRISE PROCHAINE SESSION (2026-06-12) — P2 NARRATIVE VALIDÉE, place à P3 (session parallèle)
 
 > 🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** — brief
