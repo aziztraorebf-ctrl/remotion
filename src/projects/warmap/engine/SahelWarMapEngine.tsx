@@ -545,8 +545,8 @@ const getPartie1Cam = (frame: number): { lon: number; lat: number; zoom: number 
 const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 2940, lon: -0.6,  lat: 15.3,  zoom: 5.05 }, // = fin Partie 1 (raccord exact)
   { f: 3196, lon:  0.6,  lat: 16.9,  zoom: 5.70 }, // 2.1 Serval : cadre serré nord-Mali (bases apparaissent)
-  { f: 3443, lon: -0.5,  lat: 14.6,  zoom: 4.35 }, // 2.2 présence FR : ÉLARGISSEMENT (forces régionales tout autour visibles)
-  { f: 3640, lon: -0.5,  lat: 14.6,  zoom: 4.35 }, // 2.2 hold : la présence régionale s'installe (le temps de lire)
+  { f: 3443, lon:  1.5,  lat: 14.2,  zoom: 3.70 }, // 2.2 présence FR : GRAND ÉLARGISSEMENT (jetons FR pré-positionnés Tchad/Niger/CI/Mauritanie visibles autour)
+  { f: 3640, lon:  1.5,  lat: 14.2,  zoom: 3.70 }, // 2.2 hold : la présence régionale s'installe (le temps de lire)
   { f: 3700, lon:  0.0,  lat: 17.2,  zoom: 5.55 }, // 2.3 MINUSMA : re-resserre nord (points ONU Kidal/Tombouctou)
   { f: 3887, lon:  0.30, lat: 16.60, zoom: 6.00 }, // 2.4 T1 : cadre serré le triangle (l'étau monte)
   { f: 3980, lon:  0.05, lat: 16.35, zoom: 6.35 }, // 2.4 T2 : push-in Gao (1re extinction)
@@ -554,8 +554,8 @@ const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 4110, lon:  1.20, lat: 18.20, zoom: 5.95 }, // 2.4 T3b : remonte nord → Tessalit
   { f: 4200, lon:  0.80, lat: 17.40, zoom: 5.70 }, // 2.4 FIN : léger pull-back, les 3 bases mortes
   { f: 4421, lon: -1.20, lat: 15.60, zoom: 5.55 }, // 2.5 villes/campagnes : centre Mali rural
-  { f: 4955, lon: -0.60, lat: 13.60, zoom: 5.55 }, // 2.6 Burkina : pan SUD (débordement frontière)
-  { f: 5380, lon:  2.00, lat: 13.70, zoom: 5.60 }, // Niger bascule : pan EST (Niamey)
+  { f: 4955, lon: -1.50, lat: 12.40, zoom: 4.80 }, // 2.6 Burkina : cadre le PAYS ENTIER (voir le remplissage rouge 40%)
+  { f: 5380, lon:  2.12, lat: 13.51, zoom: 5.80 }, // Niger bascule : push-in NIAMEY (jeton junte)
   { f: 5640, lon:  0.40, lat: 12.60, zoom: 5.00 }, // CEDEAO : léger élargissement (pont Partie 3)
 ];
 const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
