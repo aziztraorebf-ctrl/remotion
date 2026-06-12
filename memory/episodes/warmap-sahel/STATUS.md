@@ -10,6 +10,10 @@
 
 ## ⛔ REPRISE PROCHAINE SESSION (2026-06-12) — P2 NARRATIVE VALIDÉE, place à P3 (session parallèle)
 
+> 🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** — brief
+> autonome (quel fichier copier = Partie2Blocage.tsx, PAS Proto24 ; triggers P3 vérifiés ; assets ; pattern
+> moteur ; ordre strict : REPRÉVOIR LE VISUEL → DA-brief → code). Tout y est, sans ambiguïté.
+
 **ÉTAT : Acte1 ✅ + P1 ✅ + P2 NARRATIVE ✅ VALIDÉE Aziz ("très bon point d'équilibre").**
 Reste sur la vidéo : **P3 "La Rupture" + P4 "Coût/Perspective" + assemblage final.** ~la moitié est derrière.
 Render P2 final : `out/episodes/warmap-sahel/p2-FINAL.mp4` (audio embarqué, catbox gfsa3h).

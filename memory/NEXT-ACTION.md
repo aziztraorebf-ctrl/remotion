@@ -6,20 +6,20 @@
 
 ## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 NARRATIVE ✅ VALIDÉE (2026-06-12) → P3 (session PARALLÈLE)
 
-> ⭐⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/STATUS.md`** (section "REPRISE" en tête, réécrite 06-12)
-> + `PLAN-NARRATIF-P2.md` (LE modèle de méthode) + `key-learnings.md` (leçon grammaire causale, majeure).
+> 🟢🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** (brief
+> autonome, sans ambiguïté : quel fichier copier, triggers, assets, ordre strict). Puis `WARMAP-GRAMMAIRE-CAUSALE.md`
+> (doctrine) + `PLAN-NARRATIF-P2.md` (modèle de plan). STATUS section REPRISE = état complet.
 
 **ÉTAT (2026-06-12) — P2 NARRATIVE VALIDÉE Aziz ("très bon point d'équilibre, on garde").**
-La P2 refondue 4 fois : SVG plat (rejeté) → premium "états" (confus, œil neuf ne comprend pas) → grammaire
-CAUSALE (validé). Render final : `out/episodes/warmap-sahel/wip/p2-FINAL-v2-FULLHD.mp4` (audio embarqué).
-Reste sur la vidéo : **P3 + P4 + assemblage**. ~moitié derrière. Tout le SYSTÈME est rodé (briques + méthode).
+La P2 refondue 4 fois : SVG plat (rejeté) → premium "états" (confus) → grammaire CAUSALE (validé).
+Render final : `out/episodes/warmap-sahel/p2-FINAL.mp4` (audio embarqué, catbox gfsa3h).
+Reste sur la vidéo : **P3 + P4 + assemblage**. ~moitié derrière. SYSTÈME rodé (briques + méthode + doctrine causale).
 
 **▶ PROCHAINE ACTION = P3 "La Rupture" — SESSION PARALLÈLE (pas la session courante, contexte chargé).**
-Appliquer LA MÉTHODE rodée : audio-first → plan narratif phrase par phrase → DA-brief upstream → arsenal causal.
-1. Écouter `narration-v5-p3.mp3`, écrire PLAN-NARRATIF-P3 (modèle = PLAN-NARRATIF-P2.md).
-2. P3 = AES naît (Liptako or) · Kidal repris · reprise · Moura · 2026. Assets prêts : jeton-fama/csp,
-   base-africacorps, jeton-junte. Briques prêtes : warmapPremiumKit (interpWaypoints, countryOutline, chip,
-   sillage), WarMapPlaque, sahelCountries, timeline moteur, SFX warmap/. Réutiliser pattern Partie2Blocage.tsx.
+Ordre STRICT (brief P3) : 1. REPRÉVOIR LE VISUEL (PLAN-NARRATIF-P3, phrase par phrase, comment ça s'expose sur
+la carte) → 2. DA-brief upstream → 3. coder (copier `Partie2Blocage.tsx`, PAS Proto24 = legacy).
+P3 = AES naît (Liptako or) · Kidal repris (FAMa+Africa Corps) · Moura (flashback) · 2026 attaques repoussées.
+Triggers vérifiés + assets + briques : tous dans BRIEF-PASSATION-P3.md.
 
 **LEÇONS gravées (`key-learnings.md` 06-12)** : grammaire CAUSALE (jetons avancent→sillage→effet) · audio-first ·
 combiner l'arsenal · jeton=cercle (pas portrait nu) · donnée se MONTRE (contour qui se remplit) · SFX si support visuel.
