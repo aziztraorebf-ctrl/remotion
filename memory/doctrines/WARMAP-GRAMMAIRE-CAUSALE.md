@@ -87,6 +87,9 @@ pays". Une forme abstraite (losange/étoile) = cheap sur une carte riche. Tout m
 - **Timeline graduée** pleine largeur, présente dès le début (curseur date qui glisse = donne le sens du temps).
 - **SFX seulement si support visuel** (retiré cedeao-snap : on ne voyait pas la CEDEAO). Silencieux sur poses/avancées.
 - **1 foyer d'attention à la fois** (anti-saturation). Hiérarchie du regard : assombrir le reste pendant l'action.
+- **EMPHASE CHIRURGICALE sur les territoires concernés** (Aziz 2026-06-11) : quand 1-2 territoires portent la scène
+  (ex : Kidal repris, zone AES qui naît), les GARDER pleinement traités (couleur, contour, jetons) et ÉPURER tout
+  le tour (carte calme, voisins atténués). On met l'emphase sur les deux parties concernées, pas sur le décor.
 
 ## LA MÉTHODE (avant de coder — la même qui a débloqué la P2)
 1. Écouter l'audio phrase par phrase → `PLAN-NARRATIF-PN.md` : "que doit COMPRENDRE un œil neuf à cette phrase ?"
