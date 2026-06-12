@@ -21,7 +21,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
 import {
-  PAL, spriteMapWidth, smokePingPong, interpWaypoints, waypointHeadingPx, type Waypoint,
+  PAL, spriteMapWidth, smokePingPong, interpWaypoints, type Waypoint,
 } from "./warmapPremiumKit";
 
 // ============================================================
@@ -114,8 +114,8 @@ const FRISE_YEARS = [2013, 2015, 2018, 2020, 2022];
 const BASE_DEG = 3.0, MINUSMA_DEG = 2.4, VILLE_DEG = 2.6;
 const SPRITE_BOUNDS = { min: 120, max: 320 };
 const BASE_RATIO = 0.56, MINUSMA_RATIO = 0.55, VILLE_RATIO = 0.55;
-const JETON_DEG = 1.0;
-const JETON_BOUNDS = { min: 44, max: 120 };
+const JETON_DEG = 1.4;                          // acteurs plus présents (ce sont eux le sujet du 2.4)
+const JETON_BOUNDS = { min: 64, max: 150 };
 
 type Props = { ctx: SahelRenderContext | null };
 
@@ -134,8 +134,7 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
     .map((j) => {
       const [lon, lat] = interpWaypoints(j.wp, frame);
       const p = project(lon, lat);
-      const heading = waypointHeadingPx(project, j.wp, frame);
-      return { j, lon, lat, p, heading };
+      return { j, lon, lat, p };
     });
 
   // ── SILLAGE : le territoire rouge se révèle là où les jetons SONT PASSÉS (mask de cercles aux positions
@@ -209,11 +208,15 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
             <stop offset="0%" stopColor={PAL.RED_INK} stopOpacity={0.55} />
             <stop offset="100%" stopColor={PAL.RED_DEEP} stopOpacity={0.4} />
           </radialGradient>
-          {/* mask sillage : le territoire rouge n'apparaît QUE là où les jetons sont passés */}
+          {/* mask sillage : le territoire rouge n'apparaît QUE là où les jetons sont passés.
+              feGaussianBlur fond les empreintes circulaires en une NAPPE continue (pas des ronds visibles). */}
+          <filter id="p2-sillage-blur"><feGaussianBlur stdDeviation="16" /></filter>
           <mask id="p2-sillage">
-            {sillageStamps.map((s, i) => (
-              <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="white" />
-            ))}
+            <g filter="url(#p2-sillage-blur)">
+              {sillageStamps.map((s, i) => (
+                <circle key={i} cx={s.x} cy={s.y} r={s.r} fill="white" />
+              ))}
+            </g>
           </mask>
         </defs>
 
@@ -279,21 +282,35 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
       })}
       {FR_BASES.map((b) => renderBase(b, baseSprite, BASE_DEG, BASE_RATIO))}
 
-      {/* ============ JETONS JIHADISTES (acteurs qui avancent) ============ */}
-      {activeJetons.map(({ j, lon, lat, p, heading }) => {
+      {/* ============ JETONS JIHADISTES (acteurs qui avancent) — VRAI JETON CIRCULAIRE (modèle Acte 1) :
+           cercle parchemin + bordure faction (clair JNIM / sombre EIGS) + portrait clippé DANS le rond +
+           ombre portée. PAS le portrait nu (= buste flottant, erreur). ============ */}
+      {activeJetons.map(({ j, lon, lat, p }) => {
         const ap = spring({ frame: frame - j.appear, fps, config: { damping: 15 }, durationInFrames: 14 });
         const dis = interpolate(frame, [j.disappear - 30, j.disappear], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         const op = ap * dis;
         if (op <= 0.02) return null;
-        const w = spriteMapWidth(project, lon, lat, JETON_DEG, JETON_BOUNDS) * ap;
-        const flip = Math.abs(heading) > Math.PI / 2 ? -1 : 1; // flip ouest
+        const D = spriteMapWidth(project, lon, lat, JETON_DEG, JETON_BOUNDS) * ap; // diamètre ancré carte
+        const breathe = 1 + 0.05 * Math.sin((frame + j.id.charCodeAt(1) * 7) * 0.08);
+        const border = j.faction === "jnim" ? "#C9A24B" : "#2E2A1E"; // bordure faction (or clair / sombre)
         const sprite = j.faction === "jnim" ? "fighter-jnim" : "fighter-eigs";
         return (
-          <img key={j.id} src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
-            style={{
-              position: "absolute", left: p.x - w / 2, top: p.y - w * 0.6, width: w, height: w, opacity: op,
-              transform: `scaleX(${flip})`, filter: "drop-shadow(0 2px 4px rgba(40,20,10,0.4))", pointerEvents: "none",
-            }} />
+          <div key={j.id} style={{
+            position: "absolute", left: p.x, top: p.y,
+            transform: `translate(-50%,-50%) scale(${breathe})`, opacity: op, pointerEvents: "none",
+          }}>
+            {/* ombre portée (le jeton flotte au-dessus du parchemin) */}
+            <div style={{ position: "absolute", left: "50%", top: "72%", width: D * 0.82, height: D * 0.26,
+              transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
+            {/* jeton : cercle parchemin + bordure faction + portrait clippé */}
+            <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden",
+              background: "#F5EFD6", border: `${Math.max(2.5, D * 0.06)}px solid ${border}`,
+              boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
+              <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+                style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
+                  transform: "translate(-8%, 2%)", display: "block" }} />
+            </div>
+          </div>
         );
       })}
 
