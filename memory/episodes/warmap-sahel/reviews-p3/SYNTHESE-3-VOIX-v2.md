@@ -24,3 +24,12 @@
 
 ## À NE PAS CASSER (3 voix)
 Inversion chromatique bleu/rouge · latence ONU→offensive · sobriété "table d'état-major".
+
+---
+## ⚠️ BUG REVIEW PREMIUM (2026-06-13) : Gemini n'a PAS vu la vidéo
+Au review premium v6, gemini-p3-review.py (gemini-3.1-pro-preview, Files API vidéo) a répondu "sans avoir
+l'image sous les yeux" → il a raisonné sur le TEXTE du brief, pas la vidéo. Ses suggestions = principes
+génériques, dont plusieurs déjà faites ou contraires aux choix Aziz (refocus radial retiré, plein écran écarté)
+ou fausses techniquement (map.easeTo INTERDIT). À INVESTIGUER : pourquoi l'upload vidéo Files API ne "prend" pas
+pour ce modèle (peut-être 3.1-pro ne lit pas la vidéo, ou bug upload). EN ATTENDANT : pour un review VIDÉO fiable,
+privilégier Kimi sur FRAMES (lui a bien vu). Gemini reste OK sur frames/texte, pas vidéo.

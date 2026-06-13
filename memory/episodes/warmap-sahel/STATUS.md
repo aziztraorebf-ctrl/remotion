@@ -232,3 +232,14 @@ Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · JNIM f1198 · EIGS 
 - `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — format long (carte permanente, overlays 3 niveaux, 5 actes).
 - `memory/doctrines/WARMAP-VIVANTE-GRAMMAIRE.md` — dynamisme (R-V1..R-V4, board clearing, Ken Burns, 1 transfo/plan).
 - `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` + doctrine Tremblay — niveau oral du script.
+
+## ⏳ CHANTIER TRANSVERSAL EN ATTENTE — "Fond de contrôle qui respire" (session dédiée, Aziz 2026-06-13)
+Constat (Aziz P3) : depuis l'Acte 2, la carte colorée de contrôle territorial (sahel-fill rouge/contesté/bleu)
+est forcée à ~12% ("carte calme" pour que les beats ressortent) → on a PERDU la lecture de fond "qui tient quoi".
+La légende de contrôle (haut-gauche) est aussi masquée en P2/P3.
+DÉCISION : réintroduire un FOND QUI RESPIRE — calme (~15%) pendant l'action (jetons/combat/sillage), remonte
+(~35%) sur les temps de lecture (transitions, plans larges, morale). + légende code-couleur BRÈVE aux moments
+clés (pas permanente). Cohérent avec l'inversion chromatique (rouge=jihadiste, bleu=État).
+PORTÉE : transversal — à appliquer à Acte1/P1/P2/P3 ENSEMBLE (sinon incohérence), donc SESSION DÉDIÉE, en une
+passe : (1) mécanique controlBaseOpacity pilotée par phase dans SahelWarMapEngine, (2) composant légende brève,
+(3) brancher chaque partie, (4) re-render court de chaque partie + jugement d'ensemble. NE PAS faire au coup par coup.

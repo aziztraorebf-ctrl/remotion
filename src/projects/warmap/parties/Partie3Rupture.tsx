@@ -32,6 +32,7 @@ import { MALI_RING, NIGER_RING, BURKINA_RING } from "./sahelCountries";
 import { WarMapPlaque } from "./WarMapPlaque";
 import { SahelAttackArrow } from "../_shared/SahelAttackArrow";
 import { TerritorialExpansion, type ExpansionRegion } from "../_shared/TerritorialExpansion";
+import { WarMapOverlayDynamic } from "../_shared/WarMapOverlayDynamic";
 
 // ============================================================
 // TRIGGERS V5 P3 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-12)
@@ -47,8 +48,9 @@ const F_AFRICA = 7794;     // "Africa" Corps — Ph6 offensive FAMa
 const F_FLOTTE = 8132;     // "flotte" — Ph7 reprise Kidal (figée 2s)
 const F_MOURA = 8580;      // "Moura" — Ph8 flashback mars 2022
 const F_REPOUSSE = 9121;   // "repousse" — Ph9 attaques 2026 refoulées
-const F_CONSERVER = 9372;  // "conserver" — pont P4
-const F_END = 9560;        // fin P3
+const F_CONSERVER = 9372;  // "conserver en est une autre" — fin de la phrase-morale = FIN P3
+const F_END = 9410;        // fin P3 : ~1.3s après la morale pour la laisser résonner, puis coupe. PAS de
+                           // débordement dans la P4 (réfugiés f9366+ = compo P4 séparée). Décision Aziz 2026-06-12.
 
 // ============================================================
 // COORDONNÉES (lon, lat)
@@ -75,59 +77,81 @@ const CEDEAO_RING: [number, number][] = [
 ];
 
 // ONU / MINUSMA autour de Kidal (Ph5 présents passifs → Ph6 se retirent un par un).
+// ONU/MINUSMA — JETONS casque bleu disposés en ANNEAU autour de la ville Kidal (pas SUR elle). Impuissants
+// (rendu : marqueur "observation" + pas d'action). Au retrait : reculent (translation Y) + s'estompent, AVANT
+// l'offensive FAMa (départ anticipé pendant que la voix l'annonce). Espacés pour ne pas se chevaucher.
 type Base = { id: string; name: string; coord: [number, number]; appearAt: number; outAt: number };
+// 2 BASES MINUSMA (sprites campements ONU top-down, Aziz 2026-06-13) posées près de Kidal. Badge "interdiction
+// de tirer" = mandat non-combattant. Au retrait (Ph6) : la base FADE simplement sur place (un bâtiment ne se
+// déplace pas — le poste est démantelé/abandonné). Espacées hors footprint ville.
+// Espacées LOIN des jetons touaregs (Aziz 2026-06-13 : avant, les bases tombaient sur les jetons → illisible).
+// Touaregs au statu quo : SE [2.35,17.95] + NO [0.65,19.10]. Donc bases ONU placées au NORD (Tessalit/Aguelhok,
+// vrais sites MINUSMA) + une à l'OUEST franc, à l'écart des jetons.
 const MINUSMA_KIDAL: Base[] = [
-  { id: "un-kidal", name: "KIDAL", coord: [1.44, 18.43], appearAt: F_TOUAREGS, outAt: F_RETIRE + 20 },
-  { id: "un-aguelhok", name: "AGUELHOK", coord: [0.87, 19.47], appearAt: F_TOUAREGS + 14, outAt: F_RETIRE + 60 },
-  { id: "un-tessalit", name: "TESSALIT", coord: [1.01, 20.20], appearAt: F_TOUAREGS + 28, outAt: F_RETIRE + 100 },
+  { id: "un-tessalit", name: "", coord: [1.01, 20.20], appearAt: F_TOUAREGS, outAt: F_RETIRE + 50 },   // N (Tessalit), loin des touaregs
+  { id: "un-ouest", name: "", coord: [-0.70, 18.40], appearAt: F_TOUAREGS + 16, outAt: F_RETIRE + 30 }, // O franc, à l'écart
 ];
 
 // Africa Corps (ex-Wagner) — base/fortin gris EN APPUI (décision Aziz : pas un jeton acteur principal).
-const AFRICACORPS_BASE: Base = { id: "africacorps", name: "AFRICA CORPS", coord: [0.20, 16.80], appearAt: F_AFRICA, outAt: F_END };
+const AFRICACORPS_BASE: Base = { id: "africacorps", name: "AFRICA CORPS", coord: [-0.20, 16.55], appearAt: F_AFRICA, outAt: F_END };
 
-// Jetons touaregs (Ph5 POSÉS autour de Kidal, ils tiennent ; Ph6-7 RECULENT vers le nord).
+// Jetons touaregs (Ph5 POSÉS en anneau autour de Kidal, BIEN ESPACÉS, hors footprint ville ; ils tiennent ;
+// Ph6-7 RECULENT loin vers le nord/NE = dispersion marquée).
 type Jeton = { id: string; appear: number; disappear: number; wp: Waypoint[] };
 const TOUAREG_JETONS: Jeton[] = [
-  // posés au sud/est de Kidal pendant le statu quo, reculent vers le nord-est à la reprise
-  { id: "t1", appear: F_TOUAREGS, disappear: F_FLOTTE + 30, wp: [
-    { f: F_TOUAREGS, lon: 1.70, lat: 18.20 }, { f: F_AFRICA, lon: 1.70, lat: 18.20 },
-    { f: F_FLOTTE, lon: 2.60, lat: 19.10 }, { f: F_FLOTTE + 30, lon: 3.20, lat: 19.60 },
+  // SE de Kidal → recule loin au NE (dispersion poussée, Aziz : "aller encore plus loin")
+  { id: "t1", appear: F_TOUAREGS, disappear: F_FLOTTE + 60, wp: [
+    { f: F_TOUAREGS, lon: 2.35, lat: 17.95 }, { f: F_AFRICA, lon: 2.35, lat: 17.95 },
+    { f: F_FLOTTE, lon: 3.40, lat: 19.40 }, { f: F_FLOTTE + 60, lon: 4.40, lat: 20.30 },
   ] },
-  { id: "t2", appear: F_TOUAREGS + 12, disappear: F_FLOTTE + 30, wp: [
-    { f: F_TOUAREGS, lon: 1.10, lat: 18.75 }, { f: F_AFRICA, lon: 1.10, lat: 18.75 },
-    { f: F_FLOTTE, lon: 0.70, lat: 19.70 }, { f: F_FLOTTE + 30, lon: 0.30, lat: 20.20 },
-  ] },
-];
-
-// Jetons FAMa (Ph6 AVANCENT depuis Gao/Ménaka vers Kidal). RACCORD CAUSAL (DA-brief B) : ils démarrent
-// PENDANT le retrait ONU (chevauchement) → l'œil lit la PASSATION (vide ONU comblé par l'armée).
-const F_FAMA_START = 7720; // pendant le fade ONU (le 1er point ONU est déjà à ~50%) — passation lisible
-const FAMA_JETONS: Jeton[] = [
-  { id: "f1", appear: F_FAMA_START, disappear: F_MOURA - 40, wp: [
-    { f: F_FAMA_START, lon: GAO[0], lat: GAO[1] }, { f: F_FAMA_START + 160, lon: 0.70, lat: 17.40 },
-    { f: F_FLOTTE - 30, lon: 1.30, lat: 18.30 }, { f: F_FLOTTE, lon: 1.40, lat: 18.40 },
-  ] },
-  { id: "f2", appear: F_FAMA_START + 24, disappear: F_MOURA - 40, wp: [
-    { f: F_FAMA_START + 24, lon: MENAKA[0], lat: MENAKA[1] }, { f: F_FAMA_START + 170, lon: 1.90, lat: 17.30 },
-    { f: F_FLOTTE - 30, lon: 1.55, lat: 18.25 }, { f: F_FLOTTE, lon: 1.50, lat: 18.38 },
+  // NO de Kidal → recule loin au N (dispersion)
+  { id: "t2", appear: F_TOUAREGS + 12, disappear: F_FLOTTE + 60, wp: [
+    { f: F_TOUAREGS, lon: 0.65, lat: 19.10 }, { f: F_AFRICA, lon: 0.65, lat: 19.10 },
+    { f: F_FLOTTE, lon: 0.20, lat: 20.40 }, { f: F_FLOTTE + 60, lon: -0.40, lat: 21.20 },
   ] },
 ];
 
-// Attaques 2026 (Ph9) — SPRITES JIHADISTES RÉELS (DA-brief D : pas des halos qui poppent).
-// Ils AVANCENT VITE vers une capitale (assaut) → arrêt NET au halo bleu de défense → reculent LENTEMENT
-// en s'effaçant (déroute). Le différentiel de vélocité raconte. Court sillage rouge sourd. Continuité
-// de l'ennemi P1/P2 (technical-jnim / fighter-jnim / fighter-eigs).
-// attackEnd = frame d'arrêt au contact ; chaque sprite recule de attackEnd à disappear (lent).
-type Attack = { id: string; faction: "jnim" | "eigs"; appear: number; attackEnd: number; disappear: number; from: [number, number]; to: [number, number] };
+// Jetons offensive (Ph6 AVANCENT vers Kidal). RACCORD CAUSAL : démarrent PENDANT le retrait ONU. DUO FAMa
+// (bleu) + Africa Corps mercenaire (gris). EN TENAILLE (Aziz 2026-06-12) : ils ne s'empilent PAS au centre,
+// ils se positionnent à 3 EXTRÉMITÉS de la région Kidal (ouest, sud, est) = ils TIENNENT/encerclent le territoire.
+const F_FAMA_START = 7720;
+type OffJeton = Jeton & { faction: "fama" | "africacorps" };
+const FAMA_JETONS: OffJeton[] = [
+  // FAMa #1 → tient le FLANC OUEST de Kidal
+  { id: "f1", faction: "fama", appear: F_FAMA_START, disappear: F_MOURA - 40, wp: [
+    { f: F_FAMA_START, lon: GAO[0], lat: GAO[1] }, { f: F_FAMA_START + 160, lon: 0.70, lat: 17.60 },
+    { f: F_FLOTTE - 20, lon: 0.75, lat: 18.45 }, { f: F_FLOTTE, lon: 0.78, lat: 18.55 },
+  ] },
+  // FAMa #2 → tient le FLANC SUD de Kidal
+  { id: "f2", faction: "fama", appear: F_FAMA_START + 20, disappear: F_MOURA - 40, wp: [
+    { f: F_FAMA_START + 20, lon: MENAKA[0], lat: MENAKA[1] }, { f: F_FAMA_START + 170, lon: 1.60, lat: 17.30 },
+    { f: F_FLOTTE - 20, lon: 1.50, lat: 17.65 }, { f: F_FLOTTE, lon: 1.48, lat: 17.55 },
+  ] },
+  // Africa Corps → tient le FLANC EST de Kidal (encerclement complet de la région)
+  { id: "ac1", faction: "africacorps", appear: F_FAMA_START + 40, disappear: F_MOURA - 40, wp: [
+    { f: F_FAMA_START + 40, lon: 0.10, lat: 16.55 }, { f: F_FAMA_START + 180, lon: 1.80, lat: 17.70 },
+    { f: F_FLOTTE - 20, lon: 2.30, lat: 18.55 }, { f: F_FLOTTE, lon: 2.40, lat: 18.65 },
+  ] },
+];
+
+// Attaques 2026 (Ph9) — REFONTE Aziz 2026-06-12 : 100% DÉMONSTRATION PAR JETONS PHYSIQUES (pas de flèches,
+// pas de plaque). Un jeton jihadiste (rouge) CHARGE vite vers une capitale → un jeton FAMa (bleu) lui BLOQUE
+// PHYSIQUEMENT la route (posté entre l'attaquant et la capitale) → au contact, le jihadiste est REPOUSSÉ
+// (recule vers son origine + fade) tandis que le FAMa tient. La cause (charge) et l'effet (blocage+recul) se
+// VOIENT, sans abstraction. `block` = point où l'attaquant est stoppé (court de la capitale). `defend` = poste FAMa.
+type Attack = {
+  id: string; faction: "jnim" | "eigs"; appear: number; clashAt: number; disappear: number;
+  from: [number, number]; block: [number, number]; defend: [number, number];
+};
+// 2 affrontements DANS le cadre resserré (Ouaga + Niamey). La cam est centrée ~[0.5,13.6] z5.85, donc on cadre
+// le corridor Ouaga(SO)→Niamey(E). Bamako (extrême ouest) hors-cadre = on n'y met pas d'attaque (lisibilité).
 const ATTACKS_2026: Attack[] = [
-  // vers Bamako (SO)
-  { id: "atk1", faction: "jnim", appear: F_REPOUSSE, attackEnd: F_REPOUSSE + 40, disappear: F_REPOUSSE + 130, from: [-6.20, 13.40], to: [-7.30, 12.85] },
-  // vers Ouaga (S)
-  { id: "atk2", faction: "eigs", appear: F_REPOUSSE + 16, attackEnd: F_REPOUSSE + 56, disappear: F_REPOUSSE + 140, from: [-0.30, 13.60], to: [-1.30, 12.55] },
-  // vers Niamey (SE)
-  { id: "atk3", faction: "eigs", appear: F_REPOUSSE + 30, attackEnd: F_REPOUSSE + 70, disappear: F_REPOUSSE + 150, from: [3.40, 14.20], to: [2.30, 13.65] },
-  // 2e poussée vers Bamako (N)
-  { id: "atk4", faction: "jnim", appear: F_REPOUSSE + 44, attackEnd: F_REPOUSSE + 84, disappear: F_REPOUSSE + 160, from: [-5.80, 14.60], to: [-7.10, 13.10] },
+  // charge vers Ouaga (depuis le N) — bloquée au nord de la capitale
+  { id: "atk1", faction: "jnim", appear: F_REPOUSSE, clashAt: F_REPOUSSE + 48, disappear: F_REPOUSSE + 145,
+    from: [-1.10, 14.60], block: [-1.35, 13.30], defend: [-1.52, 12.85] },
+  // charge vers Niamey (depuis le NE)
+  { id: "atk2", faction: "eigs", appear: F_REPOUSSE + 26, clashAt: F_REPOUSSE + 74, disappear: F_REPOUSSE + 158,
+    from: [3.00, 14.70], block: [2.45, 13.95], defend: [2.12, 13.55] },
 ];
 
 // Région de Kidal (pour le remplissage BLEU à la reprise via TerritorialExpansion geoPolygon).
@@ -145,9 +169,9 @@ const OR_AES = "#C9A24B";    // or chaud AES (décision Aziz). Mat, pas glossy.
 const BLUE_MALI = "#2B4F7C"; // bleu Mali DÉSATURÉ (anti AI-slop chromatique, DA-brief C). Fill 40-60% jamais 100%.
 const RED_MOURA = "#6B1A1A"; // rouge bordeaux sourd (gravité Moura, DA-brief C/Q2)
 
-type Props = { ctx: SahelRenderContext | null; map: mapboxgl.Map | null };
+type Props = { ctx: SahelRenderContext | null; map: mapboxgl.Map | null; ph1Fullscreen?: boolean };
 
-export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
+export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = false }) => {
   const { fps } = useVideoConfig();
   if (!ctx) return null;
   const { frame, width, height, project } = ctx;
@@ -155,6 +179,7 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
 
   const minusmaSprite = staticFile("_shared/sprites/warmap/base-minusma-td.png");
   const africacorpsSprite = staticFile("_shared/sprites/warmap/base-africacorps.png");
+  const kidalTownSprite = staticFile("_shared/sprites/warmap/ville-kidal.png");
 
   // ── Positions courantes des jetons actifs ──
   const activeTouaregs = TOUAREG_JETONS.filter((j) => frame >= j.appear && frame <= j.disappear)
@@ -162,26 +187,26 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   const activeFama = FAMA_JETONS.filter((j) => frame >= j.appear && frame <= j.disappear)
     .map((j) => { const [lon, lat] = interpWaypoints(j.wp, frame); return { j, lon, lat, p: project(lon, lat) }; });
 
-  // ── Attaques 2026 (Ph9) : assaut RAPIDE (appear→attackEnd, ease-out) puis déroute LENTE
-  //    (attackEnd→disappear, ease-in, recul vers l'origine + fade). Différentiel de vélocité (DA-brief D). ──
+  // ── Attaques 2026 (Ph9) : JETONS PHYSIQUES. L'attaquant CHARGE (appear→clashAt, ease-out, vite) jusqu'au
+  //    point de blocage (court de la capitale) → CLASH avec le FAMa posté → RECULE (clashAt→disappear, ease-in,
+  //    retour vers l'origine + fade). Le FAMa défenseur reste fixe à son poste. Démonstration par la vision. ──
   const activeAttacks = ATTACKS_2026.filter((a) => frame >= a.appear && frame <= a.disappear).map((a) => {
-    let lon: number, lat: number, op: number, sillageEnd: number;
-    if (frame <= a.attackEnd) {
-      // assaut : avance vite vers la cible (ease-out = part fort, arrive net)
-      const t = interpolate(frame, [a.appear, a.attackEnd], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
-      lon = a.from[0] + (a.to[0] - a.from[0]) * t;
-      lat = a.from[1] + (a.to[1] - a.from[1]) * t;
-      op = interpolate(frame, [a.appear, a.appear + 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-      sillageEnd = t;
+    let lon: number, lat: number, op: number;
+    const clashT = interpolate(frame, [a.clashAt - 6, a.clashAt + 6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    if (frame <= a.clashAt) {
+      const t = interpolate(frame, [a.appear, a.clashAt], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+      lon = a.from[0] + (a.block[0] - a.from[0]) * t;
+      lat = a.from[1] + (a.block[1] - a.from[1]) * t;
+      op = interpolate(frame, [a.appear, a.appear + 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     } else {
-      // déroute : recule LENTEMENT vers l'origine (ease-in) en s'effaçant
-      const t = interpolate(frame, [a.attackEnd, a.disappear], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.in(Easing.cubic) });
-      lon = a.to[0] + (a.from[0] - a.to[0]) * t;
-      lat = a.to[1] + (a.from[1] - a.to[1]) * t;
-      op = interpolate(frame, [a.attackEnd, a.disappear], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-      sillageEnd = 1 - t;
+      const t = interpolate(frame, [a.clashAt, a.disappear], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.in(Easing.cubic) });
+      lon = a.block[0] + (a.from[0] - a.block[0]) * t;
+      lat = a.block[1] + (a.from[1] - a.block[1]) * t;
+      op = interpolate(frame, [a.disappear - 30, a.disappear], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     }
-    return { a, lon, lat, p: project(lon, lat), op, sillageEnd };
+    // le FAMa défenseur apparaît avant l'arrivée de l'attaquant (il TIENT déjà le poste), reste tout du long
+    const defOp = interpolate(frame, [a.appear - 10, a.appear + 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    return { a, lon, lat, p: project(lon, lat), op, clashT, defP: project(a.defend[0], a.defend[1]), defOp };
   });
 
   // ── SILLAGE BLEU (Ph6-7) : le territoire repris se révèle DERRIÈRE les FAMa (même mask wet-ink que P2,
@@ -209,12 +234,13 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   const cedeaoShake = frame >= F_BAMAKO && frame < F_BAMAKO + 30 ? 2.5 * Math.sin(frame * 0.9) : 0;
 
   // ── Ph1 : lien OR entre les 3 capitales (le pacte) ──
-  const aesLinkProgress = interpolate(frame, [F_BAMAKO + 30, F_OUAGA + 70], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   // ── Ph1 : les 3 contours AES virent OR ──
   const aesGold = interpolate(frame, [F_BAMAKO + 20, F_LIPTAKO], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Ph2 : zone Liptako PULSE OR (l'union se voit) — figée visuellement f6616→+60 ──
-  const liptakoT = interpolate(frame, [F_LIPTAKO, F_LIPTAKO + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // monte au nommage (Ph2) PUIS S'ESTOMPE quand on transite vers Kidal (Ph3) — Aziz : ne doit pas rester
+  // jusqu'à la fin. La carte se nettoie pour le focus Kidal.
+  const liptakoT = interpolate(frame, [F_LIPTAKO, F_LIPTAKO + 24, F_EPREUVE - 30, F_EPREUVE], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const liptakoPulse = liptakoT > 0 ? 1 + 0.10 * Math.sin((frame - F_LIPTAKO) * 0.12) : 0;
 
   // ── Ph4 : onde de choc "Kidal." (cercles concentriques) + assombrissement radial ──
@@ -222,7 +248,6 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   const kidalShock = interpolate(frame, [F_KIDAL, F_KIDAL + 45], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const kidalHalo = frame >= F_KIDAL ? 0.5 + 0.5 * Math.sin((frame - F_KIDAL) * 0.10) : 0;
   // assombrissement radial centré Kidal (Ph3-4 : tout s'épure sauf Kidal). S'estompe à l'offensive.
-  const kidalFocus = interpolate(frame, [F_EPREUVE, F_KIDAL, F_RETIRE, F_RETIRE + 60], [0, 0.45, 0.45, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Ph6 : offensive FAMa (SahelAttackArrow) progress + retrait ONU ──
   const famaArrowP = interpolate(frame, [F_AFRICA, F_FLOTTE - 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
@@ -264,20 +289,52 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   };
 
   // ── helper JETON CIRCULAIRE (touaregs / FAMa) — modèle chip() P2 ──
-  const chip = (o: { key: string; x: number; y: number; D: number; op: number; border: string; sprite: string; seed: number }) => {
+  // badge = pictogramme de faction discret (vocabulaire état-major, reco K&G via review premium) : dit ce que
+  // le jeton REPRÉSENTE d'un coup d'œil. "mil" = force militaire régulière (chevrons), "merc" = mercenaire
+  // (losange/croix), "armed" = groupe armé (étoile sobre). Petit, coin bas-droit, pastille parchemin.
+  const factionBadge = (kind: "mil" | "merc" | "armed", D: number, accent: string) => {
+    const s = Math.max(11, D * 0.30);
+    let icon: React.ReactNode;
+    if (kind === "mil") icon = ( // chevrons (grade militaire)
+      <g stroke={accent} strokeWidth={s * 0.11} fill="none" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points={`${s*0.28},${s*0.46} ${s*0.5},${s*0.34} ${s*0.72},${s*0.46}`} />
+        <polyline points={`${s*0.28},${s*0.62} ${s*0.5},${s*0.5} ${s*0.72},${s*0.62}`} />
+      </g>);
+    else if (kind === "merc") icon = ( // losange barré (paramilitaire/mercenaire)
+      <g stroke={accent} strokeWidth={s * 0.1} fill="none" strokeLinejoin="round">
+        <polygon points={`${s*0.5},${s*0.26} ${s*0.72},${s*0.5} ${s*0.5},${s*0.74} ${s*0.28},${s*0.5}`} />
+      </g>);
+    else icon = ( // étoile sobre (groupe armé)
+      <g stroke={accent} strokeWidth={s * 0.1} fill="none" strokeLinejoin="round">
+        <polygon points={`${s*0.5},${s*0.26} ${s*0.57},${s*0.45} ${s*0.74},${s*0.45} ${s*0.6},${s*0.57} ${s*0.66},${s*0.74} ${s*0.5},${s*0.62} ${s*0.34},${s*0.74} ${s*0.4},${s*0.57} ${s*0.26},${s*0.45} ${s*0.43},${s*0.45}`} />
+      </g>);
+    return (
+      <div style={{ position: "absolute", right: -s * 0.18, bottom: -s * 0.18, width: s, height: s,
+        borderRadius: "50%", background: "#F5EFD6", border: `${Math.max(1.5, s * 0.08)}px solid ${accent}`,
+        boxShadow: "0 1px 3px rgba(0,0,0,0.4)" }}>
+        <svg width={s} height={s} viewBox={`0 0 ${s} ${s}`}>{icon}</svg>
+      </div>
+    );
+  };
+
+  const chip = (o: { key: string; x: number; y: number; D: number; op: number; border: string; sprite: string; seed: number; badge?: "mil" | "merc" | "armed" }) => {
     if (o.op <= 0.02 || o.D <= 1) return null;
     const breathe = 1 + 0.05 * Math.sin((frame + o.seed) * 0.08);
     return (
       <div key={o.key} style={{ position: "absolute", left: o.x, top: o.y,
         transform: `translate(-50%,-50%) scale(${breathe})`, opacity: o.op, pointerEvents: "none" }}>
-        <div style={{ position: "absolute", left: "50%", top: "72%", width: o.D * 0.82, height: o.D * 0.26,
-          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
-        <div style={{ width: o.D, height: o.D, borderRadius: "50%", overflow: "hidden",
-          background: "#F5EFD6", border: `${Math.max(2.5, o.D * 0.06)}px solid ${o.border}`,
-          boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
-          <img src={staticFile(`_shared/sprites/warmap/${o.sprite}.png`)}
-            style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
-              transform: "translate(-8%, 2%)", display: "block" }} />
+        {/* ombre portée au sol (ancrage, anti-buste-flottant) */}
+        <div style={{ position: "absolute", left: "50%", top: "74%", width: o.D * 0.86, height: o.D * 0.28,
+          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.45)", borderRadius: "50%", filter: "blur(6px)" }} />
+        <div style={{ position: "relative", width: o.D, height: o.D }}>
+          <div style={{ width: o.D, height: o.D, borderRadius: "50%", overflow: "hidden",
+            background: "#F5EFD6", border: `${Math.max(2.5, o.D * 0.06)}px solid ${o.border}`,
+            boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
+            <img src={staticFile(`_shared/sprites/warmap/${o.sprite}.png`)}
+              style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
+                transform: "translate(-8%, 2%)", display: "block" }} />
+          </div>
+          {o.badge && factionBadge(o.badge, o.D, o.border)}
         </div>
       </div>
     );
@@ -292,8 +349,15 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   const wave = (i: number) => kidalBlueT > 0.01 ? Math.sin(frame * 0.10 + i * 1.3) * (vmin * 0.006) : 0;
   const kidalFlagPath = kidalRegionPx.map((p, i) => `${i === 0 ? "M" : "L"}${(p.x + wave(i)).toFixed(1)},${(p.y + wave(i + 2) * 0.5).toFixed(1)}`).join("") + "Z";
 
+  // FLASH OR à la prise de Kidal (climax, review premium) : bref éclat doré plein écran au "flotte" (3-4 frames)
+  // = marque l'événement / le "souffle" de la victoire. Très court, ne reste pas.
+  const kidalFlash = interpolate(frame, [F_FLOTTE, F_FLOTTE + 4, F_FLOTTE + 14], [0, 0.42, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
+      {/* FLASH OR climax prise de Kidal (bref) */}
+      {kidalFlash > 0.01 && <AbsoluteFill style={{ background: OR_AES, opacity: kidalFlash, mixBlendMode: "screen" }} />}
+
       {/* ============ ÉTAT ALTÉRÉ MOURA (Ph8) — flashback mars 2022 : la carte vire SÉPIA (pas noir,
            charte parchemin). Désaturation + teinte chaude passé. Retour inverse au sortir (DA-brief A). ============ */}
       {mouraDesat > 0.01 && (
@@ -319,19 +383,10 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
           </mask>
           <clipPath id="p3-kidal-clip"><path d={kidalRegionPath} /></clipPath>
           <clipPath id="p3-kidal-flag-clip"><path d={kidalFlagPath} /></clipPath>
-          {/* assombrissement radial centré Kidal (focus chirurgical Ph3-4) */}
-          <radialGradient id="p3-kidal-focus"
-            gradientUnits="userSpaceOnUse" cx={kidalP.x} cy={kidalP.y} r={vmin * 0.42}>
-            <stop offset="0%" stopColor="#000" stopOpacity={0} />
-            <stop offset="55%" stopColor="#000" stopOpacity={0} />
-            <stop offset="100%" stopColor="#0a0805" stopOpacity={1} />
-          </radialGradient>
         </defs>
 
-        {/* FOCUS RADIAL KIDAL (Ph3-4 : tout s'épure autour de Kidal — emphase chirurgicale Aziz) */}
-        {kidalFocus > 0.01 && (
-          <rect x={0} y={0} width={width} height={height} fill="url(#p3-kidal-focus)" opacity={kidalFocus} />
-        )}
+        {/* (FOCUS RADIAL RETIRÉ — Aziz : l'assombrissement+halo lumineux centré donnait une image "brouillée"
+            type vignette extrême. La caméra serrée + le zoom suffisent à concentrer l'œil.) */}
 
         {/* TERRITOIRE BLEU = sillage des FAMa (multiply, révélé par le mask — l'État reprend, Ph6-7) */}
         {sillageStamps.length > 0 && sillageBlueOp > 0.01 && (
@@ -355,24 +410,11 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
           );
         })}
 
-        {/* Ph1 — LIEN OR entre les 3 capitales AES (le pacte "une seule voix") */}
-        {aesLinkProgress > 0.01 && (() => {
-          const b = project(BAMAKO[0], BAMAKO[1]);
-          const o = project(OUAGA[0], OUAGA[1]);
-          const n = project(NIAMEY[0], NIAMEY[1]);
-          const seg = (a: { x: number; y: number }, c: { x: number; y: number }, t: number) => (
-            <line x1={a.x} y1={a.y} x2={a.x + (c.x - a.x) * t} y2={a.y + (c.y - a.y) * t}
-              stroke={OR_AES} strokeWidth={3} strokeOpacity={0.85} strokeLinecap="round" />
-          );
-          return (
-            <g>
-              {seg(b, o, Math.min(1, aesLinkProgress * 2))}
-              {seg(o, n, Math.max(0, Math.min(1, (aesLinkProgress - 0.5) * 2)))}
-            </g>
-          );
-        })()}
+        {/* (LIEN OR entre capitales RETIRÉ — Aziz : c'est la "petite flèche or" qui se dessinait sur la carte
+            avant/sous l'overlay AES. Redondant : l'overlay porte déjà l'union (titre + 3 drapeaux + lien doré).) */}
 
-        {/* Ph1 — CONTOURS AES virent OR (Mali + Burkina + Niger ensemble) */}
+        {/* Ph1 — CONTOURS AES virent OR (Mali + Burkina + Niger ensemble). Le lien doré entre pays est désormais
+            DANS l'overlay ; ici les contours colorent le territoire AES (persiste après l'overlay = sens gardé). */}
         {aesGold > 0.01 && [MALI_RING, BURKINA_RING, NIGER_RING].map((ring, i) => {
           const oc = countryOutline({ ring, project, frame, startF: F_BAMAKO + i * 8, drawDur: 38, holdDur: 600 });
           if (!oc) return null;
@@ -411,68 +453,105 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
             })}
           </g>
         )}
+        {/* halo doux SOUS la ville Kidal (le sprite-lieu, rendu hors-svg, est l'ancre — plus un point GPS).
+            Anneau qui pulse une fois au nommage puis se calme. */}
         {frame >= F_KIDAL && frame < F_MOURA && (
           <g transform={`translate(${kidalP.x},${kidalP.y})`}>
-            <circle r={vmin * 0.018 * (1 + 0.2 * kidalHalo)} fill={OR_AES} fillOpacity={0.9} />
-            <circle r={vmin * 0.030 * (1 + 0.25 * kidalHalo)} fill="none" stroke={OR_AES} strokeWidth={2} strokeOpacity={0.5 + 0.3 * kidalHalo} />
+            <circle r={vmin * 0.055 * (1 + 0.12 * kidalHalo)} fill="none" stroke={OR_AES} strokeWidth={2} strokeOpacity={0.35 + 0.25 * kidalHalo} />
           </g>
         )}
 
-        {/* Ph7 — KIDAL VIRE BLEU (désaturé, fill ~50% "peint sur papier") + VRAIE IMAGE drapeau malien
-            clippée dans le polygone Kidal (Q1 tranchée Aziz). Le "flotte" = MICRO-ONDULATION du clip-path
-            (oscillation sinusoïdale feutrée), ZÉRO sprite généré. Pendant le figé 2s, seul le drapeau ondule. */}
+        {/* ONU/MINUSMA — badge "interdiction de tirer" (mandat non-combattant) posé sur chaque base ONU. Le
+            CAMPEMENT lui-même est un sprite rendu hors-svg (ci-dessous). Au retrait : la base FADE sur place. */}
+        {MINUSMA_KIDAL.map((m) => {
+          if (frame < m.appearAt) return null;
+          const ap = interpolate(frame, [m.appearAt, m.appearAt + 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const out = interpolate(frame, [m.outAt - 36, m.outAt], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const noFire = interpolate(frame, [m.appearAt + 18, m.appearAt + 34], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * ap * out;
+          if (noFire <= 0.02) return null;
+          const p = project(m.coord[0], m.coord[1]);
+          const pr = vmin * 0.016;
+          return (
+            <g key={m.id} transform={`translate(${p.x + vmin * 0.028},${p.y - vmin * 0.028})`} opacity={noFire * 0.9}>
+              <circle r={pr} fill="#fff" fillOpacity={0.92} stroke="#B3402F" strokeWidth={2.4} />
+              <line x1={-pr * 0.68} y1={pr * 0.68} x2={pr * 0.68} y2={-pr * 0.68} stroke="#B3402F" strokeWidth={2.4} />
+            </g>
+          );
+        })}
+
+        {/* Ph7 — REPRISE : la RÉGION de Kidal se remplit aux COULEURS DU DRAPEAU MALIEN (3 bandes vert-jaune-rouge
+            verticales, clippées au contour, RÉVÉLÉES bas→haut = le drapeau se hisse sur le territoire). Décision
+            Aziz 2026-06-12 : on revient au "losange aux couleurs Mali" (mieux que losange bleu + clip-art rect). */}
         {kidalBlueT > 0.01 && (() => {
           const { minX, maxX, minY, maxY } = kidalBounds;
           const w = maxX - minX, h = maxY - minY;
+          const bandW = w / 3;
+          const revealTop = maxY - h * flagRise;        // le remplissage monte du bas
+          // ondulation douce des bandes (le drapeau "flotte" sur le territoire)
+          const wv = Math.sin(frame * 0.10) * (vmin * 0.004);
           return (
-            <>
-              {/* fond bleu de reconquête (désaturé, ~50%, jamais 100%) */}
-              <g clipPath="url(#p3-kidal-clip)" style={{ mixBlendMode: "multiply" }}>
-                <rect x={minX} y={minY} width={w} height={h} fill={BLUE_MALI} opacity={0.50 * kidalBlueT} />
-              </g>
-              {/* VRAIE IMAGE drapeau Mali, clippée au polygone Kidal ONDULANT, révélée bas→haut */}
+            <g clipPath="url(#p3-kidal-clip)" style={{ mixBlendMode: "multiply" }} opacity={0.82 * kidalBlueT}>
               {flagRise > 0.01 && (
-                <g clipPath="url(#p3-kidal-flag-clip)" opacity={Math.min(1, flagRise * 1.3) * 0.9}>
-                  <image href={staticFile("_shared/flags/ml.png")}
-                    x={minX} y={maxY - h * flagRise} width={w} height={h * flagRise}
-                    preserveAspectRatio="xMidYMid slice" />
-                </g>
+                <>
+                  <rect x={minX + wv} y={revealTop} width={bandW} height={maxY - revealTop} fill="#14B53A" />
+                  <rect x={minX + bandW + wv} y={revealTop} width={bandW} height={maxY - revealTop} fill="#FCD116" />
+                  <rect x={minX + 2 * bandW + wv} y={revealTop} width={bandW} height={maxY - revealTop} fill="#CE1126" />
+                </>
               )}
-            </>
-          );
-        })()}
-
-        {/* Ph8 — MOURA : ABSTRACTION PURE (Q2). Point rouge bordeaux sourd + halo STATIQUE dilué (~20%,
-            PAS pulsé = pas d'alerte jeu vidéo). Aucun visage. La gravité par la froideur clinique. */}
-        {frame >= F_MOURA && frame < F_REPOUSSE - 20 && (() => {
-          const ap = interpolate(frame, [F_MOURA, F_MOURA + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-          return (
-            <g transform={`translate(${mouraP.x},${mouraP.y})`} opacity={mouraDesat * ap}>
-              <circle r={vmin * 0.045} fill={RED_MOURA} fillOpacity={0.20} />
-              <circle r={vmin * 0.014} fill={RED_MOURA} fillOpacity={0.92} />
             </g>
           );
         })()}
 
-        {/* Ph9 — COURT SILLAGE ROUGE SOURD derrière les sprites d'attaque (assaut), s'effiloche à la déroute */}
-        {activeAttacks.map(({ a, p, op, sillageEnd }) => {
-          const from = project(a.from[0], a.from[1]);
-          if (op <= 0.02) return null;
+        {/* Ph7 — ONDE DE CHOC à l'IMPACT (les FAMa atteignent Kidal = la prise). Cinétique qui raconte la
+            violence sans soldat écrasé (reco Gemini). 2 cercles bleus concentriques qui s'étendent au "flotte". */}
+        {frame >= F_FLOTTE - 6 && frame < F_FLOTTE + 50 && (() => {
+          const sh = interpolate(frame, [F_FLOTTE - 6, F_FLOTTE + 44], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           return (
-            <line key={`atk-trail-${a.id}`} x1={from.x} y1={from.y} x2={p.x} y2={p.y}
-              stroke={PAL.RED_DEEP} strokeWidth={3} strokeOpacity={0.30 * op * sillageEnd} strokeLinecap="round"
-              strokeDasharray="6 6" />
+            <g transform={`translate(${kidalP.x},${kidalP.y})`}>
+              {[0, 0.4].map((d, i) => {
+                const t = Math.max(0, Math.min(1, sh - d));
+                if (t <= 0 || t >= 1) return null;
+                return <circle key={i} r={vmin * 0.03 + t * vmin * 0.11} fill="none"
+                  stroke={BLUE_MALI} strokeWidth={3} strokeOpacity={(1 - t) * 0.65} />;
+              })}
+            </g>
           );
-        })}
-        {/* Ph9 — HALO BLEU DE DÉFENSE des capitales (la barrière qui arrête/refoule les attaques) */}
-        {protectT > 0.01 && AES_CAPITALS.map((c) => {
-          const p = project(c.coord[0], c.coord[1]);
-          const r = vmin * 0.05 * protectT;
-          const breath = 1 + 0.06 * Math.sin(frame * 0.12);
+        })()}
+
+        {/* Ph8 — MOURA : ABSTRACTION PURE (Q2). Point rouge bordeaux sourd + halo STATIQUE dilué + UNE onde de
+            choc GRAVE (1 seul ripple lent qui s'étend et s'efface, PAS un pulse d'alarme répété — Q2 respecté ;
+            ajout Gemini top-3 pour la gravité des 500 morts). Aucun visage. Froideur clinique. */}
+        {frame >= F_MOURA && frame < F_REPOUSSE - 20 && (() => {
+          const ap = interpolate(frame, [F_MOURA, F_MOURA + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          // TACHE DE SANG qui s'étend LENTEMENT (3 voix : gravité des 500 morts). Bords irréguliers via 2 cercles
+          // décalés. Scale up doux, opacité dégressive vers les bords. + 1 onde de choc grave initiale.
+          const spread = interpolate(frame, [F_MOURA, F_MOURA + 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+          const shock = interpolate(frame, [F_MOURA, F_MOURA + 55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const stain = vmin * 0.02 + spread * vmin * 0.055;
           return (
-            <g key={`shield-${c.id}`} transform={`translate(${p.x},${p.y})`} opacity={protectT * 0.7}>
-              <circle r={r * breath} fill="none" stroke={BLUE_MALI} strokeWidth={2.4} strokeOpacity={0.6} />
-              <circle r={r * 0.6} fill={BLUE_MALI} fillOpacity={0.12} />
+            <g transform={`translate(${mouraP.x},${mouraP.y})`} opacity={mouraDesat * ap}>
+              {shock > 0 && shock < 1 && (
+                <circle r={vmin * 0.02 + shock * vmin * 0.10} fill="none" stroke={RED_MOURA}
+                  strokeWidth={2.4} strokeOpacity={(1 - shock) * 0.5} />
+              )}
+              {/* tache de sang : halo diffus + cœur, bords irréguliers (2 cercles décalés) */}
+              <circle r={stain * 1.25} fill={RED_MOURA} fillOpacity={0.12} />
+              <circle cx={stain * 0.12} cy={-stain * 0.08} r={stain} fill={RED_MOURA} fillOpacity={0.30} />
+              <circle r={stain * 0.55} fill={RED_MOURA} fillOpacity={0.55} />
+              <circle r={vmin * 0.012} fill={RED_MOURA} fillOpacity={0.95} />
+            </g>
+          );
+        })()}
+
+        {/* Ph9 — CLASH : onde de choc au point de blocage quand le jihadiste percute le FAMa posté (le choc se
+            VOIT, pas de flèche). Brève, à clashAt. */}
+        {activeAttacks.map(({ a, clashT }) => {
+          if (clashT <= 0.01 || clashT >= 0.99) return null;
+          const bp = project(a.block[0], a.block[1]);
+          return (
+            <g key={`clash-${a.id}`} transform={`translate(${bp.x},${bp.y})`}>
+              <circle r={vmin * 0.012 + clashT * vmin * 0.05} fill="none" stroke={PAL.INK}
+                strokeWidth={2.4} strokeOpacity={(1 - clashT) * 0.6} />
             </g>
           );
         })}
@@ -495,9 +574,45 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
           regions={[{ id: "kidal", center: KIDAL, delayFrames: 0, durationFrames: 50, geoPolygon: KIDAL_REGION }]} />
       )}
 
-      {/* ============ SPRITES LIEUX (ONU autour de Kidal + Africa Corps en appui) ============ */}
-      {MINUSMA_KIDAL.map((m) => renderBase(m, minusmaSprite, MINUSMA_DEG, MINUSMA_RATIO, true))}
-      {frame >= AFRICACORPS_BASE.appearAt && renderBase(AFRICACORPS_BASE, africacorpsSprite, BASE_DEG * 0.85, BASE_RATIO, false)}
+      {/* ============ VILLE KIDAL (sprite-lieu, l'ANCRE — "une forteresse à prendre", pas un point GPS).
+           Apparaît à Ph4 "Kidal." (spring), reste tout le reste de P3, ancrée centrée sur la coord. ============ */}
+      {frame >= F_KIDAL && (() => {
+        const ap = spring({ frame: frame - F_KIDAL, fps, config: { damping: 15 }, durationInFrames: 22 });
+        if (ap <= 0.02) return null;
+        const w = spriteMapWidth(project, KIDAL[0], KIDAL[1], 1.9, { min: 130, max: 340 }) * ap;
+        const h = w * 0.545;
+        return (
+          <img key="ville-kidal" src={kidalTownSprite}
+            style={{ position: "absolute", left: kidalP.x - w / 2, top: kidalP.y - h / 2, width: w, height: h,
+              opacity: ap, filter: "drop-shadow(0 4px 10px rgba(40,28,12,0.4))", pointerEvents: "none" }} />
+        );
+      })()}
+
+      {/* ============ BASES MINUSMA (campements ONU top-down) près de Kidal (Ph5). Posées, immobiles (mandat
+           non-combattant = badge no-fire en svg). Au retrait Ph6 : la base FADE simplement sur place (bâtiment
+           démantelé/abandonné, ne se déplace pas — décision Aziz 2026-06-13). ============ */}
+      {MINUSMA_KIDAL.map((m) => {
+        if (frame < m.appearAt) return null;
+        const ap = spring({ frame: frame - m.appearAt, fps, config: { damping: 14 }, durationInFrames: 18 });
+        const out = interpolate(frame, [m.outAt - 36, m.outAt], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const op = ap * out;
+        if (op <= 0.02) return null;
+        const p = project(m.coord[0], m.coord[1]);
+        const w = spriteMapWidth(project, m.coord[0], m.coord[1], MINUSMA_DEG, { min: 90, max: 240 }) * ap;
+        const h = w * MINUSMA_RATIO;
+        return (
+          <img key={`un-${m.id}`} src={minusmaSprite}
+            style={{ position: "absolute", left: p.x - w / 2, top: p.y - h * 0.6, width: w, height: h, opacity: op,
+              filter: "drop-shadow(0 3px 7px rgba(40,30,20,0.3))", pointerEvents: "none" }} />
+        );
+      })}
+
+      {/* (Africa Corps n'est plus un fortin statique — c'est désormais un JETON qui AVANCE avec les FAMa,
+          rendu dans le duo offensive ci-dessous. Décision Aziz : des acteurs en mouvement, pas une base posée.) */}
+
+      {/* (DRAPEAU RECTANGULAIRE clip-art RETIRÉ — Aziz 2026-06-12 : on revient au losange aux couleurs Mali,
+          c.-à-d. la RÉGION remplie des 3 bandes vert-jaune-rouge, rendue dans le SVG ci-dessus. Plus de petit
+          drapeau rectangulaire par-dessus.) */}
 
       {/* ============ JETONS TOUAREGS (Ph5 posés → Ph6-7 reculent) ============ */}
       {activeTouaregs.map(({ j, lon, lat, p }) => {
@@ -506,26 +621,38 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
         const op = ap * dis;
         if (op <= 0.02) return null;
         const D = spriteMapWidth(project, lon, lat, JETON_DEG, JETON_BOUNDS) * ap;
-        return chip({ key: j.id, x: p.x, y: p.y, D, op, border: "#9C8859", sprite: "jeton-csp", seed: j.id.charCodeAt(1) * 7 });
+        return chip({ key: j.id, x: p.x, y: p.y, D, op, border: "#9C8859", sprite: "jeton-csp", seed: j.id.charCodeAt(1) * 7, badge: "armed" });
       })}
 
-      {/* ============ JETONS FAMa (Ph6 avancent vers Kidal — bordure bleu Mali) ============ */}
+      {/* ============ DUO OFFENSIVE (Ph6) : FAMa (bordure bleu Mali, jeton-fama) + Africa Corps (bordure grise,
+           jeton-junte stand-in) montent ENSEMBLE vers Kidal ============ */}
       {activeFama.map(({ j, lon, lat, p }) => {
         const ap = spring({ frame: frame - j.appear, fps, config: { damping: 15 }, durationInFrames: 14 });
         const dis = interpolate(frame, [j.disappear - 30, j.disappear], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         const op = ap * dis;
         if (op <= 0.02) return null;
         const D = spriteMapWidth(project, lon, lat, JETON_DEG, JETON_BOUNDS) * ap;
-        return chip({ key: j.id, x: p.x, y: p.y, D, op, border: BLUE_MALI, sprite: "jeton-fama", seed: j.id.charCodeAt(1) * 7 });
+        const isAC = (j as OffJeton).faction === "africacorps";
+        const border = isAC ? "#6E6A60" : BLUE_MALI;   // gris-fer paramilitaire vs bleu Mali
+        const sprite = isAC ? "jeton-africacorps" : "jeton-fama"; // vrai mercenaire russe (distinct des FAMa)
+        return chip({ key: j.id, x: p.x, y: p.y, D: D * (isAC ? 0.92 : 1), op, border, sprite, seed: j.id.charCodeAt(1) * 7, badge: isAC ? "merc" : "mil" });
       })}
 
-      {/* ============ ATTAQUES 2026 (Ph9) — sprites jihadistes RÉELS qui avancent→refoulés ============ */}
+      {/* ============ ATTAQUES 2026 (Ph9) — REFONTE jetons physiques (Aziz) : jihadiste CHARGE → FAMa le BLOQUE
+           physiquement → jihadiste REPOUSSÉ. Pas de flèches, pas de plaque. Démonstration par la vision. ============ */}
+      {/* FAMa défenseurs postés (bleu) — ils TIENNENT la route devant la capitale */}
+      {activeAttacks.map(({ a, defP, defOp }) => {
+        if (defOp <= 0.02) return null;
+        const D = spriteMapWidth(project, a.defend[0], a.defend[1], JETON_DEG * 0.78, { min: 46, max: 100 });
+        return chip({ key: `def-${a.id}`, x: defP.x, y: defP.y, D, op: defOp, border: BLUE_MALI, sprite: "jeton-fama", seed: a.id.charCodeAt(3) * 5, badge: "mil" });
+      })}
+      {/* jihadistes qui chargent puis sont repoussés (rouge) */}
       {activeAttacks.map(({ a, lon, lat, p, op }) => {
         if (op <= 0.02) return null;
-        const D = spriteMapWidth(project, lon, lat, JETON_DEG * 0.92, { min: 54, max: 120 });
+        const D = spriteMapWidth(project, lon, lat, JETON_DEG * 0.78, { min: 46, max: 100 });
         const border = a.faction === "jnim" ? "#C9A24B" : "#2E2A1E";
         const sprite = a.faction === "jnim" ? "fighter-jnim" : "fighter-eigs";
-        return chip({ key: a.id, x: p.x, y: p.y, D, op, border, sprite, seed: a.id.charCodeAt(3) * 7 });
+        return chip({ key: a.id, x: p.x, y: p.y, D, op, border, sprite, seed: a.id.charCodeAt(3) * 7, badge: "armed" });
       })}
 
       {/* (FUMÉE retrait ONU RETIRÉE — décision Aziz : l'ONU "se retire" = effacement PROPRE des points,
@@ -533,27 +660,49 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
           fondent déjà via `out` dans renderBase.) */}
 
       {/* ============ PLAQUES DE NOMS (WarMapPlaque parchemin) ============ */}
-      {/* Ph2 — naissance AES */}
-      <WarMapPlaque frame={frame} name="16 SEPT. 2023 · AES" pos={project(LIPTAKO_CENTER[0], LIPTAKO_CENTER[1])}
-        appearAt={F_LIPTAKO + 10} hideAt={F_EPREUVE} accent={OR_AES} size={20} yOffset={40} />
-      {/* Ph4 — Kidal (label permanent toute la P3) */}
+      {/* (Plaque "16 SEPT. 2023 · AES" RETIRÉE — la date + l'événement sont DÉJÀ dans le kicker de l'overlay
+          WarMapOverlayDynamic. Cette plaque carte entrait en collision avec l'overlay + doublonnait l'info.) */}
+      {/* PLAQUES ÉLAGUÉES (#8 Aziz/3 voix) : chaque plaque vit pour SON moment puis disparaît. KIDAL n'est
+          affiché que le temps de situer la ville (Ph4→reprise) PUIS disparaît (le drapeau suffit à dire qui tient).
+          Plaques "HORS CONTRÔLE" et "FAMa+Africa Corps" retirées (redondantes avec les jetons/voix). */}
+      {/* Ph4 — Kidal (situe la ville, disparaît une fois reprise + drapeau planté) */}
       <WarMapPlaque frame={frame} name="KIDAL" pos={kidalP}
-        appearAt={F_KIDAL + 6} hideAt={F_END} accent={OR_AES} size={22} yOffset={26} />
-      {/* Ph5 — hors contrôle depuis 2012 */}
-      <WarMapPlaque frame={frame} name="HORS CONTRÔLE · DEPUIS 2012" pos={project(1.44, 17.40)}
-        appearAt={F_TOUAREGS + 12} hideAt={F_RETIRE} accent="#9C8859" size={16} yOffset={20} />
-      {/* Ph6 — FAMa + Africa Corps */}
-      <WarMapPlaque frame={frame} name="FAMa + AFRICA CORPS · EX-WAGNER" pos={project(0.20, 16.20)}
-        appearAt={F_AFRICA + 20} hideAt={F_FLOTTE} accent={BLUE_MALI} size={16} yOffset={20} />
-      {/* Ph7 — Kidal reprise */}
+        appearAt={F_KIDAL + 6} hideAt={F_FLOTTE + 50} accent={OR_AES} size={22} yOffset={26} />
+      {/* Ph7 — Kidal reprise (l'événement clé, bref) */}
       <WarMapPlaque frame={frame} name="KIDAL REPRISE · NOV. 2023" pos={project(1.44, 19.30)}
-        appearAt={F_FLOTTE + 20} hideAt={F_MOURA - 20} accent={BLUE_MALI} size={18} yOffset={20} />
+        appearAt={F_FLOTTE + 20} hideAt={F_MOURA - 40} accent={BLUE_MALI} size={18} yOffset={20} />
+      {/* (Plaque "CONTRÔLE DE L'ÉTAT MALIEN" RETIRÉE — Aziz : le losange aux couleurs du drapeau Mali + les
+          jetons FAMa qui tiennent le territoire disent déjà tout. Pas besoin de label.) */}
       {/* Ph8 — Moura (sourcé ONU) */}
-      <WarMapPlaque frame={frame} name="MOURA · MARS 2022 · +500 CIVILS · RAPPORT ONU" pos={project(MOURA[0], MOURA[1] - 1.2)}
+      <WarMapPlaque frame={frame} name="MOURA · MARS 2022 · RAPPORT ONU" pos={project(MOURA[0], MOURA[1] - 1.3)}
         appearAt={F_MOURA + 14} hideAt={F_REPOUSSE - 30} accent={RED_MOURA} size={15} yOffset={24} />
-      {/* Ph9 — attaques repoussées */}
-      <WarMapPlaque frame={frame} name="2026 · ATTAQUES REPOUSSÉES" pos={project(-1.0, 13.0)}
-        appearAt={F_REPOUSSE + 20} hideAt={F_END} accent={BLUE_MALI} size={18} yOffset={20} />
+      {/* (Chiffre "500+" géant RETIRÉ — Aziz 2026-06-12 : prend trop d'espace sur la carte et casse au dézoom.
+          On garde la tache de sang + la plaque sourcée "MOURA · MARS 2022 · RAPPORT ONU" + le SFX grave.) */}
+      {/* (Plaque "2026 · ATTAQUES REPOUSSÉES" RETIRÉE — Aziz : pas besoin de plaque, le combat de jetons
+          (jihadistes repoussés par les FAMa) raconte tout par la vision.) */}
+
+      {/* ============================================================
+          Ph1 OVERLAY AES DYNAMIQUE — via la BRIQUE RÉUTILISABLE WarMapOverlayDynamic (Aziz 2026-06-12).
+          Décision : semi-transparent (garde la géo) + DYNAMIQUE (blocs animés composés, pas une plaque figée).
+          mode pilotable par ph1Fullscreen (maquette). Blocs MIXÉS : kicker + titre reveal + 3 drapeaux AES
+          qui s'allument en séquence + citation du pacte qui s'écrit. inAt f6118 → outAt f6800 (vers Kidal). ============================================================ */}
+      {/* ANIMATION ÉTALÉE sur ~20s (Aziz : la scène fait ~22s, tout doit se mettre en place lentement jusqu'à
+          ~20s, pas tout fini à 12s — évite d'ajouter une 2e template pour meubler). Blocs espacés + cadences
+          internes ralenties (tokenStagger, charPerFrame). */}
+      <WarMapOverlayDynamic
+        inAt={F_BAMAKO} outAt={F_EPREUVE} mode={ph1Fullscreen ? "fullscreen" : "semitransp"} accent={OR_AES}
+        anchorPx={project(LIPTAKO_CENTER[0], LIPTAKO_CENTER[1])}
+        blocks={[
+          { type: "kicker", text: "16 septembre 2023 · Charte du Liptako-Gourma", at: 0, wordStagger: 7 },
+          { type: "title", text: "Alliance des États du Sahel", at: 60, size: ph1Fullscreen ? 56 : 44, wordStagger: 14 },
+          { type: "tokens", at: 200, size: ph1Fullscreen ? 120 : 96, tokenStagger: 40, wave: true, link: true, tokens: [
+            { flagFile: "ml.png", label: "MALI" },
+            { flagFile: "bf.png", label: "BURKINA" },
+            { flagFile: "ne.png", label: "NIGER" },
+          ] },
+          { type: "quote", text: "Toute agression contre l'un sera une déclaration de guerre contre les trois", at: 400, size: ph1Fullscreen ? 24 : 19, charPerFrame: 0.55 },
+        ]}
+      />
     </AbsoluteFill>
   );
 };

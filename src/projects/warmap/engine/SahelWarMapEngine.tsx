@@ -584,40 +584,55 @@ const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number 
 // Trajectoire : union AES (3 pays, élargi) → zoom serré sur Kidal (cristallisation) → reprise (push Kidal)
 // → flashback Moura (centre Mali) → retour Kidal → zoom arrière vue AES (pont P4). Caméra qui SUIT l'action.
 // ============================================================
+// REFONTE CAMÉRA SUIVEUSE (Aziz 2026-06-12) : la caméra SUIT l'action (traque les jetons), serrée, jamais
+// de plan large figé "pour tout montrer". Ph1 cadre les 3 pays (l'overlay AES s'y pose). Ph6 SUIT l'avancée
+// FAMa Gao→Kidal (keys intermédiaires qui glissent avec eux). Ph9 reste serré et suit les assauts, ne dézoome
+// qu'À LA TOUTE FIN pour le pont P4. Zoom plus serré partout (pas de dézoom continental).
 const PARTIE3_CAM_KEYS: CamKey[] = [
-  { f: 6118, lon: 2.00, lat: 13.40, zoom: 4.30 },  // Ph1 raccord P2 : vue Niger/Niamey (CEDEAO se brise)
-  { f: 6300, lon: 0.30, lat: 14.50, zoom: 4.05 },  // Ph1 fin : élargit sur les 3 pays AES
-  { f: 6616, lon: 0.60, lat: 14.40, zoom: 4.20 },  // Ph2 Liptako : centre le triangle (naissance AES, figé)
-  { f: 6760, lon: 0.60, lat: 14.40, zoom: 4.20 },  // hold figé 2s
-  { f: 6950, lon: 1.20, lat: 16.80, zoom: 5.10 },  // Ph3 transition : zoom vers le nord
-  { f: 7083, lon: 1.44, lat: 18.43, zoom: 6.10 },  // Ph4 "Kidal." : serré sur Kidal
-  { f: 7319, lon: 1.44, lat: 18.43, zoom: 5.95 },  // Ph5 statu quo : léger pull pour voir touaregs+ONU
-  { f: 7794, lon: 0.90, lat: 17.60, zoom: 5.70 },  // Ph6 offensive : cadre l'axe Gao→Kidal
-  { f: 8132, lon: 1.44, lat: 18.43, zoom: 6.15 },  // Ph7 reprise : push-in Kidal (drapeau, figé)
-  { f: 8300, lon: 1.44, lat: 18.43, zoom: 6.15 },  // hold reprise
-  { f: 8580, lon: -3.95, lat: 14.92, zoom: 5.60 }, // Ph8 Moura : pan vers centre Mali (flashback)
-  { f: 8900, lon: -3.95, lat: 14.92, zoom: 5.60 }, // hold Moura
-  { f: 9121, lon: -1.00, lat: 14.80, zoom: 4.40 }, // Ph9 attaques : vue large (points à travers le pays)
-  { f: 9372, lon: 0.40, lat: 15.20, zoom: 3.95 },  // Ph9 "conserver" : zoom arrière vue AES (pont P4)
-  { f: 9560, lon: 0.40, lat: 15.20, zoom: 3.90 },  // fin
+  { f: 6118, lon: 1.40, lat: 14.20, zoom: 4.55 },  // Ph1 raccord P2 : déjà serré sur les 3 pays (pas Niger seul)
+  { f: 6400, lon: 0.50, lat: 14.40, zoom: 4.55 },  // Ph1 : centre le bloc AES (overlay par-dessus), pas de dézoom large
+  { f: 6616, lon: 0.55, lat: 14.45, zoom: 4.60 },  // Ph2 Liptako : centre le triangle (naissance AES, figé)
+  { f: 6760, lon: 0.55, lat: 14.45, zoom: 4.62 },  // hold figé 2s (drift quasi nul)
+  { f: 6980, lon: 1.30, lat: 17.20, zoom: 5.55 },  // Ph3 transition : plonge vers le nord-Mali (resserre)
+  { f: 7083, lon: 1.44, lat: 18.43, zoom: 6.35 },  // Ph4 "Kidal." : SERRÉ sur Kidal (forteresse)
+  { f: 7319, lon: 1.44, lat: 18.30, zoom: 6.10 },  // Ph5 statu quo : léger pull pour voir touaregs+ONU autour
+  // Ph6 offensive : la caméra SUIT l'avancée FAMa Gao→Kidal (le point cadré glisse avec eux)
+  { f: 7720, lon: 0.30, lat: 16.60, zoom: 6.10 },  // départ FAMa (Gao/Ménaka)
+  { f: 7950, lon: 0.85, lat: 17.45, zoom: 6.20 },  // ils montent (mi-chemin)
+  { f: 8132, lon: 1.44, lat: 18.43, zoom: 6.45 },  // Ph7 reprise : push-in Kidal (drapeau, figé)
+  { f: 8320, lon: 1.44, lat: 18.43, zoom: 6.45 },  // hold reprise
+  { f: 8580, lon: -3.95, lat: 14.92, zoom: 6.00 }, // Ph8 Moura : pan vers centre Mali (flashback, serré)
+  { f: 8900, lon: -3.95, lat: 14.92, zoom: 6.05 }, // hold Moura
+  // Ph9 attaques : RESSERRÉ sur le combat de jetons (Aziz 2026-06-13 : resserrer + jetons un peu plus petits).
+  // On suit l'axe central des affrontements (Ouaga/Niamey sud) sans plan continental. PAS de grand dézoom.
+  { f: 9121, lon: 0.50, lat: 13.60, zoom: 5.85 },  // attaques : cadre serré sur les affrontements centre/est
+  { f: 9280, lon: 0.30, lat: 13.70, zoom: 5.75 },  // refoulement (jihadistes repoussés), reste serré
+  { f: 9372, lon: 0.30, lat: 13.90, zoom: 5.55 },  // "conserver" : à peine élargi, capitales tiennent
+  { f: 9410, lon: 0.30, lat: 13.95, zoom: 5.50 },  // fin P3 (serrée — pont P4 à l'assemblage)
 ];
 const getPartie3Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
-  if (frame <= PARTIE3_CAM_KEYS[0].f) return PARTIE3_CAM_KEYS[0];
+  // DRIFT CONTINU LÉGER (review premium, validé Aziz) : une war-map premium n'a jamais une caméra 100% fixe.
+  // Micro-oscillation lon/lat (amplitude infime, période lente) ajoutée par-dessus les keyframes → la carte
+  // "respire" même sur les temps figés (Liptako, Kidal, reprise), sans jamais distraire.
+  const driftLon = Math.sin(frame * 0.012) * 0.05;
+  const driftLat = Math.cos(frame * 0.009) * 0.035;
+  const withDrift = (c: { lon: number; lat: number; zoom: number }) => ({ lon: c.lon + driftLon, lat: c.lat + driftLat, zoom: c.zoom });
+  if (frame <= PARTIE3_CAM_KEYS[0].f) return withDrift(PARTIE3_CAM_KEYS[0]);
   const keys = PARTIE3_CAM_KEYS;
-  if (frame >= keys[keys.length - 1].f) return keys[keys.length - 1];
+  if (frame >= keys[keys.length - 1].f) return withDrift(keys[keys.length - 1]);
   for (let i = 0; i < keys.length - 1; i++) {
     if (frame >= keys[i].f && frame <= keys[i + 1].f) {
       const a = keys[i], b = keys[i + 1];
       const t = (frame - a.f) / (b.f - a.f);
       const e = t * t * (3 - 2 * t); // smoothstep
-      return {
+      return withDrift({
         lon: a.lon + (b.lon - a.lon) * e,
         lat: a.lat + (b.lat - a.lat) * e,
         zoom: a.zoom + (b.zoom - a.zoom) * e,
-      };
+      });
     }
   }
-  return keys[keys.length - 1];
+  return withDrift(keys[keys.length - 1]);
 };
 
 // ============================================================
@@ -906,6 +921,9 @@ export type SahelTestProps = {
   // chromatique : l'avancée FAMa colore en BLEU = l'État reprend Kidal). Même architecture que partie2
   // (table rase chrome/HUD, timeline graduée, SFX dédiés, getPartie3Cam serrée). Raccord depuis fin P2.
   partie3?: boolean;
+  // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
+  // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
+  ph1Fullscreen?: boolean;
   // ⚠️ PROTO 2.4 — LEGACY (compo de test historique, prototype du beat 2.4 avant la P2 narrative).
   // NE PAS prendre comme modèle pour P3/P4 (le modèle = partie2). Conservé isolé : ne touche ni P1 ni P2.
   // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
@@ -929,6 +947,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   partie1 = false,
   partie2 = false,
   partie3 = false,
+  ph1Fullscreen = false,
   proto24 = false,
   proto24Pitch = 0,
 }) => {
@@ -1381,10 +1400,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     }
     // PROTO 2.4 : pitch variable (0 = à-plat comme P1, ~32 = relief 3D) pour comparer.
     // Léger drift de bearing en mode pitch (la caméra "respire" sur le relief).
-    const effPitch = proto24 ? proto24Pitch : 0;
-    const effBearing = proto24 && proto24Pitch > 0
+    // PARTIE 3 (ESSAI Aziz 2026-06-13) : pitch 3D sur l'offensive Kidal (montre le relief Adrar des Iforas =
+    // "pourquoi Kidal était imprenable") puis RETOUR top-down à la prise (effet "écran de situation"). jumpTo
+    // frame-driven (JAMAIS easeTo). Désactivable en remettant p3Pitch à 0.
+    let effPitch = proto24 ? proto24Pitch : 0;
+    let effBearing = proto24 && proto24Pitch > 0
       ? interpolate(frame, [3887, 4160], [-4, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
       : 0;
+    if (partie3) {
+      // monte de 0→35 pendant l'approche (f7720→f7980), tient, puis redescend à 0 à la prise (f8132→f8260)
+      effPitch = interpolate(frame, [7720, 7980, 8132, 8260], [0, 38, 38, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+      effBearing = interpolate(frame, [7720, 8132], [0, 5], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * (effPitch > 1 ? 1 : 0);
+    }
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: effPitch, bearing: effBearing });
 
     // PARTIE 1 (V5) — VIDE D'ÉTAT (beat 1.3) : au mot "absent" (f2743), l'opacité du
@@ -2133,9 +2160,19 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={7083} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} />
           </Sequence>
-          {/* whoosh/montée à la reprise de Kidal (drapeau qui flotte) */}
+          {/* reprise de Kidal (drapeau planté) : whoosh + impact sourd renforcé (3 voix : SFX fort au climax) */}
           <Sequence from={8132} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.52} />
+            <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={8140} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />
+          </Sequence>
+          {/* MOURA (flashback grave) : boom sourd profond + drone de tension sous tout le beat (gravité 500 morts) */}
+          <Sequence from={8580} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={8580} durationInFrames={Math.ceil(7.0 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.14} />
           </Sequence>
         </>
       )}
@@ -3622,7 +3659,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
-      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} />}
+      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
       {isFinalLook && (() => {
