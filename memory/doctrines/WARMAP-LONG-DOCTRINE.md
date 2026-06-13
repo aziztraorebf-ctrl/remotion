@@ -33,6 +33,32 @@ Les données viennent à la carte. La carte ne va jamais aux données.
 
 **Ce que font les war-maps à haute rétention (Ollie Bye, Al Jazeera carto) :** la carte ne quitte jamais l'écran. Les informations sont des calques sur la carte, pas des remplacements.
 
+> ✅ **DÉCISION TRANCHÉE (Aziz 2026-06-12, session P3 Sahel) — L'OVERLAY SEMI-TRANSPARENT DYNAMIQUE EST UNE
+> TECHNIQUE DE PLEIN DROIT.** La règle "100% carte tout le temps" était trop rigide → certaines scènes
+> devenaient "statiques et contemplatives", et on s'épuisait en artifices pour tout caser sur la carte.
+>
+> **La nouvelle règle (simple) :**
+> - **Overlay SEMI-TRANSPARENT par-dessus la carte** = l'outil par défaut pour MEUBLER une section vide ou
+>   AJOUTER de l'info. La carte reste visible dessous (assombrie) → on garde le lien territorial. Retenu pour
+>   Ph1 AES (test : maquette A, catbox ei6r1y) contre le plein écran (B, dfw4qx).
+> - **CONDITION NON-NÉGOCIABLE : l'overlay doit être DYNAMIQUE.** Vrais graphismes animés qui utilisent toute
+>   la puissance de Remotion (count-up, reveals, secondary motion, métaphore physique) — JAMAIS une plaque
+>   statique. Une plaque figée = l'anti-pattern à éviter.
+> - **LE LEVIER : réutiliser/adapter/mixer les TEMPLATES SOUVERAIN animés** (HERO DATA : CountUp, HeroBars,
+>   FloatingHeroObject, Badge satellite, TextChoc, reveals…) pour nos overlays War-Map. Technique sous-utilisée
+>   jusqu'ici, à exploiter. Catalogue : `src/projects/_shared/COMPOSANTS-INDEX.md` (section HERO DATA + reveals).
+> - **Plein écran total** (carte qui disparaît) = reste un OUTIL légitime mais réservé aux scènes SANS enjeu
+>   géographique (concept pur, citation). Le défaut = semi-transparent (garde la géo).
+> - **Test au cas par cas** : la scène a-t-elle un enjeu territorial ? OUI → overlay semi-transp sur carte.
+>   NON → plein écran possible. Dans les deux cas : DYNAMIQUE, jamais statique.
+>
+> ✅ **CRITÈRE FINAL TRANCHÉ (Aziz 2026-06-12, après comparaison des 2 maquettes Ph1) — la COMPLEXITÉ décide :**
+> - **Info SIMPLE** (un titre, quelques drapeaux, une citation, une date) → **overlay semi-transparent sur la
+>   carte**. Ça fonctionne très bien, garde la carte, pas besoin de casser. C'est le DÉFAUT. (Ph1 AES = ce cas → semi-transp retenu.)
+> - **Visuel TRÈS DYNAMIQUE / qui prend beaucoup d'espace** (courbes à visualiser, gros graphe animé, data-viz
+>   qui respire) → **plein écran** justifié (la carte ne pourrait pas l'accueillir lisiblement).
+> Résumé : *plus le contenu est lourd/dynamique, plus le plein écran se justifie ; pour de l'info simple, reste sur la carte.*
+
 ---
 
 ## Système d'overlays — La hiérarchie des calques
