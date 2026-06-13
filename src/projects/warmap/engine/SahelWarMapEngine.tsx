@@ -1407,11 +1407,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     let effBearing = proto24 && proto24Pitch > 0
       ? interpolate(frame, [3887, 4160], [-4, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
       : 0;
-    if (partie3) {
-      // monte de 0→35 pendant l'approche (f7720→f7980), tient, puis redescend à 0 à la prise (f8132→f8260)
-      effPitch = interpolate(frame, [7720, 7980, 8132, 8260], [0, 38, 38, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-      effBearing = interpolate(frame, [7720, 8132], [0, 5], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * (effPitch > 1 ? 1 : 0);
-    }
+    // (PITCH 3D P3 RETIRÉ — Aziz 2026-06-13 : sans couche de relief Mapbox, incliner ne révèle aucune montagne
+    //  (carte plate) → effet cosmétique qui casse le top-down cohérent P1/P2/Acte1. Garder top-down pur.
+    //  Pour un vrai "war room relief", il faudrait activer un hillshade/terrain Mapbox = chantier séparé.)
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: effPitch, bearing: effBearing });
 
     // PARTIE 1 (V5) — VIDE D'ÉTAT (beat 1.3) : au mot "absent" (f2743), l'opacité du

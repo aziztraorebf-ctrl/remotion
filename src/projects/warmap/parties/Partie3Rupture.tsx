@@ -26,7 +26,7 @@ import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing }
 import type mapboxgl from "mapbox-gl";
 import type { SahelRenderContext } from "../engine/SahelContext";
 import {
-  PAL, spriteMapWidth, interpWaypoints, countryOutline, type Waypoint,
+  PAL, spriteMapWidth, interpWaypoints, countryOutline, lerpHex, type Waypoint,
 } from "./warmapPremiumKit";
 import { MALI_RING, NIGER_RING, BURKINA_RING } from "./sahelCountries";
 import { WarMapPlaque } from "./WarMapPlaque";
@@ -460,6 +460,25 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
             <circle r={vmin * 0.055 * (1 + 0.12 * kidalHalo)} fill="none" stroke={OR_AES} strokeWidth={2} strokeOpacity={0.35 + 0.25 * kidalHalo} />
           </g>
         )}
+
+        {/* TRACÉ DES FRONTIÈRES de la zone Kidal (Aziz 2026-06-13) : quand "Kidal" est nommée, la délimitation
+            de la zone contestée se DESSINE (stroke-dashoffset), pas un pop. Couleur = sable (zone hors-contrôle)
+            puis vire BLEU à la reprise (l'État délimite ce qu'il reprend). Geste "délimitation claire". */}
+        {frame >= F_KIDAL && frame < F_MOURA && (() => {
+          const kr = countryOutline({ ring: KIDAL_REGION, project, frame, startF: F_KIDAL + 6, drawDur: 40, holdDur: 1400 });
+          if (!kr) return null;
+          // couleur : sable tant que tenue par touaregs, vire bleu Mali à la reprise (kidalBlueT)
+          const col = lerpHex("#9C8859", BLUE_MALI, Math.min(1, kidalBlueT));
+          return (
+            <g opacity={kr.op}>
+              {kr.flash > 0.05 && <path d={kr.d} fill={col} opacity={0.10 * kr.flash} />}
+              <path d={kr.d} fill="none" stroke={col} strokeWidth={5 + 3 * kr.flash} strokeOpacity={0.18}
+                strokeDasharray={kr.len} strokeDashoffset={kr.dashOffset} strokeLinejoin="round" />
+              <path d={kr.d} fill="none" stroke={col} strokeWidth={2.6 + 1.4 * kr.flash} strokeOpacity={0.9}
+                strokeDasharray={kr.len} strokeDashoffset={kr.dashOffset} strokeLinejoin="round" />
+            </g>
+          );
+        })()}
 
         {/* ONU/MINUSMA — badge "interdiction de tirer" (mandat non-combattant) posé sur chaque base ONU. Le
             CAMPEMENT lui-même est un sprite rendu hors-svg (ci-dessous). Au retrait : la base FADE sur place. */}
