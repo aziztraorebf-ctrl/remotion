@@ -405,3 +405,12 @@ calculees numeriquement (d3-geo), pas tatonnees :
 1. scale tactique 190000→150000 + wingMid lat 41.45/41.19→41.41/41.23 (arcs debordaient).
 2. titleOpacity s'efface au zoom f95-120 (titre se superposait a l'aile haute).
 Apres : render video complet + upload + presentation Aziz.
+
+## War-Map Sahel P3 "La Rupture" — v8 FINALE — 2026-06-13 [COMPLETE — attend validation Aziz]
+P3 codée de bout en bout (8 itérations + DA upstream 3 voix + review premium Gemini/Kimi + passe premium).
+Compo SahelPartie3 (f6118→9410). Render : out/episodes/warmap-sahel/wip/p3-FULL_v8.mp4 (catbox 93yw8p, scale 0.5).
+Brique créée : src/projects/warmap/_shared/WarMapOverlayDynamic.tsx (overlay dynamique réutilisable).
+Doctrine : memory/doctrines/REVIEW-PREMIUM-TEMPLATE.md (standard review premium) + WARMAP-LONG (règle overlay).
+Assets Gemini : ville-kidal, jeton-africacorps. Flags canvas : ml/bf/ne.
+NEXT : (1) full HD si validé ; (2) session dédiée "fond qui respire" (transversal) ; (3) P4.
+Détail état : memory/episodes/warmap-sahel/STATUS.md.

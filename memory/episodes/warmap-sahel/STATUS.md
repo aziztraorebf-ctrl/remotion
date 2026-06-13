@@ -243,3 +243,20 @@ clés (pas permanente). Cohérent avec l'inversion chromatique (rouge=jihadiste,
 PORTÉE : transversal — à appliquer à Acte1/P1/P2/P3 ENSEMBLE (sinon incohérence), donc SESSION DÉDIÉE, en une
 passe : (1) mécanique controlBaseOpacity pilotée par phase dans SahelWarMapEngine, (2) composant légende brève,
 (3) brancher chaque partie, (4) re-render court de chaque partie + jugement d'ensemble. NE PAS faire au coup par coup.
+
+## ✅ P3 "LA RUPTURE" — v8 FINALE proposée (2026-06-13) — EN ATTENTE VALIDATION AZIZ
+Render final : `out/episodes/warmap-sahel/wip/p3-FULL_v8.mp4` (catbox 93yw8p, scale 0.5, audio embarqué).
+Compo `SahelPartie3` (f6118→9410, durationInFrames 9410). Code : `parties/Partie3Rupture.tsx`.
+8 itérations + 2 reviews DA (upstream + premium Gemini/Kimi) + passe premium.
+CONTENU : overlay AES dynamique (brique WarMapOverlayDynamic réutilisable) · ville-forteresse Kidal (Gemini) ·
+jetons en tenaille + pictogrammes faction (chevrons=mil/losange=merc/étoile=armed) · jeton mercenaire Africa
+Corps (Gemini, distinct des FAMa) · MINUSMA campements top-down + badge no-fire (fade au retrait) · drapeau
+Kidal = losange 3 bandes Mali tracé · Moura sépia+tache de sang+SFX grave · attaques 2026 combat jetons
+physiques (jihadiste charge→FAMa bloque→repoussé) · drift caméra continu · flash or climax · tracé frontières
+zone Kidal (sable→bleu) · fin serrée f9410 (pas de débordement P4).
+ÉCARTÉ : pitch 3D (cosmétique sans relief) · PixelLab (jure avec jetons réalistes) · plein écran (réservé P4).
+NEXT : (1) si Aziz valide → render FULL HD ; (2) SESSION DÉDIÉE 'fond de contrôle qui respire' (transversal
+Acte1→P3) ; (3) P4 (coût/réfugiés/franc CFA — plein écran OK pour les concepts).
+Assets générés : public/_shared/sprites/warmap/{ville-kidal,jeton-africacorps}.png · flags/{ml,bf,ne}.png.
+Briques nouvelles : _shared/WarMapOverlayDynamic.tsx (overlay dynamique réutilisable, 6 blocs composables).
+Doctrines : REVIEW-PREMIUM-TEMPLATE.md (standard review) · WARMAP-LONG-DOCTRINE (règle overlay vs plein écran).

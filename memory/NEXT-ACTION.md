@@ -4,16 +4,22 @@
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 NARRATIVE ✅ VALIDÉE (2026-06-12) → P3 (session PARALLÈLE)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 v8 FINALE (2026-06-13, attend validation Aziz)
 
-> 🔄 **SYNCHRO (2026-06-12 a-m)** : DEUX sessions ont tourné sur P3 (même branche). La session PLAN a finalisé
-> `PLAN-NARRATIF-P3.md` + DA-brief 3 voix (commit 3073214). La session CODING (Partie3Rupture.tsx déjà commencée)
-> DOIT `git pull` puis confronter son code au plan (drapeau ondulation, Moura abstraction, anachronisme sépia,
-> raccord ONU→FAMa, bleu désaturé, easing Ph9). Détail : STATUS.md section "SYNCHRO DEUX SESSIONS P3".
-
-> 🟢🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** (brief
-> autonome, sans ambiguïté : quel fichier copier, triggers, assets, ordre strict). Puis `WARMAP-GRAMMAIRE-CAUSALE.md`
-> (doctrine) + `PLAN-NARRATIF-P2.md` (modèle de plan). STATUS section REPRISE = état complet.
+> ⭐ **ÉTAT (2026-06-13)** : P3 "La Rupture" v8 FINALE proposée à Aziz (catbox 93yw8p). 8 itérations + 2 reviews
+> DA (upstream + premium Gemini/Kimi) + passe premium complète. Détail complet : `STATUS.md` section "P3 v8 FINALE".
+>
+> **PROCHAINES ACTIONS (dans l'ordre) :**
+> 1. **Si Aziz valide la P3** → render FULL HD (scale 1, juger netteté) → promouvoir p3-FINAL.mp4.
+> 2. **SESSION DÉDIÉE "fond de contrôle qui respire"** (transversal Acte1→P3, NE PAS faire au coup par coup) :
+>    réintroduire la carte colorée de contrôle (rouge/contesté/bleu) à opacité qui RESPIRE (calme ~15% pendant
+>    l'action, remonte ~35% sur les temps de lecture) + légende couleur brève. Détail : STATUS.md "CHANTIER TRANSVERSAL".
+> 3. **P4 "Coût / Levier / Perspective"** (réfugiés Djibo/Ménaka/Tillabéri f9366+, franc CFA, perspective) — le
+>    PLEIN ÉCRAN est validé comme outil pour les CONCEPTS non-spatiaux de la P4 (vs overlay pour le territorial).
+>
+> NOUVEAUTÉS RÉUTILISABLES de cette session : brique `WarMapOverlayDynamic` (overlay dynamique, 6 blocs composables)
+> + doctrine `REVIEW-PREMIUM-TEMPLATE.md` (structure standard du review premium). ⚠️ Bug noté : Gemini Files API
+> vidéo ne "voit" pas la vidéo → pour review vidéo fiable, envoyer des FRAMES aux 2 modèles.
 
 **ÉTAT (2026-06-12) — P2 NARRATIVE VALIDÉE Aziz ("très bon point d'équilibre, on garde").**
 La P2 refondue 4 fois : SVG plat (rejeté) → premium "états" (confus) → grammaire CAUSALE (validé).
