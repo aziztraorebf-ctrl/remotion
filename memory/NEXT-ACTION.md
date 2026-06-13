@@ -385,6 +385,15 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 
 ---
 
+## 💡 IDÉE BACKLOG — Pipeline Shorts automatisé trending (2026-06-13)
+
+**Concept** : google-news-trends (détection topic) → last30days (validation viralité + angle) → Souverain Short template (Mapbox ou Remotion) → render → TryPost/Postiz. Le stack existe à ~80%, manque uniquement le script d'orchestration topic→script→render.
+**Forme réaliste** : semi-automatique — Claude rédige script + recommande template, Aziz valide en 20min, pipeline fait le reste.
+**Prérequis avant de développer** : (1) stabiliser la cadence Long Format, (2) créer un "template express" plus épuré (3-4 beats max, zéro délai recherche données).
+**Décision** : ne pas commencer maintenant — y revenir quand Long Format bien en place.
+
+---
+
 ## Techniques a exploiter (session future)
 
 **⭐ BACKLOG GeoFlowConnection (pipeline Mapbox)** — Le seul type de beat encore cher = connexions pays→pays (gazoduc Algérie→Europe, routes AES/CEDEAO, flux BRICS). Aucune brique. Coder `GeoFlowConnection` headless-safe (lignes/arcs animés entre pays, centroïdes dérivés des bbox projetées, JAMAIS filter:blur CSS) au PREMIER sujet à flux → ces beats passent à 90% assemblage. Détails : `feedback_pipeline-mapbox-maturite-autonomie.md`.

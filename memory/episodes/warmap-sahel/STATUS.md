@@ -260,3 +260,19 @@ Acte1→P3) ; (3) P4 (coût/réfugiés/franc CFA — plein écran OK pour les co
 Assets générés : public/_shared/sprites/warmap/{ville-kidal,jeton-africacorps}.png · flags/{ml,bf,ne}.png.
 Briques nouvelles : _shared/WarMapOverlayDynamic.tsx (overlay dynamique réutilisable, 6 blocs composables).
 Doctrines : REVIEW-PREMIUM-TEMPLATE.md (standard review) · WARMAP-LONG-DOCTRINE (règle overlay vs plein écran).
+
+## ✅✅ P3 VALIDÉE DÉFINITIVEMENT par Aziz (2026-06-13)
+Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4` (1920x1080, 1min50, audio, catbox ck26kl) — VALIDÉ.
+wip P3 purgés (v1-v8, core, pitch-test, ph1 variants = ~325 MB). raw assets purgés (emblem gardé).
+RESTE sur la vidéo : P4 + assemblage final (Acte1+P1+P2+P3+P4). + chantier transversal "fond qui respire".
+
+## 🔬 DIAGNOSTIC "FOND QUI RESPIRE" (2026-06-13) — le vrai chantier identifié
+Tenté en fin de session : faire respirer l'opacité du fill de contrôle (sahel-fill) en P3 (calme action / haut
+lecture) + légende code-couleur. RÉSULTAT : l'opacité respire MAIS le fond reste beige/bleu quasi-uniforme.
+CAUSE RACINE (ligne ~1101 moteur) : toutes les régions sont initialisées à `ctrl=1` (état/bleu) par défaut ;
+la coloration rouge/contesté vient des JALONS (sahelJalon/ctrlByName) qui NE SONT PAS pilotés en mode partie3
+(ni partie1/partie2). Donc un simple curseur d'opacité ne montre rien — il n'y a pas de donnée de contrôle à révéler.
+→ LE VRAI CHANTIER (session dédiée) : définir les DONNÉES de contrôle territorial par phase (qui tient quoi :
+nord rouge jihadiste, Kidal rouge→bleu à la reprise, etc.) cohérentes sur Acte1→P3, PUIS faire respirer l'opacité.
+C'est un travail DATA (control map temporelle), pas un réglage visuel. Expérimentation revertée (P3 = p3-FINAL intact).
+Code de réf pour la session : `engine/SahelControlData.ts` (snapFaction/ctrlByName) + blocs calmFactor par mode.
