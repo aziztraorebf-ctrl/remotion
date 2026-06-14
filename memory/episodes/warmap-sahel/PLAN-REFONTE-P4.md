@@ -338,7 +338,8 @@ garder le PRINCIPE (pan+pitch+dézoom) compressé. Coords soldats : on garde nos
      à travers). Aziz : l'action de fuite a déjà joué → exode FADE quand le cartouche arrive (EXODE_OUT=F_COUT+24).
      Countup 3M (3 icônes-personnes TOUTES allumées) → bascule 15M+ (15 icônes 2 rangées empilées TOUTES allumées),
      cadre autour des icônes. = Chantier 2 "coût" BOUCLÉ. Reste juste l'overlay RESSOURCES au Chantier 2.
-- Rendu v9 : `out/episodes/warmap-sahel/wip/p4-c1-exode-v9.mp4` → catbox `tf8hrn`. EN ATTENTE verdict Aziz.
+- ✅✅ **CHANTIER 1 VALIDÉ AZIZ (2026-06-14, full HD)**. FINAL : `out/episodes/warmap-sahel/p4-c1-exode-FINAL.mp4`
+  (f9680-10600, 1920×1080, 30.7s). Tous les wip p4-c1 purgés. Commit `9f69468`. Inclut le Chantier 2 "coût" (bouclé).
 - ⚠️ DETTE : overlays confed (F_FORCE) + CFA encore en mode="semitransp" → passer opaque aux Chantiers 2/3.
   Imports lucide MapPin/User dans Partie4Cout. v8 catbox `5gx9md` (plein écran rejeté → cartouche central).
 
