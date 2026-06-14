@@ -254,3 +254,34 @@ assiègent des forts, le territoire devient rouge' → gagné. Si tu vois juste 
 **MÉTA** : cette méthode (audio→plan narratif→DA-brief→arsenal causal→corrections itératives) est le STANDARD
 War-Map désormais. Elle s'applique à P3/P4 et à toute war-map future. Elle rend non seulement premium mais
 COMPRÉHENSIBLE — les deux sont indissociables. Réf : `episodes/warmap-sahel/PLAN-NARRATIF-P2.md`.
+
+---
+
+## 2026-06-14 — VALIDATION VISUELLE : mini-renders comparatifs + instrumenter avant deviner (War-Map)
+
+> Session contours nationaux colorés Sahel P3. 2 leçons de PROCESS gravées par Aziz.
+
+**1. Mini-renders VIDÉO comparatifs OBLIGATOIRES (pas des stills) pour juger un effet en mouvement.**
+Quand on évalue un effet visuel dynamique (respiration d'opacité, draw-in, pulse, couleur qui apparaît),
+Aziz a EXIGÉ 2x dans la session de voir le tout EN MOUVEMENT côte-à-côte (hstack ffmpeg gauche/droite),
+jamais des images fixes. Les stills servent à MOI (analyse rapide pré-présentation) ; la décision d'Aziz
+se prend sur la vidéo. Pattern : 2 fenêtres courtes (lecture→action + action→lecture) en scale 0.5 pour
+itérer vite, montées côte-à-côte, uploadées catbox. La netteté finale se juge séparément en full HD (scale 1).
+**Pourquoi** : un effet d'opacité/mouvement est INVISIBLE sur un still — présenter des stills fait tourner
+en rond et fait douter du design à tort.
+
+**2. INSTRUMENTER pour PROUVER, ne jamais deviner quand un effet n'apparaît pas.**
+Quand Aziz dit "je ne vois absolument pas [l'effet]", le CROIRE et instrumenter AVANT de re-coder à l'aveugle.
+Technique validée (déjà notée pour le bug timeline P2) : forcer la couche suspecte à une valeur ULTRA-VISIBLE
+(magenta `#FF00FF`, largeur 8, opacité 1) et rendre 1 still. Si le magenta apparaît → la couche est peinte,
+le problème est la subtilité (couleur/largeur/grain qui lave). Si rien → bug de données ou de z-order.
+Cette session : a révélé DEUX bugs cachés — (a) `(src as any)._data` n'existe plus sur GeoJSONSource récent
+→ le contrôle par région n'était JAMAIS mis à jour (restait ctrl=1) ; (b) le grain papier plein écran
+(mixBlendMode overlay) LAVE les traits SVG fins → il faut rendre les contours AU-DESSUS du grain.
+**Règle** : un effet "invisible" = bug à prouver (couche peinte ? données à jour ? z-order ?), pas un réglage
+à tâtonner. Le debug magenta tranche en 1 render.
+
+**Règle de design bonus (cas spécifique mais réutilisable)** : repère permanent (contours pays) + overlay
+semi-transparent = JAMAIS cohabiter (bouillie illisible). Les repères s'EFFACENT pendant tout overlay
+(fenêtres CONTOUR_HIDE_WINDOWS), reviennent après. Et : couleur via fond mosaïque OU via contours selon
+le look de la partie, jamais les deux (sinon surcharge).
