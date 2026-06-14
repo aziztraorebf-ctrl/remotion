@@ -237,11 +237,18 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
   // ── Ph1 : les 3 contours AES virent OR ──
   const aesGold = interpolate(frame, [F_BAMAKO + 20, F_LIPTAKO], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // ── Ph2 : zone Liptako PULSE OR (l'union se voit) — figée visuellement f6616→+60 ──
-  // monte au nommage (Ph2) PUIS S'ESTOMPE quand on transite vers Kidal (Ph3) — Aziz : ne doit pas rester
-  // jusqu'à la fin. La carte se nettoie pour le focus Kidal.
-  const liptakoT = interpolate(frame, [F_LIPTAKO, F_LIPTAKO + 24, F_EPREUVE - 30, F_EPREUVE], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ── Ph2 : CONVERGENCE CAUSALE (DA-brief Gemini+Kimi) — 3 lignes or se DESSINENT depuis les capitales vers
+  //    le centre Liptako (la CAUSE : les 3 pays s'unissent), PUIS le sceau d'union apparaît au point de
+  //    rencontre (l'EFFET). Remplace le simple cercle qui poppait. Grammaire causale respectée. ──
+  //    converge : 0→1 = les lignes se tracent (F_LIPTAKO-34 → F_LIPTAKO+6). Le sceau suit (déclenché à 1).
+  const F_CONVERGE = F_LIPTAKO - 34;
+  const converge = interpolate(frame, [F_CONVERGE, F_LIPTAKO + 6], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+  // ── Ph2 : SCEAU/zone Liptako OR (l'union se voit) — apparaît APRÈS la convergence, pulse, puis S'ESTOMPE
+  //    quand on transite vers Kidal (Ph3). La carte se nettoie pour le focus Kidal. ──
+  const liptakoT = interpolate(frame, [F_LIPTAKO + 2, F_LIPTAKO + 26, F_EPREUVE - 30, F_EPREUVE], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const liptakoPulse = liptakoT > 0 ? 1 + 0.10 * Math.sin((frame - F_LIPTAKO) * 0.12) : 0;
+  // flash d'union au moment exact où les 3 lignes se rejoignent (climax causal bref)
+  const unionFlash = interpolate(frame, [F_LIPTAKO, F_LIPTAKO + 4, F_LIPTAKO + 18], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Ph4 : onde de choc "Kidal." (cercles concentriques) + assombrissement radial ──
   const kidalP = project(KIDAL[0], KIDAL[1]);
@@ -441,15 +448,65 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
           );
         })}
 
-        {/* Ph2 — ZONE LIPTAKO PULSE OR (l'union se voit géographiquement, figée 2s) */}
-        {liptakoT > 0.01 && (() => {
+        {/* Ph2 — CONVERGENCE : 3 lignes or se DESSINENT des capitales vers le centre Liptako (CAUSE de l'union).
+            Chaque ligne part de sa capitale et "pousse" sa pointe vers le centre (stroke-dashoffset). */}
+        {converge > 0.001 && converge < 1 && (() => {
+          const lp = project(LIPTAKO_CENTER[0], LIPTAKO_CENTER[1]);
+          return (
+            <g>
+              {[BAMAKO, OUAGA, NIAMEY].map((cap, i) => {
+                const cp = project(cap[0], cap[1]);
+                // délai léger par capitale (elles s'allument en cascade Bamako→Ouaga→Niamey)
+                const t = interpolate(converge, [i * 0.12, 1], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+                if (t <= 0.001) return null;
+                // pointe qui avance de la capitale vers le centre
+                const tipX = cp.x + (lp.x - cp.x) * t;
+                const tipY = cp.y + (lp.y - cp.y) * t;
+                return (
+                  <g key={`conv-${i}`}>
+                    {/* halo large doux sous la ligne */}
+                    <line x1={cp.x} y1={cp.y} x2={tipX} y2={tipY} stroke={OR_AES} strokeWidth={6} strokeOpacity={0.18} strokeLinecap="round" />
+                    {/* trait net */}
+                    <line x1={cp.x} y1={cp.y} x2={tipX} y2={tipY} stroke={OR_AES} strokeWidth={2.6} strokeOpacity={0.9} strokeLinecap="round" />
+                    {/* pointe lumineuse qui progresse */}
+                    <circle cx={tipX} cy={tipY} r={4.5} fill={OR_AES} fillOpacity={0.95} />
+                    <circle cx={cp.x} cy={cp.y} r={3} fill={OR_AES} fillOpacity={0.8} />
+                  </g>
+                );
+              })}
+            </g>
+          );
+        })()}
+
+        {/* Ph2 — SCEAU D'UNION OR au point de rencontre (EFFET, après la convergence). Starburst bref au climax
+            + zone qui pulse (l'union se voit géographiquement), puis s'estompe vers Kidal. */}
+        {(liptakoT > 0.01 || unionFlash > 0.01) && (() => {
           const lp = project(LIPTAKO_CENTER[0], LIPTAKO_CENTER[1]);
           const r = spriteMapWidth(project, LIPTAKO_CENTER[0], LIPTAKO_CENTER[1], 3.2, { min: 60, max: 260 }) * liptakoPulse;
+          // starburst : rayons courts qui jaillissent au moment de l'union (climax causal)
+          const burstR = spriteMapWidth(project, LIPTAKO_CENTER[0], LIPTAKO_CENTER[1], 1.6, { min: 30, max: 130 });
           return (
-            <g opacity={liptakoT} transform={`translate(${lp.x},${lp.y})`}>
-              <circle r={r} fill={OR_AES} fillOpacity={0.16} />
-              <circle r={r} fill="none" stroke={OR_AES} strokeWidth={3} strokeOpacity={0.7} />
-              <circle r={r * 1.35} fill="none" stroke={OR_AES} strokeWidth={1.6} strokeOpacity={0.35 * liptakoPulse} />
+            <g transform={`translate(${lp.x},${lp.y})`}>
+              {/* zone pulsante (sceau établi) */}
+              {liptakoT > 0.01 && (
+                <g opacity={liptakoT}>
+                  <circle r={r} fill={OR_AES} fillOpacity={0.16} />
+                  <circle r={r} fill="none" stroke={OR_AES} strokeWidth={3} strokeOpacity={0.7} />
+                  <circle r={r * 1.35} fill="none" stroke={OR_AES} strokeWidth={1.6} strokeOpacity={0.35 * liptakoPulse} />
+                </g>
+              )}
+              {/* starburst bref au moment de l'union (12 rayons) */}
+              {unionFlash > 0.01 && (
+                <g opacity={unionFlash}>
+                  <circle r={burstR * (0.4 + 0.6 * unionFlash)} fill="none" stroke={OR_AES} strokeWidth={2.5} strokeOpacity={0.7} />
+                  {Array.from({ length: 12 }).map((_, k) => {
+                    const ang = (k / 12) * Math.PI * 2;
+                    const r0 = burstR * 0.5, r1 = burstR * (0.9 + 0.4 * unionFlash);
+                    return <line key={k} x1={Math.cos(ang) * r0} y1={Math.sin(ang) * r0}
+                      x2={Math.cos(ang) * r1} y2={Math.sin(ang) * r1} stroke={OR_AES} strokeWidth={2} strokeOpacity={0.85} strokeLinecap="round" />;
+                  })}
+                </g>
+              )}
             </g>
           );
         })()}
