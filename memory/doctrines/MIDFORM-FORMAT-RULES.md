@@ -1,6 +1,11 @@
 # Mid-form Souverain — Règles format 4-6 min
 
 > **Lock 2026-05-19.** Premier test de format long Souverain. Règles à appliquer AVANT toute écriture script Mid-form. Complète `CHARTE-EDITORIALE-SOUVERAIN.md` (positionnement) et `rules-souverain-editorial.md` (règles transversales).
+>
+> ⚠️ PÉRIMÈTRE (depuis 2026-06-14) — Ce fichier = couche STRUCTURE/VISUEL/PRODUCTION du Mid-form Souverain
+> (4 actes, respirations, ratio map/data/text, render). Pour le NIVEAU ORAL (comment écrire les phrases :
+> clarté, registre on/nous, incarnation Tremblay, rétention), la source de vérité est désormais
+> `DOCTRINE-SCRIPT-UNIFIEE.md`. Les anciennes règles orales de ce fichier y ont été consolidées.
 
 ---
 

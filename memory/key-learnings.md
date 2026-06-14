@@ -285,3 +285,52 @@ Cette session : a révélé DEUX bugs cachés — (a) `(src as any)._data` n'exi
 semi-transparent = JAMAIS cohabiter (bouillie illisible). Les repères s'EFFACENT pendant tout overlay
 (fenêtres CONTOUR_HIDE_WINDOWS), reviennent après. Et : couleur via fond mosaïque OU via contours selon
 le look de la partie, jamais les deux (sinon surcharge).
+
+---
+
+## DA-BRIEF : la causalité phrase-par-phrase + chaînes de réf + catalogue templates sont OBLIGATOIRES (2026-06-14, Aziz, War-Map P4)
+
+**Erreur évitée** : mon 1er DA-brief P4 a VALIDÉ mon plan sans le confronter à ce qui nous fait vraiment
+trébucher. Aziz a arrêté la session : "vous ne leur avez pas demandé comment rendre TOUTES les actions causales
+— c'est ce qui nous a ralentis sur P2/P3. Et vous n'avez pas envoyé nos chaînes de réf (Kings & Generals, etc.)
+ni la liste de nos templates pour qu'ils proposent des combinaisons."
+
+**Les 3 manques d'un DA-brief faible (à NE JAMAIS reproduire) :**
+1. **Causalité phrase-par-phrase JAMAIS mise à l'épreuve** : mentionner "cause avant effet" dans le socle ≠
+   demander, POUR CHAQUE phrase : "risque d'état qui pop ? comment rendre la cause visible AVANT l'effet ?".
+   C'est LA question structurante (celle qui a fait refaire P2 4×). La poser explicitement + joindre le test
+   "coupe le son" + lister les phrases À RISQUE (en P4 : or/uranium qui poppent, fusion=morph PowerPoint,
+   chiffre=donnée qui s'écrit, dézoom=mouvement sans acteur).
+2. **Chaînes de référence absentes** : joindre le décodage du genre (Operations Room/mapsinanutshell/K&G/
+   BazBattles) + notre différentiel → les LLM comparent au MODÈLE et proposent mieux ("ce qu'ils feraient
+   mieux qu'on peut prendre sans trahir notre identité"). Sinon le brief est auto-référentiel.
+3. **Catalogue de nos templates non envoyé** (`da-brief.py --catalog`) : sans la liste RÉELLE de nos briques
+   (WarMapOverlayDynamic, SahelAttackArrow, TerritorialExpansion, GeoConvergenceOverlay, countryOutline, chip,
+   sillage mask...) ils travaillent à l'aveugle et ne peuvent pas proposer de COMBINAISONS.
+
+**Le 2e brief enrichi a payé** : il a remonté 3 risques causaux ÉLEVÉS/CRITIQUES que le 1er avait laissés
+passer — Ph7 fusion (→ fils convergents+sceau tampon, pas morph), Ph3 chiffre (→ overlay ANCRÉ sur cluster),
+Ph5-6 ressources (→ contour pulse→remplissage→icône émerge). + règle chromatique rouge≠or (anti-cynisme).
+
+**RÈGLE GRAVÉE** : tout DA-brief upstream War-Map DOIT inclure (a) la question causale phrase-par-phrase avec
+le test "coupe le son", (b) le décodage du genre/chaînes de réf, (c) `--catalog` avec nos templates réels.
+Le brief P4 v2 (`/tmp/da-refs/brief-p4.txt` + `catalog-p4.txt`) = le MODÈLE à réutiliser. Vaut pour tout pilier.
+
+---
+
+## FACT-CHECK chiffres récents : Sonar Deep Research via OpenRouter + le piège "chiffre daté/trompeur" (2026-06-14, War-Map P4)
+
+**Capacité (réutilisable)** : pour vérifier des chiffres À JOUR (2025-2026) avant de les afficher dans une vidéo,
+appeler **Perplexity Sonar Deep Research via OpenRouter** : `OPENROUTER_API_KEY` (déjà dans .env) + endpoint
+`https://openrouter.ai/api/v1/chat/completions` + modèle `perplexity/sonar-deep-research` (30-120s, ~$0.10-0.20,
+sources incluses). Pattern de script : `/tmp/sonar-p4-ressources.py` (réf : anciens scripts archivés
+`scripts/_archive/episodes-livres/perplexity-fact-check-*.py`). Workflow : WebSearch d'abord (rapide, gratuit) →
+Sonar pour verrouiller/corriger les chiffres incertains. Aziz : "lance une recherche Perplexity Sonar Pro pour les
+chiffres dont on est incertain, comme ça on n'a pas à refaire".
+
+**LE PIÈGE (vérifié, important)** : un chiffre que CITE un modèle (Gemini/Kimi dans un DA-brief) peut être DATÉ ou
+TROMPEUR. Ex P4 : Kimi proposait des camemberts "Niger ~5% production uranium mondiale" → fact-check : c'était 4,7%
+en 2021 mais **1,6% en 2024** (Orano retiré, ~0 export après le coup). Afficher un % de PRODUCTION aurait CONTREDIT
+le message "levier qui permet de tenir". → Solution : afficher les **RÉSERVES** (Niger = 6% des réserves mondiales =
+le levier DURABLE), pas la production volatile. **RÈGLE : ne JAMAIS afficher un chiffre cité par un modèle sans
+fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/infrastructure (structurel, solide).**

@@ -74,7 +74,7 @@ réalisateur (Aziz) sur ce jet.
 {CATALOGUE}
 
 ## LES COMMENTAIRES DE NOTRE RÉALISATEUR (Aziz) sur ce jet
-{Path("/tmp/da-refs/p3-v2-aziz-feedback.txt").read_text()}
+{Path("/tmp/da-refs/p3-premium-brief.txt").read_text()}
 
 ## CE QU'ON TE DEMANDE (avis de réalisateur LIBRE)
 Regarde la vidéo en entier (avec le son). Donne ton point de vue de réalisateur. TU AS LA LIBERTÉ CRÉATIVE :
@@ -127,7 +127,7 @@ def main():
     print("[4/4] Cleanup...")
     try: client.files.delete(name=vf.name)
     except Exception: pass
-    out = ROOT / "memory/episodes/warmap-sahel/reviews-p3" / "gemini-p3-jet2-review.md"
+    out = ROOT / "memory/episodes/warmap-sahel/reviews-p3" / "gemini-p3-premium-review.md"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(resp.text)
     print(f"\n=== REVIEW SAUVEGARDÉE -> {out} ===\n")

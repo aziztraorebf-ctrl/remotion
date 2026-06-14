@@ -4,7 +4,30 @@
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅✅ VALIDÉE DÉFINITIVEMENT (2026-06-13)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL P4 REFONTE : Chantiers 4 + 1 + 2(coût) VALIDÉS FULL HD (2026-06-14)
+
+> **▶ PROCHAINE SESSION = LIRE `memory/episodes/warmap-sahel/PLAN-REFONTE-P4.md` EN PREMIER** (doc maître à jour :
+> 4 chantiers + synthèse extractive tracée DA upstream + avancement). Puis `WARMAP-GRAMMAIRE-CAUSALE.md` (règle
+> semitransp BANNIE) + `FACTS-P4-RESSOURCES-DIRIGEANTS.md` (chiffres verrouillés).
+>
+> ✅ **FAIT** :
+> - **Chantier 4 FIN HABITÉE** validé + full HD (`wip/p4-c4-FINAL-fullhd-audio.mp4`). NE PAS Y RETOUCHER.
+> - **Chantier 1 EXODE** validé Aziz + full HD : `out/episodes/warmap-sahel/p4-c1-exode-FINAL.mp4` (commits 9f69468+fb71473).
+>   5 jetons réfugiés (1/sprite, cohortes, profondeur 2.5D top-down PAS de pitch), sillage wet-ink, RefugeeFlow,
+>   villes = Lucide MapPin (sprite town-td abandonné). Code : `Partie4Cout.tsx`.
+> - **Chantier 2 "COÛT" BOUCLÉ** (fait avec le Chantier 1) : cartouche CENTRAL OPAQUE (pas plein écran), countup
+>   3M (3 icônes-personnes) → bascule 15M+ (15 icônes 2 rangées, toutes allumées).
+>
+> ⛔ RÈGLES GRAVÉES : overlay `mode="semitransp"` BANNI (WARMAP-GRAMMAIRE-CAUSALE) · synthèse extractive tracée à
+> chaque appel modèle · pas de pitch P4 (top-down, décision Aziz) · 5 jetons MAX = nb sprites distincts.
+>
+> ▶ **RESTE (ordre Aziz)** : Chantier 3 (Confédération SUR la carte, supprimer overlays AES+CFA encore semitransp →
+> opaque) → Chantier 2 "RESSOURCES" (overlay : uranium 6% réserves / Burkina 2e or 94,4t / oléoduc Niger) → render
+> full HD P4 complète → ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
+> ⚠️ DETTE : overlays confed + CFA dans `Partie4Cout.tsx` encore en semitransp → à passer opaque.
+> ℹ️ Multi-instance : voir `feedback_multi-instance-working-tree.md` (working tree partagé, committer tôt).
+
+## 🟢 (archive) WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅✅ VALIDÉE DÉFINITIVEMENT (2026-06-13)
 
 > ⭐ **ÉTAT (2026-06-13)** : P3 "La Rupture" VALIDÉE par Aziz. Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4`
 > (1920x1080, 1min50, audio embarqué, catbox ck26kl). wip P3 purgés. Détail : `STATUS.md` section "P3 VALIDÉE".

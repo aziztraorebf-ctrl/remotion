@@ -36,6 +36,29 @@ déformation / un tracé / une pulsation ?"** Si OUI → **SVG animé par code**
   sapin de Noël (garde-fou DA-brief P3 Gemini+Kimi, 2026-06-14).
 - **Taille ANCRÉE CARTE** (R-OBJ-1) : dimensionner via spriteMapWidth (degrés), jamais vmin fixe.
 
+## ⭐ AJOUT (Aziz 2026-06-14, P4) — la 3e voie inclut AUSSI : icônes Lucide + formes géométriques dessinées maison
+
+La 3e voie n'est pas que la déformation de paths. Elle couvre TOUT ce qu'on peut **dessiner ET animer
+nous-mêmes par code**, sans asset généré. Trois briques, toujours disponibles, à proposer par défaut :
+
+1. **Icônes Lucide** (`lucide-react` INSTALLÉ, compatible render Remotion). Bibliothèque d'icônes vectorielles
+   nettes, prêtes à poser et à animer (size/color/strokeWidth/fill dynamiques, spring, cascade). VALIDÉ P4 :
+   `MapPin` (marqueur ville sur disque parchemin) + `User` (icônes-personnes du compteur coût, 3M→15M en cascade).
+   Quand un marqueur/pictogramme net suffit (lieu, personne, ressource, alerte, flèche…) → Lucide AVANT de
+   générer un sprite. Import : `import { MapPin, User, ... } from "lucide-react"`. ~1500 icônes dispo.
+2. **Formes géométriques simples dessinées en SVG** (cercle, rect, path, polygone, ligne) — qu'on COMPOSE et
+   ANIME nous-mêmes : disque + anneau + silhouette de bâti, pastille-lieu, cartouche, jauge, repère. Net full
+   HD, nos couleurs exactes, zéro coût, zéro détourage. Souvent supérieur à un sprite (ex P4 : marqueur ville
+   SVG/Lucide a remplacé le sprite town-td répété + mal détouré).
+3. **Animations maison frame-driven** : countup amorti, cascade d'icônes qui s'empilent, ondulation, ondes,
+   tracés, pulsation, slide/fade — tout via `interpolate`/`spring`/`Math.sin`. VALIDÉ P4 (cartouche coût animé).
+
+**RÈGLE pour le DA et la construction de plan** : ces 3 briques sont TOUJOURS dans le champ des options.
+Quand je construis une scène OU quand je rédige un DA-brief (la boîte à outils envoyée aux modèles DOIT les
+citer), se rappeler : avant de générer un asset, est-ce qu'une icône Lucide / une forme SVG dessinée / une
+animation maison ferait le travail ? Souvent OUI = plus net, gratuit, à notre charte. Les modèles externes
+doivent aussi le savoir pour le proposer (cf. boîte à outils de `scripts/tools/da-brief.py`).
+
 ## Recette technique du drapeau ondulant (réutilisable — Ph5 Partie3Rupture.tsx)
 Voile = N colonnes (seg=5), chaque bord supérieur/inférieur décalé par `Math.sin(frame*k + i*phase)*amp`,
 bandes = paths fermés entre yTop et yBot. Hampe = line encre + cap. Ombre = feDropShadow #1A1005.

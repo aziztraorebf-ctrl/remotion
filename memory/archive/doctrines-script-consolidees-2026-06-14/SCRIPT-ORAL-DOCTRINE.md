@@ -126,6 +126,49 @@ Le grade 10-11 est l'équilibre : un lycéen curieux comprend, un expert n'est p
 
 ---
 
+## Règle 8 — Registre "on/nous" inclusif, jamais de "tu" (NON-NÉGOCIABLE)
+
+Le narrateur ne tutoie JAMAIS le spectateur. En anglais, "you" est neutre. En français, le "tu" porte une intimité qui sape la crédibilité d'un analyste et envoie le signal du coach hustle ou du créateur TikTok — exactement ce dont on se distingue.
+
+**Registre dominant : le "on/nous" inclusif.** Le narrateur se met DANS le même bateau que le spectateur. Pas "vous avez tort, voici la vérité", mais "on croit souvent ça — regardons ensemble". Crée de la complicité sans familiarité, évite la posture du sachant qui corrige.
+
+**Le "vous" réservé à l'adresse directe** : hook (rarement), conclusion, invitation finale. Là où on veut regarder le spectateur dans les yeux.
+
+| ❌ "tu" (familier, registre TikTok) | ✅ "on/nous" (complice) ou "vous" (adresse) |
+|---|---|
+| "Tu penses que c'est l'immigration." | "On pense souvent que c'est l'immigration." |
+| "Tu vas voir où ta ville se situe." | "Où que vous habitiez, vous allez reconnaître ce qui suit." |
+| "Imagine que tu gagnes 50 000$." | "Imaginons un ménage qui gagne 50 000$." |
+
+**Pourquoi :** le "on/nous" n'est pas de la politesse décorative — c'est un positionnement. Il dit "je vous respecte comme un pair intelligent, pas comme une cible à convertir". S'applique à TOUTES les chaînes (GéoAfrique inclus). Cohérent avec "analyste, pas militant".
+
+---
+
+## Règle 9 — Pas de CTA transactionnel dans le hook (NON-NÉGOCIABLE)
+
+Demander un like, un abonnement ou un commentaire dans les 30 premières secondes = demander un paiement avant le service. Pour une audience sérieuse, c'est présomptueux et ça rompt le pacte de crédibilité. La mécanique TikTok ("commente d'où tu regardes") sonne gadget, presque infantilisante, pour une audience adulte (30-55 ans, professionnels).
+
+**Distinction clé :**
+- **CTA transactionnel** (demander une action — like/commentaire/abonnement) = INTERDIT dans le hook
+- **Ancrage rhétorique** (une question/affirmation qui fait sentir au spectateur que ça le concerne, SANS demander d'agir) = encouragé
+
+| ❌ CTA transactionnel (hook) | ✅ Ancrage rhétorique (hook) |
+|---|---|
+| "Écris ta ville en commentaire." | "Où que vous habitiez, vous allez reconnaître ce qui suit." |
+| "Like si ça t'est déjà arrivé." | "Beaucoup d'entre nous l'ont déjà vécu sans le nommer." |
+
+**Placement des vrais CTA :**
+
+| Moment | CTA approprié |
+|---|---|
+| Hook (0-30s) | AUCUN CTA. Ancrage rhétorique + promesse de valeur uniquement. |
+| Milieu | Au mieux une invitation discrète SI naturelle et justifiée. |
+| Fin (conclusion) | Le seul vrai CTA d'abonnement — la valeur a été livrée, la demande est légitime. Ton adulte : "si cette analyse vous a éclairé, la suite est ici", pas "likez et abonnez-vous !!!". |
+
+**Pourquoi :** on ne demande l'abonnement qu'après avoir prouvé la valeur. Une invitation entre pairs, pas une supplication d'algorithme. S'applique à toutes les chaînes.
+
+---
+
 ## Densité cible par format
 
 | Format | Mots/min | Mots total | Niveau cible |
@@ -145,6 +188,8 @@ Le grade 10-11 est l'équilibre : un lycéen curieux comprend, un expert n'est p
 - [ ] Tous les noms propres ont un tampon au premier passage
 - [ ] Question centrale posée dans les 20 premières secondes (formats 3min+)
 - [ ] Phrase de liaison entre chaque acte (formats 3min+)
+- [ ] Zéro "tu" — registre "on/nous" inclusif, "vous" pour l'adresse directe (règle 8)
+- [ ] Aucun CTA transactionnel dans le hook — ancrage rhétorique seulement ; vrai CTA en conclusion (règle 9)
 - [ ] Test : lire à voix haute sans buter → si on bute, reformuler
 
 ---

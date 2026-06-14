@@ -598,6 +598,27 @@ Toujours structurer ainsi pour éviter l'ambiguïté :
 - **Double rangée de barres** : préciser "UNE SEULE rangée de barres" — Gemini peut générer 2 rangées.
 - **Chiffres sous les barres** : préciser "PAS de chiffres sous les barres".
 
+### ⭐ Portraits de PERSONNES RÉELLES (i2i depuis photo) — recette validée (2026-06-14, War-Map P4)
+
+Pour des portraits stylisés RESSEMBLANTS de figures réelles (dirigeants, personnalités) :
+1. **Source = Wikimedia Commons / Wikipédia** (licence libre). Récupérer l'URL directe `upload.wikimedia.org/.../FICHIER.jpg`
+   (retirer `/thumb/` et `/250px-...` pour la full-res) via WebFetch sur la page infobox. PAS Getty (droits/hotlink).
+2. **`gemini-i2i.py --ref photo.jpg`** + prompt qui dit explicitement "KEEP the exact same face and likeness, clearly
+   recognizable" + le style cible (gravure/encre parchemin, sépia, etc.). L'i2i garde le visage, change le rendu.
+3. ⛔ **PIÈGE MAJEUR (vérifié) : Gemini HALLUCINE du texte sur les portraits** (cartouche "médaillon" avec un NOM
+   INVENTÉ — ex P4 : a écrit "CAPTAIN ALPHA DIALLO · WESTERN FRONT 1918" sur un portrait, nom faux + date absurde).
+   → Prompt anti-texte STRICT obligatoire : "ABSOLUTELY NO TEXT, NO LETTERS, NO WORDS, NO NAME, NO BANNER, NO FRAME,
+   NO CIRCLE BORDER, NO MEDALLION, NO DECORATION. Just the bust on plain transparent background." Le nom se met
+   ENSUITE dans une plaque qu'on CONTRÔLE (Remotion), jamais dans l'image générée.
+4. **Vérifier la ressemblance** (Read l'image) avant validation. Le i2i depuis photo > génération de zéro (qui donne
+   un visage générique "crédible mais ressemble à personne"). Décision éditoriale : stylisé OK (pas deepfake photo-réaliste).
+5. ⛔ **PIÈGE FOND OPAQUE (vérifié P4 2026-06-14)** : un i2i Gemini "fond transparent" rend souvent un FOND OPAQUE
+   (gris/blanc/parchemin), PAS un vrai alpha. Vu dans un chip() cercle, ce fond opaque crée un "carré/clipping"
+   visible (le fond du portrait ≠ couleur du chip). Symptôme : "ça a l'air bruité/pas net, je vois un carré derrière".
+   → VÉRIFIER l'alpha : `Image.open(p).convert('RGBA')` + lire les coins (si alpha=255 = opaque = à détourer).
+   → DÉTOURER avec **Recraft `remove_background`** (MCP) → vrai alpha 0 propre, comme les sprites réfugiés. Le faire
+   SYSTÉMATIQUEMENT pour tout portrait i2i destiné à un chip/cercle. (Le grain de gravure i2i reste, assumé comme style.)
+
 ### Contact sheet (validation Aziz)
 
 ```python

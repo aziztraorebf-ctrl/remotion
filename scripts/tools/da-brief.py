@@ -99,7 +99,13 @@ Sois SPÉCIFIQUE et TECHNIQUE : couleurs (saturation/contraste/surcharge), typog
 (placement/hiérarchie/redondance), éléments graphiques (justifiés ? compris ? bien intégrés ?),
 composition/espace négatif, ce qui fait "template générique" vs "travail intentionnel".
 Pour chaque point : le PROBLÈME + une PISTE de correction réaliste dans NOTRE stack
-(dans NOTRE stack : SVG, opacité, couleurs, timing, caméra frame-driven — PAS d'After Effects/3D/blur CSS).
+(NOTRE boîte à outils, à utiliser ET à proposer : (1) SVG animé par code frame-driven — formes géométriques
+simples dessinées maison (cercle/rect/path/polygone), déformation de paths (drapeaux/ondes/tracés stroke-dashoffset),
+jauges/compteurs/cascades ; (2) ICÔNES LUCIDE — lucide-react INSTALLÉ, ~1500 icônes vectorielles nettes, posables
+et animables (size/color/spring/cascade), ex. MapPin/User ; (3) sprites Gemini (trait net/identité) + PixelLab
+(effet organique chaotique) ; opacité, couleurs charte, timing, caméra frame-driven. PAS d'After Effects/3D/blur CSS/
+particules/volumétrique. La 3e voie SVG+Lucide dessinée/animée maison est souvent SUPÉRIEURE à un asset généré : nette,
+gratuite, à notre charte — TOUJOURS l'envisager et la proposer en premier pour une forme simple/un pictogramme/un marqueur).
 """
 
 # Bloc EXPERT — point de vue d'un expert du métier (idée Aziz). À contraindre à notre stack.
@@ -112,10 +118,12 @@ meilleures chaînes du domaine). Sans concession. Réponds à DEUX points de vue
    il jugerait ratées / amateures ? Qu'est-ce qui manque qui ferait la différence pro/amateur ?
    Quelles animations/transitions un pro mettrait là où on ne met rien (ou l'inverse) ?
 2. LE SPECTATEUR lambda : qu'est-ce qu'il cherche, comprend, ressent ? Où décroche-t-il ?
-CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (SVG, opacité, couleurs,
-caméra frame-driven, timing). NE PROPOSE PAS de 3D, de geo-layers complexes, de particules,
-d'After Effects, d'effets volumétriques. L'expertise doit s'exprimer DANS nos contraintes —
-ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils — (1) SVG animé frame-driven (formes géométriques
+dessinées maison, déformation de paths, jauges/compteurs/cascades), (2) ICÔNES LUCIDE (lucide-react installé,
+~1500 icônes nettes posables/animables), (3) sprites Gemini + PixelLab, opacité/couleurs/timing/caméra frame-driven.
+NE PROPOSE PAS de 3D, geo-layers complexes, particules, After Effects, volumétrique. L'expertise s'exprime DANS
+nos contraintes — ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS, pas un rêve infaisable. Et envisage la 3e voie
+(SVG+Lucide dessiné/animé maison) AVANT un asset généré quand une forme simple / un pictogramme / un marqueur suffit.
 """
 
 
@@ -133,7 +141,13 @@ D'après ce plan, qu'est-ce qui RISQUE de "crier généré par IA / amateur / pr
 une fois codé ? Anticipe les pièges : couleurs (surcharge/saturation), typo (générique/redondante
 avec la voix), éléments graphiques sans fonction claire, manque d'espace négatif, effets "template".
 Pour CHAQUE risque : la PARADE concrète à appliquer dès la conception, dans NOTRE stack
-(dans NOTRE stack : SVG, opacité, couleurs, timing, caméra frame-driven — PAS d'After Effects/3D/blur CSS).
+(NOTRE boîte à outils, à utiliser ET à proposer : (1) SVG animé par code frame-driven — formes géométriques
+simples dessinées maison (cercle/rect/path/polygone), déformation de paths (drapeaux/ondes/tracés stroke-dashoffset),
+jauges/compteurs/cascades ; (2) ICÔNES LUCIDE — lucide-react INSTALLÉ, ~1500 icônes vectorielles nettes, posables
+et animables (size/color/spring/cascade), ex. MapPin/User ; (3) sprites Gemini (trait net/identité) + PixelLab
+(effet organique chaotique) ; opacité, couleurs charte, timing, caméra frame-driven. PAS d'After Effects/3D/blur CSS/
+particules/volumétrique. La 3e voie SVG+Lucide dessinée/animée maison est souvent SUPÉRIEURE à un asset généré : nette,
+gratuite, à notre charte — TOUJOURS l'envisager et la proposer en premier pour une forme simple/un pictogramme/un marqueur).
 """
 
 EXPERT_BLOCK_UPSTREAM = """
@@ -147,8 +161,11 @@ rendu mais un PLAN à construire. Réponds à TROIS questions :
    transitions tu mettrais où, pour atteindre le niveau pro ? Quels pièges éviter dès le départ ?
 3. ENCHAÎNEMENT POUR LA COMPRÉHENSION : comment séquencer pour qu'un SPECTATEUR lambda (qui ne
    connaît pas le sujet) comprenne tout, sans surcharge, à chaque instant ? Où mettre les respirations ?
-CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils (SVG, opacité, couleurs,
-caméra frame-driven, timing). PAS de 3D/geo-layers complexes/particules/After Effects/volumétrique.
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils — (1) SVG animé frame-driven (formes géométriques dessinées
+maison, déformation de paths, jauges/compteurs/cascades), (2) ICÔNES LUCIDE (lucide-react installé, ~1500 icônes
+nettes posables/animables, ex. MapPin/User), (3) sprites Gemini + PixelLab, opacité/couleurs/timing/caméra frame-driven.
+PAS de 3D/geo-layers complexes/particules/After Effects/volumétrique. Envisage la 3e voie (SVG+Lucide dessiné/animé
+maison) AVANT un asset généré quand une forme simple / pictogramme / marqueur suffit.
 Ce qu'un pro ferait de mieux AVEC LES MÊMES OUTILS que nous, pas un rêve infaisable.
 """
 

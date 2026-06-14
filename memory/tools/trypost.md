@@ -40,6 +40,7 @@ Facebook : 019e9de9-291d-7305-ba18-ed46fbec26ea  (platform: facebook, content_ty
 | Contrainte | Valeur | Note |
 |-----------|--------|------|
 | **Taille max fichier** | **50 MB** | Au-delà → compresser avec `-crf 28 -preset fast` |
+| **Caption YouTube Short** | **100 caractères MAX** | ⚠️ Limite dure — au-delà la plateforme rejette silencieusement (erreur confirmée 2026-06-11). Utiliser titre seul sans hashtags. |
 | Formats vidéo acceptés | mp4 (h264) | aac audio obligatoire |
 | Délai entre upload et publish | immédiat | pas de cooldown observé |
 | Nombre de comptes | illimité | selon plan |

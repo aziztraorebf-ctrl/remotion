@@ -59,6 +59,13 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
 2. **SUJET** + format (16:9 / 9:16) + cible.
 3. **IDENTITÉ VISUELLE — socle non-négociable** : palette exacte (hex), ton, direction déjà choisie. "NE PAS proposer autre chose."
 4. **BOÎTE À OUTILS EXACTE** : la liste de ce qu'on SAIT coder (frame-driven Remotion/Mapbox, SVG, opacité, map.project, drift, flèches qui poussent, vignette, grain, FlagFill, etc.).
+   ⭐ **TOUJOURS inclure (Aziz 2026-06-14, tous projets) la 3e voie — dessiner ET animer NOUS-MÊMES** : (a) **icônes
+   Lucide** (`lucide-react` installé, ~1500 icônes vectorielles nettes, posables/animables size/color/spring/cascade —
+   ex. MapPin, User), (b) **formes géométriques simples SVG dessinées maison** (cercle/rect/path/polygone composés :
+   marqueur-lieu, cartouche, jauge, pastille), (c) **animations maison frame-driven** (countup, cascade, ondulation,
+   ondes, tracé stroke-dashoffset, pulsation). Souvent SUPÉRIEUR à un asset généré (net full HD, gratuit, charte exacte,
+   zéro détourage). Détail : `WARMAP-SVG-ANIME-3E-VOIE.md`. Cette voie DOIT figurer dans la boîte à outils envoyée aux
+   modèles (déjà injectée dans `da-brief.py`) ET être dans MON champ d'options quand je construis un plan/une scène.
 5. **INTERDIT** : `filter:blur` CSS, particules 3D, depth-of-field, vraie 3D, volumetric, lens flare, tout AE non reproductible. "NE RIEN proposer de tel."
 6. **LIBERTÉ CRÉATIVE CADRÉE** (clé) : "Tu PEUX suggérer des effets non encore codés ET piocher dans le CATALOGUE joint, À CONDITION que ce soit faisable dans la boîte à outils. Indique le STATUT : 'déjà faisable' ou 'à coder mais faisable'."
 7. **MATÉRIAU RÉEL** : script de l'acte (phrase par phrase) + timing exact (frames).
@@ -78,13 +85,66 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
    Vaut pour TOUT appel modèle+image, pas que la review vidéo.
 2. **Les deux modèles en PARALLÈLE, séparément** (threads). Modèles verrouillés :
    `gemini-3.1-pro-preview` + `moonshotai/kimi-k2.5` (via OpenRouter).
-3. **Claude SYNTHÉTISE et VÉRIFIE** chaque proposition contre le code réel AVANT de présenter.
-   Distinguer "ce qui CONVERGE" (haute confiance) / "idées uniques bonnes" / "écarté (hallucination/infaisable)".
-   Gemini/Kimi = SIGNAL, JAMAIS JUGE (cf. règle Gemini CLAUDE.md). Vérifier, ne pas gober.
+3. **Claude fait une SYNTHÈSE EXTRACTIVE TRACÉE** (voir section dédiée ci-dessous) — JAMAIS une synthèse molle
+   type "3/3 valident, voici les points". OBLIGATOIRE à chaque appel. Gemini/Kimi = SIGNAL, JAMAIS JUGE. Vérifier, ne pas gober.
 4. **Aziz tranche le GOÛT** (regrouper les questions de goût en 1 point de contrôle, le reste = technique tranché par Claude).
 5. **MAX 1 appel par modèle par acte.** Pas de boucle brief→fix→brief. On synthétise, on code.
 6. **Si un modèle échoue** (quota, API) : ne pas bloquer. 1 modèle solide suffit pour avancer ;
    on croisera le 2e plus tard si pertinent.
+
+---
+
+## ⭐⭐ SYNTHÈSE EXTRACTIVE TRACÉE — OBLIGATOIRE à CHAQUE appel modèle (Aziz 2026-06-14, NON-NEGOTIABLE)
+
+> "Parfois on n'utilise pas à fond ce que disent les modèles. Ce type de synthèse devrait être fait
+> AUTOMATIQUEMENT à chaque fois. Extrais le maximum, intègre-le au plan, AVANT de coder." — Aziz.
+> Vaut pour TOUT appel : upstream, downstream, OU idées indépendantes. On paie ces modèles → on extrait tout.
+
+**LE PROBLÈME à éviter** : la synthèse molle ("convergence forte, voici 3 points retenus") laisse filer 70% de
+la matière. Les modèles nous MONTRENT LA VOIE — chaque idée exploitable doit être capturée, pas survolée.
+
+**LA MÉTHODE (à appliquer systématiquement) :**
+1. **RELIRE INTÉGRALEMENT** chaque sortie (pas juste le résumé/la conclusion du modèle). Les pépites sont souvent
+   dans les sections "enrichissements", "expert", "pièges" — pas dans le TL;DR.
+2. **EXTRAIRE TOUTE idée exploitable**, organisée PAR CHANTIER / PAR PHRASE / PAR CHapitre (la maille du travail).
+3. **ATTRIBUER LA SOURCE** de chaque idée : `G` (Gemini), `K` (Kimi), `D` (DeepSeek), `G+K` (convergent).
+   La convergence = signal de haute confiance ; une idée unique forte = à ne pas perdre.
+4. **TRANCHER chaque idée** avec un marqueur explicite :
+   - ✅ **RETENU** (on code ça)
+   - 🔶 **NUANCÉ / OPTION** (bon mais conditionnel — surcharge possible, à activer si la scène respire) + la condition
+   - ❌ **ÉCARTÉ** + LA RAISON (hallucination · infaisable · anti-charte · FACTUELLEMENT FAUX · contredit une décision Aziz)
+5. **VÉRIFIER les FAITS** avant de retenir un chiffre/nom (un % "production mondiale" cité par un modèle peut être
+   daté/faux → fact-check WebSearch/Sonar AVANT de l'afficher. Cf. P4 : camemberts % uranium écartés car trompeurs).
+6. **INTÉGRER la synthèse tracée DANS LE PLAN** (`PLAN-*.md` du projet), comme section de référence pour le code.
+   PAS dans un coin de conversation jeté — dans le fichier durable, structuré, relisable au moment de coder.
+7. **PRÉSENTER la synthèse à Aziz** quand il y a des arbitrages (goût/coût/factuel), AVANT de coder.
+
+**Le format de référence** = la synthèse P4 downstream dans `memory/episodes/warmap-sahel/PLAN-REFONTE-P4.md`
+(section "SYNTHÈSE TRACÉE DES 2 DOWNSTREAM") : par chantier, chaque idée avec source + décision + raison. À copier.
+
+**Règle d'or** : après cette synthèse, RIEN d'exploitable d'un modèle ne doit avoir disparu sans une décision
+explicite (retenu / option / écarté+raison). Si une idée n'est ni dans le code ni écartée avec raison = trou à combler.
+
+### ⭐⭐ VÉRIFIER CHAQUE SOLUTION CONTRE NOS CONTRAINTES RÉELLES (Aziz 2026-06-14, NON-NEGOTIABLE)
+
+> Les modèles diagnostiquent bien le PROBLÈME mais proposent parfois une SOLUTION qui ne marche pas dans NOTRE
+> contexte précis (qu'ils ne connaissent pas). Distinguer le diagnostic (souvent juste) de la solution (à valider).
+
+**La règle** : avant d'appliquer une solution recommandée par un modèle, la confronter à :
+1. **Nos contraintes techniques réelles** (ce que notre stack fait/ne fait pas).
+2. **Nos décisions/leçons DÉJÀ documentées** (chercher dans le code + la mémoire si on a déjà tranché ce point).
+3. **Un TEST empirique court** quand c'est testable (1-2 frames, A/B) AVANT une grosse refonte — instrumenter, pas présumer.
+
+**Cas d'école (P4 Chantier 4, 2026-06-14)** : Gemini+Kimi recommandaient à l'unanimité un PITCH 40° pour donner de la
+profondeur et faire "fuir le désert vers l'horizon". MAIS : (a) le code documentait déjà une leçon du 13 juin = pitch
+rejeté car notre carte est un APLAT DE COULEUR sans relief Mapbox ; (b) test A/B (pitch 0 vs 40, 1 frame) → frames
+QUASI IDENTIQUES (preuve `wip/p4-pitch-test-{0,40}`). Les modèles le recommandaient sans connaître cette contrainte.
+→ Pitch ÉCARTÉ avec preuve. Les 2 AUTRES fixes du même brief (caméra qui pane + hiérarchie échelle/opacité) = valides
+et retenus. **Le diagnostic était juste (carte plate+statique+pas de hiérarchie), une des 3 solutions ne l'était pas.**
+
+**Ce que ça évite** : appliquer une fausse piste recommandée par 2 modèles convergents (la convergence n'est PAS une
+preuve — ils partagent les mêmes angles morts sur notre contexte). Le test de 30 secondes tranche ce que la prose ne
+peut pas. JAMAIS gober une solution parce qu'elle "fait consensus" — vérifier contre le réel, tester si testable.
 
 ---
 
