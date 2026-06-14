@@ -74,6 +74,12 @@ import { DutchTiltCollapse } from "./projects/atlas/_blueprints/dutch-tilt-colla
 import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
 import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
 import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
+import { P1_OrthoLinksDemo, P1_FRAMES } from "./projects/warmap/_rnd/maxbellona/P1_OrthoLinks";
+import { P2_FactionBadgeDemo, P2_FRAMES } from "./projects/warmap/_rnd/maxbellona/P2_FactionBadge";
+import { P4_DashedFlowDemo, P4_FRAMES } from "./projects/warmap/_rnd/maxbellona/P4_DashedFlow";
+import { P3_MapTransformDemo, P3_FRAMES } from "./projects/warmap/_rnd/maxbellona/P3_MapTransform";
+import { P5_SplitScreenDemo, P5_FRAMES } from "./projects/warmap/_rnd/maxbellona/P5_SplitScreen";
+import { P6_SplitLiveMapsDemo, P6_FRAMES } from "./projects/warmap/_rnd/maxbellona/P6_SplitLiveMaps";
 import { AtlasCannesScene } from "./projects/atlas/_shared/AtlasCannesScene";
 import { AtlasCannesHannibal } from "./projects/atlas/_shared/AtlasCannesHannibal";
 import { AtlasMansaMoussaV2Final } from "./projects/atlas/_reference/mansa-moussa-v2/AtlasMansaMoussaV2Final";
@@ -441,6 +447,54 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={720}
           height={1280}
+        />
+        <Composition
+          id="MaxBellona-P1-OrthoLinks"
+          component={P1_OrthoLinksDemo}
+          durationInFrames={P1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="MaxBellona-P2-FactionBadge"
+          component={P2_FactionBadgeDemo}
+          durationInFrames={P2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="MaxBellona-P4-DashedFlow"
+          component={P4_DashedFlowDemo}
+          durationInFrames={P4_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="MaxBellona-P3-MapTransform"
+          component={P3_MapTransformDemo}
+          durationInFrames={P3_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="MaxBellona-P5-SplitScreen"
+          component={P5_SplitScreenDemo}
+          durationInFrames={P5_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="MaxBellona-P6-SplitLiveMaps"
+          component={P6_SplitLiveMapsDemo}
+          durationInFrames={P6_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
         <Composition
           id="AtlasAttackArrowDemo"
