@@ -1,0 +1,76 @@
+CONTEXTE — REFONTE D'UNE SCÈNE RATÉE : "LA CONFÉDÉRATION AES"
+
+Documentaire War-Map long (16:9, ~7min26) sur l'Alliance des États du Sahel (AES : Mali, Burkina, Niger),
+identité PARCHEMIN (fond sable gris-blanc, encre brune, or mat). Carte MAPBOX 2D TOP-DOWN (vue du dessus,
+PAS de pitch/inclinaison — décision ferme du réalisateur : sans relief Mapbox, incliner = carte plate
+inclinée qui casse le top-down). Mouvement de carte par code (useCurrentFrame + interpolate).
+
+La scène "Confédération AES" (Partie 4, ~14s, narration : "confédération / force armée commune / Niamey /
+ex-base Barkhane") a été jugée RATÉE par le réalisateur. On la refait. Les 2 frames fournies montrent
+l'état actuel raté (déjà partiellement corrigé : l'overlay est passé opaque).
+
+LE SENS DE LA SCÈNE (à servir) : en 2024, les 3 pays fondent une CONFÉDÉRATION avec force armée commune,
+QG à Niamey (ex-base française Barkhane). C'est le moment d'UNION / de souveraineté retrouvée. L'émotion
+visée = solennité, noblesse, "le bloc qui se soude". Doit se sentir comme un acte fondateur, pas un slide.
+
+============================================================
+SOCLE INTOUCHABLE (ne proposez RIEN qui viole ça)
+============================================================
+- Carte 2D TOP-DOWN, frame-driven. ⛔ PAS DE PITCH / inclinaison / pseudo-3D appuyée. Le relief se fait par
+  ÉPAISSEUR de trait, OPACITÉ étagée, HALO, ombre portée — jamais par inclinaison.
+- Charte PARCHEMIN stricte : fond sable gris-blanc, encre brune (#2A1C0E), OR MAT NOBLE (#C9A24B). Le fond
+  NE DOIT JAMAIS virer jaune pisseux. Or = noble, pas jaune sale.
+- GRAMMAIRE CAUSALE : la CAUSE précède l'EFFET (un acteur agit → le territoire change). Pas d'état qui "pop".
+- SHOW NOT TELL : info SPATIALE = la MONTRER sur la carte, PAS un cartouche texte qui répète la voix off.
+- ⛔ Overlay semi-transparent (voile sur la carte) = BANNI (bouillie). Soit cartouche OPAQUE (carte visible
+  autour, jamais à travers), soit plein écran opaque, soit info directement sur la carte.
+
+BOÎTE À OUTILS RÉELLE (restez DEDANS — et la "3e voie" est PRIORITAIRE) :
+- ⭐ 3e VOIE (à privilégier AVANT tout asset généré) : (a) ICÔNES LUCIDE (~1500 icônes vectorielles nettes :
+  Shield, Landmark, Star, Crown, Flag, etc. — posables et animables : size/color/strokeWidth/spring/cascade),
+  (b) FORMES GÉOMÉTRIQUES SVG dessinées maison (cercle, anneau, path, polygone, étoile) qu'on compose et anime,
+  (c) ANIMATIONS maison frame-driven (interpolate/spring/Math.sin : tracés stroke-dashoffset, pulsation, ondes,
+  countup, ondulation). Net full HD, nos couleurs exactes, ZÉRO coût, zéro détourage. SUPÉRIEUR à un sprite
+  pour les formes simples (drapeaux, sceaux, marqueurs, jauges).
+- Sprites Gemini (objets à trait fin / identité), spritesheets fumée+explosion (effets denses), drapeaux
+  clippés ondulants (SVG), contours de territoire qui se tracent (stroke-dashoffset) + flash.
+- INTERDIT : After Effects, vraie 3D, pitch, blur CSS lourd, effets diffus hors-sol (poussière au sol top-down
+  = ne lit pas), particules vaporeuses.
+
+============================================================
+LES 4 PROBLÈMES DIAGNOSTIQUÉS (confirmez / complétez / proposez le meilleur fix DANS notre stack)
+============================================================
+1. FOND JAUNE PISSEUX : le remplissage or des 3 pays (fusion) est posé à opacité 0.40 en mode "multiply" sur
+   le land clair → ça vire jaune sale, ça casse la charte parchemin. (Visible sur les 2 frames : le bloc AES
+   est jaune terne, pas or noble.)
+2. SCEAU MOU + CARRÉ BLANC : le sceau de la confédération (posé sur Niamey, le QG) est une image basse-déf au
+   fond non détouré (carré blanc visible) + posée brute → indistinct, "cheap", ne lit pas comme un sceau.
+3. OVERLAY QUI RÉPÈTE LA VOIX : un cartouche "2024 · Confédération AES / FORCE ARMÉE COMMUNE" répète mot pour
+   mot ce que dit la voix off = sous-titre redondant (tell, pas show).
+4. SCÈNE PAUVRE / STATIQUE : ~14s sans assez de RÉCIT visuel causal. Manque de "moment fondateur".
+
+============================================================
+LE PLAN DE REFONTE ENVISAGÉ (donnez votre avis : bon ? mieux ? pièges ?)
+============================================================
+- Les 3 contours pays se dessinent (stroke-dashoffset) → passent à l'OR par un flash.
+- Les frontières INTERNES entre les 3 pays s'EFFACENT (opacité→0) pendant que les contours EXTERNES FUSIONNENT
+  en UNE seule ligne or épaisse englobant le bloc = "les 3 ne font plus qu'un" (le sens, sur la carte).
+- Un SCEAU TOMBE sur Niamey (effet tampon : scale 1.2→1 + légère rotation "cire") + ombre portée + impact.
+- Onde d'union / signal radio depuis le QG (Niamey) vers les 3 capitales = la force commune qui rayonne.
+- Fond or NOBLE et subtil (le CONTOUR épais porte le sens "bloc soudé", pas un fill saturé).
+- CFA (juste après) : marqueur léger + fil ténu Sahel→Paris, PAS un overlay plein écran texte.
+
+============================================================
+CE QU'ON VOUS DEMANDE (le coeur de la review)
+============================================================
+1. FOND OR NOBLE : comment rendre la fusion "or noble" (pas jaune pisseux) DANS notre stack ? (opacité ? pas
+   de multiply ? dégradé ? contour épais + fill quasi nul ? donnez des valeurs concrètes.)
+2. SCEAU : faut-il le redessiner en SVG/LUCIDE (3e voie) plutôt que l'image ratée ? Si oui, à quoi ressemble
+   un sceau de confédération NOBLE en SVG/Lucide sur fond parchemin (composition précise : cercle, embleme,
+   anneau, texte gravé, quelle icône Lucide) ? Ou vaut-il mieux détourer+intégrer l'image ? Tranchez.
+3. OVERLAY : faut-il le SUPPRIMER (la fusion + le sceau + une date "2024" gravée suffisent) ou garder une
+   plaque-date minimale ? Comment éviter le "sous-titre qui répète la voix" ?
+4. RÉCIT / "moment fondateur" : qu'est-ce qui ferait de ces 14s un acte fondateur SOLENNEL et non un slide,
+   DANS un top-down sans pitch ? (rythme, séquence causale, ce qui doit bouger, où mettre l'emphase.)
+5. AI-SLOP : sur les 2 frames, qu'est-ce qui CRIE "généré/amateur" et comment le corriger dans notre stack ?
+6. LE PIÈGE DU TROP : où risque-t-on de surcharger une scène qui doit rester noble/sobre ? Garde-fous.
