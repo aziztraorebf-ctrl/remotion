@@ -16,7 +16,7 @@
 >
 > Ordre P4 (strict) : 1. PLAN-NARRATIF-P4 (phrase par phrase) → 2. DA-brief upstream → 3. coder (copier
 > Partie3Rupture, mode moteur `partie4` à créer). Audio prêt : `narration-v5-p4.mp3` (132s).
-> ⚠️ Clarifier avec Aziz : P1 n'a pas de p1-FINAL.mp4 (render dans wip/partie1-fullhd-v3.mp4) — à promouvoir ?
+> ✅ Les 4 parties sont en FINAL (acte1/p1/p2/p3-FINAL.mp4) — P1 promu/re-rendu full HD le 2026-06-14.
 >
 > **✅ FAIT 2026-06-14 — "fond qui respire" RÉSOLU** via CONTOURS NATIONAUX colorés (Mali ocre / Burkina brique
 > / Niger sarcelle) + draw-in + pulse + effacement sous overlay, UNIQUEMENT sur parties épurées (P3 ; Acte1/

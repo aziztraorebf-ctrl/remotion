@@ -10,14 +10,14 @@
 | Partie | État | Render |
 |---|---|---|
 | Acte 1 | ✅ FINAL (intouché) | `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox slchjv) |
-| P1 Origine | ✅ validée canari | `out/episodes/warmap-sahel/wip/partie1-fullhd-v3.mp4` ⚠️ À PROMOUVOIR en p1-FINAL.mp4 |
+| P1 Origine | ✅ FINAL (promu 2026-06-14, re-rendu full HD) | `out/episodes/warmap-sahel/p1-FINAL.mp4` (35s) |
 | P2 Blocage | ✅ FINAL | `out/episodes/warmap-sahel/p2-FINAL.mp4` (catbox gfsa3h) |
 | P3 Rupture | ✅ FINAL (avec contours nationaux) | `out/episodes/warmap-sahel/p3-FINAL.mp4` (catbox xbyurg) |
 | **P4 Coût/Levier/Perspective** | ❌ **À CODER** | — |
 | Assemblage final | ❌ après P4 | — |
 
-⚠️ **Point à clarifier en début de session** : P1 n'a pas de `p1-FINAL.mp4` (le render est dans wip/).
-Vérifier avec Aziz s'il faut le promouvoir avant l'assemblage.
+✅ **P1 promu** (2026-06-14) : re-rendu full HD → `p1-FINAL.mp4` (35s). Les 4 parties sont en FINAL.
+Pour l'assemblage : Acte1 + P1 + P2 + P3 + P4 → tous les FINAL sont dans `out/episodes/warmap-sahel/`.
 
 ---
 
