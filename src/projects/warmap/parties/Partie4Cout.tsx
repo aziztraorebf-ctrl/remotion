@@ -28,12 +28,13 @@ import {
   PAL, spriteMapWidth, countryOutline, lerpHex, smokePingPong,
 } from "./warmapPremiumKit";
 import type { FlowCorridor } from "../_shared/RefugeeFlow";
-import { MapPin, User } from "lucide-react";
+import { MapPin, User, Star } from "lucide-react";
 import { MALI_RING, NIGER_RING, BURKINA_RING } from "./sahelCountries";
 import { WarMapPlaque } from "./WarMapPlaque";
 import {
   WarMapOverlayDynamic, TitleReveal, StatCountUp, BadgeRow,
 } from "../_shared/WarMapOverlayDynamic";
+import { WarMapDimmedOverlay } from "../_shared/WarMapDimmedOverlay";
 
 // ============================================================
 // TRIGGERS V5 P4 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-14)
@@ -182,6 +183,97 @@ const F_LEADERS = 12640;   // dirigeants commencent (réussir / institutions)
 const F_SOLDIERS = 12820;  // soldats (sécuriser/stabiliser)
 const F_THREAT = 13000;    // menace résiduelle (faire tenir)
 const F_EXT_HABITED = 13290; // début extinction sur "durer..."
+
+// ============================================================
+// CONFEDERATION REVEAL — overlay PLEIN ÉCRAN solide (doctrine WARMAP-CARTE-VS-OVERLAY 2026-06-14).
+// L'acte institutionnel (3 pays signent) = conceptuel, sans ancrage spatial → on sort de la carte.
+// Séquence : fond sombre opaque monte → 3 drapeaux AES entrent (gauche/centre/droite) → glissent et se
+// resserrent vers le centre → SCEAU "coup de tampon" au contact + titre gravé → hold → sortie (retour carte).
+// ============================================================
+const ConfederationReveal: React.FC<{
+  frame: number; inAt: number; outAt: number; width: number; height: number; vmin: number; fps: number;
+}> = ({ frame, inAt, outAt, width, height, vmin, fps }) => {
+  if (frame < inAt - 2 || frame > outAt + 2) return null;
+  const L = frame - inAt;                         // frame locale
+  const cx = width / 2, cy = height * 0.44;        // centre = centerY du template (alignement trou contours)
+  const flagW = vmin * 0.13, flagH = flagW * 0.66;
+  const spread = vmin * 0.26;                      // écart initial des 3 drapeaux
+  // convergence : les drapeaux glissent du large vers le centre [L 18 → 58]
+  const conv = interpolate(L, [18, 58], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+  const flags = [
+    { code: "ml", name: "MALI", dir: -1 },
+    { code: "bf", name: "BURKINA", dir: 0 },
+    { code: "ne", name: "NIGER", dir: 1 },
+  ];
+  // sceau : apparaît au contact (L 56) en coup de tampon
+  const sceauSpring = spring({ frame: L - 56, fps, config: { damping: 9, stiffness: 95, mass: 0.9 } });
+  const sceauVisible = L >= 54;
+  const R = vmin * 0.085;
+  const sy = interpolate(sceauSpring, [0, 0.5, 1], [0.3, 1.15, 1]);
+  const impact = Math.max(0, 1 - Math.abs(sceauSpring - 0.55) / 0.35);
+  const starD = R * 0.95;
+  // titre : se grave après le tampon
+  const titleOp = interpolate(L, [70, 86], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  return (
+    <WarMapDimmedOverlay frame={frame} inAt={inAt} outAt={outAt} width={width} height={height} centerY={0.44}>
+      {/* La scène SPÉCIFIQUE confédération se superpose sur la carte assombrie (voile/halo/grain = template).
+          La carte (contours colorés) reste visible derrière ; le sceau passe devant via le trou percé dans la
+          couche contours du moteur (SahelWarMapEngine, mask confed-seal-hole). */}
+
+      {/* 3 drapeaux qui convergent vers le centre (avant le sceau) */}
+      {!sceauVisible && flags.map((f) => {
+        const x = cx + f.dir * spread * conv;
+        const appear = interpolate(L, [4 + Math.abs(f.dir) * 4, 18 + Math.abs(f.dir) * 4], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const fade = interpolate(L, [50, 56], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // s'effacent quand le sceau naît
+        return (
+          <div key={f.code} style={{ position: "absolute", left: x, top: cy, transform: "translate(-50%,-50%)",
+            opacity: appear * fade, textAlign: "center" }}>
+            <img src={staticFile(`_shared/flags/${f.code}.png`)} style={{ width: flagW, height: flagH,
+              objectFit: "cover", borderRadius: 6, border: "2px solid rgba(201,162,75,0.7)",
+              boxShadow: "0 6px 22px rgba(0,0,0,0.6)", display: "block" }} />
+            <div style={{ marginTop: vmin * 0.012, color: "#E8DCC0", fontFamily: "Georgia, serif",
+              fontWeight: 800, fontSize: vmin * 0.022, letterSpacing: 2 }}>{f.name}</div>
+          </div>
+        );
+      })}
+
+      {/* SCEAU (coup de tampon au contact des 3 drapeaux) */}
+      {sceauVisible && sceauSpring > 0.02 && (
+        <div style={{ position: "absolute", left: cx, top: cy, transform: `translate(-50%,-50%) scaleY(${sy}) scale(${Math.min(1, sceauSpring)})` }}>
+          <svg width={R * 2.6} height={R * 2.6} viewBox={`${-R * 1.3} ${-R * 1.3} ${R * 2.6} ${R * 2.6}`}
+            style={{ display: "block", filter: "drop-shadow(0 6px 12px rgba(0,0,0,0.55))" }}>
+            {impact > 0.02 && <circle r={R * (1.05 + impact * 0.6)} fill="none" stroke="#C9A24B" strokeWidth={R * 0.05} opacity={impact * 0.7} />}
+            <defs>
+              <radialGradient id="confed-sceau-grad">
+                <stop offset="0%" stopColor="#E9D08A" /><stop offset="68%" stopColor="#C9A24B" /><stop offset="100%" stopColor="#8E6E2C" />
+              </radialGradient>
+            </defs>
+            {/* plaque OPAQUE sombre sous le sceau : empêche les contours de la carte de TRAVERSER le sceau
+                (lisibilité — Aziz 2026-06-14). Le sceau est au premier plan, rien ne passe à travers. */}
+            <circle r={R * 1.14} fill="#16130c" opacity={0.96} />
+            <circle r={R} fill="url(#confed-sceau-grad)" stroke="#3A2A12" strokeWidth={R * 0.045} />
+            <circle r={R * 0.84} fill="none" stroke="#F4ECD8" strokeWidth={R * 0.025}
+              strokeDasharray={`${R * 0.07} ${R * 0.05}`} opacity={0.85} />
+            <Star x={-starD / 2} y={-starD / 2 - R * 0.14} width={starD} height={starD} fill="#F4ECD8" stroke="#F4ECD8" strokeWidth={1} />
+            <text y={R * 0.64} textAnchor="middle" fontSize={R * 0.2} fontWeight={800} fill="#3A2A12"
+              style={{ fontFamily: "Georgia, serif", letterSpacing: 1 }}>A · E · S</text>
+          </svg>
+        </div>
+      )}
+
+      {/* titre gravé sous le sceau */}
+      {titleOp > 0.01 && (
+        <div style={{ position: "absolute", left: 0, right: 0, top: cy + R * 1.5, textAlign: "center", opacity: titleOp }}>
+          <div style={{ color: "#C9A24B", fontFamily: "Georgia, serif", fontWeight: 800, fontSize: vmin * 0.05, letterSpacing: 1 }}>
+            Confédération AES</div>
+          <div style={{ color: "#B8A988", fontFamily: "Georgia, serif", fontSize: vmin * 0.026, letterSpacing: 4, marginTop: vmin * 0.01 }}>
+            SEPTEMBRE 2023</div>
+        </div>
+      )}
+    </WarMapDimmedOverlay>
+  );
+};
 
 // ============================================================
 // COMPOSANT — couche P4 par-dessus la carte
@@ -444,25 +536,22 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
             opacity={r.worldHalo * 0.3 * (1 - (frame % 90) / 90)} />
         ))}
 
-        {/* ════ M3 Ph7 : fils convergents des 3 capitales vers le centre (cause de la fusion) ════ */}
-        {beamsT > 0.01 && fuseT < 0.99 && cap.map((c, i) => {
-          const x2 = c.x + (centerPx.x - c.x) * beamsT;
-          const y2 = c.y + (centerPx.y - c.y) * beamsT;
-          return <line key={`beam-${i}`} x1={c.x} y1={c.y} x2={x2} y2={y2}
-            stroke={OR_AES} strokeWidth={2.5} strokeOpacity={0.8 * (1 - fuseT)} strokeLinecap="round"
-            strokeDasharray="3 6" />;
-        })}
+        {/* ════ M3 Ph7 : liens orthogonaux RETIRÉS (doctrine WARMAP-CARTE-VS-OVERLAY, Aziz 2026-06-14).
+             L'ACCORD institutionnel = conceptuel, sans ancrage spatial → il passe en OVERLAY PLEIN ÉCRAN
+             (ConfederationReveal ci-dessous), pas en métaphore plaquée sur la carte. CE QUI RESTE sur la
+             carte = la fusion territoriale or (ça, c'est spatial : 3 pays → 1 bloc soudé). ════ */}
 
-        {/* ════ M3 Ph7 : fusion or — remplissage des 3 pays (effet, après contact des fils) ════ */}
+        {/* ════ M3 Ph7 : fusion or — les 3 pays se SOUDENT en un bloc (SPATIAL → légitime sur la carte) ════ */}
         {fuseT > 0.01 && [MALI_RING, BURKINA_RING, NIGER_RING].map((ring, i) => {
           const px = ring.map(([lon, lat]) => project(lon, lat));
           const d = px.map((p, k) => `${k === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("") + "Z";
           return (
             <g key={`fuse-${i}`}>
-              {/* remplissage or (renforcé : 0.40 multiply, se lit sur le beige épuré) */}
+              {/* remplissage or SUBTIL (0.18 max — fix jaune pisseux Chantier 3 : le SENS est porté par le
+                  contour or épais ci-dessous, pas par le fill. L'or doit rester NOBLE, jamais jaune sale). */}
               <g clipPath={`url(#p4-fuse-${i})`}>
                 <rect x={0} y={0} width={width} height={height} fill={OR_AES}
-                  opacity={fuseT * 0.40} style={{ mixBlendMode: "multiply" }} />
+                  opacity={fuseT * 0.18} style={{ mixBlendMode: "multiply" }} />
               </g>
               {/* contour or net du périmètre = le bloc qui se soude (le plus lisible) */}
               <path d={d} fill="none" stroke={OR_AES} strokeWidth={vmin * 0.005}
@@ -561,32 +650,14 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         </div>
       ))}
 
-      {/* ════ M3 Ph7 : sceau confédération (tampon sur Niamey) ════ */}
-      {sceauOp > 0.02 && sceauSpring > 0.02 && (() => {
-        const D = vmin * 0.10;
-        // "coup de tampon" : scale Y compressé puis release
-        const sy = interpolate(sceauSpring, [0, 0.5, 1], [0.3, 1.15, 1]);
-        return (
-          <div style={{ position: "absolute", left: niameyPx.x, top: niameyPx.y,
-            transform: `translate(-50%,-50%) scaleY(${sy}) scale(${Math.min(1, sceauSpring)})`,
-            opacity: sceauOp }}>
-            <img src={staticFile("_shared/sprites/warmap/p4-assets/icon-sceau-confederation.png")}
-              style={{ width: D, height: D, objectFit: "contain", display: "block" }} />
-          </div>
-        );
-      })()}
+      {/* ════ M3 Ph7 : CONFÉDÉRATION = OVERLAY PLEIN ÉCRAN SOLIDE (doctrine WARMAP-CARTE-VS-OVERLAY).
+           L'acte institutionnel (3 pays signent) n'a PAS d'ancrage spatial → on SORT de la carte pour le
+           montrer en grand, premium, lisible : 3 drapeaux AES glissent vers le centre → fusionnent en SCEAU
+           "Septembre 2023 · Confédération AES". Puis retour carte (CFA, dézoom). ════ */}
+      <ConfederationReveal frame={frame} inAt={F_FORCE} outAt={F_CFA - 18} width={width} height={height} vmin={vmin} fps={fps} />
 
-      {/* ════ M3 Ph7 : micro-note QG ex-base Barkhane ════ */}
-      {(() => {
-        const op = interpolate(frame, [F_BARKHANE, F_BARKHANE + 14, F_CFA - 24, F_CFA], [0, 1, 1, 0],
-          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-        return op > 0.02 && (
-          <div style={{ position: "absolute", left: niameyPx.x, top: niameyPx.y + vmin * 0.075,
-            transform: "translate(-50%,-50%)", opacity: op, fontFamily: "Georgia, serif", fontSize: vmin * 0.016,
-            color: INK, fontStyle: "italic", whiteSpace: "nowrap",
-            textShadow: "0 0 4px #EADBC6, 0 0 4px #EADBC6" }}>QG · ex-base Barkhane</div>
-        );
-      })()}
+      {/* Micro-note "QG ex-base Barkhane" SUPPRIMÉE (Aziz 2026-06-14) : résidu d'adaptations antérieures,
+         transparaissait sous l'overlay confédération. L'overlay plein écran porte tout l'acte AES. */}
 
       {/* ════ COÛT HUMAIN — CARTOUCHE CENTRAL OPAQUE (Aziz 2026-06-14 : overlay central, PAS plein écran — la carte
            reste visible AUTOUR du cartouche, jamais à travers). L'action de fuite a déjà joué → cartouche central.
@@ -655,16 +726,9 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         );
       })()}
 
-      {/* ════ M3 Ph7 : overlay confédération — CARTOUCHE OPAQUE ancré (mode "card", PAS de voile sur la carte :
-           la fusion or qui se joue au centre reste visible. semitransp banni — Aziz 2026-06-14). ════ */}
-      <WarMapOverlayDynamic
-        inAt={F_FORCE} outAt={F_CFA - 24} mode="card" accent={OR_AES}
-        anchorPx={niameyPx}
-        blocks={[
-          { type: "title", text: "2024 · Confédération AES", at: 0, size: 40 },
-          { type: "kicker", text: "force armée commune", at: 22 },
-        ]}
-      />
+      {/* ════ M3 Ph7 : overlay confédération SUPPRIMÉ (Aziz 2026-06-14, Chantier 3) — la carte porte le sens :
+           le SCEAU "AES · 2024" + la fusion or + les contours nationaux qui se soudent en un bloc disent tout.
+           Doctrine MONTRER pas RÉPÉTER (le cartouche redondait la voix = problème #3 du diagnostic). ════ */}
 
       {/* ════ M3 Ph8 : franc CFA — PLEIN ÉCRAN (concept non-spatial, texte seul) ════ */}
       <WarMapOverlayDynamic

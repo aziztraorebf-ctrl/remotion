@@ -415,6 +415,8 @@ const CONTOUR_HIDE_WINDOWS: { from: number; to: number }[] = [
   // P4 : effacer les contours sous overlay coût (ancré) + CFA (plein écran). Sinon bouillie (leçon P3).
   { from: 10047, to: 10574 }, // P4 overlay coût chiffré (Ph3)
   { from: 11869, to: 12273 }, // P4 franc CFA plein écran (Ph8)
+  // NB confédération (Ph7) : on NE masque PAS les contours (ils font la beauté de la scène — fond noir +
+  // territoires colorés + drapeaux). Seul le SCEAU doit passer DEVANT eux → géré par z-index dans Partie4Cout.
 ];
 // facteur 1 = contours visibles, 0 = effacés. Fondu de 30f aux bords.
 const contourHideFactor = (frame: number): number => {
@@ -705,10 +707,11 @@ const PARTIE4_CAM_KEYS: CamKey[] = [
   { f: 10667, lon: -4.0, lat: 12.9, zoom: 5.15 },  // Ph5 : or sur Bamako (ouest)
   { f: 10729, lon: -1.5, lat: 12.8, zoom: 5.15 },  // Ph5 : balaye vers Ouaga
   { f: 10804, lon: 1.6, lat: 13.3, zoom: 5.20 },   // Ph6 : vers Niamey (uranium/pétrole, est)
-  { f: 11200, lon: -0.5, lat: 14.0, zoom: 4.75 },  // transition : élargit pour cadrer les 3 pays
-  { f: 11449, lon: -1.0, lat: 14.3, zoom: 4.60 },  // Ph7 : cadre le bloc AES (fusion)
-  { f: 11700, lon: -1.0, lat: 14.3, zoom: 4.58 },  // Ph7 hold (sceau, figé)
-  { f: 11869, lon: -1.0, lat: 14.3, zoom: 4.40 },  // Ph8 : léger dézoom (CFA concept)
+  { f: 11200, lon: -0.5, lat: 14.2, zoom: 4.95 },  // transition : cadre les 3 pays (resserré — éviter zoom large)
+  { f: 11449, lon: -0.9, lat: 14.4, zoom: 5.05 },  // Ph7 : cadre SERRÉ le bloc AES (liens orthogonaux lisibles)
+  { f: 11613, lon: -0.6, lat: 14.2, zoom: 5.20 },  // Ph7 : PUSH-IN doux vers Niamey pendant que le sceau tombe
+  { f: 11760, lon: -0.6, lat: 14.2, zoom: 5.18 },  // Ph7 hold serré (sceau posé, le bloc soudé en gros plan)
+  { f: 11869, lon: -0.8, lat: 14.3, zoom: 4.95 },  // Ph8 : léger desserrage (transition CFA concept)
   // Ph9 "statu quo 60 ans" : BREF dézoom révélateur (le bloc dans le continent) PUIS retour serré.
   { f: 12297, lon: -1.0, lat: 14.5, zoom: 3.95 },  // Ph9 : dézoom continental (statu quo 60 ans brisé)
   { f: 12520, lon: -1.0, lat: 14.6, zoom: 3.75 },  // Ph9 : point bas du dézoom (le bloc dans l'Afrique)
@@ -3911,9 +3914,24 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           ? interpolate(frame, [0, 360, 720], [0.55, 0.85, 0.72],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
           : 0.78) * hide; // base parties (le pulse ajoute le relief ponctuel)
+        // TROU CONFÉDÉRATION (Ph7) : pendant l'overlay AES (f11521→11851), percer un disque dans les contours
+        // à l'emplacement ÉCRAN du sceau (centre overlay = width/2, height*0.46) pour qu'AUCUNE ligne ne le
+        // traverse — SANS masquer le reste des contours (qui font la beauté de la scène). Aziz 2026-06-14.
+        const confedHole = interpolate(frame, [11521 - 8, 11521 + 12, 11851 - 12, 11851 + 8], [0, 1, 1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const holeCx = width / 2, holeCy = height * 0.44, holeR = Math.min(width, height) * 0.105;
         return (
           <AbsoluteFill style={{ pointerEvents: "none" }}>
             <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
+              {confedHole > 0.01 && (
+                <defs>
+                  <mask id="confed-seal-hole">
+                    <rect x={0} y={0} width={width} height={height} fill="#fff" />
+                    <circle cx={holeCx} cy={holeCy} r={holeR * confedHole} fill="#000" />
+                  </mask>
+                </defs>
+              )}
+              <g mask={confedHole > 0.01 ? "url(#confed-seal-hole)" : undefined}>
               {countryBorderPaths.map((p, i) => {
                 const iso = p.country as CountryISO;
                 const color = SAHEL_COUNTRY_COLORS[p.country] ?? "#D98A3D";
@@ -3954,6 +3972,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                   </g>
                 );
               })}
+              </g>
             </svg>
           </AbsoluteFill>
         );
