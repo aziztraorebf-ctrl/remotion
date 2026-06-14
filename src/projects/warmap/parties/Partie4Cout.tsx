@@ -655,9 +655,10 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         );
       })()}
 
-      {/* ════ M3 Ph7 : overlay confédération (ancré, pas plein écran — la fusion porte le sens) ════ */}
+      {/* ════ M3 Ph7 : overlay confédération — CARTOUCHE OPAQUE ancré (mode "card", PAS de voile sur la carte :
+           la fusion or qui se joue au centre reste visible. semitransp banni — Aziz 2026-06-14). ════ */}
       <WarMapOverlayDynamic
-        inAt={F_FORCE} outAt={F_CFA - 24} mode="semitransp" accent={OR_AES}
+        inAt={F_FORCE} outAt={F_CFA - 24} mode="card" accent={OR_AES}
         anchorPx={niameyPx}
         blocks={[
           { type: "title", text: "2024 · Confédération AES", at: 0, size: 40 },

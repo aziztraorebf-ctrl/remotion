@@ -170,7 +170,12 @@ type BlockSpec =
 export type WarMapOverlayDynamicProps = {
   inAt: number;            // frame d'apparition (absolue)
   outAt: number;           // frame de disparition (absolue)
-  mode?: "semitransp" | "fullscreen";
+  // "fullscreen" = parchemin opaque plein écran (casse la carte, pour concept non-spatial).
+  // "card" = cartouche central/ancré OPAQUE, SANS voile sur la carte (la carte reste visible et lisible
+  //          tout autour — pour les scènes à enjeu territorial où la carte porte le sens). Remplace l'ancien
+  //          "semitransp" BANNI (voile sombre = bouillie, décision Aziz 2026-06-14).
+  // "semitransp" = DÉPRÉCIÉ (banni) — conservé pour compat, rendu identique à "card" (jamais de voile).
+  mode?: "semitransp" | "fullscreen" | "card";
   accent?: string;
   cardWidthPct?: number;   // largeur de la carte centrale (0-1 de l'écran)
   anchorPx?: { x: number; y: number } | null; // point carte auquel relier l'overlay (ligne fine), optionnel
@@ -190,6 +195,7 @@ export const WarMapOverlayDynamic: React.FC<WarMapOverlayDynamicProps> = ({
   if (op <= 0.01) return null;
   const localFrame = frame - inAt;
   const isFull = mode === "fullscreen";
+  // "semitransp" (déprécié) est rendu comme "card" : JAMAIS de voile sur la carte (banni Aziz 2026-06-14).
   const cardW = width * (cardWidthPct ?? (isFull ? 0.62 : 0.5));
 
   const renderBlock = (b: BlockSpec, i: number) => {
@@ -209,15 +215,14 @@ export const WarMapOverlayDynamic: React.FC<WarMapOverlayDynamicProps> = ({
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none", opacity: op }}>
-      {/* FOND : plein écran parchemin opaque OU voile semi-transp (carte visible dessous) */}
-      {isFull ? (
+      {/* FOND : plein écran parchemin opaque (fullscreen) OU AUCUN voile (card/semitransp) — la carte reste
+          visible et nette autour du cartouche. Plus de voile sombre (banni Aziz 2026-06-14). */}
+      {isFull && (
         <>
           <AbsoluteFill style={{ background: "#cdba8f", opacity: 0.98 }} />
           <AbsoluteFill style={{ backgroundImage: `url(${staticFile("_shared/sprites/warmap/paper-grain.png")})`,
             backgroundRepeat: "repeat", opacity: 0.4, mixBlendMode: "multiply" }} />
         </>
-      ) : (
-        <AbsoluteFill style={{ background: "rgba(20,14,6,0.42)" }} />
       )}
 
       {/* ligne fine vers le point carte ancré (géo-conscience optionnelle) */}
@@ -229,14 +234,22 @@ export const WarMapOverlayDynamic: React.FC<WarMapOverlayDynamicProps> = ({
         </svg>
       )}
 
-      {/* CARTE CENTRALE (parchemin) */}
-      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
-        <div style={{ width: cardW, padding: isFull ? "48px 56px" : "34px 44px",
-          background: isFull ? "rgba(245,239,214,0.97)" : "rgba(245,239,214,0.92)",
+      {/* CARTE CENTRALE (parchemin). En mode "card" : cartouche compact OPAQUE placé plus haut (ne masque pas
+          le centre de la carte où l'action se joue) + grain papier (document officiel, anti-flat). */}
+      <AbsoluteFill style={{ justifyContent: isFull ? "center" : "flex-start", alignItems: "center",
+        paddingTop: isFull ? 0 : height * 0.10 }}>
+        <div style={{ width: cardW, padding: isFull ? "48px 56px" : "26px 38px",
+          position: "relative", overflow: "hidden",
+          background: isFull ? "rgba(245,239,214,0.97)" : "#F2EACF",
           border: `3px solid ${accent}`, borderRadius: 12, textAlign: "center",
-          boxShadow: "0 14px 44px rgba(0,0,0,0.42)",
+          boxShadow: "0 14px 44px rgba(0,0,0,0.5)",
           transform: `scale(${0.96 + 0.04 * cardPop})`,
-          display: "flex", flexDirection: "column", gap: isFull ? 22 : 16 }}>
+          display: "flex", flexDirection: "column", gap: isFull ? 22 : 14 }}>
+          {/* grain papier sur le cartouche (document officiel) */}
+          {!isFull && (
+            <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${staticFile("_shared/sprites/warmap/paper-grain.png")})`,
+              backgroundRepeat: "repeat", opacity: 0.25, mixBlendMode: "multiply", pointerEvents: "none" }} />
+          )}
           {children ?? blocks?.map(renderBlock)}
         </div>
       </AbsoluteFill>
