@@ -1,3 +1,6 @@
+> ⛔ ARCHIVÉ 2026-06-14 — P3 TERMINÉE ET VALIDÉE (p3-FINAL.mp4 avec contours nationaux).
+> Prochaine partie : voir `BRIEF-PASSATION-P4.md`. Ce fichier = historique P3 uniquement.
+
 # BRIEF DE PASSATION — War-Map Sahel PARTIE 3 "La Rupture"
 
 > Pour l'instance Claude qui démarre la session P3. **LIRE CE FICHIER EN ENTIER EN PREMIER.** Il est autonome :

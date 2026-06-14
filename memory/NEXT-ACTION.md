@@ -9,15 +9,18 @@
 > ⭐ **ÉTAT (2026-06-13)** : P3 "La Rupture" VALIDÉE par Aziz. Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4`
 > (1920x1080, 1min50, audio embarqué, catbox ck26kl). wip P3 purgés. Détail : `STATUS.md` section "P3 VALIDÉE".
 >
-> **PROCHAINES ACTIONS (dans l'ordre) :**
-> 1. **✅ "fond qui respire" RÉSOLU (2026-06-14)** via CONTOURS NATIONAUX colorés (1 ton/pays : Mali ocre /
->    Burkina brique / Niger sarcelle) + draw-in + pulse aux moments clés + effacement sous overlay. UNIQUEMENT
->    sur parties épurées (P3, P4) ; Acte1/Acte2/P1 intouchés. Détail complet : STATUS.md section dédiée.
->    RESTE : valider le render P3 full HD avec contours (en cours) → remplacer p3-FINAL.mp4.
-> 2. **P4 "Coût / Levier / Perspective"** (réfugiés Djibo/Ménaka/Tillabéri f9366+, franc CFA, perspective) — le
->    PLEIN ÉCRAN est validé pour les CONCEPTS non-spatiaux. RÉUTILISER les contours nationaux : ajouter `partie4`
->    au gate `partie3 || countryBordersTest` dans le moteur + définir les fenêtres d'overlay P4 dans CONTOUR_HIDE_WINDOWS.
-> 3. **Assemblage final** (Acte1+P1+P2+P3+P4).
+> **▶ PROCHAINE SESSION = P4 "Coût / Levier / Perspective" — LA DERNIÈRE PARTIE.**
+> ⭐ **LIRE EN PREMIER : `memory/episodes/warmap-sahel/BRIEF-PASSATION-P4.md`** (brief autonome complet :
+> état vidéo, ordre de démarrage strict, découpage beats f9410→f12996 déjà fait dans BEATS-V5, assets/briques,
+> réutilisation contours nationaux, doctrine, méthode). Après P4 → il ne reste que l'ASSEMBLAGE FINAL.
+>
+> Ordre P4 (strict) : 1. PLAN-NARRATIF-P4 (phrase par phrase) → 2. DA-brief upstream → 3. coder (copier
+> Partie3Rupture, mode moteur `partie4` à créer). Audio prêt : `narration-v5-p4.mp3` (132s).
+> ⚠️ Clarifier avec Aziz : P1 n'a pas de p1-FINAL.mp4 (render dans wip/partie1-fullhd-v3.mp4) — à promouvoir ?
+>
+> **✅ FAIT 2026-06-14 — "fond qui respire" RÉSOLU** via CONTOURS NATIONAUX colorés (Mali ocre / Burkina brique
+> / Niger sarcelle) + draw-in + pulse + effacement sous overlay, UNIQUEMENT sur parties épurées (P3 ; Acte1/
+> Acte2/P1 intouchés). p3-FINAL.mp4 régénéré full HD avec contours. Commits 1b82633 + 11eacf8. Code nettoyé.
 >
 > NOUVEAUTÉS RÉUTILISABLES : brique `WarMapOverlayDynamic` (overlay dynamique, 6 blocs composables) + doctrine
 > `REVIEW-PREMIUM-TEMPLATE.md`. ⚠️ Bug noté : Gemini Files API vidéo ne "voit" pas la vidéo → review vidéo = FRAMES.
