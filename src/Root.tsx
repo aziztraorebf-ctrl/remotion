@@ -259,6 +259,7 @@ import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/Sate
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
 import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/GoldRouteAtlasZoom";
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
+import { PocImmobilierQC } from "./projects/_rnd/poc-immobilier-qc/PocImmobilierQC";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2830,7 +2831,18 @@ export const RemotionRoot: React.FC = () => {
           id="SahelPartie3"
           component={SahelWarMapEngine}
           defaultProps={{ partie3: true }}
-          durationInFrames={9560}
+          durationInFrames={9410}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* DÉMO de référence du principe validé (Aziz 2026-06-14) : contours NATIONAUX colorés
+            (1 ton/pays) + draw-in & pulse. Carte épurée, séquence Mali→Burkina→Niger. --frames=0-450. */}
+        <Composition
+          id="SahelCountryBordersTest"
+          component={SahelWarMapEngine}
+          defaultProps={{ countryBordersTest: true }}
+          durationInFrames={450}
           fps={30}
           width={1920}
           height={1080}
@@ -2935,6 +2947,17 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+      </Folder>
+
+      <Folder name="RND-Nord-Donnees">
+        <Composition
+          id="PocImmobilierQC"
+          component={PocImmobilierQC}
+          durationInFrames={1995}
+          fps={30}
+          width={1080}
+          height={1920}
         />
       </Folder>
 

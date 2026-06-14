@@ -4,22 +4,23 @@
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 v8 FINALE (2026-06-13, attend validation Aziz)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅✅ VALIDÉE DÉFINITIVEMENT (2026-06-13)
 
-> ⭐ **ÉTAT (2026-06-13)** : P3 "La Rupture" v8 FINALE proposée à Aziz (catbox 93yw8p). 8 itérations + 2 reviews
-> DA (upstream + premium Gemini/Kimi) + passe premium complète. Détail complet : `STATUS.md` section "P3 v8 FINALE".
+> ⭐ **ÉTAT (2026-06-13)** : P3 "La Rupture" VALIDÉE par Aziz. Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4`
+> (1920x1080, 1min50, audio embarqué, catbox ck26kl). wip P3 purgés. Détail : `STATUS.md` section "P3 VALIDÉE".
 >
 > **PROCHAINES ACTIONS (dans l'ordre) :**
-> 1. **Si Aziz valide la P3** → render FULL HD (scale 1, juger netteté) → promouvoir p3-FINAL.mp4.
-> 2. **SESSION DÉDIÉE "fond de contrôle qui respire"** (transversal Acte1→P3, NE PAS faire au coup par coup) :
->    réintroduire la carte colorée de contrôle (rouge/contesté/bleu) à opacité qui RESPIRE (calme ~15% pendant
->    l'action, remonte ~35% sur les temps de lecture) + légende couleur brève. Détail : STATUS.md "CHANTIER TRANSVERSAL".
-> 3. **P4 "Coût / Levier / Perspective"** (réfugiés Djibo/Ménaka/Tillabéri f9366+, franc CFA, perspective) — le
->    PLEIN ÉCRAN est validé comme outil pour les CONCEPTS non-spatiaux de la P4 (vs overlay pour le territorial).
+> 1. **✅ "fond qui respire" RÉSOLU (2026-06-14)** via CONTOURS NATIONAUX colorés (1 ton/pays : Mali ocre /
+>    Burkina brique / Niger sarcelle) + draw-in + pulse aux moments clés + effacement sous overlay. UNIQUEMENT
+>    sur parties épurées (P3, P4) ; Acte1/Acte2/P1 intouchés. Détail complet : STATUS.md section dédiée.
+>    RESTE : valider le render P3 full HD avec contours (en cours) → remplacer p3-FINAL.mp4.
+> 2. **P4 "Coût / Levier / Perspective"** (réfugiés Djibo/Ménaka/Tillabéri f9366+, franc CFA, perspective) — le
+>    PLEIN ÉCRAN est validé pour les CONCEPTS non-spatiaux. RÉUTILISER les contours nationaux : ajouter `partie4`
+>    au gate `partie3 || countryBordersTest` dans le moteur + définir les fenêtres d'overlay P4 dans CONTOUR_HIDE_WINDOWS.
+> 3. **Assemblage final** (Acte1+P1+P2+P3+P4).
 >
-> NOUVEAUTÉS RÉUTILISABLES de cette session : brique `WarMapOverlayDynamic` (overlay dynamique, 6 blocs composables)
-> + doctrine `REVIEW-PREMIUM-TEMPLATE.md` (structure standard du review premium). ⚠️ Bug noté : Gemini Files API
-> vidéo ne "voit" pas la vidéo → pour review vidéo fiable, envoyer des FRAMES aux 2 modèles.
+> NOUVEAUTÉS RÉUTILISABLES : brique `WarMapOverlayDynamic` (overlay dynamique, 6 blocs composables) + doctrine
+> `REVIEW-PREMIUM-TEMPLATE.md`. ⚠️ Bug noté : Gemini Files API vidéo ne "voit" pas la vidéo → review vidéo = FRAMES.
 
 **ÉTAT (2026-06-12) — P2 NARRATIVE VALIDÉE Aziz ("très bon point d'équilibre, on garde").**
 La P2 refondue 4 fois : SVG plat (rejeté) → premium "états" (confus) → grammaire CAUSALE (validé).
@@ -382,6 +383,20 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **NEXT** : (1) anims north caravane ; (2) retouches Beat5 ; (3) FINAL Beat5 ; (4) assemblage 5 beats + narration + SFX.
 **Reprise** : lire `memory/episodes/peste-1347/STATUS.md` (état détaillé par beat + méthode qui a débloqué).
 **Méthode validée** : phase par phase + œil Gemini (`gemini-beat5-review.py`) sur beat qui résiste + systematic-debugging + réutiliser templates (CHECK A6 du hook force ça maintenant).
+
+---
+
+## 💡 CHANTIER SCRIPT — Système hook + CTA commentaire (2026-06-13, session dédiée)
+
+**Contexte** : analyse de 3 chaînes "slideshow/animation minimale" (dont Psychology Explained 593k vues avec 10k abonnés) a confirmé que la différence de performance vient quasi exclusivement du hook des 30 premières secondes et du CTA commentaire précoce — pas de la production visuelle.
+
+**Deux livrables à construire en session dédiée :**
+1. **Checklist hook universelle** à intégrer dans `SCRIPT-ORAL-DOCTRINE.md` — les 20 premières secondes DOIVENT contenir soit une contradiction choquante, soit une honte réhabilitée, soit un fait qui renverse une croyance commune. Formule : douleur/contradiction identitaire → puis le fait, pas l'inverse.
+2. **Template CTA commentaire** à insérer systématiquement à 30-60s dans chaque script (pas seulement en fin). Ex : "Écris en commentaire le pays ou l'empire africain que tu veux qu'on explore — ça m'aide à choisir la prochaine vidéo."
+
+**Cas AES (War-Map Sahel) :** hook potentiellement améliorable mais voix déjà générée. En session dédiée : évaluer si re-générer l'audio du début vaut le coût (coût = 1 partie ElevenLabs + raccord audio) vs laisser tel quel et appliquer sur la vidéo suivante. Décision Aziz.
+
+**Pour toutes les vidéos suivantes :** appliquer le nouveau hook AVANT génération audio (pas après).
 
 ---
 

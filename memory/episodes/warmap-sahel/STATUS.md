@@ -266,7 +266,36 @@ Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4` (1920x1080, 1min50, audio, catb
 wip P3 purgés (v1-v8, core, pitch-test, ph1 variants = ~325 MB). raw assets purgés (emblem gardé).
 RESTE sur la vidéo : P4 + assemblage final (Acte1+P1+P2+P3+P4). + chantier transversal "fond qui respire".
 
-## 🔬 DIAGNOSTIC "FOND QUI RESPIRE" (2026-06-13) — le vrai chantier identifié
+## ✅ CONTOURS NATIONAUX COLORÉS — RÉSOLUTION du chantier "fond qui respire" (2026-06-14)
+
+Le chantier "fond qui respire" a abouti à une solution DIFFÉRENTE de l'idée initiale (opacité du fill),
+après exploration guidée par Aziz. Parcours : mosaïque par région (ÉCARTÉ, noyait l'action) → bordures
+de contrôle par faction (ÉCARTÉ, bouillie) → **CONTOURS NATIONAUX colorés, 1 ton/pays (RETENU)**.
+
+**SOLUTION VALIDÉE (Aziz 2026-06-14)** :
+- **Contour national coloré, 1 ton par pays** : Mali `#D98A3D` (ocre), Burkina `#C0553C` (brique),
+  Niger `#4E8C7D` (sarcelle). Constante `SAHEL_COUNTRY_COLORS` dans `SahelControlData.ts`.
+- **Carte épurée conservée** (pas de mosaïque pleine, pas de quadrillage interne).
+- **Présence permanente + respiration douce** (atténués pendant l'action des jetons, jamais disparus).
+- **Effets** : draw-in (le contour se dessine) + pulse (s'allume) aux moments clés / mentions du pays
+  (table `COUNTRY_PULSES`, frames extraites de narration-v5-alignment.json).
+- **EFFACEMENT sous overlay** (`CONTOUR_HIDE_WINDOWS`) : les contours fade-out quand un overlay/panneau
+  couvre la carte (P3 : overlay AES f6118-6800 + flashback Moura f8560-8920). Sinon = bouillie illisible
+  sous l'overlay semi-transparent. RÈGLE : contours et overlay ne cohabitent JAMAIS.
+
+**PÉRIMÈTRE (décision Aziz)** : contours UNIQUEMENT sur parties ÉPURÉES (P3, P4 à venir). Acte 1, Acte 2,
+P1 gardent leur look validé (fond mosaïque/allumage séquentiel qui porte déjà la couleur) — on ne les
+touche PAS. Gate moteur : `partie3 || countryBordersTest` (ajouter `partie4` au moment de coder P4).
+
+**CODE** : tout dans `engine/SahelWarMapEngine.tsx` (countryBorderPaths reprojetés/frame depuis
+`sahel-countries`, rendu SVG au-dessus du grain). Démo de référence : compo `SahelCountryBordersTest`
+(catbox 4m4bpv). Plan : `docs/plans/2026-06-13-contours-nationaux-colores.md`.
+NETTOYAGE FAIT : modes exploratoires region/borders (`controlMode`) entièrement retirés (code mort).
+
+**RESTE** : render P3 full HD avec contours → remplacer p3-FINAL.mp4 après validation netteté Aziz.
+P4 reprendra le même mécanisme (`partie4` à ajouter au gate).
+
+## 🔬 DIAGNOSTIC "FOND QUI RESPIRE" (2026-06-13) — le vrai chantier identifié [ARCHIVÉ — résolu ci-dessus]
 Tenté en fin de session : faire respirer l'opacité du fill de contrôle (sahel-fill) en P3 (calme action / haut
 lecture) + légende code-couleur. RÉSULTAT : l'opacité respire MAIS le fond reste beige/bleu quasi-uniforme.
 CAUSE RACINE (ligne ~1101 moteur) : toutes les régions sont initialisées à `ctrl=1` (état/bleu) par défaut ;

@@ -21,9 +21,19 @@
 | **Flèche tactique qui pousse progressivement** (axe d'offensive, convergence, tenaille) sur carte Mapbox | `SahelAttackArrow` | `warmap/_shared/SahelAttackArrow.tsx` | `map`, `waypoints: [number,number][]`, `progress: 0→1`, `color`, `strokeWidth`, `headType`, `marchingFrame` |
 | **Zones de contrôle qui grandissent organiquement** (expansion territoriale, contamination) | `TerritorialExpansion` | `warmap/_shared/TerritorialExpansion.tsx` | `map`, `regions: ExpansionRegion[]`, `startFrame`, `endFrame`, `frame`, `color`, `maxOpacity`. Données Act2 JNIM incluses dans `EXPANSION_REGIONS_ACT2` |
 | **Flux de déplacés / migration en rubans animés** (corridors humanitaires, flux population) | `RefugeeFlow` | `warmap/_shared/RefugeeFlow.tsx` | `map`, `flows: FlowCorridor[]`, `frame`, `color`, `baseWidth`. Données Act4 Sahel incluses dans `REFUGEE_FLOWS_ACT4` |
+| **⭐ OVERLAY DYNAMIQUE semi-transp/plein écran** (meubler une section vide, ajouter de l'info SANS tout forcer sur la carte — décision Aziz 2026-06-12) | `WarMapOverlayDynamic` | `warmap/_shared/WarMapOverlayDynamic.tsx` | `inAt`, `outAt`, `mode` ("semitransp"=voile sur carte / "fullscreen"=parchemin opaque), `accent`, `anchorPx` (relier à un point carte), `blocks[]` (déclaratif) OU `children` (libre). **Blocs animés composables/mixables/extensibles** : `TitleReveal` (mot-à-mot), `Kicker`, `TokenRow` (drapeaux/portraits qui s'allument en séquence), `StatCountUp`, `QuoteType` (typewriter), `BadgeRow`. Charte parchemin War-Map. RÈGLE : overlay TOUJOURS dynamique, jamais figé. 1ʳᵉ utilisation : Ph1 AES (P3 Sahel). |
 
 **Showcase de validation** : `MapAnimationShowcase` (composition Root.tsx) — 40s, 3 segments.
 Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
+
+### ⭐ CONTOURS NATIONAUX COLORÉS (Sahel, Aziz 2026-06-14) — "touche de couleur épurée"
+
+| Quand tu veux... | Mécanisme | Où | Règle |
+|---|---|---|---|
+| **Distinguer les pays par une touche de couleur SANS charger la carte** (1 ton par pays sur le contour national, draw-in + pulse aux moments clés) | `countryBorderPaths` (reprojetés/frame depuis `sahel-countries`) + rendu SVG au-dessus du grain + `SAHEL_COUNTRY_COLORS` + `COUNTRY_PULSES` + `CONTOUR_HIDE_WINDOWS` | `engine/SahelWarMapEngine.tsx` + couleurs dans `engine/SahelControlData.ts` | **UNIQUEMENT sur parties ÉPURÉES** (fond mosaïque = porte déjà la couleur, NE PAS ajouter). Contours s'EFFACENT sous tout overlay (jamais de cohabitation = bouillie). Respiration douce. Démo : compo `SahelCountryBordersTest`. |
+
+**Couleurs pays** : Mali `#D98A3D` ocre · Burkina `#C0553C` brique · Niger `#4E8C7D` sarcelle.
+**Réutiliser pour P4** : ajouter `partie4` au gate `partie3 || countryBordersTest` + fenêtres overlay P4 dans `CONTOUR_HIDE_WINDOWS`.
 
 ---
 

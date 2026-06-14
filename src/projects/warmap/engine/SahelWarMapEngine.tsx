@@ -62,6 +62,7 @@ import {
   sahelControlAt,
   sahelJalonAt,
   SAHEL_COLORS,
+  SAHEL_COUNTRY_COLORS,
 } from "./SahelControlData";
 import type { Vehicle as SchemaVehicle, Refugee as SchemaRefugee, GeoPathPoint } from "../data/schema";
 import type { SahelRenderContext } from "./SahelContext";
@@ -391,6 +392,51 @@ const F_HOOK_CEDEAO   = 382;   // "continent." → anneau CEDEAO clignote orange
 const F_HOOK_LIPTAKO  = 502;   // "nouveau." → vecteurs capitales + Liptako pulse or
 const F_HOOK_FREEZE   = 572;   // "possible" → FIGÉE 2s (60 frames)
 const F_HOOK_DRIFT    = 726;   // "répondre" → drift reprend
+
+// CONTOURS NATIONAUX COLORÉS (Aziz 2026-06-13) — pulses aux moments clés de chaque pays,
+// frames extraites de narration-v5-alignment.json (mentions Mali/Burkina/Niger + Kidal=Mali).
+// Acte 1 (f150/231/301) = draw-in + pulse, géré à part. Ici : P1→P4.
+type CountryISO = "MLI" | "BFA" | "NER";
+const COUNTRY_PULSES: { f: number; c: CountryISO }[] = [
+  { f: 1324, c: "MLI" }, { f: 1360, c: "BFA" }, { f: 1689, c: "NER" },
+  { f: 2442, c: "MLI" }, { f: 3723, c: "MLI" },
+  { f: 4858, c: "MLI" }, { f: 4976, c: "BFA" }, { f: 5380, c: "NER" },
+  { f: 6255, c: "NER" }, { f: 7083, c: "MLI" }, { f: 7240, c: "MLI" },
+  { f: 8117, c: "MLI" }, { f: 8158, c: "MLI" },
+  { f: 10709, c: "MLI" }, { f: 10729, c: "BFA" }, { f: 10851, c: "NER" },
+];
+// FENÊTRES D'EFFACEMENT des contours nationaux (Aziz 2026-06-13) : quand un overlay/panneau
+// couvre la carte, les contours s'effacent (sinon bouillie illisible sous l'overlay semi-transp).
+// P3 : overlay AES (f6118→6800) + flashback Moura désaturé (f8570→8900). Avec fondu d'entrée/sortie.
+const CONTOUR_HIDE_WINDOWS: { from: number; to: number }[] = [
+  { from: 6118, to: 6800 },  // overlay "Alliance des États du Sahel"
+  { from: 8560, to: 8920 },  // flashback Moura (carte altérée sépia)
+];
+// facteur 1 = contours visibles, 0 = effacés. Fondu de 30f aux bords.
+const contourHideFactor = (frame: number): number => {
+  let f = 1;
+  for (const w of CONTOUR_HIDE_WINDOWS) {
+    const inside = interpolate(frame, [w.from - 30, w.from, w.to, w.to + 30], [1, 0, 0, 1],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    f = Math.min(f, inside);
+  }
+  return f;
+};
+
+// pulse 0..1 pour un pays à une frame : prend le pulse actif le plus récent (montée/maintien/descente).
+const countryPulseAt = (country: CountryISO, frame: number): number => {
+  let best = 0;
+  for (const p of COUNTRY_PULSES) {
+    if (p.c !== country || frame < p.f) continue;
+    // montée 10f → maintien 30f → descente 40f
+    const v =
+      frame < p.f + 10 ? (frame - p.f) / 10 :
+      frame < p.f + 40 ? 1 :
+      frame < p.f + 80 ? 1 - (frame - p.f - 40) / 40 : 0;
+    if (v > best) best = v;
+  }
+  return Math.max(0, Math.min(1, best));
+};
 
 // Coordonnées pivots hook
 const LIPTAKO_CENTER = [-0.5, 14.5] as [number, number]; // Centre zone Liptako-Gourma
@@ -929,6 +975,11 @@ export type SahelTestProps = {
   // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
   proto24?: boolean;
   proto24Pitch?: number;
+  // DÉMO ISOLÉE (Aziz 2026-06-14) : contours NATIONAUX colorés (1 ton/pays) + effets
+  // draw-in (le contour se dessine) et pulse (il s'allume). Carte épurée, caméra large
+  // fixe, AUCUN overlay/panneau. Séquence : Mali → Burkina → Niger. Le PRINCIPE retenu
+  // s'applique en production sur les parties épurées (P3, P4) — voir bloc render.
+  countryBordersTest?: boolean;
 };
 
 export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
@@ -947,6 +998,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   partie1 = false,
   partie2 = false,
   partie3 = false,
+  countryBordersTest = false,
   ph1Fullscreen = false,
   proto24 = false,
   proto24Pitch = 0,
@@ -959,7 +1011,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || proto24;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || proto24 || countryBordersTest;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
   const isPartie = partie1 || partie2 || partie3 || proto24;
 
@@ -1003,6 +1055,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   const [aesPaths, setAesPaths] = useState<string[]>([]);
   // B3 frontDraw : contours des masses fusionnées reprojetés, groupés par pays (draw-in).
   const [frontPaths, setFrontPaths] = useState<{ country: string; d: string; len: number }[]>([]);
+  // CONTOURS NATIONAUX : paths SVG par pays (reprojetés/frame) + longueur pour le draw-in.
+  const [countryBorderPaths, setCountryBorderPaths] = useState<{ country: string; d: string; len: number }[]>([]);
   // ACTE 1 FINAL : véhicules pilotés par frame absolue (position + direction + traînée).
   const [a1VehPx, setA1VehPx] = useState<{ id: string; x: number; y: number; dx: number; dy: number; trail: {x:number;y:number}[] }[]>([]);
   // ACTE 1 FINAL : foyers des taches d'influence (JNIM centre Mali, EIGS est) reprojetés.
@@ -1325,18 +1379,31 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           }
           setFrontPaths(fps2);
         }
-      } else if ((src as any)._data) {
-        const data = (src as any)._data;
-        for (const f of data.features) {
-          const name = f.properties.name as string;
-          if (SAHEL_STATES.includes(name)) {
-            const c = sahelControlAt(name, ctrlTGlobal);
-            f.properties.ctrl = c;
-            f.properties.front = 1 - 2 * Math.abs(c - 0.5);
-          }
-        }
-        src.setData(data);
+      } else if (baseFeaturesRef.current) {
+        // FIX (2026-06-13) : (src as any)._data n'existe plus sur GeoJSONSource récent →
+        // le contrôle par région n'était JAMAIS mis à jour (restait ctrl=1 partout).
+        // On reconstruit le FC depuis baseFeaturesRef (source fiable des 32 régions).
+        const updated = {
+          type: "FeatureCollection",
+          features: baseFeaturesRef.current.map((bf: any) => {
+            const name = bf.properties.name as string;
+            const c = SAHEL_STATES.includes(name) ? sahelControlAt(name, ctrlTGlobal) : 1;
+            return {
+              ...bf,
+              properties: { ...bf.properties, ctrl: c, front: 1 - 2 * Math.abs(c - 0.5) },
+            };
+          }),
+        };
+        src.setData(updated as any);
       }
+    }
+
+    // DÉMO contours nationaux : fond fill ÉPURÉ (parchemin quasi nu) + lignes internes
+    // quasi éteintes → SEULS les contours nationaux colorés portent la couleur.
+    if (countryBordersTest) {
+      try { map.setPaintProperty("sahel-fill", "fill-opacity", 0.05); } catch {}
+      if (map.getLayer("sahel-line")) { try { map.setPaintProperty("sahel-line", "line-opacity", 0.10); } catch {} }
+      if (map.getLayer("sahel-outline")) { try { map.setPaintProperty("sahel-outline", "line-opacity", 0.15); } catch {} }
     }
 
     // CARTE COLORÉE DÈS LE DÉPART (décision Aziz 2026-06-07, revenant sur "neutre") :
@@ -1377,7 +1444,15 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // FIGÉE pendant "Comment est-ce possible?" (f572→f632 = 2s).
     const hookFreeze = frame >= F_HOOK_FREEZE && frame < F_HOOK_FREEZE + 60;
     let camLon: number, camLat: number, camZoom: number;
-    if (useActe1Cam) {
+    if (countryBordersTest) {
+      // TEST contours nationaux : vue large fixe sur les 3 pays AES, léger drift premium.
+      const e = interpolate(frame, [0, 600], [0, 1], {
+        extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
+      });
+      camLon = 0.8 + e * 0.3;
+      camLat = 16.2 - e * 0.4;
+      camZoom = 4.35 + e * 0.12;
+    } else if (useActe1Cam) {
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
@@ -1508,6 +1583,33 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         }
       }
       setAesPaths(paths);
+    }
+
+    // CONTOURS NATIONAUX COLORÉS : reprojeter chaque pays + mesurer la longueur du tracé.
+    // Actif UNIQUEMENT sur les parties ÉPURÉES (P3, P4 à venir) + le test. Acte1/Acte2/P1
+    // gardent leur fond mosaïque qui porte déjà la couleur (décision Aziz 2026-06-14).
+    if ((countryBordersTest || partie3) && srcC && (srcC as any)._data) {
+      const fcC = (srcC as any)._data;
+      const cbp: { country: string; d: string; len: number }[] = [];
+      for (const feat of fcC.features) {
+        const ctry = feat.properties.country as string;
+        const geom = feat.geometry;
+        const polys = geom.type === "MultiPolygon" ? geom.coordinates : [geom.coordinates];
+        for (const poly of polys) {
+          for (const ring of poly) {
+            let d = ""; let len = 0; let prev: { x: number; y: number } | null = null;
+            for (let i = 0; i < ring.length; i++) {
+              const p = map.project(ring[i] as [number, number]);
+              d += (i === 0 ? "M" : "L") + p.x.toFixed(1) + "," + p.y.toFixed(1);
+              if (prev) len += Math.hypot(p.x - prev.x, p.y - prev.y);
+              prev = p;
+            }
+            d += "Z";
+            cbp.push({ country: ctry, d, len: Math.max(len, 1) });
+          }
+        }
+      }
+      setCountryBorderPaths(cbp);
     }
 
     // Projections pivots hook (capitales + Liptako-Gourma)
@@ -1939,7 +2041,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
   // Seules les couches <Proto24Extinction>/<Partie2Blocage> + le fill calme s'affichent. (Anti-saturation #2)
   // P2 premium (2026-06-11) suit le modèle 2.4 validé : zones statiques + sprites Gemini, sans chrome legacy.
-  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3;
+  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3 && !countryBordersTest;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -3041,7 +3143,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ⚠️ PIÈGE (leçon P2) : ce fragment <> englobe la légende ET la timeline graduée plus bas. Si on
           gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
           → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
-      {!acte1CameraOnly && !proto24 && <>
+      {!acte1CameraOnly && !proto24 && !countryBordersTest && <>
       {/* Legende factions — haut gauche (masquée en partie2/partie3 : table rase, les jetons parlent d'eux-mêmes) */}
       {!partie2 && !partie3 && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
@@ -3691,6 +3793,75 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </>
         );
       })()}
+
+      {/* CONTOURS NATIONAUX COLORÉS (1 ton/pays) — PERMANENTS + draw-in (Acte 1) + pulse.
+          Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
+          en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES). */}
+      {(countryBordersTest || partie3) && countryBorderPaths.length > 0 && (() => {
+        // Draw-in : en test (séquence démo). En P3 les contours sont déjà tracés (offset 0)
+        // + pulse aux moments clés. (Acte1 garde son allumage séquentiel, pas de contours.)
+        const isActe1 = countryBordersTest;
+        const DRAW = 70;
+        const drawStart: Record<string, number> = countryBordersTest
+          ? { MLI: 30, BFA: 150, NER: 270 }
+          : { MLI: F_HOOK_MALI, BFA: F_HOOK_BURKINA, NER: F_HOOK_NIGER };
+        // Respiration douce de l'ensemble (présents en lecture, atténués en action).
+        // Acte1 : monte après les draw-ins. Parties : oscillation douce (jamais < 0.45).
+        // base respiration + EFFACEMENT pendant les overlays (sinon bouillie sous l'overlay
+        // semi-transparent — décision Aziz 2026-06-13). Hide ne s'applique pas en test/Acte1.
+        const hide = isActe1 ? 1 : contourHideFactor(frame);
+        const breathe = (isActe1
+          ? interpolate(frame, [0, 360, 720], [0.55, 0.85, 0.72],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : 0.78) * hide; // base parties (le pulse ajoute le relief ponctuel)
+        return (
+          <AbsoluteFill style={{ pointerEvents: "none" }}>
+            <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
+              {countryBorderPaths.map((p, i) => {
+                const iso = p.country as CountryISO;
+                const color = SAHEL_COUNTRY_COLORS[p.country] ?? "#D98A3D";
+                const s = drawStart[p.country] ?? -9999;
+                // draw-in seulement en Acte1/test ; sinon contour déjà tracé (offset 0).
+                const drawn = isActe1
+                  ? interpolate(frame, [s, s + DRAW], [1, 0],
+                      { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) })
+                  : 0;
+                const offset = p.len * drawn;
+                const visible = isActe1 ? frame >= s : true;
+                if (!visible) return null;
+                // pulse : Acte1 = après le draw-in (glow qui bat) ; Parties = table COUNTRY_PULSES.
+                const lit = (isActe1
+                  ? interpolate(frame, [s + DRAW, s + DRAW + 18, s + DRAW + 70, s + DRAW + 130],
+                      [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+                  : countryPulseAt(iso, frame)) * hide; // pulse aussi effacé sous overlay
+                const beat = lit > 0.05 ? 1 + 0.45 * Math.sin(frame * 0.18) : 1;
+                const glowW = (6 + 11 * Math.max(0, lit)) * beat;
+                // opacité du trait net : respiration + boost ponctuel au pulse.
+                const strokeOp = Math.min(0.98, breathe + 0.18 * Math.max(0, lit));
+                return (
+                  <g key={i}>
+                    {lit > 0.02 && (
+                      <>
+                        <path d={p.d} fill="none" stroke={color}
+                          strokeWidth={glowW} strokeOpacity={0.20 * lit}
+                          strokeLinejoin="round" strokeLinecap="round" />
+                        <path d={p.d} fill="none" stroke={color}
+                          strokeWidth={glowW * 0.55} strokeOpacity={0.28 * lit}
+                          strokeLinejoin="round" strokeLinecap="round" />
+                      </>
+                    )}
+                    <path d={p.d} fill="none" stroke={color}
+                      strokeWidth={3.4} strokeOpacity={strokeOp}
+                      strokeLinejoin="round" strokeLinecap="round"
+                      strokeDasharray={p.len} strokeDashoffset={offset} />
+                  </g>
+                );
+              })}
+            </svg>
+          </AbsoluteFill>
+        );
+      })()}
+
     </AbsoluteFill>
   );
 };

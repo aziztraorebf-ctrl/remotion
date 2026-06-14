@@ -31,3 +31,11 @@ export const SAHEL_COLORS = {
   jnim:      "#B14B3C",   // rouge groupes armes (JNIM + EIGS)
   contested: "#C99A3A",   // or conteste / CSP
 };
+
+// COULEURS PAR PAYS AES (contour national coloré, 1 ton/pays — décision Aziz 2026-06-13).
+// 3 tons distincts mais cohérents avec la palette parchemin (saturés pour ressortir en contour).
+export const SAHEL_COUNTRY_COLORS: Record<string, string> = {
+  MLI: "#D98A3D",  // Mali — ocre orangé
+  BFA: "#C0553C",  // Burkina Faso — terre brûlée / rouge brique
+  NER: "#4E8C7D",  // Niger — vert-sarcelle sahélien
+};
