@@ -1,10 +1,40 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-11 (PROTO 2.4 PREMIUM VALIDÉ + doctrine Gemini/PixelLab actée)
-**Branche :** `feat/da-brief-gate-warmap-sahel`
+**Dernière mise à jour :** 2026-06-14 (PASSE "RENDRE VIVANT" P3 démarrée — Ph5 statu quo validé)
+**Branche :** `feat/p3-ambient-vie` (issue de `feat/da-brief-gate-warmap-sahel` ; P4 continue sur la parente)
 **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (pipeline expressif V3→STS).
 
 > ⭐ **REPRISE AU RETOUR : section "REPRISE PROCHAINE SESSION" ci-dessous.**
+
+---
+
+## 🎬 PASSE "RENDRE VIVANT" P3 (2026-06-14) — densifier les zones mortes SANS casser le validé
+
+> Objectif Aziz : on a été "trop prudent", le format permet plus de vie du début à la fin. On MEUBLE les
+> zones mortes de P3 (narrativement validée) sans toucher au récit. Audit + DA-brief (Gemini+Kimi) faits.
+
+**⭐⭐ DÉCOUVERTE STRATÉGIQUE = 3e VOIE D'ANIMATION : le SVG animé par code.** Doctrine créée :
+`memory/doctrines/WARMAP-SVG-ANIME-3E-VOIE.md`. Pour drapeaux/tissus/ondes/tracés/jauges/flux → SVG
+animé frame-driven (déformation de paths via Math.sin) = SUPÉRIEUR à PixelLab (net full HD, nos couleurs,
+0 coût, 0 risque). À proposer EN PREMIER. Gemini = sprites à trait fin ; PixelLab = effets denses chaotiques ;
+DIFFUS (poussière sol) = personne (leçon ratée poussière, confirmée 2x).
+
+**DA-brief P3 archivé :** `memory/episodes/warmap-sahel/da-briefs/P3-vivacite-{gemini,kimi,BRIEF}.{md,txt}`.
+Synthèse : NE PAS animer les jetons en image-à-image (piège, "jeu vidéo cheap") ; diversifier l'impact
+(cercle d'encre = chocs politiques seulement ; matière dense = chocs militaires) ; ne PAS toucher Ph4/Ph7.
+Vérif code : Gemini a halluciné 2 critiques AI-slop déjà résolues (drapeau Ph7 déjà 0.82+multiply ; grain
+papier déjà appliqué). Gemini = signal jamais juge → confirmé.
+
+**ÉTAT DES CHANTIERS P3 :**
+- ✅ **Ph5 STATU QUO — VALIDÉ Aziz** : drapeau touareg (Azawad vert-rouge-noir désaturé) qui ONDULE sur
+  Kidal (SVG animé, ambiant, sort à l'approche FAMa) + ondes "observation passive" ONU (cercles bleus fins
+  qui s'éteignent avant Kidal = inaction) + jetons touaregs réduits ~12% (JETON_DEG ×0.88). Code dans
+  `Partie3Rupture.tsx`. Recette drapeau ondulant réutilisable (bloc "DRAPEAU TOUAREG ondulant").
+- ⏳ **Ph2 convergence frontières** (frontières 3 pays se tracent depuis capitales → sceau central) — SVG, 0 risque.
+- ⏳ **Ph9 matière d'impact** (étincelle SVG + fx-explosion désat. + micro coup-de-reins jeton qui charge).
+- ⏳ **Ph6 traînée fumée** (fx-smoke courte derrière FAMa — à valider visuellement, risque surcharge).
+- ❌ **ÉCARTÉ** : poussière diffuse / dust devil (doctrine : ni SVG ni PixelLab ne rendent le diffus top-down).
+- PROCHAINE ACTION : Aziz choisit le prochain chantier (Ph2 recommandé). Méthode = mini-render comparatif full HD.
 
 ---
 
@@ -260,6 +290,35 @@ Acte1→P3) ; (3) P4 (coût/réfugiés/franc CFA — plein écran OK pour les co
 Assets générés : public/_shared/sprites/warmap/{ville-kidal,jeton-africacorps}.png · flags/{ml,bf,ne}.png.
 Briques nouvelles : _shared/WarMapOverlayDynamic.tsx (overlay dynamique réutilisable, 6 blocs composables).
 Doctrines : REVIEW-PREMIUM-TEMPLATE.md (standard review) · WARMAP-LONG-DOCTRINE (règle overlay vs plein écran).
+
+## 🔄 P4 "LE COÛT, LE LEVIER, LA PERSPECTIVE" — EN COURS (2026-06-14) — DERNIÈRE PARTIE
+
+**État : codée + branchée + render full v2 en cours (corrections appliquées).** Fichier : `parties/Partie4Cout.tsx`.
+Compo `SahelPartie4` (f9416→13439, durationInFrames 13440). Mode moteur `partie4` branché (miroir partie3).
+
+**PIPELINE SUIVI (ordre strict brief) :**
+- ✅ `PLAN-NARRATIF-P4.md` (11 phrases, triggers VÉRIFIÉS vs alignment — BEATS-V5 était décalé +373f sur confédération).
+- ✅ **DA-brief en 2 passes** : v1 validé mais INCOMPLET → Aziz signale 3 manques (causalité phrase-par-phrase jamais
+  demandée · chaînes de réf absentes · catalogue templates non envoyé). v2 ENRICHI (`--catalog` + question causale +
+  comparaison genre Operations Room/K&G/BazBattles). Output : `/tmp/da-refs/da-warmap-sahel-p4-causal-{gemini,kimi}.md`.
+  → LEÇON : le DA-brief DOIT inclure la causalité phrase-par-phrase + les chaînes de réf + le catalogue templates.
+- ✅ 4 assets Gemini (`public/_shared/sprites/warmap/p4-assets/`) : icon-or/uranium/petrole/sceau-confederation.
+- ✅ CODE + branchement moteur + Root.
+
+**ARC 3 MOUVEMENTS** : Coût (réfugiés Ph2 + chiffre ancré Ph3) → Levier (or/uranium/pétrole, accumulation) →
+Perspective (confédération fusion Ph7 + CFA plein écran Ph8 + dézoom continental Ph9-10 + extinction au noir Ph11).
+
+**CAUSALITÉ (du DA-brief v2, gravée) :** Ph2 ville pulse rouge→visage s'extrait→traînée · Ph3 overlay ANCRÉ sur
+cluster réfugiés (pas diapo) · Ph5-6 contour pulse→remplissage→icône émerge (pas pop) · Ph7 fils convergent→fusion
+or→sceau tampon (pas morph PowerPoint) · RÈGLE CHROMATIQUE rouge≠or simultané (anti-cynisme).
+
+**CORRECTIONS POST-RENDER (3 itérations) :** légende masquée (`!partie4`) · icônes or visibles (retrait mixBlend
+multiply qui les noyait + taille bornée) · fond ÉPURÉ (sahel-fill neutralisé parchemin uniforme + front-glow off,
+décision Aziz : la conclusion ne parle plus de qui-tient-quoi) · ⭐ CTA/outro/intro globaux gatés `!isPartie`
+(parasitaient l'extinction P4 avec "@koraetcartes") · fusion or Ph7 renforcée (0.40 + contour or net).
+
+**NEXT** : juger render full v2 → présenter Aziz (audio embarqué) → itérations → FULL HD → **ASSEMBLAGE FINAL**
+(concat Acte1+P1+P2+P3+P4 + narration globale + mix = TOUTE DERNIÈRE étape de la vidéo).
 
 ## ✅✅ P3 VALIDÉE DÉFINITIVEMENT par Aziz (2026-06-13)
 Full HD `out/episodes/warmap-sahel/p3-FINAL.mp4` (1920x1080, 1min50, audio, catbox ck26kl) — VALIDÉ.

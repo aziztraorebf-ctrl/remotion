@@ -267,6 +267,15 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
   // ── Ph9 : halo de protection BLEU depuis capitales (éteint les rouges) ──
   const protectT = interpolate(frame, [F_REPOUSSE + 30, F_REPOUSSE + 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
+  // ── Ph5 — DRAPEAU TOUAREG (Azawad) qui ONDULE sur Kidal : "ils tiennent le terrain" pendant le statu quo.
+  //    Ambient (boucle d'ondulation tant que la condition dure, R-OBJ doctrine). Apparaît après que la ville
+  //    et les jetons soient posés (F_TOUAREGS + délai), DISPARAÎT à la reprise (le drapeau malien le remplace
+  //    en Ph7). Ancré à la ville Kidal (clip SVG ondulant = même technique que le drapeau malien Ph7). ──
+  const tuaregFlagIn = interpolate(frame, [F_TOUAREGS + 30, F_TOUAREGS + 55], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // sort quand les FAMa arrivent (la prise approche) — il s'abaisse AVANT que le drapeau malien monte (Ph7)
+  const tuaregFlagOut = interpolate(frame, [F_FAMA_START + 120, F_FLOTTE - 30], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const tuaregFlagOp = tuaregFlagIn * tuaregFlagOut;
+
   // ── helper rendu sprite-lieu ancré carte (ONU + Africa Corps) ──
   const renderBase = (b: Base, src: string, deg: number, ratio: number, fadeOut: boolean) => {
     if (frame < b.appearAt) return null;
@@ -383,6 +392,9 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
           </mask>
           <clipPath id="p3-kidal-clip"><path d={kidalRegionPath} /></clipPath>
           <clipPath id="p3-kidal-flag-clip"><path d={kidalFlagPath} /></clipPath>
+          <filter id="p3-flag-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="2.5" stdDeviation="2.5" floodColor="#1A1005" floodOpacity="0.45" />
+          </filter>
         </defs>
 
         {/* (FOCUS RADIAL RETIRÉ — Aziz : l'assombrissement+halo lumineux centré donnait une image "brouillée"
@@ -482,6 +494,31 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
 
         {/* ONU/MINUSMA — badge "interdiction de tirer" (mandat non-combattant) posé sur chaque base ONU. Le
             CAMPEMENT lui-même est un sprite rendu hors-svg (ci-dessous). Au retrait : la base FADE sur place. */}
+
+        {/* Ph5 — ONDES "OBSERVATION PASSIVE" ONU : cercles très fins qui émanent lentement de chaque base ONU
+            puis S'ESTOMPENT avant d'atteindre Kidal (l'onde n'aboutit jamais = mandat non-combattant, inaction).
+            Très discret (op faible). Cesse au retrait (Ph6). Ancré aux camps → pas de mouvement hors-sol. */}
+        {MINUSMA_KIDAL.map((m) => {
+          if (frame < m.appearAt + 20) return null;
+          const live = interpolate(frame, [m.appearAt + 20, m.appearAt + 40, m.outAt - 40, m.outAt - 16], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          if (live <= 0.02) return null;
+          const p = project(m.coord[0], m.coord[1]);
+          const rMax = vmin * 0.075;          // l'onde meurt court (n'atteint pas Kidal = inaction)
+          const period = 120;                  // expansion lente (~4s)
+          return (
+            <g key={`onu-wave-${m.id}`} opacity={live}>
+              {[0, 0.5].map((ph, i) => {
+                const t = (((frame - m.appearAt) / period + ph) % 1 + 1) % 1; // 0→1 cyclique, 2 ondes déphasées
+                const r = rMax * t;
+                const op = (1 - t) * 0.32 * t * 4; // monte vite, meurt en s'éloignant (jamais pleine au bord)
+                if (op <= 0.01) return null;
+                return <circle key={i} cx={p.x} cy={p.y} r={r} fill="none" stroke={PAL.UN_BLUE}
+                  strokeWidth={1.4} strokeOpacity={Math.min(0.32, op)} />;
+              })}
+            </g>
+          );
+        })}
+
         {MINUSMA_KIDAL.map((m) => {
           if (frame < m.appearAt) return null;
           const ap = interpolate(frame, [m.appearAt, m.appearAt + 14], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -607,6 +644,49 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
         );
       })()}
 
+      {/* ============ DRAPEAU TOUAREG (Azawad) ondulant PLANTÉ sur Kidal (Ph5 — "ils tiennent le terrain").
+           Hampe + voile à 3 bandes horizontales vert-rouge-noir qui ondule (déformation sinusoïdale des bords).
+           AMBIANT : ondule en boucle tant qu'ils tiennent. Sort à l'approche des FAMa (le drapeau malien le
+           remplace en Ph7). Petit, ancré au sommet de la ville-forteresse. ============ */}
+      {tuaregFlagOp > 0.01 && (() => {
+        // taille ancrée carte (R-OBJ-1), petit drapeau de garnison
+        const fw = spriteMapWidth(project, KIDAL[0], KIDAL[1], 0.62, { min: 42, max: 96 });
+        const poleH = fw * 1.35;        // hauteur de hampe
+        const voileH = fw * 0.62;       // hauteur du voile
+        // planté au sommet de la ville (légèrement décalé pour ne pas masquer le label)
+        const baseX = kidalP.x + fw * 0.05;
+        const baseY = kidalP.y - spriteMapWidth(project, KIDAL[0], KIDAL[1], 1.9, { min: 130, max: 340 }) * 0.18;
+        const topY = baseY - poleH;
+        // ondulation : 4 colonnes, chaque bord décalé en phase → voile qui flotte (geste de présence)
+        const amp = fw * 0.06;
+        const seg = 5;
+        const colX = (k: number) => baseX + (fw * k) / (seg - 1);
+        const waveY = (k: number, off: number) => Math.sin(frame * 0.13 + k * 0.9 + off) * amp * (k / (seg - 1));
+        const bandPath = (yTop: number, yBot: number) => {
+          let top = `M${colX(0).toFixed(1)},${(topY + yTop).toFixed(1)}`;
+          for (let k = 1; k < seg; k++) top += `L${colX(k).toFixed(1)},${(topY + yTop + waveY(k, 0)).toFixed(1)}`;
+          let bot = "";
+          for (let k = seg - 1; k >= 0; k--) bot += `L${colX(k).toFixed(1)},${(topY + yBot + waveY(k, 0.6)).toFixed(1)}`;
+          return top + bot + "Z";
+        };
+        const b = voileH / 3;
+        return (
+          <svg key="tuareg-flag" width={width} height={height} style={{ position: "absolute", inset: 0, opacity: tuaregFlagOp, pointerEvents: "none" }}>
+            <g filter="url(#p3-flag-shadow)">
+              {/* hampe (encre brune) */}
+              <line x1={baseX} y1={baseY} x2={baseX} y2={topY} stroke={PAL.INK} strokeWidth={Math.max(2, fw * 0.05)} strokeLinecap="round" />
+              <circle cx={baseX} cy={topY} r={Math.max(2, fw * 0.05)} fill={PAL.INK} />
+              {/* voile Azawad : vert / rouge / noir (haut→bas), désaturé pour la charte parchemin */}
+              <path d={bandPath(0, b)} fill="#3E6B45" />
+              <path d={bandPath(b, b * 2)} fill="#9C3A33" />
+              <path d={bandPath(b * 2, b * 3)} fill="#2A241E" />
+              {/* liseré sombre au guindant (côté hampe) pour ancrer le voile à la hampe */}
+              <line x1={baseX} y1={topY} x2={baseX} y2={topY + voileH} stroke="rgba(0,0,0,0.25)" strokeWidth={Math.max(1, fw * 0.03)} />
+            </g>
+          </svg>
+        );
+      })()}
+
       {/* ============ BASES MINUSMA (campements ONU top-down) près de Kidal (Ph5). Posées, immobiles (mandat
            non-combattant = badge no-fire en svg). Au retrait Ph6 : la base FADE simplement sur place (bâtiment
            démantelé/abandonné, ne se déplace pas — décision Aziz 2026-06-13). ============ */}
@@ -634,12 +714,13 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
           drapeau rectangulaire par-dessus.) */}
 
       {/* ============ JETONS TOUAREGS (Ph5 posés → Ph6-7 reculent) ============ */}
+      {/* Taille LÉGÈREMENT réduite (Aziz 2026-06-14 : jetons touaregs autour de Kidal un peu trop gros). */}
       {activeTouaregs.map(({ j, lon, lat, p }) => {
         const ap = spring({ frame: frame - j.appear, fps, config: { damping: 15 }, durationInFrames: 14 });
         const dis = interpolate(frame, [j.disappear - 30, j.disappear], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         const op = ap * dis;
         if (op <= 0.02) return null;
-        const D = spriteMapWidth(project, lon, lat, JETON_DEG, JETON_BOUNDS) * ap;
+        const D = spriteMapWidth(project, lon, lat, JETON_DEG * 0.88, { min: 56, max: 132 }) * ap;
         return chip({ key: j.id, x: p.x, y: p.y, D, op, border: "#9C8859", sprite: "jeton-csp", seed: j.id.charCodeAt(1) * 7, badge: "armed" });
       })}
 
