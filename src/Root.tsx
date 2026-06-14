@@ -260,6 +260,7 @@ import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRout
 import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/GoldRouteAtlasZoom";
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 import { PocImmobilierQC } from "./projects/_rnd/poc-immobilier-qc/PocImmobilierQC";
+import { PocMaliVideoGame } from "./projects/_rnd/poc-mali-videogame/PocMaliVideoGame";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2836,6 +2837,18 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* PARTIE 4 Sahel — le coût, le levier, la perspective (DERNIÈRE partie). Look Acte 1 + couche
+            <Partie4Cout>. Arc 3 mouvements : coût humain (réfugiés/chiffre) → levier (or/uranium/pétrole) →
+            perspective (confédération/CFA/dézoom) → extinction au noir. Render utile : --frames=9416-13440. */}
+        <Composition
+          id="SahelPartie4"
+          component={SahelWarMapEngine}
+          defaultProps={{ partie4: true }}
+          durationInFrames={13440}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* DÉMO de référence du principe validé (Aziz 2026-06-14) : contours NATIONAUX colorés
             (1 ton/pays) + draw-in & pulse. Carte épurée, séquence Mali→Burkina→Niger. --frames=0-450. */}
         <Composition
@@ -2958,6 +2971,17 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+      </Folder>
+
+      <Folder name="RND-Atlas-VideoGame">
+        <Composition
+          id="PocMaliVideoGame"
+          component={PocMaliVideoGame}
+          durationInFrames={750}
+          fps={30}
+          width={1920}
+          height={1080}
         />
       </Folder>
 

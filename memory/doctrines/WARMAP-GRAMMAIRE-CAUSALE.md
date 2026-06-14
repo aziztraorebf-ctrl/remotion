@@ -100,3 +100,38 @@ pays". Une forme abstraite (losange/étoile) = cheap sur une carte riche. Tout m
 > Voir aussi : [[WARMAP-OBJETS-GEMINI-VS-PIXELLAB]] (Gemini vs PixelLab + 3 règles R-OBJ) ·
 > `memory/key-learnings.md` (leçon grammaire causale) · `PLAN-NARRATIF-P2.md` (modèle de plan) ·
 > `WARMAP-LONG-DOCTRINE.md` (format long, 100% carte).
+
+---
+
+## ⛔ RÈGLE UNIVERSELLE — OVERLAY SEMI-TRANSPARENT AVEC CARTE/CONTOURS AU TRAVERS = INTERDIT (Aziz 2026-06-14)
+
+**Gravé après P4 v2 (capture "2024 Confédération AES" jugée "vraiment très moche", "interdit").**
+
+Un overlay (cartouche texte/données) avec la CARTE ou des CONTOURS qui transparaissent dessous = BOUILLIE
+illisible. On ne comprend pas ce qui se passe, les écrits sont noyés par les traits du fond. BANNI dans
+TOUTES les vidéos (War-Map, Atlas, Souverain).
+
+**Les 2 seules options autorisées pour présenter de l'info :**
+1. **PLEIN ÉCRAN OPAQUE** — fond parchemin solide, la carte disparaît complètement. C'est notre force Remotion :
+   l'overlay plein écran s'ANIME à fond (data-viz, icônes en cascade, camemberts/barres, objets PixelLab DANS
+   l'overlay comme en Atlas). Jamais un bloc texte statique posé quelques secondes.
+2. **SUR LA CARTE** — pas d'overlay du tout : l'info se représente directement sur le territoire (contour qui
+   vire de couleur, jeton/sprite qui se pose, remplissage, sceau, plaque-nom ancrée). La carte porte le sens.
+
+**JAMAIS l'entre-deux** (cartouche semi-transparent flottant avec territoires/contours visibles dessous).
+Si on tient à un cartouche sur fond de carte : le fond DOIT être totalement assombri/neutralisé dessous
+(aucun contour ni détail visible) — mais par défaut, préférer plein écran opaque ou représentation sur carte.
+
+**Corollaire (règle gravée Aziz)** : un overlay Remotion DOIT être animé (c'est notre force). Un overlay statique
+posé plusieurs secondes pendant que rien ne bouge = mort. Animer, ou ne pas mettre d'overlay.
+
+**⛔ RENFORCEMENT (Aziz 2026-06-14, P4 Chantier 1) — ON ARRÊTE LES SEMI-TRANSPARENTS, POINT.**
+`WarMapOverlayDynamic mode="semitransp"` est BANNI (le voile + carte au travers = exactement la bouillie ci-dessus,
+les sprites/villes/jetons transparaissent à travers le cartouche). Ne plus l'utiliser nulle part. Aziz : "pourquoi
+se compliquer la vie ? un overlay solide empêche les sprites de passer au travers." Toujours :
+- chiffre/info ABSTRAITE (national, sans point géo : "3 M déplacés") → **plaque OPAQUE ancrée** (fond parchemin
+  100% solide, AUCUN détail de carte visible dessous) avec le flux/action qui continue AUTOUR (pas dessous), OU
+  **plein écran opaque animé** (Chantier 2 data-viz).
+- info SPATIALE (territoire, ville, flux) → représentée SUR la carte (contour, jeton, remplissage, plaque-nom ancrée).
+Le composant `WarMapOverlayDynamic` n'a que 2 modes (semitransp=banni, fullscreen=opaque) → pour une plaque opaque
+ancrée locale, coder une plaque inline à fond solide (pas le composant). À terme : ajouter un mode "solid-anchor".

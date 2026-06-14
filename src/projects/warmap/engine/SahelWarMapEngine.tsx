@@ -53,6 +53,7 @@ import { GeoConvergenceOverlay, GeoForce } from "../_shared/GeoConvergenceOverla
 import { Partie1Origine } from "../parties/Partie1Origine";
 import { Partie2Blocage } from "../parties/Partie2Blocage";
 import { Partie3Rupture } from "../parties/Partie3Rupture";
+import { Partie4Cout } from "../parties/Partie4Cout";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import {
   SAHEL_STATES,
@@ -409,8 +410,11 @@ const COUNTRY_PULSES: { f: number; c: CountryISO }[] = [
 // couvre la carte, les contours s'effacent (sinon bouillie illisible sous l'overlay semi-transp).
 // P3 : overlay AES (f6118→6800) + flashback Moura désaturé (f8570→8900). Avec fondu d'entrée/sortie.
 const CONTOUR_HIDE_WINDOWS: { from: number; to: number }[] = [
-  { from: 6118, to: 6800 },  // overlay "Alliance des États du Sahel"
-  { from: 8560, to: 8920 },  // flashback Moura (carte altérée sépia)
+  { from: 6118, to: 6800 },  // P3 overlay "Alliance des États du Sahel"
+  { from: 8560, to: 8920 },  // P3 flashback Moura (carte altérée sépia)
+  // P4 : effacer les contours sous overlay coût (ancré) + CFA (plein écran). Sinon bouillie (leçon P3).
+  { from: 10047, to: 10574 }, // P4 overlay coût chiffré (Ph3)
+  { from: 11869, to: 12273 }, // P4 franc CFA plein écran (Ph8)
 ];
 // facteur 1 = contours visibles, 0 = effacés. Fondu de 30f aux bords.
 const contourHideFactor = (frame: number): number => {
@@ -665,6 +669,68 @@ const getPartie3Cam = (frame: number): { lon: number; lat: number; zoom: number 
   const withDrift = (c: { lon: number; lat: number; zoom: number }) => ({ lon: c.lon + driftLon, lat: c.lat + driftLat, zoom: c.zoom });
   if (frame <= PARTIE3_CAM_KEYS[0].f) return withDrift(PARTIE3_CAM_KEYS[0]);
   const keys = PARTIE3_CAM_KEYS;
+  if (frame >= keys[keys.length - 1].f) return withDrift(keys[keys.length - 1]);
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (frame >= keys[i].f && frame <= keys[i + 1].f) {
+      const a = keys[i], b = keys[i + 1];
+      const t = (frame - a.f) / (b.f - a.f);
+      const e = t * t * (3 - 2 * t); // smoothstep
+      return withDrift({
+        lon: a.lon + (b.lon - a.lon) * e,
+        lat: a.lat + (b.lat - a.lat) * e,
+        zoom: a.zoom + (b.zoom - a.zoom) * e,
+      });
+    }
+  }
+  return withDrift(keys[keys.length - 1]);
+};
+
+// ============================================================
+// PARTIE 4 CAMÉRA — Le Coût, le Levier, la Perspective (conclusion, DERNIÈRE partie).
+// Raccord exact depuis fin P3 (f9410, lon 0.30 lat 13.95 zoom 5.50). Arc en 3 mouvements :
+//   M1 COÛT (Ph2-3) : drift vers les zones de fuite (Djibo/Ménaka/Tillabéri, centre-est), serré.
+//   M2 LEVIER (Ph5-6) : balaye Bamako→Ouaga (or) puis vers Niamey (uranium/pétrole). Drift lent continu.
+//   M3 PERSPECTIVE : Ph7 cadre les 3 pays (fusion) → Ph8 léger dézoom (CFA concept) → Ph9-11 GRAND DÉZOOM
+//     continental (target lock sur le centre AES, le continent entre dans le cadre) → fige pour l'extinction.
+// Zoom : serré 5.0-5.6 pour M1-M2, puis dézoom progressif jusqu'à ~3.4 (continental) en M3.
+const PARTIE4_CAM_KEYS: CamKey[] = [
+  { f: 9416, lon: 0.30, lat: 13.95, zoom: 5.50 },  // raccord fin P3
+  // CHANTIER 1 EXODE — caméra SERRÉE top-down sur le triangle Liptako-Gourma (Djibo/Ménaka/Tillabéri),
+  // PAS de pitch (décision Aziz 13+14 juin : relief des flux = profondeur 2.5D dans la couche, pas inclinaison).
+  // Drift très léger seulement (carte vivante), aucun dézoom pendant l'exode (DA : ne pas animer la caméra = anti-surcharge).
+  { f: 9700, lon: 0.55, lat: 14.70, zoom: 5.75 },  // entrée serrée sur le triangle des 3 villes
+  { f: 9850, lon: 0.65, lat: 14.85, zoom: 5.78 },  // cadre stable Djibo/Ménaka/Tillabéri (villes posées + exode)
+  { f: 10047, lon: 0.60, lat: 14.78, zoom: 5.72 }, // hold quasi-fixe sur le cluster (overlay coût, flux continue)
+  { f: 10594, lon: -2.0, lat: 13.6, zoom: 5.05 },  // Ph4 pivot : drift vers les capitales (board clearing)
+  { f: 10667, lon: -4.0, lat: 12.9, zoom: 5.15 },  // Ph5 : or sur Bamako (ouest)
+  { f: 10729, lon: -1.5, lat: 12.8, zoom: 5.15 },  // Ph5 : balaye vers Ouaga
+  { f: 10804, lon: 1.6, lat: 13.3, zoom: 5.20 },   // Ph6 : vers Niamey (uranium/pétrole, est)
+  { f: 11200, lon: -0.5, lat: 14.0, zoom: 4.75 },  // transition : élargit pour cadrer les 3 pays
+  { f: 11449, lon: -1.0, lat: 14.3, zoom: 4.60 },  // Ph7 : cadre le bloc AES (fusion)
+  { f: 11700, lon: -1.0, lat: 14.3, zoom: 4.58 },  // Ph7 hold (sceau, figé)
+  { f: 11869, lon: -1.0, lat: 14.3, zoom: 4.40 },  // Ph8 : léger dézoom (CFA concept)
+  // Ph9 "statu quo 60 ans" : BREF dézoom révélateur (le bloc dans le continent) PUIS retour serré.
+  { f: 12297, lon: -1.0, lat: 14.5, zoom: 3.95 },  // Ph9 : dézoom continental (statu quo 60 ans brisé)
+  { f: 12520, lon: -1.0, lat: 14.6, zoom: 3.75 },  // Ph9 : point bas du dézoom (le bloc dans l'Afrique)
+  // ════ CHANTIER 4 FIN HABITÉE : on REVIENT serré sur le bloc AES pour voir dirigeants/soldats dans les villes ════
+  { f: 12640, lon: -2.5, lat: 13.6, zoom: 4.85 },  // dirigeants : cadre les 3 capitales (Bamako ouest → Niamey est)
+  { f: 12760, lon: 0.5, lat: 13.8, zoom: 4.75 },   // balaye vers Niamey (3e dirigeant)
+  { f: 12880, lon: -0.5, lat: 14.6, zoom: 4.55 },  // soldats : élargit un peu pour voir les points tenus (frontières nord)
+  // menace résiduelle : ÉLARGIR + recentrer vers l'est pour montrer TOUTE l'étendue du Sahel (jusqu'à Diffa 12.6°E)
+  // → la dispersion des menaces JNIM/EIGS sur tout le bloc se voit (pas un cluster central).
+  { f: 13030, lon: 1.5, lat: 14.8, zoom: 4.05 },   // menace : bloc AES entier visible, zones d'ombre dispersées
+  { f: 13082, lon: 1.5, lat: 14.8, zoom: 4.05 },   // "résister" : tout le bloc habité tient (vue large)
+  { f: 13290, lon: 0.5, lat: 14.9, zoom: 3.85 },   // "durer" : début extinction, léger dézoom
+  { f: 13440, lon: -1.0, lat: 15.0, zoom: 3.95 },  // fin : dézoom doux pendant le noir (le bloc s'éloigne)
+];
+const getPartie4Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
+  // Drift continu léger (même esprit que P3, atténué pendant le grand dézoom final).
+  const driftAmp = interpolate(frame, [12297, 12662], [1, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const driftLon = Math.sin(frame * 0.011) * 0.05 * driftAmp;
+  const driftLat = Math.cos(frame * 0.009) * 0.035 * driftAmp;
+  const withDrift = (c: { lon: number; lat: number; zoom: number }) => ({ lon: c.lon + driftLon, lat: c.lat + driftLat, zoom: c.zoom });
+  const keys = PARTIE4_CAM_KEYS;
+  if (frame <= keys[0].f) return withDrift(keys[0]);
   if (frame >= keys[keys.length - 1].f) return withDrift(keys[keys.length - 1]);
   for (let i = 0; i < keys.length - 1; i++) {
     if (frame >= keys[i].f && frame <= keys[i + 1].f) {
@@ -967,6 +1033,9 @@ export type SahelTestProps = {
   // chromatique : l'avancée FAMa colore en BLEU = l'État reprend Kidal). Même architecture que partie2
   // (table rase chrome/HUD, timeline graduée, SFX dédiés, getPartie3Cam serrée). Raccord depuis fin P2.
   partie3?: boolean;
+  // REFACTOR V5 — mode Partie 4 (le coût, le levier, la perspective). DERNIÈRE partie. Couche <Partie4Cout>
+  // (grammaire causale, arc 3 mouvements, extinction finale au noir). getPartie4Cam + contours nationaux réutilisés.
+  partie4?: boolean;
   // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
   // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
   ph1Fullscreen?: boolean;
@@ -998,6 +1067,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   partie1 = false,
   partie2 = false,
   partie3 = false,
+  partie4 = false,
   countryBordersTest = false,
   ph1Fullscreen = false,
   proto24 = false,
@@ -1011,9 +1081,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || proto24 || countryBordersTest;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
-  const isPartie = partie1 || partie2 || partie3 || proto24;
+  const isPartie = partie1 || partie2 || partie3 || partie4 || proto24;
 
   // VERSION FINALE Acte 1 : dérive les sous-mécaniques du socle validé.
   // Allumage séquentiel calé sur les triggers RÉELS (Mali f150, BFA f231, NER f301).
@@ -1456,7 +1526,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       // Track caméra dédié Acte 1 (Étape 1 + version finale), FREEZE total f572-632.
       // En acte2 : getActe2Cam prolonge (avant f2299 = identique Acte 1, après = mouvements B1).
       const a1Freeze = frame >= A1.FREEZE && frame < A1.FREEZE_END;
-      const camFn = proto24 ? getProto24Cam : partie3 ? getPartie3Cam : partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
+      const camFn = proto24 ? getProto24Cam : partie4 ? getPartie4Cam : partie3 ? getPartie3Cam : partie2 ? getPartie2Cam : partie1 ? getPartie1Cam : acte2 ? getActe2Cam : getActe1Cam;
       const cam = a1Freeze ? camFn(A1.FREEZE) : camFn(frame);
       camLon = cam.lon; camLat = cam.lat; camZoom = cam.zoom;
     } else if (camStatic) {
@@ -1482,6 +1552,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     let effBearing = proto24 && proto24Pitch > 0
       ? interpolate(frame, [3887, 4160], [-4, 6], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
       : 0;
+    // PITCH P4 RE-TESTÉ + RE-REJETÉ (2026-06-14, demande Aziz suite DA downstream qui le recommandait) : test
+    // comparatif pitch 0 vs 40° sur la fin habitée → frames QUASI IDENTIQUES (preuve : wip/p4-pitch-test-{0,40}).
+    // Confirme la leçon du 13 juin : notre carte = aplat de couleur SANS relief Mapbox → incliner ne crée aucune
+    // profondeur. Les modèles le recommandaient sans connaître cette contrainte. Top-down pur conservé pour P4.
     // (PITCH 3D P3 RETIRÉ — Aziz 2026-06-13 : sans couche de relief Mapbox, incliner ne révèle aucune montagne
     //  (carte plate) → effet cosmétique qui casse le top-down cohérent P1/P2/Acte1. Garder top-down pur.
     //  Pour un vrai "war room relief", il faudrait activer un hillshade/terrain Mapbox = chantier séparé.)
@@ -1544,6 +1618,26 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       } catch {}
     }
 
+    // PARTIE 4 — CARTE CALME (miroir partie3) : P4 ne parle jamais d'emprise rouge (coût/levier/perspective).
+    // Le fill reste TRÈS bas tout du long, puis s'ÉTEINT complètement à l'extinction finale (Ph11, f13290→f13380).
+    // La couche <Partie4Cout> porte tout le récit (réfugiés, ressources, fusion AES).
+    if (partie4 && map.getLayer("sahel-fill")) {
+      const calmFactorP4 = interpolate(frame,
+        [9416, 9480, 13290, 13380],
+        [0.10, 0.10, 0.10, 0.0],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
+      try {
+        // ÉPURE P4 (décision Aziz 2026-06-14) : la conclusion ne parle plus de "qui tient quoi" → on NEUTRALISE
+        // la teinte de contrôle (palette factions rouge/contesté/état) vers une couleur parchemin UNIFORME.
+        // Ne restent que les contours nationaux colorés + les couches P4 (réfugiés, ressources, fusion).
+        map.setPaintProperty("sahel-fill", "fill-color", SAHEL_COLORS.land);
+        map.setPaintProperty("sahel-fill", "fill-opacity",
+          (["*", 0.5, calmFactorP4] as any));
+      } catch {}
+      // neutraliser aussi le glow de front (zones contestées) — hors-sujet en conclusion
+      try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
+    }
+
     // PROTO 2.4 — CARTE CALME (miroir partie2) : le fill de contrôle Acte 1 reste très bas
     // pendant l'install, puis REMONTE légèrement au beat 2.4 (l'État conteste) tandis que
     // les surfaces rouges DÉDIÉES (couche <Proto24Extinction>) explosent par-dessus.
@@ -1588,7 +1682,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // CONTOURS NATIONAUX COLORÉS : reprojeter chaque pays + mesurer la longueur du tracé.
     // Actif UNIQUEMENT sur les parties ÉPURÉES (P3, P4 à venir) + le test. Acte1/Acte2/P1
     // gardent leur fond mosaïque qui porte déjà la couleur (décision Aziz 2026-06-14).
-    if ((countryBordersTest || partie3) && srcC && (srcC as any)._data) {
+    if ((countryBordersTest || partie3 || partie4) && srcC && (srcC as any)._data) {
       const fcC = (srcC as any)._data;
       const cbp: { country: string; d: string; len: number }[] = [];
       for (const feat of fcC.features) {
@@ -2041,7 +2135,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
   // Seules les couches <Proto24Extinction>/<Partie2Blocage> + le fill calme s'affichent. (Anti-saturation #2)
   // P2 premium (2026-06-11) suit le modèle 2.4 validé : zones statiques + sprites Gemini, sans chrome legacy.
-  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3 && !countryBordersTest;
+  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3 && !partie4 && !countryBordersTest;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -3144,8 +3238,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
           → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
       {!acte1CameraOnly && !proto24 && !countryBordersTest && <>
-      {/* Legende factions — haut gauche (masquée en partie2/partie3 : table rase, les jetons parlent d'eux-mêmes) */}
-      {!partie2 && !partie3 && (
+      {/* Legende factions — haut gauche (masquée en partie2/partie3/partie4 : table rase, les jetons parlent d'eux-mêmes) */}
+      {!partie2 && !partie3 && !partie4 && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
         <div style={{ ...plaque, padding: "12px 20px" }}>
@@ -3393,7 +3487,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* Cartouche AES au CENTRE, semi-transparent (décision Aziz 2026-06-07 :
           les cartouches narratifs apparaissent au centre où est l'œil, pas sur le bord). */}
-      {aesOverlayOp > 0 && !acte1CameraOnly && !partie3 && (
+      {aesOverlayOp > 0 && !acte1CameraOnly && !partie3 && !partie4 && (
         <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
             opacity: aesOverlayOp * 0.92, pointerEvents: "none" }}>
           <div style={{ ...plaque, padding: "22px 40px", textAlign: "center",
@@ -3415,8 +3509,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
-          CARTON TITRE INTRO
+          CARTON TITRE INTRO — JAMAIS dans une couche Partie (intro/outro/CTA = assemblage final global).
           ====================================================== */}
+      {!isPartie && (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
           opacity: introOp, pointerEvents: "none" }}>
         <div style={{ ...plaque, textAlign: "center", padding: "34px 60px",
@@ -3432,14 +3527,15 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </div>
         </div>
       </AbsoluteFill>
+      )}
 
-      {/* Fade out final */}
-      <AbsoluteFill style={{ background: "#1A1209", opacity: outroOp, pointerEvents: "none" }} />
+      {/* Fade out final — JAMAIS en couche Partie (P4 a sa propre extinction au noir). */}
+      {!isPartie && <AbsoluteFill style={{ background: "#1A1209", opacity: outroOp, pointerEvents: "none" }} />}
 
       {/* ======================================================
-          CTA FINAL (apres la narration, ~13200->13380)
+          CTA FINAL (apres la narration, ~13200->13380) — JAMAIS en couche Partie (assemblage final global).
           ====================================================== */}
-      {(() => {
+      {!isPartie && (() => {
         const local = frame - CTA_START;
         if (local < 0 || local > CTA_HOLD) return null;
         const op = Math.min(
@@ -3760,6 +3856,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
       {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
+      {partie4 && <Partie4Cout ctx={sahelCtx} map={mapRef.current} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
       {isFinalLook && (() => {
@@ -3797,7 +3894,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* CONTOURS NATIONAUX COLORÉS (1 ton/pays) — PERMANENTS + draw-in (Acte 1) + pulse.
           Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
           en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES). */}
-      {(countryBordersTest || partie3) && countryBorderPaths.length > 0 && (() => {
+      {(countryBordersTest || partie3 || partie4) && countryBorderPaths.length > 0 && (() => {
         // Draw-in : en test (séquence démo). En P3 les contours sont déjà tracés (offset 0)
         // + pulse aux moments clés. (Acte1 garde son allumage séquentiel, pas de contours.)
         const isActe1 = countryBordersTest;
