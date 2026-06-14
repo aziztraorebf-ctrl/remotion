@@ -17,14 +17,20 @@
 >   villes = Lucide MapPin (sprite town-td abandonné). Code : `Partie4Cout.tsx`.
 > - **Chantier 2 "COÛT" BOUCLÉ** (fait avec le Chantier 1) : cartouche CENTRAL OPAQUE (pas plein écran), countup
 >   3M (3 icônes-personnes) → bascule 15M+ (15 icônes 2 rangées, toutes allumées).
+> - **Chantier 3 CONFÉDÉRATION AES VALIDÉ Aziz + full HD (2026-06-14)** : `out/episodes/warmap-sahel/p4-chantier3-confed-FINAL.mp4`
+>   (catbox xt8ztb, commits 05c229b+e6a6146). ⭐ Né du **nouveau TEMPLATE PRINCIPAL `WarMapDimmedOverlay`**
+>   (carte assombrie + éléments superposés). 3 drapeaux AES → sceau SVG "Sept. 2023", fusion or sur carte.
+>   ⭐ **DOCTRINE NOUVELLE : `WARMAP-CARTE-VS-OVERLAY.md`** — la carte = causal/spatial ; le CONCEPTUEL
+>   (accord/data) = overlay solide ou plein écran, PUIS retour carte. À appliquer à TOUTES les scènes complexes.
 >
 > ⛔ RÈGLES GRAVÉES : overlay `mode="semitransp"` BANNI (WARMAP-GRAMMAIRE-CAUSALE) · synthèse extractive tracée à
 > chaque appel modèle · pas de pitch P4 (top-down, décision Aziz) · 5 jetons MAX = nb sprites distincts.
 >
-> ▶ **RESTE (ordre Aziz)** : Chantier 3 (Confédération SUR la carte, supprimer overlays AES+CFA encore semitransp →
-> opaque) → Chantier 2 "RESSOURCES" (overlay : uranium 6% réserves / Burkina 2e or 94,4t / oléoduc Niger) → render
-> full HD P4 complète → ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
-> ⚠️ DETTE : overlays confed + CFA dans `Partie4Cout.tsx` encore en semitransp → à passer opaque.
+> ▶ **RESTE (ordre Aziz)** : Chantier 2 "RESSOURCES" (overlay : uranium 6% réserves / Burkina 2e or 94,4t /
+> oléoduc Niger — candidat idéal pour le template `WarMapDimmedOverlay`) → render full HD P4 complète →
+> ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
+> ✅ DETTE semitransp RÉSOLUE : `WarMapOverlayDynamic` mode "card" (opaque) + nouveau `WarMapDimmedOverlay`.
+> ℹ️ Render still/vidéo Mapbox local = flag `--gl=angle` obligatoire (sinon "Failed to initialize WebGL").
 > ℹ️ Multi-instance : voir `feedback_multi-instance-working-tree.md` (working tree partagé, committer tôt).
 
 ## 🟢 (archive) WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅✅ VALIDÉE DÉFINITIVEMENT (2026-06-13)
