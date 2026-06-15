@@ -1,7 +1,7 @@
 # Seedance 2.0 — Technique Storyboard-to-Video
 
 > Source : @voxelplot sur X, 2026-04-13 (thread "Seedance 2.0 — Série de Workflows Avancés, #7 Storyboard vers Vidéo")
-> Démo archivée : `memory/tools/references/seedance-storyboard-voxelplot-demo.mov` (10s, anime combat hero vs phoenix)
+> Démo source : https://x.com/voxelplot/status/2043645442597007721 (10s, anime combat hero vs phoenix)
 > Statut : **À TESTER** sur Acte V Kirina Soundjata avant adoption.
 
 ---
@@ -442,8 +442,7 @@ CHARACTER LOCK: [personnage] must remain visually identical across all 4 beats �
 
 ## Liens
 
-- Post source : https://x.com/voxelplot/status/2043645442597007721
-- Démo locale : `memory/tools/references/seedance-storyboard-voxelplot-demo.mov`
+- Post source (démo 10s) : https://x.com/voxelplot/status/2043645442597007721
 - Règles Seedance générales : `memory/tools/seedance-rules.md` (appliquent toujours)
 - Prompts Seedance généraux : `memory/tools/seedance-prompts.md`
 - Recherche X API 30 jours (2026-05-10) : `/Users/clawdbot/Documents/Last30Days/seedance-2-0-storyboard-technique-panel-image-to-video-paper-raw.md`
