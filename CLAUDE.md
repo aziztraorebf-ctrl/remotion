@@ -55,6 +55,8 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 **Sauvegarde autonome EN COURS de session** (sans qu'Aziz le demande, immédiatement, bref/factuel, annoncer en 1 ligne) :
 - API/outil découvert → `memory/apis-and-tools.md` · Leçon/bug/anti-pattern → `memory/key-learnings.md` · État projet → `memory/COMPACT_CURRENT.md` · Gotcha outil → `memory/tools/<outil>.md` · Nouveau routage → `memory/ROUTAGE.md`.
 
+**Après tout déplacement/renommage de fichier mémoire OU script** : lancer `python3 scripts/tools/check-links.py` (garde-fou liens morts dans les fichiers de navigation). Corriger les `.md` ET les chemins en dur dans le CODE (.py/.sh) — une réorg casse les deux.
+
 ---
 
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
@@ -73,42 +75,15 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 ---
 
-## Pipeline Beat Souverain — REMOTION/Tailwind (NON-NEGOTIABLE)
+## Pipelines Beat (NON-NEGOTIABLE) — détail des étapes dans les scripts
 
-> Source : `scripts/beat-session.py`. Lancer `/beat`. Doctrine d'abord : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes data-viz + template storyboard). Squelette : `memory/doctrines/SOUVERAIN-REMOTION-SKELETON.md`.
+**Beat Souverain REMOTION/Tailwind** : `/beat` (`scripts/beat-session.py`). Doctrine : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`. Phases : scan→storyboard→breakdown→DA-brief→code→self-review→review→upload.
+**Absolus** : phase 0 SCAN COMPOSANTS-INDEX gate bloquant · 2 appels Gemini MAX · Tailwind partout (exception SVG/animations) · R1 = max 8s sans changement visuel · self-review ≥19/23 avant Gemini · upload (catbox+ntfy) avant toute présentation.
 
-```
-0. scan        SCAN COMPLET COMPOSANTS-INDEX (71+) + >=2 combinaisons validées Aziz. GATE : breakdown bloqué sans scan.
-0bis. storyboard STORYBOARD GEMINI multi-panels validé Aziz AVANT breakdown (gemini-storyboard-panels.py).
-1. breakdown   JSON layout Tailwind. LIRE avant de coder.
-1bis. DA-BRIEF-GATE (Gemini+Kimi via da-brief.py) -> synthese -> Aziz tranche -> code. (skippable si trivial.)
-2. code        Beat*.tsx Tailwind (h-[X%]+flex, tokens text-gold/ivory/bg-navy, briques HERO DATA). -> wip/beatN_v1.mp4
-3. self-review 23 criteres. Seuil 19/23 BLOQUANT avant Gemini.
-4. review      1 SEUL appel Gemini. JSON code_values.
-5. corrections appliquer code_values, iterer SANS nouvel appel Gemini.
-6. upload      catbox + ntfy Aziz. OBLIGATOIRE avant toute presentation.
-```
-**Absolus** : phase 0 SCAN gate bloquant · 2 appels Gemini MAX · Tailwind partout (exception SVG/animations) · R1 = max 8s sans changement visuel · self-review ≥19/23 · upload avant présentation.
+**Beat Mapbox CARTE** : `scripts/mapbox-session.py` (1 Map continue, getCam+overlays, fichier unique). Doctrine : `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`. Self-review scriptée d'abord : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (0 erreur avant review).
+**Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux = `useClipFlags` (vraies images, PAS drawFlagCanvas) · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
 
----
-
-## Pipeline Beat Mapbox — CARTE (NON-NEGOTIABLE)
-
-> Système miroir, beats carte (getCam, overlays, 1 Map continue). Source : `scripts/mapbox-session.py`. Doctrine d'abord : `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md` (5 principes premium).
-
-```
-0. SCAN TEMPLATES  scanner CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS + COMPOSANTS-INDEX. Presenter templates + combinaisons. Jamais d'effet custom sans verifier l'existant.
-1. storyboard      Production Brief par acte (Camera + Overlays + SFX) VALIDE AZIZ avant code. SFX plancher 0.50. Pitch 32 si 1-4 pays.
-1bis. DA-BRIEF-GATE (idem Souverain).
-2. code            getCam(frame) + ShortOverlays, fichier UNIQUE. -> wip/animatic_aN_v1.mp4 (scale 0.35).
-3. self-review     SCRIPTEE D'ABORD : python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx> (0 erreur avant review). Puis criteres visuels.
-4. review          gemini-mapbox-review.py -> JSON score. 1 SEUL appel. CONSULTATIF jamais juge.
-5. corrections     fix_code VRAIS uniquement, iterer SANS nouvel appel Gemini.
-6. upload          catbox + presenter a Aziz (decisions de gout).
-```
-**⛔ GEMINI = SIGNAL, JAMAIS JUGE** : le score est consultatif. Gemini analyse des frames sans son → hallucine sur le mouvement (a noté 4/10 un bon Beat 3, croyant un pull back = « cut brutal »). Procédure : 1 appel → vérifier chaque point contre les frames réelles → appliquer seulement ce qui est vrai → STOP → présenter à Aziz. JAMAIS de boucle Gemini→fix→Gemini. Un score bas n'invalide PAS un beat ; le jugement d'Aziz prime.
-
-**Absolus** : 2 appels Gemini MAX · Production Brief validé AVANT code · self-review scriptée 0 erreur · animatic 25-35% · drapeaux = `useClipFlags` (vraies images, PAS drawFlagCanvas). Drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat Mapbox, même un Short fait « comme ça ».
+**⛔ GEMINI = SIGNAL, JAMAIS JUGE** (les deux pipelines) : le score est consultatif. Gemini analyse des frames sans son → hallucine sur le mouvement (a noté 4/10 un bon Beat 3, croyant un pull back = « cut brutal »). Procédure : 1 appel → vérifier chaque point contre les frames réelles → appliquer seulement ce qui est vrai → STOP. JAMAIS de boucle Gemini→fix→Gemini. Le jugement d'Aziz prime. Outils review : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
 
 ---
 

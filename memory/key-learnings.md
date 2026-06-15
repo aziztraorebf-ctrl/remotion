@@ -4,6 +4,18 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ---
 
+### 2026-06-15 — Methode de reorg workspace (gros menage : memoire, scripts, doctrines)
+
+Apprentissages durables de la session de reorg complete (validee par un test agent vierge) :
+- **Une reorg `.md` casse AUSSI les chemins en dur dans le CODE** (.py/.sh), pas que la doc. Apres tout deplacement : `python3 scripts/tools/check-links.py` (nav) + grep des chemins dans `scripts/`. Bugs reels trouves : `beat-session.py` (SKELETON deplace), `factcheck.py`, CLAUDE.md (`render-on-vercel.py` ->tools/, `review_with_kimi.py` ->`visual_review.py`).
+- **Doublon successeur-non-adopte** : quand un fichier dit "Remplace X", verifier que TOUS les pointeurs (CLAUDE.md inclus) pointent le successeur, pas l'ancien. Cas : `visual_review.py` remplacait `review_with_kimi.py` mais CLAUDE pointait encore l'ancien -> risque d'utiliser le mauvais outil.
+- **1 fichier = 1 role TROUVABLE** : tout script/doctrine reutilisable doit etre dans un INDEX par cas d'usage. 48% des scripts etaient orphelins (cites nulle part = invisibles pour moi/un agent). Cree : `scripts/SCRIPTS-INDEX.md`, `scripts/tools/REVIEW-TOOLS-INDEX.md`. Symetrie des 3 piliers : chacun a son INDEX point d'entree (SOUVERAIN/ATLAS/WARMAP-INDEX).
+- **Le hook `gemini-model-guard.sh` bloque l'ecriture des noms de modeles perimes MEME dans la doc qui sert a les interdire** -> decrire les bannis ("versions Gemini < 3.1") au lieu de les lister litteralement.
+- **Test agent vierge = validation de navigabilite** : lancer un agent SANS contexte pour qu'il navigue le workspace sur des taches reelles revele les liens morts/ambiguites qu'on ne voit plus. MAIS verifier ses verdicts (il a mal attribue une source : "CLAUDE.md a 4 liens morts" etait faux).
+- Garde-fou cree : `scripts/tools/check-links.py` (`--all` pour tout le repo). Nav principale = 0 lien mort verifie.
+
+---
+
 ### 2026-06-15 — Grand menage memoire + disque (etat de reference post-menage)
 
 Session dediee au menage. Resultats a retenir comme nouvelle baseline :
@@ -212,7 +224,7 @@ Quand un composant accepte une image externe (portrait, photo archive, carte), t
 `deepseek/deepseek-v4-pro` (~$0.44/M in, $0.87/M out = ~10-20x moins cher qu'Opus). 1.6T MoE, contexte 1M.
 **Frein confirmé** : PAS de vision/multimodal au lancement (en dev). Nos briefs DA reposent sur des frames.
 **Walkaround validé** : remplacer les images par une DESCRIPTION TEXTUELLE fidèle (Claude a vu les frames).
-Script : `scripts/tools/deepseek-b1-test.py`.
+Script : scripts/tools/deepseek-b1-test.py.
 **Verdict** (2 briefs B1 War-Map, comparés à gemini+kimi qui avaient les images) :
 - CONCEPTUEL (séquencier, logique narrative, structure) = 80-90% de la valeur Gemini/Kimi. A même apporté
   une idée neuve (chaîne uranium Arlit→port Cotonou→cargo, que ni Gemini ni Kimi n'avaient).
