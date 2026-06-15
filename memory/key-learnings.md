@@ -4,6 +4,25 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ---
 
+### 2026-06-15 — ⭐ HOOK : partir de NOS templates prouves, NE PAS transposer une grammaire externe sur notre carte 2D
+
+Symptome : j'ai code un hook War-Map (acte 1) en suivant un DA-brief abstrait (gabarit "carte qui se transforme"
+type Max Bellona) SANS d'abord verifier nos templates de hook DEJA PROUVES. Resultat rejete par Aziz : tremblement
+de bord inexplique, drapeaux=requins, pins parasites, cold-start rate. Le prototype `SahelHookActe1` a ete supprime.
+
+**Cause racine** : transposer une recette pensee pour une AUTRE grammaire (style 3D / autre chaine) sur notre
+carte 2D flat top-down, au lieu de partir de CE QUI MARCHE CHEZ NOUS.
+
+**LA REGLE** :
+1. La regle "RECHERCHE TEMPLATES obligatoire AVANT de coder" s'applique AUSSI aux hooks (je l'avais sautee).
+2. NOS hooks prouves = `KineticMaskSlam` + `ComboMaskSweep` ("carte a travers un chiffre", masque SVG + zoom-reveal).
+   `src/projects/_shared/mapbox/`. Penses pour notre carte 2D, drift Mapbox continu, cinetique en overlay SVG.
+3. Un DA-brief peut pousser une direction INADAPTEE a notre stack — le verifier contre nos templates AVANT de coder.
+4. Chantier ouvert : SESSION DEDIEE HOOKS (`memory/SESSION-DEDIEE-HOOKS.md`) = bibliotheque de hooks reutilisables
+   pour TOUTES nos videos (on est "a court de bons hooks", manque structurel — Aziz 2026-06-15).
+
+---
+
 ### 2026-06-15 — ⭐ REGLE TRANSVERSALE (tous projets/episodes) : sur un bug VISUEL, EXTRAIRE les frames de la VRAIE video + INSTRUMENTER avant d'affirmer une cause
 
 Symptome (Sahel P4 ressources, mais vaut PARTOUT) : Aziz voyait "la carte a travers le plein ecran". J'ai

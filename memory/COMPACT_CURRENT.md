@@ -1,5 +1,33 @@
 # COMPACT_CURRENT — Etat d'avancement
-> Mise a jour : 2026-06-02 — **Maroc Batteries : Beat 0 + Beat 1 FINAL.** Architecture beats séparés (compositions Root.tsx). Découverte majeure : FlagFill = règle N°1 carte vivante. 2 templates FlagFill créés. PROCHAIN : session Fill-Pattern (bibliothèque drapeaux/textures) AVANT Beat 2.
+> Mise a jour : 2026-06-15 — **War-Map Sahel : P4 REFAITE+VALIDÉE. Virage méthode = PASSE SÉQUENTIELLE scène par scène avant assemblage. Hook = SESSION DÉDIÉE (prioritaire).**
+
+---
+
+## 🗺️ War-Map Sahel AES — PROJET ACTIF (2026-06-15)
+
+**Statut :** P4 "Coût/Levier/Perspective" REFAITE + VALIDÉE Aziz. Render `hdxsgi` (`wip/p4-FULL-v3-*.mp4`, 136s).
+Branche `feat/p3-ambient-vie`. Format War-Map Long 16:9, ~7min26, voix GéoAfrique V2.
+
+**⭐ CHANGEMENT DE MÉTHODE (Aziz) :** PASSE SÉQUENTIELLE — valider CHAQUE scène à 100% AVANT d'assembler
+(sinon re-découpage pénible après). Ordre : Acte1 (hook+corps) → P1 → P2 → P3 (P4 ✅). Assemblage EN DERNIER.
+
+**P4 — 11 corrections (commits 6a60ad9 + 922753e) :** intro anneaux/villes (fini les 12s vides) · triple-screen
+prolongé + chaque volet animé (halos pulsés/fill respire/atome tourne) + **bug opacité Mapbox corrigé** (masquage
+carte recalé 10647→11433, fini "carte à travers") · caméra finale FIGÉE (anti-jitter sub-pixel) + zoom serré (plus
+de dézoom continental) · portraits dirigeants réduits 0.105→0.065 · flash retiré · plan final : noir plus tôt +
+1 ligne typewriter monospace « Durer — reste à le démontrer. » + 2s. `Partie4Cout.tsx`.
+
+**🔴 PROCHAIN = ACTE 1** (refaire grammaire P3/P4) : gros blocs sahel-fill → contours qui flashent · supprimer
+légende factions + timeline · recaler triggers sur narration-v5-alignment.json (calés v1 → visuel désynchro voix v5).
+Plan : `memory/episodes/warmap-sahel/PLAN-REFONTE-ACTE1-HOOK.md`.
+
+**🔴 SESSION DÉDIÉE HOOKS (prioritaire) :** `memory/SESSION-DEDIEE-HOOKS.md`. Bibliothèque hooks réutilisables
+toutes vidéos. Socle = `KineticMaskSlam` + `ComboMaskSweep`. ⛔ Prototype hook Sahel "gabarit Bellona" SUPPRIMÉ
+(commit 17fc2c7) — ne pas transposer une grammaire externe sur notre carte 2D (key-learnings 06-15).
+
+**🎵 Musique :** 6 options Minimax (`public/_shared/audio/sahel-warmap/music/`), Aziz a choisi **D (Montée maîtrisée)**.
+
+**🧹 Infra :** `public/` allégé 2.3→2.0 GB (seedance + geoafrique → `_public-archive/`, 0 compo active impactée).
 
 ---
 

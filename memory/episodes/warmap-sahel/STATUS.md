@@ -1,26 +1,37 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-15 (nuit) — TOUTES LES SCÈNES FINAL, reste l'ASSEMBLAGE.
+**Dernière mise à jour :** 2026-06-15 (après-midi) — P4 VALIDÉE · PASSE SÉQUENTIELLE en cours · HOOK en session dédiée.
 **Branche :** `feat/p3-ambient-vie`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
-> ⛔⭐ **REPRISE AU RETOUR — LIRE CECI, IGNORER TOUT L'HISTORIQUE CI-DESSOUS (périmé, conservé pour archive) :**
+> ⛔⭐ **REPRISE AU RETOUR — LIRE CECI (l'ancien "reste l'assemblage" est PÉRIMÉ) :**
 >
-> **TOUTES LES SCÈNES SONT FINAL + full HD** (`out/episodes/warmap-sahel/`) : acte1 · p1 · p2 · p3 ·
-> p4-c1-exode · p4-cfa · p4-chantier3-confed · p4-ressources (+ chantier 4 "fin habitée" dans P4).
-> La refonte P4 est **TERMINÉE** (les 6 scènes validées Aziz). **AUCUNE scène à créer/corriger.**
+> **CHANGEMENT DE MÉTHODE (Aziz 2026-06-15) : PASSE SÉQUENTIELLE scène par scène AVANT tout assemblage.**
+> En refondant P4 puis en regardant les autres scènes, on a constaté qu'elles ne sont PAS toutes au niveau.
+> On NE PEUT PAS assembler tant que CHAQUE scène n'est pas validée à 100% (sinon re-découpage après = pénible).
+> Ordre de révision : **Acte1 (hook + corps) → P1 → P2 → P3** (P4 ✅ déjà refaite et validée). Assemblage EN DERNIER.
 >
-> **▶ NEXT = ASSEMBLAGE UNIQUEMENT** :
-> 1. Rendre P4 complète : compo `SahelPartie4` (`partie4:true`), f9416→13440, full HD, `--gl=angle` (Mapbox).
->    Audio : `public/_shared/audio/sahel-warmap/narration-v5-p4.mp3`.
-> 2. Concat ffmpeg Acte1+P1+P2+P3+P4 + narration globale `narration-v5-expressive.mp3` + 1 musique continue +
->    SFX + mix. Vérif anti-figé (1 frame/2s + md5, key-learnings 06-08).
-> 3. PUIS Gemini/Twelve Labs sur la vidéo COMPLÈTE (polish final). PUIS dérivés (`STRATEGIE-DERIVES-SHORT-CARROUSEL.md`).
+> **✅ P4 REFAITE + VALIDÉE (2026-06-15)** : 11 corrections (intro anneaux/villes · triple-screen prolongé+animé
+>   + bug opacité Mapbox corrigé · caméra figée anti-jitter · portraits réduits · flash retiré · plan final noir
+>   plus tôt + 1 ligne typewriter monospace + 2s). Render `hdxsgi`. Fichiers `wip/p4-FULL-v3-*.mp4` (136s).
+>   Détail : `PLAN-REFONTE-P4-POLISH.md`. Commits 6a60ad9 + 922753e.
 >
-> 📂 DOCS À JOUR : `memory/NEXT-ACTION.md` (en-tête) · `INVENTAIRE-TEMPLATES-SESSION-06-15.md` (templates
-> utilisés/réserve) · `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`.
-> ⛔ DOCS OBSOLÈTES (NE PAS suivre) : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md` (refonte finie).
-> 🧰 TEMPLATES CRÉÉS (06-14/15) : `WarMapDimmedOverlay` (carte assombrie+overlay), `WarMapSplitScreen` (2/3
-> volets + accordéon). Doctrine : `WARMAP-CARTE-VS-OVERLAY.md`. Règle debug : key-learnings 06-15.
+> **🔴 ACTE 1 = PROCHAIN GROS CHANTIER** — à refaire à la grammaire P3/P4 :
+>   - Supprimer les gros blocs `sahel-fill` (coloriage bleu/jaune/rouge) → contours nationaux qui flashent.
+>   - Supprimer la légende factions (haut-gauche) + la timeline graduée (registre dashboard, absent de P2/P3/P4).
+>   - Recaler les triggers visuels sur `narration-v5-alignment.json` (actuellement calés narration-v1, ligne 382 moteur
+>     → le visuel est désynchro de la voix v5 expressive, c'est ce qu'Aziz ressentait).
+>   - Le HOOK (0-30s) dépend de la **SESSION DÉDIÉE HOOKS** (voir ci-dessous). Plan : `PLAN-REFONTE-ACTE1-HOOK.md`.
+>
+> **🔴 SESSION DÉDIÉE HOOKS (priorité stratégique Aziz)** : `memory/SESSION-DEDIEE-HOOKS.md`. On est "à court de
+>   bons hooks". Bibliothèque de hooks RÉUTILISABLES (toutes vidéos), socle = `KineticMaskSlam` + `ComboMaskSweep`
+>   ("carte à travers un chiffre"). ⛔ Le prototype hook Sahel "gabarit Bellona" a été SUPPRIMÉ (commit 17fc2c7) :
+>   ne pas transposer une recette d'une autre grammaire sur notre carte 2D flat.
+>
+> **🎵 MUSIQUE** : 6 options générées (`public/_shared/audio/sahel-warmap/music/`). Aziz a choisi **D (Montée maîtrisée)**.
+>   Scripts : `scripts/tools/minimax-sahel-music{,-v2}.py`. À poser au concat final (1 morceau continu).
+>
+> 🧰 TEMPLATES (06-14/15) : `WarMapDimmedOverlay`, `WarMapSplitScreen` (2/3 volets). Doctrine `WARMAP-CARTE-VS-OVERLAY.md`.
+> ⛔ DOCS OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
 
 ---
 
