@@ -18,19 +18,25 @@
 > - **Chantier 2 "COÛT" BOUCLÉ** (fait avec le Chantier 1) : cartouche CENTRAL OPAQUE (pas plein écran), countup
 >   3M (3 icônes-personnes) → bascule 15M+ (15 icônes 2 rangées, toutes allumées).
 > - **Chantier 3 CONFÉDÉRATION AES VALIDÉ Aziz + full HD (2026-06-14)** : `out/episodes/warmap-sahel/p4-chantier3-confed-FINAL.mp4`
->   (catbox xt8ztb, commits 05c229b+e6a6146). ⭐ Né du **nouveau TEMPLATE PRINCIPAL `WarMapDimmedOverlay`**
->   (carte assombrie + éléments superposés). 3 drapeaux AES → sceau SVG "Sept. 2023", fusion or sur carte.
->   ⭐ **DOCTRINE NOUVELLE : `WARMAP-CARTE-VS-OVERLAY.md`** — la carte = causal/spatial ; le CONCEPTUEL
->   (accord/data) = overlay solide ou plein écran, PUIS retour carte. À appliquer à TOUTES les scènes complexes.
+>   (catbox xt8ztb, commits 05c229b+e6a6146). ⭐ Né du **TEMPLATE `WarMapDimmedOverlay`** (carte assombrie +
+>   éléments superposés). 3 drapeaux AES → sceau SVG "Sept. 2023", fusion or sur carte.
+> - **Chantier "CFA" (Ph8) VALIDÉ Aziz + full HD (2026-06-15)** : `out/episodes/warmap-sahel/p4-cfa-FINAL.mp4`
+>   (catbox 5fxlvp, commits 660bf05+06cc12c). ⭐ Né du **TEMPLATE `WarMapSplitScreen`** (2 mondes côte à côte) :
+>   GAUCHE carte AES+pièce CFA pulsante / DROITE drapeau FR SVG ondulant + équation "1€=~656 FCFA" → bascule
+>   vers le SENS (souveraineté+jeunesse) en typewriter. Faits : `FACTS-CFA-2026.md`.
+> ⭐ **2 DOCTRINES/TEMPLATES NOUVEAUX RÉUTILISABLES** : `WARMAP-CARTE-VS-OVERLAY.md` (la carte = causal/spatial ;
+>   le CONCEPTUEL = overlay solide OU plein écran OU split, puis retour carte) + `WarMapDimmedOverlay` +
+>   `WarMapSplitScreen`. À appliquer à TOUTES les scènes complexes futures (le test : "ancrage géo réel ?").
 >
 > ⛔ RÈGLES GRAVÉES : overlay `mode="semitransp"` BANNI (WARMAP-GRAMMAIRE-CAUSALE) · synthèse extractive tracée à
 > chaque appel modèle · pas de pitch P4 (top-down, décision Aziz) · 5 jetons MAX = nb sprites distincts.
 >
-> ▶ **RESTE (ordre Aziz)** : Chantier 2 "RESSOURCES" (overlay : uranium 6% réserves / Burkina 2e or 94,4t /
-> oléoduc Niger — candidat idéal pour le template `WarMapDimmedOverlay`) → render full HD P4 complète →
-> ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
-> ✅ DETTE semitransp RÉSOLUE : `WarMapOverlayDynamic` mode "card" (opaque) + nouveau `WarMapDimmedOverlay`.
-> ℹ️ Render still/vidéo Mapbox local = flag `--gl=angle` obligatoire (sinon "Failed to initialize WebGL").
+> ▶ **RESTE (ordre Aziz)** : Chantier 2 "RESSOURCES" (Ph5-6 ~f10667→10851 : uranium / or Burkina / oléoduc Niger
+>   — candidat pour `WarMapDimmedOverlay` ou `WarMapSplitScreen`) → render full HD P4 complète → ASSEMBLAGE FINAL
+>   (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
+> ✅ Confédération + CFA = les 2 scènes "dures" de la perspective FAITES. Reste surtout Ressources + assemblage.
+> ✅ DETTE semitransp RÉSOLUE. ℹ️ Render Mapbox local = flag `--gl=angle` obligatoire (sinon WebGL fail).
+> ℹ️ Chiffres à l'écran : TOUJOURS arrondir sans ambiguïté (ex "~656" pas "655,957" → lu "655 000"). Public fact-checke.
 > ℹ️ Multi-instance : voir `feedback_multi-instance-working-tree.md` (working tree partagé, committer tôt).
 
 ## 🟢 (archive) WAR-MAP SAHEL : Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅✅ VALIDÉE DÉFINITIVEMENT (2026-06-13)
