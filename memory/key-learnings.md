@@ -4,6 +4,29 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ---
 
+### 2026-06-15 — ⭐ REGLE TRANSVERSALE (tous projets/episodes) : sur un bug VISUEL, EXTRAIRE les frames de la VRAIE video + INSTRUMENTER avant d'affirmer une cause
+
+Symptome (Sahel P4 ressources, mais vaut PARTOUT) : Aziz voyait "la carte a travers le plein ecran". J'ai
+affirme 2x "c'est regle / c'est la carte Mapbox masquee" SANS verifier la video reelle -> 4 tours perdus,
+frustration. La vraie cause n'etait PAS le canvas Mapbox (bien masque) mais les CONTOURS NATIONAUX du moteur
+(une couche React) rendus PAR-DESSUS l'overlay.
+
+**LA REGLE (systematic-debugging applique au visuel) :**
+1. **Ne JAMAIS affirmer "c'est regle" sans avoir extrait les frames de la VRAIE video rendue** (`ffmpeg -i
+   video.mp4 -vf "select='eq(n\,N)'" frame.png`) et les avoir REGARDEES. Un still re-rendu peut differer ; c'est
+   la video que l'utilisateur voit qui compte.
+2. **INSTRUMENTER pour prouver la cause** (ex : fond rouge/vert/bleu vif opaque par zone -> revele ce qui est
+   clippe vs ce qui deborde ; un div debug ; isoler une couche). Prouver AVANT de fixer.
+3. **Test de controle** : reproduire le bug sur une frame AVANT la zone suspecte (ex : une frame deja validee
+   casse aussi ? -> c'est l'environnement/une couche commune, pas mon nouveau code).
+4. Des le 2e fix qui echoue sur le MEME symptome : STOP, lancer `superpowers:systematic-debugging`, instrumenter.
+   Ne JAMAIS dire "c'est le cache/l'environnement/la map" sans preuve.
+
+Corollaire moteur War-Map (mais le principe est general) : une couche rendue APRES un overlay dans l'arbre passe
+AU-DESSUS. "On voit X a travers" = X est rendu apres/au-dessus, pas une transparence. Chercher l'ordre de montage.
+
+---
+
 ### 2026-06-08 — Beats codes pour compo GLOBALE vs rendus STANDALONE : 3 pieges qui donnent ecran noir + queue morte + musique coupee
 
 Symptome (Peste 1347, assemblage) : 8-24s d'ecran noir au debut de Beat2/Beat3, puis queue figee de meme duree en fin, et musique qui "coupe et reprend" entre beats. Cause = les beats ecrits pour vivre dans UNE compo globale (ou `frame` = position dans l'audio complet) mais rendus en compositions STANDALONE (frame part de 0). Trois bugs distincts a corriger ENSEMBLE :
