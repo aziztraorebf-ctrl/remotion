@@ -129,7 +129,7 @@ Un bon combo = une **progression narrative** (pas une superposition). Le secret 
 - `ClipFlag` : `{ iso, geoNames[], flagFile, at, bgColor?, fadeFrames?, mainlandBox? }`
 - **`mainlandBox` [minLon,minLat,maxLon,maxLat]** OBLIGATOIRE pour pays à outre-mer (France `[-5,41,10,52]`, sinon bbox géante Guyane→Réunion casse le drapeau). Idem USA/Pays-Bas/Danemark.
 - `preserveAspectRatio="meet"` (drapeau entier) + fond `bgColor` pour combler les bords de silhouette.
-- ⛔ **NE PAS utiliser `flagCanvas.ts` `drawFlagCanvas` pour un drapeau visible** — ce sont des dessins APPROXIMATIFS (étoiles fausses). Réservé aux cas où seule la couleur dominante compte. Voir `memory/feedback_sfx-sequence-et-drapeaux-reels.md` (BUG 2+3).
+- ⛔ **NE PAS utiliser `flagCanvas.ts` `drawFlagCanvas` pour un drapeau visible** — ce sont des dessins APPROXIMATIFS (étoiles fausses). Réservé aux cas où seule la couleur dominante compte. Voir `memory/feedbacks/feedback_sfx-sequence-et-drapeaux-reels.md` (BUG 2+3).
 
 ### Autres helpers
 - **`flagCanvas.ts`** — 45 drapeaux DESSINÉS en canvas pur + `countryFilter(iso, boundaryIsos)` (filtre Mapbox par ISO, JAMAIS par `name`). ⚠️ Les drapeaux dessinés sont approximatifs → préférer `useClipFlags` (vraies images) pour tout drapeau visible. `countryFilter` reste la référence pour filtrer un fill.

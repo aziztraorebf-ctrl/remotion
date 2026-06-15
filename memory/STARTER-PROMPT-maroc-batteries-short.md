@@ -27,7 +27,7 @@
 
 **1 fichier unique** `MarocBatteriesShort.tsx` — pas de beats séparés.
 Raison validée en session : la caméra Mapbox est continue, 1 seule instance Map.
-Modèle : `PetrolePatienceShort.tsx` (voir `memory/SOUVERAIN-SHORT-SKELETON.md`).
+Modèle : `PetrolePatienceShort.tsx` (voir `memory/doctrines/SOUVERAIN-SHORT-SKELETON.md`).
 
 Pattern getCam(frame) → retourne {lon, lat, zoom, pitch, bearing} selon l'acte.
 Tout le code dans ce seul fichier. Render via `render-mapbox.sh`.
@@ -83,7 +83,7 @@ easing = `Math.pow(t, 0.6)` pour mouvement lent progressif.
 ## Workflow validé pour la session suivante
 
 1. Lire ce fichier
-2. Lire `memory/SOUVERAIN-SHORT-SKELETON.md`
+2. Lire `memory/doctrines/SOUVERAIN-SHORT-SKELETON.md`
 3. Ouvrir `MarocBatteriesShort.tsx` — continuer à partir de A2
 4. Coder A2 → render frames → valider → A3 → etc.
 5. Envoyer vidéo complète à Gemini 3.1 Pro pour review globale

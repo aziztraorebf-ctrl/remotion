@@ -230,7 +230,7 @@
 
 ## HERO DATA — data-viz premium (doctrine SOUVERAIN-REMOTION-PLAYBOOK)
 
-> Briques codifiées 2026-06-02 depuis Silicon Savannah + analyse Gemini. Pour beats **graphisme/data-viz/hero-data** (pas carte). Charte navy/gold, secondary motion, métaphore physique. Squelette assemblage : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
+> Briques codifiées 2026-06-02 depuis Silicon Savannah + analyse Gemini. Pour beats **graphisme/data-viz/hero-data** (pas carte). Charte navy/gold, secondary motion, métaphore physique. Squelette assemblage : `memory/doctrines/SOUVERAIN-REMOTION-SKELETON.md`.
 
 | Composant | Import | Quand Aziz dit... |
 |---|---|---|

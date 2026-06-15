@@ -27,7 +27,7 @@ plus courtes. Catbox : `4dwqit` (v4 final). Composition dans `src/Root.tsx` (fol
 | **Doctrine DONNÉES** (phase recherche : sources OSINT, fiabilité, schéma canonique) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` | 4 étapes ACLED→synthèse→fact-check ; classement fiabilité ; contrat schéma |
 | **État + compositions + rendus + analyse stratégique** | `memory/episodes/warmap-daybyday/STATUS.md` | Fiche de reprise. Compositions, briques, décisions Aziz, historique rendus |
 | **Décode du genre** (écosystème mapsinanutshell, cadence, monétisation) | `memory/atlas-decode/DECODE-daybyday-warmap.md` | Le "pourquoi" du format + pipeline du genre |
-| **Recette sprites top-down** (Gemini, pas Recraft) | `memory/feedback_sprites-topdown-gemini-vs-recraft.md` | Diagnostic + recette fond cream → removeBackground |
+| **Recette sprites top-down** (Gemini, pas Recraft) | `memory/feedbacks/feedback_sprites-topdown-gemini-vs-recraft.md` | Diagnostic + recette fond cream → removeBackground |
 | **"quelle brique pour X ?" / réutilisable** ⭐ | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` | Catalogue "quand Aziz dit X → brique Y" des 4 briques + LINKING mapanimation (flèches, encerclement, manœuvres) + convention de rangement |
 | **2e source d'animation : mapanimation** (flèches tactiques, encerclement, flux, manœuvres troupes) | Voir WARMAP-COMPOSANTS-INDEX §mapanimation | `AtlasAttackArrow`/`AtlasEncirclement` (codés) + décodes `memory/_r-and-d-mapanimation-*` + `DECODE-bazbattles-manoeuvres.md`. **À exploiter pour enrichir les beats war-map** |
 

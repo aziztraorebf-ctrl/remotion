@@ -8,7 +8,7 @@
 > structure narrative de chaque pilier (le QUOI raconter, dans quel ordre). Celle-ci reste dans :
 > - Souverain → `DOCTRINE-SOUVERAIN.md` + `MIDFORM-FORMAT-RULES.md` (structure 4 actes, respirations, ratio map/data)
 > - Atlas → `ATLAS-PLAYBOOK.md`
-> - War-Map → `WARMAP-PLAYBOOK.md` + `WARMAP-LONG-DOCTRINE.md` + `WARMAP-GRAMMAIRE-CAUSALE.md`
+> - War-Map → `WARMAP-PLAYBOOK.md` + `WARMAP-LONG-DOCTRINE.md` + `WARMAP-GRAMMAIRE.md`
 >
 > **Comment l'utiliser :** la doctrine de PILIER te dit QUOI raconter et dans quel ordre.
 > CETTE doctrine te dit COMMENT l'écrire pour que ça s'écoute bien. Les DEUX ensemble, toujours.
@@ -261,6 +261,6 @@ Dérivé de Medieval Mindset (188k abonnés, voir `feedback_medieval-mindset-met
 |---|---|
 | Souverain (long/short) | `DOCTRINE-SOUVERAIN.md` + `MIDFORM-FORMAT-RULES.md` (4 actes, respirations, ratio map/data/text, render) + `CHARTE-EDITORIALE-SOUVERAIN.md` |
 | Atlas | `ATLAS-PLAYBOOK.md` + `ATLAS-BEAT-DEMARRAGE.md` |
-| War-Map | `WARMAP-PLAYBOOK.md` + `WARMAP-LONG-DOCTRINE.md` + `WARMAP-GRAMMAIRE-CAUSALE.md` |
+| War-Map | `WARMAP-PLAYBOOK.md` + `WARMAP-LONG-DOCTRINE.md` + `WARMAP-GRAMMAIRE.md` |
 | Shorts (formule beats) | `memory/tools/seedance-community.md` (formule César, 7 beats) si réactivé |
 | Nouvelles chaînes (immobilier, etc.) | Pas encore de doctrine de pilier — utiliser cette couche orale + structure ad hoc |

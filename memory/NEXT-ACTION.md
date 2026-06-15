@@ -4,13 +4,16 @@
 
 ---
 
-## 🔴 PRIORITÉ 1 — SESSION DÉDIÉE HOOKS (Aziz 2026-06-15) — CHANTIER STRATÉGIQUE
+## ✅ (LIVRÉ 2026-06-15) — BIBLIOTHÈQUE DE HOOKS RÉUTILISABLES
 
-> ⭐ **LIRE `memory/SESSION-DEDIEE-HOOKS.md`** (préparation complète). "On est à court de bons hooks" =
-> manque structurel. Objectif : BIBLIOTHÈQUE de hooks RÉUTILISABLES pour TOUTES nos vidéos (pas one-shot).
-> Socle = nos 2 patterns PROUVÉS : **KineticMaskSlam** + **ComboMaskSweep** ("carte à travers un chiffre").
-> ⛔ LEÇON : ne PAS transposer une recette d'une AUTRE grammaire (gabarit Bellona) sur notre carte 2D flat.
-> Le prototype hook Sahel a été SUPPRIMÉ (commit 17fc2c7). Idées d'amorce dans SESSION-DEDIEE-HOOKS.md.
+> ✅ **CHANTIER LIVRÉ + commité** (branche `feat/hooks-library`, commits 581542a + 21f7649).
+> Code `src/projects/_shared/hooks-lib/`. Catalogue `hooks-lib/HOOKS-LIBRARY-CATALOGUE.md`.
+> Source de vérité : `memory/HOOKS-LIBRARY-PLAN.md`. État détaillé : `memory/SESSION-DEDIEE-HOOKS.md` (en-tête).
+> 3 hooks distincts (CrosshairLock=traquer / RedlineContagion=propager / MaskReveal=chiffre-masque) +
+> insert ArteryDrain, sur fond commun `HookMapBackground` (theme dark/parchemin + camKeys CAMÉRA SERRÉE
+> + raccord carte) + `HookEffects` (grain + displacement). Démo réf : catbox `9q75sr`.
+> **RESTE (= refonte Acte 1 ci-dessous)** : brancher un hook sur la vraie vidéo AES + narration.
+> Différés : version Short verticale · effets AE secondaires (halftone) · morph path (sujet historique).
 
 ## 🟡 PRIORITÉ 2 — WAR-MAP SAHEL : PASSE SÉQUENTIELLE scène par scène (révision méthode 2026-06-15)
 
@@ -20,7 +23,9 @@
 > **✅ P4 VALIDÉE + corrigée** (11 corrections, render `hdxsgi`, `wip/p4-FULL-v3-*.mp4`). Voir `PLAN-REFONTE-P4-POLISH.md`.
 > **▶ ACTE 1 = à refaire à la grammaire P3/P4** (gros blocs sahel-fill → contours qui flashent ; supprimer
 >   légende factions + timeline ; recaler triggers sur narration-v5-alignment.json — actuellement calés v1).
->   Le HOOK de l'Acte 1 dépend de la SESSION DÉDIÉE HOOKS (priorité 1). Plan : `PLAN-REFONTE-ACTE1-HOOK.md`.
+>   ✅ **Le HOOK est DÉBLOQUÉ** : bibliothèque livrée (`hooks-lib/`). Candidat n°1 = `CrosshairLock` caméra
+>   serrée (catbox `9q75sr`) OU `MaskReveal`/`RedlineContagion`. VRAI TEST = brancher un hook en tête de
+>   la vraie vidéo AES + narration. Voir `HOOKS-LIBRARY-CATALOGUE.md`. Plan Acte 1 : `PLAN-REFONTE-ACTE1-HOOK.md`.
 > **PUIS** P1, P2, P3 revues une par une. **PUIS SEULEMENT** assemblage (concat + narration globale
 >   `narration-v5-expressive.mp3` + musique **D (Montée maîtrisée)** choisie + mix + vérif anti-figé).
 > 🎵 Musique : 6 options générées (`public/_shared/audio/sahel-warmap/music/`), Aziz a choisi **D-montee-maitrisee**.
@@ -48,7 +53,7 @@
 >   (catbox 88k2gg, commits 20626c2+8ccae8f). ⭐ TRIPLE-SCREEN (`WarMapSplitScreen` 3 volets + accordéon) : Mali|Burkina|Niger,
 >   chacun carte zoomée pays + icône ressource + plaque. Niger s'élargit (accordéon) + 2 icônes uranium+pétrole.
 >   Faits : `FACTS-RESSOURCES-2026.md`. Review DA : `SYNTHESE-DA-RESSOURCES-TRIPLE.md`.
-> ⭐ **2 DOCTRINES + 2 TEMPLATES RÉUTILISABLES** : `WARMAP-CARTE-VS-OVERLAY.md` (carte = causal/spatial ; conceptuel
+> ⭐ **2 DOCTRINES + 2 TEMPLATES RÉUTILISABLES** : `WARMAP-GRAMMAIRE.md` (carte = causal/spatial ; conceptuel
 >   = overlay/plein écran/split, puis retour carte) + `WarMapDimmedOverlay` + `WarMapSplitScreen` (2 OU 3 volets,
 >   accordéon). Test avant toute scène : "ancrage géo réel ?". ⚠️ Plein écran = masquer carte Mapbox
 >   (`MAP_HIDE_WINDOWS`) ET contours moteur (`CONTOUR_HIDE_WINDOWS`), sinon "on voit la carte à travers".
@@ -375,7 +380,7 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 1. **LIRE** `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes + section SFX + template storyboard 10 champs).
 2. **Pipeline** `/beat` (`scripts/beat-session.py`) : phase 0 SCAN (complet, >=2 combinaisons) → storyboard Gemini multi-panels (`scripts/tools/gemini-storyboard-panels.py`) → breakdown → code → self-review → review Gemini.
 3. **Briques** : section HERO DATA de `COMPOSANTS-INDEX.md` (CountUp bounce, HeroMirrorBars, **HeroVerticalBars**, FloatingHeroObject clipCircle/spin, Badge satellite, SubtitleBarSouverain, TextChoc) + helpers `animations.ts`.
-4. **Assemblage** : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
+4. **Assemblage** : `memory/doctrines/SOUVERAIN-REMOTION-SKELETON.md`.
 5. **1er beat produit (preuve)** : A3 Cailloux Maroc — `out/episodes/maroc-batteries/a3-cailloux-FINAL.mp4`.
 
 **Lecon SFX** : toujours vérifier la DURÉE d'un SFX (`ffprobe`) avant usage — `ui/reveal.mp3` était corrompu (voix fantôme 18s), neutralisé. Section ⛔ de `SFX-INDEX.md`.

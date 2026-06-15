@@ -87,4 +87,4 @@ Commande base :
 - Render Mapbox : `./scripts/render-mapbox.sh`
 - Beat11 source : `src/projects/souverain/senegal-petrole-gaz/beats/Beat11.tsx`
 - Composant LaCalebasse : `src/projects/_shared/components/layouts/LaCalebasse.tsx`
-- DOCTRINE SOUVERAIN : `memory/DOCTRINE-SOUVERAIN.md`
+- DOCTRINE SOUVERAIN : `memory/doctrines/DOCTRINE-SOUVERAIN.md`

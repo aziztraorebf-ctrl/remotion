@@ -62,7 +62,7 @@ Idées hook non codées (backlog) : TacticalRadarScan, EpicenterShockwave, Satel
 
 ## 🎌 FILL-PATTERN (session 2026-06-03) — colorer/remplir les pays (N1→N4)
 
-> 10 templates + 2 bibliothèques helper. **Carte JAMAIS nue = règle N°1.** Helper central `flagCanvas.ts` (45 drapeaux canvas pur, `pushFlagToMap`, `countryFilter`). Filtre TOUJOURS par ISO via `countryFilter(iso, boundaryIsos)` — jamais par `name` (KO headless). Détails + gotchas : `CATALOGUE-CARTE-VIVANTE.md` sections N1-N4 + `memory/feedback_flagfill-templates-decouverte.md`.
+> 10 templates + 2 bibliothèques helper. **Carte JAMAIS nue = règle N°1.** Helper central `flagCanvas.ts` (45 drapeaux canvas pur, `pushFlagToMap`, `countryFilter`). Filtre TOUJOURS par ISO via `countryFilter(iso, boundaryIsos)` — jamais par `name` (KO headless). Détails + gotchas : `CATALOGUE-CARTE-VIVANTE.md` sections N1-N4 + `memory/feedbacks/feedback_flagfill-templates-decouverte.md`.
 
 | Composant | Niveau | Effet | Preview V |
 |---|---|---|---|

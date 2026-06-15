@@ -1,8 +1,27 @@
-# SESSION DÉDIÉE HOOKS — Préparation (créé 2026-06-15)
+# SESSION DÉDIÉE HOOKS — ✅ LIVRÉE (session 2026-06-15)
 
-> ⭐ CHANTIER STRATÉGIQUE prioritaire (Aziz 2026-06-15). "On est à court de bons hooks" = manque
-> structurel. Objectif : une BIBLIOTHÈQUE de hooks RÉUTILISABLES pour TOUTES nos vidéos
-> (War-Map, Souverain, Atlas), pas juste un hook one-shot. Session ÉTENDUE, on pousse à fond.
+> ✅ **CHANTIER LIVRÉ.** Bibliothèque codée + commitée (branche `feat/hooks-library`, commits 581542a + 21f7649).
+> Code : `src/projects/_shared/hooks-lib/`. Catalogue : `hooks-lib/HOOKS-LIBRARY-CATALOGUE.md`.
+> Plan + synthèse DA + leçons : `memory/HOOKS-LIBRARY-PLAN.md` (SOURCE DE VÉRITÉ du chantier).
+>
+> **CE QUI A ÉTÉ LIVRÉ :**
+> - `HookMapBackground` = fond commun agnostique (theme dark/parchemin + raccord carte `countriesGeoJson`
+>   + `camKeys` CAMÉRA SERRÉE+PAN comme Acte 1 + `litStagger` contagion + projection géo + punchZoom).
+> - 3 hooks à mécaniques DISTINCTES : `CrosshairLock` (traquer), `RedlineContagion` (propager),
+>   `MaskReveal` (révéler par texte, prop `effect` plain/echo/chromatic — fusion anti-redondance).
+> - `ArteryDrain` = INSERT éco (pas hook). `HookEffects` = grain + displacement (onde de choc), prouvés render.
+> - Démos catbox : CrosshairLock cam serrée `9q75sr` · RedlineContagion AE `uwbr8o` / cam `2ppj6r` · MaskReveal cam `4ea6cl`.
+>
+> **3 LEÇONS GRAVÉES** (dans HOOKS-LIBRARY-PLAN) : (1) hook (crée tension) ≠ insert (explique) ;
+> (2) ne pas multiplier les variantes de DÉCO du même squelette = AI-slop ; (3) CAMÉRA SERRÉE comme la
+> vraie vidéo (regarder ACTE1_CAM_KEYS), JAMAIS vue continent figée.
+>
+> **RESTE (différé, pas un manque)** : brancher un hook sur la vraie vidéo AES Acte 1 + narration (= le
+> vrai test, relève de la refonte Acte 1 Priorité 2) · version VERTICALE Short · effets AE secondaires
+> (halftone radar, gradient-spot, déchirure) · morph path (sujet historique). Tout tracé dans le catalogue.
+
+---
+## (archive) Préparation initiale du chantier
 
 ## POURQUOI (le constat)
 - Le hook = levier #1 de rétention (confirmé : toutes les grosses chaînes y mettent l'emphase).

@@ -37,11 +37,11 @@
 |---|---|
 | Doctrine visuelle (7 principes) | `memory/doctrines/ATLAS-PLAYBOOK.md` |
 | Couche personnages PixelLab | `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md` |
-| Retour aux sources (pourquoi Ghana+Mansa = la base) | `memory/feedback_atlas-retour-aux-sources-ghana-mansa.md` |
+| Retour aux sources (pourquoi Ghana+Mansa = la base) | `memory/feedbacks/feedback_atlas-retour-aux-sources-ghana-mansa.md` |
 | Décodage Empire Ghana (source playbook) | `memory/atlas-decode/DECODE-empire-ghana.md` |
 | Décodage Mansa Moussa (source playbook) | `memory/atlas-decode/DECODE-mansa-moussa.md` |
 | Audit bibliothèque (inventaire complet) | `memory/atlas-decode/audit/AUDIT-atlas-bibliotheque-2026-06-03.md` |
-| Faisabilité inspiration externe (mapanimation = banc R&D) | `memory/feedback_atlas-inspiration-externe-faisabilite.md` |
+| Faisabilité inspiration externe (mapanimation = banc R&D) | `memory/feedbacks/feedback_atlas-inspiration-externe-faisabilite.md` |
 
 ---
 

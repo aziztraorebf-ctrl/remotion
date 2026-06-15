@@ -64,7 +64,7 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
    ex. MapPin, User), (b) **formes géométriques simples SVG dessinées maison** (cercle/rect/path/polygone composés :
    marqueur-lieu, cartouche, jauge, pastille), (c) **animations maison frame-driven** (countup, cascade, ondulation,
    ondes, tracé stroke-dashoffset, pulsation). Souvent SUPÉRIEUR à un asset généré (net full HD, gratuit, charte exacte,
-   zéro détourage). Détail : `WARMAP-SVG-ANIME-3E-VOIE.md`. Cette voie DOIT figurer dans la boîte à outils envoyée aux
+   zéro détourage). Détail : `WARMAP-ANIMER-OBJETS.md`. Cette voie DOIT figurer dans la boîte à outils envoyée aux
    modèles (déjà injectée dans `da-brief.py`) ET être dans MON champ d'options quand je construis un plan/une scène.
 5. **INTERDIT** : `filter:blur` CSS, particules 3D, depth-of-field, vraie 3D, volumetric, lens flare, tout AE non reproductible. "NE RIEN proposer de tel."
 6. **LIBERTÉ CRÉATIVE CADRÉE** (clé) : "Tu PEUX suggérer des effets non encore codés ET piocher dans le CATALOGUE joint, À CONDITION que ce soit faisable dans la boîte à outils. Indique le STATUT : 'déjà faisable' ou 'à coder mais faisable'."

@@ -34,7 +34,7 @@ Le format convient aux **concepts, systèmes et mécanismes**. Il NE convient JA
 | "Les règles du commerce transsaharien médiéval" | Esclavage, colonisation (sujets de douleur) |
 
 **Pourquoi :** la métaphore ludique banaliserait la souffrance. C'est l'INVERSE de la grammaire causale
-War-Map (qui traite le drame avec gravité — voir `WARMAP-GRAMMAIRE-CAUSALE.md`). Un sujet ne peut pas
+War-Map (qui traite le drame avec gravité — voir `WARMAP-GRAMMAIRE.md`). Un sujet ne peut pas
 être à la fois un "jeu vidéo" et un drame respecté. En cas de doute : ne pas utiliser ce format.
 
 ---

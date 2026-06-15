@@ -34,12 +34,13 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
-| Démarrer/coder un Short Souverain Mapbox (point d'entrée) | `memory/SOUVERAIN-SHORT-DEMARRAGE.md` ⭐ 7 étapes → puis `SOUVERAIN-SHORT-SKELETON.md` |
-| Doctrine Souverain (durable) | `memory/DOCTRINE-SOUVERAIN.md` (LIRE en entier avant tout code Souverain) |
+| **Doute « où chercher ? » Souverain — POINT D'ENTRÉE** | `src/projects/souverain/SOUVERAIN-INDEX.md` ⭐ carte maître du pilier |
+| Démarrer/coder un Short Souverain Mapbox (point d'entrée) | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` ⭐ 7 étapes → puis `SOUVERAIN-SHORT-SKELETON.md` |
+| Doctrine Souverain (durable) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` (LIRE en entier avant tout code Souverain) |
 | Règles éditoriales Souverain (sources, couleurs, script Type B) | `memory/rules-souverain-editorial.md` |
-| Tailwind (tokens gold/navy/ivory) — TOUT composant Souverain | `memory/feedback_tailwind-remotion-setup.md` · Framer Motion INTERDIT · lire `tailwind.config.ts` |
+| Tailwind (tokens gold/navy/ivory) — TOUT composant Souverain | `memory/feedbacks/feedback_tailwind-remotion-setup.md` · Framer Motion INTERDIT · lire `tailwind.config.ts` |
 | SplitScreen 50/50, entité vs entité | `src/projects/_shared/components/layouts/SplitScreenSouverain.tsx` |
-| Data-viz Souverain (StackedBars, ProcessFlow, comparaisons $) | `memory/DOCTRINE-SOUVERAIN.md` §9 + `PrototypeD3StackedBars.tsx` (D3 utility-only) |
+| Data-viz Souverain (StackedBars, ProcessFlow, comparaisons $) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` §9 + `PrototypeD3StackedBars.tsx` (D3 utility-only) |
 | Breakdown Gemini 3.1-pro (prompt + schema JSON) | `memory/tools/workflow-gemini-breakdown-schema.md` (coller bloc « stack technique ») |
 
 ### Atlas
@@ -58,7 +59,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
-| Coder scène/beat War-Map (changement territoire) AVANT CODE | `memory/doctrines/WARMAP-GRAMMAIRE-CAUSALE.md` ⭐⭐ CAUSE avant EFFET + 5 techniques causales |
+| Coder scène/beat War-Map (changement territoire) AVANT CODE | `memory/doctrines/WARMAP-GRAMMAIRE.md` ⭐⭐ CAUSE avant EFFET + 5 techniques causales |
 | War-Map Long (5-7min, 16:9, analytique géopo) | `memory/doctrines/WARMAP-LONG-DOCTRINE.md` ⭐ |
 | Doctrine design War-Map | `memory/doctrines/WARMAP-PLAYBOOK.md` |
 | Doctrine données War-Map (recherche OSINT) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` |

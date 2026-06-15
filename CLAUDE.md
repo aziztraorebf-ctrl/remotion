@@ -29,14 +29,14 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 
 ---
 
-## ⛔ DOCTRINE SOUVERAIN — LIRE `memory/DOCTRINE-SOUVERAIN.md` AVANT TOUT CODE SOUVERAIN
+## ⛔ DOCTRINE SOUVERAIN — LIRE `memory/doctrines/DOCTRINE-SOUVERAIN.md` AVANT TOUT CODE SOUVERAIN
 
 3 règles maîtresses (résumé non substituable à la lecture complète, 9 sections) :
 1. **Premium d'abord, contraintes ensuite** — jamais la solution facile pour rendre vite. Anti-pattern proscrit : « je rends simple, on améliorera après » (on n'améliore jamais).
 2. **Réutiliser un pattern est OK si justifié** — pas d'interdiction. Un pattern existant (donut, Pull Back Reveal, arc…) qui explique mieux = l'utiliser. La réutilisation crée le langage visuel.
 3. **Mapbox = frame-driven obligatoire** — `useCurrentFrame` + `interpolate` + `map.jumpTo()`. JAMAIS `flyTo`/`easeTo` (incompatibles headless). Architecture « 1 seule Map continue » pour multi-lieux (pattern `SenegalActe2Continu`).
 
-Détails (caméra, blur whip pan 60f, Pull Back Reveal, fond `#16213a`, timing, SFX…) : `memory/DOCTRINE-SOUVERAIN.md`.
+Détails (caméra, blur whip pan 60f, Pull Back Reveal, fond `#16213a`, timing, SFX…) : `memory/doctrines/DOCTRINE-SOUVERAIN.md`.
 
 ---
 
@@ -60,7 +60,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 ## ⛔ RÈGLES DE TRAVAIL NON-NEGOTIABLES (résumé dense — détail en pointeur)
 
 - **Trancher le technique, regrouper le goût.** Réponse technique objective (frameCount, import, fix évident, API documentée) → trancher seul, mentionner en 1 ligne. Goût/vision/narratif OU coûteux à défaire (asset payant, refaire un beat) → demander, MA reco en 1ère option. Regrouper les questions de goût en UN point de contrôle espacé (AskUserQuestion multi), puis exécuter longtemps sans interrompre.
-- **Recherche templates AVANT tout code** (la plus rentable). Scanner les catalogues et présenter ce qu'on a trouvé. Aziz ne mémorise pas 70+ composants, moi oui. Jamais coder un effet custom sans vérifier l'existant. Procédure : `memory/feedback_recherche-templates-obligatoire.md`. Carte vivante = FlagFill (drapeaux/couleurs dans polygones) est la règle n°1.
+- **Recherche templates AVANT tout code** (la plus rentable). Scanner les catalogues et présenter ce qu'on a trouvé. Aziz ne mémorise pas 70+ composants, moi oui. Jamais coder un effet custom sans vérifier l'existant. Procédure : `memory/feedbacks/feedback_recherche-templates-obligatoire.md`. Carte vivante = FlagFill (drapeaux/couleurs dans polygones) est la règle n°1.
 - **Effet vivant (Mapbox)** : chaque beat carte inclut ≥1 effet vivant (couleur/frontières/projection/Lottie). La carte n'est jamais nue, comme la caméra n'est jamais statique. Priorité couleur+frontières+projection avant le 3D.
 - **Templates obligatoires AVANT prompt/image** : lire le template (`memory/templates/combat|narratif|montage|exploration.md`), cocher sa checklist, afficher le scan. ZÉRO exception, même « test rapide » (erreurs coûteuses sur prompts « simples » : diversité visages, ethnicity, enfant en scène militaire).
 - **Workflow Visual-Producer** : montrer le prompt à Aziz et attendre validation explicite AVANT tout asset payant (Gemini/Recraft/Seedance/Kling). Format : « Voici le prompt… Je lance ? » (Aziz a payé 100$+ d'assets ratés sur prompts non validés.)
@@ -75,7 +75,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 ## Pipeline Beat Souverain — REMOTION/Tailwind (NON-NEGOTIABLE)
 
-> Source : `scripts/beat-session.py`. Lancer `/beat`. Doctrine d'abord : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes data-viz + template storyboard). Squelette : `memory/SOUVERAIN-REMOTION-SKELETON.md`.
+> Source : `scripts/beat-session.py`. Lancer `/beat`. Doctrine d'abord : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` (8 principes data-viz + template storyboard). Squelette : `memory/doctrines/SOUVERAIN-REMOTION-SKELETON.md`.
 
 ```
 0. scan        SCAN COMPLET COMPOSANTS-INDEX (71+) + >=2 combinaisons validées Aziz. GATE : breakdown bloqué sans scan.

@@ -57,7 +57,7 @@ Outils ÉCARTÉS (ne pas proposer) :
 
 **OBLIGATOIRE pour tout breakdown carto** : COLLER AUSSI le brief complet `memory/tools/BRIEF-GEMINI-TEMPLATES-CARTE.md` dans le prompt Gemini (descriptions + props + méthode de combinaison + consigne "propose au moins 1 combo original"). Sans ça, Gemini propose des mécaniques génériques au lieu d'exploiter nos templates. Le brief dérive du catalogue maître `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md`.
 
-→ Cette stack est aussi documentée dans `memory/DOCTRINE-SOUVERAIN.md` section 9.
+→ Cette stack est aussi documentée dans `memory/doctrines/DOCTRINE-SOUVERAIN.md` section 9.
 
 Format JSON `sfx` attendu dans chaque beat :
 ```json

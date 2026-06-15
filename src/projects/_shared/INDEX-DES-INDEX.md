@@ -12,7 +12,9 @@
 | **Composant Remotion général** (stat, comparaison, timeline, hook, portrait, preuve, réseau...) | `src/projects/_shared/COMPOSANTS-INDEX.md` | 71 composants par cas d'usage ("quand Aziz dit...") |
 | **Template carte Mapbox** (hook carto, insert, couleur/drapeau sur territoire, combo, fill-pattern, plaque+source) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` | 28 templates carte vivante + helpers. Drapeau dans un pays = `useClipFlags` ⭐⭐ (vraies images, jamais drawFlagCanvas). Plaque nom+stat+source = `GeoCountryPlaque`. Galerie : `dashboard/templates-carte-vivante.html` |
 | **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber, OdometerFlip...) | `memory/tools/CATALOGUE-GEMINI.md` | 40+ templates animés, format prompt Gemini |
+| **TOUT Souverain** (Shorts 90s + Mid-form éco/géopo, Mapbox OU Remotion/data-viz) — POINT D'ENTRÉE | `src/projects/souverain/SOUVERAIN-INDEX.md` ⭐ | Carte maître Souverain : doctrine (DOCTRINE-SOUVERAIN), playbooks visuels (Mapbox + Remotion), démarrage Short, composants, éditorial |
 | **TOUT Atlas** (d3-geo, cartographie, sprites PixelLab, empires, batailles) — POINT D'ENTRÉE | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ | Carte maître Atlas : doctrine (ATLAS-PLAYBOOK), composants (COMPOSANTS-INDEX), assets (ATLAS-ASSETS-INDEX 568 sprites), 13 blueprints, démarrage beat |
+| **TOUT War-Map** (carte temporelle vivante, front jour-par-jour, contrôle territorial) — POINT D'ENTRÉE | `src/projects/warmap/WARMAP-INDEX.md` ⭐ | Carte maître War-Map : doctrines (GRAMMAIRE, PLAYBOOK, LONG, RESEARCH, ANIMER-OBJETS), moteur, briques, LA réf `SudanWarMapEpic60` |
 | **Asset PixelLab** (personnage, objet pixel art) | `memory/tools/PIXELLAB-MASTER-INDEX.md` | ~50 characters + objects avec IDs |
 | **Mouvement caméra — clip AI** (Seedance/Kling/Veo, prompt) | `memory/tools/camera-movements.md` | 30 mouvements + filtres validés |
 | **Mouvement caméra — Atlas/Remotion** (code, zéro-cost) | `memory/tools/atlas-camera-movements.md` | 16 mouvements validés/à tester |
@@ -23,8 +25,8 @@
 
 | Type de production | Procédure | Rôle |
 |---|---|---|
-| **Short Souverain Mapbox** | `memory/SOUVERAIN-SHORT-DEMARRAGE.md` | 7 étapes : script→Camera Brief (mvts caméra par acte)→choix template par acte→code→review. **Point d'entrée d'un Short.** |
-| Short Souverain — structure code | `memory/SOUVERAIN-SHORT-SKELETON.md` | Architecture : 1 fichier TSX, 6 actes, getCam(frame), 1 Map continue |
+| **Short Souverain Mapbox** | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` | 7 étapes : script→Camera Brief (mvts caméra par acte)→choix template par acte→code→review. **Point d'entrée d'un Short.** |
+| Short Souverain — structure code | `memory/doctrines/SOUVERAIN-SHORT-SKELETON.md` | Architecture : 1 fichier TSX, 6 actes, getCam(frame), 1 Map continue |
 | Beat Souverain (beat par beat) | `memory/rules-beat-production.md` + `/beat` | 11 règles non-négociables (R0-R11) |
 | Beat Atlas | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` | Lire AVANT 1ère ligne de code Atlas |
 | Pré-production complète | skill `souverain-preproduction` / `atlas-video-preproduction` | Script→jury→audio→planning visuel |
@@ -42,7 +44,7 @@
 | Sujet | Fichier |
 |---|---|
 | Doctrine visuelle cartographique premium | `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md` |
-| Décisions durables Souverain | `memory/DOCTRINE-SOUVERAIN.md` |
+| Décisions durables Souverain | `memory/doctrines/DOCTRINE-SOUVERAIN.md` |
 | Charte éditoriale | `memory/doctrines/CHARTE-EDITORIALE-SOUVERAIN.md` |
 
 ---
