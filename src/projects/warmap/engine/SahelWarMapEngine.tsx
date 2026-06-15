@@ -414,6 +414,8 @@ const CONTOUR_HIDE_WINDOWS: { from: number; to: number }[] = [
   { from: 8560, to: 8920 },  // P3 flashback Moura (carte altérée sépia)
   // P4 : effacer les contours sous overlay coût (ancré) + CFA (plein écran). Sinon bouillie (leçon P3).
   { from: 10047, to: 10574 }, // P4 overlay coût chiffré (Ph3)
+  { from: 10647, to: 11140 }, // P4 RESSOURCES triple-screen plein écran (sinon les contours nationaux du moteur
+                              // se dessinent PAR-DESSUS l'overlay = "on voit la carte à travers". Aziz 2026-06-15.)
   { from: 11869, to: 12273 }, // P4 franc CFA plein écran (Ph8)
   // NB confédération (Ph7) : on NE masque PAS les contours (ils font la beauté de la scène — fond noir +
   // territoires colorés + drapeaux). Seul le SCEAU doit passer DEVANT eux → géré par z-index dans Partie4Cout.
@@ -423,6 +425,24 @@ const contourHideFactor = (frame: number): number => {
   let f = 1;
   for (const w of CONTOUR_HIDE_WINDOWS) {
     const inside = interpolate(frame, [w.from - 30, w.from, w.to, w.to + 30], [1, 0, 0, 1],
+      { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    f = Math.min(f, inside);
+  }
+  return f;
+};
+
+// MAP_HIDE_WINDOWS : fenêtres où la carte Mapbox est CARRÉMENT MASQUÉE (opacity 0 du conteneur). Pour les
+// scènes PLEIN ÉCRAN qui ne montrent pas la carte du tout (Aziz 2026-06-15 : "la carte apparaît AVANT le plein
+// écran et réapparaît APRÈS, aussi simple que ça"). Évite toute translucence résiduelle d'un fond React posé
+// par-dessus le canvas. NB : confédération + CFA gardent la carte visible (semi-transp voulu) → PAS ici.
+const MAP_HIDE_WINDOWS: { from: number; to: number }[] = [
+  { from: 10647, to: 11140 }, // P4 RESSOURCES triple-screen (plein écran, ResourcesReveal)
+];
+// 1 = carte visible, 0 = carte masquée. Fondu 14f aux bords (la carte disparaît juste avant l'overlay, revient après).
+const mapHideFactor = (frame: number): number => {
+  let f = 1;
+  for (const w of MAP_HIDE_WINDOWS) {
+    const inside = interpolate(frame, [w.from - 14, w.from + 2, w.to - 2, w.to + 14], [1, 0, 0, 1],
       { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     f = Math.min(f, inside);
   }
@@ -704,9 +724,11 @@ const PARTIE4_CAM_KEYS: CamKey[] = [
   { f: 9850, lon: 0.65, lat: 14.85, zoom: 5.78 },  // cadre stable Djibo/Ménaka/Tillabéri (villes posées + exode)
   { f: 10047, lon: 0.60, lat: 14.78, zoom: 5.72 }, // hold quasi-fixe sur le cluster (overlay coût, flux continue)
   { f: 10594, lon: -2.0, lat: 13.6, zoom: 5.05 },  // Ph4 pivot : drift vers les capitales (board clearing)
-  { f: 10667, lon: -4.0, lat: 12.9, zoom: 5.15 },  // Ph5 : or sur Bamako (ouest)
-  { f: 10729, lon: -1.5, lat: 12.8, zoom: 5.15 },  // Ph5 : balaye vers Ouaga
-  { f: 10804, lon: 1.6, lat: 13.3, zoom: 5.20 },   // Ph6 : vers Niamey (uranium/pétrole, est)
+  // Ph5-6 RESSOURCES : caméra SERRÉE par pays (icônes + cartouches-chiffres lisibles — Aziz 2026-06-15).
+  { f: 10667, lon: -6.5, lat: 13.4, zoom: 6.2 },   // Ph5 : OR serré sur Bamako/Mali ouest
+  { f: 10729, lon: -1.7, lat: 12.9, zoom: 6.2 },   // Ph5 : OR serré sur Ouaga/Burkina
+  { f: 10804, lon: 2.0, lat: 14.6, zoom: 6.0 },    // Ph6 : URANIUM/PÉTROLE serré sur Niger ouest (Arlit/Agadem)
+  { f: 11080, lon: 2.0, lat: 14.6, zoom: 5.9 },    // Ph6 hold (climax uranium nationalisé)
   { f: 11200, lon: -0.5, lat: 14.2, zoom: 4.95 },  // transition : cadre les 3 pays (resserré — éviter zoom large)
   { f: 11449, lon: -0.9, lat: 14.4, zoom: 5.05 },  // Ph7 : cadre SERRÉ le bloc AES (liens orthogonaux lisibles)
   { f: 11613, lon: -0.6, lat: 14.2, zoom: 5.20 },  // Ph7 : PUSH-IN doux vers Niamey pendant que le sceau tombe
@@ -2382,7 +2404,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         </filter>
       </svg>
 
-      <div ref={containerRef} style={{ width, height, position: "absolute" }} />
+      {/* opacity = mapHideFactor : la carte Mapbox est MASQUÉE pendant les scènes plein écran (ressources) —
+          elle disparaît avant l'overlay et revient après (Aziz 2026-06-15). Plus aucune translucence résiduelle. */}
+      <div ref={containerRef} style={{ width, height, position: "absolute", opacity: mapHideFactor(frame) }} />
 
       {/* ======================================================
           CORRECTION B (test) — VIGNETTAGE GÉOGRAPHIQUE
