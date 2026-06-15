@@ -30,7 +30,7 @@
 > **🎵 MUSIQUE** : 6 options générées (`public/_shared/audio/sahel-warmap/music/`). Aziz a choisi **D (Montée maîtrisée)**.
 >   Scripts : `scripts/tools/minimax-sahel-music{,-v2}.py`. À poser au concat final (1 morceau continu).
 >
-> 🧰 TEMPLATES (06-14/15) : `WarMapDimmedOverlay`, `WarMapSplitScreen` (2/3 volets). Doctrine `WARMAP-CARTE-VS-OVERLAY.md`.
+> 🧰 TEMPLATES (06-14/15) : `WarMapDimmedOverlay`, `WarMapSplitScreen` (2/3 volets). Doctrine `WARMAP-GRAMMAIRE.md`.
 > ⛔ DOCS OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
 
 ---
@@ -43,7 +43,7 @@
 > zones mortes de P3 (narrativement validée) sans toucher au récit. Audit + DA-brief (Gemini+Kimi) faits.
 
 **⭐⭐ DÉCOUVERTE STRATÉGIQUE = 3e VOIE D'ANIMATION : le SVG animé par code.** Doctrine créée :
-`memory/doctrines/WARMAP-SVG-ANIME-3E-VOIE.md`. Pour drapeaux/tissus/ondes/tracés/jauges/flux → SVG
+`memory/doctrines/WARMAP-ANIMER-OBJETS.md`. Pour drapeaux/tissus/ondes/tracés/jauges/flux → SVG
 animé frame-driven (déformation de paths via Math.sin) = SUPÉRIEUR à PixelLab (net full HD, nos couleurs,
 0 coût, 0 risque). À proposer EN PREMIER. Gemini = sprites à trait fin ; PixelLab = effets denses chaotiques ;
 DIFFUS (poussière sol) = personne (leçon ratée poussière, confirmée 2x).
@@ -95,7 +95,7 @@ papier déjà appliqué). Gemini = signal jamais juge → confirmé.
 Reste sur la vidéo : **P3 "La Rupture" + P4 "Coût/Perspective" + assemblage final.** ~la moitié est derrière.
 Render P2 final : `out/episodes/warmap-sahel/p2-FINAL.mp4` (audio embarqué, catbox gfsa3h).
 
-> ⭐⭐ **LIRE EN PREMIER AVANT DE CODER P3 : `memory/doctrines/WARMAP-GRAMMAIRE-CAUSALE.md`** — LA doctrine
+> ⭐⭐ **LIRE EN PREMIER AVANT DE CODER P3 : `memory/doctrines/WARMAP-GRAMMAIRE.md`** — LA doctrine
 > qui évite le "bordel confus du départ" (Aziz). Règle CAUSE avant EFFET + catalogue des 5 techniques causales
 > validées (avancée jetons+sillage · chute base 3 temps · donnée qui se MONTRE par remplissage du pays ·
 > contour flash · casser la grammaire pour acteur différent). C'est le standard non-négociable.
@@ -122,7 +122,7 @@ CAUSALE, combiner l'arsenal complet**. Séquence obligatoire avant de coder une 
 - **Timeline graduée** : réactivée pour partie2 dans le moteur (pleine largeur, curseur date dès le début).
 - **SFX banque warmap/** : ink-spread (sillage), impact (chute), boom-coup (coup d'État), arrow-whoosh, drone.
 
-### 3 RÈGLES STRUCTURELLES gravées (doctrine WARMAP-OBJETS-GEMINI-VS-PIXELLAB.md)
+### 3 RÈGLES STRUCTURELLES gravées (doctrine WARMAP-ANIMER-OBJETS.md)
 R-OBJ-1 taille ANCRÉE CARTE (jamais vmin) · R-OBJ-2 objet = IMAGE Gemini jamais dot · R-OBJ-3 zones TRANSITOIRES.
 + technique systématique : **contour du territoire nommé qui se dessine + flash** (couleur porteuse de sens).
 
@@ -289,7 +289,7 @@ Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · JNIM f1198 · EIGS 
 
 ## DOCTRINES LIÉES
 - `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — format long (carte permanente, overlays 3 niveaux, 5 actes).
-- `memory/doctrines/WARMAP-VIVANTE-GRAMMAIRE.md` — dynamisme (R-V1..R-V4, board clearing, Ken Burns, 1 transfo/plan).
+- `memory/doctrines/WARMAP-GRAMMAIRE.md` — dynamisme (R-V1..R-V4, board clearing, Ken Burns, 1 transfo/plan).
 - `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` + doctrine Tremblay — niveau oral du script.
 
 ## ⏳ CHANTIER TRANSVERSAL EN ATTENTE — "Fond de contrôle qui respire" (session dédiée, Aziz 2026-06-13)

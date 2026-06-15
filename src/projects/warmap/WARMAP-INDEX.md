@@ -23,7 +23,10 @@ plus courtes. Catbox : `4dwqit` (v4 final). Composition dans `src/Root.tsx` (fol
 
 | Besoin | Source de vérité | Contenu |
 |---|---|---|
-| **Doctrine VISUELLE** (différentiel, 4 briques, R1-R6 règles design, recette sprites, ouvertures) — LIRE D'ABORD | `memory/doctrines/WARMAP-PLAYBOOK.md` | Tout sur la carte sauf info sans équivalent ; overlays centrés ; séquentiel ; jamais assombrir |
+| **Doctrine GRAMMAIRE (réalisation)** — ⭐⭐ LIRE AVANT DE CODER TOUTE SCÈNE | `memory/doctrines/WARMAP-GRAMMAIRE.md` | CAUSE avant EFFET, carte vs overlay, 5 techniques causales, dynamisme D-0→D-9, 4 règles R-V, templates overlay. (Fusion 2026-06-15 des ex-grammaires causale/vivante/carte-vs-overlay.) |
+| **Doctrine ANIMER UN OBJET** (quel outil : SVG / Gemini / PixelLab) | `memory/doctrines/WARMAP-ANIMER-OBJETS.md` | Arbre de décision + 3 règles R-OBJ + ponctuel vs ambiant. (Fusion ex-objets-gemini-vs-pixellab + svg-anime-3e-voie.) |
+| **Doctrine VISUELLE / DESIGN** (différentiel, 4 briques, R1-R6, recette sprites, ouvertures) | `memory/doctrines/WARMAP-PLAYBOOK.md` | Tout sur la carte sauf info sans équivalent ; overlays centrés ; séquentiel ; jamais assombrir |
+| **Doctrine LONG FORMAT** (5-7min, 16:9, carte permanente) | `memory/doctrines/WARMAP-LONG-DOCTRINE.md` | Carte permanente, overlays 3 niveaux, structure 5 actes, 3 régimes |
 | **Doctrine DONNÉES** (phase recherche : sources OSINT, fiabilité, schéma canonique) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` | 4 étapes ACLED→synthèse→fact-check ; classement fiabilité ; contrat schéma |
 | **État + compositions + rendus + analyse stratégique** | `memory/episodes/warmap-daybyday/STATUS.md` | Fiche de reprise. Compositions, briques, décisions Aziz, historique rendus |
 | **Décode du genre** (écosystème mapsinanutshell, cadence, monétisation) | `memory/atlas-decode/DECODE-daybyday-warmap.md` | Le "pourquoi" du format + pipeline du genre |
@@ -83,7 +86,7 @@ factcheck, build_warmap_data + fixtures + golden test). Voir WARMAP-RESEARCH-PLA
 
 ## 🚀 COMMENT DÉMARRER (3 étapes)
 
-1. **Lire** `memory/doctrines/WARMAP-PLAYBOOK.md` (design) + `WARMAP-RESEARCH-PLAYBOOK.md` (données si nouveau sujet).
+1. **Lire** `memory/doctrines/WARMAP-GRAMMAIRE.md` (⭐⭐ réalisation, AVANT de coder) + `WARMAP-PLAYBOOK.md` (design) + `WARMAP-RESEARCH-PLAYBOOK.md` (données si nouveau sujet).
 2. **Ouvrir** `src/projects/warmap/engine/WarMapEngine.tsx` (le moteur) — la référence vivante est `SudanWarMapEpic60`.
 3. **Pour un nouveau sujet** : produire un `<sujet>.warmap.json` (via `scripts/warmap/`), pas toucher au moteur.
 
