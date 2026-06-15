@@ -1,3 +1,7 @@
+> ⛔⛔ DOCUMENT OBSOLÈTE (2026-06-15) — LA REFONTE P4 EST TERMINÉE. Les 6 scènes (exode/coût/ressources/
+> confédération/CFA/fin habitée) sont TOUTES validées + full HD. NE PAS coder depuis ce doc. NEXT = ASSEMBLAGE.
+> Voir `STATUS.md` (en-tête) + `NEXT-ACTION.md`. Conservé pour archive historique uniquement.
+
 # BRIEF DE PASSATION — Partie 4 "Coût / Levier / Perspective" (DERNIÈRE PARTIE)
 
 > Créé 2026-06-14 (fin session contours nationaux). Brief AUTONOME pour démarrer la session P4.

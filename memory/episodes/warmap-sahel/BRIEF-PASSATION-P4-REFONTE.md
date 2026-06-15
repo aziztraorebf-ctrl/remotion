@@ -1,3 +1,7 @@
+> ⛔⛔ DOCUMENT OBSOLÈTE (2026-06-15) — LA REFONTE P4 EST TERMINÉE. Les 6 scènes (exode/coût/ressources/
+> confédération/CFA/fin habitée) sont TOUTES validées + full HD. NE PAS coder depuis ce doc. NEXT = ASSEMBLAGE.
+> Voir `STATUS.md` (en-tête) + `NEXT-ACTION.md`. Conservé pour archive historique uniquement.
+
 # BRIEF PASSATION — Refonte P4 (Chantiers 1, 3, 2 + assemblage) — session dédiée
 
 > Créé 2026-06-14, MAJ soir. Restent : finir Chantier 4 (2 fixes) + chantiers 1, 3, 2 + assemblage final.

@@ -10,14 +10,16 @@
 
 ---
 
-## War-Map Sahel — Acte1 + P1 + P2 + P3 FAITS · P4 = DERNIÈRE PARTIE — 2026-06-14 [P3 FINAL, NEXT = P4]
+## War-Map Sahel — TOUTES SCÈNES FINAL · NEXT = ASSEMBLAGE — 2026-06-15 [P4 COMPLETE, NEXT = ASSEMBLAGE]
 
-Acte1 ✅ FINAL · P1 ✅ (canari, render wip à promouvoir) · P2 ✅ FINAL · P3 ✅ FINAL (avec CONTOURS
-NATIONAUX colorés intégrés 2026-06-14 — Mali ocre/Burkina brique/Niger sarcelle, draw-in+pulse+effacement
-sous overlay, uniquement parties épurées). **NEXT = P4 "Coût/Levier/Perspective" (DERNIÈRE), puis assemblage.**
-⭐ BRIEF DE PASSATION P4 : `memory/episodes/warmap-sahel/BRIEF-PASSATION-P4.md` (autonome, découpage f9410→f12996
-déjà dans BEATS-V5, audio narration-v5-p4.mp3 prêt, réutiliser contours nationaux via gate `partie4`).
-Commits du jour : 1b82633 (contours) + 11eacf8 (learnings). Code propre (modes exploratoires retirés).
+Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅ · **P4 ✅ (les 6 scènes : exode, coût, ressources, confédération, CFA, fin
+habitée)**. Toutes FINAL + full HD dans `out/episodes/warmap-sahel/`. **NEXT = ASSEMBLAGE UNIQUEMENT** (aucune
+scène à créer/corriger) : rendre P4 complète (compo `SahelPartie4`, f9416→13440, `--gl=angle`) → concat
+Acte1+P1+P2+P3+P4 + narration `narration-v5-expressive.mp3` + mix → PUIS Gemini sur la vidéo complète → dérivés.
+⭐ DOC REPRISE : `memory/NEXT-ACTION.md` (en-tête) + `memory/episodes/warmap-sahel/STATUS.md` (à jour) +
+`INVENTAIRE-TEMPLATES-SESSION-06-15.md`. ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md` (refonte
+TERMINÉE). Templates créés 06-14/15 : `WarMapDimmedOverlay` + `WarMapSplitScreen` (2/3 volets + accordéon).
+Commits récents : 20626c2+8ccae8f (ressources), 660bf05+06cc12c (CFA), 05c229b+e6a6146 (confed).
 
 ## War-Map Sahel — SCRIPT V5 refondu + AUDIO + PIPELINE VOIX validé — 2026-06-10 [SCRIPT LOCKED, voix résolue]
 

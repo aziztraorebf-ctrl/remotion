@@ -1,12 +1,30 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-14 (PASSE "RENDRE VIVANT" P3 démarrée — Ph5 statu quo validé)
-**Branche :** `feat/p3-ambient-vie` (issue de `feat/da-brief-gate-warmap-sahel` ; P4 continue sur la parente)
-**Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (pipeline expressif V3→STS).
+**Dernière mise à jour :** 2026-06-15 (nuit) — TOUTES LES SCÈNES FINAL, reste l'ASSEMBLAGE.
+**Branche :** `feat/p3-ambient-vie`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
-> ⭐ **REPRISE AU RETOUR : section "REPRISE PROCHAINE SESSION" ci-dessous.**
+> ⛔⭐ **REPRISE AU RETOUR — LIRE CECI, IGNORER TOUT L'HISTORIQUE CI-DESSOUS (périmé, conservé pour archive) :**
+>
+> **TOUTES LES SCÈNES SONT FINAL + full HD** (`out/episodes/warmap-sahel/`) : acte1 · p1 · p2 · p3 ·
+> p4-c1-exode · p4-cfa · p4-chantier3-confed · p4-ressources (+ chantier 4 "fin habitée" dans P4).
+> La refonte P4 est **TERMINÉE** (les 6 scènes validées Aziz). **AUCUNE scène à créer/corriger.**
+>
+> **▶ NEXT = ASSEMBLAGE UNIQUEMENT** :
+> 1. Rendre P4 complète : compo `SahelPartie4` (`partie4:true`), f9416→13440, full HD, `--gl=angle` (Mapbox).
+>    Audio : `public/_shared/audio/sahel-warmap/narration-v5-p4.mp3`.
+> 2. Concat ffmpeg Acte1+P1+P2+P3+P4 + narration globale `narration-v5-expressive.mp3` + 1 musique continue +
+>    SFX + mix. Vérif anti-figé (1 frame/2s + md5, key-learnings 06-08).
+> 3. PUIS Gemini/Twelve Labs sur la vidéo COMPLÈTE (polish final). PUIS dérivés (`STRATEGIE-DERIVES-SHORT-CARROUSEL.md`).
+>
+> 📂 DOCS À JOUR : `memory/NEXT-ACTION.md` (en-tête) · `INVENTAIRE-TEMPLATES-SESSION-06-15.md` (templates
+> utilisés/réserve) · `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`.
+> ⛔ DOCS OBSOLÈTES (NE PAS suivre) : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md` (refonte finie).
+> 🧰 TEMPLATES CRÉÉS (06-14/15) : `WarMapDimmedOverlay` (carte assombrie+overlay), `WarMapSplitScreen` (2/3
+> volets + accordéon). Doctrine : `WARMAP-CARTE-VS-OVERLAY.md`. Règle debug : key-learnings 06-15.
 
 ---
+
+# ═══════════ HISTORIQUE (archive — état pré-finalisation, NE PAS coder depuis ici) ═══════════
 
 ## 🎬 PASSE "RENDRE VIVANT" P3 (2026-06-14) — densifier les zones mortes SANS casser le validé
 

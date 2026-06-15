@@ -1,16 +1,27 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-11 (soir). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-15 (nuit). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL P4 REFONTE : Chantiers 4 + 1 + 2(coût) VALIDÉS FULL HD (2026-06-14)
+## 🟢 PRIORITÉ — WAR-MAP SAHEL : TOUTES LES SCÈNES FINAL ✅ → IL NE RESTE QUE L'ASSEMBLAGE (2026-06-15)
 
-> **▶ PROCHAINE SESSION = LIRE `memory/episodes/warmap-sahel/PLAN-REFONTE-P4.md` EN PREMIER** (doc maître à jour :
-> 4 chantiers + synthèse extractive tracée DA upstream + avancement). Puis `WARMAP-GRAMMAIRE-CAUSALE.md` (règle
-> semitransp BANNIE) + `FACTS-P4-RESSOURCES-DIRIGEANTS.md` (chiffres verrouillés).
+> **▶ PROCHAINE SESSION = ASSEMBLAGE FINAL.** Les 5 parties (Acte1, P1, P2, P3, P4) et les 6 scènes de P4 sont
+> TOUTES validées + rendues full HD. Aucune scène à créer/corriger. Reste 2 étapes mécaniques :
+>   1. **Rendre la P4 COMPLÈTE** en 1 fichier : compo `SahelPartie4` (`partie4:true`), plage **f9416→13440**,
+>      full HD, flag `--gl=angle` OBLIGATOIRE (Mapbox). Audio P4 : `public/_shared/audio/sahel-warmap/narration-v5-p4.mp3`.
+>   2. **ASSEMBLAGE** : concat ffmpeg Acte1+P1+P2+P3+P4 (FINAL dans `out/episodes/warmap-sahel/`) + narration
+>      globale `narration-v5-expressive.mp3` + 1 musique continue au concat + SFX + mix.
+>      ⚠️ Vérif anti-figé après assemblage (1 frame/2s + md5, voir key-learnings 2026-06-08).
+> ▶ **PUIS** : Gemini/Twelve Labs sur la vidéo COMPLÈTE (polish final rythme/rétention/ton) — "dernière touche".
+> ▶ **PUIS** : dérivés Short + Carrousel (voir `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`).
 >
-> ✅ **FAIT** :
+> 📂 DOCS À JOUR : `INVENTAIRE-TEMPLATES-SESSION-06-15.md` (templates utilisés/en réserve) · `STATUS.md` (état) ·
+>   `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`. ⛔ OBSOLÈTES (NE PAS suivre) : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`
+>   (la refonte P4 est TERMINÉE). Templates créés : `WarMapDimmedOverlay` + `WarMapSplitScreen` (2/3 volets).
+>
+> ✅ **TOUTES SCÈNES FINAL (`out/episodes/warmap-sahel/`)** : acte1 · p1 · p2 · p3 · p4-c1-exode · p4-cfa ·
+>    p4-chantier3-confed · p4-ressources · (chantier 4 "fin habitée" dans P4). Historique détaillé ci-dessous :
 > - **Chantier 4 FIN HABITÉE** validé + full HD (`wip/p4-c4-FINAL-fullhd-audio.mp4`). NE PAS Y RETOUCHER.
 > - **Chantier 1 EXODE** validé Aziz + full HD : `out/episodes/warmap-sahel/p4-c1-exode-FINAL.mp4` (commits 9f69468+fb71473).
 >   5 jetons réfugiés (1/sprite, cohortes, profondeur 2.5D top-down PAS de pitch), sillage wet-ink, RefugeeFlow,

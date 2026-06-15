@@ -1,3 +1,7 @@
+> ⛔⛔ DOCUMENT OBSOLÈTE (2026-06-15) — LA REFONTE P4 EST TERMINÉE. Les 6 scènes (exode/coût/ressources/
+> confédération/CFA/fin habitée) sont TOUTES validées + full HD. NE PAS coder depuis ce doc. NEXT = ASSEMBLAGE.
+> Voir `STATUS.md` (en-tête) + `NEXT-ACTION.md`. Conservé pour archive historique uniquement.
+
 # PLAN REFONTE P4 — "remplir la carte, plus de timidité" (2026-06-14)
 
 > Origine : Aziz a jugé la P4 v1 TROP PRUDENTE (peu de jetons, overlays statiques, vides). DA-brief DOWNSTREAM
