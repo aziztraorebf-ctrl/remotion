@@ -2840,6 +2840,15 @@ export const RemotionRoot: React.FC = () => {
         {/* ACTE 1 FINAL — version reconstruite (plan validé upstream + socle 6 mécaniques).
             Compo isolée f0-2299 (77s), Actes 2-5 alignés dans une passe ultérieure. */}
         <Composition
+          id="SahelNewHook"
+          component={SahelWarMapEngine}
+          defaultProps={{ newHook: true }}
+          durationInFrames={2300}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
           id="SahelActe1-Final"
           component={SahelWarMapEngine}
           defaultProps={{ acte1Final: true }}

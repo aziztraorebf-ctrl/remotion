@@ -54,6 +54,7 @@ import { Partie1Origine } from "../parties/Partie1Origine";
 import { Partie2Blocage } from "../parties/Partie2Blocage";
 import { Partie3Rupture } from "../parties/Partie3Rupture";
 import { Partie4Cout } from "../parties/Partie4Cout";
+import { SahelHookActe1 } from "../parties/SahelHookActe1";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import {
   SAHEL_STATES,
@@ -1041,6 +1042,10 @@ export type SahelTestProps = {
   // fissure / flèches Liptako / nettoyage f727 / véhicules différenciés). Remplace
   // l'ancien hook. Les Actes 2-5 restent OFF (compo isolée f0-2299).
   acte1Final?: boolean;
+  // NOUVEAU HOOK (2026-06-15) : refonte des 0-30s à la grammaire P3/P4 (contours qui flashent,
+  // pas de gros blocs sahel-fill, zéro légende/timeline). Active <SahelHookActe1> + désactive
+  // l'ancien hook/chrome sur 0-30s. Prolonge acte1Final (tout le reste de l'Acte 1 inchangé).
+  newHook?: boolean;
   // ACTE 2 : PROLONGE l'Acte 1 (ne recrée rien). Active tout le look acte1Final
   // (jetons + taches + palette estompée + fusion + grain/vignette) MAIS sans la borne
   // f2299 — la couche tactique persiste, la caméra continue, et les éléments B1+
@@ -1090,6 +1095,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   frontDraw = false,
   acte1CameraOnly = false,
   acte1Final = false,
+  newHook = false,
   acte2 = false,
   prepoVeil = 0.70, // validé Aziz 2026-06-09 (carte en sourdine, overlay net)
   partie1 = false,
@@ -1109,7 +1115,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest;
+  const isFinalLook = acte1Final || newHook || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest;
+  // newHook prolonge l'Acte 1 (même carte/caméra) : on traite acte1Final comme vrai pour tout le reste.
+  const acte1Like = acte1Final || newHook;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
   const isPartie = partie1 || partie2 || partie3 || partie4 || proto24;
 
@@ -1437,6 +1445,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             });
             dim = dim * b1; // 0.42 * 0.48 ≈ 0.20 — board clearing court (2s)
           }
+          // newHook : sur 0-30s, on NEUTRALISE les gros blocs sahel-fill (le nouveau hook utilise
+          // les contours nationaux qui flashent, grammaire P3/P4 — pas le coloriage par aplats).
+          // Fondu de retour vers l'Acte 1 normal sur f840→900.
+          const hookFillKill = newHook
+            ? interpolate(frame, [840, 900], [0.06, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+            : 1;
           for (const f of (fusedFC as any).features) {
             const ign = effSeqIgnite[f.properties.country as string];
             const base =
@@ -1446,7 +1460,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                     extrapolateLeft: "clamp", extrapolateRight: "clamp",
                     easing: Easing.bezier(0.4, 0, 0.2, 1),
                   });
-            f.properties.igniteOp = base * dim;
+            f.properties.igniteOp = base * dim * hookFillKill;
           }
         }
         src.setData(fusedFC as any);
@@ -2163,7 +2177,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // taches d'influence, légende HUD, region-pulses, seeds) pour repartir d'une carte calme.
   // Seules les couches <Proto24Extinction>/<Partie2Blocage> + le fill calme s'affichent. (Anti-saturation #2)
   // P2 premium (2026-06-11) suit le modèle 2.4 validé : zones statiques + sprites Gemini, sans chrome legacy.
-  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3 && !partie4 && !countryBordersTest;
+  // newHook : sur les 0-30s (frame < 870), on masque TOUT le chrome legacy (légende factions, timeline
+  // graduée, hook blanc Mali/Burkina/Niger, CEDEAO legacy) — le nouveau <SahelHookActe1> porte tout.
+  const inNewHookZone = newHook && frame < 870;
+  const showChrome = ready && !acte1CameraOnly && !proto24 && !partie2 && !partie3 && !partie4 && !countryBordersTest && !inNewHookZone;
 
   // ============================================================
   // ACTE 1 FINAL — artefacts narratifs (plan validé upstream)
@@ -3887,6 +3904,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
       {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
       {partie4 && <Partie4Cout ctx={sahelCtx} map={mapRef.current} />}
+      {newHook && <SahelHookActe1 ctx={sahelCtx} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
       {isFinalLook && (() => {

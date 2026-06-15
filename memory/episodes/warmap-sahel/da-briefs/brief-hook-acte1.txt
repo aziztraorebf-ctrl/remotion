@@ -1,0 +1,71 @@
+BRIEF DA — REFONTE DU HOOK (Acte 1, War-Map Sahel AES, 16:9 parchemin)
+=======================================================================
+
+OBJECTIF
+--------
+Refaire ENTIÈREMENT le VISUEL des 30 premières secondes (le hook) de la vidéo War-Map
+Sahel AES. Le texte/audio est CONSERVÉ tel quel (déjà fort) — on garde la voix v5 expressive.
+On veut un hook "mini-TikTok visuel" qui HAPPE : la partie où on met le paquet, le levier #1
+de rétention. Le hook actuel est BIEN mais MOU (jugement Aziz, confirmé sur frames) : une carte
+beige qui se présente + une légende dashboard + une timeline qui défile, alors que la voix
+annonce une RUPTURE spectaculaire. Le visuel n'incarne pas du tout l'énergie du texte.
+
+CONTEXTE PROJET
+---------------
+- War-Map Long géopolitique, carte permanente parchemin, caméra frame-driven.
+- Pays : Mali (ocre #D98A3D) / Burkina (brique #C0553C) / Niger (sarcelle #4E8C7D).
+- Stack 100% React/SVG/Lucide + carte Mapbox frame-driven (PAS d'After Effects, PAS de stock).
+- Identité = honnêteté analyste + incarnation. Registre on/nous (jamais "tu"). Pas de CTA dans le hook.
+
+LE TEXTE DU HOOK (audio EXISTANT — le visuel doit matcher CHAQUE phrase)
+------------------------------------------------------------------------
+[ 0.1-4.5s]  « En moins de trois ans, trois pays ont tout changé en même temps. »
+[ 4.6-7.1s]  « Ils chassent leurs partenaires militaires. »
+[ 7.2-9.3s]  « Rompent leurs alliances historiques. »
+[ 9.4-12.6s] « Et quittent la principale organisation régionale du continent. »
+[13.5-16.2s] « Et bâtissent, à la place, quelque chose de nouveau. »
+[17.4-21.0s] « Comment est-ce possible ? Et surtout... pourquoi maintenant ? »
+[22.7-28.5s] « Pour répondre, il faut d'abord regarder ce qui existait avant. Et ce qui ne fonctionnait plus. »
+
+CE QU'ON A DÉJÀ (à exploiter, NE PAS réinventer)
+------------------------------------------------
+GABARIT HOOK déjà écrit (memory/doctrines/HOOK-MAXBELLONA-GABARIT.md) :
+- Gabarit A "carte géo qui SE TRANSFORME en carte de guerre" (la trouvaille Max Bellona) — UNE
+  métaphore tenue, le même objet se métamorphose. Application AES déjà esquissée : ancrage →
+  paradoxe (richesses or/uranium/pétrole ↔ pauvreté/morts) → TRANSFORMATION → accroche actu →
+  boucle ouverte.
+- Gabarit B "argumentatif" (affirmation-choc + faux coupables + pivot "et si...").
+- Gabarit C "questions-pièges".
+ANALYSE CHAÎNES : Medieval Mindset (ouverture in medias res par un personnage concret, pont
+  temporel, titre dissonant) · Max Bellona (carte qui se transforme, paradoxe planté tôt, boucle
+  ouverte = N questions) · TIH (pivot intellectuel).
+NOS TEMPLATES (citez-les explicitement, Aziz craint qu'on les oublie) :
+- WarMapDimmedOverlay : carte assombrie + éléments superposés + trous lumineux (dimmedOverlayHole).
+- WarMapSplitScreen : 2 ou 3 volets + accordéon + connecteur.
+- WarMapOverlayDynamic : overlay dynamique 6 blocs composables (card/fullscreen).
+- countryOutline (contour qui se trace + flash), jetons-factions, RefugeeFlow, SahelAttackArrow,
+  fill de contrôle territorial (rouge jihadiste / bleu État), pulse régions, grain papier, vignette.
+- Mécanique "carte qui se transforme" déjà prouvée dans P3 (mode moteur).
+
+CE QU'ON DEMANDE AU DA (Gemini 3.1 Pro + Kimi K2.5)
+---------------------------------------------------
+1. Une mise en scène SECONDE PAR SECONDE du hook 0-28s, calée sur les phrases ci-dessus :
+   pour CHAQUE phrase, QUE voit-on à l'écran, avec QUEL template/brique à nous, et POURQUOI ça
+   matche l'énergie de la voix. Le visuel doit ESCALADER (chassent → rompent → quittent = 3 coups
+   de plus en plus forts), pas se contenter de colorer une carte.
+2. Comment incarner les 3 verbes d'action (CHASSENT les militaires français / ROMPENT les
+   alliances / QUITTENT la CEDEAO) par des MOUVEMENTS forts sur la carte (pas des labels) —
+   ex : jeton/drapeau France expulsé, liens qui claquent, pays qui sort d'un cercle CEDEAO.
+3. Le PARADOXE (richesses ↔ drame) : où et comment le planter tôt sans surcharger.
+4. La TRANSFORMATION (gabarit A) : la carte géo nue → carte de guerre. Faisable ici ? Comment ?
+5. La BOUCLE OUVERTE sur "Comment ? Pourquoi maintenant ?" (17-21s) : comment la rendre visuelle
+   et tenir la promesse (2 questions à l'écran ? typo ? pulsation ?).
+6. Le cold-open optionnel (0-3s) : un choc d'entrée AVANT même la carte ? (carte qui tremble,
+   grain, mot-choc, son grave) — faisable avec notre stack sans stock-footage ?
+7. Quels de NOS templates utiliser à chaque temps. Citez-les nommément.
+8. Garde-fous : registre on/nous, pas de CTA, escalade émotionnelle, grammaire causale
+   (cause→effet), portraits stylisés jamais photos, pas d'overlay semi-transparent (carte à travers).
+
+CONTRAINTE DE SORTIE : synthèse extractive tracée (chaque idée attribuée G/K, tranchée
+RETENU/OPTION/ÉCARTÉ + raison). Idées CONCRÈTES et CODABLES avec notre stack. Pas de "tout est bon".
+On veut un hook qu'on pourrait montrer seul comme un Short — le standard "mini-TikTok visuel".
