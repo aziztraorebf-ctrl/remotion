@@ -1,20 +1,29 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-15 (nuit). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-15 (après-midi). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🟢 PRIORITÉ — WAR-MAP SAHEL : TOUTES LES SCÈNES FINAL ✅ → IL NE RESTE QUE L'ASSEMBLAGE (2026-06-15)
+## 🔴 PRIORITÉ 1 — SESSION DÉDIÉE HOOKS (Aziz 2026-06-15) — CHANTIER STRATÉGIQUE
 
-> **▶ PROCHAINE SESSION = ASSEMBLAGE FINAL.** Les 5 parties (Acte1, P1, P2, P3, P4) et les 6 scènes de P4 sont
-> TOUTES validées + rendues full HD. Aucune scène à créer/corriger. Reste 2 étapes mécaniques :
->   1. **Rendre la P4 COMPLÈTE** en 1 fichier : compo `SahelPartie4` (`partie4:true`), plage **f9416→13440**,
->      full HD, flag `--gl=angle` OBLIGATOIRE (Mapbox). Audio P4 : `public/_shared/audio/sahel-warmap/narration-v5-p4.mp3`.
->   2. **ASSEMBLAGE** : concat ffmpeg Acte1+P1+P2+P3+P4 (FINAL dans `out/episodes/warmap-sahel/`) + narration
->      globale `narration-v5-expressive.mp3` + 1 musique continue au concat + SFX + mix.
->      ⚠️ Vérif anti-figé après assemblage (1 frame/2s + md5, voir key-learnings 2026-06-08).
-> ▶ **PUIS** : Gemini/Twelve Labs sur la vidéo COMPLÈTE (polish final rythme/rétention/ton) — "dernière touche".
-> ▶ **PUIS** : dérivés Short + Carrousel (voir `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`).
+> ⭐ **LIRE `memory/SESSION-DEDIEE-HOOKS.md`** (préparation complète). "On est à court de bons hooks" =
+> manque structurel. Objectif : BIBLIOTHÈQUE de hooks RÉUTILISABLES pour TOUTES nos vidéos (pas one-shot).
+> Socle = nos 2 patterns PROUVÉS : **KineticMaskSlam** + **ComboMaskSweep** ("carte à travers un chiffre").
+> ⛔ LEÇON : ne PAS transposer une recette d'une AUTRE grammaire (gabarit Bellona) sur notre carte 2D flat.
+> Le prototype hook Sahel a été SUPPRIMÉ (commit 17fc2c7). Idées d'amorce dans SESSION-DEDIEE-HOOKS.md.
+
+## 🟡 PRIORITÉ 2 — WAR-MAP SAHEL : PASSE SÉQUENTIELLE scène par scène (révision méthode 2026-06-15)
+
+> ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%
+> (sinon re-découpage après = complexe pour rien). Ordre : **Acte1 (hook+corps) → P1 → P2 → P3** (P4 ✅ déjà OK).
+>
+> **✅ P4 VALIDÉE + corrigée** (11 corrections, render `hdxsgi`, `wip/p4-FULL-v3-*.mp4`). Voir `PLAN-REFONTE-P4-POLISH.md`.
+> **▶ ACTE 1 = à refaire à la grammaire P3/P4** (gros blocs sahel-fill → contours qui flashent ; supprimer
+>   légende factions + timeline ; recaler triggers sur narration-v5-alignment.json — actuellement calés v1).
+>   Le HOOK de l'Acte 1 dépend de la SESSION DÉDIÉE HOOKS (priorité 1). Plan : `PLAN-REFONTE-ACTE1-HOOK.md`.
+> **PUIS** P1, P2, P3 revues une par une. **PUIS SEULEMENT** assemblage (concat + narration globale
+>   `narration-v5-expressive.mp3` + musique **D (Montée maîtrisée)** choisie + mix + vérif anti-figé).
+> 🎵 Musique : 6 options générées (`public/_shared/audio/sahel-warmap/music/`), Aziz a choisi **D-montee-maitrisee**.
 >
 > 📂 DOCS À JOUR : `INVENTAIRE-TEMPLATES-SESSION-06-15.md` (templates utilisés/en réserve) · `STATUS.md` (état) ·
 >   `STRATEGIE-DERIVES-SHORT-CARROUSEL.md`. ⛔ OBSOLÈTES (NE PAS suivre) : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`
