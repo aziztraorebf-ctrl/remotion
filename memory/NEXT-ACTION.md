@@ -24,17 +24,21 @@
 >   (catbox 5fxlvp, commits 660bf05+06cc12c). ⭐ Né du **TEMPLATE `WarMapSplitScreen`** (2 mondes côte à côte) :
 >   GAUCHE carte AES+pièce CFA pulsante / DROITE drapeau FR SVG ondulant + équation "1€=~656 FCFA" → bascule
 >   vers le SENS (souveraineté+jeunesse) en typewriter. Faits : `FACTS-CFA-2026.md`.
-> ⭐ **2 DOCTRINES/TEMPLATES NOUVEAUX RÉUTILISABLES** : `WARMAP-CARTE-VS-OVERLAY.md` (la carte = causal/spatial ;
->   le CONCEPTUEL = overlay solide OU plein écran OU split, puis retour carte) + `WarMapDimmedOverlay` +
->   `WarMapSplitScreen`. À appliquer à TOUTES les scènes complexes futures (le test : "ancrage géo réel ?").
+> - **Chantier 2 "RESSOURCES" (Ph5-6) VALIDÉ Aziz + full HD (2026-06-15)** : `out/episodes/warmap-sahel/p4-ressources-FINAL.mp4`
+>   (catbox 88k2gg, commits 20626c2+8ccae8f). ⭐ TRIPLE-SCREEN (`WarMapSplitScreen` 3 volets + accordéon) : Mali|Burkina|Niger,
+>   chacun carte zoomée pays + icône ressource + plaque. Niger s'élargit (accordéon) + 2 icônes uranium+pétrole.
+>   Faits : `FACTS-RESSOURCES-2026.md`. Review DA : `SYNTHESE-DA-RESSOURCES-TRIPLE.md`.
+> ⭐ **2 DOCTRINES + 2 TEMPLATES RÉUTILISABLES** : `WARMAP-CARTE-VS-OVERLAY.md` (carte = causal/spatial ; conceptuel
+>   = overlay/plein écran/split, puis retour carte) + `WarMapDimmedOverlay` + `WarMapSplitScreen` (2 OU 3 volets,
+>   accordéon). Test avant toute scène : "ancrage géo réel ?". ⚠️ Plein écran = masquer carte Mapbox
+>   (`MAP_HIDE_WINDOWS`) ET contours moteur (`CONTOUR_HIDE_WINDOWS`), sinon "on voit la carte à travers".
 >
-> ⛔ RÈGLES GRAVÉES : overlay `mode="semitransp"` BANNI (WARMAP-GRAMMAIRE-CAUSALE) · synthèse extractive tracée à
-> chaque appel modèle · pas de pitch P4 (top-down, décision Aziz) · 5 jetons MAX = nb sprites distincts.
+> ⛔ RÈGLES GRAVÉES : `semitransp` BANNI · synthèse extractive tracée · pas de pitch P4 · arrondir les chiffres
+>   sans ambiguïté ("~656" pas "655,957"; "~68t" pas "94,4t") + fact-check web (public fact-checke).
 >
-> ▶ **RESTE (ordre Aziz)** : Chantier 2 "RESSOURCES" (Ph5-6 ~f10667→10851 : uranium / or Burkina / oléoduc Niger
->   — candidat pour `WarMapDimmedOverlay` ou `WarMapSplitScreen`) → render full HD P4 complète → ASSEMBLAGE FINAL
->   (concat Acte1+P1+P2+P3+P4 + narration globale + mix).
-> ✅ Confédération + CFA = les 2 scènes "dures" de la perspective FAITES. Reste surtout Ressources + assemblage.
+> ▶ **RESTE = ASSEMBLAGE FINAL UNIQUEMENT** : les 4 CHANTIERS P4 SONT FAITS (4 Fin habitée ✅ · 1 Exode ✅ ·
+>   2 Coût ✅ · 2 Ressources ✅ · 3 Confédération ✅ · CFA ✅). → render full HD P4 complète (f9416→13440) →
+>   concat Acte1+P1+P2+P3+P4 + narration globale `narration-v5-expressive.mp3` + mix. C'est la dernière étape de TOUTE la vidéo.
 > ✅ DETTE semitransp RÉSOLUE. ℹ️ Render Mapbox local = flag `--gl=angle` obligatoire (sinon WebGL fail).
 > ℹ️ Chiffres à l'écran : TOUJOURS arrondir sans ambiguïté (ex "~656" pas "655,957" → lu "655 000"). Public fact-checke.
 > ℹ️ Multi-instance : voir `feedback_multi-instance-working-tree.md` (working tree partagé, committer tôt).
