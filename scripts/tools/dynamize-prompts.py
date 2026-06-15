@@ -135,10 +135,10 @@ Remember:
 - Anti-instructions header
 - COLOR GRADE section at the end of each prompt"""
 
-    print("Calling Claude API (claude-sonnet-4-20250514)...")
+    print("Calling Claude API (claude-sonnet-4-6)...")
 
     response = client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-4-6",
         max_tokens=8192,
         system=SYSTEM_PROMPT,
         messages=[{"role": "user", "content": user_msg}],
@@ -178,10 +178,10 @@ Remember:
 - Anti-instructions header
 - COLOR GRADE section at the end of each prompt"""
 
-    print("Calling Gemini API (gemini-2.5-flash)...")
+    print("Calling Gemini API (gemini-3.1-flash)...")
 
     response = client.models.generate_content(
-        model="models/gemini-2.5-flash",
+        model="models/gemini-3.1-flash",
         contents=[user_msg],
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,

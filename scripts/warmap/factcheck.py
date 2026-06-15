@@ -6,7 +6,7 @@ compares ACLED-derived control/casualties against press/communique sources and f
 anomalies (casualty mismatch, control-position dispute). Writes back verified/confidence
 and emits a human-readable fact-check.md report.
 
-Convergence rule (mirrors memory/feedback_3-agents-research-stack.md): a jalon is
+Convergence rule (mirrors memory/feedbacks/feedback_3-agents-research-stack.md): a jalon is
 verified=true only if >=2 independent source KINDS agree. ACLED alone -> verified=false,
 confidence capped at 0.6.
 

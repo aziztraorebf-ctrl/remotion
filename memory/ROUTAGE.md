@@ -119,7 +119,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier / skill |
 |---|---|
 | Remotion, animation, render, headless, composition | `memory/tools/remotion.md` + skills `remotion-best-practices/rules/`, `remotion-video-toolkit/rules/rendering.md` |
-| Render cloud Vercel (>30s, libérer machine) | `scripts/render-on-vercel.py` (défaut render long, 100GB-h/mois gratuit) |
+| Render cloud Vercel (>30s, libérer machine) | `scripts/tools/render-on-vercel.py` (défaut render long, 100GB-h/mois gratuit) |
 | Règles outils techniques (Lottie, Mapbox headless, audio, geo) | `memory/rules-outils-techniques.md` |
 | Publier YouTube + Instagram + Facebook | `memory/tools/trypost.md` (TryPost, limites 50MB, jamais REST `/api/uploads`) |
 | Publier TikTok | `memory/tools/postiz.md` (Postiz REST, coverB obligatoire) |

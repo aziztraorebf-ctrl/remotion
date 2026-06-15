@@ -125,7 +125,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 **Async PixelLab** : après `animate_character` → `sleep 120` → `get_character()` dans le MÊME flow. « Animations: None yet » après 3min → relancer. Jamais annoncer « j'attends » sans exécuter le sleep Bash.
 
-**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine + `quebec-jacques-poc/.env` (Mapbox), jamais hardcoder, détail `memory/apis-and-tools.md`. Render >30s → `scripts/render-on-vercel.py` (défaut). QA : `scripts/review_with_kimi.py`, `generate-audio.ts`, `polish-audio.ts`.
+**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine + `quebec-jacques-poc/.env` (Mapbox), jamais hardcoder, détail `memory/apis-and-tools.md`. Render >30s → `scripts/tools/render-on-vercel.py` (défaut). QA : `scripts/review_with_kimi.py`. Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
 
 ---
 
