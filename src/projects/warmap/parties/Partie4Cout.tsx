@@ -35,6 +35,7 @@ import {
   WarMapOverlayDynamic, TitleReveal, StatCountUp, BadgeRow,
 } from "../_shared/WarMapOverlayDynamic";
 import { WarMapDimmedOverlay } from "../_shared/WarMapDimmedOverlay";
+import { WarMapSplitScreen } from "../_shared/WarMapSplitScreen";
 
 // ============================================================
 // TRIGGERS V5 P4 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-14)
@@ -272,6 +273,210 @@ const ConfederationReveal: React.FC<{
         </div>
       )}
     </WarMapDimmedOverlay>
+  );
+};
+
+// ============================================================
+// DRAPEAU FRANCE SVG ONDULANT (même technique que le drapeau Kidal P3 : sommets qui oscillent en phase
+// déphasée → ondulation feutrée). Dessiné en SVG (3 bandes), pas d'asset. Plus grand pour le panneau CFA.
+// ============================================================
+const WavingFrenchFlag: React.FC<{ frame: number; cx: number; cy: number; w: number; appear: number }> = ({ frame, cx, cy, w, appear }) => {
+  const h = w * 0.66;
+  const cols = 10, rows = 6;
+  const amp = w * 0.02;
+  // grille de points ondulants : x fixe, y oscille selon une onde qui se propage horizontalement
+  const ptY = (c: number, r: number) => cy - h / 2 + (r / rows) * h + Math.sin(frame * 0.22 + c * 0.6) * amp * (c / cols);
+  const ptX = (c: number) => cx - w / 2 + (c / cols) * w;
+  // 3 bandes verticales : bleu [0..1/3], blanc [1/3..2/3], rouge [2/3..1]
+  const bands = [{ c0: 0, c1: cols / 3, col: "#1B3A8C" }, { c0: cols / 3, c1: (2 * cols) / 3, col: "#F4F4F4" }, { c0: (2 * cols) / 3, c1: cols, col: "#D11A2A" }];
+  const bandPath = (c0: number, c1: number) => {
+    let d = `M${ptX(c0).toFixed(1)},${ptY(c0, 0).toFixed(1)}`;
+    for (let c = c0; c <= c1; c++) d += `L${ptX(c).toFixed(1)},${ptY(c, 0).toFixed(1)}`;
+    for (let c = c1; c >= c0; c--) d += `L${ptX(c).toFixed(1)},${ptY(c, rows).toFixed(1)}`;
+    return d + "Z";
+  };
+  return (
+    <g opacity={appear} style={{ filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.35))" }}>
+      {bands.map((b, i) => <path key={i} d={bandPath(b.c0, b.c1)} fill={b.col} />)}
+      {/* hampe */}
+      <line x1={cx - w / 2 - w * 0.02} y1={cy - h / 2 - h * 0.1} x2={cx - w / 2 - w * 0.02} y2={cy + h / 2 + h * 0.1}
+        stroke="#3A2A12" strokeWidth={w * 0.018} strokeLinecap="round" />
+    </g>
+  );
+};
+
+// ============================================================
+// CFA REVEAL — SPLIT-SCREEN (idée Aziz 2026-06-14, template WarMapSplitScreen). Le franc CFA = DIVERGENCE
+// entre 2 mondes → le split l'INCARNE. GAUCHE = carte AES (territorial, notre différentiel). DROITE = panneau
+// data Paris (parité 655,957=1€, garantie Trésor français, réserves) — le conceptuel se lit hors-sol. Un fil
+// doré (la parité) TRAVERSE la séparation et la fait vibrer sur "rompre ?". Charte analyste (factuel).
+// ============================================================
+const CfaReveal: React.FC<{
+  frame: number; inAt: number; outAt: number; width: number; height: number; vmin: number; fps: number;
+}> = ({ frame, inAt, outAt, width, height, vmin, fps }) => {
+  if (frame < inAt - 2 || frame > outAt + 2) return null;
+  const L = frame - inAt;
+  const total = outAt - inAt;
+  const ruptureAt = Math.max(0, total - 80);
+  const vibrate = L >= ruptureAt ? Math.sin((L - ruptureAt) * 0.85) * (vmin * 0.004) * Math.max(0, 1 - (L - ruptureAt) / 55) : 0;
+
+  // Fonds PARCHEMIN (Aziz : pas de fond noir, réutiliser nos tons map, un peu plus clairs)
+  const PARCH_L = "linear-gradient(155deg, #E9DDBE 0%, #D8C7A0 100%)";   // panneau carte (gauche)
+  const PARCH_R = "linear-gradient(155deg, #EDE3C8 0%, #DCCCA6 100%)";   // panneau data (droite, un peu + clair)
+  const INK_W = "#3A2A12";
+
+  // pièce CFA dessinée (3e voie) — réutilisable sur les 2 panneaux
+  const Coin: React.FC<{ r: number; showRate?: boolean }> = ({ r, showRate }) => (
+    <svg width={r * 2.3} height={r * 2.3} viewBox={`${-r * 1.15} ${-r * 1.15} ${r * 2.3} ${r * 2.3}`}
+      style={{ display: "block", filter: "drop-shadow(0 4px 9px rgba(0,0,0,0.4))" }}>
+      <defs><radialGradient id="cfa-coin"><stop offset="0%" stopColor="#E9D08A" /><stop offset="68%" stopColor={OR_AES} /><stop offset="100%" stopColor="#8E6E2C" /></radialGradient></defs>
+      <circle r={r} fill="url(#cfa-coin)" stroke={INK_W} strokeWidth={r * 0.05} />
+      <circle r={r * 0.83} fill="none" stroke={INK_W} strokeWidth={r * 0.018} opacity={0.4}
+        strokeDasharray={`${r * 0.06} ${r * 0.045}`} />
+      <text y={showRate ? -r * 0.12 : 0} textAnchor="middle" dominantBaseline="central" fontSize={r * 0.5}
+        fontWeight={800} fill={INK_W} style={{ fontFamily: "Georgia, serif" }}>CFA</text>
+      {showRate && <text y={r * 0.42} textAnchor="middle" fontSize={r * 0.16} fontWeight={700} fill="#5A4420"
+        style={{ fontFamily: "Georgia, serif", letterSpacing: 0.5 }}>franc</text>}
+    </svg>
+  );
+
+  // ── PANNEAU GAUCHE : carte AES (parchemin) + pièce CFA POSÉE dessus (l'argent côté Afrique) ──
+  const leftPanel = (w: number, h: number) => {
+    const bbox = { lonMin: -12, lonMax: 16, latMin: 9, latMax: 25 };
+    const mx = w * 0.1, my = h * 0.14;
+    const proj = (lon: number, lat: number) => ({
+      x: mx + ((lon - bbox.lonMin) / (bbox.lonMax - bbox.lonMin)) * (w - 2 * mx),
+      y: my + ((bbox.latMax - lat) / (bbox.latMax - bbox.latMin)) * (h - 2 * my),
+    });
+    const ringPath = (ring: [number, number][]) => ring.map(([lo, la], i) => { const p = proj(lo, la); return `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`; }).join("") + "Z";
+    const drawT = interpolate(L, [8, 38], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+    const countries: { ring: [number, number][]; c: string }[] = [
+      { ring: MALI_RING, c: C_MALI }, { ring: BURKINA_RING, c: C_BURKINA }, { ring: NIGER_RING, c: C_NIGER },
+    ];
+    const center = proj(-1, 15); // centre du bloc AES
+    const coinSpring = spring({ frame: L - 34, fps, config: { damping: 11, stiffness: 120 } });
+    return (
+      <AbsoluteFill style={{ background: PARCH_L }}>
+        {/* grain papier */}
+        <AbsoluteFill style={{ backgroundImage: `url(${staticFile("_shared/sprites/warmap/paper-grain.png")})`,
+          backgroundRepeat: "repeat", opacity: 0.18, mixBlendMode: "multiply" }} />
+        <svg width={w} height={h} style={{ position: "absolute", inset: 0 }}>
+          {countries.map((co, i) => {
+            const d = ringPath(co.ring);
+            return (<g key={i}>
+              <path d={d} fill={co.c} fillOpacity={0.18 * drawT} />
+              <path d={d} fill="none" stroke={co.c} strokeWidth={vmin * 0.0045} strokeOpacity={0.9 * drawT} strokeLinejoin="round" />
+            </g>);
+          })}
+        </svg>
+        {/* pièce CFA posée au centre du bloc + PULSE (anneau or qui bat = la monnaie "vivante" sur le territoire) */}
+        {coinSpring > 0.02 && (() => {
+          const pulsePhase = (frame % 75) / 75; // battement lent continu
+          const coinR = vmin * 0.062;
+          return (
+            <div style={{ position: "absolute", left: center.x, top: center.y, transform: "translate(-50%,-50%)" }}>
+              <svg width={coinR * 6} height={coinR * 6} viewBox={`${-coinR * 3} ${-coinR * 3} ${coinR * 6} ${coinR * 6}`}
+                style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-50%)", overflow: "visible" }}>
+                <circle r={coinR * (1.1 + pulsePhase * 1.3)} fill="none" stroke={OR_AES}
+                  strokeWidth={vmin * 0.003} opacity={(1 - pulsePhase) * 0.5 * Math.min(1, coinSpring)} />
+              </svg>
+              <div style={{ transform: `scale(${Math.min(1, coinSpring)})` }}><Coin r={coinR} showRate /></div>
+            </div>
+          );
+        })()}
+      </AbsoluteFill>
+    );
+  };
+
+  // typewriter : révèle `txt` caractère par caractère à partir de `at` (cps = chars/frame)
+  const typed = (txt: string, at: number, cps = 0.9) => txt.slice(0, Math.max(0, Math.floor((L - at) * cps)));
+  const caret = (txt: string, at: number, cps = 0.9) => (L - at) * cps < txt.length && L >= at && Math.floor(L / 8) % 2 === 0;
+
+  // ── PANNEAU DROITE : bascule MÉCANIQUE → SENS (souveraineté + jeunesse). Drapeau FR SVG ondulant (grand)
+  //    + équation parité (le fait, vite) → puis ce que ça VEUT DIRE pour le continent, en typewriter. ──
+  const rightPanel = (w: number, h: number) => {
+    const flagAppear = interpolate(L, [10, 28], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    const eqOp = interpolate(L, [34, 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    const eqPop = spring({ frame: L - 34, fps, config: { damping: 12, stiffness: 130 } });
+    const meaningAt = 90;
+    // lignes "sens" en typewriter — ALLÉGÉ 2 lignes + NEUTRE (Aziz 2026-06-15 : retirer "dernier lien colonial"
+    // = trop parti pris/AES. On DOCUMENTE le ressenti générationnel sans le valider — charte analyste).
+    const sense: { txt: string; at: number; strong?: boolean }[] = [
+      { txt: "Une monnaie dont les règles se décident largement à Paris.", at: meaningAt },
+      { txt: "Pour une jeunesse née après les indépendances, un symbole de trop.", at: meaningAt + 60, strong: true },
+    ];
+    const flagW = vmin * 0.16;
+    return (
+      <AbsoluteFill style={{ background: PARCH_R }}>
+        <AbsoluteFill style={{ backgroundImage: `url(${staticFile("_shared/sprites/warmap/paper-grain.png")})`,
+          backgroundRepeat: "repeat", opacity: 0.16, mixBlendMode: "multiply" }} />
+        {/* drapeau France SVG ONDULANT (grand) + PARIS */}
+        <svg width={w} height={h} style={{ position: "absolute", inset: 0 }}>
+          <WavingFrenchFlag frame={frame} cx={w * 0.5} cy={h * 0.2} w={flagW} appear={flagAppear} />
+        </svg>
+        <div style={{ position: "absolute", left: 0, right: 0, top: h * 0.31, textAlign: "center", opacity: flagAppear,
+          color: INK_W, fontFamily: "Georgia, serif", fontWeight: 800, fontSize: vmin * 0.022, letterSpacing: 3 }}>PARIS</div>
+
+        {/* ÉQUATION parité — PERSISTANTE toute la scène (Aziz : plus puissant si elle reste) + EXPLICITE
+            (655,957 FCFA POUR 1 €). La pièce CFA porte le label "FCFA" sous le chiffre. */}
+        <div style={{ position: "absolute", left: 0, right: 0, top: h * 0.42, display: "flex", alignItems: "center",
+          justifyContent: "center", gap: vmin * 0.018, opacity: eqOp, transform: `scale(${0.9 + 0.1 * Math.min(1, eqPop)})` }}>
+          {/* Équation ARRONDIE (Aziz 2026-06-15) : "655,957" exact est ambigu (lu "655 000" par un œil non
+              averti, virgule décimale FR). "1 € = ~656 FCFA" se lit instantanément, sans piège, et reste juste. */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ width: vmin * 0.062, height: vmin * 0.062, borderRadius: "50%", border: `${vmin * 0.005}px solid #1B4FA0`,
+              display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <span style={{ color: "#1B4FA0", fontFamily: "Georgia, serif", fontWeight: 800, fontSize: vmin * 0.036 }}>€</span>
+            </div>
+            <span style={{ color: "#1B4FA0", fontFamily: "Georgia, serif", fontSize: vmin * 0.016, letterSpacing: 2, marginTop: vmin * 0.004 }}>1 EURO</span>
+          </div>
+          <span style={{ color: "#7a6336", fontFamily: "Georgia, serif", fontSize: vmin * 0.026, fontWeight: 700, margin: `0 ${vmin * 0.008}px` }}>=</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span style={{ color: OR_AES, fontFamily: "Georgia, serif", fontWeight: 800, fontSize: vmin * 0.05, lineHeight: 1 }}>≈ 656</span>
+            <span style={{ color: "#7a6336", fontFamily: "Georgia, serif", fontSize: vmin * 0.016, letterSpacing: 2 }}>FRANCS CFA</span>
+          </div>
+          <Coin r={vmin * 0.04} />
+        </div>
+
+        {/* BASCULE VERS LE SENS (typewriter) : ce que ça veut dire pour le continent (équation reste au-dessus) */}
+        <div style={{ position: "absolute", left: w * 0.07, right: w * 0.07, top: h * 0.6 }}>
+          {sense.map((s, i) => {
+            if (L < s.at) return null;
+            return (
+              <div key={i} style={{ marginTop: vmin * 0.018, textAlign: "center",
+                color: s.strong ? "#9A2A12" : "#4A3A1E", fontFamily: "Georgia, serif",
+                fontWeight: s.strong ? 800 : 600, fontSize: vmin * (s.strong ? 0.03 : 0.024), lineHeight: 1.4 }}>
+                {typed(s.txt, s.at)}{caret(s.txt, s.at) && <span style={{ opacity: 0.6 }}>|</span>}
+              </div>
+            );
+          })}
+        </div>
+      </AbsoluteFill>
+    );
+  };
+
+  // ── CONNECTEUR : fil doré (la parité) qui traverse la séparation + vibre au climax ──
+  const connector = (w: number, h: number) => {
+    const wireT = interpolate(L, [38, 66], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+    const y = h * 0.5 + vibrate;
+    const x0 = w * 0.40, x1 = w * 0.60, d = `M${x0},${y} L${x1},${y}`, len = x1 - x0;
+    return (
+      <svg width={w} height={h} style={{ position: "absolute", inset: 0 }}>
+        {wireT > 0.05 && (<>
+          <path d={d} fill="none" stroke={OR_AES} strokeWidth={vmin * 0.006}
+            strokeDasharray={len} strokeDashoffset={len * (1 - wireT)} strokeLinecap="round" />
+          <circle cx={w * 0.5} cy={y} r={vmin * 0.016 * Math.min(1, wireT * 1.5)} fill={OR_AES} stroke="#F4ECD8" strokeWidth={2} />
+        </>)}
+      </svg>
+    );
+  };
+
+  // Titres RETIRÉS + ligne-climax "rompre ?" SUPPRIMÉE (Aziz 2026-06-15). Focus graphisme : le split (carte |
+  // CFA), l'équation persistante et le texte-sens en typewriter portent tout. Pas de ligne en bas.
+  return (
+    <WarMapSplitScreen frame={frame} inAt={inAt} outAt={outAt} width={width} height={height}
+      orientation="vertical" ratio={0.5} panels={[leftPanel, rightPanel]}
+      labels={["LE SAHEL · AES", "LE FRANC CFA"]} connector={connector} sepColor={OR_AES} />
   );
 };
 
@@ -730,15 +935,10 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
            le SCEAU "AES · 2024" + la fusion or + les contours nationaux qui se soudent en un bloc disent tout.
            Doctrine MONTRER pas RÉPÉTER (le cartouche redondait la voix = problème #3 du diagnostic). ════ */}
 
-      {/* ════ M3 Ph8 : franc CFA — PLEIN ÉCRAN (concept non-spatial, texte seul) ════ */}
-      <WarMapOverlayDynamic
-        inAt={F_CFA} outAt={F_STATU - 24} mode="fullscreen" accent={OR_AES}
-        blocks={[
-          { type: "title", text: "Le franc CFA", at: 0, size: 64 },
-          { type: "kicker", text: "encore lié à Paris", at: 24 },
-          { type: "kicker", text: "rompre — leur prochaine grande décision ?", at: 52 },
-        ]}
-      />
+      {/* ════ M3 Ph8 : franc CFA — overlay sur carte assombrie (concept monétaire, pas spatial → pas sur la
+           carte). Pièce CFA reliée par un fil doré entre le bloc AES et Paris = la dépendance. Climax : le fil
+           vibre sur "rompre ?". Charte analyste (fil = lien factuel, pas chaîne militante). ════ */}
+      <CfaReveal frame={frame} inAt={F_CFA} outAt={F_STATU - 24} width={width} height={height} vmin={vmin} fps={fps} />
 
       {/* ════════════ CHANTIER 4 — LA FIN HABITÉE (refonte) ════════════
            Ordre STRICT : dirigeants (institutions) → soldats (sécuriser/stabiliser) → menace (ce qui reste à tenir).
