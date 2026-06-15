@@ -46,6 +46,18 @@ concept sur la carte (illisible).
 - Réf validée : confédération AES (Chantier 3 P4) — `out/episodes/warmap-sahel/p4-chantier3-confed-FINAL.mp4`
   (catbox xt8ztb). Drapeaux ml/bf/ne convergent → sceau SVG "Confédération AES / Septembre 2023".
 
+## ⭐ TEMPLATE — `WarMapSplitScreen` (les DEUX en parallèle, validé Aziz 2026-06-15)
+Code : `src/projects/warmap/_shared/WarMapSplitScreen.tsx` (promu des protos R&D P5/P6).
+Évolution de la doctrine : au lieu de "OU la carte OU l'overlay", le split montre **les deux SIMULTANÉMENT** —
+spatial à gauche (carte), conceptuel à droite (data), côte à côte. **Incarne une DIVERGENCE** (la frontière du
+split EST la séparation des 2 mondes) au lieu de la décrire. Cas roi : opposition/comparaison/dépendance.
+- 2 render-props (chacun son repère 0..w/0..h), orientation vertical/horizontal, `connector` qui traverse la
+  séparation (ex. fil de parité CFA), ouverture animée.
+- Réf validée : CFA P4 (`out/episodes/warmap-sahel/p4-cfa-FINAL.mp4`, catbox 5fxlvp). GAUCHE carte AES + pièce
+  CFA pulsante. DROITE drapeau France SVG ondulant + équation "1 € = ~656 FCFA" PERSISTANTE → bascule vers le
+  SENS en typewriter (souveraineté + jeunesse, charte analyste : documenter le ressenti sans le valider).
+- Leçon data : afficher les chiffres ARRONDIS sans ambiguïté ("~656" pas "655,957" → lu "655 000"). Voir FACTS-CFA-2026.
+
 ## Garde-fous (ne pas tomber dans l'excès inverse)
 1. **La carte reste le FIL CONDUCTEUR** et le lieu du causal — c'est notre différentiel (Bellona/Sahel
    Chronicles ne l'ont pas). On ne bascule PAS tout en plein écran (sinon on perd la carte vivante).
