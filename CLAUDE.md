@@ -143,7 +143,8 @@ Quand Aziz parle de l'un de ces sujets, **charger le fichier correspondant AVANT
 | **animations presets, fadeIn, popIn, gentleReveal, countUp, drawPath** | `src/projects/_shared/animations.ts` — 10 presets disponibles. Importer directement. | — |
 | **Lucide, icones, icone React video** | `lucide-react` est installe — `import { Icon } from "lucide-react"`. Compatibles render Remotion. | — |
 | **Regles workflow/processus (jury APIs, collaboration, sujets go/no-go)** | `memory/rules-workflow-processus.md` | — |
-| **Hook d'ouverture 5s, teaser, cold open** | `memory/templates/hook-short.md` | — |
+| **Hook d'ouverture animé (carte), accroche video, "on a besoin d'un hook"** ⭐ | `src/projects/_shared/hooks-lib/HOOKS-LIBRARY-CATALOGUE.md` — 3 hooks réutilisables agnostiques (CrosshairLock=traquer / RedlineContagion=propager / MaskReveal=chiffre-masque) + insert ArteryDrain. Fond commun `HookMapBackground` (theme dark/parchemin + camKeys caméra serrée+pan + raccord carte). RÈGLE : caméra serrée comme Acte 1, pas vue continent figée. | — |
+| **Hook d'ouverture 5s, teaser, cold open (script/narration)** | `memory/templates/hook-short.md` | — |
 | **Sous-titres Shorts (TikTok/Karaoke), camera shake** | `memory/templates/subtitles-shorts.md` | — |
 | **Formule Cesar, 7 beats Shorts, dynamisation script** | `memory/tools/seedance-community.md` | — |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` | — |
