@@ -23,7 +23,8 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
-| Écrire/valider TOUT script (couche orale universelle) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` ⭐ 16 règles (clarté/incarnation/rétention) |
+| **« Quel SCRIPT lancer pour faire X ? » (render/audio/publish/gen/review/data)** | `scripts/SCRIPTS-INDEX.md` ⭐ index des scripts par cas d'usage. Review : `scripts/tools/REVIEW-TOOLS-INDEX.md`. |
+| Écrire/valider TOUT script narratif (couche orale universelle) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` ⭐ 16 règles (clarté/incarnation/rétention) |
 | Script Short narratif (Héros Oubliés, conte, tragédie) | `memory/templates/script-ebauche-v1.md` |
 | Script Atlas (géo, taille, richesse-record, comparaison) | `memory/templates/script-atlas-v1.md` |
 | Hook 5s / cold open (narration) | `memory/templates/hook-short.md` |
