@@ -748,7 +748,7 @@ const PARTIE4_CAM_KEYS: CamKey[] = [
   { f: 13030, lon: 0.2, lat: 14.5, zoom: 4.95 },   // menace : léger élargissement pour voir la dispersion, reste lisible
   { f: 13082, lon: 0.2, lat: 14.5, zoom: 4.95 },   // "résister" : le bloc habité tient (cadre serré stable)
   { f: 13290, lon: 0.0, lat: 14.6, zoom: 4.90 },   // "durer" : début extinction, caméra quasi figée
-  { f: 13440, lon: 0.0, lat: 14.6, zoom: 4.90 },   // fin : FIGÉE pendant le noir (zéro mouvement)
+  { f: 13500, lon: 0.0, lat: 14.6, zoom: 4.90 },   // fin : FIGÉE pendant le noir (+2s, zéro mouvement)
 ];
 const getPartie4Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
   // Drift continu léger pour M1-M2, puis FIGÉ dès la séquence finale (Aziz 2026-06-15 : le drift sur des

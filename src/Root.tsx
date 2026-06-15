@@ -2898,7 +2898,7 @@ export const RemotionRoot: React.FC = () => {
           id="SahelPartie4"
           component={SahelWarMapEngine}
           defaultProps={{ partie4: true }}
-          durationInFrames={13440}
+          durationInFrames={13500}
           fps={30}
           width={1920}
           height={1080}

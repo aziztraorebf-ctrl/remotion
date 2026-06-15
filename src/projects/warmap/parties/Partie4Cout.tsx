@@ -69,7 +69,7 @@ const F_RESISTER = 13082;   // "résister" — Ph11 chute finale
 const F_CONSTRUIRE = 13200; // "construire"
 const F_DURER = 13290;      // "durer" — début extinction
 const F_DEMONTRER = 13372;  // "démontrer." — cut to black
-const F_END = 13440;        // fin absolue (noir + résonance)
+const F_END = 13500;        // fin absolue (noir + résonance) — +2s (Aziz 2026-06-15 : laisser l'audio/morale finir)
 
 // ── Palette P4 ──
 const OR_AES = "#C9A24B";       // levier / AES (continuité P3)
@@ -812,9 +812,10 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
   // Ph11 — extinction par couches
   const extTimeline = interpolate(frame, [F_DURER, F_DURER + 24], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const extPlaques = interpolate(frame, [F_DURER + 12, F_DURER + 40], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // grain noir qui monte (easeInExpo : lent puis accélère)
-  const blackRaw = interpolate(frame, [F_DURER + 20, F_DEMONTRER + 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const blackT = Math.pow(blackRaw, 3); // ease-in cubique (proche easeInExpo, lisible)
+  // grain noir qui monte (Aziz 2026-06-15 : passage au noir PLUS TÔT et plus franc — dès "durer" le noir
+  // s'installe vite, et on tient ~6s sur contours AES + morale au lieu de laisser la carte grise traîner).
+  const blackRaw = interpolate(frame, [F_DURER, F_DURER + 40], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const blackT = Math.pow(blackRaw, 2.2); // ease-in (noir quasi complet ~f13320 ≈ 2min06)
   // (flash "construire" RETIRÉ — Aziz 2026-06-15 : gratuit/daté)
 
 
@@ -1259,7 +1260,7 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
            Allongé : démarre à F_DURER (≈ début extinction) et tient jusqu'à F_END (~5s de présence). ════ */}
       {(() => {
         const FINAL_TXT = "Durer — reste à le démontrer.";
-        const TW_START = F_DURER + 20;          // commence quand le noir monte
+        const TW_START = F_DURER + 30;          // commence quand le noir est déjà bien installé (texte sur fond noir)
         const TW_CPS = 0.55;                     // caractères par frame (≈ 16 chars/s, posé)
         const nChars = Math.max(0, Math.min(FINAL_TXT.length, Math.floor((frame - TW_START) * TW_CPS)));
         const shown = FINAL_TXT.slice(0, nChars);
@@ -1268,12 +1269,14 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         const blink = Math.floor(frame / 8) % 2 === 0;
         const op = interpolate(frame, [TW_START, TW_START + 10, F_END - 8, F_END], [0, 1, 1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        // Positionné BAS de l'écran (sous les contours AES, plus de chevauchement avec le tracé Burkina).
+        // Blanc cassé lisible + halo noir. Aziz 2026-06-15.
         return op > 0.02 && (
-          <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity: op }}>
-            <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: vmin * 0.026, fontWeight: 400,
-              color: "#9a8a55", letterSpacing: 1, textAlign: "center", marginTop: vmin * 0.40,
-              textShadow: "0 1px 6px rgba(0,0,0,0.85)" }}>
-              {shown}<span style={{ opacity: writing && blink ? 0.7 : 0 }}>_</span>
+          <AbsoluteFill style={{ alignItems: "center", justifyContent: "flex-end", opacity: op, paddingBottom: vmin * 0.12 }}>
+            <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: vmin * 0.03, fontWeight: 500,
+              color: "#F2ECDC", letterSpacing: 1.5, textAlign: "center",
+              textShadow: "0 2px 10px rgba(0,0,0,0.95), 0 0 2px rgba(0,0,0,0.9)" }}>
+              {shown}<span style={{ opacity: writing && blink ? 0.8 : 0 }}>_</span>
             </div>
           </AbsoluteFill>
         );
