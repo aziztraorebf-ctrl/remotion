@@ -414,8 +414,9 @@ const CONTOUR_HIDE_WINDOWS: { from: number; to: number }[] = [
   { from: 8560, to: 8920 },  // P3 flashback Moura (carte altérée sépia)
   // P4 : effacer les contours sous overlay coût (ancré) + CFA (plein écran). Sinon bouillie (leçon P3).
   { from: 10047, to: 10574 }, // P4 overlay coût chiffré (Ph3)
-  { from: 10647, to: 11140 }, // P4 RESSOURCES triple-screen plein écran (sinon les contours nationaux du moteur
-                              // se dessinent PAR-DESSUS l'overlay = "on voit la carte à travers". Aziz 2026-06-15.)
+  { from: 10647, to: 11433 }, // P4 RESSOURCES triple-screen plein écran — couvre TOUTE la durée de l'overlay
+                              // (ResourcesReveal va jusqu'à F_CONFED-16=11433). Bug 2026-06-15 : finissait à 11140
+                              // → la carte réapparaissait derrière l'overlay encore visible. Recalé sur outAt réel.
   { from: 11869, to: 12273 }, // P4 franc CFA plein écran (Ph8)
   // NB confédération (Ph7) : on NE masque PAS les contours (ils font la beauté de la scène — fond noir +
   // territoires colorés + drapeaux). Seul le SCEAU doit passer DEVANT eux → géré par z-index dans Partie4Cout.
@@ -436,7 +437,8 @@ const contourHideFactor = (frame: number): number => {
 // écran et réapparaît APRÈS, aussi simple que ça"). Évite toute translucence résiduelle d'un fond React posé
 // par-dessus le canvas. NB : confédération + CFA gardent la carte visible (semi-transp voulu) → PAS ici.
 const MAP_HIDE_WINDOWS: { from: number; to: number }[] = [
-  { from: 10647, to: 11140 }, // P4 RESSOURCES triple-screen (plein écran, ResourcesReveal)
+  { from: 10647, to: 11433 }, // P4 RESSOURCES triple-screen (plein écran) — recalé sur outAt réel (F_CONFED-16).
+                              // Bug 2026-06-15 : finissait à 11140 → carte Mapbox visible derrière l'overlay.
 ];
 // 1 = carte visible, 0 = carte masquée. Fondu 14f aux bords (la carte disparaît juste avant l'overlay, revient après).
 const mapHideFactor = (frame: number): number => {
@@ -716,11 +718,13 @@ const getPartie3Cam = (frame: number): { lon: number; lat: number; zoom: number 
 //     continental (target lock sur le centre AES, le continent entre dans le cadre) → fige pour l'extinction.
 // Zoom : serré 5.0-5.6 pour M1-M2, puis dézoom progressif jusqu'à ~3.4 (continental) en M3.
 const PARTIE4_CAM_KEYS: CamKey[] = [
-  { f: 9416, lon: 0.30, lat: 13.95, zoom: 5.50 },  // raccord fin P3
+  // Intro : démarrage SERRÉ d'emblée sur le triangle des 3 villes (Aziz 2026-06-15 : plus de 12s de carte vide
+  // qui zoome — on entre directement cadré sur la zone, les villes s'allument tôt en anticipation).
+  { f: 9416, lon: 0.50, lat: 14.55, zoom: 5.70 },  // raccord fin P3, déjà serré sur le triangle Liptako-Gourma
   // CHANTIER 1 EXODE — caméra SERRÉE top-down sur le triangle Liptako-Gourma (Djibo/Ménaka/Tillabéri),
   // PAS de pitch (décision Aziz 13+14 juin : relief des flux = profondeur 2.5D dans la couche, pas inclinaison).
   // Drift très léger seulement (carte vivante), aucun dézoom pendant l'exode (DA : ne pas animer la caméra = anti-surcharge).
-  { f: 9700, lon: 0.55, lat: 14.70, zoom: 5.75 },  // entrée serrée sur le triangle des 3 villes
+  { f: 9700, lon: 0.55, lat: 14.70, zoom: 5.78 },  // entrée serrée sur le triangle des 3 villes
   { f: 9850, lon: 0.65, lat: 14.85, zoom: 5.78 },  // cadre stable Djibo/Ménaka/Tillabéri (villes posées + exode)
   { f: 10047, lon: 0.60, lat: 14.78, zoom: 5.72 }, // hold quasi-fixe sur le cluster (overlay coût, flux continue)
   { f: 10594, lon: -2.0, lat: 13.6, zoom: 5.05 },  // Ph4 pivot : drift vers les capitales (board clearing)
@@ -734,23 +738,22 @@ const PARTIE4_CAM_KEYS: CamKey[] = [
   { f: 11613, lon: -0.6, lat: 14.2, zoom: 5.20 },  // Ph7 : PUSH-IN doux vers Niamey pendant que le sceau tombe
   { f: 11760, lon: -0.6, lat: 14.2, zoom: 5.18 },  // Ph7 hold serré (sceau posé, le bloc soudé en gros plan)
   { f: 11869, lon: -0.8, lat: 14.3, zoom: 4.95 },  // Ph8 : léger desserrage (transition CFA concept)
-  // Ph9 "statu quo 60 ans" : BREF dézoom révélateur (le bloc dans le continent) PUIS retour serré.
-  { f: 12297, lon: -1.0, lat: 14.5, zoom: 3.95 },  // Ph9 : dézoom continental (statu quo 60 ans brisé)
-  { f: 12520, lon: -1.0, lat: 14.6, zoom: 3.75 },  // Ph9 : point bas du dézoom (le bloc dans l'Afrique)
-  // ════ CHANTIER 4 FIN HABITÉE : on REVIENT serré sur le bloc AES pour voir dirigeants/soldats dans les villes ════
-  { f: 12640, lon: -2.5, lat: 13.6, zoom: 4.85 },  // dirigeants : cadre les 3 capitales (Bamako ouest → Niamey est)
-  { f: 12760, lon: 0.5, lat: 13.8, zoom: 4.75 },   // balaye vers Niamey (3e dirigeant)
-  { f: 12880, lon: -0.5, lat: 14.6, zoom: 4.55 },  // soldats : élargit un peu pour voir les points tenus (frontières nord)
-  // menace résiduelle : ÉLARGIR + recentrer vers l'est pour montrer TOUTE l'étendue du Sahel (jusqu'à Diffa 12.6°E)
-  // → la dispersion des menaces JNIM/EIGS sur tout le bloc se voit (pas un cluster central).
-  { f: 13030, lon: 1.5, lat: 14.8, zoom: 4.05 },   // menace : bloc AES entier visible, zones d'ombre dispersées
-  { f: 13082, lon: 1.5, lat: 14.8, zoom: 4.05 },   // "résister" : tout le bloc habité tient (vue large)
-  { f: 13290, lon: 0.5, lat: 14.9, zoom: 3.85 },   // "durer" : début extinction, léger dézoom
-  { f: 13440, lon: -1.0, lat: 15.0, zoom: 3.95 },  // fin : dézoom doux pendant le noir (le bloc s'éloigne)
+  // Ph9 "statu quo 60 ans" : Aziz 2026-06-15 — PLUS de dézoom continental (illisible). On reste SERRÉ sur le bloc.
+  { f: 12297, lon: -0.8, lat: 14.3, zoom: 4.80 },  // Ph9 : léger desserrage seulement (le bloc, pas le continent)
+  { f: 12520, lon: -0.8, lat: 14.4, zoom: 4.85 },  // Ph9 : hold serré
+  // ════ CHANTIER 4 FIN HABITÉE : cadre SERRÉ et FIGÉ sur le bloc AES (dirigeants/soldats nets, anti-jitter) ════
+  { f: 12640, lon: -1.4, lat: 13.9, zoom: 5.15 },  // dirigeants : cadre serré les 3 capitales (anti-chevauchement)
+  { f: 12760, lon: -0.6, lat: 14.0, zoom: 5.15 },  // léger pan vers l'est (3e dirigeant) — zoom CONSTANT (pas de respiration)
+  { f: 12880, lon: -0.4, lat: 14.4, zoom: 5.05 },  // soldats : cadre les frontières nord tenues, reste serré
+  { f: 13030, lon: 0.2, lat: 14.5, zoom: 4.95 },   // menace : léger élargissement pour voir la dispersion, reste lisible
+  { f: 13082, lon: 0.2, lat: 14.5, zoom: 4.95 },   // "résister" : le bloc habité tient (cadre serré stable)
+  { f: 13290, lon: 0.0, lat: 14.6, zoom: 4.90 },   // "durer" : début extinction, caméra quasi figée
+  { f: 13440, lon: 0.0, lat: 14.6, zoom: 4.90 },   // fin : FIGÉE pendant le noir (zéro mouvement)
 ];
 const getPartie4Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
-  // Drift continu léger (même esprit que P3, atténué pendant le grand dézoom final).
-  const driftAmp = interpolate(frame, [12297, 12662], [1, 0.3], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Drift continu léger pour M1-M2, puis FIGÉ dès la séquence finale (Aziz 2026-06-15 : le drift sur des
+  // éléments à trait fin géo-ancrés = jitter sub-pixel / scintillement. Caméra figée = traits nets).
+  const driftAmp = interpolate(frame, [12200, 12640], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const driftLon = Math.sin(frame * 0.011) * 0.05 * driftAmp;
   const driftLat = Math.cos(frame * 0.009) * 0.035 * driftAmp;
   const withDrift = (c: { lon: number; lat: number; zoom: number }) => ({ lon: c.lon + driftLon, lat: c.lat + driftLat, zoom: c.zoom });

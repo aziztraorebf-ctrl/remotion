@@ -395,6 +395,12 @@ const ResourcesReveal: React.FC<{
     const center = proj(midLon, midLat);
     const climaxOp = opts.climax ? interpolate(lc, [70, 88], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
     const mwh = Math.min(w, h);
+    // ── VIE CONTINUE (Aziz 2026-06-15) : le panneau ne se fige pas après l'apparition. Animations de fond qui
+    //    respirent sur TOUTE la durée de l'overlay (~26s) : halo doré pulsé + rotation lente icône + glow national. ──
+    const alive = interpolate(lc, [34, 60], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // monte une fois posé
+    const haloPulse = (0.5 + 0.5 * Math.sin(lc * 0.045)) * alive;          // respiration lente du halo
+    const fillBreathe = (0.30 + 0.10 * Math.sin(lc * 0.04)) * drawT;       // le fill national respire doucement
+    const iconSpin = lc * 0.5;                                              // rotation lente (deg) pour l'uranium
     // ── Pays COLORIÉ de sa couleur nationale (clippé à sa silhouette) + ICÔNE ressource claire au centre
     //    (Aziz 2026-06-15 : retour au lisible — icône > jauge qui ne se lit pas). overflow:hidden = zéro débordement. ──
     const iconR = Math.min(w, h) * 0.12;
@@ -405,8 +411,8 @@ const ResourcesReveal: React.FC<{
           {/* clip RECTANGULAIRE au volet (garantie ZÉRO débordement vers les volets voisins — Aziz 2026-06-15) */}
           <defs><clipPath id={`panel-clip-${opts.flagCode}`}><rect x={0} y={0} width={w} height={h} /></clipPath></defs>
           <g clipPath={`url(#panel-clip-${opts.flagCode})`}>
-            {/* pays colorié de sa couleur nationale (fill léger) + contour net */}
-            <path d={ringPath} fill={opts.color} fillOpacity={0.30 * drawT} />
+            {/* pays colorié de sa couleur nationale (fill qui RESPIRE) + contour net */}
+            <path d={ringPath} fill={opts.color} fillOpacity={fillBreathe} />
             <path d={ringPath} fill="none" stroke={opts.color} strokeWidth={mwh * 0.008} strokeOpacity={0.95 * drawT} strokeLinejoin="round" />
           </g>
         </svg>
@@ -414,10 +420,17 @@ const ResourcesReveal: React.FC<{
             gauche, la 2de à droite, centrées ensemble sur le pays. */}
         {iconSpring > 0.02 && (
           <div style={{ position: "absolute", left: center.x - (opts.secondKind ? iconR * 1.2 : 0), top: center.y, transform: `translate(-50%,-50%) scale(${Math.min(1, iconSpring)})` }}>
+            {/* halo doré pulsé (respire en continu — la ressource "rayonne") */}
+            <div style={{ position: "absolute", left: "50%", top: "50%", width: iconR * 3.4, height: iconR * 3.4,
+              transform: "translate(-50%,-50%)", borderRadius: "50%",
+              background: `radial-gradient(circle, ${OR_AES}44 0%, transparent 68%)`, opacity: 0.4 + haloPulse * 0.6 }} />
             <svg width={iconR * 2.4} height={iconR * 2.4} viewBox={`${-iconR * 1.2} ${-iconR * 1.2} ${iconR * 2.4} ${iconR * 2.4}`}
-              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))" }}>
+              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))", position: "relative" }}>
               <circle r={iconR} fill="#F2EACF" stroke={OR_AES} strokeWidth={iconR * 0.07} />
-              <ResourceIcon kind={opts.kind} r={iconR * 0.72} />
+              {/* uranium : symbole atome qui tourne lentement (vie continue) ; or/pétrole : statique */}
+              <g transform={opts.kind === "uranium" ? `rotate(${iconSpin})` : undefined}>
+                <ResourceIcon kind={opts.kind} r={iconR * 0.72} />
+              </g>
             </svg>
           </div>
         )}
@@ -437,8 +450,13 @@ const ResourcesReveal: React.FC<{
         {/* 2e ICÔNE pour le Niger (volet large via accordéon) : PÉTROLE (goutte) à côté de l'uranium. */}
         {opts.secondKind && iconSpring > 0.02 && (
           <div style={{ position: "absolute", left: center.x + iconR * 1.2, top: center.y, transform: `translate(-50%,-50%) scale(${Math.min(1, iconSpring)})` }}>
+            {/* halo pulsé (déphasé du 1er pour une respiration alternée) */}
+            <div style={{ position: "absolute", left: "50%", top: "50%", width: iconR * 3.4, height: iconR * 3.4,
+              transform: "translate(-50%,-50%)", borderRadius: "50%",
+              background: `radial-gradient(circle, ${OR_AES}44 0%, transparent 68%)`,
+              opacity: 0.4 + (0.5 + 0.5 * Math.sin(lc * 0.045 + 1.5)) * alive * 0.6 }} />
             <svg width={iconR * 2.4} height={iconR * 2.4} viewBox={`${-iconR * 1.2} ${-iconR * 1.2} ${iconR * 2.4} ${iconR * 2.4}`}
-              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))" }}>
+              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))", position: "relative" }}>
               <circle r={iconR} fill="#F2EACF" stroke={OR_AES} strokeWidth={iconR * 0.07} />
               <ResourceIcon kind={opts.secondKind} r={iconR * 0.72} />
             </svg>
@@ -797,15 +815,54 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
   // grain noir qui monte (easeInExpo : lent puis accélère)
   const blackRaw = interpolate(frame, [F_DURER + 20, F_DEMONTRER + 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const blackT = Math.pow(blackRaw, 3); // ease-in cubique (proche easeInExpo, lisible)
-  // éclat doré sur le sceau au "construire"
-  const constructFlash = interpolate(frame, [F_CONSTRUIRE, F_CONSTRUIRE + 6, F_CONSTRUIRE + 26], [0, 0.5, 0],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // (flash "construire" RETIRÉ — Aziz 2026-06-15 : gratuit/daté)
 
+
+  // ════ INTRO ANTICIPÉE (Aziz 2026-06-15) : combler les ~10s de carte vide avant l'exode.
+  //   Dès f9440, les 3 villes (Djibo/Ménaka/Tillabéri) s'annoncent : anneaux concentriques pulsés
+  //   (tension qui monte) + léger MapPin fantôme + vignette douce pour l'effet "trous lumineux" géo-ancrés.
+  //   Ça s'efface quand la pose pleine des villes arrive (F_FAMILLES). ════
+  const F_INTRO_START = 9440;
+  const introOp = interpolate(frame, [F_INTRO_START, F_INTRO_START + 18, F_FAMILLES - 6, F_FAMILLES + 8],
+    [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const introCities: { coord: [number, number]; color: string; at: number }[] = [
+    { coord: DJIBO, color: "#C0553C", at: F_INTRO_START + 6 },
+    { coord: MENAKA, color: "#D98A3D", at: F_INTRO_START + 40 },
+    { coord: TILLABERI, color: "#4E8C7D", at: F_INTRO_START + 74 },
+  ];
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* éclat doré "construire" (Ph11) */}
-      {constructFlash > 0.01 && <AbsoluteFill style={{ background: OR_AES, opacity: constructFlash, mixBlendMode: "screen" }} />}
+
+      {/* ── INTRO : vignette douce + anneaux pulsés sur les 3 villes (anticipation de l'exode) ── */}
+      {introOp > 0.01 && (
+        <>
+          <AbsoluteFill style={{ opacity: introOp * 0.5,
+            background: "radial-gradient(ellipse at 52% 46%, transparent 32%, rgba(22,19,12,0.55) 100%)" }} />
+          <svg width={width} height={height} style={{ position: "absolute", inset: 0, opacity: introOp }}>
+            {introCities.map((ci, i) => {
+              const lc = frame - ci.at;
+              if (lc < 0) return null;
+              const p = P(ci.coord);
+              // 2 anneaux concentriques qui s'étendent en boucle (radar de tension)
+              return (
+                <g key={i}>
+                  {[0, 1].map((k) => {
+                    const phase = ((lc + k * 22) % 44) / 44;          // 0→1 cyclique
+                    const rr = vmin * (0.02 + phase * 0.07);
+                    const ringOp = (1 - phase) * 0.7;
+                    return <circle key={k} cx={p.x} cy={p.y} r={rr} fill="none"
+                      stroke={ci.color} strokeWidth={vmin * 0.004} opacity={ringOp} />;
+                  })}
+                  {/* point chaud central */}
+                  <circle cx={p.x} cy={p.y} r={vmin * 0.012} fill={ci.color} opacity={0.85} />
+                  <circle cx={p.x} cy={p.y} r={vmin * 0.012} fill="none" stroke="#F4ECD8" strokeWidth={vmin * 0.002} opacity={0.6} />
+                </g>
+              );
+            })}
+          </svg>
+        </>
+      )}
 
       <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
         <defs>
@@ -1160,7 +1217,7 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         const op = interpolate(frame, [l.at, l.at + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * attenuate * fadeOut;
         if (op <= 0.02 || sp <= 0.02) return null;
         const c = P(l.coord);
-        const D = vmin * 0.105;
+        const D = vmin * 0.065; // Aziz 2026-06-15 : réduit (0.105→0.065) — évite le chevauchement Ouaga/Niamey
         const plaqueAbove = idx % 2 === 1; // alterne : Goïta bas, Traoré haut, Tiani bas
         return (
           <div key={l.id} style={{ position: "absolute", left: c.x, top: c.y,
@@ -1197,15 +1254,26 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
       {/* ════ M3 Ph11 : extinction par couches — grain noir qui monte (easeIn) ════ */}
       {blackT > 0.005 && <AbsoluteFill style={{ background: "#0a0805", opacity: blackT }} />}
 
-      {/* ════ M3 Ph11 : phrase-morale pendue sur le noir ════ */}
+      {/* ════ M3 Ph11 : phrase-morale FINALE — 1 seule ligne en typewriter monospace (Aziz 2026-06-15)
+           « Durer — reste à le démontrer. » se dessine caractère par caractère sous les contours AES.
+           Allongé : démarre à F_DURER (≈ début extinction) et tient jusqu'à F_END (~5s de présence). ════ */}
       {(() => {
-        const op = interpolate(frame, [F_DEMONTRER, F_DEMONTRER + 14, F_END - 10, F_END], [0, 1, 1, 0],
+        const FINAL_TXT = "Durer — reste à le démontrer.";
+        const TW_START = F_DURER + 20;          // commence quand le noir monte
+        const TW_CPS = 0.55;                     // caractères par frame (≈ 16 chars/s, posé)
+        const nChars = Math.max(0, Math.min(FINAL_TXT.length, Math.floor((frame - TW_START) * TW_CPS)));
+        const shown = FINAL_TXT.slice(0, nChars);
+        // curseur clignotant tant que l'écriture n'est pas finie
+        const writing = nChars < FINAL_TXT.length;
+        const blink = Math.floor(frame / 8) % 2 === 0;
+        const op = interpolate(frame, [TW_START, TW_START + 10, F_END - 8, F_END], [0, 1, 1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         return op > 0.02 && (
           <AbsoluteFill style={{ alignItems: "center", justifyContent: "center", opacity: op }}>
-            <div style={{ fontFamily: "Georgia, serif", fontSize: vmin * 0.03, fontWeight: 300,
-              color: "#8a7a4a", letterSpacing: 2, textAlign: "center" }}>
-              Résister, elle l'a prouvé. Construire, elle a commencé.<br />Durer — reste à le démontrer.
+            <div style={{ fontFamily: "'Courier New', Courier, monospace", fontSize: vmin * 0.026, fontWeight: 400,
+              color: "#9a8a55", letterSpacing: 1, textAlign: "center", marginTop: vmin * 0.40,
+              textShadow: "0 1px 6px rgba(0,0,0,0.85)" }}>
+              {shown}<span style={{ opacity: writing && blink ? 0.7 : 0 }}>_</span>
             </div>
           </AbsoluteFill>
         );
