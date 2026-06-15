@@ -4,6 +4,30 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ---
 
+### 2026-06-15 — Grand menage memoire + disque (etat de reference post-menage)
+
+Session dediee au menage. Resultats a retenir comme nouvelle baseline :
+
+**Contexte/demarrage (-62%)** : CLAUDE.md projet 47->14KB (routage extrait vers `memory/ROUTAGE.md`,
+regles non-negociables resumees+pointees). MEMORY.md 36->17.5KB (index pur 1 ligne/entree).
+COMPACT_CURRENT.md 920->134 lignes (historique mort -> STATUS.md par episode).
+**9 MCP debranches** (supabase/neon/vercel/netlify/render/sentry/stitch/cavalry/phaser-editor) —
+`.mcp.json` NON tracke git, defs sauvees `/tmp/menage-backups-2026-06-15/` pour rebrancher.
+
+**Disque (~4.4 GB recuperes)** : 3 worktrees git abandonnes (`git worktree remove --force`),
+`out/*/wip` purges (warmap-sahel garde v3+FINAL car projet actif), `out/_r-and-d` >7j purge,
+CSV UCDP 239M (re-telechargeable via ucdp_connector.py). Travail Cannae non commite sauve dans
+`memory/_recup-worktree-cannae-2026-06-04/`.
+
+**Gisement restant non traite** : connecteurs `claude_ai_*` (~30, cote app claude.ai, pas pilotables
+d'ici) ; `public/` 2GB (assets episodes livres, archivable mais delicat car partiellement versionne) ;
+142 vieux feedbacks dans l'auto-memory `~/.claude/.../memory/` (uniques, jamais migres au repo).
+
+**Methode validee** : auditer/mesurer AVANT de supprimer · verifier dérivabilité (FINAL existe ailleurs ?) ·
+backups avant config · `git add` chirurgical jamais `-A`.
+
+---
+
 ### 2026-06-15 — ⭐ HOOK : partir de NOS templates prouves, NE PAS transposer une grammaire externe sur notre carte 2D
 
 Symptome : j'ai code un hook War-Map (acte 1) en suivant un DA-brief abstrait (gabarit "carte qui se transforme"
