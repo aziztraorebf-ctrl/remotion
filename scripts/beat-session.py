@@ -423,7 +423,7 @@ CATALOGUES_REMOTION = [
     ("INDEX-DES-INDEX (point d'entree maitre)", "src/projects/_shared/INDEX-DES-INDEX.md"),
     ("COMPOSANTS-INDEX (71+ composants par cas d'usage + section HERO DATA)", "src/projects/_shared/COMPOSANTS-INDEX.md"),
     ("PLAYBOOK data-viz (8 principes + template storyboard 10 champs)", "memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md"),
-    ("SKELETON assemblage (1 narration globale, CutFade navy)", "memory/SOUVERAIN-REMOTION-SKELETON.md"),
+    ("SKELETON assemblage (1 narration globale, CutFade navy)", "memory/doctrines/SOUVERAIN-REMOTION-SKELETON.md"),
 ]
 
 

@@ -65,14 +65,25 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Doctrine données War-Map (recherche OSINT) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` |
 | « Quelle brique War-Map pour X ? » | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` (+ LINKING mapanimation) |
 
-### Composants & animations partagés
+### Composants & templates — SCAN OBLIGATOIRE AVANT TOUT CODE
 
-| Sujet | Fichier |
+> ⛔ **RÈGLE (NON-NEGOTIABLE, même hors `/beat` ou `mapbox-session.py`)** : avant d'écrire une ligne de code
+> pour un beat/scène, SCANNER les catalogues du besoin et présenter à Aziz les templates pertinents + ≥2
+> combinaisons. Le gate scriptée n'existe QUE dans les sessions beat — en session libre, c'est ma discipline
+> qui l'applique. Aziz ne mémorise pas les composants, moi oui. Jamais coder un effet custom sans vérifier l'existant.
+
+**Les 6 catalogues de templates (par besoin) :**
+
+| Besoin | Catalogue |
 |---|---|
-| « Quel composant pour X ? » / composant inconnu | `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants par cas d'usage) |
-| Animations presets (fadeIn, popIn, countUp, drawPath) | `src/projects/_shared/animations.ts` (10 presets) |
-| Icônes | `lucide-react` installé — `import { Icon } from "lucide-react"` |
+| Composant Remotion général (stat, comparaison, timeline, hook, portrait, HERO DATA) | `src/projects/_shared/COMPOSANTS-INDEX.md` (71, par cas d'usage) |
+| Template carte Mapbox (hook/corps/insert, drapeau/couleur sur territoire) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` (28 + helpers) |
+| Template data-viz pour Gemini (BarRace, StackedBars, PulseNumber) | `memory/tools/CATALOGUE-GEMINI.md` (40+) |
+| Composant Atlas | `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` |
+| Brique War-Map | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` |
 | Hook d'ouverture animé (carte) « on a besoin d'un hook » | `src/projects/_shared/hooks-lib/HOOKS-LIBRARY-CATALOGUE.md` ⭐ (caméra serrée, pas continent figé) |
+| Animations presets (fadeIn, popIn, countUp, drawPath) | `src/projects/_shared/animations.ts` (10 presets) |
+| Icônes | `lucide-react` installé — `import { Icon } from "lucide-react"` (~1500 icônes) |
 
 ### Mapbox (carte)
 
@@ -137,9 +148,10 @@ Nos procédés SONT des skills exécutables. Quand un procédé démarre, **LANC
 | Analyser une chaîne YouTube | `analyze-channel` |
 | Intégrer feedback / corrections post-review | `integrate-feedback` |
 | Bilan/checkpoint de session | `checkpoint` (Souverain) ou `atlas-session` (Atlas) |
-| **AVANT de coder un acte/beat (vision validée + assets décidés)** | DA-BRIEF-GATE — `memory/doctrines/DA-BRIEF-GATE.md` + `scripts/tools/da-brief.py` (Gemini+Kimi parallèle → synthèse → Aziz tranche → code). NON-NEGOTIABLE tous projets. MAX 1 appel/modèle/acte |
+| **Review externe (plan OU rendu) — quel outil ?** | `scripts/tools/REVIEW-TOOLS-INDEX.md` ⭐ vue unifiée. Système principal = `da-brief.py` (3 voix, upstream/downstream). Modèles CONSULTATIFS jamais juges. |
+| **AVANT de coder un acte/beat (vision validée + assets décidés)** | DA-BRIEF-GATE — `memory/doctrines/DA-BRIEF-GATE.md` + `scripts/tools/da-brief.py --upstream` (Gemini+Kimi+DeepSeek → synthèse tracée → Aziz tranche → code). NON-NEGOTIABLE tous projets. MAX 1 appel/modèle/acte |
 | **Bug Remotion/Mapbox — 2e fix sur MÊME symptôme échoue** | `superpowers:systematic-debugging` OBLIGATOIRE. STOP → instrumenter (prouver la valeur réelle) AVANT de fixer. Jamais « c'est l'environnement » sans preuve |
-| Beat vidéo qui échoue 2+ fois (visuel) | AVANT de re-coder : `scripts/tools/gemini-beat5-review.py` (œil externe sur la vidéo ratée) |
+| Beat vidéo qui échoue 2+ fois (visuel) | AVANT de re-coder : œil externe sur la vidéo ratée via `scripts/tools/da-brief.py` (downstream, frames). Voir REVIEW-TOOLS-INDEX. |
 | Gros chantier multi-étapes (épisode, pipeline, refactor) | `superpowers:writing-plans` |
 | Avant de dire « c'est fait/terminé » | `superpowers:verification-before-completion` |
 
