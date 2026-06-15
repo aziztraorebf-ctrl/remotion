@@ -28,6 +28,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import { HookMapBackground } from "./HookMapBackground";
+import { HookGrain, HookDisplacementBurst } from "./HookEffects";
 import { HOOK_COLORS, HOOK_FONTS, SPRING } from "./theme";
 
 const RED = "#B14B3C"; // rouge brique (menace, coherent palette parchemin/dark)
@@ -46,6 +47,8 @@ export interface RedlineContagionProps {
   subLabel?: string;
   question?: string;
   countriesGeoJson?: string;
+  /** Trajectoire camera serree + pan (grammaire War-Map Acte 1). */
+  camKeys?: { f: number; lon: number; lat: number; zoom: number }[];
   contagionAt?: number;
   contagionGap?: number;
   durationFrames?: number;
@@ -62,6 +65,7 @@ export const RedlineContagion: React.FC<RedlineContagionProps> = ({
   subLabel,
   question,
   countriesGeoJson,
+  camKeys,
   contagionAt = 14,
   contagionGap = 16,
   durationFrames = 150,
@@ -111,22 +115,25 @@ export const RedlineContagion: React.FC<RedlineContagionProps> = ({
 
   return (
     <AbsoluteFill style={{ opacity: globalOpacity }}>
-      {/* FOND : contagion = allumage ROUGE en cascade (litStagger) */}
-      <HookMapBackground
-        center={center}
-        baseZoom={baseZoom}
-        theme={theme}
-        focusIsos={focusIso}
-        accentColor={RED}
-        litFrom={contagionAt}
-        litStagger={contagionGap}
-        litFillOpacity={0.5}
-        durationFrames={durationFrames}
-        driftAmount={0.4}
-        countriesGeoJson={countriesGeoJson}
-        countryBorderColor={theme === "parchment" ? "#3A2A18" : HOOK_COLORS.ivory}
-        onMapReady={handleMapReady}
-      />
+      {/* FOND : contagion = allumage ROUGE en cascade. L'impact (contagionAt) fait TREMBLER la carte (displacement). */}
+      <HookDisplacementBurst at={contagionAt} dur={24} scale={26}>
+        <HookMapBackground
+          center={center}
+          baseZoom={baseZoom}
+          theme={theme}
+          focusIsos={focusIso}
+          accentColor={RED}
+          litFrom={contagionAt}
+          litStagger={contagionGap}
+          litFillOpacity={0.5}
+          durationFrames={durationFrames}
+          driftAmount={0.4}
+          camKeys={camKeys}
+          countriesGeoJson={countriesGeoJson}
+          countryBorderColor={theme === "parchment" ? "#3A2A18" : HOOK_COLORS.ivory}
+          onMapReady={handleMapReady}
+        />
+      </HookDisplacementBurst>
 
       {/* IMPACT initial : un point rouge claque sur l'epicentre + ondes de choc (le punch) */}
       {project && epicenter && frame >= contagionAt - 4 && (() => {
@@ -207,6 +214,9 @@ export const RedlineContagion: React.FC<RedlineContagionProps> = ({
           </div>
         </div>
       )}
+
+      {/* grain premium par-dessus tout */}
+      <HookGrain opacity={0.045} />
     </AbsoluteFill>
   );
 };

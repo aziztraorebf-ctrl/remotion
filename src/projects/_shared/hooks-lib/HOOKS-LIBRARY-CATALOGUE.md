@@ -47,6 +47,14 @@ Nos vraies videos (ex AES Acte 1) utilisent une CAMERA SERREE (zoom ~4.5-4.8) qu
 
 ---
 
+## EFFETS "AE" REUTILISABLES (HookEffects.tsx) — Partie B du DA, prouves en render headless
+- `HookGrain` : grain/noise SVG subtil (feTurbulence, deterministe). Pose en dernier, texture premium. Partout.
+- `HookDisplacementBurst at={f} scale={px}` : onde de choc DEFORMANTE (feDisplacementMap) a un frame -> la
+  carte TREMBLE a l'impact ("seisme/deflagration"). Wrappe le fond : `<HookDisplacementBurst><HookMapBackground/></...>`.
+  ⭐ VERIFIE : feDisplacementMap s'applique bien au-dessus du canvas Mapbox en headless (RedlineContagion, catbox uwbr8o).
+- A POUSSER (non encore codes, faisables) : halftone dot-grid (pattern SVG cercles, look radar) · gradient
+  radial spot anime (cx/cy = balayage organique) · dechirure parchemin (clipPath courbe qui s'elargit).
+
 ## PRINCIPES DE RETENTION (graves du DA 3 modeles, appliques)
 1. Trou de serrure : jamais la carte pleine a t=0, commencer par un detail qui obstrue puis OUVRIR.
 2. Relais du regard : l'animation A meurt la ou B nait (label la ou le mouvement s'arrete).

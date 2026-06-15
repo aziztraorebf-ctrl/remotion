@@ -39,6 +39,8 @@ export interface MaskRevealProps {
   /** Decoration du slam : net / ondes / aberration chromatique. */
   effect?: "plain" | "echo" | "chromatic";
   countriesGeoJson?: string;
+  /** Trajectoire camera serree + pan (grammaire War-Map). Remplace le punch zoom si fourni. */
+  camKeys?: { f: number; lon: number; lat: number; zoom: number }[];
   accentColor?: string;
   slamAt?: number;
   revealAt?: number;
@@ -56,6 +58,7 @@ export const MaskReveal: React.FC<MaskRevealProps> = ({
   question,
   effect = "plain",
   countriesGeoJson,
+  camKeys,
   accentColor = HOOK_COLORS.gold,
   slamAt = 6,
   revealAt = 96,
@@ -122,7 +125,8 @@ export const MaskReveal: React.FC<MaskRevealProps> = ({
         litFrom={litAt}
         durationFrames={durationFrames}
         driftAmount={0.6}
-        punchZoom={{ at: revealAt, delta: revealZoom, dur: 26 }}
+        punchZoom={camKeys ? undefined : { at: revealAt, delta: revealZoom, dur: 26 }}
+        camKeys={camKeys}
         countriesGeoJson={countriesGeoJson}
         onMapReady={useCallback(() => {}, [])}
       />
