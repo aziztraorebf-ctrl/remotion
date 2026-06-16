@@ -42,6 +42,22 @@ TITRE/sujet, PAS la qualité, le format, ni la transposabilité. Une vidéo à 2
 recyclé, de la désinfo panafricaniste virale, ou une vraie analyse — on ne le SAIT pas sans lire le contenu.
 Valider sur les vues seules = valider une coquille. D'où 2 niveaux :
 
+### ⛔⛔ LEÇON N°0 — LE SEED/INPUT DÉTERMINE TOUT (Aziz 2026-06-16, prouvé en test)
+La qualité d'une recherche de découverte = la qualité de son POINT DE DÉPART. Erreur commise : lancer
+`search_related_outliers` sur Sahel Chronicles (chaîne Nigeria + ANGLOPHONE) → résultats = sujets Nigeria-EN,
+INUTILES pour nous (FR, Sahel/Afrique de l'Ouest). On avait choisi cette chaîne pour son ANGLE (analyste), pas
+son SUJET ni sa LANGUE → mauvais seed. RÈGLES :
+1. **Partir d'une VIDÉO (`videoId`), PAS d'une chaîne** quand on veut éviter le biais d'ADN de la chaîne. Une
+   vidéo Afrique qui perce dans une chaîne FR généraliste = signal PUR (un public francophone non-spécialiste a
+   cliqué) = meilleur que partir d'une chaîne 100% Afrique anglophone.
+2. **Filtre `language: ["fr"]` NON-NÉGOCIABLE** pour valider NOTRE marché. L'EN sert à l'inspiration d'ANGLE, pas
+   à la demande.
+3. **Le SEED tire vers SON sujet** : seed "La Corée du Nord d'Afrique" → moitié des résultats sur la Corée du Nord
+   (vrai test 06-16). Choisir des seeds dont le SUJET CENTRAL est le nôtre (Sahel, CFA, France-Afrique).
+4. **Croiser PLUSIEURS seeds alignés + recouper** : un sujet qui ressort sur plusieurs seeds = vraie demande ; sur
+   un seul = biais de ce seed. + recouper avec `search_outliers` par MOTS-CLÉS FR purs (non contaminé par un seed).
+→ Bons seeds pour NOUS : vidéos FR carto/géopo Afrique qui cartonnent (ex. Max Bellona). Voir [[DECODE-modeles-fr-afrique]].
+
 ### NIVEAU 1 — FILTRAGE rapide (~10 min) : le thème attire-t-il des clics ? Y a-t-il une demande VIVANTE ?
 - ⭐ **`last30days` (skill) = PLACE CENTRALE/PRIVILÉGIÉE** : ce que les gens disent/cherchent/débattent MAINTENANT
   (Reddit, X, YouTube, TikTok, HN, news, web). C'est le détecteur de DEMANDE FRAÎCHE + d'ANGLE ÉMERGENT + de
