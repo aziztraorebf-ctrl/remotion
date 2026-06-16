@@ -3953,10 +3953,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
           en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES). */}
       {(countryBordersTest || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
-        // Draw-in : en test (séquence démo). En P3 les contours sont déjà tracés (offset 0)
-        // + pulse aux moments clés. (Acte1 garde son allumage séquentiel, pas de contours.)
-        const isActe1 = countryBordersTest;
-        const DRAW = 70;
+        // Draw-in : en test (séquence démo) ET en acte1Refonte (allumage des 3 pays PAR LE CONTOUR,
+        // calé sur la narration V5 : Mali f145 "chassent" → Burkina f217 "Rompent" → Niger f286 "quittent").
+        // En P3/P4 les contours sont déjà tracés (offset 0) + pulse aux moments clés (COUNTRY_PULSES).
+        const useDrawIn = countryBordersTest || acte1Refonte;
+        const isActe1 = useDrawIn;
+        // Test = draw long (démo lente). Refonte = draw serré (~28f) + pulse court, calé sur la voix.
+        const DRAW = acte1Refonte ? 28 : 70;
+        // Offsets ABSOLUS depuis (s + DRAW) : montée → fin maintien → fin retombée. Strictement croissants.
+        // Test = pulse long (18/70/130, valeurs d'origine inchangées). Refonte = flash court (~20f utiles).
+        const PULSE_RISE = acte1Refonte ? 8 : 18;
+        const PULSE_HOLD_END = acte1Refonte ? 22 : 70;
+        const PULSE_FALL_END = acte1Refonte ? 68 : 130;
         const drawStart: Record<string, number> = countryBordersTest
           ? { MLI: 30, BFA: 150, NER: 270 }
           : { MLI: F_HOOK_MALI, BFA: F_HOOK_BURKINA, NER: F_HOOK_NIGER };
@@ -3965,7 +3973,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         // base respiration + EFFACEMENT pendant les overlays (sinon bouillie sous l'overlay
         // semi-transparent — décision Aziz 2026-06-13). Hide ne s'applique pas en test/Acte1.
         const hide = isActe1 ? 1 : contourHideFactor(frame);
-        const breathe = (isActe1
+        // Refonte : ambiant HAUT (0.80→0.90) pour que ocre/brique/sarcelle restent LISIBLES une fois
+        // allumés (le contour est désormais l'unique repère pays, HUD épuré). Test : ramp démo d'origine.
+        const breathe = (acte1Refonte
+          ? interpolate(frame, [0, 360, 720], [0.80, 0.90, 0.86],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : isActe1
           ? interpolate(frame, [0, 360, 720], [0.55, 0.85, 0.72],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
           : 0.78) * hide; // base parties (le pulse ajoute le relief ponctuel)
@@ -4001,7 +4014,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                 if (!visible) return null;
                 // pulse : Acte1 = après le draw-in (glow qui bat) ; Parties = table COUNTRY_PULSES.
                 const lit = (isActe1
-                  ? interpolate(frame, [s + DRAW, s + DRAW + 18, s + DRAW + 70, s + DRAW + 130],
+                  ? interpolate(frame, [s + DRAW, s + DRAW + PULSE_RISE, s + DRAW + PULSE_HOLD_END, s + DRAW + PULSE_FALL_END],
                       [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
                   : countryPulseAt(iso, frame)) * hide; // pulse aussi effacé sous overlay
                 const beat = lit > 0.05 ? 1 + 0.45 * Math.sin(frame * 0.18) : 1;
