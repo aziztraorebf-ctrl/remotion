@@ -4046,6 +4046,104 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         );
       })()}
 
+      {/* ============================================================
+          VISEUR CROSSHAIR — HOOK Acte 1 Refonte (calque SVG par-dessus la VRAIE carte du moteur).
+          Decision Aziz : le viseur EST le hook a lui seul. AUCUN texte, carton, label, question.
+          Grammaire copiee de _shared/hooks-lib/CrosshairLock.tsx (forme du viseur), mais on dessine
+          sur la Map continue du moteur (PAS de carte parchemin propre). Cible = projection ecran du
+          centre AES via sahelCtx.project().
+          Fenetre : f0..420 (recherche -> lock f135 juste avant "chassent" f145 -> effacement f350-400).
+          ============================================================ */}
+      {acte1Refonte && frame >= 0 && frame < 420 && (() => {
+        const CL_INK = "#3A2A18";        // trait de recherche brun fonce (lisible sur parchemin)
+        const CL_LOCK = "#B14B3C";       // accent lock brique sobre
+        const LOCK_AT = 135;             // verrouillage juste avant "chassent" (f145)
+        // Cible = centre AES projete sur l'ecran. Fallback centre ecran si ctx pas pret.
+        const target = sahelCtx
+          ? sahelCtx.project(-0.5, 15.2)
+          : { x: width / 2, y: height / 2 };
+
+        // PHASE 1 — RECHERCHE : le viseur part d'un coin et converge avec jitter decroissant.
+        const startX = width * 0.2, startY = height * 0.24;
+        const approach = interpolate(frame, [10, LOCK_AT], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const ease = approach * approach * (3 - 2 * approach); // smoothstep
+        const jitterAmp = (1 - approach) * 22;
+        const jitterX = Math.sin(frame * 1.5) * jitterAmp;
+        const jitterY = Math.cos(frame * 2.1) * jitterAmp;
+
+        // PHASE 2 — LOCK : verrouillage sec sur ~12 frames (crochets claquent, couleur -> brique).
+        const lock = interpolate(frame, [LOCK_AT, LOCK_AT + 12], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+        const cx = startX + (target.x - startX) * ease + jitterX * (1 - lock);
+        const cy = startY + (target.y - startY) * ease + jitterY * (1 - lock);
+
+        const R = 138;
+        const ringR = R * (1 - 0.28 * lock); // l'anneau se resserre au lock
+        const bx = ringR * 1.5;              // distance des crochets de coin
+        const isLocked = lock > 0.5;
+        const stroke = isLocked ? CL_LOCK : CL_INK;
+
+        // grille de coordonnees : apparait tot, s'efface au lock.
+        const gridOpacity = interpolate(frame, [6, 18, LOCK_AT + 4, LOCK_AT + 18], [0, 0.85, 0.85, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const gridStep = 120;
+
+        // PHASE 3 — Opacite du calque : apparition (f10-18), maintien plein jusqu'a f350, puis
+        // EFFACEMENT en fondu pendant que les pays finissent de s'allumer (Niger f286), avant le
+        // freeze f539. Une seule rampe monotone (pas de dropout au moment du lock).
+        const layerOp = interpolate(frame, [10, 18, 330, 372], [0, 1, 1, 0],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+        if (layerOp <= 0.01) return null;
+        return (
+          <AbsoluteFill style={{ pointerEvents: "none" }}>
+            <svg width={width} height={height} style={{ position: "absolute", inset: 0, opacity: layerOp }}>
+              {/* grille de coordonnees (s'efface au lock) */}
+              {gridOpacity > 0.01 && (
+                <g opacity={gridOpacity} stroke={CL_INK} strokeWidth={1.4}>
+                  {Array.from({ length: Math.ceil(width / gridStep) + 1 }, (_, i) => (
+                    <line key={`clv${i}`} x1={i * gridStep} y1={0} x2={i * gridStep} y2={height} opacity={0.5} />
+                  ))}
+                  {Array.from({ length: Math.ceil(height / gridStep) + 1 }, (_, i) => (
+                    <line key={`clh${i}`} x1={0} y1={i * gridStep} x2={width} y2={i * gridStep} opacity={0.5} />
+                  ))}
+                </g>
+              )}
+
+              {/* lignes guides HUD (1 horizontale + 1 verticale qui se croisent au viseur) */}
+              <g stroke={stroke} strokeWidth={1.5} opacity={isLocked ? 0.5 : 0.35}>
+                <line x1={0} y1={cy} x2={width} y2={cy} />
+                <line x1={cx} y1={0} x2={cx} y2={height} />
+              </g>
+
+              {/* viseur : double cercle + croix centrale */}
+              <g stroke={stroke} strokeWidth={3} fill="none">
+                <circle cx={cx} cy={cy} r={ringR} opacity={0.9} />
+                <circle cx={cx} cy={cy} r={ringR * 0.62} opacity={0.4} />
+                <line x1={cx - 16} y1={cy} x2={cx + 16} y2={cy} />
+                <line x1={cx} y1={cy - 16} x2={cx} y2={cy + 16} />
+              </g>
+
+              {/* crochets de coin qui claquent au lock (4 coins, accent brique) */}
+              {lock > 0.01 && (
+                <g stroke={CL_LOCK} strokeWidth={4} fill="none" opacity={lock}>
+                  {[[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([sx, sy], i) => {
+                    const k = 28;
+                    const px = cx + sx * bx, py = cy + sy * bx;
+                    return (
+                      <path key={`clbr${i}`}
+                        d={`M ${px - sx * k} ${py} L ${px} ${py} L ${px} ${py - sy * k}`}
+                        strokeLinecap="round" />
+                    );
+                  })}
+                </g>
+              )}
+            </svg>
+          </AbsoluteFill>
+        );
+      })()}
+
     </AbsoluteFill>
   );
 };
