@@ -466,7 +466,7 @@ export const Beat14: React.FC = () => {
             width={PLATE_W} height={PLATE_H}
             opacity={opFonsis}
             slashProgress={frame >= F_A_END ? slashF : 0}
-            captionText="Dette 80% PIB"
+            captionText="Dette 132% PIB"
             captionOpacity={frame >= F_A_END ? opCapDette : 0}
           />
           <PlateLabel

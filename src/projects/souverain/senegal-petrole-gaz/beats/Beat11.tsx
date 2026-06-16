@@ -5,6 +5,7 @@ import {
 } from "remotion";
 import { scaleLinear } from "d3-scale";
 import { SourceTag } from "../../../_shared/components/overlays/SourceTag";
+import { KraftGrain } from "../../../_shared/components/overlays/KraftDepth";
 
 // Beat11 — S2 Mecanisme 1 : Le Contrat de Concession
 // Duree : 1473f = 49.10s @30fps (allonge de 125f pour couvrir "mais voila" jusqu'a Beat12)
@@ -273,6 +274,9 @@ export const Beat11: React.FC = () => {
           style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
         >
           <defs>
+            <filter id="bar-shadow" x="-10%" y="-10%" width="120%" height="130%">
+              <feDropShadow dx={0} dy={5} stdDeviation={4} floodColor="#16213a" floodOpacity={0.22} />
+            </filter>
             <pattern id="hatch-kraft" patternUnits="userSpaceOnUse" width="8" height="8" patternTransform="rotate(45)">
               <line x1="0" y1="0" x2="0" y2="8" stroke={RED_ALERT} strokeWidth="1.5" opacity="0.5" />
             </pattern>
@@ -315,9 +319,10 @@ export const Beat11: React.FC = () => {
             </g>
           ))}
 
-          {/* Track fond */}
+          {/* Track fond — ombre portee douce pour decoller la data-viz du fond kraft */}
           <rect x={BAR_X} y={BAR_Y} width={xScale(100)} height={BAR_H}
-            fill="rgba(26,18,10,0.05)" stroke="rgba(26,18,10,0.18)" strokeWidth={1} />
+            fill="rgba(26,18,10,0.05)" stroke="rgba(26,18,10,0.18)" strokeWidth={1}
+            filter="url(#bar-shadow)" />
 
           {/* [3] Ghost trailing — 60% promis */}
           {showPhase3 && (
@@ -562,6 +567,9 @@ export const Beat11: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Grain papier (texture premium, coherence avec les autres inserts kraft) */}
+      <KraftGrain />
 
       {/* Sources */}
       <SourceTag source="ITIE Sénégal — Rapport 2023" startFrame={F_60PCT} endFrame={F_WOODSIDE} />

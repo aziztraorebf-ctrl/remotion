@@ -9,6 +9,7 @@ import {
   MAPBOX_STYLES,
 } from "../../../_shared/mapbox/MapboxBase";
 import { SourceTag } from "../../../_shared/components/overlays/SourceTag";
+import { KraftGrain } from "../../../_shared/components/overlays/KraftDepth";
 
 // Beat13 — S3 Mecanisme 3 : Coulisses Yakaar
 // Duree : 1540f = 51.33s @30fps (allonge de 70f pour couvrir la phrase finale jusqu'a Beat14)
@@ -428,6 +429,9 @@ export const Beat13: React.FC = () => {
       </AbsoluteFill>
       {/* SFX — Zoom In debut Phase A (carte Yakaar) */}
       {frame === 5 && <Audio src={staticFile("_shared/sfx/camera/sfx-swoosh-zoomin.mp3")} volume={0.35} />}
+
+      {/* Grain papier sur phases kraft uniquement (eteint pendant la carte via 1-opMap) */}
+      <KraftGrain opacity={0.055 * (1 - opMap)} />
 
       {/* Sources */}
       <SourceTag source="Kosmos Energy / PETROSEN — 2024" startFrame={F_A_END} endFrame={F_B_END} />

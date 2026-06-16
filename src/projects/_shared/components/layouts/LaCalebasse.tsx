@@ -19,6 +19,8 @@ export interface LaCalebasseProps {
   textColor?: string;
   bgColor?: string;
   startFrame?: number;
+  /** Ombre portee "decoupage papier" (navy) sur la calebasse + valeur. Defaut false (retrocompat). */
+  depth?: boolean;
 }
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -79,6 +81,7 @@ export function LaCalebasse({
   textColor = "#4a9eff",
   bgColor = "transparent",
   startFrame = 0,
+  depth = false,
 }: LaCalebasseProps) {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -186,8 +189,14 @@ export function LaCalebasse({
               <clipPath id="calebasse-clip">
                 <path d={calebassePath} />
               </clipPath>
+              {depth && (
+                <filter id="calebasse-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx={6} dy={8} stdDeviation={4} floodColor="#16213a" floodOpacity={0.3} />
+                </filter>
+              )}
             </defs>
 
+            <g filter={depth ? "url(#calebasse-shadow)" : undefined}>
             {/* Liquid fill group — clipped to calebasse shape */}
             <g clipPath="url(#calebasse-clip)">
               <g
@@ -208,6 +217,7 @@ export function LaCalebasse({
               strokeLinecap="round"
               strokeLinejoin="round"
             />
+            </g>
 
             {/* Overflow drips — 3 drops falling from rim when percentage > 100 */}
             {drips.map((drip, i) => {

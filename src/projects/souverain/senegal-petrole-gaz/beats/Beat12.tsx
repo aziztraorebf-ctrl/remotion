@@ -5,6 +5,7 @@ import {
 } from "remotion";
 import { LaCalebasse } from "../../../_shared/components/layouts/LaCalebasse";
 import { SourceTag } from "../../../_shared/components/overlays/SourceTag";
+import { KraftGrain } from "../../../_shared/components/overlays/KraftDepth";
 import { Landmark, Settings2, Building2 } from "lucide-react";
 
 // Beat12 — S3 Mecanisme 2 : FONSIS + Piege de la Dette
@@ -162,7 +163,12 @@ export const Beat12: React.FC = () => {
       {/* ── PHASE A : Coffre + pièces boucle + odometer ── */}
       <AbsoluteFill style={{ opacity: opA, pointerEvents: "none" }}>
         <svg width={1920} height={1080} viewBox="0 0 1920 1080">
-          <g transform={`translate(960, 460) scale(${aAppear})`}>
+          <defs>
+            <filter id="fonsis-shadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx={8} dy={10} stdDeviation={6} floodColor="#16213a" floodOpacity={0.3} />
+            </filter>
+          </defs>
+          <g transform={`translate(960, 460) scale(${aAppear})`} filter="url(#fonsis-shadow)">
             {/* Base */}
             <rect x={-200} y={-130} width={400} height={290} rx={18} fill={KRAFT_DARK} stroke={GOLD} strokeWidth={4} />
             <rect x={-200} y={-20} width={400} height={20} fill={GOLD} opacity={0.35} />
@@ -224,6 +230,7 @@ export const Beat12: React.FC = () => {
           textColor={KRAFT_DARK}
           bgColor={KRAFT_BG}
           startFrame={F_A_END}
+          depth
         />
         {/* Badge FMI */}
         <div className="absolute left-0 right-0 flex justify-center" style={{ bottom: 80 }}>
@@ -399,6 +406,9 @@ export const Beat12: React.FC = () => {
           </g>
         </svg>
       </AbsoluteFill>
+
+      {/* Grain papier global (toutes phases kraft) */}
+      <KraftGrain />
 
       {/* Sources */}
       <SourceTag source="FONSIS — Rapport activité 2024" startFrame={80} endFrame={350} />
