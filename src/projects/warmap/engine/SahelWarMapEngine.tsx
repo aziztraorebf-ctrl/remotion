@@ -3281,8 +3281,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
           → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
       {!acte1CameraOnly && !proto24 && !countryBordersTest && <>
-      {/* Legende factions — haut gauche (masquée en partie2/partie3/partie4 : table rase, les jetons parlent d'eux-mêmes) */}
-      {!partie2 && !partie3 && !partie4 && (
+      {/* Legende factions — haut gauche (masquée en partie2/partie3/partie4 : table rase, les jetons parlent d'eux-mêmes ;
+          masquée aussi en acte1Refonte : epuration totale du HUD pour la lisibilite, decision Aziz Task 2) */}
+      {!partie2 && !partie3 && !partie4 && !acte1Refonte && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
         <div style={{ ...plaque, padding: "12px 20px" }}>
@@ -3329,7 +3330,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && (showChrome || partie2 || partie3) && !partie1 && !proto24 && (() => {
+      {isFinalLook && (showChrome || partie2 || partie3) && !partie1 && !proto24 && !acte1Refonte && (() => {
         // PARTIE 2 (V5) : timeline graduée Acte 1 RÉACTIVÉE (Aziz 2026-06-12 : la frise doit être pleine
         // largeur, présente DÈS LE DÉBUT de la P2, exactement comme l'Acte 1). Axe 2013→2024, curseur
         // qui glisse sur toute la P2 (f3000→f5690 mappé 2013→2024). Encoches aux événements P2.
