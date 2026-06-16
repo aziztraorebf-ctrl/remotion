@@ -36,16 +36,38 @@ fera moins qu'une vidéo sobre sur un sujet recherché.
   (ex. LeChefOtaku : « Marine Ford » cartonne, « Devy Back Fight » floppe — même manga). La validation porte sur
   « ce sujet a-t-il un public + sous quel angle/titre il clique ».
 
-## PROTOCOLE DE VALIDATION (gate avant tout lancement — ~30-60 min)
-Miroir du DA-BRIEF-GATE (qui protège le VISUEL en amont) mais pour le SUJET :
-1. **Demande prouvée ?** `TubeLab` (search_outliers, get_channel_videos sur les chaînes de réf : Sahel
-   Chronicles, Bellona, The Invisible Hand) → ce sujet/angle performe-t-il ailleurs ? + `google-news-trends` /
-   `last30days` → est-il chaud/cherché maintenant ?
-2. **Quel angle/titre ?** Doctrine titres Kora & Cartes (fait + conséquence + cause inattendue) → tester 2-3
-   titres-angles AVANT de choisir. Le meilleur angle peut sauver un sujet moyen ; un mauvais angle tue un bon sujet.
-3. **Verdict** : demande faible + aucun angle fort → NE PAS LANCER (ou ré-angler). Demande OK + angle fort → GO.
-- Décision de GOÛT (Aziz tranche) si le sujet est borderline ou hors-niche. Décision TECHNIQUE (Claude tranche)
-  si les données sont claires.
+## PROTOCOLE DE VALIDATION — GATE À 2 NIVEAUX (Aziz 2026-06-16 : un titre + un nombre de vues ≠ validation)
+Miroir du DA-BRIEF-GATE (protège le VISUEL) mais pour le SUJET. ⚠️ LEÇON : les VUES mesurent l'attractivité du
+TITRE/sujet, PAS la qualité, le format, ni la transposabilité. Une vidéo à 279k vues peut être un clip de podcast
+recyclé, de la désinfo panafricaniste virale, ou une vraie analyse — on ne le SAIT pas sans lire le contenu.
+Valider sur les vues seules = valider une coquille. D'où 2 niveaux :
+
+### NIVEAU 1 — FILTRAGE rapide (~10 min) : le thème attire-t-il des clics ? Y a-t-il une demande VIVANTE ?
+- ⭐ **`last30days` (skill) = PLACE CENTRALE/PRIVILÉGIÉE** : ce que les gens disent/cherchent/débattent MAINTENANT
+  (Reddit, X, YouTube, TikTok, HN, news, web). C'est le détecteur de DEMANDE FRAÎCHE + d'ANGLE ÉMERGENT + de
+  TIMING (le timing = la moitié du clic ; cf. LeChefOtaku « Fire Force fait un an trop tôt »). TubeLab = rétroviseur
+  (le passé) ; last30days = la demande VIVANTE. → lancer last30days sur le sujet candidat EN PREMIER.
+- `TubeLab search_outliers` (langue en+fr, durée long-form) → le THÈME a-t-il produit des outliers (ratio
+  averageViewsRatio élevé) ? Filtre les sujets MORTS. + `get_channel_videos` sur chaînes de réf (Sahel Chronicles,
+  Bellona, The Invisible Hand) : qu'est-ce qui marche dans NOTRE registre exact.
+- Sortie niveau 1 : 2-3 sujets candidats qui ont une demande (passé TubeLab + vivante last30days). Les morts sont éliminés.
+
+### NIVEAU 2 — VALIDATION ACTIONNABLE (~20-30 min) : sur les 2-3 candidats SEULEMENT
+- ⭐ **EXTRAIRE LES TRANSCRIPTS** des meilleurs outliers (yt-dlp `--write-auto-sub`) + les LIRE. Répondre à :
+  (a) POURQUOI ça marche (angle, promesse, hook, structure) ? (b) Est-ce de la QUALITÉ ou du creux/clickbait/podcast
+  recyclé ? (c) Quel ANGLE LIBRE reste pour NOUS (analyste, carte vivante) que les outliers ne couvrent pas ?
+  → c'est ÇA la validation actionnable, pas le compteur de vues.
+- ⚠️ Repérer le PIÈGE d'angle : si les outliers qui marchent sont TOUS militants/pompeux/pro-Traoré
+  inspirationnel (registre qu'on REFUSE), le sujet "marche" mais PAS pour nous → soit on trouve un angle analyste
+  distinct, soit on écarte (on se ferait écraser sur leur terrain). Cf. leçon Caspian + charte analyste.
+- **Angle/titre** : doctrine titres Kora & Cartes (fait + conséquence + cause inattendue) → 2-3 titres testés,
+  DISTINCTS des outliers militants. Le bon angle sauve un sujet moyen ; le mauvais tue un bon sujet.
+
+### VERDICT
+- Demande vivante (last30days) + outliers dans le passé + angle analyste libre + matière dispo → **GO**.
+- Demande faible OU seulement des angles militants OU aucun angle distinct → **NO-GO ou RÉ-ANGLER**.
+- Souvent le gate REDIRIGE vers un MEILLEUR sujet que l'idée initiale (coup de tête) → c'est le but.
+- Décision GOÛT (Aziz tranche) si borderline/hors-niche ; décision TECHNIQUE (Claude tranche) si données claires.
 
 ## RAPPEL — notre avantage structurel
 Notre production est DATA-DRIVEN Remotion : un short/carrousel coûte une fraction d'un long (vs LeChefOtaku qui
