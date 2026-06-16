@@ -1678,6 +1678,19 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
     }
 
+    // REFONTE ACTE 1 (Task 3) — LOOK ÉPURÉ P3/P4 : on ABANDONNE les blocs colorés de contrôle
+    // (palette factions bleu/contesté/rouge pilotée par effSeqIgnite). On reproduit EXACTEMENT
+    // la neutralisation P4 : la couche sahel-fill devient un fond PARCHEMIN UNIFORME (SAHEL_COLORS.land,
+    // opacité basse constante) ; toute la couleur passe désormais par les CONTOURS NATIONAUX colorés
+    // (rendus SVG, gate ci-dessus + Task 4 pour l'allumage par contour). Le glow de front est éteint.
+    if (acte1Refonte && map.getLayer("sahel-fill")) {
+      try {
+        map.setPaintProperty("sahel-fill", "fill-color", SAHEL_COLORS.land);
+        map.setPaintProperty("sahel-fill", "fill-opacity", 0.5);
+      } catch {}
+      try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
+    }
+
     // PROTO 2.4 — CARTE CALME (miroir partie2) : le fill de contrôle Acte 1 reste très bas
     // pendant l'install, puis REMONTE légèrement au beat 2.4 (l'État conteste) tandis que
     // les surfaces rouges DÉDIÉES (couche <Proto24Extinction>) explosent par-dessus.
@@ -1722,7 +1735,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     // CONTOURS NATIONAUX COLORÉS : reprojeter chaque pays + mesurer la longueur du tracé.
     // Actif UNIQUEMENT sur les parties ÉPURÉES (P3, P4 à venir) + le test. Acte1/Acte2/P1
     // gardent leur fond mosaïque qui porte déjà la couleur (décision Aziz 2026-06-14).
-    if ((countryBordersTest || partie3 || partie4) && srcC && (srcC as any)._data) {
+    if ((countryBordersTest || partie3 || partie4 || acte1Refonte) && srcC && (srcC as any)._data) {
       const fcC = (srcC as any)._data;
       const cbp: { country: string; d: string; len: number }[] = [];
       for (const feat of fcC.features) {
@@ -3939,7 +3952,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* CONTOURS NATIONAUX COLORÉS (1 ton/pays) — PERMANENTS + draw-in (Acte 1) + pulse.
           Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
           en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES). */}
-      {(countryBordersTest || partie3 || partie4) && countryBorderPaths.length > 0 && (() => {
+      {(countryBordersTest || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
         // Draw-in : en test (séquence démo). En P3 les contours sont déjà tracés (offset 0)
         // + pulse aux moments clés. (Acte1 garde son allumage séquentiel, pas de contours.)
         const isActe1 = countryBordersTest;
