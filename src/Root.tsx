@@ -2874,6 +2874,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* ACTE 1 REFONTE — compo soeur de SahelActe1-Final (Task 1, filet reversible).
+            Au depart STRICTEMENT identique a acte1Final ; look epure + hook crosshair en taches suivantes. */}
+        <Composition
+          id="SahelActe1-Refonte"
+          component={SahelWarMapEngine}
+          defaultProps={{ acte1Refonte: true }}
+          durationInFrames={2126}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* ACTE 2 Sahel — PROLONGE l'Acte 1 (même moteur). B1 = enjeu caché (bases + flux). */}
         <Composition
           id="SahelActe2"

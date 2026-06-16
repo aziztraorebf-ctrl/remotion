@@ -1071,6 +1071,10 @@ export type SahelTestProps = {
   // REFACTOR V5 — mode Partie 4 (le coût, le levier, la perspective). DERNIÈRE partie. Couche <Partie4Cout>
   // (grammaire causale, arc 3 mouvements, extinction finale au noir). getPartie4Cam + contours nationaux réutilisés.
   partie4?: boolean;
+  // REFONTE ACTE 1 — filet réversible (Task 1). Mode SŒUR de acte1Final : au départ STRICTEMENT
+  // identique (caméra + allumage 3 pays calés narration V5, hérite isFinalLook). Le look épuré
+  // (contours nationaux colorés P3/P4) + hook viseur crosshair viennent dans les tâches suivantes.
+  acte1Refonte?: boolean;
   // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
   // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
   ph1Fullscreen?: boolean;
@@ -1103,6 +1107,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   partie2 = false,
   partie3 = false,
   partie4 = false,
+  acte1Refonte = false,
   countryBordersTest = false,
   ph1Fullscreen = false,
   proto24 = false,
@@ -1116,7 +1121,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
-  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest;
+  const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest || acte1Refonte;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
   const isPartie = partie1 || partie2 || partie3 || partie4 || proto24;
 
