@@ -153,7 +153,7 @@
 ### 2.1 Character sheets multi-angle via Gemini 3.1 Flash
 - **Statut** : VALIDE
 - **Resultat** : Colomb character sheet genere — 4 vues tete + full body, style coherent avec Abou Bakari/Moussa
-- **Fichier** : `public/assets/library/geoafrique/characters/colomb/christophe-colomb-character-sheet-v1.png`
+- **Fichier** : public/assets/library/geoafrique/characters/colomb/christophe-colomb-character-sheet-v1.png
 
 ### 2.2 Expressions en pourcentage
 - **Source** : Mira AI + test interne

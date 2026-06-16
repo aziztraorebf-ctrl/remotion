@@ -178,17 +178,17 @@ urllib.request.urlretrieve(video_url, output_path)
 ## Vercel Blob (Review Gallery)
 
 **Key**: `BLOB_READ_WRITE_TOKEN`
-**Script**: `scripts/upload-to-blob.py`
+**Script**: `scripts/tools/upload-to-blob.py`
 
 ```bash
 # Single file
-python scripts/upload-to-blob.py file.png --folder images
+python scripts/tools/upload-to-blob.py file.png --folder images
 
 # Gallery (images + audio + video on one page)
-python scripts/upload-to-blob.py --gallery "Review Title" img1.png clip1.mp4 audio.mp3 --folder review/project
+python scripts/tools/upload-to-blob.py --gallery "Review Title" img1.png clip1.mp4 audio.mp3 --folder review/project
 
 # List files
-python scripts/upload-to-blob.py --list
+python scripts/tools/upload-to-blob.py --list
 ```
 
 Gallery produces a static HTML page uploaded to Blob — works on iPhone Safari.

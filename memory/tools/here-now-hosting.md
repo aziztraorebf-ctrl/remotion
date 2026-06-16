@@ -80,7 +80,7 @@ Le `claimToken` est retourné UNE SEULE FOIS à la création. Sauvegarder imméd
 ### Empire du Ghana dashboard 2026-05-03
 - Slug : `smooth-oyster-6zb2`
 - URL : https://smooth-oyster-6zb2.here.now/
-- Claim URL sauvegardé dans `memory/episodes/empire-ghana/dashboard-url.md`
+- Claim URL sauvegardé dans memory/episodes/empire-ghana/dashboard-url.md
 
 ### Souverain Templates Library dashboard 2026-05-09
 - Slug : `hollow-desert-9tz6`

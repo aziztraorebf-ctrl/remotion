@@ -55,7 +55,7 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 
 ### Kimi K2.5 (Moonshot)
 - **Usage** : Direction artistique (DA review) + review video/image
-- **Script** : `scripts/review_with_kimi.py` (via OpenRouter API)
+- **Script** : scripts/review_with_kimi.py (via OpenRouter API)
 - **Agent** : `.claude/agents/kimi-reviewer.md`
 - **Cout** : ~$0.01-0.02/passe
 - **Workflow** : brief unifie 6 sections -> prompts finaux (max 3 iterations)
@@ -175,6 +175,6 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 - `d3-array` (^3.2.4) — extent, max, sum, mean, bisector
 - `d3-format` (^3.1.2) — format("$,.0f"), format(".0%"), format(",.2f")
 - `d3-geo` (^3.1.1) — geoMercator, geoPath (Atlas)
-- **Pattern** : utility-only — voir `memory/feedback_d3-pattern-utility-only.md`
+- **Pattern** : utility-only — voir `memory/feedbacks/feedback_d3-pattern-utility-only.md`
 - **Référence prototype** : `src/projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars.tsx`
 - **Anti-pattern** : laisser D3 manipuler le DOM (`.append()`, `.selectAll()`) — conflit React reconciler

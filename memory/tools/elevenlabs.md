@@ -485,7 +485,7 @@ Persona: <2-5 words>. Emotion: <2-3 adjectives>.
 
 **Limite 5000 caractères/appel** (`eleven_v3`) : un script mid-form (7min ~7000 chars) DÉPASSE.
 → Découper en 2+ segments à un `[pause]` naturel → générer chacun → concat ffmpeg (re-encode
-libmp3lame, PAS copy, pour éviter glitch de concat MP3). Modèle : `scripts/generate-sahel-narration-v5.py`.
+libmp3lame, PAS copy, pour éviter glitch de concat MP3). Modèle : scripts/generate-sahel-narration-v5.py.
 
 **Scan anti-pièges AVANT appel (scriptable)** : regex `\bont\s+[voyelle]` (liaison) + `\b\d+\b` (chiffres
 arabes → écrire en lettres) + participes `-é/-ée/-és/-ées` en fin de groupe (drop d'accent). Reformuler :

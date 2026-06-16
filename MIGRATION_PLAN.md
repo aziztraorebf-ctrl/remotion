@@ -19,7 +19,7 @@ Résultat : chevauchements critiques sur mobile 9:16 (textes superposés, assets
 
 ## État actuel Beat 5 Zimbabwe
 
-**Fichier code :** `src/projects/souverain/zimbabwe-lithium/Beat5Demonstration.tsx`
+**Fichier code :** src/projects/souverain/zimbabwe-lithium/Beat5Demonstration.tsx
 **Render dernière version :** `out/episodes/zimbabwe-lithium/versions/beat5_V9.mp4`
 **Catbox :** https://litter.catbox.moe/f7fzb2.mp4(24h)
 
@@ -177,8 +177,8 @@ python3 scripts/prepare_beat.py zimbabwe-lithium <beat_id>
 
 ## Règles mémoire clés (lire avant de coder)
 
-- `memory/workflow-souverain-gemini-pipeline.md` — workflow officiel 4 étapes
-- `memory/feedback_gemini-assets-fond-transparent.md` — fond noir+screen vs fond crème
-- `memory/feedback_souverain-backgrounds-valides.md` — 3 types valides, code CSS dots
-- `memory/feedback_geo-zero-approximation.md` — d3-geo obligatoire, ISO codes
-- `memory/feedback_review-mp4-avant-presentation.md` — extraire frames AVANT upload
+- `memory/tools/workflow-souverain-gemini-pipeline.md` — workflow officiel 4 étapes
+- `memory/feedbacks/feedback_gemini-assets-fond-transparent.md` — fond noir+screen vs fond crème
+- `memory/feedbacks/feedback_souverain-backgrounds-valides.md` — 3 types valides, code CSS dots
+- `memory/feedbacks/feedback_geo-zero-approximation.md` — d3-geo obligatoire, ISO codes
+- `memory/feedbacks/feedback_review-mp4-avant-presentation.md` — extraire frames AVANT upload

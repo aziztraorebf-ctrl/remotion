@@ -313,6 +313,6 @@ Ce script est la référence canonique à imiter sur :
 
 - `memory/doctrines/WARMAP-PLAYBOOK.md` — doctrine design war-map (briques, R1-R6)
 - `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` — doctrine données OSINT
-- `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` — règles script oral grade 10-11
+- `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` — règles script oral grade 10-11
 - `src/projects/warmap/WARMAP-INDEX.md` — point d'entrée code
 - `memory/episodes/warmap-sahel/SCRIPT-V4-FINAL-2026-06-07.md` — **RÉFÉRENCE CANONIQUE** (remplace V3-FINAL)

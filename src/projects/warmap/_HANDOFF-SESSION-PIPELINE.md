@@ -10,14 +10,14 @@ Le code War-Map a été **unifié et réorganisé** pour parité Souverain/Atlas
 
 | AVANT (ce que tu connaissais) | MAINTENANT |
 |---|---|
-| `src/projects/_rnd/sudan-warmap/SudanWarMapFlat.tsx` | `src/projects/warmap/engine/WarMapEngine.tsx` (RENOMMÉ) |
-| `src/projects/_rnd/sudan-warmap/sudanControlData.ts` | `src/projects/warmap/engine/sudanControlData.ts` |
-| `src/projects/_rnd/sudan-warmap/warmapVehicles.ts` | `src/projects/warmap/engine/warmapVehicles.ts` |
-| `src/projects/_rnd/sudan-warmap/WarMapDataOverlay.tsx` | `src/projects/warmap/engine/WarMapDataOverlay.tsx` |
-| `src/projects/_rnd/sudan-warmap/VehicleSymbols.tsx` | `src/projects/warmap/engine/VehicleSymbols.tsx` |
-| `src/projects/warmap/schema.ts` | `src/projects/warmap/data/schema.ts` |
-| `src/projects/warmap/adapter.ts` | `src/projects/warmap/data/adapter.ts` |
-| `src/projects/_rnd/sudan-warmap/SudanWarMap.tsx` (satellite) | **SUPPRIMÉ** (satellite 3D rejeté) |
+| src/projects/_rnd/sudan-warmap/SudanWarMapFlat.tsx | `src/projects/warmap/engine/WarMapEngine.tsx` (RENOMMÉ) |
+| `src/projects/warmap/engine/sudanControlData.ts` | `src/projects/warmap/engine/sudanControlData.ts` |
+| `src/projects/warmap/engine/warmapVehicles.ts` | `src/projects/warmap/engine/warmapVehicles.ts` |
+| `src/projects/warmap/engine/WarMapDataOverlay.tsx` | `src/projects/warmap/engine/WarMapDataOverlay.tsx` |
+| `src/projects/warmap/engine/VehicleSymbols.tsx` | `src/projects/warmap/engine/VehicleSymbols.tsx` |
+| `src/projects/warmap/data/schema.ts` | `src/projects/warmap/data/schema.ts` |
+| `src/projects/warmap/data/adapter.ts` | `src/projects/warmap/data/adapter.ts` |
+| src/projects/_rnd/sudan-warmap/SudanWarMap.tsx (satellite) | **SUPPRIMÉ** (satellite 3D rejeté) |
 
 - Le composant **`SudanWarMapFlat` s'appelle maintenant `WarMapEngine`** (moteur générique). Les IDs de
   composition Root (`SudanWarMapEpic60`, etc.) sont INCHANGÉS.

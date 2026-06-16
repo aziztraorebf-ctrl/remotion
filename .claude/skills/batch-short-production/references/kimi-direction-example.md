@@ -52,7 +52,7 @@ The V3 brief structure that worked:
 
 ## Files produced
 
-- `scripts/thiaroye-v3-kimi-prompts.md` — Final 7 prompts, ready for Seedance generation
+- scripts/thiaroye-v3-kimi-prompts.md — Final 7 prompts, ready for Seedance generation
 - `tmp/kimi-da-brief-full-v3.txt` — V3 brief (final, complete)
 - `tmp/kimi-da-prompts-v3.md` — V3 prompts (complete, with bridges)
 - `tmp/kimi-da-clip1-v3.md` — Clip 1 rewrite (2-scene format)

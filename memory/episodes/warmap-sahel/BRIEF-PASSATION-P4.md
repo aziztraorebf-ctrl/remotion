@@ -74,7 +74,7 @@ Détail complet : STATUS.md section "CONTOURS NATIONAUX COLORÉS" + `WARMAP-COMP
 
 ## DOCTRINE (LIRE AVANT DE CODER)
 
-- ⭐⭐ `memory/doctrines/WARMAP-GRAMMAIRE-CAUSALE.md` — règle CAUSE avant EFFET (un acteur AGIT → effet).
+- ⭐⭐ `memory/doctrines/WARMAP-GRAMMAIRE.md` — règle CAUSE avant EFFET (un acteur AGIT → effet).
 - `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — overlay vs plein écran, 3 régimes audio-visuel.
 - P1 direction = SOUSTRACTION (vide d'État par chute opacité). P4 reprend cet esprit pour la chute finale (4.11).
 

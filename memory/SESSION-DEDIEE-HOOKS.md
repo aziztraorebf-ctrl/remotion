@@ -45,7 +45,7 @@
 ## BACKLOG IDÉES HOOK (déjà noté, à exploiter en session)
 - `memory/tools/gemini-hook-ideas-2026-06-02.json` : TacticalRadarScan, EpicenterShockwave,
   SatelliteTargetLock, GlitchMapIntro (idées non codées).
-- 3 gabarits formalisés `memory/doctrines/HOOK-MAXBELLONA-GABARIT.md` (A carte se transforme /
+- 3 gabarits formalisés memory/doctrines/HOOK-MAXBELLONA-GABARIT.md (A carte se transforme /
   B argumentatif / C questions-pièges) — VALABLES comme STRUCTURE, mais à réincarner dans NOTRE grammaire.
 - Analyse chaînes : `feedback_medieval-mindset-methode.md` (in medias res par personnage, pont temporel).
 

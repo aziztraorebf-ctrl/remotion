@@ -135,7 +135,7 @@ Dossier : `quebec-jacques-poc/public/pixellab-walk-test/`
 ## Prochaine étape : walk cycles Mansa Moussa
 
 Nécessite abonnement MCP PixelLab (walk cycles automatiques) ou génération frame-par-frame SDK.
-Prompts de base documentés dans `memory/atlas-mansa-moussa/PIXELLAB-WALK-PIPELINE.md`.
+Prompts de base documentés dans memory/atlas-mansa-moussa/PIXELLAB-WALK-PIPELINE.md.
 
 ## Erreurs à ne pas reproduire
 

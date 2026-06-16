@@ -97,7 +97,7 @@ Documenter toutes les modifications :
 ### Step 6: Mise a jour memoire
 
 - Si le feedback revele un pattern reutilisable : ajouter dans `memory/key-learnings.md`
-- Si le feedback change la direction du projet : mettre a jour `memory/current-project.md`
+- Si le feedback change la direction du projet : mettre a jour memory/current-project.md
 - Si le feedback concerne un outil/API : mettre a jour `memory/apis-and-tools.md`
 
 ### Guardrails

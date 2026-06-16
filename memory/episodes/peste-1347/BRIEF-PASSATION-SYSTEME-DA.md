@@ -86,7 +86,7 @@ réel (les modèles hallucinent — règle CLAUDE.md L254, ne PAS gober). Aziz t
 ---
 
 ## CONTEXTE TECHNIQUE BEAT 5
-- Code : `src/projects/atlas/.../Beat5MaliVivant.tsx` (515L) — chercher le chemin exact au démarrage.
+- Code : src/projects/atlas/.../Beat5MaliVivant.tsx (515L) — chercher le chemin exact au démarrage.
 - Storyboard : `public/atlas/peste-1347/storyboard/beat5-storyboard.md` (route or SVG + POI précalculés).
 - Assets : Souleymane walk east/west `public/atlas/peste-1347/assets/characters/souleymane/animations/walk/`.
 - POI SVG : Niani (210,737), Tombouctou (250,696), Maghreb (235,556), Florence (354,463), Venise (362,446).

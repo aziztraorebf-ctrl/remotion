@@ -260,7 +260,7 @@ Validé le 2026-04-13 sur Soundjata Acte V Segment A v2 (test keep-and-duck à 3
 
 **Question à poser AVANT de fixer la densité** : "Cette scène a-t-elle UN beat émotionnel continu (→ 9 plans OK) ou PLUSIEURS sous-scènes distinctes (→ 6-7 plans pour respiration) ?"
 
-**Gabarit canonique** : `public/assets/library/geoafrique/soundjata/combat-refs/storyboard-9panels-test.png` (combat) + `public/assets/library/geoafrique/heros-oublies/soundjata/refs/acte7/storyboard.png` (contemplatif mono-beat).
+**Gabarit canonique** : public/assets/library/geoafrique/soundjata/combat-refs/storyboard-9panels-test.png (combat) + public/assets/library/geoafrique/heros-oublies/soundjata/refs/acte7/storyboard.png (contemplatif mono-beat).
 
 ### Règle 18 — Refs personnages non transférables entre Actes (VALIDÉE 2026-04-14 PM)
 

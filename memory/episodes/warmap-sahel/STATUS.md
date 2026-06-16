@@ -290,7 +290,7 @@ Burkina f231 · Niger f301 · CEDEAO f382 · Liptako f502 · JNIM f1198 · EIGS 
 ## DOCTRINES LIÉES
 - `memory/doctrines/WARMAP-LONG-DOCTRINE.md` — format long (carte permanente, overlays 3 niveaux, 5 actes).
 - `memory/doctrines/WARMAP-GRAMMAIRE.md` — dynamisme (R-V1..R-V4, board clearing, Ken Burns, 1 transfo/plan).
-- `memory/doctrines/SCRIPT-ORAL-DOCTRINE.md` + doctrine Tremblay — niveau oral du script.
+- `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` + doctrine Tremblay — niveau oral du script.
 
 ## ⏳ CHANTIER TRANSVERSAL EN ATTENTE — "Fond de contrôle qui respire" (session dédiée, Aziz 2026-06-13)
 Constat (Aziz P3) : depuis l'Acte 2, la carte colorée de contrôle territorial (sahel-fill rouge/contesté/bleu)

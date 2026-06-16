@@ -66,7 +66,7 @@ Classées par priorité narrative + faisabilité :
 
 4. **Compteur numérique gros plan** — Chiffres `46 000 → 20 000` en gros au moment de la révélation des pertes. Couplé au sprite-decay pour double impact.
 
-5. **Barre d'altitude HUD** — StatGauge vertical qui monte pendant la montée et descend à la descente. Visible pendant tout le Beat 3 (25s). Signature RPG cohérente avec `memory/feedback_atlas-rpg-hud-patterns.md`.
+5. **Barre d'altitude HUD** — StatGauge vertical qui monte pendant la montée et descend à la descente. Visible pendant tout le Beat 3 (25s). Signature RPG cohérente avec memory/feedback_atlas-rpg-hud-patterns.md.
 
 6. **Dutch tilt + vibration vinaigre** — `transform: rotate(3-5deg)` + spring() shake pendant 2-3s. Moment d'action pure, contraste avec la carte statique.
 

@@ -11,14 +11,14 @@
 
 ## Composants
 
-### `src/projects/geoafrique-shorts/Subtitles.tsx`
+### src/projects/geoafrique-shorts/Subtitles.tsx
 Composant principal. Phrase-level display + karaoke word highlight.
 
-### `src/projects/geoafrique-shorts/whisper-words.ts`
+### src/projects/geoafrique-shorts/whisper-words.ts
 Donnees mot-par-mot generees par Whisper API. Une seule narration = un fichier.
 **Pour un nouveau projet** : creer `whisper-words-<projet>.ts` et importer dans le composant.
 
-### `src/projects/geoafrique-shorts/cameraShake.ts`
+### src/projects/geoafrique-shorts/cameraShake.ts
 Helper standalone pour le tremblement de camera sur moments de force. Utilise dans Sonjata scene 5 (baobab) et scene 7 (chute Soumaoro).
 
 ### `scripts/tools/whisper-align.py`

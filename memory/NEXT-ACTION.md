@@ -327,7 +327,7 @@ pas trivial. Voir `feedback_atlas-bataille-multisprites-technique.md` section BA
 (orchestration, pas code) a integrer au playbook — et ils alimentent DIRECTEMENT le point 1 "Objets sur la map" ci-dessus :**
 1. **Grammaire d'apparition des objets** (★ ce qui interesse Aziz) : forced-alignment sur les pop + <=6 objets/ecran
    + 1 pop/3-5s jamais simultane + pop pres du dernier point nomme + atterrissage spring. → option hook `useObjectChoreography`.
-2. **EvidenceBoard** — ✅ CODE + VALIDE Aziz 2026-06-04. `src/projects/atlas/_shared/AtlasEvidenceBoard.tsx` +
+2. **EvidenceBoard** — ✅ CODE + VALIDE Aziz 2026-06-04. src/projects/atlas/_shared/AtlasEvidenceBoard.tsx +
    `AtlasEvidenceBoardDemo` (Root: `AtlasEvidenceBoardDemo`). Tableau d'enquete persistant data-driven `{nodes,links,notes}`,
    placement declaratif, fils animes colores (relation/flow), fiches surlignees, fonds retenus flat-parch (beige)+slate (navy),
    drift seul (PAS de camera-focus, distrait). Assets Gemini gravis : `public/atlas/_shared/evidence-board/`.
@@ -343,7 +343,7 @@ sur la map", relire `out/_r-and-d/decode-channels/README.md` (5 regles + frames)
 
 **ANCIEN chantier (toujours valide) :**
 1. **CONTINUER A TESTER LE SYSTEME** sur d'autres beats — empire qui s'etend pas encore teste.
-2. **OUTILLER le demarrage** : `scripts/atlas-beat-session.py` (miroir beat-session.py) + selfreview,
+2. **OUTILLER le demarrage** : scripts/atlas-beat-session.py (miroir beat-session.py) + selfreview,
    depuis `ATLAS-BEAT-DEMARRAGE.md`. Rend la discipline executable (le scan force, comme /beat Souverain).
 3. **EXTRAIRE en composants partages** (grep-usage AVANT) : SpotlightInsert (GHANA sel/or), AtlasPixelChar
    (→ _shared), inserts charts Mansa, composants Shaka. Backlog dans COMPOSANTS-INDEX.
@@ -408,7 +408,7 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 | **A5 Géographie (Mapbox)** | ❌ **STUB — À PRODUIRE** | `Beat4Geographie.tsx` = placeholder |
 | A6 Question (Remotion) | ✅ FINAL | `a6-question-FINAL.mp4` (PHOSPHATE—ET—ASSEMBLAGE → question) |
 
-**NEXT (2 tâches) — STARTER COMPLET : `memory/STARTER-PROMPT-maroc-a5-geographie.md`** (scan templates + enchaînement premium + 3 signalements déjà faits) :
+**NEXT (2 tâches) — STARTER COMPLET : `memory/archive/starters-perimes-2026-06-15/STARTER-PROMPT-maroc-a5-geographie.md`** (scan templates + enchaînement premium + 3 signalements déjà faits) :
 1. **A5 Géographie** (~37s, MAPBOX — beat le plus stratégique). Texte : « Pour le Maroc sortir du rôle de fournisseur... Pour l'Europe réduire la dépendance Chine... Le Maroc devient l'endroit où les deux fabriquent ensemble. Ce n'est pas de la diplomatie, c'est de la géographie industrielle. » → 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité 2h Espagne, Volkswagen) / **triangle Maroc—Europe—Chine** (flux convergents). Climax visuel = le triangle. Pipeline Mapbox (`mapbox-session.py`).
 2. **Assemblage final** : ffmpeg concat des 6 beats dans l'ordre (Beat0→A2→A3→A4→A5→A6) + 1 narration globale + mix. Voir `SOUVERAIN-REMOTION-SKELETON.md` (pattern audio) + `SFX-INDEX.md`.
 
@@ -436,7 +436,7 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
 **Decision en attente** : commencer par Mansa Moussa ou Senegal Petrole ?
 **Ma recommandation** : Senegal Petrole d'abord — la video vient d'etre publiee, la matiere est fraiche.
-**Demarrer** : lire `memory/STARTER-PROMPT-carrousels-hybrides.md`
+**Demarrer** : lire `memory/archive/starters-perimes-2026-06-15/STARTER-PROMPT-carrousels-hybrides.md`
 
 ### 4bis. Peste 1347 — MI-FORME HORIZONTAL (CONCEPT VALIDÉ 2026-06-07 — BACKLOG)
 **Statut** : concept validé, backlog — NE PAS commencer avant fin AES + Maroc Batteries.

@@ -15,7 +15,7 @@ Le projet heberge egalement des prototypes de videos educatives longues format.
 | **Thiaroye 1944** | Massacre des tirailleurs senegalais | Pivot paper-craft palette froide. Manifest JSON en place |
 | **Chaine News geopolitique** | Format news quotidien | Systeme valide, execution post-3 Shorts |
 
-Tous les Shorts utilisent le style **paper-craft sepia** (decors decoupes papier, personnages dot-eyes, palette chaude). Regles documentees dans `memory/style-papercraft-sepia.md`.
+Tous les Shorts utilisent le style **paper-craft sepia** (decors decoupes papier, personnages dot-eyes, palette chaude). Regles documentees dans memory/style-papercraft-sepia.md.
 
 ---
 
@@ -56,7 +56,7 @@ Regles du pipeline, non-negociables :
 - Mini-render validation AVANT de coder d'autres scenes
 - Scan TTS francais obligatoire avant ElevenLabs (participes "e/ee", liaisons "ont + voyelle", chiffres en lettres)
 
-Details complets : `memory/pipeline.md` et `.claude/agent-memory/shared/PIPELINE.md`.
+Details complets : `memory/tools/pipeline.md` et `.claude/agent-memory/shared/PIPELINE.md`.
 
 ---
 
@@ -83,7 +83,7 @@ Details complets : `memory/pipeline.md` et `.claude/agent-memory/shared/PIPELINE
 
 ### Rendu
 - Local : `npx remotion render`
-- Cloud : Vercel Sandbox via `scripts/render-on-vercel.py`, retourne MP4 public
+- Cloud : Vercel Sandbox via `scripts/tools/render-on-vercel.py`, retourne MP4 public
 - Upload : Vercel Blob pour review mobile-friendly
 
 ---
@@ -162,7 +162,7 @@ npx tsx scripts/generate-audio.ts
 npx remotion render SonjataPapercraft out/sonjata.mp4
 
 # Render cloud (Vercel)
-python scripts/render-on-vercel.py
+python scripts/tools/render-on-vercel.py
 ```
 
 ---
@@ -224,7 +224,7 @@ Sonjata Papercraft (cumule sur 10 scenes) : ~$52.50
 - ElevenLabs (narration + SFX) : inclus plan
 - Render cloud : negligeable
 
-Regles budget dans `memory/rules-pipeline.md`.
+Regles budget dans memory/rules-pipeline.md.
 
 ---
 

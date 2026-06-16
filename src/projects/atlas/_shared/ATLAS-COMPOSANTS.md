@@ -306,7 +306,7 @@ y += Math.abs(Math.sin(frame * 0.3)) * 4
 
 ## Pipeline PixelLab — Capacités MCP complètes (validé 2026-05-16)
 
-> Source de vérité complète : `memory/PIXELLAB-MASTER-INDEX.md`
+> Source de vérité complète : `memory/tools/PIXELLAB-MASTER-INDEX.md`
 
 ### States — capacité clé ⭐
 

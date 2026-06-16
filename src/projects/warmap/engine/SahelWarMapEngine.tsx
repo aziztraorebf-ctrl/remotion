@@ -141,10 +141,12 @@ const interpPath = (path: GeoPathPoint[], t: number): [number, number] => {
 };
 
 // Triggers RÉELS Acte 1 (forced-alignment) — partagés par toutes les couches finales.
+// RECALÉ SUR NARRATION V5 (2026-06-15) — voir CARTOGRAPHIE-TRIGGERS-ACTE1-V5.md.
+// V5 plus rapide que v1 ; EIGS au nommage f1461 (symétrie JNIM) ; END raccourci à f2096 (fin narrative).
 const A1 = {
-  MALI: 150, BURKINA: 231, NIGER: 301, CEDEAO: 382, LIPTAKO: 502,
-  FREEZE: 572, FREEZE_END: 632, DRIFT: 726,
-  JNIM: 1198, EIGS: 1749, FRICTION: 2167, END: 2299,
+  MALI: 145, BURKINA: 217, NIGER: 286, CEDEAO: 361, LIPTAKO: 477,
+  FREEZE: 539, FREEZE_END: 599, DRIFT: 684,
+  JNIM: 1132, EIGS: 1461, FRICTION: 1840, END: 2096,
 } as const;
 
 // ACTE 1 FINAL — PULSE RÉGION-PRÉCISE AU NOMMAGE.
@@ -186,34 +188,35 @@ type A1Vehicle = {
 };
 // Zone Liptako-Gourma (centre Mali / nord Burkina / ouest Niger), lon ~-1..2, lat ~13..16.
 const ACTE1_VEHICLES: A1Vehicle[] = [
+  // recalé V5
   // JNIM #1 : patrouille erratique centre Mali, converge vers point friction (lon -0.35)
   { id: "a1-jnim-1", sprite: "technical-jnim", faction: "jnim", size: 56,
     appear: A1.JNIM, disappear: A1.END,
     wp: [
-      { f: 1198, lon: -1.6, lat: 14.9 }, { f: 1400, lon: -1.1, lat: 15.2 },
-      { f: 1600, lon: -1.5, lat: 15.0 }, { f: 1800, lon: -0.9, lat: 15.1 },
-      { f: 2000, lon: -0.7, lat: 14.95 }, { f: 2100, lon: -0.5, lat: 15.0 },
-      { f: 2167, lon: -0.42, lat: 15.0 }, // arrive au contact (ouest du point friction)
-      { f: 2230, lon: -0.6, lat: 15.0 },  // RECULE (répulsion ease-out-back)
-      { f: 2299, lon: -0.65, lat: 14.95 },
+      { f: 1132, lon: -1.6, lat: 14.9 }, { f: 1253, lon: -1.1, lat: 15.2 },
+      { f: 1372, lon: -1.5, lat: 15.0 }, { f: 1507, lon: -0.9, lat: 15.1 },
+      { f: 1689, lon: -0.7, lat: 14.95 }, { f: 1779, lon: -0.5, lat: 15.0 },
+      { f: 1840, lon: -0.42, lat: 15.0 }, // arrive au contact (ouest du point friction)
+      { f: 1962, lon: -0.6, lat: 15.0 },  // RECULE (répulsion ease-out-back)
+      { f: 2096, lon: -0.65, lat: 14.95 },
     ] },
   // JNIM #2 : seconde patrouille, plus au nord, reste en retrait
   { id: "a1-jnim-2", sprite: "technical-jnim", faction: "jnim", size: 54,
     appear: A1.JNIM + 60, disappear: A1.END,
     wp: [
-      { f: 1258, lon: -0.9, lat: 15.3 }, { f: 1500, lon: -0.5, lat: 15.45 },
-      { f: 1750, lon: -0.8, lat: 15.5 }, { f: 2000, lon: -0.6, lat: 15.3 },
-      { f: 2167, lon: -0.5, lat: 15.25 }, { f: 2299, lon: -0.55, lat: 15.3 },
+      { f: 1168, lon: -0.9, lat: 15.3 }, { f: 1312, lon: -0.5, lat: 15.45 },
+      { f: 1462, lon: -0.8, lat: 15.5 }, { f: 1689, lon: -0.6, lat: 15.3 },
+      { f: 1840, lon: -0.5, lat: 15.25 }, { f: 2096, lon: -0.55, lat: 15.3 },
     ] },
   // EIGS : avance LINÉAIRE depuis l'est (Niger) vers le point friction (lon -0.28)
   { id: "a1-eigs-1", sprite: "technical-eigs", faction: "eigs", size: 46,
     appear: A1.EIGS, disappear: A1.END,
     wp: [
-      { f: 1749, lon: 1.5, lat: 15.0 }, { f: 1950, lon: 0.7, lat: 15.0 },
-      { f: 2100, lon: 0.0, lat: 15.0 },
-      { f: 2167, lon: -0.14, lat: 15.0 }, // arrive au contact (est du point friction)
-      { f: 2230, lon: 0.05, lat: 15.0 },  // RECULE (répulsion)
-      { f: 2299, lon: 0.1, lat: 15.0 },
+      { f: 1461, lon: 1.5, lat: 15.0 }, { f: 1643, lon: 0.7, lat: 15.0 },
+      { f: 1779, lon: 0.0, lat: 15.0 },
+      { f: 1840, lon: -0.14, lat: 15.0 }, // arrive au contact (est du point friction)
+      { f: 1962, lon: 0.05, lat: 15.0 },  // RECULE (répulsion)
+      { f: 2096, lon: 0.1, lat: 15.0 },
     ] },
 ];
 // ============================================================
@@ -232,29 +235,30 @@ type Fighter = {
 // l'agglutination. JNIM couvre un large arc rural ouest (Mopti->Centre-Nord BFA).
 // EIGS occupe l'est (Ménaka/Tillabéri/Liptako est). Le front est à ~lon -0.2..0.2.
 const FIGHTERS: Fighter[] = [
+  // recalé V5
   // --- JNIM : 4 jetons DISPERSÉS sur le centre Mali + nord Burkina (rural diffus) ---
-  { id: "j1", faction: "jnim", appear: 1000, wp: [ // ouest profond (Mopti/Ségou nord) — bien à l'ouest
-    { f: 1000, lon: -2.9, lat: 14.85 }, { f: 1198, lon: -3.0, lat: 14.9 },
-    { f: 2167, lon: -2.9, lat: 14.9 }, { f: 2299, lon: -3.0, lat: 14.85 } ] },
-  { id: "j2", faction: "jnim", appear: 1030, wp: [ // centre-nord (avance vers le front à f2167)
-    { f: 1030, lon: -1.7, lat: 15.6 }, { f: 1198, lon: -1.8, lat: 15.65 },
-    { f: 2050, lon: -1.1, lat: 15.35 }, { f: 2167, lon: -0.5, lat: 15.15 }, { f: 2230, lon: -1.0, lat: 15.3 } ] },
-  { id: "j3", faction: "jnim", appear: 1060, wp: [ // sud Burkina (Sahel/Djibo) — bien décollé vers le sud
-    { f: 1060, lon: -1.5, lat: 14.0 }, { f: 1198, lon: -1.6, lat: 13.95 },
-    { f: 2167, lon: -1.4, lat: 14.05 }, { f: 2299, lon: -1.6, lat: 14.0 } ] },
-  { id: "j4", faction: "jnim", appear: 1090, wp: [ // centre-est EN RETRAIT (échelon arrière, ne colle pas le front)
-    { f: 1090, lon: -0.7, lat: 14.6 }, { f: 1198, lon: -0.75, lat: 14.55 },
-    { f: 2050, lon: -0.95, lat: 14.6 }, { f: 2167, lon: -0.9, lat: 14.55 }, { f: 2230, lon: -1.1, lat: 14.55 } ] },
+  { id: "j1", faction: "jnim", appear: 945, wp: [ // ouest profond (Mopti/Ségou nord) — bien à l'ouest
+    { f: 945, lon: -2.9, lat: 14.85 }, { f: 1132, lon: -3.0, lat: 14.9 },
+    { f: 1840, lon: -2.9, lat: 14.9 }, { f: 2096, lon: -3.0, lat: 14.85 } ] },
+  { id: "j2", faction: "jnim", appear: 973, wp: [ // centre-nord (avance vers le front à f1840)
+    { f: 973, lon: -1.7, lat: 15.6 }, { f: 1132, lon: -1.8, lat: 15.65 },
+    { f: 1734, lon: -1.1, lat: 15.35 }, { f: 1840, lon: -0.5, lat: 15.15 }, { f: 1962, lon: -1.0, lat: 15.3 } ] },
+  { id: "j3", faction: "jnim", appear: 1002, wp: [ // sud Burkina (Sahel/Djibo) — bien décollé vers le sud
+    { f: 1002, lon: -1.5, lat: 14.0 }, { f: 1132, lon: -1.6, lat: 13.95 },
+    { f: 1840, lon: -1.4, lat: 14.05 }, { f: 2096, lon: -1.6, lat: 14.0 } ] },
+  { id: "j4", faction: "jnim", appear: 1030, wp: [ // centre-est EN RETRAIT (échelon arrière, ne colle pas le front)
+    { f: 1030, lon: -0.7, lat: 14.6 }, { f: 1132, lon: -0.75, lat: 14.55 },
+    { f: 1734, lon: -0.95, lat: 14.6 }, { f: 1840, lon: -0.9, lat: 14.55 }, { f: 1962, lon: -1.1, lat: 14.55 } ] },
   // --- EIGS : 3 jetons DISPERSÉS sur l'est (triangle large : Ménaka/Tillabéri/Liptako-est) ---
-  { id: "e1", faction: "eigs", appear: 1560, wp: [ // pointe ouest EIGS (avance au front, garde l'écart)
-    { f: 1560, lon: 1.1, lat: 15.0 }, { f: 1749, lon: 0.9, lat: 15.05 },
-    { f: 2050, lon: 0.55, lat: 15.0 }, { f: 2167, lon: 0.3, lat: 15.0 }, { f: 2230, lon: 0.7, lat: 15.0 } ] },
-  { id: "e2", faction: "eigs", appear: 1585, wp: [ // sud-est (Tillabéri Niger)
-    { f: 1585, lon: 1.7, lat: 14.6 }, { f: 1749, lon: 1.8, lat: 14.55 },
-    { f: 2167, lon: 1.6, lat: 14.6 }, { f: 2299, lon: 1.8, lat: 14.55 } ] },
-  { id: "e3", faction: "eigs", appear: 1610, wp: [ // nord-est (Ménaka)
-    { f: 1610, lon: 1.5, lat: 15.5 }, { f: 1749, lon: 1.6, lat: 15.6 },
-    { f: 2167, lon: 1.4, lat: 15.5 }, { f: 2299, lon: 1.6, lat: 15.55 } ] },
+  { id: "e1", faction: "eigs", appear: 1348, wp: [ // pointe ouest EIGS (avance au front, garde l'écart)
+    { f: 1348, lon: 1.1, lat: 15.0 }, { f: 1461, lon: 0.9, lat: 15.05 },
+    { f: 1734, lon: 0.55, lat: 15.0 }, { f: 1840, lon: 0.3, lat: 15.0 }, { f: 1962, lon: 0.7, lat: 15.0 } ] },
+  { id: "e2", faction: "eigs", appear: 1363, wp: [ // sud-est (Tillabéri Niger)
+    { f: 1363, lon: 1.7, lat: 14.6 }, { f: 1461, lon: 1.8, lat: 14.55 },
+    { f: 1840, lon: 1.6, lat: 14.6 }, { f: 2096, lon: 1.8, lat: 14.55 } ] },
+  { id: "e3", faction: "eigs", appear: 1378, wp: [ // nord-est (Ménaka)
+    { f: 1378, lon: 1.5, lat: 15.5 }, { f: 1461, lon: 1.6, lat: 15.6 },
+    { f: 1840, lon: 1.4, lat: 15.5 }, { f: 2096, lon: 1.6, lat: 15.55 } ] },
 ];
 
 const interpFighter = (wp: Fighter["wp"], frame: number): [number, number] => {
@@ -327,9 +331,9 @@ const T_END = 13150;                          // ~438s — proche de la derniere
 // ============================================================
 // TRIGGERS AUDIO (depuis TIMING-V1-2026-06-07.md)
 // ============================================================
-const F_JNIM_ZONE     = 1198;  // "JNIM." — zone rouge apparait
-const F_BURKINA       = 1471;  // "Faso" — Burkina s'allume
-const F_NIGER         = 2009;  // "Niger." — Niger s'allume
+const F_JNIM_ZONE     = 1132;  // V5: "JNIM." f1132 (était 1198 v1) — zone rouge apparait
+const F_BURKINA       = 1375;  // V5: "Faso." f1375 (était 1471 v1) — Burkina s'allume
+const F_NIGER         = 1690;  // V5: "Niger." f1690 (était 2009 v1) — Niger s'allume
 const F_AES_NEE       = 7014;  // "née." — AES born overlay
 const F_KIDAL_ALONE   = 7279;  // "Kidal." — Kidal s'allume
 const F_KIDAL_FLAG    = 8683;  // "flotte" — drapeau malien sur Kidal
@@ -386,13 +390,15 @@ const NORD_MALI_COORD = [1.44, 18.43] as [number, number]; // Kidal = porte d'en
 // SCRIPT: "quelque chose de nouveau" → vecteurs capitales → Liptako or
 // SCRIPT: "Comment est-ce possible" → FIGÉE 2s
 // ============================================================
-const F_HOOK_MALI     = 150;   // "expulsé" → Mali s'allume blanc
-const F_HOOK_BURKINA  = 231;   // "Rompu" → Burkina s'allume blanc
-const F_HOOK_NIGER    = 301;   // "Quitté" → Niger s'allume blanc
-const F_HOOK_CEDEAO   = 382;   // "continent." → anneau CEDEAO clignote orange → s'éteint
-const F_HOOK_LIPTAKO  = 502;   // "nouveau." → vecteurs capitales + Liptako pulse or
-const F_HOOK_FREEZE   = 572;   // "possible" → FIGÉE 2s (60 frames)
-const F_HOOK_DRIFT    = 726;   // "répondre" → drift reprend
+// RECALÉS V5 (2026-06-15) — mêmes valeurs que A1.* (paire redondante). V5 reformulée :
+// "chassent"/"Rompent"/"quittent"/"continent"/"nouveau"/"possible"/"répondre".
+const F_HOOK_MALI     = 145;   // V5 "chassent" (était 150) → Mali s'allume blanc
+const F_HOOK_BURKINA  = 217;   // V5 "Rompent" (était 231) → Burkina s'allume blanc
+const F_HOOK_NIGER    = 286;   // V5 "quittent" (était 301) → Niger s'allume blanc
+const F_HOOK_CEDEAO   = 361;   // V5 "continent." (était 382) → anneau CEDEAO clignote orange → s'éteint
+const F_HOOK_LIPTAKO  = 477;   // V5 "nouveau." (était 502) → vecteurs capitales + Liptako pulse or
+const F_HOOK_FREEZE   = 539;   // V5 "possible" (était 572) → FIGÉE 2s (60 frames)
+const F_HOOK_DRIFT    = 684;   // V5 "répondre" (était 726) → drift reprend
 
 // CONTOURS NATIONAUX COLORÉS (Aziz 2026-06-13) — pulses aux moments clés de chaque pays,
 // frames extraites de narration-v5-alignment.json (mentions Mali/Burkina/Niger + Kidal=Mali).
@@ -521,25 +527,26 @@ const SAHEL_CAM_KEYS: CamKey[] = [
 // Drift CONTINU léger partout (jamais immobile sauf freeze f572-632), + recentrages
 // marqués sur les événements (la cam "va voir" l'action). Micro-keyframes intermédiaires
 // pour que la 2e moitié ne soit jamais statique (retour Aziz : trop figée après ~22s).
+// RECALÉ V5 (2026-06-15) : les `f:` suivent les triggers A1 recalés (JNIM 1132, EIGS 1461, FRICTION 1840, END 2096).
 const ACTE1_CAM_KEYS: CamKey[] = [
   { f: 0,    lon: -1.2, lat: 15.2, zoom: 4.62 }, // installation : vue large, drift lent
-  { f: 150,  lon: -2.0, lat: 14.6, zoom: 4.78 }, // "expulsé" Mali : recentre ouest + zoom léger
-  { f: 231,  lon: -0.8, lat: 14.8, zoom: 4.74 }, // "Rompu" Burkina : pan est
-  { f: 301,  lon:  0.6, lat: 15.2, zoom: 4.70 }, // "Quitté" Niger : pan est encore
-  { f: 382,  lon: -0.4, lat: 15.0, zoom: 4.55 }, // "continent" CEDEAO : zoom-OUT (voir les 3)
-  { f: 502,  lon: -0.4, lat: 14.7, zoom: 4.74 }, // "nouveau" Liptako : recentre + zoom léger
-  { f: 572,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // "possible" : arrivée freeze
-  { f: 632,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // FREEZE identique (figé 2s)
-  { f: 726,  lon: -0.6, lat: 14.9, zoom: 4.70 }, // "répondre" : drift reprend, reset doux
-  // --- 2e moitié : ZOOM TACTIQUE (review zone2) — on DESCEND sur le terrain ---
-  { f: 960,  lon: -0.85, lat: 15.05, zoom: 4.95 }, // transition : push-in commence
-  { f: 1198, lon: -0.95, lat: 15.1,  zoom: 5.30 }, // "JNIM" : push-in MALI central (zoom tactique)
-  { f: 1450, lon: -0.75, lat: 15.15, zoom: 5.32 }, // drift pendant patrouille JNIM (serré)
-  { f: 1620, lon: -0.2,  lat: 15.1,  zoom: 5.20 }, // pan vers l'est (transition continue O->E)
-  { f: 1749, lon:  0.45, lat: 15.05, zoom: 5.28 }, // "EIGS" : trois-frontières est (zoom tactique)
-  { f: 1980, lon:  0.15, lat: 15.05, zoom: 5.25 }, // drift pendant avancée EIGS
-  { f: 2167, lon: -0.15, lat: 15.05, zoom: 5.18 }, // "combattent" : recule un peu pour voir les 2
-  { f: 2299, lon: -0.15, lat: 15.05, zoom: 5.18 }, // "séparément" : freeze final
+  { f: 145,  lon: -2.0, lat: 14.6, zoom: 4.78 }, // "chassent" Mali : recentre ouest + zoom léger
+  { f: 217,  lon: -0.8, lat: 14.8, zoom: 4.74 }, // "Rompent" Burkina : pan est
+  { f: 286,  lon:  0.6, lat: 15.2, zoom: 4.70 }, // "quittent" Niger : pan est encore
+  { f: 361,  lon: -0.4, lat: 15.0, zoom: 4.55 }, // "continent" CEDEAO : zoom-OUT (voir les 3)
+  { f: 477,  lon: -0.4, lat: 14.7, zoom: 4.74 }, // "nouveau" Liptako : recentre + zoom léger
+  { f: 539,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // "possible" : arrivée freeze
+  { f: 599,  lon: -0.4, lat: 14.6, zoom: 4.78 }, // FREEZE identique (figé 2s)
+  { f: 684,  lon: -0.6, lat: 14.9, zoom: 4.70 }, // "répondre" : drift reprend, reset doux
+  // --- 2e moitié : ZOOM TACTIQUE — on DESCEND sur le terrain ---
+  { f: 900,  lon: -0.85, lat: 15.05, zoom: 4.95 }, // transition : push-in commence
+  { f: 1132, lon: -0.95, lat: 15.1,  zoom: 5.30 }, // "JNIM" : push-in MALI central (zoom tactique)
+  { f: 1320, lon: -0.75, lat: 15.15, zoom: 5.32 }, // drift pendant patrouille JNIM (serré)
+  { f: 1420, lon: -0.2,  lat: 15.1,  zoom: 5.20 }, // pan vers l'est (transition continue O->E)
+  { f: 1461, lon:  0.45, lat: 15.05, zoom: 5.28 }, // "EIGS" : trois-frontières est (zoom tactique)
+  { f: 1700, lon:  0.15, lat: 15.05, zoom: 5.25 }, // drift pendant avancée EIGS
+  { f: 1840, lon: -0.15, lat: 15.05, zoom: 5.18 }, // "combattent" : recule un peu pour voir les 2
+  { f: 2096, lon: -0.15, lat: 15.05, zoom: 5.18 }, // fin Acte 1 : freeze final
 ];
 
 const getActe1Cam = (frame: number): { lon: number; lat: number; zoom: number } => {
@@ -2201,12 +2208,13 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // TACHES D'INFLUENCE : grandissent AVEC l'arrivée des jetons (le territoire se prend
   // au fur et à mesure que les combattants se déploient), se touchent à f2167 puis se
   // REPOUSSENT. JNIM dès f1000 (arrivée jetons), EIGS dès f1560.
+  // RECALÉ V5 : milieux (taille pleine) STRICTEMENT avant A1.FRICTION (1840) pour éviter doublon de borne.
   const jnimZoneGrow = interpolate(frame,
-    [1000, 1000 + 320, A1.FRICTION, A1.FRICTION + 40],
+    [945, 1500, A1.FRICTION, A1.FRICTION + 40],
     [0, 1, 1, 0.85],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
   const eigsZoneGrow = interpolate(frame,
-    [1560, 1560 + 280, A1.FRICTION, A1.FRICTION + 40],
+    [1348, 1700, A1.FRICTION, A1.FRICTION + 40],
     [0, 1, 1, 0.85],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
 
@@ -3893,7 +3901,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         // RESPIRATION FINALE : sur les ~2.5 dernières secondes (f2220→END),
         // léger assombrissement progressif = suspension avant l'Acte 2.
         // En acte2, PAS d'assombrissement à f2299 (le récit continue sans coupure).
-        const finalDarken = acte2 ? 0 : interpolate(frame, [2220, A1.END], [0, 0.22], {
+        // RECALÉ V5 : darken final sur les ~50 dernières frames avant END (2096), pas 2220 (> END = bornes inversées).
+        const finalDarken = acte2 ? 0 : interpolate(frame, [A1.END - 50, A1.END], [0, 0.22], {
           extrapolateLeft: "clamp", extrapolateRight: "clamp",
         });
         return (

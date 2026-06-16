@@ -46,7 +46,7 @@ type: project
 - **Mix recommande** : voix 100% + musique -18dB (level documentaire)
 - **Styles testes 2026-03-14** : C (kora), D (dark ambient), E (tribal), F (orchestral), G (tribal+chant), H (tribal sans chant), I-raw/rich (ethnic), J (ethnic+tags NeoSounds)
 - **Meilleur style valide** : J — description instrumentale (djembe, dundun, shekere, kora) + tags mood (African, tribal, festive, optimistic)
-- **Script** : `scripts/generate-music-test.py`
+- **Script** : scripts/generate-music-test.py
 
 ### Workflow audio-analyse → prompt (PIPELINE VALIDE)
 1. Trouver preview NeoSounds/TunePocket qui plait
@@ -67,10 +67,10 @@ type: project
 
 ## Scripts
 
-- `scripts/save-voices-v3.py` : regenere + sauvegarde les deux voix (a relancer si les IDs expirent)
-- `scripts/voice-design-narratrice-v3.py` : genere de nouveaux candidats si besoin
-- `scripts/voice-design-african.py` : voix masculines africaines (round 2, v3)
-- `scripts/generate-music-test.py` : genere musique de fond styles C + D (30s, loopable)
+- scripts/save-voices-v3.py : regenere + sauvegarde les deux voix (a relancer si les IDs expirent)
+- scripts/voice-design-narratrice-v3.py : genere de nouveaux candidats si besoin
+- scripts/voice-design-african.py : voix masculines africaines (round 2, v3)
+- scripts/generate-music-test.py : genere musique de fond styles C + D (30s, loopable)
 
 ---
 

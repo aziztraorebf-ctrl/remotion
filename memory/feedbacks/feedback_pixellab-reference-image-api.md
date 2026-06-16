@@ -26,7 +26,7 @@ Le **MCP `create_character` n'expose PAS** la creation depuis reference (texte s
 → On sait a chaque fois quel perso on obtient. Parfait pour lancer une troupe coherente en lot.
 
 Cle API PixelLab : dans .env (MCP l'utilise deja). Pour REST : header `Authorization: Bearer <PIXELLAB_API_KEY>`.
-A CODER : script `scripts/tools/gemini-to-pixellab.py` (sheet Gemini → /rotate → /animate). Pas encore fait.
+A CODER : script scripts/tools/gemini-to-pixellab.py (sheet Gemini → /rotate → /animate). Pas encore fait.
 
 ## OBJETS : pont reference DEJA dispo via MCP (bonus)
 

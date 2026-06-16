@@ -124,7 +124,7 @@ const SCENES_START_FRAME = HOOK_FRAMES;
 
 **Option B (validee 2026-04-22)** : musique COMMENCE a scene 1, PAS a frame 0. Contraste silence -> kora = effet "ouverture cinema".
 
-Reference implementation : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
+Reference implementation : src/projects/geoafrique-shorts/SonjataShortFull.tsx
 
 ---
 

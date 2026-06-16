@@ -3,7 +3,7 @@
 
 ## Palette
 - Carte : mer `#1C3D5A` (bleu acier) + terres `#D4C8B0` (beige pierre) — distinct Ghana/Mansa Moussa
-- Narratif : `HANNIBAL_PALETTE` dans `src/projects/atlas/hannibal/components/HannibalPalette.ts`
+- Narratif : `HANNIBAL_PALETTE` dans src/projects/atlas/hannibal/components/HannibalPalette.ts
 - Fond global : `NOIR_GUERRE #0F1A1F`
 - Route Hannibal : ambre `#D4A843`
 - Carthage : rouge punique `#8B3A2A`
@@ -31,9 +31,9 @@
 ## Hook
 - **Version A validée** (fond noir textuel) — plus épique que carte en fond
 - Texte : ligne 1 IVOIRE, ligne 2 ROUGE_MORT, ligne 3 METAL_FROID, Cinzel 84px
-- Fichier : `src/projects/atlas/hannibal/scenes/HookScene.tsx` — composant `HookVersionA`
+- Fichier : src/projects/atlas/hannibal/scenes/HookScene.tsx — composant `HookVersionA`
 
 ## Structure production
 - Branche : `feat/atlas-hannibal-alpes` (à créer depuis `lab/hannibal-rpg-patterns`)
-- Timing : `src/projects/atlas/hannibal/timing.ts`
+- Timing : src/projects/atlas/hannibal/timing.ts
 - Audio narration : `public/hannibal/audio/narration-v2.mp3` (147.77s)

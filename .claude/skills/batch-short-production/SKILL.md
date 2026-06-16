@@ -260,7 +260,7 @@ This is the step that makes the difference between 3/10 and 9.5/10 videos.
 
 Generate a style reference image for each clip via Gemini 3.1 Flash.
 
-**Script**: `scripts/generate-thiaroye-styleref.py` (adapt PROMPT per clip)
+**Script**: scripts/generate-thiaroye-styleref.py (adapt PROMPT per clip)
 **Input**: `frame-03.jpg` (style anchor) + scene description
 **Output**: 1 image 9:16 per clip in `tmp/[project]-styleref/`
 

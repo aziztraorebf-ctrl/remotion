@@ -98,7 +98,7 @@ metadata:
 
 - [ ] Downscale frames (`./scripts/downscale-for-review.sh`)
 - [ ] Claude review AVANT Kimi
-- [ ] Kimi review (`scripts/review_with_kimi.py`)
+- [ ] Kimi review (scripts/review_with_kimi.py)
 - [ ] Verdict APPROVE / MINOR FIX / RE-EVALUATE
 
 ---

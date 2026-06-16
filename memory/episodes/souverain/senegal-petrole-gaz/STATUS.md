@@ -59,7 +59,7 @@ Lire : memory/STARTER-PROMPT-senegal-assemblage-final.md
 - **Beat** : Beat0Accroche.tsx
 - **Problème** : présentés comme simultanés alors qu'ils sont séparés d'un mois
 - **Action requise** : Beat0 est à refaire de toute façon (refonte visuelle prévue) — intégrer la correction dans la nouvelle version
-- **Fichier** : `src/projects/souverain/senegal-petrole-gaz/Beat0Accroche.tsx`
+- **Fichier** : `src/projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche.tsx`
 
 ### FC-1 — "8 millions $/jour" (Acte 1, ~0:25) — PRIORITÉ BASSE
 - Label overlay discret : `"(estimation au cours marché — Woodside : 100 000 b/j)"`
@@ -85,7 +85,7 @@ Lire : memory/STARTER-PROMPT-senegal-assemblage-final.md
 
 | Technique | Source | Application Sénégal |
 |---|---|---|
-| **Audio music loop tardif** | `memory/feedback_audio-music-loop-startfrom-tardif.md` | Vérifier que la musique ne coupe pas en fin d'Acte 3/4 à l'assemblage |
-| **D3.js StackedBars** | `memory/feedback_d3-pattern-utility-only.md` | Si on veut améliorer Beat11 (calebasse → bar chart D3 pour le 132%) |
-| **Render cloud Vercel** | `scripts/render-on-vercel.py` | L'assemblage final (~7min34s) = render long → utiliser Vercel par défaut |
+| **Audio music loop tardif** | memory/feedback_audio-music-loop-startfrom-tardif.md | Vérifier que la musique ne coupe pas en fin d'Acte 3/4 à l'assemblage |
+| **D3.js StackedBars** | `memory/feedbacks/feedback_d3-pattern-utility-only.md` | Si on veut améliorer Beat11 (calebasse → bar chart D3 pour le 132%) |
+| **Render cloud Vercel** | `scripts/tools/render-on-vercel.py` | L'assemblage final (~7min34s) = render long → utiliser Vercel par défaut |
 | **Downscale avant review** | `scripts/downscale-for-review.sh` | Review de l'assemblage complet — 453s = beaucoup de frames |

@@ -213,11 +213,11 @@ Rappel CLAUDE.md (déjà documenté ailleurs, repris ici pour exhaustivité Souv
 
 | Si Aziz parle de... | Lire en complément... |
 |----|----|
-| Beat Mapbox Souverain | `memory/feedback_mapbox-souverain-blueprint.md` |
-| Render Mapbox | `memory/feedback_mapbox-render-pattern-canonique.md` (utiliser `scripts/render-mapbox.sh`) |
-| Tailwind Souverain | `memory/feedback_tailwind-remotion-setup.md` |
-| Gemini storyboard / breakdown | `memory/workflow-gemini-breakdown-schema.md` |
-| Audit templates 16:9 | `memory/audit-templates-16-9.md` (benchmark Caspian/JH/Vox/PolyMatter) |
+| Beat Mapbox Souverain | memory/feedback_mapbox-souverain-blueprint.md |
+| Render Mapbox | memory/feedback_mapbox-render-pattern-canonique.md (utiliser `scripts/render-mapbox.sh`) |
+| Tailwind Souverain | `memory/feedbacks/feedback_tailwind-remotion-setup.md` |
+| Gemini storyboard / breakdown | `memory/tools/workflow-gemini-breakdown-schema.md` |
+| Audit templates 16:9 | memory/audit-templates-16-9.md (benchmark Caspian/JH/Vox/PolyMatter) |
 | Pipeline beat 6 phases | `memory/rules-beat-production.md` |
 | TTS français ElevenLabs | `memory/tools/elevenlabs.md` + section CLAUDE.md |
 

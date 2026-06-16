@@ -92,7 +92,7 @@ Cocher les principes (§1 PLAYBOOK) + lisibilité :
 
 ## À OUTILLER PLUS TARD (backlog)
 
-Transformer cette checklist en `scripts/atlas-beat-session.py` (miroir `beat-session.py`) :
+Transformer cette checklist en scripts/atlas-beat-session.py (miroir `beat-session.py`) :
 phases scan / storyboard / code / self-review / review, avec gates bloquants et scoring.
 Plus un `atlas-selfreview.py` (assertions automatiques : SFX dans Sequence, sprites pixelated,
 ancrage-pied, timing forced-alignment, lisibilité d'échelle).

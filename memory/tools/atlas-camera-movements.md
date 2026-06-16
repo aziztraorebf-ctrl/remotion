@@ -172,7 +172,7 @@ Une scène carte validée n'est PAS finale. Pendant le polish final (après tous
 
 ## Référence code
 
-- Camera-track CSS : `src/projects/atlas/empire-ghana/scenes/Beat3Barter.tsx` (`computeCameraState` + `svgToCompWithCam`)
-- Camera-track SVG : `src/projects/atlas/mansa-moussa/scenes/AtlasV2S3Scene.tsx` (legacy mais référence)
-- Spotlight insert : `src/projects/atlas/empire-ghana/scenes/Beat1Setup.tsx`
-- Pulse/breathing : `src/projects/atlas/empire-ghana/scenes/Beat1Setup.tsx` (Koumbi POI)
+- Camera-track CSS : src/projects/atlas/empire-ghana/scenes/Beat3Barter.tsx (`computeCameraState` + `svgToCompWithCam`)
+- Camera-track SVG : `src/projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasV2S3Scene.tsx` (legacy mais référence)
+- Spotlight insert : src/projects/atlas/empire-ghana/scenes/Beat1Setup.tsx
+- Pulse/breathing : src/projects/atlas/empire-ghana/scenes/Beat1Setup.tsx (Koumbi POI)

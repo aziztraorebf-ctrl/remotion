@@ -88,4 +88,4 @@ return (
 
 ## Référence DOCTRINE
 
-`memory/DOCTRINE-SOUVERAIN.md` section 9 "Stack — Outils évalués" (entrée D3.js VALIDÉ 2026-05-23).
+`memory/doctrines/DOCTRINE-SOUVERAIN.md` section 9 "Stack — Outils évalués" (entrée D3.js VALIDÉ 2026-05-23).

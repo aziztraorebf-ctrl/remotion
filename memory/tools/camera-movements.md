@@ -279,7 +279,7 @@ Nos instincts cinematographiques etaient bons mais on n'avait pas le **vocabulai
 - Transcript complet : `/tmp/camera-video/transcript-clean.txt` (localement)
 - Notion library de Yannis (paid) : https://yannisashay.gumroad.com/l/cqxop
 - Application Sonjata validee : `memory/tools/minimax.md` (Option B musique + hook pattern)
-- Application Thiaroye a venir : manifest `src/projects/geoafrique-shorts/manifests/thiaroye-manifest.json`
+- Application Thiaroye a venir : manifest src/projects/geoafrique-shorts/manifests/thiaroye-manifest.json
 
 ---
 

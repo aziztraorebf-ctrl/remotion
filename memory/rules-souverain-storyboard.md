@@ -109,8 +109,8 @@ Deux fichiers de référence permanents dans `public/_shared/refs-i2i/` :
 ### Étape 3 — Passe i2i (V2 enrichie)
 - Modèle : `gemini-3.1-flash-image-preview` en mode i2i (3 images en input)
 - Input : [ref canonique par registre] + [PNG V1] + instruction d'enrichissement
-- Ref Mapbox → `public/_shared/refs-i2i/souverain-ref-mapbox.png`
-- Ref Graphisme → `public/_shared/refs-i2i/souverain-ref-graphisme.png`
+- Ref Mapbox → public/_shared/refs-i2i/souverain-ref-mapbox.png
+- Ref Graphisme → public/_shared/refs-i2i/souverain-ref-graphisme.png
 - Instruction : "garde la composition exacte, enrichis la qualité visuelle"
 - Une seule ref par beat — jamais les deux simultanément
 
@@ -124,7 +124,7 @@ Deux fichiers de référence permanents dans `public/_shared/refs-i2i/` :
 - Input : PNG V2 validé + voix-off exacte + timings frame-précis + prompt breakdown schema
 - Output : JSON technique (coords, spring(), mots-pivots, permanent_motion, warnings)
 - 3.1 Pro identifie aussi ce qui dépasse nos contraintes et propose des workarounds
-- Script de référence : `memory/workflow-gemini-breakdown-schema.md`
+- Script de référence : `memory/tools/workflow-gemini-breakdown-schema.md`
 
 ### Étape 6 — Claude code depuis le JSON
 - Source de vérité : le JSON de 3.1 Pro

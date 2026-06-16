@@ -43,7 +43,7 @@ type: project
 - Cadre téléphone vertical stylisé dans fond noir éditorial
 
 ### Règles éthiques visuelles
-- **Aucune couleur ne code un jugement moral subliminal.** Voir règle complète + nuances dans `memory/feedback_souverain-couleurs-narratives.md`. Les couleurs sont autorisées et utiles — c'est le **jugement moral codé** qui est interdit. Pour cet épisode : pas de rouge sur SA pour signifier "agresseur". Mais une couleur narrativement justifiée (drapeau, identité historique) reste OK. Test "couper l'audio" obligatoire avant render final.
+- **Aucune couleur ne code un jugement moral subliminal.** Voir règle complète + nuances dans memory/feedback_souverain-couleurs-narratives.md. Les couleurs sont autorisées et utiles — c'est le **jugement moral codé** qui est interdit. Pour cet épisode : pas de rouge sur SA pour signifier "agresseur". Mais une couleur narrativement justifiée (drapeau, identité historique) reste OK. Test "couper l'audio" obligatoire avant render final.
 - **Pas d'images de violence**, cadavres, pillages
 - **Pas de jugement moral surplombant** ("honte", "barbarie", "Mandela se retourne dans sa tombe")
 - **Pas de comparaison directe avec apartheid** (apartheid = racial-d'État ; xénophobie = intra-africaine populaire — confondre = mauvais journalisme)

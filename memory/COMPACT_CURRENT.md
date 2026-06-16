@@ -55,7 +55,7 @@ toutes vidéos. Socle = `KineticMaskSlam` + `ComboMaskSweep`. ⛔ Prototype hook
 - Karaoké : MAROC_WORDS filtré (tous les mots), JAMAIS WORD_ANCHORS seuls
 - SFX volumes : cinématique 0.50-0.55, UI 0.40-0.45, musique 0.12
 
-**Découverte majeure :** voir `memory/feedback_flagfill-templates-decouverte.md` — la carte Mapbox DOIT être colorée dès le départ (fill-pattern/fill-color). Règle N°1.
+**Découverte majeure :** voir `memory/feedbacks/feedback_flagfill-templates-decouverte.md` — la carte Mapbox DOIT être colorée dès le départ (fill-pattern/fill-color). Règle N°1.
 
 ---
 
@@ -85,7 +85,7 @@ toutes vidéos. Socle = `KineticMaskSlam` + `ComboMaskSweep`. ⛔ Prototype hook
 - `scripts/generate-carousels.py` — générateur PNG Remotion (abandonné, remplacé par Gemini)
 - `src/projects/_shared/components/layouts/CarouselSouverain.tsx` — template Remotion carousel (abandonné)
 - `src/projects/souverain/carousels/carousel-data.ts` — données 9 carousels
-- `memory/STARTER-PROMPT-carousels-suite.md` — starter prompt prochaine session
+- `memory/archive/starters-perimes-2026-06-15/STARTER-PROMPT-carousels-suite.md` — starter prompt prochaine session
 
 ---
 

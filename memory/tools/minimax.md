@@ -230,7 +230,7 @@ python3 scripts/tools/upload-to-blob.py --gallery "Title" \
 - **Fade-out** : 2s avant fin composition
 - Utiliser `<Audio volume={frame => ...}>` avec `interpolate` clamped
 
-Voir `src/projects/geoafrique-shorts/SonjataShortFull.tsx` pour l'implementation reference.
+Voir src/projects/geoafrique-shorts/SonjataShortFull.tsx pour l'implementation reference.
 
 ---
 
@@ -238,7 +238,7 @@ Voir `src/projects/geoafrique-shorts/SonjataShortFull.tsx` pour l'implementation
 
 - Doc Context7 fal.ai : `/websites/fal_ai_models` query "minimax-music v2.6"
 - Clip reference validation : `sonjata-papercraft/audio/music/v2-A-griot-intime.mp3`
-- Integration Remotion : `src/projects/geoafrique-shorts/SonjataShortFull.tsx`
+- Integration Remotion : src/projects/geoafrique-shorts/SonjataShortFull.tsx
 - Script test solo : `scripts/tools/minimax-music-test.py`
 - Script 3 variantes : `scripts/tools/minimax-music-3variants.py`
 

@@ -90,7 +90,7 @@ ROI clair : 2 chiffres invérifiables détectés avant écriture (644 morts, 952
 
 ## Règles Souverain établies pendant cette session (à appliquer tous épisodes futurs)
 
-1. **Grille sources 3 niveaux** (faits vérifiables / voix narratifs / objet d'étude) — déjà sauvegardée dans `memory/feedback_grille-sources-3-niveaux.md`
+1. **Grille sources 3 niveaux** (faits vérifiables / voix narratifs / objet d'étude) — déjà sauvegardée dans memory/feedback_grille-sources-3-niveaux.md
 2. **Fact-Sheet v2 obligatoire** pour épisodes sensibles — déjà sauvegardée dans `memory/templates/fact-sheet-souverain-v1.md`
 3. **Aucune couleur ne code un jugement moral** — voir 04-DECISIONS-OUVERTES.md (à formaliser comme feedback à la reprise)
 4. **Test "couper l'audio"** : si on identifie qui sont les méchants par les couleurs seules, la grammaire visuelle a trahi Souverain

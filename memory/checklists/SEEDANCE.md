@@ -28,7 +28,7 @@ metadata:
 - [ ] Checklist du template cochée
 - [ ] Scan affiché (tableau points vérifiés)
 - [ ] Refs séparées par élément (personnage, lieu, objets) — 3-5 refs dans Seedance
-- [ ] Style paper-craft confirmé si applicable (`memory/tools/style-papercraft-sepia.md`)
+- [ ] Style paper-craft confirmé si applicable (memory/tools/style-papercraft-sepia.md)
 
 ---
 
@@ -49,9 +49,9 @@ metadata:
 ## PHASE 3 — Intégration Remotion
 
 - [ ] `timing.ts` stable AVANT assemblage
-- [ ] Duree clip >= narration cross-check (cross-check bloquant — voir `memory/pipeline.md`)
+- [ ] Duree clip >= narration cross-check (cross-check bloquant — voir `memory/tools/pipeline.md`)
 - [ ] Clips dans `public/seedance/` avec nommage convention
-- [ ] INDEX.md mis à jour (`public/seedance/INDEX.md`)
+- [ ] INDEX.md mis à jour (public/seedance/INDEX.md)
 
 ---
 

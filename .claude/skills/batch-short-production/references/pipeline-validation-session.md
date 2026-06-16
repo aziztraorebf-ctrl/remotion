@@ -49,7 +49,7 @@ Additionally, output 9 video animation prompts (one per frame).
 
 ### Etape 2 : Generation clips Kling via fal.ai
 
-**Script :** `scripts/generate-thiaroye-kling.py`
+**Script :** scripts/generate-thiaroye-kling.py
 **API :** fal.ai (fal_client Python SDK)
 **Endpoints utilises :**
 
@@ -170,7 +170,7 @@ Le lien en bio.
 
 ### Etape 6 : Assemblage Remotion
 
-**Composant :** `src/projects/geoafrique-shorts/ThiaroyeShort.tsx`
+**Composant :** src/projects/geoafrique-shorts/ThiaroyeShort.tsx
 **Composition :** 1080x1920, 30fps, 3302 frames (110s)
 
 **Architecture :**
@@ -300,7 +300,7 @@ L'ordre correct pour la production future :
 
 ### Scripts (temporaires, a formaliser)
 - `/tmp/generate-thiaroye-storyboard.py` — Gemini storyboard 3x3
-- `scripts/generate-thiaroye-kling.py` — 9 clips Kling paralleles
+- scripts/generate-thiaroye-kling.py — 9 clips Kling paralleles
 - `/tmp/regen-frame01.py` — Regeneration F1
 - `/tmp/gemini-diversify-f4.py` — Diversification visages Gemini
 - `/tmp/regen-frame04-diverse.py` — Kling sur frame diversifiee
@@ -310,12 +310,12 @@ L'ordre correct pour la production future :
 ### Assets (permanents)
 - `public/assets/library/geoafrique/thiaroye-1944/thiaroye-storyboard-grid-v2.jpg`
 - `public/assets/library/geoafrique/thiaroye-1944/frames/frame-01.jpg` a `frame-09.jpg`
-- `public/assets/library/geoafrique/thiaroye-1944/clips/frame-01-final.mp4` (et tous les clips)
-- `public/assets/library/geoafrique/thiaroye-1944/clips/dynamic-A.mp4`, `dynamic-B.mp4`
+- public/assets/library/geoafrique/thiaroye-1944/clips/frame-01-final.mp4 (et tous les clips)
+- public/assets/library/geoafrique/thiaroye-1944/clips/dynamic-A.mp4, `dynamic-B.mp4`
 - `public/assets/library/geoafrique/thiaroye-1944/thiaroye-voixoff-v6.mp3`
 
 ### Composant Remotion
-- `src/projects/geoafrique-shorts/ThiaroyeShort.tsx`
+- src/projects/geoafrique-shorts/ThiaroyeShort.tsx
 - Composition : `ThiaroyeShort` (1080x1920, 30fps, 3302 frames)
 
 ### Render

@@ -22,7 +22,7 @@ phrase s'expose sur la carte), PUIS DA-brief upstream, PUIS coder. Ne saute pas 
   La vérité : `Partie2Blocage.tsx` est la P2 validée, c'est ton modèle.
 
 ## À LIRE AVANT DE CODER (dans cet ordre)
-1. ⭐⭐ **`memory/doctrines/WARMAP-GRAMMAIRE-CAUSALE.md`** — LA doctrine. Règle CAUSE avant EFFET + catalogue des
+1. ⭐⭐ **`memory/doctrines/WARMAP-GRAMMAIRE.md`** — LA doctrine. Règle CAUSE avant EFFET + catalogue des
    5 techniques causales (avancée jetons+sillage · chute base 3 temps · donnée qui se MONTRE · contour flash ·
    casser la grammaire). C'est le standard non-négociable. Sans ça → "bordel confus" rejeté.
 2. `memory/episodes/warmap-sahel/PLAN-NARRATIF-P2.md` — le MODÈLE de plan narratif (à reproduire pour P3).

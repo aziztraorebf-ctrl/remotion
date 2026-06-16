@@ -8,7 +8,7 @@ type: reference
 
 Validé après exploration Shaka Zulu (2026-05-03). Le format JSON canonique étant maîtrisé via skill Wiggle, Claude peut maintenant générer des animations Lottie autonomes pour les vidéos Atlas et autres projets.
 
-**Référence format** : voir `memory/feedback_remotion-lottie-headless-broken.md` pour les 4 règles critiques + pattern require().
+**Référence format** : voir memory/feedback_remotion-lottie-headless-broken.md pour les 4 règles critiques + pattern require().
 
 ---
 

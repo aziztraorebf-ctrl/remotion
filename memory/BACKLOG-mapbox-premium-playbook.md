@@ -23,7 +23,7 @@ Un seul appel Gemini 3.1 Pro (Files API, multi-vidéos) qui reçoit :
 "Compare nos cartes aux références. Qu'est-ce qui sépare les deux ? Donne un rundown de principes applicables, compatibles avec nos contraintes (navy, frame-driven, headless, R1), sur lesquels on peut se fier à chaque Mapbox."
 
 ## Sortie
-`memory/doctrines/MAPBOX-PREMIUM-PLAYBOOK.md` — doctrine cartographique réutilisable.
+memory/doctrines/MAPBOX-PREMIUM-PLAYBOOK.md — doctrine cartographique réutilisable.
 
 ## Point critique
 Aziz choisit les réfs — son jugement "qu'est-ce qui est bon" est ce que Gemini doit apprendre. Ne pas choisir les réfs à sa place.

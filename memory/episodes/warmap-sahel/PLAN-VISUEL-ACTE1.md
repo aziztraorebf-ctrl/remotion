@@ -80,7 +80,7 @@ Carte **colorée dès le départ** (contrôle territorial réel 2020), zoom hook
 | **technical-eigs.png** | Pickup/technical top-down, couleur EIGS (orange-brun), distinct du JNIM | idem |
 
 > FAMa (char bleu), CSP (4x4 or), leaders, réfugiés = générés à leurs actes (2,3,4). PAS l'Acte 1.
-> Recette : `memory/feedback_sprites-topdown-gemini-vs-recraft.md`. Fond cream #d4c29d → removeBg.
+> Recette : `memory/feedbacks/feedback_sprites-topdown-gemini-vs-recraft.md`. Fond cream #d4c29d → removeBg.
 
 ---
 

@@ -132,10 +132,10 @@ ambiance/ [lieu]-[etat].mp3                     ex: ocean-calm.mp3
   <Audio src={staticFile("_shared/sfx/ui/plate-pop.mp3")} volume={0.50} />
 </Sequence>
 ```
-⛔ **NE JAMAIS utiliser `{frame === X && <Audio/>}` ni `{frame >= X && frame < X+15 && <Audio/>}`** — un `<Audio>` monté une seule frame (ou conditionnellement) NE DÉMARRE PAS en render (son inaudible). Bug confirmé 2026-06-03 sur Beat3 Maroc (Aziz n'entendait aucun SFX). Toujours `<Sequence from={F} durationInFrames={20-30}>` autour du `<Audio>` (pattern Or Africain Beat4). Voir `memory/feedback_sfx-sequence-et-drapeaux-reels.md`.
+⛔ **NE JAMAIS utiliser `{frame === X && <Audio/>}` ni `{frame >= X && frame < X+15 && <Audio/>}`** — un `<Audio>` monté une seule frame (ou conditionnellement) NE DÉMARRE PAS en render (son inaudible). Bug confirmé 2026-06-03 sur Beat3 Maroc (Aziz n'entendait aucun SFX). Toujours `<Sequence from={F} durationInFrames={20-30}>` autour du `<Audio>` (pattern Or Africain Beat4). Voir `memory/feedbacks/feedback_sfx-sequence-et-drapeaux-reels.md`.
 
 ### ⛔ VOLUME SFX — PLANCHER 0.50 (RÉVISÉ 2026-06-03, NON-NEGOTIABLE)
-**Tous les SFX (ping, tick, snap, plate-pop, impact, whoosh, swoosh, drone) : 0.50 minimum, JAMAIS en dessous.** Peut monter à 0.60 sur les gros moments cinématiques (swoosh caméra descend/monte, impact). Musique fond 0.12-0.15 (baisser si elle masque). L'ancienne valeur 0.35 / fourchette 0.25-0.35 était trop basse → SFX inaudibles, Aziz devait monter le son. Source de vérité : `memory/DOCTRINE-SOUVERAIN.md` section 6.
+**Tous les SFX (ping, tick, snap, plate-pop, impact, whoosh, swoosh, drone) : 0.50 minimum, JAMAIS en dessous.** Peut monter à 0.60 sur les gros moments cinématiques (swoosh caméra descend/monte, impact). Musique fond 0.12-0.15 (baisser si elle masque). L'ancienne valeur 0.35 / fourchette 0.25-0.35 était trop basse → SFX inaudibles, Aziz devait monter le son. Source de vérité : `memory/doctrines/DOCTRINE-SOUVERAIN.md` section 6.
 
 ### 🎯 QUEL SFX selon le mouvement caméra (règle 2026-06-03)
 **Un SFX doit correspondre à un ÉVÉNEMENT VISUEL RÉEL. Pas de SFX "par habitude".**

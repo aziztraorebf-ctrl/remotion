@@ -1,7 +1,7 @@
 # MANIFEST — Hannibal : Traversée des Alpes — V2
 > Validé Aziz 2026-05-05. Source de vérité visuelle AVANT tout code.
 > Règle : mouvement caméra toutes les 5-8s maximum. Jamais statique.
-> Timing source : `src/projects/atlas/hannibal/timing.ts`
+> Timing source : src/projects/atlas/hannibal/timing.ts
 > Format 1080×1920 @30fps
 
 ---

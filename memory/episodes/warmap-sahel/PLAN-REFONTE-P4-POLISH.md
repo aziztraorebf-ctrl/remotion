@@ -69,7 +69,7 @@ Ordre : **Acte1 (hook) → P1 → P2 → P3** (P4 déjà OK). Puis seulement ass
   Découpage phrase-par-phrase 0-28s extrait de narration-v5-alignment.json.
 - **DÉCISION AZIZ** : garder le texte/audio, REFAIRE entièrement le visuel = "mini-TikTok visuel", mettre le paquet.
 - **MÉTHODE** : DA-brief upstream (Gemini+Kimi+DeepSeek) AVANT de coder. Brief `/tmp/da-refs/brief-hook-acte1.txt`.
-  Gabarit déjà écrit : `memory/doctrines/HOOK-MAXBELLONA-GABARIT.md` (A carte se transforme / B argumentatif /
+  Gabarit déjà écrit : memory/doctrines/HOOK-MAXBELLONA-GABARIT.md (A carte se transforme / B argumentatif /
   C questions). Analyse chaînes : `feedback_medieval-mindset-methode.md`.
 - ⚠️ **DETTE AUDIO ACTE 1** : les triggers visuels Acte 1 sont calés sur narration-v1 (ligne 382 moteur :
   "depuis forced alignment narration-v1"), PAS sur v5 expressive. Le moteur câble bien narration-v5-expressive.mp3

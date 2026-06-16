@@ -178,7 +178,7 @@ const grainShift = Math.sin(frame * 0.025) * 3;
 | Asset sur fond clair (crème, kraft) | Générer sur fond crème `#d4c29d` solide |
 | Ne jamais faire | PIL alpha_composite, chroma key manuel, CSS mask-image |
 
-Détails : `memory/feedback_gemini-assets-fond-transparent.md`
+Détails : `memory/feedbacks/feedback_gemini-assets-fond-transparent.md`
 
 ---
 

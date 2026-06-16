@@ -53,6 +53,6 @@ IDs = Mons Alma vqFzTzlYUe8 · Volcaean -UsMhJizr_w · Teutoburg T5KEyOnk7Y4 · 
 
 ## POC en cours
 
-- `src/projects/atlas/_rnd/order-of-battle/UnitBlock.tsx` + `OrderOfBattlePOC.tsx` — POC v1 (bloc top-down).
+- src/projects/atlas/_rnd/order-of-battle/UnitBlock.tsx + `OrderOfBattlePOC.tsx` — POC v1 (bloc top-down).
   Render `out/_r-and-d/order-of-battle/poc_v1.mp4`, catbox 4i2zfy. Verdict : concept echelle validE,
   esthetique rejetee (copier-coller). v2 = switch vers sprites lateraux + manoeuvre.

@@ -15,19 +15,19 @@ Pourquoi ce segment : action dense sans temps mort (rush -> clash -> close-ups -
 ## Tests valides avec ces refs
 
 ### Test 1 (2026-04-13) — Soundjata vs Soumaoro V1
-- Resultat : `public/assets/library/geoafrique/soundjata/combat-tests/test-choreography-transfer-1776105175.mp4`
+- Resultat : public/assets/library/geoafrique/soundjata/combat-tests/test-choreography-transfer-1776105175.mp4
 - Score : 8.5/10
 - Issues : sabre fantome sur Soumaoro a ~7.5s, expressions faciales plates
 
 ### Test 2 (2026-04-13) — Soundjata vs Soumaoro V2 (corrections appliquees)
-- Resultat : `public/assets/library/geoafrique/soundjata/combat-tests/test-choreography-v2-1776106128.mp4`
+- Resultat : public/assets/library/geoafrique/soundjata/combat-tests/test-choreography-v2-1776106128.mp4
 - Score : 9.5/10
 - Ameliorations : sabre fantome resolu, expressions faciales intenses, tempo ~2x plus rapide (bonus)
 - Seul gotcha restant : micro-artefact sabre flicker pendant le recul de Soundjata (invisible pour spectateur normal)
 
 ## Documentation
 
-Voir `memory/motion-reference-transfer.md` (auto-memory) pour le pipeline complet, gotchas, et leviers de controle du tempo.
+Voir memory/motion-reference-transfer.md (auto-memory) pour le pipeline complet, gotchas, et leviers de controle du tempo.
 
 ## Reutilisation future
 

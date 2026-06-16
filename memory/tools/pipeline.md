@@ -87,7 +87,7 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
     - Script : `scripts/tools/kimi-review-acte{N}-storyboard.py` (adaptable)
     - Cout : ~$0.02. Valide 2026-04-16 (Acte IV Clip 1, propositions galop lateral + OTS validees)
 4c. CLAUDE DYNAMISATION — rewrite des prompts Seedance (NON-NEGOTIABLE)
-    **SCRIPT** : `scripts/dynamize-prompts.py kimi-brief.md [--model claude|gemini] [--clips 1,3]`
+    **SCRIPT** : `scripts/tools/dynamize-prompts.py kimi-brief.md [--model claude|gemini] [--clips 1,3]`
     Input : brief Kimi (vision narrative) + regles Seedance documentees
     Output : prompts Format 3 SECONDS prets pour Dreamina (fichier -dynamized.md)
     Regles obligatoires :
@@ -100,7 +100,7 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
     - Anti-instructions obligatoires en en-tete
     NE JAMAIS donner les prompts Kimi directement a Seedance — ils sont contemplatifs, pas cinematiques.
 4d. GEMINI REF STYLE — generer 1 image de reference par clip
-    **SCRIPT** : `scripts/generate-styleref.py [clip1 clip3]` (editer tableau CLIPS dans le script)
+    **SCRIPT** : `scripts/tools/generate-styleref.py [clip1 clip3]` (editer tableau CLIPS dans le script)
     Input : frame-03.jpg (style anchor) + description de la scene du clip
     Output : image 9:16 dans le style flat BD (tmp/styleref/clipN-styleref.png)
     Modele : gemini-3.1-flash-image-preview
@@ -109,7 +109,7 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
    - Uploader ref Gemini du clip comme image de reference
    - Coller prompt Claude (Format 3 SECONDS)
    - Duree : 15s
-   - Frame chaining : `scripts/extract-lastframe.sh clip_N.mp4` -> lastframe_clip_N.png
+   - Frame chaining : `scripts/tools/extract-lastframe.sh clip_N.mp4` -> lastframe_clip_N.png
      (la ref Gemini sert pour le clip 1 ou si le style drift)
 6. Integration Remotion + mini-render
 ```

@@ -7,7 +7,7 @@
 
 ## Diagnostic — Pourquoi rien ne marchait vraiment
 
-`src/projects/souverain/zimbabwe-lithium/timing.ts` a été généré à un moment où l'audio n'était pas finalisé (ou avec un script de découpe automatique mal calibré). Les **bornes BEATS** sont décalées par rapport à la narration audio réelle. Chaque beat a ensuite été codé isolément avec ses propres pivots audio (qui eux sont corrects parce qu'extraits a posteriori), donc visuellement chaque beat fonctionne **en isolation** — mais leur position dans la timeline globale est fausse.
+src/projects/souverain/zimbabwe-lithium/timing.ts a été généré à un moment où l'audio n'était pas finalisé (ou avec un script de découpe automatique mal calibré). Les **bornes BEATS** sont décalées par rapport à la narration audio réelle. Chaque beat a ensuite été codé isolément avec ses propres pivots audio (qui eux sont corrects parce qu'extraits a posteriori), donc visuellement chaque beat fonctionne **en isolation** — mais leur position dans la timeline globale est fausse.
 
 **Résultat observé** : Beat 5 layout cassé, sensation que "ça ne tient pas" sans pouvoir mettre le doigt dessus.
 

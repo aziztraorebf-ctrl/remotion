@@ -193,9 +193,9 @@ metadata:
 | Asset | Chemin local | Taille | Usage beat | Notes |
 |-------|-------------|--------|-----------|-------|
 | Rat noir statique | `public/atlas/peste-1347/assets/objects/rat-noir.png` | 32×32 | Beat 3 | |
-| Rat scurrying | `public/atlas/peste-1347/assets/objects/rat-anim/frame_000-003.png` | 64×64 | Beat 3 | 4 frames via animate_with_text |
+| Rat scurrying | public/atlas/peste-1347/assets/objects/rat-anim/frame_000-003.png | 64×64 | Beat 3 | 4 frames via animate_with_text |
 | Bateau génois statique | `public/atlas/peste-1347/assets/objects/bateau-genois.png` | 64×48 | Beat 2 | |
-| Bateau rocking | `public/atlas/peste-1347/assets/objects/bateau-anim/frame_002-003.png` | 64×64 | Beat 2 | **utiliser f2/f3 uniquement** (f0/f1 sans voiles) |
+| Bateau rocking | public/atlas/peste-1347/assets/objects/bateau-anim/frame_002-003.png | 64×64 | Beat 2 | **utiliser f2/f3 uniquement** (f0/f1 sans voiles) |
 | Mosquée Tombouctou | `public/atlas/peste-1347/assets/objects/mosquee-tombouctou.png` | 64×64 | Beat 5 | |
 | Ville européenne deuil | `public/atlas/peste-1347/assets/objects/ville-europeenne-deuil.png` | 64×48 | Beat 3/4 | |
 
@@ -204,7 +204,7 @@ metadata:
 | Asset | Chemin local | Usage beat | Notes |
 |-------|-------------|-----------|-------|
 | Chameau Mali statique | `public/empire-ghana/assets/pixellab/chameau-walk-static.png` | Beat 4/5 | |
-| Chameau walk east | `public/empire-ghana/assets/pixellab/chameau/walking/east/frame_000-003.png` | Beat 4/5 | 4 frames |
+| Chameau walk east | public/empire-ghana/assets/pixellab/chameau/walking/east/frame_000-003.png | Beat 4/5 | 4 frames |
 | Marchand berbère Ghana | `public/empire-ghana/characters/berbere/rotations/east.png` (+ N/S/W) | Beat 5 Maghreb | réutiliser pour caravane |
 
 ### Audio

@@ -172,9 +172,9 @@ Quand tu lances une session de tests Mapbox dédiée :
 ## Lien avec autres fichiers
 
 - API Mapbox détaillée : `src/projects/_shared/mapbox/MAPBOX-COMPOSANTS.md`
-- Style signature : `memory/feedback_mapbox-style-geo-afrique.md`
-- Branding hide : `memory/feedback_mapbox-branding-hide-pattern.md`
-- Zoom delta : `memory/feedback_mapbox-zoom-delta-minimum.md`
-- Render script : `memory/feedback_remotion-mapbox-render-script.md`
-- Couleurs narratives : `memory/feedback_souverain-couleurs-narratives.md`
+- Style signature : memory/feedback_mapbox-style-geo-afrique.md
+- Branding hide : memory/feedback_mapbox-branding-hide-pattern.md
+- Zoom delta : memory/feedback_mapbox-zoom-delta-minimum.md
+- Render script : memory/feedback_remotion-mapbox-render-script.md
+- Couleurs narratives : memory/feedback_souverain-couleurs-narratives.md
 - Skills officiels : `mapbox-cartography`, `mapbox-style-quality`, `mapbox-data-visualization-patterns`, `mapbox-style-patterns`

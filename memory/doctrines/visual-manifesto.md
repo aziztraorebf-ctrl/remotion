@@ -312,7 +312,7 @@ C'est la mise en pratique de la Regle du 70% : les effets d'EffectsLab sont pre-
 | Seg 9 | 2400-2699 | Carte propagation + cercles |
 | Seg 10 | 2700-2999 | Micro-expressions |
 
-Fichier : `src/projects/style-tests/EffectsLab.tsx`
+Fichier : src/projects/style-tests/EffectsLab.tsx
 
 ### Contrat Visuel + SCENE_TIMING
 

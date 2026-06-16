@@ -81,7 +81,7 @@ Ces images sont les **références design originales** de chaque template, gén�
 
 ### Template A — MapboxGeoAfriqueV5 (style signature dark Souverain)
 
-**Path code** : `src/projects/poc-money-legends/MapboxOceanColor.tsx` → `MapboxGeoAfriqueV5`
+**Path code** : src/projects/poc-money-legends/MapboxOceanColor.tsx → `MapboxGeoAfriqueV5`
 **Style helper partagé** : `src/projects/_shared/mapbox/MapboxBase.tsx` → `applyGeoAfriqueV5`, `STYLE_GEO_AFRIQUE_V5`
 **Composition Remotion** : `MapboxGeoAfriqueV5` (Root.tsx, 300 frames)
 **Status** : ✅ Validé production Or Africain 2026-05-07 — style signature de la chaîne GéoAfrique
@@ -148,7 +148,7 @@ applyCartoCaspian(map, CASPIAN_SEPIA);  // default Niger uranium
 
 **Principe color script** : OK de changer de variante DANS une vidéo (Sepia → Noir pour climax) car même grammaire visuelle = pas de rupture stylistique. NE PAS changer de family (Caspian → AtlasRealiste3D = rupture).
 
-**Mémoire dédiée** : `memory/feedback_caspian-niger-palettes-validated.md`
+**Mémoire dédiée** : memory/feedback_caspian-niger-palettes-validated.md
 
 ---
 
@@ -202,7 +202,7 @@ addCountryFocus(map, "NER", ATLAS3D_PALETTE.accentOr);
 ```bash
 ./scripts/render-mapbox.sh ProtoA-MapboxSatelliteSenegal out/render.mp4
 ```
-⚠️ JAMAIS `npx remotion render` direct — voir [`memory/feedback_mapbox-render-pattern-canonique.md`](../../memory/feedback_mapbox-render-pattern-canonique.md)
+⚠️ JAMAIS `npx remotion render` direct — voir [memory/feedback_mapbox-render-pattern-canonique.md](../../memory/feedback_mapbox-render-pattern-canonique.md)
 
 **Adaptation pour autre pays** : copier le fichier, changer ISO (`addCountryFocus(map, "MAR"...)`) + coordonnées CAM_START/MID/END pour cibler la zone.
 
@@ -1503,7 +1503,7 @@ pt-[288px] (safe zone) + asset flex-shrink-0 (pleine largeur colonne) + flex-1 j
 
 **Pattern** : Mapbox `projection: 'globe'` + atmosphère + réticule SVG positionné via `map.project([lon, lat])` + panel pays/ville + dot capitale dans silhouette + transition globe→Mercator native
 
-**2 styles canoniques** (cf `memory/feedback_globe-reveal-2-styles-locked.md`) :
+**2 styles canoniques** (cf memory/feedback_globe-reveal-2-styles-locked.md) :
 - `style="souverain"` — sombre étoilé, accent jaune `#f5d547`, panel bleu nuit. Pour révélations dramatiques.
 - `style="caspian"` — lumineux papier, accent terracotta `#a05a3a`, panel crème. Pour révélations apaisées éditoriales.
 
@@ -1515,7 +1515,7 @@ pt-[288px] (safe zone) + asset flex-shrink-0 (pleine largeur colonne) + flex-1 j
 - `subInfo` ("SAHEL · 26.2M HAB.") préféré à `secondaryLabel` (capitale redondante si dot visible)
 
 **Render** : OBLIGATOIRE via `./scripts/render-mapbox.sh <CompId> <out.mp4>` (WebGL, Chrome for Testing + --gl=angle)
-**Mémoires dédiées** : `memory/feedback_globe-mapbox-pattern-validated.md` + `memory/feedback_globe-reveal-2-styles-locked.md`
+**Mémoires dédiées** : memory/feedback_globe-mapbox-pattern-validated.md + memory/feedback_globe-reveal-2-styles-locked.md
 
 ---
 
@@ -1790,7 +1790,7 @@ Détails complets dans `public/_shared/characters-refs/<personnage>/README.md` q
 
 ## 📋 Backlog — templates NON encore codés (Jour 5+)
 
-(Source : `memory/templates-research/scouting/CONSOLIDATION-V1.md` + `V2.md`)
+(Source : memory/templates-research/scouting/CONSOLIDATION-V1.md + `V2.md`)
 
 | Template | Source d'inspiration | Effort estimé | Priorité |
 |---|---|---|---|
@@ -1813,7 +1813,7 @@ Détails complets dans `public/_shared/characters-refs/<personnage>/README.md` q
 | Script | Path | Usage |
 |---|---|---|
 | Génération previews automatique | `scripts/generate_template_previews.py` | `python3 scripts/generate_template_previews.py [filter]` — render + upload catbox + manifest JSON |
-| Jury LLM 3 modèles (templates) | `scripts/jury_3llms_jour3.py` | Évaluation parallèle Kimi+GPT+Gemini sur frames |
+| Jury LLM 3 modèles (templates) | scripts/jury_3llms_jour3.py | Évaluation parallèle Kimi+GPT+Gemini sur frames |
 
 ---
 
@@ -2122,7 +2122,7 @@ Détails complets dans `public/_shared/characters-refs/<personnage>/README.md` q
 
 > Codés : 2026-05-21. Renders : Litterbox 72h (catbox.moe down ce jour).
 > **Nature** : abstraits par design — nécessitent un contexte narratif précis pour devenir premium.
-> **Workflow upgrade** : envoyer v1 + storyboard + previews à Gemini 3.1-pro → `code_values` ciblés → scène 2x premium. Voir `memory/feedback_gemini-v2-upgrade-workflow.md`.
+> **Workflow upgrade** : envoyer v1 + storyboard + previews à Gemini 3.1-pro → `code_values` ciblés → scène 2x premium. Voir memory/feedback_gemini-v2-upgrade-workflow.md.
 
 ### Template Vague6Exp-A — ParallaxeDiorama (Profondeur 3 Couches)
 

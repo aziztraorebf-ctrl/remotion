@@ -5,7 +5,7 @@
 
 ## Philosophie de production (validée 2026-06-03)
 **2 blocs séparés : TOUT le Mapbox d'abord (fait ✅), PUIS tout le Remotion, PUIS assemblage.**
-Voir `memory/feedback_philosophie-mapbox-puis-remotion.md`.
+Voir `memory/feedbacks/feedback_philosophie-mapbox-puis-remotion.md`.
 
 ## État des beats
 
@@ -36,4 +36,4 @@ Previews catbox : Beat0 https://files.catbox.moe/otcfyz.mp4 · Beat1 https://fil
 - **Pull back planétaire** (Kénitra → vue monde Mercator zoom 1.0) + drapeaux statiques synchro voix + lignes de connexion (centroïdes dérivés des bbox projetées).
 - **SFX `<Sequence>`** obligatoire (jamais `{frame===X}`). Plancher 0.50. SFX = événement visuel réel (pas swoosh sur carte fixe/dézoom lent).
 - **camCountryApproach** pitch 32 (relief). 11 templates fill-pattern N1-N4.
-- Détails + gotchas : `memory/feedback_sfx-sequence-et-drapeaux-reels.md`, `feedback_pattern-or-africain-plaques-relief-sfx.md`.
+- Détails + gotchas : `memory/feedbacks/feedback_sfx-sequence-et-drapeaux-reels.md`, `feedback_pattern-or-africain-plaques-relief-sfx.md`.

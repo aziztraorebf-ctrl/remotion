@@ -9,8 +9,8 @@ type: reference
 > Validé : 2026-05-11 sur "La Vraie Taille de l'Afrique"
 > Fichiers de référence :
 > - `scripts/precompute-vraie-taille.mjs` — script precompute complet
-> - `src/projects/souverain/vraie-taille-afrique/Beat2Silhouettes.tsx` — composant Remotion
-> - `src/projects/souverain/vraie-taille-afrique/geo-data.json` — output precompute
+> - src/projects/souverain/vraie-taille-afrique/Beat2Silhouettes.tsx — composant Remotion
+> - src/projects/souverain/vraie-taille-afrique/geo-data.json — output precompute
 
 ---
 

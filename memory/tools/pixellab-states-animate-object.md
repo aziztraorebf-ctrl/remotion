@@ -124,8 +124,8 @@ for i, img in enumerate(images):
 
 | Asset | Frames | Qualité | Fichiers |
 |-------|--------|---------|---------|
-| Rat scurrying | 4f (64×64) | Cycle propre, pattes bougent | `public/atlas/peste-1347/assets/objects/rat-anim/frame_000-003.png` |
-| Bateau rocking | 4f (64×64) | f0/f1 sans voiles, f2/f3 avec voiles — utiliser f2/f3 | `public/atlas/peste-1347/assets/objects/bateau-anim/frame_000-003.png` |
+| Rat scurrying | 4f (64×64) | Cycle propre, pattes bougent | public/atlas/peste-1347/assets/objects/rat-anim/frame_000-003.png |
+| Bateau rocking | 4f (64×64) | f0/f1 sans voiles, f2/f3 avec voiles — utiliser f2/f3 | public/atlas/peste-1347/assets/objects/bateau-anim/frame_000-003.png |
 
 ---
 

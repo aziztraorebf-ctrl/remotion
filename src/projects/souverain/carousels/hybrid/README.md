@@ -1,7 +1,7 @@
 # Carrousels hybrides animés — composants réutilisables
 
 > Pipeline validé 2026-05-31 (Or Africain, 8 slides). Standard de qualité : V2.
-> Doctrine + règles : `memory/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md`.
+> Doctrine + règles : `memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md`.
 
 ## Principe
 

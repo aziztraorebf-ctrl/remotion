@@ -45,7 +45,7 @@ Action : clarifier — 2 patterns sprites distincts (AtlasCaravane chibi 1-frame
 
 ## CIBLE D'ORGANISATION (après nettoyage) — miroir Souverain
 
-1. `src/projects/atlas/_shared/INDEX-DES-INDEX.md` (carte maître Atlas) — À CRÉER
+1. `src/projects/_shared/INDEX-DES-INDEX.md` (carte maître Atlas) — À CRÉER
 2. `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` (format "quand Aziz dit...") — À CRÉER
 3. `ATLAS-COMPOSANTS.md` → réduit à doc technique + imports (pointe vers INDEX)
 4. `ATLAS-ASSETS-INDEX.md` (les 568 sprites + 11 JSON géo + map-objects) — À CRÉER ⭐

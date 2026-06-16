@@ -101,5 +101,5 @@ Le positionnement militant plafonne sur AdSense diaspora et coupe la moitié sup
 ## Références internes (détails)
 
 - `memory/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)
-- `memory/archive/feedbacks-originaux-2026-05/feedback_grille-sources-3-niveaux.md` — grille 3 niveaux détaillée
-- `memory/archive/feedbacks-originaux-2026-05/feedback_souverain-couleurs-narratives.md` — palette + test couper l'audio
+- grille des sources 3 niveaux détaillée (feedback archivé, supprimé)
+- palette + test couper l'audio (feedback archivé, supprimé)

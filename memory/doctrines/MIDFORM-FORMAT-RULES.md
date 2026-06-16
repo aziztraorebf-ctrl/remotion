@@ -153,7 +153,7 @@ Quota Hobby : 100 GB-h/mois gratuit
 
 ## Références internes
 
-- `memory/CHARTE-EDITORIALE-SOUVERAIN.md` — positionnement et règles éditoriales
+- `memory/doctrines/CHARTE-EDITORIALE-SOUVERAIN.md` — positionnement et règles éditoriales
 - `memory/rules-souverain-editorial.md` — règles techniques transversales (sources, couleurs, grammaire)
-- `memory/feedback_review-mp4-avant-presentation.md` — extraction frames
-- `scripts/render-on-vercel.py` — render cloud Mapbox
+- `memory/feedbacks/feedback_review-mp4-avant-presentation.md` — extraction frames
+- `scripts/tools/render-on-vercel.py` — render cloud Mapbox

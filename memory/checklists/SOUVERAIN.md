@@ -108,7 +108,7 @@ metadata:
 
 - [ ] Downscale frames avant review (`./scripts/downscale-for-review.sh`)
 - [ ] Claude review visuelle AVANT Kimi
-- [ ] Kimi review technique (`scripts/review_with_kimi.py`)
+- [ ] Kimi review technique (scripts/review_with_kimi.py)
 - [ ] Verdict : APPROVE / MINOR FIX / RE-EVALUATE
 - [ ] Fixes appliqués si nécessaire
 

@@ -191,7 +191,7 @@ Pour 80s scene complete (extrapolation) : ~15-25 min render. Pour scene narrativ
 
 ## Fichiers reference dans projet
 
-- Pipeline complet : `memory/atlas-mansa-moussa/LEARNINGS-V2-VECTOR-PIPELINE.md`
+- Pipeline complet : memory/atlas-mansa-moussa/LEARNINGS-V2-VECTOR-PIPELINE.md
 - Composition template : `quebec-jacques-poc/src/AtlasV2GlobeTest.tsx` + `AtlasV2SceneS3Test.tsx`
 - Precompute script : `quebec-jacques-poc/scripts-atlas/precompute-atlas-v2-data.mjs`
 - Data extracted : `quebec-jacques-poc/src/atlas-v2-data.json` (1.2 MB, 4 datasets)
