@@ -4,6 +4,8 @@
 > Lecture obligatoire avant tout nouveau script Souverain. Détails techniques dans `rules-souverain-editorial.md`.
 >
 > **Complément 2026-05-27 :** [ANGLE-MACRO-SOUVERAIN.md](ANGLE-MACRO-SOUVERAIN.md) — exécution concrète de la promesse "le viewer à Paris/Tokyo/Montréal" via l'angle macro (sujets africains vus depuis leur impact sur le monde). Ratio 70/30 macro/micro recommandé.
+>
+> **⭐⭐ RÈGLE N°1 (2026-06-16, AVANT TOUT) :** [SUJET-PRIME-SUR-PRODUCTION.md](SUJET-PRIME-SUR-PRODUCTION.md) — valider la DEMANDE du sujet + l'angle/titre AVANT toute production, tous formats. Le sujet décide du clic, la qualité du retour. Même un chef-d'œuvre visuel floppe si le sujet n'a pas de public. Gate ~30-60 min (TubeLab + trends + titres). PRIME sur tout (sans sujet à demande, le reste ne sert à rien — MAIS toujours DANS la niche + charte analyste).
 
 ---
 
