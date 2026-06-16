@@ -1,6 +1,22 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-15 (après-midi). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-16 (nuit, post-grand-ménage). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🧹 (FAIT 2026-06-15→16) — GRAND MÉNAGE WORKSPACE : ce qui a changé (LIRE pour comprendre la nouvelle structure)
+
+> Session dédiée au ménage/réorg complet. **La structure a changé — voici l'essentiel pour ne pas être perdu.** Détail : `memory/key-learnings.md` (section 🔧 MÉTHODE & PROCESS).
+
+- **Démarrage allégé −62%** : `CLAUDE.md` projet (47→~13KB) ne garde que les règles ; le routage complet est extrait dans **`memory/ROUTAGE.md`** (à consulter au début de toute tâche). `MEMORY.md` = index pur 1 ligne/entrée.
+- **9 MCP débranchés** (supabase/neon/vercel/netlify/render/sentry/stitch/cavalry/phaser-editor). Rebranchables : `/tmp/menage-backups-2026-06-15/`.
+- **3 piliers ont une porte d'entrée symétrique** : `src/projects/souverain/SOUVERAIN-INDEX.md` (NOUVEAU) · `atlas/_shared/ATLAS-INDEX-DES-INDEX.md` · `warmap/WARMAP-INDEX.md`.
+- **Doctrines War-Map fusionnées 8→5** : grammaires → **`WARMAP-GRAMMAIRE.md`** · objets+SVG → **`WARMAP-ANIMER-OBJETS.md`**. (Anciens noms WARMAP-GRAMMAIRE-CAUSALE/VIVANTE/CARTE-VS-OVERLAY/OBJETS-GEMINI/SVG-ANIME = supprimés.)
+- **Scripts mappés** : `scripts/SCRIPTS-INDEX.md` (par cas d'usage) + `scripts/tools/REVIEW-TOOLS-INDEX.md` (review externe : `da-brief.py` = système principal ; `visual_review.py` remplace `review_with_kimi.py`). 122→91 scripts (tests/POC archivés).
+- **Feedbacks rangés** dans `memory/feedbacks/` (plus à la racine). `key-learnings.md` réorganisé par thème + index.
+- **Garde-fou liens morts** : `python3 scripts/tools/check-links.py` — À LANCER après tout déplacement de fichier. Navigation principale = 0 lien mort.
+- **Disque −4.7 GB** : worktrees morts, `.auto-claude/` supprimé, `out/wip` purgés, logs claude-mem purgés.
+- ⚠️ **Reste mineur** (non bloquant) : ~128 liens morts résiduels dans `memory/archive/` + `.claude/agent-memory/` (jamais lus). `atlas-v2-data.json` en 3 copies (dédup risquée, à faire dans une passe dédiée).
 
 ---
 
