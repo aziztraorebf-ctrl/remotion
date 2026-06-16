@@ -231,6 +231,7 @@ import { ArteryDrain } from "./projects/_shared/hooks-lib/ArteryDrain";
 import { CrosshairLock } from "./projects/_shared/hooks-lib/CrosshairLock";
 import { RedlineContagion } from "./projects/_shared/hooks-lib/RedlineContagion";
 import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
+import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1455,6 +1456,8 @@ export const RemotionRoot: React.FC = () => {
         {/* ── hooks-lib — bibliotheque de hooks agnostiques au fond (2026-06-15) ── */}
         <Composition id="ArteryDrain-Niger-V" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="ArteryDrain-Niger-H" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1920} height={1080} />
+        {/* PROTOTYPE hook ouverture Acte 1 AES (CrosshairLock + audio V5, cale sur les 3 verbes) */}
+        <Composition id="HookAES-Acte1-Proto" component={HookAESActe1Proto} durationInFrames={600} fps={30} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />

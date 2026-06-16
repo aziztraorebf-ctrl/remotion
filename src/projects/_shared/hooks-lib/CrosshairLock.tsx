@@ -45,6 +45,8 @@ export interface CrosshairLockProps {
   accentColor?: string;
   /** Frame du verrouillage. Recherche = 0..lockAt. */
   lockAt?: number;
+  /** Delai (frames) entre l'allumage de chaque pays focus apres le lock = cascade (ex: 3 verbes). */
+  litStagger?: number;
   /** Punch zoom apres lock (+delta). Ignore si camKeys fourni. */
   zoomPunch?: number;
   durationFrames?: number;
@@ -62,6 +64,7 @@ export const CrosshairLock: React.FC<CrosshairLockProps> = ({
   camKeys,
   accentColor = HOOK_COLORS.gold,
   lockAt = 75,
+  litStagger = 0,
   zoomPunch = 1.1,
   durationFrames = 210,
 }) => {
@@ -153,6 +156,7 @@ export const CrosshairLock: React.FC<CrosshairLockProps> = ({
         focusIsos={focusIsos}
         accentColor={accentColor}
         litFrom={lockAt}
+        litStagger={litStagger}
         durationFrames={durationFrames}
         driftAmount={0.5}
         punchZoom={camKeys ? undefined : { at: lockAt, delta: zoomPunch, dur: 11 }}
