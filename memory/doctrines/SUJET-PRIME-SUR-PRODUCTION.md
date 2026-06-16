@@ -58,32 +58,44 @@ son SUJET ni sa LANGUE → mauvais seed. RÈGLES :
    un seul = biais de ce seed. + recouper avec `search_outliers` par MOTS-CLÉS FR purs (non contaminé par un seed).
 → Bons seeds pour NOUS : vidéos FR carto/géopo Afrique qui cartonnent (ex. Max Bellona). Voir [[DECODE-modeles-fr-afrique]].
 
-### NIVEAU 1 — FILTRAGE rapide (~10 min) : le thème attire-t-il des clics ? Y a-t-il une demande VIVANTE ?
-- ⭐ **`last30days` (skill) = PLACE CENTRALE/PRIVILÉGIÉE** : ce que les gens disent/cherchent/débattent MAINTENANT
-  (Reddit, X, YouTube, TikTok, HN, news, web). C'est le détecteur de DEMANDE FRAÎCHE + d'ANGLE ÉMERGENT + de
-  TIMING (le timing = la moitié du clic ; cf. LeChefOtaku « Fire Force fait un an trop tôt »). TubeLab = rétroviseur
-  (le passé) ; last30days = la demande VIVANTE. → lancer last30days sur le sujet candidat EN PREMIER.
-- `TubeLab search_outliers` (langue en+fr, durée long-form) → le THÈME a-t-il produit des outliers (ratio
-  averageViewsRatio élevé) ? Filtre les sujets MORTS. + `get_channel_videos` sur chaînes de réf (Sahel Chronicles,
-  Bellona, The Invisible Hand) : qu'est-ce qui marche dans NOTRE registre exact.
-- Sortie niveau 1 : 2-3 sujets candidats qui ont une demande (passé TubeLab + vivante last30days). Les morts sont éliminés.
+### LE WORKFLOW EN 6 ÉTAPES (Aziz 2026-06-16 — checklist exécutable, ~45-60 min, du large au précis)
+Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amont. Logique : large → précis,
+"quoi" → "comment". Coût maîtrisé (TubeLab a des crédits ; voir [[tools/tubelab]] règle de routage).
 
-### NIVEAU 2 — VALIDATION ACTIONNABLE (~20-30 min) : sur les 2-3 candidats SEULEMENT
-- ⭐ **EXTRAIRE LES TRANSCRIPTS** des meilleurs outliers (yt-dlp `--write-auto-sub`) + les LIRE. Répondre à :
-  (a) POURQUOI ça marche (angle, promesse, hook, structure) ? (b) Est-ce de la QUALITÉ ou du creux/clickbait/podcast
-  recyclé ? (c) Quel ANGLE LIBRE reste pour NOUS (analyste, carte vivante) que les outliers ne couvrent pas ?
-  → c'est ÇA la validation actionnable, pas le compteur de vues.
-- ⚠️ Repérer le PIÈGE d'angle : si les outliers qui marchent sont TOUS militants/pompeux/pro-Traoré
-  inspirationnel (registre qu'on REFUSE), le sujet "marche" mais PAS pour nous → soit on trouve un angle analyste
-  distinct, soit on écarte (on se ferait écraser sur leur terrain). Cf. leçon Caspian + charte analyste.
-- **Angle/titre** : doctrine titres Kora & Cartes (fait + conséquence + cause inattendue) → 2-3 titres testés,
-  DISTINCTS des outliers militants. Le bon angle sauve un sujet moyen ; le mauvais tue un bon sujet.
+**0. INTAKE** : les idées d'Aziz OU la question ouverte « qu'est-ce qui marche en ce moment dans notre sphère ? »
 
-### VERDICT
-- Demande vivante (last30days) + outliers dans le passé + angle analyste libre + matière dispo → **GO**.
-- Demande faible OU seulement des angles militants OU aucun angle distinct → **NO-GO ou RÉ-ANGLER**.
-- Souvent le gate REDIRIGE vers un MEILLEUR sujet que l'idée initiale (coup de tête) → c'est le but.
-- Décision GOÛT (Aziz tranche) si borderline/hors-niche ; décision TECHNIQUE (Claude tranche) si données claires.
+**1. DÉCOUVERTE LARGE (TubeLab, ~10 min)** — sphère Afrique FR, PAS que géopo (rester ouvert à ce qui se démarque) :
+   - `search_outliers` mots-clés LARGES (`["Afrique", "Africa economy", "histoire africaine"...]`), `language:["fr"]`,
+     `classificationIsFaceless:true`, `durationFrom:360`, tri `averageViewsRatio` desc → vidéos qui SURPERFORMENT.
+   - `search_channels` (niche + faceless + ratio vues/subs élevé) → CHAÎNES qui montent (≠ vidéos).
+   → Sortie : 3-4 vidéos/sujets qui SE DÉMARQUENT.
+
+**2. TIMING — éliminer les sujets FROIDS (`last30days` skill, ~10 min)** :
+   - Une vidéo à succès peut dater de 1 an → sujet refroidi/mort. last30days dit ce qui est CHAUD MAINTENANT
+     (Reddit/X/YouTube/TikTok/news). → garder les 2-3 sujets ENCORE vivants, éliminer les froids AVANT de dépenser
+     des crédits à remonter les fils. (TubeLab=passé ; last30days=présent.)
+
+**3. REMONTER LE FIL — sur 2-3 candidats SEULEMENT (le "fil d'Ariane", ~20 min)** :
+   - `search_related_outliers` par **`videoId`** (PAS par chaîne — leçon N°0) → qui d'autre a traité ça, quels angles.
+   - `get_video_comments` (yt-dlp gratuit de préférence) → ce que le public VALIDE / REPROCHE / RÉCLAME = matière à angle.
+   - transcript (yt-dlp gratuit) → quel angle est DÉJÀ pris → donc lequel est LIBRE pour nous.
+   - ⚠️ plafonner à 2-3 vidéos max (coût/temps). Ne pas remonter le fil sur tout.
+
+**4. SYNTHÈSE ANGLE (~10 min)** — croiser last30days + commentaires + transcripts :
+   - l'angle FRAIS du moment (l'actu qui relance le sujet) + l'angle analyste LIBRE (camp 2, PAS militant — cf.
+     [[DECODE-modeles-fr-afrique]] : World View/Open Box = doc neutre ; Yamb/Traoré = militant à éviter).
+   - ⚠️ PIÈGE d'angle : si tous les outliers qui marchent sont militants/racoleurs, le sujet "marche" mais pas pour
+     nous → trouver l'angle analyste distinct OU écarter (leçon Caspian). NB : l'outil ne donne pas d'« idée toute
+     faite » — il donne la MATIÈRE (outliers + commentaires + trends), c'est NOUS qui déduisons l'angle inédit.
+   - pré-TITRE testé (doctrine titres : fait + conséquence + cause inattendue), DISTINCT des militants.
+
+**5. VERDICT** :
+   - Chaud (last30days) + outliers passés + angle analyste libre + demande FR prouvée + matière dispo → **GO**.
+   - Froid OU seulement angles militants OU aucun angle distinct → **NO-GO ou RÉ-ANGLER**.
+   - Souvent le gate REDIRIGE vers un MEILLEUR sujet que l'idée initiale (coup de tête) = c'est le but.
+   - Décision GOÛT (Aziz tranche) si borderline/hors-niche ; TECHNIQUE (Claude tranche) si données claires.
+   → On sort avec : SUJET validé + ANGLE libre + pré-TITRE + ce que le public veut + FORMAT pressenti.
+   → SEULEMENT ENSUITE : pré-production (script → DA-brief visuel → code). Jamais avant.
 
 ## RAPPEL — notre avantage structurel
 Notre production est DATA-DRIVEN Remotion : un short/carrousel coûte une fraction d'un long (vs LeChefOtaku qui
