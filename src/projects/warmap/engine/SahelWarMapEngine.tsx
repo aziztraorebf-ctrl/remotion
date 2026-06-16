@@ -3567,8 +3567,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* ======================================================
           CARTON TITRE INTRO — JAMAIS dans une couche Partie (intro/outro/CTA = assemblage final global).
+          Masque aussi en acte1Refonte : le viseur crosshair EST le seul hook (decision Aziz, sans carton/titre).
           ====================================================== */}
-      {!isPartie && (
+      {!isPartie && !acte1Refonte && (
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center",
           opacity: introOp, pointerEvents: "none" }}>
         <div style={{ ...plaque, textAlign: "center", padding: "34px 60px",
