@@ -8,6 +8,8 @@ import {
   addCountryHighlight,
   ISO,
 } from "../../../_shared/mapbox/MapboxBase";
+import { drawResourceTexture, resourceImageId } from "../../../_shared/mapbox/resourceTextures";
+import { pushCanvas } from "../../../_shared/mapbox/flagCanvas";
 
 // Beat 1 — Segment A (0:00 – 0:12)
 // Carte GéoAfrique V5 plein écran — Mercator top-down
@@ -63,7 +65,21 @@ export const Beat1: React.FC = () => {
       safe("landcover", "fill-color",       "#545454");
       safe("water",     "fill-color",       "#2a4f72");
       safe("water-shadow", "fill-color",    "#2a4f72");
-      addCountryHighlight(map, ISO.SENEGAL, SENEGAL_GOLD, 0.55, 2, "b1-");
+      // Bordure gold du Senegal (fill quasi nul : la texture ressource porte le remplissage)
+      addCountryHighlight(map, ISO.SENEGAL, SENEGAL_GOLD, 0.08, 2, "b1-");
+      // ResourceTextureFill (petrole) : le Senegal se REMPLIT de sa ressource au lieu d'un aplat plat
+      const oilCanvas = drawResourceTexture("oil", 256);
+      pushCanvas(map, resourceImageId("oil"), oilCanvas);
+      if (!map.getLayer("b1-res-sen")) {
+        map.addLayer({
+          id: "b1-res-sen",
+          type: "fill",
+          source: "mapbox-country-boundaries",
+          "source-layer": "country_boundaries",
+          filter: ["==", ["get", "iso_3166_1_alpha_3"], ISO.SENEGAL],
+          paint: { "fill-pattern": resourceImageId("oil"), "fill-opacity": 0.9 },
+        });
+      }
     });
 
     mapRef.current = map;
