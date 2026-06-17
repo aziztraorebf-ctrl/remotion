@@ -55,6 +55,7 @@ import { Partie2Blocage } from "../parties/Partie2Blocage";
 import { Partie3Rupture } from "../parties/Partie3Rupture";
 import { Partie4Cout } from "../parties/Partie4Cout";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
+import { WarMapPlaque } from "../parties/WarMapPlaque";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -3226,7 +3227,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             const RESP_PERIOD = 72; // ~2.4s a 30fps : respiration lente
             const osc = (Math.sin((sinceCity / RESP_PERIOD) * Math.PI * 2) + 1) / 2; // 0..1
             ringScale = 1.0 + osc * 0.25; // amplitude faible 1.0 -> 1.25
-            ringOp = (0.32 + osc * 0.18) * appearOp; // douce 0.32..0.50, jamais clignotement fort
+            // FIX contraste (Aziz) : anneau plus franc pour rester VISIBLE sur fond ivoire,
+            // mais oscillation douce conservee (respiration, pas strobe).
+            ringOp = (0.55 + osc * 0.30) * appearOp; // 0.55..0.85, nettement visible
           } else {
             const PULSE_PERIOD = 42;
             const PULSE_COUNT = 3;
@@ -3240,6 +3243,40 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             ringOp = (1 - t) * 0.7 * appearOp * pulseFade;
           }
           const BEIGE = "#F3E9C8"; // beige clair lumineux (demande Aziz)
+          // FIX contraste (Aziz) : en acte1Refonte l'anneau prend la COULEUR DU PAYS
+          // (ocre/brique/sarcelle) au lieu du beige invisible sur le fond ivoire.
+          const countryColor = SAHEL_COUNTRY_COLORS[country] ?? "#3A2A18";
+          if (isRefonte) {
+            // STRUCTURE acte1Refonte : anneau + micro-centre dans le div parent geo-ancre,
+            // PLAQUE elegante (WarMapPlaque) rendue en sibling (elle se positionne elle-meme
+            // en absolute via sa prop pos). Remplace l'ancien label texte nu.
+            return (
+              <React.Fragment key={`pulse-${country}`}>
+                <div style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
+                    transform: "translate(-50%, -50%)", opacity: appearOp, pointerEvents: "none" }}>
+                  {/* anneau pulsant — couleur du pays, opacite franche, respiration douce */}
+                  <div style={{ position: "absolute", left: "50%", top: "50%",
+                    width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
+                    border: `3px solid ${countryColor}`,
+                    transform: `scale(${ringScale})`, opacity: ringOp }} />
+                  {/* micro-centre : meme couleur que le pays (coherence) */}
+                  <div style={{ position: "absolute", left: "50%", top: "50%",
+                    width: 4, height: 4, marginLeft: -2, marginTop: -2, borderRadius: "50%",
+                    background: countryColor, opacity: 0.8 * appearOp }} />
+                </div>
+                {/* PLAQUE elegante geo-ancree : accent = couleur du pays (relie plaque <-> pays) */}
+                <WarMapPlaque
+                  frame={frame}
+                  name={cityName}
+                  pos={cityPos}
+                  appearAt={cityStart}
+                  hideAt={460}
+                  accent={countryColor}
+                  size={18}
+                />
+              </React.Fragment>
+            );
+          }
           return (
             <div key={`pulse-${country}`} style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
                 transform: "translate(-50%, -50%)", opacity: appearOp, pointerEvents: "none" }}>
@@ -3248,18 +3285,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                 width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
                 border: `2.5px solid ${BEIGE}`,
                 transform: `scale(${ringScale})`, opacity: ringOp }} />
-              {/* centre : gros point plein dashboard (modes finaux) OU petit ancrage discret
-                  (acte1Refonte, decision Aziz Task 5c : retirer le point plein lumineux). */}
-              {isRefonte ? (
-                <div style={{ position: "absolute", left: "50%", top: "50%",
-                  width: 4, height: 4, marginLeft: -2, marginTop: -2, borderRadius: "50%",
-                  background: BEIGE, opacity: 0.7 * appearOp }} />
-              ) : (
-                <div style={{ position: "absolute", left: "50%", top: "50%",
-                  width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
-                  background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
-                  boxShadow: `0 0 8px ${BEIGE}` }} />
-              )}
+              {/* centre : gros point plein dashboard (modes finaux) */}
+              <div style={{ position: "absolute", left: "50%", top: "50%",
+                width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
+                background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
+                boxShadow: `0 0 8px ${BEIGE}` }} />
               {/* label ville — ENCRE sur halo réserve parchemin (anti-slop, DA downstream :
                   plus de cartouche blanc qui "flotte" sur le parchemin). */}
               <div style={{ position: "absolute", left: "50%", top: 14,
