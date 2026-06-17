@@ -54,6 +54,8 @@ import { Partie1Origine } from "../parties/Partie1Origine";
 import { Partie2Blocage } from "../parties/Partie2Blocage";
 import { Partie3Rupture } from "../parties/Partie3Rupture";
 import { Partie4Cout } from "../parties/Partie4Cout";
+import { ProtoFicelles } from "../parties/ProtoFicelles";
+import { ProtoVide } from "../parties/ProtoVide";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import { WarMapPlaque } from "../parties/WarMapPlaque";
 import {
@@ -1076,6 +1078,10 @@ export type SahelTestProps = {
   // identique (caméra + allumage 3 pays calés narration V5, hérite isFinalLook). Le look épuré
   // (contours nationaux colorés P3/P4) + hook viseur crosshair viennent dans les tâches suivantes.
   acte1Refonte?: boolean;
+  // PROTOS DA divergence (jetables) : concepts d'ouverture alternatifs (ficelles / vide laissé).
+  // Héritent du look acte1Refonte (carte épurée + contours). Couches dans leur propre fichier.
+  acte1ProtoFicelles?: boolean;
+  acte1ProtoVide?: boolean;
   // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
   // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
   ph1Fullscreen?: boolean;
@@ -1108,7 +1114,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   partie2 = false,
   partie3 = false,
   partie4 = false,
-  acte1Refonte = false,
+  acte1Refonte: acte1RefonteProp = false,
+  acte1ProtoFicelles = false,
+  acte1ProtoVide = false,
   countryBordersTest = false,
   ph1Fullscreen = false,
   proto24 = false,
@@ -1122,6 +1130,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   // `acte1Final` seul reste pour ce qui est BORNÉ à l'Acte 1 (respiration finale f2299).
   // partie1/partie2 héritent du LOOK Acte 1 (jetons/taches/palette/grain) comme acte2,
   // mais SANS les blocs B1 legacy (qui restent gated sur `acte2` seul).
+  // PROTOS DA (jetables) : héritent du LOOK épuré acte1Refonte (carte épurée + contours +
+  // HUD off + carton/CEDEAO off) via cette variable. MAIS le viseur crosshair reste gardé sur
+  // `acte1RefonteProp` seul (les protos REMPLACENT le hook par leur propre concept).
+  const acte1ProtoActif = acte1ProtoFicelles || acte1ProtoVide;
+  const acte1Refonte = acte1RefonteProp || acte1ProtoActif;
   const isFinalLook = acte1Final || acte2 || partie1 || partie2 || partie3 || partie4 || proto24 || countryBordersTest || acte1Refonte;
   // `isPartie` = un mode Partie V5 actif (factorise les gates communs).
   const isPartie = partie1 || partie2 || partie3 || partie4 || proto24;
@@ -3964,6 +3977,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           ====================================================== */}
       {/* REFACTOR V5 — couches Partie (canari/blocage), SOUS le grain papier.
           Encre/taches dessinées par-dessus la carte+jetons, sous la texture d'archive. */}
+      {/* PROTOS DA divergence (jetables) — couches concept d'ouverture, sous le grain. */}
+      {acte1ProtoFicelles && <ProtoFicelles ctx={sahelCtx} />}
+      {acte1ProtoVide && <ProtoVide ctx={sahelCtx} />}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
       {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
@@ -4108,7 +4124,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           centre AES via sahelCtx.project().
           Fenetre : f0..420 (recherche -> lock f135 juste avant "chassent" f145 -> effacement f350-400).
           ============================================================ */}
-      {acte1Refonte && frame >= 0 && frame < 420 && (() => {
+      {acte1RefonteProp && !acte1ProtoActif && frame >= 0 && frame < 420 && (() => {
         const CL_INK = "#3A2A18";        // trait de recherche brun fonce (lisible sur parchemin)
         const CL_LOCK = "#B14B3C";       // accent lock brique sobre
         const LOCK_AT = 135;             // verrouillage juste avant "chassent" (f145)

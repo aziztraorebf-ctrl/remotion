@@ -232,6 +232,7 @@ import { CrosshairLock } from "./projects/_shared/hooks-lib/CrosshairLock";
 import { RedlineContagion } from "./projects/_shared/hooks-lib/RedlineContagion";
 import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
 import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
+import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1018,7 +1019,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Senegal-Beat0-Accroche"
             component={SenegalBeat0}
-            durationInFrames={1095}
+            durationInFrames={979}
             fps={30}
             width={1920}
             height={1080}
@@ -1458,6 +1459,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ArteryDrain-Niger-H" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1920} height={1080} />
         {/* PROTOTYPE hook ouverture Acte 1 AES (CrosshairLock + audio V5, cale sur les 3 verbes) */}
         <Composition id="HookAES-Acte1-Proto" component={HookAESActe1Proto} durationInFrames={600} fps={30} width={1920} height={1080} />
+        {/* MINI-RENDER VALIDATION — Soudan Acte 1 ouverture (carte + jeton Hemeti + forces RSF + contour, audio fact-check) */}
+        <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />
@@ -2880,6 +2883,25 @@ export const RemotionRoot: React.FC = () => {
           id="SahelActe1-Refonte"
           component={SahelWarMapEngine}
           defaultProps={{ acte1Refonte: true }}
+          durationInFrames={2126}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTOS DA divergence (jetables) — concepts d'ouverture alternatifs (~10s). */}
+        <Composition
+          id="SahelActe1-ProtoFicelles"
+          component={SahelWarMapEngine}
+          defaultProps={{ acte1ProtoFicelles: true }}
+          durationInFrames={2126}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="SahelActe1-ProtoVide"
+          component={SahelWarMapEngine}
+          defaultProps={{ acte1ProtoVide: true }}
           durationInFrames={2126}
           fps={30}
           width={1920}
