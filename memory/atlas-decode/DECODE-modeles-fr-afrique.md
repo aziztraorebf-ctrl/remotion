@@ -28,6 +28,16 @@ demande — c'est l'ANGLE : le marché est polarisé entre 2 camps. Notre opport
   qualité positive.** Petite chaîne émergente, niche exacte (à surveiller).
 - **Max Bellona** (237k subs) — nos seeds (RDC 566k, "Corée du Nord d'Afrique" 1.3M). Carto FR premium = notre réf visuelle.
 
+### CAMP 3 — VULGARISATION MÉGAPROJETS/INGÉNIERIE (qualité `positive`, ratios ÉNORMES) — ⭐ FILON DÉCOUVERT 2026-06-16
+Découvert en remontant le fil par videoId (seeds = Grand Inga RDC + Top Mégaprojets Maroc + Tunnel Afrique-Europe).
+Le sujet "mégaprojet africain expliqué" sort sur PLUSIEURS seeds = vraie demande (pas un biais de seed). Ratios ×8 à ×17.
+- ⭐ **Giga Builds FR** (@GigaBuild, 8.1k subs SEULEMENT) — "Plus grand stade du monde (Maroc)" **×17.6 / 265k**, "Top 6 Mégaprojets Maroc" ×10 / 150k, "Grand Paris Express" ×8.6. Format IDENTIQUE au nôtre, petit canal sous-monétisé = preuve qu'un nouvel entrant perce VITE sur ce filon. Ouvre par contraste d'échelle chiffré ("50 Mds€... proportionnellement = 700 Mds pour la France") + boucle ouverte. MAIS descriptif, **PAS de carte vivante**.
+- ⭐ **Perduchan** (@Perduchan, 14k subs) — "Pont Gibraltar DANGER" **×13.8 / 379k**, "Égypte tranche le Sahara" ×8.8 / 242k. Angle "voici pourquoi ce projet est dangereux / va tout changer" = tension dramatique sur un mégaprojet.
+- **Unveiling Marvels** (@UnveilingMarvels, 22k) — "Ormuz / chokepoints pétroliers" ×5.3 / 217k, "pipelines eau mer Arabie" ×5.1 / 208k. = géographie stratégique (chokepoints) qui cartonne.
+- **aTech** (@aTechFR, 448k), **BeyondTheBuild Français**, **Le Bon Vendeur du Burkina** ("Autoroute Ouaga-Bobo" ×6.7 / 112k, registre patriote local chaleureux mais pas analyste macro).
+- ⚠️ **PIÈGE D'ANGLE confirmé noir sur blanc** : MÊME sujet en militant = "Traore SHOCK The World! Build Giant Canal WITHOUT WEST (IMF, USAID, EU)" ×9 / 292k / ~7-14k$/mois. Le mégaprojet africain marche ÉNORMÉMENT en registre souverainiste-anti-Occident → c'est ce qu'on REFUSE. L'angle analyste neutre du même sujet est LIBRE.
+- → **L'angle "mégaprojet africain + CARTE VIVANTE data-driven + analyste macro (impact mondial)" est VIDE.** Personne ne le tient. = notre différentiel exact. Voir [[GAZODUC-MEGAPROJETS-SUJET]].
+
 ## CE QUE ÇA NOUS DONNE (actionnable)
 1. **La demande FR Sahel/souveraineté est prouvée** (pas besoin de partir en anglais — cf. débat marché Caspian FR).
 2. **Notre différentiel = camp 2 PREMIUM** : documentaire analyste posé + CARTE VIVANTE data-driven. World View/Open

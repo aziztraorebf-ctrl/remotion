@@ -83,16 +83,32 @@ Trois niveaux d'overlay sur la carte, selon la densité d'information :
 - Citations courtes
 - **Règle carte :** carte figée 2-3 secondes maximum, puis slow drift reprend. Le visuel respire avec l'audio.
 
-**Anti-pattern absolu :** data-viz plein écran, graphique qui remplace la carte, insert séparé de la carte. Ces éléments appartiennent à Souverain Mid-form, pas à War-Map Long.
+> ⚠️ **DÉCISION RÉVISÉE (Aziz 2026-06-16, retour d'expérience AES) — LA RÈGLE "100% CARTE" ÉTAIT TROP RIGIDE.**
+> Constat en finalisant l'AES : forcer TOUT sur la carte, tout le temps, devient contre-intuitif et pousse à des
+> raccourcis artificiels qui sonnent faux — surtout pour les concepts SANS ancrage géographique (franc CFA,
+> nombre de réfugiés, mécanisme abstrait). Les chaînes plus avancées utilisent la carte comme terrain primaire
+> MAIS n'hésitent pas à faire un plein écran ou un overlay solide quand ça sert le propos.
+>
+> **NOUVELLE RÈGLE (hiérarchie de sauvetage) :**
+> 1. **Carte = terrain primaire, défaut absolu.** On reste dessus le plus souvent possible, dès que le contenu a
+>    un ancrage géographique. C'est la signature.
+> 2. **Quand un beat COINCE** (concept abstrait, chiffre global, contexte sans lieu précis) → ne PAS se forcer à
+>    un artifice cartographique. Deux outils de sauvetage légitimes, dans l'ordre :
+>    - **Overlay SEMI-TRANSPARENT dynamique** sur la carte (garde le lien spatial) — 1er réflexe.
+>    - **Overlay SOLIDE ou PLEIN ÉCRAN** (carte masquée) — quand l'info est lourde/dynamique OU purement
+>      abstraite et que la carte dessous parasiterait. Légitime, pas un échec.
+> 3. **Critère de bascule (inchangé) : la COMPLEXITÉ + l'ancrage décident.** Info simple + géo-ancrée → carte.
+>    Info lourde/abstraite/sans lieu → overlay solide ou plein écran. Le test : *"est-ce que forcer ça sur la
+>    carte sonnerait faux ou artificiel ?"* Si oui → sauver par overlay/plein écran.
+> 4. **Condition non-négociable (inchangée) : DYNAMIQUE, jamais une plaque figée.** Plein écran = data-viz qui
+>    respire (count-up, reveals, secondary motion), pas un carton statique.
+>
+> Exemples AES qui justifient la révision : le franc CFA et le nombre de réfugiés résistaient à la carte — un
+> overlay/plein écran les aurait mieux servis qu'un artifice géographique.
 
-**DÉCISION VERROUILLÉE (Aziz 2026-06-11) — War-Map = 100% carte, ZÉRO plein écran.**
-Question posée explicitement (faut-il des scènes plein écran façon King & Generals docs ?). Réponse tranchée :
-NON. La War-Map ne quitte JAMAIS la carte. C'est la SIGNATURE et l'avantage concurrentiel (le plan-séquence
-cartographique continu est rare et difficile ; le "carte + cutaway plein écran" est le standard documentaire
-banal). Le plein écran (portraits, BigStat, headlines, HERO DATA) reste réservé au **Souverain Mid-form**.
-Les "moments forts" en War-Map se font PAR la carte : mouvements caméra (pull-back/push-in), board clearing,
-pulses, assombrissement, vide d'opacité — pas par une coupe hors-carte. Risque évité : une fois UNE scène
-plein écran autorisée, on s'autorise la facilité dès qu'un beat est dur à rendre sur la carte → érosion de l'identité.
+**Anti-pattern résiduel :** un plein écran STATIQUE (plaque figée), ou un plein écran utilisé par PARESSE alors que
+le beat est géo-ancré et tiendrait très bien sur la carte. Le plein écran se MÉRITE (info lourde/abstraite), il ne
+remplace pas la carte par confort.
 
 **Les 3 registres d'enrichissement AUTORISÉS (sans quitter la carte) — validés 2026-06-11 :**
 1. **Portraits/visages projetés SUR la carte** — médaillon encre ancré à un lieu (façon jeton-visage du

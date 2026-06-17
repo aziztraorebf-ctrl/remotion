@@ -95,7 +95,28 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    - Souvent le gate REDIRIGE vers un MEILLEUR sujet que l'idée initiale (coup de tête) = c'est le but.
    - Décision GOÛT (Aziz tranche) si borderline/hors-niche ; TECHNIQUE (Claude tranche) si données claires.
    → On sort avec : SUJET validé + ANGLE libre + pré-TITRE + ce que le public veut + FORMAT pressenti.
-   → SEULEMENT ENSUITE : pré-production (script → DA-brief visuel → code). Jamais avant.
+   → SEULEMENT ENSUITE : pré-production. Jamais avant. **MAIS le 1er livrable de la pré-prod = le POSITIONNEMENT (ci-dessous), AVANT le script.**
+
+## ⭐ ÉTAPE 6 — L'ÉTOILE POLAIRE DE POSITIONNEMENT (1er livrable de pré-prod, AVANT le script) — Aziz 2026-06-16
+Une fois le sujet validé (étapes 0-5), AVANT d'écrire le script ou de choisir la manière visuelle : **écrire l'étoile polaire**. C'est ce qui empêche les dérives en aval — sans elle, on écrit des actes « corrects » qui glissent vers le générique. Avec elle, chaque décision (titre, phrase, choix visuel) a un juge : *« est-ce que ça sert notre différenciation ? »*.
+
+**L'ordre canonique de pré-prod (tous formats) :**
+1. **SUJET** (la demande prouvée — étapes 0-5 ci-dessus). *Le sujet décide du clic.*
+2. **POSITIONNEMENT** (l'étoile polaire — cette étape). *Pourquoi NOUS, ce qu'on apporte de différent.*
+3. **DONNÉES** (le factuel tracé, qui PRIME sur le ressenti/l'émotion). Gate factuel.
+4. **PUIS** seulement : la manière visuelle, le script, le code.
+
+**Ce que contient l'étoile polaire :**
+- Pourquoi cette vidéo (à quel besoin du public on répond — souvent issu des commentaires de l'étape 3).
+- Ce qui nous DIFFÉRENCIE des concurrents (le trou éditorial qu'on occupe vs l'émotionnel / le jargon / le superficiel).
+- La phrase-étoile (le test de réussite : qu'est-ce que le spectateur ressort en ayant COMPRIS, pas juste ressenti).
+- Implication titrage + ton (déclaratif/mécanique, pas émotionnel).
+
+**Proportionné à l'enjeu (pas de bureaucratie) :**
+- **Formats longs/de fond** (mid-form, War-Map Long, Atlas) → 1 page de positionnement (ex. modèle : [[soudan-midform-POSITIONNEMENT]]).
+- **Formats courts** (Short 90s, carrousel) → 1 LIGNE suffit (l'angle différenciant en une phrase). Ne pas alourdir un Short d'une page formelle.
+
+**Principe de fond** : notre seul avantage concurrentiel DÉFENDABLE = la JUSTESSE (données > émotion). Si on est « l'émotionnel en plus joli » → interchangeable. Si on est « la compréhension limpide et rigoureuse » → seuls sur le créneau. Le positionnement fige CE choix avant qu'on écrive une ligne. Cohérent avec [[CHARTE-EDITORIALE-SOUVERAIN]] (pas de méchant, multi-perspective) et les doctrines de script (données > ressenti) — le positionnement les ACTIVE pour un projet précis, il ne les remplace pas.
 
 ## RAPPEL — notre avantage structurel
 Notre production est DATA-DRIVEN Remotion : un short/carrousel coûte une fraction d'un long (vs LeChefOtaku qui

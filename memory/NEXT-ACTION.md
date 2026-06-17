@@ -31,17 +31,39 @@
 > **RESTE (= refonte Acte 1 ci-dessous)** : brancher un hook sur la vraie vidéo AES + narration.
 > Différés : version Short verticale · effets AE secondaires (halftone) · morph path (sujet historique).
 
+## ⭐ PRIORITÉ 1 (APRÈS AES) — SOUDAN MID-FORM 7-8min (pré-prod TRÈS AVANCÉE, session 2026-06-16)
+
+> **SUJET VALIDÉ GO** + **grosse session de pré-prod faite le 2026-06-16** (données, scripts Actes 1-2, audio, pipeline render validé, positionnement).
+> 🗂️ **POINT D'ENTRÉE = `memory/projects/soudan-midform.md`** → pointe vers tout le dossier (POSITIONNEMENT, DONNÉES, STORYBOARD-ACTE1/2, ACTE3-NOTE, AUDIO-ETAT).
+>
+> **DÉJÀ FAIT (2026-06-16)** :
+> - ✅ Données fact-checkées tracées (Tavily + Deep Research + Sonar Pro) — `soudan-midform-DONNEES.md`.
+> - ✅ Scripts Actes 1 + 2 figés fact-checkés + audio GéoAfrique V3 (Acte 1 OK, Acte 2 à régénérer post-correction temporelle).
+> - ✅ Storyboards Actes 1-2 (jeton 2-visages = symbole neuf, garde-fous).
+> - ✅ Mini-render pipeline validé : `src/projects/warmap/SoudanActe1Ouverture.tsx` (https://files.catbox.moe/dyz9tf.mp4).
+> - ✅ Étoile polaire positionnement + cadrage serré tranché.
+>
+> **NEXT (reprise pré-prod Soudan)** :
+> 1. **Acte 3** : combler 2 trous recherche (Russie/Wagner-or-sanctions + Égypte) → `soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`, PUIS écrire l'acte.
+> 2. Actes 4 (coût humain — DOIT inclure nuance génocide ciblé Darfour, voir DONNÉES) + 5 (perspective ouverte).
+> 3. Au lock audio : check + régénération sélective acte par acte (`soudan-midform-AUDIO-ETAT.md`).
+> 4. Production : vrais jetons Hemeti + Al-Burhan (Gemini) → coder Acte 1 complet cadrage serré.
+>
+> **Short Soudan en attente** : ACLED toujours inaccessible (compte ordinaire ; Aziz envisage compte business). Finaliser en teaser/parallèle.
+
+---
+
 ## 🟡 PRIORITÉ 2 — WAR-MAP SAHEL : PASSE SÉQUENTIELLE scène par scène (révision méthode 2026-06-15)
 
 > ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%
 > (sinon re-découpage après = complexe pour rien). Ordre : **Acte1 (hook+corps) → P1 → P2 → P3** (P4 ✅ déjà OK).
 >
 > **✅ P4 VALIDÉE + corrigée** (11 corrections, render `hdxsgi`, `wip/p4-FULL-v3-*.mp4`). Voir `PLAN-REFONTE-P4-POLISH.md`.
-> **▶ ACTE 1 = à refaire à la grammaire P3/P4** (gros blocs sahel-fill → contours qui flashent ; supprimer
->   légende factions + timeline ; recaler triggers sur narration-v5-alignment.json — actuellement calés v1).
->   ✅ **Le HOOK est DÉBLOQUÉ** : bibliothèque livrée (`hooks-lib/`). Candidat n°1 = `CrosshairLock` caméra
->   serrée (catbox `9q75sr`) OU `MaskReveal`/`RedlineContagion`. VRAI TEST = brancher un hook en tête de
->   la vraie vidéo AES + narration. Voir `HOOKS-LIBRARY-CATALOGUE.md`. Plan Acte 1 : `PLAN-REFONTE-ACTE1-HOOK.md`.
+> **▶ ACTE 1 = SESSION DÉDIÉE — ⭐ LIRE `memory/episodes/warmap-sahel/PLAN-REFONTE-ACTE1.md` EN PREMIER.**
+>   ACQUIS (2026-06-16) : triggers Acte 1 RECALÉS sur V5 + synchro VALIDÉE Aziz (catbox 18wsph, commit a43f2ab) ·
+>   prototype hook CrosshairLock+V5 testé (catbox bu8tnl, commit 3e18769). RESTE (4 problèmes, voir PLAN) :
+>   (P1) carte hook ≠ carte moteur · (P2) zoom de transition hook→corps à ~10s (idée Aziz) · (P3) retirer
+>   légende+timeline + grammaire P3/P4 contours · (P4) recaler timing question. Branche `feat/hooks-library`.
 > **PUIS** P1, P2, P3 revues une par une. **PUIS SEULEMENT** assemblage (concat + narration globale
 >   `narration-v5-expressive.mp3` + musique **D (Montée maîtrisée)** choisie + mix + vérif anti-figé).
 > 🎵 Musique : 6 options générées (`public/_shared/audio/sahel-warmap/music/`), Aziz a choisi **D-montee-maitrisee**.
@@ -405,6 +427,14 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 
 ## Projets en cours — decision immediate
 
+### ⭐ SUJET VALIDÉ EN RÉSERVE (gate 2026-06-16) — Mégaprojets / Gazoduc Nigeria-Maroc-Europe
+**Etat** : SUJET passé GO par le gate complet [[SUJET-PRIME-SUR-PRODUCTION]] (test 6 étapes rodé, ~22 crédits TubeLab).
+Toutes les bases éditoriales sont posées : pourquoi + angle (basculement de dépendance énergétique sur carte) +
+pré-titre + format tranché (**mid-form Souverain Mapbox** = 1 Map continue + inserts data-viz Remotion ; PAS War-Map).
+**Decision Aziz** : à produire en SESSION DÉDIÉE quand War-Map/Sénégal/Maroc seront finis. Ne rien perdre.
+**Reprise** : ouvrir `memory/GAZODUC-MEGAPROJETS-SUJET.md` (checklist de reprise) + `DECODE-modeles-fr-afrique.md` (camp 3).
+Reste alors : recherche données NMGP (km/coût/calendrier/13 pays/statut 2026) → script → DA-brief → code Mapbox.
+
 ### 0. Carrousel "Good News" — pipeline hebdo PRET (2026-06-02)
 **Etat** : Carrousel #1 programmé (3 juin). **Pipeline semi-auto data-driven COMPLET** : carousel-data.ts (source unique) + scripts prepare-goodnews-weekly.py / render-goodnews-carousel.sh / schedule-goodnews-*.py. Tout référencé (README + CLAUDE.md + index).
 **Decision en attente** : aucune — pour le carrousel #2, lancer le workflow (voir README good-news section "Pipeline DATA-DRIVEN").
@@ -442,11 +472,18 @@ Parite avec le systeme Mapbox atteinte. Avant tout beat Souverain Remotion/data-
 **Etat** : FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s, 1080x1920). Source `src/projects/souverain/petrole-patience-short/`. Programme Postiz lundi 9 juin 15h UTC (4 plateformes), titre "Decouvrir une fortune et rester pauvre : le pari du Senegal". = TEASER du mid-form. Niger uranium retire du 9 juin (standby, a reprogrammer).
 **Fait depuis le showcase** : drapeaux useClipFlags, hook FiberOptic+gold, plaques GeoCountryPlaque (Norvege+Senegal), CTA voix+plaque @koraetcartes, sous-titres, audio (musique 0.10 / SFX 0.35 / boom->ping).
 
-### 2. Senegal Petrole & Gaz — Assemblage final (PRIORITE 2)
-**Etat** : Tous beats valides. Reste : assemblage + SFX + correction dette sonore 70%→132%.
-**⚠️ ALERTE PUBLICATION** : le mid-form est programme Postiz le **20 juin 15h UTC** mais pointe vers `senegal-petrole-gaz-FINAL-compressed.mp4` du **25 mai** (PRE-corrections FC-2 dette 132% + FC-4 Beat0). AVANT le 20 juin : assembler la version corrigee + re-uploader/remplacer le media Postiz, sinon une version fausse part en ligne.
-**Decision en attente** : aucune — executer directement.
-**Demarrer** : lire `memory/STARTER-PROMPT-senegal-assemblage-final.md`
+### 2. Senegal Petrole & Gaz — MAKEOVER PREMIUM en cours (2026-06-16) ⭐
+**⭐ DÉMARRER : `memory/STARTER-PROMPT-senegal-makeover-premium.md`** (état réel + plan A-E complet).
+⛔ `STARTER-PROMPT-senegal-assemblage-final.md` = PÉRIMÉ (ses FC-2/FC-4 sont DÉJÀ faits).
+**Etat RÉEL vérifié dans la vidéo (pas les notes)** : la version du 25 mai est **DÉJÀ PUBLIABLE** —
+FC-2 (dette 132%) ✅ + FC-4 (Beat0 deux dates) ✅ + assemblage ✅. Le STATUS qui disait "à corriger" était PÉRIMÉ.
+**Deadline Postiz 20 juin = DÉCALABLE** (Aziz) — la qualité prime. Pas d'urgence à publier une version non polie.
+**Fait cette session (commité, branche feat/hooks-library)** : fix incohérence 80%→132% (Beat14) · lot kraft premium
+(ombre+grain, composant `KraftDepth`, Beat11/12/13) · POC ResourceTexture pétrole sur Sénégal (Beat1) ·
+upload vidéo Gemini fiable confirmé (`memory/gemini-video-upload-fiable.md`).
+**RESTE** (détail dans le starter) : A) chantier carte vivante (4 beats + pitch 32°), B) donut/temps morts navy,
+C) outro teaser AES, D) ⭐ audio V3 expressif (narration V1 plate → re-timing 8 beats, session dédiée),
+E) assemblage + remplacer média Postiz.
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.

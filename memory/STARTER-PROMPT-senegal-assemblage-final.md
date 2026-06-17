@@ -1,5 +1,10 @@
 # STARTER PROMPT — Sénégal Pétrole & Gaz — Assemblage final + corrections
 
+> ⛔⛔ **PÉRIMÉ (2026-06-16) — NE PAS SUIVRE.** Ses corrections FC-2 (132%) et FC-4 sont DÉJÀ FAITES
+> (vérifié dans la vraie vidéo), et "Beat11 = calebasse" est FAUX (c'est Beat12). La vidéo est déjà publiable.
+> ⭐ **STARTER À JOUR : `memory/STARTER-PROMPT-senegal-makeover-premium.md`** (makeover premium en cours).
+> Conservé uniquement pour la commande d'assemblage ffmpeg (section 3) qui reste valide.
+
 > Coller ce fichier en début de session.
 
 ---

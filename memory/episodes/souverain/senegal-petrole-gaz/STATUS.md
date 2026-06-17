@@ -1,5 +1,13 @@
-# STATUS — Sénégal Pétrole & Gaz (Mid-form 7min34s)
-> Mis à jour : 2026-06-01
+# STATUS — Sénégal Pétrole & Gaz (Mid-form 7min39s)
+> Mis à jour : 2026-06-16 (MAKEOVER PREMIUM en cours)
+
+> ⭐ **REPRISE : `memory/STARTER-PROMPT-senegal-makeover-premium.md`** (état réel + plan A-E).
+> ⚠️ **CE STATUS CI-DESSOUS (sections FC) EST PARTIELLEMENT PÉRIMÉ** — vérifié dans la vraie vidéo le 2026-06-16 :
+> - FC-2 (dette 132%) : ✅ DÉJÀ FAIT (calebasse 132% Beat12 + audio). PAS "à corriger".
+> - FC-4 (Beat0 deux dates) : ✅ DÉJÀ FAIT (visuel "22 MAI 2026" + audio "un mois plus tard").
+> - La dette/calebasse est dans **Beat12**, PAS Beat11 (le tableau ci-dessous se trompait de numéro).
+> - Incohérence 80% vs 132% (Beat14) : trouvée + corrigée le 2026-06-16.
+> - La vidéo du 25 mai est DÉJÀ PUBLIABLE. Le chantier en cours = MAKEOVER premium (carte vivante + kraft + audio V3), deadline décalable.
 
 ---
 

@@ -24,8 +24,10 @@ type: project
 
 | # | Sujet | Format | Pourquoi en priorité |
 |---|-------|--------|----------------------|
-| 1 | **Battle of Adwa 1896 (Éthiopie vs Italie)** | Atlas Long + Short | Atlas 5/5. Angle universel : "seule armée coloniale battue militairement — à cause d'une erreur de carte". Public large au-delà diaspora. Zéro piège éditorial. Sources solides. |
-| 2 | **Mali blocus carburant** | Souverain Short/Long | Dossier déjà ouvert. Angle économique, évite piège politique. Reprendre juin 2026+. |
+| 1 | **Soudan — guerre civile (angle proxys éco)** | War-Map Mid-form 7-8min | Validé gate SUJET-PRIME 2026-06-16. Ratio 6.1x outlier FR. Angle "qui alimente la guerre" inexistant en FR. Pré-prod à faire. Détail : `memory/projects/soudan-midform.md` |
+| 2 | **Mégaprojets / Gazoduc Nigeria-Maroc-Europe** | Souverain Mapbox Mid-form 5-7min | Validé gate SUJET-PRIME 2026-06-16. Ratio ×8–×17. Angle "qui dépend de qui" + carte vivante = créneau vide. Détail : `memory/GAZODUC-MEGAPROJETS-SUJET.md` |
+| 3 | **Battle of Adwa 1896 (Éthiopie vs Italie)** | Atlas Long + Short | Atlas 5/5. Angle universel : "seule armée coloniale battue militairement — à cause d'une erreur de carte". Public large au-delà diaspora. Zéro piège éditorial. Sources solides. |
+| 4 | **Mali blocus carburant** | Souverain Short/Long | Dossier déjà ouvert. Angle économique, évite piège politique. Reprendre juin 2026+. |
 
 ---
 
@@ -103,7 +105,7 @@ Ne pas proposer, ne pas relancer.
 
 | Sujet | Raison exclusion |
 |-------|-----------------|
-| Soudan — guerre RSF/SAF/El-Fasher | Génocide en cours, format non-monétisable, expertise terrain requise. Laisser aux journalistes d'investigation. |
+| ~~Soudan — guerre RSF/SAF/El-Fasher~~ | ~~Génocide en cours, format non-monétisable~~. **RÉVISÉ 2026-06-16** : gate SUJET-PRIME passé, angle proxys éco validé, déplacé en FILE D'ATTENTE #1. |
 | Xénophobie Afrique du Sud (dossier gelé) | Reprendre dans 2-3 mois selon décision Aziz. Pas avant. |
 | Sujets afrocentristes non-sourcés (Amen=Amen-Ra, Moses=Maat, Alkebulan) | Étymologie contestée. Risque crédibilité. |
 | Conflits armés actifs sans consensus sources | Même règle que Soudan. |

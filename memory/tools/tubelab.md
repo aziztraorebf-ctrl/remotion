@@ -57,4 +57,13 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
   dans notre niche exacte. À lancer en début de toute recherche de sujet.
 - GOTCHA : résultats volumineux → l'affichage tronque ; lire le fichier tool-result via python/jq.
 
-Liens : [[SUJET-PRIME-SUR-PRODUCTION]] · [[DECODE-sahel-chronicles]] · [[feedback_tubelab-editorial-filters]] · skill `last30days`.
+## TEST 2026-06-16 — GATE COMPLET 6 ÉTAPES (rodé, ~22 crédits : 158→136)
+Premier passage end-to-end du gate [[SUJET-PRIME-SUR-PRODUCTION]]. Validé : le workflow fonctionne et REDIRIGE.
+- ÉTAPE 1 `search_outliers` mots-clés FR larges → pépites (Tõnd Média, Perduchan, Unveiling Marvels).
+- ÉTAPE 2 `last30days` (skill) → sujet "grands projets africains" CHAUD (RDC/Inga, TGV CI, Tunisie <30j) → gardé.
+- ÉTAPE 3 `search_related_outliers` par **videoId** (2 seeds croisés) + transcripts **yt-dlp gratuit** (routage respecté).
+- ÉTAPES 4-5 → **GO** sur "mégaprojets africains / gazoduc Nigeria-Maroc-Europe", angle analyste+carte (libre). [[GAZODUC-MEGAPROJETS-SUJET]].
+- ⛔⛔ LEÇON N°0 VÉRIFIÉE EN DIRECT : le seed RDC a pollué vers la guerre (M23/Rwanda, qualité negative) ; le seed
+  mégaprojet-pur a convergé propre. Croiser 2 seeds = correction du biais. Confirme la règle, ne jamais 1 seul seed.
+
+Liens : [[SUJET-PRIME-SUR-PRODUCTION]] · [[GAZODUC-MEGAPROJETS-SUJET]] · [[DECODE-modeles-fr-afrique]] · [[DECODE-sahel-chronicles]] · [[feedback_tubelab-editorial-filters]] · skill `last30days`.
