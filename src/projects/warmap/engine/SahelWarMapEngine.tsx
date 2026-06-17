@@ -3217,16 +3217,28 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           // HIÉRARCHIE PULSE (plan upstream) : 3 ondes à l'apparition PUIS calme.
           // Évite le "sapin de Noël" (anneaux qui pulsent en boucle tout l'acte).
           const sinceCity = frame - cityStart;
-          const PULSE_PERIOD = 42;
-          const PULSE_COUNT = 3;
-          const inPulsePhase = sinceCity < PULSE_PERIOD * PULSE_COUNT;
-          const t = (sinceCity % PULSE_PERIOD) / PULSE_PERIOD;
-          const ringScale = 1 + t * 1.4;
-          // l'onde s'éteint progressivement sur les 3 pulses puis disparaît
-          const pulseFade = inPulsePhase
-            ? 1 - sinceCity / (PULSE_PERIOD * PULSE_COUNT)
-            : 0;
-          const ringOp = (1 - t) * 0.7 * appearOp * pulseFade;
+          const isRefonte = acte1Refonte;
+          let ringScale: number;
+          let ringOp: number;
+          if (isRefonte) {
+            // RESPIRATION CONTINUE DOUCE (decision Aziz Task 5c) : oscillation sin LENTE,
+            // amplitude faible, tant que la ville est visible. Pas d'extinction seche.
+            const RESP_PERIOD = 72; // ~2.4s a 30fps : respiration lente
+            const osc = (Math.sin((sinceCity / RESP_PERIOD) * Math.PI * 2) + 1) / 2; // 0..1
+            ringScale = 1.0 + osc * 0.25; // amplitude faible 1.0 -> 1.25
+            ringOp = (0.32 + osc * 0.18) * appearOp; // douce 0.32..0.50, jamais clignotement fort
+          } else {
+            const PULSE_PERIOD = 42;
+            const PULSE_COUNT = 3;
+            const inPulsePhase = sinceCity < PULSE_PERIOD * PULSE_COUNT;
+            const t = (sinceCity % PULSE_PERIOD) / PULSE_PERIOD;
+            ringScale = 1 + t * 1.4;
+            // l'onde s'éteint progressivement sur les 3 pulses puis disparaît
+            const pulseFade = inPulsePhase
+              ? 1 - sinceCity / (PULSE_PERIOD * PULSE_COUNT)
+              : 0;
+            ringOp = (1 - t) * 0.7 * appearOp * pulseFade;
+          }
           const BEIGE = "#F3E9C8"; // beige clair lumineux (demande Aziz)
           return (
             <div key={`pulse-${country}`} style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
@@ -3236,11 +3248,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                 width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
                 border: `2.5px solid ${BEIGE}`,
                 transform: `scale(${ringScale})`, opacity: ringOp }} />
-              {/* point plein beige + halo doux */}
-              <div style={{ position: "absolute", left: "50%", top: "50%",
-                width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
-                background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
-                boxShadow: `0 0 8px ${BEIGE}` }} />
+              {/* centre : gros point plein dashboard (modes finaux) OU petit ancrage discret
+                  (acte1Refonte, decision Aziz Task 5c : retirer le point plein lumineux). */}
+              {isRefonte ? (
+                <div style={{ position: "absolute", left: "50%", top: "50%",
+                  width: 4, height: 4, marginLeft: -2, marginTop: -2, borderRadius: "50%",
+                  background: BEIGE, opacity: 0.7 * appearOp }} />
+              ) : (
+                <div style={{ position: "absolute", left: "50%", top: "50%",
+                  width: 12, height: 12, marginLeft: -6, marginTop: -6, borderRadius: "50%",
+                  background: BEIGE, border: "2px solid rgba(46,31,10,0.55)",
+                  boxShadow: `0 0 8px ${BEIGE}` }} />
+              )}
               {/* label ville — ENCRE sur halo réserve parchemin (anti-slop, DA downstream :
                   plus de cartouche blanc qui "flotte" sur le parchemin). */}
               <div style={{ position: "absolute", left: "50%", top: 14,
