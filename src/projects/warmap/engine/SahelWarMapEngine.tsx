@@ -2309,10 +2309,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={F_HOOK_NIGER} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
           </Sequence>
-          {/* snap electrique — mort de l'anneau CEDEAO (au moment du pic du 3e pulse) */}
-          <Sequence from={F_HOOK_CEDEAO + 60} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.50} />
-          </Sequence>
+          {/* snap electrique — mort de l'anneau CEDEAO (au moment du pic du 3e pulse).
+              RETIRÉ en acte1Refonte (Aziz 2026-06-16) : anneau CEDEAO supprimé du hook
+              (peu lisible, pas différenciant) → son SFX n'a plus de support visuel. */}
+          {!acte1Refonte && (
+            <Sequence from={F_HOOK_CEDEAO + 60} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
+              <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.50} />
+            </Sequence>
+          )}
           {/* gong grave — impact convergence Liptako (au freeze) */}
           <Sequence from={F_HOOK_FREEZE} durationInFrames={Math.ceil(2.5 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/liptako-gong.mp3")} volume={0.58} />
@@ -2495,7 +2499,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           stroke-dasharray dont les espaces s'allongent = le lien se dissout.
           (choix Aziz : fissure, pas onde radar — ajustable au render)
           ====================================================== */}
-      {isFinalLook && showChrome && cedeaoOpA1 > 0 && hookPx.liptako && (() => {
+      {isFinalLook && !acte1Refonte && showChrome && cedeaoOpA1 > 0 && hookPx.liptako && (() => {
         const cx = hookPx.liptako.x, cy = hookPx.liptako.y - 20;
         const R = 230; // englobe les 3 pays autour du Liptako
         // dash : au repos trait quasi-plein (dash 40, gap 6) → en rupture les gaps
