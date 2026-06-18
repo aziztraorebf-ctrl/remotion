@@ -191,12 +191,13 @@ import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
 import { ProtoEffect_MapDrawParchemin } from "./projects/_proto-16-9/ProtoEffect_MapDrawParchemin";
+import { DemoLimogeageTemplates } from "./projects/_proto-16-9/DemoLimogeageTemplates";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
 import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
 import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
-import { HeraFidele_V08_ChartMap, HeraFidele_V13_Bars, HeraFidele_V01_Poll, HeraFidele_V10_Timeline } from "./projects/_proto-16-9/ProtoHeraFidele_Repros";
+import { HeraFidele_V08_ChartMap, HeraFidele_V13_Bars, HeraFidele_V01_Poll, HeraFidele_V10_Timeline, HeraFidele_V04_FlagsOnMap, HeraFidele_V02_PressArticle } from "./projects/_proto-16-9/ProtoHeraFidele_Repros";
 import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche";
 import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
@@ -2016,6 +2017,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDrawParchemin" component={ProtoEffect_MapDrawParchemin} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDrawParchemin-Narr" component={ProtoEffect_MapDrawParchemin} durationInFrames={252} fps={30} width={1920} height={1080} defaultProps={{ withNarration: true }} />
+        <Composition id="DemoLimogeageTemplates" component={DemoLimogeageTemplates} durationInFrames={300} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
@@ -2025,6 +2027,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="HeraFidele-V13-Bars" component={HeraFidele_V13_Bars} durationInFrames={120} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V01-Poll" component={HeraFidele_V01_Poll} durationInFrames={120} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V10-Timeline" component={HeraFidele_V10_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
+        <Composition id="HeraFidele-V04-FlagsOnMap" component={HeraFidele_V04_FlagsOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="HeraFidele-V02-PressArticle" component={HeraFidele_V02_PressArticle} durationInFrames={150} fps={30} width={1920} height={1080} />
       </Folder>
 
       <Folder name="Carousels">

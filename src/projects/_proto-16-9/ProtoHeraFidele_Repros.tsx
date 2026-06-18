@@ -10,9 +10,25 @@
  * Ce sont des COPIES, pas notre charte. Comparer avec ProtoHera_* (versions Souverain).
  */
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, spring } from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, spring, staticFile, Img, delayRender, continueRender } from "remotion";
 import { EUROPE_PATHS, EUROPE_VIEWBOX } from "./europePath";
 import { WEST_AFRICA_PATHS, WEST_AFRICA_VIEWBOX } from "./westAfricaPath";
+
+// carte monde chargee depuis public/ (path trop lourd pour le bundle en string litterale)
+const useWorldLand = () => {
+  const [data, setData] = React.useState<{ viewBox: string; d: string } | null>(null);
+  const [handle] = React.useState(() => delayRender("world-land"));
+  React.useEffect(() => {
+    fetch(staticFile("_proto/hera/world-land.json"))
+      .then((r) => r.json())
+      .then((j) => {
+        setData(j);
+        continueRender(handle);
+      })
+      .catch(() => continueRender(handle));
+  }, [handle]);
+  return data;
+};
 
 const W = 1920;
 const H = 1080;
@@ -350,6 +366,157 @@ export const HeraFidele_V10_Timeline: React.FC = () => {
           </div>
         );
       })}
+    </AbsoluteFill>
+  );
+};
+
+// ======================================================================================
+// V04 — LIFE EXPECTANCY THEN & NOW (drapeaux ronds + then/now SUR carte monde claire)
+// Couleurs Hera : fond carte monde gris-clair lumineux, titre serif "Life Expectancy:" + "Then & Now"
+//   surligne jaune, 5 drapeaux ronds cercles, ancienne valeur BARREE rouge "in 1950", nouvelle valeur
+//   BLEUE grosse "70 yrs". Fidele en FORME ; contenu adapte aux drapeaux qu'on possede.
+// ======================================================================================
+export const HeraFidele_V04_FlagsOnMap: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const BLUE = "#1d4ed8";
+  const RED = "#c0392b";
+
+  // drapeaux disponibles (public/_shared/flags) + donnees then/now (esperance de vie illustrative)
+  const items = [
+    { flag: "sn", then: "38 ans", now: "67 ans" },
+    { flag: "ng", then: "37 ans", now: "55 ans" },
+    { flag: "ml", then: "31 ans", now: "59 ans" },
+    { flag: "ma", then: "43 ans", now: "74 ans" },
+    { flag: "cn", then: "44 ans", now: "78 ans" },
+  ];
+  const n = items.length;
+  const slot = (W - 360) / n;
+  const startX = 180 + slot / 2;
+  const rowY = 560;
+  const r = 64;
+
+  const mapOp = interpolate(frame, [0, 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const titleOp = interpolate(frame, [10, 28], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const world = useWorldLand();
+
+  return (
+    <AbsoluteFill style={{ background: "#eef0f0" }}>
+      {/* carte monde claire estompee */}
+      {world && (
+        <svg width={W} height={H} viewBox={world.viewBox} preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0, opacity: mapOp }}>
+          <path d={world.d} fill="#d6d9dc" stroke="#c4c8cc" strokeWidth={1} />
+        </svg>
+      )}
+      <AbsoluteFill style={{ background: "rgba(238,240,240,0.35)" }} />
+
+      {/* titre */}
+      <div style={{ position: "absolute", top: 90, left: 0, right: 0, textAlign: "center", opacity: titleOp, fontFamily: "Georgia,serif", fontSize: 64, fontStyle: "italic", color: "#2a2a2a" }}>
+        Espérance de vie : <span style={{ fontStyle: "normal", fontWeight: 800, background: "#ffe14d", padding: "0 10px" }}>Hier &amp; Aujourd'hui</span>
+      </div>
+      <div style={{ position: "absolute", top: 190, left: 0, right: 0, textAlign: "center", opacity: titleOp, fontFamily: "'Inter',sans-serif", fontSize: 24, letterSpacing: "2px", color: "#7a7a7a", textTransform: "uppercase" }}>
+        5 pays d'Afrique et d'Asie
+      </div>
+
+      {/* drapeaux ronds + then/now */}
+      {items.map((it, i) => {
+        const cx = startX + i * slot;
+        const pop = spring({ fps, frame: Math.max(0, frame - (34 + i * 12)), config: { damping: 13, stiffness: 170 } });
+        if (pop <= 0.001) return null;
+        const sc = Math.min(1, pop);
+        const valOp = interpolate(frame, [34 + i * 12 + 16, 34 + i * 12 + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        return (
+          <div key={it.flag} style={{ position: "absolute", left: cx, top: rowY, transform: `translate(-50%,-50%) scale(${sc})`, textAlign: "center" }}>
+            {/* drapeau rond */}
+            <div style={{ width: r * 2, height: r * 2, borderRadius: "50%", overflow: "hidden", border: "4px solid #fff", boxShadow: "0 4px 14px rgba(0,0,0,0.25)", margin: "0 auto" }}>
+              <Img src={staticFile(`_shared/flags/${it.flag}.png`)} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+            </div>
+            {/* then barre */}
+            <div style={{ marginTop: 18, fontFamily: "'Inter',sans-serif", fontSize: 26, color: RED, textDecoration: "line-through", opacity: valOp }}>{it.then}</div>
+            <div style={{ fontFamily: "'Inter',sans-serif", fontSize: 15, color: "#999", opacity: valOp, letterSpacing: "1px" }}>EN 1950</div>
+            {/* now */}
+            <div style={{ marginTop: 6, fontFamily: "'Inter',sans-serif", fontSize: 44, fontWeight: 800, color: BLUE, opacity: valOp }}>{it.now}</div>
+          </div>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+// ======================================================================================
+// V02 — ARTICLE DE PRESSE (style NYT / Vox)
+// Couleurs Hera : fond creme #f3f1ec, date petite caps gris, GROS titre serif noir, sous-titre gris,
+//   puis logo journal (serif) + photo N&B qui apparait. Tres editorial, sobre.
+// ======================================================================================
+export const HeraFidele_V02_PressArticle: React.FC = () => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+
+  const dateOp = interpolate(frame, [4, 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // titre revele ligne par ligne (clip)
+  const titleProg = spring({ fps, frame: Math.max(0, frame - 14), config: { damping: 40, stiffness: 40 } });
+  const subOp = interpolate(frame, [40, 56], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const logoOp = interpolate(frame, [62, 78], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const photoOp = interpolate(frame, [70, 92], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const photoUp = interpolate(frame, [70, 92], [30, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  const M = 200; // marge gauche
+
+  return (
+    <AbsoluteFill style={{ background: "#f3f1ec" }}>
+      {/* date */}
+      <div style={{ position: "absolute", top: 150, left: M, opacity: dateOp, fontFamily: "Georgia,serif", fontSize: 26, fontWeight: 700, color: "#333" }}>
+        27 octobre 2022
+      </div>
+
+      {/* gros titre serif, revele par un wipe */}
+      <div style={{ position: "absolute", top: 210, left: M, right: 200, overflow: "hidden" }}>
+        <div
+          style={{
+            fontFamily: "Georgia,'Times New Roman',serif",
+            fontSize: 76,
+            fontWeight: 800,
+            color: "#111",
+            lineHeight: 1.15,
+            clipPath: `inset(0 ${100 - 100 * titleProg}% 0 0)`,
+          }}
+        >
+          Elon Musk rachète Twitter pour 44 milliards de dollars
+        </div>
+      </div>
+
+      {/* sous-titre gris */}
+      <div style={{ position: "absolute", top: 470, left: M, right: 280, opacity: subOp, fontFamily: "Georgia,serif", fontSize: 30, color: "#666", lineHeight: 1.4 }}>
+        L'homme le plus riche du monde finalise son acquisition retentissante du réseau social, le faisant entrer dans une nouvelle ère.
+      </div>
+
+      {/* logo journal (faux NYT serif) */}
+      <div style={{ position: "absolute", top: 640, left: M, opacity: logoOp, fontFamily: "'UnifrakturCook','Old English Text MT',Georgia,serif", fontSize: 48, color: "#111" }}>
+        The Daily Record
+      </div>
+
+      {/* photo N&B placeholder (degrade + silhouette) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 600 + photoUp,
+          right: 200,
+          width: 340,
+          height: 340,
+          opacity: photoOp,
+          filter: "grayscale(1) contrast(1.05)",
+          background: "linear-gradient(135deg,#bdbdbd,#7a7a7a)",
+          borderRadius: 4,
+          overflow: "hidden",
+          boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
+        }}
+      >
+        <svg width="100%" height="100%" viewBox="0 0 100 100">
+          <circle cx="50" cy="40" r="20" fill="#5a5a5a" />
+          <ellipse cx="50" cy="92" rx="34" ry="26" fill="#5a5a5a" />
+        </svg>
+      </div>
     </AbsoluteFill>
   );
 };

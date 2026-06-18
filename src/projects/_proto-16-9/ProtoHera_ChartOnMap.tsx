@@ -21,9 +21,12 @@ import { WEST_AFRICA_PATHS, WEST_AFRICA_VIEWBOX } from "./westAfricaPath";
 const W = 1920;
 const H = 1080;
 
+// REGISTRE CLAIR LUMINEUX (correction Aziz : la version navy sombre etouffait la carte).
+// Fond ivoire chaud + carte gris-dore pale qui RESPIRE + barre OR qui ressort + axe/titre NAVY.
 const NAVY = "#16213a";
-const NAVY_MAP = "#27344f"; // terre estompee
-const NAVY_LINE = "#41506e"; // contours pays pales
+const IVORY = "#eee7d6"; // fond clair chaud (registre Souverain lumineux)
+const MAP_FILL = "#d8cdb0"; // terre gris-dore pale (carte qui respire, facon Hera clair)
+const MAP_LINE = "#bcae8a"; // contours pays pales
 const GOLD = "#c8a951";
 const GOLD_DARK = "#a8862f";
 const NUM = "'Bebas Neue','Impact',sans-serif";
@@ -63,8 +66,8 @@ export const ProtoHera_ChartOnMap: React.FC = () => {
   const ticks = [0, 10, 20, 30];
 
   return (
-    <AbsoluteFill style={{ background: NAVY }}>
-      {/* CARTE estompee plein cadre */}
+    <AbsoluteFill style={{ background: IVORY }}>
+      {/* CARTE claire qui RESPIRE (correction : plus de navy sombre etouffant) */}
       <svg
         width={W}
         height={H}
@@ -73,12 +76,12 @@ export const ProtoHera_ChartOnMap: React.FC = () => {
         style={{ position: "absolute", inset: 0, opacity: mapOp }}
       >
         {WEST_AFRICA_PATHS.map((p) => (
-          <path key={p.name} d={p.d} fill={NAVY_MAP} stroke={NAVY_LINE} strokeWidth={1.2} />
+          <path key={p.name} d={p.d} fill={MAP_FILL} stroke={MAP_LINE} strokeWidth={1.2} />
         ))}
       </svg>
 
-      {/* voile pour assombrir encore (la carte = contexte, pas sujet) */}
-      <AbsoluteFill style={{ background: "rgba(15,22,40,0.42)" }} />
+      {/* voile clair leger pour estomper la carte (contexte, pas sujet) */}
+      <AbsoluteFill style={{ background: "rgba(238,231,214,0.45)" }} />
 
       {/* CHART par-dessus */}
       <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
@@ -88,8 +91,8 @@ export const ProtoHera_ChartOnMap: React.FC = () => {
             const y = plotBot - plotH * (t / AXIS_MAX);
             return (
               <g key={t}>
-                <line x1={plotX - 20} y1={y} x2={W - 120} y2={y} stroke="#ffffff" strokeWidth={1} opacity={0.08} />
-                <text x={plotX - 38} y={y + 10} textAnchor="end" fontFamily={SANS} fontSize={28} fill="#cdd3df">
+                <line x1={plotX - 20} y1={y} x2={W - 120} y2={y} stroke={NAVY} strokeWidth={1} opacity={0.12} />
+                <text x={plotX - 38} y={y + 10} textAnchor="end" fontFamily={SANS} fontSize={28} fill={NAVY} opacity={0.7}>
                   {t === 0 ? "$0" : `$${t}B`}
                 </text>
               </g>
@@ -97,10 +100,10 @@ export const ProtoHera_ChartOnMap: React.FC = () => {
           })}
         </g>
 
-        {/* barre OR qui monte */}
-        <rect x={plotX} y={plotBot - barH} width={barW} height={barH} fill={GOLD} rx={4} />
+        {/* barre OR qui monte (ressort sur le clair) */}
+        <rect x={plotX} y={plotBot - barH} width={barW} height={barH} fill={GOLD} stroke={GOLD_DARK} strokeWidth={1.5} rx={4} />
         {/* annee sous la barre */}
-        <text x={plotX + barW / 2} y={plotBot + 44} textAnchor="middle" fontFamily={SANS} fontSize={30} fontWeight={700} fill="#e7ecf5" opacity={axisOp}>
+        <text x={plotX + barW / 2} y={plotBot + 44} textAnchor="middle" fontFamily={SANS} fontSize={30} fontWeight={700} fill={NAVY} opacity={axisOp}>
           2025
         </text>
       </svg>
@@ -138,9 +141,9 @@ export const ProtoHera_ChartOnMap: React.FC = () => {
           opacity: interpolate(frame, [44, 56], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }),
           fontFamily: NUM,
           fontSize: 88,
-          color: GOLD,
+          color: GOLD_DARK,
           lineHeight: 1,
-          textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+          textShadow: "0 1px 0 rgba(255,255,255,0.6)",
           whiteSpace: "nowrap",
         }}
       >
