@@ -192,13 +192,14 @@ import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_News
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
 import { ProtoEffect_MapDrawParchemin } from "./projects/_proto-16-9/ProtoEffect_MapDrawParchemin";
 import { DemoLimogeageTemplates } from "./projects/_proto-16-9/DemoLimogeageTemplates";
+import { ProtoEffect_Fracture } from "./projects/_proto-16-9/ProtoEffect_Fracture";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
 import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
 import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
 import { HeraFidele_V08_ChartMap, HeraFidele_V13_Bars, HeraFidele_V01_Poll, HeraFidele_V10_Timeline, HeraFidele_V04_FlagsOnMap, HeraFidele_V02_PressArticle } from "./projects/_proto-16-9/ProtoHeraFidele_Repros";
-import { HeraFidele_V05_Contagion, HeraFidele_V06_Contour, HeraFidele_V03_KineticText, HeraFidele_V11_CountUp, HeraFidele_V12_LineChart } from "./projects/_proto-16-9/ProtoHeraFidele_Repros2";
+import { HeraFidele_V03_KineticText, HeraFidele_V12_LineChart } from "./projects/_proto-16-9/ProtoHeraFidele_Repros2";
 import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche";
 import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
@@ -1564,7 +1565,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ContagionFlagSpread-BRICS-H" component={() => <ContagionFlagSpread center={[20,5]} baseZoom={3.5} waves={[["ZAF"],["EGY","ETH"],["NGA","DZA"],["COD","TZA","AGO"]]} waveAt={10} waveGap={35} epicenterIso="ZAF" />} durationInFrames={280} fps={30} width={1920} height={1080} />
 
         <Composition id="Layout16-LaCalebasse" component={() => <LaCalebasse />} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="Layout16-LeCadranSolaire" component={() => <LeCadranSolaire />} durationInFrames={270} fps={30} width={1920} height={1080} />
+        <Composition id="Layout16-LeCadranSolaire" component={() => <LeCadranSolaire />} durationInFrames={700} fps={30} width={1920} height={1080} />
         <Composition id="Layout16-Stratigraphie" component={() => <Stratigraphie />} durationInFrames={180} fps={30} width={1920} height={1080} />
         {/* ── SILICON SAVANNAH ── */}
         
@@ -1628,7 +1629,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="ProtoC-CompositionTest"
           component={Prototype_C_CompositionTest}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1684,7 +1685,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-LeCadranSolaire"
           component={LeCadranSolaire}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1692,7 +1693,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-Stratigraphie"
           component={Stratigraphie}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1716,7 +1717,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-NoeudTisserand"
           component={NoeudTisserand}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1732,7 +1733,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-LeSemeur"
           component={LeSemeur}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1740,7 +1741,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-Palimpseste"
           component={Palimpseste}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -1748,7 +1749,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Template-ArbreAPalabres"
           component={ArbreAPalabres}
-          durationInFrames={270}
+          durationInFrames={700}
           fps={30}
           width={1920}
           height={1080}
@@ -2019,6 +2020,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-MapDrawParchemin" component={ProtoEffect_MapDrawParchemin} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDrawParchemin-Narr" component={ProtoEffect_MapDrawParchemin} durationInFrames={252} fps={30} width={1920} height={1080} defaultProps={{ withNarration: true }} />
         <Composition id="DemoLimogeageTemplates" component={DemoLimogeageTemplates} durationInFrames={300} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-Fracture-Parchemin" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "parchemin" }} />
+        <Composition id="ProtoEffect-Fracture-Sombre" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "sombre" }} />
+        <Composition id="ProtoEffect-Fracture-Parchemin-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "parchemin", withNarration: true }} />
+        <Composition id="ProtoEffect-Fracture-Sombre-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "sombre", withNarration: true }} />
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
@@ -2030,10 +2035,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="HeraFidele-V10-Timeline" component={HeraFidele_V10_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V04-FlagsOnMap" component={HeraFidele_V04_FlagsOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V02-PressArticle" component={HeraFidele_V02_PressArticle} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V05-Contagion" component={HeraFidele_V05_Contagion} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V06-Contour" component={HeraFidele_V06_Contour} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V03-KineticText" component={HeraFidele_V03_KineticText} durationInFrames={120} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V11-CountUp" component={HeraFidele_V11_CountUp} durationInFrames={120} fps={30} width={1920} height={1080} />
         <Composition id="HeraFidele-V12-LineChart" component={HeraFidele_V12_LineChart} durationInFrames={150} fps={30} width={1920} height={1080} />
       </Folder>
 

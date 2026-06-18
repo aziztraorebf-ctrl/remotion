@@ -1,113 +1,21 @@
 /**
- * REPRODUCTIONS FIDELES Hera — LOT 2 (templates restants, methode mapanimation : copie a l'identique).
+ * REPRODUCTIONS FIDELES Hera — LOT 2 (templates CONSERVES apres review Aziz 2026-06-18).
  * Couleurs/layout echantillonnes sur les vraies frames Hera.
  *
- *   - HeraFidele_V05_Contagion   : pays se remplit de son drapeau + label pastille, contagion vers voisins (carte claire)
- *   - HeraFidele_V06_Contour     : contour pays (France) qui se trace en rouge sur carte estompee + label drapeau
- *   - HeraFidele_V03_KineticText : "Rejection isn't failure" texte cinetique sur fond noir + ondulations + souligne rouge
- *   - HeraFidele_V11_CountUp     : odometre rose sur damier alpha (count-up $)
- *   - HeraFidele_V12_LineChart   : line chart lime + bande jaune surlignee + points noirs sur quadrille clair
+ * GARDES (validés Aziz) :
+ *   - HeraFidele_V03_KineticText : "Rejection isn't failure" texte cinetique sur noir + souligne rouge.
+ *       Raison : esthetique d'emphase interessante (mettre l'accent sur un mot).
+ *   - HeraFidele_V12_LineChart   : line chart lime + bande jaune surlignee + points noirs sur quadrille.
+ *       Raison : variation 2 couleurs tres modulable (autres couleurs/styles/types a decliner plus tard).
+ *
+ * SUPPRIMES (review Aziz) : V05 contagion + V06 contour (on fait BIEN mieux en Mapbox 3D frame-driven,
+ *   et pas notre style) · V11 count-up (basique Remotion deja maitrise de plusieurs facons).
  */
 import React from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, spring, staticFile, Img } from "remotion";
-import { SCENE_VB, SPAIN_SCENE, FRANCE_SCENE } from "./heraScenePaths";
+import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig, spring } from "remotion";
 
 const W = 1920;
 const H = 1080;
-
-// ======================================================================================
-// V05 — CONTAGION (drapeau fill + propagation voisins) sur carte claire
-// Hera : terre blanche #f4f4f4, mer gris-bleu #a8b0b8, pays focus rempli du DRAPEAU reel + label pastille noire,
-//   voisins se teintent rouge (contagion), foyers orange.
-// ======================================================================================
-export const HeraFidele_V05_Contagion: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const SEA = "#a8b0b8";
-  const LAND = "#f4f4f4";
-  const LAND_LINE = "#d2d6da";
-  const RED = "#c0392b";
-
-  // remplissage drapeau du focus (clip wipe bas->haut)
-  const fill = spring({ fps, frame: Math.max(0, frame - 16), config: { damping: 32, stiffness: 45 } });
-  // contagion voisins (apparition rouge sequentielle)
-  const labelOp = interpolate(frame, [40, 54], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  return (
-    <AbsoluteFill style={{ background: SEA }}>
-      <svg width={W} height={H} viewBox={SCENE_VB} preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
-        <defs>
-          <pattern id="esFlag" patternUnits="objectBoundingBox" width="1" height="1">
-            <image href={staticFile("_shared/flags/es.png")} x="0" y="0" width="1600" height="900" preserveAspectRatio="xMidYMid slice" />
-          </pattern>
-          <clipPath id="esFillWipe">
-            <rect x="0" y={900 - 900 * fill} width="1600" height={900 * fill} />
-          </clipPath>
-        </defs>
-
-        {/* voisins (terre blanche, certains se teintent rouge = contagion) */}
-        {SPAIN_SCENE.neighbors.map((nb, i) => {
-          const contag = ["Morocco", "Portugal", "France"].includes(nb.name);
-          const cg = contag ? spring({ fps, frame: Math.max(0, frame - (50 + i * 10)), config: { damping: 30, stiffness: 40 } }) : 0;
-          return <path key={nb.name} d={nb.d} fill={cg > 0 ? RED : LAND} opacity={cg > 0 ? 0.35 + 0.45 * cg : 1} stroke={LAND_LINE} strokeWidth={1} />;
-        })}
-
-        {/* focus Espagne : terre blanche puis remplissage drapeau (wipe) */}
-        <path d={SPAIN_SCENE.focus} fill={LAND} stroke={LAND_LINE} strokeWidth={1} />
-        <g clipPath="url(#esFillWipe)">
-          <path d={SPAIN_SCENE.focus} fill="url(#esFlag)" stroke="#fff" strokeWidth={2} />
-        </g>
-      </svg>
-
-      {/* label pastille noire "Espagne" */}
-      <div style={{ position: "absolute", top: 90, left: "50%", transform: "translateX(-50%)", opacity: labelOp, background: "#1a1a1a", color: "#fff", padding: "10px 28px", borderRadius: 8, fontFamily: "'Inter',sans-serif", fontSize: 36, fontWeight: 700, boxShadow: "0 6px 20px rgba(0,0,0,0.3)" }}>
-        Espagne
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-// ======================================================================================
-// V06 — CONTOUR pays qui se trace (rouge) sur carte estompee + label drapeau coin
-// Hera : carte gris-bleu estompee (#c8ccce terre, contours pales), contour ROUGE qui se trace autour de la France.
-// ======================================================================================
-export const HeraFidele_V06_Contour: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const MAP_LAND = "#e6e8ea";
-  const MAP_SEA = "#c2c8cc";
-  const MAP_LINE = "#cfd3d6";
-  const RED = "#e23b30";
-
-  const draw = spring({ fps, frame: Math.max(0, frame - 18), config: { damping: 44, stiffness: 22 } });
-  // longueur approx du contour France (pour dash)
-  const LEN = 3800;
-  const labelOp = interpolate(frame, [6, 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-  return (
-    <AbsoluteFill style={{ background: MAP_SEA }}>
-      <svg width={W} height={H} viewBox={SCENE_VB} preserveAspectRatio="xMidYMid slice" style={{ position: "absolute", inset: 0 }}>
-        {/* voisins estompes */}
-        {FRANCE_SCENE.neighbors.map((nb) => (
-          <path key={nb.name} d={nb.d} fill={MAP_LAND} stroke={MAP_LINE} strokeWidth={1} />
-        ))}
-        {/* France : terre + contour rouge qui se trace */}
-        <path d={FRANCE_SCENE.focus} fill={MAP_LAND} stroke={MAP_LINE} strokeWidth={1} />
-        <path d={FRANCE_SCENE.focus} fill="none" stroke={RED} strokeWidth={4} strokeLinejoin="round" strokeLinecap="round" strokeDasharray={LEN} strokeDashoffset={LEN * (1 - draw)} />
-      </svg>
-
-      {/* label drapeau coin haut-gauche */}
-      <div style={{ position: "absolute", top: 60, left: 60, opacity: labelOp, display: "flex", alignItems: "center", gap: 14, background: "rgba(255,255,255,0.92)", padding: "10px 20px 10px 12px", borderRadius: 8, boxShadow: "0 4px 14px rgba(0,0,0,0.18)" }}>
-        <div style={{ width: 54, height: 36, overflow: "hidden", borderRadius: 3, boxShadow: "0 1px 3px rgba(0,0,0,0.3)" }}>
-          <Img src={staticFile("_shared/flags/fr.png")} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        </div>
-        <span style={{ fontFamily: "'Inter',sans-serif", fontSize: 32, fontWeight: 700, color: "#1a1a1a" }}>FRANCE</span>
-      </div>
-    </AbsoluteFill>
-  );
-};
 
 // ======================================================================================
 // V03 — TEXTE CINETIQUE sur fond noir + ondulations
@@ -152,42 +60,10 @@ export const HeraFidele_V03_KineticText: React.FC = () => {
 };
 
 // ======================================================================================
-// V11 — COUNT-UP odometre rose sur damier alpha (export transparent)
-// Hera : damier alpha + chiffre $XX,XXX.XX rose #f98a9c, monospace, count-up.
-// ======================================================================================
-export const HeraFidele_V11_CountUp: React.FC = () => {
-  const frame = useCurrentFrame();
-  const PINK = "#f98a9c";
-
-  const TARGET = 9399.16;
-  const t = interpolate(frame, [10, 90], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const eased = 1 - Math.pow(1 - t, 3);
-  const val = eased * TARGET;
-  const str = "$" + val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).padStart(9, "0");
-
-  // damier alpha simule (carres gris clairs alternes) — en prod = vrai fond transparent
-  const sq = 40;
-
-  return (
-    <AbsoluteFill style={{ background: "#ffffff" }}>
-      <svg width={W} height={H} style={{ position: "absolute", inset: 0 }}>
-        {Array.from({ length: Math.ceil(H / sq) }).map((_, r) =>
-          Array.from({ length: Math.ceil(W / sq) }).map((_, c) => (
-            <rect key={`${r}-${c}`} x={c * sq} y={r * sq} width={sq} height={sq} fill={(r + c) % 2 === 0 ? "#ffffff" : "#e9e9e9"} />
-          ))
-        )}
-      </svg>
-      <AbsoluteFill style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <div style={{ fontFamily: "'JetBrains Mono','SF Mono',monospace", fontSize: 150, fontWeight: 800, color: PINK }}>{str}</div>
-      </AbsoluteFill>
-    </AbsoluteFill>
-  );
-};
-
-// ======================================================================================
 // V12 — LINE CHART lime + bande jaune surlignee + points noirs sur quadrille clair
 // Hera : quadrille blanc, bande jaune verticale (periode surlignee), courbe LIME #aed136 epaisse,
 //   points noirs sur la courbe, axe Y % (10-30%), axe X annees.
+// MODULABLE : couleur courbe, couleur bande, jeu de donnees -> a decliner (autres conversions plus tard).
 // ======================================================================================
 export const HeraFidele_V12_LineChart: React.FC = () => {
   const frame = useCurrentFrame();
