@@ -73,6 +73,31 @@ Compos dans `src/projects/_proto-16-9/ProtoHera_*.tsx`, enregistrées Root.tsx. 
 - Famille F : prévoir le clip-rond photo réelle pour la prod (asset Gemini = validation Aziz avant).
 - Frames rendues (preuves) : `/tmp/hera-p1-*.png` `hera-p2-150` `hera-p3-*` `hera-p4b` `hera-p5` (régénérables).
 
+## REPRODUCTIONS FIDÈLES (méthode mapanimation — ajout 2026-06-18, retour Aziz)
+⚠️ **RÈGLE GRAVÉE** : copier le template À L'IDENTIQUE d'abord (couleurs/layout/texte des frames), PUIS approprier.
+Sinon impossible de juger le template en soi. Fichier : `ProtoHeraFidele_Repros.tsx` (compos `HeraFidele_*`).
+- V08 chart-carte Europe, V13 bars Pagare/Prendere, V01 poll Yes/No, V10 timeline Radcliffe, V04 drapeaux+then/now, V02 presse.
+- Conclusion : **Hera est "écrasable"** — on reproduit sans effort. L'écart fidèle→Souverain = palette + police + géo + fond.
+
+## VALIDATIONS AZIZ (2026-06-18)
+- ✅ **Chart-sur-carte clair APPROUVÉ** (concept prouvé). Carte = VRAIE géo d3-geo (`westAfricaPath.ts`, 18 pays Natural Earth),
+  PAS dessinée main. "Fait graphisme" = juste l'aplat uni ; améliorable via relief/dégradé/Mapbox satellite estompé.
+  ⚠️ Version navy sombre REJETÉE (étouffait la carte) → corrigée en CLAIR LUMINEUX (ivory + carte gris-doré + barre or). C'est la bonne.
+- ✅ **Timeline APPROUVÉE** en l'état (`ProtoHera_Timeline`).
+- ✅ **Presse V02 COMPLÉTÉE** : portrait stipple WSJ généré (Gemini `gemini-3.1-flash-image-preview`, businessman générique
+  réutilisable) → `public/_proto/hera/press-portrait.png`, intégré en `mixBlendMode:multiply` (fond blanc disparaît sur crème).
+
+## GOTCHAS TECHNIQUES (gravés)
+- ⛔ **Path SVG lourd (879KB) en string littérale CASSE le bundle Remotion** (mort silencieuse ~60% bundling, pas d'erreur).
+  Solution : sortir le path vers `public/` (JSON) + charger via `fetch`+`delayRender`/`continueRender`. Cf. `world-land.json` + hook `useWorldLand`.
+- **Intégrer illustration fond blanc sans détourage** : `mixBlendMode:"multiply"` (garde les traits noirs, fond disparaît sur clair).
+- Gemini ignore souvent la demande d'alpha (fond blanc rendu). OK si fond cible clair + multiply ; sinon Recraft remove_background.
+
+## MP4 catbox (2026-06-18)
+Souverain : chart-carte CLAIR `q1chyq` · timeline `2cbzky` · charts parchemin `s790z1` · néon `n4mhbn` · sketch `oz59bs`.
+Fidèles : V08 `gqif3h` · V13 `otband` · V01 `1du4aj` · V10 `d5ph0n` · V04 carte+drapeaux `cg76lu` · V02 presse+portrait `olfzlr`.
+
 ## NEXT (après protos)
 Doctrine "fonds + palettes + familles" : quel fond + quelle palette + quel graphe pour quel message → couvrir
-TOUT sans re-explorer. Comparer/unifier avec notre kraft existant. Garder les protos forts, les pousser en candidats.
+TOUT sans re-explorer. Comparer/unifier avec notre kraft existant. Garder les protos forts (chart-carte clair = prêt prod), les pousser en candidats.
+Templates restants non explorés : V05 contagion, V06 contour, V03 texte cinétique, V11 count-up alpha, V12 intro.
