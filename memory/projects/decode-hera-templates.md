@@ -97,7 +97,16 @@ Sinon impossible de juger le template en soi. Fichier : `ProtoHeraFidele_Repros.
 Souverain : chart-carte CLAIR `q1chyq` · timeline `2cbzky` · charts parchemin `s790z1` · néon `n4mhbn` · sketch `oz59bs`.
 Fidèles : V08 `gqif3h` · V13 `otband` · V01 `1du4aj` · V10 `d5ph0n` · V04 carte+drapeaux `cg76lu` · V02 presse+portrait `olfzlr`.
 
-## NEXT (après protos)
+## CATALOGUE HERA COMPLET (2026-06-18) — 15/15 templates couverts
+Lot 2 repros fidèles (`ProtoHeraFidele_Repros2.tsx` + `heraScenePaths.ts` Espagne/France d3-geo) :
+- ✅ V05 contagion : drapeau fill + propagation voisins rouge (carte claire) — catbox `8b0193`
+- ✅ V06 contour : France contour rouge tracé sur carte estompée + label drapeau — catbox `g2vd4i`
+- ✅ V03 texte cinétique : Rejection/isn't(souligné rouge)/failure sur noir + ondulations — catbox `n8fwsx`
+- ✅ V11 count-up : odomètre rose monospace sur damier alpha — catbox `7ipher`
+- ✅ V12 line chart : courbe lime + bande jaune surlignée + points noirs sur quadrillé — catbox `kdht12`
+⚠️ Correction README matière : V12 n'est PAS une intro, c'est un line chart (bande jaune highlight). V11 = count-up (pas alpha export verifié).
+
+## NEXT (après protos) — TOUT le catalogue est décodé
 Doctrine "fonds + palettes + familles" : quel fond + quelle palette + quel graphe pour quel message → couvrir
 TOUT sans re-explorer. Comparer/unifier avec notre kraft existant. Garder les protos forts (chart-carte clair = prêt prod), les pousser en candidats.
-Templates restants non explorés : V05 contagion, V06 contour, V03 texte cinétique, V11 count-up alpha, V12 intro.
+Plus de template Hera à explorer — place à la DOCTRINE + appropriation Souverain des registres validés.
