@@ -185,7 +185,19 @@ import { LoomWipe } from "./projects/_shared/components/layouts/LoomWipe";
 import { Prototype_P_Vague4bShowcase } from "./projects/_proto-16-9/Prototype_P_Vague4bShowcase";
 import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Prototype_Q_Vague3CompleteShowcase";
 import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
+import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
+import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
+import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
+import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
+import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
+import { ProtoEffect_MapDrawParchemin } from "./projects/_proto-16-9/ProtoEffect_MapDrawParchemin";
+import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
+import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
+import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
+import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
+import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
 import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche";
+import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
 import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
 import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
@@ -223,6 +235,11 @@ import { FiberOpticBorderDraw } from "./projects/_shared/mapbox/FiberOpticBorder
 import { GeoFlowConnection } from "./projects/_shared/mapbox/GeoFlowConnection";
 import { FiberOpticFlagInvade } from "./projects/_shared/mapbox/FiberOpticFlagInvade";
 import { KineticMaskSlam } from "./projects/_shared/mapbox/KineticMaskSlam";
+import { KineticMaskSlamFX } from "./projects/_shared/_demos/KineticMaskSlamFX";
+import { KineticSlam3D } from "./projects/_shared/_demos/KineticSlam3D";
+import { Country3DRise } from "./projects/_shared/_demos/Country3DRise";
+import { Asset3DShowcase } from "./projects/_shared/_demos/Asset3DShowcase";
+import { JetonWarMap3DCompare } from "./projects/_shared/_demos/JetonWarMap3DCompare";
 import { RapidFireCountries } from "./projects/_shared/mapbox/RapidFireCountries";
 import { ClassifiedRedactReveal } from "./projects/_shared/mapbox/ClassifiedRedactReveal";
 import { MapCutaway } from "./projects/_shared/mapbox/MapCutaway";
@@ -1025,6 +1042,14 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="Senegal-Beat0-Accroche-V7"
+            component={SenegalBeat0V7}
+            durationInFrames={979}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="Senegal-Beat0-PlaqueProto"
             component={SenegalBeat0Proto}
             durationInFrames={360}
@@ -1454,6 +1479,12 @@ export const RemotionRoot: React.FC = () => {
         {/* ── CHANTIER HOOK — templates d'ouverture (punch frame 0) ── */}
         <Composition id="KineticMaskSlam-Maroc-V" component={() => <KineticMaskSlam center={[-7, 31]} baseZoom={4.6} bigText="70%" subText="DU PHOSPHATE MONDIAL" focusIso="MAR" />} durationInFrames={120} fps={30} width={1080} height={1920} />
         <Composition id="KineticMaskSlam-Maroc-H" component={() => <KineticMaskSlam center={[-7, 31]} baseZoom={4.6} bigText="70%" subText="DU PHOSPHATE MONDIAL" focusIso="MAR" />} durationInFrames={120} fps={30} width={1920} height={1080} />
+        {/* ── DEMO 2026-06-17 : rack d'effets natifs Remotion (cartographier le plafond AE) ── */}
+        <Composition id="KineticMaskSlamFX-Maroc-V" component={() => <KineticMaskSlamFX center={[-7, 31]} baseZoom={4.6} bigText="70%" subText="DU PHOSPHATE MONDIAL" focusIso="MAR" />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="KineticSlam3D-Maroc-V" component={() => <KineticSlam3D bigText="70%" subText="DU PHOSPHATE MONDIAL" />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="Country3DRise-Maroc-V" component={() => <Country3DRise geoName="Morocco" bigText="70%" subText="DU PHOSPHATE MONDIAL" />} durationInFrames={120} fps={30} width={1080} height={1920} />
+        <Composition id="Asset3DShowcase" component={Asset3DShowcase} durationInFrames={120} fps={30} width={1080} height={1080} />
+        <Composition id="JetonWarMap3DCompare" component={JetonWarMap3DCompare} durationInFrames={120} fps={30} width={1920} height={1080} />
         {/* ── hooks-lib — bibliotheque de hooks agnostiques au fond (2026-06-15) ── */}
         <Composition id="ArteryDrain-Niger-V" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="ArteryDrain-Niger-H" component={() => <ArteryDrain center={[8.08, 17.6]} baseZoom={4.8} focusIso="NER" bigText="68t" subText="D'URANIUM PAR AN" rays={8} />} durationInFrames={110} fps={30} width={1920} height={1080} />
@@ -1977,6 +2008,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoEffect-MapDrawParchemin" component={ProtoEffect_MapDrawParchemin} durationInFrames={210} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoHera-Sketch" component={ProtoHera_Sketch} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoHera-Timeline" component={ProtoHera_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
       </Folder>
 
       <Folder name="Carousels">
