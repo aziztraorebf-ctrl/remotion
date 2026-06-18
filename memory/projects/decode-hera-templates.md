@@ -97,14 +97,18 @@ Sinon impossible de juger le template en soi. Fichier : `ProtoHeraFidele_Repros.
 Souverain : chart-carte CLAIR `q1chyq` · timeline `2cbzky` · charts parchemin `s790z1` · néon `n4mhbn` · sketch `oz59bs`.
 Fidèles : V08 `gqif3h` · V13 `otband` · V01 `1du4aj` · V10 `d5ph0n` · V04 carte+drapeaux `cg76lu` · V02 presse+portrait `olfzlr`.
 
-## CATALOGUE HERA COMPLET (2026-06-18) — 15/15 templates couverts
-Lot 2 repros fidèles (`ProtoHeraFidele_Repros2.tsx` + `heraScenePaths.ts` Espagne/France d3-geo) :
-- ✅ V05 contagion : drapeau fill + propagation voisins rouge (carte claire) — catbox `8b0193`
-- ✅ V06 contour : France contour rouge tracé sur carte estompée + label drapeau — catbox `g2vd4i`
-- ✅ V03 texte cinétique : Rejection/isn't(souligné rouge)/failure sur noir + ondulations — catbox `n8fwsx`
-- ✅ V11 count-up : odomètre rose monospace sur damier alpha — catbox `7ipher`
-- ✅ V12 line chart : courbe lime + bande jaune surlignée + points noirs sur quadrillé — catbox `kdht12`
-⚠️ Correction README matière : V12 n'est PAS une intro, c'est un line chart (bande jaune highlight). V11 = count-up (pas alpha export verifié).
+## CATALOGUE HERA — exploré en entier, puis TRIÉ (review Aziz 2026-06-18)
+Lot 2 (`ProtoHeraFidele_Repros2.tsx`) — après exploration des 5 derniers, Aziz a TRANCHÉ :
+- ❌ V05 contagion + V06 contour SUPPRIMÉS : on fait bien mieux en Mapbox 3D frame-driven (FlagFill, contours
+  qui se tracent, mouvement caméra) + pas notre style. Repros SVG plates = en-dessous de notre niveau.
+- ❌ V11 count-up SUPPRIMÉ : basique Remotion déjà maîtrisé de plusieurs façons, pas besoin de template.
+- ✅ V03 texte cinétique CONSERVÉ : esthétique d'emphase (mettre l'accent sur un mot) — catbox `n8fwsx`
+- ✅ V12 line chart bande jaune CONSERVÉ : variation 2 couleurs très modulable (décliner couleurs/styles plus tard) — catbox `kdht12`
+⚠️ `heraScenePaths.ts` supprimé (servait V05/V06). Correction README matière : V12 = line chart bande highlight (pas une intro).
+
+## ⭐ LEÇON DE TRI (gravée) : ne PAS garder un template Hera juste parce qu'on sait le reproduire.
+Le garder seulement si (a) il apporte un registre qu'on n'a pas, ET (b) Hera ne le fait pas mieux que notre stack.
+Carte/contagion/contour → notre Mapbox 3D écrase la repro SVG. Count-up → déjà natif Remotion. = supprimés.
 
 ## NEXT (après protos) — TOUT le catalogue est décodé
 Doctrine "fonds + palettes + familles" : quel fond + quelle palette + quel graphe pour quel message → couvrir
