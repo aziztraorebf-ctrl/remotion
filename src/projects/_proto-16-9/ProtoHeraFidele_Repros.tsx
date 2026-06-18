@@ -486,8 +486,8 @@ export const HeraFidele_V02_PressArticle: React.FC = () => {
         </div>
       </div>
 
-      {/* sous-titre gris */}
-      <div style={{ position: "absolute", top: 470, left: M, right: 280, opacity: subOp, fontFamily: "Georgia,serif", fontSize: 30, color: "#666", lineHeight: 1.4 }}>
+      {/* sous-titre gris (largeur reduite a gauche pour laisser la place au portrait) */}
+      <div style={{ position: "absolute", top: 470, left: M, width: 920, opacity: subOp, fontFamily: "Georgia,serif", fontSize: 30, color: "#666", lineHeight: 1.4 }}>
         L'homme le plus riche du monde finalise son acquisition retentissante du réseau social, le faisant entrer dans une nouvelle ère.
       </div>
 
@@ -496,26 +496,22 @@ export const HeraFidele_V02_PressArticle: React.FC = () => {
         The Daily Record
       </div>
 
-      {/* photo N&B placeholder (degrade + silhouette) */}
+      {/* portrait stipple N&B (illustration Gemini WSJ hedcut, generee 2026-06-18) */}
       <div
         style={{
           position: "absolute",
-          top: 600 + photoUp,
-          right: 200,
-          width: 340,
-          height: 340,
+          top: 430 + photoUp,
+          right: 180,
+          width: 460,
+          height: 460,
           opacity: photoOp,
-          filter: "grayscale(1) contrast(1.05)",
-          background: "linear-gradient(135deg,#bdbdbd,#7a7a7a)",
-          borderRadius: 4,
           overflow: "hidden",
-          boxShadow: "0 8px 24px rgba(0,0,0,0.18)",
         }}
       >
-        <svg width="100%" height="100%" viewBox="0 0 100 100">
-          <circle cx="50" cy="40" r="20" fill="#5a5a5a" />
-          <ellipse cx="50" cy="92" rx="34" ry="26" fill="#5a5a5a" />
-        </svg>
+        <Img
+          src={staticFile("_proto/hera/press-portrait.png")}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", mixBlendMode: "multiply" }}
+        />
       </div>
     </AbsoluteFill>
   );
