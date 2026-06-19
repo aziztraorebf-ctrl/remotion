@@ -60,9 +60,11 @@ Test : si le texte à l'écran pourrait être lu À VOIX HAUTE en même temps qu
 double la voix → le réduire au noyau ou le supprimer.
 
 ### 4. CALAGE AUDIO = l'image PRÉCÈDE l'oreille
-Mesurer la voix (Whisper word-timestamps), caler l'animation pour **culminer ~1s AVANT** le mot-clé.
-Une animation en retard sur la voix = sensation de lenteur. L'image qui précède = vivacité.
-(Hook : le compteur atteint 8M à ~5s, la voix dit « dollars » à ~6s.)
+Mesurer la voix par **FORCED ALIGNMENT ElevenLabs** (`/v1/forced-alignment`, word-level, loss < 0.3) —
+PAS Whisper (Whisper derive de ~0.4s+, prouve sur le hook : il situait "saute" a 11.46s, le forced
+alignment a 11.84s = le vrai). Script de ref : `scripts/senegal-hook-alignment.py`. Caler l'animation
+pour **culminer ~1s AVANT** le mot-cle. Animation en retard sur la voix = sensation de lenteur ;
+l'image qui precede = vivacite. (Hook : compteur a 8M ~5s, voix dit "dollars" ~6s.)
 
 ---
 
@@ -80,7 +82,33 @@ immédiat (du 1er coup). Quand on plaque un template, l'instinct sent le décala
 3. **Forme** : quel geste porte l'intention ? (ne pas penser « composant » encore)
 4. **Template** : a-t-on déjà cette forme ? oui→adapter / non→coder (mais je sais quoi).
 5. **Épure** : qu'est-ce que la voix dit déjà ? → je le retire de l'écran.
-6. **Calage** : l'animation culmine ~1s avant le mot-clé (Whisper si besoin).
+6. **Calage** : l'animation culmine ~1s avant le mot-clé (forced alignment ElevenLabs).
+
+---
+
+## APPLICATION PAR PILIER (ce qui est PROUVÉ vs HYPOTHÈSE à tester)
+
+> Les 4 principes ci-dessus sont nés d'un cas **Remotion**. Voici lesquels sont universels, lesquels
+> sont à confirmer sur les autres médiums. **Ne pas traiter une hypothèse comme une vérité prouvée.**
+
+| Principe | Remotion (PROUVÉ) | War-Map | Mapbox |
+|---|---|---|---|
+| **1. Intention→forme→template** | ✅ prouvé 2× du 1er coup | ✅ universel (s'applique tel quel) | ✅ universel |
+| **2. Continuité du monde** | ✅ prouvé (scène 0) | 🔶 hypothèse forte : War-Map a déjà un ÉTAT CONTINU (1 moteur conteneur) → principe NATIF, probablement renforcé | 🔶 hypothèse forte : Mapbox = "1 seule Map continue" (doctrine Souverain) → la continuité y est DÉJÀ la règle. À confirmer que "prolonger > nouvel écran" tient pour les overlays |
+| **3. Épure anti-redondance** | ✅ prouvé | ✅ universel (l'écran ne double jamais la voix, tous médiums) | ✅ universel |
+| **4. Image précède l'oreille (forced align)** | ✅ prouvé | ✅ déjà la pratique (War-Map utilise forced alignment, ex. `narration-v5-alignment.json`) | ✅ universel (caler getCam/overlays sur la voix) |
+
+**Synthèse** : les principes 1, 3, 4 sont **universels** (tous piliers). Le principe 2 (continuité) est
+**prouvé en Remotion** et **probablement natif/renforcé** en Mapbox/War-Map (qui ont déjà un monde continu),
+mais cette transposition reste une **hypothèse à valider en pratique** sur le prochain beat carto.
+⚠️ La grammaire VISUELLE diffère par médium (fracture SVG ≠ FlagFill Mapbox ≠ jetons War-Map) — c'est la
+FORME qui change, pas la doctrine de décision.
+
+## VARIANTE DE REVIEW : DA-brief VIDÉO (aval, mouvement+son)
+Pour juger une scène FINIE (mouvement/rythme/transitions/son), utiliser `scripts/tools/gemini-video-da-brief.py`
+(upload vidéo complète à Gemini 3.1 Pro + analyse d'écart vers des refs de niveau). Distinct de `da-brief.py`
+(review AMONT sur frames/storyboard figés). Gemini = SIGNAL, jamais juge : on FILTRE (garder ce qui élève
+sans casser l'épure ; jeter le bruit). Détail : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
 
 ---
 

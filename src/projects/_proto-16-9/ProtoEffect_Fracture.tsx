@@ -215,10 +215,10 @@ export const ProtoEffect_Fracture: React.FC<{ mode?: "parchemin" | "sombre"; wit
       <Sequence from={BREAK} durationInFrames={40}>
         <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.9} />
       </Sequence>
-      {/* SFX RECOLLEMENT — glissement des 2 moities qui se rejoignent ("la verite plus precise").
-          Cale sur la recomposition, n'affecte AUCUN timing visuel/narration (juste un son). */}
-      <Sequence from={f2s(30.6)} durationInFrames={30}>
-        <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/sfx/sfx-whoosh-transition.mp3")} volume={0.55} />
+      {/* SFX CONTACT — clic sec quand les 2 moities sont COLLEES (pas de whoosh de glissement, decision Aziz).
+          Cale sur le contact final de la recomposition. N'affecte aucun timing visuel/narration. */}
+      <Sequence from={f2s(31.0)} durationInFrames={12}>
+        <Audio src={staticFile("_shared/sfx/data/stat-tick.mp3")} volume={0.6} />
       </Sequence>
 
       {/* SCENE (carte fracturee) : plein ecran, push-in + micro-respiration (anti-statique) */}
