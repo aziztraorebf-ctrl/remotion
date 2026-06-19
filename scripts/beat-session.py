@@ -988,7 +988,12 @@ def phase_review(episode: str, beat_num: int, video_path: str, gate: dict) -> No
 
     print(f"\n=== REVIEW GEMINI {episode} Beat{beat_num} (Appel Gemini 2) ===\n")
 
-    output = f"/tmp/{episode}-beat{beat_num}-review.json"
+    # Review ecrite A COTE du mp4 (<video>.review.json) : c'est l'emplacement que le
+    # hook pre-presentation-review.sh verifie pour autoriser la presentation. Survit a /tmp.
+    if video_path.endswith(".mp4"):
+        output = video_path[:-4] + ".review.json"
+    else:
+        output = f"/tmp/{episode}-beat{beat_num}-review.json"
     cmd = [
         sys.executable,
         str(SCRIPTS_DIR / "visual_review.py"),

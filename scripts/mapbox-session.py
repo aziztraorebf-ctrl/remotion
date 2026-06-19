@@ -198,6 +198,20 @@ def phase_review(episode: str, acte: str, video: str, observations: str) -> None
         print(">>>   SEULEMENT ce qui est factuellement VRAI -> ignorer le reste -> STOP.")
         print(">>> JAMAIS de boucle Gemini->fix->Gemini. Le jugement d'Aziz prime sur le score.")
         print(">>> 1 SEUL appel Gemini. Apres corrections vraies -> upload (decision Aziz).")
+        # Ecrire un review.json normalise A COTE du mp4, lu par le hook pre-presentation-review.sh.
+        # verdict jamais REBUILD : la carte est CONSULTATIVE, le hook ne doit pas la bloquer durement.
+        if video.endswith(".mp4"):
+            adjacent = video[:-4] + ".review.json"
+            try:
+                gval = float(g)
+            except (TypeError, ValueError):
+                gval = 0.0
+            Path(adjacent).write_text(json.dumps({
+                "file": video, "model": "gemini-mapbox", "storyboard": None,
+                "score": gval, "verdict": "APPROVE" if gval >= 8 else "NEEDS_WORK",
+                "r1_violations": [], "review": data,
+            }, ensure_ascii=False, indent=2))
+            print(f">>> review.json ecrit a cote du mp4 : {adjacent}")
     except Exception as e:
         print(f"[WARN] JSON non lu : {e}")
 

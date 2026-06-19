@@ -38,7 +38,18 @@ Le chantier supposait « 5 portes d'entrée, visual_review jamais lancé ». La 
 
 ---
 
-## CHANTIER A — Porte d'entrée unique (rendre la session incontournable)
+## CHANTIER A — Porte d'entrée unique (rendre la session incontournable) — ✅ FAIT (2026-06-19)
+
+> **FAIT.** `/beat` (`.claude/commands/beat.md`) réécrit en aiguilleur unique : déduit l'intention →
+> route Mapbox (`mapbox-session.py`) vs Remotion (`beat-session.py`) vs proto jetable (`_rnd/`, pas de session).
+>
+> **Découverte clé du chantier** : le vrai travail n'était pas l'aiguilleur mais **l'alignement des sessions
+> sur le contrat du hook B**. `beat-session.py` écrivait sa review dans `/tmp/...-review.json` ; le hook B
+> cherche `<mp4>.review.json` adjacent. Sans correctif, le hook aurait bloqué MÊME les beats correctement
+> reviewés. Corrigé : les DEUX sessions écrivent désormais `<mp4>.review.json` à côté du mp4 (intégration
+> A+B prouvée end-to-end). Pour Mapbox, verdict normalisé jamais REBUILD (la carte reste CONSULTATIVE).
+>
+> Conception ci-dessous conservée pour mémoire.
 
 **Cible** : UN point d'entrée « je produis une scène » qui route automatiquement, au lieu de 5 chemins concurrents.
 
