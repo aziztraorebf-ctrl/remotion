@@ -4,6 +4,20 @@
 
 ---
 
+## 🛠️ (FAIT 2026-06-19) — SYSTÈME ANTI-FOUILLIS : ce qui a changé (branche `feat/elagage-systeme`)
+
+> Session d'architecture (pas de prod). Détail + conception : **`memory/PLAN-SYSTEME-ANTI-FOUILLIS.md`**.
+
+- **Scripts 98→56 actifs** : 47 one-shot/épisode archivés dans `scripts/_archive/` + `scripts/tools/_archive/`, 4 tests morts supprimés. `SCRIPTS-INDEX.md` régénéré.
+- **⛔ ORDRE TEMPLATES CORRIGÉ** : `INTENTION → FORME → TEMPLATE` (plus « template AVANT tout code »). Harmonisé dans CLAUDE.md + DOCTRINE-SOUVERAIN §3.10 + ATLAS-BEAT-DEMARRAGE, tous → `CONTINUITE-SCENE-INTENTION-DABORD`.
+- **🎯 PORTE UNIQUE `/beat`** (`.claude/commands/beat.md`) : aiguilleur qui route carte→`mapbox-session.py` / data-viz→`beat-session.py` / proto→`_rnd/`. Ne plus coder de Beat*.tsx à la main hors de ce flux.
+- **🔒 GATE DE PRÉSENTATION (hook)** : `.claude/hooks/pre-presentation-review.sh` BLOQUE tout upload/SendUserFile d'un `.mp4` de livrable (`out/...`) tant qu'un `<mp4>.review.json` adjacent, frais, score ≥ 8 et ≠ REBUILD n'existe pas. Les sessions écrivent ce fichier en `--phase review`. **Si le hook bloque → relancer `--phase review`.** Hook fantôme `beat-gemini-review.sh` retiré.
+- **📁 RÈGLE 3 ZONES dossiers** : livrable `<pilier>/<episode>/` · proto jetable `_rnd/<sujet>/` · brique `_shared/components/`. Section « OÙ RANGER » dans `INTENTION-FORME-INDEX.md`. `_proto-16-9/` migre vers `_rnd/` au fil de l'eau.
+- **🌿 Branche assouplie** (global) : « par chantier, pas par fichier ».
+- ⏳ À FAIRE : merger `feat/elagage-systeme` dans master quand validé. Éprouver le système sur une vraie prod (le test instance-vierge prouve les liens, pas l'usage réel).
+
+---
+
 ## 🧹 (FAIT 2026-06-15→16) — GRAND MÉNAGE WORKSPACE : ce qui a changé (LIRE pour comprendre la nouvelle structure)
 
 > Session dédiée au ménage/réorg complet. **La structure a changé — voici l'essentiel pour ne pas être perdu.** Détail : `memory/key-learnings.md` (section 🔧 MÉTHODE & PROCESS).

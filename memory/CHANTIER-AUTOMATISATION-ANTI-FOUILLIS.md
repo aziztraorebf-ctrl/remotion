@@ -1,5 +1,13 @@
 # CHANTIER DÉDIÉ — Automatisation anti-fouillis (réduire les erreurs d'exécution de Claude)
 
+> ✅ **TRAITÉ le 2026-06-19** (branche `feat/elagage-systeme`). Phase 1 (élagage) + 4 chantiers du plan FAITS.
+> Bilan, conception et état détaillé → **`memory/PLAN-SYSTEME-ANTI-FOUILLIS.md`**.
+> Résumé : scripts 98→56 · contradiction template-first/intention-first résolue · hook `pre-presentation-review.sh`
+> rend la review INCONTOURNABLE avant présentation · `/beat` = porte unique qui route Mapbox/Remotion ·
+> sessions alignées sur le contrat du hook (`<mp4>.review.json` adjacent) · règle des 3 zones de dossiers ·
+> branche assouplie. Test instance vierge : les 4 marches s'enchaînent (liens prouvés ; reste à éprouver en prod réelle).
+> Ce fichier conservé comme trace du diagnostic d'origine.
+
 > Né de la frustration réelle d'Aziz (2026-06-19) : malgré tous les outils/doctrines/scripts, Claude fait
 > trop d'erreurs d'exécution (ignore les templates qu'on vient de choisir, timing calé sur l'absolu au lieu
 > du local, sous-dimensionne, ne lance pas l'auto-vérif qui EXISTE). Diagnostic partagé : **le problème n'est
