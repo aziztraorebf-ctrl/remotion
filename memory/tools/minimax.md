@@ -190,17 +190,13 @@ Resultat observe 2026-04-22 : "accents electroniques tres pousses, pas africain 
 
 ## Workflow production
 
-### Test rapide (1 variante, ~$0.10)
+### 3 variantes parallele (~$0.30, ~6min) — recette de reference
 ```bash
-python3 scripts/tools/minimax-music-test.py
+python3 scripts/tools/_archive/minimax-music-3variants.py
 ```
-Mesure duree reelle + sauvegarde dans `sonjata-papercraft/audio/music/`.
-
-### 3 variantes parallele (~$0.30, ~6min)
-```bash
-python3 scripts/tools/minimax-music-3variants.py
-```
-Genere A/B/C simultanees, telecharge, probe duree. Upload en gallery Vercel :
+Genere A/B/C simultanees, telecharge, probe duree. (Script archive le 2026-06-19 :
+recette one-shot par episode. Pour un nouvel episode, mieux vaut un `minimax-music.py`
+parametrable plutot que dupliquer.) Upload en gallery Vercel :
 ```bash
 python3 scripts/tools/upload-to-blob.py --gallery "Title" \
   sonjata-papercraft/audio/music/v2-A-*.mp3 ... \
@@ -239,8 +235,7 @@ Voir src/projects/geoafrique-shorts/SonjataShortFull.tsx pour l'implementation r
 - Doc Context7 fal.ai : `/websites/fal_ai_models` query "minimax-music v2.6"
 - Clip reference validation : `sonjata-papercraft/audio/music/v2-A-griot-intime.mp3`
 - Integration Remotion : src/projects/geoafrique-shorts/SonjataShortFull.tsx
-- Script test solo : `scripts/tools/minimax-music-test.py`
-- Script 3 variantes : `scripts/tools/minimax-music-3variants.py`
+- Script 3 variantes (archive) : `scripts/tools/_archive/minimax-music-3variants.py`
 
 ---
 

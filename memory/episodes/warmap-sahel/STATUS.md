@@ -318,7 +318,7 @@ NEXT : (1) si Aziz valide → render FULL HD ; (2) SESSION DÉDIÉE 'fond de con
 Acte1→P3) ; (3) P4 (coût/réfugiés/franc CFA — plein écran OK pour les concepts).
 Assets générés : public/_shared/sprites/warmap/{ville-kidal,jeton-africacorps}.png · flags/{ml,bf,ne}.png.
 Briques nouvelles : _shared/WarMapOverlayDynamic.tsx (overlay dynamique réutilisable, 6 blocs composables).
-Doctrines : REVIEW-PREMIUM-TEMPLATE.md (standard review) · WARMAP-LONG-DOCTRINE (règle overlay vs plein écran).
+Doctrines : WARMAP-LONG-DOCTRINE (règle overlay vs plein écran). [REVIEW-PREMIUM-TEMPLATE archivé 2026-06-19 — info Gemini-vidéo contredite par CLAUDE.md ; review = `scripts/visual_review.py` + DA-BRIEF-GATE.]
 
 ## 🔄 P4 "LE COÛT, LE LEVIER, LA PERSPECTIVE" — EN COURS (2026-06-14) — DERNIÈRE PARTIE
 

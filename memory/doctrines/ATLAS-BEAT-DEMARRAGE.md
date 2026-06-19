@@ -1,11 +1,15 @@
 # ATLAS-BEAT-DEMARRAGE — Amorce du système de démarrage de beat (checklist scan)
 
-> Créé 2026-06-03. AMORCE écrite (à outiller en script `atlas-beat-session.py` plus tard, miroir
-> de `scripts/beat-session.py` Souverain). Le réflexe : au début de TOUT beat/scène Atlas, SCANNER
-> avant de coder — savoir quel mouvement est validé, quel overlay, quel sprite, qu'est-ce qui
-> apparaît où. Comme pour un beat Souverain, JAMAIS improviser un effet custom sans avoir vérifié
-> l'existant.
-> Doctrine : [[ATLAS-PLAYBOOK]] + [[ATLAS-PIXELLAB-PLAYBOOK]]. Sources décodées : [[DECODE-empire-ghana]] + [[DECODE-mansa-moussa]].
+> Créé 2026-06-03. Révisé 2026-06-19. AMORCE écrite (à outiller en script `atlas-beat-session.py` plus tard,
+> miroir de `scripts/beat-session.py` Souverain).
+>
+> ⚠️ **ORDRE (révisé 2026-06-19) : INTENTION → FORME → TEMPLATE, jamais l'inverse.** Le réflexe n'est PAS
+> « scanner d'abord ce qu'on a » (= piège template-first, [[CONTINUITE-SCENE-INTENTION-DABORD]]). C'est : pour
+> chaque moment, déduire CE QU'ON VEUT MONTRER/FAIRE RESSENTIR (§0.3 ci-dessous), PUIS scanner les catalogues
+> (§0.2) comme question binaire « a-t-on déjà cette forme ? ». En pratique, exécuter §0.3 AVANT §0.2. Le scan
+> reste obligatoire — mais au service de l'intention, jamais comme point de départ. JAMAIS re-coder un effet
+> existant une fois la forme connue.
+> Doctrine : [[CONTINUITE-SCENE-INTENTION-DABORD]] ⭐⭐ + [[ATLAS-PLAYBOOK]] + [[ATLAS-PIXELLAB-PLAYBOOK]]. Sources décodées : [[DECODE-empire-ghana]] + [[DECODE-mansa-moussa]].
 
 ---
 

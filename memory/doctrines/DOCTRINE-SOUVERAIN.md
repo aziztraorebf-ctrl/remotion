@@ -142,8 +142,8 @@ Avant de render un beat avec Mapbox, vérifier :
 - **Dots par-dessus les fills** : ajouter les `circle` layers EN DERNIER dans `style.load`. Pour les dots critiques sur fond de drapeau, utiliser `div` CSS via `map.project()` (les circle Mapbox se cachent sous fill-pattern).
 - **2 templates validés** : Focus-Un-Pays (1 drapeau + couleurs unies) et Multi-Pays (tous drapeaux). Voir [feedback_flagfill-templates-decouverte.md](feedback_flagfill-templates-decouverte.md).
 
-### 3.10 Recherche templates AVANT code (validé 2026-06-02, NON-NEGOTIABLE)
-Avant d'écrire une ligne de code pour un beat, Claude scanne les catalogues (`INDEX-DES-INDEX.md` → `CATALOGUE-CARTE-VIVANTE.md` + `COMPOSANTS-INDEX.md`) et présente à Aziz ce qui existe déjà. Aziz ne peut pas mémoriser 70+ composants — Claude le peut en une fraction de seconde. Ne JAMAIS coder un effet custom sans vérifier l'existant. Voir [feedback_recherche-templates-obligatoire.md](feedback_recherche-templates-obligatoire.md). (Leçon : 18 versions Beat 1 Maroc car FlagFill pas cherché au départ.)
+### 3.10 INTENTION → FORME → TEMPLATE (révisé 2026-06-19, NON-NEGOTIABLE)
+⚠️ Révision de l'ancien « scan templates AVANT code » : l'ordre comptait. **D'abord déduire l'intention** (1 verbe : ce qu'on veut faire RESSENTIR), **puis la forme** (le geste visuel), **PUIS** consulter les catalogues (`INTENTION-FORME-INDEX.md` → `CATALOGUE-CARTE-VIVANTE.md` + `COMPOSANTS-INDEX.md`) comme question binaire : « a-t-on déjà cette forme ? » — oui → adapter, non → coder en sachant exactement quoi. Le scan reste obligatoire mais comme AIDE à la déduction, **après** l'intention, jamais comme point de départ (« voici 70+ composants, lequel colle ? » = le piège qui paralyse). Une fois la forme connue, ne JAMAIS re-coder un effet existant (Aziz ne mémorise pas 70+ composants, Claude oui). Doctrine maîtresse : [CONTINUITE-SCENE-INTENTION-DABORD.md](CONTINUITE-SCENE-INTENTION-DABORD.md) ⭐⭐. (Leçon double : 18 versions Beat 1 Maroc car FlagFill pas trouvé — MAIS aussi ~10 essais quand on PART du template au lieu de l'intention. La bonne réponse n'est pas « cherche plus tôt », c'est « cherche dans le bon ordre ».)
 
 ---
 

@@ -13,7 +13,6 @@
 |---|---|---|
 | Rendre une compo lourde / Mapbox (> 30s) sur le cloud (libérer la machine) | `scripts/tools/render-on-vercel.py` | `--comp GeoTest --props '{...}' [--open]` → URL Vercel Blob MP4. DÉFAUT render long. |
 | Rendre une compo Mapbox/WebGL en local (headless WebGL) | `scripts/render-mapbox.sh` | `<CompositionId> <output.mp4> [args remotion...]` chrome-headless-shell, public-dir slim. |
-| Capturer une compo WebGL Mapbox frame-par-frame via Remotion Studio (Playwright) | `scripts/capture-mapbox-studio.py` | `--comp <id> --frames N --fps 30 --out x.mp4`. Studio doit tourner. Fallback au headless. |
 | Rendre les 8 slides du carrousel Good News + musique | `scripts/render-goodnews-carousel.sh` | Lit CURRENT_EDITION. Sortie `out/_r-and-d/good-news/final/`. |
 | Rendre les slides d'un carrousel (PNG via remotion still) | `scripts/generate-carousels.py` | Sortie `out/carousels/<id>/slide-N.png`. Édite CAROUSELS en tête. |
 
@@ -24,23 +23,12 @@
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
 | Générer une narration EXPRESSIVE (pipeline voix vivante V3→STS GéoAfrique) | `scripts/generate-narration-expressive.py` | `--text-file <txt> --out <mp3> [--sample] [--dry-run]`. Lancer `--dry-run` d'abord (coût). |
-| Générer la narration Peste 1347 (GéoAfrique v2, script locked) | `scripts/generate-peste-narration.py` | Voix `z3gESu49naEZW8Af2Upm`. Script V3 hardcodé. |
 | Générer des SFX (sound design, pas TTS) | `scripts/generate-sfx-elevenlabs.py` | ElevenLabs Sound Effects → `public/_shared/sfx/`. Prompts EN. |
 | Générer les SFX War-Map (set signature + bonus réutilisable) | `scripts/warmap/generate-warmap-sfx.py` | Sortie `public/_shared/sfx/warmap/`. Indexer dans SFX-INDEX. |
-| Forced alignment Peste 1347 (timing mot-à-mot) | `scripts/generate-peste-alignment.py` | ElevenLabs forced-alignment → JSON word-level. |
-| Faire un SRT sobre depuis l'alignement Peste | `scripts/peste-make-srt.py` | Regroupe en lignes ≤42 chars, coupe à la ponctuation. |
 | Forced alignment + découpe d'un mp3 narration par PARTIES (Sahel) | `scripts/sahel-align-and-split-v5.py` | Découpe le bloc validé aux vraies frontières, zéro regen. |
 | Alignement mot-à-mot Whisper → fichier TS pour Subtitles | `scripts/tools/whisper-align.py` | `<audio.mp3> [--out x.ts]`. ~$0.006/min. |
 | Transcrire une narration (Whisper, word-level JSON) | `scripts/tools/transcribe-openai.py` | OpenAI Whisper. Chemins Soundjata en dur (adapter). |
-| Générer musique de fond Mande (3 variantes parallèles) | `scripts/tools/minimax-music-3variants.py` | Minimax v2.6 via fal.ai. |
-| Générer musique Sénégal Pétrole & Gaz (3 variantes) | `scripts/tools/minimax-senegal-music.py` | Documentaire analytique. |
-| Générer musique War-Map Sahel (4 variantes graves) | `scripts/tools/minimax-sahel-music.py` | + `minimax-sahel-music-v2.py` (2 variantes épiques). |
-| Générer musique RDC (ambient doc sobre) | `scripts/tools/minimax-music-rdc.py` | Sortie projet rdc-no-sense. |
-| Générer musique Québec/Canada (5 variantes, projet différé) | `scripts/tools/minimax-quebec-music.py` | R&D portabilité. |
-| Générer musique EDM/énergique (sortir du contemplatif) | `scripts/tools/minimax-edm-music.py` | 3 pistes test. |
-| Vérifier la durée réelle produite par Minimax (test) | `scripts/tools/minimax-music-test.py` | 1 prompt épique, contrôle duration. |
-| Tester une voix TTS alternative (Hume Octave A/B vs GéoAfrique) | `scripts/test-hume-octave.py` | `<HUME_API_KEY>`. Clé jetable, NE PAS commiter. |
-| Tester Gemini TTS V3 (accents africains) | `scripts/tools/test-gemini-tts-v3-accents.py` | Recherche voix proche narratrice EL. |
+| Générer une musique de fond (Minimax v2.6, A/B/C variantes) | `scripts/tools/_archive/minimax-music-3variants.py` | Archive : recette de référence (one-shot par épisode). Pour un nouvel épisode, paramétrer plutôt que dupliquer. |
 
 ---
 
@@ -51,13 +39,8 @@
 | Programmer les vidéos Kora & Cartes sur Postiz (4 plateformes, 3 sem.) | `scripts/schedule-postiz.py` | `[--dry-run]`. |
 | Programmer le carrousel Good News (IG + FB + TikTok Photo Mode) | `scripts/schedule-goodnews-carousel.py` | `[--dry-run] [--date ISO]`. |
 | Programmer la version TikTok vidéo du carrousel Good News | `scripts/schedule-goodnews-tiktok.py` | `[--dry-run]`. Vidéo unique (pas carrousel). |
-| Republier Kora & Cartes (coverB) via Postiz | `scripts/republish-kora.py` | `[--dry-run]`. Calendrier juin 2026 en tête. |
-| Republier batch via TryPost (YT+IG+FB) + Postiz (TikTok) | `scripts/republish-trypost-batch.py` | `[--dry-run]`. API REST directe. |
-| Republier Kora via TryPost + Postiz (calendrier détaillé) | `scripts/republish-trypost.py` | `[--dry-run]`. |
-| Supprimer les posts Postiz en attente (#3+) | `scripts/delete-postiz-pending.py` | `[--dry-run]`. Demande confirmation. |
 | Vérification mi-semaine (jeudi) des publications Postiz | `scripts/postiz-weekly-check.py` | `[--full-week]`. Cloud-safe, exit≠0 si échec. |
 | Bilan hebdo (samedi) des publications Kora & Cartes | `scripts/postiz-weekly-report.py` | `[--days N]`. Liens live (pas de métriques). |
-| Publier un storyboard beat sur here.now | `scripts/publish-storyboard.sh` | `<beat_dir> <beat_name> [audio] [slug] [token]`. |
 
 ---
 
@@ -69,14 +52,12 @@
 | Générer une variation image-to-image (garde le style d'une ref) | `scripts/tools/gemini-i2i.py` | `--ref REF.png --prompt "..." --output OUT.png`. |
 | Générer des refs de style i2i en série (style anchor + table de clips) | `scripts/tools/generate-styleref.py` | 9:16 vertical, un par clip. |
 | Générer un storyboard VISUEL multi-panels (pipeline Beat) | `scripts/tools/gemini-storyboard-panels.py` | `--episode X --beat N --prompt-file f.txt`. NON-NEGOTIABLE avant code. |
-| Améliorer un storyboard existant (Gemini suggère + régénère) | `scripts/improve_storyboard.py` | `<episode> <beat_id> [--apply]`. Étape 1.5. |
-| Générer un storyboard beat précis (Niger Beat4 / Silicon Beat7) | `scripts/tools/generate-beat4-storyboard-v2.py`, `scripts/tools/generate-beat7-storyboard.py` | Storyboards hardcodés (épisode-spécifiques). |
+| Générer un storyboard en DUAL (Gemini + GPT/fal en parallèle) | `scripts/tools/storyboard-dual-gen.py` | Pipeline dual-gen validé 2026-06-19. |
+| Générer une image text-to-image via GPT-image (OpenRouter) | `scripts/tools/openrouter-gen-image.py` | `gpt-5.4-image-2`. Comparer à Gemini selon le besoin. |
 | Éditer chirurgicalement une thumbnail Souverain | `scripts/tools/gemini-thumbnail-edit.py` | `--input --output --brief senegal\|niger`. |
 | Créer une thumbnail guidée par croquis + refs d'esthétique | `scripts/tools/gemini-thumbnail-create-from-refs.py` | `--croquis --refs ... --output --brief`. |
-| Tester un style d'illustration carrousel Good News | `scripts/tools/gemini-goodnews-style-test.py` | 2 styles A/B. |
 | Générer d'autres directions d'un sprite (pont Gemini→PixelLab) | `scripts/tools/pixellab-rotate.py` | `--image base.png --out-dir d/ --to-dirs east,west,...`. |
 | Réécrire des prompts Kimi en Format 3 SECONDS Seedance | `scripts/tools/dynamize-prompts.py` | `kimi-brief.md [--clips 1,3] [--model claude\|gemini]`. |
-| **(Sahel)** Générer la base Africa Corps top-down | `scripts/gen-africacorps-base.py` | Spécifique épisode War-Map Sahel P3. |
 | **(Sahel)** Générer les jetons-combattants Acte 1 (JNIM/EIGS) | `scripts/warmap/gen-sahel-fighters.py` | Spécifique Sahel. |
 | **(Sahel)** Générer le jeton soldats français (B1 V3) | `scripts/warmap/gen-sahel-france-token.py` | Spécifique Sahel. |
 | **(Sahel)** Générer les véhicules top-down Acte 1 | `scripts/warmap/gen-sahel-vehicles.py` | Spécifique Sahel. |
@@ -99,7 +80,8 @@
 | Brief Mapbox caméra+overlays via Kimi | `scripts/tools/kimi-mapbox-brief.py` | `--prompt "..." \| --prompt-file f`. OpenRouter kimi-k2.5. |
 | Reviewer un render (routeur multi-modèles : kimi narratif / qwen JSON / gemini) ⭐ | `scripts/visual_review.py` | `<video> --model gemini --storyboard PATH`. Remplace review_with_kimi (archivé). |
 | Reviewer un beat data-viz Remotion (Gemini 1 breakdown) | `scripts/beat-breakdown.py` | `--beat N [--storyboard] [--output]`. Appel Gemini 1. |
-| Reviewer la vidéo carrousel Good News (mouvement réel) | `scripts/tools/gemini-review-goodnews.py` | Gemini 3.1 Pro Files API. |
+| Breakdown JSON d'un storyboard via GPT-5.5 (jugé supérieur au breakdown) | `scripts/tools/openrouter-vision-breakdown.py` | Éval 2026-06-17. Voir aussi `gemini-vision-breakdown.py` (alternative Gemini). |
+| Breakdown DUAL d'un storyboard (Gemini + GPT en parallèle) | `scripts/tools/storyboard-breakdown-dual.py` | Pipeline dual validé 2026-06-19. |
 | Downscaler images/frames avant analyse vision (économie tokens) | `scripts/downscale-for-review.sh` | `<image\|video\|dossier> [nb_frames\|--batch]`. |
 
 ---
@@ -144,27 +126,16 @@
 | Uploader un fichier sur catbox.moe (→ litterbox si >200 MB) | `scripts/upload-catbox.sh` | `<file>` → URL. |
 | Uploader des fichiers sur Vercel Blob (review mobile) | `scripts/tools/upload-to-blob.py` | `<file> [--folder] \| --gallery <title> ... \| --list`. |
 | Supprimer des blobs Vercel | `scripts/tools/cleanup-blob.py` | `<prefix_or_url> ...`. |
-| Régénérer les previews de templates (PNG stills + catbox) | `scripts/generate_template_previews.py` | `[filter] [--update-index]`. |
-| Régénérer le dashboard HTML Souverain | `scripts/generate_dashboard.py` | `[--upload]` (here.now). |
-| Préparer (générer assets manquants) un beat avant code | `scripts/prepare_beat.py` | `<episode> <beat_id>`. Étape 3. Vérifie pixel(0,0). |
 | Vérifier l'enregistrement durationInFrames d'un beat (Root.tsx) | `scripts/check-beat-registration.py` | `--episode X --beat N [--start --end]`. |
-| Gate bloquant avant de coder un beat Souverain | `scripts/validate_beat.sh` | `<episode> <beat_id>`. Exit 1 si fail. |
 | Gates de pré-génération (anti-gaspillage API) | `scripts/pipeline_gates.py` | Module : `pre_seedance_check`, `pre_gemini_check`. |
 | Intégrer un asset ville PixelLab (checks RGB/ref/dims) | `scripts/add-city-asset.sh` | `<ville> <fichier> [episode]`. |
 | Extraire la dernière frame d'un clip (frame chaining) | `scripts/tools/extract-lastframe.sh` | `clip1.mp4 [clip2...]` → lastframe_*.png. |
 | Vérifier les balances API avant génération payante | `scripts/check-api-balance.sh` | `[elevenlabs\|pixellab\|all]`. Exit 1 si seuil critique. |
 | Envoyer une notification push (ntfy) | `scripts/ntfy-notify.sh` | `<event> <beat> [url] [msg]`. NTFY_TOPIC dans .env. |
-| Lancer le layout tmux de surveillance agents | `scripts/tmux-agents.sh` | `[session_name]`. 4 panneaux live. |
 | Préparer la recherche hebdo Good News (last30days → BRIEF) | `scripts/prepare-goodnews-weekly.py` | `[--days N]`. Étape 1, jugement éditorial reste manuel. |
 | Détecter des outliers YouTube dans une niche | `scripts/tools/outlier-scan.py` | `[--queries "..."] [--min-ratio N]`. ScrapeCreators. |
-| Brief conceptuel ponctuel overlay DATE Acte 1 (Gemini+Kimi) | `scripts/tools/ask-date-overlay.py` | Spécifique War-Map Sahel Acte 1. |
-| Construire le SOUVERAIN-VISUAL-PLAYBOOK (2 appels Gemini) | `scripts/tools/gemini-visual-playbook.py` | Génération doctrine Mapbox. |
-| Construire le SOUVERAIN-REMOTION-PLAYBOOK (2 appels Gemini) | `scripts/tools/gemini-remotion-playbook.py` | Génération doctrine data-viz. |
-| Upgrade d'un playbook via Gemini (refs → principes appliqués) | `scripts/tools/gemini-playbook-upgrade.py` | 6 refs + 2 beats. |
-| Idées de templates HOOK (ouverture) via Gemini | `scripts/tools/gemini-hook-ideas.py` | JSON → /tmp/hook-ideas.json. |
-| Gap analysis templates carte vs Playbook (textuel) | `scripts/tools/gemini-template-gap.py` | JSON → /tmp/template-gap.json. |
-| Nouvelles idées de templates carte vivante (previews réelles) | `scripts/tools/gemini-template-ideas-v2.py` | JSON → /tmp/template-ideas-v2.json. |
+| Vérifier les liens morts dans les fichiers de navigation | `scripts/tools/check-links.py` | NON-NEGOTIABLE après tout déplacement/renommage. |
 
 ---
 
-_Total : ~80 scripts actifs mappés. Si un script n'est pas ici, vérifier `scripts/_archive/`._
+_Total : ~55 scripts actifs mappés (élagage 2026-06-19 : 47 scripts one-shot/épisode-spécifiques archivés dans `scripts/_archive/` + `scripts/tools/_archive/`, 4 tests morts supprimés). Si un script n'est pas ici, vérifier `_archive/`._

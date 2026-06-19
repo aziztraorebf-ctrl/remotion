@@ -19,7 +19,7 @@
 - **MAX 1 appel / modèle / acte.** Doctrine complète : `memory/doctrines/DA-BRIEF-GATE.md`.
 
 **Template de prompt downstream premium** (faire monter une version semi-finale en gamme, pas chasser les bugs) :
-`memory/doctrines/REVIEW-PREMIUM-TEMPLATE.md` (standard validé Aziz, donne d'excellents résultats).
+`memory/archive/doctrines-perimees-2026-06-19/REVIEW-PREMIUM-TEMPLATE.md` (archivé 2026-06-19 : portait une info Gemini-vidéo contredite par CLAUDE.md ; les 7 demandes de montée en gamme restent consultables. Review actuelle = `scripts/visual_review.py` + DA-BRIEF-GATE).
 
 ---
 
