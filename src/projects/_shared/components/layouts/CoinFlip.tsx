@@ -59,6 +59,10 @@ export interface FaceContent {
   icon: CoinIcon;
   label: string;
   value: string;
+  // OPTIONNEL : contenu React custom (illustration SVG) injecte DANS la face a la place de icon/label/value.
+  // Permet d'utiliser le template 3D avec des faces sur-mesure (ex: malediction/miracle Senegal).
+  custom?: React.ReactNode;
+  accentColor?: string; // bordure/anneau de la face (defaut or)
 }
 
 export interface CoinFlipProps {
@@ -66,6 +70,10 @@ export interface CoinFlipProps {
   faceB?: FaceContent;
   subtitle?: string;
   bgColor?: string;
+  // OPTIONNEL : pilotage externe du flip (frame-driven par un parent) au lieu du timing interne.
+  rotateYExternal?: number;
+  diameter?: number;
+  showDotGrid?: boolean;
 }
 
 const DEFAULT_FACE_A: FaceContent = {
@@ -125,6 +133,7 @@ function CoinFace({
   content: FaceContent;
   isBack: boolean;
 }) {
+  const accent = content.accentColor ?? COLOR_GOLD;
   return (
     <div
       style={{
@@ -132,9 +141,9 @@ function CoinFace({
         inset: 0,
         borderRadius: "50%",
         background:
-          "radial-gradient(circle at 40% 40%, #1a2a40, #0d1420)",
-        border: `4px solid ${COLOR_GOLD}`,
-        boxShadow: `0 0 40px rgba(196,160,83,0.4)`,
+          "radial-gradient(circle at 38% 36%, #f6e2b0, #e7bd78 55%, #bf9442 100%)",
+        border: `5px solid ${accent}`,
+        boxShadow: `0 0 50px rgba(196,160,83,0.45), inset 0 0 60px rgba(120,80,20,0.25)`,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -143,6 +152,7 @@ function CoinFace({
         WebkitBackfaceVisibility: "hidden",
         transform: isBack ? "rotateY(180deg)" : "rotateY(0deg)",
         gap: 24,
+        overflow: "hidden",
       }}
     >
       {/* Inner decorative ring */}
@@ -152,11 +162,16 @@ function CoinFace({
           width: INNER_RING_DIAMETER,
           height: INNER_RING_DIAMETER,
           borderRadius: "50%",
-          border: `1px solid rgba(196,160,83,0.25)`,
+          border: `1px solid rgba(120,80,20,0.35)`,
           pointerEvents: "none",
         }}
       />
 
+      {/* CUSTOM content (illustration sur-mesure) — sinon icon/label/value par defaut */}
+      {content.custom ? (
+        content.custom
+      ) : (
+      <>
       {/* Icon */}
       <IconComponent name={content.icon} size={140} />
 
@@ -199,6 +214,8 @@ function CoinFace({
           opacity: 0.4,
         }}
       />
+      </>
+      )}
     </div>
   );
 }
@@ -210,9 +227,13 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
   faceB = DEFAULT_FACE_B,
   subtitle = DEFAULT_SUBTITLE,
   bgColor = "transparent",
+  rotateYExternal,
+  diameter = COIN_DIAMETER,
+  showDotGrid = true,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const external = rotateYExternal !== undefined;
 
   // ── Pop-in spring (frame 0 → APPEAR_END) ───────────────────────────────────
   const popIn = spring({
@@ -221,14 +242,15 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
     config: { damping: 70, stiffness: 200 },
     durationInFrames: APPEAR_END,
   });
-  const coinScale = interpolate(popIn, [0, 1], [0, 1], {
+  const coinScale = external ? 1 : interpolate(popIn, [0, 1], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
-  // ── Rotation Y (flip) ───────────────────────────────────────────────────────
-  const rotateY =
-    frame < FLIP_START
+  // ── Rotation Y (flip) ── pilotage externe possible (sync voix) ─────────────
+  const rotateY = external
+    ? (rotateYExternal as number)
+    : frame < FLIP_START
       ? 0
       : frame > FLIP_END
       ? 180
@@ -280,16 +302,19 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
         overflow: "hidden",
       }}
     >
-      {/* Dot grid background */}
-      <AbsoluteFill
-        style={{
-          backgroundImage: `radial-gradient(rgba(196,160,83,0.30) 1px, transparent 1px)`,
-          backgroundSize: "28px 28px",
-          opacity: 0.7,
-        }}
-      />
+      {/* Dot grid background (off en mode externe : le parent gere le fond) */}
+      {showDotGrid && (
+        <AbsoluteFill
+          style={{
+            backgroundImage: `radial-gradient(rgba(196,160,83,0.30) 1px, transparent 1px)`,
+            backgroundSize: "28px 28px",
+            opacity: 0.7,
+          }}
+        />
+      )}
 
-      {/* Top subtitle */}
+      {/* Top subtitle (off en mode externe) */}
+      {!external && (
       <div
         style={{
           position: "absolute",
@@ -314,6 +339,7 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
           {subtitle}
         </div>
       </div>
+      )}
 
       {/* Center: 3D coin container */}
       <div
@@ -321,11 +347,11 @@ export const CoinFlip: React.FC<CoinFlipProps> = ({
           position: "absolute",
           top: "50%",
           left: "50%",
-          width: COIN_DIAMETER,
-          height: COIN_DIAMETER,
-          transform: `translate(-50%, -50%) scale(${coinScale * zoomOut})`,
-          opacity: fadeOut,
-          perspective: 1200,
+          width: diameter,
+          height: diameter,
+          transform: `translate(-50%, -50%) scale(${external ? coinScale : coinScale * zoomOut})`,
+          opacity: external ? 1 : fadeOut,
+          perspective: 1400,
         }}
       >
         <div
