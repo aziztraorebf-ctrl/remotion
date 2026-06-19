@@ -195,6 +195,10 @@ import { DemoLimogeageTemplates } from "./projects/_proto-16-9/DemoLimogeageTemp
 import { ProtoEffect_Fracture } from "./projects/_proto-16-9/ProtoEffect_Fracture";
 import { SenegalScene0 } from "./projects/_proto-16-9/SenegalScene0";
 import { SenegalScene1 } from "./projects/_proto-16-9/SenegalScene1";
+import { SenegalScene1Intro } from "./projects/_proto-16-9/SenegalScene1Intro";
+import { IntroProtoC } from "./projects/_proto-16-9/IntroProtoC";
+import { IntroProtoB } from "./projects/_proto-16-9/IntroProtoB";
+import { IntroProtoA } from "./projects/_proto-16-9/IntroProtoA";
 import { MatterCompare } from "./projects/_proto-16-9/MatterCompare";
 import { MatterOnMap } from "./projects/_proto-16-9/MatterOnMap";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
@@ -2068,6 +2072,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Fracture-Sombre-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "sombre", withNarration: true }} />
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
+        <Composition id="IntroProtoC" component={IntroProtoC} durationInFrames={270} fps={30} width={1920} height={1080} />
+        <Composition id="IntroProtoB" component={IntroProtoB} durationInFrames={270} fps={30} width={1920} height={1080} />
+        <Composition id="IntroProtoA" component={IntroProtoA} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="MatterCompare" component={MatterCompare} durationInFrames={30} fps={30} width={1920} height={1080} />
         <Composition id="MatterOnMap-none" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "none" }} />
         <Composition id="MatterOnMap-canvas" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "canvas" }} />
