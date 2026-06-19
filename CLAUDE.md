@@ -120,3 +120,4 @@ Nommage : `beatN_v3.mp4` (wip) → `beatN_V3.mp4` (présenté) → `beatN-FINAL.
 ## Langue & emojis
 - Communication : français. Code/docs techniques : anglais.
 - **NO EMOJIS IN CODE** : interdit `.ts .tsx .js .json .yaml .env` · autorisé `.md .txt` uniquement.
+- **ACCENTS FR OBLIGATOIRES dans les strings AFFICHÉES** (texte à l'écran en JSX) : « SOUVERAINETÉ », pas « SOUVERAINETE ». NO-EMOJIS ≠ NO-ACCENTS — ne pas omettre É/È/À/Ç par confusion. Vérifier avant render (un titre amputé d'accent = faux visuel).
