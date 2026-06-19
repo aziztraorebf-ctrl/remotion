@@ -40,19 +40,36 @@ enrichissement↔chute = bon open loop), structure démonstrative Norvège/Congo
 | **0 HOOK** | 8M$/j → gouvernement saute → 2 récits à écarter | Beat0 | (refait) | ✅ **FAIT** | Validé (catbox yg9k78). Référence du standard cible. |
 | **1 ACTE1** | 3 gisements + 60% paradoxe | Beat1-9 | carte navy | 🟡 REFAIRE | 1 Map continue · ResourceTexture pétrole + bathymétrie · gisements = échelle (FPSO/halo) pas points · 60% = flux qui FUIT vers Woodside/BP (pas "<50%" plat) · drapeaux réels · SFX boom+cliquetis. (ma base SenegalScene1 = structure OK mais trop sage, à enrichir OU re-storyboarder) |
 | **2 LEÇON** | Norvège/Congo/Botswana = les RÈGLES décident | Beat10 | carte navy (Congo en brun) | 🟢 GARDER+ | Idée forte (3 destins, même ressource). Re-réaliser : 3 pays sur 1 Map continue, FlagFill drapeaux, contraste visuel fonds souverain (Norvège lumineux) vs dette (Congo sombre). Climax "ce sont les RÈGLES". |
-| **3 CONTRAT** | 60% = estimation ; contrats opaques ; bras de fer Woodside/impôt | Beat11 | 🔴 **parchemin/kraft** | 🟡 REFAIRE | ⛔ SORTIR du kraft. Rester dans le monde carte/navy. Le "bras de fer" Woodside↔État = tension visuelle (2 forces qui tirent), pas un diagramme. Citation Sonko en tampon. |
-| **4 DETTE** | FONSIS verrouillé MAIS dette 132% → tentation de vider | Beat12 | 🔴 **kraft (FONSIS-VANNE-BUDGET)** | 🟡 REFAIRE | ⛔ SORTIR du kraft (boîtes-et-lignes plates). 132% = le chiffre-choc à matérialiser (calebasse qui déborde existait en V1 ? à vérifier). Le "fonds qu'on peut vider" = métaphore visuelle forte. |
-| **5 COULISSES** | Yakaar fermé : Kosmos/BP/Petrosen, Pékin observe, Europe recule | Beat13 | 🔴 **kraft (barres Europe/Chine)** | 🟡 REFAIRE | ⛔ SORTIR du kraft. RETOUR sur la carte = Yakaar offshore (rappel scène 1, ferme l'open loop) + regards géopolitiques (US/Chine/Europe) qui convergent. |
+| **3 CONTRAT** | 60% = estimation ; contrats opaques ; bras de fer Woodside/impôt | Beat11 | parchemin/kraft | 🟡 REFAIRE | ABSTRAIT → reste en Remotion (overlay dédié), mais NIVEAU PREMIUM pas kraft plat. "Bras de fer" Woodside↔État = tension visuelle (2 forces qui tirent), accompagne la voix. Transition TENUE depuis/vers la carte. Citation Sonko en tampon. |
+| **4 DETTE** | FONSIS verrouillé MAIS dette 132% → tentation de vider | Beat12 | kraft (FONSIS-VANNE-BUDGET) | 🟡 REFAIRE | ABSTRAIT → Remotion. ⭐ La **calebasse 132% qui déborde** (V1) était BONNE et accompagnait la voix → GARDER/améliorer, pas jeter. "Fonds qu'on peut vider" = métaphore visuelle forte. NE PAS forcer sur la carte. |
+| **5 COULISSES** | Yakaar fermé : Kosmos/BP/Petrosen, Pékin observe, Europe recule | Beat13 | kraft (barres Europe/Chine) | 🟡 REFAIRE | MIXTE : Yakaar = SPATIAL → RETOUR carte (rappel offshore scène 1, ferme l'open loop) + regards géopolitiques US/Chine/Europe convergent. Le "Europe recule vs Chine avance" = abstrait → overlay ancré. Décider au montage. |
 | **6 BILAN** | 0→exportateur en 10 mois · garde-fous vs fragilités · "le moment" | Beat14 | carte navy (FONSIS/ITIE/loi) | 🟢 GARDER+ | Idée OK (récap sur carte). Re-réaliser : chiffres frais mai 2026, balance garde-fous↔fragilités visuelle, pont vers scène 7. |
 | **7 BONUS** | machine tourne / pouvoir se fissure / pont AES | ❌ **AUCUN** | — | 🔴 **CRÉER** | Tout neuf. Mini-arc : production (chaud, cargaisons) → fracture Faye/Sonko (tension) → 3 pays AES (Mali/Burkina/Niger) → teaser prochaine vidéo + CTA abonnement. |
 
-## INSIGHT CLÉ (réponse à "faut-il garder la map ou couper vers un graphique ?")
+## ⭐ INSIGHT CLÉ — SPATIAL→CARTE / ABSTRAIT→REMOTION (précision Aziz 2026-06-18, NE PAS DÉFORMER)
 
-La V1 répond mal : elle COUPE vers des diagrammes kraft plats (scènes 3-5) = rupture d'univers + chute de qualité.
-**La doctrine continuité dit : 1 monde qui se transforme.** Hypothèse de travail (à tester scène par scène sur
-Mapbox, pas à décréter) : **rester dans le monde carte/navy le plus possible**, et quand un moment est CONCEPTUEL
-(60%, 132%, comparaison), le traiter en OVERLAY ancré sur la carte (grammaire War-Map `WarMapDimmedOverlay`/
-`WarMapSplitScreen`) PLUTÔT qu'un plein écran kraft déconnecté. On VALIDE ça empiriquement scène par scène.
+⛔ **RÈGLE GRAVÉE : on ne FORCE JAMAIS de l'abstrait sur la carte.** Mettre un % / une dette / un partage de
+revenus "sur la carte" = forcé et illisible. Quitter la carte pour expliquer l'abstrait en Remotion = JUSTE,
+ce n'était PAS l'erreur de la V1.
+
+**Ce n'était donc PAS "sortir du kraft" le bon diagnostic.** Le principe V1 (abstrait → overlay Remotion) était
+bon. Les VRAIS problèmes des scènes 3-5 :
+1. Les diagrammes kraft étaient **PLATS/pauvres** (boîtes-et-lignes, barres mornes) — exécution, pas principe.
+   ⚠️ MAIS certains étaient BONS et accompagnaient bien la voix : la **calebasse qui déborde (132%)**, les
+   graphismes de pourcentages. Ceux-là = à GARDER/améliorer, pas jeter.
+2. La **transition carte navy → kraft clair = CUT SEC** entre 2 univers. C'est ça qui fait amateur, pas l'overlay.
+3. Overlay "PAR-DESSUS" (transparence baveuse) au lieu d'**ANCRÉ/SOLIDE** (la carte s'assombrit, l'élément se pose
+   dessus net — comme `WarMapDimmedOverlay`, ou les overlays propres des templates Vox/Hera récents).
+
+**LA BONNE GRAMMAIRE (par moment, jamais une règle rigide) :**
+- **SPATIAL → CARTE** : où est Sangomar/GTA/Yakaar (offshore) · jumps Norvège/Congo/Botswana (**fly-through rapide**
+  d'un pays à l'autre, point à point) · regards géopolitiques US/Chine/Europe vers Yakaar. La carte est imbattable ici.
+- **ABSTRAIT → REMOTION** : calebasse 132% · % de revenus · flux de partage. Visuel dédié, mieux que forcer sur carte.
+- **TRANSITION entre les deux = TENUE, jamais un cut** : assombrissement de la carte, overlay ANCRÉ solide, ou
+  fly-through. Le monde reste continu même quand on passe carte ↔ Remotion.
+
+**MÉTHODE (Aziz) : décider SCÈNE PAR SCÈNE — "ce moment est-il spatial ou abstrait ?" → carte ou Remotion → la
+transition tenue. Ne PAS forcer ce qui ne doit pas être forcé. Premium 100% du 1er coup, effort max, zéro coin rond.**
 
 ## ORDRE DE BATAILLE (sessions futures)
 
