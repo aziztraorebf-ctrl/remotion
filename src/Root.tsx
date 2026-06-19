@@ -194,6 +194,7 @@ import { ProtoEffect_MapDrawParchemin } from "./projects/_proto-16-9/ProtoEffect
 import { DemoLimogeageTemplates } from "./projects/_proto-16-9/DemoLimogeageTemplates";
 import { ProtoEffect_Fracture } from "./projects/_proto-16-9/ProtoEffect_Fracture";
 import { SenegalScene0 } from "./projects/_proto-16-9/SenegalScene0";
+import { SenegalScene1 } from "./projects/_proto-16-9/SenegalScene1";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
@@ -2026,6 +2027,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Fracture-Parchemin-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "parchemin", withNarration: true }} />
         <Composition id="ProtoEffect-Fracture-Sombre-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "sombre", withNarration: true }} />
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
