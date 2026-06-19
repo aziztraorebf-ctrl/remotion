@@ -14,6 +14,26 @@
 
 ---
 
+## OÙ RANGER CE QUE JE CODE (règle des 3 zones — 1 question)
+
+> Avant d'écrire un `.tsx`, répondre : « ce que je code, c'est… ». Le bon emplacement doit être ÉVIDENT.
+> (Posée 2026-06-19, Chantier C anti-fouillis. L'existant `_proto-16-9/` migre vers `_rnd/` au fil de l'eau,
+> pas en big-bang — il reste valide en attendant.)
+
+| Ce que je code… | Emplacement | Durée de vie | Enregistré dans Root.tsx ? |
+|---|---|---|---|
+| un **livrable** d'un épisode précis (un Beat de la vidéo finale) | `src/projects/<pilier>/<episode>/` (ex: `souverain/senegal-petrole-gaz/beats/`) | permanent | oui, `<Folder>` de l'épisode |
+| un **proto jetable** (tester une mécanique d'animation, R&D) | `src/projects/_rnd/<sujet>/` | 7j implicite, se purge | oui, `<Folder name="proto-*">` |
+| une **brique réutilisable** validée (sort du proto, sert ≥2 fois ou validée Aziz) | `src/projects/_shared/components/` (ou `/mapbox/`, `/templates/`) + indexer dans COMPOSANTS-INDEX | permanent | non (importée par les beats) |
+
+**Promotion proto → brique** : un proto devient une brique `_shared` seulement s'il est réutilisé ≥2 fois OU
+validé par Aziz. Sinon il reste dans `_rnd/` et se purge. Ne PAS coder direct dans `_shared` « au cas où ».
+
+⚠️ Tout `.tsx` de scène (livrable ou proto) doit être enregistré dans `src/Root.tsx` (`<Composition>` + import)
+pour être rendu. Une brique `_shared` n'est pas enregistrée — elle est importée par les scènes.
+
+---
+
 ## TABLE INTENTION → FORME
 
 Lis la colonne **INTENTION** (ce que tu veux faire RESSENTIR), pas la colonne composant.

@@ -115,7 +115,18 @@ Le chantier supposait « 5 portes d'entrée, visual_review jamais lancé ». La 
 
 ---
 
-## CHANTIER C — Structure de dossiers où le bon emplacement est ÉVIDENT
+## CHANTIER C — Structure de dossiers où le bon emplacement est ÉVIDENT — ✅ FAIT (règle posée, 2026-06-19)
+
+> **FAIT par DOCUMENTATION, pas par migration big-bang** (décision Aziz : migrer 42 protos + réécrire
+> 42 imports Root.tsx = risque build pour un gain cosmétique ; le but réel = « instance vierge sait où
+> ranger un NOUVEAU fichier », atteint sans toucher l'existant).
+> - Règle des 3 zones (livrable / proto `_rnd` / brique `_shared`) ajoutée en tête de
+>   `src/projects/_shared/INTENTION-FORME-INDEX.md` (section « OÙ RANGER CE QUE JE CODE »).
+> - `_README.md` d'aiguillage dans `src/projects/_rnd/` (zone proto canonique) et `src/projects/_proto-16-9/`
+>   (signale qu'il migre vers `_rnd/` au fil de l'eau).
+> - L'ancien `_proto-16-9/` (42 imports Root.tsx + 1 import inter-protos) reste valide ; migration au fil de l'eau.
+>
+> Conception ci-dessous conservée pour mémoire.
 
 **Problème mesuré** : un proto, une démo, un livrable, un blueprint réutilisable = 4 intentions, mais ~6 dossiers concurrents sans règle claire (`_proto-16-9`, `_rnd`, `_demos`, `_shared/_demos`, `_blueprints`, beats par épisode).
 
@@ -134,7 +145,10 @@ Le chantier supposait « 5 portes d'entrée, visual_review jamais lancé ». La 
 
 ---
 
-## CHANTIER D — Remettre en question la branche git systématique
+## CHANTIER D — Remettre en question la branche git systématique — ✅ FAIT (2026-06-19)
+
+> **FAIT.** `~/.claude/CLAUDE.md` (global) assoupli : « branche par CHANTIER, pas par fichier ».
+> Plus de sous-branche par micro-fix sur une branche d'épisode déjà ouverte. Validé par Aziz.
 
 **Constat** : le chantier demande de trancher « branche pour gros chantiers, abandonner pour le quotidien ? ».
 
