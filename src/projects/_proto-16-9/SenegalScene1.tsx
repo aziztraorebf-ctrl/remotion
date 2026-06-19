@@ -18,7 +18,7 @@
  * Frames locales @30fps. NARR_OFFSET = 25.0s : on convertit les t-absolus de l'alignment en frames locales
  * via tf(absSec) = round((absSec - 25.0) * 30).
  */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AbsoluteFill, Audio, Img, interpolate, spring, staticFile,
   useCurrentFrame, useVideoConfig, delayRender, continueRender,
@@ -67,7 +67,9 @@ const SceneMap: React.FC<{ frame: number }> = ({ frame }) => {
   const { width, height } = useVideoConfig();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
-  const handleRef = useRef<number>(delayRender("mapbox-scene1-load"));
+  // delayRender appele UNE seule fois (init paresseuse), sinon un handle est cree a chaque
+  // render et jamais libere -> Remotion annule (renderWithHooks error).
+  const [handle] = useState(() => delayRender("mapbox-scene1-load"));
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -95,7 +97,7 @@ const SceneMap: React.FC<{ frame: number }> = ({ frame }) => {
     });
     // libere le render seulement quand la map a fini de peindre les tuiles (anti-frame-grise)
     map.on("idle", () => {
-      try { continueRender(handleRef.current); } catch {}
+      try { continueRender(handle); } catch {}
     });
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };
