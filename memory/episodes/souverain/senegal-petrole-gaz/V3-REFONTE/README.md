@@ -25,7 +25,7 @@
 | Scène | Sujet | V1 correspondant | État V3 | Composant V3 |
 |---|---|---|---|---|
 | **0 — HOOK** | Avril 2026, 8M$/jour → fracture (limoge) → recomposition (la vérité) | Beat0Accroche | ✅ **FAIT** (catbox yg9k78) | `src/projects/_proto-16-9/SenegalScene0.tsx` (+ MapDrawParchemin + Fracture) |
-| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | ⬜ à faire (PROCHAINE) | — |
+| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | ⬜ à faire (**PROCHAINE → `STARTER-SCENE-1.md`**) | — |
 | 2 | leçon Norvège/Congo/Botswana | fin Acte1 / Acte2 | ⬜ | — |
 | 3 | le contrat (terrain 1) | Beat11 | ⬜ | — |
 | 4 | le piège de la dette (terrain 2) | Beat12 (calebasse 132%) | ⬜ | — |
