@@ -14,7 +14,9 @@
 - **🔒 GATE DE PRÉSENTATION (hook)** : `.claude/hooks/pre-presentation-review.sh` BLOQUE tout upload/SendUserFile d'un `.mp4` de livrable (`out/...`) tant qu'un `<mp4>.review.json` adjacent, frais, score ≥ 8 et ≠ REBUILD n'existe pas. Les sessions écrivent ce fichier en `--phase review`. **Si le hook bloque → relancer `--phase review`.** Hook fantôme `beat-gemini-review.sh` retiré.
 - **📁 RÈGLE 3 ZONES dossiers** : livrable `<pilier>/<episode>/` · proto jetable `_rnd/<sujet>/` · brique `_shared/components/`. Section « OÙ RANGER » dans `INTENTION-FORME-INDEX.md`. `_proto-16-9/` migre vers `_rnd/` au fil de l'eau.
 - **🌿 Branche assouplie** (global) : « par chantier, pas par fichier ».
-- ⏳ À FAIRE : merger `feat/elagage-systeme` dans master quand validé. Éprouver le système sur une vraie prod (le test instance-vierge prouve les liens, pas l'usage réel).
+- 🧪 **TESTÉ par 2 agents instance-vierge** (Mapbox + data-viz, sonnet ≈ mode médium) : le système GUIDE bien (intention-first, rangement, self-review spontanés). 11 ambiguïtés révélées → toutes fermées (A1-A11). Drapeau carrelé (faux) + self-review aveugle aux imports = corrigés.
+- 🎯 **ORCHESTRATION** → **`memory/PLAN-ORCHESTRATION-VIDEO.md`** : Claude = chef d'orchestre, agents frais = exécutants. Contrat = `timing.ts` figé → fan-out N agents-beat parallèles → 2 points de contrôle goût → assemblage. Prêt à éprouver sur une mini-vidéo 2-3 beats.
+- ⏳ À FAIRE : merger `feat/elagage-systeme` dans master quand validé. Éprouver l'orchestration sur une vraie prod.
 
 ---
 
