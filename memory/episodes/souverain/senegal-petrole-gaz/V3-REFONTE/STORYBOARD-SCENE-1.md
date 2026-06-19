@@ -109,14 +109,18 @@ Densité = le risque n°1. Antidote : 1 monde, gradation maîtrisée, l'abstrait
 
 ## ⚠️ 2 CHANTIERS TECHNIQUES (soulevés par Aziz — à régler AVANT/PENDANT le code)
 
-### (1) ResourceTexture = TROP "icône/SVG", pas une vraie matière (Aziz a l'œil juste)
-`drawOilTexture` (resourceTextures.ts) = motif d'ICÔNES répétées (gouttes + derricks triangles) en grille 4×4 →
-rend un pavage de pictogrammes dorés, PAS une nappe de pétrole réaliste. Idem gaz probablement.
-**À faire pour la scène 1** :
-- Option A (défaut, headless-safe) : RÉ-ÉCRIRE une vraie matière au canvas — dégradé sombre irisé (noir-pétrole →
-  reflets ambrés) + grain/turbulence (noise), surface d'hydrocarbure vue de dessus. PAS d'icônes répétées.
-- Option B : générer une texture image photoréaliste (Gemini/Recraft) → projeter (asset payant = valider prompt).
-- ⛔ Ne PAS réutiliser le motif icônes actuel tel quel pour le rendu premium.
+### (1) ResourceFill — ✅ CHANTIER RÉGLÉ (2026-06-18) : ABANDONNÉ pour la scène 1 (décision Aziz)
+Constat (Aziz avait l'œil juste) : `drawOilTexture` (resourceTextures.ts) = motif d'ICÔNES répétées (gouttes +
+derricks) = "emoji/SVG", pas une matière. → on a créé une VRAIE matière canvas (`resourceMatter.ts`, drawOilMatter/
+drawGasMatter : nappe irisée par fbm+warp) ET testé une texture Gemini photoréaliste.
+**TEST DÉCISIF SUR CARTE (3 stills : none/canvas/gemini, MatterOnMap.tsx)** :
+- canvas = s'intègre, reste dans l'identité navy/or, lisible. Le meilleur des fills. (catbox wqucll)
+- gemini = superbe en isolé MAIS coutures tiling visibles + trop photoréaliste → "décolle" de la carte stylisée. (1d4emg)
+- none = propre, neutre. (ucpqdf)
+**DÉCISION AZIZ : ABANDONNER le fill du pays.** Raisons : (a) le pétrole est OFFSHORE, remplir les terres est
+imprécis ; (b) le gisement est déjà signifié par dot + halo sous-marin + cartouche au point offshore exact ; (c) le
+contour or suffit à l'ancrage ; (d) ne pas s'acharner (on a trop d'options). `resourceMatter.ts` GARDÉ en réserve
+(vraie amélioration réutilisable si un cas le justifie). ⛔ Pour scène 1 : PAS de ResourceFill, signifier autrement.
 
 ### (2) SFX — en mettre PLUS, faire VIVRE (Aziz). Générer si manque.
 Bibliothèque dispo (`public/_shared/sfx/`) — mapping scène 1 :

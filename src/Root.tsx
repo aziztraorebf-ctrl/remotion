@@ -195,6 +195,8 @@ import { DemoLimogeageTemplates } from "./projects/_proto-16-9/DemoLimogeageTemp
 import { ProtoEffect_Fracture } from "./projects/_proto-16-9/ProtoEffect_Fracture";
 import { SenegalScene0 } from "./projects/_proto-16-9/SenegalScene0";
 import { SenegalScene1 } from "./projects/_proto-16-9/SenegalScene1";
+import { MatterCompare } from "./projects/_proto-16-9/MatterCompare";
+import { MatterOnMap } from "./projects/_proto-16-9/MatterOnMap";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
@@ -296,6 +298,10 @@ import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/Gold
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 import { PocImmobilierQC } from "./projects/_rnd/poc-immobilier-qc/PocImmobilierQC";
 import { PocMaliVideoGame } from "./projects/_rnd/poc-mali-videogame/PocMaliVideoGame";
+import { ProtoFlag_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoFlag_Sahel";
+import { ProtoBattle_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoBattle_Sahel";
+import { ProtoPieces_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoPieces_Sahel";
+import { ProtoSealAnim_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoSealAnim_Sahel";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -444,6 +450,40 @@ export const RemotionRoot: React.FC = () => {
       
       
       
+      <Folder name="warmap-decode-castile">
+        <Composition
+          id="ProtoFlag-Sahel"
+          component={ProtoFlag_Sahel}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoBattle-Sahel"
+          component={ProtoBattle_Sahel}
+          durationInFrames={240}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoPieces-Sahel"
+          component={ProtoPieces_Sahel}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ProtoSealAnim-Sahel"
+          component={ProtoSealAnim_Sahel}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+      </Folder>
       <Folder name="atlas-peste-1347">
         <Composition
           id="HeroDataShowcase"
@@ -2028,6 +2068,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Fracture-Sombre-Narr" component={ProtoEffect_Fracture} durationInFrames={700} fps={30} width={1920} height={1080} defaultProps={{ mode: "sombre", withNarration: true }} />
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
+        <Composition id="MatterCompare" component={MatterCompare} durationInFrames={30} fps={30} width={1920} height={1080} />
+        <Composition id="MatterOnMap-none" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "none" }} />
+        <Composition id="MatterOnMap-canvas" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "canvas" }} />
+        <Composition id="MatterOnMap-gemini" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "gemini" }} />
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
