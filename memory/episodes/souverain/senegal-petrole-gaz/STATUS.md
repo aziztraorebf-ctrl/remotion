@@ -1,5 +1,11 @@
 # STATUS — Sénégal Pétrole & Gaz (Mid-form 7min39s)
-> Mis à jour : 2026-06-16 (MAKEOVER PREMIUM en cours)
+
+> ⛔⛔ **CE FICHIER DÉCRIT LA V1 (ancienne version). NE PAS L'UTILISER POUR LA REFONTE EN COURS.**
+> Depuis le 2026-06-18, le projet est en **REFONTE V3 scène par scène**. SOURCE DE VÉRITÉ UNIQUE =
+> **`V3-REFONTE/README.md`** (+ `V3-REFONTE/STARTER-SCENE-1.md`). V1 = filet/comparatif, supprimée quand V3 complète.
+> Ce STATUS reste seulement comme référence de l'état V1. NE PAS partir d'ici pour AGIR.
+
+> Mis à jour : 2026-06-16 (MAKEOVER PREMIUM en cours — ⚠️ approche abandonnée au profit de la refonte V3)
 
 > ⭐ **REPRISE : `memory/STARTER-PROMPT-senegal-makeover-premium.md`** (état réel + plan A-E).
 > ⚠️ **CE STATUS CI-DESSOUS (sections FC) EST PARTIELLEMENT PÉRIMÉ** — vérifié dans la vraie vidéo le 2026-06-16 :
@@ -41,14 +47,14 @@ Pas bloqué techniquement — les beats sont tous validés. Ce qui reste :
 
 ---
 
-## PROCHAINE ACTION
+## PROCHAINE ACTION (MAJ 2026-06-17)
 
-**Étape 1 (30 min)** : Appliquer FC-2 et FC-4 en priorité AVANT l'assemblage
+> ⚠️ Sections ci-dessous PÉRIMÉES : FC-2 (132%) et FC-4 sont DÉJÀ FAITS. La vidéo 25 mai est publiable.
+> Chantier actuel = MAKEOVER PREMIUM + audio V3 + carte vivante.
 
-**Étape 2** : Lancer l'assemblage
-```
-Lire : memory/STARTER-PROMPT-senegal-assemblage-final.md
-```
+**SOURCE UNIQUE** : `memory/STARTER-PROMPT-senegal-makeover-premium.md` (retiming-v3 + assemblage-final fusionnés/supprimés).
+**État** : audio V3 validé · hook Beat0 refondu (v5 « Compteur→Courbe→Crash », à valider Aziz).
+**NEXT** : valider Beat0 v5 → re-timing séquentiel Acte1 (Beat1-9) → suite. Lire aussi `memory/doctrines/HOOK-PREMIERE-MINUTE.md`.
 
 ---
 

@@ -59,3 +59,29 @@ réels), filtres premium grain+ombres (dans `ProtoEffect_Fracture`), charte navy
   épure) est faite pour ça : 3 points sur UNE carte, pas 9 écrans.
 - 1ère scène où se pose le choix de MÉDIUM (SVG vs Mapbox) — décision à trancher avec Aziz au début.
 - Yakaar-Teranga = graine d'open loop à planter visuellement (rappelée plus tard dans la vidéo).
+
+## CHEMINS EXACTS (composants scène 0 = à prolonger)
+- `src/projects/_proto-16-9/SenegalScene0.tsx` (assemblage), `_proto-16-9/ProtoEffect_MapDrawParchemin.tsx`
+  (count-up parchemin), `_proto-16-9/ProtoEffect_Fracture.tsx` (fracture+recompo), `_proto-16-9/senegalPath.ts`
+  (géométrie Sénégal), `_proto-16-9/ProtoEffect_Loupe3D.tsx` (points offshore Sangomar/GTA déjà placés).
+- ⚠️ Ces fichiers sont dans `_proto-16-9/` (R&D) **mais sont du FINAL validé**, pas du WIP. Déplacement vers
+  `souverain/senegal-petrole-gaz/v3/` = TODO (attend libération de Root.tsx, autre instance).
+
+## DÉCISION MÉDIUM (à poser à Aziz AVANT de coder)
+Question : « 3 gisements OFFSHORE qui s'allument — on PROLONGE la carte parchemin SVG de la scène 0
+(continuité maximale, même monde) ou on passe en **Mapbox carte vivante** (FlagFill, getCam, plus riche
+géographiquement) ? » Reco par défaut (doctrine §continuité) : **prolonger le SVG parchemin** sauf si Aziz
+veut la richesse Mapbox. Trancher AVANT, ne pas commencer à coder sans cette réponse.
+
+## READINESS CHECK (avant de coder — répondre OUI aux 4)
+1. Ai-je lu la doctrine ET le README V3 ? (pas juste survolé)
+2. Ai-je formulé l'INTENTION de la scène 1 en 1 verbe dominant ? (≠ "montrer les gisements")
+3. Ai-je compris la CONTINUITÉ avec la scène 0 ? (la carte recomposée RESTE, les gisements s'allument dessus)
+4. Le MÉDIUM (SVG vs Mapbox) est-il tranché avec Aziz ?
+Si un NON → ne pas coder, compléter d'abord.
+
+## NOTES MINEURES (anticipées par test agent vierge 2026-06-18)
+- **Source de vérité texte** = `SCRIPT-V3-senegal.md` (le texte que la voix lit). Les timings = forced
+  alignment, jamais édités à la main sans réaligner. Ne PAS modifier le script (audio déjà généré/validé).
+- **DA-brief vidéo** (`gemini-video-da-brief.py`) = à lancer quand le render est SEMI-FINAL pour le monter
+  en gamme (pas obligatoire à chaque essai). Toujours FILTRER (Gemini = signal).

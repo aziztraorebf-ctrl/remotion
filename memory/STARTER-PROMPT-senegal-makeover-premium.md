@@ -1,80 +1,86 @@
-# STARTER — Sénégal Pétrole & Gaz : MAKEOVER PREMIUM (reprise session)
+# STARTER — Sénégal Pétrole & Gaz : MAKEOVER PREMIUM + RE-TIMING V3 (source unique)
 
-> Créé 2026-06-16. Coller en début de session pour reprendre le chantier d'amélioration premium
-> de la vidéo Sénégal (déjà publiable, on la fait MONTER EN GAMME). Branche : `feat/hooks-library`.
-> ⭐ Remplace l'ancien `STARTER-PROMPT-senegal-assemblage-final.md` (PÉRIMÉ : ses corrections FC-2/FC-4
-> sont déjà faites, voir ci-dessous).
+> ⛔⛔ **PÉRIMÉ (2026-06-18). NE PAS UTILISER.** L'approche "makeover/re-timing de la V1" a été REMPLACÉE par
+> une **refonte V3 scène par scène**. SOURCE DE VÉRITÉ UNIQUE = **`memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
+> (+ `V3-REFONTE/STARTER-SCENE-1.md`). Ce fichier ne sert plus que d'archive. Aller directement au README V3.
 
----
-
-## ÉTAT RÉEL VÉRIFIÉ (2026-06-16, dans la vraie vidéo — pas les notes)
-
-La vidéo finale `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (7min39, 25 mai) est **DÉJÀ PUBLIABLE** :
-- ✅ **FC-2 (dette 132%)** : DÉJÀ FAIT — calebasse 132% (Beat12) + audio "132% de la richesse annuelle". (STATUS/NEXT-ACTION disaient "à corriger" → PÉRIMÉ.)
-- ✅ **FC-4 (Beat0 deux dates)** : DÉJÀ FAIT — visuel "22 MAI 2026" + audio "un mois plus tard... limogé".
-- ✅ Assemblage : DÉJÀ FAIT (la vidéo complète existe).
-- ⚠️ Postiz programmé le **20 juin 15h UTC** pointe vers cette version. Deadline = **DÉCALABLE** (décision Aziz) — la qualité prime.
-
-⚠️ **CORRECTION DOC : la dette/calebasse est dans Beat12, PAS Beat11** (le STATUS se trompait de numéro).
-Beat11 = contrat de concession (60%→36%). Beat12 = FONSIS + calebasse dette. Beat14 = carte "DE ZÉRO À EXPORTATEUR".
+> **MAJ 2026-06-17.** Coller en début de session pour reprendre le chantier. Branche : `feat/hooks-library`.
+> ⭐ **SEULE SOURCE DE VÉRITÉ** — fusionne l'ancien makeover + l'ancien retiming-v3 + l'état réel du 17 juin.
+> Les starters `-assemblage-final` et `-retiming-v3` ont été SUPPRIMÉS (fusionnés ici).
+> ⚠️ Règle Aziz : vérifier l'état RÉEL dans le livrable (frames + code), pas les notes. Ce starter peut périmer.
 
 ---
 
-## CE QUI A ÉTÉ FAIT CETTE SESSION (commité, branche feat/hooks-library)
+## ⛔ AVANT TOUT — LIRE la doctrine HOOK (nouvelle, 2026-06-17)
+`memory/doctrines/HOOK-PREMIERE-MINUTE.md` — le hook = TENSION TENUE ~1 min (pas accroche de 8s).
+4 règles + 6 archétypes + checklist. S'applique au Beat0 Sénégal ET à toute ouverture future.
+Sources tracées : `feedback_hook-retention-premiere-minute.md` (terrain 14M vidéos + jury 3 modèles).
 
-3 commits : `12d9148` (texture pétrole) + le commit kraft + le commit fix 132%.
+## ÉTAT RÉEL VÉRIFIÉ (2026-06-17, frames + code — pas les notes)
 
-1. ✅ **Fix fact-check 80%→132%** : Beat14 l.469 affichait "Dette 80% PIB" (incohérent avec Beat12 132%). Corrigé → "Dette 132% PIB". (Gemini l'avait MANQUÉ, Claude l'a trouvé.)
-2. ✅ **Lot kraft premium** (registre B "dossier d'enquête") : nouveau composant `src/projects/_shared/components/overlays/KraftDepth.tsx` (`KraftShadowDefs` feDropShadow + `KraftGrain` feTurbulence, render-safe, PAS de blur CSS). Appliqué :
-   - `LaCalebasse.tsx` : prop `depth` (ombre opt-in, rétrocompat) → Beat12 calebasse.
-   - Beat11 : grain + ombre douce sur barres (la fiche contrat avait DÉJÀ son ombre, pas touchée).
-   - Beat12 : grain global + ombre calebasse + ombre coffre FONSIS.
-   - Beat13 : grain sur phases kraft (éteint pendant la carte via `1-opMap`).
-   - Renders preuve validés. Direction VALIDÉE Aziz (catbox 2hkv7z).
-3. ✅ **POC carte vivante** : `ResourceTextureFill` pétrole sur le Sénégal (Beat1) — remplace l'aplat jaune plat par la texture oil bichromie. Mécanique prouvée en render (catbox via t-senegal-oil.mp4). ⚠️ RÉGLAGE À AFFINER : motif un peu gros/dense → tester `drawResourceTexture("oil", 512)` ou baisser `fill-opacity` (actuellement 0.9). Code : Beat1.tsx l.68-82.
-4. ✅ **DÉCOUVERTE TECHNIQUE** : l'upload VIDÉO complète à Gemini 3.1 Pro est FIABLE maintenant (bug 13 juin résolu). Voir `memory/gemini-video-upload-fiable.md`. Scripts : `gemini-video-upload-test.py` (test fiabilité) + `gemini-senegal-premium-review.py` + `gemini-senegal-mapbox-review.py`.
+**La vidéo du 25 mai (`out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4`, 7min39) est DÉJÀ PUBLIABLE** (FC-2 dette 132% ✅, FC-4 Beat0 deux dates ✅, assemblage ✅). On la fait MONTER EN GAMME avec l'audio V3 vivant + carte vivante.
 
----
+**⭐ LE HOOK (Beat0) A ÉTÉ REFAIT CETTE SESSION (17 juin) — travail valide, ne pas perdre :**
+- `Beat0Accroche.tsx` refondu → hook **« Compteur → Courbe → Crash »** (breakdown Gemini 3.1 Pro validé 17 juin).
+- Dernier render : `out/episodes/senegal-petrole-gaz/wip/beat0_v5_premium.mp4` (32s) — « 8 000 000 $ / JOUR » en or sur navy, grain + particules dorées, Lottie shockwave au crash. **PAS encore validé Aziz / pas FINAL.**
+- Spec : `out/episodes/senegal-petrole-gaz/_audio-v3/BREAKDOWN-HOOK.json` + storyboard `public/souverain/senegal-petrole-gaz/beat0/storyboard-gemini.png`.
+- Compo Root : `Senegal-Beat0-Accroche`. Frames audio dans l'en-tête de `Beat0Accroche.tsx` (forced-align @30fps, F_TOTAL=979).
+- ⚠️ Acte "carte Yakaar" du Beat0 original NE COLLE PLUS au nouveau timing → DISSOUS. Le hook est désormais data-viz (compteur/courbe), pas carte.
+- **NEXT Beat0** : présenter v5 à Aziz pour validation → ajustements → promouvoir FINAL. Vérifier qu'il respecte la doctrine HOOK (open loop ? re-hook 8-12s ? pas d'ouverture molle ?).
 
-## ⭐ RESTE À FAIRE — PLAN CLAIR POUR LA PROCHAINE SESSION
+## AUDIO V3 — FAIT et VALIDÉ
+- `out/episodes/senegal-petrole-gaz/_audio-v3/narration-v3-VALIDEE.mp3` (8min12, 492s, 8 scènes).
+- Forced-align : `forced-align-v3.json` (loss 0.14, timing au mot). Whisper : `whisper-words-v3.ts`.
 
-### A. CHANTIER CARTE VIVANTE (le gros morceau, breakdown Gemini+Claude fait, tri validé)
-> Source breakdown : `out/episodes/senegal-petrole-gaz/_review-prepub/GEMINI-MAPBOX-REVIEW.md` + synthèse tracée
-> dans l'historique de session. Catalogue templates : `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md`.
-> Décision Aziz : faire TOUT le makeover (ne pas sauter d'étapes). Délégable à des agents (1 beat/agent, séquentiel, `git add` chirurgical).
-
-1. **CARTE 1/4 ResourceTexture Sénégal** — POC FAIT (Beat1). RESTE : (a) affiner finesse texture, (b) appliquer aussi à Beat2 + Beat5 (mêmes beats Acte 1 avec aplat jaune via `addCountryHighlight`), (c) décider oil vs gas vs mixte.
-2. **CARTE 2/4 Beat10** (Norvège/Congo/Botswana) : `SweepRevealTerritory` (faisceau scanner) + `ResourceTextureFill` différenciée (oil Norvège/Congo, mineral/lithium Botswana). Beat séparé = sûr.
-3. **CARTE 3/4 Beat14** (Mécanisme 3, où le 132% a été corrigé) : remplacer blocs UI / triangles rouges flottants par `GlassmorphismGeoPopup` (FONSIS/ITIE/LOI) + `PulsingRegionFill` (zones tension). + Lucide sur labels.
-4. **CARTE 4/4 Export GTA** (~01:36, dans Acte 2 OU Beat séparé) : `GeoFlowConnection` (route + cargo mobile) + `PulsingRegionFill` Europe/Asie.
-5. **PITCH 32° relief** (camCountryApproach) : Gemini insiste, cartes à plat (pitch 0). ⚠️ ATTENTION : l'Acte 2 est une **Map continue** (`SenegalActe2Continu`) — changer le pitch touche TOUTE la trajectoire + recale les labels screen-space (Beat1 LABEL_X/Y l.107-108). Faire avec prudence, beat par beat, PAS globalement d'un coup.
-
-### B. DONUT + temps morts navy (1er breakdown premium)
-Donut "revenus pétroliers" (Acte 2) petit/collé gauche sur grand navy vide. Option : grille SVG glissante en fond + draw-in stroke. OU `MapCutaway` (mais touche la Map continue). Source : `GEMINI-PREMIUM-REVIEW.md`.
-
-### C. OUTRO refonte (décidé Aziz)
-Carton final "Prochaine vidéo" très nu → split-screen premium. **CTA = teaser de la PROCHAINE VIDÉO sur l'alliance AES (Sahel : Mali/Burkina/Niger)**. Pont thématique Sénégal→AES.
-
-### D. ⭐⭐ CHANTIER AUDIO V3 EXPRESSIF (gros, session dédiée, deadline décalable)
-La narration actuelle (`narration-v1-clean.mp3`) est PLATE/monotone — d'avant le pipeline voix vivante V3.
-Refaire avec pipeline `generate-narration-expressive.py` (texte taggé V3 Océane → STS GéoAfrique stability 0.45,
-doctrine `PIPELINE-VOIX-VIVANTE-VALIDE.md`). ⚠️ NON TRIVIAL : tous les beats sont timés au frame près sur l'audio V1
-(ex Beat12 `startFrom=7182`). Nouvel audio = débit différent = **re-timer les 8 beats** (comme recalage Acte1 War-Map V5).
-PROCÉDURE : 1) extraire transcript V1 (Whisper), 2) mesurer durées beats actuelles, 3) générer audio V3, 4) force-align,
-5) **MESURER le décalage** beat par beat AVANT de s'engager. Si décalage faible → re-timer. Si gros → garder V1 pour la pub, sortir V3 ensuite.
-
-### E. ASSEMBLAGE FINAL (après corrections)
-Re-render groupé des beats touchés (Mapbox = flag `--gl=angle` OBLIGATOIRE) → concat ffmpeg
-(beat0→acte1→acte2→beat10→11→12→13→14) → mix (voix 1.0 / musique 0.18 / fade 6s) →
-**remplacer le média Postiz du 20 juin** (sinon vieille version part). Sources beats : `out/episodes/senegal-petrole-gaz/`.
+## SOURCES DE VÉRITÉ À LIRE (toutes dans `_audio-v3/`) :
+1. `RETIMING-MAP.md` — frontières scènes en frames + startFrom par beat.
+2. `PLAN-CARTE-VIVANTE-V2.md` — quels templates carte, où, synchro (validé Gemini).
+3. `SCRIPT-V3-senegal.md` — script narratif final (vérité texte).
 
 ---
 
-## FICHIERS CLÉS
-- Beats source : `src/projects/souverain/senegal-petrole-gaz/beats/` (Beat0-14, +SenegalActe2Continu)
-- Composant premium kraft : `src/projects/_shared/components/overlays/KraftDepth.tsx`
-- Catalogue carte vivante : `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md`
-- Breakdowns Gemini : `out/episodes/senegal-petrole-gaz/_review-prepub/GEMINI-*.md`
-- Frames + audio extraits (vérif) : `out/episodes/senegal-petrole-gaz/_review-prepub/` (peut purger les t-*.mp4 de test)
-- Doctrine review premium : `memory/doctrines/REVIEW-PREMIUM-TEMPLATE.md`
-- Render Mapbox : `--gl=angle` obligatoire. Beats Remotion purs : render standard.
+## OBJECTIF : RE-TIMING SÉQUENTIEL, PASSE COMPLÈTE PAR BEAT (décidé Aziz)
+Pour CHAQUE beat dans l'ordre, faire TOUT d'un coup avant le suivant :
+1. Brancher `narration-v3-VALIDEE.mp3` avec le startFrom de RETIMING-MAP.
+2. Recaler les animations Remotion internes sur les timestamps forced-align.
+3. Arbitrer les désaccords structurels audio/visuel (texte RESTRUCTURÉ, pas juste raccourci).
+4. Appliquer la carte vivante du beat (PLAN-CARTE-VIVANTE-V2).
+5. Rendre full HD (Mapbox = `--gl=angle`) + vérifier synchro AVANT le beat suivant.
+
+**ORDRE** : ✅ Beat0 (hook v5 fait, à valider) → **Acte1 (Beat1-9, GROS morceau −85s) ← REPRENDRE ICI** → Beat10 → Beat11-12-13-14 → CRÉER scène bonus (~85s, n'existe pas).
+
+## CARTE VIVANTE À AJOUTER (détail dans PLAN-CARTE-VIVANTE-V2) :
+- `ResourceTextureFill` (pétrole/gaz coule) — POC Beat1 fait, à AFFINER (motif gros → `drawResourceTexture("oil",512)` ou baisser fill-opacity, actuellement 0.9, Beat1.tsx l.68-82).
+- Pitch 32° (relief) via interpolate/jumpTo, JAMAIS flyTo.
+- `LottieGeoAura` (ondes sonar) sur gisements offshore.
+- `SweepRevealTerritory` (faisceau) sur Norvège/Congo/Botswana + texture sémantique.
+- `GeoFlowConnection` (cargo mobile) pour l'export maritime.
+- Frontière maritime GTA 50/50 Sénégal-Mauritanie (`FiberOpticBorderDraw` + plaque).
+- `GlassmorphismGeoPopup` (verre) pour FONSIS/ITIE.
+- Scène bonus 3 phases : triomphe → fracture (pulse rouge Dakar) → pont AES (dézoom + frontières Mali/Burkina/Niger ambre).
+- Lot kraft premium DÉJÀ fait (Beat11/12/13, composant `KraftDepth.tsx`, validé Aziz catbox 2hkv7z).
+
+## ASSEMBLAGE FINAL (session séparée, à la fin) :
+- PAS une compo unique — chaque beat = mp4 séparé → concat ffmpeg.
+- Re-render beats touchés full HD → concat → mix : VOIX 1.0 / MUSIQUE existante 0.18 / fondus.
+- Musique : GARDER pistes existantes (music-A-ambient/B-kora/C-sabar), re-mixer sur audio V3.
+- Remplacer le média Postiz du 20 juin. Deadline DÉCALABLE (qualité prime).
+
+## RÈGLES NON-NÉGOCIABLES :
+- Render Mapbox = `--gl=angle` (scripts/render-mapbox.sh). Remotion pur = render standard.
+- Pitch/caméra = useCurrentFrame + interpolate + jumpTo. JAMAIS flyTo/easeTo (interdit headless).
+- Acte 2 = UNE Map continue (`SenegalActe2Continu`) : recaler la trajectoire entière, pas beat par beat.
+- Netteté jugée SEULEMENT en render scale=1 (scale 0.4 = flou trompeur).
+- Beats Mapbox : 0(plus maintenant→data-viz),1,2,5,6,7,8,10,13,14,Acte2Continu. Remotion pur : 3,4,9,11,12,14PhaseC.
+- Gemini = signal jamais juge. Vérifier l'état RÉEL dans le code, pas les notes.
+- `spring()` partout, jamais easing linéaire. Doctrine HOOK appliquée sur les ouvertures.
+
+## COMMENCER PAR :
+1. Lire `HOOK-PREMIERE-MINUTE.md` + les 3 sources `_audio-v3/`.
+2. Présenter `beat0_v5_premium.mp4` à Aziz (valider le hook v5) OU attaquer Acte1 si Beat0 déjà tranché.
+3. Annoncer le plan du beat AVANT de coder.
+
+## FAIT cette session (commité branche feat/hooks-library) — historique :
+- Fix fact-check 80%→132% (Beat14). Lot kraft premium (KraftDepth, Beat11/12/13). POC ResourceTexture pétrole (Beat1).
+- Upload vidéo Gemini fiable confirmé (`memory/gemini-video-upload-fiable.md`).
+- Audio V3 généré + validé + forced-align. Hook Beat0 refondu (Compteur→Courbe→Crash, v5).

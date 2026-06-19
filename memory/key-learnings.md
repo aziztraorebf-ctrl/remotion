@@ -8,7 +8,8 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 - **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills)
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
-- **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render
+- **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
+- **🎬 SCÈNE & CONTINUITÉ** — doctrine intention→forme→template (anti-cercle-vicieux templates), forced alignment ElevenLabs > Whisper pour le CALAGE d'animation (Whisper dérive ~0.4s)
 - **🔊 AUDIO & SOUS-TITRES** — trimAfter ABSOLU (depuis début media), sous-titres ffmpeg sans libass → overlay ProRes alpha, beats GLOBALE vs STANDALONE (noir+queue morte+musique coupée), musique 1 morceau → plusieurs durées
 - **🗺️ MAPBOX & RENDU GÉO** — stroke=fill → frontières invisibles, pays outre-mer → clipPath
 - **🤖 BRIEF AGENTS** — workflow Beat Mapbox templates catalogue, background/proportions/dimensions explicites, visualWeight + placeholders réalistes
@@ -303,6 +304,41 @@ Réponses test : `memory/episodes/warmap-sahel/reviews-acte2/deepseek-b1-{downst
 **Modèle à utiliser :** `gemini-3.1-pro-preview` (analyse vision/diff précis — modèle VERROUILLÉ par CLAUDE.md, voir tableau modèles API). Les anciennes versions Gemini < 3.1 sont INTERDITES. Flash uniquement pour brainstorm, jamais pour diff visuel précis.
 
 **S'applique à :** tout nouveau composant Remotion, tout nouveau template, tout beat avec layout custom.
+
+---
+
+## 🎬 SCÈNE & CONTINUITÉ
+
+### 2026-06-18 — ⭐⭐ DOCTRINE : INTENTION→forme→template (jamais l'inverse) + continuité du monde
+
+**Leçon MAJEURE transversale, prouvée 2× du 1er coup** (hook Sénégal + sa suite fracture). Le problème
+récurrent d'Aziz : *"à chaque nouvelle scène ou prolongement, ça redevient problématique, on tâtonne, on
+hésite, on refait"*. Cause = **pas "trop de templates", mais l'ORDRE d'invocation.** Le réflexe template-first
+(*"lequel de nos 71 composants colle ?"*) PARALYSE (rien ne colle "à 100%", ~10 essais). La méthode qui marche
+= **sens→forme→template** : (1) que doit FAIRE ressentir ce moment ? (1 verbe) (2) quelle forme porte ça ?
+(3) a-t-on déjà cette forme ? oui→adapter / non→coder (mais on sait QUOI). Mesure objective : intention-first
+= 1 essai. Doctrine complète : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md`.
+**+ Continuité du monde > nouveauté** : une scène = UN monde qui se transforme, pas une succession d'écrans.
+Le vrai template réutilisable = le MONDE (carte+fond+chiffre), pas un composant. Prolonger, ne pas remplacer.
+**+ Épure (fil rouge Aziz)** : l'écran ne double JAMAIS la voix ni l'animation. Garder l'essentiel, alléger le
+reste. Test : si le texte à l'écran peut être lu à voix haute en même temps que la narration → il double → réduire.
+
+### 2026-06-18 — ⭐ Forced alignment ElevenLabs > Whisper pour le CALAGE d'animation
+
+Pour caler une animation sur la voix, utiliser le **forced alignment ElevenLabs** (`/v1/forced-alignment`,
+loss < 0.3), PAS Whisper. Whisper **dérive de ~0.4s** : sur le hook Sénégal il situait "saute" à 11.46s, le
+forced alignment à 11.84s (le vrai). 0.4s d'écart = un SFX/animation qui tombe à côté. Script de réf :
+`scripts/senegal-hook-alignment.py` (texte = TTS exact SANS tags, audio = extrait). Règle : caler l'animation
+pour **culminer ~1s AVANT** le mot-clé (l'image précède l'oreille = vivacité ; en retard = sensation de lenteur).
+
+### 2026-06-18 — DA-brief VIDÉO : analyse d'écart vers refs, Gemini = signal filtré
+
+Pour faire monter en gamme une scène FINIE (mouvement/rythme/son), `scripts/tools/gemini-video-da-brief.py`
+(upload vidéo complète Gemini 3.1 Pro). NE PAS envoyer nos templates (= retomber dans le piège catalogue) :
+décrire nos intentions + donner des **refs de niveau** (Bloomberg/FT/Economist, Vox/Kurzgesagt) + demander
+l'ÉCART. Cadrer "ne pas ajouter de texte" (protège l'épure). FILTRER après (Gemini = signal) : sur la scène 0,
+gardé 4 vrais gains (grain+ombres = anti vectoriel-plat, faille chaude vs néon, easing expo, micro-tremblement),
+jeté sa note 5/10 + un faux point (bug déjà corrigé). Tester fiabilité upload d'abord (`gemini-video-upload-test.py`).
 
 ---
 

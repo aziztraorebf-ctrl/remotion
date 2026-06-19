@@ -472,9 +472,16 @@ Reste alors : recherche données NMGP (km/coût/calendrier/13 pays/statut 2026) 
 **Etat** : FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s, 1080x1920). Source `src/projects/souverain/petrole-patience-short/`. Programme Postiz lundi 9 juin 15h UTC (4 plateformes), titre "Decouvrir une fortune et rester pauvre : le pari du Senegal". = TEASER du mid-form. Niger uranium retire du 9 juin (standby, a reprogrammer).
 **Fait depuis le showcase** : drapeaux useClipFlags, hook FiberOptic+gold, plaques GeoCountryPlaque (Norvege+Senegal), CTA voix+plaque @koraetcartes, sous-titres, audio (musique 0.10 / SFX 0.35 / boom->ping).
 
-### 2. Senegal Petrole & Gaz — MAKEOVER PREMIUM en cours (2026-06-16) ⭐
-**⭐ DÉMARRER : `memory/STARTER-PROMPT-senegal-makeover-premium.md`** (état réel + plan A-E complet).
-⛔ `STARTER-PROMPT-senegal-assemblage-final.md` = PÉRIMÉ (ses FC-2/FC-4 sont DÉJÀ faits).
+### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (2026-06-18) ⭐⭐
+**⭐ DÉMARRER : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`** = SOURCE DE VÉRITÉ UNIQUE.
+Décision Aziz (2026-06-18) : adopter la narration V3 expressive + refaire les **8 scènes une par une** (méthode
+War-Map). **V1 et V3 SÉPARÉS** (V1 = ancienne, publiable, filet/comparatif ; supprimée quand V3 complète). NE PAS MÉLANGER.
+- ✅ **SCÈNE 0 (hook) FAITE + validée** : carte se dessine + count-up 8M$ → fracture (sur "limoge") → recomposition
+  ("la vérité plus précise"). Composant `src/projects/_proto-16-9/SenegalScene0.tsx`. Rendu : catbox yg9k78. Né de
+  la doctrine `CONTINUITE-SCENE-INTENTION-DABORD` (intention→forme→template, prouvée 2× du 1er coup).
+- ▶ **NEXT = SCÈNE 1** (3 gisements + paradoxe) → prompt prêt : `V3-REFONTE/STARTER-SCENE-1.md`. 1ère décision = trancher
+  le médium (SVG parchemin continuité vs Mapbox carte vivante).
+ℹ️ Ancien starter `STARTER-PROMPT-senegal-makeover-premium.md` = PÉRIMÉ (remplacé par V3-REFONTE).
 **Etat RÉEL vérifié dans la vidéo (pas les notes)** : la version du 25 mai est **DÉJÀ PUBLIABLE** —
 FC-2 (dette 132%) ✅ + FC-4 (Beat0 deux dates) ✅ + assemblage ✅. Le STATUS qui disait "à corriger" était PÉRIMÉ.
 **Deadline Postiz 20 juin = DÉCALABLE** (Aziz) — la qualité prime. Pas d'urgence à publier une version non polie.
