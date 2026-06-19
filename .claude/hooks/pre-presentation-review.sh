@@ -56,13 +56,18 @@ if [[ -z "$CANDIDATE_MP4" ]]; then
   exit 0
 fi
 
-# --- 2. Ne garder que les mp4 de LIVRABLE (out/ ou wip/versions). Ignorer protos/_rnd/tmp ---
-#     (presenter un proto de mecanique n'exige pas de review formelle)
-if [[ "$CANDIDATE_MP4" != *"/out/"* ]] && [[ "$CANDIDATE_MP4" != *"out/"* ]]; then
-  exit 0
-fi
+# --- 2. Proto EXPLICITE (_rnd / _r-and-d / templates) : exemption legitime et silencieuse ---
 if [[ "$CANDIDATE_MP4" == *"/_r-and-d/"* ]] || [[ "$CANDIDATE_MP4" == *"/_rnd/"* ]] \
    || [[ "$CANDIDATE_MP4" == *"templates-souverain"* ]]; then
+  exit 0
+fi
+
+# --- 2b. Ni livrable (out/) ni proto explicite : SUSPECT (A7). Un vrai livrable rendu vers ---
+#     /tmp/ ou ailleurs shunterait la review en silence. On AVERTIT au lieu d'exit 0 muet.
+if [[ "$CANDIDATE_MP4" != *"/out/"* ]] && [[ "$CANDIDATE_MP4" != *"out/"* ]]; then
+  echo "[review] ⚠️  Présentation d'un .mp4 HORS out/ et HORS _rnd/ : $CANDIDATE_MP4"
+  echo "[review]    Si c'est un PROTO → le mettre sous _rnd/ (exemption claire)."
+  echo "[review]    Si c'est un LIVRABLE → il doit être sous out/episodes/<ep>/ + passer la review (sinon il shunte le gate)."
   exit 0
 fi
 

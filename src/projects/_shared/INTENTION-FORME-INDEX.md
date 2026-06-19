@@ -25,12 +25,24 @@
 | un **livrable** d'un épisode précis (un Beat de la vidéo finale) | `src/projects/<pilier>/<episode>/` (ex: `souverain/senegal-petrole-gaz/beats/`) | permanent | oui, `<Folder>` de l'épisode |
 | un **proto jetable** (tester une mécanique d'animation, R&D) | `src/projects/_rnd/<sujet>/` | 7j implicite, se purge | oui, `<Folder name="proto-*">` |
 | une **brique réutilisable** validée (sort du proto, sert ≥2 fois ou validée Aziz) | `src/projects/_shared/components/` (ou `/mapbox/`, `/templates/`) + indexer dans COMPOSANTS-INDEX | permanent | non (importée par les beats) |
+| ⛔ `src/projects/_demos/` | **ZONE GELÉE** — 8 démos shorts de référence déjà livrées. NE PAS y ajouter, NE PAS s'en inspirer comme source de vérité (les vraies briques sont dans `_shared/`). Consultable seulement. | archive | (déjà enregistrées) |
 
 **Promotion proto → brique** : un proto devient une brique `_shared` seulement s'il est réutilisé ≥2 fois OU
 validé par Aziz. Sinon il reste dans `_rnd/` et se purge. Ne PAS coder direct dans `_shared` « au cas où ».
 
 ⚠️ Tout `.tsx` de scène (livrable ou proto) doit être enregistré dans `src/Root.tsx` (`<Composition>` + import)
 pour être rendu. Une brique `_shared` n'est pas enregistrée — elle est importée par les scènes.
+
+### Niveau PROTO vs LIVRABLE (déterministe — quand passer par la session complète ?)
+
+| | **PROTO** (tester vite) | **LIVRABLE** (la vraie vidéo) |
+|---|---|---|
+| Emplacement | `_rnd/<sujet>/` | `<pilier>/<episode>/` |
+| Workflow | render local direct, self-review scriptée (`mapbox-selfreview.py` si carte). PAS de Gemini, PAS de review.json. | **session complète obligatoire** via `/beat` → `beat-session.py`/`mapbox-session.py` (scan→breakdown→self-review→review→upload). review.json adjacent. |
+| Présentation | libre (le hook exempte `_rnd/`) | bloquée par le hook tant que review.json adjacent ≥ 8/10 absent. |
+| Règle dure | **jamais dans `out/episodes/`**, jamais présenté comme « final ». | **jamais hors session** ; un livrable rendu vers `/tmp/` ou `_rnd/` est invalide. |
+
+Ne pas « déduire » qu'un livrable mérite le mode proto pour aller vite : si c'est destiné à la vidéo finale, c'est LIVRABLE.
 
 ---
 
@@ -94,6 +106,11 @@ Le fond se choisit selon le registre éditorial, pas au hasard (anti-retour-en-a
 3. **Terminal néon noir** (`#0c0c0e` + grille + glow) — marché/tech/data brute (PAS l'éco-politique premium).
 4. **Sketch/whiteboard** (papier + trait crayon) — registre chaleureux/pédagogique. Réf : `ProtoHera_Sketch`.
 Détail + palettes : [[decode-hera-templates]] + README `out/_r-and-d/decode-hera/`.
+
+⚠️ **Registre → composant qui sait le faire** (ne pas abandonner un registre parce que LE composant scanné
+ne l'offre pas) : un **chiffre-choc sur PARCHEMIN** → `ChiffreChoc` avec `bgColor="#e4ddca"` (fond libre), PAS
+`OrAfricainStat` (qui n'a que `noir`/`navy`). Le registre décide le composant, pas l'inverse. Si aucun composant
+n'offre le registre voulu, le signaler/l'ajouter — ne pas silencieusement basculer sur noir.
 
 ---
 

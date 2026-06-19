@@ -8,6 +8,13 @@ Pas un livrable. Durée de vie ~7j implicite, se purge.
 - **Proto jetable** → ICI, `src/projects/_rnd/<sujet>/`.
 - **Brique réutilisable** validée (réutilisée ≥2× ou validée Aziz) → `src/projects/_shared/components/` + indexer.
 
+## PROTO vs LIVRABLE (ne pas confondre)
+Ce dossier = **PROTO uniquement**. Render local + self-review scriptée suffisent. PAS de Gemini, PAS de
+review.json, présentation libre (le hook `pre-presentation-review.sh` exempte `_rnd/`). Un proto ne va
+JAMAIS dans `out/episodes/` et n'est jamais présenté comme « final ».
+Si ce que tu codes est destiné à la VRAIE vidéo → ce n'est PAS un proto : va dans `<pilier>/<episode>/`
+et passe par la session complète (`/beat`). Table comparative : `_shared/INTENTION-FORME-INDEX.md`.
+
 ## Conventions
 - Un sous-dossier par sujet : `_rnd/<sujet>/`.
 - Enregistrer la compo dans `src/Root.tsx` sous un `<Folder name="proto-<sujet>">` pour la prévisualiser.
