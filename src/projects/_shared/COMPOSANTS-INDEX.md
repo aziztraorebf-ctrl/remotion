@@ -1,7 +1,9 @@
 # Index des composants partagés — par cas d'usage
-> 71 composants. Source : `src/projects/_shared/components/`
-> Utiliser cet index pour trouver le bon composant AVANT de chercher dans les fichiers.
-> Format : `NomComposant` → dossier d'import, description 1 ligne.
+> ⭐ **AVANT cet index : passe par `INTENTION-FORME-INDEX.md`** (déduis l'intention d'abord — doctrine
+> [[CONTINUITE-SCENE-INTENTION-DABORD]]). Cet index est la FICHE TECHNIQUE consultée une fois la forme déduite,
+> pas un catalogue-vitrine où l'on cherche « quoi mettre ».
+> 71 composants + templates Hera (motion-design validé). Source : `src/projects/_shared/components/` + `_proto-16-9/`.
+> Format : `NomComposant` → dossier d'import, colonne « Quand Aziz dit » (= l'intention, pas la techno).
 
 ---
 
@@ -225,6 +227,32 @@
 | `LeSceau` | layouts | Sceau officiel / cachet institutionnel |
 | `LeSemeur` | layouts | Dispersion de données / semis de points |
 | `ParallaxeDiorama` | layouts | Vue diorama avec parallaxe (profondeur de champ) |
+
+### ⭐ Templates HERA — motion-design validé externe (décodés hera.video 2026-06-18) — réponses PRIORITAIRES
+> Vrais templates motion-design (Y Combinator, validés par des pros). À privilégier comme réponse à une intention data-viz.
+> Dossier `src/projects/_proto-16-9/`. Choix du FOND = voir les 4 registres dans `INTENTION-FORME-INDEX.md`.
+
+| Composant | Import | Quand Aziz dit... |
+|---|---|---|
+| `ProtoHera_ChartOnMap` ⭐ | _proto-16-9 | "Un chiffre/barre qui monte SUR une carte" — barre or + axe sur carte Afrique claire estompée (prêt prod) |
+| `ProtoHera_ChartsParchemin` ⭐ | _proto-16-9 | "Bars / poll / courbe sur papier" — 3 charts registre parchemin clair (charte Souverain) |
+| `HeraFidele_V12_LineChart` ⭐ | _proto-16-9 | "Une courbe + période surlignée" — line chart lime + bande jaune highlight (couleurs MODULABLES) |
+| `ProtoHera_TerminalNeon` | _proto-16-9 | "Line/donut style marché/tech" — glow néon sur noir (registre marché, PAS éco-politique premium) |
+| `ProtoHera_Timeline` ⭐ | _proto-16-9 | "Frise chrono premium" — ligne or + médaillons + fiches sur carte estompée |
+| `HeraFidele_V04_FlagsOnMap` ⭐ | _proto-16-9 | "Hier vs aujourd'hui par pays" — drapeaux ronds + valeurs barrées→neuves sur carte monde |
+| `ProtoHera_Sketch` | _proto-16-9 | "Style dessiné-main / whiteboard" — barres crayon + flèche manuscrite (registre pédago chaleureux) |
+
+---
+
+## TEXTE / EMPHASE — phrase-choc, accent sur un mot, paradoxe typographique
+
+> ⭐ Catégorie ajoutée 2026-06-18 (manquait). Pour mettre l'EMPHASE par le texte lui-même (pas une citation statique).
+
+| Composant | Import | Quand Aziz dit... |
+|---|---|---|
+| `HeraFidele_V03_KineticText` ⭐ | _proto-16-9 | "La phrase se construit mot par mot, accent sur UN mot" — texte cinétique + souligné rouge (fond noir + ondulations) |
+| `ProtoEffect_Fracture` | _proto-16-9 | "Le paradoxe nu en 2 mots opposés" — bascule typographique ("S'enrichir. / S'effondrer.") |
+| `TextChoc` | layouts | "Le mot qui claque plein écran" — texte d'impact (voir aussi § CITATION / TEXTE FORT) |
 
 ---
 

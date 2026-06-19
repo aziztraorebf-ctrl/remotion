@@ -5,7 +5,12 @@
 
 ---
 
-## 🧭 Quel catalogue pour quoi ?
+## ⭐ ÉTAPE 0 — PORTE D'ENTRÉE PAR INTENTION (avant tout catalogue)
+> Doctrine [[CONTINUITE-SCENE-INTENTION-DABORD]] : déduis l'INTENTION (1 verbe) AVANT d'ouvrir un catalogue.
+> **`src/projects/_shared/INTENTION-FORME-INDEX.md`** = table intention→forme→réponse (inclut templates Hera ⭐
+> motion-design validé + 4 registres de fond + catégorie TEXTE). Les catalogues ci-dessous = fiches techniques consultées APRÈS.
+
+## 🧭 Quel catalogue pour quoi ? (fiches techniques détaillées)
 
 | Besoin | Catalogue (source de vérité) | Contenu |
 |---|---|---|

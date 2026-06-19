@@ -104,6 +104,33 @@ mais cette transposition reste une **hypothèse à valider en pratique** sur le 
 ⚠️ La grammaire VISUELLE diffère par médium (fracture SVG ≠ FlagFill Mapbox ≠ jetons War-Map) — c'est la
 FORME qui change, pas la doctrine de décision.
 
+## APPLICATION AUX INDEX / CATALOGUES (la doctrine appliquée au rangement)
+
+> Étend la doctrine au PROBLÈME D'AZIZ sur les index (2026-06-18) : un catalogue rangé par
+> techno/lieu = piège template-first. Un index doit servir la déduction, pas la remplacer.
+
+**Règle** : un index n'est pas une vitrine où l'on vient voir « ce qu'on a ». C'est une
+**table INTENTION → FORME → réponse**, consultée APRÈS avoir déduit l'intention (étape 4 de la
+checklist), jamais comme point de départ.
+
+- **Le bon patron existe déjà** : la colonne « **Quand Aziz dit…** » du COMPOSANTS-INDEX Souverain.
+  Elle indexe par ce qu'on veut DIRE/FAIRE RESSENTIR, pas par le nom technique du composant. À généraliser.
+- **Porte d'entrée unique** : `src/projects/_shared/INTENTION-FORME-INDEX.md` mappe chaque intention
+  (faire basculer, révéler un chiffre, mettre l'emphase, situer…) vers la/les forme(s) existante(s)
+  + le catalogue détaillé. Les catalogues par pilier (warmap/atlas/mapbox/gemini) restent comme
+  FICHES TECHNIQUES, consultées en second.
+- **Hiérarchie de réponse** : à intention égale, préférer (1) prolonger le monde déjà à l'écran
+  (continuité §2) ; (2) une forme motion-design validée (templates Hera ⭐) ; (3) coder si rien ne colle
+  — mais alors l'intention est claire, donc on sait quoi.
+- **Anti-piège** : si l'index te fait dérouler une liste en te demandant « lequel ressemble ? », tu es
+  reparti template-first. Reviens à l'intention (1 verbe) avant de rouvrir l'index.
+
+⚠️ Les data-viz autonomes (un chart, une timeline) sont des **inserts ponctuels**, pas des mondes à
+enchaîner. Ne pas faire une succession d'écrans data qui changent de monde (= anti-pattern §2). Le
+chart-sur-carte est le plus doctrine-compatible (il EST un monde : carte + chart dessus).
+
+---
+
 ## VARIANTE DE REVIEW : DA-brief VIDÉO (aval, mouvement+son)
 Pour juger une scène FINIE (mouvement/rythme/transitions/son), utiliser `scripts/tools/gemini-video-da-brief.py`
 (upload vidéo complète à Gemini 3.1 Pro + analyse d'écart vers des refs de niveau). Distinct de `da-brief.py`
@@ -115,7 +142,8 @@ sans casser l'épure ; jeter le bruit). Détail : `scripts/tools/REVIEW-TOOLS-IN
 ## RAPPORT AVEC LES AUTRES DOCTRINES
 - Ne REMPLACE pas le scan templates — le **réordonne** : intention d'abord, template en vérification finale.
 - Complète [[feedback_premium-d-abord-anti-paresse]] (le premium = direction, pas un composant plaqué).
-- Le COMPOSANTS-INDEX reste utile comme RÉPONSE à une forme déjà déduite, pas comme point de départ.
+- Porte d'entrée des templates : `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme).
+  Le COMPOSANTS-INDEX et les catalogues par pilier = FICHES TECHNIQUES consultées APRÈS, pas points de départ.
 - Lié au chantier [[decode-hera-templates]] : les 3 fonds + 6 familles servent comme *réponses* à une
   intention, jamais comme catalogue où l'on « cherche quoi mettre ».
 - Cas incarné : hook Sénégal `ProtoEffect_MapDrawParchemin` + suite `ProtoEffect_Fracture`.
