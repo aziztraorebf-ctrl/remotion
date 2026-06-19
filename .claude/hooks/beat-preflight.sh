@@ -5,9 +5,18 @@
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
 
-# Uniquement pour les fichiers Beat*.tsx
+# Rappel LÉGER (non bloquant) pour toute scène CARTE qui n'est pas un Beat d'épisode
+# (protos _rnd, Scene*.tsx...). Le preflight lourd ci-dessous reste réservé aux Beat*.tsx Souverain.
+# Comble A3 : un proto carte nommé autrement que Beat* échappait à tout rappel de règle.
 if [[ "$FILE_PATH" != *"Beat"*".tsx" ]]; then
+  if [[ "$FILE_PATH" == *.tsx ]] && echo "$CONTENT" | grep -qE "mapbox|MapboxBase|useClipFlags|WavingFlagFill|getCam"; then
+    echo "[rappel carte] Scène Mapbox détectée (hors Beat d'épisode)."
+    echo "  - AVANT présentation : python3 scripts/tools/mapbox-selfreview.py $FILE_PATH (0 erreur)."
+    echo "  - Drapeau visible → useClipFlags (vraies images), JAMAIS drawFlagCanvas (sauf WavingFlagFill = 3 bandes unies)."
+    echo "  - Règle complète : src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md"
+  fi
   exit 0
 fi
 

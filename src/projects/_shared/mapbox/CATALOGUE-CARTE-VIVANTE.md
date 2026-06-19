@@ -59,7 +59,7 @@
 
 | Template | Ce qu'il fait | Quand l'utiliser | Props clés | Preview |
 |---|---|---|---|---|
-| **WavingFlagFill** ⭐ N3.1 | Drapeau ondulant dans la silhouette (canvas redessiné frame par frame, décalage sinusoïdal) | Ouvrir sur un pays avec vie — le drapeau respire | `mainIso`, `waveAmplitude`, `waveFrequency`, `waveSpeed` | [V](https://files.catbox.moe/qn4eh3.mp4) |
+| **WavingFlagFill** N3.1 ⚠️ | Drapeau ondulant dans la silhouette (canvas `drawFlagCanvas`, décalage sinusoïdal) | Ouvrir sur un pays avec vie — le drapeau respire. ⛔ **RÉSERVÉ aux drapeaux 3 bandes UNIES sans emblème** (Mali, France, Guinée, Sénégal-hors-étoile…). Drapeau à étoile/emblème/détail → INTERDIT (rend carrelé/faux) → prendre `useClipFlags` (vraies images) + animer l'opacité. C'est l'EXCEPTION nommée à la règle « jamais drawFlagCanvas » ci-dessous. | `mainIso`, `waveAmplitude`, `waveFrequency`, `waveSpeed` | [V](https://files.catbox.moe/qn4eh3.mp4) |
 | **FlagDissolveTransition** N3.2 | Un pays passe d'un drapeau à un autre (crossfade entre fill-patterns) | Territoire contesté, changement d'influence (AES, CEDEAO), transition géopolitique | `countries[]` ({iso,fromIso,toIso,dissolveAt,dissolveDur}) | [V](https://files.catbox.moe/qbgksz.mp4) |
 | **ImageProjectionFill** N3.3 | Image réelle bichromisée navy/gold clippée dans la silhouette d'un pays | Montrer un lieu précis (mine, ville, usine) plutôt qu'un drapeau — pour les beats à fort enjeu visuel | `countries[]` ({iso,boundaryIsos,imageSrc,navyColor,goldColor,contrast}) | [Maroc/mine V](https://files.catbox.moe/7opcc9.mp4) |
 | **PulsingRegionFill** N3.4 | Territoire entier qui "respire" (opacity sin) — tout le pays pulse, pas juste un dot | Zone de tension, point chaud géopolitique, conflit actif | `countries[]` ({iso,color,opacityMin,opacityMax,period,phaseOffset,showGlow}) | [V](https://files.catbox.moe/8uvzdy.mp4) |
@@ -129,7 +129,8 @@ Un bon combo = une **progression narrative** (pas une superposition). Le secret 
 - `ClipFlag` : `{ iso, geoNames[], flagFile, at, bgColor?, fadeFrames?, mainlandBox? }`
 - **`mainlandBox` [minLon,minLat,maxLon,maxLat]** OBLIGATOIRE pour pays à outre-mer (France `[-5,41,10,52]`, sinon bbox géante Guyane→Réunion casse le drapeau). Idem USA/Pays-Bas/Danemark.
 - `preserveAspectRatio="meet"` (drapeau entier) + fond `bgColor` pour combler les bords de silhouette.
-- ⛔ **NE PAS utiliser `flagCanvas.ts` `drawFlagCanvas` pour un drapeau visible** — ce sont des dessins APPROXIMATIFS (étoiles fausses). Réservé aux cas où seule la couleur dominante compte. Voir `memory/feedbacks/feedback_sfx-sequence-et-drapeaux-reels.md` (BUG 2+3).
+- ⛔ **NE PAS utiliser `flagCanvas.ts` `drawFlagCanvas` pour un drapeau visible** — ce sont des dessins APPROXIMATIFS (étoiles fausses, bandes qui se carrellent sur les formes géo complexes). Réservé aux cas où seule la couleur dominante compte. Voir `memory/feedbacks/feedback_sfx-sequence-et-drapeaux-reels.md` (BUG 2+3).
+  - **UNIQUE EXCEPTION nommée** : `WavingFlagFill` (ondulation), et SEULEMENT pour les drapeaux **3 bandes unies sans emblème** (le mouvement masque l'approximation, et 3 bandes unies n'ont pas de détail à fausser). Tout autre drapeau visible → `useClipFlags`. Si tu hésites → `useClipFlags` (jamais faux).
 
 ### Autres helpers
 - **`flagCanvas.ts`** — 45 drapeaux DESSINÉS en canvas pur + `countryFilter(iso, boundaryIsos)` (filtre Mapbox par ISO, JAMAIS par `name`). ⚠️ Les drapeaux dessinés sont approximatifs → préférer `useClipFlags` (vraies images) pour tout drapeau visible. `countryFilter` reste la référence pour filtrer un fill.

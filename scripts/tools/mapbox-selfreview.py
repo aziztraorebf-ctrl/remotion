@@ -106,6 +106,21 @@ def check_file(path: Path):
             "Si c'est du code mort, le supprimer (le linter ne peut pas le deviner)."
         ))
 
+    # ── E2b : drapeau dessiné via un COMPOSANT IMPORTÉ (faux négatif des imports) ──
+    # mapbox-selfreview ne suit pas les imports. Or WavingFlagFill (et alikes) appellent
+    # drawFlagCanvas EN INTERNE -> un wrapper qui les importe rend un drapeau approximatif
+    # tout en passant E2 (0 appel direct). On force la vérification du cas drapeau-à-emblème.
+    FLAG_CANVAS_COMPONENTS = ("WavingFlagFill", "FlagDissolveTransition")
+    imported_flag_comps = [c for c in FLAG_CANVAS_COMPONENTS
+                           if re.search(rf"\b{c}\b", src) and re.search(rf"import[^;]*\b{c}\b", src)]
+    if imported_flag_comps:
+        warns.append((
+            "W2b", f"Composant drapeau-canvas importé : {imported_flag_comps}. Il dessine le drapeau via "
+            "drawFlagCanvas (approximatif). OK SEULEMENT si le pays a un drapeau 3 BANDES UNIES sans emblème "
+            "(Mali/France/Guinée…). Pays à étoile/emblème/détail → carrelé/faux → utiliser useClipFlags. "
+            "VÉRIFIER le drapeau du pays concerné avant de valider (voir CATALOGUE-CARTE-VIVANTE § drapeaux)."
+        ))
+
     # ── E3 : frame-driven (pas de flyTo/easeTo) ─────────────────────────────────
     fly = find_lines(r"\.(flyTo|easeTo)\s*\(")
     if fly:
