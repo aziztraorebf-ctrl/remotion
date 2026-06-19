@@ -125,9 +125,21 @@ checklist), jamais comme point de départ.
 - **Anti-piège** : si l'index te fait dérouler une liste en te demandant « lequel ressemble ? », tu es
   reparti template-first. Reviens à l'intention (1 verbe) avant de rouvrir l'index.
 
-⚠️ Les data-viz autonomes (un chart, une timeline) sont des **inserts ponctuels**, pas des mondes à
-enchaîner. Ne pas faire une succession d'écrans data qui changent de monde (= anti-pattern §2). Le
-chart-sur-carte est le plus doctrine-compatible (il EST un monde : carte + chart dessus).
+### Une dataviz EST un monde à continuer (précision Aziz 2026-06-18)
+Le mauvais pattern n'est PAS « rester longtemps sur une dataviz » — c'est **CHANGER de dataviz** (nouvel
+écran, nouveau monde) sans justification. Une dataviz se fait VIVRE comme tout autre monde :
+- ✅ **Faire évoluer la MÊME dataviz** : axe → courbe qui se trace → bande qui apparaît → point qui s'allume
+  → annotation → chiffre qui pulse. Un seul monde, qui s'enrichit. **Plus fort** que changer d'écran : le
+  spectateur garde son ancrage, chaque nouvel élément RÉCOMPENSE l'attention au lieu de la réinitialiser.
+- ❌ **Zapper d'une dataviz à une autre** (donut → bars → line sans rapport) = 3 mondes = anti-pattern §2.
+- ⏱️ **Ce n'est PAS une question de durée** (ni minimum 20s, ni maximum). C'est l'INTENTION qui décide :
+  si elle justifie 5s, c'est 5s ; si elle porte sur 20s+ en faisant vivre, on continue. Changer de monde
+  est permis SI justifié par l'intention — jamais par défaut.
+- ⚠️ **Seul garde-fou temporel : ne jamais rester statique.** Un événement visuel ~toutes les 5s (règle
+  rétention) — mais appliqué **DANS le monde** (le faire vivre), pas en changeant de plan. Lien : doctrine
+  rétention/hook 1ère minute. C'est la règle des 5s souvent MAL appliquée (on changeait de plan au lieu d'enrichir).
+- `ProtoHera_ChartOnMap` / `HeraFidele_V12_LineChart` = exemplaires (1 monde qui se construit).
+  `ProtoHera_ChartsParchemin` (3 charts enchaînés) = à n'utiliser QUE si l'intention justifie 3 mondes distincts.
 
 ---
 
