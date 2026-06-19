@@ -1,0 +1,109 @@
+"""Genere des STORYBOARDS (planches de reference visuelle) pour les moments ABSTRAITS de la scene 1
+Senegal, sur DEUX generateurs en parallele pour comparer :
+  - Gemini 3.1 Flash Image (gemini-3.1-flash-image-preview) — notre habituel, tend "graphisme plat".
+  - GPT-image-1 via fal.ai (fal-ai/gpt-image-1) — instinct Aziz : moins plat, plus 3D/profondeur.
+Reference de registre = frames M-Pesa (Data-Hero) passees en image d'entree (Gemini) ou decrites (GPT).
+Brief = registre + contenu + MARGE creative (ni bride 'trop safe' ni libre total).
+
+Sortie : /tmp/storyboard-gen/<moment>-<modele>.png
+Usage : python3 scripts/tools/storyboard-dual-gen.py
+"""
+import os, sys, base64, time, requests
+from pathlib import Path
+from dotenv import load_dotenv
+
+ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT / ".env")
+GEMINI_KEY = os.getenv("GEMINI_API_KEY")
+FAL_KEY = os.getenv("FAL_KEY")
+OUT = Path("/tmp/storyboard-gen"); OUT.mkdir(exist_ok=True)
+
+GEMINI_MODEL = "gemini-3.1-flash-image-preview"
+GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent?key={GEMINI_KEY}"
+FAL_URL = "https://fal.run/fal-ai/gpt-image-1/text-to-image"
+
+REF_NOKIA = Path("/tmp/ref-mpesa-nokia.jpg")  # pivot Nokia + data greffees
+REF_COIN = Path("/tmp/ref-mpesa-coin.jpg")    # pivot piece + comparaison 5%/0.22%
+
+# === BRIEF COMMUN (registre Data-Hero + charte + marge creative) ===
+REGISTRE = (
+    "Editorial data-visualization motion-design frame, 16:9, premium documentary style (like Bloomberg/Vox). "
+    "DATA-HERO grammar: ONE central hero object locked in the center, data labels grafted AROUND it (left/right, "
+    "never stacked), a soft radial halo around the hero so it breathes. Color charter STRICT: deep navy background "
+    "#16213a, warm gold/ocre accents #e7bd78, ivory text #f2ebd9, crisis red #b23a2e only for the 'cost/bad' side. "
+    "Subtle paper grain texture, soft drop shadows (semi-3D, NOT flat vector), gentle glow on key numbers, vignette. "
+    "Clean, sober, sophisticated — NOT busy, NOT clip-art, NOT neon. French labels."
+)
+
+# MULTI-PLANCHE : chaque moment = UNE image montrant 3 etats (debut / milieu / fin) cote a cote,
+# comme un storyboard de Silicon Savannah. Concepts RETENUS (Aziz) : coin-flip pour l'intro, baril pour 60%.
+MULTIPANEL = (" Output a SINGLE storyboard image arranged as a horizontal STRIP of 3 panels side by side "
+    "(labelled BEGINNING / MIDDLE / END), showing how this DATA-HERO scene EVOLVES over time. Same central "
+    "hero across the 3 panels — only the grafted data and the state change. Clear thin separators between panels.")
+
+MOMENTS = {
+    "intro-recits": (
+        "SCENE: opening of a Senegal oil documentary that DECONSTRUCTS two opposing myths. CENTRAL HERO = a "
+        "premium 3D GOLD COIN with TWO faces (a coin-flip). FACE A = 'LA MALEDICTION' (resource curse, a ship/"
+        "extraction icon, cold red tone). FACE B = 'LE MIRACLE' (sovereignty, a flag/landmark icon, warm gold). "
+        "The COIN FLIP itself is the gesture of 'flipping the narrative'. "
+        "PANEL 1 (beginning): the coin appears showing FACE A 'LA MALEDICTION' with 1-2 data labels grafted around. "
+        "PANEL 2 (middle): the coin is mid-flip (edge/tranche visible, motion blur), narratives in tension. "
+        "PANEL 3 (end): coin shows FACE B 'LE MIRACLE', then a crack — both myths revealed as constructed lies "
+        "('DEUX ILLUSIONS'). Deep navy, gold, crisis red for the curse side, soft 3D depth, halo, grain."
+        + MULTIPANEL
+    ),
+    "soixante-pourcent": (
+        "SCENE: reveal of a key statistic. CENTRAL HERO = an OIL BARREL that acts as a GAUGE — filled with gold "
+        "(Senegal's share) at the bottom and red (foreign operators' share) at top, the fill LEVEL encodes the split. "
+        "PANEL 1 (beginning): empty/outline barrel, label 'PART DES REVENUS'. "
+        "PANEL 2 (middle): the barrel FILLS up with gold to ~60%, a counter rising toward '60%', data labels "
+        "'PART DE L'ETAT SENEGALAIS' (gold) vs 'OPERATEURS ETRANGERS' (red) grafted left/right. "
+        "PANEL 3 (end): '60%' locked in the gold zone + subtext 'moyenne des emergents, ni scandale ni jackpot', "
+        "the number deliberately DEFLATED (slight desaturation). Deep navy, gold/red barrel, halo, grain, semi-3D."
+        + MULTIPANEL
+    ),
+}
+
+
+def gen_gemini(prompt: str, refs: list, out: Path):
+    parts = [{"text": REGISTRE + "\n\n" + prompt + "\n\nUse the attached M-Pesa reference frames ONLY for the "
+              "Data-Hero REGISTER (central pivot + grafted data + charter), NOT the content."}]
+    for r in refs:
+        if r.exists():
+            parts.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(r.read_bytes()).decode()}})
+    payload = {"contents": [{"parts": parts}], "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.6}}
+    r = requests.post(GEMINI_URL, json=payload, timeout=180)
+    if r.status_code != 200:
+        print(f"  [gemini] ERROR {r.status_code}: {r.text[:200]}"); return
+    for c in r.json().get("candidates", []):
+        for p in c.get("content", {}).get("parts", []):
+            inl = p.get("inlineData") or p.get("inline_data")
+            if inl and inl.get("data"):
+                out.write_bytes(base64.b64decode(inl["data"])); print(f"  [gemini] -> {out.name} ({out.stat().st_size//1024}KB)"); return
+    print("  [gemini] no image")
+
+
+def gen_gpt(prompt: str, out: Path):
+    # GPT-image-1 ne prend pas d'image ref ici (text-to-image) : on DECRIT le registre M-Pesa dans le prompt.
+    full = (REGISTRE + "\n\n" + prompt + "\n\nReference register: like a premium M-Pesa/Safaricom data explainer "
+            "with a central hero object and stats grafted around it on a navy background.")
+    payload = {"prompt": full, "image_size": "1536x1024", "num_images": 1}
+    r = requests.post(FAL_URL, headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"}, json=payload, timeout=240)
+    if r.status_code != 200:
+        print(f"  [gpt] ERROR {r.status_code}: {r.text[:200]}"); return
+    imgs = r.json().get("images", [])
+    if imgs:
+        url = imgs[0]["url"]
+        out.write_bytes(requests.get(url, timeout=120).content)
+        print(f"  [gpt] -> {out.name} ({out.stat().st_size//1024}KB)")
+    else:
+        print(f"  [gpt] no image: {r.text[:200]}")
+
+
+if __name__ == "__main__":
+    for key, prompt in MOMENTS.items():
+        print(f"\n=== {key} ===")
+        gen_gemini(prompt, [REF_NOKIA, REF_COIN], OUT / f"{key}-gemini.png")
+        gen_gpt(prompt, OUT / f"{key}-gpt.png")
+    print(f"\n-> {OUT}")
