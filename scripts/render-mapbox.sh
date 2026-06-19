@@ -27,7 +27,7 @@ shift 2
 SLIM_DIR="/tmp/public-mapbox-slim"
 rm -rf "$SLIM_DIR"
 mkdir -p "$SLIM_DIR"
-for dir in souverain atlas _shared _demos geo-data fonts; do
+for dir in souverain atlas _shared _demos _r-and-d _rnd geo-data fonts; do
   [ -d "public/$dir" ] && ln -s "$(pwd)/public/$dir" "$SLIM_DIR/$dir"
 done
 for f in public/*.json public/*.png; do

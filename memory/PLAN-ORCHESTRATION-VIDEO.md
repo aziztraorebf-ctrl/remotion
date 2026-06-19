@@ -62,37 +62,57 @@ Tailwind, score scripté) → agent. Goût/coûteux-à-défaire (asset payant, r
 │ 0.3  Spawn storyboarder  → timing.ts (frames absolues)       [BARRIÈRE 2]  │
 │ 0.4  Chef découpe beat0..beatN. Décide isolation worktree par beat.        │
 └────────────────────────────────────────────────────────────────────────────┘
-                                   │  FAN-OUT (1 message, N agents parallèles)
+                                   │  FAN-OUT TEMPS 1 — CONCEPTION (1 message, N agents //)
         ┌──────────────────────────┼──────────────────────────┐
         ▼                          ▼                          ▼
-┌─ N AGENTS-BEAT FRAIS (parallèle, ~12 min/beat, effort élevé) ──────────────┐
-│ prompt = "--episode X --beat N" + chemin timing.ts + isolation: worktree   │
-│   1. /beat → route Mapbox(mapbox-session) ou Remotion(beat-session)        │
-│   2. scan → [prompt assets → REMONTE AU CHEF, ne génère pas seul]          │ ← contrôle 1 (goût)
-│   3. breakdown (Gemini 1) → code → render (wip)                            │
-│   4. self-review scriptée (≥19/23 ou ≥10/12, BLOQUANT)                     │
-│   5. review (Gemini 2) → <mp4>.review.json adjacent                       │
-│   6. corrections VRAIES (pas de boucle Gemini) → beat{N}-FINAL.mp4         │
-│   7. écrit dans PIPELINE.md : [BEAT-N] COMPLETE : <mp4> + score            │ ← handoff fiable (disque)
+┌─ TEMPS 1 : N AGENTS-BEAT — CONCEPTION (parallèle, puis STOP) ──────────────┐
+│   1. /beat → route Mapbox/Remotion. scan → intention (1 verbe) → FORME.    │
+│   2. MINI DA-BRIEF premium du beat : références visuelles + intention de   │
+│      MOTION (le geste, pas l'objet) + niveau d'ambition. (force le premium)│
+│   3. 1-2 versions de STORYBOARD VISUEL (Gemini/GPT, storyboard-dual-gen).  │
+│   4. [prompt assets payants éventuels] → REMONTE AU CHEF, ne génère pas.   │
+│   5. STOP. Remonte DA-brief + storyboards au chef.                        │
 └────────────────────────────────────────────────────────────────────────────┘
         └──────────────────────────┼──────────────────────────┘
                                    ▼
-┌─ POINTS DE CONTRÔLE — CHEF ────────────────────────────────────────────────┐
-│ • Regroupe TOUS les prompts d'assets des N agents → UN AskUserQuestion      │ ← contrôle 1 (lot)
-│   multi à Aziz. Débloque les agents en lot. (jamais N interruptions)        │
-│ • Lit chaque review.json. Gemini = signal. Arbitre corrections/variantes.   │ ← contrôle 2
-│ • Circuit breaker si un beat RE-EVALUATE.                                    │
+╔═ CHECKPOINT 1 (GOÛT) — CHEF → AZIZ, GROUPÉ ════════════════════════════════╗
+║ Chef rassemble les N DA-briefs + storyboards + prompts assets → présente   ║
+║ EN UN LOT à Aziz (jamais N interruptions). Aziz VOIT LE VISUEL avant tout  ║
+║ code. Valide / ajuste (« Beat1 : veines minérales, pas un damier ») /      ║
+║ rejette. Débloque les agents en lot. ← C'EST L'ÉTAPE QUI FORCE LE PREMIUM. ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                   ▼  TEMPS 2 — EXÉCUTION (agents reprennent //)
+┌─ TEMPS 2 : N AGENTS-BEAT — CODE sur storyboard VALIDÉ ─────────────────────┐
+│   6. breakdown (Gemini 1) → code le beat sur le storyboard validé → render │
+│   7. self-review scriptée (≥19/23 ou ≥10/12, BLOQUANT)                     │
+│   8. review (Gemini 2, max 2 appels) → boucle corrections jusqu'à ≥8/10    │
+│      → <mp4>.review.json adjacent → [BEAT-N] COMPLETE dans PIPELINE.md     │
 └────────────────────────────────────────────────────────────────────────────┘
                                    ▼
+╔═ CHECKPOINT 2 (GOÛT) — CHEF → AZIZ ════════════════════════════════════════╗
+║ Chef synthétise les reviews, arbitre corrections/variantes, présente les   ║
+║ beats finaux. Circuit breaker si un beat RE-EVALUATE.                       ║
+╚════════════════════════════════════════════════════════════════════════════╝
+                                   ▼
 ┌─ BARRIÈRE 3 — ASSEMBLAGE (chef) ───────────────────────────────────────────┐
-│ concat ffmpeg beat0..N + narration globale + mix → out/PRET-PUBLICATION/   │
+│ concat ffmpeg beat0..N (audio déjà embarqué par beat) → mix → PRET-PUBLI.  │
 └────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Les 2 SEULS points de contrôle goût** (pour ne pas saturer Aziz) :
-1. **Avant assets payants** : chef regroupe les prompts des N beats en UN lot.
-2. **Après reviews** : chef synthétise scores + arbitre corrections/variantes.
-Entre les deux → **exécution longue sans interruption** (modèle « regrouper le goût, exécuter longtemps »).
+**Les 3 points de contrôle goût** (révisés après le test RDC cobalt 2026-06-19) :
+0. **Script** (éditorial) — avant la chaîne série.
+1. **Storyboard + DA-brief premium GROUPÉS, AVANT le code** ⭐ (le 3e ajouté). Déplace le jugement de goût
+   d'APRÈS le render (trop tard, coûteux) vers AVANT le code (gratuit à changer). C'est ce qui force le
+   premium et empêche le « basique par défaut » (cause du damier de Beat1 au test).
+2. **Après reviews** — synthèse scores + arbitrage.
+Entre les checkpoints → **exécution longue sans interruption**.
+
+> ⚠️ LEÇON DU TEST RDC COBALT (2026-06-19) : sans le checkpoint storyboard, un agent laissé seul sur un vide
+> visuel produit du JUSTE mais BASIQUE (Beat1 = damier de mallettes cobalt). Les beats à forme évidente
+> (Beat2 chiffre, Beat3 flux) sont sortis premium SANS storyboard — mais on ne peut pas parier là-dessus.
+> Le storyboard validé en amont est ce qui garantit le premium partout, pas seulement là où la forme est évidente.
+> ✅ Ce que le test a VALIDÉ : vocal bien synchronisé, changements de palette (Beat3 carte→noir révèle le tracé
+> Chine), agents capables d'intégrer nos templates + improviser juste sur une intention claire.
 
 ---
 
