@@ -1,0 +1,147 @@
+#!/bin/bash
+# pre-presentation-review.sh
+# PreToolUse — rend la review visuelle INCONTOURNABLE avant toute presentation d'un rendu.
+#
+# Declenche sur deux surfaces de presentation :
+#   1. Bash : commande qui pousse un .mp4 vers Aziz (catbox / upload-to-blob / ntfy-notify).
+#   2. SendUserFile : envoi direct d'un .mp4 a l'utilisateur.
+#
+# Le hook NE LANCE PAS visual_review.py (trop lent pour un hook). Il VERIFIE qu'une review
+# existe deja, est a jour, et a passe le seuil. Si non -> exit 2 avec la commande exacte a lancer.
+#
+# Convention d'appariement : pour <chemin>/beatN_v3.mp4, la review attendue est
+#   <chemin>/beatN_v3.review.json   (ecrite par : visual_review.py <mp4> --output <mp4-sans-ext>.review.json)
+#
+# Seuil de blocage : score < 8/10  OU  verdict == REBUILD.
+# Pas de cle API / review illancable : ce hook ne bloque pas sur l'infra (il ne lance rien).
+#
+# Comportement :
+#   exit 0 -> presentation autorisee
+#   exit 2 -> presentation BLOQUEE (Claude voit le message, doit lancer/corriger la review)
+
+INPUT=$(cat)
+TOOL_NAME=$(echo "$INPUT" | jq -r '.tool_name // empty')
+
+# --- 1. Extraire le(s) mp4 candidat(s) a la presentation selon l'outil ---
+CANDIDATE_MP4=""
+
+case "$TOOL_NAME" in
+  Bash)
+    CMD=$(echo "$INPUT" | jq -r '.tool_input.command // empty')
+    # Seules les commandes de PRESENTATION nous interessent
+    if [[ "$CMD" != *"catbox.moe"* ]] \
+       && [[ "$CMD" != *"upload-catbox.sh"* ]] \
+       && [[ "$CMD" != *"upload-to-blob.py"* ]] \
+       && [[ "$CMD" != *"ntfy-notify.sh"* ]] \
+       && [[ "$CMD" != *"litterbox"* ]]; then
+      exit 0
+    fi
+    # Premier .mp4 LOCAL mentionne (exclure les URL http(s):// — ex: lien ntfy distant)
+    CANDIDATE_MP4=$(echo "$CMD" | grep -oE '[^ "'"'"']+\.mp4' | grep -vE '^https?://' | head -1)
+    # Nettoyer les prefixes curl/multipart : "fileToUpload=@/path" -> "/path", "key=@x" -> "x"
+    CANDIDATE_MP4="${CANDIDATE_MP4##*@}"
+    CANDIDATE_MP4="${CANDIDATE_MP4##*=}"
+    ;;
+  SendUserFile)
+    # files[] peut contenir plusieurs chemins ; on prend le premier .mp4
+    CANDIDATE_MP4=$(echo "$INPUT" | jq -r '.tool_input.files[]? // empty' | grep -E '\.mp4$' | head -1)
+    ;;
+  *)
+    exit 0
+    ;;
+esac
+
+# Aucun mp4 implique -> rien a verifier
+if [[ -z "$CANDIDATE_MP4" ]]; then
+  exit 0
+fi
+
+# --- 2. Ne garder que les mp4 de LIVRABLE (out/ ou wip/versions). Ignorer protos/_rnd/tmp ---
+#     (presenter un proto de mecanique n'exige pas de review formelle)
+if [[ "$CANDIDATE_MP4" != *"/out/"* ]] && [[ "$CANDIDATE_MP4" != *"out/"* ]]; then
+  exit 0
+fi
+if [[ "$CANDIDATE_MP4" == *"/_r-and-d/"* ]] || [[ "$CANDIDATE_MP4" == *"/_rnd/"* ]] \
+   || [[ "$CANDIDATE_MP4" == *"templates-souverain"* ]]; then
+  exit 0
+fi
+
+# Resoudre en chemin absolu si relatif
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-/Users/clawdbot/Workspace/remotion}"
+if [[ "$CANDIDATE_MP4" != /* ]]; then
+  MP4_ABS="$PROJECT_DIR/$CANDIDATE_MP4"
+else
+  MP4_ABS="$CANDIDATE_MP4"
+fi
+
+# Le mp4 doit exister pour qu'on puisse comparer les dates
+if [[ ! -f "$MP4_ABS" ]]; then
+  # Fichier pas encore rendu / chemin inattendu : on ne bloque pas (rien a reviewer)
+  exit 0
+fi
+
+REVIEW_JSON="${MP4_ABS%.mp4}.review.json"
+REVIEW_CMD="python3 scripts/visual_review.py \"$CANDIDATE_MP4\" --model gemini --storyboard <storyboard.png> --output \"${CANDIDATE_MP4%.mp4}.review.json\""
+
+block() {
+  echo ""
+  echo "================================================================"
+  echo "PRESENTATION BLOQUEE — review visuelle requise avant de montrer"
+  echo "  Rendu : $CANDIDATE_MP4"
+  echo "----------------------------------------------------------------"
+  echo "$1"
+  echo "----------------------------------------------------------------"
+  echo "Lance (compare le rendu au storyboard, ecrit la note a cote du mp4) :"
+  echo "  $REVIEW_CMD"
+  echo "Seuil pour presenter : score >= 8/10 ET verdict != REBUILD."
+  echo "(Sans cle API : le hook laisse passer avec un warning — il ne lance rien lui-meme.)"
+  echo "================================================================"
+  exit 2
+}
+
+# --- 3. La review existe-t-elle ? ---
+if [[ ! -f "$REVIEW_JSON" ]]; then
+  block "Aucune review trouvee ($(basename "$REVIEW_JSON") absent)."
+fi
+
+# --- 4. La review est-elle a jour (plus recente que le mp4) ? ---
+if [[ "$MP4_ABS" -nt "$REVIEW_JSON" ]]; then
+  block "La review est PLUS ANCIENNE que le rendu (le mp4 a ete re-rendu depuis). Relance la review."
+fi
+
+# --- 5. Lire score + verdict ---
+SCORE=$(python3 -c "import json,sys
+try:
+    d=json.load(open('$REVIEW_JSON'))
+    s=d.get('score')
+    print(s if s is not None else '')
+except Exception:
+    print('')" 2>/dev/null)
+
+VERDICT=$(python3 -c "import json,sys
+try:
+    d=json.load(open('$REVIEW_JSON'))
+    print((d.get('verdict') or '').upper())
+except Exception:
+    print('')" 2>/dev/null)
+
+# Review illisible / score non numerique (ex: cle API manquante au moment de la review)
+if [[ -z "$SCORE" ]] || ! python3 -c "float('$SCORE')" >/dev/null 2>&1; then
+  echo ""
+  echo "[review] WARNING — review presente mais score illisible (score='$SCORE')."
+  echo "[review] Probablement une review sans cle API. Presentation AUTORISEE, mais non verifiee."
+  echo "[review] Pour une vraie verif : $REVIEW_CMD"
+  exit 0
+fi
+
+# --- 6. Appliquer le seuil ---
+if [[ "$VERDICT" == "REBUILD" ]]; then
+  block "Verdict = REBUILD (score ${SCORE}/10). Le rendu demande une refonte, pas une presentation."
+fi
+
+if python3 -c "exit(0 if float('$SCORE') < 8 else 1)" 2>/dev/null; then
+  block "Score ${SCORE}/10 < 8 — corrige les fixes de la review avant de presenter."
+fi
+
+echo "[review] OK — ${SCORE}/10 (${VERDICT}). Presentation autorisee."
+exit 0

@@ -74,8 +74,23 @@
           },
           {
             "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-presentation-review.sh",
+            "timeout": 10
+          },
+          {
+            "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/gemini-model-guard.sh",
             "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "SendUserFile",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/pre-presentation-review.sh",
+            "timeout": 10
           }
         ]
       },
@@ -113,16 +128,6 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/lint-on-edit.sh",
             "timeout": 30
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/beat-gemini-review.sh",
-            "timeout": 120
           }
         ]
       }

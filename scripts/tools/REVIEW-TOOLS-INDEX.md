@@ -8,6 +8,30 @@
 
 ---
 
+## ⛔ GATE AUTOMATIQUE — review AVANT de présenter un rendu (NON-NEGOTIABLE, imposé par hook)
+
+> Depuis 2026-06-19, un hook `.claude/hooks/pre-presentation-review.sh` (PreToolUse Bash + SendUserFile)
+> **BLOQUE toute présentation d'un .mp4 de livrable** (chemin `out/...`) tant qu'une review valide n'existe pas.
+> Ce n'est plus une consigne qu'on peut oublier : c'est structurel. Marche en mode médium, sur mobile.
+
+**Ce que le hook exige** pour laisser passer un upload (catbox / blob / ntfy) ou un `SendUserFile` d'un mp4 :
+- un fichier `<mp4-sans-ext>.review.json` **à côté du mp4**,
+- **plus récent que le mp4** (sinon = rendu refait depuis la review → relancer),
+- avec **score ≥ 8/10 ET verdict ≠ REBUILD**.
+
+**Comment produire ce review.json** (= débloquer la présentation) :
+```bash
+python3 scripts/visual_review.py <chemin/au/rendu.mp4> --model gemini \
+  --storyboard <le/storyboard.png> --output <chemin/au/rendu>.review.json
+```
+Puis lire la review, corriger les `fixes`, re-rendre si besoin, **re-lancer la review** (la périmée est rejetée).
+
+**Échappatoires volontaires (le hook NE bloque PAS)** : protos `_rnd/` / `_r-and-d/` (mécanique d'animation, pas livrable), mp4 hors `out/`, URL distantes (liens ntfy), et le cas « pas de clé API » (score illisible → passe avec un WARNING, le hook ne lance jamais de review lui-même).
+
+⚠️ Le hook ne JUGE pas le goût — il vérifie qu'une review OBJECTIVE a eu lieu (score/verdict/fraîcheur). Le jugement d'Aziz prime toujours sur le score. Détail conception : `memory/PLAN-SYSTEME-ANTI-FOUILLIS.md` (Chantier B).
+
+---
+
 ## ⭐ LE SYSTÈME PRINCIPAL — `da-brief.py` (upstream + downstream unifié)
 
 **`scripts/tools/da-brief.py`** est LE système de review externe. À utiliser par défaut pour TOUTE review (plan ou rendu).

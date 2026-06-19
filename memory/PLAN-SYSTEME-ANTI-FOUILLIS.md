@@ -15,7 +15,7 @@
 - **Scripts** : 98 actifs → **56 actifs** + 47 archivés (`scripts/_archive/` + `scripts/tools/_archive/`) + 4 tests morts supprimés. `SCRIPTS-INDEX.md` régénéré. `check-links.py` = 0 lien mort.
 - **Doctrine** : `REVIEW-PREMIUM-TEMPLATE.md` archivée (info Gemini-vidéo contredite). Fusions des 3 autres doctrines REPORTÉES (référencées par 5-10 fichiers chacune → mauvais ratio risque/gain ; ce ne sont pas des fichiers nuisibles, juste un peu redondants).
 - **Contradiction template-first vs intention-first RÉSOLUE** : `CLAUDE.md`, `DOCTRINE-SOUVERAIN.md` §3.10, `ATLAS-BEAT-DEMARRAGE.md` harmonisés sur **INTENTION → FORME → TEMPLATE**, tous pointant vers `CONTINUITE-SCENE-INTENTION-DABORD.md`.
-- **Hooks settings.json** : correction du hook fantôme `beat-gemini-review.sh` (câblé sur chaque Bash, fichier archivé) → **BLOQUÉE par le classifier** (auto-modification). À approuver par Aziz (voir §4).
+- **Hooks settings.json** : hook fantôme `beat-gemini-review.sh` (câblé sur chaque Bash, fichier archivé) → **RETIRÉ** (2026-06-19, avec le câblage du Chantier B).
 
 ---
 
@@ -61,7 +61,16 @@ Le chantier supposait « 5 portes d'entrée, visual_review jamais lancé ». La 
 
 ---
 
-## CHANTIER B — Hook d'auto-vérification AVANT présentation (le cœur)
+## CHANTIER B — Hook d'auto-vérification AVANT présentation (le cœur) — ✅ FAIT (2026-06-19)
+
+> **CODÉ ET CÂBLÉ.** `.claude/hooks/pre-presentation-review.sh` (PreToolUse Bash + SendUserFile).
+> Bloque tout upload/SendUserFile d'un .mp4 de livrable (`out/...`) tant qu'un `<mp4>.review.json` adjacent,
+> plus récent que le mp4, score ≥ 8/10 et verdict ≠ REBUILD, n'existe pas. 16 cas testés en isolation.
+> Échappatoires : protos `_rnd`/`_r-and-d`, hors `out/`, URL distantes, pas de clé API (passe + warning).
+> Doc utilisateur : `scripts/tools/REVIEW-TOOLS-INDEX.md` (section « GATE AUTOMATIQUE »).
+> Hook fantôme `beat-gemini-review.sh` (câblé sur chaque Bash, fichier archivé) retiré au passage.
+>
+> Conception ci-dessous conservée pour mémoire.
 
 **Cible** : tant que le rendu n'a pas été comparé au breakdown et scoré ≥ seuil, Claude NE PRÉSENTE PAS.
 
