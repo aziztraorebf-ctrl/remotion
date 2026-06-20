@@ -25,18 +25,40 @@ qu'il sache à quoi elle ressemble (style, palette, mécaniques) :
 - Beat **Atlas** → `public/_shared/refs/cartes/carte-atlas-mansa-moussa.jpg`
 (On joint la réf au générateur : `storyboard-dual-gen.py --ref <cette frame>`.)
 
-**[2] INSPIRATION EXTERNE (citée par NOM, pas une banque d'images)** — le modèle connaît ces chaînes, il sait
-leur style. On lui dit « vise ce niveau de dynamisme ». Chaînes par registre :
-> ⚠️ À REMPLIR PAR AZIZ (il fournit les chaînes exactes par registre). Emplacement réservé :
-> - **Mapbox dynamique / géopolitique** : _(à compléter)_
-> - **WarMap / cartes de conflit** : _(à compléter)_
-> - **Atlas / historique illustré** : _(à compléter)_
+**[2] INSPIRATION EXTERNE (citée par NOM au modèle, pas une banque d'images)** — le modèle connaît ces chaînes,
+il sait leur grammaire. On lui dit « vise CE niveau, prends-leur CECI ». Listes données par Aziz 2026-06-20
+(repère de goût, pas figé). Pour chaque chaîne : ce qu'on lui VOLE.
 
-**[3] NOS CONTRAINTES (dites en TEXTE, pas jointes)** — ce qu'on SAIT faire, pour qu'il propose du codable :
-- Toujours : palette navy/gold, fond `#16213a`, frame-driven (caméra pilotée par le temps), vraie géo.
-- WarMap : on a jetons, drapeaux ondulés (`WavingFlagFill` 3 bandes / `useClipFlags`), fronts qui avancent, sceaux d'événement.
-- Atlas : persos PixelLab, décors illustrés, registre épique (même si les persos finaux différeront du storyboard).
-- Souverain : `GeoCountryPlaque`, `FlagFill`, flux/arcs, camCountryApproach pitch ~32.
+*Mapbox dynamique / géopolitique :*
+- **@geoglobetales** + **@jacquesadit** (After Effects / GeoLayers 3) → ⚠️ on prend leur **DYNAMISME** : reveals,
+  pictos/emojis qui pop, tempo des apparitions, usage de la couleur. ON NE PREND PAS le globe 3D / la techno AE
+  (on est Mapbox frame-driven 2.5D). « Leur langage d'animation, pas leur outil. »
+- **@reallifelore** → rythme narratif, carte au service du propos, échelle (zoom du monde au détail).
+- **@vox** + **@johnnyharris** → rigueur éditoriale, registre documentaire premium, annotations propres.
+- **PolyMatter** + **Wendover** → carte animée propre, registre éco/géopolitique très proche du nôtre.
+- **Bloomberg Originals** → data-visualisation premium incrustée sur carte (chiffres + géo).
+
+*WarMap / cartes de conflit (+ Atlas) :*
+- **@kingsandgenerals** + **@bazbattles** + **@historicbattles** + **@sandrhomanhistory** → grammaire de la carte de
+  bataille : flèches de mouvement, fronts qui avancent, jetons d'unités, order of battle, drapeaux.
+- **@history_mapped_out** → notre réf flat sépia : bannière flottante, sceaux d'événement (déjà décodée, voir [[decode-castile-warmap-vivante]]).
+- **Map Men** → grammaire carte vive/légère (à citer si on veut un registre plus enlevé).
+- **Real Time History** → sérieux documentaire-guerre.
+
+**[3] NOS CONTRAINTES + DIRECTIVE « CARTE VIVANTE » (dites en TEXTE au modèle, pas jointes)** :
+
+⭐ **DIRECTIVE CARTE VIVANTE (à donner à CHAQUE storyboard carte — le cœur)** : « La carte ne doit JAMAIS être
+plate ni statique. Elle vit en permanence par : (a) le MOUVEMENT DE CAMÉRA — zoom in/out, travelling, pivot,
+recadrages rythmés (jamais un plan fixe figé) ; (b) la COULEUR — territoires qui se colorent/changent de camp,
+contrastes forts, zones qui s'allument ; (c) les APPARITIONS — pictos, flèches qui se tracent, jetons, sceaux,
+plaques qui pop au bon moment. À chaque état, quelque chose BOUGE, se COLORE ou APPARAÎT. » (C'est ce qu'on vole
+aux chaînes ci-dessus, traduit en leviers concrets.)
+
+*Ce qu'on SAIT faire (pour qu'il propose du codable) :*
+- Toujours : palette navy/gold, fond `#16213a`, frame-driven (caméra pilotée par le temps), vraie géo, 2.5D (pitch, PAS de 3D AE).
+- WarMap : jetons, drapeaux ondulés (`WavingFlagFill` 3 bandes / `useClipFlags`), fronts qui avancent, sceaux d'événement, bannière.
+- Atlas : persos PixelLab, décors illustrés, registre épique (les persos finaux différeront du storyboard).
+- Souverain : `GeoCountryPlaque`, `FlagFill`, flux/arcs, `camCountryApproach` pitch ~32.
 
 **[4] L'INTENTION du beat** (1 verbe) + la narration.
 
@@ -66,6 +88,7 @@ au très dynamique) beaucoup plus vite qu'en re-codant à l'aveugle.
   or le but est que le MODÈLE propose la créativité. On garde donc le modèle-propose. (La vraie carte = au code.)
 
 ## STATUT
-⏳ Doctrine posée, NON encore testée sur un cas réel (le test prévu : un beat AES Sahel, toi + Claude).
-⏳ Manque : les chaînes de référence par registre (Aziz). Une fois remplies → tester.
-Branché dans : `src/projects/_shared/INTENTION-FORME-INDEX.md` + `WARMAP-INDEX` / pipelines mapbox.
+✅ Chaînes de référence + directive CARTE VIVANTE remplies (Aziz 2026-06-20).
+⏳ NON encore testée sur un cas réel — prochain pas : un beat AES Sahel (toi + Claude), pour valider que le
+   préambule (notre carte + chaînes + directive carte vivante) produit une direction premium et non plate.
+Branché dans : `MEMORY.md`. À brancher aussi : `WARMAP-INDEX` / pipelines mapbox au moment du test.
