@@ -6,7 +6,8 @@ Systeme miroir de beat-session.py, mais pour les beats CARTE (getCam, overlays, 
 Routage CLAUDE.md : "Coder un beat / Short Souverain MAPBOX".
 
 Pipeline (6 phases, discipline scoree, MAX 2 appels Gemini) :
-  1. storyboard   → afficher le Production Brief de l'acte (Camera + Overlays + SFX). VALIDE PAR AZIZ avant code.
+  1. storyboard   → storyboard d'evolution (le modele PROPOSE, doctrine STORYBOARD-MAPBOX) + Production Brief. VALIDE PAR AZIZ.
+  1b. breakdown   → decode la direction VALIDEE en plan technique (JSON par etat, champs anti-rigidite). Le pont vers le code.
   2. code         → Claude ecrit getCam() + ShortOverlays dans le fichier UNIQUE (etape manuelle)
   3. self-review  → assertions scriptees BLOQUANTES (--file requis) + checklist Mapbox cochee AVANT Gemini
   4. review       → gemini-mapbox-review.py → JSON score CONSULTATIF (jamais juge). 1 SEUL appel.
@@ -98,9 +99,32 @@ def phase_storyboard(episode: str, acte: str) -> None:
     print(">>>   3 garde-fous ABSOLUS : (1) suit la voix, (2) lisible, (3) sequentiel pas metronome.")
     print(">>>   Lecon test A5 : 'mieux voir peu que voir enormement'. Voir Playbook section 2bis.")
     print(">>>   Source a la demande : memory/_r-and-d-mapanimation-PREMIUM-DECODE.md")
-    print("\n>>> AFFICHER l'acte concerne a Aziz et OBTENIR validation AVANT de coder getCam().")
-    print(">>> C'est l'equivalent du storyboard PNG, mais pour une carte animee.")
-    print("\nApres validation Aziz → phase code (manuel) → phase self-review.")
+    print("\n>>> ETAPE 2 — STORYBOARD D'EVOLUTION (le modele PROPOSE la direction, doctrine complete) :")
+    print(">>>   memory/doctrines/STORYBOARD-MAPBOX.md — preambule 4 couches a JOINDRE au generateur :")
+    print(">>>   [1] NOTRE carte (frame ref selon pilier) [2] chaines de ref citees par NOM")
+    print(">>>   [3] directive CARTE VIVANTE + interdits (pas de 3D AE) [4] intention (1 verbe) + narration.")
+    print(">>>   Outil : scripts/tools/storyboard-dual-gen.py (Gemini + GPT) → multi-etats DEBUT→FIN, epure.")
+    print(">>>   La geo du storyboard est APPROXIMATIVE = OK (vraie geo au CODE).")
+    print("\n>>> AFFICHER le storyboard (+ Production Brief) a Aziz et OBTENIR validation de la DIRECTION.")
+    print(">>> On ne decode PAS une direction non validee.")
+    print("\nApres validation Aziz → --phase breakdown (decode la direction en plan technique) → code.")
+
+
+def phase_breakdown(episode: str, acte: str) -> None:
+    """Pont storyboard VALIDE -> code. Le breakdown TRANSCRIT la direction, il ne CREE pas."""
+    print(f"\n{'='*60}\nPHASE 2 — BREAKDOWN CARTE — {episode} {acte}\n{'='*60}")
+    print(">>> PREREQUIS : le storyboard d'evolution a ete VALIDE par Aziz (sinon, retour --phase storyboard).")
+    print(">>> Le breakdown TRANSCRIT la direction validee en plan technique FIDELE. Il ne reinvente RIEN.")
+    print(">>> Il ne rabote JAMAIS une idee du storyboard : si aucun composant ne la fait -> 'si_nouveau'.")
+    print("\n>>> FORMAT (doctrine complete) : memory/doctrines/STORYBOARD-MAPBOX.md § FORMAT")
+    print(">>>   (A) JSON par etat : camera frame-driven (jumpTo, JAMAIS flyTo), intention_etat (libre),")
+    print(">>>       forme_connue / forme_couvre_tout / ce_qui_manque / si_nouveau,")
+    print(">>>       cout_estime (trivial|ajustement|proto-rnd), fallback_si_echec, sync_voix, sfx.")
+    print(">>>   + forbid global (rejets techniques) + continuite_avec (beat precedent).")
+    print(">>>   (B) Resume prose 5-8 lignes pour validation Aziz.")
+    print("\n>>> Ecrire le breakdown dans /tmp/mapbox-breakdown-{ep}-{acte}.json puis coder a partir de LUI.")
+    print(f">>>   (chemin : /tmp/mapbox-breakdown-{episode}-{acte}.json)")
+    print("\nApres breakdown -> code (vraie carte Mapbox) -> --phase self-review.")
 
 
 def _selfreview_passed_marker(episode: str, acte: str) -> Path:
@@ -239,7 +263,7 @@ def main():
     ap.add_argument("--episode", required=True)
     ap.add_argument("--acte", required=True, help="A1, A2, ...")
     ap.add_argument("--phase", required=True,
-                    choices=["storyboard", "self-review", "review", "upload"])
+                    choices=["storyboard", "breakdown", "self-review", "review", "upload"])
     ap.add_argument("--video", default="")
     ap.add_argument("--file", default="", help="Beat*.tsx — requis en self-review (assertions scriptees bloquantes)")
     ap.add_argument("--checked", type=int, default=-1,
@@ -249,6 +273,8 @@ def main():
 
     if args.phase == "storyboard":
         phase_storyboard(args.episode, args.acte)
+    elif args.phase == "breakdown":
+        phase_breakdown(args.episode, args.acte)
     elif args.phase == "self-review":
         if args.checked >= 0:
             phase_self_review_confirm(args.episode, args.acte, args.checked)

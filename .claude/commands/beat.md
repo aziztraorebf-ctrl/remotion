@@ -41,7 +41,8 @@ python3 scripts/beat-session.py --episode <slug> --beat <N> --phase breakdown
 ```bash
 python3 scripts/mapbox-session.py --episode <slug> --acte <AN> --phase storyboard
 ```
-1. Production Brief validé par Aziz AVANT le code (SFX plancher 0.50, pitch 32 si 1-4 pays).
+1. **Storyboard d'évolution** (le modèle PROPOSE, doctrine `STORYBOARD-MAPBOX.md` : préambule 4 couches) + Production Brief, validés par Aziz AVANT le code (SFX plancher 0.50, pitch 32 si 1-4 pays).
+1b. `--phase breakdown` : décode la direction VALIDÉE en plan technique (JSON par état, format `STORYBOARD-MAPBOX.md` § FORMAT — transcrit, ne réinvente pas). Coder à partir de ce JSON.
 2. Code : 1 seule Map continue, getCam + overlays, fichier unique. Drapeaux = `useClipFlags`.
 3. `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (0 erreur) puis `--phase self-review --checked N` (N ≥ 10/12).
 4. `--phase review --file <Beat*.tsx> --video <mp4>` → écrit `<mp4>.review.json` À CÔTÉ du mp4 (Gemini CONSULTATIF).
