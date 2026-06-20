@@ -17,10 +17,14 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 1. **ÉTAT RÉEL d'abord** (ne pas croire les notes) : ouvre le `STATUS.md` de l'épisode + vérifie l'état RÉEL
    dans le livrable (extraire frames/audio de la vidéo, lire le code du beat). Les notes périment — le livrable
    est la vérité. (Règle CLAUDE.md « fichiers de navigation périment ».)
-   ⚠️ **2 vérifs en amont (sinon on code sur du faux — leçon cobaye 2026-06-20)** : (a) si le beat porte un CHIFFRE,
+   ⚠️ **3 vérifs en amont (sinon on code sur du faux — leçons cobayes 2026-06-20)** : (a) si le beat porte un CHIFFRE,
    vérifier qu'il est SOURCÉ avant de le mettre à l'écran (ne jamais halluciner une donnée — gate [[SUJET-PRIME-SUR-PRODUCTION]]) ;
    (b) `ffprobe` la durée RÉELLE de l'audio de calage + word-timing (alignment/Whisper) avant de figer `durationInFrames`
-   (frame0 = 1er mot du SEGMENT de CE beat, pas de l'audio entier).
+   (frame0 = 1er mot du SEGMENT de CE beat, pas de l'audio entier) ;
+   (c) ⛔ **COHÉRENCE INTENTION ↔ AUDIO** : l'audio prononce-t-il VRAIMENT ce que le beat montre ? Si l'intention dit
+   « solaire » mais que les mots du segment parlent de phosphate → STOP, remonter au chef. Ne JAMAIS concevoir un beau
+   beat hors-sujet ni fabriquer un faux `sync_voix` (les 2 agents cobayes ont attrapé un brief incohérent ici — le
+   système doit le gater, pas dépendre de leur vigilance). Si AUCUN segment ne correspond → le beat est mal briefé.
 2. **INTENTION → FORME** : pour la scène, déduis l'intention (1 verbe : ce qu'elle doit faire RESSENTIR), puis
    la forme. JAMAIS partir du template. Porte d'entrée : `src/projects/_shared/INTENTION-FORME-INDEX.md`.
    Doctrine : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐.

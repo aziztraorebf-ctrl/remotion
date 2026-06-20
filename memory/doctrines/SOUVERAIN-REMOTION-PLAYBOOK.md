@@ -139,6 +139,11 @@ SELF-REVIEW 19/23 → REVIEW GEMINI (1 appel) → CORRECTIONS → UPLOAD
 ⚠️ **Le nombre d'états se cale sur les PIVOTS de la narration** (1 état = 1 nouveau mot-clé porteur), pas sur un compte
 arbitraire — c'est ce qui rend la répartition des frames déterministe au lieu d'inventée.
 
+⚠️ **Si le beat dure NETTEMENT plus que son segment de voix** (ex : beat 8s, mais le segment « 70%…phosphate » ne dure que ~3s) :
+le surplus se tient par un PLATEAU DE RESPIRATION explicite (dernier état = halo qui respire, ease-out, aucun nouveau geste — règle 5-6s),
+PAS par des frames étirées au hasard. Marquer ce plateau dans le breakdown (`intention_etat: "…RESPIRER, plateau tenu"`). Si le ratio
+durée-beat/durée-segment dépasse ~2,5×, c'est peut-être un signe que le beat est mal découpé → remonter au chef avant de coder.
+
 ---
 
 ## 3. TEMPLATE STORYBOARD BEAT REMOTION (le master)

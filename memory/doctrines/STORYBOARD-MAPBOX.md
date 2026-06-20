@@ -120,6 +120,10 @@ précédent, pour ne pas re-poser une caméra qui contredit le plan d'avant — 
 
 **(B) Résumé prose** (5-8 lignes) — le beat raconté comme un plan de tournage, pour qu'Aziz VALIDE sans lire le JSON.
 
+⚠️ **Cohérence amont + durée** (leçons cobayes 2026-06-20) : avant de breakdowner, vérifier que l'audio prononce ce que
+le beat montre (sinon STOP, beat mal briefé) ; et si le beat dure nettement plus que son segment de voix, tenir le surplus
+par un état de PLATEAU (caméra quasi fixe + halo qui respire), pas par des frames étirées au hasard.
+
 ⚠️ **Les 3 champs qui rendent le format auto-portant** (issus du test — sans eux, le format dépend de la seule
 vigilance de l'agent) : `forme_couvre_tout`/`ce_qui_manque` désamorce l'aimant « un composant existe à peu près,
 je le coche » ; `cout_estime` montre à Aziz qu'un état coûte 10× les autres (il arbitre proto vs fallback) ;
