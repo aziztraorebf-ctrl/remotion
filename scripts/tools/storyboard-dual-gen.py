@@ -1,12 +1,18 @@
-"""Genere des STORYBOARDS (planches de reference visuelle) pour les moments ABSTRAITS de la scene 1
-Senegal, sur DEUX generateurs en parallele pour comparer :
-  - Gemini 3.1 Flash Image (gemini-3.1-flash-image-preview) — notre habituel, tend "graphisme plat".
-  - GPT-image-1 via fal.ai (fal-ai/gpt-image-1) — instinct Aziz : moins plat, plus 3D/profondeur.
-Reference de registre = frames M-Pesa (Data-Hero) passees en image d'entree (Gemini) ou decrites (GPT).
-Brief = registre + contenu + MARGE creative (ni bride 'trop safe' ni libre total).
+"""Genere des STORYBOARDS (planches de reference visuelle) sur DEUX generateurs en parallele :
+  - Gemini 3.1 Flash Image (gemini-3.1-flash-image-preview) — RESPECTE le fond impose meme en milieu de prompt.
+  - GPT-image-1 via fal.ai (fal-ai/gpt-image-1) — meilleur relief, mais retombe sur son fond sombre SAUF si
+    le fond est en 1ere phrase + formule negatif (« LIGHT … NOT dark/navy »). Voir _PALETTE-BACKGROUNDS.md.
 
-Sortie : /tmp/storyboard-gen/<moment>-<modele>.png
-Usage : python3 scripts/tools/storyboard-dual-gen.py
+⛔ Le prompt de l'APPELANT n'est JAMAIS pollue par un registre hardcode (correction 2026-06-19 : l'ancien
+   REGISTRE M-Pesa/navy etait force en prefixe -> chaque appelant devait le contourner). L'appelant fournit
+   SON prompt complet (registre + palette de SON choix). Les fonctions gen_gemini/gen_gpt envoient ce prompt tel quel.
+
+Usage CLI (recommande pour un agent) :
+  python3 scripts/tools/storyboard-dual-gen.py --prompt-file brief.txt --out-prefix /tmp/sb-x/scene \
+      [--ref bg.png] [--models gemini,gpt]
+  -> ecrit <out-prefix>-gemini.png et/ou <out-prefix>-gpt.png
+Usage module : importer gen_gemini(prompt, refs, out) / gen_gpt(prompt, out) — prompt = exactement ce qui part au modele.
+Le bloc __main__ historique (storyboards Senegal M-Pesa) est conserve sous --demo-senegal.
 """
 import os, sys, base64, time, requests
 from pathlib import Path
@@ -67,11 +73,14 @@ MOMENTS = {
 
 
 def gen_gemini(prompt: str, refs: list, out: Path):
-    parts = [{"text": REGISTRE + "\n\n" + prompt + "\n\nUse the attached M-Pesa reference frames ONLY for the "
-              "Data-Hero REGISTER (central pivot + grafted data + charter), NOT the content."}]
+    # prompt = EXACTEMENT ce qui part au modele (aucun registre injecte). Les refs sont des images
+    # d'ancrage de registre/fond (ex: un background de la palette) — facultatives.
+    parts = [{"text": prompt}]
     for r in refs:
+        r = Path(r)
         if r.exists():
-            parts.append({"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(r.read_bytes()).decode()}})
+            mime = "image/png" if r.suffix.lower() == ".png" else "image/jpeg"
+            parts.append({"inline_data": {"mime_type": mime, "data": base64.b64encode(r.read_bytes()).decode()}})
     payload = {"contents": [{"parts": parts}], "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.6}}
     r = requests.post(GEMINI_URL, json=payload, timeout=180)
     if r.status_code != 200:
@@ -85,10 +94,9 @@ def gen_gemini(prompt: str, refs: list, out: Path):
 
 
 def gen_gpt(prompt: str, out: Path):
-    # GPT-image-1 ne prend pas d'image ref ici (text-to-image) : on DECRIT le registre M-Pesa dans le prompt.
-    full = (REGISTRE + "\n\n" + prompt + "\n\nReference register: like a premium M-Pesa/Safaricom data explainer "
-            "with a central hero object and stats grafted around it on a navy background.")
-    payload = {"prompt": full, "image_size": "1536x1024", "num_images": 1}
+    # prompt = EXACTEMENT ce qui part au modele (text-to-image, aucun registre injecte).
+    # Rappel biais GPT : mettre le FOND en 1ere phrase + formule negatif si fond clair voulu.
+    payload = {"prompt": prompt, "image_size": "1536x1024", "num_images": 1}
     r = requests.post(FAL_URL, headers={"Authorization": f"Key {FAL_KEY}", "Content-Type": "application/json"}, json=payload, timeout=240)
     if r.status_code != 200:
         print(f"  [gpt] ERROR {r.status_code}: {r.text[:200]}"); return
@@ -101,9 +109,40 @@ def gen_gpt(prompt: str, out: Path):
         print(f"  [gpt] no image: {r.text[:200]}")
 
 
-if __name__ == "__main__":
+def _run_demo_senegal():
+    """Historique : les 2 storyboards Senegal M-Pesa (registre navy hardcode, refs M-Pesa)."""
     for key, prompt in MOMENTS.items():
         print(f"\n=== {key} ===")
-        gen_gemini(prompt, [REF_NOKIA, REF_COIN], OUT / f"{key}-gemini.png")
-        gen_gpt(prompt, OUT / f"{key}-gpt.png")
+        full = REGISTRE + "\n\n" + prompt  # le registre M-Pesa est explicite ICI, pas dans gen_*
+        gen_gemini(full, [REF_NOKIA, REF_COIN], OUT / f"{key}-gemini.png")
+        gen_gpt(full + "\n\nReference register: premium M-Pesa data explainer, central hero + stats grafted, navy bg.",
+                OUT / f"{key}-gpt.png")
     print(f"\n-> {OUT}")
+
+
+if __name__ == "__main__":
+    import argparse
+    ap = argparse.ArgumentParser(description="Storyboard dual-gen (Gemini + GPT-image). Prompt fourni par l'appelant, non pollue.")
+    ap.add_argument("--prompt-file", type=Path, help="Fichier texte du prompt complet (registre + contenu, palette au choix).")
+    ap.add_argument("--prompt", type=str, help="Prompt inline (alternative a --prompt-file).")
+    ap.add_argument("--out-prefix", type=str, help="Prefixe de sortie : <prefix>-gemini.png / <prefix>-gpt.png")
+    ap.add_argument("--ref", action="append", default=[], help="Image(s) d'ancrage de fond/registre (Gemini). Repetable.")
+    ap.add_argument("--models", default="gemini,gpt", help="Modeles a lancer (defaut: gemini,gpt).")
+    ap.add_argument("--demo-senegal", action="store_true", help="Rejoue les storyboards historiques Senegal M-Pesa.")
+    args = ap.parse_args()
+
+    if args.demo_senegal:
+        _run_demo_senegal()
+        sys.exit(0)
+
+    prompt = args.prompt_file.read_text() if args.prompt_file else args.prompt
+    if not prompt or not args.out_prefix:
+        ap.error("Fournir (--prompt-file | --prompt) ET --out-prefix. Sinon --demo-senegal.")
+    out_prefix = Path(args.out_prefix)
+    out_prefix.parent.mkdir(parents=True, exist_ok=True)
+    models = [m.strip() for m in args.models.split(",") if m.strip()]
+    if "gemini" in models:
+        print("--- Gemini ---"); gen_gemini(prompt, args.ref, Path(f"{out_prefix}-gemini.png"))
+    if "gpt" in models:
+        print("--- GPT-image ---"); gen_gpt(prompt, Path(f"{out_prefix}-gpt.png"))
+    print(f"-> {out_prefix.parent}")
