@@ -50,6 +50,8 @@ Détails (caméra, blur whip pan 60f, Pull Back Reveal, fond `#16213a`, timing, 
 
 Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la mémoire.
 
+**⭐ SYSTÈME AGENTIQUE** : si Aziz dit « consulte notre système agentique » / « active le système » (ou toute formulation proche), OU si on s'apprête à produire/refaire une scène d'une vidéo → ouvrir **`memory/SYSTEME-AGENTIQUE.md`** (carte d'orientation : le flux storyboard→validation→breakdown→code→review, l'orchestration, où est chaque brique). Activable à n'importe quel moment d'une session.
+
 **Fin de session** : mettre à jour `PIPELINE.md` (statut) + `NEXT-ACTION.md` (priorités/décisions en attente) + `memory/episodes/<projet>/STATUS.md` si on a touché un épisode (5 sections, max 30 lignes — modèle : `senegal-petrole-gaz/STATUS.md`).
 
 **Sauvegarde autonome EN COURS de session** (sans qu'Aziz le demande, immédiatement, bref/factuel, annoncer en 1 ligne) :

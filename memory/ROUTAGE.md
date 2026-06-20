@@ -14,6 +14,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
+| **PRODUIRE/REFAIRE une scène — le SYSTÈME complet** | `memory/SYSTEME-AGENTIQUE.md` ⭐⭐ carte du système : le FLUX (storyboard→validation→breakdown→code→review), l'orchestration (chef+agents frais), où est chaque brique. Activable à tout moment (« consulte notre système agentique »). |
 | **Construire/prolonger TOUTE scène (AVANT de chercher un composant)** | `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐ NON-NEGOTIABLE — déduis l'INTENTION (1 verbe) d'abord, le template en dernier. PUIS porte d'entrée `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme→réponse, inclut templates Hera ⭐) |
 | **Doute sur quel catalogue ouvrir (tout domaine)** | `src/projects/_shared/INDEX-DES-INDEX.md` ⭐ carte de TOUS les catalogues (fiches techniques, consultées APRÈS l'intention) |
 | **Doute catalogue Atlas** | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ |
