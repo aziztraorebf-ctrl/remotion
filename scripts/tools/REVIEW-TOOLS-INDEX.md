@@ -24,13 +24,18 @@
 >    (`scale=360:-2`, l'ancien `243x432` forçait du 9:16 sur un 16:9).
 > 3. **Frames extraites à intervalle fixe** → pas alignées sur les états → faux « élément manquant ».
 >    ✅ FIX : `--state-boundaries "1.2,4.8,9.0"` (secondes, au cœur de chaque état du breakdown) → extraction alignée.
+> 4. **(découverte au TERRAIN 2026-06-20) Palette navy/gold hardcodée dans le prompt** → un beat parchemin/ocre VALIDÉ
+>    était pénalisé (4 fixes « critical » faux sur 6, score 4.5 à tort, phase_a 60%). ✅ FIX : `--palette {navy|parchemin|neon}`
+>    (le prompt juge la palette contre LE bon registre). Preuve A/B même render : phase_a 60%→**90%**, faux-positifs palette **4→0**,
+>    les VRAIS écarts (chiffre pas assez dominant, barre 30% minuscule, layout) ressortent enfin nets.
 >
 > **MODE D'EMPLOI du gate fiabilisé** (passer les frontières d'états = activer l'appariement) :
 > ```bash
 > python3 scripts/visual_review.py <render.mp4> --model gemini \
->   --storyboard <planche.png> --ratio 16:9 \
+>   --storyboard <planche.png> --ratio 16:9 --palette parchemin \
 >   --state-boundaries "1.2,4.8,9.0"   # secondes au cœur de chaque état (du breakdown)
 > ```
+> ⛔ `--palette` DOIT matcher le registre du beat (navy par défaut ; parchemin pour le registre crème/ocre ; neon marché/tech).
 > Sans `--state-boundaries` : mode legacy (planche entière + frames +offset%, toujours dispo, mais bruité).
 > **Avec** : panneau_i comparé à frame_i au bon moment → `phase_match_avg` cesse d'être faux-bas. Le juge reste la
 > self-review état-par-état + jugement d'Aziz ; le gate fiabilisé est un signal NETTEMENT meilleur (plus la peine de

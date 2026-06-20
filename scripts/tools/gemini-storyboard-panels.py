@@ -111,7 +111,11 @@ def main():
     print(f"=== STORYBOARD GEMINI FLASH — {args.episode} Beat{args.beat} ===")
     print(f"  Modele : {MODEL}")
     print(f"  Ratio  : {args.ratio}  (preambule premium DATA-VIZ injecte — STORYBOARD-DATAVIZ.md)")
-    print(f"  Sortie : {out_path.relative_to(PROJECT_ROOT)}")
+    try:
+        sortie_disp = out_path.relative_to(PROJECT_ROOT)
+    except ValueError:
+        sortie_disp = out_path  # --out hors repo (ex /tmp) : afficher le chemin absolu
+    print(f"  Sortie : {sortie_disp}")
     print(f"  Prompt : {len(full_prompt)} chars\n")
 
     client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))

@@ -54,10 +54,19 @@ KIMI_MODEL = 'kimi-k2.5'
 
 # ─── Prompts ─────────────────────────────────────────────────────────────────
 
-GEMINI_BEAT_REVIEW_PROMPT = """Tu es directeur artistique senior pour la série "Souverain" par GéoAfrique (YouTube Shorts, 1080×1920, 30fps).
+# Registres de palette Souverain (le beat dit lequel — sinon faux-bas : un beat parchemin/ocre
+# VALIDÉ etait penalise par une palette navy/gold hardcodee. Cause #4 du gate bruite, terrain 2026-06-20).
+PALETTE_REGISTERS = {
+    "navy":      "navy #112240 (fond), gold #c8a951 (donnee cle), ivory #f0e8d8 (texte)",
+    "parchemin": "parchemin creme #ece3cb (fond), ocre/terre cuite #b06a2c (donnee cle + traits), encre sepia #5a4528 (texte)",
+    "neon":      "noir #111111 (fond), glow cyan/magenta/vert (donnee cle) — registre marche/tech UNIQUEMENT",
+}
 
-Palette locked : navy #112240, gold #c8a951, ivory #f0e8d8.
+GEMINI_BEAT_REVIEW_PROMPT = """Tu es directeur artistique senior pour la série "Souverain" par GéoAfrique (format {fmt}, 30fps).
+
+Palette locked (registre {palette_name}) : {palette_desc}.
 Police titres : Bebas Neue condensé. Police stats : monospace.
+⛔ Ne juge la palette QUE contre CE registre. Ne reclame PAS navy/gold si le registre est parchemin (ou inversement).
 Règle R1 : aucun segment > 8s sans changement visuel (permanent motion comme glow/flottement ne compte PAS).
 
 {storyboard_instruction}
@@ -275,7 +284,8 @@ def build_openai_content(filepath: str, prompt: str, n_frames: int, offset: floa
 
 def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: str | None,
                   n_frames: int, offset: float,
-                  state_seconds: list[float] | None = None, ratio: str = "16:9") -> dict | None:
+                  state_seconds: list[float] | None = None, ratio: str = "16:9",
+                  palette: str = "navy") -> dict | None:
     """
     Gemini 3.1-pro-preview — review beat Souverain avec code_values.
     Retourne JSON actionnable. responseMimeType=application/json force JSON propre, jamais tronqué.
@@ -313,8 +323,13 @@ def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: s
     else:
         storyboard_instruction = "Aucun storyboard fourni — évaluer les frames sur les critères Souverain uniquement."
 
+    fmt_map = {"16:9": "16:9 horizontal 1920x1080", "9:16": "Short vertical 1080x1920", "1:1": "carre 1080x1080"}
+    palette_desc = PALETTE_REGISTERS.get(palette, PALETTE_REGISTERS["navy"])
     prompt = prompt_override or GEMINI_BEAT_REVIEW_PROMPT.format(
-        storyboard_instruction=storyboard_instruction
+        storyboard_instruction=storyboard_instruction,
+        fmt=fmt_map.get(ratio, fmt_map["16:9"]),
+        palette_name=palette,
+        palette_desc=palette_desc,
     )
 
     parts = []
@@ -573,6 +588,9 @@ Exemples:
                              'APPARIÉE panneau_i↔frame_i + extraction alignée sur les états. Sans ça : mode legacy.')
     parser.add_argument('--ratio', default='16:9', choices=['16:9', '9:16', '1:1'],
                         help='Ratio du render ET du storyboard (défaut 16:9). Dit à Gemini de ne pas pénaliser le format.')
+    parser.add_argument('--palette', default='navy', choices=['navy', 'parchemin', 'neon'],
+                        help='Registre de palette du beat (--model gemini). ⛔ DOIT matcher le beat : un beat parchemin '
+                             'note avec --palette navy est faux-bas (Gemini reclame du gold a tort). Defaut navy.')
     parser.add_argument('--prompt', help='Override du prompt')
     parser.add_argument('--output', help='Sauvegarder le résultat dans un fichier')
 
@@ -598,7 +616,7 @@ Exemples:
 
     if args.model == 'gemini':
         result = review_gemini(args.file, args.storyboard, args.prompt, args.frames, args.offset,
-                               state_seconds=state_seconds, ratio=args.ratio)
+                               state_seconds=state_seconds, ratio=args.ratio, palette=args.palette)
     elif args.model == 'qwen':
         prompt = args.prompt or QWEN_JSON_PROMPT
         result = review_qwen(args.file, prompt, args.frames, args.offset)
