@@ -47,18 +47,23 @@ il sait leur grammaire. On lui dit « vise CE niveau, prends-leur CECI ». Liste
 
 **[3] NOS CONTRAINTES + DIRECTIVE « CARTE VIVANTE » (dites en TEXTE au modèle, pas jointes)** :
 
-⭐ **DIRECTIVE CARTE VIVANTE (à donner à CHAQUE storyboard carte — le cœur)** : « La carte ne doit JAMAIS être
-plate ni statique. Elle vit en permanence par : (a) le MOUVEMENT DE CAMÉRA — zoom in/out, travelling, pivot,
-recadrages rythmés (jamais un plan fixe figé) ; (b) la COULEUR — territoires qui se colorent/changent de camp,
-contrastes forts, zones qui s'allument ; (c) les APPARITIONS — pictos, flèches qui se tracent, jetons, sceaux,
-plaques qui pop au bon moment. À chaque état, quelque chose BOUGE, se COLORE ou APPARAÎT. » (C'est ce qu'on vole
-aux chaînes ci-dessus, traduit en leviers concrets.)
+⭐ **DIRECTIVE CARTE VIVANTE (à donner à CHAQUE storyboard carte — le cœur)** : on fixe l'EXIGENCE, le modèle
+trouve le COMMENT. « La carte doit être VIVANTE — jamais plate, jamais un plan fixe figé. À chaque état du
+storyboard, quelque chose doit ÉVOLUER pour porter l'intention. **À TOI de proposer COMMENT** (inspire-toi des
+chaînes de référence ci-dessus, adapte-les à nos moyens). Ne te contente pas du minimum : ose des partis pris
+visuels forts. » — ⚠️ on NE liste PAS les techniques (zoom/couleur/picto…) : ça briderait. Le modèle a les
+références, il sait adapter. (Rappel du gain : nos agents ont inventé seuls le passage carte claire→noir au
+climax de Beat3 parce qu'on ne leur avait PAS dicté la technique — juste l'intention + le cadre.)
 
-*Ce qu'on SAIT faire (pour qu'il propose du codable) :*
-- Toujours : palette navy/gold, fond `#16213a`, frame-driven (caméra pilotée par le temps), vraie géo, 2.5D (pitch, PAS de 3D AE).
-- WarMap : jetons, drapeaux ondulés (`WavingFlagFill` 3 bandes / `useClipFlags`), fronts qui avancent, sceaux d'événement, bannière.
+Seuls **INTERDITS techniques** posés (pour qu'il reste dans nos moyens, sans rien imposer d'autre) :
+- PAS de 3D / globe type After Effects-GeoLayers (on est Mapbox 2.5D : pitch oui, vrai 3D non).
+- La géo reste réelle (pas de continent inventé) — au CODE ; au storyboard l'approximation est tolérée.
+
+*Ce qu'on SAIT faire — palette de moyens DISPONIBLES (pour qu'il propose du codable, PAS une checklist à cocher).*
+Le modèle peut piocher là-dedans OU proposer autre chose dans le même esprit. C'est ce qui existe, pas ce qu'il faut faire :
+- Souverain : `GeoCountryPlaque`, `FlagFill`, flux/arcs, `camCountryApproach`, palette navy/gold sur `#16213a`.
+- WarMap : jetons, drapeaux ondulés, fronts qui avancent, sceaux d'événement, bannière flottante.
 - Atlas : persos PixelLab, décors illustrés, registre épique (les persos finaux différeront du storyboard).
-- Souverain : `GeoCountryPlaque`, `FlagFill`, flux/arcs, `camCountryApproach` pitch ~32.
 
 **[4] L'INTENTION du beat** (1 verbe) + la narration.
 
