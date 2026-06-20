@@ -4,6 +4,26 @@
 
 ---
 
+## 🎬 (FAIT 2026-06-19→20) — STORYBOARD + ORCHESTRATION : système validé (mergé dans master)
+
+> Session d'architecture. `feat/elagage-systeme` **mergée dans master** (696006f). Tout commité, testé par agents réels.
+
+**Ce qui est en place et PROUVÉ :**
+- **Storyboard = le modèle PROPOSE → on valide → breakdown → code.** Prouvé 4× (90%, ZLECAf, Maroc, Sahel). Pour Remotion ET Mapbox. Doctrines : `memory/doctrines/STORYBOARD-MAPBOX.md`, `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`.
+- **Palette de 4 backgrounds** validés (`public/_shared/refs/backgrounds/`) + **3 réfs de nos cartes** + **ARSENAL** (`public/_shared/refs/cartes/_ARSENAL.md` — ce qu'on sait faire par registre, « va plus loin », jamais checklist).
+- **Orchestration** (`memory/PLAN-ORCHESTRATION-VIDEO.md`) : Claude = chef d'orchestre, agents frais = exécutants. timing.ts = contrat, fan-out N beats, 2-3 checkpoints goût. Outils : `storyboard-dual-gen.py` (CLI propre), biais Gemini (respecte le fond, multi-panneaux) vs GPT (relief, mono-panneau).
+- **Anti-fouillis** (détail plus bas) : porte `/beat`, hook auto-vérif présentation, règle 3 zones, 11 ambiguïtés fermées.
+
+**⏳ CE QU'IL RESTE À PEAUFINER (prochaine session = peaufinage) :**
+- **Brancher le storyboard dans le pipeline réel** : aujourd'hui le storyboard Mapbox/Remotion est prouvé en isolé mais pas encore câblé comme étape obligatoire de `beat-session.py`/`mapbox-session.py` (le 3e checkpoint du plan orchestration v2).
+- **Éprouver l'orchestration complète sur UNE vraie mini-vidéo** bout-en-bout (le test RDC cobalt a marché mais on a corrigé des frictions ; refaire un cycle propre avec storyboard + breakdown + le nouveau système).
+- **Décoder le BREAKDOWN Mapbox** : la doctrine dit « storyboard → breakdown technique (caméra lon/lat/zoom, couches, SFX) » mais le format exact du breakdown carte n'est pas encore défini/testé. À concevoir + tester.
+- **Trous d'assets** notés : `jeton-jnim.png`/`jeton-eigs.png` absents (voir `_ARSENAL.md`).
+- **Décisions en attente** : direction parchemin pour la scène 90% (recoder ou garder noir — Aziz n'a pas tranché).
+- **Réfs externes** : la doctrine cite les chaînes par nom (geoglobetales, kingsandgenerals…) — on n'a PAS de banque de frames, on s'appuie sur ce que le modèle connaît. OK pour l'instant, à enrichir si trop plat.
+
+---
+
 ## 🛠️ (FAIT 2026-06-19) — SYSTÈME ANTI-FOUILLIS : ce qui a changé (branche `feat/elagage-systeme`)
 
 > Session d'architecture (pas de prod). Détail + conception : **`memory/PLAN-SYSTEME-ANTI-FOUILLIS.md`**.
