@@ -1,10 +1,24 @@
 ---
-name: Gemini assets sans fond transparent — 2 solutions selon contexte
-description: Gemini ne peut pas générer de vrai transparent. Solution A (fond crème solide) pour cercles clairs. Solution B (fond noir + mix-blend-mode screen) pour fond sombre. Ne jamais tenter alpha_composite ou chroma key manuel.
+name: Gemini assets sans fond transparent — détourage Recraft (solution N°1) + fallbacks
+description: Gemini ne sort jamais d'alpha (faux damier opaque). SOLUTION N°1 VALIDÉE 2026-06-20 = détourage Recraft remove_background (vrai alpha 0,255, trou des lettres OK). Fallbacks A/B (fond crème / fond noir) si pas d'accès Recraft.
 type: feedback
 ---
 
 # Gemini assets — gestion du fond transparent
+
+## ⭐ SOLUTION N°1 (VALIDÉE 2026-06-20, [[WORKFLOW-DATAVIZ]]) — DÉTOURAGE RECRAFT
+Gemini dessine un **faux damier OPAQUE** (pixels gris ~`(195,195,195)`, alpha=255 partout) quand on demande
+"fond transparent" — l'image n'a PAS de vrai alpha (vérifié : PIL lit RGB, coins opaques). **Solution fiable :**
+1. Uploader l'asset Gemini brut (catbox).
+2. `mcp__recraft__remove_background` (passer l'URL) → renvoie un `.webp` avec **vrai alpha**.
+3. Vérifier : `alpha extrema = (0,255)` ET le trou des lettres (le "0", le "8") transparent `(0,0,0,0)`.
+4. Convertir en PNG, poser dans `public/`. Composer sur 2 fonds pour PROUVER l'alpha (pas de halo).
+⚠️ Cas à surveiller : le contre-poinçon (intérieur du "0") peut garder un léger blanc résiduel → re-détourer/masquer.
+C'est l'étape 4 obligatoire du pipeline data-viz. Les solutions A/B ci-dessous = FALLBACK (pas d'accès Recraft).
+
+---
+
+# Gemini assets — gestion du fond transparent (fallbacks A/B)
 
 **Validé** :
 - Solution A : Niger Uranium Beat 3 v4, 2026-05-10 (icônes sur cercles crème)

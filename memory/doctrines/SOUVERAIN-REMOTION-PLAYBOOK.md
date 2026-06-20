@@ -5,6 +5,7 @@
 > **Principe fondateur (règle Aziz) :** Claude est maître du CODE. Pour la VISION ARTISTIQUE, s'appuyer sur l'œil externe (Gemini scoré) + ce qui a marché chez nous. Voir [[feedback_systeme-beat-mapbox-vs-remotion]].
 > Catalogue des briques codées : section "DONNÉES VISUELLES / HERO DATA" de `src/projects/_shared/COMPOSANTS-INDEX.md`. Squelette d'assemblage : [[SOUVERAIN-REMOTION-SKELETON]].
 > ⭐ **STORYBOARD data-viz** : le préambule premium qui transmet CES principes AU MODÈLE (chaînes citées + ce qu'on leur vole + ratio cible) vit dans [[STORYBOARD-DATAVIZ]] (pendant de [[STORYBOARD-MAPBOX]]). Injecté par `gemini-storyboard-panels.py`.
+> ⭐⭐ **PIPELINE COMPLET storyboard→code** (storyboard=cible, breakdown GPT-5.5 verdict+prompts+Tailwind+tailles mesurées, génération+détourage Recraft, assemblage, diff) = [[WORKFLOW-DATAVIZ]]. C'est LE point d'entrée pour produire une scène data-viz.
 
 ---
 

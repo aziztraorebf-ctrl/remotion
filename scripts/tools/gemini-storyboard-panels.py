@@ -37,9 +37,18 @@ MODEL = "gemini-3.1-flash-image-preview"
 # ⛔ Generer au ratio du RENDER (pas vertical par defaut) : sinon panneaux portrait ->
 # espaces vides en 16:9 ET faux-bas du gate review. Doctrine : STORYBOARD-DATAVIZ.md [1].
 RATIO_TARGETS = {
-    "16:9": "1920x1080 (16:9, HORIZONTAL) — compose chaque panneau POUR ce cadre large, REMPLIS l'espace horizontal, ne laisse AUCUN vide a gauche/droite",
-    "9:16": "1080x1920 (9:16, VERTICAL) — les panneaux illustrent ce cadrage portrait (Short)",
-    "1:1":  "1080x1080 (1:1, CARRE) — cadrage carrousel Instagram",
+    "16:9": "1920x1080 (16:9, HORIZONTAL)",
+    "9:16": "1080x1920 (9:16, VERTICAL, Short)",
+    "1:1":  "1080x1080 (1:1, CARRE, carrousel Instagram)",
+}
+
+# Backgrounds : registre de fond. "libre" = Gemini choisit (pour explorer hors parchemin).
+BACKGROUND_TARGETS = {
+    "parchemin": "Fond PARCHEMIN creme #ece3cb quadrille (grille ocre desaturee). Accent OCRE/terre cuite #b06a2c.",
+    "navy":      "Fond NAVY #141c2e (uni ou pointille). Accent GOLD #c8a951, texte IVORY #f0e8d8.",
+    "neon":      "Fond NOIR #111111 + grille sombre. Glow cyan/magenta/vert (registre marche/tech UNIQUEMENT).",
+    "libre":     "CHOISIS toi-meme le fond le plus premium pour ce sujet (autre que parchemin clair) — "
+                 "propose une direction de fond + palette d'accent coherente et editoriale. Surprends-nous, reste sobre et premium.",
 }
 
 # PREAMBULE PREMIUM DATA-VIZ — pendant symetrique du preambule carte (STORYBOARD-MAPBOX.md).
@@ -68,18 +77,31 @@ se met en scene). REMPLIS l'espace du cadre. A TOI de proposer COMMENT — ose d
 """
 
 
-def build_style_block(ratio: str) -> str:
-    """Charte + style + preambule premium, parametre par le ratio cible du render."""
+def build_style_block(ratio: str, background: str = "parchemin") -> str:
+    """Charte + style + preambule premium, parametre par le ratio cible ET le fond."""
     ratio_desc = RATIO_TARGETS.get(ratio, RATIO_TARGETS["16:9"])
+    bg_desc = BACKGROUND_TARGETS.get(background, BACKGROUND_TARGETS["parchemin"])
+    horizontal = ratio == "16:9"
     return PREMIUM_PREAMBLE + f"""
 STYLE RULES (NON-NEGOTIABLE) :
 - Flat editorial illustration, NOT 3D, NOT photorealistic, NOT cartoon
-- Palette STRICTE : navy #141c2e (fond), gold #c8a951 (donnee cle), ivory #f0e8d8 (texte),
-  accent rouge #cc2200 / vert #4caf7d UNIQUEMENT pour un verdict (parchemin #e4ddca si registre clair)
+- {bg_desc}
+  Rouge #cc2200 / vert #4caf7d UNIQUEMENT pour un verdict.
 - Multi-panels : bordure fine, numerotees, montrant la PROGRESSION temporelle du beat
   (gauche->droite). Timestamp dans un coin de chaque panel.
 - NO subtitles, NO voiceover text inside panels (sauf labels data/geo explicitement demandes)
-- Format cible : {ratio_desc}
+
+⛔ RATIO DE CHAQUE PANNEAU = LE RATIO DU RENDER ({ratio_desc}) — c'est LE point critique :
+- CHAQUE cellule individuelle est un MINI-ECRAN au format {ratio}, PAS une vignette carree.
+  {"Chaque panneau est donc plus LARGE que haut (paysage). Compose le contenu de chaque panneau"
+   " ETALE HORIZONTALEMENT pour remplir toute la largeur du panneau — le chiffre/heros d'un cote,"
+   " les labels/metaphore de l'autre cote, RIEN au centre avec des bords vides." if horizontal else
+   "Chaque panneau est au format portrait " + ratio + "."}
+- Si tu traduis un seul panneau en plein ecran, il DOIT deja remplir un cadre {ratio} sans bord vide.
+  (Un panneau carre force a remplir un ecran {ratio} = bords vides au render = ECHEC.)
+- Disposition de la planche : {"si 3 panneaux 16:9 ne tiennent pas sur une rangee sans devenir minuscules,"
+  " empile-les sur 2-3 RANGEES (chacun garde son ratio 16:9 large). Le ratio du panneau PRIME sur le"
+  " 'tout sur une rangee'." if horizontal else "panneaux en rangee(s) reguliere(s)."}
 
 DISCIPLINE PANNEAUX (NON-NEGOTIABLE — sinon le storyboard est inutilisable) :
 - Produis EXACTEMENT le nombre d'etats decrits dans le prompt, ni plus ni moins. N'AJOUTE
@@ -103,6 +125,8 @@ def main():
     ap.add_argument("--ratio", default="16:9", choices=list(RATIO_TARGETS.keys()),
                     help="Ratio cible du RENDER (defaut 16:9 horizontal). ⛔ Doit matcher le format de sortie "
                          "(sinon panneaux mal cadres + faux-bas gate review). 9:16 = Short, 1:1 = carrousel.")
+    ap.add_argument("--background", default="parchemin", choices=list(BACKGROUND_TARGETS.keys()),
+                    help="Registre de fond (defaut parchemin). 'libre' = Gemini choisit le fond (exploration hors parchemin).")
     ap.add_argument("--out", default=None, help="Override chemin de sortie")
     args = ap.parse_args()
 
@@ -117,7 +141,7 @@ def main():
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    full_prompt = user_prompt + "\n\n" + build_style_block(args.ratio)
+    full_prompt = user_prompt + "\n\n" + build_style_block(args.ratio, args.background)
 
     print(f"=== STORYBOARD GEMINI FLASH — {args.episode} Beat{args.beat} ===")
     print(f"  Modele : {MODEL}")

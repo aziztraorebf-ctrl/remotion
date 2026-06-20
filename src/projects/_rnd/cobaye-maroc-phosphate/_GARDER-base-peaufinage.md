@@ -8,3 +8,8 @@ Ils prouvent que le système agentique tourne A→Z, mais leur rendu est « corr
 
 Renders : carte https://files.catbox.moe/demuzz.mp4 · data-viz https://files.catbox.moe/plhrgr.mp4
 Purge autorisée SEULEMENT une fois la session peaufinage terminée et ses acquis gravés.
+
+## AJOUT 2026-06-20 — Cobaye TEAL (workflow data-viz prouvé A→Z)
+`TealAssemblyEtat3.tsx` + assets `public/_rnd/cobaye-teal/` = référence vivante du pipeline
+WORKFLOW-DATAVIZ.md (storyboard=cible → breakdown GPT-5.5 → génération → détourage Recraft → Remotion → diff).
+Reprise + 3 corrections restantes : `memory/REPRISE-WORKFLOW-DATAVIZ.md`. NE PAS PURGER.

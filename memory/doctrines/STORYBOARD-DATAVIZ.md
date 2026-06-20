@@ -1,4 +1,13 @@
-# DOCTRINE — Storyboard Data-viz (Remotion) : le préambule premium qui manquait
+# DOCTRINE — Storyboard Data-viz (Remotion) : le préambule premium + format
+
+> ⭐ Cette doctrine = l'ÉTAPE STORYBOARD du pipeline complet [[WORKFLOW-DATAVIZ]] (lire la maîtresse pour le
+> flux entier storyboard→breakdown→assets→Remotion→diff). Ici = le détail de l'étape 2 (générer le storyboard).
+>
+> **Acquis gravés 2026-06-20** (en plus du préambule premium ci-dessous) : le storyboard est la **CIBLE à
+> reproduire** (pas un brouillon) · **ratio de CHAQUE panneau = ratio du render** (16:9 → panneaux larges, pas
+> vignettes carrées) · **4 cases** standard (état1 · état2 · transition/le geste · état final) · **2 versions
+> auto** (`--background parchemin` notre réf + `--background libre` exploration, le libre propose souvent mieux)
+> · **illustration plate obligatoire** (réaliste = non reproductible). Tout dans `gemini-storyboard-panels.py`.
 
 > Posée 2026-06-20 (toi + Claude), comble le **TROU 3** du `CHANTIER-PEAUFINAGE-GRAPHISMES.md`.
 > Pendant symétrique de [[STORYBOARD-MAPBOX]] : la carte avait un préambule riche (notre carte + chaînes citées +

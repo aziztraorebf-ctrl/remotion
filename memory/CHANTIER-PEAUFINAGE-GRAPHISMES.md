@@ -12,6 +12,13 @@
 - (Si encore présents : autres protos `_rnd/` et `_proto-16-9/` = matière à peaufiner aussi.)
 - Aziz : « gardons les démos, ne les supprimons pas — base de travail temporaire pour cette session. »
 
+## ✅✅ WORKFLOW DATA-VIZ COMPLET PROUVÉ + GRAVÉ (2026-06-20) → `memory/doctrines/WORKFLOW-DATAVIZ.md`
+> La session a dépassé les dettes : on a prouvé et gravé LE pipeline data-viz complet (storyboard=CIBLE →
+> breakdown GPT-5.5 verdict GÉNÉRÉ/REMOTION/HYBRIDE + prompts d'asset + Tailwind + tailles MESURÉES → génération
+> Gemini → détourage Recraft → assemblage Remotion → diff cible-vs-render). Cobaye Maroc "70%" rendu jusqu'à v5.
+> **Reprise + liens A→Z + 3 corrections restantes = `memory/REPRISE-WORKFLOW-DATAVIZ.md`.** Les 3 TROUS ci-dessous
+> sont TOUS traités (ratio, breakdown précis, préambule premium). Ce CHANTIER = historique du diagnostic.
+
 ## ✅ 2 DETTES SYSTÈME COMBLÉES (2026-06-20, branche `feat/dettes-systeme-preambule-gate`)
 > Décision Aziz « combler les 2 dettes maintenant ». Fait + testé (sans appel API) :
 > - **TROU 3 (préambule premium DATA-VIZ)** ✅ : doctrine `memory/doctrines/STORYBOARD-DATAVIZ.md` créée (pendant de

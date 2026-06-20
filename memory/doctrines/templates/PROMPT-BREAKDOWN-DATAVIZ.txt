@@ -1,0 +1,73 @@
+# TEMPLATE — Prompt de BREAKDOWN data-viz (a donner a GPT-5.5 vision avec le panneau storyboard).
+# Genere/prouve 2026-06-20. Adapter la description du sujet (ici exemple "70%% phosphate Maroc").
+# Doctrine : WORKFLOW-DATAVIZ.md etape 3. Outil : openrouter-vision-breakdown.py --model openai/gpt-5.5.
+# ----------------------------------------------------------------------------------------------
+
+Tu es directeur technique d'une chaine de data-visualization premium (style Bloomberg/Vox).
+On te donne UN PANNEAU de storyboard (etat final d'un beat "70%" : le Maroc detient 70% des
+reserves mondiales de phosphate). Ce panneau EST LA CIBLE VISUELLE A REPRODUIRE A ~100% dans
+une video Remotion (React) horizontale 1920x1080, 30fps.
+
+Notre methode (NON-NEGOTIABLE) :
+- Le storyboard n'est PAS un brouillon a reinterpreter : c'est le livrable a reproduire fidelement.
+- Ce qui est BEAU et FIGE (matiere, relief, fond, illustrations) = on le GENERE en image (Gemini/Recraft,
+  fond transparent), on ne le redessine PAS a la main en SVG/CSS (ca donne du plat amateur).
+- Ce qui BOUGE / COMPTE / se met en scene = REMOTION (placement, animation, count-up, timing audio).
+- Certains elements sont HYBRIDES : un asset genere + une couche Remotion par-dessus (ex un chiffre
+  dont la MATIERE est generee mais qui doit faire un count-up anime).
+
+TON TRAVAIL : decouper CE panneau en une table EXHAUSTIVE d'elements. Pour CHAQUE element visible,
+TRANCHE toi-meme (ne laisse RIEN a deviner a celui qui codera) :
+
+Retourne UNIQUEMENT du JSON (pas de markdown), avec cette structure :
+{
+  "panneau": "etat 3 - l'ecrasement",
+  "ratio": "16:9",
+  "background": { "verdict": "GENERE|REMOTION|HYBRIDE", "description": "...",
+    "asset_prompt": "<si GENERE/HYBRIDE : le prompt EXACT pour reproduire ce fond a 100%, en precisant
+       style (flat editorial illustration, PAS realiste), couleurs hex, fond, dimensions 1920x1080>",
+    "remotion": "<si REMOTION/HYBRIDE : ce que Remotion fait (ex vignettage anime, grille)>" },
+  "elements": [
+    {
+      "id": "chiffre-70",
+      "quoi": "le '70' geant dore avec faux-relief 3D",
+      "verdict": "GENERE|REMOTION|HYBRIDE",
+      "asset_prompt": "<si GENERE/HYBRIDE : prompt EXACT pour generer cet asset a 100% (matiere or,
+         degrade, relief, fond TRANSPARENT, style flat illustration, taille). Ecris le prompt pret a copier-coller.>",
+      "remotion": "<si REMOTION/HYBRIDE : ce que Remotion code par-dessus/a la place (ex count-up 0->70,
+         bounce overshoot a la fin, position x/y, scale d'entree)>",
+      "intention": "<PROSE : ce que cet element doit faire RESSENTIR a ce moment (pas un code, une phrase)>",
+      "position": "<ou dans le cadre 16:9 : ex 'centre-gauche, occupe 45% largeur'>",
+      "sync_voix": "<le mot de la narration sur lequel il apparait/agit>"
+    }
+    // ... UN objet par element : fond, chiffre 70, signe %, picto Terre+phosphate 'RESERVES MONDIALES',
+    //     barre 'PHOSPHATE' + segment '30% RESTE DU MONDE', source USGS, labels, traits de liaison.
+  ],
+  "ce_qui_reste_a_remotion": "<SYNTHESE en clair : une fois TOUS les assets generes, la liste de ce
+     qu'il reste a faire dans Remotion (placement, animations, count-up, barre qui s'ecrase, transitions,
+     timing). Pour qu'un agent frais sache exactement son perimetre de code sans rien deviner.>",
+  "assets_a_generer": ["<liste des ids verdict=GENERE ou HYBRIDE, = la checklist de generation>"],
+  "intention_globale_du_panneau": "<PROSE 2-3 phrases : l'arc de cet etat, ce qu'on veut que le spectateur ressente>"
+}
+
+REGLES sur les asset_prompt :
+- Style TOUJOURS 'flat editorial illustration', JAMAIS realiste/photo (sinon non reproductible et dur a manipuler).
+- Toujours preciser 'fond transparent' pour les assets a superposer (le chiffre, le picto, la barre).
+- Le fond pleine page peut etre opaque.
+- Donne des prompts PRETS A L'EMPLOI (couleurs hex exactes vues dans l'image, pas de "couleur doree" vague).
+- Sois exhaustif : chaque chose visible a un verdict. Ne regroupe pas, ne saute rien.
+- ⛔ CALIBRE L'INTENSITE des effets a "JUSTE ASSEZ" (premium editorial = sobre). Pour un relief/extrusion 3D :
+  precise "extrusion SUBTILE, faible profondeur, editoriale, PAS un gros biseau cartoon/jeu video". Le premium
+  vient de la RETENUE, pas de l'exageration. Decris l'intensite exacte (ex "profondeur d'extrusion ~8% de la
+  hauteur du glyphe", "ombre douce et courte"). Mieux vaut trop sobre que trop ressorti.
+
+⛔ REGLES sur le champ "remotion" (CRITIQUE pour un centrage/placement juste sans deviner) :
+- Notre stack = Remotion + TAILWIND CSS. Donne le placement en TAILWIND + Remotion, JAMAIS en pixels d'une
+  vignette de storyboard. Le render cible est 1920x1080.
+- Exprime les positions en : classes Tailwind de centrage/flux (`absolute left-1/2 top-1/2 -translate-x-1/2
+  -translate-y-1/2`, `flex items-center justify-center`, `gap-x`, etc.) OU en POURCENTAGE du cadre 1920x1080
+  (ex "centre vertical, ancre horizontale a 40% de la largeur"). JAMAIS "x=530 y=265" (illisible/faux hors vignette).
+- Donne la TAILLE cible de chaque element en % du cadre (ex "le 70 occupe ~50% de la hauteur du cadre") pour
+  qu'un agent dimensionne juste, pas en px de vignette.
+- Precise l'animation Remotion (spring damping/stiffness, count-up, crossfade) ET l'ancrage Tailwind ensemble.
+- But : un agent code le placement DIRECTEMENT depuis le champ remotion, en Tailwind, sans rien recalculer ni deviner.
