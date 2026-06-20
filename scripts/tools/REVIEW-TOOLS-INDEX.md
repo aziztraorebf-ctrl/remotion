@@ -6,14 +6,23 @@
 > mouvement, sans son). Procédure : 1 appel → vérifier chaque point contre les frames réelles → appliquer
 > seulement ce qui est VRAI → STOP. Jamais de boucle modèle→fix→modèle. Le jugement d'Aziz prime toujours.
 
-> ⚠️ **GATE DE LA BOUCLE REVIEW = `phase_match_avg`, PAS le `score` global** (leçon cobaye 2026-06-20).
-> Le score global Gemini est BRUITÉ et NON MONOTONE : il a baissé (6.5→5.5) alors que le render s'était
-> AMÉLIORÉ et que les `match_pct` par phase avaient monté. `visual_review.py` calcule désormais
-> `phase_match_avg` (moyenne des `match_pct` par phase) = le signal STABLE. Gate la boucle dessus (viser
-> ≥80% par phase), pas sur `score`. Toujours self-review AVANT l'appel (forme ton jugement, trie les
-> hallucinations — au cobaye, 3 fixes sur 5 étaient hallucinés). MAX 2 appels, puis STOP même si <seuil.
-> Faux signal connu : un storyboard multi-panneaux horizontal fait halluciner un format 9:16 à Gemini →
-> lui passer 1 panneau de réf à la fois OU préciser le format cible dans le prompt.
+> ⚠️ **GATE DE LA BOUCLE REVIEW = `phase_match_avg`, mais c'est un SIGNAL pour la self-review, JAMAIS un gate AUTO bloquant** (leçons cobayes 2026-06-20).
+> `visual_review.py` calcule `phase_match_avg` (moyenne des `match_pct` par phase) — plus lisible que le `score`
+> global (lui BRUITÉ/non-monotone : a baissé 6.5→5.5 alors que le render s'améliorait). MAIS even `phase_match_avg`
+> sort BAS (51-55%) sur des renders FIDÈLES — voir diagnostic ci-dessous. Donc : le VRAI juge = la **self-review
+> état-par-état** (Claude/agent compare chaque frame à SON état + écarte les divergences d'asset connues). Gemini =
+> signal confirmatoire. Toujours self-review AVANT l'appel (au cobaye, la plupart des fixes Gemini étaient hallucinés).
+> MAX 2 appels puis STOP même si <seuil.
+>
+> 🔬 **DIAGNOSTIC du gate (creusé 2026-06-20, à corriger en session dédiée — `visual_review.py:218-254`)** : pourquoi
+> `phase_match_avg` est faux-bas sur un bon render. 3 causes structurelles :
+> 1. **Storyboard envoyé en UNE image 3-panneaux** → Gemini doit deviner quel panneau ↔ quelle frame, il confond.
+> 2. **Ratio storyboard (panneaux verticaux) ≠ render (16:9)** → Gemini pénalise une différence de format inévitable.
+> 3. **Frames extraites à intervalle fixe** (`extract_frames` offset 0.3) → pas alignées sur les états du beat → une
+>    frame pré-révélation est comparée au panneau « final » → faux « élément manquant ».
+> **FIX à implémenter (session dédiée)** : découper la planche storyboard en panneaux + comparer panneau_i ↔ frame
+> de l'état_i (pas l'image entière vs frames au hasard) + extraire les frames AUX frontières d'états du breakdown (pas
+> à intervalle fixe) + dire le ratio cible (16:9) dans le prompt. Tant que non fait : `phase_match_avg` = indicatif, le juge = self-review.
 
 ---
 

@@ -206,6 +206,10 @@ import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_Char
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { ProtoCarto_ZoomOutProjection } from "./projects/_proto-16-9/ProtoCarto_ZoomOutProjection";
 import { ProtoCarto_Cartogramme } from "./projects/_proto-16-9/ProtoCarto_Cartogramme";
+import { ProtoCarto_ContinentDraw } from "./projects/_proto-16-9/ProtoCarto_ContinentDraw";
+import { ProtoCarto_OffshoreCut } from "./projects/_proto-16-9/ProtoCarto_OffshoreCut";
+import { ProtoCarto_TerritoireDecoupe } from "./projects/_proto-16-9/ProtoCarto_TerritoireDecoupe";
+import { ProtoCarto_CoucheTemps } from "./projects/_proto-16-9/ProtoCarto_CoucheTemps";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
 import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
 import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
@@ -309,6 +313,8 @@ import { ProtoFlag_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoFlag
 import { ProtoBattle_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoBattle_Sahel";
 import { ProtoPieces_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoPieces_Sahel";
 import { ProtoSealAnim_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoSealAnim_Sahel";
+import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
+import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2088,6 +2094,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoCarto-ZoomOutProjection" component={ProtoCarto_ZoomOutProjection} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="ProtoCarto-Cartogramme" component={ProtoCarto_Cartogramme} durationInFrames={210} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-ContinentDraw" component={ProtoCarto_ContinentDraw} durationInFrames={390} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-OffshoreCut" component={ProtoCarto_OffshoreCut} durationInFrames={330} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-TerritoireDecoupe" component={ProtoCarto_TerritoireDecoupe} durationInFrames={330} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-CoucheTemps" component={ProtoCarto_CoucheTemps} durationInFrames={360} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-Sketch" component={ProtoHera_Sketch} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-Timeline" component={ProtoHera_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
@@ -2829,6 +2839,24 @@ export const RemotionRoot: React.FC = () => {
       </Folder>
 
       <Folder name="rnd-warmap">
+        {/* COBAYE — Maroc phosphate carte (RÉVÉLER) */}
+        <Composition
+          id="Cobaye-Maroc-Carte"
+          component={MarocPhosphateCarte}
+          durationInFrames={MAROC_PHOSPHATE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* COBAYE — Maroc phosphate data-viz "70%" (ÉCRASER, Data-Hero) */}
+        <Composition
+          id="Cobaye-Maroc-DataHero"
+          component={MarocPhosphateDataHero}
+          durationInFrames={MAROC_DATAHERO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* LOBITO — versions comparatives A/B */}
         <Composition
           id="LobitoWarmapScene"

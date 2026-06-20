@@ -4,6 +4,24 @@
 
 ---
 
+## ▶ PROCHAINE SESSION DÉDIÉE — PEAUFINER LES GRAPHISMES → `memory/CHANTIER-PEAUFINAGE-GRAPHISMES.md`
+
+> Le système agentique TOURNE A→Z (prouvé 2026-06-20, cobayes Maroc). Mais le rendu visuel = « correct pas premium ».
+> Session dédiée : partir des cobayes existants (`src/projects/_rnd/cobaye-maroc-phosphate/`, NE PAS PURGER) et les
+> rendre premium. **3 trous diagnostiqués** (cause du manque de punch) : (1) storyboard généré en ratio VERTICAL,
+> render HORIZONTAL → espaces vides ; (2) breakdown pas assez précis sur les ASSETS (icône générique) ; (3) ⭐ pas de
+> préambule « chaînes premium » pour le storyboard DATA-VIZ (la matière Hera décodée existe mais n'est pas branchée —
+> contrairement à la carte). + corriger le gate review (diagnostic dans REVIEW-TOOLS-INDEX). Détail complet : le CHANTIER.
+
+## 🤖 (FAIT 2026-06-20) — SYSTÈME AGENTIQUE ÉPROUVÉ A→Z (session système, sans dette de structure)
+
+> Grosse session : registre des formes → orchestration → cobayes A→Z. Le système est OPÉRATIONNEL de bout en bout.
+> Acquis (tous commités master) : format breakdown Mapbox+Remotion défini+éprouvé · storyboard IMAGE obligatoire +
+> checkpoint chef→Aziz (erreur « checkpoint sauté » corrigée) · boucle review (self-review + Gemini ≤2 appels, gate
+> `phase_match_avg`) · 3 vérifs amont (chiffre sourcé / durée audio / cohérence intention↔audio) · palette fonds
+> (parchemin défaut, prime sur navy/gold) · `forme_verifiee` anti-fantôme · gotcha CountUp prefix. Carte = `SYSTEME-AGENTIQUE.md`.
+> RESTE = le peaufinage graphismes ci-dessus (le système marche, le GOÛT visuel est le prochain front).
+
 ## 📚 (FAIT 2026-06-20) — REGISTRE DES FORMES RÉSOLUES (commit 2173ce2)
 
 > Session système (pas de prod). Répond à la frustration d'Aziz : « pourquoi c'est si complexe ? on a
