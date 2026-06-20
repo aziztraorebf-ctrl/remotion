@@ -4,15 +4,17 @@
 > empêcher la dérive « chaque génération improvise son fond ». L'agent CHOISIT dans cette palette selon le
 > registre — il n'invente pas un fond. Adaptable au fil du temps, mais on part TOUJOURS d'ici.
 
-## Les 5 backgrounds validés (Aziz, 2026-06-19)
+## Les 4 backgrounds validés (Aziz, 2026-06-19) — fonds PURS (sans sujet ni texte)
 
 | Ref (image) | Registre / quand l'utiliser |
 |---|---|
-| `bg-parchemin-clair.png` ⭐ | **Éditorial/documentaire premium** (le « safe efficace » type Vox/Johnny Harris). Le DÉFAUT pour la data-viz sérieuse. Crème + quadrillage ocre fin. Le plus robuste à générer (zéro parasite). |
-| `bg-parchemin-kraft.png` | Variante chaude/sombre du parchemin (kraft, ambiance candle-lit). Pour un ton plus grave. ⚠️ plus sujet au texte parasite (fond chargé). |
-| `bg-dots-navy.png` ⭐ | **Data-lab moderne** : navy + pointillés subtils + halo. Pour chiffres-chocs tech/marché. Très propre. |
+| `bg-parchemin-clair.png` ⭐ | **Éditorial/documentaire premium** (le « safe efficace » type Vox/Johnny Harris). Le DÉFAUT pour la data-viz sérieuse. Crème + quadrillage ocre fin. Le plus robuste à générer. |
+| `bg-parchemin-kraft.png` | Variante chaude/sombre du parchemin (kraft, ambiance candle-lit). Pour un ton plus grave. |
+| `bg-dots-navy.png` ⭐ | **Data-lab moderne** : navy + pointillés subtils + halo. Pour chiffres-chocs tech/marché. |
 | `bg-uni-navy.png` | Navy uni `#16213a`, sobre, sans grille. Neutre, polyvalent. = le fond carte Mapbox standard. |
-| `bg-senegal-navy-grille-or-REEL.jpg` ⭐ | Le VRAI fond du hook Sénégal (extrait de la vidéo finale). Navy profond + quadrillage DORÉ. Notre identité prouvée. ⚠️ NB : ce qu'on appelait « parchemin Sénégal » est en fait CE navy+grille-or, pas un parchemin crème. |
+
+> Ce sont des fonds PURS (régénérés 2026-06-19, aucun chiffre/texte) — prêts à servir de ref de background.
+> Clé pour en regénérer un propre : prompt « EMPTY background texture only … NO text, NO numbers, NO subject ».
 
 ## Comment s'en servir dans un storyboard dual-gen
 
@@ -33,7 +35,5 @@ On passe le background voulu comme **référence + description** au générateur
    « cost/bad », labels d'un autre épisode) → le modèle les dessine. Décrire SEULEMENT ce qu'on veut à l'écran.
 3. **Toujours les 2 modèles**, jamais se limiter à un selon le registre : on compare deux intentions de direction.
 
-## Dette / à améliorer
-- Ces refs ont le sujet « 90% » dessus (ce sont des storyboards). Pour des refs de FOND pures, regénérer les
-  fonds SANS sujet. Tels quels, ils servent déjà bien de ref de registre.
+## Évolution
 - Élargir avec d'autres teintes/variantes validées au fil des prods (rester une palette FERMÉE, pas un fourre-tout).

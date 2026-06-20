@@ -165,8 +165,8 @@ Le fond se choisit selon le registre éditorial, pas au hasard (anti-retour-en-a
 Détail + palettes : [[decode-hera-templates]] + README `out/_r-and-d/decode-hera/`.
 
 ⭐ **PALETTE DE BACKGROUNDS VALIDÉE (images de réf, palette FERMÉE)** : `public/_shared/refs/backgrounds/`
-(`_PALETTE-BACKGROUNDS.md`). 5 fonds validés Aziz 2026-06-19 : parchemin-clair ⭐ (défaut éditorial), dots-navy ⭐,
-parchemin-kraft, uni-navy, + le VRAI fond hook Sénégal (navy+grille OR — pas un parchemin). **Pour un storyboard,
+(`_PALETTE-BACKGROUNDS.md`). 4 fonds PURS validés Aziz 2026-06-19 : parchemin-clair ⭐ (défaut éditorial), dots-navy ⭐,
+parchemin-kraft, uni-navy. **Pour un storyboard,
 on PART de cette palette** (l'agent choisit dedans, n'invente pas un fond → identité visuelle stable). Génération
 dual-gen : Gemini RESPECTE le fond imposé (outil du contrôle de fond) · GPT-image le fait AUSSI mais il faut le
 mettre en 1ʳᵉ phrase + formulé négatif (« LIGHT … NOT dark/navy »). TOUJOURS les 2 modèles (2 directions à comparer).
