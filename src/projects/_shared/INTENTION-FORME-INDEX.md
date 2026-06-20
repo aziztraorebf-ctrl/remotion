@@ -63,6 +63,12 @@ Deux acquis transversaux ressortent de TOUTES nos prods. Les ignorer = re-tâton
    **Prouvé** : War-Map P3/P4 (`WarMapDimmedOverlay`/`WarMapSplitScreen`), diagnostic « PowerPoint de luxe » V1 Sénégal = cut sec.
    **Réf** : [[spatial-carte-abstrait-remotion]] · `memory/doctrines/WARMAP-GRAMMAIRE.md`. Transversal **War-Map + Souverain**.
 
+> 🔗 **DEMANDES COMPOSÉES (Aziz demande souvent 2 choses dans le même beat).** La table liste les formes une par une, mais un beat en combine souvent deux. Règle de composition : une forme = un **calque** (base) + des **overlays** ancrés par-dessus. Patterns prouvés :
+> - **Carte qui fait X + plaque/donnée à côté** → la plaque (`GeoCountryPlaque`, etc.) se passe en `children`/overlay du composant carte (ex: `ResourceTextureFill` + plaque en enfant) — 1 seul beat, plaque ancrée au pays.
+> - **Cortège qui traverse + plusieurs étapes géo** → `FormationMarch` (la formation) sur un path à waypoints (Niani→Sahara→Mecque) — les deux axes se cumulent, ne pas choisir l'un OU l'autre.
+> - **Concept sur carte + texte solennel** → `WarMapDimmedOverlay` (base assombrie) + `WarMapOverlayDynamic` (bloc texte par-dessus).
+> Si la composition n'a pas de pattern ci-dessus : base = l'élément SPATIAL (carte), overlays = les éléments CONCEPTUELS (data, texte), jamais l'inverse.
+
 ---
 
 ## TABLE INTENTION → FORME
@@ -78,6 +84,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Le chiffre monte SUR une carte (contexte géo) | barre/axe sur carte estompée | ⭐ [S] `ProtoHera_ChartOnMap` (carte claire + barre or) | _proto-16-9 / COMPOSANTS § DONNÉES |
 | Une part qui se remplit | jauge | [S] `FillScreen` ; baril-jauge or/rouge (cf. Scène 1 Sénégal) | COMPOSANTS § CHIFFRE |
 | **Un objet central + chiffres greffés autour** (premium épuré) | **Data-Hero** (pivot + labels asym. + halo) | ⭐⭐ voir **RÈGLE MAÎTRESSE 1** ci-dessus | DECODE-mpesa-data-hero-MOTION |
+> ⚠️ **Pivot OBJET ou CHIFFRE ?** (lève l'ambiguïté avec la ligne « chiffre qui FRAPPE » ci-dessus) : si un objet physique signifiant s'impose (pièce, baril, tour) → Data-Hero objet. Si le centre EST le nombre (PIB, réserve) sans objet évident → Data-Hero où **le pivot est la typo monumentale verrouillée au centre + count-up à l'entrée**, données en satellites. Un simple `BigStat`/`CountUp` plein écran (sans satellites) suffit seulement si AUCUNE donnée ne contextualise.
 | **2 récits/vérités opposés qui basculent** | **pièce 3D qui se retourne** | [S] `CoinFlip.tsx` (props `custom` par face, `rotateYExternal` sync voix) | catbox qx51mw, validé Aziz |
 
 ### Faire RESSENTIR une TENDANCE / évolution chiffrée
@@ -137,7 +144,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Incarner un acteur sur un trajet (A→B) | sprite walk-cycle ancré-pied + caméra suit | [A] `AtlasPixelChar` + blueprint `WalkToDestination` | ATLAS-COMPOSANTS §3 |
-| Un cortège/caravane traverse un territoire | file de sprites décalés sur path courbe | [A] `caravanePositions()` + blueprint `FormationMarch` | ATLAS-COMPOSANTS §3 |
+| Un cortège/caravane traverse un territoire | file de sprites décalés sur path courbe | [A] **canonique** : `caravanePositions()` (`atlas/_shared/geoUtils.ts`) + `FormationMarch` (`_blueprints/formation-march/`) OU templates `_shared/templates/travel-map/GoldRoute*`. ⛔ `AnimatedCaravan.tsx` = fichier FANTÔME (cité en mémoire, n'existe pas) | ATLAS-COMPOSANTS §3 |
 | Voyage multi-villes (A→B→C→D) | waypoints + sprite tourne par direction | [A] blueprint `WaypointMarch` | _blueprints |
 | Un affrontement / 2 forces convergent | chorégraphie file→ligne→charge→clash, OU confrontation face-à-face | [A] `AtlasV2ArmyDeployScene`, `AtlasV2ConfrontationScene`, blueprint `Alliance` | ATLAS-PLAYBOOK §3 |
 | Un mouvement tactique (flèche, tenaille) | arc géodésique marching-ants + tête mobile | [A] `AtlasAttackArrow`, `AtlasEncirclement` | _shared atlas |
@@ -147,7 +154,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | L'échange (sel↔or) / insert chiffré sur carte | dim carte + boîte parchemin double-cadre glow | [A] `SpotlightInsert` (Ghana — à extraire en composant) | ATLAS-PLAYBOOK §3 |
 
 ### Faire RESSENTIR du CONCEPTUEL sans quitter la carte  ← ⭐ CATÉGORIE WAR-MAP (manquait)
-> Voir **RÈGLE MAÎTRESSE 2**. ⛔ `semitransp` BANNI (voile < 0.5 qui montre la carte derrière). Plein écran = masquer carte Mapbox ET contours moteur. Combiner l'ARSENAL (jetons + zones + contours + plaques), jamais 1 seul asset. CAUSE avant EFFET (jamais pop magique).
+> Voir **RÈGLE MAÎTRESSE 2**. Composants dans `src/projects/warmap/_shared/` — chemins exacts + props : `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md`. ⛔ `semitransp` BANNI (voile < 0.5 qui montre la carte derrière). Plein écran = masquer carte Mapbox ET contours moteur. Combiner l'ARSENAL (jetons + zones + contours + plaques), jamais 1 seul asset. CAUSE avant EFFET (jamais pop magique). Registre grave/solennel = voile plus dense + montée lente + 1 plateau tenu (halo qui respire).
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Superposer un concept sans quitter la carte | carte assombrie (voile 0.62, halo, trous locaux) + bloc | [WM] `WarMapDimmedOverlay` + `dimmedOverlayHole()` | catbox xt8ztb, validé Aziz |

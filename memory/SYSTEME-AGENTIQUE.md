@@ -20,6 +20,10 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 2. **INTENTION → FORME** : pour la scène, déduis l'intention (1 verbe : ce qu'elle doit faire RESSENTIR), puis
    la forme. JAMAIS partir du template. Porte d'entrée : `src/projects/_shared/INTENTION-FORME-INDEX.md`.
    Doctrine : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐.
+   ✅ **Registre OPÉRATIONNEL (2026-06-20)** : enrichi des ~60 acquis tranchés de TOUS les piliers (2 règles
+   maîtresses Data-Hero + carte/overlay, catégories incarnation Atlas & conceptuel War-Map, tags pilier).
+   ⛔ **Lire la section REJETS** du registre : 15 formes déjà essayées ET abandonnées (drawFlagCanvas, flyTo,
+   pitch 3D, semitransp…) — ne pas les re-tenter. Vérifie aussi que le composant cité existe RÉELLEMENT (les index périment).
 3. **STORYBOARD (le modèle propose la direction)** : génère un storyboard multi-états (évolution + épure) via
    `scripts/tools/storyboard-dual-gen.py` (Gemini + GPT). Le modèle PROPOSE, tu ne dictes pas.
    - Data-viz/Remotion → choisir un **fond** dans la palette : `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`.
@@ -47,7 +51,7 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 | ORCHESTRATION (chef + agents frais) | `memory/PLAN-ORCHESTRATION-VIDEO.md` — découper, fan-out N beats, 2-3 checkpoints, isolation worktree |
 | Intention → forme → template | `src/projects/_shared/INTENTION-FORME-INDEX.md` + `CONTINUITE-SCENE-INTENTION-DABORD.md` |
 | Où ranger un fichier (3 zones) | INTENTION-FORME-INDEX § « OÙ RANGER » (livrable / `_rnd` proto / `_shared` brique) |
-| Hooks actifs (garde-fous) | `.claude/hooks/` — auto-vérif présentation, model-guard, preflight carte, lint |
+| Hooks actifs (garde-fous) | `.claude/hooks/` — auto-vérif présentation, model-guard, preflight carte, **rappel registre intention→forme avant toute scène `.tsx`** (`beat-preflight.sh`, non bloquant), lint |
 | État anti-fouillis (pourquoi le système) | `memory/PLAN-SYSTEME-ANTI-FOUILLIS.md` |
 | Scripts par cas d'usage | `scripts/SCRIPTS-INDEX.md` |
 
@@ -64,6 +68,9 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 ---
 
 ## ⚠️ CE QUI N'EST PAS ENCORE BRANCHÉ (au 2026-06-20 — voir NEXT-ACTION pour le détail)
+- ✅ **RÉSOLU 2026-06-20** : l'étape 2 (INTENTION→FORME) est désormais OPÉRATIONNELLE — registre rempli des
+  ~60 acquis + section REJETS + rappel par hook (avant, le flux pointait vers un registre à moitié vide).
+  Validé par agents vierges (2/3 trouvent la forme du 1er coup sans connaître l'historique).
 - Le storyboard est prouvé en isolé mais pas encore une étape OBLIGATOIRE des sessions (à câbler).
 - Le format du breakdown Mapbox reste à définir/tester (le pont storyboard→code carte).
 - L'orchestration complète bout-en-bout reste à éprouver sur une vraie mini-vidéo propre.
