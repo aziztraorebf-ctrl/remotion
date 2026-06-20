@@ -91,6 +91,18 @@ GPT MESURE les ecarts (taille/position en %) et donne les corrections Tailwind e
 tailles, faire MESURER par le modele qui voit la cible. Prouve : mon oeil notait "80%", GPT mesurait "55%".
 Vaut pour Claude ET pour tout agent. Detail : [[feedback_juger-asset-cote-a-cote-storyboard]].
 
+## ⭐⭐ REGLE DE PRESENTATION A AZIZ (lecon 2026-06-20, source de frustration MAJEURE evitee)
+**Aziz juge le design sur le PLEIN FORMAT, jamais sur une vignette.** Un comparatif cote-a-cote rapetisse les
+deux images (ex 540px) : la vraie ECHELLE et la vraie PRESENCE ne transparaissent PAS → Aziz a cru a un "70 trop
+petit / espace vide" qui, en plein ecran, N'EXISTAIT PAS. Le bug etait dans la PRESENTATION, pas le render.
+Procedure OBLIGATOIRE pour montrer un render data-viz :
+1. **Render SEUL en pleine taille** (full HD scale=1, NON rapetisse) — uploade. C'est CA qu'Aziz juge en premier.
+2. **Cible SEULE a sa vraie taille** (le storyboard tel que pris, non compresse) — uploade.
+3. Le comparatif cote-a-cote = COMPLEMENT seulement, et en HAUTE RESOLUTION (chaque image ~1080px de haut, jamais
+   540px). Il sert a MON analyse + au diff GPT (mesure d'ecarts), PAS de preuve de jugement pour Aziz.
+4. Si Aziz insatisfait sur la frame figee → rendre le MP4 anime (le mouvement rend mieux justice que la pose finale).
+⛔ Ne JAMAIS presenter un cobaye/render via le SEUL cote-a-cote rapetisse. Toujours le plein format d'abord.
+
 ## CE QUI RESTE (session fraiche)
 Voir [[REPRISE-WORKFLOW-DATAVIZ]] : 3 corrections pixel du cobaye + gate format phase 0 a cabler +
 agent vierge de validation a lancer au demarrage + test sur une vraie scene de prod.

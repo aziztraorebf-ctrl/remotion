@@ -23,6 +23,7 @@ Retourne UNIQUEMENT du JSON (pas de markdown), avec cette structure :
 {
   "panneau": "etat 3 - l'ecrasement",
   "ratio": "16:9",
+  "palette": { "or_clair": "#...", "or_fonce": "#...", "fond_teal": "#...", "accent_fleche": "#...", "...": "..." },
   "background": { "verdict": "GENERE|REMOTION|HYBRIDE", "description": "...",
     "asset_prompt": "<si GENERE/HYBRIDE : le prompt EXACT pour reproduire ce fond a 100%, en precisant
        style (flat editorial illustration, PAS realiste), couleurs hex, fond, dimensions 1920x1080>",
@@ -36,6 +37,12 @@ Retourne UNIQUEMENT du JSON (pas de markdown), avec cette structure :
          degrade, relief, fond TRANSPARENT, style flat illustration, taille). Ecris le prompt pret a copier-coller.>",
       "remotion": "<si REMOTION/HYBRIDE : ce que Remotion code par-dessus/a la place (ex count-up 0->70,
          bounce overshoot a la fin, position x/y, scale d'entree)>",
+      "style_exact": "<OBLIGATOIRE pour tout element REMOTION/HYBRIDE qui est un TEXTE, un TRAIT, une FLECHE,
+         un CADRE/CARTOUCHE, une BARRE : la MATIERE exacte a coder, rien laisse au codeur. Pour un TEXTE :
+         police nommee (ex 'Bebas Neue' / 'Anton' / 'Oswald', condensee/bold) + couleur hex + taille en % du
+         cadre OU px@1080 + ombre/contour exacts. Pour un TRAIT/FLECHE : couleur hex + epaisseur en px@1080 +
+         style de pointe (fine/triangle plein) + opacite. Pour un CADRE : couleur bordure hex + epaisseur +
+         fond hex+opacite + rayon. NE METS PAS 'doree' / 'epais' : donne la valeur EXACTE mesuree sur la cible.>",
       "intention": "<PROSE : ce que cet element doit faire RESSENTIR a ce moment (pas un code, une phrase)>",
       "position": "<ou dans le cadre 16:9 : ex 'centre-gauche, occupe 45% largeur'>",
       "sync_voix": "<le mot de la narration sur lequel il apparait/agit>"
@@ -71,3 +78,14 @@ REGLES sur les asset_prompt :
   qu'un agent dimensionne juste, pas en px de vignette.
 - Precise l'animation Remotion (spring damping/stiffness, count-up, crossfade) ET l'ancrage Tailwind ensemble.
 - But : un agent code le placement DIRECTEMENT depuis le champ remotion, en Tailwind, sans rien recalculer ni deviner.
+
+⛔⛔ REGLE "ZERO CHOIX LAISSE AU CODEUR" (cause prouvee n1 des divergences cible-vs-render, 2026-06-20) :
+Un element REMOTION (texte/trait/fleche/cadre/barre) dont tu donnes la position+taille MAIS PAS la matiere force
+le codeur a DEVINER police/hex/epaisseur → il devine differemment a chaque fois → le render "ressemble" sans etre
+"identique" (vu : fleches mauvaise couleur, cadre PHOSPHATE different, label mauvaise fonte). REMPLIS `style_exact`
+pour CHAQUE element REMOTION/HYBRIDE textuel ou graphique. Le critere de qualite : deux codeurs differents qui
+suivent ce breakdown produisent le MEME pixel. Si tu hesites sur une valeur, MESURE-la sur la cible, ne l'omets pas.
+- POLICES : nomme une police reelle et disponible (Bebas Neue, Anton, Oswald, Archivo Black, Impact). Pour les
+  chiffres/titres condensses bold de ce style, defaut = 'Bebas Neue' sauf si la cible montre clairement autre chose.
+- Donne aussi une PALETTE GLOBALE en tete (champ "palette" : les 4-6 hex dominants de la cible : or clair, or
+  fonce/brun, teal fond, accent fleche...) que tous les style_exact reutilisent — coherence garantie.
