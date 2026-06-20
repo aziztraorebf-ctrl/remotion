@@ -5,7 +5,27 @@
 
 INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
-CONTENT=$(echo "$INPUT" | jq -r '.tool_input.content // .tool_input.new_string // empty')
+CONTENT=$(echo "$INPUT" | jq -r '.tool_input.new_string // .tool_input.content // empty')
+
+# ============================================================
+# RAPPEL REGISTRE INTENTION→FORME (non bloquant) — pour TOUTE scène .tsx
+# Cause racine n°1 des essais en trop : coder une forme déjà tranchée sans
+# ouvrir le registre. Ce rappel s'affiche avant toute écriture de scène.
+# (Posé 2026-06-20, session "registre des formes résolues".)
+# ============================================================
+if [[ "$FILE_PATH" == *.tsx ]] && [[ "$FILE_PATH" == *"/projects/"* ]]; then
+  echo ""
+  echo "--- ⛔ REGISTRE INTENTION→FORME (avant de coder cette scène) ---"
+  echo "  As-tu, dans CET ordre :"
+  echo "  1. Déduit l'INTENTION (1 verbe : ce que ce moment doit faire RESSENTIR) ?"
+  echo "  2. Ouvert src/projects/_shared/INTENTION-FORME-INDEX.md et cherché si la"
+  echo "     forme est DÉJÀ tranchée ? (Data-Hero, CoinFlip, FlagDissolve, overlays,"
+  echo "     blueprints Atlas, plaques carte...)"
+  echo "  3. Vérifié que le composant existe RÉELLEMENT dans le code (les index périment) ?"
+  echo "  4. Lu la section ⛔ REJETS pour ne pas re-tenter une forme abandonnée ?"
+  echo "  Si le registre n'a pas été ouvert → STOP, ouvre-le. C'est la cause n°1 des essais en trop."
+  echo "------------------------------------------------------------"
+fi
 
 # Rappel LÉGER (non bloquant) pour toute scène CARTE qui n'est pas un Beat d'épisode
 # (protos _rnd, Scene*.tsx...). Le preflight lourd ci-dessous reste réservé aux Beat*.tsx Souverain.

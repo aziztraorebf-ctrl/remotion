@@ -133,6 +133,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 
 ### Faire RESSENTIR une INCARNATION / un acteur qui agit  ← ⭐ CATÉGORIE ATLAS (manquait)
 > Atlas = sprites-acteurs (PixelLab/Gemini) ancrés à la carte. ⛔ Taille ancrée à la carte (`spriteMapWidth` en degrés), JAMAIS vmin. L'objet est une IMAGE, jamais un dot. ⛔ Bataille en rectangles/blocs top-down = REJET (sans identité).
+> **Désambiguïsation marche A→B** (3 lignes proches) : 1 figure isolée qui marche = `WalkToDestination` · plusieurs unités en colonne/cortège (armée, caravane) = `FormationMarch`/`caravanePositions()` · plusieurs étapes A→B→C = `WaypointMarch`. **Pilier** : « armée/caravane historique » → Atlas (sprites). Si l'épisode est War-Map → équivalent = jetons qui avancent + sillage (pas de sprite PixelLab). ⚠️ Vérifier que le blueprint existe RÉELLEMENT dans `src/projects/atlas/_blueprints/` avant de coder (les index périment).
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Incarner un acteur sur un trajet (A→B) | sprite walk-cycle ancré-pied + caméra suit | [A] `AtlasPixelChar` + blueprint `WalkToDestination` | ATLAS-COMPOSANTS §3 |
