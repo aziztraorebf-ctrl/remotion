@@ -41,6 +41,10 @@ Garamond. **Va plus loin que ça.**
 
 ---
 
+## Trous d'assets connus (à créer au moment du code, signalés par les tests)
+- WarMap : pas de `jeton-jnim.png` ni `jeton-eigs.png` (on a `fighter-jnim.png` / `technical-jnim.png` → adapter
+  en jeton-portrait au code). Si on fait un beat avancée jihadiste, créer ces 2 jetons-faction.
+
 ## Refs visuelles à JOINDRE (en plus du texte, pour qu'il VOIE notre style)
 - Carte du registre : `public/_shared/refs/cartes/carte-{souverain-geoafrique-v5|warmap-sudan-epic|atlas-mansa-moussa}.jpg`
 - WarMap, montrer nos jetons/sprites réels : `public/_shared/sprites/warmap/` (jeton-*.png, fighter-*.png, base-*.png)
