@@ -4,6 +4,29 @@
 
 ---
 
+## 📚 (FAIT 2026-06-20) — REGISTRE DES FORMES RÉSOLUES (commit 2173ce2)
+
+> Session système (pas de prod). Répond à la frustration d'Aziz : « pourquoi c'est si complexe ? on a
+> déjà les réponses (Silicon Savanna→Data-Hero) mais on les re-tâtonne ». Cause racine = acquis déjà
+> tranchés MAL INDEXÉS (problème de classification, pas de stockage). ⚠️ Commité sur `feat/elagage-systeme` —
+> vérifier qu'il a bien suivi le merge dans master (l'autre instance a mergé la branche en parallèle).
+
+- **Diagnostic chiffré** : balayage 4 piliers (agents lecture seule) → ~60 acquis validés ABSENTS/mal placés
+  dans `INTENTION-FORME-INDEX.md` (Data-Hero, coin-flip, 17 templates Mapbox, overlays War-Map, blueprints
+  Atlas) + 15 REJETS jamais documentés (drawFlagCanvas, flyTo, pitch 3D, semitransp…).
+- **`INTENTION-FORME-INDEX.md` enrichi** (123→210 l) : 2 RÈGLES MAÎTRESSES (Data-Hero = LA grammaire premium
+  épurée · carte=spatial/overlay=conceptuel) + géo complétée + 2 catégories neuves (incarnation Atlas,
+  conceptuel War-Map) + section ⛔ REJETS + tags pilier [S]/[WM]/[A]/[C].
+- **Hook `beat-preflight.sh`** : rappel NON BLOQUANT (4 points : intention→registre→existence→rejets) sur
+  toute scène `.tsx`. Installe le réflexe « ouvre le registre avant de coder » sans friction.
+- **Validé par 3 agents vierges** : 2/3 trouvent la forme du 1er coup sans tâtonner ; le 3e (armée Atlas) a
+  révélé les vrais trous (lignes voisines ambiguës + index qui périment + pilier non dit) → corrigés/délégués au hook.
+- ⏳ **OPTION DE DURCISSEMENT** (si Claude continue d'oublier d'ouvrir le registre) : passer le rappel de
+  non-bloquant → bloquant (flag `/tmp`, comme R3), ou bloquant uniquement pour les livrables. Décision reportée :
+  on attend la donnée d'usage. Seule suite ouverte de ce chantier. ENRICHIR le registre à chaque nouvelle forme tranchée.
+
+---
+
 ## 🎬 (FAIT 2026-06-19→20) — STORYBOARD + ORCHESTRATION : système validé (mergé dans master)
 
 > Session d'architecture. `feat/elagage-systeme` **mergée dans master** (696006f). Tout commité, testé par agents réels.
