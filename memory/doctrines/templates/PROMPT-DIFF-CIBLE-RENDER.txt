@@ -36,3 +36,6 @@ IMPORTANT :
 - Le cadre fait 100% de large sur 100% de haut. Un element qui va de 10% a 30% de la largeur fait 20% de large.
 - Sois exhaustif et precis sur les TAILLES (c'est la ou B s'ecarte le plus de A).
 - Donne des corrections directement applicables (classes Tailwind, valeurs), pas des conseils vagues.
+- ⛔ IGNORE les ANNOTATIONS DE STORYBOARD presentes dans A : titre d'etat (ex "ETAT 3 — L'ecrasement"),
+  timer/chrono (ex "00:08"), numero de case. Ce sont des echafaudages du storyboard, PAS du contenu a
+  reproduire. NE les liste PAS comme ecarts et NE penalise PAS leur absence dans B (sinon score fausse a la baisse).

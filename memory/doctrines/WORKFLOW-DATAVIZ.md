@@ -64,14 +64,27 @@ en SVG (geometrie precise), timing audio-derive. NE PAS deroger au breakdown (ch
 Stack : Remotion + Tailwind (`enableTailwind` actif). Render plein HD scale=1 pour juger la nettete.
 
 ### 6. DIFF cible-vs-render (corriger MESURE, pas devine — puis STOP)
-Composer une planche `IMAGE A = cible | IMAGE B = notre render` et la donner a GPT-5.5 :
-`scripts/tools/openrouter-vision-breakdown.py --model openai/gpt-5.5 --image <planche A|B>`.
+Composer une planche `IMAGE A = cible | IMAGE B = notre render` (cote a cote, MEME hauteur, fond uni, ~24px de
+gouttiere) et la donner a GPT-5.5. Recette de planche prouvee (PIL) : croper la case CIBLE de la cible, normaliser
+les deux a une meme hauteur, coller cote a cote. ⛔ **Croper la case cible SANS le bandeau d'annotation** (titre
+d'etat + timer en haut) : sinon les % verticaux ET le ratio des elements (picto, 70) sont biaises par la bande
+(cause prouvee d'un picto rendu trop petit en suivant la mesure GPT). Si pas de coordonnees de crop connues : grille
+2x2 reguliere = case bas-droite ~ (50%,50%)->(100%,100%), puis rogner le haut jusqu'a la 1ere ligne de contenu.
+
+Commande COMPLETE (copier-collable, 4 args obligatoires) :
+`python3 scripts/tools/openrouter-vision-breakdown.py --model openai/gpt-5.5 --image /tmp/diff-plate.png --prompt-file memory/doctrines/templates/PROMPT-DIFF-CIBLE-RENDER.txt --output /tmp/diff-result.json`
 Prompt de reference : `memory/doctrines/templates/PROMPT-DIFF-CIBLE-RENDER.txt`.
 GPT MESURE les ecarts (taille/position en %) et donne les corrections Tailwind exactes. Appliquer.
 - ⛔ **1 PASSE, SIGNAL pas juge** : NE PAS boucler diff->fix->diff (doctrine "modele=signal jamais juge",
   [[feedback_systeme-beat-mapbox-vs-remotion]]). Appliquer ce qui est vrai, STOP.
 - ⛔ EXCLURE les annotations de storyboard du diff (titre d'etat, timer) = on ne les reproduit pas ; sinon
-  GPT penalise a tort et fausse le score.
+  GPT penalise a tort et fausse le score. (Instruction gravee dans le template depuis 2026-06-20.)
+- ⛔ **VERIFIER CHAQUE CORRECTION COTE-A-COTE APRES APPLICATION** (regle d'or) : le diff GPT peut sur/sous-mesurer
+  (vu : picto "12%" alors que l'oeil correct = ~16%). Le verdict d'Aziz/l'oeil prime sur la mesure si la planche
+  post-fix le contredit. Re-render scale=1 + re-composer la planche apres les fix.
+- ⛔ **LE DIFF GPT NE VOIT PAS L'ALPHA** : un trou de lettre mal detoure (le "0", le "8" : damier/blanc residuel)
+  N'apparait PAS dans le diff cote-a-cote. Garder l'inspection alpha de l'etape 4 comme controle SEPARE
+  (verifier alpha=0 dans le contre-poincon ; flood-fill local si Recraft a laisse du blanc opaque).
 
 ## ⭐ REGLE D'OR TRANSVERSE (la lecon la plus chere de la session)
 **Ne JAMAIS juger un asset/render de MEMOIRE.** Toujours composer cote-a-cote avec la cible et, pour les

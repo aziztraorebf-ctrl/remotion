@@ -61,9 +61,9 @@ export const TealAssemblyEtat3: React.FC = () => {
 
       {/* === TOUTES LES TAILLES/POSITIONS = diff GPT-5.5 (mesurees sur la cible), PAS devinees === */}
 
-      {/* "70" : HYBRIDE — diff v4 : remonter un peu + agrandir (etait trop bas/petit). top 28%, w 44% */}
+      {/* "70" : HYBRIDE — v7 : remonter (top 16%) + h 56% pour dominer comme la cible, w 40% */}
       <div
-        className="absolute left-[27%] top-[28%] w-[44%] h-[58%]"
+        className="absolute left-[26%] top-[16%] w-[40%] h-[56%]"
         style={{ transform: `scale(${numScale})`, transformOrigin: "center", opacity: numEntry }}
       >
         {/* count-up temporaire (s'efface au crossfade) */}
@@ -77,16 +77,16 @@ export const TealAssemblyEtat3: React.FC = () => {
         <Img src={staticFile("_rnd/cobaye-teal/num70.png")} className="block w-full h-full" style={{ objectFit: "contain", opacity: crossfade }} />
       </div>
 
-      {/* Picto Terre — diff v4 : un peu plus grand + descendre (etait trop haut/petit). w 15%, top 47% */}
+      {/* Picto Terre — v7 : agrandi (oeil Aziz prime sur mesure GPT biaisee par bandeau). w-16% centre y=44% */}
       <Img
         src={staticFile("_rnd/cobaye-teal/terre-phosphate.png")}
-        className="absolute left-[11%] top-[47%] -translate-y-1/2 w-[15%] h-auto"
-        style={{ opacity: terreOp, transform: `translateY(-50%) scale(${terreScale})`, transformOrigin: "center" }}
+        className="absolute left-[6%] top-[33%] w-[16%] h-[22%]"
+        style={{ opacity: terreOp, transform: `scale(${terreScale})`, transformOrigin: "center", objectFit: "contain" }}
       />
-      {/* label RESERVES MONDIALES — diff GPT : left-[9.3%] top-[62.5%] w-[15.5%] text-[47px] leading-[0.86] */}
+      {/* label RESERVES MONDIALES — v8 : regrossi au niveau cible. text-[52px] w-[18%] */}
       <div
-        className="absolute left-[9.3%] top-[62.5%] w-[15.5%] text-center font-black uppercase leading-[0.86]"
-        style={{ fontSize: 47, color: "#f2c66c", fontFamily: "Bebas Neue, Impact, sans-serif", letterSpacing: "-0.02em", textShadow: "3px 4px 0 rgba(0,0,0,0.55)", opacity: terreOp }}
+        className="absolute left-[3.5%] top-[59%] w-[18%] text-center font-black uppercase leading-[0.88]"
+        style={{ fontSize: 52, color: "#FFD16A", fontFamily: "Bebas Neue, Impact, sans-serif", letterSpacing: "-0.02em", textShadow: "0 3px 2px rgba(0,0,0,0.75)", opacity: terreOp }}
       >
         Réserves<br />Mondiales
       </div>
@@ -98,59 +98,59 @@ export const TealAssemblyEtat3: React.FC = () => {
           <linearGradient id="seg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#c66b32" /><stop offset="100%" stopColor="#8e3f20" /></linearGradient>
         </defs>
 
-        {/* trait de liaison picto->70 — diff GPT : left-[21%] top-[50.2%] w-[11%] (etait ABSENT) */}
-        <rect x={1920 * 0.21} y={1080 * 0.502} width={1920 * 0.11} height={4} fill="#d6c990" opacity={terreOp} />
+        {/* trait de liaison picto->70 — diff v6 GPT : left-[21.5%] top-[49.7%] w-[11%] */}
+        <rect x={1920 * 0.215} y={1080 * 0.497} width={1920 * 0.11} height={4} fill="#d3c58a" opacity={terreOp} />
 
         {(() => {
-          // diff v4 : tout le groupe phosphate est ~3% trop a DROITE -> offset -3% (= -57.6px).
-          const DX = -1920 * 0.03;
-          // BARRE — partie jaune left-[75.55%] top-[23.5%] w-[10.3%] h-[38.5%]
-          const barX = 1920 * 0.7555 + DX;
+          // diff v6 GPT : positions absolues remesurees (plus de DX offset).
+          // BARRE container — left-[73.6%] top-[24%] w-[10.3%] h-[51.5%], jaune h-71% / segment h-29% COLLES (gap-0)
+          const barX = 1920 * 0.736;
           const barW = 1920 * 0.103;
-          const phosTop = 1080 * 0.235;
-          const phosH = 1080 * 0.385;
-          // segment 30% — top-[61.9%] h-[15.2%]
-          const segTop0 = 1080 * 0.619;
-          const segMaxH = 1080 * 0.152;
-          const segH = segMaxH * interpolate(crushP, [0, 1], [1.0, 0.85]);
-          const segTop = segTop0 + (segMaxH - segH);
-          const cartX = 1920 * 0.706 + DX;
+          const contTop = 1080 * 0.24;
+          const contH = 1080 * 0.515;
+          const phosH = contH * 0.71;        // partie jaune (haut)
+          const phosTop = contTop;
+          const segFullH = contH * 0.29;      // segment 30% (bas), colle a la jaune
+          const segFullTop = contTop + phosH; // = 60.5% du cadre
+          // ecrasement : le segment se comprime legerement vers le bas (ancrage haut conserve la jonction)
+          const segH = segFullH * interpolate(crushP, [0, 1], [1.0, 0.88]);
+          const cartX = 1920 * 0.694;
           return (
             <g opacity={barOp}>
-              {/* cartouche PHOSPHATE — left-[70.6%] top-[12.1%] w-[18.8%] h-[8.8%] */}
-              <rect x={cartX} y={1080 * 0.121} width={1920 * 0.188} height={1080 * 0.088} rx={4} fill="#12313a" fillOpacity={0.45} stroke="#d5aa5d" strokeWidth={4} />
-              <text x={cartX + 1920 * 0.094} y={1080 * 0.121 + 1080 * 0.058} fill="#eec36c" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={43} fontWeight={900} textAnchor="middle" letterSpacing={1}>PHOSPHATE</text>
+              {/* cartouche PHOSPHATE — left-[69.4%] top-[12.8%] w-[18.8%] h-[8.7%] */}
+              <rect x={cartX} y={1080 * 0.128} width={1920 * 0.188} height={1080 * 0.087} rx={2} fill="#143D43" fillOpacity={0.7} stroke="#e7b762" strokeWidth={3} />
+              <text x={cartX + 1920 * 0.094} y={1080 * 0.128 + 1080 * 0.058} fill="#f4c66e" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={43} fontWeight={900} textAnchor="middle" letterSpacing={1}>PHOSPHATE</text>
 
               {/* zone 70% phosphate (jaune) */}
-              <rect x={barX} y={phosTop} width={barW} height={phosH} fill="url(#phos)" rx={3} />
-              {/* segment 30% (brun) qui s'ecrase */}
-              <rect x={barX} y={segTop} width={barW} height={segH} fill="url(#seg)" rx={3} />
-              {/* texte 30% */}
-              <text x={barX + barW / 2} y={segTop0 + segMaxH / 2 + 22} fill="#ffe9d5" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={62} fontWeight={900} textAnchor="middle" style={{ filter: "drop-shadow(2px 3px 0 rgba(0,0,0,0.35))" }}>30%</text>
+              <rect x={barX} y={phosTop} width={barW} height={phosH} fill="url(#phos)" />
+              {/* segment 30% (brun) colle, qui s'ecrase legerement */}
+              <rect x={barX} y={segFullTop} width={barW} height={segH} fill="url(#seg)" />
+              {/* texte 30% — diff v6 : text-[62px], centre x=78% y=68% */}
+              <text x={1920 * 0.788} y={1080 * 0.68 + 22} fill="#fff1d2" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={62} fontWeight={900} textAnchor="middle" style={{ filter: "drop-shadow(0 3px 2px rgba(0,0,0,0.65))" }}>30%</text>
 
-              {/* fleches d'ecrasement — x=71.8% et 87.4% (+ offset), top-[31%] h-[34%] */}
-              {[1920 * 0.718 + DX, 1920 * 0.874 + DX].map((ax, i) => (
-                <g key={i} opacity={crushP} transform={`translate(${ax} ${1080 * 0.31 + arrowShift})`}>
-                  <line x1={0} y1={0} x2={0} y2={1080 * 0.30} stroke="#d0a85b" strokeWidth={5} />
-                  <path d={`M -11 ${1080 * 0.30 - 14} L 0 ${1080 * 0.30 + 4} L 11 ${1080 * 0.30 - 14}`} fill="none" stroke="#d0a85b" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" />
+              {/* fleches d'ecrasement — diff v6 : h-[34%] (y 29.3%->63.3%), gauche x=71.7% droite x=85.8% */}
+              {[1920 * 0.717, 1920 * 0.858].map((ax, i) => (
+                <g key={i} opacity={crushP} transform={`translate(${ax} ${1080 * 0.293 + arrowShift})`}>
+                  <line x1={0} y1={0} x2={0} y2={1080 * 0.34} stroke="#dda64e" strokeWidth={5} />
+                  <path d={`M -11 ${1080 * 0.34 - 14} L 0 ${1080 * 0.34 + 4} L 11 ${1080 * 0.34 - 14}`} fill="none" stroke="#dda64e" strokeWidth={5} strokeLinecap="round" strokeLinejoin="round" />
                 </g>
               ))}
 
-              {/* ligne base — left-[71.85%] top-[77.1%] w-[17.7%] */}
-              <rect x={1920 * 0.7185 + DX} y={1080 * 0.771} width={1920 * 0.177} height={4} fill="#d6c990" opacity={0.85} />
-              {/* RESTE DU MONDE — left centre 80.7% (+ offset) top-[79.8%] text-[42px] */}
-              <text x={1920 * 0.807 + DX} y={1080 * 0.84} fill="#f2c66c" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={42} fontWeight={900} textAnchor="middle" letterSpacing={-0.5} style={{ filter: "drop-shadow(3px 4px 0 rgba(0,0,0,0.55))" }}>
-                <tspan x={1920 * 0.807 + DX} dy={0}>RESTE</tspan><tspan x={1920 * 0.807 + DX} dy={40}>DU MONDE</tspan>
+              {/* ligne base — sous la barre */}
+              <rect x={1920 * 0.7185} y={1080 * 0.771} width={1920 * 0.177} height={4} fill="#d6c990" opacity={0.85} />
+              {/* RESTE DU MONDE — diff v6 : w-[13%] text-[36px], centre sous la barre */}
+              <text x={1920 * 0.788} y={1080 * 0.84} fill="#f2c66c" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={36} fontWeight={900} textAnchor="middle" letterSpacing={-0.5} style={{ filter: "drop-shadow(3px 4px 0 rgba(0,0,0,0.55))" }}>
+                <tspan x={1920 * 0.788} dy={0}>RESTE</tspan><tspan x={1920 * 0.788} dy={36}>DU MONDE</tspan>
               </text>
             </g>
           );
         })()}
       </svg>
 
-      {/* source — diff GPT : left-[43.2%] top-[91.6%] w-[18.6%] text-[33px], casse 'Source : USGS 2024' */}
+      {/* source — diff v6 GPT : top-[89.8%] text-[40px] */}
       <div
-        className="absolute left-[43.2%] top-[91.6%] w-[18.6%] text-center"
-        style={{ fontSize: 33, fontFamily: "'IBM Plex Mono', monospace", color: "#f0eee4", opacity: srcOp * 0.92, letterSpacing: "-0.02em" }}
+        className="absolute left-[38%] top-[90.5%] w-[24%] text-center whitespace-nowrap"
+        style={{ fontSize: 36, fontFamily: "'IBM Plex Mono', monospace", color: "#f0eee4", opacity: srcOp * 0.92, letterSpacing: "-0.02em" }}
       >
         Source : USGS 2024
       </div>
