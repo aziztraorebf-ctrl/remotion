@@ -1,0 +1,114 @@
+# TEMPLATE — Prompt de BREAKDOWN CARTO d3-geo PLAT (parchemin / carte dessinee).
+# Pendant carto du PROMPT-BREAKDOWN-DATAVIZ. Pour les scenes CARTOGRAPHIQUES en d3-geo PLAT
+# (carte vectorielle dessinee, projetee, quadrillee parchemin — PAS Mapbox satellite/3D).
+# Doctrine : WORKFLOW-DATAVIZ.md + STORYBOARD-MAPBOX.md. Outil : openrouter-vision-breakdown.py --model openai/gpt-5.5.
+# ⚠️ Pour Mapbox/GeoAfrique V5 (carte grise terrain) : utiliser PROMPT-BREAKDOWN-CARTO-MAPBOX.txt a la place.
+# ----------------------------------------------------------------------------------------------
+# AVANT D'ENVOYER : remplacer le bloc SUJET par la scene reelle (texte voix, etats, coords reelles VERIFIEES).
+# La palette globale + le mini-kit ci-dessous sont la CHARTE FIGEE (ne pas laisser GPT la redeviner).
+# ----------------------------------------------------------------------------------------------
+
+Tu es directeur technique d'une chaine documentaire premium (style Bloomberg/Vox).
+On te donne un STORYBOARD (image, eventuellement en grille de panneaux = etats successifs). C'est la CIBLE
+a reproduire dans une video Remotion (React) HORIZONTALE 1920x1080, 30fps, en CARTOGRAPHIE d3-geo PLATE
+(carte vectorielle dessinee, PAS Mapbox, PAS satellite, PAS 3D).
+
+=== SUJET (a remplacer pour chaque scene) ===
+<<<SUJET>>>
+
+=== AVERTISSEMENT FORMAT (corrige le biais du storyboard) ===
+Si le storyboard est une grille de panneaux, c'est pour montrer la SEQUENCE — ce n'est PAS le cadrage final.
+Chaque etat sera rendu en PLEIN ECRAN 16:9, l'un apres l'autre (transitions animees, jamais de cut sec).
+Raisonne sur la CHOREGRAPHIE + les ELEMENTS, propose la composition pour un cadre LARGE 1920x1080.
+⛔ REGLE ANTI-VIDE : le contenu doit REMPLIR ~90% du cadre. Zero bande morte. Ne reproduis PAS un cadrage
+compresse vers le centre. Carte ancree (souvent a gauche), marge utilisee (cartouches/labels relies), pas de vide symetrique.
+
+=== STACK + REGLES STRUCTURELLES CARTO PLAT ===
+- La GEOMETRIE (carte, contours, marqueurs, spotlight, fleches, jauges) = TOUJOURS CODEE en SVG/d3-geo. JAMAIS generee.
+  Charge la geo via TopoJSON (countries-50m) + d3-geo geoMercator + fitExtent ; projette les marqueurs aux VRAIES coords (lon,lat).
+- Ce qu'on GENERE (asset fige, fond transparent) = UNIQUEMENT les jetons poses sur la carte : drapeaux, pictos/sceaux
+  si lucide-react ne suffit pas. lucide-react (~1500 icones) est dispo : privilegie-le.
+- Camera = un groupe <g> SVG translate/scale interpole en SPRING entre les coords projetees (voyage d'un point a l'autre). Jamais de cut.
+- Spotlight/focus = clipPath ou mask SVG circulaire NET (pas de blur CSS), centre recalcule depuis lon/lat a chaque frame.
+- Ghost mode = element quitte a ~20% opacity (repere) ou retreci en pastille. Transition TENUE (jamais cut sec).
+
+=== ⛔⛔ DYNAMISME : LA CARTE DOIT VIVRE (la lecon de cette session — anti "parchemin vide / statique") ===
+REGLE DE RYTHME : a chaque ~5 secondes, un EVENEMENT VISUEL doit se produire. MAIS attention au piege :
+⛔ "EVENEMENT" = un MOUVEMENT / une TRANSFORMATION / un changement de COULEUR — PAS un nouvel objet empile.
+   (Lecon A5 gravee : "carte vivante" ≠ "carte chargee" = OPPOSES. On a deja rate en empilant 6 elements -> illisible.)
+   Vivant par le GESTE, epure par le NOMBRE d'objets a l'ecran.
+Sources de dynamisme A PROPOSER (choisis selon la voix, ne les empile pas) :
+- CAMERA JAMAIS IMMOBILE : drift continu lent (le groupe <g> derive doucement) + ZOOM NARRATIF (plonge sur le gisement
+  dont on parle, DEZOOME pour montrer un flux/une echelle). Inspire-toi de @reallifelore (echelle : du monde au detail).
+- TRANSFORMATION de l'existant : un marqueur qui s'allume/change de matiere, le pays qui prend une couleur, une frontiere qui se trace.
+- ANTI-VIDE : ne JAMAIS laisser un point seul sur du parchemin vide. Si un flux part "vers l'Europe/Asie", DEZOOME pour
+  qu'on VOIE reellement la destination (carte plus large, vraie projection) — pas une fleche qui part dans le vide hors-cadre.
+- ANTI-GRIS / COULEUR : ose la couleur (drapeau plein du pays, accent chaud) quand ca sert ; evite le tout-monochrome morne.
+- POP-UPS/VALEURS ANCREES : une donnee (%, operateur) ne flotte JAMAIS seule au milieu. Soit reliee par une fleche/leader a
+  l'element concerne (modele "SANGOMAR + trait"), soit en overlay solide bref (1-2s), soit posee sur la carte. Jamais deconnectee.
+Inspirations carto premium (VOLE leur dynamisme, reste epure) : @geoglobetales + @jacquesadit (reveals, mouvements),
+@reallifelore (zoom du monde au detail), @kingsandgenerals/@bazbattles (carte qui evolue), Vox/Harris/Polymatter/Wendover.
+⛔ CHAQUE etat du breakdown DOIT decrire son MOUVEMENT (camera + ce qui se transforme), pas seulement ses elements figes.
+- Fond = registre PARCHEMIN (voir palette). Bascule de couleur (parchemin->navy) = REMOTION (interpolation hex, fonction mix).
+- INTERDIT : CSS transition, setTimeout, @keyframes, requestAnimationFrame, blur CSS. Tout via useCurrentFrame + interpolate/spring.
+
+=== ⛔ COORDONNEES : NE DEVINE PAS (garde-fou anti-hallucination) ===
+Les coordonnees lon/lat sont fournies dans le SUJET. NE LES INVENTE PAS, ne les "ajuste" pas de memoire.
+Si une coord manque, marque-la "[A_VERIFIER]" plutot que d'inventer. Une coord fausse = un marqueur au mauvais endroit.
+
+=== ⛔ PALETTE GLOBALE FIGEE (charte — NE PAS redeviner) ===
+A reporter en tete du JSON, champ "palette_globale". Ces valeurs PRIMENT sur ce que tu vois dans le storyboard
+(le storyboard Gemini peut avoir derive de la charte) :
+- Fond parchemin : PARCH #e4ddca, PARCH_DARK #d6cdb4, grille GRID #c2a96a (fine, opacity ~0.6).
+- Contour pays / texte sombre : NAVY #16213a, NAVY_DEEP #0d1424 (fond bascule).
+- Remplissage / accent chaud : OCRE #e7bd78, OCRE_DARK #bf9442.
+- Petrole = disque plein NAVY/sombre. Gaz = anneaux TEAL #2a9da0. En-suspens = pointilles GRIS #a9a9a0.
+- Police CHIFFRES/TITRES : "'Bebas Neue','Impact',sans-serif". Police SANS (labels) : "'Inter','Helvetica Neue',Arial,sans-serif".
+  Police cartouche (si plaque) : nom = "'IBM Plex Mono',monospace", stat = "Georgia,serif".
+- Drapeaux : assets generes fond transparent, flat editorial (PAS de tissu/ondulation).
+- ⛔ ACCENTS FR obligatoires dans les strings affichees (SENEGAL, Petrole, Gaz). JAMAIS d'anglais (pas "Oil"/"Gas").
+
+=== TON TRAVAIL ===
+Pour CHAQUE etat du storyboard, decoupe en une table EXHAUSTIVE d'elements. Pour CHAQUE element, TRANCHE (ne laisse RIEN a deviner) :
+verdict (GENERE/REMOTION/HYBRIDE), asset_prompt si genere, placement+anim en TAILWIND + % du cadre 1920x1080,
+et SURTOUT le champ style_exact ci-dessous. Retourne UNIQUEMENT du JSON :
+
+{
+  "scene": "...",
+  "ratio": "16:9",
+  "archetype": "carto-plat-parchemin",
+  "palette_globale": { "<reporte la charte figee ci-dessus, + tout hex non couvert que tu deduis du storyboard>" },
+  "etats": [
+    {
+      "etat": "1 - ...",
+      "sync_voix": "<phrase declencheuse>",
+      "background": { "verdict": "REMOTION", "description": "...", "remotion": "<fond parchemin + grille + grain + bascule>" },
+      "elements": [
+        {
+          "id": "...",
+          "quoi": "...",
+          "verdict": "GENERE|REMOTION|HYBRIDE",
+          "coords": "<si marqueur geo : lon,lat REELS du SUJET, sinon ''>",
+          "asset_prompt": "<si GENERE/HYBRIDE : prompt pret, fond transparent, flat editorial, hex exacts>",
+          "remotion": "<placement Tailwind + % cadre + taille % cadre + anim (spring damping/stiffness, count-up, stroke-dashoffset)>",
+          "style_exact": "<OBLIGATOIRE pour tout element REMOTION : police NOMMEE + hex de CHAQUE couleur (trait, fill, glow) + epaisseur trait (en % cadre) + style precis (pointe de fleche fine/epaisse, cadre bordure Xpx/couleur/glow, dasharray du pointille, radius). Prends d'ABORD la charte figee ; complete par ce que tu mesures dans le storyboard pour ce qui n'y est pas. Objectif : un codeur reproduit la MATIERE EXACTE sans deviner.>",
+          "intention": "<prose : ce que l'element fait RESSENTIR>",
+          "position": "<% du cadre 16:9>",
+          "sync_voix": "<mot declencheur>"
+        }
+      ],
+      "intention_etat": "<prose : l'arc de cet etat>"
+    }
+  ],
+  "transitions": "<comment passer d'un etat au suivant SANS cut : camera spring, spotlight deplace, ghost mode, bascule fond. Decris chaque transition.>",
+  "assets_a_generer": ["<ids verdict GENERE/HYBRIDE>"],
+  "ce_qui_reste_a_remotion": "<SYNTHESE : tout le code Remotion une fois les assets generes (carte d3-geo, marqueurs, spotlight, anims, transitions, timing audio). Perimetre clair pour un agent frais.>",
+  "techniques_inedites": "<AU PLUS 1-2, tenant dans SVG/d3-geo/Remotion frame-driven. Sinon 'aucune'.>"
+}
+
+REGLES style_exact (le coeur de la fidelite — lecon gravee) :
+- C'est OBLIGATOIRE et NON VIDE pour chaque element REMOTION/HYBRIDE. Un trou ici = un codeur qui devine = divergence.
+- La charte figee PRIME ; tu ne tranches que ce qu'elle ne couvre pas (style de fleche, dasharray, glow ponctuel, radius).
+- Donne des valeurs CONCRETES (hex, px/%, nom de police), jamais "doree" ou "fine" en vague.
+REGLES asset_prompt : flat editorial illustration JAMAIS realiste ; fond transparent ; hex exacts ; intensite calibree "juste assez" (premium = retenue).
+REGLES remotion : Tailwind + % du cadre 1920x1080, jamais px de vignette ; taille en % du cadre ; anim + ancrage ensemble.
