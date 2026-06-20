@@ -5,7 +5,7 @@ modèle sache à quoi ressemble la carte sur laquelle on travaille (style, palet
 
 | Fichier | Registre | Ce que le modèle y voit |
 |---|---|---|
-| `carte-souverain-geoafrique-v5.jpg` | Souverain Mapbox | Fond GeoAfrique V5, frontières, plaques pays |
+| `carte-souverain-geoafrique-v5.jpg` | Souverain Mapbox | VRAIE carte GeoAfrique V5 : fond navy `#16213a`, océan bleu, pays gris + frontières blanches fines, pays focus en or (ex: Ghana). Carte pure, sans insert (remplacée 2026-06-20 — l'ancienne était une frame data-viz, pas une carte). |
 | `carte-warmap-sudan-epic.jpg` | WarMap / AES | Parchemin, territoires par faction (couleurs), jetons-véhicules, plaques villes, sceaux, bandeau événement |
 | `carte-atlas-mansa-moussa.jpg` | Atlas | Carte historique illustrée |
 
