@@ -262,7 +262,7 @@
 
 | Composant | Import | Quand Aziz dit... |
 |---|---|---|
-| `CountUp` (preset `bounce` + `decimals`) | ui | "Le chiffre clé monte et claque" — count-up 0→target + overshoot physique + glow (P1). `decimals` pour "0.22%" |
+| `CountUp` (preset `bounce` + `decimals`) | ui | "Le chiffre clé monte et claque" — count-up 0→target + overshoot physique + glow (P1). `decimals` pour "0.22%". ⚠️ GOTCHA : `prefix` défaut = `"$"` → pour un "%" ou un nombre nu, passer `prefix=""` (sinon affiche `$70%`). Le "%" va dans `suffix`. |
 | `HeroMirrorBars` | layouts | "Plus tu es petit plus tu paies" — 2 barres miroir HORIZONTALES rouge/vert + count-up + verdict (vibration/pulse) + slot central (P7) |
 | `HeroVerticalBars` | layouts | "L'un écrase l'autre" — 2 barres VERTICALES qui montent (le contraste de hauteur = le déséquilibre) + count-up + verdict + slot central. Meuble l'espace vertical (P7). Frère vertical de HeroMirrorBars |
 | `FloatingHeroObject` | layouts | "Un objet/icône qui flotte, vivant" — float sin + halo oscillant + ping-ring. Props : `clipCircle` (masque rond, anti-carré PNG), `spin` (balancement rotatif 2e motion). Image OU enfant Lucide/SVG (P5) |

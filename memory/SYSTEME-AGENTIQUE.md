@@ -42,10 +42,13 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
      (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox → préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE
      carte + chaînes de réf + ARSENAL + directive carte vivante ; géo approximative OK, vraie géo au CODE).
    - L'agent-beat écrit le storyboard + (si image) le PROMPT, puis **STOP** — il ne génère pas l'asset payant lui-même.
-4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐ Le chef remonte
-   les storyboards (liens des images uploadées OU le texte) à Aziz **groupés**, AVANT tout code/breakdown. C'est LE
-   checkpoint goût visuel. On ne code/breakdown JAMAIS une direction non validée. (Manqué au 1er test cobaye 2026-06-20 :
-   les agents avaient rabattu sur texte seul sans que le chef remonte rien — corrigé ici.)
+4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐⭐ Le chef remonte
+   les storyboards à Aziz **groupés**, AVANT tout code/breakdown. C'est LE checkpoint goût. On ne code/breakdown
+   JAMAIS une direction non validée. ⛔ **VAUT AUSSI POUR LE STORYBOARD TEXTE** : si les agents jugent l'image inutile
+   (formes connues) et produisent un storyboard TEXTE, le chef DOIT quand même remonter ce texte à Aziz et ATTENDRE
+   sa validation — ne PAS enchaîner sur le breakdown/code sous l'élan. (Erreur du chef RÉPÉTÉE 2× les 2026-06-20 :
+   storyboard texte produit puis checkpoint sauté. Graver la règle ne suffit pas — le chef doit s'ARRÊTER ici, point
+   d'arrêt dur, comme un fan-out qui attend les complétions avant le checkpoint.)
 5. **BREAKDOWN** : on décode le storyboard validé en plan technique. ⛔ Il TRANSCRIT, il ne CRÉE pas (la
    direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. **FORMAT défini pour les DEUX
    branches** (même esprit : JSON par état, `intention_etat` libre, `forme_connue`/`si_nouveau` anti-rabotage,

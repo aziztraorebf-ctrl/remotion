@@ -3,6 +3,12 @@
 > Posée 2026-06-19 (test storyboard beat 90% RDC cobalt). But : une identité visuelle reconnaissable, et
 > empêcher la dérive « chaque génération improvise son fond ». L'agent CHOISIT dans cette palette selon le
 > registre — il n'invente pas un fond. Adaptable au fil du temps, mais on part TOUJOURS d'ici.
+>
+> ⭐⭐ **SOURCE UNIQUE DU FOND — cette palette PRIME (tranché Aziz 2026-06-20).** En cas de doute ou de
+> contradiction avec une autre doctrine (ex : l'ancienne signature « navy/gold » du `SOUVERAIN-REMOTION-PLAYBOOK`),
+> **c'est CETTE liste qui décide, pas le playbook.** Ne PAS « choisir un registre » dans l'abstrait : se fier
+> UNIQUEMENT aux fonds validés ci-dessous. **PARCHEMIN d'abord** (style V3 Sénégal, préféré d'Aziz) ; navy/gold
+> seulement si le parchemin ne colle vraiment pas. Si aucun fond validé ne convient → le signaler, ne pas inventer.
 
 ## Les 4 backgrounds validés (Aziz, 2026-06-19) — fonds PURS (sans sujet ni texte)
 

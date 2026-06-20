@@ -105,6 +105,7 @@ mix-and-match à cocher. Refs visuelles de nos assets (jetons/persos) à joindre
   "camera": {"mode":"frame-driven-jumpTo", "keys":[{"f":,"lng":,"lat":,"zoom":,"pitch":,"bearing":}]},
   "intention_etat": "<ce que l'état doit faire RESSENTIR — langage LIBRE, copié de la direction validée>",
   "forme_connue": "<composant exact qui le fait, OU null si rien n'existe>",
+  "forme_verifiee": "<chemin RÉEL grep'd du composant — OBLIGATOIRE si forme_connue≠null (anti-fantôme, cf. AnimatedCaravan) ; null = pas vérifié = STOP>",
   "forme_couvre_tout": <true|false>,            // false = le composant ne fait l'intention QU'EN PARTIE
   "ce_qui_manque": "<si forme_couvre_tout=false : ce que le composant ne fait pas, à compléter>",
   "si_nouveau": "<si forme_connue=null : description RICHE et libre de l'effet, sans le réduire à l'existant>",
