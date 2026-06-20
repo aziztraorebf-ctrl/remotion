@@ -14,6 +14,18 @@
 - Mêmes règles que Remotion : **multi-états (DÉBUT→FIN) + ÉPURE** (chaque état = incrément minimal, zéro texte
   redondant — voir `_PALETTE-BACKGROUNDS.md` § storyboard, et [[CONTINUITE-SCENE-INTENTION-DABORD]]).
 
+### ⚠️ LES ANNOTATIONS DU STORYBOARD NE SONT PAS LE RENDU FINAL (clarification cruciale)
+Un storyboard est une **image FIGÉE** : il ne peut pas montrer le mouvement réel. Les **flèches, traits, labels
+de panneau** (« LE FLUX S'ARRÊTE », « LA RUPTURE ») sont des **conventions de storyboard** (comme dans un
+storyboard de film) — elles disent l'INTENTION de chaque état, elles ne sont PAS forcément à l'écran final.
+- Une flèche figée = « ici, ça se déplace dans cette direction » (au code : un arc qui se trace, une unité qui avance).
+- Un label = ce que l'état raconte (au code : porté par la voix off + le visuel, pas forcément écrit).
+- **Le vrai MOUVEMENT (caméra qui recule, couleur qui envahit, arc qui se trace) ne vit PAS dans l'image — il vit
+  dans le BREAKDOWN** (étape suivante) : « état 2→3 : caméra zoome sur Gibraltar 30f, arc 0→100% en dashoffset,
+  Maroc gris→or en opacité ». Le storyboard montre QUOI ; le breakdown dit COMMENT ça bouge.
+- ⛔ Ne jamais confondre « storyboard chargé d'annotations » avec « scène finale chargée ». Au contraire : la scène
+  finale ÉPURE (la voix dit, le visuel montre). Les annotations sont un échafaudage de conception.
+
 ## LE PRÉAMBULE (2 couches + nos contraintes — à JOINDRE/DIRE à chaque storyboard carte)
 
 Pour que le modèle propose une direction CRÉATIVE (pas plate), on le cadre AVANT de générer :
@@ -59,11 +71,12 @@ Seuls **INTERDITS techniques** posés (pour qu'il reste dans nos moyens, sans ri
 - PAS de 3D / globe type After Effects-GeoLayers (on est Mapbox 2.5D : pitch oui, vrai 3D non).
 - La géo reste réelle (pas de continent inventé) — au CODE ; au storyboard l'approximation est tolérée.
 
-*Ce qu'on SAIT faire — palette de moyens DISPONIBLES (pour qu'il propose du codable, PAS une checklist à cocher).*
-Le modèle peut piocher là-dedans OU proposer autre chose dans le même esprit. C'est ce qui existe, pas ce qu'il faut faire :
-- Souverain : `GeoCountryPlaque`, `FlagFill`, flux/arcs, `camCountryApproach`, palette navy/gold sur `#16213a`.
-- WarMap : jetons, drapeaux ondulés, fronts qui avancent, sceaux d'événement, bannière flottante.
-- Atlas : persos PixelLab, décors illustrés, registre épique (les persos finaux différeront du storyboard).
+*Ce qu'on SAIT faire — l'ARSENAL (source d'inspiration, PAS une checklist).* Le modèle DOIT savoir l'étendue de
+notre boîte à outils, sinon il se limite à colorier des pays. On lui passe le bloc registre de
+`public/_shared/refs/cartes/_ARSENAL.md` (Souverain / WarMap / Atlas) avec la formule : **« Voici ce qu'on sait
+faire. On n'est PAS limité à ça — sers-t'en comme inspiration et VA PLUS LOIN. »** C'est riche exprès (jetons,
+losanges, sprites PixelLab, FX, contagion, scanner, sceaux animés…) pour qu'il propose ambitieux — jamais un
+mix-and-match à cocher. Refs visuelles de nos assets (jetons/persos) à joindre aussi si pertinent (voir `_ARSENAL.md`).
 
 **[4] L'INTENTION du beat** (1 verbe) + la narration.
 
