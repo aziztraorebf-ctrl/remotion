@@ -111,6 +111,34 @@ SELF-REVIEW 19/23 → REVIEW GEMINI (1 appel) → CORRECTIONS → UPLOAD
 1. **Scan COMPLET** : lire TOUT `COMPOSANTS-INDEX.md` (toutes les sections), pas seulement HERO DATA. Aziz ne mémorise pas 71 composants — Claude le fait.
 2. **Combinaison obligatoire** : un beat premium = plusieurs templates assemblés (corps + insert + overlay + sous-titre). Jamais un seul template tout du long.
 
+### ⭐ FORMAT DU BREAKDOWN REMOTION (le pont storyboard→timing — pendant du format Mapbox)
+
+> Posé 2026-06-20 (leçon cobaye : sans format explicite, l'agent-beat INVENTE la répartition des frames → résultat
+> plausible mais non reproductible et non calé sur l'audio). Même esprit que `STORYBOARD-MAPBOX.md` § FORMAT :
+> le breakdown TRANSCRIT le storyboard validé, il ne CRÉE pas. ⛔ Le timing se cale sur la VOIX (frame0 = 1er mot
+> du segment de CE beat — `ffprobe` + alignment AVANT), JAMAIS réparti arbitrairement.
+
+**(A) JSON — un objet par ÉTAT du storyboard :**
+```
+{
+  "etat": <n>, "frames": "<début>-<fin>",
+  "intention_etat": "<ce que l'état doit faire RESSENTIR — langage libre, copié du storyboard validé>",
+  "forme_connue": "<composant(s) exact(s) qui le font, OU null>",
+  "forme_couvre_tout": <true|false>, "ce_qui_manque": "<si false : ce qui reste à coder>",
+  "si_nouveau": "<si forme_connue=null : description riche de l'effet, sans le réduire à l'existant>",
+  "anim": {"type":"spring|interpolate", "spring":{"damping":,"stiffness":}, "from":, "to":, "property":"translateY|scale|opacity|..."},
+  "cout_estime": "trivial|ajustement|proto-rnd", "fallback_si_echec": "<version dégradée la moins trahissante>",
+  "sync_voix": "<le mot du segment sur lequel cet état/reveal se cale>",
+  "sfx": [{"at":<frame>,"type":"<son>","gain":<≥0.50>}]
+}
+```
++ `"fond"` (registre de fond validé, `_PALETTE-BACKGROUNDS.md`) + `"forbid"` (REJETS : `CSS transition`, `setTimeout`,
+`@keyframes`, `requestAnimationFrame`, opacity-seule sans micro-motion, pop mécanique sauf overshoot count-up voulu)
++ `"continuite_avec"` (beat précédent). **(B) Résumé prose** 5-8 lignes pour validation Aziz.
+
+⚠️ **Le nombre d'états se cale sur les PIVOTS de la narration** (1 état = 1 nouveau mot-clé porteur), pas sur un compte
+arbitraire — c'est ce qui rend la répartition des frames déterministe au lieu d'inventée.
+
 ---
 
 ## 3. TEMPLATE STORYBOARD BEAT REMOTION (le master)

@@ -6,6 +6,15 @@
 > mouvement, sans son). Procédure : 1 appel → vérifier chaque point contre les frames réelles → appliquer
 > seulement ce qui est VRAI → STOP. Jamais de boucle modèle→fix→modèle. Le jugement d'Aziz prime toujours.
 
+> ⚠️ **GATE DE LA BOUCLE REVIEW = `phase_match_avg`, PAS le `score` global** (leçon cobaye 2026-06-20).
+> Le score global Gemini est BRUITÉ et NON MONOTONE : il a baissé (6.5→5.5) alors que le render s'était
+> AMÉLIORÉ et que les `match_pct` par phase avaient monté. `visual_review.py` calcule désormais
+> `phase_match_avg` (moyenne des `match_pct` par phase) = le signal STABLE. Gate la boucle dessus (viser
+> ≥80% par phase), pas sur `score`. Toujours self-review AVANT l'appel (forme ton jugement, trie les
+> hallucinations — au cobaye, 3 fixes sur 5 étaient hallucinés). MAX 2 appels, puis STOP même si <seuil.
+> Faux signal connu : un storyboard multi-panneaux horizontal fait halluciner un format 9:16 à Gemini →
+> lui passer 1 panneau de réf à la fois OU préciser le format cible dans le prompt.
+
 ---
 
 ## ⛔ GATE AUTOMATIQUE — review AVANT de présenter un rendu (NON-NEGOTIABLE, imposé par hook)

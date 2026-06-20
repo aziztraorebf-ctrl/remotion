@@ -43,10 +43,12 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    checkpoint goût visuel. On ne code/breakdown JAMAIS une direction non validée. (Manqué au 1er test cobaye 2026-06-20 :
    les agents avaient rabattu sur texte seul sans que le chef remonte rien — corrigé ici.)
 5. **BREAKDOWN** : on décode le storyboard validé en plan technique. ⛔ Il TRANSCRIT, il ne CRÉE pas (la
-   direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. Data-viz/Remotion → composants +
-   timing. ✅ **Carte/Mapbox → FORMAT DÉFINI + ÉPROUVÉ** (JSON par état : caméra frame-driven, `intention_etat`
-   libre, `forme_connue`/`si_nouveau` anti-rabotage, `cout_estime`, `fallback_si_echec`, `forbid`) →
-   `memory/doctrines/STORYBOARD-MAPBOX.md` § FORMAT.
+   direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. **FORMAT défini pour les DEUX
+   branches** (même esprit : JSON par état, `intention_etat` libre, `forme_connue`/`si_nouveau` anti-rabotage,
+   `cout_estime`, `fallback_si_echec`, `sync_voix`, `forbid`) :
+   - **Carte/Mapbox** → `memory/doctrines/STORYBOARD-MAPBOX.md` § FORMAT (caméra frame-driven lon/lat/zoom).
+   - **Data-viz/Remotion** → `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` § FORMAT BREAKDOWN (anim spring/interpolate,
+     états calés sur les PIVOTS de la voix — jamais frames réparties arbitrairement).
 6. **CODE** dans le bon emplacement (règle 3 zones, voir INTENTION-FORME-INDEX § « OÙ RANGER ») : livrable →
    `<pilier>/<episode>/`. Passe par la **session** (`/beat` → `beat-session.py` ou `mapbox-session.py`).
 7. **REVIEW + PRÉSENTATION** : la session écrit `<mp4>.review.json` adjacent (Gemini, seuil 8/10). Le **hook**
@@ -87,8 +89,11 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
   Validé par agents vierges (2/3 trouvent la forme du 1er coup sans connaître l'historique).
 - ✅ **CLARIFIÉ 2026-06-20** : le storyboard est NON-SAUTABLE (image ou texte, voir étape 3). Le chef remonte les
   liens/textes à Aziz avant tout code. Câblé dans les sessions Mapbox (phase storyboard+breakdown) et Remotion (gate PNG).
-- ⏳ **Pont storyboard→timing chiffré** : défini pour Mapbox (`STORYBOARD-MAPBOX.md` § FORMAT). PAS encore d'équivalent
-  formalisé pour Remotion/data-viz (un agent doit inventer le mapping états→frames/spring). À définir (leçon cobaye).
+- ✅ **RÉSOLU 2026-06-20** : pont storyboard→timing défini pour les DEUX branches (Mapbox : `STORYBOARD-MAPBOX.md` ;
+  Remotion : `SOUVERAIN-REMOTION-PLAYBOOK.md` § FORMAT BREAKDOWN). Plus d'invention de frames par l'agent.
+- ✅ **RÉSOLU 2026-06-20** : gate de la boucle review fiabilisé. `visual_review.py` extrait désormais le vrai score
+  (bug tableau JSON corrigé) + calcule `phase_match_avg` (signal STABLE). Gate sur `phase_match_avg` ≥80%, PAS sur
+  le score global (bruité). Doctrine : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
 - ✅ **RÉSOLU 2026-06-20** : le format du breakdown Mapbox (pont storyboard→code carte) est DÉFINI et ÉPROUVÉ
   (agent réel, piège créatif → idée préservée). → `STORYBOARD-MAPBOX.md` § FORMAT.
 - L'orchestration complète bout-en-bout reste à éprouver sur une vraie mini-vidéo propre (le révélateur des

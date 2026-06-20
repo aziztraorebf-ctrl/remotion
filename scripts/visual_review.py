@@ -292,9 +292,13 @@ def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: s
 
         try:
             parsed = json.loads(raw)
-            score = parsed.get('score', '?')
-            verdict = parsed.get('verdict', '?')
-            r1_raw = parsed.get('r1_violations', [])
+            # Gemini renvoie parfois un TABLEAU [{...}] au lieu d'un objet {...}.
+            # (bug constaté 2026-06-20 : score restait '?' car parsed.get() sur une liste echoue.)
+            obj = parsed[0] if isinstance(parsed, list) and parsed else parsed
+            obj = obj if isinstance(obj, dict) else {}
+            score = obj.get('score', '?')
+            verdict = obj.get('verdict', '?')
+            r1_raw = obj.get('r1_violations', [])
             # r1_violations peut être une liste de dicts ou de strings selon Gemini
             r1 = []
             for v in r1_raw:
@@ -302,15 +306,27 @@ def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: s
                     r1.append(v)
                 elif isinstance(v, str):
                     r1.append({'segment': v, 'static_duration_s': '?', 'fix': ''})
-        except json.JSONDecodeError:
+            # SIGNAL STABLE : moyenne des match_pct par phase. Le score GLOBAL Gemini est
+            # BRUITÉ (non monotone : il peut baisser quand le render s'ameliore). Le gate
+            # de la boucle review doit s'appuyer sur phase_match_avg, PAS sur score seul.
+            # (leçon cobaye 2026-06-20.)
+            phase_pcts = [obj[k].get('match_pct') for k in obj
+                          if k.startswith('phase_') and isinstance(obj.get(k), dict)
+                          and isinstance(obj[k].get('match_pct'), (int, float))]
+            phase_match_avg = round(sum(phase_pcts) / len(phase_pcts), 1) if phase_pcts else None
+        except (json.JSONDecodeError, TypeError, KeyError):
             parsed = None
             score = '?'
             verdict = '?'
             r1 = []
+            phase_match_avg = None
 
         print(f"\n{'='*80}")
         print(f"GEMINI 3.1-PRO — BEAT REVIEW (JSON actionnable)")
-        print(f"Score: {score}/10 — {verdict}")
+        print(f"Score global (BRUITÉ, indicatif): {score}/10 — {verdict}")
+        if phase_match_avg is not None:
+            print(f"Phase match avg (SIGNAL STABLE pour le gate): {phase_match_avg}% "
+                  f"— gate boucle review : viser >= 80% par phase, PAS le score global.")
         if r1:
             print(f"R1 violations: {len(r1)}")
             for v in r1:
@@ -320,6 +336,7 @@ def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: s
         print(f"\n{'='*80}\n")
 
         return {'text': raw, 'parsed': parsed, 'score': score, 'verdict': verdict,
+                'phase_match_avg': phase_match_avg,
                 'r1_violations': r1, 'provider': 'gemini-3.1-pro-preview'}
 
     except requests.HTTPError as e:
@@ -496,6 +513,7 @@ Exemples:
                 'provider': result.get('provider'),
                 'score': result.get('score'),
                 'verdict': result.get('verdict'),
+                'phase_match_avg': result.get('phase_match_avg'),
                 'r1_violations': result.get('r1_violations', []),
                 'review': result.get('parsed') or result.get('text'),
             }, f, ensure_ascii=False, indent=2)
