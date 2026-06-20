@@ -1,0 +1,41 @@
+# TEMPLATE — Prompt de DIFF cible-vs-render (a donner a GPT-5.5 avec une planche IMAGE_A=cible | IMAGE_B=render).
+# Genere/prouve 2026-06-20. Doctrine : WORKFLOW-DATAVIZ.md etape 6. 1 PASSE, signal pas juge.
+# ----------------------------------------------------------------------------------------------
+
+On te donne UNE image contenant DEUX panneaux cote a cote :
+- IMAGE A (gauche) = la CIBLE (storyboard data-viz premium, etat "70% des reserves de phosphate").
+- IMAGE B (droite) = NOTRE RENDER actuel (reproduction en cours, a corriger pour matcher A).
+
+Les deux representent le MEME panneau. B doit devenir identique a A.
+
+Ton travail : DIAGNOSTIQUE precisement TOUS les ecarts de B par rapport a A, element par element,
+et donne les CORRECTIONS EXACTES a appliquer. Notre stack = Remotion + Tailwind, render 1920x1080.
+
+Pour CHAQUE element (le grand "70", le picto Terre+phosphate, le label RESERVES MONDIALES, le trait de
+liaison, le cartouche PHOSPHATE, la barre verticale phosphate, le segment 30%, le texte 30%, les fleches,
+RESTE DU MONDE, la source), compare A vs B et dis :
+
+Retourne UNIQUEMENT du JSON :
+{
+  "ecarts": [
+    {
+      "element": "<id>",
+      "probleme": "<ce qui differe entre B et A, precis : taille / position / couleur / forme / manquant>",
+      "dans_A_cible": "<comment c'est dans A : taille en % du cadre (largeur ET hauteur), position en % (centre x,y), couleur>",
+      "dans_B_render": "<comment c'est dans B actuellement, en % aussi>",
+      "correction_tailwind": "<les classes Tailwind / valeurs EXACTES a mettre pour que B = A (ex 'w-[22%]', 'left-[15%]', taille de police, couleur hex)>",
+      "severite": "majeur|mineur"
+    }
+  ],
+  "ecart_principal": "<en 1 phrase : le plus gros ecart visuel qui fait que B ne ressemble pas encore a A>",
+  "verdict_fidelite": "<estimation honnete : B reproduit A a ~X% ?>"
+}
+
+IMPORTANT :
+- MESURE les tailles en regardant l'image, ne devine pas. Donne largeur ET hauteur en % du cadre 1920x1080.
+- Le cadre fait 100% de large sur 100% de haut. Un element qui va de 10% a 30% de la largeur fait 20% de large.
+- Sois exhaustif et precis sur les TAILLES (c'est la ou B s'ecarte le plus de A).
+- Donne des corrections directement applicables (classes Tailwind, valeurs), pas des conseils vagues.
+- ⛔ IGNORE les ANNOTATIONS DE STORYBOARD presentes dans A : titre d'etat (ex "ETAT 3 — L'ecrasement"),
+  timer/chrono (ex "00:08"), numero de case. Ce sont des echafaudages du storyboard, PAS du contenu a
+  reproduire. NE les liste PAS comme ecarts et NE penalise PAS leur absence dans B (sinon score fausse a la baisse).

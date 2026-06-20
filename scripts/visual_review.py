@@ -54,10 +54,19 @@ KIMI_MODEL = 'kimi-k2.5'
 
 # ─── Prompts ─────────────────────────────────────────────────────────────────
 
-GEMINI_BEAT_REVIEW_PROMPT = """Tu es directeur artistique senior pour la série "Souverain" par GéoAfrique (YouTube Shorts, 1080×1920, 30fps).
+# Registres de palette Souverain (le beat dit lequel — sinon faux-bas : un beat parchemin/ocre
+# VALIDÉ etait penalise par une palette navy/gold hardcodee. Cause #4 du gate bruite, terrain 2026-06-20).
+PALETTE_REGISTERS = {
+    "navy":      "navy #112240 (fond), gold #c8a951 (donnee cle), ivory #f0e8d8 (texte)",
+    "parchemin": "parchemin creme #ece3cb (fond), ocre/terre cuite #b06a2c (donnee cle + traits), encre sepia #5a4528 (texte)",
+    "neon":      "noir #111111 (fond), glow cyan/magenta/vert (donnee cle) — registre marche/tech UNIQUEMENT",
+}
 
-Palette locked : navy #112240, gold #c8a951, ivory #f0e8d8.
+GEMINI_BEAT_REVIEW_PROMPT = """Tu es directeur artistique senior pour la série "Souverain" par GéoAfrique (format {fmt}, 30fps).
+
+Palette locked (registre {palette_name}) : {palette_desc}.
 Police titres : Bebas Neue condensé. Police stats : monospace.
+⛔ Ne juge la palette QUE contre CE registre. Ne reclame PAS navy/gold si le registre est parchemin (ou inversement).
 Règle R1 : aucun segment > 8s sans changement visuel (permanent motion comme glow/flottement ne compte PAS).
 
 {storyboard_instruction}
@@ -166,13 +175,40 @@ def get_mime(filepath: str) -> str:
             'jpeg': 'image/jpeg', 'png': 'image/png', 'webp': 'image/webp'}.get(ext, 'image/jpeg')
 
 
-def extract_frames(video_path: str, n_frames: int = 5, offset: float = 0.3) -> list[Path]:
+def extract_frames(video_path: str, n_frames: int = 5, offset: float = 0.3,
+                   state_seconds: list[float] | None = None) -> list[Path]:
     """
-    Extrait n frames selon la règle +offset% (défaut +30%).
-    offset=0.3 signifie : frame_i = segment_start + 30% de la durée du segment.
-    Pour une extraction uniforme sur toute la vidéo, distribue les points à +offset dans chaque tranche.
-    Scale : 243px de largeur (token-efficient).
+    Extrait des frames pour la review.
+
+    Deux modes :
+      - PAR DÉFAUT (state_seconds=None) : règle +offset% — n_frames segments égaux, frame à
+        +offset dans chaque tranche. Aveugle aux états du beat (legacy).
+      - ALIGNÉ ÉTATS (state_seconds fourni) : extrait UNE frame par timecode (en secondes),
+        au CŒUR de chaque état du breakdown. Corrige la cause #3 du gate bruité (frames à
+        intervalle fixe non alignées sur les états -> faux "élément manquant"). Doctrine :
+        REVIEW-TOOLS-INDEX.md § DIAGNOSTIC.
+
+    Scale : largeur 360px, hauteur AUTO (-2) — NE déforme PLUS (l'ancien 243x432 forçait du
+    9:16 sur un render 16:9). token-efficient + ratio préservé.
     """
+    tmp_dir = tempfile.mkdtemp()
+    scale = "scale=360:-2"
+
+    if state_seconds:
+        # Mode aligné états : 1 frame par timecode (seek précis), nommées dans l'ordre.
+        frames = []
+        for i, t in enumerate(state_seconds, 1):
+            out = f'{tmp_dir}/frame_{i:02d}.jpg'
+            subprocess.run([
+                'ffmpeg', '-y', '-ss', f'{max(0.0, t):.3f}', '-i', video_path,
+                '-frames:v', '1', '-vf', scale, out
+            ], capture_output=True)
+            if Path(out).exists():
+                frames.append(Path(out))
+        print(f"Frames extraites (ALIGNÉES états) aux secondes : {[round(s,2) for s in state_seconds]}")
+        return sorted(frames)
+
+    # Mode legacy : règle +offset%
     result = subprocess.run(
         ['ffprobe', '-v', 'quiet', '-select_streams', 'v:0',
          '-show_entries', 'stream=nb_frames', '-of', 'csv=p=0', video_path],
@@ -183,22 +219,53 @@ def extract_frames(video_path: str, n_frames: int = 5, offset: float = 0.3) -> l
     except Exception:
         total = 300
 
-    # Divise en n_frames segments égaux, extrait à offset% dans chaque segment
     segment_size = total / n_frames
     frame_indices = [int(segment_size * i + segment_size * offset) for i in range(n_frames)]
     frame_indices = [min(f, total - 1) for f in frame_indices]
 
     select = '+'.join(f'eq(n,{f})' for f in frame_indices)
-    tmp_dir = tempfile.mkdtemp()
     subprocess.run([
         'ffmpeg', '-y', '-i', video_path,
-        '-vf', f"select='{select}',scale=243:432,setpts=N/TB",
+        '-vf', f"select='{select}',{scale},setpts=N/TB",
         '-vsync', 'vfr', f'{tmp_dir}/frame_%02d.jpg'
     ], capture_output=True)
 
     frames = sorted(Path(tmp_dir).glob('frame_*.jpg'))
     print(f"Frames extraites ({n_frames} × +{int(offset*100)}%) : indices {frame_indices}")
     return frames
+
+
+def split_storyboard_panels(storyboard_path: str, n_panels: int) -> list[Path]:
+    """
+    Découpe une planche storyboard multi-panneaux en N images individuelles (cause #1 du gate
+    bruité : Gemini reçoit UNE image 3-panneaux et devine mal quel panneau ↔ quelle frame).
+
+    Heuristique : panneaux disposés HORIZONTALEMENT (gauche->droite, convention storyboard),
+    découpe en n_panels colonnes égales. Si la planche est plutôt verticale (hauteur > largeur),
+    découpe en lignes. Retourne les panneaux dans l'ordre temporel (état 1..N).
+    """
+    try:
+        from PIL import Image
+    except ImportError:
+        print("[split_storyboard] PIL absent — panneau non découpé, planche entière utilisée.")
+        return [Path(storyboard_path)]
+
+    img = Image.open(storyboard_path)
+    w, h = img.size
+    tmp_dir = tempfile.mkdtemp()
+    panels = []
+    horizontal = w >= h  # planche large = panneaux côte à côte
+    for i in range(n_panels):
+        if horizontal:
+            box = (int(w * i / n_panels), 0, int(w * (i + 1) / n_panels), h)
+        else:
+            box = (0, int(h * i / n_panels), w, int(h * (i + 1) / n_panels))
+        crop = img.crop(box)
+        out = Path(tmp_dir) / f'panel_{i+1:02d}.jpg'
+        crop.convert('RGB').save(out)
+        panels.append(out)
+    print(f"Storyboard découpé en {n_panels} panneaux ({'colonnes' if horizontal else 'lignes'}).")
+    return panels
 
 
 def build_openai_content(filepath: str, prompt: str, n_frames: int, offset: float) -> list:
@@ -216,40 +283,79 @@ def build_openai_content(filepath: str, prompt: str, n_frames: int, offset: floa
 # ─── Review Gemini ───────────────────────────────────────────────────────────
 
 def review_gemini(filepath: str, storyboard_path: str | None, prompt_override: str | None,
-                  n_frames: int, offset: float) -> dict | None:
+                  n_frames: int, offset: float,
+                  state_seconds: list[float] | None = None, ratio: str = "16:9",
+                  palette: str = "navy") -> dict | None:
     """
     Gemini 3.1-pro-preview — review beat Souverain avec code_values.
     Retourne JSON actionnable. responseMimeType=application/json force JSON propre, jamais tronqué.
+
+    GATE FIABILISÉ (3 causes du faux-bas corrigées — REVIEW-TOOLS-INDEX.md § DIAGNOSTIC) :
+      - cause #1 : si state_seconds fourni, on DÉCOUPE la planche storyboard en panneaux et on
+        APPARIE panneau_i ↔ frame_i (Gemini ne devine plus quel panneau va avec quelle frame).
+      - cause #2 : on DIT le ratio cible (le storyboard et le render sont au même ratio désormais —
+        plus de pénalité de format inévitable).
+      - cause #3 : frames extraites AUX frontières d'états (state_seconds), pas à intervalle fixe.
+    Sans state_seconds : comportement legacy (planche entière + frames +offset%).
     """
     if not GEMINI_API_KEY:
         print("Erreur : GEMINI_API_KEY absent du .env")
         return None
 
-    storyboard_instruction = (
-        "Le PREMIER bloc image est le STORYBOARD DE RÉFÉRENCE. "
-        "Les images suivantes sont les frames du rendu. Compare chaque phase rendu vs storyboard."
-        if storyboard_path else
-        "Aucun storyboard fourni — évaluer les frames sur les critères Souverain uniquement."
-    )
+    ext = Path(filepath).suffix.lower()
+    is_video = ext in ['.mp4', '.mov', '.avi', '.webm']
+    aligned = bool(state_seconds) and is_video
 
+    if aligned:
+        storyboard_instruction = (
+            f"Render et storyboard sont au MÊME ratio {ratio} — ne pénalise PAS le format. "
+            "Les images sont APPARIÉES par paires : PANNEAU i (storyboard de l'état i) puis FRAME i "
+            "(le rendu réel de ce même état, extrait au cœur de l'état). Compare CHAQUE paire "
+            "panneau_i ↔ frame_i — c'est le même moment du beat. N'attends PAS un élément de l'état i+1 "
+            "dans la frame i."
+        )
+    elif storyboard_path:
+        storyboard_instruction = (
+            f"Le PREMIER bloc image est le STORYBOARD DE RÉFÉRENCE (ratio {ratio}, comme le render). "
+            "Les images suivantes sont les frames du rendu. Compare chaque phase rendu vs storyboard. "
+            "Ne pénalise pas une différence de format."
+        )
+    else:
+        storyboard_instruction = "Aucun storyboard fourni — évaluer les frames sur les critères Souverain uniquement."
+
+    fmt_map = {"16:9": "16:9 horizontal 1920x1080", "9:16": "Short vertical 1080x1920", "1:1": "carre 1080x1080"}
+    palette_desc = PALETTE_REGISTERS.get(palette, PALETTE_REGISTERS["navy"])
     prompt = prompt_override or GEMINI_BEAT_REVIEW_PROMPT.format(
-        storyboard_instruction=storyboard_instruction
+        storyboard_instruction=storyboard_instruction,
+        fmt=fmt_map.get(ratio, fmt_map["16:9"]),
+        palette_name=palette,
+        palette_desc=palette_desc,
     )
 
     parts = []
 
-    if storyboard_path:
-        parts.append({"inline_data": {"mime_type": get_mime(storyboard_path), "data": encode_b64(storyboard_path)}})
-        parts.append({"text": "=== STORYBOARD DE RÉFÉRENCE ==="})
-
-    ext = Path(filepath).suffix.lower()
-    if ext in ['.mp4', '.mov', '.avi', '.webm']:
-        frames = extract_frames(filepath, n_frames, offset)
+    if aligned:
+        # Mode apparié : panneau_i + frame_i en paires ordonnées.
+        frames = extract_frames(filepath, n_frames, offset, state_seconds=state_seconds)
+        panels = split_storyboard_panels(storyboard_path, len(frames)) if storyboard_path else [None] * len(frames)
         for i, fp in enumerate(frames, 1):
+            panel = panels[i-1] if i-1 < len(panels) else None
+            if panel is not None:
+                parts.append({"inline_data": {"mime_type": "image/jpeg", "data": encode_b64(panel)}})
+                parts.append({"text": f"=== PANNEAU STORYBOARD état {i}/{len(frames)} ==="})
             parts.append({"inline_data": {"mime_type": "image/jpeg", "data": encode_b64(fp)}})
-            parts.append({"text": f"=== FRAME RENDU {i}/{len(frames)} ==="})
+            parts.append({"text": f"=== FRAME RENDU état {i}/{len(frames)} (à comparer au panneau ci-dessus) ==="})
     else:
-        parts.append({"inline_data": {"mime_type": get_mime(filepath), "data": encode_b64(filepath)}})
+        if storyboard_path:
+            parts.append({"inline_data": {"mime_type": get_mime(storyboard_path), "data": encode_b64(storyboard_path)}})
+            parts.append({"text": "=== STORYBOARD DE RÉFÉRENCE ==="})
+        if is_video:
+            frames = extract_frames(filepath, n_frames, offset)
+            for i, fp in enumerate(frames, 1):
+                parts.append({"inline_data": {"mime_type": "image/jpeg", "data": encode_b64(fp)}})
+                parts.append({"text": f"=== FRAME RENDU {i}/{len(frames)} ==="})
+        else:
+            parts.append({"inline_data": {"mime_type": get_mime(filepath), "data": encode_b64(filepath)}})
 
     parts.append({"text": prompt})
 
@@ -476,10 +582,27 @@ Exemples:
                         help='Frames à extraire depuis la vidéo (défaut: 5)')
     parser.add_argument('--offset', type=float, default=0.3,
                         help='Règle +X%% dans chaque segment (défaut: 0.3 = +30%%)')
+    parser.add_argument('--state-boundaries', dest='state_boundaries', default=None,
+                        help='GATE FIABILISÉ (--model gemini) : timecodes en SECONDES, séparés par virgule, '
+                             'au cœur de chaque état du breakdown (ex "1.2,4.8,9.0"). Active la comparaison '
+                             'APPARIÉE panneau_i↔frame_i + extraction alignée sur les états. Sans ça : mode legacy.')
+    parser.add_argument('--ratio', default='16:9', choices=['16:9', '9:16', '1:1'],
+                        help='Ratio du render ET du storyboard (défaut 16:9). Dit à Gemini de ne pas pénaliser le format.')
+    parser.add_argument('--palette', default='navy', choices=['navy', 'parchemin', 'neon'],
+                        help='Registre de palette du beat (--model gemini). ⛔ DOIT matcher le beat : un beat parchemin '
+                             'note avec --palette navy est faux-bas (Gemini reclame du gold a tort). Defaut navy.')
     parser.add_argument('--prompt', help='Override du prompt')
     parser.add_argument('--output', help='Sauvegarder le résultat dans un fichier')
 
     args = parser.parse_args()
+
+    state_seconds = None
+    if args.state_boundaries:
+        try:
+            state_seconds = [float(s.strip()) for s in args.state_boundaries.split(',') if s.strip()]
+        except ValueError:
+            print(f"Erreur : --state-boundaries invalide : '{args.state_boundaries}' (attendu : '1.2,4.8,9.0')")
+            sys.exit(1)
 
     if not os.path.exists(args.file):
         print(f"Erreur : fichier introuvable : {args.file}")
@@ -492,7 +615,8 @@ Exemples:
     result = None
 
     if args.model == 'gemini':
-        result = review_gemini(args.file, args.storyboard, args.prompt, args.frames, args.offset)
+        result = review_gemini(args.file, args.storyboard, args.prompt, args.frames, args.offset,
+                               state_seconds=state_seconds, ratio=args.ratio, palette=args.palette)
     elif args.model == 'qwen':
         prompt = args.prompt or QWEN_JSON_PROMPT
         result = review_qwen(args.file, prompt, args.frames, args.offset)

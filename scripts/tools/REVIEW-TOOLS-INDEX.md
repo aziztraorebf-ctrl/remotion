@@ -14,15 +14,32 @@
 > signal confirmatoire. Toujours self-review AVANT l'appel (au cobaye, la plupart des fixes Gemini étaient hallucinés).
 > MAX 2 appels puis STOP même si <seuil.
 >
-> 🔬 **DIAGNOSTIC du gate (creusé 2026-06-20, à corriger en session dédiée — `visual_review.py:218-254`)** : pourquoi
-> `phase_match_avg` est faux-bas sur un bon render. 3 causes structurelles :
-> 1. **Storyboard envoyé en UNE image 3-panneaux** → Gemini doit deviner quel panneau ↔ quelle frame, il confond.
-> 2. **Ratio storyboard (panneaux verticaux) ≠ render (16:9)** → Gemini pénalise une différence de format inévitable.
-> 3. **Frames extraites à intervalle fixe** (`extract_frames` offset 0.3) → pas alignées sur les états du beat → une
->    frame pré-révélation est comparée au panneau « final » → faux « élément manquant ».
-> **FIX à implémenter (session dédiée)** : découper la planche storyboard en panneaux + comparer panneau_i ↔ frame
-> de l'état_i (pas l'image entière vs frames au hasard) + extraire les frames AUX frontières d'états du breakdown (pas
-> à intervalle fixe) + dire le ratio cible (16:9) dans le prompt. Tant que non fait : `phase_match_avg` = indicatif, le juge = self-review.
+> 🔬 **DIAGNOSTIC du gate (creusé 2026-06-20) — ✅ FIX IMPLÉMENTÉ le 2026-06-20** : pourquoi `phase_match_avg` était
+> faux-bas sur un bon render. 3 causes structurelles, toutes corrigées :
+> 1. **Storyboard envoyé en UNE image 3-panneaux** → Gemini devinait mal quel panneau ↔ quelle frame.
+>    ✅ FIX : `split_storyboard_panels()` découpe la planche + appariement **panneau_i ↔ frame_i** en paires ordonnées.
+> 2. **Ratio storyboard vertical ≠ render 16:9** → Gemini pénalisait un format inévitable.
+>    ✅ FIX double : (a) le storyboard se génère désormais au RATIO du render (`--ratio` sur `gemini-storyboard-panels.py`,
+>    défaut 16:9) ; (b) le prompt review DIT le ratio (« ne pénalise pas le format »). Scale d'extraction non-déformant
+>    (`scale=360:-2`, l'ancien `243x432` forçait du 9:16 sur un 16:9).
+> 3. **Frames extraites à intervalle fixe** → pas alignées sur les états → faux « élément manquant ».
+>    ✅ FIX : `--state-boundaries "1.2,4.8,9.0"` (secondes, au cœur de chaque état du breakdown) → extraction alignée.
+> 4. **(découverte au TERRAIN 2026-06-20) Palette navy/gold hardcodée dans le prompt** → un beat parchemin/ocre VALIDÉ
+>    était pénalisé (4 fixes « critical » faux sur 6, score 4.5 à tort, phase_a 60%). ✅ FIX : `--palette {navy|parchemin|neon}`
+>    (le prompt juge la palette contre LE bon registre). Preuve A/B même render : phase_a 60%→**90%**, faux-positifs palette **4→0**,
+>    les VRAIS écarts (chiffre pas assez dominant, barre 30% minuscule, layout) ressortent enfin nets.
+>
+> **MODE D'EMPLOI du gate fiabilisé** (passer les frontières d'états = activer l'appariement) :
+> ```bash
+> python3 scripts/visual_review.py <render.mp4> --model gemini \
+>   --storyboard <planche.png> --ratio 16:9 --palette parchemin \
+>   --state-boundaries "1.2,4.8,9.0"   # secondes au cœur de chaque état (du breakdown)
+> ```
+> ⛔ `--palette` DOIT matcher le registre du beat (navy par défaut ; parchemin pour le registre crème/ocre ; neon marché/tech).
+> Sans `--state-boundaries` : mode legacy (planche entière + frames +offset%, toujours dispo, mais bruité).
+> **Avec** : panneau_i comparé à frame_i au bon moment → `phase_match_avg` cesse d'être faux-bas. Le juge reste la
+> self-review état-par-état + jugement d'Aziz ; le gate fiabilisé est un signal NETTEMENT meilleur (plus la peine de
+> l'ignorer par défaut). MAX 2 appels puis STOP.
 
 ---
 

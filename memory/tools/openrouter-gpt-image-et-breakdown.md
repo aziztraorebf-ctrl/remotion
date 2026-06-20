@@ -9,3 +9,15 @@ storyboards multi-planche (coin-flip + baril).
 le meilleur ; (2) breakdown JSON = **GPT-5.5** (cahier des charges quasi-code) ; (3) assets = Gemini 3.1 Flash défaut.
 ⚠️ GPT via OpenRouter : surveiller crédits (erreur 402 si max_tokens trop haut vs solde). Scripts :
 `storyboard-dual-gen.py` (gen image Gemini+GPT/fal) + `storyboard-breakdown-dual.py` (breakdown Gemini+GPT-5.5).
+
+## ⭐ 3 RAFFINEMENTS DU BREAKDOWN GPT-5.5 (prouvés 2026-06-20, workflow data-viz) — à EXIGER dans le prompt
+Le breakdown GPT-5.5 est excellent MAIS, par défaut, il : (1) donne le placement en PIXELS d'une vignette (faux
+hors cadre réel), (2) ESTIME les tailles à l'œil (sous-dimensionne — picto noté 8.5% alors que la cible faisait
+17%, 2× trop petit), (3) sur-interprète les effets ("3D" → cartoon). **Le prompt de breakdown DOIT exiger :**
+- **Placement en classes TAILWIND** (`absolute left-[48%] top-[45%] -translate-x-1/2 w-[40%]`), pas en px.
+- **Tailles MESURÉES** en % du cadre (largeur ET hauteur), en regardant l'image — pas estimées.
+- **Intensité CALIBRÉE "juste assez"** (ex "extrusion subtile ~8% de la hauteur, pas de biseau cartoon").
+- **Verdict GÉNÉRÉ/REMOTION/HYBRIDE par élément** + prompt d'asset prêt + intention en prose.
+Prompt de référence prêt : `memory/doctrines/templates/PROMPT-BREAKDOWN-DATAVIZ.txt`. GPT-5.5 sert AUSSI à faire
+le **DIFF cible-vs-render** (planche A|B → écarts mesurés + corrections Tailwind, 1 passe) :
+`templates/PROMPT-DIFF-CIBLE-RENDER.txt`. Pipeline complet : [[WORKFLOW-DATAVIZ]].

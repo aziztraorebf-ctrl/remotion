@@ -4,14 +4,18 @@
 
 ---
 
-## ▶ PROCHAINE SESSION DÉDIÉE — PEAUFINER LES GRAPHISMES → `memory/CHANTIER-PEAUFINAGE-GRAPHISMES.md`
+## ⭐⭐ REPRISE IMMÉDIATE (2026-06-20) → `memory/REPRISE-WORKFLOW-DATAVIZ.md` — LIRE EN PREMIER
 
-> Le système agentique TOURNE A→Z (prouvé 2026-06-20, cobayes Maroc). Mais le rendu visuel = « correct pas premium ».
-> Session dédiée : partir des cobayes existants (`src/projects/_rnd/cobaye-maroc-phosphate/`, NE PAS PURGER) et les
-> rendre premium. **3 trous diagnostiqués** (cause du manque de punch) : (1) storyboard généré en ratio VERTICAL,
-> render HORIZONTAL → espaces vides ; (2) breakdown pas assez précis sur les ASSETS (icône générique) ; (3) ⭐ pas de
-> préambule « chaînes premium » pour le storyboard DATA-VIZ (la matière Hera décodée existe mais n'est pas branchée —
-> contrairement à la carte). + corriger le gate review (diagnostic dans REVIEW-TOOLS-INDEX). Détail complet : le CHANTIER.
+> **Le workflow DATA-VIZ complet est PROUVÉ A→Z et GRAVÉ** (`memory/doctrines/WORKFLOW-DATAVIZ.md`) : storyboard
+> = CIBLE → breakdown GPT-5.5 (verdict GÉNÉRÉ/REMOTION/HYBRIDE + prompts d'asset + Tailwind + tailles mesurées)
+> → génération Gemini → détourage Recraft → assemblage Remotion → diff cible-vs-render. Cobaye Maroc "70%" rendu
+> jusqu'à v5 (~fidèle). **Tous les liens A→Z + les 3 corrections restantes + la commande de l'agent vierge de
+> validation sont dans `REPRISE-WORKFLOW-DATAVIZ.md`.** PROCHAINE SESSION : lancer l'agent vierge AU DÉBUT (contexte
+> frais) AVANT de toucher au code, puis les 3 corrections pixel (70 plus grand · trou du 0 · picto réserves).
+>
+> ✅ Les **3 TROUS du chantier peaufinage sont TRAITÉS** : (1) ratio vertical→horizontal CORRIGÉ (`--ratio`),
+> (2) breakdown précis sur les assets CORRIGÉ (verdict+prompts+Tailwind+tailles mesurées), (3) préambule premium
+> data-viz CRÉÉ. + gate review fiabilisé (4 causes corrigées). Détail historique : `CHANTIER-PEAUFINAGE-GRAPHISMES.md`.
 
 ## 🤖 (FAIT 2026-06-20) — SYSTÈME AGENTIQUE ÉPROUVÉ A→Z (session système, sans dette de structure)
 
