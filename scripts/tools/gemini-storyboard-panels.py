@@ -76,10 +76,21 @@ STYLE RULES (NON-NEGOTIABLE) :
 - Flat editorial illustration, NOT 3D, NOT photorealistic, NOT cartoon
 - Palette STRICTE : navy #141c2e (fond), gold #c8a951 (donnee cle), ivory #f0e8d8 (texte),
   accent rouge #cc2200 / vert #4caf7d UNIQUEMENT pour un verdict (parchemin #e4ddca si registre clair)
-- Multi-panels : 3 ou 4 cellules rectangulaires, bordure fine, numerotees, montrant la
-  PROGRESSION temporelle du beat (gauche->droite). Timestamp dans un coin de chaque panel.
+- Multi-panels : bordure fine, numerotees, montrant la PROGRESSION temporelle du beat
+  (gauche->droite). Timestamp dans un coin de chaque panel.
 - NO subtitles, NO voiceover text inside panels (sauf labels data/geo explicitement demandes)
 - Format cible : {ratio_desc}
+
+DISCIPLINE PANNEAUX (NON-NEGOTIABLE — sinon le storyboard est inutilisable) :
+- Produis EXACTEMENT le nombre d'etats decrits dans le prompt, ni plus ni moins. N'AJOUTE
+  AUCUN panneau supplementaire, AUCUN agrandissement, AUCUN "zoom plein cadre", AUCUN doublon
+  d'un etat deja montre. Si le prompt decrit 3 etats -> 3 cellules, point final.
+- Cadres ETANCHES : chaque element reste DANS sa cellule. RIEN ne deborde ni ne chevauche
+  une cellule voisine (pas de barre/objet qui traverse deux panneaux).
+- Disposition reguliere : cellules de MEME taille, alignees en une grille propre (1 rangee si
+  3 etats tiennent ; sinon grille reguliere). Pas de grande case isolee a cote de petites.
+- TOUT le texte EN FRANCAIS (titres, labels, annotations). AUCUN mot anglais (jamais "CRUSHES",
+  "RESERVES" ok car francais). Les labels = ceux du prompt, traduits si besoin.
 """
 
 
