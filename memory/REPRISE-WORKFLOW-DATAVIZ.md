@@ -3,13 +3,19 @@
 > Ouvre la prochaine session, dis "continue" : ce fichier dit TOUT (etat, liens A→Z, quoi corriger,
 > comment relancer). Aziz n'a RIEN a repeter. Doctrine du systeme : [[WORKFLOW-DATAVIZ]].
 
-## ETAT EXACT
-Le **workflow data-viz complet est PROUVE A→Z** le 2026-06-20 et GRAVE dans [[WORKFLOW-DATAVIZ]]
-(pipeline storyboard → breakdown GPT-5.5 → generation Gemini → detourage Recraft → assemblage Remotion → diff).
-Cobaye de preuve : Maroc phosphate "70% des reserves mondiales", etat "l'ecrasement".
-✅ **Render final = v8** (FIDELE a la cible, verifie cote-a-cote) : `public/_rnd/cobaye-teal/render-v8-FINAL.png`,
-   planche cible|v8 : `public/_rnd/cobaye-teal/plank-cible-v8.png`. Les 3 corrections pixel = FAITES + verifiees.
-✅ **Systeme VALIDE par agent vierge** (2026-06-20, verdict PARTIEL → 4 trous combles, voir plus bas).
+## ETAT EXACT (mis a jour 2026-06-20 fin de session — MERGE DANS MASTER)
+Le **workflow data-viz complet est PROUVE et MERGE DANS MASTER** le 2026-06-20. Pipeline grave dans
+[[WORKFLOW-DATAVIZ]] (storyboard → breakdown GPT-5.5 → generation Gemini → detourage Recraft → assemblage
+Remotion → diff). Cobaye de preuve : Maroc phosphate "70% des reserves mondiales", etat "l'ecrasement".
+✅ **Render final = v9** (valide Aziz "tres fidele au storyboard") : `public/_rnd/cobaye-teal/render-v9-FINAL-EXEMPLE.png`.
+   v9 = exemple de reference (le niveau a atteindre DES LE 1er COUP). Diff matiere applique (palette desaturee chaude).
+✅ **Systeme VALIDE 2x PAR AGENT VIERGE** :
+   1. agent vierge etape DIFF (verdict PARTIEL → 4 trous combles)
+   2. **TEST ULTIME** : agent vierge ISOLE en worktree (v9 cache), bout-en-bout (breakdown→regen assets→assemblage
+      →diff) DU 1er COUP = ~86% de fidelite. Methode : [[methode-test-reproductibilite-agent-vierge]].
+   Trou CRITIQUE trouve : `openrouter-vision-breakdown.py` n'etait PAS versionne (script fantome) → corrige.
+⚠️ **FAIBLESSE RECURRENTE restante** : le picto+label "reserves mondiales" sort TOUJOURS trop petit (2x : cobaye
+   ET agent). A CREUSER (pourquoi). La BARRE phosphate, elle, est un POINT FORT (bonne du 1er coup). Detail : [[WORKFLOW-DATAVIZ]].
 
 ## TOUTE LA MATIERE (liens A→Z — ne rien re-chercher)
 
