@@ -55,6 +55,9 @@ Critere de qualite du breakdown : **un agent frais l'execute sans avoir a decide
 - ⛔ **DETOURAGE RECRAFT OBLIGATOIRE** : Gemini ne sort JAMAIS un vrai alpha — il dessine un faux damier
   OPAQUE. Detourer via `mcp__recraft__remove_background` (passer l'URL catbox). Verifier alpha = (0,255) ET
   le trou des lettres (le "0", le "8"...) bien transparent. Detail : [[feedback_gemini-assets-fond-transparent]].
+  ⚠️ **Recraft renvoie du .webp** → reconvertir en .png (PIL `Image.open(x).save(y,'PNG')`) pour Remotion.
+  ⚠️ Si Recraft laisse du blanc OPAQUE dans un contre-poincon (trou du "0"/"8"), nettoyer par FLOOD-FILL alpha
+  local depuis l'interieur du trou (le diff GPT ne voit PAS ce defaut, cf etape 6).
 - Copier les PNG transparents dans `public/<zone>/` pour Remotion.
 
 ### 5. ASSEMBLAGE REMOTION
@@ -62,6 +65,10 @@ Coder la scene en suivant le breakdown A LA LETTRE : `<Img>` des assets generes 
 du breakdown, count-up Remotion -> `crossfade` vers l'asset genere (pattern HYBRIDE), barres/traits/fleches
 en SVG (geometrie precise), timing audio-derive. NE PAS deroger au breakdown (chaque deviation = un ecart).
 Stack : Remotion + Tailwind (`enableTailwind` actif). Render plein HD scale=1 pour juger la nettete.
+⛔ **POLICES** : les polices nommees dans le breakdown (Bebas Neue, Oswald, Anton...) doivent etre CHARGEES,
+sinon fallback systeme = faux rendu. Utiliser `@remotion/google-fonts/<Police>` (ex
+`import {loadFont} from "@remotion/google-fonts/Oswald"; const {fontFamily} = loadFont();`). Installer le paquet
+s'il manque (`@remotion/google-fonts`, version alignee sur remotion). Defaut chiffres/titres condensses = Bebas Neue.
 
 ### 6. DIFF cible-vs-render (corriger MESURE, pas devine — puis STOP)
 Composer une planche `IMAGE A = cible | IMAGE B = notre render` (cote a cote, MEME hauteur, fond uni, ~24px de

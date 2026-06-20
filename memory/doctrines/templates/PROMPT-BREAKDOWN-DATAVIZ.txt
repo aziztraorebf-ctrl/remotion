@@ -16,7 +16,11 @@ Notre methode (NON-NEGOTIABLE) :
 - Certains elements sont HYBRIDES : un asset genere + une couche Remotion par-dessus (ex un chiffre
   dont la MATIERE est generee mais qui doit faire un count-up anime).
 
-TON TRAVAIL : decouper CE panneau en une table EXHAUSTIVE d'elements. Pour CHAQUE element visible,
+⛔ IGNORE les ANNOTATIONS DE STORYBOARD : titre d'etat (ex "ETAT 3 — L'ecrasement"), timer/chrono (ex "00:08"),
+numero de case. Ce sont des echafaudages du storyboard, PAS du contenu a reproduire. NE les inclus PAS dans la
+table d'elements (sinon le codeur les reproduit a tort dans le render final).
+
+TON TRAVAIL : decouper CE panneau en une table EXHAUSTIVE d'elements (HORS annotations). Pour CHAQUE element visible,
 TRANCHE toi-meme (ne laisse RIEN a deviner a celui qui codera) :
 
 Retourne UNIQUEMENT du JSON (pas de markdown), avec cette structure :
