@@ -31,8 +31,11 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
      + citer les chaînes de réf + passer l'ARSENAL (`public/_shared/refs/cartes/_ARSENAL.md`, « va plus loin »)
      + directive carte vivante. La géo du storyboard est approximative = OK (vraie géo au CODE).
 4. **AZIZ VALIDE la direction** (point de contrôle goût). On ne code/breakdown PAS une direction non validée.
-5. **BREAKDOWN** : on décode le storyboard validé en plan technique (composants, timing, ou pour la carte :
-   caméra lon/lat/zoom, couches, SFX). ⏳ Format breakdown Mapbox = à finaliser (voir NEXT-ACTION « reste à peaufiner »).
+5. **BREAKDOWN** : on décode le storyboard validé en plan technique. ⛔ Il TRANSCRIT, il ne CRÉE pas (la
+   direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. Data-viz/Remotion → composants +
+   timing. ✅ **Carte/Mapbox → FORMAT DÉFINI + ÉPROUVÉ** (JSON par état : caméra frame-driven, `intention_etat`
+   libre, `forme_connue`/`si_nouveau` anti-rabotage, `cout_estime`, `fallback_si_echec`, `forbid`) →
+   `memory/doctrines/STORYBOARD-MAPBOX.md` § FORMAT.
 6. **CODE** dans le bon emplacement (règle 3 zones, voir INTENTION-FORME-INDEX § « OÙ RANGER ») : livrable →
    `<pilier>/<episode>/`. Passe par la **session** (`/beat` → `beat-session.py` ou `mapbox-session.py`).
 7. **REVIEW + PRÉSENTATION** : la session écrit `<mp4>.review.json` adjacent (Gemini, seuil 8/10). Le **hook**
@@ -72,6 +75,8 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
   ~60 acquis + section REJETS + rappel par hook (avant, le flux pointait vers un registre à moitié vide).
   Validé par agents vierges (2/3 trouvent la forme du 1er coup sans connaître l'historique).
 - Le storyboard est prouvé en isolé mais pas encore une étape OBLIGATOIRE des sessions (à câbler).
-- Le format du breakdown Mapbox reste à définir/tester (le pont storyboard→code carte).
-- L'orchestration complète bout-en-bout reste à éprouver sur une vraie mini-vidéo propre.
+- ✅ **RÉSOLU 2026-06-20** : le format du breakdown Mapbox (pont storyboard→code carte) est DÉFINI et ÉPROUVÉ
+  (agent réel, piège créatif → idée préservée). → `STORYBOARD-MAPBOX.md` § FORMAT.
+- L'orchestration complète bout-en-bout reste à éprouver sur une vraie mini-vidéo propre (le révélateur des
+  lacunes restantes de l'étape 3 storyboard).
 → En attendant : on peut suivre le flux ci-dessus À LA MAIN (générer le storyboard, valider, coder via session).

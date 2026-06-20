@@ -86,10 +86,45 @@ mix-and-match à cocher. Refs visuelles de nos assets (jetons/persos) à joindre
 
 1. **Préambule** (les 4 couches ci-dessus) → générer le storyboard carte (Gemini + GPT, on compare).
 2. **Aziz valide la DIRECTION** (le ressenti, le mouvement, les artifices). On NE décode pas une direction non validée.
-3. **SEULEMENT APRÈS** : on demande le **BREAKDOWN technique** au modèle — « décode comment atteindre ça sur
-   notre Mapbox » : mouvements caméra (lon/lat/zoom/pitch par état), couches qui s'allument, artifices (jetons,
-   drapeaux, arcs), SFX, timing. C'est le pont vers le code (comme le breakdown Remotion).
+3. **SEULEMENT APRÈS** : on demande le **BREAKDOWN technique** au modèle — voir FORMAT ci-dessous.
 4. Code sur la VRAIE carte Mapbox (jamais copier la géo du storyboard).
+
+## LE FORMAT DU BREAKDOWN CARTE (éprouvé 2026-06-20, agent réel sur beat AES « confédération »)
+
+> ⛔ **RÈGLE D'OR — le breakdown TRANSCRIT, il ne CRÉE pas.** La direction créative est DÉJÀ tranchée au
+> storyboard validé. Le breakdown la traduit en technique FIDÈLE. Il ne rabote JAMAIS une idée du storyboard
+> sous prétexte qu'aucun composant ne la fait — il la signale « à créer ». **C'est l'étape 5 du flux
+> d'orchestration (`PLAN-ORCHESTRATION-VIDEO.md`), APRÈS le checkpoint goût.** Le breakdown ne décide rien de
+> créatif → il ne peut pas brider ; au contraire il PROTÈGE la direction validée (force le frame-driven, bloque
+> les rejets type `flyTo`). La liberté vit à l'étape 3 (storyboard) ; la fidélité vit ici.
+
+**(A) JSON structuré — un objet par ÉTAT du storyboard** (champs ouverts = anti-rigidité) :
+```
+{
+  "etat": <n>, "frames": "<début>-<fin>",
+  "camera": {"mode":"frame-driven-jumpTo", "keys":[{"f":,"lng":,"lat":,"zoom":,"pitch":,"bearing":}]},
+  "intention_etat": "<ce que l'état doit faire RESSENTIR — langage LIBRE, copié de la direction validée>",
+  "forme_connue": "<composant exact qui le fait, OU null si rien n'existe>",
+  "forme_couvre_tout": <true|false>,            // false = le composant ne fait l'intention QU'EN PARTIE
+  "ce_qui_manque": "<si forme_couvre_tout=false : ce que le composant ne fait pas, à compléter>",
+  "si_nouveau": "<si forme_connue=null : description RICHE et libre de l'effet, sans le réduire à l'existant>",
+  "cout_estime": "trivial | ajustement | proto-rnd",   // pour qu'Aziz arbitre AVANT (proto-rnd = chantier)
+  "fallback_si_echec": "<la version dégradée la MOINS trahissante si le proto échoue au render>",
+  "sync_voix": "<le mot de la narration sur lequel cet état se cale (frame0 = 1er mot)>",
+  "sfx": [{"at":<frame>,"type":"<son>","gain":<≥0.50>}]
+}
+```
++ champ global `"forbid": [...]` (les REJETS techniques : `flyTo`/`easeTo`, `drawFlagCanvas`, filtre par `name`,
+`semitransp`<0.5, SFX hors `<Sequence>`, vrai 3D, images async sans `delayRender`). + `"continuite_avec"` (le beat
+précédent, pour ne pas re-poser une caméra qui contredit le plan d'avant — doctrine [[CONTINUITE-SCENE-INTENTION-DABORD]]).
+
+**(B) Résumé prose** (5-8 lignes) — le beat raconté comme un plan de tournage, pour qu'Aziz VALIDE sans lire le JSON.
+
+⚠️ **Les 3 champs qui rendent le format auto-portant** (issus du test — sans eux, le format dépend de la seule
+vigilance de l'agent) : `forme_couvre_tout`/`ce_qui_manque` désamorce l'aimant « un composant existe à peu près,
+je le coche » ; `cout_estime` montre à Aziz qu'un état coûte 10× les autres (il arbitre proto vs fallback) ;
+`fallback_si_echec` évite le rabotage EN PANIQUE au render (garder le CŒUR de l'idée même dégradée — ex : garder
+la FUSION des 3 pays même sans la matière métal-liquide).
 
 ## LE CRAN DE RE-STORYBOARD (le vrai gain — moteur d'évolution du style)
 
@@ -107,6 +142,10 @@ au très dynamique) beaucoup plus vite qu'en re-codant à l'aveugle.
 
 ## STATUT
 ✅ Chaînes de référence + directive CARTE VIVANTE remplies (Aziz 2026-06-20).
-⏳ NON encore testée sur un cas réel — prochain pas : un beat AES Sahel (toi + Claude), pour valider que le
-   préambule (notre carte + chaînes + directive carte vivante) produit une direction premium et non plate.
-Branché dans : `MEMORY.md`. À brancher aussi : `WARMAP-INDEX` / pipelines mapbox au moment du test.
+✅ **FORMAT BREAKDOWN CARTE défini + éprouvé** (2026-06-20, agent réel sur beat AES « confédération » avec piège
+   créatif volontaire) : le format protège l'idée inédite via `si_nouveau` sans la raboter. 3 champs auto-portants
+   ajoutés (`forme_couvre_tout`/`ce_qui_manque`, `cout_estime`, `fallback_si_echec`).
+⏳ Le PRÉAMBULE storyboard (notre carte + chaînes + directive carte vivante) reste à tester sur un cas réel
+   (génération d'image), pour valider qu'il produit une direction premium et non plate.
+⏳ Reste à éprouver : la chaîne COMPLÈTE storyboard→breakdown→code sur une mini-vidéo cobaye (orchestration bout-en-bout).
+Branché dans : `MEMORY.md`, `SYSTEME-AGENTIQUE.md` (étape 5), `PLAN-ORCHESTRATION-VIDEO.md`.

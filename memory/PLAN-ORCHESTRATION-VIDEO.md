@@ -85,6 +85,8 @@ Tailwind, score scripté) → agent. Goût/coûteux-à-défaire (asset payant, r
                                    ▼  TEMPS 2 — EXÉCUTION (agents reprennent //)
 ┌─ TEMPS 2 : N AGENTS-BEAT — CODE sur storyboard VALIDÉ ─────────────────────┐
 │   6. breakdown (Gemini 1) → code le beat sur le storyboard validé → render │
+│      • Carte/Mapbox : FORMAT breakdown défini (JSON par état + champs        │
+│        anti-rigidité si_nouveau/cout_estime/fallback) → `STORYBOARD-MAPBOX.md`│
 │   7. self-review scriptée (≥19/23 ou ≥10/12, BLOQUANT)                     │
 │   8. review (Gemini 2, max 2 appels) → boucle corrections jusqu'à ≥8/10    │
 │      → <mp4>.review.json adjacent → [BEAT-N] COMPLETE dans PIPELINE.md     │
