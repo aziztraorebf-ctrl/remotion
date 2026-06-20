@@ -93,6 +93,16 @@ GPT MESURE les ecarts (taille/position en %) et donne les corrections Tailwind e
   N'apparait PAS dans le diff cote-a-cote. Garder l'inspection alpha de l'etape 4 comme controle SEPARE
   (verifier alpha=0 dans le contre-poincon ; flood-fill local si Recraft a laisse du blanc opaque).
 
+## ⛔ 2 FAIBLESSES RECURRENTES CONNUES (a verifier ACTIVEMENT a chaque scene data-viz)
+Reapparues 2x (mon cobaye ET l'agent vierge isole, 2026-06-20) — ce ne sont PAS des bugs ponctuels, le systeme
+les rate par defaut. Les controler EXPLICITEMENT avant de dire "fait" :
+1. **PICTO + LABEL secondaire (ex "RESERVES MONDIALES") SOUS-DIMENSIONNES.** Le pipeline tend a les faire trop
+   petits (le diff GPT les sous-mesure aussi). Reflexe : les agrandir de +40 a +50% vs la 1ere estimation, et
+   JUGER en plein format. C'est l'element n1 qui trahit l'amateurisme s'il est riquiqui.
+2. **BARRE/COLONNE (ex barre "PHOSPHATE" + segment) rarement bonne du 1er coup** (proportions, jonction jaune/
+   segment, ecrasement). Verifier : pas de gap, segment colle, proportions 70/30 lisibles, couleurs desaturees.
+Tant que ces 2 points ne sont pas pre-cables dans le breakdown/diff, les traiter comme une checklist obligatoire.
+
 ## ⭐ REGLE D'OR TRANSVERSE (la lecon la plus chere de la session)
 **Ne JAMAIS juger un asset/render de MEMOIRE.** Toujours composer cote-a-cote avec la cible et, pour les
 tailles, faire MESURER par le modele qui voit la cible. Prouve : mon oeil notait "80%", GPT mesurait "55%".
