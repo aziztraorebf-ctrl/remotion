@@ -69,7 +69,8 @@ Tailwind, score scripté) → agent. Goût/coûteux-à-défaire (asset payant, r
 │   1. /beat → route Mapbox/Remotion. scan → intention (1 verbe) → FORME.    │
 │   2. MINI DA-BRIEF premium du beat : références visuelles + intention de   │
 │      MOTION (le geste, pas l'objet) + niveau d'ambition. (force le premium)│
-│   3. 1-2 versions de STORYBOARD VISUEL (Gemini/GPT, storyboard-dual-gen).  │
+│   3. STORYBOARD d'ÉVOLUTION (Gemini/GPT, dual-gen) : N états DÉBUT→FIN,     │
+│      chaque état = incrément minimal, ZÉRO texte redondant. Fond = palette. │
 │   4. [prompt assets payants éventuels] → REMONTE AU CHEF, ne génère pas.   │
 │   5. STOP. Remonte DA-brief + storyboards au chef.                        │
 └────────────────────────────────────────────────────────────────────────────┘

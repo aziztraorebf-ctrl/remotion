@@ -16,6 +16,24 @@
 > Ce sont des fonds PURS (régénérés 2026-06-19, aucun chiffre/texte) — prêts à servir de ref de background.
 > Clé pour en regénérer un propre : prompt « EMPTY background texture only … NO text, NO numbers, NO subject ».
 
+## ⭐ CE QU'UN BON STORYBOARD DOIT MONTRER (règle posée Aziz 2026-06-19)
+
+Un storyboard n'est PAS une vignette figée — c'est la **TRAJECTOIRE de la scène dans le temps**. Deux faces
+d'un même principe, indissociables :
+
+1. **Montrer l'ÉVOLUTION en états** (DÉBUT → MILIEU → FIN, ou N panneaux). Chaque panneau = la scène à un
+   instant, pour qu'on lise l'arc dramatique d'un coup d'œil. (Le storyboard Gemini 3-panneaux du beat 90% = la réf.)
+2. **Chaque état n'AJOUTE que l'élément nouveau, épuré au strict nécessaire.** On ne répète pas ce qui est déjà
+   à l'écran, on n'empile pas d'écritures décoratives. **Texte SEULEMENT en cas de vraie nécessité** — la voix
+   off dit déjà beaucoup (épure : [[CONTINUITE-SCENE-INTENTION-DABORD]], étape « retirer ce que la voix dit »).
+   Redondance et texte inutile = l'ennemi du premium.
+
+Concrètement, le storyboard montre : état 1 (le 90% entre) → état 2 (le label se greffe) → état 3 (le climax
+rouge), chaque incrément minimal. Ça donne au code la chorégraphie exacte, pas juste une image cible.
+
+⚠️ Biais à connaître (test 2026-06-19) : Gemini produit bien le multi-panneaux ; GPT-image tend à ne rendre
+QU'UN panneau quand il doit aussi combattre son biais de fond → pour un storyboard d'ÉVOLUTION, Gemini est l'outil.
+
 ## Comment s'en servir dans un storyboard dual-gen
 
 On passe le background voulu comme **référence + description** au générateur. Deux modèles, deux biais
