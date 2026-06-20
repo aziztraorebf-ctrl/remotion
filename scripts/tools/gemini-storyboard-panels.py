@@ -33,17 +33,53 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 MODEL = "gemini-3.1-flash-image-preview"
 
-# Charte + style commun (injecté dans tout prompt — cohérence storyboard)
-STYLE_BLOCK = """
+# Ratio cible : 16:9 par defaut (Souverain mid-form / long, render HORIZONTAL).
+# ⛔ Generer au ratio du RENDER (pas vertical par defaut) : sinon panneaux portrait ->
+# espaces vides en 16:9 ET faux-bas du gate review. Doctrine : STORYBOARD-DATAVIZ.md [1].
+RATIO_TARGETS = {
+    "16:9": "1920x1080 (16:9, HORIZONTAL) — compose chaque panneau POUR ce cadre large, REMPLIS l'espace horizontal, ne laisse AUCUN vide a gauche/droite",
+    "9:16": "1080x1920 (9:16, VERTICAL) — les panneaux illustrent ce cadrage portrait (Short)",
+    "1:1":  "1080x1080 (1:1, CARRE) — cadrage carrousel Instagram",
+}
+
+# PREAMBULE PREMIUM DATA-VIZ — pendant symetrique du preambule carte (STORYBOARD-MAPBOX.md).
+# Comble le TROU 3 du CHANTIER-PEAUFINAGE-GRAPHISMES : donne au modele une CIBLE de qualite a
+# viser (chaines premium + ce qu'on leur vole + notre matiere Hera), pas juste un "tone".
+# Doctrine complete : memory/doctrines/STORYBOARD-DATAVIZ.md.
+PREMIUM_PREAMBLE = """
+PREMIUM TARGET (ce que tu DOIS viser — pas le minimum) :
+Inspire-toi de ces chaines data-viz premium et VOLE-leur leur force :
+- Bloomberg Originals -> profondeur 2.5D (drop-shadow dynamique, parallaxe fond/avant-plan), chiffre incruste avec autorite.
+- Vox / Johnny Harris -> rigueur editoriale, annotations propres, transitions seamless (match cut, zoom intra-element), JAMAIS de cut franc.
+- Kurzgesagt -> secondary motion (tout respire), springs anticipation+overshoot, discipline du vide, metaphore visuelle qui porte le chiffre.
+- Polymatter / Wendover -> registre eco/geopolitique, chart au service du propos, montee en tension narrative.
+- Financial Times / The Economist -> autorite du chiffre, sobriete, hierarchie typographique impeccable, labels directs (PAS de legende).
+
+NOTRE MATIERE (ce qu'on sait deja faire a ce niveau — va PLUS LOIN) :
+- Grammaire narrative 5 beats : (1) pose la question, (2) baseline/comparaison, (3) anime le chiffre cle (le geste),
+  (4) traduit en langage simple (le takeaway), (5) source/CTA. Pause APRES le chiffre le plus important (count-up land + breathe).
+- On sait faire : count-up odometre, hero vertical bars, chart-sur-vraie-carte, donut, timeline medaillons,
+  texte cinetique d'emphase, metaphore physique (balance, piece).
+
+DIRECTIVE DATA-VIZ VIVANTE (le coeur) :
+Le data-viz doit etre VIVANT et PREMIUM — jamais un PowerPoint, jamais un plan fixe fige, jamais des carres vides.
+A chaque etat, quelque chose EVOLUE pour porter l'intention (le chiffre se construit, une metaphore apparait, la donnee
+se met en scene). REMPLIS l'espace du cadre. A TOI de proposer COMMENT — ose des partis pris visuels forts.
+"""
+
+
+def build_style_block(ratio: str) -> str:
+    """Charte + style + preambule premium, parametre par le ratio cible du render."""
+    ratio_desc = RATIO_TARGETS.get(ratio, RATIO_TARGETS["16:9"])
+    return PREMIUM_PREAMBLE + f"""
 STYLE RULES (NON-NEGOTIABLE) :
 - Flat editorial illustration, NOT 3D, NOT photorealistic, NOT cartoon
-- Premium journalistic documentary tone (Bloomberg, Vox, Le Monde)
 - Palette STRICTE : navy #141c2e (fond), gold #c8a951 (donnee cle), ivory #f0e8d8 (texte),
-  accent rouge #cc2200 / vert #4caf7d UNIQUEMENT pour un verdict
+  accent rouge #cc2200 / vert #4caf7d UNIQUEMENT pour un verdict (parchemin #e4ddca si registre clair)
 - Multi-panels : 3 ou 4 cellules rectangulaires, bordure fine, numerotees, montrant la
   PROGRESSION temporelle du beat (gauche->droite). Timestamp dans un coin de chaque panel.
 - NO subtitles, NO voiceover text inside panels (sauf labels data/geo explicitement demandes)
-- Vertical format target 1080x1920 (9:16) — les panels illustrent ce cadrage
+- Format cible : {ratio_desc}
 """
 
 
@@ -53,6 +89,9 @@ def main():
     ap.add_argument("--beat", type=int, required=True)
     ap.add_argument("--prompt-file", required=True,
                     help="Fichier texte avec le prompt storyboard (redige par Claude, valide par Aziz)")
+    ap.add_argument("--ratio", default="16:9", choices=list(RATIO_TARGETS.keys()),
+                    help="Ratio cible du RENDER (defaut 16:9 horizontal). ⛔ Doit matcher le format de sortie "
+                         "(sinon panneaux mal cadres + faux-bas gate review). 9:16 = Short, 1:1 = carrousel.")
     ap.add_argument("--out", default=None, help="Override chemin de sortie")
     args = ap.parse_args()
 
@@ -67,10 +106,11 @@ def main():
     )
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
-    full_prompt = user_prompt + "\n\n" + STYLE_BLOCK
+    full_prompt = user_prompt + "\n\n" + build_style_block(args.ratio)
 
     print(f"=== STORYBOARD GEMINI FLASH — {args.episode} Beat{args.beat} ===")
     print(f"  Modele : {MODEL}")
+    print(f"  Ratio  : {args.ratio}  (preambule premium DATA-VIZ injecte — STORYBOARD-DATAVIZ.md)")
     print(f"  Sortie : {out_path.relative_to(PROJECT_ROOT)}")
     print(f"  Prompt : {len(full_prompt)} chars\n")
 

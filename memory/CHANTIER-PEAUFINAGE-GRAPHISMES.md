@@ -12,6 +12,22 @@
 - (Si encore présents : autres protos `_rnd/` et `_proto-16-9/` = matière à peaufiner aussi.)
 - Aziz : « gardons les démos, ne les supprimons pas — base de travail temporaire pour cette session. »
 
+## ✅ 2 DETTES SYSTÈME COMBLÉES (2026-06-20, branche `feat/dettes-systeme-preambule-gate`)
+> Décision Aziz « combler les 2 dettes maintenant ». Fait + testé (sans appel API) :
+> - **TROU 3 (préambule premium DATA-VIZ)** ✅ : doctrine `memory/doctrines/STORYBOARD-DATAVIZ.md` créée (pendant de
+>   STORYBOARD-MAPBOX) + branchée dans `gemini-storyboard-panels.py` (`STYLE_BLOCK` → préambule riche : chaînes
+>   Bloomberg/Vox/Kurzgesagt/Polymatter/FT citées + ce qu'on leur vole + matière Hera + directive « va plus loin »).
+> - **TROU 1 (ratio vertical→horizontal)** ✅ : `gemini-storyboard-panels.py --ratio` (défaut **16:9 horizontal**, le
+>   storyboard se génère au ratio du render → plus de carrés vides). Corrige AUSSI la cause-2 du gate.
+> - **GATE REVIEW bruité** ✅ : `visual_review.py` fiabilisé — découpe planche en panneaux + appariement
+>   panneau_i↔frame_i (`--state-boundaries`) + scale non-déformant + ratio dit au prompt. Mode d'emploi :
+>   `REVIEW-TOOLS-INDEX.md` § DIAGNOSTIC.
+> - **TROU 2 (breakdown asset imprécis)** ⏳ AMORCÉ : doctrine `STORYBOARD-DATAVIZ.md` § « champ asset précis » pose
+>   la règle (icône Lucide / composant / asset Gemini EXACT, pas « satellite icon »). RESTE = l'inscrire dans le
+>   format breakdown de `beat-session.py` + l'éprouver.
+> ⏳ **À ÉPROUVER** : régénérer le storyboard data-viz cobaye Maroc 70% avec `--ratio 16:9` + nouveau préambule →
+>   comparer au render plat. C'est la validation terrain des 2 dettes.
+
 ## LES 3 TROUS À CORRIGER (cause racine du « pas assez premium ») — diagnostiqués par Aziz sur le rendu réel
 
 ### TROU 1 — Storyboard généré en RATIO VERTICAL, render en HORIZONTAL 16:9

@@ -4,6 +4,7 @@
 > **Miroir Remotion** du [[SOUVERAIN-VISUAL-PLAYBOOK]] (qui couvre le Mapbox). À LIRE avant tout beat Souverain **Remotion/graphisme/data-viz** (pas carte).
 > **Principe fondateur (règle Aziz) :** Claude est maître du CODE. Pour la VISION ARTISTIQUE, s'appuyer sur l'œil externe (Gemini scoré) + ce qui a marché chez nous. Voir [[feedback_systeme-beat-mapbox-vs-remotion]].
 > Catalogue des briques codées : section "DONNÉES VISUELLES / HERO DATA" de `src/projects/_shared/COMPOSANTS-INDEX.md`. Squelette d'assemblage : [[SOUVERAIN-REMOTION-SKELETON]].
+> ⭐ **STORYBOARD data-viz** : le préambule premium qui transmet CES principes AU MODÈLE (chaînes citées + ce qu'on leur vole + ratio cible) vit dans [[STORYBOARD-DATAVIZ]] (pendant de [[STORYBOARD-MAPBOX]]). Injecté par `gemini-storyboard-panels.py`.
 
 ---
 
