@@ -17,6 +17,10 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 1. **ÉTAT RÉEL d'abord** (ne pas croire les notes) : ouvre le `STATUS.md` de l'épisode + vérifie l'état RÉEL
    dans le livrable (extraire frames/audio de la vidéo, lire le code du beat). Les notes périment — le livrable
    est la vérité. (Règle CLAUDE.md « fichiers de navigation périment ».)
+   ⚠️ **2 vérifs en amont (sinon on code sur du faux — leçon cobaye 2026-06-20)** : (a) si le beat porte un CHIFFRE,
+   vérifier qu'il est SOURCÉ avant de le mettre à l'écran (ne jamais halluciner une donnée — gate [[SUJET-PRIME-SUR-PRODUCTION]]) ;
+   (b) `ffprobe` la durée RÉELLE de l'audio de calage + word-timing (alignment/Whisper) avant de figer `durationInFrames`
+   (frame0 = 1er mot du SEGMENT de CE beat, pas de l'audio entier).
 2. **INTENTION → FORME** : pour la scène, déduis l'intention (1 verbe : ce qu'elle doit faire RESSENTIR), puis
    la forme. JAMAIS partir du template. Porte d'entrée : `src/projects/_shared/INTENTION-FORME-INDEX.md`.
    Doctrine : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐.
@@ -24,13 +28,20 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    maîtresses Data-Hero + carte/overlay, catégories incarnation Atlas & conceptuel War-Map, tags pilier).
    ⛔ **Lire la section REJETS** du registre : 15 formes déjà essayées ET abandonnées (drawFlagCanvas, flyTo,
    pitch 3D, semitransp…) — ne pas les re-tenter. Vérifie aussi que le composant cité existe RÉELLEMENT (les index périment).
-3. **STORYBOARD (le modèle propose la direction)** : génère un storyboard multi-états (évolution + épure) via
-   `scripts/tools/storyboard-dual-gen.py` (Gemini + GPT). Le modèle PROPOSE, tu ne dictes pas.
-   - Data-viz/Remotion → choisir un **fond** dans la palette : `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`.
-   - Carte/Mapbox → suivre `memory/doctrines/STORYBOARD-MAPBOX.md` : joindre NOTRE carte (`public/_shared/refs/cartes/`)
-     + citer les chaînes de réf + passer l'ARSENAL (`public/_shared/refs/cartes/_ARSENAL.md`, « va plus loin »)
-     + directive carte vivante. La géo du storyboard est approximative = OK (vraie géo au CODE).
-4. **AZIZ VALIDE la direction** (point de contrôle goût). On ne code/breakdown PAS une direction non validée.
+3. **STORYBOARD — ÉTAPE NON-SAUTABLE (image OU texte, jamais zéro).** ⛔ Sa valeur n'est PAS « être une image » :
+   c'est (a) ne pas coder dans le vide, (b) permettre le breakdown (qui décode le storyboard), (c) PROUVER que
+   l'agent a choisi un **fond parmi nos backgrounds validés** + suit l'intention/continuité/épure AVANT toute dépense.
+   **Sans storyboard = coder à l'aveugle.** Donc TOUJOURS un storyboard, même minimal :
+   - **Storyboard structuré (toujours)** : états DÉBUT→FIN (incrément minimal, épure), FOND choisi dans la palette
+     (`public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`), intention par état. C'est le minimum non-négociable.
+   - **+ Image générée (quand la direction est neuve / ambitieuse / à juger visuellement)** : `storyboard-dual-gen.py`
+     (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox → préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE
+     carte + chaînes de réf + ARSENAL + directive carte vivante ; géo approximative OK, vraie géo au CODE).
+   - L'agent-beat écrit le storyboard + (si image) le PROMPT, puis **STOP** — il ne génère pas l'asset payant lui-même.
+4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐ Le chef remonte
+   les storyboards (liens des images uploadées OU le texte) à Aziz **groupés**, AVANT tout code/breakdown. C'est LE
+   checkpoint goût visuel. On ne code/breakdown JAMAIS une direction non validée. (Manqué au 1er test cobaye 2026-06-20 :
+   les agents avaient rabattu sur texte seul sans que le chef remonte rien — corrigé ici.)
 5. **BREAKDOWN** : on décode le storyboard validé en plan technique. ⛔ Il TRANSCRIT, il ne CRÉE pas (la
    direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. Data-viz/Remotion → composants +
    timing. ✅ **Carte/Mapbox → FORMAT DÉFINI + ÉPROUVÉ** (JSON par état : caméra frame-driven, `intention_etat`
@@ -74,7 +85,10 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 - ✅ **RÉSOLU 2026-06-20** : l'étape 2 (INTENTION→FORME) est désormais OPÉRATIONNELLE — registre rempli des
   ~60 acquis + section REJETS + rappel par hook (avant, le flux pointait vers un registre à moitié vide).
   Validé par agents vierges (2/3 trouvent la forme du 1er coup sans connaître l'historique).
-- Le storyboard est prouvé en isolé mais pas encore une étape OBLIGATOIRE des sessions (à câbler).
+- ✅ **CLARIFIÉ 2026-06-20** : le storyboard est NON-SAUTABLE (image ou texte, voir étape 3). Le chef remonte les
+  liens/textes à Aziz avant tout code. Câblé dans les sessions Mapbox (phase storyboard+breakdown) et Remotion (gate PNG).
+- ⏳ **Pont storyboard→timing chiffré** : défini pour Mapbox (`STORYBOARD-MAPBOX.md` § FORMAT). PAS encore d'équivalent
+  formalisé pour Remotion/data-viz (un agent doit inventer le mapping états→frames/spring). À définir (leçon cobaye).
 - ✅ **RÉSOLU 2026-06-20** : le format du breakdown Mapbox (pont storyboard→code carte) est DÉFINI et ÉPROUVÉ
   (agent réel, piège créatif → idée préservée). → `STORYBOARD-MAPBOX.md` § FORMAT.
 - L'orchestration complète bout-en-bout reste à éprouver sur une vraie mini-vidéo propre (le révélateur des
