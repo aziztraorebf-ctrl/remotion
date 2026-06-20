@@ -204,6 +204,8 @@ import { MatterCompare } from "./projects/_proto-16-9/MatterCompare";
 import { MatterOnMap } from "./projects/_proto-16-9/MatterOnMap";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
+import { ProtoCarto_ZoomOutProjection } from "./projects/_proto-16-9/ProtoCarto_ZoomOutProjection";
+import { ProtoCarto_Cartogramme } from "./projects/_proto-16-9/ProtoCarto_Cartogramme";
 import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
 import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
 import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
@@ -2084,6 +2086,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="MatterOnMap-gemini" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "gemini" }} />
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-ZoomOutProjection" component={ProtoCarto_ZoomOutProjection} durationInFrames={270} fps={30} width={1920} height={1080} />
+        <Composition id="ProtoCarto-Cartogramme" component={ProtoCarto_Cartogramme} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-Sketch" component={ProtoHera_Sketch} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-Timeline" component={ProtoHera_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
