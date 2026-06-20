@@ -32,16 +32,18 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    maîtresses Data-Hero + carte/overlay, catégories incarnation Atlas & conceptuel War-Map, tags pilier).
    ⛔ **Lire la section REJETS** du registre : 15 formes déjà essayées ET abandonnées (drawFlagCanvas, flyTo,
    pitch 3D, semitransp…) — ne pas les re-tenter. Vérifie aussi que le composant cité existe RÉELLEMENT (les index périment).
-3. **STORYBOARD — ÉTAPE NON-SAUTABLE (image OU texte, jamais zéro).** ⛔ Sa valeur n'est PAS « être une image » :
-   c'est (a) ne pas coder dans le vide, (b) permettre le breakdown (qui décode le storyboard), (c) PROUVER que
-   l'agent a choisi un **fond parmi nos backgrounds validés** + suit l'intention/continuité/épure AVANT toute dépense.
-   **Sans storyboard = coder à l'aveugle.** Donc TOUJOURS un storyboard, même minimal :
-   - **Storyboard structuré (toujours)** : états DÉBUT→FIN (incrément minimal, épure), FOND choisi dans la palette
-     (`public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`), intention par état. C'est le minimum non-négociable.
-   - **+ Image générée (quand la direction est neuve / ambitieuse / à juger visuellement)** : `storyboard-dual-gen.py`
-     (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox → préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE
-     carte + chaînes de réf + ARSENAL + directive carte vivante ; géo approximative OK, vraie géo au CODE).
-   - L'agent-beat écrit le storyboard + (si image) le PROMPT, puis **STOP** — il ne génère pas l'asset payant lui-même.
+3. **STORYBOARD — ÉTAPE NON-SAUTABLE, IMAGE TOUJOURS OBLIGATOIRE (tranché Aziz 2026-06-20).** ⛔ Chaque beat a
+   une IMAGE de storyboard générée — PAS d'exception « formes connues = texte suffit » (règle supprimée : elle a
+   fait sauter le checkpoint visuel 2×). Pourquoi : c'est AZIZ qui valide la direction, et il doit la VOIR, pas
+   l'imaginer depuis un tableau d'états. Sa valeur : (a) ne pas coder dans le vide, (b) permettre le breakdown,
+   (c) PROUVER le fond validé + intention/continuité/épure AVANT toute dépense.
+   - **Storyboard structuré (le contenu)** : états DÉBUT→FIN (incrément minimal, épure), FOND choisi dans la palette
+     (`public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md` — PARCHEMIN par défaut), intention par état.
+   - **Image générée (TOUJOURS)** : `storyboard-dual-gen.py` (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox →
+     préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE carte + chaînes de réf + ARSENAL + directive carte
+     vivante ; géo approximative OK, vraie géo au CODE).
+   - L'agent-beat écrit le storyboard structuré + le PROMPT image, puis **STOP** — il ne génère pas l'asset payant
+     lui-même (c'est le chef qui génère, pour grouper et valider le coût). Voir Phase 0/checkpoint dans `PLAN-ORCHESTRATION-VIDEO.md`.
 4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐⭐ Le chef remonte
    les storyboards à Aziz **groupés**, AVANT tout code/breakdown. C'est LE checkpoint goût. On ne code/breakdown
    JAMAIS une direction non validée. ⛔ **VAUT AUSSI POUR LE STORYBOARD TEXTE** : si les agents jugent l'image inutile
