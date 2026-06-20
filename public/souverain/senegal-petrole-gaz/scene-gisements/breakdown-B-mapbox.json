@@ -1,0 +1,369 @@
+{
+  "scene": "Sénégal — trois gisements pétroliers et gaziers offshore",
+  "ratio": "16:9",
+  "archetype": "carto-mapbox-geoafrique-v5",
+  "map_style": "mapbox://styles/mapbox/dark-v11 + applyGeoAfriqueV5 (water #1a3a5c, land #4a4a4a, border #c8c8c8)",
+  "palette_globale": {
+    "or": "#c8a951",
+    "ivoire": "#f2ebd9",
+    "ocean": "#1a3a5c",
+    "terre": "#4a4a4a",
+    "frontieres": "#c8c8c8",
+    "cartouche_fond": "#101820",
+    "cartouche_fond_secondaire": "#16212c",
+    "cartouche_bord": "#c8a951",
+    "petrole_ambre": "#c47a16",
+    "petrole_ambre_clair": "#f2b34d",
+    "gaz_teal": "#2a9da0",
+    "gaz_teal_clair": "#7ed8d6",
+    "en_suspens_gris": "#a9a9a0",
+    "texte_secondaire": "#b7c0c9",
+    "ombre": "#000000"
+  },
+  "etats": [
+    {
+      "etat": "1 - TROIS",
+      "sync_voix": "« Le Sénégal n'a pas trouvé un gisement. Il en a trouvé trois. »",
+      "camera": {
+        "from": "lon -17.20, lat 14.95, zoom 5.35, pitch 28, bearing -4",
+        "to": "lon -17.05, lat 14.95, zoom 5.85, pitch 30, bearing -6",
+        "anim": "frames 0-90, interpolation frame-driven useCurrentFrame + interpolate, easing ease-out cubic, map.jumpTo({center, zoom, pitch, bearing}) à chaque frame",
+        "intention": "La caméra part assez large pour situer le Sénégal, l'Atlantique et la Mauritanie, puis se resserre légèrement afin que les trois points offshore apparaissent comme une constellation cohérente."
+      },
+      "couches_carte": [
+        {
+          "id": "fill_pays_senegal",
+          "quoi": "Sénégal surligné or translucide",
+          "technique": "Mapbox addLayer fill sur polygone Sénégal, placé au-dessus des terres et sous les frontières; contour séparé line-layer",
+          "style_exact": "fill-color #c8a951, fill-opacity 0.58, fill-outline-color #e0c46a; contour line-color #e0c46a, line-width 1.6px, line-opacity 0.85; léger glow Remotion du masque pays: box-shadow 0 0 18px rgba(200,169,81,0.28)",
+          "sync_voix": "« Sénégal »"
+        },
+        {
+          "id": "frontieres_geoafrique",
+          "quoi": "Frontières blanches subtiles GeoAfrique V5",
+          "technique": "override paint Mapbox sur admin boundaries",
+          "style_exact": "line-color #c8c8c8, line-width 1.05px, line-opacity 0.72; frontières secondaires line-color #8f9399, line-width 0.55px, line-opacity 0.28",
+          "sync_voix": "continu"
+        },
+        {
+          "id": "marqueur_sangomar_vide",
+          "coords": "lon -16.95, lat 14.00",
+          "quoi": "Marqueur vide Sangomar, sans nom",
+          "technique": "DOM marker Remotion ancré via map.project(), pulse discret",
+          "style_exact": "cercle vide diamètre 18px; border 2px solid #f2ebd9; background rgba(242,235,217,0.08); glow 0 0 12px rgba(242,235,217,0.45); pulse scale 1.0→1.22→1.0 sur 45 frames, opacity 0.95",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "marqueur_gta_vide",
+          "coords": "lon -17.05, lat 15.90",
+          "quoi": "Marqueur vide GTA, sans nom",
+          "technique": "DOM marker Remotion ancré via map.project(), pulse discret décalé",
+          "style_exact": "cercle vide diamètre 18px; border 2px solid #f2ebd9; background rgba(242,235,217,0.08); glow 0 0 12px rgba(242,235,217,0.45); pulse scale 1.0→1.22→1.0 sur 45 frames avec offset +8 frames, opacity 0.95",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "marqueur_yakaar_vide",
+          "coords": "lon -17.30, lat 14.90",
+          "quoi": "Marqueur vide Yakaar-Teranga, sans nom",
+          "technique": "DOM marker Remotion ancré via map.project(), pulse discret décalé",
+          "style_exact": "cercle vide diamètre 18px; border 2px solid #f2ebd9; background rgba(242,235,217,0.08); glow 0 0 12px rgba(242,235,217,0.45); pulse scale 1.0→1.22→1.0 sur 45 frames avec offset +16 frames, opacity 0.95",
+          "sync_voix": "« trois »"
+        }
+      ],
+      "overlays_remotion": [
+        {
+          "id": "grand_chiffre_3",
+          "quoi": "Grand chiffre 3 isolé",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 50% top 69%, transform translate(-50%,-50%); width auto; entrée frames 28-52 opacity 0→1 et scale 0.88→1.0; sortie frames 82-96 opacity 1→0",
+          "style_exact": "font-family Georgia, serif; font-size 132px; line-height 0.9; font-weight 400; color #f2ebd9; text-shadow 0 5px 22px rgba(0,0,0,0.55); letter-spacing -0.04em",
+          "intention": "Faire comprendre immédiatement que l'enjeu est le nombre, avant les noms et les opérateurs.",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "titre_pays_minimal",
+          "quoi": "Petit libellé SÉNÉGAL",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 6.5% top 8%; opacity 0.82; entrée frames 10-35 translateY 8px→0 et opacity 0→0.82",
+          "style_exact": "font-family IBM Plex Mono, monospace; font-size 22px; font-weight 600; color #f2ebd9; letter-spacing 0.18em; text-transform uppercase; border-left 3px solid #c8a951; padding-left 14px",
+          "intention": "Ancrer le pays sans surcharger la carte.",
+          "sync_voix": "« Sénégal »"
+        }
+      ],
+      "intention_etat": "Installer une promesse simple et premium : trois points offshore, pas encore nommés, autour d'un Sénégal doré sur une carte grise sobre."
+    },
+    {
+      "etat": "2 - SANGOMAR",
+      "sync_voix": "« Le premier s'appelle Sangomar. Du pétrole brut, au large de Dakar. Exploité par l'Australien Woodside. Petrosen détient dix-huit pour cent. »",
+      "camera": {
+        "from": "lon -17.05, lat 14.95, zoom 5.85, pitch 30, bearing -6",
+        "to": "lon -16.95, lat 14.25, zoom 6.55, pitch 31, bearing -7",
+        "anim": "frames 90-170, interpolation frame-driven useCurrentFrame + interpolate, easing ease-out cubic, map.jumpTo par frame; respiration caméra ±0.015 zoom sur frames 170-270",
+        "intention": "Descendre vers le sud et l'offshore de Dakar pour isoler Sangomar comme premier foyer actif; la caméra raconte le passage du nombre abstrait au premier actif concret."
+      },
+      "couches_carte": [
+        {
+          "id": "fill_pays_senegal",
+          "quoi": "Sénégal surligné or, maintenu mais légèrement moins dominant",
+          "technique": "Mapbox fill-layer Sénégal continu, opacité interpolée",
+          "style_exact": "fill-color #c8a951, fill-opacity 0.52, fill-outline-color #e0c46a; contour line-color #e0c46a, line-width 1.5px, line-opacity 0.82; glow Remotion 0 0 16px rgba(200,169,81,0.22)",
+          "sync_voix": "continu"
+        },
+        {
+          "id": "marqueur_sangomar_petrole",
+          "coords": "lon -16.95, lat 14.00",
+          "quoi": "Marqueur pétrole actif Sangomar",
+          "technique": "DOM marker Remotion ancré via map.project(), pictogramme goutte pétrole en SVG Remotion, pulse contrôlé",
+          "style_exact": "disque extérieur diamètre 54px background rgba(196,122,22,0.22), border 2px solid #c47a16; disque intérieur diamètre 34px background #6b3f10, border 2px solid #f2b34d; icône goutte fill #f2b34d; glow 0 0 18px rgba(242,179,77,0.55); pulse uniquement frames 120-165 scale 0.92→1.08→1.0",
+          "sync_voix": "« Sangomar »"
+        },
+        {
+          "id": "marqueur_gta_fantome",
+          "coords": "lon -17.05, lat 15.90",
+          "quoi": "GTA en fantôme",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "cercle diamètre 13px; background rgba(242,235,217,0.35); border 1px solid rgba(242,235,217,0.45); glow none; opacity 0.38",
+          "sync_voix": "après « premier »"
+        },
+        {
+          "id": "marqueur_yakaar_fantome",
+          "coords": "lon -17.30, lat 14.90",
+          "quoi": "Yakaar-Teranga en fantôme",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "cercle diamètre 13px; background rgba(242,235,217,0.35); border 1px solid rgba(242,235,217,0.45); glow none; opacity 0.38",
+          "sync_voix": "après « premier »"
+        },
+        {
+          "id": "repere_dakar",
+          "coords": "lon -17.45, lat 14.69",
+          "quoi": "Point discret Dakar",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "point diamètre 5px background #f2ebd9; halo 12px rgba(242,235,217,0.16); label optionnel non affiché dans cet état pour éviter surcharge",
+          "sync_voix": "« Dakar »"
+        }
+      ],
+      "overlays_remotion": [
+        {
+          "id": "cartouche_sangomar",
+          "quoi": "Cartouche nom + type + opérateur implicite par drapeau",
+          "verdict": "HYBRIDE",
+          "asset_prompt": "Drapeau australien flat editorial, fond transparent, proportions fidèles, couleurs sobres non saturées, aucun relief, aucune ombre interne, export PNG 512x256 transparent.",
+          "remotion": "position absolute left 51% top 28%; width 360px; min-height 128px; entrée frames 142-172 opacity 0→1, translateY 12px→0, scale 0.97→1; sortie frames 270-292 opacity 1→0.35 pour devenir fantôme au beat suivant",
+          "style_exact": "cartouche background linear-gradient(180deg,#16212c 0%,#101820 100%); border 1.5px solid rgba(200,169,81,0.72); border-radius 10px; box-shadow 0 12px 30px rgba(0,0,0,0.42), inset 0 0 0 1px rgba(242,235,217,0.06); padding 18px 20px; titre font-family IBM Plex Mono, monospace, font-size 34px, font-weight 600, color #f2ebd9, letter-spacing 0.02em; ligne secondaire font-family Georgia, serif, font-size 27px, color #f2b34d; drapeau Australie 34px x 22px placé sous le titre à gauche; libellé opérateur non écrit pour rester sobre",
+          "intention": "Nommer le premier actif avec un cartouche data-editorial proche de la référence, sans effet VFX.",
+          "sync_voix": "« Sangomar »"
+        },
+        {
+          "id": "jauge_petrossen_18",
+          "quoi": "Jauge circulaire 18%",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 67.8% top 36.5%; width 72px height 72px; entrée frames 205-235 strokeDashoffset animé vers 18%; opacity 0→1",
+          "style_exact": "cercle fond stroke rgba(242,235,217,0.18) stroke-width 7px; arc stroke #f2b34d stroke-width 7px stroke-linecap round; remplissage intérieur #17202a; texte font-family IBM Plex Mono, monospace, font-size 20px, font-weight 700, color #f2ebd9; label invisible, seulement « 18% »; ombre 0 6px 16px rgba(0,0,0,0.45)",
+          "intention": "Matérialiser la part de Petrosen sans ouvrir un second foyer narratif.",
+          "sync_voix": "« dix-huit pour cent »"
+        },
+        {
+          "id": "micro_label_dakar",
+          "quoi": "Petit libellé DAKAR très discret",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "ancré au point Dakar via map.project(), offset x 10px y -18px; affichage frames 158-205 uniquement",
+          "style_exact": "font-family IBM Plex Mono, monospace; font-size 13px; color rgba(242,235,217,0.74); letter-spacing 0.12em; text-transform uppercase; text-shadow 0 2px 8px rgba(0,0,0,0.65)",
+          "intention": "Aider à lire « au large de Dakar » puis disparaître pour ne pas concurrencer Sangomar.",
+          "sync_voix": "« Dakar »"
+        }
+      ],
+      "intention_etat": "Faire de Sangomar le premier foyer actif : pétrole, Australie, participation sénégalaise, pendant que les deux autres champs restent présents mais silencieux."
+    },
+    {
+      "etat": "3 - GTA",
+      "sync_voix": "« Le deuxième, c'est GTA : un champ de gaz sur la frontière avec la Mauritanie, opéré par le Britannique BP. Depuis 2025, il produit. Les premières cargaisons sont parties vers l'Europe et l'Asie — pour remplacer le gaz russe. »",
+      "camera": {
+        "from": "lon -16.95, lat 14.25, zoom 6.55, pitch 31, bearing -7",
+        "to": "lon -17.02, lat 15.55, zoom 6.35, pitch 32, bearing -5",
+        "anim": "frames 292-385, interpolation frame-driven useCurrentFrame + interpolate, easing ease-out cubic, map.jumpTo par frame; micro-respiration bearing -5→-4.4→-5 sur frames 385-510",
+        "intention": "Remonter franchement vers le nord pour suivre le mot « deuxième » et placer GTA sur la frontière maritime Sénégal-Mauritanie; le mouvement rend visible le changement d'échelle géopolitique."
+      },
+      "couches_carte": [
+        {
+          "id": "fill_pays_senegal",
+          "quoi": "Sénégal surligné or, repère territorial constant",
+          "technique": "Mapbox fill-layer Sénégal continu",
+          "style_exact": "fill-color #c8a951, fill-opacity 0.48, fill-outline-color #e0c46a; contour line-color #e0c46a, line-width 1.45px, line-opacity 0.78; glow Remotion 0 0 14px rgba(200,169,81,0.18)",
+          "sync_voix": "continu"
+        },
+        {
+          "id": "mood_ocean_navy",
+          "quoi": "Virage discret vers un fond plus navy",
+          "technique": "override progressif paint Mapbox water + overlay Remotion semi-transparent",
+          "style_exact": "water-color interpolé #1a3a5c→#10243b entre frames 360-510; overlay plein cadre pointer-events none background rgba(4,10,18,0.10) à frame 510; terres restent #4a4a4a avec opacité visuelle inchangée",
+          "sync_voix": "« Europe et l'Asie »"
+        },
+        {
+          "id": "marqueur_gta_gaz",
+          "coords": "lon -17.05, lat 15.90",
+          "quoi": "Marqueur gaz actif GTA",
+          "technique": "DOM marker Remotion ancré via map.project(), anneaux teal et goutte gaz SVG Remotion",
+          "style_exact": "anneau extérieur diamètre 62px border 2px solid #2a9da0 background rgba(42,157,160,0.18); anneau médian diamètre 44px border 2px solid rgba(126,216,214,0.75); noyau diamètre 30px background #12383d; icône goutte fill #7ed8d6; glow 0 0 20px rgba(42,157,160,0.58); pulse anneau extérieur scale 1→1.28 opacity 0.65→0 sur boucle 54 frames",
+          "sync_voix": "« GTA »"
+        },
+        {
+          "id": "marqueur_sangomar_fantome",
+          "coords": "lon -16.95, lat 14.00",
+          "quoi": "Sangomar en fantôme pétrole",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "disque diamètre 25px background rgba(196,122,22,0.20); border 1.5px solid rgba(242,179,77,0.38); icône goutte opacity 0.32 fill #f2b34d; glow 0 0 8px rgba(242,179,77,0.16); opacity globale 0.46",
+          "sync_voix": "après « deuxième »"
+        },
+        {
+          "id": "marqueur_yakaar_fantome",
+          "coords": "lon -17.30, lat 14.90",
+          "quoi": "Yakaar-Teranga en fantôme silencieux",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "cercle diamètre 12px background rgba(169,169,160,0.18); border 1px dashed rgba(169,169,160,0.45); opacity 0.32; no glow",
+          "sync_voix": "continu"
+        },
+        {
+          "id": "fleche_export_europe",
+          "quoi": "Flèche courbe d'export vers l'Europe",
+          "technique": "SVG Remotion par-dessus la carte, point de départ ancré sur GTA via map.project(), arrivée en screen-space hors cadre haut-droit",
+          "style_exact": "path cubic Bézier depuis GTA vers x 88% y 8%; stroke #7ed8d6; stroke-width 2px; stroke-opacity 0.55; fill none; stroke-linecap round; dasharray 6 10; flèche terminale triangle #7ed8d6 opacity 0.55; draw-on frames 420-470",
+          "sync_voix": "« Europe »"
+        },
+        {
+          "id": "fleche_export_asie",
+          "quoi": "Flèche courbe d'export vers l'Asie",
+          "technique": "SVG Remotion par-dessus la carte, point de départ ancré sur GTA via map.project(), arrivée en screen-space hors cadre droit",
+          "style_exact": "path cubic Bézier depuis GTA vers x 101% y 38%; stroke #7ed8d6; stroke-width 2px; stroke-opacity 0.42; fill none; stroke-linecap round; dasharray 6 10; flèche terminale triangle #7ed8d6 opacity 0.42; draw-on frames 438-492",
+          "sync_voix": "« Asie »"
+        }
+      ],
+      "overlays_remotion": [
+        {
+          "id": "cartouche_gta",
+          "quoi": "Cartouche GTA + drapeau britannique + Gaz, 2025",
+          "verdict": "HYBRIDE",
+          "asset_prompt": "Drapeau britannique flat editorial, fond transparent, proportions fidèles, couleurs légèrement désaturées adaptées à carte sombre, aucun relief, aucune ombre interne, export PNG 512x256 transparent.",
+          "remotion": "position absolute left 57% top 31%; width 310px; min-height 116px; entrée frames 372-405 opacity 0→1, translateY 12px→0; maintien jusqu'à frame 520; drapeau aligné à droite du titre",
+          "style_exact": "cartouche background linear-gradient(180deg,#153039 0%,#101820 100%); border 1.5px solid rgba(42,157,160,0.78); border-radius 10px; box-shadow 0 12px 30px rgba(0,0,0,0.44), 0 0 18px rgba(42,157,160,0.14), inset 0 0 0 1px rgba(242,235,217,0.05); padding 17px 19px; titre font-family IBM Plex Mono, monospace, font-size 34px, font-weight 600, color #f2ebd9; drapeau Royaume-Uni 38px x 24px; ligne secondaire font-family Georgia, serif, font-size 27px, color #7ed8d6; texte exact « Gaz, 2025 »",
+          "intention": "Donner le deuxième actif comme déjà productif et internationalisé.",
+          "sync_voix": "« GTA » puis « 2025 »"
+        },
+        {
+          "id": "label_frontiere",
+          "quoi": "Mention discrète frontière Sénégal-Mauritanie",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 30% top 18%; entrée frames 350-375 opacity 0→0.68; sortie frames 418-445 opacity 0.68→0",
+          "style_exact": "font-family IBM Plex Mono, monospace; font-size 14px; color rgba(242,235,217,0.68); letter-spacing 0.08em; text-transform uppercase; border-top 1px solid rgba(200,200,200,0.35); padding-top 6px; text-shadow 0 2px 8px rgba(0,0,0,0.7); texte exact « FRONTIÈRE SÉNÉGAL-MAURITANIE »",
+          "intention": "Souligner l'emplacement frontalier sans transformer la scène en leçon de géographie.",
+          "sync_voix": "« frontière avec la Mauritanie »"
+        },
+        {
+          "id": "export_labels",
+          "quoi": "Micro-labels Europe et Asie sur les flèches",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "EUROPE position absolute left 82% top 9%; ASIE position absolute left 88% top 35%; apparition synchronisée avec le draw-on des flèches",
+          "style_exact": "font-family IBM Plex Mono, monospace; font-size 15px; font-weight 600; color rgba(126,216,214,0.82); letter-spacing 0.16em; text-transform uppercase; text-shadow 0 2px 10px rgba(0,0,0,0.75)",
+          "intention": "Faire lire les destinations sans ajouter de carte mondiale.",
+          "sync_voix": "« Europe » et « Asie »"
+        }
+      ],
+      "intention_etat": "Basculer de l'actif local vers la chaîne d'export mondiale : gaz, BP britannique, production 2025, routes vers Europe et Asie, avec une atmosphère plus navy."
+    },
+    {
+      "etat": "4 - YAKAAR-TERANGA",
+      "sync_voix": "« Et il y a un troisième champ. Yakaar-Teranga. Du gaz, encore offshore. Mais personne n'a décidé comment il sera exploité. Il attend. Et plusieurs capitales le regardent. On y reviendra — c'est lui qui réserve la plus grosse surprise. »",
+      "camera": {
+        "from": "lon -17.02, lat 15.55, zoom 6.35, pitch 32, bearing -5",
+        "to": "lon -17.18, lat 14.92, zoom 6.10, pitch 33, bearing -8",
+        "anim": "frames 520-610, interpolation frame-driven useCurrentFrame + interpolate, easing ease-out cubic, map.jumpTo par frame; respiration très lente zoom 6.10→6.16→6.10 frames 610-720",
+        "intention": "Redescendre vers l'offshore de Dakar mais assombrir la scène : ce n'est plus une annonce d'exploitation, c'est une attente stratégique."
+      },
+      "couches_carte": [
+        {
+          "id": "fill_pays_senegal_assombri",
+          "quoi": "Sénégal encore visible mais presque effacé",
+          "technique": "Mapbox fill-layer Sénégal opacité réduite + overlay sombre",
+          "style_exact": "fill-color #c8a951, fill-opacity 0.30; contour line-color #c8a951, line-width 1.15px, line-opacity 0.45; glow supprimé; overlay Remotion plein cadre background rgba(3,8,15,0.34) à partir de frame 560",
+          "sync_voix": "« troisième champ »"
+        },
+        {
+          "id": "carte_assombrie_navy",
+          "quoi": "Carte presque effacée, fond navy sombre",
+          "technique": "override progressif applyGeoAfriqueV5 + voile Remotion",
+          "style_exact": "water-color #081525; land-color #2c2d31; border line-color #c8c8c8 avec line-opacity 0.34; routes et labels Mapbox désactivés ou opacity 0; voile radial background radial-gradient(circle at 38% 49%, rgba(0,0,0,0.05) 0%, rgba(3,8,15,0.42) 68%, rgba(3,8,15,0.62) 100%)",
+          "sync_voix": "« Il attend »"
+        },
+        {
+          "id": "marqueur_yakaar_suspens",
+          "coords": "lon -17.30, lat 14.90",
+          "quoi": "Marqueur en suspens Yakaar-Teranga, éteint",
+          "technique": "DOM marker Remotion ancré via map.project(), pointillés gris, sans glow actif",
+          "style_exact": "anneau extérieur diamètre 58px border 2px dashed #a9a9a0; dasharray CSS simulé par SVG circle stroke-dasharray 4 6; stroke-opacity 0.72; noyau diamètre 18px background rgba(169,169,160,0.18); icône goutte fill rgba(169,169,160,0.36); aucun halo lumineux; rotation lente de l'anneau 0→18deg sur 120 frames; opacity globale 0.78",
+          "sync_voix": "« Yakaar-Teranga »"
+        },
+        {
+          "id": "marqueur_sangomar_eteint",
+          "coords": "lon -16.95, lat 14.00",
+          "quoi": "Sangomar presque disparu",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "point diamètre 7px background rgba(242,179,77,0.18); border none; opacity 0.22; no glow",
+          "sync_voix": "après « troisième champ »"
+        },
+        {
+          "id": "marqueur_gta_eteint",
+          "coords": "lon -17.05, lat 15.90",
+          "quoi": "GTA presque disparu",
+          "technique": "DOM marker Remotion ancré via map.project()",
+          "style_exact": "point diamètre 7px background rgba(126,216,214,0.18); border none; opacity 0.22; no glow",
+          "sync_voix": "après « troisième champ »"
+        }
+      ],
+      "overlays_remotion": [
+        {
+          "id": "cartouche_yakaar",
+          "quoi": "Cartouche Yakaar-Teranga + opérateur non renseigné",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 54% top 39%; width 440px; min-height 118px; entrée frames 592-628 opacity 0→1, translateY 10px→0; curseur clignote frames 635-720",
+          "style_exact": "cartouche background linear-gradient(180deg,#141b25 0%,#0b1119 100%); border 1.4px solid rgba(169,169,160,0.62); border-radius 10px; box-shadow 0 14px 34px rgba(0,0,0,0.55), inset 0 0 0 1px rgba(242,235,217,0.04); padding 18px 20px; titre font-family IBM Plex Mono, monospace, font-size 32px, font-weight 600, color #f2ebd9, letter-spacing 0.02em; ligne secondaire font-family Georgia, serif, font-size 26px, color #b7c0c9; texte exact « Opérateur : _ »; curseur underscore color #f2ebd9 opacity 1→0→1 toutes les 18 frames",
+          "intention": "Transformer l'absence de décision en information visuelle centrale.",
+          "sync_voix": "« personne n'a décidé »"
+        },
+        {
+          "id": "icones_yeux_capitales",
+          "quoi": "Deux à trois icônes œil orientées vers Yakaar-Teranga",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "SVG Remotion; œil 1 position left 24% top 30%, œil 2 left 73% top 22%, œil 3 left 80% top 64%; chaque œil rotate vers le point projeté Yakaar; apparition frames 650-690 en cascade opacity 0→0.82",
+          "style_exact": "icône œil width 28px height 18px; stroke #a9a9a0 stroke-width 1.7px fill rgba(169,169,160,0.06); pupille cercle 4px fill #f2ebd9 opacity 0.82; trait de visée optionnel dotted line vers Yakaar stroke rgba(169,169,160,0.32) stroke-width 1px stroke-dasharray 2 7; aucune lueur, aucune particule",
+          "intention": "Suggérer les capitales qui observent sans les nommer ni inventer de localisation.",
+          "sync_voix": "« plusieurs capitales le regardent »"
+        },
+        {
+          "id": "micro_cliffhanger",
+          "quoi": "Mention finale discrète",
+          "verdict": "REMOTION",
+          "asset_prompt": "",
+          "remotion": "position absolute left 6.5% bottom 8%; entrée frames 690-720 opacity 0→0.9, translateX -8px→0",
+          "style_exact": "font-family IBM Plex Mono, monospace; font-size 18px; font-weight 600; color #c8a951; letter-spacing 0.14em; text-transform uppercase; border-left 3px solid #c8a951; padding-left 14px; text-shadow 0 3px 12px rgba(0,0,0,0.65); texte exact « À SUIVRE »",
+          "intention": "Verrouiller l'open loop sans surdramatiser.",
+          "sync_voix": "« On y reviendra »"
+        }
+      ],
+      "intention_etat": "Éteindre les certitudes et isoler Yakaar-Teranga comme le champ non décidé, observé, porteur de surprise."
+    }
+  ],
+  "transitions": "La scène utilise une seule Mapbox continue. Transition 1→2 : le chiffre 3 disparaît pendant que les trois marqueurs vides se réorganisent; Sangomar passe de cercle ivoire à disque pétrole ambre, les deux autres deviennent fantômes; caméra jumpTo interpolée vers le sud offshore. Transition 2→3 : le cartouche Sangomar baisse en opacité puis sort; la caméra remonte au nord vers GTA; le marqueur gaz teal s'allume, Sangomar devient fantôme; les flèches d'export se dessinent après l'apparition du cartouche GTA; l'eau passe progressivement de #1a3a5c à #10243b. Transition 3→4 : les flèches s'effacent en dash reverse, le cartouche GTA baisse à 0, la carte s'assombrit; caméra redescend vers Yakaar-Teranga; le Sénégal reste or mais réduit à 0.30 d'opacité; Yakaar devient le seul marqueur lisible, en pointillés gris. Aucun cut sec, aucun flyTo/easeTo, uniquement useCurrentFrame + interpolate + map.jumpTo par frame.",
+  "assets_a_generer": [
+    "drapeau Australie flat editorial fond transparent PNG 512x256",
+    "drapeau Royaume-Uni flat editorial fond transparent PNG 512x256"
+  ],
+  "ce_qui_reste_a_remotion": "Construire une seule Map continue Mapbox GL headless en 1920x1080 30fps avec style mapbox://styles/mapbox/dark-v11 et applyGeoAfriqueV5; piloter tous les camKeys par useCurrentFrame + interpolate + map.jumpTo; ajouter le fill or du Sénégal et son contour; projeter les DOM markers via map.project() aux coordonnées réelles Sangomar (-16.95,14.00), GTA (-17.05,15.90), Yakaar-Teranga (-17.30,14.90), Dakar (-17.45,14.69); créer les overlays Tailwind/Remotion pour cartouches, jauge, labels, flèches SVG et icônes œil; utiliser useClipFlags ou images transparentes réelles pour les drapeaux; synchroniser les entrées/sorties sur la voix off; masquer ou assombrir la carte par voile Remotion si un overlay devient dominant; ne jamais utiliser flyTo/easeTo, drawFlagCanvas, satellite, globe, terrain volumétrique, faisceaux ou particules VFX.",
+  "techniques_inedites": "Voile navy progressif frame-driven par interpolation des couleurs Mapbox water/land + overlay radial Remotion; flèches d'export SVG screen-space avec départ ancré via map.project() et arrivée hors cadre, sans coordonnées inventées."
+}

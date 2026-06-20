@@ -1,0 +1,409 @@
+{
+  "scene": "Documentaire premium sur le pétrole/gaz du Sénégal — révélation des trois champs offshore Sangomar, GTA et Yakaar-Teranga en cartographie d3-geo plate parchemin.",
+  "ratio": "16:9",
+  "archetype": "carto-plat-parchemin",
+  "palette_globale": {
+    "PARCH": "#e4ddca",
+    "PARCH_DARK": "#d6cdb4",
+    "GRID": "#c2a96a",
+    "NAVY": "#16213a",
+    "NAVY_DEEP": "#0d1424",
+    "OCRE": "#e7bd78",
+    "OCRE_DARK": "#bf9442",
+    "PETROLE_FILL": "#16213a",
+    "GAZ_TEAL": "#2a9da0",
+    "EN_SUSPENS_GREY": "#a9a9a0",
+    "WHITE_WARM": "#f6efd8",
+    "TEXT_MUTED": "#8f8b7c",
+    "SHADOW_INK": "#0b1020",
+    "SPOTLIGHT": "#fff2c8",
+    "FANTOME": "#b7b0a0",
+    "EUROPE_ARROW": "#2a9da0",
+    "ASIE_ARROW": "#2a9da0",
+    "font_titres_chiffres": "'Bebas Neue','Impact',sans-serif",
+    "font_sans_labels": "'Inter','Helvetica Neue',Arial,sans-serif",
+    "font_cartouche_nom": "'IBM Plex Mono',monospace",
+    "font_cartouche_stat": "Georgia,serif"
+  },
+  "etats": [
+    {
+      "etat": "1 - TROIS",
+      "sync_voix": "« Le Sénégal n'a pas trouvé un gisement. Il en a trouvé trois. »",
+      "background": {
+        "verdict": "REMOTION",
+        "description": "Fond parchemin clair couvrant tout le 16:9, quadrillage cartographique fin et grain très léger. Le contenu remplit le cadre : carte Sénégal + Atlantique très large, ancrée légèrement à gauche, avec trois marqueurs vides et le chiffre 3 monumental.",
+        "remotion": "absolute inset-0 w-full h-full; background interpolé PARCH #e4ddca vers PARCH_DARK #d6cdb4 en radial très doux; grille SVG à lignes verticales/horizontales tous les 4.2% largeur et 7.5% hauteur, opacity 0.55; grain SVG feTurbulence opacity 0.045; aucune CSS transition, tout via useCurrentFrame."
+      },
+      "elements": [
+        {
+          "id": "etat1_map_senegal_atlantique",
+          "quoi": "Carte d3-geo plate : Sénégal rempli ocre, Mauritanie/Gambie/Guinée-Bissau en contours très discrets, Atlantique à gauche, projection Mercator fitExtent.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "SVG plein écran absolute inset-0. Groupe carte gMap transformé par camera spring. Cadrage état 1 : fitExtent [[120,90],[1500,990]] sur bbox Sénégal + Mauritanie sud + Atlantique ouest; Sénégal occupe environ x=29%-70%, y=19%-82%; îles du Cap-Vert visibles à x=8%-17%, y=35%-48%. Apparition par draw-on des contours frames 0-22 puis fill fade-in frames 10-35.",
+          "style_exact": "Pays Sénégal fill #bf9442 avec léger gradient SVG interne de #e7bd78 haut-gauche vers #bf9442 bas-droite; contour #16213a stroke-width 0.09% largeur cadre soit 1.7px, opacity 0.78; pays voisins fill #d6cdb4 opacity 0.35, stroke #16213a stroke-width 1.1px opacity 0.25; côtes stroke-linejoin round; aucune ombre CSS; ombre SVG duplicate path translate(0.25%,0.35%) fill #0b1020 opacity 0.14; grille #c2a96a stroke-width 1px opacity 0.6.",
+          "intention": "Installer une carte dessinée, tangible, éditoriale, comme un parchemin moderne où le Sénégal devient le plateau de révélation.",
+          "position": "Carte principale x=5%-78%, y=6%-94%; Sénégal visuellement centré x=47%, y=51%.",
+          "sync_voix": "« Sénégal »"
+        },
+        {
+          "id": "etat1_chiffre_3",
+          "quoi": "Grand chiffre « 3 » au-dessus de la carte, chiffre-titre de révélation.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Div/SVG text absolute left-[44%] top-[2.5%] w-[12%] h-[15%]. Scale spring de 0.82 à 1 frames 8-28, opacity 0 à 1 frames 4-20. Respiration sinusoïdale scale +/-1.2% toutes les 90 frames.",
+          "style_exact": "Texte '3'; font-family 'Bebas Neue','Impact',sans-serif; font-size 7.2vw; line-height 0.9; fill #8a5d21 puis accent #bf9442 via SVG linearGradient; stroke #f6efd8 stroke-width 0.09% largeur cadre soit 1.7px; shadow SVG feDropShadow dx 0 dy 3 stdDeviation 0.8 flood-color #0b1020 flood-opacity 0.22; letter-spacing 0.",
+          "intention": "Donner immédiatement la clé narrative : il y a trois découvertes, pas une.",
+          "position": "Centre haut, x=50%, y=8%, taille environ 9% largeur x 13% hauteur.",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "etat1_marker_sangomar_vide",
+          "quoi": "Marqueur vide numéro 1, position réelle Sangomar offshore sud de Dakar.",
+          "verdict": "REMOTION",
+          "coords": "lon -16.95, lat 14.00",
+          "asset_prompt": "",
+          "remotion": "Circle SVG projeté par geoMercator aux coordonnées réelles; dans état 1 visible x approximatif 28%-31%, y=58%-62%. Apparition par stroke-dashoffset frames 16-30; pulse scale 1 à 1.08 sin discret.",
+          "style_exact": "Anneau vide sans texte; fill transparent; stroke #bf9442; stroke-width 0.17% largeur cadre soit 3.2px; rayon 0.75% largeur cadre soit 14.4px; deuxième anneau intérieur stroke #f6efd8 stroke-width 1.4px opacity 0.75; pas de glow; stroke-linecap round.",
+          "intention": "Signaler un point encore anonyme, promesse d'identification future.",
+          "position": "Projeté offshore sud-ouest de Dakar; environ x=29%, y=60% selon cadrage état 1.",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "etat1_marker_gta_vide",
+          "quoi": "Marqueur vide numéro 2, position réelle GTA à la frontière maritime Sénégal/Mauritanie.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.05, lat 15.90",
+          "asset_prompt": "",
+          "remotion": "Circle SVG projeté aux coordonnées réelles; état 1 visible près du haut du Sénégal, x approximatif 42%-46%, y=23%-28%. Apparition frames 20-34 avec léger rebond spring.",
+          "style_exact": "Anneau vide; fill transparent; stroke #bf9442; stroke-width 0.17% largeur cadre soit 3.2px; rayon 0.65% largeur cadre soit 12.5px; petit point central #f6efd8 radius 0.16% largeur cadre opacity 0.65; pulse opacity 0.8-1.",
+          "intention": "Créer un second repère au nord, sans encore nommer le gaz.",
+          "position": "Projeté offshore nord Sénégal/frontière Mauritanie; environ x=44%, y=25%.",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "etat1_marker_yakaar_vide",
+          "quoi": "Marqueur vide numéro 3, position réelle Yakaar-Teranga offshore au large de Dakar.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.30, lat 14.90",
+          "asset_prompt": "",
+          "remotion": "Circle SVG projeté aux coordonnées réelles; état 1 visible à l'ouest/nord-ouest de Dakar, x approximatif 23%-27%, y=45%-50%. Apparition frames 24-38, retardé pour compléter le triangle.",
+          "style_exact": "Anneau vide; fill transparent; stroke #bf9442; stroke-width 0.17% largeur cadre soit 3.2px; rayon 0.72% largeur cadre soit 13.8px; contour intérieur #f6efd8 stroke-width 1.2px opacity 0.62; dasharray none en état 1.",
+          "intention": "Troisième point discret, celui qui sera gardé en suspens pour le cliffhanger.",
+          "position": "Projeté offshore Dakar; environ x=25%, y=48%.",
+          "sync_voix": "« trois »"
+        },
+        {
+          "id": "etat1_repere_dakar_minimal",
+          "quoi": "Repère très discret de Dakar sans label, pour ancrage géographique.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.45, lat 14.69",
+          "asset_prompt": "",
+          "remotion": "Petit point SVG projeté aux coordonnées Dakar; opacity fade-in frames 15-35; reste en arrière-plan.",
+          "style_exact": "Circle fill #16213a opacity 0.45 radius 0.18% largeur cadre soit 3.5px; halo fill transparent stroke #16213a stroke-width 0.8px opacity 0.18 radius 0.48% largeur cadre; aucun label en état 1.",
+          "intention": "Donner une référence urbaine sans surcharger l'état très aéré.",
+          "position": "Côte ouest du Sénégal, proche de la presqu'île; environ x=30%, y=50%.",
+          "sync_voix": "« Sénégal »"
+        }
+      ],
+      "intention_etat": "Premier état très lisible : le public comprend qu'il y a trois points distincts autour du Sénégal. Pas de noms, pas de statistiques : uniquement la promesse."
+    },
+    {
+      "etat": "2 - SANGOMAR",
+      "sync_voix": "« Le premier s'appelle Sangomar. Du pétrole brut, au large de Dakar. Exploité par l'Australien Woodside. Petrosen détient dix-huit pour cent. »",
+      "background": {
+        "verdict": "REMOTION",
+        "description": "Le parchemin se refroidit légèrement sous un voile gris/navy, avec spotlight net sur Sangomar. La carte reste visible mais désaturée hors du cercle de focus.",
+        "remotion": "Fond interpolé #e4ddca vers #d6cdb4 avec overlay rect #16213a opacity 0.18 à 0.28. Grille persistante #c2a96a opacity 0.38. Spotlight SVG mask circulaire net centré sur projection Sangomar, rayon animé 9% à 15% largeur cadre frames 0-24 de l'état."
+      },
+      "elements": [
+        {
+          "id": "etat2_map_focus_sangomar",
+          "quoi": "Carte d3-geo persistante, caméra descend/zoome vers Sangomar, reste du territoire en fantôme.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Même SVG carte. Camera gMap spring depuis état 1 vers Sangomar : scale environ 1.28, translate pour placer Sangomar x=34%, y=47%. Durée transition 28 frames, spring config damping 24 stiffness 85 mass 0.9. Hors spotlight, groupe carte opacity 0.38; dans clipPath spotlight, opacity 0.92.",
+          "style_exact": "Sénégal fill #bf9442 opacity 0.42 hors spotlight, #bf9442 opacity 0.72 dans spotlight; contour #16213a stroke-width 1.6px opacity 0.55 hors spotlight, 0.85 dans spotlight; pays voisins #d6cdb4 opacity 0.25; masque spotlight cercle bord net sans blur, fill #fff2c8 opacity 0.78; bord spotlight stroke #f6efd8 stroke-width 1px opacity 0.35.",
+          "intention": "Isoler le premier gisement et transformer la carte globale en dossier d'exploitation.",
+          "position": "Sangomar actif x=34%, y=47%; label et jauge occupent la moitié droite x=42%-92%.",
+          "sync_voix": "« premier »"
+        },
+        {
+          "id": "etat2_marker_sangomar_petrole",
+          "quoi": "Marqueur pétrole actif sur Sangomar : disque sombre, halo ambré, petite pastille secondaire.",
+          "verdict": "REMOTION",
+          "coords": "lon -16.95, lat 14.00",
+          "asset_prompt": "",
+          "remotion": "SVG group projeté Sangomar. Scale spring 0.7 à 1 frames 4-20; pulse halo tous les 60 frames. Relié au label par ligne horizontale vers la droite.",
+          "style_exact": "Disque principal fill #16213a radius 1.28% largeur cadre soit 24.5px; stroke #f6efd8 stroke-width 0.15% largeur cadre soit 2.9px; halo externe circle fill #e7bd78 opacity animé 0.18-0.32 radius 2.05% largeur cadre; petit disque secondaire en bas-gauche fill #8f8b7c radius 0.58% largeur cadre, stroke #f6efd8 stroke-width 1.4px opacity 0.55; aucune icône pétrole ajoutée, le disque sombre code le pétrole.",
+          "intention": "Faire sentir un actif pétrolier dense, lourd, déjà exploité.",
+          "position": "Point actif x=34%, y=47% après caméra; taille marqueur environ 4.2% largeur avec halo.",
+          "sync_voix": "« Sangomar »"
+        },
+        {
+          "id": "etat2_label_sangomar",
+          "quoi": "Nom SANGOMAR en grand, cartouche linéaire à droite du marqueur.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Text SVG/HTML absolute left-[43%] top-[41%] w-[28%] h-[8%]. Slide-in de gauche 18px équivalent à 0.95% largeur, opacity 0 à 1 frames 8-22. Ligne leader depuis marqueur x=35.5% vers x=43%.",
+          "style_exact": "Texte 'SANGOMAR'; font-family 'Inter','Helvetica Neue',Arial,sans-serif; font-weight 800; font-size 2.35vw; letter-spacing -0.03em; color #16213a; text-shadow SVG/HTML 0 1px 0 #f6efd8; leader line stroke #16213a stroke-width 0.12% largeur cadre soit 2.3px opacity 0.85; linecap square; cartouche sans fond, uniquement baseline stroke #16213a width 2px sous le texte à y=52%.",
+          "intention": "Nommer clairement le premier champ sans rompre le style cartographique.",
+          "position": "x=43%-70%, y=41%-49%.",
+          "sync_voix": "« Sangomar »"
+        },
+        {
+          "id": "etat2_flag_australie",
+          "quoi": "Drapeau australien flat, associé à Woodside.",
+          "verdict": "HYBRIDE",
+          "coords": "",
+          "asset_prompt": "Flat editorial icon of the Australian flag, transparent background, clean vector style, no fabric texture, no waving, exact colors navy #012169, red #C8102E, white #FFFFFF, rectangular 3:2 ratio, premium documentary graphic, crisp edges.",
+          "remotion": "Image asset PNG/SVG fond transparent absolute left-[69.5%] top-[42.2%] w-[3.5%] h-[2.4%]. Fade/scale 0.85 à 1 frames 12-24. Attaché au label SANGOMAR, aligné sur baseline.",
+          "style_exact": "Asset flat transparent; taille affichée 3.5% largeur cadre x 2.4% hauteur; border SVG rect stroke #f6efd8 stroke-width 1px opacity 0.75; shadow 0 1px 2px #0b1020 opacity 0.18 via filtre SVG; pas d'arrondi ou radius 0.1% max.",
+          "intention": "Associer immédiatement le champ au partenaire australien sans long texte.",
+          "position": "À droite immédiate du mot SANGOMAR, x=69.5%-73%, y=42.2%-44.6%.",
+          "sync_voix": "« Australien »"
+        },
+        {
+          "id": "etat2_jauge_petrossen_18",
+          "quoi": "Jauge circulaire « 18% » représentant la part de Petrosen.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "SVG gauge absolute left-[80%] top-[32%] w-[11%] h-[20%]. Arc animé par stroke-dashoffset de 0 à 18% frames 18-44; count-up texte de 0 à 18 frames 18-44. Léger maintien respirant.",
+          "style_exact": "Cercle fond stroke #8f8b7c stroke-width 0.52% largeur cadre soit 10px opacity 0.55; arc actif stroke #16213a stroke-width 0.52% largeur cadre linecap butt couvrant 18% de circonférence depuis angle -90°; cercle intérieur fill transparent; texte '18%' font-family 'Inter','Helvetica Neue',Arial,sans-serif font-weight 800 font-size 2.05vw fill #16213a; align center; aucun gradient; rayon cercle 4.1% largeur cadre.",
+          "intention": "Transformer une donnée de propriété en signe visuel immédiatement mémorisable.",
+          "position": "Droite du cadre, x=80%-91%, y=32%-52%.",
+          "sync_voix": "« dix-huit pour cent »"
+        },
+        {
+          "id": "etat2_markers_gta_yakaar_fantomes",
+          "quoi": "Les deux autres marqueurs restent présents en fantôme à 20% pour garder la structure des trois champs.",
+          "verdict": "REMOTION",
+          "coords": "GTA lon -17.05, lat 15.90 ; Yakaar-Teranga lon -17.30, lat 14.90",
+          "asset_prompt": "",
+          "remotion": "Deux circles SVG projetés aux coordonnées réelles, hors focus. Opacity descend de 1 à 0.2 pendant transition état1->état2; scale 0.86; pulse très lent opacity 0.16-0.24.",
+          "style_exact": "Anneaux fantômes fill transparent; stroke #a9a9a0; stroke-width 0.13% largeur cadre soit 2.5px; radius 0.72% largeur cadre; opacity 0.2; pas de label; dasharray none; blend normal.",
+          "intention": "Rappeler qu'il y aura deux autres étapes sans distraire du pétrole.",
+          "position": "Positions projetées réelles, atténuées hors spotlight.",
+          "sync_voix": "« premier »"
+        }
+      ],
+      "intention_etat": "L'état 2 convertit la promesse en premier cas concret : Sangomar est traité comme un actif pétrolier identifiable, avec opérateur et participation nationale."
+    },
+    {
+      "etat": "3 - GTA",
+      "sync_voix": "« Le deuxième, c'est GTA : un champ de gaz sur la frontière avec la Mauritanie, opéré par le Britannique BP. Depuis 2025, il produit. Les premières cargaisons sont parties vers l'Europe et l'Asie — pour remplacer le gaz russe. »",
+      "background": {
+        "verdict": "REMOTION",
+        "description": "La caméra remonte au nord. Le parchemin bascule vers un bleu-gris/navy, comme une carte économique devenue géopolitique. Les flux d'export apparaissent vers la droite.",
+        "remotion": "Interpolation background de #d6cdb4 vers mix(#16213a 55%, #d6cdb4 45%) puis vers #16213a sur la droite par rect gradient. Grille #c2a96a opacity 0.25. Vignette latérale gauche #0d1424 opacity 0.42. Tout frame-driven."
+      },
+      "elements": [
+        {
+          "id": "etat3_map_focus_gta",
+          "quoi": "Carte centrée plus au nord sur la frontière Sénégal/Mauritanie, GTA actif.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Camera gMap spring depuis Sangomar vers GTA : scale 1.42, translate pour placer GTA x=30%, y=24%; Sénégal remplit x=20%-62%, y=0%-92%, Mauritanie visible en haut/droite, Atlantique à gauche. Durée transition 34 frames, damping 26 stiffness 78. Carte maintenue vivante par balayage lumineux diagonal opacity 0.08 frames sinus.",
+          "style_exact": "Sénégal fill #bf9442 opacity 0.82; Mauritanie fill #d6cdb4 opacity 0.38 stroke #16213a opacity 0.28; mer overlay fill #0d1424 opacity 0.22 à gauche; contours #16213a stroke-width 1.5px opacity 0.72; frontières stroke #16213a stroke-width 1px opacity 0.32; grille stroke #c2a96a width 1px opacity 0.24.",
+          "intention": "Déplacer le regard du pétrole vers le gaz frontalier, et ouvrir le sujet export.",
+          "position": "GTA actif x=30%, y=24%; labels et flèches occupent x=35%-92%.",
+          "sync_voix": "« deuxième »"
+        },
+        {
+          "id": "etat3_marker_gta_gaz",
+          "quoi": "Marqueur gaz actif en anneaux teal concentriques autour de GTA.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.05, lat 15.90",
+          "asset_prompt": "",
+          "remotion": "SVG group projeté GTA. Trois à cinq anneaux concentriques stroke-dashoffset/dilatation légère. Apparition frames 4-24. Pulse anneaux scale 0.96-1.08 en décalage sinusoïdal; limité à un élément actif principal.",
+          "style_exact": "Point central fill #2a9da0 radius 0.74% largeur cadre soit 14px; noyau secondaire fill #16213a radius 0.38% largeur cadre opacity 0.55; anneaux concentriques sans fill stroke #2a9da0 stroke-width 0.12% largeur cadre soit 2.3px opacity respectives 0.85, 0.62, 0.42, 0.28; rayons 1.55%, 2.35%, 3.15%, 3.95% largeur cadre; linecap round; pas de blur CSS.",
+          "intention": "Coder le gaz comme une onde, un champ actif qui rayonne.",
+          "position": "Projeté frontière maritime nord; environ x=30%, y=24% après caméra.",
+          "sync_voix": "« GTA »"
+        },
+        {
+          "id": "etat3_label_gaz_gta_uk",
+          "quoi": "Bloc label « GAZ », « GTA », drapeau britannique, « 2025 ». Hiérarchie typographique claire.",
+          "verdict": "HYBRIDE",
+          "coords": "",
+          "asset_prompt": "Flat editorial icon of the United Kingdom flag, transparent background, clean vector style, no fabric texture, no waving, exact colors navy #012169, red #C8102E, white #FFFFFF, rectangular 3:2 ratio, premium documentary graphic, crisp edges.",
+          "remotion": "Bloc absolute left-[35%] top-[18%] w-[26%] h-[15%]. 'GAZ' petit au-dessus des anneaux/à gauche du bloc, 'GTA' grand, flag UK à droite du mot, '2025' dessous. Slide-in depuis x=-1.2% cadre frames 8-24; 2025 count/fade frames 22-34.",
+          "style_exact": "Texte 'GAZ' font-family 'Inter','Helvetica Neue',Arial,sans-serif font-weight 800 font-size 1.35vw fill #16213a letter-spacing 0.02em; texte 'GTA' font-family 'Inter','Helvetica Neue',Arial,sans-serif font-weight 900 font-size 2.55vw fill #16213a; texte '2025' font-family 'Georgia',serif font-size 2.05vw fill #16213a; drapeau UK taille 3.3% largeur x 2.2% hauteur avec border #f6efd8 1px opacity 0.8; leader baseline stroke #16213a width 2px opacity 0.85; fond cartouche #f6efd8 opacity 0.58 sur rect x=0 y=28% w=78% h=38% radius 0.35% largeur, optionnel mais codé.",
+          "intention": "Nommer le gaz et l'opérateur britannique, puis dater l'entrée en production.",
+          "position": "x=35%-61%, y=18%-33%.",
+          "sync_voix": "« Britannique » puis « 2025 »"
+        },
+        {
+          "id": "etat3_marker_sangomar_fantome",
+          "quoi": "Sangomar reste en fantôme au sud, rappel du premier champ.",
+          "verdict": "REMOTION",
+          "coords": "lon -16.95, lat 14.00",
+          "asset_prompt": "",
+          "remotion": "Circle projeté Sangomar, visible dans le bas/centre selon caméra. Opacity 0.18, scale 0.75; pas de label. Maintien pulse très discret.",
+          "style_exact": "Circle fill #f6efd8 opacity 0.28 radius 0.52% largeur; stroke #a9a9a0 stroke-width 2px opacity 0.45; halo fill #f6efd8 opacity 0.12 radius 1.0% largeur; aucun texte.",
+          "intention": "Indiquer que le récit avance au deuxième point sans effacer totalement le premier.",
+          "position": "Projeté au sud de Dakar, environ x=34%, y=60%-68% selon caméra état 3.",
+          "sync_voix": "« deuxième »"
+        },
+        {
+          "id": "etat3_marker_yakaar_fantome",
+          "quoi": "Yakaar-Teranga en fantôme, encore non traité.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.30, lat 14.90",
+          "asset_prompt": "",
+          "remotion": "Circle projeté Yakaar-Teranga, opacity 0.18; scale 0.75. Ne pas attirer l'œil avant l'état 4.",
+          "style_exact": "Anneau fill transparent stroke #a9a9a0 stroke-width 2px opacity 0.32; radius 0.62% largeur; dasharray none dans état 3; pas de glow.",
+          "intention": "Préparer inconsciemment le troisième champ.",
+          "position": "Offshore Dakar, à gauche du Sénégal selon caméra état 3.",
+          "sync_voix": "« deuxième »"
+        },
+        {
+          "id": "etat3_fleche_export_europe",
+          "quoi": "Flèche courbe teal depuis GTA vers l'Europe, sortant vers le haut-droit.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "SVG path quadratic/cubic depuis projection GTA x=31%, y=24% vers x=82%, y=17%. Stroke-dasharray total pathLength 1, stroke-dashoffset animé 1 à 0 frames 24-48. Arrowhead SVG marker apparaît en fin de tracé. Label Europe fade-in frames 38-52.",
+          "style_exact": "Path fill none stroke #2a9da0 stroke-width 0.13% largeur cadre soit 2.5px opacity 0.9; courbe cubic M 31 24 C 47 12, 65 12, 82 17 en pourcentage viewBox; arrowhead marker triangle fermé fill #2a9da0 width 0.75% height 0.75%, orient auto, pointe fine; label 'Europe' font-family 'Inter','Helvetica Neue',Arial,sans-serif font-size 1.45vw font-weight 500 fill #16213a sur parchemin clair ou #f6efd8 si fond local navy, shadow 0 1px 0 #0d1424 opacity 0.25.",
+          "intention": "Montrer que le gaz n'est pas seulement local : il part vers les marchés européens.",
+          "position": "Flèche x=31%-82%, y=12%-24%; label x=81%-89%, y=21%-26%.",
+          "sync_voix": "« Europe »"
+        },
+        {
+          "id": "etat3_fleche_export_asie",
+          "quoi": "Flèche courbe teal depuis GTA vers l'Asie, descendant vers le bas-droit.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "SVG path cubic depuis projection GTA x=31%, y=24% vers x=86%, y=70%. Stroke-dashoffset animé frames 30-58, légèrement après Europe. Label Asie fade-in frames 48-62.",
+          "style_exact": "Path fill none stroke #2a9da0 stroke-width 0.13% largeur cadre soit 2.5px opacity 0.86; cubic M 31 24 C 56 30, 74 48, 86 70 en pourcentage viewBox; arrowhead triangle fill #2a9da0 width 0.75% height 0.75%; label 'Asie' font-family 'Inter','Helvetica Neue',Arial,sans-serif font-size 1.45vw font-weight 500 fill #16213a ou #f6efd8 selon fond, text-shadow 0 1px 0 #0d1424 opacity 0.25.",
+          "intention": "Élargir la carte au commerce mondial et aux cargaisons LNG.",
+          "position": "Flèche x=31%-86%, y=24%-70%; label x=83%-91%, y=71%-76%.",
+          "sync_voix": "« Asie »"
+        },
+        {
+          "id": "etat3_voile_navy_progressif",
+          "quoi": "Voile navy progressif qui annonce le basculement vers le cliffhanger final.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Rect SVG/HTML absolute inset-0 pointer-events-none. Gradient linéaire gauche #0d1424 opacity 0.35 vers transparent centre puis #0d1424 opacity 0.2 droite. Opacity augmente frames 42-80 de l'état.",
+          "style_exact": "LinearGradient stops: 0% #0d1424 opacity 0.38, 45% #0d1424 opacity 0.08, 100% #0d1424 opacity 0.24; blend-mode normal; pas de blur; grille reste au-dessus à opacity 0.18.",
+          "intention": "Assombrir le récit au moment où il devient géopolitique et préparer Yakaar-Teranga.",
+          "position": "Plein cadre.",
+          "sync_voix": "« remplacer le gaz russe »"
+        }
+      ],
+      "intention_etat": "L'état 3 est le pivot géopolitique : le gaz GTA devient production, opérateur international et flux vers Europe/Asie."
+    },
+    {
+      "etat": "4 - YAKAAR-TERANGA",
+      "sync_voix": "« Et il y a un troisième champ. Yakaar-Teranga. Du gaz, encore offshore. Mais personne n'a décidé comment il sera exploité. Il attend. Et plusieurs capitales le regardent. On y reviendra — c'est lui qui réserve la plus grosse surprise. »",
+      "background": {
+        "verdict": "REMOTION",
+        "description": "Fond navy profond. La carte est presque effacée, repoussée vers le bord droit. Le marqueur central est éteint, en pointillés gris. Des yeux graphiques le surveillent. Le cartouche opérateur reste vide avec curseur.",
+        "remotion": "Background plein cadre interpolé vers NAVY_DEEP #0d1424 avec gradient radial très subtil #16213a au centre x=50 y=48 opacity 0.35. Grille #c2a96a opacity descend à 0.08. Grain opacity 0.055. Aucun cut; fondu progressif depuis état 3 frames 0-40."
+      },
+      "elements": [
+        {
+          "id": "etat4_map_effacee_bord_droit",
+          "quoi": "Carte du Sénégal presque effacée sur le bord droit, comme un souvenir de contexte.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Même carte d3-geo, camera spring vers Yakaar mais avec translation volontaire laissant côte Sénégal à droite: Yakaar projeté x=50%, y=52%, masse continentale visible x=83%-105%, y=0%-96%. Opacity carte 0.18 à 0.28, contours seulement. Respiration opacity 0.18-0.24.",
+          "style_exact": "Pays fill #d6cdb4 opacity 0.12; Sénégal fill #bf9442 opacity 0.16; contours stroke #a9a9a0 stroke-width 1.3px opacity 0.32; côtes stroke #16213a stroke-width 1.6px opacity 0.45; grille #c2a96a opacity 0.08; aucune ombre forte.",
+          "intention": "Faire sentir que la géographie s'efface au profit de l'enjeu politique et de l'incertitude.",
+          "position": "Carte repoussée à droite, x=82%-105%, y=0%-100%; centre d'attention libre au milieu.",
+          "sync_voix": "« troisième champ »"
+        },
+        {
+          "id": "etat4_titre_yakaar_teranga",
+          "quoi": "Titre principal « YAKAAR-TERANGA » en haut, gris clair, sobre.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Text absolute left-[31%] top-[15%] w-[38%] h-[8%]. Fade-in frames 8-28 avec tracking qui passe de 0.08em à 0.02em. Léger tremblement non, rester premium.",
+          "style_exact": "Texte 'YAKAAR-TERANGA'; font-family 'Inter','Helvetica Neue',Arial,sans-serif; font-weight 900; font-size 2.35vw; letter-spacing 0.015em; fill #a9a9a0; opacity 0.95; text-shadow 0 2px 0 #0b1020 opacity 0.55; pas de contour; uppercase.",
+          "intention": "Nommer le troisième champ comme un dossier mystérieux, pas encore résolu.",
+          "position": "x=31%-69%, y=15%-23%.",
+          "sync_voix": "« Yakaar-Teranga »"
+        },
+        {
+          "id": "etat4_marker_yakaar_suspens",
+          "quoi": "Marqueur Yakaar-Teranga en suspens : cercle pointillé gris, éteint, sans halo lumineux.",
+          "verdict": "REMOTION",
+          "coords": "lon -17.30, lat 14.90",
+          "asset_prompt": "",
+          "remotion": "SVG circle projeté Yakaar-Teranga mais camera le place au centre x=50%, y=52%. Radius animé très légèrement 3.4% à 3.6% largeur cadre; stroke-dashoffset tourne lentement via frame*0.6, mais sans effet lumineux. Opacity 0 à 1 frames 16-36.",
+          "style_exact": "Circle fill transparent; stroke #a9a9a0; stroke-width 0.20% largeur cadre soit 3.8px; radius 3.25% largeur cadre soit 62px; stroke-dasharray '14 14'; stroke-linecap round; opacity 0.82; aucun glow; aucun fill; point central absent ou tiny circle fill #a9a9a0 radius 0.2% largeur opacity 0.28.",
+          "intention": "Matérialiser l'attente : le champ existe, mais rien n'est décidé.",
+          "position": "Centre légèrement haut, x=50%, y=52%, diamètre environ 6.5% largeur cadre.",
+          "sync_voix": "« Il attend »"
+        },
+        {
+          "id": "etat4_yeux_capitales",
+          "quoi": "Deux à trois icônes œil tournées vers Yakaar-Teranga, représentant les capitales qui observent.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Utiliser lucide-react Eye ou SVG codé. Trois groupes œil autour du cercle: gauche x=42%, y=52%; droite x=59%, y=52%; bas x=55%, y=64%. Apparition séquentielle frames 28, 34, 40; pupille orientée vers centre par calcul atan2. Micro-blink via scaleY 1 -> 0.25 ->1 sur 6 frames toutes les 110 frames avec offset par œil.",
+          "style_exact": "Icône œil stroke #a9a9a0 stroke-width 0.16% largeur cadre soit 3px; fill #d6cdb4 opacity 0.85 pour sclère stylisée si forme fermée; pupille circle fill #16213a radius 0.42% largeur cadre; taille chaque œil w=3.7% largeur h=2.4% hauteur; opacity 0.9; pas de glow; linecap round linejoin round.",
+          "intention": "Faire sentir une surveillance internationale sans nommer encore les pays.",
+          "position": "Œil gauche x=40.2%-43.9%, y=50.8%-53.2%; œil droit x=57.3%-61.0%, y=50.8%-53.2%; œil bas x=53.2%-56.9%, y=62.7%-65.1%.",
+          "sync_voix": "« plusieurs capitales le regardent »"
+        },
+        {
+          "id": "etat4_operateur_vide_curseur",
+          "quoi": "Texte « Opérateur : _ » avec curseur, information volontairement manquante.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Text absolute left-[37%] top-[70%] w-[28%] h-[6%]. Type-on frames 48-72 pour 'Opérateur : ' puis underscore/caret clignotant via Math.floor(frame/15)%2. Aucun setTimeout.",
+          "style_exact": "Texte 'Opérateur : _'; font-family 'Inter','Helvetica Neue',Arial,sans-serif; font-weight 500; font-size 2.0vw; fill #f6efd8; letter-spacing -0.02em; deux-points avec espace insécable avant selon typographie française affichée 'Opérateur :'; curseur underscore fill #f6efd8 opacity alternée 0/1 toutes 15 frames; text-shadow 0 2px 0 #0b1020 opacity 0.65.",
+          "intention": "Créer le cliffhanger : la case décisive n'est pas remplie.",
+          "position": "x=37%-65%, y=70%-76%.",
+          "sync_voix": "« personne n'a décidé »"
+        },
+        {
+          "id": "etat4_markers_sangomar_gta_disparus",
+          "quoi": "Sangomar et GTA quittent presque totalement le récit, seulement traces fantômes très faibles si visibles.",
+          "verdict": "REMOTION",
+          "coords": "Sangomar lon -16.95, lat 14.00 ; GTA lon -17.05, lat 15.90",
+          "asset_prompt": "",
+          "remotion": "Markers projetés mais opacity interpolée vers 0.06 puis éventuellement display visuel nul; pas de label. Leur disparition se fait pendant la transition état3->état4.",
+          "style_exact": "Circles fill transparent stroke #a9a9a0 stroke-width 1.5px opacity 0.06; radius 0.5% largeur; pas de pulse visible; aucun glow.",
+          "intention": "Respecter la règle : ce qui n'est plus dit disparaît ou devient fantôme.",
+          "position": "Positions géographiques réelles, majoritairement hors centre après caméra état 4.",
+          "sync_voix": "« troisième »"
+        },
+        {
+          "id": "etat4_assombrissement_final",
+          "quoi": "Assombrissement final contrôlé pour finir sur le cercle pointillé et le curseur.",
+          "verdict": "REMOTION",
+          "coords": "",
+          "asset_prompt": "",
+          "remotion": "Overlay radial inverse absolute inset-0 frames 80-120 de l'état : bords #0b1020 opacity 0.28, centre transparent radius 28%. Conserve lisibilité du titre, yeux et opérateur.",
+          "style_exact": "RadialGradient center 50% 53%, stops 0% transparent opacity 0, 48% transparent, 100% #0b1020 opacity 0.38; blend normal; aucune blur CSS; grain maintenu opacity 0.055.",
+          "intention": "Verrouiller le suspense et diriger le regard vers l'absence de décision.",
+          "position": "Plein cadre.",
+          "sync_voix": "« la plus grosse surprise »"
+        }
+      ],
+      "intention_etat": "Le dernier état transforme la carte en énigme : Yakaar-Teranga existe, mais son exploitation reste vide, observée, ouverte."
+    }
+  ],
+  "transitions": "Transition 1->2 : aucun cut. La carte reste le même SVG d3-geo. Le groupe <g> camera passe en spring d'un cadrage large Sénégal/Atlantique vers un cadrage Sangomar, en plaçant Sangomar à x=34%, y=47%. Les trois anneaux vides deviennent : Sangomar disque pétrole actif, GTA/Yakaar fantômes opacity 0.2. Le grand chiffre 3 scale down vers 0.92 et opacity 0 sur 18 frames. Un mask SVG circulaire net naît sur Sangomar, rayon 0 à 15% largeur. Transition 2->3 : camera spring remonte vers GTA, Sangomar devient fantôme, le spotlight Sangomar se réduit puis se convertit en anneaux teal GTA; fond parchemin refroidit avec overlay navy progressif. Le label SANGOMAR et la jauge 18% glissent/fadent vers la droite en opacity 0 pendant que GTA/GAZ/2025 apparaît. Les flèches Europe/Asie se dessinent après stabilisation caméra. Transition 3->4 : la camera continue vers Yakaar-Teranga mais translate la carte au bord droit; fond interpole vers #0d1424. Les flèches export s'effacent par stroke-dashoffset inverse et opacity 0. GTA passe en fantôme puis disparaît. Yakaar devient cercle pointillé gris centré, sans lumière. Les yeux apparaissent séquentiellement puis le texte 'Opérateur : _' se tape. Aucun cut sec, aucune CSS transition.",
+  "assets_a_generer": [
+    "etat2_flag_australie",
+    "etat3_label_gaz_gta_uk"
+  ],
+  "ce_qui_reste_a_remotion": "Coder toute la géométrie en Remotion React + SVG + d3-geo : charger TopoJSON countries-50m, extraire Sénégal, Mauritanie, Gambie, pays voisins utiles, configurer geoMercator avec fitExtent puis appliquer un groupe camera <g> translate/scale animé par spring. Projeter strictement les coordonnées fournies : Sangomar [-16.95,14.00], GTA [-17.05,15.90], Yakaar-Teranga [-17.30,14.90], Dakar [-17.45,14.69]. Implémenter background parchemin/navy par interpolation hex frame-driven, grille SVG, grain SVG. Tous les marqueurs, jauges, lignes leader, flèches, masks spotlight, anneaux gaz, cercle pointillé, icônes œil et textes sont codés en Remotion/SVG/HTML frame-driven avec useCurrentFrame, interpolate et spring. Générer uniquement deux assets flat transparents : drapeau Australie et drapeau Royaume-Uni. Les timings suivent les déclencheurs voix : état 1 révélation 'trois', état 2 Sangomar/pétrole/Australien/18%, état 3 GTA/gaz/Britannique/2025/Europe/Asie, état 4 Yakaar-Teranga/attente/opérateur vide/capitales. Respecter le dosage : un foyer actif par état, jamais plus de trois animations simultanées importantes.",
+  "techniques_inedites": "Mask SVG circulaire net recalculé chaque frame depuis les coordonnées projetées pour le spotlight Sangomar; pupilles des icônes œil orientées vers Yakaar-Teranga par calcul atan2, entièrement frame-driven."
+}

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="60" height="40">
+  <rect width="60" height="40" fill="#012169"/>
+  <!-- Union Jack canton (top-left, half size) -->
+  <g>
+    <clipPath id="cantonClip"><rect width="30" height="20"/></clipPath>
+    <g clip-path="url(#cantonClip)">
+      <rect width="30" height="20" fill="#012169"/>
+      <!-- diagonals white -->
+      <path d="M0,0 L30,20 M30,0 L0,20" stroke="#FFFFFF" stroke-width="4"/>
+      <!-- diagonals red (offset) -->
+      <path d="M0,0 L30,20" stroke="#C8102E" stroke-width="2"/>
+      <path d="M30,0 L0,20" stroke="#C8102E" stroke-width="2"/>
+      <!-- cross white -->
+      <rect x="12.5" width="5" height="20" fill="#FFFFFF"/>
+      <rect y="7.5" width="30" height="5" fill="#FFFFFF"/>
+      <!-- cross red -->
+      <rect x="13.5" width="3" height="20" fill="#C8102E"/>
+      <rect y="8.5" width="30" height="3" fill="#C8102E"/>
+    </g>
+  </g>
+  <!-- Commonwealth star (7-point) below canton -->
+  <g fill="#FFFFFF">
+    <polygon points="15,22 16.2,26 20.2,26 17,28.5 18.2,32.5 15,30 11.8,32.5 13,28.5 9.8,26 13.8,26" transform="translate(0,2) scale(0.9 0.9)" transform-origin="15 27"/>
+  </g>
+  <!-- Southern Cross stars (simplified, white) -->
+  <g fill="#FFFFFF">
+    <circle cx="45" cy="9" r="1.6"/>
+    <circle cx="51" cy="17" r="1.6"/>
+    <circle cx="45" cy="26" r="1.6"/>
+    <circle cx="39" cy="18" r="1.4"/>
+    <circle cx="47" cy="20" r="0.9"/>
+  </g>
+</svg>

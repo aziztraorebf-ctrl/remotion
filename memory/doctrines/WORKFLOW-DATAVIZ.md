@@ -70,7 +70,22 @@ sinon fallback systeme = faux rendu. Utiliser `@remotion/google-fonts/<Police>` 
 `import {loadFont} from "@remotion/google-fonts/Oswald"; const {fontFamily} = loadFont();`). Installer le paquet
 s'il manque (`@remotion/google-fonts`, version alignee sur remotion). Defaut chiffres/titres condensses = Bebas Neue.
 
-### 6. DIFF cible-vs-render (corriger MESURE, pas devine — puis STOP)
+### 6a. SELF-REVIEW SCRIPTEE (le VRAI gate — DETERMINISTE, AVANT tout diff/review/presentation)
+⛔ AVANT le diff GPT et AVANT de presenter : `python3 scripts/tools/dataviz-selfreview.py <Scene.tsx>`.
+C'est le gate data-viz (equivalent de `mapbox-selfreview.py` pour le Mapbox). Il VERIFIE MECANIQUEMENT les
+regles qui ont coute des iterations — PAS un score LLM (le score Gemini est bruite/non-monotone, cf. dette n1) :
+- **E1/E2 = faiblesse recurrente n1 cablee en DUR** : picto secondaire >= 13% largeur, label secondaire >= 40px
+  @1080. Sous le plancher = ERROR bloquante. (Le seuil est aligne avec le template de breakdown.)
+- **E3** : toute police nommee (Bebas Neue, Anton, Oswald...) DOIT etre chargee via `@remotion/google-fonts/<X>`,
+  sinon fallback systeme silencieux (Impact a la place) = faux rendu. Bug REEL trouve sur le cobaye v9 (il rendait
+  en Impact). Un score Gemini ne voit jamais ca ; un gate scripte si.
+- **E4** : chaque `staticFile(...)` existe sur disque. **W2** : asset opaque plein-canvas place petit -> verifier
+  la PRESENCE en plein format. **W1** : patterns interdits Remotion (transition CSS, @keyframes, setTimeout).
+- Exit 0 = on peut passer au diff/presentation. Exit 1 = corriger d'abord. `--strict` rend les W bloquants aussi.
+⛔ **Le score Gemini global n'est JAMAIS un gate** (il a baisse 6.5->5.5 pendant que le render s'ameliorait). Le
+gate, c'est CE script + la self-review etat-par-etat (Claude/agent compare chaque frame a SON etat). Gemini = signal.
+
+### 6b. DIFF cible-vs-render (corriger MESURE, pas devine — puis STOP)
 Composer une planche `IMAGE A = cible | IMAGE B = notre render` (cote a cote, MEME hauteur, fond uni, ~24px de
 gouttiere) et la donner a GPT-5.5. Recette de planche prouvee (PIL) : croper la case CIBLE de la cible, normaliser
 les deux a une meme hauteur, coller cote a cote. ⛔ **Croper la case cible SANS le bandeau d'annotation** (titre
@@ -93,9 +108,12 @@ GPT MESURE les ecarts (taille/position en %) et donne les corrections Tailwind e
   N'apparait PAS dans le diff cote-a-cote. Garder l'inspection alpha de l'etape 4 comme controle SEPARE
   (verifier alpha=0 dans le contre-poincon ; flood-fill local si Recraft a laisse du blanc opaque).
 
-## ⛔ FAIBLESSE RECURRENTE CONNUE N1 (a verifier ACTIVEMENT a chaque scene data-viz)
+## ⛔ FAIBLESSE RECURRENTE CONNUE N1 (✅ DESORMAIS CABLEE EN DUR — 2026-06-20 2e passe)
 Reapparue 2x (mon cobaye ET l'agent vierge isole, 2026-06-20) — ce n'est PAS un bug ponctuel, le systeme la
-rate par defaut. La controler EXPLICITEMENT avant de dire "fait" :
+rate par defaut. **Maintenant pre-cablee a 2 endroits** (plus seulement une consigne a se rappeler) :
+1. Le template de breakdown (`PROMPT-BREAKDOWN-DATAVIZ.txt`) ORDONNE +40% de marge + plancher 13% picto / 40px label.
+2. `scripts/tools/dataviz-selfreview.py` BLOQUE (E1/E2) tout picto < 13% largeur ou label < 40px @1080 (etape 6a).
+La controler EXPLICITEMENT avant de dire "fait" (le gate le fait pour toi, mais juger en plein format reste) :
 - **PICTO + LABEL secondaire (ex globe "RESERVES MONDIALES") SOUS-DIMENSIONNES.** Le pipeline tend a les faire
   trop petits (le diff GPT les sous-mesure aussi). Reflexe : les agrandir de +40 a +50% vs la 1ere estimation,
   et JUGER en plein format. C'est l'element n1 qui trahit l'amateurisme s'il est riquiqui. A CREUSER : trouver

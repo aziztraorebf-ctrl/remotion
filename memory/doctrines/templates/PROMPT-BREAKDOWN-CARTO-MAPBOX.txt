@@ -1,0 +1,99 @@
+# TEMPLATE — Prompt de BREAKDOWN CARTO MAPBOX (GeoAfrique V5 : carte grise dark-v11).
+# Pendant Mapbox du PROMPT-BREAKDOWN-CARTO-PLAT. Pour les scenes CARTOGRAPHIQUES en MAPBOX
+# (vraie carte grise terrain, frontieres blanches, pays surligne or, ocean navy — style "Or du Ghana").
+# Doctrine : STORYBOARD-MAPBOX.md + SOUVERAIN-VISUAL-PLAYBOOK.md + DOCTRINE-SOUVERAIN §3 (Mapbox frame-driven).
+# Outil : openrouter-vision-breakdown.py --model openai/gpt-5.5.
+# ⚠️ Pour le parchemin d3-geo plat : utiliser PROMPT-BREAKDOWN-CARTO-PLAT.txt a la place.
+# ⛔⛔ AVANT D'ENVOYER : joindre une FRAME DE REFERENCE GeoAfrique V5 (carte grise reelle, ex. video "Or du Ghana")
+#     en plus du storyboard. SANS elle, le modele hallucine un look satellite/3D/VFX qu'on ne fait PAS. (Lecon 2026-06-20.)
+# ----------------------------------------------------------------------------------------------
+
+Tu es directeur technique d'une chaine documentaire premium (style Bloomberg/Vox).
+On te donne un STORYBOARD (cible) ET une FRAME DE REFERENCE de notre vrai style de carte "GeoAfrique V5".
+La cible est une video Remotion + Mapbox GL (headless) HORIZONTALE 1920x1080, 30fps.
+
+=== SUJET (a remplacer pour chaque scene) ===
+<<<SUJET>>>
+
+=== ⛔ NOTRE STYLE DE CARTE = GeoAfrique V5 (la frame de reference jointe FAIT FOI) ===
+- Carte GRISE / anthracite vue de dessus, base Mapbox "mapbox://styles/mapbox/dark-v11" + overrides applyGeoAfriqueV5.
+- Couleurs FIGEES : ocean/eau = #1a3a5c, terres = #4a4a4a, frontieres = #c8c8c8 (traits blancs subtils).
+- Le pays sujet est SURLIGNE en OR translucide (fill-pattern) + leger contour. Accent or = #c8a951, texte ivoire = #f2ebd9.
+- "Relief 3D" maison = PITCH 25-35 + zoom serre + leger bearing (PAS de vrai terrain volumetrique, PAS de satellite).
+- ⛔ INTERDIT : satellite/terrain realiste ocre-vert, vue orbitale/globe, colonnes lumineuses/faisceaux/particules VFX,
+  relief volumetrique. Reste fidele a la frame de reference : carte grise sobre, data-editoriale.
+
+=== ⛔ MAPBOX FRAME-DRIVEN (NON-NEGOTIABLE — DOCTRINE-SOUVERAIN) ===
+- Camera pilotee par useCurrentFrame + interpolate + map.jumpTo() a chaque frame. JAMAIS flyTo / easeTo (incompatibles headless).
+- Pour multi-lieux : architecture "1 SEULE Map continue" (pattern SenegalActe2Continu), pas plusieurs maps.
+- Overlays (cartouches/jetons/data) = Remotion PAR-DESSUS la carte. Si un overlay plein ecran masque la carte,
+  masquer AUSSI la carte Mapbox ET les contours moteur (sinon "on voit la carte a travers").
+- Drapeaux = useClipFlags (vraies images), JAMAIS drawFlagCanvas.
+
+=== ⛔⛔ DYNAMISME : LA CARTE DOIT VIVRE (lecon de cette session — anti "Senegal fige + ecran gris ou il ne se passe rien") ===
+REGLE DE RYTHME : a chaque ~5 secondes, un EVENEMENT VISUEL. MAIS "evenement" = MOUVEMENT/TRANSFORMATION/COULEUR,
+PAS un nouvel objet empile (lecon A5 : "carte vivante" ≠ "carte chargee" = OPPOSES). Vivant par le GESTE, epure par le NOMBRE.
+- CAMERA JAMAIS IMMOBILE : drift continu (incrementer bearing ~+0.05/frame OU center, effet drone) ENTRE les jumpTo de transition.
+  JAMAIS un plan fixe qui dure. ZOOM NARRATIF : plonge sur le gisement, DEZOOME pour montrer flux/voisins/echelle.
+- ⛔ ANTI-GRIS (CRITIQUE pour Mapbox) : la carte grise V5 est belle mais peut devenir MORNE. Ajoute de la COULEUR/vie :
+  drapeau PLEIN du pays (pas juste un fill or terne), surlignage des pays VOISINS concernes, marqueurs colores qui pulsent,
+  flux colores. Evite l'ecran gris-sombre ou il ne se passe plus rien (ex rate : Senegal seul surligne, immobile, 26s d'ecran sombre).
+- EXPLOITE la vraie carte : pays voisins (Mauritanie pour GTA), DEZOOM pour les flux d'export reels vers Europe/Asie (on VOIT la destination),
+  ne gache PAS le fait d'avoir une vraie geo (ne reste pas colle sur le seul Senegal tout du long).
+- TRANSFORMATION : marqueur qui s'allume/change, voile qui bascule, pays qui se colore. POP-UPS ANCREES (jamais flottantes : leader/overlay bref).
+Inspirations carto premium (VOLE le dynamisme, reste lisible) : @geoglobetales/@jacquesadit (reveals), @reallifelore (zoom monde->detail),
+@kingsandgenerals/@bazbattles (carte qui evolue), Bloomberg/Vox/Wendover.
+⛔ CHAQUE bloc "camera" DOIT decrire un MOUVEMENT (jamais from==to fige) ; CHAQUE etat doit dire ce qui se TRANSFORME/se colore.
+
+=== TON TRAVAIL : breakdown PAR BEAT, axe CAMERA + COUCHES + OVERLAYS ===
+Pour CHAQUE etat/beat, decoupe en : (a) la CAMERA, (b) les COUCHES carte (fill pays, marqueurs), (c) les OVERLAYS Remotion.
+TRANCHE tout (rien a deviner). Retourne UNIQUEMENT du JSON :
+
+{
+  "scene": "...",
+  "ratio": "16:9",
+  "archetype": "carto-mapbox-geoafrique-v5",
+  "map_style": "mapbox://styles/mapbox/dark-v11 + applyGeoAfriqueV5 (water #1a3a5c, land #4a4a4a, border #c8c8c8)",
+  "palette_globale": { "or #c8a951", "ivoire #f2ebd9", "petrole ambre", "gaz teal #2a9da0", "en-suspens pointilles gris", "<+ hex deduits du storyboard>" },
+  "etats": [
+    {
+      "etat": "1 - ...",
+      "sync_voix": "<phrase declencheuse>",
+      "camera": {
+        "from": "<lon,lat,zoom,pitch,bearing de DEPART — coords REELLES du SUJET, NE DEVINE PAS>",
+        "to": "<lon,lat,zoom,pitch,bearing d'ARRIVEE>",
+        "anim": "<interpolation frame-driven : duree en frames, easing (ease-out cubic), map.jumpTo par frame>",
+        "intention": "<pourquoi ce mouvement (remonter au nord = 'le deuxieme', etc.) — le mouvement raconte>"
+      },
+      "couches_carte": [
+        { "id": "fill_pays", "quoi": "Senegal surligne or", "technique": "addLayer fill-color #c8a951 fill-opacity ... / useClipFlags si drapeau projete",
+          "style_exact": "<hex fill, opacity, couleur+epaisseur contour, glow eventuel>", "sync_voix": "<mot>" },
+        { "id": "marqueur_gisement", "coords": "<lon,lat REELS>", "quoi": "...", "technique": "DOM marker Remotion ancre via map.project(), pulse",
+          "style_exact": "<petrole=disque ambre hex / gaz=anneaux teal #2a9da0 / suspens=pointilles gris #a9a9a0 ; rayon %, glow, dasharray>", "sync_voix": "<mot>" }
+      ],
+      "overlays_remotion": [
+        { "id": "...", "quoi": "<cartouche/label/jauge/drapeau>", "verdict": "GENERE|REMOTION|HYBRIDE",
+          "asset_prompt": "<si drapeau/picto genere : fond transparent, flat>",
+          "remotion": "<placement Tailwind + % cadre + taille % + anim>",
+          "style_exact": "<OBLIGATOIRE : police nommee + hex de chaque couleur + epaisseur trait + style cadre/fleche/dasharray. Charte FIGEE prime (cartouche = IBM Plex Mono nom / Georgia stat / bordure or #c8a951) ; complete par le storyboard.>",
+          "intention": "<prose>", "sync_voix": "<mot>" }
+      ],
+      "intention_etat": "<prose : l'arc de cet etat>"
+    }
+  ],
+  "transitions": "<entre beats : camera jumpTo interpolee (jamais flyTo), surlignage qui change, marqueur qui s'active/s'eteint, overlays qui entrent/sortent. Si bascule de mood (jour->nuit), comment. JAMAIS de cut sec.>",
+  "assets_a_generer": ["<drapeaux/pictos verdict GENERE>"],
+  "ce_qui_reste_a_remotion": "<SYNTHESE pour agent frais : la Map continue (1 seule), applyGeoAfriqueV5, les camKeys frame-driven, le fill or du pays, les DOM markers, les overlays Tailwind, le timing audio, le masquage carte si overlay plein ecran.>",
+  "techniques_inedites": "<AU PLUS 1-2, frame-driven, sans flyTo. Sinon 'aucune'.>"
+}
+
+=== ⛔ COORDONNEES : NE DEVINE PAS ===
+lon/lat/zoom fournis dans le SUJET. Si manquant -> "[A_VERIFIER]", jamais invente.
+
+REGLES style_exact (coeur de la fidelite — lecon gravee 2026-06-20) :
+- OBLIGATOIRE et NON VIDE pour chaque overlay/couche. Un trou = un codeur qui devine = divergence.
+- Charte FIGEE (couleurs GeoAfrique V5 + or/ivoire + polices cartouche) PRIME ; tu ne tranches que le reste (style fleche, dasharray, glow, radius).
+- Valeurs CONCRETES (hex, %, nom de police), jamais vague.
+REGLES asset_prompt : flat editorial, fond transparent, hex exacts, sobre.
+REGLES camera : coords reelles, frame-driven (jumpTo), jamais flyTo/easeTo. Le mouvement doit avoir une INTENTION narrative (jamais "glissement sans but").
+REGLES FR : accents obligatoires (SENEGAL, Petrole, Gaz), JAMAIS d'anglais (pas "Oil"/"Gas").

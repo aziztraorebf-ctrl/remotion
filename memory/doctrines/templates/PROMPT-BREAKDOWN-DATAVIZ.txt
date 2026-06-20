@@ -83,6 +83,23 @@ REGLES sur les asset_prompt :
 - Precise l'animation Remotion (spring damping/stiffness, count-up, crossfade) ET l'ancrage Tailwind ensemble.
 - But : un agent code le placement DIRECTEMENT depuis le champ remotion, en Tailwind, sans rien recalculer ni deviner.
 
+⛔⛔ REGLE "PICTO + LABEL SECONDAIRE — NE PAS LES SOUS-DIMENSIONNER" (faiblesse recurrente n1, prouvee 2x
+le 2026-06-20 : mon cobaye ET un agent vierge ont sorti le picto + label "RESERVES MONDIALES" trop petit).
+CAUSE RACINE MESUREE : tu (le modele de breakdown) SOUS-MESURES systematiquement les elements secondaires
+petits et en marge (picto illustre + son label), alors que le chiffre hero et la barre, eux, sont bien
+dimensionnes. Le biais vient du bandeau d'annotation du storyboard qui ecrase l'echelle percue.
+PARADE OBLIGATOIRE — pour TOUT picto illustratif secondaire (globe, icone, embleme) ET son label texte :
+- MESURE sa taille en % du cadre en IGNORANT le bandeau d'annotation (titre d'etat + timer), exactement comme
+  pour les autres elements.
+- PUIS donne la taille cible avec une MARGE DE SECURITE de +40% sur ta premiere estimation (ex tu mesures
+  "picto ~11% de largeur" -> ecris "w-[15%] a w-[16%]"). Mieux vaut un picto legerement trop grand (corrigeable
+  d'un coup d'oeil) que riquiqui (= trahit l'amateurisme, c'est l'element n1 qui le revele).
+- AJOUTE dans le champ "remotion"/"style_exact" de CE picto et de CE label la mention explicite :
+  "TAILLE PLANCHER — verifier en PLEIN FORMAT que le picto+label ont une PRESENCE (pas riquiqui). Seuil
+   minimum : picto >= 13% de largeur du cadre, label secondaire >= 40px @1080."
+- Un seuil PLANCHER s'applique meme si la cible parait montrer plus petit : picto secondaire >= 13% largeur,
+  label secondaire >= 40px @1080. En-dessous = systeme rate par defaut, NE PAS descendre sous le plancher.
+
 ⛔⛔ REGLE "ZERO CHOIX LAISSE AU CODEUR" (cause prouvee n1 des divergences cible-vs-render, 2026-06-20) :
 Un element REMOTION (texte/trait/fleche/cadre/barre) dont tu donnes la position+taille MAIS PAS la matiere force
 le codeur a DEVINER police/hex/epaisseur → il devine differemment a chaque fois → le render "ressemble" sans etre

@@ -15,6 +15,10 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { loadFont } from "@remotion/google-fonts/BebasNeue";
+
+// Charger Bebas Neue (sinon fallback Impact silencieux = faux rendu — gate dataviz-selfreview E3)
+const { fontFamily: BEBAS } = loadFont();
 
 const GOLD = "#e7b35c";
 const IVORY = "#f4f1ea";
@@ -69,7 +73,7 @@ export const TealAssemblyEtat3: React.FC = () => {
         {/* count-up temporaire (s'efface au crossfade) */}
         <span
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-black whitespace-nowrap"
-          style={{ fontSize: "46vh", fontFamily: "Bebas Neue, Impact, sans-serif", color: GOLD, letterSpacing: "-0.02em", opacity: 1 - crossfade }}
+          style={{ fontSize: "46vh", fontFamily: BEBAS, color: GOLD, letterSpacing: "-0.02em", opacity: 1 - crossfade }}
         >
           {count}
         </span>
@@ -86,7 +90,7 @@ export const TealAssemblyEtat3: React.FC = () => {
       {/* label RESERVES MONDIALES — v9 diff matiere : creme-or desature #FFE3A6 (etait jaune sature), ombre brune douce */}
       <div
         className="absolute left-[3.5%] top-[59%] w-[18%] text-center font-bold uppercase leading-[0.88]"
-        style={{ fontSize: 52, color: "#FFE3A6", fontFamily: "Bebas Neue, Impact, sans-serif", letterSpacing: "-0.02em", textShadow: "2px 3px 3px rgba(58,36,22,0.55)", opacity: terreOp }}
+        style={{ fontSize: 52, color: "#FFE3A6", fontFamily: BEBAS, letterSpacing: "-0.02em", textShadow: "2px 3px 3px rgba(58,36,22,0.55)", opacity: terreOp }}
       >
         Réserves<br />Mondiales
       </div>
@@ -121,14 +125,14 @@ export const TealAssemblyEtat3: React.FC = () => {
               {/* cartouche PHOSPHATE — v9 diff matiere : bordure beige-or pale #D9C58D 4px, fond #0B3F48 a0.38 */}
               <rect x={cartX} y={1080 * 0.128} width={1920 * 0.188} height={1080 * 0.087} rx={2} fill="#0B3F48" fillOpacity={0.38} stroke="#d9c58d" strokeWidth={4} />
               {/* texte PHOSPHATE — v9 : #F6CF86 (etait #f4c66e), ombre brune douce */}
-              <text x={cartX + 1920 * 0.094} y={1080 * 0.128 + 1080 * 0.058} fill="#f6cf86" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={43} fontWeight={700} textAnchor="middle" letterSpacing={1} style={{ filter: "drop-shadow(2px 3px 3px rgba(74,43,24,0.55))" }}>PHOSPHATE</text>
+              <text x={cartX + 1920 * 0.094} y={1080 * 0.128 + 1080 * 0.058} fill="#f6cf86" fontFamily={BEBAS} fontSize={43} fontWeight={700} textAnchor="middle" letterSpacing={1} style={{ filter: "drop-shadow(2px 3px 3px rgba(74,43,24,0.55))" }}>PHOSPHATE</text>
 
               {/* zone 70% phosphate (jaune) */}
               <rect x={barX} y={phosTop} width={barW} height={phosH} fill="url(#phos)" />
               {/* segment 30% (brun) colle, qui s'ecrase legerement */}
               <rect x={barX} y={segFullTop} width={barW} height={segH} fill="url(#seg)" />
               {/* texte 30% — v9 diff matiere : creme #F8E9D0 (etait blanc pur), ombre brun #5A2A17 */}
-              <text x={1920 * 0.788} y={1080 * 0.68 + 22} fill="#f8e9d0" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={62} fontWeight={700} textAnchor="middle" style={{ filter: "drop-shadow(2px 3px 2px rgba(90,42,23,0.70))" }}>30%</text>
+              <text x={1920 * 0.788} y={1080 * 0.68 + 22} fill="#f8e9d0" fontFamily={BEBAS} fontSize={62} fontWeight={700} textAnchor="middle" style={{ filter: "drop-shadow(2px 3px 2px rgba(90,42,23,0.70))" }}>30%</text>
 
               {/* fleches d'ecrasement — v9 diff matiere : #C9823E orange-cuivre (etait #dda64e jaune), 6px, opacite 0.88, ombre brune */}
               {[1920 * 0.717, 1920 * 0.858].map((ax, i) => (
@@ -141,7 +145,7 @@ export const TealAssemblyEtat3: React.FC = () => {
               {/* ligne base — v9 : beige desature #CFC58E */}
               <rect x={1920 * 0.7185} y={1080 * 0.771} width={1920 * 0.177} height={3} fill="#cfc58e" opacity={0.85} />
               {/* RESTE DU MONDE — v9 diff matiere : creme-or #FFE0A0 (etait jaune), ombre brune douce */}
-              <text x={1920 * 0.788} y={1080 * 0.84} fill="#ffe0a0" fontFamily="Bebas Neue, Impact, sans-serif" fontSize={36} fontWeight={700} textAnchor="middle" letterSpacing={-0.5} style={{ filter: "drop-shadow(2px 3px 3px rgba(58,36,22,0.55))" }}>
+              <text x={1920 * 0.788} y={1080 * 0.84} fill="#ffe0a0" fontFamily={BEBAS} fontSize={36} fontWeight={700} textAnchor="middle" letterSpacing={-0.5} style={{ filter: "drop-shadow(2px 3px 3px rgba(58,36,22,0.55))" }}>
                 <tspan x={1920 * 0.788} dy={0}>RESTE</tspan><tspan x={1920 * 0.788} dy={36}>DU MONDE</tspan>
               </text>
             </g>
