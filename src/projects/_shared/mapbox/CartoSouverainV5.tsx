@@ -79,7 +79,15 @@ export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, foc
   const mapRef = useRef<mapboxgl.Map | null>(null);
 
   const p = durationInFrames > 1 ? frame / (durationInFrames - 1) : 0;
-  const cam = camAtProgress(camKeys, p);
+  const baseCam = camAtProgress(camKeys, p);
+  // DRIFT CONTINU (P5 doctrine CARTO-OVERLAYS) : la camera n'est JAMAIS parfaitement immobile.
+  // Micro-oscillation sinusoidale (amplitude qui se reduit avec le zoom pour rester imperceptible).
+  const driftAmp = 0.06 / Math.max(1, baseCam.zoom / 3); // moins de drift quand on est zoome
+  const cam = {
+    ...baseCam,
+    lon: baseCam.lon + driftAmp * Math.sin(frame * 0.011),
+    lat: baseCam.lat + driftAmp * 0.6 * Math.cos(frame * 0.009),
+  };
 
   // init carte (pattern headless prouve : dark-v11 + setProjection mercator + applyGeoAfriqueV5)
   useEffect(() => {

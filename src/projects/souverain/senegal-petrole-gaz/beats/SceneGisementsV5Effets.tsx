@@ -16,6 +16,7 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig, inter
 import type mapboxgl from "mapbox-gl";
 import { loadFont as loadBebas } from "@remotion/google-fonts/BebasNeue";
 import { CartoSouverainV5 } from "../../../_shared/mapbox/CartoSouverainV5";
+import { GeoCountryPlaque } from "../../../_shared/mapbox/GeoCountryPlaque";
 
 const { fontFamily: BEBAS } = loadBebas();
 
@@ -63,63 +64,84 @@ export const SceneGisementsV5Effets: React.FC = () => {
   );
 };
 
+// E1 : plaques DEPORTEES dans l'ocean (a gauche) + leader fleche vers le point. dy = etage vertical.
+const E1_FIELDS: { name: string; coord: [number, number]; start: number; num: string; plaqueY: number }[] = [
+  { name: "GTA", coord: GTA, start: 114, num: "02", plaqueY: 220 },
+  { name: "YAKAAR", coord: YAKAAR, start: 192, num: "03", plaqueY: 430 },
+  { name: "SANGOMAR", coord: SANGOMAR, start: 36, num: "01", plaqueY: 640 },
+];
+const PLAQUE_X = 250; // colonne ocean a gauche
+
 const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> = ({ mapRef }) => {
   const frame = useCurrentFrame();
   const map = mapRef.current;
   if (!map) return null;
   const P = (c: [number, number]) => { const p = map.project(c as any); return [p.x, p.y] as [number, number]; };
 
-  return (
-    <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
-      {/* ════ E1 — COMPTER : 3 marqueurs sonar reveles en serie + labels ════ */}
-      {frame < E2 + 30 && <E1Sonar frame={frame} P={P} />}
+  const showE1 = frame < E2 + 30;
 
-      {/* titres ecran (non geo-ancres) */}
-      <ScreenTitle frame={frame} show={[0, 360]} parts={["THREE FIELDS"]} />
-      <ScreenTitle frame={frame} show={[372, 840]} parts={["SANGOMAR", " / oil"]} />
-      <ScreenTitle frame={frame} show={[852, 1260]} parts={["GTA", " / export"]} />
-      <ScreenTitle frame={frame} show={[1272, 1560]} parts={["YAKAAR", " / suspense"]} />
-    </svg>
+  return (
+    <>
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
+        {/* ════ E1 — marqueurs sonar (plus gros, pulse rapide) + leaders fleches vers plaques deportees ════ */}
+        {showE1 && E1_FIELDS.map((f) => {
+          const [x, y] = P(f.coord);
+          const t = frame - f.start;
+          if (t < -2) return null;
+          const leadOp = interpolate(frame, [f.start + 26, f.start + 44, 330, 360], [0, 0.9, 0.9, 0], clamp);
+          return (
+            <g key={f.name}>
+              {/* leader fleche : du point (geo) vers la plaque deportee (P3) */}
+              {leadOp > 0.01 && <Leader x1={x} y1={y} x2={PLAQUE_X + 10} y2={f.plaqueY + 44} op={leadOp} />}
+              {/* sonar rings — plus gros (r jusqu'a 52), pulse RAPIDE (P4) */}
+              {[0, 1, 2].map((i) => {
+                const d = i * 7;
+                const r = interpolate(t - d, [0, 34], [6, 52], clamp);
+                const op = interpolate(t - d, [0, 22, 34], [0, 0.55, 0], clamp);
+                return op > 0.01 ? <circle key={i} cx={x} cy={y} r={r} fill="none" stroke={IVORY} strokeWidth={1.6} opacity={op} /> : null;
+              })}
+              {/* ring statique + pulse rapide */}
+              {t > 44 && <circle cx={x} cy={y} r={22} fill="none" stroke={GOLD} strokeWidth={1.4} opacity={0.3 + 0.18 * Math.sin((frame - f.start - 44) / 9)} />}
+              <circle cx={x} cy={y} r={8} fill={GOLD} stroke={NAVY} strokeWidth={1.5} />
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* plaques deportees (HTML) — geoplaque, pas de texte nu (P1+P2) */}
+      {showE1 && E1_FIELDS.map((f) => (
+        <GeoCountryPlaque
+          key={f.name}
+          frame={frame}
+          name={`${f.num}  ${f.name}`}
+          color={GOLD}
+          appearAt={f.start + 26}
+          hideAt={360}
+          pos={{ x: PLAQUE_X, y: f.plaqueY + 120 }}
+        />
+      ))}
+
+      {/* titres ecran (coin — exception P1, ce n'est pas un label de lieu) */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }}>
+        <ScreenTitle frame={frame} show={[0, 360]} parts={["THREE FIELDS"]} />
+        <ScreenTitle frame={frame} show={[372, 840]} parts={["SANGOMAR", " / oil"]} />
+        <ScreenTitle frame={frame} show={[852, 1260]} parts={["GTA", " / export"]} />
+        <ScreenTitle frame={frame} show={[1272, 1560]} parts={["YAKAAR", " / suspense"]} />
+      </svg>
+    </>
   );
 };
 
-// ─── E1 : sonar markers ───────────────────────────────────────────────────
-const E1Sonar: React.FC<{ frame: number; P: (c: [number, number]) => [number, number] }> = ({ frame, P }) => {
-  // dy = decalage vertical du label pour eviter le chevauchement (gisements proches a l'ecran)
-  const pts: [string, [number, number], number, string, number][] = [
-    ["01 SANGOMAR", SANGOMAR, 36, "01", 6],
-    ["02 GTA", GTA, 114, "02", -6],
-    ["03 YAKAAR", YAKAAR, 192, "03", 6],
-  ];
+// leader avec pointe de fleche, du point geo vers la plaque
+const Leader: React.FC<{ x1: number; y1: number; x2: number; y2: number; op: number }> = ({ x1, y1, x2, y2, op }) => {
+  const ang = Math.atan2(y1 - y2, x1 - x2);
+  const ax = x1 - 13 * Math.cos(ang), ay = y1 - 13 * Math.sin(ang);
   return (
-    <>
-      {pts.map(([label, coord, start, num, dy]) => {
-        const [x, y] = P(coord);
-        const t = frame - start;
-        if (t < -2) return null;
-        const labelOp = interpolate(frame, [start + 22, start + 40, 330, 360], [0, 1, 1, 0], clamp);
-        return (
-          <g key={label}>
-            {/* sonar rings */}
-            {[0, 1, 2].map((i) => {
-              const d = i * 10;
-              const r = interpolate(t - d, [0, 42], [5, 36], clamp);
-              const op = interpolate(t - d, [0, 30, 42], [0, 0.48, 0], clamp);
-              return op > 0.01 ? <circle key={i} cx={x} cy={y} r={r} fill="none" stroke={IVORY} strokeWidth={1.2} opacity={op} /> : null;
-            })}
-            {/* ring statique + respiration */}
-            {t > 56 && <circle cx={x} cy={y} r={16} fill="none" stroke={GOLD} strokeWidth={1} opacity={0.22 + 0.08 * Math.sin((frame - start - 56) / 24)} />}
-            <circle cx={x} cy={y} r={4.5} fill={GOLD} />
-            {/* label */}
-            {labelOp > 0.01 && (
-              <text x={x + 30} y={y + dy} fontFamily={BEBAS} fontSize={24} letterSpacing={1} opacity={labelOp}>
-                <tspan fill={GOLD}>{num}</tspan><tspan fill={IVORY}> {label.slice(3)}</tspan>
-              </text>
-            )}
-          </g>
-        );
-      })}
-    </>
+    <g opacity={op}>
+      <line x1={x2} y1={y2} x2={x1} y2={y1} stroke={GOLD} strokeWidth={2} strokeLinecap="round" />
+      {/* pointe sur le point geo */}
+      <path d={`M ${x1} ${y1} L ${ax - 6 * Math.sin(ang)} ${ay + 6 * Math.cos(ang)} L ${ax + 6 * Math.sin(ang)} ${ay - 6 * Math.cos(ang)} Z`} fill={GOLD} />
+    </g>
   );
 };
 
