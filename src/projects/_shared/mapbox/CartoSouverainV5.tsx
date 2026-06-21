@@ -44,6 +44,9 @@ export type CartoSouverainV5Props = {
   children?: React.ReactNode;
   /** override couleur focus (defaut or canonique). */
   focusColor?: string;
+  /** callback expose l'instance Map (apres style.load) pour overlays geo-ancres (marqueurs offshore, flux).
+   *  Permet de projeter des coords lon/lat -> px ecran via map.project() dans une scene enfant. */
+  onMapReady?: (map: mapboxgl.Map) => void;
 };
 
 /**
@@ -63,7 +66,7 @@ function camAtProgress(keys: { atProgress: number; cam: CamState }[], p: number)
   return lerpCam(a.cam, b.cam, local);
 }
 
-export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, focusIsos = [], children, focusColor }) => {
+export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, focusIsos = [], children, focusColor, onMapReady }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -93,6 +96,7 @@ export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, foc
       for (const iso of focusIsos) {
         addCountryHighlight(map, iso, focusColor ?? SOUVERAIN_GOLD, 0.85, 2, `v5-${iso}-`);
       }
+      onMapReady?.(map);
     });
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };
