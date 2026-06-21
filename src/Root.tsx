@@ -241,6 +241,7 @@ import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/ma
 import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { SceneGisementsV5 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5";
+import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
 import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
 import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
 import { MapboxLottieShowcase, MAPBOX_LOTTIE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/MapboxLottieShowcase";
@@ -1306,6 +1307,14 @@ export const RemotionRoot: React.FC = () => {
             id="SceneGisementsV5"
             component={SceneGisementsV5}
             durationInFrames={1560}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="CartoGeoStickTest"
+            component={CartoGeoStickTest}
+            durationInFrames={30}
             fps={30}
             width={1920}
             height={1080}

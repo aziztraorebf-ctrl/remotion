@@ -45,7 +45,13 @@ export type CartoSouverainV5Props = {
   /** override couleur focus (defaut or canonique). */
   focusColor?: string;
   /** callback expose l'instance Map (apres style.load) pour overlays geo-ancres (marqueurs offshore, flux).
-   *  Permet de projeter des coords lon/lat -> px ecran via map.project() dans une scene enfant. */
+   *  Permet de projeter des coords lon/lat -> px ecran via map.project() dans une scene enfant.
+   *
+   *  ⛔ REGLE NON-NEGOTIABLE (prouvee 2026-06-20, CartoGeoStickTest) : TOUT element ancre a un lieu
+   *  (marqueur, plaque, label, flux, drapeau) DOIT calculer sa position par map.project([lon,lat]) RECALCULE
+   *  A CHAQUE FRAME (appeler useCurrentFrame() dans l'enfant pour forcer le re-render). JAMAIS de left/top fixe
+   *  en pixels. Sinon le point DERIVE quand la camera bouge (bug recurrent historique). Le pattern map.project()/
+   *  frame COLLE au pixel meme en dezoom+pan+rotation+pitch extremes (prouve). Le gate carto-selfreview verifie ca. */
   onMapReady?: (map: mapboxgl.Map) => void;
 };
 
