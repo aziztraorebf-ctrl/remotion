@@ -96,6 +96,25 @@ Verdict du test Gemini vs GPT : voir [[key-learnings]] (section jetons SVG).
 
 ---
 
+## ⚠️ CLARIFICATIONS / LIMITES CONNUES (révélées par le test agent vierge 2026-06-21, Nigéria)
+
+- **Jetons SANS dépendance asset (démarrage à froid)** : `gas`, `sonar`, `seal` sont 100% self-contained (SVG natif).
+  `oil` REQUIERT une image (Gemini, prop `oilImgSrc`) + `flag` requiert `flagSrc`. Si pas d'asset sous la main →
+  utiliser gas/sonar/seal, ou générer l'image d'abord (visual-producer). Ne PAS bloquer sur `oil` faute d'asset.
+- **`zoom` est OBLIGATOIRE sur `GisementMarker`** (taille zoom-driven, anti-agglutination) : passer `zoom={map.getZoom()}`.
+  ⚠️ Toute scène qui l'oublie est non-conforme (corrigé dans `SceneGisementsV5Effets` 2026-06-21).
+- **Plaques multiples (≥3) déportées : NE PAS empiler bord à bord** (devient fouillis). Trois parades, par ordre :
+  (1) ESPACER verticalement (pas de plaques collées) ; (2) plaques + écritures PLUS PETITES quand il y en a beaucoup ;
+  (3) les faire APPARAÎTRE/DISPARAÎTRE au fil de la plongée (la plaque du point survolé visible, les autres s'estompent)
+  plutôt que toutes affichées en permanence. Préférer (3) dès qu'on plonge point par point.
+- **Coords offshore plausibles** : pas de procédure auto dans le code. Soit poser à vue d'œil (golfe/plateau), soit
+  géocoder via le MCP Mapbox (`search_and_geocode_tool` / `reverse_geocode_tool`) pour un site nommé.
+- **`MapboxCountryFlagDecal` ne s'injecte qu'UNE fois** (`doneRef`) : OK pour un drapeau qui reste toute la scène.
+  Si le drapeau doit CHANGER/apparaître/disparaître en cours de scène (multi-lieux dynamique) → la brique est à
+  étendre (re-render conditionnel). Angle mort actuel, à traiter quand le besoin se présente.
+- **Opacité « couleurs nationales » dépend du PITCH** : ~0.78 à plat, mais à fort pitch (38+) baisser vers ~0.6 pour
+  ne pas écraser le relief. Valeur à ajuster selon le pitch de la scène, pas une constante.
+
 ## Références
 - Cible : `src/projects/_shared/mapbox/CartoSouverainV5.tsx` (3 modes caméra, drift P5).
 - Briques : `GisementTokens.tsx` · `MapboxCountryFlagDecal.tsx` · `MapboxBase.tsx` (`addCountryFlagFill` = fill-pattern, marqué « carrelle au dézoom »).

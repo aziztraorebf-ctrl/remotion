@@ -216,6 +216,7 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
   const map = mapRef.current;
   if (!map) return null;
   const P = (c: [number, number]) => { const p = map.project(c as any); return [p.x, p.y] as [number, number]; };
+  const zoom = map.getZoom(); // doctrine CARTO-OVERLAYS : taille des jetons pilotee par le zoom (anti-agglutination)
 
   const showE1 = frame < E2 + 30;
 
@@ -316,6 +317,8 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
               frame={frame}
               localF={t}
               appeared={appeared}
+              uid={f.name}
+              zoom={zoom}
               oilImgSrc={staticFile(OIL_IMG)}
             />
           );
