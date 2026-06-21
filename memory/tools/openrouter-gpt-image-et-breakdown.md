@@ -10,6 +10,15 @@ le meilleur ; (2) breakdown JSON = **GPT-5.5** (cahier des charges quasi-code) ;
 ⚠️ GPT via OpenRouter : surveiller crédits (erreur 402 si max_tokens trop haut vs solde). Scripts :
 `storyboard-dual-gen.py` (gen image Gemini+GPT/fal) + `storyboard-breakdown-dual.py` (breakdown Gemini+GPT-5.5).
 
+## ⭐ TEST GÉNÉRATION SVG (jetons carto) Gemini 3.1 Pro vs GPT-5.5 (2026-06-21)
+**Les DEUX génèrent du SVG animé propre EN UN SEUL APPEL pour N jetons** (JSON `{tokens:{...}}`, animation par `f`=frame
+via expressions inline `{...}`, syntaxe JSX exacte). Test : 5 jetons (gas/oil/sonar/export/reserve) dans le registre Souverain.
+- **GPT-5.5 = préféré** (plus riche/narratif : derrick complet, matière+ombres, cuve à niveau). Choix d'Aziz.
+- Gemini 3.1 Pro = plus épuré/iconographique (radar, flux divergents élégants). Bon aussi.
+→ Comme le breakdown : lancer les 2 en parallèle et piocher le meilleur par jeton. Script : `scripts/tools/llm-gen-svg.py
+--provider gpt|gemini`. Le LLM ne dessine QUE le contenu intérieur (centré 0,0, rayon 40) ; cadre+ancrage = TokenFrame côté code.
+Doctrine jetons : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`.
+
 ## ⭐ 3 RAFFINEMENTS DU BREAKDOWN GPT-5.5 (prouvés 2026-06-20, workflow data-viz) — à EXIGER dans le prompt
 Le breakdown GPT-5.5 est excellent MAIS, par défaut, il : (1) donne le placement en PIXELS d'une vignette (faux
 hors cadre réel), (2) ESTIME les tailles à l'œil (sous-dimensionne — picto noté 8.5% alors que la cible faisait

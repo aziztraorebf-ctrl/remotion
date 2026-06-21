@@ -1,6 +1,12 @@
 // useClipFlags.tsx — Hook + composant pour projeter des VRAIS drapeaux dans des pays
 // via clip SVG (net a toute echelle, etoile non coupee). Technique validee Beat3 (2026-06-03).
 //
+// ⛔⛔ A NE PAS UTILISER SUR UNE CARTE AVEC PITCH (relief V5) — DERIVE prouvee 2026-06-21.
+//   L'image SVG est plate dans une bbox 2D : au pitch, le pays devient un trapeze 3D incline et le
+//   drapeau GLISSE/deborde (il ne suit pas le terrain). OK uniquement a plat (pitch 0).
+//   Pour projeter un drapeau sur une carte AVEC PITCH → utiliser MapboxCountryFlagDecal (source image
+//   decoupee a la silhouette, drapee sur le terrain). Doctrine : memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md.
+//
 // Remplace le fill-pattern Mapbox (qui carrelle, deforme les etoiles) par :
 //   - vraies images drapeaux officiels HD (public/_shared/flags/), pas de dessin approximatif
 //   - clip SVG du pays reprojete chaque frame via map.project()

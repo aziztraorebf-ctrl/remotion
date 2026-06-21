@@ -95,12 +95,14 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Répartition d'un tout (parts) | donut | ⭐ `ProtoHera_TerminalNeon` (donut glow, registre marché/tech) | _proto-16-9 |
 
 ### Faire RESSENTIR la GÉOGRAPHIE / le territoire
-> ⭐ **2 RÉPONSES PAR DÉFAUT, ne pas réinventer :** drapeau dans un pays = `useClipFlags` (VRAIES images HD, net à toute échelle — JAMAIS `drawFlagCanvas`) · annoncer un pays avec donnée+source = `GeoCountryPlaque` (pilule nom + stat serif gold + source mono). Filtrer un pays = `countryFilter(iso,…)` par **ISO**, jamais par `'name'`. Relief = `camCountryApproach()` pitch ~32 (inclinaison caméra).
+> ⭐ **RÉPONSES PAR DÉFAUT, ne pas réinventer :** drapeau sur un pays **avec PITCH (relief V5)** = **`MapboxCountryFlagDecal`** (source image découpée à la silhouette — la SEULE qui ne dérive ni ne carrelle, prouvé 2026-06-21) · drapeau sur carte **plate** (pitch 0) = `useClipFlags` (images HD, JAMAIS `drawFlagCanvas`) · annoncer un pays avec donnée+source = `GeoCountryPlaque`. Filtrer un pays = `countryFilter(iso,…)` par **ISO**. Relief = `camCountryApproach()` pitch ~32.
+> ⛔ **PROJETER UN DRAPEAU — 3 méthodes, 2 pièges** (doctrine `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`) : SVG clippé (`useClipFlags`/`MapboxFlagFill`) DÉRIVE au pitch · fill-pattern (`addCountryFlagFill`) CARRELLE au dézoom · ✅ source-image découpée (`MapboxCountryFlagDecal`) = robuste. Hiérarchie pays : aplat uni (neutre) / couleurs nationales (secondaire) / drapeau complet (héros).
 
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Situer un pays/lieu | globe + reveal | [C] `GlobeCountryReveal(Mapbox)`, `FlagPin` | COMPOSANTS § CARTE |
-| Un pays prend son **vrai** drapeau | FlagFill clip SVG frame-driven | [C] `MapboxFlagFill` + **`useClipFlags`** (défaut), `SequentialFlagReveal` (séquence) | CATALOGUE-CARTE-VIVANTE |
+| Un pays prend son **vrai** drapeau (carte avec PITCH) | source image drapée sur silhouette | [C] ⭐ **`MapboxCountryFlagDecal`** (défaut V5, zéro dérive/carrelage) ; carte plate → `useClipFlags`/`SequentialFlagReveal` | CARTO-OVERLAYS-PRINCIPES |
+| Marquer un POINT précis sur la carte (gisement, site, événement) | jeton hexagonal géo-ancré (taille zoom-driven) | [C] ⭐ **`GisementMarker`** (`GisementTokens.tsx`) : kinds gas/oil/sonar/flag/seal, SVG via `llm-gen-svg.py` | CARTO-OVERLAYS-PRINCIPES |
 | Annoncer un pays : nom + donnée + source | plaque éditoriale | [C] **`GeoCountryPlaque`** (+ `GeoProgressCounter` cumul X/N, + `GeoClimaxOverlay` climax) | CATALOGUE l.96-98 |
 | Un pays se remplit de sa **ressource** | texture bichromie projetée | [C] `ResourceTextureFill` (pétrole/phosphate/or) | CATALOGUE N2.1 |
 | Intensité / évolution (choropleth) | gradient qui monte/baisse | [C] `HeatGradientFill` (5 palettes) | CATALOGUE N2.2 |

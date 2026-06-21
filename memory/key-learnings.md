@@ -309,6 +309,16 @@ Réponses test : `memory/episodes/warmap-sahel/reviews-acte2/deepseek-b1-{downst
 
 ## 🎬 SCÈNE & CONTINUITÉ
 
+### 2026-06-21 — ⭐⭐ CARTE SOUVERAIN : jetons géo-ancrés + projeter un drapeau SANS dériver (3 méthodes, 2 pièges)
+
+**Leçon MAJEURE transversale prouvée par render** (scène test `TokenShowcaseV5`). Pour POSER quoi que ce soit sur
+une carte Mapbox avec PITCH (relief V5), il y a des pièges qui reviennent à chaque fois — d'où ce repère unique.
+**Détail complet (NE PAS dupliquer ailleurs, c'est LA source) : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`.**
+Résumé non substituable : (1) **jetons** = `TokenFrame` hexagonal, 2 modes (navy pour SVG animé / fill pour
+image-drapeau-sceau), taille pilotée par le zoom (anti-agglutination) ; (2) **projeter un drapeau sur un pays** :
+SVG clippé DÉRIVE au pitch · fill-pattern CARRELLE au dézoom · ✅ source-image découpée (`MapboxCountryFlagDecal`)
+= la seule robuste ; (3) appel SVG dédié des jetons via `scripts/tools/llm-gen-svg.py` (GPT-5.5 préféré, Gemini ok).
+
 ### 2026-06-18 — ⭐⭐ DOCTRINE : INTENTION→forme→template (jamais l'inverse) + continuité du monde
 
 **Leçon MAJEURE transversale, prouvée 2× du 1er coup** (hook Sénégal + sa suite fracture). Le problème
@@ -480,3 +490,19 @@ en 2021 mais **1,6% en 2024** (Orano retiré, ~0 export après le coup). Affiche
 le message "levier qui permet de tenir". → Solution : afficher les **RÉSERVES** (Niger = 6% des réserves mondiales =
 le levier DURABLE), pas la production volatile. **RÈGLE : ne JAMAIS afficher un chiffre cité par un modèle sans
 fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/infrastructure (structurel, solide).**
+
+## Boucle d'autoreview beat (éprouvée 2026-06-20, cobaye DataHero)
+
+- **Le score global Gemini est INSTABLE entre 2 appels** : sur le même beat, après des fixes qui ont objectivement amélioré l'alignement (match_pct par phase 50→65, 55→65), le score global est PASSÉ DE 6.5 À 5.5. Cause : Gemini change de grille de lecture d'un appel à l'autre (appel 2 a halluciné un cadrage "horizontal→vertical 9:16" et pénalisé un badge placeholder volontaire).
+- **Conséquence pratique** : se fier aux `match_pct` PAR PHASE (granularité stable) plutôt qu'au `score` global (bruité). Et confirmer : Gemini = signal, jamais juge. La self-review (mon œil sur frames vs storyboard) reste le juge — ici elle convergeait avec l'appel 1 (6.5, même fix n°1 = glow diffus).
+- **Tri des fixes Gemini contre le code réel = indispensable** : sur 5 fixes proposés à l'appel 1, 3 étaient hallucinés (fontFamily Bebas DÉJÀ appliquée l.80 CountUp ; monospace annotations DÉJÀ appliqué ; strokeDasharray inventé absent du storyboard). Seuls 2 étaient vrais (glow trop diffus, annotations trop simples/peu contrastées). Appliquer aveuglément aurait dégradé.
+- **Outillage de la boucle** : `scripts/visual_review.py --model gemini --storyboard ... --output ...` fonctionne. GAP : le champ `review` du JSON est tantôt une string JSON, tantôt un dict déjà parsé (selon l'appel) — tout parseur doit gérer les deux. Et `score`/`verdict` au niveau racine restent à "?" (non extraits du sous-objet). À durcir si on automatise un gate sur le score.
+
+---
+
+## ⛔ GOTCHA render Mapbox PARTIEL court = fausse carte grise (2026-06-21, scène gisements V5)
+
+- **Symptôme** : un render `./scripts/render-mapbox.sh <compo> out.mp4 --frames=1185-1195` (segment COURT) produit une frame où **la carte a disparu / est grise/vide**. On croit à un bug de la scène (caméra cassée, élément manquant) → on diagnostique dans le vide, on perd du temps.
+- **Cause RÉELLE** : la carte Mapbox (WebGL headless) met ~15-20 frames à finir de charger (`style.load` + tiles). Un render qui DÉMARRE à frame 1185 n'a pas le temps de charger avant la frame 1190 extraite → carte grise. Ce n'est PAS un bug de la scène, c'est un artefact du render partiel trop court.
+- **RÈGLE** : pour juger une frame TARDIVE d'une scène Mapbox, rendre un **segment LONG** (≥100-150 frames AVANT la frame cible) pour laisser la map charger, PUIS extraire la frame voulue avec ffmpeg. Ne jamais conclure « bug » sur un render `--frames=A-B` court où A est loin du début. Prouvé : la même frame 1190 montrait du gris en render 1185-1195, et la carte complète en render 1040-1210.
+- **Corollaire** : ce gotcha a masqué un VRAI problème (flux d'export trop fins, 1.6px → invisibles). Toujours distinguer « artefact de render » de « effet réellement absent » en re-rendant proprement AVANT de modifier le code.

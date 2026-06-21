@@ -4,6 +4,25 @@
 
 ---
 
+## ⭐⭐ REPRISE (2026-06-21) — SYSTÈME CARTO V5 (dire « continue carto »)
+
+> 🗂️ POINT D'ENTRÉE UNIQUE : `REPRISE-SYSTEME-CARTO-V5.md` (état exact, ce qui marche, ce qui reste).
+>
+> ⛔ **DÉCISION RENVERSÉE le 2026-06-21** : la note du 20 juin disait « parchemin d3-geo PRÉFÉRÉ ». **FAUX désormais.**
+> Aziz a tranché : la carte canonique Souverain = **GéoAfrique V5 (navy/gris/or)**, réf `carte-souverain-geoafrique-v5.jpg`
+> + short Sénégal publié. La d3-geo parchemin était le MAUVAIS départ (corrigé). Les fichiers `STARTER-REPRISE-coding-V2.md`,
+> `PASSE-DE-VIE-V2-parchemin.md`, `breakdown-V2-plat.json`, `PROMPT-BREAKDOWN-CARTO-PLAT.txt` = PÉRIMÉS pour Souverain (ne pas suivre).
+>
+> **✅ SYSTÈME COMPLET ET PROUVÉ (session 2026-06-21 soir)** — doctrine source unique `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` :
+> cible `CartoSouverainV5` (3 modes cam, drift) · **jetons hexagonaux** `GisementTokens.tsx` (5 variantes, 2 modes, taille zoom-driven) ·
+> **projection drapeau sans dérive** `MapboxCountryFlagDecal.tsx` (les 2 anciennes méthodes SVG/fill-pattern = pièges, gravés) ·
+> caméra-plonge · couleurs nationales (pays secondaire) · **appel SVG dédié** `scripts/tools/llm-gen-svg.py` (GPT-5.5 préféré) ·
+> **gate** `mapbox-selfreview.py` enrichi (E6/W6/W7/W8) · assombrissement V5 tranché (voile navy autorisé).
+> **✅ TEST DE VÉRITÉ RÉUSSI** : agent vierge a reproduit le système A→Z (Nigéria) sans voir la solution → 6 trous corrigés.
+> **▶ RESTE (prochaine session)** : (1) ⭐ **CODER LA VRAIE SCÈNE Mapbox Sénégal branchée AUDIO** (plus un proto — on a tout l'outillage) ·
+> (2) peaufinage scène gisements (popup E4 à déporter, plaque E2, jauge 18%) · (3) merger `feat/systeme-carto-v5` dans master.
+> ⏳ **SESSION WAR-MAP DÉDIÉE séparée** : 3 contradictions doctrine WarMap (d3-geo vs Mapbox, R4 vs DimmedOverlay) — notées dans CARTO-OVERLAYS-PRINCIPES.
+
 ## ⭐⭐ REPRISE IMMÉDIATE (2026-06-20) → `memory/REPRISE-WORKFLOW-DATAVIZ.md` — LIRE EN PREMIER
 
 > **Le workflow DATA-VIZ complet est PROUVÉ A→Z et GRAVÉ** (`memory/doctrines/WORKFLOW-DATAVIZ.md`) : storyboard

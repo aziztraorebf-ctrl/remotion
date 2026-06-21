@@ -16,6 +16,14 @@ Regles verifiees (chacune = leçon documentee 2026-06-03) :
   W1  Si une géométrie pays a outre-mer (France/USA/NLD/DNK) sans mainlandBox -> warn
   W2  countryFilter par ISO present si fill country_boundaries (jamais filtre 'name')
 
+CARTO SOUVERAIN V5 (si fichier touche CartoSouverainV5/GisementMarker/map.project) :
+  E6  Position left/top FIXE px sur element geo-ancre (DERIVE quand la camera bouge)
+  W6  Drapeau SVG (useClipFlags/MapboxFlagFill) + pitch>0 -> DERIVE -> MapboxCountryFlagDecal
+  W7  <GisementMarker> sans prop zoom -> taille pas zoom-driven (agglutination au dezoom)
+  W8  addCountryFlagFill (fill-pattern) -> CARRELLE au dezoom -> MapboxCountryFlagDecal
+
+Doctrine V5 : memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md
+
 Usage : python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx> [Beat2.tsx ...]
 Exit code 0 si 0 ERROR, 1 sinon. WARN n'echoue pas mais s'affiche.
 """
@@ -95,10 +103,15 @@ def check_file(path: Path):
     # peut afficher un drapeau A en useClipFlags (correct) ET un drapeau B en canvas
     # (approximatif, réellement rendu) : la présence globale de useClipFlags ne prouve
     # PAS que CE draw-là est mort (faux négatif corrigé 2026-06-03).
+    # Exception (2026-06-21) : passe a MapboxCountryFlagDecal via drawFlag=... = usage LEGITIME
+    # (le canvas sert de source-image decoupee a la silhouette, PAS de drapeau approximatif pose brut).
     draw_calls = [i + 1 for i, ln in enumerate(code_lines)
                   if re.search(r"\b(drawFlagCanvas|drawMarocFlagCanvas)\s*\(", ln)
                   and not ln.strip().startswith("function")
-                  and not ln.strip().startswith("export")]
+                  and not ln.strip().startswith("export")
+                  and "drawFlag" not in ln
+                  and "MapboxCountryFlagDecal" not in ln
+                  and "addCountryFlagFill" not in ln]
     if draw_calls:
         errors.append((
             "E2", f"drawFlagCanvas/drawMarocFlagCanvas APPELÉ (drapeau dessiné approximatif, rendu réel). "
@@ -198,6 +211,50 @@ def check_file(path: Path):
             "W2", f"Filtre Mapbox sur ['get','name'] (l. {name_filter}) — NON fiable headless. "
             "→ countryFilter(iso, boundaryIsos) (filtre par iso_3166_1_alpha_3)."
         ))
+
+    # ══ CHECKS CARTO SOUVERAIN V5 (doctrine memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md) ══
+
+    # ── W6 : projection drapeau SVG (useClipFlags/MapboxFlagFill) avec PITCH → derive ──
+    # S'applique a TOUTE carte Mapbox pitchee (pas seulement V5) : c'est le piege de derive.
+    svg_flag = [c for c in ("useClipFlags", "ClipFlagsLayer", "MapboxFlagFill")
+                if re.search(rf"\b{c}\b", src)]
+    has_pitch = bool(re.search(r"pitch\s*:\s*([1-9]\d*|0*[1-9])", src))  # pitch > 0 quelque part
+    if svg_flag and has_pitch:
+        warns.append((
+            "W6", f"Projection drapeau SVG {svg_flag} AVEC pitch>0 detecte. Le drapeau SVG (image plate dans "
+            "une bbox) DERIVE au pitch (prouve 2026-06-21). → MapboxCountryFlagDecal (source image decoupee "
+            "a la silhouette, suit le terrain). Doctrine CARTO-OVERLAYS-PRINCIPES."
+        ))
+
+    # ── W8 : addCountryFlagFill (fill-pattern) carrelle au dezoom ──────────────────
+    if re.search(r"\baddCountryFlagFill\b", src):
+        warns.append((
+            "W8", "addCountryFlagFill (fill-pattern Mapbox) detecte : CARRELLE/bouillie au DEZOOM. "
+            "OK seulement si le pays reste grand a l'ecran. Pour un drapeau-heros → MapboxCountryFlagDecal."
+        ))
+
+    # Checks specifiques aux overlays geo-ancres V5 (jetons, anti-derive)
+    is_carto = bool(re.search(r"CartoSouverainV5|GisementMarker|MapboxCountryFlagDecal|map\.project\(", src))
+    if is_carto:
+        # ── E6 : anti-derive — left/top fixe sur element cense etre geo-ancre ──────
+        # Regle ZERO : tout element ancre a un lieu = map.project()/frame, JAMAIS left/top px fixe.
+        lefttop = [i + 1 for i, ln in enumerate(code_lines)
+                   if re.search(r"(left|top)\s*:\s*[\"'`]?\d+(\.\d+)?(px)?[\"'`]?\s*[,}]", ln)
+                   and not re.search(r"inset\s*:\s*0", ln)]
+        if lefttop:
+            errors.append((
+                "E6", f"Position left/top FIXE en px dans un fichier carto (l. {lefttop}). Un element geo-ancre "
+                "DERIVE si la camera bouge. → position via map.project([lon,lat]) recalcule chaque frame. "
+                "(Si c'est un element d'ecran NON ancre — titre, plaque deportee fixe — ignorer ce point.)"
+            ))
+
+        # ── W7 : GisementMarker sans prop zoom (taille zoom-driven obligatoire) ────
+        marker_lines = [i + 1 for i, ln in enumerate(code_lines) if re.search(r"<GisementMarker\b", ln)]
+        if marker_lines and not re.search(r"\bzoom\s*=\s*\{", src):
+            warns.append((
+                "W7", f"<GisementMarker> sans prop zoom (l. {marker_lines}). La taille DOIT etre pilotee par le "
+                "zoom (anti-agglutination au dezoom). → passer zoom={map.getZoom()}. Doctrine CARTO-OVERLAYS."
+            ))
 
     return errors, warns
 
