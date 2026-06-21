@@ -239,6 +239,7 @@ import { SenegalActe2Full, SENEGAL_ACTE2_FULL_FRAMES } from "./projects/souverai
 import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars";
 import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxCameraLab";
 import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
+import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
 import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
 import { MapboxLottieShowcase, MAPBOX_LOTTIE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/MapboxLottieShowcase";
@@ -1287,6 +1288,14 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="CartoSouverainV5-CIBLE"
             component={CartoSouverainV5Demo}
+            durationInFrames={150}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="CartoSouverainV5-REGIONAL"
+            component={CartoSouverainV5RegionalDemo}
             durationInFrames={150}
             fps={30}
             width={1920}
