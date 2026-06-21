@@ -17,6 +17,7 @@ import type mapboxgl from "mapbox-gl";
 import { loadFont as loadBebas } from "@remotion/google-fonts/BebasNeue";
 import { CartoSouverainV5 } from "../../../_shared/mapbox/CartoSouverainV5";
 import { GeoCountryPlaque } from "../../../_shared/mapbox/GeoCountryPlaque";
+import { GisementMarker, type GisementKind } from "../../../_shared/mapbox/GisementTokens";
 
 const { fontFamily: BEBAS } = loadBebas();
 
@@ -58,9 +59,22 @@ export const SceneGisementsV5Effets: React.FC = () => {
   const [, force] = useState(0);
 
   const camKeys = [
-    // E1 cadre offshore Dakar (zoom 5.9) pour que les 3 gisements RESPIRENT et soient distincts/lisibles.
-    { atProgress: 0.0, cam: { lon: -16.6, lat: 14.7, zoom: 5.9, pitch: 0, bearing: 0 } },
-    { atProgress: 300 / 1560, cam: { lon: -16.7, lat: 14.6, zoom: 6.0, pitch: 8, bearing: 0 } },
+    // ── E1 "ETABLIR PUIS PLONGER" (idee Aziz) : on pose les 3 gisements en vue large,
+    //    puis la camera PLONGE en relief successivement sur chaque point (jamais statique).
+    //    Chaque point tient ~84f (2.8s) en relief => l'animation des jetons respire plusieurs cycles.
+    // 0-66 : vue large, les 3 marqueurs apparaissent (THREE FIELDS etabli)
+    { atProgress: 0.0,        cam: { lon: -16.7,  lat: 14.85, zoom: 5.85, pitch: 0,  bearing: 0 } },
+    { atProgress: 60 / 1560,  cam: { lon: -16.7,  lat: 14.85, zoom: 5.9,  pitch: 4,  bearing: 0 } },
+    // 66-150 : PLONGEE relief sur SANGOMAR (sud)
+    { atProgress: 120 / 1560, cam: { lon: SANGOMAR[0] - 0.05, lat: SANGOMAR[1] - 0.18, zoom: 7.4, pitch: 38, bearing: -6 } },
+    { atProgress: 150 / 1560, cam: { lon: SANGOMAR[0] - 0.05, lat: SANGOMAR[1] - 0.18, zoom: 7.4, pitch: 38, bearing: -6 } },
+    // 150-234 : spring vers GTA (nord, sur la frontiere)
+    { atProgress: 210 / 1560, cam: { lon: GTA[0] - 0.05, lat: GTA[1] - 0.2, zoom: 7.4, pitch: 38, bearing: 6 } },
+    { atProgress: 234 / 1560, cam: { lon: GTA[0] - 0.05, lat: GTA[1] - 0.2, zoom: 7.4, pitch: 38, bearing: 6 } },
+    // 234-318 : spring vers YAKAAR (centre)
+    { atProgress: 294 / 1560, cam: { lon: YAKAAR[0] - 0.05, lat: YAKAAR[1] - 0.2, zoom: 7.4, pitch: 38, bearing: 0 } },
+    { atProgress: 318 / 1560, cam: { lon: YAKAAR[0] - 0.05, lat: YAKAAR[1] - 0.2, zoom: 7.4, pitch: 38, bearing: 0 } },
+    // 318-360 : remontee large -> raccord E2
     { atProgress: E2 / 1560, cam: { lon: -16.82, lat: 14.28, zoom: 6.72, pitch: 34, bearing: 0 } },
     { atProgress: 840 / 1560, cam: { lon: -16.82, lat: 14.28, zoom: 6.72, pitch: 34, bearing: 0 } },
     { atProgress: 960 / 1560, cam: { lon: -16.95, lat: 15.55, zoom: 5.42, pitch: 14, bearing: 0 } },
@@ -81,11 +95,13 @@ export const SceneGisementsV5Effets: React.FC = () => {
 };
 
 // E1 : plaques DEPORTEES dans l'ocean (a gauche) + leader fleche vers le point. dy = etage vertical.
-const E1_FIELDS: { name: string; coord: [number, number]; start: number; num: string; plaqueY: number }[] = [
-  { name: "GTA",     coord: GTA,     start: 114, num: "02", plaqueY: 220 },
-  { name: "YAKAAR",  coord: YAKAAR,  start: 192, num: "03", plaqueY: 430 },
-  { name: "SANGOMAR",coord: SANGOMAR,start: 36,  num: "01", plaqueY: 640 },
+// `kind` = variante de jeton testee (session 2026-06-21) : sonar=temoin, gas=SVG natif, oil=image Gemini.
+const E1_FIELDS: { name: string; coord: [number, number]; start: number; num: string; plaqueY: number; kind: GisementKind }[] = [
+  { name: "GTA",     coord: GTA,     start: 114, num: "02", plaqueY: 220, kind: "gas" },
+  { name: "YAKAAR",  coord: YAKAAR,  start: 192, num: "03", plaqueY: 430, kind: "oil" },
+  { name: "SANGOMAR",coord: SANGOMAR,start: 36,  num: "01", plaqueY: 640, kind: "sonar" },
 ];
+const OIL_IMG = "souverain/senegal-petrole-gaz/scene-gisements/jeton-petrole-offshore-square.png";
 const PLAQUE_X = 250; // colonne ocean a gauche
 
 // Utilitaire : calcule longueur approx + points echantillonnes sur une courbe quadratique Bezier
@@ -271,27 +287,37 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
           </clipPath>
         </defs>
 
-        {/* ── E1 — marqueurs sonar (gros, pulse rapide) + leaders fleches ────── */}
+        {/* ── E1 — leaders fleches (les jetons eux-memes sont rendus plus bas, voir bloc HTML/Img) ── */}
         {showE1 && E1_FIELDS.map((f) => {
           const [x, y] = P(f.coord);
           const t = frame - f.start;
           if (t < -2) return null;
           const leadOp = interpolate(frame, [f.start + 26, f.start + 44, 330, 360], [0, 0.9, 0.9, 0], clamp);
+          return leadOp > 0.01 ? (
+            <Leader key={f.name} x1={x} y1={y} x2={PLAQUE_X + 10} y2={f.plaqueY + 44} op={leadOp} />
+          ) : null;
+        })}
+
+        {/* ── E1 — jetons de gisement (3 variantes a tester : sonar/gas/oil) ─── */}
+        {showE1 && E1_FIELDS.map((f) => {
+          const [x, y] = P(f.coord);
+          const t = frame - f.start;
+          if (t < -2) return null;
+          // spring d'apparition lent et propre (pop du cadre)
+          const scale = spring({ frame: t, fps, config: { damping: 16, mass: 0.8 } });
+          const appeared = t > 44;
           return (
-            <g key={f.name}>
-              {/* leader fleche : du point geo vers la plaque deportee a gauche */}
-              {leadOp > 0.01 && <Leader x1={x} y1={y} x2={PLAQUE_X + 10} y2={f.plaqueY + 44} op={leadOp} />}
-              {/* sonar rings — plus gros (r jusqu'a 52), pulse RAPIDE */}
-              {[0, 1, 2].map((i) => {
-                const d = i * 7;
-                const r = interpolate(t - d, [0, 34], [6, 52], clamp);
-                const op = interpolate(t - d, [0, 22, 34], [0, 0.55, 0], clamp);
-                return op > 0.01 ? <circle key={i} cx={x} cy={y} r={r} fill="none" stroke={IVORY} strokeWidth={1.6} opacity={op} /> : null;
-              })}
-              {/* ring statique */}
-              {t > 44 && <circle cx={x} cy={y} r={22} fill="none" stroke={GOLD} strokeWidth={1.4} opacity={0.3 + 0.18 * Math.sin((frame - f.start - 44) / 9)} />}
-              <circle cx={x} cy={y} r={8} fill={GOLD} stroke={NAVY} strokeWidth={1.5} />
-            </g>
+            <GisementMarker
+              key={f.name}
+              kind={f.kind}
+              x={x}
+              y={y}
+              scale={scale}
+              frame={frame}
+              localF={t}
+              appeared={appeared}
+              oilImgSrc={staticFile(OIL_IMG)}
+            />
           );
         })}
 

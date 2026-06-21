@@ -242,6 +242,8 @@ import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { SceneGisementsV5 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5";
 import { SceneGisementsV5Effets } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5Effets";
+import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
+import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
 import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
 import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
@@ -1316,6 +1318,22 @@ export const RemotionRoot: React.FC = () => {
             id="SceneGisementsV5Effets"
             component={SceneGisementsV5Effets}
             durationInFrames={1560}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="TokenShowcaseV5"
+            component={TokenShowcaseV5}
+            durationInFrames={600}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SvgTokenCompare"
+            component={SvgTokenCompare}
+            durationInFrames={240}
             fps={30}
             width={1920}
             height={1080}

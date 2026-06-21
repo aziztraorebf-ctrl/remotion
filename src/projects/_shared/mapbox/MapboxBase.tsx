@@ -214,6 +214,69 @@ export const addCountryHighlight = (
   return { fillId, borderId };
 };
 
+/**
+ * addCountryFlagFill — peint un DRAPEAU dans la silhouette d'un pays via fill-pattern Mapbox NATIF.
+ *
+ * ⛔ POURQUOI (grave 2026-06-21) : l'overlay SVG (clipPath + <image>) DERIVE au pitch — l'image
+ * rectangulaire reste plate dans sa bbox alors que le pays devient un trapeze 3D incline → le drapeau
+ * glisse/deborde. La solution GeoLes3/chaines premium = peindre la texture DANS Mapbox : c'est le moteur
+ * qui drape le motif sur le terrain, donc il suit pitch+zoom+pan SANS dériver (le drapeau EST la carte).
+ *
+ * ⛔ LIMITE PROUVEE 2026-06-21 : le fill-pattern CARRELLE/bouillie au DEZOOM (la tuile garde sa taille pixel →
+ *   quand le pays devient plus petit que la tuile, le drapeau se repete et devient illisible). Suit le terrain
+ *   au pitch (pas de derive) MAIS pas robuste au dezoom. → Pour un drapeau-heros, PREFERER MapboxCountryFlagDecal
+ *   (source image decoupee = pas de carrelage + pas de derive). Garder addCountryFlagFill pour des cas plats
+ *   ou le pays reste grand a l'ecran. Doctrine : memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md.
+ *
+ * @param drawFlag fonction qui retourne le canvas drapeau (ex: (iso,size)=>drawFlagCanvas(iso,size))
+ * @returns { fillId, patternId }
+ */
+export const addCountryFlagFill = (
+  map: mapboxgl.Map,
+  iso: string,
+  drawFlag: (iso: string, size: number) => HTMLCanvasElement,
+  opts: { size?: number; opacity?: number; idPrefix?: string; borderColor?: string; borderWidth?: number } = {}
+) => {
+  const { size = 1024, opacity = 1, idPrefix = "flagfill-", borderColor = "#f2efe6", borderWidth = 1.5 } = opts;
+  const patternId = `flagpat-${iso}`;
+  const fillId = `${idPrefix}fill-${iso}`;
+  const borderId = `${idPrefix}border-${iso}`;
+
+  if (!map.getSource(COUNTRY_SOURCE_ID)) {
+    map.addSource(COUNTRY_SOURCE_ID, { type: "vector", url: "mapbox://mapbox.country-boundaries-v1" });
+  }
+
+  // injecter le drapeau comme image-pattern (haute resolution = pas de carrelage a l'echelle pays)
+  const canvas = drawFlag(iso, size);
+  const ctx = canvas.getContext("2d")!;
+  const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data as unknown as Uint8Array;
+  if (!map.hasImage(patternId)) {
+    map.addImage(patternId, { width: canvas.width, height: canvas.height, data });
+  }
+
+  if (map.getLayer(fillId)) map.removeLayer(fillId);
+  if (map.getLayer(borderId)) map.removeLayer(borderId);
+
+  map.addLayer({
+    id: fillId,
+    type: "fill",
+    source: COUNTRY_SOURCE_ID,
+    "source-layer": "country_boundaries",
+    filter: ["==", ["get", "iso_3166_1_alpha_3"], iso],
+    paint: { "fill-pattern": patternId, "fill-opacity": opacity },
+  });
+  map.addLayer({
+    id: borderId,
+    type: "line",
+    source: COUNTRY_SOURCE_ID,
+    "source-layer": "country_boundaries",
+    filter: ["==", ["get", "iso_3166_1_alpha_3"], iso],
+    paint: { "line-color": borderColor, "line-width": borderWidth, "line-opacity": 0.85 },
+  });
+
+  return { fillId, borderId, patternId };
+};
+
 // ---------------------------------------------------------------------------
 // Codes ISO des pays africains fréquemment utilisés
 // ---------------------------------------------------------------------------

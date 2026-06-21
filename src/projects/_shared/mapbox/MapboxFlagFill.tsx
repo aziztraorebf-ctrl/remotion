@@ -2,6 +2,10 @@
  * MapboxFlagFill — UNE image (drapeau, texture minerai, portrait...) projetee DANS la
  * silhouette exacte d'un pays, par-dessus une VRAIE carte Mapbox vivante.
  *
+ * ⛔⛔ MEME LIMITE QUE useClipFlags : overlay SVG (clipPath + <image>) → DERIVE au pitch (prouve 2026-06-21).
+ *   OK a plat (pitch 0). Sur carte AVEC PITCH (relief V5) → utiliser MapboxCountryFlagDecal.
+ *   Doctrine : memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md (3 methodes de projection, 2 pieges).
+ *
  * Technique (Chantier C, validee Aziz 2026-06-01) :
  *   - Vraie carte Mapbox dessous : ocean navy, voisins en contexte, DRIFT + altitude pays.
  *   - Overlay SVG par-dessus : on reprojette la geometrie du pays (Natural Earth) via
