@@ -2,7 +2,10 @@
 
 > Doctrine maîtresse pour TOUT élément posé sur une carte Mapbox Souverain (cible [[CartoSouverainV5]]).
 > Prouvée par render (session 2026-06-21, scène test `TokenShowcaseV5`). À lire AVANT de poser un marqueur,
-> un jeton, un drapeau, une plaque, un flux sur une carte. Gate à venir : `scripts/tools/carto-selfreview.py`.
+> un jeton, un drapeau, une plaque, un flux sur une carte.
+> **Gate scripté : `python3 scripts/tools/mapbox-selfreview.py <fichier.tsx>`** — vérifie les anti-patterns V5
+> (E6 left/top fixe géo-ancré · W6 drapeau SVG+pitch=dérive · W7 GisementMarker sans zoom · W8 fill-pattern carrelle).
+> Lancer AVANT toute review Gemini sur une scène carto.
 
 ---
 
@@ -95,6 +98,24 @@ Script : `scripts/tools/llm-gen-svg.py` (Gemini 3.1 Pro vs GPT-5.5). Le LLM ne d
 Verdict du test Gemini vs GPT : voir [[key-learnings]] (section jetons SVG).
 
 ---
+
+## ✅ TRANCHÉ — assombrissement / semi-transparent sur carte Souverain V5 (2026-06-21)
+
+**Question** : peut-on assombrir une carte V5 (poser un voile semi-transparent) pour isoler un point ou superposer
+de l'info ? **OUI, AUTORISÉ et VALIDÉ** (déjà utilisé dans `SceneGisementsV5Effets` E2 : voile navy `#16213a`
+opacity ~0.52 + trou radial autour du point focus, rendus validés Aziz).
+- **Règle V5** : le voile = **navy `#16213a`** (la couleur de fond Souverain), JAMAIS noir pur. Garder un **trou**
+  (gradient radial / spotlight) autour de l'élément focus pour ne pas tout éteindre — on ASSOMBRIT pour isoler,
+  on ne masque pas la carte. C'est l'équivalent Souverain du `WarMapDimmedOverlay` (qui, lui, est en registre
+  parchemin/cream — NE PAS importer tel quel : recoder le voile en navy).
+- L'ancienne note « semi-transp banni » venait du registre data-viz/Souverain Remotion (où le fond est plein),
+  PAS de la carte. Sur une CARTE V5, le voile navy semi-transp est un outil légitime. Pas de contradiction.
+
+> ⚠️ NOTE SESSION FUTURE (WAR-MAP, à ne PAS oublier) : 3 contradictions de doctrine restent ouvertes CÔTÉ WAR-MAP
+> (hors V5, à traiter dans une session dédiée War-Map) : (1) `WARMAP-PLAYBOOK.md` R4 « carte JAMAIS assombrie »
+> (voile cream) vs `WARMAP-GRAMMAIRE.md` `WarMapDimmedOverlay` (« on l'assombrit, voile ~0.62 ») — surface
+> contradictoire à harmoniser ; (2) techno WarMap : `WARMAP-PLAYBOOK` dit « voie prod = d3-geo pur à basculer »
+> alors que WarMap tourne sur Mapbox reskinné — dette à trancher ; (3) cohérence semi-transp WarMap vs Souverain.
 
 ## ⚠️ CLARIFICATIONS / LIMITES CONNUES (révélées par le test agent vierge 2026-06-21, Nigéria)
 
