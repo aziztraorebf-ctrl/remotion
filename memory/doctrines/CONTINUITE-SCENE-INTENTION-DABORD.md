@@ -138,6 +138,20 @@ Le mauvais pattern n'est PAS « rester longtemps sur une dataviz » — c'est **
 - ⚠️ **Seul garde-fou temporel : ne jamais rester statique.** Un événement visuel ~toutes les 5s (règle
   rétention) — mais appliqué **DANS le monde** (le faire vivre), pas en changeant de plan. Lien : doctrine
   rétention/hook 1ère minute. C'est la règle des 5s souvent MAL appliquée (on changeait de plan au lieu d'enrichir).
+
+  **⭐ COMMENT bien appliquer la règle des 5s (raffinement prouvé 2026-06-21, Sénégal Scène 1 SVG animé) —**
+  vaut surtout quand on ANIME un monde par parties (SVG, Hero-d'état, carte vivante) où on a le CONTRÔLE :
+  1. **ÉTALER les événements, ne JAMAIS les empiler à la fin.** Le piège réel : tous les effets tombaient au
+     dernier mot → les 16 premières secondes mortes. Répartir : un déclencheur ~toutes les 4-5s sur toute la durée.
+  2. **VIE DE FOND CONTINUE en plus des événements ponctuels** : un mouvement permanent de bas niveau (nuages qui
+     dérivent, océan qui respire, halo qui pulse) → "jamais zéro mouvement" même entre deux événements. C'est la
+     couche qui empêche le statique, distincte des temps forts.
+  3. **CALER chaque effet sur un MOT précis** (forced alignment) : l'effet tombe sur le mot qui le justifie
+     (ex: l'océan noircit sur "ces deux récits", le navire part sur "pompent"). L'image épouse la voix.
+  4. **FINIR sur une RESPIRATION** : laisser le monde dans son état final ~0.5-1s AVANT la transition (pièce
+     vide, carte posée) → le message infuse avant le changement. Ne pas enchaîner la transition à la milliseconde.
+  Le SVG/animation maison rend ces 4 points TRIVIAUX (chaque élément = une variable frame-driven). Prouvé :
+  `out/_r-and-d/svg-anime-coin/` + `SenegalCoinFaceA_SVG.tsx`. Détail technique SVG : [[key-learnings]] §SVG GÉNÉRATIF ANIMÉ.
 - `ProtoHera_ChartOnMap` / `HeraFidele_V12_LineChart` = exemplaires (1 monde qui se construit).
   `ProtoHera_ChartsParchemin` (3 charts enchaînés) = à n'utiliser QUE si l'intention justifie 3 mondes distincts.
 

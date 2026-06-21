@@ -148,6 +148,32 @@ peut pas. JAMAIS gober une solution parce qu'elle "fait consensus" — vérifier
 
 ---
 
+### ⭐⭐ COMMENT POSER LA QUESTION : RÉFÉRENCES DE CHAÎNES + CONTRAINTE TECHNIQUE (Aziz 2026-06-21, NON-NEGOTIABLE)
+
+> REMPLACE l'ancienne question généraliste ("qu'est-ce que tu changerais / améliorerais ?") qui donnait du vague
+> et causait des renders d'essai à répétition. Prouvé sur Sénégal Scène 1 (animer une image fixe premium) : ~50%
+> de tâtonnements en moins, on a codé du 1er coup grâce à une convergence 3 modèles claire.
+
+Quand on cherche COMMENT animer/résoudre un plan (pas un diagnostic d'écart sur un rendu fini), la question DOIT contenir :
+1. **CONTEXTE** précis du plan (format, médium, ce que dit la voix off à ce moment).
+2. **CONTRAINTE TECHNIQUE EXPLICITE** — ce que notre stack PEUT et NE PEUT PAS faire ("c'est une image plate dans
+   Remotion, je ne peux pas animer l'intérieur / pas d'After Effects / un SVG plaqué fait sticker, déjà rejeté").
+   Sans ça, les modèles proposent des solutions infaisables chez nous.
+3. **RÉFÉRENCES DE CHAÎNES/STUDIOS CONCRETS à imiter** — "comme le ferait Finary / Polymatter / Wendover / Ordinary
+   Folk". Ancre la réponse dans des solutions ÉPROUVÉES au lieu d'inventer du générique.
+4. **DEMANDE ACTIONNABLE** : liste PRIORISÉE de techniques concrètes + "ce que ça fait ressentir" + valeurs chiffrées
+   (ex: scale 1.0→1.04 sur 16s, ease-out). Pas de prose, pas de score.
+
+**3 modèles, pas 1** (Gemini + DeepSeek + Kimi, même prompt EXACT) : la convergence VALIDE le filon (techniques citées
+par 3/3 = on code sans douter), la divergence signale le risqué (cité par 1/3 = à écarter ou tester). Coût quasi nul.
+Puis appliquer la section ci-dessus (vérifier chaque solution contre nos contraintes + test court si testable).
+
+**Exemple prouvé** : "comment Finary/Polymatter animeraient cette pièce gravée FIXE (image plate, pas d'AE) pendant 16s
+sur la voix 'multinationales qui pompent et repartent' ?" → 3/3 ont répondu : specular sweep + parallaxe fond + slow
+scale + UN seul label (pas 3). Codé du 1er coup, validé Aziz. (Bitmap : sweep+parallaxe ; voie SVG : anim par parties.)
+
+---
+
 ## ⭐ SOCLE D'ANGLES OBLIGATOIRES (garantit "le même résultat partout" — créé 2026-06-07)
 
 Notre succès repose sur 5 ANGLES posés à CHAQUE review. Ils sont maintenant FIGÉS dans un socle

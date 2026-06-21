@@ -1,51 +1,45 @@
-# REPRISE — SCÈNE 1 V3 (état au 2026-06-19, fin de session)
+# REPRISE — SCÈNE 1 V3 (état au 2026-06-21)
 
-> Session très dense. Contexte plein → arrêt propre. Voici l'état EXACT pour reprendre à froid.
-> Branche : `feat/senegal-v3-refonte`. Tous les commits sont faits.
+> ⚠️ BRANCHE RÉELLE = `feat/elagage-systeme` (le travail Sénégal y vit, PAS `feat/senegal-v3-refonte`).
+> Vérifier l'état RÉEL dans le code/les renders, pas cette note seule.
 
-## ✅ CE QUI EST FAIT ET VALIDÉ (méthode)
-On a retrouvé/validé un PIPELINE complet, à réutiliser pour chaque moment de scène :
-1. **Storyboard image multi-planche** (début/milieu/fin) sur 2 modèles : Gemini 3.1 Flash (concept/lisible)
-   + GPT-image-1 via fal.ai (matière/profondeur). Script : `scripts/tools/storyboard-dual-gen.py`.
-2. **Breakdown JSON** sur GPT-5.5 (ÉCRASE Gemini au breakdown : 13 étapes précises, valeurs spring, positions).
-   Script : `scripts/tools/storyboard-breakdown-dual.py`. ⚠️ OpenRouter limite hebdo (était 5$→passée 20$).
-3. **Code** Remotion guidé par le breakdown. **Assets : Gemini 3.1 Flash défaut, GPT secours.**
-Détail gravé : `memory/tools/openrouter-gpt-image-et-breakdown.md` (section test 2026-06-19).
-Décodage Data-Hero (grammaire pivot central) : `memory/atlas-decode/DECODE-mpesa-data-hero-MOTION.md`.
+## ✅ INTRO COIN-FLIP — état : 2 VOIES coexistent, à trancher
 
-## ✅ DÉCISIONS ACTÉES (scène 1)
-- **Périmètre** : moments ABSTRAITS → graphique Data-Hero Remotion (intro 2 récits + 60%). Gisements →
-  CARTE Mapbox (spatial). ⛔ Pas de vidéo 100% graphisme. Règle [[spatial-carte-abstrait-remotion]].
-- **Intro 2 récits** = COIN-FLIP. Storyboard retenu = GEMINI (`V3-REFONTE/storyboards-scene1/intro-recits-gemini.png`,
-  catbox nd08cl). Face A "LA MALÉDICTION" (navire+derrick rouge, mer rouge) → FLIP → Face B "LE MIRACLE"
-  (monument souveraineté) → FISSURE → "DEUX ILLUSIONS CONSTRUITES".
-- **60%** = BARIL-JAUGE (Gemini, catbox 78dcbs) : baril vide → se remplit or 60%/rouge 40% → chiffre dégonflé.
+L'intro scène 1 = duel des récits = COIN-FLIP 3D. Texte voix (alignment, intro démarre à 0s) :
+« Ces deux récits, on les entend partout. D'un côté, des multinationales qui pompent et repartent.
+De l'autre, une nation qui reprend enfin son destin en main. Mais la réalité se joue ailleurs... »
+Beats calés : pièce f0 / malédiction pleine f483 ("pompent") / FLIP f555 ("De l'autre") / fissure f672 ("se joue ailleurs") / verdict "L'ENVERS DU DÉCOR" / sortie f735.
 
-## 🔧 ÉTAT DU CODE INTRO COIN-FLIP (À PEAUFINER, pas fini)
-- Composant : `src/projects/_proto-16-9/SenegalScene1IntroCoin.tsx` (commit 2c10eee).
-- Utilise le VRAI template `src/projects/_shared/components/layouts/CoinFlip.tsx` (étendu rétro-compat :
-  props `custom` React par face + `rotateYExternal` sync voix + `diameter` + `showDotGrid`).
-- Dernier render : https://files.catbox.moe/qx51mw.mp4 (timing CORRIGÉ : pièce dès f0, vraie 3D, DIAM 620).
-- **Verdict Aziz : "meilleure, avec des détails à changer"** (détails PAS encore précisés par Aziz).
-- **Détails repérés par Claude (à confirmer/compléter avec Aziz)** :
-  1. Data greffées Face A pâles/peu lisibles → renforcer contraste+taille.
-  2. Face B SANS data greffées (asymétrie Data-Hero) → ajouter "souveraineté renforcée / développement durable".
-  3. Monument Face B (Landmark navy sur or) un peu sombre → plus présent.
-  4. Bord crénelé de la pièce discret sur les faces pleines.
+### VOIE A — BITMAP (validée fonctionnellement) — `SenegalScene1IntroCoin.tsx`
+- Faces = illustrations GPT-image projetées : Face A navire+derrick rouge, Face B arbre à billets (monument
+  occidental REJETÉ par Aziz → arbre = l'illusion de l'eldorado). Assets : `public/.../beat0/assets/coin/`.
+- Animation premium (3 modèles convergents) : specular sweep + parallaxe fond + slow scale + ombre + UN label
+  ("EXTRACTION OFFSHORE / les revenus repartent"). Titres FACE A/B SUPPRIMÉS. Fond quadrillé blueprint.
+- Vraie FISSURE (pièce fendue en 2 + éclats), pas une ligne. Texte fin "L'ENVERS DU DÉCOR".
+- Dernier render : v13 → catbox `ju4pmq`. **Limite** : le bitmap est figé, on l'anime de l'extérieur seulement.
 
-## ▶ NEXT (à froid)
-1. Demander à Aziz SES détails à changer sur l'intro coin-flip + ajouter ceux de Claude → corriger → re-render →
-   AUTO-VÉRIFIER (comparer au storyboard) AVANT de présenter.
-2. Puis coder le BARIL 60% (baril-jauge, storyboard Gemini prêt + faire son breakdown GPT-5.5).
-3. Puis les GISEMENTS sur carte Mapbox (Sangomar/GTA/Yakaar) — voir STORYBOARD-SCENE-1-PREMIUM.md (déjà fait par DA).
+### VOIE B — SVG GÉNÉRATIF ANIMÉ (nouvelle voie prouvée, préférée Aziz) ⭐
+- `SenegalCoinFaceA_SVG.tsx` + probe `SenegalCoinSVGProbe.tsx`. SVG Gemini (groupes #ship #derrick #pumphead
+  #waves), animé PAR PARTIES : océan respire + derrick pompe + navire CHARGE puis FADE ("repartent").
+- Registre stylisé (= hook parchemin, préféré au réaliste figé). Net à toute taille, couleurs modifiables.
+- ⛔ GOTCHA gravé : ne JAMAIS sortir un élément du cadre clippé (artefact) → avance légère + fade out.
+- Protos : `out/_r-and-d/svg-anime-coin/` (proto-svg-faceA-charge-fade.mp4 → catbox `w9pn0p`). FACE B (arbre)
+  en SVG + intégration dans le CoinFlip 3D complet = PAS encore fait.
+- Doctrine complète : `memory/key-learnings.md` section "🎨 SVG GÉNÉRATIF ANIMÉ".
 
-## ⚠️ CHANTIER SÉPARÉ EN ATTENTE (session dédiée, desktop/mode élevé)
-`memory/CHANTIER-AUTOMATISATION-ANTI-FOUILLIS.md` = élaguer le fouillis scripts/hooks/doctrines + porte
-d'entrée unique + auto-vérif imposée par hook + remise en question branche systématique & structure dossiers.
-Cause racine des erreurs d'exécution de Claude. Prompt de démarrage fourni à Aziz.
+## ▶ NEXT (décisions ouvertes)
+1. **TRANCHER la voie** : bitmap v13 (prêt) OU SVG animé (plus beau potentiel, reste à finir Face B + intégration).
+   Aziz penche SVG (stylisé animable). Tester GPT-5.5 SVG quand provider OpenRouter OpenAI rétabli (down le 21/06).
+2. Si SVG : faire Face B (arbre à billets) en SVG animé + brancher les 2 faces dans le CoinFlip 3D (flip + fissure
+   par paths + sweep/parallaxe). Caler le geste sur la voix.
+3. Puis BARIL 60% (storyboard Gemini prêt) puis GISEMENTS sur carte Mapbox.
+
+## SYSTÈME (acquis de la session 2026-06-21)
+- Hook `pre-presentation-review.sh` : ajout OVERRIDE TRACÉ (`.review-override.md` daté > mp4) — débloque les faux
+  positifs Gemini SANS contournement silencieux (justif écrite obligatoire). Gemini hallucine sur scènes à phases.
+- Méthode "références chaînes" gravée dans `DA-BRIEF-GATE.md` (remplace la question généraliste).
 
 ## POINTEURS
-- Diagnostic global 8 scènes : `V3-REFONTE/DIAGNOSTIC-GLOBAL-8-SCENES.md`
-- Storyboard premium détaillé : `V3-REFONTE/STORYBOARD-SCENE-1-PREMIUM.md`
-- Breakdowns : `V3-REFONTE/breakdowns/` (intro-COIN-gpt5.md = le plus détaillé)
+- Diagnostic 8 scènes : `DIAGNOSTIC-GLOBAL-8-SCENES.md` · Storyboard : `STORYBOARD-SCENE-1-PREMIUM.md`
 - Audio V3 + alignment : `public/souverain/senegal-petrole-gaz/audio/` (narration-v3-VALIDEE.mp3, scene1-alignment.json)
+- Storyboard réf à jour : `storyboards-scene1/intro-recits-REF-v3-gemini.png`

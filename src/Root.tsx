@@ -197,6 +197,7 @@ import { SenegalScene0 } from "./projects/_proto-16-9/SenegalScene0";
 import { SenegalScene1 } from "./projects/_proto-16-9/SenegalScene1";
 import { SenegalScene1Intro } from "./projects/_proto-16-9/SenegalScene1Intro";
 import { SenegalScene1IntroCoin } from "./projects/_proto-16-9/SenegalScene1IntroCoin";
+import { SenegalCoinSVGProbe } from "./projects/_proto-16-9/SenegalCoinSVGProbe";
 import { IntroProtoC } from "./projects/_proto-16-9/IntroProtoC";
 import { IntroProtoB } from "./projects/_proto-16-9/IntroProtoB";
 import { IntroProtoA } from "./projects/_proto-16-9/IntroProtoA";
@@ -242,6 +243,7 @@ import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { SceneGisementsV5 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5";
 import { SceneGisementsV5Effets } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5Effets";
+import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -1323,6 +1325,14 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="SceneGisementsV3"
+            component={SceneGisementsV3}
+            durationInFrames={1560}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="TokenShowcaseV5"
             component={TokenShowcaseV5}
             durationInFrames={600}
@@ -2144,7 +2154,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
-        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={750} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={810} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
         <Composition id="IntroProtoC" component={IntroProtoC} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="IntroProtoB" component={IntroProtoB} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="IntroProtoA" component={IntroProtoA} durationInFrames={270} fps={30} width={1920} height={1080} />

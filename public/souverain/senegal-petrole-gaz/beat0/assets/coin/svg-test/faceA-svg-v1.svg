@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+    <defs>
+        <!-- Gradients for Numismatic Bas-Relief Look -->
+        <linearGradient id="goldBase" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fcedcd"/>
+            <stop offset="40%" stop-color="#e7bd78"/>
+            <stop offset="100%" stop-color="#b88d40"/>
+        </linearGradient>
+        
+        <linearGradient id="hullGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#fcedcd"/>
+            <stop offset="30%" stop-color="#e7bd78"/>
+            <stop offset="80%" stop-color="#c49547"/>
+            <stop offset="100%" stop-color="#9a6e26"/>
+        </linearGradient>
+
+        <linearGradient id="waveGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="#fae1b6"/>
+            <stop offset="50%" stop-color="#e7bd78"/>
+            <stop offset="100%" stop-color="#b88d40"/>
+        </linearGradient>
+
+        <radialGradient id="shadowGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="70%" stop-color="#e7bd78" stop-opacity="0"/>
+            <stop offset="100%" stop-color="#8a2a20" stop-opacity="0.35"/>
+        </radialGradient>
+
+        <!-- Inner clipping mask for the coin scene -->
+        <clipPath id="scene_mask">
+            <circle cx="512" cy="512" r="434"/>
+        </clipPath>
+    </defs>
+
+    <!-- Outer Coin Base -->
+    <g id="coin_base">
+        <rect width="1024" height="1024" fill="#e7bd78" />
+        <circle cx="512" cy="512" r="498" fill="url(#goldBase)" stroke="#8a2a20" stroke-width="4"/>
+    </g>
+
+    <!-- Engraved Sky Backdrop (Sunburst & Etched Clouds) -->
+    <g id="sky" clip-path="url(#scene_mask)">
+        <!-- Sunburst Radial Lines -->
+        <g stroke="#8a2a20" stroke-width="1.5" opacity="0.4">
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(7.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(15.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(22.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(30.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(37.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(45.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(52.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(60.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(67.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(75.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(82.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(90.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(97.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(105.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(112.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(120.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(127.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(135.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(142.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(150.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(157.5 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(165.0 512 512)"/>
+            <line x1="512" y1="77" x2="512" y2="947" transform="rotate(172.5 512 512)"/>
+        </g>
+
+        <!-- Etched Horizon Clouds -->
+        <g stroke="#8a2a20" fill="none" opacity="0.6">
+            <path d="M 50 150 Q 280 190 512 150 T 974 150" stroke-width="2"/>
+            <path d="M 70 162 Q 280 202 512 162 T 954 162" stroke-width="1.5"/>
+            <path d="M 90 172 Q 280 212 512 172 T 934 172" stroke-width="1"/>
+            
+            <path d="M 120 260 Q 350 240 550 270 T 920 260" stroke-width="2"/>
+            <path d="M 140 272 Q 350 252 550 282 T 900 272" stroke-width="1.5"/>
+            <path d="M 160 282 Q 350 262 550 292 T 880 282" stroke-width="1"/>
+        </g>
+    </g>
+
+    <!-- Detailed Ship -->
+    <g id="ship" clip-path="url(#scene_mask)">
+        <!-- Superstructure (Aft) -->
+        <path d="M 160 440 L 160 360 L 280 360 L 280 440 Z" fill="url(#hullGrad)" stroke="#8a2a20" stroke-width="2.5"/>
+        <path d="M 170 360 L 170 310 L 260 310 L 270 360 Z" fill="url(#hullGrad)" stroke="#8a2a20" stroke-width="2.5"/>
+        <path d="M 190 310 L 190 280 L 240 280 L 240 310 Z" fill="url(#hullGrad)" stroke="#8a2a20" stroke-width="2.5"/>
+        
+        <!-- Engraved Bridge Windows -->
+        <rect x="195" y="285" width="6" height="15" fill="#8a2a20"/>
+        <rect x="207" y="285" width="6" height="15" fill="#8a2a20"/>
+        <rect x="219" y="285" width="6" height="15" fill="#8a2a20"/>
+        <rect x="231" y="285" width="6" height="15" fill="#8a2a20"/>
+        
+        <rect x="175" y="320" width="8" height="14" fill="#8a2a20"/>
+        <rect x="190" y="320" width="8" height="14" fill="#8a2a20"/>
+        <rect x="205" y="320" width="8" height="14" fill="#8a2a20"/>
+        <rect x="220" y="320" width="8" height="14" fill="#8a2a20"/>
+        <rect x="235" y="320" width="8" height="14" fill="#8a2a20"/>
+        <rect x="250" y="320" width="8" height="14" fill="#8a2a20"/>
+
+        <circle cx="180" cy="385" r="4" fill="#8a2a20"/>
+        <circle cx="200" cy="385" r="4" fill="#8a2a20"/>
+        <circle cx="220" cy="385" r="4" fill="#8a2a20"/>
+        <circle cx="240" cy="385" r="4" fill="#8a2a20"/>
+        <circle cx="260" cy="385" r="4" fill="#8a2a20"/>
+
+        <!-- Funnel and Radar -->
+        <path d="M 165 310 L 150 230 L 185 230 L 185 310 Z" fill="url(#hullGrad)" stroke="#8a2a20" stroke-width="2"/>
+        <path d="M 150 230 L 185 230 L 185 255 L 154 255 Z" fill="#8a2a20"/>
+        <line x1="215" y1="280" x2="215" y2="190" stroke="#8a2a20" stroke-width="2.5"/>
+        <line x1="200" y1="220" x2="230" y2="205" stroke="#8a2a20" stroke-width="2"/>
+        
+        <!-- Main Hull Outline -->
+        <path d="M 150 580 L 150 440 L 320 440 L 320 420 L 820 420 Q 880 420 920 480 L 920 580 Z" fill="url(#hullGrad)" stroke="#8a2a20" stroke-width="3"/>
+        
+        <!-- Hull Engraving Lines (Metal Plates & Shading) -->
+        <line x1="150" y1="460" x2="845" y2="460" stroke="#8a2a20" stroke-width="1" />
+        <line x1="150" y1="480" x2="870" y2="480" stroke="#8a2a20" stroke-width="1.5" />
+        <line x1="150" y1="500" x2="895" y2="500" stroke="#8a2a20" stroke-width="2" />
+        <line x1="150" y1="520" x2="905" y2="520" stroke="#8a2a20" stroke-width="2.5" />
+        <line x1="150" y1="540" x2="915" y2="540" stroke="#8a2a20" stroke-width="3" />
+        <line x1="150" y1="560" x2="918" y2="560" stroke="#8a2a20" stroke-width="2" />
+        
+        <!-- Bow Vertical Hatching -->
+        <path d="M 880 440 L 880 580 M 890 460 L 890 580 M 900 480 L 900 580 M 910 510 L 910 580 M 915 540 L 915 580" stroke="#8a2a20" stroke-width="1.5" opacity="0.6"/>
+
+        <!-- Deck Pipelines -->
+        <line x1="320" y1="408" x2="820" y2="408" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="320" y1="414" x2="820" y2="414" stroke="#8a2a20" stroke-width="1"/>
+        <path d="M 360 420 L 360 405 M 400 420 L 400 405 M 440 420 L 440 405 M 480 420 L 480 405 M 520 420 L 520 405 M 700 420 L 700 405 M 740 420 L 740 405 M 780 420 L 780 405" stroke="#8a2a20" stroke-width="2"/>
+
+        <!-- Loading Arms / Cranes -->
+        <path d="M 450 420 L 450 340 L 510 290" fill="none" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M 460 420 L 460 350 L 500 315" fill="none" stroke="#8a2a20" stroke-width="1.5"/>
+        <circle cx="450" cy="340" r="5" fill="#8a2a20"/>
+
+        <!-- Portholes along aft hull -->
+        <circle cx="170" cy="460" r="6" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+        <circle cx="205" cy="460" r="6" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+        <circle cx="240" cy="460" r="6" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+        <circle cx="275" cy="460" r="6" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+        <circle cx="310" cy="460" r="6" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+
+        <!-- Anchor Hawsepipe -->
+        <path d="M 880 440 A 12 12 0 1 1 880 464 A 12 12 0 1 1 880 440" fill="#8a2a20" opacity="0.8"/>
+        
+        <!-- Plimsoll Line / Waterline Marks -->
+        <circle cx="512" cy="500" r="9" fill="none" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="495" y1="500" x2="529" y2="500" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="538" y1="475" x2="538" y2="525" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="538" y1="485" x2="555" y2="485" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="538" y1="500" x2="555" y2="500" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="538" y1="515" x2="555" y2="515" stroke="#8a2a20" stroke-width="2"/>
+        
+        <!-- Fore-mast Tower -->
+        <polygon points="790,420 798,220 802,220 810,420" fill="url(#goldBase)" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="792" y1="370" x2="808" y2="370" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="794" y1="320" x2="806" y2="320" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="796" y1="270" x2="804" y2="270" stroke="#8a2a20" stroke-width="1.5"/>
+        <polyline points="790,420 808,370 794,320 804,270 798,220" fill="none" stroke="#8a2a20" stroke-width="1"/>
+        <polyline points="810,420 792,370 806,320 796,270 802,220" fill="none" stroke="#8a2a20" stroke-width="1"/>
+    </g>
+
+    <!-- Main Oil Derrick on Deck -->
+    <g id="derrick" clip-path="url(#scene_mask)">
+        <!-- Derrick Main Outline -->
+        <polygon points="550,420 585,150 615,150 650,420" fill="url(#goldBase)" stroke="#8a2a20" stroke-width="3"/>
+        
+        <!-- Lattice X-Bracing Framework -->
+        <line x1="559" y1="350" x2="641" y2="350" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="568" y1="280" x2="632" y2="280" stroke="#8a2a20" stroke-width="2"/>
+        <line x1="577" y1="210" x2="623" y2="210" stroke="#8a2a20" stroke-width="2"/>
+        
+        <line x1="550" y1="420" x2="641" y2="350" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="650" y1="420" x2="559" y2="350" stroke="#8a2a20" stroke-width="1.5"/>
+        
+        <line x1="559" y1="350" x2="632" y2="280" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="641" y1="350" x2="568" y2="280" stroke="#8a2a20" stroke-width="1.5"/>
+        
+        <line x1="568" y1="280" x2="623" y2="210" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="632" y1="280" x2="577" y2="210" stroke="#8a2a20" stroke-width="1.5"/>
+        
+        <line x1="577" y1="210" x2="615" y2="150" stroke="#8a2a20" stroke-width="1.5"/>
+        <line x1="623" y1="210" x2="585" y2="150" stroke="#8a2a20" stroke-width="1.5"/>
+
+        <!-- Crown Block and Top Accessories -->
+        <rect x="580" y="135" width="40" height="15" fill="#e7bd78" stroke="#8a2a20" stroke-width="2"/>
+        <rect x="585" y="125" width="30" height="10" fill="#8a2a20"/>
+        <line x1="600" y1="125" x2="600" y2="90" stroke="#8a2a20" stroke-width="2.5"/>
+        <circle cx="600" cy="85" r="5" fill="#8a2a20"/>
+        
+        <!-- Engraved Vertical Hatching for 3D Tower effect -->
+        <line x1="605" y1="420" x2="592" y2="150" stroke="#8a2a20" stroke-width="1" opacity="0.7"/>
+        <line x1="615" y1="420" x2="598" y2="150" stroke="#8a2a20" stroke-width="1" opacity="0.7"/>
+        <line x1="625" y1="420" x2="604" y2="150" stroke="#8a2a20" stroke-width="1" opacity="0.7"/>
+        <line x1="635" y1="420" x2="610" y2="150" stroke="#8a2a20" stroke-width="1" opacity="0.7"/>
+    </g>
+
+    <!-- Detailed Stylized Engraving Waves -->
+    <g id="waves" clip-path="url(#scene_mask)">
+        <!-- Row 1 -->
+        <path d="M -100 560 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 L 1200 1200 L -100 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -100 565 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0" fill="none" stroke="#8a2a20" stroke-width="1.5" opacity="0.8"/>
+        <path d="M -100 570 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0 q 35 -20 70 0" fill="none" stroke="#8a2a20" stroke-width="0.5" opacity="0.8"/>
+
+        <!-- Row 2 -->
+        <path d="M -120 600 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 L 1300 1200 L -120 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -120 606 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0" fill="none" stroke="#8a2a20" stroke-width="1.5"/>
+        <path d="M -120 612 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0 q 42 -25 84 0" fill="none" stroke="#8a2a20" stroke-width="0.5"/>
+
+        <!-- Row 3 -->
+        <path d="M -100 650 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 L 1300 1200 L -100 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -100 657 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0" fill="none" stroke="#8a2a20" stroke-width="2"/>
+        <path d="M -100 664 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0 q 50 -30 100 0" fill="none" stroke="#8a2a20" stroke-width="1"/>
+
+        <!-- Row 4 -->
+        <path d="M -130 710 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 L 1310 1200 L -130 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -130 718 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0" fill="none" stroke="#8a2a20" stroke-width="2"/>
+        <path d="M -130 726 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0" fill="none" stroke="#8a2a20" stroke-width="1.5"/>
+        <path d="M -130 734 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0 q 60 -35 120 0" fill="none" stroke="#8a2a20" stroke-width="0.5"/>
+
+        <!-- Row 5 -->
+        <path d="M -100 780 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 L 1300 1200 L -100 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -100 790 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0" fill="none" stroke="#8a2a20" stroke-width="2"/>
+        <path d="M -100 800 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0" fill="none" stroke="#8a2a20" stroke-width="1.5"/>
+        <path d="M -100 810 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0 q 70 -40 140 0" fill="none" stroke="#8a2a20" stroke-width="0.5"/>
+
+        <!-- Row 6 -->
+        <path d="M -140 860 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 L 1390 1200 L -140 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -140 872 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0" fill="none" stroke="#8a2a20" stroke-width="2.5"/>
+        <path d="M -140 884 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0" fill="none" stroke="#8a2a20" stroke-width="1.5"/>
+        <path d="M -140 896 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0 q 85 -50 170 0" fill="none" stroke="#8a2a20" stroke-width="1"/>
+
+        <!-- Row 7 (Foreground) -->
+        <path d="M -100 950 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 L 1370 1200 L -100 1200 Z" fill="url(#waveGrad)" stroke="#8a2a20" stroke-width="4"/>
+        <path d="M -100 965 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0" fill="none" stroke="#8a2a20" stroke-width="3"/>
+        <path d="M -100 980 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0" fill="none" stroke="#8a2a20" stroke-width="2"/>
+        <path d="M -100 995 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0 q 105 -60 210 0" fill="none" stroke="#8a2a20" stroke-width="1"/>
+    </g>
+
+    <!-- Overlay Shadow for Coin Depth -->
+    <circle cx="512" cy="512" r="435" fill="url(#shadowGrad)" pointer-events="none"/>
+
+    <!-- Intricate Numismatic Coin Rim -->
+    <g id="rim">
+        <!-- Outer thick bounded rim -->
+        <circle cx="512" cy="512" r="485" fill="none" stroke="url(#goldBase)" stroke-width="20"/>
+        
+        <!-- Outer Denticles (Crenellated Gear Border) -->
+        <circle cx="512" cy="512" r="475" fill="none" stroke="#8a2a20" stroke-width="25" stroke-dasharray="4 8"/>
+        
+        <!-- Inner Bounding Ring -->
+        <circle cx="512" cy="512" r="460" fill="none" stroke="#8a2a20" stroke-width="6"/>
+        <circle cx="512" cy="512" r="457" fill="none" stroke="#e7bd78" stroke-width="2"/>
+        
+        <!-- Beaded / Dotted Border (Exactly 186 dots) -->
+        <circle cx="512" cy="512" r="446" fill="none" stroke="#8a2a20" stroke-width="8" stroke-dasharray="0 15.066" stroke-linecap="round"/>
+        
+        <!-- Inner Sharp Framing Edge -->
+        <circle cx="512" cy="512" r="435" fill="none" stroke="#8a2a20" stroke-width="3"/>
+        <circle cx="512" cy="512" r="433" fill="none" stroke="#e7bd78" stroke-width="1"/>
+    </g>
+</svg>

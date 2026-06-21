@@ -9,6 +9,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 - **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills)
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
+- **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out
 - **🎬 SCÈNE & CONTINUITÉ** — doctrine intention→forme→template (anti-cercle-vicieux templates), forced alignment ElevenLabs > Whisper pour le CALAGE d'animation (Whisper dérive ~0.4s)
 - **🔊 AUDIO & SOUS-TITRES** — trimAfter ABSOLU (depuis début media), sous-titres ffmpeg sans libass → overlay ProRes alpha, beats GLOBALE vs STANDALONE (noir+queue morte+musique coupée), musique 1 morceau → plusieurs durées
 - **🗺️ MAPBOX & RENDU GÉO** — stroke=fill → frontières invisibles, pays outre-mer → clipPath
@@ -306,6 +307,50 @@ Réponses test : `memory/episodes/warmap-sahel/reviews-acte2/deepseek-b1-{downst
 **S'applique à :** tout nouveau composant Remotion, tout nouveau template, tout beat avec layout custom.
 
 ---
+
+## 🎨 SVG GÉNÉRATIF ANIMÉ
+
+### 2026-06-21 — ⭐⭐ NOUVELLE VOIE : SVG génératif (Gemini) animé PAR PARTIES dans Remotion
+
+Découverte majeure (session Sénégal Scène 1, validée par Aziz). Comble un manque : faire vivre une
+illustration RICHE sans Lottie, sans After Effects, sans dépendre d'un bitmap figé.
+
+**Le pipeline (prouvé)** :
+1. **Gemini 3.1 Pro génère un SVG de SCÈNE** (pas une icône) — prompt = sujet + STYLE/palette EXACTE +
+   exigence de STRUCTURE : `<g id="...">` sémantiques (ex: #ship, #derrick avec #pumphead, #waves, #rim),
+   chaque élément animable AUTONOME. Résultat typique : 50-100 paths, ~12-20 Ko. PROPRE et léger.
+2. **Convertir en composant React** : inliner le SVG, kebab→camelCase (stroke-width→strokeWidth,
+   clip-path→clipPath, transform-origin→transformOrigin), virer les `style="..."` inline.
+3. **Animer chaque groupe** par `transform`/`opacity` pilotés par `useCurrentFrame` + `interpolate`.
+   Ex : #waves translateY sinusoïdal (océan respire), #pumphead translateY (derrick pompe), #ship translate+opacity.
+
+**Pourquoi ça bat bitmap ET Lottie** :
+- vs BITMAP (PNG GPT/Gemini) : le bitmap est NÉ figé → animable seulement de l'extérieur (sweep/parallaxe),
+  tout ajout SVG par-dessus fait "sticker". Le SVG est NÉ animable (intérieur vivant : vagues, navire…).
+- vs LOTTIE : Lottie est figé une fois exporté ; ici chaque path répond à la frame → synchro voix exacte.
+- VECTORIEL : net à TOUTE taille (push-in/zoom sans pixellisation) + couleur de chaque élément modifiable
+  à la frame (ex: mer qui vire au rouge sang, oxydation progressive).
+
+**⛔ GOTCHA (Aziz, prouvé) — NE JAMAIS sortir un élément du CADRE clippé.** Un `<g clipPath>` TRANCHE
+tout élément qui dépasse le cercle → artefact "navire coupé / qui bave sur le fond". Pour signifier qu'un
+élément "part/disparaît" : **avance LÉGÈRE (translate faible) + FADE OUT (opacity→0)**, jamais une sortie
+hors champ. Règle valable pour toute scène SVG/clippée.
+
+**Comparatif outils (testé)** : Gemini SVG = propre+léger+structuré (GAGNANT pour l'anim). GPT-5.5 = à tester
+(provider OpenRouter OpenAI down le 21/06, seul gpt-4o répondait — inutile pour SVG premium). Recraft
+vectorize/generate = magnifiques MAIS 1-3 Mo, 4700-5700 paths, non-groupés → INANIMABLE par partie, lourds.
+Donc : Recraft = bon pour un asset fixe vectorisé, PAS pour de l'animation par parties.
+
+**Piège prompt** : "crée une PIÈCE D'OR" force le fond doré/parchemin dans l'intention même (Gemini dérive
+sépia même si on verrouille la palette). L'intention du prompt conditionne le rendu — formuler le sujet
+voulu, pas l'objet-support.
+
+**Transposable** (Aziz) : inserts Mapbox (scène gravée qui surgit sur la carte), Hero-d'état (objet central
+riche vivant au lieu d'une icône Lucide), Atlas. Méthode = [[CONTINUITE-SCENE-INTENTION-DABORD]] : générer
+le SVG AVEC les éléments animables prévus pour le geste (calé sur la voix), pas générer puis chercher quoi animer.
+
+**Preuves** : `out/_r-and-d/svg-anime-coin/` (protos mp4 + SVG). Code : `src/projects/_proto-16-9/SenegalCoinFaceA_SVG.tsx`
+(+ probe `SenegalCoinSVGProbe.tsx`). Geste prouvé : navire charge ("pompent") puis fade ("repartent"), océan respire, derrick pompe.
 
 ## 🎬 SCÈNE & CONTINUITÉ
 
