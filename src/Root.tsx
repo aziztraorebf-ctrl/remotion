@@ -205,8 +205,6 @@ import { MatterOnMap } from "./projects/_proto-16-9/MatterOnMap";
 import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
 import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
 import { TealAssemblyEtat3, TEAL_ASSEMBLY_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/TealAssemblyEtat3";
-import { ProtoCarto_ZoomOutProjection } from "./projects/_proto-16-9/ProtoCarto_ZoomOutProjection";
-import { ProtoCarto_Cartogramme } from "./projects/_proto-16-9/ProtoCarto_Cartogramme";
 import { ProtoCarto_ContinentDraw } from "./projects/_proto-16-9/ProtoCarto_ContinentDraw";
 import { ProtoCarto_OffshoreCut } from "./projects/_proto-16-9/ProtoCarto_OffshoreCut";
 import { ProtoCarto_TerritoireDecoupe } from "./projects/_proto-16-9/ProtoCarto_TerritoireDecoupe";
@@ -240,6 +238,7 @@ import { SenegalActe2Continu } from "./projects/souverain/senegal-petrole-gaz/Se
 import { SenegalActe2Full, SENEGAL_ACTE2_FULL_FRAMES } from "./projects/souverain/senegal-petrole-gaz/SenegalActe2Full";
 import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars";
 import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxCameraLab";
+import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
 import { MapboxOverlayLab, MAPBOX_OVERLAY_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLab";
 import { MapboxOverlayLabV2, MAPBOX_OVERLAY_LAB_V2_FRAMES } from "./projects/_shared/mapbox/MapboxOverlayLabV2";
 import { MapboxLottieShowcase, MAPBOX_LOTTIE_SHOWCASE_FRAMES } from "./projects/_shared/mapbox/MapboxLottieShowcase";
@@ -1286,6 +1285,14 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="CartoSouverainV5-CIBLE"
+            component={CartoSouverainV5Demo}
+            durationInFrames={150}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="Mapbox-Overlay-Lab"
             component={MapboxOverlayLab}
             durationInFrames={MAPBOX_OVERLAY_LAB_FRAMES}
@@ -2094,8 +2101,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
         <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="TealAssemblyEtat3" component={TealAssemblyEtat3} durationInFrames={TEAL_ASSEMBLY_FRAMES} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-ZoomOutProjection" component={ProtoCarto_ZoomOutProjection} durationInFrames={270} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-Cartogramme" component={ProtoCarto_Cartogramme} durationInFrames={210} fps={30} width={1920} height={1080} />
         <Composition id="ProtoCarto-ContinentDraw" component={ProtoCarto_ContinentDraw} durationInFrames={390} fps={30} width={1920} height={1080} />
         <Composition id="ProtoCarto-OffshoreCut" component={ProtoCarto_OffshoreCut} durationInFrames={330} fps={30} width={1920} height={1080} />
         <Composition id="ProtoCarto-TerritoireDecoupe" component={ProtoCarto_TerritoireDecoupe} durationInFrames={330} fps={30} width={1920} height={1080} />
