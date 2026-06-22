@@ -25,6 +25,8 @@ en groupes nommés, qu'on anime ensuite par la frame (Remotion). Doctrine compl�
 | `OrganiqueCompare` (Profil/Duo/Animal) | encre | organique | ⛔ a prouvé que le SVG N'EST PAS pour l'organique |
 | `DefenseCompare` / `DefenseGptAnimee` | tactique | défense mutuelle AES | ⭐ encart conceptuel, issu du vrai script Sahel |
 | `CfaCompare` / `CfaFrancAnimee` / `…SFX` | tactique | mécanisme Franc CFA | produit par l'AGENT VIERGE (test reproductibilité) |
+| `MineCompare` / `MineGeminiAnimee` | braise-or | mine d'or Darfour (16:9) | 1er test 16:9 + chaud + 28s (chargée — leçon : trop d'éléments) |
+| ⭐ `HeroGptAnimee` | or-jour | « suivre l'or » Soudan HÉROS (16:9) | scène-référence ÉPURE : tomber-sec + bascule couleur + remap palette + fumée réécrite à la main |
 
 Les `*Bodies.ts` contiennent les SVG bruts générés par les LLM (auto-générés, jetables/régénérables).
 
