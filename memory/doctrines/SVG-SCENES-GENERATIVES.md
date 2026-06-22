@@ -86,7 +86,16 @@ La technique (LLM → groupes → anim par frame) est INDÉPENDANTE du registre 
 | **`braise-or`** (gravure chaude sombre) | terre sombre chaude #1c1108/#2a1a0d, ocres #7a4a22/#9c5f2c/#b8763a, OR lumineux #e8b44a/#f2cf72/#ffe39a, braise/guerre #d6552e/#c23a1e ; AUCUN bleu/gris | scène CHAUDE matérée (mine d'or, ressource, terre africaine, désert ardent). Coucher de soleil/fournaise | (compos dédiées) |
 | **`or-jour`** (illustration chaude LUMINEUSE) | ciel ambre clair #f2cf72/#ffd98a/#ffe8b8, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a/#b8763a/#e0b878, or #f2cf72/#ffe39a, guerre rouge #d6552e discrète ; AUCUN bleu/gris/noir plat | scène chaude LUMINEUSE et premium (matin doré sur désert). Sort du « technique froid » et du « sombre dépressif » sans tomber dans le parchemin | (compo `HeroGptAnimee`) |
 
-À TESTER (registres non encore sondés) : néon/data-terminal (data-viz moderne), papier découpé (pédagogique). (encre ✅ · braise-or ✅ · or-jour ✅ prouvés.)
+| **`papier-decoupe`** (paper-cut pédagogique) | couches pleines EMPILÉES + ombre portée douce sous chaque couche ; palette CLAIRE chaude : ciel pastel #bfe3ef/#a8d8e8, crème #fdf3df/#f7ecd2, terre ocre #caa46a/#b3823f/#8a5a2c, verts étagés #3e7c34/#569b43/#7cba5a/#a8d678, bois #8a5a2c/#a06b35, or doux #f2cf72/#ffd98a, corail #e0795b ; AUCUNE hachure, AUCUN noir plat, profondeur par empilement de couches | ⭐ scène PÉDAGOGIQUE / explainer (croissance, cycle, processus illustré façon Kurzgesagt-papier) — joyeux, clair, premium | `GraineGeminiAnimee` |
+
+À TESTER (registres non encore sondés) : néon/data-terminal (data-viz moderne). (encre ✅ · braise-or ✅ · or-jour ✅ · papier-decoupe ✅ prouvés.)
+
+> ⭐ NOUVEAU REGISTRE `papier-decoupe` PROUVÉ (2026-06-22, scène « graine→arbre » 16:9, Gemini) : https://files.catbox.moe/wv4xlm.mp4
+> Gemini GAGNE nettement ce registre (couches organiques empilées + ombres douces = sa force atmosphérique). GPT non
+> testé (OpenRouter 402 crédits épuisés ce jour-là → générer-les-2 forcément contourné ; Gemini était de toute façon le
+> choix doctrinal pour une scène organique/profondeur). Gotcha registre : Gemini met les ombres en `<style>`/`class="shadow"`
+> dans `<defs>` → les INLINER (class→fill+opacity) avant injection innerHTML. Grammaire = SE CONSTRUIT bas→haut (graine→
+> racines tracées→tronc scaleY ancré sol→branches scale depuis sommet→feuillage 5 couches épanouies en VAGUES→fruits pop).
 
 ---
 
@@ -269,7 +278,34 @@ inner = m.group(1) if m else svg
 ```
 Pour ANIMER un groupe injecté : wrapper JSX `<g transform={...} opacity={...} dangerouslySetInnerHTML={{__html: body}} />`
 — le wrapper (créé en JSX) EST animable même si son contenu est injecté. C'est LA technique pour contourner « innerHTML
-n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`.)
+n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`, `GraineGeminiAnimee.tsx`.)
+
+7. **Gemini met parfois les styles en `<style>`/`class="..."` dans `<defs>`** (ex ombres portées paper-cut `class="shadow"`).
+   En injection innerHTML ces classes perdent leur scope → l'élément devient invisible. Les INLINER avant injection :
+   remplacer `class="shadow"` par les attributs réels (`fill="..." opacity="..."`). (Découvert par l'agent vierge, 2026-06-22.)
+8. **Fallback PROVIDER indisponible** : si un provider échoue (ex OpenRouter `402 Payment Required` = crédits GPT épuisés),
+   NE PAS bloquer — continuer avec l'autre, en choisissant selon la nature (organique/atmosphérique → Gemini ; schéma/
+   objets nets → GPT). Signaler à Aziz « GPT indispo, je continue avec Gemini » + lui dire de recharger s'il veut comparer.
+9. **Sous-découper un `<g>` unique en sous-couches animables** : quand le LLM met plusieurs couches dans UN seul `<g id>`
+   (ex feuillage = 5 paires ombre+couleur dans `<g id="feuillage">`), les séparer côté JSX par regex pour les animer en
+   vagues : `const parts = G_FEUILLAGE.match(/<g[\s\S]*?<\/g>/g); // puis regrouper par paires`. (Backlog : helper
+   `growFrom(anchor, scale)` pour les ancres de croissance, analogue au `flowAlongAxis` déjà noté.)
+
+## ⭐⭐⭐ FINITION ORCHESTRÉE — l'agent fait le gros œuvre, Claude+Aziz ajoutent la VIE (prouvé 2026-06-22)
+> Vision d'Aziz pour scaler : un AGENT produit la scène A→Z (gros œuvre), PUIS on regarde le rendu réel et on ajoute une
+> COUCHE DE FINITION ciblée — sans tout refaire. C'est du travail d'orchestration, pas de pixel. Prouvé : l'arbre de l'agent
+> vierge (figé une fois poussé) → on a ajouté en code, sur SON fichier, ce qui le rend VIVANT.
+**Les gestes de finition « organique » réutilisables (tous prouvés sur l'arbre)** :
+- **Balancement au vent** : oscillation `sin` DÉPHASÉE par étage (tronc bouge peu, branches moyen, feuillage/extrémités le
+  plus), `rotate(sway)` autour du point d'attache. Démarre une fois l'élément en place. → transforme un élément figé en vivant.
+- **Soleil/source actif** : rayons qui tournent (`rotate(f*0.25)`) + halo glow (`<circle>` flou opacité respirante) + pulse.
+- **Élément qui se détache et TOMBE** : chute + rebond (`spring` sur Y) + squash à l'impact + SFX thud. (Cycle qui se referme.)
+- **Particules qui flottent** (feuilles/pétales/étincelles) : chute lente + zigzag `sin` + rotation, fade avant le bord.
+- **Fruits/bourgeons qui POP** : `spring` élastique décalé (cascade).
+⭐ **SFX NATURE GÉNÉRÉS** (pas la banque War-Map, trop sombre pour une scène douce) : générer des SFX adaptés via ElevenLabs
+(`scripts/generate-sfx-elevenlabs.py` modèle ; sortie `public/_shared/sfx/nature/`). Faits : `birds-ambient` (loop, ambiance),
+`wind-leaves` (loop, bruissement), `growth-pop` (la pousse), `fruit-drop` (le fruit qui tombe). ⚠️ Sources ElevenLabs nature
+= DOUCES (mean ~-24 dB) → remonter le volume (oiseaux ~0.85, vent ~0.5) pour un mix audible ; revérifier `volumedetect`.
 
 ---
 
@@ -285,8 +321,13 @@ n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `Creu
 | Mine d'or Darfour (16:9, chargée) | braise-or | Gemini | RESPIRE 28s, 2 couches | https://files.catbox.moe/lkf0ia.mp4 |
 | ⭐⭐⭐ « Suivre l'or » Soudan HÉROS (16:9) | or-jour | GPT-5.5 | tomber-sec + bascule couleur + fade + fumée→ciel noir | https://files.catbox.moe/1ws3kh.mp4 |
 | Creuset « l'or devient la guerre » (16:9) | braise-or éclairci | GPT-5.5 | TRANSFORMATION (creuset bascule → balles émergent) | https://files.catbox.moe/yonpoq.mp4 |
+| ⭐ Graine → arbre (16:9) | papier-decoupe | Gemini | SE CONSTRUIT + FINITION orchestrée (vent · soleil actif · fruit tombe · feuilles flottent · SFX nature) | https://files.catbox.moe/ft5l5g.mp4 |
+| ⭐ « D'une graine naît un arbre » PÉDAGOGIQUE (16:9) | papier-decoupe | Gemini | SE CONSTRUIT bas→haut (graine→tronc scaleY→feuillage en vagues) + 2 couches | https://files.catbox.moe/wv4xlm.mp4 |
 
-Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee}.tsx`.
+Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee, GraineGeminiAnimee}.tsx`.
+
+📼 **RENDUS DE RÉFÉRENCE (fichiers .mp4 gardés) → `out/_r-and-d/svg-scenes-refs/`** (voir son README). ⚠️ Réfs R&D
+« ce qu'on sait faire », PAS des livrables — réadapter au script/audio réels avant tout usage épisode.
 
 ⭐ **« Suivre l'or » = la scène-référence de la doctrine ÉPURE + 16:9 + remap couleur + Claude-éditeur-SVG** (session
 2026-06-22, sur le vrai script Soudan mid-form Acte 1 « il ne faut pas suivre les armes, il faut suivre l'or »). C'est

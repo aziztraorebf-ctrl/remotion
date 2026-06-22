@@ -90,6 +90,33 @@ lumineux, chaud, optimiste en surface (le contraste avec le sujet grave fait la 
 CADRE : viewBox="0 0 1920 1080" (PAYSAGE 16:9). Compose en LARGEUR, etale horizontalement. Leger vignettage CHAUD et
 DOUX possible (id="vignette"), surtout PAS un vignettage sombre qui assombrit (garde la scene CLAIRE et aeree).
 """,
+    "papier-decoupe": r"""
+"PAPIER DECOUPE (PAPER-CUT) PEDAGOGIQUE" — un collage d'illustration en PAPIER DECOUPE, fait de formes pleines et
+nettes EMPILEES EN COUCHES, chacune comme un morceau de papier de couleur pose sur un autre, avec une fine OMBRE
+PORTEE DOUCE sous chaque couche (l'effet "papier qui flotte au-dessus du fond"). Aspect craft, chaleureux, lumineux,
+clair et lisible — comme un livre pour enfants haut de gamme ou un explainer pedagogique (pense Kurzgesagt en papier).
+Palette STRICTE, CLAIRE et CHALEUREUSE (PAS de noir plat, PAS de bleu nuit sombre, PAS de cyan technique) :
+- FOND : un ciel/arriere-plan en degrade DOUX et CLAIR (bleu ciel pastel #bfe3ef / #a8d8e8 en haut vers un creme
+  chaud #fdf3df / ivoire #f7ecd2 vers le bas — le code peut le poser).
+- TERRE / SOL : ocres et bruns CHAUDS et CLAIRS en couches (#caa46a, #b3823f, #8a5a2c pour la couche profonde,
+  rehaut sable #e3c489).
+- VEGETAL : verts FRANCS et lumineux en plusieurs tons pour etager les couches de feuillage (#7cba5a vert clair,
+  #569b43 vert moyen, #3e7c34 vert profond, rehaut tendre #a8d678).
+- BOIS / TRONC : brun chaud (#8a5a2c / #a06b35, rehaut #c08a4e).
+- SOLEIL / LUMIERE / GRAINE : jaune-or doux (#f2cf72 / #ffd98a, rehaut ivoire #fff4c2).
+- ACCENTS : un rouge/corail tendre (#e0795b) et un blanc casse (#fbf6ea) avec PARCIMONIE.
+Style : FORMES PLEINES decoupees (fill, pas de gros contours noirs ; si contour, un LISERE fin et clair de la
+meme famille, plus clair, pour souligner la decoupe), bords NETS et un peu arrondis (decoupe ciseaux), AUCUNE
+hachure (ce n'est PAS de la gravure), AUCUN degrade complexe (aplats de couleur), juste de fines ombres portees
+douces. La PROFONDEUR vient de l'EMPILEMENT DE COUCHES (couches de fond -> couches de premier plan), chacune
+legerement decalee et ombree. Genereux, doux, premium, joyeux.
+⭐ POUR L'OMBRE PORTEE DOUCE de chaque couche : tu peux la SUGGERER par une forme jumelle legerement decalee (vers
+le bas-droite) en une teinte plus sombre translucide JUSTE derriere la forme (id de groupe distinct si possible),
+OU laisser le code l'ajouter — privilegie quand meme de structurer chaque couche dans son propre <g id> pour qu'on
+puisse l'animer ET lui poser une ombre.
+CADRE : viewBox="0 0 1920x1080" — NON, ecris exactement viewBox="0 0 1920 1080" (FORMAT PAYSAGE 16:9). Compose la
+scene CENTREE et bien etalee, pas de cartouche technique, pas de grille. Remplis joliment le cadre paysage, aere.
+""",
     "encre": r"""
 "GRAVURE A L'ENCRE SUR PARCHEMIN" — une estampe / gravure sur bois ancienne, trait d'encre noir sur papier vieilli.
 Palette STRICTE : fond PARCHEMIN CREME (#e8dcc0 / #ddcba6, ne le dessine PAS forcement, le code peut le poser, mais
@@ -344,6 +371,57 @@ Pense "phrase visuelle pilotable" : les braises pulsent (le four vit) ; le creus
 DESCEND vers les moules ; puis les ARMES EMERGENT une a une des moules (la transformation s'accomplit) ; etincelles.
 4 gestes maximum, chacun limpide, synchronisable sur une voix. La TRANSFORMATION or->arme DOIT etre le geste central.
 """,
+    # ---- PEDAGOGIQUE : la croissance — une GRAINE devient un ARBRE (papier decoupe) ----
+    "graine-arbre": r"""
+SUJET DE LA SCENE : LA CROISSANCE D'UN ARBRE — une GRAINE plantee dans la terre qui DEVIENT un grand ARBRE.
+Registre PAPIER DECOUPE (paper-cut), scene pedagogique, chaleureuse et lumineuse. PHRASE NARRATIVE a raconter en
+image : "d'une simple graine... nait un arbre." On doit RESSENTIR la CROISSANCE : minuscule -> grand et vivant.
+
+⛔⛔ PHILOSOPHIE (scene-HERO EPUREE, PAS illustration chargee) : 4 elements HEROS MAXIMUM, chacun GROS, lisible en
+<1s, porteur d'UNE etape de la croissance. La force vient de la coherence sens<->image (la graine devient l'arbre),
+PAS du nombre de details. Si tu hesites entre ajouter un detail ou epurer -> EPURE. Espace, respiration, lisibilite
+immediate. Une seule plante au CENTRE, qui grandit. PAS de foret, PAS de paysage charge, PAS de multiples arbres.
+
+⛔ AUCUNE FIGURE VIVANTE (humain, visage, corps, main, animal). QUE des elements vegetaux/mineraux/lumineux nets en
+papier decoupe. (Un arbre, une graine, des feuilles, un soleil = formes manufacturables propres, OK.)
+
+⭐ POINT CLE POUR L'ANIMATION : tu dessines l'arbre dans son ETAT FINAL ADULTE (grand, complet, feuillu), MAIS
+DECOUPE EN COUCHES SEPAREES correspondant aux ETAPES de croissance, chacune dans son propre <g id>, pour que le
+code les fasse apparaitre/grandir UNE PAR UNE de bas en haut (la graine d'abord, puis la pousse, puis le tronc, puis
+les branches, puis le feuillage). Le code animera l'echelle/le clip vertical de chaque couche. Compose en pensant a
+ce "montage etage du bas vers le haut".
+
+COMPOSE EN LARGEUR (paysage 16:9, viewBox 1920x1080), arbre CENTRE horizontalement, qui monte du bas vers le haut :
+- LE FOND / CIEL (id="ciel") : un ciel clair en couches de papier (bleu ciel pastel en haut, creme chaud vers
+  l'horizon). Doux, pose l'ambiance, ne vole pas la vedette. Quelques nuages en papier decoupe possibles (formes
+  rondes empilees, blanc casse), bien espaces. Groupe distinct pour les faire deriver.
+- LE SOLEIL (id="soleil") : un soleil rond en papier jaune-or doux dans un coin haut (par ex. en haut a droite ou
+  centre-haut), avec quelques rayons decoupes simples autour. Couche de fond permanente (le code le fera pulser
+  doucement, sa lumiere nourrit la croissance). Net, chaleureux, pas trop gros.
+- LA TERRE + LA GRAINE (id="terre" pour le sol, id="graine" pour la graine) : au BAS, le SOL en couches de papier
+  (une bande de terre ocre/brun chaud, avec une couche de surface plus claire et une couche profonde plus sombre,
+  effet "coupe de terre"). DANS la terre, une GRAINE (petite forme ovale doree/brune, nette) d'ou tout part. La
+  graine doit etre SEPAREE dans son groupe (premier element a apparaitre). On peut suggerer 2-3 petites RACINES
+  decoupees qui descendent sous la graine (id="racines", optionnel, pour les faire pousser vers le bas).
+- LE TRONC (id="tronc") : un tronc d'arbre en papier brun chaud, partant de la graine/du sol et montant droit (ou
+  legerement courbe, organique mais net). Forme PLEINE decoupee (pas un simple trait), avec une couche d'ombre/de
+  rehaut pour le volume papier. C'est la 3e etape (pousse -> tronc). Compose-le bien VERTICAL et degage pour que le
+  code le fasse GRANDIR du sol vers le haut (clip/scale vertical depuis la base).
+- LES BRANCHES (id="branches") : 3-5 branches en papier brun qui partent du haut du tronc et s'ecartent (gauche,
+  droite, haut), formes pleines nettes. 4e etape. Groupe distinct (apparition apres le tronc, deploiement).
+- LE FEUILLAGE (id="feuillage") : la couronne de feuilles, faite de PLUSIEURS COUCHES de papier vert empilees et
+  decalees (vert profond derriere -> vert moyen -> vert clair devant -> rehaut tendre), formes de masses de feuillage
+  rondes/lobees decoupees (PAS une seule boule plate : un empilement de 3-4 masses pour la profondeur papier). C'est
+  la DERNIERE etape, l'apogee (l'arbre est vivant). Tu PEUX ajouter quelques feuilles individuelles decoupees (id="feuilles"
+  optionnel) qui pourront voltiger. Le feuillage doit COIFFER les branches. Groupe(s) distinct(s) pour le faire
+  s'epanouir/grossir en dernier.
+- (optionnel) un FRUIT ou deux (id="fruits") : 1-2 petits fruits ronds (pomme rouge-corail) dans le feuillage,
+  touche finale de vie. Discret.
+Pense "la croissance se CONSTRUIT du bas vers le haut, etape par etape, jusqu'a l'apogee feuillu" : graine -> pousse
+-> tronc qui s'eleve -> branches qui se deploient -> feuillage qui s'epanouit, le soleil qui pulse au-dessus, les
+nuages qui derivent. Laisse l'ESPACE vertical pour que l'arbre GRANDISSE (ne remplis pas tout le haut au depart :
+le haut du cadre se remplit a la fin, quand le feuillage arrive). EPURE, CLAIR, JOYEUX, premium.
+""",
     # ---- AES : la clause de defense mutuelle (concept abstrait, PAS une carte) ----
     "defense-mutuelle": r"""
 SUJET DE LA SCENE : le PRINCIPE DE DEFENSE MUTUELLE de l'Alliance des Etats du Sahel (AES) — "une agression contre
@@ -409,6 +487,7 @@ SCENE_REGISTRE = {
     "mine-or-darfour": "braise-or",
     "or-darfour-hero": "or-jour",
     "creuset-armes": "braise-or",
+    "graine-arbre": "papier-decoupe",
 }
 
 

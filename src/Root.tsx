@@ -205,6 +205,8 @@ import { MineCompare } from "./projects/_rnd/svg-scenes/MineCompare";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
+import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
+import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2179,6 +2181,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
+        <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
+        <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
