@@ -187,6 +187,19 @@ import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Proto
 import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
 import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
 import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
+import { VilleCompare } from "./projects/_rnd/svg-scenes/VilleCompare";
+import { EtatMajorCompare } from "./projects/_rnd/svg-scenes/EtatMajorCompare";
+import { VilleGeminiAnimee } from "./projects/_rnd/svg-scenes/VilleGeminiAnimee";
+import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/EtatMajorGptAnimee";
+import { OffshoreCompare } from "./projects/_rnd/svg-scenes/OffshoreCompare";
+import { OffshoreGeminiAnimee } from "./projects/_rnd/svg-scenes/OffshoreGeminiAnimee";
+import { OffshoreGeminiAnimeeSFX } from "./projects/_rnd/svg-scenes/OffshoreGeminiAnimeeSFX";
+import { ProfilCompare, DuoCompare, AnimalCompare } from "./projects/_rnd/svg-scenes/OrganiqueCompare";
+import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
+import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
+import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
+import { CfaFrancAnimee } from "./projects/_rnd/svg-scenes/CfaFrancAnimee";
+import { CfaFrancAnimeeSFX } from "./projects/_rnd/svg-scenes/CfaFrancAnimeeSFX";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2141,6 +2154,21 @@ export const RemotionRoot: React.FC = () => {
         />
         <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="RND-VilleCompare" component={VilleCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-EtatMajorCompare" component={EtatMajorCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-EtatMajorGptAnimee" component={EtatMajorGptAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
+        <Composition id="RND-VilleGeminiAnimee" component={VilleGeminiAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
+        <Composition id="RND-OffshoreCompare" component={OffshoreCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-OffshoreGeminiAnimee" component={OffshoreGeminiAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
+        <Composition id="RND-OffshoreGeminiAnimeeSFX" component={OffshoreGeminiAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
+        <Composition id="RND-ProfilCompare" component={ProfilCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-DuoCompare" component={DuoCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-AnimalCompare" component={AnimalCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-DefenseCompare" component={DefenseCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
+        <Composition id="RND-DefenseGptAnimee" component={DefenseGptAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
+        <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
+        <Composition id="RND-CfaFrancAnimee" component={CfaFrancAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
+        <Composition id="RND-CfaFrancAnimeeSFX" component={CfaFrancAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
