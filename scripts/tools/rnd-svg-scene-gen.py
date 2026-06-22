@@ -422,6 +422,95 @@ Pense "la croissance se CONSTRUIT du bas vers le haut, etape par etape, jusqu'a 
 nuages qui derivent. Laisse l'ESPACE vertical pour que l'arbre GRANDISSE (ne remplis pas tout le haut au depart :
 le haut du cadre se remplit a la fin, quand le feuillage arrive). EPURE, CLAIR, JOYEUX, premium.
 """,
+    # ---- GRANDE MURAILLE VERTE : VUE TOP-DOWN du mur d'arbres (B1 hook + B5 preuve) ----
+    "mur-topdown": r"""
+SUJET DE LA SCENE : une VUE DE DESSUS (top-down, vue aerienne / vue satellite stylisee) d'une portion de l'AFRIQUE
+sahelienne, sur laquelle on va faire apparaitre un "MUR" d'arbres qui traverse le paysage d'OUEST en EST (du Senegal
+a gauche vers Djibouti a droite). PHRASE NARRATIVE : "un mur d'arbres de 8000 km cense barrer la route au desert".
+C'est le HOOK : on doit comprendre d'un coup d'oeil = vue de dessus + une bande d'arbres qui traverse + le desert autour.
+
+⛔⛔ PHILOSOPHIE : vue TOP-DOWN claire et lisible, PAS une scene de cote. Pense carte satellite stylisee / vue de drone.
+Le sol = vu de dessus (texture de terre seche). Les arbres = vus de DESSUS = des TOUFFES rondes (cercles de feuillage
+lobes, vus du ciel), PAS des arbres de profil avec tronc. Chaque arbre = une petite forme ronde de canopee.
+
+⛔ AUCUNE FIGURE VIVANTE (humain, animal). QUE terre, arbres top-down, eventuellement un fin trait de relief/oued.
+
+⭐⭐ POINT CLE POUR L'ANIMATION (le plus important) : je dois pouvoir faire APPARAITRE les arbres UN PAR UN / par
+vagues de GAUCHE a DROITE, puis les faire MOURIR (disparaitre / griser). Donc :
+- Dessine une BANDE horizontale (le trace du "mur", legerement ondulee, qui traverse tout le cadre de gauche a droite)
+  dans laquelle se trouvent les arbres. Groupe id="bande-trace" (le trace du couloir, discret).
+- Place DE NOMBREUX petits arbres top-down (vise 24 a 40) le long de cette bande, repartis de gauche a droite.
+  ⭐ CHAQUE ARBRE DOIT ETRE DANS SON PROPRE GROUPE id NUMEROTE : id="arbre-01", id="arbre-02", ... id="arbre-40"
+  (numerotation de GAUCHE a DROITE = ouest vers est, pour que le code les revele dans l'ordre geographique).
+  Chaque arbre = une touffe ronde (1 cercle de canopee + eventuellement 1-2 cercles plus petits pour le lobe + un
+  point central). Taille variee legere pour le naturel. C'est CE decoupage numerote qui rend l'animation possible.
+- Le DESERT autour (id="desert") : le sol top-down, terre seche ocre/sable, texture de craquelures ou de dunes vues
+  de dessus, hachures legeres selon le registre. C'est le fond permanent.
+- Repere geographique discret (id="reperes") : un petit point/label "SENEGAL" tout a gauche et "DJIBOUTI" tout a droite
+  (aux deux extremites de la bande), tres discrets, pour ancrer l'ouest-est. (Texte minimal, accents OK.)
+- (optionnel id="cadre") : un tres fin cadre ou des coordonnees de coin facon vue satellite, discret.
+Pense "le mur se PEUPLE d'ouest en est puis MEURT" : au depart desert nu ; les arbres apparaissent un par un de gauche
+a droite (le code les revele dans l'ordre arbre-01..arbre-40) en prenant leur couleur verte ; PUIS presque tous
+disparaissent/grisent (l'echec), il n'en reste qu'une poignee. Compose pour que les arbres soient BIEN REPARTIS et
+INDIVIDUELLEMENT identifiables (espaces, pas colles), et que la bande traverse tout le cadre. Format selon le registre.
+CADRE : respecte le viewBox du registre (1920x1080 paysage OU 1024x1024). Pour un usage VERTICAL ulterieur la bande
+doit rester lisible meme recadree au centre — mais compose d'abord proprement dans le viewBox demande.
+""",
+    # ---- GRANDE MURAILLE VERTE : la demi-lune qui capte l'eau et reveille la racine (scene-heros, "ce qui marche") ----
+    "demilune-racine": r"""
+SUJET DE LA SCENE : "CE QUI MARCHE VRAIMENT" pour reverdir le Sahel — une CUVETTE EN DEMI-LUNE creusee dans la terre
+seche capte la pluie, l'eau s'infiltre, et une RACINE DEJA PRESENTE sous le sable se REVEILLE et repart en jeune
+arbre. PHRASE NARRATIVE a raconter en image : "On ne plante pas un mur d'arbres contre le desert. On creuse une
+simple cuvette, on capte la pluie... et la vie qui dormait sous le sable repart." On doit RESSENTIR la TRANSFORMATION :
+terre seche et morte -> eau captee -> racine qui repart -> vie. C'est un GESTE d'espoir CONCRET et ANCRE (pas abstrait).
+
+⛔⛔ PHILOSOPHIE (scene-HERO EPUREE, PAS illustration chargee) : 4-5 elements HEROS MAXIMUM, chacun GROS, lisible en
+<1s, porteur d'UNE etape (la terre seche / la demi-lune / l'eau captee / la racine reveillee / la pousse). La force
+vient de la coherence sens<->image (la cuvette reveille la vie), PAS du nombre de details. Si tu hesites entre ajouter
+un detail ou epurer -> EPURE. Espace, respiration, lisibilite immediate. UN SEUL point d'action au centre (la demi-lune
+et ce qui en sort). PAS de paysage charge, PAS de multiples arbres, PAS de foule de cuvettes.
+
+⛔ AUCUNE FIGURE VIVANTE (humain, visage, corps, main, animal). QUE des elements terre/eau/vegetal/mineraux nets.
+La cuvette est creusee "par le travail humain" mais on ne dessine PAS d'humain (le geste est suggere par le resultat :
+la cuvette nette, la pelle plantee a la rigueur, mais PAS de personne).
+
+⭐ POINT CLE POUR L'ANIMATION : tu dessines la scene dans son ETAT FINAL (la pousse a repris, l'eau est dans la cuvette),
+MAIS DECOUPE EN COUCHES SEPAREES correspondant aux ETAPES, chacune dans son propre <g id>, pour que le code les fasse
+apparaitre UNE PAR UNE : (1) la terre seche fendillee, (2) la demi-lune qui se creuse, (3) la pluie/l'eau qui la
+remplit et s'infiltre, (4) la racine sous le sol qui se reveille (se trace/s'illumine), (5) la jeune pousse qui sort
+et grandit. Le code animera l'apparition/le trace/l'echelle de chaque couche dans cet ordre.
+
+COMPOSE EN COUPE (on voit le DESSUS du sol ET le DESSOUS, comme une coupe pedagogique de terre), CENTREE, viewBox 1920x1080 :
+- LE CIEL / FOND (id="ciel") : un fond chaud qui pose l'ambiance (selon le registre : ciel sec ardent, ou ciel clair).
+  Au depart il evoque la SECHERESSE ; le code pourra l'eclaircir/le verdir a la fin. 1-2 nuages possibles (la pluie vient).
+  Eventuellement un soleil bas. Groupe distinct.
+- LA PLUIE (id="pluie") : quelques traits/gouttes de pluie obliques qui tombent vers la cuvette (l'evenement declencheur).
+  Nettes, stylisees selon le registre. Le code les fera TOMBER puis s'arreter (l'averse breve du Sahel). Groupe distinct.
+- LA TERRE EN COUPE (id="terre-seche" pour la surface craquelee, id="sous-sol" pour la couche profonde) : le SOL occupe
+  le bas/milieu, vu en COUPE. La surface est SECHE et FENDILLEE (craquelures nettes = terre morte). Sous la surface, une
+  couche de sous-sol plus sombre ou dort la racine. Le code pourra faire VIRER la surface du sec (ocre pale/gris) au
+  VIVANT (ocre riche/verdi). Garde une base lisible. Texture de strates bienvenue (pas surcharge).
+- LA DEMI-LUNE / CUVETTE (id="demilune") : au CENTRE, LA cuvette en demi-lune creusee dans le sol — une depression
+  semi-circulaire nette (bourrelet de terre en croissant cote aval qui retient l'eau, creux au milieu). C'est le HEROS
+  du "ce qui marche" : forme claire, reconnaissable, le geste malin. Bien dessinee, le code pourra la "creuser"
+  (apparition) puis la remplir d'eau. (Optionnel : une PELLE plantee dans le bourrelet, id="pelle", objet manufacture
+  net, evoque le travail sans humain — IMMOBILE.)
+- L'EAU CAPTEE (id="eau") : dans le creux de la demi-lune, une nappe d'EAU (aplat/forme nette, reflets selon registre)
+  qui REMPLIT la cuvette, et 2-3 fleches/filets fins d'INFILTRATION qui descendent de la cuvette vers la racine
+  (l'eau qui s'enfonce nourrir la racine). Le code fera MONTER le niveau d'eau puis DESCENDRE l'infiltration. Groupe(s).
+- LA RACINE REVEILLEE (id="racine") : SOUS la cuvette, dans le sous-sol, une RACINE deja presente (un systeme racinaire
+  ramifie, lignes qui descendent et s'etalent) qui etait DORMANTE et se REVEILLE. Fais-en des PATHS CONTINUS (stroke)
+  pour que le code la TRACE / l'ILLUMINE quand l'eau arrive (la vie qui repart sous le sol). C'est le coeur du sens :
+  rien n'a ete plante, la racine etait deja la. Groupe distinct, bien degage.
+- LA JEUNE POUSSE (id="pousse") : au-dessus de la cuvette, depuis la racine reveillee, une JEUNE POUSSE / petit arbre
+  qui sort de terre (tige + premieres feuilles, simple et net, PAS un grand arbre — une POUSSE pleine d'espoir). C'est
+  la DERNIERE etape, l'apogee. Le code la fera GRANDIR depuis le sol vers le haut (scale/clip vertical depuis la base).
+  Groupe distinct. (Optionnel 1-2 jeunes feuilles id="feuilles" qui se deploient.)
+Pense "la transformation se CONSTRUIT etape par etape" : terre seche fendillee -> la pluie tombe -> la demi-lune capte
+et l'eau monte -> l'eau s'infiltre -> la racine sous le sol s'illumine/se trace (elle se reveille) -> la pousse sort et
+grandit -> le sol verdit. Laisse l'ESPACE vertical (sous-sol pour la racine, au-dessus pour la pousse). EPURE, CLAIR,
+porteur d'ESPOIR, premium. Le contraste sec->vivant DOIT etre lisible au premier coup d'oeil.
+""",
     # ---- AES : la clause de defense mutuelle (concept abstrait, PAS une carte) ----
     "defense-mutuelle": r"""
 SUJET DE LA SCENE : le PRINCIPE DE DEFENSE MUTUELLE de l'Alliance des Etats du Sahel (AES) — "une agression contre
@@ -488,11 +577,13 @@ SCENE_REGISTRE = {
     "or-darfour-hero": "or-jour",
     "creuset-armes": "braise-or",
     "graine-arbre": "papier-decoupe",
+    "demilune-racine": "papier-decoupe",
+    "mur-topdown": "braise-or",
 }
 
 
-def build_prompt(scene_key: str) -> str:
-    reg = SCENE_REGISTRE[scene_key]
+def build_prompt(scene_key: str, registre_override: str = None) -> str:
+    reg = registre_override or SCENE_REGISTRE[scene_key]
     head = ("Tu es un illustrateur SVG VECTORIEL pour une chaine video premium. "
             "Tu dessines dans un registre precis :\n" + REGISTRES[reg])
     return head + "\n" + COMMON_TECH + "\n" + SCENES[scene_key]
@@ -530,11 +621,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scene", required=True, choices=list(SCENES.keys()))
     ap.add_argument("--provider", required=True, choices=["gemini", "gpt"])
+    ap.add_argument("--registre", default=None, choices=list(REGISTRES.keys()),
+                    help="Force un registre visuel (override du defaut de la scene). Utile pour un comparatif d'identite.")
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
-    prompt = build_prompt(args.scene)
+    prompt = build_prompt(args.scene, args.registre)
     if args.provider == "gemini":
         gen_gemini(prompt, out)
     else:
