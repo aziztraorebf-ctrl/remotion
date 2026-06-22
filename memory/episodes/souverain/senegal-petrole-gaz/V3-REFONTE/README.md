@@ -25,7 +25,7 @@
 | Scène | Sujet | V1 correspondant | État V3 | Composant V3 |
 |---|---|---|---|---|
 | **0 — HOOK** | Avril 2026, 8M$/jour → fracture (limoge) → recomposition (la vérité) | Beat0Accroche | ✅ **FAIT** (catbox yg9k78) | `src/projects/_proto-16-9/SenegalScene0.tsx` (+ MapDrawParchemin + Fracture) |
-| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | ⬜ à faire (**PROCHAINE → `STARTER-SCENE-1.md`**) | — |
+| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip duel des récits, 2 faces SVG animé, `scene1-intro-coin-FINAL.mp4`, validée 2026-06-22, catbox ky7j6l) · reste BARIL 60% + GISEMENTS carte. Détail → `REPRISE-SCENE-1.md` | `SenegalScene1IntroCoin.tsx` + `SenegalCoinFaceA/B_SVG.tsx` |
 | 2 | leçon Norvège/Congo/Botswana | fin Acte1 / Acte2 | ⬜ | — |
 | 3 | le contrat (terrain 1) | Beat11 | ⬜ | — |
 | 4 | le piège de la dette (terrain 2) | Beat12 (calebasse 132%) | ⬜ | — |
