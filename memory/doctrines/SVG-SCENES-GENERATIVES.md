@@ -17,11 +17,38 @@ Pourquoi ça marche : les LLM **ne savent pas animer** mais savent **composer un
 parties manipulables**. Registre "gravure dorée / médaille ciselée" (or patiné #e7bd78/#dca95e/#bf9442, traits
 rouges #8a2a20, rehauts ivoire #f2ebd9) = facile à rendre PREMIUM (vs photo-réalisme impossible en SVG).
 
-Script de génération : `scripts/tools/rnd-svg-scene-gen.py` — **REGISTRE découplé de la SCÈNE** (param interne
-`SCENE_REGISTRE`). Registres : `medaille` (gravure dorée), `blueprint` (technique bleu). Scènes : `ville`,
-`etatmajor`, `plateforme-offshore`. Ajouter registres/scènes au fil de l'eau.
-Harnais de rendu : `src/projects/_rnd/svg-scenes/` → `SvgSceneCoin.tsx` (enveloppe disque-pièce, registre médaille)
-· `SvgScenePlanche.tsx` (planche rectangulaire fond bleu nuit, registre blueprint). Injection innerHTML.
+Script de génération : `scripts/tools/rnd-svg-scene-gen.py` — **REGISTRE découplé de la SCÈNE** (params `REGISTRES`
++ `SCENE_REGISTRE`). **6 registres prouvés** (`medaille`, `blueprint`, `encre`, `tactique`, `braise-or`, `or-jour` —
+tableau complet § REGISTRES) et ~12 scènes. Ajouter registres/scènes au fil de l'eau. Usage :
+`python3 scripts/tools/rnd-svg-scene-gen.py --scene <nom> --provider gemini|gpt --out /tmp/x.json`.
+Harnais de rendu : `src/projects/_rnd/svg-scenes/` (voir son `README.md`). ⚠️ BIBLIOTHÈQUE DE RÉFÉRENCE R&D, pas de
+la prod — réadapter avant tout usage vidéo.
+
+> **⭐ ORDRE DE LECTURE pour reproduire (agent vierge / nouvelle scène)** : (1) ce bloc + § WORKFLOW A→Z ci-dessous
+> (la checklist ordonnée) · (2) § DOCTRINE D'ANIMATION & D'ÉPURE (épure + 2 couches + objet inerte + couleur) ·
+> (3) § REGISTRES (choisir/créer la palette) · (4) § GOTCHAS TECHNIQUES (extraction groupes, innerHTML vs JSX) ·
+> (5) § DEUX CAPACITÉS WORKFLOW (remap couleur + éditeur SVG). Le reste = contexte/preuves.
+
+---
+
+## ⭐⭐⭐ WORKFLOW A→Z (la checklist ordonnée — suivre dans CET ordre pour TOUTE nouvelle scène)
+
+1. **INTENTION** (1 verbe : ce qu'on veut faire RESSENTIR) → **FORME** (le geste visuel) → **REGISTRE** (palette).
+   Jamais l'inverse. (Doctrine [[CONTINUITE-SCENE-INTENTION-DABORD]].)
+2. **ÉPURE D'ABORD** : 3-4 éléments HÉROS max, chacun lisible en <1s et porteur d'UN sens (§ DOCTRINE D'ÉPURE). Pas
+   d'illustration chargée (sinon Seedance ferait mieux). Zéro organique vivant (objets manufacturés OK).
+3. **AJOUTER scène + registre** au générateur (`SCENES` + `SCENE_REGISTRE` ; créer le registre dans `REGISTRES` si neuf).
+   viewBox `1920x1080` pour 16:9, `1024x1024` pour carré. Préciser la taille DANS le prompt scène.
+4. **GÉNÉRER LES 2** (Gemini + GPT) : `--provider gemini` ET `--provider gpt`. Toujours les deux (§ RÈGLE MAÎTRESSE).
+5. **JUGER STATIQUE** : injecter les 2 en innerHTML dans un comparatif (modèle `MineCompare.tsx`), render still full HD,
+   regarder SOI-MÊME, choisir. (Atmosphérique → Gemini · objets nets épurés → GPT.) Crop + upload catbox pour Aziz.
+6. **CORRIGER EN CODE si besoin (sans rappeler le LLM)** : palette pas bonne → REMAP COULEUR (§ capacité A) ; un élément
+   raté/illisible → le RÉÉCRIRE à la main (§ capacité B). Ne jamais régénérer juste pour changer une couleur/un détail.
+7. **ANIMER en JSX** (innerHTML n'anime pas — réécrire en wrapper JSX, § GOTCHAS) : doctrine 2 COUCHES (fond permanent +
+   événements échelonnés, règle des 5s). Objet inerte = fade/couleur (jamais glisser). Tomber-sec = `spring()`.
+8. **SFX TIMÉ** frame-perfect (banque `_shared/sfx/`, `<Sequence from>` obligatoire, plancher 0.50, drone 0.40).
+9. **RENDER full HD** + vérifier piste audio (`volumedetect`, mean dB ≠ silence) + **upload catbox** avant de présenter.
+10. **ENRICHIR la doctrine** si nouvel acquis (registre, gotcha, pattern).
 
 ---
 
@@ -217,6 +244,33 @@ confirmation)→animation JSX→SFX timé→render→upload. **Le système est r
 6. **Gemini enveloppe souvent tout dans un `<g id="scene-root">`** unique → descendre d'un niveau pour extraire les
    groupes internes. (2026-06-22.)
 
+### ⭐ SNIPPET extraction de groupes (réutilisable — gère apostrophes GPT, guillemets Gemini, imbrication scene-root)
+```python
+# parse les <g id="..."> de 1er niveau en comptant la profondeur (gere l'imbrication)
+def extract_groups(s):
+    res={}; i=0
+    while True:
+        m=re.search(r'<g id=["\']([^"\']+)["\']', s[i:])
+        if not m: break
+        gid=m.group(1); a=i+m.start(); j=a; d=0
+        while j<len(s):
+            if s[j:j+2]=='<g': d+=1; j+=2; continue
+            if s[j:j+4]=='</g>':
+                d-=1; j+=4
+                if d==0: break
+                continue
+            j+=1
+        res[gid]=s[a:j]; i=j
+    return res
+# si Gemini a enveloppe dans scene-root, descendre d'un niveau d'abord :
+m=re.match(r'\s*<g id=["\']scene-root["\'][^>]*>(.*)</g>\s*$', svg, re.S)
+inner = m.group(1) if m else svg
+# pour innerHTML : remplacer apostrophes -> guillemets + camelCase->kebab + nettoyer glyphes ↑↓→
+```
+Pour ANIMER un groupe injecté : wrapper JSX `<g transform={...} opacity={...} dangerouslySetInnerHTML={{__html: body}} />`
+— le wrapper (créé en JSX) EST animable même si son contenu est injecté. C'est LA technique pour contourner « innerHTML
+n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`.)
+
 ---
 
 ## ✅ LES SCÈNES PROUVÉES
@@ -229,9 +283,10 @@ confirmation)→animation JSX→SFX timé→render→upload. **Le système est r
 | ⭐ Offshore + SFX timé | blueprint | Gemini | idem + son frame-perfect | https://files.catbox.moe/s1jloa.mp4 |
 | ⭐⭐ Défense mutuelle AES | tactique | GPT-5.5 | SE CONSTRUIT + DÉCLENCHE + SFX | https://files.catbox.moe/05xbm1.mp4 |
 | Mine d'or Darfour (16:9, chargée) | braise-or | Gemini | RESPIRE 28s, 2 couches | https://files.catbox.moe/lkf0ia.mp4 |
-| ⭐⭐⭐ « Suivre l'or » Soudan HÉROS (16:9) | or-jour | GPT-5.5 | tomber-sec + bascule couleur + fade | https://files.catbox.moe/w7xndo.mp4 |
+| ⭐⭐⭐ « Suivre l'or » Soudan HÉROS (16:9) | or-jour | GPT-5.5 | tomber-sec + bascule couleur + fade + fumée→ciel noir | https://files.catbox.moe/1ws3kh.mp4 |
+| Creuset « l'or devient la guerre » (16:9) | braise-or éclairci | GPT-5.5 | TRANSFORMATION (creuset bascule → balles émergent) | https://files.catbox.moe/yonpoq.mp4 |
 
-Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee}.tsx`.
+Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee}.tsx`.
 
 ⭐ **« Suivre l'or » = la scène-référence de la doctrine ÉPURE + 16:9 + remap couleur + Claude-éditeur-SVG** (session
 2026-06-22, sur le vrai script Soudan mid-form Acte 1 « il ne faut pas suivre les armes, il faut suivre l'or »). C'est
