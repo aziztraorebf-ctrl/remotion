@@ -210,6 +210,9 @@ import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
 import { Img2SvgCompare } from "./projects/_rnd/svg-scenes/Img2SvgCompare";
 import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
 import { GgwD3GeoMap } from "./projects/_rnd/svg-scenes/GgwD3GeoMap";
+import { GgwD3GeoMapEncre } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncre";
+import { GgwD3GeoMapSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapSFX";
+import { GgwD3GeoMapEncreSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncreSFX";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
@@ -2197,6 +2200,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-Img2SvgCompare" component={Img2SvgCompare} durationInFrames={60} fps={30} width={2160} height={1920} />
         <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
         <Composition id="RND-GgwD3GeoMap" component={GgwD3GeoMap} durationInFrames={250} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GgwD3GeoMapEncre" component={GgwD3GeoMapEncre} durationInFrames={250} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GgwD3GeoMapSFX" component={GgwD3GeoMapSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GgwD3GeoMapEncreSFX" component={GgwD3GeoMapEncreSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
