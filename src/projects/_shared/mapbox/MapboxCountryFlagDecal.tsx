@@ -34,6 +34,10 @@ export type FlagDecalProps = {
   opacity?: number;
   /** couleur du liseré de frontiere (defaut ivoire). */
   borderColor?: string;
+  /** Limite la silhouette a une bbox [minLon, minLat, maxLon, maxLat]. Indispensable pour les pays
+   *  a DOM-TOM (ex: France = -61.8..55.8 lon dans Natural Earth → la metropole devient minuscule et le
+   *  drapeau s'etale sur du vide). Donner la bbox metropolitaine pour clipper aux anneaux pertinents. */
+  clipBbox?: [number, number, number, number];
 };
 
 export const MapboxCountryFlagDecal: React.FC<FlagDecalProps> = ({
@@ -44,6 +48,7 @@ export const MapboxCountryFlagDecal: React.FC<FlagDecalProps> = ({
   size = 2048,
   opacity = 1,
   borderColor = "#f2efe6",
+  clipBbox,
 }) => {
   useCurrentFrame(); // force re-render pour capter map ready
   const [handle] = useState(() => delayRender(`flag-decal-${iso}`));
@@ -67,11 +72,24 @@ export const MapboxCountryFlagDecal: React.FC<FlagDecalProps> = ({
           if (g.type === "Polygon") rings.push(...(g.coordinates as number[][][]));
           else if (g.type === "MultiPolygon") for (const poly of g.coordinates) rings.push(...(poly as number[][][]));
         }
-        if (!rings.length) { continueRender(handle); return; }
+        // clip optionnel a une bbox (pays a DOM-TOM : ne garder que les anneaux dont le centre tombe dedans)
+        let usedRings = rings;
+        if (clipBbox) {
+          const [bMinLon, bMinLat, bMaxLon, bMaxLat] = clipBbox;
+          usedRings = rings.filter((ring) => {
+            let cx = 0, cy = 0;
+            for (const [lon, lat] of ring) { cx += lon; cy += lat; }
+            cx /= ring.length; cy /= ring.length;
+            return cx >= bMinLon && cx <= bMaxLon && cy >= bMinLat && cy <= bMaxLat;
+          });
+          if (!usedRings.length) usedRings = rings; // fallback : ne jamais tout perdre
+        }
+        const rings2 = usedRings;
+        if (!rings2.length) { continueRender(handle); return; }
 
         // bbox geo du pays
         let minLon = Infinity, minLat = Infinity, maxLon = -Infinity, maxLat = -Infinity;
-        for (const ring of rings) for (const [lon, lat] of ring) {
+        for (const ring of rings2) for (const [lon, lat] of ring) {
           if (lon < minLon) minLon = lon; if (lon > maxLon) maxLon = lon;
           if (lat < minLat) minLat = lat; if (lat > maxLat) maxLat = lat;
         }
@@ -90,7 +108,7 @@ export const MapboxCountryFlagDecal: React.FC<FlagDecalProps> = ({
         ];
         // 1) construire le clip = silhouette du pays
         ctx.beginPath();
-        for (const ring of rings) {
+        for (const ring of rings2) {
           ring.forEach(([lon, lat], i) => {
             const [px, py] = toPx(lon, lat);
             if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
@@ -105,7 +123,7 @@ export const MapboxCountryFlagDecal: React.FC<FlagDecalProps> = ({
         ctx.lineWidth = Math.max(2, size * 0.004);
         ctx.strokeStyle = borderColor;
         ctx.beginPath();
-        for (const ring of rings) {
+        for (const ring of rings2) {
           ring.forEach(([lon, lat], i) => {
             const [px, py] = toPx(lon, lat);
             if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);

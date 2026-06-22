@@ -200,6 +200,9 @@ import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
 import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
 import { CfaFrancAnimee } from "./projects/_rnd/svg-scenes/CfaFrancAnimee";
 import { CfaFrancAnimeeSFX } from "./projects/_rnd/svg-scenes/CfaFrancAnimeeSFX";
+import { MineCompare } from "./projects/_rnd/svg-scenes/MineCompare";
+import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
+import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2169,6 +2172,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
         <Composition id="RND-CfaFrancAnimee" component={CfaFrancAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="RND-CfaFrancAnimeeSFX" component={CfaFrancAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
+        <Composition id="RND-MineCompare" component={MineCompare} durationInFrames={60} fps={30} width={3840} height={1080} />
+        <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
+        <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
@@ -2182,7 +2188,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
-        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={810} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={900} fps={30} width={1920} height={1080} />
         <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
         <Composition id="IntroProtoC" component={IntroProtoC} durationInFrames={270} fps={30} width={1920} height={1080} />
         <Composition id="IntroProtoB" component={IntroProtoB} durationInFrames={270} fps={30} width={1920} height={1080} />
