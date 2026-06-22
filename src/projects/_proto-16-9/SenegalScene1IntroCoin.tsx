@@ -21,6 +21,7 @@ import React from "react";
 import { AbsoluteFill, Audio, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig, Sequence } from "remotion";
 import { CoinFlip } from "../_shared/components/layouts/CoinFlip";
 import { SenegalCoinFaceA_SVG } from "./SenegalCoinFaceA_SVG";
+import { SenegalCoinFaceB_SVG } from "./SenegalCoinFaceB_SVG";
 
 const W = 1920, H = 1080;
 const NAVY = "#16213a", NAVY_DEEP = "#0d1424", OCRE = "#e7bd78";
@@ -45,11 +46,11 @@ const F_FLIP_S  = tl(19.8);   // flip retarde : laisse le navire finir de partir
 const F_FLIP_E  = tl(21.6);   // flip fini
 const F_FISSURE = tl(23.0);   // sur "la realite se joue"
 const F_VERDICT = tl(23.4);   // accompagne la cassure
-const F_OUT     = tl(25.0);   // sortie -> enchaine gisements
-const TOTAL     = tl(25.8);
+const F_OUT     = tl(28.8);   // sortie APRES "...en direct" (fin de phrase a 28.6s), avant "Premiere" (29.5s) = gisements
+const TOTAL     = tl(29.4);   // la scene tient jusqu'a la fin de la phrase complete
 
-const DIAM = 920;             // taille VALIDEE par Aziz (proto SVG). NE PAS rabaisser a 620.
-const CX = W / 2, CY = H * 0.44;
+const DIAM = 760;             // reduite (920->760) pour degager un VRAI espace sous la piece (label recit). Aziz 21/06.
+const CX = W / 2, CY = H * 0.40;  // remontee pour liberer le bas
 
 const COIN_A = staticFile("souverain/senegal-petrole-gaz/beat0/assets/coin/faceA-malediction-gpt.png");
 const COIN_B = staticFile("souverain/senegal-petrole-gaz/beat0/assets/coin/faceB-arbre-gpt.png");
@@ -154,7 +155,8 @@ export const SenegalScene1IntroCoin: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ background: NAVY }}>
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} volume={1} />
+      {/* narration : coupee APRES "...en direct" (48.95s absolu) pour ne pas enchainer sur "Premiere chose a comprendre" (gisements) */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} endAt={Math.round(48.95 * 30)} volume={1} />
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")} startFrom={Math.round(AUDIO_START * 30)} volume={0.14} />
       <Sequence from={F_FLIP_S} durationInFrames={40}><Audio src={staticFile("souverain/senegal-petrole-gaz/audio/sfx/sfx-whoosh-transition.mp3")} volume={0.4} /></Sequence>
       <Sequence from={F_FISSURE} durationInFrames={40}><Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.55} /></Sequence>
@@ -199,7 +201,7 @@ export const SenegalScene1IntroCoin: React.FC = () => {
             showDotGrid={false}
             bgColor="transparent"
             faceA={{ icon: "ship", label: "", value: "", custom: <SenegalCoinFaceA_SVG sailProgress={faceA_sail} pumpActive={faceA_pump} oilSpread={faceA_oil} oilDrop={Math.max(faceA_shimmer * 0.4, faceA_drop)} /> }}
-            faceB={{ icon: "landmark", label: "", value: "", custom: <CoinFaceImg src={COIN_B} /> }}
+            faceB={{ icon: "landmark", label: "", value: "", custom: <SenegalCoinFaceB_SVG oxidize={interpolate(frame, [F_FISSURE - 30, F_FISSURE], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })} /> }}
           />
           {/* SPECULAR SWEEP : reflet doux qui balaie le metal (clippe au cercle de la piece) */}
           {showA && sweepOp > 0.01 && (
@@ -213,51 +215,42 @@ export const SenegalScene1IntroCoin: React.FC = () => {
         </div>
       )}
 
-      {/* === FISSURE : deux moities de la piece (Face B) qui se separent === */}
-      {broken && (
-        <div style={{ position: "absolute", left: CX, top: CY, transform: `translate(${shake}px,0)` }}>
-          <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ position: "absolute", left: -D / 2, top: -D / 2, overflow: "visible" }}>
-            <defs>
-              {/* masque moitie GAUCHE de la piece (cote fissure) */}
-              <clipPath id="leftHalf"><path d={leftHalfPath} /></clipPath>
-              {/* masque moitie DROITE */}
-              <clipPath id="rightHalf"><path d={rightHalfPath} /></clipPath>
-              <clipPath id="roundClip"><circle cx={D / 2} cy={D / 2} r={D / 2} /></clipPath>
-            </defs>
-
-            {/* ombre interne de la faille (derriere, plus large) */}
-            <g clipPath="url(#roundClip)" opacity={fissureEase}>
-              <path d={crackPath} fill="none" stroke={NOIR} strokeWidth={28 + split} strokeLinecap="round" strokeLinejoin="round" opacity={0.85} />
-            </g>
-
-            {/* MOITIE GAUCHE : image piece B, decalee a gauche + leger tilt */}
-            <g clipPath="url(#roundClip)">
-              <g clipPath="url(#leftHalf)" transform={`translate(${-split},0) rotate(${-splitTilt} ${D * 0.3} ${D / 2})`}>
-                <image href={COIN_B} x={0} y={0} width={D} height={D} preserveAspectRatio="xMidYMid slice" transform={`scale(${COIN_IMG_SCALE})`} transform-origin="center" />
-                {/* tranche metal sur le bord de cassure */}
-                <path d={crackPath} fill="none" stroke="#8a6a1f" strokeWidth={6} opacity={0.9} />
-                <path d={crackPath} fill="none" stroke="#d8b25a" strokeWidth={2} opacity={0.9} />
-              </g>
-              {/* MOITIE DROITE : decalee a droite */}
-              <g clipPath="url(#rightHalf)" transform={`translate(${split},0) rotate(${splitTilt} ${D * 0.7} ${D / 2})`}>
-                <image href={COIN_B} x={0} y={0} width={D} height={D} preserveAspectRatio="xMidYMid slice" transform={`scale(${COIN_IMG_SCALE})`} transform-origin="center" />
-                <path d={crackPath} fill="none" stroke="#8a6a1f" strokeWidth={6} opacity={0.9} />
-                <path d={crackPath} fill="none" stroke="#d8b25a" strokeWidth={2} opacity={0.9} />
-              </g>
-            </g>
-
-            {/* eclats projetes par la cassure (renforces : plus nombreux, plus gros) */}
-            {[...Array(20)].map((_, i) => {
-              const ang = (i / 20) * Math.PI - Math.PI / 2 + (i % 2 ? 0.35 : -0.25);
-              const dist = (55 + (i % 4) * 70) * fissureEase;
-              const ex = D / 2 + Math.cos(ang) * (D * 0.28) + Math.cos(ang) * dist;
-              const ey = D / 2 + Math.sin(ang) * (D * 0.42) + Math.sin(ang) * dist * 0.7;
-              const sz = 7 + (i % 5) * 4;
-              return <rect key={i} x={ex} y={ey} width={sz} height={sz * (0.5 + (i % 3) * 0.4)} fill={i % 3 ? "#e7bd78" : (i % 3 === 1 ? "#d8b25a" : "#8a6a1f")} opacity={fissureEase * (1 - i / 26)} transform={`rotate(${i * 33} ${ex} ${ey})`} style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.6))" }} />;
-            })}
-          </svg>
-        </div>
-      )}
+      {/* === FISSURE : la PIECE SVG (Face B) se fend en deux moities qui se separent ===
+           Les deux moities = le MEME composant SVG Face B, clippe par un demi-masque CSS (clip-path),
+           decale lateralement. Plus de bitmap : raccord coherent avec le reste de la scene. */}
+      {broken && (() => {
+        // clip-path CSS en % (le composant remplit un carre DxD). Fissure verticale en zigzag.
+        const leftPoly = "polygon(0% 0%, 62% 0%, 50% 26%, 60% 44%, 44% 66%, 52% 82%, 40% 100%, 0% 100%)";
+        const rightPoly = "polygon(62% 0%, 100% 0%, 100% 100%, 40% 100%, 52% 82%, 44% 66%, 60% 44%, 50% 26%)";
+        const oxB = interpolate(frame, [F_FISSURE - 30, F_FISSURE], [0, 0.7], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        return (
+          <div style={{ position: "absolute", left: CX - D / 2, top: CY - D / 2, width: D, height: D, transform: `translate(${shake}px,0)` }}>
+            {/* ombre interne de la faille (derriere) */}
+            <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ position: "absolute", inset: 0, overflow: "visible" }}>
+              <path d={crackPath} fill="none" stroke={NOIR} strokeWidth={28 + split} strokeLinecap="round" strokeLinejoin="round" opacity={0.85 * fissureEase} />
+            </svg>
+            {/* MOITIE GAUCHE : Face B SVG clippee, decalee a gauche + leger tilt */}
+            <div style={{ position: "absolute", inset: 0, clipPath: leftPoly, transform: `translate(${-split}px,0) rotate(${-splitTilt}deg)`, transformOrigin: "30% 50%" }}>
+              <SenegalCoinFaceB_SVG oxidize={oxB} />
+            </div>
+            {/* MOITIE DROITE : decalee a droite */}
+            <div style={{ position: "absolute", inset: 0, clipPath: rightPoly, transform: `translate(${split}px,0) rotate(${splitTilt}deg)`, transformOrigin: "70% 50%" }}>
+              <SenegalCoinFaceB_SVG oxidize={oxB} />
+            </div>
+            {/* tranche metal + eclats par-dessus */}
+            <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`} style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}>
+              {[...Array(20)].map((_, i) => {
+                const ang = (i / 20) * Math.PI - Math.PI / 2 + (i % 2 ? 0.35 : -0.25);
+                const dist = (55 + (i % 4) * 70) * fissureEase;
+                const ex = D / 2 + Math.cos(ang) * (D * 0.28) + Math.cos(ang) * dist;
+                const ey = D / 2 + Math.sin(ang) * (D * 0.42) + Math.sin(ang) * dist * 0.7;
+                const sz = 7 + (i % 5) * 4;
+                return <rect key={i} x={ex} y={ey} width={sz} height={sz * (0.5 + (i % 3) * 0.4)} fill={i % 3 ? "#e7bd78" : (i % 3 === 1 ? "#d8b25a" : "#8a6a1f")} opacity={fissureEase * (1 - i / 26)} transform={`rotate(${i * 33} ${ex} ${ey})`} style={{ filter: "drop-shadow(0 1px 2px rgba(0,0,0,0.6))" }} />;
+              })}
+            </svg>
+          </div>
+        );
+      })()}
 
       {/* etincelles du FLIP (sur la tranche, autour de la mi-rotation) */}
       {(() => {
@@ -277,8 +270,26 @@ export const SenegalScene1IntroCoin: React.FC = () => {
         );
       })()}
 
-      {/* PAS de label sur Face A : la gravure VIVANTE (navire charge+repart, ocean qui noircit)
-          raconte deja "multinationales qui pompent et repartent". L'image precede l'oreille (doctrine). */}
+      {/* === LABEL DE RECIT transitoire SOUS la piece (nomme le recit, apparait en fade 2-3s puis disparait) ===
+           Face A = "LA MALEDICTION" · Face B = "L'ELDORADO". Ponctuation, pas annotation. */}
+      {!broken && (() => {
+        // Face A : apparait ~2s, tient jusqu'a ~9s, disparait avant la suite. Face B : apparait apres le flip.
+        const aOp = showA
+          ? interpolate(frame, [tl(2.0), tl(3.0), tl(8.5), tl(9.5)], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : 0;
+        const bOp = !showA
+          ? interpolate(frame, [F_FLIP_E + 6, F_FLIP_E + 20, F_FISSURE - 18, F_FISSURE - 6], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : 0;
+        const op = showA ? aOp : bOp;
+        if (op < 0.01) return null;
+        const word = showA ? "LA MALÉDICTION" : "L'ELDORADO";
+        return (
+          <div style={{ position: "absolute", left: 0, right: 0, top: H * 0.85, textAlign: "center", opacity: op, transform: `translateY(${(1 - op) * 10}px)`, pointerEvents: "none",
+            fontFamily: "Cinzel, serif", fontSize: 52, fontWeight: 700, letterSpacing: "0.24em", color: showA ? "#d98a5c" : OCRE, textShadow: "0 2px 16px #000, 0 0 30px rgba(0,0,0,0.8)" }}>
+            {word}
+          </div>
+        );
+      })()}
 
       {/* verdict — "L'ENVERS DU DECOR" (epouse "la realite se joue ailleurs") */}
       {verdictOp > 0.01 && (
