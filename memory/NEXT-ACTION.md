@@ -4,6 +4,16 @@
 
 ---
 
+## ⭐⭐ PISTE STRATÉGIQUE FRAÎCHE (2026-06-22) — Shorts SVG ↔ Longs Mapbox (Hub & Spoke)
+> 🗂️ POINT D'ENTRÉE : `STARTER-PROMPT-strategie-shorts-svg-hub-spoke.md` (idée Aziz + analyse Gemini + 3 angles
+> morts repérés par Claude + le chantier neuf à explorer). Aziz veut s'y lancer « pendant que c'est frais ».
+> En bref : 2 formats séparés MÊME niche — longs analytiques (Mapbox/3D, autorité) + shorts SVG génératifs
+> (paper-cut/blueprint, pédagogiques, multi-plateforme, gardent la chaîne vivante). PAS de la dilution = Hub & Spoke.
+> ⚠️ AVANT d'industrialiser : (1) créer une SIGNATURE VISUELLE commune longs↔shorts · (2) tunnel = NOTORIÉTÉ
+> cross-plateforme, pas conversion directe · (3) garder le gate [[SUJET-PRIME-SUR-PRODUCTION]] sur les shorts.
+> CHANTIER NEUF = **assembler/monter PLUSIEURS scènes SVG en récit court** (storyboard de short + transitions/collage
+> entre scènes — jamais testé, on a des scènes ISOLÉES). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
+
 ## ⭐⭐ REPRISE (2026-06-21) — SYSTÈME CARTO V5 (dire « continue carto »)
 
 > 🗂️ POINT D'ENTRÉE UNIQUE : `REPRISE-SYSTEME-CARTO-V5.md` (état exact, ce qui marche, ce qui reste).
