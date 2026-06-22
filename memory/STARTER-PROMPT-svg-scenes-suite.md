@@ -43,6 +43,12 @@ Les 3 pistes ci-dessous ont été TRAITÉES cette session sur le vrai script Sou
 - **REMAP COULEUR côté code** (décliner une palette sans rappeler le LLM) + **CLAUDE = ÉDITEUR SVG** (corriger un élément raté
   à la main, ex fumée réécrite, zéro appel API). → le LLM = matière première, pas contrainte.
 - Modèle : sur une scène CONCRÈTE/ÉPURÉE à objets nets, **GPT-5.5 redevient compétitif/meilleur** (Gemini = atmosphérique).
+- **AGENT VIERGE prouvé une 2e fois** (registre `papier-decoupe` NEUF, scène graine→arbre, A→Z sans solution soufflée) →
+  le système est reproductible PAR UN TIERS, pas juste par moi.
+- ⭐ **FINITION ORCHESTRÉE prouvée** (vision Aziz pour scaler) : agent = gros œuvre, Claude+Aziz = la VIE ajoutée en code
+  (balancement vent · soleil actif · fruit qui tombe · feuilles qui flottent) + **SFX NATURE générés ElevenLabs** (`public/_shared/sfx/nature/`).
+- 📼 **Rendus de référence gardés** : `out/_r-and-d/svg-scenes-refs/` (README + .mp4, marqués RÉFS R&D pas livrables).
+- **5 registres chauds/doux prouvés au total** : braise-or, or-jour, papier-decoupe (+ medaille/blueprint/encre/tactique des sessions avant).
 
 ## ⭐ CE QUI RESTE À EXPLORER (prochaine session)
 

@@ -102,7 +102,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 - INTERDIT : `CSS transition:`, `setTimeout`, `@keyframes`, `requestAnimationFrame`.
 - Safe zones 1920×1080 : marges 100/60px, sous-titres Y≥850, texte min 32px. Atlas sprites : Spring Pop, `Math.max(0, localF)`, RGB check.
 - **Netteté = full HD only** : juger qualité visuelle UNIQUEMENT sur render `scale=1`. Les renders `scale=0.4-0.5` sont flous et font douter à tort. Avant de conclure « flou/moche » → rendre 1 frame full HD.
-- **Mouvement = intention narrative** : un élément qui bouge sur la carte est OK seulement avec intention claire (prendre un territoire, fuir, avancer). Le « glissement sans but » = le vrai problème, pas le mouvement.
+- **Mouvement = intention narrative** : un élément qui bouge sur la carte est OK seulement avec intention claire (prendre un territoire, fuir, avancer). Le « glissement sans but » = le vrai problème, pas le mouvement. **Corollaire (objet inerte)** : un objet qui ne se déplace pas dans la vraie vie (lingot, coffre, pierre, bâtiment, outil) NE GLISSE JAMAIS — il disparaît par fade, change de couleur, ou s'illumine sur place. SEULS les véhicules (navire, avion, voiture, char) glissent de façon crédible.
 
 **TTS ElevenLabs français** (scanner AVANT chaque appel) : (1) ZÉRO participe passé « é/ée » en fin de groupe (reformuler : « la terreur le saisit »). (2) ZÉRO « ont + voyelle » → passé simple. (3) noms de villes « s » final → phonétique si besoin. (4) nombres en lettres (« 1311 » → « treize cent onze »). (5) lister tous les « é/ée » avant génération.
 
