@@ -189,6 +189,7 @@ import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
 import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
 import { VilleCompare } from "./projects/_rnd/svg-scenes/VilleCompare";
 import { JetonsCompare } from "./projects/_rnd/svg-scenes/JetonsCompare";
+import { Donut60Proto } from "./projects/_rnd/svg-scenes/Donut60Proto";
 import { EtatMajorCompare } from "./projects/_rnd/svg-scenes/EtatMajorCompare";
 import { VilleGeminiAnimee } from "./projects/_rnd/svg-scenes/VilleGeminiAnimee";
 import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/EtatMajorGptAnimee";
@@ -208,6 +209,7 @@ import { DemiLuneBraiseAnimee } from "./projects/_rnd/svg-scenes/DemiLuneBraiseA
 import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
 import { Img2SvgCompare } from "./projects/_rnd/svg-scenes/Img2SvgCompare";
 import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
+import { GgwD3GeoMap } from "./projects/_rnd/svg-scenes/GgwD3GeoMap";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
@@ -2169,6 +2171,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="RND-VilleCompare" component={VilleCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-JetonsCompare" component={JetonsCompare} durationInFrames={90} fps={30} width={1920} height={1080} />
+        <Composition id="RND-Donut60Proto" component={Donut60Proto} durationInFrames={90} fps={30} width={1920} height={1080} />
         <Composition id="RND-EtatMajorCompare" component={EtatMajorCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-EtatMajorGptAnimee" component={EtatMajorGptAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
         <Composition id="RND-VilleGeminiAnimee" component={VilleGeminiAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
@@ -2193,6 +2196,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
         <Composition id="RND-Img2SvgCompare" component={Img2SvgCompare} durationInFrames={60} fps={30} width={2160} height={1920} />
         <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
+        <Composition id="RND-GgwD3GeoMap" component={GgwD3GeoMap} durationInFrames={150} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
