@@ -356,6 +356,19 @@ le SVG AVEC les éléments animables prévus pour le geste (calé sur la voix), 
 **Preuves** : `out/_r-and-d/svg-anime-coin/` (protos mp4 + SVG). Code : `src/projects/_proto-16-9/SenegalCoinFaceA_SVG.tsx`
 (+ probe `SenegalCoinSVGProbe.tsx`). Geste prouvé : navire charge ("pompent") puis fade ("repartent"), océan respire, derrick pompe.
 
+**⛔ 3 ERREURS D'EXÉCUTION récurrentes (repérées par Aziz, scène 1 — à VÉRIFIER à chaque branchement/assemblage) :**
+1. **AUDIO mal calé** : `narration-v3-VALIDEE.mp3` est la narration COMPLÈTE (492s). Un segment de scène commence
+   à un OFFSET absolu (ex: duel à 20.08s). Mettre `OFFSET=0` → l'audio démarre sur "avril 2026" (début du fichier).
+   TOUJOURS `startFrom=<offset_absolu>` ET `endAt=<fin_phrase>` (sinon enchaîne sur la scène suivante). Le segment
+   absolu vient de `senegal-scene1-alignment.py` (WINDOW_OFFSET) ; vérifier par transcription whisper des 1res/dernières s.
+2. **TAILLE rabaissée au branchement** : un proto validé à DIAM=920 repassait à 620 (valeur par défaut du template)
+   en branchant dans le CoinFlip. Re-vérifier la taille validée après tout branchement de composant.
+3. **Asset FANTÔME après changement de source** : en passant Face B du bitmap au SVG, le bloc FISSURE référençait
+   encore l'ancien `<image href={COIN_B}>` → la pièce "revenait" au bitmap à la cassure. Après tout changement
+   d'asset/source : GREP toutes les références à l'ancien asset dans le fichier (pas juste le branchement principal).
+Cause commune : on modifie le point d'entrée mais pas TOUS les usages. → auto-vérifier les frames clés (début, milieu,
+transition, fin) AVANT de présenter — Aziz a attrapé les 3 sur la vidéo, pas moi.
+
 ## 🎬 SCÈNE & CONTINUITÉ
 
 ### 2026-06-21 — ⭐⭐ CARTE SOUVERAIN : jetons géo-ancrés + projeter un drapeau SANS dériver (3 méthodes, 2 pièges)
