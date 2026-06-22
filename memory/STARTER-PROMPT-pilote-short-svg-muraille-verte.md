@@ -47,6 +47,21 @@ Verdict CLAUDE (Aziz tranche) :
 - ⭐ BRAISE-OR = le plus fort + le plus « GeoAfrique » : arc sec→vivant (ciel ardent, terre sombre, or qui luit, racine doree vivante), meme monde chromatique que les longs Mapbox. **RECO.**
 - ENCRE = elegant/premium mais austere/froid, plus statique → ideal Atlas historique, moins pour porter l'espoir/la vie d'un sujet environnemental.
 
+## ⭐⭐ HOOK (Beat 1) PROUVE + ANIME — VRAIE CARTE d3-geo (2026-06-22, idee Aziz)
+Probleme decouvert : Gemini ne sait PAS dessiner une geo EXACTE en SVG (fausse carte). SOLUTION (idee Aziz) : la geo = d3-geo/NOUS,
+les arbres = Gemini. Combinaison gagnante prouvee :
+- `public/_shared/geo-data/ggw/ggw-countries.geojson` = 11 pays ceinture Senegal->Djibouti (Natural Earth 110m, 14KB).
+- `src/projects/_rnd/svg-scenes/GgwD3GeoMap.tsx` : geoMercator + vrai trace ceinture (waypoints lon/lat) + arbres geo-ancres.
+- ⭐ TRANSFO 3/4 ISO (`rotate(-34) scale`) : bande horizontale -> DIAGONALE qui REMPLIT le 9:16 vertical (resout l'ecrasement).
+  Arbres contre-pivotes (+34) pour rester droits. Ombre portee iso + braise-or matere + vignette + labels des 11 pays au centroide.
+- ⭐ ARBRES = les VRAIS arbres Gemini (iteration top-down) reutilises (`geminiTrees.ts`), PAS des cercles maison (corrige par Aziz :
+  "reutilise la belle matiere LLM"). scale 1.7, 16 arbres.
+- ANIME : apparition ouest->est (spring par index) + LA MORT (f180, 3/4 grisent via filtre grayscale/sepia + retrecissent, survivants 1/4).
+- RENDUS : still iso+arbres `zxh1kj.png` · still mort `ggw-mort.png` · VIDEO hook complet `files.catbox.moe/4s3l37.mp4`.
+- Commits : 60a52e4 (base) + dd853f8 (carte iso) + 684e2e7 (anime). Branche `feat/shorts-svg-muraille-verte`.
+- ▶ RESTE sur ce hook : recadrer Djibouti/Erythree (frolent bord droit) · version ENCRE · brancher sur l'audio · raccord -> Beat 2.
+- ⚠️ 2 OPTIONS de hook coexistent : (A) bande stylisee Gemini `jn6xds.png` (pas de vraie geo) · (B) ⭐ vraie carte d3-geo (ci-dessus, PREFEREE).
+
 ## DOSSIER FACTUEL (fact-check Tavily 2026-06-22, SOURCE pour le script)
 - Mur 2007 = ligne droite d'arbres 8000 km, 11 pays, Senegal→Djibouti. **A ECHOUE** : « scientifiquement une idee desastreuse » (Dennis Garrity, ex-dir World Agroforestry Center, a NPR avril 2026) ; Nigeria 3/4 de 50 M arbres morts en 2 mois ; Senegal 1 zone sur 36 plantees plus verte que naturellement (Land Use Policy via Yale E360 oct 2025).
 - Avancement : ~4 % zone stricte (4 Mha/100 Mha, UNCCD) ; ~15-30 % au sens large (mais 12 Mha = Ethiopie hors zone). 14,2 Md$ promis / 33 Md$ necessaires, « tres peu est alle au Mur ».
