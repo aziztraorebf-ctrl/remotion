@@ -336,9 +336,13 @@ tout élément qui dépasse le cercle → artefact "navire coupé / qui bave sur
 élément "part/disparaît" : **avance LÉGÈRE (translate faible) + FADE OUT (opacity→0)**, jamais une sortie
 hors champ. Règle valable pour toute scène SVG/clippée.
 
-**Comparatif outils (testé)** : Gemini SVG = propre+léger+structuré (GAGNANT pour l'anim). GPT-5.5 = à tester
-(provider OpenRouter OpenAI down le 21/06, seul gpt-4o répondait — inutile pour SVG premium). Recraft
-vectorize/generate = magnifiques MAIS 1-3 Mo, 4700-5700 paths, non-groupés → INANIMABLE par partie, lourds.
+**Comparatif outils (testé 21/06)** : **Gemini SVG = GAGNANT NET pour le SVG de SCÈNE** (riche, dense,
+groupes sémantiques, ~20Ko). GPT-5.5 testé en API DIRECTE OpenAI (`api.openai.com`, modèle `gpt-5.5`,
+`max_completion_tokens`) → SVG bien trop SCHÉMATIQUE (12 paths vs 119 chez Gemini sur la même Face B arbre).
+⚠️ Note importante : c'est l'INVERSE du breakdown JSON (où GPT-5.5 écrase Gemini). Donc : SVG de scène → Gemini ;
+breakdown JSON → GPT-5.5. ⚠️ OpenRouter avait son provider OpenAI DOWN tout le 21/06 ("Provider returned error"
+sur tous les gpt-5.x) → passer par la clé OpenAI DIRECTE (`OPENAI_API_KEY` dans .env) quand OpenRouter flanche.
+Recraft vectorize/generate = magnifiques MAIS 1-3 Mo, 4700-5700 paths, non-groupés → INANIMABLE par partie, lourds.
 Donc : Recraft = bon pour un asset fixe vectorisé, PAS pour de l'animation par parties.
 
 **Piège prompt** : "crée une PIÈCE D'OR" force le fond doré/parchemin dans l'intention même (Gemini dérive
@@ -385,6 +389,16 @@ loss < 0.3), PAS Whisper. Whisper **dérive de ~0.4s** : sur le hook Sénégal i
 forced alignment à 11.84s (le vrai). 0.4s d'écart = un SFX/animation qui tombe à côté. Script de réf :
 `scripts/senegal-hook-alignment.py` (texte = TTS exact SANS tags, audio = extrait). Règle : caler l'animation
 pour **culminer ~1s AVANT** le mot-clé (l'image précède l'oreille = vivacité ; en retard = sensation de lenteur).
+
+⚠️ **NUANCE (2026-06-21, scène gisements Sénégal) — un fichier d'alignment peut être FAUX SUR LE CONTENU,
+pas juste imprécis.** Le `scene1-alignment.json` (ElevenLabs) prétendait « opéré par BP » à 52s alors que la
+voix RÉELLE dit « un gisement, il en a trouvé trois » (vérifié par Whisper sur le segment + écoute). J'allais
+coder une jauge **60%** alors que la voix dit **18%** (Petrosen détient 18% de Sangomar ; le 60% est une AUTRE
+scène, après 104s). **Donc** : avant de caler une scène sur un fichier d'alignment hérité, TRANSCRIRE le segment
+réel (Whisper API `scripts/tools/whisper-align.py` suffit pour le TEXTE/structure) et confronter au fichier.
+Whisper = bon pour le TEXTE et la structure des actes ; ElevenLabs forced-align = pour le CALAGE fin une fois
+le bon texte établi. Les deux ne s'opposent pas : Whisper vérifie QUOI/QUAND grossier, ElevenLabs affine le QUAND.
+Cas d'école de la règle « fichiers de navigation périment → vérifier l'état RÉEL du livrable » appliquée à l'audio.
 
 ### 2026-06-18 — DA-brief VIDÉO : analyse d'écart vers refs, Gemini = signal filtré
 

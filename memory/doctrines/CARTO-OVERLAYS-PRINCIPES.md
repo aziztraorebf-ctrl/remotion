@@ -79,6 +79,10 @@ Pour « peindre » un drapeau/une identité sur la silhouette d'un pays, **3 mé
 **Brique définitive** : `src/projects/_shared/mapbox/MapboxCountryFlagDecal.tsx`
 `<MapboxCountryFlagDecal mapRef={...} iso="SEN" geoNames={["Senegal"]} drawFlag={(s)=>drawFlagCanvas("SEN",s)} />`
 
+⚠️ **Pays à DOM-TOM (France, etc.) → prop `clipBbox` OBLIGATOIRE.** Dans Natural Earth, « France » inclut
+Guadeloupe..La Réunion (bbox 117° de large) → la métropole devient minuscule, le drapeau s'étale sur du vide
+= drapeau BLANC. Passer `clipBbox={[-5.5,41.0,9.8,51.5]}` (métropole). Détail : [[key-learnings-flag-decal-domtom]].
+
 ### Hiérarchie de remplissage pays (3 niveaux, du discret au fort)
 1. **Aplat uni** (or/navy) — neutre.
 2. **Couleurs nationales** (bandes du drapeau, SANS emblème) — pays SECONDAIRE évoqué. Carte vivante quand on
