@@ -123,13 +123,23 @@ export const GgwD3GeoMap: React.FC = () => {
           <path d={traceD} fill="none" stroke={OR} strokeWidth={6} strokeLinecap="round"
             opacity={0.95} style={{ filter: "drop-shadow(0 0 10px rgba(232,180,74,0.7))" }} />
 
-          {/* arbres geo-ancres, CONTRE-PIVOTES (+34deg) pour rester droits, apparition ouest->est */}
+          {/* arbres geo-ancres, CONTRE-PIVOTES (+34deg) pour rester droits, apparition ouest->est PUIS la MORT */}
           {trees.map((tr, i) => {
             const birth = 30 + i * 3;
             const pop = spring({ frame: frame - birth, fps, config: { mass: 1, damping: 12, stiffness: 120 } });
             if (pop < 0.01) return null;
+            // LA MORT : a partir de f180, 3/4 grisent+retrecissent ; survivants = 1 arbre sur 4 (i%4===2)
+            const survivor = i % 4 === 2;
+            const death = survivor ? 0 : interpolate(frame, [180, 180 + (i % 6) * 5 + 14], [0, 1],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+            const scale = 1.7 * pop * interpolate(death, [0, 1], [1, 0.32]);
+            // filtre : vivant = couleur Gemini ; mort = desature + bruni (grayscale + sepia sombre)
+            const deathFilter = death > 0
+              ? `grayscale(${death}) sepia(${death * 0.6}) brightness(${1 - death * 0.55})`
+              : undefined;
             return (
-              <g key={i} opacity={pop} transform={`translate(${tr.x} ${tr.y}) rotate(34) scale(${1.7 * pop})`}>
+              <g key={i} opacity={pop} transform={`translate(${tr.x} ${tr.y}) rotate(34) scale(${scale})`}
+                 style={{ filter: deathFilter }}>
                 <Tree variant={i} />
               </g>
             );
