@@ -188,9 +188,6 @@ import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_
 import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
 import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
 import { VilleCompare } from "./projects/_rnd/svg-scenes/VilleCompare";
-import { JetonsCompare } from "./projects/_rnd/svg-scenes/JetonsCompare";
-import { Donut60Proto } from "./projects/_rnd/svg-scenes/Donut60Proto";
-import { BarilHeroProto } from "./projects/_rnd/svg-scenes/BarilHeroProto";
 import { EtatMajorCompare } from "./projects/_rnd/svg-scenes/EtatMajorCompare";
 import { VilleGeminiAnimee } from "./projects/_rnd/svg-scenes/VilleGeminiAnimee";
 import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/EtatMajorGptAnimee";
@@ -214,6 +211,7 @@ import { GgwD3GeoMap } from "./projects/_rnd/svg-scenes/GgwD3GeoMap";
 import { GgwD3GeoMapEncre } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncre";
 import { GgwD3GeoMapSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapSFX";
 import { GgwD3GeoMapEncreSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncreSFX";
+import { GgwSvgTestCoupe, GgwSvgTestTop } from "./projects/_rnd/svg-scenes/GgwSvgTestCompare";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
@@ -273,8 +271,6 @@ import { PrototypeD3StackedBars } from "./projects/souverain/senegal-petrole-gaz
 import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/mapbox/MapboxCameraLab";
 import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
-import { SceneGisementsV5 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5";
-import { SceneGisementsV5Effets } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV5Effets";
 import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
@@ -1341,22 +1337,6 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
-            id="SceneGisementsV5"
-            component={SceneGisementsV5}
-            durationInFrames={1560}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
-            id="SceneGisementsV5Effets"
-            component={SceneGisementsV5Effets}
-            durationInFrames={1560}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
             id="SceneGisementsV3"
             component={SceneGisementsV3}
             durationInFrames={2120}
@@ -2174,9 +2154,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="RND-VilleCompare" component={VilleCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-JetonsCompare" component={JetonsCompare} durationInFrames={90} fps={30} width={1920} height={1080} />
-        <Composition id="RND-Donut60Proto" component={Donut60Proto} durationInFrames={90} fps={30} width={1920} height={1080} />
-        <Composition id="RND-BarilHeroProto" component={BarilHeroProto} durationInFrames={100} fps={30} width={1920} height={1080} />
         <Composition id="RND-EtatMajorCompare" component={EtatMajorCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-EtatMajorGptAnimee" component={EtatMajorGptAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
         <Composition id="RND-VilleGeminiAnimee" component={VilleGeminiAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
@@ -2205,6 +2182,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GgwD3GeoMapEncre" component={GgwD3GeoMapEncre} durationInFrames={250} fps={30} width={1080} height={1920} />
         <Composition id="RND-GgwD3GeoMapSFX" component={GgwD3GeoMapSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
         <Composition id="RND-GgwD3GeoMapEncreSFX" component={GgwD3GeoMapEncreSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GgwSvgTestCoupe" component={GgwSvgTestCoupe} durationInFrames={60} fps={30} width={1620} height={960} />
+        <Composition id="RND-GgwSvgTestTop" component={GgwSvgTestTop} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />

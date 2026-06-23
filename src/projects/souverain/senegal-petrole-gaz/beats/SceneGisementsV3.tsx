@@ -269,22 +269,21 @@ const Sfx: React.FC<{ at: number; src: string; dur?: number; volume?: number }> 
 );
 
 const SFX = {
-  ping: "_shared/sfx/camera/sfx-map-ping.mp3",        // apparition jeton (cliquetis discret)
-  swoosh: "_shared/sfx/camera/sfx-swoosh-zoomin.mp3", // LE dezoom vers le plein large (1 seul, narratif)
+  ping: "_shared/sfx/camera/sfx-map-ping.mp3",   // apparition jeton (cliquetis discret)
+  barilFill: "_shared/sfx/ui/sfx-baril-fill.mp3", // remplissage du baril 60% (liquide qui monte)
 };
 
 // SFX EPURE (retour Aziz) : on NE met PAS un son a chaque mouvement de camera (saturation).
-// Garder : (1) le PING d'apparition de chaque jeton/gisement · (2) UN swoosh fort, bien time,
-// sur le dezoom monde (le moment ou on passe en plein large pour montrer les flux export).
-// Retire : swooshs de plongee, whooshs de retour, arrows de flux, pops de plaque.
+// Garder : (1) le PING d'apparition de chaque jeton/gisement · (2) le bruit de REMPLISSAGE du baril.
+// Retire : TOUS les swooshs/whooshs de camera (mal cales, n'ajoutent rien), arrows de flux, pops.
 const SceneSFX: React.FC = () => (
   <>
     {/* ping a l'apparition de chaque gisement (ponctue la decouverte) */}
     <Sfx at={165} src={SFX.ping} dur={16} volume={0.5} />  {/* SANGOMAR */}
     <Sfx at={575} src={SFX.ping} dur={16} volume={0.5} />  {/* GTA */}
     <Sfx at={1165} src={SFX.ping} dur={16} volume={0.5} /> {/* YAKAAR */}
-    {/* LE swoosh : dezoom vers le plein large (f880, debut du recul monde). Bien time, marque le sens. */}
-    <Sfx at={880} src={SFX.swoosh} dur={26} volume={0.5} />
+    {/* remplissage du baril 60% : liquide qui monte, cale sur le remplissage (f1640-1790) */}
+    <Sfx at={1640} src={SFX.barilFill} dur={150} volume={0.42} />
   </>
 );
 
@@ -454,7 +453,7 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
         {frame < A2 + 10 && a1MarkerOp > 0.01 && (
           <>
             <Leader x1={sx} y1={sy} x2={PLAQUE_X + 10} y2={560 + 44} op={a1PlaqueOp} />
-            <GisementMarker kind="oil" x={sx} y={sy} scale={a1Scale} frame={frame} localF={frame - a1MarkerStart} appeared={frame - a1MarkerStart > 24} uid="sangomar" zoom={zoom} oilImgSrc={staticFile(OIL_IMG)} />
+            <GisementMarker kind="oil" x={sx} y={sy} scale={a1Scale} frame={frame} localF={frame - a1MarkerStart} appeared={frame - a1MarkerStart > 24} uid="sangomar" zoom={zoom} />
           </>
         )}
 
@@ -534,6 +533,16 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
         <GeoCountryPlaque frame={frame} name="GTA" color={GOLD} stat="Gaz, depuis 2025" source="Opérateur : BP (Royaume-Uni)" appearAt={600} hideAt={724} pos={{ x: PLAQUE_X, y: 380 }} />
       )}
 
+      {/* ── ACTE 2 — plaques DESTINATION qui apparaissent quand la fleche TOUCHE le pays ──
+          France (fleche Europe arrive ~f1010) · Inde (fleche Asie arrive ~f1060). Posees AU POINT
+          d'atterrissage (geo-ancrees), petites (juste le nom + role) = vie sur les pays partenaires. */}
+      {frame >= 1000 && frame < A3 && (
+        <GeoCountryPlaque frame={frame} name="FRANCE" color={IVORY} stat="Client gaz" appearAt={1008} hideAt={A3} pos={{ x: ex, y: ey - 30 }} />
+      )}
+      {frame >= 1050 && frame < A3 && (
+        <GeoCountryPlaque frame={frame} name="INDE" color={GOLD} stat="Client gaz" appearAt={1058} hideAt={A3} pos={{ x: asx, y: asy - 30 }} />
+      )}
+
       {/* ── ACTE 3 — plaque YAKAAR deportee (ocean gauche) ───────────────────── */}
       {/* La plaque Yakaar disparait AVANT le pivot 60% (sinon elle chevauche l'amorce "sur tout cet argent").
           hideAt=PIV-10 -> elle s'efface pendant que la voix finit "...la plus grosse surprise". */}
@@ -543,8 +552,6 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
     </>
   );
 };
-
-const OIL_IMG = "souverain/senegal-petrole-gaz/scene-gisements/jeton-petrole-offshore-square.png";
 
 export const SCENE_GISEMENTS_V3_FRAMES = END;
 export default SceneGisementsV3;
