@@ -2198,7 +2198,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GgwHookNarr3" component={GgwHookNarr3} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwHookNarr4" component={GgwHookNarr4} durationInFrames={60} fps={30} width={1920} height={840} />
         <Composition id="RND-GgwTreesCompare" component={GgwTreesCompare} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={210} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />

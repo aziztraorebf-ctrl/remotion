@@ -6,10 +6,10 @@
 
 ## SCRIPT (texte voix off, beat par beat)
 
-**BEAT 1 — HOOK (~0-12s)**
+**BEAT 1 — HOOK (~0-12s)** [LOCK v2 2026-06-23]
 > Voici le plus grand projet ecologique de la planete.
 > Un mur d'arbres de huit mille kilometres, du Senegal jusqu'a Djibouti, pour barrer la route au desert.
-> Un reve immense. Et pourtant : il a presque entierement echoue. Pourquoi ?
+> Un reve immense. Et pourtant, il s'effondre presque partout. Pourquoi ?
 
 **BEAT 2 — L'ECHEC (~12-28s)**
 > L'idee de depart : aligner des arbres, en ligne droite, face au sable.
@@ -29,10 +29,10 @@
 > L'eau s'enfonce dans le sol... et reveille des racines encore vivantes, endormies sous le sable.
 > Sans planter un seul arbre.
 
-**BEAT 5 — LA PREUVE (~60-75s)**
+**BEAT 5 — LA PREUVE (~60-75s)** [LOCK v3 2026-06-23]
 > Le resultat ? Au Niger, deux cents millions d'arbres reviennent.
-> Pas plantes. Revenus. Pour vingt dollars l'hectare.
-> Et la ou ces cuvettes captent la pluie, l'eau remonte dans les puits — parfois de dix-sept metres.
+> Aucune main ne les a plantes la. La nature les a fait revenir. Pour vingt dollars l'hectare.
+> Et la ou les paysans creusent ces trous qui retiennent la pluie, l'eau remonte dans les puits. Parfois de dix-sept metres.
 
 **BEAT 6 — OUTRO + CTA (~75-85s)**
 > La leçon tient en une phrase : on n'arrete pas le desert en lui livrant bataille de front.
