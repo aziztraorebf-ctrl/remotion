@@ -53,6 +53,9 @@
 6. Mettre à jour ce tableau (scène ✅).
 
 ## POINTEURS
+- ⭐ **RENDERS FINAUX + reste à faire + plan assemblage** : `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`
+  (source de vérité des parties rendues, anti-fouillis). 3 parties faites (hook + intro coin-flip + gisements,
+  audio 0→122s = 25%) ; restent 6 scènes (122→492s, ~75%). PROCHAINE = scène 2 Norvège/Botswana.
 - Doctrine : `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md`.
 - Script V3 (8 scènes, texte exact) : `out/episodes/senegal-petrole-gaz/_audio-v3/SCRIPT-V3-senegal.md`.
 - Audio V3 : `public/souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3`.
