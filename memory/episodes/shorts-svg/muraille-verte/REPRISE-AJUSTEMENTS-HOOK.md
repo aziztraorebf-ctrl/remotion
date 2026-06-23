@@ -45,6 +45,24 @@ Technique = `stroke-dasharray`=longueur + `stroke-dashoffset` anime L->0 (= la m
   (a) pas de SFX "fletrissement organique" dedie ; (b) `loop` audio fonctionne en render headless (a graver) ; (c) l'agent
   avait besoin de l'IMAGE-CIBLE precise (wuar68) pour viser la bonne esthetique — sans elle il fait du propre-plat.
 
+## ⭐⭐ ECART 3 (idee Aziz, peut-etre LE plus puissant) — REVENIR A LA VUE DE FACE / COUPE
+Aziz : la vue comme dans `REF-3-registres-vue-face.png` (= wuar68, sauvegarde dans cet episode + `public/_rnd/ref-3-registres-vue-face.png`)
+est peut-etre PLUS PUISSANTE que le top-down. RAISON (analyse Claude, d'accord) : notre angle est SOUTERRAIN.
+- Top-down (carte) montre OU (geo, impersonnel, plan large). Vue de COUPE montre CE QUI SE PASSE + le DESSOUS du sol.
+- Notre coeur = "la solution etait SOUS le sable" (racines dormantes, eau qui s'infiltre, nappe +17m). SEULE la coupe montre ca.
+- Coupe = 2 etages animables separement (ciel/surface + sous-sol) + gros plan incarne (espoir) vs carte = plan large froid.
+ARBITRAGE PROPOSE (ne pas choisir, ENCHAINER) : carte top-down = le HOOK (ampleur : 8000km, 11 pays, ca rate) ->
+vue de COUPE = le COEUR (B3 malentendu, B4 demi-lune, B5 racine qui repart + nappe +17m). 2 vues, 2 roles.
+ADAPTATION SCRIPT -> COUPE (idees) :
+- "arbres assoiffes dans un sol mort" = arbre de face qui fane, racines courtes, sol sec craquele en coupe.
+- "le desert ne s'arrete pas avec un mur" = barrer l'image fausse -> sol qui se degrade PAR EN DESSOUS.
+- "cuvette qui capte la pluie" = la DEMI-LUNE EN COUPE (DEJA PROUVEE : DemiLuneEncreColorisee/BraiseAnimee).
+- ⭐ "reveille des racines deja vivantes sous le sable" = le SOUS-SOL s'illumine, racines grises -> vert/or. Plan que SEULE la coupe permet.
+- "la nappe remonte de 17 metres" = jauge VERTICALE dans le sous-sol, l'eau qui monte. Lisible uniquement en coupe.
+ℹ️ ON A DEJA cette vue = `DemiLuneEncreColorisee.tsx` / `DemiLuneBraiseAnimee.tsx` (beat 4). RESTE = la pousser au niveau
+   GRAVURE-naturaliste (ecart 1) + lui appliquer le TRACE progressif (ecart 2). La vue "se dessine bit-by-bit" marche ENCORE
+   MIEUX en coupe (planche d'etude : ciel -> ligne de sol -> arbre qui monte / racines qui descendent -> eau -> cotes, au rythme de la voix).
+
 ## RESTE APRES LE HOOK
 Storyboard v2 (vision Aziz : B2 mort stylisee, B3 image-fausse-barree, B4 demi-lune verticale native, portraits Rinaudo/
 Sawadogo N&B, B5 demultiplication, B6 outro boucle) + produire beats 2-6 dans le(s) registre(s) retenu(s) + assemblage 2 versions.
