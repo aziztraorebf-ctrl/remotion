@@ -25,7 +25,7 @@
 | Scène | Sujet | V1 correspondant | État V3 | Composant V3 |
 |---|---|---|---|---|
 | **0 — HOOK** | Avril 2026, 8M$/jour → fracture (limoge) → recomposition (la vérité) | Beat0Accroche | ✅ **FAIT** (catbox yg9k78) | `src/projects/_proto-16-9/SenegalScene0.tsx` (+ MapDrawParchemin + Fracture) |
-| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip duel des récits, 2 faces SVG animé, `scene1-intro-coin-FINAL.mp4`, validée 2026-06-22, catbox ky7j6l) · reste BARIL 60% + GISEMENTS carte. Détail → `REPRISE-SCENE-1.md` | `SenegalScene1IntroCoin.tsx` + `SenegalCoinFaceA/B_SVG.tsx` |
+| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip) · **GISEMENTS ✅✅ SCÈNE FINALE VALIDÉE AZIZ 2026-06-22** — `SceneGisementsV3.tsx` SEUL composant (V5/V5Effets/protos SUPPRIMÉS). 3 actes calés voix (Sangomar/GTA/Yakaar) + drapeau SEN projeté + jetons SVG GPT-5.5 + SFX + **pivot 60% en DATA-HERO (baril-héros qui se remplit, plein écran, grille navy)**. Livrable : `out/episodes/senegal-petrole-gaz/scene-gisements-FINAL.mp4` (catbox e74r6n avec musique). Détail → `REPRISE-SCENE-1.md` | `SenegalScene1IntroCoin.tsx` (intro) + `SceneGisementsV3.tsx` (gisements, FINAL) |
 | 2 | leçon Norvège/Congo/Botswana | fin Acte1 / Acte2 | ⬜ | — |
 | 3 | le contrat (terrain 1) | Beat11 | ⬜ | — |
 | 4 | le piège de la dette (terrain 2) | Beat12 (calebasse 132%) | ⬜ | — |
