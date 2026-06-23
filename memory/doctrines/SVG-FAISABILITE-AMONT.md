@@ -66,6 +66,14 @@ variable modele). Cobaye top-down (image `jn6xds.png`, 3 panneaux : gemini-v1 / 
 -> Pour corriger un SVG : preferer l'ITERATION du modele qui l'a fait (surtout si organique=Gemini), avec corrections precises.
 Le panneau "gemini-itere" = la BASE DE HOOK validee du pilote Grande Muraille Verte (SVG reel, sans fausse carte).
 
+## ⚠️ TROU CONFIRME (2026-06-22, test agent vierge sur le hook encre) — DONNER L'IMAGE-CIBLE PRECISE
+Un agent vierge a refait le hook en ENCRE du 1er coup (doctrine reproductible ✅) MAIS a produit du vectoriel PLAT
+(aplats propres) au lieu de la GRAVURE-naturaliste voulue (hachures, trait vivant, lignes de construction) — PARCE QU'IL
+N'AVAIT PAS l'image-cible de reference precise sous les yeux. Le mot "registre encre" ne suffit pas : il faut joindre
+L'IMAGE qui montre le NIVEAU de gravure attendu. LEÇON : dans tout brief d'agent SVG, joindre l'IMAGE-CIBLE exacte du
+rendu vise (pas juste le nom du registre). Sinon le modele/agent fait du "propre-plat" par defaut. (Cas : ref `wuar68.png`.)
+Bonus gotcha : `loop` sur un `<Audio>` (drone/ambiance plus court que la compo) FONCTIONNE en render headless (non documente avant).
+
 ## REGLE GRAVEE
 "Une idee de scene n'est pas une scene. Avant de coder un SVG, faire dire au LLM-dessinateur SA meilleure approche +
 generer l'image-cible. Voir avant de coder. La diagonale isometrique > le top-down pur pour des objets qui doivent LIRE
