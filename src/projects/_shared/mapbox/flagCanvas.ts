@@ -13,7 +13,7 @@ const PURE_CANVAS_ISOS = new Set([
   "ETH", "KEN", "TZA", "UGA", "RWA", "BDI", "ZAF", "ZWE", "ZMB", "COD", "AGO",
   "MDG", "MOZ", "BWA", "NAM", "MWI", "SOM", "SDN", "SSD", "CAF", "GAB", "COG",
   "CHN", "USA", "GBR", "RUS", "JPN", "BRA", "IND", "SAU", "ARE",
-  "DEU", "FRA", "ESP", "ITA", "PRT", "BEL", "NLD",
+  "DEU", "FRA", "ESP", "ITA", "PRT", "BEL", "NLD", "NOR",
 ]);
 
 // Mapping iso → fichier PNG dans public/_shared/flags/
@@ -297,6 +297,24 @@ function drawBWA(size = 512): HTMLCanvasElement {
   ctx.fillStyle = "#75aadb"; ctx.fillRect(0, 0, size, size);
   ctx.fillStyle = "#000000"; ctx.fillRect(0, h5 * 2, size, h5);
   ctx.fillStyle = "#ffffff"; ctx.fillRect(0, h5 * 2 + size * 0.04, size, h5 - size * 0.08);
+  return c;
+}
+
+function drawNOR(size = 512): HTMLCanvasElement {
+  // Drapeau norvegien : fond rouge, croix nordique blanche, croix bleue par-dessus.
+  // Croix decalee vers la gauche (vexillologie nordique). Proportions adaptees au canvas carre.
+  const c = makeCanvas(size, size); const ctx = c.getContext("2d")!;
+  ctx.fillStyle = "#ba0c2f"; ctx.fillRect(0, 0, size, size);   // rouge
+  const vx = size * 0.36;       // centre vertical de la croix (decale a gauche)
+  const hy = size * 0.5;        // centre horizontal de la croix
+  const wWhite = size * 0.22;   // largeur croix blanche
+  const wBlue  = size * 0.11;   // largeur croix bleue
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(vx - wWhite / 2, 0, wWhite, size);             // bras vertical blanc
+  ctx.fillRect(0, hy - wWhite / 2, size, wWhite);             // bras horizontal blanc
+  ctx.fillStyle = "#00205b";
+  ctx.fillRect(vx - wBlue / 2, 0, wBlue, size);               // bras vertical bleu
+  ctx.fillRect(0, hy - wBlue / 2, size, wBlue);               // bras horizontal bleu
   return c;
 }
 
@@ -606,7 +624,7 @@ const DRAW_REGISTRY: Record<string, (size?: number) => HTMLCanvasElement> = {
   DEU: (s = 512) => { const c = makeCanvas(s, s); const ctx = c.getContext("2d")!; const h3 = s / 3; ctx.fillStyle = "#000000"; ctx.fillRect(0, 0, s, h3); ctx.fillStyle = "#dd0000"; ctx.fillRect(0, h3, s, h3); ctx.fillStyle = "#ffce00"; ctx.fillRect(0, h3 * 2, s, h3); return c; },
   FRA: (s = 512) => { const c = makeCanvas(s, s); const ctx = c.getContext("2d")!; const w3 = s / 3; ctx.fillStyle = "#002395"; ctx.fillRect(0, 0, w3, s); ctx.fillStyle = "#ffffff"; ctx.fillRect(w3, 0, w3, s); ctx.fillStyle = "#ed2939"; ctx.fillRect(w3 * 2, 0, w3, s); return c; },
   ESP: (s = 512) => { const c = makeCanvas(s, s); const ctx = c.getContext("2d")!; const h4 = s / 4; ctx.fillStyle = "#c60b1e"; ctx.fillRect(0, 0, s, h4); ctx.fillStyle = "#ffc400"; ctx.fillRect(0, h4, s, h4 * 2); ctx.fillStyle = "#c60b1e"; ctx.fillRect(0, h4 * 3, s, h4); return c; },
-  ITA: drawITA, PRT: drawPRT, BEL: drawBEL, NLD: drawNLD,
+  ITA: drawITA, PRT: drawPRT, BEL: drawBEL, NLD: drawNLD, NOR: drawNOR,
 };
 
 // ── API publique ────────────────────────────────────────────────────────────────

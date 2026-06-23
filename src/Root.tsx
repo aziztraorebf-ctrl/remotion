@@ -278,6 +278,7 @@ import { MapboxCameraLab, MAPBOX_CAMERA_LAB_FRAMES } from "./projects/_shared/ma
 import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5Demo";
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
+import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneComparaisonV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -1346,6 +1347,14 @@ export const RemotionRoot: React.FC = () => {
             id="SceneGisementsV3"
             component={SceneGisementsV3}
             durationInFrames={2120}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SceneComparaisonV3"
+            component={SceneComparaisonV3}
+            durationInFrames={SCENE_COMPARAISON_V3_FRAMES}
             fps={30}
             width={1920}
             height={1080}
