@@ -1,0 +1,50 @@
+{
+  "idees": [
+    {
+      "titre": "Le continent-règle : 8000 km en un seul trait",
+      "vue": "Top-down schematique, carte non géo-réaliste",
+      "description": "Un grand aplatissement très simple de l'Afrique, presque comme une plaque de carnet. Une bande horizontale hachurée traverse le Sahel de gauche à droite, avec deux petits repères typographiques : Senegal à l'ouest, Djibouti à l'est. La bande est graduée comme une règle d'architecte : 0, 1000, 4000, 8000 km. Onze petits jalons verticaux symbolisent les 11 pays, sans chercher la vraie carte.",
+      "element_cle": "La ligne de 8000 km, trop longue pour tenir dans le cadre, qui déborde presque de l'Afrique schématique.",
+      "geste_anime": "Le trait Sahel se dessine d'ouest en est au stroke-dasharray, les 11 jalons claquent un par un, puis la ligne verte devient sèche/brune par segments et laisse apparaître un grand point d'interrogation en hachures.",
+      "pourquoi": "Ça pose immédiatement l'ampleur démesurée sans tomber dans la carte réaliste. Le spectateur comprend : projet gigantesque, simple dans l'idée, mais suspect car réduit à une ligne abstraite.",
+      "faisable_note": "9"
+    },
+    {
+      "titre": "Le mur d'arbres vu en coupe : une promesse trop fine",
+      "vue": "Coupe/profil panoramique vertical",
+      "description": "Au centre, une longue coupe de sol sahélien en strates crème et brunes. En surface : une ligne parfaitement droite de jeunes arbres plantés comme des piquets, minuscules face à une masse de sable qui avance depuis le haut/droite comme une vague hachurée. Sous terre, les racines sont courtes, isolées, sans réseau. Des annotations techniques indiquent 8000 km, 11 pays, Senegal → Djibouti comme sur un plan d'ingénieur.",
+      "element_cle": "Le contraste entre la ligne d'arbres très ordonnée et la profondeur immense du sol désertifié.",
+      "geste_anime": "La ligne d'arbres pousse en une seule cadence mécanique, puis le sable hachuré glisse par-dessus ; les racines restent trop petites, les cimes se courbent, et un cartouche 'Pourquoi ?' se trace en marge.",
+      "pourquoi": "La vue de coupe rend visible l'erreur de départ : on croyait stopper un système vivant avec une barrière linéaire. C'est plus émotionnel qu'une carte, et prépare naturellement le beat 2 sur les arbres qui meurent.",
+      "faisable_note": "9"
+    },
+    {
+      "titre": "La muraille comme chantier impossible",
+      "vue": "Vue éclatée / axonométrie de plan technique",
+      "description": "Une composition de type blueprint à l'encre : en bas, une mini-pépinière, au centre des camions, pelles et silhouettes très simplifiées, en haut une ligne d'arbres alignés sur un immense ruban. Des flèches relient les modules : plants, eau, clôture, main-d'œuvre, 11 pays. Le ruban est volontairement trop grand : il sort du cadre en haut et en bas, avec l'inscription 8000 km cassée en segments.",
+      "element_cle": "L'empilement absurde des moyens nécessaires pour fabriquer un 'mur' vivant sur une distance continentale.",
+      "geste_anime": "Les modules apparaissent comme des pièces d'un schéma éclaté ; les flèches se dessinent vers la ligne d'arbres, puis certaines flèches se rompent en pointillés, montrant le projet qui ne tient pas.",
+      "pourquoi": "Ça donne une sensation de projet monumental, presque industriel, mais fragile. On comprend que l'échec n'est pas seulement botanique : c'est une logistique impossible à maintenir à cette échelle.",
+      "faisable_note": "8"
+    },
+    {
+      "titre": "Le voyage Senegal-Djibouti en travelling de carnet",
+      "vue": "Séquence horizontale compressée dans un format vertical",
+      "description": "Le cadre est découpé en 5 ou 6 vignettes empilées comme une bande dessinée scientifique : départ Senegal, villages, dunes, zones sèches, bornes de pays, arrivée Djibouti. Une même ligne d'arbres traverse toutes les vignettes sans interruption, comme un fil. Chaque vignette est très simple, avec hachures de sol, soleil, vent, silhouettes minuscules.",
+      "element_cle": "Le fil continu d'arbres qui traverse 11 territoires et devient de plus en plus fragile.",
+      "geste_anime": "Le fil vert se dessine de vignette en vignette ; à chaque passage de frontière, un petit repère apparaît, puis les arbres perdent leurs feuilles progressivement jusqu'au dernier panneau où la ligne se termine en point d'interrogation.",
+      "pourquoi": "La séquence donne l'impression d'un voyage de 8000 km sans nécessiter une vraie carte. Elle rend l'échelle narrative et humaine, tout en installant l'open loop : comment une idée aussi belle a-t-elle pu se dessécher ?",
+      "faisable_note": "8"
+    },
+    {
+      "titre": "Le désert comme vague, le mur comme couture",
+      "vue": "Profil symbolique / coupe-poème",
+      "description": "Un horizon minimal : à droite, le Sahara est représenté par une grande vague de sable hachurée, presque animale, qui avance. À gauche, une zone plus vivante mais encore en encre. Entre les deux, une couture verticale de petits arbres, parfaitement alignés, avec une grande accolade indiquant 8000 km. Senegal et Djibouti sont deux étiquettes aux extrémités de la couture, comme si le continent avait été recousu.",
+      "element_cle": "La couture d'arbres face à une vague de désert beaucoup plus massive.",
+      "geste_anime": "La couture verte se brode point par point ; la vague de hachures se gonfle lentement ; puis quelques points de couture sautent, laissant le désert passer entre les arbres.",
+      "pourquoi": "Image très lisible et métaphorique : l'ambition est belle, mais le désert n'est pas un mur qu'on arrête avec un autre mur. Ça crée un hook visuel fort et inquiétant.",
+      "faisable_note": "9"
+    }
+  ],
+  "reco": "Je recommande 'Le mur d'arbres vu en coupe : une promesse trop fine'. C'est le plus cohérent avec le registre SVG déjà maîtrisé, il évite la carte réaliste, pose l'échelle par annotations, et prépare parfaitement le beat suivant où les arbres fanent."
+}

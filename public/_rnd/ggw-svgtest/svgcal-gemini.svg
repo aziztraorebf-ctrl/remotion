@@ -1,0 +1,167 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .ink { stroke: #2b2117; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .plant-ink { stroke: #1e4a28; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .text-ink { fill: #2b2117; font-family: "Arial", "Helvetica", sans-serif; }
+      .bg { fill: #e8dcc0; }
+    </style>
+  </defs>
+
+  <g id="fond_parchemin">
+    <rect width="1080" height="1920" class="bg" />
+  </g>
+
+  <g id="soleil" class="ink">
+    <circle cx="220" cy="220" r="65" stroke-width="2" />
+    <circle cx="220" cy="220" r="52" stroke-width="2" stroke-dasharray="6,6" />
+    <path d="M 220 110 L 220 130 M 220 310 L 220 330 M 110 220 L 130 220 M 310 220 L 330 220 M 142 142 L 156 156 M 284 284 L 298 298 M 142 298 L 156 284 M 284 142 L 298 156" stroke-width="2" />
+  </g>
+
+  <g id="nuages_pluie" class="ink">
+    <path d="M 630 170 L 850 170 M 670 200 L 920 200 M 710 230 L 880 230" stroke-width="2" stroke-dasharray="12,8" />
+    <path d="M 650 270 L 610 420 M 700 260 L 660 450 M 750 250 L 710 440 M 800 250 L 760 460 M 850 270 L 810 450" stroke-width="1.5" stroke-dasharray="10,10" />
+  </g>
+
+  <g id="rose_des_vents" class="ink">
+    <path d="M 100 1850 L 100 1520 M 90 1535 L 100 1520 L 110 1535" stroke-width="1.5" />
+    <path d="M 50 1800 L 350 1800 M 335 1790 L 350 1800 L 335 1810" stroke-width="1.5" />
+    <path d="M 30 1710 L 170 1890 M 15 1730 L 150 1910 M 30 1890 L 170 1710 M 15 1870 L 150 1690" stroke-width="1" opacity="0.6" />
+  </g>
+
+  <g id="strates_sol" class="ink" stroke-width="1.5" opacity="0.7">
+    <path d="M -10 780 Q 250 760, 540 830 T 1090 800" />
+    <path d="M -10 930 Q 300 900, 540 960 T 1090 880" />
+    <path d="M -10 1030 Q 200 1060, 540 1000 T 1090 1060" />
+    <path d="M -10 1180 Q 400 1130, 700 1230 T 1090 1160" />
+    <path d="M -10 1280 Q 250 1330, 540 1280 T 1090 1360" />
+    <path d="M -10 1430 Q 350 1380, 600 1460 T 1090 1400" />
+  </g>
+
+  <g id="hachures_sol" class="ink" stroke-width="1" opacity="0.5">
+    <path d="M 40 1130 L 120 1055 M 70 1140 L 150 1065 M 100 1150 L 180 1075 M 130 1160 L 210 1085 M 160 1170 L 240 1095 M 190 1180 L 270 1105 M 220 1190 L 300 1115 M 250 1200 L 330 1125 M 280 1210 L 360 1135" />
+    <path d="M 650 1300 L 750 1210 M 680 1315 L 780 1225 M 710 1330 L 810 1240 M 740 1345 L 840 1255 M 770 1360 L 870 1270 M 800 1375 L 900 1285 M 830 1390 L 930 1300 M 860 1405 L 960 1315 M 890 1420 L 990 1330" />
+  </g>
+
+  <g id="fissures_sol" class="ink" stroke-width="2">
+    <path d="M 100 620 L 105 650 L 90 680 M 105 650 L 120 670" />
+    <path d="M 230 620 L 225 645 L 240 660 L 235 680" />
+    <path d="M 850 620 L 860 655 L 840 690 M 860 655 L 880 675 L 890 700" />
+    <path d="M 1020 620 L 1015 645 L 1030 670 M 1015 645 L 995 680" />
+  </g>
+
+  <g id="surface_sol" class="ink" stroke-width="5">
+    <path d="M -10 620 L 300 620 C 330 620, 360 760, 540 760 C 720 760, 750 620, 780 620 C 810 620, 830 560, 880 620 L 1090 620" />
+  </g>
+
+  <g id="cuvette_demi_lune" class="ink" stroke-width="1.5">
+    <path d="M 330 690 C 420 780, 660 780, 750 690" />
+    <path d="M 360 720 C 440 790, 640 790, 720 720" />
+    <path d="M 400 740 C 460 795, 620 795, 680 740" />
+  </g>
+
+  <g id="pelle" class="ink">
+    <path d="M 865 530 L 810 650" stroke-width="3" />
+    <path d="M 855 525 L 875 535 L 865 545 L 845 535 Z" stroke-width="2" />
+    <path d="M 800 645 L 820 655 L 805 685 L 785 675 Z" stroke-width="2" />
+  </g>
+
+  <g id="arbre_tronc" class="plant-ink" stroke-width="5">
+    <path d="M 540 700 Q 530 500, 550 400 T 450 320" />
+    <path d="M 538 560 Q 580 530, 650 510" stroke-width="4" />
+    <path d="M 536 450 Q 480 430, 400 400" stroke-width="4" />
+    <path d="M 548 410 Q 590 380, 630 350" stroke-width="3" />
+  </g>
+
+  <g id="arbre_feuilles" class="plant-ink" stroke-width="2.5">
+    <path d="M 450 320 C 410 310, 410 270, 445 280 C 470 285, 470 315, 450 320 Z" />
+    <path d="M 450 320 L 440 295" stroke-width="1.5" />
+    <path d="M 650 510 C 720 500, 750 550, 745 560 C 710 570, 660 550, 650 510 Z" />
+    <path d="M 650 510 C 690 530, 720 540, 745 560" stroke-width="1.5" />
+    <path d="M 400 400 C 350 380, 310 420, 315 430 C 350 450, 390 430, 400 400 Z" />
+    <path d="M 400 400 C 370 410, 340 420, 315 430" stroke-width="1.5" />
+    <path d="M 630 350 C 680 320, 720 360, 715 370 C 680 390, 640 370, 630 350 Z" />
+    <path d="M 630 350 C 660 355, 690 360, 715 370" stroke-width="1.5" />
+    <path d="M 545 460 C 580 440, 610 470, 605 480 C 580 490, 550 480, 545 460 Z" />
+    <path d="M 545 460 C 570 465, 590 470, 605 480" stroke-width="1.5" />
+  </g>
+
+  <g id="racine_pivot" class="ink" stroke-width="3">
+    <path d="M 540 680 C 530 850, 560 1000, 550 1200 C 540 1400, 560 1550, 545 1660" />
+    <path d="M 540 680 C 525 850, 555 1000, 545 1200" stroke-width="3" />
+    <path d="M 540 680 C 535 800, 550 900, 545 1000" stroke-width="4" />
+  </g>
+
+  <g id="racines_secondaires" class="ink" stroke-width="2.5">
+    <path d="M 540 850 Q 430 890, 310 980 M 400 920 Q 360 960, 390 1060 M 350 950 Q 300 970, 290 1020" />
+    <path d="M 545 860 Q 660 900, 780 1000 M 670 920 Q 710 980, 760 1050 M 740 980 Q 790 970, 820 1010" />
+    <path d="M 545 1250 Q 500 1300, 460 1350 M 490 1310 Q 480 1360, 450 1400" />
+    <path d="M 550 1450 Q 580 1500, 590 1550 M 575 1515 Q 600 1540, 610 1580" />
+  </g>
+
+  <g id="flux_eau_racines" class="ink" stroke-width="1.5" stroke-dasharray="6,6">
+    <path d="M 420 740 Q 420 800, 480 850" />
+    <path d="M 460 760 Q 460 810, 500 860" />
+    <path d="M 490 765 Q 490 810, 520 860" />
+    <path d="M 660 740 Q 660 800, 600 850" />
+    <path d="M 620 760 Q 620 810, 580 860" />
+    <path d="M 590 765 Q 590 810, 560 860" />
+  </g>
+
+  <g id="nappe_eau" class="ink" stroke-width="2">
+    <path d="M -10 1620 Q 250 1580, 540 1640 T 1090 1610" />
+    <path d="M -10 1650 Q 280 1610, 540 1670 T 1090 1640" />
+    <path d="M -10 1680 Q 240 1650, 540 1700 T 1090 1670" />
+    <path d="M -10 1710 Q 290 1680, 540 1730 T 1090 1700" />
+  </g>
+
+  <g id="lignes_mesure" class="ink">
+    <path d="M 270 620 L 270 750" stroke-width="1.5" stroke-dasharray="8,6" />
+    <path d="M 260 630 L 270 620 L 280 630 M 260 740 L 270 750 L 280 740" stroke-width="1.5" />
+    <path d="M 270 750 L 530 750" stroke-width="1" stroke-dasharray="6,4" opacity="0.6" />
+    
+    <path d="M 650 800 L 760 900 L 980 900" stroke-width="1.5" />
+    <path d="M 650 800 L 660 810 M 650 800 L 665 800" stroke-width="1.5" />
+
+    <path d="M 980 620 L 980 1620" stroke-width="1" />
+    <path d="M 970 1610 L 980 1620 L 990 1610" stroke-width="1.5" />
+    
+    <path d="M 980 620 L 1050 620" stroke-width="1" />
+    <path d="M 980 1100 L 1050 1100" stroke-width="1" />
+    <path d="M 980 1300 L 1050 1300" stroke-width="1" />
+    <path d="M 980 1500 L 1050 1500" stroke-width="1" />
+    <path d="M 980 1700 L 1050 1700" stroke-width="1" />
+    
+    <path d="M 600 1620 L 600 1020" stroke-width="1.5" stroke-dasharray="8,6" />
+    <path d="M 590 1610 L 600 1620 L 610 1610 M 590 1030 L 600 1020 L 610 1030" stroke-width="1.5" />
+  </g>
+
+  <g id="echelle" class="ink">
+    <path d="M 740 1820 L 1020 1820" stroke-width="3" />
+    <rect x="740" y="1810" width="40" height="10" fill="#2b2117" stroke="#2b2117" stroke-width="1" />
+    <rect x="780" y="1810" width="40" height="10" fill="none" stroke="#2b2117" stroke-width="1" />
+    <rect x="820" y="1810" width="40" height="10" fill="#2b2117" stroke="#2b2117" stroke-width="1" />
+    <rect x="860" y="1810" width="40" height="10" fill="none" stroke="#2b2117" stroke-width="1" />
+    <rect x="900" y="1810" width="40" height="10" fill="#2b2117" stroke="#2b2117" stroke-width="1" />
+  </g>
+
+  <g id="annotations" class="text-ink">
+    <text x="270" y="830" font-size="32" text-anchor="middle">+1.5 m</text>
+    <text x="780" y="885" font-size="30">HALF-MOON</text>
+    <text x="780" y="925" font-size="28">(Demi-lune)</text>
+    <text x="890" y="1090" font-size="30">2.0 m</text>
+    <text x="1000" y="1290" font-size="30">2</text>
+    <text x="1000" y="1490" font-size="30">1</text>
+    <text x="1000" y="1690" font-size="30">0</text>
+    <text x="860" y="1570" font-size="32">Nappe</text>
+    <text x="860" y="1610" font-size="32">+17 m</text>
+    <text x="90" y="1490" font-size="30">15° N</text>
+    <text x="380" y="1810" font-size="30">15° N</text>
+    <text x="740" y="1860" font-size="26" text-anchor="middle">0</text>
+    <text x="780" y="1860" font-size="26" text-anchor="middle">1</text>
+    <text x="820" y="1860" font-size="26" text-anchor="middle">2</text>
+    <text x="860" y="1860" font-size="26" text-anchor="middle">3</text>
+    <text x="940" y="1860" font-size="26" text-anchor="middle">5</text>
+    <text x="1020" y="1860" font-size="26" text-anchor="middle">1 m</text>
+  </g>
+</svg>

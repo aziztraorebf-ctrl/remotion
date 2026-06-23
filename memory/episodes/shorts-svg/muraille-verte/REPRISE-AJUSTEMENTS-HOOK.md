@@ -1,8 +1,44 @@
-# REPRISE — Ajustements du HOOK (prochaine session) : esthetique gravure + mouvement "se dessine"
+# REPRISE — HOOK Grande Muraille Verte (etat au 2026-06-23)
 
-> Cree 2026-06-22 fin de session. 2 retours MAJEURS d'Aziz sur le hook encre produit par l'agent vierge.
-> Le hook FONCTIONNE (vraie carte d3-geo + arbres Gemini + 2 registres + SFX, tout commite branche feat/shorts-svg-muraille-verte)
-> MAIS 2 ecarts a corriger pour atteindre la vision. Reference cible = `https://files.catbox.moe/wuar68.png` (comparatif 3 registres ORIGINAL).
+## ⭐⭐ ETAT ACTUEL (session 2026-06-22->23) — HOOK VIVANT PROUVE + METHODE COMPLETE
+> Le hook a ete REFAIT entierement sur une nouvelle direction prouvee. La version d3-geo/carte est ABANDONNEE pour le hook
+> (carte geo-realiste s'effondre en SVG). Nouvelle base = SCENE NARRATIVE ENCRE animee avec pilotage couleur.
+
+**HOOK VIVANT v4 (dernier) : https://files.catbox.moe/uwp4gq.mp4** — `src/projects/_rnd/svg-scenes/GgwHookEncreVivant.tsx`
+(compo `RND-GgwHookEncreVivant`, 1080x1920, 210f). Scene "le mur fier ecrase par l'immensite" :
+dunes ecrasantes + soleil + 2 lignes d'arbres + pelle. REGISTRE = ENCRE narrative. SEQUENCE COULEUR TIMEE :
+pelle coloree d'emblee -> arbres se construisent un a un (avant-plan->horizon) + virent au VERT -> soleil s'embrase (or+glow+rayons) ;
+le DESERT reste en encre. Arbres = 4 vrais arbres GPT-5.5 (`ggwTreesGpt.ts` : acacia parasol/rond/jeune/arbuste), varies par profondeur.
+
+**METHODE GRAVEE cette session (8 acquis majeurs)** — detail : `memory/doctrines/SVG-FAISABILITE-AMONT.md` +
+`memory/doctrines/templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md` :
+1. CAUSE RACINE ecart esthetique : on visait l'INFAISABLE (gravure-musee wuar68 = milliers de hachures). 
+2. CALIBRER l'image-cible au NIVEAU SVG faisable (partir d'une frame de proto qui marche). Prouve par render.
+3. IMAGE-CIBLE = SVG NATIF de Gemini 3.1 Pro + GPT-5.5 (pas de raster intermediaire) -> ecart nul par construction.
+   Verif modeles : PAS de gpt-5.5-image (le bon = gpt-5.4-image-2) ; 3.1-pro = vision/SVG (pas de raster), 3.1-flash-image = raster.
+4. SCENE NARRATIVE > SCHEMA ANNOTE (decouverte Aziz) : penser MOMENT + 4-5 objets-heros qui RACONTENT (cf piece Senegal),
+   pas coupe/blueprint annotee. Donner une REF narrative (pas une planche). 
+5. ENCRE = MEILLEUR CANEVAS pour le PILOTAGE COULEUR SEMANTIQUE (monde mort en encre, vie en couleur timee). chaud-medaille = deja colore = moins de munition.
+6. "CHAQUE TRAIT du LLM = un ARBRE" (idee Aziz) : reutiliser les hachures que le LLM a plantees comme POSITIONS d'arbres (zero devinette, fidele a sa compo).
+7. VRAIS ARBRES : generer 4 arbres SVG via LLM (GPT-5.5 GAGNE : acacia parasol structure) -> raffiner/varier/coloriser en code.
+8. CONTROLE TOTAL element par element (ajouter/supprimer/coloriser/animer) = l'avantage SVG vs video IA. Efface hachures, garde arbres.
+
+**OUTILS CREES** : `scripts/tools/svg-scene-libre.py` (SVG natif depuis brief + style-ref) · `svg-from-image-target.py` (test ecart) ·
+`svg-ideation-vues.py` (idees de vues par LLM) · `gemini-gen-image-ref.py` · `svg-faisabilite-brief.py`.
+**REFS** : `public/_shared/refs/svg-registres/` (1 image par registre + REF narrative piece) · protos sauvegardes `out/_r-and-d/svg-scenes-refs/` (+5).
+**BIBLIOTHEQUE prompts-cibles par registre** : `memory/doctrines/templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md` (regle Aziz : 1 prompt+ref par registre, pas un prompt unique).
+
+**▶ RESTE (prochaine session)** :
+- POLISH hook : soleil qui pulse plus fort · ombres arbres · SFX time (vent + pousse). 
+- AUDIO GeoAfrique : lock script v1 (`SCRIPT-PILOTE-v1.md`, scan TTS "echoue"/"plantes-revenus") -> narration ElevenLabs -> mesure ffprobe -> CALER le timing du hook (le se-dessine) sur la voix.
+- BEATS 2-6 : appliquer la meme methode (scene narrative + image-cible=SVG natif + colorisation timee). Beat 4 (demi-lune) = on a deja `DemiLuneEncreColorisee` + le proto arbre-hachure.
+- Trancher : garde-t-on ENCRE pour tout le short (raccord + canevas couleur) ou A/B avec un 2e registre ?
+
+---
+
+## (HISTORIQUE) Ajustements initiaux du hook — 2026-06-22 (traites cette session)
+> Les 3 ecarts ci-dessous ont mene a la refonte ci-dessus. Reference cible initiale = `https://files.catbox.moe/wuar68.png`.
+> ⚠️ LECON : wuar68 (gravure-musee) etait une cible INFAISABLE en SVG -> remplacee par le calibrage niveau-SVG (acquis 2).
 
 ## ⚠️ ECART 1 — ESTHETIQUE : l'encre de l'agent = APLAT PLAT, pas GRAVURE
 L'agent a produit du vectoriel PROPRE (frontieres nettes, arbres aplats verts sur parchemin). C'est lisible/elegant MAIS

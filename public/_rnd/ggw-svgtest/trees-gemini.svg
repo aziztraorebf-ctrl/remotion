@@ -1,0 +1,159 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <rect id="fond_parchemin" width="1080" height="1920" fill="#e8dcc0" />
+  <g id="cadres_et_grilles">
+    <rect x="80" y="80" width="920" height="1760" fill="none" stroke="#2b2117" stroke-width="2" rx="5" />
+    <rect x="100" y="100" width="880" height="1720" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="4 4" rx="5" />
+    <g id="cartouche_technique">
+      <rect x="680" y="120" width="280" height="100" fill="none" stroke="#2b2117" stroke-width="1" />
+      <line x1="680" y1="170" x2="960" y2="170" stroke="#2b2117" stroke-width="1" />
+      <line x1="820" y1="170" x2="820" y2="220" stroke="#2b2117" stroke-width="1" />
+      <text x="695" y="150" font-family="monospace" font-size="14" fill="#2b2117">PROJET: GRANDE MURAILLE VERTE</text>
+      <text x="695" y="200" font-family="monospace" font-size="12" fill="#2b2117">RÉF: GMV-SAH-04</text>
+      <text x="835" y="200" font-family="monospace" font-size="12" fill="#2b2117">ÉCHELLE: 1/50</text>
+    </g>
+    <path d="M100,240 L980,240" stroke="#2b2117" stroke-width="1" />
+    <!-- Crosshairs de repérage -->
+    <path d="M90,90 L110,110 M110,90 L90,110" stroke="#2b2117" stroke-width="0.5" />
+    <path d="M970,90 L990,110 M990,90 L970,110" stroke="#2b2117" stroke-width="0.5" />
+    <path d="M90,1810 L110,1830 M110,1810 L90,1830" stroke="#2b2117" stroke-width="0.5" />
+    <path d="M970,1810 L990,1830 M990,1810 L970,1830" stroke="#2b2117" stroke-width="0.5" />
+  </g>
+  <g id="textes_annotations">
+    <text x="120" y="160" font-family="sans-serif" font-size="32" font-weight="bold" fill="#2b2117">SPÉCIMENS VÉGÉTAUX : SAHEL</text>
+    <text x="120" y="200" font-family="sans-serif" font-size="20" fill="#2b2117">Étude morphologique de quatre essences ligneuses locales</text>
+    <!-- Légendes sous les arbres (alignées avec le SVG imbriqué) -->
+    <text x="190" y="1320" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2b2117" text-anchor="middle">ACACIA PARASOL</text>
+    <text x="190" y="1345" font-family="monospace" font-size="14" fill="#2b2117" text-anchor="middle">Vachellia tortilis</text>
+    <text x="440" y="1320" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2b2117" text-anchor="middle">ARBRE ROND</text>
+    <text x="440" y="1345" font-family="monospace" font-size="14" fill="#2b2117" text-anchor="middle">Balanites aegyptiaca</text>
+    <text x="690" y="1320" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2b2117" text-anchor="middle">JEUNE POUSSE</text>
+    <text x="690" y="1345" font-family="monospace" font-size="14" fill="#2b2117" text-anchor="middle">Croissance rapide</text>
+    <text x="890" y="1320" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2b2117" text-anchor="middle">ARBUSTE BAS</text>
+    <text x="890" y="1345" font-family="monospace" font-size="14" fill="#2b2117" text-anchor="middle">Ziziphus mauritiana</text>
+  </g>
+  <!-- Espace central contenant les arbres avec viewBox dédiée -->
+  <svg x="40" y="780" width="1000" height="500" viewBox="0 0 400 200">
+    <g id="dunes_sable">
+      <path d="M-20,160 Q100,165 200,160 T420,158" stroke="#2b2117" stroke-width="1.5" fill="none" />
+      <path d="M-20,168 Q80,185 180,172 T420,168" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      <path d="M20,160 Q100,145 150,160" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      <path d="M200,160 Q280,150 350,160" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      <!-- Grains de sable pointilles -->
+      <path d="M10,165 Q100,170 200,165" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="1 10" stroke-linecap="round" fill="none" />
+      <path d="M60,172 Q150,178 250,172" stroke="#2b2117" stroke-width="1" stroke-dasharray="1 15" stroke-linecap="round" fill="none" />
+      <path d="M280,165 Q340,168 380,165" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="1 12" stroke-linecap="round" fill="none" />
+    </g>
+    <g id="lignes_construction">
+      <path d="M20,160 L380,160" stroke="#2b2117" stroke-width="0.5" stroke-dasharray="2 2" fill="none" />
+      <path d="M20,50 L380,50" stroke="#2b2117" stroke-width="0.5" stroke-dasharray="2 2" fill="none" />
+      <path d="M20,80 L380,80" stroke="#2b2117" stroke-width="0.5" stroke-dasharray="2 2" fill="none" />
+      <!-- Repères centraux d"implantation -->
+      <path d="M60,155 L60,165 M55,160 L65,160" stroke="#2b2117" stroke-width="1" fill="none" />
+      <path d="M160,155 L160,165 M155,160 L165,160" stroke="#2b2117" stroke-width="1" fill="none" />
+      <path d="M260,155 L260,165 M255,160 L265,160" stroke="#2b2117" stroke-width="1" fill="none" />
+      <path d="M340,155 L340,165 M335,160 L345,160" stroke="#2b2117" stroke-width="1" fill="none" />
+    </g>
+    <g id="cotes">
+      <line x1="15" y1="160" x2="15" y2="50" stroke="#2b2117" stroke-width="0.5" />
+      <path d="M12,160 L18,160 M12,50 L18,50" stroke="#2b2117" stroke-width="1" fill="none" />
+      <text x="10" y="105" transform="rotate(-90 10,105)" font-family="monospace" font-size="8" fill="#2b2117" text-anchor="middle">110 cm</text>
+    </g>
+    
+    <g id="arbre_acacia" transform="translate(60, 160)">
+      <g id="acacia_ombre">
+        <ellipse cx="0" cy="0" rx="35" ry="4" fill="#2b2117" opacity="0.1" />
+        <path d="M-20,0 L-15,3 M-10,-1 L-5,2 M0,-2 L5,1 M10,-1 L15,2" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      </g>
+      <g id="acacia_tronc">
+        <path d="M-4,0 C-4,-15 -2,-30 0,-40 C1,-45 4,-50 8,-55 L6,-56 C2,-52 -1,-45 -2,-40 C-5,-50 -15,-55 -22,-60 L-20,-62 C-12,-56 -4,-50 0,-40 C-2,-30 -2,-15 -1,0 Z" fill="#5c3a21" />
+        <path d="M-2,-40 C-3,-48 -8,-60 -10,-70 L-8,-70 C-6,-60 -1,-48 0,-40 Z" fill="#5c3a21" />
+        <path d="M-20,-60 C-25,-65 -30,-68 -30,-68 M8,-55 C15,-60 20,-65 20,-65 M-8,-70 C-15,-75 -20,-75 -20,-75" stroke="#5c3a21" stroke-width="1.5" fill="none" />
+      </g>
+      <g id="acacia_feuillage">
+        <path d="M-55,-65 C-55,-75 -35,-78 -25,-78 C-15,-78 5,-75 5,-65 C5,-62 -15,-60 -25,-60 C-35,-60 -55,-62 -55,-65 Z" fill="#295c1c" />
+        <path d="M-15,-75 C-15,-82 5,-85 15,-85 C25,-85 45,-82 45,-75 C45,-72 25,-72 15,-72 C5,-72 -15,-72 -15,-75 Z" fill="#295c1c" />
+        <path d="M10,-68 C10,-75 25,-78 35,-78 C45,-78 60,-75 60,-68 C60,-65 45,-65 35,-65 C25,-65 10,-65 10,-68 Z" fill="#295c1c" />
+        <path d="M-35,-80 C-35,-85 -20,-88 -10,-88 C0,-88 15,-85 15,-80 C15,-78 0,-78 -10,-78 C-20,-78 -35,-78 -35,-80 Z" fill="#295c1c" />
+        <!-- Couches claires (étages superieurs) -->
+        <path d="M-50,-68 C-50,-74 -35,-76 -25,-76 C-15,-76 -5,-74 -5,-68 C-5,-66 -15,-65 -25,-65 C-35,-65 -50,-66 -50,-68 Z" fill="#3e8f34" />
+        <path d="M-10,-78 C-10,-83 5,-85 15,-85 C25,-85 35,-83 35,-78 C35,-76 25,-76 15,-76 C5,-76 -10,-76 -10,-78 Z" fill="#3e8f34" />
+        <path d="M15,-71 C15,-76 25,-78 35,-78 C45,-78 55,-76 55,-71 C55,-69 45,-69 35,-69 C25,-69 15,-69 15,-71 Z" fill="#3e8f34" />
+        <!-- Highlights max -->
+        <path d="M-40,-71 C-40,-75 -30,-76 -25,-76 C-20,-76 -15,-75 -15,-71 C-15,-70 -20,-70 -25,-70 C-30,-70 -40,-70 -40,-71 Z" fill="#5fc24a" />
+        <path d="M0,-81 C0,-84 10,-85 15,-85 C20,-85 25,-84 25,-81 C25,-80 20,-80 15,-80 C10,-80 0,-80 0,-81 Z" fill="#5fc24a" />
+      </g>
+    </g>
+
+    <g id="arbre_rond" transform="translate(160, 160)">
+      <g id="rond_ombre">
+        <ellipse cx="0" cy="0" rx="28" ry="4" fill="#2b2117" opacity="0.1" />
+        <path d="M-15,0 L-10,3 M-5,-1 L0,2 M5,-2 L10,1" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      </g>
+      <g id="rond_tronc">
+        <path d="M-6,0 C-5,-10 -8,-20 -5,-30 C-2,-40 5,-45 2,-55 L6,-56 C10,-45 2,-38 -1,-30 C-3,-20 0,-10 0,0 Z" fill="#5c3a21" />
+        <path d="M-1,-30 C5,-35 15,-40 20,-50 L18,-52 C12,-42 2,-38 -5,-30 Z" fill="#5c3a21" />
+        <path d="M-5,-30 C-15,-35 -20,-45 -22,-55 L-19,-56 C-17,-47 -12,-38 -2,-30 Z" fill="#5c3a21" />
+      </g>
+      <g id="rond_feuillage">
+        <path d="M-30,-50 C-30,-65 -15,-75 -5,-70 C5,-65 0,-50 -10,-45 C-20,-40 -30,-40 -30,-50 Z" fill="#295c1c" />
+        <path d="M5,-55 C5,-70 25,-75 35,-65 C45,-55 40,-40 25,-40 C15,-40 5,-45 5,-55 Z" fill="#295c1c" />
+        <path d="M-20,-75 C-20,-95 0,-105 15,-95 C30,-85 25,-65 10,-65 C-5,-65 -20,-65 -20,-75 Z" fill="#295c1c" />
+        <path d="M-15,-45 C-15,-60 5,-65 15,-55 C25,-45 15,-30 0,-30 C-10,-30 -15,-35 -15,-45 Z" fill="#295c1c" />
+        <!-- Midtones -->
+        <path d="M-22,-52 C-22,-62 -10,-68 -2,-64 C6,-60 2,-50 -6,-47 C-14,-44 -22,-44 -22,-52 Z" fill="#3e8f34" />
+        <path d="M10,-58 C10,-68 25,-72 32,-64 C38,-56 35,-45 23,-45 C15,-45 10,-49 10,-58 Z" fill="#3e8f34" />
+        <path d="M-12,-78 C-12,-92 2,-100 12,-92 C22,-84 18,-68 6,-68 C-4,-68 -12,-72 -12,-78 Z" fill="#3e8f34" />
+        <path d="M-8,-48 C-8,-58 8,-62 15,-54 C22,-46 15,-35 4,-35 C-4,-35 -8,-39 -8,-48 Z" fill="#3e8f34" />
+        <!-- Highlights -->
+        <path d="M-4,-81 C-4,-89 3,-93 9,-87 C15,-81 12,-74 6,-74 C0,-74 -4,-77 -4,-81 Z" fill="#5fc24a" />
+        <path d="M15,-60 C15,-66 22,-68 26,-64 C30,-60 28,-53 21,-53 C16,-53 15,-56 15,-60 Z" fill="#5fc24a" />
+        <path d="M0,-50 C0,-56 8,-58 12,-54 C16,-50 12,-43 5,-43 C0,-43 0,-46 0,-50 Z" fill="#5fc24a" />
+      </g>
+    </g>
+
+    <g id="arbre_jeune" transform="translate(260, 160)">
+      <g id="jeune_ombre">
+        <ellipse cx="0" cy="0" rx="12" ry="2" fill="#2b2117" opacity="0.1" />
+        <path d="M-5,0 L-2,1 M2,-1 L5,0" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      </g>
+      <g id="jeune_tronc">
+        <path d="M-1.5,0 C-1,-20 -4,-40 0,-60 C2,-70 6,-80 5,-90 L3,-90 C4,-80 0,-70 -2,-60 C-6,-40 -3,-20 -3,0 Z" fill="#8a5a2c" />
+        <path d="M-1,-50 C-5,-55 -12,-60 -15,-65 M0,-65 C5,-70 12,-75 15,-80 M1,-80 C-4,-85 -8,-90 -10,-95" stroke="#8a5a2c" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      </g>
+      <g id="jeune_feuillage">
+        <path d="M-15,-65 C-18,-68 -12,-72 -10,-68 C-8,-64 -12,-62 -15,-65 Z" fill="#5fc24a" />
+        <path d="M-18,-62 C-21,-65 -15,-69 -13,-65 C-11,-61 -15,-59 -18,-62 Z" fill="#3e8f34" />
+        <path d="M15,-80 C18,-83 24,-79 22,-75 C20,-71 12,-77 15,-80 Z" fill="#5fc24a" />
+        <path d="M18,-76 C22,-78 26,-72 23,-69 C20,-66 14,-72 18,-76 Z" fill="#3e8f34" />
+        <path d="M5,-90 C2,-95 -2,-92 0,-88 C2,-84 8,-85 5,-90 Z" fill="#3e8f34" />
+        <path d="M4,-95 C1,-100 -3,-97 -1,-93 C1,-89 7,-90 4,-95 Z" fill="#5fc24a" />
+        <path d="M-10,-95 C-13,-98 -7,-102 -5,-98 C-3,-94 -7,-92 -10,-95 Z" fill="#3e8f34" />
+        <path d="M-12,-91 C-15,-94 -9,-98 -7,-94 C-5,-90 -9,-88 -12,-91 Z" fill="#5fc24a" />
+      </g>
+    </g>
+
+    <g id="arbre_arbuste" transform="translate(340, 160)">
+      <g id="arbuste_ombre">
+        <ellipse cx="0" cy="0" rx="25" ry="3" fill="#2b2117" opacity="0.1" />
+        <path d="M-10,0 L-5,2 M0,-1 L5,1 M10,-2 L15,0" stroke="#2b2117" stroke-width="0.5" fill="none" />
+      </g>
+      <g id="arbuste_tronc">
+        <path d="M-3,0 C-5,-10 -15,-20 -20,-30 M-1,0 C-2,-15 -5,-25 -8,-35 M1,0 C2,-15 5,-25 8,-35 M3,0 C5,-10 15,-20 20,-30 M0,0 C0,-10 0,-25 0,-40" stroke="#5c3a21" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      </g>
+      <g id="arbuste_feuillage">
+        <path d="M-25,-20 C-35,-35 -15,-50 -5,-55 C5,-60 15,-60 25,-55 C35,-50 45,-35 35,-20 C25,-15 5,-15 -25,-20 Z" fill="#295c1c" />
+        <path d="M-35,-15 C-45,-25 -30,-35 -25,-35 C-15,-35 -15,-25 -20,-15 C-25,-10 -30,-10 -35,-15 Z" fill="#295c1c" />
+        <path d="M35,-15 C45,-25 30,-35 25,-35 C15,-35 15,-25 20,-15 C25,-10 30,-10 35,-15 Z" fill="#295c1c" />
+        <!-- Midtones -->
+        <path d="M-20,-22 C-25,-30 -10,-40 0,-45 C10,-50 20,-50 30,-45 C40,-40 35,-30 30,-22 C20,-18 -10,-18 -20,-22 Z" fill="#3e8f34" />
+        <path d="M-10,-30 C-15,-40 0,-50 10,-50 C20,-50 25,-40 20,-30 C10,-25 0,-25 -10,-30 Z" fill="#3e8f34" />
+        <path d="M-30,-18 C-35,-24 -25,-30 -22,-30 C-15,-30 -15,-24 -18,-18 C-22,-15 -25,-15 -30,-18 Z" fill="#3e8f34" />
+        <path d="M30,-18 C35,-24 25,-30 22,-30 C15,-30 15,-24 18,-18 C22,-15 25,-15 30,-18 Z" fill="#3e8f34" />
+        <!-- Highlights -->
+        <path d="M-5,-35 C-10,-42 2,-45 8,-45 C15,-45 18,-38 15,-35 C8,-32 0,-32 -5,-35 Z" fill="#5fc24a" />
+        <path d="M-15,-26 C-20,-31 -10,-35 -5,-35 C0,-35 5,-31 0,-26 C-5,-23 -10,-23 -15,-26 Z" fill="#5fc24a" />
+        <path d="M15,-26 C20,-31 10,-35 5,-35 C0,-35 -5,-31 0,-26 C5,-23 10,-23 15,-26 Z" fill="#5fc24a" />
+      </g>
+    </g>
+  </svg>
+</svg>

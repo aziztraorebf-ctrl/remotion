@@ -74,6 +74,25 @@ L'IMAGE qui montre le NIVEAU de gravure attendu. LEÇON : dans tout brief d'agen
 rendu vise (pas juste le nom du registre). Sinon le modele/agent fait du "propre-plat" par defaut. (Cas : ref `wuar68.png`.)
 Bonus gotcha : `loop` sur un `<Audio>` (drone/ambiance plus court que la compo) FONCTIONNE en render headless (non documente avant).
 
+## ⭐⭐ CALIBRER L'IMAGE-CIBLE AU NIVEAU SVG FAISABLE (prouve par render 2026-06-22) — LA correction majeure
+CAUSE RACINE d'une perte de temps : on generait des image-cibles = ILLUSTRATIONS DENSES (gravure de musee type
+`wuar68` : milliers de hachures de plume) -> magnifiques en raster MAIS INFAISABLES en SVG -> ecart image->SVG "intensif".
+CORRECTION (Aziz) : "l'image-cible doit se retrouver comme ton SVG final". Elle doit RESSEMBLER DEJA A UN SVG FAISABLE.
+METHODE : pour calibrer le prompt-cible, PARTIR D'UNE FRAME D'UN PROTO QUI MARCHE (la joindre comme ref de NIVEAU),
+pas d'une idee abstraite. PREUVE bouclee : 1er test (cible=wuar68) -> ecart intensif (carte effondree, blob noir) ;
+test calibre (cible=niveau du proto arbre-hachure) -> ecart QUASI-NUL (cible/Gemini/GPT identiques, render `m1kwcw.png`).
+-> BIBLIOTHEQUE de prompts-cibles PAR REGISTRE (pas un prompt unique) : `templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md`.
+   Chaque registre = PROMPT + IMAGE-REF (`public/_shared/refs/svg-registres/`) a joindre ensemble ("ref de STYLE/NIVEAU
+   seulement, la scene voulue est differente"). 2 FAMILLES faisables : aplats+degrades / trait-grave-epure. Le premium =
+   EPURE + MOUVEMENT, jamais la densite de trait. Carte GEO-REALISTE s'effondre en SVG (=> d3-geo) ; carte SCHEMATIQUE OK.
+
+## ⭐⭐ IDEATION "VUES" PAR LE LLM QUI CONNAIT SA CAPACITE (methode neuve 2026-06-22)
+Une fois l'image-cible 100%% prouvee, le LLM SAIT ce qu'il peut faire. Donc on lui demande des IDEES de DIRECTION :
+"voici le SCRIPT du beat + l'image-cible que TU as generee a 100%% (tu connais donc tes capacites reelles) -> propose
+plusieurs VUES / facons de representer cette scene, et VA PLUS LOIN". Puis on EXAMINE les idees -> on choisit quoi generer.
+= storyboard [[STORYBOARD-MAPBOX]] applique au SVG : le modele propose la direction (en restant dans le faisable, ancre
+par l'image-cible), Aziz tranche, PUIS on genere. Evite les idees hors-sol (le modele ne propose que ce qu'il sait rendre).
+
 ## REGLE GRAVEE
 "Une idee de scene n'est pas une scene. Avant de coder un SVG, faire dire au LLM-dessinateur SA meilleure approche +
 generer l'image-cible. Voir avant de coder. La diagonale isometrique > le top-down pur pour des objets qui doivent LIRE

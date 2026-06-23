@@ -1,0 +1,188 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .bg { fill: #e8dcc0; }
+    .ink { stroke: #2b2117; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+    .ink-thin { stroke: #2b2117; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    .ink-dash { stroke: #2b2117; fill: none; stroke-width: 2; stroke-dasharray: 8 10; }
+    .ink-dot { stroke: #2b2117; fill: none; stroke-width: 2; stroke-dasharray: 2 14; stroke-linecap: round; }
+    .accent { stroke: #3a4a2a; fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+    .accent-thin { stroke: #3a4a2a; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .text-main { fill: #2b2117; font-family: "Courier New", Courier, monospace; font-weight: bold; }
+    .text-sec { fill: #524433; font-family: "Courier New", Courier, monospace; font-weight: normal; }
+    .text-dim { fill: #8a7a63; font-family: "Courier New", Courier, monospace; font-style: italic; }
+  </style>
+
+  <!-- FOND -->
+  <rect width="1080" height="1920" class="bg" />
+
+  <!-- 1. LIGNES DE CONSTRUCTION -->
+  <g id="lignes_construction" opacity="0.25">
+    <path class="ink-thin" d="M100 0 v1920 M300 0 v1920 M500 0 v1920 M700 0 v1920 M900 0 v1920" />
+    <path class="ink-thin" d="M0 200 h1080 M0 400 h1080 M0 600 h1080 M0 800 h1080 M0 1000 h1080 M0 1200 h1080 M0 1400 h1080 M0 1600 h1080 M0 1800 h1080" />
+    <!-- Axe central -->
+    <path class="ink-dash" d="M400 100 v1720" />
+  </g>
+
+  <!-- 2. SOLEIL ARIDE ET CLIMAT -->
+  <g id="soleil_aride">
+    <circle cx="880" cy="220" r="60" class="ink-thin" />
+    <circle cx="880" cy="220" r="80" class="ink-dash" />
+    <path class="ink" d="M880 110 v-30 M880 330 v30 M770 220 h-30 M990 220 h30 M802 142 l-21 -21 M958 298 l21 21 M802 298 l-21 21 M958 142 l21 -21" />
+    <!-- Isobares / Vents -->
+    <path class="ink-dash" opacity="0.5" d="M880 400 Q 750 450 550 430" />
+    <polyline class="ink-thin" opacity="0.5" points="570 415 550 430 570 445" />
+  </g>
+
+  <!-- 3. TERRE STABLE (GAUCHE) -->
+  <g id="terre_stable">
+    <path class="ink-thin" opacity="0.6" d="M0 450 h350 M0 480 h200 M0 750 h380 M0 780 h150 M0 1050 h360 M0 1080 h250 M0 1350 h390 M0 1380 h180 M0 1650 h370 M0 1680 h220" />
+    <!-- Hachures géologiques mesurées -->
+    <path class="ink-thin" opacity="0.5" d="M10 450 l20 -20 M30 450 l20 -20 M50 450 l20 -20 M70 450 l20 -20 M90 450 l20 -20 M110 450 l20 -20 M130 450 l20 -20 M150 450 l20 -20 M170 450 l20 -20" />
+    <path class="ink-thin" opacity="0.5" d="M10 1050 l20 -20 M30 1050 l20 -20 M50 1050 l20 -20 M70 1050 l20 -20 M90 1050 l20 -20 M110 1050 l20 -20 M130 1050 l20 -20" />
+    <path class="ink-thin" opacity="0.5" d="M10 1650 l20 -20 M30 1650 l20 -20 M50 1650 l20 -20 M70 1650 l20 -20 M90 1650 l20 -20 M110 1650 l20 -20 M130 1650 l20 -20 M150 1650 l20 -20" />
+    <!-- Fissures racinaires -->
+    <path class="ink-thin" d="M150 450 l-15 30 l5 25 M280 1050 l10 35 l-15 25 M120 1350 l5 25 l-20 20" />
+  </g>
+
+  <!-- 4. DUNES DE SABLE (DROITE) -->
+  <g id="dunes_sable">
+    <!-- Crêtes principales -->
+    <path class="ink" d="M440 500 Q 750 400 1080 580" />
+    <path class="ink" d="M425 750 Q 800 650 1080 900" />
+    <path class="ink" d="M435 1050 Q 700 900 1080 1150" />
+    <path class="ink" d="M420 1350 Q 850 1200 1080 1550" />
+    <path class="ink" d="M450 1650 Q 750 1500 1080 1800" />
+    
+    <!-- Lignes de volume (Secondaires) -->
+    <path class="ink-thin" d="M580 470 Q 850 380 1080 480 M650 710 Q 900 650 1080 820 M550 990 Q 800 880 1080 1060 M700 1300 Q 900 1240 1080 1450 M600 1600 Q 850 1480 1080 1690" />
+    
+    <!-- Hachures d"ombre sur dunes -->
+    <path class="ink-thin" opacity="0.4" d="M580 470 l-10 10 M595 474 l-10 10 M610 478 l-10 10 M625 483 l-10 10 M640 489 l-10 10 M550 990 l-10 10 M565 994 l-10 10 M580 999 l-10 10 M595 1005 l-10 10 M610 1012 l-10 10" />
+
+    <!-- Grain de sable (Pointillés) -->
+    <path class="ink-dot" d="M480 530 Q 750 430 1080 610 M520 560 Q 750 460 1080 640 M600 590 Q 800 510 1080 670" />
+    <path class="ink-dot" d="M460 780 Q 800 680 1080 930 M500 810 Q 800 710 1080 960" />
+    <path class="ink-dot" d="M470 1080 Q 700 930 1080 1180 M510 1110 Q 700 960 1080 1210" />
+    <path class="ink-dot" d="M460 1380 Q 850 1230 1080 1580 M500 1410 Q 850 1260 1080 1610 M580 1450 Q 880 1320 1080 1640" />
+    
+    <!-- Flèches de pression du désert -->
+    <g opacity="0.6">
+      <path class="ink-dash" d="M950 750 Q 750 770 500 750" />
+      <polyline class="ink" points="520 735 500 750 520 765" />
+      <path class="ink-dash" d="M980 1250 Q 750 1270 500 1250" />
+      <polyline class="ink" points="520 1235 500 1250 520 1265" />
+    </g>
+  </g>
+
+  <!-- 5. RACINES D"ANCRAGE (TENSION VERS LA GAUCHE) -->
+  <g id="racines_ancrage">
+    <!-- Arbre 1 (Y=450) -->
+    <path class="ink" d="M400 450 Q350 470 300 530 M400 450 Q370 490 350 580 M400 450 Q420 470 425 490" />
+    <!-- Arbre 2 (Y=750) -->
+    <path class="ink" d="M400 750 Q350 770 300 830 M400 750 Q370 790 350 880 M400 750 Q420 770 425 790" />
+    <!-- Arbre 3 (Y=1050) -->
+    <path class="ink" d="M400 1050 Q350 1070 300 1130 M400 1050 Q370 1090 350 1180 M400 1050 Q420 1070 425 1090" />
+    <!-- Arbre 4 (Y=1350) -->
+    <path class="ink" d="M400 1350 Q350 1370 300 1430 M400 1350 Q370 1390 350 1480 M400 1350 Q420 1370 425 1390" />
+    <!-- Arbre 5 (Y=1650) -->
+    <path class="ink" d="M400 1650 Q350 1670 300 1730 M400 1650 Q370 1690 350 1780 M400 1650 Q420 1670 425 1690" />
+  </g>
+
+  <!-- 6. FIL DE COUTURE -->
+  <g id="fil_de_couture">
+    <!-- Fil continu en zig-zag -->
+    <path class="ink-dash" stroke-width="3" d="M 400 300 C 460 335, 460 385, 400 420 C 340 455, 340 505, 400 540 C 460 575, 460 625, 400 660 C 340 695, 340 745, 400 780 C 460 815, 460 865, 400 900 C 340 935, 340 985, 400 1020 C 460 1055, 460 1105, 400 1140 C 340 1175, 340 1225, 400 1260 C 460 1295, 460 1345, 400 1380 C 340 1415, 340 1465, 400 1500 C 460 1535, 460 1585, 400 1620 C 340 1655, 340 1705, 400 1740" />
+    <!-- Aiguille en bas -->
+    <path class="ink" stroke-width="4" d="M 400 1730 L 380 1860" />
+    <ellipse cx="397" cy="1750" rx="3" ry="12" class="ink-thin" transform="rotate(10, 397, 1750)" />
+  </g>
+
+  <!-- 7. ARBRES MURAILLE (LIGNE CENTRALE) -->
+  <g id="arbres_muraille">
+    <!-- Base ombres map -->
+    <ellipse cx="400" cy="450" rx="25" ry="7" class="ink-thin" />
+    <ellipse cx="400" cy="750" rx="25" ry="7" class="ink-thin" />
+    <ellipse cx="400" cy="1050" rx="25" ry="7" class="ink-thin" />
+    <ellipse cx="400" cy="1350" rx="25" ry="7" class="ink-thin" />
+    <ellipse cx="400" cy="1650" rx="25" ry="7" class="ink-thin" />
+
+    <!-- Tronc et feuilles avec nervures -->
+    <!-- Arbre 1 -->
+    <path class="accent" stroke-width="5" d="M400 450 L400 300" />
+    <path class="accent" d="M400 380 Q440 360 450 320 Q410 310 400 360" />
+    <path class="accent-thin" d="M400 380 Q430 350 450 320" />
+    <path class="accent" d="M400 340 Q360 320 350 280 Q390 270 400 320" />
+    <path class="accent-thin" d="M400 340 Q370 310 350 280" />
+    <path class="accent" d="M400 300 Q415 250 400 220 Q385 250 400 300" />
+    <path class="accent-thin" d="M400 300 Q400 260 400 220" />
+
+    <!-- Arbre 2 -->
+    <path class="accent" stroke-width="5" d="M400 750 L400 600" />
+    <path class="accent" d="M400 680 Q440 660 450 620 Q410 610 400 660" />
+    <path class="accent-thin" d="M400 680 Q430 650 450 620" />
+    <path class="accent" d="M400 640 Q360 620 350 580 Q390 570 400 620" />
+    <path class="accent-thin" d="M400 640 Q370 610 350 580" />
+    <path class="accent" d="M400 600 Q415 550 400 520 Q385 550 400 600" />
+    <path class="accent-thin" d="M400 600 Q400 560 400 520" />
+
+    <!-- Arbre 3 -->
+    <path class="accent" stroke-width="5" d="M400 1050 L400 900" />
+    <path class="accent" d="M400 980 Q440 960 450 920 Q410 910 400 960" />
+    <path class="accent-thin" d="M400 980 Q430 950 450 920" />
+    <path class="accent" d="M400 940 Q360 920 350 880 Q390 870 400 920" />
+    <path class="accent-thin" d="M400 940 Q370 910 350 880" />
+    <path class="accent" d="M400 900 Q415 850 400 820 Q385 850 400 900" />
+    <path class="accent-thin" d="M400 900 Q400 860 400 820" />
+
+    <!-- Arbre 4 -->
+    <path class="accent" stroke-width="5" d="M400 1350 L400 1200" />
+    <path class="accent" d="M400 1280 Q440 1260 450 1220 Q410 1210 400 1260" />
+    <path class="accent-thin" d="M400 1280 Q430 1250 450 1220" />
+    <path class="accent" d="M400 1240 Q360 1220 350 1180 Q390 1170 400 1220" />
+    <path class="accent-thin" d="M400 1240 Q370 1210 350 1180" />
+    <path class="accent" d="M400 1200 Q415 1150 400 1120 Q385 1150 400 1200" />
+    <path class="accent-thin" d="M400 1200 Q400 1160 400 1120" />
+
+    <!-- Arbre 5 -->
+    <path class="accent" stroke-width="5" d="M400 1650 L400 1500" />
+    <path class="accent" d="M400 1580 Q440 1560 450 1520 Q410 1510 400 1560" />
+    <path class="accent-thin" d="M400 1580 Q430 1550 450 1520" />
+    <path class="accent" d="M400 1540 Q360 1520 350 1480 Q390 1470 400 1520" />
+    <path class="accent-thin" d="M400 1540 Q370 1510 350 1480" />
+    <path class="accent" d="M400 1500 Q415 1450 400 1420 Q385 1450 400 1500" />
+    <path class="accent-thin" d="M400 1500 Q400 1460 400 1420" />
+  </g>
+
+  <!-- 8. ACCOLADE DE MESURE -->
+  <g id="accolade_mesure">
+    <!-- Accolade architecturale -->
+    <path class="ink" d="M220 250 L190 250 L190 940 L150 950 L190 960 L190 1650 L220 1650" />
+    <!-- Bornes horizontales -->
+    <path class="ink-thin" d="M170 250 L260 250 M170 1650 L260 1650" />
+  </g>
+
+  <!-- 9. ETIQUETTES ET COTE -->
+  <g id="etiquettes" text-anchor="middle">
+    <!-- Cote centrale -->
+    <text x="-950" y="120" transform="rotate(-90)" class="text-main" font-size="44" letter-spacing="8">8 000 KM</text>
+    <text x="-950" y="80" transform="rotate(-90)" class="text-sec" font-size="24" letter-spacing="4">GRANDE MURAILLE VERTE</text>
+
+    <!-- Marqueur Sénégal -->
+    <text x="400" y="130" class="text-main" font-size="36" letter-spacing="6">SÉNÉGAL</text>
+    <circle cx="400" cy="155" r="8" class="ink-thin" />
+    <circle cx="400" cy="155" r="2" class="ink" />
+    <path class="ink-thin" d="M400 163 v37" />
+
+    <!-- Marqueur Djibouti -->
+    <path class="ink-thin" d="M400 1780 v37" />
+    <circle cx="400" cy="1825" r="8" class="ink-thin" />
+    <circle cx="400" cy="1825" r="2" class="ink" />
+    <text x="400" y="1875" class="text-main" font-size="36" letter-spacing="6">DJIBOUTI</text>
+
+    <!-- Altitudes schématiques sur les dunes -->
+    <text x="650" y="500" class="text-dim" font-size="18">+ 250 m</text>
+    <text x="750" y="850" class="text-dim" font-size="18">+ 420 m</text>
+    <text x="700" y="1300" class="text-dim" font-size="18">+ 310 m</text>
+  </g>
+
+</svg>

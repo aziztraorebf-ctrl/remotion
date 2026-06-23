@@ -1,0 +1,180 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" style="background-color:#e8dcc0;">
+  <rect width="1080" height="1920" fill="#e8dcc0" />
+  
+  <g id="background_grid" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="2 8" stroke-linecap="round" opacity="0.2">
+    <!-- Lignes verticales -->
+    <line x1="120" y1="0" x2="120" y2="1920" />
+    <line x1="240" y1="0" x2="240" y2="1920" />
+    <line x1="360" y1="0" x2="360" y2="1920" />
+    <line x1="480" y1="0" x2="480" y2="1920" />
+    <line x1="600" y1="0" x2="600" y2="1920" />
+    <line x1="720" y1="0" x2="720" y2="1920" />
+    <line x1="840" y1="0" x2="840" y2="1920" />
+    <line x1="960" y1="0" x2="960" y2="1920" />
+    <!-- Lignes horizontales -->
+    <line x1="0" y1="120" x2="1080" y2="120" />
+    <line x1="0" y1="240" x2="1080" y2="240" />
+    <line x1="0" y1="360" x2="1080" y2="360" />
+    <line x1="0" y1="480" x2="1080" y2="480" />
+    <line x1="0" y1="600" x2="1080" y2="600" />
+    <line x1="0" y1="720" x2="1080" y2="720" />
+    <line x1="0" y1="840" x2="1080" y2="840" />
+    <line x1="0" y1="960" x2="1080" y2="960" />
+    <line x1="0" y1="1080" x2="1080" y2="1080" />
+    <line x1="0" y1="1200" x2="1080" y2="1200" />
+    <line x1="0" y1="1320" x2="1080" y2="1320" />
+    <line x1="0" y1="1440" x2="1080" y2="1440" />
+    <line x1="0" y1="1560" x2="1080" y2="1560" />
+    <line x1="0" y1="1680" x2="1080" y2="1680" />
+    <line x1="0" y1="1800" x2="1080" y2="1800" />
+  </g>
+
+  <g id="blueprint_framework" stroke="#2b2117" fill="none">
+    <!-- Coins de cadrage -->
+    <path d="M 40 80 L 40 40 L 80 40" stroke-width="3" stroke-linejoin="round" />
+    <path d="M 1040 80 L 1040 40 L 1000 40" stroke-width="3" stroke-linejoin="round" />
+    <path d="M 40 1840 L 40 1880 L 80 1880" stroke-width="3" stroke-linejoin="round" />
+    <path d="M 1040 1840 L 1040 1880 L 1000 1880" stroke-width="3" stroke-linejoin="round" />
+    
+    <!-- Boussole technique -->
+    <circle cx="240" cy="240" r="45" stroke-width="2" />
+    <circle cx="240" cy="240" r="35" stroke-width="1.5" stroke-dasharray="4 4" />
+    <line x1="240" y1="170" x2="240" y2="215" stroke-width="2" />
+    <line x1="240" y1="265" x2="240" y2="310" stroke-width="2" />
+    <line x1="170" y1="240" x2="215" y2="240" stroke-width="2" />
+    <line x1="265" y1="240" x2="310" y2="240" stroke-width="2" />
+    <!-- Echelle -->
+    <line x1="120" y1="1800" x2="320" y2="1800" stroke-width="3" stroke-linecap="round" />
+    <line x1="120" y1="1790" x2="120" y2="1810" stroke-width="2" />
+    <line x1="170" y1="1795" x2="170" y2="1805" stroke-width="1.5" />
+    <line x1="220" y1="1790" x2="220" y2="1810" stroke-width="2" />
+    <line x1="270" y1="1795" x2="270" y2="1805" stroke-width="1.5" />
+    <line x1="320" y1="1790" x2="320" y2="1810" stroke-width="2" />
+  </g>
+
+  <g id="measurement_cotes" stroke="#2b2117" fill="none">
+    <!-- Ligne de cote principale -->
+    <line x1="120" y1="1750" x2="120" y2="150" stroke-width="2" />
+    <line x1="100" y1="1750" x2="140" y2="1750" stroke-width="3" />
+    <line x1="100" y1="150" x2="140" y2="150" stroke-width="3" />
+    <!-- Ticks intermediaires -->
+    <line x1="110" y1="470" x2="130" y2="470" stroke-width="1.5" />
+    <line x1="110" y1="790" x2="130" y2="790" stroke-width="1.5" />
+    <line x1="110" y1="1110" x2="130" y2="1110" stroke-width="1.5" />
+    <line x1="110" y1="1430" x2="130" y2="1430" stroke-width="1.5" />
+  </g>
+
+  <g id="wall_structure" stroke="#2b2117" fill="none">
+    <!-- Muraille centrale (Axe) -->
+    <line x1="540" y1="1750" x2="540" y2="150" stroke-width="10" stroke-linecap="round" />
+    <!-- Lignes de construction d"encadrement -->
+    <line x1="520" y1="1750" x2="520" y2="150" stroke-width="2" stroke-dasharray="8 8" />
+    <line x1="560" y1="1750" x2="560" y2="150" stroke-width="2" stroke-dasharray="8 8" />
+    <!-- Noeuds de pays / etapes de la muraille -->
+    <circle cx="540" cy="470" r="8" fill="#e8dcc0" stroke-width="3" />
+    <circle cx="540" cy="790" r="8" fill="#e8dcc0" stroke-width="3" />
+    <circle cx="540" cy="1110" r="8" fill="#e8dcc0" stroke-width="3" />
+    <circle cx="540" cy="1430" r="8" fill="#e8dcc0" stroke-width="3" />
+    <!-- Noeuds extremes (Sénégal / Djibouti) -->
+    <circle cx="540" cy="1750" r="24" fill="#e8dcc0" stroke-width="3" />
+    <circle cx="540" cy="1750" r="12" stroke-width="1.5" stroke-dasharray="4 4" />
+    <line x1="500" y1="1750" x2="580" y2="1750" stroke-width="2" />
+    <line x1="540" y1="1710" x2="540" y2="1790" stroke-width="2" />
+    <circle cx="540" cy="150" r="24" fill="#e8dcc0" stroke-width="3" />
+    <circle cx="540" cy="150" r="12" stroke-width="1.5" stroke-dasharray="4 4" />
+    <line x1="500" y1="150" x2="580" y2="150" stroke-width="2" />
+    <line x1="540" y1="110" x2="540" y2="190" stroke-width="2" />
+  </g>
+
+  <g id="root_system" stroke="#2b2117" fill="none" stroke-linecap="round">
+    <!-- Racines s"etendant vers l"ouest (gauche) -->
+    <path d="M 520 1600 C 400 1600, 300 1700, 150 1720" stroke-width="4" />
+    <path d="M 520 1300 C 350 1300, 300 1450, 100 1480" stroke-width="3" />
+    <path d="M 520 950 C 400 950, 250 1050, 150 1100" stroke-width="4" />
+    <path d="M 520 600 C 450 600, 350 700, 200 750" stroke-width="3" />
+    <path d="M 520 300 C 380 300, 300 400, 180 420" stroke-width="2" />
+    <!-- Terminaisons nodales -->
+    <circle cx="150" cy="1720" r="4" stroke-width="2" />
+    <circle cx="100" cy="1480" r="4" stroke-width="2" />
+    <circle cx="150" cy="1100" r="4" stroke-width="2" />
+    <circle cx="200" cy="750" r="4" stroke-width="2" />
+    <!-- Lignes de substrat (influence racinaire en profondeur) -->
+    <line x1="300" y1="1650" x2="300" y2="1800" stroke-width="1.5" stroke-dasharray="4 6" />
+    <line x1="220" y1="1360" x2="220" y2="1500" stroke-width="1.5" stroke-dasharray="4 6" />
+    <line x1="280" y1="1000" x2="280" y2="1150" stroke-width="1.5" stroke-dasharray="4 6" />
+    <!-- Elements foliaires geometriques epures -->
+    <path d="M 350 1650 Q 320 1600 280 1620 Q 310 1670 350 1650" stroke-width="2" />
+    <path d="M 250 1380 Q 230 1330 190 1350 Q 210 1400 250 1380" stroke-width="2" />
+    <path d="M 320 1000 Q 280 940 240 970 Q 280 1030 320 1000" stroke-width="2" />
+  </g>
+
+  <g id="desert_dunes" stroke="#2b2117" fill="none" stroke-linecap="round">
+    <!-- Arcs de pression contre la muraille -->
+    <path d="M 560 1450 A 40 40 0 0 1 560 1550" stroke-width="2" stroke-dasharray="4 4" />
+    <path d="M 560 1050 A 40 40 0 0 1 560 1150" stroke-width="2" stroke-dasharray="4 4" />
+    <path d="M 560 650 A 40 40 0 0 1 560 750" stroke-width="2" stroke-dasharray="4 4" />
+    
+    <!-- Dune 1 (Bas) -->
+    <path d="M 560 1500 C 700 1350, 900 1350, 1080 1450" stroke-width="4" />
+    <path d="M 560 1530 C 700 1380, 900 1380, 1080 1480" stroke-width="2" />
+    <path d="M 560 1560 C 700 1410, 900 1410, 1080 1510" stroke-width="1" />
+    <!-- Grain Dune 1 -->
+    <path d="M 580 1470 C 700 1320, 900 1320, 1080 1420" stroke-width="2" stroke-dasharray="2 12" />
+
+    <!-- Dune 2 (Milieu-Bas) -->
+    <path d="M 560 1100 C 750 950, 850 1050, 1080 1150" stroke-width="4" />
+    <path d="M 560 1130 C 750 980, 850 1080, 1080 1180" stroke-width="2" />
+    <!-- Grain Dune 2 -->
+    <path d="M 580 1070 C 750 920, 850 1020, 1080 1120" stroke-width="2" stroke-dasharray="2 12" />
+
+    <!-- Dune 3 (Milieu-Haut) -->
+    <path d="M 560 700 C 800 500, 900 650, 1080 750" stroke-width="4" />
+    <path d="M 560 730 C 800 530, 900 680, 1080 780" stroke-width="2" />
+    <!-- Grain Dune 3 -->
+    <path d="M 580 670 C 800 470, 900 620, 1080 720" stroke-width="2" stroke-dasharray="2 12" />
+
+    <!-- Dune 4 (Haut) -->
+    <path d="M 560 300 C 750 150, 850 250, 1080 350" stroke-width="4" />
+    <path d="M 560 330 C 750 180, 850 280, 1080 380" stroke-width="2" />
+    <path d="M 580 270 C 750 120, 850 220, 1080 320" stroke-width="2" stroke-dasharray="2 12" />
+
+    <!-- Croix de reperage topographique -->
+    <path d="M 820 1550 L 830 1550 M 825 1545 L 825 1555" stroke-width="1.5" />
+    <path d="M 950 900 L 960 900 M 955 895 L 955 905" stroke-width="1.5" />
+    <path d="M 780 400 L 790 400 M 785 395 L 785 405" stroke-width="1.5" />
+  </g>
+
+  <g id="text_annotations" fill="#2b2117" font-family="sans-serif">
+    <!-- Labels Extremites -->
+    <text x="600" y="1760" font-size="36" font-weight="bold" letter-spacing="4">SÉNÉGAL</text>
+    <text x="600" y="1790" font-size="18" opacity="0.7" font-family="monospace">ORIGINE OUEST (14° 40" N, 17° 25" O)</text>
+    
+    <text x="600" y="160" font-size="36" font-weight="bold" letter-spacing="4">DJIBOUTI</text>
+    <text x="600" y="190" font-size="18" opacity="0.7" font-family="monospace">TERMINUS EST (11° 35" N, 43° 08" E)</text>
+
+    <!-- Cote Verticale 8000KM -->
+    <text x="80" y="950" transform="rotate(-90 80 950)" font-size="42" font-weight="bold" letter-spacing="8" text-anchor="middle">8 000 KILOMÈTRES</text>
+
+    <!-- Label Muraille Verte -->
+    <text x="510" y="950" transform="rotate(-90 510 950)" font-size="28" font-weight="bold" letter-spacing="12" text-anchor="middle" opacity="0.8">MURAILLE VERTE</text>
+
+    <!-- Label Zone Desertique -->
+    <text x="800" y="1020" font-size="24" font-weight="bold" letter-spacing="2">AVANCÉE DU SAHARA</text>
+    <text x="800" y="1050" font-size="16" font-family="monospace">ZONES HYPER-ARIDES</text>
+    <line x1="800" y1="1065" x2="1000" y2="1065" stroke="#2b2117" stroke-width="1.5" />
+
+    <!-- Label Zone Resiliente -->
+    <text x="420" y="1160" font-size="24" font-weight="bold" letter-spacing="2" text-anchor="end">RÉSEAU RACINAIRE</text>
+    <text x="420" y="1190" font-size="16" font-family="monospace" text-anchor="end">RESTAURATION DES SOLS</text>
+    <line x1="420" y1="1205" x2="220" y2="1205" stroke="#2b2117" stroke-width="1.5" />
+
+    <!-- Textes Boussole / Echelle -->
+    <text x="165" y="246" font-size="18" font-weight="bold" font-family="monospace">N</text>
+    <text x="320" y="246" font-size="18" font-weight="bold" font-family="monospace">S</text>
+    <text x="235" y="155" font-size="18" font-weight="bold" font-family="monospace">E</text>
+    <text x="235" y="335" font-size="18" font-weight="bold" font-family="monospace">O</text>
+    
+    <text x="120" y="1780" font-size="16" font-family="monospace">0</text>
+    <text x="320" y="1780" font-size="16" font-family="monospace" text-anchor="end">1000 KM</text>
+  </g>
+</svg>

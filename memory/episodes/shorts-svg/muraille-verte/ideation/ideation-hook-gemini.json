@@ -1,0 +1,41 @@
+{
+  "idees": [
+    {
+      "titre": "L'Élévation Absurde (Le Mur Mathématique)",
+      "vue": "Profil architectural schématique",
+      "description": "Une ligne d'horizon légèrement courbe. Par-dessus, une haie d'arbres parfaitement identiques, géométriques, répétés comme un motif (copier-coller vectoriel) formant une barrière rigide. En dessous, dans le sol vide, une immense ligne de cote architecturale (flèches, repères) marque '8000 KM'. Pas de fond, juste le trait sur fond crème.",
+      "element_cle": "La cote architecturale '8000 KM' sous un mur d'arbres beaucoup trop régulier.",
+      "geste_anime": "La ligne d'horizon se trace (stroke). Les arbres jaillissent en séquence rapide et mécanique (pop-up). Au mot 'échoué', la couleur verte disparaît et le trait des arbres se fragmente en pointillés (stroke-dasharray) qui s'affaissent.",
+      "pourquoi": "Pose immédiatement l'échelle titanesque (le chiffre) et le problème central (l'hubris humaine d'avoir voulu imposer une ligne droite mathématique à la nature). Très graphique et infaillible en SVG.",
+      "faisable_note": "10"
+    },
+    {
+      "titre": "Le Blueprint Vertical (La Fausse Carte 9:16)",
+      "vue": "Top-down abstrait (Plan de bataille)",
+      "description": "Aucune vraie côte géographique. Un carroyage strict de lignes de construction en fond. Au centre, un trait vert très épais tranche l'écran verticalement de bas en haut (exploitant le format 9:16). Des nœuds de connexion indiquent 'SÉNÉGAL' en bas et 'DJIBOUTI' en haut. À droite de la ligne, des hachures denses et agressives symbolisent le sable du désert.",
+      "element_cle": "La ligne droite centrale qui agit comme une frontière artificielle sur une grille technique.",
+      "geste_anime": "La grille se dessine, puis le trait vert vertical fend l'écran de bas en haut comme un mur de protection. Les hachures du désert viennent buter contre. À la fin, la ligne se brise sous la pression des hachures qui la traversent.",
+      "pourquoi": "Évite l'effondrement visuel d'une carte réaliste tout en montrant le tracé continental. Exploite parfaitement la verticalité du short pour faire ressentir la longueur interminable du projet.",
+      "faisable_note": "9"
+    },
+    {
+      "titre": "L'Arbre Standardisé (Coupe Micro-Macro)",
+      "vue": "Coupe de sol focale (proche de la référence jointe)",
+      "description": "Un seul arbre planté dans une coupe de sol très détaillée. Autour de lui, un 'corset' de lignes pointillées et de cercles de gabarit (comme un plan industriel). Le sol environnant n'est composé que de hachures arides et de craquelures profondes, contrastant avec la géométrie parfaite de la plantation.",
+      "element_cle": "Le contraste entre les lignes de construction (le rêve ingénieur) et les craquelures du sol (la réalité aride).",
+      "geste_anime": "Le corset géométrique apparaît d'abord, puis l'arbre pousse de force à l'intérieur. Au 'pourquoi ?', les craquelures du sol s'étendent rapidement (croissance de chemins), les racines se rétractent et l'arbre bascule.",
+      "pourquoi": "Ramène les 8000 km à un problème fondamental de biologie et de terrain. On comprend visuellement que l'approche 'ingénierie standard' ne marchait pas dans ce sol. C'est l'essence même de mon style vectoriel.",
+      "faisable_note": "10"
+    },
+    {
+      "titre": "L'Éclaté du Mur (Symbole d'échec)",
+      "vue": "Isométrie épurée (filaire)",
+      "description": "Un bloc de terre rectangulaire en 3D isométrique (rendu purement filaire SVG, sans perspective complexe). Sur ce bloc, une rangée de jeunes pousses alignées au cordeau. De grands vecteurs fléchés (le vent/désert) pointent vers le bloc.",
+      "element_cle": "Le bloc isométrique parfait qui se fracture comme une maquette d'architecture.",
+      "geste_anime": "Le bloc et ses arbres se dessinent trait par trait. Les flèches frappent le bloc. Une fissure en zigzag (trait noir épais) traverse soudainement la maquette isométrique pour marquer l'échec.",
+      "pourquoi": "Le rendu isométrique filaire donne un côté 'présentation de grand projet' institutionnel qui rend le crash (la fissure) d'autant plus impactant et surprenant.",
+      "faisable_note": "8"
+    }
+  ],
+  "reco": "Je recommande fortement l'Idée 2 (Le Blueprint Vertical). Elle contourne brillamment notre point faible (les cartes géo) en assumant un plan abstrait, et elle exploite à fond le format 9:16 de TikTok/Reels pour faire ressentir physiquement la longueur absurde des 8000 km."
+}

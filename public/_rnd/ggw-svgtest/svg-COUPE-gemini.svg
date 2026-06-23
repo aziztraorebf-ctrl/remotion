@@ -1,0 +1,167 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clip-path id="clip_couche_3">
+      <path d="M 30 1250 Q 250 1200 450 1260 T 800 1220 T 1050 1250 L 1050 1440 Q 850 1460 550 1430 T 30 1450 Z"/>
+    </clip-path>
+    <clip-path id="clip_couche_4">
+      <path d="M 30 1450 Q 300 1480 550 1430 T 850 1460 T 1050 1440 L 1050 1745 T 700 1755 T 350 1745 T 30 1750 Z"/>
+    </clip-path>
+  </defs>
+  <g id="fond_parchemin">
+    <rect width="1080" height="1920" fill="#e8dcc0" />
+  </g>
+  <g id="cadre_exterieur">
+    <rect x="30" y="30" width="1020" height="1860" stroke="#2b2117" stroke-width="4" fill="none" />
+    <rect x="45" y="45" width="990" height="1830" stroke="#2b2117" stroke-width="1.5" fill="none" />
+  </g>
+  <g id="grille_construction" stroke="#2b2117" stroke-width="0.5" opacity="0.4" fill="none">
+    <path d="M 100 40 L 100 1880 M 160 40 L 160 1880 M 220 40 L 220 1880 M 280 40 L 280 1880 M 340 40 L 340 1880 M 400 40 L 400 1880 M 460 40 L 460 1880 M 520 40 L 520 1880 M 580 40 L 580 1880 M 640 40 L 640 1880 M 700 40 L 700 1880 M 760 40 L 760 1880 M 820 40 L 820 1880 M 880 40 L 880 1880 M 940 40 L 940 1880 M 1000 40 L 1000 1880" />
+    <path d="M 200 40 L 200 1880 M 40 220 L 1040 220" stroke-dasharray="10 10" />
+    <path d="M 40 1880 L 250 1500 M 40 1780 L 180 1500 M 40 1680 L 120 1500 M 1040 1880 L 830 1500 M 1040 1780 L 900 1500 M 1040 1680 L 960 1500" />
+  </g>
+  <g id="soleil">
+    <circle cx="200" cy="220" r="75" stroke="#2b2117" stroke-width="2.5" fill="none" />
+    <circle cx="200" cy="220" r="65" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="8 6" fill="none" />
+    <circle cx="200" cy="220" r="85" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 4" fill="none" />
+    <path d="M 120 140 L 70 90 M 280 140 L 330 90 M 120 300 L 70 350 M 280 300 L 330 350 M 80 220 L 30 220 M 320 220 L 380 220 M 200 100 L 200 50 M 200 340 L 200 390" stroke="#2b2117" stroke-width="2" fill="none" />
+  </g>
+  <g id="pluie">
+    <path d="M 600 40 L 300 650 M 700 40 L 350 750 M 800 40 L 400 750 M 900 40 L 500 850 M 1000 40 L 600 850 M 1040 150 L 700 850 M 1040 300 L 800 800 M 500 40 L 250 550 M 400 40 L 150 550 M 300 40 L 80 490" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="20 20" fill="none" opacity="0.6" />
+  </g>
+  <g id="horizon_desert">
+    <path d="M 30 650 Q 150 620 250 660 T 500 640 T 750 670 T 1050 630" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 30 630 Q 200 590 350 630 T 650 610 T 1050 640" stroke="#2b2117" stroke-width="1" fill="none" opacity="0.7" />
+    <path d="M 650 620 Q 850 630 1050 610" stroke="#2b2117" stroke-width="2" stroke-dasharray="12 8" fill="none" />
+    <path d="M 700 690 L 1050 690 M 780 710 L 1020 710 M 720 730 L 1050 730 M 40 690 L 280 690 M 100 720 L 240 720" stroke="#2b2117" stroke-width="1" stroke-dasharray="25 12" fill="none" />
+  </g>
+  <g id="surface_sol">
+    <path d="M 30 900 L 120 900 M 960 900 L 1050 900" stroke="#2b2117" stroke-width="5" stroke-linecap="round" fill="none" />
+  </g>
+  <g id="bassin_demi_lune">
+    <path d="M 120 900 C 180 750, 280 780, 320 900" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M 960 900 C 900 750, 800 780, 760 900" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M 215 795 C 400 680, 680 680, 865 795" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M 320 900 C 400 830, 680 830, 760 900 C 680 980, 400 980, 320 900" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M 120 900 L 320 900 M 760 900 L 960 900" stroke="#2b2117" stroke-width="4" stroke-linecap="round" fill="none" />
+  </g>
+  <g id="hachures_bassin">
+    <path d="M 140 880 C 170 800, 200 800, 220 860 M 160 880 C 180 820, 220 820, 240 880 M 180 880 C 200 840, 240 840, 260 880 M 230 790 C 260 760, 300 760, 310 820 M 270 760 C 310 740, 340 760, 350 820 M 310 740 C 350 720, 380 740, 390 810 M 350 720 C 400 700, 450 720, 470 790 M 420 705 C 480 690, 520 710, 540 780 M 500 695 C 560 690, 600 710, 620 780 M 580 695 C 640 700, 680 720, 690 790 M 660 710 C 720 720, 750 740, 760 810 M 730 735 C 780 750, 810 770, 810 830 M 790 760 C 830 780, 850 800, 840 850" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 340 880 L 360 860 M 380 875 L 400 850 M 420 870 L 440 840 M 460 865 L 480 830 M 500 860 L 520 820 M 540 860 L 560 820 M 580 860 L 600 825 M 620 865 L 640 835 M 660 870 L 680 845 M 700 875 L 720 855 M 740 880 L 760 865" stroke="#2b2117" stroke-width="1" fill="none" />
+  </g>
+  <g id="eau_bassin">
+    <path d="M 340 920 Q 400 925 450 920 T 550 920 T 650 920 T 740 920 M 360 940 Q 450 945 540 940 T 720 940 M 390 960 Q 540 965 690 960" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 400 930 L 460 930 M 510 935 L 590 935 M 630 930 L 690 930 M 440 950 L 520 950 M 560 950 L 640 950 M 480 970 L 600 970" stroke="#2b2117" stroke-width="1" fill="none" />
+  </g>
+  <g id="couches_sol">
+    <path d="M 30 1050 Q 200 1020 350 1060 T 650 1030 T 900 1070 T 1050 1040" stroke="#2b2117" stroke-width="2.5" fill="none" />
+    <path d="M 30 1250 Q 250 1200 450 1260 T 800 1220 T 1050 1250" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 30 1450 Q 300 1480 550 1430 T 850 1460 T 1050 1440" stroke="#2b2117" stroke-width="2" fill="none" />
+  </g>
+  <g id="textures_sol">
+    <!-- Fissures -->
+    <path d="M 100 900 L 110 930 L 105 960 M 110 930 L 130 950 M 230 900 L 220 940 L 240 980 M 220 940 L 190 960 M 800 900 L 810 940 M 810 940 L 780 970 M 930 900 L 940 930 L 960 960" stroke="#2b2117" stroke-width="2" fill="none" stroke-linejoin="round" />
+    <!-- Cailloux et Stippling -->
+    <path d="M 150 1150 L 170 1140 L 190 1160 L 180 1180 L 150 1170 Z M 270 1200 L 300 1180 L 320 1210 L 280 1220 Z M 800 1100 L 830 1090 L 840 1120 L 810 1130 Z M 650 1150 L 680 1130 L 700 1160 L 670 1180 Z M 400 1080 L 420 1070 L 440 1090 L 410 1100 Z M 880 1180 L 910 1170 L 930 1200 L 890 1210 Z" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 120 1100 L 122 1100 M 140 1120 L 142 1120 M 180 1080 L 182 1080 M 250 1150 L 252 1150 M 350 1120 L 352 1120 M 450 1180 L 452 1180 M 550 1100 L 552 1100 M 750 1150 L 752 1150 M 850 1080 L 852 1080 M 950 1120 L 952 1120 M 980 1180 L 982 1180" stroke="#2b2117" stroke-width="4" stroke-linecap="round" fill="none" />
+    <!-- Hachures croisées couche 3 -->
+    <g clip-path="url(#clip_couche_3)">
+      <path d="M -100 1200 L 1200 2500 M -60 1200 L 1240 2500 M -20 1200 L 1280 2500 M 20 1200 L 1320 2500 M 60 1200 L 1360 2500 M 100 1200 L 1400 2500 M 140 1200 L 1440 2500 M 180 1200 L 1480 2500 M 220 1200 L 1520 2500 M 260 1200 L 1560 2500 M 300 1200 L 1600 2500 M 340 1200 L 1640 2500 M 380 1200 L 1680 2500 M 420 1200 L 1720 2500 M 460 1200 L 1760 2500 M 500 1200 L 1800 2500" stroke="#2b2117" stroke-width="1" opacity="0.7" fill="none" />
+      <path d="M 1200 1200 L -100 2500 M 1160 1200 L -140 2500 M 1120 1200 L -180 2500 M 1080 1200 L -220 2500 M 1040 1200 L -260 2500 M 1000 1200 L -300 2500 M 960 1200 L -340 2500 M 920 1200 L -380 2500 M 880 1200 L -420 2500 M 840 1200 L -460 2500 M 800 1200 L -500 2500 M 760 1200 L -540 2500 M 720 1200 L -580 2500 M 680 1200 L -620 2500 M 640 1200 L -660 2500 M 600 1200 L -700 2500" stroke="#2b2117" stroke-width="1" opacity="0.7" fill="none" />
+    </g>
+    <!-- Hachures simples couche 4 -->
+    <g clip-path="url(#clip_couche_4)">
+      <path d="M -100 1400 L 1200 2050 M -50 1400 L 1250 2050 M 0 1400 L 1300 2050 M 50 1400 L 1350 2050 M 100 1400 L 1400 2050 M 150 1400 L 1450 2050 M 200 1400 L 1500 2050 M 250 1400 L 1550 2050 M 300 1400 L 1600 2050 M 350 1400 L 1650 2050 M 400 1400 L 1700 2050 M 450 1400 L 1750 2050 M 500 1400 L 1800 2050 M 550 1400 L 1850 2050 M 600 1400 L 1900 2050 M 650 1400 L 1950 2050 M 700 1400 L 2000 2050 M 750 1400 L 2050 2050 M 800 1400 L 2100 2050" stroke="#2b2117" stroke-width="1" opacity="0.5" fill="none" />
+    </g>
+  </g>
+  <g id="racine_pivot">
+    <path d="M 525 930 C 510 1100, 450 1400, 500 1850 M 555 930 C 560 1100, 510 1400, 520 1850" stroke="#2b2117" stroke-width="3" fill="none" stroke-linecap="round" />
+    <path d="M 545 950 C 550 1100, 505 1400, 515 1800" stroke="#2b2117" stroke-width="1" fill="none" opacity="0.8" />
+  </g>
+  <g id="radicelles">
+    <path d="M 522 1050 C 450 1150, 350 1200, 250 1350 M 520 1100 C 470 1200, 390 1250, 300 1380" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 545 1150 C 650 1250, 750 1350, 850 1500 M 540 1200 C 630 1300, 720 1400, 800 1520" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 510 1300 C 400 1450, 350 1600, 300 1800 M 500 1400 C 420 1550, 380 1650, 350 1780" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 525 1450 C 600 1600, 650 1700, 700 1850 M 523 1550 C 580 1680, 620 1750, 650 1820" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 350 1220 Q 300 1250 280 1280 M 700 1300 Q 750 1320 780 1300 M 400 1550 Q 350 1600 320 1580 M 600 1650 Q 650 1680 680 1650 M 400 1210 L 380 1240 M 680 1280 L 710 1320 M 350 1530 L 320 1560" stroke="#2b2117" stroke-width="1.5" fill="none" />
+  </g>
+  <g id="arbre_tronc">
+    <path d="M 525 930 C 525 700, 500 500, 500 250 C 520 400, 540 600, 555 930" stroke="#2b2117" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M 535 910 C 535 750, 520 600, 515 450 M 545 880 C 540 700, 530 550, 525 400" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 548 920 C 550 700, 535 500, 520 250" stroke="#2b2117" stroke-width="1" fill="none" opacity="0.7" />
+  </g>
+  <g id="arbre_branches">
+    <path d="M 525 780 C 450 730, 350 680, 250 580 M 535 720 C 600 680, 700 600, 800 500 M 518 600 C 450 550, 400 480, 320 400 M 525 500 C 600 450, 650 400, 750 300 M 510 400 C 480 350, 450 300, 420 200" stroke="#2b2117" stroke-width="2.5" fill="none" stroke-linecap="round" />
+  </g>
+  <g id="feuilles">
+    <!-- Branche Bas Gauche -->
+    <path d="M 330 635 C 330 580, 400 550, 480 580 C 430 620, 380 650, 330 635" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 330 635 C 380 600, 430 590, 480 580" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- Branche Bas Droite -->
+    <path d="M 740 555 C 680 520, 620 540, 550 600 C 610 630, 680 610, 740 555" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 740 555 C 680 560, 620 570, 550 600" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- Branche Milieu Gauche -->
+    <path d="M 380 460 C 400 400, 460 380, 500 420 C 460 460, 420 480, 380 460" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 380 460 C 420 430, 460 420, 500 420" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- Branche Milieu Droite -->
+    <path d="M 680 350 C 640 310, 580 320, 530 380 C 580 410, 640 400, 680 350" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 680 350 C 630 355, 580 365, 530 380" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- Branche Haut Gauche -->
+    <path d="M 420 280 C 440 230, 480 220, 510 260 C 480 300, 450 310, 420 280" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 420 280 C 450 250, 480 250, 510 260" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- Sommet -->
+    <path d="M 510 150 C 480 190, 490 230, 500 250 C 520 220, 530 190, 510 150" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 510 150 C 500 180, 495 210, 500 250" stroke="#2b2117" stroke-width="1.5" fill="none" />
+  </g>
+  <g id="hachures_feuilles">
+    <!-- F1 (Bas Gauche) -->
+    <path d="M 360 620 L 380 600 M 390 620 L 410 595 M 420 615 L 440 590 M 450 605 L 465 585" stroke="#2b2117" stroke-width="1" fill="none" />
+    <!-- F2 (Bas Droite) -->
+    <path d="M 600 605 L 615 580 M 630 605 L 650 575 M 660 595 L 680 570 M 690 585 L 710 560" stroke="#2b2117" stroke-width="1" fill="none" />
+    <!-- F3 (Milieu Gauche) -->
+    <path d="M 410 455 L 425 435 M 435 450 L 450 430 M 460 440 L 475 425" stroke="#2b2117" stroke-width="1" fill="none" />
+    <!-- F4 (Milieu Droite) -->
+    <path d="M 570 385 L 585 360 M 600 385 L 615 355 M 630 375 L 645 350 M 650 365 L 665 345" stroke="#2b2117" stroke-width="1" fill="none" />
+    <!-- F5 (Haut Gauche) -->
+    <path d="M 445 280 L 455 265 M 465 280 L 475 260 M 485 275 L 495 260" stroke="#2b2117" stroke-width="1" fill="none" />
+    <!-- F6 (Sommet) -->
+    <path d="M 495 210 L 510 195 M 495 230 L 510 215" stroke="#2b2117" stroke-width="1" fill="none" />
+  </g>
+  <g id="nappe_eau">
+    <path d="M 30 1750 Q 200 1760 350 1745 T 700 1755 T 1050 1745 M 30 1780 Q 250 1790 500 1775 T 1050 1785 M 30 1810 Q 300 1800 550 1815 T 1050 1805 M 30 1840 Q 200 1850 400 1835 T 800 1845 T 1050 1830 M 30 1870 Q 250 1880 450 1865 T 900 1875 T 1050 1860 M 30 1900 Q 300 1910 600 1895 T 1050 1905" stroke="#2b2117" stroke-width="2" fill="none" />
+  </g>
+  <g id="lignes_annotation">
+    <!-- CRÉATION DE BERME -->
+    <path d="M 260 740 C 240 740, 190 770, 180 840" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 175 830 L 180 840 L 190 835" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- BASSIN DEMI-LUNE -->
+    <path d="M 820 805 C 780 805, 750 830, 710 870" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 720 860 L 710 870 L 725 875" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- ARBRE -->
+    <path d="M 640 720 L 545 770" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="5 5" fill="none" />
+    <!-- 15°N SAHEL -->
+    <path d="M 840 550 Q 800 570 810 610" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 800 600 L 810 610 L 820 600" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- SURFACE DESERT -->
+    <path d="M 790 660 L 760 690" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 770 680 L 760 690 L 775 695" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- SOL PROFOND -->
+    <path d="M 740 1330 L 650 1370" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <!-- NIVEAU DE LA NAPPE -->
+    <path d="M 690 1730 L 600 1760" stroke="#2b2117" stroke-width="1.5" fill="none" />
+  </g>
+  <g id="textes_annotations" font-family="sans-serif" fill="#2b2117">
+    <text x="80" y="730" font-size="20" font-weight="600">CRÉATION DE BERME</text>
+    <text x="830" y="780" font-size="20" font-weight="600">BASSIN</text>
+    <text x="830" y="805" font-size="20" font-weight="600">DEMI-LUNE</text>
+    <text x="580" y="690" font-size="20" font-weight="600">ARBRE DE LA GRANDE</text>
+    <text x="640" y="715" font-size="20" font-weight="600">MURAILLE VERTE</text>
+    <text x="850" y="550" font-size="22" font-weight="bold">15°N SAHEL</text>
+    <text x="750" y="650" font-size="20" font-weight="600">SURFACE DESERT</text>
+    <text x="60" y="890" font-size="24" font-weight="bold">+17 m</text>
+    <text x="120" y="1730" font-size="24" font-weight="bold">+23 m</text>
+    <text x="720" y="1320" font-size="20" font-weight="600">SOL PROFOND</text>
+    <text x="720" y="1345" font-size="20" font-weight="600">ET STRATIFIÉ</text>
+    <text x="680" y="1710" font-size="20" font-weight="600">NIVEAU DE LA</text>
+    <text x="680" y="1735" font-size="20" font-weight="600">NAPPE PHRÉATIQUE</text>
+  </g>
+</svg>

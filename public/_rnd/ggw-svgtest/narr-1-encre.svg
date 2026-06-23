@@ -1,0 +1,137 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clip-path id="scene_bounds">
+      <rect width="1080" height="1920" />
+    </clip-path>
+  </defs>
+  <g clip-path="url(#scene_bounds)">
+    <g id="fond_parchemin">
+      <rect width="1080" height="1920" fill="#e8dcc0" />
+      <!-- Cadre géométrique d"épure -->
+      <rect x="40" y="40" width="1000" height="1840" stroke="#2b2117" stroke-width="1.5" fill="none" />
+      <rect x="50" y="50" width="980" height="1820" stroke="#2b2117" stroke-width="1" stroke-dasharray="4 8" fill="none" />
+    </g>
+
+    <g id="horizon_sans_fin">
+      <!-- Ligne d"horizon lointaine et subtile -->
+      <path d="M -50 500 Q 250 490 540 510 T 1150 495" stroke="#2b2117" stroke-width="2" fill="none" />
+      <path d="M 100 500 Q 300 480 450 505" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 4" fill="none" />
+      <path d="M 650 510 Q 800 480 1000 495" stroke="#2b2117" stroke-width="1" stroke-dasharray="3 6" fill="none" />
+    </g>
+
+    <g id="soleil_de_plomb">
+      <!-- Disque solaire -->
+      <circle cx="540" cy="320" r="160" stroke="#2b2117" stroke-width="4" fill="none" />
+      <!-- Couronnes de chaleur géométriques -->
+      <circle cx="540" cy="320" r="190" stroke="#2b2117" stroke-width="2" stroke-dasharray="12 18" fill="none" />
+      <circle cx="540" cy="320" r="230" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 10" fill="none" />
+      <circle cx="540" cy="320" r="280" stroke="#2b2117" stroke-width="1" stroke-dasharray="1 8" fill="none" />
+      <!-- Rayons schématiques -->
+      <path d="M 540 120 L 540 60 M 540 40 L 540 20" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 540 520 L 540 580 M 540 600 L 540 620" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 340 320 L 280 320 M 260 320 L 240 320" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 740 320 L 800 320 M 820 320 L 840 320" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 398 178 L 356 136 M 342 122 L 328 108" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 681 461 L 724 504 M 738 518 L 752 532" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 681 178 L 724 136 M 738 122 L 752 108" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+      <path d="M 398 461 L 356 504 M 342 518 L 328 532" stroke="#2b2117" stroke-width="2" stroke-linecap="round" fill="none" />
+    </g>
+
+    <g id="etendue_dunes">
+      <!-- Dune Arrière-plan (Droite) -->
+      <path d="M 400 505 C 600 550 750 650 1150 750" stroke="#2b2117" stroke-width="2.5" fill="none" />
+      <path d="M 750 650 C 850 750 950 850 1150 880" stroke="#2b2117" stroke-width="1.5" fill="none" />
+      
+      <!-- Dune Médiane (Gauche vers Centre-Droit) -->
+      <path d="M -50 850 C 250 800 450 950 850 1100 C 950 1137 1050 1150 1150 1150" stroke="#2b2117" stroke-width="3.5" fill="none" />
+      <!-- Crête secondaire médiane -->
+      <path d="M 450 950 C 350 1050 200 1150 -50 1250" stroke="#2b2117" stroke-width="2" fill="none" />
+      <!-- Lignes de hachures schématiques (ombre crête médiane) -->
+      <path d="M 440 965 L 430 990 M 420 985 L 410 1015 M 400 1005 L 390 1040 M 380 1025 L 370 1060 M 360 1045 L 350 1085 M 340 1065 L 330 1105 M 320 1085 L 310 1130 M 300 1105 L 290 1150 M 280 1125 L 270 1170" stroke="#2b2117" stroke-width="1.5" fill="none" />
+
+      <!-- Dune Massive Premier Plan (Écrasante) -->
+      <path d="M 1150 1150 C 900 1350 700 1450 350 1450 C 150 1450 -10 1500 -50 1550" stroke="#2b2117" stroke-width="5" fill="none" />
+      <path d="M 350 1450 C 500 1600 750 1750 1150 1900" stroke="#2b2117" stroke-width="3" fill="none" />
+      <!-- Lignes de hachures massives (ombre crête avant) -->
+      <path d="M 370 1475 L 375 1520 M 400 1505 L 405 1555 M 430 1535 L 435 1590 M 460 1565 L 465 1625 M 490 1595 L 495 1655 M 520 1625 L 525 1690 M 550 1655 L 555 1720 M 580 1685 L 585 1755 M 610 1715 L 615 1785 M 640 1745 L 645 1815 M 670 1775 L 675 1850" stroke="#2b2117" stroke-width="2" fill="none" />
+    </g>
+
+    <g id="vents_et_sable">
+      <!-- Lignes de vent balayant la scène -->
+      <path d="M -50 1050 Q 300 1150 600 1050 T 1150 1100" stroke="#2b2117" stroke-width="1" stroke-dasharray="15 25 5 15" fill="none" />
+      <path d="M -50 1350 Q 400 1300 700 1400 T 1150 1350" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="30 40 10 30" fill="none" />
+      
+      <!-- Pointillés de grain de sable (le long des crêtes) -->
+      <g fill="#2b2117">
+        <!-- Grain crête arrière -->
+        <circle cx="500" cy="575" r="1.5"/><circle cx="520" cy="590" r="1"/><circle cx="540" cy="595" r="2"/><circle cx="560" cy="610" r="1"/>
+        <circle cx="600" cy="635" r="1.5"/><circle cx="630" cy="655" r="1.5"/><circle cx="650" cy="670" r="1"/><circle cx="680" cy="690" r="2"/>
+        <!-- Grain crête médiane -->
+        <circle cx="350" cy="1025" r="2"/><circle cx="365" cy="1045" r="1.5"/><circle cx="380" cy="1040" r="1"/><circle cx="400" cy="1020" r="2"/>
+        <circle cx="320" cy="1065" r="1.5"/><circle cx="300" cy="1080" r="1"/><circle cx="280" cy="1105" r="2"/><circle cx="260" cy="1120" r="1.5"/>
+        <circle cx="240" cy="1135" r="1"/><circle cx="220" cy="1155" r="2"/><circle cx="200" cy="1165" r="1.5"/><circle cx="180" cy="1180" r="1"/>
+        <!-- Grain crête avant -->
+        <circle cx="380" cy="1480" r="2.5"/><circle cx="410" cy="1515" r="2"/><circle cx="440" cy="1540" r="1.5"/><circle cx="470" cy="1575" r="2.5"/>
+        <circle cx="500" cy="1605" r="2"/><circle cx="530" cy="1635" r="1.5"/><circle cx="560" cy="1660" r="2"/><circle cx="590" cy="1695" r="2.5"/>
+        <circle cx="620" cy="1730" r="2"/><circle cx="650" cy="1755" r="1.5"/><circle cx="680" cy="1785" r="2"/><circle cx="710" cy="1815" r="2.5"/>
+      </g>
+    </g>
+
+    <g id="mur_arbres_fragiles">
+      <!-- Ruban d"arbres sinuant sur la crête médiane, luttant contre le vent -->
+      
+      <!-- Arbre 1 (Chef de file) -->
+      <path d="M 650 1025 Q 660 990 680 960" stroke="#2b2117" stroke-width="3" fill="none" stroke-linecap="round" />
+      <path d="M 665 965 C 640 955 650 930 675 925 C 690 920 705 935 695 955 C 685 975 660 975 665 965 Z" stroke="#2b2117" stroke-width="2" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 2 -->
+      <path d="M 610 1010 Q 620 980 640 955" stroke="#2b2117" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <path d="M 625 960 C 605 950 615 930 635 925 C 650 920 660 935 650 950 C 645 965 625 965 625 960 Z" stroke="#2b2117" stroke-width="1.5" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 3 (Souche cassée) -->
+      <path d="M 570 995 Q 575 980 585 975" stroke="#2b2117" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <!-- Arbre 4 -->
+      <path d="M 530 982 Q 540 955 560 935" stroke="#2b2117" stroke-width="2.5" fill="none" stroke-linecap="round" />
+      <path d="M 545 940 C 525 930 535 910 555 905 C 570 900 580 915 570 930 C 565 945 545 945 545 940 Z" stroke="#2b2117" stroke-width="1.5" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 5 -->
+      <path d="M 490 968 Q 500 940 520 920" stroke="#2b2117" stroke-width="2" fill="none" stroke-linecap="round" />
+      <path d="M 505 925 C 485 915 495 895 515 890 C 530 885 540 900 530 915 C 525 930 505 930 505 925 Z" stroke="#2b2117" stroke-width="1.5" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 6 -->
+      <path d="M 450 953 Q 460 925 480 905" stroke="#2b2117" stroke-width="2" fill="none" stroke-linecap="round" />
+      <path d="M 465 910 C 445 900 455 880 475 875 C 490 870 500 885 490 900 C 485 915 465 915 465 910 Z" stroke="#2b2117" stroke-width="1.5" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 7 (Plus petit) -->
+      <path d="M 410 935 Q 420 910 440 895" stroke="#2b2117" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <path d="M 425 900 C 410 890 420 875 435 870 C 445 865 455 875 445 890 C 440 900 425 900 425 900 Z" stroke="#2b2117" stroke-width="1" fill="#e8dcc0" stroke-linejoin="round" />
+      <!-- Arbre 8 (Lointain) -->
+      <path d="M 370 915 Q 380 895 395 885" stroke="#2b2117" stroke-width="1.5" fill="none" stroke-linecap="round" />
+      <path d="M 385 890 C 370 880 380 865 395 860 C 405 855 415 865 405 880 C 400 890 385 890 385 890 Z" stroke="#2b2117" stroke-width="1" fill="#e8dcc0" stroke-linejoin="round" />
+      
+      <!-- Ligne de sol filaire pour lier les arbres (racines exposées) -->
+      <path d="M 350 910 C 450 960 550 1000 670 1030" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 6" fill="none" />
+    </g>
+
+    <g id="pelle_abandonnee">
+      <!-- Ombre portée sur le sable -->
+      <path d="M 260 1675 L 120 1715" stroke="#2b2117" stroke-width="2" stroke-dasharray="5 5" fill="none" />
+      <!-- Tas de sable à la base -->
+      <path d="M 220 1675 C 240 1650 280 1650 300 1685" stroke="#2b2117" stroke-width="2" fill="#e8dcc0" />
+      <path d="M 235 1665 C 250 1655 270 1655 285 1675" stroke="#2b2117" stroke-width="1" fill="none" />
+      <!-- Manche de la pelle -->
+      <line x1="260" y1="1660" x2="300" y2="1480" stroke="#2b2117" stroke-width="5" stroke-linecap="round" />
+      <!-- Poignée en D -->
+      <path d="M 295 1485 C 275 1480 280 1450 305 1455 C 330 1460 325 1490 305 1485 Z" stroke="#2b2117" stroke-width="3" fill="none" />
+      <line x1="290" y1="1470" x2="315" y2="1475" stroke="#2b2117" stroke-width="3" stroke-linecap="round" />
+      <!-- Lame enfouie -->
+      <path d="M 250 1670 L 240 1630 L 280 1620 L 270 1680 Z" stroke="#2b2117" stroke-width="3" fill="#e8dcc0" stroke-linejoin="round" />
+      <path d="M 260 1625 L 255 1665" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    </g>
+
+    <g id="annotations_narratives">
+      <!-- Typographie d"épure narrative -->
+      <text x="540" y="1820" font-family="monospace" font-size="24" fill="#2b2117" text-anchor="middle" letter-spacing="6">LA GRANDE MURAILLE VERTE</text>
+      <text x="540" y="1855" font-family="monospace" font-size="14" fill="#2b2117" text-anchor="middle" letter-spacing="3">L"AVANCÉE DU DÉSERT</text>
+      <!-- Petits repères discrets -->
+      <line x1="540" y1="1780" x2="540" y2="1790" stroke="#2b2117" stroke-width="1.5" />
+      <line x1="420" y1="1848" x2="440" y2="1848" stroke="#2b2117" stroke-width="1" />
+      <line x1="640" y1="1848" x2="660" y2="1848" stroke="#2b2117" stroke-width="1" />
+    </g>
+  </g>
+</svg>

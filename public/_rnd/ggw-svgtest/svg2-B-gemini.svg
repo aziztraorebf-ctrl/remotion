@@ -1,0 +1,81 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1920" fill="#e8dcc0" />
+  <g id="cadre_et_references" stroke="#2b2117" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="50" y="50" width="980" height="1820" stroke-width="4" />
+    <path d="M 30 100 L 70 100 M 1010 100 L 1050 100 M 30 1820 L 70 1820 M 1010 1820 L 1050 1820" />
+    <path d="M 100 30 L 100 70 M 100 1850 L 100 1890 M 980 30 L 980 70 M 980 1850 L 980 1890" />
+    <circle cx="200" cy="280" r="60" stroke-width="3" />
+    <circle cx="200" cy="280" r="80" stroke-dasharray="10 15" stroke-width="2" />
+    <path d="M 200 160 L 200 120 M 200 400 L 200 440 M 80 280 L 40 280 M 320 280 L 360 280 M 115 195 L 85 165 M 285 365 L 315 395 M 285 195 L 315 165 M 115 365 L 85 395" stroke-width="2" />
+  </g>
+  <g id="coupe_sol_sahelien" stroke="#2b2117" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 50 1150 L 1030 1150" stroke-width="5" />
+    <path d="M 50 1400 C 300 1420 500 1350 1030 1400" stroke-width="2" />
+    <path d="M 50 1650 C 400 1600 700 1700 1030 1650" stroke-width="2" />
+    <path d="M 150 1150 L 140 1200 L 160 1230 L 145 1280 M 350 1150 L 360 1180 L 340 1220 M 850 1150 L 860 1190 L 840 1250" stroke-width="2" />
+    <path d="M 50 1275 L 1030 1275 M 50 1525 L 1030 1525" stroke-dasharray="15 20" stroke-width="1" opacity="0.6" />
+    <path d="M 100 1650 L 150 1870 M 200 1650 L 250 1870 M 300 1650 L 350 1870 M 400 1650 L 450 1870 M 500 1650 L 550 1870 M 600 1650 L 650 1870 M 700 1650 L 750 1870 M 800 1650 L 850 1870 M 900 1650 L 950 1870" stroke-width="1" opacity="0.5" />
+  </g>
+  <g id="racines_isolees" stroke="#2b2117" fill="none" stroke-width="3" stroke-linecap="round">
+    <path d="M 200 1150 Q 180 1200 210 1280" />
+    <path d="M 200 1150 Q 230 1180 200 1230" />
+    <path d="M 350 1150 Q 330 1220 360 1290" />
+    <path d="M 350 1150 Q 380 1190 350 1240" />
+    <path d="M 500 1150 Q 480 1210 490 1270" />
+    <path d="M 500 1150 Q 520 1200 530 1250" />
+    <path d="M 650 1150 Q 640 1200 660 1260" />
+    <path d="M 650 1150 Q 670 1190 680 1230" />
+    <path d="M 800 1150 Q 790 1180 810 1220" />
+  </g>
+  <g id="arbres_jeunes" stroke="#2b2117" fill="none" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 200 1150 L 200 800" />
+    <path d="M 200 950 Q 150 930 140 960 Q 160 980 200 950" stroke-width="2" />
+    <path d="M 200 850 Q 250 820 260 850 Q 240 880 200 850" stroke-width="2" />
+    
+    <path d="M 350 1150 L 350 820" />
+    <path d="M 350 970 Q 300 940 290 980 Q 310 1000 350 970" stroke-width="2" />
+    <path d="M 350 860 Q 400 830 410 860 Q 390 890 350 860" stroke-width="2" />
+    
+    <path d="M 500 1150 L 500 850" />
+    <path d="M 500 1000 Q 450 970 440 1010 Q 460 1030 500 1000" stroke-width="2" />
+    <path d="M 500 900 Q 550 870 560 900 Q 540 930 500 900" stroke-width="2" />
+    
+    <path d="M 650 1150 C 650 1050 630 950 580 900" />
+    <path d="M 625 1020 Q 570 1010 560 1050 Q 590 1060 625 1020" stroke-width="2" />
+    
+    <path d="M 800 1150 C 790 1120 760 1100 720 1090" />
+    <path d="M 760 1120 Q 720 1140 710 1160 Q 740 1160 760 1120" stroke-width="2" />
+  </g>
+  <g id="dunes_sable_menace" stroke="#2b2117" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 1030 450 C 850 480 700 700 650 1150 L 1030 1150 Z" stroke-width="4" />
+    <path d="M 1030 700 C 900 750 800 900 750 1150" stroke-width="3" />
+    <path d="M 850 780 C 800 850 780 1000 820 1150" stroke-width="2" stroke-dasharray="15 10" />
+    <g stroke-width="2" stroke-linecap="round">
+      <path d="M 670 1120 v 1 M 685 1090 v 1 M 700 1140 v 1 M 710 1050 v 1 M 720 1100 v 1 M 735 1130 v 1 M 750 1020 v 1 M 760 1070 v 1 M 770 1110 v 1 M 785 1145 v 1 M 800 950 v 1 M 815 1000 v 1 M 830 1060 v 1 M 850 1120 v 1 M 865 1090 v 1 M 880 1030 v 1 M 900 900 v 1 M 920 980 v 1 M 940 1050 v 1 M 960 1130 v 1 M 980 850 v 1 M 1000 950 v 1" />
+      <path d="M 660 1135 v 1 M 690 1115 v 1 M 720 1075 v 1 M 740 1135 v 1 M 780 1045 v 1 M 810 1125 v 1 M 840 985 v 1 M 870 1135 v 1 M 890 1075 v 1 M 910 1145 v 1 M 930 1105 v 1 M 950 1005 v 1 M 970 1085 v 1 M 990 1025 v 1 M 1010 1115 v 1 M 1020 905 v 1" />
+    </g>
+  </g>
+  <g id="annotations_ingenieur" stroke="#2b2117" fill="#2b2117" font-family="Courier New, monospace" font-size="24" font-weight="bold">
+    <text x="400" y="150" fill="#2b2117" stroke="none">PROJET: GRANDE MURAILLE VERTE</text>
+    
+    <path d="M 100 200 L 980 200" stroke-dasharray="10 15" stroke-width="2" fill="none" />
+    <path d="M 100 180 L 100 220 M 980 180 L 980 220" stroke-width="3" fill="none" />
+    <text x="540" y="185" text-anchor="middle" fill="#2b2117" stroke="none">8 000 km</text>
+    
+    <path d="M 100 260 L 400 260 L 420 280" stroke-dasharray="5 10" stroke-width="2" fill="none" />
+    <text x="430" y="290" fill="#2b2117" stroke="none">11 PAYS : SÉNÉGAL à DJIBOUTI</text>
+    
+    <rect x="800" y="300" width="120" height="120" stroke="#2b2117" stroke-width="4" fill="none" />
+    <path d="M 780 280 L 820 320 M 940 400 L 900 440" stroke="#2b2117" stroke-width="2" fill="none" />
+    <text x="860" y="385" font-size="80" text-anchor="middle" fill="#2b2117" stroke="none">?</text>
+    <text x="860" y="460" font-size="20" text-anchor="middle" fill="#2b2117" stroke="none">DÉSERTIFICATION</text>
+    <path d="M 860 480 L 860 680" stroke-dasharray="8 8" stroke-width="2" fill="none" />
+    <circle cx="860" cy="680" r="5" fill="#2b2117" />
+    
+    <text x="80" y="1285" font-size="20" fill="#2b2117" stroke="none">STRATE 1: LIMON SABLEUX</text>
+    <path d="M 370 1275 L 450 1275 L 480 1230" stroke-dasharray="4 6" stroke-width="2" fill="none" />
+    
+    <text x="80" y="1535" font-size="20" fill="#2b2117" stroke="none">STRATE 2: ARGILE PROFONDE</text>
+    <path d="M 390 1525 L 470 1525 L 500 1480" stroke-dasharray="4 6" stroke-width="2" fill="none" />
+  </g>
+</svg>

@@ -1,0 +1,70 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .trait-principal { fill: none; stroke: #8a2a20; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+      .trait-fin { fill: none; stroke: #8a2a20; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .trait-ombre { fill: none; stroke: #dca95e; stroke-width: 2; stroke-linecap: round; }
+      .trait-grain { fill: none; stroke: #8a2a20; stroke-width: 3; stroke-linecap: round; stroke-dasharray: 2 12; }
+    </style>
+  </defs>
+
+  <g id="cadre_et_fond">
+    <rect width="1080" height="1920" fill="#e8dcc0" />
+    <rect x="30" y="30" width="1020" height="1860" rx="15" fill="none" stroke="#8a2a20" stroke-width="6" />
+    <rect x="50" y="50" width="980" height="1820" rx="10" fill="none" stroke="#8a2a20" stroke-width="2" stroke-dasharray="6 12" />
+  </g>
+
+  <g id="ciel_halo">
+    <circle cx="540" cy="350" r="260" fill="none" stroke="#dca95e" stroke-width="1" stroke-dasharray="8 16" />
+    <circle cx="540" cy="350" r="380" fill="none" stroke="#dca95e" stroke-width="1" stroke-dasharray="4 24" />
+    <circle cx="540" cy="350" r="500" fill="none" stroke="#dca95e" stroke-width="1" stroke-dasharray="2 30" />
+    <path d="M 50 150 L 1030 150 M 50 250 L 1030 250 M 50 450 L 1030 450 M 50 550 L 1030 550" stroke="#dca95e" stroke-width="1" opacity="0.5" fill="none" />
+  </g>
+
+  <g id="soleil_accablant">
+    <circle cx="540" cy="350" r="130" fill="#f2ebd9" stroke="#8a2a20" stroke-width="5" />
+    <circle cx="540" cy="350" r="160" class="trait-principal" stroke-dasharray="4 12" />
+    <path d="M 540 140 L 540 60 M 540 560 L 540 640 M 330 350 L 250 350 M 750 350 L 830 350" class="trait-principal" />
+    <path d="M 391 201 L 335 145 M 689 201 L 745 145 M 391 499 L 335 555 M 689 499 L 745 555" class="trait-principal" />
+    <path d="M 441 169 L 401 113 M 639 169 L 679 113 M 441 531 L 401 587 M 639 531 L 679 587" class="trait-fin" />
+  </g>
+
+  <g id="etendue_dunes_arriere">
+    <path d="M 25 750 Q 300 650 550 750 Q 800 600 1055 720 L 1055 1890 L 25 1890 Z" fill="#e7bd78" stroke="#8a2a20" stroke-width="4" />
+    <path d="M 25 950 Q 400 820 750 980 Q 900 880 1055 960 L 1055 1890 L 25 1890 Z" fill="#dca95e" stroke="#8a2a20" stroke-width="4" />
+    <path d="M 450 710 Q 460 740 470 760 M 480 705 Q 490 735 500 755 M 510 708 Q 520 738 530 758" class="trait-fin" />
+    <path d="M 25 970 Q 400 840 750 1000 Q 900 900 1055 980" class="trait-grain" />
+  </g>
+
+  <g id="ruban_arbres">
+    <path d="M 220 955 Q 400 880 550 920 T 860 855" fill="none" stroke="#8a2a20" stroke-width="2" stroke-dasharray="4 8" opacity="0.7" />
+    <path id="arbres_troncs" d="M 250 950 L 250 930 M 300 930 L 300 910 M 360 907 L 360 887 M 420 895 L 420 875 M 480 900 L 480 880 M 550 920 L 550 900 M 620 915 L 620 895 M 690 897 L 690 877 M 760 873 L 760 853 M 830 855 L 830 835" class="trait-principal" stroke-width="3" />
+    <path id="arbres_feuillages" d="M 235 930 L 240 920 L 260 920 L 265 930 Z M 285 910 L 290 900 L 310 900 L 315 910 Z M 345 887 L 350 877 L 370 877 L 375 887 Z M 405 875 L 410 865 L 430 865 L 435 875 Z M 465 880 L 470 870 L 490 870 L 495 880 Z M 535 900 L 540 890 L 560 890 L 565 900 Z M 605 895 L 610 885 L 630 885 L 635 895 Z M 675 877 L 680 867 L 700 867 L 705 877 Z M 745 853 L 750 843 L 770 843 L 775 853 Z M 815 835 L 820 825 L 840 825 L 845 835 Z" fill="#2b2117" stroke="#8a2a20" stroke-width="2" stroke-linejoin="round" />
+  </g>
+
+  <g id="etendue_dunes_avant">
+    <path d="M 25 1250 Q 500 1050 950 1250 Q 1000 1200 1055 1250 L 1055 1890 L 25 1890 Z" fill="#e7bd78" stroke="#8a2a20" stroke-width="4" />
+    <path d="M 25 1550 Q 300 1400 650 1600 Q 850 1450 1055 1650 L 1055 1890 L 25 1890 Z" fill="#dca95e" stroke="#8a2a20" stroke-width="4" />
+    <path d="M 25 1850 Q 200 1750 500 1890 L 25 1890 Z" fill="#e7bd78" stroke="#8a2a20" stroke-width="4" />
+    <path d="M 510 1150 L 510 1200 M 480 1160 L 480 1210 M 540 1145 L 540 1195" class="trait-fin" stroke-dasharray="2 6" />
+    <path d="M 320 1420 L 320 1480 M 290 1435 L 290 1490 M 350 1415 L 350 1470" class="trait-fin" stroke-dasharray="2 6" />
+    <path d="M 25 1270 Q 500 1070 950 1270" class="trait-grain" />
+    <path d="M 25 1580 Q 300 1430 650 1630" class="trait-grain" stroke-width="2" />
+  </g>
+
+  <g id="pelle_abandonnee">
+    <path d="M 740 1715 L 900 1650" fill="none" stroke="#dca95e" stroke-width="16" stroke-linecap="round" opacity="0.8" />
+    <path d="M 600 1200 L 750 1600" fill="none" stroke="#8a2a20" stroke-width="12" stroke-linecap="round" />
+    <path d="M 570 1190 L 630 1170" fill="none" stroke="#8a2a20" stroke-width="16" stroke-linecap="round" />
+    <path d="M 720 1605 L 780 1595" fill="none" stroke="#8a2a20" stroke-width="12" stroke-linecap="round" />
+    <path d="M 720 1605 L 685 1740 Q 740 1780 795 1715 L 780 1595 Z" fill="#f2ebd9" stroke="#8a2a20" stroke-width="6" stroke-linejoin="round" />
+    <path d="M 720 1650 L 745 1655 M 715 1680 L 755 1690" class="trait-fin" />
+    <circle cx="745" cy="1600" r="3" fill="#8a2a20" />
+    <circle cx="755" cy="1598" r="3" fill="#8a2a20" />
+  </g>
+
+  <g id="titre_narratif">
+    <text x="540" y="1780" font-family="monospace, sans-serif" font-size="32" font-weight="bold" fill="#8a2a20" text-anchor="middle" letter-spacing="6">LA GRANDE MURAILLE VERTE</text>
+    <text x="540" y="1825" font-family="monospace, sans-serif" font-size="20" fill="#4a2511" text-anchor="middle" letter-spacing="2">L"ambition humaine face à la démesure</text>
+  </g>
+</svg>

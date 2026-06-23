@@ -1,0 +1,65 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1920" fill="#e8dcc0" />
+
+  <g id="cadre_architectural">
+    <path d="M 140 1650 L 140 540 A 400 400 0 0 1 940 540 L 940 1650" stroke="#2b2117" stroke-width="4" fill="none" />
+    <path d="M 160 1650 L 160 540 A 380 380 0 0 1 920 540 L 920 1650" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 120 540 L 160 540 M 920 540 L 960 540" stroke="#2b2117" stroke-width="2" fill="none" />
+  </g>
+
+  <g id="lignes_construction">
+    <path d="M 540 100 L 540 1700" stroke="#2b2117" stroke-width="1" stroke-dasharray="10 30" fill="none" />
+    <path d="M 100 850 L 980 850" stroke="#2b2117" stroke-width="1" stroke-dasharray="10 30" fill="none" />
+    <path d="M 520 850 L 560 850 M 540 830 L 540 870" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 140 650 L 940 650 M 140 750 L 940 750" stroke="#2b2117" stroke-width="0.5" stroke-dasharray="4 16" fill="none" />
+  </g>
+
+  <g id="soleil_accablant">
+    <circle cx="540" cy="540" r="160" stroke="#2b2117" stroke-width="4" fill="none" />
+    <circle cx="540" cy="540" r="190" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="8 16" fill="none" />
+    <circle cx="540" cy="540" r="220" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 12" fill="none" />
+    <path d="M 400 780 L 400 880 M 540 800 L 540 920 M 680 780 L 680 880" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 8" fill="none" />
+  </g>
+
+  <g id="horizon_infini">
+    <path d="M -50 850 L 1130 850" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M -50 830 L 1130 830" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="12 24" fill="none" />
+  </g>
+
+  <g id="immensite_dunes">
+    <!-- Dune 1 (Fond droite) -->
+    <path d="M 600 1000 Q 800 950 1130 880" stroke="#2b2117" stroke-width="2.5" fill="none" />
+    <!-- Dune 2 (Milieu, sous les arbres) -->
+    <path d="M -50 1050 Q 500 1000 1130 1100" stroke="#2b2117" stroke-width="3" fill="none" />
+    <path d="M 50 1070 Q 500 1020 1050 1120" stroke="#2b2117" stroke-width="2" stroke-dasharray="2 12" stroke-linecap="round" fill="none" />
+    <!-- Dune 3 (Grande traversee gauche vers droite, coupee pour la pelle) -->
+    <path d="M -50 1300 Q 300 1230 750 1290" stroke="#2b2117" stroke-width="3.5" fill="none" />
+    <path d="M 1000 1360 Q 1050 1380 1130 1400" stroke="#2b2117" stroke-width="3.5" fill="none" />
+    <path d="M 0 1330 Q 300 1260 700 1310" stroke="#2b2117" stroke-width="2" stroke-dasharray="2 12" stroke-linecap="round" fill="none" />
+    <!-- Dune 4 (Premier plan, deborde du cadre) -->
+    <path d="M -50 1600 Q 600 1450 1130 1700" stroke="#2b2117" stroke-width="4" fill="none" />
+    <path d="M -20 1630 Q 600 1480 1080 1730" stroke="#2b2117" stroke-width="2" stroke-dasharray="2 15" stroke-linecap="round" fill="none" />
+    <path d="M 50 1660 Q 600 1510 1030 1760" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="1 20" stroke-linecap="round" fill="none" />
+  </g>
+
+  <g id="ruban_arbres">
+    <path d="M 140 1000 L 910 1000" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 140 1005 L 910 1005" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 6" fill="none" />
+    <path d="M 150 1000 L 150 980 M 150 980 Q 138 960 150 950 Q 162 960 150 980 Z M 200 1000 L 200 980 M 200 980 Q 188 960 200 950 Q 212 960 200 980 Z M 250 1000 L 250 980 M 250 980 Q 238 960 250 950 Q 262 960 250 980 Z M 300 1000 L 300 980 M 300 980 Q 288 960 300 950 Q 312 960 300 980 Z M 350 1000 L 350 980 M 350 980 Q 338 960 350 950 Q 362 960 350 980 Z M 400 1000 L 400 980 M 400 980 Q 388 960 400 950 Q 412 960 400 980 Z M 450 1000 L 450 980 M 450 980 Q 438 960 450 950 Q 462 960 450 980 Z M 500 1000 L 500 980 M 500 980 Q 488 960 500 950 Q 512 960 500 980 Z M 550 1000 L 550 980 M 550 980 Q 538 960 550 950 Q 562 960 550 980 Z M 600 1000 L 600 980 M 600 980 Q 588 960 600 950 Q 612 960 600 980 Z M 650 1000 L 650 980 M 650 980 Q 638 960 650 950 Q 662 960 650 980 Z M 700 1000 L 700 980 M 700 980 Q 688 960 700 950 Q 712 960 700 980 Z M 750 1000 L 750 980 M 750 980 Q 738 960 750 950 Q 762 960 750 980 Z M 800 1000 L 800 980 M 800 980 Q 788 960 800 950 Q 812 960 800 980 Z M 850 1000 L 850 980 M 850 980 Q 838 960 850 950 Q 862 960 850 980 Z M 900 1000 L 900 980 M 900 980 Q 888 960 900 950 Q 912 960 900 980 Z" stroke="#2b2117" stroke-width="1.5" fill="none" />
+  </g>
+
+  <g id="pelle_abandonnee">
+    <path d="M 866 1461 L 946 1101 M 874 1459 L 954 1099" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 935 1105 L 965 1095 M 935 1105 C 920 1060 980 1040 965 1095 M 942 1099 C 935 1070 965 1060 958 1094" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 860 1463 L 880 1457 M 864 1480 L 876 1475 M 864 1480 L 850 1520 M 876 1475 L 890 1515" stroke="#2b2117" stroke-width="2" fill="none" />
+    <path d="M 830 1510 Q 870 1500 910 1520" stroke="#2b2117" stroke-width="2.5" fill="none" />
+    <path d="M 840 1525 Q 870 1515 900 1530" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 6" stroke-linecap="round" fill="none" />
+  </g>
+
+  <g id="texte_narratif">
+    <text x="540" y="1780" font-family="sans-serif" font-size="22" font-weight="bold" letter-spacing="8" text-anchor="middle" fill="#2b2117">LA GRANDE MURAILLE VERTE</text>
+    <text x="540" y="1820" font-family="sans-serif" font-size="14" letter-spacing="4" text-anchor="middle" fill="#2b2117">L"AMBITION HUMAINE FACE À L"IMMENSITÉ</text>
+    <path d="M 200 1772 L 280 1772 M 800 1772 L 880 1772" stroke="#2b2117" stroke-width="1.5" fill="none" />
+    <path d="M 480 1840 L 600 1840" stroke="#2b2117" stroke-width="1" stroke-dasharray="4 8" fill="none" />
+  </g>
+</svg>
