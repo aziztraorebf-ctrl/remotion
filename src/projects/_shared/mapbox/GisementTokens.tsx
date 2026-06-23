@@ -12,6 +12,7 @@
  */
 import React from "react";
 import { Img, staticFile } from "remotion";
+import { SvgGas, SvgOil, SvgSonar } from "./GisementTokensSVG";
 
 const NAVY = "#16213a";
 const GOLD = "#c8a951";
@@ -279,16 +280,16 @@ export const GisementMarker: React.FC<{
   // facteur de taille pilote par le zoom : petit point loin (zoom<=6), hexagone plein au plongeon (zoom>=7.4).
   // En l'absence de zoom fourni, reste a 1 (comportement historique).
   const sizeFactor = zoom == null ? 1 : Math.max(0.26, Math.min(1, (zoom - 6.0) / (7.4 - 6.0)));
-  if (kind === "sonar") {
-    return <SonarToken x={x} y={y} localF={localF} frame={frame} appeared={appeared} />;
-  }
   const id = uid ?? `${Math.round(x)}_${Math.round(y)}`;
-  // mode "fill" pour image/drapeau/sceau (remplissent l'hexa), "navy" pour le SVG natif anime
-  const mode = kind === "gas" ? "navy" : "fill";
+  // FAMILLE SVG GPT-5.5 (2026-06-22, validee Aziz) : gas/oil/sonar = SVG natif anime par frame, mode navy.
+  // Identite visuelle coherente (torchere, goutte+ondes, sonar). Remplace l'ancienne bougie (GasFlareToken)
+  // + l'image Gemini (OilImageToken). flag/seal/image restent en mode fill.
+  const mode = kind === "gas" || kind === "oil" || kind === "sonar" ? "navy" : "fill";
   return (
     <TokenFrame x={x} y={y} scale={scale * sizeFactor} frame={frame} uid={id} mode={mode}>
-      {kind === "gas" && <GasFlareToken x={x} y={y} scale={scale} frame={frame} />}
-      {kind === "oil" && oilImgSrc && <OilImageToken frame={frame} imgSrc={oilImgSrc} />}
+      {kind === "gas" && <SvgGas f={frame} />}
+      {kind === "oil" && <SvgOil f={frame} />}
+      {kind === "sonar" && <SvgSonar f={frame} />}
       {kind === "flag" && flagSrc && <FlagToken frame={frame} flagSrc={flagSrc} />}
       {kind === "seal" && <SealToken frame={frame} localF={localF} />}
     </TokenFrame>

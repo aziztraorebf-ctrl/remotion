@@ -22,7 +22,7 @@
  * Anti-derive : tout overlay geo-ancre = map.project([lon,lat]) RECALCULE chaque frame (useCurrentFrame).
  */
 import React, { useRef, useState } from "react";
-import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
+import { AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring } from "remotion";
 import type mapboxgl from "mapbox-gl";
 import { loadFont as loadBebas } from "@remotion/google-fonts/BebasNeue";
 import { CartoSouverainV5 } from "../../../_shared/mapbox/CartoSouverainV5";
@@ -30,6 +30,7 @@ import { GeoCountryPlaque } from "../../../_shared/mapbox/GeoCountryPlaque";
 import { GisementMarker } from "../../../_shared/mapbox/GisementTokens";
 import { MapboxCountryFlagDecal } from "../../../_shared/mapbox/MapboxCountryFlagDecal";
 import { drawFlagCanvas } from "../../../_shared/mapbox/flagCanvas";
+import { BarilJaugeIcon } from "../../../_shared/thumbnails/icons/BarilJaugeIcon";
 
 const { fontFamily: BEBAS } = loadBebas();
 
@@ -52,7 +53,19 @@ const RUSSIA: [number, number] = [38.0, 56.0];       // ~ Russie europeenne (con
 const A1 = 0;     // SANGOMAR
 const A2 = 500;   // GTA (la voix dit "le deuxieme c'est GTA" ~f470-501)
 const A3 = 1090;  // YAKAAR (la voix dit "un troisieme champ, Yakaar" ~f1090-1155)
-const END = 1560;
+// ── PIVOT 60% (fin de scene 1 : "combien reste au Senegal ?") ───────────────
+// La carte a fait son travail (3 champs montres). On RECENTRE : la carte recule
+// et se voile, LE chiffre 60% emerge, se nuance ("ni scandale ni jackpot"), puis
+// le fond reste pur (transition vers scene 2 Norvege/Congo/Botswana).
+//
+// ⚠️ CALAGE VERIFIE A L'OREILLE (transcription Whisper de narration-v3-VALIDEE.mp3, l'audio REEL qui joue).
+// scene1-alignment.json est DESYNCHRONISE de ~20s (il met "surprise" a 82s, en realite 102.5s) -> NE PAS l'utiliser.
+// La source fiable = AUDIO_START=52 + temps audio reel. scene_frame = (t_abs - 52) * 30 :
+//   "surprise"(fin Yakaar) 102.5s=f1515 · "Reste la vraie question" 102.8s=f1524 · "combien reste" 106s=f1620
+//   "environ 60%" 108.5s=f1695 · "60% la moyenne" 113s=f1830 · "ni scandale ni jackpot" 117.5s=f1965
+//   "ne dit rien" 120s=f2040 · "du resultat" 122s=f2100 · (scene 2 "regardons trois" 122.5s=f2115)
+const PIV = 1500;  // debut voile carte (recouvre la toute fin de Yakaar f1515, transition douce)
+const END = 2120;  // +560f / ~18.7s : "Reste la vraie question..." -> "...du resultat." (122s)
 
 export const SceneGisementsV3: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -80,12 +93,17 @@ export const SceneGisementsV3: React.FC = () => {
     // ACTE 3 — retour Senegal large pour le climax Yakaar + convoitise
     { atProgress: 1190 / END,  cam: { lon: -16.6, lat: 14.7, zoom: 5.6, pitch: 12, bearing: 0 } },
     { atProgress: 1300 / END,  cam: { lon: -16.7, lat: 14.85, zoom: 6.05, pitch: 22, bearing: 0 } },
-    { atProgress: 1.0,         cam: { lon: -16.7, lat: 14.85, zoom: 6.05, pitch: 22, bearing: 0 } },
+    { atProgress: 1480 / END,  cam: { lon: -16.7, lat: 14.85, zoom: 6.05, pitch: 22, bearing: 0 } },
+    // PIVOT 60% — la carte RECULE doucement (dezoom + pitch a plat) pendant qu'elle se voile.
+    // On ne quitte pas le monde : il s'eloigne et passe en fond derriere le chiffre.
+    { atProgress: 1620 / END,  cam: { lon: -16.4, lat: 14.6, zoom: 5.3, pitch: 4, bearing: 0 } },
+    { atProgress: 1.0,         cam: { lon: -16.2, lat: 14.4, zoom: 5.05, pitch: 0, bearing: 0 } },
   ];
 
   return (
     <AbsoluteFill>
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={AUDIO_START * fps} />
+      <SceneSFX />
       <CartoSouverainV5 camKeys={camKeys} focusIsos={["SEN"]} onMapReady={(m) => { mapRef.current = m; force((n) => n + 1); }}>
         {/* DRAPEAU SEN drape des le debut (heros, colorie la carte) — opacite dosee */}
         <MapboxCountryFlagDecal mapRef={mapRef} iso="SEN" geoNames={["Senegal"]} drawFlag={(s) => drawFlagCanvas("SEN", s)} opacity={0.5} />
@@ -100,9 +118,175 @@ export const SceneGisementsV3: React.FC = () => {
         <AnimatedFlagDecal mapRef={mapRef} iso="RUS" geoNames={["Russia"]} appearAt={905} maxOpacity={0.5} fadeOutAt={1000} />
         <Effets mapRef={mapRef} />
       </CartoSouverainV5>
+      {/* ── PIVOT 60% : voile navy + chiffre hero + jauge + nuance (premier plan, par-dessus la carte) ── */}
+      <PivotRevenu />
     </AbsoluteFill>
   );
 };
+
+// ════════════════════════════════════════════════════════════════════════════
+//  PIVOT REVENU — fin de scene 1, en DATA-HERO (grammaire DECODE-mpesa, validee Aziz).
+//  Objet-HEROS central immuable (le BARIL) qui se remplit du drapeau SEN a 60%, halo qui
+//  RESPIRE, UNE donnee greffee a droite (60%), UNE seule ecriture (la question). Fond navy
+//  QUADRILLE (grille or visible, registre data Souverain). Voile OPAQUE : la carte disparait
+//  totalement (plein ecran, plus de superposition jeton Yakaar/carte).
+//
+//  REGLE DES 5s sur ~20s = 4 plateaux, le baril ne bouge JAMAIS (seuls remplissage + halo vivent).
+//  Cale sur l'audio REEL (Whisper segment 100-125s, frame_scene = (t_abs-52)*30) :
+//   P1 f1500-1640 : voile opaque monte, baril vide + question ("Reste la vraie question..." f1558)
+//   P2 f1640-1740 : le baril SE REMPLIT a 60%, le 60% se greffe a droite. Pic "environ 60%" f1715.
+//   P3 f1740-1980 : tenue stable, halo respire ("60% la moyenne" f1911).
+//   P4 f1980-2120 : halo se calme, fade doux -> navy pur ("ni scandale... du resultat" f2010-2134).
+// ════════════════════════════════════════════════════════════════════════════
+const PivotRevenu: React.FC = () => {
+  const frame = useCurrentFrame();
+  if (frame < PIV) return null;
+
+  // P1 — voile navy OPAQUE : la carte disparait totalement (plein ecran serie).
+  const veil = interpolate(frame, [PIV, PIV + 70], [0, 1], clamp);
+
+  // SEULE ecriture : la question (apparait apres le voile, reste jusqu'au fade final).
+  const qOp = interpolate(frame, [1560, 1600, 2080, 2120], [0, 1, 1, 0], clamp);
+
+  // P2 — remplissage baril 0->60%, RALENTI et ease-out (le petrole se pose, mouvement ample).
+  // Etale sur f1640->1790 (150f = 5s) au lieu de 80f. Le pic reste cale sur "soixante pour cent" (~f1715-1760).
+  const fillT = interpolate(frame, [1640, 1790], [0, 1], clamp);
+  const fillEased = 1 - Math.pow(1 - fillT, 2.2); // ease-out : rapide au debut, lent a la fin (se pose)
+  const barilRatio = fillEased * 60;
+  const num = Math.round(barilRatio);
+  const barilOp = interpolate(frame, [1560, 1620, 2090, 2120], [0, 1, 1, 0], clamp);
+  // le 60% se greffe a droite APRES le remplissage (f1770->1820)
+  const rightIn = interpolate(frame, [1770, 1820], [0, 1], clamp);
+
+  // ── geometrie du baril (repere viewBox 1280x720 du composant) pour poser l'animation de surface ──
+  const B_CX = 500, B_CY = 400, B_W = 320, B_H = 470;
+  const B_bottom = B_CY + B_H / 2;
+  const B_left = B_CX - B_W / 2, B_right = B_CX + B_W / 2;
+  const surfaceY = B_bottom - (B_H * barilRatio) / 100; // niveau du liquide (= cutY interne)
+  const filled = barilRatio > 2;
+  // ondulation de surface (une fois du liquide present) : oscillation lente du niveau + brillance
+  const ripple = 2.2 * Math.sin(frame / 9) + 1.4 * Math.sin(frame / 13 + 1);
+  // reflet qui balaye le couvercle (haut du baril) lentement
+  const sweepX = B_left + ((frame % 150) / 150) * B_W;
+
+  // P3 — halo qui RESPIRE (le pivot respire, cree du vide). Se calme en P4 ("ni scandale").
+  const haloBreath = 0.10 + 0.05 * Math.sin(frame / 16);
+  const haloCalm = interpolate(frame, [1980, 2060], [1, 0.4], clamp); // se calme vers la fin
+  const halo = haloBreath * haloCalm;
+
+  // P4 — fade-out global -> navy pur (transition scene 2).
+  const blockOp = interpolate(frame, [2090, 2120], [1, 0], clamp);
+
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      {/* voile navy OPAQUE + grille or visible (registre data Souverain) */}
+      <AbsoluteFill style={{
+        backgroundColor: NAVY,
+        opacity: veil,
+        backgroundImage:
+          "linear-gradient(rgba(200,169,81,0.10) 1px, transparent 1px)," +
+          "linear-gradient(90deg, rgba(200,169,81,0.10) 1px, transparent 1px)",
+        backgroundSize: "60px 60px, 60px 60px",
+      }} />
+      {/* halo radial doux derriere le baril */}
+      <AbsoluteFill style={{
+        opacity: barilOp,
+        background: `radial-gradient(circle at 33% 55%, rgba(200,169,81,${halo}) 0%, rgba(200,169,81,0) 36%)`,
+      }} />
+
+      <AbsoluteFill style={{ opacity: blockOp }}>
+        {/* SEULE ecriture : la question, en haut (remontee pour ne pas toucher le baril) */}
+        <div
+          style={{
+            position: "absolute", top: 70, width: "100%", textAlign: "center",
+            opacity: qOp, color: IVORY, fontFamily: BEBAS, fontSize: 52, letterSpacing: "0.05em",
+          }}
+        >
+          Combien reste au Sénégal&nbsp;?
+        </div>
+
+        {/* BARIL HERO a GAUCHE du centre (immuable, gros), se remplit du drapeau SEN */}
+        <div style={{ position: "absolute", inset: 0, opacity: barilOp }}>
+          <BarilJaugeIcon
+            ratio={barilRatio}
+            flagColors={{ a: "#00853F", b: "#FDEF42", c: "#E31B23" }}
+            starColor="#00853F"
+            position={{ cx: 500, cy: 400 }}
+            size={{ w: 320, h: 470 }}
+          />
+          {/* SURFACE VIVANTE (anti-statique) : ondulation du niveau de liquide + reflet qui balaye le couvercle.
+              Memes coords que le baril (viewBox 1280x720), pose par-dessus. */}
+          <svg width="100%" height="100%" viewBox="0 0 1280 720" style={{ position: "absolute", inset: 0 }}>
+            {filled && (
+              <>
+                {/* miroitement de la surface du petrole (ellipse claire qui ondule au niveau du liquide) */}
+                <ellipse
+                  cx={B_CX} cy={surfaceY + ripple}
+                  rx={B_W / 2 - 6} ry={B_W * 0.085}
+                  fill="none" stroke="#f4e3ad" strokeWidth={2}
+                  opacity={0.35 + 0.12 * Math.sin(frame / 9)}
+                />
+                <ellipse
+                  cx={B_CX} cy={surfaceY + ripple}
+                  rx={B_W / 2 - 6} ry={B_W * 0.085}
+                  fill="#f4e3ad" opacity={0.07 + 0.04 * Math.sin(frame / 11)}
+                />
+              </>
+            )}
+            {/* reflet diagonal qui balaye le HAUT du baril (couvercle metal) — vie permanente */}
+            <g clipPath="url(#barilTopClip)" opacity={0.5}>
+              <rect x={sweepX} y={B_CY - B_H / 2 - 10} width={16} height={B_H * 0.45} fill="#ffffff" opacity={0.10} transform="skewX(-18)" />
+            </g>
+            <defs>
+              <clipPath id="barilTopClip">
+                <rect x={B_left} y={B_CY - B_H / 2} width={B_W} height={surfaceY - (B_CY - B_H / 2)} />
+              </clipPath>
+            </defs>
+          </svg>
+        </div>
+
+        {/* SEULE donnee : le 60% hero greffe a droite (spring), aligne au centre du baril, SANS label */}
+        <div style={{
+          position: "absolute", right: 300, top: 470, textAlign: "left",
+          opacity: rightIn * barilOp, transform: `translateX(${(1 - rightIn) * 40}px)`,
+        }}>
+          <div style={{ fontFamily: BEBAS, fontSize: 220, lineHeight: 0.9, color: GOLD, textShadow: "0 0 30px rgba(200,169,81,0.3)" }}>{num}%</div>
+        </div>
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
+// ════════════════════════════════════════════════════════════════════════════
+//  SFX — couche son. Chaque SFX dans un <Sequence> (doctrine : {frame===X && <Audio>} = SILENCE
+//  en render ; il FAUT wrapper dans une Sequence d'une duree >= celle du son). Volumes doses pour
+//  ne pas couvrir la narration. Cales sur les moments des actes 1-3 (frames stables que je controle).
+// ════════════════════════════════════════════════════════════════════════════
+const Sfx: React.FC<{ at: number; src: string; dur?: number; volume?: number }> = ({ at, src, dur = 24, volume = 0.5 }) => (
+  <Sequence from={at} durationInFrames={dur}>
+    <Audio src={staticFile(src)} volume={volume} />
+  </Sequence>
+);
+
+const SFX = {
+  ping: "_shared/sfx/camera/sfx-map-ping.mp3",        // apparition jeton (cliquetis discret)
+  swoosh: "_shared/sfx/camera/sfx-swoosh-zoomin.mp3", // LE dezoom vers le plein large (1 seul, narratif)
+};
+
+// SFX EPURE (retour Aziz) : on NE met PAS un son a chaque mouvement de camera (saturation).
+// Garder : (1) le PING d'apparition de chaque jeton/gisement · (2) UN swoosh fort, bien time,
+// sur le dezoom monde (le moment ou on passe en plein large pour montrer les flux export).
+// Retire : swooshs de plongee, whooshs de retour, arrows de flux, pops de plaque.
+const SceneSFX: React.FC = () => (
+  <>
+    {/* ping a l'apparition de chaque gisement (ponctue la decouverte) */}
+    <Sfx at={165} src={SFX.ping} dur={16} volume={0.5} />  {/* SANGOMAR */}
+    <Sfx at={575} src={SFX.ping} dur={16} volume={0.5} />  {/* GTA */}
+    <Sfx at={1165} src={SFX.ping} dur={16} volume={0.5} /> {/* YAKAAR */}
+    {/* LE swoosh : dezoom vers le plein large (f880, debut du recul monde). Bien time, marque le sens. */}
+    <Sfx at={880} src={SFX.swoosh} dur={26} volume={0.5} />
+  </>
+);
 
 // ════════════════════════════════════════════════════════════════════════════
 //  Drapeau drape avec opacite ANIMEE (etend MapboxCountryFlagDecal mono-injection :
@@ -305,7 +489,9 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
         )}
 
         {/* ═══ ACTE 3 — YAKAAR : convoitise ═══ */}
-        {frame >= A3 && (
+        {/* borne haute PIV+30 : le jeton/fleches s'effacent sous le voile navy qui monte (pas de jeton dore
+            qui perce le pivot). Avant ca le voile (0->0.86) les estompe deja en "monde qui recule". */}
+        {frame >= A3 && frame < PIV + 30 && (
           <>
             {/* fleches de convoitise : tracees vers Yakaar, s'arretent 56px avant (gap = suspense) */}
             {convoiteOrigins.map(([ox, oy], i) => {
@@ -349,8 +535,10 @@ const Effets: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }> 
       )}
 
       {/* ── ACTE 3 — plaque YAKAAR deportee (ocean gauche) ───────────────────── */}
-      {frame >= A3 + 60 && (
-        <GeoCountryPlaque frame={frame} name="YAKAAR-TERANGA" color={GOLD} stat="Gaz, non attribué" source="Opérateur : à décider" appearAt={1180} hideAt={END} pos={{ x: PLAQUE_X, y: 470 }} />
+      {/* La plaque Yakaar disparait AVANT le pivot 60% (sinon elle chevauche l'amorce "sur tout cet argent").
+          hideAt=PIV-10 -> elle s'efface pendant que la voix finit "...la plus grosse surprise". */}
+      {frame >= A3 + 60 && frame < PIV && (
+        <GeoCountryPlaque frame={frame} name="YAKAAR-TERANGA" color={GOLD} stat="Gaz, non attribué" source="Opérateur : à décider" appearAt={1180} hideAt={PIV - 10} pos={{ x: PLAQUE_X, y: 470 }} />
       )}
     </>
   );

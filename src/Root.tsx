@@ -190,6 +190,7 @@ import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw"
 import { VilleCompare } from "./projects/_rnd/svg-scenes/VilleCompare";
 import { JetonsCompare } from "./projects/_rnd/svg-scenes/JetonsCompare";
 import { Donut60Proto } from "./projects/_rnd/svg-scenes/Donut60Proto";
+import { BarilHeroProto } from "./projects/_rnd/svg-scenes/BarilHeroProto";
 import { EtatMajorCompare } from "./projects/_rnd/svg-scenes/EtatMajorCompare";
 import { VilleGeminiAnimee } from "./projects/_rnd/svg-scenes/VilleGeminiAnimee";
 import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/EtatMajorGptAnimee";
@@ -2175,6 +2176,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-VilleCompare" component={VilleCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-JetonsCompare" component={JetonsCompare} durationInFrames={90} fps={30} width={1920} height={1080} />
         <Composition id="RND-Donut60Proto" component={Donut60Proto} durationInFrames={90} fps={30} width={1920} height={1080} />
+        <Composition id="RND-BarilHeroProto" component={BarilHeroProto} durationInFrames={100} fps={30} width={1920} height={1080} />
         <Composition id="RND-EtatMajorCompare" component={EtatMajorCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-EtatMajorGptAnimee" component={EtatMajorGptAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
         <Composition id="RND-VilleGeminiAnimee" component={VilleGeminiAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
