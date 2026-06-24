@@ -9,8 +9,12 @@
 - Dernier render validé sur le fond : `out/episodes/senegal-petrole-gaz/wip/scene4-barrage-v3.mp4`
   (catbox https://files.catbox.moe/qvx8j0.mp4). Audio scène = 243.26s→291s (forced-align V3). Musique redémarrée
   startFrom=0 (la portion 243s+ s'emballait). 50s, 16:9, full HD.
-- Plan + synthèse jury + audit faisabilité : `V3-REFONTE/PLAN-SCENE-4-DETTE.md`.
-- TOUT est commité (branche `feat/senegal-v3-scene2-comparaison`, commits jusqu'à d263863 "barrage v3").
+- Plan + synthèse jury + audit faisabilité : `V3-REFONTE/PLAN-SCENE-4-DETTE.md` (COMMITÉ).
+- ⚠️ **BRANCHE** : tout le travail scène 4 est commité sur `feat/senegal-v3-scene2-comparaison` (HEAD = 69f6c9b
+  "commit PLAN-SCENE-4"). MAIS le working tree est partagé multi-instances et peut être sur une AUTRE branche au
+  démarrage (ex `rnd/svg-qwen3.6-test`, où ces commits sont aussi). **Au démarrage, faire `git branch --show-current` ;
+  si pas sur une branche contenant le commit 69f6c9b, faire `git log --oneline -3` pour vérifier que SceneDetteV3
+  barrage v3 est bien là** (il l'est sur les 2 branches). Ne pas s'inquiéter du nom de branche : vérifier le contenu.
 
 ## LES 2 FIXES À FAIRE (puis FINAL)
 1. **Fissure nette à la rupture (regression v2→v3)** : en v2 il y avait une vraie fissure zigzag NETTE qui
