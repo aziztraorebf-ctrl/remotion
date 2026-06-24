@@ -22,7 +22,7 @@
  */
 import React, { useEffect, useRef, useState } from "react";
 import {
-  AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring,
+  AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring,
   continueRender, delayRender,
 } from "remotion";
 import { feature } from "topojson-client";
@@ -98,6 +98,16 @@ export const SceneComparaisonV3: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY }}>
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={AUDIO_START * fps} endAt={Math.round(187.6 * fps)} />
+      {/* Musique de fond — meme piste que la scene gisements (continuite sonore), ~5.5%, fade-out 3s a la fin */}
+      <Audio
+        src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
+        startFrom={AUDIO_START * fps}
+        volume={(f) => {
+          const fadeStart = END - 90; // 3s avant la fin
+          if (f >= fadeStart) return 0.055 * Math.max(0, 1 - (f - fadeStart) / 90);
+          return 0.055;
+        }}
+      />
       <SceneSFX />
       <CartoSouverainV5 camKeys={camKeys} focusIsos={[]} onMapReady={(m) => { mapRef.current = m; force((n) => n + 1); }}>
         {/* DRAPEAUX DRAPES — chaque pays prend son drapeau a son arrivee (carte vivante, pas aplat terne V1) */}
@@ -143,25 +153,37 @@ const AnimatedFlagDecal: React.FC<{
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-//  SFX — ping a l'arrivee de chaque pays + swoosh pull-back aux transitions
+//  SFX — cale AU MILLIMETRE via <Sequence from={frame}> (frame-perfect, pas de
+//  fenetre montage/demontage imprecise). Timings = forced-align V3 (frame=(t-122)*30).
 // ════════════════════════════════════════════════════════════════════════════
 const SFX = {
-  ping: "_shared/sfx/camera/sfx-map-ping.mp3",
-  pullback: "_shared/sfx/camera/sfx-swoosh-pullback.mp3",
+  swoosh: "_shared/sfx/camera/sfx-swoosh-pullback.mp3", // transition entre pays
+  stamp:  "_shared/sfx/ui/stamp-dossier.mp3",           // estampe du jeton petrole (decouverte)
+  ping:   "_shared/sfx/data/stat-tick.mp3",             // clic d'inscription du chiffre (plaque verdict)
+  impact: "_shared/sfx/impact/impact.mp3",              // whoosh+impact au fade triple screen
 };
-const SceneSFX: React.FC = () => {
-  const frame = useCurrentFrame();
-  return (
-    <>
-      {frame >= F_NOR + 30 && frame < F_NOR + 30 + 20 && <Audio src={staticFile(SFX.ping)} volume={0.5} />}
-      {frame >= F_TRANS_AB && frame < F_TRANS_AB + 24 && <Audio src={staticFile(SFX.pullback)} volume={0.38} />}
-      {frame >= F_COG + 30 && frame < F_COG + 30 + 20 && <Audio src={staticFile(SFX.ping)} volume={0.5} />}
-      {frame >= F_TRANS_BC && frame < F_TRANS_BC + 24 && <Audio src={staticFile(SFX.pullback)} volume={0.38} />}
-      {frame >= F_BWA + 30 && frame < F_BWA + 30 + 20 && <Audio src={staticFile(SFX.ping)} volume={0.5} />}
-      {frame >= F_CRANE && frame < F_CRANE + 24 && <Audio src={staticFile(SFX.pullback)} volume={0.34} />}
-    </>
-  );
-};
+// 1 SFX cale a une frame exacte : Sequence demarre le son pile a `at`, dure `dur` frames.
+const Sfx: React.FC<{ at: number; src: string; volume?: number; dur?: number }> = ({ at, src, volume = 0.5, dur = 30 }) => (
+  <Sequence from={at} durationInFrames={dur} layout="none">
+    <Audio src={staticFile(src)} volume={volume} />
+  </Sequence>
+);
+const SceneSFX: React.FC = () => (
+  <>
+    {/* stamp jeton petrole offshore Norvege (apparition jeton) */}
+    <Sfx at={F_NOR + 30} src={SFX.stamp} volume={0.42} dur={40} />
+    {/* ping plaque verdict (le chiffre s'inscrit) — pile a l'apparition de chaque plaque */}
+    <Sfx at={F_NOR + 55} src={SFX.ping} volume={0.5} />
+    {/* swoosh transition Norvege -> Congo */}
+    <Sfx at={F_TRANS_AB} src={SFX.swoosh} volume={0.4} dur={30} />
+    <Sfx at={F_COG + 55} src={SFX.ping} volume={0.5} />
+    {/* swoosh transition Congo -> Botswana */}
+    <Sfx at={F_TRANS_BC} src={SFX.swoosh} volume={0.4} dur={30} />
+    <Sfx at={F_BWA + 55} src={SFX.ping} volume={0.5} />
+    {/* impact + whoosh au fade vers le triple screen (climax "meme ressource") */}
+    <Sfx at={F_CRANE} src={SFX.impact} volume={0.5} dur={50} />
+  </>
+);
 
 // ════════════════════════════════════════════════════════════════════════════
 //  Dot sonar geo-ancre (point cle par pays) — sobre, anneaux qui se propagent (P4)
@@ -285,12 +307,34 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
 //  les regles."). Decision Aziz : enlever les 4 lignes redondantes avec la voix.
 //  L'opposition se LIT dans le triptyque (3 destins juxtaposes), pas dans du texte.
 // ════════════════════════════════════════════════════════════════════════════
-type Panel = { iso: string; geoName: string; name: string; stat: string; color: string };
+type Panel = { iso: string; geoName: string; name: string; stat: string; color: string; clipBbox?: [number, number, number, number] };
 const PANELS: Panel[] = [
-  { iso: "NOR", geoName: "Norway",   name: "NORVÈGE", stat: "1 500 Mds$",        color: GOLD },
+  // Norvege : clip continental (enleve Svalbard + iles eparses du Grand Nord -> silhouette compacte, taille comparable aux autres)
+  { iso: "NOR", geoName: "Norway",   name: "NORVÈGE", stat: "1 500 Mds$",        color: GOLD,   clipBbox: [4.0, 57.8, 31.5, 71.3] },
   { iso: "COG", geoName: "Congo",    name: "CONGO",   stat: "dette : 92% du PIB", color: ORANGE },
   { iso: "BWA", geoName: "Botswana", name: "BOTSWANA",stat: "fonds souverain",   color: GREEN },
 ];
+
+// filtre les anneaux d'un feature pour ne garder que ceux dont le centre tombe dans une bbox (pays a iles eparses)
+const clipFeatureToBbox = (feat: any, bbox: [number, number, number, number]) => {
+  const [minLon, minLat, maxLon, maxLat] = bbox;
+  const inside = (ring: number[][]) => {
+    let cx = 0, cy = 0;
+    for (const [lon, lat] of ring) { cx += lon; cy += lat; }
+    cx /= ring.length; cy /= ring.length;
+    return cx >= minLon && cx <= maxLon && cy >= minLat && cy <= maxLat;
+  };
+  const g = feat.geometry;
+  if (g.type === "Polygon") {
+    return inside(g.coordinates[0]) ? feat : null;
+  }
+  if (g.type === "MultiPolygon") {
+    const kept = g.coordinates.filter((poly: number[][][]) => inside(poly[0]));
+    if (!kept.length) return feat;
+    return { ...feat, geometry: { type: "MultiPolygon", coordinates: kept } };
+  }
+  return feat;
+};
 
 // drapeau dessine une fois en dataURL (canvas synchrone)
 const flagDataUrl = (iso: string): string => {
