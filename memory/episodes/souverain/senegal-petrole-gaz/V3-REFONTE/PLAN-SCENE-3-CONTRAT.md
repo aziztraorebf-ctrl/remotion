@@ -61,4 +61,7 @@ Remotion frame-driven + audio-derived · SVG natif OK · PAS Mapbox · INTERDIT 
 - SFX/musique : même registre (stat-tick, impact, music-A-ambient).
 
 ## ÉTAT
-Plan validé Aziz (métaphore + registre). PROCHAINE = coder SceneContratV3.tsx.
+✅ **SCÈNE FAITE ET GRAVÉE FINALE (2026-06-24, validée Aziz).** `scene3-contrat-FINAL.mp4` (54.7s), catbox 4gzkq1.
+Itérations : v1 mécanisme → v2 fix chiffre annoncé fixe → v3 clarté (doc+cadenas, marqueurs rattachés, SFX) →
+v4 baril centré → v5 remplissage lent ~15s. Composant `beats/SceneContratV3.tsx`.
+Détail final dans `_ASSEMBLAGE-V3.md` (§ Scène 3). PROCHAINE = scène 4 (le piège de la dette, réf Beat12 calebasse 132%).
