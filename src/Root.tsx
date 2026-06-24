@@ -218,6 +218,9 @@ import { GgwHookNarr3 } from "./projects/_rnd/svg-scenes/GgwHookNarr3";
 import { GgwHookNarr4 } from "./projects/_rnd/svg-scenes/GgwHookNarr4";
 import { GgwTreesCompare } from "./projects/_rnd/svg-scenes/GgwTreesCompare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
+import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
+import { B2Sablier } from "./projects/_rnd/svg-scenes/B2Sablier";
+import { B2MecheEteinte } from "./projects/_rnd/svg-scenes/B2MecheEteinte";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
@@ -279,6 +282,7 @@ import { CartoSouverainV5Demo } from "./projects/_shared/mapbox/CartoSouverainV5
 import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSouverainV5RegionalDemo";
 import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
 import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneComparaisonV3";
+import { SceneContratV3, SCENE_CONTRAT_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneContratV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -1360,6 +1364,14 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="SceneContratV3"
+            component={SceneContratV3}
+            durationInFrames={SCENE_CONTRAT_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="TokenShowcaseV5"
             component={TokenShowcaseV5}
             durationInFrames={600}
@@ -2200,6 +2212,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GgwSvgTestCoupe" component={GgwSvgTestCoupe} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwSvgTestTop" component={GgwSvgTestTop} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwSvgTestCalibre" component={GgwSvgTestCalibre} durationInFrames={60} fps={30} width={1620} height={960} />
+        <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B2Sablier" component={B2Sablier} durationInFrames={571} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B2MecheEteinte" component={B2MecheEteinte} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-GgwHookSvg6Up" component={GgwHookSvg6Up} durationInFrames={60} fps={30} width={2160} height={640} />
         <Composition id="RND-GgwHookPairA" component={GgwHookPairA} durationInFrames={60} fps={30} width={1080} height={960} />
         <Composition id="RND-GgwHookPairB" component={GgwHookPairB} durationInFrames={60} fps={30} width={1080} height={960} />
