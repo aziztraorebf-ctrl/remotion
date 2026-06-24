@@ -135,8 +135,10 @@ const ContratViz: React.FC = () => {
   // niveau Senegal de depart = 60%. La lame cost recovery descend du HAUT de la zone drapeau,
   // comprimant le drapeau : le niveau "haut du drapeau" descend de 60% vers ~28%.
   const senTop = 60;   // sommet du drapeau (en % depuis le bas) au depart
-  // la lame monte/descend : avant F_WOODSIDE le drapeau occupe 0->60%. Cost recovery ronge a partir de F_MILLIARDS.
-  const fillProg = interpolate(frame, [0, 70], [0, 1], clamp); // remplissage initial du baril a 60%
+  // REMPLISSAGE LENT (~15s, decision Aziz) : le baril se remplit doucement du drapeau jusqu'a F_ECRITE (~16s,
+  // quand le contrat apparait) -> il y a toujours quelque chose qui bouge, pas de temps mort. Ease-out (se pose).
+  const fillRaw = interpolate(frame, [0, F_ECRITE - 30], [0, 1], clamp); // 0 -> ~457f (~15.2s)
+  const fillProg = 1 - Math.pow(1 - fillRaw, 2.4); // ease-out : ample au debut, se pose doucement
   const senLevelBase = senTop * fillProg;
 
   // cost recovery : la lame descend dans la zone drapeau a partir de F_WOODSIDE, fort a F_MILLIARDS
@@ -350,8 +352,8 @@ const Sfx: React.FC<{ at: number; src: string; volume?: number; dur?: number }> 
 );
 const SceneSFX: React.FC = () => (
   <>
-    {/* le baril se REMPLIT a 60% au debut */}
-    <Sfx at={2} src={SFX.fill} volume={0.4} dur={70} />
+    {/* le baril se REMPLIT a 60% (remplissage lent ~15s) — le SFX (4s) accompagne la phase active */}
+    <Sfx at={2} src={SFX.fill} volume={0.4} dur={130} />
     {/* le 60% s'inscrit */}
     <Sfx at={F_60} src={SFX.tick} volume={0.45} />
     {/* cadenas : le contrat se ferme (pas public) */}
