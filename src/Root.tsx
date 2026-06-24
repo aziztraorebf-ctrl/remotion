@@ -207,6 +207,7 @@ import { DemiLuneBraiseAnimee } from "./projects/_rnd/svg-scenes/DemiLuneBraiseA
 import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
 import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
+import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
@@ -2175,6 +2176,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
         <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
