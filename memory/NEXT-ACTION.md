@@ -306,12 +306,13 @@ Reste alors : recherche données NMGP (km/coût/calendrier/13 pays/statut 2026) 
 **⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`** (tableau 8 scènes)
 **+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX). NE PAS partir d'un autre fichier.
 Refonte 8 scènes une par une (narration V3 expressive). V1 et V3 SÉPARÉS, ne pas mélanger.
-- ✅ **SCÈNES 0, 1 (intro+gisements), 2 (comparaison Mapbox), 3 (contrat) = FAITES, gravées FINALES** (2026-06-24).
-  Renders dans `out/episodes/senegal-petrole-gaz/sceneN-*-FINAL.mp4`. Couvre l'audio 0→241.3s (~49%).
-- ▶ **NEXT = SCÈNE 4 (la dette, 132% du PIB)** — audio 241.3→~300s. Réf V1 = Beat12 (calebasse 132%). Remotion.
-  Décider : reprendre la calebasse V1 ou créer du neuf (jury LLM `da-brief.py --upstream`). Voir README V3-REFONTE.
-ℹ️ PÉRIMÉS (ne pas utiliser) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (= V1),
-   `V3-REFONTE/REPRISE-SCENE-1.md` + `REPRISE-SCENE-2-COMPARAISON.md` (scènes déjà faites).
+- ✅ **SCÈNES 0, 1, 2 (comparaison Mapbox), 3 (contrat) = FAITES, gravées FINALES.** Audio 0→241.3s.
+- 🟡 **SCÈNE 4 (la dette, barrage) = À 95%** — validée sur le fond, reste 2 fixes (fissure nette + bac immobile)
+  avant FINAL. ▶▶ REPRENDRE ICI → `V3-REFONTE/REPRISE-SCENE-4-DETTE.md` (prompt prêt). Composant `SceneDetteV3.tsx`.
+  Codée par AGENT autonome (test système agentique CONCLUANT → doctrine `doctrines/PRODUCTION-AGENTIQUE-REMOTION.md`).
+- ▶ Après scène 4 FINAL : scène 5 (coulisses/Yakaar, Beat13). Les scènes restantes peuvent être déléguées à des agents.
+ℹ️ PÉRIMÉS : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`,
+   `REPRISE-SCENE-2-COMPARAISON.md` (scènes faites).
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
