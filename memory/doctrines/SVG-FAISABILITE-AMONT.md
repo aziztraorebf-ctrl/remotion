@@ -23,8 +23,13 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
 2. **Brief FAISABILITE SVG** (`scripts/tools/svg-faisabilite-brief.py`), a Gemini ET GPT (generer les 2, comparer leur
    approche native) : joindre des FRAMES DE REFERENCE (ce qu'on sait rendre) + la TENTATIVE RATEE s'il y en a une.
    -> sortie JSON {faisable_note, approche, changements, mini_storyboard, image_cible_prompt}.
-3. **IMAGE-CIBLE** : generer l'image avec le prompt rendu (`gemini-gen-image.py`, modele `gemini-3.1-flash-image-preview`).
-   On VOIT la cible. Si l'element lit (l'arbre ressemble a un arbre) -> go. Sinon -> on re-brief / change d'angle. GRATUIT vs render.
+3. **IMAGE-CIBLE = SVG NATIF du LLM** (correction 2026-06-23, prouvee par render) : generer la cible directement en
+   SVG NATIF via **Gemini 3.1 Pro** (vision/SVG) ou **GPT-5.5** — PAS un raster intermediaire. Outil : `svg-scene-narrative.py`.
+   ⛔ NE PLUS utiliser `gemini-3.1-flash-image-preview` (raster) pour l'image-cible : le raster cree un ECART faisabilite
+   image->SVG (la cible raster est plus dense que ce que le SVG peut rendre). Le SVG natif = ecart NUL par construction
+   (ce qu'on voit dans la cible = ce qu'on obtient). On VOIT la cible (convertir le SVG en PNG pour juger). Si l'element
+   lit (l'arbre ressemble a un arbre) -> go. Sinon -> re-brief / change d'angle. GRATUIT vs render.
+   (`gemini-3.1-flash-image` reste valide pour des RASTERS hors-cible, ex un arbre a raffiner ensuite en code.)
 4. **Claude FILTRE** (double filtre [[feedback_ia-externe-idees-filtre-projet]]) : le LLM ne connait pas nos decisions ;
    garder ce qui sert le projet, ecarter le hors-sol. Presenter la synthese a Aziz.
 5. **PUIS** generer le vrai SVG (scene ajoutee au generateur), en sachant : la bonne VUE, que ca LIRA, que c'est animable,

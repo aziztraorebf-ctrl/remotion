@@ -19,23 +19,25 @@ Cible ~75-90s. Format vertical 9:16. Zones de securite : titre haut, sous-titres
 ---
 ### BEAT 1 — HOOK : "le plus grand mur vivant du monde" (~0-12s)
 - **TEXTE (intention)** : poser l'ambition demesuree + l'open loop. "Voici le plus grand projet ecologique de la planete : un mur d'arbres de 8000 km cense arreter le desert. Sauf qu'il a presque tout rate. Pourquoi ?"
-- **SCENE SVG** : le trait du MUR qui se trace a travers le continent (Senegal->Djibouti) — registre carte/schema (PAS la demi-lune). Une LIGNE qui se dessine d'ouest en est, des petits arbres alignes qui poppent le long. Puis FREEZE.
-- **ANIM** : stroke-dasharray (la ligne se trace) + arbres en pop cascade. Climax = la ligne complete qui pulse.
+- **SCENE SVG** : ⛔ MAJ 2026-06-23 — direction "carte/schema top-down" ABANDONNEE (s'effondre en SVG). HOOK ACTUEL = SCENE NARRATIVE ENCRE "le mur fier ecrase par l'immensite" (`GgwHookEncreVivant.tsx`) : dunes ecrasantes + soleil + 2 lignes d'arbres + pelle. Detail : `REPRISE-AJUSTEMENTS-HOOK.md`. (Le TEXTE/intention/open-loop ci-dessus restent valides.)
+- **ANIM** : colorisation timee (pelle d'emblee -> arbres se construisent un a un + virent au vert -> soleil s'embrase), desert reste en encre. Se-dessine a caler sur la voix.
 - **RACCORD -> B2** : les petits arbres alignes commencent a FANER/tomber (transition directe vers l'echec).
 - **FAIT/SOURCE** : 8000 km, Senegal->Djibouti, 11 pays, lance 2007 (UNCCD/NatGeo). "presque tout rate" -> Yale E360 / NPR.
 - **OPEN LOOP pose** : "Pourquoi ?"
 
-### BEAT 2 — L'ECHEC : "le mur qui meurt" (~12-28s)
-- **TEXTE** : le constat sans detour mais factuel. "L'idee : planter une ligne droite d'arbres contre le sable. Au Nigeria, 3 arbres sur 4 sont morts en deux mois. Au Senegal, sur 36 zones plantees, une seule a vraiment reverdi. Scientifiquement, disent les experts, c'etait une idee desastreuse."
-- **SCENE SVG** : les arbres alignes du B1 qui TOMBENT un a un (fade/chute sec), la ligne droite se BRISE (fissures). Un compteur "3/4 MORTS" qui s'inscrit. Couleur : monde qui se DESSECHE (vire au gris/ocre pale).
-- **ANIM** : chute sec (spring) des arbres, fissures qui se tracent, compteur count-up. Bascule couleur INVERSE (vie->mort).
+### BEAT 2 — L'ECHEC : "le mur qui meurt" (~12-28s) ✅ FAIT (2026-06-24, `B2LigneBrisee.tsx`)
+> ⛔ CE BEAT EST PRODUIT ET FINAL. Voir [[ETAT-GGW-MURAILLE-VERTE]] (statut + acquis). Le storyboard ci-dessous
+> est l'INTENTION initiale ; la version reelle a EVOLUE (pas de compteur chiffre = anti-doctrine, voir ci-dessous).
+- **TEXTE** : "L'idee : aligner des arbres en ligne droite contre le sable. Au Nigeria, 3 arbres sur 4 meurent en deux mois. Au Senegal, sur 36 zones plantees, une seule reverdit. Les scientifiques sont durs : sur le papier, aucune chance."
+- **SCENE SVG (realisee)** : 4 arbres vert tendre identiques -> mort en CASCADE gauche-droite (grisent -> feuilles tombent -> tronc nu) -> survivant en 2 temps (fausse mort puis explosion verte). Soleil retarde qui s'embrase ~6s.
+- ⚠️ **CORRECTION DOCTRINE** : le "compteur 3/4 MORTS qui s'inscrit" prevu ici a ete ECARTE — un compteur chiffre = infographie froide, contraire a [[ETAT-GGW-MURAILLE-VERTE]] acquis #1 (scene narrative, pas schema). Le ratio se VOIT (3 arbres morts / 1 survivant) + se DIT a la voix. Regle generale pour les beats suivants : pas de compteur/cartouche, le chiffre se montre par le geste.
 - **RACCORD -> B3** : sur "pourquoi ca rate ?", zoom/transition vers une COUPE de sol (on passe du dessus au DESSOUS).
 - **FAIT/SOURCE** : Nigeria 3/4 de 50M arbres morts 2 mois (American Scientist) ; Senegal 1/36 (Land Use Policy/Yale E360) ; "idee desastreuse" = Dennis Garrity, ex-dir World Agroforestry Center, NPR avril 2026.
 
 ### BEAT 3 — LE MALENTENDU : "le desert n'avance pas comme un mur" (~28-42s)
 - **TEXTE** : le coeur conceptuel (le retournement intellectuel). "Le probleme, c'est qu'on s'est trompe d'ennemi. Le desert n'avance pas comme un mur qu'on arreterait avec une barriere d'arbres. La terre se degrade sur place, faute d'eau. Et planter des arbres assoiffes dans un sol mort... ne pouvait pas marcher."
-- **SCENE SVG** : SCHEMA conceptuel — une fausse image "desert = mur qui avance vers des arbres-barriere" qu'on BARRE/corrige -> remplacee par "sol qui se degrade sur place, manque d'eau". Le mot cle : l'eau ABSENTE (sol fissure, goutte barree).
-- **ANIM** : l'image fausse se construit puis se fait BARRER (croix), la vraie s'installe. SE CONSTRUIT (doctrine).
+- **SCENE SVG** : ⚠️ ATTENTION mot "SCHEMA" trompeur — doit rester une SCENE NARRATIVE, PAS un schema annote (voir [[ETAT-GGW-MURAILLE-VERTE]] acquis #1). Idee : montrer le FAUX modele mental "le desert = un mur qui avance vers une barriere d'arbres" comme une SCENE (une vague de sable qui fonce sur une rangee), qu'on BARRE/corrige par la vraie SCENE "la terre meurt sur place, faute d'eau" (sol qui se craquelle, goutte qui s'evapore). Raconter par des objets/gestes, jamais par un diagramme a fleches/labels.
+- **ANIM** : la fausse scene se construit puis se fait BARRER (un trait d'encre qui raye), la vraie s'installe. SE CONSTRUIT (doctrine). Garder l'encre + colorisation timee (l'eau absente = pas de bleu ; quand on comprend, une touche).
 - **RACCORD -> B4** : "tout etait deja sous leurs pieds" -> on PLONGE sous le sol (transition verticale descendante vers la racine dormante) = entree de la scene demi-lune.
 - **FAIT/SOURCE** : American Scientist ("le desert ne fait que sembler avancer ; les arbres ne sont pas des barrieres anti-desert ; tout etait a leurs pieds").
 
@@ -62,13 +64,17 @@ Cible ~75-90s. Format vertical 9:16. Zones de securite : titre haut, sous-titres
 
 ---
 ## CE QUE CE STORYBOARD REVELE (reponse a "combien de scenes + comment raccorder")
-- **6 beats = 6 scenes SVG**, dont **1 DEJA PROUVEE** (beat 4 = la demi-lune, le coeur). 5 a creer.
-- **2 REGISTRES de scene** : carte/schema (B1 mur, B3 malentendu) + scene-organique-coloree (B2, B4, B5, B6). Le pilote MIXE les deux — coherent avec la doctrine (carte=spatial, scene=transformation).
+> ⛔ STATUT A JOUR = [[ETAT-GGW-MURAILLE-VERTE]] (source de verite). Resume : B1 hook ✅, B2 echec ✅,
+> B4 demi-lune ⚠️proto a finaliser. **Reste : B3 (next), B5, B6.** (Le "5 a creer" ci-dessous etait l'etat initial.)
+- **6 beats = 6 scenes SVG** : B1 ✅ + B2 ✅ faits, B4 proto prouve a finaliser, **B3/B5/B6 a creer**.
+- **REGISTRE UNIQUE = ENCRE narrative** pour tout le short (PAS un mix carte/scene — le d3-geo/carte top-down
+  est ABANDONNE, voir [[ETAT-GGW-MURAILLE-VERTE]]). Toutes les scenes sont des SCENES NARRATIVES en encre
+  (jamais de schema/carte). La distinction "carte vs scene" de la version initiale est PERIMEE.
 - **LE FIL DE TRANSITION** (chantier technique neuf) se dessine deja : B1->B2 les arbres fanent (continuite d'objet) · B2->B3 zoom dessus->dessous (camera verticale) · B3->B4 on PLONGE sous le sol (descente verticale, l'element "racine" relie) · B4->B5 demultiplication (1 arbre -> foret) · B5->B6 la foret reste, le cadre s'apaise. **Le raccord dominant = le mouvement VERTICAL (descendre dans le sol, puis remonter avec la vie) + la continuite d'un objet qui se transforme.** C'est LE motif a prototyper.
 - **DUREE** : 6 beats x ~12-15s = ~75-90s. Coherent short.
 
-## NEXT
-1. Valider ce storyboard avec Aziz (angle/beats/raccords) AVANT d'ecrire le texte parle final.
-2. Ecrire le SCRIPT parle (scanne TTS FR : zero participe passe en fin de groupe, nombres en lettres, etc.) cale sur ces 6 beats.
-3. Prototyper LE FIL DE TRANSITION (le raccord vertical descendre/remonter) sur 2 beats (B3->B4) = le chantier technique neuf.
-4. Generer les 5 scenes manquantes (B1,B2,B3,B5,B6) dans les 2 registres-test.
+## NEXT (a jour 2026-06-24)
+> Storyboard + script VALIDES, B1+B2 produits. Le NEXT reel = produire le **Beat 3** (puis B5, B6, finaliser B4).
+> Procedure complete par beat : [[ETAT-GGW-MURAILLE-VERTE]] § METHODE PROUVEE. ⚠️ Le raccord par "mouvement
+> vertical camera" envisage ci-dessous est a manier avec prudence : pas de camera qui fait valser une scene
+> frontale (acquis #5). Privilegier le fade / la continuite d'objet en encre.

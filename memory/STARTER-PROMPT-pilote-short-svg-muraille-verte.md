@@ -2,6 +2,13 @@
 
 > Cree 2026-06-22. Premier pilote concret de la strategie [[STARTER-PROMPT-strategie-shorts-svg-hub-spoke]].
 > Sujet VALIDE par le gate [[SUJET-PRIME-SUR-PRODUCTION]] (6 etapes, ~30 credits TubeLab). Prerequis technique = [[SVG-SCENES-GENERATIVES]].
+>
+> ⛔⛔ STATUT/REGISTRE/OUTILS A JOUR = [[ETAT-GGW-MURAILLE-VERTE]] (source de verite, prime sur ce fichier).
+> Resume des decisions qui PERIMENT des passages ci-dessous : (1) REGISTRE TRANCHE = **ENCRE narrative** pour
+> tout le short (PAS un A/B braise-or vs encre ; la reco "BRAISE-OR" plus bas est PERIMEE — l'encre = meilleur
+> canevas pour la colorisation timee). (2) HOOK = scene narrative encre (`GgwHookEncreVivant.tsx`), la carte
+> d3-geo est ABANDONNEE (section HISTORIQUE plus bas, garder pour reference technique d3-geo reutilisable ailleurs).
+> (3) B1 hook ✅ + B2 echec ✅ FAITS. La note de reprise hook est archivee : `_ARCHIVE-REPRISE-AJUSTEMENTS-HOOK.md`.
 
 ## SUJET FIGE (gate GO 2026-06-22)
 **Grande Muraille Verte africaine / reverdir le Sahara** (Sahel, Senegal→Djibouti, ~8000 km).
@@ -47,7 +54,12 @@ Verdict CLAUDE (Aziz tranche) :
 - ⭐ BRAISE-OR = le plus fort + le plus « GeoAfrique » : arc sec→vivant (ciel ardent, terre sombre, or qui luit, racine doree vivante), meme monde chromatique que les longs Mapbox. **RECO.**
 - ENCRE = elegant/premium mais austere/froid, plus statique → ideal Atlas historique, moins pour porter l'espoir/la vie d'un sujet environnemental.
 
-## ⭐⭐ HOOK (Beat 1) PROUVE + ANIME — VRAIE CARTE d3-geo (2026-06-22, idee Aziz)
+## ⛔ SUPERSEDE (2026-06-23) — le HOOK n'est PLUS la carte d3-geo. VOIR [[ETAT-GGW-MURAILLE-VERTE]]
+> La direction "carte d3-geo / top-down" ci-dessous est ABANDONNEE pour le hook : une carte geo-realiste s'effondre en SVG.
+> HOOK ACTUEL = SCENE NARRATIVE ENCRE animee (`GgwHookEncreVivant.tsx`, colorisation timee, vrais arbres GPT-5.5). Commit `a57e2de`.
+> La section ci-dessous est conservee comme HISTORIQUE (la carte d3-geo reste un acquis reutilisable AILLEURS, jamais pour ce hook).
+
+## (HISTORIQUE) HOOK d3-geo — ABANDONNE pour le hook, garde comme reference technique d3-geo
 Probleme decouvert : Gemini ne sait PAS dessiner une geo EXACTE en SVG (fausse carte). SOLUTION (idee Aziz) : la geo = d3-geo/NOUS,
 les arbres = Gemini. Combinaison gagnante prouvee :
 - `public/_shared/geo-data/ggw/ggw-countries.geojson` = 11 pays ceinture Senegal->Djibouti (Natural Earth 110m, 14KB).
@@ -59,8 +71,8 @@ les arbres = Gemini. Combinaison gagnante prouvee :
 - ANIME : apparition ouest->est (spring par index) + LA MORT (f180, 3/4 grisent via filtre grayscale/sepia + retrecissent, survivants 1/4).
 - RENDUS : still iso+arbres `zxh1kj.png` · still mort `ggw-mort.png` · VIDEO hook complet `files.catbox.moe/4s3l37.mp4`.
 - Commits : 60a52e4 (base) + dd853f8 (carte iso) + 684e2e7 (anime). Branche `feat/shorts-svg-muraille-verte`.
-- ▶ RESTE sur ce hook : recadrer Djibouti/Erythree (frolent bord droit) · version ENCRE · brancher sur l'audio · raccord -> Beat 2.
-- ⚠️ 2 OPTIONS de hook coexistent : (A) bande stylisee Gemini `jn6xds.png` (pas de vraie geo) · (B) ⭐ vraie carte d3-geo (ci-dessus, PREFEREE).
+- (historique) RESTE note a l'epoque : version ENCRE · audio · raccord Beat 2. -> Tout repris dans la nouvelle direction encre narrative.
+- ⛔ Les "2 OPTIONS de hook" (bande Gemini / carte d3-geo) sont TOUTES DEUX abandonnees pour le hook. Direction actuelle = scene narrative encre. Voir REPRISE.
 
 ## DOSSIER FACTUEL (fact-check Tavily 2026-06-22, SOURCE pour le script)
 - Mur 2007 = ligne droite d'arbres 8000 km, 11 pays, Senegal→Djibouti. **A ECHOUE** : « scientifiquement une idee desastreuse » (Dennis Garrity, ex-dir World Agroforestry Center, a NPR avril 2026) ; Nigeria 3/4 de 50 M arbres morts en 2 mois ; Senegal 1 zone sur 36 plantees plus verte que naturellement (Land Use Policy via Yale E360 oct 2025).
@@ -71,8 +83,11 @@ les arbres = Gemini. Combinaison gagnante prouvee :
   - Yacouba Sawadogo (zai + demi-lunes, « l'homme qui a arrete le desert », Burkina †2023) : **nappe phreatique +5 a +17 m**. FAO industrialise les demi-lunes (projet Delfino, mars 2026) : **×10 captation d'eau**.
 - ⚠️ Evoquer Rinaudo/Sawadogo par leurs GESTES/outils (racine reveillee, demi-lune qui se remplit), PAS en portraits (doctrine SVG anti-organique).
 
-## ⭐⭐ IDENTITE : 2 PISTES PROUVEES EN VERTICAL (2026-06-22) — on NE TRANCHE PAS, on teste les deux
-Decision Aziz : produire le pilote en 2 versions (encre colorisée + braise-or), la data reseaux tranchera l'identite.
+## ⭐⭐ IDENTITE : 2 PISTES PROUVEES EN VERTICAL (2026-06-22)
+> ⭐ MAJ 2026-06-23 : pour le HOOK on a PRIVILEGIE l'ENCRE narrative (= meilleur CANEVAS pour la colorisation timee ;
+> le braise-or est "deja tout colore" = moins de munition couleur). Le test A/B 2 registres reste possible plus tard ;
+> par defaut on part ENCRE. Le reste de cette section (technique colorisation, format vertical, zones securite) reste VALIDE.
+Decision initiale Aziz : produire le pilote en 2 versions (encre colorisée + braise-or), la data reseaux tranchera l'identite.
 - ⭐ DECOUVERTE COULEUR : la colorisation = des APLATS VIFS PLEINS qui REMPLISSENT les formes vivantes (pousse VERT plein,
   racine OR, eau BLEU), PAS un filtre de teinte sur le trait (1ere version ratee, trop timide). Technique = superposer une
   COPIE du groupe recolore (fill+stroke forces, regex `recolorBody`), opacite montee par frame sur le mot-cle. Le monde
