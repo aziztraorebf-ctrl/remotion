@@ -205,18 +205,7 @@ import { DemiLuneCompare } from "./projects/_rnd/svg-scenes/DemiLuneCompare";
 import { DemiLuneEncreColorisee } from "./projects/_rnd/svg-scenes/DemiLuneEncreColorisee";
 import { DemiLuneBraiseAnimee } from "./projects/_rnd/svg-scenes/DemiLuneBraiseAnimee";
 import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
-import { Img2SvgCompare } from "./projects/_rnd/svg-scenes/Img2SvgCompare";
 import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
-import { GgwD3GeoMap } from "./projects/_rnd/svg-scenes/GgwD3GeoMap";
-import { GgwD3GeoMapEncre } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncre";
-import { GgwD3GeoMapSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapSFX";
-import { GgwD3GeoMapEncreSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncreSFX";
-import { GgwSvgTestCoupe, GgwSvgTestTop, GgwSvgTestCalibre } from "./projects/_rnd/svg-scenes/GgwSvgTestCompare";
-import { GgwHookSvg6Up } from "./projects/_rnd/svg-scenes/GgwHookSvg6Up";
-import { GgwHookPairA, GgwHookPairB, GgwHookPairC } from "./projects/_rnd/svg-scenes/GgwHookPair";
-import { GgwHookNarr3 } from "./projects/_rnd/svg-scenes/GgwHookNarr3";
-import { GgwHookNarr4 } from "./projects/_rnd/svg-scenes/GgwHookNarr4";
-import { GgwTreesCompare } from "./projects/_rnd/svg-scenes/GgwTreesCompare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
@@ -2184,22 +2173,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-DemiLuneBraiseVert" component={DemiLuneBraiseAnimee} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
         <Composition id="RND-MurTopDownBraise" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1920} height={1080} />
         <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-Img2SvgCompare" component={Img2SvgCompare} durationInFrames={60} fps={30} width={2160} height={1920} />
         <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
-        <Composition id="RND-GgwD3GeoMap" component={GgwD3GeoMap} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapEncre" component={GgwD3GeoMapEncre} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapSFX" component={GgwD3GeoMapSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapEncreSFX" component={GgwD3GeoMapEncreSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwSvgTestCoupe" component={GgwSvgTestCoupe} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwSvgTestTop" component={GgwSvgTestTop} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwSvgTestCalibre" component={GgwSvgTestCalibre} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwHookSvg6Up" component={GgwHookSvg6Up} durationInFrames={60} fps={30} width={2160} height={640} />
-        <Composition id="RND-GgwHookPairA" component={GgwHookPairA} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookPairB" component={GgwHookPairB} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookPairC" component={GgwHookPairC} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookNarr3" component={GgwHookNarr3} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwHookNarr4" component={GgwHookNarr4} durationInFrames={60} fps={30} width={1920} height={840} />
-        <Composition id="RND-GgwTreesCompare" component={GgwTreesCompare} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
