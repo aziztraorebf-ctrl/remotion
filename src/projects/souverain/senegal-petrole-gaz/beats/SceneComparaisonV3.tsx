@@ -20,10 +20,13 @@
  *
  * Anti-derive : tout overlay geo-ancre = map.project([lon,lat]) RECALCULE chaque frame (useCurrentFrame).
  */
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring,
+  continueRender, delayRender,
 } from "remotion";
+import { feature } from "topojson-client";
+import { geoMercator, geoPath } from "d3-geo";
 import type mapboxgl from "mapbox-gl";
 import { loadFont as loadBebas } from "@remotion/google-fonts/BebasNeue";
 import { CartoSouverainV5 } from "../../../_shared/mapbox/CartoSouverainV5";
@@ -42,7 +45,8 @@ const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as 
 const W = 1920, H = 1080;
 
 // ── coords reelles (point cle par pays) ───────────────────────────────────────
-const NORVEGE: [number, number] = [4.50, 61.20];   // cote mer du Nord (offshore petrole 1969)
+const NORVEGE: [number, number] = [4.50, 61.20];   // territoire (ancre la plaque verdict)
+const NORVEGE_OIL: [number, number] = [2.80, 60.30]; // gisement OFFSHORE mer du Nord (le jeton petrole, dans l'eau)
 const CONGO: [number, number] = [11.86, -4.80];    // Pointe-Noire (petrole offshore)
 const BOTSWANA: [number, number] = [24.73, -24.60];// Jwaneng (mine de diamants Debswana)
 // bbox metropolitaine Norvege : Natural Earth "Norway" inclut Svalbard/Jan Mayen (tres au nord)
@@ -208,6 +212,7 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
   const zoomNow = map.getZoom();
 
   const nor = P(NORVEGE);
+  const norOil = P(NORVEGE_OIL); // jeton petrole offshore (dans l'eau, contraste sur la mer)
   const cog = P(CONGO);
   const bwa = P(BOTSWANA);
 
@@ -219,7 +224,8 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
     x: Math.max(380, Math.min(W - 380, pt.x + side * dx)),
     y: Math.max(190, Math.min(H - 210, pt.y + dy)),
   });
-  const norP = plaqueOffset(nor, 1, 250, -40);
+  // plaque Norvege ancree sur le JETON offshore (le leader part du jeton, comme scene gisements)
+  const norP = plaqueOffset(norOil, 1, 250, -40);
   const cogP = plaqueOffset(cog, 1, 250, -60);
   const bwaP = plaqueOffset(bwa, -1, 250, -60);
 
@@ -231,16 +237,16 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
   return (
     <>
       <svg width={W} height={H} style={{ position: "absolute", inset: 0, overflow: "visible", pointerEvents: "none" }}>
-        {/* leaders point -> plaque */}
-        {frame >= F_NOR + 40 && frame < F_TRANS_AB + 10 && <Leader x1={nor.x} y1={nor.y} x2={norP.x} y2={norP.y} op={norLeadOp} />}
+        {/* leaders point -> plaque (Norvege : depuis le JETON offshore, pas le territoire) */}
+        {frame >= F_NOR + 40 && frame < F_TRANS_AB + 10 && <Leader x1={norOil.x} y1={norOil.y} x2={norP.x} y2={norP.y} op={norLeadOp} />}
         {frame >= F_COG + 40 && frame < F_TRANS_BC + 10 && <Leader x1={cog.x} y1={cog.y} x2={cogP.x} y2={cogP.y} op={cogLeadOp} />}
         {frame >= F_BWA + 40 && frame < F_CRANE && <Leader x1={bwa.x} y1={bwa.y} x2={bwaP.x} y2={bwaP.y} op={bwaLeadOp} />}
         {/* NORVEGE = jeton petrole offshore (ce qu'ils ont decouvert en mer du Nord, esthetique navy+or
             coherente avec la scene gisements precedente). Congo/Botswana = dot sonar sobre. */}
         {frame >= F_NOR + 30 && frame < F_TRANS_AB + 10 && (
           <GisementMarker
-            kind="oil" x={nor.x} y={nor.y}
-            scale={interpolate(spring({ frame: frame - (F_NOR + 30), fps, config: { damping: 11, stiffness: 280 }, durationInFrames: 26 }), [0, 1], [0, 1], clamp)}
+            kind="oil" x={norOil.x} y={norOil.y}
+            scale={1.6 * interpolate(spring({ frame: frame - (F_NOR + 30), fps, config: { damping: 11, stiffness: 280 }, durationInFrames: 26 }), [0, 1], [0, 1], clamp)}
             frame={frame} localF={frame - (F_NOR + 30)} appeared={frame - (F_NOR + 30) > 24}
             uid="norvege-oil" zoom={zoomNow}
           />
@@ -279,58 +285,83 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
 //  les regles."). Decision Aziz : enlever les 4 lignes redondantes avec la voix.
 //  L'opposition se LIT dans le triptyque (3 destins juxtaposes), pas dans du texte.
 // ════════════════════════════════════════════════════════════════════════════
-type Panel = { iso: string; name: string; stat: string; color: string; clipBbox?: [number, number, number, number] };
+type Panel = { iso: string; geoName: string; name: string; stat: string; color: string };
 const PANELS: Panel[] = [
-  { iso: "NOR", name: "NORVÈGE", stat: "1 500 Mds$", color: GOLD, clipBbox: NOR_BBOX },
-  { iso: "COG", name: "CONGO", stat: "dette : 92% du PIB", color: ORANGE },
-  { iso: "BWA", name: "BOTSWANA", stat: "fonds souverain", color: GREEN },
+  { iso: "NOR", geoName: "Norway",   name: "NORVÈGE", stat: "1 500 Mds$",        color: GOLD },
+  { iso: "COG", geoName: "Congo",    name: "CONGO",   stat: "dette : 92% du PIB", color: ORANGE },
+  { iso: "BWA", geoName: "Botswana", name: "BOTSWANA",stat: "fonds souverain",   color: GREEN },
 ];
 
-// drapeau dessine une fois en dataURL (canvas synchrone, dispo a f0)
+// drapeau dessine une fois en dataURL (canvas synchrone)
 const flagDataUrl = (iso: string): string => {
-  try {
-    const flag = drawFlagCanvas(iso, 512);
-    return flag.toDataURL("image/png");
-  } catch (_e) { return ""; }
+  try { return drawFlagCanvas(iso, 1024).toDataURL("image/png"); } catch (_e) { return ""; }
 };
 
-const FlagPanel: React.FC<{ panel: Panel; index: number; frame: number; fps: number }> = ({ panel, index, frame, fps }) => {
-  const [url] = useState(() => flagDataUrl(panel.iso));
-  // chaque panneau entre en cascade (decale de 10f), depuis le bas
+// TerritoryFlagPanel — la SILHOUETTE du pays (d3-geo) remplie de son drapeau (decision Aziz :
+// chaque ecran = le territoire avec son drapeau projete dessus, comme sur la carte, pas un rectangle).
+const TerritoryFlagPanel: React.FC<{ panel: Panel; index: number; topology: any; frame: number; fps: number }> = ({ panel, index, topology, frame, fps }) => {
+  const PW = W / 3, PH = H; // dimensions du panneau
+  const [flagUrl] = useState(() => flagDataUrl(panel.iso));
+
+  const { pathD, bbox, centroid } = React.useMemo(() => {
+    try {
+      const fc = feature(topology, topology.objects.countries) as unknown as { features: any[] };
+      const feat = fc.features.find((f: any) => f.properties?.name === panel.geoName);
+      if (!feat) return { pathD: "", bbox: [[0, 0], [PW, PH]], centroid: [PW / 2, PH / 2] };
+      // fitExtent : cale la silhouette dans le panneau (marge ~ pour laisser place au texte en bas)
+      const proj = geoMercator().fitExtent([[44, 80], [PW - 44, PH - 230]], feat);
+      const gp = geoPath(proj);
+      return { pathD: gp(feat) ?? "", bbox: gp.bounds(feat), centroid: gp.centroid(feat) };
+    } catch (_e) { return { pathD: "", bbox: [[0, 0], [PW, PH]], centroid: [PW / 2, PH / 2] }; }
+  }, [topology, panel.geoName, PW, PH]);
+
   const appearAt = F_CRANE + 20 + index * 12;
   const p = spring({ frame: frame - appearAt, fps, config: { damping: 18, stiffness: 150 }, durationInFrames: 26 });
   const op = interpolate(p, [0, 1], [0, 1], clamp);
   const y = interpolate(p, [0, 1], [40, 0], clamp);
+  const glow = 0.55 + 0.25 * Math.sin((frame - appearAt) / 22);
+
+  const [[bx0, by0], [bx1, by1]] = bbox;
+  const clipId = `terr-${panel.iso}`;
+
   return (
     <div style={{
       flex: 1, height: "100%", position: "relative", overflow: "hidden",
-      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       opacity: op, transform: `translateY(${y}px)`,
-      borderLeft: index > 0 ? `2px solid ${GOLD}55` : "none",
+      borderLeft: index > 0 ? `2px solid ${GOLD}44` : "none",
+      background: "radial-gradient(ellipse at 50% 42%, rgba(40,52,78,0.55) 0%, rgba(13,21,32,0.95) 78%)",
     }}>
-      {/* drapeau en fond, assombri pour lisibilite du texte */}
-      {url && (
-        <img src={url} alt="" style={{
-          position: "absolute", inset: 0, width: "100%", height: "100%",
-          objectFit: "cover", opacity: 0.5,
-        }} />
-      )}
-      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(13,21,32,0.55) 0%, rgba(13,21,32,0.78) 100%)" }} />
-      {/* contenu : nom + chiffre factuel */}
-      <div style={{ position: "relative", textAlign: "center", padding: "0 24px" }}>
+      {/* SILHOUETTE territoire + drapeau clippe a la forme */}
+      <svg width={PW} height={PH} viewBox={`0 0 ${PW} ${PH}`} style={{ position: "absolute", inset: 0 }}>
+        <defs>
+          <clipPath id={clipId}><path d={pathD} /></clipPath>
+        </defs>
+        {/* halo couleur derriere la silhouette (paths superposes — PAS de filter:blur, invisible en headless) */}
+        <path d={pathD} fill="none" stroke={panel.color} strokeWidth={16} opacity={glow * 0.18} strokeLinejoin="round" />
+        <path d={pathD} fill="none" stroke={panel.color} strokeWidth={9}  opacity={glow * 0.32} strokeLinejoin="round" />
+        <path d={pathD} fill={panel.color} opacity={0.12} />
+        {/* drapeau clippe a la silhouette */}
+        {flagUrl && pathD && (
+          <image href={flagUrl} x={bx0} y={by0} width={bx1 - bx0} height={by1 - by0}
+            preserveAspectRatio="xMidYMid slice" clipPath={`url(#${clipId})`} opacity={0.92} />
+        )}
+        {/* liseré net */}
+        <path d={pathD} fill="none" stroke={IVORY} strokeWidth={2} opacity={0.7} strokeLinejoin="round" />
+      </svg>
+
+      {/* nom + chiffre factuel, en bas du panneau */}
+      <div style={{
+        position: "absolute", bottom: 70, left: 0, right: 0, textAlign: "center", padding: "0 24px",
+      }}>
         <div style={{
-          color: IVORY, fontFamily: BEBAS, fontSize: 58, letterSpacing: "0.06em",
-          textShadow: "0 3px 20px rgba(0,0,0,0.95)", marginBottom: 18,
-        }}>
-          {panel.name}
-        </div>
-        <div style={{ width: 64, height: 3, background: panel.color, margin: "0 auto 18px", borderRadius: 2 }} />
+          color: IVORY, fontFamily: BEBAS, fontSize: 54, letterSpacing: "0.06em",
+          textShadow: "0 3px 20px rgba(0,0,0,0.95)", marginBottom: 14,
+        }}>{panel.name}</div>
+        <div style={{ width: 60, height: 3, background: panel.color, margin: "0 auto 14px", borderRadius: 2 }} />
         <div style={{
-          color: panel.color, fontFamily: BEBAS, fontSize: 44, letterSpacing: "0.03em",
-          textShadow: `0 2px 18px rgba(0,0,0,0.9)`,
-        }}>
-          {panel.stat}
-        </div>
+          color: panel.color, fontFamily: BEBAS, fontSize: 40, letterSpacing: "0.03em",
+          textShadow: "0 2px 18px rgba(0,0,0,0.95)",
+        }}>{panel.stat}</div>
       </div>
     </div>
   );
@@ -339,15 +370,23 @@ const FlagPanel: React.FC<{ panel: Panel; index: number; frame: number; fps: num
 const TripleScreen: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const [topo, setTopo] = useState<any>(null);
+  const [handle] = useState(() => delayRender("triple-screen-topo"));
+  useEffect(() => {
+    fetch(staticFile("_shared/geo-data/countries-50m.json"))
+      .then((r) => r.json())
+      .then((j) => { setTopo(j); continueRender(handle); })
+      .catch(() => continueRender(handle));
+  }, [handle]);
+
   if (frame < F_CRANE - 10) return null;
-  // voile navy qui monte = fade depuis la carte Botswana vers le triptyque
   const veil = interpolate(frame, [F_CRANE - 10, F_CRANE + 30], [0, 1], clamp);
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <AbsoluteFill style={{ backgroundColor: NAVY, opacity: veil }} />
       <div style={{ position: "absolute", inset: 0, display: "flex", opacity: veil }}>
-        {PANELS.map((panel, i) => (
-          <FlagPanel key={panel.iso} panel={panel} index={i} frame={frame} fps={fps} />
+        {topo && PANELS.map((panel, i) => (
+          <TerritoryFlagPanel key={panel.iso} panel={panel} index={i} topology={topo} frame={frame} fps={fps} />
         ))}
       </div>
     </AbsoluteFill>
