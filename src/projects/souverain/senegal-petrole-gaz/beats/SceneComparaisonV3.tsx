@@ -64,6 +64,33 @@ const F_BWA = 1210;  // plongee Botswana (voix f1207)
 // fin : fade vers triple screen apres Botswana (voix "Meme ressource" f1627, "REGLES" f1940)
 const F_CRANE = 1600;
 
+// ────────────────────────────────────────────────────────────────────────────
+//  brightenMap — eclaircit le fond de carte APRES applyGeoAfriqueV5 (override LOCAL,
+//  ne touche pas le composant partage). Aziz : la carte sombre ne saute pas aux yeux
+//  en plein jour sur mobile. On releve terres + eau + frontieres, sans changer la carte.
+//  Frontieres : line-width pilotee par le ZOOM (anti-bouillie au dezoom).
+// ────────────────────────────────────────────────────────────────────────────
+const brightenMap = (map: mapboxgl.Map) => {
+  const safe = (id: string, prop: string, val: unknown) => {
+    try { if (map.getLayer(id)) (map.setPaintProperty as any)(id, prop, val); } catch (_e) {}
+  };
+  const LAND = "#6f7480";   // terres : gris desature plus CLAIR (etait #4a4a4a)
+  const WATER = "#274b73";  // eau : bleu un peu plus clair, contraste terre/eau maintenu (etait #1a3a5c)
+  const BORDER = "#eef0f3"; // frontieres : blanc franc (etait #c8c8c8)
+  safe("land", "background-color", LAND);
+  safe("landuse", "fill-color", LAND);
+  safe("national-park", "fill-color", LAND);
+  safe("landcover", "fill-color", LAND);
+  safe("water", "fill-color", WATER);
+  safe("water-shadow", "fill-color", WATER);
+  // frontieres : couleur franche + epaisseur croissante au zoom (lisible de loin SANS bouillie de pres)
+  safe("admin-0-boundary", "line-color", BORDER);
+  safe("admin-0-boundary", "line-width", ["interpolate", ["linear"], ["zoom"], 2, 0.8, 4, 1.6, 6, 2.6]);
+  safe("admin-0-boundary", "line-opacity", 0.9);
+  safe("admin-0-boundary-disputed", "line-color", BORDER);
+  safe("admin-1-boundary", "line-color", "rgba(210,210,210,0.18)");
+};
+
 export const SceneComparaisonV3: React.FC = () => {
   const { fps } = useVideoConfig();
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -109,7 +136,7 @@ export const SceneComparaisonV3: React.FC = () => {
         }}
       />
       <SceneSFX />
-      <CartoSouverainV5 camKeys={camKeys} focusIsos={[]} onMapReady={(m) => { mapRef.current = m; force((n) => n + 1); }}>
+      <CartoSouverainV5 camKeys={camKeys} focusIsos={[]} onMapReady={(m) => { mapRef.current = m; brightenMap(m); force((n) => n + 1); }}>
         {/* DRAPEAUX DRAPES — chaque pays prend son drapeau a son arrivee (carte vivante, pas aplat terne V1) */}
         <AnimatedFlagDecal mapRef={mapRef} iso="NOR" geoNames={["Norway"]} appearAt={F_NOR + 30} maxOpacity={0.72} clipBbox={NOR_BBOX} />
         <AnimatedFlagDecal mapRef={mapRef} iso="COG" geoNames={["Congo"]} appearAt={F_COG + 30} maxOpacity={0.72} />
@@ -119,10 +146,10 @@ export const SceneComparaisonV3: React.FC = () => {
       </CartoSouverainV5>
       {/* Fin = triple screen NU (3 pays cote a cote, zero phrase, la voix porte le recit) */}
       <TripleScreen />
-      {/* Vignette douce */}
+      {/* Vignette tres douce (allegee : ne pas reassombrir les bords — carte lisible en plein jour) */}
       <AbsoluteFill style={{
         pointerEvents: "none",
-        background: "radial-gradient(ellipse at center, transparent 52%, rgba(13,21,32,0.40) 100%)",
+        background: "radial-gradient(ellipse at center, transparent 60%, rgba(13,21,32,0.22) 100%)",
       }} />
     </AbsoluteFill>
   );
