@@ -250,18 +250,21 @@ const BarrageViz: React.FC = () => {
         <DrainStream wallCx={wallCx} wallBotW={wallBotW} floorY={floorY} open={breachOpen} frame={frame} budgetY={floorY + 96} />
       )}
 
-      {/* ── MUR-BARRAGE (2 moities qui s'ecartent a la rupture) ── */}
+      {/* ── MUR-BARRAGE — a la rupture, la MOITIE GAUCHE (cote Senegal) DISPARAIT (plus rien ne protege,
+            idee Aziz), pendant que la moitie droite (cote dette) reste. PAS de 2 moities qui s'ecartent. ── */}
       <g transform={`translate(${wallShake}, 0)`}>
-        {/* moitie gauche du mur */}
-        <g transform={`translate(${-wallBreak * 14}, ${wallBreak * 6}) rotate(${-wallBreak * 3} ${wallCx} ${floorY})`}>
+        {/* moitie gauche (cote Senegal) : s'effondre/disparait a F_VIDER (fade + leger affaissement) */}
+        <g transform={`translate(0, ${wallBreak * 30})`} opacity={1 - wallBreak}>
           <path d={wallPath(0)} fill="url(#wallV)" clipPath="url(#leftHalf)" stroke={GOLD_HI} strokeWidth={1.5} />
         </g>
-        {/* moitie droite du mur */}
-        <g transform={`translate(${wallBreak * 14}, ${wallBreak * 6}) rotate(${wallBreak * 3} ${wallCx} ${floorY})`}>
+        {/* moitie droite (cote dette) : RESTE en place */}
+        <g>
           <path d={wallPath(0)} fill="url(#wallV)" clipPath="url(#rightHalf)" stroke={GOLD_HI} strokeWidth={1.5} />
         </g>
-        {/* fissures sur le mur (se tracent a partir de F_ETOUFFE) */}
-        <WallCracks wallCx={wallCx} crestY={crestY} floorY={floorY} frame={frame} />
+        {/* fissures sur le mur (se tracent a F_ETOUFFE) — s'estompent quand le mur gauche disparait */}
+        <g opacity={1 - wallBreak * 0.85}>
+          <WallCracks wallCx={wallCx} crestY={crestY} floorY={floorY} frame={frame} />
+        </g>
         {/* label FONSIS grave sur le mur */}
         <FonsisLabel wallCx={wallCx} y={(crestY + floorY) / 2} frame={frame} breakOp={1 - wallBreak} />
         {/* CADENAS or : se pose a F_VERROU ("verrouille"), SAUTE a F_PIOCHER (on perce le fonds) */}
@@ -282,8 +285,8 @@ const BarrageViz: React.FC = () => {
       {/* ── bassin BUDGET (recoit le filet) ── */}
       <BudgetBasin wallCx={wallCx} floorY={floorY} frame={frame} drainP={1 - senDrain} />
 
-      {/* ── cloche / alerte FMI (zone libre : haut-centre, AU-DESSUS de la dette, loin du readout 132%) ── */}
-      <FmiAlert x={1180} y={210} frame={frame} />
+      {/* ── alerte FMI : STATIQUE au-dessus du mur FONSIS (il surveille le fonds — idee Aziz) ── */}
+      <FmiAlert x={wallCx} y={crestY - 78} frame={frame} />
     </svg>
   );
 };
@@ -370,9 +373,10 @@ function jaggedCrack(x0: number, y0: number, x1: number, y1: number, segs: numbe
   return d;
 }
 const WallCracks: React.FC<{ wallCx: number; crestY: number; floorY: number; frame: number }> = ({ wallCx, crestY, floorY, frame }) => {
-  // trace progressif F_ETOUFFE->F_PIOCHER, puis ECLATE (s'elargit) a F_VIDER (le mur cede)
+  // trace progressif F_ETOUFFE->F_PIOCHER. Les fissures s'epaississent un peu jusqu'a la rupture, mais
+  // ne "burstent" plus (le mur gauche DISPARAIT a F_VIDER -> les fissures s'estompent avec lui, gere par le parent).
   const traceP = interpolate(frame, [F_ETOUFFE, F_PIOCHER], [0, 1], clamp);
-  const burst = interpolate(frame, [F_VIDER - 20, F_VIDER + 30], [0, 1], clamp);
+  const burst = interpolate(frame, [F_PIOCHER, F_VIDER], [0, 0.5], clamp); // epaississement modere, pas d'eclatement
   const midY = (crestY + floorY) / 2;
   // fissure maitresse verticale + 2 branches obliques (technique fracturePath)
   const cracks = [
@@ -453,8 +457,9 @@ const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; 
   const startY = floorY - 64;
   const endY = budgetY; // jusqu'au bord du bac BUDGET (continu, pas coupe au sol)
   const h = (endY - startY) * open;
-  // ruban epais a 3 bandes (vrai tricolore qui coule), legere ondulation laterale
-  const sway = Math.sin(frame / 7) * 4;
+  // ruban epais a 3 bandes (vrai tricolore qui coule) — ecoulement CALME, quasi droit (pas de fretillement,
+  // retour Aziz : le jet ne doit pas s'agiter dans le bac). Micro-ondulation a peine perceptible.
+  const sway = Math.sin(frame / 16) * 1.2;
   const bandW = 7;
   return (
     <g>
@@ -462,10 +467,6 @@ const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; 
       <rect x={x - bandW * 1.5} y={startY} width={bandW} height={h} fill={SEN.a} opacity={0.92 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
       <rect x={x - bandW * 0.5} y={startY} width={bandW} height={h} fill={SEN.b} opacity={0.95 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
       <rect x={x + bandW * 0.5} y={startY} width={bandW} height={h} fill={SEN.c} opacity={0.92 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
-      {/* eclaboussure a l'arrivee dans le bac */}
-      {open > 0.4 && h > (endY - startY) * 0.85 && (
-        <ellipse cx={x + sway} cy={endY} rx={16 + 4 * Math.sin(frame / 5)} ry={5} fill={SEN.b} opacity={0.5 * open} />
-      )}
     </g>
   );
 };
@@ -473,37 +474,46 @@ const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; 
 // bassin BUDGET sous le mur (recoit le filet, se remplit un peu)
 const BudgetBasin: React.FC<{ wallCx: number; floorY: number; frame: number; drainP: number }> = ({ wallCx, floorY, frame, drainP }) => {
   const appear = interpolate(frame, [F_PIOCHER - 10, F_PIOCHER + 20], [0, 1], clamp);
-  // bassin remonte dans la safe zone (label final <= ~975, bord 100px respecte) — fix review Gemini
   const bx = wallCx - 150, by = floorY + 22, bw = 160, bh = 56;
-  const fillH = bh * Math.min(1, drainP * 0.9);
+  // le bac se REMPLIT progressivement (niveau qui MONTE calmement, statique — pas de jet qui fretille)
+  const fillH = bh * Math.min(1, drainP * 0.95);
+  const fy = by + bh - fillH;
+  const fId = `budgetFill-${wallCx}`;
   return (
     <g opacity={appear}>
-      {/* bac */}
+      {/* le liquide recu = TRICOLORE Senegal (l'argent du fonds qui part dans le budget) */}
+      <defs>
+        <linearGradient id={fId} x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor={SEN.a} /><stop offset="33%" stopColor={SEN.a} />
+          <stop offset="33.01%" stopColor={SEN.b} /><stop offset="66%" stopColor={SEN.b} />
+          <stop offset="66.01%" stopColor={SEN.c} /><stop offset="100%" stopColor={SEN.c} />
+        </linearGradient>
+      </defs>
+      {fillH > 1 && <rect x={bx + 12} y={fy} width={bw - 24} height={fillH} fill={`url(#${fId})`} opacity={0.92} />}
+      {/* bac (par-dessus le liquide) */}
       <path d={`M ${bx} ${by} L ${bx + 14} ${by + bh} L ${bx + bw - 14} ${by + bh} L ${bx + bw} ${by} `}
-        fill="none" stroke={IVORY} strokeWidth={2.5} opacity={0.55} />
-      {/* niveau recu */}
-      <rect x={bx + 12} y={by + bh - fillH} width={bw - 24} height={fillH} fill={SEN.b} opacity={0.5} />
+        fill="none" stroke={IVORY} strokeWidth={2.5} opacity={0.6} />
       <text x={bx + bw / 2} y={by + bh + 30} textAnchor="middle" fill="rgba(242,239,230,0.7)" fontFamily={BEBAS} fontSize={26} letterSpacing="2">BUDGET</text>
     </g>
   );
 };
 
 // cloche / alerte FMI (forme SVG maison, halo rouge pulse)
+// FMI : se pose STATIQUE au-dessus du mur FONSIS (il surveille le fonds). Pas de pulse/mouvement
+// gauche-droite (retour Aziz : distrayant). Seul un halo d'alerte tres doux respire, l'icone reste fixe.
 const FmiAlert: React.FC<{ x: number; y: number; frame: number }> = ({ x, y, frame }) => {
-  const enter = spring({ frame: frame - F_FMI, fps: 30, config: { damping: 11, stiffness: 160 }, durationInFrames: 24 });
+  const enter = spring({ frame: frame - F_FMI, fps: 30, config: { damping: 13, stiffness: 150 }, durationInFrames: 22 });
   const op = interpolate(frame, [F_FMI, F_FMI + 20, F_VIDER + 40, END], [0, 1, 1, 0], clamp);
   if (frame < F_FMI - 5) return null;
-  const pulse = 1 + 0.12 * Math.max(0, Math.sin((frame - F_FMI) / 5));
-  const scale = interpolate(enter, [0, 1], [0, 1], clamp) * pulse;
+  const scale = interpolate(enter, [0, 1], [0, 1], clamp); // pose, PAS de pulse permanent
+  const haloOp = 0.16 + 0.08 * Math.sin((frame - F_FMI) / 9); // seul le halo respire (alerte), l'icone est fixe
   return (
     <g opacity={op} transform={`translate(${x}, ${y}) scale(${scale})`} style={{ transformOrigin: "center" }}>
-      {/* halo */}
-      <circle cx={0} cy={0} r={52} fill={RED_DEBT} opacity={0.18 + 0.1 * Math.sin((frame - F_FMI) / 5)} />
-      {/* cloche (path maison) */}
-      <path d="M 0 -30 C 18 -30 26 -16 26 2 L 32 14 L -32 14 L -26 2 C -26 -16 -18 -30 0 -30 Z"
+      <circle cx={0} cy={0} r={46} fill="#9a3528" opacity={haloOp} />
+      <path d="M 0 -28 C 16 -28 24 -15 24 2 L 30 13 L -30 13 L -24 2 C -24 -15 -16 -28 0 -28 Z"
         fill="none" stroke="#d4604f" strokeWidth={3.5} strokeLinejoin="round" />
-      <path d="M -7 14 a 7 7 0 0 0 14 0" fill="none" stroke="#d4604f" strokeWidth={3.5} />
-      <text x={0} y={48} textAnchor="middle" fill="#e08a7c" fontFamily={BEBAS} fontSize={30} letterSpacing="3">FMI</text>
+      <path d="M -6 13 a 6 6 0 0 0 12 0" fill="none" stroke="#d4604f" strokeWidth={3.5} />
+      <text x={0} y={44} textAnchor="middle" fill="#e08a7c" fontFamily={BEBAS} fontSize={28} letterSpacing="3">FMI</text>
     </g>
   );
 };
