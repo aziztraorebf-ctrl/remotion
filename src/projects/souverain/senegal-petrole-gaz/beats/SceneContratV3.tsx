@@ -125,8 +125,9 @@ const Title: React.FC = () => {
 const ContratViz: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // ── geometrie baril (reprise BarilJaugeIcon, agrandie/centree) ──
-  const cx = 720, cy = 560, w = 420, h = 560;
+  // ── geometrie baril : CENTRE a l'ecran (cx=960) pour faire respirer la scene (decision Aziz) :
+  // document a gauche (separation naturelle), chiffre a droite, marqueurs Woodside/Etat visibles. ──
+  const cx = 960, cy = 560, w = 420, h = 560;
   const left = cx - w / 2, right = cx + w / 2, top = cy - h / 2, bottom = cy + h / 2;
   const ellipseRy = w * 0.10;
 
@@ -221,9 +222,9 @@ const ContratViz: React.FC = () => {
       {/* (le libelle COST RECOVERY a ete retire : le marqueur WOODSIDE pointe deja la lame rouge,
           eviter la surcharge de texte — decision Aziz) */}
 
-      {/* CHIFFRE a droite : "60% ANNONCÉ" FIXE (l'annonce ne bouge pas, c'est un chiffre fige)
+      {/* CHIFFRE loin a droite (baril centre -> le chiffre respire dans la colonne droite) : "60% ANNONCÉ" FIXE (l'annonce ne bouge pas, c'est un chiffre fige)
           -> bascule a "??% PART RÉELLE ?" quand la lame mord (la realite devient incertaine). */}
-      <PctReadout x={1340} y={cy} uncertain={showUncertain} frame={frame} />
+      <PctReadout x={1580} y={cy} uncertain={showUncertain} frame={frame} />
 
       {/* marqueurs acteurs RATTACHES au baril : Woodside designe la LAME (ce qu'il prend),
           L'ÉTAT designe le DRAPEAU (ce qui reste). Role mecanique clair (decision Aziz). */}
@@ -349,16 +350,14 @@ const Sfx: React.FC<{ at: number; src: string; volume?: number; dur?: number }> 
 );
 const SceneSFX: React.FC = () => (
   <>
-    {/* le baril se REMPLIT a 60% au debut (moment sonore avant manque) */}
+    {/* le baril se REMPLIT a 60% au debut */}
     <Sfx at={2} src={SFX.fill} volume={0.4} dur={70} />
     {/* le 60% s'inscrit */}
     <Sfx at={F_60} src={SFX.tick} volume={0.45} />
     {/* cadenas : le contrat se ferme (pas public) */}
     <Sfx at={F_PUBLICS} src={SFX.lock} volume={0.42} dur={36} />
-    {/* LA LAME cost recovery descend et siphonne (le moment fort) */}
-    <Sfx at={F_MILLIARDS} src={SFX.drain} volume={0.5} dur={66} />
-    {/* bras de fer : tension sourde (PAS le swoosh map) */}
-    <Sfx at={F_BRASDEFER} src={SFX.tension} volume={0.4} dur={54} />
+    {/* SFX drain (lame) + tension (bras de fer) RETIRES (decision Aziz : trop forts, font sursauter,
+        ne donnent pas bien). Gardes pour d'autres occasions. La lame reste muette (le visuel suffit). */}
   </>
 );
 
