@@ -219,6 +219,7 @@ import { GgwHookNarr4 } from "./projects/_rnd/svg-scenes/GgwHookNarr4";
 import { GgwTreesCompare } from "./projects/_rnd/svg-scenes/GgwTreesCompare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
 import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
+import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { B2Sablier } from "./projects/_rnd/svg-scenes/B2Sablier";
 import { B2MecheEteinte } from "./projects/_rnd/svg-scenes/B2MecheEteinte";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
@@ -283,6 +284,7 @@ import { CartoSouverainV5RegionalDemo } from "./projects/_shared/mapbox/CartoSou
 import { SceneGisementsV3 } from "./projects/souverain/senegal-petrole-gaz/beats/SceneGisementsV3";
 import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneComparaisonV3";
 import { SceneContratV3, SCENE_CONTRAT_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneContratV3";
+import { SceneDetteV3, SCENE_DETTE_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneDetteV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -1372,6 +1374,14 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="SceneDetteV3"
+            component={SceneDetteV3}
+            durationInFrames={SCENE_DETTE_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
             id="TokenShowcaseV5"
             component={TokenShowcaseV5}
             durationInFrames={600}
@@ -2213,6 +2223,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GgwSvgTestTop" component={GgwSvgTestTop} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwSvgTestCalibre" component={GgwSvgTestCalibre} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B3Malentendu" component={B3Malentendu} durationInFrames={468} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2Sablier" component={B2Sablier} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2MecheEteinte" component={B2MecheEteinte} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-GgwHookSvg6Up" component={GgwHookSvg6Up} durationInFrames={60} fps={30} width={2160} height={640} />
