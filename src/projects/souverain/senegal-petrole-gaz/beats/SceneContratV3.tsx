@@ -153,9 +153,8 @@ const ContratViz: React.FC = () => {
   const senCutY = bottom - (h * senLevel) / 100;       // sommet du drapeau
   const costCutY = bottom - (h * (senLevel + costEat * (costEat > 0.5 ? 1 : 0))) / 100; // bas de la lame = sommet drapeau ; lame au-dessus
 
-  // chiffre : 60% tant que pas ronge, puis "??%" quand la lame mord (apres F_MILLIARDS)
+  // chiffre : "60%" fixe tant que pas ronge, puis "??%" quand la lame mord (apres F_MILLIARDS)
   const showUncertain = frame >= F_MILLIARDS + 40;
-  const pctNum = Math.round(senLevel);
 
   const clipId = "baril-contrat-body";
 
@@ -184,8 +183,8 @@ const ContratViz: React.FC = () => {
         </clipPath>
       </defs>
 
-      {/* clauses de contrat en arriere-plan (lignes fines or, se tracent) + caviardage */}
-      <ContractClauses frame={frame} />
+      {/* document-contrat (bloc net a gauche) + caviardage + cadenas = "pas public" sans texte */}
+      <ContractDoc frame={frame} />
 
       {/* ombre portee */}
       <ellipse cx={cx} cy={bottom + 34} rx={w * 0.55} ry={20} fill="rgba(0,0,0,0.45)" />
@@ -219,16 +218,17 @@ const ContratViz: React.FC = () => {
       <line x1={left - 14} x2={right + 14} y1={senCutY} y2={senCutY} stroke={GOLD} strokeWidth={13} strokeOpacity={0.4} strokeLinecap="round" />
       <line x1={left - 14} x2={right + 14} y1={senCutY} y2={senCutY} stroke={GOLD_HI} strokeWidth={5} strokeLinecap="round" />
 
-      {/* libelle COST RECOVERY (haut, sobre) quand la lame mord */}
-      {costEat > 2 && (
-        <CostLabel x={right + 40} y={(top + senCutY) / 2} op={interpolate(frame, [F_WOODSIDE, F_WOODSIDE + 30], [0, 1], clamp)} />
-      )}
+      {/* (le libelle COST RECOVERY a ete retire : le marqueur WOODSIDE pointe deja la lame rouge,
+          eviter la surcharge de texte — decision Aziz) */}
 
-      {/* CHIFFRE a droite : 60% -> ??% */}
-      <PctReadout x={1340} y={cy} num={pctNum} uncertain={showUncertain} frame={frame} />
+      {/* CHIFFRE a droite : "60% ANNONCÉ" FIXE (l'annonce ne bouge pas, c'est un chiffre fige)
+          -> bascule a "??% PART RÉELLE ?" quand la lame mord (la realite devient incertaine). */}
+      <PctReadout x={1340} y={cy} uncertain={showUncertain} frame={frame} />
 
-      {/* marqueurs acteurs : Senegal (bas) / Woodside (haut) — pions sobres, pas d'icone web */}
-      <ActorMarkers cx={cx} top={top} bottom={bottom} frame={frame} />
+      {/* marqueurs acteurs RATTACHES au baril : Woodside designe la LAME (ce qu'il prend),
+          L'ÉTAT designe le DRAPEAU (ce qui reste). Role mecanique clair (decision Aziz). */}
+      <ActorMarkers cx={cx} left={left} right={right} senCutY={senCutY} costCutY={costCutY}
+        bottom={bottom} costEat={costEat} frame={frame} />
     </svg>
   );
 };
@@ -244,55 +244,62 @@ const Star: React.FC<{ cx: number; cy: number; r: number; color: string }> = ({ 
   return <polygon points={pts.join(" ")} fill={color} opacity={0.92} />;
 };
 
-// clauses de contrat (lignes fines or) qui se tracent + caviardage des "pas publiques"
-const ContractClauses: React.FC<{ frame: number }> = ({ frame }) => {
-  const lines = [
-    { x: 1120, y: 250, len: 340 }, { x: 1120, y: 286, len: 280 }, { x: 1120, y: 322, len: 320 },
-    { x: 1120, y: 760, len: 300 }, { x: 1120, y: 796, len: 360 }, { x: 1120, y: 832, len: 240 },
-    { x: 240, y: 250, len: 300 }, { x: 240, y: 286, len: 260 }, { x: 240, y: 800, len: 320 },
-  ];
-  const traceP = interpolate(frame, [F_ECRITE, F_ECRITE + 70], [0, 1], clamp);
-  const groupOp = interpolate(frame, [F_ECRITE, F_ECRITE + 40, F_FIN, END], [0, 0.5, 0.5, 0], clamp);
-  // caviardage : quelques lignes masquees par des rects navy-noir a F_PUBLICS
-  const redactP = interpolate(frame, [F_PUBLICS, F_PUBLICS + 20], [0, 1], clamp);
-  const redacted = [1, 4, 7]; // indices caviardes
+// DOCUMENT-CONTRAT (un seul bloc net, a gauche) : lignes alignees comme un vrai contrat,
+// dont une PARTIE se NOIRCIT franchement + CADENAS = "pas public" SANS un mot ecrit (decision Aziz).
+const ContractDoc: React.FC<{ frame: number }> = ({ frame }) => {
+  const DX = 200, DY = 340, DW = 300, DH = 400; // position/taille du document (a gauche du baril)
+  const appear = interpolate(frame, [F_ECRITE, F_ECRITE + 30], [0, 1], clamp);
+  const groupOp = interpolate(frame, [F_ECRITE, F_ECRITE + 30, F_FIN, END], [0, 1, 1, 0], clamp);
+  const scaleIn = interpolate(spring({ frame: frame - F_ECRITE, fps: 30, config: { damping: 18, stiffness: 120 }, durationInFrames: 26 }), [0, 1], [0.9, 1], clamp);
+  // les lignes du contrat se tracent (stroke-dashoffset simule par largeur croissante)
+  const lineRows = [0, 1, 2, 3, 4, 5, 6, 7]; // 8 lignes
+  const traceP = interpolate(frame, [F_ECRITE, F_ECRITE + 50], [0, 1], clamp);
+  // caviardage : a F_PUBLICS, la moitie basse du doc se noircit franchement + cadenas apparait
+  const redactP = interpolate(spring({ frame: frame - F_PUBLICS, fps: 30, config: { damping: 16, stiffness: 200 }, durationInFrames: 18 }), [0, 1], [0, 1], clamp);
+  const lockP = interpolate(spring({ frame: frame - (F_PUBLICS + 6), fps: 30, config: { damping: 11, stiffness: 240 }, durationInFrames: 22 }), [0, 1], [0, 1], clamp);
+
   return (
-    <g opacity={groupOp}>
-      {lines.map((l, i) => (
-        <line key={i} x1={l.x} y1={l.y} x2={l.x + l.len * traceP} y2={l.y}
-          stroke={GOLD} strokeWidth={1.5} opacity={0.5} strokeLinecap="round" />
-      ))}
-      {redacted.map((idx) => {
-        const l = lines[idx];
-        return <rect key={`r${idx}`} x={l.x - 4} y={l.y - 9} width={(l.len + 8) * redactP} height={18}
-          fill="#0a0f1d" opacity={0.92} />;
+    <g opacity={groupOp} transform={`translate(${DX}, ${DY}) scale(${scaleIn})`} style={{ transformOrigin: `${DX + DW / 2}px ${DY + DH / 2}px` }}>
+      {/* papier du document (navy clair, liseré or) */}
+      <rect x={0} y={0} width={DW} height={DH} rx={6} fill="#1e2c47" stroke={GOLD} strokeWidth={1.5} opacity={0.9 * appear} />
+      {/* en-tete (bandeau or) */}
+      <rect x={0} y={0} width={DW} height={36} rx={6} fill={GOLD} opacity={0.22 * appear} />
+      <rect x={18} y={15} width={120} height={6} rx={3} fill={GOLD} opacity={0.8 * appear} />
+      {/* lignes de clauses (se tracent) */}
+      {lineRows.map((i) => {
+        const y = 70 + i * 38;
+        const full = i % 3 === 0 ? DW - 80 : DW - 40;
+        return <rect key={i} x={20} y={y} width={full * traceP} height={5} rx={2.5}
+          fill="rgba(242,239,230,0.55)" />;
       })}
+      {/* CAVIARDAGE : la moitie basse se noircit (les clauses "pas publiques") */}
+      <rect x={8} y={70 + 4 * 38 - 8} width={(DW - 16) * redactP} height={DH - (70 + 4 * 38 - 8) - 14}
+        rx={4} fill="#0a0f1d" opacity={0.95} />
+      {/* CADENAS au centre du caviardage (un seul symbole, "pas public" sans texte) */}
+      {redactP > 0.3 && (
+        <g transform={`translate(${DW / 2}, ${70 + 6 * 38}) scale(${lockP})`} opacity={lockP}>
+          <rect x={-22} y={-6} width={44} height={36} rx={6} fill="none" stroke={GOLD} strokeWidth={3.5} />
+          <path d={`M -13 -6 L -13 -20 A 13 13 0 0 1 13 -20 L 13 -6`} fill="none" stroke={GOLD} strokeWidth={3.5} />
+          <circle cx={0} cy={10} r={4.5} fill={GOLD} />
+        </g>
+      )}
     </g>
   );
 };
 
-// libelle COST RECOVERY (sobre, a droite de la lame)
-const CostLabel: React.FC<{ x: number; y: number; op: number }> = ({ x, y, op }) => (
-  <g opacity={op}>
-    <text x={x} y={y - 6} fill="#c97a6a" fontFamily={BEBAS} fontSize={28} letterSpacing="2">COST RECOVERY</text>
-    <text x={x} y={y + 24} fill="rgba(242,239,230,0.6)" fontFamily={BEBAS} fontSize={20} letterSpacing="1">Woodside récupère d'abord</text>
-  </g>
-);
-
-// chiffre 60% -> ??% a droite
-const PctReadout: React.FC<{ x: number; y: number; num: number; uncertain: boolean; frame: number }> = ({ x, y, num, uncertain, frame }) => {
+// chiffre : "60% ANNONCÉ" FIXE -> "??% PART RÉELLE ?" quand la lame mord
+const PctReadout: React.FC<{ x: number; y: number; uncertain: boolean; frame: number }> = ({ x, y, uncertain, frame }) => {
   const appear = interpolate(frame, [F_60, F_60 + 20], [0, 1], clamp);
   // tremble quand "estimation" (F_ESTIM) et pendant le bras de fer
   const tremble = (frame >= F_ESTIM && frame < F_ECRITE) || (frame >= F_BRASDEFER && frame < F_FIN)
     ? Math.sin(frame / 2.2) * 2.5 : 0;
-  const halo = 0.3 + 0.18 * Math.sin(frame / 18);
   return (
     <g opacity={appear} transform={`translate(${x + tremble}, ${y})`}>
       <text x={0} y={0} textAnchor="middle" fill={GOLD} fontFamily={BEBAS} fontSize={150}
-        opacity={uncertain ? 0.55 : 1}>
-        {uncertain ? "??%" : `${num}%`}
+        opacity={uncertain ? 0.6 : 1}>
+        {uncertain ? "??%" : "60%"}
       </text>
-      {/* sous-libelle : "annoncé" puis "réel ?" */}
+      {/* sous-libelle : "annoncé" (fixe) puis "réel ?" (la realite devient incertaine) */}
       <text x={0} y={56} textAnchor="middle" fill="rgba(242,239,230,0.6)" fontFamily={BEBAS} fontSize={30} letterSpacing="3">
         {uncertain ? "PART RÉELLE ?" : "ANNONCÉ"}
       </text>
@@ -300,42 +307,58 @@ const PctReadout: React.FC<{ x: number; y: number; num: number; uncertain: boole
   );
 };
 
-// marqueurs acteurs (pions sobres) : Senegal en bas, Woodside en haut
-const ActorMarkers: React.FC<{ cx: number; top: number; bottom: number; frame: number }> = ({ cx, top, bottom, frame }) => {
+// marqueurs acteurs RATTACHES au baril : une accolade/trait relie le NOM a SA zone du baril.
+// Woodside -> la LAME rouge (ce qu'il prend en premier) · L'ÉTAT -> le DRAPEAU (ce qui reste).
+const ActorMarkers: React.FC<{ cx: number; left: number; right: number; senCutY: number; costCutY: number; bottom: number; costEat: number; frame: number }> = ({ cx, left, right, senCutY, costCutY, bottom, costEat, frame }) => {
   const senOp = interpolate(frame, [F_SONKO, F_SONKO + 25], [0, 1], clamp);
   const wsOp = interpolate(frame, [F_WOODSIDE, F_WOODSIDE + 25], [0, 1], clamp);
+  const senMidY = (senCutY + bottom) / 2; // centre de la part Senegal (drapeau)
+  const costMidY = (costCutY + senCutY) / 2; // centre de la lame cost recovery
+  const lx = left - 40;  // accolade gauche pour l'Etat
+  const rx = right + 40; // accolade droite pour Woodside
   return (
     <>
-      {/* Senegal (Etat) — pion or, bas gauche du baril */}
-      <g opacity={senOp} transform={`translate(${cx - 360}, ${bottom - 40})`}>
-        <circle r={9} fill={GOLD} /><circle r={20} fill="none" stroke={GOLD} strokeWidth={1.5} opacity={0.4} />
-        <text x={0} y={42} textAnchor="middle" fill={IVORY} fontFamily={BEBAS} fontSize={24} letterSpacing="2">L'ÉTAT</text>
+      {/* L'ÉTAT -> drapeau (gauche, or) */}
+      <g opacity={senOp}>
+        <line x1={left} y1={senMidY} x2={lx} y2={senMidY} stroke={GOLD} strokeWidth={2} opacity={0.7} />
+        <circle cx={lx} cy={senMidY} r={6} fill={GOLD} />
+        <text x={lx - 14} y={senMidY + 7} textAnchor="end" fill={IVORY} fontFamily={BEBAS} fontSize={26} letterSpacing="2">L'ÉTAT</text>
       </g>
-      {/* Woodside — pion acier, haut droit */}
-      <g opacity={wsOp} transform={`translate(${cx + 360}, ${top + 30})`}>
-        <circle r={9} fill="#8a9aab" /><circle r={20} fill="none" stroke="#8a9aab" strokeWidth={1.5} opacity={0.4} />
-        <text x={0} y={-26} textAnchor="middle" fill="rgba(242,239,230,0.8)" fontFamily={BEBAS} fontSize={24} letterSpacing="2">WOODSIDE</text>
-      </g>
+      {/* WOODSIDE -> lame rouge (droite, acier) — apparait avec la lame */}
+      {costEat > 1 && (
+        <g opacity={wsOp}>
+          <line x1={right} y1={costMidY} x2={rx} y2={costMidY} stroke="#c97a6a" strokeWidth={2} opacity={0.7} />
+          <circle cx={rx} cy={costMidY} r={6} fill="#c97a6a" />
+          <text x={rx + 14} y={costMidY + 7} textAnchor="start" fill="rgba(242,239,230,0.85)" fontFamily={BEBAS} fontSize={26} letterSpacing="2">WOODSIDE</text>
+        </g>
+      )}
     </>
   );
 };
 
-// ── SFX cales millimetre (Sequence) ──────────────────────────────────────────
+// ── SFX cales millimetre (Sequence). PAS de son de camera/zoom map (hors-sujet, scene Remotion). ──
 const SFX = {
-  tick: "_shared/sfx/data/stat-tick.mp3",
-  impact: "_shared/sfx/impact/impact.mp3",
-  swoosh: "_shared/sfx/camera/sfx-swoosh-pullback.mp3",
-  stamp: "_shared/sfx/ui/stamp-dossier.mp3",
+  fill: "_shared/sfx/ui/sfx-baril-fill.mp3",            // baril qui se remplit (debut)
+  tick: "_shared/sfx/data/stat-tick.mp3",               // chiffre 60% s'inscrit
+  lock: "_shared/sfx/ui/stamp-dossier.mp3",             // cadenas / caviardage "pas public"
+  drain: "_shared/sfx/sfx-cost-recovery-drain.mp3",     // LAME cost recovery descend (genere)
+  tension: "_shared/sfx/sfx-tension-tug.mp3",           // bras de fer (genere, remplace le swoosh map)
 };
 const Sfx: React.FC<{ at: number; src: string; volume?: number; dur?: number }> = ({ at, src, volume = 0.5, dur = 30 }) => (
   <Sequence from={at} durationInFrames={dur} layout="none"><Audio src={staticFile(src)} volume={volume} /></Sequence>
 );
 const SceneSFX: React.FC = () => (
   <>
+    {/* le baril se REMPLIT a 60% au debut (moment sonore avant manque) */}
+    <Sfx at={2} src={SFX.fill} volume={0.4} dur={70} />
+    {/* le 60% s'inscrit */}
     <Sfx at={F_60} src={SFX.tick} volume={0.45} />
-    <Sfx at={F_PUBLICS} src={SFX.stamp} volume={0.4} dur={36} />
-    <Sfx at={F_MILLIARDS} src={SFX.impact} volume={0.5} dur={50} />
-    <Sfx at={F_BRASDEFER} src={SFX.swoosh} volume={0.34} dur={30} />
+    {/* cadenas : le contrat se ferme (pas public) */}
+    <Sfx at={F_PUBLICS} src={SFX.lock} volume={0.42} dur={36} />
+    {/* LA LAME cost recovery descend et siphonne (le moment fort) */}
+    <Sfx at={F_MILLIARDS} src={SFX.drain} volume={0.5} dur={66} />
+    {/* bras de fer : tension sourde (PAS le swoosh map) */}
+    <Sfx at={F_BRASDEFER} src={SFX.tension} volume={0.4} dur={54} />
   </>
 );
 
