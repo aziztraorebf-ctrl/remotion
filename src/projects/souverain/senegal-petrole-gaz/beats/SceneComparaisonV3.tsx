@@ -30,6 +30,7 @@ import { CartoSouverainV5 } from "../../../_shared/mapbox/CartoSouverainV5";
 import { GeoCountryPlaque } from "../../../_shared/mapbox/GeoCountryPlaque";
 import { MapboxCountryFlagDecal } from "../../../_shared/mapbox/MapboxCountryFlagDecal";
 import { drawFlagCanvas } from "../../../_shared/mapbox/flagCanvas";
+import { GisementMarker } from "../../../_shared/mapbox/GisementTokens";
 
 const { fontFamily: BEBAS } = loadBebas();
 
@@ -52,17 +53,12 @@ const NOR_BBOX: [number, number, number, number] = [4.0, 57.5, 31.5, 71.5];
 const END = 1965;
 // entrees pays (cale sur la voix)
 const F_NOR = 200;   // plongee Norvege commence avant "Norvege" f225
-const F_NOR_STAT1 = 600; // "1 500 Mds$" (voix f632)
-const F_NOR_STAT2 = 720; // "280 000 $/hab" (voix f739)
 const F_TRANS_AB = 820;  // pull-back, depart sud
 const F_COG = 870;   // plongee Congo (voix "Congo" f850)
 const F_TRANS_BC = 1180; // depart SE
 const F_BWA = 1210;  // plongee Botswana (voix f1207)
-const F_CRANE = 1600;// crane-up final (apres "institutions" f1451, avant "Meme ressource" f1627)
-// punchline
-const FD_LINE1 = 1627; // "Meme ressource."
-const FD_LINE2 = 1711; // "Trois destins radicalement differents."
-const FD_REGLES = 1900;// le basculement vers "ce sont les REGLES" (voix "REGLES" f1940)
+// fin : fade vers triple screen apres Botswana (voix "Meme ressource" f1627, "REGLES" f1940)
+const F_CRANE = 1600;
 
 export const SceneComparaisonV3: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -89,9 +85,10 @@ export const SceneComparaisonV3: React.FC = () => {
     { atProgress: F_BWA / END,  cam: { lon: 24.0, lat: -23.0, zoom: 4.2, pitch: 6, bearing: 0 } },
     { atProgress: 1400 / END,   cam: { lon: BOTSWANA[0] + 0.5, lat: BOTSWANA[1] - 0.2, zoom: 5.3, pitch: 30, bearing: -5 } },
     { atProgress: (F_CRANE - 20) / END, cam: { lon: BOTSWANA[0] + 0.5, lat: BOTSWANA[1] - 0.2, zoom: 5.3, pitch: 28, bearing: -3 } },
-    // Crane-up final : vue large Afrique + Europe (les 3 pays dans le meme cadre, mental "meme ressource")
-    { atProgress: 1780 / END,   cam: { lon: 16.0, lat: 22.0, zoom: 2.5, pitch: 0, bearing: 0 } },
-    { atProgress: 1.0,          cam: { lon: 16.0, lat: 24.0, zoom: 2.45, pitch: 0, bearing: 0 } },
+    // Le triple screen final couvre l'ecran a partir de F_CRANE : la carte se voile dessous.
+    // Pas de crane-up large necessaire — leger recul doux sur Botswana pendant le fade.
+    { atProgress: 1780 / END,   cam: { lon: BOTSWANA[0] + 0.6, lat: BOTSWANA[1], zoom: 4.6, pitch: 14, bearing: 0 } },
+    { atProgress: 1.0,          cam: { lon: BOTSWANA[0] + 0.7, lat: BOTSWANA[1] + 0.2, zoom: 4.4, pitch: 8, bearing: 0 } },
   ];
 
   return (
@@ -106,8 +103,8 @@ export const SceneComparaisonV3: React.FC = () => {
         {/* Overlays geo-ancres : dots sonar + leaders + plaques verdict */}
         <Overlays mapRef={mapRef} />
       </CartoSouverainV5>
-      {/* Punchline finale (premier plan, par-dessus la carte large) */}
-      <Punchline />
+      {/* Fin = triple screen NU (3 pays cote a cote, zero phrase, la voix porte le recit) */}
+      <TripleScreen />
       {/* Vignette douce */}
       <AbsoluteFill style={{
         pointerEvents: "none",
@@ -208,6 +205,7 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
   const map = mapRef.current;
   if (!map) return null;
   const P = (c: [number, number]) => { const p = map.project(c as any); return { x: p.x, y: p.y }; };
+  const zoomNow = map.getZoom();
 
   const nor = P(NORVEGE);
   const cog = P(CONGO);
@@ -215,9 +213,11 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
 
   // plaques deportees : a droite du point (zone libre), reliees par leader.
   // offset fixe ecran (la plaque vit pres du point mais decalee dans le vide).
+  // marge laterale = demi-largeur max d'une plaque (pilule nom + stat ~720px, centree via translate(-50%))
+  // -> clamp a 380px des bords pour ne jamais deborder.
   const plaqueOffset = (pt: { x: number; y: number }, side: 1 | -1, dx = 240, dy = -150) => ({
-    x: Math.max(260, Math.min(W - 260, pt.x + side * dx)),
-    y: Math.max(180, Math.min(H - 200, pt.y + dy)),
+    x: Math.max(380, Math.min(W - 380, pt.x + side * dx)),
+    y: Math.max(190, Math.min(H - 210, pt.y + dy)),
   });
   const norP = plaqueOffset(nor, 1, 250, -40);
   const cogP = plaqueOffset(cog, 1, 250, -60);
@@ -235,29 +235,38 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
         {frame >= F_NOR + 40 && frame < F_TRANS_AB + 10 && <Leader x1={nor.x} y1={nor.y} x2={norP.x} y2={norP.y} op={norLeadOp} />}
         {frame >= F_COG + 40 && frame < F_TRANS_BC + 10 && <Leader x1={cog.x} y1={cog.y} x2={cogP.x} y2={cogP.y} op={cogLeadOp} />}
         {frame >= F_BWA + 40 && frame < F_CRANE && <Leader x1={bwa.x} y1={bwa.y} x2={bwaP.x} y2={bwaP.y} op={bwaLeadOp} />}
-        {/* dots sonar */}
-        {frame >= F_NOR + 30 && frame < F_TRANS_AB + 10 && <Dot x={nor.x} y={nor.y} color={GOLD} appearAt={F_NOR + 30} frame={frame} fps={fps} />}
+        {/* NORVEGE = jeton petrole offshore (ce qu'ils ont decouvert en mer du Nord, esthetique navy+or
+            coherente avec la scene gisements precedente). Congo/Botswana = dot sonar sobre. */}
+        {frame >= F_NOR + 30 && frame < F_TRANS_AB + 10 && (
+          <GisementMarker
+            kind="oil" x={nor.x} y={nor.y}
+            scale={interpolate(spring({ frame: frame - (F_NOR + 30), fps, config: { damping: 11, stiffness: 280 }, durationInFrames: 26 }), [0, 1], [0, 1], clamp)}
+            frame={frame} localF={frame - (F_NOR + 30)} appeared={frame - (F_NOR + 30) > 24}
+            uid="norvege-oil" zoom={zoomNow}
+          />
+        )}
         {frame >= F_COG + 30 && frame < F_TRANS_BC + 10 && <Dot x={cog.x} y={cog.y} color={ORANGE} appearAt={F_COG + 30} frame={frame} fps={fps} />}
         {frame >= F_BWA + 30 && frame < F_CRANE && <Dot x={bwa.x} y={bwa.y} color={GREEN} appearAt={F_BWA + 30} frame={frame} fps={fps} />}
       </svg>
 
-      {/* plaques verdict deportees (mode pos geo-ancre) */}
+      {/* plaques verdict deportees — UN SEUL CHIFFRE FACTUEL par pays (pas de jugement de valeur, decision Aziz).
+          Norvege = ce qu'ils ont accumule · Congo = leur dette · Botswana = leur fonds (comme la Norvege). */}
       <GeoCountryPlaque
         frame={frame} name="NORVEGE" color={GOLD}
-        stat={frame >= F_NOR_STAT2 ? "1 500 Mds$ · 280 000 $/hab" : "1 500 Mds$"}
+        stat="1 500 Mds$"
         source="fonds souverain — NBIM 2025"
         appearAt={F_NOR + 55} hideAt={F_TRANS_AB} pos={norP} fadeFrames={14}
       />
       <GeoCountryPlaque
         frame={frame} name="CONGO-BRAZZAVILLE" color={ORANGE}
-        stat="le plus endetté d'Afrique"
-        source="même époque — Banque mondiale"
+        stat="dette : 92% du PIB"
+        source="2024 — Banque mondiale"
         appearAt={F_COG + 55} hideAt={F_TRANS_BC} pos={cogP} fadeFrames={14}
       />
       <GeoCountryPlaque
         frame={frame} name="BOTSWANA" color={GREEN}
-        stat="le plus stable du continent"
-        source="diamants 1966 — institutions"
+        stat="fonds souverain — Pula Fund"
+        source="diamants, dès 1966"
         appearAt={F_BWA + 55} hideAt={F_CRANE} pos={bwaP} fadeFrames={14}
       />
     </>
@@ -265,87 +274,81 @@ const Overlays: React.FC<{ mapRef: React.MutableRefObject<mapboxgl.Map | null> }
 };
 
 // ════════════════════════════════════════════════════════════════════════════
-//  PUNCHLINE — "Meme ressource. Presque la meme epoque. Trois destins.
-//  Ce qui a tout decide, ce ne sont pas la ressource. Ce sont les REGLES."
-//  Le mot REGLES frappe (scale spring + or massif). Cale sur la voix.
+//  TRIPLE SCREEN FINAL — apres Botswana, fade -> 3 pays cote a cote (drapeau + 1 chiffre
+//  factuel chacun). ZERO phrase a l'ecran : la voix porte le recit ("meme ressource... ce sont
+//  les regles."). Decision Aziz : enlever les 4 lignes redondantes avec la voix.
+//  L'opposition se LIT dans le triptyque (3 destins juxtaposes), pas dans du texte.
 // ════════════════════════════════════════════════════════════════════════════
-const Punchline: React.FC = () => {
+type Panel = { iso: string; name: string; stat: string; color: string; clipBbox?: [number, number, number, number] };
+const PANELS: Panel[] = [
+  { iso: "NOR", name: "NORVÈGE", stat: "1 500 Mds$", color: GOLD, clipBbox: NOR_BBOX },
+  { iso: "COG", name: "CONGO", stat: "dette : 92% du PIB", color: ORANGE },
+  { iso: "BWA", name: "BOTSWANA", stat: "fonds souverain", color: GREEN },
+];
+
+// drapeau dessine une fois en dataURL (canvas synchrone, dispo a f0)
+const flagDataUrl = (iso: string): string => {
+  try {
+    const flag = drawFlagCanvas(iso, 512);
+    return flag.toDataURL("image/png");
+  } catch (_e) { return ""; }
+};
+
+const FlagPanel: React.FC<{ panel: Panel; index: number; frame: number; fps: number }> = ({ panel, index, frame, fps }) => {
+  const [url] = useState(() => flagDataUrl(panel.iso));
+  // chaque panneau entre en cascade (decale de 10f), depuis le bas
+  const appearAt = F_CRANE + 20 + index * 12;
+  const p = spring({ frame: frame - appearAt, fps, config: { damping: 18, stiffness: 150 }, durationInFrames: 26 });
+  const op = interpolate(p, [0, 1], [0, 1], clamp);
+  const y = interpolate(p, [0, 1], [40, 0], clamp);
+  return (
+    <div style={{
+      flex: 1, height: "100%", position: "relative", overflow: "hidden",
+      display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      opacity: op, transform: `translateY(${y}px)`,
+      borderLeft: index > 0 ? `2px solid ${GOLD}55` : "none",
+    }}>
+      {/* drapeau en fond, assombri pour lisibilite du texte */}
+      {url && (
+        <img src={url} alt="" style={{
+          position: "absolute", inset: 0, width: "100%", height: "100%",
+          objectFit: "cover", opacity: 0.5,
+        }} />
+      )}
+      <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(13,21,32,0.55) 0%, rgba(13,21,32,0.78) 100%)" }} />
+      {/* contenu : nom + chiffre factuel */}
+      <div style={{ position: "relative", textAlign: "center", padding: "0 24px" }}>
+        <div style={{
+          color: IVORY, fontFamily: BEBAS, fontSize: 58, letterSpacing: "0.06em",
+          textShadow: "0 3px 20px rgba(0,0,0,0.95)", marginBottom: 18,
+        }}>
+          {panel.name}
+        </div>
+        <div style={{ width: 64, height: 3, background: panel.color, margin: "0 auto 18px", borderRadius: 2 }} />
+        <div style={{
+          color: panel.color, fontFamily: BEBAS, fontSize: 44, letterSpacing: "0.03em",
+          textShadow: `0 2px 18px rgba(0,0,0,0.9)`,
+        }}>
+          {panel.stat}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TripleScreen: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  if (frame < FD_LINE1 - 20) return null;
-
-  // voile bas pour lisibilite (la carte large reste visible derriere)
-  const veil = interpolate(frame, [FD_LINE1 - 20, FD_LINE1 + 20], [0, 1], clamp);
-
-  // ligne 1 — "Meme ressource. Presque la meme epoque." (sobre, ivoire)
-  const l1 = spring({ frame: frame - FD_LINE1, fps, config: { damping: 20, stiffness: 150 }, durationInFrames: 24 });
-  const l1Op = interpolate(l1, [0, 1], [0, 1], clamp);
-  const l1Y = interpolate(l1, [0, 1], [22, 0], clamp);
-
-  // ligne 2 — "Trois destins radicalement differents." (emphase ivoire)
-  const l2 = spring({ frame: frame - FD_LINE2, fps, config: { damping: 18, stiffness: 200 }, durationInFrames: 22 });
-  const l2Op = interpolate(l2, [0, 1], [0, 1], clamp);
-  const l2Scale = interpolate(l2, [0, 1], [0.84, 1], clamp);
-
-  // bascule finale : "Ce ne sont pas la ressource." s'efface, "Ce sont les REGLES." FRAPPE
-  const negOp = interpolate(frame, [FD_REGLES - 70, FD_REGLES - 45, FD_REGLES, FD_REGLES + 20], [0, 1, 1, 0.25], clamp);
-  const reglesP = spring({ frame: frame - FD_REGLES, fps, config: { damping: 11, stiffness: 240 }, durationInFrames: 26 });
-  const reglesOp = interpolate(reglesP, [0, 0.1, 1], [0, 1, 1], clamp);
-  const reglesScale = interpolate(reglesP, [0, 1], [0.6, 1], clamp);
-
+  if (frame < F_CRANE - 10) return null;
+  // voile navy qui monte = fade depuis la carte Botswana vers le triptyque
+  const veil = interpolate(frame, [F_CRANE - 10, F_CRANE + 30], [0, 1], clamp);
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
-      {/* voile degrade bas */}
-      <div style={{
-        position: "absolute", bottom: 0, left: 0, right: 0, height: 520,
-        background: "linear-gradient(to top, rgba(13,21,32,0.86) 0%, rgba(13,21,32,0.0) 100%)",
-        opacity: veil,
-      }} />
-
-      <div style={{
-        position: "absolute", inset: 0, display: "flex", flexDirection: "column",
-        alignItems: "center", justifyContent: "flex-end", paddingBottom: 150,
-      }}>
-        {/* ligne 1 */}
-        {frame < FD_REGLES - 30 && (
-          <div style={{
-            opacity: l1Op, transform: `translateY(${l1Y}px)`, marginBottom: 10, textAlign: "center",
-            color: IVORY, fontFamily: BEBAS, fontSize: 46, letterSpacing: "0.04em",
-            textShadow: "0 2px 22px rgba(0,0,0,0.95)",
-          }}>
-            Même ressource. Presque la même époque.
-          </div>
-        )}
-        {/* ligne 2 */}
-        {frame >= FD_LINE2 && frame < FD_REGLES - 30 && (
-          <div style={{
-            opacity: l2Op, transform: `scale(${l2Scale})`, textAlign: "center",
-            color: IVORY, fontFamily: BEBAS, fontSize: 64, letterSpacing: "0.03em", fontWeight: 700,
-            textShadow: "0 3px 30px rgba(0,0,0,0.95)",
-          }}>
-            Trois destins radicalement différents.
-          </div>
-        )}
-
-        {/* bascule finale */}
-        {frame >= FD_REGLES - 70 && (
-          <div style={{ textAlign: "center" }}>
-            <div style={{
-              opacity: negOp, color: IVORY, fontFamily: BEBAS, fontSize: 44,
-              letterSpacing: "0.04em", marginBottom: 14, textShadow: "0 2px 22px rgba(0,0,0,0.95)",
-            }}>
-              Ce n'est pas la ressource.
-            </div>
-            <div style={{
-              opacity: reglesOp, transform: `scale(${reglesScale})`,
-              color: GOLD, fontFamily: BEBAS, fontSize: 132, fontWeight: 900,
-              letterSpacing: "0.06em", lineHeight: 1,
-              textShadow: "0 4px 50px rgba(200,169,81,0.55)",
-            }}>
-              CE SONT LES RÈGLES.
-            </div>
-          </div>
-        )}
+      <AbsoluteFill style={{ backgroundColor: NAVY, opacity: veil }} />
+      <div style={{ position: "absolute", inset: 0, display: "flex", opacity: veil }}>
+        {PANELS.map((panel, i) => (
+          <FlagPanel key={panel.iso} panel={panel} index={i} frame={frame} fps={fps} />
+        ))}
       </div>
     </AbsoluteFill>
   );
