@@ -59,14 +59,17 @@ export const SceneDetteV3: React.FC = () => {
         startFrom={Math.round(AUDIO_START * fps)}
         endAt={Math.round(291.2 * fps)}
       />
-      {/* Musique de fond — continuite (meme piste que gisements/comparaison/contrat), 5.5%, fade-out 3s */}
+      {/* Musique de fond — REDEMARREE au DEBUT de la piste (startFrom=0) a l'entree de la scene 4 :
+          la portion 243s+ de music-A s'emballe et concurrence la voix (retour Aziz) -> on reprend la
+          partie calme du debut. fade-IN 1.5s (raccord doux depuis la scene 3) + fade-OUT 3s a la fin. */}
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
-        startFrom={Math.round(AUDIO_START * fps)}
+        startFrom={0}
         volume={(f) => {
+          const fadeIn = interpolate(f, [0, 45], [0, 1], clamp);
           const fadeStart = END - 90;
-          if (f >= fadeStart) return 0.055 * Math.max(0, 1 - (f - fadeStart) / 90);
-          return 0.055;
+          const fadeOut = f >= fadeStart ? Math.max(0, 1 - (f - fadeStart) / 90) : 1;
+          return 0.055 * fadeIn * fadeOut;
         }}
       />
       <SceneSFX />
@@ -240,11 +243,12 @@ const BarrageViz: React.FC = () => {
           />
         )}
 
-        {/* ── filet tricolore qui s'ecoule par la BRECHE vers le bassin BUDGET ── */}
-        {breachOpen > 0.05 && senLevelFrac > 0.02 && (
-          <DrainStream wallCx={wallCx} wallBotW={wallBotW} floorY={floorY} open={breachOpen} frame={frame} />
-        )}
       </g>
+
+      {/* ── filet tricolore qui s'ecoule par la BRECHE vers BUDGET (HORS clip bassin = ecoulement continu) ── */}
+      {breachOpen > 0.05 && senLevelFrac > 0.02 && (
+        <DrainStream wallCx={wallCx} wallBotW={wallBotW} floorY={floorY} open={breachOpen} frame={frame} budgetY={floorY + 96} />
+      )}
 
       {/* ── MUR-BARRAGE (2 moities qui s'ecartent a la rupture) ── */}
       <g transform={`translate(${wallShake}, 0)`}>
@@ -260,6 +264,8 @@ const BarrageViz: React.FC = () => {
         <WallCracks wallCx={wallCx} crestY={crestY} floorY={floorY} frame={frame} />
         {/* label FONSIS grave sur le mur */}
         <FonsisLabel wallCx={wallCx} y={(crestY + floorY) / 2} frame={frame} breakOp={1 - wallBreak} />
+        {/* CADENAS or : se pose a F_VERROU ("verrouille"), SAUTE a F_PIOCHER (on perce le fonds) */}
+        <FonsisLock wallCx={wallCx} y={crestY + 64} frame={frame} />
         {/* breche (trou) au pied du mur cote gauche */}
         {breachOpen > 0.05 && (
           <ellipse cx={wallCx - wallBotW / 2 + 6} cy={floorY - 70} rx={10 * breachOpen} ry={18 * breachOpen}
@@ -321,20 +327,80 @@ const FonsisLabel: React.FC<{ wallCx: number; y: number; frame: number; breakOp:
 };
 
 // fissures sur le mur (stroke-dashoffset) — anticipent la rupture
+// CADENAS or sur le mur : se pose (spring overshoot + halo) a F_VERROU, SAUTE/s'ejecte a F_PIOCHER.
+const FonsisLock: React.FC<{ wallCx: number; y: number; frame: number }> = ({ wallCx, y, frame }) => {
+  if (frame < F_VERROU - 10) return null;
+  // pose : tombe d'en haut avec rebond
+  const drop = spring({ frame: frame - F_VERROU, fps: 30, config: { damping: 10, stiffness: 200 }, durationInFrames: 26 });
+  const dropY = interpolate(drop, [0, 1], [-70, 0], clamp);
+  const appear = interpolate(frame, [F_VERROU - 10, F_VERROU + 6], [0, 1], clamp);
+  // saut a F_PIOCHER : s'ejecte vers le haut-droite + rotation + fade
+  const jump = interpolate(frame, [F_PIOCHER, F_PIOCHER + 28], [0, 1], clamp);
+  const jumpY = -90 * jump, jumpX = 50 * jump, rot = 120 * jump, op = (1 - jump) * appear;
+  // halo respirant tant que verrouille
+  const halo = frame < F_PIOCHER ? 0.3 + 0.15 * Math.sin(frame / 14) : 0;
+  return (
+    <g transform={`translate(${wallCx + jumpX}, ${y + dropY + jumpY}) rotate(${rot})`} opacity={op}>
+      <circle r={26} fill={GOLD} opacity={halo} />
+      {/* anse */}
+      <path d="M -11 -4 L -11 -16 A 11 11 0 0 1 11 -16 L 11 -4" fill="none" stroke={GOLD_HI} strokeWidth={4} />
+      {/* corps */}
+      <rect x={-15} y={-4} width={30} height={26} rx={5} fill={GOLD} stroke={GOLD_HI} strokeWidth={1.5} />
+      <circle cx={0} cy={7} r={3.5} fill={STEEL_LO} />
+      <rect x={-1.6} y={7} width={3.2} height={9} rx={1.5} fill={STEEL_LO} />
+    </g>
+  );
+};
+
+// fissure SPECTACULAIRE (technique pièce d'or 2-faces, ProtoEffect_Fracture) : zigzag avec jitter
+// perpendiculaire seedé + branches. Trait NOIR épais qui GROSSIT à mesure que la dette pousse.
+function jaggedCrack(x0: number, y0: number, x1: number, y1: number, segs: number, amp: number, seed: number): string {
+  let d = `M ${x0} ${y0}`;
+  const dx = x1 - x0, dy = y1 - y0;
+  const len = Math.hypot(dx, dy) || 1;
+  const px = -dy / len, py = dx / len; // perpendiculaire
+  for (let i = 1; i <= segs; i++) {
+    const t = i / segs;
+    const bx = x0 + dx * t, by = y0 + dy * t;
+    // jitter pseudo-aleatoire deterministe (pas de Math.random — interdit Remotion)
+    const j = (Math.sin(seed * 12.9898 + i * 78.233) * 43758.5453 % 1) * amp - amp / 2;
+    const taper = i === segs ? 0 : 1; // converge au bout
+    d += ` L ${bx + px * j * taper} ${by + py * j * taper}`;
+  }
+  return d;
+}
 const WallCracks: React.FC<{ wallCx: number; crestY: number; floorY: number; frame: number }> = ({ wallCx, crestY, floorY, frame }) => {
+  // trace progressif F_ETOUFFE->F_PIOCHER, puis ECLATE (s'elargit) a F_VIDER (le mur cede)
   const traceP = interpolate(frame, [F_ETOUFFE, F_PIOCHER], [0, 1], clamp);
+  const burst = interpolate(frame, [F_VIDER - 20, F_VIDER + 30], [0, 1], clamp);
+  const midY = (crestY + floorY) / 2;
+  // fissure maitresse verticale + 2 branches obliques (technique fracturePath)
   const cracks = [
-    `M ${wallCx + 4} ${crestY + 80} l -14 60 l 10 50 l -8 70`,
-    `M ${wallCx - 8} ${crestY + 200} l 16 50 l -10 60`,
-    `M ${wallCx + 10} ${floorY - 180} l -12 60 l 8 50`,
+    { d: jaggedCrack(wallCx + 2, crestY + 30, wallCx - 6, floorY - 20, 11, 26, 3.1), w: 3.2 },
+    { d: jaggedCrack(wallCx + 2, midY - 40, wallCx + 34, midY + 60, 7, 18, 7.7), w: 2.2 },
+    { d: jaggedCrack(wallCx - 2, midY + 30, wallCx - 30, floorY - 50, 7, 18, 5.3), w: 2.2 },
   ];
-  const LEN = 260;
+  const LEN = 420;
   return (
     <g>
-      {cracks.map((d, i) => (
-        <path key={i} d={d} fill="none" stroke="#3a2410" strokeWidth={2.4} strokeLinecap="round"
-          strokeDasharray={LEN} strokeDashoffset={LEN * (1 - Math.max(0, Math.min(1, traceP * 1.2 - i * 0.15)))} opacity={0.8} />
-      ))}
+      {cracks.map((c, i) => {
+        const p = Math.max(0, Math.min(1, traceP * 1.25 - i * 0.18));
+        const width = (c.w + burst * 9) ; // le trait GROSSIT au climax (le mur s'ouvre)
+        return (
+          <g key={i}>
+            {/* lueur sombre derriere (profondeur de la faille) */}
+            <path d={c.d} fill="none" stroke="#0a0f1d" strokeWidth={width + 4} strokeLinecap="round" strokeLinejoin="round"
+              strokeDasharray={LEN} strokeDashoffset={LEN * (1 - p)} opacity={0.6 * p} />
+            <path d={c.d} fill="none" stroke="#2a1808" strokeWidth={width} strokeLinecap="round" strokeLinejoin="round"
+              strokeDasharray={LEN} strokeDashoffset={LEN * (1 - p)} opacity={0.92 * p} />
+            {/* liseré rouge dette qui suinte dans la faille au climax */}
+            {burst > 0.1 && (
+              <path d={c.d} fill="none" stroke="#9a3528" strokeWidth={Math.max(1, width - 4)} strokeLinecap="round"
+                strokeDasharray={LEN} strokeDashoffset={LEN * (1 - p)} opacity={0.5 * burst} />
+            )}
+          </g>
+        );
+      })}
     </g>
   );
 };
@@ -380,22 +446,26 @@ const NorvegeSeuil: React.FC<{ leftEdge: number; wallCx: number; y: number; fram
 };
 
 // filet tricolore qui s'ecoule par la breche vers le bassin BUDGET (sous le mur, cote gauche)
-const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; open: number; frame: number }> = ({ wallCx, wallBotW, floorY, open, frame }) => {
-  const x = wallCx - wallBotW / 2 + 4;
-  const startY = floorY - 70;
-  const endY = floorY + 60; // descend sous le sol vers le bassin (remonte avec le bassin)
-  // petites gouttes tricolores qui descendent
-  const drops = [0, 1, 2, 3].map((i) => {
-    const t = ((frame - F_PIOCHER + i * 14) % 56) / 56;
-    return { y: startY + (endY - startY) * t, c: [SEN.a, SEN.b, SEN.c, SEN.a][i], op: open * (1 - Math.abs(t - 0.5)) };
-  });
+// filet de vidange CONTINU et EPAIS (ruban tricolore ininterrompu de la breche jusqu'au bac BUDGET).
+// PAS clippe par le bassin (sort du clip pour un ecoulement continu — fix Aziz/Gemini).
+const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; open: number; frame: number; budgetY: number }> = ({ wallCx, wallBotW, floorY, open, frame, budgetY }) => {
+  const x = wallCx - wallBotW / 2 + 2;
+  const startY = floorY - 64;
+  const endY = budgetY; // jusqu'au bord du bac BUDGET (continu, pas coupe au sol)
+  const h = (endY - startY) * open;
+  // ruban epais a 3 bandes (vrai tricolore qui coule), legere ondulation laterale
+  const sway = Math.sin(frame / 7) * 4;
+  const bandW = 7;
   return (
     <g>
-      {/* jet continu */}
-      <rect x={x - 4} y={startY} width={8} height={(endY - startY) * open} fill={SEN.b} opacity={0.55 * open} rx={4} />
-      {drops.map((d, i) => (
-        <circle key={i} cx={x + Math.sin(frame / 8 + i) * 3} cy={d.y} r={5} fill={d.c} opacity={d.op} />
-      ))}
+      {/* ruban tricolore epais (3 bandes cote a cote) */}
+      <rect x={x - bandW * 1.5} y={startY} width={bandW} height={h} fill={SEN.a} opacity={0.92 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
+      <rect x={x - bandW * 0.5} y={startY} width={bandW} height={h} fill={SEN.b} opacity={0.95 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
+      <rect x={x + bandW * 0.5} y={startY} width={bandW} height={h} fill={SEN.c} opacity={0.92 * open} rx={3} transform={`skewX(${sway * 0.3})`} />
+      {/* eclaboussure a l'arrivee dans le bac */}
+      {open > 0.4 && h > (endY - startY) * 0.85 && (
+        <ellipse cx={x + sway} cy={endY} rx={16 + 4 * Math.sin(frame / 5)} ry={5} fill={SEN.b} opacity={0.5 * open} />
+      )}
     </g>
   );
 };
