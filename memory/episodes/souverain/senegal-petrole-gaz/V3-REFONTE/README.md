@@ -26,7 +26,7 @@
 |---|---|---|---|---|
 | **0 — HOOK** | Avril 2026, 8M$/jour → fracture (limoge) → recomposition (la vérité) | Beat0Accroche | ✅ **FAIT** (catbox yg9k78) | `src/projects/_proto-16-9/SenegalScene0.tsx` (+ MapDrawParchemin + Fracture) |
 | 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip) · **GISEMENTS ✅✅ SCÈNE FINALE VALIDÉE AZIZ 2026-06-22** — `SceneGisementsV3.tsx` SEUL composant (V5/V5Effets/protos SUPPRIMÉS). 3 actes calés voix (Sangomar/GTA/Yakaar) + drapeau SEN projeté + jetons SVG GPT-5.5 + SFX + **pivot 60% en DATA-HERO (baril-héros qui se remplit, plein écran, grille navy)**. Livrable : `out/episodes/senegal-petrole-gaz/scene-gisements-FINAL.mp4` (catbox e74r6n avec musique). Détail → `REPRISE-SCENE-1.md` | `SenegalScene1IntroCoin.tsx` (intro) + `SceneGisementsV3.tsx` (gisements, FINAL) |
-| 2 | leçon Norvège/Congo/Botswana | fin Acte1 / Acte2 | ⬜ | — |
+| 2 | leçon Norvège/Congo/Botswana | Beat10 | ✅ **FAIT** (validé Aziz 2026-06-24, catbox mv56cl) — carte Mapbox 1-continue (reprise Beat10, premiumisée) : voyage 3 pays, drapeaux drapés + plaques factuelles 1 chiffre/pays + jeton pétrole offshore relié + **triple screen final** (silhouettes territoire d3-geo + drapeau, NU) + SFX millimètre + musique + carte éclaircie. Render : `out/episodes/senegal-petrole-gaz/scene2-comparaison-FINAL.mp4` | `beats/SceneComparaisonV3.tsx` |
 | 3 | le contrat (terrain 1) | Beat11 | ⬜ | — |
 | 4 | le piège de la dette (terrain 2) | Beat12 (calebasse 132%) | ⬜ | — |
 | 5 | qui regarde dans les coulisses (terrain 3) | Beat13 | ⬜ | — |
