@@ -302,25 +302,16 @@ Reste alors : recherche données NMGP (km/coût/calendrier/13 pays/statut 2026) 
 **Etat** : FINAL `out/PRET-PUBLICATION/petrole-patience-short-FINAL.mp4` (91s, 1080x1920). Source `src/projects/souverain/petrole-patience-short/`. Programme Postiz lundi 9 juin 15h UTC (4 plateformes), titre "Decouvrir une fortune et rester pauvre : le pari du Senegal". = TEASER du mid-form. Niger uranium retire du 9 juin (standby, a reprogrammer).
 **Fait depuis le showcase** : drapeaux useClipFlags, hook FiberOptic+gold, plaques GeoCountryPlaque (Norvege+Senegal), CTA voix+plaque @koraetcartes, sous-titres, audio (musique 0.10 / SFX 0.35 / boom->ping).
 
-### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (2026-06-18) ⭐⭐
-**⭐ DÉMARRER : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`** = SOURCE DE VÉRITÉ UNIQUE.
-Décision Aziz (2026-06-18) : adopter la narration V3 expressive + refaire les **8 scènes une par une** (méthode
-War-Map). **V1 et V3 SÉPARÉS** (V1 = ancienne, publiable, filet/comparatif ; supprimée quand V3 complète). NE PAS MÉLANGER.
-- ✅ **SCÈNE 0 (hook) FAITE + validée** : carte se dessine + count-up 8M$ → fracture (sur "limoge") → recomposition
-  ("la vérité plus précise"). Composant `src/projects/_proto-16-9/SenegalScene0.tsx`. Rendu : catbox yg9k78. Né de
-  la doctrine `CONTINUITE-SCENE-INTENTION-DABORD` (intention→forme→template, prouvée 2× du 1er coup).
-- ▶ **NEXT = SCÈNE 1** (3 gisements + paradoxe) → prompt prêt : `V3-REFONTE/STARTER-SCENE-1.md`. 1ère décision = trancher
-  le médium (SVG parchemin continuité vs Mapbox carte vivante).
-ℹ️ Ancien starter `STARTER-PROMPT-senegal-makeover-premium.md` = PÉRIMÉ (remplacé par V3-REFONTE).
-**Etat RÉEL vérifié dans la vidéo (pas les notes)** : la version du 25 mai est **DÉJÀ PUBLIABLE** —
-FC-2 (dette 132%) ✅ + FC-4 (Beat0 deux dates) ✅ + assemblage ✅. Le STATUS qui disait "à corriger" était PÉRIMÉ.
-**Deadline Postiz 20 juin = DÉCALABLE** (Aziz) — la qualité prime. Pas d'urgence à publier une version non polie.
-**Fait cette session (commité, branche feat/hooks-library)** : fix incohérence 80%→132% (Beat14) · lot kraft premium
-(ombre+grain, composant `KraftDepth`, Beat11/12/13) · POC ResourceTexture pétrole sur Sénégal (Beat1) ·
-upload vidéo Gemini fiable confirmé (`memory/gemini-video-upload-fiable.md`).
-**RESTE** (détail dans le starter) : A) chantier carte vivante (4 beats + pitch 32°), B) donut/temps morts navy,
-C) outro teaser AES, D) ⭐ audio V3 expressif (narration V1 plate → re-timing 8 beats, session dédiée),
-E) assemblage + remplacer média Postiz.
+### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-24) ⭐⭐
+**⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`** (tableau 8 scènes)
+**+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX). NE PAS partir d'un autre fichier.
+Refonte 8 scènes une par une (narration V3 expressive). V1 et V3 SÉPARÉS, ne pas mélanger.
+- ✅ **SCÈNES 0, 1 (intro+gisements), 2 (comparaison Mapbox), 3 (contrat) = FAITES, gravées FINALES** (2026-06-24).
+  Renders dans `out/episodes/senegal-petrole-gaz/sceneN-*-FINAL.mp4`. Couvre l'audio 0→241.3s (~49%).
+- ▶ **NEXT = SCÈNE 4 (la dette, 132% du PIB)** — audio 241.3→~300s. Réf V1 = Beat12 (calebasse 132%). Remotion.
+  Décider : reprendre la calebasse V1 ou créer du neuf (jury LLM `da-brief.py --upstream`). Voir README V3-REFONTE.
+ℹ️ PÉRIMÉS (ne pas utiliser) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (= V1),
+   `V3-REFONTE/REPRISE-SCENE-1.md` + `REPRISE-SCENE-2-COMPARAISON.md` (scènes déjà faites).
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
