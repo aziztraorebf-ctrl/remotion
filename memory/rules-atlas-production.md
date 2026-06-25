@@ -22,7 +22,7 @@
 
 **RÈGLE 7 — Inserts plein écran pour data viz** : chiffre choc / comparaison / objet symbolique → insert plein écran (fond noir + dataviz centré). INTERDIT : mini-objet posé à droite de la carte.
 
-**RÈGLE 8 — Mouvement permanent** : INTERDIT scène statique > 2s. Sources obligatoires (au moins 2 simultanées) : drift Ken Burns, tilt respiratoire, pulse marker, apparition/disparition labels, pan caméra, zoom continu.
+**RÈGLE 8 — Mouvement permanent** : INTERDIT scène statique > 8s (règle canonique ATLAS-PLAYBOOK R1). Sources obligatoires (au moins 2 simultanées) : drift Ken Burns, tilt respiratoire, pulse marker, apparition/disparition labels, pan caméra, zoom continu.
 
 **RÈGLE 9 — Validation visuelle Claude AVANT Aziz** : Read l'image/vidéo → identifier défauts → corriger AVANT de présenter. Ne jamais dire "voici le render" sans avoir regardé.
 
@@ -279,7 +279,7 @@ Quand un agent est invoqué sur un projet Atlas pur, il doit :
 [ ] Caméra via props AtlasMercator
 [ ] Sous-titres karaoke prévus
 [ ] Au moins 2 sources de mouvement simultanées
-[ ] Aucune scène statique > 2s
+[ ] Aucune scène statique > 8s
 [ ] Data viz/objet symbolique → insert plein écran (pas overlay)
 [ ] Lingot/sceau/objet réel → PixelLab (pas Lottie)
 [ ] Mini-render après chaque modif majeure

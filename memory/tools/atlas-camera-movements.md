@@ -8,7 +8,7 @@
 
 Constat session Beat 1-3 Empire Ghana : on a passé 70s sur la même région (Sahel/Wagadou) sans bouger activement la caméra → risque de statique. À chaque épisode Atlas où l'histoire reste ancrée géographiquement, **anticiper les mouvements caméra dès le storyboard**, pas en réaction.
 
-Règle directrice : **tous les 5-8s, la caméra doit BOUGER de manière narrative.** Sinon le spectateur décroche.
+Règle directrice : **max 8s sans changement visuel** (caméra, couleur, apparition — règle canonique ATLAS-PLAYBOOK R1). En pratique viser un changement toutes les 5-8s. Sinon le spectateur décroche.
 
 ## Mouvements VALIDÉS (utilisés et fonctionnels)
 

@@ -70,6 +70,8 @@ const href = staticFile(`${ANIM_PATH}/${direction}/frame_${frameStr}.png`);
 
 ## Placement sur carte SVG
 
+> ⛔ **RÈGLE FLIP OBSOLÈTE POUR ATLAS** — voir `ATLAS-PIXELLAB-PLAYBOOK.md §0` (le flip causait le bug moonwalk, 2026-06-03). N'utiliser `flipX` que hors contexte Atlas si vraiment nécessaire.
+
 ```tsx
 // Ancrage au sol : x centré, y = bas du sprite
 <image
@@ -82,6 +84,8 @@ const href = staticFile(`${ANIM_PATH}/${direction}/frame_${frameStr}.png`);
 />
 
 // Flip direction ouest
+// ⛔ RÈGLE FLIP OBSOLÈTE POUR ATLAS — voir ATLAS-PIXELLAB-PLAYBOOK.md §0 (le flip causait le bug moonwalk,
+// 2026-06-03). N'utiliser flipX que hors contexte Atlas si vraiment nécessaire.
 <g transform="scale(-1, 1)">
   <image ... />
 </g>
