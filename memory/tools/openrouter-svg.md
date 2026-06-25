@@ -35,7 +35,7 @@ GLM = ~5-7x moins cher que GPT-5.5 sur ce qu'il sait faire. Cout d'une planche d
 
 | Modele | Geometrie / technique / schema / jetons | Organique / encre | Vitesse | Validite SVG | Statut |
 |---|---|---|---|---|---|
-| **GLM-5.2** | ⭐ excellent (≈ GPT-5.5), gagne les jetons 4/5 vs Qwen | faible sur encre (arbre naif) | ok | propre | **ADOPTE (3e modele)** |
+| **GLM-5.2** | ⭐ excellent (≈ GPT-5.5), gagne les jetons 4/5 vs Qwen | faible sur l'ORGANIQUE VIVANT (arbre naif) ; mais l'encre NARRATIVE/schematique passe tres bien (marche CFA prouve) | ok | propre | **ADOPTE (3e modele)** |
 | Qwen3.6-35B-A3B (`qwen/qwen3.6-35b-a3b`, $0.14/$1, vision) | tres bon | maigre | ⭐ rapide | parfois invalide (pas de `<svg>` racine, attr dupliques) | ECARTE (un cran sous GLM, ecart prix derisoire) |
 | MiniMax M3 (`minimax/minimax-m3`, $0.30/$1.20, vision) | ⭐ excellent (le + fini sur offshore) | (non teste) | ❌ ~7 min/scene | ❌ camelCase JSX a convertir | ECARTE (lenteur impraticable) |
 | GPT-5.5 / Gemini 3.1 Pro | references | Gemini = roi organique | ok | propre | PRINCIPAUX (inchanges) |

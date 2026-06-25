@@ -32,6 +32,16 @@ karaoke + sources, code, REND full HD, upload catbox. + auto-eval poussee (justi
 -> AZIZ + CLAUDE donnent les FINITIONS (ajustements de gout). Claude applique les micro-fixes lui-meme
    (changement cible et bien cerne = Claude edite directement, ne relance pas un agent pour rien).
 
+⛔⛔ **LE POINT DE CONTROLE VAUT MEME QUAND LA SCENE SE DESSINE "A LA MAIN" (sans cible LLM) — renforce 2026-06-25 (Aziz, B4 FMNR raté)** :
+ne JAMAIS sauter le checkpoint sous pretexte que la scene est codee directement en JSX (pas de SVG genere a montrer).
+Ce qui se valide AVANT d'animer, ce n'est pas seulement un fichier SVG, c'est l'IMAGE / LA METAPHORE choisie pour porter
+le geste. Avant de coder, l'agent (ou Claude) DECRIT en 1-2 lignes le concept visuel retenu (« comment je montre le geste X »)
++ POURQUOI, et propose 2-3 alternatives si le geste est central — Aziz tranche l'image AVANT l'animation. Sinon on anime une
+metaphore faible qu'Aziz ne decouvre qu'au render (cas B4 : « souche-pot + racines-lignes » = ressemblait a un pot de fleurs,
+le geste FMNR « prendre soin de ce qui dort » pas rendu — Aziz l'a rejete apres coup, scene a refaire). REGLE : pour le ou les
+gestes-CŒUR d'un beat, montrer le CONCEPT D'IMAGE (croquis verbal + alternatives) en checkpoint, pas seulement le SVG. Le
+jugement de gout sur l'image se fait avant le code, pas apres le render.
+
 **PARALLELISME** : lancer 2-3 agents Phase 2 en meme temps, un par scene, en WORKTREE ISOLE si plusieurs
 touchent des fichiers en parallele. Chacun lance depuis CE fichier + l'ETAT du short. Handoff = fichier disque.
 
@@ -64,6 +74,30 @@ touchent des fichiers en parallele. Chacun lance depuis CE fichier + l'ETAT du s
    l'illusion qui s'evanouit. Choisir selon l'intention.
 5. **Kimi `--max-tokens 8000`** par defaut (4000 coupe les idees FR ; surveiller `finish_reason: length` ;
    bug provider OpenRouter = reponse JSON parasite -> RELANCER l'appel).
+6. **⛔ WORKTREE incomplet = render bloque (prouve B5/B6, 2026-06-25)** : avant de lancer des agents Phase 2 en
+   worktree, le CHEF prepare l'environnement : (a) `ln -s <repo-principal>/node_modules node_modules` ; (b) copier
+   les audios + alignment + beat-bounds (gitignores, absents du worktree) ; (c) le `.env` est dans le repo principal
+   (pointer dessus pour la generation SFX) ; (d) Root.tsx importe des fichiers UNTRACKED absents du worktree -> le
+   bundle webpack echoue ENTIEREMENT meme pour un beat sans rapport. Les agents ont du ecrire un BFS qui copie les
+   .tsx manquants depuis le repo principal. Reco : committer les fichiers Root OU fournir le bootstrap a l'agent.
+7. **⭐ PRE-CABLER Root.tsx AVANT de lancer les agents (anti-collision, prouve B5/B6)** : Root.tsx est le SEUL point
+   de collision quand 2 agents produisent 2 beats en parallele. Le CHEF ajoute LUI-MEME les imports + lignes
+   `<Composition>` (avec id, duree=Nframes, 1080x1920) AVANT de lancer les agents -> chaque agent n'a plus qu'a creer
+   son fichier TSX du meme nom, zero edition de Root.tsx, zero collision. (Exception : si un agent doit changer la
+   DUREE de sa compo, il touche UNIQUEMENT sa valeur `durationInFrames`.)
+8. **SFX generes en worktree = a recopier dans le repo principal** : `public/audio/` est gitignore -> les SFX generes
+   par les agents vivent SEULEMENT dans le worktree. A la fin, les copier dans le repo principal (sinon un futur render
+   depuis le repo principal les rate). Idem tout audio derive (ex narration coupee `*-cut.mp3`).
+9. **FINITION = Claude prend la main en direct (prouve B5/B6)** : apres les renders Phase 2, les retours de gout d'Aziz
+   (couleur, composition, narratif) sont appliques par Claude DIRECTEMENT (Edit sur le fichier de l'agent), PAS en
+   relancant un agent. L'agent fait le gros oeuvre A->Z ; le chef cisele les finitions ciblees. Reutiliser un composant
+   d'un autre beat (TreeTrunk/LeafyCrown de B3 dans B5) = cohérence visuelle gratuite.
+10. **⛔ COLORISATION = exiger des SURFACES FERMEES (prouve CFA 2026-06-25, NE PAS REPERDRE)** : pour animer la
+   colorisation d'une scene encre (le trait qui se REMPLIT de couleur), le SVG doit contenir un groupe `<g id="couleurs">`
+   de FORMES PLEINES FERMEES (`fill="#couleur"`), separe du trait. Par defaut TOUS les modeles (GLM/Gemini/GPT) dessinent
+   des CONTOURS (`fill="none"`) = incolorisables. ⚠️ GOTCHA : le modele met souvent un groupe WRAPPER racine qui ENGLOBE
+   les couleurs -> a l'extraction, NEUTRALISER les fills couleur du wrapper (sinon couleur dupliquee + non animee).
+   Detail complet : [[openrouter-svg]] § COLORISATION TIMEE.
 
 ## CE QUE L'HUMAIN GARDE (ne se delegue pas)
 - Validation du SUJET/angle (gate amont) + de la CIBLE (point de controle Phase 1).
