@@ -214,6 +214,30 @@ Dérivé de Medieval Mindset (188k abonnés, voir `feedback_medieval-mindset-met
 
 ---
 
+# D. OUTILLAGE VISUEL À L'ÉCRITURE — penser le SVG-insert DÈS le script ⭐⭐
+
+> Bascule stratégique (2026-06-25). Le SVG génératif animé est désormais un OUTIL NARRATIF à part entière, au même
+> titre que Mapbox (géo) et l'image générée (organique). Il doit être dans la palette mentale **au moment d'écrire**,
+> pas plaqué après coup. Doctrine complète : [[SVG-MIDFORM-FORMAT]].
+
+## Règle 17 — À l'écriture, repérer les moments "SVG" (tous formats, longs ET courts)
+
+En écrivant TOUT script (Atlas, Souverain, War-Map, Shorts), identifier les passages où **le sens se construit par le TRAIT et la TRANSFORMATION** → ce sont des candidats **insert SVG** (bloc de 30s-1min) ou, si toute la vidéo est de cette nature, un **format SVG mid-form**. Deux familles, toutes deux PROUVÉES :
+- **Conceptuel/abstrait** : un mécanisme, un flux, un montage, une parité (ex. franc CFA).
+- **Narratif/métaphorique** : un récit incarné porté par des formes qui se dessinent/colorisent/transforment (ex. Grande Muraille Verte = graine→arbre ; Soudan = l'or→l'arme).
+
+Le critère n'est PAS "abstrait vs narratif" — c'est **transformation visuelle de formes**.
+
+## Garde-fou — quand le SVG n'est PAS le bon outil (anti-dilution des signatures)
+
+- **Géo réelle** (territoire, frontières, bataille située, trajet) → reste **Mapbox** frame-driven.
+- **Organique humain/animal réaliste, émotion d'un visage, scène "filmée"** → reste image générée / Seedance / vraie matière.
+- **Récit chronologique pur "que s'est-il passé"** sans transformation visuelle → narration classique.
+
+Pourquoi écrire avec ça en tête : le script NAÎT avec le bon outil pour chaque moment (SVG = transformation, Mapbox = géo, image = organique), au lieu de « se casser la tête plus tard ». Avantage bonus : un insert SVG est souvent **moins coûteux et plus contrôlable** qu'un beat Mapbox (1 appel GLM ~centimes + animation par frame en contrôle total). Détail format/pipeline : [[SVG-MIDFORM-FORMAT]].
+
+---
+
 ## CHECKLIST AUDIO LOCK (toutes chaînes, tous formats)
 
 **A. Clarté**

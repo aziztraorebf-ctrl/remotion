@@ -3,6 +3,7 @@
 > **Construit 2026-06-01** via 2 appels Gemini 3.1 Pro : 6 réfs premium (Jacque a dit & sim.) analysées par Aziz + 4 de nos vidéos (Or Africain, Sénégal, Maroc Hook, Maroc Beat1).
 > **À LIRE avant tout beat Mapbox.** Référencé depuis CLAUDE.md (Pipeline Beat Mapbox) et SKELETON.
 > **Principe fondateur (règle Aziz) :** Claude est maître du CODE. Pour la VISION ARTISTIQUE, s'appuyer sur l'œil externe (Gemini scoré). Voir [[feedback_systeme-beat-mapbox-vs-remotion]].
+> ⭐ **OUTIL SVG-INSERT dispo** : un mécanisme/concept/transformation à expliquer (ex. franc CFA, flux financier, métaphore) peut être un insert SVG animé (30s-1min) plutôt qu'un beat Mapbox — souvent moins coûteux + contrôle total. À penser DÈS le script. Doctrine : [[SVG-MIDFORM-FORMAT]] · couche script : [[DOCTRINE-SCRIPT-UNIFIEE]] règle 17. (⛔ la géo reste Mapbox.)
 
 ---
 

@@ -228,6 +228,7 @@ import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
 import { FluxPetroleAnimee } from "./projects/_rnd/svg-scenes/FluxPetroleAnimee";
 import { JetonsQwenDemo } from "./projects/_rnd/svg-scenes/JetonsQwenDemo";
 import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
+import { CfaMidformTest } from "./projects/_rnd/svg-scenes/CfaMidformTest";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
 import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
@@ -2205,6 +2206,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
+        <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />

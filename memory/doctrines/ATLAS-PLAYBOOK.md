@@ -4,6 +4,7 @@
 > **DÉRIVÉ DE CE QUI MARCHE** : Empire du Ghana + Mansa Moussa V2, nos 2 meilleures Atlas pures.
 > Sources : [[DECODE-empire-ghana]], [[DECODE-mansa-moussa]], [[feedback_atlas-retour-aux-sources-ghana-mansa]].
 > Couche PixelLab (le morceau dur) = fichier dédié [[ATLAS-PIXELLAB-PLAYBOOK]]. Démarrage beat = [[ATLAS-BEAT-DEMARRAGE]].
+> ⭐ **OUTIL SVG-INSERT dispo** : un moment "transformation/mécanisme/métaphore" (récit incarné par des formes qui se dessinent/transforment) peut être un insert SVG animé (30s-1min) — à penser DÈS le script. Doctrine : [[SVG-MIDFORM-FORMAT]] · couche script : [[DOCTRINE-SCRIPT-UNIFIEE]] règle 17.
 
 Format Atlas : vertical, SVG `viewBox 0 0 720 1280` rendu en `1080×1920`, d3-geo précalculé (paths dans `<episode>-data.json`), JAMAIS Mapbox. Manipulation par `transform` SVG (caméra = transform, pas reprojection frame-driven).
 

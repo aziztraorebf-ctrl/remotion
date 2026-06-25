@@ -3,6 +3,7 @@
 > Cree 2026-06-05. 3e PILIER Kora & Cartes (apres Souverain + Atlas). Miroir de
 > `SOUVERAIN-VISUAL-PLAYBOOK` / `ATLAS-PLAYBOOK`. A LIRE avant toute video war-map.
 > **DERIVE DE CE QUI MARCHE** : prototype Soudan valide en session (2026-06-05).
+> ⭐ **OUTIL SVG-INSERT dispo** : un mecanisme/transformation/metaphore (ex. "l'or sort de la terre et finance la guerre" = pelle/lingot/creuset en SVG) peut etre un insert SVG anime (30s-1min) DANS la war-map. A penser DES le script. Doctrine : [[SVG-MIDFORM-FORMAT]] · couche script : [[DOCTRINE-SCRIPT-UNIFIEE]] regle 17. (⛔ la geo/bataille situee reste Mapbox.)
 > ⭐ **POINT D'ENTREE CODE : `src/projects/warmap/WARMAP-INDEX.md`** (carte maitre — quel fichier pour quoi).
 > ⭐ **LA REFERENCE = composition `SudanWarMapEpic60`** (60s, tout combine, catbox `4dwqit`). Les variantes
 > plus courtes ne sont PAS la reference.

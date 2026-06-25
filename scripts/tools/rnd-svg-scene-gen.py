@@ -456,6 +456,69 @@ COMPOSE EN LARGEUR (paysage, viewBox 1920x1080), arbre CENTRE, qui monte du bas 
   au trait. DERNIERE etape, l'apogee. Quelques feuilles individuelles (id="feuilles") qui pourront voltiger.
 Pense "gravure de planche botanique ancienne qui se construit du bas vers le haut". EPURE, CHAUD, ANCIEN, premium.
 """,
+    # ==== TEST SVG MID-FORM "franc CFA" — 3 beats, 3 registres (R&D 2026-06-25) ====
+    # HORIZONTAL 16:9 (viewBox 1920x1080) pour TOUTES ces scenes.
+    "cfa-mecanisme-blueprint": r"""
+SUJET : SCHEMA TECHNIQUE du mecanisme du franc CFA. Plan d'ingenieur / blueprint conceptuel. PHRASE :
+"14 pays, une monnaie, une parite fixe avec l'euro garantie par Paris, reserves deposees sur un compte."
+
+⛔ HORIZONTAL 16:9, viewBox="0 0 1920 1080". SCHEMA ABSTRAIT lisible. AUCUNE figure vivante. Pictos + flux flechés.
+4-5 noeuds HEROS relies, decoupes en <g id> nommes (animation sequentielle) :
+- GROUPE PAYS (id="zone-cfa") : a gauche, un bloc / ensemble de petites cellules hexagonales ou carrees representant
+  les 14 pays (pas besoin de geo reelle : un bloc schematique "ZONE FRANC CFA").
+- LA MONNAIE (id="monnaie") : un symbole de piece/monnaie central issu de la zone.
+- LE LIEN DE PARITE (id="parite") : une barre / un lien RIGIDE entre la monnaie CFA et un symbole EURO a droite,
+  annoté "PARITE FIXE" (l'idee : verrou, ancrage rigide). Pense a un mecanisme de verrouillage (engrenage/serrure).
+- LE COMPTE A PARIS (id="compte") : en haut a droite, un symbole de coffre/banque "TRESOR / COMPTE D'OPERATIONS"
+  vers lequel une fleche de DEPOT monte depuis la zone (les reserves deposees).
+- ETIQUETTES (id="etiquettes") : labels courts ("ZONE FRANC CFA", "PARITE FIXE EUR", "COMPTE D'OPERATIONS", "RESERVES").
+Compose pour animer : la zone apparait, la monnaie sort, le lien de parite se VERROUILLE, le depot monte vers le compte. Premium, froid, technique.
+""",
+    "cfa-marche-encre": r"""
+SUJET : une SCENE DE VIE quotidienne en GRAVURE ENCRE — un etal de marche africain (Dakar), des mains qui comptent
+des billets, des produits (sacs de riz, tomates, balance). PHRASE : "sur un marche, ca ne se voit pas ; une monnaie
+stable, previsible." Le but : RECHAUFFER apres le schema froid. Registre encre (decrit dans l'en-tete).
+
+⛔ HORIZONTAL 16:9, viewBox="0 0 1920 1080". GRAVURE ENCRE UNIQUEMENT (trait brun-noir #2b2117 sur creme #e8dcc0,
+hachures, ZERO aplat colore). ⛔ PAS DE VISAGE ni corps entier (regle projet : pas d'humain detaille) — suggere la
+presence par des MAINS stylisees au trait + l'etal, c'est tout.
+
+⭐⭐ SURFACES COLORISABLES (CRITIQUE — pour l'animation de colorisation timee) : pour CHAQUE objet qui aura une
+couleur (tomates, riz, etc.), tu dessines DEUX choses SEPAREES :
+  (1) une FORME FERMEE PLEINE = un <path>/<circle>/<ellipse> avec fill="<couleur>" (la zone de couleur, fermee),
+  (2) PAR-DESSUS, le CONTOUR + hachures en trait d'encre brun-noir (fill="none" stroke="#2b2117").
+Regroupe TOUTES les formes-couleur pleines dans UN groupe dedie id="couleurs" (place AVANT le trait dans le code,
+donc dessous), et les contours/hachures dans les groupes d'objets normaux. Ainsi le code peut animer l'OPACITE du
+groupe "couleurs" pour faire "se remplir" l'encre (effet aquarelle pose sur la gravure). SANS ces surfaces fermees,
+la colorisation est impossible — c'est OBLIGATOIRE ici.
+Couleurs a utiliser dans id="couleurs" : tomates -> rouge-tomate doux #c0492e ; riz/sacs -> beige-ocre #cBA46a ;
+balance/metal -> gris-or leger #b9924a. Teintes DOUCES (aquarelle ancienne), pas criardes.
+
+Decoupe en <g id> :
+- id="couleurs" : TOUTES les formes pleines colorees (fermees, fill=couleur), dessous le trait. Sous-formes reperables.
+- L'ETAL (id="etal") : table de marche au trait d'encre + auvent/parasol au-dessus.
+- LES PRODUITS au TRAIT (id="produits-tomates", id="produits-riz", id="produits-balance") : contours + hachures
+  d'encre PAR-DESSUS les surfaces couleur correspondantes. Pyramide de tomates, sacs de riz ouverts, balance ancienne.
+- LES MAINS (id="echange-main-gauche", id="echange-main-droite") + un BILLET (id="billet") : mains stylisees au trait
+  qui comptent/tendent des billets CFA au centre. Geste-cle quotidien. Suggere, pas realiste, PAS de visage.
+- AMBIANCE (id="ambiance") : hachures de sol, suggestion d'autres etals (traits legers), soleil grave en coin.
+Compose pour animer : l'etal se trace, les produits se dessinent, la COULEUR se remplit (id="couleurs"), la main compte. Chaud, humain, ancien.
+""",
+    "cfa-flux-conceptuel": r"""
+SUJET : DIAGRAMME DE FLUX conceptuel — "la stabilite a un prix : une partie de la richesse circule vers l'exterieur,
+et la decision monetaire se prend ailleurs." Pense infographie blueprint conceptuel (comme un schema d'etat-major).
+
+⛔ HORIZONTAL 16:9, viewBox="0 0 1920 1080". SCHEMA ABSTRAIT, pas de scene realiste, pas de figure vivante. Decoupe <g id> :
+- LA ZONE (id="zone") : a gauche, le bloc "ZONE FRANC CFA" (coherent avec le 1er schema : meme symbole de zone).
+- LE FLUX SORTANT (id="flux-richesse") : de GROSSES fleches courbes qui emportent de la valeur VERS LA DROITE / hors
+  cadre (vers l'exterieur). Fleches epaisses, directionnelles, c'est le coeur du message.
+- LA DECISION AILLEURS (id="decision") : a droite, un symbole de pouvoir/decision (un marteau, une table de conseil,
+  ou un batiment institutionnel stylise) annoté "POLITIQUE MONETAIRE" — l'idee : ca se decide la-bas, pas ici.
+- LA QUESTION (id="question") : au centre-bas, en grand, la question qui ferme : "A QUI APPARTIENT UNE MONNAIE ?"
+  (texte SVG, typo nette). C'est le punch final.
+- ETIQUETTES (id="etiquettes") : "RICHESSE", "DECISION EXTERNE", labels courts.
+Compose pour animer : la zone, puis les fleches qui COULENT vers l'exterieur, puis la question qui apparait. Conceptuel, fort, ferme sur une question.
+""",
     # ---- OBJET TECHNIQUE : une PELLE / EXCAVATRICE en coupe blueprint (test GLM objet concret) ----
     "excavatrice-blueprint": r"""
 SUJET DE LA SCENE : une PELLE MECANIQUE / EXCAVATRICE (engin de chantier) dessinee comme un SCHEMA TECHNIQUE de profil,
@@ -652,6 +715,9 @@ SCENE_REGISTRE = {
     "graine-arbre-encre": "encre",
     "excavatrice-blueprint": "blueprint",
     "flux-petrole-conceptuel": "tactique",
+    "cfa-mecanisme-blueprint": "blueprint",
+    "cfa-marche-encre": "encre",
+    "cfa-flux-conceptuel": "tactique",
     "demilune-racine": "papier-decoupe",
     "mur-topdown": "braise-or",
 }

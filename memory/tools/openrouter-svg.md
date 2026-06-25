@@ -49,7 +49,18 @@ GLM genere → JSON `{tokens:{...}}` ou `{scene_svg, groups}` → on transforme 
 
 ## Nettoyage SVG (a faire a la lecture, tous modeles)
 
-Fonction commune : extraire le `<svg>`/JSON, **strip `<style>`/CSS**, fix camelCase→kebab (ou l'inverse selon cible JSX), **dedup attributs** dupliques, **wrap dans `<svg viewBox=...>`** si le modele renvoie un fragment de `<g>` sans racine. (Fait a la main 6x pendant la R&D — a outiller si on industrialise.)
+Fonction commune : extraire le `<svg>`/JSON, **strip `<style>`/CSS**, fix camelCase→kebab (ou l'inverse selon cible JSX), **dedup attributs** dupliques, **wrap dans `<svg viewBox=...>`** si le modele renvoie un fragment de `<g>` sans racine, **fixer les `""` parasites** (GLM/Gemini glissent parfois un guillemet en trop : `470"" />`). (Fait a la main pendant la R&D — a outiller si on industrialise.)
+
+## ⭐⭐ COLORISATION TIMEE de l'encre (lecon 2026-06-25, NE PAS REPERDRE)
+
+**Pour animer la colorisation d'une scene encre/gravure (le trait noir qui se REMPLIT de couleur — doctrine "encre = canevas pour couleur semantique timee"), il FAUT que le brief exige des SURFACES FERMEES colorisables.** Par defaut, GLM (et Gemini) dessinent des CONTOURS (trait, fill="none") — incolorisables : il n'y a aucune surface a remplir. Resultat v1 = marche reste plat, colorisation impossible (echec prouve).
+
+**Le pattern qui marche** (prouve, marche CFA) :
+1. Brief : exiger un groupe `<g id="couleurs">` contenant UNIQUEMENT des **formes fermees pleines** (`<path>/<ellipse>/<circle>` avec `fill="<couleur>"`), placees DESSOUS le trait dans le code. Donner les teintes exactes (douces, aquarelle). Les contours+hachures d'encre vont par-dessus, dans les groupes d'objets normaux (fill="none").
+2. ⚠️ **GOTCHA CRITIQUE** : le modele met souvent un groupe WRAPPER racine (`id="scene"`) qui ENGLOBE tout, **couleurs comprises** → la couleur apparait en double ET non animee. A l'extraction, **neutraliser les fills couleur dans le groupe wrapper** (`fill="<couleur>"` → `fill="none"`) pour que SEUL le groupe `couleurs` (anime) porte la couleur.
+3. Animation : `<Grp body={COULEURS} opacity={clampI(f, debut, fin)} />` → la couleur monte en opacite = l'encre se remplit. Le reste (trait, produits) reste a 1.
+
+Preuve : marche se dessine au trait noir (colorise=0) PUIS se remplit (tomates rouges, riz beige, balance or). Frames : https://files.catbox.moe/fe3u3g.mp4 (beat 2).
 
 ## Liens R&D (catbox, rendus de reference)
 
