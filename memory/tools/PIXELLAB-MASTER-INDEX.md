@@ -53,7 +53,7 @@ type: reference
 |-----|----|-----------|--------|------------|
 | **Mansa Moussa** | `0a167efc-1abd-48ae-9c81-f77ad243f80d` | 4 | 92×92 | 4 |
 | **Chameau Mali** | `0b93031f-4df6-40ad-8a65-240229d127ff` | 4 | 92×92 | 2 |
-| **Soldat Mali** | `d378d0f2-2704-4f4e-bf60-3a8475b2fb16` | 4 | 92×92 | 2 |
+| **Soldat Mali** | `d378d0f2-2704-4f4e-bf60-3a8475b2fb16` | 4 | 92×92 | 4 (walk_cycle 6f + charge running-6f + spear_attack 7f + death 7f) |
 | **Porteur Mali** | `5d667d1e-8a3e-4b53-903e-28da88200ec4` | 4 | 92×92 | 2 |
 
 ### Projet Peste 1347

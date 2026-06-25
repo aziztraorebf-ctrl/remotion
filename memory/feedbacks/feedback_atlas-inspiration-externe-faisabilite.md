@@ -54,7 +54,7 @@ qui "apparaissent" au lieu de se dessiner, enveloppement illisible. Vaut pour li
 ET manœuvre d'enveloppement. **CONSÉQUENCE STRATÉGIQUE : les batailles sont NOTRE exclusivité
 PixelLab** (2 formations sprites face à face + terrain + rapport de force + pulse de choc —
 4 choses qu'ils ne peuvent produire). Ne PAS gaspiller de générations sur les batailles.
-Voir [[atlas-pixellab-differentiel]]. NB : leur système EXIGE une localisation géo réelle.
+Voir `ATLAS-PIXELLAB-PLAYBOOK.md §4` (échelle N0/N1/N2). NB : leur système EXIGE une localisation géo réelle.
 
 **DÉCOUVERTE 3 — Leur limite FONDAMENTALE = boîte noire non déterministe (analyse Aziz, validée).**
 3 avantages décisifs de NOTRE approche (templates d3-geo) sur leur outil :
