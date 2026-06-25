@@ -25,6 +25,9 @@ load_dotenv(ROOT / ".env")
 
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.5"
+GLM_MODEL = "z-ai/glm-5.2"  # 3e modele low-cost (R&D 2026-06-24) : tres bon en geometrie/technique/schema.
+# text-only (pas d'image-ref) ; ne PAS limiter max_tokens. Detail+verdict : memory/tools/openrouter-svg.md.
+# (Qwen3.6 et MiniMax M3 testes puis ecartes : Qwen un cran sous GLM, MiniMax ~7min/scene = impraticable.)
 
 # ----- REGISTRES visuels (style + palette + cadre) — decouples du sujet -----
 REGISTRES = {
@@ -422,6 +425,75 @@ Pense "la croissance se CONSTRUIT du bas vers le haut, etape par etape, jusqu'a 
 nuages qui derivent. Laisse l'ESPACE vertical pour que l'arbre GRANDISSE (ne remplis pas tout le haut au depart :
 le haut du cadre se remplit a la fin, quand le feuillage arrive). EPURE, CLAIR, JOYEUX, premium.
 """,
+    # ---- CROISSANCE ARBRE en GRAVURE ENCRE (test text-only registre — pas de conflit paper-cut) ----
+    "graine-arbre-encre": r"""
+SUJET DE LA SCENE : LA CROISSANCE D'UN ARBRE — une GRAINE plantee dans la terre qui DEVIENT un grand ARBRE.
+PHRASE NARRATIVE a raconter en image : "d'une simple graine... nait un arbre." On doit RESSENTIR la CROISSANCE.
+
+⛔⛔ LE REGISTRE PRIME SUR TOUT : tu dessines EXCLUSIVEMENT en GRAVURE A L'ENCRE (decrit ci-dessus). AUCUN aplat de
+couleur vive, AUCUN flat-design, AUCUN papier decoupe colore, AUCUN vert/jaune/bleu sature. UNIQUEMENT le trait
+brun-noir (#2b2117) sur fond parchemin creme (#e8dcc0), volume par HACHURES fines et contre-hachures. Si tu hesites
+entre une couleur et une hachure -> HACHURE. C'est une estampe ancienne, pas une illustration enfantine.
+
+⛔⛔ PHILOSOPHIE (scene-HERO EPUREE) : 4-5 elements HEROS MAXIMUM, chacun lisible en <1s. Une seule plante au CENTRE.
+PAS de foret, PAS de paysage charge. Espace, respiration. EPURE.
+
+⭐ POINT CLE ANIMATION : tu dessines l'arbre dans son ETAT FINAL ADULTE, MAIS DECOUPE EN COUCHES SEPAREES (chacune
+dans son <g id>) correspondant aux ETAPES de croissance, pour que le code les fasse apparaitre UNE PAR UNE de bas en
+haut. Compose en pensant a ce "montage etage du bas vers le haut".
+
+COMPOSE EN LARGEUR (paysage, viewBox 1920x1080), arbre CENTRE, qui monte du bas vers le haut :
+- LE FOND (id="ciel") : le parchemin creme, eventuellement un soleil grave en cercle a filet d'encre + rares rayons
+  en traits/pointilles dans un coin haut (id="soleil"), quelques hachures legeres de ciel. PAS de bleu plein.
+- LA TERRE + LA GRAINE (id="terre", id="graine") : au bas, le SOL suggere par une ligne d'horizon + hachures de
+  strates (lignes paralleles), pas un aplat brun. Une GRAINE (petite forme ovale en trait d'encre) d'ou tout part,
+  groupe separe (1er a apparaitre). 2-3 RACINES en trait fin qui descendent (id="racines").
+- LE TRONC (id="tronc") : un tronc en trait d'encre, contour + hachures directionnelles pour le volume (PAS un aplat
+  brun plein). Vertical, degage, pour grandir du sol vers le haut.
+- LES BRANCHES (id="branches") : 3-5 branches en trait d'encre qui se deploient depuis le haut du tronc.
+- LE FEUILLAGE (id="feuillage") : la couronne suggeree par des masses de feuilles en CONTOUR + hachures (lobes
+  dessines au trait, ombres par hachures serrees), PAS une boule verte pleine. Plusieurs petits groupes de feuilles
+  au trait. DERNIERE etape, l'apogee. Quelques feuilles individuelles (id="feuilles") qui pourront voltiger.
+Pense "gravure de planche botanique ancienne qui se construit du bas vers le haut". EPURE, CHAUD, ANCIEN, premium.
+""",
+    # ---- OBJET TECHNIQUE : une PELLE / EXCAVATRICE en coupe blueprint (test GLM objet concret) ----
+    "excavatrice-blueprint": r"""
+SUJET DE LA SCENE : une PELLE MECANIQUE / EXCAVATRICE (engin de chantier) dessinee comme un SCHEMA TECHNIQUE de profil,
+plan d'ingenieur. PHRASE NARRATIVE : "la machine qui creuse / qui extrait". OBJET seul, net, aucune figure vivante.
+
+⛔⛔ PHILOSOPHIE (sce-HERO EPUREE) : l'excavatrice est l'unique HEROS, GROSSE et CENTREE, lisible en <1s. Pense
+planche technique / vue eclatee propre, PAS un paysage de chantier charge. Espace, respiration.
+
+L'engin se DECOMPOSE en sous-ensembles, chacun dans son <g id> (pour animation par code) :
+- LE CHASSIS / CHENILLES (id="chassis") : le train de chenilles a la base (galets, barbotin), bien pose au sol.
+- LA TOURELLE / CABINE (id="tourelle") : le corps pivotant + la cabine de l'operateur (vide, juste la structure).
+- LE BRAS / FLECHE (id="bras") : le bras articule principal (boom) qui monte.
+- L'AVANT-BRAS + VERIN (id="avant-bras") : le second segment + les verins hydrauliques (cylindres) bien dessines.
+- LE GODET (id="godet") : le godet denté au bout, oriente vers le sol (l'element qui creuse).
+- COTES & ETIQUETTES (id="cotes", id="etiquettes") : quelques cotes de dimension (fleches a double tete + valeurs
+  type "12 m", "GODET 1.2 m3"), 2-3 etiquettes de reperage. Une ligne de sol. Cadre-cartouche de plan en bas (id="cartouche").
+Compose pour que le code anime le bras/godet (creuser) et fasse apparaitre les sous-ensembles un par un. Premium, net.
+""",
+    # ---- DIAGRAMME DE FLUX CONCEPTUEL : l'argent du petrole qui circule (test GLM schema abstrait) ----
+    "flux-petrole-conceptuel": r"""
+SUJET DE LA SCENE : un DIAGRAMME DE FLUX CONCEPTUEL (schema de circulation), PAS un paysage. On illustre un PRINCIPE :
+"la richesse du petrole sort du pays au lieu d'y rester". Pense infographie d'etat-major / blueprint conceptuel.
+
+⛔⛔ PHILOSOPHIE : SCHEMA ABSTRAIT lisible en <1s. 4-5 noeuds HEROS relies par des FLUX flechés. PAS de scene realiste,
+PAS de figure vivante. Des PICTOGRAMMES SIMPLES (derrick, baril, banque/coffre, fleche sortante) + des fleches de flux.
+
+Structure en groupes nommes (<g id>) pour animation sequentielle :
+- LE GISEMENT / SOURCE (id="source") : a gauche, un pictogramme de derrick ou de gisement (la source de la richesse).
+- LE BARIL / RESSOURCE (id="ressource") : un baril ou un symbole de petrole brut qui sort de la source.
+- LE FLUX SORTANT (id="flux-sortant") : de GROSSES fleches courbes qui emportent la richesse VERS LA DROITE / HORS
+  CADRE (vers l'exterieur / l'etranger), c'est le coeur du message. Fleches epaisses, directionnelles.
+- LE COFFRE / DESTINATAIRE EXTERNE (id="destinataire") : a droite, un coffre-fort ou symbole de capital etranger qui
+  RECOIT (la richesse part la-bas). Eventuellement hors-cadre suggere.
+- LA PART QUI RESTE (id="part-locale") : en bas, une TOUTE PETITE fleche / petite portion qui reste au pays (le
+  contraste : presque rien reste). Le desequilibre doit se LIRE visuellement (gros flux sortant vs mince flux local).
+- ETIQUETTES (id="etiquettes") : 3-4 labels courts (type "EXTRACTION", "EXPORT", "CAPITAL ETRANGER", "PART LOCALE").
+Le SENS prime : le desequilibre du flux raconte tout. Compose pour animer les fleches qui "coulent" vers l'exterieur. Premium.
+""",
     # ---- GRANDE MURAILLE VERTE : VUE TOP-DOWN du mur d'arbres (B1 hook + B5 preuve) ----
     "mur-topdown": r"""
 SUJET DE LA SCENE : une VUE DE DESSUS (top-down, vue aerienne / vue satellite stylisee) d'une portion de l'AFRIQUE
@@ -577,6 +649,9 @@ SCENE_REGISTRE = {
     "or-darfour-hero": "or-jour",
     "creuset-armes": "braise-or",
     "graine-arbre": "papier-decoupe",
+    "graine-arbre-encre": "encre",
+    "excavatrice-blueprint": "blueprint",
+    "flux-petrole-conceptuel": "tactique",
     "demilune-racine": "papier-decoupe",
     "mur-topdown": "braise-or",
 }
@@ -617,10 +692,28 @@ def gen_gpt(prompt: str, out: Path):
     print(f"[gpt] saved raw -> {out}  ({len(text)} chars)")
 
 
+def gen_glm(prompt: str, out: Path):
+    """GLM-5.2 via OpenRouter : 3e modele low-cost, tres bon en geometrie/technique/schema (R&D 2026-06-24).
+    TEXT-ONLY (pas d'image-ref). Gotcha (Simon Willison) : GLM peut wrapper le SVG dans un HTML + CSS anime ;
+    l'extraction cote lecture ne garde que le <svg> statique. Ne PAS passer max_tokens (raisonnement)."""
+    import requests
+    key = os.getenv("OPENROUTER_API_KEY")
+    if not key:
+        print("ERROR: OPENROUTER_API_KEY missing"); sys.exit(1)
+    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    payload = {"model": GLM_MODEL, "messages": [{"role": "user", "content": prompt}]}
+    print(f"[glm] {GLM_MODEL} via OpenRouter (text-only) ...")
+    r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=600)
+    r.raise_for_status()
+    text = r.json()["choices"][0]["message"]["content"]
+    out.write_text(text, encoding="utf-8")
+    print(f"[glm] saved raw -> {out}  ({len(text)} chars)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--scene", required=True, choices=list(SCENES.keys()))
-    ap.add_argument("--provider", required=True, choices=["gemini", "gpt"])
+    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "glm"])
     ap.add_argument("--registre", default=None, choices=list(REGISTRES.keys()),
                     help="Force un registre visuel (override du defaut de la scene). Utile pour un comparatif d'identite.")
     ap.add_argument("--out", required=True)
@@ -630,6 +723,8 @@ def main():
     prompt = build_prompt(args.scene, args.registre)
     if args.provider == "gemini":
         gen_gemini(prompt, out)
+    elif args.provider == "glm":
+        gen_glm(prompt, out)
     else:
         gen_gpt(prompt, out)
 

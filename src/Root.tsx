@@ -225,6 +225,9 @@ import { B2MecheEteinte } from "./projects/_rnd/svg-scenes/B2MecheEteinte";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
+import { FluxPetroleAnimee } from "./projects/_rnd/svg-scenes/FluxPetroleAnimee";
+import { JetonsQwenDemo } from "./projects/_rnd/svg-scenes/JetonsQwenDemo";
+import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
 import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
@@ -2237,6 +2240,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
         <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
+        <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
+        <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
+        <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />

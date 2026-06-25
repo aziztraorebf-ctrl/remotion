@@ -23,6 +23,11 @@ load_dotenv(ROOT / ".env")
 
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.5"
+# GLM-5.2 = 3e modele complementaire low-cost ($1.40/$4.40 via OpenRouter) pour jetons / assets SVG en lot.
+# R&D 2026-06-24 : bat Qwen3.6 sur les jetons (4/5), JSX f-driven exploitable direct en Remotion.
+# text-only (pas d'image-ref) ; brief verbal sans contradiction ; ne PAS limiter max_tokens (raisonnement).
+# Detail : memory/tools/openrouter-svg.md. (Qwen3.6 et MiniMax M3 testes puis ecartes — voir le memo.)
+GLM_MODEL = "z-ai/glm-5.2"
 
 # Le brief : ce qu'on veut, le registre exact, la contrainte technique (frame-driven, centre 0,0).
 PROMPT = r"""
@@ -93,15 +98,34 @@ def gen_gpt(out: Path):
     print(f"Saved raw: {out}")
 
 
+def gen_glm(out: Path):
+    """GLM-5.2 via OpenRouter : 3e modele low-cost pour jetons / assets SVG en lot (R&D 2026-06-24).
+    Ne PAS passer max_tokens (le raisonnement etouffe la sortie). text-only : pas d'image-ref."""
+    import requests
+    key = os.getenv("OPENROUTER_API_KEY")
+    if not key:
+        print("ERROR: OPENROUTER_API_KEY missing"); sys.exit(1)
+    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    payload = {"model": GLM_MODEL, "messages": [{"role": "user", "content": PROMPT}]}
+    print(f"Generating SVG tokens with {GLM_MODEL} via OpenRouter...")
+    r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=600)
+    r.raise_for_status()
+    text = r.json()["choices"][0]["message"]["content"]
+    out.write_text(text, encoding="utf-8")
+    print(f"[glm] Saved raw: {out}  ({len(text)} chars)")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", required=True, choices=["gemini", "gpt"])
+    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "glm"])
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = Path(args.out)
     out.parent.mkdir(parents=True, exist_ok=True)
     if args.provider == "gemini":
         gen_gemini(out)
+    elif args.provider == "glm":
+        gen_glm(out)
     else:
         gen_gpt(out)
 

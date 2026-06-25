@@ -4,6 +4,29 @@
 > (`SenegalCoinFaceA_SVG`) d'un OBJET-symbole à une SCÈNE COMPLÈTE (paysage, ville, carte d'état-major…).
 > Source de vérité pour tout ce qui est "SVG vectoriel généré par LLM puis animé par code".
 > Le verdict jetons (jetons hexa) reste dans [[key-learnings]] + [[CARTO-OVERLAYS-PRINCIPES]] — NE PAS dupliquer.
+> Pour un short SVG concret (statut/registre/outils) : voir l'ETAT du projet (ex [[ETAT-GGW-MURAILLE-VERTE]]).
+
+## ⭐⭐ ACQUIS TRANSVERSES (prouvés Beat 1 hook + Beat 2 échec GGW, 2026-06-24)
+Ces règles valent pour TOUTE scène SVG animée, pas seulement la Muraille Verte :
+1. **Idéation via Kimi K2.5 MULTIMODAL** (`scripts/tools/kimi-svg-ideation.py`) : joindre 2-3 frames SVG comme
+   CALIBRAGE DU MÉDIUM ("référence de faisabilité, PAS un modèle à copier") + le découpage audio réel.
+   Kimi propose des SCÈNES et des CHORÉGRAPHIES d'animation qu'on ne trouve pas seul (prouvé : "la mèche
+   éteinte"). Claude FILTRE ensuite par connaissance du projet. Le bug provider OpenRouter (réponse parasite
+   JSON) se contourne en RELANÇANT l'appel (retry jusqu'à réponse valide).
+2. **Image-cible = SVG NATIF** (gemini-3.1-pro / gpt-5.5), jamais raster → écart faisabilité nul. Voir [[SVG-FAISABILITE-AMONT]].
+3. **Colorisation TIMÉE maîtrisée** : ne pas tout colorer d'emblée. Le monde reste en encre ; chaque touche de
+   couleur a un TIMING + un SENS, espacée. Garder de la "munition couleur" pour le climax.
+4. **État VIVANT au départ, dégradation = ÉVÉNEMENT** : les éléments naissent pleins/vivants et se dégradent
+   en se racontant (vert → gris → nu). Jamais naître déjà-mort (spoile + ce n'est pas un récit).
+5. **PAS de mouvement caméra qui fait valser une scène frontale** : un translateY global du "monde" = glissement
+   parasite. Scènes SVG frontales = FIXES ; raccord par FADE, pas par déplacement de toute la scène.
+6. **Transformation en CASCADE séquentielle** (~0.4s d'intervalle) > en bloc : la propagation se VOIT avancer = rythme.
+7. **Sous-titres KARAOKE mot-à-mot** (pattern `AtlasV2Subtitles.tsx`) adapté au registre : mot pas dit = pâle,
+   mot dit = plein, mot en cours = touche d'accent. Calé sur l'alignment mot-par-mot.
+8. **Sources en short = micro-source (centrée sous le sous-titre) + description, JAMAIS de carton de fin**
+   (casse le rythme). Rigueur sans casser le visuel.
+9. **Production déléguée à des agents frais en parallèle** (worktrees isolés), SOCLE commun imposé (calage audio,
+   grammaire, palette) → comparatif équitable + mix-and-match (les `<g id>` se recomposent entre cibles).
 
 ---
 
@@ -63,6 +86,21 @@ Test ville + carte d'état-major, Gemini 3.1 Pro vs GPT-5.5, même prompt :
 
 **Conséquence opératoire** : pour une scène SVG, **TOUJOURS générer les 2 (Gemini + GPT-5.5) et choisir selon la
 nature**. Cohérent avec le verdict transversal : Gemini gagne la GÉNÉRATION d'image, GPT gagne le BREAKDOWN/schéma.
+
+### ⭐ GLM-5.2 — 3e modèle low-cost pour JETONS et ASSETS SVG (R&D 2026-06-24)
+
+**GPT-5.5 + Gemini restent les modèles PRINCIPAUX des scènes** (règle ci-dessus inchangée). On ajoute **GLM-5.2** (`z-ai/glm-5.2` via OpenRouter, $1.40/$4.40, **5-7× moins cher**) comme **3e modèle COMPLÉMENTAIRE**, appelé pour :
+- **jetons / pictogrammes / petits assets SVG en lot** (planche de N en 1 appel) → `scripts/tools/llm-gen-svg.py --provider glm` ;
+- **plusieurs éléments SVG variés d'une scène quand on veut de la qualité** (ex. assets AES) ;
+- **option de test / 3e voix** pour comparer.
+
+⛔ **PAS** les drapeaux de carte Mapbox (règle E2 `useClipFlags` = vraies images, inchangée). ⛔ **PAS** le pipeline scènes narratives principal (GPT/Gemini). GLM est **excellent en géométrie/technique/schéma/diagramme/jetons** (≈ GPT-5.5), **faible sur l'encre/gravure** (arbre naïf) → ne pas l'y envoyer.
+
+**Gotchas GLM (avant appel)** : TEXT-ONLY (brief verbal, pas d'image-réf ; brief sans contradiction de registre) · ne PAS limiter `max_tokens` (raisonnement) · peut wrapper en HTML+CSS → strip le CSS, garder le `<svg>` statique. Détail + verdict comparatif 4 modèles + IDs/prix + gotchas : **[[openrouter-svg]]** (`memory/tools/openrouter-svg.md`).
+
+**Pipeline prouvé bout-en-bout** : GLM → JSON → composants React `{f}` / groupes nommés → animation par frame Remotion (zéro CSS) → render. Réfs : `src/projects/_rnd/svg-scenes/GisementTokensGlm.tsx` + `JetonsGlmDemo.tsx` (jetons), `FluxPetroleAnimee.tsx` (scène conceptuelle). Le JSX `f`-driven de GLM compile sans retouche. Jetons animés : https://files.catbox.moe/jmeup8.mp4 · flux conceptuel : https://files.catbox.moe/hhftb1.mp4
+
+**Qwen3.6 et MiniMax M3** : testés puis **écartés** (Qwen un cran sous GLM sur les jetons, écart prix dérisoire ; MiniMax ~7 min/scène = impraticable). Détail dans [[openrouter-svg]].
 
 ⚠️ NUANCE (prouvée offshore blueprint) : la règle vaut surtout quand les 2 scènes opposent organique vs schéma.
 Quand les DEUX sont dans le même registre "schéma technique" (ex blueprint), c'est plus serré : sur la plateforme
