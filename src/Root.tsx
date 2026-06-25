@@ -209,6 +209,8 @@ import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
 import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
 import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
+import { B5LaPreuve } from "./projects/_rnd/svg-scenes/B5LaPreuve";
+import { B6Outro } from "./projects/_rnd/svg-scenes/B6Outro";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
@@ -2179,6 +2181,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-B3Malentendu" component={B3Malentendu} durationInFrames={468} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B5LaPreuve" component={B5LaPreuve} durationInFrames={596} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B6Outro" component={B6Outro} durationInFrames={690} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
