@@ -220,6 +220,19 @@ Contre-check obligatoire : lire manifest projet ET script avant de proposer voix
 
 ## Session log
 
+### 2026-06-25 (GGW Muraille Verte — correction FMNR B4+B5)
+**Par agent audio-director.** Regeneration factuelle B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pure). B1/B2/B3/B6 INCHANGES.
+- Pipeline EXACT reproduit : V3 Oceane (CqTrL0ThT2GJVJEIiLcY) -> STS GeoAfrique (z3gESu49naEZW8Af2Upm), V3 stab 0.30/sim 0.75/style 0.0/speed 1.0, STS stab 0.45/sim 0.80/style 0.0. (Coherence voix avec les 4 autres beats.)
+- ⚠️ Le meta original GGW a style=0.0 (PAS 0.25 comme defaut agent generique). Toujours relire le meta du projet, ne pas appliquer les defauts agent en aveugle.
+- Scan TTS : 0 bloquant. 1 risque mineur 'Pas plantes.' (participe -es fin de groupe court, staccato voulu Aziz) -> aligne loss 0.336, prononce, gardé. 'Tony Rinaudo' nom propre -> aligne loss 0.258 (frontiere, normal), present.
+- Durees : B4 24.985s/750f@30 (etait 19.319s) ; B5 14.118s/424f@30 (etait 19.876s). Total 114.521s (B4 +5.67 compense B5 -5.76, ~inchange).
+- RMS B4 -17.3dB / B5 -16.6dB, max -1.3dB, 0 clipping. Alignment loss B4 0.054 / B5 0.169.
+- Livrables : narration-beat{4,5}.mp3 + beat{4,5}.alignment.json + beat-bounds.json v4 + narration-beat{4,5}.script.txt (texte tagge V3 trace) + .preFMNR.bak.mp3 (anciens).
+- catbox B4 https://files.catbox.moe/9geiq6.mp3 | B5 https://files.catbox.moe/5jgb0o.mp3
+- Script alignement reutilisable : scripts/tools/ggw-b4b5-alignment.py
+- ⛔ Note rendu : chaque beat = compo STANDALONE (narration-beatN.mp3 isole, frame 0 = debut beat). Pour l'animation, durationInFrames B4=750, B5=424. beat-bounds = calage assemblage global.
+- VALIDATION PENDING Aziz (ecoute B4 'Tony Rinaudo' + B5 'Pas plantes').
+
 ### 2026-04-13 (initial)
 Agent cree. Aucune invocation encore.
 

@@ -546,6 +546,57 @@ Quand un composant accepte une image externe (portrait, photo archive, carte), t
 
 ## ✅ FACT-CHECK
 
+## ⛔⛔ GATE FACT-CHECK D'ATTRIBUTION — AVANT de graver toute scène qui NOMME une personne / attribue une technique / un lieu / une citation (2026-06-25, GGW Beat 4) — NON-NEGOCIABLE, TOUS PROJETS
+
+**L'erreur (a failli graver une fausse attribution dans le pilote GGW)** : on a produit un Beat 4 avec le portrait de
+**Yacouba Sawadogo** (zaï, Burkina Faso, qui PLANTE des arbres dans ses trous) sur la phrase-climax « réveille des racines
+encore vivantes… **sans planter un seul arbre** ». Or cette phrase = la signature de **Tony Rinaudo / FMNR au Niger**
+(« without planting a single tree, simply by recognizing what was there, literally at our feet ») — pas Sawadogo. PIRE :
+le script mélangeait DEUX mécanismes distincts dans une scène (demi-lune = CREUSER pour retenir l'eau ; FMNR = TAILLER
+les souches déjà vivantes, sans creuser). C'est **Aziz** qui a rattrapé l'erreur en demandant une double-recherche, pas Claude.
+
+**Cause racine** : tous les éléments du script étaient INDIVIDUELLEMENT vrais (demi-lunes réelles, FMNR réelle, Sahel, 200M
+arbres Niger), donc le script « sonnait vrai » et a passé la recherche de sujet. Mais l'**ATTRIBUTION précise** (qui a fait
+quoi, où, quelle technique pour quelle phrase) n'a JAMAIS été vérifiée comme étape dédiée — elle a été improvisée au moment
+de produire la scène (choix du portrait). Un fait vrai + une attribution fausse = mensonge à l'écran, potentiellement
+catastrophique (on nomme une vraie personne décédée).
+
+**LA RÈGLE (gate bloquante)** : dès qu'une scène va NOMMER une personne réelle, ATTRIBUER une technique/invention/citation,
+ou situer un fait dans un PAYS précis → AVANT de produire/graver, faire une **double-recherche d'attribution** (2+ sources
+indépendantes) répondant à : QUI a fait QUOI, OÙ, et la citation/phrase est-elle de CETTE personne ? Vérifier surtout les
+cas « ça sonne vrai » (le plus dangereux). Ne JAMAIS coller un visage/nom sur une phrase sans avoir confirmé l'attribution.
+Si deux figures/techniques/lieux sont proches (Sawadogo/zaï/Burkina VS Rinaudo/FMNR/Niger), les SÉPARER explicitement —
+ne pas les fondre par commodité narrative. Le découpage audio PAR BEAT permet de corriger une seule scène sans toucher le reste.
+
+**⛔ RENFORCEMENT — vérifier l'ORIGINE et l'ANTÉRIORITÉ, pas seulement l'identité (2026-06-25, Aziz)** : quand on attribue
+un GESTE, un SAVOIR, une DÉCOUVERTE ou une INVENTION à quelqu'un, ne pas se contenter de vérifier que la personne existe et
+est liée au sujet. Vérifier RIGOUREUSEMENT que **c'est vraiment ELLE qui est à l'origine** : a-t-elle posé ce geste / eu cette
+idée EN PREMIER, ou d'autres l'avaient-ils fait/su AVANT ? Le savoir était-il déjà répandu (auquel cas « X l'a découvert »
+est faux) ou réellement nouveau ? Inversement, un savoir présenté comme « ancestral / les gens connaissaient déjà » l'était-il
+vraiment, ou est-ce une redécouverte par UNE personne (cas GGW : on a failli écrire « les paysans du Sahel connaissaient déjà »
+alors que c'est Rinaudo qui a VU que les souches arrachées étaient vivantes — les paysans ne le savaient pas). Ne JAMAIS
+affirmer l'origine/la paternité/l'antériorité sans l'avoir vérifiée. Dans le doute, formuler en TANDEM/rôles distincts
+(« X a découvert, les paysans ont propagé ») plutôt qu'attribuer faussement à un seul. C'est une faute aussi grave qu'un faux
+chiffre : elle réécrit l'Histoire à l'écran.
+
+## ⛔⛔ GATE COHÉRENCE INTER-BEATS — auditer la CHAÎNE causale/mécanique sur TOUS les beats ENSEMBLE avant de graver (2026-06-25, GGW) — NON-NEGOCIABLE
+
+**L'erreur (révélée en auditant GGW)** : on a écrit le script SCÈNE PAR SCÈNE et validé chaque scène ISOLÉMENT. Résultat :
+le Beat 4 introduisait une « cuvette en demi-lune » et le Beat 5 y référait (« là où ces cuvettes captent la pluie, l'eau
+remonte… +17m »). Quand on a dû corriger le B4 (mélange de 2 techniques), on a découvert que le B5 EN DÉPENDAIT — et que le
+short fusionnait en réalité DEUX techniques distinctes comme si c'en était une seule : les DEMI-LUNES/zaï (creuser → capter
+l'eau → la nappe remonte, le « +17m ») ET la FMNR (protéger/tailler les souches vivantes → les arbres reviennent, « sans
+planter », « 200M arbres »). Vrai au Niger toutes les deux, mais EFFETS et GESTES différents — les fondre = raccourci faux.
+
+**LA RÈGLE (gate bloquante)** : avant de graver un script multi-scènes, faire un AUDIT DE LA CHAÎNE sur l'ensemble des beats,
+PAS scène par scène : (1) tout terme/mécanisme/objet introduit à un beat et RÉFÉRENCÉ à un autre (« ces cuvettes », « cette
+technique ») doit avoir un antécédent cohérent ; (2) une CAUSE → un EFFET : ne pas attribuer à un mécanisme un effet qui
+appartient à un autre (la nappe qui remonte = les demi-lunes ; les arbres qui reviennent = la FMNR) ; (3) une seule solution-
+héros si possible — si plusieurs coexistent, les DISTINGUER explicitement, jamais les fondre. Relire le script EN ENTIER en
+traçant chaque mécanisme d'un bout à l'autre. Corollaire SVG (notre force) : changer un audio/une scène par beat est peu
+coûteux (audios découpés par beat, re-timing du code) — donc autant CORRIGER LE SCRIPT À FOND dès qu'une incohérence apparaît,
+plutôt que rustiner une scène. Lié à [[la gate fact-check d'attribution ci-dessus]].
+
 ## FACT-CHECK chiffres récents : Sonar Deep Research via OpenRouter + le piège "chiffre daté/trompeur" (2026-06-14, War-Map P4)
 
 **Capacité (réutilisable)** : pour vérifier des chiffres À JOUR (2025-2026) avant de les afficher dans une vidéo,
