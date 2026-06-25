@@ -1,9 +1,11 @@
 # Doctrine War-Map Long Format (5-7min)
 
+> ⭐ **Règles overlay/plein écran : voir `WARMAP-GRAMMAIRE.md` (source de vérité, prime sur ce fichier).**
+
 > **Lock 2026-06-06.** Nouveau genre validé lors de la session AES/Sahel.
 > Distinct de Souverain Mid-form (alterne map/data-viz) et de War-Map Short (9:16, 60-90s).
 > Format : 16:9, 5-7min, carte permanente à l'écran, overlays semi-transparents.
-> Référence script : `memory/episodes/warmap-sahel/SCRIPT-V3-FINAL-2026-06-06.md`
+> Référence script production réelle : `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` (V4 = référence de style antérieure uniquement)
 
 ---
 

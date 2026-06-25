@@ -31,7 +31,6 @@
 >   Scripts : `scripts/tools/minimax-sahel-music{,-v2}.py`. À poser au concat final (1 morceau continu).
 >
 > 🧰 TEMPLATES (06-14/15) : `WarMapDimmedOverlay`, `WarMapSplitScreen` (2/3 volets). Doctrine `WARMAP-GRAMMAIRE.md`.
-> ⛔ DOCS OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
 
 ---
 
@@ -87,9 +86,7 @@ papier déjà appliqué). Gemini = signal jamais juge → confirmé.
 
 ## ⛔ REPRISE PROCHAINE SESSION (2026-06-12) — P2 NARRATIVE VALIDÉE, place à P3 (session parallèle)
 
-> 🟢 **POUR DÉMARRER LA P3 : LIRE `memory/episodes/warmap-sahel/BRIEF-PASSATION-P3.md` EN PREMIER** — brief
-> autonome (quel fichier copier = Partie2Blocage.tsx, PAS Proto24 ; triggers P3 vérifiés ; assets ; pattern
-> moteur ; ordre strict : REPRÉVOIR LE VISUEL → DA-brief → code). Tout y est, sans ambiguïté.
+> 🟢 **POUR DÉMARRER LA P3 : lire `PLAN-NARRATIF-P3.md` + `WARMAP-GRAMMAIRE.md`.** Partir de `Partie2Blocage.tsx` (PAS Proto24) ; triggers P3 vérifiés dans `narration-v5-alignment.json` ; ordre strict : REPRÉVOIR LE VISUEL → DA-brief → code. (BRIEF-PASSATION-P3.md supprimé — info consolidée ici.)
 
 **ÉTAT : Acte1 ✅ + P1 ✅ + P2 NARRATIVE ✅ VALIDÉE Aziz ("très bon point d'équilibre").**
 Reste sur la vidéo : **P3 "La Rupture" + P4 "Coût/Perspective" + assemblage final.** ~la moitié est derrière.
@@ -245,7 +242,7 @@ Repointé vers `narration-v5-expressive.mp3` (ligne ~1722). Mais Acte 1 encore c
 ## ▶ PROCHAINE ÉTAPE (session SAHEL — CODE) — ⭐ PLAN PRÊT
 **Le découpage beats + le plan visuel Partie 1 sont FAITS et VALIDÉS. Reste = exécuter le refactor + coder.**
 
-1. **Découpage beats** : `BEATS-V5.md` (5 parties, ~30 beats, frame-précis sur `narration-v5-alignment.json`). FAIT.
+1. **Découpage beats** : ~~`BEATS-V5.md`~~ (supprimé — frames décalées, remplacé par PLAN-NARRATIF-Px.md par partie). Utiliser `PLAN-NARRATIF-P3.md` + `PLAN-NARRATIF-P4.md` comme référence.
 2. **Plan visuel Partie 1 (canari)** validé DA 3 voix + Aziz : direction SOUSTRACTION (flux d'encre Libye→Mali +
    taches d'impact + vide d'État par chute d'opacité + hachures tensions). PAS d'overlay, PAS d'objets (P1 abstraite).
    Détail : `BEATS-V5.md` section CANARI + `reviews-p1/da-sahel-p1-upstream-{gemini,kimi,deepseek}.md`. FAIT.
