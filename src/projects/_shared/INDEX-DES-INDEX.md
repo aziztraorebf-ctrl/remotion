@@ -16,7 +16,7 @@
 |---|---|---|
 | **Composant Remotion général** (stat, comparaison, timeline, hook, portrait, preuve, réseau...) | `src/projects/_shared/COMPOSANTS-INDEX.md` | 71 composants par cas d'usage ("quand Aziz dit...") |
 | **Template carte Mapbox** (hook carto, insert, couleur/drapeau sur territoire, combo, fill-pattern, plaque+source) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` | 28 templates carte vivante + helpers. Drapeau dans un pays = `useClipFlags` ⭐⭐ (vraies images, jamais drawFlagCanvas). Plaque nom+stat+source = `GeoCountryPlaque`. Galerie : `dashboard/templates-carte-vivante.html` |
-| **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber, OdometerFlip...) | `memory/tools/CATALOGUE-GEMINI.md` | 40+ templates animés, format prompt Gemini |
+| **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber, OdometerFlip...) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` | 40+ templates animés, format prompt Gemini |
 | **TOUT Souverain** (Shorts 90s + Mid-form éco/géopo, Mapbox OU Remotion/data-viz) — POINT D'ENTRÉE | `src/projects/souverain/SOUVERAIN-INDEX.md` ⭐ | Carte maître Souverain : doctrine (DOCTRINE-SOUVERAIN), playbooks visuels (Mapbox + Remotion), démarrage Short, composants, éditorial |
 | **TOUT Atlas** (d3-geo, cartographie, sprites PixelLab, empires, batailles) — POINT D'ENTRÉE | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ | Carte maître Atlas : doctrine (ATLAS-PLAYBOOK), composants (COMPOSANTS-INDEX), assets (ATLAS-ASSETS-INDEX 568 sprites), 13 blueprints, démarrage beat |
 | **TOUT War-Map** (carte temporelle vivante, front jour-par-jour, contrôle territorial) — POINT D'ENTRÉE | `src/projects/warmap/WARMAP-INDEX.md` ⭐ | Carte maître War-Map : doctrines (GRAMMAIRE, PLAYBOOK, LONG, RESEARCH, ANIMER-OBJETS), moteur, briques, LA réf `SudanWarMapEpic60` |
@@ -42,7 +42,7 @@
 |---|---|
 | Breakdown beat (découpage script→storyboard) | `memory/tools/workflow-gemini-breakdown-schema.md` (inclut l'arsenal carte + consigne combo) |
 | Arsenal templates carte (détaillé) | `memory/tools/BRIEF-GEMINI-TEMPLATES-CARTE.md` |
-| Templates data-viz Souverain | `memory/tools/CATALOGUE-GEMINI.md` |
+| Templates data-viz Souverain | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` |
 
 ## 🎨 Doctrines (le "pourquoi" / les règles esthétiques)
 

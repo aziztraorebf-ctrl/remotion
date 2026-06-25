@@ -63,7 +63,7 @@ Puis lire la review, corriger les `fixes`, re-rendre si besoin, **re-lancer la r
 
 **Échappatoires volontaires (le hook NE bloque PAS)** : protos `_rnd/` / `_r-and-d/` (mécanique d'animation, pas livrable), mp4 hors `out/`, URL distantes (liens ntfy), et le cas « pas de clé API » (score illisible → passe avec un WARNING, le hook ne lance jamais de review lui-même).
 
-⚠️ Le hook ne JUGE pas le goût — il vérifie qu'une review OBJECTIVE a eu lieu (score/verdict/fraîcheur). Le jugement d'Aziz prime toujours sur le score. Détail conception : `memory/PLAN-SYSTEME-ANTI-FOUILLIS.md` (Chantier B).
+⚠️ Le hook ne JUGE pas le goût — il vérifie qu'une review OBJECTIVE a eu lieu (score/verdict/fraîcheur). Le jugement d'Aziz prime toujours sur le score. Détail conception : implémenté dans le hook `pre-presentation-review.sh` (Chantier B — fichier de conception supprimé après implémentation).
 
 ---
 
