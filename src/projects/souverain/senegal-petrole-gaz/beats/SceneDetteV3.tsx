@@ -1,7 +1,10 @@
 /**
  * SceneDetteV3 — "le piege de la dette" (terrain 2), Senegal Petrole & Gaz V3-REFONTE, scene 4.
  *
- * Ecrite DEPUIS LA VOIX (forced-align V3, segment 243.26s -> ~291.0s, ~47.7s).
+ * Ecrite DEPUIS LA VOIX (forced-align V3, segment 243.26s -> 288.7s, ~45.4s).
+ * Coupe a 288.7s : fin NETTE sur "...ne protege plus rien" (mot a 288.34s + 0.36s de souffle). La phrase
+ * "Reste le dernier terrain... loin de Dakar" (289.58s+) est l'AMORCE de la scene 5, PAS la fin de la 4
+ * (sinon l'audio coupait en plein milieu de cette phrase a 291.2s — raccord casse, retour Aziz 2026-06-25).
  * Plan + jury (Gemini+Kimi+DeepSeek) + storyboard valide Aziz : V3-REFONTE/PLAN-SCENE-4-DETTE.md.
  *
  * INTENTION (1 verbe) : SIPHONNER. Le Senegal a un fonds protege (le FONSIS) ou va l'argent du petrole,
@@ -47,8 +50,9 @@ const F_PIOCHER   = 783;  // "piocher dans l'argent du petrole" (BRECHE : le tri
 const F_FMI       = 983;  // "Le FMI tire la sonnette d'alarme" (cloche FMI)
 const F_NORVEGE   = 1128; // "plus souples que la Norvege" (ligne pointillee SEUIL NORVEGE, niveau deja en-dessous)
 const F_VIDER     = 1282; // "Un fonds qu'on peut vider... ne protege plus rien" (reserve a sec, mur casse, rouge submerge)
-const F_FIN       = 1389; // "Reste le dernier terrain... loin de Dakar" (teaser, fade)
-const END         = 1440;
+// La rupture (wallBreak + fondu fissures) se termine a F_VIDER+60 = 1342. Le mot "rien" finit a frame 1352.
+const F_FIN       = 1342; // debut du fade de sortie (apres la fin de l'effondrement, avant la coupe audio)
+const END         = 1363; // 288.7s : coupe nette apres le verdict (~45.4s). La suite = amorce scene 5.
 
 export const SceneDetteV3: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -57,7 +61,7 @@ export const SceneDetteV3: React.FC = () => {
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")}
         startFrom={Math.round(AUDIO_START * fps)}
-        endAt={Math.round(291.2 * fps)}
+        endAt={Math.round(288.7 * fps)}
       />
       {/* Musique de fond — REDEMARREE au DEBUT de la piste (startFrom=0) a l'entree de la scene 4 :
           la portion 243s+ de music-A s'emballe et concurrence la voix (retour Aziz) -> on reprend la
