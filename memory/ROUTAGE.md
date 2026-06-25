@@ -58,6 +58,17 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Règles production Atlas (non-négociable, checklist) | `memory/rules-atlas-production.md` |
 | Format « concept expliqué comme un jeu vidéo » | `memory/doctrines/ATLAS-FORMAT-VIDEO-GAME.md` (concepts oui, drames non) |
 
+### SVG génératif / Shorts SVG
+
+| Sujet | Fichier |
+|---|---|
+| **Point d'entrée SVG — AVANT tout code ou prompt SVG** | `memory/doctrines/SVG-SCENES-GENERATIVES.md` ⭐ technique (LLM dessine groupes nommés → Remotion anime), registres, grammaires, acquis transverses |
+| **Orchestration agents SVG (A→Z par beat)** | `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` ⭐⭐ flux 2 phases + point de contrôle, checklist de lancement, preuve Beat 3 GGW |
+| **Format SVG long (5-7min) ou SVG-insert dans Mapbox/Remotion** | `memory/doctrines/SVG-MIDFORM-FORMAT.md` ⭐⭐ critère = transformation visuelle de formes ; pipeline script-first |
+| **Épisode pilote Short SVG en cours (GGW Muraille Verte)** | `memory/episodes/shorts-svg/muraille-verte/ETAT-GGW-MURAILLE-VERTE.md` ⭐⭐ STATUT + REGISTRE + OUTILS + ACQUIS. Ce fichier PRIME en cas de conflit. |
+| Faisabilité SVG AMONT (LLM dit sa capacité + image-cible avant le code) | `memory/doctrines/SVG-FAISABILITE-AMONT.md` ⭐ méthode prouvée, pipeline par scène |
+| Bibliothèque de prompts-cibles SVG par registre | `memory/doctrines/templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md` |
+
 ### War-Map
 
 | Sujet | Fichier |

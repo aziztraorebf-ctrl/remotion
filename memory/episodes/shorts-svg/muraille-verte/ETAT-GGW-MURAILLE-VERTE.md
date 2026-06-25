@@ -83,31 +83,21 @@ les gestes, pas a imposer N plans.
 5. Render homogene (chef), comparatif catbox, Aziz tranche / mix-and-match (les `<g id>` se recomposent entre cibles).
 6. Polish : sous-titres KARAOKE + micro-sources + SFX (voir ACQUIS ci-dessous). Render FINAL.
 
-## ⭐ ACQUIS GRAVES (Beat 1 hook + Beat 2 echec) — NON-NEGOCIABLES
-1. **SCENE NARRATIVE > schema annote** : un MOMENT + 4-6 objets-heros qui RACONTENT. ZERO grille/cartouche/
-   tableau de chiffres. Les chiffres se DISENT a la voix + se MONTRENT par le geste (un arbre qui tombe = la
-   mort, PAS un compteur "75%"). Si infographie indispensable -> CODEE PAR NOUS (overlay), jamais par le LLM SVG.
-2. **Image-cible = SVG NATIF** (pas raster) -> ecart faisabilite nul (voir outils).
-3. **ENCRE = canevas couleur** : le monde reste en encre ; chaque touche de couleur a un TIMING et un SENS.
-   Ne pas tout colorer d'emblee. Beat 2 : monde encre -> soleil or (1ere couleur, retarde ~6s) -> mort grise
-   -> survivant vert vif (climax). Garder de la "munition couleur" pour le climax.
-4. **Etat VIVANT au depart, degradation = EVENEMENT** : les elements naissent dans leur etat plein/vivant
-   (4 arbres verts feuillus identiques) et se degradent EN SE RACONTANT (grisent -> feuilles tombent -> tronc nu).
-   JAMAIS naitre deja-mort (ca spoile + ce n'est pas un recit).
-5. **PAS de mouvement camera qui fait valser une scene SVG frontale** : un translateY global du "monde" cree
-   un glissement parasite. Les scenes SVG frontales restent FIXES ; le raccord se fait par FADE, pas par
-   deplacement de toute la scene. (Prouve sur Beat 2 : la descente camera a ete retiree.)
-6. **Mort/transformation en CASCADE** (sequentielle) > en bloc : les 3 arbres meurent l'un apres l'autre
-   (~0.4s d'intervalle), la propagation se VOIT avancer = rythme + tension. (Repris de l'idee "meche eteinte".)
-7. **SOUS-TITRES KARAOKE mot-a-mot** : pattern `AtlasV2Subtitles.tsx` (Heros oublies/Atlas) adapte identite
-   encre : mot pas dit = encre pale (0.45), mot dit = encre pleine, mot en cours = touche verte discrete.
-   Bas (zone safe), ~37px, fond parchemin semi-transparent, cale sur l'alignment mot-par-mot. Chiffres en LETTRES.
-8. **SOURCES en short = micro-source + description, JAMAIS de carton de fin** : micro-ligne discrete (~27px,
-   encre opacity 0.7) CENTREE sous le sous-titre, timee sur le claim concerne. + sources completes en
-   description video. Pas de carton recap (casse le rythme du short). Rigueur sans casser le visuel.
-9. **DELEGUER a des agents frais** : un agent vierge (contexte propre) anime une cible aussi bien (souvent
-   mieux) que l'instance saturee. Chef = decoupe + socle commun + verifie + rend. Handoff = fichier disque.
-   Cible = lancer 2-3 scenes en parallele par session (worktrees isoles), Aziz + Claude donnent les finitions.
+## ⭐ ACQUIS GRAVES — NON-NEGOCIABLES
+
+Acquis transverses : voir [[SVG-SCENES-GENERATIVES]] §ACQUIS TRANSVERSES (9 regles : Kimi-idéation, SVG-natif,
+colorisation timée, état-vivant, pas de translateY global, cascade séquentielle, karaoké, micro-sources, agents frais).
+Specificites GGW seulement ci-dessous :
+
+- **REGISTRE ENCRE = canevas couleur pour CE SHORT** : Beat 2 illustre l'usage : monde encre -> soleil or (~6s,
+  1ere couleur retardee) -> mort grise -> survivant vert vif (climax). Garder de la "munition couleur" pour le climax.
+  La regie "ne pas tout colorer d'emblee" est PARTICULIEREMENT CRITIQUE ici car l'encre est l'identite visuelle du short.
+- **SCENE NARRATIVE > schema annote** (specifique au registre encre) : les chiffres se DISENT a la voix + se MONTRENT
+  par le geste (un arbre qui tombe = la mort, PAS un compteur "75%"). Si infographie indispensable -> CODEE PAR NOUS
+  (overlay), jamais par le LLM SVG.
+- **KARAOKE : couleur d'accent = vert discret** (pas la couleur d'accent generique du pattern AtlasV2Subtitles) —
+  adapte a l'identite parchemin creme #e8dcc0 / encre #2b2117. ~37px, fond parchemin semi-transparent.
+- **MICRO-SOURCES** : ~27px, encre opacity 0.7, CENTREE sous le sous-titre, timee sur le claim concerne.
 
 ## SFX (Beat 2, reutilisables / pattern)
 Dossier : `public/audio/ggw-muraille-verte/sfx/`. Generes via ElevenLabs sound-generation (prompts EN, sound
