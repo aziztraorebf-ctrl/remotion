@@ -92,7 +92,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 |---|---|
 | Composant Remotion général (stat, comparaison, timeline, hook, portrait, HERO DATA) | `src/projects/_shared/COMPOSANTS-INDEX.md` (71, par cas d'usage) |
 | Template carte Mapbox (hook/corps/insert, drapeau/couleur sur territoire) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` (28 + helpers) |
-| Template data-viz pour Gemini (BarRace, StackedBars, PulseNumber) | `memory/tools/CATALOGUE-GEMINI.md` (40+) |
+| Template data-viz pour Gemini (BarRace, StackedBars, PulseNumber) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+) |
 | Composant Atlas | `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` |
 | Brique War-Map | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` |
 | Hook d'ouverture animé (carte) « on a besoin d'un hook » | `src/projects/_shared/hooks-lib/HOOKS-LIBRARY-CATALOGUE.md` ⭐ (caméra serrée, pas continent figé) |
@@ -117,7 +117,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Mouvement caméra clip AI (orbit, dolly, crane, OTS) | `memory/tools/camera-movements.md` |
 | Seedance, Dreamina, prompt vidéo, clip | `memory/tools/seedance-prompts.md` + `seedance-rules.md` |
 | Seedance storyboard multi-cut (<15s) | `memory/tools/seedance-storyboard-technique.md` |
-| Template data-viz pour Gemini (BarRace, StackedBars…) | `memory/tools/CATALOGUE-GEMINI.md` (40+ templates) |
+| Template data-viz pour Gemini (BarRace, StackedBars…) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates) |
 | Asset PixelLab AVANT génération | `memory/tools/PIXELLAB-MASTER-INDEX.md` (~50 assets avec IDs) |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
 | Gemini, retouche image, character sheet | `memory/tools/gemini.md` |
