@@ -361,10 +361,6 @@ import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/Gold
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 import { PocImmobilierQC } from "./projects/_rnd/poc-immobilier-qc/PocImmobilierQC";
 import { PocMaliVideoGame } from "./projects/_rnd/poc-mali-videogame/PocMaliVideoGame";
-import { ProtoFlag_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoFlag_Sahel";
-import { ProtoBattle_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoBattle_Sahel";
-import { ProtoPieces_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoPieces_Sahel";
-import { ProtoSealAnim_Sahel } from "./projects/warmap/_rnd/decode-castile/ProtoSealAnim_Sahel";
 import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 
@@ -515,40 +511,6 @@ export const RemotionRoot: React.FC = () => {
       
       
       
-      <Folder name="warmap-decode-castile">
-        <Composition
-          id="ProtoFlag-Sahel"
-          component={ProtoFlag_Sahel}
-          durationInFrames={150}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoBattle-Sahel"
-          component={ProtoBattle_Sahel}
-          durationInFrames={240}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoPieces-Sahel"
-          component={ProtoPieces_Sahel}
-          durationInFrames={150}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoSealAnim-Sahel"
-          component={ProtoSealAnim_Sahel}
-          durationInFrames={120}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-      </Folder>
       <Folder name="atlas-peste-1347">
         <Composition
           id="HeroDataShowcase"

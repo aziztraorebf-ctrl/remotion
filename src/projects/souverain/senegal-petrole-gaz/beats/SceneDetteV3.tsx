@@ -261,8 +261,9 @@ const BarrageViz: React.FC = () => {
         <g>
           <path d={wallPath(0)} fill="url(#wallV)" clipPath="url(#rightHalf)" stroke={GOLD_HI} strokeWidth={1.5} />
         </g>
-        {/* fissures sur le mur (se tracent a F_ETOUFFE) — s'estompent quand le mur gauche disparait */}
-        <g opacity={1 - wallBreak * 0.85}>
+        {/* fissures sur le mur (se tracent a F_ETOUFFE) — DISPARAISSENT avec la moitie gauche du mur (retour Aziz).
+            Le fondu suit wallBreak avec un leger retard pour laisser voir la cassure NETTE avant l'effacement. */}
+        <g opacity={1 - interpolate(frame, [F_VIDER + 20, F_VIDER + 60], [0, 1], clamp)}>
           <WallCracks wallCx={wallCx} crestY={crestY} floorY={floorY} frame={frame} />
         </g>
         {/* label FONSIS grave sur le mur */}
@@ -373,10 +374,11 @@ function jaggedCrack(x0: number, y0: number, x1: number, y1: number, segs: numbe
   return d;
 }
 const WallCracks: React.FC<{ wallCx: number; crestY: number; floorY: number; frame: number }> = ({ wallCx, crestY, floorY, frame }) => {
-  // trace progressif F_ETOUFFE->F_PIOCHER. Les fissures s'epaississent un peu jusqu'a la rupture, mais
-  // ne "burstent" plus (le mur gauche DISPARAIT a F_VIDER -> les fissures s'estompent avec lui, gere par le parent).
+  // trace progressif F_ETOUFFE->F_PIOCHER (fines lezardes qui anticipent), PUIS a la rupture (F_VIDER) la
+  // FISSURE CENTRALE devient NETTE et marquee : le mur se SEPARE EN DEUX AU MILIEU (retour Aziz, regression v2->v3).
   const traceP = interpolate(frame, [F_ETOUFFE, F_PIOCHER], [0, 1], clamp);
-  const burst = interpolate(frame, [F_PIOCHER, F_VIDER], [0, 0.5], clamp); // epaississement modere, pas d'eclatement
+  // pic d'eclatement cale PILE sur la rupture (comme en v2) : la faille s'ouvre franchement au moment ou le mur cede.
+  const burst = interpolate(frame, [F_VIDER - 18, F_VIDER + 18], [0, 1], clamp);
   const midY = (crestY + floorY) / 2;
   // fissure maitresse verticale + 2 branches obliques (technique fracturePath)
   const cracks = [
@@ -385,6 +387,11 @@ const WallCracks: React.FC<{ wallCx: number; crestY: number; floorY: number; fra
     { d: jaggedCrack(wallCx - 2, midY + 30, wallCx - 30, floorY - 50, 7, 18, 5.3), w: 2.2 },
   ];
   const LEN = 420;
+  // FISSURE CENTRALE DE SEPARATION : une faille verticale nette plein centre (crete -> sol), qui s'OUVRE
+  // (largeur) a la rupture pour donner la lecture "le mur se fend en deux au milieu". Distincte des lezardes.
+  const splitCrack = jaggedCrack(wallCx, crestY + 6, wallCx, floorY - 6, 14, 16, 9.4);
+  const splitWidth = 4 + burst * 16; // de fine a tres marquee a la rupture
+  const splitOp = interpolate(frame, [F_VIDER - 24, F_VIDER - 4], [0, 1], clamp); // apparait JUSTE avant la separation
   return (
     <g>
       {cracks.map((c, i) => {
@@ -405,6 +412,18 @@ const WallCracks: React.FC<{ wallCx: number; crestY: number; floorY: number; fra
           </g>
         );
       })}
+      {/* ── la cassure centrale NETTE (separation en deux au milieu) ── */}
+      {splitOp > 0.01 && (
+        <g opacity={splitOp}>
+          {/* gouffre sombre (profondeur de la coupure) */}
+          <path d={splitCrack} fill="none" stroke="#06090f" strokeWidth={splitWidth + 6} strokeLinecap="round" strokeLinejoin="round" />
+          <path d={splitCrack} fill="none" stroke="#1a1208" strokeWidth={splitWidth} strokeLinecap="round" strokeLinejoin="round" />
+          {/* liseré rouge dette qui jaillit de la cassure au moment ou ca cede */}
+          {burst > 0.15 && (
+            <path d={splitCrack} fill="none" stroke="#b04030" strokeWidth={Math.max(1.5, splitWidth - 7)} strokeLinecap="round" strokeLinejoin="round" opacity={0.7 * burst} />
+          )}
+        </g>
+      )}
     </g>
   );
 };
@@ -457,9 +476,10 @@ const DrainStream: React.FC<{ wallCx: number; wallBotW: number; floorY: number; 
   const startY = floorY - 64;
   const endY = budgetY; // jusqu'au bord du bac BUDGET (continu, pas coupe au sol)
   const h = (endY - startY) * open;
-  // ruban epais a 3 bandes (vrai tricolore qui coule) — ecoulement CALME, quasi droit (pas de fretillement,
-  // retour Aziz : le jet ne doit pas s'agiter dans le bac). Micro-ondulation a peine perceptible.
-  const sway = Math.sin(frame / 16) * 1.2;
+  // ruban epais a 3 bandes (vrai tricolore qui coule) — IMMOBILE une fois etabli (retour Aziz : le filet
+  // ne doit plus bouger apres son apparition). Micro-ondulation seulement pendant l'amorcage (~1s), puis FIGE a 0.
+  const settle = interpolate(frame, [F_PIOCHER + 12, F_PIOCHER + 42], [1, 0], clamp); // 1 a l'ouverture -> 0 (fige)
+  const sway = Math.sin(frame / 16) * 1.2 * settle;
   const bandW = 7;
   return (
     <g>

@@ -1,0 +1,65 @@
+=== BRIEF DA — DIVERGENCE CRÉATIVE LIBRE (priorité absolue, lis ceci AVANT toute grille) ===
+
+CONSIGNE PRIORITAIRE : on ne te demande PAS un audit de correction. On te demande des IDÉES NEUVES,
+les plus fortes et les plus originales possibles, pour l'OUVERTURE (Acte 1, ~32 secondes) d'un
+documentaire cartographique géopolitique. Pense comme un directeur artistique des MEILLEURES chaînes
+du genre (Johnny Harris, Polymatter, RealLifeLore, Operations Room, Kurzgesagt, Vox, Wendover).
+On veut être SURPRIS. Si tu trouves que ce qu'on fait d'habitude est convenu, DIS-LE et propose mieux.
+
+Une grille d'angles "diagnostic" est ajoutée plus bas par l'outil — traite-la en SECONDAIRE.
+La PRIORITÉ N°1 = la divergence créative ci-dessous. Ne te censure pas par habitude.
+
+--- LE SUJET ---
+Trois pays du Sahel (Mali, Burkina Faso, Niger) ont, en moins de 3 ans (2020-2026), simultanément :
+chassé leurs partenaires militaires occidentaux, rompu leurs alliances historiques, quitté la CEDEAO
+(principale organisation régionale du continent), et fondé leur propre confédération (AES — Alliance
+des États du Sahel). C'est un basculement géopolitique majeur et rare. L'ouverture doit créer la
+SIDÉRATION ("comment 3 pays ont pu tout changer en même temps ?") et donner envie de comprendre.
+
+--- LE TEXTE V5 DE L'OUVERTURE (voix off, frames @30fps) ---
+« En moins de trois ans, trois pays ont tout changé en même temps. [f0-145]
+Ils chassent leurs partenaires militaires [f145].
+Rompent leurs alliances historiques [f217].
+Et quittent la principale organisation régionale du continent [f286-361].
+Et bâtissent quelque chose de nouveau [f477].
+Comment est-ce possible [f539] ? Et surtout… pourquoi maintenant [~f560] ?
+Pour répondre à cette question [f684], il faut d'abord regarder ce qui existait avant. » [→ corps à ~f900-960]
+
+--- CE QUI EXISTE AUJOURD'HUI (8 frames jointes, état actuel à challenger) ---
+1. (f60) HOOK : un viseur crosshair cherche sur la carte épurée.
+2. (f150) Le Mali s'allume (contour ocre se dessine + pulse) au mot "chassent".
+3. (f300) Viseur verrouillé sur la zone AES ; villes en plaques parchemin.
+4. (f440) Les 3 pays allumés (Mali ocre, Burkina brique, Niger sarcelle), 3 plaques de capitales.
+5. (f600) "Creux" : les 3 pays figés, caméra commence à dériver. <-- POINT FAIBLE : trop vide/statique.
+6. (f700) Creux, drift caméra lent. Rien ne se passe. <-- LE problème à résoudre créativement.
+7. (f900) Push-in caméra commence (transition vers le corps).
+8. (f959) Arrivée du corps (les combattants vont apparaître).
+
+Notre auto-critique : le HOOK (0-15s) marche (viseur + allumage séquentiel). Le CREUX (15-30s,
+frames 5-6-7) est mou : 3 zones beiges figées qui glissent pendant que la voix pose "comment/pourquoi
+maintenant/regarder ce qui existait avant". On cherche des idées FORTES pour TOUTE l'ouverture, et
+spécialement pour transformer ce creux en moment de tension/bascule mémorable.
+
+--- TERRAIN DE JEU (notre médium — sois créatif DEDANS, pas une checklist qui éteint l'imagination) ---
+- Format 16:9, carte PLEIN ÉCRAN en permanence (jamais de plein écran type slide/carton — c'est une war-map).
+- UNE SEULE carte Mapbox CONTINUE, pilotée frame par frame (caméra = useCurrentFrame + interpolate +
+  map.jumpTo ; on peut zoomer/dézoomer/paner/pitch à volonté de façon cinématique). PAS de cut entre cartes.
+- Fond parchemin épuré validé (terres ivoire clair, océan gris-bleu, contours pays). Pas de blocs de
+  couleur de contrôle, pas de légende, pas de timeline (on a tout épuré récemment, on aime ça).
+- Boîte à outils RENDU : SVG animé maison frame-driven (formes, paths, déformation, jauges, ondes,
+  stroke-dashoffset) ; icônes Lucide (~1500, nettes, animables) ; sprites image (Gemini, trait net) ;
+  vrais drapeaux clippés ; déplacement d'objets géo-ancrés (jetons, marqueurs) ; grain papier, vignette.
+- PAS DISPONIBLE : After Effects, 3D volumétrique, blur CSS, particules GPU. Tout est React/SVG/Mapbox.
+- C'est un format LONG (7 min) : l'ouverture doit ACCROCHER mais aussi POSER le ton de toute la série.
+
+--- CE QU'ON ATTEND DE TOI ---
+A. 3 à 5 CONCEPTS D'OUVERTURE distincts et ambitieux (pas des variantes du viseur actuel). Pour chacun :
+   l'IDÉE FORTE en 1 phrase + comment elle se déroule sur les ~32s + pourquoi elle crée la sidération.
+B. Pour le CREUX (15-30s) spécifiquement : 2-3 idées pour le rendre mémorable (mouvement caméra
+   signature, élément qui monte, bascule temporelle vers "avant", tension visuelle…).
+C. Pour CHAQUE idée : une note de FAISABILITÉ honnête dans notre terrain de jeu (réalisable tel quel /
+   demande un asset / ambitieux mais possible / hors médium). On triera nous-mêmes — ne t'autocensure pas,
+   mais signale ce qui sort du médium.
+D. Si tu penses que des références précises (telle chaîne, tel procédé connu) nous inspireraient, NOMME-LES.
+
+Sois concret, visuel, ose. On préfère 5 idées dont 2 folles à 5 idées sages.
