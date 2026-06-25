@@ -87,66 +87,72 @@ type Cue = { start: number; end: number; text: string };
 
 // Mots avec timings forced-alignment (start/end = SECONDES relatives au debut du beat).
 type Word = { word: string; start: number; end: number };
+// ⚠️ CORRECTION FACTUELLE (2026-06-25) : "Au Nigeria, 3 arbres sur 4 meurent en 2 mois" etait mal
+//   attribue (c'est le SAHEL global, pas le Nigeria) + "en 2 mois" invente. Corrige -> "dans le Sahel,
+//   pres de huit arbres sur dix meurent, faute d'eau" (~80% morts, sourcé Smithsonian/Yale). Audio B2
+//   regenere (606f). Scene SVG inchangee (4 arbres dont la majorite meurt = porte toujours le propos).
 const B2_WORDS: Word[] = [
-  { word: "L'idée", start: 0.114, end: 0.384 },
-  { word: "de", start: 0.464, end: 0.564 },
-  { word: "départ", start: 0.584, end: 1.024 },
-  { word: "aligner", start: 1.644, end: 2.024 },
-  { word: "des", start: 2.084, end: 2.264 },
-  { word: "arbres,", start: 2.364, end: 2.604 },
-  { word: "en", start: 2.924, end: 3.024 },
-  { word: "ligne", start: 3.044, end: 3.244 },
-  { word: "droite,", start: 3.264, end: 3.664 },
-  { word: "face", start: 3.944, end: 4.144 },
-  { word: "au", start: 4.164, end: 4.224 },
-  { word: "sable.", start: 4.284, end: 4.644 },
-  { word: "Au", start: 5.944, end: 6.004 },
-  { word: "Nigéria,", start: 6.064, end: 6.604 },
-  { word: "trois", start: 6.904, end: 7.144 },
-  { word: "arbres", start: 7.204, end: 7.384 },
-  { word: "sur", start: 7.424, end: 7.564 },
-  { word: "quatre", start: 7.644, end: 7.904 },
-  { word: "meurent", start: 8.044, end: 8.304 },
-  { word: "en", start: 8.344, end: 8.464 },
-  { word: "deux", start: 8.504, end: 8.644 },
-  { word: "mois.", start: 8.684, end: 8.884 },
-  { word: "Au", start: 9.784, end: 9.844 },
-  { word: "Sénégal,", start: 9.924, end: 10.484 },
-  { word: "sur", start: 10.684, end: 10.863 },
-  { word: "trente-six", start: 10.904, end: 11.244 },
-  { word: "zones", start: 11.364, end: 11.544 },
-  { word: "plantées,", start: 11.624, end: 12.024 },
-  { word: "une", start: 12.584, end: 12.724 },
-  { word: "seule", start: 12.824, end: 13.024 },
-  { word: "reverdit", start: 13.084, end: 13.543 },
-  { word: "vraiment.", start: 13.584, end: 13.964 },
-  { word: "Les", start: 14.984, end: 15.104 },
-  { word: "scientifiques", start: 15.124, end: 15.664 },
-  { word: "sont", start: 15.724, end: 15.884 },
-  { word: "durs", start: 15.904, end: 16.184 },
-  { word: "sur", start: 16.484, end: 16.644 },
-  { word: "le", start: 16.684, end: 16.724 },
-  { word: "papier,", start: 16.804, end: 17.184 },
-  { word: "cette", start: 17.424, end: 17.604 },
-  { word: "idée", start: 17.664, end: 17.864 },
-  { word: "n'avait", start: 17.873, end: 18.244 },
-  { word: "aucune", start: 18.304, end: 18.624 },
-  { word: "chance.", start: 18.664, end: 19.004 },
+  { word: "L'idée", start: 0.119, end: 0.519 },
+  { word: "de", start: 0.519, end: 0.659 },
+  { word: "départ", start: 0.659, end: 1.179 },
+  { word: "aligner", start: 1.500, end: 2.000 },
+  { word: "des", start: 2.000, end: 2.259 },
+  { word: "arbres,", start: 2.259, end: 2.799 },
+  { word: "en", start: 2.799, end: 2.939 },
+  { word: "ligne", start: 2.939, end: 3.159 },
+  { word: "droite,", start: 3.159, end: 3.819 },
+  { word: "face", start: 3.819, end: 4.039 },
+  { word: "au", start: 4.039, end: 4.219 },
+  { word: "sable.", start: 4.219, end: 4.644 },
+  { word: "Mais", start: 5.199, end: 5.359 },
+  { word: "dans", start: 5.359, end: 5.559 },
+  { word: "le", start: 5.559, end: 5.739 },
+  { word: "Sahel,", start: 5.739, end: 6.639 },
+  { word: "près", start: 6.639, end: 6.879 },
+  { word: "de", start: 6.879, end: 7.039 },
+  { word: "huit", start: 7.039, end: 7.319 },
+  { word: "arbres", start: 7.319, end: 7.699 },
+  { word: "sur", start: 7.699, end: 7.940 },
+  { word: "dix", start: 7.940, end: 8.359 },
+  { word: "meurent,", start: 8.359, end: 8.960 },
+  { word: "faute", start: 8.960, end: 9.199 },
+  { word: "d'eau.", start: 9.199, end: 9.799 },
+  { word: "Au", start: 10.340, end: 10.500 },
+  { word: "Sénégal,", start: 10.500, end: 11.300 },
+  { word: "sur", start: 11.300, end: 11.539 },
+  { word: "trente-six", start: 11.539, end: 12.039 },
+  { word: "zones", start: 12.039, end: 12.319 },
+  { word: "plantées,", start: 12.319, end: 13.219 },
+  { word: "une", start: 13.219, end: 13.439 },
+  { word: "seule", start: 13.439, end: 13.799 },
+  { word: "a", start: 13.799, end: 13.899 },
+  { word: "vraiment", start: 13.899, end: 14.279 },
+  { word: "reverdi.", start: 14.279, end: 16.119 },
+  { word: "Les", start: 16.119, end: 16.260 },
+  { word: "scientifiques", start: 16.260, end: 16.840 },
+  { word: "sont", start: 16.840, end: 17.039 },
+  { word: "durs", start: 17.039, end: 17.519 },
+  { word: "sur", start: 17.579, end: 17.760 },
+  { word: "le", start: 17.760, end: 17.920 },
+  { word: "papier,", start: 17.920, end: 18.539 },
+  { word: "cette", start: 18.539, end: 18.779 },
+  { word: "idée", start: 18.779, end: 19.000 },
+  { word: "n'avait", start: 19.000, end: 19.379 },
+  { word: "aucune", start: 19.379, end: 19.779 },
+  { word: "chance.", start: 19.779, end: 20.201 },
 ];
 
-// Groupage en 4 phrases (par silence) : derive du tableau, indices de fin de phrase.
-// [L'idée...sable.] / [Au Nigéria...mois.] / [Au Sénégal...vraiment.] / [Les scientifiques...chance.]
+// ⛔ Trou de doctrine #1 : NE PAS grouper par silence auto. Le nouvel alignment (606f) a des gaps
+//   inter-phrases TOUS < 0.8s (0.55s, 0.54s, 0.0s) -> le groupage par silence collait les 4 phrases
+//   en un bloc illisible. On FORCE les frontieres par INDEX de mots (1er mot de chaque phrase) :
+//   [L'idée...sable.] / [Mais...d'eau.] / [Au Senegal...reverdi.] / [Les scientifiques...chance.]
 type Phrase = { words: Word[]; start: number; end: number };
+const PHRASE_BREAKS = [12, 25, 36];
 const buildPhrases = (words: Word[]): Phrase[] => {
   const phrases: Phrase[] = [];
   let current: Word[] = [];
   for (let i = 0; i < words.length; i++) {
-    const w = words[i];
-    const next = words[i + 1];
-    current.push(w);
-    const gap = next ? next.start - w.end : 999;
-    // coupure de phrase sur silence > 0.8s (les 4 blocs sont separes par ~1s+)
-    if (gap > 0.8 || !next) {
+    if (PHRASE_BREAKS.includes(i) && current.length) {
       phrases.push({
         words: [...current],
         start: current[0].start,
@@ -154,15 +160,25 @@ const buildPhrases = (words: Word[]): Phrase[] => {
       });
       current = [];
     }
+    current.push(words[i]);
+  }
+  if (current.length) {
+    phrases.push({
+      words: [...current],
+      start: current[0].start,
+      end: current[current.length - 1].end,
+    });
   }
   return phrases;
 };
 const B2_PHRASES: Phrase[] = buildPhrases(B2_WORDS);
 
+// Sources timees (frames @30) sur les claims du nouveau texte FMNR-coherent :
+//  - "8 sur 10 meurent" (Sahel) f211-276 -> Smithsonian / Yale E360
+//  - "36 zones, une seule reverdi" (Senegal) f346-428 -> Land Use Policy 2025 / NPR
 const SOURCES: Cue[] = [
-  { start: 207, end: 292, text: "American Scientist" },
-  { start: 327, end: 418, text: "Yale E360 - Land Use Policy" },
-  { start: 454, end: 562, text: "NPR - D. Garrity" },
+  { start: 211, end: 300, text: "Smithsonian - Yale E360 (~80% morts)" },
+  { start: 346, end: 470, text: "Land Use Policy 2025 - NPR (1/36 zones)" },
 ];
 
 /* ------------------------------------------------------------------ */
@@ -341,7 +357,7 @@ export const B2LigneBrisee: React.FC = () => {
 
   /* === CHANGEMENT 1 : PLUS DE CAMERA. Scene FIXE.
      Seule concession au raccord B3 : un tres leger fade global en toute fin. === */
-  const endFade = interpolate(frame, [540, 571], [1, 0.82], {
+  const endFade = interpolate(frame, [575, 606], [1, 0.82], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -407,26 +423,27 @@ export const B2LigneBrisee: React.FC = () => {
   /* === CHANGEMENT 5 : SURVIVANT EN 2 TEMPS ===
      fausse-mort : grise legerement avec la cascade (~265f), reste en suspens jusqu'a 390f.
      reverdit : sursaut spring a 393f -> rejette le gris, explose en vert. */
-  const falseDeath = interpolate(frame, [265, 295, 388], [0, 0.42, 0.42], {
+  // ⚠️ Re-cale sur le nouvel audio (606f) : "une seule a vraiment reverdi" tombe a f428 (etait f393).
+  const falseDeath = interpolate(frame, [265, 295, 423], [0, 0.42, 0.42], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const revive = spring({
-    frame: frame - 393,
+    frame: frame - 428,
     fps,
     config: { mass: 1, damping: 11, stiffness: 150 }, // un peu plus snappy pour le "sursaut"
   });
-  // greenIn : le survivant passe du gris-encre (fausse mort) au vert vif a partir de 393f
-  const greenIn = interpolate(frame, [393, 423], [0, 1], {
+  // greenIn : le survivant passe du gris-encre (fausse mort) au vert vif a partir de 428f (sur "reverdi")
+  const greenIn = interpolate(frame, [428, 458], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const rootGrow = interpolate(frame, [396, 446], [0, 1], {
+  const rootGrow = interpolate(frame, [431, 481], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
   const glowPulse = 0.45 + 0.2 * Math.sin(frame / 8);
-  const breathe = 1 + 0.02 * Math.sin((frame - 423) / 11);
+  const breathe = 1 + 0.02 * Math.sin((frame - 458) / 11);
 
   /* placement des 4 arbres (repris de idee1.svg, ordre bas-gauche -> haut-droite) */
   const deadTrees = [
@@ -522,8 +539,8 @@ export const B2LigneBrisee: React.FC = () => {
       <Sequence from={238} durationInFrames={90}>
         <Audio src={staticFile("_shared/sfx/nature/wind-leaves.mp3")} volume={0.30} />
       </Sequence>
-      {/* 8. GROWTH-POP — f393, le survivant explose en vert (REVERDIT) */}
-      <Sequence from={393} durationInFrames={60}>
+      {/* 8. GROWTH-POP — f428, le survivant explose en vert (REVERDIT) — re-cale audio 606f */}
+      <Sequence from={428} durationInFrames={60}>
         <Audio src={staticFile("_shared/sfx/nature/growth-pop.mp3")} volume={0.45} />
       </Sequence>
 

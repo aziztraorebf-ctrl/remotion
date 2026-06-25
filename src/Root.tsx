@@ -2180,7 +2180,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
         <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
-        <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={606} fps={30} width={1080} height={1920} />
         <Composition id="RND-B3Malentendu" component={B3Malentendu} durationInFrames={468} fps={30} width={1080} height={1920} />
         <Composition id="RND-B4Demilune" component={B4Demilune} durationInFrames={750} fps={30} width={1080} height={1920} />
         <Composition id="RND-B5LaPreuve" component={B5LaPreuve} durationInFrames={424} fps={30} width={1080} height={1920} />
