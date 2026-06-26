@@ -1,5 +1,7 @@
 # ⭐ SVG-SCENES-GENERATIVES — doctrine R&D : générer des SCÈNES SVG complètes via LLM
 
+> 🧭 ORDRE DE LECTURE : (0) SVG-FAISABILITE-AMONT (valider la vue AVANT) → **(1) VOUS ETES ICI — SVG-SCENES-GENERATIVES** (generer+animer, manuel principal) → si multi-agents : PRODUCTION-AGENTIQUE-SVG → si format video long : SVG-MIDFORM-FORMAT.
+
 > Prouvée par render (session R&D 2026-06-21). Étend la technique du coin-flip Sénégal
 > (`SenegalCoinFaceA_SVG`) d'un OBJET-symbole à une SCÈNE COMPLÈTE (paysage, ville, carte d'état-major…).
 > Source de vérité pour tout ce qui est "SVG vectoriel généré par LLM puis animé par code".
