@@ -51,7 +51,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | Coder une scène/beat Atlas (doctrine visuelle, AVANT code) | `memory/doctrines/ATLAS-PLAYBOOK.md` ⭐ → puis `ATLAS-BEAT-DEMARRAGE.md` (scan phase 0) |
-| Produire un épisode Atlas (audio + d3-geo + render) | `memory/templates/atlas-template-v1.md` (skill `remotion-best-practices/rules/maps.md`) |
+| Produire un épisode Atlas (audio + d3-geo + render) | `memory/doctrines/ATLAS-BEAT-DEMARRAGE.md` ⭐ (atlas-template-v1.md = PÉRIMÉ ancienne archi Mapbox) |
 | « Quel composant Atlas pour X ? » | `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` · doc : `ATLAS-COMPOSANTS.md` |
 | Asset Atlas (sprite, map-object, geo) AVANT générer | `src/projects/atlas/_shared/ATLAS-ASSETS-INDEX.md` (19 persos / 568 sprites) |
 | Personnage/sprite PixelLab dans un beat Atlas | `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md` ⭐ · code `AtlasPixelChar.tsx` |

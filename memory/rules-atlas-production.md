@@ -141,7 +141,7 @@ Exception spotlight insert : acceptable car temporaire et dim background masque 
 - Pas d'ombre, pas de hop statique
 - Zoom caméra pendant walk : 2.5x
 - Pull-back automatique à l'arrivée (isArrived flag)
-- flipX: true quand déplacement vers la gauche
+- Direction ouest = frames `west/` natives (générées avec 4 dirs). `flipX` INTERDIT (cause le bug moonwalk). Voir `ATLAS-PIXELLAB-PLAYBOOK.md` §0.
 - lerpColor territoire pendant le walk : OR_VIF → BORDEAUX
 
 **Timing walk cycle latéral :**
