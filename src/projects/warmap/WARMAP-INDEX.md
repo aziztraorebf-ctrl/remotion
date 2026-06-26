@@ -87,8 +87,10 @@ factcheck, build_warmap_data + fixtures + golden test). Voir WARMAP-RESEARCH-PLA
 ## 🚀 COMMENT DÉMARRER (3 étapes)
 
 1. **Lire** `memory/doctrines/WARMAP-GRAMMAIRE.md` (⭐⭐ réalisation, AVANT de coder) + `WARMAP-PLAYBOOK.md` (design) + `WARMAP-RESEARCH-PLAYBOOK.md` (données si nouveau sujet).
-2. **Ouvrir** `src/projects/warmap/engine/WarMapEngine.tsx` (le moteur) — la référence vivante est `SudanWarMapEpic60`.
-3. **Pour un nouveau sujet** : produire un `<sujet>.warmap.json` (via `scripts/warmap/`), pas toucher au moteur.
+2. **Choisir le moteur selon l'épisode :**
+   - **Sahel (production active)** → `src/projects/warmap/engine/SahelWarMapEngine.tsx` ⭐ moteur principal long-format 16:9. État épisode : `memory/episodes/warmap-sahel/STATUS.md`.
+   - **Soudan (référence stack)** → `src/projects/warmap/engine/WarMapEngine.tsx` — la composition de référence est `SudanWarMapEpic60` (catbox `4dwqit`). Toujours utile pour voir les 4 briques combinées.
+3. **Pour un nouveau sujet** : produire un `<sujet>.warmap.json` (via `scripts/warmap/`), partir de `SahelWarMapEngine.tsx` comme base (moteur le plus avancé).
 
 ## 🗂️ INSTANCES (sujets traités avec ce moteur)
 
