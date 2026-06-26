@@ -187,41 +187,12 @@ import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Proto
 import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
 import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
 import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
-import { VilleCompare } from "./projects/_rnd/svg-scenes/VilleCompare";
-import { EtatMajorCompare } from "./projects/_rnd/svg-scenes/EtatMajorCompare";
-import { VilleGeminiAnimee } from "./projects/_rnd/svg-scenes/VilleGeminiAnimee";
-import { EtatMajorGptAnimee } from "./projects/_rnd/svg-scenes/EtatMajorGptAnimee";
-import { OffshoreCompare } from "./projects/_rnd/svg-scenes/OffshoreCompare";
-import { OffshoreGeminiAnimee } from "./projects/_rnd/svg-scenes/OffshoreGeminiAnimee";
-import { OffshoreGeminiAnimeeSFX } from "./projects/_rnd/svg-scenes/OffshoreGeminiAnimeeSFX";
-import { ProfilCompare, DuoCompare, AnimalCompare } from "./projects/_rnd/svg-scenes/OrganiqueCompare";
-import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
-import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
-import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
-import { CfaFrancAnimee } from "./projects/_rnd/svg-scenes/CfaFrancAnimee";
-import { CfaFrancAnimeeSFX } from "./projects/_rnd/svg-scenes/CfaFrancAnimeeSFX";
-import { MineCompare } from "./projects/_rnd/svg-scenes/MineCompare";
-import { DemiLuneCompare } from "./projects/_rnd/svg-scenes/DemiLuneCompare";
-import { DemiLuneEncreColorisee } from "./projects/_rnd/svg-scenes/DemiLuneEncreColorisee";
-import { DemiLuneBraiseAnimee } from "./projects/_rnd/svg-scenes/DemiLuneBraiseAnimee";
-import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
-import { Img2SvgCompare } from "./projects/_rnd/svg-scenes/Img2SvgCompare";
-import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
-import { GgwD3GeoMap } from "./projects/_rnd/svg-scenes/GgwD3GeoMap";
-import { GgwD3GeoMapEncre } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncre";
-import { GgwD3GeoMapSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapSFX";
-import { GgwD3GeoMapEncreSFX } from "./projects/_rnd/svg-scenes/GgwD3GeoMapEncreSFX";
-import { GgwSvgTestCoupe, GgwSvgTestTop, GgwSvgTestCalibre } from "./projects/_rnd/svg-scenes/GgwSvgTestCompare";
-import { GgwHookSvg6Up } from "./projects/_rnd/svg-scenes/GgwHookSvg6Up";
-import { GgwHookPairA, GgwHookPairB, GgwHookPairC } from "./projects/_rnd/svg-scenes/GgwHookPair";
-import { GgwHookNarr3 } from "./projects/_rnd/svg-scenes/GgwHookNarr3";
-import { GgwHookNarr4 } from "./projects/_rnd/svg-scenes/GgwHookNarr4";
-import { GgwTreesCompare } from "./projects/_rnd/svg-scenes/GgwTreesCompare";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
 import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
 import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
-import { B2Sablier } from "./projects/_rnd/svg-scenes/B2Sablier";
-import { B2MecheEteinte } from "./projects/_rnd/svg-scenes/B2MecheEteinte";
+import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
+import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
+import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
 import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
 import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
@@ -2165,49 +2136,11 @@ export const RemotionRoot: React.FC = () => {
         />
         <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="RND-VilleCompare" component={VilleCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-EtatMajorCompare" component={EtatMajorCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-EtatMajorGptAnimee" component={EtatMajorGptAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
-        <Composition id="RND-VilleGeminiAnimee" component={VilleGeminiAnimee} durationInFrames={150} fps={30} width={1080} height={1080} />
-        <Composition id="RND-OffshoreCompare" component={OffshoreCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-OffshoreGeminiAnimee" component={OffshoreGeminiAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-OffshoreGeminiAnimeeSFX" component={OffshoreGeminiAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-ProfilCompare" component={ProfilCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-DuoCompare" component={DuoCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-AnimalCompare" component={AnimalCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-DefenseCompare" component={DefenseCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-DefenseGptAnimee" component={DefenseGptAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
-        <Composition id="RND-CfaFrancAnimee" component={CfaFrancAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-CfaFrancAnimeeSFX" component={CfaFrancAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-MineCompare" component={MineCompare} durationInFrames={60} fps={30} width={3840} height={1080} />
-        <Composition id="RND-DemiLuneCompare" component={DemiLuneCompare} durationInFrames={60} fps={30} width={5760} height={1080} />
-        <Composition id="RND-DemiLuneEncreColorisee" component={DemiLuneEncreColorisee} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="RND-DemiLuneBraiseAnimee" component={DemiLuneBraiseAnimee} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="RND-DemiLuneEncreVert" component={DemiLuneEncreColorisee} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-DemiLuneBraiseVert" component={DemiLuneBraiseAnimee} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-MurTopDownBraise" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1920} height={1080} />
-        <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-Img2SvgCompare" component={Img2SvgCompare} durationInFrames={60} fps={30} width={2160} height={1920} />
-        <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
-        <Composition id="RND-GgwD3GeoMap" component={GgwD3GeoMap} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapEncre" component={GgwD3GeoMapEncre} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapSFX" component={GgwD3GeoMapSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwD3GeoMapEncreSFX" component={GgwD3GeoMapEncreSFX} durationInFrames={250} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwSvgTestCoupe" component={GgwSvgTestCoupe} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwSvgTestTop" component={GgwSvgTestTop} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwSvgTestCalibre" component={GgwSvgTestCalibre} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={571} fps={30} width={1080} height={1920} />
         <Composition id="RND-B3Malentendu" component={B3Malentendu} durationInFrames={468} fps={30} width={1080} height={1920} />
-        <Composition id="RND-B2Sablier" component={B2Sablier} durationInFrames={571} fps={30} width={1080} height={1920} />
-        <Composition id="RND-B2MecheEteinte" component={B2MecheEteinte} durationInFrames={571} fps={30} width={1080} height={1920} />
-        <Composition id="RND-GgwHookSvg6Up" component={GgwHookSvg6Up} durationInFrames={60} fps={30} width={2160} height={640} />
-        <Composition id="RND-GgwHookPairA" component={GgwHookPairA} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookPairB" component={GgwHookPairB} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookPairC" component={GgwHookPairC} durationInFrames={60} fps={30} width={1080} height={960} />
-        <Composition id="RND-GgwHookNarr3" component={GgwHookNarr3} durationInFrames={60} fps={30} width={1620} height={960} />
-        <Composition id="RND-GgwHookNarr4" component={GgwHookNarr4} durationInFrames={60} fps={30} width={1920} height={840} />
-        <Composition id="RND-GgwTreesCompare" component={GgwTreesCompare} durationInFrames={60} fps={30} width={1620} height={960} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={210} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
         <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
