@@ -1,7 +1,7 @@
 # Scenes — Regles obligatoires (Peste 1347)
 
 > Ces regles s'appliquent a TOUT fichier dans ce dossier.
-> Reference complete : `memory/visual-manifesto.md`
+> Reference complete : `memory/doctrines/atlas/visual-manifesto.md`
 
 ---
 

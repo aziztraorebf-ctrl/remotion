@@ -3,7 +3,7 @@
 
 ## Pipeline officiel
 
-**Lire d'abord** : `memory/tools/workflow-souverain-gemini-pipeline.md` — inclut la **CHECKLIST BLOQUANTE** à cocher avant de coder chaque beat.
+**Lire d'abord** : `memory/tools/workflow-gemini-breakdown-schema.md` — inclut la **CHECKLIST BLOQUANTE** à cocher avant de coder chaque beat.
 
 ## Backgrounds de l'épisode
 

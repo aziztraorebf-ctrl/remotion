@@ -177,7 +177,7 @@ python3 scripts/prepare_beat.py zimbabwe-lithium <beat_id>
 
 ## Règles mémoire clés (lire avant de coder)
 
-- `memory/tools/workflow-souverain-gemini-pipeline.md` — workflow officiel 4 étapes
+- `memory/tools/workflow-gemini-breakdown-schema.md` — workflow officiel 4 étapes (fusionné)
 - `memory/feedbacks/feedback_gemini-assets-fond-transparent.md` — fond noir+screen vs fond crème
 - `memory/feedbacks/feedback_souverain-backgrounds-valides.md` — 3 types valides, code CSS dots
 - `memory/feedbacks/feedback_geo-zero-approximation.md` — d3-geo obligatoire, ISO codes
