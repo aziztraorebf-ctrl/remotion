@@ -25,6 +25,7 @@
 | **Mouvement caméra — Atlas/Remotion** (code, zéro-cost) | `memory/tools/atlas-camera-movements.md` | 16 mouvements validés/à tester |
 | **Asset visuel / mockup design Gemini** | `public/_shared/ASSETS-INDEX.md` | Blueprints design + templates compositions + refs |
 | **SFX** (effet sonore) | `public/_shared/sfx/SFX-INDEX.md` | ~15 SFX par catégorie + backlog |
+| **Élément SVG réutilisable** (arbre, soleil, sol, technique clipPath/buvard/spring/sway...) — POINT D'ENTRÉE | `src/projects/_shared/svg-library/SVG-LIBRARY-INDEX.md` ⭐ | Bibliothèque SVG GGW : 5 éléments (arbre sahel, soleil, sol, souche, graines) + 6 techniques d'animation + table intention→forme |
 
 ## 🚀 Procédures de DÉMARRAGE (lire AVANT de coder)
 

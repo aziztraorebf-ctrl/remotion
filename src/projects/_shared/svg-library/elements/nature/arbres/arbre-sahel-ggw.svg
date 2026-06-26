@@ -1,0 +1,70 @@
+<!-- GGW Arbre Sahel — extrait de B2LigneBrisee.tsx, B3Malentendu.tsx, B5LaPreuve.tsx -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #6fa85a (vert tendre), #3e8f34 (vert vif), #5b3b24 (brun tronc) -->
+<!-- Dimensions originales : 1080×1920 | viewBox : coordonnées relatives (0,0) = base du tronc -->
+<!-- Date extraction : 2026-06-25 -->
+<!--
+  USAGE REMOTION : placer dans un <g transform="translate(TX TY) scale(S)"> pour positionner.
+  Chaque partie (tronc, branches, houppier) est un groupe distinct, animable séparément.
+  Les coordonnées Y sont NÉGATIVES (vers le haut) depuis la base (0,0).
+  Pour le colorisation timée, cross-fader entre la version encre et la version couleur par opacité.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -450 400 450" width="400" height="450">
+
+  <!-- VARIANTE A : ARBRE AVEC HOUPPIER EN CERCLES (B2/B3/B5 — modèle principal) -->
+  <!-- Origine (0,0) = base du tronc -->
+
+  <!-- Tronc double trait (B3/B5 — deux paths parallèles) -->
+  <g id="tronc">
+    <path
+      d="M0 0 C6 -60 3 -115 15 -170 C25 -217 25 -263 18 -305"
+      fill="none"
+      stroke="#5b3b24"
+      stroke-width="12"
+      stroke-linecap="round"
+    />
+    <path
+      d="M35 0 C32 -64 38 -115 32 -175 C28 -227 37 -265 48 -305"
+      fill="none"
+      stroke="#5b3b24"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Amorces de branches vers le houppier -->
+  <g id="branches">
+    <path
+      d="M12 -165 C-20 -195 -45 -235 -68 -283 M38 -187 C78 -220 105 -257 138 -293 M22 -240 C-5 -270 -28 -300 -55 -335 M40 -245 C82 -267 115 -293 153 -323"
+      fill="none"
+      stroke="#5b3b24"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Houppier (cercles de feuillage, centre ~(20,-360)) -->
+  <!-- fill="#6fa85a" = vert tendre (état de naissance) -->
+  <!-- fill="#3e8f34" = vert vif (climax/apogée) -->
+  <!-- fill="#cdbd9a" = encre/creme (état sec, neutre) -->
+  <g id="houppier">
+    <circle cx="-58" cy="-360" r="52" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="-12" cy="-392" r="56" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="38"  cy="-382" r="58" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="82"  cy="-352" r="50" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="-30" cy="-330" r="50" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="40"  cy="-322" r="48" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="8"   cy="-360" r="60" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="-78" cy="-335" r="36" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <circle cx="108" cy="-332" r="34" fill="#6fa85a" stroke="#4f7e3f" stroke-width="2.5"/>
+    <!-- Nervures internes (texture feuillage) -->
+    <path
+      d="M-44 -360 C-4 -378 38 -372 78 -348 M-50 -332 C0 -312 60 -312 110 -336 M-20 -390 C16 -402 52 -398 88 -376"
+      fill="none"
+      stroke="#4f7e3f"
+      stroke-width="3"
+      opacity="0.7"
+      stroke-linecap="round"
+    />
+  </g>
+
+</svg>
