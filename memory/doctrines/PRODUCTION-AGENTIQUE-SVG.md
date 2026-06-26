@@ -1,5 +1,7 @@
 # ⭐⭐ PRODUCTION AGENTIQUE D'UNE SCENE SVG — source de verite (ce qu'un agent fait A->Z)
 
+> 🧭 ORDRE DE LECTURE : (0) SVG-FAISABILITE-AMONT (valider la vue AVANT) → (1) SVG-SCENES-GENERATIVES (generer+animer, manuel principal) → **(si multi-agents) VOUS ETES ICI — PRODUCTION-AGENTIQUE-SVG** → si format video long : SVG-MIDFORM-FORMAT.
+
 > Cree 2026-06-24, prouve sur le Beat 3 GGW (un agent frais a produit ~90% de la scene seul).
 > SOURCE DE VERITE pour lancer 1, 2 ou 3 agents en PARALLELE qui produisent chacun une scene SVG
 > de bout en bout. Chaque agent est lance DEPUIS CE FICHIER. On le met a jour a chaque decouverte.
@@ -72,8 +74,8 @@ touchent des fichiers en parallele. Chacun lance depuis CE fichier + l'ETAT du s
 4. **Symbole qui MENT et qui RESTE > symbole qui se dissipe** (gout Aziz Beat 3) : un faux remede (le mur)
    qui RESTE visible pendant que le sujet meurt quand meme = plus cinglant ("le mur ne sert a rien") que
    l'illusion qui s'evanouit. Choisir selon l'intention.
-5. **Kimi `--max-tokens 8000`** par defaut (4000 coupe les idees FR ; surveiller `finish_reason: length` ;
-   bug provider OpenRouter = reponse JSON parasite -> RELANCER l'appel).
+5. **Kimi gotchas** (idéation) → voir [[SVG-SCENES-GENERATIVES]] § ACQUIS TRANSVERSES point 1 (--max-tokens 8000,
+   finish_reason: length, bug provider OpenRouter retry). Source canonique la-bas, ne pas dupliquer ici.
 6. **⛔ WORKTREE incomplet = render bloque (prouve B5/B6, 2026-06-25)** : avant de lancer des agents Phase 2 en
    worktree, le CHEF prepare l'environnement : (a) `ln -s <repo-principal>/node_modules node_modules` ; (b) copier
    les audios + alignment + beat-bounds (gitignores, absents du worktree) ; (c) le `.env` est dans le repo principal

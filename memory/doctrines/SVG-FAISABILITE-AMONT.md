@@ -1,5 +1,7 @@
 # ⭐ DOCTRINE — ETAPE "FAISABILITE SVG" AMONT (le LLM dit SA capacite + image-cible AVANT le code)
 
+> 🧭 ORDRE DE LECTURE : **(0) VOUS ETES ICI — SVG-FAISABILITE-AMONT** (valider la vue AVANT de generer) → (1) SVG-SCENES-GENERATIVES (generer+animer, manuel principal) → si multi-agents : PRODUCTION-AGENTIQUE-SVG → si format video long : SVG-MIDFORM-FORMAT.
+
 > Gravee 2026-06-22 (Aziz). Comble un trou prouve : "avoir une idee de scene ne veut PAS dire qu'elle se transcrit
 > bien une fois le SVG genere". Cas declencheur = le mur d'arbres top-down -> les arbres = "gros points verts informes",
 > illisibles. Decouvert seulement APRES le render (cher en allers-retours). Cette etape deplace la decouverte AVANT le code.

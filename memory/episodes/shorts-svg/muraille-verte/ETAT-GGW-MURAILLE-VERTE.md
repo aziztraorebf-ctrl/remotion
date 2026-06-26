@@ -73,15 +73,13 @@ le decoupage audio en N segments — CHOISIR explicitement :
 Defaut = scene unique qui se relit (plus premium, plus dans l'identite encre). Le decoupage audio sert a TIMER
 les gestes, pas a imposer N plans.
 
-## METHODE PROUVEE (pipeline d'un beat, A->Z) — applique au Beat 2
-1. INTENTION du beat (le ressenti, 1 verbe) deduite du script + decoupage audio reel (whisper alignment,
-   filtrer `narration.alignment.json` sur les bornes du beat via `beat-bounds.json`).
-2. IDEATION Kimi (refs calibrage + audio) -> 2-3 idees de scene -> Claude filtre -> Aziz tranche / on genere les cibles.
-3. IMAGE-CIBLE SVG natif (svg-scene-narrative, gemini+gpt) -> convertir PNG -> juger -> choisir/regenerer.
-4. ANIMATION : agent(s) en parallele, chacun anime une cible (worktree isole si plusieurs). SOCLE commun
-   impose (calage audio, grammaire spring/stroke/cross-fade, palette) pour comparatif equitable + mix-and-match.
-5. Render homogene (chef), comparatif catbox, Aziz tranche / mix-and-match (les `<g id>` se recomposent entre cibles).
-6. Polish : sous-titres KARAOKE + micro-sources + SFX (voir ACQUIS ci-dessous). Render FINAL.
+## METHODE PROUVEE (pipeline d'un beat, A->Z)
+> Pipeline complet (2 phases + point de controle, checklist de lancement, trous combles) :
+> **[[PRODUCTION-AGENTIQUE-SVG]]** — source de verite agentique. Ce fichier ne repete pas le flux general.
+
+Spec GGW UNIQUEMENT : les 2 temps de mapping d'une scene CONCEPTUELLE sur l'audio sont dans la section
+ci-dessous (⛔ MAPPER UNE SCENE CONCEPTUELLE SUR L'AUDIO). Les acquis visuels/narratifs specifiques
+au short sont dans § ACQUIS GRAVES.
 
 ## ⭐ ACQUIS GRAVES (Beat 1 hook + Beat 2 echec) — NON-NEGOCIABLES
 1. **SCENE NARRATIVE > schema annote** : un MOMENT + 4-6 objets-heros qui RACONTENT. ZERO grille/cartouche/
