@@ -6,6 +6,26 @@ type: project
 
 # WAR-MAP — GRAMMAIRE DE RÉALISATION (LIRE AVANT DE CODER TOUTE WAR-MAP)
 
+## ⚡ SOMMAIRE EXÉCUTIF — RÈGLES NON-NEGOTIABLE (extrait du corps, détail ci-dessous)
+
+- **CAUSE avant EFFET** — un territoire ne change jamais par magie : un acteur agit → le territoire change en conséquence (§1)
+- **Carte = CAUSAL/SPATIAL ; overlay = CONCEPTUEL** — ce qui n'a pas d'ancrage géographique va en overlay solide ou plein écran, puis on revient sur la carte (§2)
+- **JAMAIS 5 secondes sans mouvement visible** — déplacement, pulse, révélation ; viser moins (D-0)
+- **1 transformation à la fois** — MAX 1 objet mobile, reste à opacity 0.3 ; jamais 2 mouvements simultanés (R-V4, D-0)
+- **BOARD CLEARING entre registres** — estomper la couche sortante à opacity 0.15-0.25 avant d'entrer dans le registre suivant (R-V1)
+- **Overlay SEMI-TRANSPARENT BANNI** — `WarMapOverlayDynamic mode="semitransp"` interdit dans toutes les vidéos ; 2 seules options : plein écran opaque OU représentation sur la carte (§9)
+- **WarMapDimmedOverlay = AUTORISÉ** (≠ semi-transparent banni) : voile fort ~0.62 + trou dans les contours sous l'élément — la carte n'est plus lisible dessous (§6)
+- **Overlay TOUJOURS ANIMÉ** — jamais une plaque statique posée plusieurs secondes pendant que rien ne bouge (§9)
+- **"On nomme → ça se dessine"** — chaque toponyme cité déclenche un contour/allumage/pulse sur la carte, couleur porteuse de sens (D-7)
+- **Ken Burns PERMANENT** — drift continu 10-15 px/s même sur les temps "calmes" ; ne jamais retirer (D-2)
+- **Caméra : PAN serré, JAMAIS pull-back continental** — zoom IN sur l'action encouragé ; le pull-back "pour tout montrer" est banni (R-V3, D-3)
+- **Overlays = PREMIUM SOUVERAIN** (FlowBrick, CountUp glow, HeroBars, ProcessFlow…), jamais style "encre austère" (D-9)
+- **Ancrage géo vérifié avant code** — test §2 obligatoire : "ancrage géographique réel ?" OUI → sur carte ; NON → overlay solide/plein écran
+- **6-8 événements pour un beat <60s** — entre les gros jalons, micro-événements (pulse, label, micro-zoom) pour ne jamais laisser la carte au repos (D-1)
+- **Overlay = MÉCANISME, jamais le texte de la voix** — un overlay qui affiche ce que la voix prononce = sous-titre = interdit (§8, D-8)
+
+---
+
 > ⭐ **NON-NEGOTIABLE — LIRE AVANT DE CODER TOUTE WAR-MAP.**
 > **Provenance — fusion de 3 fichiers de doctrine** (consolidés 2026-06-15) :
 > - `WARMAP-GRAMMAIRE-CAUSALE.md` (12 juin 2026, Sahel P2) — la règle d'or cause→effet + 5 techniques causales + règle overlay semi-transp banni.
