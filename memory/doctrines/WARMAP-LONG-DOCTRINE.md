@@ -4,7 +4,7 @@
 
 > **Lock 2026-06-06.** Nouveau genre validé lors de la session AES/Sahel.
 > Distinct de Souverain Mid-form (alterne map/data-viz) et de War-Map Short (9:16, 60-90s).
-> Format : 16:9, 5-7min, carte permanente à l'écran, overlays semi-transparents.
+> Format : 16:9, 5-7min, carte permanente à l'écran, overlays solides (semi-transparent BANNI, cf WARMAP-GRAMMAIRE §9).
 > Référence script production réelle : `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` (V4 = référence de style antérieure uniquement)
 
 ---
