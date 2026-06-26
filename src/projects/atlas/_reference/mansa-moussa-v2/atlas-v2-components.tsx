@@ -1,3 +1,4 @@
+// ARCHIVE — source historique Mansa Moussa V2. Source de verite pour tout nouvel episode : src/projects/atlas/_shared/atlas-components.tsx
 // Atlas V2 reusable components — shared across all Mansa Moussa scenes (Hook, S1, S2, S3, S4, CTA).
 // Pattern: d3-geo precompute + Remotion SVG overlays.
 // Validated 2026-04-30 on S3 Climax Hadj Iter2.
