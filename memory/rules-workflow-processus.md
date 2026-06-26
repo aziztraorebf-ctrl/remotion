@@ -232,7 +232,7 @@ YouTube Shorts accepte désormais les vidéos jusqu'à **3 minutes** (180 second
 - [ ] Manifest créé (`src/projects/souverain/<episode>/manifest.ts`)
 - [ ] Assets visuels beat par beat (Gemini illustration/photo selon style épisode)
 - [ ] Production beat par beat (code Remotion)
-- [ ] Quality review (Kimi)
+- [ ] Quality review (Gemini 3.1 Pro via `visual_review.py` — Kimi retiré du jury standard, voir Section 1)
 - [ ] Render final
 
 **Étapes les plus souvent oubliées** :

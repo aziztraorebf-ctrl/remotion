@@ -131,65 +131,22 @@ carte 2D flat top-down, au lieu de partir de CE QUI MARCHE CHEZ NOUS.
 
 ---
 
-## GRAMMAIRE CAUSALE + AUDIO-FIRST : LE STANDARD WAR-MAP (2026-06-12, leçon MAJEURE transversale)
+## GRAMMAIRE CAUSALE + AUDIO-FIRST : LE STANDARD WAR-MAP (2026-06-12)
 
-**Suite directe de la leçon précédente.** Après avoir rendu la P2 Sahel "premium" (jolie), Aziz l'a quand même
-trouvée CONFUSE : "c'est beau mais je ne comprends pas pourquoi une tache rouge apparaît, pourquoi les bases
-brûlent sans attaquant". Le polish ne suffit pas — il manquait le SENS.
+> ⭐ **Doctrine absorbée dans `memory/doctrines/WARMAP-GRAMMAIRE.md`** — lire en priorité.
+> Résumé non substituable : CAUSE AVANT EFFET (les jetons AVANCENT → sillage colore → bases tombent). Jamais un ÉTAT qui pop. Audio phrase-par-phrase AVANT de coder. Test de lisibilité : "coupe le son — si tu comprends les actions sans l'audio → gagné".
 
-**LA CAUSE RACINE** : j'avais codé des ÉTATS qui apparaissent (zone rouge qui pop, base qui s'efface) au lieu
-d'ACTIONS CAUSALES (A fait X → donc Y). Et j'avais pris les triggers (frames) de l'alignment SANS écouter
-l'audio pour me demander "que doit montrer cette phrase ?". Synchronisé techniquement, vide narrativement.
-
-**CE QUI A DÉBLOQUÉ (4 itérations + DA-brief)** :
-1. **PARTIR DE L'AUDIO, phrase par phrase** → pour chaque phrase, "que doit COMPRENDRE un œil neuf ?".
-   C'est l'audio-lock de la doctrine, mais appliqué au SENS visuel, pas juste au timing. Outil : un PLAN
-   NARRATIF texte (PLAN-NARRATIF-P2.md) validé Aziz AVANT de coder.
-2. **CAUSE AVANT EFFET** : les jetons jihadistes AVANCENT (waypoints) → leur SILLAGE colore le territoire →
-   les bases tombent là où ils arrivent. La zone rouge NAÎT de l'action, elle ne pop jamais.
-3. **COMBINER L'ARSENAL** (jamais 1 seul asset) : jetons (acteurs) + zones (conséquence) + sprites Gemini
-   (lieux) + PixelLab (effets) + timeline (temps) + contours flash + plaques. L'ensemble crée le sens.
-   Test d'Aziz : "on n'utilise pas à 100% ce qu'on a — c'est l'ensemble qui rend puissant."
-4. **DA-brief upstream sur le PLAN** (pas juste sur le render) : Gemini+Kimi ont validé la grammaire causale
-   et ajouté 3 gestes clés (sillage progressif par mask, Niger=junte institutionnelle ≠ rouge jihadiste,
-   chute en 3 temps). Signal jamais juge : j'ai filtré leurs hallucinations (ils voulaient retirer nos sprites
-   validés en croyant à du Freepik 3D sur frames floues).
-
-**TEST DE LISIBILITÉ FINAL (Kimi, à réutiliser)** : "coupe le son. Si tu comprends 'des gens avancent,
-assiègent des forts, le territoire devient rouge' → gagné. Si tu vois juste des taches apparaître → AI-slop narratif."
-
-**ERREURS SPÉCIFIQUES À NE PAS REFAIRE** :
-- Afficher un sprite-PORTRAIT nu (fighter-jnim = buste de face) sur une carte top-down = incohérent.
-  Le JETON = cercle parchemin + bordure faction + portrait CLIPPÉ dedans (modèle Acte 1, helper chip()).
+**Erreurs spécifiques à ne pas refaire (complément local, non couvertes par la doctrine) :**
+- Sprite-PORTRAIT nu (buste face) sur une carte top-down = incohérent. Le JETON = cercle parchemin + portrait CLIPPÉ dedans (`chip()`).
 - Pont Gemini→PixelLab RATE sur effets DIFFUS (poussière = boule pleine). Marche sur denses (explosion/fumée).
-- Données qui se MONTRENT, jamais qui s'écrivent : le "40% du Burkina" = le CONTOUR DU PAYS QUI SE REMPLIT
-  de rouge, PAS un overlay chiffré hors-centre qui répète la voix.
-- Forme abstraite (losange/étoile) = cheap sur une carte riche. Tout marqueur = jeton/sprite à notre identité.
-- SFX seulement si SUPPORT VISUEL (retiré cedeao-snap : on ne voit pas la CEDEAO se fracturer).
-- Un élément graphique enfermé dans un fragment JSX gaté peut disparaître même si sa propre condition est vraie
-  (bug timeline P2 : enfermée dans le HUD gaté !partie2 → systematic-debugging + rect debug magenta pour prouver).
-
-**MÉTA** : cette méthode (audio→plan narratif→DA-brief→arsenal causal→corrections itératives) est le STANDARD
-War-Map désormais. Elle s'applique à P3/P4 et à toute war-map future. Elle rend non seulement premium mais
-COMPRÉHENSIBLE — les deux sont indissociables. Réf : `episodes/warmap-sahel/PLAN-NARRATIF-P2.md`.
+- SFX seulement si SUPPORT VISUEL.
+- Un élément JSX gaté peut disparaître même si sa propre condition est vraie → systematic-debugging + rect debug magenta.
 
 ---
 
 ## SCANNER LE CATALOGUE CARTE-VIVANTE AVANT DE CODER UN BEAT WAR-MAP (2026-06-11)
 
-**Erreur commise** : codé toute la Partie 2 Sahel en SVG plat (cercles/étoiles/X) → Aziz : "mort, plat, niveau 1,
-pédagogique, pas premium". Gemini (analyse vidéo) confirme 4/10. CAUSE : j'ai sauté la RÈGLE RECHERCHE TEMPLATES
-(scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md` AVANT d'écrire une ligne). On avait 30+ composants
-premium NON utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill, sprites base-france, pitch 3D...).
-
-**Règle (déjà dans CLAUDE.md, à RESPECTER)** : AVANT de coder TOUT beat carto, scanner les catalogues + présenter
-à Aziz les templates pertinents. Une carte War-Map ne doit JAMAIS être : cercles SVG plats, marqueurs statiques
-sans pulse, caméra plan large avec du vide autour. Premium = sprites à ombre (pas cercles), Lottie géo-ancrés,
-front mouvant (path morphé / track-matte, pas scale de cercle), caméra serrée qui suit l'action + drift permanent,
-pitch 3D optionnel, séquentiel synchro voix. Réf complète : `episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md`.
-
-**Méta-leçon** : "sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Premium d'abord (doctrine Aziz).
-Quand Aziz dit "rends vivant", ce n'est pas optionnel — c'est le standard minimal.
+> Règle gravée dans CLAUDE.md et ROUTAGE.md. Rappel court : AVANT de coder TOUT beat carto, scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md`. Cause de l'erreur P2 : 30+ composants premium non utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill...) car le scan avait été sauté. "Sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Réf complète : `episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md`.
 
 ---
 
@@ -241,31 +198,13 @@ Render B1 V2 (board clearing + avion whip + convoi uranium + emprises dessinées
 
 ## DA-BRIEF : la causalité phrase-par-phrase + chaînes de réf + catalogue templates sont OBLIGATOIRES (2026-06-14, Aziz, War-Map P4)
 
-**Erreur évitée** : mon 1er DA-brief P4 a VALIDÉ mon plan sans le confronter à ce qui nous fait vraiment
-trébucher. Aziz a arrêté la session : "vous ne leur avez pas demandé comment rendre TOUTES les actions causales
-— c'est ce qui nous a ralentis sur P2/P3. Et vous n'avez pas envoyé nos chaînes de réf (Kings & Generals, etc.)
-ni la liste de nos templates pour qu'ils proposent des combinaisons."
-
-**Les 3 manques d'un DA-brief faible (à NE JAMAIS reproduire) :**
-1. **Causalité phrase-par-phrase JAMAIS mise à l'épreuve** : mentionner "cause avant effet" dans le socle ≠
-   demander, POUR CHAQUE phrase : "risque d'état qui pop ? comment rendre la cause visible AVANT l'effet ?".
-   C'est LA question structurante (celle qui a fait refaire P2 4×). La poser explicitement + joindre le test
-   "coupe le son" + lister les phrases À RISQUE (en P4 : or/uranium qui poppent, fusion=morph PowerPoint,
-   chiffre=donnée qui s'écrit, dézoom=mouvement sans acteur).
-2. **Chaînes de référence absentes** : joindre le décodage du genre (Operations Room/mapsinanutshell/K&G/
-   BazBattles) + notre différentiel → les LLM comparent au MODÈLE et proposent mieux ("ce qu'ils feraient
-   mieux qu'on peut prendre sans trahir notre identité"). Sinon le brief est auto-référentiel.
-3. **Catalogue de nos templates non envoyé** (`da-brief.py --catalog`) : sans la liste RÉELLE de nos briques
-   (WarMapOverlayDynamic, SahelAttackArrow, TerritorialExpansion, GeoConvergenceOverlay, countryOutline, chip,
-   sillage mask...) ils travaillent à l'aveugle et ne peuvent pas proposer de COMBINAISONS.
-
-**Le 2e brief enrichi a payé** : il a remonté 3 risques causaux ÉLEVÉS/CRITIQUES que le 1er avait laissés
-passer — Ph7 fusion (→ fils convergents+sceau tampon, pas morph), Ph3 chiffre (→ overlay ANCRÉ sur cluster),
-Ph5-6 ressources (→ contour pulse→remplissage→icône émerge). + règle chromatique rouge≠or (anti-cynisme).
-
-**RÈGLE GRAVÉE** : tout DA-brief upstream War-Map DOIT inclure (a) la question causale phrase-par-phrase avec
-le test "coupe le son", (b) le décodage du genre/chaînes de réf, (c) `--catalog` avec nos templates réels.
-Le brief P4 v2 (`/tmp/da-refs/brief-p4.txt` + `catalog-p4.txt`) = le MODÈLE à réutiliser. Vaut pour tout pilier.
+> ⭐ **Doctrine absorbée dans `memory/doctrines/DA-BRIEF-GATE.md`** — lire avant tout DA-brief.
+> **Les 3 manques d'un DA-brief faible** (à NE JAMAIS reproduire) :
+> 1. Causalité phrase-par-phrase jamais mise à l'épreuve (poser POUR CHAQUE phrase : "risque d'état qui pop ?").
+> 2. Chaînes de référence absentes (Operations Room/K&G/BazBattles — les LLM comparent mieux avec un MODÈLE).
+> 3. Catalogue de nos templates non envoyé (`da-brief.py --catalog`) → ils travaillent à l'aveugle.
+>
+> **Modèle de brief** : brief P4 v2 = le MODÈLE. Vaut pour tout pilier.
 
 ---
 
@@ -488,59 +427,23 @@ clip stable a tout zoom. Meme nature que le bug `mainlandBox` des drapeaux (`use
 
 ## 🤖 BRIEF AGENTS
 
-### 2026-06-02 — Workflow Beat Mapbox avec templates catalogue
+> ⭐ **Doctrines absorbées dans `memory/doctrines/PRODUCTION-AGENTIQUE-REMOTION.md` et `PRODUCTION-AGENTIQUE-SVG.md`.**
+> Les règles ci-dessous (visualWeight, background, dimensions) sont des COMPLÉMENTS CONCRETS pas encore dans les doctrines.
 
-**Leçon :** Partir d'un template catalogue existant (SweepRevealTerritory) au lieu de coder custom donne un résultat satisfaisant dès le premier render — au lieu de 5-8 itérations habituelles.
+### Règles brief agents codage Remotion (NON-NEGOTIABLE)
 
-**Ce qui a changé :**
-- Page blanche + choix template AVANT de coder (storyboard 7 champs Playbook)
-- MAROC_WORDS (tous les mots) au lieu de WORD_ANCHORS (anchors seulement) pour le karaoké
-- showHatching prop ajoutée à SweepRevealTerritory — hachures ivory visibles sur gold
-- SFX volumes : cinématique 0.50-0.55 (pas 0.35), musique 0.12 (pas 0.07)
+**Règle 1 — visualWeight :** Tout brief doit inclure `"visualWeight"` pour les éléments dominants.
+- Ex: `"le chiffre doit remplir 60-70% du diamètre du cercle"` — les agents respectent les px mais pas l'intention visuelle.
 
-**Workflow amélioré identifié par Aziz :**
-1. Render → auto-review Claude → appliquer premiums évidents AVANT Gemini
-2. Envoyer à Gemini avec les premiums déjà intégrés → score de départ plus haut → feedback plus incisif
-3. Objectif : atteindre 8/10 avant validation au lieu de 7/10
+**Règle 2 — Placeholder réaliste :** Quand un composant accepte une image externe, toujours générer un placeholder Gemini Flash AVANT le render de validation — jamais un PNG 1px (= rendu injugeable).
+
+**Règle 3 — BACKGROUND :** Famille reveal-mécanique : fond `#080d14` ou plus sombre (`#060a10`). JAMAIS `bg-navy` sans instruction — les agents defaultent dessus. Astuce : `"background": "#060a10 — PAS bg-navy"` dans le brief JSON.
+
+**Règle 4 — PROPORTIONS LABELS :** Labels textuels dans les composants reveal-mécanique = fontSize MAX 32px, opacity 0.6-0.7. Ils sont DÉCORATIFS. Astuce : `"labels": "DÉCORATIFS — fontSize 28-32px max"`.
+
+**Règle 5 — DIMENSIONS EXPLICITES EN PX :** Tout élément central = dimensions en px dans le brief, NON-RÉDUCTIBLES. Exemples validés : OdometerFlip CASE_WIDTH=240, CASE_HEIGHT=300, fontSize=220.
 
 **Anti-pattern confirmé :** Ne jamais continuer sur du code existant non-template — archiver et repartir à zéro avec la bonne architecture.
-- FillScreen centralValue fontSize=280px minimum
-- Écrire dans le brief : `"dimensionsNonReductibles": { "caseWidth": 240, "caseHeight": 300, "fontSize": 220, "nbCases": 4 }` — l'agent ne peut pas descendre en dessous
-
-### 2026-05-13 — Brief agents : 3 règles supplémentaires (background, proportions, dimensions)
-
-**Problème observé :** FillScreen, OdometerFlip, RadarPing codés par agents — 3 écarts systématiques vs mockups Gemini malgré la règle visualWeight déjà en place.
-
-**Règle 3 — BACKGROUND (NON-NEGOTIABLE) :**
-- Famille reveal-mécanique : fond par défaut = `#080d14` ou plus sombre (`#060a10`)
-- JAMAIS `bg-navy` (#141c2e) sans instruction explicite — les agents defaultent dessus
-- Si le mockup Gemini montre quasi-noir = utiliser `backgroundColor: "#060a10"` inline
-- Astuce brief : écrire explicitement `"background": "#060a10 — PAS bg-navy"` dans le JSON
-
-**Règle 4 — PROPORTIONS LABELS (NON-NEGOTIABLE) :**
-- Labels textuels (titre haut, sous-titre bas) dans les composants reveal-mécanique = fontSize MAX 32px, opacity 0.6-0.7, tracking large
-- Ils sont DÉCORATIFS — l'élément central prend toute la place
-- Si un label occupe >15% de l'espace écran = trop grand
-- Astuce brief : écrire `"labels": "DÉCORATIFS — fontSize 28-32px max, opacity 0.65"` dans le JSON
-
-**Règle 5 — DIMENSIONS EXPLICITES EN PX (NON-NEGOTIABLE) :**
-- Tout élément central doit avoir ses dimensions écrites en px dans le brief, non-réductibles
-- Exemples validés : OdometerFlip CASE_WIDTH=240, CASE_HEIGHT=300, fontSize=220, nbCases=4
-
-### 2026-05-13 — Brief agents : visualWeight obligatoire + placeholders realistes
-
-**Probleme observe :** Les agents de codage respectent les valeurs numeriques du breakdown JSON (ex: fontSize:130) mais pas l'intention visuelle du mockup. Resultat : CountdownReveal avec chiffre trop petit (320px au lieu de 380px+), PortraitGeometry avec typo 2x trop petite.
-
-**Regle 1 — visualWeight dans le brief :**
-Tout brief d'agent doit inclure une section `"visualWeight"` pour les elements dominants :
-- Ex: `"visualWeight": "le chiffre doit remplir 60-70% du diametre du cercle"`
-- Ex: `"visualWeight": "countryName doit etre aussi large que le cercle au-dessus"`
-
-**Regle 2 — Placeholder realiste obligatoire :**
-Quand un composant accepte une image externe (portrait, photo archive, carte), toujours generer un placeholder realiste Gemini Flash AVANT le render de validation — jamais un PNG 1px.
-- PNG 1px = rendu injugeable (fond vert ou gris uni)
-- Placeholder Gemini = peut juger le rendu final immediatement
-- Exception acceptable : composants purement CSS/SVG sans image externe
 
 ---
 

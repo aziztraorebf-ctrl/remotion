@@ -138,8 +138,18 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Publier YouTube + Instagram + Facebook | `memory/tools/trypost.md` (TryPost, limites 50MB, jamais REST `/api/uploads`) |
 | Publier TikTok | `memory/tools/postiz.md` (Postiz REST, coverB obligatoire) |
 | Calendrier éditorial Kora & Cartes | `memory/episodes/lancement-kora/CALENDRIER-EDITORIAL-JUIN-2026.md` |
-| Pipeline, ordre des étapes | `memory/tools/pipeline.md` |
+| Pipeline, ordre des étapes | `memory/tools/pipeline.md` ⚠️ daté 2026-05-02 — pour data-viz voir WORKFLOW-DATAVIZ.md |
 | Règles workflow/processus (jury APIs, go/no-go) | `memory/rules-workflow-processus.md` |
+
+### Workflows agentiques et data-viz (2026-06)
+
+| Sujet | Fichier |
+|---|---|
+| **Pipeline DATA-VIZ complet A→Z** (storyboard→breakdown→Gemini→Recraft→Remotion) | `memory/doctrines/WORKFLOW-DATAVIZ.md` ⭐⭐ — POINT D'ENTRÉE pour toute scène data-viz |
+| **Agent autonome scène REMOTION data-viz** (flux 2 phases, checklist, outils) | `memory/doctrines/PRODUCTION-AGENTIQUE-REMOTION.md` ⭐⭐ |
+| **Agent autonome scène SVG** (flux 2 phases, checklist, outils) | `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` ⭐⭐ |
+| Templates Remotion (CATALOGUE) | `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants, inclut HERO DATA et templates Mapbox aussi référencés) |
+| Règles motion design data-driven | `memory/rules-data-driven-motion-design.md` ⭐ |
 
 ---
 

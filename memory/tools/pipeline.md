@@ -1,4 +1,6 @@
 # Pipeline Shorts GeoAfrique — Ordre INVIOLABLE
+> ⚠️ **Daté 2026-05-02 — n'intègre PAS les workflows SVG/data-viz de juin 2026.**
+> Pour data-viz : `memory/doctrines/WORKFLOW-DATAVIZ.md`. Pour SVG : `memory/doctrines/SVG-SCENES-GENERATIVES.md` et `SVG-MIDFORM-FORMAT.md`. Pour agents : `PRODUCTION-AGENTIQUE-REMOTION.md` / `PRODUCTION-AGENTIQUE-SVG.md`.
 > Ne JAMAIS changer cet ordre. Zero clip avant timing.ts stable.
 > Mise a jour : 2026-05-02
 
