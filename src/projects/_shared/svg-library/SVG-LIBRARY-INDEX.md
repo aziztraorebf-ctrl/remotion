@@ -56,3 +56,28 @@
 | Gris mort (mort sans vie) | `#8f8a7e` | arbres encre sur sécheresse |
 
 **Règle de progression chromatique GGW** : encre pure (#2b2117) → vert tendre (#6fa85a) → vert vif (#3e8f34). L'ocre (#b5651d) est la seule touche "diagnostic de l'échec". La couleur arrive toujours en dernier (le climax), pas au début.
+
+---
+
+## Registres visuels disponibles
+
+> Source de vérité complète (palettes hex, harnais, règles modèle LLM) : `memory/doctrines/SVG-SCENES-GENERATIVES.md` § REGISTRES VISUELS PROUVÉS.
+> Ce tableau = résumé de décision rapide. Protos animés validés : `svg-library/RD-INDEX.md`.
+
+| Registre | Ton | Brille pour | Modèle LLM | Harnais |
+|---|---|---|---|---|
+| `encre` | Parchemin crème #e8dcc0, traits brun-noir #2b2117 | Figures historiques, emblèmes, scènes narratives (GGW) | Gemini (organique) ou GPT-5.5 (géométrie) | `SvgSceneParchemin.tsx` |
+| `médaille` | Or patiné #e7bd78, traits rouges #8a2a20, ivoire #f2ebd9 | Objet-symbole, scène narrative chaude (port, ville) | Gemini (ville/profondeur) · GPT (schéma net) | `SvgSceneCoin.tsx` |
+| `blueprint` | Bleu nuit #0d1b3a, cyan #7fd4ff, or #c8a951 | Infrastructure, mécanisme, schéma technique (gazoduc, barrage) | Gemini (justesse technique) · GPT (lisibilité flux) | `SvgScenePlanche.tsx` |
+| `tactique` | Bleu très sombre #0b1526, rouge #d6552e (menace), or #c8a951 | Encart conceptuel : pacte, rapport de force, doctrine (War-Map/AES) | GPT-5.5 | compo dédiée |
+| `braise-or` | Terre sombre #1c1108, ocres #7a4a22→#b8763a, or lumineux #e8b44a | Scène chaude matérée : mine, ressource, désert ardent | Gemini | compos dédiées |
+| `or-jour` | Ciel ambre #f2cf72, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a | Scène chaude LUMINEUSE et premium (matin doré, héros en action) | GPT-5.5 | `HeroGptAnimee.tsx` |
+| `papier-decoupe` | Couches pleines empilées + ombre portée, palette claire chaude (ciel pastel, crème, verts étagés) | Scène pédagogique/explainer : cycle, croissance, processus (façon Kurzgesagt) | Gemini (couches organiques) | `GraineGeminiAnimee.tsx` |
+
+**Règle de choix** : intention ORGANIQUE/profondeur → Gemini. Intention GÉOMÉTRIE/schéma → GPT-5.5. Toujours générer les 2 et choisir sur render statique.
+
+---
+
+## R&D et protos validés
+
+Voir `svg-library/RD-INDEX.md` — index des scènes R&D validées avec render catbox, verdict, et fichier source. À consulter avant de coder une nouvelle scène pour éviter de recoder l'existant.
