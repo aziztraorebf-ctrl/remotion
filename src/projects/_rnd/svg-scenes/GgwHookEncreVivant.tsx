@@ -287,6 +287,98 @@ export const GgwHookEncreVivant: React.FC = () => {
           <line x1={540} y1={1778} x2={540} y2={1790} stroke={ENCRE} strokeWidth={1.5} />
         </g>
       </svg>
+
+      {/* ============ SOUS-TITRES KARAOKÉ — même format B2-B6 ============ */}
+      {(() => {
+        const narSec = frame / 30;
+        const WORDS = [
+          { word: "Voici", start: 0.000, end: 0.320 },
+          { word: "le", start: 0.320, end: 0.540 },
+          { word: "plus", start: 0.540, end: 0.840 },
+          { word: "grand", start: 0.840, end: 1.060 },
+          { word: "projet", start: 1.060, end: 1.440 },
+          { word: "écologique", start: 1.440, end: 2.120 },
+          { word: "de", start: 2.120, end: 2.380 },
+          { word: "la", start: 2.380, end: 2.960 },
+          { word: "planète", start: 2.960, end: 4.000 },
+          { word: "Un", start: 4.000, end: 4.100 },
+          { word: "mur", start: 4.100, end: 4.380 },
+          { word: "d'arbres", start: 4.380, end: 4.840 },
+          { word: "de", start: 4.840, end: 5.160 },
+          { word: "8 000", start: 5.160, end: 5.640 },
+          { word: "kilomètres", start: 5.640, end: 6.260 },
+          { word: "du", start: 6.800, end: 6.960 },
+          { word: "Sénégal", start: 6.960, end: 7.500 },
+          { word: "jusqu'à", start: 7.500, end: 7.960 },
+          { word: "Djibouti", start: 7.960, end: 9.140 },
+          { word: "pour", start: 9.140, end: 9.280 },
+          { word: "barrer", start: 9.280, end: 9.540 },
+          { word: "la", start: 9.540, end: 9.960 },
+          { word: "route", start: 9.960, end: 10.220 },
+          { word: "au", start: 10.220, end: 10.580 },
+          { word: "désert.", start: 10.580, end: 11.600 },
+          { word: "Un", start: 11.600, end: 11.780 },
+          { word: "rêve", start: 11.780, end: 12.040 },
+          { word: "immense.", start: 12.040, end: 13.860 },
+          { word: "Et", start: 13.860, end: 14.020 },
+          { word: "pourtant,", start: 14.020, end: 15.220 },
+          { word: "il", start: 15.220, end: 15.400 },
+          { word: "s'effondre", start: 15.400, end: 15.920 },
+          { word: "presque", start: 15.920, end: 16.420 },
+          { word: "partout.", start: 16.420, end: 17.000 },
+        ];
+        const PHRASE_BREAKS = [9, 19, 25, 28];
+        const phrases: { words: typeof WORDS; start: number; end: number }[] = [];
+        let start = 0;
+        const breakSet = new Set(PHRASE_BREAKS);
+        for (let i = 0; i < WORDS.length; i++) {
+          if (breakSet.has(i) || i === WORDS.length - 1) {
+            const slice = WORDS.slice(start, i + 1);
+            phrases.push({ words: slice, start: slice[0].start, end: slice[slice.length - 1].end });
+            start = i + 1;
+          }
+        }
+        const activeIdx = phrases.findIndex((p, i) => {
+          const nextStart = phrases[i + 1]?.start ?? p.end + 0.6;
+          return narSec >= p.start - 0.1 && narSec < nextStart;
+        });
+        const activePhrase = activeIdx >= 0 ? phrases[activeIdx] : null;
+        const subOpacity = interpolate(frame, [0, 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const endFade = interpolate(frame, [490, 510], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+        if (!activePhrase || subOpacity <= 0.001) return null;
+        return (
+          <div style={{
+            position: "absolute", left: 0, right: 0, top: 1620,
+            display: "flex", justifyContent: "center",
+            opacity: subOpacity * endFade, pointerEvents: "none",
+          }}>
+            <div style={{
+              maxWidth: 880, margin: "0 80px", padding: "18px 32px",
+              borderRadius: 18, background: "rgba(232,220,192,0.72)",
+              border: "1px solid rgba(43,33,23,0.18)",
+              fontFamily: "Georgia, 'Times New Roman', serif",
+              fontSize: 37, lineHeight: 1.3,
+              textAlign: "center", textWrap: "balance" as any,
+            }}>
+              {activePhrase.words.map((w, i) => {
+                const spoken = narSec >= w.start;
+                const active = narSec >= w.start && narSec <= w.end + 0.12;
+                return (
+                  <span key={i} style={{
+                    color: active ? VERT_D : ENCRE,
+                    opacity: spoken ? 1 : 0.45,
+                    fontWeight: spoken ? 800 : 600,
+                    marginRight: 9, display: "inline-block",
+                  }}>
+                    {w.word}
+                  </span>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })()}
     </AbsoluteFill>
   );
 };

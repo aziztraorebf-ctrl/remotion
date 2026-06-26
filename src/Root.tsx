@@ -212,6 +212,7 @@ import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { B4Demilune } from "./projects/_rnd/svg-scenes/B4Demilune";
 import { B5LaPreuve } from "./projects/_rnd/svg-scenes/B5LaPreuve";
 import { B6Outro } from "./projects/_rnd/svg-scenes/B6Outro";
+import { B7MosaiqueFinal } from "./projects/_rnd/svg-scenes/B7MosaiqueFinal";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
 import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
@@ -2185,6 +2186,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-B4Demilune" component={B4Demilune} durationInFrames={750} fps={30} width={1080} height={1920} />
         <Composition id="RND-B5LaPreuve" component={B5LaPreuve} durationInFrames={424} fps={30} width={1080} height={1920} />
         <Composition id="RND-B6Outro" component={B6Outro} durationInFrames={690} fps={30} width={1080} height={1920} />
+        <Composition id="RND-B7MosaiqueFinal" component={B7MosaiqueFinal} durationInFrames={642} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
