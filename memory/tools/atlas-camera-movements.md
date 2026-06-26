@@ -1,5 +1,9 @@
 # Atlas — Bibliothèque mouvements caméra Remotion
 
+> **DOMAINE : Remotion (code frame-driven, SVG transform).** Zéro coût par essai.
+> Pour les mouvements caméra Seedance/Kling/Veo (génération vidéo AI), voir `memory/tools/camera-movements.md`.
+
+
 > Catalogue centralisé des mouvements caméra éprouvés et suggérés pour épisodes Atlas.
 > Créé 2026-05-03 fin session Beat 3 Empire Ghana sur demande Aziz.
 > **Philosophie Remotion** : zéro coût par tentative (vs Seedance). On DOIT oser les mouvements risqués — un render perdu coûte 0$ contre un échec créatif coûteux narrativement.
