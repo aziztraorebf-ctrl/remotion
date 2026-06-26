@@ -92,8 +92,8 @@
 ### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-25) ⭐⭐
 **⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
 **+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX).
-- ✅ **SCÈNES 0, 1, 2, 3, 4 = FAITES, gravées FINALES.** Audio 0→288.7s ≈ 50% narration.
-- 🟡 **SCÈNE 5 = EN COURS dans une autre session** (coulisses/Yakaar, 288.7s→). Pipeline agentique Remotion → `BRIEF-AGENT-SCENE-5.md`. Ne pas démarrer ici.
+- ✅ **SCÈNES 0, 1, 2, 3, 4, 5 = FAITES, gravées FINALES.** Audio 0→344.46s ≈ 70% narration.
+- ⬜ **SCÈNE 6 = NEXT** (bilan : de zéro à exportateur, Beat14, ~344.46s→). Remotion data-viz.
 ℹ️ PÉRIMÉS (supprimés 2026-06-25) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
 
 ### 3. Carousels Instagram (PRIORITE 3)
@@ -182,11 +182,10 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 > ⚠️ Vérifier l'état RÉEL au démarrage (ne pas se fier à la section FAITS ci-dessus) : le point 1 dit "Root.tsx nettoyé" mais au 2026-06-25 fin de session, `grep -c "<Composition" src/Root.tsx` = **460 compositions dont 57 protos/tests/cobayes** → l'assainissement Root n'est PAS complet (seuls ~35 imports svg-scenes retirés). Compter avant d'agir.
 
 1. **🔴 Assainir Root.tsx (plus gros gain)** : 460 compositions, dont **57 protos/tests/cobayes** à retirer du registre de prod. Désimporter + supprimer les `<Composition>` protos. Repérer les compositions mortes (import vers fichier supprimé) via `npx tsc --noEmit`. ⚠️ CODE sensible (registre Remotion) → toi+moi OU agent Sonnet avec typecheck strict + render de contrôle. Débloque aussi l'archivage des svg-scenes encore importées.
-2. **🟠 Purge des 35 CLAUDE.md VIDES** : 63 CLAUDE.md dans le repo, **35 sont vides** (juste balise `<claude-mem-context></claude-mem-context>` orpheline). `git rm` en bloc des vides (garder les 28 avec contenu réel). Vestiges de l'outil claude-mem — polluent grep/recherche/agents.
+2. ~~**🟠 Purge des 35 CLAUDE.md VIDES**~~ ✅ FAIT (2026-06-25) : 33 CLAUDE.md vides supprimés via `git rm`, 2 dashboards orphelins (`abou-bakari-dashboard/` + `thiaroye-v5-dashboard/`) supprimés — projets livrés, plus actifs.
 3. **🟠 Audit src/ (78 .md) + public/ (41 .md)** : zone JAMAIS auditée (les 3 vagues n'ont couvert que memory/). 1 agent Sonnet : INDEX code périmés, notes d'assets mortes, doublons.
 4. **🟡 Purge out/ restante** : 4.8 GB actuels. Vérifier ce qui reste de purgeable (le gros a été fait, mais re-scanner >7j).
-5. **🟡 Dashboards orphelins** : `abou-bakari-dashboard/` + `thiaroye-v5-dashboard/` à la racine — vérifier s'ils sont encore utilisés, sinon archiver.
-6. **🟡 Dégraisser CLAUDE.md principal** (17.5 KB / 132 lignes, auto-chargé CHAQUE session) : couper le gras comme on a fait pour MEMORY.md. SENSIBLE → toi+moi en direct.
+5. **🟡 Dégraisser CLAUDE.md principal** (17.5 KB / 132 lignes, auto-chargé CHAQUE session) : couper le gras comme on a fait pour MEMORY.md. SENSIBLE → toi+moi en direct.
 
 Méthode : [[methode-consolidation-par-vagues]] (agents Sonnet disjoints). C'est une session CODE, distincte des 3 vagues MÉMOIRE déjà faites.
 

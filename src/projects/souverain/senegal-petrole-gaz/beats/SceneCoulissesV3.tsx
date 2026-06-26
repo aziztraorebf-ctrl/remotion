@@ -397,10 +397,10 @@ const RapportDeForces: React.FC = () => {
 
   const op = interpolate(frame, [F_EUROPE - 10, F_EUROPE + 16, F_PRIX + 40, F_PRIX + 90], [0, 1, 1, 0.7], clamp);
 
-  // GRAPHISME AGRANDI ~+50% (retour Aziz : "rendre le tout plus gros") + AUCUN texte (le graphisme parle).
-  const cx = W / 2, cy = 430; // centre = jeton Yakaar (AnchorToken) — remonte pour aerer la question finale
-  const euX = W / 2 - 660, euY = cy;   // pole Europe (gauche) — plus ecarte
-  const cnX = W / 2 + 660, cnY = cy;   // pole Chine (droite)
+  // GRAPHISME AGRANDI ~+50% encore (retour Aziz v7 : "encore 40-50% plus grand") + AUCUN texte.
+  const cx = W / 2, cy = 400; // centre remonte pour aerer la question finale
+  const euX = W / 2 - 840, euY = cy;   // pole Europe — ecarté davantage (840 vs 660 = +27% distance)
+  const cnX = W / 2 + 840, cnY = cy;   // pole Chine
 
   // EUROPE : pleine au depart -> se RETRACTE a "Occidentaux reculent" (s'eloigne + palit)
   const euAppear = spring({ frame: frame - F_EUROPE, fps, config: { damping: 18, stiffness: 110 }, durationInFrames: 26 });
@@ -435,16 +435,16 @@ const RapportDeForces: React.FC = () => {
       <ForceField poleX={cnX + cnShift} poleY={cnY} cx={cx} cy={cy} color={RED_CN} colorHi="#d4604f"
         strength={cnForce} frame={frame} dir={-1} count={6} />
 
-      {/* ── POLE EUROPE (badge +50%, halo radial, AUCUN texte) ── */}
+      {/* ── POLE EUROPE (icone agrandie +50%, halo radial, AUCUN texte) ── */}
       <g opacity={Math.max(0.22, euForce)} transform={`translate(${euShift}, 0)`}>
-        <circle cx={euX} cy={euY} r={120 + 26 * euForce} fill="url(#rf-eu-halo)" opacity={euForce} />
-        <UEFlagBadge cx={euX} cy={euY} r={46} />
+        <circle cx={euX} cy={euY} r={160 + 36 * euForce} fill="url(#rf-eu-halo)" opacity={euForce} />
+        <UEFlagBadge cx={euX} cy={euY} r={70} />
       </g>
 
-      {/* ── POLE CHINE (badge +50%, halo radial qui s'intensifie, AUCUN texte) ── */}
+      {/* ── POLE CHINE (icone agrandie +50%, halo radial qui s'intensifie, AUCUN texte) ── */}
       <g opacity={Math.max(0.22, cnForce)} transform={`translate(${cnShift}, 0)`}>
-        <circle cx={cnX} cy={cnY} r={104 + 44 * cnForce} fill="url(#rf-cn-halo)" opacity={cnForce} />
-        <FlagDiscSvg cx={cnX} cy={cnY} r={46} iso="cn" />
+        <circle cx={cnX} cy={cnY} r={140 + 60 * cnForce} fill="url(#rf-cn-halo)" opacity={cnForce} />
+        <FlagDiscSvg cx={cnX} cy={cnY} r={70} iso="cn" />
       </g>
     </svg>
   );
@@ -486,9 +486,9 @@ const UEFlagBadge: React.FC<{ cx: number; cy: number; r: number }> = ({ cx, cy, 
   });
   return (
     <g>
-      <circle cx={cx} cy={cy} r={r} fill="#0a1a3a" stroke={IVORY} strokeWidth={1.5} />
+      <circle cx={cx} cy={cy} r={r} fill="#0a1a3a" stroke={IVORY} strokeWidth={2} />
       {stars.map((s, i) => (
-        <text key={i} x={s.x} y={s.y + 3} textAnchor="middle" fontFamily="serif" fontSize={7} fill={GOLD}>★</text>
+        <text key={i} x={s.x} y={s.y + 4} textAnchor="middle" fontFamily="serif" fontSize={Math.round(r * 0.155)} fill={GOLD}>★</text>
       ))}
     </g>
   );
@@ -515,19 +515,19 @@ const AnchorToken: React.FC = () => {
   if (frame < TOKEN_APPEAR) return null;
   // apparait au centre (point d'ancrage qui a migre de la carte), petit, en haut du duel
   const op = interpolate(frame, [TOKEN_APPEAR, TOKEN_APPEAR + 20], [0, 1], clamp);
-  const cx = W / 2, cy = 430; // aligne avec les poles RapportDeForces (remonte pour aerer la question)
+  const cx = W / 2, cy = 400; // aligne avec les poles RapportDeForces (remonte pour aerer la question)
   // pulse de tension qui s'intensifie a "reculent" (l'enjeu convoite)
   const tension = interpolate(frame, [F_RECULENT, F_PLACE], [0, 1], clamp);
   const pulse = 1 + (0.04 + 0.06 * tension) * Math.sin(frame / 10);
-  // halo or qui respire derriere le jeton (centre de gravite convoite) — agrandi +50%, pulse avec la tension
-  const haloR = 140 + 20 * Math.sin(frame / 16) + 34 * tension;
-  // AUCUN label texte (Aziz : laisser le graphisme parler). Jeton AGRANDI (scale 2.5).
+  // halo or qui respire derriere le jeton (centre de gravite convoite) — agrandi, pulse avec la tension
+  const haloR = 180 + 28 * Math.sin(frame / 16) + 46 * tension;
+  // AUCUN label texte (Aziz : laisser le graphisme parler). Jeton AGRANDI (scale 3.7).
   return (
     <svg width={W} height={H} style={{ position: "absolute", inset: 0, opacity: op, overflow: "visible" }}>
       <circle cx={cx} cy={cy} r={haloR} fill={GOLD} opacity={0.08 + 0.07 * tension} />
       <g transform={`scale(${pulse})`} style={{ transformOrigin: `${cx}px ${cy}px` }}>
         <GisementMarker
-          kind="gas" x={cx} y={cy} scale={2.5}
+          kind="gas" x={cx} y={cy} scale={3.7}
           frame={frame} localF={frame - TOKEN_APPEAR} appeared uid="yakaar-anchor"
         />
       </g>
@@ -544,12 +544,12 @@ const FinalQuestion: React.FC = () => {
   const op = interpolate(frame, [F_PLACE - 10, F_PLACE + 10], [0, 1], clamp);
   return (
     <div style={{
-      position: "absolute", top: 640, width: "100%", textAlign: "center", opacity: op,
+      position: "absolute", top: 660, left: 0, right: 0, textAlign: "center", opacity: op,
     }}>
-      <div style={{ color: GOLD, fontFamily: BEBAS, fontSize: 64, letterSpacing: "0.06em", textShadow: `0 0 26px ${GOLD}50`, minHeight: 76 }}>
+      <div style={{ color: GOLD, fontFamily: BEBAS, fontSize: 72, letterSpacing: "0.06em", textShadow: `0 0 32px ${GOLD}60`, minHeight: 86 }}>
         {l1}
       </div>
-      <div style={{ color: IVORY, fontFamily: BEBAS, fontSize: 52, letterSpacing: "0.06em", marginTop: 8, minHeight: 60 }}>
+      <div style={{ color: IVORY, fontFamily: BEBAS, fontSize: 58, letterSpacing: "0.06em", marginTop: 10, minHeight: 68 }}>
         {l2}
       </div>
     </div>
