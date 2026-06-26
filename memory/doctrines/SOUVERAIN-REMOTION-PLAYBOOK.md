@@ -14,7 +14,7 @@
 Les chaînes data-viz populaires (Bloomberg Originals, Vox, Kurzgesagt, Polymatter) ont chacune une signature forte. On adopte leurs **PRINCIPES** (mise en scène de la donnée, secondary motion, discipline du vide), **JAMAIS** une esthétique plaquée.
 
 **Notre signature à préserver :** gold `#c8a951` (donnée vitale, < 15% de l'écran) · ivory `#f0e8d8` / navy pour le texte selon le fond · accent rouge `#cc2200` / vert `#4caf7d` **réservé au verdict**. Bebas Neue (hero) + IBM Plex Mono (sources). Premium et CLASSIQUE.
-> ⛔ **LE FOND ne se décide PAS ici — il se choisit dans `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`** (palette fermée, PARCHEMIN par défaut, tranché Aziz 2026-06-20). Cette palette PRIME : ne pas défaulter sur navy par réflexe « signature Souverain ». Sur fond parchemin, l'accent gold pur passe en ocre/terre cuite. Le navy `#141c2e` reste un fond valide (`bg-uni-navy`/`bg-dots-navy`) mais c'est UNE option de la palette, pas LE défaut.
+> ⛔ **LE FOND ne se décide PAS ici — il se choisit dans `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`** (palette fermée, PARCHEMIN par défaut, tranché Aziz 2026-06-20). Cette palette PRIME : ne pas défaulter sur navy par réflexe « signature Souverain ». Sur fond parchemin, l'accent gold pur passe en ocre/terre cuite. Le navy `#16213a` reste un fond valide (`bg-uni-navy`/`bg-dots-navy`) mais c'est UNE option de la palette, pas LE défaut. (source : _PALETTE-BACKGROUNDS.md)
 
 | À ADOPTER (principes) | À ÉVITER (clone / amateur) |
 |---|---|

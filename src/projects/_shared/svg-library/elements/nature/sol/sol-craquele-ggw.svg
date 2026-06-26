@@ -1,0 +1,56 @@
+<!-- GGW Sol Aride + Craquelures — extrait de B3Malentendu.tsx, B4Demilune.tsx, B6Outro.tsx -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #b5651d (ocre terre = couleur diagnostic) -->
+<!-- Dimensions originales : 1080×1920 | Zone sol : typiquement y 1300-1920 -->
+<!-- Date extraction : 2026-06-25 -->
+<!--
+  USAGE REMOTION :
+  - Le réseau de craquelures est animé via stroke-dashoffset (technique "se-dessine").
+  - La couleur ocre (#b5651d) s'allume séparément via une couche fill (opacity 0->1).
+  - L'ordre de rendu : plaques ocre dessous (opacity animée) + réseau encre dessus.
+  - En Remotion : const crackDraw = clampI(frame, [start, end], [DASH, 0]) puis
+    strokeDasharray={DASH} strokeDashoffset={crackDraw}
+
+  Ce SVG présente le pattern B3 (sol craquelé avec plaques ocre).
+  ViewBox adapté pour la zone inférieure de la composition.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 520" width="1080" height="520">
+  <!-- Zone : remapper à y 1400-1920 dans la composition réelle (viewBox 1080×1920) -->
+
+  <!-- COUCHE 1 : Plaques ocre dessous (couleur diagnostic "la terre est morte") -->
+  <!-- opacity animée : s'allume quand la narration nomme la cause (ex: "la terre meurt sur place") -->
+  <g id="plaques-ocre" opacity="0.55">
+    <path d="M380 0 L250 -5 L150 30 L60 100 L150 220 L320 240 L460 160 L420 50 Z" fill="#b5651d" stroke="none"/>
+    <path d="M460 160 L600 130 L760 160 L850 250 L760 380 L560 400 L450 300 Z" fill="#b5651d" stroke="none"/>
+    <path d="M520 10 L680 -10 L850 20 L940 100 L850 160 L660 140 L520 100 Z" fill="#b5651d" stroke="none"/>
+    <path d="M150 220 L60 300 L120 420 L300 440 L320 240 Z" fill="#b5651d" stroke="none"/>
+    <path d="M850 160 L1000 140 L1040 260 L960 390 L760 380 L850 250 Z" fill="#b5651d" stroke="none"/>
+  </g>
+
+  <!-- COUCHE 2 : Réseau de craquelures principal (encre, se-dessine) -->
+  <!-- Dans Remotion, ajouter strokeDasharray={4200} strokeDashoffset={crackDraw} -->
+  <g id="craquelures-principales" fill="none" stroke="#2b2117" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M530 0 L500 80 L530 180 L490 300 L540 410 L500 520" stroke-width="7"/>
+    <path d="M500 0 L400 50 L360 160 L220 250 L190 380 L60 520" stroke-width="6"/>
+    <path d="M560 0 L660 40 L730 140 L880 220 L930 360 L1060 520" stroke-width="7"/>
+    <path d="M440 10 L280 0 L170 40 L20 -5" stroke-width="5"/>
+    <path d="M600 10 L760 -10 L930 20 L1080 -5" stroke-width="6"/>
+  </g>
+
+  <!-- COUCHE 3 : Craquelures secondaires plus fines -->
+  <g id="craquelures-secondaires" fill="none" stroke="#2b2117" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M500 80 L430 120 L360 160 M530 180 L610 210 L730 140 M490 300 L380 330 L300 440 M540 410 L700 430 L760 520" stroke-width="4"/>
+    <path d="M280 10 L220 110 L210 250 M730 140 L800 220 L870 360 M400 60 L450 100 M660 40 L600 80" stroke-width="3"/>
+    <path d="M170 50 L110 160 L190 240 M930 30 L1010 100 L960 200 M120 250 L60 360 L160 420 M960 200 L1050 240" stroke-width="2.4"/>
+  </g>
+
+  <!-- COUCHE 4 : Petits éclats (impacts de sécheresse) -->
+  <g id="eclats" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round" opacity="0.6">
+    <path d="M420 160 L450 130 L440 190 M520 300 L500 340 L545 330 M620 100 L590 120"/>
+  </g>
+
+  <!-- COUCHE 5 : Hachures sèches (au sol plat, marqueur de sécheresse) -->
+  <!-- Présentes dans B4 opening et B6 — quelques traits courts obliques -->
+  <g id="hachures-seches" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-linecap="round" opacity="0.5">
+    <path d="M200 66 L212 44 M380 72 L392 50 M560 68 L572 46 M820 64 L832 42"/>
+  </g>
+</svg>

@@ -22,7 +22,7 @@
 
 **RÈGLE 7 — Inserts plein écran pour data viz** : chiffre choc / comparaison / objet symbolique → insert plein écran (fond noir + dataviz centré). INTERDIT : mini-objet posé à droite de la carte.
 
-**RÈGLE 8 — Mouvement permanent** : INTERDIT scène statique > 2s. Sources obligatoires (au moins 2 simultanées) : drift Ken Burns, tilt respiratoire, pulse marker, apparition/disparition labels, pan caméra, zoom continu.
+**RÈGLE 8 — Mouvement permanent** : INTERDIT scène statique > 8s (règle canonique ATLAS-PLAYBOOK R1). Sources obligatoires (au moins 2 simultanées) : drift Ken Burns, tilt respiratoire, pulse marker, apparition/disparition labels, pan caméra, zoom continu.
 
 **RÈGLE 9 — Validation visuelle Claude AVANT Aziz** : Read l'image/vidéo → identifier défauts → corriger AVANT de présenter. Ne jamais dire "voici le render" sans avoir regardé.
 
@@ -111,18 +111,20 @@ Mode intermédiaire entre overlay simple et insert plein écran. Inventé et val
 
 ---
 
-## SECTION 6 — Règle cartouches TOP HALF (y < 640)
+## SECTION 6 — Règle cartouches TOP HALF (y ≤ 320, selon ATLAS-PLAYBOOK §1 qui prime)
 
 > Règle absolue. Bottom half réservé aux sous-titres karaoke TikTok.
+> ⚠️ Mise à jour : la limite est y ≤ 320 (ATLAS-PLAYBOOK §1 prime sur l'ancienne valeur y < 640). 470 = limite basse exceptionnelle tolérée uniquement pour cartouche tertiaire.
 
 **Sur viewBox 720×1280 :**
-- Top half (y 0→640) : overlays textuels (cartouches, labels, encadrés, dates, stats)
+- Top zone (y 0→320) : overlays textuels principaux (cartouches, labels, encadrés, dates, stats)
+- Zone intermédiaire (y 320→640) : réservée — pas de cartouche sauf exception tertiaire justifiée (470 max)
 - Bottom half (y 640→1280) : sous-titres karaoke TikTok uniquement
 
 **Positions canoniques :**
 - Cartouche principal : y = 170
 - Cartouche secondaire (dates/sous-info) : y = 320
-- Cartouche tertiaire (stat) : y = 470 (limite basse acceptable)
+- Cartouche tertiaire (stat) : y = 470 (limite basse exceptionnelle tolérée)
 - Spotlight insert centré : y = 640 (exception acceptée car temporaire ~3s + dim background)
 - Sous-titres karaoke : y = 1130-1180
 
@@ -279,10 +281,10 @@ Quand un agent est invoqué sur un projet Atlas pur, il doit :
 [ ] Caméra via props AtlasMercator
 [ ] Sous-titres karaoke prévus
 [ ] Au moins 2 sources de mouvement simultanées
-[ ] Aucune scène statique > 2s
+[ ] Aucune scène statique > 8s
 [ ] Data viz/objet symbolique → insert plein écran (pas overlay)
 [ ] Lingot/sceau/objet réel → PixelLab (pas Lottie)
 [ ] Mini-render après chaque modif majeure
-[ ] Tous les overlays textuels en y < 640
+[ ] Tous les overlays textuels en y ≤ 320 (limite basse exceptionnelle : 470)
 [ ] Type 1 Lieu geo ou Type 2 Action geo → bon pattern sélectionné
 ```

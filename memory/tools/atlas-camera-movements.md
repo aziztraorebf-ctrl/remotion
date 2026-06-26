@@ -1,5 +1,9 @@
 # Atlas — Bibliothèque mouvements caméra Remotion
 
+> **DOMAINE : Remotion (code frame-driven, SVG transform).** Zéro coût par essai.
+> Pour les mouvements caméra Seedance/Kling/Veo (génération vidéo AI), voir `memory/tools/camera-movements.md`.
+
+
 > Catalogue centralisé des mouvements caméra éprouvés et suggérés pour épisodes Atlas.
 > Créé 2026-05-03 fin session Beat 3 Empire Ghana sur demande Aziz.
 > **Philosophie Remotion** : zéro coût par tentative (vs Seedance). On DOIT oser les mouvements risqués — un render perdu coûte 0$ contre un échec créatif coûteux narrativement.
@@ -8,7 +12,7 @@
 
 Constat session Beat 1-3 Empire Ghana : on a passé 70s sur la même région (Sahel/Wagadou) sans bouger activement la caméra → risque de statique. À chaque épisode Atlas où l'histoire reste ancrée géographiquement, **anticiper les mouvements caméra dès le storyboard**, pas en réaction.
 
-Règle directrice : **tous les 5-8s, la caméra doit BOUGER de manière narrative.** Sinon le spectateur décroche.
+Règle directrice : **max 8s sans changement visuel** (caméra, couleur, apparition — règle canonique ATLAS-PLAYBOOK R1). En pratique viser un changement toutes les 5-8s. Sinon le spectateur décroche.
 
 ## Mouvements VALIDÉS (utilisés et fonctionnels)
 

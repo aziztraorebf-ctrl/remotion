@@ -5,6 +5,10 @@
 > qui marchent. Chaque prompt vise le NIVEAU DE COMPLEXITE REELLEMENT FAISABLE en SVG (pas une illustration).
 > Complete [[SVG-FAISABILITE-AMONT]] (la methode) + [[SVG-SCENES-GENERATIVES]] (les registres prouves).
 
+## ⚠️ REGISTRES 2-3 A CALIBRER — ACTION REQUISE PROCHAINE SESSION
+
+> **REGISTRE 2 (aplats+dégradés : or-jour, braise-or, papier-decoupe) et REGISTRE 3 (carte/schéma tactique) sont des TODO.** La prochaine session qui génère une scène de l'un de ces registres DOIT graver le prompt ici (15 min). Procédure : § METHODE POUR AJOUTER UN REGISTRE ci-dessous.
+
 ## 🖼️ CHAQUE REGISTRE = PROMPT + IMAGE-REFERENCE (toujours joindre les deux) — regle Aziz 2026-06-22
 Images-ref durables : `public/_shared/refs/svg-registres/` (frames de protos prouves, une par registre).
 PROCEDURE pour TOUTE generation d'image-cible d'un beat :

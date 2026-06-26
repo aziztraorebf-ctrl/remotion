@@ -20,7 +20,7 @@ Avant d'écrire UNE LIGNE de code pour un beat/scène, Claude DOIT faire une rec
    - Mapbox : `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` (17 templates)
    - Composants : `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants par cas d'usage)
    - Point d'entrée maître : `src/projects/_shared/INDEX-DES-INDEX.md`
-   - Gemini data-viz : `memory/tools/CATALOGUE-GEMINI.md` (40+ templates)
+   - Gemini data-viz : `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates)
 3. **Présenter à Aziz** : "Pour ce beat, voici ce qu'on a déjà : [template A] fait X, [template B] fait Y. Je propose d'utiliser [choix] parce que [raison]. Alternative : [autre]."
 4. **PUIS** coder en assemblant les templates trouvés, pas from scratch.
 

@@ -4,6 +4,8 @@ description: Référence blindée pour reproduire le pipeline breakdown à 85-90
 type: reference
 ---
 
+> ⚠️ Pour data-viz : utiliser `WORKFLOW-DATAVIZ.md` (GPT-5.5 écrase Gemini au breakdown). Ce fichier = pipeline beats MAPBOX (Gemini 3.1-pro).
+
 ## Contraintes OBLIGATOIRES dans le prompt Gemini storyboard (ajoutées 2026-05-22)
 
 Deux contraintes manquaient dans les premiers appels Sénégal et Gemini a ignoré la géographie :
@@ -301,3 +303,126 @@ Avant de passer le JSON au code, vérifier chaque point. Si un point échoue →
 ```
 
 **S'applique dès l'Acte 3.**
+
+---
+
+## Étape 0 — Backgrounds de l'épisode (AVANT les beats)
+
+Générer en batch **3-4 backgrounds atmosphériques** pour toute la production. Ne plus générer de fonds beat par beat.
+
+Famille standard :
+| Fichier | Ambiance | Usage |
+|---------|---------|-------|
+| `bg-navy-dots-spotlight.png` | Tech, data, corporate | Beats data-viz |
+| `bg-kraft-aged.png` | Chaud, archive, dossier | Beats narratifs |
+| `bg-sepia-texture.png` | Parcheminé, géo | Beats carte/géo |
+| `bg-noir-cinematic.png` | Dramatique, tension | Beats climax |
+
+Prompt type pour `bg-navy-dots-spotlight.png` :
+```
+Dark navy blue background #080d14 with a regular pattern of very small dots in slightly lighter navy.
+A subtle warm spotlight / vignette emanates from the center-bottom third of the frame, creating depth.
+Cinematic, premium, editorial. 1080x1920 portrait. No text, no icons, pure background.
+```
+
+---
+
+## Deux modèles Gemini — rôles distincts et NON interchangeables
+
+| Modèle | Capacité | Rôle dans le pipeline |
+|--------|---------|----------------------|
+| `gemini-3.1-flash-image-preview` | Génère des images | Étapes 1 et 3 (storyboard + assets) |
+| `gemini-3.1-pro-preview` | Analyse des images, produit du texte/JSON | Étape 2 (breakdown technique) |
+
+**3.1-pro-preview ne peut PAS générer d'images.**
+**3.1-flash-image-preview ne peut PAS produire un JSON technique précis.**
+Ce ne sont pas deux niveaux de qualité du même modèle — ce sont deux spécialités différentes.
+
+---
+
+## Étape 1.5 — Amélioration storyboard (`gemini-3.1-pro-preview`) — SYSTÉMATIQUE
+
+> Lancer après l'Étape 1 (storyboard Flash), avant l'Étape 2 (breakdown).
+
+```bash
+# Analyse seule (affiche les suggestions, pas de régénération)
+python3 scripts/improve_storyboard.py <episode> <beat_id>
+
+# Analyse + régénération du storyboard amélioré
+python3 scripts/improve_storyboard.py <episode> <beat_id> --apply
+```
+
+**Pourquoi systématique :** Flash génère un bon storyboard mais optimise pour l'esthétique statique. Il ne pense pas à l'animation, à la profondeur atmosphérique, aux contraintes Remotion. 3.1-pro voit les deux — il enrichit avant le breakdown.
+
+**Ce que fait le script :**
+1. Lit le storyboard Flash existant
+2. 3.1-pro analyse : ce qui est flat, ce qui manque, ce qui contredit nos contraintes
+3. Suggère des améliorations concrètes (background PNG, éléments SVG, atmosphere)
+4. Produit un prompt amélioré pour Flash
+5. `--apply` : régénère le storyboard avec le prompt amélioré
+
+**Validation Aziz requise** : regarder le storyboard amélioré et approuver avant de passer à l'Étape 2.
+
+**Validé sur :** Zimbabwe Beat 4 (2026-05-13) — "PowerPoint slide → cinematic documentary frame"
+
+---
+
+## Springs Souverain (journalistique, lent)
+
+```ts
+spring({ frame: frame - cueFrame, fps, config: { damping: 90, stiffness: 60 } }) // standard
+spring({ frame: frame - stampFrame, fps, config: { damping: 12, stiffness: 120 } }) // stamp impact
+```
+
+**Permanent motion obligatoire** (copier la description `permanent_motion` du JSON) :
+```ts
+const float = Math.sin(frame * 0.04) * 5; // exemple
+const grainShift = Math.sin(frame * 0.025) * 3;
+```
+
+---
+
+## Règles non-négociables du pipeline
+
+1. **Toujours envoyer le storyboard PNG** au 3.1-pro (pas juste du texte)
+2. **Tous les textes** → `type: "css_text"` / code_only
+3. **Toutes les formes simples** → `svg_shape` / code_only
+4. **Fond transparent PNG → 2 solutions** (voir `feedback_gemini-assets-fond-transparent.md`)
+5. **Pas de SFX nodes** sur fond musical — le pulse visuel suffit
+6. **Tampon = info clé contextuelle** (date, lieu), pas un mot fonctionnel
+7. **Max 5 secondes sans changement**, min 2 secondes entre changements majeurs
+8. **Background lisible sur mobile** : fond minimum `#141c2e`, dots/patterns minimum 28% opacité. Jamais de fond quasi-noir (#080d14) — invisible en plein soleil.
+9. **3 types de backgrounds valides uniquement** — dots CSS / kraft PNG / geometric SVG. Jamais de texture fumée/nuages/organique. Voir `feedback_souverain-backgrounds-valides.md`.
+10. **Géographie = d3-geo obligatoire** — jamais SVG path approximatif de 3.1-pro. Voir `feedback_geo-zero-approximation.md`.
+
+---
+
+## Gestion des fonds transparents (Résumé)
+
+| Contexte | Solution |
+|---------|----------|
+| Asset sur fond sombre (navy, noir) | Générer sur fond noir + `mixBlendMode: "screen"` |
+| Asset sur fond clair (crème, kraft) | Générer sur fond crème `#d4c29d` solide |
+| Ne jamais faire | PIL alpha_composite, chroma key manuel, CSS mask-image |
+
+Détails : `memory/feedbacks/feedback_gemini-assets-fond-transparent.md`
+
+---
+
+## Quand utiliser ce pipeline
+
+- ✅ Beats data-viz, diagrammes, documents, comparaisons
+- ✅ Beats avec storyboard à signature visuelle forte
+- ✅ Production Souverain où la fidélité visuelle prime
+- ❌ Beats Mapbox WebGL — carte interactive, code custom direct
+- ❌ Beats PixelLab / walk cycles — pipeline Atlas séparé
+
+---
+
+## Validations cross-projets
+
+| Production | Beat | Résultat | Date |
+|-----------|------|---------|------|
+| Niger Uranium | Beat 3 (EntityDiagram) | Aziz : "quasiment copie conforme, meilleur que storyboard" | 2026-05-10 |
+| Niger Uranium | Beat 2 (ComparisonTable) | Breakdown prêt, à coder | 2026-05-10 |
+| Zimbabwe Lithium | Beat 2 (Tension ×15) | Aziz : "encore mieux que le storyboard" | 2026-05-13 |

@@ -1,5 +1,7 @@
 # Doctrine — FORMAT SVG mid-form (& SVG-insert) ⭐⭐
 
+> 🧭 ORDRE DE LECTURE : (0) SVG-FAISABILITE-AMONT (valider la vue AVANT) → (1) SVG-SCENES-GENERATIVES (generer+animer, manuel principal) → si multi-agents : PRODUCTION-AGENTIQUE-SVG → **(si format video long) VOUS ETES ICI — SVG-MIDFORM-FORMAT**.
+
 > Prouve 2026-06-25 (test franc CFA, ~45s, 3 registres). Le SVG genere (GLM-5.2 / Gemini / GPT) + anime par frame
 > en Remotion n'est pas qu'un effet ponctuel : c'est un FORMAT de video a part entiere ET un OUTIL narratif a integrer
 > dans TOUS les scripts. Source de verite du format. Voir aussi : [[SVG-SCENES-GENERATIVES]] (technique de generation),

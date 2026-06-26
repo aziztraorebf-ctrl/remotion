@@ -49,6 +49,7 @@ editoriale Kora & Cartes (angle macro africain) rendue en mouvement.
 **R3 — SEQUENTIEL, jamais simultane (parite Souverain/Atlas).** Plusieurs pieces en mouvement en meme temps (chars + visages + jetons) = bordelique. Ordre : l'info s'affiche -> PUIS les jetons bougent SEULS pour illustrer -> puis suite. Exception : un seul moment vraiment fort peut tout reunir. C'est la regle de comparite avec les autres piliers.
 
 **R4 — Carte JAMAIS assombrie.** Identite parchemin lumineuse. Voile = cream clair (`{cream}59` env.), jamais noir.
+> ⚠️ **EXCEPTION validée (WARMAP-GRAMMAIRE.md §6, prime sur R4)** : `WarMapDimmedOverlay` assombrit FORTEMENT la carte (voile ~0.62 + halo + grain + trou dans les contours) pour y superposer un élément premium — cas AUTORISÉ car les détails de carte sous l'élément sont neutralisés. Ne s'applique pas au voile cream leger R4 (qui, lui, reste banni pour les overlays texte). Règle à jour : WARMAP-GRAMMAIRE.md §6 + §9.
 
 **R5 — Rythme dwell par jalon.** Defilement non lineaire : DWELL sur chaque jalon (le bandeau a le temps de se lire) puis ease-in-out vers le suivant. Segment-cle (ex. contre-attaque) = dwell + duree plus longs.
 

@@ -47,7 +47,7 @@ ancré dans Ghana/Mansa Moussa. Cf. [[feedback_atlas-inspiration-externe-faisabi
 2. **Les 2 vidéos sont COMPLÉMENTAIRES** pas interchangeables : Ghana = encadrés data,
    Mansa Moussa = overlays + sprites mouvement. Routage par besoin.
 3. **PixelLab = le morceau dur** : "quel sprite, quel cycle, apparaît où, quand" = couche dédiée
-   (N2 "sprite = acteur" de l'échelle d'escalade). Cf. [[atlas-pixellab-differentiel]].
+   (N2 "sprite = acteur" de l'échelle d'escalade). Cf. `ATLAS-PIXELLAB-PLAYBOOK.md §4` (échelle N0/N1/N2).
 
 ## Sources survivantes (vérifiées 2026-06-03)
 

@@ -1,0 +1,131 @@
+<!-- GGW Bulbes Dormants + Epi — extrait de B6Outro.tsx (BULBS array) + B5LaPreuve.tsx (CropStalk) -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #3e8f34 (vert vie), #c9a13b (dore recolte) -->
+<!-- Dimensions originales : 1080×1920 | Zone profondeur : y 900-1400 (sous la ligne de sol) -->
+<!-- Date extraction : 2026-06-25 -->
+<!--
+  USAGE REMOTION :
+  Deux types d'elements "graine" dans le registre GGW :
+
+  1. BULBES DORMANTS (B6) — 3 formes organiques asymetriques sous la coupe de terre.
+     Ce sont des "graines paysannes" enfouies, vivantes sous la surface.
+     Animation : pop spring sequentiel (cascade ~0.4s/bulbe) + pulse sin leger.
+     Colorisation : encre pure -> liseré vert (#3e8f34) quand "la vie s'eveille".
+
+  2. EPI / CULTURE (B5) — tige dressée avec grains dores et barbes de ble.
+     Apparait a la fin de B5 "les recoltes qui repartent" = CLIMAX d'abondance.
+     Animation : spring de croissance (tige monte, epi s'ouvre, barbes rayonnent).
+     Couleur : vert-terre #5e8a3a (tige) + dore #c9a13b (grains).
+
+  Objet inerte -> JAMAIS de glissement lateral. Seuls : pop spring, fade, pulse.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -100 500 300" width="500" height="300">
+
+  <!-- ==================================================
+       BULBE 1 — forme horizontale aplatie (B6, tx=250 ty=950)
+       Origine (0,0) = centre du bulbe
+       ================================================== -->
+  <g id="bulbe-1" transform="translate(-120, 80)">
+    <!-- Corps du bulbe (forme organique horizontale) -->
+    <path
+      d="M-30,0 C-30,-25 30,-25 40,0 C50,25 -30,25 -30,0 Z"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <!-- Nervures internes (le bulbe est vivant, pas mort) -->
+    <path
+      d="M-20,-5 Q 5,-15 30,-2 M-20,5 Q 5,15 25,5"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.7"
+    />
+    <!-- Racines (4 ramifications depuis la base) -->
+    <path
+      d="M-30,0 C-60,10 -80,-20 -100,10 M-30,0 C-50,30 -70,30 -80,60 M40,0 C70,10 90,-10 120,0 M40,0 C60,20 70,40 100,50"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      opacity="0.65"
+    />
+    <!-- Liseré vert (vie latente — s'allume dans Remotion via opacity animée encre->vert) -->
+    <!-- Dans Remotion : opacity = bulbLife * 0.8, stroke #3e8f34 -->
+    <path
+      d="M-30,0 C-30,-25 30,-25 40,0 C50,25 -30,25 -30,0 Z"
+      fill="none"
+      stroke="#3e8f34"
+      stroke-width="3"
+      opacity="0.0"
+    />
+  </g>
+
+  <!-- ==================================================
+       BULBE 2 — forme verticale allongee (B6, tx=820 ty=1150)
+       Origine (0,0) = centre du bulbe
+       ================================================== -->
+  <g id="bulbe-2" transform="translate(80, 30)">
+    <!-- Corps du bulbe (forme verticale, rx=45 ry=65) -->
+    <path
+      d="M0,-40 C25,-40 25,40 0,50 C-25,40 -25,-40 0,-40 Z"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <!-- Nervures internes -->
+    <path
+      d="M-10,-20 Q 15,-10 10,-30 M-15,10 Q 15,20 10,0"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.7"
+    />
+    <!-- Racines (4 directions) -->
+    <path
+      d="M0,50 C10,80 -10,100 0,130 M0,50 C-20,70 -40,60 -60,90 M0,-40 C-10,-70 20,-90 10,-120 M0,-40 C30,-60 50,-50 70,-70"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      opacity="0.65"
+    />
+  </g>
+
+  <!-- ==================================================
+       BULBE 3 — forme ovale penchee (B6, tx=350 ty=1350)
+       Origine (0,0) = centre du bulbe
+       ================================================== -->
+  <g id="bulbe-3" transform="translate(200, 140)">
+    <!-- Corps du bulbe (rx=60 ry=35, incline) -->
+    <path
+      d="M-35,-10 C-10,-30 20,-30 40,-5 C60,20 10,25 -35,-10 Z"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <!-- Nervures internes -->
+    <path
+      d="M-20,-10 Q 5,-20 25,-10 M-10,0 Q 15,-10 20,5"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.7"
+    />
+    <!-- Racines (4 directions) -->
+    <path
+      d="M-35,-10 C-60,-20 -80,0 -110,-10 M-35,-10 C-50,-30 -40,-60 -60,-80 M40,-5 C70,0 80,20 110,10 M40,-5 C50,25 70,40 90,60"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      opacity="0.65"
+    />
+  </g>
+
+</svg>

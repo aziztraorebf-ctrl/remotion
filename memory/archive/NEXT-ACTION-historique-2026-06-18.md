@@ -184,7 +184,7 @@ Aziz a pris le Route Pack mapanimation (19,99$, 40 generations). Decode 7 refs. 
 d3-geo headless = bon moteur (clipPath deja eprouve en render, mieux que Mapbox).** Brique
 `AtlasAttackArrow.tsx` codee + polishee + validee render (fleche tactique sequentielle, mode
 carte light). 3 decouvertes durables dans `feedback_atlas-inspiration-externe-faisabilite.md`
-+ `atlas-pixellab-differentiel.md`.
++ contenu absorbé dans `ATLAS-PIXELLAB-PLAYBOOK.md §4` (échelle N0/N1/N2).
 
 ## ⏳ PROCHAINE SESSION — ATLAS : retour aux sources FAIT, place au playbook vivant
 

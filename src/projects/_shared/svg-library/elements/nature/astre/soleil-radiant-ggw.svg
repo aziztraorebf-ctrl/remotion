@@ -1,0 +1,49 @@
+<!-- GGW Soleil radiant — extrait de B4Demilune.tsx, B5LaPreuve.tsx, B6Outro.tsx, B7MosaiqueFinal.tsx -->
+<!-- Registre : encre narrative | Palette : #e8b44a (jaune), #b5862b (jaune foncé), #f2b53a (or), #ffd86b (or glow) -->
+<!-- Dimensions originales : 1080×1920 | Position variable selon la scène (voir fiche .md) -->
+<!-- Date extraction : 2026-06-25 -->
+<!--
+  USAGE REMOTION : ce SVG montre l'état STATIQUE de référence du soleil.
+  Dans le code Remotion, le soleil est animé par :
+    - scale via spring (apparition)
+    - rotate sur le groupe rayons (rotation continue ou timée)
+    - opacity du glow (pulse sin ou cross-fade encre->or)
+    - r du halo (pulse sin)
+  Le centre du soleil varie selon la scène : voir fiche .md.
+  Ce fichier utilise (0,0) comme centre pour faciliter le positionnement.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-180 -180 360 360" width="360" height="360">
+
+  <!-- VARIANTE JAUNE (B4/B5) — soleil espoir, discret, rayonnant -->
+  <!-- Centre (0,0) -->
+
+  <g id="soleil-jaune">
+    <!-- Halo extérieur pulsant (opacity animée en sin) -->
+    <circle cx="0" cy="0" r="100" fill="#e8b44a" fill-opacity="0.16"/>
+    <!-- Halo intermédiaire -->
+    <circle cx="0" cy="0" r="74" fill="#e8b44a" fill-opacity="0.10"/>
+    <!-- Anneau pointillé -->
+    <circle cx="0" cy="0" r="92" fill="none" stroke="#b5862b" stroke-width="1.5" stroke-dasharray="11 18" opacity="0.35"/>
+    <!-- Corps du soleil -->
+    <circle cx="0" cy="0" r="64" fill="#e8b44a" fill-opacity="0.88" stroke="#b5862b" stroke-width="4"/>
+    <!-- Rayons — 12 traits alternés longs/courts, strokeWidth 2.5-3.5 -->
+    <!-- Dans Remotion : ce groupe tourne avec rotate(sunRot, 0, 0) ou rotate(frame*0.1, 0, 0) -->
+    <g id="rayons" stroke="#b5862b" stroke-linecap="round">
+      <!-- Rayons longs (index pair) : r1=76, r2=76+22=98 -->
+      <line x1="76" y1="0" x2="98" y2="0" stroke-width="3.5"/>
+      <line x1="-76" y1="0" x2="-98" y2="0" stroke-width="3.5"/>
+      <line x1="0" y1="-76" x2="0" y2="-98" stroke-width="3.5"/>
+      <line x1="0" y1="76" x2="0" y2="98" stroke-width="3.5"/>
+      <line x1="53.7" y1="-53.7" x2="69.3" y2="-69.3" stroke-width="3.5"/>
+      <line x1="-53.7" y1="-53.7" x2="-69.3" y2="-69.3" stroke-width="3.5"/>
+      <line x1="53.7" y1="53.7" x2="69.3" y2="69.3" stroke-width="3.5"/>
+      <line x1="-53.7" y1="53.7" x2="-69.3" y2="69.3" stroke-width="3.5"/>
+      <!-- Rayons courts (index impair) : r1=76, r2=76+12=88 -->
+      <line x1="72.6" y1="-26.4" x2="83.8" y2="-30.5" stroke-width="2"/>
+      <line x1="26.4" y1="-72.6" x2="30.5" y2="-83.8" stroke-width="2"/>
+      <line x1="-26.4" y1="-72.6" x2="-30.5" y2="-83.8" stroke-width="2"/>
+      <line x1="-72.6" y1="-26.4" x2="-83.8" y2="-30.5" stroke-width="2"/>
+    </g>
+  </g>
+
+</svg>

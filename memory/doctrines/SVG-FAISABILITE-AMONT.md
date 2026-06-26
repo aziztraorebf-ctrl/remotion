@@ -1,5 +1,7 @@
 # ⭐ DOCTRINE — ETAPE "FAISABILITE SVG" AMONT (le LLM dit SA capacite + image-cible AVANT le code)
 
+> 🧭 ORDRE DE LECTURE : **(0) VOUS ETES ICI — SVG-FAISABILITE-AMONT** (valider la vue AVANT de generer) → (1) SVG-SCENES-GENERATIVES (generer+animer, manuel principal) → si multi-agents : PRODUCTION-AGENTIQUE-SVG → si format video long : SVG-MIDFORM-FORMAT.
+
 > Gravee 2026-06-22 (Aziz). Comble un trou prouve : "avoir une idee de scene ne veut PAS dire qu'elle se transcrit
 > bien une fois le SVG genere". Cas declencheur = le mur d'arbres top-down -> les arbres = "gros points verts informes",
 > illisibles. Decouvert seulement APRES le render (cher en allers-retours). Cette etape deplace la decouverte AVANT le code.
@@ -23,7 +25,9 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
 2. **Brief FAISABILITE SVG** (`scripts/tools/svg-faisabilite-brief.py`), a Gemini ET GPT (generer les 2, comparer leur
    approche native) : joindre des FRAMES DE REFERENCE (ce qu'on sait rendre) + la TENTATIVE RATEE s'il y en a une.
    -> sortie JSON {faisable_note, approche, changements, mini_storyboard, image_cible_prompt}.
-3. **IMAGE-CIBLE** : generer l'image avec le prompt rendu (`gemini-gen-image.py`, modele `gemini-3.1-flash-image-preview`).
+3. **IMAGE-CIBLE = SVG NATIF** : generer le SVG cible via `svg-scene-narrative.py` (--provider gemini|gpt, --narrative-ref,
+   --style-ref). On obtient un SVG decoupe en `<g id>` nommes (directement animable). PAS de raster intermediaire (gemini-gen-image.py
+   est DEPASSE pour cette etape — voir [[SVG-MIDFORM-FORMAT]] + outils ETAT-GGW). Generer gemini ET gpt, comparer la decomposition.
    On VOIT la cible. Si l'element lit (l'arbre ressemble a un arbre) -> go. Sinon -> on re-brief / change d'angle. GRATUIT vs render.
 4. **Claude FILTRE** (double filtre [[feedback_ia-externe-idees-filtre-projet]]) : le LLM ne connait pas nos decisions ;
    garder ce qui sert le projet, ecarter le hors-sol. Presenter la synthese a Aziz.

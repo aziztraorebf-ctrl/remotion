@@ -66,7 +66,7 @@ bash scripts/render-mapbox.sh <CompositionId> /tmp/animatic_a2.mp4 --frames <A2_
 
 **AVANT de coder un acte : PIOCHER un template existant (réutiliser > from scratch).** Ouvrir les catalogues selon le type :
 - Acte Mapbox → `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` (17 templates : hooks, combos, inserts, territoire, dynamiques, séquentiel). Galerie visuelle : `dashboard/templates-carte-vivante.html`.
-- Acte graphisme/data → `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants) + `memory/tools/CATALOGUE-GEMINI.md` (40+ templates data-viz).
+- Acte graphisme/data → `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants) + `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates data-viz).
 - Vue d'ensemble de tous les catalogues : `src/projects/_shared/INDEX-DES-INDEX.md`.
 - **A1 (hook) OBLIGATOIRE** : un hook du catalogue (KineticMaskSlam, FiberOpticFlagInvade, ou un Combo).
 - **Inserts** : MapCutaway (4 modes) dès qu'on veut couper la carte pour appuyer un point.

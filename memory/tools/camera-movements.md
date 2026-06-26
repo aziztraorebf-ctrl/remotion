@@ -1,5 +1,9 @@
 # Camera Movements — Guide complet pour prompts Seedance/Kling/Veo
 
+> **DOMAINE : Génération vidéo AI (Seedance, Kling, Veo) — prompts textuels payants.**
+> Pour les mouvements caméra Remotion (code frame-driven, zéro coût par essai), voir `memory/tools/atlas-camera-movements.md`.
+
+
 > Source : "ALL Camera Movement Prompts in AI Filmmaking (30 Cinematic Moves)" — Yannis Ashay, 2026-04-22 (https://youtu.be/4-ctOYBfmDs)
 > Adapte par Aziz/Claude 2026-04-22 avec les validations Seedance V2 de Sonjata Papercraft.
 > **A consulter AVANT d'ecrire un prompt video.**

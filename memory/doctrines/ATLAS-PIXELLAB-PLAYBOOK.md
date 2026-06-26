@@ -2,7 +2,7 @@
 
 > Créé 2026-06-03. Couche dédiée du [[ATLAS-PLAYBOOK]]. Le morceau le PLUS DUR et le PLUS PRÉCIEUX
 > d'Atlas — ce qui le sépare d'un clone mapanimation (carte 2D flat). Sprites = ACTEURS du récit.
-> Dérivé du décodage Mansa Moussa V2 ([[DECODE-mansa-moussa]]) + correction [[atlas-pixellab-differentiel]].
+> Dérivé du décodage Mansa Moussa V2 ([[DECODE-mansa-moussa]]) + correction intégrée ici (voir §4 — échelle N0/N1/N2).
 > Code réel restauré : `src/projects/atlas/_reference/mansa-moussa-v2/scenes/AtlasPixelChar.tsx`.
 
 **Principe directeur (Aziz)** : PixelLab = différentiel par DÉFAUT, pas plan B. La flèche/primitive

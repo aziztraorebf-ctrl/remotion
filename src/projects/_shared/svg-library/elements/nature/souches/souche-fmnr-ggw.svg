@@ -1,0 +1,131 @@
+<!-- GGW Souche FMNR — extrait de B4Demilune.tsx, B5LaPreuve.tsx -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #5d7d3a (vert-terre vie cachée), #d8a43a (or) -->
+<!-- Dimensions originales : 1080×1920 | Date extraction : 2026-06-25 -->
+<!--
+  USAGE REMOTION :
+  Ce SVG documente DEUX types de souches utilisées dans GGW :
+  1. PETITE SOUCHE (FS_*) — vue frontale simple pour le champ (plan 2 de B4)
+  2. GROS PLAN SOUCHE (GP_*) — souche héros lisible (plan 1 de B4)
+
+  Les deux sont des éléments INERTES (ne se déplacent pas — doctrine Remotion).
+  Animation autorisée : fade-in, spring pop, changement de couleur (cambium qui s'illumine).
+  Animation interdite : glissement latéral.
+
+  Le "coeur vivant" (cambium) s'illumine via fill animé encre->vert-terre,
+  technique canonique du registre GGW (cross-fade par opacité).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-250 -200 500 300" width="500" height="300">
+
+  <!-- ==================================================
+       PETITE SOUCHE (FS_* de B4) — vue frontale simple
+       Origine (0,0) = base du tronc au niveau du sol
+       ================================================== -->
+  <g id="petite-souche" transform="translate(-120, 0)">
+    <!-- Corps de la souche — silhouette large et basse (anti-barrique) -->
+    <path
+      d="M-40,0 C-44,-40 -38,-68 -28,-80 L28,-80 C40,-68 44,-40 40,0 Z"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+    <!-- Cernes annuels du bois (sommet scie) -->
+    <path
+      d="M-20,-78 C-6,-86 10,-86 22,-78 M-26,-74 C-4,-88 14,-88 28,-74 M-10,-79 C0,-83 6,-83 12,-79"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+    <!-- Coeur vivant (cambium) — s'illumine en vert dans Remotion -->
+    <!-- Dans Remotion : fill animé encre->vert via coreReveal -->
+    <path
+      d="M-14,-79 C-2,-85 6,-85 14,-79 C8,-72 -8,-72 -14,-79 Z"
+      fill="#5d7d3a"
+      stroke="none"
+    />
+    <!-- Rejet FMNR (tige + feuille terminale) — ancré au bord supérieur -->
+    <!-- Dans Remotion : scale animé via spring depuis la base du rejet -->
+    <path
+      d="M0,-78 C6,-110 0,-140 8,-176"
+      fill="none"
+      stroke="#5d7d3a"
+      stroke-width="5"
+      stroke-linecap="round"
+    />
+    <path
+      d="M8,-176 C-12,-184 -8,-202 6,-202 C16,-198 14,-184 8,-176 Z"
+      fill="#3e8f34"
+      stroke="#295c1c"
+      stroke-width="2.5"
+      stroke-linejoin="round"
+    />
+    <!-- Écorce sombre (texture, traits verticaux courts) -->
+    <path
+      d="M-30,-8 L-26,-72 M-8,-6 L-6,-76 M14,-8 L12,-74 M30,-10 L26,-66"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2"
+      stroke-linecap="round"
+      opacity="0.55"
+    />
+  </g>
+
+  <!-- ==================================================
+       GROS PLAN SOUCHE (GP_* de B4) — souche héros
+       Centre (0,0) = centre du disque scie
+       Vue de 3/4, large et basse (anti-barrique)
+       ================================================== -->
+  <g id="gros-plan-souche" transform="translate(130, 50)">
+    <!-- Disque scie (sommet) — large ellipse vue de 3/4 -->
+    <path
+      d="M-210,-6 C-206,-66 206,-66 210,-6 C206,52 -206,52 -210,-6 Z"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+    <!-- Cambium (bord vivant) — anneau evenodd entre les deux contours -->
+    <!-- Dans Remotion : fill animé via inkToColor(gpCambiumLife, 0x5d, 0x7d, 0x3a) -->
+    <path
+      d="M-204,-6 C-200,-62 200,-62 204,-6 C200,48 -200,48 -204,-6 Z M-168,-6 C-166,-50 170,-50 172,-6 C170,40 -166,40 -168,-6 Z"
+      fill="#5d7d3a"
+      fill-rule="evenodd"
+      stroke="none"
+      opacity="0.7"
+    />
+    <!-- Cerne 1 -->
+    <path d="M-168,-6 C-166,-50 170,-50 172,-6 C170,40 -166,40 -168,-6 Z" fill="none" stroke="#2b2117" stroke-width="2.5" opacity="0.85"/>
+    <!-- Cerne 2 -->
+    <path d="M-120,-10 C-118,-44 128,-44 130,-10 C128,30 -118,30 -120,-10 Z" fill="none" stroke="#2b2117" stroke-width="2.5" opacity="0.85"/>
+    <!-- Cerne 3 -->
+    <path d="M-72,-8 C-70,-32 84,-32 86,-8 C84,16 -70,16 -72,-8 Z" fill="none" stroke="#2b2117" stroke-width="2.5" opacity="0.85"/>
+    <!-- Cerne 4 (plus petit, coeur) -->
+    <path d="M-32,-12 C-30,-24 44,-24 46,-12 C44,4 -30,4 -32,-12 Z" fill="none" stroke="#2b2117" stroke-width="2.5" opacity="0.85"/>
+    <!-- Stries radiales (rayons du bois) -->
+    <path
+      d="M8,-44 L4,-22 M-92,-30 L-58,-16 M104,-30 L66,-16 M-150,-8 L-104,-4 M156,-8 L108,-4 M8,30 L4,14 M-60,28 L-36,14 M76,28 L48,14"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="1.8"
+      stroke-linecap="round"
+      opacity="0.6"
+    />
+    <!-- Flancs (écorce hachuree, traits verticaux) -->
+    <path
+      d="M-210,0 C-224,52 -208,108 -176,150 C-150,176 -120,184 -70,190 C-20,196 30,196 84,188 C140,178 180,158 200,120 C214,86 210,44 210,0"
+      fill="#e8dcc0"
+      stroke="#2b2117"
+      stroke-width="6"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M-176,30 C-184,80 -178,130 -160,166 M-120,42 C-128,90 -124,140 -110,176 M-58,50 C-64,100 -62,150 -54,186 M22,50 C26,100 24,150 16,186 M96,44 C104,92 100,142 84,176 M158,32 C168,80 164,130 142,166"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.5"
+      stroke-linecap="round"
+      opacity="0.65"
+    />
+  </g>
+</svg>

@@ -1,7 +1,7 @@
 # STATUS — Système Atlas (playbook + bibliothèque)
 
 > Chantier transversal (pas un épisode) : rebâtir le système Atlas à parité Souverain.
-> Mis à jour 2026-06-03. Branche `feat/atlas-playbook-retour-aux-sources` (11 commits, à merger).
+> Mis à jour 2026-06-03. SYSTÈME ACTIF — voir doctrines pour l'état courant.
 
 ## État (tout FAIT, validé render + Aziz)
 

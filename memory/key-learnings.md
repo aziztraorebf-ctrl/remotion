@@ -131,65 +131,22 @@ carte 2D flat top-down, au lieu de partir de CE QUI MARCHE CHEZ NOUS.
 
 ---
 
-## GRAMMAIRE CAUSALE + AUDIO-FIRST : LE STANDARD WAR-MAP (2026-06-12, leçon MAJEURE transversale)
+## GRAMMAIRE CAUSALE + AUDIO-FIRST : LE STANDARD WAR-MAP (2026-06-12)
 
-**Suite directe de la leçon précédente.** Après avoir rendu la P2 Sahel "premium" (jolie), Aziz l'a quand même
-trouvée CONFUSE : "c'est beau mais je ne comprends pas pourquoi une tache rouge apparaît, pourquoi les bases
-brûlent sans attaquant". Le polish ne suffit pas — il manquait le SENS.
+> ⭐ **Doctrine absorbée dans `memory/doctrines/WARMAP-GRAMMAIRE.md`** — lire en priorité.
+> Résumé non substituable : CAUSE AVANT EFFET (les jetons AVANCENT → sillage colore → bases tombent). Jamais un ÉTAT qui pop. Audio phrase-par-phrase AVANT de coder. Test de lisibilité : "coupe le son — si tu comprends les actions sans l'audio → gagné".
 
-**LA CAUSE RACINE** : j'avais codé des ÉTATS qui apparaissent (zone rouge qui pop, base qui s'efface) au lieu
-d'ACTIONS CAUSALES (A fait X → donc Y). Et j'avais pris les triggers (frames) de l'alignment SANS écouter
-l'audio pour me demander "que doit montrer cette phrase ?". Synchronisé techniquement, vide narrativement.
-
-**CE QUI A DÉBLOQUÉ (4 itérations + DA-brief)** :
-1. **PARTIR DE L'AUDIO, phrase par phrase** → pour chaque phrase, "que doit COMPRENDRE un œil neuf ?".
-   C'est l'audio-lock de la doctrine, mais appliqué au SENS visuel, pas juste au timing. Outil : un PLAN
-   NARRATIF texte (PLAN-NARRATIF-P2.md) validé Aziz AVANT de coder.
-2. **CAUSE AVANT EFFET** : les jetons jihadistes AVANCENT (waypoints) → leur SILLAGE colore le territoire →
-   les bases tombent là où ils arrivent. La zone rouge NAÎT de l'action, elle ne pop jamais.
-3. **COMBINER L'ARSENAL** (jamais 1 seul asset) : jetons (acteurs) + zones (conséquence) + sprites Gemini
-   (lieux) + PixelLab (effets) + timeline (temps) + contours flash + plaques. L'ensemble crée le sens.
-   Test d'Aziz : "on n'utilise pas à 100% ce qu'on a — c'est l'ensemble qui rend puissant."
-4. **DA-brief upstream sur le PLAN** (pas juste sur le render) : Gemini+Kimi ont validé la grammaire causale
-   et ajouté 3 gestes clés (sillage progressif par mask, Niger=junte institutionnelle ≠ rouge jihadiste,
-   chute en 3 temps). Signal jamais juge : j'ai filtré leurs hallucinations (ils voulaient retirer nos sprites
-   validés en croyant à du Freepik 3D sur frames floues).
-
-**TEST DE LISIBILITÉ FINAL (Kimi, à réutiliser)** : "coupe le son. Si tu comprends 'des gens avancent,
-assiègent des forts, le territoire devient rouge' → gagné. Si tu vois juste des taches apparaître → AI-slop narratif."
-
-**ERREURS SPÉCIFIQUES À NE PAS REFAIRE** :
-- Afficher un sprite-PORTRAIT nu (fighter-jnim = buste de face) sur une carte top-down = incohérent.
-  Le JETON = cercle parchemin + bordure faction + portrait CLIPPÉ dedans (modèle Acte 1, helper chip()).
+**Erreurs spécifiques à ne pas refaire (complément local, non couvertes par la doctrine) :**
+- Sprite-PORTRAIT nu (buste face) sur une carte top-down = incohérent. Le JETON = cercle parchemin + portrait CLIPPÉ dedans (`chip()`).
 - Pont Gemini→PixelLab RATE sur effets DIFFUS (poussière = boule pleine). Marche sur denses (explosion/fumée).
-- Données qui se MONTRENT, jamais qui s'écrivent : le "40% du Burkina" = le CONTOUR DU PAYS QUI SE REMPLIT
-  de rouge, PAS un overlay chiffré hors-centre qui répète la voix.
-- Forme abstraite (losange/étoile) = cheap sur une carte riche. Tout marqueur = jeton/sprite à notre identité.
-- SFX seulement si SUPPORT VISUEL (retiré cedeao-snap : on ne voit pas la CEDEAO se fracturer).
-- Un élément graphique enfermé dans un fragment JSX gaté peut disparaître même si sa propre condition est vraie
-  (bug timeline P2 : enfermée dans le HUD gaté !partie2 → systematic-debugging + rect debug magenta pour prouver).
-
-**MÉTA** : cette méthode (audio→plan narratif→DA-brief→arsenal causal→corrections itératives) est le STANDARD
-War-Map désormais. Elle s'applique à P3/P4 et à toute war-map future. Elle rend non seulement premium mais
-COMPRÉHENSIBLE — les deux sont indissociables. Réf : `episodes/warmap-sahel/PLAN-NARRATIF-P2.md`.
+- SFX seulement si SUPPORT VISUEL.
+- Un élément JSX gaté peut disparaître même si sa propre condition est vraie → systematic-debugging + rect debug magenta.
 
 ---
 
 ## SCANNER LE CATALOGUE CARTE-VIVANTE AVANT DE CODER UN BEAT WAR-MAP (2026-06-11)
 
-**Erreur commise** : codé toute la Partie 2 Sahel en SVG plat (cercles/étoiles/X) → Aziz : "mort, plat, niveau 1,
-pédagogique, pas premium". Gemini (analyse vidéo) confirme 4/10. CAUSE : j'ai sauté la RÈGLE RECHERCHE TEMPLATES
-(scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md` AVANT d'écrire une ligne). On avait 30+ composants
-premium NON utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill, sprites base-france, pitch 3D...).
-
-**Règle (déjà dans CLAUDE.md, à RESPECTER)** : AVANT de coder TOUT beat carto, scanner les catalogues + présenter
-à Aziz les templates pertinents. Une carte War-Map ne doit JAMAIS être : cercles SVG plats, marqueurs statiques
-sans pulse, caméra plan large avec du vide autour. Premium = sprites à ombre (pas cercles), Lottie géo-ancrés,
-front mouvant (path morphé / track-matte, pas scale de cercle), caméra serrée qui suit l'action + drift permanent,
-pitch 3D optionnel, séquentiel synchro voix. Réf complète : `episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md`.
-
-**Méta-leçon** : "sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Premium d'abord (doctrine Aziz).
-Quand Aziz dit "rends vivant", ce n'est pas optionnel — c'est le standard minimal.
+> Règle gravée dans CLAUDE.md et ROUTAGE.md. Rappel court : AVANT de coder TOUT beat carto, scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md`. Cause de l'erreur P2 : 30+ composants premium non utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill...) car le scan avait été sauté. "Sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Réf complète : `episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md`.
 
 ---
 
@@ -241,31 +198,13 @@ Render B1 V2 (board clearing + avion whip + convoi uranium + emprises dessinées
 
 ## DA-BRIEF : la causalité phrase-par-phrase + chaînes de réf + catalogue templates sont OBLIGATOIRES (2026-06-14, Aziz, War-Map P4)
 
-**Erreur évitée** : mon 1er DA-brief P4 a VALIDÉ mon plan sans le confronter à ce qui nous fait vraiment
-trébucher. Aziz a arrêté la session : "vous ne leur avez pas demandé comment rendre TOUTES les actions causales
-— c'est ce qui nous a ralentis sur P2/P3. Et vous n'avez pas envoyé nos chaînes de réf (Kings & Generals, etc.)
-ni la liste de nos templates pour qu'ils proposent des combinaisons."
-
-**Les 3 manques d'un DA-brief faible (à NE JAMAIS reproduire) :**
-1. **Causalité phrase-par-phrase JAMAIS mise à l'épreuve** : mentionner "cause avant effet" dans le socle ≠
-   demander, POUR CHAQUE phrase : "risque d'état qui pop ? comment rendre la cause visible AVANT l'effet ?".
-   C'est LA question structurante (celle qui a fait refaire P2 4×). La poser explicitement + joindre le test
-   "coupe le son" + lister les phrases À RISQUE (en P4 : or/uranium qui poppent, fusion=morph PowerPoint,
-   chiffre=donnée qui s'écrit, dézoom=mouvement sans acteur).
-2. **Chaînes de référence absentes** : joindre le décodage du genre (Operations Room/mapsinanutshell/K&G/
-   BazBattles) + notre différentiel → les LLM comparent au MODÈLE et proposent mieux ("ce qu'ils feraient
-   mieux qu'on peut prendre sans trahir notre identité"). Sinon le brief est auto-référentiel.
-3. **Catalogue de nos templates non envoyé** (`da-brief.py --catalog`) : sans la liste RÉELLE de nos briques
-   (WarMapOverlayDynamic, SahelAttackArrow, TerritorialExpansion, GeoConvergenceOverlay, countryOutline, chip,
-   sillage mask...) ils travaillent à l'aveugle et ne peuvent pas proposer de COMBINAISONS.
-
-**Le 2e brief enrichi a payé** : il a remonté 3 risques causaux ÉLEVÉS/CRITIQUES que le 1er avait laissés
-passer — Ph7 fusion (→ fils convergents+sceau tampon, pas morph), Ph3 chiffre (→ overlay ANCRÉ sur cluster),
-Ph5-6 ressources (→ contour pulse→remplissage→icône émerge). + règle chromatique rouge≠or (anti-cynisme).
-
-**RÈGLE GRAVÉE** : tout DA-brief upstream War-Map DOIT inclure (a) la question causale phrase-par-phrase avec
-le test "coupe le son", (b) le décodage du genre/chaînes de réf, (c) `--catalog` avec nos templates réels.
-Le brief P4 v2 (`/tmp/da-refs/brief-p4.txt` + `catalog-p4.txt`) = le MODÈLE à réutiliser. Vaut pour tout pilier.
+> ⭐ **Doctrine absorbée dans `memory/doctrines/DA-BRIEF-GATE.md`** — lire avant tout DA-brief.
+> **Les 3 manques d'un DA-brief faible** (à NE JAMAIS reproduire) :
+> 1. Causalité phrase-par-phrase jamais mise à l'épreuve (poser POUR CHAQUE phrase : "risque d'état qui pop ?").
+> 2. Chaînes de référence absentes (Operations Room/K&G/BazBattles — les LLM comparent mieux avec un MODÈLE).
+> 3. Catalogue de nos templates non envoyé (`da-brief.py --catalog`) → ils travaillent à l'aveugle.
+>
+> **Modèle de brief** : brief P4 v2 = le MODÈLE. Vaut pour tout pilier.
 
 ---
 
@@ -488,63 +427,78 @@ clip stable a tout zoom. Meme nature que le bug `mainlandBox` des drapeaux (`use
 
 ## 🤖 BRIEF AGENTS
 
-### 2026-06-02 — Workflow Beat Mapbox avec templates catalogue
+> ⭐ **Doctrines absorbées dans `memory/doctrines/PRODUCTION-AGENTIQUE-REMOTION.md` et `PRODUCTION-AGENTIQUE-SVG.md`.**
+> Les règles ci-dessous (visualWeight, background, dimensions) sont des COMPLÉMENTS CONCRETS pas encore dans les doctrines.
 
-**Leçon :** Partir d'un template catalogue existant (SweepRevealTerritory) au lieu de coder custom donne un résultat satisfaisant dès le premier render — au lieu de 5-8 itérations habituelles.
+### Règles brief agents codage Remotion (NON-NEGOTIABLE)
 
-**Ce qui a changé :**
-- Page blanche + choix template AVANT de coder (storyboard 7 champs Playbook)
-- MAROC_WORDS (tous les mots) au lieu de WORD_ANCHORS (anchors seulement) pour le karaoké
-- showHatching prop ajoutée à SweepRevealTerritory — hachures ivory visibles sur gold
-- SFX volumes : cinématique 0.50-0.55 (pas 0.35), musique 0.12 (pas 0.07)
+**Règle 1 — visualWeight :** Tout brief doit inclure `"visualWeight"` pour les éléments dominants.
+- Ex: `"le chiffre doit remplir 60-70% du diamètre du cercle"` — les agents respectent les px mais pas l'intention visuelle.
 
-**Workflow amélioré identifié par Aziz :**
-1. Render → auto-review Claude → appliquer premiums évidents AVANT Gemini
-2. Envoyer à Gemini avec les premiums déjà intégrés → score de départ plus haut → feedback plus incisif
-3. Objectif : atteindre 8/10 avant validation au lieu de 7/10
+**Règle 2 — Placeholder réaliste :** Quand un composant accepte une image externe, toujours générer un placeholder Gemini Flash AVANT le render de validation — jamais un PNG 1px (= rendu injugeable).
+
+**Règle 3 — BACKGROUND :** Famille reveal-mécanique : fond `#080d14` ou plus sombre (`#060a10`). JAMAIS `bg-navy` sans instruction — les agents defaultent dessus. Astuce : `"background": "#060a10 — PAS bg-navy"` dans le brief JSON.
+
+**Règle 4 — PROPORTIONS LABELS :** Labels textuels dans les composants reveal-mécanique = fontSize MAX 32px, opacity 0.6-0.7. Ils sont DÉCORATIFS. Astuce : `"labels": "DÉCORATIFS — fontSize 28-32px max"`.
+
+**Règle 5 — DIMENSIONS EXPLICITES EN PX :** Tout élément central = dimensions en px dans le brief, NON-RÉDUCTIBLES. Exemples validés : OdometerFlip CASE_WIDTH=240, CASE_HEIGHT=300, fontSize=220.
 
 **Anti-pattern confirmé :** Ne jamais continuer sur du code existant non-template — archiver et repartir à zéro avec la bonne architecture.
-- FillScreen centralValue fontSize=280px minimum
-- Écrire dans le brief : `"dimensionsNonReductibles": { "caseWidth": 240, "caseHeight": 300, "fontSize": 220, "nbCases": 4 }` — l'agent ne peut pas descendre en dessous
-
-### 2026-05-13 — Brief agents : 3 règles supplémentaires (background, proportions, dimensions)
-
-**Problème observé :** FillScreen, OdometerFlip, RadarPing codés par agents — 3 écarts systématiques vs mockups Gemini malgré la règle visualWeight déjà en place.
-
-**Règle 3 — BACKGROUND (NON-NEGOTIABLE) :**
-- Famille reveal-mécanique : fond par défaut = `#080d14` ou plus sombre (`#060a10`)
-- JAMAIS `bg-navy` (#141c2e) sans instruction explicite — les agents defaultent dessus
-- Si le mockup Gemini montre quasi-noir = utiliser `backgroundColor: "#060a10"` inline
-- Astuce brief : écrire explicitement `"background": "#060a10 — PAS bg-navy"` dans le JSON
-
-**Règle 4 — PROPORTIONS LABELS (NON-NEGOTIABLE) :**
-- Labels textuels (titre haut, sous-titre bas) dans les composants reveal-mécanique = fontSize MAX 32px, opacity 0.6-0.7, tracking large
-- Ils sont DÉCORATIFS — l'élément central prend toute la place
-- Si un label occupe >15% de l'espace écran = trop grand
-- Astuce brief : écrire `"labels": "DÉCORATIFS — fontSize 28-32px max, opacity 0.65"` dans le JSON
-
-**Règle 5 — DIMENSIONS EXPLICITES EN PX (NON-NEGOTIABLE) :**
-- Tout élément central doit avoir ses dimensions écrites en px dans le brief, non-réductibles
-- Exemples validés : OdometerFlip CASE_WIDTH=240, CASE_HEIGHT=300, fontSize=220, nbCases=4
-
-### 2026-05-13 — Brief agents : visualWeight obligatoire + placeholders realistes
-
-**Probleme observe :** Les agents de codage respectent les valeurs numeriques du breakdown JSON (ex: fontSize:130) mais pas l'intention visuelle du mockup. Resultat : CountdownReveal avec chiffre trop petit (320px au lieu de 380px+), PortraitGeometry avec typo 2x trop petite.
-
-**Regle 1 — visualWeight dans le brief :**
-Tout brief d'agent doit inclure une section `"visualWeight"` pour les elements dominants :
-- Ex: `"visualWeight": "le chiffre doit remplir 60-70% du diametre du cercle"`
-- Ex: `"visualWeight": "countryName doit etre aussi large que le cercle au-dessus"`
-
-**Regle 2 — Placeholder realiste obligatoire :**
-Quand un composant accepte une image externe (portrait, photo archive, carte), toujours generer un placeholder realiste Gemini Flash AVANT le render de validation — jamais un PNG 1px.
-- PNG 1px = rendu injugeable (fond vert ou gris uni)
-- Placeholder Gemini = peut juger le rendu final immediatement
-- Exception acceptable : composants purement CSS/SVG sans image externe
 
 ---
 
 ## ✅ FACT-CHECK
+
+## ⛔⛔ GATE FACT-CHECK D'ATTRIBUTION — AVANT de graver toute scène qui NOMME une personne / attribue une technique / un lieu / une citation (2026-06-25, GGW Beat 4) — NON-NEGOCIABLE, TOUS PROJETS
+
+**L'erreur (a failli graver une fausse attribution dans le pilote GGW)** : on a produit un Beat 4 avec le portrait de
+**Yacouba Sawadogo** (zaï, Burkina Faso, qui PLANTE des arbres dans ses trous) sur la phrase-climax « réveille des racines
+encore vivantes… **sans planter un seul arbre** ». Or cette phrase = la signature de **Tony Rinaudo / FMNR au Niger**
+(« without planting a single tree, simply by recognizing what was there, literally at our feet ») — pas Sawadogo. PIRE :
+le script mélangeait DEUX mécanismes distincts dans une scène (demi-lune = CREUSER pour retenir l'eau ; FMNR = TAILLER
+les souches déjà vivantes, sans creuser). C'est **Aziz** qui a rattrapé l'erreur en demandant une double-recherche, pas Claude.
+
+**Cause racine** : tous les éléments du script étaient INDIVIDUELLEMENT vrais (demi-lunes réelles, FMNR réelle, Sahel, 200M
+arbres Niger), donc le script « sonnait vrai » et a passé la recherche de sujet. Mais l'**ATTRIBUTION précise** (qui a fait
+quoi, où, quelle technique pour quelle phrase) n'a JAMAIS été vérifiée comme étape dédiée — elle a été improvisée au moment
+de produire la scène (choix du portrait). Un fait vrai + une attribution fausse = mensonge à l'écran, potentiellement
+catastrophique (on nomme une vraie personne décédée).
+
+**LA RÈGLE (gate bloquante)** : dès qu'une scène va NOMMER une personne réelle, ATTRIBUER une technique/invention/citation,
+ou situer un fait dans un PAYS précis → AVANT de produire/graver, faire une **double-recherche d'attribution** (2+ sources
+indépendantes) répondant à : QUI a fait QUOI, OÙ, et la citation/phrase est-elle de CETTE personne ? Vérifier surtout les
+cas « ça sonne vrai » (le plus dangereux). Ne JAMAIS coller un visage/nom sur une phrase sans avoir confirmé l'attribution.
+Si deux figures/techniques/lieux sont proches (Sawadogo/zaï/Burkina VS Rinaudo/FMNR/Niger), les SÉPARER explicitement —
+ne pas les fondre par commodité narrative. Le découpage audio PAR BEAT permet de corriger une seule scène sans toucher le reste.
+
+**⛔ RENFORCEMENT — vérifier l'ORIGINE et l'ANTÉRIORITÉ, pas seulement l'identité (2026-06-25, Aziz)** : quand on attribue
+un GESTE, un SAVOIR, une DÉCOUVERTE ou une INVENTION à quelqu'un, ne pas se contenter de vérifier que la personne existe et
+est liée au sujet. Vérifier RIGOUREUSEMENT que **c'est vraiment ELLE qui est à l'origine** : a-t-elle posé ce geste / eu cette
+idée EN PREMIER, ou d'autres l'avaient-ils fait/su AVANT ? Le savoir était-il déjà répandu (auquel cas « X l'a découvert »
+est faux) ou réellement nouveau ? Inversement, un savoir présenté comme « ancestral / les gens connaissaient déjà » l'était-il
+vraiment, ou est-ce une redécouverte par UNE personne (cas GGW : on a failli écrire « les paysans du Sahel connaissaient déjà »
+alors que c'est Rinaudo qui a VU que les souches arrachées étaient vivantes — les paysans ne le savaient pas). Ne JAMAIS
+affirmer l'origine/la paternité/l'antériorité sans l'avoir vérifiée. Dans le doute, formuler en TANDEM/rôles distincts
+(« X a découvert, les paysans ont propagé ») plutôt qu'attribuer faussement à un seul. C'est une faute aussi grave qu'un faux
+chiffre : elle réécrit l'Histoire à l'écran.
+
+## ⛔⛔ GATE COHÉRENCE INTER-BEATS — auditer la CHAÎNE causale/mécanique sur TOUS les beats ENSEMBLE avant de graver (2026-06-25, GGW) — NON-NEGOCIABLE
+
+**L'erreur (révélée en auditant GGW)** : on a écrit le script SCÈNE PAR SCÈNE et validé chaque scène ISOLÉMENT. Résultat :
+le Beat 4 introduisait une « cuvette en demi-lune » et le Beat 5 y référait (« là où ces cuvettes captent la pluie, l'eau
+remonte… +17m »). Quand on a dû corriger le B4 (mélange de 2 techniques), on a découvert que le B5 EN DÉPENDAIT — et que le
+short fusionnait en réalité DEUX techniques distinctes comme si c'en était une seule : les DEMI-LUNES/zaï (creuser → capter
+l'eau → la nappe remonte, le « +17m ») ET la FMNR (protéger/tailler les souches vivantes → les arbres reviennent, « sans
+planter », « 200M arbres »). Vrai au Niger toutes les deux, mais EFFETS et GESTES différents — les fondre = raccourci faux.
+
+**LA RÈGLE (gate bloquante)** : avant de graver un script multi-scènes, faire un AUDIT DE LA CHAÎNE sur l'ensemble des beats,
+PAS scène par scène : (1) tout terme/mécanisme/objet introduit à un beat et RÉFÉRENCÉ à un autre (« ces cuvettes », « cette
+technique ») doit avoir un antécédent cohérent ; (2) une CAUSE → un EFFET : ne pas attribuer à un mécanisme un effet qui
+appartient à un autre (la nappe qui remonte = les demi-lunes ; les arbres qui reviennent = la FMNR) ; (3) une seule solution-
+héros si possible — si plusieurs coexistent, les DISTINGUER explicitement, jamais les fondre. Relire le script EN ENTIER en
+traçant chaque mécanisme d'un bout à l'autre. Corollaire SVG (notre force) : changer un audio/une scène par beat est peu
+coûteux (audios découpés par beat, re-timing du code) — donc autant CORRIGER LE SCRIPT À FOND dès qu'une incohérence apparaît,
+plutôt que rustiner une scène. Lié à [[la gate fact-check d'attribution ci-dessus]].
 
 ## FACT-CHECK chiffres récents : Sonar Deep Research via OpenRouter + le piège "chiffre daté/trompeur" (2026-06-14, War-Map P4)
 
@@ -578,3 +532,9 @@ fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/inf
 - **Cause RÉELLE** : la carte Mapbox (WebGL headless) met ~15-20 frames à finir de charger (`style.load` + tiles). Un render qui DÉMARRE à frame 1185 n'a pas le temps de charger avant la frame 1190 extraite → carte grise. Ce n'est PAS un bug de la scène, c'est un artefact du render partiel trop court.
 - **RÈGLE** : pour juger une frame TARDIVE d'une scène Mapbox, rendre un **segment LONG** (≥100-150 frames AVANT la frame cible) pour laisser la map charger, PUIS extraire la frame voulue avec ffmpeg. Ne jamais conclure « bug » sur un render `--frames=A-B` court où A est loin du début. Prouvé : la même frame 1190 montrait du gris en render 1185-1195, et la carte complète en render 1040-1210.
 - **Corollaire** : ce gotcha a masqué un VRAI problème (flux d'export trop fins, 1.6px → invisibles). Toujours distinguer « artefact de render » de « effet réellement absent » en re-rendant proprement AVANT de modifier le code.
+
+## 🔗 check-links.py — angle mort sur la résolution depuis l'auto-memory (2026-06-25)
+**Bug prouvé** : `check-links.py` valide les chemins depuis `ROOT` (racine projet), PAS depuis l'emplacement réel d'un lien relatif écrit dans l'auto-memory (`.claude/projects/.../memory/MEMORY.md`). Conséquence : il peut afficher « 0 lien mort » alors que des liens relatifs DANS MEMORY.md sont cassés (vu : 3 liens `../../../` au lieu de `../../../../` non détectés).
+**Profondeur correcte** depuis l'auto-memory vers le workspace = **4 niveaux** : `../../../../Workspace/remotion/memory/...` (l'auto-memory est à `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/`).
+**Règle** : après réécriture de MEMORY.md, valider AUSSI par résolution absolue réelle (`os.path.normpath(os.path.join(auto_dir, target))`), pas seulement check-links.py.
+**Système 2 mémoires** : memory/ workspace (419 .md) ET auto-memory (257 .md) sont SÉPARÉS. Fichiers racine sans préfixe `feedbacks/` dans MEMORY.md = souvent dans l'auto-memory (chemin court) ; fichiers `feedbacks/feedback_*` = workspace (chemin 4-niveaux). Ne pas uniformiser aveuglément.

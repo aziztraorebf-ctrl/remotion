@@ -10,6 +10,19 @@
 
 ---
 
+## [STAGE-1] audio-director — GGW Muraille Verte B4+B5 (correction FMNR) — COMPLETE (2026-06-25)
+
+Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pure). B1/B2/B3/B6 inchanges.
+- narration-beat4.mp3 = **24.985s / 750 frames@30** (Tony Rinaudo / souches dormantes) — beat4.alignment.json
+- narration-beat5.mp3 = **14.118s / 424 frames@30** (preuve raccourcie) — beat5.alignment.json
+- beat-bounds.json v4 (B5/B6 decales en start/end ; total 114.521s)
+- Pipeline V3->STS reproduit EXACT (voix coherente avec les 4 autres beats). 0 clipping, RMS sains.
+- catbox B4 https://files.catbox.moe/9geiq6.mp3 | B5 https://files.catbox.moe/5jgb0o.mp3
+- VALIDATION PENDING Aziz (ecoute). Detail : `.claude/agent-memory/audio-director/MEMORY.md` (session 2026-06-25).
+- → Agent d'animation B4/B5 : durationInFrames = 750 (B4) / 424 (B5). Decoupage mot->frame dans beat{4,5}.alignment.json.
+
+---
+
 ## War-Map Sahel — TOUTES SCÈNES FINAL · NEXT = ASSEMBLAGE — 2026-06-15 [P4 COMPLETE, NEXT = ASSEMBLAGE]
 
 Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅ · **P4 ✅ (les 6 scènes : exode, coût, ressources, confédération, CFA, fin

@@ -16,7 +16,7 @@
 | **Doctrine visuelle REMOTION/data-viz** (8 principes premium) | `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` | chiffre-événement, discipline chromatique, séquençage 8s, contraste d'échelle, secondary motion |
 | **Composant / brique réutilisable** — "quand Aziz dit..." | `src/projects/_shared/COMPOSANTS-INDEX.md` | 71 composants par cas d'usage (Chiffre, Comparaison, Timeline, Carte, Révélation, HERO DATA...) |
 | **Template carte vivante** (hook/corps/insert Mapbox) | `src/projects/_shared/mapbox/CATALOGUE-CARTE-VIVANTE.md` | Source unique des templates carte. FlagFill = règle n°1 |
-| **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber) | `memory/tools/CATALOGUE-GEMINI.md` | 40+ templates animés, format prompt Gemini |
+| **Template data-viz pour Gemini** (BarRace, StackedBars, PulseNumber) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` | 40+ templates animés, format prompt Gemini |
 | **Animations presets** (fadeIn, popIn, countUp, drawPath) | `src/projects/_shared/animations.ts` | 10 presets, importer directement |
 | **SplitScreen 50/50** (entité vs entité) | `src/projects/_shared/components/layouts/SplitScreenSouverain.tsx` | Composant générique Tailwind |
 | **Tailwind** (tokens gold/navy/ivory) | `memory/feedbacks/feedback_tailwind-remotion-setup.md` + `tailwind.config.ts` | Tailwind 3.4. Framer Motion INTERDIT |
