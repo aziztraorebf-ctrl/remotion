@@ -13,34 +13,18 @@
 > CHANTIER NEUF = **assembler/monter PLUSIEURS scènes SVG en récit court** (storyboard de short + transitions/collage
 > entre scènes — jamais testé, on a des scènes ISOLÉES). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
 
-## ⭐⭐ REPRISE (2026-06-21) — SYSTÈME CARTO V5 (dire « continue carto »)
+## 🔧 BACKLOG TECHNIQUE — Système CARTO V5 (reprendre quand Sénégal V3 fini)
 
-> 🗂️ POINT D'ENTRÉE UNIQUE : `REPRISE-SYSTEME-CARTO-V5.md` (état exact, ce qui marche, ce qui reste).
+> ✅ Système prouvé. Doctrine gravée dans `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`. Point d'entrée : `REPRISE-SYSTEME-CARTO-V5.md`.
+> ⛔ Carte canonique = **GéoAfrique V5 (navy/gris/or)**. Les fichiers d3-geo parchemin V2 = PÉRIMÉS.
 >
-> ⛔ **DÉCISION RENVERSÉE le 2026-06-21** : la note du 20 juin disait « parchemin d3-geo PRÉFÉRÉ ». **FAUX désormais.**
-> Aziz a tranché : la carte canonique Souverain = **GéoAfrique V5 (navy/gris/or)**, réf `carte-souverain-geoafrique-v5.jpg`
-> + short Sénégal publié. La d3-geo parchemin était le MAUVAIS départ (corrigé). Les fichiers `STARTER-REPRISE-coding-V2.md`,
-> `PASSE-DE-VIE-V2-parchemin.md`, `breakdown-V2-plat.json`, `PROMPT-BREAKDOWN-CARTO-PLAT.txt` = PÉRIMÉS pour Souverain (ne pas suivre).
->
-> **✅ SYSTÈME COMPLET ET PROUVÉ (session 2026-06-21 soir)** — doctrine source unique `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` :
-> cible `CartoSouverainV5` (3 modes cam, drift) · **jetons hexagonaux** `GisementTokens.tsx` (5 variantes, 2 modes, taille zoom-driven) ·
-> **projection drapeau sans dérive** `MapboxCountryFlagDecal.tsx` · caméra-plonge · couleurs nationales · **appel SVG dédié** `scripts/tools/llm-gen-svg.py` ·
-> **gate** `mapbox-selfreview.py` enrichi (E6/W6/W7/W8) · assombrissement V5 tranché.
-> **✅ TEST DE VÉRITÉ RÉUSSI** : agent vierge a reproduit le système A→Z (Nigéria) → 6 trous corrigés.
-> **▶ RESTE (prochaine session)** : (1) ⭐ **CODER LA VRAIE SCÈNE Mapbox Sénégal branchée AUDIO** ·
-> (2) peaufinage scène gisements (popup E4 à déporter, plaque E2, jauge 18%) · (3) merger `feat/systeme-carto-v5` dans master.
-> ⏳ **SESSION WAR-MAP DÉDIÉE séparée** : 3 contradictions doctrine WarMap (d3-geo vs Mapbox, R4 vs DimmedOverlay).
+> **▶ RESTE** : (1) coder la vraie scène Mapbox Sénégal branchée audio · (2) peaufinage scène gisements (popup E4, plaque E2, jauge 18%) · (3) merger dans master. Session dédiée, pas urgent avant Sénégal V3 scène 6.
 
-## ⭐⭐ REPRISE IMMÉDIATE (2026-06-20) → `memory/REPRISE-WORKFLOW-DATAVIZ.md` — LIRE EN PREMIER
+## ✅ Workflow Data-viz — SYSTÈME GRAVÉ (plus une priorité active)
 
-> **Le workflow DATA-VIZ complet est PROUVÉ A→Z et GRAVÉ** (`memory/doctrines/WORKFLOW-DATAVIZ.md`) : storyboard
-> = CIBLE → breakdown GPT-5.5 (verdict GÉNÉRÉ/REMOTION/HYBRIDE + prompts d'asset + Tailwind + tailles mesurées)
-> → génération Gemini → détourage Recraft → assemblage Remotion → diff cible-vs-render. Cobaye Maroc "70%" rendu
-> jusqu'à v5 (~fidèle). **Tous les liens A→Z + les 3 corrections restantes + la commande de l'agent vierge de
-> validation sont dans `REPRISE-WORKFLOW-DATAVIZ.md`.** PROCHAINE SESSION : lancer l'agent vierge AU DÉBUT (contexte
-> frais) AVANT de toucher au code, puis les 3 corrections pixel (70 plus grand · trou du 0 · picto réserves).
->
-> ✅ Les **3 TROUS du chantier peaufinage sont TRAITÉS** : (1) ratio vertical→horizontal CORRIGÉ, (2) breakdown précis sur les assets CORRIGÉ, (3) préambule premium data-viz CRÉÉ. + gate review fiabilisé.
+> **MERGÉ DANS MASTER le 2026-06-20.** Pipeline complet dans `memory/doctrines/WORKFLOW-DATAVIZ.md`.
+> Ce qui reste = optionnel (gate format phase 0 = doublon inutile). **Prochain vrai pas = l'éprouver sur une scène de prod réelle** (ex : Sénégal V3 scène 6).
+> Détails dans `REPRISE-WORKFLOW-DATAVIZ.md` si besoin de relire le système.
 
 ---
 
