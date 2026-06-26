@@ -51,7 +51,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | Coder une scène/beat Atlas (doctrine visuelle, AVANT code) | `memory/doctrines/ATLAS-PLAYBOOK.md` ⭐ → puis `ATLAS-BEAT-DEMARRAGE.md` (scan phase 0) |
-| Produire un épisode Atlas (audio + d3-geo + render) | `memory/templates/atlas-template-v1.md` (skill `remotion-best-practices/rules/maps.md`) |
+| Produire un épisode Atlas (audio + d3-geo + render) | `memory/doctrines/ATLAS-BEAT-DEMARRAGE.md` ⭐ (atlas-template-v1.md = PÉRIMÉ ancienne archi Mapbox) |
 | « Quel composant Atlas pour X ? » | `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` · doc : `ATLAS-COMPOSANTS.md` |
 | Asset Atlas (sprite, map-object, geo) AVANT générer | `src/projects/atlas/_shared/ATLAS-ASSETS-INDEX.md` (19 persos / 568 sprites) |
 | Personnage/sprite PixelLab dans un beat Atlas | `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md` ⭐ · code `AtlasPixelChar.tsx` |
@@ -62,11 +62,11 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
-| **Point d'entrée SVG — AVANT tout code ou prompt SVG** | `memory/doctrines/SVG-SCENES-GENERATIVES.md` ⭐ technique (LLM dessine groupes nommés → Remotion anime), registres, grammaires, acquis transverses |
+| **(0) Faisabilité SVG AMONT — LIRE AVANT toute génération** | `memory/doctrines/SVG-FAISABILITE-AMONT.md` ⭐⭐ le LLM dit SA meilleure approche + image-cible AVANT le code. ÉTAPE 0 obligatoire (évite les aller-retours coûteux). |
+| **(1) Technique génération+animation SVG (manuel principal)** | `memory/doctrines/SVG-SCENES-GENERATIVES.md` ⭐ LLM dessine groupes nommés → Remotion anime, registres, grammaires, acquis transverses |
 | **Orchestration agents SVG (A→Z par beat)** | `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` ⭐⭐ flux 2 phases + point de contrôle, checklist de lancement, preuve Beat 3 GGW |
-| **Format SVG long (5-7min) ou SVG-insert dans Mapbox/Remotion** | `memory/doctrines/SVG-MIDFORM-FORMAT.md` ⭐⭐ critère = transformation visuelle de formes ; pipeline script-first |
+| **Format SVG long (5-7min) ou SVG-insert dans Mapbox/Remotion** | `memory/doctrines/SVG-MIDFORM-FORMAT.md` ⭐⭐ critère = transformation visuelle de formes ; pipeline script-first ; playbook assemblage multi-beats |
 | **Épisode pilote Short SVG en cours (GGW Muraille Verte)** | `memory/episodes/shorts-svg/muraille-verte/ETAT-GGW-MURAILLE-VERTE.md` ⭐⭐ STATUT + REGISTRE + OUTILS + ACQUIS. Ce fichier PRIME en cas de conflit. |
-| Faisabilité SVG AMONT (LLM dit sa capacité + image-cible avant le code) | `memory/doctrines/SVG-FAISABILITE-AMONT.md` ⭐ méthode prouvée, pipeline par scène |
 | Bibliothèque de prompts-cibles SVG par registre | `memory/doctrines/templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md` |
 
 ### War-Map

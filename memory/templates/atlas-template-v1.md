@@ -6,9 +6,17 @@ type: project
 
 # Atlas Template V1 — Pipeline production
 
-> Premiere version validee : Atlas Tombouctou V8 (2026-04-29).
+> ⛔ **PÉRIMÉ — décrit l'ancienne archi Mapbox (répertoire `quebec-jacques-poc/` supprimé).**
+> Atlas moderne = **d3-geo SVG** (PAS Mapbox). Scripts narration/SFX/musique déplacés vers `scripts/`.
+> **Pour produire un épisode Atlas aujourd'hui : lire `memory/doctrines/ATLAS-BEAT-DEMARRAGE.md`.**
+> Scripts actifs : `scripts/generate-narration-expressive.py` (narration) · `scripts/generate-sfx-elevenlabs.py` (SFX) · `scripts/generate-music-minimax.py` (musique).
+> Ce fichier conservé pour référence historique (palette, overlays, coûts).
+
+---
+
+> Premiere version validee : Atlas Tombouctou V8 (2026-04-29) — ancienne archi Mapbox.
 > Pour ECRIRE le script : voir `script-atlas-v1.md`.
-> Ce fichier = comment PRODUIRE l'episode apres script lock.
+> Ce fichier = comment PRODUIRE l'episode apres script lock (ancienne archi).
 
 ---
 

@@ -179,8 +179,10 @@ Avant de render un beat avec Mapbox, vérifier :
 - Règle empirique : si une animation finit avant la fin de la phrase narrative correspondante, elle est trop rapide
 
 ### 5.3 Fond
-- Fond Souverain par défaut : `#16213a` (bleu nuit lisible) — pas `#0d1525` (quasi-noir, manque de contraste)
-- Validé Beat9 v4→v5 (2026-05-23)
+- **Ne PAS hardcoder le fond ici.** Source de vérité unique : `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md`.
+  - PARCHEMIN = fond par défaut data-viz/Remotion (décision Aziz 2026-06-20).
+  - `#16213a` navy = option valide pour les beats Mapbox (`bg-uni-navy` / `bg-dots-navy`), mais ce n'est PAS le défaut universel.
+- Ne jamais defaulter sur navy par réflexe « signature Souverain » sans avoir consulté `_PALETTE-BACKGROUNDS.md`.
 
 ### 5.4 Tokens Tailwind (existants)
 - `text-gold` (#c8a951), `text-ivory` (#f2ebd9), `bg-navy`, `text-stat-lg`, `text-entity`

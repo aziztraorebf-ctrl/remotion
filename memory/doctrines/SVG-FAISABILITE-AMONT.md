@@ -46,7 +46,8 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
 
 ## OUTILS
 - `scripts/tools/svg-faisabilite-brief.py --provider gemini|gpt --intention "..." --refs a.png,b.png --out x.json`
-- `scripts/tools/gemini-gen-image.py --prompt "..." --output cible.png` (modele verrouille flash image)
+- Image-cible SVG : `scripts/tools/svg-scene-narrative.py` (sortie = SVG natif decoupe en `<g id>` nommes, directement animable — PAS de raster intermediaire). Generer gemini ET gpt, comparer.
+- `scripts/tools/gemini-gen-image.py` — DEPLACE DE CET ETAPE. Uniquement pour portraits graves type B4 Rinaudo ou generation de REFERENCE DE STYLE raster. PAS pour l'image-cible SVG (raster intermediaire = ecart image->SVG, cf. section TEST D'ECART ci-dessous).
 - Generateur SVG final : `scripts/tools/rnd-svg-scene-gen.py` (+ flag `--registre` pour override).
 
 ## ⭐⭐ TEST DE L'ECART image-cible -> SVG (reserve Aziz prouvee, 2026-06-22) — ETAPE OBLIGATOIRE si geo/detail realiste

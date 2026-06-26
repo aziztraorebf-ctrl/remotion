@@ -5,10 +5,6 @@
 > qui marchent. Chaque prompt vise le NIVEAU DE COMPLEXITE REELLEMENT FAISABLE en SVG (pas une illustration).
 > Complete [[SVG-FAISABILITE-AMONT]] (la methode) + [[SVG-SCENES-GENERATIVES]] (les registres prouves).
 
-## ⚠️ REGISTRES 2-3 A CALIBRER — ACTION REQUISE PROCHAINE SESSION
-
-> **REGISTRE 2 (aplats+dégradés : or-jour, braise-or, papier-decoupe) et REGISTRE 3 (carte/schéma tactique) sont des TODO.** La prochaine session qui génère une scène de l'un de ces registres DOIT graver le prompt ici (15 min). Procédure : § METHODE POUR AJOUTER UN REGISTRE ci-dessous.
-
 ## 🖼️ CHAQUE REGISTRE = PROMPT + IMAGE-REFERENCE (toujours joindre les deux) — regle Aziz 2026-06-22
 Images-ref durables : `public/_shared/refs/svg-registres/` (frames de protos prouves, une par registre).
 PROCEDURE pour TOUTE generation d'image-cible d'un beat :
@@ -17,13 +13,14 @@ PROCEDURE pour TOUTE generation d'image-cible d'un beat :
    (match this drawing complexity & ink style), the SCENE I want is DIFFERENT: [decrire la scene du beat]".
    -> le modele connait alors EXACTEMENT le niveau faisable (il l'a deja produit) + dessine une scene NOUVELLE.
 3. Resultat : fidelite/proximite des le 1er coup, peu importe le type de scene, sans se casser la tete.
-| Registre | Image-ref | Prompt |
-|---|---|---|
-| hachure-encre | `svg-registres/REGISTRE_hachure-encre_arbre.png` | REGISTRE 1 ci-dessous ✅ |
-| papier-decoupe | `svg-registres/REGISTRE_papier-decoupe_arbre.png` | REGISTRE 2 (a calibrer) |
-| or-jour | `svg-registres/REGISTRE_or-jour_hero.png` | REGISTRE 2 (a calibrer) |
-| braise-or | `svg-registres/REGISTRE_braise-or_mine.png` | REGISTRE 2 (a calibrer) |
-| medaille/tactique (carte schema) | `svg-registres/REGISTRE_medaille-tactique_carte-schema.png` | REGISTRE 3 (a calibrer) |
+
+| Registre | Image-ref | Prompt | Statut |
+|---|---|---|---|
+| hachure-encre | `svg-registres/REGISTRE_hachure-encre_arbre.png` | REGISTRE 1 ci-dessous | ✅ CALIBRE |
+| braise-or | `svg-registres/REGISTRE_braise-or_mine.png` | REGISTRE 2A ci-dessous | ✅ CALIBRE (2026-06-25) |
+| or-jour | `svg-registres/REGISTRE_or-jour_hero.png` | REGISTRE 2B ci-dessous | ✅ CALIBRE (2026-06-25) |
+| papier-decoupe | `svg-registres/REGISTRE_papier-decoupe_arbre.png` | REGISTRE 2C ci-dessous | ✅ CALIBRE (2026-06-25) |
+| medaille/tactique (carte schema) | `svg-registres/REGISTRE_medaille-tactique_carte-schema.png` | REGISTRE 3 ci-dessous | ✅ CALIBRE (2026-06-25) |
 
 ## 🛠️ CLAUDE = EDITEUR SVG APRES GENERATION (rappel, deja approuve Aziz)
 Un element genere qui ne plait pas (la pelle, le soleil, une racine) -> NE PAS regenerer : je le LOCALISE dans le SVG
@@ -88,15 +85,91 @@ la recoler au bon element. Colorisation = AJOUTEE EN CODE (tronc->vert, nappe->b
 
 ---
 
-## REGISTRE 2 — APLATS + DEGRADES CHAUD (scene-heros, terre/desert/ressource) ⏳ A CALIBRER
-> Famille prouvee (hero-or 1ws3kh, mine, creuset, graine paper-cut). Premium = degrades doux + couches + epure + couleur.
-> TODO prochaine fois qu'on en a besoin : partir d'une frame (hero-or_0.92 / graine_0.97), la joindre, deriver le prompt
-> "flat vector, solid fills, smooth gradients, layered depth, 4-5 hero elements, NO hatching, NO photoreal".
+## REGISTRE 2A — APLATS + DEGRADES CHAUD SOMBRE (braise-or : mine, ressource, désert ardent) ✅ CALIBRÉ
 
-## REGISTRE 3 — CARTE/SCHEMA TACTIQUE (medaille/tactique : zones, fleches, liens) ⏳ A CALIBRER
-> Prouve : etat-major (pt5od0) = "carte" SCHEMATIQUE qui marche (zones hachurees + fleches tracees). ⚠️ une vraie carte
-> GEO-REALISTE s'effondre en SVG (test d'ecart top-down) -> pour de la vraie geo : d3-geo, pas le SVG-LLM.
-> TODO : deriver le prompt depuis une frame etat-major quand on en aura besoin.
+> Calibré sur protos `MineGeminiAnimee.tsx` (lkf0ia) + `CreusetAnimee.tsx` (yonpoq). Frame-ref : `REGISTRE_braise-or_mine.png`.
+> Modèle : **Gemini** (gagne sur l'organique/profondeur). Générer Gemini + GPT, choisir sur render statique.
+> USAGE : scène chaude et matérée (mine, ressource africaine, désert ardent, conflit pour une richesse, nuit de braise).
+
+PROMPT (remplacer [SCENE] par l'objet de la scène) :
+```
+The ATTACHED IMAGE is the EXACT target style and complexity level — match it precisely. It is a real animatable SVG
+frame: warm dark earth tones with glowing gold accents, flat vector with smooth gradients, NO hatching, NO photoreal.
+Generate a VERTICAL 9:16 [SCENE] at EXACTLY this style level:
+- Dark warm earth base: #1c1108 / #2a1a0d. NO blue, NO grey, NO cold tones.
+- Ocre layers: #7a4a22 / #9c5f2c / #b8763a. Gold accent: #e8b44a / #f2cf72 / #ffe39a (luminous, not metallic).
+- Ember/conflict accent (use sparingly): #d6552e / #c23a1e.
+- Flat solid color fills + smooth gradient overlays for depth. NO hachures, NO outlines, NO technical labels.
+- 4-5 hero elements, each readable in 1s. Layered depth (foreground / midground / background clearly separated).
+- Premium warm editorial look: depth by layering, not by density. Everything as separable <g id="..."> groups.
+```
+NETTOYAGE attendu : vérifier que `fill` n'utilise pas de couleurs froides (bleu/gris) — les remplacer par les ocres/ors ci-dessus. Gemini peut ajouter des ombres en `<style>`/`class` → extraire en `fill-opacity` inline animable.
+
+---
+
+## REGISTRE 2B — APLATS + DEGRADES CHAUD LUMINEUX (or-jour : héros en action, matin doré, victoire) ✅ CALIBRÉ
+
+> Calibré sur proto `HeroGptAnimee.tsx` (1ws3kh). Frame-ref : `REGISTRE_or-jour_hero.png`.
+> Modèle : **GPT-5.5** (gagne sur la lisibilité du personnage en action). Générer les 2, choisir.
+> USAGE : scène lumineuse et premium (personnage actif, matin doré, découverte, victoire, contraste chaud/lumière).
+
+PROMPT (remplacer [SCENE] par l'objet de la scène) :
+```
+The ATTACHED IMAGE is the EXACT target style — match this luminous warm illustration level precisely.
+Generate a VERTICAL 9:16 [SCENE]:
+- Sky: bright amber #f2cf72 / #ffd98a / #ffe8b8. Clouds: ivory #f7eccf. NO blue sky, NO night.
+- Ground/earth: clear warm ocre #c98a4a / #b8763a / #e0b878 (LIGHT, not dark).
+- Gold light: #f2cf72 / #ffe39a. Conflict accent (very discrete): #d6552e.
+- NO blue, NO grey, NO flat black fills. Premium luminous morning look.
+- Flat vector, solid fills + soft gradient overlays. NO hatching, NO photoreal, NO dense outlines.
+- 4-5 hero elements, each crisp and readable in 1s. Everything as separable <g id="..."> groups (animatable).
+- The scene should feel ACTIVE and LUMINOUS, not dramatic or dark.
+```
+
+---
+
+## REGISTRE 2C — PAPIER DÉCOUPÉ PÉDAGOGIQUE (paper-cut : cycle, croissance, explainer) ✅ CALIBRÉ
+
+> Calibré sur proto `GraineGeminiAnimee.tsx` (ft5l5g / wv4xlm). Frame-ref : `REGISTRE_papier-decoupe_arbre.png`.
+> Modèle : **Gemini** (gagne nettement — couches organiques empilées + ombres douces = sa force).
+> USAGE : scène pédagogique/explainer (croissance, cycle, processus, Kurzgesagt-papier). Joyeux, clair, accessible.
+
+PROMPT (remplacer [SCENE] par l'objet de la scène) :
+```
+The ATTACHED IMAGE is the EXACT target style — match this layered paper-cut illustration level precisely.
+Generate a VERTICAL 9:16 [SCENE]:
+- Sky layer: pastel blue #bfe3ef / #a8d8e8. Ground layer: cream #fdf3df / #f7ecd2.
+- Earth layers: warm ocre #caa46a / #b3823f / #8a5a2c. Greens stacked: #3e7c34 / #569b43 / #7cba5a / #a8d678.
+- Wood/bark: #8a5a2c / #a06b35. Soft gold light: #f2cf72 / #ffd98a. Accent: coral #e0795b (warm, not aggressive).
+- FLAT SOLID COLOR FILLS only (no gradients, no hatching, no outlines). Each shape = a distinct opaque layer.
+- Soft drop-shadow under each layer (subtle, not graphic). Depth by stacking layers, NOT by shading.
+- 4-6 elements, each a distinct paper-cut silhouette. Clean, joyful, premium. Everything as separable <g id="..."> groups.
+- NO black, NO flat grey, NO cold colors. NO dense detail. Minimal and expressive.
+```
+NETTOYAGE attendu : Gemini peut ajouter ombres en `<style>`/`class` → extraire en `filter:drop-shadow` ou `fill-opacity` inline.
+
+---
+
+## REGISTRE 3 — CARTE/SCHEMA TACTIQUE (médaille/tactique : zones, flèches, liens) ✅ CALIBRÉ
+
+> Calibré sur protos `EtatMajorGptAnimee.tsx` (pt5od0) + `DefenseGptAnimee.tsx` (05xbm1). Frame-ref : `REGISTRE_medaille-tactique_carte-schema.png`.
+> Modèle : **GPT-5.5** gagne (géométrie nette, flèches à poids, cartouche propre). Générer les 2, choisir.
+> USAGE : encart conceptuel — un PRINCIPE, un RAPPORT DE FORCE, un PACTE (PAS une carte géo-réaliste → d3-geo pour ça).
+> ⚠️ PAS une carte géo réelle : la vraie géo s'effondre en SVG (test top-down). SVG = schéma/abstraction UNIQUEMENT.
+
+PROMPT (remplacer [SCENE] par le concept à illustrer) :
+```
+The ATTACHED IMAGE is the EXACT target style — match this tactical schematic level precisely.
+Generate a VERTICAL 9:16 [SCENE] as a SCHEMATIC (NOT a geographic map, NOT an illustration):
+- Background: very dark blue #0b1526. Grid lines: faint #1a2a45 (barely visible).
+- Main strokes: off-white #e8eef5 + steel blue #5a8fc0 for connections/links.
+- THREAT/enemy: RED-ORANGE #d6552e (strong, clear). SOLIDARITY/shield: GOLD #c8a951.
+- 4-6 hero elements: nodes (circles/hexagons) + weighted arrows + labels. Each element separable <g id="...">.
+- Arrows: strokeDasharray-animatable (drawn progressively). Nodes: simple geometric shapes (circle, hex).
+- NO photoreal, NO organic shapes, NO dense detail. Schematic precision + editorial clarity.
+- Cartouche / legend block in corner (optional but premium).
+```
+NETTOYAGE attendu : GPT peut oublier les `id` sur certains `<g>` → les ajouter manuellement pour l'animation. Flèches parfois sans `marker-end` → rajouter un `<marker>` SVG.
 
 ---
 

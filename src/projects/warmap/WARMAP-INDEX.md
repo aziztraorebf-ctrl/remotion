@@ -52,7 +52,11 @@ src/projects/warmap/
 │   ├── WarMapDataOverlay.tsx   overlays (data solide + explicatif + figure)
 │   ├── VehicleSymbols.tsx      fallback SVG (déprécié par sprites Gemini)
 │   ├── warmapVehicles.ts       VEHICLES + REFUGEES + paths géo
-│   └── sudanControlData.ts     DATA Soudan — re-export depuis l'adapter
+│   ├── sudanControlData.ts     DATA Soudan — re-export depuis l'adapter
+│   ├── SahelTimings.tsx    ⭐ constantes de triggers audio (A1, F_*), tables pulses/hide windows, RESOURCE_ICONS, ResourceSVG — EXTRAIT au refactor (était dans le monolithe)
+│   ├── SahelCameras.ts     ⭐ keyframes caméra (SAHEL/ACTE1/PARTIE1-4/PROTO24/ACTE2_CAM_KEYS) + fonctions getXxxCam + tokens B1 + ACTE2_BASES — EXTRAIT au refactor
+│   ├── SahelActors.ts      ⭐ ACTE1_VEHICLES, FIGHTERS, interpFighter/interpA1Vehicle, blobPath — EXTRAIT au refactor
+│   └── SahelContext.ts         type SahelRenderContext + closure project(lon,lat)→{x,y}
 └── data/                    ← la COUCHE DONNÉES (pipeline)
     ├── schema.ts             WarMapDataset (contrat moteur + provenance)
     ├── adapter.ts            canonicalToEngine (bridge JSON → moteur)

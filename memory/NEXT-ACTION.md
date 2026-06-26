@@ -5,8 +5,7 @@
 ---
 
 ## ⭐⭐ PISTE STRATÉGIQUE FRAÎCHE (2026-06-22) — Shorts SVG ↔ Longs Mapbox (Hub & Spoke)
-> 🗂️ POINT D'ENTRÉE : `STARTER-PROMPT-strategie-shorts-svg-hub-spoke.md` (idée Aziz + analyse Gemini + 3 angles
-> morts repérés par Claude + le chantier neuf à explorer). Aziz veut s'y lancer « pendant que c'est frais ».
+> 🗂️ Analyse Hub & Spoke gravée dans `memory/doctrines/SVG-SCENES-GENERATIVES.md` § Hub & Spoke + `ETAT-GGW-MURAILLE-VERTE.md` (acquis GGW). Aziz veut s'y lancer « pendant que c'est frais ».
 > En bref : 2 formats séparés MÊME niche — longs analytiques (Mapbox/3D, autorité) + shorts SVG génératifs
 > (paper-cut/blueprint, pédagogiques, multi-plateforme, gardent la chaîne vivante). PAS de la dilution = Hub & Spoke.
 > ⚠️ AVANT d'industrialiser : (1) créer une SIGNATURE VISUELLE commune longs↔shorts · (2) tunnel = NOTORIÉTÉ

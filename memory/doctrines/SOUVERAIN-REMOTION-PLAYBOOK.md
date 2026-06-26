@@ -103,7 +103,11 @@ STORYBOARD GEMINI   → storyboard VISUEL multi-panels (Gemini Flash) montrant l
                        → présenter le PNG à Aziz. C'est ce qui permet de coder sans hésiter
                          ET d'où on tire le breakdown JSON. JAMAIS coder sans ce storyboard.
         ↓
-BREAKDOWN JSON      → Gemini 3.1 Pro lit le storyboard → JSON "comment coder" (Tailwind, timing)
+BREAKDOWN JSON      → GPT-5.5 lit le storyboard → JSON "comment coder" (Tailwind, timing, tailles mesurées)
+                       ⭐ GPT-5.5 ÉCRASE Gemini sur cette étape (verdict WORKFLOW-DATAVIZ 2026-06-20).
+                       Commande : scripts/tools/openrouter-vision-breakdown.py --model openai/gpt-5.5
+                       → Alternative si GPT-5.5 indispo : gemini-vision-breakdown.py (Gemini 3.1 Pro).
+                       → Pipeline complet et règles du format JSON : [[WORKFLOW-DATAVIZ]].
         ↓
 CODE                → assembler les briques (combinaison, pas 1 seul template) selon le breakdown
         ↓

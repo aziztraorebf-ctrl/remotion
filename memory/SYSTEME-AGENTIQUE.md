@@ -43,7 +43,7 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
      préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE carte + chaînes de réf + ARSENAL + directive carte
      vivante ; géo approximative OK, vraie géo au CODE).
    - L'agent-beat écrit le storyboard structuré + le PROMPT image, puis **STOP** — il ne génère pas l'asset payant
-     lui-même (c'est le chef qui génère, pour grouper et valider le coût). Voir Phase 0/checkpoint dans `PLAN-ORCHESTRATION-VIDEO.md`.
+     lui-même (c'est le chef qui génère, pour grouper et valider le coût). Voir Phase 0/checkpoint plus bas dans ce fichier.
 4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐⭐ Le chef remonte
    les storyboards à Aziz **groupés**, AVANT tout code/breakdown. C'est LE checkpoint goût. On ne code/breakdown
    JAMAIS une direction non validée. ⛔ **VAUT AUSSI POUR LE STORYBOARD TEXTE** : si les agents jugent l'image inutile
@@ -73,7 +73,7 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 | Produire/refaire une scène (porte unique) | `/beat` (`.claude/commands/beat.md`) → route Mapbox vs Remotion vs proto |
 | Storyboard (le modèle propose) | `_PALETTE-BACKGROUNDS.md` (§ storyboard) · `STORYBOARD-MAPBOX.md` · outil `storyboard-dual-gen.py` |
 | Palette de fonds + arsenal de capacités | `public/_shared/refs/backgrounds/` · `public/_shared/refs/cartes/_ARSENAL.md` |
-| ORCHESTRATION (chef + agents frais) | `memory/PLAN-ORCHESTRATION-VIDEO.md` — découper, fan-out N beats, 2-3 checkpoints, isolation worktree |
+| ORCHESTRATION (chef + agents frais) | ce fichier (SYSTEME-AGENTIQUE) — découper, fan-out N beats, 2-3 checkpoints, isolation worktree. Méthode prouvée 3 vagues (consolidation 2026-06-25) |
 | Intention → forme → template | `src/projects/_shared/INTENTION-FORME-INDEX.md` + `CONTINUITE-SCENE-INTENTION-DABORD.md` |
 | Où ranger un fichier (3 zones) | INTENTION-FORME-INDEX § « OÙ RANGER » (livrable / `_rnd` proto / `_shared` brique) |
 | Hooks actifs (garde-fous) | `.claude/hooks/` — auto-vérif présentation, model-guard, preflight carte, **rappel registre intention→forme avant toute scène `.tsx`** (`beat-preflight.sh`, non bloquant), lint |

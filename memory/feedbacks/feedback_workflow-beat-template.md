@@ -5,7 +5,9 @@ metadata:
   type: feedback
 ---
 
-**Règle :** Choisir le template catalogue AVANT d'écrire une ligne de code. Remplir le storyboard 7 champs (Playbook) avec le template choisi, valider avec Aziz, puis coder.
+> ⚠️ MAJ 2026-06-25 : l'ordre a été corrigé. INTENTION→FORME D'ABORD, le scan de templates vient APRÈS comme aide à la déduction (jamais le point de départ). Voir `CONTINUITE-SCENE-INTENTION-DABORD.md`. Le scan reste obligatoire mais PAS en premier.
+
+**Règle :** Définir l'INTENTION et la FORME D'ABORD, puis choisir le template catalogue le plus adapté. Remplir le storyboard 7 champs (Playbook) avec le template choisi, valider avec Aziz, puis coder.
 
 **Why:** Beat 0 Maroc a été satisfaisant dès le premier render (au lieu de 5-8 itérations). La différence = template SweepRevealTerritory choisi à l'avance vs code custom qui demandait des refontes complètes.
 
@@ -18,4 +20,4 @@ metadata:
 6. Valider
 
 **Karaoké :** Toujours utiliser MAROC_WORDS (tous les mots) filtrés par timestamps — jamais WORD_ANCHORS seuls.
-**SFX volumes doctrine :** cinématique 0.50-0.55 · UI 0.40-0.45 · musique fond 0.10-0.14.
+**SFX volumes doctrine :** plancher 0.50 pour TOUS les SFX (cinématique ET UI), cf DOCTRINE-SOUVERAIN §6 · musique fond 0.10-0.14.

@@ -5,6 +5,8 @@ metadata:
   type: feedback
 ---
 
+> ⚠️ MAJ 2026-06-25 : sur carte AVEC PITCH, useClipFlags/fill-pattern sont BANNIS (dérive au pitch, carrelage au dézoom) → utiliser `MapboxCountryFlagDecal` (source-image). Voir `CARTO-OVERLAYS-PRINCIPES.md`. Les méthodes ci-dessous restent valides UNIQUEMENT à pitch=0.
+
 ## Règle : La carte Mapbox DOIT être colorée dès le départ
 
 La partie manquante de toutes nos scènes Mapbox jusqu'ici : on laissait les pays voisins gris/vides. Le remplissage de couleur (fill-pattern drapeau, fill-color couleur unie) est la règle N°1, pas une option.
@@ -85,3 +87,5 @@ La partie manquante de toutes nos scènes Mapbox jusqu'ici : on laissait les pay
 ## Reste backlog (non codé)
 - Transition fill-color → fill-pattern progressive dans le même beat (couvert partiellement par ContagionFlagSpread).
 - Flux inter-pays (flèches animées) — séparé du fill-pattern.
+
+Lié : [[sfx-sequence-et-drapeaux-reels]] (bugs SFX + drapeaux réels découverts même session) · [[pipeline-mapbox-maturite-autonomie]] (maturité pipeline, self-review scriptée) · [[philosophie-mapbox-puis-remotion]] (ordre de production Mapbox-first)

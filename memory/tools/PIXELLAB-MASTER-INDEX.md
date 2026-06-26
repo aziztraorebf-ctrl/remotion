@@ -5,7 +5,7 @@ type: reference
 ---
 
 # PixelLab Master Index
-> Mis à jour : 2026-05-05
+> Mis à jour : 2026-06-25
 > RÈGLE : lire ce fichier AVANT tout `create_character` ou `create_map_object`.
 > Si l'asset existe déjà → utiliser l'ID directement. Zéro dépense inutile.
 
@@ -63,6 +63,12 @@ type: reference
 | **Mansa Souleymane** | `eb3d1a3e-4fdb-4a73-9b14-f4f6106d8c23` | 4 | 92×92 | walk east+west (6f) | `public/atlas/peste-1347/assets/characters/souleymane/` |
 | **Souleymane trônant** (state) | `cb6d0d56-...` | 4 | 92×92 | aucune | `public/atlas/peste-1347/assets/characters/souleymane-throne/` — state de `eb3d1a3e` |
 | **Marchand berbère assis** | `e2e06a90-...` | 4 | 92×92 | aucune | `public/atlas/peste-1347/assets/characters/marchand-assis/rotations/` — marché Tombouctou |
+| **Porteur Mali** (caravane Peste) | ID à confirmer | 4 | 64×64 | walk east+west (6f) | `public/atlas/peste-1347/assets/characters/porteur-mali/animations/walk/{east,west}/` — distinct du porteur Mansa Moussa |
+| **Ane caravane** | ID à confirmer | 4 | 64×64 | walk east (4f), north (anims à confirmer) | `public/atlas/peste-1347/assets/characters/ane-caravane/animations/walk/{east}/` — north généré 2026-06-07 |
+| **Cheval bat** | ID à confirmer | 4 | 64×64 | walk east (4f) | `public/atlas/peste-1347/assets/characters/cheval-bat/animations/walk/{east}/` — north profil rejeté |
+| **Marchand berbère** (marche) | ID à confirmer | 4 | 64×64 | walk east (4f) | `public/atlas/peste-1347/assets/characters/marchand-berbere/animations/walk/{east}/` + `rotations/{east,south,west}.png` |
+
+> ⚠️ IDs PixelLab des 4 persos caravane Peste (porteur-mali, ane-caravane, cheval-bat, marchand-berbere) non retrouvés dans la mémoire. Confirmer via `list_characters` MCP avant toute génération.
 
 ### Personnages génériques (réutilisables tous projets)
 
@@ -73,6 +79,17 @@ type: reference
 | medieval monk (64px) | `c2923dcd-...` | 4 | 64×64 | 3 |
 | medieval peasant woman (64px) | `99eb124f-...` | 4 | 64×64 | 4 |
 | Child | `da1c3676-...` | 4 | 48×48 | 4 |
+
+### Projet Order of Battle (POC manoeuvres militaires, 2026-06-04)
+
+> Style : generic antique teintable, v3 ou standard. 8 directions (n_directions: 8). Dossiers DL : `public/atlas-order-of-battle/characters/` (absent du repo si non commité).
+
+| Nom | ID | Directions | Canvas | Animations | Notes |
+|-----|----|-----------|--------|------------|-------|
+| **Soldat antique side v3** | `d5d1677d-20d4-4c59-be30-32325043eafe` | 8 | 172px | walk E/W/SE (DL) | Casque plumet, bouclier rond, lance. Artefact lance visible profil. |
+| **Soldat antique low top-down v3** | `7a3dafbf-ff98-4cec-9d70-6188d3bc890b` | 8 | 184px | walk E/W/S/SE (DL) | Vue 3/4 RPG ~20°. N/NE/NW/SW en cours session. |
+| **Soldat antique low top-down standard** | `090ebcc0-0fb3-4cbe-82b9-c30e85115e6e` | 8 | 132px | walk E/W/S, attack, death (en cours session) | Standard 1 gen, plus fiable. |
+| **Soldat antique high top-down standard** | `9818acf0-acb9-47f7-a283-eaecfbd089fc` | 8 | à confirmer | anims à confirmer | En création lors de la session 2026-06-04. |
 
 ---
 

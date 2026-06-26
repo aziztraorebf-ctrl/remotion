@@ -55,3 +55,121 @@ Resultat : le script NAIT avec le bon outil pour chaque moment (SVG pour la tran
 ## Reference vivante (test CFA)
 - Composant : `src/projects/_rnd/svg-scenes/CfaMidformTest.tsx` (+ cfaMecaGroups / cfaMarcheGroups / cfaFluxGroups).
 - Final : https://files.catbox.moe/fe3u3g.mp4 (colorisation timee OK). v1 PoC : https://files.catbox.moe/skaxho.mp4
+
+---
+
+## ASSEMBLAGE D'UN SHORT SVG (N beats -> video finale)
+
+> Documente le REEL de GGW Muraille Verte (7 beats, 141s, branche `feat/shorts-svg-muraille-verte` + master).
+> B7MosaiqueFinal.tsx : presente dans la svg-library + dans le rendu final, mais PAS enregistre dans Root.tsx
+> (le render final a ete produit via renderMedia CLI directement depuis la branche). Signaler + committer B7 dans
+> Root.tsx a l'assemblage du prochain short (pour pouvoir previsualiser dans Remotion Studio).
+
+### 1. Principe : une composition d'assemblage par short (Series + Sequence)
+
+Chaque beat = un composant TSX autonome avec ses `durationInFrames` et `fps` en export.
+L'assemblage = 1 fichier `<Nom>Short.tsx` + 1 composition dans Root.tsx :
+
+```tsx
+// GgwMurailleVerteShort.tsx (a creer si manquant)
+import { Series } from "remotion";
+import { GgwHookEncreVivant } from "./_rnd/svg-scenes/GgwHookEncreVivant";
+import { B2LigneBrisee } from "./_rnd/svg-scenes/B2LigneBrisee";
+// ... importer chaque beat
+
+const BEATS = [
+  { component: GgwHookEncreVivant, durationInFrames: 640 },
+  { component: B2LigneBrisee,       durationInFrames: 606 },
+  { component: B3Malentendu,        durationInFrames: 468 },
+  { component: B4Demilune,          durationInFrames: 750 },
+  { component: B5LaPreuve,          durationInFrames: 424 },
+  { component: B6Outro,             durationInFrames: 690 },
+  { component: B7MosaiqueFinal,     durationInFrames: 642 },
+];
+
+export const GgwShort: React.FC = () => (
+  <Series>
+    {BEATS.map(({ component: Comp, durationInFrames }, i) => (
+      <Series.Sequence key={i} durationInFrames={durationInFrames}>
+        <Comp />
+      </Series.Sequence>
+    ))}
+  </Series>
+);
+
+export const GGW_SHORT_TOTAL_FRAMES = BEATS.reduce((s, b) => s + b.durationInFrames, 0);
+// -> 4220 frames a 30fps = 140.67s (correspondance validee ETAT-GGW 140.99s)
+```
+
+Dans Root.tsx :
+```tsx
+import { GgwShort, GGW_SHORT_TOTAL_FRAMES } from "./projects/_rnd/svg-scenes/GgwShort";
+// ...
+<Composition id="GGW-MurailleVerte-Short" component={GgwShort}
+  durationInFrames={GGW_SHORT_TOTAL_FRAMES} fps={30} width={1080} height={1920} />
+```
+
+### 2. Cross-fade entre beats (si voulu)
+
+`Series` enchaine sans transition. Pour un cross-fade :
+- Utiliser `<Sequence>` + `premountFor` (charge le beat suivant N frames avant sa position)
+- Opacite du beat sortant : `interpolate(frame, [end-15, end], [1, 0])` + `extrapolateRight:'clamp'`
+- Opacite du beat entrant : `interpolate(frame, [start, start+15], [0, 1])`
+- GGW N'A PAS utilise de cross-fade (coupes nettes + SFX pont = suffisant pour l'encre). Cross-fade = a
+  utiliser seulement si les registres changent de facon abrupte (ex: encre -> blueprint).
+
+### 3. Nappe musicale globale (technique GGW)
+
+La nappe se pose EN UNE COUCHE sur l'assemblage, PAS sur chaque beat :
+```tsx
+// Dans GgwShort.tsx, au niveau de la composition entiere
+import { Audio } from "remotion";
+// ...
+<Audio src={staticFile("audio/ggw-muraille-verte/music/ambiance-raw.mp3")}
+  volume={0.10} />
+{/* Series avec les beats ci-dessus */}
+```
+- Volume nappe : ~0.10 (sous la narration). Les narrations de chaque beat ont leurs propres `<Audio>`.
+- Si la nappe est plus courte que le short : ajouter `loop` sur l'element `<Audio>` (fonctionne en headless, prouve GGW).
+- `loop` sur un `<Audio>` = ok en render headless (non documente Remotion, valide 2026-06-22).
+
+### 4. CTA final (beat dedie vs overlay)
+
+Deux strategies :
+- **Beat dedie** (GGW B7) : composant `B7MosaiqueFinal.tsx` est a la fois le climax esthetique ET le CTA.
+  `typewriter` du CTA demarre quand la foret est en place (~frame 520 sur 642).
+- **Overlay independant** : un composant `<CTAOverlay>` en `<Sequence from={totalFrames-120}>` sur la composition
+  d'assemblage. Avantage : CTA unifie pour tous les shorts (pas a recoder par beat).
+Recommandation : beat dedie si le CTA s'integre narrativement (climax = transition naturelle) ; overlay si le CTA
+est generique et la derniere scene ne le porte pas.
+
+### 5. Render final (CLI ou Vercel)
+
+```bash
+# Render direct depuis Root.tsx (beats individuels)
+npx remotion render src/index.ts RND-GgwHookEncreVivant out/episodes/ggw-muraille-verte/beat1.mp4
+
+# Render assemblage (composition GGW-MurailleVerte-Short)
+npx remotion render src/index.ts GGW-MurailleVerte-Short out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4
+
+# Pour >30s -> preferer render Vercel (evite saturation machine locale)
+python3 scripts/tools/render-on-vercel.py --comp GGW-MurailleVerte-Short --out ggw-FINAL.mp4
+```
+
+### 6. Pre-cable Root.tsx AVANT de lancer les agents
+
+Lecon GGW (2026-06-25, 2 agents en parallele) : le chef d'orchestre pre-cable TOUS les imports et
+`<Composition>` dans Root.tsx AVANT de lancer les agents (meme si les fichiers TSX n'existent pas encore).
+Les agents creent leurs fichiers, ils compilent immediatement sans toucher Root.tsx -> zero collision.
+Si Root.tsx n'est pas pre-cable : les agents creent des fichiers "flottants" (pas de comp Remotion, pas
+de previsualisation) -> risque de double touche sur Root.tsx.
+
+### 7. Signaux d'alerte assemblage
+
+- Un beat dont le `durationInFrames` differe de l'audio mesure au ffprobe = glissement de timing
+  (recalibrer via `scripts/tools/ggw-b2-alignment.py` ou `ggw-b4b5-alignment.py`).
+- La `<Series>` enchaıne en frames absolus : un beat trop long = decalage de TOUS les suivants.
+  Verifier : `sum(BEATS.map(b => b.durationInFrames))` == duree totale attendue.
+- B7MosaiqueFinal.tsx absent de Root.tsx sur master -> a enregistrer lors du prochain merge de `feat/shorts-svg-muraille-verte`.
+
+**Reference GGW complete** : `memory/episodes/shorts-svg/muraille-verte/ETAT-GGW-MURAILLE-VERTE.md` (durees exactes de chaque beat, commits, liens catbox).

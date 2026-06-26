@@ -1,6 +1,10 @@
 """
-Transcribe Soundjata narration via OpenAI Whisper API.
+Transcribe audio via OpenAI Whisper API.
 Returns word-level timestamps in JSON.
+
+NOTE: le chemin AUDIO ci-dessous pointe vers un fichier Soundjata perime (n'existe plus).
+Pour transcrire un autre fichier, modifier la variable AUDIO (ligne ~14) ou utiliser
+scripts/tools/whisper-align.py qui accepte un argument CLI : python3 whisper-align.py <audio.mp3>
 """
 
 import json

@@ -42,9 +42,9 @@ editoriale Kora & Cartes (angle macro africain) rendue en mouvement.
 
 **R1 — Tout sur la carte sauf l'essentiel sans equivalent carto.** L'action (mouvement, incarnation, explicatif) vit SUR la carte. Le PLEIN ECRAN est reserve aux infos qui n'ont PAS de representation cartographique. Ex : refugies = jetons mouvants + texte sur carte (PAS d'overlay plein ecran, serait un doublon) ; famine = pas de jeton -> overlay plein ecran legitime. **Tout doublon (overlay qui repete ce que la carte montre) = a supprimer.**
 
-**R2 — Deux types d'overlays, les DEUX CENTRES :**
+**R2 — Deux types d'overlays, les DEUX CENTRES :** ⚠️ **DÉPRÉCIÉ partiellement** — semi-transparent banni (WARMAP-GRAMMAIRE §9). Utiliser overlay solide OU WarMapDimmedOverlay (voile fort + trou contours).
 - **Overlay DONNEE majeure** (sans equivalent carte) = fond SOLIDE parchemin, centre, fige l'action ~7-10s. Temps fort de respiration. Ex. famine 25M.
-- **Overlay EXPLICATIF** (ce qui se passe sur la carte) = fond SEMI-TRANSPARENT, centre, coupe l'action comme l'overlay motion. Ex. "L'exode". ⚠️ JAMAIS en haut de l'ecran (n'accroche pas l'oeil — erreur a corriger). Centre obligatoire.
+- **Overlay EXPLICATIF** (ce qui se passe sur la carte) = ~~fond SEMI-TRANSPARENT~~ → **fond SOLIDE ou WarMapDimmedOverlay** (semi-transparent BANNI, cf WARMAP-GRAMMAIRE §9), centre, coupe l'action comme l'overlay motion. Ex. "L'exode". ⚠️ JAMAIS en haut de l'ecran (n'accroche pas l'oeil — erreur a corriger). Centre obligatoire.
 
 **R3 — SEQUENTIEL, jamais simultane (parite Souverain/Atlas).** Plusieurs pieces en mouvement en meme temps (chars + visages + jetons) = bordelique. Ordre : l'info s'affiche -> PUIS les jetons bougent SEULS pour illustrer -> puis suite. Exception : un seul moment vraiment fort peut tout reunir. C'est la regle de comparite avec les autres piliers.
 
@@ -61,7 +61,7 @@ editoriale Kora & Cartes (angle macro africain) rendue en mouvement.
 (corpus lateral + "map" declenche un fond decoratif). Gemini reussit du 1er coup. Recette :
 - `gemini-3.1-flash-image-preview`, decrire ce qu'on VOIT d'en haut piece par piece, marteler "STRICTLY from directly straight above, bird's eye orthographic", pointer vers le HAUT.
 - Fond cream solide `#d4c29d` impose -> verifier pixel(4,4) ~ (212,194,157) -> **Recraft removeBackground** pour le PNG transparent.
-- Detail complet : [[feedback_sprites-topdown-gemini-vs-recraft]]. Script modele : `gen_gemini_sprites.py`.
+- Detail complet : [[feedback_sprites-topdown-gemini-vs-recraft]]. Scripts reels : `scripts/warmap/gen-sahel-vehicles.py` (vehicules), `gen-sahel-fighters.py` (jetons combattants), `gen-sahel-refugies.py` (refugies). (L'ancien `gen_gemini_sprites.py` etait un script /tmp fantome.)
 
 ## §5 — PONT COURT -> LONG (avantage de production unique)
 
