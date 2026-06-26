@@ -175,17 +175,6 @@ import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
 import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
 import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
-import { CfaFrancAnimee } from "./projects/_rnd/svg-scenes/CfaFrancAnimee";
-import { CfaFrancAnimeeSFX } from "./projects/_rnd/svg-scenes/CfaFrancAnimeeSFX";
-import { MineCompare } from "./projects/_rnd/svg-scenes/MineCompare";
-import { DemiLuneCompare } from "./projects/_rnd/svg-scenes/DemiLuneCompare";
-import { DemiLuneEncreColorisee } from "./projects/_rnd/svg-scenes/DemiLuneEncreColorisee";
-import { DemiLuneBraiseAnimee } from "./projects/_rnd/svg-scenes/DemiLuneBraiseAnimee";
-import { MurTopDownBraise } from "./projects/_rnd/svg-scenes/MurTopDownBraise";
-import { TopDown3Compare } from "./projects/_rnd/svg-scenes/TopDown3Compare";
-import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
-import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
-import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { B4Demilune } from "./projects/_rnd/svg-scenes/B4Demilune";
 import { B5LaPreuve } from "./projects/_rnd/svg-scenes/B5LaPreuve";
 import { B6Outro } from "./projects/_rnd/svg-scenes/B6Outro";
@@ -1953,17 +1942,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-DefenseCompare" component={DefenseCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
         <Composition id="RND-DefenseGptAnimee" component={DefenseGptAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
-        <Composition id="RND-CfaFrancAnimee" component={CfaFrancAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-CfaFrancAnimeeSFX" component={CfaFrancAnimeeSFX} durationInFrames={180} fps={30} width={1080} height={1080} />
-        <Composition id="RND-MineCompare" component={MineCompare} durationInFrames={60} fps={30} width={3840} height={1080} />
-        <Composition id="RND-DemiLuneCompare" component={DemiLuneCompare} durationInFrames={60} fps={30} width={5760} height={1080} />
-        <Composition id="RND-DemiLuneEncreColorisee" component={DemiLuneEncreColorisee} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="RND-DemiLuneBraiseAnimee" component={DemiLuneBraiseAnimee} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="RND-DemiLuneEncreVert" component={DemiLuneEncreColorisee} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-DemiLuneBraiseVert" component={DemiLuneBraiseAnimee} durationInFrames={210} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-MurTopDownBraise" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1920} height={1080} />
-        <Composition id="RND-MurTopDownBraiseVert" component={MurTopDownBraise} durationInFrames={240} fps={30} width={1080} height={1920} defaultProps={{ vertical: true }} />
-        <Composition id="RND-TopDown3Compare" component={TopDown3Compare} durationInFrames={60} fps={30} width={3240} height={1920} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={606} fps={30} width={1080} height={1920} />
         <Composition id="RND-B3Malentendu" component={B3Malentendu} durationInFrames={468} fps={30} width={1080} height={1920} />
