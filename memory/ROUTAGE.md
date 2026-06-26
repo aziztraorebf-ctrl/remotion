@@ -14,6 +14,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
+| **État actuel du projet (session précédente)** | `memory/COMPACT_CURRENT.md` — résumé dense post-session (GGW livré, projets en attente, état bibliothèque SVG). Lire si doute sur "où on en était". |
 | **PRODUIRE/REFAIRE une scène — le SYSTÈME complet** | `memory/SYSTEME-AGENTIQUE.md` ⭐⭐ carte du système : le FLUX (storyboard→validation→breakdown→code→review), l'orchestration (chef+agents frais), où est chaque brique. Activable à tout moment (« consulte notre système agentique »). |
 | **Construire/prolonger TOUTE scène (AVANT de chercher un composant)** | `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐ NON-NEGOTIABLE — déduis l'INTENTION (1 verbe) d'abord, le template en dernier. PUIS porte d'entrée `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme→réponse, inclut templates Hera ⭐) |
 | **Doute sur quel catalogue ouvrir (tout domaine)** | `src/projects/_shared/INDEX-DES-INDEX.md` ⭐ carte de TOUS les catalogues (fiches techniques, consultées APRÈS l'intention) |
@@ -68,6 +69,9 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Format SVG long (5-7min) ou SVG-insert dans Mapbox/Remotion** | `memory/doctrines/SVG-MIDFORM-FORMAT.md` ⭐⭐ critère = transformation visuelle de formes ; pipeline script-first ; playbook assemblage multi-beats |
 | **Épisode pilote Short SVG en cours (GGW Muraille Verte)** | `memory/episodes/shorts-svg/muraille-verte/ETAT-GGW-MURAILLE-VERTE.md` ⭐⭐ STATUT + REGISTRE + OUTILS + ACQUIS. Ce fichier PRIME en cas de conflit. |
 | Bibliothèque de prompts-cibles SVG par registre | `memory/doctrines/templates/PROMPTS-CIBLES-SVG-PAR-REGISTRE.md` |
+| **⭐ Bibliothèque éléments + techniques réutilisables (arbre, soleil, sol, souche + 6 recettes d'animation)** | `src/projects/_shared/svg-library/SVG-LIBRARY-INDEX.md` — lire AVANT de coder une nouvelle scène SVG |
+| Table intention → technique SVG (12 intentions : arbre qui pousse, buvard, sway, glow...) | `src/projects/_shared/svg-library/INTENTION-FORME-SVG.md` |
+| Index protos R&D validés (renders catbox, verdicts, fichiers source) | `src/projects/_shared/svg-library/RD-INDEX.md` |
 
 ### War-Map
 
