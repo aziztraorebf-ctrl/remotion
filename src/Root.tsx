@@ -95,15 +95,6 @@ import { Beat4Climax } from "./projects/atlas/peste-1347/Beat4Climax";
 import { Beat5MaliVivant } from "./projects/atlas/peste-1347/Beat5MaliVivant";
 import { Beat6Conclusion } from "./projects/atlas/peste-1347/Beat6Conclusion";
 import { PesteSubtitles } from "./projects/atlas/peste-1347/PesteSubtitles";
-import { Prototype_A_MapboxSatelliteSenegal } from "./projects/_proto-16-9/Prototype_A_MapboxSatelliteSenegal";
-import { Prototype_B_OdometerDataHero } from "./projects/_proto-16-9/Prototype_B_OdometerDataHero";
-import { Prototype_C_CompositionTest } from "./projects/_proto-16-9/Prototype_C_CompositionTest";
-import { Prototype_D_MapboxStyleComparison } from "./projects/_proto-16-9/Prototype_D_MapboxStyleComparison";
-import { Prototype_E_BackgroundsShowcase } from "./projects/_proto-16-9/Prototype_E_BackgroundsShowcase";
-import { Prototype_F_Vague2Showcase } from "./projects/_proto-16-9/Prototype_F_Vague2Showcase";
-import { Prototype_G_Vague3Showcase } from "./projects/_proto-16-9/Prototype_G_Vague3Showcase";
-import { Prototype_H_Vague3bShowcase } from "./projects/_proto-16-9/Prototype_H_Vague3bShowcase";
-import { Prototype_I_Vague3cShowcase } from "./projects/_proto-16-9/Prototype_I_Vague3cShowcase";
 import { TickerTapeHistoryDemo, TICKER_TAPE_DEMO_FRAMES } from "./projects/_shared/components/inserts/TickerTapeHistory";
 import { CrossSectionDemo, CROSS_SECTION_DEMO_FRAMES } from "./projects/_shared/components/inserts/CrossSection";
 import { WealthScaleDemo, WEALTH_SCALE_DEMO_FRAMES } from "./projects/_shared/components/inserts/WealthScale";
@@ -156,12 +147,6 @@ import { ArbreAPalabres } from "./projects/_shared/components/layouts/ArbreAPala
 import { Caviardage } from "./projects/_shared/components/layouts/Caviardage";
 import { FilRouge } from "./projects/_shared/components/layouts/FilRouge";
 import { SovereignEclipse } from "./projects/_shared/components/layouts/SovereignEclipse";
-import { Prototype_J_Vague4Showcase } from "./projects/_proto-16-9/Prototype_J_Vague4Showcase";
-import { Prototype_K_Vague5Showcase } from "./projects/_proto-16-9/Prototype_K_Vague5Showcase";
-import { Prototype_L_Vague6Showcase } from "./projects/_proto-16-9/Prototype_L_Vague6Showcase";
-import { Prototype_M_Vague7Showcase } from "./projects/_proto-16-9/Prototype_M_Vague7Showcase";
-import { Prototype_N_Vague8Showcase } from "./projects/_proto-16-9/Prototype_N_Vague8Showcase";
-import { Prototype_O_Vague6ExpShowcase } from "./projects/_proto-16-9/Prototype_O_Vague6ExpShowcase";
 import { ParallaxeDiorama } from "./projects/_shared/components/layouts/ParallaxeDiorama";
 import { MosaiqueWax } from "./projects/_shared/components/layouts/MosaiqueWax";
 import { MetamorphoseFiduciaire } from "./projects/_shared/components/layouts/MetamorphoseFiduciaire";
@@ -182,9 +167,6 @@ import { CalqueDechire } from "./projects/_shared/components/layouts/CalqueDechi
 import { ScanInfrarouge } from "./projects/_shared/components/layouts/ScanInfrarouge";
 import { EffetDomino } from "./projects/_shared/components/layouts/EffetDomino";
 import { LoomWipe } from "./projects/_shared/components/layouts/LoomWipe";
-import { Prototype_P_Vague4bShowcase } from "./projects/_proto-16-9/Prototype_P_Vague4bShowcase";
-import { Prototype_Q_Vague3CompleteShowcase } from "./projects/_proto-16-9/Prototype_Q_Vague3CompleteShowcase";
-import { Prototype_R_Vague1RefactorShowcase, PROTO_R_FRAMES } from "./projects/_proto-16-9/Prototype_R_Vague1RefactorShowcase";
 import { ProtoEffect_Loupe } from "./projects/_proto-16-9/ProtoEffect_Loupe";
 import { ProtoEffect_MapDraw } from "./projects/_proto-16-9/ProtoEffect_MapDraw";
 import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivant";
@@ -213,23 +195,6 @@ import { SenegalScene1 } from "./projects/_proto-16-9/SenegalScene1";
 import { SenegalScene1Intro } from "./projects/_proto-16-9/SenegalScene1Intro";
 import { SenegalScene1IntroCoin } from "./projects/_proto-16-9/SenegalScene1IntroCoin";
 import { SenegalCoinSVGProbe } from "./projects/_proto-16-9/SenegalCoinSVGProbe";
-import { IntroProtoC } from "./projects/_proto-16-9/IntroProtoC";
-import { IntroProtoB } from "./projects/_proto-16-9/IntroProtoB";
-import { IntroProtoA } from "./projects/_proto-16-9/IntroProtoA";
-import { MatterCompare } from "./projects/_proto-16-9/MatterCompare";
-import { MatterOnMap } from "./projects/_proto-16-9/MatterOnMap";
-import { ProtoHera_ChartsParchemin } from "./projects/_proto-16-9/ProtoHera_ChartsParchemin";
-import { ProtoHera_ChartOnMap } from "./projects/_proto-16-9/ProtoHera_ChartOnMap";
-import { TealAssemblyEtat3, TEAL_ASSEMBLY_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/TealAssemblyEtat3";
-import { ProtoCarto_ContinentDraw } from "./projects/_proto-16-9/ProtoCarto_ContinentDraw";
-import { ProtoCarto_OffshoreCut } from "./projects/_proto-16-9/ProtoCarto_OffshoreCut";
-import { ProtoCarto_TerritoireDecoupe } from "./projects/_proto-16-9/ProtoCarto_TerritoireDecoupe";
-import { ProtoCarto_CoucheTemps } from "./projects/_proto-16-9/ProtoCarto_CoucheTemps";
-import { ProtoHera_TerminalNeon } from "./projects/_proto-16-9/ProtoHera_TerminalNeon";
-import { ProtoHera_Sketch } from "./projects/_proto-16-9/ProtoHera_Sketch";
-import { ProtoHera_Timeline } from "./projects/_proto-16-9/ProtoHera_Timeline";
-import { HeraFidele_V08_ChartMap, HeraFidele_V13_Bars, HeraFidele_V01_Poll, HeraFidele_V10_Timeline, HeraFidele_V04_FlagsOnMap, HeraFidele_V02_PressArticle } from "./projects/_proto-16-9/ProtoHeraFidele_Repros";
-import { HeraFidele_V03_KineticText, HeraFidele_V12_LineChart } from "./projects/_proto-16-9/ProtoHeraFidele_Repros2";
 import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0Accroche";
 import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
@@ -324,16 +289,11 @@ import { SahelFriseOverlayDemo } from "./projects/warmap/_shared/SahelFriseOverl
 import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepositionnementDemo";
 import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
-import { LobitoWarmapScene, LOBITO_WARMAP_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoWarmapScene";
-import { LobitoVersionA, LOBITO_A_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionA";
-import { LobitoVersionB, LOBITO_B_FRAMES } from "./projects/_rnd/lobito-corridor/LobitoVersionB";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
 import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/GoldRouteAtlasZoom";
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
-import { PocImmobilierQC } from "./projects/_rnd/poc-immobilier-qc/PocImmobilierQC";
-import { PocMaliVideoGame } from "./projects/_rnd/poc-mali-videogame/PocMaliVideoGame";
 import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 
@@ -1714,89 +1674,6 @@ export const RemotionRoot: React.FC = () => {
 
       <Folder name="proto-16-9">
         <Composition
-          id="ProtoA-MapboxSatelliteSenegal"
-          component={Prototype_A_MapboxSatelliteSenegal}
-          durationInFrames={180}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoB1-OdometerKraft"
-          component={Prototype_B_OdometerDataHero}
-          durationInFrames={180}
-          fps={30}
-          width={1920}
-          height={1080}
-          defaultProps={{ variant: "kraft" as const }}
-        />
-        <Composition
-          id="ProtoB2-OdometerIvoire"
-          component={Prototype_B_OdometerDataHero}
-          durationInFrames={180}
-          fps={30}
-          width={1920}
-          height={1080}
-          defaultProps={{ variant: "ivoire" as const }}
-        />
-        <Composition
-          id="ProtoB3-OdometerSlate"
-          component={Prototype_B_OdometerDataHero}
-          durationInFrames={180}
-          fps={30}
-          width={1920}
-          height={1080}
-          defaultProps={{ variant: "slate" as const }}
-        />
-        <Composition
-          id="ProtoC-CompositionTest"
-          component={Prototype_C_CompositionTest}
-          durationInFrames={700}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoD-MapboxStyleComparison"
-          component={Prototype_D_MapboxStyleComparison}
-          durationInFrames={450}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoE-BackgroundsShowcase"
-          component={Prototype_E_BackgroundsShowcase}
-          durationInFrames={600}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoF-Vague2Showcase"
-          component={Prototype_F_Vague2Showcase}
-          durationInFrames={1080}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoG-Vague3Showcase"
-          component={Prototype_G_Vague3Showcase}
-          durationInFrames={810}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoH-Vague3b-Showcase"
-          component={Prototype_H_Vague3bShowcase}
-          durationInFrames={810}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-LaCalebasse"
           component={LaCalebasse}
           durationInFrames={240}
@@ -1845,14 +1722,6 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="ProtoI-Vague3c-Showcase"
-          component={Prototype_I_Vague3cShowcase}
-          durationInFrames={810}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-LeSemeur"
           component={LeSemeur}
           durationInFrames={700}
@@ -1872,14 +1741,6 @@ export const RemotionRoot: React.FC = () => {
           id="Template-ArbreAPalabres"
           component={ArbreAPalabres}
           durationInFrames={700}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoJ-Vague4-Showcase"
-          component={Prototype_J_Vague4Showcase}
-          durationInFrames={810}
           fps={30}
           width={1920}
           height={1080}
@@ -1909,14 +1770,6 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="ProtoK-Vague5-Showcase"
-          component={Prototype_K_Vague5Showcase}
-          durationInFrames={810}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-VoixDuPeuple"
           component={VoixDuPeuple}
           durationInFrames={210}
@@ -1936,14 +1789,6 @@ export const RemotionRoot: React.FC = () => {
           id="Template-PortraitDossier"
           component={PortraitDossier}
           durationInFrames={240}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoL-Vague6-Showcase"
-          component={Prototype_L_Vague6Showcase}
-          durationInFrames={720}
           fps={30}
           width={1920}
           height={1080}
@@ -1973,14 +1818,6 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="ProtoM-Vague7-Showcase"
-          component={Prototype_M_Vague7Showcase}
-          durationInFrames={810}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-PortraitSilhouette"
           component={PortraitSilhouette}
           durationInFrames={240}
@@ -2005,14 +1842,6 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="ProtoN-Vague8-Showcase"
-          component={Prototype_N_Vague8Showcase}
-          durationInFrames={540}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-PortraitEditorial"
           component={PortraitEditorial}
           durationInFrames={180}
@@ -2024,14 +1853,6 @@ export const RemotionRoot: React.FC = () => {
           id="Template-TrombinoscapeStrategique"
           component={TrombinoscapeStrategique}
           durationInFrames={210}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoO-Vague6Exp-Showcase"
-          component={Prototype_O_Vague6ExpShowcase}
-          durationInFrames={1200}
           fps={30}
           width={1920}
           height={1080}
@@ -2079,14 +1900,6 @@ export const RemotionRoot: React.FC = () => {
 
         {/* Vague 4 manquants */}
         <Composition
-          id="ProtoP-Vague4b-Showcase"
-          component={Prototype_P_Vague4bShowcase}
-          durationInFrames={660}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Template-CalqueDechire"
           component={CalqueDechire}
           durationInFrames={180}
@@ -2114,22 +1927,6 @@ export const RemotionRoot: React.FC = () => {
           id="Template-LoomWipe"
           component={LoomWipe}
           durationInFrames={90}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoQ-Vague3-Complete-Showcase"
-          component={Prototype_Q_Vague3CompleteShowcase}
-          durationInFrames={2430}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="ProtoR-Vague1-Refactor-Showcase"
-          component={Prototype_R_Vague1RefactorShowcase}
-          durationInFrames={PROTO_R_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -2166,31 +1963,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={900} fps={30} width={1920} height={1080} />
         <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
-        <Composition id="IntroProtoC" component={IntroProtoC} durationInFrames={270} fps={30} width={1920} height={1080} />
-        <Composition id="IntroProtoB" component={IntroProtoB} durationInFrames={270} fps={30} width={1920} height={1080} />
-        <Composition id="IntroProtoA" component={IntroProtoA} durationInFrames={270} fps={30} width={1920} height={1080} />
-        <Composition id="MatterCompare" component={MatterCompare} durationInFrames={30} fps={30} width={1920} height={1080} />
-        <Composition id="MatterOnMap-none" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "none" }} />
-        <Composition id="MatterOnMap-canvas" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "canvas" }} />
-        <Composition id="MatterOnMap-gemini" component={MatterOnMap} durationInFrames={30} fps={30} width={1920} height={1080} defaultProps={{ mode: "gemini" }} />
-        <Composition id="ProtoHera-ChartsParchemin" component={ProtoHera_ChartsParchemin} durationInFrames={450} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoHera-ChartOnMap" component={ProtoHera_ChartOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
-        <Composition id="TealAssemblyEtat3" component={TealAssemblyEtat3} durationInFrames={TEAL_ASSEMBLY_FRAMES} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-ContinentDraw" component={ProtoCarto_ContinentDraw} durationInFrames={390} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-OffshoreCut" component={ProtoCarto_OffshoreCut} durationInFrames={330} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-TerritoireDecoupe" component={ProtoCarto_TerritoireDecoupe} durationInFrames={330} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoCarto-CoucheTemps" component={ProtoCarto_CoucheTemps} durationInFrames={360} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoHera-TerminalNeon" component={ProtoHera_TerminalNeon} durationInFrames={330} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoHera-Sketch" component={ProtoHera_Sketch} durationInFrames={180} fps={30} width={1920} height={1080} />
-        <Composition id="ProtoHera-Timeline" component={ProtoHera_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V08-ChartMap" component={HeraFidele_V08_ChartMap} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V13-Bars" component={HeraFidele_V13_Bars} durationInFrames={120} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V01-Poll" component={HeraFidele_V01_Poll} durationInFrames={120} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V10-Timeline" component={HeraFidele_V10_Timeline} durationInFrames={210} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V04-FlagsOnMap" component={HeraFidele_V04_FlagsOnMap} durationInFrames={180} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V02-PressArticle" component={HeraFidele_V02_PressArticle} durationInFrames={150} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V03-KineticText" component={HeraFidele_V03_KineticText} durationInFrames={120} fps={30} width={1920} height={1080} />
-        <Composition id="HeraFidele-V12-LineChart" component={HeraFidele_V12_LineChart} durationInFrames={150} fps={30} width={1920} height={1080} />
       </Folder>
 
       <Folder name="Carousels">
@@ -2939,31 +2711,6 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
-        {/* LOBITO — versions comparatives A/B */}
-        <Composition
-          id="LobitoWarmapScene"
-          component={LobitoWarmapScene}
-          durationInFrames={LOBITO_WARMAP_FRAMES}
-          fps={30}
-          width={1080}
-          height={1920}
-        />
-        <Composition
-          id="LobitoVersionA"
-          component={LobitoVersionA}
-          durationInFrames={LOBITO_A_FRAMES}
-          fps={30}
-          width={1080}
-          height={1920}
-        />
-        <Composition
-          id="LobitoVersionB"
-          component={LobitoVersionB}
-          durationInFrames={LOBITO_B_FRAMES}
-          fps={30}
-          width={1080}
-          height={1920}
-        />
         {/* TEMPLATE PRINCIPAL VERTICAL (overlay Remotion, carte claire) — 3e pilier */}
         <Composition
           id="SudanWarMapVertical"
@@ -3308,27 +3055,6 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
-      <Folder name="RND-Nord-Donnees">
-        <Composition
-          id="PocImmobilierQC"
-          component={PocImmobilierQC}
-          durationInFrames={1995}
-          fps={30}
-          width={1080}
-          height={1920}
-        />
-      </Folder>
-
-      <Folder name="RND-Atlas-VideoGame">
-        <Composition
-          id="PocMaliVideoGame"
-          component={PocMaliVideoGame}
-          durationInFrames={750}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-      </Folder>
 
     </>
   );
