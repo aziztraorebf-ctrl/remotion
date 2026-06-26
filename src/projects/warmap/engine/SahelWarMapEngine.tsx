@@ -58,6 +58,8 @@ import { ProtoFicelles } from "../parties/ProtoFicelles";
 import { ProtoVide } from "../parties/ProtoVide";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import { WarMapPlaque } from "../parties/WarMapPlaque";
+import { WarMapBanner } from "../_shared/WarMapBanner";
+import { Acte1IntroSlam } from "../_shared/Acte1IntroSlam";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -184,6 +186,16 @@ const interpPath = (path: GeoPathPoint[], t: number): [number, number] => {
 
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
+// HOOK AES (Aziz 2026-06-19) : direction "detachement + soudure" SANS viseur (cliche du genre).
+// VISEUR_ON=false -> le viseur crosshair est desactive (remettre true pour comparer).
+const VISEUR_ON = false;
+// Drapeaux REELS (decode Castile : etendard plante = souverainete). JAMAIS drawFlagCanvas.
+const COUNTRY_FLAG: Record<string, string> = {
+  MLI: "_shared/flags/ml.png",
+  BFA: "_shared/flags/bf.png",
+  NER: "_shared/flags/ne.png",
+};
+
 export const SAHEL_FPS = 30;
 // 439.37s narration + 3s fade out + 4s CTA = 446s -> arrondi a 13380 frames
 export const SAHEL_DURATION = 13380;
@@ -295,7 +307,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   proto24Pitch = 0,
 }) => {
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
+  const { width, height, fps } = useVideoConfig();
 
   // ACTE 2 prolonge l'Acte 1 : tout le LOOK acte1Final s'applique aussi en acte2.
   // `isFinalLook` = pilote le rendu visuel (jetons, taches, palette, fusion, grain).
@@ -1633,24 +1645,33 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           le Sahel = contraste par le calme. Masque-trou = silhouette AES reprojetée.
           Placé SOUS la couche narrative → véhicules/labels restent nets sur l'AES.
           ====================================================== */}
-      {effVignette && aesPaths.length > 0 && (
-        <svg width={width} height={height}
-          style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          <defs>
-            <mask id="aesHole">
-              <rect x="0" y="0" width={width} height={height} fill="white" />
-              {aesPaths.map((d, i) => (
-                <path key={i} d={d} fill="black" />
-              ))}
-            </mask>
-          </defs>
-          {/* couche sépia sombre, trouée sur l'AES */}
-          <rect x="0" y="0" width={width} height={height}
-            fill="#241809"
-            fillOpacity={effVignetteOp}
-            mask="url(#aesHole)" />
-        </svg>
-      )}
+      {effVignette && aesPaths.length > 0 && (() => {
+        // DÉTACHEMENT (Aziz 2026-06-19) : en acte1Refonte, le fond RECULE PROGRESSIVEMENT.
+        // Avant le 1er detachement (f145) : vignette faible (les 3 pays "dans la masse").
+        // Au fil des detachements f145->f286 : le fond s'assombrit -> les 3 pays ressortent SEULS.
+        const vOp = acte1RefonteProp
+          ? effVignetteOp * interpolate(frame, [80, F_HOOK_MALI, F_HOOK_NIGER + 40], [0.18, 0.4, 1],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : effVignetteOp;
+        return (
+          <svg width={width} height={height}
+            style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+            <defs>
+              <mask id="aesHole">
+                <rect x="0" y="0" width={width} height={height} fill="white" />
+                {aesPaths.map((d, i) => (
+                  <path key={i} d={d} fill="black" />
+                ))}
+              </mask>
+            </defs>
+            {/* couche sépia sombre, trouée sur l'AES — opacite animee (fond qui recule) */}
+            <rect x="0" y="0" width={width} height={height}
+              fill="#241809"
+              fillOpacity={vOp}
+              mask="url(#aesHole)" />
+          </svg>
+        );
+      })()}
 
       {/* ======================================================
           B3 — FRONTS QUI SE DESSINENT (draw-in stroke-dashoffset)
@@ -2436,24 +2457,39 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           // (ocre/brique/sarcelle) au lieu du beige invisible sur le fond ivoire.
           const countryColor = SAHEL_COUNTRY_COLORS[country] ?? "#3A2A18";
           if (isRefonte) {
-            // STRUCTURE acte1Refonte : anneau + micro-centre dans le div parent geo-ancre,
-            // PLAQUE elegante (WarMapPlaque) rendue en sibling (elle se positionne elle-meme
-            // en absolute via sa prop pos). Remplace l'ancien label texte nu.
+            // STRUCTURE acte1Refonte v2 (decode Castile + intention RUPTURE/SOUVERAINETE, Aziz 2026-06-19) :
+            //  - ONDE BRÈVE au plantage (snap, pas respiration molle) : le pays s'allume d'un COUP.
+            //  - DRAPEAU REEL qui se PLANTE + ondule (remplace l'anneau) = souverainete affirmee.
+            //  - PLAQUE elegante SOUS le point (below), Niamey decalee a droite (anti-chevauchement).
+            const ONDE = 22;
+            const ow = Math.min(1, sinceCity / ONDE);
+            const ondeScale = 0.4 + ow * 2.2;
+            const ondeOp = (1 - ow) * 0.7 * appearOp;
             return (
               <React.Fragment key={`pulse-${country}`}>
                 <div style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
-                    transform: "translate(-50%, -50%)", opacity: appearOp, pointerEvents: "none" }}>
-                  {/* anneau pulsant — couleur du pays, opacite franche, respiration douce */}
+                    transform: "translate(-50%, -50%)", pointerEvents: "none" }}>
+                  {/* onde de rupture (one-shot, snap) */}
                   <div style={{ position: "absolute", left: "50%", top: "50%",
-                    width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
-                    border: `3px solid ${countryColor}`,
-                    transform: `scale(${ringScale})`, opacity: ringOp }} />
-                  {/* micro-centre : meme couleur que le pays (coherence) */}
+                    width: 26, height: 26, marginLeft: -13, marginTop: -13, borderRadius: "50%",
+                    border: `2.5px solid ${countryColor}`,
+                    transform: `scale(${ondeScale})`, opacity: ondeOp }} />
+                  {/* micro-centre (point d'ancrage du mat) */}
                   <div style={{ position: "absolute", left: "50%", top: "50%",
                     width: 4, height: 4, marginLeft: -2, marginTop: -2, borderRadius: "50%",
-                    background: countryColor, opacity: 0.8 * appearOp }} />
+                    background: countryColor, opacity: 0.85 * appearOp }} />
                 </div>
-                {/* PLAQUE elegante geo-ancree : accent = couleur du pays (relie plaque <-> pays) */}
+                {/* DRAPEAU REEL qui se plante (decode Castile, banniere flottante flat) */}
+                <WarMapBanner
+                  frame={frame}
+                  fps={fps}
+                  pos={cityPos}
+                  flag={COUNTRY_FLAG[country] ?? "_shared/flags/ml.png"}
+                  appearAt={cityStart}
+                  accent={countryColor}
+                />
+                {/* PLAQUE SOUS le point (below) — le drapeau plante occupe le HAUT.
+                    Niamey (NER) decalee a droite pour ne pas chevaucher Ouagadougou. */}
                 <WarMapPlaque
                   frame={frame}
                   name={cityName}
@@ -2462,6 +2498,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                   hideAt={460}
                   accent={countryColor}
                   size={18}
+                  yOffset={18}
+                  below
+                  xOffset={country === "NER" ? 70 : 0}
                 />
               </React.Fragment>
             );
@@ -3296,7 +3335,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           centre AES via sahelCtx.project().
           Fenetre : f0..420 (recherche -> lock f135 juste avant "chassent" f145 -> effacement f350-400).
           ============================================================ */}
-      {acte1RefonteProp && !acte1ProtoActif && frame >= 0 && frame < 420 && (() => {
+      {VISEUR_ON && acte1RefonteProp && !acte1ProtoActif && frame >= 0 && frame < 420 && (() => {
         const CL_INK = "#3A2A18";        // trait de recherche brun fonce (lisible sur parchemin)
         const CL_LOCK = "#B14B3C";       // accent lock brique sobre
         const LOCK_AT = 135;             // verrouillage juste avant "chassent" (f145)
@@ -3385,6 +3424,55 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </AbsoluteFill>
         );
       })()}
+
+      {/* ============================================================
+          LISÉRÉ D'UNION AES — "et batissent, a la place, quelque chose de nouveau" (f477).
+          Direction "detachement + soudure" : apres que les 3 pays se sont detaches + drapeaux plantes,
+          un trait relie leurs capitales = la soudure AES. Trace one-shot + pulse de fermeture.
+          ============================================================ */}
+      {acte1RefonteProp && !acte1ProtoActif && frame >= F_HOOK_LIPTAKO && (() => {
+        const bamako = cityPx.find((c) => c.name === "Bamako");
+        const ouaga = cityPx.find((c) => c.name === "Ouagadougou");
+        const niamey = cityPx.find((c) => c.name === "Niamey");
+        if (!bamako || !ouaga || !niamey) return null;
+        const draw = interpolate(frame, [F_HOOK_LIPTAKO, F_HOOK_LIPTAKO + 40], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const op = interpolate(frame, [F_HOOK_LIPTAKO, F_HOOK_LIPTAKO + 16], [0, 0.85],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const pts = [bamako, ouaga, niamey, bamako];
+        let total = 0;
+        for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+        const d = `M ${pts.map((p) => `${p.x} ${p.y}`).join(" L ")}`;
+        const GOLD = SAHEL_COLORS.contested;
+        const closed = interpolate(frame, [F_HOOK_LIPTAKO + 40, F_HOOK_LIPTAKO + 52], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const pulse = interpolate(frame, [F_HOOK_LIPTAKO + 40, F_HOOK_LIPTAKO + 50, F_HOOK_LIPTAKO + 66],
+          [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const fillD = `M ${[bamako, ouaga, niamey].map((p) => `${p.x} ${p.y}`).join(" L ")} Z`;
+        return (
+          <AbsoluteFill style={{ pointerEvents: "none" }}>
+            <svg width={width} height={height} style={{ position: "absolute", inset: 0 }} key="union-svg">
+              <path d={fillD} fill={GOLD} opacity={closed * 0.10} />
+              <path d={d} fill="none" stroke={GOLD} strokeWidth={10 + pulse * 8} opacity={op * (0.16 + pulse * 0.25)}
+                strokeDasharray={total} strokeDashoffset={total * (1 - draw)} strokeLinejoin="round" />
+              <path d={d} fill="none" stroke={GOLD} strokeWidth={4.5} opacity={Math.min(1, op + 0.1)}
+                strokeDasharray={total} strokeDashoffset={total * (1 - draw)} strokeLinejoin="round" />
+              {closed > 0.01 && [bamako, ouaga, niamey].map((p, i) => (
+                <circle key={i} cx={p.x} cy={p.y} r={3 + pulse * 2.5} fill={GOLD} opacity={closed * 0.9} />
+              ))}
+            </svg>
+          </AbsoluteFill>
+        );
+      })()}
+
+      {/* ============================================================
+          INTRO SLAM — le chiffre "3" (= "trois pays") slamme, carte du moteur visible A TRAVERS,
+          puis zoom-reveal jusqu'a la carte pleine. Mecanique KineticMaskSlam adaptee SANS 2e carte.
+          Premier plan. Avant "chassent" (f145).
+          ============================================================ */}
+      {acte1RefonteProp && !acte1ProtoActif && (
+        <Acte1IntroSlam bigText="3" slamAt={2} revealStart={70} revealEnd={120} />
+      )}
 
     </AbsoluteFill>
   );

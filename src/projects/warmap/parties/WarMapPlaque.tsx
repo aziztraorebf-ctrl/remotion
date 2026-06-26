@@ -23,10 +23,13 @@ export interface WarMapPlaqueProps {
   fadeFrames?: number;
   size?: number;         // taille de police du nom
   yOffset?: number;      // décalage vertical au-dessus du point (px)
+  xOffset?: number;      // décalage horizontal (px) — eviter chevauchement de 2 plaques voisines
+  below?: boolean;       // placer la plaque SOUS le point (le drapeau plante occupe le dessus)
 }
 
 export const WarMapPlaque: React.FC<WarMapPlaqueProps> = ({
   frame, name, pos, appearAt, hideAt, accent = INK, stat, fadeFrames = 10, size = 22, yOffset = 30,
+  xOffset = 0, below = false,
 }) => {
   if (frame < appearAt || frame >= hideAt) return null;
   const localFrame = frame - appearAt;
@@ -35,15 +38,21 @@ export const WarMapPlaque: React.FC<WarMapPlaqueProps> = ({
   const opacity = Math.min(fadeIn, fadeOut);
   const slideY = interpolate(localFrame, [0, fadeFrames + 4], [12, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
+  // below=true : la plaque est SOUS le point (top = pos.y + yOffset, ancrage par le HAUT).
+  const topPos = below ? pos.y + yOffset : pos.y - yOffset;
+  const transformY = below ? `translate(-50%, ${slideY}px)` : `translate(-50%, calc(-100% + ${slideY}px))`;
+
   return (
     <div style={{
-      position: "absolute", left: pos.x, top: pos.y - yOffset,
-      transform: `translate(-50%, calc(-100% + ${slideY}px))`,
+      position: "absolute", left: pos.x + xOffset, top: topPos,
+      transform: transformY,
       opacity, textAlign: "center", pointerEvents: "none", zIndex: 30,
     }}>
-      {/* petite tige + point d'ancrage (la plaque pointe le lieu) */}
-      <div style={{ position: "absolute", left: "50%", bottom: -yOffset + 4, width: 1.5, height: yOffset - 6,
-        background: accent, opacity: 0.5, transform: "translateX(-50%)" }} />
+      {/* petite tige + point d'ancrage — masquee si below ou xOffset (sinon decalee) */}
+      {!below && xOffset === 0 && (
+        <div style={{ position: "absolute", left: "50%", bottom: -yOffset + 4, width: 1.5, height: yOffset - 6,
+          background: accent, opacity: 0.5, transform: "translateX(-50%)" }} />
+      )}
       {/* pilule nom — parchemin + bordure accent */}
       <div style={{
         display: "inline-block", background: "rgba(243,233,200,0.92)",
