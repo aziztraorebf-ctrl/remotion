@@ -78,7 +78,7 @@ SUDAN_JALON_LABELS = {
 # --- LLM model ids (LOCKED per CLAUDE.md) --------------------------------
 MODEL_SYNTHESIS = "perplexity/sonar-pro"      # via OpenRouter (NOT deep-research, too costly)
 MODEL_FACTCHECK_GEMINI = "gemini-3.1-pro-preview"
-MODEL_FACTCHECK_GROK = "grok-4"                # via XAI (second judge)
+# MODEL_FACTCHECK_GROK = "grok-4"              # non utilise — variable morte (jamais importee)
 
 # --- ACLED API -----------------------------------------------------------
 ACLED_OAUTH_URL = "https://acleddata.com/oauth/token"

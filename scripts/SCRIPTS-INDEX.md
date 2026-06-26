@@ -44,6 +44,25 @@
 
 ---
 
+## 🖼️ PIPELINE SVG GÉNÉRATIF (scènes animées, registres encre/schéma/tactique)
+
+> Scripts SVG canoniques. Point d'entrée doctrine : `memory/doctrines/SVG-SCENES-GENERATIVES.md` + `memory/doctrines/SVG-FAISABILITE-AMONT.md`.
+> ⛔ `svg-scene-libre.py` = **DÉPRÉCIÉ** (bandeau dans le fichier) → utiliser `svg-scene-narrative.py`.
+
+| Quand tu veux... | Script | Usage / note |
+|---|---|---|
+| Idéation chorégraphie SVG (Kimi K2.5 — scène, transitions, registre) | `scripts/tools/kimi-svg-ideation.py` | `--brief "..." [--episode X]`. Kimi via Moonshot. |
+| Idéation vues SVG (Gemini + GPT en parallèle — 2 angles créatifs) | `scripts/tools/svg-ideation-vues.py` | `--brief "..." [--out dir/]`. |
+| Brief de faisabilité SVG AMONT (LLM propose sa meilleure approche + image-cible) | `scripts/tools/svg-faisabilite-brief.py` | `--brief "..." [--provider gemini\|gpt]`. Étape 0 pipeline. |
+| Tester l'écart image→SVG (image-cible raster → SVG : valide ou s'effondre ?) | `scripts/tools/svg-from-image-target.py` | `--image ref.png --brief "..."`. Diagnostic avant codage. |
+| Générer une scène SVG narrative COMPLÈTE ⭐ CANONIQUE | `scripts/tools/svg-scene-narrative.py` | `--brief "..." --provider gemini\|gpt [--out x.svg]`. Groupes `<g id>` nommés animables. |
+| R&D SVG génératif — registre découplé (test nouveaux registres, harnais `_rnd/svg-scenes/`) | `scripts/tools/rnd-svg-scene-gen.py` | `--registre encre\|schema\|tactique --brief "..."`. |
+| Générer jetons / assets SVG ponctuels (drapeaux, icônes, symbols) | `scripts/tools/llm-gen-svg.py` | `--provider gemini\|gpt\|glm --brief "..." --out x.svg`. |
+| Générer une image RASTER (portrait, texture, fond) via Gemini | `scripts/tools/gemini-gen-image.py` | `--prompt "..." --output x.png`. |
+| Générer une image raster depuis une ref de style (Gemini) | `scripts/tools/gemini-gen-image-ref.py` | `--ref REF.png --prompt "..." --output OUT.png`. |
+
+---
+
 ## 🎨 GÉNÉRATION D'ASSETS (images, sprites, storyboards)
 
 | Quand tu veux... | Script | Usage / note |
@@ -82,6 +101,7 @@
 | Reviewer un beat data-viz Remotion (Gemini 1 breakdown) | `scripts/beat-breakdown.py` | `--beat N [--storyboard] [--output]`. Appel Gemini 1. |
 | Breakdown JSON d'un storyboard via GPT-5.5 (jugé supérieur au breakdown) | `scripts/tools/openrouter-vision-breakdown.py` | Éval 2026-06-17. Voir aussi `gemini-vision-breakdown.py` (alternative Gemini). |
 | Breakdown DUAL d'un storyboard (Gemini + GPT en parallèle) | `scripts/tools/storyboard-breakdown-dual.py` | Pipeline dual validé 2026-06-19. |
+| **Self-review SCRIPTÉE d'un beat data-viz Remotion (LE VRAI GATE) ⭐** | `scripts/tools/dataviz-selfreview.py` | `<Beat*.tsx>`. Assertions bloquantes. Exit 0 = gate OK. Requis avant `--phase review`. |
 | Downscaler images/frames avant analyse vision (économie tokens) | `scripts/downscale-for-review.sh` | `<image\|video\|dossier> [nb_frames\|--batch]`. |
 
 ---
@@ -90,8 +110,8 @@
 
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
-| Produire un beat Souverain Remotion/Tailwind (seuil 19/23) | `scripts/beat-session.py` | `--episode X --beat N --phase scan\|breakdown\|review\|upload`. Lancé via `/beat`. |
-| Produire un beat Souverain Mapbox (carte, seuil 8/10) | `scripts/mapbox-session.py` | `--episode X --acte AN --phase storyboard\|self-review\|review\|upload`. |
+| Produire un beat Souverain Remotion/Tailwind (seuil 19/23) | `scripts/beat-session.py` | `--episode X --beat N --phase scan\|preflight\|breakdown\|spec-table\|self-review\|review\|upload\|full`. Lancé via `/beat`. 8 phases. |
+| Produire un beat Souverain Mapbox (carte, seuil 8/10) | `scripts/mapbox-session.py` | `--episode X --acte AN --phase storyboard\|breakdown\|self-review\|review\|upload`. 5 phases (breakdown = décode direction validée en plan technique). |
 | Bilan + audit + next actions d'une session Atlas | `scripts/atlas-session.py` | `--episode X [--beat N \| --beats N M]`. |
 
 ---
