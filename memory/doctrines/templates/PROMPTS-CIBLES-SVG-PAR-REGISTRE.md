@@ -42,6 +42,25 @@ Pour calibrer un prompt-cible : PARTIR D'UNE FRAME D'UN PROTO QUI MARCHE (la joi
 
 ---
 
+## ⛔ REGLE NON-NEGOCIABLE (gravee 2026-06-23, 2e rappel Aziz) — TOUTE SCENE SVG = SCENE NARRATIVE
+Avant de coder/generer TOUTE scene SVG d'un short : on RACONTE une histoire avec un MOMENT + 4-5 OBJETS-HEROS,
+JAMAIS un dispositif explicatif (cartouches, grilles statistiques, encadres de donnees, "rapport d'expertise").
+Au moindre glissement vers cartouche/grille/tableau de chiffres -> STOP, c'est la derive schema-annote. Se re-ancrer
+sur le HOOK valide (GgwHookEncreVivant : horizon/soleil/dunes/arbres/pelle = objets-heros) et les protos (piece Senegal).
+Les CHIFFRES se disent a la voix off + se MONTRENT par le geste narratif (un arbre qui tombe = la mort, pas un compteur).
+CAS DECLENCHEUR : Beat 2 GGW derive 2x vers cartouches/grille 6x6 (froid) -> recentre en scene narrative.
+⚠️ Les LLM ne dessinent QUE de l'organique (arbres/dunes/coupes) ; demander une grille/cartouche =
+echec garanti (prouve 2x). L'infographie eventuelle = CODEE PAR NOUS (notre specialite : overlays/plaques), pas par le LLM.
+ℹ️ OUTILS (flux clair) : generation image-cible/scene = `svg-scene-narrative.py` (SVG natif, ACTIF) ou `rnd-svg-scene-gen.py`.
+   ⛔ `svg-scene-libre.py` est DEPRECIE (il forcait les cotes/le mode schema). Ideation amont = `kimi-svg-ideation.py`.
+
+## ⭐⭐ TRANSITION SIGNATURE = WHITEBOARD (draw-off -> draw-on, prouve 2026-06-23)
+Avantage natif du SVG sous-exploite : une scene peut SE DESSINER / S'EFFACER sous les yeux (stroke-dasharray +
+dashoffset anime), comme un carnet vivant / une main qui dessine. Pour enchainer 2 scenes SANS cut sec : la scene A
+s'EFFACE trait par trait (dashoffset 0->L) pendant que la scene B SE DESSINE (dashoffset L->0). C'est NOTRE identite
+(carnet d'explorateur), superieur au cut/fade. Limite : marche sur les TRAITS (stroke) ; pour les remplissages (fill),
+ruser avec un clip-path/masque qui se revele. => rester en TRAIT D'ENCRE garde le whiteboard gratuit (raison de plus pour l'encre).
+
 ## ⭐⭐⭐ LECON MAJEURE 2026-06-23 — SCENE NARRATIVE > SCHEMA ANNOTE (cause racine retrouvee)
 On derivait vers des SCHEMAS ANNOTES (coupe/blueprint avec cotes, labels, 8000km) = froids, "plan technique".
 Nos protos REUSSIS (piece Senegal, port, etat-major, hero-or) sont des SCENES NARRATIVES : un MOMENT + 4-5 OBJETS-HEROS

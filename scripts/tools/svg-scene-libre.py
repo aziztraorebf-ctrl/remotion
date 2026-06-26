@@ -1,4 +1,9 @@
 """
+⛔ DEPRECATED (2026-06-23) — pour une SCENE NARRATIVE, utiliser `svg-scene-narrative.py` a la place.
+   CET OUTIL IMPOSE "lignes de construction + cotes" dans son prompt interne -> il force le mode SCHEMA
+   TECHNIQUE (planche d'ingenieur). Cause prouvee de 4 generations B2 ratees. Garde uniquement si tu veux
+   VRAIMENT un schema technique avec cotes. Sinon -> svg-scene-narrative.py (scene qui raconte, sans cotes).
+
 svg-scene-libre.py — generation SVG LIBRE depuis un brief texte (+ image-ref de STYLE optionnelle).
 ⛔ DEPRECATED 2026-06-23 — NE PAS UTILISER. Remplace par svg-scene-narrative.py (forcait les lignes de construction/cotes au lieu d'une scene narrative).
 Methode 2026-06-22 (Aziz) : l'image-cible = le SVG NATIF du generateur, pas un raster intermediaire.

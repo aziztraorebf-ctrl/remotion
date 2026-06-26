@@ -177,14 +177,12 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 4. ✅ **Frontière 2-mémoires clarifiée** : NE PAS fusionner. `.claude/.../memory/` = navigation (MEMORY.md index + feedbacks courts) ; `memory/` workspace = contenu (doctrines, STATUS, outils). Règle gravée dans MEMORY.md header.
 5. **Items "À CONFIRMER"** : `PLAN-ASSEMBLAGE-FINAL` War-Map (validations ouvertes) + `PIXELLAB-MASTER-INDEX` (statuts à confirmer quand on attaque ces prods).
 
-## 🧹 PROCHAINE SESSION DÉDIÉE — "NETTOYAGE CODE" (plan 2026-06-25, ordre = rentabilité/risque)
+## 🧹 NETTOYAGE CODE — FAITS (2026-06-25, session agentique 3 agents parallèles)
 
-> ⚠️ Vérifier l'état RÉEL au démarrage (ne pas se fier à la section FAITS ci-dessus) : le point 1 dit "Root.tsx nettoyé" mais au 2026-06-25 fin de session, `grep -c "<Composition" src/Root.tsx` = **460 compositions dont 57 protos/tests/cobayes** → l'assainissement Root n'est PAS complet (seuls ~35 imports svg-scenes retirés). Compter avant d'agir.
-
-1. **🔴 Assainir Root.tsx (plus gros gain)** : 460 compositions, dont **57 protos/tests/cobayes** à retirer du registre de prod. Désimporter + supprimer les `<Composition>` protos. Repérer les compositions mortes (import vers fichier supprimé) via `npx tsc --noEmit`. ⚠️ CODE sensible (registre Remotion) → toi+moi OU agent Sonnet avec typecheck strict + render de contrôle. Débloque aussi l'archivage des svg-scenes encore importées.
-2. ~~**🟠 Purge des 35 CLAUDE.md VIDES**~~ ✅ FAIT (2026-06-25) : 33 CLAUDE.md vides supprimés via `git rm`, 2 dashboards orphelins (`abou-bakari-dashboard/` + `thiaroye-v5-dashboard/`) supprimés — projets livrés, plus actifs.
-3. **🟠 Audit src/ (78 .md) + public/ (41 .md)** : zone JAMAIS auditée (les 3 vagues n'ont couvert que memory/). 1 agent Sonnet : INDEX code périmés, notes d'assets mortes, doublons.
-4. **🟡 Purge out/ restante** : 4.8 GB actuels. Vérifier ce qui reste de purgeable (le gros a été fait, mais re-scanner >7j).
+1. ✅ **Root.tsx protos A→D** : -34 imports, -57 compositions (Prototype_A→R, ProtoHera, ProtoCarto, HeraFidele, Matter, IntroProto, Lobito, Poc). Commit `d6b9348`. Build propre (6 erreurs pré-existantes inchangées).
+2. ✅ **CLAUDE.md vides + dashboards** : 33 CLAUDE.md supprimés, 2 dashboards orphelins retirés + 3 CLAUDE.md vides supplémentaires (2026-06-26). Commit groupé.
+3. ✅ **Audit src/+public/ .md** (77 fichiers) : 3 périmés supprimés (senegal parchemin V2 + niger url). Cobaye maroc GARDÉ (base peaufinage).
+4. ✅ **Worktree GGW** fermé (2026-06-26) — branche `feat/shorts-svg-muraille-verte` archivée.
 5. **🟡 Dégraisser CLAUDE.md principal** (17.5 KB / 132 lignes, auto-chargé CHAQUE session) : couper le gras comme on a fait pour MEMORY.md. SENSIBLE → toi+moi en direct.
 
 Méthode : [[methode-consolidation-par-vagues]] (agents Sonnet disjoints). C'est une session CODE, distincte des 3 vagues MÉMOIRE déjà faites.

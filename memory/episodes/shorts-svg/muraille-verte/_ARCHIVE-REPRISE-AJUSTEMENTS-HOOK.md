@@ -1,4 +1,8 @@
-# REPRISE — HOOK Grande Muraille Verte (etat au 2026-06-23)
+> ⛔⛔ ARCHIVE — NE PAS UTILISER POUR AGIR (archivee 2026-06-24). Le hook (Beat 1) est FINAL, le Beat 2 aussi.
+> Ce fichier decrivait le hook "en cours" + des pistes abandonnees (d3-geo, vue de coupe, image-cible wuar68 rejetee).
+> SOURCE DE VERITE ACTUELLE = [[ETAT-GGW-MURAILLE-VERTE]]. Conserve uniquement pour l'historique des 8 acquis methode.
+
+# (ARCHIVE) REPRISE — HOOK Grande Muraille Verte (etat au 2026-06-23)
 
 ## ⭐⭐ ETAT ACTUEL (session 2026-06-22->23) — HOOK VIVANT PROUVE + METHODE COMPLETE
 > Le hook a ete REFAIT entierement sur une nouvelle direction prouvee. La version d3-geo/carte est ABANDONNEE pour le hook

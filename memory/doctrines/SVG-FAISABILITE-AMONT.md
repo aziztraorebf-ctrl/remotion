@@ -1,7 +1,5 @@
 # ⭐ DOCTRINE — ETAPE "FAISABILITE SVG" AMONT (le LLM dit SA capacite + image-cible AVANT le code)
 
-> 🧭 ORDRE DE LECTURE : **(0) VOUS ETES ICI — SVG-FAISABILITE-AMONT** (valider la vue AVANT de generer) → (1) SVG-SCENES-GENERATIVES (generer+animer, manuel principal) → si multi-agents : PRODUCTION-AGENTIQUE-SVG → si format video long : SVG-MIDFORM-FORMAT.
-
 > Gravee 2026-06-22 (Aziz). Comble un trou prouve : "avoir une idee de scene ne veut PAS dire qu'elle se transcrit
 > bien une fois le SVG genere". Cas declencheur = le mur d'arbres top-down -> les arbres = "gros points verts informes",
 > illisibles. Decouvert seulement APRES le render (cher en allers-retours). Cette etape deplace la decouverte AVANT le code.
@@ -25,10 +23,13 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
 2. **Brief FAISABILITE SVG** (`scripts/tools/svg-faisabilite-brief.py`), a Gemini ET GPT (generer les 2, comparer leur
    approche native) : joindre des FRAMES DE REFERENCE (ce qu'on sait rendre) + la TENTATIVE RATEE s'il y en a une.
    -> sortie JSON {faisable_note, approche, changements, mini_storyboard, image_cible_prompt}.
-3. **IMAGE-CIBLE = SVG NATIF** : generer le SVG cible via `svg-scene-narrative.py` (--provider gemini|gpt, --narrative-ref,
-   --style-ref). On obtient un SVG decoupe en `<g id>` nommes (directement animable). PAS de raster intermediaire (gemini-gen-image.py
-   est DEPASSE pour cette etape — voir [[SVG-MIDFORM-FORMAT]] + outils ETAT-GGW). Generer gemini ET gpt, comparer la decomposition.
-   On VOIT la cible. Si l'element lit (l'arbre ressemble a un arbre) -> go. Sinon -> on re-brief / change d'angle. GRATUIT vs render.
+3. **IMAGE-CIBLE = SVG NATIF du LLM** (correction 2026-06-23, prouvee par render) : generer la cible directement en
+   SVG NATIF via **Gemini 3.1 Pro** (vision/SVG) ou **GPT-5.5** — PAS un raster intermediaire. Outil : `svg-scene-narrative.py`.
+   ⛔ NE PLUS utiliser `gemini-3.1-flash-image-preview` (raster) pour l'image-cible : le raster cree un ECART faisabilite
+   image->SVG (la cible raster est plus dense que ce que le SVG peut rendre). Le SVG natif = ecart NUL par construction
+   (ce qu'on voit dans la cible = ce qu'on obtient). On VOIT la cible (convertir le SVG en PNG pour juger). Si l'element
+   lit (l'arbre ressemble a un arbre) -> go. Sinon -> re-brief / change d'angle. GRATUIT vs render.
+   (`gemini-3.1-flash-image` reste valide pour des RASTERS hors-cible, ex un arbre a raffiner ensuite en code.)
 4. **Claude FILTRE** (double filtre [[feedback_ia-externe-idees-filtre-projet]]) : le LLM ne connait pas nos decisions ;
    garder ce qui sert le projet, ecarter le hors-sol. Presenter la synthese a Aziz.
 5. **PUIS** generer le vrai SVG (scene ajoutee au generateur), en sachant : la bonne VUE, que ca LIRA, que c'est animable,
@@ -46,8 +47,7 @@ seule contrainte non-negociable : **decoupe en `<g id>` nommes** (sinon inanimab
 
 ## OUTILS
 - `scripts/tools/svg-faisabilite-brief.py --provider gemini|gpt --intention "..." --refs a.png,b.png --out x.json`
-- Image-cible SVG : `scripts/tools/svg-scene-narrative.py` (sortie = SVG natif decoupe en `<g id>` nommes, directement animable — PAS de raster intermediaire). Generer gemini ET gpt, comparer.
-- `scripts/tools/gemini-gen-image.py` — DEPLACE DE CET ETAPE. Uniquement pour portraits graves type B4 Rinaudo ou generation de REFERENCE DE STYLE raster. PAS pour l'image-cible SVG (raster intermediaire = ecart image->SVG, cf. section TEST D'ECART ci-dessous).
+- `scripts/tools/gemini-gen-image.py --prompt "..." --output cible.png` (modele verrouille flash image)
 - Generateur SVG final : `scripts/tools/rnd-svg-scene-gen.py` (+ flag `--registre` pour override).
 
 ## ⭐⭐ TEST DE L'ECART image-cible -> SVG (reserve Aziz prouvee, 2026-06-22) — ETAPE OBLIGATOIRE si geo/detail realiste

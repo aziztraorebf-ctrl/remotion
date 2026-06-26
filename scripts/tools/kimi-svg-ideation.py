@@ -92,7 +92,7 @@ def main():
     group.add_argument('--prompt-file', help='Fichier texte contenant le prompt')
     parser.add_argument('--image', action='append', default=[], help='Image de reference (repetable)')
     parser.add_argument('--output', help='Sauvegarder la reponse dans ce fichier')
-    parser.add_argument('--max-tokens', type=int, default=8000)
+    parser.add_argument('--max-tokens', type=int, default=4000)
     args = parser.parse_args()
 
     if args.prompt:

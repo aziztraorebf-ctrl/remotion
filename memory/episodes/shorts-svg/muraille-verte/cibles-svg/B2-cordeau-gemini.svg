@@ -1,0 +1,141 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1080" height="1920" fill="#e8dcc0"/>
+  <rect x="40" y="40" width="1000" height="1840" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 8"/>
+  
+  <g id="ciel_et_soleil">
+    <circle cx="540" cy="320" r="160" fill="#e8dcc0" stroke="#2b2117" stroke-width="4"/>
+    <circle cx="540" cy="320" r="190" fill="none" stroke="#2b2117" stroke-width="2" stroke-dasharray="12 12"/>
+    <circle cx="540" cy="320" r="230" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="4 8"/>
+    <line x1="540" y1="40" x2="540" y2="70" stroke="#2b2117" stroke-width="2"/>
+    <line x1="540" y1="570" x2="540" y2="600" stroke="#2b2117" stroke-width="2"/>
+    <line x1="260" y1="320" x2="290" y2="320" stroke="#2b2117" stroke-width="2"/>
+    <line x1="790" y1="320" x2="820" y2="320" stroke="#2b2117" stroke-width="2"/>
+    <line x1="342" y1="122" x2="363" y2="143" stroke="#2b2117" stroke-width="2"/>
+    <line x1="717" y1="498" x2="738" y2="519" stroke="#2b2117" stroke-width="2"/>
+    <line x1="738" y1="122" x2="717" y2="143" stroke="#2b2117" stroke-width="2"/>
+    <line x1="363" y1="498" x2="342" y2="519" stroke="#2b2117" stroke-width="2"/>
+    
+    <!-- Dunes arriere plan -->
+    <path d="M -10 500 C 300 480, 600 650, 1090 550" fill="none" stroke="#2b2117" stroke-width="3"/>
+    <path d="M -10 650 C 400 800, 700 700, 1090 950" fill="none" stroke="#2b2117" stroke-width="2" stroke-dasharray="15 10"/>
+  </g>
+
+  <g id="arbre_4_enseveli">
+    <!-- Arbre a moitie mort et recouvert par la dune -->
+    <path d="M 810 850 C 800 750, 830 650, 815 550 C 810 520, 790 500, 770 480" fill="none" stroke="#2b2117" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 817 620 C 850 580, 880 570, 910 580" fill="none" stroke="#2b2117" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 812 700 C 780 680, 740 680, 720 650" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 850 585 C 860 550, 880 530, 890 520" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+    <!-- Texture ecorce -->
+    <path d="M 813 830 Q 808 780 818 730" fill="none" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <g id="dune_menacante">
+    <!-- La grande dune qui avance et engloutit -->
+    <path d="M 1090 750 C 850 800, 750 950, 650 1150 C 500 1450, 300 1550, -10 1600 L -10 1930 L 1090 1930 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="4"/>
+    <!-- Lignes de crete et hachures de grain -->
+    <path d="M 1090 850 C 850 900, 700 1100, 550 1350 C 420 1570, 250 1650, -10 1700" fill="none" stroke="#2b2117" stroke-width="2" stroke-dasharray="20 15"/>
+    <path d="M 1090 980 C 900 1020, 800 1250, 650 1500 C 550 1680, 350 1800, -10 1850" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="8 12"/>
+    <path d="M 720 1020 L 730 1035 M 750 1040 L 760 1055 M 680 1110 L 690 1125 M 640 1200 L 655 1215 M 580 1300 L 595 1315 M 500 1450 L 515 1465 M 400 1550 L 415 1565" fill="none" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <g id="racines">
+    <!-- Racines courtes sous les arbres 1, 2 et 3, suggerees dans le sol sterile -->
+    <path d="M 270 1400 Q 260 1450 240 1480 M 275 1400 Q 280 1430 300 1450 M 265 1400 L 260 1440" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 450 1240 Q 430 1290 410 1310 M 455 1240 Q 465 1280 490 1290 M 445 1240 L 440 1280" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 630 1080 Q 610 1120 590 1140 M 635 1080 Q 645 1110 660 1120 M 625 1080 L 620 1120" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <g id="sol_craquele">
+    <!-- Ligne de sol plante artificiellement droit -->
+    <path d="M -10 1650 L 120 1520 L 300 1410 L 480 1250 L 660 1090 L 750 1000" fill="none" stroke="#2b2117" stroke-width="2" stroke-dasharray="10 5"/>
+    <!-- Craquelures autour des plantations -->
+    <path d="M 240 1430 L 220 1460 L 230 1500 M 220 1460 L 180 1470 L 160 1510 M 180 1470 L 170 1440 M 270 1430 L 290 1460 L 330 1450 L 350 1480 M 290 1460 L 300 1500 M 330 1450 L 340 1420" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-linejoin="bevel"/>
+    <path d="M 420 1270 L 400 1300 L 410 1340 M 400 1300 L 360 1310 M 450 1270 L 470 1300 L 510 1290 M 470 1300 L 480 1340" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-linejoin="bevel"/>
+  </g>
+
+  <g id="piquet_gauche">
+    <!-- Piquet rigide planté au premier plan -->
+    <polygon points="110,1320 135,1315 140,1520 115,1530" fill="#e8dcc0" stroke="#2b2117" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="135,1315 150,1325 155,1510 140,1520" fill="#e8dcc0" stroke="#2b2117" stroke-width="4" stroke-linejoin="round"/>
+    <!-- Hachures bois -->
+    <path d="M 118 1330 L 122 1510 M 125 1325 L 130 1515 M 140 1325 L 145 1510" fill="none" stroke="#2b2117" stroke-width="1"/>
+    <path d="M 118 1380 Q 125 1390 119 1400 M 125 1450 Q 132 1460 126 1470" fill="none" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <g id="piquet_droite">
+    <!-- Piquet eloigne -->
+    <polygon points="890,620 905,615 910,750 895,755" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <polygon points="905,615 915,622 920,745 910,750" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 895 630 L 898 740 M 902 625 L 905 745" fill="none" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <g id="corde_alignement">
+    <!-- La ligne de mort : droite, rigide, contre-nature -->
+    <line x1="145" y1="1360" x2="900" y2="660" stroke="#2b2117" stroke-width="2" stroke-dasharray="10 4"/>
+    <!-- Noeuds sur les piquets -->
+    <path d="M 115 1350 L 155 1370 M 115 1355 L 155 1375 M 115 1360 L 145 1385" fill="none" stroke="#2b2117" stroke-width="2"/>
+    <path d="M 890 655 L 920 665 M 890 660 L 920 670" fill="none" stroke="#2b2117" stroke-width="2"/>
+  </g>
+
+  <g id="arbre_1_mort">
+    <!-- Arbre brisé -->
+    <path d="M 265 1400 C 270 1350, 275 1300, 280 1260 L 290 1265 C 285 1300, 280 1350, 275 1400 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Partie cassee qui pend -->
+    <path d="M 280 1260 L 210 1310 L 215 1318 L 290 1265" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Echardes de la cassure -->
+    <path d="M 275 1260 L 282 1250 L 285 1265 M 280 1260 L 288 1245 L 290 1265" fill="none" stroke="#2b2117" stroke-width="2"/>
+    <!-- Branches seches -->
+    <path d="M 240 1288 L 180 1280 M 230 1295 L 190 1330 M 275 1320 L 230 1310" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 195 1282 L 185 1260 M 210 1312 L 205 1340" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <g id="arbre_2_mourant">
+    <!-- Arbre entier mais penche et sec -->
+    <path d="M 450 1240 C 470 1150, 520 1050, 580 980 L 588 985 C 528 1060, 480 1150, 460 1240 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 515 1070 C 550 1050, 580 1050, 610 1070" fill="none" stroke="#2b2117" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 550 1015 C 590 980, 620 980, 640 1000" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 480 1150 C 520 1130, 540 1140, 560 1170" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <!-- Rameaux secs -->
+    <path d="M 570 1055 L 580 1020 M 600 1065 L 615 1040 M 605 990 L 625 960" fill="none" stroke="#2b2117" stroke-width="2" stroke-linecap="round"/>
+    <!-- Une feuille morte qui tombe -->
+    <path d="M 630 1040 Q 640 1045 635 1055 Q 625 1050 630 1040 Z" fill="none" stroke="#2b2117" stroke-width="1.5"/>
+    <path d="M 610 1120 Q 620 1125 615 1135 Q 605 1130 610 1120 Z" fill="none" stroke="#2b2117" stroke-width="1.5"/>
+  </g>
+
+  <g id="arbre_3_survivant">
+    <!-- Le seul qui se tient droit, avec un peu de feuillage -->
+    <path d="M 630 1080 C 625 980, 620 880, 615 780 L 623 780 C 628 880, 634 980, 640 1080 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 620 950 C 580 920, 550 880, 540 830" fill="none" stroke="#2b2117" stroke-width="4" stroke-linecap="round"/>
+    <path d="M 623 880 C 660 850, 690 820, 700 780" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 618 830 C 590 800, 580 770, 570 730" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <!-- Touffes de feuilles (formes vectorielles pleines contournees) -->
+    <path d="M 540 830 C 520 830, 510 810, 520 790 C 530 770, 550 780, 560 800 C 570 820, 550 840, 540 830 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M 700 780 C 680 780, 670 760, 680 740 C 690 720, 710 730, 720 750 C 730 770, 710 790, 700 780 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M 570 730 C 550 730, 540 710, 550 690 C 560 670, 580 680, 590 700 C 600 720, 580 740, 570 730 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M 615 780 C 595 780, 585 750, 605 730 C 625 710, 645 730, 635 760 C 630 780, 620 790, 615 780 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Details ecorce -->
+    <path d="M 628 1050 L 632 1000 M 626 950 L 629 900" fill="none" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <g id="outils_abandonnes">
+    <!-- L'arrosoir renversé -->
+    <ellipse cx="120" cy="1680" rx="25" ry="40" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" transform="rotate(60 120 1680)"/>
+    <path d="M 100 1650 L 180 1600 L 220 1660 L 140 1710 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Pommeau et bec -->
+    <path d="M 210 1640 L 260 1600 L 270 1615 L 220 1655 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <ellipse cx="265" cy="1607" rx="8" ry="15" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" transform="rotate(40 265 1607)"/>
+    <!-- Trous du pommeau -->
+    <circle cx="265" cy="1607" r="1" fill="#2b2117"/>
+    <circle cx="260" cy="1602" r="1" fill="#2b2117"/>
+    <circle cx="270" cy="1612" r="1" fill="#2b2117"/>
+    <!-- Anse de l'arrosoir -->
+    <path d="M 140 1620 C 130 1570, 180 1540, 200 1580" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 105 1660 C 80 1680, 100 1720, 130 1700" fill="none" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+    
+    <!-- Le plantoir fiché dans la terre craquelée -->
+    <path d="M 350 1550 L 365 1600 L 380 1545 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" stroke-linejoin="round"/>
+    <path d="M 365 1550 L 375 1510" fill="none" stroke="#2b2117" stroke-width="4" stroke-linecap="round"/>
+    <rect x="368" y="1480" width="14" height="30" rx="5" fill="#e8dcc0" stroke="#2b2117" stroke-width="3" transform="rotate(15 375 1495)"/>
+  </g>
+</svg>
