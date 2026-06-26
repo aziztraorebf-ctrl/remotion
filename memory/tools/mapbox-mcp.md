@@ -138,47 +138,9 @@ Avec `search_and_geocode_tool`, le centroïde correspond exactement aux vraies f
 
 ---
 
-## Caméra & projection — règles validées (2026-05-26)
+## Caméra, projection, mouvements et transitions de style
 
-### Mercator obligatoire (NON-NÉGOCIABLE)
-Mapbox GL JS v3+ utilise `projection: "globe"` par défaut → vues sphériques non documentaires.
-Toujours forcer Mercator dans `style.load` ET après chaque `setStyle()` :
-```ts
-map.on("style.load", () => {
-  try { (map as any).setProjection?.("mercator"); } catch {}
-  applyGeoAfriqueV5(map);
-});
-```
-Sans ça : aux zooms ≤ 3, la carte se courbe en globe — incohérent avec le langage documentaire (Caspian, JH, Vox sont tous en Mercator).
-
-### Zoom max safe headless
-- **dark-v11 + GéoAfrique V5** : zoom max **5.8** sans tuiles grises
-- Au-delà (6+), les tuiles ne chargent pas assez vite en chrome-headless-shell → écran gris
-- **satellite-streets-v12 + pitch 60-70°** : zoom 14-15 OK (atterrissage ville)
-- Pour effet "zoom rapide + freeze", capper à 5.8 même si visuellement on voudrait plus
-
-### Mouvements caméra catalogués (Camera Lab v2)
-Référence : https://files.catbox.moe/v0v4e6.mp4 (12 scènes × 10s = 2 min)
-1. Drift Continu — bearing slow + lon sine wave
-2. Orbit + Dolly In — bearing 0→-180° + zoom 4.5→6.2
-3. Multi-Stop Whip Pan — blur 14px au pic du transit
-4. Zoom Rapide + Freeze — zoom 3.2→5.8 en 30% scène
-5. Tilt + Pull Back — pitch 0→60° puis zoom 5.5→3.0
-6. Counter-Rotation + Orbit — pitch 40°, bearing 0→-45°→35°
-7. Drift Lent + Blur Atmosphère — `filter: blur(1.5px)` permanent
-8. Pull Back Reveal Planétaire — zoom 5.5→2.8 en 60f
-9. Zoom Sol 3D — `satellite-streets-v12`, zoom 4→14, pitch 0→65°
-10. Fade CSS Style Switch — opacity 1→0→1 autour de `setStyle()`
-11. Whip Pan + Style Switch — blur 14px cache le changement
-12. Zoom Out + Style Switch + Zoom In — pull back continent → switch → redolly
-
-### Transitions de style (3 techniques validées)
-`setStyle()` est async → ne jamais switcher sans masquer le délai :
-- **Fade CSS** (simple, sobre) : `opacity` du container 1→0 sur 15f, switch, 0→1 sur 15f
-- **Whip pan + switch** : blur 14px atteint son pic au moment du `setStyle()` → invisible
-- **Zoom out + switch + zoom in** : pull back zoom 2, switch au creux, redolly satellite
-
-Toujours réappliquer `setProjection("mercator")` + `applyGeoAfriqueV5()` après chaque switch vers dark.
+> Règles caméra/projection/blur/mouvements catalogués → **`memory/doctrines/DOCTRINE-SOUVERAIN.md` sections 3.1-3.9** (source de vérité).
 
 ---
 
