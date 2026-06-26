@@ -1,5 +1,6 @@
 """
 svg-scene-libre.py — generation SVG LIBRE depuis un brief texte (+ image-ref de STYLE optionnelle).
+⛔ DEPRECATED 2026-06-23 — NE PAS UTILISER. Remplace par svg-scene-narrative.py (forcait les lignes de construction/cotes au lieu d'une scene narrative).
 Methode 2026-06-22 (Aziz) : l'image-cible = le SVG NATIF du generateur, pas un raster intermediaire.
 On demande directement le SVG aux 2 meilleurs modeles : Gemini 3.1 Pro (vision/SVG) + GPT-5.5.
 L'image-ref jointe (si fournie) sert de REFERENCE DE STYLE/NIVEAU uniquement (pas de contenu).
