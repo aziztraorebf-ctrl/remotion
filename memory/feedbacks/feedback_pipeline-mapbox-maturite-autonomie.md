@@ -36,5 +36,5 @@ Beat "pays + ressource + acteurs + chiffres" = ~85% ASSEMBLAGE (briques : camCou
 5 ERROR : E1 SFX hors <Sequence>, E2 drawFlagCanvas appelé, E3 flyTo/easeTo, E5 image distante flagcdn/https. 5 WARN : blur CSS SVG, filtre 'name', outre-mer sans mainlandBox, etc.
 Testé : les 3 beats Maroc validés passent (0 erreur), un cas volontairement cassé attrape 4 erreurs. Double sens vérifié.
 
-### BACKLOG — GeoFlowConnection (à coder au 1er sujet à flux)
-Le SEUL type de beat encore cher (~65% assemblage) = connexions pays→pays (gazoduc Algérie→Europe, routes AES/CEDEAO, flux d'influence BRICS). Aucune brique → c'est ce sur quoi on a buté (lignes invisibles). Composant `GeoFlowConnection` headless-safe (lignes/arcs animés entre 2+ pays, centroïdes dérivés des bbox projetées, pas de filter:blur) → transforme ces beats en 90% assemblage. NE PAS coder spéculativement : attendre le 1er sujet à flux pour bien viser le besoin. [[sfx-sequence-et-drapeaux-reels]] [[philosophie-mapbox-puis-remotion]]
+### GeoFlowConnection — CODÉ 2026-06-03
+`src/projects/_shared/mapbox/GeoFlowConnection.tsx`, headless-safe. Voir `feedback_mapanimation-veille-et-geoflow.md` pour le détail complet (route ville→ville qui se dessine, dashed doré + dash animé, city markers Spring Pop, sprite mobile orienté tangente, caméra-follow puis dézoom final). Référencé CATALOGUE-CARTE-VIVANTE section ROUTE/FLUX. [[sfx-sequence-et-drapeaux-reels]] [[philosophie-mapbox-puis-remotion]]

@@ -49,3 +49,5 @@ Drapeaux HD installes 2026-06-03 : ma.png (pentagramme officiel), cn.png (5 etoi
 
 ## Beat3 Acteurs — FINAL 2026-06-03
 Valide Aziz. Technique clip SVG (vraies images, meet, fond couleur) + lignes connexion Maroc->Chine/Allemagne (centroides derives des bbox projetees, PAS de filter:blur CSS qui casse headless). Vue monde Mercator. Preview : https://files.catbox.moe/ivv7d8.mp4
+
+Lié : [[flagfill-templates-decouverte]] (templates fill-pattern + drapeaux) · [[pipeline-mapbox-maturite-autonomie]] (maturité pipeline, self-review scriptée) · [[philosophie-mapbox-puis-remotion]] (ordre de production Mapbox-first)

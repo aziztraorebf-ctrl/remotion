@@ -35,3 +35,5 @@ metadata:
 **Donc : il ne reste qu'UN SEUL beat Mapbox = Beat 3 (Acteurs Gotion/VW).** Une fois Beat 3 validé, le BLOC CARTE est terminé → on passe au BLOC REMOTION (Beats 2, 4, 5).
 
 Beat 3 brief : Stop1 Kénitra (zoom 13, pitch 0→45 sur 60f, plaques GOTION rouge + VOLKSWAGEN bleu) → Whip Pan 60f → Stop2 Wolfsburg (drift, arc Kénitra→Wolfsburg). Templates candidats à scanner : plaques (GeoCountryPlaque possible pour GOTION/VW + source), camCountryApproach pitch 32, MapCutaway si insert. [[pattern-or-africain-plaques-relief-sfx]]
+
+Lié : [[flagfill-templates-decouverte]] (templates fill-pattern) · [[sfx-sequence-et-drapeaux-reels]] (bugs SFX + drapeaux réels) · [[pipeline-mapbox-maturite-autonomie]] (maturité pipeline, GeoFlowConnection) · [[mapanimation-veille-et-geoflow]] (GeoFlowConnection codé + veille)

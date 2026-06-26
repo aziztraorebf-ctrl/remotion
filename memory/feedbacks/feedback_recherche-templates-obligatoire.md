@@ -5,6 +5,8 @@ metadata:
   type: feedback
 ---
 
+> ⚠️ MAJ 2026-06-25 : l'ordre a été corrigé. INTENTION→FORME D'ABORD, le scan de templates vient APRÈS comme aide à la déduction (jamais le point de départ). Voir `CONTINUITE-SCENE-INTENTION-DABORD.md`. Le scan reste obligatoire mais PAS en premier.
+
 ## Règle : RECHERCHE TEMPLATES AVANT TOUT CODE (NON-NEGOTIABLE)
 
 Avant d'écrire UNE LIGNE de code pour un beat/scène, Claude DOIT faire une recherche systématique dans nos catalogues de templates et présenter ce qu'il a trouvé.
