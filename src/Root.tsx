@@ -232,6 +232,8 @@ import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souv
 import { SceneContratV3, SCENE_CONTRAT_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneContratV3";
 import { SceneDetteV3, SCENE_DETTE_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneDetteV3";
 import { SceneCoulissesV3, SCENE_COULISSES_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneCoulissesV3";
+import { SceneBilanV3, SCENE_BILAN_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBilanV3";
+import { SceneBonusV3, SCENE_BONUS_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBonusV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -1289,6 +1291,22 @@ export const RemotionRoot: React.FC = () => {
             id="SceneCoulissesV3"
             component={SceneCoulissesV3}
             durationInFrames={SCENE_COULISSES_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SceneBilanV3"
+            component={SceneBilanV3}
+            durationInFrames={SCENE_BILAN_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SceneBonusV3"
+            component={SceneBonusV3}
+            durationInFrames={SCENE_BONUS_V3_FRAMES}
             fps={30}
             width={1920}
             height={1080}

@@ -42,6 +42,13 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    - **Image générée (TOUJOURS)** : `storyboard-dual-gen.py` (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox →
      préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE carte + chaînes de réf + ARSENAL + directive carte
      vivante ; géo approximative OK, vraie géo au CODE).
+   - ⛔⛔ **FORMAT = PANEL D'ÉVOLUTION 4-CASES, JAMAIS UNE FRAME-AFFICHE (gravé 2026-06-26, erreur orchestrateur sc.6+7 Sénégal V3).**
+     Le storyboard montre la PROGRESSION temporelle de la scène (case 1 début → case 4 fin) — c'est un outil de
+     CHORÉGRAPHIE, pas un poster figé. **OUTIL data-viz/Remotion = `gemini-storyboard-panels.py --ratio 16:9 --background navy`**
+     (PAS `gemini-gen-image.py`, qui sort une frame isolée → c'est le piège qui a produit l'erreur). ⛔ **ZÉRO photoréalisme** :
+     pas de photos, pas de visages photo, pas de drapeaux raster — tout en motion design VECTORIEL navy/or. Si une scène
+     appelle des gens (ex Faye/Sonko) → silhouettes-icônes géométriques, jamais des visages (cf. doctrine SVG « objet vs
+     organique vivant »). C'est la RESPONSABILITÉ DU CHEF de briefer ce format aux agents — pas à l'agent de deviner.
    - L'agent-beat écrit le storyboard structuré + le PROMPT image, puis **STOP** — il ne génère pas l'asset payant
      lui-même (c'est le chef qui génère, pour grouper et valider le coût). Voir Phase 0/checkpoint plus bas dans ce fichier.
 4. **LE CHEF GÉNÈRE (si image) → UPLOAD → DONNE LES LIENS À AZIZ → AZIZ VALIDE la direction.** ⭐⭐ Le chef remonte
