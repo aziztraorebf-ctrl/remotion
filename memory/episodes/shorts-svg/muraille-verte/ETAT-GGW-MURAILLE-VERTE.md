@@ -4,8 +4,14 @@
 > En cas de contradiction avec un autre fichier (STORYBOARD, STARTER, REPRISE...), CE FICHIER prime.
 > Tout agent qui produit un beat de ce short PART D'ICI. Doctrine SVG generale : [[SVG-SCENES-GENERATIVES]].
 
+## ✅✅ STATUT FINAL — PRET A PUBLIER (2026-06-25)
+Fichier : `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4` (17 Mo, 140.99s, 7 beats)
+Blob permanent : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/ggw-FINAL-v3-GxFL2poUa84eU3ZcHAIEy17CUFfvgT.mp4
+Note publication : `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.PUBLICATION-NOTE.md`
+▶ Publier via TryPost (Instagram Reels) dès crédits rechargés.
+
 ## SUJET / ANGLE (fige)
-Short vertical 9:16, ~80s, 6 beats. Grande Muraille Verte (mur d'arbres 8000km cense arreter le desert).
+Short vertical 9:16, ~141s, 7 beats. Grande Muraille Verte (mur d'arbres 8000km cense arreter le desert).
 Etoile polaire : "On a cru qu'on arreterait le desert avec un mur d'arbres. On avait tort — la vraie
 solution etait deja sous nos pieds." Ton = analyste qui revele un retournement (pas militant). Script
 parle fige : [[SCRIPT-PILOTE-v1]]. Storyboard 6 beats (le WHAT par beat) : [[STORYBOARD-PILOTE]].
@@ -16,25 +22,66 @@ Raison : meilleur CANEVAS pour la colorisation semantique timee (monde inerte en
 apparait en couleur a un instant precis). Le braise-or et le d3-geo/carte top-down sont ABANDONNES pour
 ce short (le d3-geo reste un acquis reutilisable AILLEURS, pas ici). Ne PAS relancer un A/B de registre.
 
-## STATUT DES 6 BEATS (le QUOI EST FAIT)
+## ⛔⛔ CORRECTION FACTUELLE MAJEURE (2026-06-25) — TOUT recentre sur la FMNR
+L'ancien script melangeait 2 techniques DISTINCTES comme si c'en etait une seule : les DEMI-LUNES/zai (creuser,
+capter l'eau, nappe +17m, Yacouba Sawadogo/Burkina, qui PLANTE) ET la FMNR (proteger les souches vivantes, SANS
+planter, 200M arbres, Tony Rinaudo/Niger). « Sans planter un seul arbre » = Rinaudo/FMNR, PAS Sawadogo. Aziz a
+rattrape l'erreur. -> B4 et B5 REFAITS en FMNR pur ; B2 corrige (Nigeria/2 mois invente -> Sahel/8 sur 10, sourcé).
+2 gates gravees dans [[key-learnings]] : fact-check d'ATTRIBUTION (qui a fait quoi, antériorité) + COHERENCE INTER-BEATS.
+⛔ Le portrait HUMAIN = vraie photo -> Gemini stylise en gravure encre (gemini-gen-image-ref.py) — JAMAIS un portrait SVG (uncanny).
+
+## ✅ STATUT DES 7 BEATS — TOUS FINAUX + ASSEMBLES
+
 | Beat | Sujet | Statut | Composant | Render FINAL |
 |---|---|---|---|---|
-| 1 HOOK | le plus grand mur vivant + open loop | ✅ FAIT | `GgwHookEncreVivant.tsx` | (catbox uwp4gq, polish v5) |
-| 2 L'ECHEC | 3/4 morts Nigeria, 1/36 Senegal | ✅ FAIT (2026-06-24) | `B2LigneBrisee.tsx` | `out/episodes/ggw-muraille-verte/beat2-FINAL.mp4` · catbox cht0n0 |
-| 3 LE MALENTENDU | le desert n'avance pas comme un mur | ✅ FAIT (2026-06-24) | `B3Malentendu.tsx` | `out/episodes/ggw-muraille-verte/beat3-FINAL.mp4` · catbox s2qqrm |
-| 4 DEMI-LUNE | la cuvette qui capte la pluie ⭐ coeur | ⚠️ proto prouve | `DemiLuneEncreColorisee.tsx` (a finaliser) | — |
-| 5 LA PREUVE | 200M arbres Niger, nappe +17m | a creer | (a creer) | — |
-| 6 OUTRO + CTA | la lecon + CTA commentaire | a creer | (a creer) | — |
+| 1 HOOK | le plus grand mur vivant + open loop | ✅ FAIT + KARAOKE AJOUTE | `GgwHookEncreVivant.tsx` | catbox uwp4gq |
+| 2 L'ECHEC | Sahel ~8/10 meurent, 1/36 Senegal | ✅ FAIT (corrige Nigeria->Sahel) | `B2LigneBrisee.tsx` (606f) | beat2-FINAL.mp4 · catbox x0jp5l |
+| 3 LE MALENTENDU | le desert n'avance pas comme un mur | ✅ FAIT | `B3Malentendu.tsx` | beat3-FINAL.mp4 · catbox s2qqrm |
+| 4 RETOURNEMENT (FMNR) | Rinaudo + souches qui repoussent | ✅ FAIT (FMNR) | `B4Demilune.tsx` (750f) | beat4-FINAL.mp4 · catbox du27wm |
+| 5 LA PREUVE | 200M arbres FMNR + ombre/sols/recoltes | ✅ FAIT (FMNR) | `B5LaPreuve.tsx` (424f) | beat5-FINAL.mp4 · catbox 7n30x2 |
+| 6 OUTRO | la lecon + boucle verte | ✅ FAIT (FMNR-coherent) | `B6Outro.tsx` (690f) | beat6-FINAL.mp4 · catbox kpdw3x |
+| 7 MOSAIQUE VIVANTE + CTA | foret qui revient + abonnement | ✅ FAIT (2026-06-25) | `B7MosaiqueFinal.tsx` (642f) | dans assemblage final |
 
-**Reste a produire : Beat 5, Beat 6, + finaliser Beat 4.** B1, B2, B3 sont FINAUX.
-**▶ PROCHAINE SESSION = TEST 2 SCENES EN PARALLELE** (ex B5 + B6) via 2 agents lances depuis
-[[PRODUCTION-AGENTIQUE-SVG]] (source de verite agentique : ce qu'un agent fait A->Z + checklist de lancement).
-Beat 3 = preuve qu'un agent fait ~90% seul. Specificites B3 gravees : le mur RESTE tout du long (pas de
-dissolution = "le mur ne sert a rien") · couleur-diagnostic ocre #b5651d sur le sol mort · karaoke decoupe
-par PHRASE_BREAKS (index de mots, PAS silence auto — sinon bloc illisible).
+**✅ SHORT GGW TERMINÉ — PRÊT À PUBLIER (2026-06-25).** 7 beats + assemblage + musique Minimax intégrée.
+Durees @30 : B1=640 · B2=606 · B3=468 · B4=750 · B5=424 · B6=690 · B7=642 (total 140.99s).
+CTA B7 : "Abonne-toi pour d'autres sujets fascinants sur l'Afrique d'aujourd'hui." (positionne chaine geopolitique africaine)
+Commits : B5+B6 `1140091` · B4+B5 FMNR `1c16f79` · B2 corrige `1b8b768` · B7+karaoke B1+assemblage `en cours`.
+⭐ Portraits graves dispo : `public/assets/ggw-muraille-verte/{rinaudo,sawadogo}-portrait-encre.png` (Sawadogo non utilise, garde).
+⛔ COMMIT B5+B6 = `1140091` sur branche `feat/shorts-svg-muraille-verte`.
+
+**✅ TEST 2 SCENES EN PARALLELE = REUSSI (2026-06-25)** : B5 + B6 produits par 4 agents en parallele (Phase 1
+ideation/cibles ×2, Phase 2 animation ×2), puis finitions codees en direct par Claude. Le parallelisme tient
+(fichiers TSX distincts, Root.tsx PRE-CABLE par le chef avant de lancer les agents = zero collision). Suite de la
+preuve "1 agent fait ~90% seul" (Beat 3). Specificites B3 gravees : le mur RESTE tout du long (pas de dissolution =
+"le mur ne sert a rien") · couleur-diagnostic ocre #b5651d sur le sol mort · karaoke decoupe par PHRASE_BREAKS
+(index de mots, PAS silence auto — sinon bloc illisible).
+
+**⭐ ACQUIS B5+B6 (graves cette session)** :
+- **Reutiliser un composant entre beats = cohérence** : B5 a repris TreeTrunk+LeafyCrown+Roots de B3 (meme dessin
+  d'arbre, positions conservees) au lieu d'un modele neuf qui detonnait. La force du SVG : meme composant, on change
+  juste la position/couleur. Aziz l'a explicitement demande.
+- **BOUCLER LA BOUCLE en fin de short** (B6) : la derniere image fait ECHO au probleme initial mais RESOLU (le mur
+  d'arbres MORTS du hook/B2 REVERDIT a la fin grace a la graine paysanne qui remonte). Climax emotionnel qui paie
+  l'etoile polaire. Geste : une racine couleur terre qui MONTE du sol vers les arbres (connexion visible) -> verdissement en cascade.
+- **EXPLOITER un silence audio par de l'animation** (B6, silence ~4s) : un reseau racinaire qui s'illumine (graines
+  qui s'eveillent + filaments traces entre elles) = la vie souterraine qui se reveille. Un silence n'est PAS un vide, c'est un temps narratif a meubler.
+- **Objet vivant qui RESTE > qui meurt** (B6) : une graine verte qui se decroche et tombe donne l'impression qu'elle
+  MEURT (contresens). Les graines vivantes RESTENT en place. (Corollaire inverse du "mur qui ment et reste" de B3.)
+- **Fin NON statique** : prolonger une fin de scene de 2-3s = OK, mais l'image finale doit VIVRE (feuilles au vent,
+  vie souterraine qui pulse), jamais figee.
+- **CTA en fin de short** : "Dis-le en commentaire" pose juste apres le climax CASSE le rythme. Mieux = finir sur la
+  derniere image forte ; le CTA (ecran dedie/typewriter) se decide a l'ASSEMBLAGE, pas dans le beat.
 ⛔ MUSIQUE : toujours reportee a l'assemblage des 6 beats (nappe atmospherique discrete ~0.08-0.12).
 
-## ⛔ MUSIQUE — DECISION REPORTEE
+## ✅ MUSIQUE VALIDEE (2026-06-25)
+Nappe d'ambiance v1 generee (Minimax `fal-ai/minimax-music/v2.6`, `is_instrumental: true`) : cordes douces +
+kora/ngoni discrets + perc main tres douce, Sahel, contemplatif, CONSTANT (homogene = se cale par fenetre+fade
+sur n'importe quelle duree). Brut 163s -> `public/audio/ggw-muraille-verte/music/ambiance-raw.mp3` (catbox pyo5lg).
+A poser EN UNE COUCHE GLOBALE a l'assemblage, volume ~0.10 (sous la narration), fade in/out. Prompt garde dans
+`/tmp/ggw-music-gen.py` (3 variantes generees, v1 retenue). Doctrine appel : [[minimax]] (pas le mot "instrumental"
+dans le prompt, style africain precis sinon sortie electronique).
+
+## ⛔ MUSIQUE — HISTORIQUE (decision initialement reportee, tranchee 2026-06-25 ci-dessus)
 Pas de musique par beat. Une nappe atmospherique DISCRETE (~0.08-0.12) sera ajoutee EN UNE COUCHE
 GLOBALE a l'assemblage des 6 beats (evite les raccords musicaux, unifie le short). A trancher quand
 les 6 beats sont faits. Les beats restent SANS musique d'ici la (SFX oui, musique non).
@@ -73,41 +120,29 @@ le decoupage audio en N segments — CHOISIR explicitement :
 Defaut = scene unique qui se relit (plus premium, plus dans l'identite encre). Le decoupage audio sert a TIMER
 les gestes, pas a imposer N plans.
 
-## METHODE PROUVEE (pipeline d'un beat, A->Z) — applique au Beat 2
-1. INTENTION du beat (le ressenti, 1 verbe) deduite du script + decoupage audio reel (whisper alignment,
-   filtrer `narration.alignment.json` sur les bornes du beat via `beat-bounds.json`).
-2. IDEATION Kimi (refs calibrage + audio) -> 2-3 idees de scene -> Claude filtre -> Aziz tranche / on genere les cibles.
-3. IMAGE-CIBLE SVG natif (svg-scene-narrative, gemini+gpt) -> convertir PNG -> juger -> choisir/regenerer.
-4. ANIMATION : agent(s) en parallele, chacun anime une cible (worktree isole si plusieurs). SOCLE commun
-   impose (calage audio, grammaire spring/stroke/cross-fade, palette) pour comparatif equitable + mix-and-match.
-5. Render homogene (chef), comparatif catbox, Aziz tranche / mix-and-match (les `<g id>` se recomposent entre cibles).
-6. Polish : sous-titres KARAOKE + micro-sources + SFX (voir ACQUIS ci-dessous). Render FINAL.
+## METHODE PROUVEE (pipeline d'un beat, A->Z)
+> Pipeline complet (2 phases + point de controle, checklist de lancement, trous combles) :
+> **[[PRODUCTION-AGENTIQUE-SVG]]** — source de verite agentique. Ce fichier ne repete pas le flux general.
 
-## ⭐ ACQUIS GRAVES (Beat 1 hook + Beat 2 echec) — NON-NEGOCIABLES
-1. **SCENE NARRATIVE > schema annote** : un MOMENT + 4-6 objets-heros qui RACONTENT. ZERO grille/cartouche/
-   tableau de chiffres. Les chiffres se DISENT a la voix + se MONTRENT par le geste (un arbre qui tombe = la
-   mort, PAS un compteur "75%"). Si infographie indispensable -> CODEE PAR NOUS (overlay), jamais par le LLM SVG.
-2. **Image-cible = SVG NATIF** (pas raster) -> ecart faisabilite nul (voir outils).
-3. **ENCRE = canevas couleur** : le monde reste en encre ; chaque touche de couleur a un TIMING et un SENS.
-   Ne pas tout colorer d'emblee. Beat 2 : monde encre -> soleil or (1ere couleur, retarde ~6s) -> mort grise
-   -> survivant vert vif (climax). Garder de la "munition couleur" pour le climax.
-4. **Etat VIVANT au depart, degradation = EVENEMENT** : les elements naissent dans leur etat plein/vivant
-   (4 arbres verts feuillus identiques) et se degradent EN SE RACONTANT (grisent -> feuilles tombent -> tronc nu).
-   JAMAIS naitre deja-mort (ca spoile + ce n'est pas un recit).
-5. **PAS de mouvement camera qui fait valser une scene SVG frontale** : un translateY global du "monde" cree
-   un glissement parasite. Les scenes SVG frontales restent FIXES ; le raccord se fait par FADE, pas par
-   deplacement de toute la scene. (Prouve sur Beat 2 : la descente camera a ete retiree.)
-6. **Mort/transformation en CASCADE** (sequentielle) > en bloc : les 3 arbres meurent l'un apres l'autre
-   (~0.4s d'intervalle), la propagation se VOIT avancer = rythme + tension. (Repris de l'idee "meche eteinte".)
-7. **SOUS-TITRES KARAOKE mot-a-mot** : pattern `AtlasV2Subtitles.tsx` (Heros oublies/Atlas) adapte identite
-   encre : mot pas dit = encre pale (0.45), mot dit = encre pleine, mot en cours = touche verte discrete.
-   Bas (zone safe), ~37px, fond parchemin semi-transparent, cale sur l'alignment mot-par-mot. Chiffres en LETTRES.
-8. **SOURCES en short = micro-source + description, JAMAIS de carton de fin** : micro-ligne discrete (~27px,
-   encre opacity 0.7) CENTREE sous le sous-titre, timee sur le claim concerne. + sources completes en
-   description video. Pas de carton recap (casse le rythme du short). Rigueur sans casser le visuel.
-9. **DELEGUER a des agents frais** : un agent vierge (contexte propre) anime une cible aussi bien (souvent
-   mieux) que l'instance saturee. Chef = decoupe + socle commun + verifie + rend. Handoff = fichier disque.
-   Cible = lancer 2-3 scenes en parallele par session (worktrees isoles), Aziz + Claude donnent les finitions.
+Spec GGW UNIQUEMENT : les 2 temps de mapping d'une scene CONCEPTUELLE sur l'audio sont dans la section
+ci-dessous (⛔ MAPPER UNE SCENE CONCEPTUELLE SUR L'AUDIO). Les acquis visuels/narratifs specifiques
+au short sont dans § ACQUIS GRAVES.
+
+## ⭐ ACQUIS GRAVES — NON-NEGOCIABLES
+
+Acquis transverses : voir [[SVG-SCENES-GENERATIVES]] §ACQUIS TRANSVERSES (9 regles : Kimi-idéation, SVG-natif,
+colorisation timée, état-vivant, pas de translateY global, cascade séquentielle, karaoké, micro-sources, agents frais).
+Specificites GGW seulement ci-dessous :
+
+- **REGISTRE ENCRE = canevas couleur pour CE SHORT** : Beat 2 illustre l'usage : monde encre -> soleil or (~6s,
+  1ere couleur retardee) -> mort grise -> survivant vert vif (climax). Garder de la "munition couleur" pour le climax.
+  La regie "ne pas tout colorer d'emblee" est PARTICULIEREMENT CRITIQUE ici car l'encre est l'identite visuelle du short.
+- **SCENE NARRATIVE > schema annote** (specifique au registre encre) : les chiffres se DISENT a la voix + se MONTRENT
+  par le geste (un arbre qui tombe = la mort, PAS un compteur "75%"). Si infographie indispensable -> CODEE PAR NOUS
+  (overlay), jamais par le LLM SVG.
+- **KARAOKE : couleur d'accent = vert discret** (pas la couleur d'accent generique du pattern AtlasV2Subtitles) —
+  adapte a l'identite parchemin creme #e8dcc0 / encre #2b2117. ~37px, fond parchemin semi-transparent.
+- **MICRO-SOURCES** : ~27px, encre opacity 0.7, CENTREE sous le sous-titre, timee sur le claim concerne.
 
 ## SFX (Beat 2, reutilisables / pattern)
 Dossier : `public/audio/ggw-muraille-verte/sfx/`. Generes via ElevenLabs sound-generation (prompts EN, sound

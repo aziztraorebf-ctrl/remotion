@@ -526,6 +526,23 @@ fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/inf
 
 ---
 
+## ⛔ GOTCHA `remotion still` sur compo Mapbox = toujours gris (2026-06-25, scène 5 coulisses)
+
+- **Symptôme** : `npx remotion still src/index.ts <compo> frame.png --frame=300 --gl=angle` → carte grise même avec token correct en `.env`. La carte n'apparaît JAMAIS dans un still, quelle que soit la frame.
+- **Cause** : `remotion still` rend exactement 1 frame dans un processus frais. Mapbox (WebGL headless) met ~60-100 frames pour charger les tiles + style. Un still à frame=300 ne donne pas le temps à la map de charger → carte grise systématique.
+- **RÈGLE** : pour vérifier des frames d'une scène Mapbox, **toujours rendre la vidéo COMPLÈTE** (ou un segment long ≥300 frames depuis le début), puis extraire avec `ffmpeg -ss <sec> -vframes 1 -update 1 <out>.png`. Ne jamais utiliser `remotion still` pour juger une scène Mapbox — le résultat est toujours trompeur.
+- **Validation frame dans le render vidéo** = carte correcte. Prouvé : `scene5-coulisses-v6.mp4` → stills gris, mais `ffmpeg -ss 20` → carte pleine avec drapeau SEN drapé.
+
+## ⛔ GOTCHA hook pre-presentation-review = review.json ET override.md tous les deux requis (2026-06-25)
+
+- **Symptôme** : upload bloqué avec "PreToolUse hook error: No stderr output" même si `review-override.md` existe.
+- **Cause** : le hook vérifie D'ABORD l'existence de `<mp4>.review.json`. Si ce fichier est ABSENT → blocage avant même de lire l'override. L'override seul ne suffit pas.
+- **RÈGLE** : pour passer le gate avec un faux positif Gemini, il faut les DEUX fichiers plus récents que le mp4 :
+  1. `python3 scripts/visual_review.py <mp4> --model gemini --output <mp4-sans-.mp4>.review.json`
+  2. Écrire `<mp4-sans-.mp4>.review-override.md` (justification point par point)
+  3. Les deux doivent être PLUS RÉCENTS que le mp4 (`ls -lt` pour vérifier)
+- **Ordre d'écriture correct** : render mp4 → review.json → review-override.md → upload.
+
 ## ⛔ GOTCHA render Mapbox PARTIEL court = fausse carte grise (2026-06-21, scène gisements V5)
 
 - **Symptôme** : un render `./scripts/render-mapbox.sh <compo> out.mp4 --frames=1185-1195` (segment COURT) produit une frame où **la carte a disparu / est grise/vide**. On croit à un bug de la scène (caméra cassée, élément manquant) → on diagnostique dans le vide, on perd du temps.

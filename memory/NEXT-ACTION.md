@@ -180,12 +180,10 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 ## 🧹 NETTOYAGE CODE — FAITS (2026-06-25, session agentique 3 agents parallèles)
 
 1. ✅ **Root.tsx protos A→D** : -34 imports, -57 compositions (Prototype_A→R, ProtoHera, ProtoCarto, HeraFidele, Matter, IntroProto, Lobito, Poc). Commit `d6b9348`. Build propre (6 erreurs pré-existantes inchangées).
-2. ✅ **CLAUDE.md vides + dashboards** : 33 CLAUDE.md supprimés, 2 dashboards orphelins retirés + 3 CLAUDE.md vides supplémentaires (2026-06-26). Commit groupé.
-3. ✅ **Audit src/+public/ .md** (77 fichiers) : 3 périmés supprimés (senegal parchemin V2 + niger url). Cobaye maroc GARDÉ (base peaufinage).
-4. ✅ **Worktree GGW** fermé (2026-06-26) — branche `feat/shorts-svg-muraille-verte` archivée.
-5. **🟡 Dégraisser CLAUDE.md principal** (17.5 KB / 132 lignes, auto-chargé CHAQUE session) : couper le gras comme on a fait pour MEMORY.md. SENSIBLE → toi+moi en direct.
-
-Méthode : [[methode-consolidation-par-vagues]] (agents Sonnet disjoints). C'est une session CODE, distincte des 3 vagues MÉMOIRE déjà faites.
+2. ✅ **CLAUDE.md vides + dashboards** : 33 CLAUDE.md supprimés, 2 dashboards orphelins retirés. Commit `e27ca73`.
+3. ✅ **Audit src/+public/ .md** (77 fichiers) : 3 périmés supprimés (senegal parchemin V2 + niger url). Commit `d0d782b`. Cobaye maroc GARDÉ (base peaufinage).
+4. 🟡 **CLAUDE.md principal** : à dégraisser si besoin — surveiller taille en session. PAS urgent.
+5. 🟡 **Purge out/ restante** : 4.8 GB. Re-scanner >7j en session dédiée si besoin d'espace.
 
 ---
 

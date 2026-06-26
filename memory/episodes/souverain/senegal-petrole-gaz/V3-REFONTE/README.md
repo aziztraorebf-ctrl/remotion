@@ -40,6 +40,14 @@
 - **Acquis réutilisables** : voie SVG génératif animé → `memory/key-learnings.md §SVG GÉNÉRATIF ANIMÉ`. Hook `pre-presentation-review.sh` : override tracé (`.review-override.md`) anti faux-positif Gemini.
 - **TODO rangement** : `_proto-16-9/` = R&D mais contenu FINAL. Déplacer vers `souverain/senegal-petrole-gaz/v3/` quand Root.tsx libéré.
 
+## SCÈNE 5 — gotchas techniques (FINALE, validée Aziz 2026-06-25)
+- **Audio dédié** : `narration-v3-scene5-silence.mp3` (56.49s, gitignored). Segment 288.7→342.92s + 0.7s silence + 342.92→344.46s. `startFrom=0` dans le composant.
+- **Mapbox stills = toujours gris** : ne jamais utiliser `remotion still` pour vérifier une frame Mapbox. Toujours rendre la vidéo complète + `ffmpeg -ss <sec> -vframes 1 -update 1`.
+- **Valeurs finales graphisme partie 2** : pôles `euX = W/2 - 840`, `cnX = W/2 + 840` · `cy = 400` · badge UE `r=70` · drapeau Chine `r=70` · jeton Yakaar `scale=3.7` · halos (Europe 160+36, Chine 140+60). FinalQuestion : `left:0, right:0` explicites, `fontSize 72/58px`.
+- **SFX bascule retirés** : swoosh + impact à F_BASCULE supprimés (retour Aziz : "font sortir de la scène").
+- **Faux positifs Gemini récurrents** : rouge Chine = sémantique (pas hors palette) · titres or = charte V3 · graphisme épuré = direction validée. Override systématique.
+- **Starter scènes 6+7** : `STARTER-SCENES-6-7.md` (plan multi-agentique parallèle + gotchas worktree).
+
 ## SCÈNE 4 — gotchas techniques (FINALE, info fusionnée depuis REPRISE-SCENE-4-DETTE.md)
 - **Raccord audio 288.7s** : coupe exacte sur "...ne protège plus rien" (288.34s + 0.36s souffle). PAS à 291.2s (milieu phrase). `endAt` → F1342/1363f.
 - **Fissure centrale** : `splitCrack` dans `WallCracks` doit culminer pile sur `F_VIDER` (pas avant). `burst` recalé. Scénario régression : `burst` culminant avant `F_VIDER` = fissure floue.
