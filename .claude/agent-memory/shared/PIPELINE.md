@@ -167,15 +167,14 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ---
 
-## État actuel des projets (2026-05-20)
+## État actuel des projets (MAJ 2026-06-26)
 
 ### ⚡ Actif
 
-- **Sénégal Pétrole & Gaz (Mid-form 7 beats 420s)** ⭐ EN COURS (Mid-form actif).
-  Beat1 à recommencer propre. Code des 5 versions abandonnées archivé dans
-  `src/_archive/senegal-attempt-v1-v5/`. Pré-prod intacte :
-  `memory/episodes/souverain/senegal-petrole-gaz/` + audio final validé
-  (`senegal-petrole-auphonic-trimmed.mp3`).
+- **Sénégal Pétrole & Gaz — REFONTE V3** ⭐ EN COURS. Source de vérité : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`.
+  Scènes 0→5 FINALES (audio 0→344.46s, ~70% narration). NEXT = Scène 6 (bilan : de zéro à exportateur, Beat14, ~344.46s→). Multi-agentique parallèle → starter `V3-REFONTE/STARTER-SCENES-6-7.md`.
+  - Sc.4 dette ✅ FINAL (catbox f1wbdp, 45.4s/1363f) — `beats/SceneDetteV3.tsx`
+  - Sc.5 coulisses ✅ FINAL (catbox clyx8t, 56.5s/1695f) — `beats/SceneCoulissesV3.tsx`
 - **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
   `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
   Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
