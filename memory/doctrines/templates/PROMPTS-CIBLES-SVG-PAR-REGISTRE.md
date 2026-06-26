@@ -5,10 +5,6 @@
 > qui marchent. Chaque prompt vise le NIVEAU DE COMPLEXITE REELLEMENT FAISABLE en SVG (pas une illustration).
 > Complete [[SVG-FAISABILITE-AMONT]] (la methode) + [[SVG-SCENES-GENERATIVES]] (les registres prouves).
 
-## ⚠️ REGISTRES 2-3 A CALIBRER — ACTION REQUISE PROCHAINE SESSION
-
-> **REGISTRE 2 (aplats+dégradés : or-jour, braise-or, papier-decoupe) et REGISTRE 3 (carte/schéma tactique) sont des TODO.** La prochaine session qui génère une scène de l'un de ces registres DOIT graver le prompt ici (15 min). Procédure : § METHODE POUR AJOUTER UN REGISTRE ci-dessous.
-
 ## 🖼️ CHAQUE REGISTRE = PROMPT + IMAGE-REFERENCE (toujours joindre les deux) — regle Aziz 2026-06-22
 Images-ref durables : `public/_shared/refs/svg-registres/` (frames de protos prouves, une par registre).
 PROCEDURE pour TOUTE generation d'image-cible d'un beat :
@@ -17,13 +13,14 @@ PROCEDURE pour TOUTE generation d'image-cible d'un beat :
    (match this drawing complexity & ink style), the SCENE I want is DIFFERENT: [decrire la scene du beat]".
    -> le modele connait alors EXACTEMENT le niveau faisable (il l'a deja produit) + dessine une scene NOUVELLE.
 3. Resultat : fidelite/proximite des le 1er coup, peu importe le type de scene, sans se casser la tete.
-| Registre | Image-ref | Prompt |
-|---|---|---|
-| hachure-encre | `svg-registres/REGISTRE_hachure-encre_arbre.png` | REGISTRE 1 ci-dessous ✅ |
-| papier-decoupe | `svg-registres/REGISTRE_papier-decoupe_arbre.png` | REGISTRE 2 (a calibrer) |
-| or-jour | `svg-registres/REGISTRE_or-jour_hero.png` | REGISTRE 2 (a calibrer) |
-| braise-or | `svg-registres/REGISTRE_braise-or_mine.png` | REGISTRE 2 (a calibrer) |
-| medaille/tactique (carte schema) | `svg-registres/REGISTRE_medaille-tactique_carte-schema.png` | REGISTRE 3 (a calibrer) |
+
+| Registre | Image-ref | Prompt | Statut |
+|---|---|---|---|
+| hachure-encre | `svg-registres/REGISTRE_hachure-encre_arbre.png` | REGISTRE 1 ci-dessous | ✅ CALIBRE |
+| braise-or | `svg-registres/REGISTRE_braise-or_mine.png` | REGISTRE 2A ci-dessous | ✅ CALIBRE (2026-06-25) |
+| or-jour | `svg-registres/REGISTRE_or-jour_hero.png` | REGISTRE 2B ci-dessous | ✅ CALIBRE (2026-06-25) |
+| papier-decoupe | `svg-registres/REGISTRE_papier-decoupe_arbre.png` | REGISTRE 2C ci-dessous | ✅ CALIBRE (2026-06-25) |
+| medaille/tactique (carte schema) | `svg-registres/REGISTRE_medaille-tactique_carte-schema.png` | REGISTRE 3 ci-dessous | ✅ CALIBRE (2026-06-25) |
 
 ## 🛠️ CLAUDE = EDITEUR SVG APRES GENERATION (rappel, deja approuve Aziz)
 Un element genere qui ne plait pas (la pelle, le soleil, une racine) -> NE PAS regenerer : je le LOCALISE dans le SVG
