@@ -100,14 +100,18 @@
 
 > ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%.
 >
-> ✅ **TOUTES SCÈNES FINAL** : acte1 · p1 · p2 · p3 · p4 (6 scènes).
-> ▶ **RESTE = ASSEMBLAGE FINAL UNIQUEMENT** : render P4 complète → concat + narration `narration-v5-expressive.mp3` + mix.
+> ✅ **P1-P4 FINAL** (4 scènes). 🔴 **ACTE 1 EN CHANTIER** (PAS final).
+> ▶ **RESTE = finir Acte 1 PUIS assemblage** (render P4 complète → concat + narration `narration-v5-expressive.mp3` + mix).
 > 🎵 Musique : Aziz a choisi **D-montee-maitrisee** (`public/_shared/audio/sahel-warmap/music/`).
 > 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
 >
-> ▶ **ACTE 1 = SESSION DÉDIÉE — ⭐ LIRE `memory/episodes/warmap-sahel/PLAN-REFONTE-ACTE1.md` EN PREMIER.**
->   ACQUIS : triggers Acte 1 RECALÉS + synchro VALIDÉE Aziz · prototype hook CrosshairLock+V5 testé. RESTE (4 problèmes, voir PLAN) :
->   (P1) carte hook ≠ carte moteur · (P2) zoom de transition hook→corps à ~10s · (P3) retirer légende+timeline + grammaire P3/P4 contours · (P4) recaler timing question.
+> ▶ **ACTE 1 — HOOK AVANCÉ (2026-06-26)** : le hook « détachement+soudure » est CÂBLÉ + COMMITÉ (`23a550a`,
+>   branche `feat/warmap-aes-hook-integration`, compo `SahelActe1-Refonte`). Mécanique : chiffre « 3 »
+>   (Acte1IntroSlam, KineticMaskSlam adapté SANS 2e carte) → drapeaux réels plantés (WarMapBanner) au mot
+>   exact f145/217/286 → détachement par vignette animée → liséré d'union AES. Viseur crosshair retiré (cliché).
+>   RESTE (corps Acte 1, ⭐ LIRE `PLAN-REFONTE-ACTE1.md`) : bug `hideAt={460}` (plaques disparaissent à la soudure) ·
+>   meubler le creux 15-32s · grammaire P3/P4 contours sur le corps · render Acte 1 complet + jugement.
+> 📎 **SVG-insert franc CFA** = seul candidat franc (cas test système agentique SVG, isolé) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
 
 ---
 

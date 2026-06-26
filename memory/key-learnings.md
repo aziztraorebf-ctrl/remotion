@@ -20,6 +20,19 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-06-26 — Réécriture d'historique git (filter-repo) drope le travail NON-COMMITÉ (piège silencieux)
+Le hook AES Acte 1 a été PERDU entre sessions : un `git filter-repo` (réécriture d'historique) suivi d'un commit
+d'intégration avait gardé les FICHIERS composants (`WarMapBanner`, `Acte1IntroSlam`) mais PAS leur câblage dans le
+moteur (modifs non commitées au moment de la réécriture). **Le piège = les fichiers survivent, seule l'intégration
+disparaît → régression SILENCIEUSE découverte tard** (le hook ne s'affichait plus, mais rien ne cassait au build).
+Règle : **commiter un JALON (même wip) avant toute opération filter-repo / rebase / reset**. Re-câblé + commité `23a550a`.
+
+### 2026-06-26 — Ondulation de tissu/bannière en headless : bandes DOM, JAMAIS clipPath SVG
+Effet ONDULATION (drapeau qui flotte, voile qui vague, déchirure animée) en rendu Mapbox headless : NE PAS utiliser
+`clipPath` SVG (fragile, échoue en headless — l'image clippée disparaît). Préférer **N bandes verticales DOM**, chacune
+affichant une tranche de l'image via `background-position`, avec `translateY` sinusoïdal déphasé (amplitude croissante
+du mât vers le bord libre). 100% DOM/CSS, robuste. Prouvé `WarMapBanner.tsx` (STRIPS=16, drapeaux AES plantés).
+
 ### 2026-06-15 — Methode de reorg workspace (gros menage : memoire, scripts, doctrines)
 
 Apprentissages durables de la session de reorg complete (validee par un test agent vierge) :

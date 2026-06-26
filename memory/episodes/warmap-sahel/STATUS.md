@@ -1,8 +1,15 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-15 (après-midi) — P4 VALIDÉE · PASSE SÉQUENTIELLE en cours · HOOK en session dédiée.
-**Branche :** `feat/p3-ambient-vie`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+**Dernière mise à jour :** 2026-06-26 — HOOK Acte 1 « détachement+soudure » CÂBLÉ+COMMITÉ. P1-P4 FINAL · Acte 1 en chantier.
+**Branche :** `feat/warmap-aes-hook-integration` (hook) · `feat/p3-ambient-vie` (corps). **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
+> 🆕 **SESSION 2026-06-26 — HOOK ACTE 1 « DÉTACHEMENT+SOUDURE » FAIT + COMMITÉ (`23a550a`).**
+> Sans viseur (cliché retiré). Mécanique : chiffre « 3 » (`Acte1IntroSlam`, KineticMaskSlam adapté SANS 2e carte)
+> → drapeaux réels plantés (`WarMapBanner`) au mot exact f145/217/286 → détachement par vignette animée
+> → liséré d'union AES. Compo `SahelActe1-Refonte`. RESTE corps Acte 1 : bug `hideAt={460}` (plaques disparaissent
+> à la soudure) · creux 15-32s · grammaire contours · render complet. Décodage source : `feedback_decode-castile-warmap-vivante.md`.
+> 📎 **SVG-insert franc CFA** = seul candidat franc dans l'AES (cas test système agentique SVG, isolé) → `SVG-INSERTS-CANDIDATS.md`.
+>
 > ⛔⭐ **REPRISE AU RETOUR — LIRE CECI (l'ancien "reste l'assemblage" est PÉRIMÉ) :**
 >
 > **CHANGEMENT DE MÉTHODE (Aziz 2026-06-15) : PASSE SÉQUENTIELLE scène par scène AVANT tout assemblage.**

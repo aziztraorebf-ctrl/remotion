@@ -28,6 +28,16 @@
 **Showcase de validation** : `MapAnimationShowcase` (composition Root.tsx) — 40s, 3 segments.
 Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
 
+### ⭐ HOOK AES — Sahel Session 2026-06-26 (décode Castile, intégrés au moteur)
+
+| Quand tu veux... | Composant | Où | Props clés |
+|---|---|---|---|
+| **Un pays s'allume / plante son étendard / affirme sa souveraineté** (drapeau RÉEL qui se plante one-shot avec rebond sec + ondule) | `WarMapBanner` | `warmap/_shared/WarMapBanner.tsx` | `frame`, `fps`, `pos{x,y}` (déjà projeté par le moteur), `flag` (staticFile `_shared/flags/*.png` — JAMAIS `drawFlagCanvas`), `appearAt`, `accent`, `poleH/flagW/flagH`, `yOffset`. ⚠️ Ondulation = **bandes verticales DOM** (background-position + translateY sinusoïdal), PAS clipPath SVG (échoue en headless). |
+| **Chiffre/mot géant qui slamme, carte visible À TRAVERS, puis zoom-reveal jusqu'à la carte pleine — SANS amener de 2e carte** (mécanique KineticMaskSlam adaptée à la contrainte « 1 seule Map continue ») | `Acte1IntroSlam` | `warmap/_shared/Acte1IntroSlam.tsx` | `bigText` ("3"), `slamAt`, `revealStart`, `revealEnd`, `veilColor` (parchemin), `ink`. Overlay PUR (voile troué par le texte via mask SVG) au-dessus de la carte du moteur. |
+
+> Intégrés dans `SahelWarMapEngine` (compo `SahelActe1-Refonte`, commit `23a550a`) : hook « détachement+soudure »
+> (3 → drapeaux plantés f145/217/286 → détachement vignette → liséré d'union AES). Doctrine décodage : `feedback_decode-castile-warmap-vivante.md`.
+
 ### ⭐ CONTOURS NATIONAUX COLORÉS (Sahel, Aziz 2026-06-14) — "touche de couleur épurée"
 
 | Quand tu veux... | Mécanisme | Où | Règle |
