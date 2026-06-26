@@ -21,6 +21,9 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 | Minimax musique | `fal-ai/minimax-music/v2.6`, payload `{prompt, is_instrumental: true}` (pas de `reference_audio_url`) |
 | Kimi review | `kimi-k2.5` via Moonshot API |
 | DeepSeek — 3e voix DA-brief (TEXTE only, PAS de vision) | `deepseek/deepseek-v4-pro` via OpenRouter |
+| GPT — texte+vision (SVG, breakdown JSON, idéation) | `openai/gpt-5.5` via OpenRouter |
+| GPT — génération image | `gpt-5.4-image-2` via OpenRouter (PAS `gpt-5.5-image`, n'existe pas) |
+| SVG jetons/assets low-cost | `z-ai/glm-5.2` via OpenRouter |
 | Claude (moi-même) | `claude-opus-4-8`, `claude-sonnet-4-6`, `claude-haiku-4-5-20251001` |
 
 **INTERDITS** : toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-image`, `imagen`, `nano-banana` ; les vieux Claude (séries 3.x). Détail exhaustif des bannis : `memory/tools/gemini.md`.
@@ -88,7 +91,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 **Absolus** : phase 0 SCAN COMPOSANTS-INDEX gate bloquant · 2 appels Gemini MAX · Tailwind partout (exception SVG/animations) · R1 = max 8s sans changement visuel · self-review ≥19/23 avant Gemini · upload (catbox+ntfy) avant toute présentation.
 
 **Beat Mapbox CARTE** : `scripts/mapbox-session.py` (1 Map continue, getCam+overlays, fichier unique). Doctrine : `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`. Self-review scriptée d'abord : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (0 erreur avant review).
-**Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux = `useClipFlags` (vraies images, PAS drawFlagCanvas) · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
+**Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux : `MapboxCountryFlagDecal` (source-image) sur carte avec pitch ; `useClipFlags` seulement à pitch=0 — JAMAIS `drawFlagCanvas`. Détail : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
 
 **⛔ GEMINI = SIGNAL, JAMAIS JUGE** (les deux pipelines) : le score est consultatif. Procédure : 1 appel → vérifier chaque point contre le réel → appliquer seulement ce qui est vrai → STOP. JAMAIS de boucle Gemini→fix→Gemini. Le jugement d'Aziz prime. Outils review : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
 ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** (Files API, validé 2026-06-16 ; le bug "répond sans voir" du 13 juin est résolu). Permet de juger MOUVEMENT/rythme/transitions/SON — supérieur aux frames figées pour un breakdown premium. Toujours tester la fiabilité avant (`scripts/tools/gemini-video-upload-test.py`). Détail : `memory/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)

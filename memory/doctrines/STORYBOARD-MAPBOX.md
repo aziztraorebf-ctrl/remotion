@@ -94,7 +94,7 @@ mix-and-match à cocher. Refs visuelles de nos assets (jetons/persos) à joindre
 > ⛔ **RÈGLE D'OR — le breakdown TRANSCRIT, il ne CRÉE pas.** La direction créative est DÉJÀ tranchée au
 > storyboard validé. Le breakdown la traduit en technique FIDÈLE. Il ne rabote JAMAIS une idée du storyboard
 > sous prétexte qu'aucun composant ne la fait — il la signale « à créer ». **C'est l'étape 5 du flux
-> d'orchestration (`PLAN-ORCHESTRATION-VIDEO.md`), APRÈS le checkpoint goût.** Le breakdown ne décide rien de
+> d.orchestration (`SYSTEME-AGENTIQUE.md`), APRÈS le checkpoint goût.** Le breakdown ne décide rien de
 > créatif → il ne peut pas brider ; au contraire il PROTÈGE la direction validée (force le frame-driven, bloque
 > les rejets type `flyTo`). La liberté vit à l'étape 3 (storyboard) ; la fidélité vit ici.
 
@@ -153,4 +153,4 @@ au très dynamique) beaucoup plus vite qu'en re-codant à l'aveugle.
 ⏳ Le PRÉAMBULE storyboard (notre carte + chaînes + directive carte vivante) reste à tester sur un cas réel
    (génération d'image), pour valider qu'il produit une direction premium et non plate.
 ⏳ Reste à éprouver : la chaîne COMPLÈTE storyboard→breakdown→code sur une mini-vidéo cobaye (orchestration bout-en-bout).
-Branché dans : `MEMORY.md`, `SYSTEME-AGENTIQUE.md` (étape 5), `PLAN-ORCHESTRATION-VIDEO.md`.
+Branché dans : `MEMORY.md`, `SYSTEME-AGENTIQUE.md` (étape 5).
