@@ -25,13 +25,26 @@
 | Scène | Sujet | V1 correspondant | État V3 | Composant V3 |
 |---|---|---|---|---|
 | **0 — HOOK** | Avril 2026, 8M$/jour → fracture (limoge) → recomposition (la vérité) | Beat0Accroche | ✅ **FAIT** (catbox yg9k78) | `src/projects/_proto-16-9/SenegalScene0.tsx` (+ MapDrawParchemin + Fracture) |
-| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip) · **GISEMENTS ✅✅ SCÈNE FINALE VALIDÉE AZIZ 2026-06-22** — `SceneGisementsV3.tsx` SEUL composant (V5/V5Effets/protos SUPPRIMÉS). 3 actes calés voix (Sangomar/GTA/Yakaar) + drapeau SEN projeté + jetons SVG GPT-5.5 + SFX + **pivot 60% en DATA-HERO (baril-héros qui se remplit, plein écran, grille navy)**. Livrable : `out/episodes/senegal-petrole-gaz/scene-gisements-FINAL.mp4` (catbox e74r6n avec musique). Détail → `REPRISE-SCENE-1.md` | `SenegalScene1IntroCoin.tsx` (intro) + `SceneGisementsV3.tsx` (gisements, FINAL) |
+| 1 — ACTE 1 | les 3 gisements + le paradoxe | Beat1→9 (senegal-acte1-FINAL) | 🟡 INTRO ✅ (coin-flip) · **GISEMENTS ✅✅ SCÈNE FINALE VALIDÉE AZIZ 2026-06-22** — `SceneGisementsV3.tsx` SEUL composant (V5/V5Effets/protos SUPPRIMÉS). 3 actes calés voix (Sangomar/GTA/Yakaar) + drapeau SEN projeté + jetons SVG GPT-5.5 + SFX + **pivot 60% en DATA-HERO (baril-héros qui se remplit, plein écran, grille navy)**. Livrable : `out/episodes/senegal-petrole-gaz/scene-gisements-FINAL.mp4` (catbox e74r6n avec musique). | `SenegalScene1IntroCoin.tsx` (intro) + `SceneGisementsV3.tsx` (gisements, FINAL) |
 | 2 | leçon Norvège/Congo/Botswana | Beat10 | ✅ **FAIT** (validé Aziz 2026-06-24, catbox mv56cl) — carte Mapbox 1-continue (reprise Beat10, premiumisée) : voyage 3 pays, drapeaux drapés + plaques factuelles 1 chiffre/pays + jeton pétrole offshore relié + **triple screen final** (silhouettes territoire d3-geo + drapeau, NU) + SFX millimètre + musique + carte éclaircie. Render : `out/episodes/senegal-petrole-gaz/scene2-comparaison-FINAL.mp4` | `beats/SceneComparaisonV3.tsx` |
 | 3 | le contrat (terrain 1) | Beat11 | ✅ **FAIT** (validé Aziz 2026-06-24, catbox 4gzkq1) — data-viz Remotion (jury LLM G+K+D). Baril 60% (continuité pivot gisements) rongé par lame COST RECOVERY Woodside → « 60% ANNONCÉ » devient « ??% PART RÉELLE ». Document-contrat + cadenas (pas public, sans texte). Marqueurs Woodside/État rattachés au baril. Baril centré. Render : `out/episodes/senegal-petrole-gaz/scene3-contrat-FINAL.mp4`. Plan : `PLAN-SCENE-3-CONTRAT.md` | `beats/SceneContratV3.tsx` |
 | 4 | le piège de la dette (terrain 2) | Beat12 (calebasse 132%) | ✅ **FAIT** (validé Aziz 2026-06-25, catbox f1wbdp) — concept BARRAGE (mur FONSIS, dette rouge déborde 132%, brèche/vidange tricolore vers BUDGET, FMI statique, mur gauche disparaît). Agent autonome + 2 fixes (fissure centrale NETTE à la rupture + filet figé) + **raccord audio corrigé** : coupe 288.7s sur "...ne protège plus rien", AVANT l'amorce sc.5 qui était coupée en deux à 291.2s. 45.4s / 1363f. Render : `scene4-dette-FINAL.mp4`. Plan : `PLAN-SCENE-4-DETTE.md` | `beats/SceneDetteV3.tsx` |
 | 5 | qui regarde dans les coulisses (terrain 3) | Beat13 | ⬜ **NEXT** — point d'entrée audio = **288.7s** ("Reste le dernier terrain... loin de Dakar" puis "Souvenez-vous du troisième champ — Yakaar-Teranga"). Yakaar pas décidé / Chine observe / Europe ralentit (climat). Remotion, pipeline agentique. | — |
 | 6 | bilan : de zéro à exportateur | Beat14 | ⬜ | — |
 | 7 — BONUS | la machine tourne, le pouvoir se fissure + pont AES | **AUCUN (nouveau)** | ⬜ | — |
+
+## SCÈNE 1 — détail technique (FINALE, info fusionnée depuis REPRISE-SCENE-1.md)
+- **Intro coin-flip** : `src/projects/_proto-16-9/SenegalScene1IntroCoin.tsx` + faces SVG `SenegalCoinFaceA_SVG.tsx` (malédiction : derrick+navire) + `SenegalCoinFaceB_SVG.tsx` (eldorado : arbre à billets). Render catbox `ky7j6l`. Commit `f9a395b`.
+- **Audio calage exact** : segment absolu **20.08s→48.95s** dans `narration-v3-VALIDEE.mp3`. Dans le composant : `<Audio startFrom={20.08*30} endAt={48.95*30}>`. `WINDOW_OFFSET=20` (cf. `scripts/senegal-scene1-alignment.py`). Alignment : `scene1-alignment.json`.
+- **Gisements** : `SceneGisementsV3.tsx` seul (V5/V5Effets/protos supprimés). Catbox `e74r6n`. 3 actes Sangomar/GTA/Yakaar + baril DATA-HERO 60% + drapeau SEN + jetons SVG GPT-5.5 + SFX.
+- **Acquis réutilisables** : voie SVG génératif animé → `memory/key-learnings.md §SVG GÉNÉRATIF ANIMÉ`. Hook `pre-presentation-review.sh` : override tracé (`.review-override.md`) anti faux-positif Gemini.
+- **TODO rangement** : `_proto-16-9/` = R&D mais contenu FINAL. Déplacer vers `souverain/senegal-petrole-gaz/v3/` quand Root.tsx libéré.
+
+## SCÈNE 4 — gotchas techniques (FINALE, info fusionnée depuis REPRISE-SCENE-4-DETTE.md)
+- **Raccord audio 288.7s** : coupe exacte sur "...ne protège plus rien" (288.34s + 0.36s souffle). PAS à 291.2s (milieu phrase). `endAt` → F1342/1363f.
+- **Fissure centrale** : `splitCrack` dans `WallCracks` doit culminer pile sur `F_VIDER` (pas avant). `burst` recalé. Scénario régression : `burst` culminant avant `F_VIDER` = fissure floue.
+- **Filet DrainStream figé** : `sway *= settle` (1 à F_PIOCHER+12 → 0 à +42). Ruban immobile une fois établi.
+- **Gate review override** : si Gemini réclame de retirer le ROUGE (sémantique CENTRALE dette/FMI) → écrire `<mp4>.review-override.md` tracé PLUS RÉCENT que le mp4. Ne pas modifier le hook.
 
 ## SCÈNE 0 — détail (FAITE, référence pour les suivantes)
 - **Composant** : `src/projects/_proto-16-9/SenegalScene0.tsx` (composition `SenegalScene0`, 970f / 32s).

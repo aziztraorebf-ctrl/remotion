@@ -89,13 +89,12 @@
 1. **A5 Géographie** (~37s, MAPBOX). 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité Espagne, Volkswagen) / **triangle Maroc—Europe—Chine**. Pipeline Mapbox (`mapbox-session.py`).
 2. **Assemblage final** : ffmpeg concat des 6 beats + 1 narration globale + mix.
 
-### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-24) ⭐⭐
+### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-25) ⭐⭐
 **⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
 **+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX).
-- ✅ **SCÈNES 0, 1, 2, 3 = FAITES, gravées FINALES.** Audio 0→241.3s.
-- 🟡 **SCÈNE 4 (la dette, barrage) = À 95%** — reste 2 fixes (fissure nette + bac immobile). ▶▶ REPRENDRE ICI → `V3-REFONTE/REPRISE-SCENE-4-DETTE.md`. Composant `SceneDetteV3.tsx`.
-- ▶ Après scène 4 FINAL : scène 5 (coulisses/Yakaar, Beat13). Déléguable à des agents.
-ℹ️ PÉRIMÉS : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`.
+- ✅ **SCÈNES 0, 1, 2, 3, 4 = FAITES, gravées FINALES.** Audio 0→288.7s ≈ 50% narration.
+- ▶▶ **SCÈNE 5 = NEXT** (coulisses/Yakaar, Beat13). Point d'entrée audio **288.7s**. Pipeline agentique Remotion → `BRIEF-AGENT-SCENE-5.md`. Déléguable à des agents en parallèle.
+ℹ️ PÉRIMÉS (supprimés 2026-06-25) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
@@ -167,6 +166,18 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 - `AtlasParcheminGlobe.tsx` → mouvements camera spheriques a adapter en Mercator
 - `AnimatedCaravan.tsx` → route commerciale animee (applicable Atlas + Souverain)
 - `atlas-parchemin-mande.json` → style Mapbox historique (Empire Mali, etc.)
+
+---
+
+## 🧹 CHANTIERS DE NETTOYAGE RESTANTS (post-consolidation 2026-06-25)
+
+> Session dédiée requise pour chacun. NE PAS faire en pleine prod.
+
+1. **Rangement `src/projects/_rnd/svg-scenes/`** (17+ variantes écartées) : désimporter de `Root.tsx` D'ABORD (sinon build cassé), PUIS `git mv` vers `_archive/`. Ordre obligatoire : désimport → vérif build → mv. Détail : README du dossier `_rnd/svg-scenes/`.
+2. **Extraction `atlas-components.tsx`** (1009L, 23 imports) : reportée, à faire au calme — refactor d'un seul fichier monolithique.
+3. **Purge `out/`** (~1.5 GB estimés) : `out/_r-and-d/` >7j (sauf `cobaye-maroc-phosphate/` GARDER) + `out/episodes/warmap-sahel/wip/`. Vérifier `_ASSEMBLAGE-V3.md` avant toute purge Sénégal.
+4. **Clarifier frontière mémoire** : `memory/` (workspace, 419 fichiers) vs `.claude/projects/.../memory/` (auto-memory, 257 fichiers) — décider si on rapatrie tout dans `memory/` ou si on maintient les deux.
+5. **Items "À CONFIRMER"** : `PLAN-ASSEMBLAGE-FINAL` War-Map (validations ouvertes) + `PIXELLAB-MASTER-INDEX` (statuts à confirmer quand on attaque ces prods).
 
 ---
 
