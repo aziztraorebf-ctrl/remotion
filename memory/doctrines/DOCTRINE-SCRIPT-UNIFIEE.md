@@ -31,6 +31,25 @@ Cette couche a trois familles de règles (16 au total) :
 
 ---
 
+## ⛔⛔ GATE DE SORTIE D'ÉCRITURE — COCHER AVANT DE PRÉSENTER TOUT SCRIPT (BLOQUANT)
+
+> Ajoutée 2026-06-27. RAISON : un script peut être FACTUELLEMENT juste mais violer des règles "connues"
+> (prouvé Short CFA : 3 versions télégraphiques d'affilée). Cause racine = la doctrine était traitée comme
+> référence à consulter APRÈS, pas comme gate à cocher AVANT. Cette gate est le miroir du SCAN COMPOSANTS-INDEX
+> (bloquant avant de coder un beat). NE PAS présenter un script sans avoir coché les 4 points, à voix haute :
+
+1. **ZÉRO phrase sans verbe** (règle 11bis). Relire CHAQUE ligne : a-t-elle un sujet + un verbe ? "Minuit." /
+   "Une balance." / "Stabilité d'un côté." = télégraphique = RÉÉCRIRE en phrase complète. Concis ≠ sans verbe.
+2. **Un connecteur de présence du narrateur par beat** (règle 10 Tremblay). Chaque beat a-t-il au moins un
+   "Et c'est là que…" / "Ce qui frappe, c'est…" ? Sinon = exposé, pas "quelqu'un me parle". AJOUTER.
+3. **"on/nous" jamais "tu"** (règle 8) · **aucun CTA dans le hook** (règle 9).
+4. **1 idée/phrase ≤20-22 mots** (règle 1) · **tampon sur chaque nom propre/terme au 1er passage** (règle 4) ·
+   **niveau du format** (Short = grade 9-10 ; mid-form = grade 10-11 — règle 7).
+
+Si un point échoue → réécrire AVANT de montrer. Cette gate fait partie de [[RECHERCHE-PRESCRIPT-UNIFIEE]] (étape 7).
+
+---
+
 # A. CLARTÉ — que chaque phrase soit comprise
 
 ## Règle 1 — Une idée par phrase, max 20-22 mots (NON-NÉGOCIABLE)
@@ -158,7 +177,47 @@ Formules validées :
 - Anti-pattern : "400 fûts radioactifs dorment dans un hangar" (fait avant l'enjeu)
 - Pattern : "Le Niger est l'un des pays les plus pauvres du monde. Il possède l'une des ressources les plus stratégiques du monde." → PUIS les preuves.
 
-**Zéro phrase sans verbe.** "Payer ses soldats. Contenir une insurrection." → toujours sujet + verbe. Le style sans verbe sonne télégraphique, pas oral.
+## Règle 11bis — ZÉRO phrase sans verbe (NON-NÉGOCIABLE, la plus violée)
+
+> Promue en règle autonome 2026-06-27 (elle était noyée en sous-clause de la règle 11 → ratée à répétition).
+> C'est LE défaut télégraphique. Fait partie de la GATE DE SORTIE (point 1, en tête de fichier).
+
+Toute phrase a un SUJET + un VERBE. Le style sans verbe sonne télégraphique, pas oral — personne ne parle
+ainsi en face-à-face. **Concis ≠ sans verbe** : on raccourcit en gardant le verbe, jamais en le supprimant.
+
+| ❌ Télégraphique (sans verbe) | ✅ Oral (sujet + verbe) |
+|---|---|
+| "Payer ses soldats. Contenir une insurrection." | "Il doit payer ses soldats et contenir une insurrection." |
+| "12 janvier 1994. Minuit." | "Nous sommes le 12 janvier 1994, à minuit." |
+| "Une balance. Un sac de riz." | "On y voit une balance et un sac de riz importé." |
+| "Stabilité d'un côté. Dépendance de l'autre." | "D'un côté la stabilité ; de l'autre, moins de marge." |
+
+Exception UNIQUE : une respiration visuelle assumée (carton plein écran), pas la voix-off narrative.
+
+**Test à la GATE** : relire chaque ligne du script, pointer le verbe. Pas de verbe → réécrire.
+
+## Règle 11ter — INCARNER ≠ DILUER · CORRIGER LE TÉLÉGRAPHIQUE ≠ RENDRE FAMILIER (NON-NÉGOCIABLE)
+
+> Gravée 2026-06-27. ERREUR PROUVÉE (Short CFA) : en voulant "incarner" (Tremblay) et corriger le télégraphique,
+> j'ai REMPLACÉ des phrases denses et ciselées par du remplissage vague et familier. RÉGRESSION, pas amélioration.
+
+Deux pièges symétriques à éviter quand on retravaille un script :
+1. **Ne pas confondre "phrase complète" avec "phrase bavarde".** Une phrase peut avoir un verbe ET rester ciselée.
+   La densité intelligente est une QUALITÉ, pas un défaut à aplatir. Le grade 9-10 = "chaque phrase se tient à
+   l'oreille", PAS "langage appauvri".
+2. **Ne pas confondre "incarner" (règle 10, présence du narrateur) avec "ajouter du familier/du remplissage".**
+   Un connecteur de présence est CHIRURGICAL (un par beat). "Imaginez un instant", "ça compte", "regardez ce que
+   les gens achètent" = remplissage qui DILUE, pas incarnation.
+
+| ❌ Dilué (régression CFA) | ✅ Dense et ciselé (à viser) |
+|---|---|
+| "des millions se sont couchés avec un certain montant" | "leur argent vaut deux fois moins" |
+| "Imaginez un instant. Nous sommes le 12 janvier 1994, à minuit." | "Le 12 janvier 1994, en une nuit, le franc CFA est divisé par deux." |
+| "une monnaie stable, ça compte vraiment" | "cette stabilité protège les prix — un vrai avantage" |
+
+**Test à la GATE** : si une réécriture est plus LONGUE et moins PRÉCISE que l'originale, c'est une régression →
+revenir à la version dense, et n'y appliquer QUE le correctif minimal (verbe manquant, connecteur unique).
+La précision est reine ; on coupe le télégraphique SANS noyer l'intelligence.
 
 ---
 

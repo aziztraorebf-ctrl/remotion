@@ -4,6 +4,13 @@
 
 ---
 
+## 🆕 FRANC CFA — MID-FORM SVG (pré-prod faite, 2026-06-27)
+> ✅ Sujet validé + angle (B) "le courage + le coût réel" + TRIPLE fact-check + script de référence (V6) + jury LLM.
+> ⭐ Pivot acté : MID-FORM, pas short (sujet à MÉCANISME → veut de la construction visuelle séquentielle, cf règle
+> sujet→format dans [[SUJET-PRIME-SUR-PRODUCTION]]). Tout se transpose. → `episodes/souverain/franc-cfa-short/STATUS.md`.
+> **NEXT** : étendre script V6 → mid-form 4-6min + storyboard SVG-d'abord (scènes parité/Dakar/entrée déjà esquissées dans STATUS §7).
+> ⚙️ MÉTA prouvé cette session : la CHAÎNE [[RECHERCHE-PRESCRIPT-UNIFIEE]] (valider→écrire→fact-check 3 niveaux→jury) fonctionne A→Z.
+
 ## ⭐⭐ PISTE STRATÉGIQUE FRAÎCHE (2026-06-22) — Shorts SVG ↔ Longs Mapbox (Hub & Spoke)
 > 🗂️ Analyse Hub & Spoke gravée dans `memory/doctrines/SVG-SCENES-GENERATIVES.md` § Hub & Spoke + `ETAT-GGW-MURAILLE-VERTE.md` (acquis GGW). Aziz veut s'y lancer « pendant que c'est frais ».
 > En bref : 2 formats séparés MÊME niche — longs analytiques (Mapbox/3D, autorité) + shorts SVG génératifs

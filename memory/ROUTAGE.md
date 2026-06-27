@@ -15,6 +15,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | **État actuel du projet (session précédente)** | `memory/COMPACT_CURRENT.md` — résumé dense post-session (GGW livré, projets en attente, état bibliothèque SVG). Lire si doute sur "où on en était". |
+| **DÉMARRER / RECHERCHER une nouvelle vidéo OU un script (short, mid-form, macro)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ DÉCLENCHEUR : dès qu'Aziz dit « je veux faire une vidéo / une recherche sur X / un script sur Y ». La chaîne complète 9 étapes (valider sujet→écrire→fact-check→jury). Aziz n'a PAS à se rappeler des étapes — suivre ce fichier. |
 | **PRODUIRE/REFAIRE une scène — le SYSTÈME complet** | `memory/SYSTEME-AGENTIQUE.md` ⭐⭐ carte du système : le FLUX (storyboard→validation→breakdown→code→review), l'orchestration (chef+agents frais), où est chaque brique. Activable à tout moment (« consulte notre système agentique »). |
 | **Construire/prolonger TOUTE scène (AVANT de chercher un composant)** | `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐ NON-NEGOTIABLE — déduis l'INTENTION (1 verbe) d'abord, le template en dernier. PUIS porte d'entrée `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme→réponse, inclut templates Hera ⭐) |
 | **Doute sur quel catalogue ouvrir (tout domaine)** | `src/projects/_shared/INDEX-DES-INDEX.md` ⭐ carte de TOUS les catalogues (fiches techniques, consultées APRÈS l'intention) |
@@ -27,6 +28,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | **« Quel SCRIPT lancer pour faire X ? » (render/audio/publish/gen/review/data)** | `scripts/SCRIPTS-INDEX.md` ⭐ index des scripts par cas d'usage. Review : `scripts/tools/REVIEW-TOOLS-INDEX.md`. |
+| **Chaîne complète idée→script blindé (valider sujet → écrire → fact-check → jury)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ 9 étapes. Enchaîne `SUJET-PRIME` (0-6) + script + fact-check 3 niveaux + jury. |
 | Écrire/valider TOUT script narratif (couche orale universelle) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` ⭐ 16 règles (clarté/incarnation/rétention) |
 | Script Short narratif (Héros Oubliés, conte, tragédie) | `memory/templates/script-ebauche-v1.md` |
 | Script Atlas (géo, taille, richesse-record, comparaison) | `memory/templates/script-atlas-v1.md` |

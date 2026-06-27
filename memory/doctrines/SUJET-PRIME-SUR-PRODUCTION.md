@@ -97,6 +97,20 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    → On sort avec : SUJET validé + ANGLE libre + pré-TITRE + ce que le public veut + FORMAT pressenti.
    → SEULEMENT ENSUITE : pré-production. Jamais avant. **MAIS le 1er livrable de la pré-prod = le POSITIONNEMENT (ci-dessous), AVANT le script.**
 
+### ⭐ CHOIX DU FORMAT — la NATURE du sujet décide (short vs mid-form/long) — Aziz 2026-06-27
+Prouvé par le Short franc CFA : on a passé une heure à comprimer un contenu qui VOULAIT respirer. Leçon racine :
+- **Sujet NARRATIF / VISUEL / ÉMOTIONNEL** (une image forte, une histoire, un geste : la Muraille Verte qui avance,
+  un héros, une tragédie) → **SHORT**. Le short excelle sur l'image forte et l'émotion, pas sur l'explication.
+- **Sujet à MÉCANISME / CHAÎNE CAUSALE** (il faut expliquer comment ça marche : franc CFA = parité→garantie→réserves
+  →réforme ; un système financier, juridique, institutionnel) → **MID-FORM ou LONG**. Comprimer un mécanisme en
+  90-140s le mutile. Le signal "je n'arrête pas de couper sans perdre le sens" = le sujet veut du long.
+- **Le short reste la PORTE D'ENTRÉE audience** (un short qui perce amène vers les longs). Stratégie : short = amorce
+  émotionnelle d'un sujet narratif ; long = profondeur d'un sujet à mécanisme. Choisir par la NATURE, jamais par habitude.
+- **Notre avantage structurel** (data-driven Remotion) s'exprime MIEUX sur le long : un long ne coûte pas
+  proportionnellement plus cher qu'à un YouTuber qui filme. → ne pas fuir le long par réflexe "short = plus simple".
+- ⚠️ Un sujet à mécanisme PEUT donner un short SI on en fait l'amuse-bouche émotionnel (1 angle, 1 image) + CTA vers
+  le long. Mais ne pas vouloir TOUT expliquer dans le short (piège CFA). Cf. [[RECHERCHE-PRESCRIPT-UNIFIEE]] étape 7.
+
 ## ⭐ ÉTAPE 6 — L'ÉTOILE POLAIRE DE POSITIONNEMENT (1er livrable de pré-prod, AVANT le script) — Aziz 2026-06-16
 Une fois le sujet validé (étapes 0-5), AVANT d'écrire le script ou de choisir la manière visuelle : **écrire l'étoile polaire**. C'est ce qui empêche les dérives en aval — sans elle, on écrit des actes « corrects » qui glissent vers le générique. Avec elle, chaque décision (titre, phrase, choix visuel) a un juge : *« est-ce que ça sert notre différenciation ? »*.
 
@@ -124,5 +138,9 @@ re-tourne/re-monte à la main). Donc le coût marginal du contenu réutilisable 
 performance — mais ça ne dispense PAS de valider le sujet : produire pas cher un sujet sans demande reste du
 temps perdu.
 
+**SUITE → APRÈS le verdict GO + positionnement, enchaîner sur [[RECHERCHE-PRESCRIPT-UNIFIEE]]** (étapes 7-9 :
+script conforme DOCTRINE-SCRIPT-UNIFIEE → fact-check 3 niveaux → jury LLM). Ce fichier-ci = étapes 0-6 ; ne pas dupliquer.
+
 Liens : [[CHARTE-EDITORIALE-SOUVERAIN]] · [[feedback_doctrine-titres-youtube-kora-cartes]] · [[ANGLE-MACRO-SOUVERAIN]] ·
-[[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]].
+[[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]] ·
+[[RECHERCHE-PRESCRIPT-UNIFIEE]] (la suite : script + fact-check + jury).

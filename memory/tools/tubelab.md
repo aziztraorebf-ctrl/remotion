@@ -43,6 +43,8 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
 - ⚠️ Repérer le piège d'angle : si les outliers sont tous militants/pompeux (registre qu'on refuse), le sujet "marche"
   mais pas pour nous → angle analyste distinct OU écarter (charte).
 - Réévaluer le ROI de l'abonnement après 1-2 mois d'usage COMPLET (pas 3 outils sur 11).
+- 🆓 **TOP COMMENTAIRES via yt-dlp (gratuit, mine d'or à angle)** : `yt-dlp --write-comments --extractor-args "youtube:comment_sort=top;max_comments=N" --skip-download <url>`. Donne les commentaires les + likés (ce que le public dit/reproche/réclame = matière à angle + phrases-titres). Préférer à `get_video_comments` TubeLab (économise des crédits). Parser le `.info.json` (champ `comments`, filtrer `parent=='root'`, trier par `like_count`). Prouvé recherche CFA 2026-06-27.
+- ⚠️ **Cross-plateforme via `/last30days`** (le "poumon présent") : Reddit/HN/YouTube = commentaires natifs ; TikTok/IG/Threads = clé ScrapeCreators (`~/.config/last30days/.env`). GOTCHA : `INCLUDE_SOURCES` n'est PAS lu depuis le `.env` du skill → le passer en variable d'environnement au lancement si besoin d'activer youtube_comments/threads.
 
 ## TEST 2026-06-16 — `search_related_channels` + `search_related_outliers` sur Sahel Chronicles (CONCLUANT)
 2 appels = cartographie complète de NOTRE niche, impossible gratuitement :
