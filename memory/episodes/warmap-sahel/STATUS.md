@@ -24,8 +24,16 @@
 >   ⭐ COMPARATIF À FAIRE à l'assemblage : cette version SVG vs le CFA Remotion existant (`p4-cfa-FINAL.mp4`).
 >   3 trous méthode comblés (ratio explicite · chorégraphie Phase 1 · mix-and-match maison) → `PRODUCTION-AGENTIQUE-SVG.md`.
 >
-> **▶ RESTE SUR LA VIDÉO** : (1) assembler P4 (morceaux : exode + ressources + confed + CFA) en p4-FINAL unique
->   — au moment du CFA, TRANCHER version SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
+> 🔜 **PROCHAINE SESSION — PASSE AMÉLIORATION P1 + P2 (plan Aziz 2026-06-27)** :
+>   1. Renders P1/P2 existent → upload catbox direct (`p1-FINAL.mp4`, `p2-FINAL.mp4`) pour qu'Aziz revoie les scènes.
+>   2. Aziz valide les corrections de `AUDIT-AMELIORATIONS-P1.md` + `AUDIT-AMELIORATIONS-P2.md` (backlog priorisé).
+>   3. Lancer agents de CORRECTION (système agentique) qui appliquent les corrections validées.
+>   ⭐ Constat dominant audits = AUDIO : P1 n'a AUCUN SFX câblé (`partie1`) · P2 drone non continu (3 trous silence)
+>   + dernier tiers faible (CEDEAO vide, raccord P3). P1 reste en "soustraction" (PAS de SVG/jetons).
+>
+> **▶ RESTE SUR LA VIDÉO** : (0) passe amélioration P1+P2 ci-dessus ; (1) assembler P4 (morceaux : exode + ressources
+>   + confed + CFA) en p4-FINAL unique — au CFA, TRANCHER SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL
+>   (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
 > 📎 Candidats SVG-inserts (détail + comparatif) → `SVG-INSERTS-CANDIDATS.md`.
 > 📜 Hook source décodage : `feedback_decode-castile-warmap-vivante.md`.
 >
