@@ -1406,14 +1406,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
   // Flèches Liptako (f502) : 3 traits beige continus capitales→centre qui se DESSINENT
   // (stroke-dashoffset), puis pulse or UNIQUE à l'arrivée ("soudure" de l'alliance).
-  const arrowDraw = interpolate(frame, [A1.LIPTAKO, A1.LIPTAKO + 50], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-  });
-  const arrowFade = interpolate(frame, [A1.FREEZE + 40, A1.FREEZE + 80], [1, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  const weldPulse = interpolate(frame, [A1.LIPTAKO + 48, A1.LIPTAKO + 62, A1.LIPTAKO + 90],
+  // Flash or FRANC accompagnant l'emergence du sceau (climax "batissent quelque chose de nouveau").
+  // Cale sur l'apparition du sceau (LIPTAKO+58) pour culminer QUAND le sceau devient lisible.
+  const weldFlash = interpolate(frame, [A1.LIPTAKO + 60, A1.LIPTAKO + 80, A1.LIPTAKO + 110],
     [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Sceau "AES" au centre du triangle : emerge a la soudure, RESTE jusqu'au drift (meuble le creux).
+  // Apparait apres le flash (le concept se NOMME une fois les 3 soudes), reste plein, fade avant le drift.
+  const aesSealOp = interpolate(frame,
+    [A1.LIPTAKO + 58, A1.LIPTAKO + 82, A1.DRIFT - 24, A1.DRIFT],
+    [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const aesSealRise = interpolate(frame, [A1.LIPTAKO + 58, A1.LIPTAKO + 90], [10, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const aesSealBreath = 1 + 0.025 * Math.sin((frame - A1.LIPTAKO) * 0.08);
 
   // Nettoyage cognitif (f726) : les couleurs politiques baissent (0.82→0.3) pour faire
   // place à la couche tactique. "éteindre la géopolitique pour allumer la tactique".
@@ -1732,31 +1736,51 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           ACTE 1 FINAL — FLÈCHES LIPTAKO (f502) : 3 traits beige continus
           capitales→centre qui se dessinent (dashoffset) + pulse or unique "soudure".
           ====================================================== */}
-      {isFinalLook && showChrome && arrowDraw > 0 && hookPx.liptako &&
-        hookPx.bamako && hookPx.ouaga && hookPx.niamey && (() => {
+      {isFinalLook && showChrome && aesSealOp > 0 && hookPx.liptako && (() => {
         const L = hookPx.liptako;
-        const caps = [hookPx.bamako, hookPx.ouaga, hookPx.niamey];
+        // SCEAU "AES" repositionne AU-DESSUS du groupe de drapeaux (nord-Mali vide) pour ne pas
+        // chevaucher les bannieres/capitales. Le sceau EST le geste de soudure (les 3 deviennent UN) :
+        // les 3 traits capitales->Liptako etaient illisibles a ce zoom (capitales trop proches) -> retires.
+        const sealX = L.x;
+        const sealY = L.y - 118;
         return (
-          <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-            {caps.map((cap, i) => {
-              if (!cap) return null;
-              const len = Math.hypot(L.x - cap.x, L.y - cap.y);
-              const off = len * (1 - arrowDraw);
-              return (
-                <line key={i} x1={cap.x} y1={cap.y} x2={L.x} y2={L.y}
-                  stroke="#F3E9C8" strokeWidth={3.5 * arrowDraw + 0.5} strokeLinecap="round"
-                  strokeDasharray={len} strokeDashoffset={off}
-                  opacity={0.85 * arrowFade}
-                  style={{ filter: "drop-shadow(0 0 2px rgba(243,233,200,0.4))" }} />
-              );
-            })}
-            {/* pulse or UNIQUE "soudure" au centre à l'arrivée */}
-            {weldPulse > 0 && (
-              <circle cx={L.x} cy={L.y} r={18 + weldPulse * 34} fill="none"
-                stroke={SAHEL_COLORS.contested} strokeWidth={4}
-                opacity={weldPulse * 0.9} />
-            )}
-          </svg>
+          <>
+          {/* FLASH or franc a l'emergence du sceau (climax "batissent quelque chose de nouveau").
+              Element FRERE (opacite propre) pour ne pas heriter de l'opacite encore basse du sceau. */}
+          {weldFlash > 0 && (
+            <div style={{
+              position: "absolute", left: sealX, top: sealY,
+              width: 300, height: 300, marginLeft: -150, marginTop: -150,
+              borderRadius: "50%", pointerEvents: "none", zIndex: 39,
+              background: `radial-gradient(circle, rgba(242,210,122,${weldFlash * 0.92}) 0%, rgba(201,154,58,${weldFlash * 0.5}) 40%, rgba(201,154,58,0) 70%)`,
+            }} />
+          )}
+          {aesSealOp > 0 && (
+            <div style={{
+              position: "absolute", left: sealX, top: sealY,
+              transform: `translate(-50%, calc(-50% + ${aesSealRise}px)) scale(${aesSealBreath})`,
+              opacity: aesSealOp, pointerEvents: "none", textAlign: "center", zIndex: 40,
+            }}>
+              <div style={{
+                position: "relative",
+                display: "inline-block",
+                background: "rgba(245,239,214,0.95)",
+                border: `2.5px solid ${SAHEL_COLORS.contested}`,
+                borderRadius: 9, padding: "7px 18px 5px",
+                boxShadow: `0 0 18px rgba(201,154,58,0.45), 0 4px 10px rgba(40,28,16,0.4)`,
+              }}>
+                <div style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 40, fontWeight: 800,
+                  lineHeight: 1, letterSpacing: "5px", color: SAHEL_COLORS.ink,
+                }}>AES</div>
+                <div style={{
+                  marginTop: 4, fontFamily: "Georgia, serif", fontSize: 12.5, fontWeight: 700,
+                  letterSpacing: "1.4px", textTransform: "uppercase", color: "#7A5A1E",
+                }}>Alliance des États du Sahel</div>
+              </div>
+            </div>
+          )}
+          </>
         );
       })()}
 
@@ -2495,7 +2519,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                   name={cityName}
                   pos={cityPos}
                   appearAt={cityStart}
-                  hideAt={460}
+                  hideAt={560}
                   accent={countryColor}
                   size={18}
                   yOffset={18}

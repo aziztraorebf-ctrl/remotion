@@ -42,6 +42,15 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    - **Image générée (TOUJOURS)** : `storyboard-dual-gen.py` (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox →
      préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE carte + chaînes de réf + ARSENAL + directive carte
      vivante ; géo approximative OK, vraie géo au CODE).
+   - ⛔⛔ **ÉPURE DU TEXTE À L'ÉCRAN — le texte n'apparaît QUE pour l'essentiel (gravé 2026-06-26, Aziz, sc.7 Sénégal V3).**
+     La VOIX porte le récit ; l'écran porte le GRAPHISME. Un texte n'est justifié à l'écran QUE s'il est une
+     information-clé que le spectateur doit RETENIR ou qui n'est PAS dite par la voix (un chiffre qui frappe, une
+     question pivot, un CTA). ⛔ INTERDITS car la voix les dit déjà = pur bruit visuel : les labels de section
+     (« ÉPILOGUE », « ACTE 2 »), les redites de la narration (« UN PAYS QUI S'ENRICHIT » quand la voix le dit),
+     les légendes redondantes avec un visuel évident (le nom « FAYE » sous un jeton marqué F). Règle pratique : pour
+     CHAQUE texte du storyboard, se demander « la voix le dit-elle déjà ? le visuel le montre-t-il déjà ? » → si oui,
+     RETIRER. Laisser le graphisme respirer pendant que la voix parle. (Sur sc.7 : retirés ÉPILOGUE + 2 redites +
+     noms des jetons ; gardés LIMOGÉ/ÉLU, la question pivot « AU NOM DE QUI », le CTA.)
    - ⛔⛔ **FORMAT = PANEL D'ÉVOLUTION 4-CASES, JAMAIS UNE FRAME-AFFICHE (gravé 2026-06-26, erreur orchestrateur sc.6+7 Sénégal V3).**
      Le storyboard montre la PROGRESSION temporelle de la scène (case 1 début → case 4 fin) — c'est un outil de
      CHORÉGRAPHIE, pas un poster figé. **OUTIL data-viz/Remotion = `gemini-storyboard-panels.py --ratio 16:9 --background navy`**
