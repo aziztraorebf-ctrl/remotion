@@ -18,9 +18,15 @@
 > ⚠️ **Mix audio** : pic transitoire ~0 dB à ~18s (gong Liptako + voix + musique). Non audible signalé. Le mastering
 >   de l'assemblage normalisera. Si saturation perçue : baisser `liptako-gong` 0.58→0.48 (ligne ~1523 moteur).
 >
-> **▶ RESTE SUR LA VIDÉO** : (1) assembler P4 (morceaux : exode + ressources + confed + CFA) en p4-FINAL unique ;
->   (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
-> 📎 **SVG-insert franc CFA** = candidat franc (cas test système agentique SVG, isolé) → `SVG-INSERTS-CANDIDATS.md`.
+> ✅ **SVG-INSERT CFA ALTERNATIF PRODUIT + VALIDÉ AZIZ (2026-06-27)** via système agentique SVG (cas test prouvé,
+>   bloc isolé). Compo `WarmapCfaInsertSVG` (11s, 16:9) → `out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`
+>   (catbox `228hiw`). Cible = verrou + chaîne/maillon de rupture + racines (mix-and-match Claude maison).
+>   ⭐ COMPARATIF À FAIRE à l'assemblage : cette version SVG vs le CFA Remotion existant (`p4-cfa-FINAL.mp4`).
+>   3 trous méthode comblés (ratio explicite · chorégraphie Phase 1 · mix-and-match maison) → `PRODUCTION-AGENTIQUE-SVG.md`.
+>
+> **▶ RESTE SUR LA VIDÉO** : (1) assembler P4 (morceaux : exode + ressources + confed + CFA) en p4-FINAL unique
+>   — au moment du CFA, TRANCHER version SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
+> 📎 Candidats SVG-inserts (détail + comparatif) → `SVG-INSERTS-CANDIDATS.md`.
 > 📜 Hook source décodage : `feedback_decode-castile-warmap-vivante.md`.
 >
 > ⛔⭐ **REPRISE AU RETOUR — LIRE CECI (l'ancien "reste l'assemblage" est PÉRIMÉ) :**

@@ -297,6 +297,7 @@ import { SahelFriseOverlayDemo } from "./projects/warmap/_shared/SahelFriseOverl
 import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepositionnementDemo";
 import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
+import { WarmapCfaInsertSVG, WARMAP_CFA_INSERT_FRAMES } from "./projects/warmap/parties/WarmapCfaInsertSVG";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -1976,6 +1977,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
+        <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
