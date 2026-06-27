@@ -1,14 +1,27 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-26 — HOOK Acte 1 « détachement+soudure » CÂBLÉ+COMMITÉ. P1-P4 FINAL · Acte 1 en chantier.
-**Branche :** `feat/warmap-aes-hook-integration` (hook) · `feat/p3-ambient-vie` (corps). **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+**Dernière mise à jour :** 2026-06-27 — ✅✅ **ACTE 1 FINAL (hook + corps) VALIDÉ AZIZ.** Acte1 + P1 + P2 + P3 FINAL · P4 en morceaux à assembler.
+**Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
-> 🆕 **SESSION 2026-06-26 — HOOK ACTE 1 « DÉTACHEMENT+SOUDURE » FAIT + COMMITÉ (`23a550a`).**
-> Sans viseur (cliché retiré). Mécanique : chiffre « 3 » (`Acte1IntroSlam`, KineticMaskSlam adapté SANS 2e carte)
-> → drapeaux réels plantés (`WarMapBanner`) au mot exact f145/217/286 → détachement par vignette animée
-> → liséré d'union AES. Compo `SahelActe1-Refonte`. RESTE corps Acte 1 : bug `hideAt={460}` (plaques disparaissent
-> à la soudure) · creux 15-32s · grammaire contours · render complet. Décodage source : `feedback_decode-castile-warmap-vivante.md`.
-> 📎 **SVG-insert franc CFA** = seul candidat franc dans l'AES (cas test système agentique SVG, isolé) → `SVG-INSERTS-CANDIDATS.md`.
+> ✅✅ **SESSION 2026-06-27 — ACTE 1 COMPLET FINALISÉ + VALIDÉ AZIZ.** Compo `SahelActe1-Refonte` (f0-2125, 71s).
+> Render : `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `91solc`). Commits 98efe6f + 02a2864 + 5099489.
+> **HOOK (f0-684)** : chiffre « 3 » slam (`Acte1IntroSlam`) → drapeaux réels plantés (`WarMapBanner`) f145/217/286
+>   → détachement vignette → **sceau « AES » central + flash or** au climax « bâtissent » (f557 ; les 3 traits
+>   convergents illisibles à ce zoom ont été RETIRÉS) → sceau reste jusqu'au drift (comble le creux). Fix `hideAt=560`.
+> **CORPS (f684-2125)** : grammaire P3/P4 déjà en place (contours nationaux, jetons JNIM/EIGS, zones, friction),
+>   triggers calés alignment V5 (écart 0f). **SFX câblés** (le corps était MUET) : drone d'assise + PING carto
+>   à la pose des jetons (clic, pas whoosh) + ink-spread zones + impact friction. **Drapeaux s'effacent f954-990**
+>   (après 1ers jetons → cèdent à la couche tactique ; contours conservés). Mention « Données estimées » RETIRÉE
+>   (Acte 1 narratif sans chiffre → trompeuse).
+> ⚠️ **ÉCART connu** : `acte1-FINAL.mp4` a été rendu AVANT le retrait de la mention source → il l'affiche encore.
+>   Le CODE ne l'a plus. Au re-render de l'assemblage final, la mention sera absente. (Pas re-rendu : décision Aziz.)
+> ⚠️ **Mix audio** : pic transitoire ~0 dB à ~18s (gong Liptako + voix + musique). Non audible signalé. Le mastering
+>   de l'assemblage normalisera. Si saturation perçue : baisser `liptako-gong` 0.58→0.48 (ligne ~1523 moteur).
+>
+> **▶ RESTE SUR LA VIDÉO** : (1) assembler P4 (morceaux : exode + ressources + confed + CFA) en p4-FINAL unique ;
+>   (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
+> 📎 **SVG-insert franc CFA** = candidat franc (cas test système agentique SVG, isolé) → `SVG-INSERTS-CANDIDATS.md`.
+> 📜 Hook source décodage : `feedback_decode-castile-warmap-vivante.md`.
 >
 > ⛔⭐ **REPRISE AU RETOUR — LIRE CECI (l'ancien "reste l'assemblage" est PÉRIMÉ) :**
 >

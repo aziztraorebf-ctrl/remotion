@@ -100,17 +100,17 @@
 
 > ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%.
 >
-> ✅ **P1-P4 FINAL** (4 scènes). 🔴 **ACTE 1 EN CHANTIER** (PAS final).
-> ▶ **RESTE = finir Acte 1 PUIS assemblage** (render P4 complète → concat + narration `narration-v5-expressive.mp3` + mix).
+> ✅✅ **ACTE 1 FINAL + P1 + P2 + P3 FINAL.** 🟡 **P4 = en morceaux** (exode + ressources + confed + CFA, à assembler en p4-FINAL).
+> ▶ **RESTE** : (1) assembler P4 morceaux → p4-FINAL ; (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
 > 🎵 Musique : Aziz a choisi **D-montee-maitrisee** (`public/_shared/audio/sahel-warmap/music/`).
-> 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
+> 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` (état détaillé) · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`, `PLAN-REFONTE-ACTE1.md` (Acte 1 fini).
 >
-> ▶ **ACTE 1 — HOOK AVANCÉ (2026-06-26)** : le hook « détachement+soudure » est CÂBLÉ + COMMITÉ (`23a550a`,
->   branche `feat/warmap-aes-hook-integration`, compo `SahelActe1-Refonte`). Mécanique : chiffre « 3 »
->   (Acte1IntroSlam, KineticMaskSlam adapté SANS 2e carte) → drapeaux réels plantés (WarMapBanner) au mot
->   exact f145/217/286 → détachement par vignette animée → liséré d'union AES. Viseur crosshair retiré (cliché).
->   RESTE (corps Acte 1, ⭐ LIRE `PLAN-REFONTE-ACTE1.md`) : bug `hideAt={460}` (plaques disparaissent à la soudure) ·
->   meubler le creux 15-32s · grammaire P3/P4 contours sur le corps · render Acte 1 complet + jugement.
+> ✅✅ **ACTE 1 FINALISÉ + VALIDÉ AZIZ (2026-06-27)** : compo `SahelActe1-Refonte` (f0-2125, 71s),
+>   `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `91solc`). Hook = chiffre « 3 » → drapeaux plantés →
+>   **sceau AES central + flash or** au climax (3 traits convergents illisibles RETIRÉS) ; corps = grammaire P3/P4
+>   + **SFX câblés** (drone/ping carto/ink/impact) + **drapeaux s'effacent après les 1ers jetons** (contours gardés)
+>   + mention « Données estimées » retirée. ⚠️ acte1-FINAL.mp4 a la mention (rendu avant retrait) — le code ne l'a plus,
+>   l'assemblage la retirera. ⚠️ pic audio ~0 dB à 18s (gong) → mastering assemblage normalisera.
 > 📎 **SVG-insert franc CFA** = seul candidat franc (cas test système agentique SVG, isolé) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
 
 ---
