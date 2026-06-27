@@ -1526,6 +1526,47 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
+          SFX CORPS ACTE 1 REFONTE (f684→END) — le corps etait MUET (les pistes son
+          vivaient dans acte2/partie2/partie3, jamais en acte1Refonte). Grammaire P2/P3 :
+          drone d'assise continu · PING discret a la pose des jetons (clic carto, pas whoosh
+          qui fatigue — decision Aziz) · ink-spread sur l'etalement des zones · impact sourd
+          a la friction. Tout en <Sequence>, plancher bas (sous voix + musique).
+          ====================================================== */}
+      {acte1Refonte && !acte1CameraOnly && (
+        <>
+          {/* assise sonore : drone de tension tres bas pendant tout le corps (montee JNIM/EIGS/friction) */}
+          <Sequence from={A1.DRIFT} durationInFrames={A1.END - A1.DRIFT + 30}>
+            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.22} />
+          </Sequence>
+          {/* PING discret a la pose des jetons — clic cartographique (marqueur qui se pose).
+              Pas sur CHAQUE jeton (7 = trop) : 2 par grappe, espaces, pour le sentiment de cascade. */}
+          <Sequence from={945} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.34} />
+          </Sequence>
+          <Sequence from={1002} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={1348} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.34} />
+          </Sequence>
+          <Sequence from={1378} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          {/* etalement des zones d'influence — ink-spread doux (JNIM puis EIGS) */}
+          <Sequence from={A1.JNIM + 30} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={A1.EIGS + 30} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.30} />
+          </Sequence>
+          {/* friction — impact sourd quand les deux fronts se touchent (f1840) */}
+          <Sequence from={A1.FRICTION} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.40} />
+          </Sequence>
+        </>
+      )}
+
+      {/* ======================================================
           SFX B1 V2 (acte2) — sobres, plancher 0.50, dans <Sequence> (jamais frame===X).
           Board clearing (gong rappel "fin de chapitre") · avion (whoosh whip) ·
           convoi (grondement bas) · emprises bases (ink-spread cascade ×3).
@@ -2446,9 +2487,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           // STAGGER : la ville apparaît 10f APRÈS le fill du pays (fond→contour→ville).
           const cityStart = ignF + 10;
           if (!cityPos || frame < cityStart) return null;
+          // En refonte : le marqueur (drapeau + onde + micro-centre) CEDE la place a la couche
+          // tactique apres les premiers jetons (fade-out f954->990, aligne sur WarMapBanner hideAt).
+          const refonteFadeOut = acte1Refonte
+            ? interpolate(frame, [954, 990], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+            : 1;
           const appearOp = interpolate(frame, [cityStart, cityStart + 16], [0, 1], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          });
+          }) * refonteFadeOut;
           // HIÉRARCHIE PULSE (plan upstream) : 3 ondes à l'apparition PUIS calme.
           // Évite le "sapin de Noël" (anneaux qui pulsent en boucle tout l'acte).
           const sinceCity = frame - cityStart;
@@ -2510,6 +2556,8 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
                   pos={cityPos}
                   flag={COUNTRY_FLAG[country] ?? "_shared/flags/ml.png"}
                   appearAt={cityStart}
+                  hideAt={990}
+                  fadeFrames={36}
                   accent={countryColor}
                 />
                 {/* PLAQUE SOUS le point (below) — le drapeau plante occupe le HAUT.

@@ -21,6 +21,8 @@ export interface WarMapBannerProps {
   pos: { x: number; y: number };
   flag: string;            // chemin staticFile, ex "_shared/flags/ml.png"
   appearAt: number;        // frame de plantage (= allumage du pays)
+  hideAt?: number;         // frame de retrait (fade-out) — le drapeau cede la place a la couche tactique
+  fadeFrames?: number;     // duree du fade-out avant hideAt
   accent: string;          // couleur pays (mat/pommeau) — coherence
   poleH?: number;          // hauteur du mat
   flagW?: number;
@@ -30,17 +32,22 @@ export interface WarMapBannerProps {
 }
 
 export const WarMapBanner: React.FC<WarMapBannerProps> = ({
-  frame, fps, pos, flag, appearAt, accent, poleH = 92, flagW = 78, flagH = 50, opacity = 1, yOffset = -10,
+  frame, fps, pos, flag, appearAt, hideAt, fadeFrames = 24, accent, poleH = 92, flagW = 78, flagH = 50, opacity = 1, yOffset = -10,
 }) => {
   const lf = frame - appearAt;
   if (lf < 0) return null;
+  if (hideAt != null && frame >= hideAt) return null;
   const t = lf / fps;
+  // fade-out a l'approche de hideAt (le drapeau s'efface quand la couche tactique prend le relais)
+  const hideOp = hideAt != null
+    ? interpolate(frame, [hideAt - fadeFrames, hideAt], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+    : 1;
 
   // Plantage one-shot — effet PLANTÉ DANS LE SOL (Aziz) : le mât s'enfonce avec un petit rebond sec,
   // pas un simple fade flottant. overshoot puis settle.
   const plant = interpolate(lf, [0, 7, 12], [poleH, -4, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const rise = plant;
-  const op = interpolate(lf, [0, 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * opacity;
+  const op = interpolate(lf, [0, 8], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * opacity * hideOp;
   const unfurlW = interpolate(lf, [8, 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // largeur deployee
 
   const STRIPS = 16;
