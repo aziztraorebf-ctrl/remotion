@@ -2805,11 +2805,16 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         );
       })()}
 
-      {/* Source bas droite */}
+      {/* Source bas droite — RETIRÉE en acte1Refonte (Aziz 2026-06-27) : l'Acte 1 est une ouverture
+          NARRATIVE sans chiffre précis → une mention "Données estimées · Sources..." est trompeuse
+          (elle suggère des données chiffrées absentes). Les sources ponctuelles vont sur les parties
+          à CHIFFRES (P4 : réfugiés, ressources, CFA). */}
+      {!acte1Refonte && (
       <div style={{ position: "absolute", bottom: 20, right: 30, fontSize: 12,
           color: SAHEL_COLORS.cream, opacity: hudOp * 0.65 }}>
         Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR
       </div>
+      )}
       </>}
 
       {/* ======================================================
