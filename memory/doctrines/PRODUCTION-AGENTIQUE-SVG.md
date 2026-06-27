@@ -21,10 +21,25 @@ Prouve Beat 3 GGW : un agent general-purpose, a partir de la doctrine + script +
    FINITIONS de gout (couleur exacte, "le mur reste", taille sous-titres). Tout le reste est delegable.
 
 ## LE FLUX EN 2 PHASES + 1 POINT DE CONTROLE (obligatoire)
-**PHASE 1 (agent autonome) — ideation -> cibles SVG -> STOP.**
-L'agent lit la source de verite du short, ideation Kimi, genere les cibles SVG natives, et S'ARRETE.
-Livrable en UN message : (1) idees Kimi + reco motivee, (2) cibles converties PNG + UPLOADEES CATBOX
-(Aziz juge en visuel), (3) auto-eval + trous. -> AZIZ TRANCHE LA CIBLE (+ mix-and-match eventuel).
+**PHASE 1 (agent autonome) — ideation -> cibles SVG + CHOREGRAPHIE -> STOP.**
+L'agent lit la source de verite du short, ideation Kimi, genere les cibles SVG natives (au RATIO du livrable,
+cf. checklist #7), et S'ARRETE. Livrable en UN message : (1) idees Kimi + reco motivee, (2) cibles converties
+PNG + UPLOADEES CATBOX (Aziz juge en visuel), (3) la CHOREGRAPHIE de chaque cible (cf. section dediee plus bas),
+(4) auto-eval + trous. -> AZIZ TRANCHE LA CIBLE.
+
+**PHASE 1bis (Claude, GRATUIT, sans API) — passe MIX-AND-MATCH + version maison. (acte Aziz 2026-06-27)**
+> Le SVG est du CODE editable -> ne JAMAIS jeter les variantes non retenues. Une fois la direction choisie :
+> 1. **Mix-and-match** : Claude LIT les SVG de toutes les variantes (meme concept, elements representables),
+>    repere les meilleures idees de chacune et les GREFFE (copier le `<g>`) sur la cible retenue. Ex prouve CFA :
+>    la variante "verrou" choisie + greffe de la variante "laisse" = vraie chaine a maillons + MAILLON DE RUPTURE
+>    identifiable + racines de la piece dans le sol. Des idees qu'on n'avait pas dans la cible de base.
+> 2. **Version Claude maison** : Claude ECRIT sa propre version SVG (gratuit, 0 API). Avantage cle : un SVG
+>    code par Claude sort deja en GROUPES NOMMES PROPRES (anime par construction) — comble le trou "GPT/Gemini
+>    sortent du SVG plat inanimable". Repartition des forces : Gemini/GPT = organique riche (medaille, textures) ;
+>    Claude = structure geometrique propre + composition + animabilite. Le MEILLEUR resultat = le MIX des deux.
+> 3. Claude convertit (rsvg-convert -w 1920 -h 1080) + upload catbox + presente le COMPARATIF a Aziz.
+> -> AZIZ TRANCHE la version finale (souvent la version mixee). Claude corrige les petits defauts puis Phase 2.
+> Cout = ~0 (lecture SVG + ecriture + rsvg-convert local). Gain = matiere de decision + animabilite garantie.
 
 **PHASE 2 (agent autonome) — animation A->Z -> render -> STOP.**
 A partir de la cible validee : l'agent CONCOIT la choregraphie + couleur + SFX (genere si besoin) +
