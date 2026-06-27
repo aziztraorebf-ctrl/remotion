@@ -46,7 +46,16 @@ ressources or/uranium/pétrole, confédération. Tous = géo réelle située ou 
    défaut, [[openrouter-svg]]) -> animer par frame (tracage/colorisation timée/flux) -> SFX existants.
 6. **Garde-fou** : 1 seul insert (pas de chantier SVG massif) ; le reste de l'AES reste Mapbox INTACT.
 
-## ÉTAT VIDÉO AES (à vérifier en RÉEL avant la session — les notes divergent)
-⚠️ MEMORY.md dit « toutes scènes FINAL » MAIS STATUS.md dit « passe séquentielle scène par scène, Acte 1 =
-gros chantier, assemblage EN DERNIER ». Contradiction à lever en début de session (vérifier le livrable réel).
+## ⚠️ CORRECTION 2026-06-27 — LE CFA EXISTE DÉJÀ (vérif livrable réel)
+Le brief 30-45s ci-dessus IGNORAIT que la P4 a DÉJÀ un CFA : `Partie4Cout.tsx` Ph8 (F_CFA=11869) +
+`out/episodes/warmap-sahel/p4-cfa-FINAL.mp4` (13.5s, split-screen carte AES + pièce CFA / Paris + « ≈656 FCFA » +
+« symbole de trop », validé FINAL). **DÉCISION AZIZ** : on produit une VERSION ALTERNATIVE SVG isolée (pipeline
+agentique), on GARDE l'existant, et on fera le COMPARATIF des deux quand tout sera complet (ne pas remplacer à l'aveugle).
+- **Segment audio RÉEL mesuré** (narration-v5-alignment) : « celle du franc CFA. Cette monnaie commune, toujours liée
+  à Paris, circule encore dans les trois pays, et rompre avec elle serait sans doute leur prochaine grande décision. »
+  Frames f11861 (« franc », 395.4s) → f12166 (« décision. », 405.5s). **Durée ≈ 10.2s** (PAS 30-45s — coller à l'audio).
+- **Registre** : PARCHEMIN War-Map (continuité, décision Aziz 2026-06-27) — PAS blueprint.
+
+## ÉTAT VIDÉO AES (vérifié RÉEL 2026-06-27)
+✅✅ **Acte1 FINAL + P1 + P2 + P3 FINAL.** P4 = morceaux à assembler (dont p4-cfa-FINAL existant).
 ✅ Hook Acte 1 « détachement+soudure » = fait + commité (`23a550a`, branche feat/warmap-aes-hook-integration).

@@ -43,8 +43,27 @@ touchent des fichiers en parallele. Chacun lance depuis CE fichier + l'ETAT du s
 4. La cible SVG validee (chemin) + le mix-and-match demande.
 5. Les refs de calibrage (2-3 frames SVG : "faisabilite du medium, PAS modele a copier").
 6. Le PIEGE specifique du beat (ex Beat 3 conceptuel = risque schema -> exiger scene narrative).
-7. Commandes exactes : render (`npx remotion render src/index.ts <CompoId> <out.mp4> --scale=1`),
+7. ⛔ **LE RATIO CIBLE DU LIVRABLE, EXPLICITEMENT** (16:9 pour les longs/War-Map/mid-form · 9:16 pour les Shorts ·
+   1:1 carrousel). Trou prouve 2026-06-27 (CFA) : sans consigne, l'agent a genere les cibles SVG en 9:16 par defaut
+   alors que la War-Map est 16:9. REGLE : toujours preciser le ratio + le `viewBox` attendu (ex 16:9 = `0 0 1920 1080`).
+   Si l'agent N'EST PAS SUR du ratio -> il POSE LA QUESTION via Claude (jamais deviner) ; Claude tranche sans
+   interrompre Aziz. La cible ET le code doivent etre au ratio du livrable des la Phase 1.
+8. Commandes exactes : render (`npx remotion render src/index.ts <CompoId> <out.mp4> --scale=1`),
    verif audio (ffprobe + volumedetect), upload catbox. Enregistrer la compo dans Root.tsx.
+
+## ⭐ PHASE 1 = CIBLE **+ CHOREGRAPHIE** (decision Aziz 2026-06-27 — evite les iterations Phase 2)
+Quand l'agent envoie ses images-cibles au point de controle, il DOIT joindre, POUR CHAQUE cible (ou juste la cible
+deja choisie si Aziz a tranche), la CHOREGRAPHIE D'ANIMATION prevue — pas seulement l'image figee. Le but : qu'Aziz
+juge le MOUVEMENT avant le code (le gout d'animation se valide en amont, pas apres render). La choregraphie decrit :
+- **La sequence timee** : quel geste sur quel MOT/frame (cale sur l'audio reel), du debut a la fin du segment.
+- **La COLORISATION par segment** : quelle couleur arrive QUAND et POURQUOI (couleur = diagnostic/recompense narrative,
+  pas deco — cf. trou doctrine #2 ci-dessous). Ce qui reste en encre, ce qui se colore.
+- **Le respect de la REGLE 5-6s** (SOUVERAIN-REMOTION-PLAYBOOK) : aucun plan statique > 5-6s sans nouveau geste OU
+  plateau de respiration explicite (halo qui respire, ease-out). Pour ~10s = ~2-3 micro-evenements echelonnes ;
+  pour ~45s = 4-6 (cf. SVG-MIDFORM-FORMAT densite). Lister les micro-evenements et leur frame.
+- **Micro-mouvements vs mouvements explicites** : distinguer l'ambiant continu (oscillation douce, respiration) des
+  gestes narratifs forts (tracage, colorisation, rupture). Dire lequel est lequel et quand.
+- **Le 1er element visuel AVANT ~1-1.5s** (jamais a 5s), le PLATEAU final (dernier etat qui respire).
 
 ## TROUS DE DOCTRINE COMBLES (remontes par les agents, gardes a jour)
 1. **Groupage des sous-titres** : NE PAS grouper par silence auto (`buildPhrases` sur gap > Xs). Le
