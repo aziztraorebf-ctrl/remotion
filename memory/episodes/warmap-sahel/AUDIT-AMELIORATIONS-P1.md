@@ -1,5 +1,11 @@
 # AUDIT AMÉLIORATIONS — Partie 1 (Origine 2012 / Libye / vide d'État)
 
+> ⛔⭐ **CORRECTION AZIZ 2026-06-27 — NE PAS UTILISER LE `tension-drone`.** L'audit ci-dessous recommande un
+> drone d'assise continu (points #1, #3, #4). DÉCISION AZIZ : le grondement `tension-drone` DÉRANGE → il a été
+> RETIRÉ du corps de l'Acte 1, et NE DOIT PAS être câblé sur P1 (ni les autres scènes). La MUSIQUE de fond
+> (`score-epic.mp3`, vol 0.10) suffit comme lit sonore. → Pour P1 : garder les SFX PONCTUELS (ping carto à la
+> pose, ink-spread sur les zones, impact sur les chutes de villes) MAIS ignorer toute mention de "drone d'assise".
+
 > Audit LECTURE SEULE 2026-06-27. Jugé sur le LIVRABLE RÉEL (`out/episodes/warmap-sahel/p1-FINAL.mp4`,
 > 35.2s, 9 frames extraites + analyse audio RMS/volumedetect) PUIS sur le code
 > (`src/projects/warmap/parties/Partie1Origine.tsx` + câblage `engine/SahelWarMapEngine.tsx` mode `partie1`).

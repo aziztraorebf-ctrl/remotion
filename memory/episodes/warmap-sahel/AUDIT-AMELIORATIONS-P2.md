@@ -1,5 +1,10 @@
 # AUDIT AMÉLIORATIONS P2 — War-Map Sahel AES (le blocage)
 
+> ⛔⭐ **CORRECTION AZIZ 2026-06-27 — NE PAS UTILISER LE `tension-drone`.** Le point A1 ci-dessous (IMPACT FORT)
+> recommande un `tension-drone` continu pour combler les 3 trous de silence. DÉCISION AZIZ : le grondement
+> `tension-drone` DÉRANGE → ne PAS le câbler. Combler les trous via la MUSIQUE de fond (`score-epic.mp3`) ou des
+> SFX PONCTUELS, PAS un drone. Les autres points (dernier tiers visuel, ping carto, sillage…) restent valides.
+
 > Audit LECTURE SEULE (2026-06-27). Render jugé : `out/episodes/warmap-sahel/p2-FINAL.mp4`
 > (89.7 s, 1920×1080, mean -19.9 dB / max -0.4 dB). Code : `src/projects/warmap/parties/Partie2Blocage.tsx`
 > + câblage `engine/SahelWarMapEngine.tsx` (mode `partie2`). Modèle : `PLAN-NARRATIF-P2.md`.

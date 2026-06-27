@@ -1528,16 +1528,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {/* ======================================================
           SFX CORPS ACTE 1 REFONTE (f684→END) — le corps etait MUET (les pistes son
           vivaient dans acte2/partie2/partie3, jamais en acte1Refonte). Grammaire P2/P3 :
-          drone d'assise continu · PING discret a la pose des jetons (clic carto, pas whoosh
-          qui fatigue — decision Aziz) · ink-spread sur l'etalement des zones · impact sourd
-          a la friction. Tout en <Sequence>, plancher bas (sous voix + musique).
+          PING discret a la pose des jetons (clic carto, pas whoosh qui fatigue) · ink-spread
+          sur l'etalement des zones · impact sourd a la friction. Tout en <Sequence>, plancher
+          bas (sous voix + musique).
+          ⛔ tension-drone d'assise RETIRE (decision Aziz 2026-06-27 : le grondement continu derange ;
+             la musique de fond suffit comme lit). Ne PAS le re-cabler — vaut aussi pour les autres scenes.
           ====================================================== */}
       {acte1Refonte && !acte1CameraOnly && (
         <>
-          {/* assise sonore : drone de tension tres bas pendant tout le corps (montee JNIM/EIGS/friction) */}
-          <Sequence from={A1.DRIFT} durationInFrames={A1.END - A1.DRIFT + 30}>
-            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.22} />
-          </Sequence>
           {/* PING discret a la pose des jetons — clic cartographique (marqueur qui se pose).
               Pas sur CHAQUE jeton (7 = trop) : 2 par grappe, espaces, pour le sentiment de cascade. */}
           <Sequence from={945} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>

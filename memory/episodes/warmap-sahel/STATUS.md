@@ -28,8 +28,10 @@
 >   1. Renders P1/P2 existent → upload catbox direct (`p1-FINAL.mp4`, `p2-FINAL.mp4`) pour qu'Aziz revoie les scènes.
 >   2. Aziz valide les corrections de `AUDIT-AMELIORATIONS-P1.md` + `AUDIT-AMELIORATIONS-P2.md` (backlog priorisé).
 >   3. Lancer agents de CORRECTION (système agentique) qui appliquent les corrections validées.
->   ⭐ Constat dominant audits = AUDIO : P1 n'a AUCUN SFX câblé (`partie1`) · P2 drone non continu (3 trous silence)
->   + dernier tiers faible (CEDEAO vide, raccord P3). P1 reste en "soustraction" (PAS de SVG/jetons).
+>   ⭐ Constat dominant audits = AUDIO : P1 n'a AUCUN SFX câblé (`partie1`) · P2 dernier tiers faible (CEDEAO vide,
+>   raccord P3). P1 reste en "soustraction" (PAS de SVG/jetons).
+>   ⛔ **NE PAS utiliser le `tension-drone`** (décision Aziz 2026-06-27 : il dérange, RETIRÉ du corps Acte 1).
+>   Combler les trous de silence via la musique de fond + SFX PONCTUELS (ping carto, ink-spread, impact), JAMAIS un drone.
 >
 > **▶ RESTE SUR LA VIDÉO** : (0) passe amélioration P1+P2 ci-dessus ; (1) assembler P4 (morceaux : exode + ressources
 >   + confed + CFA) en p4-FINAL unique — au CFA, TRANCHER SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL
