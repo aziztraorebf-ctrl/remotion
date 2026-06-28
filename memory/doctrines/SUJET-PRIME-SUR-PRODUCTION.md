@@ -135,6 +135,15 @@ vivantes — graines = pierres mortes). Toujours garder UNE couleur d'accent ré
 | Analytique / mécanisme / argent | blanc cassé `#f4f1ea` | or ou bleu-acier (la valeur) |
 | Tragique / guerre / perte | blanc froid `#fbfaf7` | rouge sang (le seul accent, jamais de vert) |
 
+**⭐ AXE PHYSICALITÉ — le sujet a-t-il une incarnation physique naturelle ? (prouvé Grand Inga 2026-06-28)**
+> Hypothèse validée en R&D : GGW vit car arbres = gestes physiques (croissance, ombre, vent). CFA peinait car mécanisme = métaphore froide (flux monétaire = abstraction). Ce n'est pas un nouveau moteur narratif — c'est un MODIFICATEUR qui affecte la vivacité native d'un moteur.
+
+**Test de physicalité :** « Est-ce que l'objet central de cette scène bougerait dans la vraie vie sans intervention humaine ? »
+- OUI (turbine qui tourne, eau qui coule, arbre qui pousse, flamme qui vacille) → **SVG encre vivant natif**. L'animation raconte sans effort.
+- NON (mécanisme pur, flux monétaire, abstraction réglementaire) → **SVG possible** mais demande un VECTEUR D'INCARNATION explicite (un objet porteur : la pièce, le décret, la main qui signe, la bougie). Sans vecteur → effet PowerPoint garanti.
+
+**Corollaire (objet inerte) :** un objet qui ne se déplace pas dans la vraie vie (lingot, coffre, pierre, bâtiment, turbine à l'ARRÊT) NE GLISSE JAMAIS — il s'illumine, change de couleur, ou fade sur place. Seuls les objets naturellement mobiles (eau, flamme, végétation, véhicules) peuvent se déplacer de façon crédible.
+
 **⭐⭐ DENSITÉ NARRATIVE = le ratio change la GRAMMAIRE DE MONTAGE, pas que la composition (Aziz 2026-06-27, prouvé).**
 > Réfute la doctrine antérieure « format = simple paramètre de composition » (fausse, cf. test
 > `files.catbox.moe/6u1usb.png` vertical vs horizontal + scène-port animée `files.catbox.moe/voh2fv.mp4`).

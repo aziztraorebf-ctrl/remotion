@@ -190,6 +190,14 @@ import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
 import { CfaMidformTest } from "./projects/_rnd/svg-scenes/CfaMidformTest";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
 import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
+import { IngaH16x9, INGA_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaH16x9";
+import { IngaV9x16, INGA_V_FRAMES } from "./projects/_rnd/svg-scenes/IngaV9x16";
+import { IngaEncreH, INGA_ENCRE_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaEncreH";
+import { IngaNarratifParchemin, IngaNarratifBlanc, INGA_NARRATIF_FRAMES } from "./projects/_rnd/svg-scenes/IngaNarratif";
+import { IngaMondeVivant, INGA_MONDE_FRAMES } from "./projects/_rnd/svg-scenes/IngaMondeVivant";
+import { IngaMondeV2, INGA_MONDE_V2_FRAMES } from "./projects/_rnd/svg-scenes/IngaMondeV2";
+import { IngaDualScene, INGA_DUAL_FRAMES } from "./projects/_rnd/svg-scenes/IngaDualScene";
+import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/IngaSplitScreen";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -1980,6 +1988,15 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaH16x9" component={IngaH16x9} durationInFrames={INGA_H_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaV9x16" component={IngaV9x16} durationInFrames={INGA_V_FRAMES} fps={30} width={1080} height={1920} />
+        <Composition id="RND-IngaEncreH" component={IngaEncreH} durationInFrames={INGA_ENCRE_H_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaNarratif-Parchemin" component={IngaNarratifParchemin} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaNarratif-Blanc" component={IngaNarratifBlanc} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaMondeVivant" component={IngaMondeVivant} durationInFrames={INGA_MONDE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaMondeV2" component={IngaMondeV2} durationInFrames={INGA_MONDE_V2_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaDualScene" component={IngaDualScene} durationInFrames={INGA_DUAL_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaSplitScreen" component={IngaSplitScreen} durationInFrames={INGA_SPLIT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />

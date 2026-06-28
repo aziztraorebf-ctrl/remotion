@@ -17,11 +17,13 @@ Le point commun : **ca se RACONTE par des formes qui evoluent** (tracage, colori
 
 ## ⛔ Ce pour quoi le SVG n'est PAS le bon outil (garde-fou anti-dilution)
 
-- **Geo reelle** (territoire, frontieres, bataille situee, trajet) → reste **Mapbox** (frame-driven).
+- **Geo reelle seule** (territoire, frontieres, bataille situee, trajet) → reste **Mapbox** (frame-driven).
 - **Organique humain/animal realiste, emotion d'un visage, scene "filmee"** → reste image generee / Seedance / vraie matiere.
 - **Recit chronologique pur "que s'est-il passe"** sans transformation visuelle a montrer → narration classique.
 
-Ce garde-fou preserve la signature de chaque format (une War-Map reste geo, etc.) SANS amputer le SVG de sa force narrative. Le critere n'est donc PAS "abstrait vs narratif" (erreur), c'est "**transformation visuelle de formes OUI ; geo reelle / organique realiste / recit sans transfo NON**".
+Ce garde-fou preserve la signature de chaque format (une War-Map reste geo, etc.) SANS amputer le SVG de sa force narrative. Le critere n'est donc PAS "abstrait vs narratif" (erreur), c'est "**transformation visuelle de formes OUI ; geo reelle seule / organique realiste / recit sans transfo NON**".
+
+**Cas hybride SVG + géo réelle = POSSIBLE via SVG-insert** : un beat Mapbox peut contenir un insert SVG narratif (ex : War-Map AES = carte Mapbox pour la géo + `WarmapCfaInsertSVG` pour le mécanisme CFA). Ce n'est PAS une violation de ce garde-fou — c'est la complémentarité des deux formats. Le SVG-insert reste dans son rôle (transfo narrative), la carte reste dans son rôle (géo réelle). Arbre de décision complet : `memory/ROUTAGE.md` § "ARBRE DE DÉCISION".
 
 ## Le FORMAT mid-form 100% SVG (viable, prouve)
 
@@ -81,6 +83,73 @@ ce qu'ils voient : GGW ne "zoome" pas, il ENCHAINE des etats d'objets.
   le fil impose la sequence causale ET fait voyager l'oeil sans bouger le cadre. A poser DES la composition de toute
   scene-lieu horizontale (c'est lui qui evite l'effet PowerPoint, plus encore que le spotlight).
 → Garde-fou avant TOUT format long horizontal : si une scene se contente de "poser + coloriser sur place", elle sera jugee PowerPoint.
+
+---
+
+## ⭐⭐ DOCTRINE GGW — LES 5 RÈGLES FONDAMENTALES (blueprint vivant, gravé 2026-06-28)
+
+> GGW (Grande Muraille Verte) est notre **référence absolue** pour toute scène SVG encre narrative.
+> Ces règles sont tirées de l'analyse frame-par-frame de `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4`.
+> Elles s'appliquent AVANT tout appel à Gemini/GPT pour générer une scène.
+
+### Règle 1 — Zéro chiffre à l'écran. L'information passe par la FORME.
+
+Les chiffres appartiennent à la narration audio. La forme montre : arbres qui meurent = 80% d'échec.
+Un chiffre à l'écran transforme une scène narrative en infographie. Même beau, c'est du PowerPoint.
+Exception tolérée : une date isolée (ex. "1994"), un nom propre (ex. "TONY RINAUDO") — jamais un ratio/statistique.
+
+### Règle 2 — La scène SE DESSINE ENTIÈRE D'ABORD, puis SE COLORIE.
+
+Toute la scène arrive en encre neutre (rapidement ou lentement). ENSUITE la voix nomme un objet → il reçoit
+sa couleur. La couleur = le doigt qui montre, pas l'objet qui naît.
+Anti-pattern : construire ET coloriser en même temps (verdict : schéma, pas récit).
+Bonne pratique : poser le décor complet en encre frame 1 → voix → couleur → voix → couleur → etc.
+
+### Règle 3 — Tout est VIVANT dès la première frame.
+
+Le soleil tourne. L'eau ondule. La turbine tourne. Les feuilles bougent. La caméra ne bouge PAS —
+mais le monde à l'écran n'est jamais statique. La couleur arrive ensuite, mais la vie était là depuis le début.
+Corollaire : une scène SVG sans mouvement permanent de fond = scène morte dès le départ.
+La "caméra" ne bouge pas — c'est le DESSIN qui progresse dans l'espace (révélation de profondeur :
+ciel → milieu → sol/racines). Le viewBox reste fixe en permanence.
+
+### Règle 4 — FORMAT = DIRECTION NATURELLE DU SUJET (choisir AVANT la recherche approfondie)
+
+**Vertical 9:16** = sujets dont le mouvement naturel est HAUT ↔ BAS :
+- arbres qui poussent, eau qui monte, soleil qui écrase, graine qui germe, profondeur révélée par couches
+- l'œil suit la gravité ou la vie — haut (ciel/contexte) → bas (sol/conséquence)
+
+**Horizontal 16:9** = sujets dont le mouvement naturel est GAUCHE → DROITE :
+- électricité qui voyage d'un barrage vers les villes, gaz qui traverse un continent, route commerciale,
+  front de guerre, chaîne causale (ressource → transformation → exportation → profit)
+- l'œil suit la causalité — le fil conducteur visuel EST la métaphore du voyage
+
+**Gate à appliquer** : avant toute session de recherche approfondie sur un sujet SVG, poser la question :
+"Le mouvement naturel de ce sujet est-il vertical ou horizontal ?" → choisir le format en conséquence.
+Un sujet sans direction naturelle claire = questionner si SVG est le bon outil (vs Mapbox/Atlas).
+
+### Règle 5 — FRAMES GGW COMME RÉFÉRENCE DE REGISTRE (pour tout modèle vision : Gemini, GPT, Claude, agents)
+
+Quand on demande à un modèle (Gemini, GPT-5.5, Claude, agent remotion-composer…) de générer ou coder
+une scène SVG encre narrative, joindre 5-7 frames GGW comme référence visuelle.
+Les frames sont en 9:16 mais le modèle les utilise comme référence de REGISTRE (palette, trait, épure,
+taille des héros), pas de composition — il adapte à la grammaire du format demandé (16:9 ou 9:16).
+Valable aussi pour Claude lui-même en session : lire ces frames avant de coder une scène encre.
+
+Frames canoniques permanentes : `public/_shared/refs/ggw-frames/`
+(re-extraire si besoin : `ffmpeg -i out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4 -vf "fps=1/7,scale=540:960" frame_%03d.jpg`)
+
+| Frame | Ce qu'elle illustre | Règle |
+|---|---|---|
+| frame_001 | Scène entière en encre, pelle seule, tout le reste vide | R2 — dessin complet d'abord |
+| frame_002 | Colorisation sélective verte sur fond encre, arbres vivants | R2 — mécanisme B en action |
+| frame_004 | Deux arbres héros énormes, 60% du cadre, fond presque vide | R1 + R3 — taille + vide intentionnel |
+| frame_005 | Un vivant + deux morts décharnés, contraste sans mot | R1 — forme montre, pas chiffre |
+| frame_007 | Un seul objet héros + décor stable, grand vide | R3 — vie permanente + respiration |
+| frame_013 | Racines révélées sous le sol, arbres en haut | R3 — profondeur révélée par couches |
+| frame_019 | Vue mosaïque finale avec perspective, scène qui se referme | R2+R4 — clôture de la scène-lieu |
+
+---
 
 ## ⭐ Le SVG-INSERT (dans TOUS les formats — la vraie bascule strategique)
 
@@ -225,3 +294,44 @@ de previsualisation) -> risque de double touche sur Root.tsx.
 - B7MosaiqueFinal.tsx absent de Root.tsx sur master -> a enregistrer lors du prochain merge de `feat/shorts-svg-muraille-verte`.
 
 **Reference GGW complete** : `memory/episodes/shorts-svg/muraille-verte/ETAT-GGW-MURAILLE-VERTE.md` (durees exactes de chaque beat, commits, liens catbox).
+
+---
+
+## Scène-Monde Persistante (prouvé 2026-06-28, session Grand Inga)
+
+Un seul SVG qui change d'état sans coupe — la transformation EST le récit. Validé sur `IngaMondeV2.tsx` (60s, encre→colorisation→jour→crépuscule→nuit) et `IngaDualScene.tsx` (montage en continuité de monde, cross-dissolve).
+
+**Règles :**
+- Partir de l'encre pure (fond `#1a1008`, traits `#3a2a18`) — la couleur est une révélation, pas un décor
+- Colorisation séquentielle GGW R2 : fleuve d'abord → turbine → câble → pylône → ciel
+- Un objet inerte (barrage, maison, rocher) NE GLISSE JAMAIS — il s'illumine, change de couleur, ou fade
+- La turbine Inga ne s'arrête JAMAIS narrativement — elle tourne à plein régime pendant que le village est dans le noir (erreur à éviter : la montrer arrêtée = faux historiquement ET narrativement)
+
+**Option C — Désaturation intermédiaire (chromatic narration, prouvé `IngaMondeV2.tsx` avec `feColorMatrix saturate`) :**
+Avant tout changement de palette vif→vif, passer par un gris-beige neutre (saturation→0.05 puis re-saturation). Le monde "s'éteint" avant de "changer de registre" — signal que quelque chose change fondamentalement. Implémentation : `<filter id="desat"><feColorMatrix type="saturate" values={satValue}/></filter>` sur tout le groupe SVG, activé seulement pendant la transition.
+
+**Référence cinématographique :** Pixar "Day and Night" (2010) — 6 minutes, zéro coupe, même espace, cycle jour/nuit. Notre équivalent SVG.
+
+## Split-screen — Règle d'usage (prouvé 2026-06-28)
+
+Le split-screen crée une **rivalité d'attention** quand les deux côtés bougent simultanément. Le cerveau ne sait jamais lequel regarder.
+
+**Usage correct :** Ponctuel, 2-4 secondes maximum, pour une révélation simultanée ("voilà les deux faces"). Puis retour plan unique. Court, chirurgical — l'effet est dévastateur précisément parce qu'il ne dure pas.
+
+**Seule exception viable en continu :** un côté statique (photo fixe, titre) + un côté animé. Dès que les deux bougent = rivalité.
+
+**Diagnostic Gemini sur notre SplitScreen Inga :** Le split Jour/Nuit est un faux paradoxe — l'injustice n'est pas une question d'heure. Le barrage tourne jour ET nuit, le village est privé jour ET nuit. Version upgrade = split CONCEPTUEL (gauche = macro mécanique en encre, droite = humain/bougies) tout en fond sombre `#1a1008`.
+
+## La 3ème voie : Zoom Inversé / Powers of Ten (non encore codé, 2026-06-28)
+
+Proposition Gemini sur les prototypes Inga — technique à coder en session dédiée :
+
+1. Macro sur le rotor de la turbine (or qui pulse, tourne vite)
+2. Dé-zoom brutal (easing exponentiel) → carte topographique SVG encre, tout petit
+3. Câble d'or se trace à vitesse impériale sur la carte
+4. Zoom soudain sur un grain de poussière sur le tracé du câble
+5. Révélation : c'est le village. Câble domine en haut du cadre. Bougies en bas.
+
+**Pourquoi supérieur :** montre physiquement l'écrasement technologique — l'infrastructure enjambe les habitants comme des grains de poussière. Exploite la vraie force du SVG vectoriel : zoom infini sans perte de résolution. C'est le seul format qui encode l'ÉCHELLE de l'injustice, pas seulement le contraste.
+
+**Geste manquant des deux protos (Gemini) :** Le câble d'or qui passe au-dessus des maisons doit émettre un halo FROID qui éclaire les toits mais n'entre jamais dans les fenêtres — et les flammes des bougies vacillent au passage ("siphon effect"). L'énergie les frôle, ne les pénètre pas.

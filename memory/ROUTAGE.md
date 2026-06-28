@@ -10,6 +10,18 @@
 
 Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire du code ou un prompt**. Si la ligne mentionne aussi un skill, le consulter en complément (jamais à la place de la mémoire projet).
 
+### ⚡ ARBRE DE DÉCISION — SVG ou Mapbox ? (trancher ici avant tout)
+
+| Question | Réponse → Format |
+|---|---|
+| Le sujet a une **géographie réelle** (frontières, trajet, territoire) ? | → **Mapbox** frame-driven |
+| Le sujet est une **transformation visuelle de formes** (mécanisme, flux, montage financier, récit incarné par des formes qui évoluent) ? | → **SVG génératif** |
+| Les deux à la fois (géo + transfo narrative) ? | → **Mapbox** pour la géo + **SVG-insert** pour la couche narrative (ex. War-Map AES = carte Mapbox + insert CFA en SVG). Doctrine : `SVG-MIDFORM-FORMAT.md` § "SVG-insert" |
+| Doute sur si le SVG sera LISIBLE (forme nouvelle, angle incertain) ? | → **SVG-FAISABILITE-AMONT** obligatoire AVANT tout code |
+| Organique humain/animal réaliste, émotion de visage, scène filmée ? | → image générée (Gemini/Recraft/Seedance), pas SVG |
+
+---
+
 ### Points d'entrée maîtres (lire EN PREMIER en cas de doute « où chercher ? »)
 
 | Sujet | Fichier |

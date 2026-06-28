@@ -1,8 +1,16 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-25 (élagage archive → `memory/archive/NEXT-ACTION-historique-2026-06-25.md`). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-28 (session Grand Inga R&D). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
+
+## 🆕 PROCHAINE SESSION DÉDIÉE — Grand Inga : Zoom Inversé (Powers of Ten)
+
+> Session R&D Grand Inga 2026-06-28 : physicalité du sujet PROUVÉE. 4 prototypes produits (`IngaMondeVivant`, `IngaMondeV2` avec option C désaturation, `IngaDualScene`, `IngaSplitScreen`). Review Gemini reçue.
+> **NEXT :** coder le "Zoom Inversé" (proposition Gemini, technique la plus forte) : macro turbine → dé-zoom carte SVG → câble d'or qui se trace → zoom sur village → bougies. Session dédiée.
+> **À appliquer avant le Zoom Inversé :** turbine toujours ACTIVE en scène B (erreur narrative dans DualScene), câble émet halo froid sur les toits des maisons sans entrer dans les fenêtres, "siphon effect" sur les bougies au passage du câble.
+> **Doctrine gravée :** Scène-Monde Persistante + Split-screen règle d'usage + 3ème voie Zoom Inversé → `memory/doctrines/SVG-MIDFORM-FORMAT.md`.
+> **Prototypes R&D :** `src/projects/_rnd/svg-scenes/Inga*.tsx` (4 fichiers). Renders : `out/_r-and-d/inga-*.mp4`.
 
 ## 🆕 PROCHAINE SESSION SUGGÉRÉE (2026-06-28) — La PHYSICALITÉ du sujet
 > ⭐ Point de départ donné par Aziz en fin de session R&D SVG. Hypothèse : c'est la PROPRIÉTÉ du sujet (scènes
@@ -113,10 +121,10 @@
 **Statut** : concept validé, backlog — NE PAS commencer avant fin AES + Maroc Batteries.
 **Fiche complète** : `memory/projects/peste-1347-midform.md`.
 
-### 4. Peste 1347 Atlas — REFONTE AU PLAYBOOK QUASI TERMINÉE (2026-06-05) ⭐
-**Etat** : Beats 1-4 **FINAL premium**. Beat 5 V9 **COMPLET** mais pas encore FINAL.
-**Decision en attente** : verdict global Aziz sur Beat5 + générer anims NORTH premium caravane (pont PixelLab).
-**Reprise** : lire `memory/episodes/peste-1347/STATUS.md`.
+### 4. Peste 1347 Atlas — EN ATTENTE VALIDATION AZIZ POUR PUBLICATION ✅
+**État** : épisode COMPLET. Livrable : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4`. Beat5 v17 FINAL + assemblage fait 2026-06-08.
+**Décision en attente** : validation Aziz pour publication. Passe améliorations optionnelle (Gemini signale aplat rouge + encarts texte — non bloquant).
+**Reprise** : `memory/episodes/peste-1347/STATUS.md` section PROCHAINE SESSION.
 
 ---
 

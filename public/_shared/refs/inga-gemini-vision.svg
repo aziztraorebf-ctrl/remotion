@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <g id="house">
+      <!-- Ombre -->
+      <ellipse cx="30" cy="50" rx="40" ry="8" fill="#2b2117" opacity="0.06" />
+      <!-- Base de la maison -->
+      <rect x="0" y="0" width="60" height="50" fill="none" stroke="#2b2117" stroke-width="2" />
+      <!-- Toit triangulaire -->
+      <polygon points="-10,0 30,-30 70,0" fill="none" stroke="#2b2117" stroke-width="1.5" />
+      <!-- Fenêtres (Éteintes, couleur parchemin) -->
+      <rect x="12" y="15" width="12" height="12" fill="#e8dcc0" stroke="#2b2117" stroke-width="1" />
+      <rect x="36" y="15" width="12" height="12" fill="#e8dcc0" stroke="#2b2117" stroke-width="1" />
+    </g>
+  </defs>
+
+  <!-- 1. FOND -->
+  <rect width="1920" height="1080" fill="#e8dcc0" />
+  
+  <!-- Double cadre pointillé -->
+  <rect x="30" y="30" width="1860" height="1020" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.5" />
+  <rect x="45" y="45" width="1830" height="990" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 4" opacity="0.5" />
+
+  <!-- 2. FLEUVE CONGO -->
+  <path d="M 0 750 Q 480 700 960 780 T 1920 730" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.4" />
+  <path d="M 0 830 Q 500 880 1000 800 T 1920 860" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.4" />
+  <path d="M 0 910 Q 450 860 900 940 T 1920 890" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.4" />
+  <path d="M 0 990 Q 550 1040 1050 960 T 1920 1020" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.4" />
+
+  <!-- 4. PYLÔNE -->
+  <!-- Base large -->
+  <rect x="1000" y="740" width="200" height="20" fill="#2b2117" opacity="0.3" />
+  
+  <!-- Diagonales de renfort en X -->
+  <g stroke="#2b2117" stroke-width="1.5" opacity="0.7">
+    <line x1="1020" y1="750" x2="1166" y2="630" />
+    <line x1="1180" y1="750" x2="1034" y2="630" />
+    
+    <line x1="1034" y1="630" x2="1152" y2="510" />
+    <line x1="1166" y1="630" x2="1048" y2="510" />
+    
+    <line x1="1048" y1="510" x2="1138" y2="390" />
+    <line x1="1152" y1="510" x2="1062" y2="390" />
+    
+    <line x1="1062" y1="390" x2="1124" y2="270" />
+    <line x1="1138" y1="390" x2="1076" y2="270" />
+    
+    <line x1="1076" y1="270" x2="1110" y2="150" />
+    <line x1="1124" y1="270" x2="1090" y2="150" />
+  </g>
+
+  <!-- Traverses horizontales -->
+  <g stroke="#2b2117" stroke-width="2">
+    <line x1="1034" y1="630" x2="1166" y2="630" />
+    <line x1="1048" y1="510" x2="1152" y2="510" />
+    <line x1="1062" y1="390" x2="1138" y2="390" />
