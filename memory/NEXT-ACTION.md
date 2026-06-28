@@ -4,6 +4,15 @@
 
 ---
 
+## 🆕 PROCHAINE SESSION SUGGÉRÉE (2026-06-28) — La PHYSICALITÉ du sujet
+> ⭐ Point de départ donné par Aziz en fin de session R&D SVG. Hypothèse : c'est la PROPRIÉTÉ du sujet (scènes
+> vivantes incarnées vs concepts abstraits) qui fait vivre ou mourir le style encre. GGW (arbres = gestes) vit ;
+> CFA (mécanisme = métaphore froide) peine. → ajouter un 5e axe "physicalité" au gate [[SUJET-PRIME-SUR-PRODUCTION]],
+> et TESTER sur le MÉGAPROJET BARRAGE (Grand Inga, déjà validé GO dans [[GAZODUC-MEGAPROJETS-SUJET]]).
+> **STARTER COMPLET** : `STARTER-PROCHAINE-SESSION-physicalite-sujet.md` (tableau + livrable + test + rappels acquis).
+
+---
+
 ## 🆕 FRANC CFA — MID-FORM SVG (pré-prod faite, 2026-06-27)
 > ✅ Sujet validé + angle (B) "le courage + le coût réel" + TRIPLE fact-check + script de référence (V6) + jury LLM.
 > ⭐ Pivot acté : MID-FORM, pas short (sujet à MÉCANISME → veut de la construction visuelle séquentielle, cf règle
