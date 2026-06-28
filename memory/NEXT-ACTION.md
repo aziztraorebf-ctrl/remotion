@@ -11,7 +11,15 @@
 > **NEXT** : étendre script V6 → mid-form 4-6min + storyboard SVG-d'abord (scènes parité/Dakar/entrée déjà esquissées dans STATUS §7).
 > ⚙️ MÉTA prouvé cette session : la CHAÎNE [[RECHERCHE-PRESCRIPT-UNIFIEE]] (valider→écrire→fact-check 3 niveaux→jury) fonctionne A→Z.
 
-## ⭐⭐ PISTE STRATÉGIQUE FRAÎCHE (2026-06-22) — Shorts SVG ↔ Longs Mapbox (Hub & Spoke)
+## 🆕 MÉTA — TYPAGE SUJET enrichi : moteur narratif + trousseau de style (2026-06-27)
+> Décortiqué avec Aziz suite au CFA. Conclusion : le CFA n'était pas un MAUVAIS sujet, il était mal FORMATÉ.
+> Cause racine = on ne typait pas le **moteur narratif** (ce qui crée la tension), seulement la durée.
+> ✅ GRAVÉ : (1) axe « moteur narratif » (retournement/mécanisme/récit/révélation-chiffre → dynamisme+format+style)
+> dans [[SUJET-PRIME-SUR-PRODUCTION]] § TYPER LE MOTEUR NARRATIF. (2) Trousseau « encre » 3 clés (parchemin/blanc-cassé/
+> blanc-froid selon le TON, accent sémantique unique, N&B intégral proscrit) dans [[SUJET-PRIME]] + [[SVG-MIDFORM-FORMAT]].
+> Comparaison visuelle 3 registres : files.catbox.moe/jb8puk.png. **À éprouver au prochain typage de sujet réel.**
+
+## 🔧 BACKLOG STRATÉGIQUE — Shorts SVG ↔ Longs Mapbox (Hub & Spoke) — assemblage short SVG désormais PROUVÉ (GGW)
 > 🗂️ Analyse Hub & Spoke gravée dans `memory/doctrines/SVG-SCENES-GENERATIVES.md` § Hub & Spoke + `ETAT-GGW-MURAILLE-VERTE.md` (acquis GGW). Aziz veut s'y lancer « pendant que c'est frais ».
 > En bref : 2 formats séparés MÊME niche — longs analytiques (Mapbox/3D, autorité) + shorts SVG génératifs
 > (paper-cut/blueprint, pédagogiques, multi-plateforme, gardent la chaîne vivante). PAS de la dilution = Hub & Spoke.

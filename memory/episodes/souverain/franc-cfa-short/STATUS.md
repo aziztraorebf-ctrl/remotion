@@ -24,6 +24,18 @@
 - ✅ TRIPLE fact-check FAIT (Tavily + Sonar Pro + Deep Research). 5 corrections appliquees (voir §4). Sources = §6.
 - ✅ Jury LLM FAIT (GPT 7 / Gemini 6.5 / Kimi 6) : fond/angle validés, corrections short appliquées en V6.
 - ✅ Doctrines gravées : [[RECHERCHE-PRESCRIPT-UNIFIEE]] + règles 11bis/11ter [[DOCTRINE-SCRIPT-UNIFIEE]] + règle sujet→format.
+- ✅ REGISTRE TRANCHÉ (2026-06-27) = **encre ANALYTIQUE** : fond blanc cassé `#f4f1ea`, accent OR `#b8860b` (la valeur),
+  touche ROUGE `#a8281f` réservée à la bascule (la perte). PAS le parchemin (trop nature/chaleur), PAS le blueprint pur
+  (trop froid/technique). L'or = l'argent/l'institution, sans militer. Cf. [[SUJET-PRIME-SUR-PRODUCTION]] § fond+accent.
+- ✅ SCÈNE-CLÉ « nuit 1994 » CONÇUE en SCÈNE-LIEU à activation séquentielle (grammaire horizontale, cf [[SVG-MIDFORM-FORMAT]]) :
+  un BUREAU DE DÉCISION nocturne (sans humain), objets activés un par un sur le script : décret posé → balance qui bascule
+  100→50 → pièces coupées en deux → tampon « TRESOR » qui frappe → fenêtre qui s'éclaire au matin. Composition fixe, attention
+  qui voyage. C'est la réponse au « CFA plat en short » : le mécanisme devient une scène qui se construit. Test GLM de cette scène :
+  `files.catbox.moe/arhoxr.png` (objets OK, compo Gemini bien meilleure : `files.catbox.moe/e52t6b.png`).
+- ⚠️ PROTO ANIMÉ TESTÉ + JUGÉ (2026-06-28) : scène-bureau animée (grammaire couleur GGW : pièces entrent dorées, rouge au climax,
+  fond sobre) → `files.catbox.moe/fjo71c.mp4`. **Verdict jury 3 modèles (Gemini-vidéo + Kimi-frames + Claude) = NON, pas au niveau
+  GGW, effet PowerPoint.** Grammaire de COULEUR OK ; ce qui MANQUE = le MONTAGE TEMPOREL (révélation/spotlight + transitions-encre +
+  échelle d'objet, PAS de caméra/viewBox). → la scène-bureau est à REFAIRE avec ces mécaniques avant prod. Cf. [[SVG-MIDFORM-FORMAT]] § PowerPoint.
 - ⬜ NEXT (mid-form) :
   - Étendre le script V6 (référence short ~2:20) → script mid-form 4-6 min (chaque beat = scène qui se CONSTRUIT,
     + respirations, + ratio doctrine [[MIDFORM-FORMAT-RULES]]). Le V6 condense ce que le mid-form va DÉPLOYER.

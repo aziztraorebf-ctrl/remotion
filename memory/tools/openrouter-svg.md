@@ -47,6 +47,16 @@ GLM genere → JSON `{tokens:{...}}` ou `{scene_svg, groups}` → on transforme 
 - Scene conceptuelle animee : `FluxPetroleAnimee.tsx` (+ `fluxPetroleGroups.ts`) — diagramme "hemorragie petroliere" niveau Bloomberg/Vox, directement utile aux encarts Souverain.
 - Le JSX `f`-driven produit par GLM **compile et tourne dans Remotion sans retouche**.
 
+### Observation 2026-06-27 (scene CFA "bureau 1994", a RECROISER — PAS un verdict)
+Brief verbal detaille (8 objets nommes, registre encre analytique, 16:9) → GLM a livre les 8 `<g id>` demandes,
+registre respecte, ~174 hachures (suivi la consigne de detail), 0 CSS, propre. Cout 0,03$. Render : files.catbox.moe/arhoxr.png.
+- ✅ FORT sur l'OBJET detaille isole (balance ciselee, tampon, fenetre gravee) + respect du registre decrit en mots.
+  (Coherent avec ses reussites passees : carte etat-major, jetons, flux petrole — GLM sait BEAUCOUP de scenes, ne pas le sous-estimer.)
+- ⚠️ Sur CETTE compo : profondeur/echelles/ancrage manques (fenetre qui flotte). MAIS cause probable = mon brief decrivait
+  les objets SANS imposer la perspective/les plans. **A recroiser** avec un brief qui specifie profondeur + echelles relatives.
+  ⛔ NE PAS graver "GLM faible en composition" : un seul essai, et il a tres bien compose ailleurs.
+- Piste si confirme : **GLM dessine les objets premium → mise en scene/composition cote nous**. A tester, pas acquis.
+
 ## Nettoyage SVG (a faire a la lecture, tous modeles)
 
 Fonction commune : extraire le `<svg>`/JSON, **strip `<style>`/CSS**, fix camelCase→kebab (ou l'inverse selon cible JSX), **dedup attributs** dupliques, **wrap dans `<svg viewBox=...>`** si le modele renvoie un fragment de `<g>` sans racine, **fixer les `""` parasites** (GLM/Gemini glissent parfois un guillemet en trop : `470"" />`). (Fait a la main pendant la R&D — a outiller si on industrialise.)

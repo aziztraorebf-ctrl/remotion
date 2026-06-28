@@ -208,10 +208,29 @@ durationInFrames:34})`) + poussière d'impact brève + SFX sec (`impact/impact.m
 Bien plus tangible qu'un fade. Chute VISIBLE (~16f, pas 6f : baisser stiffness). Cascade lisible (pelle → gros lingot →
 petit lingot, décalés). `spring > interpolate` (doctrine Remotion). Prouvé `HeroGptAnimee`.
 
-### 5. ⭐ PILOTAGE COULEUR SÉMANTIQUE = notre signature (ce que Seedance ne fait pas sur commande)
-La terre/le ciel qui VIRENT au ROUGE SANG sur le mot « la guerre » (overlay `<rect>` en `mixBlendMode:"multiply"`, opacité
-montée par interpolate) = exactement l'océan qui noircissait dans la pièce Sénégal (`oilSpread`). La couleur dit le SENS,
-timée sur la voix. Choisir la couleur PAR le sens : rouge sang = guerre/violence (PAS noir, qui dirait pétrole/pollution).
+### 5. ⭐⭐ GRAMMAIRE DE COLORISATION = notre signature (analyse GGW complète 7 beats, 2026-06-27)
+> Vérifiée frame par frame sur les 7 beats GGW + code. ⛔ CORRIGE un contresens : le monde NE se colorise PAS
+> entièrement à la fin (« voile chaud global » = FAUX). La couleur reste localisée au SENS ; le décor reste en encre.
+
+**3 MÉCANISMES de couleur, choisis par la NATURE de l'objet (pas un seul) :**
+- **A — ENTRE DÉJÀ COLORÉ** : ce qui *apparaît* comme acte neuf/vivant naît AVEC sa couleur native (la pelle, les
+  arbres plantés, les pousses, les récoltes). La couleur naît avec l'objet — on n'« active » pas sa couleur après.
+  C'est la SÉQUENCE D'APPARITION (timée sur le mot) qui porte le récit, pas une colorisation différée.
+- **B — PRÉSENT EN ENCRE PUIS SE COLORISE** : ce qui *existe déjà en contour* et se RÉVÈLE au mot-clé (le soleil
+  contour→or, le sol mort encre→ocre, les souches encre→cœur vert, le champ final B7 encre→forêt). **Le PAYOFF d'un
+  beat est presque toujours un mécanisme B** (la révélation). Overlay/fill monté par interpolate, timé sur la voix.
+- **C — DÉ-COLORISATION = MORT** : la couleur se RETIRE (vert→gris en vague/cascade quand les arbres meurent). Par
+  cross-fade d'opacité entre calques encre/couleur/mort du même objet — JAMAIS par glissement (objet inerte ne glisse pas).
+
+**Invariants (non négociables) :**
+- Couleur TOUJOURS sémantique, **frame-calée sur le mot** du script (cues de l'alignement audio). Jamais décorative.
+- **Le décor permanent reste en ENCRE pour toujours** (dunes, horizon, fond crème). Le fond ne se colorise jamais —
+  SEULE exception inversée : un virage GLOBAL au GRIS (`multiply`) pour marquer la mort/l'échec (= mécanisme C à l'échelle de la scène).
+- **Palette à code FIXE** (anti-décor) : vert=vie · or/jaune=soleil (ambivalent : ambition puis menace/sécheresse) ·
+  **ocre=couleur-DIAGNOSTIC** (le sol mort qui s'allume quand on NOMME la cause) · gris=mort · sépia=archive/humain. Rien hors lexique.
+- **Parcimonie** : « garder la munition » (le vert vif réservé au climax) — sauf au beat d'ABONDANCE prouvée où il se déverse.
+- **Sous-titres** : mot dit = encre pleine · mot en cours = couleur d'accent · mot à venir = encre 0.45. (Convention constante.)
+- **Porté à l'HORIZONTAL** : même lexique, simplement plus d'objets (la scène-lieu dense = la frise GGW en paysage). Cf. [[SVG-MIDFORM-FORMAT]] § scène-lieu.
 
 ## ⭐⭐⭐ DEUX CAPACITÉS DE WORKFLOW NOUVELLES (le LLM = matière première, pas contrainte) — 2026-06-22
 

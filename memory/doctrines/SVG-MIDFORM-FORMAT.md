@@ -30,6 +30,58 @@ Ce garde-fou preserve la signature de chaque format (une War-Map reste geo, etc.
 - **Regle anti-monotonie** : changer de registre toutes les 1-2 scenes (blueprint froid / encre chaude / flux / medaille / papier-decoupe). 3-4 registres dominants par video. Le CONTRASTE de registre = le moteur de retention.
 - **Densite par scene** : une scene de 45s doit avoir ~4-6 micro-evenements echelonnes (sinon temps mort).
 
+### ⭐ FOND + ACCENT du registre encre selon le TON (PAS un nouveau registre — 2026-06-27 : files.catbox.moe/jb8puk.png)
+⚠️ Changer le fond (parchemin→blanc) et l'accent (vert→or→rouge) ne cree PAS un registre : c'est la colorisation
+semantique deja en place. Acquis reel = **le fond peut quitter le parchemin** (blanc casse/froid tient aussi bien).
+⛔ N&B INTEGRAL PROSCRIT (sans accent, formes grises = pierres mortes). TOUJOURS une couleur d'accent reservee au sens.
+- **Espoir/nature/vie** → fond parchemin `#e8dcc0`, accent VERT. = signature GGW.
+- **Analytique/mecanisme/argent** → fond blanc casse `#f4f1ea`, accent OR/bleu-acier. Pour CFA & co.
+- **Tragique/guerre/perte** → fond blanc froid `#fbfaf7`, accent ROUGE SANG (le seul, jamais de vert).
+Le TON se deduit au TYPAGE DU SUJET → source de verite : [[SUJET-PRIME-SUR-PRODUCTION]] § moteur narratif + densite.
+
+### ⭐⭐ SCENE-LIEU A ACTIVATION SEQUENTIELLE — la grammaire de l'HORIZONTAL (prouve 2026-06-27)
+> Le 16:9 a une exigence de densite que le 9:16 n'a pas (un objet seul y lit « inacheve », pas « aere »). Reponse =
+> densite NARRATIVE, pas decorative. Preuve : scene-port animee `files.catbox.moe/voh2fv.mp4` (35s, encre, 0 API).
+**Le pattern** : composer un LIEU (plusieurs objets coherents d'un meme decor, SANS organique humain — ex. un port :
+grue+conteneurs+navire+caisses+panneau de prix ; un bureau : decret+balance+pieces+tampon+fenetre). On POSE la scene
+calme (tout dessine en encre), PUIS on l'ACTIVE objet par objet (traçage + colorisation semantique timee sur le script).
+- Chaque objet porte UN sens activable (aucun n'est du remplissage) → l'attention VOYAGE d'objet en objet = retention ~1 min.
+- VERTICAL = sequence dans le TEMPS (un objet remplace le precedent) ; HORIZONTAL = sequence dans l'ESPACE (objets
+  coexistent, le regard se deplace). Deux grammaires de montage distinctes — le ratio n'est PAS qu'un cadrage.
+- La contrainte du champ large FORCE une sequence causale (la ressource sort → le prix vient d'ailleurs) = pousse a EXPLIQUER.
+- Parent du Data-Hero ([[DECODE-mpesa-data-hero-MOTION]]) applique a une scene-lieu narrative. Cale les 4-6 micro-evenements/scene sur le script.
+
+### ⛔⛔ SCENE-LIEU SANS MONTAGE TEMPOREL = EFFET POWERPOINT (jury 3 modeles, 2026-06-28)
+> Prouve : test CFA "bureau 1994" (32s horizontal) juge par Gemini-video + Kimi-frames + Claude, 3 perspectives
+> CONVERGENTES → verdict unanime "NON, pas au niveau de GGW, c'est du PowerPoint sophistique masque par des lignes
+> d'encre". Verdicts : `scratchpad jury` (ou re-generer). Le diagnostic est FERME ; le remede ci-dessous est la version corrigee.
+**LE TROU** : composer un lieu + activer/coloriser les objets sur place NE SUFFIT PAS. Sans transformation dans le
+TEMPS, le plan reste fige = "tableau unique" = presentation d'entreprise. GGW raconte AVEC l'espace ; une scene-lieu
+figee illustre un concept DANS un espace. La grammaire de couleur (3 mecanismes) est OK — ce qui manque = la mise en scene temporelle.
+
+**⛔ LE PIEGE A EVITER — "mouvement de camera" (Aziz 2026-06-28, prouve faux pour le SVG)** : les modeles video
+(Gemini/Kimi) recommandent des pans/zooms "camera". ⛔ FAUX pour le SVG headless : bouger le viewBox (zoom/pan/scale
+du calque) fait SORTIR les objets du cadre et VIDE les bords (le SVG est dessine pour UN cadrage) — exactement le bug
+constate sur les tests passes. Meme famille que `flyTo`/`easeTo` bannis en Mapbox headless. Les modeles nomment mal
+ce qu'ils voient : GGW ne "zoome" pas, il ENCHAINE des etats d'objets.
+
+**✅ LE REMEDE — mise en scene par REVELATION/TRANSFORMATION d'objets (natif SVG, PAS de viewBox mobile)** :
+- **SPOTLIGHT / revelation** : un objet a la fois est mis en avant (eclaire / a pleine opacite), le reste recule en
+  encre pale. L'attention "voyage" sans bouger le cadre. = la vraie version SVG du "mouvement de camera".
+- **TRANSITION-ENCRE (signature, idee phare du jury)** : le trait s'efface ici et se REDESSINE la ; un element (ex. le
+  fil rouge) s'echappe, traverse, et DESSINE la scene suivante. La scene se transforme au lieu que la camera se deplace.
+- **ECHELLE D'OBJET** : l'objet-focus GRANDIT (lui-meme change de taille), les autres rapetissent/s'estompent. Pas un zoom camera.
+- **MORPHING** : un objet se transforme en un autre (la piece -> la balance). Continuite par metamorphose.
+- **PARALLAXE LEGERE** (a doser) : couches a vitesses differentes pour la profondeur — SANS vider les bords (amplitude faible).
+- **⭐ FIL CONDUCTEUR VISUEL = l'OSSATURE (le plus structurant — convergence GPT-5.5 + Gemini, 2026-06-28)** : un trait/
+  flux/element graphique UNIQUE qui RELIE les objets du lieu et porte le regard gauche->droite EN SUIVANT la causalite
+  (ex. une veine de minerai qui va de la mine -> au port -> a la finance). Preuve forte : en CARTE BLANCHE TOTALE, GPT et
+  Gemini ont TOUS DEUX, sans concertation, choisi le meme sujet (cobalt/RDC) AVEC un fil conducteur cyan reliant les poles
+  (`files.catbox.moe/scgup3.png` + `7b1ruq.png`). C'est ce qui transforme une JUXTAPOSITION d'objets en scene RACONTEE :
+  le fil impose la sequence causale ET fait voyager l'oeil sans bouger le cadre. A poser DES la composition de toute
+  scene-lieu horizontale (c'est lui qui evite l'effet PowerPoint, plus encore que le spotlight).
+→ Garde-fou avant TOUT format long horizontal : si une scene se contente de "poser + coloriser sur place", elle sera jugee PowerPoint.
+
 ## ⭐ Le SVG-INSERT (dans TOUS les formats — la vraie bascule strategique)
 
 Le SVG-insert (un bloc SVG de 30s-1min insere dans une video Mapbox/Atlas/Souverain/War-Map) doit etre pense **DES L'ECRITURE DU SCRIPT**, pas plaque apres coup. C'est integre a [[DOCTRINE-SCRIPT-UNIFIEE]] : a l'ecriture de tout script, reperer les moments "mecanisme/concept/transformation a expliquer" = candidats insert SVG. Chaque playbook format (ATLAS / SOUVERAIN / WARMAP) pointe vers cette doctrine.

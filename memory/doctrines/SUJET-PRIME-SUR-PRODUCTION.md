@@ -97,19 +97,63 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    → On sort avec : SUJET validé + ANGLE libre + pré-TITRE + ce que le public veut + FORMAT pressenti.
    → SEULEMENT ENSUITE : pré-production. Jamais avant. **MAIS le 1er livrable de la pré-prod = le POSITIONNEMENT (ci-dessous), AVANT le script.**
 
-### ⭐ CHOIX DU FORMAT — la NATURE du sujet décide (short vs mid-form/long) — Aziz 2026-06-27
-Prouvé par le Short franc CFA : on a passé une heure à comprimer un contenu qui VOULAIT respirer. Leçon racine :
-- **Sujet NARRATIF / VISUEL / ÉMOTIONNEL** (une image forte, une histoire, un geste : la Muraille Verte qui avance,
-  un héros, une tragédie) → **SHORT**. Le short excelle sur l'image forte et l'émotion, pas sur l'explication.
-- **Sujet à MÉCANISME / CHAÎNE CAUSALE** (il faut expliquer comment ça marche : franc CFA = parité→garantie→réserves
-  →réforme ; un système financier, juridique, institutionnel) → **MID-FORM ou LONG**. Comprimer un mécanisme en
-  90-140s le mutile. Le signal "je n'arrête pas de couper sans perdre le sens" = le sujet veut du long.
-- **Le short reste la PORTE D'ENTRÉE audience** (un short qui perce amène vers les longs). Stratégie : short = amorce
-  émotionnelle d'un sujet narratif ; long = profondeur d'un sujet à mécanisme. Choisir par la NATURE, jamais par habitude.
+### ⭐ TYPER LE MOTEUR NARRATIF → dynamisme + format + style (à l'étape 4-5, AVANT toute prod) — Aziz 2026-06-27
+> Évolution de la simple règle « narratif→short / mécanisme→long ». Le franc CFA a montré que le format seul ne
+> suffit pas : il faut prédire AUSSI le DYNAMISME (ce sujet va-t-il claquer comme GGW ?) et le STYLE, dès qu'on
+> type le sujet. Le **moteur narratif** (la mécanique qui crée la tension) est le bon prédicteur des trois.
+> ⚠️ Ce n'est PAS « bon sujet vs mauvais sujet » : c'est l'ADÉQUATION moteur ↔ format. Le CFA n'était pas mauvais,
+> il était mal formaté (short) → son moteur (mécanisme) voulait du mid-form. On type le moteur, le reste suit.
+
+**Les 4 moteurs narratifs** (déduits à l'étape 4 Synthèse-angle, en même temps que l'angle) :
+
+| Moteur du sujet | Dynamisme natif | Format | Registre / accent visuel pressenti |
+|---|---|---|---|
+| **RETOURNEMENT** — « on croyait X, c'est faux, la vraie réponse est Y » | Fort (surprise par beat) | Short OU mid | Encre **parchemin** + colorisation sémantique verte (GGW : inerte→la vie apparaît) |
+| **MÉCANISME** — « A cause B cause C » (système financier/juridique/institutionnel) | Moyen, à DOSER (construction) | Mid/long | Encre **blanc cassé** (analytique, net) + accent or/bleu-acier (valeur). Blueprint qui se construit (CFA) |
+| **RÉCIT / CHRONOLOGIE** — « il s'est passé X, puis Y, puis l'effondrement » | Fort (tension temporelle) | Mid/long | Carte vivante Mapbox OU encre **blanc froid** grave (Soudan, Thiaroye) |
+| **RÉVÉLATION-CHIFFRE** — « un chiffre qui tue » | Fort mais BREF (choc unique) | Short | Échelle objet + colorisation du chiffre (or africain, vraie-taille-Afrique) |
+
+**Comment lire la table :**
+- Le **moteur prédit le PUNCH** : retournement / récit / révélation-chiffre claquent nativement (comme GGW). Le
+  mécanisme est le seul à dynamisme « moyen » → il a besoin de la CONSTRUCTION séquentielle pour vivre (et donc de
+  durée). C'est pour ça que le CFA en short était plat : on coupait la construction qui EST son dynamisme.
+- Le **moteur prédit le FORMAT** : mécanisme/récit → mid/long ; retournement/chiffre → short possible. Signal-clé :
+  « je coupe sans perdre le sens » = retournement/chiffre (short OK) ; « je coupe et le sens se mutile » = mécanisme (mid).
+- Le **moteur oriente le STYLE par le TON** (cf. trousseau ci-dessous), il ne le FIGE pas : le DA-brief tranche en aval.
+
+**⭐ FOND + ACCENT selon le TON (ce N'EST PAS un nouveau registre — Aziz 2026-06-27, test `files.catbox.moe/jb8puk.png`).**
+⚠️ CORRECTION d'une formulation initiale fausse : changer la couleur d'accent (vert→or→rouge) et le fond
+(parchemin→blanc) NE CRÉE PAS un nouveau registre. C'est exactement ce que la colorisation sémantique fait DÉJÀ
+par design. Le registre `encre` reste UN registre (cf. les 7 registres réels dans [[SVG-SCENES-GENERATIVES]]). Le
+seul acquis réel du test : **le fond n'est pas obligé d'être le parchemin** — un blanc cassé / blanc froid tient
+aussi bien et adapte le TON. Le N&B intégral est PROSCRIT (sans accent, les formes grises ne lisent plus comme
+vivantes — graines = pierres mortes). Toujours garder UNE couleur d'accent réservée au sens.
+
+| Ton du sujet | Fond | Accent sémantique (le seul colorisé) |
+|---|---|---|
+| Espoir / nature / vie | parchemin `#e8dcc0` | vert (la vie qui revient) |
+| Analytique / mécanisme / argent | blanc cassé `#f4f1ea` | or ou bleu-acier (la valeur) |
+| Tragique / guerre / perte | blanc froid `#fbfaf7` | rouge sang (le seul accent, jamais de vert) |
+
+**⭐⭐ DENSITÉ NARRATIVE = le ratio change la GRAMMAIRE DE MONTAGE, pas que la composition (Aziz 2026-06-27, prouvé).**
+> Réfute la doctrine antérieure « format = simple paramètre de composition » (fausse, cf. test
+> `files.catbox.moe/6u1usb.png` vertical vs horizontal + scène-port animée `files.catbox.moe/voh2fv.mp4`).
+- **VERTICAL 9:16** = séquence dans le TEMPS. Plan-objet : UN héros-objet qui pose une idée, remplacé par le suivant.
+  Le vide est élégant (page de carnet). L'encre minimaliste y excelle nativement.
+- **HORIZONTAL 16:9** = séquence dans l'ESPACE. Le champ large a une EXIGENCE DE DENSITÉ que le vertical n'a pas :
+  un seul objet au centre lit « inachevé / perdu », pas « aéré ». Remède = **densité NARRATIVE, jamais décorative** :
+  une **scène-lieu composée** (plusieurs objets cohérents d'un même lieu, SANS organique humain) qu'on POSE calme,
+  PUIS qu'on ACTIVE objet par objet (colorisation / traçage / mouvement timé sur le script). L'attention VOYAGE
+  d'objet en objet = le moteur de rétention sur ~1 min. Chaque objet porte un SENS activable, aucun n'est du remplissage.
+- **Bonus** : la contrainte du champ large FORCE à montrer une séquence causale (port : la ressource sort → le prix
+  vient d'ailleurs) → le format pousse vers l'explication, qui est la force Souverain. Parent du pattern Data-Hero
+  ([[DECODE-mpesa-data-hero-MOTION]]) étendu à une scène-lieu narrative. Détail technique : [[SVG-MIDFORM-FORMAT]].
+
+- **Le short reste la PORTE D'ENTRÉE audience** : un sujet à mécanisme PEUT donner un short SI on en fait l'amuse-bouche
+  émotionnel (1 angle, 1 image forte) + CTA vers le long — sans vouloir TOUT expliquer (piège CFA). Cf. [[RECHERCHE-PRESCRIPT-UNIFIEE]] étape 7.
 - **Notre avantage structurel** (data-driven Remotion) s'exprime MIEUX sur le long : un long ne coûte pas
-  proportionnellement plus cher qu'à un YouTuber qui filme. → ne pas fuir le long par réflexe "short = plus simple".
-- ⚠️ Un sujet à mécanisme PEUT donner un short SI on en fait l'amuse-bouche émotionnel (1 angle, 1 image) + CTA vers
-  le long. Mais ne pas vouloir TOUT expliquer dans le short (piège CFA). Cf. [[RECHERCHE-PRESCRIPT-UNIFIEE]] étape 7.
+  proportionnellement plus cher qu'à un YouTuber qui filme. → ne pas fuir le long par réflexe « short = plus simple ».
+- Détail du trousseau visuel : [[SVG-MIDFORM-FORMAT]] · palettes de fond : [[_PALETTE-BACKGROUNDS]] (§ backgrounds).
 
 ## ⭐ ÉTAPE 6 — L'ÉTOILE POLAIRE DE POSITIONNEMENT (1er livrable de pré-prod, AVANT le script) — Aziz 2026-06-16
 Une fois le sujet validé (étapes 0-5), AVANT d'écrire le script ou de choisir la manière visuelle : **écrire l'étoile polaire**. C'est ce qui empêche les dérives en aval — sans elle, on écrit des actes « corrects » qui glissent vers le générique. Avec elle, chaque décision (titre, phrase, choix visuel) a un juge : *« est-ce que ça sert notre différenciation ? »*.
