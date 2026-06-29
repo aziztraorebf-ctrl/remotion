@@ -17,7 +17,30 @@
 - ✅ **B4 RENVERSEMENT VALIDE FINAL (2026-06-29, 910f=30s)** : 4A verger REVERDIT cascade depuis survivants (climax) ->
   4B FISSURE traversante (haut+bas chapeau) -> 4C USINE trace ordonne (structure->details) + flux choco continu + fumee
   organique + 2s respiration. Transition LIEN (fissure->sol usine). out/episodes/cacao-chocolat-short/beat4-FINAL.mp4
-- ⬜ NEXT = **B5 (pont cafe/or/cobalt + CTA)** — POINT 4 a trancher avec Aziz (direction visuelle du pont). Puis ASSEMBLAGE 5 beats + musique B.
+- ⬜ NEXT (SESSION DEDIEE) = **B5 (pont + CTA)** puis FINITIONS + ASSEMBLAGE 5 beats + musique B. Voir STARTER-B5 ci-dessous.
+
+## ⚠️⚠️ B5 — TEXTE REEL (audio FINAL fait foi, le SCRIPT-V4 etait PERIME sur le CTA — verifie 2026-06-29)
+Transcription Whisper de cacao-beat5-FINAL.mp3 (25,63s) = source de verite. Alignement word-level : `audio/cacao-beat5-words.ts`.
+> "Et le cacao n'est qu'une porte d'entrée. Le café, l'or, le cobalt : le même mécanisme, partout. La version
+> **longue de cette vidéo** répond à la vraie question : pourquoi 60 ans après les indépendances ça n'a toujours pas
+> changé. Abonne-toi pour ne pas la rater. Et dis-moi en commentaire : **quel produit t'intéresse le plus que tu
+> voudrais voir traité en vidéo ?**"
+⛔ DIFFERENCE vs SCRIPT-V4 : le CTA final n'est PAS "quel produit veux-tu qu'on suive jusqu'au bout" mais
+"quel produit t'intéresse le plus que tu voudrais voir traité en vidéo". + "la version longue DE CETTE VIDEO".
+=> CODER LE KARAOKE B5 SUR cacao-beat5-words.ts, PAS sur SCRIPT-V4.
+
+## 🚀 STARTER B5 (session dediee) — "on reprend le cacao, on fait B5"
+1. Lire ce STATUS + DA-BRIEF-ANIMATION.md §BEAT 5 + le texte reel ci-dessus (audio fait foi).
+2. **POINT 4 (direction pont) A TRANCHER avec Aziz** — montrer que cafe/or/cobalt = MEME mecanisme que le cacao.
+   Mon idee (reco) : la barre 6/94 du cacao (composant TabletteMorphBarre) se DUPLIQUE pour cafe/or/cobalt
+   = 4 barres identiquement desequilibrees = "le meme mecanisme partout". Reutilise l'acquis, fil qui boucle.
+   Alternatives proposees : 4 icones-produits alignees · la cabosse qui devient PORTE d'entree.
+3. CTA = ecran dedie typewriter encre (acquis GGW B7), JAMAIS colle au climax.
+4. Composants PRETS a reutiliser : VergerCacao, TabletteMorphBarre (barre 6/94), UsineConstruction, CabosseOuverture.
+5. Pattern karaoke = identique B1/B2/B3/B4 (fond parchemin, bordure, SERIF 40 bold, mot actif COCOA).
+6. APRES B5 : FINITIONS (passe Gemini/Kimi sur les 5 beats) + ASSEMBLAGE (5 <Sequence>, musique B
+   `music/cacao-music-CHOISI.mp3` ~0.08-0.12 bouclee sur ~95s, fade in/out) -> PRET-PUBLICATION.
+7. Plan B si B5 essouffle visuellement : couper "soixante ans apres les independances" (mais audio deja mesure, prudence).
 
 ## 🧩 COMPOSANTS REUTILISABLES CREES (B3/B4)
 - `components/VergerCacao.tsx` ⭐ — paysage 3 etats (mort/reverdit/fissure) + cacaoyer parametrique (tronc+cabosses),

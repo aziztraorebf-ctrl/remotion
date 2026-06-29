@@ -4,19 +4,21 @@
 
 ---
 
-## 🎬 CACAO → CHOCOLAT SHORT — EN PRODUCTION VISUELLE, B1+B2 ACQUIS, NEXT = B3 (2026-06-29)
+## 🎬 CACAO → CHOCOLAT SHORT — 4/5 BEATS FINAL, NEXT = B5 + ASSEMBLAGE (session dédiée, 2026-06-29)
 
 > Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre/parchemin GGW.
 > Sujet = "L'Afrique n'est pas pauvre, elle est sous-payee pour ce qu'elle produit" (cacao->chocolat = porte d'entree).
-> ✅ PRÉ-PROD (historique) : sujet validé · SCRIPT-V4 · triple fact-check · jury LLM 8,5/10 · NARRATION ElevenLabs
->   validée (5 beats) · MUSIQUE choisie (B afro-mélancolique kora/ngoni).
-> ✅ DA-brief animation FAIT + audité (DA-BRIEF-ANIMATION.md = source de vérité du plan, remapping V2->V4 figé).
-> ✅ **B1 (hook, v8 focus-tablette)** + **B2 (source, split CI/Ghana, compromis brun->drapeaux)** produits et validés Aziz.
->   Karaoké word-level accent brun chocolat sur les 2. Variantes transfusion + cuisine testées puis ÉCARTÉES.
-> **NEXT :** produire **B3** (extraction : tablette qui se fend en répartition ~6% + champ colorisé "1/7" via buvard +
->   chapeau paysan ; pré-plan dans DA-brief §B3), puis **B4** (renversement+nuance, 3 sous-scènes) et **B5** (pont/CTA,
->   point 4 à trancher), + assemblage 5 beats + musique B (~0.08-0.12, boucler sur ~95s).
-> **Source de vérité :** `memory/episodes/souverain/cacao-chocolat-short/STATUS.md` + `DA-BRIEF-ANIMATION.md`. Dire « on reprend le cacao ».
+> ✅ PRÉ-PROD : sujet validé · script · fact-check · jury · NARRATION 5 beats · MUSIQUE B choisie.
+> ✅ **B1 + B2 + B3 + B4 = FINAL et validés Aziz** (B3+B4 validés 2026-06-29, commit `10f8c9d`).
+>   Composants réutilisables : VergerCacao (paysage 3 états), TabletteMorphBarre (barre 6/94), UsineConstruction,
+>   CabosseOuverture. Vie permanente (vent/soleil glow/nuages/oiseaux). Karaoké word-level pattern commun.
+> **NEXT (SESSION DÉDIÉE, dire « on reprend le cacao, on fait B5 ») :**
+>   1. **B5 (pont café/or/cobalt + CTA)** — ⚠️ CODER LE KARAOKÉ SUR `audio/cacao-beat5-words.ts` (SCRIPT-V4 PÉRIMÉ sur le
+>      CTA — voir STATUS.md § "B5 TEXTE RÉEL"). POINT 4 (direction pont) à trancher avec Aziz — ma reco = 4 barres 6/94.
+>      CTA = écran dédié typewriter encre.
+>   2. **FINITIONS** (passe Gemini/Kimi sur les 5 beats) puis **ASSEMBLAGE** (5 `<Sequence>` + musique B ~0.08-0.12
+>      bouclée sur ~95s, fade in/out) → PRET-PUBLICATION.
+> **Source de vérité :** `STATUS.md` (§ STARTER B5) + `DA-BRIEF-ANIMATION.md`. Livrables : `out/episodes/cacao-chocolat-short/beat3-FINAL.mp4` + `beat4-FINAL.mp4`. Dire « on reprend le cacao ».
 
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
