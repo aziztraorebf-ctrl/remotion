@@ -1,0 +1,138 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #EBE4D5; }
+      .stroke-main { stroke: #29251E; stroke-linecap: round; stroke-linejoin: round; }
+      .fill-map-top { fill: #DFD3B9; }
+      .fill-map-side { fill: #CFC0A3; }
+      .fill-factory-front { fill: #F2EDE1; }
+      .fill-factory-side { fill: #E8DFCB; }
+      .fill-glass { fill: #D6D1C4; }
+      .fill-accent { fill: #B37D5B; }
+      .fill-sac { fill: #C7BAA3; }
+    </style>
+  </defs>
+
+  <rect width="1080" height="1920" class="bg" />
+
+  <g id="arriere_plan_decor" class="stroke-main">
+    <rect x="40" y="40" width="1000" height="1840" fill="none" stroke-width="1.5" />
+    <rect x="60" y="60" width="960" height="1800" fill="none" stroke-width="1" stroke-dasharray="4 6" />
+    
+    <circle cx="540" cy="350" r="180" fill="none" stroke-width="1.5" />
+    <circle cx="540" cy="350" r="210" fill="none" stroke-width="1" stroke-dasharray="5 10" />
+    <circle cx="540" cy="350" r="240" fill="none" stroke-width="0.5" stroke-dasharray="2 8" />
+    
+    <line x1="540" y1="60" x2="540" y2="100" stroke-width="1" />
+    <line x1="540" y1="600" x2="540" y2="640" stroke-width="1" />
+    <line x1="250" y1="350" x2="290" y2="350" stroke-width="1" />
+    <line x1="790" y1="350" x2="830" y2="350" stroke-width="1" />
+    <line x1="335" y1="145" x2="363" y2="173" stroke-width="1" />
+    <line x1="745" y1="555" x2="717" y2="527" stroke-width="1" />
+    <line x1="745" y1="145" x2="717" y2="173" stroke-width="1" />
+    <line x1="335" y1="555" x2="363" y2="527" stroke-width="1" />
+
+    <path d="M 0,600 C 300,550 500,800 1080,500" fill="none" stroke-width="1" />
+    <path d="M 0,650 C 400,600 700,900 1080,750" fill="none" stroke-width="0.5" stroke-dasharray="10 10" />
+    <path d="M 0,1650 C 500,1550 800,1800 1080,1600" fill="none" stroke-width="1.5" />
+    <path d="M 0,1700 C 400,1620 600,1850 1080,1700" fill="none" stroke-width="0.5" stroke-dasharray="5 5" />
+  </g>
+
+  <g id="pays_silhouette">
+    <path d="M 250,1250 C 300,1350 400,1320 450,1380 C 500,1450 650,1420 720,1350 L 720,1430 C 650,1500 500,1530 450,1460 C 400,1400 300,1430 250,1330 Z" class="fill-map-side stroke-main" stroke-width="2" />
+    <path d="M 380,1000 C 450,950 650,970 750,1050 C 800,1120 780,1250 720,1350 C 650,1420 500,1450 450,1380 C 400,1320 300,1350 250,1250 C 200,1150 280,1050 380,1000 Z" class="fill-map-top stroke-main" stroke-width="2.5" />
+  </g>
+
+  <g id="nervures">
+    <path d="M 350,1050 Q 400,1120 480,1150 T 600,1280" fill="none" stroke="#A89F8B" stroke-width="1.5" stroke-dasharray="8 6" />
+    <path d="M 270,1220 Q 350,1200 420,1250 T 650,1180" fill="none" stroke="#A89F8B" stroke-width="1.5" stroke-dasharray="5 5" />
+    <path d="M 480,1380 Q 520,1300 580,1200" fill="none" stroke="#A89F8B" stroke-width="1.5" stroke-dasharray="12 6" />
+    <path d="M 710,1080 Q 650,1120 580,1100" fill="none" stroke="#A89F8B" stroke-width="1.5" stroke-dasharray="4 4" />
+  </g>
+
+  <g id="batiment">
+    <polygon points="420,1250 520,1300 520,1150 420,1100" class="fill-factory-front stroke-main" stroke-width="2" />
+    <polygon points="520,1300 700,1210 700,1060 520,1150" class="fill-factory-side stroke-main" stroke-width="2" />
+  </g>
+
+  <g id="toit_dents_scie">
+    <!-- Front glass triangles -->
+    <polygon points="420,1100 420,1040 453.3,1116.6" class="fill-glass stroke-main" stroke-width="1.5" />
+    <polygon points="453.3,1116.6 453.3,1056.6 486.6,1133.3" class="fill-glass stroke-main" stroke-width="1.5" />
+    <polygon points="486.6,1133.3 486.6,1073.3 520,1150" class="fill-glass stroke-main" stroke-width="1.5" />
+    <!-- Long roof panels -->
+    <polygon points="420,1040 600,950 633.3,1026.6 453.3,1116.6" class="fill-factory-side stroke-main" stroke-width="1.5" />
+    <polygon points="453.3,1056.6 633.3,966.6 666.6,1043.3 486.6,1133.3" class="fill-factory-side stroke-main" stroke-width="1.5" />
+    <polygon points="486.6,1073.3 666.6,983.3 700,1060 520,1150" class="fill-factory-side stroke-main" stroke-width="1.5" />
+  </g>
+
+  <g id="porte">
+    <polygon points="460,1270 490,1285 490,1225 460,1210" fill="#29251E" />
+  </g>
+
+  <g id="convoyeur">
+    <polygon points="250,1350 250,1360 440,1190 440,1180" class="fill-factory-side stroke-main" stroke-width="2" />
+    <polygon points="250,1350 280,1365 470,1195 440,1180" fill="#BCAE93" class="stroke-main" stroke-width="1.5" />
+    <line x1="300" y1="1290" x2="300" y2="1360" class="stroke-main" stroke-width="2" />
+    <line x1="370" y1="1220" x2="370" y2="1310" class="stroke-main" stroke-width="2" />
+    <polygon points="440,1180 470,1195 470,1165 440,1150" fill="#29251E" />
+  </g>
+
+  <g id="cabosses_sacs">
+    <rect x="180" y="1360" width="45" height="30" rx="4" class="fill-sac stroke-main" stroke-width="1.5" transform="rotate(-15 180 1360)" />
+    <rect x="210" y="1335" width="45" height="30" rx="4" class="fill-sac stroke-main" stroke-width="1.5" transform="rotate(10 210 1335)" />
+    <rect x="230" y="1375" width="45" height="30" rx="4" class="fill-sac stroke-main" stroke-width="1.5" transform="rotate(-5 230 1375)" />
+    
+    <ellipse cx="290" cy="1315" rx="7" ry="11" transform="rotate(35 290 1315)" class="fill-accent stroke-main" stroke-width="1.2" />
+    <ellipse cx="330" cy="1275" rx="7" ry="11" transform="rotate(40 330 1275)" class="fill-accent stroke-main" stroke-width="1.2" />
+    <ellipse cx="370" cy="1235" rx="7" ry="11" transform="rotate(30 370 1235)" class="fill-accent stroke-main" stroke-width="1.2" />
+    <ellipse cx="410" cy="1195" rx="7" ry="11" transform="rotate(45 410 1195)" class="fill-accent stroke-main" stroke-width="1.2" />
+  </g>
+
+  <g id="cheminee">
+    <!-- Hidden back of solid cylinder base -->
+    <path d="M 600,1100 L 600,800 A 20,10 0 0,0 640,800 L 640,1100 A 20,10 0 0,1 600,1100 Z" class="fill-factory-front stroke-main" stroke-width="1.5" />
+    <!-- Dashed upper part -->
+    <line x1="600" y1="800" x2="600" y2="550" class="stroke-main" stroke-width="1.5" stroke-dasharray="6 6" />
+    <line x1="640" y1="800" x2="640" y2="550" class="stroke-main" stroke-width="1.5" stroke-dasharray="6 6" />
+    <ellipse cx="620" cy="550" rx="20" ry="10" fill="none" class="stroke-main" stroke-width="1.5" stroke-dasharray="4 4" />
+  </g>
+
+  <g id="echafaudage">
+    <!-- Horizontal rings -->
+    <ellipse cx="620" cy="850" rx="35" ry="17" fill="none" class="stroke-main" stroke-width="1" />
+    <ellipse cx="620" cy="750" rx="35" ry="17" fill="none" class="stroke-main" stroke-width="1" />
+    <ellipse cx="620" cy="650" rx="35" ry="17" fill="none" class="stroke-main" stroke-width="1" />
+    <ellipse cx="620" cy="550" rx="35" ry="17" fill="none" class="stroke-main" stroke-width="1" />
+    <!-- Vertical poles -->
+    <line x1="585" y1="850" x2="585" y2="550" class="stroke-main" stroke-width="1" />
+    <line x1="655" y1="850" x2="655" y2="550" class="stroke-main" stroke-width="1" />
+    <line x1="620" y1="867" x2="620" y2="567" class="stroke-main" stroke-width="1" />
+    <!-- Cross braces -->
+    <line x1="585" y1="850" x2="620" y2="767" class="stroke-main" stroke-width="0.75" />
+    <line x1="620" y1="867" x2="585" y2="750" class="stroke-main" stroke-width="0.75" />
+    <line x1="585" y1="750" x2="620" y2="667" class="stroke-main" stroke-width="0.75" />
+    <line x1="620" y1="767" x2="585" y2="650" class="stroke-main" stroke-width="0.75" />
+    <line x1="585" y1="650" x2="620" y2="567" class="stroke-main" stroke-width="0.75" />
+    <line x1="620" y1="667" x2="585" y2="550" class="stroke-main" stroke-width="0.75" />
+  </g>
+
+  <g id="lignes_construction">
+    <!-- Vertical sky projections -->
+    <line x1="420" y1="1040" x2="420" y2="700" class="stroke-main" stroke-width="0.75" stroke-dasharray="4 8" />
+    <line x1="453.3" y1="1056.6" x2="453.3" y2="716.6" class="stroke-main" stroke-width="0.75" stroke-dasharray="4 8" />
+    <line x1="486.6" y1="1073.3" x2="486.6" y2="733.3" class="stroke-main" stroke-width="0.75" stroke-dasharray="4 8" />
+    <line x1="520" y1="1150" x2="520" y2="810" class="stroke-main" stroke-width="0.75" stroke-dasharray="4 8" />
+    <!-- Ground isometric projections -->
+    <line x1="420" y1="1250" x2="280" y2="1320" class="stroke-main" stroke-width="0.75" stroke-dasharray="6 6" />
+    <line x1="700" y1="1210" x2="880" y2="1120" class="stroke-main" stroke-width="0.75" stroke-dasharray="6 6" />
+    <line x1="700" y1="1060" x2="880" y2="970" class="stroke-main" stroke-width="0.75" stroke-dasharray="6 6" />
+    <!-- Abstract horizontal/vertical layout lines -->
+    <line x1="100" y1="1150" x2="980" y2="1150" class="stroke-main" stroke-width="0.5" stroke-dasharray="12 12" />
+    <line x1="620" y1="100" x2="620" y2="1800" class="stroke-main" stroke-width="0.5" stroke-dasharray="12 12" />
+  </g>
+
+  <g id="texte_2030">
+    <text x="680" y="1400" font-family="Courier, monospace" font-size="36" font-weight="bold" fill="none" class="stroke-main" stroke-width="1.5" letter-spacing="8" transform="rotate(-15 680 1400)">2030</text>
+  </g>
+</svg>

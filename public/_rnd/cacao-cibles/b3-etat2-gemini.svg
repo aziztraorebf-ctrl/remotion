@@ -1,0 +1,68 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .ink { stroke: #2b2117; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .dead { opacity: 0.35; }
+  </style>
+  <rect width="1080" height="1920" fill="#e8dcc0" />
+  <defs>
+    <g id="cacao_dead">
+      <path d="M -15 0 Q 0 -5 15 0" class="ink" stroke-width="1.5" />
+      <path d="M 0 0 L 0 -190" class="ink" stroke-width="2" />
+      <path d="M 0 -80 Q -30 -100 -50 -110 M 0 -100 Q 30 -120 45 -125 M 0 -130 Q -20 -150 -40 -160 M 0 -150 Q 20 -170 35 -180" class="ink" stroke-width="1.5" />
+      <path d="M -40 -160 C -60 -190 -50 -230 -15 -245 C 10 -255 45 -240 50 -200 C 55 -160 30 -135 -5 -140 C -30 -145 -35 -150 -40 -160 Z" class="ink" stroke-width="1.5" />
+      <path d="M -20 -220 Q 0 -230 20 -210 M -25 -190 Q 0 -200 25 -180 M -10 -170 Q 5 -180 15 -160 M 10 -220 Q 25 -230 35 -200" class="ink" stroke-width="1" stroke-dasharray="2 5" />
+      <path d="M 0 -80 C -15 -75 -15 -105 0 -100 Z" class="ink" stroke-width="1.5" />
+      <path d="M 0 -120 C 15 -115 15 -145 0 -140 Z" class="ink" stroke-width="1.5" />
+      <path d="M 0 -150 C -12 -145 -12 -170 0 -165 Z" class="ink" stroke-width="1.5" />
+    </g>
+    <g id="cacao_alive">
+      <path d="M -15 0 Q 0 -5 15 0" class="ink" stroke-width="2" />
+      <path d="M 0 0 L 0 -190" class="ink" stroke-width="2.5" />
+      <path d="M 0 -80 Q -30 -100 -50 -110 M 0 -100 Q 30 -120 45 -125 M 0 -130 Q -20 -150 -40 -160 M 0 -150 Q 20 -170 35 -180" class="ink" stroke-width="2" />
+      <path d="M -40 -160 C -60 -190 -50 -230 -15 -245 C 10 -255 45 -240 50 -200 C 55 -160 30 -135 -5 -140 C -30 -145 -35 -150 -40 -160 Z" fill="#6b4423" stroke="#2b2117" stroke-width="2" stroke-linejoin="round" />
+      <path d="M -20 -220 Q 0 -235 20 -215 M -30 -190 Q -5 -205 15 -185 M -15 -170 Q 5 -180 25 -160 M 10 -220 Q 25 -230 35 -210" stroke="#e8dcc0" fill="none" stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+      <path d="M 0 -80 C -15 -75 -15 -105 0 -100 Z" fill="#6b4423" stroke="#2b2117" stroke-width="1.5" />
+      <path d="M 0 -120 C 15 -115 15 -145 0 -140 Z" fill="#6b4423" stroke="#2b2117" stroke-width="1.5" />
+      <path d="M 0 -150 C -12 -145 -12 -170 0 -165 Z" fill="#6b4423" stroke="#2b2117" stroke-width="1.5" />
+    </g>
+  </defs>
+
+  <g id="sol">
+    <path d="M 50 900 Q 300 905 540 898 T 1030 900" class="ink" stroke-width="1" opacity="0.5" />
+    <path d="M 100 904 Q 400 895 700 902 T 980 905" class="ink" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8" />
+    <path d="M 50 1370 Q 300 1365 540 1372 T 1030 1370" class="ink" stroke-width="1" opacity="0.5" />
+    <path d="M 100 1366 Q 400 1375 700 1368 T 980 1365" class="ink" stroke-width="0.5" opacity="0.3" stroke-dasharray="4 8" />
+  </g>
+
+  <g id="trees_dead" class="dead">
+    <use href="#cacao_dead" x="400" y="900" />
+    <use href="#cacao_dead" x="540" y="900" />
+    <use href="#cacao_dead" x="680" y="900" />
+    <use href="#cacao_dead" x="820" y="900" />
+    <use href="#cacao_dead" x="960" y="900" />
+    <use href="#cacao_dead" x="120" y="1350" />
+    <use href="#cacao_dead" x="260" y="1350" />
+    <use href="#cacao_dead" x="400" y="1350" />
+    <use href="#cacao_dead" x="540" y="1350" />
+    <use href="#cacao_dead" x="680" y="1350" />
+    <use href="#cacao_dead" x="820" y="1350" />
+    <use href="#cacao_dead" x="960" y="1350" />
+  </g>
+
+  <g id="trees_alive">
+    <use href="#cacao_alive" x="120" y="900" />
+    <use href="#cacao_alive" x="260" y="900" />
+  </g>
+
+  <g id="chapeau_paysan">
+    <ellipse cx="540" cy="990" rx="75" ry="18" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" />
+    <path d="M 500 985 Q 540 940 580 985" fill="#e8dcc0" stroke="#2b2117" stroke-width="2" />
+    <ellipse cx="540" cy="990" rx="60" ry="12" class="ink" stroke-width="1" stroke-dasharray="4 6" opacity="0.6" />
+    <ellipse cx="540" cy="990" rx="45" ry="8" class="ink" stroke-width="1" stroke-dasharray="3 5" opacity="0.6" />
+    <path d="M 515 972 Q 540 955 565 972" class="ink" stroke-width="1" stroke-dasharray="3 4" opacity="0.6" />
+  </g>
+
+  <g id="micro_source">
+    <text x="540" y="1880" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="22" fill="#2b2117" opacity="0.6" letter-spacing="1">Ghana ~1,5% — Oxfam</text>
+  </g>
+</svg>

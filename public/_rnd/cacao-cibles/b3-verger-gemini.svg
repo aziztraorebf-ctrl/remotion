@@ -1,0 +1,219 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <ellipse id="def_shadow" cx="0" cy="0" rx="45" ry="12" vector-effect="non-scaling-stroke" fill="none" stroke-dasharray="6 4" />
+    <path id="def_foliage" d="M -35,-95 C -80,-80 -120,-120 -95,-160 C -110,-210 -60,-260 -20,-240 C 20,-290 80,-270 95,-230 C 140,-230 150,-170 115,-140 C 135,-90 90,-60 55,-85 C 30,-50 -10,-60 -35,-95 Z" vector-effect="non-scaling-stroke" />
+    <path id="def_trunk" d="M -12,0 L -8,-40 C -15,-65 -25,-80 -35,-95 L -25,-100 C -15,-80 -8,-55 -2,-45 L 2,-110 L 12,-110 L 6,-45 C 15,-55 25,-75 35,-90 L 45,-85 C 32,-60 18,-35 12,0 Z" vector-effect="non-scaling-stroke" />
+    <g id="def_pod">
+      <ellipse cx="0" cy="0" rx="7" ry="13" vector-effect="non-scaling-stroke" />
+      <path d="M 0,-13 L 0,13 M -3,-11 Q -7,0 -3,11 M 3,-11 Q 7,0 3,11" fill="none" vector-effect="non-scaling-stroke" />
+    </g>
+  </defs>
+  <g id="scene_background">
+    <rect width="1080" height="1920" fill="#E4DAC3" />
+  </g>
+  <g id="pale_sun" transform="translate(540, 220)" stroke="#322618">
+    <circle cx="0" cy="0" rx="80" fill="#E4DAC3" stroke-width="2.5" />
+    <circle cx="0" cy="0" rx="100" fill="none" stroke-width="1.2" stroke-dasharray="4 6" />
+    <circle cx="0" cy="0" rx="120" fill="none" stroke-width="1.2" stroke-dasharray="1 8" />
+    <line x1="0" y1="-135" x2="0" y2="-165" stroke-width="1.5" />
+    <line x1="0" y1="135" x2="0" y2="165" stroke-width="1.5" />
+    <line x1="-135" y1="0" x2="-165" y2="0" stroke-width="1.5" />
+    <line x1="135" y1="0" x2="165" y2="0" stroke-width="1.5" />
+    <line x1="-95" y1="-95" x2="-115" y2="-115" stroke-width="1.5" />
+    <line x1="95" y1="-95" x2="115" y2="-115" stroke-width="1.5" />
+    <line x1="-95" y1="95" x2="-115" y2="115" stroke-width="1.5" />
+    <line x1="95" y1="95" x2="115" y2="115" stroke-width="1.5" />
+  </g>
+  <g id="landscape_contours" fill="none" stroke="#322618" stroke-width="2">
+    <path d="M -100,400 Q 200,370 540,400 T 1180,390" />
+    <path d="M -100,550 Q 300,490 700,600 T 1180,550" />
+    <path d="M -100,800 Q 400,920 800,850 T 1180,950" />
+    <path d="M -100,1200 Q 500,1050 1180,1350" />
+    <path d="M -100,1650 Q 400,1750 1180,1550" />
+  </g>
+  <g id="terrain_details" fill="none" stroke="#322618" stroke-width="1.2" stroke-dasharray="8 8">
+    <path d="M 50,600 Q 350,660 750,560" />
+    <path d="M -50,950 Q 450,1070 1050,900" />
+    <path d="M 150,1400 Q 600,1280 1100,1480" />
+  </g>
+  <g id="field_furrows" fill="none" stroke="#322618" stroke-width="1.5">
+    <line x1="490" y1="400" x2="150" y2="1920" />
+    <line x1="590" y1="400" x2="930" y2="1920" />
+    <line x1="450" y1="400" x2="-200" y2="1920" />
+    <line x1="630" y1="400" x2="1280" y2="1920" />
+    <line x1="410" y1="400" x2="-600" y2="1920" />
+    <line x1="670" y1="400" x2="1680" y2="1920" />
+  </g>
+
+  <!-- ARBRES LOINTAINS (3) -->
+  <g id="tree_14" transform="translate(530, 410) scale(0.15)">
+    <g id="tree_14_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_14_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_14_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_14_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+    </g>
+  </g>
+  <g id="tree_13" transform="translate(470, 415) scale(0.18)">
+    <g id="tree_13_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_13_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_13_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_13_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+    </g>
+  </g>
+  <g id="tree_12" transform="translate(580, 425) scale(0.22)">
+    <g id="tree_12_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_12_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_12_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_12_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+
+  <!-- ARBRES PETITS (3) -->
+  <g id="tree_11" transform="translate(430, 460) scale(0.30)">
+    <g id="tree_11_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_11_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_11_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_11_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_10" transform="translate(630, 490) scale(0.38)">
+    <g id="tree_10_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_10_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_10_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_10_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+    </g>
+  </g>
+  <g id="tree_09" transform="translate(370, 550) scale(0.48)">
+    <g id="tree_09_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_09_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_09_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_09_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+
+  <!-- ARBRES MOYENS (4) -->
+  <g id="tree_08" transform="translate(700, 630) scale(0.60)">
+    <g id="tree_08_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_08_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_08_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_08_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+    </g>
+  </g>
+  <g id="tree_07" transform="translate(280, 740) scale(0.75)">
+    <g id="tree_07_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_07_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_07_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_07_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_06" transform="translate(800, 880) scale(0.95)">
+    <g id="tree_06_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_06_foliage"><use href="#def_foliage" fill="#4D6A46" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_06_trunk"><use href="#def_trunk" fill="#704728" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_06_pods" fill="#B85C27" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_05" transform="translate(200, 1050) scale(1.15)">
+    <g id="tree_05_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_05_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_05_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_05_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+
+  <!-- ARBRES GRANDS (4) -->
+  <g id="tree_04" transform="translate(900, 1280) scale(1.35)">
+    <g id="tree_04_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_04_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_04_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_04_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_03" transform="translate(120, 1520) scale(1.60)">
+    <g id="tree_03_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_03_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_03_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_03_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_02" transform="translate(960, 1700) scale(1.80)">
+    <g id="tree_02_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_02_foliage"><use href="#def_foliage" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_02_trunk"><use href="#def_trunk" fill="#E4DAC3" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_02_pods" fill="#E4DAC3" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+  <g id="tree_01" transform="translate(250, 1820) scale(2.10)">
+    <g id="tree_01_shadow"><use href="#def_shadow" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_01_foliage"><use href="#def_foliage" fill="#4D6A46" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_01_trunk"><use href="#def_trunk" fill="#704728" stroke="#322618" stroke-width="2"/></g>
+    <g id="tree_01_pods" fill="#B85C27" stroke="#322618" stroke-width="2">
+      <use href="#def_pod" transform="translate(0, -35) rotate(15)"/>
+      <use href="#def_pod" transform="translate(-10, -60) rotate(-25)"/>
+      <use href="#def_pod" transform="translate(8, -55) rotate(35)"/>
+      <use href="#def_pod" transform="translate(-25, -85) rotate(-40)"/>
+      <use href="#def_pod" transform="translate(28, -75) rotate(45)"/>
+    </g>
+  </g>
+
+  <g id="straw_hat" transform="translate(650, 1820) rotate(-15)">
+    <ellipse cx="0" cy="0" rx="90" ry="30" fill="#E4DAC3" stroke="#322618" stroke-width="2.5" />
+    <ellipse cx="0" cy="0" rx="70" ry="20" fill="none" stroke="#322618" stroke-width="1.5" stroke-dasharray="6 4" />
+    <ellipse cx="0" cy="0" rx="50" ry="10" fill="none" stroke="#322618" stroke-width="1" stroke-dasharray="4 4" />
+    <path d="M -45,0 C -45,-50 45,-50 45,0 Z" fill="#E4DAC3" stroke="#322618" stroke-width="2.5" />
+    <path d="M -45,0 C -25,12 25,12 45,0 C 25,8 -25,8 -45,0 Z" fill="#322618" />
+  </g>
+</svg>

@@ -1,0 +1,289 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .ink { fill: none; stroke: #332A20; stroke-linejoin: round; stroke-linecap: round; }
+      .ink-thick { stroke-width: 3.5; }
+      .ink-med { stroke-width: 2; }
+      .ink-thin { stroke-width: 1; }
+      .ink-dash { stroke-dasharray: 6 8; }
+      .ink-dot { stroke-dasharray: 2 6; }
+      .fill-cream { fill: #EAE3D3; }
+      .fill-dark { fill: #332A20; }
+      .fill-accent-orange { fill: #CE8954; }
+      .fill-accent-green { fill: #737A60; }
+      .fill-accent-choc { fill: #5E4633; }
+    </style>
+  </defs>
+
+  <!-- BACKGROUND -->
+  <rect width="1080" height="1920" class="fill-cream" />
+  <rect x="45" y="45" width="990" height="1830" class="ink ink-med" stroke-dasharray="12 12" />
+
+  <!-- HORIZON & CIEL -->
+  <g id="horizon">
+    <!-- Sun & Halos -->
+    <circle cx="540" cy="450" r="160" class="fill-cream ink ink-thick" />
+    <circle cx="540" cy="450" r="200" class="ink ink-thin" stroke-dasharray="10 15" />
+    <circle cx="540" cy="450" r="240" class="ink ink-thin ink-dot" />
+    <circle cx="540" cy="450" r="320" class="ink ink-thin" opacity="0.5" />
+    
+    <!-- Sun Rays (Geometric) -->
+    <line x1="540" y1="100" x2="540" y2="220" class="ink ink-med" />
+    <line x1="540" y1="680" x2="540" y2="800" class="ink ink-med" />
+    <line x1="190" y1="450" x2="280" y2="450" class="ink ink-med" />
+    <line x1="800" y1="450" x2="890" y2="450" class="ink ink-med" />
+    <line x1="292" y1="202" x2="356" y2="266" class="ink ink-med" />
+    <line x1="724" y1="634" x2="788" y2="698" class="ink ink-med" />
+    <line x1="788" y1="202" x2="724" y2="266" class="ink ink-med" />
+    <line x1="356" y1="634" x2="292" y2="698" class="ink ink-med" />
+
+    <!-- Stylized Clouds / Wind -->
+    <path d="M 150 300 Q 200 280 250 320 T 350 300" class="ink ink-med" />
+    <path d="M 120 330 Q 180 330 220 370 T 300 350" class="ink ink-thin ink-dash" />
+    <path d="M 750 250 Q 800 220 850 250 T 950 230" class="ink ink-med" />
+    <path d="M 780 280 Q 820 280 860 310" class="ink ink-thin ink-dash" />
+
+    <!-- Horizon Lines -->
+    <path d="M -10 900 Q 300 850 700 950 T 1090 900" class="ink ink-thick" />
+    <path d="M -10 930 Q 300 880 700 980 T 1090 930" class="ink ink-thin" />
+  </g>
+
+  <!-- SOL & PAYS (Côte d'Ivoire Subtext) -->
+  <g id="sol_pays">
+    <!-- Abstract Map Silhouette of Ivory Coast etched in ground -->
+    <path d="M 380 1550 C 450 1520 520 1530 570 1560 C 620 1600 630 1650 600 1710 C 550 1760 480 1750 420 1720 C 370 1680 350 1600 380 1550 Z" class="fill-accent-orange" opacity="0.05" />
+    <path d="M 380 1550 C 450 1520 520 1530 570 1560 C 620 1600 630 1650 600 1710 C 550 1760 480 1750 420 1720 C 370 1680 350 1600 380 1550 Z" class="ink ink-thin ink-dash" opacity="0.6" />
+    
+    <!-- Sweeping Dune / Ground Contours -->
+    <path d="M -10 1300 Q 400 1200 800 1400 T 1090 1350" class="ink ink-med" />
+    <path d="M -10 1450 C 300 1450 400 1600 700 1500 T 1090 1650" class="ink ink-thick" />
+    <path d="M 0 1700 C 400 1850 600 1650 1080 1750" class="ink ink-med" />
+    
+    <!-- Tricolor abstract bands (Orange / White / Green desaturated) -->
+    <path d="M -10 1450 C 300 1450 400 1600 700 1500 T 1090 1650 L 1090 1920 L -10 1920 Z" class="fill-accent-green" opacity="0.05" />
+    <path d="M -10 1300 Q 400 1200 800 1400 T 1090 1350 L 1090 1650 T 700 1500 C 400 1600 300 1450 -10 1450 Z" class="fill-cream" opacity="0.1" />
+    <path d="M -10 900 Q 300 850 700 950 T 1090 900 L 1090 1350 T 800 1400 Q 400 1200 -10 1300 Z" class="fill-accent-orange" opacity="0.05" />
+  </g>
+
+  <!-- TEXTE 2030 -->
+  <g id="texte_2030">
+    <!-- Engraved monument style text -->
+    <text x="800" y="1820" font-family="'Courier New', monospace" font-weight="bold" font-size="42" fill="#332A20" letter-spacing="12">2030</text>
+    <line x1="780" y1="1835" x2="965" y2="1835" class="ink ink-med" />
+    <line x1="780" y1="1842" x2="965" y2="1842" class="ink ink-thin" />
+  </g>
+
+  <!-- USINE - BATIMENT PRINCIPAL -->
+  <g id="usine_batiment">
+    <!-- Side Wall (Receding) -->
+    <polygon points="650,1180 920,1050 920,800 650,900" class="fill-cream ink ink-thick" />
+    <!-- Front Facade -->
+    <polygon points="250,1180 650,1180 650,900 250,900" class="fill-cream ink ink-thick" />
+    
+    <!-- Facade Structural Lines -->
+    <line x1="350" y1="1180" x2="350" y2="900" class="ink ink-med" />
+    <line x1="450" y1="1180" x2="450" y2="900" class="ink ink-med" />
+    <line x1="550" y1="1180" x2="550" y2="900" class="ink ink-med" />
+    <line x1="250" y1="1050" x2="650" y2="1050" class="ink ink-thin ink-dash" />
+    
+    <!-- Side Wall Structural Lines -->
+    <line x1="740" y1="1135" x2="740" y2="865" class="ink ink-med" />
+    <line x1="830" y1="1090" x2="830" y2="835" class="ink ink-med" />
+  </g>
+
+  <!-- TOIT EN DENTS DE SCIE -->
+  <g id="toit_dents_scie">
+    <!-- Peak 3 (Back) -->
+    <polygon points="516,900 650,750 650,900" class="fill-cream ink ink-thick" />
+    <polygon points="650,750 920,620 920,800 650,900" class="fill-cream ink ink-med" />
+    <polygon points="516,900 650,750 920,620 786,770" class="fill-cream ink ink-med" /> <!-- Slope roof -->
+    <!-- Peak 2 (Middle) -->
+    <polygon points="383,900 516,750 516,900" class="fill-cream ink ink-thick" />
+    <polygon points="516,750 786,620 786,800 516,900" class="fill-cream ink ink-med" />
+    <polygon points="383,900 516,750 786,620 653,770" class="fill-cream ink ink-med" />
+    <!-- Peak 1 (Front) -->
+    <polygon points="250,900 383,750 383,900" class="fill-cream ink ink-thick" />
+    <polygon points="383,750 653,620 653,800 383,900" class="fill-cream ink ink-med" />
+    <polygon points="250,900 383,750 653,620 520,770" class="fill-cream ink ink-med" />
+    
+    <!-- Glass Panes Hatching (Vertical sides of the sawtooth) -->
+    <g class="ink ink-thin">
+      <line x1="383" y1="760" x2="383" y2="890" />
+      <line x1="410" y1="780" x2="410" y2="880" />
+      <line x1="437" y1="800" x2="437" y2="870" />
+      <line x1="516" y1="760" x2="516" y2="890" />
+      <line x1="543" y1="780" x2="543" y2="880" />
+      <line x1="570" y1="800" x2="570" y2="870" />
+      <line x1="650" y1="760" x2="650" y2="890" />
+      <line x1="677" y1="780" x2="677" y2="880" />
+      <line x1="704" y1="800" x2="704" y2="870" />
+    </g>
+  </g>
+
+  <!-- PORTE -->
+  <g id="porte">
+    <!-- Arch Gate -->
+    <path d="M 400 1180 L 400 1000 A 50 50 0 0 1 500 1000 L 500 1180 Z" class="fill-dark" />
+    <path d="M 385 1180 L 385 1000 A 65 65 0 0 1 515 1000 L 515 1180" class="ink ink-thick" />
+    <!-- Energy / Process lines emitting from door -->
+    <line x1="450" y1="1050" x2="450" y2="1150" class="ink ink-med" stroke="#EAE3D3" stroke-dasharray="10 10" />
+    <line x1="420" y1="1070" x2="420" y2="1130" class="ink ink-med" stroke="#EAE3D3" stroke-dasharray="5 10" />
+    <line x1="480" y1="1070" x2="480" y2="1130" class="ink ink-med" stroke="#EAE3D3" stroke-dasharray="5 10" />
+  </g>
+
+  <!-- CHEMINEE -->
+  <g id="cheminee">
+    <!-- Main Body Base -->
+    <path d="M 820 840 L 820 450 L 890 450 L 890 800" class="fill-cream ink ink-thick" />
+    <!-- Brick / Segment Texture -->
+    <line x1="820" y1="780" x2="890" y2="780" class="ink ink-med" />
+    <line x1="820" y1="720" x2="890" y2="720" class="ink ink-med" />
+    <line x1="820" y1="660" x2="890" y2="660" class="ink ink-med" />
+    <line x1="820" y1="600" x2="890" y2="600" class="ink ink-med" />
+    <line x1="820" y1="540" x2="890" y2="540" class="ink ink-med" />
+    <line x1="820" y1="480" x2="890" y2="480" class="ink ink-med" />
+    <!-- Unfinished Top -->
+    <path d="M 820 450 L 835 410 L 850 460 L 870 420 L 890 450" class="ink ink-thick" />
+    <path d="M 820 450 L 835 410 L 850 460 L 870 420 L 890 450" class="fill-accent-orange" opacity="0.5" />
+  </g>
+
+  <!-- ECHAFAUDAGE -->
+  <g id="echafaudage">
+    <!-- Vertical Poles -->
+    <line x1="800" y1="880" x2="800" y2="380" class="ink ink-med" />
+    <line x1="855" y1="860" x2="855" y2="380" class="ink ink-med" />
+    <line x1="910" y1="840" x2="910" y2="380" class="ink ink-med" />
+    <!-- Horizontal Planks -->
+    <line x1="780" y1="760" x2="930" y2="760" class="ink ink-thick" />
+    <line x1="780" y1="640" x2="930" y2="640" class="ink ink-thick" />
+    <line x1="780" y1="520" x2="930" y2="520" class="ink ink-thick" />
+    <line x1="780" y1="400" x2="930" y2="400" class="ink ink-thick" />
+    <!-- Cross Bracing (X) -->
+    <path d="M 800 760 L 855 640 M 855 760 L 800 640" class="ink ink-thin" />
+    <path d="M 855 760 L 910 640 M 910 760 L 855 640" class="ink ink-thin" />
+    <path d="M 800 640 L 855 520 M 855 640 L 800 520" class="ink ink-thin" />
+    <path d="M 855 640 L 910 520 M 910 640 L 855 520" class="ink ink-thin" />
+    <path d="M 800 520 L 855 400 M 855 520 L 800 400" class="ink ink-thin" />
+    <path d="M 855 520 L 910 400 M 910 520 L 855 400" class="ink ink-thin" />
+  </g>
+
+  <!-- LIGNES CHANTIER -->
+  <g id="lignes_chantier">
+    <!-- Ghost extension of chimney -->
+    <rect x="820" y="200" width="70" height="200" class="ink ink-med ink-dash" />
+    <!-- Blueprint nodes -->
+    <circle cx="820" cy="200" r="4" class="fill-dark" />
+    <circle cx="890" cy="200" r="4" class="fill-dark" />
+    
+    <!-- Crane / Plumb Line -->
+    <line x1="970" y1="100" x2="970" y2="450" class="ink ink-thin" stroke-dasharray="15 5" />
+    <path d="M 950 450 L 990 450 L 970 480 Z" class="ink ink-med" />
+    <circle cx="970" cy="100" r="6" class="fill-dark" />
+
+    <!-- Expansion Blueprint Block -->
+    <polygon points="950,950 1050,900 1050,1100 950,1150" class="ink ink-med ink-dash" />
+    <polygon points="950,950 1050,900 1050,1100 950,1150" class="fill-accent-orange" opacity="0.05" />
+    <line x1="950" y1="1050" x2="1050" y2="1000" class="ink ink-thin ink-dash" />
+  </g>
+
+  <!-- TAS DE CABOSSES (Hero Objects) -->
+  <g id="tas_cabosses">
+    <!-- Foreground Giant Pod 1 -->
+    <g transform="translate(250, 1750) rotate(-15) scale(2)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-accent-orange ink ink-thick" />
+      <path d="M -25 0 C -10 -15 10 -15 25 0 C 10 15 -10 15 -25 0 Z" class="ink ink-med" />
+      <path d="M -30 0 L 30 0" class="ink ink-thin" />
+    </g>
+    <!-- Foreground Giant Pod 2 -->
+    <g transform="translate(150, 1800) rotate(25) scale(1.8)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-accent-orange ink ink-thick" />
+      <path d="M -25 0 C -10 -15 10 -15 25 0 C 10 15 -10 15 -25 0 Z" class="ink ink-med" />
+      <path d="M -30 0 L 30 0" class="ink ink-thin" />
+    </g>
+    <!-- Foreground Giant Pod 3 -->
+    <g transform="translate(100, 1700) rotate(-40) scale(1.6)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-cream ink ink-thick" />
+      <path d="M -25 0 C -10 -15 10 -15 25 0 C 10 15 -10 15 -25 0 Z" class="ink ink-med" />
+      <path d="M -30 0 L 30 0" class="ink ink-thin" />
+    </g>
+    <!-- Stacked Pods Medium -->
+    <g transform="translate(180, 1650) rotate(10) scale(1.3)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-cream ink ink-thick" />
+      <path d="M -25 0 C -10 -15 10 -15 25 0 C 10 15 -10 15 -25 0 Z" class="ink ink-med" />
+    </g>
+    <g transform="translate(260, 1620) rotate(-30) scale(1.3)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-accent-orange ink ink-thick" />
+      <path d="M -25 0 C -10 -15 10 -15 25 0 C 10 15 -10 15 -25 0 Z" class="ink ink-med" />
+    </g>
+  </g>
+
+  <!-- CONVOYEUR ENTREE -->
+  <g id="convoyeur_entree">
+    <!-- Belt Structure -->
+    <path d="M 150 1600 C 250 1550 350 1400 420 1180" class="ink ink-thick" />
+    <path d="M 180 1630 C 280 1580 380 1430 450 1180" class="ink ink-thick" />
+    
+    <!-- Supports -->
+    <line x1="220" y1="1560" x2="220" y2="1660" class="ink ink-thick" />
+    <line x1="320" y1="1430" x2="320" y2="1580" class="ink ink-thick" />
+    <line x1="400" y1="1270" x2="400" y2="1470" class="ink ink-thick" />
+
+    <!-- Cross details (Rollers) -->
+    <line x1="165" y1="1615" x2="150" y2="1600" class="ink ink-med" />
+    <line x1="235" y1="1575" x2="210" y2="1550" class="ink ink-med" />
+    <line x1="315" y1="1480" x2="290" y2="1460" class="ink ink-med" />
+    <line x1="395" y1="1315" x2="365" y2="1305" class="ink ink-med" />
+
+    <!-- Pods on Conveyor -->
+    <g transform="translate(220, 1530) rotate(-45) scale(0.8)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-accent-orange ink ink-thick" />
+    </g>
+    <g transform="translate(300, 1430) rotate(-60) scale(0.8)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-cream ink ink-thick" />
+    </g>
+    <g transform="translate(380, 1280) rotate(-75) scale(0.8)">
+      <path d="M -30 0 C -15 -25 15 -25 30 0 C 15 25 -15 25 -30 0 Z" class="fill-accent-orange ink ink-thick" />
+    </g>
+  </g>
+
+  <!-- SORTIE TABLETTES (Hero Objects) -->
+  <g id="sortie_tablettes">
+    <!-- Output Ramp/Conveyor -->
+    <path d="M 600 1180 C 750 1350 900 1450 1080 1550" class="ink ink-thick" />
+    <path d="M 630 1150 C 780 1320 930 1420 1080 1520" class="ink ink-thick" />
+    
+    <!-- Supports -->
+    <line x1="750" y1="1290" x2="750" y2="1440" class="ink ink-thick" />
+    <line x1="900" y1="1415" x2="900" y2="1600" class="ink ink-thick" />
+
+    <!-- Tablettes on Ramp -->
+    <!-- Tablette 1 -->
+    <g transform="translate(650, 1180) rotate(42)">
+      <rect x="0" y="0" width="80" height="40" rx="2" class="fill-accent-choc ink ink-thick" />
+      <line x1="20" y1="0" x2="20" y2="40" class="ink ink-med" />
+      <line x1="40" y1="0" x2="40" y2="40" class="ink ink-med" />
+      <line x1="60" y1="0" x2="60" y2="40" class="ink ink-med" />
+      <line x1="0" y1="20" x2="80" y2="20" class="ink ink-med" />
+    </g>
+    <!-- Tablette 2 -->
+    <g transform="translate(800, 1315) rotate(35)">
+      <rect x="0" y="0" width="100" height="50" rx="2" class="fill-cream ink ink-thick" />
+      <rect x="5" y="5" width="90" height="40" class="ink ink-thin" />
+      <line x1="25" y1="5" x2="25" y2="45" class="ink ink-med" />
+      <line x1="50" y1="5" x2="50" y2="45" class="ink ink-med" />
+      <line x1="75" y1="5" x2="75" y2="45" class="ink ink-med" />
+    </g>
+    <!-- Tablette 3 (Giant Foreground Stack) -->
+    <g transform="translate(950, 1380) rotate(25) scale(1.5)">
+      <rect x="0" y="20" width="120" height="60" rx="3" class="fill-dark ink ink-thick" />
+      <rect x="-10" y="0" width="120" height="60" rx="3" class="fill-accent-choc ink ink-thick" />
+      <!-- Grid on top bar -->
+      <line x1="20" y1="0" x2="20" y2="60" class="ink ink-med" />
+      <line x1="40" y1="0" x2="40" y2="60" class="ink ink-med" />
+      <line x1="60" y1="0" x2="60" y2="60" class="ink ink-med" />
+      <line x1="80" y1="0" x2="80" y2="60" class="ink ink-med" />
+      <line x1="100" y1="0" x2="100" y2="60" class="ink ink-med" />
+      <line x1="0" y1="30" x2="120" y2="30" class="ink ink-med" />
+    </g>
+  </g>
+</svg>

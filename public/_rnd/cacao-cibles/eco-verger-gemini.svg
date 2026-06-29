@@ -1,0 +1,196 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #F1EBE0; }
+      .pale_fill { fill: #F1EBE0; stroke: #9E9385; stroke-width: 3; stroke-linejoin: round; }
+      .pale_stroke { fill: none; stroke: #9E9385; stroke-width: 2; stroke-linecap: round; }
+      .pale_shadow { fill: #E4DCD0; stroke: none; }
+      .solid_fill { fill: #755035; stroke: #2F2116; stroke-width: 3; stroke-linejoin: round; }
+      .solid_stroke { fill: none; stroke: #2F2116; stroke-width: 2; stroke-linecap: round; }
+      .solid_shadow { fill: #4A3120; stroke: none; }
+      .path_corridor { fill: #EAE3D6; }
+    </style>
+  </defs>
+
+  <g id="sol">
+    <rect class="bg" width="1080" height="1920" />
+    <path d="M0,1700 Q540,1750 1080,1650" class="pale_stroke" />
+    <path d="M0,1400 Q540,1430 1080,1380" class="pale_stroke" />
+    <path d="M0,1100 Q540,1120 1080,1080" class="pale_stroke" />
+    <path d="M0,800 Q540,810 1080,790" class="pale_stroke" />
+  </g>
+
+  <g id="couloir">
+    <polygon points="450,500 630,500 950,1920 130,1920" class="path_corridor" />
+  </g>
+
+  <g id="sillons">
+    <path d="M220,1920 L500,500" class="pale_stroke" />
+    <path d="M380,1920 L520,500" class="pale_stroke" />
+    <path d="M700,1920 L560,500" class="pale_stroke" />
+    <path d="M860,1920 L580,500" class="pale_stroke" />
+  </g>
+
+  <g id="horizon_collines">
+    <path d="M0,450 Q 250,400 500,470 T 1080,430" class="pale_stroke" />
+    <path d="M0,480 Q 350,430 700,500 T 1080,460" class="pale_stroke" />
+    <line x1="0" y1="500" x2="1080" y2="500" class="pale_fill" stroke-width="4" />
+  </g>
+
+  <g id="soleil">
+    <circle cx="540" cy="280" r="90" class="pale_fill" />
+    <line x1="540" y1="160" x2="540" y2="120" class="pale_stroke" />
+    <line x1="540" y1="400" x2="540" y2="440" class="pale_stroke" />
+    <line x1="420" y1="280" x2="380" y2="280" class="pale_stroke" />
+    <line x1="660" y1="280" x2="700" y2="280" class="pale_stroke" />
+    <line x1="455" y1="195" x2="425" y2="165" class="pale_stroke" />
+    <line x1="625" y1="365" x2="655" y2="395" class="pale_stroke" />
+    <line x1="455" y1="365" x2="425" y2="395" class="pale_stroke" />
+    <line x1="625" y1="195" x2="655" y2="165" class="pale_stroke" />
+  </g>
+
+  <g id="oiseaux">
+    <path d="M 300,200 Q 320,180 340,210 Q 360,180 380,200 Q 340,190 300,200 Z" class="pale_fill" />
+    <path d="M 780,150 Q 790,135 800,160 Q 810,135 820,150 Q 800,140 780,150 Z" class="pale_fill" />
+    <path d="M 220,350 Q 235,330 250,365 Q 265,330 280,350 Q 250,340 220,350 Z" class="pale_fill" />
+  </g>
+
+  <!-- TREES BACKGROUND TO FOREGROUND (Z-INDEX) -->
+  <g id="tree_14" transform="translate(582, 510) scale(-0.06, 0.06)">
+    <g id="tree_14_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_14_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_14_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_14_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_13" transform="translate(492, 530) scale(0.1, 0.1)">
+    <g id="tree_13_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_13_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_13_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_13_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_12" transform="translate(596, 560) scale(-0.15, 0.15)">
+    <g id="tree_12_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_12_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_12_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_12_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_11" transform="translate(471, 610) scale(0.22, 0.22)">
+    <g id="tree_11_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_11_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_11_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_11_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_10" transform="translate(629, 680) scale(-0.3, 0.3)">
+    <g id="tree_10_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_10_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_10_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_10_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_09" transform="translate(432, 760) scale(0.42, 0.42)">
+    <g id="tree_09_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_09_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_09_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_09_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_08" transform="translate(675, 850) scale(-0.55, 0.55)">
+    <g id="tree_08_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_08_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_08_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_08_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_07" transform="translate(383, 950) scale(0.7, 0.7)">
+    <g id="tree_07_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_07_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_07_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_07_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <!-- COLORIZED MID-GROUND TREE -->
+  <g id="tree_06" transform="translate(730, 1050) scale(-0.85, 0.85)">
+    <g id="tree_06_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="solid_shadow"/></g>
+    <g id="tree_06_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="solid_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="solid_stroke"/></g>
+    <g id="tree_06_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="solid_fill"/></g>
+    <g id="tree_06_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="solid_fill"/></g>
+  </g>
+
+  <g id="tree_05" transform="translate(331, 1150) scale(1.0, 1.0)">
+    <g id="tree_05_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_05_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_05_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_05_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_04" transform="translate(799, 1300) scale(-1.3, 1.3)">
+    <g id="tree_04_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_04_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_04_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_04_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_03" transform="translate(253, 1450) scale(1.6, 1.6)">
+    <g id="tree_03_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_03_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_03_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_03_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <g id="tree_02" transform="translate(881, 1600) scale(-2.0, 2.0)">
+    <g id="tree_02_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="pale_shadow"/></g>
+    <g id="tree_02_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="pale_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="pale_stroke"/></g>
+    <g id="tree_02_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="pale_fill"/></g>
+    <g id="tree_02_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="pale_fill"/></g>
+  </g>
+
+  <!-- COLORIZED FOREGROUND TREE -->
+  <g id="tree_01" transform="translate(175, 1750) scale(2.5, 2.5)">
+    <g id="tree_01_ombre"><ellipse cx="0" cy="20" rx="120" ry="30" class="solid_shadow"/></g>
+    <g id="tree_01_tronc"><path d="M-20,20 C-30,-50 -40,-120 -80,-180 C-70,-190 -50,-180 -30,-140 C-10,-90 0,-50 10,-90 C30,-150 60,-190 70,-170 C50,-120 30,-50 30,20 Z" class="solid_fill"/><path d="M-10,-30 Q-15,-80 -35,-120 M15,-20 Q20,-70 30,-120" class="solid_stroke"/></g>
+    <g id="tree_01_feuillage"><path d="M-60,-140 C-160,-120 -220,-220 -150,-300 C-180,-380 -90,-450 -10,-400 C60,-460 160,-430 180,-350 C240,-330 240,-230 160,-180 C180,-110 80,-80 20,-120 C-20,-90 -40,-100 -60,-140 Z" class="solid_fill"/></g>
+    <g id="tree_01_cabosses"><path d="M-25,-50 C-40,-45 -40,-15 -25,-10 C-10,-5 -5,-35 -25,-50 Z M15,-90 C0,-85 0,-55 15,-50 C30,-45 35,-75 15,-90 Z M-45,-120 C-60,-115 -60,-85 -45,-80 C-30,-75 -25,-105 -45,-120 Z M35,-140 C20,-135 20,-105 35,-100 C50,-95 55,-125 35,-140 Z" class="solid_fill"/></g>
+  </g>
+
+  <!-- FOREGROUND CENTER OBJECTS -->
+  <g id="feuilles_sol">
+    <g transform="translate(480, 1860) rotate(15)">
+      <path d="M0,0 C 30,-20 70,-10 90,20 C 60,30 20,20 0,0 Z" class="pale_fill" />
+      <path d="M0,0 Q 45,-5 90,20" class="pale_stroke" />
+    </g>
+    <g transform="translate(600, 1720) rotate(-60)">
+      <path d="M0,0 C 25,-15 60,-5 75,15 C 50,25 15,15 0,0 Z" class="pale_fill" />
+      <path d="M0,0 Q 35,-2 75,15" class="pale_stroke" />
+    </g>
+  </g>
+
+  <g id="cabosses_sol">
+    <!-- Whole scattered pod -->
+    <g transform="translate(380, 1820) rotate(-30)">
+      <path d="M-25,-60 C-45,-50 -50,-30 -35,-10 C-20,10 5,10 20,-10 C35,-30 30,-50 10,-60 Z" class="pale_fill" />
+      <path d="M-25,-50 Q -10,-10 15,-15 M-10,-55 Q 5,-20 20,-25" class="pale_stroke" />
+    </g>
+    <!-- Open split pod showing beans -->
+    <g transform="translate(680, 1800) rotate(45)">
+      <path d="M-20,-50 C-40,-40 -40,-20 -30,-5 C-20,10 10,15 25,0 C40,-15 35,-35 20,-50 Z" class="pale_fill" />
+      <circle cx="-5" cy="-25" r="8" class="pale_fill" />
+      <circle cx="5" cy="-15" r="8" class="pale_fill" />
+      <circle cx="12" cy="-30" r="8" class="pale_fill" />
+    </g>
+    <!-- Second half of open pod -->
+    <g transform="translate(730, 1840) rotate(120)">
+      <path d="M-20,-50 C-40,-40 -40,-20 -30,-5 C-20,10 10,15 25,0 C40,-15 35,-35 20,-50 Z" class="pale_fill" />
+    </g>
+  </g>
+
+  <g id="chapeau">
+    <ellipse cx="540" cy="1780" rx="120" ry="35" class="pale_fill" />
+    <path d="M 460,1775 C 460,1680 620,1680 620,1775 Z" class="pale_fill" />
+    <path d="M 480,1770 C 490,1720 590,1720 600,1770" class="pale_stroke" stroke-dasharray="6,4" />
+    <path d="M 460,1775 C 460,1800 620,1800 620,1775" class="pale_stroke" />
+  </g>
+</svg>

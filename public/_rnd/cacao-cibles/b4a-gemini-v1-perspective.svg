@@ -1,0 +1,71 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <g id="tree_A">
+      <ellipse cx="0" cy="0" rx="35" ry="8" fill="rgba(43,33,23,0.15)" />
+      <path d="M-15,0 C-10,-30 -8,-70 -8,-100 L8,-100 C8,-70 10,-30 15,0 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M-5,-60 C-20,-80 -30,-90 -30,-90 M5,-70 C20,-90 25,-100 25,-100" fill="none" stroke="#2b2117" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M-40,-40 C-70,-40 -90,-70 -75,-100 C-95,-120 -80,-160 -50,-165 C-40,-195 10,-205 35,-180 C60,-195 90,-175 90,-145 C110,-130 100,-85 75,-75 C85,-45 55,-25 30,-35 C10,-20 -20,-20 -40,-40 Z" fill="#6b4423" stroke="#2b2117" stroke-width="2.5" stroke-linejoin="round" />
+    </g>
+    <g id="tree_B">
+      <ellipse cx="0" cy="0" rx="40" ry="10" fill="rgba(43,33,23,0.15)" />
+      <path d="M-12,0 C-8,-40 -5,-75 -5,-105 L5,-105 C5,-75 8,-40 12,0 Z" fill="#e8dcc0" stroke="#2b2117" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M-3,-50 C-15,-75 -20,-85 -20,-85 M3,-55 C15,-80 25,-95 25,-95" fill="none" stroke="#2b2117" stroke-width="2.5" stroke-linecap="round" />
+      <path d="M-35,-45 C-65,-35 -95,-60 -80,-90 C-105,-110 -90,-150 -55,-155 C-35,-190 20,-195 45,-165 C75,-175 105,-150 95,-120 C120,-100 105,-55 75,-50 C80,-20 45,0 20,-15 C0,-5 -25,-15 -35,-45 Z" fill="#6b4423" stroke="#2b2117" stroke-width="2.5" stroke-linejoin="round" />
+    </g>
+  </defs>
+
+  <rect width="1080" height="1920" fill="#e8dcc0" />
+<g id="phrase_afrique">
+    <text x="540" y="220" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="110" stroke="#2b2117" stroke-width="4.5" stroke-linejoin="round" fill="rgba(43,33,23,0.06)" text-anchor="middle" letter-spacing="6">L'AFRIQUE</text>
+    <text x="540" y="350" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="80" stroke="#2b2117" stroke-width="4.5" stroke-linejoin="round" fill="rgba(43,33,23,0.06)" text-anchor="middle" letter-spacing="6">N'EST PAS PAUVRE</text>
+    <path d="M 340,430 L 740,430" stroke="#2b2117" stroke-width="2" stroke-dasharray="4 12" stroke-linecap="round" />
+    <circle cx="540" cy="430" r="5" fill="#e8dcc0" stroke="#2b2117" stroke-width="2.5" />
+  </g>
+
+  <g id="phrase_sous_payee">
+    <text x="540" y="560" font-family="Georgia, 'Times New Roman', serif" font-weight="bold" font-size="105" stroke="#2b2117" stroke-width="5" stroke-linejoin="round" fill="rgba(43,33,23,0.12)" text-anchor="middle" letter-spacing="8">SOUS-PAYÉE</text>
+  </g>
+
+  <g id="tree_01">
+    <use href="#tree_A" transform="translate(440, 780) scale(0.4) rotate(-3)" />
+  </g>
+  <g id="tree_02">
+    <use href="#tree_B" transform="translate(640, 780) scale(0.4) rotate(2)" />
+  </g>
+  <g id="tree_03">
+    <use href="#tree_B" transform="translate(400, 900) scale(0.5) rotate(4)" />
+  </g>
+  <g id="tree_04">
+    <use href="#tree_A" transform="translate(680, 900) scale(0.5) rotate(-2)" />
+  </g>
+  <g id="tree_05">
+    <use href="#tree_A" transform="translate(350, 1040) scale(0.65) rotate(-4)" />
+  </g>
+  <g id="tree_06">
+    <use href="#tree_B" transform="translate(730, 1040) scale(0.65) rotate(1)" />
+  </g>
+  <g id="tree_07">
+    <use href="#tree_B" transform="translate(290, 1200) scale(0.8) rotate(3)" />
+  </g>
+  <g id="tree_08">
+    <use href="#tree_A" transform="translate(790, 1200) scale(0.8) rotate(-3)" />
+  </g>
+  <g id="tree_09">
+    <use href="#tree_A" transform="translate(220, 1380) scale(1.0) rotate(-1)" />
+  </g>
+  <g id="tree_10">
+    <use href="#tree_B" transform="translate(860, 1380) scale(1.0) rotate(4)" />
+  </g>
+  <g id="tree_11">
+    <use href="#tree_B" transform="translate(140, 1580) scale(1.25) rotate(2)" />
+  </g>
+  <g id="tree_12">
+    <use href="#tree_A" transform="translate(940, 1580) scale(1.25) rotate(-2)" />
+  </g>
+  <g id="tree_13">
+    <use href="#tree_A" transform="translate(50, 1800) scale(1.55) rotate(-3)" />
+  </g>
+  <g id="tree_14">
+    <use href="#tree_B" transform="translate(1030, 1800) scale(1.55) rotate(1)" />
+  </g>
+</svg>
