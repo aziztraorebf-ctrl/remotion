@@ -11,7 +11,23 @@
 - ✅ Jury LLM FAIT (GPT-5.5 / Gemini 3.1 Pro / Kimi K2.5 = 8,5/10 unanime) -> cacao-jury-RESULT.md (scratchpad).
 - ✅ NARRATION ElevenLabs GENEREE + CORRIGEE + VALIDEE AZIZ (timbre GeoAfrique V2, pipeline voix vivante).
 - ✅ DA-brief animation FAIT (DA-BRIEF-ANIMATION.md) · storyboard SVG-d'abord FAIT · B1+B2 produits et valides Aziz (2026-06-29).
-- ⬜ NEXT = produire B3 (extraction) puis B4, B5 + assemblage.
+- ✅ **B3 EXTRACTION VALIDE FINAL (2026-06-29)** : cabosse s'ouvre -> tablette B1 morphe en barre 6/94 (labels) -> verger
+  s'eveille (croissance organique, pas pop) + 2/14 colorises "un septieme" -> chapeau. Vie permanente (sway tous arbres,
+  soleil glow+rayons, oiseaux qui battent, nuages qui derivent, feves squash&stretch). out/episodes/cacao-chocolat-short/beat3-FINAL.mp4
+- ✅ **B4 RENVERSEMENT VALIDE FINAL (2026-06-29, 910f=30s)** : 4A verger REVERDIT cascade depuis survivants (climax) ->
+  4B FISSURE traversante (haut+bas chapeau) -> 4C USINE trace ordonne (structure->details) + flux choco continu + fumee
+  organique + 2s respiration. Transition LIEN (fissure->sol usine). out/episodes/cacao-chocolat-short/beat4-FINAL.mp4
+- ⬜ NEXT = **B5 (pont cafe/or/cobalt + CTA)** — POINT 4 a trancher avec Aziz (direction visuelle du pont). Puis ASSEMBLAGE 5 beats + musique B.
+
+## 🧩 COMPOSANTS REUTILISABLES CREES (B3/B4)
+- `components/VergerCacao.tsx` ⭐ — paysage 3 etats (mort/reverdit/fissure) + cacaoyer parametrique (tronc+cabosses),
+  14 arbres perspective, vie permanente (windPhase: sway/soleil glow/nuages/oiseaux), croissance (appearProgress/grow),
+  fissure traversante, chapeau. Pilote par props (zero logique frame). REUTILISE B3+B4.
+- `components/TabletteMorphBarre.tsx` — tablette carreaux+croix suisse -> barre 6/94 (morph), labels, filet "valeur qui fuit".
+- `components/CabosseOuverture.tsx` — cabosse se dessine -> s'ouvre -> feves -> fade.
+- `components/UsineConstruction.tsx` ⭐ — usine trace ordonne (build) + colorisation (munition couleur) + fumee organique
+  + flux choco continu (chocOut, boucle permanente taille constante). Soleil glow+rayons. Pilote par props.
+- Alignements Whisper word-level : `audio/cacao-beat3-words.ts` (59 mots) + `cacao-beat4-words.ts` (78 mots).
 
 ## 🔊 AUDIO FINAL — SOURCE DE VERITE (ne pas chercher ailleurs)
 **Dossier** : `out/episodes/cacao-chocolat-short/audio/`

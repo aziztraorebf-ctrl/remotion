@@ -1,6 +1,10 @@
 import { Composition, Folder, staticFile as staticFileRoot } from "remotion";
 import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
 import { B2Source, B2_SOURCE_FRAMES, B2_SOURCE_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B2Source";
+import { VergerPreviewB3, VergerPreviewReverdit, VergerPreviewFissure } from "./projects/souverain/cacao-chocolat-short/components/VergerPreview";
+import { TabletteMorphPreview0, TabletteMorphPreview1 } from "./projects/souverain/cacao-chocolat-short/components/TabletteMorphBarre";
+import { B3Extraction, B3_EXTRACTION_FRAMES, B3_EXTRACTION_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B3Extraction";
+import { B4Lien, B4Fade, B4_RENVERSEMENT_FRAMES, B4_RENVERSEMENT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B4Renversement";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
@@ -3120,6 +3124,70 @@ export const RemotionRoot: React.FC = () => {
           component={B2Source}
           durationInFrames={B2_SOURCE_FRAMES}
           fps={B2_SOURCE_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerB3"
+          component={VergerPreviewB3}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerReverdit"
+          component={VergerPreviewReverdit}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerFissure"
+          component={VergerPreviewFissure}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-TabletteMorph0"
+          component={TabletteMorphPreview0}
+          durationInFrames={30}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-TabletteMorph1"
+          component={TabletteMorphPreview1}
+          durationInFrames={30}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B3Extraction"
+          component={B3Extraction}
+          durationInFrames={B3_EXTRACTION_FRAMES}
+          fps={B3_EXTRACTION_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B4-Lien"
+          component={B4Lien}
+          durationInFrames={B4_RENVERSEMENT_FRAMES}
+          fps={B4_RENVERSEMENT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B4-Fade"
+          component={B4Fade}
+          durationInFrames={B4_RENVERSEMENT_FRAMES}
+          fps={B4_RENVERSEMENT_FPS}
           width={1080}
           height={1920}
         />

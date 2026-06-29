@@ -574,3 +574,14 @@ fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/inf
 **Exemples corrigés 2026-06-25** : `feedback_flagfill` disait useClipFlags=NON-NEGOTIABLE (V5 dit BANNI au pitch→MapboxCountryFlagDecal) · 2 feedbacks "scan template d'abord" (doctrine = INTENTION-d'abord) · rules-atlas §7 `flipX:true` (bug moonwalk) · CLAUDE.md lui-même en retard sur les drapeaux V5.
 **How to apply** : à CHAQUE révision de doctrine, faire un `grep` du sujet dans `memory/feedbacks/` + CLAUDE.md + les index, et rétropropager (bandeau "⚠️ MAJ <date>" en tête du feedback périmé, pas suppression — le corps reste utile dans son ancien contexte). Le feedback est la couche qui dérive le plus vite car personne ne le re-relit.
 **Corollaire** : nos PROPRES ménages créent des régressions (fichier supprimé encore cité, fichier extrait non documenté dans l'index). Après toute purge/refactor, `grep` les noms supprimés/déplacés dans TOUTE la mémoire, pas seulement les 8 fichiers de check-links.py (qui ne couvre pas feedbacks/NEXT-ACTION/tools/ ni la résolution relative depuis l'auto-memory).
+
+## 🎬 SVG narratif : SCÈNE-ÉCOSYSTÈME, jamais OBJET-DANS-CADRE (2026-06-29, cacao B3/B4)
+**Cas déclencheur** : briefs SVG cacao (verger/tablette/CI-usine) → cibles correctes en objets MAIS « des arbres à droite à gauche », tablette posée sur 2 traits dans du vide, CI = patate beige au milieu du parchemin. Aziz : « où sont nos scènes narratives comme la Grande Muraille Verte ? »
+**Cause racine** : le brief décrivait des OBJETS dans un cadre, pas une SCÈNE. Un objet + 2 lignes de sol = inventaire, pas récit.
+**La référence-étalon** (ce qui RACONTE) = la pièce-malédiction Sénégal (`SenegalCoinFaceA_SVG`, render `scene1-intro-coin-FINAL.mp4`) : derrick qui POMPE au-dessus de la mer + navire qui FLOTTE sur la mer + vagues qui REMPLISSENT le bas. Chaque élément AGIT sur les autres dans UN espace unifié. Idem GGW : champ avec échelle premier-plan/fond, sol qui se fend + racines SOUS l'horizon, mosaïque en perspective qu'on traverse.
+**RÈGLE (à mettre dans tout brief SVG narratif)** :
+1. **Scène-écosystème** : avant-plan FORT (un objet-héros proche, grand), sol ET ciel HABITÉS, éléments EN RELATION/action les uns sur les autres. PAS un objet centré dans du vide.
+2. **Matière partout** : le « vide GGW » = respiration CIBLÉE, pas un fond mort. Remplir : sol (feuilles, cabosses, sillons), ciel (soleil correct, oiseaux, collines horizon), accessoires qui racontent le travail.
+3. **Perspective qu'on traverse** : 3/4 plongeante, point de fuite, étagement profond — pas frontal-frise.
+4. **Joindre la frame pièce-malédiction + frames GGW** comme refs de NIVEAU (strictement : « ne copie pas, vise CETTE richesse »).
+**How to apply** : avant de juger une cible SVG « bonne », test = « est-ce que les éléments INTERAGISSENT dans un monde, ou sont-ils juste posés ? ». Si posés → re-brief écosystème. Lié à [[SVG-FAISABILITE-AMONT]] et au pré-plan DA cacao.
