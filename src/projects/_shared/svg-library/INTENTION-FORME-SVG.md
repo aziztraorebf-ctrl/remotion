@@ -27,6 +27,25 @@
 
 ---
 
+## PATTERNS NARRATIFS GGW (au-delà de l'effet unitaire — ils STRUCTURENT le récit)
+
+> La table ci-dessus = effets unitaires. Ces patterns = comment ENCHAÎNER les effets sur plusieurs beats pour
+> raconter, pas une suite de plans. Prouvés GGW Muraille Verte + Cacao→Chocolat (2026-06-29).
+> Preuve cacao : `memory/episodes/souverain/cacao-chocolat-short/DA-BRIEF-ANIMATION.md` (leçons + pré-plan B3/B4).
+
+| Pattern narratif | Geste | Quand l'utiliser |
+|---|---|---|
+| PROPORTION = CHIFFRE | X éléments sur N s'allument/se colorisent (ex: 2 plants /14 en brun-vie, reste en encre morte) | Porter un chiffre du script (« un septième », « 3 sur 4 ») sans infographie LLM |
+| BOUCLER LA BOUCLE | L'image finale fait écho à l'image-problème initiale, résolue | Climax / fin — fermer l'arc visuellement |
+| EXPLOITER UN SILENCE par l'animation | Un élément discret s'éveille (réseau racinaire, lueur) pendant un temps mort audio | Meubler un blanc de narration sans ajouter d'info |
+| FIL DE TRANSFORMATION CONTINU (⭐ dépasse GGW) | Les éléments se TRANSFORMENT et REVIENNENT au lieu d'apparaître/disparaître : tablette→graphique→revient ; champ qui reverdit puis ternit ; carte qui réapparaît. Un même monde qui évolue sur N beats. | Tout Short/scène multi-beats — crée la continuité (GGW bouclait 1×, le fil = mieux) |
+
+### Règle anti-sur-épurage (corollaire premium-d'abord)
+« Registre encre » != « minimal/pauvre ». Viser la RICHESSE NARRATIVE (sens par geste, tension, transformation)
+DÈS le 1er brief, JAMAIS en rattrapage. Anti-pattern prouvé coûteux (cacao B1/B2) : briefer une tablette/carte
+nue puis devoir ajouter geste/couleur après render. Et : on sur-utilise le split-screen — scanner d'abord
+buvard-circulaire / proportion=chiffre / fil continu AVANT de défaut sur split.
+
 ## Règles de composition SVG (non-negotiables)
 
 - **1 technique par intention** — ne pas cumuler 3 effets sur le même élément pour compenser un dessin faible.

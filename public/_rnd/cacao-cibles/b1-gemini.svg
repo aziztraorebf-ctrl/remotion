@@ -1,0 +1,121 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg" stroke="#2b2117" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect width="1080" height="1920" fill="#e8dcc0" stroke="none" />
+
+  <g id="desert_dunes" stroke-width="2">
+    <!-- Foreground dune sweeping under the chocolate -->
+    <path d="M -50 1200 Q 400 1200 800 1400 Q 1000 1500 1150 1450" />
+    <path d="M 100 1230 Q 400 1250 750 1430" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.7" />
+    
+    <!-- Midground dune rising on the right -->
+    <path d="M 500 1250 Q 800 1250 1150 1150" />
+    <path d="M 550 1280 Q 800 1290 1100 1190" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.7" />
+
+    <!-- Background dune on the left -->
+    <path d="M -50 1100 Q 200 1100 400 1180" />
+    <path d="M 0 1130 Q 150 1130 350 1200" stroke-width="1.5" stroke-dasharray="4 8" opacity="0.7" />
+  </g>
+
+  <g id="sun_graphic">
+    <!-- Abstract, stark sun high in the desert sky -->
+    <circle cx="540" cy="350" r="140" stroke-width="2" />
+    <circle cx="540" cy="350" r="175" stroke-width="1.5" stroke-dasharray="6 12" opacity="0.6" />
+    <circle cx="540" cy="350" r="200" stroke-width="1" opacity="0.3" />
+    
+    <!-- Sun rays -->
+    <g stroke-width="1.5" opacity="0.8">
+      <path d="M 540 110 L 540 70" />
+      <path d="M 540 590 L 540 630" />
+      <path d="M 300 350 L 260 350" />
+      <path d="M 780 350 L 820 350" />
+      <path d="M 370 180 L 342 152" />
+      <path d="M 710 180 L 738 152" />
+      <path d="M 370 520 L 342 548" />
+      <path d="M 710 520 L 738 548" />
+    </g>
+  </g>
+
+  <g id="cacao_tree" stroke-width="1.5" opacity="0.5">
+    <!-- Frail trunk and roots struggling in the sand -->
+    <path d="M 200 1100 Q 190 950 210 800" />
+    <path d="M 200 1100 Q 180 1120 160 1130" stroke-dasharray="3 5" />
+    <path d="M 200 1100 Q 220 1130 240 1140" stroke-dasharray="3 5" />
+    
+    <!-- Fragile branches -->
+    <path d="M 202 980 Q 150 940 120 950" />
+    <path d="M 207 880 Q 250 830 280 820" />
+    <path d="M 210 800 Q 230 750 210 700" />
+    
+    <!-- Drooping, sparse leaves -->
+    <path d="M 120 950 C 100 970 80 1000 90 1020 C 110 1010 120 980 120 950 Z" stroke-width="1" />
+    <path d="M 150 947 C 130 980 110 1020 130 1040 C 150 1020 160 980 150 947 Z" stroke-width="1" />
+    <path d="M 280 820 C 310 830 330 860 320 880 C 300 870 280 850 280 820 Z" stroke-width="1" />
+    <path d="M 260 825 C 290 850 300 890 280 910 C 260 890 250 850 260 825 Z" stroke-width="1" />
+    <path d="M 210 700 C 190 670 170 650 160 630 C 190 630 210 660 210 700 Z" stroke-width="1" />
+    <path d="M 210 700 C 230 670 260 660 280 650 C 260 680 230 690 210 700 Z" stroke-width="1" />
+    
+    <!-- 2 Cacao pods directly on the trunk -->
+    <g stroke-width="2">
+      <path d="M 205 900 C 185 890 175 920 190 940 C 205 930 215 910 205 900 Z" />
+      <path d="M 192 905 C 185 915 190 930 195 935" stroke-width="1" />
+      
+      <path d="M 198 1000 C 220 990 235 1010 220 1035 C 205 1025 190 1010 198 1000 Z" />
+      <path d="M 205 1005 C 215 1015 210 1025 210 1030" stroke-width="1" />
+    </g>
+  </g>
+
+  <g id="chocolate_bar">
+    <!-- 3D side depth (Right and Bottom) -->
+    <path d="M 730 750 L 750 780 L 650 1380 L 630 1350 Z" stroke-width="4" />
+    <path d="M 630 1350 L 650 1380 L 270 1280 L 250 1250 Z" stroke-width="4" />
+    <path d="M 650 1380 L 630 1350" stroke-width="2" />
+
+    <!-- Main top face outline -->
+    <path d="M 350 650 L 730 750 L 630 1350 L 250 1250 Z" stroke-width="4" />
+    
+    <!-- Inner offset bevel for premium look -->
+    <path d="M 360 660 L 720 750 L 630 1330 L 270 1240 Z" stroke-width="1" opacity="0.5" />
+
+    <!-- Inner Grid: 4 columns x 6 rows, accurately calculated in perspective -->
+    <g stroke-width="2.5">
+      <!-- Vertical grooves -->
+      <path d="M 445 675 L 345 1275" />
+      <path d="M 540 700 L 440 1300" />
+      <path d="M 635 725 L 535 1325" />
+      
+      <!-- Horizontal grooves -->
+      <path d="M 333 750 L 713 850" />
+      <path d="M 316 850 L 696 950" />
+      <path d="M 300 950 L 680 1050" />
+      <path d="M 283 1050 L 663 1150" />
+      <path d="M 266 1150 L 646 1250" />
+    </g>
+
+    <!-- Groove depth highlights to make chunks look 3D -->
+    <g stroke-width="1.5" opacity="0.6">
+      <!-- Vertical shadows -->
+      <path d="M 452 677 L 352 1277" />
+      <path d="M 547 702 L 447 1302" />
+      <path d="M 642 727 L 542 1327" />
+      
+      <!-- Horizontal shadows -->
+      <path d="M 333 758 L 713 858" />
+      <path d="M 316 858 L 696 958" />
+      <path d="M 300 958 L 680 1058" />
+      <path d="M 283 1058 L 663 1158" />
+      <path d="M 266 1158 L 646 1258" />
+    </g>
+  </g>
+
+  <g id="swiss_flag">
+    <!-- Flagpole planted in the dune -->
+    <path d="M 820 850 L 820 1250" stroke-width="3.5" />
+    <circle cx="820" cy="850" r="8" stroke-width="2.5" />
+    
+    <!-- Flag outline (Rigid square pointing right) -->
+    <path d="M 820 870 L 940 870 L 940 990 L 820 990 Z" stroke-width="3" />
+    <path d="M 820 870 L 830 880 L 830 980 L 820 990" stroke-width="1.5" opacity="0.5" />
+
+    <!-- Distinct central Swiss Cross -->
+    <path d="M 870 900 L 890 900 L 890 920 L 910 920 L 910 940 L 890 940 L 890 960 L 870 960 L 870 940 L 850 940 L 850 920 L 870 920 Z" stroke-width="2.5" stroke-linejoin="miter" />
+  </g>
+</svg>

@@ -89,6 +89,17 @@ if not parts:
 
 ---
 
+## GOTCHA — visual_review.py / pre-presentation-review.sh = faux positifs sur registre non-War-Map (2026-06-29)
+Le hook gate `pre-presentation-review.sh` + `visual_review.py` (Gemini) juge implicitement contre la charte
+War-Map (navy/gold) et produit des FAUX POSITIFS récurrents sur d'autres registres — prouvé sur le registre
+encre/parchemin (Cacao→Chocolat) où Gemini pénalisait l'épure encre comme « manque de contraste/couleur » et
+réclamait des éléments retirés volontairement (soleil/dunes/storyboard pré-nettoyage). Scores 3,5–5,5/REBUILD à répétition.
+- Rappel : Gemini = SIGNAL, jamais JUGE. Sur un registre hors War-Map, attendre des scores bas STRUCTURELS.
+- Procédure : override le verdict quand il vise le registre lui-même (pas un défaut réel), TRACER l'override
+  (fichier `<render>.review-override.md` adjacent + 1 ligne STATUS projet). Le jugement d'Aziz prime.
+
+---
+
 ## Gotcha drapeaux nationaux en contexte "Afrique / souveraineté" (2026-05-06)
 
 Quand on demande des drapeaux de pays occidentaux dans un contexte narratif lié à l'Afrique, Gemini substitue des drapeaux africains ou régionaux même si les pays sont explicitement nommés.

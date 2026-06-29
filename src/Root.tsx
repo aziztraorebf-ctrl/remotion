@@ -1,4 +1,6 @@
 import { Composition, Folder, staticFile as staticFileRoot } from "remotion";
+import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
+import { B2Source, B2_SOURCE_FRAMES, B2_SOURCE_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B2Source";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
@@ -3101,6 +3103,25 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+      </Folder>
+
+      <Folder name="cacao-chocolat-short">
+        <Composition
+          id="Cacao-B1Hook"
+          component={B1Hook}
+          durationInFrames={B1_HOOK_FRAMES}
+          fps={B1_HOOK_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B2Source"
+          component={B2Source}
+          durationInFrames={B2_SOURCE_FRAMES}
+          fps={B2_SOURCE_FPS}
+          width={1080}
+          height={1920}
         />
       </Folder>
 

@@ -216,3 +216,36 @@ Si on reutilise un segment video d'un render precedent (qui contient deja narrat
 - 2026-04-22 : Sonjata session 8, pattern Hook + Option B musique valide (reference : `SonjataShortFull.tsx`)
 - 2026-04-24 : refactor memoire (creation RULES-ACTIVE.md + CHECKLIST-PRE-COMPOSE.md, split Geo vers `memory/tools/remotion-geo.md`)
 - 2026-04-25 : safe zones table -> pointeur RULES-ACTIVE.md ; section Identite GeoAfrique Shorts ajoutee
+
+---
+
+## SESSION 2026-06-28 — Cacao Short VERSION B (B1HookVB + B2SourceVB)
+
+### Livrable
+- B1HookVB.tsx (365f) + B2SourceVB.tsx (286f), 1080x1920, tsc propre.
+- Renders full HD : B1 https://files.catbox.moe/kxx95a.mp4 · B2 https://files.catbox.moe/cdapaf.mp4
+
+### Pattern reutilisable : TRANSFUSION cross-composition (continuite visuelle entre 2 beats separes)
+- 2 compositions Remotion = 2 timelines independantes -> PAS de camera/pan continu possible.
+- Astuce : faire correspondre EXACTEMENT un element (couleur + position Y) entre fin-beat-N et debut-beat-N+1.
+  Ici : flaque brune a Y=1720 a la fin de B1 (poolFill clampe a 1) reprise a Y=1720 (FLOW_POOL_Y_START) au debut de B2.
+  Constantes partagees a la main (pas d'import cross-fichier) : FLOW_POOL_Y / FLOW_BASE_Y identiques dans les 2 fichiers.
+- Resultat : "illusion de continuite" convaincante. Risque connu : l'amorce du beat 2 (~0.8s) peut paraitre vide si seul l'element repris est present -> demarrer le trace du contenu suivant tot.
+
+### Pattern : remplissage qui se VIDE (drain) dans une silhouette clippee
+- fillLevel = max(0, fillUp - drain). fillUp monte (colorisation), drain descend (vidage).
+- IMPORTANT : faire finir fillUp AVANT le debut du drain, sinon la silhouette n'est jamais "pleine" et le
+  geste luxe-parfait-puis-vidage ne se lit pas (bug rencontre : F_BAR_COLOR_END=88 vs F_DRAIN=90 -> tablette
+  jamais pleine ; corrige a F_BAR_COLOR_END=84).
+- Remplissage = <rect> clippe par <clipPath> sur le path de la silhouette ; le niveau = y du rect.
+
+### Pattern : compromis couleur (brun PUIS drapeau)
+- Dans FlagCountry : (1) rect brun clippe monte du bas, (2) bandes drapeau clippees par-dessus, (3) contour encre trace au-dessus.
+- Ordre de rendu = ordre semantique : matiere brute -> identite nationale -> trait.
+
+### Gotcha lisibilite : 2 elements verticaux au meme X se telescopent
+- Germination avortee (encre) + colonne de flux brun etaient toutes deux au centre (barCx) -> illisibles.
+- Fix : decaler la germination (baseX = centre - 175) ET retrecir la colonne de flux. Un seul element brun vertical au centre.
+
+### Whisper word-level
+- `whisper <mp3> --model tiny --language French --word_timestamps True --output_format json` (model small TIMEOUT 2min, tiny OK ~90s en bg).

@@ -10,12 +10,13 @@
 
 ---
 
-## Cacao → Chocolat Short — PRÉ-PROD COMPLÈTE, NEXT = PRODUCTION VISUELLE (2026-06-28)
-> [AUDIO LOCKED · prod visuelle PENDING] Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre GGW.
-> ✅ Sujet validé (TubeLab) · SCRIPT-V4 · triple fact-check · jury LLM 8,5/10 · NARRATION ElevenLabs validée Aziz
->   (5 beats séparés + complète) · MUSIQUE choisie (B afro-mélancolique).
-> NEXT = DA-brief animation → storyboarder (storyboard SVG-d'abord) → remotion-composer (audio-derived timing).
-> Source de vérité : `memory/episodes/souverain/cacao-chocolat-short/STATUS.md`.
+## Cacao → Chocolat Short — EN PRODUCTION VISUELLE, B1+B2 ACQUIS (2026-06-29)
+> [AUDIO LOCKED · B1+B2 COMPLETE · B3 NEXT] Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre GGW.
+> ✅ Pré-prod (historique) : SCRIPT-V4 · fact-check · jury 8,5/10 · NARRATION validée · MUSIQUE B.
+> ✅ DA-brief animation figé (DA-BRIEF-ANIMATION.md). ✅ B1 (hook v8 focus-tablette) + B2 (source split CI/Ghana)
+>   produits et validés Aziz, karaoké word-level brun chocolat. Variantes transfusion+cuisine écartées.
+> NEXT = B3 (extraction) puis B4, B5 + assemblage 5 beats + musique B.
+> Source de vérité : `memory/episodes/souverain/cacao-chocolat-short/STATUS.md` + `DA-BRIEF-ANIMATION.md`.
 
 ---
 
@@ -446,3 +447,70 @@ Doctrine : memory/doctrines/REVIEW-PREMIUM-TEMPLATE.md (standard review premium)
 Assets Gemini : ville-kidal, jeton-africacorps. Flags canvas : ml/bf/ne.
 NEXT : (1) full HD si validé ; (2) session dédiée "fond qui respire" (transversal) ; (3) P4.
 Détail état : memory/episodes/warmap-sahel/STATUS.md.
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source — POINT DE CONTROLE (style encre a valider Aziz)
+Passe 1 d3-geo encre rendue full HD. Geo EXACTE (countries-50m, CIV+GHA + region Afrique Ouest).
+Choregraphie OK : region se dessine -> brun cacao -> focus CI -> focus Ghana -> paire (labels deportes).
+Mp4: https://files.catbox.moe/bqer2s.mp4 · Frame paire: https://files.catbox.moe/peu7il.png
+EN ATTENTE arbitrage style encre AVANT finition timing audio-derived + colorisation. NE PAS chainer.
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source V2 — COMPLETE (refonte structure post-validation style)
+Split-screen 2 volets : CI (gauche) + Ghana (droite), geo d3-geo EXACTE (countries-50m). CI se trace puis Ghana.
+Couleurs DRAPEAU en remplissage clippe sur silhouette (bandes verticales CI ; horizontales+etoile Ghana), bbox-equilibrees.
+Trace SYNCHRO au nom (Whisper : "Cote d'Ivoire" f241-262 -> trace finit f245 ; "Ghana" f274-283 -> finit f276).
+Audio integre (cacao-beat2-FINAL.mp3 -> public/souverain/cacao-chocolat-short/audio/). tsc clean. Render full HD + audio.
+Mp4: https://files.catbox.moe/el492c.mp4 · Frame finale: https://files.catbox.moe/afwp7k.png
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source VERSION A peaufinee — COMPLETE (Phase 3)
+2 ajustements appliques : (1) colorisation DECOUPLEE du nom -> couleurs montent des la fin de trace de chaque
+pays (CI coloree ~f110, Ghana ~f190), vivent plusieurs secondes ; labels noms restent cales audio (f241/f274).
+(2) etoile Ghana ECLOT comme une graine (spring scale + rotation douce qui se resorbe), plus de pop sec.
+tsc clean. Render full HD + audio. Mp4: https://files.catbox.moe/i8a4ea.mp4 · Frame: https://files.catbox.moe/q07sjl.png
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B1HookVB+B2SourceVB VERSION B — COMPLETE (variante experimentale A/B)
+Variante B (convergence Gemini+Kimi) : TRANSFUSION brune B1->B2 (fil conducteur vertical 9:16) + compromis couleur B2 (brun PUIS drapeau).
+B1HookVB : tablette pleine brune (luxe) -> a "Sauf qu'en Suisse" (f90) le brun se vide/coule -> wireframe encre sterile + germination avortee decalee + flaque brune en attente bas (Y1720).
+B2SourceVB : reprend flaque Y1720 -> monte remplir CI/Ghana de brun -> drapeaux eclosent par-dessus en fin (CI vertical, Ghana horizontal + etoile).
+Acquis communs presents : croix suisse embossee+rouge, tablette ~50% largeur, trait epais, titre qui disparait, etoile Ghana qui eclot.
+tsc clean sur les 2 fichiers. Renders full HD : B1 https://files.catbox.moe/kxx95a.mp4 · B2 https://files.catbox.moe/cdapaf.mp4
+NEXT (Aziz) : comparer VERSION A vs VERSION B, trancher la DA. Risque note : amorce B2 (~0.8s) un peu vide avant trace pays.
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source CANONIQUE — COMPROMIS COULEUR + AGRANDI (COMPLETE)
+Porte le compromis VB dans le canonique (B2SourceVB laisse intact, reference) : chaque pays se trace ->
+se remplit de BRUN CACAO #6b4423 (matiere, vit longtemps) -> DRAPEAU eclot par-dessus en fin de beat
+(brun s'estompe sous le drapeau). PAS de transfusion/flaque (B2 demarre proprement). Etoile Ghana eclot.
+Pays AGRANDIS ~45% (fitExtent HALF*0.05->0.95, H*0.16->0.6), bas garde pour labels+source ICCO.
+Couleur anticipee (acquis) : ne depend pas du nom. tsc clean. Render full HD + audio.
+Mp4: https://files.catbox.moe/7txsqd.mp4 · Final: https://files.catbox.moe/smj321.png · Brun: https://files.catbox.moe/76yyaz.png
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source — KARAOKE word-level AJOUTE (B2 COMPLET)
+Sous-titres karaoke TikTok (grammaire GGW) : mot actif s'allume en BRUN CHOCOLAT #6b4423 (pas vert GGW),
+autres mots encre attenuee, fond parchemin semi-transparent, position tiers inferieur AU-DESSUS de la
+micro-source ICCO (bottom 230 vs 130, pas de collision). Timing REEL via whisper-align.py (32 mots).
+JSON livre : out/episodes/cacao-chocolat-short/audio/cacao-beat2-words.json (+ .ts genere). Accents FR OK.
+Tout B2 garde (split, compromis brun->drapeau, agrandi, etoile, geo, ICCO). tsc clean. Render full HD + audio.
+Mp4: https://files.catbox.moe/0jbt2y.mp4 · Frame: https://files.catbox.moe/7l210h.png
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B1HookCuisine VARIANTE "CUISINE SUISSE" — COMPLETE (test parallele version A)
+Idee Aziz : un LIEU pas un objet flottant. Cuisine/atelier suisse SUGGERE en TRAIT FIN encre #2b2117 (3-4 elements,
+vide domine). Decor : plan de travail (2 lignes) + fenetre a droite avec silhouette CERVIN/neige en trait (le seul
+"paysage suisse", confirme Suisse sans drapeau plaque) + moule a tablette. Couleur=evenement tenue : SEULE la tablette
+se colorise brun cacao, tout le reste = trait. La tablette SE FABRIQUE (pas juste se-dessine) : chocolat COULE (matiere)
+dans le moule -> niveau monte -> tablette prend forme (sillons se revelent) -> croix suisse embossee arrive (spring) ->
+colorisation pleine vers "savoir-faire de luxe". Le MANQUE : cacaoyer rate dans un pot sous la fenetre, trace qui GELE
++ tige qui s'affaisse, sur fond de montagne suisse (= paradoxe "pas un seul cacaoyer"). Titre apparait puis disparait.
+Calage whisper reel : f56 "vient de Suisse" (coulee) / f100 "en Suisse" / f137 "pas un seul cacaoyer" (echec) /
+f256-277 "savoir-faire de luxe" (colorisation pleine). NE TOUCHE QUE B1HookCuisine.tsx (B1Hook=version A intacte).
+tsc clean sur le fichier. Render full HD + audio OK (365f, 1080x1920, 872 kB) -> /scratchpad/B1HookCuisine-fullHD.mp4
+VERDICT HONNETE : (1) le decor suggere TIENT le vide premium (epure, pas dessin d'enfant) — le moule disparait apres
+prise (sinon contour residuel sale, corrige). (2) la tablette qui SE FABRIQUE lit MIEUX qu'une tablette qui se dessine
+(geste = fil narratif "on fabrique le chocolat ICI"). (3) le paradoxe (cuisine/montagne suisse + cacaoyer qui rate)
+FRAPPE une fois le cacaoyer agrandi+pot+affaissement (v1 illisible, corrige). Reserve : le moule a plat ressemble un
+peu a un plateau/ecran avant remplissage ; la tige fletrie chevauche legerement le coin bas-droit de la fenetre (mineur).
+NEXT (Aziz) : comparer au render version A (focus tablette) et trancher la DA.
+
+[STAGE-5] remotion-composer cacao-chocolat-short/B2Source — micro-source FADE OUT (ajustement final)
+Micro-source ICCO ne reste plus 9s : fade in f10-25 -> plein f25-90 -> fade out f90-110 -> 0.
+Independante du karaoke (2 div distincts, opacites separees) — verifie f50 (source visible), f135/f255 (source
+absente, karaoke OK). Reste de B2 inchange. tsc clean. Render full HD + audio.
+Mp4: https://files.catbox.moe/txxako.mp4 · Frame source visible: https://files.catbox.moe/afhttv.png
