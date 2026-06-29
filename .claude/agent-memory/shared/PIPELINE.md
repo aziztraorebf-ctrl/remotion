@@ -10,6 +10,15 @@
 
 ---
 
+## Cacao → Chocolat Short — PRÉ-PROD COMPLÈTE, NEXT = PRODUCTION VISUELLE (2026-06-28)
+> [AUDIO LOCKED · prod visuelle PENDING] Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre GGW.
+> ✅ Sujet validé (TubeLab) · SCRIPT-V4 · triple fact-check · jury LLM 8,5/10 · NARRATION ElevenLabs validée Aziz
+>   (5 beats séparés + complète) · MUSIQUE choisie (B afro-mélancolique).
+> NEXT = DA-brief animation → storyboarder (storyboard SVG-d'abord) → remotion-composer (audio-derived timing).
+> Source de vérité : `memory/episodes/souverain/cacao-chocolat-short/STATUS.md`.
+
+---
+
 ## [STAGE-1] audio-director — GGW Muraille Verte B4+B5 (correction FMNR) — COMPLETE (2026-06-25)
 
 Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pure). B1/B2/B3/B6 inchanges.

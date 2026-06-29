@@ -29,6 +29,14 @@ Aucune vidéo ne pointe un acteur comme coupable. On décrit les forces structur
 - INTERDIT : "La France pille encore l'Afrique"
 - CORRECT : "Comment 14 pays partagent une monnaie qu'ils ne contrôlent pas"
 
+⭐ **DEMANDE PROUVÉE DU PUBLIC (2026-06-28, validée 2× en commentaires Machi + Bhargav)** : sur le thème
+« Afrique riche mais pauvre », le public RÉCLAME explicitement la nuance de RESPONSABILITÉ INTERNE (gouvernance,
+institutions, choix locaux, faible transformation) — pas seulement le récit extractiviste/colonial. Les commentaires
+les + likés sous les viraux du thème le confirment ("our thieves parading as leaders" 4,1k likes ; "after independence
+we turned on each other"). C'est exactement le CRÉNEAU analyste vs désinfo : ni militantisme victimaire (qui plafonne),
+ni racolage "EXPOSED". Mentionner la part interne RENFORCE la crédibilité (validé jury LLM 8,5/10 sur le short cacao).
+Concrètement : sur ce thème, toujours coupler l'injustice externe avec ≥1 point factuel de responsabilité interne.
+
 ### 2. Chaque chiffre = source vérifiée (Perplexity sonar-pro après script lock)
 
 Avant TTS, fact-check obligatoire via Perplexity sonar-pro. Croiser au moins 2 sources de camps différents (mainstream international + panafricain + OSINT/officiel). Voir `rules-souverain-editorial.md` Section 1 pour la grille 3 niveaux complète.

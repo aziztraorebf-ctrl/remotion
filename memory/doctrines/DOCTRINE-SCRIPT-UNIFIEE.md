@@ -219,6 +219,29 @@ Deux pièges symétriques à éviter quand on retravaille un script :
 revenir à la version dense, et n'y appliquer QUE le correctif minimal (verbe manquant, connecteur unique).
 La précision est reine ; on coupe le télégraphique SANS noyer l'intelligence.
 
+## Règle 11quater — AFFIRMER le paradoxe, ne JAMAIS annoncer la question rhétorique (NON-NÉGOCIABLE)
+
+> Gravée 2026-06-28. ERREUR PROUVÉE (Short cacao, hook V3) : "Où sont les cacaoyers en Suisse ? Posons la question."
+> = écriture ÉCRITE, pas orale. Personne ne dit "posons la question" en face-à-face. C'est de la rhétorique
+> scolaire annoncée — ça sonne artificiel et casse l'immersion dès la seconde 0 (justement là où il faut accrocher).
+
+Le paradoxe (règle 11) doit être AFFIRMÉ comme un fait sec, pas introduit par une méta-annonce ("posons-nous la
+question", "demandons-nous", "une question se pose", "réfléchissons un instant"). Ces béquilles signalent à l'oreille
+qu'on va raisonner — au lieu de simplement asséner le choc. La contradiction frappe plus fort nue.
+
+| ❌ Question rhétorique annoncée (écrit) | ✅ Paradoxe affirmé (oral) |
+|---|---|
+| "Où sont les cacaoyers en Suisse ? Posons la question." | "Le meilleur chocolat vient de Suisse. Sauf qu'en Suisse, il n'y a pas un seul cacaoyer." |
+| "Demandons-nous pourquoi le Niger reste pauvre." | "Le Niger possède l'uranium de la France. Et reste l'un des pays les plus pauvres du monde." |
+| "Une question se pose : où va l'argent ?" | "L'argent existe. Il part juste ailleurs." |
+
+- Une VRAIE question (sans l'annoncer) reste permise si elle sonne orale et laisse le silence travailler :
+  "Le cacao, il pousse où, à votre avis ?" ✅ — mais c'est plus faible que le paradoxe brut affirmé.
+- ⛔ Bannir : "posons/posons-nous la question", "demandons-nous", "une question se pose", "réfléchissons".
+
+**Test à la GATE** : lire chaque phrase à voix haute comme en conversation. Si on n'oserait pas la dire ainsi à
+un ami (trop "scolaire", trop "exposé"), reformuler en affirmation ou en question directe non annoncée.
+
 ---
 
 # C. RÉTENTION — que le viewer reste jusqu'au bout

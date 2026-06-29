@@ -36,6 +36,18 @@
 > **▶ RESTE SUR LA VIDÉO** : (0) passe amélioration P1+P2 ci-dessus ; (1) assembler P4 (morceaux : exode + ressources
 >   + confed + CFA) en p4-FINAL unique — au CFA, TRANCHER SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL
 >   (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
+>
+> ⛔⭐ **DÉCISION EN ATTENTE — RUPTURE BURKINA/FRANCE (26 juin 2026) À INTÉGRER (Aziz 2026-06-28)** :
+>   La vidéo AES NE DOIT PAS ÊTRE FINALISÉE/ASSEMBLÉE avant qu'on décide quoi faire de cet événement historique.
+>   FAIT : le 26 juin 2026, le Burkina d'Ibrahim Traoré a ROMPU ses relations diplomatiques avec la France
+>   (motif officiel : « activisme néocolonial », accusation de soutien aux terroristes du Sahel). Rupture
+>   DIPLOMATIQUE seulement (liens culturels/humains préservés). Aboutissement de l'escalade : départ armée FR 2023
+>   → rappel ambassadeur 2023 → rupture totale 2026. Réalignement Russie/Turquie/Iran. Sources : France 24, RTS,
+>   Al Jazeera, Washington Post (26-27 juin 2026).
+>   PISTE AZIZ : scène BONUS ou avant-dernière scène (« pendant qu'on monte cette vidéo, le 26 juin 2026… »)
+>   = preuve en temps réel de la thèse AES « le Sahel se détache de la France ». Surfer l'actu chaude.
+>   ⚠️ RISQUE à peser : ça DATE la vidéo (scène figée dans 6 mois). Acceptable pour sujet d'actu géopolitique.
+>   ⭐ LIÉ : Aziz envisage de PUBLIER L'AES AVANT LE SÉNÉGAL (momentum actu Burkina vs Sénégal intemporel).
 > 📎 Candidats SVG-inserts (détail + comparatif) → `SVG-INSERTS-CANDIDATS.md`.
 > 📜 Hook source décodage : `feedback_decode-castile-warmap-vivante.md`.
 >

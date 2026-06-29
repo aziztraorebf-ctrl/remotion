@@ -1,6 +1,25 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-28 (session Grand Inga R&D). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-06-28 (session cacao-chocolat + bilan distribution 1 mois). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🆕 CACAO → CHOCOLAT SHORT — PRÉ-PROD COMPLÈTE, NEXT = PRODUCTION VISUELLE (2026-06-28)
+
+> Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre/parchemin GGW.
+> Sujet = "L'Afrique n'est pas pauvre, elle est sous-payee pour ce qu'elle produit" (cacao->chocolat = porte d'entree).
+> ✅ Sujet validé (TubeLab + transcripts/commentaires) · SCRIPT-V4 · triple fact-check (Tavily+Deep Research) ·
+>   jury LLM 8,5/10 (GPT-5.5/Gemini 3.1 Pro/Kimi) · NARRATION ElevenLabs validée Aziz (5 beats + complète) ·
+>   MUSIQUE choisie (B afro-mélancolique kora/ngoni).
+> **NEXT :** DA-brief animation -> storyboard SVG-d'abord (d3-geo Suisse/CI/Ghana en encre ; cabosse/champ SVG pur) ->
+>   code Remotion (audio-derived timing depuis durees mesurees) -> render -> review.
+> **Source de vérité :** `memory/episodes/souverain/cacao-chocolat-short/STATUS.md`. Dire « on reprend le cacao ».
+
+## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
+> Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
+> Instagram 24 · TikTok = shadowban (apres suppression de masse — NE PLUS supprimer en masse). DÉCISION : niche
+> viable, prioriser YouTube LONG + Facebook ; depriorise Instagram ; TikTok en quarantaine.
+> Detail : `memory/BILAN-DISTRIBUTION-1MOIS-2026-06.md`. Conforte le pari format LONG (cacao = teaser vers long).
 
 ---
 
@@ -42,8 +61,9 @@
 > (paper-cut/blueprint, pédagogiques, multi-plateforme, gardent la chaîne vivante). PAS de la dilution = Hub & Spoke.
 > ⚠️ AVANT d'industrialiser : (1) créer une SIGNATURE VISUELLE commune longs↔shorts · (2) tunnel = NOTORIÉTÉ
 > cross-plateforme, pas conversion directe · (3) garder le gate [[SUJET-PRIME-SUR-PRODUCTION]] sur les shorts.
-> CHANTIER NEUF = **assembler/monter PLUSIEURS scènes SVG en récit court** (storyboard de short + transitions/collage
-> entre scènes — jamais testé, on a des scènes ISOLÉES). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
+> Assemblage de PLUSIEURS scènes SVG en récit court = PROUVÉ (Short GGW Muraille Verte terminé ; cacao-chocolat
+> 2e short SVG multi-scènes en production). Le chantier restant = INDUSTRIALISER (signature commune longs↔shorts,
+> cadence). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
 
 ## 🔧 BACKLOG TECHNIQUE — Système CARTO V5 (reprendre quand Sénégal V3 fini)
 

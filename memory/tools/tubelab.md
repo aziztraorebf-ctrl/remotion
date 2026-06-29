@@ -20,6 +20,20 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
   chaîne/vidéo précise. (yt-dlp `--write-auto-sub`, `--write-comments`, `--dump-json`.) Gratuit = priorité.
 - Gate 2 niveaux : Niveau 1 (découverte) = TubeLab large + `last30days` (demande VIVANTE). Niveau 2 (validation) =
   transcripts/commentaires des 2-3 candidats → yt-dlp gratuit de préférence.
+- ⛔⭐ **RÈGLE OBLIGATOIRE (Aziz 2026-06-28) — JAMAIS conclure sur une vidéo de la SHORTLIST sans avoir extrait
+  son TRANSCRIPT + ses TOP COMMENTAIRES (yt-dlp gratuit).** Un titre + des vues MENTENT sur le contenu réel
+  (prouvé 2× le même jour : (1) Bhargav "Why Colonialism Made Some Poor" 1,96M = parle de l'INDE pas l'Afrique ;
+  (2) Machi "The Africa They Don't Show You" semblait anti-Afrique au titre → en fait critique brillante du
+  "western gaze" + mine d'or en commentaires). On ne le fait PAS pour tout le scan, mais pour TOUTE vidéo de la
+  shortlist = OUI, systématiquement.
+  ⛔ **NE JAMAIS REJETER sur le titre seul, ni même sur "le sujet n'est pas pile le nôtre" (Aziz 2026-06-28).**
+  Si une vidéo a fait la shortlist, c'est qu'il y a une DEMANDE PROUVÉE — donc on lit le transcript + commentaires
+  jusqu'au bout AVANT de décider. Un sujet hors-créneau peut contenir un ANGLE ou une MÉCANIQUE transposable à
+  notre style (ex. Bhargav parle de l'Inde, mais sa thèse "les institutions pré-coloniales détruites" va dans le
+  MÊME sens que Machi sur l'Afrique → réutilisable). Ça ne coûte rien (yt-dlp gratuit). On ne rejette QUE si,
+  après lecture complète, rien n'est pertinent ni transposable. C'EST ÇA YouTube : trouver des sujets prouvés et
+  les traiter sous un angle/méthode que les autres ne voient pas. Les commentaires = vérité-terrain sur ce que le
+  public RESSENT/RÉCLAME (matière à angle + phrases-titres déjà validées par les likes). Commande : gotcha yt-dlp ci-dessous.
 
 ## LES 11 OUTILS — quand utiliser lequel
 | Outil | Quand l'utiliser | Statut usage |
