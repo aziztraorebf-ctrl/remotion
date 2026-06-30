@@ -14,6 +14,12 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
+## ⭐⭐ NEXT SESSION CHOISIE PAR AZIZ — 16:9 NARRATIF + PERSONNAGES
+> Voir le starter complet : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (dis « on reprend le 16:9 narratif »).
+> Acquis prouvés 2026-06-29 : transposition 16:9 (profondeur/parallaxe/heure dorée) + personnage d'encre (PlanteurEncre)
+> + model sheets via Gemini-avec-ref (planche planteur 5 poses). Pistes : SVG direct vs redessin · perso paramétrique
+> multi-poses · scène narrative 16:9 (verger/GGW + personnage qui vit la scène) · tester perso en VERTICAL.
+
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
 > Instagram 24 · TikTok = shadowban (apres suppression de masse — NE PLUS supprimer en masse). DÉCISION : niche
