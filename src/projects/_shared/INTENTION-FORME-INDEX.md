@@ -154,6 +154,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Un territoire qui s'effondre (choc) | Dutch tilt + shake + désaturation continent | [A] blueprint `ShakeImpact`/`DutchTiltCollapse` + grisaille narrative (lerp RGB sauf protagoniste) | _blueprints / ATLAS-PLAYBOOK §3 |
 | Nommer un lieu / chiffre-impact (registre Atlas) | pill Cormorant spring · cartouche Cinzel wobble · pulse-marker radar | [A] `AtlasLabel`, `AtlasCartouche`, `AtlasPulseMarker` | atlas-components |
 | L'échange (sel↔or) / insert chiffré sur carte | dim carte + boîte parchemin double-cadre glow | [A] `SpotlightInsert` (Ghana — à extraire en composant) | ATLAS-PLAYBOOK §3 |
+| Un personnage qui VIT une scène SVG encre (marche, se penche, ramasse) — PAS sur carte | stick figure d'encre animé par code (frame-driven) | ⭐ `StickRig` + scène-proto `RecolteAuSol` (`_shared/personnage-vivant-svg/`) | PERSONNAGE-VIVANT-INDEX |
 
 ### Faire RESSENTIR du CONCEPTUEL sans quitter la carte  ← ⭐ CATÉGORIE WAR-MAP (manquait)
 > Voir **RÈGLE MAÎTRESSE 2**. Composants dans `src/projects/warmap/_shared/` — chemins exacts + props : `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md`. ⛔ `semitransp` BANNI (voile < 0.5 qui montre la carte derrière). Plein écran = masquer carte Mapbox ET contours moteur. Combiner l'ARSENAL (jetons + zones + contours + plaques), jamais 1 seul asset. CAUSE avant EFFET (jamais pop magique). Registre grave/solennel = voile plus dense + montée lente + 1 plateau tenu (halo qui respire).

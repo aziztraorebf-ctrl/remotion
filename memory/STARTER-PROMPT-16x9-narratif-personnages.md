@@ -14,9 +14,17 @@ en 16:9 **avec des personnages**. Tester aussi : **des personnages en VERTICAL**
 - **Grammaire horizontale** : ombres/éléments rayonnent latéralement (œil G→D), SANS sous-titres (16:9 = écran/son activé),
   PROFONDEUR 3 plans (fond coloré varié + ciel vivant nuages/oiseaux), CAMÉRA lente + PARALLAXE (`camAt(p)` par profondeur) + HEURE DORÉE.
   Réf vidéo : `out/templates-souverain/svg-horizontal-16x9-REFERENCE.mp4` · catbox https://files.catbox.moe/ppqbb9.mp4
-- **Personnage d'encre animé** : `components/PlanteurEncre.tsx` (silhouette paramétrique, props walkPhase/bend/armReach/facing).
-  Proto `beats/ProtoPlanteur.tsx` (compo `Cacao-ProtoPlanteur-16x9`). Réf : `out/templates-souverain/svg-personnage-encre-REFERENCE.mp4` · catbox hunvwd.
+- ✅✅ **SYSTÈME PERSONNAGE VIVANT — PROUVÉ + RANGÉ (2026-06-30). SOURCE DE VÉRITÉ unique :**
+  `src/projects/_shared/personnage-vivant-svg/` → `PERSONNAGE-VIVANT-INDEX.md` (doc) + `rig/poses.ts` (cinématique) +
+  `rig/StickRig.tsx` (rig générique : ink + hat straw/cap/scarf + carry) + `rig/objectHandling.ts` (ramasser/déposer) +
+  `scenes-proto/RecolteAuSol.tsx`. Gestes prouvés : marche (foot-plant), penché (compensation bassin), ramasser/tenir/
+  transporter/déposer-dans-contenant, planter, porter. Prouvé 9:16 ET 16:9, cacao + GGW, 1 à 3 persos différenciés.
+  ⛔ REPARTIR DE CE RIG (ne plus coder un perso de zéro). Leçon complète : `memory/key-learnings.md` § PERSONNAGE VIVANT
+  + `episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`.
+  Scènes de réf (compos Root) : `PersoVivant-RecolteAuSol`, `Cacao-HistoirePlanteur`, `GGW-HistoirePlanteurs`, `Cacao-ChaineValeur-16x9`.
   ⛔ GARDE-FOU : silhouette stylisée pictogramme GGW, JAMAIS organique humain réaliste. Échelle : homme = ~1/3 cacaoyer.
+- ⚠️ PRÉDÉCESSEUR (périmé, ne plus utiliser comme base) : `components/PlanteurEncre.tsx` + `beats/ProtoPlanteur.tsx`
+  (rig minimal d'origine, segments raides, penché cassé). Remplacé et généralisé par `StickRig` ci-dessus.
 
 ## 🖼️ MODEL SHEETS PERSONNAGE (générés via LLM image, session 2026-06-29)
 2 planches du planteur (5 poses : marche / récolte penché / panier épaule / s'essuie front / debout). MÊME brief.

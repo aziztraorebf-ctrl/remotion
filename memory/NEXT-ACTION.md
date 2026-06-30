@@ -14,11 +14,15 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
-## ⭐⭐ NEXT SESSION CHOISIE PAR AZIZ — 16:9 NARRATIF + PERSONNAGES
-> Voir le starter complet : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (dis « on reprend le 16:9 narratif »).
-> Acquis prouvés 2026-06-29 : transposition 16:9 (profondeur/parallaxe/heure dorée) + personnage d'encre (PlanteurEncre)
-> + model sheets via Gemini-avec-ref (planche planteur 5 poses). Pistes : SVG direct vs redessin · perso paramétrique
-> multi-poses · scène narrative 16:9 (verger/GGW + personnage qui vit la scène) · tester perso en VERTICAL.
+## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — SYSTÈME PERSO PROUVÉ (2026-06-30)
+> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (dis « on reprend le 16:9 narratif »).
+> ✅ ACQUIS 2026-06-30 : système « personnage vivant SVG » PROUVÉ + rangé — rig générique animé par CODE
+>   (marche/penche/ramasse/manipule-objet/plante/porte), validé Aziz sur cacao + GGW, en 9:16 ET 16:9, 1 à 3 persos.
+>   ⛔ SOURCE DE VÉRITÉ = `src/projects/_shared/personnage-vivant-svg/` (INDEX + rig/poses.ts + StickRig + objectHandling
+>   + scène-proto RecolteAuSol). REPARTIR DE CE RIG, ne plus coder un perso de zéro. Leçon : [[key-learnings]] § PERSONNAGE VIVANT.
+> Acquis antérieurs (2026-06-29) : transposition 16:9 (profondeur/parallaxe/heure dorée) + model sheets Gemini-avec-ref.
+> NEXT possibles : pousser de VRAIES scènes narratives (cacao/GGW) ; faire INTERAGIR 2 persos ; évolution 8 directions
+>   (`[[IDEE-PERSO-8-DIRECTIONS]]`, pour le plan-séquence champ→usine). Renders R&D session : 5 scènes (catbox dans l'historique).
 
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·

@@ -8,6 +8,10 @@ import { B4Lien, B4Fade, B4_RENVERSEMENT_FRAMES, B4_RENVERSEMENT_FPS } from "./p
 import { B5Pont, B5_PONT_FRAMES, B5_PONT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5Pont";
 import { B5PontH, B5_PONT_H_FRAMES, B5_PONT_H_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5PontH";
 import { ProtoPlanteur, PROTO_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/beats/ProtoPlanteur";
+import { RecolteAuSol, RECOLTE_AU_SOL_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/RecolteAuSol";
+import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
+import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
+import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
 import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
 import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
@@ -324,6 +328,7 @@ import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/Gold
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
+import { HalftoneDemo } from "./projects/_rnd/cutout-halftone/HalftoneDemo";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2771,6 +2776,15 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* R&D — Cutout halftone + stroke offset (technique Vox-style) */}
+        <Composition
+          id="RND-CutoutHalftone"
+          component={HalftoneDemo}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* TEMPLATE PRINCIPAL VERTICAL (overlay Remotion, carte claire) — 3e pilier */}
         <Composition
           id="SudanWarMapVertical"
@@ -3219,6 +3233,38 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+        <Composition
+          id="PersoVivant-RecolteAuSol"
+          component={RecolteAuSol}
+          durationInFrames={RECOLTE_AU_SOL_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-HistoirePlanteur"
+          component={HistoirePlanteur}
+          durationInFrames={HISTOIRE_PLANTEUR_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-ChaineValeur-16x9"
+          component={CacaoChaineValeur16x9}
+          durationInFrames={CACAO_CHAINE_16X9_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="GGW-HistoirePlanteurs"
+          component={HistoireGGW}
+          durationInFrames={HISTOIRE_GGW_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
         />
         <Composition
           id="Cacao-FULL"

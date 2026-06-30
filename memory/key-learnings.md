@@ -9,7 +9,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 - **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills)
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
-- **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée)
+- **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
 - **🎬 SCÈNE & CONTINUITÉ** — doctrine intention→forme→template (anti-cercle-vicieux templates), forced alignment ElevenLabs > Whisper pour le CALAGE d'animation (Whisper dérive ~0.4s)
 - **🔊 AUDIO & SOUS-TITRES** — trimAfter ABSOLU (depuis début media), sous-titres ffmpeg sans libass → overlay ProRes alpha, beats GLOBALE vs STANDALONE (noir+queue morte+musique coupée), musique 1 morceau → plusieurs durées
 - **🗺️ MAPBOX & RENDU GÉO** — stroke=fill → frontières invisibles, pays outre-mer → clipPath
@@ -611,3 +611,28 @@ audio↔script est trouvée, pour qu'un agent futur ne reparte pas sur le mauvai
    (Whisper word-level déjà dispo) + offsets cumulatifs des beats (frames/30). Caler chaque SFX sur le MOT déclencheur,
    pas sur une estimation. Volumes 0.08-0.38 SOUS la narration ; vérifier mix (mean/max dB, pas de clipping).
 3. Spotting délégable à un agent (lui donner timeline + inventaire SFX réel). Mais le TIMING final = force alignment, pas l'agent.
+
+---
+
+## PERSONNAGE VIVANT = animation procédurale frame-driven (PAS sprites, PAS rig-LLM-en-bloc) — 2026-06-30 ⭐⭐
+Faire AGIR un personnage dans une scène SVG (marche/penche/ramasse/transporte/dépose/plante/porte) = silhouette
+stick figure SIMPLE (segments DROITS, pictogramme digne) animée 100% par CODE via `useCurrentFrame` + une fonction
+cinématique source-de-vérité (`computePose`). Validé Aziz sur cacao + GGW, 9:16 ET 16:9, 1 à 3 personnages.
+
+**Le corps n'est jamais le problème — l'ANIMATION l'est.** 3 causes-racines à connaître (détail : la feuille de
+route) :
+- marche qui "glisse" → **FOOT-PLANT** (le pied d'appui reste fixe au sol pendant son appui ; clamp y≤0).
+- penché qui bascule en arrière → **COMPENSATION DU BASSIN** (le bassin RECULE + DESCEND quand le torse se penche).
+- objet qui "lévite" → **machine à états + HOLD + objet enfant-de-la-main** : l'objet reste collé à la position
+  RÉELLE de la main (`computePose`), JAMAIS de glissade autonome vers sa cible — c'est la main qui l'amène. Le corps
+  s'arrête AVANT le contenant (`depotStopX`) pour que la main tendue arrive au-dessus.
+- Marche = translation à vitesse CONSTANTE (linéaire, pas d'easing sur les segments de marche).
+
+**LLM (GLM/GPT/Gemini) = banc d'idées UTILE (capacité, pas plafond), mais NE PAS prendre un rig généré EN BLOC** :
+le rig "noodle"/courbes tue le pictogramme. On garde NOS lignes droites et on pilote la cadence nous-mêmes.
+
+**Biblio réutilisable — PARTIR D'ICI, ne pas recoder un perso de zéro** :
+`src/projects/_shared/personnage-vivant-svg/` (`PERSONNAGE-VIVANT-INDEX.md` = doc · `rig/poses.ts` = cinématique
+source de vérité · `rig/StickRig.tsx` = rig générique ink+hat(straw/cap/scarf)+carry · `rig/objectHandling.ts` ·
+`scenes-proto/RecolteAuSol.tsx`). Feuille de route anim (Gemini+web concordants) :
+`memory/episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`. Évolution : [[IDEE-PERSO-8-DIRECTIONS]].
