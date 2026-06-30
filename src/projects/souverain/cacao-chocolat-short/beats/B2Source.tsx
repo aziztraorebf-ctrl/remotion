@@ -32,6 +32,7 @@ import {
 import { geoMercator, geoPath, geoCentroid } from "d3-geo";
 import { feature } from "topojson-client";
 import { useTopology } from "../../../_shared/components/inserts/useTopology";
+import { buildDisplayWords, type DispWord } from "../audio/karaokeWords";
 
 export const B2_SOURCE_FPS = 30;
 export const B2_SOURCE_FRAMES = 286;
@@ -197,6 +198,9 @@ export const B2Source: React.FC = () => {
 
   const introFade = interpolate(frame, [0, 12], [0, 1], { extrapolateRight: "clamp" });
   const breath = 1 + 0.004 * Math.sin(frame * 0.06);
+  // LOT1 #1 — le BRUN cacao RESPIRE (la matiere vivante, pas une silhouette gelee) : on decale les stops
+  // du gradient + une legere modulation. cocoaShift anime l'offset du 1er stop (de ~2% a ~12%).
+  const cocoaShift = 6 + 4 * Math.sin(frame * 0.05);
 
   return (
     <AbsoluteFill style={{ background: PARCH }}>
@@ -245,10 +249,11 @@ export const B2Source: React.FC = () => {
             cocoa={ciCocoa}
             flag={ciFlag}
             breath={breath}
+            cocoaShift={cocoaShift}
             clipId="ciClip"
             label="CÔTE D'IVOIRE"
             labelOp={ciLabel}
-            bands={<ClipBandsVertical clipId="ciClip" bbox={ci.bbox} colors={[CI_ORANGE, CI_WHITE, CI_GREEN]} fill={ciFlag} />}
+            bands={<ClipBandsVertical clipId="ciClip" bbox={ci.bbox} colors={[CI_ORANGE, CI_WHITE, CI_GREEN]} fill={ciFlag} frame={frame} />}
           />
         )}
       </div>
@@ -265,12 +270,13 @@ export const B2Source: React.FC = () => {
             cocoa={ghCocoa}
             flag={ghFlag}
             breath={breath}
+            cocoaShift={cocoaShift}
             clipId="ghClip"
             label="GHANA"
             labelOp={ghLabel}
             bands={
               <>
-                <ClipBandsHorizontal clipId="ghClip" bbox={ghana.bbox} colors={[GH_RED, GH_YELLOW, GH_GREEN]} fill={ghFlag} />
+                <ClipBandsHorizontal clipId="ghClip" bbox={ghana.bbox} colors={[GH_RED, GH_YELLOW, GH_GREEN]} fill={ghFlag} frame={frame} />
                 {ghStar > 0.01 && (
                   <Star
                     cx={ghana.cx}
@@ -332,11 +338,12 @@ const FlagCountry: React.FC<{
   cocoa: number;
   flag: number;
   breath: number;
+  cocoaShift: number;
   clipId: string;
   label: string;
   labelOp: number;
   bands: React.ReactNode;
-}> = ({ d, len, cx, cy, trace, cocoa, flag, breath, clipId, label, labelOp, bands }) => {
+}> = ({ d, len, cx, cy, trace, cocoa, flag, breath, cocoaShift, clipId, label, labelOp, bands }) => {
   if (trace <= 0) return null;
   // le brun s'estompe quand le drapeau eclot par-dessus (transition matiere -> identite)
   const cocoaOpacity = cocoa * (1 - flag * 0.9);
@@ -347,7 +354,8 @@ const FlagCountry: React.FC<{
           <path d={d} />
         </clipPath>
         <linearGradient id={`${clipId}Cocoa`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor={COCOA} />
+          {/* LOT1 #1 : le 1er stop se decale (cocoaShift) -> la matiere brune ondule/respire */}
+          <stop offset={`${cocoaShift}%`} stopColor={COCOA} />
           <stop offset="100%" stopColor={COCOA_DARK} />
         </linearGradient>
       </defs>
@@ -395,7 +403,8 @@ const ClipBandsVertical: React.FC<{
   bbox: [[number, number], [number, number]];
   colors: [string, string, string];
   fill: number;
-}> = ({ clipId, bbox, colors, fill }) => {
+  frame?: number;
+}> = ({ clipId, bbox, colors, fill, frame = 0 }) => {
   const [[x0, y0], [x1, y1]] = bbox;
   const bw = (x1 - x0) / 3;
   return (
@@ -405,8 +414,10 @@ const ClipBandsVertical: React.FC<{
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
         });
-        const h = (y1 - y0) * local;
-        return <rect key={i} x={x0 + i * bw} y={y1 - h} width={bw + 0.5} height={h} fill={col} opacity={0.92} />;
+        // LOT2 — SETTLE : apres remplissage (fill>=0.95), micro-overshoot permanent (clippe a la silhouette).
+        const settle = fill >= 0.95 ? 1 + 0.012 * Math.sin(frame * 0.05 + i * 0.9) : 1;
+        const h = (y1 - y0) * local * settle;
+        return <rect key={i} x={x0 + i * bw} y={y1 - h} width={bw + 0.5} height={h} fill={col} opacity={0.92 * (fill >= 0.95 ? 0.98 + 0.02 * Math.sin(frame * 0.05 + i) : 1)} />;
       })}
     </g>
   );
@@ -418,7 +429,8 @@ const ClipBandsHorizontal: React.FC<{
   bbox: [[number, number], [number, number]];
   colors: [string, string, string];
   fill: number;
-}> = ({ clipId, bbox, colors, fill }) => {
+  frame?: number;
+}> = ({ clipId, bbox, colors, fill, frame = 0 }) => {
   const [[x0, y0], [x1, y1]] = bbox;
   const bh = (y1 - y0) / 3;
   return (
@@ -428,8 +440,10 @@ const ClipBandsHorizontal: React.FC<{
           extrapolateLeft: "clamp",
           extrapolateRight: "clamp",
         });
-        const w = (x1 - x0) * local;
-        return <rect key={i} x={x0} y={y0 + i * bh} width={w} height={bh + 0.5} fill={col} opacity={0.92} />;
+        // LOT2 — SETTLE : micro-overshoot permanent apres remplissage (clippe a la silhouette).
+        const settle = fill >= 0.95 ? 1 + 0.012 * Math.sin(frame * 0.05 + i * 0.9) : 1;
+        const w = (x1 - x0) * local * settle;
+        return <rect key={i} x={x0} y={y0 + i * bh} width={w} height={bh + 0.5} fill={col} opacity={0.92 * (fill >= 0.95 ? 0.98 + 0.02 * Math.sin(frame * 0.05 + i) : 1)} />;
       })}
     </g>
   );
@@ -464,14 +478,20 @@ const Star: React.FC<{ cx: number; cy: number; r: number; rot: number; fill: str
 const Karaoke: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
   const narSec = frame / fps;
 
-  // decoupe WORDS en phrases via PHRASE_BREAKS
-  const phrases: { words: Word[]; start: number; end: number }[] = [];
-  const breakSet = new Set(PHRASE_BREAKS);
+  // decoupe en phrases via PHRASE_BREAKS, sur les mots AFFICHABLES (elisions recollees, harmonise avec B5).
+  const DISP = buildDisplayWords(WORDS);
+  const dispBreaks = new Set(
+    PHRASE_BREAKS.map((b) => {
+      const idx = DISP.findIndex((d) => d.covers.includes(b));
+      return idx < 0 ? DISP.length - 1 : idx;
+    })
+  );
+  const phrases: { words: DispWord[]; start: number; end: number }[] = [];
   let startIdx = 0;
-  for (let i = 0; i < WORDS.length; i++) {
-    if (breakSet.has(i) || i === WORDS.length - 1) {
-      const slice = WORDS.slice(startIdx, i + 1);
-      phrases.push({ words: slice, start: slice[0].start, end: slice[slice.length - 1].end });
+  for (let i = 0; i < DISP.length; i++) {
+    if (dispBreaks.has(i) || i === DISP.length - 1) {
+      const slice = DISP.slice(startIdx, i + 1);
+      if (slice.length) phrases.push({ words: slice, start: slice[0].start, end: slice[slice.length - 1].end });
       startIdx = i + 1;
     }
   }
@@ -513,6 +533,7 @@ const Karaoke: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
       }}
     >
       {activePhrase.words.map((w, i) => {
+        if (!w.text) return null;
         const active = narSec >= w.start && narSec <= w.end + 0.12;
         return (
           <span
@@ -524,7 +545,7 @@ const Karaoke: React.FC<{ frame: number; fps: number }> = ({ frame, fps }) => {
               display: "inline-block",
             }}
           >
-            {w.word}
+            {w.text}
           </span>
         );
       })}

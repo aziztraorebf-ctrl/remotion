@@ -585,3 +585,29 @@ fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/inf
 3. **Perspective qu'on traverse** : 3/4 plongeante, point de fuite, étagement profond — pas frontal-frise.
 4. **Joindre la frame pièce-malédiction + frames GGW** comme refs de NIVEAU (strictement : « ne copie pas, vise CETTE richesse »).
 **How to apply** : avant de juger une cible SVG « bonne », test = « est-ce que les éléments INTERAGISSENT dans un monde, ou sont-ils juste posés ? ». Si posés → re-brief écosystème. Lié à [[SVG-FAISABILITE-AMONT]] et au pré-plan DA cacao.
+
+## ⚠️ LE SCRIPT TEXTE EST PÉRIMÉ DÈS QUE L'AUDIO FINAL EST VALIDÉ (Cacao B5, 2026-06-29)
+**Cas prouvé** : le CTA de B5 dans SCRIPT-V4 ("quel produit veux-tu qu'on suive jusqu'au bout") DIFFÉRAIT de l'audio
+réel ("quel produit t'intéresse le plus que tu voudrais voir traité en vidéo" + "la version longue DE CETTE VIDEO").
+Aziz l'a signalé d'instinct ; transcription Whisper de l'audio FINAL l'a confirmé.
+**RÈGLE** : pour tout beat avec narration FINAL, le fichier de référence du karaoké/des supports calés sur la voix =
+l'AUDIO (transcrit Whisper word-level), JAMAIS le script texte. Avant de coder le karaoké d'un beat : (1) transcrire
+l'audio réel (`scripts/tools/whisper-align.py <beat>-FINAL.mp3 --out <beat>-words.ts`), (2) confronter au script,
+(3) coder sur l'audio. Le script peut avoir été ré-écrit après la génération TTS sans que l'audio soit regénéré.
+**How to apply** : flaguer "⛔ TEXTE PÉRIMÉ, vérité = <beat>-words.ts" dans tout script/DA-brief dès qu'une divergence
+audio↔script est trouvée, pour qu'un agent futur ne reparte pas sur le mauvais texte.
+
+---
+
+## SFX premium : réutiliser la palette GGW + ALIGNER par force alignment (prouvé cacao 2026-06-29)
+**Leçon** : pour poser les SFX d'un short SVG encre/parchemin, 2 règles qui font la différence premium.
+**Why** : les SFX décident de la perception "premium" autant que la musique ; mal placés (estimation manuelle), ils sonnent faux.
+**How to apply** :
+1. **RÉUTILISER avant créer** : la palette `public/audio/ggw-muraille-verte/sfx/` (sillon=trace, pousse=vie,
+   fissure, goutte=fuite, soleil-embrase=colorisation, ombre-dissoute, reveal-souterrain=racines, vent=ambiance) est
+   le MÊME registre que tout short encre/parchemin. + UI `_shared/sfx/ui/` (stamp-dossier, plate-pop). ⛔ reveal.mp3 BANNI.
+   Ne créer (ElevenLabs `sound-generation`, prompts EN sobres) que les 3-5 gestes manquants. Parcimonie : 8-22 events max.
+2. **FORCE ALIGNMENT** (sinon décalages perçus) : reconstruire la timeline ABSOLUE des mots depuis les `beatN-words.ts`
+   (Whisper word-level déjà dispo) + offsets cumulatifs des beats (frames/30). Caler chaque SFX sur le MOT déclencheur,
+   pas sur une estimation. Volumes 0.08-0.38 SOUS la narration ; vérifier mix (mean/max dB, pas de clipping).
+3. Spotting délégable à un agent (lui donner timeline + inventaire SFX réel). Mais le TIMING final = force alignment, pas l'agent.

@@ -30,6 +30,7 @@ import {
 import { VergerCacao, VIVANTS_B3 } from "../components/VergerCacao";
 import { CabosseOuverture } from "../components/CabosseOuverture";
 import { TabletteMorphBarre } from "../components/TabletteMorphBarre";
+import { buildDisplayWords } from "../audio/karaokeWords";
 
 export const B3_EXTRACTION_FPS = 30;
 export const B3_EXTRACTION_FRAMES = 574;
@@ -140,24 +141,29 @@ export const B3Extraction: React.FC = () => {
   // (les arbres ont pousse, les racines ont fait leur travail — sinon elles parasitent sous le chapeau).
   const rootLife = interpolate(frame, [296, 330, 360, 400], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE });
 
-  // ---- karaoke : mot actif (pendant un silence, on garde le DERNIER mot prononce) ----
-  let activeWordIdx = WORDS.findIndex((w) => t >= w.start && t < w.end);
+  // ---- karaoke : mot actif (elisions recollees, harmonise avec B5 ; en silence garde le dernier mot) ----
+  const DISP = useMemo(() => buildDisplayWords(WORDS), []);
+  const dispBreaks = useMemo(() => PHRASE_BREAKS.map((b) => {
+    const idx = DISP.findIndex((d) => d.covers[0] >= b);
+    return idx < 0 ? DISP.length : idx;
+  }), [DISP]);
+  let activeWordIdx = DISP.findIndex((w) => t >= w.start && t < w.end);
   // index de reference pour la ligne : dernier mot dont le start est passe (stable en silence)
   const refIdx = useMemo(() => {
     let r = 0;
-    for (let i = 0; i < WORDS.length; i++) { if (t >= WORDS[i].start) r = i; }
+    for (let i = 0; i < DISP.length; i++) { if (t >= DISP[i].start) r = i; }
     return r;
-  }, [t]);
+  }, [t, DISP]);
   // ligne courante (selon les breaks) — basee sur refIdx (jamais ne retombe a 0 en silence)
   const lineStart = useMemo(() => {
     let s = 0;
-    for (const b of PHRASE_BREAKS) { if (refIdx >= b) s = b; else break; }
+    for (const b of dispBreaks) { if (refIdx >= b) s = b; else break; }
     return s;
-  }, [refIdx]);
+  }, [refIdx, dispBreaks]);
   const lineEnd = useMemo(() => {
-    for (const b of PHRASE_BREAKS) { if (b > lineStart) return b; }
-    return WORDS.length;
-  }, [lineStart]);
+    for (const b of dispBreaks) { if (b > lineStart) return b; }
+    return DISP.length;
+  }, [lineStart, dispBreaks]);
 
   return (
     <AbsoluteFill style={{ backgroundColor: PARCH }}>
@@ -256,7 +262,8 @@ export const B3Extraction: React.FC = () => {
           fontWeight: 700,
         }}
       >
-        {WORDS.slice(lineStart, lineEnd).map((w, j) => {
+        {DISP.slice(lineStart, lineEnd).map((w, j) => {
+          if (!w.text) return null;
           const globalIdx = lineStart + j;
           const isActive = globalIdx === activeWordIdx;
           return (
@@ -269,7 +276,7 @@ export const B3Extraction: React.FC = () => {
                 display: "inline-block",
               }}
             >
-              {w.word}
+              {w.text}
             </span>
           );
         })}

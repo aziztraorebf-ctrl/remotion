@@ -40,9 +40,16 @@ type TreeProps = {
   deadOpacity?: number; // densite du trait mort (pour qu'on COMPTE les 14)
   tone?: number; // index de ton de feuillage (LEAF_TONES) — varie le champ au climax
   grow?: number; // 0..1 croissance (tronc se trace bas->haut, couronne eclot). Defaut 1.
+  breath?: number; // micro-respiration de la couronne (LOT1 : ~1.0 +/- 0.025). Defaut 1.
+  podWf?: number; // phase (frame) pour le maturation/pulse des cabosses (LOT2). Defaut 0 = fige.
+  podIdx?: number; // index d'arbre pour dephaser le pulse des cabosses. Defaut 0.
 };
 
-const CacaoTree: React.FC<TreeProps> = ({ alive, deadOpacity = 0.55, tone = 0, grow = 1 }) => {
+export const CacaoTree: React.FC<TreeProps> = ({ alive, deadOpacity = 0.55, tone = 0, grow = 1, breath = 1, podWf = 0, podIdx = 0 }) => {
+  // LOT2 — CABOSSES qui MURISSENT/GONFLENT sur les arbres vivants (la matiere prend de la valeur).
+  // pulse par cabosse (dephase), seulement si vivant. Amplitude faible (~5%).
+  const podLive = alive > 0.3 ? alive : 0;
+  const podPulse = (k: number) => 1 + podLive * 0.05 * Math.sin(podWf / 30 + podIdx * 1.1 + k * 1.7);
   // interpolation couleur encre-morte -> brun-vie (ton variable)
   const barkFill = alive > 0.01 ? COCOA_DARK : "none";
   const leafFill = alive > 0.01 ? LEAF_TONES[tone % LEAF_TONES.length] : "none";
@@ -89,7 +96,7 @@ const CacaoTree: React.FC<TreeProps> = ({ alive, deadOpacity = 0.55, tone = 0, g
         />
       </g>
       {/* COURONNE + nervures + cabosses : ECLOSION (scale depuis la base du houppier, apres le tronc) */}
-      <g transform={`translate(0 -260) scale(${crownScale}) translate(0 260)`} opacity={crownOp}>
+      <g transform={`translate(0 -260) scale(${crownScale * breath}) translate(0 260)`} opacity={crownOp}>
       {/* couronne irreguliere PLEINE silhouette (mort = trait dense lisible, vivant = rempli brun-vie) */}
       <path
         d="M-194 -340 C-238 -410 -182 -488 -100 -474 C-66 -558 58 -562 102 -480 C184 -502 250 -426 204 -350 C238 -292 150 -232 70 -262 C18 -212 -92 -222 -126 -282 C-188 -268 -238 -302 -194 -340 Z"
@@ -111,10 +118,10 @@ const CacaoTree: React.FC<TreeProps> = ({ alive, deadOpacity = 0.55, tone = 0, g
       />
       {/* CABOSSES ovales sur le tronc (signature du cacaoyer — plus presentes : 4, plus grandes) */}
       <g>
-        <ellipse cx={4} cy={-128} rx={23} ry={42} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
-        <ellipse cx={-46} cy={-206} rx={19} ry={37} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
-        <ellipse cx={50} cy={-182} rx={18} ry={35} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
-        <ellipse cx={-14} cy={-238} rx={15} ry={29} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3} />
+        <ellipse cx={4} cy={-128} rx={23 * podPulse(0)} ry={42 * podPulse(0)} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
+        <ellipse cx={-46} cy={-206} rx={19 * podPulse(1)} ry={37 * podPulse(1)} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
+        <ellipse cx={50} cy={-182} rx={18 * podPulse(2)} ry={35 * podPulse(2)} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3.4} />
+        <ellipse cx={-14} cy={-238} rx={15 * podPulse(3)} ry={29 * podPulse(3)} fill={podFill} fillOpacity={fillOp} stroke={lineStroke} strokeOpacity={lineOpacity} strokeWidth={3} />
         {/* cotes des cabosses (texture striee) */}
         <path
           d="M4 -166 L4 -90 M-10 -158 C-2 -142 -2 -114 -10 -98 M18 -158 C10 -142 10 -114 18 -98 M-46 -240 L-46 -172 M50 -214 L50 -150 M-14 -266 L-14 -210"
@@ -181,6 +188,8 @@ type VergerProps = {
   rootLife?: number;
   /** phase de VENT permanente (= frame courant). Pilote sway+glow+nuages+oiseaux en boucle. Defaut 0. */
   windPhase?: number;
+  /** LOT2 — pulse d'eclosion par arbre (0..1) : un halo de vie pulse au moment ou l'arbre s'allume (4A). */
+  bloomPulse?: number[];
 };
 
 export const VergerCacao: React.FC<VergerProps> = ({
@@ -194,6 +203,7 @@ export const VergerCacao: React.FC<VergerProps> = ({
   sunRise = 1,
   rootLife = 0,
   windPhase = 0,
+  bloomPulse = [],
 }) => {
   const wf = windPhase; // frame pour les boucles de vie permanente
   // soleil : monte de y=380 (bas) a y=250 (haut), grandit et s'eclaire
@@ -329,12 +339,22 @@ export const VergerCacao: React.FC<VergerProps> = ({
         // periode ~2.7s, dephasage par index, amplitude visible (1.6deg) modulee par un 2e sin lent (rafales).
         const gust = 0.7 + 0.3 * Math.sin(wf / 38 + i);
         const swayPermanent = Math.sin(wf / 26 + i * 0.9) * 1.6 * gust;
+        // SUR-SWAY DES VIVANTS (LOT1 #1) : un arbre colorise vit PLUS qu'un mort (distinction par le MOUVEMENT,
+        // pas que par la couleur). Frequence un peu plus rapide, amplitude proportionnelle a `alive`.
+        const livelySway = alive > 0.3 ? alive * Math.sin(wf / 19 + i * 0.9) * 1.1 : 0;
         // sway additionnel optionnel (sway prop) pour accentuer ponctuellement
-        const swayAngle = (swayPermanent + sway * Math.sin(i * 1.3) * 1.2) * grow;
+        const swayAngle = (swayPermanent + livelySway + sway * Math.sin(i * 1.3) * 1.2) * grow;
+        // BREATH couronne (LOT1 #1) : micro-respiration du feuillage des vivants (la matiere respire).
+        const breath = alive > 0.3 ? 1 + alive * 0.025 * Math.sin(wf / 23 + i * 1.4) : 1;
+        const bloom = bloomPulse[i] ?? 0;
         return (
           <g key={i} transform={`translate(${t.x} ${t.y}) scale(${t.s})`}>
+            {/* LOT2 — ONDE DE REVERDISSEMENT : halo de vie bref autour du houppier au moment de l'eclosion (4A). */}
+            {bloom > 0.01 && (
+              <circle cx={0} cy={-300} r={240} fill={COCOA} opacity={bloom * 0.16} />
+            )}
             <g transform={`rotate(${swayAngle} 0 0)`}>
-              <CacaoTree alive={alive} deadOpacity={deadOpacity} tone={tone} grow={grow} />
+              <CacaoTree alive={alive} deadOpacity={deadOpacity} tone={tone} grow={grow} breath={breath} podWf={wf} podIdx={i} />
             </g>
           </g>
         );
@@ -388,6 +408,22 @@ export const VergerCacao: React.FC<VergerProps> = ({
             fill="none" stroke={INK} strokeWidth={3} strokeLinecap="round"
             opacity={Math.max(0, (crackProgress - 0.5) / 0.5)}
           />
+          {/* LOT1 #3 — LA VALEUR QUI FUIT : gouttes brun-vie qui descendent DANS la faille, en boucle perpetuelle
+              (les revenus se perdent en route). Gated crackProgress>0.4. La fissure va ~x538(haut) -> ~x540(bas),
+              donc on descend le long de x~536 avec une legere derive sin. */}
+          {crackProgress > 0.4 && (
+            <g id="fuite" opacity={Math.min(1, (crackProgress - 0.4) / 0.3)}>
+              {Array.from({ length: 6 }, (_, k) => {
+                const span = 1920 - 800; // de y~800 (sous le point de fuite) au bord bas
+                const cycle = ((wf * 3 + k * (span / 6)) % span) / span; // 0..1 le long de la faille
+                const y = 800 + cycle * span;
+                const x = 536 + Math.sin(wf / 14 + k * 1.3) * 7 + (y - 800) * 0.004; // suit la faille + micro-derive
+                const op = Math.sin(Math.PI * cycle) * 0.7; // fade entree/sortie (max au milieu)
+                const r = 4 - cycle * 1.6; // retrecit en descendant
+                return <circle key={k} cx={x} cy={y} r={Math.max(0.8, r)} fill={COCOA} opacity={op} />;
+              })}
+            </g>
+          )}
         </g>
       )}
     </svg>

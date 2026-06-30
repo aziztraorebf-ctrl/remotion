@@ -5,6 +5,9 @@ import { VergerPreviewB3, VergerPreviewReverdit, VergerPreviewFissure } from "./
 import { TabletteMorphPreview0, TabletteMorphPreview1 } from "./projects/souverain/cacao-chocolat-short/components/TabletteMorphBarre";
 import { B3Extraction, B3_EXTRACTION_FRAMES, B3_EXTRACTION_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B3Extraction";
 import { B4Lien, B4Fade, B4_RENVERSEMENT_FRAMES, B4_RENVERSEMENT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B4Renversement";
+import { B5Pont, B5_PONT_FRAMES, B5_PONT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5Pont";
+import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
+import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
@@ -3188,6 +3191,54 @@ export const RemotionRoot: React.FC = () => {
           component={B4Fade}
           durationInFrames={B4_RENVERSEMENT_FRAMES}
           fps={B4_RENVERSEMENT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B5Pont"
+          component={B5Pont}
+          durationInFrames={B5_PONT_FRAMES}
+          fps={B5_PONT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-FULL"
+          component={CacaoChocolatFull}
+          durationInFrames={CACAO_FULL_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineCacao"
+          component={UsinePreviewCacao}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoire"
+          component={UsinePreviewIvoire}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoireDouce"
+          component={UsinePreviewIvoireDouce}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoireDouceChemVerte"
+          component={UsinePreviewIvoireDouceChemVerte}
+          durationInFrames={90}
+          fps={30}
           width={1080}
           height={1920}
         />

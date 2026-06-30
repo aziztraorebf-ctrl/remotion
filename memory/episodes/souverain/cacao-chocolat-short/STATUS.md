@@ -4,7 +4,16 @@
 > Sujet-parapluie = "L'Afrique n'est pas pauvre, elle est sous-payee pour ce qu'elle produit" (cacao->chocolat = porte
 > d'entree figurative + teaser format long). ⛔ NE PAS re-chercher/re-fact-checker/re-jurer : tout est fait et verrouille.
 
-## ⭐ OU ON EN EST (2026-06-28)
+## ✅✅ TERMINE — PRET PUBLICATION (2026-06-29)
+- Short COMPLET assemble + valide Aziz : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` (98,5s).
+  Catbox 72h : https://files.catbox.moe/bvbm63.mp4 · note : `cacao-chocolat-FINAL.PUBLICATION-NOTE.md`.
+- 5 beats (B1-B5) + musique B (~0.10) + SFX (palette GGW reutilisee + 4 crees, ALIGNES par force alignment) + usine aux couleurs CI.
+- B5 "arbre aux 4 ombres" cree (agents) · LOT1 mouvement (verger vivant) · karaoke elisions homogene B1-B5 (`audio/karaokeWords.ts`).
+- ⛔ NE PAS refaire. NEXT = PUBLIER (trypost YT+IG+FB / postiz TikTok). Voir NEXT-ACTION.
+- Composition Remotion : `Cacao-FULL` (CacaoChocolatFull.tsx). Usine : `palette="ivoire-douce"` dans B4.
+- Decisions Aziz : halo reverdissement RETIRE · SFX pod-crack(24.9s)+reveal-souterrain(90.2s) RETIRES · usine cheminee CREME.
+
+## ⭐ OU ON EN EST (2026-06-28 — HISTORIQUE, voir bloc TERMINE ci-dessus)
 - ✅ Sujet VALIDE (TubeLab 6 appels + transcripts/commentaires Machi+Bhargav, ~24k likes convergents).
 - ✅ SCRIPT FINAL = **SCRIPT-V4.md** (NE PAS repartir des V1/V2/V3). Hook paradoxe brut + CTA pont vers long.
 - ✅ Fact-check triple FAIT (Tavily + Deep Research) -> FACT-CHECK-RESULTAT.md. Chiffres verrouilles.
@@ -220,3 +229,8 @@ Transcription Whisper de cacao-beat5-FINAL.mp3 (25,63s) = source de verite. Alig
   -> override b1_v8.review-override.md.
 - Render : https://files.catbox.moe/pju1sl.mp4  (out/episodes/cacao-chocolat-short/wip/b1_v8.mp4)
 - tsc --noEmit propre. NEXT = validation Aziz.
+
+## 🎨 PATTERN RÉUTILISABLE — barre morphing 6/94 (partage inégal)
+`TabletteMorphBarre` : un objet-produit (tablette) se morphe en barre de répartition sectionnée (petit % brun-vie /
+grand % nuit) + labels + filet "valeur qui fuit" hors cadre (écho pipelines Sénégal). Munition couleur (3 éléments
+colorés max sur fond encre). Réutilisable pour TOUT short à partage inégal (pétrole, cacao, minerais, café/or/cobalt → B5).

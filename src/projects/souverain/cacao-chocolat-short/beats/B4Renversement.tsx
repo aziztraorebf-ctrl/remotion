@@ -25,6 +25,7 @@ import { AbsoluteFill, Audio, interpolate, staticFile, useCurrentFrame, Easing }
 import { VergerCacao } from "../components/VergerCacao";
 import { UsineConstruction } from "../components/UsineConstruction";
 import { WHISPER_WORDS } from "../audio/beat4-words";
+import { buildDisplayWords } from "../audio/karaokeWords";
 
 export const B4_RENVERSEMENT_FPS = 30;
 // 850f = duree audio (28,33s) + 60f (2s) de RESPIRATION usine en fin (l'usine tourne, fumee/chocolat/soleil,
@@ -63,6 +64,9 @@ export const B4Renversement: React.FC<{ transitionMode?: "fade" | "lien" }> = ({
     return arr;
   }, [frame]);
 
+  // NOTE : le halo d'onde de reverdissement (LOT2) a ete RETIRE (Aziz : pas dans la version approuvee).
+  // Le bloomPulse n'est plus passe a VergerCacao -> le halo est desactive (defaut []).
+
   // ---- 4B : fissure (se trace) + leger ternissement ----
   const crackProgress = interpolate(frame, [F_4B_START, F_4B_START + 120], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE });
 
@@ -84,21 +88,26 @@ export const B4Renversement: React.FC<{ transitionMode?: "fade" | "lien" }> = ({
   const sunRise = 1; // deja leve (suite de B3)
   const sway = 0.6;
 
-  // ---- karaoke ----
-  const activeWordIdx = WHISPER_WORDS.findIndex((w) => t >= w.start && t < w.end);
+  // ---- karaoke (elisions recollees, harmonise avec B5) ----
+  const DISP = useMemo(() => buildDisplayWords(WHISPER_WORDS), []);
+  const dispBreaks = useMemo(() => PHRASE_BREAKS.map((b) => {
+    const idx = DISP.findIndex((d) => d.covers[0] >= b);
+    return idx < 0 ? DISP.length : idx;
+  }), [DISP]);
+  const activeWordIdx = DISP.findIndex((w) => t >= w.start && t < w.end);
   const refIdx = useMemo(() => {
     let r = 0;
-    for (let i = 0; i < WHISPER_WORDS.length; i++) { if (t >= WHISPER_WORDS[i].start) r = i; }
+    for (let i = 0; i < DISP.length; i++) { if (t >= DISP[i].start) r = i; }
     return r;
-  }, [t]);
+  }, [t, DISP]);
   const lineStart = useMemo(() => {
     let s = 0;
-    for (const b of PHRASE_BREAKS) { if (refIdx >= b) s = b; else break; }
+    for (const b of dispBreaks) { if (refIdx >= b) s = b; else break; }
     return s;
-  }, [refIdx]);
+  }, [refIdx, dispBreaks]);
   const lineEnd = useMemo(() => {
-    for (const b of PHRASE_BREAKS) { if (b > lineStart) return b; }
-    return WHISPER_WORDS.length;
+    for (const b of dispBreaks) { if (b > lineStart) return b; }
+    return DISP.length;
   }, [lineStart]);
 
   // micro-source (sur le claim final)
@@ -130,6 +139,7 @@ export const B4Renversement: React.FC<{ transitionMode?: "fade" | "lien" }> = ({
             chocOut={usineChocOut}
             windPhase={frame}
             groundFromCrack={groundFromCrack}
+            palette="ivoire-douce"
           />
         </AbsoluteFill>
       )}
@@ -143,12 +153,13 @@ export const B4Renversement: React.FC<{ transitionMode?: "fade" | "lien" }> = ({
 
       {/* KARAOKE word-level (pattern B1/B2/B3) — fade en fin (apres l'audio, pendant la respiration usine) */}
       <div style={{ position: "absolute", bottom: 150, left: 60, right: 60, display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0 14px", background: "rgba(232,220,192,0.82)", border: "1px solid rgba(43,33,23,0.18)", borderRadius: 14, padding: "18px 26px", fontFamily: SERIF, fontSize: 40, lineHeight: 1.3, fontWeight: 700, opacity: interpolate(frame, [840, 868], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}>
-        {WHISPER_WORDS.slice(lineStart, lineEnd).map((w, j) => {
+        {DISP.slice(lineStart, lineEnd).map((w, j) => {
+          if (!w.text) return null;
           const globalIdx = lineStart + j;
           const isActive = globalIdx === activeWordIdx;
           return (
             <span key={j} style={{ color: isActive ? COCOA : INK, opacity: isActive ? 1 : 0.62, transform: isActive ? "translateY(-2px)" : "none", display: "inline-block" }}>
-              {w.word}
+              {w.text}
             </span>
           );
         })}

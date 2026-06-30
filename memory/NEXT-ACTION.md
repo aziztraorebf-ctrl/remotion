@@ -4,21 +4,15 @@
 
 ---
 
-## 🎬 CACAO → CHOCOLAT SHORT — 4/5 BEATS FINAL, NEXT = B5 + ASSEMBLAGE (session dédiée, 2026-06-29)
+## ✅✅ CACAO → CHOCOLAT SHORT — TERMINÉ, PRET PUBLICATION (2026-06-29)
 
-> Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre/parchemin GGW.
-> Sujet = "L'Afrique n'est pas pauvre, elle est sous-payee pour ce qu'elle produit" (cacao->chocolat = porte d'entree).
-> ✅ PRÉ-PROD : sujet validé · script · fact-check · jury · NARRATION 5 beats · MUSIQUE B choisie.
-> ✅ **B1 + B2 + B3 + B4 = FINAL et validés Aziz** (B3+B4 validés 2026-06-29, commit `10f8c9d`).
->   Composants réutilisables : VergerCacao (paysage 3 états), TabletteMorphBarre (barre 6/94), UsineConstruction,
->   CabosseOuverture. Vie permanente (vent/soleil glow/nuages/oiseaux). Karaoké word-level pattern commun.
-> **NEXT (SESSION DÉDIÉE, dire « on reprend le cacao, on fait B5 ») :**
->   1. **B5 (pont café/or/cobalt + CTA)** — ⚠️ CODER LE KARAOKÉ SUR `audio/cacao-beat5-words.ts` (SCRIPT-V4 PÉRIMÉ sur le
->      CTA — voir STATUS.md § "B5 TEXTE RÉEL"). POINT 4 (direction pont) à trancher avec Aziz — ma reco = 4 barres 6/94.
->      CTA = écran dédié typewriter encre.
->   2. **FINITIONS** (passe Gemini/Kimi sur les 5 beats) puis **ASSEMBLAGE** (5 `<Sequence>` + musique B ~0.08-0.12
->      bouclée sur ~95s, fade in/out) → PRET-PUBLICATION.
-> **Source de vérité :** `STATUS.md` (§ STARTER B5) + `DA-BRIEF-ANIMATION.md`. Livrables : `out/episodes/cacao-chocolat-short/beat3-FINAL.mp4` + `beat4-FINAL.mp4`. Dire « on reprend le cacao ».
+> Short SVG vertical 9:16 (98,5s), pilier Souverain, registre encre/parchemin GGW. COMPLET et validé Aziz.
+> **Livrable : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`** · Catbox 72h : https://files.catbox.moe/bvbm63.mp4
+> 5 beats (B1-B5) + musique B + SFX (palette GGW réutilisée + 4 créés, ALIGNÉS force alignment) + usine aux couleurs CI.
+> Compo Remotion = `Cacao-FULL` (CacaoChocolatFull.tsx). ⛔ NE PAS refaire/re-rendre sans raison.
+> **NEXT = PUBLIER** : trypost (YT+IG+FB) / postiz (TikTok — mais TikTok en quarantaine, cf bilan distrib).
+>   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
+> Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·

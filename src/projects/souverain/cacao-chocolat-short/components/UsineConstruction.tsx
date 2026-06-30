@@ -12,7 +12,7 @@
  * Registre encre. Munition couleur (soleil/usine/chocolat colores, sol en encre). Rien ne sort lateralement du cadre.
  */
 import React from "react";
-import { interpolate } from "remotion";
+import { interpolate, AbsoluteFill } from "remotion";
 
 const INK = "#332A20";
 const CREAM = "#EAE3D3";
@@ -25,6 +25,7 @@ type UsineProps = {
   chocOut?: number;
   windPhase?: number;
   groundFromCrack?: number;
+  palette?: "cacao" | "ivoire" | "ivoire-douce" | "ivoire-douce-chem-verte"; // drapeau CI variantes
 };
 
 export const UsineConstruction: React.FC<UsineProps> = ({
@@ -33,6 +34,7 @@ export const UsineConstruction: React.FC<UsineProps> = ({
   chocOut = 1,
   windPhase = 0,
   groundFromCrack = 0,
+  palette = "cacao",
 }) => {
   const wf = windPhase;
   // phases de construction (build) etagees : sol -> batiment -> toit -> cheminee
@@ -47,7 +49,18 @@ export const UsineConstruction: React.FC<UsineProps> = ({
   // colorisation (fill apparait via opacity) — sinon trait encre seul
   const cOp = colorize;
   // couleurs : encre (non colorise) -> couleur (colorise). On superpose un fill colore en opacity=colorize.
-  const wallFront = "#d8c4a2", wallSide = "#c2a878", roofFront = "#8a5b35", roofBack = "#6f4628", chimney = "#b88a5a";
+  // palette "cacao" = tons terre/cacao (defaut). palette "ivoire" = drapeau CI (orange #F77F00 / blanc / vert #009E60)
+  // = l'usine est ivoirienne (transformation souveraine, chez elle).
+  // 3 palettes : cacao (defaut terre), ivoire (drapeau CI vif), ivoire-douce (drapeau CI desature/terre).
+  const PAL = {
+    cacao: { wf: "#d8c4a2", ws: "#c2a878", rf: "#8a5b35", rb: "#6f4628", ch: "#b88a5a" },
+    ivoire: { wf: "#F77F00", ws: "#d96f00", rf: "#009E60", rb: "#00824f", ch: "#f4f1ea" },
+    // orange BRULE/terre + vert SOURD/olive + creme : dialogue avec le registre encre au lieu de le percer.
+    "ivoire-douce": { wf: "#c9762f", ws: "#a85f24", rf: "#5e7245", rb: "#4c5c38", ch: "#e6dcc4" },
+    // variante : cheminee de la MEME couleur que le toit (vert olive) — plus unifie, mais perd le blanc du drapeau.
+    "ivoire-douce-chem-verte": { wf: "#c9762f", ws: "#a85f24", rf: "#5e7245", rb: "#4c5c38", ch: "#5e7245" },
+  }[palette];
+  const wallFront = PAL.wf, wallSide = PAL.ws, roofFront = PAL.rf, roofBack = PAL.rb, chimney = PAL.ch;
 
   // soleil glow + rayons (vie permanente, comme le verger)
   const sunPulse = 0.85 + 0.15 * Math.sin(wf / 22);
@@ -217,3 +230,26 @@ export const UsineConstruction: React.FC<UsineProps> = ({
     </svg>
   );
 };
+
+// ── Previews de comparaison palette (TEST Aziz) ───────────────────────────────
+const PARCH_BG = "#e8dcc0";
+export const UsinePreviewCacao: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: PARCH_BG }}>
+    <UsineConstruction build={1} colorize={1} chocOut={1} windPhase={120} palette="cacao" />
+  </AbsoluteFill>
+);
+export const UsinePreviewIvoire: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: PARCH_BG }}>
+    <UsineConstruction build={1} colorize={1} chocOut={1} windPhase={120} palette="ivoire" />
+  </AbsoluteFill>
+);
+export const UsinePreviewIvoireDouce: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: PARCH_BG }}>
+    <UsineConstruction build={1} colorize={1} chocOut={1} windPhase={120} palette="ivoire-douce" />
+  </AbsoluteFill>
+);
+export const UsinePreviewIvoireDouceChemVerte: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: PARCH_BG }}>
+    <UsineConstruction build={1} colorize={1} chocOut={1} windPhase={120} palette="ivoire-douce-chem-verte" />
+  </AbsoluteFill>
+);

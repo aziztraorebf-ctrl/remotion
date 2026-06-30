@@ -9,6 +9,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+import { buildDisplayWords, type DispWord } from "../audio/karaokeWords";
 
 // Cacao -> Chocolat SHORT — BEAT 1 HOOK (paradoxe). VERSION A — FOCUS PUR TABLETTE (validee Aziz).
 // Audio: public/souverain/cacao-chocolat-short/audio/cacao-beat1-FINAL.mp3 (12,167s -> 365f @30).
@@ -98,7 +99,12 @@ const TabletGlow: React.FC = () => {
     extrapolateRight: "clamp",
   });
   const breathe = 0.82 + 0.18 * Math.sin((frame - F_GLOW_START) / (fps * 0.5));
-  const op = on * 0.3 * breathe;
+  // LOT1 #2 : le glow MONTE en visibilite une fois la croix posee (tue le gel f320->365 du hook).
+  const afterCross = interpolate(frame, [F_CROSS_REVEAL, F_CROSS_REVEAL + 40], [0.3, 0.5], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const op = on * afterCross * breathe;
   if (op <= 0.001) return null;
   return (
     <g>
@@ -199,6 +205,14 @@ const ChocolateBar: React.FC = () => {
           d={`M ${TLX} ${TLY} L ${TRX} ${TRY} L ${BRX} ${BRY} L ${BLX} ${BLY} Z`}
           fill={COCOA}
           stroke="none"
+        />
+        {/* LOT1 #2 — RESPIRATION DE LA MATIERE : la face avant pulse en luminosite (la tablette n'est pas un
+            decal mort). Overlay clair tres discret module par sin, actif une fois la couleur revelee. */}
+        <path
+          d={`M ${TLX} ${TLY} L ${TRX} ${TRY} L ${BRX} ${BRY} L ${BLX} ${BLY} Z`}
+          fill="#7d5230"
+          stroke="none"
+          opacity={interpolate(frame, [F_COLOR_END - 30, F_COLOR_END], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * (0.05 + 0.05 * Math.sin(frame / (fps * 0.9)))}
         />
       </g>
 
@@ -379,13 +393,21 @@ const Karaoke: React.FC = () => {
   const { fps } = useVideoConfig();
   const narSec = frame / fps;
 
-  const phrases: { words: Word[]; start: number; end: number }[] = [];
-  const breakSet = new Set(PHRASE_BREAKS);
+  // elisions recollees (harmonise avec B5) : on decoupe sur les mots AFFICHABLES, breaks reindexes.
+  const DISP = buildDisplayWords(WORDS);
+  // PHRASE_BREAKS[k] = index BRUT du DERNIER mot d'une phrase. On retrouve le DISP qui COUVRE ce mot brut.
+  const dispBreaks = new Set(
+    PHRASE_BREAKS.map((b) => {
+      const idx = DISP.findIndex((d) => d.covers.includes(b));
+      return idx < 0 ? DISP.length - 1 : idx;
+    })
+  );
+  const phrases: { words: DispWord[]; start: number; end: number }[] = [];
   let startIdx = 0;
-  for (let i = 0; i < WORDS.length; i++) {
-    if (breakSet.has(i) || i === WORDS.length - 1) {
-      const slice = WORDS.slice(startIdx, i + 1);
-      phrases.push({ words: slice, start: slice[0].start, end: slice[slice.length - 1].end });
+  for (let i = 0; i < DISP.length; i++) {
+    if (dispBreaks.has(i) || i === DISP.length - 1) {
+      const slice = DISP.slice(startIdx, i + 1);
+      if (slice.length) phrases.push({ words: slice, start: slice[0].start, end: slice[slice.length - 1].end });
       startIdx = i + 1;
     }
   }
@@ -425,6 +447,7 @@ const Karaoke: React.FC = () => {
       }}
     >
       {activePhrase.words.map((w, i) => {
+        if (!w.text) return null;
         const active = narSec >= w.start && narSec <= w.end + 0.12;
         return (
           <span
@@ -436,7 +459,7 @@ const Karaoke: React.FC = () => {
               display: "inline-block",
             }}
           >
-            {w.word}
+            {w.text}
           </span>
         );
       })}
