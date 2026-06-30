@@ -126,6 +126,18 @@ Un seul element central FAIT VIDE en 16:9 (alors qu'il remplit le cadre etroit v
 → **Quand un format long horizontal est demande : NE PAS recadrer le vertical. Re-composer en pensant
   rayonnement lateral + 3 plans de profondeur + camera/parallaxe.** C'est ce qui evite le "vide TV".
 
+### 5. PERSONNAGE D'ENCRE — la brique "identification" du FORMAT LONG (proto 2026-06-29)
+Le long debloque un PROTAGONISTE (le short n'a pas le temps). Prouve : un planteur entre, marche, se penche, RECOLTE.
+Proto : https://files.catbox.moe/hunvwd.mp4 · ref `out/templates-souverain/svg-personnage-encre-REFERENCE.mp4`.
+Composant : `components/PlanteurEncre.tsx` (compo proto `Cacao-ProtoPlanteur-16x9`).
+- ⛔ GARDE-FOU (doctrine SVG) : SILHOUETTE STYLISEE facon pictogramme GGW (traits epais, digne), JAMAIS un humain
+  detaille/realiste (le SVG genere mal l'organique humain). Chapeau de paille = situe culturellement, rappelle VergerCacao.
+- Animation paramatrique pure (props walkPhase/bend/armReach/facing) : balancier de marche (sin), flexion du buste
+  (pivot a la hanche, ~28deg MAX — au-dela ca "plonge"/bascule), bras qui s'etend en recolte.
+- ECHELLE CRUCIALE : un homme = ~1/3 d'un cacaoyer (scale ~0.5). Trop grand = casse l'echelle, lit faux.
+- Combine aux autres briques (profondeur, parallaxe, plan-sequence champ->usine) = inventaire technique complet
+  pour passer un sujet du SHORT (teaser) au LONG (immersion). Le 16:9+profondeur EST la base du format long.
+
 ---
 
 ## ⭐⭐ DOCTRINE GGW — LES 5 RÈGLES FONDAMENTALES (blueprint vivant, gravé 2026-06-28)

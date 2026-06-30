@@ -7,6 +7,7 @@ import { B3Extraction, B3_EXTRACTION_FRAMES, B3_EXTRACTION_FPS } from "./project
 import { B4Lien, B4Fade, B4_RENVERSEMENT_FRAMES, B4_RENVERSEMENT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B4Renversement";
 import { B5Pont, B5_PONT_FRAMES, B5_PONT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5Pont";
 import { B5PontH, B5_PONT_H_FRAMES, B5_PONT_H_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5PontH";
+import { ProtoPlanteur, PROTO_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/beats/ProtoPlanteur";
 import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
 import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
@@ -3208,6 +3209,14 @@ export const RemotionRoot: React.FC = () => {
           component={B5PontH}
           durationInFrames={B5_PONT_H_FRAMES}
           fps={B5_PONT_H_FPS}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Cacao-ProtoPlanteur-16x9"
+          component={ProtoPlanteur}
+          durationInFrames={PROTO_PLANTEUR_FRAMES}
+          fps={30}
           width={1920}
           height={1080}
         />
