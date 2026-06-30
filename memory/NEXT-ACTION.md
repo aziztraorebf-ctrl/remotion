@@ -67,7 +67,7 @@
 > ⚠️ AVANT d'industrialiser : (1) créer une SIGNATURE VISUELLE commune longs↔shorts · (2) tunnel = NOTORIÉTÉ
 > cross-plateforme, pas conversion directe · (3) garder le gate [[SUJET-PRIME-SUR-PRODUCTION]] sur les shorts.
 > Assemblage de PLUSIEURS scènes SVG en récit court = PROUVÉ (Short GGW Muraille Verte terminé ; cacao-chocolat
-> 2e short SVG multi-scènes en production). Le chantier restant = INDUSTRIALISER (signature commune longs↔shorts,
+> 2e short SVG multi-scènes terminé 2026-06-29). Le chantier restant = INDUSTRIALISER (signature commune longs↔shorts,
 > cadence). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
 
 ## 🔧 BACKLOG TECHNIQUE — Système CARTO V5 (reprendre quand Sénégal V3 fini)

@@ -24,3 +24,17 @@
 ## Références code
 - `src/projects/_rnd/svg-scenes/GgwHookEncreVivant.tsx` (réf hook GGW)
 - `src/projects/souverain/cacao-chocolat-short/beats/B2Source.tsx` (réf Cacao B2, accent brun chocolat)
+
+## Variante .ts constant par beat (prouvé Cacao B3/B4/B5, 2026-06-29)
+Pour les Shorts SVG multi-beats : générer UN fichier `<beat>-words.ts` par beat (`whisper-align.py ... --out X.ts`)
+qui exporte `WHISPER_WORDS: {word,start,end}[]`. Importer la constante directement dans le composant beat (typage TS,
+zéro parsing runtime, vs JSON brut). Pipeline : `whisper-align.py <beat>-FINAL.mp3 --out <beat>-words.ts` → `import { WHISPER_WORDS }`.
+⚠️ L'audio FINAL fait foi, PAS le script (cf key-learnings § "script périmé après audio lock"). Fichiers cacao : beat3/4/5-words.ts.
+
+## Helper buildDisplayWords — recoller les ÉLISIONS (prouvé Cacao B1-B5, 2026-06-29)
+Whisper FRAGMENTE les apostrophes : "l'or" → ["l","or"], "n'est" → ["n","est"], "qu'une" → ["qu","une"], "d'entrée"...
+→ affiché brut, le karaoké montre "l or", "n est" (faux). Solution mutualisée : `audio/karaokeWords.ts` exporte
+`buildDisplayWords(WHISPER_WORDS)` qui recolle l/d/qu/n/t/j/c/s/m + mot suivant en un token "l'or", en conservant
+les timings (start du 1er fragment → end du dernier) + un index `covers[]` pour mapper le mot actif. Importer ce helper
+dans TOUT beat karaoké word-level (ne PAS ré-implémenter par beat). Les PHRASE_BREAKS (index bruts) se reconvertissent
+en index DISP via `covers`. Réf : `src/projects/souverain/cacao-chocolat-short/audio/karaokeWords.ts` + B1-B5.

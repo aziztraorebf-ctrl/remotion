@@ -104,3 +104,36 @@ juge le MOUVEMENT avant le code (le gout d'animation se valide en amont, pas apr
 - Les FINITIONS de gout : couleur exacte, intention d'un symbole ("le mur reste"), taille/style sous-titres,
   perception audio/emotion. Le jugement final est celui d'Aziz.
 - Trancher les ambiguites que l'agent ne peut pas resoudre (registre, raccord entre beats).
+
+## ⭐ CRITÈRE DE DÉCOUPE : brique cadrée (→ agent) vs cœur sensible (→ Claude+Aziz) — prouvé Cacao B3/B4 (2026-06-29)
+La bonne ligne de partage pour déléguer une scène SVG :
+- **Brique cadrée → AGENT en worktree** : input/output clairs, ZÉRO goût à valider en cours de route. Ex : le composant
+  `TabletteMorphBarre` (spec précise : tablette progress=0 → barre 6/94 progress=1). L'agent code, rend, on récupère.
+- **Cœur sensible → CLAUDE + AZIZ en boucle courte** : gestes narratifs, timing fin sur l'audio, intention, "ça flotte/
+  c'est trop". Ex : le verger qui s'anime, la cascade de reverdissement, le rythme des sous-scènes. Itération rapide
+  toi↔moi au render — un agent reviendrait avec un défaut de goût qu'il faut reprendre (perte de temps).
+Règle : on délègue le MÉCANIQUE cadré, on garde le GOÛT. Corollaire orchestrateur : après CHAQUE render d'agent,
+vérifier frame-par-frame (ffmpeg + Read), pas "ça ne crashe pas" (a rattrapé 2 bugs non signalés par les agents).
+
+---
+
+## ⭐ IDÉATION DUALE — 2 agents à RÔLES OPPOSÉS pour trouver une forme de scène (prouvé B5 cacao 2026-06-29)
+Quand une scène est "connue mais banale" (on sait quoi raconter, pas comment le rendre fort), lancer **2 agents
+vierges à rôles ANTAGONISTES** sur la même scène, en parallèle :
+- **Le Continuiste** : doit RESTER dans le langage/registre existant, exploiter/pousser les composants déjà là.
+- **Le Métaphoriste** : a le droit de QUITTER le registre pour une métaphore visuelle forte (mais reste faisable, même style).
+Chacun rend 2-3 directions. L'orchestrateur synthétise, Aziz tranche. Les rôles opposés FORCENT la divergence
+(sinon les agents convergent vers la même idée). Prouvé : a produit "l'arbre aux 4 ombres" (B5) qu'aucun agent
+seul, ni Claude ni Aziz, n'aurait proposé. Bonus vs LLM externes : agents vierges connaissent NOS composants →
+idées faisables par construction. Avantage clé : déplace le jugement de goût AVANT le code (gratuit), pas après (cher).
+
+## ⭐ REVIEW POST-MONTAGE — examen de la VIDÉO COMPLÈTE par vagues (prouvé cacao B1-B5 2026-06-29)
+Distinct de la production A→Z : auditer une vidéo DÉJÀ MONTÉE pour améliorations transverses. Méthode (workflow) :
+- **N agents en parallèle, 1 par beat**, même brief de review (chacun regarde SON beat via frames extraites + code).
+- Chaque agent propose 2-3 améliorations + signale ce qu'il verrait sur les autres beats (patterns transverses).
+- **1 agent synthèse** : dédoublonne, repère les patterns communs, classe par IMPACT/EFFORT, sort un LOT.
+  → **LOT1** = corrections communes à tous les beats, fort impact / faible effort (ex : "le verger fige après
+     colorisation" → helper mutualisé qui fait respirer la couleur). À coder en priorité.
+  → **LOT2** = finitions individuelles, enrichissement (effort moyen, optionnel).
+Prouvé cacao : a diagnostiqué le défaut transverse "colorisation = événement consommé, pas état qui respire" +
+l'incohérence élisions B1-B4. Donner à chaque agent : timeline + frames du beat + le code. Aziz tranche le LOT.
