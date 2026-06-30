@@ -86,6 +86,48 @@ ce qu'ils voient : GGW ne "zoome" pas, il ENCHAINE des etats d'objets.
 
 ---
 
+## ⭐⭐ TRANSPOSER UN SHORT VERTICAL EN 16:9 + PROFONDEUR CINEMATOGRAPHIQUE (prouve 2026-06-29, proto B5 cacao)
+
+Test : transposer le beat B5 "arbre aux 4 ombres" (9:16) en 16:9, puis le pousser jusqu'au plan de cinema.
+Proto final : https://files.catbox.moe/ppqbb9.mp4 (paysage vivant, parallaxe + heure doree).
+Code de reference : `src/projects/souverain/cacao-chocolat-short/beats/B5PontH.tsx` (compo `Cacao-B5PontH-16x9`).
+
+### 1. La transposition 9:16 -> 16:9 = RE-COMPOSITION, pas reconstruction (~70% reutilise)
+- **Reutilise tel quel** : les COMPOSANTS (CacaoTree...), la logique d'effet (ombrePath, drift, gouttes, spring),
+  l'AUDIO, le karaoke word-level, les phases. Le SVG est parametrique -> redimensionnable/recomposable.
+- **A re-composer** (le coût réel, ~1 fichier ~140 lignes ~15 min pour un beat simple) : viewBox `1920x1080`,
+  position/echelle du sujet, ANGLES des elements, zones sures des labels, placement texte.
+- ⚠️ Cout VARIABLE par beat : un beat simple/autonome (B5) = trivial ; un beat a perspective verticale forte
+  (verger en plongee) ou split-screen geo = plus cher. NE PAS extrapoler "tout le short en 15 min".
+- Estimation realiste : transposer un short SVG 5 beats deja produit = ~1 jour (assets+preprod deja la).
+
+### 2. La grammaire CHANGE avec le format (pas qu'un re-cadrage)
+- **Ombres/elements rayonnent LATERALEMENT** (l'oeil voyage G->D) au lieu de descendre. Le sujet decale a
+  GAUCHE sur la ligne de force (regle des tiers) ; l'espace droit = respiration assumee, pas un vide a meubler.
+- **SANS SOUS-TITRES** : 16:9 = ecran/TV, regarde SON ACTIVE (≠ vertical mobile souvent muet ou le ST est vital).
+  Retirer le karaoke LIBERE la composition -> texte DIEGETIQUE (mots-cles/cartons integres DANS la scene, pas un bandeau).
+
+### 3. PROFONDEUR = la reponse au "vide horizontal" (le point cle)
+Un seul element central FAIT VIDE en 16:9 (alors qu'il remplit le cadre etroit vertical). Solution = PLANS MULTIPLES :
+- **Fond** : le motif principal repete au loin, COLORE (pas silhouette), tons VARIES (pas la couleur du heros),
+  etage a 2 distances + brume d'horizon (bande plus claire) qui separe les plans.
+- **Median** : le sujet-heros, plus grand (16:9 permet du grand).
+- **Ciel vivant** : nuages qui derivent + oiseaux (boucle + fade aux bords = JAMAIS hors cadre, logique VergerCacao).
+- ⛔ Ecarter le faux avant-plan decoratif (ex herbes/traits au sol) s'il "bouge bizarrement" sans lire — Aziz l'a rejete.
+
+### 4. CAMERA LENTE + PARALLAXE + HEURE DOREE = le passage "plan anime" -> "plan filme"
+- **Camera** : tres leger zoom-OUT + derive laterale (interpolate sur un transform global, pivot sur le sujet).
+- **PARALLAXE** (l'effet le plus cinema) : appliquer le mouvement camera a INTENSITES differentes par profondeur —
+  `camAt(p)` avec p=1.0 (1er plan), ~0.6 (median), ~0.28 (ciel). Le fond bouge MOINS -> profondeur PHYSIQUE percue.
+- **Heure doree** : sur la duree, interpoler le fond parchemin -> ambre chaud + le soleil jaune -> ambre couchant
+  (lerp de canaux hex). Ambiance cinematographique, reste dans le registre.
+- Tout en `useCurrentFrame`+`interpolate`+`sin` (zero CSS transition). Vie permanente partout (Regle 3 GGW).
+
+→ **Quand un format long horizontal est demande : NE PAS recadrer le vertical. Re-composer en pensant
+  rayonnement lateral + 3 plans de profondeur + camera/parallaxe.** C'est ce qui evite le "vide TV".
+
+---
+
 ## ⭐⭐ DOCTRINE GGW — LES 5 RÈGLES FONDAMENTALES (blueprint vivant, gravé 2026-06-28)
 
 > GGW (Grande Muraille Verte) est notre **référence absolue** pour toute scène SVG encre narrative.
