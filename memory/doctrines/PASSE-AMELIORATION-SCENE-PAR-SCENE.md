@@ -61,15 +61,20 @@ Section finale : ce qui reste à la perception/goût d'Aziz (audio fin, dosage, 
 - **Ne pas fusionner audit et correction dans le même agent** — sinon on perd le point de contrôle de goût.
 - Cette checklist devient PÉRIMÉE à mesure que l'arsenal évolue — la mettre à jour à chaque nouvelle technique
   prouvée (comme on vient de le faire avec le mix-and-match SVG).
+- ⛔ **LIMITE MÉTHODOLOGIQUE DÉCOUVERTE (2026-07-01)** : cette méthode juge des scènes DÉJÀ RENDUES au moment
+  de l'audit — elle ne couvre PAS la continuité technique d'un futur re-découpage en plusieurs fichiers de
+  render. Sur War-Map Sahel, aucun des 4 agents scène + l'agent transversal n'a détecté qu'un futur découpage
+  en segments créerait des trous de frames aux jonctions (jusqu'à 40s de fin jamais rendues) — logique, ce
+  n'était pas leur mandat, mais Aziz l'a perçu comme un vrai manque de rigueur du process. **Si une future
+  passe d'audit débouche sur des renders en plusieurs morceaux à assembler**, ajouter une étape de vérification
+  de continuité (`scripts/tools/check-frame-continuity.py`, créé suite à cet incident, cf `DOCTRINE-SOUVERAIN.md`
+  §3.8.6) AVANT toute présentation — ce n'est pas un jugement de goût scène par scène, c'est un fait technique
+  binaire (trou ou pas trou), donc automatisable, à ne jamais laisser reposer uniquement sur le jugement humain.
 
 ## APPLIQUÉ (War-Map Sahel AES)
-- ✅ **P1, P2 DÉJÀ AUDITÉS (2026-06-27)** : `episodes/warmap-sahel/AUDIT-AMELIORATIONS-P1.md` / `-P2.md`.
-  Ce sont des SOURCES DE VÉRITÉ déjà écrites — NE PAS relancer d'agent d'audit dessus. La prochaine session
-  lance seulement les agents MANQUANTS (Acte1 formel + P3 + P4 à confirmer), puis l'agent TRANSVERSAL lit
-  les 5 fichiers d'audit (2 déjà là + 3 nouveaux) pour sa synthèse d'ensemble.
-- **Restent à auditer** : Acte1 (fait manuellement cette session, jamais audité formellement par un agent dédié —
-  vérifier si ça vaut le coup vu qu'il vient d'être refait), P3, P4 (probablement déjà au niveau, à confirmer
-  avant de lancer l'agent — si P4 est déjà jugée bonne, ne pas auditer pour rien).
-- Prochaine session : lancer les agents scène manquants (Acte1 optionnel + P3 + P4 si pertinent) PUIS
-  l'agent TRANSVERSAL final qui lit TOUS les audits (les 2 existants + les nouveaux) et produit la synthèse
-  transversale (systèmes qui doivent courir partout, cohérence inter-scènes, défi carte-fixe résolu ou non).
+- ✅✅ **Audit complet fait (2026-07-01)** : P1 (mis à jour), P2, P3, P4 + synthèse transversale — les 5
+  fichiers `episodes/warmap-sahel/AUDIT-AMELIORATIONS-P{1,2,3,4}.md` + `AUDIT-TRANSVERSAL-SYNTHESE.md` sont
+  des SOURCES DE VÉRITÉ. Corrections codées et rendues. **MAIS un bug critique de continuité de frames a été
+  découvert au visionnage** (voir limite méthodologique ci-dessus) — la vidéo n'est PAS prête, re-render en
+  plages continues obligatoire avant toute nouvelle présentation. Détail complet et 20 retours Aziz :
+  `episodes/warmap-sahel/STATUS.md` § REPRISE SESSION SUIVANTE.

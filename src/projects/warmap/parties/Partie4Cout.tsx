@@ -226,15 +226,17 @@ const ConfederationReveal: React.FC<{
       {!sceauVisible && flags.map((f) => {
         const x = cx + f.dir * spread * conv;
         const appear = interpolate(L, [4 + Math.abs(f.dir) * 4, 18 + Math.abs(f.dir) * 4], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-        const fade = interpolate(L, [50, 56], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // s'effacent quand le sceau naît
+        const fade = interpolate(L, [50, 56], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // drapeau s'efface quand le sceau naît
+        // le TEXTE doit disparaître avant que la convergence n'empile les 3 noms au centre (bug labels superposés)
+        const textFade = interpolate(L, [36, 46], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         return (
           <div key={f.code} style={{ position: "absolute", left: x, top: cy, transform: "translate(-50%,-50%)",
-            opacity: appear * fade, textAlign: "center" }}>
+            opacity: appear, textAlign: "center" }}>
             <img src={staticFile(`_shared/flags/${f.code}.png`)} style={{ width: flagW, height: flagH,
               objectFit: "cover", borderRadius: 6, border: "2px solid rgba(201,162,75,0.7)",
-              boxShadow: "0 6px 22px rgba(0,0,0,0.6)", display: "block" }} />
+              boxShadow: "0 6px 22px rgba(0,0,0,0.6)", display: "block", opacity: fade }} />
             <div style={{ marginTop: vmin * 0.012, color: "#E8DCC0", fontFamily: "Georgia, serif",
-              fontWeight: 800, fontSize: vmin * 0.022, letterSpacing: 2 }}>{f.name}</div>
+              fontWeight: 800, fontSize: vmin * 0.022, letterSpacing: 2, opacity: textFade }}>{f.name}</div>
           </div>
         );
       })}
@@ -1067,8 +1069,15 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
            Séquence : countup 3M + 3 personnes (TOUTES allumées) → bascule 15M+ cascade 15 (TOUTES allumées),
            multi-rangées empilées + cadre autour des icônes. = Chantier 2 "coût" bouclé ici. */}
       {(() => {
-        const op = interpolate(frame, [F_COUT, F_COUT + 16, F_RESSOURCES - 26, F_RESSOURCES - 4], [0, 1, 1, 0],
-          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        // Entrée en fondu classique, MAIS la sortie ne fade JAMAIS l'opacité du cartouche (le fond "opaque"
+        // #EFE3C2 redeviendrait semi-transparent et exposerait les contours colorés dessous — bug WARMAP-GRAMMAIRE
+        // §9 "bouillie"). À la place : le cartouche sort par un scale-down + slide rapide (4 frames, quasi-cut),
+        // fond toujours à opacité 1 tant qu'il est visible à l'écran.
+        const opIn = interpolate(frame, [F_COUT, F_COUT + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const OUT_START = F_RESSOURCES - 8, OUT_END = F_RESSOURCES - 4;
+        const outScale = interpolate(frame, [OUT_START, OUT_END], [1, 0.85], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const outVisible = frame < OUT_END;
+        const op = opIn * (outVisible ? 1 : 0);
         if (op <= 0.02) return null;
         const grain = staticFile("_shared/sprites/warmap/paper-grain.png");
         // count-up amorti — phase 1 : 3M (toutes les 3 icônes allumées AVANT la bascule)
@@ -1086,8 +1095,9 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         const slideY = interpolate(frame, [F_COUT, F_COUT + 16], [vmin * 0.03, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         return (
           <AbsoluteFill style={{ opacity: op, zIndex: 320, alignItems: "center", justifyContent: "center" }}>
-            {/* CARTOUCHE central opaque (la carte reste visible AUTOUR, pas à travers) */}
-            <div style={{ position: "relative", transform: `translateY(${slideY}px)`, width: "54%", maxWidth: vmin * 1.0,
+            {/* CARTOUCHE central opaque (la carte reste visible AUTOUR, pas à travers). Fond TOUJOURS opaque
+                tant que visible : la sortie est un scale-down (outScale), jamais un fondu d'opacité du fond. */}
+            <div style={{ position: "relative", transform: `translateY(${slideY}px) scale(${outScale})`, width: "54%", maxWidth: vmin * 1.0,
               background: "#EFE3C2", border: `3px solid ${RED_GRAVE}`, borderRadius: 10,
               boxShadow: "0 14px 40px rgba(0,0,0,0.5)", padding: `${vmin * 0.04}px ${vmin * 0.05}px`,
               textAlign: "center", fontFamily: "Georgia, serif", overflow: "hidden" }}>

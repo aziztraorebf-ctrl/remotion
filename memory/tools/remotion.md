@@ -124,5 +124,13 @@ RadarScan, RadarPing, PulseNumber, SplitFlap, TimelineFracture, WordExplode, Bar
 - Palette froide (gris-bleu + blanc terne) = froideur, mecanique
 - C'est une decision narrative, pas esthetique.
 
+### Render en plusieurs segments (`--frames=A-B` x N) — verifier la continuite AVANT tout concat
+Bug 2026-07-01 (War-Map Sahel) : des renders separes avaient des trous aux jonctions (fin segment N != debut
+segment N+1) — jusqu'a 40s de narration/visuel jamais rendues, un chevauchement faisant repeter une phrase.
+Personne (agent ni humain) ne l'a detecte avant presentation. Garde-fou : `python3
+scripts/tools/check-frame-continuity.py <start-end> <start-end> ...` (memes bornes que les `--frames=`
+utilises, dans l'ordre) — DOIT renvoyer exit 0 avant tout `ffmpeg concat` ou envoi de livrable. Detail complet
+et regle gravee : `memory/doctrines/DOCTRINE-SOUVERAIN.md` §3.8 point 6.
+
 <!-- Section "Kimi review" supprimee 2026-04-24 : appartient a quality-reviewer, pas a remotion composition. Voir .claude/agents/quality-reviewer.md -->
 

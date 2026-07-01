@@ -1,5 +1,21 @@
 # AUDIT AMÉLIORATIONS — Partie 1 (Origine 2012 / Libye / vide d'État)
 
+> ⭐ **MISE À JOUR (2026-07-01) — confrontation arsenal post-Acte1-refonte.** Audit LECTURE SEULE, agent
+> frais, sans code touché. Contexte : l'Acte 1 a été refait et VALIDÉ Aziz le 2026-06-27 (même jour que cet
+> audit P1, mais APRÈS) avec 3 acquis nouveaux : sceau AES émergent + flash or (climax hook), drapeaux réels
+> plantés `WarMapBanner` (prop `hideAt` pour céder la place à la couche tactique), SVG mix-and-match maison
+> (`PRODUCTION-AGENTIQUE-SVG.md`, prouvé sur le SVG-insert CFA). Vérification code (`SahelWarMapEngine.tsx`,
+> `Partie1Origine.tsx`) : ces 3 briques sont câblées EXCLUSIVEMENT sous les gates `acte1Refonte` — zéro trace
+> dans le mode `partie1`. **Conclusion : aucune des 3 ne doit être greffée sur P1.** Elles appartiennent au
+> registre "hook/rupture/souveraineté" (Acte1 hook, P3/P4) ; P1 = "origine 2012, abstraite, soustraction"
+> reste un registre DIFFÉRENT et volontairement plus sobre (déjà tranché dans la section "TECHNIQUES NON
+> RETENUES" ci-dessous, confirmé toujours valide). Ce n'est PAS un manque, c'est la direction validée qui tient.
+> **Le seul vrai delta trouvé concerne le point #4 existant (raccord Acte1→P1)** : son contexte a changé,
+> voir correction ci-dessous. Aucun nouveau point d'IMPACT FORT n'est apparu — le diagnostic dominant de
+> l'audit original (P1 est MUET, 0 SFX câblé en mode `partie1`) reste, à date, le trou n°1, INCHANGÉ.
+> Un point mineur nouveau est ajouté en fin de section (A) : cohérence du silence P1 vs SFX désormais
+> enrichis de l'Acte 1 refait, qui rend le contraste plus perceptible qu'au moment de l'audit original.
+
 > ⛔⭐ **CORRECTION AZIZ 2026-06-27 — NE PAS UTILISER LE `tension-drone`.** L'audit ci-dessous recommande un
 > drone d'assise continu (points #1, #3, #4). DÉCISION AZIZ : le grondement `tension-drone` DÉRANGE → il a été
 > RETIRÉ du corps de l'Acte 1, et NE DOIT PAS être câblé sur P1 (ni les autres scènes). La MUSIQUE de fond
@@ -39,6 +55,26 @@
 - **Constaté** : le début du render (f_0.5→f_5.5) montre les jetons métalliques de l'Acte 1 (labels EIGS, etc.) en cours d'effacement (board-clearing, jetons→0.05) AVANT que "2012" s'inscrive (F_2012=2102). C'est le raccord voulu. MAIS : l'Acte 1 refait (`acte1-FINAL.mp4`, 2026-06-27, le drone d'assise s'arrête à `A1.END`) enchaîne sec sur un P1 sans drone → rupture sonore au point de jointure. Visuellement le board-clearing est correct, mais à confirmer une fois les deux concaténés (registre/palette OK sur frames isolées).
 - **Technique arsenal** : faire DÉBORDER le `tension-drone` de P1 dès le board-clearing (couvrir la jointure), et vérifier que la palette/grain du board-clearing P1 == fin Acte1 refait (les deux héritent `isFinalLook`, donc a priori OK — à valider sur la concat réelle, pas sur frames isolées : règle "fichiers de navigation périment / juger le livrable").
 - **Risque** : ne se juge VRAIMENT qu'après concat Acte1+P1. Ne pas sur-corriger à l'aveugle.
+- **⛔ CORRECTION (2026-07-01) — la prémisse de ce point est PÉRIMÉE, à REFORMULER, pas à exécuter tel quel.**
+  Vérifié dans le code (`SahelWarMapEngine.tsx`, grep exhaustif) : le `tension-drone` du corps Acte 1 refait
+  (lignes ~1613/1668, vol 0.12-0.14) a bien été retiré (décision Aziz 2026-06-27, déjà actée en tête de ce
+  fichier) — il ne reste QUE le convoi B1 (une occurrence isolée hors du corps final, vol 0.32, hors-scope
+  du raccord). Donc à la jointure Acte1(corps)→P1, l'Acte 1 refait n'a **plus aucun drone d'assise du tout**
+  (ni à supprimer, ni à faire déborder). Le vrai état à la jointure : Acte1 = SFX ponctuels (ping pose jetons,
+  ink-spread zones, impact friction) + musique de fond → P1 = **silence total** (0 SFX câblé, cf. point #1).
+  **Reformulation du problème** : ce n'est plus une rupture de drone (qui n'existe plus), c'est un **écart
+  de densité sonore** — l'Acte 1 refait est maintenant SFX-riche (ponctuels enrichis) et P1 enchaîne sur un vide
+  total, ce qui rend la coupure plus perceptible qu'avant (avant, les deux étaient pauvres en SFX ; maintenant
+  Acte1 est riche et P1 reste pauvre → l'écart s'est CREUSÉ, pas résorbé). **Ne pas recommander de drone** :
+  la correction reste celle du point #1 (SFX ponctuels sur P1 : ping/ink-spread/impact), qui, une fois câblée,
+  résout AUSSI ce raccord par construction (plus de trou de densité entre les deux scènes). Pas d'action
+  séparée nécessaire pour #4 — il se résout comme sous-produit du #1. Risque conservé : à confirmer sur la
+  concat réelle (pas de changement sur ce point).
+
+### 5. [NOUVEAU 2026-07-01 · GLOBAL] Confrontation à l'arsenal Acte1-refonte — aucune brique récente (sceau, WarMapBanner, mix-and-match SVG) n'est transposable à P1, mais l'écart de richesse sonore avec Acte1 s'est accru · IMPACT FAIBLE (constat, pas une action nouvelle) · EFFORT N/A
+- **Constaté (code, grep exhaustif `SahelWarMapEngine.tsx` + lecture `Partie1Origine.tsx`)** : les 3 acquis de la refonte Acte 1 (sceau AES émergent + flash or, `WarMapBanner` avec `hideAt=560/990`, SVG mix-and-match du CFA-insert) sont câblés STRICTEMENT sous les gates `acte1Refonte` / hors mode `partie1`. `Partie1Origine.tsx` reste 100% SVG cartographique pur (trait d'encre, taches, hachures, aucun objet/jeton/bannière/sceau) — cohérent avec la direction "soustraction" déjà validée DA 3 voix + Aziz (section B ci-dessous). Aucune de ces 3 briques ne "manque" à P1 au sens propre : les introduire romprait le registre volontairement plus sobre/abstrait de l'origine 2012.
+- **Technique arsenal** : aucune à greffer. Le seul lien réel avec l'arsenal récent est indirect : les SFX ponctuels enrichis de l'Acte 1 (ping pose de jetons, ink-spread zones, impact friction) sont exactement le même TYPE de son (ponctuel, pas de drone) que ceux déjà recommandés aux points #1-#3 de cet audit pour P1. Le vocabulaire sonore à câbler sur P1 est donc désormais confirmé DEUX FOIS : par cet audit (juin) ET par ce que l'Acte 1 refait a validé en pratique (juin, après coup). Aucune raison de dévier vers un autre type de SFX.
+- **Risque** : nul — ceci est une confirmation, pas un changement de cap. Signalé pour mémoire (traçabilité de la confrontation demandée par la méthode `PASSE-AMELIORATION-SCENE-PAR-SCENE.md`), pas pour action supplémentaire.
 
 ---
 

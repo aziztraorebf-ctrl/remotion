@@ -174,30 +174,29 @@
 
 ---
 
-## 🟡 PRIORITÉ 2 — WAR-MAP SAHEL : PASSE SÉQUENTIELLE scène par scène
+## ⛔⛔ PRIORITÉ 2 — WAR-MAP SAHEL : BLOQUÉ SUR BUG CRITIQUE (2026-07-01)
 
-> ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%.
+> ⛔⛔ **BUG CRITIQUE DÉCOUVERT (2026-07-01, visionnage Aziz)** : les renders multi-segments présentés
+> avaient des TROUS DE FRAMES aux jonctions (jusqu'à 40s de fin JAMAIS rendues sur P4, un chevauchement
+> qui fait répéter une phrase, des trous de 8.6s et 14s ailleurs) — perçu par Aziz comme "voix qui
+> saute/se répète/coupures brutales" sur ~8 des 20 points de son retour détaillé. Ce n'est PAS un problème
+> de contenu/script manquant, juste de mauvais calcul des bornes `--frames=` lors du découpage en renders
+> séparés. Garde-fou créé : `python3 scripts/tools/check-frame-continuity.py <bornes>` — DOIT renvoyer OK
+> avant tout `ffmpeg concat` ou présentation future (règle gravée `DOCTRINE-SOUVERAIN.md` §3.8.6).
 >
-> ✅✅ **ACTE 1 FINAL + P1 + P2 + P3 FINAL.** 🟡 **P4 = en morceaux** (exode + ressources + confed + CFA, à assembler en p4-FINAL).
-> ▶ **RESTE** : (1) assembler P4 morceaux → p4-FINAL ; (2) ASSEMBLAGE FINAL (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
-> 🎵 Musique : Aziz a choisi **D-montee-maitrisee** (`public/_shared/audio/sahel-warmap/music/`).
-> 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` (état détaillé) · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`, `PLAN-REFONTE-ACTE1.md` (Acte 1 fini).
+> **NEXT SESSION (lire `memory/episodes/warmap-sahel/STATUS.md` § REPRISE SESSION SUIVANTE en tête du
+> fichier — c'est la source de vérité complète, ne pas dupliquer ici)** :
+> 1. Poser la question process à Aziz en ouverture (agentique vs direct) — ne pas présumer.
+> 2. Re-render en plages CONTINUES (P1+P2 en un seul fichier, P3, P4 en un seul fichier `9416-13500`)
+>    + vérifier `check-frame-continuity.py` = OK avant tout assemblage.
+> 3. Traiter les 20 retours détaillés d'Aziz (contours P2 manquants, sources visibles au lieu de
+>    "données estimées", flèches CEDEAO à repenser, casques bleus ONU à Kidal, retirer texte Moura ajouté,
+>    évaluer SVG narratif pour triple-screen ressources et franc CFA — prototype CFA déjà existant à
+>    `out/_r-and-d/cfa-svg/`).
 >
-> ✅✅ **ACTE 1 FINALISÉ + VALIDÉ AZIZ (2026-06-27, v2 SANS tension-drone)** : compo `SahelActe1-Refonte` (f0-2125, 71s),
->   `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e`). Hook = chiffre « 3 » → drapeaux plantés →
->   **sceau AES central + flash or** au climax (3 traits convergents illisibles RETIRÉS) ; corps = grammaire P3/P4
->   + **SFX ponctuels** (ping carto/ink/impact — le `tension-drone` d'assise a été RETIRÉ, il dérangeait Aziz)
->   + **drapeaux s'effacent après les 1ers jetons** (contours gardés) + mention « Données estimées » retirée.
->   ⛔ **NE PLUS câbler le `tension-drone`** nulle part (P1/P2/autres) — la musique de fond suffit comme lit sonore.
->   ⚠️ pic audio ~0 dB à 18s (gong) → mastering assemblage normalisera.
-> ✅ **SVG-insert franc CFA produit + validé** (système agentique, mix-and-match) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
-> ⭐⭐ **PROCHAINE SESSION — PASSE AUDIT COMPLÈTE scène par scène (méthode gravée 2026-06-27)** :
->   Lire `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md` (méthode : 1 agent par scène + 1 agent
->   TRANSVERSAL final). ✅ P1+P2 DÉJÀ AUDITÉS (sources de vérité prêtes, NE PAS refaire) : `AUDIT-AMELIORATIONS-
->   P1.md` / `-P2.md`. RESTE : lancer agents sur Acte1 (optionnel, vient d'être refait) + P3 + P4 (confirmer
->   si utile) → PUIS agent transversal qui lit TOUS les audits (cohérence inter-scènes, défi carte-fixe/3-pays-
->   fixes, systèmes qui doivent courir partout — ex idée Aziz : pictogrammes de faction persistants via GLM-5.2).
->   Aziz VALIDE le backlog priorisé avant tout agent de correction.
+> ✅ Ce qui EST fait et validé côté code (ne pas refaire) : chantier SFX unifié P1-P4, raccord CEDEAO
+> renforcé (mais visuel rejeté par Aziz, à repenser), drone Moura retiré, bugs P4 corrigés, contours P1 +
+> drapeau libyen géographique réel, timeline retirée P2/P3, Acte1 validé (2026-06-27, catbox `6azb9e`).
 
 ---
 

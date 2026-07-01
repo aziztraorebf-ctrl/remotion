@@ -1,7 +1,172 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-27 — ✅✅ **ACTE 1 FINAL (hook + corps) VALIDÉ AZIZ.** Acte1 + P1 + P2 + P3 FINAL · P4 en morceaux à assembler.
+**Dernière mise à jour :** 2026-07-01 — ⛔⛔ **BUG CRITIQUE TROUVÉ : trous de frames dans les renders de correction, à corriger EN PREMIER la prochaine session, avant tout le reste.** Voir section ci-dessous.
 **Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+
+---
+
+## ⛔⛔⛔ REPRISE SESSION SUIVANTE — LIRE CECI EN PREMIER (2026-07-01)
+
+### Contexte de cette session (2026-07-01)
+Passe de correction post-audit (voir section "PASSE AUDIT" plus bas pour le détail du backlog de départ).
+Corrections codées et rendues : chantier SFX unifié P1-P4, raccord CEDEAO P2→P3 renforcé, drone résiduel Moura
+retiré + plateau meublé, bugs P4 (labels superposés + cartouche transparent) corrigés, onde de choc Niger +
+sillage renforcé P2, puis 2e passe : légende retirée P1, contours nationaux colorés étendus à P1 (au lieu du
+fond mosaïque plein), drapeau libyen géographique réel sur le territoire P1, "2012" qui s'efface au lieu de
+rester affiché, timeline graduée retirée de P2 ET P3. Tout ce code est BON et VALIDÉ visuellement par Aziz
+dans les grandes lignes (voir ses retours détaillés ci-dessous — ce sont des affinages, pas des rejets).
+
+### ⛔ BUG CRITIQUE DÉCOUVERT : les 2 blocs présentés à Aziz (bloc1 catbox `sjy5ua`, bloc2 catbox `yzx3dh`)
+### ont des TROUS DE FRAMES aux jonctions — pas un problème de code/script, un problème de MES COMMANDES DE RENDER.
+
+Chaque render de scène a été fait avec `--frames=X-Y` en isolant des plages qui ne se raccordent PAS bout à
+bout avec la plage suivante. L'audio de narration, lui, est continu dans le moteur — donc à chaque jonction
+mal calculée, des SECONDES ENTIÈRES de narration+visuel ont été sautées dans le fichier final. C'est la cause
+directe de tout ce qu'Aziz a perçu comme "voix qui saute / se répète / coupures brutales / contenu manquant"
+(il a listé ~8 endroits distincts avec ce symptôme dans son retour du 2026-07-01, voir section "RETOURS AZIZ"
+ci-dessous — TOUS ou presque sont probablement ce même bug, pas 8 bugs différents).
+
+**Trous mesurés (frames absolues moteur, @30fps) :**
+| Jonction | Fin segment A | Début segment B | Trou | Durée manquante |
+|---|---|---|---|---|
+| P1 → P2 | 2939 | 3196 | 257f | **8.6s** (coupe AVANT le board-clearing qui commence à f3050 — coupe en plein milieu d'une transition) |
+| P2 → P3 | 5699 | 6118 | 419f | **14.0s** |
+| P4a (exode) → P4b (ressources) | 10247 | 10647 | 400f | **13.3s** — explique le "boum" ressenti par Aziz à 2:16 du bloc2 |
+| P4b → P4c (confed) | 11469 | 11501 | 32f | 1.1s |
+| P4c → P4d (cfa) | 11887 | 11849 | **-38f** | **CHEVAUCHEMENT NÉGATIF** — P4d rejoue ~1.3s déjà jouées par P4c → explique la voix "CFA" répétée 2x entendue par Aziz vers 2:43-2:45 |
+| P4d → fin réelle | 12297 | F_END=13500 | 1203f | **40.1s ENTIÈREMENT ABSENTES** — toute la séquence Chantier 4 "fin habitée" (dirigeants f12640 → soldats f12820 → menace f13000 → extinction f13290→13500) N'A JAMAIS ÉTÉ RENDUE. Aziz n'a donc PAS vu la vraie fin de la vidéo. |
+
+**Ce qui n'a PAS ce problème** : Acte1 (fichier existant `acte1-FINAL.mp4`, inchangé) ; P1 en lui-même (2055-2939,
+continu) ; P2 en lui-même (3196-5699, continu) ; P3 en lui-même (6118-9409, continu). Le bug est uniquement
+AUX JONCTIONS entre fichiers séparés, pas à l'intérieur de chaque scène.
+
+### ✅ ACTION #1 PROCHAINE SESSION (avant tout le reste) : re-render en plages CONTINUES, sans trou
+- **Bloc 1** : Acte1 (fichier existant, inchangé) + P1+P2 en **UN SEUL render continu `--frames=2055-5699`**
+  (au lieu de 2 renders séparés) + P3 `--frames=5699-9409` (étendre le début pour couvrir le trou vers P3 —
+  vérifier d'abord ce qu'il y a réellement entre 5699 et 6118 dans le code, probablement un board-clearing
+  similaire à celui de P1→P2, confirmer avant de trancher la borne exacte).
+- **Bloc 2 (P4)** : **UN SEUL render continu `--frames=9416-13500`** (4084 frames, long — utiliser
+  `scripts/render-mapbox.sh`, PAS `npx remotion render` en direct, cf leçon apprise cette session : le script
+  gère chrome-headless-shell + `--gl=angle` + public-dir allégé, sans lui l'erreur `Failed to initialize WebGL`
+  apparaît). Ce fichier couvrira ENFIN la vraie fin de la vidéo (extinction) qu'Aziz n'a jamais vue.
+- Réassembler les 2 blocs (ou tenter directement UN SEUL fichier complet Acte1+P1+P2+P3+P4 si Aziz préfère —
+  voir sa demande initiale de découpage en "2-4 points de jugement max", à reconfirmer selon ce qui est
+  gérable niveau temps de render : P4 seul continu = ~136s de contenu = plusieurs dizaines de minutes de render).
+- ⛔ **Avant de présenter à nouveau à Aziz : vérifier qu'il n'y a AUCUN autre trou.** Un garde-fou a été créé
+  cette session : `python3 scripts/tools/check-frame-continuity.py <start-end> <start-end> ...` (mêmes bornes
+  que les `--frames=` de chaque segment, dans l'ordre) — DOIT renvoyer exit 0 (OK) avant tout `ffmpeg concat`
+  ou envoi à Aziz. Testé et fonctionnel (détecte les 3 trous/chevauchements de cette session avec les bonnes
+  durées). Règle gravée dans `memory/doctrines/DOCTRINE-SOUVERAIN.md` §3.8 point 6 (checklist Mapbox-in-Beat) —
+  s'applique à TOUT render Mapbox multi-segments futur, pas seulement cet épisode.
+
+### 📋 RETOURS AZIZ DÉTAILLÉS (2026-07-01, visionnage bloc1+bloc2) — à traiter APRÈS le fix des trous
+
+**Bloc 1 (Acte1+P1+P2) :**
+1. Hook chiffre "3" pas centré (trop bas à l'écran) — à recentrer.
+2. 1:09-1:11 raccord Acte1→P1 brutal, sensation de répétition de la bascule — **probablement résolu par le
+   fix des trous ci-dessus** (P1 commençait à 2055, AVANT le board-clearing complet), à revérifier après.
+3. 1:39 coupure "tensions entre communautés" → "Serval" — **= le trou P1→P2 documenté ci-dessus, résolu par le fix**.
+4. ~2:30 la caméra dézoome large (on voit une grande partie de l'Afrique) sans raison narrative claire — Aziz
+   préfère rester serré comme le reste de la vidéo. Localiser ce zoom dans le code caméra de P2 (probablement
+   `getPartie2Cam`) et vérifier s'il est voulu ou un residu — semble correspondre à la zone du trou P2→P3
+   documenté ci-dessus (le contenu manquant pourrait expliquer pourquoi ce zoom "sort de nulle part" — à
+   revérifier une fois le trou comblé, il est possible que ce zoom ait un sens dans le contenu qui manquait).
+5. **Constat transversal sur tout le bloc 1** : après les 30 premières secondes (Acte1), les contours nationaux
+   colorés (Mali/Burkina/Niger) ne sont JAMAIS visibles, et la technique "contour qui s'allume/pulse à la
+   nomination du pays" n'est jamais utilisée. Ceci concerne P2 spécifiquement (P1 vient d'être corrigée cette
+   session pour avoir les contours — à reconfirmer après re-render sans trou qu'ils sont bien visibles ; P2
+   n'a PAS eu cette correction cette session, contrairement à P1 — **P2 doit recevoir le même traitement que P1**
+   point 2 de la passe précédente : fond mosaïque neutralisé + contours nationaux colorés actifs).
+6. 1:33-1:34 le mot "déjà" semble prononcé deux fois / réverbération étrange — à vérifier après fix des trous
+   (pourrait aussi être un artefact de coupure).
+7. **Mention "données estimées"** (et suggestion "sources Wikipédia" etc.) jugée insuffisante — Aziz veut de
+   VRAIES SOURCES qui apparaissent ponctuellement à l'écran (comme dans d'autres vidéos du projet), pas juste
+   une mention discrète en bas d'écran. Concerne TOUT le bloc 1 ET le bloc 2. Chantier : identifier chaque
+   endroit où une donnée chiffrée est affichée sans source claire, ajouter une source réelle (2-3s d'affichage,
+   suffisamment visible, jamais permanente sur la carte).
+8. Fin bloc 1 (~3:00-3:03, beat CEDEAO) : les flèches qui apparaissent (~3:00) ne sont pas claires dans leur
+   sens (censées représenter les pays CEDEAO ? pas évident). SFX "craquement" jugé inutile. Aziz suggère de
+   rester en caméra SERRÉE sur la zone Sahel plutôt que d'élargir pour montrer la CEDEAO hors-zone — trouver
+   une autre manière de représenter la menace CEDEAO sans sortir du cadre serré habituel de la vidéo.
+   ⚠️ NOTE : ce point (CEDEAO renforcée) est PRÉCISÉMENT ce qui a été ajouté cette session (agent SFX, cf
+   plus haut "raccord CEDEAO P2→P3 renforcé") suite à l'audit P2 — Aziz n'aime PAS le résultat visuel obtenu,
+   à repenser (pas juste re-doser, RE-CONCEVOIR la représentation).
+
+**Raccord bloc1 → bloc2 :**
+9. Aziz ne sait pas si le raccord bloc1(fin ~3:03, "CEDEAO, la grande coalition")→bloc2(début, "toute agression
+   contre le Niger" + encadré Charte Liptako-Gourma) sera fluide une fois tout assemblé en continu — sensation
+   qu'il manque un morceau entre les deux. **Probablement lié au trou P2→P3 documenté ci-dessus** (le bloc2
+   commence directement par P3, qui elle-même commençait avec un trou de 14s avant elle) — à revérifier après fix.
+10. L'encadré "Charte du Liptako-Gourma" (~20s au début P3) juge peu convaincant tel quel — Aziz propose
+    d'explorer un remplacement en SVG narratif (comme le pipeline `PRODUCTION-AGENTIQUE-SVG.md` prouvé sur
+    Cacao/CFA) pour meubler ce passage plutôt que garder l'encadré actuel — À ÉVALUER PROCHAINE SESSION,
+    pas trancher seul, decision de goût + faisabilité technique à explorer ensemble ou via agent dédié.
+
+**Bloc 2 (P3+P4) :**
+11. Ville de Kidal / casques bleus ONU : actuellement seules les bases MINUSMA sont représentées. Aziz propose
+    d'ajouter 1-2 jetons "casques bleus" physiques (en plus des bases, ou en remplacement partiel) pour mieux
+    montrer visuellement qu'ils sont présents mais sans mandat d'intervenir par les armes — pas juste des
+    bâtiments, des figurants qui incarnent l'impuissance. Vérifier faisabilité (asset existant ou à générer).
+12. Moura : retirer le texte typewriter "500+ morts recensés · aucune réponse officielle de Bamako" ajouté
+    cette session (Aziz juge que la plaque "MOURA · MARS 2022 · RAPPORT ONU" existante suffit, le texte
+    supplémentaire n'apporte rien) — MAIS garder l'intention de meubler le plateau figé de mouvement, trouver
+    une autre solution (piste : la source ONU pourrait apparaître visiblement 2-3s au lieu du texte retiré,
+    cf point 7 sur les sources — pourrait résoudre 2 problèmes à la fois).
+13. ~1:49 saut abrupt juste avant le début du récit réfugiés — **= le trou P2→P3 documenté ci-dessus (bloc2
+    commence par P3), résolu par le fix des trous**.
+14. Passage réfugiés (jetons qui fuient les villes, ~2:03) : Aziz trouve ça "quand même assez bien" mais se
+    demande si ça pourrait être plus intéressant visuellement — pas un rejet, une piste d'amélioration à
+    explorer si le temps le permet, pas prioritaire.
+15. ~2:16 coupure brutale coût humain (overlay "3M déplacés / 15M+ sécurité alimentaire") → triple-screen
+    ressources — **= très probablement le trou P4a→P4b documenté ci-dessus (13.3s manquantes), résolu par le fix**.
+16. Triple-screen ressources (Mali/Burkina/Niger, or/uranium/pétrole) : Aziz le juge "statique tout le long",
+    suggère de le remplacer par un graphisme SVG narratif dynamique façon "objet-héros unique" (référence
+    explicite : la dernière scène du Short Cacao où le cacao devient un objet central avec des ramifications
+    vers callbot/or/pétrole) plutôt qu'un triple-screen figé. **À évaluer prochaine session** (piste forte,
+    mais refonte complète d'une scène — décision de goût + effort, pas à trancher seul).
+17. ~2:43-2:45 raccord confédération→sceau AES : voix qui saute, "comme si on venait de raccorder des scènes
+    de manière brusque" — **très probablement le trou P4b→P4c documenté ci-dessus (1.1s), résolu par le fix,
+    mais à revérifier précisément car l'écart mesuré est faible (1.1s) par rapport à la gêne perçue — si le
+    fix ne résout pas totalement ce point, creuser plus (peut-être aussi un souci de mixage audio à ce point,
+    pas seulement un trou de frames)**.
+18. Confédération AES jugée à rendre "plus dynamique" (dans la continuité du point 16, même diagnostic —
+    scène jugée trop statique/overlay figé).
+19. Franc CFA : la voix dit "celle du franc CFA" **deux fois de suite** — **= très probablement le
+    CHEVAUCHEMENT NÉGATIF P4c→P4d documenté ci-dessus (P4d rejoue du contenu déjà joué par P4c), résolu par
+    le fix**. Aziz confirme aussi vouloir sortir cette scène de l'effet "PowerPoint" — remplacement SVG
+    narratif suggéré, ET rappel qu'**un prototype SVG du CFA existe déjà** (`out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`,
+    produit lors d'une session antérieure via le système agentique SVG, jamais encore comparé/tranché vs la
+    version Remotion actuelle) — à ADAPTER/réutiliser plutôt que reconstruire de zéro.
+20. Aziz rappelle qu'il n'a PAS vu la fin réelle de la vidéo (le bloc2 présenté s'arrêtait à P4d/CFA) —
+    **confirmé par le diagnostic ci-dessus : les 40 dernières secondes n'ont jamais été rendues**. La
+    "Partie 4 à re-vérifier" mentionnée par Aziz = cette séquence finale jamais vue, pas une partie 4 distincte
+    au sens du projet (le projet n'a que Acte1+P1+P2+P3+P4, P4 EST la dernière partie, son extinction finale
+    n'a simplement jamais été rendue dans les fichiers présentés).
+
+### 🔧 LEÇON PROCESS — méthode d'audit agent à améliorer (constat Aziz explicite)
+> "Je suis surpris que les agents n'aient pas vu tout ceci... il va falloir qu'on améliore notre process,
+> comment les agents font une review."
+
+Aucun des 4 audits scène + l'agent transversal (session du 2026-07-01, cf section PASSE AUDIT ci-dessous)
+n'a détecté qu'un futur découpage en fichiers séparés créerait des trous de jonction — logique, ces audits
+jugeaient les scènes EXISTANTES déjà rendues à l'époque, pas un futur re-découpage. Mais la leçon plus large :
+**aucun agent (ni Aziz avant son visionnage manuel) n'a vérifié que les plages de frames rendues COUVRENT
+BIEN la continuité narrative attendue avant de présenter le livrable.** Piste pour la prochaine session : avant
+tout envoi de render à Aziz, un agent (ou une étape scriptée) devrait comparer systématiquement les bornes de
+chaque segment aux triggers F_* du code source pour détecter les trous — un simple calcul arithmétique aurait
+détecté ce bug en quelques secondes, avant même de faire tourner ffmpeg. À formaliser comme étape obligatoire
+(checklist ou script `check-frame-continuity.py`) pour tout découpage futur en morceaux.
+
+### 🎯 DÉCISION PROCESS EN ATTENTE (à trancher en ouverture de la prochaine session)
+Aziz hésite entre finaliser la suite (fix trous + tous les retours ci-dessus) **via système agentique** ou
+**en direct avec l'instance suivante** (lui + Claude, sans fan-out d'agents). Vu le volume de retours et
+qu'il s'agit maintenant surtout d'affinages + 1 bug technique bien cerné (pas une exploration ouverte), une
+approche mixte est probable : fix des trous + retouches ciblées en direct (rapide, chirurgical), PUIS
+évaluation SVG narratif (points 10/16/19) éventuellement via agent dédié si Aziz valide la direction créative
+d'abord sur un mini-prototype. À poser comme première question de la prochaine session, ne pas présumer.
+
+---
+
 
 > ✅✅ **SESSION 2026-06-27 — ACTE 1 COMPLET FINALISÉ + VALIDÉ AZIZ.** Compo `SahelActe1-Refonte` (f0-2125, 71s).
 > Render : `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e` — v2 SANS tension-drone, validé Aziz 2026-06-27

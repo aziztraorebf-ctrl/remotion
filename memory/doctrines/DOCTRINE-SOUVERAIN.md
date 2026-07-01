@@ -135,6 +135,16 @@ Avant de render un beat avec Mapbox, vérifier :
 3. **Pas de `delayRender`** : useEffect simple, retour cleanup `map.remove()`
 4. **Audio en boucle si `startFrom` tardif** : si `startFrom_sec > durée_piste - durée_beat`, doubler `<Audio src=...startFrom={0} volume={interpolate(frame,[loop_start,loop_start+20],[0,vol])}/>` au-delà du point de fin. Exemple Beat13 : piste 321s, `startFrom=8851` (295s) → 26s dispo, beat 49s → loop à f780.
 5. **Render via `scripts/render-mapbox.sh`** (jamais `remotion render` direct — chrome-headless-shell + slim public-dir nécessaires)
+6. ⛔⛔ **RENDER EN PLUSIEURS MORCEAUX (`--frames=A-B` par segment) : vérifier la continuité AVANT tout
+   assemblage/présentation.** Bug 2026-07-01 (War-Map Sahel) : 4 renders séparés avaient des trous entre eux
+   (jusqu'à 40s de fin JAMAIS rendues, un chevauchement qui faisait répéter une phrase) — personne (agent ni
+   humain) ne l'a détecté avant présentation à Aziz, qui a perçu ça comme "voix qui saute/se répète". Cause :
+   les bornes `--frames=` de segments consécutifs ne se raccordaient pas (fin segment N ≠ début segment N+1).
+   **OBLIGATOIRE avant tout `ffmpeg concat` de plusieurs renders** : `python3 scripts/tools/check-frame-continuity.py
+   <start-end> <start-end> ...` (mêmes bornes que les `--frames=` utilisés, dans l'ordre) — doit renvoyer OK
+   (exit 0) avant d'assembler ou d'envoyer quoi que ce soit à Aziz. Si un trou est signalé, corriger les bornes
+   en vérifiant les triggers `F_*` du code source (souvent une transition/board-clearing juste avant la borne
+   coupée trop tôt) et relancer le check avant de re-render.
 
 ### 3.9 FlagFill — Carte colorée = RÈGLE N°1 (validé 2026-06-02, NON-NEGOTIABLE)
 **Une carte Mapbox DOIT être colorée dès le départ.** Le gris/vide n'est pas un style, c'est un vide qu'on ne remplit pas. La technique reine : projeter drapeaux/couleurs dans les silhouettes de pays (fill-pattern canvas + fill-color filtré par ISO).

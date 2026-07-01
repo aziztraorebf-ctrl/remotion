@@ -256,9 +256,11 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg width={width} height={height} style={{ position: "absolute", inset: 0 }}>
         <defs>
+          {/* Renforcé (2026-07-01, cf AUDIT-AMELIORATIONS-P2.md A6) : le sillage lisait faible/brunâtre sur
+              le parchemin — opacités remontées (+0.12/+0.1), garde le multiply anti-aplat (pas un aplat criard). */}
           <radialGradient id="p2-red" cx="50%" cy="50%" r="60%">
-            <stop offset="0%" stopColor={PAL.RED_INK} stopOpacity={0.55} />
-            <stop offset="100%" stopColor={PAL.RED_DEEP} stopOpacity={0.4} />
+            <stop offset="0%" stopColor={PAL.RED_INK} stopOpacity={0.67} />
+            <stop offset="100%" stopColor={PAL.RED_DEEP} stopOpacity={0.5} />
           </radialGradient>
           {/* mask sillage : le territoire rouge n'apparaît QUE là où les jetons sont passés.
               feGaussianBlur fond les empreintes circulaires en une NAPPE continue (pas des ronds visibles). */}
@@ -277,10 +279,11 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
         {/* hiérarchie du regard : léger voile sombre pendant l'avancée */}
         {dim > 0 && <rect x={0} y={0} width={width} height={height} fill="#1a1206" opacity={dim} />}
 
-        {/* TERRITOIRE ROUGE = sillage des jetons (multiply, révélé par le mask, jamais un pop) */}
+        {/* TERRITOIRE ROUGE = sillage des jetons (multiply, révélé par le mask, jamais un pop).
+            Opacity remontée 0.5→0.62 (A6 : renforcer le beat-cœur sans aplat, tester full HD scale=1). */}
         {sillageStamps.length > 0 && (
           <g style={{ mixBlendMode: "multiply" }} mask="url(#p2-sillage)">
-            <rect x={0} y={0} width={width} height={height} fill="url(#p2-red)" opacity={0.5} />
+            <rect x={0} y={0} width={width} height={height} fill="url(#p2-red)" opacity={0.62} />
           </g>
         )}
 
@@ -350,22 +353,50 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
             </g>
           );
         })()}
+        {/* ONDE DE CHOC GÉOMÉTRIQUE FROIDE — Niger, coup d'État (2026-07-01, cf AUDIT-AMELIORATIONS-P2.md A4).
+            One-shot, kaki/gris-fer, SANS sillage (contraste voulu avec la progression virale jihadiste rouge
+            qui, elle, avance par sillage continu). "Casse la grammaire" = politique vs jihadiste. */}
+        {(() => {
+          const shockT = interpolate(frame, [F_NIGER, F_NIGER + 26], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          if (shockT <= 0 || shockT >= 1) return null;
+          const r = vmin * 0.02 + shockT * vmin * 0.16;
+          return (
+            <circle cx={niamey.x} cy={niamey.y} r={r} fill="none" stroke="#8A8578"
+              strokeWidth={3.2 - shockT * 2} strokeOpacity={(1 - shockT) * 0.65} />
+          );
+        })()}
 
-        {/* CEDEAO — contour orange clignotant (menace EXTERNE, pas une tache) + flèches vers Niamey */}
+        {/* CEDEAO — contour orange clignotant (menace EXTERNE, pas une tache) + flèches vers Niamey.
+            Renforcé (2026-07-01, cf AUDIT-AMELIORATIONS-P2.md A2/A3) : marqueurs + flèches agrandis et
+            épaissis pour que ce beat soit un vrai setup lisible — P3 "brise" ces mêmes flèches
+            (CEDEAO_RING identique dans Partie3Rupture.tsx), le payoff ne tient que si le setup se voit. */}
         {cedeaoT > 0 && CEDEAO_RING.map((c, i) => {
           const p = project(c[0], c[1]);
           const ap = interpolate(frame, [F_CEDEAO + i * 6, F_CEDEAO + i * 6 + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           if (ap <= 0) return null;
           const blink = 0.6 + 0.4 * Math.sin(frame * 0.25 + i);
-          const r = 0.012 * vmin;
+          const r = 0.02 * vmin;
+          const tipX = (niamey.x - p.x) * 0.55;
+          const tipY = (niamey.y - p.y) * 0.55;
           return (
             <g key={`cedeao-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
-              <circle r={r} fill="none" stroke={PAL.CEDEAO} strokeWidth={2.4} strokeOpacity={blink} />
-              <line x1={0} y1={0} x2={(niamey.x - p.x) * 0.4} y2={(niamey.y - p.y) * 0.4}
-                stroke={PAL.CEDEAO} strokeWidth={2} strokeOpacity={0.55 * blink} strokeDasharray="4 4" />
+              {/* halo diffus de menace (rend le marqueur visible même à ce niveau de dézoom) */}
+              <circle r={r * 2.2} fill={PAL.CEDEAO} fillOpacity={0.12 * blink} style={{ filter: "blur(3px)" }} />
+              <circle r={r} fill="none" stroke={PAL.CEDEAO} strokeWidth={3.2} strokeOpacity={blink} />
+              <circle r={r * 0.4} fill={PAL.CEDEAO} fillOpacity={0.7 * blink} />
+              <line x1={0} y1={0} x2={tipX} y2={tipY}
+                stroke={PAL.CEDEAO} strokeWidth={3} strokeOpacity={0.75 * blink} strokeDasharray="6 5"
+                markerEnd={`url(#cedeao-arrowhead)`} />
             </g>
           );
         })}
+        {cedeaoT > 0 && (
+          <defs>
+            <marker id="cedeao-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill={PAL.CEDEAO} opacity={0.8} />
+            </marker>
+          </defs>
+        )}
 
         {/* ============ VILLES TENUES (2.5) — points clairs NOMMÉS qui RÉSISTENT dans le rouge (retour Aziz :
              plus de sprite-bâtiment ambigu). Halo bleu-acier qui pulse (la ville tient) + nom géo-ancré.
