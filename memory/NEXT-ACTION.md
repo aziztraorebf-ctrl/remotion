@@ -183,13 +183,16 @@
 > 🎵 Musique : Aziz a choisi **D-montee-maitrisee** (`public/_shared/audio/sahel-warmap/music/`).
 > 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` (état détaillé) · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`, `PLAN-REFONTE-ACTE1.md` (Acte 1 fini).
 >
-> ✅✅ **ACTE 1 FINALISÉ + VALIDÉ AZIZ (2026-06-27)** : compo `SahelActe1-Refonte` (f0-2125, 71s),
->   `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `91solc`). Hook = chiffre « 3 » → drapeaux plantés →
+> ✅✅ **ACTE 1 FINALISÉ + VALIDÉ AZIZ (2026-06-27, v2 SANS tension-drone)** : compo `SahelActe1-Refonte` (f0-2125, 71s),
+>   `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e`). Hook = chiffre « 3 » → drapeaux plantés →
 >   **sceau AES central + flash or** au climax (3 traits convergents illisibles RETIRÉS) ; corps = grammaire P3/P4
->   + **SFX câblés** (drone/ping carto/ink/impact) + **drapeaux s'effacent après les 1ers jetons** (contours gardés)
->   + mention « Données estimées » retirée. ⚠️ acte1-FINAL.mp4 a la mention (rendu avant retrait) — le code ne l'a plus,
->   l'assemblage la retirera. ⚠️ pic audio ~0 dB à 18s (gong) → mastering assemblage normalisera.
-> 📎 **SVG-insert franc CFA** = seul candidat franc (cas test système agentique SVG, isolé) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
+>   + **SFX ponctuels** (ping carto/ink/impact — le `tension-drone` d'assise a été RETIRÉ, il dérangeait Aziz)
+>   + **drapeaux s'effacent après les 1ers jetons** (contours gardés) + mention « Données estimées » retirée.
+>   ⛔ **NE PLUS câbler le `tension-drone`** nulle part (P1/P2/autres) — la musique de fond suffit comme lit sonore.
+>   ⚠️ pic audio ~0 dB à 18s (gong) → mastering assemblage normalisera.
+> ✅ **SVG-insert franc CFA produit + validé** (système agentique, mix-and-match) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
+> 🔜 **PROCHAINE SESSION** : upload P1/P2 → Aziz revoit → valide corrections de `AUDIT-AMELIORATIONS-P1.md` +
+>   `AUDIT-AMELIORATIONS-P2.md` (SANS tension-drone) → agents de correction appliquent.
 
 ---
 

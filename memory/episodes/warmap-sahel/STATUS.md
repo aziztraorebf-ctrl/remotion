@@ -4,7 +4,8 @@
 **Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
 > ✅✅ **SESSION 2026-06-27 — ACTE 1 COMPLET FINALISÉ + VALIDÉ AZIZ.** Compo `SahelActe1-Refonte` (f0-2125, 71s).
-> Render : `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `91solc`). Commits 98efe6f + 02a2864 + 5099489.
+> Render : `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e` — v2 SANS tension-drone, validé Aziz 2026-06-27
+> après retrait du SFX drone qui dérangeait ; l'ancien `91solc` avec drone est PÉRIMÉ). Commits 98efe6f + 02a2864 + 5099489 + 6dd6120.
 > **HOOK (f0-684)** : chiffre « 3 » slam (`Acte1IntroSlam`) → drapeaux réels plantés (`WarMapBanner`) f145/217/286
 >   → détachement vignette → **sceau « AES » central + flash or** au climax « bâtissent » (f557 ; les 3 traits
 >   convergents illisibles à ce zoom ont été RETIRÉS) → sceau reste jusqu'au drift (comble le creux). Fix `hideAt=560`.
