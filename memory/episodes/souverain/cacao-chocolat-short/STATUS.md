@@ -7,6 +7,14 @@
 ## ✅✅ TERMINE — PRET PUBLICATION (2026-06-29)
 - Short COMPLET assemble + valide Aziz : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` (98,5s).
   Catbox 72h : https://files.catbox.moe/bvbm63.mp4 · note : `cacao-chocolat-FINAL.PUBLICATION-NOTE.md`.
+- **coverB generee 2026-06-30** : `out/PRET-PUBLICATION/cacao-chocolat-coverB.mp4` (24 MB, 99s).
+  Frame 0 = tablette chocolat + croix suisse (f350). Catbox 72h : https://files.catbox.moe/ufrurz.mp4
+- **MCP TryPost configure** dans `.mcp.json` (2026-06-30). Redemarrer Claude Code pour activer.
+- **PUBLICATION PROGRAMMEE (2026-07-01, 14h00 UTC)** : ⛔ TryPost n'a PAS de caption par-plateforme (`content` global
+  au post, le champ `platforms[].content` est ignore silencieusement a la creation) -> 2 posts SEPARES obligatoires :
+  - Post YouTube seul : `019f1b9a-482d-70a7-989d-4ec1ea6ee6af` — "Le chocolat suisse n'existe pas. #short" (39 car).
+  - Post IG+FB : `019f1b9a-48e3-70a7-b714-2a921a26df6d` — caption longue + hashtags (498 car).
+  Video = coverB (frame 0 tablette+croix suisse). TikTok = MANUEL (compte en quarantaine).
 - 5 beats (B1-B5) + musique B (~0.10) + SFX (palette GGW reutilisee + 4 crees, ALIGNES par force alignment) + usine aux couleurs CI.
 - B5 "arbre aux 4 ombres" cree (agents) · LOT1 mouvement (verger vivant) · karaoke elisions homogene B1-B5 (`audio/karaokeWords.ts`).
 - ⛔ NE PAS refaire. NEXT = PUBLIER (trypost YT+IG+FB / postiz TikTok). Voir NEXT-ACTION.

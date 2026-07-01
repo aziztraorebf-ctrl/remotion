@@ -1,5 +1,59 @@
 # STATUS — Peste 1347 (Atlas pur)
-> Mis à jour : 2026-06-08
+> Mis à jour : 2026-07-01
+
+---
+
+## ⛔⛔ BUG GÉO CORRIGÉ (2026-07-01) — RE-RENDER + RÉASSEMBLAGE NÉCESSAIRE AVANT PUBLICATION
+
+Audit géo complet (agent, 36 frames + ground-truth Remotion still) : le fix "territoires d'outre-mer rouges"
+documenté comme fait sur Beat5/6 n'était PAS propagé à Beat1/2/3 — Açores, Maroc/Canaries, Réunion, Madagascar
+rougissaient en pleine mer pendant la propagation de la peste. Cause : `AtlasMercator` n'a pas de clipPath et
+peint aussi les sous-tracés d'outre-mer des pays (FRA/PRT/NLD/NOR) quand `highlightFills` contient leur ISO.
+Beat2/3 avaient DÉJÀ une couche clippée correcte ajoutée EN PLUS de l'injection buggée (redondance qui laissait
+le bug actif) ; Beat1 n'avait aucune protection.
+
+**Fix appliqué (2026-07-01)** : retrait de l'injection ISO_EUROPE/ISO_PLAGUE dans `highlightFills` sur les 3
+fichiers, le rouge passe désormais UNIQUEMENT par `<g clipPath="url(#europeClipBN)">` (rect x118 y236 w470 h328,
+même pattern que Beat4/5/6). Vérifié par render ground-truth (`npx remotion still`) sur Beat1 f150, Beat2 lf434,
+Beat3 lf36 + lf396 — plus aucune tache isolée en mer. Beat4/5/6 étaient déjà propres, non touchés.
+
+**✅✅ RE-RENDER + RÉASSEMBLAGE + MIX CORRIGÉ, VALIDÉ AZIZ (2026-07-01)** :
+1. Beat1Hook, Beat2Setup, Beat3Densite re-rendus (Beat4/5/6 repris inchangés, déjà propres).
+2. Réassemblés : concat 6 beats + musique `music-c-desert.mp3` en 1 piste continue + sous-titres `PesteSubtitles`
+   overlayés (ProRes alpha).
+3. ⛔ Piège ProRes rencontré : render sans `--prores-profile=4444` explicite NE PRODUIT PAS de canal alpha
+   (`pix_fmt=yuv444p10le` sans le "a") même avec `--pixel-format=yuva444p10le` demandé → overlay ffmpeg donnait un
+   écran quasi-noir (bitrate final ~70kb/s, symptôme net). Fix : les 4 flags ensemble sont obligatoires
+   (`--codec=prores --prores-profile=4444 --pixel-format=yuva444p10le --image-format=png`).
+4. **v1 avait 2 défauts signalés par Aziz à l'écoute** (corrigés en v2, même session) :
+   - Musique à volume 0.11 au lieu de 0.04 documenté dans `manifeste.md` (trop forte, perçue "différente").
+   - Narration jouée en 6 segments séparés (1 `<Audio>` par beat, concaténés) → cuts nets à chaque frontière de
+     beat. Fix : `narration-v1.mp3` rejoué EN CONTINU (1 seul flux) par-dessus la vidéo rendue silencieuse
+     (`-an`), overlayée aux sous-titres. ⭐ LEÇON : pour un réassemblage post-fix, TOUJOURS rejouer la narration
+     source en continu plutôt que concaténer l'audio déjà découpé par beat — même petit écart de durée entre
+     "durée relative render" (Root.tsx) et "durée narration" (timing.ts) suffit à produire des cuts audibles.
+5. **Voix jugée "monotone" par Aziz — PAS un défaut de ce travail** : `narration-v1.mp3` date du 2026-05-15
+   (GéoAfrique `eleven_v3` direct). Le pipeline "voix vivante" (Océane V3 + tags + Speech-to-Speech,
+   `PIPELINE-VOIX-VIVANTE-VALIDE.md`) n'a été validé que le 2026-06-10. → chantier séparé, voir ci-dessous.
+6. Livrable final validé : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4` (42 Mo, 103.4s). Catbox : hptvlc.
+   **VALIDÉ AZIZ (2026-07-01)** — transitions fluides, musique bien dosée. Publication : à programmer (TryPost).
+
+---
+
+## 🆕 PROCHAINE SESSION — 2 chantiers actés par Aziz (2026-07-01)
+
+1. **Régénération narration avec pipeline voix vivante** : reprendre le script de Peste 1347, appliquer
+   `PIPELINE-VOIX-VIVANTE-VALIDE.md` (tags émotion V3 phrase par phrase → Océane V3 → Speech-to-Speech vers
+   GéoAfrique). Implique : retagger le texte par émotion/beat, régénérer `narration-v1.mp3`, refaire le
+   forced-alignment (nouveaux timestamps), probablement retoucher `timing.ts` et les frames-clés de chaque
+   beat (POI, pivots) si les durées de mots changent. Gros chantier, pas un simple remplacement de fichier.
+2. **Système multi-agent de proposition d'amélioration sur le rendu actuel (post-fix, voix incluse une fois
+   régénérée)** : lancer plusieurs agents pour proposer des idées d'amélioration scène par scène, en tenant
+   compte de TOUT ce qui a été appris/ajouté depuis la création initiale de l'épisode (2026-05 à 2026-06) —
+   personnage-vivant-svg, patterns SVG GGW/cacao, pipeline storyboard→validation→breakdown, etc. Décider en
+   session le type d'agents à lancer (proposition libre vs scoring vs comparaison) et le périmètre (les 6 beats
+   ou cibler les plus faibles, ex. transitions cartographiques 1-4 vs SVG symbolique pour Beat5/climax évoqué
+   dans la discussion du 2026-07-01 sur l'hybridation Atlas+SVG).
 
 ---
 

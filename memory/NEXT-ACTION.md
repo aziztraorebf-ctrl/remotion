@@ -1,8 +1,26 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-28 (session cacao-chocolat + bilan distribution 1 mois). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-01 (session cacao+GGW publication + peste-1347 bugfix geo/audio). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
+
+## ✅✅ PESTE 1347 — BUG GÉO + AUDIO CORRIGÉS, VALIDÉ AZIZ (2026-07-01)
+
+> Livrable : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4` (42 Mo, 103.4s). Catbox : files.catbox.moe/hptvlc.mp4
+> Fix géo (territoires d'outre-mer rouges Beat1/2/3) + fix mix (musique 0.04, narration continue sans cuts).
+> **VALIDÉ AZIZ** — transitions fluides, musique bien dosée. NEXT = programmer publication TryPost (comme cacao/GGW).
+> **2 chantiers actés pour PROCHAINE SESSION** (détail : `episodes/peste-1347/STATUS.md` § PROCHAINE SESSION) :
+>   1. Régénérer la narration avec le pipeline voix vivante (`PIPELINE-VOIX-VIVANTE-VALIDE.md`, Océane V3 + tags
+>      + Speech-to-Speech GéoAfrique) — la narration actuelle (2026-05-15) est antérieure à ce pipeline (2026-06-10),
+>      jugée "monotone" par Aziz par comparaison avec cacao/GGW.
+>   2. Lancer un système multi-agent pour proposer des idées d'amélioration sur l'épisode (post-fix), en tenant
+>      compte des acquis récents (personnage-vivant-svg, patterns SVG, etc.) — décider le type d'agents en session.
+
+## ✅✅ CACAO + GGW — PUBLICATIONS PROGRAMMÉES (2026-07-01)
+
+> Cacao : YT 2026-07-01 14h UTC · GGW : YT 2026-07-03 14h UTC (posts séparés YT vs IG+FB, TryPost n'a pas de
+> caption par-plateforme — leçon gravée dans `memory/tools/trypost.md`). GGW coverB corrigé (bug sample-rate
+> 44100/48000 qui ralentissait l'audio). TikTok reste manuel (compte en quarantaine).
 
 ## ✅✅ CACAO → CHOCOLAT SHORT — TERMINÉ, PRET PUBLICATION (2026-06-29)
 
@@ -150,10 +168,9 @@
 **Statut** : concept validé, backlog — NE PAS commencer avant fin AES + Maroc Batteries.
 **Fiche complète** : `memory/projects/peste-1347-midform.md`.
 
-### 4. Peste 1347 Atlas — EN ATTENTE VALIDATION AZIZ POUR PUBLICATION ✅
-**État** : épisode COMPLET. Livrable : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4`. Beat5 v17 FINAL + assemblage fait 2026-06-08.
-**Décision en attente** : validation Aziz pour publication. Passe améliorations optionnelle (Gemini signale aplat rouge + encarts texte — non bloquant).
-**Reprise** : `memory/episodes/peste-1347/STATUS.md` section PROCHAINE SESSION.
+### 4. Peste 1347 Atlas — VALIDÉ AZIZ, voir section ✅✅ en tête de fichier
+**État à jour** : voir la section "✅✅ PESTE 1347 — BUG GÉO + AUDIO CORRIGÉS, VALIDÉ AZIZ" tout en haut de ce fichier
+(cette entrée-ci datait d'avant le bugfix du 2026-07-01, conservée seulement comme redirection).
 
 ---
 

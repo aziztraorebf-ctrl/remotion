@@ -110,8 +110,11 @@ export const Beat1Hook: React.FC = () => {
   });
 
   // ── highlightFills dynamiques
+  // Europe NE PASSE PAS ICI : AtlasMercator n'a pas de clipPath et peindrait
+  // aussi les territoires d'outre-mer (Açores/Réunion/etc, sous-tracés du
+  // path pays) en pleine mer. Le rouge Europe est dessiné séparément plus
+  // bas dans un <g clipPath="url(#europeClipB1)"> (même pattern que Beat4).
   const highlightFills: Record<string, string> = {};
-  ISO_EUROPE.forEach((iso) => { highlightFills[iso] = europeColor; });
   ISO_MALI_ZONE.forEach((iso) => { highlightFills[iso] = MALI_GOLD; });
 
   const STAT_X = W / 2;
@@ -134,6 +137,11 @@ export const Beat1Hook: React.FC = () => {
         viewBox={`0 0 ${W} ${H}`}
         style={{ opacity: mapOpacity }}
       >
+        <defs>
+          <clipPath id="europeClipB1">
+            <rect x={118} y={236} width={470} height={328} />
+          </clipPath>
+        </defs>
         <rect x={0} y={0} width={W} height={H} fill={OCEAN} />
 
         <AtlasMercator
@@ -145,6 +153,19 @@ export const Beat1Hook: React.FC = () => {
           width={W}
           height={H}
         />
+
+        {/* Propagation rouge Europe — clippée au continent (territoires
+            d'outre-mer FRA/PRT/NLD/NOR exclus, cf commentaire highlightFills) */}
+        <g
+          transform={`translate(${W / 2 + driftX} ${H / 2 + driftY}) scale(${camScale}) translate(${-W / 2} ${-H / 2})`}
+          clipPath="url(#europeClipB1)"
+        >
+          {data.countries
+            .filter((c: { iso: string; d: string }) => ISO_EUROPE.has(c.iso))
+            .map((c: { iso: string; d: string }) => (
+              <path key={c.iso} d={c.d} fill={europeColor} stroke="none" />
+            ))}
+        </g>
 
         {/* Empire Mali — invisible jusqu'à la punchline */}
         {data.maliEmpire1300 && maliReveal > 0 && (

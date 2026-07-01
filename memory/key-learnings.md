@@ -388,6 +388,17 @@ Symptome (Peste 1347, assemblage) : 8-24s d'ecran noir au debut de Beat2/Beat3, 
 
 Verif anti-figé apres assemblage : echantillonner 1 frame/2s, comparer le md5 (frame identique a t-2 = figee) + taille <15KB = noir.
 
+⛔ **4e piege trouve en reassemblant apres un fix de code (peste-1347, 2026-07-01)** : meme en respectant les
+points 1-3 (musique en 1 piste), si la NARRATION reste concatenee par segments (chaque beat garde son propre
+`<Audio startFrom= trimAfter=>` sur le fichier narration source, et on concatene les beats DEJA rendus avec leur
+son), on obtient quand meme des coupures nettes audibles a chaque frontiere de beat — meme fichier source, mais
+6 flux audio recolles au lieu d'un seul continu. **Fix : au REASSEMBLAGE (pas au premier render), rejouer le
+fichier narration SOURCE ORIGINAL en 1 SEUL flux continu par-dessus la video concatenee rendue SILENCIEUSE
+(`-an` sur le concat video), plutot que de garder l'audio deja decoupe par beat.** Verifier ensuite l'absence de
+derive cumulative : comparer les durees RELATIVES de render par beat (`durationInFrames` Root.tsx) aux durees
+ABSOLUES de la narration source (timing.ts) — un ecart CONSTANT et faible (~2 frames, padding initial) est
+normal, un ecart qui GRANDIT progressivement d'un beat a l'autre indique une vraie derive a corriger.
+
 ### 2026-06-08 — Sous-titres : ffmpeg local SANS libass -> overlay couche Remotion ProRes alpha
 
 Le ffmpeg brew local (8.0.1) est compile SANS libass : les filtres `subtitles` et `ass` n'existent pas
@@ -400,6 +411,12 @@ Le ffmpeg brew local (8.0.1) est compile SANS libass : les filtres `subtitles` e
    `--public-dir=/tmp/empty-public` si la couche n'a pas d'assets (evite la copie 1.3GB qui bloque le render).
 4. Overlay sur la video : `ffmpeg -i video.mp4 -i subs.mov -filter_complex "[0:v][1:v]overlay=0:0:shortest=1[v]" -map "[v]" -map 0:a`.
 Le filtre `overlay` LUI est dispo sans libass. Bonus : style sous-titres 100% controle Remotion (coherent charte).
+⛔ **PIEGE reproduit 2026-07-01 (peste-1347)** : si `--prores-profile=4444` est OMIS (meme avec `--pixel-format=
+yuva444p10le` demande), Remotion encode SANS canal alpha (`pix_fmt` reel = `yuv444p10le`, sans le "a") sans
+erreur ni warning. L'overlay produit alors un ecran QUASI-NOIR sur toute la video (le calque opaque ecrase tout).
+**Symptome diagnostique rapide** : bitrate du fichier assemble final anormalement bas (~70 kb/s au lieu de
+plusieurs milliers) + `ffprobe -show_entries stream=pix_fmt` sur le fichier subs.mov ne montre PAS de "a" dans
+le pix_fmt. Verifier ce point AVANT de lancer l'overlay final, pas apres.
 
 ### 2026-06-08 — Remotion `<Audio>` : `trimAfter` est ABSOLU (depuis le debut du media), pas relatif a `startFrom`
 

@@ -182,11 +182,10 @@ export const Beat2Setup: React.FC = () => {
     return `#${nr.toString(16).padStart(2, "0")}${ng.toString(16).padStart(2, "0")}${nb.toString(16).padStart(2, "0")}`;
   };
   const plagueColor = plagueOpacity > 0.05 ? mixHex(PLAGUE_COUNTRY_COLOR, plagueOpacity) : null;
-  if (plagueColor) {
-    ISO_PLAGUE.forEach((iso) => {
-      if (!highlightFills[iso]) highlightFills[iso] = plagueColor;
-    });
-  }
+  // ISO_PLAGUE ne passe PAS dans highlightFills : AtlasMercator n'a pas de
+  // clipPath et peindrait aussi les territoires d'outre-mer (Açores/Réunion/
+  // Guyane/Svalbard) en pleine mer. Le rouge est dessiné plus bas dans un
+  // <g clipPath="url(#europeClipB2)"> qui, lui, est correctement clippé.
 
   // ── POI — raw coords from geo JSON
   const poi = data.poi as Record<string, { x: number; y: number }>;
