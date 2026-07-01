@@ -191,8 +191,13 @@
 >   ⛔ **NE PLUS câbler le `tension-drone`** nulle part (P1/P2/autres) — la musique de fond suffit comme lit sonore.
 >   ⚠️ pic audio ~0 dB à 18s (gong) → mastering assemblage normalisera.
 > ✅ **SVG-insert franc CFA produit + validé** (système agentique, mix-and-match) : `episodes/warmap-sahel/SVG-INSERTS-CANDIDATS.md`.
-> 🔜 **PROCHAINE SESSION** : upload P1/P2 → Aziz revoit → valide corrections de `AUDIT-AMELIORATIONS-P1.md` +
->   `AUDIT-AMELIORATIONS-P2.md` (SANS tension-drone) → agents de correction appliquent.
+> ⭐⭐ **PROCHAINE SESSION — PASSE AUDIT COMPLÈTE scène par scène (méthode gravée 2026-06-27)** :
+>   Lire `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md` (méthode : 1 agent par scène + 1 agent
+>   TRANSVERSAL final). ✅ P1+P2 DÉJÀ AUDITÉS (sources de vérité prêtes, NE PAS refaire) : `AUDIT-AMELIORATIONS-
+>   P1.md` / `-P2.md`. RESTE : lancer agents sur Acte1 (optionnel, vient d'être refait) + P3 + P4 (confirmer
+>   si utile) → PUIS agent transversal qui lit TOUS les audits (cohérence inter-scènes, défi carte-fixe/3-pays-
+>   fixes, systèmes qui doivent courir partout — ex idée Aziz : pictogrammes de faction persistants via GLM-5.2).
+>   Aziz VALIDE le backlog priorisé avant tout agent de correction.
 
 ---
 
