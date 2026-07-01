@@ -20,7 +20,7 @@ garantie par Paris. Les pays deposaient une partie de leurs reserves sur un comp
 
 | t (s) | Geste ANIME (pas fade) | Technique | SFX |
 |---|---|---|---|
-| 0-1 | cartouche + grille se TRACENT (lignes qui filent) | dashoffset sur grille | (silence/drone) `warmap/tension-drone` loop bas |
+| 0-1 | cartouche + grille se TRACENT (lignes qui filent) | dashoffset sur grille | ⛔ PAS `tension-drone` (proscrit, decision Aziz 2026-06-27 — derange) ; silence ou musique de fond |
 | 1-3 | les 14 hexagones s'allument UN PAR UN (cellule par cellule, gauche->droite) | stagger opacity+scale par cellule | `ui/node-appear` x sobre (1 ping groupe) |
 | 3-5 | la piece CFA EMERGE de la zone (monte + s'illumine or) | spring scale 0->1 + glow or | `ui/plate-pop` |
 | 5-8 | le LIEN de parite se TRACE CFA->EUR, puis le CADENAS CLAQUE (ferme) | dashoffset lien + spring "claque" sur cadenas | `warmap/cedeao-snap` (le claquement = verrou) |
@@ -70,8 +70,9 @@ Intention : TENSION qui monte, le flux qui FUIT visiblement, fermeture sur la qu
 ---
 
 ## Musique de fond
-- Une nappe discrete et continue sur les 45s (tension sourde montante). Reutiliser `warmap/tension-drone` (loop, vol bas
-  ~0.18) OU `sfx-music` si plus adapte. Volume sous la voix.
+- Une nappe discrete et continue sur les 45s (tension sourde montante). ⛔ PAS `tension-drone` (proscrit, decision
+  Aziz 2026-06-27 — le grondement d'assise derange a l'ecoute). Utiliser `sfx-music`/musique de fond existante,
+  volume sous la voix.
 
 ## Transitions entre beats
 - Whip/swoosh court (`camera/sfx-whip-pan-1`) + cross-fade fond. Le changement de couleur de fond MARQUE le beat.

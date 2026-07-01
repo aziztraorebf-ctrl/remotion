@@ -226,6 +226,14 @@
 
 ---
 
+## 💡 BACKLOG ENRICHI — Xénophobie SA (2026-07-01)
+
+> Statut : MISE EN PAUSE enrichie. Angle validé ("double face" / colère mal dirigée / apartheid économique).
+> Données 2026 intégrées (25k expulsés, ultimatums, March and March, réaction continentale).
+> Format Hub & Spoke (Long Mapbox + Short SVG) intellectuellement pertinent mais complexe — Short SVG testé (images-cibles GPT/Gemini générées, faisable pour scènes symboliques, difficile pour foule/paradoxe).
+> **Gate AVANT production** : TubeLab validation demande audience → candidat pour "3e sujet" prochain cycle.
+> Dossier : `memory/episodes/souverain/xenophobie-sa-EXPLORATION/`. État complet : `04-DECISIONS-OUVERTES.md` § 7-8.
+
 ## 💡 IDÉE BACKLOG — Pipeline Shorts automatisé trending (2026-06-13)
 
 **Décision** : ne pas commencer maintenant — y revenir quand Long Format bien en place.

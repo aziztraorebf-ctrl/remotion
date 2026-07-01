@@ -33,7 +33,24 @@ Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pu
 
 ---
 
-## War-Map Sahel — TOUTES SCÈNES FINAL · NEXT = ASSEMBLAGE — 2026-06-15 [P4 COMPLETE, NEXT = ASSEMBLAGE]
+## War-Map Sahel — 2026-06-27 [ACTE1 REFAIT+VALIDÉ · P1/P2 AUDITÉS · P4 EN MORCEAUX] — PRIME sur l'entrée 06-15 ci-dessous (périmée)
+
+**[STAGE-CODE] warmap-sahel — Acte1 refondu (hook+corps+SFX) VALIDÉ Aziz.** Compo `SahelActe1-Refonte` (71s),
+`out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e`, v2 SANS tension-drone — le SFX drone d'assise
+dérangeait Aziz, RETIRÉ + proscrit partout). SVG-insert franc CFA alternatif produit (système agentique,
+mix-and-match, `WarmapCfaInsertSVG`, catbox `228hiw`) — coexiste avec `p4-cfa-FINAL.mp4` (Remotion) pour
+comparatif futur, aucun remplacement.
+**Audits P1 + P2 FAITS** (lecture seule) : `AUDIT-AMELIORATIONS-P1.md` / `-P2.md` — backlog priorisé EN ATTENTE
+de validation Aziz (pas encore traité). **P4 reste EN MORCEAUX** (exode/ressources/confed/CFA), PAS complète
+(contredit l'entrée 06-15 ci-dessous).
+**NEXT** : (1) passe audit complète (agents scène P3+P4-confirmer + agent TRANSVERSAL, méthode
+`memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`) ; (2) Aziz valide backlog P1/P2 → agents correction ;
+(3) assembler P4 morceaux → p4-FINAL ; (4) assemblage final (concat Acte1+P1+P2+P3+P4 + musique D + mix).
+Détail : `memory/episodes/warmap-sahel/STATUS.md`.
+
+---
+
+## War-Map Sahel — TOUTES SCÈNES FINAL · NEXT = ASSEMBLAGE — 2026-06-15 [PÉRIMÉ — voir entrée 2026-06-27 ci-dessus]
 
 Acte1 ✅ · P1 ✅ · P2 ✅ · P3 ✅ · **P4 ✅ (les 6 scènes : exode, coût, ressources, confédération, CFA, fin
 habitée)**. Toutes FINAL + full HD dans `out/episodes/warmap-sahel/`. **NEXT = ASSEMBLAGE UNIQUEMENT** (aucune

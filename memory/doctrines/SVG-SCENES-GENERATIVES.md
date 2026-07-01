@@ -444,7 +444,9 @@ l'image, OU image synchronisée sur une nappe/voix posée d'abord (= notre doctr
 **Mapping geste → son (proto `OffshoreGeminiAnimeeSFX.tsx`, 100% banque `_shared/sfx/`, zéro génération)** :
 - trait de structure qui se trace → `warmap/arrow-whoosh.mp3` (whoosh bas et sec) sur CHAQUE frame de tracé
 - apparition (torchère/réservoir) → `ui/node-appear.mp3` · structure complète → `impact/impact.mp3`
-- flux continu (pétrole qui monte) → `warmap/tension-drone.mp3` (drone grave, volume bas 0.4, sous le reste)
+- flux continu (pétrole qui monte) → ⛔ PAS `tension-drone` (proscrit, décision Aziz 2026-06-27 : le grondement
+  d'assise continu dérange à l'écoute — retiré de War-Map Sahel partout). Préférer un SFX PONCTUEL répété en
+  boucle discrète (ex `ink-spread.mp3` espacé) ou laisser la musique de fond porter la continuité.
 - annotation (cote/étiquette) → `data/tick-counter.mp3` (tick sec) échelonné
 - ouverture de planche → `ui/whoosh.mp3`
 
@@ -465,3 +467,14 @@ render au `ffprobe`/`volumedetect` (mean dB ≠ silence) avant de présenter.
 - Formes organiques NON-figuratives (flamme, fumée, eau, fluides) : pas encore testées, potentiellement OK (pas d'uncanny).
 - Registres visuels NEUFS restants : **néon/data-terminal**, **papier découpé** (pédagogique). (médaille ✅ · blueprint ✅ · encre ✅.)
 - Brancher une scène SVG dans une VRAIE vidéo (plein écran + voix off + SFX timé) — le proto SFX est prouvé, reste l'intégration épisode.
+
+## ⭐⭐ DEUX RÈGLES D'IMPLÉMENTATION (prouvées Cacao B3/B4, 2026-06-29)
+
+### 1. COUCHE DE VIE PERMANENTE (sin) — obligatoire pour toute scène > 5s
+Une scène SVG a DEUX couches d'animation, pas une :
+1. **Gestes narratifs forts** : `interpolate()` timés (un arbre pousse, une barre se forme, l'usine se construit). One-shot, ils FINISSENT.
+2. **Couche ambiante permanente** : `Math.sin(frame/...)` qui ne s'arrête JAMAIS — sway feuillage (TOUS les arbres, même morts), glow soleil qui respire, rayons qui tournent, nuages qui dérivent (fade aux bords, jamais hors cadre), fumée en bouffées désync, oiseaux qui battent.
+**Si on n'a que (1)**, la scène se fige entre les gestes → Gemini diagnostiquera « trop statique » (c'est arrivé sur le verger B3 v4, corrigé en v5). Implémentation : passer `windPhase={frame}` au composant, calculer les oscillations à l'intérieur. La couche ambiante tourne tant que la scène dure.
+
+### 2. COMPOSANT À ÉTATS PILOTÉ PAR PROPS = fil de transformation multi-beats
+Coder un composant SVG à N états dont TOUTE la logique de transformation est en **props** — ZÉRO `useCurrentFrame` interne. Le beat parent calcule les progressions (audio-derived) et les passe en props. Prouvé : `VergerCacao` (états mort/reverdit/fissure) réutilisé tel quel en B3 ET B4 — même monde qui évolue (le verger de B3 reverdit puis se fissure en B4), sans dupliquer le code. Avantages : continuité du monde (fil de transformation, cf [[INTENTION-FORME-SVG]]), état de chaque beat testable isolément (compo preview), un seul endroit à corriger. Pattern complémentaire : un composant "construction" piloté par `build`/`colorize` (trace ordonné structure→détails) — cf `UsineConstruction`.
