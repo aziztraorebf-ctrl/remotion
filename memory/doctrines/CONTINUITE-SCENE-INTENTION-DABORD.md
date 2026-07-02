@@ -46,6 +46,11 @@ continué la scène en rajoutant des éléments. »*
   contamine. Puis la carte recule/s'estompe et **la question monte par-dessus le même monde**.
 - ⚠️ Chaque fois qu'on CHANGE de monde (nouveau template = nouvel écran), il faut tout re-justifier →
   c'est là qu'on tâtonnait. **Le vrai template réutilisable, c'est le MONDE (fond + carte + chiffre), pas un composant.**
+- ⭐ **Cas SVG (2026-07-02)** : en SVG la continuité est facile à obtenir TECHNIQUEMENT (on peut réutiliser le
+  même code de dessin), donc l'erreur n'est pas d'en manquer les moyens mais de ne pas les employer — "s'inspirer"
+  du monde précédent (nouvelles constantes proches) casse la continuité perçue aussi sûrement qu'un monde
+  différent. Détail + cas vécu (rejet Aziz sur `PortDechargement16x9.tsx` puis fix) :
+  [[SVG-MIDFORM-FORMAT]] § 4ter CONTINUITÉ DE SCÈNE EN SÉQUENCE.
 
 ### 3. ÉPURE = ANTI-REDONDANCE (l'écran ne répète pas la voix) — ⭐ LE FIL ROUGE D'AZIZ
 **Règle gravée (répétée par Aziz depuis le début du sujet) : à l'écran, GARDER L'ESSENTIEL, alléger

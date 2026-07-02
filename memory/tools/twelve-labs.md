@@ -1,10 +1,17 @@
 ---
 name: Twelve Labs — Video Intelligence API
-description: Outil d'analyse vidéo par IA — résumé, ton, rétention, artefacts, cohérence personnage. Intégré pipeline GeoAfrique mai 2026.
+description: Outil d'analyse vidéo par IA — résumé, ton, rétention, artefacts, cohérence personnage. Intégré pipeline GeoAfrique mai 2026. Supplanté par Gemini 3.1 Pro pour la review ; utile seulement si besoin futur de recherche sémantique dans des archives vidéo.
 type: reference
 ---
 
 # Twelve Labs
+
+## ⛔ Statut (2026-07-01) — supplanté par Gemini pour notre usage actuel
+Testé une seule fois (Or Africain + Sonjata, mai 2026), jamais réintégré depuis (Cacao, GGW, Peste 1347 n'y sont pas passés). Recherche Tavily (2026-07-01) confirme :
+- **Review finale rythme/rétention/ton** → **Gemini 3.1 Pro video upload** couvre déjà ce rôle (validé fiable depuis 2026-06-16, cf. `memory/gemini-video-upload-fiable.md`) et fait mieux pour nos formats courts (90-166s) : mouvement, rythme, transitions, son.
+- Éval indépendante (GitHub `pegasus-1-eval`) : precision ~57,7%/recall ~46,9% sur factualité → risque d'hallucination réel, cohérent avec notre observation "trop indulgent sur les artefacts".
+- La seule capacité que Twelve Labs a et que Gemini n'a pas pour nous : **recherche sémantique à travers une bibliothèque de rushes/archives** (embeddings Marengo + vector DB type Pinecone/Milvus/Elasticsearch — "trouve toutes les scènes où on montre une carte du Sahel" à travers tout le back-catalogue). On n'a pas ce besoin aujourd'hui (pas de banque de rushes à interroger).
+- **Décision** : garder ce fichier en dormant. Ne PAS réintégrer dans le pipeline standard de review. Reconsidérer uniquement si on accumule un vrai volume d'archives/rushes à fouiller sémantiquement.
 
 ## Accès
 - API Key : dans `.env` → `TWELVE_LABS_API_KEY`

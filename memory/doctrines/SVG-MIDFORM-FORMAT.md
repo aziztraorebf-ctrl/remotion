@@ -126,6 +126,46 @@ Un seul element central FAIT VIDE en 16:9 (alors qu'il remplit le cadre etroit v
 → **Quand un format long horizontal est demande : NE PAS recadrer le vertical. Re-composer en pensant
   rayonnement lateral + 3 plans de profondeur + camera/parallaxe.** C'est ce qui evite le "vide TV".
 
+### 4bis. SCENE-VOYAGE vs SCENE-TRANSFORMATION — quand coloriser, quand ne PAS coloriser (2026-07-02)
+Distinction actée avec Aziz sur le patron "plan large parallaxe + véhicule" (`CargoVoyage16x9.tsx` /
+`PortDechargement16x9.tsx`) — généralise au-delà du 16:9 personnage, s'applique à toute scène SVG narrative :
+- **Scène-VOYAGE** (le sujet SE DÉPLACE mais ne change pas de nature en transit — ex : cargo qui traverse
+  l'océan, camion sur une route) → une **palette stable/globale** suffit (éventuellement un lerp chaud→froid
+  lié au TEMPS qui passe, pas à une transformation de la matière). PAS besoin de colorisation progressive
+  objet-par-objet : rien ne se transforme, on ne fait que voyager.
+- **Scène-TRANSFORMATION** (le sujet CHANGE D'ÉTAT — matière brute → produit fini, ex : cabosse → fève →
+  chocolat, minerai → lingot) → **colorisation progressive OBLIGATOIRE** : c'est le VECTEUR du message
+  narratif, pas un effet cosmétique. Cohérent avec le pattern déjà gravé Règle 2 GGW (§ ci-dessous, "la scène
+  se dessine entière d'abord puis se colorie") et prouvé sur GGW/Cacao B3-B4 ("3 états").
+- Critère de décision rapide : **le sujet a-t-il une nature différente à la fin qu'au début ?** Oui →
+  transformation → coloriser progressivement. Non (il a juste changé de LIEU) → voyage → palette stable.
+- Preuve d'application : `PortDechargement16x9.tsx` mélange les deux dans le MÊME plan — le cargo (a voyagé,
+  ne se transforme pas) garde sa palette figée à l'arrivée, tandis que l'usine à l'arrière-plan se colorise
+  neutre→premium pendant le déchargement (elle, transforme la matière) — la doctrine ne dit pas "toute la
+  scène coloris" ou "rien ne colorise", elle s'applique OBJET PAR OBJET selon sa propre nature narrative.
+
+### 4ter. CONTINUITÉ DE SCÈNE EN SÉQUENCE = réutiliser le CODE EXACT, pas "s'inspirer" (2026-07-02, leçon coûteuse)
+Quand une scène SVG doit être la SUITE narrative d'une scène précédente (même monde qui continue, cf.
+[[CONTINUITE-SCENE-INTENTION-DABORD]] §2), le réflexe correct est de **COPIER LITTÉRALEMENT** le code de
+dessin des éléments qui persistent (véhicule, décor, constantes de palette) — PAS de re-décrire le même sujet
+from scratch avec de nouvelles valeurs, même proches visuellement.
+- **Erreur vécue** : 1ère tentative de `PortDechargement16x9.tsx` (suite de `CargoVoyage16x9.tsx`) a recréé un
+  port générique avec un NOUVEAU ciel, un NOUVEL océan, un NOUVEAU style de cargo — visuellement dans le même
+  registre mais un MONDE DIFFÉRENT. Verdict Aziz : *« ce n'est pas du tout une continuation, c'est une scène
+  complètement différente. »* Rejeté malgré une doctrine de continuité déjà connue et une intention correcte.
+- **Pourquoi ça casse la continuité perçue même si "ça ressemble"** : en SVG (contrairement au live-action),
+  la continuité EST facile à obtenir techniquement — on peut littéralement réutiliser les mêmes fonctions de
+  dessin, les mêmes constantes hex. Ne pas le faire = choisir la redite conceptuelle plutôt que l'identité
+  exacte, ce que l'œil détecte immédiatement (couleurs/formes légèrement différentes = signal "nouvel écran").
+- **Fix (réécriture v2 réussie)** : relire le fichier de la scène précédente, EXTRAIRE ses valeurs de couleur/
+  géométrie exactes (`SKY_B`, `SUN_B`, `SEA_B` de `CargoVoyage16x9`), les réutiliser LITTÉRALEMENT comme point
+  de départ figé (on "arrive" dans cet état) ; copier le dessin exact du véhicule (mêmes chemins coque/
+  superstructure/cheminée/fumée) ; réutiliser la même fonction de lignes d'océan ; démarrer sur l'état exact où
+  la scène précédente a fini (mêmes coordonnées d'étoiles, nuit qui redevient jour par vrai lever de soleil).
+- **Réflexe généralisable** : pour toute future "suite de scène" SVG, la question n'est pas *"qu'est-ce qui
+  ressemble ?"* mais *"quel fichier dois-je ouvrir et RÉUTILISER TEL QUEL ?"* — le patron "s'en inspirer" est
+  le piège, celui de "réutiliser littéralement" est la règle.
+
 ### 5. PERSONNAGE D'ENCRE — la brique "identification" du FORMAT LONG (proto 2026-06-29)
 Le long debloque un PROTAGONISTE (le short n'a pas le temps). Prouve : un planteur entre, marche, se penche, RECOLTE.
 Proto : https://files.catbox.moe/hunvwd.mp4 · ref `out/templates-souverain/svg-personnage-encre-REFERENCE.mp4`.

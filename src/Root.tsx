@@ -14,6 +14,7 @@ import { Proto3Quarter, PASSER3Q_FRAMES } from "./projects/_shared/personnage-vi
 import { ProtoBack, PASSER_BACK_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoBack";
 import { ProtoFace, PASSER_FACE_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoFace";
 import { ProtoMultiDirTest, PASSER_MULTIDIR_TEST_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoMultiDirTest";
+import { SceneMultiPlanTest, SCENE_MULTIPLAN_TEST_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/SceneMultiPlanTest";
 import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
@@ -219,6 +220,7 @@ import { IngaMondeV2, INGA_MONDE_V2_FRAMES } from "./projects/_rnd/svg-scenes/In
 import { IngaDualScene, INGA_DUAL_FRAMES } from "./projects/_rnd/svg-scenes/IngaDualScene";
 import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/IngaSplitScreen";
 import { CargoVoyage16x9, CARGO_VOYAGE_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9";
+import { PortDechargement16x9, PORT_DECHARGEMENT_FRAMES } from "./projects/_rnd/svg-scenes/PortDechargement16x9";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2020,6 +2022,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-IngaDualScene" component={IngaDualScene} durationInFrames={INGA_DUAL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaSplitScreen" component={IngaSplitScreen} durationInFrames={INGA_SPLIT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-CargoVoyage16x9" component={CargoVoyage16x9} durationInFrames={CARGO_VOYAGE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PortDechargement16x9" component={PortDechargement16x9} durationInFrames={PORT_DECHARGEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
@@ -3288,6 +3291,14 @@ export const RemotionRoot: React.FC = () => {
           id="RND-8dir-ProtoMultiDirTest"
           component={ProtoMultiDirTest}
           durationInFrames={PASSER_MULTIDIR_TEST_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-SceneMultiPlanTest"
+          component={SceneMultiPlanTest}
+          durationInFrames={SCENE_MULTIPLAN_TEST_FRAMES}
           fps={30}
           width={1920}
           height={1080}

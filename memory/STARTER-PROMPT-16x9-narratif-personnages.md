@@ -2,6 +2,32 @@
 
 > Créé 2026-06-29 (fin de session cacao). Dis « on reprend le 16:9 narratif » ou « on reprend les personnages ».
 > Branche de travail : `feat/cacao-short-svg` (ou nouvelle branche `feat/svg-16x9-narratif`).
+> ⭐ MIS À JOUR 2026-07-02 : 2 scènes prototypées (voir § ÉTAT D'AVANCEMENT ci-dessous) — le patron
+> « plan large parallaxe + véhicule + persos fond de plan » est PROUVÉ, PortDechargement16x9 en attente de
+> retour Aziz. Lire ce paragraphe AVANT de repartir sur une piste ci-dessous (certaines sont déjà faites).
+
+## ⭐ ÉTAT D'AVANCEMENT (2026-07-02) — à lire avant de relancer une piste
+
+Session du 2026-07-02 : prototypage direct de 2 scènes narratives 16:9 séquentielles (pas les pistes 1-2
+ci-dessous — parti directement piste 3 "scène narrative 16:9").
+- ✅ **`CargoVoyage16x9.tsx`** (`_rnd/svg-scenes/`, compo Root `RND-CargoVoyage16x9`, 600f/20s) : plan large
+  parallaxe 3 calques (ciel/horizon lent, cargo quasi-fixe qui tangue, océan qui défile vite), horizon
+  PARAMÉTRIQUE interpolé entre 2 silhouettes (dunes/cacaoyers Afrique → pics enneigés Suisse), soleil qui
+  traverse l'écran en arc → nuit étoilée, palette globale chaud→froid (`lerpHex`). Cueilleurs StickRig
+  minuscules en fond de plan (`carry="none"` obligatoire à cette échelle, cf recette
+  `personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` § cueilleurs-fond-de-plan-16x9).
+- ⏳ **`PortDechargement16x9.tsx`** (compo Root `RND-PortDechargement16x9`, 500f/16.7s) : SUITE narrative
+  directe (Scène 2 "l'arrivée et le paradoxe") — réutilise LITTÉRALEMENT les constantes de palette/dessin de
+  CargoVoyage16x9 (v2 après un 1er rejet Aziz, voir doctrine ci-dessous). Grue qui décharge, usine qui se
+  colorise neutre→premium, docker StickRig. **PAS ENCORE VALIDÉ par Aziz** — dernière chose montrée avant le
+  wrap de session, à reprendre en priorité en tout début de prochaine session (montrer/valider avant de
+  continuer).
+- ⭐⭐ **NOUVELLE DOCTRINE gravée** : `doctrines/SVG-MIDFORM-FORMAT.md` § 4bis (scène-VOYAGE = palette stable /
+  scène-TRANSFORMATION = colorisation progressive obligatoire) + § 4ter (continuité de scène en séquence =
+  réutiliser le CODE EXACT de la scène précédente, pas s'en inspirer — leçon d'un rejet Aziz puis fix réussi).
+- NEXT possibles (évoqués par Claude en fin de session, PAS validés par Aziz) : Scène 3 au-delà du paradoxe
+  port/usine, OU appliquer le même patron à un autre sujet Souverain (or→raffinerie, minerai→usine…).
+  À CONFIRMER par Aziz avant de partir dessus.
 
 ## 🎯 OBJECTIF DE LA SESSION (vision Aziz)
 Pousser le format **16:9 narratif** avec des **PERSONNAGES**. On a prouvé que le SVG transpose en horizontal
