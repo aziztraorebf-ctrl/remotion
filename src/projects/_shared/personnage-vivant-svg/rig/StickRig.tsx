@@ -26,8 +26,10 @@ const SCARF = "#b5552f"; // foulard terre-cuite
 export type StickRigProps = {
   walkPhase?: number;
   moving?: boolean;
+  moveAmt?: number;            // 0..1 amplitude continue du pas (remplace moving, evite l'arret brutal — voir poses.ts)
   bend?: number;
   armReach?: number;
+  offerReach?: number;        // 0..1 bras tendu a l'HORIZONTALE (offrir/tendre un objet a qqn en face)
   facing?: 1 | -1;
   ink?: string;               // couleur du trait d'encre (defaut charte)
   hat?: "straw" | "cap" | "scarf" | "none"; // accessoire tete (straw=paille, cap=casquette, scarf=foulard)
@@ -38,8 +40,10 @@ export type StickRigProps = {
 export const StickRig: React.FC<StickRigProps> = ({
   walkPhase = 0,
   moving = true,
+  moveAmt,
   bend = 0,
   armReach = 0,
+  offerReach = 0,
   facing = 1,
   ink = DEFAULT_INK,
   hat = "straw",
@@ -47,11 +51,12 @@ export const StickRig: React.FC<StickRigProps> = ({
   load = 0,
 }) => {
   const { LEG, HEAD_R, ARM } = RIG;
-  const pose = computePose({ walkPhase, moving, bend, armReach });
+  const pose = computePose({ walkPhase, moving, moveAmt, bend, armReach, offerReach });
   const { be, phase, swingDeg, hipX, hipY, torsoDeg, shX, shY, frontHandX, frontHandY } = pose;
+  const m = Math.max(0, Math.min(1, moveAmt ?? (moving ? 1 : 0)));
 
   // ---- JAMBES (foot-plant : le pied ne descend jamais sous le sol y=0) ----
-  const kneeBend = (moving ? Math.max(0, Math.cos(phase)) * 14 : 0) + be * 30;
+  const kneeBend = Math.max(0, Math.cos(phase)) * 14 * m + be * 30;
   function legPath(sign: 1 | -1) {
     const hipAngle = sign * swingDeg - be * 6 * sign;
     const rad = (hipAngle * Math.PI) / 180;

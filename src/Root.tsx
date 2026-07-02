@@ -9,6 +9,7 @@ import { B5Pont, B5_PONT_FRAMES, B5_PONT_FPS } from "./projects/souverain/cacao-
 import { B5PontH, B5_PONT_H_FRAMES, B5_PONT_H_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5PontH";
 import { ProtoPlanteur, PROTO_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/beats/ProtoPlanteur";
 import { RecolteAuSol, RECOLTE_AU_SOL_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/RecolteAuSol";
+import { PasserObjetMainAMain, PASSER_OBJET_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/PasserObjetMainAMain";
 import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
@@ -2982,12 +2983,15 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         {/* PARTIE 2 Sahel — le blocage (intervention FR/ONU qui échoue 10 ans).
-            Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides. */}
+            Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides.
+            durationInFrames étendu 5700→6119 (2026-07-01) : couvre le beat CEDEAO (menace d'intervention
+            armée) jusqu'au relais exact de P3 (F_BAMAKO=6118) — sans cette extension, le render s'arrêtait
+            à 5699 et coupait ~14s de narration avant que P3 ne prenne le relais (bug trous de jonction). */}
         <Composition
           id="SahelPartie2"
           component={SahelWarMapEngine}
           defaultProps={{ partie2: true }}
-          durationInFrames={5700}
+          durationInFrames={6119}
           fps={30}
           width={1920}
           height={1080}
@@ -3241,6 +3245,14 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1080}
           height={1920}
+        />
+        <Composition
+          id="PersoVivant-PasserObjetMainAMain"
+          component={PasserObjetMainAMain}
+          durationInFrames={PASSER_OBJET_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
         <Composition
           id="Cacao-HistoirePlanteur"

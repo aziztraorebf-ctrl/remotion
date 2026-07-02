@@ -636,7 +636,7 @@ Faire AGIR un personnage dans une scène SVG (marche/penche/ramasse/transporte/d
 stick figure SIMPLE (segments DROITS, pictogramme digne) animée 100% par CODE via `useCurrentFrame` + une fonction
 cinématique source-de-vérité (`computePose`). Validé Aziz sur cacao + GGW, 9:16 ET 16:9, 1 à 3 personnages.
 
-**Le corps n'est jamais le problème — l'ANIMATION l'est.** 3 causes-racines à connaître (détail : la feuille de
+**Le corps n'est jamais le problème — l'ANIMATION l'est.** 5 causes-racines à connaître (détail : la feuille de
 route) :
 - marche qui "glisse" → **FOOT-PLANT** (le pied d'appui reste fixe au sol pendant son appui ; clamp y≤0).
 - penché qui bascule en arrière → **COMPENSATION DU BASSIN** (le bassin RECULE + DESCEND quand le torse se penche).
@@ -644,6 +644,15 @@ route) :
   RÉELLE de la main (`computePose`), JAMAIS de glissade autonome vers sa cible — c'est la main qui l'amène. Le corps
   s'arrête AVANT le contenant (`depotStopX`) pour que la main tendue arrive au-dessus.
 - Marche = translation à vitesse CONSTANTE (linéaire, pas d'easing sur les segments de marche).
+- **arrêt de marche qui "saute" (2026-07-01)** → couper `moving: true→false` net fige les jambes en pleine foulée
+  (parfois écartées). FIX : `moveAmt` continu (0..1) qui décroît sur ~15 frames AVANT l'arrêt, jamais un cut.
+  Résiduel mineur même avec le fix — acceptable en proto, à reprendre si visible en vraie production.
+
+**2 personnages qui interagissent (2026-07-01, piste "B" R&D 16:9 narratif)** : prouvé sur `passer-objet-main-a-main`
+(planteur→acheteur, `PasserObjetMainAMain.tsx`). Nouveau param `offerReach` (bras tendu HORIZONTAL ~88°, ≠ `armReach`
+qui pointe vers le sol pour ramasser) + `handoffState` (`objectHandling.ts`) : objet suit main A → point de contact
+FIGÉ au frame du HOLD (pas recalculé en continu, sinon glissade) → suit main B. Calculer la distance entre les 2
+persos pour que les mains tendues se REJOIGNENT (vérifié numériquement, pas à l'œil — 1er essai avait 250px d'écart).
 
 **LLM (GLM/GPT/Gemini) = banc d'idées UTILE (capacité, pas plafond), mais NE PAS prendre un rig généré EN BLOC** :
 le rig "noodle"/courbes tue le pictogramme. On garde NOS lignes droites et on pilote la cadence nous-mêmes.

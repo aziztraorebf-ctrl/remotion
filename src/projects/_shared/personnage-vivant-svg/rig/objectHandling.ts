@@ -49,3 +49,35 @@ export function objectState({ frame, fGrab, fDrop, handX, handY, groundX, ground
 export function depotStopX(containerX: number, frontHandLocalX: number, scale: number): number {
   return containerX - frontHandLocalX * scale;
 }
+
+/**
+ * handoffState — machine a etats pour un transfert d'objet MAIN-A-MAIN entre 2 persos (recette "passer-objet").
+ * Meme principe que objectState (JAMAIS de glissade autonome) : l'objet suit la main A jusqu'au HOLD, puis
+ * la main B. Les 2 mains fournies sont deja en coordonnees SCENE (handAX/Y, handBX/Y au frame courant).
+ *
+ *   const st = handoffState({ frame, fHold, fRelease, handAX, handAY, handBX, handBY });
+ *   // avant fHold -> objet colle a A. entre fHold et fRelease -> HOLD (les 2 mains sont proches, objet fixe
+ *   // au point de contact). apres fRelease -> objet colle a B.
+ */
+export type HandoffInput = {
+  frame: number;
+  fHold: number;    // frame de contact (les 2 mains se rejoignent) -> debut du HOLD
+  fRelease: number;  // fin du HOLD -> l'objet devient enfant de la main B
+  handAX: number; handAY: number; // main A (donneur), coords scene, au frame courant
+  handBX: number; handBY: number; // main B (receveur), coords scene, au frame courant
+  // point de contact FIGE (calcule par la scene UNE FOIS a fHold, ex. via computePose au frame fHold) —
+  // evite que l'objet "glisse" si les mains bougent encore legerement pendant le HOLD.
+  contactX: number; contactY: number;
+};
+
+export type HandoffState = {
+  x: number;
+  y: number;
+  holding: "A" | "hold" | "B";
+};
+
+export function handoffState({ frame, fHold, fRelease, handAX, handAY, handBX, handBY, contactX, contactY }: HandoffInput): HandoffState {
+  if (frame < fHold) return { x: handAX, y: handAY, holding: "A" };
+  if (frame < fRelease) return { x: contactX, y: contactY, holding: "hold" };
+  return { x: handBX, y: handBY, holding: "B" };
+}

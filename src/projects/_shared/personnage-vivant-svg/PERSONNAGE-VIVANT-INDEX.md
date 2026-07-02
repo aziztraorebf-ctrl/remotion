@@ -10,11 +10,14 @@ pêcheur, ouvrier, marchand…). Le rig est GÉNÉRIQUE : on change l'accessoire
 pas la mécanique. ⛔ Garde-fou doctrine : silhouette stylisée pictogramme, JAMAIS un humain réaliste. Segments DROITS.
 
 ## Fichiers
-- `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moving,bend,armReach})` →
+- `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moveAmt,bend,armReach,offerReach})` →
   coords locales (bassin, épaules, **main avant**). À utiliser AUSSI côté scène pour coller un objet sur la main.
-- `rig/StickRig.tsx` — le composant rig générique. Props : `walkPhase, moving, bend, armReach, facing, ink, hat`.
+- `rig/StickRig.tsx` — le composant rig générique. Props : `walkPhase, moveAmt, bend, armReach, offerReach, facing, ink, hat`.
+- `rig/objectHandling.ts` — `objectState` (ramasser→tenir→déposer) + `handoffState` (transfert main-à-main, 2 persos).
 - `scenes-proto/RecolteAuSol.tsx` — ⭐ scène-prototype validée (entre→marche→penche→ramasse→relève). Compo Root :
   `PersoVivant-RecolteAuSol`. La copier comme point de départ d'une nouvelle scène.
+- `scenes-proto/PasserObjetMainAMain.tsx` — scène-prototype 2 persos, transfert main-à-main. Compo Root :
+  `PersoVivant-PasserObjetMainAMain`. Render de réf : `out/_r-and-d/personnage-vivant-svg/passer-objet-main-a-main-v1.mp4`.
 
 ## LE SAVOIR-FAIRE (ce qui a coûté cher à trouver — ne pas réinventer)
 
@@ -40,6 +43,33 @@ des pieds. + genoux qui fléchissent. Easing `easeInOutCubic` sur le penché (ja
 5. Le bras RESTE en bas pendant le HOLD, remonte seulement APRÈS (en même temps que le corps se redresse).
 Timeline de réf (RecolteAuSol) : ARRIVE 120 / BEND 165 / REACH 195 / HOLD 209 / UP 260.
 
+### Arrêt de marche sans « saut de jambe » → moveAmt CONTINU (pas moving booléen)
+Cause racine (trouvée 2026-07-01, Aziz) : couper `moving: true→false` net fige les jambes à l'instant T, quelle
+que soit la phase de la foulée en cours → jambes parfois figées ÉCARTÉES (saut visible) au lieu de revenir jointes.
+FIX (`poses.ts`) : `moveAmt` (0..1 continu) remplace `moving` (toujours accepté, rétrocompatible mais garde le
+bug). La SCÈNE doit faire décroître `moveAmt` vers 0 sur ~15 frames AVANT l'arrêt complet
+(`interpolate(frame, [fArrive-15, fArrive], [1,0])`), jamais un cut. ⚠️ Le glissement n'est pas 100% parfait même
+avec le fix (résiduel mineur observé, acceptable pour un proto — à reprendre en vraie production si visible).
+Les scènes historiques (RecolteAuSol, HistoirePlanteur, HistoireGGW) utilisent encore l'ancien `moving` booléen
+(non cassées, mais gardent le bug) — migrer vers `moveAmt` à la prochaine retouche.
+
+### Offrir/tendre un objet à quelqu'un en face → offerReach (≠ armReach)
+`armReach` (existant) pointe le bras vers le SOL-avant (~22°, pensé pour ramasser) — INADAPTÉ pour tendre un objet
+horizontalement à un autre perso (le bras reste presque vertical, ne « sort » pas assez). Nouveau paramètre
+`offerReach` (0..1, angle cible ~88° = horizontal, indépendant de `armReach`) dans `computePose`/`StickRig`.
+Priorité sur `armReach`/la marche quand `offerReach > 0`.
+
+### Transfert d'objet MAIN-À-MAIN entre 2 persos → handoffState (`rig/objectHandling.ts`)
+Même discipline que le ramassage au sol : JAMAIS de glissade autonome, l'objet suit une main réelle jusqu'au HOLD.
+1. Calculer la distance A↔B pour que les mains tendues (`offerReach=1`) se REJOIGNENT exactement (vérifier
+   `frontHandX` numériquement, pas à l'œil — 1er essai avait un écart de 250px, mains dans le vide).
+2. `handoffState({frame, fHold, fRelease, handAX/Y, handBX/Y, contactX/Y})` : avant `fHold` → suit main A ; HOLD
+   (~14f) → point de contact FIGÉ (calculé UNE FOIS à `fHold` via `computePose`, pas recalculé à chaque frame —
+   sinon glissade si les mains bougent encore légèrement pendant le HOLD) ; après `fRelease` → suit main B.
+3. Les 2 bras montent en miroir (`offerReach` synchronisé, léger décalage ~6 frames pour éviter l'effet robotique).
+4. Flash de contact (optionnel) : fondu D'ENTRÉE obligatoire (pas d'opacité qui apparaît d'un coup = pop visuel).
+Preuve : `scenes-proto/PasserObjetMainAMain.tsx` (planteur → acheteur, cacao). Validé Aziz 2026-07-01.
+
 ### Netteté / rendu encre (Gemini)
 Hiérarchie d'épaisseurs (torse 14 / membres 9-11). `linecap`+`linejoin` round OBLIGATOIRE. Encre `#2b2117` (charte)
 opacity ~0.92 (pas de noir pur). Chapeau = léger overlap (suit la tête avec retard).
@@ -59,6 +89,7 @@ la fève, elle glisse seule"). C'est la MAIN/le corps qui l'amène. L'objet disp
 - ✅ `recolte-au-sol` : entre→marche→penche→ramasse→relève. (RecolteAuSol.tsx)
 - ✅ `manipuler-objet` : ramasse→tient→transporte→dépose dans contenant. (objectHandling.ts + HistoirePlanteur)
 - ✅ `marche-porte-charge` : traverse en portant un sac/panier. (StickRig `carry` + `load` ; trivial = pas de scène dédiée)
+- ✅ `passer-objet-main-a-main` : 2 persos se font face, tendent le bras (offerReach), transfert au HOLD. (PasserObjetMainAMain.tsx, handoffState)
 - ⬜ `planter-arbre` (GGW) : 2 persos, creuser/déposer un jeune plant. (prochain)
 - ⬜ `cueillette-arbre` : tend le bras vers le HAUT (cabosse sur tronc) — inverser l'angle du bras.
 - ⬜ `immobile-contemplatif` : debout, respiration, regarde l'horizon.
