@@ -138,13 +138,21 @@ un problème de perception humaine."*
 - Dos / face PROCHE (gros plan, au-dessus du seuil) : repasse sur le rig complet (jambes lisibles à cette taille).
 - C'est la SCÈNE qui choisit (pas un seuil automatique dans le rig) — le rig ne devine pas l'intention du plan.
 
-⛔ **DÉCISION AZIZ 2026-07-02 pour la SUITE (à traiter en prochaine session)** :
+⛔ **DÉCISION AZIZ 2026-07-02 pour la SUITE** :
 1. **Pas de marche de FACE** dans les prochaines scènes de production — réserver la vue face aux moments
-   statiques/gros plans/entrée-sortie, jamais à un déplacement en plan large (aligné avec la règle pro ci-dessus).
-2. **Piste R&D à ouvrir** : analyser des épisodes réels (ex. The Infographics Show) via yt-dlp (extraction de
-   frames) + breakdown vision (Gemini/GPT) pour en extraire une doctrine concrète — mouvements de caméra,
-   placement des personnages, gestion profil/3-4, rythme des cuts, transposable à notre registre encre/SVG.
-   Potentiellement une mine d'apprentissage sur le narratif, au-delà du seul problème jambes/orientation.
+   statiques/gros plans/entrée-sortie, jamais à un déplacement en plan large (aligné avec la règle pro ci-dessus,
+   **non affectée par la révision ci-dessous** — c'est une contrainte géométrique de lisibilité des jambes,
+   pas une question de choix de mise en scène).
+2. ✅ **Piste R&D FAITE, 2 vagues (2026-07-02)** : analyse de 5 épisodes réels (Infographics Show ×2 +
+   SimpleHistory ×3, yt-dlp + breakdown vision, 5 agents indépendants, ~160 frames) → doctrine complète dans
+   [[MISE-EN-SCENE-INFOGRAPHICS-SHOW]] ⭐⭐. Vague 1 : confirme ET généralise la règle pro ci-dessus — la marche
+   en plan large est évitée par défaut par les studios pro (statique+décor-qui-vit, véhicule qui glisse,
+   vignettes+flèches). ⚠️ **RÉVISION vague 2** (SimpleHistory "French in War") : ce n'est vrai QUE quand le
+   déplacement N'EST PAS le sujet de la scène — quand la progression EST le message narratif (colonne qui
+   avance, exode, invasion), les studios pro animent la marche PLEINEMENT en registre/profil, plan large tenu.
+   Notre `StickRigMultiDir` 8-directions reste donc l'outil pertinent pour ce cas précis (ex. War-Map Sahel :
+   colonne en mouvement = marche plan large justifiée), pas un travail gâché. Notre patron CargoVoyage16x9
+   (véhicule quasi-fixe + décor qui défile) reste validé a posteriori pour le cas "déplacement pas le sujet".
 
 ### TORSE = 3e axe de différenciation perso (2026-07-02, banc d'essai ProtoFace)
 Au-delà de `tunicColor` : `tunicPattern` (`"stripes"` = rayures verticales internes au trapèze, `"collar"` =

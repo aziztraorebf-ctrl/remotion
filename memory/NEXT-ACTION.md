@@ -32,33 +32,29 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
-## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — 8 DIRECTIONS COMPLÈTES + 2 SCÈNES SÉQUENTIELLES (2026-07-02)
-> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § ÉTAT D'AVANCEMENT (dis « on reprend le 16:9 narratif »).
-> ⏳ **EN ATTENTE RETOUR AZIZ** : `PortDechargement16x9.tsx` (compo `RND-PortDechargement16x9`) vient d'être
->   présenté (suite de `CargoVoyage16x9.tsx`, compo `RND-CargoVoyage16x9`) — PAS validé, montrer en 1er en
->   prochaine session avant de continuer.
-> ⭐⭐ Doctrine gravée cette session : `doctrines/SVG-MIDFORM-FORMAT.md` § 4bis (scène-VOYAGE=palette stable /
->   scène-TRANSFORMATION=colorisation progressive obligatoire) + § 4ter (continuité de scène en séquence SVG =
->   réutiliser le CODE EXACT de la scène précédente, jamais "s'en inspirer" — un 1er essai générique a été
->   rejeté par Aziz avant le fix). Pointeur croisé : `doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` §2.
-> ✅✅ ACQUIS 2026-07-01/02 : **8 DIRECTIONS COMPLÈTES** — profil (StickRig) + 3/4/dos/face (StickRigMultiDir) ×
->   miroir. Torse-polygone colorable promu STANDARD (tunicColor/tunicPattern/neckwear — 3e axe de différenciation
->   perso). Transfert d'objet main-à-main (handoffState). Détail complet : `PERSONNAGE-VIVANT-INDEX.md` § 8 DIRECTIONS.
-> ⛔⛔ **DÉCISION AZIZ POUR LA SUITE (2026-07-02)** :
->   1. **PAS de marche de FACE** dans les prochaines scènes — réservée aux gros plans/statique (règle pro confirmée
->      par Gemini+GPT ET observation directe Aziz sur The Infographics Show : même des persos détaillés restent
->      quasi toujours en profil/3-4 pour tout mouvement en plan large). Détail : INDEX § RÈGLE PRO DE MISE EN SCÈNE.
->   2. **NOUVELLE PISTE R&D à ouvrir** : analyser des épisodes réels (The Infographics Show en 1er) via yt-dlp
->      (extraction frames) + breakdown vision (Gemini/GPT) → doctrine concrète (mouvements caméra, placement
->      persos, rythme des cuts, gestion profil/3-4) transposable à notre registre encre/SVG. Session dédiée.
-> ✅ ACQUIS 2026-06-30 : système « personnage vivant SVG » PROUVÉ + rangé — rig générique animé par CODE
->   (marche/penche/ramasse/manipule-objet/plante/porte), validé Aziz sur cacao + GGW, en 9:16 ET 16:9, 1 à 3 persos.
->   ⛔ SOURCE DE VÉRITÉ = `src/projects/_shared/personnage-vivant-svg/` (INDEX + rig/poses.ts + StickRig + objectHandling
->   + scène-proto RecolteAuSol). REPARTIR DE CE RIG, ne plus coder un perso de zéro. Leçon : [[key-learnings]] § PERSONNAGE VIVANT.
->   Nouvelle recette 2026-07-02 : `cueilleurs-fond-de-plan-16x9` (persos minuscules en fond, `carry="none"` obligatoire).
-> Acquis antérieurs (2026-06-29) : transposition 16:9 (profondeur/parallaxe/heure dorée) + model sheets Gemini-avec-ref.
-> NEXT possibles (non validés Aziz, juste évoqués) : Scène 3 au-delà du paradoxe port/usine ; OU même patron sur
->   un autre sujet Souverain (or→raffinerie, minerai→usine) ; faire INTERAGIR 2 persos EN mouvement multi-plan.
+## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — patron 2-scènes VALIDÉ, R&D grammaire/structure FAITE (2026-07-02)
+> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § REPRISE SESSION SUIVANTE (dis « on reprend le 16:9 narratif »).
+> ✅✅ **VALIDÉ AZIZ (2026-07-02)** : patron 2-scènes "voyage→arrivée/transformation" PROUVÉ de bout en bout —
+>   `CargoVoyage16x9.tsx` (`RND-CargoVoyage16x9`) + `PortDechargement16x9.tsx` (`RND-PortDechargement16x9`),
+>   archivés `out/templates-souverain/FINAL-CargoVoyage16x9-v1.mp4` + `FINAL-PortDechargement16x9-v1.mp4`.
+>   Réutilisable tel quel pour un autre sujet Souverain (or→raffinerie, minerai→usine).
+> ✅ **Scène 3 "RetourAuChamp16x9" prototypée mais PAS validée** (`_rnd/svg-scenes/`, `RND-RetourAuChamp16x9`) —
+>   jugée "plate narrativement" après comparaison avec des propositions LLM plus riches (voir ci-dessous).
+> ⭐⭐ **3 doctrines R&D gravées cette session** (5 chaînes tierces analysées, yt-dlp+vision+lecture script) :
+>   `doctrines/MISE-EN-SCENE-INFOGRAPHICS-SHOW.md` (grammaire caméra — marche plan large OK SI elle est le
+>   sujet), `doctrines/STRUCTURE-NARRATIVE-HYPOTHETICALLY.md` (architecture narrative format long),
+>   `doctrines/SCRIPTWRITING-MASTER-STORYTELLING-HYPOTHETICALLY.md` (écriture phrase par phrase, la plus
+>   actionnable). ⚠️ Hypothèses de studios tiers — PAS ENCORE testées sur notre propre matière.
+> 🔧 **Test comparatif Gemini vs GPT (svg-scene-narrative.py --ratio 16:9, nouveau flag)** : GPT-5.5 bat
+>   nettement Gemini 3.1 Pro sur une scène complète (Gemini a produit un arbre déformé) — INVERSE du test
+>   personnage-seul du 2026-06-29 (Gemini+ref avait gagné). Hypothèse à vérifier : Gemini meilleur sur asset
+>   isolé, GPT meilleur en composition de scène. Résultats : `out/_rnd/gemini-gpt-svg-test/`.
+> ⭐⭐ **OUVRIR LA PROCHAINE SESSION PAR Seedance 2.5 (fal.ai)** — modèle inconnu de notre mémoire projet
+>   (`memory/tools/seedance-rules.md` ne documente que 2.0) et hors knowledge cutoff Claude : Tavily d'abord,
+>   ne rien affirmer sur ses capacités avant vérification. Objectif : image-to-video sur une frame de nos
+>   propres scènes SVG (registre stick-figure), voir si Seedance anime notre style directement. Puis
+>   priorités 1-3 : personnages Gemini/GPT en style libre d'abord (pas bridé), re-test Gemini vs GPT sur les
+>   2 cas d'usage, parallaxe/mouvement de véhicules générés par les LLM (jamais testé — outil actuel = statique).
 
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
