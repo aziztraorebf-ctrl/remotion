@@ -32,7 +32,7 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
-## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — 2 SCÈNES SÉQUENTIELLES PROTOTYPÉES (2026-07-02)
+## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — 8 DIRECTIONS COMPLÈTES + 2 SCÈNES SÉQUENTIELLES (2026-07-02)
 > Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § ÉTAT D'AVANCEMENT (dis « on reprend le 16:9 narratif »).
 > ⏳ **EN ATTENTE RETOUR AZIZ** : `PortDechargement16x9.tsx` (compo `RND-PortDechargement16x9`) vient d'être
 >   présenté (suite de `CargoVoyage16x9.tsx`, compo `RND-CargoVoyage16x9`) — PAS validé, montrer en 1er en
@@ -41,6 +41,16 @@
 >   scène-TRANSFORMATION=colorisation progressive obligatoire) + § 4ter (continuité de scène en séquence SVG =
 >   réutiliser le CODE EXACT de la scène précédente, jamais "s'en inspirer" — un 1er essai générique a été
 >   rejeté par Aziz avant le fix). Pointeur croisé : `doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` §2.
+> ✅✅ ACQUIS 2026-07-01/02 : **8 DIRECTIONS COMPLÈTES** — profil (StickRig) + 3/4/dos/face (StickRigMultiDir) ×
+>   miroir. Torse-polygone colorable promu STANDARD (tunicColor/tunicPattern/neckwear — 3e axe de différenciation
+>   perso). Transfert d'objet main-à-main (handoffState). Détail complet : `PERSONNAGE-VIVANT-INDEX.md` § 8 DIRECTIONS.
+> ⛔⛔ **DÉCISION AZIZ POUR LA SUITE (2026-07-02)** :
+>   1. **PAS de marche de FACE** dans les prochaines scènes — réservée aux gros plans/statique (règle pro confirmée
+>      par Gemini+GPT ET observation directe Aziz sur The Infographics Show : même des persos détaillés restent
+>      quasi toujours en profil/3-4 pour tout mouvement en plan large). Détail : INDEX § RÈGLE PRO DE MISE EN SCÈNE.
+>   2. **NOUVELLE PISTE R&D à ouvrir** : analyser des épisodes réels (The Infographics Show en 1er) via yt-dlp
+>      (extraction frames) + breakdown vision (Gemini/GPT) → doctrine concrète (mouvements caméra, placement
+>      persos, rythme des cuts, gestion profil/3-4) transposable à notre registre encre/SVG. Session dédiée.
 > ✅ ACQUIS 2026-06-30 : système « personnage vivant SVG » PROUVÉ + rangé — rig générique animé par CODE
 >   (marche/penche/ramasse/manipule-objet/plante/porte), validé Aziz sur cacao + GGW, en 9:16 ET 16:9, 1 à 3 persos.
 >   ⛔ SOURCE DE VÉRITÉ = `src/projects/_shared/personnage-vivant-svg/` (INDEX + rig/poses.ts + StickRig + objectHandling
@@ -48,8 +58,7 @@
 >   Nouvelle recette 2026-07-02 : `cueilleurs-fond-de-plan-16x9` (persos minuscules en fond, `carry="none"` obligatoire).
 > Acquis antérieurs (2026-06-29) : transposition 16:9 (profondeur/parallaxe/heure dorée) + model sheets Gemini-avec-ref.
 > NEXT possibles (non validés Aziz, juste évoqués) : Scène 3 au-delà du paradoxe port/usine ; OU même patron sur
->   un autre sujet Souverain (or→raffinerie, minerai→usine) ; faire INTERAGIR 2 persos ; évolution 8 directions
->   (`[[IDEE-PERSO-8-DIRECTIONS]]`, pour le plan-séquence champ→usine).
+>   un autre sujet Souverain (or→raffinerie, minerai→usine) ; faire INTERAGIR 2 persos EN mouvement multi-plan.
 
 ## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·

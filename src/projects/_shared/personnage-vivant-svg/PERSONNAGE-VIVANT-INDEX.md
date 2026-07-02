@@ -116,6 +116,36 @@ avant d'attaquer une scène narrative qui doit changer de vue en cours de mouvem
   ET Gemini 3.1 Pro EN PARALLÈLE avec la même image/vidéo + le diagnostic suspecté → appliquer seulement ce qui
   converge entre les 2. Les 2 modèles se sont toujours accordés exactement (jamais de désaccord net observé).
 
+### RÈGLE PRO DE MISE EN SCÈNE — pas de jambes dos/face à petite échelle (2026-07-02, ⭐⭐ décisive)
+Constat empirique (render réel + confirmé par revue croisée Gemini 3.1 Pro + GPT-5.5) : à petite échelle
+(perso lointain dans le cadre), les jambes dos/face sont QUASI ILLISIBLES — le mouvement de 3-4px sur l'axe Y
+est mangé par l'épaisseur du trait, contrairement au profil où le mouvement se lit sur X (large, lisible à
+toute taille). **Ce n'est pas un bug du rig, c'est une contrainte géométrique de la projection 2D.**
+
+Confirmé par observation directe (Aziz, visionnage accéléré d'épisodes The Infographics Show) : même avec des
+personnages BEAUCOUP plus détaillés que nos stick figures, ils restent très majoritairement en PROFIL (3/4
+en second) pour tout mouvement en plan large — quasi jamais de marche de face. Les 2 modèles confirment que
+c'est un choix de mise en scène délibéré des studios pro (staging = 1er principe de l'animation), pas une
+limite technique honteuse. Citation Gemini : *"Ne perds pas des semaines à essayer de résoudre mathématiquement
+un problème de perception humaine."*
+
+**RÈGLE ADOPTÉE** (`rig/StickFigureSimplified.tsx`, prouvée sur `rnd-8dir/SceneMultiPlanTest.tsx`) :
+- Profil / 3/4 : gardent le rig complet (`StickRig`/`StickRigMultiDir`) à TOUTE échelle — lisibles nativement.
+- Dos / face LOINTAIN (perso petit, sous un seuil d'échelle ~0.85) : `StickFigureSimplified` — PAS de cycle de
+  jambes articulé (2 segments fixes légèrement écartés), le mouvement est porté par **Scale & Bob** : rebond
+  vertical sinusoïdal du corps entier (même cadence que la marche réelle) + balancement des bras + changement
+  d'échelle (approche/éloignement). "C'est le cerveau du spectateur qui fait le reste du travail" (Gemini).
+- Dos / face PROCHE (gros plan, au-dessus du seuil) : repasse sur le rig complet (jambes lisibles à cette taille).
+- C'est la SCÈNE qui choisit (pas un seuil automatique dans le rig) — le rig ne devine pas l'intention du plan.
+
+⛔ **DÉCISION AZIZ 2026-07-02 pour la SUITE (à traiter en prochaine session)** :
+1. **Pas de marche de FACE** dans les prochaines scènes de production — réserver la vue face aux moments
+   statiques/gros plans/entrée-sortie, jamais à un déplacement en plan large (aligné avec la règle pro ci-dessus).
+2. **Piste R&D à ouvrir** : analyser des épisodes réels (ex. The Infographics Show) via yt-dlp (extraction de
+   frames) + breakdown vision (Gemini/GPT) pour en extraire une doctrine concrète — mouvements de caméra,
+   placement des personnages, gestion profil/3-4, rythme des cuts, transposable à notre registre encre/SVG.
+   Potentiellement une mine d'apprentissage sur le narratif, au-delà du seul problème jambes/orientation.
+
 ### TORSE = 3e axe de différenciation perso (2026-07-02, banc d'essai ProtoFace)
 Au-delà de `tunicColor` : `tunicPattern` (`"stripes"` = rayures verticales internes au trapèze, `"collar"` =
 bordure de col courbe) et `neckwear` (`"tie"` = triangle qui pend du cou, `"scarf-knot"` = rond + queue qui

@@ -28,6 +28,8 @@ export type StickRigMultiDirProps = {
   view: "3quarter" | "back" | "face";
   walkPhase?: number;
   moveAmt?: number;
+  facing?: 1 | -1;            // miroir gauche/droite (ex. 3/4 gauche vs 3/4 droite) — dos/face restent visuellement
+                               // quasi-symetriques mais le miroir reste cohérent pour le sens de piste/bras
   ink?: string;
   tunicColor?: string;
   tunicPattern?: "none" | "stripes" | "collar";
@@ -45,7 +47,7 @@ const VIEW_PARAMS = {
 } as const;
 
 export const StickRigMultiDir: React.FC<StickRigMultiDirProps> = ({
-  view, walkPhase = 0, moveAmt = 1,
+  view, walkPhase = 0, moveAmt = 1, facing = 1,
   ink = DEFAULT_INK, tunicColor = DEFAULT_TUNIC, tunicPattern = "none",
   neckwear = "none", neckwearColor = DEFAULT_NECKWEAR, hat = "straw", scale = 1.4,
 }) => {
@@ -98,7 +100,7 @@ export const StickRigMultiDir: React.FC<StickRigMultiDirProps> = ({
   const showFace = view === "face";
 
   return (
-    <g transform={`scale(${scale})`} opacity={0.92}>
+    <g transform={`scale(${facing * scale} ${scale})`} opacity={0.92}>
       {/* 1. bras far */}
       <path d={`M ${shXFar} ${shYFar} L ${armFarHandX} ${armFarHandY}`} {...S} strokeWidth={9 * P.farStroke} opacity={P.farOpacity} />
       {/* 2. jambe la plus loin ecran */}
