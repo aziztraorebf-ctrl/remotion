@@ -12,7 +12,7 @@ pas la mécanique. ⛔ Garde-fou doctrine : silhouette stylisée pictogramme, JA
 ## Fichiers
 - `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moveAmt,bend,armReach,offerReach})` →
   coords locales (bassin, épaules, **main avant**). À utiliser AUSSI côté scène pour coller un objet sur la main.
-- `rig/StickRig.tsx` — le composant rig générique. Props : `walkPhase, moveAmt, bend, armReach, offerReach, facing, ink, hat`.
+- `rig/StickRig.tsx` — le composant rig générique. Props : `walkPhase, moveAmt, bend, armReach, offerReach, facing, ink, tunicColor, hat`.
 - `rig/objectHandling.ts` — `objectState` (ramasser→tenir→déposer) + `handoffState` (transfert main-à-main, 2 persos).
 - `scenes-proto/RecolteAuSol.tsx` — ⭐ scène-prototype validée (entre→marche→penche→ramasse→relève). Compo Root :
   `PersoVivant-RecolteAuSol`. La copier comme point de départ d'une nouvelle scène.
@@ -52,6 +52,14 @@ bug). La SCÈNE doit faire décroître `moveAmt` vers 0 sur ~15 frames AVANT l'a
 avec le fix (résiduel mineur observé, acceptable pour un proto — à reprendre en vraie production si visible).
 Les scènes historiques (RecolteAuSol, HistoirePlanteur, HistoireGGW) utilisent encore l'ancien `moving` booléen
 (non cassées, mais gardent le bug) — migrer vers `moveAmt` à la prochaine retouche.
+
+### TORSE-POLYGONE = standard (2026-07-01, promu depuis le chantier 8 directions)
+La ligne simple hanche→épaule d'origine est remplacée par un TRAPÈZE opaque (épaules plus larges que hanches),
+colorable via `tunicColor` (défaut = parchemin neutre). Né du besoin de lisibilité en 3/4/dos (une ligne ne
+suffit pas à lire la torsion du corps), Aziz préfère ce design MÊME en profil : donne un 3e axe de
+différenciation des persos — `ink` (couleur du TRAIT), `hat` (accessoire tête), `tunicColor` (vêtement/boubou/
+tunique) — combinables librement. Le tracé du torse est calculé perpendiculairement à l'axe hanche→épaule
+(`torsoDeg`), donc suit automatiquement le penché/la marche sans logique séparée.
 
 ### Offrir/tendre un objet à quelqu'un en face → offerReach (≠ armReach)
 `armReach` (existant) pointe le bras vers le SOL-avant (~22°, pensé pour ramasser) — INADAPTÉ pour tendre un objet

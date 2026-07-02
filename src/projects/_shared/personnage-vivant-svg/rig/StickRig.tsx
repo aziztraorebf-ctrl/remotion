@@ -12,11 +12,18 @@
  *
  * GENERIQUE : le chapeau est une OPTION (hat) et l'encre est parametrable (ink). Un futur perso
  * (mineur, pecheur, ouvrier) reutilise le MEME rig en changeant l'accessoire/la couleur.
+ *
+ * TORSE-POLYGONE (2026-07-01, valide Aziz, promu standard) : ne au chantier "8 directions" (le trait
+ * simple hanche->epaule etait illisible en 3/4/dos, il fallait un vrai trapeze opaque comme masque de
+ * profondeur). Aziz prefere ce design MEME en profil : le tronc visible et colorable (`tunicColor`)
+ * donne un 3e axe de differenciation des persos (en plus de `ink`=trait et `hat`=tete) — boubou, cravate,
+ * vetement... Devient le design PAR DEFAUT sur toutes les vues, remplace la ligne simple d'origine.
  */
 import React from "react";
 import { computePose, RIG } from "./poses";
 
 const DEFAULT_INK = "#2b2117";
+const DEFAULT_TUNIC = "#e8dcc0"; // parchemin — neutre, coherent avec le fond par defaut
 const STRAW = "#d1b46b";
 const STRAW_D = "#c39a4f";
 const CAP = "#5e7245";   // casquette vert-feuille (registre GGW)
@@ -32,6 +39,7 @@ export type StickRigProps = {
   offerReach?: number;        // 0..1 bras tendu a l'HORIZONTALE (offrir/tendre un objet a qqn en face)
   facing?: 1 | -1;
   ink?: string;               // couleur du trait d'encre (defaut charte)
+  tunicColor?: string;        // couleur de remplissage du TORSE (boubou/vetement) — defaut = parchemin (neutre)
   hat?: "straw" | "cap" | "scarf" | "none"; // accessoire tete (straw=paille, cap=casquette, scarf=foulard)
   carry?: "none" | "shoulder-sack" | "hand-basket"; // charge portee (defaut none)
   load?: number;              // 0..1 intensite du poids (courbe le bras de port + main fermee)
@@ -46,6 +54,7 @@ export const StickRig: React.FC<StickRigProps> = ({
   offerReach = 0,
   facing = 1,
   ink = DEFAULT_INK,
+  tunicColor = DEFAULT_TUNIC,
   hat = "straw",
   carry = "none",
   load = 0,
@@ -54,6 +63,18 @@ export const StickRig: React.FC<StickRigProps> = ({
   const pose = computePose({ walkPhase, moving, moveAmt, bend, armReach, offerReach });
   const { be, phase, swingDeg, hipX, hipY, torsoDeg, shX, shY, frontHandX, frontHandY } = pose;
   const m = Math.max(0, Math.min(1, moveAmt ?? (moving ? 1 : 0)));
+
+  // ---- TORSE-POLYGONE (standard 2026-07-01) : trapeze de largeur autour de l'axe hanche->epaule.
+  // Profil = un seul plan (pas de near/far comme en 3/4/dos) : la largeur est perpendiculaire a l'axe
+  // du torse, projetee sur X (le rig est vu de cote, l'epaisseur du corps se lit en profondeur d'ecran
+  // -> on la simule par une largeur constante de part et d'autre de l'axe, epaules > hanches).
+  const torsoRad = (torsoDeg * Math.PI) / 180;
+  const perpX = Math.cos(torsoRad), perpY = Math.sin(torsoRad); // perpendiculaire a l'axe hanche->epaule
+  const SHOULDER_HALF_W = 16, HIP_HALF_W = 11;
+  const shFrontX = shX + perpX * SHOULDER_HALF_W, shFrontY = shY - perpY * SHOULDER_HALF_W;
+  const shBackX = shX - perpX * SHOULDER_HALF_W, shBackY = shY + perpY * SHOULDER_HALF_W;
+  const hipFrontX = hipX + perpX * HIP_HALF_W, hipFrontY = hipY - perpY * HIP_HALF_W;
+  const hipBackX = hipX - perpX * HIP_HALF_W, hipBackY = hipY + perpY * HIP_HALF_W;
 
   // ---- JAMBES (foot-plant : le pied ne descend jamais sous le sol y=0) ----
   const kneeBend = Math.max(0, Math.cos(phase)) * 14 * m + be * 30;
@@ -118,7 +139,11 @@ export const StickRig: React.FC<StickRigProps> = ({
       )}
       <path d={`M ${hipX} ${hipY} L ${legBack.kx} ${legBack.ky} L ${legBack.fx} ${legBack.fy} L ${legBack.toeX} ${legBack.fy}`} {...S} strokeWidth={10} opacity={0.85} />
       <path d={`M ${shX} ${shY} L ${backHandX} ${backHandY}`} {...S} strokeWidth={9} opacity={0.85} />
-      <path d={`M ${hipX} ${hipY} L ${shX} ${shY}`} {...S} strokeWidth={14} />
+      {/* TORSE-POLYGONE : trapeze opaque colorable (tunicColor), epaules plus larges que hanches */}
+      <path
+        d={`M ${hipBackX} ${hipBackY} L ${shBackX} ${shBackY} L ${shFrontX} ${shFrontY} L ${hipFrontX} ${hipFrontY} Z`}
+        fill={tunicColor} stroke={ink} strokeWidth={4} strokeLinejoin="round"
+      />
       <path d={`M ${hipX} ${hipY} L ${legFront.kx} ${legFront.ky} L ${legFront.fx} ${legFront.fy} L ${legFront.toeX} ${legFront.fy}`} {...S} strokeWidth={11} />
       <line x1={shX} y1={shY} x2={headX} y2={headY} {...S} strokeWidth={11} />
       <circle cx={headX} cy={headY} r={HEAD_R} fill="none" stroke={ink} strokeWidth={6} />

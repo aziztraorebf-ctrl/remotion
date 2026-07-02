@@ -10,6 +10,8 @@ import { B5PontH, B5_PONT_H_FRAMES, B5_PONT_H_FPS } from "./projects/souverain/c
 import { ProtoPlanteur, PROTO_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/beats/ProtoPlanteur";
 import { RecolteAuSol, RECOLTE_AU_SOL_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/RecolteAuSol";
 import { PasserObjetMainAMain, PASSER_OBJET_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/PasserObjetMainAMain";
+import { Proto3Quarter, PASSER3Q_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/Proto3Quarter";
+import { ProtoBack, PASSER_BACK_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoBack";
 import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
@@ -214,6 +216,7 @@ import { IngaMondeVivant, INGA_MONDE_FRAMES } from "./projects/_rnd/svg-scenes/I
 import { IngaMondeV2, INGA_MONDE_V2_FRAMES } from "./projects/_rnd/svg-scenes/IngaMondeV2";
 import { IngaDualScene, INGA_DUAL_FRAMES } from "./projects/_rnd/svg-scenes/IngaDualScene";
 import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/IngaSplitScreen";
+import { CargoVoyage16x9, CARGO_VOYAGE_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2014,6 +2017,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-IngaMondeV2" component={IngaMondeV2} durationInFrames={INGA_MONDE_V2_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaDualScene" component={IngaDualScene} durationInFrames={INGA_DUAL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaSplitScreen" component={IngaSplitScreen} durationInFrames={INGA_SPLIT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-CargoVoyage16x9" component={CargoVoyage16x9} durationInFrames={CARGO_VOYAGE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
@@ -3250,6 +3254,22 @@ export const RemotionRoot: React.FC = () => {
           id="PersoVivant-PasserObjetMainAMain"
           component={PasserObjetMainAMain}
           durationInFrames={PASSER_OBJET_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-Proto3Quarter"
+          component={Proto3Quarter}
+          durationInFrames={PASSER3Q_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoBack"
+          component={ProtoBack}
+          durationInFrames={PASSER_BACK_FRAMES}
           fps={30}
           width={1920}
           height={1080}
