@@ -213,6 +213,398 @@ la fève, elle glisse seule"). C'est la MAIN/le corps qui l'amène. L'objet disp
   DANS la bande du calque 1er-plan, pas au niveau du calque fond) ; (3) ordre de calques : fond-océan → véhicule
   → lignes-de-vague-proches (pour que les vagues passent devant le bas de la coque = ancrage visuel dans l'eau).
 
+### Segments VOLUMÉTRIQUES (capsule tapered) — PROTOTYPE VALIDÉ 2026-07-02, pas encore intégré production
+
+**Origine** : Aziz montre `planteur-cacao-charsheet-GPT.png` (planche GPT Image 2, contours fermés à volume —
+bras/jambes tapered avec manches/bottes, PAS des lignes strokeWidth comme StickRig actuel) et demande si ce
+niveau de détail est atteignable en SVG animé. Breakdown demandé DIRECTEMENT à `openai/gpt-5.5` via
+`scripts/tools/openrouter-vision-breakdown.py` (le modèle qui a dessiné la planche, interrogé sur sa propre
+construction) — verdict : **"étendre le rig actuel en cutout puppet volumétrique, PAS de path-morphing entre
+poses dessinées à la main"**. Chaque segment ligne devient un `<path>` fermé tapered (`Segment(endpointA,
+endpointB, widthA, widthB)`), la cinématique (`computePose`) reste 100% inchangée — seul le RENDU change.
+
+**Prototype réalisé** (`capsuleSegment.ts` + `_rnd/svg-scenes/ProtoCapsuleLimb.tsx`, compo Root
+`RND-ProtoCapsuleLimb`) : helper `capsulePath()` génère un contour fermé tapered avec bouts arrondis entre 2
+points, testé isolément sur le bras avant à 3 poses (debout/marche/bras tendu) superposé au `StickRig` normal
+sans le modifier. **Résultat visuel concluant** : le bras capsule se distingue nettement de la ligne d'origine,
+volume cohérent avec la pose, aucune régression sur la cinématique.
+
+**⛔ PAS encore intégré à StickRig.tsx** (production intacte). Reste à faire avant adoption :
+1. Étendre `capsuleSegment.ts` aux jambes (2 segments cuisse/mollet avec genou, comme recommandé par GPT)
+2. Ajouter un coude explicite au bras avant (actuellement 1 segment direct épaule→main, GPT recommande
+   épaule→coude→main en 2 capsules chaînées pour matcher la planche de référence)
+3. Torse/bottes/chapeau : GPT recommande des formes rigides groupées plutôt que des capsules (torse = trapèze
+   déjà existant, juste à épaissir légèrement ; bottes/chapeau = groupes séparés attachés aux joints)
+4. Décider du flag d'activation (`volumetric?: boolean` sur `StickRigProps` ?) pour ne pas casser les 5+ scènes
+   de production qui utilisent le rig ligne actuel
+5. Vérifier le comportement en 8-directions (`StickRigMultiDir`) — GPT prévient que ce registre "fonctionne
+   mieux en angle de vue limité, pas comme modèle pleinement rotatif" (chevauchements probables en 3/4/dos)
+
+**Pourquoi cette piste bat PixelLab pour un registre "personnage développé"** (voir aussi `memory/tools/pixellab.md`
+§ PixelLab vs registre SVG) : reste 100% dans l'écosystème SVG/code — zéro coût par itération (contrairement à
+un appel API payant par génération), zéro risque de choc de langage graphique (vecteur natif, pas de conversion
+pixel/vecteur), et le contrôle de timing reste total (contrairement à Seedance qui n'interprète le timing qu'à
+l'intention, voir `memory/tools/seedance-storyboard-technique.md` § 29).
+
+### GPT-5.5 générant du VRAI code SVG (pas une analyse) — TESTÉ 2026-07-02, résultat POSITIF avec réserve
+
+**Clarification importante** : le breakdown GPT ci-dessus (§ Segments VOLUMÉTRIQUES) répondait à "comment RIGGERAIS-TU
+ce personnage" — une analyse théorique, PAS une génération de code. Aziz a pointé la confusion : le test qu'il
+voulait était de demander à GPT de **produire le code SVG lui-même** à partir de l'image `planteur-cacao-charsheet-GPT.png`
+(la planche que GPT a lui-même dessinée), pour voir si le modèle peut convertir SA PROPRE image en paths
+exploitables — pas juste théoriser dessus.
+
+**Test réalisé** : prompt direct à `openai/gpt-5.5` (via `openrouter-vision-breakdown.py`) demandant le SVG brut
+de la pose "debout, mains sur les hanches" (5e figure de la planche), avec consigne de groupes nommés
+(`arm-upper-left`, `leg-lower-right`, `torso`, `hat`, `head`...) et paths FERMÉS (pas de lignes strokées).
+
+**Résultat** : ✅ GPT a produit du **vrai SVG structuré et syntaxiquement valide** (rendu direct via `rsvg-convert`,
+aucune erreur de parsing) — pas du texte vague, du code copiable. La structure de groupes nommés est cohérente
+et directement exploitable pour un futur rig (chaque membre séparé, prêt à recevoir une transform de rotation).
+
+**Mais écarts réels vs l'original** (comparaison visuelle 3 volets : original / SVG brut GPT / SVG nettoyé à la
+main) :
+- 1er jet GPT : tête trop grosse (mauvaise proportion tête/corps), chapeau en 2 formes qui se chevauchent
+  (rendu strié confus au lieu de calotte+bord nets), zone mains/coudes confuse (formes qui se chevauchent).
+- Après nettoyage manuel (réduction tête, refonte chapeau en 2 ellipses propres, refonte bras avec coude
+  explicite qui rejoint la hanche) : résultat nettement plus proche de l'original, mais toujours pas
+  pixel-parfait (torse un peu large, jambes sans la légère torsion 3/4 de l'original, trait un peu épais).
+
+**Conclusion opérationnelle** : GPT-5.5 en génération SVG directe est un **accélérateur de premier jet**, pas un
+générateur final. Il capture correctement le SQUELETTE et le GESTE (mains sur les hanches lisibles, chapeau
+conique reconnaissable, jambes ancrées) avec une structure de code exploitable (groupes nommés = prêt à animer),
+mais nécessite systématiquement une passe de nettoyage manuel sur les proportions et les chevauchements de
+formes avant d'être production-ready. Gain de temps réel vs dessiner à la main de zéro, mais PAS un remplacement
+complet du travail manuel de finition.
+
+Fichiers test : `gpt-svg-test.svg` (1er jet brut GPT), `gpt-svg-test-v2-cleaned.svg` (nettoyé, groupes intacts).
+Non conservés dans le repo (scratchpad de session) — à re-générer si cette piste est reprise en production.
+
+### ⭐⭐ Nuance importante — "reproduire une pose" ≠ "concevoir pour l'animation" (Aziz 2026-07-02)
+
+**Distinction cruciale identifiée par Aziz après le test ci-dessus** : le test GPT-5.5 réalisé a demandé une
+**reproduction fidèle d'une pose existante** (la 5e figure de la planche GPT) — objectif "fais un SVG qui
+ressemble à CE dessin précis". Ce n'est PAS la même chose que demander à GPT de **concevoir un personnage dont
+la structure est pensée dès le départ pour être animée** — c'est-à-dire lui donner le CONTEXTE de notre système
+(joints hanche/genou/cheville, épaule/coude/poignet, `computePose()` qui pivote chaque segment autour de son
+articulation parente) et lui demander de produire un SVG dont chaque `<g>` correspond à un os du squelette,
+avec un point de pivot cohérent, PAS juste "voici un joli dessin découpé en calques nommés a posteriori".
+
+**Prompt à tester en priorité à la prochaine session** (au lieu de "reproduis cette pose") :
+```
+You are designing a character RIG, not just an illustration. This SVG will be driven by code: each named
+group will receive a `transform="rotate(angle, pivotX, pivotY)"` computed per-frame by a skeletal animation
+system (hip/knee/ankle, shoulder/elbow/wrist joints — same architecture as a 2D cutout puppet).
+
+Design the character with this constraint FIRST, aesthetics SECOND:
+- Each limb segment (upper-arm, forearm, thigh, shin) must be a SEPARATE closed path, sized to rotate
+  cleanly around its PROXIMAL joint (e.g. upper-arm rotates around the shoulder point) without the shape
+  itself needing to deform.
+- Report the exact pivot point (x,y in the path's local coordinate space) for each group, so the code can
+  set the correct rotation origin.
+- Keep proportions and joint positions consistent with a standing neutral pose — this is the REST POSE the
+  rig will be built from before any rotation is applied.
+- [style constraints: ink-line, flat fill, no face detail, etc.]
+
+Output the SVG code AND a JSON list of {group_id, pivot_x, pivot_y, parent_joint} for every group.
+```
+
+**Pourquoi ça change la donne** : le test précédent a produit un SVG "joli mais figé" — les groupes existent
+mais aucun point de pivot n'a été pensé pour la rotation (GPT a dessiné une pose statique et découpé après
+coup). Avec cette approche, on demanderait à GPT de résoudre le MÊME problème de rigging que
+`capsuleSegment.ts` résout en code — mais en lui laissant dessiner la forme réelle des segments (avec plis de
+vêtement, volume organique) au lieu de nos capsules géométriques simples. Si ça marche, ça pourrait fusionner
+le meilleur des deux pistes : la précision de contrôle du rig code + la richesse visuelle du dessin GPT.
+
+**Statut** : ✅ TESTÉ 2026-07-02 — **RÉSULTAT NÉGATIF, piste écartée pour la production.**
+
+**Test réalisé** : prompt ci-dessus envoyé à `openai/gpt-5.5` sur `planteur-cacao-charsheet-GPT.png`
+(`scripts/tools/openrouter-vision-breakdown.py`). GPT a produit une réponse structurée conforme à la
+demande : SVG complet (15 groupes nommés `leg-upper-left`, `arm-lower-right`, `torso`, `hat`... chacun un
+`<path>` fermé) + JSON de 15 pivots avec `parent_joint` explicite (hip/knee/ankle, shoulder/elbow/wrist).
+Rendu de la pose REST seule (`rig-first-rest-pose.png`) : net, propre, proportions correctes.
+
+**Le vrai test** (celui qui compte) : appliquer des `transform="rotate(angle, pivot_x, pivot_y)"` aux groupes
+pour simuler une pose de marche/bras levé (`rig-first-posed-test.png` + version angle modéré
+`rig-first-posed-mild.png`). **Échec net** : dès une rotation même modérée (~20-25°) au coude/épaule, un
+écart/décrochage visible apparaît entre `arm-upper-right` et `arm-lower-right`, la main se détache
+visuellement du bras. Cause racine : les paths sont dessinés une fois en pose REST avec un chevauchement
+approximatif aux jointures (pas d'emboîtement géométrique garanti) — contrairement à `capsulePath()`
+(§ Segments VOLUMÉTRIQUES) qui RECALCULE la capsule à chaque frame à partir des 2 points d'articulation
+réels (`computePose()`), garantissant la continuité par construction quelle que soit la pose.
+
+**Conclusion opérationnelle** : GPT-5.5 peut produire un JSON de pivots syntaxiquement cohérent (bonne
+lecture de l'intention rig), mais ne sait PAS dessiner des segments dont la géométrie reste connectée sous
+rotation arbitraire — il dessine une illustration figée, pas une machine articulée. La nuance "concevoir
+pour l'animation" ne suffit pas à obtenir un résultat robuste : la robustesse vient de la RÈGLE DE
+CONSTRUCTION (capsule recalculée par le code à chaque frame), pas de la qualité du prompt. **Le rig capsule
+(`capsuleSegment.ts`, déjà intégré à `StickRig.tsx`) reste la seule approche production-ready** — supérieur
+sur ce critère décisif, même si visuellement le SVG GPT a un dessin plus riche (vêtements, chapeau à 2
+formes, cacao brodé sur le torse) que nos capsules géométriques nues. Piste de récupération possible (non
+testée) : utiliser le dessin GPT comme RÉFÉRENCE STYLE pour redessiner à la main les capsules avec plus de
+détail (manches, plis), mais garder le calcul géométrique du code — jamais faire confiance à un path GPT
+pour la rotation elle-même.
+
+Fichiers test (scratch, non conservés dans le repo) : `out/_rnd/gpt-rig-first-test/` (prompt, réponse brute,
+SVG extrait, JSON pivots, 3 renders PNG dont les 2 poses tournées qui démontrent l'échec).
+
+### ⭐⭐ "Banque de poses" text-to-SVG (idée Aziz 2026-07-02) — ✅ TESTÉE, RÉSULTAT POSITIF (GPT-5.5)
+
+**Origine de l'idée** : après l'échec du rig-first sous rotation (section précédente), Aziz a reformulé le
+problème — au lieu de forcer UN squelette unique à TOUT interpoler en continu (ce qui a échoué), reproduire
+le pattern des studios pro type The Infographics Show : une **bibliothèque de poses discrètes pré-dessinées**
+par catégorie de mouvement (idle, marche-1, marche-2, tend-la-main...), utilisées au bon moment par CUT/swap,
+pas par interpolation continue d'un rig unique. Aziz a aussi noté que le test précédent était biaisé : il
+partait d'une IMAGE déjà générée (vision→SVG), pas d'une génération SVG texte-pur dès le départ (le vrai
+pattern qui a produit les scènes SVG génératives GGW/Muraille Verte, cf. `llm-gen-svg.py`).
+
+**Test réalisé** : prompt texte pur (AUCUNE image de référence) envoyé en parallèle à `openai/gpt-5.5` ET
+`gemini-3.1-pro-preview`, demandant 4 poses SVG standalone du MÊME personnage (planteur de cacao) avec
+convention de nommage de groupes IDENTIQUE entre poses (`torso`, `leg-upper-front`, `arm-lower-back`...) :
+`idle` / `walk-a` / `walk-b` (les 2 moments alternés d'un cycle de marche) / `bend-reach` (penché, ramasse).
+Fichiers : `out/_rnd/pose-bank-test/` (prompt, réponses brutes, 8 SVG extraits, planche comparative
+`COMPARISON-pose-bank.png`).
+
+**Résultat GPT-5.5 : net succès.**
+- Personnage visuellement COHÉRENT sur les 4 poses (même chapeau, mêmes proportions, mêmes couleurs, même
+  ligne de sol) — bien le même perso reconnaissable, pas 4 dessins déconnectés.
+- Anatomie crédible sur les 4 poses, y compris `bend-reach` (posture penchée avec bassin compensé, PAS de
+  bascule improbable — le même problème qu'on avait dû résoudre à la main en code pour StickRig).
+- **Topologie de groupes VALIDÉE identique** sur les 4 SVG (vérifié par grep des `<g id="...">`) : les 15
+  mêmes IDs présents dans chaque pose (`head, hat, torso, arm-upper-front, arm-lower-front, hand-front,
+  arm-upper-back, arm-lower-back, hand-back, leg-upper-front, leg-lower-front, foot-front, leg-upper-back,
+  leg-lower-back, foot-back`) — donc cible-able de façon fiable en code (`#torso`, sélecteurs CSS/JS) à
+  travers les 4 poses, même si l'ORDRE de dessin (front/back) varie selon la pose (attendu, pas un défaut).
+
+**Jugement visuel initial (images fixes) : Gemini semblait moins bon** — bras/jambes désaxés à l'idle, mains
+disproportionnées en boules à petite échelle. **Mais Aziz a challengé ce jugement** en regardant le
+`bend-reach` en grand format : le Gemini est en fait le PLUS CRÉDIBLE des deux sur ce geste précis (posture
+accroupie basse, main qui touche vraiment le sol — contre un GPT plus "penché debout", main qui flotte).
+Vérification à l'œil en gros plan (`bend-reach-side-by-side.png`) : jugement initial corrigé, Gemini meilleur.
+
+### ⭐⭐⭐ LE VRAI TEST DÉCISIF — structure XML + interpolation en MOUVEMENT (2026-07-02)
+
+Aziz a alors posé la question qui compte vraiment : *peut-on FAIRE BOUGER ces poses, ou faut-il bricoler ?*
+Inspection du XML brut des 2 sets a révélé une différence structurelle majeure, invisible sur une image fixe :
+
+- **Gemini 3.1 Pro a spontanément produit un vrai RIG FK (forward-kinematics) imbriqué** : chaque membre est
+  un `<g transform="translate(jointX,jointY) rotate(angle)">` ENFANT du groupe parent (ex. `arm-lower`
+  imbriqué DANS `arm-upper`, avec son propre `translate`+`rotate` relatif à l'épaule). C'est exactement
+  l'architecture squelette/joint qu'on avait explicitement demandée à GPT dans le test rig-first (échoué) —
+  Gemini l'a produite SANS qu'on le lui demande, juste en générant du texte-pur avec la contrainte de nommage
+  de groupes. Preuve : les angles `rotate()` de `walk-a` (gemini-pose2.svg) et `walk-b` (gemini-pose3.svg)
+  sont EXACTEMENT le miroir front/back l'un de l'autre (mêmes valeurs, juste permutées) — Gemini a conçu
+  UN SEUL squelette et l'a réutilisé pour les 2 moments du cycle de marche.
+- **GPT-5.5 a produit des paths en coordonnées ABSOLUES**, sans aucune hiérarchie `translate`/`rotate` — le
+  JSON de pivots du test rig-first précédent était donc un ANNOTATION a posteriori, pas une vraie structure
+  de rendu exploitable en rotation (cohérent avec l'échec de ce test-là).
+
+**Test de mouvement réalisé** (protos Remotion, gardés dans le repo) :
+- `src/projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx` (compo Root `RND-ProtoGeminiPoseBankWalk`) :
+  reconstruction du rig Gemini en JSX (paths + hiérarchie copiés du SVG brut), **interpolation continue**
+  des angles `rotate()` entre walk-a et walk-b frame par frame (`lerpAngles`, easing linéaire, ~14 frames par
+  demi-pas). **Résultat : marche FLUIDE, ZÉRO décrochage, mouvement crédible** — confirmé visuellement
+  frame par frame (contact sheet `walk-contact-sheet.png`, render `out/_rnd/pose-bank-test/gemini-walk-test.mp4`).
+- `src/projects/_rnd/svg-scenes/ProtoGptPoseBankWalk.tsx` (compo Root `RND-ProtoGptPoseBankWalk`) : les 4 SVG
+  GPT bruts (`public/_rnd/gpt-pose-bank/*.svg`) affichés en **CUT SEC** (pas d'interpolation possible, vu
+  l'absence de hiérarchie de joints) au même rythme (~14 frames/pose). Résultat : chaque pose individuelle
+  reste correcte, mais le mouvement SAUTE d'un état à l'autre au lieu de progresser — pas une vraie marche
+  animée, un slideshow à 2 images (render `out/_rnd/pose-bank-test/gpt-walk-test.mp4`).
+
+**VERDICT FINAL — renversement complet du jugement du 1er passage** : **Gemini 3.1 Pro l'emporte nettement**
+pour ce cas d'usage (personnage articulé destiné à être animé), pas GPT-5.5. La raison structurelle : Gemini
+a "pensé articulation" nativement en écrivant le SVG (translate au joint + rotate = comportement par défaut
+de son style de génération), alors que GPT "pense illustration" (paths figés, jointures ajoutées a
+posteriori sous forme d'annotation JSON qui ne correspond à aucune structure de rendu réelle). C'est cohérent
+à travers TOUS les tests de cette session : rig-first sur image (GPT, échoué) + banque de poses texte-pur
+(GPT anatomie moyenne + pas de rig ; Gemini anatomie fine sur le geste dur + rig FK natif qui marche).
+
+**⚠️ Correction de diagnostic (2026-07-02, question d'Aziz après avoir vu la vidéo GPT)** : Aziz a noté que
+le perso GPT "fait un pas puis se fige complètement" — investigation a montré que ce N'EST PAS le rig plat
+en cause en premier lieu : **`walk-a.svg` et `walk-b.svg` de GPT sont quasiment la MÊME pose** (comparaison
+côte à côte `check-a-vs-b.png` — même jambe avant, même bras, écart minime), pas un vrai moment opposé du
+cycle de marche. Un `key={src}` forçant le remount DOM a été testé pour écarter un bug de cache navigateur —
+aucun changement, confirmant que le cut alterne bien mais entre 2 images quasi identiques. **Fait notable :
+les 2 poses Gemini (walk-a/walk-b) sont ÉGALEMENT quasi identiques entre elles** (`check-gemini-a-vs-b.png`)
+— donc ce n'est PAS l'écart entre poses qui a produit la marche fluide de Gemini dans le test vidéo. **La
+vraie cause du succès Gemini est l'INTERPOLATION CONTINUE des angles** (codée dans `ProtoGeminiPoseBankWalk`,
+`lerpAngles` frame par frame) : même entre 2 poses-cibles proches, faire varier en continu les valeurs de
+rotation produit un vrai balancement lisible comme mouvement. GPT, sans hiérarchie de joints, ne peut QUE
+cutter entre états figés — et 2 états figés presque identiques + zéro valeur intermédiaire = perception de
+personnage qui "ne bouge plus". **Conséquence pour la suite** : ne pas compter sur l'écart entre poses
+successives pour faire le travail de suggestion du mouvement — c'est le rig FK + interpolation d'angles qui
+porte le mouvement, quelle que soit la proximité des poses-cibles. Ça ouvre la porte à enchaîner PLUSIEURS
+actions en une seule chaîne continue de valeurs d'angles (marcher→s'arrêter→se pencher→ramasser→se relever),
+exactement comme `computePose()` le fait dans StickRig — sauf que la FORME des segments vient de Gemini.
+
+**Conclusion opérationnelle révisée** : pour un personnage SVG riche et ANIMABLE en continu (pas juste en
+cut), **Gemini 3.1 Pro text-to-SVG est la piste gagnante**, à condition de demander explicitement la
+convention de nommage de groupes (comme fait ici) — le rig FK semble être un comportement spontané de ce
+modèle sur ce type de prompt, pas quelque chose qu'il faut lui arracher. Le rig capsule (`capsuleSegment.ts`,
+code pur, zéro dépendance LLM) reste l'option la plus robuste et gratuite par itération pour la PRODUCTION
+immédiate ; la piste Gemini pose-bank est plus riche visuellement (vêtements, volume, couleurs) mais dépend
+d'un appel API par personnage/tenue et nécessite de reconstruire le rig en JSX à la main à partir du SVG brut
+(comme fait dans `ProtoGeminiPoseBankWalk.tsx` — pas un import direct, un portage manuel du XML vers JSX avec
+`lerp` des angles). GPT-5.5 texte-pur reste utile pour des poses STATIQUES isolées (pas de plan d'animation
+continue prévu) mais est écarté pour tout personnage destiné à marcher/bouger en continu.
+
+**Prochaine étape si cette piste Gemini est reprise en production** : étendre le set de poses (au minimum :
+idle, walk-a/b, bend-reach déjà faits + tend-la-main/offerReach, porte-charge — cf. Recettes rapides
+ci-dessous), écrire un script réutilisable qui EXTRAIT automatiquement la hiérarchie de joints du SVG Gemini
+brut vers une structure JSX/objet Angles (au lieu du portage manuel fait pour ce test), et valider la
+robustesse sur des rotations plus amples / d'autres poses (bend-reach, offer) avant de considérer la piste
+mûre pour un vrai personnage de production.
+
+Fichiers de ce test (scratch) : `out/_rnd/pose-bank-test/` (prompt, réponses brutes GPT+Gemini, 8 SVG,
+2 renders MP4, contact sheets). Fichiers gardés dans le repo (protos réutilisables) :
+`src/projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx`, `ProtoGptPoseBankWalk.tsx`,
+`public/_rnd/gpt-pose-bank/*.svg`.
+
+### ⭐⭐⭐ Chaîne d'actions complète (2026-07-02) — enchaînement marche→arrêt→penché→ramasse→relève→repart
+
+Suite au test de marche isolée, Aziz a demandé si GPT "se fige après un pas" (observé sur `gpt-walk-test.mp4`)
+révélait un vrai problème et ce qu'il fallait comprendre du succès Gemini pour enchaîner PLUSIEURS actions.
+Investigation + un enchaînement complet codé et corrigé en 3 itérations. Résumé pour ne pas répéter les
+mêmes erreurs de raisonnement :
+
+**1. Le "GPT se fige" n'est PAS un bug de code.** Vérifié : la logique de cut alterne bien walk-a/walk-b,
+un `key={src}` forçant le remount DOM n'a rien changé. La vraie cause, révélée en comparant `walk-a.svg` et
+`walk-b.svg` de GPT côte à côte (`check-a-vs-b.png`) : **ce sont deux poses quasiment identiques**, pas un
+vrai moment opposé du cycle de marche. Fait surprenant : **les 2 poses Gemini walk-a/walk-b sont ELLES
+AUSSI quasi identiques** (`check-gemini-a-vs-b.png`) — donc l'écart entre poses-cibles n'explique PAS le
+succès de Gemini en marche. La vraie cause : **l'interpolation continue des angles** (codée à la main,
+`lerpAngles` frame par frame) crée le mouvement même entre 2 poses proches ; GPT, sans hiérarchie de joints,
+ne peut QUE cutter entre états figés → 2 états quasi identiques + zéro intermédiaire = perception de
+personnage figé. Leçon : ne JAMAIS compter sur l'écart entre poses-cibles pour "faire le travail" du
+mouvement — c'est le rig FK + l'interpolation qui portent le mouvement, quelle que soit la proximité des
+poses fournies par le LLM.
+
+**2. Chaîne complète codée** (`src/projects/_rnd/svg-scenes/ProtoGeminiActionChain.tsx`, compo Root
+`RND-ProtoGeminiActionChain`) : une timeline explicite (objet `T` en frames) enchaîne idle → marche (cycle
+walk-a/walk-b) → décélère vers idle → penché vers `BEND_REACH` → HOLD → redressement vers idle → repart en
+marche → arrêt final. Structure directement inspirée de `computePose()`/`poses.ts` (StickRig) : une SEULE
+fonction de pose continue pilotée par `frame`, pas des clips vidéo qu'on colle bout à bout.
+
+**3. Deux itérations d'échec avant le résultat correct — la vraie leçon de cette section.**
+- **v1** (lerp linéaire simple entre IDLE et BEND_REACH, `hipX/hipY` gardés à la valeur BEND_REACH de Gemini
+  telle quelle) : au HOLD, le personnage apparaissait **couché sur le côté**, pas accroupi
+  (`chain-contact-sheet.png`). Diagnostic initial (FAUX) : "manque la compensation du bassin qu'on connaît
+  déjà pour StickRig" (`poses.ts` § compensation bassin — `hipBack`/`hipDrop` proportionnels au `torsoTilt`).
+- **v2** (ajout d'une fonction `withHipCompensation` inspirée de `poses.ts`, `hipX/hipY` recalculés
+  artificiellement en fonction de `torsoTilt`) : **AUCUNE amélioration** — toujours couché
+  (`chain-v2-contact-sheet.png`). Ce diagnostic était donc faux : le rig Gemini n'est PAS un système de
+  pivot pur autour d'une hanche fixe comme StickRig (où le code calcule `hipBack`/`hipDrop` PARCE QUE la
+  cinématique part d'une hanche fixe et fait pivoter le torse) — Gemini avait dessiné sa pose `bend-reach`
+  avec son PROPRE point d'ancrage `hipX/hipY=(120,415)`, DÉJÀ cohérent avec ses propres angles de jambes
+  (torse penché + bassin qui a reculé/descendu, exactement l'équilibre visé — mais encodé dans la
+  TRANSLATION du groupe racine, pas dans une correction a posteriori des angles de jambes).
+- **v3 (correct)** : diagnostic refait en comparant ma reconstruction JSX à l'image originale
+  `check-gemini-bend.png` (`bend-original-vs-mine.png`) — la jambe avant "pendouillait" au lieu d'être
+  repliée sous le corps. Fix réel : **supprimer entièrement la compensation ad hoc et laisser `hipX/hipY`
+  interpoler NATIVEMENT entre les valeurs IDLE (200,340) et BEND_REACH (120,415) exactement comme les
+  autres angles** (déjà supporté par `lerpAngles`, il suffisait de ne pas les figer artificiellement).
+  Résultat vérifié par comparaison directe : pose HOLD quasi identique à l'original Gemini
+  (`chain-v3-vs-original-final.png`). Render final : `out/_rnd/pose-bank-test/gemini-action-chain-v3.mp4`.
+
+**Leçon opérationnelle pour toute future pose Gemini multi-états** : NE PAS supposer que le savoir-faire
+StickRig (compensation de bassin autour d'un pivot fixe) s'applique tel quel à des poses Gemini importées —
+Gemini encode l'équilibre de sa pose directement dans le COUPLE (translation racine, angles de membres),
+pas dans une correction séparée. Le bon réflexe : interpoler TOUTES les valeurs (translation ET angles)
+entre 2 poses Gemini complètes plutôt que d'isoler un sous-ensemble "stable" (hipX/hipY) et le recalculer à
+la main — le LLM a déjà résolu cet équilibre en amont, le rôle du code est de FAIRE CONFIANCE aux 2 poses
+extrêmes et d'interpoler entre elles, pas de réinventer une physique par-dessus.
+
+**Point (a) corrigé — transition "se penche" STAGGERED (2026-07-02, v4)** : la transition mi-chemin
+bancale (torse déjà penché sur des jambes encore presque droites) a été fixée avec `lerpBendPose()` —
+les jambes (genoux/pieds/hipX/hipY) interpolent en AVANCE (`t/0.85`), le torse/bras/tête suivent avec un
+retard de 15% (`(t-0.15)/0.85`), chacun avec son propre `easeInOutCubic`. Reproduit l'ordre naturel d'un
+accroupissement (on fléchit les jambes avant que le buste finisse de plonger). Vérifié visuellement sur
+6 frames intermédiaires (`chain-v4-bend-transition.png`) : progression lisible, plus de passage bancal.
+Render final : `out/_rnd/pose-bank-test/gemini-action-chain-v4.mp4`.
+
+**Point (b) non traité, à noter** : le personnage se déplace toujours visiblement horizontalement pendant
+le penché/relevé (hipX 200→120, cohérent avec "reculer le bassin en se penchant" mais à valider si ce
+déplacement latéral est souhaité narrativement ou à contraindre selon la scène de production future).
+
+### ⛔ Pose accroupissement/squat — ÉCARTÉE après retour Aziz (2026-07-02), 2 raisons de fond
+
+Après le fix v4 ci-dessus, Aziz a pointé un problème plus profond que je n'avais pas assez creusé — la pose
+`BEND_REACH` (torsoTilt=80°) se lit toujours comme quelqu'un À TERRE / QUI A TRÉBUCHÉ, pas un accroupissement,
+même après correction de la transition. Une nouvelle pose dédiée a été générée (prompt explicite demandant
+un vrai SQUAT — genoux fléchis, torse quasi-vertical ≤25°, PAS de bend-at-hips) : `torsoTilt=25°` au lieu de
+80°, résultat nettement plus lisible comme accroupissement (`squat-pose.png`). Intégrée avec un composant de
+rendu séparé (`SquatRig`, formes arrondies/cercles aux joints — géométrie différente de `GeminiRig`) et un
+cross-fade court aux transitions.
+
+**Mais 2 raisons ont fait écarter cette piste ENTIÈREMENT (squat retiré de `ProtoGeminiActionChain.tsx`,
+retour à idle→marche→arrêt→repart→idle uniquement) :**
+
+1. **Incohérence de personnage détectée par Aziz** : la pose squat a été générée par un appel Gemini
+   SÉPARÉ, sans référence au personnage établi (couleurs/proportions non données dans le prompt). Résultat
+   vérifiable : peau `#5c3a21` (squat) vs `#8B5A2B` (marche/idle, plus clair), chemise `#d4c5b0` beige terne
+   vs `#FFFDD0` crème, pantalon `#2c3539` vs `#2F4F4F`, chapeau `#e8c37d` + forme différente (2 formes
+   superposées vs triangle+base elliptique). Ce n'est PAS le même personnage — Gemini réinvente sa palette
+   à chaque appel indépendant. Confirmé par grep des couleurs sur les 2 fichiers SVG source.
+2. **Cas d'usage marginal selon notre propre doctrine** : `MISE-EN-SCENE-INFOGRAPHICS-SHOW.md` (issue du
+   décodage de 5 épisodes réels de studios pro) établit que le registre DOMINANT est statique+marche
+   latérale/3-4 — les actions articulées au sol (accroupissement, ramassage) sont rares en plan large.
+   Continuer à peaufiner cette pose spécifique = optimiser un cas qu'on utilisera peu, au détriment du
+   temps disponible pour fiabiliser le cas qui compte (marche/statique, déjà solide).
+
+**⭐ Leçon pour toute future extension de pose bank** : générer TOUTES les poses d'un même personnage dans
+UN SEUL appel/prompt avec une description de personnage FIGÉE (couleurs précises données explicitement,
+pas laissées au hasard du modèle) — jamais des appels séparés pose par pose. Cf. `PERSONNAGE-VIVANT-INDEX.md`
+section pose bank originale (idle/walk-a/walk-b/bend-reach) qui AVAIT bien été générée en 1 seul appel —
+c'est justement pourquoi CES 3 poses restent cohérentes entre elles, contrairement au squat généré à part.
+
+**✅ Personnalisation par palette — validée, approche RETENUE (2026-07-02)** : plutôt que régénérer via
+Gemini (risque d'incohérence, coût API), le rig `GeminiRig` a été rendu paramétrable par un objet `Palette`
+(6 couleurs : skin/shirt/pants/hat/boot/ink) injecté en props, la géométrie des segments restant strictement
+inchangée. Démo (`ProtoGeminiPaletteDemo.tsx`, compo Root `RND-ProtoGeminiPaletteDemo`) : 3 personnages
+synchronisés en marche côte à côte, 3 palettes différentes (chemise/pantalon recolorés). Résultat net,
+zéro coût API, zéro risque d'incohérence — **approche à privilégier pour toute variation de personnage**
+(différencier plusieurs personnages dans une scène, décliner un même personnage pour un autre épisode).
+Render : `out/_rnd/pose-bank-test/gemini-palette-demo.mp4`.
+
+### ✅✅✅ Extension du set de poses (5 poses, 1 seul appel, personnage FIGÉ) — PROUVÉ, 2026-07-02
+
+Dernier test de la session, validant la leçon gravée juste au-dessus (générer toutes les poses d'un
+personnage en UN SEUL appel avec description figée). Prompt unique à `gemini-3.1-pro-preview` demandant
+**5 poses d'un coup** : `idle`, `walk-a`, `walk-b` (les 3 déjà connues) + 2 nouvelles — `offer` (bras avant
+tendu à l'horizontale, geste "voici/tiens" pour montrer/offrir un objet) et `reach-up` (bras levé pour
+cueillir sur un arbre). Choix motivé par Aziz comme le patron narratif le PLUS fréquent dans nos scènes
+Souverain existantes (un personnage qui marche puis tend/montre un objet), par opposition au squat écarté
+(registre marginal).
+
+**Différence clé vs le test squat qui avait échoué** : le prompt donne cette fois une description de
+personnage **entièrement figée** — 6 couleurs hex explicites (`skin #8B5A2B`, `shirt #FFFDD0`,
+`pants #2F4F4F`, `hat #D2B48C`, `boot #3E2723`, `ink #1A1A1A`) + proportions numériques approximatives
+(rayon tête, longueur torse/membres), avec la consigne explicite "this is the SAME character in different
+poses, not 5 different characters".
+
+**Résultat — cohérence de personnage VÉRIFIÉE, pas supposée** : grep des couleurs sur les 5 fichiers SVG
+générés confirme des hex codes **strictement identiques** sur les 5 poses (aucune variation, contrairement
+au squat où peau/chemise/pantalon/chapeau différaient tous). Planche comparative des 5 poses rendues
+(`v2-pose-bank-sheet.png`) : même chapeau, mêmes proportions, même personnage reconnaissable de bout en
+bout — y compris `offer` (bras tendu, main ouverte, geste lisible) et `reach-up` (bras levé, tête qui suit
+la main, cohérent avec une cueillette).
+
+**Cohérence géométrique interne notée** : `hipY=280` pour idle/offer/reach-up, `hipY=298` pour walk-a/b —
+proche, pas de saut brutal comme le squat (qui passait de 340 à 415, cause du problème de portage). Chaque
+pose garde la même hiérarchie de groupes (`torso`→`arm-upper-front`→`arm-lower-front`→`hand-front`, etc.)
+que le premier set de poses.
+
+**Scène narrative test codée** (`src/projects/_rnd/svg-scenes/ProtoGeminiOfferScene.tsx`, compo Root
+`RND-ProtoGeminiOfferScene`) : idle → marche → arrêt → tend le bras (interpolation `easeInOutCubic` IDLE→
+OFFER) → hold → rabaisse le bras → repart → idle. Rendu vérifié frame par frame
+(`offer-scene-contact-sheet.png`) : transitions fluides, aucune incohérence visuelle, geste du bras tendu
+bien lisible dès l'arrêt de la marche. Render : `out/_rnd/pose-bank-test/gemini-offer-scene.mp4`.
+
+**Conclusion opérationnelle** : la méthode "1 appel, personnage figé par couleurs hex explicites" est
+**validée et reproductible** — c'est la procédure à suivre pour toute future extension du set de poses
+Gemini (ex. futurs : porte-charge, immobile-contemplatif). Fichiers de ce test (scratch) :
+`out/_rnd/pose-bank-test/prompt-pose-bank-v2-offer.txt`, `response-v2-offer.txt`, `v2-*.svg` (5 fichiers).
+
 ## Historique
 Né de la R&D cacao 2026-06-30 (dossier `_rnd-perso/` purgé après extraction ici). Feuille de route animation (Gemini+web concordants) :
 `memory/episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`.

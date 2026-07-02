@@ -1,6 +1,7 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-01 (session cacao+GGW publication + peste-1347 bugfix geo/audio). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-02 (test prompt GPT rig-first — négatif ; test banque de poses + MOUVEMENT — verdict final Gemini 3.1 Pro > GPT-5.5, rig FK natif ; méthode 1-appel-personnage-figé prouvée). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+> ⭐⭐ PRIORITÉ IMMÉDIATE PROCHAINE SESSION : § PERSONNAGE VOLUMÉTRIQUE SVG ci-dessous — demander À GEMINI LUI-MÊME quelles poses/mouvements il peut produire pour le script Cacao (au lieu de deviner), voir sous-section "Demander à Gemini ses propres capacités".
 
 ---
 
@@ -32,12 +33,103 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
-## ⭐⭐ 16:9 NARRATIF + PERSONNAGES — patron 2-scènes VALIDÉ, R&D grammaire/structure FAITE (2026-07-02)
+## ✅✅ 16:9 NARRATIF + PERSONNAGES — patron 2-scènes PROUVÉ (plus une priorité active, backlog optionnel)
 > Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § REPRISE SESSION SUIVANTE (dis « on reprend le 16:9 narratif »).
 > ✅✅ **VALIDÉ AZIZ (2026-07-02)** : patron 2-scènes "voyage→arrivée/transformation" PROUVÉ de bout en bout —
 >   `CargoVoyage16x9.tsx` (`RND-CargoVoyage16x9`) + `PortDechargement16x9.tsx` (`RND-PortDechargement16x9`),
 >   archivés `out/templates-souverain/FINAL-CargoVoyage16x9-v1.mp4` + `FINAL-PortDechargement16x9-v1.mp4`.
 >   Réutilisable tel quel pour un autre sujet Souverain (or→raffinerie, minerai→usine).
+
+## ⭐⭐ PERSONNAGE VOLUMÉTRIQUE SVG — 3 pistes R&D actées (2026-07-02), ORDRE DE PRIORITÉ DÉCIDÉ PAR AZIZ
+
+> Contexte complet : `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` (§ Segments
+> VOLUMÉTRIQUES, § GPT-5.5 générant du vrai code SVG, § LE VRAI TEST DÉCISIF, § Chaîne d'actions complète,
+> § Extension du set de poses) + `memory/tools/pixellab.md` (§ PixelLab vs registre SVG, § Gamelabs Studio).
+
+**✅ Priorité 1 — TERMINÉE cette session : rig volumétrique SVG intégré.** `capsuleSegment.ts` +
+`StickRig.tsx` (nouveau prop `volumetric?: boolean`, défaut false = zéro régression) : jambes (cuisse+mollet+
+genou+pied) ET bras avant (épaule+coude+main) en capsules tapered fermées, testé sur 3 poses
+(debout/marche/bras tendu récolte) via `_rnd/svg-scenes/ProtoCapsuleLimb.tsx` (compo Root
+`RND-ProtoCapsuleLimb`). Cinématique `computePose()` 100% inchangée. **Reste (mineur, pas bloquant)** : léger
+décrochage visuel cheville/pied observé sur la pose marche (à fixer si le rig est adopté en scène réelle),
+torse/bottes/chapeau restent en formes rigides existantes (pas encore en capsule), vérification 8-directions
+(`StickRigMultiDir`) pas faite.
+
+**✅ Priorité 2 — TESTÉE 2026-07-02, RÉSULTAT NÉGATIF : prompt GPT "rig-first" écarté.** GPT-5.5 a produit un
+SVG 15 groupes + JSON de pivots syntaxiquement parfait, mais dès qu'on applique les rotations déclarées
+(`transform="rotate(angle,pivot)"`), les jointures coude/épaule se DISLOQUENT visuellement (paths dessinés en
+pose figée, pas d'emboîtement géométrique garanti sous rotation). Le rig capsule (`capsuleSegment.ts`,
+priorité 1) reste la seule approche production-ready — la robustesse vient du recalcul géométrique par le
+code à chaque frame, pas de la qualité du prompt. Détail + fichiers test : `PERSONNAGE-VIVANT-INDEX.md`
+§ "Nuance importante — reproduire une pose ≠ concevoir pour l'animation" (verdict en fin de section).
+**NEXT = Priorité 3 ci-dessous (déjà traitée, voir résultats) ou reprendre le rig capsule pour finir les
+points mineurs (décrochage cheville/pied pose marche, torse/bottes/chapeau en capsule, vérif 8-directions).**
+
+**✅✅✅ Priorité 3 — TESTÉE A FOND 2026-07-02, VERDICT FINAL : Gemini 3.1 Pro gagne pour marche/statique,
+squat écarté, personnalisation validée.** 1er passage avait conclu GPT meilleur sur images fixes — Aziz a
+challengé et posé LA question décisive : est-ce que ça bouge vraiment ? **Gemini produit un vrai rig FK
+imbriqué** (`translate(joint) rotate(angle)` parent→enfant) → marche FLUIDE par interpolation continue.
+**GPT produit des paths en coordonnées absolues SANS hiérarchie** → cut sec obligatoire, ça saute. Chaîne
+d'actions codée (`ProtoGeminiActionChain.tsx`) : marche→arrêt→repart→idle solide (viewBox élargi pour ne
+plus couper le pied avant en pleine foulée — bug réel confirmé par Aziz). **Volet accroupissement/squat
+TESTÉ PUIS ÉCARTÉ** : la pose générée par un appel Gemini séparé donnait un personnage aux couleurs
+DIFFÉRENTES de celui qui marche (Aziz a détecté ça à l'œil, confirmé par grep des couleurs) — ET c'est un
+registre marginal selon notre propre doctrine (`MISE-EN-SCENE-INFOGRAPHICS-SHOW.md` : statique+marche =
+dominant chez les studios pro, actions articulées au sol = rares). Leçon gravée : générer toutes les poses
+d'un personnage en UN SEUL appel avec description figée, jamais pose par pose séparément. **Personnalisation
+par palette VALIDÉE** : `GeminiRig` paramétré par un objet couleurs (6 clés), 3 variantes démontrées
+synchronisées en marche, zéro coût API, zéro risque d'incohérence — approche à privilégier pour différencier
+des personnages. Détail complet : `PERSONNAGE-VIVANT-INDEX.md` § "LE VRAI TEST DÉCISIF" + § "Chaîne
+d'actions complète" + § "Pose accroupissement/squat — ÉCARTÉE".
+
+**✅✅✅ DERNIER TEST DE SESSION — méthode "1 appel, personnage figé" PROUVÉE (2026-07-02)** : set étendu à
+5 poses (idle/walk-a/walk-b + **offer** bras tendu + **reach-up** cueillette) généré en 1 SEUL appel Gemini
+avec 6 couleurs hex explicites données dans le prompt + consigne "même personnage, pas 5 différents".
+Résultat vérifié par grep : couleurs **strictement identiques** sur les 5 SVG (zéro variation, contraste
+net avec l'échec squat). Scène narrative test codée (`ProtoGeminiOfferScene.tsx`, compo Root
+`RND-ProtoGeminiOfferScene`) : marche→arrêt→tend le bras→hold→repart, rendu fluide et cohérent
+(`out/_rnd/pose-bank-test/gemini-offer-scene.mp4`). **C'est la procédure à suivre pour toute extension
+future du set de poses** — jamais un appel séparé par pose.
+
+**NEXT si repris en prod** : étendre encore le set (porte-charge, immobile-contemplatif) avec la même
+méthode 1-appel-personnage-figé, écrire un script d'extraction automatique JSX depuis le SVG brut (fait à
+la main pour ces tests). Le rig capsule (`capsuleSegment.ts`, zéro dépendance LLM) reste l'option la plus
+robuste pour la PRODUCTION immédiate si on veut zéro dépendance API.
+
+**⭐⭐ IDÉE AZIZ POUR PROCHAINE SESSION — "Demander à Gemini ses propres capacités" (2026-07-02, pas encore
+testée)** : au lieu de deviner quelles poses demander (comme fait cette session), envoyer à Gemini le
+CONTEXTE du système (rig FK, poses discrètes interpolées en code, pas de morphing continu — cf. tout ce
+qu'on a appris cette session) + le script d'une scène RÉELLE, et lui demander LUI-MÊME quels mouvements/
+gestes seraient pertinents et faisables pour raconter cette scène. Principe = storyboard-first déjà prouvé
+ailleurs (`doctrines/STORYBOARD-MAPBOX.md`, `feedback_methode-storyboard-orchestration-guider.md` : le
+modèle PROPOSE une direction qu'on n'a pas, on valide, PUIS on code) — appliqué ici au personnage plutôt
+qu'à la caméra Mapbox.
+
+**Cas de test décidé avec Aziz : script du Cacao→Chocolat short** (`episodes/souverain/cacao-chocolat-short/
+SCRIPT-V4.md`, déjà produit et publié — `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`). Choix motivé :
+permet une comparaison DIRECTE (rendu final déjà existant) entre ce qu'on a produit avec le rig capsule
+et ce que Gemini aurait proposé s'il avait été consulté en amont — jugement plus facile qu'un exercice
+théorique sur un script pas encore tourné.
+
+**⚠️ Nuance à appliquer (piège à éviter)** : NE PAS juste demander "que peux-tu créer visuellement" à
+Gemini sans contexte — il halluciner des idées façon image fixe (belles poses dramatiques) sans savoir
+qu'on va extraire ses angles et les interpoler en rig FK. Il faut lui donner le CONTEXTE TECHNIQUE (rig FK,
+convention de nommage de groupes, contrainte "poses discrètes interpolées", cf. prompts de cette session
+`out/_rnd/pose-bank-test/prompt-pose-bank*.txt`) EN MÊME TEMPS que le script — sinon réponse inutilisable.
+Envoyer aussi une frame du personnage déjà créé (référence visuelle) pour ancrer la continuité de style.
+Séparer 2 questions distinctes : (a) poses utiles pour CE script précis (concret, actionnable) vs
+(b) éventail plus large de ce que le rig peut produire au-delà de ce script (exploratoire, pour bâtir le
+catalogue) — ne pas les mélanger dans un seul prompt, risque de réponse vague qui ne sert ni l'une ni l'autre.
+
+**Priorité 4 — Exploration continue Gamelabs Studio pour un registre RASTER séparé** (pas urgent, en fond).
+Pipeline API REST complet validé et documenté (`memory/tools/pixellab.md` § Gamelabs) : image→video→spritesheet
+fonctionnel, résultat NET une fois le personnage correctement cadré (règle : sujet doit remplir ≥80% du cadre).
+Walk cycle testé et cohérent (jambes qui alternent, bras en balancier). Bug MCP contourné (appeler l'API REST
+directement, PAS le serveur MCP qui route vers localhost:8000 — 401 systématique). ⛔ Reste un moteur RASTER
+(PNG/MP4) — pas un remplacement de StickRig pour notre registre SVG mixte actuel, mais piste sérieuse pour un
+FUTUR projet 100% raster où le contrôle frame-exact importe moins que la richesse visuelle immédiate (animations
+pré-générées directionnelles, comme fait pour Atlas/PixelLab). 14 crédits gratuits restants sur le compte Aziz.
+Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué, contourner via REST direct).
 > ✅ **Scène 3 "RetourAuChamp16x9" prototypée mais PAS validée** (`_rnd/svg-scenes/`, `RND-RetourAuChamp16x9`) —
 >   jugée "plate narrativement" après comparaison avec des propositions LLM plus riches (voir ci-dessous).
 > ⭐⭐ **3 doctrines R&D gravées cette session** (5 chaînes tierces analysées, yt-dlp+vision+lecture script) :

@@ -222,6 +222,12 @@ import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/I
 import { CargoVoyage16x9, CARGO_VOYAGE_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9";
 import { PortDechargement16x9, PORT_DECHARGEMENT_FRAMES } from "./projects/_rnd/svg-scenes/PortDechargement16x9";
 import { RetourAuChamp16x9, RETOUR_CHAMP_FRAMES } from "./projects/_rnd/svg-scenes/RetourAuChamp16x9";
+import { ProtoCapsuleLimb, PROTO_CAPSULE_LIMB_FRAMES } from "./projects/_rnd/svg-scenes/ProtoCapsuleLimb";
+import { ProtoGeminiPoseBankWalk, PROTO_GEMINI_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk";
+import { ProtoGptPoseBankWalk, PROTO_GPT_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGptPoseBankWalk";
+import { ProtoGeminiActionChain, PROTO_GEMINI_ACTION_CHAIN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiActionChain";
+import { ProtoGeminiPaletteDemo, PROTO_GEMINI_PALETTE_DEMO_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPaletteDemo";
+import { ProtoGeminiOfferScene, PROTO_GEMINI_OFFER_SCENE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiOfferScene";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2025,6 +2031,12 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-CargoVoyage16x9" component={CargoVoyage16x9} durationInFrames={CARGO_VOYAGE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-PortDechargement16x9" component={PortDechargement16x9} durationInFrames={PORT_DECHARGEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-RetourAuChamp16x9" component={RetourAuChamp16x9} durationInFrames={RETOUR_CHAMP_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCapsuleLimb" component={ProtoCapsuleLimb} durationInFrames={PROTO_CAPSULE_LIMB_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiPoseBankWalk" component={ProtoGeminiPoseBankWalk} durationInFrames={PROTO_GEMINI_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGptPoseBankWalk" component={ProtoGptPoseBankWalk} durationInFrames={PROTO_GPT_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiActionChain" component={ProtoGeminiActionChain} durationInFrames={PROTO_GEMINI_ACTION_CHAIN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiPaletteDemo" component={ProtoGeminiPaletteDemo} durationInFrames={PROTO_GEMINI_PALETTE_DEMO_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiOfferScene" component={ProtoGeminiOfferScene} durationInFrames={PROTO_GEMINI_OFFER_SCENE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />

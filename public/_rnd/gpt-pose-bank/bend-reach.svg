@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-label="West African cocoa farmer bend and reach pose">
+  <defs>
+    <style>
+      .ink{stroke:#1b1b1b;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+      .skin{fill:#8b5a35}
+      .shirt{fill:#f3e8d0}
+      .pants{fill:#1f3b2d}
+      .hatfill{fill:#c9a45c}
+      .eye{fill:#1b1b1b;stroke:none}
+    </style>
+  </defs>
+
+  <g id="leg-upper-back">
+    <path class="ink pants" d="M185 323 C194 321 202 326 203 336 C200 371 189 409 177 449 C174 461 165 467 156 464 C147 461 143 452 147 441 C158 406 166 371 170 337 C171 329 176 325 185 323 Z"/>
+  </g>
+  <g id="leg-lower-back">
+    <path class="ink pants" d="M160 455 C169 452 177 457 179 468 C177 491 171 516 164 545 C161 556 153 562 145 558 C137 554 134 546 137 536 C144 510 149 488 151 467 C152 461 155 457 160 455 Z"/>
+  </g>
+  <g id="foot-back">
+    <path class="ink skin" d="M143 540 C155 538 170 542 179 551 C175 558 161 560 145 560 C131 560 123 557 123 552 C123 546 131 542 143 540 Z"/>
+  </g>
+
+  <g id="leg-upper-front">
+    <path class="ink pants" d="M211 325 C220 323 228 329 230 339 C238 373 248 408 260 442 C264 454 260 463 251 466 C242 469 234 464 230 453 C217 416 206 381 199 346 C197 336 202 328 211 325 Z"/>
+  </g>
+  <g id="leg-lower-front">
+    <path class="ink pants" d="M247 458 C256 457 263 463 264 474 L263 544 C263 555 257 561 248 560 C239 559 234 552 235 541 L236 475 C237 465 240 459 247 458 Z"/>
+  </g>
+  <g id="foot-front">
+    <path class="ink skin" d="M245 541 C258 539 274 544 284 552 C280 558 266 560 249 560 C235 560 226 557 226 552 C226 546 234 542 245 541 Z"/>
+  </g>
+
+  <g id="arm-upper-back">
+    <path class="ink shirt" d="M239 238 C249 237 257 244 258 255 C253 279 244 304 228 329 C222 338 212 340 205 334 C198 328 198 319 204 310 C216 291 224 270 228 250 C229 243 232 240 239 238 Z"/>
+  </g>
+  <g id="arm-lower-back">
+    <path class="ink skin" d="M212 320 C220 315 230 318 234 326 C233 347 228 369 220 391 C217 401 208 406 200 402 C192 398 190 389 194 380 C201 361 205 344 206 328 C207 324 209 322 212 320 Z"/>
+  </g>
+  <g id="hand-back">
+    <path class="ink skin" d="M198 382 C207 379 216 384 218 392 C216 401 208 406 199 403 C190 400 186 393 190 387 C192 385 194 383 198 382 Z"/>
+  </g>
+
+  <g id="torso">
+    <path class="ink shirt" d="M232 230 C247 235 272 249 286 264 L224 350 C209 353 187 341 174 326 L232 230 Z"/>
+  </g>
+
+  <g id="arm-upper-front">
+    <path class="ink shirt" d="M278 260 C288 262 295 270 297 281 C301 306 304 331 307 358 C308 370 301 378 292 378 C283 378 278 371 277 360 C274 334 271 310 267 288 C265 274 268 263 278 260 Z"/>
+  </g>
+  <g id="arm-lower-front">
+    <path class="ink skin" d="M294 368 C303 368 309 375 309 386 L303 478 C302 489 295 496 286 494 C278 492 274 484 276 474 L282 386 C283 375 286 369 294 368 Z"/>
+  </g>
+  <g id="hand-front">
+    <path class="ink skin" d="M285 478 C295 476 304 481 306 490 C304 501 296 510 286 514 C277 513 271 507 273 498 C275 489 278 482 285 478 Z"/>
+  </g>
+
+  <g id="head">
+    <path class="ink skin" d="M276 154 C260 164 256 190 268 210 C278 227 306 227 320 210 C326 201 327 195 336 190 C327 185 327 172 317 163 C306 152 289 148 276 154 Z"/>
+    <circle class="eye" cx="306" cy="181" r="4"/>
+    <circle class="eye" cx="320" cy="186" r="3.5"/>
+  </g>
+
+  <g id="hat">
+    <path class="ink hatfill" d="M254 147 C267 123 284 108 295 104 C309 114 326 129 338 148 C315 157 276 157 254 147 Z"/>
+    <path class="ink hatfill" d="M242 144 C268 135 321 136 348 146 C327 160 264 160 242 144 Z"/>
+  </g>
+</svg>

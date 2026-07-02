@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" role="img" aria-label="West African cocoa farmer idle pose">
+  <defs>
+    <style>
+      .ink{stroke:#1b1b1b;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+      .skin{fill:#8b5a35}
+      .shirt{fill:#f3e8d0}
+      .pants{fill:#1f3b2d}
+      .hatfill{fill:#c9a45c}
+      .eye{fill:#1b1b1b;stroke:none}
+    </style>
+  </defs>
+
+  <g id="leg-upper-back">
+    <path class="ink pants" d="M182 328 C191 326 199 332 200 342 L202 444 C203 456 196 464 187 464 C178 464 172 456 173 444 L171 341 C171 334 175 330 182 328 Z"/>
+  </g>
+  <g id="leg-lower-back">
+    <path class="ink pants" d="M187 458 C196 458 203 465 202 476 L199 544 C198 555 191 560 182 558 C174 556 170 548 171 538 L174 475 C175 465 178 459 187 458 Z"/>
+  </g>
+  <g id="foot-back">
+    <path class="ink skin" d="M178 541 C190 539 202 544 209 552 C206 558 194 560 179 560 C166 560 158 557 158 552 C158 547 166 543 178 541 Z"/>
+  </g>
+
+  <g id="leg-upper-front">
+    <path class="ink pants" d="M210 328 C219 326 227 332 228 342 L230 444 C231 456 224 464 215 464 C206 464 200 456 201 444 L199 341 C199 334 203 330 210 328 Z"/>
+  </g>
+  <g id="leg-lower-front">
+    <path class="ink pants" d="M215 458 C224 458 231 465 230 476 L227 544 C226 555 219 560 210 558 C202 556 198 548 199 538 L202 475 C203 465 206 459 215 458 Z"/>
+  </g>
+  <g id="foot-front">
+    <path class="ink skin" d="M206 541 C218 539 230 544 237 552 C234 558 222 560 207 560 C194 560 186 557 186 552 C186 547 194 543 206 541 Z"/>
+  </g>
+
+  <g id="arm-upper-back">
+    <path class="ink shirt" d="M184 204 C194 202 202 209 203 221 L203 278 C203 289 196 296 187 295 C178 294 173 287 174 276 L174 221 C174 211 177 206 184 204 Z"/>
+  </g>
+  <g id="arm-lower-back">
+    <path class="ink skin" d="M188 288 C197 288 203 296 202 306 L199 363 C198 374 191 381 182 379 C174 377 170 369 172 359 L175 305 C176 295 180 289 188 288 Z"/>
+  </g>
+  <g id="hand-back">
+    <path class="ink skin" d="M180 362 C189 359 198 364 200 372 C198 381 190 386 181 383 C172 380 168 373 172 367 C174 365 176 363 180 362 Z"/>
+  </g>
+
+  <g id="torso">
+    <path class="ink shirt" d="M185 190 C198 184 219 184 232 197 L227 330 C214 337 194 337 181 330 L178 205 C179 198 181 194 185 190 Z"/>
+  </g>
+
+  <g id="arm-upper-front">
+    <path class="ink shirt" d="M224 204 C235 206 242 214 243 226 L250 276 C252 288 245 298 235 297 C226 296 221 288 221 277 L214 226 C213 215 216 207 224 204 Z"/>
+  </g>
+  <g id="arm-lower-front">
+    <path class="ink skin" d="M237 289 C246 289 252 297 251 307 L249 363 C248 374 241 381 232 379 C224 377 220 369 222 359 L224 307 C225 296 229 290 237 289 Z"/>
+  </g>
+  <g id="hand-front">
+    <path class="ink skin" d="M230 362 C239 359 248 364 250 372 C248 381 240 386 231 383 C222 380 218 373 222 367 C224 365 226 363 230 362 Z"/>
+  </g>
+
+  <g id="head">
+    <path class="ink skin" d="M188 122 C172 132 168 158 180 178 C190 195 218 195 232 178 C238 169 239 163 248 158 C239 153 239 140 229 131 C218 120 201 116 188 122 Z"/>
+    <circle class="eye" cx="218" cy="149" r="4"/>
+    <circle class="eye" cx="232" cy="154" r="3.5"/>
+  </g>
+
+  <g id="hat">
+    <path class="ink hatfill" d="M166 115 C179 91 196 76 207 72 C221 82 238 97 250 116 C227 125 188 125 166 115 Z"/>
+    <path class="ink hatfill" d="M154 112 C180 103 233 104 260 114 C239 128 176 128 154 112 Z"/>
+  </g>
+</svg>
