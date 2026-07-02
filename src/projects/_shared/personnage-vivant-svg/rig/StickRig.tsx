@@ -29,6 +29,7 @@ const STRAW_D = "#c39a4f";
 const CAP = "#5e7245";   // casquette vert-feuille (registre GGW)
 const CAP_D = "#4a5c37";
 const SCARF = "#b5552f"; // foulard terre-cuite
+const SCARF_DEFAULT = "#8a3a2e"; // couleur par defaut cravate/foulard de cou (distinct du foulard de tete)
 
 export type StickRigProps = {
   walkPhase?: number;
@@ -40,6 +41,9 @@ export type StickRigProps = {
   facing?: 1 | -1;
   ink?: string;               // couleur du trait d'encre (defaut charte)
   tunicColor?: string;        // couleur de remplissage du TORSE (boubou/vetement) — defaut = parchemin (neutre)
+  tunicPattern?: "none" | "stripes" | "collar"; // motif textile sur le torse (rayures verticales / bordure de col)
+  neckwear?: "none" | "tie" | "scarf-knot";     // accessoire au COU (cravate triangle / foulard noue) — distinct de hat
+  neckwearColor?: string;     // couleur de l'accessoire de cou — defaut terre-cuite (charte)
   hat?: "straw" | "cap" | "scarf" | "none"; // accessoire tete (straw=paille, cap=casquette, scarf=foulard)
   carry?: "none" | "shoulder-sack" | "hand-basket"; // charge portee (defaut none)
   load?: number;              // 0..1 intensite du poids (courbe le bras de port + main fermee)
@@ -55,6 +59,9 @@ export const StickRig: React.FC<StickRigProps> = ({
   facing = 1,
   ink = DEFAULT_INK,
   tunicColor = DEFAULT_TUNIC,
+  tunicPattern = "none",
+  neckwear = "none",
+  neckwearColor = SCARF_DEFAULT,
   hat = "straw",
   carry = "none",
   load = 0,
@@ -144,6 +151,27 @@ export const StickRig: React.FC<StickRigProps> = ({
         d={`M ${hipBackX} ${hipBackY} L ${shBackX} ${shBackY} L ${shFrontX} ${shFrontY} L ${hipFrontX} ${hipFrontY} Z`}
         fill={tunicColor} stroke={ink} strokeWidth={4} strokeLinejoin="round"
       />
+      {/* motif textile : rayures verticales (interpolees lineairement le long du trapeze, suivent le penche) */}
+      {tunicPattern === "stripes" && Array.from({ length: 3 }, (_, i) => {
+        const t = (i + 1) / 4; // 0.25/0.5/0.75 -> repartition entre hipBack->shBack et hipFront->shFront
+        const x1 = hipBackX + (shBackX - hipBackX) * t, y1 = hipBackY + (shBackY - hipBackY) * t;
+        const x2 = hipFrontX + (shFrontX - hipFrontX) * t, y2 = hipFrontY + (shFrontY - hipFrontY) * t;
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={ink} strokeWidth={2} opacity={0.4} />;
+      })}
+      {/* motif textile : bordure de col (petit trait courbe sous les epaules, registre boubou/chemise) */}
+      {tunicPattern === "collar" && (
+        <path d={`M ${shBackX} ${shBackY + 8} Q ${(shBackX + shFrontX) / 2} ${(shBackY + shFrontY) / 2 + 16} ${shFrontX} ${shFrontY + 8}`} fill="none" stroke={ink} strokeWidth={2.5} opacity={0.5} />
+      )}
+      {/* accessoire COU : cravate (triangle qui pend du cou vers le torse) ou foulard noue */}
+      {neckwear === "tie" && (
+        <path d={`M ${shX - 4} ${shY + 4} L ${shX + 4} ${shY + 4} L ${shX} ${shY + 34} Z`} fill={neckwearColor} stroke={ink} strokeWidth={2.5} strokeLinejoin="round" />
+      )}
+      {neckwear === "scarf-knot" && (
+        <g>
+          <circle cx={shX} cy={shY + 8} r={9} fill={neckwearColor} stroke={ink} strokeWidth={2.5} />
+          <path d={`M ${shX - 4} ${shY + 14} q -6 16 -2 26`} fill="none" stroke={neckwearColor} strokeWidth={6} strokeLinecap="round" />
+        </g>
+      )}
       <path d={`M ${hipX} ${hipY} L ${legFront.kx} ${legFront.ky} L ${legFront.fx} ${legFront.fy} L ${legFront.toeX} ${legFront.fy}`} {...S} strokeWidth={11} />
       <line x1={shX} y1={shY} x2={headX} y2={headY} {...S} strokeWidth={11} />
       <circle cx={headX} cy={headY} r={HEAD_R} fill="none" stroke={ink} strokeWidth={6} />

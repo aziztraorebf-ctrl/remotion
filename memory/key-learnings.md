@@ -657,6 +657,22 @@ persos pour que les mains tendues se REJOIGNENT (vérifié numériquement, pas �
 **LLM (GLM/GPT/Gemini) = banc d'idées UTILE (capacité, pas plafond), mais NE PAS prendre un rig généré EN BLOC** :
 le rig "noodle"/courbes tue le pictogramme. On garde NOS lignes droites et on pilote la cadence nous-mêmes.
 
+**8 DIRECTIONS complétées (2026-07-01/02) — profil/3-4/dos/face × miroir** : 2 familles de projection de jambe,
+JAMAIS interchangeables — LATÉRALE (profil/3-4 : le pas se lit en X écran, near/far = longueur+amplitude
+différentes) vs PROFONDEUR (dos/face : le pas se lit en Y écran, PAS X — piège du 1er essai dos qui a réutilisé
+la mécanique latérale = lisait comme un pas chassé, pas une marche vers le fond ; bug repéré par Aziz, confirmé
+fondamental par Gemini+GPT). Dos et face partagent la MÊME formule Y-stride, seul le signe de `advance` s'inverse
+(vers la caméra vs vers le fond). Draw-order : FIXE en 3/4 (far toujours derrière), DYNAMIQUE en dos/face (par
+profondeur réelle du pied) — ne JAMAIS mélanger les 2 (bug trouvé en consolidant : jambes qui se chevauchent).
+Honnêteté technique confirmée par 2 modèles : le DOS PUR est la vue la plus limitée du système (même les jeux
+vidéo trichent en 3/4-dos). Méthode qui a payé 3× : proto isolé → render EN MOUVEMENT (jamais un still) → si
+doute, GPT-5.5 + Gemini 3.1 Pro EN PARALLÈLE, appliquer ce qui converge. Consolidé en briques partagées
+(`rig/multiDirection.ts` + `rig/StickRigMultiDir.tsx`) après les 3 protos isolés, AVANT d'attaquer une scène
+narrative qui change de vue en mouvement — éviter la duplication x3 de la même projection.
+
+**Torse = 3e axe de différenciation perso** : au-delà de `tunicColor`, `tunicPattern` (rayures/col) et `neckwear`
+(cravate/foulard noué) — combinables avec `ink` (trait) et `hat` (tête), reste pictogramme digne (pas caricatural).
+
 **Biblio réutilisable — PARTIR D'ICI, ne pas recoder un perso de zéro** :
 `src/projects/_shared/personnage-vivant-svg/` (`PERSONNAGE-VIVANT-INDEX.md` = doc · `rig/poses.ts` = cinématique
 source de vérité · `rig/StickRig.tsx` = rig générique ink+hat(straw/cap/scarf)+carry · `rig/objectHandling.ts` ·

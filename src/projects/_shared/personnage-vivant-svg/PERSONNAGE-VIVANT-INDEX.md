@@ -12,12 +12,21 @@ pas la mécanique. ⛔ Garde-fou doctrine : silhouette stylisée pictogramme, JA
 ## Fichiers
 - `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moveAmt,bend,armReach,offerReach})` →
   coords locales (bassin, épaules, **main avant**). À utiliser AUSSI côté scène pour coller un objet sur la main.
-- `rig/StickRig.tsx` — le composant rig générique. Props : `walkPhase, moveAmt, bend, armReach, offerReach, facing, ink, tunicColor, hat`.
+- `rig/StickRig.tsx` — le composant rig générique VUE PROFIL (facing gauche/droite). Props : `walkPhase, moveAmt,
+  bend, armReach, offerReach, facing, ink, tunicColor, tunicPattern, neckwear, neckwearColor, hat`.
+- `rig/StickRigMultiDir.tsx` — ⭐⭐ rig UNIFIÉ pour les 3 autres vues (3/4, dos, face) — voir § 8 DIRECTIONS.
+  Prop `view: "3quarter"|"back"|"face"`. MÊME identité visuelle que StickRig (ink/tunicColor/hat) → un perso
+  garde son identité en changeant de vue.
+- `rig/multiDirection.ts` — briques de PROJECTION partagées par StickRigMultiDir (`quarterLegPath`, `depthLegPath`,
+  `torsoQuad`) — ne pas dupliquer. `computePose` reste la source du TIMING, ce fichier ne fait QUE la projection écran.
 - `rig/objectHandling.ts` — `objectState` (ramasser→tenir→déposer) + `handoffState` (transfert main-à-main, 2 persos).
 - `scenes-proto/RecolteAuSol.tsx` — ⭐ scène-prototype validée (entre→marche→penche→ramasse→relève). Compo Root :
   `PersoVivant-RecolteAuSol`. La copier comme point de départ d'une nouvelle scène.
 - `scenes-proto/PasserObjetMainAMain.tsx` — scène-prototype 2 persos, transfert main-à-main. Compo Root :
   `PersoVivant-PasserObjetMainAMain`. Render de réf : `out/_r-and-d/personnage-vivant-svg/passer-objet-main-a-main-v1.mp4`.
+- `rnd-8dir/` — prototypes historiques par vue (Proto3Quarter/ProtoBack/ProtoFace/ProtoMultiDirTest), gardés comme
+  référence/traçabilité (chacun documente sa revue externe Gemini+GPT). Pour une NOUVELLE scène, partir de
+  `StickRigMultiDir`, pas de ces protos.
 
 ## LE SAVOIR-FAIRE (ce qui a coûté cher à trouver — ne pas réinventer)
 
@@ -78,6 +87,42 @@ Même discipline que le ramassage au sol : JAMAIS de glissade autonome, l'objet 
 4. Flash de contact (optionnel) : fondu D'ENTRÉE obligatoire (pas d'opacité qui apparaît d'un coup = pop visuel).
 Preuve : `scenes-proto/PasserObjetMainAMain.tsx` (planteur → acheteur, cacao). Validé Aziz 2026-07-01.
 
+### 8 DIRECTIONS — 3/4, DOS, FACE (2026-07-01/02, ⭐⭐ palier 1 complet)
+Passage de profil-seul (facing ±1) à 4 formes de base (profil/3-4/dos/face) × miroir gauche-droite = 8 directions
+couvertes. Chaque vue codée en proto ISOLÉ d'abord (`rnd-8dir/`), validée par Aziz EN MOUVEMENT (jamais sur une
+pose figée — un rig qui a l'air bon à l'arrêt peut se révéler faux dès qu'il marche), après revue croisée
+Gemini 3.1 Pro + GPT-5.5 à chaque fois qu'un 1er essai échouait. Puis CONSOLIDÉES dans `rig/StickRigMultiDir.tsx`
++ `rig/multiDirection.ts` (les 3 protos dupliquaient chacun leur projection — extrait en briques partagées
+avant d'attaquer une scène narrative qui doit changer de vue en cours de mouvement).
+
+**2 familles de projection de jambe** (ne jamais réinventer, la géométrie diffère fondamentalement) :
+- **LATÉRALE (3/4)** : le pas se lit sur l'axe X écran. Near/far doivent avoir une longueur ET une amplitude
+  DIFFÉRENTES (`quarterLegPath`), sinon ça relit "profil juste compressé" (bug du 1er essai, corrigé après
+  revue Gemini+GPT : hanches/épaules 2 points distincts en X ET Y, jambe far ~0.88x plus courte, amplitude
+  ~0.6x, opacité/trait plus légers, torse = polygone OPAQUE qui sert de masque entre far et near).
+- **PROFONDEUR (dos, face)** : le pas se lit sur l'axe Y écran (raccourci/foreshortening), PAS X (`depthLegPath`).
+  Piège du 1er essai dos : réutiliser la mécanique latérale du profil → lit comme un PAS CHASSÉ, pas une marche
+  vers le fond (bug repéré par Aziz, confirmé fondamental — pas un réglage — par Gemini+GPT). Pied qui avance
+  vers le fond (dos) ou vers la caméra (face) = MÊME formule, seul le SIGNE de `advance` s'inverse. X reste une
+  piste étroite quasi-fixe (~0.16L, jamais un angle >15-20°). ⚠️ Honnêteté technique (2 modèles concordants) :
+  le DOS PUR reste la vue la plus limitée du système — même les jeux vidéo (Zelda, Pokémon) trichent en 3/4-dos.
+- **FACE** : symétrique gauche/droite (contrairement au dos qui garde un léger near/far). 1ère vue où un visage
+  simple (2 points = yeux, PAS de bouche/expression) est cohérent avec le registre pictogramme.
+- Draw-order : en 3/4 il est FIXE (far toujours derrière — c'est un écart de projection latérale constant, pas
+  une vraie profondeur qui alterne). En dos/face il est DYNAMIQUE (`legNear.fy >= legFar.fy`, le pied le plus
+  bas écran = le plus proche caméra = dessiné devant) — ⛔ ne PAS appliquer le dynamique au 3/4 (mélange les
+  2 familles → jambes qui se chevauchent de façon incohérente, bug trouvé lors de la consolidation).
+- Méthode de review qui a payé 3× : proto isolé → render EN MOUVEMENT (pas un still) → si doute, brief GPT-5.5
+  ET Gemini 3.1 Pro EN PARALLÈLE avec la même image/vidéo + le diagnostic suspecté → appliquer seulement ce qui
+  converge entre les 2. Les 2 modèles se sont toujours accordés exactement (jamais de désaccord net observé).
+
+### TORSE = 3e axe de différenciation perso (2026-07-02, banc d'essai ProtoFace)
+Au-delà de `tunicColor` : `tunicPattern` (`"stripes"` = rayures verticales internes au trapèze, `"collar"` =
+bordure de col courbe) et `neckwear` (`"tie"` = triangle qui pend du cou, `"scarf-knot"` = rond + queue qui
+flotte) + `neckwearColor`. Combinables librement avec `ink` (trait) et `hat` (tête) → 3 axes indépendants pour
+différencier plusieurs persos dans une même scène sans changer la mécanique. Registre : reste pictogramme digne,
+PAS caricatural (pas de motifs complexes, juste 2-3 traits internes au polygone existant).
+
 ### Netteté / rendu encre (Gemini)
 Hiérarchie d'épaisseurs (torse 14 / membres 9-11). `linecap`+`linejoin` round OBLIGATOIRE. Encre `#2b2117` (charte)
 opacity ~0.92 (pas de noir pur). Chapeau = léger overlap (suit la tête avec retard).
@@ -98,15 +143,37 @@ la fève, elle glisse seule"). C'est la MAIN/le corps qui l'amène. L'objet disp
 - ✅ `manipuler-objet` : ramasse→tient→transporte→dépose dans contenant. (objectHandling.ts + HistoirePlanteur)
 - ✅ `marche-porte-charge` : traverse en portant un sac/panier. (StickRig `carry` + `load` ; trivial = pas de scène dédiée)
 - ✅ `passer-objet-main-a-main` : 2 persos se font face, tendent le bras (offerReach), transfert au HOLD. (PasserObjetMainAMain.tsx, handoffState)
+- ✅ `cueilleurs-fond-de-plan-16x9` : persos MINUSCULES (scale ~0.27-0.3) intégrés au décor lointain d'un plan large
+  parallaxe, geste de récolte en BOUCLE continue (pas de machine à états, juste `bend`/`armReach` cycliques via
+  `wf % periode`). Preuve : `_rnd/svg-scenes/CargoVoyage16x9.tsx`. ⚠️ LEARNING (test empirique 2026-07-02) :
+  `carry="shoulder-sack"` DEVIENT ILLISIBLE à cette échelle (silhouette se confond avec le feuillage de l'arbre) →
+  à cette taille, rester `carry="none"`, le geste seul suffit à raconter le travail. Espacer le perso du TRONC
+  (ne pas le coller à l'arbre) sinon confusion silhouette/feuillage.
 - ⬜ `planter-arbre` (GGW) : 2 persos, creuser/déposer un jeune plant. (prochain)
 - ⬜ `cueillette-arbre` : tend le bras vers le HAUT (cabosse sur tronc) — inverser l'angle du bras.
 - ⬜ `immobile-contemplatif` : debout, respiration, regarde l'horizon.
+- ✅✅ `8-directions` : profil/3-4/dos/face × miroir = 8 directions (StickRigMultiDir + StickRig). Voir § 8 DIRECTIONS.
+  NEXT (piste en cours) : scène narrative multi-plan (perso avance/recule/tourne, change de vue en mouvement —
+  le vrai test de la consolidation).
 
 ## Idées d'évolution
-- [[IDEE-PERSO-8-DIRECTIONS]] : passer de profil (facing ±1) à 8 directions (N/S/E/O + diagonales) pour traverser
-  en profondeur (champ→usine). À construire SUR ce rig.
+- [[IDEE-PERSO-8-DIRECTIONS]] : ✅ RÉALISÉ 2026-07-01/02 (voir § 8 DIRECTIONS + `rig/StickRigMultiDir.tsx`). Ce
+  fichier documente l'intuition d'origine (Aziz) et l'historique de la décision — gardé pour contexte.
 - Transposition 16:9 : la grammaire profondeur/parallaxe/heure dorée est prouvée (B5PontH). Régler la vitesse de
   translation (voir note FOOT-PLANT) pour matcher la cadence du 9:16.
+- ⭐ PATRON « plan large parallaxe + véhicule + persos fond de plan » (2026-07-02) : `_rnd/svg-scenes/CargoVoyage16x9.tsx`
+  (compo Root `RND-CargoVoyage16x9`) — 3 calques (ciel/horizon lent, véhicule quasi-fixe qui tangue, 1er plan qui
+  défile vite), horizon PARAMÉTRIQUE (interpolation point par point entre 2 silhouettes = transition géographique,
+  ex. dunes/cacaoyers → pics enneigés), soleil qui traverse l'écran en arc (marque le temps qui passe, fade →
+  nuit étoilée), palette qui glisse via `lerpHex` (chaud→froid). Persos minuscules intégrés au décor (voir recette
+  `cueilleurs-fond-de-plan-16x9` ci-dessus) = montage simultané travail-humain (terre, petit) / produit-qui-part
+  (mer, grand) DANS LE MÊME PLAN, sans cut ni texte. Réutilisable tel quel pour toute scène « transport/voyage/
+  transformation » du registre Souverain (minerai vers usine, or vers raffinerie, etc.) — changer le véhicule et
+  les 2 silhouettes d'horizon, garder la mécanique. Bugs déjà corrigés (ne pas réintroduire) : (1) rect de fond
+  océan trop étroit → bord visible en fin de drift caméra (toujours largeur ≥ 2× viewBox + marge du drift max) ;
+  (2) véhicule positionné AU-DESSUS de la ligne d'horizon = flotte « dans le ciel » (toujours caler Y du véhicule
+  DANS la bande du calque 1er-plan, pas au niveau du calque fond) ; (3) ordre de calques : fond-océan → véhicule
+  → lignes-de-vague-proches (pour que les vagues passent devant le bas de la coque = ancrage visuel dans l'eau).
 
 ## Historique
 Né de la R&D cacao 2026-06-30 (dossier `_rnd-perso/` purgé après extraction ici). Feuille de route animation (Gemini+web concordants) :

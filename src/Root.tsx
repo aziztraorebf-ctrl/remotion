@@ -12,6 +12,8 @@ import { RecolteAuSol, RECOLTE_AU_SOL_FRAMES } from "./projects/_shared/personna
 import { PasserObjetMainAMain, PASSER_OBJET_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/PasserObjetMainAMain";
 import { Proto3Quarter, PASSER3Q_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/Proto3Quarter";
 import { ProtoBack, PASSER_BACK_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoBack";
+import { ProtoFace, PASSER_FACE_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoFace";
+import { ProtoMultiDirTest, PASSER_MULTIDIR_TEST_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoMultiDirTest";
 import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
@@ -3270,6 +3272,22 @@ export const RemotionRoot: React.FC = () => {
           id="RND-8dir-ProtoBack"
           component={ProtoBack}
           durationInFrames={PASSER_BACK_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoFace"
+          component={ProtoFace}
+          durationInFrames={PASSER_FACE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoMultiDirTest"
+          component={ProtoMultiDirTest}
+          durationInFrames={PASSER_MULTIDIR_TEST_FRAMES}
           fps={30}
           width={1920}
           height={1080}
