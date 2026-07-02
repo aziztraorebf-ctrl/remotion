@@ -28,6 +28,12 @@ ci-dessous — parti directement piste 3 "scène narrative 16:9").
 - NEXT possibles (évoqués par Claude en fin de session, PAS validés par Aziz) : Scène 3 au-delà du paradoxe
   port/usine, OU appliquer le même patron à un autre sujet Souverain (or→raffinerie, minerai→usine…).
   À CONFIRMER par Aziz avant de partir dessus.
+- ✅✅ **8 DIRECTIONS COMPLÈTES (2026-07-01/02)** : profil/3-4/dos/face × miroir, consolidées dans
+  `rig/StickRigMultiDir.tsx` (+ `rig/multiDirection.ts`). ⛔ DÉCISION AZIZ : pas de marche de FACE en plan large
+  (réservée gros plans/statique — contrainte géométrique 2D, dos/face illisibles à petite échelle) — voir
+  `personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` § RÈGLE PRO DE MISE EN SCÈNE. Impacte toute scène narrative
+  multi-plan à partir de maintenant. Piste R&D actée pour plus tard : analyser The Infographics Show (yt-dlp +
+  breakdown vision) pour une doctrine mise en scène/caméra transposable.
 
 ## 🎯 OBJECTIF DE LA SESSION (vision Aziz)
 Pousser le format **16:9 narratif** avec des **PERSONNAGES**. On a prouvé que le SVG transpose en horizontal
@@ -63,6 +69,8 @@ en 16:9 **avec des personnages**. Tester aussi : **des personnages en VERTICAL**
   ⚠️ GPT-image (`openai/gpt-5.4-image-2`) = LENT (>2min, lancer en background nohup). Gemini-image rapide.
 
 ## 🚀 PISTES À TESTER (par priorité)
+> ⚠️ Pistes 1-2 périmées par la réalisation des 8 directions (voir § ÉTAT D'AVANCEMENT + PERSONNAGE-VIVANT-INDEX.md
+> § 8 DIRECTIONS) — conservées pour traçabilité historique, ne pas relancer.
 1. **PLANCHE EN SVG DIRECT vs redessin manuel** (la question d'Aziz) : demander à Gemini/GPT/GLM de générer le **CODE SVG**
    du personnage (pas un PNG) → paths manipulables/animables directement. Comparer qualité vs redessiner à la main d'après la planche PNG.
    Outils : `scripts/tools/llm-gen-svg.py` (GLM low-cost) ou GPT-5.5 (code SVG propre). Si le SVG généré est exploitable → énorme gain.

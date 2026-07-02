@@ -673,6 +673,13 @@ narrative qui change de vue en mouvement — éviter la duplication x3 de la mê
 **Torse = 3e axe de différenciation perso** : au-delà de `tunicColor`, `tunicPattern` (rayures/col) et `neckwear`
 (cravate/foulard noué) — combinables avec `ink` (trait) et `hat` (tête), reste pictogramme digne (pas caricatural).
 
+**RÈGLE PRO 2026-07-02** : dos/face illisibles à petite échelle (contrainte géométrique 2D, pas un bug) →
+`StickFigureSimplified` (Scale & Bob : rebond du corps + bras + échelle, sans jambes articulées) sous le seuil
+d'échelle ~0.85. DÉCISION AZIZ : pas de marche de FACE en production (réservée gros plans/statique) — confirmé
+par Gemini+GPT ET observation directe d'Aziz sur The Infographics Show (persos détaillés restent quasi
+toujours en profil/3-4 en mouvement). Piste R&D ouverte : analyser The Infographics Show via yt-dlp
+(frames+vision) → doctrine mise en scène/caméra. Détail : `PERSONNAGE-VIVANT-INDEX.md` § RÈGLE PRO.
+
 **Biblio réutilisable — PARTIR D'ICI, ne pas recoder un perso de zéro** :
 `src/projects/_shared/personnage-vivant-svg/` (`PERSONNAGE-VIVANT-INDEX.md` = doc · `rig/poses.ts` = cinématique
 source de vérité · `rig/StickRig.tsx` = rig générique ink+hat(straw/cap/scarf)+carry · `rig/objectHandling.ts` ·
