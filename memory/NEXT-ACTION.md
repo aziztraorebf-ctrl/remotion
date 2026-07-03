@@ -1,7 +1,11 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-02 (test prompt GPT rig-first — négatif ; test banque de poses + MOUVEMENT — verdict final Gemini 3.1 Pro > GPT-5.5, rig FK natif ; méthode 1-appel-personnage-figé prouvée). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-02 (catalogue de 7 gestes du personnage cacao Gemini COMPLET — voir § PERSONNAGE
+> VOLUMÉTRIQUE SVG ci-dessous). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
-> ⭐⭐ PRIORITÉ IMMÉDIATE PROCHAINE SESSION : § PERSONNAGE VOLUMÉTRIQUE SVG ci-dessous — demander À GEMINI LUI-MÊME quelles poses/mouvements il peut produire pour le script Cacao (au lieu de deviner), voir sous-section "Demander à Gemini ses propres capacités".
+> ✅ Catalogue de gestes personnage-vivant TERMINÉ (7/7), plus une priorité active — voir § PERSONNAGE
+> VOLUMÉTRIQUE SVG pour le détail complet. Seule extension optionnelle en backlog : `planter-arbre`
+> (2 personnages). Doctrine complète : `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md`
+> § "Deux systèmes distincts : rig capsule = mécanique, personnage Gemini = habillage".
 
 ---
 
@@ -40,7 +44,10 @@
 >   archivés `out/templates-souverain/FINAL-CargoVoyage16x9-v1.mp4` + `FINAL-PortDechargement16x9-v1.mp4`.
 >   Réutilisable tel quel pour un autre sujet Souverain (or→raffinerie, minerai→usine).
 
-## ⭐⭐ PERSONNAGE VOLUMÉTRIQUE SVG — 3 pistes R&D actées (2026-07-02), ORDRE DE PRIORITÉ DÉCIDÉ PAR AZIZ
+## ✅ PERSONNAGE VOLUMÉTRIQUE SVG — SYSTÈME GRAVÉ, catalogue de 7 gestes complet (2026-07-02)
+> Rétrogradé depuis ⭐⭐ PRIORITÉ IMMÉDIATE — le catalogue est maintenant COMPLET (7/7 gestes), plus une
+> priorité active. Seule extension optionnelle en backlog : `planter-arbre` (2 personnages). Contenu
+> conservé ci-dessous pour l'historique des décisions.
 
 > Contexte complet : `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` (§ Segments
 > VOLUMÉTRIQUES, § GPT-5.5 générant du vrai code SVG, § LE VRAI TEST DÉCISIF, § Chaîne d'actions complète,
@@ -95,31 +102,60 @@ future du set de poses** — jamais un appel séparé par pose.
 méthode 1-appel-personnage-figé, écrire un script d'extraction automatique JSX depuis le SVG brut (fait à
 la main pour ces tests). Le rig capsule (`capsuleSegment.ts`, zéro dépendance LLM) reste l'option la plus
 robuste pour la PRODUCTION immédiate si on veut zéro dépendance API.
+> ✅ MISE À JOUR 2026-07-02 (session suivante) : porte-charge et immobile-contemplatif sont désormais
+> FAITS (voir catalogue 7/7 plus bas dans cette section) — seul `planter-arbre` reste en extension
+> optionnelle. La méthode a aussi été affinée : 1 pose par appel Gemini (pas un lot de 5+), SVG source
+> littéral en patron plutôt que l'image PNG seule — voir § "Deux systèmes distincts" dans
+> `PERSONNAGE-VIVANT-INDEX.md` pour le détail complet.
 
-**⭐⭐ IDÉE AZIZ POUR PROCHAINE SESSION — "Demander à Gemini ses propres capacités" (2026-07-02, pas encore
-testée)** : au lieu de deviner quelles poses demander (comme fait cette session), envoyer à Gemini le
-CONTEXTE du système (rig FK, poses discrètes interpolées en code, pas de morphing continu — cf. tout ce
-qu'on a appris cette session) + le script d'une scène RÉELLE, et lui demander LUI-MÊME quels mouvements/
-gestes seraient pertinents et faisables pour raconter cette scène. Principe = storyboard-first déjà prouvé
-ailleurs (`doctrines/STORYBOARD-MAPBOX.md`, `feedback_methode-storyboard-orchestration-guider.md` : le
-modèle PROPOSE une direction qu'on n'a pas, on valide, PUIS on code) — appliqué ici au personnage plutôt
-qu'à la caméra Mapbox.
+**✅✅✅ SESSION 2026-07-02 (suite) — "Demander à Gemini ses propres capacités" TESTÉE, catalogue de 7
+gestes COMPLET.** Consultation en 2 questions séparées (script Cacao précis vs éventail large) : réponses
+concrètes et actionnables, aucune hallucination (Gemini a bien respecté le contexte technique donné,
+marquant même l'accroupissement "Borderline/Risky" — cohérent avec notre propre écart déjà acté).
+**Insight inattendu** : le short Cacao publié n'utilise en fait AUCUN personnage — 100% data-viz
+symbolique (tablette, carte, arbres, usine). Comparaison aux propositions Gemini restée théorique de ce
+fait, mais a débloqué la vraie question de fond.
 
-**Cas de test décidé avec Aziz : script du Cacao→Chocolat short** (`episodes/souverain/cacao-chocolat-short/
-SCRIPT-V4.md`, déjà produit et publié — `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`). Choix motivé :
-permet une comparaison DIRECTE (rendu final déjà existant) entre ce qu'on a produit avec le rig capsule
-et ce que Gemini aurait proposé s'il avait été consulté en amont — jugement plus facile qu'un exercice
-théorique sur un script pas encore tourné.
+**⭐⭐⭐ RECADRAGE MAJEUR (Aziz) — 2 systèmes complémentaires, pas concurrents** : le rig capsule
+(`capsuleSegment.ts`/`StickRig.tsx`/`poses.ts`) = la MÉCANIQUE de mouvement (comment un bras porte un
+poids crédiblement, comment plier un genou, 8 directions), 100% code, zéro dépendance API. Le personnage
+Gemini = l'HABILLAGE (silhouette/couleurs/style), décliné en poses figées. Le vrai travail de la session a
+été de **transposer la mécanique du rig capsule vers le personnage Gemini**, geste par geste, PAS une
+"migration" en un coup. Détail complet + leçons : `PERSONNAGE-VIVANT-INDEX.md` § "Deux systèmes distincts".
 
-**⚠️ Nuance à appliquer (piège à éviter)** : NE PAS juste demander "que peux-tu créer visuellement" à
-Gemini sans contexte — il halluciner des idées façon image fixe (belles poses dramatiques) sans savoir
-qu'on va extraire ses angles et les interpoler en rig FK. Il faut lui donner le CONTEXTE TECHNIQUE (rig FK,
-convention de nommage de groupes, contrainte "poses discrètes interpolées", cf. prompts de cette session
-`out/_rnd/pose-bank-test/prompt-pose-bank*.txt`) EN MÊME TEMPS que le script — sinon réponse inutilisable.
-Envoyer aussi une frame du personnage déjà créé (référence visuelle) pour ancrer la continuité de style.
-Séparer 2 questions distinctes : (a) poses utiles pour CE script précis (concret, actionnable) vs
-(b) éventail plus large de ce que le rig peut produire au-delà de ce script (exploratoire, pour bâtir le
-catalogue) — ne pas les mélanger dans un seul prompt, risque de réponse vague qui ne sert ni l'une ni l'autre.
+**Catalogue complet, 7/7 gestes** (tous testés en rendu réel, pas juste en théorie) :
+1. `ProtoGeminiHandBasketWalk.tsx` — panier tenu à la main, balancier amorti par le poids.
+2. `ProtoGeminiShoulderSackWalk.tsx` — sac à l'épaule, torse penché, cadence ralentie.
+3. `ProtoGeminiBendPickup.tsx` — recolte-au-sol (marche→penche→ramasse→redresse→repart).
+4. `ProtoGeminiManipulateObject.tsx` — ramasse→transporte→dépose dans un contenant.
+5. `ProtoGeminiHandoff.tsx` — 2 personnages, transfert d'objet main-à-main.
+6. `ProtoGeminiTreeCueillette.tsx` — cueillette-arbre (bras levé), 1er geste SANS référence rig capsule.
+7. `ProtoGeminiContemplatif.tsx` — immobile-contemplatif, respiration en boucle.
+
+**Leçons gravées les plus importantes** (détail complet dans `PERSONNAGE-VIVANT-INDEX.md`) :
+- Donner le SVG SOURCE littéral en patron (pas juste l'image PNG rendue) est nécessaire pour préserver la
+  continuité du personnage — image seule fait dériver la géométrie.
+- 1 pose par appel Gemini >> lot de plusieurs poses d'un coup (instructions oubliées si trop cumulées).
+- **Bug structurel répété 2 fois** : un bras qui tient un objet ne peut PAS suivre le grand balancier de la
+  marche libre (±45°) — doit être figé à un angle réduit. Repéré la 1ère fois sur `marche-porte-charge`,
+  RE-repéré sur `cueillette-arbre` malgré la leçon déjà gravée — signal qu'une leçon en mémoire doit être
+  activement relue avant de coder un geste similaire, pas seulement découverte après un nouveau bug.
+- Un membre qui ne doit pas suivre un tilt de torse doit être structurellement SORTI du groupe SVG qui
+  applique ce tilt (bug "effet planche" sur le penché, jambes qui héritaient à tort de `rotate(torsoTilt)`).
+- Un objet mal positionné vs invisible sont deux bugs différents à diagnostiquer séparément — test debug
+  (couleur/taille volontairement absurdes) pour trancher vite.
+- Les gestes qui RECOMBINENT des briques déjà validées (`passer-objet-main-a-main`) réussissent du 1er
+  coup ; ceux qui inventent une mécanique from scratch demandent systématiquement 2-3 corrections.
+
+**Position sur la délégation à un agent (question Aziz)** : PAS ENCORE — le goulot d'étranglement de
+cette session était le jugement visuel itératif (repérer qu'un rendu est faux, comprendre pourquoi,
+corriger), pas la génération de code. Un agent sans supervision visuelle serrée déclarerait "fait" sur un
+rendu cassé. Reprendre l'idée une fois que le catalogue est assez stable pour qu'un agent ait une check-list
+de vérification visuelle explicite à suivre.
+
+**NEXT si repris** : `planter-arbre` (2 personnages, creuser+déposer un jeune plant — seul item du §
+Recettes rapides encore non transposé). Fichiers scratch de toute la session :
+`out/_rnd/pose-bank-test/response-capabilities-{A-script,B-broad}.md` + `Proto*.tsx` (7 composants Root).
 
 **Priorité 4 — Exploration continue Gamelabs Studio pour un registre RASTER séparé** (pas urgent, en fond).
 Pipeline API REST complet validé et documenté (`memory/tools/pixellab.md` § Gamelabs) : image→video→spritesheet

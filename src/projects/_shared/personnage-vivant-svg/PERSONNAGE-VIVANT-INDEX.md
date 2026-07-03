@@ -179,8 +179,15 @@ la fève, elle glisse seule"). C'est la MAIN/le corps qui l'amène. L'objet disp
 ## Recettes rapides (on enrichit au fil des scénarios)
 - ✅ `recolte-au-sol` : entre→marche→penche→ramasse→relève. (RecolteAuSol.tsx)
 - ✅ `manipuler-objet` : ramasse→tient→transporte→dépose dans contenant. (objectHandling.ts + HistoirePlanteur)
+  **✅ TRANSPOSÉ côté personnage Gemini (2026-07-02)** : `ProtoGeminiManipulateObject.tsx`
+  (`RND-ProtoGeminiManipulateObject`). Voir § "Deux systèmes distincts" ci-dessous.
 - ✅ `marche-porte-charge` : traverse en portant un sac/panier. (StickRig `carry` + `load` ; trivial = pas de scène dédiée)
+  **✅ TRANSPOSÉ côté personnage Gemini (2026-07-02)** : `ProtoGeminiHandBasketWalk.tsx` (panier à la main,
+  `RND-ProtoGeminiHandBasketWalk`) + `ProtoGeminiShoulderSackWalk.tsx` (sac à l'épaule + marche penchée/
+  ralentie, `RND-ProtoGeminiShoulderSackWalk`). Voir § "Deux systèmes distincts" ci-dessous pour la méthode.
 - ✅ `passer-objet-main-a-main` : 2 persos se font face, tendent le bras (offerReach), transfert au HOLD. (PasserObjetMainAMain.tsx, handoffState)
+  **✅ TRANSPOSÉ côté personnage Gemini (2026-07-02), réussi du 1er essai** : `ProtoGeminiHandoff.tsx`
+  (`RND-ProtoGeminiHandoff`). Voir § "Deux systèmes distincts" ci-dessous.
 - ✅ `cueilleurs-fond-de-plan-16x9` : persos MINUSCULES (scale ~0.27-0.3) intégrés au décor lointain d'un plan large
   parallaxe, geste de récolte en BOUCLE continue (pas de machine à états, juste `bend`/`armReach` cycliques via
   `wf % periode`). Preuve : `_rnd/svg-scenes/CargoVoyage16x9.tsx`. ⚠️ LEARNING (test empirique 2026-07-02) :
@@ -188,8 +195,17 @@ la fève, elle glisse seule"). C'est la MAIN/le corps qui l'amène. L'objet disp
   à cette taille, rester `carry="none"`, le geste seul suffit à raconter le travail. Espacer le perso du TRONC
   (ne pas le coller à l'arbre) sinon confusion silhouette/feuillage.
 - ⬜ `planter-arbre` (GGW) : 2 persos, creuser/déposer un jeune plant. (prochain)
-- ⬜ `cueillette-arbre` : tend le bras vers le HAUT (cabosse sur tronc) — inverser l'angle du bras.
-- ⬜ `immobile-contemplatif` : debout, respiration, regarde l'horizon.
+- ✅✅ `cueillette-arbre` **CONÇU DE ZÉRO côté personnage Gemini (2026-07-02)** — premier geste sans
+  référence rig capsule. `ProtoGeminiTreeCueillette.tsx` (`RND-ProtoGeminiTreeCueillette`). Voir §
+  "Deux systèmes distincts" ci-dessous pour le détail + 2 bugs corrigés.
+- ✅ `immobile-contemplatif` **FAIT côté personnage Gemini (2026-07-02)** : `ProtoGeminiContemplatif.tsx`
+  (`RND-ProtoGeminiContemplatif`). Voir § "Deux systèmes distincts" ci-dessous — 7/7 gestes du plan de
+  session, catalogue complet.
+- ✅ `recolte-au-sol` **TRANSPOSÉ côté personnage Gemini (2026-07-02)** : `ProtoGeminiBendPickup.tsx`
+  (`RND-ProtoGeminiBendPickup`). Voir § "Deux systèmes distincts" pour la formule + bug structurel corrigé
+  (jambes qui héritaient à tort de `rotate(torsoTilt)`).
+- ✅ `manipuler-objet` et `passer-objet-main-a-main` : **TRANSPOSÉS côté personnage Gemini (2026-07-02)** —
+  voir § "Deux systèmes distincts" plus bas pour le détail des 2 fichiers + leçons.
 - ✅✅ `8-directions` : profil/3-4/dos/face × miroir = 8 directions (StickRigMultiDir + StickRig). Voir § 8 DIRECTIONS.
   NEXT (piste en cours) : scène narrative multi-plan (perso avance/recule/tourne, change de vue en mouvement —
   le vrai test de la consolidation).
@@ -604,6 +620,130 @@ bien lisible dès l'arrêt de la marche. Render : `out/_rnd/pose-bank-test/gemin
 **validée et reproductible** — c'est la procédure à suivre pour toute future extension du set de poses
 Gemini (ex. futurs : porte-charge, immobile-contemplatif). Fichiers de ce test (scratch) :
 `out/_rnd/pose-bank-test/prompt-pose-bank-v2-offer.txt`, `response-v2-offer.txt`, `v2-*.svg` (5 fichiers).
+
+### ⭐⭐⭐ Deux systèmes distincts, PAS concurrents : rig capsule = mécanique, personnage Gemini = habillage (2026-07-02)
+
+Session "consulter Gemini sur ses propres capacités" (au lieu de deviner quelles poses demander). Aziz a
+recadré une confusion en cours de session : le rig capsule (`capsuleSegment.ts`/`StickRig.tsx`) et le
+"rig FK Gemini" (poses text-to-SVG figées, § ci-dessus) ne sont **pas deux systèmes à choisir l'un contre
+l'autre** — ce sont deux couches complémentaires du même problème :
+- **Rig capsule** = la MÉCANIQUE de mouvement, 100% code, zéro dépendance API. C'est lui qui sait déjà FAIRE
+  crédiblement porter une charge (`carry="hand-basket"`/`"shoulder-sack"`, bras qui pend + balancier amorti
+  par le poids — PAS un bras levé au-dessus de la tête), plier un genou, gérer 8 directions
+  (`StickRigMultiDir.tsx`). Squelette technique, sans habillage visuel (couleurs/silhouette).
+- **Personnage Gemini** = l'HABILLAGE (silhouette, couleurs, chapeau, style encre), déclinable en poses
+  figées via consultation + génération 1-appel-1-pose (méthode ci-dessus). N'a PAS de mécanique paramétrique
+  générale — chaque nouvelle action doit être transposée à la main depuis le rig capsule.
+
+**Le vrai travail = transposer la mécanique du rig capsule vers le personnage Gemini, action par action**,
+PAS une "migration" générale en un coup. Preuve par l'échec puis la correction (2026-07-02) :
+
+1. **Échec initial "tête chargée"** (`ProtoGeminiHeadLoadWalk.tsx`) : un panier posé en équilibre sur la
+   tête, bras levés en V de chaque côté. Lu par Aziz comme "bras qui saluent", pas "porte un panier" —
+   parce que ce n'est PAS la mécanique réelle du port de charge (aucune main ne "tient" rien, juste un
+   objet qui flotte). Erreur de jugement visuel de ma part, pas une limite du rig.
+2. **Correction "panier à la main"** (`ProtoGeminiHandBasketWalk.tsx`) : bras avant PEND le long du corps
+   (pas levé), main tient le panier, balancier léger amorti par la marche ; bras arrière libre balance
+   normalement. Mécanique copiée directement de `StickRig.tsx` (`carry="hand-basket"`, ligne ~128 :
+   `swingLoad = swingDeg * 0.25 * (1 - load)`). Résultat validé par Aziz — "marche parfaitement".
+3. **"Sac à l'épaule + marche penchée/ralentie"** (`ProtoGeminiShoulderSackWalk.tsx`) : mécanique copiée de
+   `carry="shoulder-sack"` (main remonte tenir la sangle près de l'épaule/cou, coude serré). 2 échecs avant
+   le bon résultat : (a) sac positionné à la mauvaise hauteur (`y=-160`, chevauchait la tête à `y=-180` —
+   toujours vérifier la position relative aux AUTRES groupes, ex. head à `translate(0,-135)` puis
+   `cy=-45` = tête réelle vers `y=-180`) ; (b) angles de bras devinés au jugé (`upper=-35, lower=-95`)
+   produisaient un bras qui pointait HORS du corps au lieu de replier vers l'épaule — **corrigé en
+   calculant la position finale de la main par trigonométrie** (simulation Python de la chaîne de
+   rotations cumulées `sin/cos(upper)` puis `sin/cos(upper+lower)`) plutôt qu'en essayant des angles à
+   l'aveugle. Leçon : dès qu'un angle de bras replié semble faux visuellement, calculer la position
+   finale de la main au lieu d'itérer par essais-erreurs sur les degrés.
+
+**Conclusion opérationnelle** : avant de transposer une nouvelle charge/geste, (1) identifier la bonne
+mécanique dans `StickRig.tsx` (grep `carry=`), (2) SI un angle replié semble faux, calculer trigonométri-
+quement la position de main visée plutôt que deviner, (3) toujours vérifier la position d'un objet ajouté
+(sac/panier) relative aux AUTRES groupes déjà positionnés (tête, épaule), pas en absolu.
+
+**✅ `recolte-au-sol` TRANSPOSÉ (2026-07-02)** : `ProtoGeminiBendPickup.tsx` (`RND-ProtoGeminiBendPickup`).
+Formule reprise EXACTEMENT de `poses.ts computePose(bend)` : `torsoDeg=bend*70`, `hipBack=-(torsoDeg/90)*70`
+(compensation), `hipDrop` proportionnel à NOS longueurs de jambe (pas la constante `34` du système source,
+qui suppose `LEG=150` — recalculer `bend * NOTRE_LEG_TOTAL * (34/150)` sinon le ratio drop/jambe est faux
+à une autre échelle). Bras avant vise 22° ABSOLU vers le sol (indépendant du torse) → converti en angle
+LOCAL par soustraction du tilt (`armUpperLocal = 22 - torsoDeg`), sinon le bras ramasse dans le mauvais sens
+dès que le torse est incliné.
+
+**⛔⛔ BUG STRUCTUREL trouvé et corrigé — jambes NE DOIVENT PAS hériter de `rotate(torsoTilt)`** : dans
+`poses.ts`, `stepAmp = moveAmt*(1-bend)` → dès que `bend=1`, `swingDeg=0` et **les jambes restent
+VERTICALES dans l'espace absolu**, seul le bassin translate (recule+descend) et le torse pivote AUTOUR de
+la hanche. 1er essai : un seul groupe racine appliquait `translate(hip) rotate(torsoTilt)` à TOUT (jambes
+incluses, héritage du composant marche où c'était voulu) → jambes qui pivotent avec le torse = effet
+"planche/pompe à bras", pas un vrai penché. **Fix** : découpler en 2 groupes — le groupe HANCHE fait
+seulement `translate()` (position), un SOUS-groupe séparé fait `rotate(torsoTilt)` pour torse+bras+tête
+uniquement ; les jambes restent enfants directs du groupe hanche, donc verticales même à torsoTilt=70°.
+Règle générale à vérifier à chaque nouvelle transposition : **si un membre ne doit PAS suivre un tilt de
+torse, il ne doit PAS être dans le même `<g>` que celui qui applique ce tilt** — même si ça marchait pour
+un autre geste (ici la marche), la hiérarchie de groupes n'est pas neutre, elle encode des hypothèses.
+
+**✅ `manipuler-objet` TRANSPOSÉ (2026-07-02)** : `ProtoGeminiManipulateObject.tsx`
+(`RND-ProtoGeminiManipulateObject`). Bâti directement sur `recolte-au-sol` (même `bendPose`) + machine à
+états reprise d'`objectHandling.ts` (objet collé à la position RÉELLE de la main tant que tenu, jamais de
+glissade autonome). **Bug trouvé** : l'objet était correctement positionné (calcul trigonométrique juste)
+mais **invisible à l'écran** — deux causes cumulées : (1) dessiné AVANT le personnage dans le JSX donc
+masqué par le bras qui se dessine par-dessus (ordre JSX = ordre de calque SVG) ; (2) couleur/taille trop
+proches des couleurs déjà présentes sur le personnage (bras `#8B5A2B`, chaussures `#3E2723`) pour se
+distinguer même une fois au-dessus. Diagnostic confirmé en rendant l'objet temporairement énorme et en
+magenta vif — ne pas hésiter à ce genre de test volontairement absurde pour trancher vite entre "mal
+positionné" et "invisible pour une autre raison".
+
+**✅ `passer-objet-main-a-main` TRANSPOSÉ (2026-07-02), RÉUSSI DU PREMIER ESSAI** :
+`ProtoGeminiHandoff.tsx` (`RND-ProtoGeminiHandoff`). Contraste instructif avec les 2 gestes ci-dessus (qui
+ont chacun nécessité 2-3 corrections) : celui-ci a marché immédiatement car il ne fait que RECOMBINER des
+briques déjà validées — le cycle de marche, le geste "offer" bras tendu horizontal (angles repris tels
+quels de `ProtoGeminiOfferScene.tsx`, pas recalculés), et la fonction de calcul de position de main déjà
+écrite pour `manipuler-objet`. Personnage B = simple miroir de A (`scale(-1,1)` sur tout son groupe), donc
+son bras "avant" pointe automatiquement à gauche sans recalcul d'angle séparé. Point de contact FIGÉ
+(calculé une fois à `fHold`, pas recalculé à chaque frame du hold) — même principe que `handoffState()`
+dans `objectHandling.ts`. **Leçon** : quand un nouveau geste peut se décomposer en gestes déjà transposés
+et validés, l'assembler directement plutôt que recalculer from scratch — le risque d'erreur baisse
+fortement.
+
+**✅✅ `cueillette-arbre` CONÇU DE ZÉRO (2026-07-02) — premier geste SANS référence rig capsule** :
+`ProtoGeminiTreeCueillette.tsx` (`RND-ProtoGeminiTreeCueillette`). Contrairement aux 5 gestes précédents
+(tous transposés depuis une mécanique déjà écrite dans `StickRig.tsx`/`poses.ts`/`objectHandling.ts`),
+celui-ci n'avait aucune référence côté rig capsule. Angles du bras levé repris tels quels du test Gemini
+`v2-reach-up.svg` (session précédente, déjà validé en silhouette) — `armUpperFront=-155,
+armLowerFront=-10, headTilt=15` — plutôt que devinés, même sans référence "mécanique" à copier.
+
+**2 bugs trouvés, tous deux DÉJÀ documentés dans une leçon antérieure de cette même session — vérifier
+qu'une leçon gravée est bien réappliquée avant de coder, pas seulement après avoir buggé :**
+1. Le personnage sortait du viewBox en fin de séquence (distance de marche de retour mal calibrée par
+   rapport à la largeur du cadre SVG) — erreur de calcul simple, pas un bug de mécanique.
+2. **L'objet cueilli "disparaissait" pendant la marche de retour** — même erreur EXACTE que
+   `marche-porte-charge` (§ "Deux systèmes distincts" plus haut) : le bras qui tient l'objet réutilisait
+   le cycle de marche LIBRE (`WALK_A`/`WALK_B`, bras à ±45°), alors qu'un bras chargé doit être figé à un
+   angle réduit (ici `armUpperFront=-10` au lieu de ±45) pendant que l'AUTRE bras (libre) suit le grand
+   balancier. Fix : variantes `WALK_A_CARRY`/`WALK_B_CARRY` (mêmes jambes, bras avant figé), `walkCycle()`
+   généralisé pour accepter des poses A/B en paramètre au lieu de les coder en dur.
+
+**✅ `immobile-contemplatif` FAIT (2026-07-02) — dernier geste du catalogue, réussi du 1er essai** :
+`ProtoGeminiContemplatif.tsx` (`RND-ProtoGeminiContemplatif`). Le plus simple des 7 : boucle sinusoïdale
+lente (période ~4s) sur torse/bras/tête (pas de machine à états, pas de déplacement, pas d'objet) pour
+éviter l'effet "statue figée". Confirme le pattern de la session : les gestes sans interaction d'objet ni
+déplacement (donc sans risque de z-order/glissade/cadrage) sont les plus fiables du premier coup.
+
+**Catalogue complet (7/7 gestes du plan de session 2026-07-02)** : marche neutre, panier à la main, sac à
+l'épaule + marche penchée, recolte-au-sol, manipuler-objet, passer-objet-main-a-main, cueillette-arbre,
+immobile-contemplatif. Prochaine extension suggérée : `planter-arbre` (2 personnages, creuser+déposer —
+seul item du § Recettes rapides encore non transposé).
+
+Fichiers scratch de cette session : `out/_rnd/pose-bank-test/response-capabilities-A-script.md` (Gemini
+consulté sur poses utiles pour le script Cacao précis) + `response-capabilities-B-broad.md` (catalogue
+large, avec niveaux de risque auto-évalués par Gemini — accroupissement marqué "Borderline/Risky",
+cohérent avec l'écart déjà acté § squat) + `Proto*Walk.tsx` (3 composants Root, testés en rendu réel).
+
+### Fugu Ultra (Sakana AI) — testé, écarté pour le SVG (2026-07-02)
+Même protocole "pose bank" que le test Gemini/GPT ci-dessus. Résultat technique positif (rig FK natif,
+tient en interpolation) mais écarté pour la production : API peu fiable sur prompt multi-poses (3 échecs
+500), coût 2-3x supérieur à Gemini pour un set équivalent, style de rendu instable entre appels. Détail :
+`memory/tools/openrouter-svg.md` § Fugu Ultra. Gardé en réserve pour un cas hors-SVG futur, pas ce registre.
 
 ## Historique
 Né de la R&D cacao 2026-06-30 (dossier `_rnd-perso/` purgé après extraction ici). Feuille de route animation (Gemini+web concordants) :

@@ -79,4 +79,49 @@ Preuve : marche se dessine au trait noir (colorise=0) PUIS se remplit (tomates r
 - Flux conceptuel anime (GLM) : https://files.catbox.moe/hhftb1.mp4
 - Scenes GLM : offshore https://files.catbox.moe/v9ifmb.png · excavatrice https://files.catbox.moe/xhmttd.png · flux https://files.catbox.moe/zzgy2v.png
 
+## Fugu Ultra (Sakana AI) — TESTE et ECARTE pour le SVG (2026-07-02)
+
+> Modele multi-agents orchestre de Sakana AI (`sakana/fugu-ultra` via OpenRouter), sorti 2026-06-15/24.
+> TEXT-ONLY (pas de vision). Contexte 1M. Prix nominal $5/$30 par M tok, mais cout REEL observe bien plus
+> eleve (raisonnement interne massif). Benchmarks vendeur le positionnent pres de Fable 5 sur SWE-Bench Pro
+> — mais ce chiffre ne s'est PAS traduit en avantage sur notre registre SVG personnage.
+
+**Test realise** : meme protocole que le test Gemini vs GPT (§ PERSONNAGE-VIVANT-INDEX) — prompt "pose bank"
+texte-pur, personnage figE (couleurs hex explicites), demande de rig hierarchique nomme
+(`torso > arm-upper > arm-lower > hand`, translate-au-joint + rotate). 2 poses generees (idle, walk-a),
+portees en JSX Remotion, testees en INTERPOLATION continue (`src/projects/_rnd/svg-scenes/ProtoFuguPoseBankWalk.tsx`,
+compo `RND-ProtoFuguPoseBankWalk`).
+
+**Resultat technique** : ✅ positif — Fugu Ultra produit un vrai rig FK natif (comme Gemini, PAS comme
+GPT-5.5) qui tient sous rotation/interpolation sans decrochage aux joints. Qualite visuelle 1er jet bonne
+(silhouette digne, couleurs conformes, chapeau/proportions coherents entre les 2 poses).
+
+**MAIS ecarte pour la production** (verdict Aziz 2026-07-02), 3 raisons :
+1. **Fiabilite API** : le prompt 5-poses complet (celui qui marche en 1 seul appel avec Gemini) a echoue
+   3x de suite (erreur 500 serveur) — a du etre reduit a 1 pose par appel pour obtenir une reponse.
+2. **Cout** : $0.38 puis $1.05 pour UNE SEULE pose isolee (vs Gemini : 5 poses coherentes en 1 appel pour
+   une fraction du prix — 2-3x moins cher pour LE SET COMPLET, pas juste une pose). Cause probable :
+   raisonnement interne de l'orchestration multi-agents (jusqu'a 32625 tokens de sortie pour un SVG de
+   3.8K caracteres utiles).
+3. **Coherence de style inter-appels** : a change de technique de rendu entre les 2 poses (paths fermes
+   sur idle -> lignes stroke-width epais sur walk-a) malgre le meme prompt de personnage — Gemini garde
+   une technique de rendu stable sur tout un set genere en un seul appel.
+
+**Verdict Aziz** : "pas overkill en capacite, mais pas rentable" — Gemini 3.1 Pro reste la reference pour
+le SVG personnage (moins cher, plus fiable, style stable). Fugu Ultra gardE EN RESERVE pour un futur cas
+extremement complexe hors SVG (le texte-only + raisonnement lourd peut avoir un usage ailleurs), pas
+reconsidere pour ce registre sauf signal fort contraire. Ne pas re-tester sans raison nouvelle.
+
+Fichiers du test (garde comme preuve R&D, PAS a etendre) : `out/_rnd/fugu-ultra-test/` (prompts, reponses
+brutes, SVG extraits, render `fugu-pose-bank-walk.mp4`), `src/projects/_rnd/svg-scenes/ProtoFuguPoseBankWalk.tsx`.
+
 Voir aussi : [[SVG-SCENES-GENERATIVES]] (doctrine SVG generatif). Modeles principaux : `memory/tools/gemini.md`, CLAUDE.md (bloc modeles verrouilles).
+
+## ⭐ SVG source litteral (pas l'image PNG) comme patron pour toute generation de pose/asset via LLM vision
+
+Lecon gravee dans `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` § "Deux
+systemes distincts" (session 2026-07-02) : pour garder la continuite d'un personnage/registre entre
+plusieurs appels a un modele vision (Gemini, GLM avec image, etc.), donner le **code SVG source litteral**
+en patron dans le prompt est nettement superieur a donner seulement l'image PNG rendue en reference —
+l'image seule fait deriver la geometrie (proportions, structure de groupes) meme quand les couleurs sont
+explicites. Applicable a toute generation de pose/variante SVG via LLM, pas seulement ce personnage precis.
