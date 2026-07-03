@@ -745,6 +745,43 @@ tient en interpolation) mais écarté pour la production : API peu fiable sur pr
 500), coût 2-3x supérieur à Gemini pour un set équivalent, style de rendu instable entre appels. Détail :
 `memory/tools/openrouter-svg.md` § Fugu Ultra. Gardé en réserve pour un cas hors-SVG futur, pas ce registre.
 
+### ⭐⭐ TRIO VISAGE + CORPS FRONTAL sur GeminiRig (2026-07-03, valide Aziz)
+
+**Constat** : analyse de 4 chaines YouTube (Infographics Show, Simple History, Hypothetically, Crayon Capital)
+-> TOUTES ont au minimum yeux-points + sourcils + bouche, meme les plus minimalistes. Notre rig n'avait aucun
+trait facial -> gros plan impossible, personnage sans vie.
+
+**Solution** : trio minimum (yeux + sourcils 2 traits separes + bouche courbe) ajoute au GeminiRig canonique
+(FK Gemini 3.1 Pro). Le StickRig a aussi recu le trio (prototypage initial) mais le GeminiRig est le rig
+CANONIQUE pour les scenes narratives bustes/gros plans.
+
+**2 vues seulement** (decision Aziz, le 3/4 est visuellement identique au front = gain nul) :
+- `profile` : 1 oeil, corps de profil, bras/jambes en balancier FK
+- `front` : 2 yeux symetriques, corps face camera (torse elargi, bras sur les cotes, jambes paralleles)
+
+**5 expressions** : `neutral`, `smile`, `serious`, `surprise`, `angry` — via `face` prop.
+A RETRAVAILLER (session future) : les sourcils seuls ne distinguent pas assez angry/surprise/smile. Combiner
+sourcils + forme de bouche + ouverture des yeux de maniere plus contrastee.
+
+**Cou ajoute** : petit trapeze couleur peau entre epaules et tete. Plus de tete flottante.
+
+**Chapeaux** : 3 types (`conical`, `cap`, `scarf`) + `none`. Hat de profil = triangle asymetrique (perspective).
+Hat frontal = symetrique. A CONSOLIDER (session future) : les accessoires doivent etre ancres au centre exact
+de la tete avec un offset fixe, pas un path absolu -> eviter les artefacts de position au headTilt.
+
+**Fichiers** :
+- `_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx` : GeminiRig exporte (composant parametre), types exportes
+  (`LimbAngles`, `FaceExpression`, `FaceView`, `GeminiRigProps`), poses (`IDLE`/`WALK_A`/`WALK_B`), helpers
+  (`lerp`/`lerpAngles`).
+- `_rnd/svg-scenes/ProtoCadrages.tsx` : planche comparative 4 panels (plan large profil, buste profil,
+  buste face, gros plan face) avec cycle d'expressions. Compo Root `RND-ProtoCadrages`.
+
+**Prochains chantiers grammaire narrative** (valides Aziz, a faire en session future) :
+1. 2-3 personnages buste face-a-face (differencies vetement/chapeau/peau)
+2. Personnage buste devant ecran/tableau de donnees
+3. Texte dialogue flottant au-dessus du personnage
+4. Scene de groupe 4-5 personnages alignes
+
 ## Historique
-Né de la R&D cacao 2026-06-30 (dossier `_rnd-perso/` purgé après extraction ici). Feuille de route animation (Gemini+web concordants) :
+Ne de la R&D cacao 2026-06-30 (dossier `_rnd-perso/` purge apres extraction ici). Feuille de route animation (Gemini+web concordants) :
 `memory/episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`.

@@ -1,16 +1,14 @@
 /**
- * PROTOTYPE — test de MOUVEMENT sur la banque de poses Gemini 3.1 Pro (text-to-SVG, 2026-07-02).
- * Gemini a produit un vrai rig FK imbrique (translate au joint + rotate, parent->enfant) contrairement
- * a GPT (paths en coordonnees absolues, pas de hierarchie). Ce proto verifie si on peut INTERPOLER les
- * angles entre walk-a et walk-b pour une vraie marche continue (pas juste un cut sec entre poses).
- * Angles extraits a la main des 2 SVG bruts (out/_rnd/pose-bank-test/gemini-pose2.svg et pose3.svg).
+ * GeminiRig — rig FK canonique du personnage Souverain (text-to-SVG Gemini 3.1 Pro, 2026-07-02).
+ * Hierarchie parent->enfant (translate au joint + rotate) pour interpolation fluide.
+ * Exporte GeminiRig (composant parametre) + poses + helpers.
  */
 import React from "react";
 import { AbsoluteFill, useCurrentFrame, interpolate } from "remotion";
 
 const PARCH = "#e8dcc0";
 
-type LimbAngles = {
+export type LimbAngles = {
   torsoTilt: number;
   headTilt: number;
   armUpperFront: number; armLowerFront: number;
@@ -20,8 +18,22 @@ type LimbAngles = {
   hipX: number; hipY: number;
 };
 
-// walk-a (gemini-pose2.svg) et walk-b (gemini-pose3.svg) : memes valeurs, front/back inverses.
-const WALK_A: LimbAngles = {
+export type FaceExpression = "none" | "neutral" | "smile" | "serious" | "surprise" | "angry";
+export type FaceView = "profile" | "front";
+
+export type GeminiRigProps = {
+  a: LimbAngles;
+  face?: FaceExpression;
+  faceView?: FaceView;
+  skinTone?: string;
+  clothesColor?: string;
+  pantsColor?: string;
+  inkColor?: string;
+  hatType?: "conical" | "cap" | "scarf" | "none";
+  hatColor?: string;
+};
+
+export const WALK_A: LimbAngles = {
   torsoTilt: 5, headTilt: -5,
   armUpperFront: -35, armLowerFront: -20,
   armUpperBack: 40, armLowerBack: -20,
@@ -29,7 +41,7 @@ const WALK_A: LimbAngles = {
   legUpperBack: 30, legLowerBack: 0, footBack: 45,
   hipX: 200, hipY: 365,
 };
-const WALK_B: LimbAngles = {
+export const WALK_B: LimbAngles = {
   torsoTilt: 5, headTilt: -5,
   armUpperFront: 40, armLowerFront: -20,
   armUpperBack: -35, armLowerBack: -20,
@@ -37,7 +49,7 @@ const WALK_B: LimbAngles = {
   legUpperBack: -45, legLowerBack: 45, footBack: 0,
   hipX: 200, hipY: 365,
 };
-const IDLE: LimbAngles = {
+export const IDLE: LimbAngles = {
   torsoTilt: 0, headTilt: 0,
   armUpperFront: -5, armLowerFront: 0,
   armUpperBack: 5, armLowerBack: 0,
@@ -46,10 +58,10 @@ const IDLE: LimbAngles = {
   hipX: 200, hipY: 340,
 };
 
-function lerp(a: number, b: number, t: number) {
+export function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
-function lerpAngles(a: LimbAngles, b: LimbAngles, t: number): LimbAngles {
+export function lerpAngles(a: LimbAngles, b: LimbAngles, t: number): LimbAngles {
   const out: Partial<LimbAngles> = {};
   (Object.keys(a) as (keyof LimbAngles)[]).forEach((k) => {
     out[k] = lerp(a[k], b[k], t);
@@ -57,68 +69,248 @@ function lerpAngles(a: LimbAngles, b: LimbAngles, t: number): LimbAngles {
   return out as LimbAngles;
 }
 
-const ArmFront = ({ upper, lower }: { upper: number; lower: number }) => (
+const ArmSegment = ({
+  upper, lower, skin, clothes, ink,
+}: {
+  upper: number; lower: number; skin: string; clothes: string; ink: string;
+}) => (
   <g transform={`rotate(${upper})`}>
-    <path d="M -7,40 L 7,40 L 6,90 L -6,90 Z" fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-    <path d="M -12,0 L 12,0 L 14,45 L -14,45 Z" fill="#FFFDD0" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
+    <path d="M -7,40 L 7,40 L 6,90 L -6,90 Z" fill={skin} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+    <path d="M -12,0 L 12,0 L 14,45 L -14,45 Z" fill={clothes} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
     <g transform={`translate(0, 90) rotate(${lower})`}>
-      <path d="M -6,0 L 6,0 L 5,75 L -5,75 Z" fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
+      <path d="M -6,0 L 6,0 L 5,75 L -5,75 Z" fill={skin} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
       <g transform="translate(0, 75)">
-        <circle cx={0} cy={10} r={12} fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} />
+        <circle cx={0} cy={10} r={12} fill={skin} stroke={ink} strokeWidth={4} />
       </g>
     </g>
   </g>
 );
 
-const LegFront = ({ upper, lower, foot }: { upper: number; lower: number; foot: number }) => (
+const LegSegment = ({
+  upper, lower, foot, pants, skin, ink, soleColor,
+}: {
+  upper: number; lower: number; foot: number;
+  pants: string; skin: string; ink: string; soleColor: string;
+}) => (
   <g transform={`rotate(${upper})`}>
-    <path d="M -13,0 L 13,0 L 10,110 L -10,110 Z" fill="#2F4F4F" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
+    <path d="M -13,0 L 13,0 L 10,110 L -10,110 Z" fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
     <g transform={`translate(0, 110) rotate(${lower})`}>
-      <path d="M -10,0 L 10,0 L 7,90 L -7,90 Z" fill="#2F4F4F" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
+      <path d="M -10,0 L 10,0 L 7,90 L -7,90 Z" fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
       <g transform={`translate(0, 90) rotate(${foot})`}>
         <path
           d="M -7,0 L 7,0 L 9,8 L 22,12 C 24,13 24,16 22,16 L -9,16 C -11,16 -11,12 -9,8 Z"
-          fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round"
+          fill={skin} stroke={ink} strokeWidth={4} strokeLinejoin="round"
         />
-        <path d="M -11,16 L 24,16 L 24,20 L -11,20 Z" fill="#3E2723" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
+        <path d="M -11,16 L 24,16 L 24,20 L -11,20 Z" fill={soleColor} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
       </g>
     </g>
   </g>
 );
 
-const GeminiRig: React.FC<{ a: LimbAngles }> = ({ a }) => (
-  <g transform={`translate(${a.hipX}, ${a.hipY}) rotate(${a.torsoTilt})`}>
-    {/* back arm+leg derriere (draw order fixe, profil) */}
-    <g transform={`translate(0, -135) rotate(${a.armUpperBack})`}>
-      <path d="M -7,40 L 7,40 L 6,90 L -6,90 Z" fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-      <path d="M -12,0 L 12,0 L 14,45 L -14,45 Z" fill="#FFFDD0" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-      <g transform={`translate(0, 90) rotate(${a.armLowerBack})`}>
-        <path d="M -6,0 L 6,0 L 5,75 L -5,75 Z" fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-        <circle cx={0} cy={85} r={12} fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} />
+const Neck: React.FC<{ skin: string; ink: string; frontal: boolean }> = ({ skin, ink, frontal }) => {
+  const w = frontal ? 10 : 8;
+  return (
+    <path
+      d={`M ${-w},-135 L ${w},-135 L ${w * 0.8},-148 L ${-w * 0.8},-148 Z`}
+      fill={skin} stroke={ink} strokeWidth={3} strokeLinejoin="round"
+    />
+  );
+};
+
+const FaceFeatures: React.FC<{
+  face: FaceExpression;
+  faceView: FaceView;
+  ink: string;
+  headCY: number;
+}> = ({ face, faceView, ink, headCY }) => {
+  if (face === "none") return null;
+
+  const EYE_R = 3;
+  const eyeY = headCY - 2;
+  const browY = eyeY - 9;
+  const mouthY = headCY + 12;
+  const browAngle = face === "angry" ? 12 : face === "surprise" ? -8 : face === "serious" ? 4 : 0;
+  const mouthW = face === "surprise" ? 0 : face === "smile" ? 7 : 5;
+
+  const isProfile = faceView === "profile";
+
+  const eye1X = isProfile ? 12 : -10;
+  const eye2X = isProfile ? null : 10;
+  const mouthCenterX = isProfile ? 10 : 0;
+
+  return (
+    <>
+      <circle cx={eye1X} cy={eyeY} r={EYE_R} fill={ink} />
+      {eye2X != null && <circle cx={eye2X} cy={eyeY} r={EYE_R} fill={ink} />}
+      <line
+        x1={eye1X - 5} y1={browY + browAngle * 0.3}
+        x2={eye1X + 5} y2={browY - browAngle * 0.3}
+        stroke={ink} strokeWidth={2.5} strokeLinecap="round"
+      />
+      {eye2X != null && (
+        <line
+          x1={eye2X - 5} y1={browY + browAngle * 0.3}
+          x2={eye2X + 5} y2={browY - browAngle * 0.3}
+          stroke={ink} strokeWidth={2.5} strokeLinecap="round"
+        />
+      )}
+      {face === "surprise"
+        ? <ellipse cx={mouthCenterX} cy={mouthY} rx={4} ry={5} fill={ink} />
+        : <path
+            d={`M ${mouthCenterX - mouthW} ${mouthY} q ${mouthW} ${face === "smile" ? 5 : face === "serious" ? -1 : 2} ${mouthW * 2} 0`}
+            fill="none" stroke={ink} strokeWidth={2.5} strokeLinecap="round"
+          />
+      }
+    </>
+  );
+};
+
+const HatProfile: React.FC<{ hatType: string; hc: string; ink: string }> = ({ hatType, hc, ink }) => {
+  if (hatType === "conical") {
+    return (
+      <path d="M -15,-22 Q 15,-36 40,-22 L 15,-80 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+    );
+  }
+  if (hatType === "cap") {
+    return (
+      <>
+        <path d="M -26 -16 A 26 26 0 0 1 26 -16 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M 22 -14 L 50 -10 L 48 -4 L 20 -8 Z" fill={hc} stroke={ink} strokeWidth={3.5} strokeLinejoin="round" opacity={0.85} />
+      </>
+    );
+  }
+  if (hatType === "scarf") {
+    return (
+      <>
+        <path d="M -26 -10 A 26 24 0 0 1 26 -10 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M -22 -10 q -18 8 -30 2" fill="none" stroke={hc} strokeWidth={6} strokeLinecap="round" />
+      </>
+    );
+  }
+  return null;
+};
+
+const HatFront: React.FC<{ hatType: string; hc: string; ink: string }> = ({ hatType, hc, ink }) => {
+  if (hatType === "conical") {
+    return (
+      <path d="M -50,-50 Q 0,-40 50,-50 L 0,-110 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+    );
+  }
+  if (hatType === "cap") {
+    return (
+      <path d="M -28 -16 A 28 28 0 0 1 28 -16 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+    );
+  }
+  if (hatType === "scarf") {
+    return (
+      <path d="M -28 -10 A 28 24 0 0 1 28 -10 Z" fill={hc} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+    );
+  }
+  return null;
+};
+
+export const GeminiRig: React.FC<GeminiRigProps> = ({
+  a,
+  face = "none",
+  faceView = "profile",
+  skinTone = "#8B5A2B",
+  clothesColor = "#FFFDD0",
+  pantsColor = "#2F4F4F",
+  inkColor = "#1A1A1A",
+  hatType = "conical",
+  hatColor,
+}) => {
+  const ink = inkColor;
+  const skin = skinTone;
+  const clothes = clothesColor;
+  const pants = pantsColor;
+  const sole = "#3E2723";
+  const isFrontal = faceView === "front";
+
+  const defaultHatColor = hatType === "cap" ? "#5e7245" : hatType === "scarf" ? "#b5552f" : "#D2B48C";
+  const hc = hatColor || defaultHatColor;
+
+  if (isFrontal) {
+    const legSpread = 18;
+    return (
+      <g transform={`translate(${a.hipX}, ${a.hipY})`}>
+        {/* FRONTAL: jambes droites paralleles */}
+        <g opacity={0.85}>
+          <path d={`M ${-legSpread - 10},0 L ${-legSpread + 10},0 L ${-legSpread + 7},200 L ${-legSpread - 7},200 Z`} fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+          <path d={`M ${legSpread - 10},0 L ${legSpread + 10},0 L ${legSpread + 7},200 L ${legSpread - 7},200 Z`} fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+          <path d={`M ${-legSpread - 9},200 L ${-legSpread + 9},200 L ${-legSpread + 9},210 L ${-legSpread - 9},210 Z`} fill={sole} stroke={ink} strokeWidth={3} strokeLinejoin="round" />
+          <path d={`M ${legSpread - 9},200 L ${legSpread + 9},200 L ${legSpread + 9},210 L ${legSpread - 9},210 Z`} fill={sole} stroke={ink} strokeWidth={3} strokeLinejoin="round" />
+        </g>
+
+        {/* ceinture */}
+        <path d="M -22,0 L 22,0 L 21,15 L -21,15 Z" fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+
+        {/* torse frontal */}
+        <path
+          d="M -24,-135 C -24,-135 -28,-70 -22,0 L 22,0 C 28,-70 24,-135 24,-135 Z"
+          fill={clothes} stroke={ink} strokeWidth={4} strokeLinejoin="round"
+        />
+
+        {/* bras frontaux */}
+        <g transform="translate(-24, -135)" opacity={0.85}>
+          <ArmSegment upper={10} lower={5} skin={skin} clothes={clothes} ink={ink} />
+        </g>
+        <g transform="translate(24, -135) scale(-1,1)" opacity={0.85}>
+          <ArmSegment upper={10} lower={5} skin={skin} clothes={clothes} ink={ink} />
+        </g>
+
+        {/* cou */}
+        <Neck skin={skin} ink={ink} frontal={true} />
+
+        {/* tete */}
+        <g transform={`translate(0, -135) rotate(${a.headTilt})`}>
+          <HatFront hatType={hatType} hc={hc} ink={ink} />
+          <circle cx={0} cy={-45} r={28} fill={skin} stroke={ink} strokeWidth={4} />
+          <FaceFeatures face={face} faceView={faceView} ink={ink} headCY={-45} />
+        </g>
+      </g>
+    );
+  }
+
+  return (
+    <g transform={`translate(${a.hipX}, ${a.hipY}) rotate(${a.torsoTilt})`}>
+      {/* back arm+leg */}
+      <g transform={`translate(0, -135) rotate(${a.armUpperBack})`} opacity={0.85}>
+        <path d="M -7,40 L 7,40 L 6,90 L -6,90 Z" fill={skin} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+        <path d="M -12,0 L 12,0 L 14,45 L -14,45 Z" fill={clothes} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+        <g transform={`translate(0, 90) rotate(${a.armLowerBack})`}>
+          <path d="M -6,0 L 6,0 L 5,75 L -5,75 Z" fill={skin} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+          <circle cx={0} cy={85} r={12} fill={skin} stroke={ink} strokeWidth={4} />
+        </g>
+      </g>
+      <g transform={`rotate(${a.legUpperBack})`} opacity={0.85}>
+        <LegSegment upper={0} lower={a.legLowerBack} foot={a.footBack} pants={pants} skin={skin} ink={ink} soleColor={sole} />
+      </g>
+
+      {/* torso */}
+      <path d="M -20,-135 C -20,-135 -25,-70 -18,0 L 18,0 C 25,-70 20,-135 20,-135 Z" fill={clothes} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+      <path d="M -18,0 L 18,0 L 17,15 L -17,15 Z" fill={pants} stroke={ink} strokeWidth={4} strokeLinejoin="round" />
+
+      {/* cou */}
+      <Neck skin={skin} ink={ink} frontal={false} />
+
+      {/* tete */}
+      <g transform={`translate(0, -135) rotate(${a.headTilt})`}>
+        <HatProfile hatType={hatType} hc={hc} ink={ink} />
+        <circle cx={0} cy={-45} r={28} fill={skin} stroke={ink} strokeWidth={4} />
+        <FaceFeatures face={face} faceView={faceView} ink={ink} headCY={-45} />
+      </g>
+
+      {/* front leg+arm */}
+      <g transform={`rotate(${a.legUpperFront})`}>
+        <LegSegment upper={0} lower={a.legLowerFront} foot={a.footFront} pants={pants} skin={skin} ink={ink} soleColor={sole} />
+      </g>
+      <g transform="translate(0, -135)">
+        <ArmSegment upper={a.armUpperFront} lower={a.armLowerFront} skin={skin} clothes={clothes} ink={ink} />
       </g>
     </g>
-    <g transform={`rotate(${a.legUpperBack})`}>
-      <LegFront upper={0} lower={a.legLowerBack} foot={a.footBack} />
-    </g>
-
-    {/* torso + tete + chapeau */}
-    <path d="M -20,-135 C -20,-135 -25,-70 -18,0 L 18,0 C 25,-70 20,-135 20,-135 Z" fill="#FFFDD0" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-    <path d="M -18,0 L 18,0 L 17,15 L -17,15 Z" fill="#2F4F4F" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-    <g transform={`translate(0, -135) rotate(${a.headTilt})`}>
-      <path d="M -50,-50 Q 0,-40 50,-50 L 0,-110 Z" fill="#D2B48C" stroke="#1A1A1A" strokeWidth={4} strokeLinejoin="round" />
-      <circle cx={0} cy={-45} r={28} fill="#8B5A2B" stroke="#1A1A1A" strokeWidth={4} />
-      <circle cx={14} cy={-50} r={3} fill="#1A1A1A" />
-    </g>
-
-    {/* front leg+arm devant */}
-    <g transform={`rotate(${a.legUpperFront})`}>
-      <LegFront upper={0} lower={a.legLowerFront} foot={a.footFront} />
-    </g>
-    <g transform={`translate(0, -135)`}>
-      <ArmFront upper={a.armUpperFront} lower={a.armLowerFront} />
-    </g>
-  </g>
-);
+  );
+};
 
 export const PROTO_GEMINI_POSE_BANK_WALK_FRAMES = 180;
 
@@ -126,7 +318,6 @@ export const ProtoGeminiPoseBankWalk: React.FC = () => {
   const frame = useCurrentFrame();
   const fade = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: "clamp" });
 
-  // cycle de marche : idle (0-20) -> walk-a<->walk-b en boucle (20-140, ~14f par demi-pas, EASING) -> idle (140-180)
   const CYCLE_START = 20;
   const CYCLE_END = 140;
   const HALF_STEP = 14;
@@ -154,7 +345,7 @@ export const ProtoGeminiPoseBankWalk: React.FC = () => {
         </div>
         <svg width={500} height={750} viewBox="0 -60 400 600">
           <line x1={0} y1={500} x2={400} y2={500} stroke="#2b2117" strokeWidth={2} opacity={0.3} />
-          <GeminiRig a={pose} />
+          <GeminiRig a={pose} face="neutral" />
         </svg>
       </div>
     </AbsoluteFill>

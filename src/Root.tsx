@@ -237,6 +237,13 @@ import { ProtoGeminiManipulateObject, PROTO_GEMINI_MANIPULATE_OBJECT_FRAMES } fr
 import { ProtoGeminiHandoff, PROTO_GEMINI_HANDOFF_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiHandoff";
 import { ProtoGeminiTreeCueillette, PROTO_GEMINI_TREE_CUEILLETTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiTreeCueillette";
 import { ProtoGeminiContemplatif, PROTO_GEMINI_CONTEMPLATIF_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiContemplatif";
+import { ProtoFaceExpressions } from "./projects/_rnd/svg-scenes/ProtoFaceExpressions";
+import { ProtoCadrages } from "./projects/_rnd/svg-scenes/ProtoCadrages";
+import { ProtoFaceAFace, PROTO_FACE_A_FACE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoFaceAFace";
+import { ProtoDialogueEcran, PROTO_DIALOGUE_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDialogueEcran";
+import { ProtoDataVizEncre, PROTO_DATAVIZ_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizEncre";
+import { ProtoDataVizPleinEcran, PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizPleinEcran";
+import { ProtoNarratifPlusData, PROTO_NARRATIF_PLUS_DATA_FRAMES } from "./projects/_rnd/svg-scenes/ProtoNarratifPlusData";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2055,6 +2062,13 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-ProtoGeminiHandoff" component={ProtoGeminiHandoff} durationInFrames={PROTO_GEMINI_HANDOFF_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiTreeCueillette" component={ProtoGeminiTreeCueillette} durationInFrames={PROTO_GEMINI_TREE_CUEILLETTE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiContemplatif" component={ProtoGeminiContemplatif} durationInFrames={PROTO_GEMINI_CONTEMPLATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoFaceExpressions" component={ProtoFaceExpressions} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCadrages" component={ProtoCadrages} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoFaceAFace" component={ProtoFaceAFace} durationInFrames={PROTO_FACE_A_FACE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDialogueEcran" component={ProtoDialogueEcran} durationInFrames={PROTO_DIALOGUE_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDataVizEncre" component={ProtoDataVizEncre} durationInFrames={PROTO_DATAVIZ_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDataVizPleinEcran" component={ProtoDataVizPleinEcran} durationInFrames={PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoNarratifPlusData" component={ProtoNarratifPlusData} durationInFrames={PROTO_NARRATIF_PLUS_DATA_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
