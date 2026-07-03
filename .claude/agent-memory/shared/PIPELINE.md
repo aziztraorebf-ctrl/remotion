@@ -10,13 +10,10 @@
 
 ---
 
-## Cacao → Chocolat Short — EN PRODUCTION VISUELLE, B1+B2 ACQUIS (2026-06-29)
-> [AUDIO LOCKED · B1+B2 COMPLETE · B3 NEXT] Short SVG vertical 9:16 ~1min35, pilier Souverain, registre encre GGW.
-> ✅ Pré-prod (historique) : SCRIPT-V4 · fact-check · jury 8,5/10 · NARRATION validée · MUSIQUE B.
-> ✅ DA-brief animation figé (DA-BRIEF-ANIMATION.md). ✅ B1 (hook v8 focus-tablette) + B2 (source split CI/Ghana)
->   produits et validés Aziz, karaoké word-level brun chocolat. Variantes transfusion+cuisine écartées.
-> NEXT = B3 (extraction) puis B4, B5 + assemblage 5 beats + musique B.
-> Source de vérité : `memory/episodes/souverain/cacao-chocolat-short/STATUS.md` + `DA-BRIEF-ANIMATION.md`.
+## Cacao → Chocolat Short — ✅✅ TERMINÉ, PUBLIÉ (2026-07-01)
+> Short SVG vertical 9:16 (98,5s), pilier Souverain, registre encre GGW. COMPLET et validé Aziz.
+> Livrable : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`. Publication YT 2026-07-01 14h UTC.
+> Source de vérité : `memory/episodes/souverain/cacao-chocolat-short/STATUS.md`.
 
 ---
 

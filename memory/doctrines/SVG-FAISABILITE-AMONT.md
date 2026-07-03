@@ -102,3 +102,12 @@ par l'image-cible), Aziz tranche, PUIS on genere. Evite les idees hors-sol (le m
 "Une idee de scene n'est pas une scene. Avant de coder un SVG, faire dire au LLM-dessinateur SA meilleure approche +
 generer l'image-cible. Voir avant de coder. La diagonale isometrique > le top-down pur pour des objets qui doivent LIRE
 (arbres, batiments)." -> deplace la decouverte des problemes AVANT le code, gratuitement.
+
+## ⭐⭐ REFS DE NIVEAU = NOS PROPRES VIDÉOS (passer de l'objet à l'écosystème) — prouvé Cacao B3/B4 (2026-06-29)
+Pour que le brief amont produise une SCÈNE HABITÉE (avant-plan fort, horizon, sol travaillé, profondeur) et pas une
+frise d'objets dans du vide, JOINDRE 2-3 frames de NOS MEILLEURES scènes SVG comme refs de NIVEAU narratif, avec
+l'instruction STRICTE : « inspiration de niveau UNIQUEMENT — ne copie AUCUN contenu, c'est un autre sujet, vise CETTE
+richesse de paysage ». Refs prouvées efficaces : pièce-malédiction Sénégal (derrick pompe + navire flotte + mer remplit
+= écosystème où chaque élément agit), mosaïque GGW (perspective qu'on traverse), champ GGW (échelle premier-plan/fond).
+Cause racine corrigée : un brief d'OBJETS donne des objets ; un brief d'ÉCOSYSTÈME avec refs filmiques de nos propres
+réussites donne un monde. Lié à [[../key-learnings]] (§ SCÈNE-ÉCOSYSTÈME jamais OBJET-DANS-CADRE).

@@ -15,9 +15,23 @@ Le SVG excelle quand **le sens se construit par le TRAIT et la TRANSFORMATION** 
 
 Le point commun : **ca se RACONTE par des formes qui evoluent** (tracage, colorisation timee, assemblage, transformation, flux). Pas une image figee — un geste visuel.
 
+## ⭐⭐ 4 REGISTRES VIDEO LONGUE SVG (valides Aziz, 2026-07-02)
+
+> Le format long SVG se decline en 4 registres de mise en scene distincts. Ce ne sont pas des palettes
+> (voir [[SVG-SCENES-GENERATIVES]] § REGISTRES pour ca) mais des ARCHITECTURES DE SCENE — le choix se fait AVANT la palette.
+
+1. **Narratif SVG** (le format deja grave) : scene-lieu, personnage-vivant-svg, transformation/voyage. Voir patterns ci-dessous + [[PERSONNAGE-VIVANT-INDEX]].
+2. **Data-viz plein ecran sur grille Vox** (3e voie, ouverte 2026-07-02) : composition facon Bloomberg/Vox — grille de fond (`GridBackground`, stepSmall=30px, stepLarge=150px, pas de decor narratif), 1-2 visualisations plein cadre (barres/donut/compteur), typographie Georgia serif. Palette : `BG="#0f1a2e"`, `GRID="#1e2d47"`, `INK="#2b2117"`, `PARCH="#e8dcc0"`, `PARCH_DIM="#b0a58a"`. Protos : `_rnd/svg-scenes/ProtoDataVizPleinEcran.tsx` + `ProtoDataVizEncre.tsx`.
+3. **Presentateur + data** : un personnage (rig FK Gemini) interagit avec un ecran de donnees incruste (DataScreen), dialogue/geste vers l'ecran + bulles de dialogue (SpeechBubble). Proto : `_rnd/svg-scenes/ProtoDialogueEcran.tsx`.
+4. **2D flat maps (d3-geo)** (pas encore teste en render) : projection SVG reelle via d3-geo + rendu encre/parchemin, pour la geo qui a besoin d'exactitude SANS Mapbox 3D (Aziz : "Mapbox 3D casse l'esthetique SVG dessinee"). A tester : starter `memory/STARTER-PROMPT-refactoring-svg-et-map2d.md` § CHANTIER 2.
+
+### Cross-fade NARRATIF -> DATA-VIZ (prouve 2026-07-02)
+Preuve : `out/_r-and-d/narratif-plus-data-proto.mp4`, code `_rnd/svg-scenes/ProtoNarratifPlusData.tsx`. Enchaine scene narrative (CargoVoyage16x9) puis transitionne vers data-viz plein ecran (DonutScene sur GridBackground) via crossfade opacity. Usage : commencer un beat en narratif (incarner l'enjeu) puis basculer vers la preuve chiffree SANS rupture. Les 4 registres ne sont pas exclusifs — ils se composent dans une meme video.
+
 ## ⛔ Ce pour quoi le SVG n'est PAS le bon outil (garde-fou anti-dilution)
 
-- **Geo reelle seule** (territoire, frontieres, bataille situee, trajet) → reste **Mapbox** (frame-driven).
+- **Geo reelle 3D/zoomable** (territoire, frontieres, bataille situee, trajet avec pitch/rotation) → reste **Mapbox** (frame-driven).
+- **Geo reelle 2D plate/illustree** (contour de pays, projection simple, pas de relief) → **d3-geo + SVG** (registre 4 ci-dessus).
 - **Organique humain/animal realiste, emotion d'un visage, scene "filmee"** → reste image generee / Seedance / vraie matiere.
 - **Recit chronologique pur "que s'est-il passe"** sans transformation visuelle a montrer → narration classique.
 

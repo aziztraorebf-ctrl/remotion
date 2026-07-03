@@ -136,14 +136,28 @@ type: project
 - Variations entre actes (acte I plus tendu, acte V plus apaisé ?)
 - Brief Minimax précis à valider avant génération
 
-### 7. Décision finale : produire ou re-pauser ?
+### 7. Format final — Long + Short possible (décision 2026-07-01)
 
-**À résoudre à la reprise** selon :
-- État Hannibal (terminé ?)
-- Évolution sujet xénophobie SA (élections municipales SA, Addington verdict, etc.)
-- Audience Or Africain (signal demande sujets Souverain ?)
-- Crédits API disponibles
-- Énergie créative
+**Décision Aziz** : format Hub & Spoke (Long Mapbox 9-10min + Short SVG narratif 60-90s) est intellectuellement pertinent mais complexe à exécuter.
+
+**Gate obligatoire avant production** : validation via TubeLab (analyse outliers, vérification demande audience sur le sujet, choix d'angle définitif). Ce sujet sera l'un des candidats au "3e sujet" lors du prochain cycle TubeLab.
+
+**Sur le Short SVG** : la scène parallax silhouette+valise+grille A ÉTÉ TESTÉE (session 2026-07-01). Deux images-cibles générées :
+- GPT → https://files.catbox.moe/qnvl4s.png (lisible, minimal, 4 groupes propres)
+- Gemini → https://files.catbox.moe/2zrjio.png (plus dense, croisillons, repères arpenteur)
+- Jugement : GPT gagne en lisibilité + animabilité. Gemini gagne en intensité dramatique mais sature le plan intermédiaire.
+- **Conclusion doctrine** : SVG pur est faisable pour les scènes symboliques (silhouette-frontière), mais les scènes de foule/paradoxe restent difficiles. Un Short SA nécessiterait d'isoler les scènes 100% symboliques et de traiter les autres différemment.
+
+**Décision Aziz** : sujet MIS EN PAUSE, enrichi. Revenir quand TubeLab valide la demande audience.
+
+### 8. Mise à jour données 2026 (session 2026-07-01)
+
+- Tavily confirme : escalade majeure en 2026 — Operation Dudula + March & March, marches plus violentes
+- 25 000 expulsions estimées + ultimatums donnés aux immigrants
+- Nouveau vecteur narratif : réaction économique continentale (Mozambique trucks, Ghana Gold Fields, débat UA)
+- Nouveau mouvement "March and March" à distinguer d'Operation Dudula (fondé fin 2023, plus radical)
+- Chômage jeunes : 32,9% (Q1 2025 - Stats SA confirmé)
+- Gini coefficient 0,60-0,67 (Banque mondiale, 2024)
 
 ---
 

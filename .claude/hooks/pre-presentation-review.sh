@@ -133,12 +133,24 @@ check_override() {
   return 1
 }
 
-# --- 3. La review existe-t-elle ? ---
+# --- 3. Override trace : verifier EN PREMIER (couvre absence de review.json pour livrables finaux valides humainement) ---
+if [[ -f "$OVERRIDE_MD" ]]; then
+  if [[ "$MP4_ABS" -nt "$OVERRIDE_MD" ]]; then
+    echo "[review] Override present mais PLUS ANCIEN que le mp4 (re-rendu depuis) — ignore. Mets a jour $OVERRIDE_REL."
+  else
+    echo ""
+    echo "[review] OVERRIDE TRACE accepte — presentation autorisee (validation humaine)."
+    echo "[review] Justification : $OVERRIDE_REL"
+    exit 0
+  fi
+fi
+
+# --- 4. La review existe-t-elle ? ---
 if [[ ! -f "$REVIEW_JSON" ]]; then
   block "Aucune review trouvee ($(basename "$REVIEW_JSON") absent)."
 fi
 
-# --- 4. La review est-elle a jour (plus recente que le mp4) ? ---
+# --- 5. La review est-elle a jour (plus recente que le mp4) ? ---
 if [[ "$MP4_ABS" -nt "$REVIEW_JSON" ]]; then
   block "La review est PLUS ANCIENNE que le rendu (le mp4 a ete re-rendu depuis). Relance la review."
 fi

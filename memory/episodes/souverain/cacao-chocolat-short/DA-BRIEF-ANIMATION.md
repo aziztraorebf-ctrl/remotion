@@ -181,7 +181,10 @@ l'interieur". ⛔ Explicitement marquee "a challenger" par Aziz/V2. -> POINT 3.
 → **POINT 3 (PAS TRANCHE) : visuel de la nuance interne B4.** (cf §4 points)
 
 ## BEAT 5 — PONT + CTA (25,63s)
-Texte V4 : "Et le cacao n'est qu'une porte d'entree — le cafe, l'or, le cobalt : le meme mecanisme, partout. La
+⛔ TEXTE PERIME (SCRIPT-V4) — NE PAS CODER LE KARAOKE SUR CETTE BASE.
+⭐ SOURCE DE VERITE B5 = audio cacao-beat5-FINAL.mp3 → `audio/cacao-beat5-words.ts` (vérifié 2026-06-29).
+   CTA réel = "quel produit t'intéresse le plus que tu voudrais voir traité en vidéo" + "la version longue DE CETTE VIDEO".
+Texte V4 (archivé, ancien CTA) : "Et le cacao n'est qu'une porte d'entree — le cafe, l'or, le cobalt : le meme mecanisme, partout. La
 version longue repond a la vraie question : pourquoi, soixante ans apres les independances, ca n'a toujours pas
 change. Abonne-toi pour ne pas la rater. Et dis-moi en commentaire : quel produit veux-tu qu'on suive jusqu'au bout ?"
 

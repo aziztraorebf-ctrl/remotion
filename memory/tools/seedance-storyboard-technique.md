@@ -440,9 +440,62 @@ CHARACTER LOCK: [personnage] must remain visually identical across all 4 beats �
 
 ---
 
+## Règle 26 — GPT Image 2 > Nano Banana 2/Pro pour générer le storyboard lui-même (CONFIRMÉ 3 sources 2026-07-02)
+
+**Recherche Tavily + 3 transcripts YouTube (Creative Pad Media, Sebastian Torres, créateur anonyme parkour/detective — mai-juin 2026)** convergent : pour la génération de la **grille de storyboard** (pas l'animation, qui reste Seedance), **GPT Image 2 produit un rendu plus réaliste, plus contrasté, plus "punchy"** que Nano Banana Pro sur le même prompt exact, testé sur 5+ scènes différentes (astronaute, Nike commercial, perroquet Pixar, manga Sherlock Holmes, parkour). Nano Banana 2/Pro tend vers un rendu "un peu cartoonish".
+
+**Nuance pour notre registre** : ce constat vient de storyboards **photoréalistes/cinématiques**. Pour notre style encre/stick-figure minimaliste (StickRig), l'inverse a déjà été observé une fois dans l'autre sens sur des tests antérieurs (Gemini a mieux tenu la discipline de style sur un ASSET ISOLÉ, GPT a mieux composé une SCÈNE À PLUSIEURS OBJETS — voir `STARTER-PROMPT-16x9-narratif-personnages.md`). **Pas de vainqueur universel : à re-tester sur notre registre spécifique avant de trancher.**
+
+**Workflow standard confirmé par les 3 sources (converge avec règles 1-4 déjà documentées ici)** :
+1. PDF/prompt-guide dédié uploadé à ChatGPT (ou prompt direct à GPT Image 2 / Nano Banana) → génère la grille de storyboard en 1 seul appel à partir de refs perso + description de scène courte (1 phrase suffit)
+2. Chaque panel porte une **micro-description textuelle sous l'image** — réutilisée telle quelle comme brique de prompt Seedance ensuite (gain de temps direct)
+3. Character sheet séparée obligatoire (déjà notre règle 1 ci-dessus) — sinon dérive de proportions entre générations
+4. Prompt Seedance final = "generate a scene following the attached storyboard panel by panel" + tag `@image1` sur le storyboard + micro-descriptions par panel
+
+## Règle 27 — Chaînage par extraction de dernière frame = vidéos longues 71-90s (NOUVELLE TECHNIQUE, 2026-07-02)
+
+**Source** : tutoriel "long AI videos" (fight scene 44s + short film 71s), technique différente et complémentaire de la règle 25 (storyboard 2×2 → i2v direct) et du Video Extend déjà documenté dans `seedance-rules.md` règle 89.
+
+**Principe** : pour une scène qui dépasse largement 15s (limite dure Seedance), au lieu de Video Extend (reference-to-video, qui redessine parfois le style) :
+1. Générer un storyboard **large** (12 panels en grille 3×4 ou 4×3) qui raconte toute l'arc narratif
+2. **Découper la grille par LIGNE** (pas le grid complet) : 4 panels = 1 génération Seedance de 15s. Un storyboard 12 panels = 3 lignes = 3 clips de 15s = 45s total
+3. Chaque ligne cropée doit être **layée sur un fond 16:9 complet** avant upload (contrainte technique Higgsfield/Seedance pour accepter l'image en input)
+4. Prompt = "generate a scene using the shots in the uploaded film storyboard" + timing par shot ("first four seconds: [description panel 1]...") en réutilisant les micro-descriptions déjà générées sous chaque panel
+5. **Continuité inter-clips (le point clé)** : extraire la DERNIÈRE FRAME du clip N (via un frame extractor) → l'utiliser comme point de départ visuel explicite dans le prompt du clip N+1 ("starting from this image frame of...") — évite les sauts de continuité (ex: personnage en chokehold puis soudain libre)
+6. **Pour étendre encore plus loin** : redonner à GPT Image 2 le storyboard complet précédent (comme ref) + character sheets + 1 phrase de continuation → génère "la page suivante" du storyboard (12 panels de plus). Répéter le découpage par ligne. Un créateur a atteint 90s ainsi (raccourci à 71s après montage pour retirer répétitions)
+
+**Différence avec Video Extend (règle 89 `seedance-rules.md`)** : Video Extend réinjecte la vidéo elle-même comme ref (bon pour préserver le mouvement de caméra exact) ; cette technique réinjecte une IMAGE fixe (dernière frame) + un NOUVEAU storyboard textuel (bon pour changer de beat narratif tout en gardant la continuité visuelle). Les deux sont compatibles avec la règle "storyboard = exécution stricte" (règle 24) — préciser MUST/EXACTLY dans le prompt du clip suivant aussi.
+
+**Limite observée** : scènes d'action denses (combat) = animer chaque ligne séparément produit de bons clips individuels mais des **transitions dures entre clips** si on ne fait pas l'extraction de dernière frame (ex: perso en chokehold dans clip 1 → soudain libre et en position de combat dans clip 2). La technique frame-extraction résout ça spécifiquement pour ce cas.
+
+## Règle 28 — Édition d'un seul panel après coup = peu fiable, préférer régénérer tout le grid (CONFIRMÉ, 2026-07-02)
+
+**3 sources convergent** : demander à GPT Image 2 / Nano Banana de modifier UN SEUL panel d'un storyboard déjà généré (via sélection de zone ou instruction textuelle ciblée) donne des résultats insatisfaisants la plupart du temps — soit rien ne change, soit trop change. **Exception qui marche** : demander de régénérer un panel entier en le décrivant comme différent d'un autre panel similaire (ex: "adjust shot 11 so it's not a repeat of shot 3" a fonctionné dans un cas).
+
+**Règle opérationnelle** : si un seul panel déçoit → régénérer tout le storyboard avec une note additionnelle dans le prompt ("this looks too much like X, change it, also make the scene brighter" a marché). Si contrôle frame-parfait requis sur un panel isolé → upscaler ce panel séparément en standalone (Nano Banana Pro > GPT Image 2 pour l'upscale spécifiquement, inversion notable par rapport à la génération) puis l'éditer isolément.
+
+---
+
+## Règle 29 — Stick-figure encre minimaliste : style tenu, TIMING précis NON tenu (TESTÉ 2026-07-02)
+
+**Premier test Seedance 2.0 sur notre registre stick-figure/encre 16:9** (jamais testé avant — seuls paper-craft Thiaroye et pixel-art Hannibal étaient documentés). Frame source : docker StickRig extrait de `PortDechargement16x9.tsx`. Test : bras droit qui doit se lever/tenir/redescendre selon un script `SECONDS 0-2 / 2-4 / 4-6 / 6-8 / 8-10` très explicite (clauses RIGID/NON-DEFORMING, un seul membre bouge, reste du corps et du décor figé).
+
+**Résultat** :
+- ✅ **STYLE FIDELITY parfaite** : silhouette fine, aplats, pas de détail ajouté, décor entier (grue, cargo, usine, oiseaux, soleil) resté 100% figé comme demandé — zéro dérive, zéro régénération de background. Le registre stick-figure minimaliste est donc VIABLE sur Seedance 2.0.
+- ❌ **TIMING chronométré NON respecté** : le bras est monté puis redescendu bien avant les 6s prévues, puis reparti pour un second cycle de levée non scripté vers 7s. Seedance a traité les timecodes `SECONDS X TO Y` comme une indication de rythme général ("fais un geste de levée-tenue-descente"), pas comme un mapping frame-perfect.
+
+**Confirme et durcit la règle 22/24 déjà documentée** : même avec des timecodes explicites et des clauses anti-ambiguïté fortes ("only the right arm moves", repère "clock hand from 6 to 12"), Seedance reste un collaborateur créatif sur le TIMING d'un geste — il exécute l'intention (lever le bras, le tenir, le redescendre) mais pas la partition seconde par seconde. **Implication pratique** : pour un besoin de synchronisation stricte avec un beat narratif/musical précis (ex: le bras doit être levé PILE à la seconde 5 pour matcher un impact sonore), Seedance i2v n'est PAS l'outil adapté sur notre registre — préférer l'animation SVG-main (StickRig, contrôle frame-exact déjà prouvé) et réserver Seedance aux plans où le timing exact du geste importe peu (ambiance, mouvement de fond, plan large).
+
+**Ne disqualifie PAS Seedance pour notre registre** : le style tient, donc utilisable pour des plans où seule la NATURE du mouvement compte (ex: "le docker travaille", pas "le docker lève le bras à la seconde 5 exacte").
+
+Assets test : `out/_r-and-d/16x9-narratif/seedance-i2v-test/docker-bras-controle-v1.mp4` (+ `.meta.json`), prompt complet dans le meta.
+
+---
+
 ## Liens
 
 - Post source (démo 10s) : https://x.com/voxelplot/status/2043645442597007721
 - Règles Seedance générales : `memory/tools/seedance-rules.md` (appliquent toujours)
 - Prompts Seedance généraux : `memory/tools/seedance-prompts.md`
 - Recherche X API 30 jours (2026-05-10) : `/Users/clawdbot/Documents/Last30Days/seedance-2-0-storyboard-technique-panel-image-to-video-paper-raw.md`
+- Recherche Tavily + transcripts YouTube (2026-07-02, règles 26-28) : Creative Pad Media "Seedance 2.0 + GPT 2 IMAGE Storyboard = Controlled Composition" (youtu.be/Xcx3N7H9ctU), créateur anonyme "AI storyboard to movie, Nano Banana 2 vs GPT Image 2" (youtu.be/7qBYe_VX_lE), tutoriel "long AI videos via storyboard grid" (youtu.be/KxRR8uiex_s). Transcripts sauvegardés `/private/tmp/claude-502/.../seedance-storyboard/*.txt`.

@@ -52,6 +52,8 @@ dedans — la transformation se fait ailleurs, et trop de revenus se perdent en 
 mille trente. Mais le combat est loin d'etre gagne.
 
 ### BEAT 5 — PONT VERS LE FORMAT LONG + CTA (~16s)
+⚠️ CTA CI-DESSOUS PERIME — l'audio FINAL diffère. SOURCE DE VERITE = `audio/cacao-beat5-words.ts` (CTA réel :
+"quel produit t'intéresse le plus que tu voudrais voir traité en vidéo" + "la version longue DE CETTE VIDEO"). Vérifié 2026-06-29.
 [direct]
 Et le cacao n'est qu'une porte d'entree — le cafe, l'or, le cobalt : le meme mecanisme, partout. La version longue
 repond a la vraie question : pourquoi, soixante ans apres les independances, ca n'a toujours pas change. Abonne-toi

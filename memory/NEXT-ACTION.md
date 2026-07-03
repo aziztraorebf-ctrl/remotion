@@ -1,11 +1,8 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-02 (catalogue de 7 gestes du personnage cacao Gemini COMPLET — voir § PERSONNAGE
-> VOLUMÉTRIQUE SVG ci-dessous). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-02 (4 registres video longue SVG valides + audit SVG 3 agents — voir § 4 REGISTRES).
+> A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
-> ✅ Catalogue de gestes personnage-vivant TERMINÉ (7/7), plus une priorité active — voir § PERSONNAGE
-> VOLUMÉTRIQUE SVG pour le détail complet. Seule extension optionnelle en backlog : `planter-arbre`
-> (2 personnages). Doctrine complète : `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md`
-> § "Deux systèmes distincts : rig capsule = mécanique, personnage Gemini = habillage".
+> ⭐⭐ NEXT = refactoring SVG + test carte 2D flat. Starter : `memory/STARTER-PROMPT-refactoring-svg-et-map2d.md`.
 
 ---
 
@@ -36,6 +33,20 @@
 > **NEXT = PUBLIER** : trypost (YT+IG+FB) / postiz (TikTok — mais TikTok en quarantaine, cf bilan distrib).
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
+
+## ⭐⭐ 4 REGISTRES VIDEO LONGUE SVG — valides + refactoring SVG NEXT (2026-07-02)
+
+> **NEXT SESSION** : lire `memory/STARTER-PROMPT-refactoring-svg-et-map2d.md` (dis "on reprend le refactoring SVG + test carte 2D").
+> Session du 2026-07-02 : grammaire visuelle SVG COMPLETE — 4 registres valides pour video longue :
+> 1. Narratif SVG (deja grave) · 2. Data-viz plein ecran Vox (GridBackground + bar/donut/counter) ·
+> 3. Presentateur+data (personnage devant ecran + bulles de dialogue) · 4. 2D flat maps d3-geo (a tester).
+> Cross-fade narratif->data-viz prouve en MP4 (`out/_r-and-d/narratif-plus-data-proto.mp4`).
+> Doctrine mise a jour : `memory/doctrines/SVG-MIDFORM-FORMAT.md` § 4 REGISTRES.
+> **Protos crees** : ProtoDialogueEcran, ProtoDataVizEncre, ProtoDataVizPleinEcran, ProtoNarratifPlusData,
+>   ProtoCadrages, ProtoFaceAFace, ProtoFaceExpressions, ProtoFuguPoseBankWalk (tous dans `_rnd/svg-scenes/`).
+> **Audit SVG (3 agents)** : GeminiRig a deplacer de `_rnd/` vers `_shared/`, 10+ vieux protos a archiver,
+>   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
+> **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
 
 ## ✅✅ 16:9 NARRATIF + PERSONNAGES — patron 2-scènes PROUVÉ (plus une priorité active, backlog optionnel)
 > Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § REPRISE SESSION SUIVANTE (dis « on reprend le 16:9 narratif »).

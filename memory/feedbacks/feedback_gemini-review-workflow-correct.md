@@ -30,3 +30,15 @@ Ne JAMAIS limiter `maxOutputTokens` sur les appels Gemini review — cela tronqu
 ```
 
 **Leçon ping ring :** Ne jamais positionner un élément "autour d'un SVG" via un `<div>` externe — utiliser le même SVG pour garantir le centrage. Un `<div>` border-radius:50% ne s'aligne pas automatiquement sur le SVG parent.
+
+## Tri du feedback Gemini sur SCÈNE SVG ANIMÉE — 3 critères de REJET (prouvé Cacao B3/B4, 2026-06-29)
+Gemini propose souvent de bonnes idées d'animation MAIS aussi des idées contraires à notre stack/style. Ne JAMAIS
+appliquer en bloc. Lire chaque point → vérifier contre 3 critères de rejet → appliquer SEULEMENT ce qui passe :
+1. **Contraire au style/registre** → REJET. Ex : oiseaux/objets qui SORTENT du cadre (rien ne sort latéralement ;
+   seule la marchandise glisse). Adaptation acceptée : oiseaux qui montent + fade avant le bord.
+2. **Interdit Remotion** → REJET ou TRADUCTION. Ex : `@keyframes`/`animation-delay`/`requestAnimationFrame` CSS →
+   traduire en `interpolate`/`Math.sin(frame)`/`spring()` natifs (jamais le CSS brut).
+3. **Contraire à la doctrine** → REJET. Ex : parallaxe multi-couches / faux-3D (DOCTRINE-SOUVERAIN : pas de 3D, plat encre).
+GARDÉS cette session (passent les 3) : croissance des arbres (vs pop binaire), couche de vie permanente, squash&stretch,
+tracé ordonné de l'usine. Le diagnostic de fond de Gemini ("scène trop statique") était JUSTE — c'est le tri des
+SOLUTIONS qui compte. Gemini = signal sur le problème, pas juge des solutions.
