@@ -21,6 +21,16 @@
 
 - `<Audio delay={n}>` N'EXISTE PAS. Pattern correct : `<Sequence from={n}><Audio startFrom={0} /></Sequence>`
 - Chaque piste audio sequentielle dans son propre `<Sequence>`
+- ⚠️ **`startFrom` TRIME le fichier SOURCE** (saute les X premières frames du fichier lui-même, comme
+  l'ancien `trimBefore`) — il NE POSITIONNE PAS le son dans la timeline. Confusion fréquente avec `from`
+  de `<Sequence>` (qui lui positionne). Piège : un `<Audio startFrom={n}>` SANS `<Sequence>` autour, avec
+  n supérieur à la durée du clip, ne produit PAS d'erreur — juste un SILENCE TOTAL, indétectable sans
+  écouter. Si un SFX ne joue jamais malgré volume non-nul et fichier valide : vérifier en premier que
+  `startFrom` n'est pas une valeur variable/frame-dépendante plus grande que la durée du fichier. Pattern
+  correct pour fenêtrer QUAND un son s'entend SANS `<Sequence>` (ex: dans un composant enfant monté une
+  fois) : `startFrom={inAt}` FIXE + moduler `volume` en fonction du frame courant, ex.
+  `volume={(fr) => clampI(fr-inAt,90,94,0,0.4) * clampI(fr-inAt,100,110,1,0)}`. Bug trouvé+corrigé 2026-07-04
+  (War-Map Sahel, `LiptakoRevealSVG.tsx`/`ResourcesRevealSVG.tsx`).
 
 ### Audio volume partiel
 ```tsx
@@ -68,6 +78,16 @@
 - < 10 elements : strip CSS + spring/interpolate (30-60 min)
 - >= 10 elements : Anime.js hook (paused + seek)
 - Lottie : `@remotion/lottie` UNIQUEMENT (pas `lottie-react`)
+
+### Sprites & downscale — style graphique vs taille d'affichage
+Un sprite/portrait style **gravure fine à hachures/pointillés** NE SURVIT PAS à un downscale extrême
+(ex: diamètre `vmin*0.065` ≈ 70px sur 1080p → devient du bruit visuel illisible), contrairement à un
+style **aplats de couleur épais** qui reste net à la même taille. La résolution SOURCE suffisante
+(ex: 900×1150px) ne garantit PAS la lisibilité au petit format si le style est trop fin. Avant de choisir
+un diamètre de chip/portrait sur un nouvel asset : vérifier le style graphique, pas seulement la résolution
+source. Découvert 2026-07-04 (War-Map Sahel, sprites `p4-assets/leader-*.png`) — un flou visuel avait été
+mal diagnostiqué comme un bug d'opacité (`attenuate`) alors que c'était uniquement ce problème de taille
+d'affichage vs densité de détail.
 
 ---
 

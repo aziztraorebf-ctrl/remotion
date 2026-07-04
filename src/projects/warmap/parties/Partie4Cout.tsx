@@ -37,6 +37,7 @@ import {
 import { WarMapDimmedOverlay } from "../_shared/WarMapDimmedOverlay";
 import { WarMapSplitScreen } from "../_shared/WarMapSplitScreen";
 import { CfaRevealSVG } from "./CfaRevealSVG";
+import { ResourcesRevealSVG } from "./ResourcesRevealSVG";
 
 // ============================================================
 // TRIGGERS V5 P4 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-14)
@@ -364,130 +365,6 @@ const WavingFrenchFlag: React.FC<{ frame: number; cx: number; cy: number; w: num
       <line x1={cx - w / 2 - w * 0.02} y1={cy - h / 2 - h * 0.1} x2={cx - w / 2 - w * 0.02} y2={cy + h / 2 + h * 0.1}
         stroke="#3A2A12" strokeWidth={w * 0.018} strokeLinecap="round" />
     </g>
-  );
-};
-
-// ============================================================
-// RESOURCES REVEAL — TRIPLE-SCREEN (idée Aziz 2026-06-15). "LE LEVIER" : 3 ressources sur 3 pays = 3 volets
-// cartographiés côte à côte (Mali→Burkina→Niger), chacun zoomé sur SA zone + icône + plaque. Apparition
-// séquencée (1 volet à la fois). On ne quitte jamais vraiment la carte. Volet Niger = climax (uranium 2025).
-// Contours FIXES (pas la pulse moteur = anti-tremblement). Chiffres fact-checkés (FACTS-RESSOURCES-2026).
-// ============================================================
-const ResourcesReveal: React.FC<{
-  frame: number; inAt: number; outAt: number; width: number; height: number; vmin: number; fps: number;
-}> = ({ frame, inAt, outAt, width, height, vmin, fps }) => {
-  if (frame < inAt - 2 || frame > outAt + 2) return null;
-  const L = frame - inAt;
-
-  const countryPanel = (opts: {
-    ring: [number, number][]; color: string; flagCode: string; name: string;
-    kind: "gold" | "uranium" | "oil"; secondKind?: "gold" | "uranium" | "oil";
-    stat: string; sub?: string; appearAt: number; climax?: boolean;
-  }) => (w: number, h: number) => {
-    const lons = opts.ring.map((p) => p[0]), lats = opts.ring.map((p) => p[1]);
-    const pad = 0.6;
-    const bb = { lonMin: Math.min(...lons) - pad, lonMax: Math.max(...lons) + pad, latMin: Math.min(...lats) - pad, latMax: Math.max(...lats) + pad };
-    const mx = w * 0.08, my = h * 0.14;
-    const s = Math.min((w - 2 * mx) / (bb.lonMax - bb.lonMin), (h - 2 * my) / (bb.latMax - bb.latMin));
-    const cxp = w / 2, cyp = h / 2, midLon = (bb.lonMin + bb.lonMax) / 2, midLat = (bb.latMin + bb.latMax) / 2;
-    const proj = (lon: number, lat: number) => ({ x: cxp + (lon - midLon) * s, y: cyp - (lat - midLat) * s });
-    const ringPath = opts.ring.map(([lo, la], i) => { const p = proj(lo, la); return `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`; }).join("") + "Z";
-    const lc = L - opts.appearAt;
-    const drawT = interpolate(lc, [6, 34], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
-    const iconSpring = spring({ frame: lc - 30, fps, config: { damping: 11, stiffness: 120 } });
-    const center = proj(midLon, midLat);
-    const climaxOp = opts.climax ? interpolate(lc, [70, 88], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
-    const mwh = Math.min(w, h);
-    // ── VIE CONTINUE (Aziz 2026-06-15) : le panneau ne se fige pas après l'apparition. Animations de fond qui
-    //    respirent sur TOUTE la durée de l'overlay (~26s) : halo doré pulsé + rotation lente icône + glow national. ──
-    const alive = interpolate(lc, [34, 60], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // monte une fois posé
-    const haloPulse = (0.5 + 0.5 * Math.sin(lc * 0.045)) * alive;          // respiration lente du halo
-    const fillBreathe = (0.30 + 0.10 * Math.sin(lc * 0.04)) * drawT;       // le fill national respire doucement
-    const iconSpin = lc * 0.5;                                              // rotation lente (deg) pour l'uranium
-    // ── Pays COLORIÉ de sa couleur nationale (clippé à sa silhouette) + ICÔNE ressource claire au centre
-    //    (Aziz 2026-06-15 : retour au lisible — icône > jauge qui ne se lit pas). overflow:hidden = zéro débordement. ──
-    const iconR = Math.min(w, h) * 0.12;
-    return (
-      <AbsoluteFill style={{ background: "linear-gradient(160deg, #E9DDBE 0%, #D6C49C 100%)", overflow: "hidden" }}>
-        <AbsoluteFill style={{ backgroundImage: `url(${staticFile("_shared/sprites/warmap/paper-grain.png")})`, backgroundRepeat: "repeat", opacity: 0.18, mixBlendMode: "multiply" }} />
-        <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ position: "absolute", inset: 0 }}>
-          {/* clip RECTANGULAIRE au volet (garantie ZÉRO débordement vers les volets voisins — Aziz 2026-06-15) */}
-          <defs><clipPath id={`panel-clip-${opts.flagCode}`}><rect x={0} y={0} width={w} height={h} /></clipPath></defs>
-          <g clipPath={`url(#panel-clip-${opts.flagCode})`}>
-            {/* pays colorié de sa couleur nationale (fill qui RESPIRE) + contour net */}
-            <path d={ringPath} fill={opts.color} fillOpacity={fillBreathe} />
-            <path d={ringPath} fill="none" stroke={opts.color} strokeWidth={mwh * 0.008} strokeOpacity={0.95 * drawT} strokeLinejoin="round" />
-          </g>
-        </svg>
-        {/* ICÔNE ressource claire (pastille ivoire + icône SVG). Si 2 ressources (Niger) : la 1re décalée à
-            gauche, la 2de à droite, centrées ensemble sur le pays. */}
-        {iconSpring > 0.02 && (
-          <div style={{ position: "absolute", left: center.x - (opts.secondKind ? iconR * 1.2 : 0), top: center.y, transform: `translate(-50%,-50%) scale(${Math.min(1, iconSpring)})` }}>
-            {/* halo doré pulsé (respire en continu — la ressource "rayonne") */}
-            <div style={{ position: "absolute", left: "50%", top: "50%", width: iconR * 3.4, height: iconR * 3.4,
-              transform: "translate(-50%,-50%)", borderRadius: "50%",
-              background: `radial-gradient(circle, ${OR_AES}44 0%, transparent 68%)`, opacity: 0.4 + haloPulse * 0.6 }} />
-            <svg width={iconR * 2.4} height={iconR * 2.4} viewBox={`${-iconR * 1.2} ${-iconR * 1.2} ${iconR * 2.4} ${iconR * 2.4}`}
-              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))", position: "relative" }}>
-              <circle r={iconR} fill="#F2EACF" stroke={OR_AES} strokeWidth={iconR * 0.07} />
-              {/* uranium : symbole atome qui tourne lentement (vie continue) ; or/pétrole : statique */}
-              <g transform={opts.kind === "uranium" ? `rotate(${iconSpin})` : undefined}>
-                <ResourceIcon kind={opts.kind} r={iconR * 0.72} />
-              </g>
-            </svg>
-          </div>
-        )}
-        {/* drapeau pays + nom (haut) */}
-        <div style={{ position: "absolute", left: "50%", top: h * 0.07, transform: "translateX(-50%)", opacity: drawT,
-          display: "flex", flexDirection: "column", alignItems: "center", gap: vmin * 0.006 }}>
-          <img src={staticFile(`_shared/flags/${opts.flagCode}.png`)} style={{ width: mwh * 0.16, height: mwh * 0.107, objectFit: "cover", borderRadius: 4, border: `2px solid ${OR_AES}` }} />
-          <span style={{ color: INK, fontFamily: "Georgia, serif", fontWeight: 800, fontSize: mwh * 0.05, letterSpacing: 2 }}>{opts.name}</span>
-        </div>
-        {/* plaque-chiffre (bas) */}
-        <div style={{ position: "absolute", left: w * 0.06, right: w * 0.06, bottom: h * 0.1, textAlign: "center",
-          opacity: interpolate(lc, [40, 54], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) }}>
-          <div style={{ color: OR_AES, fontFamily: "Georgia, serif", fontWeight: 800, fontSize: mwh * 0.058 }}>{opts.stat}</div>
-          {opts.sub && <div style={{ color: "#5A4420", fontFamily: "Georgia, serif", fontSize: mwh * 0.038, marginTop: vmin * 0.004 }}>{opts.sub}</div>}
-        </div>
-        {/* CLIMAX "NATIONALISÉ 2025" RETIRÉ (Aziz 2026-06-15 : surcharge sur la carte, l'icône suffit). */}
-        {/* 2e ICÔNE pour le Niger (volet large via accordéon) : PÉTROLE (goutte) à côté de l'uranium. */}
-        {opts.secondKind && iconSpring > 0.02 && (
-          <div style={{ position: "absolute", left: center.x + iconR * 1.2, top: center.y, transform: `translate(-50%,-50%) scale(${Math.min(1, iconSpring)})` }}>
-            {/* halo pulsé (déphasé du 1er pour une respiration alternée) */}
-            <div style={{ position: "absolute", left: "50%", top: "50%", width: iconR * 3.4, height: iconR * 3.4,
-              transform: "translate(-50%,-50%)", borderRadius: "50%",
-              background: `radial-gradient(circle, ${OR_AES}44 0%, transparent 68%)`,
-              opacity: 0.4 + (0.5 + 0.5 * Math.sin(lc * 0.045 + 1.5)) * alive * 0.6 }} />
-            <svg width={iconR * 2.4} height={iconR * 2.4} viewBox={`${-iconR * 1.2} ${-iconR * 1.2} ${iconR * 2.4} ${iconR * 2.4}`}
-              style={{ filter: "drop-shadow(0 3px 6px rgba(0,0,0,0.35))", position: "relative" }}>
-              <circle r={iconR} fill="#F2EACF" stroke={OR_AES} strokeWidth={iconR * 0.07} />
-              <ResourceIcon kind={opts.secondKind} r={iconR * 0.72} />
-            </svg>
-          </div>
-        )}
-      </AbsoluteFill>
-    );
-  };
-
-  // Les 3 cadres existent dès le début ; le CONTENU se remplit séquentiellement (jauge via lc interne).
-  // ── ACCORDÉON (DA Gemini ✅) : au CLIMAX (volet Niger), le Niger s'OUVRE (50%) et Mali/Burkina se réduisent
-  //    (25% chacun). La mise en page réagit à la narration → regard forcé vers le climax uranium. ──
-  const accordion = interpolate(L, [120, 150], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-  const r1 = 1 / 3 + (0.25 - 1 / 3) * accordion;  // Mali : 0.333 → 0.25
-  const r3 = 1 / 3 + (0.50 - 1 / 3) * accordion;  // Niger : 0.333 → 0.50
-  const fadeOp = interpolate(frame, [inAt, inAt + 14, outAt - 16, outAt], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  return (
-    <AbsoluteFill style={{ pointerEvents: "none", opacity: fadeOp }}>
-      {/* fond plein parchemin (la carte Mapbox est masquée par le moteur via mapHideFactor) */}
-      <AbsoluteFill style={{ background: "linear-gradient(160deg, #E2D6B6 0%, #CDBB93 100%)" }} />
-      <WarMapSplitScreen frame={frame} inAt={inAt} outAt={outAt} width={width} height={height}
-        orientation="vertical" ratios={[r1, r1, r3]} panels={[
-          countryPanel({ ring: MALI_RING, color: C_MALI, flagCode: "ml", name: "MALI", kind: "gold", stat: "OR · ~68 t/an", sub: "2ᵉ producteur d'Afrique", appearAt: 8 }),
-          countryPanel({ ring: BURKINA_RING, color: C_BURKINA, flagCode: "bf", name: "BURKINA", kind: "gold", stat: "OR · ~60 t/an", sub: "des premiers d'Afrique", appearAt: 66 }),
-          countryPanel({ ring: NIGER_RING, color: C_NIGER, flagCode: "ne", name: "NIGER", kind: "uranium", secondKind: "oil", stat: "URANIUM · PÉTROLE", sub: "Arlit · oléoduc Agadem", appearAt: 124 }),
-        ]}
-        panelAppearAt={[6, 6, 6]} sepColor={OR_AES} fadeIn={2} fadeOut={2} />
-    </AbsoluteFill>
   );
 };
 
@@ -1050,11 +927,12 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         );
       })}
 
-      {/* ════ M2 Ph5-6 : RESSOURCES "LE LEVIER" = TRIPLE-SCREEN (Aziz 2026-06-15, template WarMapSplitScreen 3
-           volets). Au lieu de poser 3 ressources sur la carte à caméra qui voyage (illisible) → 3 volets
-           cartographiés Mali→Burkina→Niger côte à côte, chacun zoomé sur SA zone + icône + plaque. Le volet
-           Niger = climax (uranium nationalisé 2025). On ne quitte jamais vraiment la carte. ════ */}
-      <ResourcesReveal frame={frame} inAt={F_OR - 20} outAt={F_CONFED - 16} width={width} height={height} vmin={vmin} fps={fps} />
+      {/* ════ M2 Ph5-6 : RESSOURCES SVG NARRATIF (Session A 2026-07-04, remplace le triple-screen jugé
+           "statique tout le long", retours Aziz 2026-06-15/07-01). Objet-héros unique = bouclier AES qui
+           se dessine au contour, 3 veines or/uranium/pétrole en cascade avec gouttes de flux vers le
+           bouclier (ravitaillement). inAt=F_OR-20 → outAt=F_CONFED-16 (786 frames = 26.2s, mini-render
+           validé Aziz catbox 9w86rf). ════ */}
+      <ResourcesRevealSVG frame={frame} inAt={F_OR - 20} outAt={F_CONFED - 16} width={width} height={height} fps={fps} />
 
       {/* ════ M3 Ph7 : CONFÉDÉRATION = OVERLAY PLEIN ÉCRAN SOLIDE (doctrine WARMAP-CARTE-VS-OVERLAY).
            L'acte institutionnel (3 pays signent) n'a PAS d'ancrage spatial → on SORT de la carte pour le
@@ -1133,10 +1011,11 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
                   })}
                 </div>
                 {/* Source renforcée (retour Aziz 2026-07-01, pt.7) : une mention discrète en bas d'écran jugée
-                    insuffisante -> taille et contraste augmentés pour que la source soit VUE, pas juste présente. */}
+                    insuffisante -> taille et contraste augmentés pour que la source soit VUE, pas juste présente.
+                    Mot "Sources :" retiré (retour Aziz 2026-07-04 pt.11) : les sigles seuls suffisent. */}
                 <div style={{ fontSize: vmin * 0.017, fontWeight: 700, color: RED_GRAVE, marginTop: vmin * 0.024,
                   letterSpacing: 2.5, textTransform: "uppercase" }}>
-                  Sources : OCHA · PAM · HCR</div>
+                  OCHA · PAM · HCR</div>
               </div>
             </div>
           </AbsoluteFill>
@@ -1233,7 +1112,11 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
         const op = interpolate(frame, [l.at, l.at + 16], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) * attenuate * fadeOut;
         if (op <= 0.02 || sp <= 0.02) return null;
         const c = P(l.coord);
-        const D = vmin * 0.065; // Aziz 2026-06-15 : réduit (0.105→0.065) — évite le chevauchement Ouaga/Niamey
+        // Aziz 2026-06-15 : réduit 0.105→0.065 (anti-chevauchement Ouaga/Niamey). Ré-agrandi à 0.08
+        // (2026-07-04, retour "portraits flous") : la gravure fine des sprites p4-assets ne survit pas
+        // au downscale extrême vers ~70px (cause réelle, pas un bug d'opacité attenuate). Compromis :
+        // plus net sans revenir au chevauchement de 0.105.
+        const D = vmin * 0.08;
         const plaqueAbove = idx % 2 === 1; // alterne : Goïta bas, Traoré haut, Tiani bas
         return (
           <div key={l.id} style={{ position: "absolute", left: c.x, top: c.y,
@@ -1295,6 +1178,16 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
             </div>
           </AbsoluteFill>
         );
+      })()}
+
+      {/* Respiration après coupe depuis P3 (retour Aziz 2026-07-04 pt.13, symétrique du fondu de sortie
+          en fin de Partie3Rupture) : fondu d'entrée bref (~0.6s) pour ne pas passer directement d'une
+          scène pleine à une carte vide de jetons. */}
+      {(() => {
+        const FADE_DUR = 18; // ~0.6s à 30fps
+        const fadeOp = interpolate(frame, [F_START, F_START + FADE_DUR], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        if (fadeOp <= 0.01) return null;
+        return <AbsoluteFill style={{ background: "#0a0805", opacity: fadeOp, pointerEvents: "none" }} />;
       })()}
     </AbsoluteFill>
   );

@@ -326,6 +326,14 @@ un lieu ni un mouvement territorial) → candidat encart SVG. Si elle montre QUI
 **Verdict modèle sur l'encart conceptuel** : GPT-5.5 GAGNE (schéma géométrique sec, lisible en 5s, doctrine à l'écran).
 4e confirmation de la règle Gemini=organique / GPT=schéma.
 
+**⚠️ Remplacement legacy → SVG : vérifier les doublons SFX moteur.** Quand un encart SVG remplace un
+composant legacy (ex: `ResourcesReveal` → `ResourcesRevealSVG`, `CfaReveal` → `CfaRevealSVG`), TOUJOURS
+vérifier si le moteur (`SahelWarMapEngine.tsx` ou équivalent) a des `<Sequence><Audio/></Sequence>` câblés
+en dur sur les anciennes frames absolues de l'ANCIEN composant — ces SFX deviennent des DOUBLONS
+inaudibles/parasites si le nouveau composant gère déjà son propre SFX interne aux mêmes frames. 2
+occurrences trouvées et corrigées sur War-Map Sahel (2026-07-04) : SFX impact CFA résiduel + SFX
+ink-spread Ressources résiduel.
+
 ## 🎛️ LEVIERS DE RAFFINAGE (tous faciles, prouvés ou triviaux — réglages, pas refontes)
 - **Épurer les écritures** : chaque texte est dans un groupe (`titre`, labels) → masquer/réduire par un flag. (« jamais de texte nu » reste, mais on peut alléger fortement.)
 - **Plus lumineux** : variant de palette du registre (changer 2-3 couleurs de fond/traits dans le bloc `REGISTRES`).

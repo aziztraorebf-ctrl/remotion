@@ -123,9 +123,6 @@ const NIAMEY: [number, number] = [2.12, 13.51];
 
 // BURKINA — le "40%" se MONTRE : VRAI contour du pays (sahelCountries) qui se remplit de rouge + contour flash.
 const BURKINA_POLY = BURKINA_RING;
-const CEDEAO_RING: [number, number][] = [
-  [-4.00, 9.50], [-1.20, 7.95], [2.30, 9.30], [8.10, 9.10],  // CI, Ghana, Bénin, Nigeria
-];
 
 // FRISE temporelle : étapes affichées. La barre se remplit de F_ECHEC à ~F_DEBORDENT (les "dix ans").
 // (Frise = timeline graduée pleine largeur rendue par le MOTEUR pour partie2 — pas ici.)
@@ -366,37 +363,44 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           );
         })()}
 
-        {/* CEDEAO — contour orange clignotant (menace EXTERNE, pas une tache) + flèches vers Niamey.
-            Renforcé (2026-07-01, cf AUDIT-AMELIORATIONS-P2.md A2/A3) : marqueurs + flèches agrandis et
-            épaissis pour que ce beat soit un vrai setup lisible — P3 "brise" ces mêmes flèches
-            (CEDEAO_RING identique dans Partie3Rupture.tsx), le payoff ne tient que si le setup se voit. */}
-        {cedeaoT > 0 && CEDEAO_RING.map((c, i) => {
-          const p = project(c[0], c[1]);
-          const ap = interpolate(frame, [F_CEDEAO + i * 6, F_CEDEAO + i * 6 + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-          if (ap <= 0) return null;
-          const blink = 0.6 + 0.4 * Math.sin(frame * 0.25 + i);
-          const r = 0.02 * vmin;
-          const tipX = (niamey.x - p.x) * 0.55;
-          const tipY = (niamey.y - p.y) * 0.55;
+        {/* CEDEAO — REPENSÉ (retour Aziz 2026-07-01 confirmé 2026-07-04) : les anciens marqueurs+flèches
+            sortaient du cadre serré (CI/Ghana/Bénin/Nigeria, hors-Sahel). Nouvelle direction actée avec
+            Aziz : frontière Sud qui PULSE au bord de l'écran + flèches COURTES vers Niamey, sans jamais
+            sortir du cadre. La menace se voit sans montrer la géographie CEDEAO elle-même. */}
+        {cedeaoT > 0 && (() => {
+          const blink = 0.5 + 0.35 * Math.sin(frame * 0.16);
+          const bandH = height * 0.05;
           return (
-            <g key={`cedeao-${i}`} transform={`translate(${p.x},${p.y})`} opacity={ap}>
-              {/* halo diffus de menace (rend le marqueur visible même à ce niveau de dézoom) */}
-              <circle r={r * 2.2} fill={PAL.CEDEAO} fillOpacity={0.12 * blink} style={{ filter: "blur(3px)" }} />
-              <circle r={r} fill="none" stroke={PAL.CEDEAO} strokeWidth={3.2} strokeOpacity={blink} />
-              <circle r={r * 0.4} fill={PAL.CEDEAO} fillOpacity={0.7 * blink} />
-              <line x1={0} y1={0} x2={tipX} y2={tipY}
-                stroke={PAL.CEDEAO} strokeWidth={3} strokeOpacity={0.75 * blink} strokeDasharray="6 5"
-                markerEnd={`url(#cedeao-arrowhead)`} />
-            </g>
+            <>
+              <rect x={0} y={height - bandH} width={width} height={bandH}
+                fill={`url(#cedeao-band-grad)`} opacity={cedeaoT * blink} />
+              <defs>
+                <linearGradient id="cedeao-band-grad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={PAL.CEDEAO} stopOpacity="0" />
+                  <stop offset="100%" stopColor={PAL.CEDEAO} stopOpacity="0.55" />
+                </linearGradient>
+                <marker id="cedeao-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M0,0 L8,4 L0,8 Z" fill={PAL.CEDEAO} opacity={0.85} />
+                </marker>
+              </defs>
+              {/* 3 flèches COURTES depuis le bord bas vers Niamey (jamais plus haut que ~18% de l'écran
+                  de remontée), portée limitée pour rester dans le cadre. */}
+              {[-0.12, 0, 0.12].map((dx, i) => {
+                const ap = interpolate(frame, [F_CEDEAO + i * 6, F_CEDEAO + i * 6 + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+                if (ap <= 0) return null;
+                const baseX = niamey.x + dx * width;
+                const baseY = height - bandH * 0.5;
+                const tipX = niamey.x + dx * width * 0.35;
+                const tipY = baseY - height * 0.16;
+                return (
+                  <line key={`cedeao-arrow-${i}`} x1={baseX} y1={baseY} x2={tipX} y2={tipY}
+                    stroke={PAL.CEDEAO} strokeWidth={3} strokeOpacity={ap * blink * 0.8} strokeDasharray="6 5"
+                    markerEnd="url(#cedeao-arrowhead)" />
+                );
+              })}
+            </>
           );
-        })}
-        {cedeaoT > 0 && (
-          <defs>
-            <marker id="cedeao-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill={PAL.CEDEAO} opacity={0.8} />
-            </marker>
-          </defs>
-        )}
+        })()}
 
         {/* ============ VILLES TENUES (2.5) — points clairs NOMMÉS qui RÉSISTENT dans le rouge (retour Aziz :
              plus de sprite-bâtiment ambigu). Halo bleu-acier qui pulse (la ville tient) + nom géo-ancré.

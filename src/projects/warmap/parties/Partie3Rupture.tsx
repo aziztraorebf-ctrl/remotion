@@ -32,7 +32,7 @@ import { MALI_RING, NIGER_RING, BURKINA_RING } from "./sahelCountries";
 import { WarMapPlaque } from "./WarMapPlaque";
 import { SahelAttackArrow } from "../_shared/SahelAttackArrow";
 import { TerritorialExpansion, type ExpansionRegion } from "../_shared/TerritorialExpansion";
-import { WarMapOverlayDynamic } from "../_shared/WarMapOverlayDynamic";
+import { LiptakoRevealSVG } from "./LiptakoRevealSVG";
 
 // ============================================================
 // TRIGGERS V5 P3 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-12)
@@ -169,9 +169,9 @@ const OR_AES = "#C9A24B";    // or chaud AES (décision Aziz). Mat, pas glossy.
 const BLUE_MALI = "#2B4F7C"; // bleu Mali DÉSATURÉ (anti AI-slop chromatique, DA-brief C). Fill 40-60% jamais 100%.
 const RED_MOURA = "#6B1A1A"; // rouge bordeaux sourd (gravité Moura, DA-brief C/Q2)
 
-type Props = { ctx: SahelRenderContext | null; map: mapboxgl.Map | null; ph1Fullscreen?: boolean };
+type Props = { ctx: SahelRenderContext | null; map: mapboxgl.Map | null };
 
-export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = false }) => {
+export const Partie3Rupture: React.FC<Props> = ({ ctx, map }) => {
   const { fps } = useVideoConfig();
   if (!ctx) return null;
   const { frame, width, height, project } = ctx;
@@ -433,7 +433,12 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
             avant/sous l'overlay AES. Redondant : l'overlay porte déjà l'union (titre + 3 drapeaux + lien doré).) */}
 
         {/* Ph1 — CONTOURS AES virent OR (Mali + Burkina + Niger ensemble). Le lien doré entre pays est désormais
-            DANS l'overlay ; ici les contours colorent le territoire AES (persiste après l'overlay = sens gardé). */}
+            DANS l'overlay ; ici les contours colorent le territoire AES (persiste après l'overlay = sens gardé).
+            NOTE (2026-07-04) : tenté de prolonger holdDur pour meubler ~F_CONSERVER→F_END (retour Aziz pt.13,
+            "sceaux qui clignotent" pauvres) — SANS EFFET : cette couche est rendue AVANT (donc EN DESSOUS de)
+            les countryBorderPaths du moteur (SahelWarMapEngine.tsx ~3413) qui sont DÉJÀ actifs en continu sur
+            toute la P3 avec les couleurs pays natives — ce calque or est invisible sous eux. Revert. La zone
+            f9500 reste à traiter autrement (nouvel asset/idée, pas cette couche). */}
         {aesGold > 0.01 && [MALI_RING, BURKINA_RING, NIGER_RING].map((ring, i) => {
           const oc = countryOutline({ ring, project, frame, startF: F_BAMAKO + i * 8, drawDur: 38, holdDur: 600 });
           if (!oc) return null;
@@ -835,20 +840,20 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
         appearAt={F_MOURA + 14} hideAt={F_REPOUSSE - 30} accent={RED_MOURA} size={15} yOffset={24} />
       {/* (Chiffre "500+" géant RETIRÉ — Aziz 2026-06-12 : prend trop d'espace sur la carte et casse au dézoom.
           On garde la tache de sang + la plaque sourcée "MOURA · MARS 2022 · RAPPORT ONU" + le SFX grave.) */}
-      {/* Ph8 — source visible (retour Aziz 2026-07-01, pt. 7+12) : le texte typewriter "500+ morts..."
-          ajouté le 2026-07-01 a été RETIRÉ (Aziz : la plaque "MOURA · MARS 2022 · RAPPORT ONU" suffit,
-          le texte n'apportait rien). Remplacé par une SOURCE réelle qui s'affiche 2-3s au milieu du hold
-          (pas en continu) : répond aussi au constat transversal "données estimées" -> vraies sources visibles. */}
+      {/* Ph8 — source visible (retour Aziz 2026-07-01 pt.7+12, DÉPLACÉE 2026-07-04 pt.10) : le texte
+          typewriter "500+ morts..." a été RETIRÉ (la plaque "MOURA · MARS 2022 · RAPPORT ONU" suffit).
+          La source elle-même était incrustée SUR la carte près de Moura — Aziz : la déplacer vers
+          l'emplacement standard (bas d'écran, même pattern que la source OCHA/PAM/HCR de P4), pas
+          incrustée dans la géographie. */}
       {frame >= F_MOURA + 50 && frame < F_MOURA + 130 && (() => {
         const op = interpolate(frame, [F_MOURA + 50, F_MOURA + 62, F_MOURA + 118, F_MOURA + 130], [0, 1, 1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         if (op <= 0.01) return null;
-        const p = project(MOURA[0], MOURA[1] - 1.3);
         return (
-          <div style={{ position: "absolute", left: p.x, top: p.y + 46, transform: "translate(-50%, 0)",
-            opacity: op, fontFamily: "Georgia, serif", fontSize: 13, letterSpacing: 0.5, color: RED_MOURA,
-            whiteSpace: "nowrap", textAlign: "center" }}>
-            Source : Haut-Commissariat de l'ONU aux droits de l'homme
+          <div style={{ position: "absolute", bottom: 20, right: 30, fontSize: 12, fontWeight: 700,
+            color: RED_MOURA, letterSpacing: 1.5, textTransform: "uppercase",
+            opacity: op, fontFamily: "Georgia, serif" }}>
+            Haut-Commissariat de l'ONU aux droits de l'homme
           </div>
         );
       })()}
@@ -856,27 +861,22 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
           (jihadistes repoussés par les FAMa) raconte tout par la vision.) */}
 
       {/* ============================================================
-          Ph1 OVERLAY AES DYNAMIQUE — via la BRIQUE RÉUTILISABLE WarMapOverlayDynamic (Aziz 2026-06-12).
-          Décision : semi-transparent (garde la géo) + DYNAMIQUE (blocs animés composés, pas une plaque figée).
-          mode pilotable par ph1Fullscreen (maquette). Blocs MIXÉS : kicker + titre reveal + 3 drapeaux AES
-          qui s'allument en séquence + citation du pacte qui s'écrit. inAt f6118 → outAt f6800 (vers Kidal). ============================================================ */}
-      {/* ANIMATION ÉTALÉE sur ~20s (Aziz : la scène fait ~22s, tout doit se mettre en place lentement jusqu'à
-          ~20s, pas tout fini à 12s — évite d'ajouter une 2e template pour meubler). Blocs espacés + cadences
-          internes ralenties (tokenStagger, charPerFrame). */}
-      <WarMapOverlayDynamic
-        inAt={F_BAMAKO} outAt={F_EPREUVE} mode={ph1Fullscreen ? "fullscreen" : "semitransp"} accent={OR_AES}
-        anchorPx={project(LIPTAKO_CENTER[0], LIPTAKO_CENTER[1])}
-        blocks={[
-          { type: "kicker", text: "16 septembre 2023 · Charte du Liptako-Gourma", at: 0, wordStagger: 7 },
-          { type: "title", text: "Alliance des États du Sahel", at: 60, size: ph1Fullscreen ? 56 : 44, wordStagger: 14 },
-          { type: "tokens", at: 200, size: ph1Fullscreen ? 120 : 96, tokenStagger: 40, wave: true, link: true, tokens: [
-            { flagFile: "ml.png", label: "MALI" },
-            { flagFile: "bf.png", label: "BURKINA" },
-            { flagFile: "ne.png", label: "NIGER" },
-          ] },
-          { type: "quote", text: "Toute agression contre l'un sera une déclaration de guerre contre les trois", at: 400, size: ph1Fullscreen ? 24 : 19, charPerFrame: 0.55 },
-        ]}
-      />
+          Ph1 SVG NARRATIF — LiptakoRevealSVG (Session A 2026-07-04, remplace WarMapOverlayDynamic jugé
+          "peu convaincant" par Aziz, retour 2026-07-01 pt.10). Miroir narratif du CFA : un sceau de cire
+          qui SE SCELLE (3 cordages Mali/Niger/Burkina convergent), + 3 vrais drapeaux en séquence.
+          inAt=F_BAMAKO → outAt=F_EPREUVE (682 frames = 22.7s, mini-render validé Aziz catbox hlt9kt).
+          ============================================================ */}
+      <LiptakoRevealSVG frame={frame} inAt={F_BAMAKO} outAt={F_EPREUVE} width={width} height={height} fps={fps} />
+
+      {/* Respiration avant coupe vers P4 (retour Aziz 2026-07-04 pt.13) : le cut P3→P4 passait directement
+          d'une scène pleine à une carte vide de jetons, jugé "moins naturel". Fondu au noir bref (~0.6s)
+          en toute fin de fenêtre, complété par le fondu d'entrée symétrique en tête de Partie4Cout. */}
+      {(() => {
+        const FADE_DUR = 18; // ~0.6s à 30fps
+        const fadeOp = interpolate(frame, [F_END - FADE_DUR, F_END], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        if (fadeOp <= 0.01) return null;
+        return <AbsoluteFill style={{ background: "#0a0805", opacity: fadeOp }} />;
+      })()}
     </AbsoluteFill>
   );
 };

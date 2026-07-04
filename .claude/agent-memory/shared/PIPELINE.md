@@ -30,25 +30,22 @@ Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pu
 
 ---
 
-## War-Map Sahel — 2026-07-04 [SESSION A (SVG) TERMINÉE · SESSION B EN ATTENTE] — PRIME sur l'entrée 06-27 ci-dessous (périmée)
+## War-Map Sahel — 2026-07-04 [SESSION B QUASI TERMINÉE · SESSION C EN ATTENTE] — PRIME sur les entrées ci-dessous (périmées)
 
-**[STAGE-CODE] warmap-sahel — bug critique des trous de frames RÉSOLU** (session 2026-07-01) : P1/P2/P3/P4
-re-rendus en plages contiguës, validés `check-frame-continuity.py`. 2e vague de retours précis reçue,
-**décision : scinder en 2 sessions** pour éviter la saturation de contexte.
-**✅✅ Session A (SVG) TERMINÉE (2026-07-04)** : 3 inserts SVG narratifs construits/validés Aziz sur mini-
-renders isolés — CFA (`CfaRevealSVG.tsx`, déjà branché dans `Partie4Cout.tsx`, mini-render validé, 1 SFX
-résiduel à retirer Session B) ; Liptako-Gourma (`LiptakoRevealSVG.tsx`, NOUVEAU, sceau de cire qui se scelle
-+ 3 drapeaux réels ondulants) ; Ressources (`ResourcesRevealSVG.tsx`, NOUVEAU, bouclier AES qui se dessine
-au contour + sceau AES + 3 veines à flux continu). **Liptako et Ressources codés et testés isolément
-(compositions Root.tsx dédiées) mais PAS ENCORE branchés dans le moteur réel** (`Partie3Rupture.tsx` et
-`Partie4Cout.tsx` utilisent toujours les anciens composants).
-**▶ Session B (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-B.md`)** : brancher Liptako+Ressources
-+ 16 fixes techniques précis (causes déjà trouvées pour 2 d'entre eux : HUD "données estimées" =
-`SahelWarMapEngine.tsx:2924` ; jetons flous P4 = `Partie4Cout.tsx` attenuate 0.55/0.7) + reconfirmer le
-calage de durée des 2 nouveaux SVG avec l'audio réel (testés hors contexte narration/musique en Session A)
-+ UN SEUL render final bout-en-bout.
-Détail complet (16 points, sources, frames, catbox) : `memory/episodes/warmap-sahel/STATUS.md` § "✅✅
-SESSION A TERMINÉE" puis § "SESSION B — FIXES TECHNIQUES", en tête de fichier.
+**[STAGE-CODE] warmap-sahel — Session B (branchement + fixes) QUASI TERMINÉE.** Les 2 nouveaux composants
+SVG (`LiptakoRevealSVG.tsx`, `ResourcesRevealSVG.tsx`) sont branchés dans le moteur réel
+(`Partie3Rupture.tsx`, `Partie4Cout.tsx`, remplacent les anciens composants legacy) et validés Aziz en
+mini-renders contexte réel. 9 fixes techniques appliqués (HUD résiduel retiré, points villes continus
+retirés P1, SFX doublons retirés, sources mal placées corrigées, portraits flous P4 corrigés — cause
+réelle = style gravure fine qui ne survit pas au downscale, pas un bug d'opacité —, caméra CEDEAO
+repensée hors du cadre Sahel) + un fondu de transition P3→P4 ajouté, tout validé Aziz.
+**⛔ RESTE avant render final** : 1 écho audio non résolu (mot "déjà" en P1, f2743 — resynthèse TTS tentée
+mais décale trop la durée, reportée) + **LE RENDER COMPLET bout-en-bout Acte1+P1+P2+P3+P4 n'a JAMAIS ÉTÉ
+LANCÉ** (seulement des mini-renders isolés de vérification cette session).
+**▶ Session C (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-C.md`)** : traiter l'écho audio
+(pistes détaillées dans STATUS.md) PUIS le render complet unique, vérifié `check-frame-continuity.py`.
+Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04)",
+en tête de fichier.
 
 ---
 

@@ -479,24 +479,21 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > naturel entre 2 phrases, jugé non-problématique). Assemblage complet uploadé (368MB) + version
 > compressée 720p pour mobile/LLM (46MB, technique : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
 >
-> ⭐⭐ **NEXT SESSION = SESSION B (lire `memory/episodes/warmap-sahel/STATUS.md` § "✅✅ SESSION A TERMINÉE"
-> puis § "SESSION B — FIXES TECHNIQUES", en tête du fichier — source de vérité complète, ne pas dupliquer ici)**.
-> ✅ **Session A TERMINÉE (2026-07-04)** : les 3 SVG (CFA `CfaRevealSVG.tsx` déjà branché ; Liptako-Gourma
->    `LiptakoRevealSVG.tsx` NOUVEAU, sceau de cire qui se scelle + 3 drapeaux réels ondulants ; Ressources
->    `ResourcesRevealSVG.tsx` NOUVEAU, bouclier AES qui se dessine au contour + sceau AES + 3 veines à flux
->    continu) sont codés, testés isolément (compositions `LiptakoRevealSVG-Test`/`ResourcesRevealSVG-Test`
->    dans Root.tsx), et VALIDÉS Aziz sur mini-renders (catbox `hlt9kt` et `9w86rf`).
-> ▶ **Session B reste à faire** : 16 fixes techniques précis (HUD "données estimées" encore visible —
->    cause trouvée `SahelWarMapEngine.tsx:2924` ; jetons flous P4 — piste trouvée `Partie4Cout.tsx` attenuate
->    0.55/0.7 ; coupures nettes, caméra CEDEAO, sources mal placées, SFX résiduel CFA, etc.) + **BRANCHER
->    Liptako et Ressources dans le moteur** (pas encore fait — l'ancien `WarMapOverlayDynamic`/`ResourcesReveal`
->    sont toujours actifs) + **reconfirmer le calage de durée des 2 nouveaux SVG avec l'audio réel** (testés
->    hors contexte narration/musique, cf point d'attention explicite dans STATUS.md) + **UN SEUL render
->    complet final**.
+> ⭐⭐ **NEXT SESSION = SESSION C (lire `memory/episodes/warmap-sahel/STATUS.md` § "✅✅✅ SESSION B — ÉTAT
+> DE FIN (2026-07-04)", en tête du fichier — source de vérité complète, ne pas dupliquer ici)**.
+> ✅ **Session B QUASI TERMINÉE (2026-07-04)** : Liptako-Gourma et Ressources (les 2 nouveaux SVG) sont
+>    BRANCHÉS dans le moteur réel (`Partie3Rupture.tsx`/`Partie4Cout.tsx`, anciens composants legacy
+>    retirés) et validés Aziz en mini-renders contexte réel. 9 fixes techniques appliqués + 1 fondu de
+>    transition P3→P4 ajouté, tout validé Aziz.
+> ▶ **Session C reste à faire** : 1 écho audio non résolu (mot "déjà" en P1, f2743 — resynthèse TTS tentée
+>    et payée mais décale trop la durée pour être intégrée sans risque, backup gardé, pistes détaillées
+>    dans STATUS.md) + **LE RENDER COMPLET bout-en-bout Acte1+P1+P2+P3+P4, JAMAIS ENCORE LANCÉ** (seulement
+>    des mini-renders isolés de vérification en Session B), vérifié `check-frame-continuity.py`.
 >
-> ✅ Ce qui EST fait cette session (ne pas refaire) : hook "3" recentré, P2 contours nationaux actifs
-> (cohérence P1/P3/P4), texte Moura retiré (source ONU ajoutée), source coût humain P4 renforcée, CFA SVG
-> codé et branché (pas encore re-rendu).
+> ✅ Ce qui EST fait Session B (ne pas refaire) : les 2 SVG branchés + validés, HUD résiduel retiré, points
+> villes en continu retirés P1, SFX doublons retirés (CFA + Ressources), sources mal placées corrigées,
+> portraits flous P4 corrigés (cause réelle : style gravure fine incompatible avec le downscale, pas un
+> bug d'opacité), caméra CEDEAO repensée (hors du cadre Sahel), fondu de transition P3→P4 ajouté.
 
 ---
 

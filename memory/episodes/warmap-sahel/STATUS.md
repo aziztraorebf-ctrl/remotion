@@ -1,7 +1,66 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-07-04 — ✅✅ **SESSION A TERMINÉE : les 3 SVG (CFA/Liptako/Ressources) sont validés Aziz + codés + testés isolément.** ⛔⛔ **SESSION B EN ATTENTE (branchement dans le moteur + fixes techniques + render final unique).** Voir section "✅✅ SESSION A TERMINÉE" ci-dessous pour l'état exact des 3 composants, PUIS section "SESSION B — FIXES TECHNIQUES" pour la suite. La section "REPRISE 2026-07-01" qui suit est HISTORIQUE (bug trous de frames déjà corrigé) mais garde des détails utiles (diagnostic, méthode).
-**Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+**Dernière mise à jour :** 2026-07-04 — ⛔⛔ **SESSION B QUASI TERMINÉE (branchement + fixes faits, render complet PAS ENCORE LANCÉ) — reste 1 point audio à traiter avant.** Voir section "✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04)" juste ci-dessous pour la reprise exacte. Les sections "SESSION A TERMINÉE" et "SESSION B — FIXES TECHNIQUES" qui suivent restent la référence détaillée de CE QUI a été demandé (la plupart est fait, quelques exceptions notées ci-dessous). La section "REPRISE 2026-07-01" après est HISTORIQUE (bug trous de frames déjà corrigé).
+**Branche :** `fix/senegal-v3-passe-finition` (⚠️ nom historique trompeur — toute la Session B War-Map Sahel
+a été faite ici, pas sur une branche dédiée `feat/warmap-aes-hook-integration` qui n'a en réalité jamais
+été créée/utilisée ; corrigé 2026-07-04, décision Aziz : documenter la réalité plutôt que déplacer les
+commits). **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+
+---
+
+## ✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04) — LIRE EN PREMIER À LA REPRISE
+
+### Fait et validé cette session
+1. **Liptako-Gourma branché** dans `Partie3Rupture.tsx` (remplace `WarMapOverlayDynamic`) — validé Aziz sur mini-render contexte réel (catbox `ui241w`).
+2. **Ressources branché** dans `Partie4Cout.tsx` (remplace `ResourcesReveal`, code mort supprimé) — validé Aziz (catbox `5g2fua`).
+3. **HUD "Données estimées"** retiré sur toutes les Parties V5 (`SahelWarMapEngine.tsx`, gate `!isPartie` ajouté).
+4. **Points Bamako/Ouaga/Niamey en continu** retirés en P1 (même gate `!isPartie`, `SahelWarMapEngine.tsx` ~2585).
+5. **SFX résiduels doublons retirés** : impact CFA (`SahelWarMapEngine.tsx` ~1776, l'ancien split-screen) + ink-spread Ressources (les 2 nouveaux composants SVG gèrent déjà leur propre SFX interne).
+6. **Mot "Sources :"** retiré du cartouche coût humain P4 (reste juste "OCHA · PAM · HCR").
+7. **Source Moura déplacée** hors de la carte (bas-droite écran, même pattern que P4) au lieu d'incrustée aux coordonnées géo.
+8. **Portraits dirigeants P4 agrandis** (`D = vmin*0.065 → 0.08`, `Partie4Cout.tsx` ~1115) — cause réelle du flou identifiée : gravure fine des sprites `p4-assets/leader-*.png` qui ne survit pas au downscale extrême (~70px), PAS un bug d'opacité `attenuate` comme le diagnostic initial le suggérait. Vérifié visuellement, plus de chevauchement Ouaga/Niamey avec cette valeur.
+9. **CEDEAO P2 repensé** (`Partie2Blocage.tsx`) : les anciens marqueurs+flèches vers CI/Ghana/Bénin/Nigeria (hors-cadre Sahel) remplacés par une bande de dégradé qui pulse en bas d'écran + 3 flèches COURTES vers Niamey, jamais hors du cadre serré. `CEDEAO_RING` (code mort) supprimé de ce fichier.
+10. **Fondu de transition f9410 (P3→P4)** ajouté : ~0.6s fondu au noir en fin de `Partie3Rupture.tsx` + fondu symétrique en début de `Partie4Cout.tsx` — Aziz confirme l'effet correct (une fausse alerte dictée vocale a semé le doute, tranchée : c'est bon).
+
+### ⛔ SEUL POINT BLOQUANT AVANT RENDER FINAL — écho/reverb sur "déjà" (P1, f2743)
+Aziz confirme à l'écoute : ce n'est PAS une répétition de mot (le script n'a qu'une occurrence à cet endroit,
+vérifié dans `narration-v5-alignment.json` index 434, "parce que l'État est **déjà** absent de ces immenses
+zones rurales"), mais un artefact du fichier audio lui-même — une aspérité façon écho/reverb sur cette syllabe
+précise. Diagnostic (forme d'onde + spectrogramme, voir historique conversation) : PAS une reverb de salle
+classique (pas de queue de décroissance séparée dans le temps), donc un simple filtre ffmpeg de-reverb
+générique risque de ne rien arranger ou d'abîmer le reste du mot.
+
+**Tentative faite cette session** : régénération TTS de la phrase complète ("Mais il faut bien comprendre une
+chose : si ces groupes s'enracinent aussi facilement, c'est parce que l'État est déjà absent de ces immenses
+zones rurales, où d'anciennes tensions entre communautés couvent encore.", tag `[solemn]`, même pipeline
+`scripts/generate-narration-expressive.py` V3→STS GeoAfrique) — coût ~443 crédits, déjà payé. **Résultat
+gardé en backup** : `memory/episodes/warmap-sahel/audio-fixes/deja-resynth-backup-2026-07-04.mp3` (12.49s).
+**PROBLÈME** : dure 12.49s contre 10.0s pour l'originale (fenêtre 84.48s→94.18s dans `narration-v5-expressive.mp3`,
+soit frames 2534→2825 à 30fps) — le TTS a inséré des pauses plus longues sur le ":" et la virgule après
+"facilement,". Intégrer tel quel décalerait TOUT le reste de la narration de +2.49s, désynchronisant les
+centaines de triggers F_* frame-précis du reste de la vidéo (P1 fin + P2 + P3 + P4 entiers). **PAS FAIT** —
+décision Aziz : ne pas risquer la désynchro globale pour un artefact mineur sur 1 mot, traiter dans une
+session dédiée.
+
+**Pistes à explorer en session dédiée (aucune tranchée)** :
+- Recouper les silences internes de `deja-resynth-backup-2026-07-04.mp3` (retirer ~2.5s dans les pauses,
+  SANS toucher la voix elle-même) pour le faire tenir dans la fenêtre de 10.0s originale, puis re-tenter le splice.
+- Tester un filtre ffmpeg ciblé (de-esser / spectral repair / compression transitoire) sur le SEUL mot "déjà"
+  (90.94s→91.42s dans le fichier original) avant de conclure que rien de générique ne fonctionne — cette
+  session a analysé (forme d'onde+spectrogramme) mais n'a PAS testé de filtre réel.
+- Envisager un outil de "speech repair" dédié (ex. Adobe Podcast enhance, Resemble AI, ou équivalent) plutôt
+  qu'un filtre ffmpeg brut, si disponible.
+- En dernier recours : accepter l'artefact tel quel (Aziz : "pas bloquant pour le render final" si rien de
+  fiable n'est trouvé rapidement).
+
+### ▶ PROCHAINE SESSION — ORDRE DE TRAVAIL RECOMMANDÉ
+1. Traiter l'écho "déjà" (voir pistes ci-dessus) OU décider de l'accepter tel quel.
+2. **UN SEUL render complet Acte1+P1+P2+P3+P4** (jamais fait cette session — tout le travail ci-dessus n'a
+   été vérifié qu'en mini-renders isolés). Vérifier avec `check-frame-continuity.py` avant tout envoi à Aziz.
+3. Si le render complet révèle un souci non anticipé (calage Liptako/Ressources en contexte VRAIMENT bout-en-
+   bout avec musique, pas juste narration isolée comme testé cette session) : ajuster les constantes de timing
+   internes (nommées en tête de `LiptakoRevealSVG.tsx`/`ResourcesRevealSVG.tsx`), PAS tronquer le SVG.
+4. Une fois le render complet propre et validé Aziz : promouvoir vers `out/PRET-PUBLICATION/`.
 
 ---
 

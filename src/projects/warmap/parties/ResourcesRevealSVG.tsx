@@ -103,9 +103,17 @@ export const ResourcesRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width,
 
   return (
     <AbsoluteFill style={{ opacity: exitOp }}>
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt + 20} volume={0.3} />
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt + 157} volume={0.28} />
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt + 188} volume={0.28} />
+      {/* FIX (2026-07-04) : `startFrom` TRIME le fichier SOURCE (pas un positionnement timeline) — avec
+          des offsets > durée du fichier (ink-spread=1.5s=45f), 2 des 3 Audio jouaient du SILENCE.
+          Pattern correct : startFrom={inAt} fixe + volume fenêtré en fonction du frame. Reste INAUDIBLE
+          au render même après ce fix (cause profonde non identifiée, cf même symptôme LiptakoRevealSVG) —
+          Aziz : pas prioritaire, ne pas s'acharner, laisser tel quel. */}
+      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
+        volume={(fr) => clampI(fr - inAt, 20, 24, 0, 0.3) * clampI(fr - inAt, 55, 65, 1, 0)} />
+      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
+        volume={(fr) => clampI(fr - inAt, 157, 161, 0, 0.28) * clampI(fr - inAt, 192, 202, 1, 0)} />
+      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
+        volume={(fr) => clampI(fr - inAt, 188, 192, 0, 0.28) * clampI(fr - inAt, 223, 233, 1, 0)} />
 
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
         <defs>

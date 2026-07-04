@@ -266,9 +266,6 @@ export type SahelTestProps = {
   // Héritent du look acte1Refonte (carte épurée + contours). Couches dans leur propre fichier.
   acte1ProtoFicelles?: boolean;
   acte1ProtoVide?: boolean;
-  // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
-  // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
-  ph1Fullscreen?: boolean;
   // ⚠️ PROTO 2.4 — LEGACY (compo de test historique, prototype du beat 2.4 avant la P2 narrative).
   // NE PAS prendre comme modèle pour P3/P4 (le modèle = partie2). Conservé isolé : ne touche ni P1 ni P2.
   // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
@@ -302,7 +299,6 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   acte1ProtoFicelles = false,
   acte1ProtoVide = false,
   countryBordersTest = false,
-  ph1Fullscreen = false,
   proto24 = false,
   proto24Pitch = 0,
 }) => {
@@ -1734,12 +1730,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           mode `partie4`, cf AUDIT-AMELIORATIONS-P4.md #1). Grammaire identique aux autres scenes :
           impact/ping sur les 3 pulses villes assiegees · ink-spread/ping sur l'emergence des 3
           icones ressources · arrow-whoosh sur la convergence des 3 drapeaux confederation +
-          boom-coup sur le coup de tampon du sceau AES · ping de pose sur la piece CFA + un impact
-          discret au climax du fil de parite (vibrate). ⛔ PAS de tension-drone (banni partout).
-          Triggers V5 (Partie4Cout.tsx) : F_DJIBO=9790 · F_MENAKA=9809 · F_TILLABERI=9835 ·
-          F_OR=10667 · F_URANIUM=10804 · F_PETROLE=10835 · F_NIAMEY_QG=11613 (sceau confed, coup de
-          tampon) · F_CFA=11869 (piece CFA posee, CfaReveal inAt) · climax vibrate fil de parite =
-          F_CFA + (outAt-inAt-80) = F_CFA + 324 = 12193 (CfaReveal : inAt=F_CFA, outAt=F_STATU-24=12273).
+          boom-coup sur le coup de tampon du sceau AES · ping de pose sur la piece CFA (CfaRevealSVG
+          gere son propre SFX interne ink-spread, pas de doublon moteur ici). ⛔ PAS de tension-drone
+          (banni partout). Triggers V5 (Partie4Cout.tsx) : F_DJIBO=9790 · F_MENAKA=9809 ·
+          F_TILLABERI=9835 · F_OR=10667 · F_URANIUM=10804 · F_PETROLE=10835 · F_NIAMEY_QG=11613
+          (sceau confed, coup de tampon) · F_CFA=11869 (piece CFA posee, CfaRevealSVG inAt).
           ====================================================== */}
       {partie4 && !acte1CameraOnly && (
         <>
@@ -1753,16 +1748,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={9835} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />
           </Sequence>
-          {/* émergence des 3 icônes ressources (or/uranium/pétrole) — ink-spread doux (remplissage diffus) */}
-          <Sequence from={10667} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.32} />
-          </Sequence>
-          <Sequence from={10804} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.32} />
-          </Sequence>
-          <Sequence from={10835} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.32} />
-          </Sequence>
+          {/* émergence des 3 veines ressources (or/uranium/pétrole) : SFX géré EN INTERNE par
+              ResourcesRevealSVG (ink-spread à inAt+20/+157/+188 = mêmes frames absolues 10667/
+              10804/10835) — pas de doublon moteur ici (fix Aziz 2026-07-04, même logique que CFA). */}
           {/* convergence des 3 drapeaux confédération — arrow-whoosh (les lignes se tracent vers le
               centre ; ConfederationReveal inAt=F_FORCE=11521, converge L=18->58, soit f11539->11579 ;
               on demarre au milieu de la fenetre, avant le sceau qui nait a L=54=f11575) */}
@@ -1776,10 +1764,6 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           {/* pose de la pièce CFA — ping discret */}
           <Sequence from={11869} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
-          </Sequence>
-          {/* climax du fil de parité (vibrate, ~F_CFA+324) — impact discret */}
-          <Sequence from={12193} durationInFrames={Math.ceil(1.0 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.35} />
           </Sequence>
         </>
       )}
@@ -2590,8 +2574,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           B3 — POINTS-VILLES PULSANTS liés à l'allumage de l'état.
           Quand un état s'allume, sa ville-clé apparaît : point beige plein +
           anneau qui pulse (scale+opacity). Cause→effet lisible sans la voix.
-          ====================================================== */}
-      {showChrome && effCityPulse && effSeqIgnite &&
+          RETIRÉ sur les Parties V5 (isPartie, fix Aziz 2026-07-04 pt.7) : ces points restaient
+          affichés EN CONTINU (jamais de fadeOut hors acte1Refonte) pendant toute la P1, pas
+          nécessaire — ce bloc ne sert que l'allumage narratif de l'Acte 1. ====================================================== */}
+      {showChrome && effCityPulse && effSeqIgnite && !isPartie &&
         Object.entries(effSeqIgnite).map(([country, ignF]) => {
           const cityName = COUNTRY_KEY_CITY[country];
           if (!cityName) return null;
@@ -2919,9 +2905,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* Source bas droite — RETIRÉE en acte1Refonte (Aziz 2026-06-27) : l'Acte 1 est une ouverture
           NARRATIVE sans chiffre précis → une mention "Données estimées · Sources..." est trompeuse
-          (elle suggère des données chiffrées absentes). Les sources ponctuelles vont sur les parties
-          à CHIFFRES (P4 : réfugiés, ressources, CFA). */}
-      {!acte1Refonte && (
+          (elle suggère des données chiffrées absentes). RETIRÉE aussi sur toutes les Parties V5
+          (isPartie, fix Aziz 2026-07-04) : P3/P4 ont déjà leurs sources ponctuelles à l'écran
+          (Moura, cartouche coût humain), ce HUD générique fait doublon/parasite partout ailleurs. */}
+      {!acte1Refonte && !isPartie && (
       <div style={{ position: "absolute", bottom: 20, right: 30, fontSize: 12,
           color: SAHEL_COLORS.cream, opacity: hudOp * 0.65 }}>
         Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR
@@ -3382,7 +3369,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {acte1ProtoVide && <ProtoVide ctx={sahelCtx} />}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
-      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
+      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} />}
       {partie4 && <Partie4Cout ctx={sahelCtx} map={mapRef.current} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 

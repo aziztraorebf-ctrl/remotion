@@ -83,6 +83,9 @@ export const LiptakoRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width, h
 
   return (
     <AbsoluteFill>
+      {/* SFX ding par drapeau tenté (2026-07-04) puis ABANDONNÉ — inaudible au render même après
+          correction du bug startFrom (trim source, pas positionnement timeline), cause profonde non
+          identifiée, non prioritaire (Aziz : scène assez forte sans, ne pas s'acharner). */}
       <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} startFrom={inAt + 2} volume={0.32} />
       <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} startFrom={inAt + 462}
         volume={(fr) => clampI(fr - inAt, 460, 466, 0, 0.4) * clampI(fr - inAt, 480, 500, 1, 0)} />
