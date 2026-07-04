@@ -48,6 +48,106 @@
 >   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
 > **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
 
+## ⭐ SEEDANCE PERSONNAGE — TECHNIQUE PROUVÉE MAIS ÉCARTÉE POUR L'INSTANT (coût), SVG reste la voie par défaut (2026-07-04)
+
+> **Test complet fait et réussi** (3 clips, pêcheur, 3 lancers de filet — voir détail technique
+> ci-dessous), **MAIS décision d'Aziz après coup : ne PAS adopter Seedance comme méthode par défaut
+> pour les personnages.** Raison = le coût (~6.85$/clip de 10s, donc ~18-20$ pour une seule scène
+> personnage complète) est disproportionné pour une piste encore en phase de test/itération — surtout
+> qu'en pratique plusieurs essais sont souvent nécessaires avant d'obtenir le bon résultat. Verdict
+> d'Aziz : "de la folie, un peu trop cher pour l'instant" pour ce qu'on fait actuellement.
+>
+> **Ce qui reste vrai et acquis (ne pas re-tester, c'est prouvé)** : Seedance PEUT très bien animer
+> notre registre encre minimaliste (aucune dérive de style), suivre un prompt narratif riche (lancer,
+> halage, retournement, dépôt précis dans un panier, pieds ancrés en permanence) sans storyboard multi-
+> images. Si le budget/contexte change un jour (scène ponctuelle à fort enjeu, budget dédié), la méthode
+> documentée plus bas reste directement réutilisable telle quelle.
+>
+> **Décision actée pour la suite immédiate** : privilégier et consolider la piste SVG organique (le
+> registre qu'on maîtrise, prouvé sur GGW/cacao/cargo) plutôt que des personnages articulés complexes en
+> attendant une meilleure solution de rig. Retirer/réduire les personnages organiques compliqués des
+> scènes plutôt que de continuer à batailler avec leur coût (temps de code OU argent Seedance) tant
+> qu'aucune des deux voies n'est pleinement satisfaisante. Cohérent avec la discussion actée avec Aziz :
+> le personnage animé n'est PAS un prérequis pour des vidéos captivantes (GGW et cacao le prouvent déjà,
+> quasi zéro personnage animé, sujet+carte+data-viz suffisent) — le personnage est un AJOUT ponctuel,
+> pas une fondation manquante. Chantier séparé identifié pour plus tard, PAS prioritaire : représenter
+> des FIGURES RÉELLES NOMMÉES (ex. Yacouba Sawadogo pour GGW) — barre de qualité différente (portrait
+> fidèle vs personnage générique), à traiter à part si/quand ça devient pertinent.
+>
+> **Détail technique de la méthode (conservé pour référence future, PAS à appliquer par défaut
+> maintenant)** :
+> 1. UNE SEULE image source (pas de storyboard multi-panels envoyé à Seedance — cette technique
+>    "reference-to-video" a un historique d'échec 0/3 à 0/5 sur tout style non-standard testé avant,
+>    cf `memory/tools/seedance-rules.md` règles 75/76/83/86/97).
+> 2. Prompt NARRATIF (verbes d'action enchaînés en langage naturel : "il lance, il se retourne, il
+>    dépose"), PAS de timecodes frame-exacts — Seedance exécute l'INTENTION du geste, pas une partition
+>    chronométrée (règle 29).
+> 3. Clause STRICT STYLE FIDELITY obligatoire (registre non-standard) + identity lock + interdits
+>    explicites (no text/dialogue/particules). `aspect_ratio` natif API, `generate_audio: false`.
+> 4. Le décor (océan/ciel/chalutier/pirogue) reste ENTIÈREMENT en SVG codé — seul le personnage+geste
+>    serait délégué, pas de rupture visuelle car même décor SVG en frame source.
+> **Leçon méthodologique générale (au-delà de Seedance)** : lors d'une vérification vidéo, échantillonner
+> SERRÉ (tous les 0.3-0.5s) autour des beats narratifs attendus avant de conclure à un échec — un premier
+> passage avait conclu à tort à un échec (dépôt dans le panier "manqué") simplement parce que
+> l'échantillonnage était trop grossier (toutes les 2s) et ratait la fenêtre exacte du geste.
+>
+> **Fichiers conservés** (pas supprimés, coexistent avec le rig codé) : `PecheurSurpecheSeedance16x9.tsx`
+> (`RND-PecheurSurpecheSeedance16x9`), clips `public/_rnd/pecheur-seedance/cast{1,2,3}.mp4`, scripts
+> `scripts/tools/seedance-pecheur-cast{2,3}.py`. Render : https://files.catbox.moe/24fbuy.mp4.
+
+## ✅✅ 16:9 NARRATIF + PERSONNAGES — 4 chantiers + mix-and-match + indexation TERMINÉS (2026-07-04)
+
+> Session 2026-07-04 (2 passes) : les 4 chantiers du 07-03 sont FAITS, PUIS la scène pêcheur a été
+> upgradée (svg-scene-upgrade.py Gemini+GPT) et recomposée en mix-and-match, ET un chantier d'indexation
+> d'objets visuels (arbres/océan/bateaux/etc., demandé par Aziz après avoir vu qu'aucun objet dessiné
+> n'était réutilisable) a été fait en parallèle par agent. **MUSIQUE validée par Aziz** (cordes minimales
+> sahel-warmap — ton correct pour le sujet, gardée).
+>
+> **1-4 (1re passe)** : extraction motion.ts (camAt/lerpHex/buildHorizonPath/sequenceExclusive/
+> objectVisualBottom) · raccordement ProtoNarratifPlusData→CargoVoyage16x9_LibreInspire · cadrage serré
+> personnage prouvé (ProtoCueilletteGrosPlan16x9, bug main↔objet corrigé par calcul algébrique plutôt
+> que par l'œil — leçon clé) · 1re version de PecheurSurpeche16x9.tsx (filet en pointillé, chalutier/
+> pirogue en formes géométriques brutes, poisson via 2 échecs LLM Qwen/GLM puis codé main).
+>
+> **2e passe — MIX-AND-MATCH + INDEXATION (demandée par Aziz après visionnage)** :
+> - **Constat d'Aziz, juste** : la scène pêcheur ne réutilisait RIEN visuellement (océan/ciel/soleil du
+>   cargo recodés en double, chalutier/pirogue improvisés) — seule la MÉCANIQUE (camAt, rig) était
+>   partagée, pas les OBJETS. Comparé aux grands studios qui indexent tout objet créé.
+> - **Chantier indexation (agent dédié, cacao+GGW)** : 3 éléments extraits de `cacao-chocolat-short/`
+>   vers `svg-library/elements/agriculture/` (cacaoyer, cabosse ouverte, usine transformation) + 2
+>   exclusions justifiées (PlanteurEncre = doublon obsolète de StickRig/GeminiRig ; TabletteMorphBarre =
+>   trop couplée au chiffre du short cacao, pas un objet générique).
+> - **Ciel/océan du cargo extraits** : `SoleilHaloRadial.tsx` + `OceanProfondeurVagues.tsx`
+>   (`svg-library/elements/ciel/` et `elements/ocean/`) — `CargoVoyage16x9_LibreInspire.tsx` REFACTORISÉ
+>   pour les consommer (zéro régression visuelle vérifiée par render). `CloudQwenGravure.tsx` déjà
+>   partagé (juste mal rangé dans `_rnd/` au lieu de `_shared/` — pas déplacé, hors scope).
+> - **Mix-and-match upgrade Gemini/GPT** (brief générique "ta meilleure version de cette scène", frame
+>   SANS personnage envoyée pour éviter que les modèles le retouchent — leçon des échecs précédents) :
+>   chalutier retenu = Gemini (plus détaillé/menaçant) → `ChalutierGemini.tsx`. Pirogue + ciel retenus =
+>   GPT (motifs bois peints, plus sobre/cohérent charte) → `PirogueGPT.tsx`. Filet retenu = Gemini
+>   (maillage/plombs/éclaboussures) → `FiletGemini.tsx`. Tous dans `svg-library/elements/peche/`.
+> - **3 bugs réels trouvés et corrigés en vérifiant par render (pas juste "ça compile")** :
+>   1. `seaColorDeep` codé en constantes bleu-froid FIXES, jamais réchauffées par la palette temporelle
+>      → au crépuscule (ciel orange), le rectangle de profondeur océan restait bleu et se lisait comme
+>      un bloc dissonant qui coupe l'écran. Fix : dériver `seaColorDeep` de `seaColor` (déjà réchauffé).
+>   2. **Composition de `transform` SVG avec scale+translate** : `translate(-apex) scale(s)` scale
+>      autour de l'origine DÉJÀ translatée, pas du point voulu — corrigé en ordre `scale(s)
+>      translate(-apex)` (le point recentré à 0,0 devient le pivot naturel du scale). Piège répété 2 fois
+>      dans la même session (1er essai avec `style={{transformOrigin}}` CSS, inefficace en SVG statique).
+>   3. **Composant non recentré = coordonnées natives qui sortent du cadre** : `FiletGemini` gardait ses
+>      coordonnées sources (apex à x=750,y=820) sans jamais les recentrer sur (0,0) — composé avec la
+>      position du personnage, l'apex réel sortait du cadre visible (y calculé à 1278 sur un cadre 1080)
+>      → filet invisible malgré opacity=1, bug diagnostiqué par calcul, pas résolu à l'œil. **Leçon
+>      générale reconductible** : tout composant `svg-library/elements/*` DOIT recentrer ses coordonnées
+>      natives sur (0,0) en interne (comme fait correctement pour PirogueGPT/ChalutierGemini) — vérifier
+>      ce recentrage EXPLICITEMENT avant tout nouveau composant extrait d'un SVG source à coordonnées
+>      absolues.
+> Render final : `/tmp/pecheur-mix-final.mp4` (12 Mo, upload catbox en cours).
+> **NEXT si repris** : option 2 (caravane sel/camion — 2 véhicules à vitesses différentes dans la même
+> couche, vraie inconnue technique jamais testée) ou option 3 (cabosse→conteneur) si Aziz veut itérer.
+> Le catalogue `svg-library/elements/peche/` (chalutier/pirogue/filet/poisson) est directement réutilisable
+> pour tout futur sujet pêche/mer sans repartir de zéro.
+
 ## ✅✅ 16:9 NARRATIF + PERSONNAGES — SHOWCASE FINAL mis à jour (2026-07-03)
 > Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (voir note de mise à jour en tête).
 > ⭐⭐ **NOUVELLE RÉFÉRENCE (2026-07-03)** : `CargoVoyage16x9_LibreInspire.tsx` (`RND-CargoVoyage16x9-LibreInspire`)
@@ -58,7 +158,23 @@
 >   retenue (reflet de soleil animé frame-driven, océan avec profondeur, cargo unifié). Détail complet du
 >   process (bug réseau IPv4/IPv6 Gemini, pattern "upgrade prototype", verdict Qwen3.6 vs GLM-5.2) :
 >   `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` § UPGRADE PROTOTYPE + `memory/tools/openrouter-svg.md`.
-> NEXT = décider si on industrialise le pivot 16:9 (nouvelle vidéo pilote longue) ou si ça reste R&D.
+> **NEXT SESSION — 4 chantiers dans cet ordre (décidé Aziz 2026-07-03)** :
+>   1. Extraire/indexer les briques réutilisables de CargoVoyage16x9_LibreInspire en composants nommés dans
+>      `src/projects/_shared/svg-library/` (pas laissés locaux au fichier) : `camAt(p,speed)` (moteur parallaxe
+>      3 couches), horizon paramétrique (interpolation 2 silhouettes via points de contrôle X fixes), palette
+>      double-état `lerpHex` (chaud→froid / jour→nuit), séquençage strict d'éléments mutuellement exclusifs
+>      (soleil/lune — jamais les 2 visibles en même temps), split fond/1er-plan calé sur le VRAI bas d'un objet
+>      posé (pas sa position de référence).
+>   2. Raccorder `ProtoNarratifPlusData.tsx` (fade scène-narrative→data-viz, DÉJÀ CODÉ 2026-07-02, ne PAS
+>      recréer) au nouveau `CargoVoyage16x9_LibreInspire` — il pointe encore vers l'ancien `CargoVoyage16x9`.
+>   3. Résoudre l'intégration personnage autrement que "plan large + fond minuscule" (a échoué 2x cette
+>      session : StickRig et GeminiRig tous deux illisibles/mal proportionnés à cette échelle) — tester un
+>      cadrage plus serré où le personnage EST le sujet (geste cueillette-arbre déjà prouvé, cf
+>      `PERSONNAGE-VIVANT-INDEX.md`).
+>   4. Produire une VRAIE scène complète ~1min (script + musique + montage), pas des tests de rendu isolés —
+>      changement d'échelle : de "prouver la technique" à "livrable jugeable dans son ensemble". Réutiliser le
+>      workflow "upgrade prototype" (`scripts/tools/svg-scene-upgrade.py`, codifié pour le 16:9 uniquement —
+>      pas encore adapté au 9:16) dès le début de cette nouvelle scène, pas en rattrapage après coup.
 >
 > --- Historique (2026-07-02, patron 2-scènes original, toujours valide comme référence secondaire) ---
 > ✅✅ **VALIDÉ AZIZ (2026-07-02)** : patron 2-scènes "voyage→arrivée/transformation" PROUVÉ de bout en bout —
@@ -338,29 +454,29 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## ⛔⛔ PRIORITÉ 2 — WAR-MAP SAHEL : BLOQUÉ SUR BUG CRITIQUE (2026-07-01)
+## ⭐⭐ PRIORITÉ 2 — WAR-MAP SAHEL : bug trous RÉSOLU, plan 2 SESSIONS en attente (2026-07-04)
 
-> ⛔⛔ **BUG CRITIQUE DÉCOUVERT (2026-07-01, visionnage Aziz)** : les renders multi-segments présentés
-> avaient des TROUS DE FRAMES aux jonctions (jusqu'à 40s de fin JAMAIS rendues sur P4, un chevauchement
-> qui fait répéter une phrase, des trous de 8.6s et 14s ailleurs) — perçu par Aziz comme "voix qui
-> saute/se répète/coupures brutales" sur ~8 des 20 points de son retour détaillé. Ce n'est PAS un problème
-> de contenu/script manquant, juste de mauvais calcul des bornes `--frames=` lors du découpage en renders
-> séparés. Garde-fou créé : `python3 scripts/tools/check-frame-continuity.py <bornes>` — DOIT renvoyer OK
-> avant tout `ffmpeg concat` ou présentation future (règle gravée `DOCTRINE-SOUVERAIN.md` §3.8.6).
+> ✅ **Bug critique des trous de frames RÉSOLU** (session 2026-07-01) : renders P1/P2/P3/P4 refaits en
+> plages contiguës, validés par `check-frame-continuity.py` (0 trou, sauf 7f/0.2s résiduelles = silence
+> naturel entre 2 phrases, jugé non-problématique). Assemblage complet uploadé (368MB) + version
+> compressée 720p pour mobile/LLM (46MB, technique : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
 >
-> **NEXT SESSION (lire `memory/episodes/warmap-sahel/STATUS.md` § REPRISE SESSION SUIVANTE en tête du
-> fichier — c'est la source de vérité complète, ne pas dupliquer ici)** :
-> 1. Poser la question process à Aziz en ouverture (agentique vs direct) — ne pas présumer.
-> 2. Re-render en plages CONTINUES (P1+P2 en un seul fichier, P3, P4 en un seul fichier `9416-13500`)
->    + vérifier `check-frame-continuity.py` = OK avant tout assemblage.
-> 3. Traiter les 20 retours détaillés d'Aziz (contours P2 manquants, sources visibles au lieu de
->    "données estimées", flèches CEDEAO à repenser, casques bleus ONU à Kidal, retirer texte Moura ajouté,
->    évaluer SVG narratif pour triple-screen ressources et franc CFA — prototype CFA déjà existant à
->    `out/_r-and-d/cfa-svg/`).
+> ⭐⭐ **NEXT SESSION (lire `memory/episodes/warmap-sahel/STATUS.md` § REPRISE SESSION SUIVANTE 2026-07-04
+> en tête du fichier — c'est la source de vérité complète, ne pas dupliquer ici)** : Aziz a donné une 2e
+> vague de retours précis (frame-par-frame, captures à l'appui) après avoir vu les renders corrigés.
+> Décision : **scinder en 2 sessions** pour ne pas saturer le contexte à nouveau —
+> 1. **Session A (starter prêt : `memory/STARTER-PROMPT-warmap-sahel-session-A-svg.md`)** : construire/
+>    valider 3 inserts SVG narratifs (CFA — déjà codé `CfaRevealSVG.tsx`, juste à mini-render+valider ;
+>    Liptako-Gourma — à concevoir ; triple-screen ressources — à concevoir, façon Cacao objet-héros).
+>    AUCUN render complet dans cette session, mini-renders isolés seulement.
+> 2. **Session B (après validation des 3 SVG)** : 16 fixes techniques précis (HUD "données estimées"
+>    encore visible — cause trouvée `SahelWarMapEngine.tsx:2924` ; jetons flous P4 — piste trouvée
+>    `Partie4Cout.tsx` attenuate 0.55/0.7 ; coupures nettes, caméra CEDEAO, sources mal placées, etc.) +
+>    brancher les SVG validés + **UN SEUL render complet final**.
 >
-> ✅ Ce qui EST fait et validé côté code (ne pas refaire) : chantier SFX unifié P1-P4, raccord CEDEAO
-> renforcé (mais visuel rejeté par Aziz, à repenser), drone Moura retiré, bugs P4 corrigés, contours P1 +
-> drapeau libyen géographique réel, timeline retirée P2/P3, Acte1 validé (2026-06-27, catbox `6azb9e`).
+> ✅ Ce qui EST fait cette session (ne pas refaire) : hook "3" recentré, P2 contours nationaux actifs
+> (cohérence P1/P3/P4), texte Moura retiré (source ONU ajoutée), source coût humain P4 renforcée, CFA SVG
+> codé et branché (pas encore re-rendu).
 
 ---
 

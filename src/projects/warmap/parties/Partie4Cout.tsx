@@ -36,6 +36,7 @@ import {
 } from "../_shared/WarMapOverlayDynamic";
 import { WarMapDimmedOverlay } from "../_shared/WarMapDimmedOverlay";
 import { WarMapSplitScreen } from "../_shared/WarMapSplitScreen";
+import { CfaRevealSVG } from "./CfaRevealSVG";
 
 // ============================================================
 // TRIGGERS V5 P4 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-14)
@@ -1131,8 +1132,11 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
                     );
                   })}
                 </div>
-                <div style={{ fontSize: vmin * 0.012, color: "#8a7350", marginTop: vmin * 0.02, letterSpacing: 2 }}>
-                  SOURCES · OCHA · PAM · HCR</div>
+                {/* Source renforcée (retour Aziz 2026-07-01, pt.7) : une mention discrète en bas d'écran jugée
+                    insuffisante -> taille et contraste augmentés pour que la source soit VUE, pas juste présente. */}
+                <div style={{ fontSize: vmin * 0.017, fontWeight: 700, color: RED_GRAVE, marginTop: vmin * 0.024,
+                  letterSpacing: 2.5, textTransform: "uppercase" }}>
+                  Sources : OCHA · PAM · HCR</div>
               </div>
             </div>
           </AbsoluteFill>
@@ -1143,10 +1147,11 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
            le SCEAU "AES · 2024" + la fusion or + les contours nationaux qui se soudent en un bloc disent tout.
            Doctrine MONTRER pas RÉPÉTER (le cartouche redondait la voix = problème #3 du diagnostic). ════ */}
 
-      {/* ════ M3 Ph8 : franc CFA — overlay sur carte assombrie (concept monétaire, pas spatial → pas sur la
-           carte). Pièce CFA reliée par un fil doré entre le bloc AES et Paris = la dépendance. Climax : le fil
-           vibre sur "rompre ?". Charte analyste (fil = lien factuel, pas chaîne militante). ════ */}
-      <CfaReveal frame={frame} inAt={F_CFA} outAt={F_STATU - 24} width={width} height={height} vmin={vmin} fps={fps} />
+      {/* ════ M3 Ph8 : franc CFA — SVG narratif (retour Aziz 2026-07-01 pt.19, remplace le split-screen
+           "PowerPoint" CfaReveal). Pièce CFA gravée → cadenas + taux → chaîne Paris→cadenas se trace →
+           collines/racines (3 pays) → tension sur le maillon de rupture à "rompre" (NE SE BRISE PAS).
+           Adapté du prototype validé out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4. ════ */}
+      <CfaRevealSVG frame={frame} inAt={F_CFA} outAt={F_STATU - 24} width={width} height={height} fps={fps} />
 
       {/* ════════════ CHANTIER 4 — LA FIN HABITÉE (refonte) ════════════
            Ordre STRICT : dirigeants (institutions) → soldats (sécuriser/stabiliser) → menace (ce qui reste à tenir).

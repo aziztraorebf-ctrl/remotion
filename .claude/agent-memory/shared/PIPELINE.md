@@ -30,7 +30,25 @@ Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pu
 
 ---
 
-## War-Map Sahel — 2026-06-27 [ACTE1 REFAIT+VALIDÉ · P1/P2 AUDITÉS · P4 EN MORCEAUX] — PRIME sur l'entrée 06-15 ci-dessous (périmée)
+## War-Map Sahel — 2026-07-04 [BUG TROUS RÉSOLU · PLAN 2 SESSIONS ACTÉ] — PRIME sur l'entrée 06-27 ci-dessous (périmée)
+
+**[STAGE-CODE] warmap-sahel — bug critique des trous de frames RÉSOLU** (session 2026-07-01) : P1/P2/P3/P4
+re-rendus en plages contiguës, validés `check-frame-continuity.py`. Assemblage complet + version 720p
+compressée (46MB, mobile/LLM) uploadés et vus par Aziz. 2e vague de retours précis reçue (frame-par-frame),
+**décision : scinder en 2 sessions** pour éviter la saturation de contexte.
+**Session A (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-A-svg.md`)** : construire/valider 3
+SVG narratifs (CFA déjà codé `CfaRevealSVG.tsx` pas encore re-rendu ; Liptako-Gourma et triple-screen
+ressources à concevoir de zéro, façon Cacao objet-héros). Aucun render complet, mini-renders isolés
+seulement.
+**Session B (après validation SVG)** : 16 fixes techniques précis (causes déjà trouvées pour 2 d'entre eux :
+HUD "données estimées" = `SahelWarMapEngine.tsx:2924` ; jetons flous P4 = `Partie4Cout.tsx` attenuate
+0.55/0.7) + branchement SVG + UN SEUL render final bout-en-bout.
+Détail complet (16 points, sources, frames) : `memory/episodes/warmap-sahel/STATUS.md` § REPRISE
+SESSION SUIVANTE (2026-07-04) en tête de fichier.
+
+---
+
+## War-Map Sahel — 2026-06-27 [ACTE1 REFAIT+VALIDÉ · P1/P2 AUDITÉS · P4 EN MORCEAUX] — PÉRIMÉ, voir entrée 2026-07-04 ci-dessus
 
 **[STAGE-CODE] warmap-sahel — Acte1 refondu (hook+corps+SFX) VALIDÉ Aziz.** Compo `SahelActe1-Refonte` (71s),
 `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e`, v2 SANS tension-drone — le SFX drone d'assise
@@ -528,3 +546,15 @@ Micro-source ICCO ne reste plus 9s : fade in f10-25 -> plein f25-90 -> fade out 
 Independante du karaoke (2 div distincts, opacites separees) — verifie f50 (source visible), f135/f255 (source
 absente, karaoke OK). Reste de B2 inchange. tsc clean. Render full HD + audio.
 Mp4: https://files.catbox.moe/txxako.mp4 · Frame source visible: https://files.catbox.moe/afhttv.png
+
+[STAGE-4] visual-producer pecheur-seedance-test — BLOCKED : compte fal.ai verrouille "Exhausted balance" (403 sur storage/auth/token). 2026-07-04. Les 2 appels Seedance (cast2, cast3, prompts+plan valides Aziz) n'ont pas pu etre soumis — echec a l'etape upload CDN, AVANT toute soumission generation. Cout facture = $0.00 pour les deux. Attend Aziz : recharger fal.ai/dashboard/billing puis relancer `python -u scripts/tools/seedance-pecheur-cast2.py` et `seedance-pecheur-cast3.py` (deja ecrits, prets, sortie /tmp/pecheur-seedance-cast{2,3}.mp4).
+
+[STAGE-4] visual-producer pecheur-seedance-test — RESOLU + CLOS. 2026-07-04 (suite). Compte fal.ai recharge par
+Aziz, les 2 appels cast2/cast3 relances avec succes (aucune erreur cette fois). 3 clips complets assembles dans
+PecheurSurpecheSeedance16x9.tsx (RND-PecheurSurpecheSeedance16x9), clips dans public/_rnd/pecheur-seedance/
+cast{1,2,3}.mp4. Render final valide visuellement par Aziz : https://files.catbox.moe/24fbuy.mp4.
+DECISION AZIZ APRES COUP : technique fonctionne tres bien (style preserve, gestes precis, poisson qui atterrit
+dans le panier, pieds ancres) MAIS coup trop eleve (~6.85$/clip 10s, ~20$/scene) pour l'usage actuel (phase de
+test/iteration) — NE PAS adopter Seedance comme methode par defaut pour les personnages pour l'instant. Retour
+a la piste SVG organique (registre GGW/cacao/cargo, deja maitrise, cout zero). Detail complet + methode
+reutilisable si besoin futur : memory/NEXT-ACTION.md § SEEDANCE PERSONNAGE — TECHNIQUE PROUVEE MAIS ECARTEE.

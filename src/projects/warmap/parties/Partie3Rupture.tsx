@@ -835,18 +835,12 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
         appearAt={F_MOURA + 14} hideAt={F_REPOUSSE - 30} accent={RED_MOURA} size={15} yOffset={24} />
       {/* (Chiffre "500+" géant RETIRÉ — Aziz 2026-06-12 : prend trop d'espace sur la carte et casse au dézoom.
           On garde la tache de sang + la plaque sourcée "MOURA · MARS 2022 · RAPPORT ONU" + le SFX grave.) */}
-      {/* Ph8 — meublage du plateau (2026-07-01, cf AUDIT-AMELIORATIONS-P3.md A3bis) : le hold Moura
-          (~16-18s) était quasi figé visuellement (violation D-0 "jamais 5s sans mouvement"), masqué
-          jusqu'ici par le tension-drone (retiré ci-dessus). Option retenue = SEULE (Q2 : pas de pulse
-          d'alarme) : une ligne de rapport en typewriter, lent, étalée sur toute la durée du hold —
-          mouvement continu discret, registre "rapport clinique", pas de spectacle. */}
-      {frame >= F_MOURA + 30 && frame < F_REPOUSSE - 20 && (() => {
-        const TXT = "500+ morts recensés · aucune réponse officielle de Bamako";
-        const cps = 0.55;
-        const L = frame - (F_MOURA + 30);
-        const shown = TXT.slice(0, Math.max(0, Math.floor(L * cps)));
-        const caretOn = L * cps < TXT.length && Math.floor(frame / 8) % 2 === 0;
-        const op = interpolate(frame, [F_MOURA + 30, F_MOURA + 46, F_REPOUSSE - 36, F_REPOUSSE - 20], [0, 1, 1, 0],
+      {/* Ph8 — source visible (retour Aziz 2026-07-01, pt. 7+12) : le texte typewriter "500+ morts..."
+          ajouté le 2026-07-01 a été RETIRÉ (Aziz : la plaque "MOURA · MARS 2022 · RAPPORT ONU" suffit,
+          le texte n'apportait rien). Remplacé par une SOURCE réelle qui s'affiche 2-3s au milieu du hold
+          (pas en continu) : répond aussi au constat transversal "données estimées" -> vraies sources visibles. */}
+      {frame >= F_MOURA + 50 && frame < F_MOURA + 130 && (() => {
+        const op = interpolate(frame, [F_MOURA + 50, F_MOURA + 62, F_MOURA + 118, F_MOURA + 130], [0, 1, 1, 0],
           { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
         if (op <= 0.01) return null;
         const p = project(MOURA[0], MOURA[1] - 1.3);
@@ -854,7 +848,7 @@ export const Partie3Rupture: React.FC<Props> = ({ ctx, map, ph1Fullscreen = fals
           <div style={{ position: "absolute", left: p.x, top: p.y + 46, transform: "translate(-50%, 0)",
             opacity: op, fontFamily: "Georgia, serif", fontSize: 13, letterSpacing: 0.5, color: RED_MOURA,
             whiteSpace: "nowrap", textAlign: "center" }}>
-            {shown}{caretOn ? "_" : " "}
+            Source : Haut-Commissariat de l'ONU aux droits de l'homme
           </div>
         );
       })()}

@@ -237,6 +237,9 @@ import { ProtoDialogueEcran, PROTO_DIALOGUE_ECRAN_FRAMES } from "./projects/_rnd
 import { ProtoDataVizEncre, PROTO_DATAVIZ_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizEncre";
 import { ProtoDataVizPleinEcran, PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizPleinEcran";
 import { ProtoNarratifPlusData, PROTO_NARRATIF_PLUS_DATA_FRAMES } from "./projects/_rnd/svg-scenes/ProtoNarratifPlusData";
+import { ProtoCueilletteGrosPlan16x9, PROTO_CUEILLETTE_GROS_PLAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoCueilletteGrosPlan16x9";
+import { PecheurSurpeche16x9, PECHEUR_SURPECHE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpeche16x9";
+import { PecheurSurpecheSeedance16x9, PECHEUR_SEEDANCE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpecheSeedance16x9";
 import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
 import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
 import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
@@ -2061,6 +2064,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-ProtoDataVizEncre" component={ProtoDataVizEncre} durationInFrames={PROTO_DATAVIZ_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoDataVizPleinEcran" component={ProtoDataVizPleinEcran} durationInFrames={PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoNarratifPlusData" component={ProtoNarratifPlusData} durationInFrames={PROTO_NARRATIF_PLUS_DATA_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCueilletteGrosPlan16x9" component={ProtoCueilletteGrosPlan16x9} durationInFrames={PROTO_CUEILLETTE_GROS_PLAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PecheurSurpeche16x9" component={PecheurSurpeche16x9} durationInFrames={PECHEUR_SURPECHE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PecheurSurpecheSeedance16x9" component={PecheurSurpecheSeedance16x9} durationInFrames={PECHEUR_SEEDANCE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />

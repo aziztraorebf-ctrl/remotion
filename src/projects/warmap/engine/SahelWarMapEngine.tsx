@@ -812,27 +812,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
     }
 
-    // PARTIE 2 (V5) — CARTE CALME pour l'installation FR/ONU (DA : "sécurité apparente"
-    // avant la tempête). Le fill de contrôle (rouge/orange Acte 1) baisse à ~0.42 au début
-    // (board clearing f3050), pour que les bases FR + surfaces rouges DÉDIÉES P2 (couche
-    // <Partie2Blocage>) se lisent clairement par-dessus. Reste calme tout P2.
+    // PARTIE 2 (V5) — NEUTRALISATION DU FILL MOSAÏQUE (révisé 2026-07-01, retour Aziz pt.5 :
+    // cohérence avec Acte1/P1/P3/P4 — le fond mosaïque plein rouge/orange ne se voyait jamais
+    // neutralisé, contrairement à P1. Le fond devient PARCHEMIN UNIFORME comme les autres
+    // parties ; toute la couleur passe par les CONTOURS NATIONAUX (countryBorderPaths ci-dessous),
+    // pas par ce fill. Les surfaces rouges DÉDIÉES du beat 2.4 (couche <Partie2Blocage>) restent
+    // le vecteur de l'explosion visuelle attendue par-dessus le fond calme.
     if (partie2 && map.getLayer("sahel-fill")) {
-      // DA fix #2 (priorité absolue) : Frame A doit être CLINIQUEMENT propre (bleu dominant,
-      // rouge quasi invisible) pour que l'explosion rouge du beat 2.4 soit un choc. Le fill de
-      // contrôle (rouge/orange) tombe très bas à l'install (0.10), puis REMONTE un peu au beat
-      // 2.4 (l'État conteste) tandis que les surfaces rouges DÉDIÉES explosent par-dessus.
-      const F_ECHEC = 3887; // "dix ans plus tard" (trigger V5, miroir Partie2Blocage)
-      const calmFactor = interpolate(frame,
-        [3050, 3120, F_ECHEC, F_ECHEC + 120],
-        [1, 0.10, 0.10, 0.22],
-        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-      const baseOp: any = effSeqIgnite
-        ? ["coalesce", ["get", "igniteOp"], 0]
-        : 0.82;
       try {
-        map.setPaintProperty("sahel-fill", "fill-opacity",
-          (["*", baseOp, calmFactor] as any));
+        map.setPaintProperty("sahel-fill", "fill-color", SAHEL_COLORS.land);
+        map.setPaintProperty("sahel-fill", "fill-opacity", 0.5);
       } catch {}
+      try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
     }
 
     // PARTIE 3 — CARTE CALME (miroir partie2) : le fill de contrôle (rouge jihadiste Acte 1) reste BAS
@@ -927,11 +918,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     }
 
     // CONTOURS NATIONAUX COLORÉS : reprojeter chaque pays + mesurer la longueur du tracé.
-    // Actif sur les parties ÉPURÉES (P1 depuis 2026-07-01, P3, P4) + le test. Décision Aziz
-    // révisée 2026-07-01 : P1 doit être cohérente avec Acte1/P3/P4 (contours, pas de blocs
-    // pleins de couleur) — l'ancienne décision "P1 garde son fond mosaïque" (2026-06-14) est
-    // annulée. Acte2 (legacy) garde son fond mosaïque, hors du périmètre de cette révision.
-    if ((countryBordersTest || partie1 || partie3 || partie4 || acte1Refonte) && srcC && (srcC as any)._data) {
+    // Actif sur les parties ÉPURÉES (P1+P2 depuis 2026-07-01, P3, P4) + le test. Décision Aziz
+    // révisée 2026-07-01 : P1 puis P2 doivent être cohérentes avec Acte1/P3/P4 (contours, pas de
+    // blocs pleins de couleur) — les anciennes décisions "fond mosaïque" (2026-06-14) sont
+    // annulées. Acte2 (legacy) garde son fond mosaïque, hors du périmètre de cette révision.
+    if ((countryBordersTest || partie1 || partie2 || partie3 || partie4 || acte1Refonte) && srcC && (srcC as any)._data) {
       const fcC = (srcC as any)._data;
       const cbp: { country: string; d: string; len: number }[] = [];
       for (const feat of fcC.features) {
@@ -3432,7 +3423,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
           en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES).
           P1 ajoutée 2026-07-01 (cohérence Acte1/P3/P4, remplace le fond mosaïque plein). */}
-      {(countryBordersTest || partie1 || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
+      {(countryBordersTest || partie1 || partie2 || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
         // Draw-in : en test (séquence démo) ET en acte1Refonte (allumage des 3 pays PAR LE CONTOUR,
         // calé sur la narration V5 : Mali f145 "chassent" → Burkina f217 "Rompent" → Niger f286 "quittent").
         // En P3/P4 les contours sont déjà tracés (offset 0) + pulse aux moments clés (COUNTRY_PULSES).

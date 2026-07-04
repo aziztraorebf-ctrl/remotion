@@ -1,7 +1,141 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-07-01 — ⛔⛔ **BUG CRITIQUE TROUVÉ : trous de frames dans les renders de correction, à corriger EN PREMIER la prochaine session, avant tout le reste.** Voir section ci-dessous.
+**Dernière mise à jour :** 2026-07-04 — ⛔⛔ **PLAN 2 SESSIONS EN ATTENTE (SVG puis intégration+render final).** Voir section ci-dessous, EN PREMIER. La section "REPRISE 2026-07-01" qui suit est HISTORIQUE (bug trous de frames déjà corrigé cette session-ci) mais garde des détails utiles (diagnostic, méthode).
 **Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+
+---
+
+## ⛔⛔⛔ REPRISE SESSION SUIVANTE (2026-07-04) — SOURCE DE VÉRITÉ ACTUELLE
+
+### Contexte : plan en 2 sessions, décidé avec Aziz le 2026-07-04
+
+Après le fix du bug critique des trous de frames (session 2026-07-01, voir section "REPRISE 2026-07-01"
+ci-dessous pour le détail), Aziz a visionné les renders corrigés et donné une deuxième vague de retours
+précis (frame-par-frame, captures d'écran à l'appui). Le contexte de cette session devenait trop long pour
+tout traiter — **décision : scinder en 2 sessions dédiées**, dans cet ordre strict :
+
+- **SESSION A (celle-ci ou la suivante) — CONSTRUCTION DES SVG.** Construire/valider les 3 inserts SVG
+  narratifs SANS toucher au reste du code, SANS render complet (juste des mini-renders isolés pour juger
+  chaque SVG). Détail des 3 SVG plus bas.
+- **SESSION B (après validation des SVG) — INTÉGRATION + FIXES + RENDER FINAL UNIQUE.** Tous les fixes
+  techniques listés ci-dessous (jetons flous, coupures, sources, caméra, HUD "données estimées") + brancher
+  les 3 SVG validés en Session A + **UN SEUL render complet bout-en-bout** (Acte1+P1+P2+P3+P4), vérifié
+  par `check-frame-continuity.py` avant toute présentation.
+
+Ne PAS mélanger les deux : la Session B ne doit démarrer QUE quand les 3 SVG de la Session A sont validés
+par Aziz (évite de re-render tout après coup si un SVG déplaît).
+
+### 🎨 SESSION A — LES 3 SVG À CONSTRUIRE/VALIDER
+
+1. **CFA (déjà fait, à finaliser)** — `src/projects/warmap/parties/CfaRevealSVG.tsx` existe déjà (adapté du
+   prototype validé `out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`), branché dans `Partie4Cout.tsx` à
+   la place de l'ancien `CfaReveal` (split-screen "PowerPoint"). **Codé mais JAMAIS re-rendu/vu** — la
+   Session A doit juste faire un mini-render isolé (P4, `--frames=11860-12200` environ, autour de F_CFA=11869)
+   pour qu'Aziz le valide visuellement. Si ok → rien d'autre à faire dessus.
+2. **Liptako-Gourma (à construire)** — remplace l'encadré actuel jugé "peu convaincant" au début de P3
+   (`WarMapOverlayDynamic` dans `Partie3Rupture.tsx`, inAt=F_BAMAKO=6118, outAt=F_EPREUVE=6800). Piste
+   Aziz : SVG narratif façon Cacao/CFA. Pas de design existant — à concevoir de zéro (pipeline
+   `PRODUCTION-AGENTIQUE-SVG.md` recommandé). Contenu narratif à porter : "16 septembre 2023 · Charte du
+   Liptako-Gourma" + les 3 drapeaux (Mali/Burkina/Niger) + citation du pacte. Réutiliser le concept
+   symbolique déjà choisi pour le CFA (objet central + ramifications) si ça colle : ex. un sceau/pacte qui
+   se scelle, 3 fils qui convergent vers un centre.
+3. **Triple-screen ressources (à construire)** — remplace `ResourcesReveal` (`Partie4Cout.tsx` ligne ~1057,
+   inAt=F_OR-20≈10647, outAt=F_CONFED-16≈11433), jugé "statique tout le long" malgré son animation actuelle
+   (contours pays qui se remplissent + icônes). Piste Aziz (déjà actée session 2026-06-15/07-01) :
+   graphisme SVG narratif dynamique façon "objet-héros unique" — référence explicite = la dernière scène
+   du Short Cacao (`out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` ou ses sources SVG) où le cacao devient
+   un objet central avec des ramifications vers callbot/or/pétrole. Ici : un objet central (ex. le Sahel/
+   les 3 pays en bloc) avec 3 ramifications vers or (Mali/Burkina)/uranium(Niger)/pétrole(Niger). Pas de
+   design existant — à concevoir de zéro.
+
+Pour 2 et 3 : suivre la doctrine `memory/doctrines/SVG-SCENES-GENERATIVES.md` et le pipeline
+`memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` (agent A→Z, prouvé sur GGW + cargo). Valider l'image-cible
+AVANT le code (`SVG-FAISABILITE-AMONT.md`).
+
+### 🔧 SESSION B — FIXES TECHNIQUES (tous nouveaux retours Aziz du 2026-07-04, précis frame-par-frame)
+
+**Bloc 1 (Acte1+P1+P2) :**
+1. **HUD "Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR" encore visible** — CAUSE TROUVÉE :
+   `SahelWarMapEngine.tsx:2924` gate `{!acte1Refonte && (...)}` → ce HUD bas-droite s'affiche sur TOUS les
+   modes SAUF `acte1Refonte` (donc visible sur P1/P2/P3/P4, alors qu'il ne devrait l'être nulle part sauf
+   remplacé par les sources ponctuelles déjà ajoutées en P3/P4). Fix : étendre le gate à
+   `!acte1Refonte && !partie1 && !partie2 && !partie3 && !partie4` (ou l'inverse : gate positif sur les
+   seuls modes qui en ont VRAIMENT besoin, probablement aucun vu que P3/P4 ont déjà leurs sources
+   ponctuelles). Concerne tout le bloc 1 ET le bloc 2 (HUD global du moteur, pas par Partie).
+2. **Dirigeants AES (P1, ~f530-950) : ré-apparition en début de séquence.** Après le sceau AES (~f530), en
+   PLUS de leur apparition finale (déjà en place), faire apparaître les 3 portraits dirigeants dans leurs
+   positions respectives, rester en place, puis disparaître juste quand le 1er jeton JNIM apparaît
+   clairement (~f950). Réutiliser les sprites `p4-assets/{...}.png` déjà utilisés en P4 (LEADERS).
+3. **Coupure nette ~f1100 (mot "revenir")** : flash net, pas de raccord seamless. Cause suspectée par Aziz :
+   le mot/label "2012" apparaît/se répète deux fois à ce moment précis, ce qui casserait la continuité
+   visuelle. À investiguer dans `Partie1Origine.tsx` autour de F_2012=2102 (attention : ce chiffre est en
+   frames ABSOLUES du moteur, pas la frame locale ~f1100 mentionnée par Aziz dans son retour vidéo — vérifier
+   la conversion, probablement un time code lecteur vidéo local au bloc uploadé, pas la frame absolue).
+4. **Garder "2012" affiché en bas à gauche de la carte** au moment du bascule — confirmation, NE PAS
+   retirer ce label (contrairement à d'anciennes notes qui pourraient suggérer le contraire).
+5. **"déjà" prononcé/affiché deux fois** (au moment "l'État est déjà absent", ~f2800 zone) — confirmé
+   encore présent après le fix des trous. Investiguer `Partie1Origine.tsx` autour de F_ABSENT=2743.
+6. **Dézoom complet qui montre toute l'Afrique reste problématique** (violences hors Mali) — CONFIRMÉ non
+   résolu par le fix des trous (contrairement à l'hypothèse de la session précédente). Localiser dans
+   `getPartie2Cam` (`SahelCameras.ts`) le keyframe responsable du dézoom large et le retirer/resserrer —
+   Aziz veut rester en plan serré tout le long de cette phase.
+7. **Retirer les points Bamako/Ouagadougou/Niamey affichés en continu** pendant toute la P1 (Partie1Origine.tsx)
+   — pas nécessaires selon Aziz sur toute la durée de cette partie.
+8. **CEDEAO (~f5700-6200) : repenser complètement** (déjà acté 2026-07-01, confirmé 2026-07-04). Rejette les
+   triangles oranges + SFX craquement. Direction actée avec Aziz (2026-07-01) : frontière Sud qui pulse/
+   s'illumine au bord de l'écran + flèches courtes vers Niamey, SANS jamais sortir du cadre serré. Si aucune
+   solution visuelle satisfaisante n'est trouvée, Aziz accepte qu'on NE MONTRE PAS visuellement la CEDEAO
+   (la voix seule suffit) plutôt que de garder les triangles actuels.
+9. **~f6200 "face à cette menace, Bamako et Ouagadougou..." : coupure nette** (pas un raccord) au moment de
+   la transition vers l'encadré Liptako-Gourma. Sera probablement résolu une fois l'encadré remplacé par le
+   SVG narratif (Session A point 2) — à revérifier après intégration.
+
+**Bloc 2 (P3+P4) :**
+10. **Source Moura : ne PAS l'afficher SUR la carte** — actuellement `Partie3Rupture.tsx` affiche
+    "Source : Haut-Commissariat de l'ONU aux droits de l'homme" directement sur la carte près de Moura
+    (fix de cette session 2026-07-01, pt.12/7). Aziz veut cette source déplacée vers l'emplacement standard
+    où les autres sources du projet s'affichent d'habitude (PAS sur la carte elle-même). Clarifier avec
+    Aziz where "d'habitude" pointe exactement si ambigu (probablement bas d'écran, cartouche dédié, pas
+    incrusté dans la géographie).
+11. **Cartouche coût humain (P4, ~F_COUT=10047) : retirer le mot "Source :"** — actuellement affiche
+    "Sources : OCHA · PAM · HCR" (fix 2026-07-01 pt.7, `Partie4Cout.tsx` ligne ~1135). Aziz veut juste le nom
+    de l'institution, SANS le mot "Source(s) :" — sauf si Claude juge que ça fait sens de le garder à cet
+    endroit précis (à trancher au moment du fix, pas à deviner maintenant).
+12. **Printemps 2026 attaques (P3, zone F_REPOUSSE=9121) : jetons/soldats trop tardifs.** Aziz veut que les
+    jetons apparaissent plus tôt, dès le début des mouvements de caméra vers les zones concernées (pas
+    seulement au moment du trigger narratif), pour combler les micro-vides visuels pendant les transitions
+    caméra.
+13. **~f9500 "territoire conservé... derrière les drapeaux" (fin P3→début P4) : coupure nette + 10s de
+    "sceaux qui clignotent" jugées pauvres.** Aziz veut plus de matière visuelle avant la scène des réfugiés
+    (P4 M1 Exode). Zone : fin `Partie3Rupture.tsx` (F_CONSERVER=9372, F_END=9410) → début `Partie4Cout.tsx`
+    (F_FAMILLES). Proposer des idées concrètes à Aziz avant de coder (pas trancher seul, décision de goût).
+14. **Zoom ~f12456 (P4, entre CFA et dirigeants finaux) : ~10s vide.** Après l'insert CFA, les 3 pays sont
+    affichés ~10s sans rien avant le zoom+dirigeants (F_LEADERS=12640). Meubler cette zone (dézoom continental
+    Ph9-10, cf `Partie4Cout.tsx` F_STATU=12297 → F_LEADERS=12640).
+15. **Écran final (dos noir, extinction) : ajouter un son typewriter** pour la ligne finale "durer... c'est
+    ce qu'il reste à démontrer" (F_DURER=13290 → F_END=13500, `Partie4Cout.tsx`).
+16. **⭐ JETONS FLOUS/SEMI-TRANSPARENTS en P4 (dirigeants + jetons, capture à l'appui) — PRIORITÉ.** Aziz
+    confirme n'avoir JAMAIS eu ce problème sur aucun jeton d'aucune autre partie — bug spécifique à cette
+    zone P4 (dirigeants+soldats, ~F_LEADERS=12640 à F_SOLDIERS=12820). PISTE DE CAUSE TROUVÉE cette session :
+    `Partie4Cout.tsx` ligne ~1204 (`attenuate` soldats tombe à opacité **0.55** au moment F_THREAT) et ligne
+    ~1231 (`attenuate` dirigeants tombe à **0.7**, alors que le commentaire dans le code dit "40%" — décalage
+    documentation/code à vérifier). Combiné à un `spring()` qui peut ne jamais atteindre 1.0 selon la frame
+    observée, ça peut expliquer l'effet flou/fantôme vu sur la capture. À investiguer et corriger en
+    PRIORITÉ dans cette liste (bug visuel net, pas une préférence de goût).
+
+### 📋 Rappel process (ne pas relire toute l'ancienne section sauf besoin)
+- Le bug des trous de frames (jonctions P1→P2→P3→P4) est **RÉSOLU** cette session (2026-07-01) — bornes
+  contiguës validées par `check-frame-continuity.py`. Ne pas revérifier sauf régression suspectée.
+- Fichiers déjà re-rendus avec les fixes du 2026-07-01 : `wip/p1-continuous.mp4`, `wip/p2-continuous.mp4`,
+  `wip/p3-continuous.mp4`, `wip/p4-continuous.mp4` (+ assemblage `wip/FULL-acte1-p1-p2-p3-p4-FIXED.mp4`,
+  368MB, et sa version compressée 720p `wip/FULL-acte1-p1-p2-p3-p4-720p.mp4`, 46MB, pour mobile/LLM externe
+  — technique de compression : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
+- **NE PAS repartir de ces fichiers tels quels pour la Session B** : ils datent d'AVANT tous les fixes listés
+  ci-dessus (sauf CFA qui est codé mais pas re-rendu). La Session B doit re-render P1/P2/P3/P4 à nouveau
+  après avoir appliqué tous les fixes 1-16 + branché les 3 SVG validés en Session A.
+- Overrides tracés créés pour contourner le hook `pre-presentation-review.sh` sur ces renders intermédiaires
+  (fix technique, pas de storyboard applicable) : voir `wip/*.review-override.md`. Pattern réutilisable si
+  le même besoin se présente (upload direct sans passer par Gemini, sur décision explicite Aziz).
 
 ---
 
