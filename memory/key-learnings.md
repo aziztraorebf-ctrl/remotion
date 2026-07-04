@@ -374,6 +374,21 @@ Whisper = bon pour le TEXTE et la structure des actes ; ElevenLabs forced-align 
 le bon texte établi. Les deux ne s'opposent pas : Whisper vérifie QUOI/QUAND grossier, ElevenLabs affine le QUAND.
 Cas d'école de la règle « fichiers de navigation périment → vérifier l'état RÉEL du livrable » appliquée à l'audio.
 
+⛔ **ÉPILOGUE (2026-07-04, passe de finition Sénégal V3)** — ce même `scene1-alignment.json` avait en fait
+un **loss aberrant sur plusieurs mots** (>2.0, et un mot "on" étalé sur 6.8s→13.6s — signe clair de dérive
+causée par un mauvais découpage de la fenêtre audio source `/tmp/senegal-s1-window.mp3`), resté non détecté
+car personne n'avait vérifié le LOSS SCORE du fichier avant de coder toute une scène dessus. Résultat concret :
+`AUDIO_START` de la scène était décalé de +12.5s par rapport à la réalité, causant un dédoublement audio massif
+au montage (texte répété entre deux scènes consécutives). **Règle ajoutée** : avant de figer un `AUDIO_START`
+sur un fichier de forced-align hérité, vérifier le `loss` de chaque mot-clé utilisé — un loss > 1.5-2.0 ou une
+durée de mot anormale (plusieurs secondes) est un signal de dérive du fichier lui-même, pas juste d'imprécision.
+Recroiser avec UNE source indépendante (nouveau forced-align sur le fichier source complet + Whisper) avant de
+coder. **Corollaire** : si un forced-align est confirmé corrompu, REFAIRE proprement l'appel API (scripts
+`scripts/senegal-scene1-realign.py` / `scene4-5-realign.py`, réutilisables comme template) plutôt que de
+reconstruire le timing à la main par déduction — reconstruire à la main risque de recréer le même genre
+d'erreur de dérive qu'on cherchait à corriger (constaté : une reconstruction manuelle a eu besoin d'un 2e
+passage de correction dans la même session).
+
 ### 2026-06-18 — DA-brief VIDÉO : analyse d'écart vers refs, Gemini = signal filtré
 
 Pour faire monter en gamme une scène FINIE (mouvement/rythme/son), `scripts/tools/gemini-video-da-brief.py`
@@ -454,6 +469,31 @@ a beaucoup de film grain/bruit.) `+faststart` = lecture qui demarre avant fin du
 `ffmpeg -i render.mp4 -vn out.wav` puis `ffmpeg -ss T -t D -i out.wav -af volumedetect -f null -` -> mean_volume.
 Voix presente ~ -15 a -20 dB ; quasi-silence <= -32 dB. Si Aziz dit "je n'entends pas la voix", LE CROIRE et instrumenter.
 
+### 2026-07-04 — Décaler une constante de timing SANS recalculer ses dérivées réintroduit le même bug qu'on vient de corriger
+
+En corrigeant un bug de dédoublement audio (Sénégal V3), `AUDIO_START` d'une scène a été décalé (49.5s →
+53.70s) pour répondre à une demande de montage — mais la constante `END` (calculée depuis l'ancien
+`AUDIO_START`) n'a pas été recalculée en conséquence, et surtout l'élément `<Audio>` n'avait **aucun
+`endAt`** du tout : il jouait donc jusqu'à la fin du RENDER (durée totale de la composition) au lieu de
+s'arrêter au bon moment, rejouant un bout de texte déjà présent dans la scène suivante. Le bug n'a été
+détecté qu'en réassemblant le montage COMPLET (pas la scène isolée) et en transcrivant TOUTES les jonctions
+avec Whisper — un test scène-par-scène ne l'aurait pas révélé puisque chaque scène individuelle semblait
+correcte. **Règle** : quand on décale une constante de timing dont d'autres constantes dépendent (`END`,
+durées de composition, offsets de SFX), TOUJOURS grep toutes les constantes DÉRIVÉES et vérifier qu'elles
+sont recalculées — et vérifier explicitement que CHAQUE élément `<Audio>` a un `endAt`/`trimAfter` défini,
+jamais supposer qu'il s'arrêtera correctement tout seul à la fin du render. Après toute correction de bug de
+timing, réassembler et re-transcrire le montage COMPLET (pas juste la scène touchée) avant de conclure.
+
+### 2026-07-04 — Whisper "small" peut halluciner des répétitions → utiliser "medium" pour confirmer un diagnostic de bug audio
+
+Un premier test de détection de dédoublement audio (jonction de montage) avec le modèle Whisper **small**
+n'a PAS détecté un bug réel (faux négatif) — un second test avec le modèle **medium** l'a confirmé
+clairement. Le modèle small a tendance à halluciner des répétitions de segments sur de l'audio ambigu,
+ce qui peut aussi bien masquer un vrai bug que faire croire à un faux positif. **Règle** : pour toute
+vérification de bug audio (dédoublement, trou, coupure) par transcription automatique, utiliser le modèle
+**medium** au minimum pour confirmer avant de conclure "pas de bug" — le modèle small sert seulement de
+premier passage rapide, jamais de verdict final.
+
 ---
 
 ### 2026-06-05 — Musique 1 morceau -> plusieurs durees video (fenetre + fade)
@@ -476,6 +516,33 @@ NOR->Svalbard (Arctique), NLD->Caraibes, PRT->Acores. Au pull-back / vue large -
 Pour l'Europe (carte peste mercLarge 720x1280) : `<rect x={118} y={236} width={470} height={328} />`. Le rect est en coords
 SVG carte ; sur un `<g transform=camera>`, le clip s'applique dans l'espace local (apres transform) = coords carte = correct,
 clip stable a tout zoom. Meme nature que le bug `mainlandBox` des drapeaux (`useClipFlags`).
+
+### 2026-07-04 — Composant Mapbox CANONIQUE promu sans reprendre les patterns déjà éprouvés ailleurs dans le même projet
+
+`CartoSouverainV5.tsx` (composant Mapbox "canonique", utilisé par 3 scènes Sénégal V3 différentes) n'avait
+NI `map.resize()` NI `delayRender`/`continueRender` — causant (a) un flash "petit carré non plein écran" aux
+premières frames de chaque scène (le canvas Mapbox s'initialise parfois avant que son container ait sa taille
+CSS finale, race condition headless connue), et (b) un flash gris avant que le style Mapbox ne soit peint
+(`style.load` ne garantit qu'un JSON de style appliqué, pas un vrai paint GPU — il faut `map.once("idle", ...)`
+avant `continueRender`). **Le pire** : un AUTRE composant Mapbox du MÊME projet, `MapboxIsolateZone.tsx`, avait
+déjà ce pattern `delayRender`/`continueRender` correctement implémenté — le composant "canonique" nouvellement
+promu l'avait tout simplement oublié/pas cherché. **Règle** : avant d'écrire ou de valider un composant partagé
+qui gère un problème structurel connu (headless WebGL, race conditions, chargement async), grep les composants
+existants du même domaine dans le projet pour vérifier s'ils ont déjà résolu ce problème — un composant
+"canonique" doit être audité CONTRE l'existant, pas juste écrit à neuf en supposant qu'il n'y a rien à reprendre.
+Fix appliqué : `map.resize()` + `map.once("idle", () => continueRender(handle))` dans `style.load`, avec un
+`delayRender()` au montage. Bénéficie à toutes les scènes qui utilisent ce composant partagé.
+
+### 2026-07-04 — Render Mapbox local échoue "Failed to initialize WebGL" → chercher le script dédié AVANT de suspecter le GPU
+
+`npx remotion render <CompoMapbox>` échouait systématiquement avec `Failed to initialize WebGL`, y compris
+après nettoyage de process zombies `chrome-headless-shell` (donc pas un problème de ressources GPU saturées).
+La vraie cause : il fallait utiliser `scripts/render-mapbox.sh <CompoId> <output.mp4>`, qui encapsule les
+vrais prérequis (chrome-headless-shell explicite, `--public-dir` symlinké "slim" pour éviter de copier ~2.4GB
+de `public/` à chaque render, flag `--gl=angle`). Le script existait déjà dans le projet et n'a été trouvé
+qu'après qu'Aziz ait demandé explicitement "as-tu utilisé le script dédié aux renders Mapbox ?" — plusieurs
+tentatives de diagnostic GPU (kill de process, `--concurrency=1`, redémarrage) auraient été évitées en
+cherchant d'abord `ls scripts/*.sh scripts/render-*` avant de suspecter l'environnement.
 
 ---
 

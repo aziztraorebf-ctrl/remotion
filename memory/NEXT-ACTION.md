@@ -1,8 +1,25 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-02 (4 registres video longue SVG valides + audit SVG 3 agents — voir § 4 REGISTRES).
+> Mis a jour : 2026-07-04 (Senegal V3 passe finition ROUND 1 terminee + validee Aziz — 3 bugs mineurs restants ROUND 2).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
-> ⭐⭐ NEXT = refactoring SVG + test carte 2D flat. Starter : `memory/STARTER-PROMPT-refactoring-svg-et-map2d.md`.
+> ⭐⭐ NEXT = Senegal V3 finition ROUND 2 (session courte, 3 bugs cibles). Starter :
+> `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
+
+---
+
+## ⭐ SÉNÉGAL V3 — PASSE DE FINITION ROUND 1 TERMINÉE + VALIDÉE AZIZ (2026-07-04)
+
+> Branche `fix/senegal-v3-passe-finition` (pas encore commitée — demander à Aziz avant tout commit).
+> 10 bugs de `REPRISE-PASSE-FINITION.md` corrigés (dédoublements audio sc.0→1a→gisements, écran gris
+> Mapbox structurel, carte gisements pas harmonisée, SFX parasites, point Dakar, texte épuré sc.7).
+> Montage réassemblé, 8 jonctions vérifiées par transcription Whisper. **Aziz a visionné le montage complet
+> et validé le dynamisme** (pas de sur-optimisation à faire, verdict tranché : ne pas retoucher le rythme).
+> Livrable : `out/episodes/senegal-petrole-gaz/senegal-petrole-gaz-V3-COMPLET.mp4` (495.1s) + web catbox
+> https://files.catbox.moe/ejk1nb.mp4.
+> **3 nouveaux bugs relevés par Aziz à l'écoute de CETTE version** (session courte prévue, PAS un nouveau
+> chantier lourd) : mot "précise" coupé fin sc.0 (~31s), mot "trois" répété (~50-53s), **musique de fond
+> absente pendant toute la scène gisements + possiblement sc.3 contrat** (~50s→2min08, jugé "problème
+> assez grave" par Aziz). Détail diagnostic + fix proposés : `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
 
 ---
 

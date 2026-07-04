@@ -16,8 +16,8 @@
  * Doctrine : DOCTRINE-SOUVERAIN.md §3 + SOUVERAIN-VISUAL-PLAYBOOK.md. Briques : MapboxBase.tsx.
  * Gate : scripts/tools/carto-selfreview.py (a venir, brique 3).
  */
-import React, { useEffect, useRef } from "react";
-import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate } from "remotion";
+import React, { useEffect, useRef, useState } from "react";
+import { AbsoluteFill, useCurrentFrame, useVideoConfig, interpolate, continueRender, delayRender } from "remotion";
 import mapboxgl from "mapbox-gl";
 import {
   MapboxBrandingHide,
@@ -53,6 +53,12 @@ export type CartoSouverainV5Props = {
    *  en pixels. Sinon le point DERIVE quand la camera bouge (bug recurrent historique). Le pattern map.project()/
    *  frame COLLE au pixel meme en dezoom+pan+rotation+pitch extremes (prouve). Le gate carto-selfreview verifie ca. */
   onMapReady?: (map: mapboxgl.Map) => void;
+  /** CHANTIER 8 (passe finition 2026-07-04) : multiplicateur du drift continu (defaut 1 = comportement
+   *  historique inchange, aucune regression sur les scenes existantes). Le drift ("camera jamais figee")
+   *  a une amplitude en pixels disproportionnee a bas zoom (<5) sur certains points de reference geo-ancres
+   *  proches du bord de carte -> tremblement percu (retour Aziz, point Dakar SceneCoulissesV3 ~zoom 4.2-5.0).
+   *  Reduire ponctuellement (ex 0.3) pour une scene precise sans toucher au comportement des autres. */
+  driftScale?: number;
 };
 
 /**
@@ -72,17 +78,22 @@ function camAtProgress(keys: { atProgress: number; cam: CamState }[], p: number)
   return lerpCam(a.cam, b.cam, local);
 }
 
-export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, focusIsos = [], children, focusColor, onMapReady }) => {
+export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, focusIsos = [], children, focusColor, onMapReady, driftScale = 1 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
+  // CHANTIER 5 (passe finition 2026-07-04) : delayRender/continueRender manquait ici (present dans
+  // d'autres composants Mapbox du projet, ex. MapboxIsolateZone) -> Remotion pouvait capturer la frame 0
+  // AVANT que style.load n'ait repeint la carte (dark-v11 gris par defaut -> flash gris a l'ecran, retour
+  // Aziz sc.5 ~4min58). Bloque le rendu de la frame jusqu'a ce que la carte soit prete.
+  const [handle] = useState(() => delayRender("CartoSouverainV5 init"));
 
   const p = durationInFrames > 1 ? frame / (durationInFrames - 1) : 0;
   const baseCam = camAtProgress(camKeys, p);
   // DRIFT CONTINU (P5 doctrine CARTO-OVERLAYS) : la camera n'est JAMAIS parfaitement immobile.
   // Micro-oscillation sinusoidale (amplitude qui se reduit avec le zoom pour rester imperceptible).
-  const driftAmp = 0.06 / Math.max(1, baseCam.zoom / 3); // moins de drift quand on est zoome
+  const driftAmp = (0.06 / Math.max(1, baseCam.zoom / 3)) * driftScale; // moins de drift quand on est zoome
   const cam = {
     ...baseCam,
     lon: baseCam.lon + driftAmp * Math.sin(frame * 0.011),
@@ -92,6 +103,7 @@ export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, foc
   // init carte (pattern headless prouve : dark-v11 + setProjection mercator + applyGeoAfriqueV5)
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
+    if (!MAPBOX_TOKEN) { continueRender(handle); return; }
     mapboxgl.accessToken = MAPBOX_TOKEN;
     const first = camKeys[0]?.cam ?? { lon: 0, lat: 10, zoom: 1.5, pitch: 0, bearing: 0 };
     const map = new mapboxgl.Map({
@@ -105,12 +117,20 @@ export const CartoSouverainV5: React.FC<CartoSouverainV5Props> = ({ camKeys, foc
       attributionControl: false,
     });
     map.on("style.load", () => {
+      // CHANTIER 5 (passe finition 2026-07-04) : le canvas Mapbox est parfois initialise AVANT que le
+      // container ait sa taille CSS finale (race condition headless connue) -> premieres frames rendues
+      // en petit carre (pas plein ecran) avant resize naturel. resize() explicite avant tout le reste.
+      map.resize();
       (map as unknown as { setProjection: (p: string) => void }).setProjection("mercator");
       applyGeoAfriqueV5(map);
       for (const iso of focusIsos) {
         addCountryHighlight(map, iso, focusColor ?? SOUVERAIN_GOLD, 0.85, 2, `v5-${iso}-`);
       }
       onMapReady?.(map);
+      // "idle" (pas "style.load") : garantit que TOUTES les tuiles sont chargees ET peintes a l'ecran.
+      // style.load ne garantit que le JSON de style est applique -> sans idle, la frame 0 pouvait etre
+      // capturee avant le vrai paint GPU du canvas WebGL (flash gris uniforme, retour Aziz sc.5 ~4min58).
+      map.once("idle", () => continueRender(handle));
     });
     mapRef.current = map;
     return () => { map.remove(); mapRef.current = null; };

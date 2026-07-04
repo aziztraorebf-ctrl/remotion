@@ -159,12 +159,17 @@ const MapPart: React.FC<{
   force: React.Dispatch<React.SetStateAction<number>>;
 }> = ({ mapRef, camKeys, force }) => {
   const frame = useCurrentFrame();
+  const [mapReady, setMapReady] = useState(false);
   // la carte se voile pendant la bascule puis disparait (perf : on garde monte mais opacite 0)
   const mapOpacity = interpolate(frame, [F_VEIL, F_BASCULE + 10], [1, 0], clamp);
   if (frame > F_BASCULE + 30) return null; // au-dela, l'encart couvre tout
   return (
     <AbsoluteFill style={{ opacity: mapOpacity }}>
-      <CartoSouverainV5 camKeys={camKeys} focusIsos={[]} onMapReady={(m) => { mapRef.current = m; brightenMap(m); force((n) => n + 1); }}>
+      {/* CHANTIER 8 (passe finition 2026-07-04) : driftScale=0.3 (au lieu du defaut 1) — le drift continu
+          standard a une amplitude trop visible au zoom bas de cette scene (4.2-5.0, fenetre F_DAKAR),
+          cause le tremblement du point Dakar (retour Aziz). Reduit ICI seulement (prop optionnelle,
+          defaut inchange partout ailleurs — sc.2/gisements gardent leur comportement valide). */}
+      <CartoSouverainV5 camKeys={camKeys} focusIsos={[]} driftScale={0.3} onMapReady={(m) => { mapRef.current = m; brightenMap(m); force((n) => n + 1); setMapReady(true); }}>
         {/* Territoire Senegal DRAPE de son DRAPEAU (FlagFill), PAS un aplat or — coherence avec sc.2
             (drapeaux drapes) et la doctrine "carte vivante = drapeau dans le polygone". Decision Aziz. */}
         <SenegalFlagDecal mapRef={mapRef} />
@@ -177,6 +182,11 @@ const MapPart: React.FC<{
         pointerEvents: "none",
         background: "radial-gradient(ellipse at center, transparent 60%, rgba(13,21,32,0.22) 100%)",
       }} />
+      {/* CHANTIER 5 (passe finition 2026-07-04) : voile navy qui masque le flash gris Mapbox pendant le
+          chargement du style/tuiles (onMapReady pas encore appele). Fade-out rapide une fois pret ; sur les
+          premieres frames avant meme le montage de CartoSouverainV5, le voile est plein opaque (pas de flash
+          au tout premier rendu). */}
+      {!mapReady && <AbsoluteFill style={{ backgroundColor: NAVY, pointerEvents: "none" }} />}
     </AbsoluteFill>
   );
 };
@@ -585,7 +595,8 @@ const SceneSFX: React.FC = () => (
     <Sfx at={F_CONTRAT} src={SFX.ping} volume={0.48} />
     <Sfx at={F_BP} src={SFX.ping} volume={0.48} />
     <Sfx at={F_PETROSEN} src={SFX.ping} volume={0.48} />
-    <Sfx at={F_PAIERA} src={SFX.swoosh} volume={0.4} dur={30} />
+    {/* SFX swoosh (pull-back "qui paiera") RETIRE ici (chantier 7 passe finition 2026-07-04, retour Aziz :
+        SFX whoosh/zoom ~5min26 qui n'apporte rien). */}
     {/* BASCULE : swoosh + boom RETIRES (retour Aziz : ils font "sortir" de la scene, inutiles).
         Le veil + le changement de registre visuel suffisent a marquer la bascule. */}
     {/* "Occidentaux reculent" */}

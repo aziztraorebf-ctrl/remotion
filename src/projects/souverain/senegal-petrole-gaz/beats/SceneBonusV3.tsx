@@ -24,8 +24,9 @@
  *      Chute rebond (ease-out-back) + micro-rotation. La fissure du pays s'OUVRE physiquement (moities ecartees).
  *   E3 (~50->58s) LA QUESTION : "AU NOM DE QUI FAUT-IL LA GOUVERNER ?". Fissure grande ouverte, lumineuse.
  *   E4 (~58->84.8s) PONT AES + CTA : le pays s'estompe. 3 drapeaux AES PREMIUM (ondulation Bezier dephasee,
- *      cadre or, couleurs broadcast-safe, deroulement en cascade, ligne or de liaison). "ILS ONT CHOISI LA
- *      RUPTURE." Puis "LA PROCHAINE VIDEO" massif + cloche or (abonnez f2383). Fin "A TRES VITE" (f2520).
+ *      cadre or, couleurs broadcast-safe, deroulement en cascade, ligne or de liaison). Texte "ILS ONT CHOISI
+ *      LA RUPTURE." RETIRE (chantier 9 passe finition 2026-07-04, retour Aziz : la voix + les 3 drapeaux
+ *      suffisent, epure-texte). Puis "LA PROCHAINE VIDEO" massif + cloche or (abonnez f2383). Fin "A TRES VITE" (f2520).
  *
  * Registre : navy #16213a + grille or qui respire. 100% SVG inline CODE-MAIN, 0 asset, 0 appel LLM/image
  * (SVG-OUTIL, gate "CODE-MAIN vs LLM" doctrine SVG-SCENES-GENERATIVES). GEO = SENEGAL_PATH d3-geo reutilise.
@@ -101,9 +102,7 @@ const F_RUPTURE   = 1883;  // "ont choisi la rupture" -> bascule E4
 const F_MALI      = 1962;
 const F_BURKINA   = 1994;
 const F_NIGER     = 2027;
-const F_RUPTURE_T = 2073;  // "Ils ont chasse..." -> texte
 const F_SOUV      = 2149;
-const F_AES_OUT   = 2240;
 const F_PROCHAINE = 2261;  // "la prochaine video"
 const F_ABONNEZ   = 2383;  // "abonnez-vous"
 const F_VITE      = 2508;  // "A tres vite"
@@ -601,8 +600,6 @@ const AesBridge: React.FC = () => {
     { at: F_BURKINA, x: startX + fW + gap, name: "BURKINA", kind: "burkina" as const, off: 1.7 },
     { at: F_NIGER, x: startX + (fW + gap) * 2, name: "NIGER", kind: "niger" as const, off: 3.4 },
   ];
-  const ruptOp = interpolate(frame, [F_RUPTURE_T, F_RUPTURE_T + 25, F_AES_OUT, F_AES_OUT + 30], [0, 1, 1, 0], clamp);
-
   const linkTrace = interpolate(frame, [F_MALI, F_NIGER + 20], [0, 1], clamp);
   const linkY = baseY + fH / 2;
   const linkLen = totalW;
@@ -624,10 +621,6 @@ const AesBridge: React.FC = () => {
           </g>
         );
       })}
-
-      <g opacity={ruptOp}>
-        <text x={W / 2} y={baseY - 56} textAnchor="middle" fill={IVORY} fontFamily={BEBAS} fontSize={58} letterSpacing="0.05em">ILS ONT CHOISI LA RUPTURE.</text>
-      </g>
     </svg>
   );
 };

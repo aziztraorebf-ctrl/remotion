@@ -19,8 +19,11 @@ const PART_A = 270; // 9s @30fps : la partie A occupe les 9 premieres secondes
 export const SenegalScene0: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#0d1424" }}>
-      {/* AUDIO CONTINU (une seule narration + musique pour toute la scene) */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} volume={1} />
+      {/* AUDIO CONTINU (une seule narration + musique pour toute la scene).
+          endAt=31.68s : coupe PILE a la fin de "...plus precise." (forced-align-v3.json global,
+          verifie 2026-07-04 — le forced-align local scene1-alignment.json etait corrompu et causait
+          un dedoublement du bloc 20-32s avec sc.1a, cf. REPRISE-PASSE-FINITION.md bug #1). */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} endAt={Math.round(31.68 * 30)} volume={1} />
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")} volume={0.16} />
 
       {/* PARTIE A : carte qui se dessine + count-up (audio off, gere par la scene) */}

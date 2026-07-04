@@ -217,8 +217,12 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ⚡ Actif
 
-- **Sénégal Pétrole & Gaz — REFONTE V3** ⭐ EN COURS. Source de vérité : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`.
-  Scènes 0→5 FINALES (audio 0→344.46s, ~70% narration). NEXT = Scène 6 (bilan : de zéro à exportateur, Beat14, ~344.46s→). Multi-agentique parallèle → starter `V3-REFONTE/STARTER-SCENES-6-7.md`.
+- **Sénégal Pétrole & Gaz — REFONTE V3** ⭐ V3 COMPLÈTE (8 scènes), passe de finition ROUND 1 terminée
+  + validée Aziz 2026-07-04 (dynamisme jugé bon, ne pas retoucher). Branche `fix/senegal-v3-passe-finition`
+  (pas commitée). 3 bugs mineurs restants (mot coupé sc.0, mot répété ~50s, musique absente scène
+  gisements) → NEXT session courte, starter `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
+  Livrable : `out/episodes/senegal-petrole-gaz/senegal-petrole-gaz-V3-COMPLET.mp4` (495.1s) + catbox
+  https://files.catbox.moe/ejk1nb.mp4.
   - Sc.4 dette ✅ FINAL (catbox f1wbdp, 45.4s/1363f) — `beats/SceneDetteV3.tsx`
   - Sc.5 coulisses ✅ FINAL (catbox clyx8t, 56.5s/1695f) — `beats/SceneCoulissesV3.tsx`
 - **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :

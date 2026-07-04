@@ -1318,7 +1318,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="SceneGisementsV3"
             component={SceneGisementsV3}
-            durationInFrames={2190}
+            durationInFrames={2122}
             fps={30}
             width={1920}
             height={1080}
@@ -2110,7 +2110,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
-        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={491} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={641} fps={30} width={1920} height={1080} />
         <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
       </Folder>
 
