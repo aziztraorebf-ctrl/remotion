@@ -56,6 +56,39 @@ la prod — réadapter avant tout usage vidéo.
 
 ---
 
+## ⛔⛔ GATE AMONT — GÉNÉRER LE SVG PAR LLM vs LE CODER À LA MAIN (trancher AVANT de coder, gravé 2026-07-04, Aziz)
+
+> LE trou comblé : la doctrine décrivait UN seul flux (LLM génère → on anime) sans dire QUAND ne PAS appeler le LLM.
+> Deux usages distincts du LLM, à ne jamais confondre :
+
+**1. L'IMAGE-CIBLE (storyboard visuel)** — un PNG généré par LLM juste pour VOIR et faire valider la direction par
+Aziz AVANT de coder. ✅ Toujours légitime (brouillon jetable). N'entre JAMAIS telle quelle dans la vidéo.
+
+**2. LE MATÉRIAU FINAL (ce qui finit dans le render)** — tranché par **LE CRITÈRE-AXE** :
+> ⭐⭐ **Le SVG est-il le HÉROS QUI SE DESSINE, ou un OUTIL au service d'une démo ?**
+> - **Le SVG EST le HÉROS** : on a décidé DÈS LE DÉPART que la scène SERAIT un dessin qui prend vie — le trait se
+>   trace, la couleur apparaît, les formes poussent/se transforment, ET CE DESSIN PORTE TOUTE LA SCÈNE du début à
+>   la fin (vidéo narrative type GGW Muraille Verte : graine→arbre, mur qui se construit). → 🤖 **APPEL LLM dès le
+>   départ** : il compose la masse riche (organique, paysage gravé dense), découpée en groupes nommés qu'on
+>   mix-and-match et anime. C'est le cœur du livrable (pipeline complet du WORKFLOW ci-dessous).
+> - **Le SVG est un OUTIL** : la scène est data-viz / conceptuelle, et le SVG n'est qu'un support graphique parmi
+>   d'autres — silhouette, fissure, icônes cercle/trapèze, drapeaux plats, jauge. Le dessin n'est PAS le spectacle ;
+>   il sert le propos, un effet à la fois. → 🖐️ **CODE-MAIN** : on écrit le SVG inline à la main
+>   (`<path>`/`<circle>`/`<rect>`), en s'inspirant du PNG-cible comme simple référence. ⛔ **Un appel LLM pour le
+>   matériau final ici = gaspillage de tokens + risque que le LLM redessine une compo différente (déformation).**
+>   Ex prouvé : sc.7 Sénégal « Cicatrice » (fracture + jetons-monogramme + drapeaux = tout code-main).
+
+**TEST DE CONFIRMATION (secondaire)** : « pourrais-je (ou Claude) coder ça à la main sans peine ? » OUI → code-main ;
+NON (masse organique riche) → LLM. En cas de doute, pencher code-main (réversible, zéro coût, zéro déformation).
+
+**⛔ RÈGLE GÉO (non-négociable)** — le continent/pays ne se génère JAMAIS par LLM (les modèles DÉFORMENT la géo :
+Gambie fausse, côtes approximatives). Pour toute vraie carte/pays : **réutiliser un PATH d3-geo / Natural Earth
+EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui se dessine au trait par
+`stroke-dashoffset`). Ne jamais laisser un LLM dessiner la géo, ni la redessiner soi-même à l'œil. (Cohérent Mapbox :
+« le modèle approxime la géo, vraie géo au CODE ».)
+
+---
+
 ## ⭐⭐⭐ WORKFLOW A→Z (la checklist ordonnée — suivre dans CET ordre pour TOUTE nouvelle scène)
 
 1. **INTENTION** (1 verbe : ce qu'on veut faire RESSENTIR) → **FORME** (le geste visuel) → **REGISTRE** (palette).

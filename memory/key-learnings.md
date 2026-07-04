@@ -20,6 +20,15 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-07-04 — Worktree : rapatrier les assets AUDIO gitignores AVANT de rendre dans le tree principal
+Un agent en worktree cree des mp3 dedies (ex `narration-v3-scene6.mp3`, `sc7-audio.mp3`) qui sont GITIGNORES ->
+ils restent dans le worktree et sont ABSENTS du working tree principal. Rendre la compo dans le tree principal
+echoue alors sur `readFile` (fichier introuvable) — le "DONE" d'un echo suivant peut MASQUER l'echec du render.
+REGLE : avant de rendre dans le tree principal une compo produite en worktree, COPIER les assets gitignores (audio
+mp3, SFX) du worktree vers le principal. C'est le sens INVERSE du gotcha connu #2 de [[PRODUCTION-AGENTIQUE-REMOTION]]
+(principal->worktree part sans assets) : le probleme joue dans les DEUX sens. Cause de render casse = >30min a
+diagnostiquer si on ne pense pas a l'asset gitignore.
+
 ### 2026-06-26 — Réécriture d'historique git (filter-repo) drope le travail NON-COMMITÉ (piège silencieux)
 Le hook AES Acte 1 a été PERDU entre sessions : un `git filter-repo` (réécriture d'historique) suivi d'un commit
 d'intégration avait gardé les FICHIERS composants (`WarMapBanner`, `Acte1IntroSlam`) mais PAS leur câblage dans le
@@ -417,6 +426,21 @@ erreur ni warning. L'overlay produit alors un ecran QUASI-NOIR sur toute la vide
 **Symptome diagnostique rapide** : bitrate du fichier assemble final anormalement bas (~70 kb/s au lieu de
 plusieurs milliers) + `ffprobe -show_entries stream=pix_fmt` sur le fichier subs.mov ne montre PAS de "a" dans
 le pix_fmt. Verifier ce point AVANT de lancer l'overlay final, pas apres.
+
+### 2026-07-04 — ffmpeg local SANS drawtext -> incruster du texte via PNG + overlay (cartouches de source)
+Le ffmpeg local n'a PAS non plus le filtre `drawtext` (compile sans libfreetype ; `ffmpeg -filters | grep drawtext`
+= vide). Pour incruster un cartouche de source / texte sur une video (ex : sources factuelles bas d'ecran de
+l'assemblage Senegal V3) : (1) generer un PNG du texte via PIL (police systeme, ex `DIN Condensed Bold` = condensee
+majuscule proche BebasNeue), fond transparent ; (2) overlay ffmpeg AVEC `-loop 1 -framerate 30` sur l'entree PNG
+(SINON le `fade` in/out ne s'applique pas a un PNG statique — piege) :
+`ffmpeg -i in.mp4 -loop 1 -framerate 30 -t <dur> -i tag.png -filter_complex "[1]format=rgba,fade=in:st=A:d=0.5:alpha=1,fade=out:st=B-0.5:d=0.5:alpha=1[t];[0][t]overlay=64:H-92:enable='between(t,A,B)'"`.
+Meme famille que le gotcha libass ci-dessus (ffmpeg amoindri = on overlay une couche image au lieu du filtre natif).
+
+### 2026-07-04 — Compression video web : CRF 27 preset slow + faststart pour livrer < 200MB (catbox)
+Livrer une video mobile-friendly sous la limite catbox (200MB) : `ffmpeg -crf 27 -preset slow -movflags +faststart
+-c:a aac -b:a 128k`. Prouve Senegal V3 : 203MB -> 60MB en 1080p sans perte visible. Le motion design navy/or
+(aplats, peu de grain) compresse TRES bien -> CRF 27 = bon defaut pour nos livrables. (Baisser le CRF si la video
+a beaucoup de film grain/bruit.) `+faststart` = lecture qui demarre avant fin du telechargement (mobile).
 
 ### 2026-06-08 — Remotion `<Audio>` : `trimAfter` est ABSOLU (depuis le debut du media), pas relatif a `startFrom`
 

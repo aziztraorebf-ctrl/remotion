@@ -435,8 +435,9 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 ### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-25) ⭐⭐
 **⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
 **+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX).
-- ✅ **SCÈNES 0, 1, 2, 3, 4, 5 = FAITES, gravées FINALES.** Audio 0→344.46s ≈ 70% narration.
-- ⬜ **SCÈNE 6 = NEXT** (bilan : de zéro à exportateur, Beat14, ~344.46s→). Remotion data-viz.
+- ✅ **LES 8 SCÈNES (0→7) = PRODUITES + MONTAGE COMPLET ASSEMBLÉ** (8min23s, catbox `bq8qtq`). sc.6=`SceneBilanV3` (Balance, data-viz), sc.7=`SceneBonusV3` (Cicatrice, SVG code-main) — premium, sources code-main.
+- ⛔ **PAS TERMINÉ/PUBLIABLE : PASSE DE FINITION en attente** (10 retours Aziz 2026-07-04 : bugs audio aux raccords, harmoniser carte gris clair + typo, retirer SFX parasites, point Dakar instable au zoom, épure texte sc.7).
+- ▶ **REPRISE = `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`** (source passe : `V3-REFONTE/REPRISE-PASSE-FINITION.md`). Objectif sortie → `out/PRET-PUBLICATION/`.
 ℹ️ PÉRIMÉS (supprimés 2026-06-25) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
 
 ### 3. Carousels Instagram (PRIORITE 3)
