@@ -1,4 +1,4 @@
-import { Composition, Folder, staticFile as staticFileRoot } from "remotion";
+import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
 import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
 import { B2Source, B2_SOURCE_FRAMES, B2_SOURCE_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B2Source";
 import { VergerPreviewB3, VergerPreviewReverdit, VergerPreviewFissure } from "./projects/souverain/cacao-chocolat-short/components/VergerPreview";
@@ -354,6 +354,8 @@ import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepo
 import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
 import { WarmapCfaInsertSVG, WARMAP_CFA_INSERT_FRAMES } from "./projects/warmap/parties/WarmapCfaInsertSVG";
+import { LiptakoRevealSVG } from "./projects/warmap/parties/LiptakoRevealSVG";
+import { ResourcesRevealSVG } from "./projects/warmap/parties/ResourcesRevealSVG";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -1316,7 +1318,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="SceneGisementsV3"
             component={SceneGisementsV3}
-            durationInFrames={2120}
+            durationInFrames={2190}
             fps={30}
             width={1920}
             height={1080}
@@ -2031,6 +2033,28 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition
+          id="LiptakoRevealSVG-Test"
+          component={() => {
+            const frame = useCurrentFrame();
+            return <LiptakoRevealSVG frame={frame} inAt={0} outAt={682} width={1920} height={1080} fps={30} />;
+          }}
+          durationInFrames={682}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ResourcesRevealSVG-Test"
+          component={() => {
+            const frame = useCurrentFrame();
+            return <ResourcesRevealSVG frame={frame} inAt={0} outAt={786} width={1920} height={1080} fps={30} />;
+          }}
+          durationInFrames={786}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaH16x9" component={IngaH16x9} durationInFrames={INGA_H_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaV9x16" component={IngaV9x16} durationInFrames={INGA_V_FRAMES} fps={30} width={1080} height={1920} />
@@ -2086,7 +2110,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
-        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={900} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={491} fps={30} width={1920} height={1080} />
         <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
       </Folder>
 

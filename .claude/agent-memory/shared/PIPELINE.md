@@ -30,21 +30,25 @@ Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pu
 
 ---
 
-## War-Map Sahel — 2026-07-04 [BUG TROUS RÉSOLU · PLAN 2 SESSIONS ACTÉ] — PRIME sur l'entrée 06-27 ci-dessous (périmée)
+## War-Map Sahel — 2026-07-04 [SESSION A (SVG) TERMINÉE · SESSION B EN ATTENTE] — PRIME sur l'entrée 06-27 ci-dessous (périmée)
 
 **[STAGE-CODE] warmap-sahel — bug critique des trous de frames RÉSOLU** (session 2026-07-01) : P1/P2/P3/P4
-re-rendus en plages contiguës, validés `check-frame-continuity.py`. Assemblage complet + version 720p
-compressée (46MB, mobile/LLM) uploadés et vus par Aziz. 2e vague de retours précis reçue (frame-par-frame),
+re-rendus en plages contiguës, validés `check-frame-continuity.py`. 2e vague de retours précis reçue,
 **décision : scinder en 2 sessions** pour éviter la saturation de contexte.
-**Session A (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-A-svg.md`)** : construire/valider 3
-SVG narratifs (CFA déjà codé `CfaRevealSVG.tsx` pas encore re-rendu ; Liptako-Gourma et triple-screen
-ressources à concevoir de zéro, façon Cacao objet-héros). Aucun render complet, mini-renders isolés
-seulement.
-**Session B (après validation SVG)** : 16 fixes techniques précis (causes déjà trouvées pour 2 d'entre eux :
-HUD "données estimées" = `SahelWarMapEngine.tsx:2924` ; jetons flous P4 = `Partie4Cout.tsx` attenuate
-0.55/0.7) + branchement SVG + UN SEUL render final bout-en-bout.
-Détail complet (16 points, sources, frames) : `memory/episodes/warmap-sahel/STATUS.md` § REPRISE
-SESSION SUIVANTE (2026-07-04) en tête de fichier.
+**✅✅ Session A (SVG) TERMINÉE (2026-07-04)** : 3 inserts SVG narratifs construits/validés Aziz sur mini-
+renders isolés — CFA (`CfaRevealSVG.tsx`, déjà branché dans `Partie4Cout.tsx`, mini-render validé, 1 SFX
+résiduel à retirer Session B) ; Liptako-Gourma (`LiptakoRevealSVG.tsx`, NOUVEAU, sceau de cire qui se scelle
++ 3 drapeaux réels ondulants) ; Ressources (`ResourcesRevealSVG.tsx`, NOUVEAU, bouclier AES qui se dessine
+au contour + sceau AES + 3 veines à flux continu). **Liptako et Ressources codés et testés isolément
+(compositions Root.tsx dédiées) mais PAS ENCORE branchés dans le moteur réel** (`Partie3Rupture.tsx` et
+`Partie4Cout.tsx` utilisent toujours les anciens composants).
+**▶ Session B (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-B.md`)** : brancher Liptako+Ressources
++ 16 fixes techniques précis (causes déjà trouvées pour 2 d'entre eux : HUD "données estimées" =
+`SahelWarMapEngine.tsx:2924` ; jetons flous P4 = `Partie4Cout.tsx` attenuate 0.55/0.7) + reconfirmer le
+calage de durée des 2 nouveaux SVG avec l'audio réel (testés hors contexte narration/musique en Session A)
++ UN SEUL render final bout-en-bout.
+Détail complet (16 points, sources, frames, catbox) : `memory/episodes/warmap-sahel/STATUS.md` § "✅✅
+SESSION A TERMINÉE" puis § "SESSION B — FIXES TECHNIQUES", en tête de fichier.
 
 ---
 

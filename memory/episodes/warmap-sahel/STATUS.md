@@ -1,6 +1,6 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-07-04 — ⛔⛔ **PLAN 2 SESSIONS EN ATTENTE (SVG puis intégration+render final).** Voir section ci-dessous, EN PREMIER. La section "REPRISE 2026-07-01" qui suit est HISTORIQUE (bug trous de frames déjà corrigé cette session-ci) mais garde des détails utiles (diagnostic, méthode).
+**Dernière mise à jour :** 2026-07-04 — ✅✅ **SESSION A TERMINÉE : les 3 SVG (CFA/Liptako/Ressources) sont validés Aziz + codés + testés isolément.** ⛔⛔ **SESSION B EN ATTENTE (branchement dans le moteur + fixes techniques + render final unique).** Voir section "✅✅ SESSION A TERMINÉE" ci-dessous pour l'état exact des 3 composants, PUIS section "SESSION B — FIXES TECHNIQUES" pour la suite. La section "REPRISE 2026-07-01" qui suit est HISTORIQUE (bug trous de frames déjà corrigé) mais garde des détails utiles (diagnostic, méthode).
 **Branche :** `feat/warmap-aes-hook-integration`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
 
 ---
@@ -51,6 +51,61 @@ par Aziz (évite de re-render tout après coup si un SVG déplaît).
 Pour 2 et 3 : suivre la doctrine `memory/doctrines/SVG-SCENES-GENERATIVES.md` et le pipeline
 `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` (agent A→Z, prouvé sur GGW + cargo). Valider l'image-cible
 AVANT le code (`SVG-FAISABILITE-AMONT.md`).
+
+### ✅✅ SESSION A TERMINÉE (2026-07-04) — LES 3 SVG SONT VALIDÉS AZIZ, CODÉS, TESTÉS ISOLÉMENT
+
+**Les 3 chantiers sont CLOS.** Reste UNIQUEMENT le branchement dans le moteur + calage de durée fin en
+Session B (détail plus bas — ⛔ point d'attention explicite, ne pas juste copier-coller le composant).
+
+1. **CFA** — `src/projects/warmap/parties/CfaRevealSVG.tsx`. Déjà branché dans `Partie4Cout.tsx:1154`
+   (`inAt={F_CFA}` `outAt={F_STATU-24}`, soit f11869→f12273, 404 frames ≈13.5s). Validé Aziz sur mini-render
+   isolé (catbox `lncgo6`). **Rien à changer dans le composant.** Un seul point pour Session B : un SFX
+   résiduel de l'ANCIEN split-screen (`SahelWarMapEngine.tsx:1780-1783`, `Sequence from={12193}` qui joue
+   `impact.mp3`, commentaire "climax du fil de parité vibrate") fait doublon avec le SFX interne du SVG —
+   **à retirer** (+ mettre à jour le commentaire lignes 1740-1742 qui référence encore l'ancien layout SFX).
+
+2. **Liptako-Gourma** — NOUVEAU fichier `src/projects/warmap/parties/LiptakoRevealSVG.tsx` (n'existait pas
+   avant cette session). Concept : miroir narratif du CFA — un SCEAU DE CIRE qui SE SCELLE (3 cordages
+   Mali/Niger/Burkina Faso convergent, sceau passe de cire terne à écarlate vif au mot "scellent", impact +
+   3 anneaux entrelacés + étoile gravés, texte circulaire "CHARTE DU LIPTAKO-GOURMA · UNION SAHÉLIENNE"),
+   avec les 3 VRAIS drapeaux (ml/ne/bf.png, `_shared/flags/`) qui apparaissent en séquence étalée (L90/150/
+   210) dans des écussons, ondulant en continu (clip-path sinusoïdal). Cible SVG source : `out/_r-and-d/
+   warmap-svg-inserts/liptako-gemini.svg` (générée Gemini 3.1 Pro, brief "exigence+liberté" sans image de
+   référence — cf doctrine GUIDER SANS BRIDER). Mini-render validé Aziz : catbox `hlt9kt` (v3, 682 frames
+   = 22.7s, correspond exactement à la fenêtre F_BAMAKO=6118→F_EPREUVE=6800 du moteur).
+   **PAS ENCORE BRANCHÉ dans `Partie3Rupture.tsx`** — actuellement l'ancien `WarMapOverlayDynamic` (lignes
+   858-879) est toujours actif. Session B doit : importer `LiptakoRevealSVG`, le brancher avec
+   `inAt={F_BAMAKO}` `outAt={F_EPREUVE}`, retirer/commenter l'ancien `WarMapOverlayDynamic`.
+
+3. **Ressources ("le levier des ressources")** — NOUVEAU fichier `src/projects/warmap/parties/
+   ResourcesRevealSVG.tsx` (n'existait pas avant cette session). Concept : objet-héros unique = un BOUCLIER
+   MÉDIÉVAL AES (silhouette écu, rebord doré épais, rivets) qui SE DESSINE au contour (stroke-dasharray),
+   avec le SCEAU AES réel en blason central (étoile + "A·E·S", repris de `ConfederationReveal` dans
+   `Partie4Cout.tsx` — cohérence visuelle avec le sceau qui scelle la confédération plus loin dans P4), et
+   3 VEINES texturées (or/uranium/pétrole) qui se tracent en cascade puis ont des GOUTTES DE FLUX qui glissent
+   en continu vers le bouclier (ravitaillement, pas extraction-fuite). Cible SVG source : mix-and-match de
+   `out/_r-and-d/warmap-svg-inserts/ressources-gemini.svg` (1re génération, veines organiques) + le fix
+   bouclier ciblé (`ressources-gemini-v3-shield.svg`) — historique complet dans le dossier `out/_r-and-d/
+   warmap-svg-inserts/`. Mini-render validé Aziz : catbox `9w86rf` (v2, 786 frames = 26.2s, correspond
+   exactement à F_OR-20=10647→F_CONFED-16=11433 du moteur).
+   **PAS ENCORE BRANCHÉ** — actuellement l'ancien `ResourcesReveal` (`Partie4Cout.tsx:1057`, composant défini
+   ligne ~376) est toujours actif. Session B doit : importer `ResourcesRevealSVG`, le brancher avec
+   `inAt={F_OR-20}` `outAt={F_CONFED-16}` à la place de l'appel à `ResourcesReveal`.
+
+**⛔⛔ POINT D'ATTENTION EXPLICITE POUR LA SESSION B (demande Aziz 2026-07-04) — CALAGE DE DURÉE :**
+Les 2 nouveaux composants ont été chorégraphiés et testés ISOLÉMENT (composition de test `LiptakoRevealSVG-
+Test`/`ResourcesRevealSVG-Test` dans `Root.tsx`, sans la vraie narration/musique jouée par-dessus). Leur
+durée interne (682f et 786f) a été calée sur le DÉCOUPAGE AUDIO RÉEL extrait de `narration-v5-alignment.json`
+au moment de cette session — mais **à l'intégration finale (Session B), il FAUT reconfirmer que ce calage
+colle exactement à la voix + musique jouées en contexte réel** (le moteur peut avoir des micro-décalages
+non testés ici : mixage audio final, éventuel padding/silence ajouté au montage, timing réel vs timing
+mesuré). Si un écart apparaît : ALLONGER ou RESSERRER la chorégraphie interne (les frames de chaque geste
+sont des constantes nommées en tête de fonction dans chaque fichier, faciles à retimer) plutôt que de
+tronquer/couper le SVG — l'intention (cause→effet, payoff couleur au bon mot) doit rester intacte même si
+le calage bouge de quelques frames. Vérifier au moins une fois avec l'audio réel avant le render final unique.
+
+Les 2 compositions de test (`LiptakoRevealSVG-Test`, `ResourcesRevealSVG-Test` dans `Root.tsx`) peuvent être
+retirées de `Root.tsx` une fois l'intégration réelle faite en Session B (ou laissées, elles ne gênent rien).
 
 ### 🔧 SESSION B — FIXES TECHNIQUES (tous nouveaux retours Aziz du 2026-07-04, précis frame-par-frame)
 
@@ -122,6 +177,17 @@ AVANT le code (`SVG-FAISABILITE-AMONT.md`).
     documentation/code à vérifier). Combiné à un `spring()` qui peut ne jamais atteindre 1.0 selon la frame
     observée, ça peut expliquer l'effet flou/fantôme vu sur la capture. À investiguer et corriger en
     PRIORITÉ dans cette liste (bug visuel net, pas une préférence de goût).
+17. **SFX résiduel à retirer — "boom"/impact à la toute fin du CFA.** Aziz confirme le CFA (Session A,
+    mini-render catbox `lncgo6`) mais signale un SFX qui "se fait attendre" en toute fin, dont il ne se
+    souvient plus bien de la raison. TROUVÉ dans le code : `SahelWarMapEngine.tsx:1780-1783`, `Sequence
+    from={12193}` (commentaire "climax du fil de parité (vibrate), ~F_CFA+324") joue `impact.mp3` volume
+    0.35 — c'est un résidu de l'ANCIEN `CfaReveal` (split-screen "PowerPoint", remplacé par `CfaRevealSVG`
+    depuis, cf commentaire ligne 1741 qui référence encore "climax vibrate fil de parité"). Le nouveau SVG
+    n'a pas de geste correspondant à ce moment précis (F_CFA+324=12193 tombe pendant la phase de tension/
+    rupture du maillon, mais le SVG a son PROPRE SFX interne — `ink-spread` dans `CfaRevealSVG.tsx:199-200`
+    — donc ce 2e impact au niveau moteur fait doublon/parasite). **Fix Session B : retirer purement ce
+    `<Sequence from={12193}>` bloc (lignes 1780-1783) et mettre à jour le commentaire ligne 1740-1742 qui
+    référence encore l'ancien layout SFX.**
 
 ### 📋 Rappel process (ne pas relire toute l'ancienne section sauf besoin)
 - Le bug des trous de frames (jonctions P1→P2→P3→P4) est **RÉSOLU** cette session (2026-07-01) — bornes

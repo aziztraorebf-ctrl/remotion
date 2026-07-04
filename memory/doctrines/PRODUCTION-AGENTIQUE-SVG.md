@@ -33,10 +33,21 @@ PNG + UPLOADEES CATBOX (Aziz juge en visuel), (3) la CHOREGRAPHIE de chaque cibl
 >    repere les meilleures idees de chacune et les GREFFE (copier le `<g>`) sur la cible retenue. Ex prouve CFA :
 >    la variante "verrou" choisie + greffe de la variante "laisse" = vraie chaine a maillons + MAILLON DE RUPTURE
 >    identifiable + racines de la piece dans le sol. Des idees qu'on n'avait pas dans la cible de base.
+>    ⭐ ETENDU 2026-07-04 (Ressources, warmap-sahel) : le mix-and-match marche aussi entre **2 GENERATIONS API
+>    DISTINCTES** (pas seulement variante+Claude-maison) — ex une 1re generation Gemini avait des veines
+>    "organiques" jugees plus pro qu'une 2e generation (faite pour corriger un AUTRE defaut, le bouclier) qui
+>    avait regenere ses propres veines plus fines/rigides. Solution : greffer les groupes de la 1re generation
+>    dans le fichier de la 2e (RENOMMER les gradients partages pour eviter collision d'id, ex `gold_grad` ->
+>    `v1_gold_grad`), plutot que choisir entre les deux ou relancer un 3e appel.
 > 2. **Version Claude maison** : Claude ECRIT sa propre version SVG (gratuit, 0 API). Avantage cle : un SVG
 >    code par Claude sort deja en GROUPES NOMMES PROPRES (anime par construction) — comble le trou "GPT/Gemini
 >    sortent du SVG plat inanimable". Repartition des forces : Gemini/GPT = organique riche (medaille, textures) ;
 >    Claude = structure geometrique propre + composition + animabilite. Le MEILLEUR resultat = le MIX des deux.
+>    ⚠️ Claude maison NE REMPLACE JAMAIS la richesse visuelle d'un appel API — reste un COMPLEMENT structurel
+>    (mix-and-match, animabilite), jamais la source de la cible finale. Confirme 2026-07-04 (Liptako/Ressources,
+>    warmap-sahel) : un croquis Claude fait a la main (formes geometriques simples, meme palette/registre) a
+>    ete juge par Aziz nettement moins "premium"/moins beau qu'une vraie generation Gemini 3.1 Pro sur le meme
+>    sujet — ne pas se fier a un croquis Claude comme approximation suffisante de la richesse finale.
 > 3. Claude convertit (rsvg-convert -w 1920 -h 1080) + upload catbox + presente le COMPARATIF a Aziz.
 > -> AZIZ TRANCHE la version finale (souvent la version mixee). Claude corrige les petits defauts puis Phase 2.
 > Cout = ~0 (lecture SVG + ecriture + rsvg-convert local). Gain = matiere de decision + animabilite garantie.
@@ -64,6 +75,31 @@ PNG + UPLOADEES CATBOX (Aziz juge en visuel), (3) la CHOREGRAPHIE de chaque cibl
 > defaut : simplifier après coup est plus facile qu'enrichir un style pauvre. Prouve sur le choix final
 > CargoVoyage16x9_LibreInspire (retenue) vs la variante charte-stricte (rejetee, testee en parallele via 2
 > agents Sonnet en isolation worktree).
+
+**⭐ VARIANTE — SANS IMAGE DE REFERENCE (composition neuve, eviter le mimetisme, prouve warmap-sahel 2026-07-04)**
+> Inverse de UPGRADE PROTOTYPE : ici on ne veut PAS que le modele imite une composition existante, on veut
+> une METAPHORE VISUELLE ORIGINALE pour un NOUVEAU sujet. Piege identifie : donner une image de reference
+> (meme une scene du meme projet, deja validee) pousse le modele vers une composition QUASI-IDENTIQUE
+> (mimetisme de la composition, pas seulement du registre/style). Fix : decrire le REGISTRE en MOTS (palette,
+> style de trait, niveau de richesse attendu — "vise ce niveau de detail, ces scenes de ce projet ont ete
+> jugees riches") + poser l'EXIGENCE narrative (le SENS a porter, pas une liste d'elements a placer) + les
+> INTERDITS, et laisser le modele choisir SA composition. Prouve sur Liptako-Gourma et Ressources
+> (warmap-sahel) : sans image de reference, Gemini 3.1 Pro a produit 2 metaphores differentes et plus riches
+> (sceau de cire + anneaux entrelaces ; bouclier-levier + soleil-diamant) que ce qu'un premier brief avec
+> reference aurait probablement rapproche du CFA existant. Scripts : `out/_r-and-d/warmap-svg-inserts/
+> gen-liptako.py` et `gen-ressources.py` (variante de `out/_r-and-d/cfa-svg/gen-16x9.py` qui, lui, utilise
+> une reference — les 2 approches coexistent selon le contexte : ameliorer un existant -> reference utile
+> [UPGRADE PROTOTYPE] ; composer du neuf -> pas de reference [cette variante]).
+
+**⭐ VARIANTE — CORRECTION CIBLEE (un seul defaut precis, image actuelle en entree, prouve warmap-sahel 2026-07-04)**
+> Quand une cible est DEJA globalement validee mais qu'un defaut PRECIS est signale (ex Aziz : "le bouclier
+> ne se lit pas comme un bouclier, le cercle central l'ecrase"), ne PAS relancer une regeneration complete
+> depuis le brief original. Renvoyer l'IMAGE ACTUELLE au modele avec un brief qui decrit UNIQUEMENT ce defaut
+> + dit explicitement "ne change rien d'autre, garde le reste identique". Plus fiable et rapide qu'une
+> regeneration complete (le modele n'a pas a redeviner toute la composition, juste a corriger un point
+> etroit). Prouve sur Ressources (warmap-sahel) : Gemini a corrige precisement la silhouette du bouclier
+> (accentue l'ecu medieval, pointe en bas, rebord epais) sans toucher aux veines/cartouches/ornements deja
+> valides.
 
 **PHASE 2 (agent autonome) — animation A->Z -> render -> STOP.**
 A partir de la cible validee : l'agent CONCOIT la choregraphie + couleur + SFX (genere si besoin) +

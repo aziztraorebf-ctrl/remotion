@@ -462,18 +462,20 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > naturel entre 2 phrases, jugé non-problématique). Assemblage complet uploadé (368MB) + version
 > compressée 720p pour mobile/LLM (46MB, technique : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
 >
-> ⭐⭐ **NEXT SESSION (lire `memory/episodes/warmap-sahel/STATUS.md` § REPRISE SESSION SUIVANTE 2026-07-04
-> en tête du fichier — c'est la source de vérité complète, ne pas dupliquer ici)** : Aziz a donné une 2e
-> vague de retours précis (frame-par-frame, captures à l'appui) après avoir vu les renders corrigés.
-> Décision : **scinder en 2 sessions** pour ne pas saturer le contexte à nouveau —
-> 1. **Session A (starter prêt : `memory/STARTER-PROMPT-warmap-sahel-session-A-svg.md`)** : construire/
->    valider 3 inserts SVG narratifs (CFA — déjà codé `CfaRevealSVG.tsx`, juste à mini-render+valider ;
->    Liptako-Gourma — à concevoir ; triple-screen ressources — à concevoir, façon Cacao objet-héros).
->    AUCUN render complet dans cette session, mini-renders isolés seulement.
-> 2. **Session B (après validation des 3 SVG)** : 16 fixes techniques précis (HUD "données estimées"
->    encore visible — cause trouvée `SahelWarMapEngine.tsx:2924` ; jetons flous P4 — piste trouvée
->    `Partie4Cout.tsx` attenuate 0.55/0.7 ; coupures nettes, caméra CEDEAO, sources mal placées, etc.) +
->    brancher les SVG validés + **UN SEUL render complet final**.
+> ⭐⭐ **NEXT SESSION = SESSION B (lire `memory/episodes/warmap-sahel/STATUS.md` § "✅✅ SESSION A TERMINÉE"
+> puis § "SESSION B — FIXES TECHNIQUES", en tête du fichier — source de vérité complète, ne pas dupliquer ici)**.
+> ✅ **Session A TERMINÉE (2026-07-04)** : les 3 SVG (CFA `CfaRevealSVG.tsx` déjà branché ; Liptako-Gourma
+>    `LiptakoRevealSVG.tsx` NOUVEAU, sceau de cire qui se scelle + 3 drapeaux réels ondulants ; Ressources
+>    `ResourcesRevealSVG.tsx` NOUVEAU, bouclier AES qui se dessine au contour + sceau AES + 3 veines à flux
+>    continu) sont codés, testés isolément (compositions `LiptakoRevealSVG-Test`/`ResourcesRevealSVG-Test`
+>    dans Root.tsx), et VALIDÉS Aziz sur mini-renders (catbox `hlt9kt` et `9w86rf`).
+> ▶ **Session B reste à faire** : 16 fixes techniques précis (HUD "données estimées" encore visible —
+>    cause trouvée `SahelWarMapEngine.tsx:2924` ; jetons flous P4 — piste trouvée `Partie4Cout.tsx` attenuate
+>    0.55/0.7 ; coupures nettes, caméra CEDEAO, sources mal placées, SFX résiduel CFA, etc.) + **BRANCHER
+>    Liptako et Ressources dans le moteur** (pas encore fait — l'ancien `WarMapOverlayDynamic`/`ResourcesReveal`
+>    sont toujours actifs) + **reconfirmer le calage de durée des 2 nouveaux SVG avec l'audio réel** (testés
+>    hors contexte narration/musique, cf point d'attention explicite dans STATUS.md) + **UN SEUL render
+>    complet final**.
 >
 > ✅ Ce qui EST fait cette session (ne pas refaire) : hook "3" recentré, P2 contours nationaux actifs
 > (cohérence P1/P3/P4), texte Moura retiré (source ONU ajoutée), source coût humain P4 renforcée, CFA SVG

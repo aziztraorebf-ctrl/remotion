@@ -106,6 +106,10 @@ EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui 
    événements échelonnés, règle des 5s). Objet inerte = fade/couleur (jamais glisser). Tomber-sec = `spring()`.
 8. **SFX TIMÉ** frame-perfect (banque `_shared/sfx/`, `<Sequence from>` obligatoire, plancher 0.50, drone 0.40).
 9. **RENDER full HD** + vérifier piste audio (`volumedetect`, mean dB ≠ silence) + **upload catbox** avant de présenter.
+   ⚠️ Une validation sur IMAGE STATIQUE ne suffit pas : des défauts n'apparaissent qu'en MOUVEMENT/superposition
+   de calques (ex : un texte caché par une veine animée une fois superposés, un résidu d'une génération
+   précédente invisible sur un aperçu figé). Toujours REVALIDER après le 1er rendu animé réel, pas seulement
+   sur l'image comparative statique (prouvé warmap-sahel 2026-07-04, Liptako/Ressources).
 10. **ENRICHIR la doctrine** si nouvel acquis (registre, gotcha, pattern).
 
 ---
@@ -227,6 +231,16 @@ point commun entre le blueprint (chaque flèche = un sens) ET la pièce Sénéga
   toutes les ~4-5s) et, une fois lancés, CONTINUENT. « On ne l'arrête plus » = vrai par geste ; mais ils ne démarrent
   PAS tous en même temps (sinon tout est dit à la 1re s, le reste est plat). L'entrée échelonnée = ce qui crée la règle
   des 5s et tient la durée. La scène SE CONSTRUIT jusqu'à un apogée. Prouvé sur 28s (mine) ET 14s (héros).
+
+**⭐ 2 techniques prouvées (retour Aziz explicite 2026-07-04, warmap-sahel Ressources) pour éviter le figé** :
+- **stroke-dasharray > fade-in pour l'apparition d'un objet-héros** : dessiner le CONTOUR au trait (comme un
+  crayon qui trace) plutôt qu'un simple fondu d'opacité — jugé "beau" et "qui fonctionne très bien", technique
+  PAR DÉFAUT pour l'apparition de l'élément central d'une scène (bouclier, sceau, objet-héros).
+- **FlowDots (gouttes qui glissent en continu le long d'un path)** : pour tout flux/veine/circulation qui ne
+  doit PAS retomber figé après son apparition initiale — `strokeDasharray` "segment court / gap long" +
+  `strokeDashoffset` qui défile en continu (valeur croissante, PAS de modulo nécessaire, l'offset négatif
+  boucle nativement le long du path). Composant helper prouvé dans `ResourcesRevealSVG.tsx`
+  (`src/projects/warmap/parties/`), réutilisable pour tout élément "qui doit se sentir vivant" une fois tracé.
 
 ### 3. ⛔ RÈGLE OBJET INERTE — un objet qui ne se déplace pas dans la vraie vie NE GLISSE JAMAIS
 Lingot, coffre, pierre, bâtiment, pelle = pas de jambes → une translation latérale fait FAUX (« glissement bizarre »).
