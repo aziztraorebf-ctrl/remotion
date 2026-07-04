@@ -9,6 +9,39 @@ Tout sujet où un PERSONNAGE doit incarner une action dans une scène SVG encre/
 pêcheur, ouvrier, marchand…). Le rig est GÉNÉRIQUE : on change l'accessoire (`hat`) et la couleur (`ink`),
 pas la mécanique. ⛔ Garde-fou doctrine : silhouette stylisée pictogramme, JAMAIS un humain réaliste. Segments DROITS.
 
+## ⭐⭐ Rig FK Gemini — LE rig canonique (`rig/GeminiRig.tsx`)
+
+**Chemin** : `src/projects/_shared/personnage-vivant-svg/rig/GeminiRig.tsx`. Composant `GeminiRig` (props
+`GeminiRigProps` : `a: LimbAngles`, `face?: FaceExpression`, `faceView?: FaceView`, `skinTone`, `clothesColor`,
+`pantsColor`, `inkColor`, `hatType`, `hatColor`). Poses exportées : `IDLE`, `WALK_A`, `WALK_B` (type `LimbAngles`).
+Helpers : `lerp`, `lerpAngles` (interpolation continue des angles entre 2 poses — LE mécanisme qui porte le
+mouvement, cf. § plus bas). 2 vues (`FaceView`: `"profile"|"front"`), 5 expressions (`FaceExpression`: `"none"|
+"neutral"|"smile"|"serious"|"surprise"|"angry"`), 3 chapeaux (`hatType`: `"conical"|"cap"|"scarf"`).
+
+**Origine** : text-to-SVG généré par Gemini 3.1 Pro (rig FK natif, hiérarchie `translate(joint) rotate(angle)`
+imbriquée — comportement spontané du modèle sur ce type de prompt, jamais obtenu de GPT-5.5 malgré plusieurs
+tentatives, cf. § tests comparatifs plus bas dans ce fichier). Promu depuis le proto `ProtoGeminiPoseBankWalk.tsx`
+vers ce fichier `rig/` le 2026-07-03 (le proto garde un re-export temporaire pour compatibilité).
+
+### ⚠️ Piège d'intégration — offset vertical pieds-au-sol (520*scale, pas 210*scale)
+Découvert 2026-07-03 (scène cargo 16:9) : pour aligner les pieds de `GeminiRig` au sol dans une NOUVELLE
+scène à une NOUVELLE échelle, l'offset vertical de positionnement doit être `~520 * scale` (pas `210 * scale`,
+erreur intuitive si on part de `hipY=340` seul). Les pieds du rig sont à `y≈520` dans son repère local
+(`hipY=340` + jambes `~180`), pas à `y≈210`. Utiliser un offset trop petit fait "flotter" le personnage
+au-dessus du sol/de l'eau au lieu d'y être ancré. Ce n'est PAS un bug du composant — un piège d'intégration
+qui se reproduira pour quiconque positionne `GeminiRig` sans le savoir.
+
+**⛔ Distinct du rig CAPSULE (`StickRig`/`StickFigureSimplified`, § plus bas dans ce même fichier)** — ce sont
+2 systèmes complémentaires, PAS concurrents (voir § "Deux systèmes distincts" ci-dessous) :
+- **Rig capsule** (`StickRig.tsx`, `capsuleSegment.ts`) = la MÉCANIQUE, 100% code, zéro dépendance API. Rig de
+  PRODUCTION historique, éprouvé sur ≥5 scènes, gère nativement 8 directions (`StickRigMultiDir`), charges
+  (`carry`), objets (`objectHandling.ts`).
+- **Rig FK Gemini** (`GeminiRig.tsx`, CE chemin) = le rig CANONIQUE pour toute NOUVELLE scène narrative avec
+  personnage (silhouette + couleurs + visage dessinés par Gemini, mécanique de mouvement transposée à la main
+  depuis le rig capsule action par action). Catalogue de 7 gestes déjà transposés (marche, panier, sac-épaule,
+  récolte-au-sol, manipuler-objet, passer-main-à-main, cueillette-arbre, contemplatif) + trio visage/expressions
+  + vue frontale. Pour une NOUVELLE scène avec personnage, partir d'ici.
+
 ## Fichiers
 - `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moveAmt,bend,armReach,offerReach})` →
   coords locales (bassin, épaules, **main avant**). À utiliser AUSSI côté scène pour coller un objet sur la main.
@@ -770,7 +803,8 @@ Hat frontal = symetrique. A CONSOLIDER (session future) : les accessoires doiven
 de la tete avec un offset fixe, pas un path absolu -> eviter les artefacts de position au headTilt.
 
 **Fichiers** :
-- `_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx` : GeminiRig exporte (composant parametre), types exportes
+- `rig/GeminiRig.tsx` : ⭐ chemin CANONIQUE (déplacé depuis `_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx` le
+  2026-07-03, proto garde un re-export temporaire). GeminiRig exporté (composant paramétré), types exportés
   (`LimbAngles`, `FaceExpression`, `FaceView`, `GeminiRigProps`), poses (`IDLE`/`WALK_A`/`WALK_B`), helpers
   (`lerp`/`lerpAngles`).
 - `_rnd/svg-scenes/ProtoCadrages.tsx` : planche comparative 4 panels (plan large profil, buste profil,

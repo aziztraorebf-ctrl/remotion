@@ -194,7 +194,6 @@ import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivan
 import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
 import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
-import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
 import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
 import { B4Demilune } from "./projects/_rnd/svg-scenes/B4Demilune";
 import { B5LaPreuve } from "./projects/_rnd/svg-scenes/B5LaPreuve";
@@ -202,15 +201,11 @@ import { B6Outro } from "./projects/_rnd/svg-scenes/B6Outro";
 import { B7MosaiqueFinal } from "./projects/_rnd/svg-scenes/B7MosaiqueFinal";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
-import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
-import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
-import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
 import { FluxPetroleAnimee } from "./projects/_rnd/svg-scenes/FluxPetroleAnimee";
 import { JetonsQwenDemo } from "./projects/_rnd/svg-scenes/JetonsQwenDemo";
 import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
 import { CfaMidformTest } from "./projects/_rnd/svg-scenes/CfaMidformTest";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
-import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
 import { IngaH16x9, INGA_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaH16x9";
 import { IngaV9x16, INGA_V_FRAMES } from "./projects/_rnd/svg-scenes/IngaV9x16";
 import { IngaEncreH, INGA_ENCRE_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaEncreH";
@@ -220,12 +215,10 @@ import { IngaMondeV2, INGA_MONDE_V2_FRAMES } from "./projects/_rnd/svg-scenes/In
 import { IngaDualScene, INGA_DUAL_FRAMES } from "./projects/_rnd/svg-scenes/IngaDualScene";
 import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/IngaSplitScreen";
 import { CargoVoyage16x9, CARGO_VOYAGE_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9";
+import { CargoVoyage16x9_LibreInspire, CARGO_VOYAGE_LI_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9_LibreInspire";
 import { PortDechargement16x9, PORT_DECHARGEMENT_FRAMES } from "./projects/_rnd/svg-scenes/PortDechargement16x9";
 import { RetourAuChamp16x9, RETOUR_CHAMP_FRAMES } from "./projects/_rnd/svg-scenes/RetourAuChamp16x9";
-import { ProtoCapsuleLimb, PROTO_CAPSULE_LIMB_FRAMES } from "./projects/_rnd/svg-scenes/ProtoCapsuleLimb";
 import { ProtoGeminiPoseBankWalk, PROTO_GEMINI_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk";
-import { ProtoGptPoseBankWalk, PROTO_GPT_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGptPoseBankWalk";
-import { ProtoFuguPoseBankWalk, PROTO_FUGU_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoFuguPoseBankWalk";
 import { ProtoGeminiActionChain, PROTO_GEMINI_ACTION_CHAIN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiActionChain";
 import { ProtoGeminiPaletteDemo, PROTO_GEMINI_PALETTE_DEMO_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPaletteDemo";
 import { ProtoGeminiOfferScene, PROTO_GEMINI_OFFER_SCENE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiOfferScene";
@@ -244,6 +237,12 @@ import { ProtoDialogueEcran, PROTO_DIALOGUE_ECRAN_FRAMES } from "./projects/_rnd
 import { ProtoDataVizEncre, PROTO_DATAVIZ_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizEncre";
 import { ProtoDataVizPleinEcran, PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizPleinEcran";
 import { ProtoNarratifPlusData, PROTO_NARRATIF_PLUS_DATA_FRAMES } from "./projects/_rnd/svg-scenes/ProtoNarratifPlusData";
+import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
+import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
+import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
+import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
+import { ProtoMapboxMondeGrisTest, PROTO_MAPBOX_MONDE_GRIS_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMapboxMondeGrisTest";
+import { ProtoAtlasMondeGrisSVG, PROTO_ATLAS_MONDE_GRIS_SVG_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeGrisSVG";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2014,7 +2013,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="RND-DefenseCompare" component={DefenseCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-DefenseGptAnimee" component={DefenseGptAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={606} fps={30} width={1080} height={1920} />
@@ -2025,16 +2023,12 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-B7MosaiqueFinal" component={B7MosaiqueFinal} durationInFrames={642} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
-        <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
-        <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
-        <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
-        <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaH16x9" component={IngaH16x9} durationInFrames={INGA_H_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaV9x16" component={IngaV9x16} durationInFrames={INGA_V_FRAMES} fps={30} width={1080} height={1920} />
         <Composition id="RND-IngaEncreH" component={IngaEncreH} durationInFrames={INGA_ENCRE_H_FRAMES} fps={30} width={1920} height={1080} />
@@ -2045,12 +2039,10 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-IngaDualScene" component={IngaDualScene} durationInFrames={INGA_DUAL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaSplitScreen" component={IngaSplitScreen} durationInFrames={INGA_SPLIT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-CargoVoyage16x9" component={CargoVoyage16x9} durationInFrames={CARGO_VOYAGE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-CargoVoyage16x9-LibreInspire" component={CargoVoyage16x9_LibreInspire} durationInFrames={CARGO_VOYAGE_LI_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-PortDechargement16x9" component={PortDechargement16x9} durationInFrames={PORT_DECHARGEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-RetourAuChamp16x9" component={RetourAuChamp16x9} durationInFrames={RETOUR_CHAMP_FRAMES} fps={30} width={1920} height={1080} />
-        <Composition id="RND-ProtoCapsuleLimb" component={ProtoCapsuleLimb} durationInFrames={PROTO_CAPSULE_LIMB_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiPoseBankWalk" component={ProtoGeminiPoseBankWalk} durationInFrames={PROTO_GEMINI_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
-        <Composition id="RND-ProtoFuguPoseBankWalk" component={ProtoFuguPoseBankWalk} durationInFrames={PROTO_FUGU_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
-        <Composition id="RND-ProtoGptPoseBankWalk" component={ProtoGptPoseBankWalk} durationInFrames={PROTO_GPT_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiActionChain" component={ProtoGeminiActionChain} durationInFrames={PROTO_GEMINI_ACTION_CHAIN_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiPaletteDemo" component={ProtoGeminiPaletteDemo} durationInFrames={PROTO_GEMINI_PALETTE_DEMO_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoGeminiOfferScene" component={ProtoGeminiOfferScene} durationInFrames={PROTO_GEMINI_OFFER_SCENE_FRAMES} fps={30} width={1920} height={1080} />
@@ -2069,6 +2061,12 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-ProtoDataVizEncre" component={ProtoDataVizEncre} durationInFrames={PROTO_DATAVIZ_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoDataVizPleinEcran" component={ProtoDataVizPleinEcran} durationInFrames={PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoNarratifPlusData" component={ProtoNarratifPlusData} durationInFrames={PROTO_NARRATIF_PLUS_DATA_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoMapboxMondeGrisTest" component={ProtoMapboxMondeGrisTest} durationInFrames={PROTO_MAPBOX_MONDE_GRIS_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondeGrisSVG" component={ProtoAtlasMondeGrisSVG} durationInFrames={PROTO_ATLAS_MONDE_GRIS_SVG_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />

@@ -100,6 +100,30 @@ réclamait des éléments retirés volontairement (soleil/dunes/storyboard pré-
 
 ---
 
+## GOTCHA RÉSEAU — IPv6 sans route sortante bloque les appels Gemini en Python (2026-07-03)
+Symptôme : un script Gemini (SDK `google-genai` / `httpx`) reste bloqué INDÉFINIMENT, sans erreur, même sur
+un appel minimal texte-only sans image. `curl` sur le même endpoint fonctionne normalement.
+- **Root cause confirmée** : la machine résout `generativelanguage.googleapis.com` en IPv6, mais n'a PAS de
+  route sortante IPv6 réelle (`socket.create_connection` direct vers l'IP IPv6 timeout après 5s). `curl` a un
+  fallback rapide (Happy Eyeballs : essaie IPv6, bascule vite en IPv4) — Python (`httpx`/SDK) n'a PAS ce
+  fallback rapide et reste bloqué sur la tentative IPv6.
+- **Diagnostic rapide** : si un script Gemini hang sans log ni erreur (même `client.models.list()` bloque),
+  tester `socket.create_connection((ipv6_addr, 443), timeout=5)` directement — si ça timeout, c'est ce gotcha.
+- **Fix** : monkeypatch `socket.getaddrinfo` en tête du script pour forcer IPv4-only :
+  ```python
+  import socket
+  _orig = socket.getaddrinfo
+  def _ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
+      return _orig(host, port, socket.AF_INET, type, proto, flags)
+  socket.getaddrinfo = _ipv4_only
+  ```
+- **État de propagation** : fix appliqué UNIQUEMENT dans `scripts/tools/svg-scene-narrative.py` (2026-07-03).
+  PAS ENCORE propagé à `svg-faisabilite-brief.py`, `gemini-gen-image.py`, `gemini-i2i.py` et autres scripts
+  Gemini. Si un de ces scripts hang un jour sans raison apparente, appliquer ce même monkeypatch en premier
+  réflexe avant de chercher ailleurs (clé API, quota, brief trop long — tous écartés lors du diagnostic 2026-07-03).
+
+---
+
 ## Gotcha drapeaux nationaux en contexte "Afrique / souveraineté" (2026-05-06)
 
 Quand on demande des drapeaux de pays occidentaux dans un contexte narratif lié à l'Afrique, Gemini substitue des drapeaux africains ou régionaux même si les pays sont explicitement nommés.

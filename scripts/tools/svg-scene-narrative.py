@@ -17,9 +17,17 @@ Usage:
 --ratio (2026-07-02, ajout retro-compatible) : defaut "9:16" (comportement historique inchange).
 "16:9" pour une scene 16:9 narrative (viewBox 1920x1080, ex. sequence CargoVoyage/PortDechargement).
 """
-import argparse, base64, os
+import argparse, base64, os, socket
 from pathlib import Path
 from dotenv import load_dotenv
+
+# FIX 2026-07-03 : sur ce reseau, l'IPv6 resout mais n'a pas de route sortante -> httpx/genai
+# restent bloques indefiniment dessus (curl a un fallback Happy Eyeballs rapide, pas Python).
+# Force IPv4-only pour tous les appels socket de ce process (Gemini SDK inclus).
+_orig_getaddrinfo = socket.getaddrinfo
+def _ipv4_only_getaddrinfo(host, port, family=0, type=0, proto=0, flags=0):
+    return _orig_getaddrinfo(host, port, socket.AF_INET, type, proto, flags)
+socket.getaddrinfo = _ipv4_only_getaddrinfo
 
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")

@@ -40,6 +40,31 @@ GLM = ~5-7x moins cher que GPT-5.5 sur ce qu'il sait faire. Cout d'une planche d
 | MiniMax M3 (`minimax/minimax-m3`, $0.30/$1.20, vision) | ⭐ excellent (le + fini sur offshore) | (non teste) | ❌ ~7 min/scene | ❌ camelCase JSX a convertir | ECARTE (lenteur impraticable) |
 | GPT-5.5 / Gemini 3.1 Pro | references | Gemini = roi organique | ok | propre | PRINCIPAUX (inchanges) |
 
+## Qwen3.6 avec vision vs GLM-5.2 text-only — comparatif retexturing (2026-07-03)
+
+> NUANCE le verdict "Qwen3.6 ECARTE" ci-dessus, sans le contredire frontalement : le test 2026-06-24 jugeait
+> Qwen sur la GENERATION generaliste de jetons/scenes. Cette session a teste un usage DIFFERENT et plus etroit :
+> retexturer une forme organique SIMPLE deja bien nee (registre gravure/hachures), en LUI MONTRANT une image
+> de reference a imiter/depasser. Pas certain qu'il s'agisse d'une vraie contradiction methodologique (le
+> tableau ci-dessus mentionne deja "vision" pour Qwen) — plutot un usage plus specifique, non teste en 2026-06-24.
+
+Test comparatif sur 5 elements reels (scene cargo 16:9, brief "registre gravure/hachures, PAS mignon/cartoon") :
+
+| Element | GLM-5.2 (text-only, pas d'image-ref) | Qwen3.6 (avec image-ref a imiter) |
+|---|---|---|
+| Nuage | ❌ facettes geometriques abstraites, ILLISIBLE comme nuage (echec net malgre bon prompt texte) | ✅ silhouette nuageuse gardee intacte + hachures fines, reconnaissable a 100% |
+| Personnage (cueilleur) | non teste | ❌ quasi identique a l'original + objet parasite deconnecte — confirme l'intuition qu'un modele ne "raisonne" pas une pose/structure articulee |
+| Arbre | non teste | ⚠️ mitige : tronc reussi (hachures ecorce credibles), houppier ecrase par une trame trop dense (illisible comme feuillage) |
+| Vagues/ecume | non teste | ✅✅ franc succes, vraie vague deferlante style estampe japonaise (Kanagawa), reutilisable en banque |
+| Cargo (coque+conteneurs) | non teste | ❌ geometrie de coque cassee, ne repose pas sur l'eau — moins bon que le mix-and-match deja fait a la main |
+
+**Verdict pratique** : Qwen3.6 (avec vision + image de reference) est fiable pour RETEXTURER une forme
+organique SIMPLE deja bien nee (nuage, vague) — la reference visuelle est la cle : SANS vision, GLM (text-only)
+derive trop loin du brief texte vers l'abstraction. Qwen reste PEU FIABLE sur toute structure ARTICULEE/
+MECANIQUE (personnage pose, cargo a geometrie precise) — il copie sans reconstruire la logique de construction.
+Root cause probable de l'echec GLM nuage : sans reference visuelle, un brief texte meme precis ("reste
+reconnaissable comme nuage") peut deriver si le modele n'a rien a comparer.
+
 ## Pipeline prouve bout-en-bout (2026-06-24)
 
 GLM genere → JSON `{tokens:{...}}` ou `{scene_svg, groups}` → on transforme en composants React `{f}` (jetons) ou groupes nommes (scene) → **animation par frame en Remotion** (zero CSS) → render.

@@ -41,6 +41,30 @@ PNG + UPLOADEES CATBOX (Aziz juge en visuel), (3) la CHOREGRAPHIE de chaque cibl
 > -> AZIZ TRANCHE la version finale (souvent la version mixee). Claude corrige les petits defauts puis Phase 2.
 > Cout = ~0 (lecture SVG + ecriture + rsvg-convert local). Gain = matiere de decision + animabilite garantie.
 
+**⭐ VARIANTE — UPGRADE PROTOTYPE (quand une scene EXISTE deja en code, prouve cargo 2026-07-03)**
+> Different de la Phase 1 (qui part TOUJOURS d'un brief texte/ideation vers une cible FRAICHE) : ici on a
+> DEJA une scene Remotion codee (a la main ou issue d'une session precedente) et on veut une MEILLEURE
+> VERSION plutot que repartir de zero. Script : `scripts/tools/svg-scene-upgrade.py`.
+> 1. Render une FRAME de la scene existante (avec ses defauts, tels quels — pas besoin de les corriger avant).
+> 2. Envoyer cette frame au modele (Gemini/GPT) avec un brief explicite : "voici NOTRE prototype, produis TA
+>    meilleure version en GARDANT LA MEME COMPOSITION, exploite tes capacites SVG a fond". Le modele n'a plus
+>    a DEVINER l'intention/la composition (contrairement a la Phase 1 en brief texte seul) — il repond a une
+>    question plus etroite ("ameliore ceci precisement"), donc plus fiable.
+> 3. Mix-and-match habituel ensuite (piocher les bonnes idees du resultat, greffer sur le code existant).
+> Preuve 2026-07-03 (CargoVoyage16x9 -> CargoVoyage16x9_LibreInspire) : sur un brief TEXTE SEUL (sans image),
+> Gemini ET GPT ont mal interprete une consigne de morphing temporel ("cargo qui voyage d'un lieu a un autre")
+> en tentant de juxtaposer 2 lieux dans UNE SEULE image, au lieu de comprendre qu'un seul etat par image
+> suffit (le morphing dans le temps etant notre job CODE, pas le leur). Avec l'upgrade-prototype (frame reelle
+> en entree), Gemini a produit un resultat nettement superieur (ocean avec profondeur+reflet, soleil avec
+> halo, cargo unifie) ; GPT a tres peu ameliore sur le meme test — Gemini reste le plus fiable pour cette
+> variante aussi.
+> **Critere de choix entre variantes mix-and-match (Aziz 2026-07-03)** : "Le SVG est reversible dans les deux
+> sens — on peut toujours repartir d'un style plus riche et l'epurer." Entre une version "charte stricte"
+> (proche de l'existant) et une version "libre inspiree" (plus riche/premium), PREFERER LA PLUS RICHE par
+> defaut : simplifier après coup est plus facile qu'enrichir un style pauvre. Prouve sur le choix final
+> CargoVoyage16x9_LibreInspire (retenue) vs la variante charte-stricte (rejetee, testee en parallele via 2
+> agents Sonnet en isolation worktree).
+
 **PHASE 2 (agent autonome) — animation A->Z -> render -> STOP.**
 A partir de la cible validee : l'agent CONCOIT la choregraphie + couleur + SFX (genere si besoin) +
 karaoke + sources, code, REND full HD, upload catbox. + auto-eval poussee (justifie CHAQUE choix).
@@ -98,6 +122,12 @@ juge le MOUVEMENT avant le code (le gout d'animation se valide en amont, pas apr
    l'illusion qui s'evanouit. Choisir selon l'intention.
 5. **Kimi `--max-tokens 8000`** par defaut (4000 coupe les idees FR ; surveiller `finish_reason: length` ;
    bug provider OpenRouter = reponse JSON parasite -> RELANCER l'appel).
+6. **Forme SVG ambigue (ex: croissant de lune) : preferer une forme SIMPLE et FIABLE a une forme plus "juste"
+   mais risquee.** Un test isole rapide (hors Remotion) peut sembler correct a tort alors que le rendu reel
+   reste ambigu (prouve 2026-07-03 : un croissant via 2 arcs superposes donnait "on dirait deux lunes qui se
+   croisent" — artefact Vesica Piscis, corrige seulement apres feedback repete Aziz). Toujours verifier le
+   rendu dans le contexte FINAL (Remotion), pas seulement isolement. En cas de doute persistant sur une
+   forme geometrique fine, la version la PLUS SIMPLE (ex: lune PLEINE au lieu de croissant) elimine le risque.
 
 ## CE QUE L'HUMAIN GARDE (ne se delegue pas)
 - Validation du SUJET/angle (gate amont) + de la CIBLE (point de controle Phase 1).

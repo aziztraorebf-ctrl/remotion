@@ -48,8 +48,19 @@
 >   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
 > **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
 
-## ✅✅ 16:9 NARRATIF + PERSONNAGES — patron 2-scènes PROUVÉ (plus une priorité active, backlog optionnel)
-> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` § REPRISE SESSION SUIVANTE (dis « on reprend le 16:9 narratif »).
+## ✅✅ 16:9 NARRATIF + PERSONNAGES — SHOWCASE FINAL mis à jour (2026-07-03)
+> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (voir note de mise à jour en tête).
+> ⭐⭐ **NOUVELLE RÉFÉRENCE (2026-07-03)** : `CargoVoyage16x9_LibreInspire.tsx` (`RND-CargoVoyage16x9-LibreInspire`)
+>   remplace `CargoVoyage16x9.tsx` comme showcase final du format 16:9 — validé par Aziz comme preuve de concept
+>   du pivot 9:16→16:9 (3-5min, style Infographic Show/Kurzgesagt). Issu d'un workflow mix-and-match : 2 agents
+>   Sonnet en isolation worktree (gardien-de-charte vs libre-inspiré-encadré) ont chacun produit une version
+>   complète en piochant dans Gemini 3.1 Pro + GPT-5.5 + code existant + doctrine ; version "libre inspiré"
+>   retenue (reflet de soleil animé frame-driven, océan avec profondeur, cargo unifié). Détail complet du
+>   process (bug réseau IPv4/IPv6 Gemini, pattern "upgrade prototype", verdict Qwen3.6 vs GLM-5.2) :
+>   `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` § UPGRADE PROTOTYPE + `memory/tools/openrouter-svg.md`.
+> NEXT = décider si on industrialise le pivot 16:9 (nouvelle vidéo pilote longue) ou si ça reste R&D.
+>
+> --- Historique (2026-07-02, patron 2-scènes original, toujours valide comme référence secondaire) ---
 > ✅✅ **VALIDÉ AZIZ (2026-07-02)** : patron 2-scènes "voyage→arrivée/transformation" PROUVÉ de bout en bout —
 >   `CargoVoyage16x9.tsx` (`RND-CargoVoyage16x9`) + `PortDechargement16x9.tsx` (`RND-PortDechargement16x9`),
 >   archivés `out/templates-souverain/FINAL-CargoVoyage16x9-v1.mp4` + `FINAL-PortDechargement16x9-v1.mp4`.
