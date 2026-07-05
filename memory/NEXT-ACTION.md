@@ -1,7 +1,21 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-05 (Short AES 90s V1 REJETE par Aziz — repartir en V2, voir section juste dessous).
+> Mis a jour : 2026-07-05 (ajout Soudan — inserts tactiques R&D terminée, NEXT=assemblage).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## ⭐⭐ SOUDAN MID-FORM — INSERTS TACTIQUES : R&D TERMINÉE, NEXT = ASSEMBLAGE (2026-07-05)
+
+> Session R&D complète sur les inserts tactiques plein écran (beat #5 du script Acte 2 : attaque RSF
+> simultanée sur Khartoum, 15 avril 2023 — aéroport, palais présidentiel, tour TV). Décision finale
+> tranchée : bâtiments statiques complexes → Gemini image-gen + traitement (désaturation/cadre) ; jetons/
+> véhicules mobiles → SVG (pipeline GLM-5.2 premier jet → agent Sonnet 5 raffinement). Tous les assets sont
+> rapatriés vers des emplacements permanents du repo (pas de scratchpad à retrouver).
+> **Démarrer avec** `memory/PROMPT-REPRISE-soudan-assemblage.md` (prompt prêt à coller) — détail complet
+> `memory/STARTER-PROMPT-inserts-tactiques-soudan.md`. NEXT SESSION = assembler la vraie séquence Remotion
+> 25-30s en combinant le socle `ProtoInsertTactiqueTopDown.tsx` (déjà codé) + les bâtiments Gemini + les
+> jetons SVG en mouvement, puis rendre en vidéo réelle pour jugement Aziz.
 
 ---
 

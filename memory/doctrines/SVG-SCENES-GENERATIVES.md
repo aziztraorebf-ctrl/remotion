@@ -16,6 +16,11 @@ Ces règles valent pour TOUTE scène SVG animée, pas seulement la Muraille Vert
    éteinte"). Claude FILTRE ensuite par connaissance du projet. Le bug provider OpenRouter (réponse parasite
    JSON) se contourne en RELANÇANT l'appel (retry jusqu'à réponse valide).
 2. **Image-cible = SVG NATIF** (gemini-3.1-pro / gpt-5.5), jamais raster → écart faisabilité nul. Voir [[SVG-FAISABILITE-AMONT]].
+   ⚠️ **Exception 2026-07-05** (inserts tactiques Soudan) : cette règle vaut pour le raster comme ÉTAPE
+   INTERMÉDIAIRE (image-cible qu'on reproduit ensuite en SVG). Elle NE s'applique PAS quand le raster est
+   l'ASSET FINAL affiché directement (pas de SVG à coder derrière) — cas des bâtiments/objets complexes
+   uniques sans vocabulaire géométrique universel (palais, tour TV), où Gemini image-gen + traitement
+   d'intégration bat le SVG codé à l'aveugle. Détail : `memory/tools/openrouter-svg.md`.
 3. **Colorisation TIMÉE maîtrisée** : ne pas tout colorer d'emblée. Le monde reste en encre ; chaque touche de
    couleur a un TIMING + un SENS, espacée. Garder de la "munition couleur" pour le climax.
 4. **État VIVANT au départ, dégradation = ÉVÉNEMENT** : les éléments naissent pleins/vivants et se dégradent

@@ -796,3 +796,16 @@ La tentative 3, validée, a changé de paradigme entier (vraie géographie des p
 élargi + contours réels extraits d'un atlas mondial, plutôt qu'un symbole abstrait affiné) au lieu de
 re-doser la tentative 2. Signal à surveiller : 2 rejets consécutifs pour la même raison = le problème
 n'est pas dans l'exécution, il est dans l'approche choisie.
+
+**IPv6 mort dans le sandbox réseau bloque silencieusement TOUT client Python HTTPS (2026-07-05)** :
+`yt-dlp`, `google-genai` (Gemini), `requests` (OpenRouter) restaient bloqués sans erreur ni respect du
+timeout déclaré sur toute requête réseau, alors que `curl` répondait normalement en <2s sur les mêmes hosts.
+Root cause : `getaddrinfo()` renvoie les adresses IPv6 avant les IPv4, la route IPv6 sortante est totalement
+morte dans ce sandbox (`networksetup -getinfo Wi-Fi` : "IPv6 IP address: none"), et Python n'a pas de
+fallback rapide type happy-eyeballs contrairement à `curl` — la connexion reste pendue bien au-delà du
+timeout. Diagnostic qui débloque en ~20 min : comparer `curl -6 https://<host>` (timeout) vs `curl -4` (rapide)
+sur le host concerné. Fix : `yt-dlp --force-ipv4` (flag natif) ; pour tout autre script Python sans flag
+IPv4, wrapper permanent `scripts/tools/run_ipv4.py` (monkeypatch `socket.getaddrinfo` via `runpy`, usage :
+`python3 scripts/tools/run_ipv4.py <script.py> [args]`). Si un script Python "traîne" sans output ni erreur
+sur un appel réseau externe dans ce projet, suspecter ce gotcha en premier avant de conclure à une limitation
+d'environnement ou un problème d'API. Détail complet : `memory/tools/yt-dlp.md`.

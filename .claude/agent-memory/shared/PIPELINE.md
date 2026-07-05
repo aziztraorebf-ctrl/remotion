@@ -221,13 +221,17 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ---
 
-## État actuel des projets (MAJ 2026-06-26)
+## État actuel des projets (MAJ 2026-07-05)
+
+### ✅ Livré (retiré de Actif — contredisait l'entrée 2026-06-08 "6 beats FINAL")
+
+- **Peste 1347 (Atlas)** — VALIDÉ AZIZ (2026-07-01), `out/PRET-PUBLICATION/peste-1347-FINAL.mp4`. NEXT =
+  programmer publication (pas une tâche technique). Voir `memory/NEXT-ACTION.md` § Peste 1347 pour le détail.
 
 ### ⚡ Actif
 
-- **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
-  `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
-  Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
+- **Soudan Mid-form** — Inserts tactiques R&D TERMINÉE (2026-07-05, décision Gemini/SVG tranchée, assets
+  rapatriés). NEXT = assemblage séquence Remotion beat #5. Démarrage : `memory/PROMPT-REPRISE-soudan-assemblage.md`.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
   Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).
   URL catbox : https://files.catbox.moe/jyrlj1.mp3. Format visuel : Template B Hybride.
