@@ -23,7 +23,7 @@ import type { SahelRenderContext } from "../engine/SahelContext";
 import {
   PAL, spriteMapWidth, smokePingPong, interpWaypoints, countryOutline, type Waypoint,
 } from "./warmapPremiumKit";
-import { NIGER_RING, BURKINA_RING } from "./sahelCountries";
+import { NIGER_RING, BURKINA_RING, MALI_RING, BENIN_RING, NIGERIA_RING, GHANA_RING, COTE_IVOIRE_RING } from "./sahelCountries";
 import { WarMapPlaque } from "./WarMapPlaque";
 
 // ============================================================
@@ -200,7 +200,14 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
   // ── Niger junte + CEDEAO ──
   const niamey = project(NIAMEY[0], NIAMEY[1]);
   const juntT = interpolate(frame, [F_NIGER, F_NIGER + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // CEDEAO — RETIRÉ (2026-07-04, retour Aziz confirmé) : la bande+flèches faisait apparaître des
+  // triangles hors-cadre (dans l'océan) et sortait de la caméra serrée exigée sur les 3 pays AES.
+  // Remplacé par un pulse rouge/ambre sur le contour MÊME des 3 pays AES (menace qui pèse sur eux,
+  // pas de nouvelle géo CEDEAO montrée) — cf bloc plus bas.
   const cedeaoT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Pulse jusqu'à la fin de P2 (f6118, cf Root.tsx durationInFrames=6119) : dure toute la zone
+  // où la voix parle de la CEDEAO/menace, avant le relais de P3.
+  const cedeaoEndT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 40, 6080, 6118], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Hiérarchie du regard : assombrir légèrement pendant l'avancée (2.4) ──
   const dim = interpolate(frame, [F_ECHEC - 10, F_ECHEC + 30, F_DEBORDENT, F_DEBORDENT + 60], [0, 0.18, 0.18, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -363,44 +370,49 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
           );
         })()}
 
-        {/* CEDEAO — REPENSÉ (retour Aziz 2026-07-01 confirmé 2026-07-04) : les anciens marqueurs+flèches
-            sortaient du cadre serré (CI/Ghana/Bénin/Nigeria, hors-Sahel). Nouvelle direction actée avec
-            Aziz : frontière Sud qui PULSE au bord de l'écran + flèches COURTES vers Niamey, sans jamais
-            sortir du cadre. La menace se voit sans montrer la géographie CEDEAO elle-même. */}
-        {cedeaoT > 0 && (() => {
-          const blink = 0.5 + 0.35 * Math.sin(frame * 0.16);
-          const bandH = height * 0.05;
+        {/* CEDEAO — 3e direction (2026-07-04, retour Aziz précisé) : les 2 tentatives précédentes
+            (marqueurs+flèches hors-cadre le 2026-07-01, puis bande+flèches faisant apparaître des
+            triangles dans l'océan) sont rejetées. Direction actée : la MENACE a une vraie géographie
+            (les pays CEDEAO côtiers) — le zoom s'élargit pour les rendre visibles (CI/Ghana/Bénin/
+            Nigeria), leurs frontières PULSENT en rouge/ambre, puis des flèches convergent vers Niamey
+            pour montrer visuellement qu'ils sont prêts à intervenir. */}
+        {cedeaoEndT > 0.02 && [BENIN_RING, NIGERIA_RING, GHANA_RING, COTE_IVOIRE_RING].map((ring, i) => {
+          const pulse = 0.35 + 0.25 * Math.sin(frame * 0.14 + i * 1.4);
+          const pts = ring.map(([lon, lat]) => project(lon, lat));
+          let d = `M${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+          for (let k = 1; k < pts.length; k++) d += `L${pts[k].x.toFixed(1)},${pts[k].y.toFixed(1)}`;
+          d += "Z";
           return (
-            <>
-              <rect x={0} y={height - bandH} width={width} height={bandH}
-                fill={`url(#cedeao-band-grad)`} opacity={cedeaoT * blink} />
-              <defs>
-                <linearGradient id="cedeao-band-grad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor={PAL.CEDEAO} stopOpacity="0" />
-                  <stop offset="100%" stopColor={PAL.CEDEAO} stopOpacity="0.55" />
-                </linearGradient>
-                <marker id="cedeao-arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-                  <path d="M0,0 L8,4 L0,8 Z" fill={PAL.CEDEAO} opacity={0.85} />
-                </marker>
-              </defs>
-              {/* 3 flèches COURTES depuis le bord bas vers Niamey (jamais plus haut que ~18% de l'écran
-                  de remontée), portée limitée pour rester dans le cadre. */}
-              {[-0.12, 0, 0.12].map((dx, i) => {
-                const ap = interpolate(frame, [F_CEDEAO + i * 6, F_CEDEAO + i * 6 + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-                if (ap <= 0) return null;
-                const baseX = niamey.x + dx * width;
-                const baseY = height - bandH * 0.5;
-                const tipX = niamey.x + dx * width * 0.35;
-                const tipY = baseY - height * 0.16;
-                return (
-                  <line key={`cedeao-arrow-${i}`} x1={baseX} y1={baseY} x2={tipX} y2={tipY}
-                    stroke={PAL.CEDEAO} strokeWidth={3} strokeOpacity={ap * blink * 0.8} strokeDasharray="6 5"
-                    markerEnd="url(#cedeao-arrowhead)" />
-                );
-              })}
-            </>
+            <path key={`cedeao-threat-${i}`} d={d} fill="none" stroke="#D14E2E"
+              strokeWidth={3.5 + pulse * 2} strokeOpacity={cedeaoEndT * (0.55 + pulse * 0.4)}
+              style={{ filter: `drop-shadow(0 0 ${pulse * 6}px rgba(209,78,46,${pulse * 0.6}))` }} />
           );
-        })()}
+        })}
+        {/* Flèches convergentes des pays CEDEAO vers Niamey (marqueur militaire) — départ approximatif
+            depuis un point représentatif de chaque pays côtier, portée jusqu'au marqueur Niger. */}
+        {cedeaoEndT > 0.02 && [
+          { from: [2.35, 9.3], delay: 0 },   // Bénin (approx centre)
+          { from: [8.0, 9.0], delay: 8 },    // Nigeria (approx nord-ouest, plus proche du Niger)
+          { from: [-1.0, 8.0], delay: 16 },  // Ghana (approx centre-nord)
+          { from: [-5.5, 8.5], delay: 24 },  // Côte d'Ivoire (approx centre-nord)
+        ].map((arrow, i) => {
+          const ap = interpolate(frame, [F_CEDEAO + 20 + arrow.delay, F_CEDEAO + 50 + arrow.delay], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          if (ap <= 0) return null;
+          const from = project(arrow.from[0], arrow.from[1]);
+          const to = project(NIAMEY[0], NIAMEY[1]);
+          const tipX = from.x + (to.x - from.x) * ap;
+          const tipY = from.y + (to.y - from.y) * ap;
+          return (
+            <line key={`cedeao-arrow-${i}`} x1={from.x} y1={from.y} x2={tipX} y2={tipY}
+              stroke="#B5432E" strokeWidth={3} strokeOpacity={cedeaoEndT * 0.75} strokeDasharray="7 6"
+              markerEnd="url(#cedeao-arrowhead-v3)" />
+          );
+        })}
+        <defs>
+          <marker id="cedeao-arrowhead-v3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+            <path d="M0,0 L9,4.5 L0,9 Z" fill="#B5432E" opacity={0.9} />
+          </marker>
+        </defs>
 
         {/* ============ VILLES TENUES (2.5) — points clairs NOMMÉS qui RÉSISTENT dans le rouge (retour Aziz :
              plus de sprite-bâtiment ambigu). Halo bleu-acier qui pulse (la ville tient) + nom géo-ancré.

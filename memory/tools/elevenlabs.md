@@ -432,6 +432,15 @@ with open(audio_path, "rb") as f:
 
 **Usage dans le pipeline** : Forced Alignment ElevenLabs v2 EN PREMIER (plus precis). Whisper API en COMPLEMENT si crossvalidation necessaire (ex: verifier syllabe ambigue). Jamais Whisper local.
 
+**⭐ Usage DIAGNOSTIC (validé 2026-07-05, War-Map Sahel)** : pour tout DOUTE sur un doublon/décalage/
+contenu audio précis (ex. "j'entends une phrase répétée deux fois"), lancer le force-alignment
+(`scripts/tools/whisper-align.py <clip.mp3> --out <file>.ts`, ~$0.02/run) sur un clip court de la zone
+suspecte AVANT toute chose — pas de calcul manuel de mapping timestamp↔frame. Le texte+timestamps exacts
+tranchent en quelques minutes ce qu'une investigation manuelle ne ferait que deviner. Preuve : a confirmé
+en 2 minutes un vrai doublon ("tensions entre communautés couvent encore" répété 2x, cause = chevauchement
+entre un backup TTS resynthétisé et un splice mal borné) que le calcul manuel n'avait pas su localiser.
+Réflexe à adopter systématiquement, sans attendre qu'Aziz le suggère.
+
 ---
 
 ## Voice Design — Guide de prompt (doc officielle 2026-04-19)

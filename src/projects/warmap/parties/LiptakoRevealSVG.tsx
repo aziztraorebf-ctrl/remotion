@@ -6,7 +6,7 @@
 // SE SCELLE : 3 cordages (Mali/Niger/Burkina Faso) convergent vers un sceau de cire qui se frappe et
 // s'intensifie en écarlate au moment où l'union est nommée ("scellent leur union").
 import React from "react";
-import { AbsoluteFill, interpolate, spring, staticFile, Audio } from "remotion";
+import { AbsoluteFill, interpolate, spring, staticFile, Audio, Sequence } from "remotion";
 
 const clampI = (f: number, a: number, b: number, lo = 0, hi = 1) =>
   interpolate(f, [a, b], [lo, hi], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -83,12 +83,24 @@ export const LiptakoRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width, h
 
   return (
     <AbsoluteFill>
-      {/* SFX ding par drapeau tenté (2026-07-04) puis ABANDONNÉ — inaudible au render même après
-          correction du bug startFrom (trim source, pas positionnement timeline), cause profonde non
-          identifiée, non prioritaire (Aziz : scène assez forte sans, ne pas s'acharner). */}
-      <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} startFrom={inAt + 2} volume={0.32} />
-      <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} startFrom={inAt + 462}
-        volume={(fr) => clampI(fr - inAt, 460, 466, 0, 0.4) * clampI(fr - inAt, 480, 500, 1, 0)} />
+      {/* SFX ding par drapeau — cause du bug 2026-07-04 identifiée : `startFrom` sur <Audio> trim le
+          FICHIER SOURCE (equiv. trimBefore), il ne positionne PAS dans la timeline (c'est `from` sur
+          <Sequence> ou <Audio> qui fait ça) — d'où "inaudible" (le ping de 300ms était quasi entièrement
+          trimmé). Fix (2026-07-04, retour Aziz : remettre les SFX, scène importante) : <Sequence from=...>
+          autour de chaque <Audio>, un ping par drapeau (L90/150/210) + impact sceau existant. */}
+      <Sequence from={inAt + 90} durationInFrames={20}>
+        <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.32} />
+      </Sequence>
+      <Sequence from={inAt + 150} durationInFrames={20}>
+        <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.32} />
+      </Sequence>
+      <Sequence from={inAt + 210} durationInFrames={20}>
+        <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.32} />
+      </Sequence>
+      <Sequence from={inAt + 462} durationInFrames={40}>
+        <Audio src={staticFile("_shared/sfx/impact/impact.mp3")}
+          volume={(fr) => clampI(fr, 0, 6, 0, 0.4) * clampI(fr, 20, 40, 1, 0)} />
+      </Sequence>
 
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
         <defs>

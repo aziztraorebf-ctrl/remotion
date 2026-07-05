@@ -47,8 +47,11 @@ export const Acte1IntroSlam: React.FC<Acte1IntroSlamProps> = ({
 
   const bigFontSize = height * 0.62;
   // Compensation optique : dominantBaseline="central" centre l'em-box de la police, pas le glyphe visuel.
-  // Cormorant Garamond a un fort undershoot sous la ligne de base -> le "3" paraissait trop bas (retour Aziz 2026-07-01).
-  const bigTextY = height / 2 - bigFontSize * 0.06;
+  // Cormorant Garamond a un fort undershoot sous la ligne de base -> le "3" paraissait trop bas (retour Aziz
+  // 2026-07-01, PUIS confirmé encore trop bas le 2026-07-05 malgré cette 1re compensation insuffisante :
+  // mesure pixel sur le rendu réel = centre du glyphe à 652px/1080 au lieu de 540px attendu, soit ~0.227×
+  // bigFontSize de décalage réel contre seulement 0.06× compensé avant — recalé à la valeur mesurée.
+  const bigTextY = height / 2 - bigFontSize * 0.183;
   const subOp = subText ? interpolate(frame, [slamAt + 8, slamAt + 20, revealStart, revealStart + 10], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
 
   return (

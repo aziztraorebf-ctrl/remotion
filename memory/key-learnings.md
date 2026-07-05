@@ -776,3 +776,23 @@ toujours en profil/3-4 en mouvement). Piste R&D ouverte : analyser The Infograph
 source de vérité · `rig/StickRig.tsx` = rig générique ink+hat(straw/cap/scarf)+carry · `rig/objectHandling.ts` ·
 `scenes-proto/RecolteAuSol.tsx`). Feuille de route anim (Gemini+web concordants) :
 `memory/episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`. Évolution : [[IDEE-PERSO-8-DIRECTIONS]].
+
+**Portrait stylisé d'une personne RÉELLE identifiable = toujours partir d'une VRAIE PHOTO, jamais d'une
+illustration déjà stylisée (2026-07-05, War-Map Sahel P4)** : pour régénérer/corriger un portrait de
+dirigeant réel (Goïta/Traoré/Tiani), la 1re tentative a utilisé l'ancienne illustration stylisée du
+projet comme référence de ressemblance pour Gemini (style cible = `soldier-aes.png`) — REJETÉE par Aziz,
+résultat = visages génériques en treillis militaire, plus la même personne. Fix qui a marché : télécharger
+la vraie photo officielle (Wikipedia/Commons, licence libre) de la personne, PUIS la restyliser via
+Recraft (`image_to_image` + `remove_background`, style extrait via `create_style` depuis un asset déjà
+validé du projet) — fidèle ET net au downscale. Le modèle de génération dérive vers un visage générique
+dès que la référence de ressemblance n'est plus une vraie photo, même si l'illustration de départ était
+censée représenter la même personne.
+
+**Quand une direction visuelle est rejetée 2 fois pour la MÊME raison de fond, changer de PARADIGME à la
+3e tentative, pas ajuster les détails (2026-07-05, visuel CEDEAO War-Map Sahel)** : tentative 1
+(marqueurs+flèches hors-cadre, 2026-07-01) et tentative 2 (bande+flèches créant des triangles visibles
+dans l'océan, 2026-07-04) rejetées pour le même défaut de fond ("pas assez concret / trop symbolique").
+La tentative 3, validée, a changé de paradigme entier (vraie géographie des pays menaçants via zoom
+élargi + contours réels extraits d'un atlas mondial, plutôt qu'un symbole abstrait affiné) au lieu de
+re-doser la tentative 2. Signal à surveiller : 2 rejets consécutifs pour la même raison = le problème
+n'est pas dans l'exécution, il est dans l'approche choisie.

@@ -425,8 +425,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
     map.on("error", (e) => console.error("[Sahel] error:", e?.error?.message ?? e));
 
-    map.on("style.load", async () => {
-      // RESKIN PARCHEMIN (meme traitement que Sudan)
+    // RESKIN PARCHEMIN (même traitement que Sudan) — factorisé en fonction réutilisable (2026-07-04,
+    // fix bug "frontières blanches natives Mapbox" : les tuiles vectorielles se chargent À LA VOLÉE
+    // quand la caméra visite une zone jamais vue avant (ex. pays CEDEAO côtiers, jamais montrés avant
+    // le zoom élargi de la Partie 2) — un reskin appliqué UNE SEULE FOIS à `style.load` ne couvre pas
+    // ces tuiles tardives, qui gardent alors la couleur claire native Mapbox (visible en fond blanc/
+    // crème). Réappliqué sur `sourcedata` (avec throttle) pour couvrir tout chargement tardif, pas
+    // seulement cette zone — un futur zoom vers une région jamais visitée aurait le même symptôme.
+    const reskinMap = () => {
       try {
         const layers = map.getStyle().layers ?? [];
         for (const l of layers) {
@@ -442,6 +448,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             try { map.setPaintProperty(l.id, "fill-color", SAHEL_COLORS.land); } catch {}
           }
           if (l.id.includes("admin-0")) {
+            try { map.setPaintProperty(l.id, "line-opacity", (l.id.includes("-bg") || l.id.includes("-disputed")) ? 0 : 1); } catch {}
             map.setPaintProperty(l.id, "line-color", SAHEL_COLORS.outline);
           }
           if (l.id.includes("admin-1")) {
@@ -452,6 +459,19 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           map.setPaintProperty("background", "background-color", SAHEL_COLORS.land);
         }
       } catch (e) { console.warn("[Sahel] reskin partial:", e); }
+    };
+
+    let reskinPending = false;
+    map.on("sourcedata", () => {
+      if (reskinPending) return;
+      reskinPending = true;
+      // Throttle léger (microtask) : plusieurs sourcedata arrivent en rafale par tuile, un seul
+      // reskin suffit à les couvrir toutes.
+      Promise.resolve().then(() => { reskinPending = false; reskinMap(); });
+    });
+
+    map.on("style.load", async () => {
+      reskinMap();
 
       // Charger sahel-admin1.geojson (32 regions)
       const res = await fetch(staticFile("_shared/geo-data/sahel/sahel-admin1.geojson"));
@@ -1675,12 +1695,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={5380} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.58} />
           </Sequence>
-          {/* SFX cedeao-snap REMIS (2026-07-01, cf AUDIT-AMELIORATIONS-P2.md A2/A3) : le support visuel
-              CEDEAO a été renforcé (marqueurs+flèches agrandis, Partie2Blocage.tsx) — le son a maintenant
-              un événement visuel clair à ponctuer. */}
-          <Sequence from={5639} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.42} />
-          </Sequence>
+          {/* SFX cedeao-snap RETIRÉ (2026-07-04, retour Aziz confirmé) : le visuel CEDEAO (marqueurs+
+              flèches, bande+flèches) est retiré entièrement de Partie2Blocage.tsx (pulse AES à la place),
+              ce SFX de craquement n'a donc plus de support visuel — parasite sans lui. */}
         </>
       )}
 
@@ -1741,6 +1758,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           {/* 3 pulses villes assiégées (Djibo/Ménaka/Tillabéri) — impact sourd, léger décalage */}
           <Sequence from={9790} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.48} />
+          </Sequence>
+          {/* compteurs coût humain (3M déplacés puis 15M+ insécurité) — tick par count-up, retour
+              Aziz 2026-07-04 : occasion manquée de SFX sur ces chiffres qui montent. */}
+          <Sequence from={10047 + 16} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/data/stat-tick.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={10047 + 100} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/data/stat-tick.mp3")} volume={0.5} />
           </Sequence>
           <Sequence from={9809} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />

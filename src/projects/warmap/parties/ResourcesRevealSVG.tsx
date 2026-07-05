@@ -6,7 +6,7 @@
 // Concept : objet-héros unique (bouclier AES) + 3 filons (or/uranium/pétrole) qui alimentent/renforcent
 // le bouclier — "le levier des ressources" qui permet aux 3 pays de tenir face aux sanctions.
 import React from "react";
-import { AbsoluteFill, interpolate, staticFile, Audio } from "remotion";
+import { AbsoluteFill, interpolate, staticFile, Audio, Sequence } from "remotion";
 
 const clampI = (f: number, a: number, b: number, lo = 0, hi = 1) =>
   interpolate(f, [a, b], [lo, hi], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -103,17 +103,19 @@ export const ResourcesRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width,
 
   return (
     <AbsoluteFill style={{ opacity: exitOp }}>
-      {/* FIX (2026-07-04) : `startFrom` TRIME le fichier SOURCE (pas un positionnement timeline) — avec
-          des offsets > durée du fichier (ink-spread=1.5s=45f), 2 des 3 Audio jouaient du SILENCE.
-          Pattern correct : startFrom={inAt} fixe + volume fenêtré en fonction du frame. Reste INAUDIBLE
-          au render même après ce fix (cause profonde non identifiée, cf même symptôme LiptakoRevealSVG) —
-          Aziz : pas prioritaire, ne pas s'acharner, laisser tel quel. */}
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
-        volume={(fr) => clampI(fr - inAt, 20, 24, 0, 0.3) * clampI(fr - inAt, 55, 65, 1, 0)} />
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
-        volume={(fr) => clampI(fr - inAt, 157, 161, 0, 0.28) * clampI(fr - inAt, 192, 202, 1, 0)} />
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
-        volume={(fr) => clampI(fr - inAt, 188, 192, 0, 0.28) * clampI(fr - inAt, 223, 233, 1, 0)} />
+      {/* Cause du bug 2026-07-04 identifiée : `startFrom` sur <Audio> trim le FICHIER SOURCE, il ne
+          positionne PAS dans la timeline (c'est `from` sur <Sequence> qui fait ça) — d'où "inaudible".
+          Fix (2026-07-04, retour Aziz : SFX importants, occasion manquée sans) : <Sequence from=...>
+          autour de chaque <Audio>, 1 son distinct par ressource (or/uranium/pétrole). */}
+      <Sequence from={inAt + 20} durationInFrames={45}>
+        <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} />
+      </Sequence>
+      <Sequence from={inAt + 157} durationInFrames={35}>
+        <Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.5} />
+      </Sequence>
+      <Sequence from={inAt + 188} durationInFrames={40}>
+        <Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.5} />
+      </Sequence>
 
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
         <defs>

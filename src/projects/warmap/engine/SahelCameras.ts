@@ -136,9 +136,13 @@ export const PARTIE2_CAM_KEYS: CamKey[] = [
   { f: 4200, lon:  0.80, lat: 17.40, zoom: 5.70 },
   { f: 4421, lon: -1.20, lat: 15.60, zoom: 5.55 },
   { f: 4955, lon: -1.50, lat: 12.40, zoom: 4.80 },
-  { f: 5380, lon:  8.50, lat: 16.50, zoom: 4.05 },
-  { f: 5520, lon:  6.00, lat: 15.00, zoom: 4.15 },
-  { f: 5640, lon:  2.00, lat: 12.80, zoom: 4.30 },
+  // Niger/CEDEAO (f5380-6118) — RE-ÉLARGI (2026-07-04, retour Aziz précisé après un 1er resserrement) :
+  // la menace CEDEAO a une vraie géographie (pays côtiers CI/Ghana/Bénin/Nigeria) qui doit être visible
+  // pour porter le pulse+flèches vers Niamey — le zoom serré (5.20-5.30, session précédente ce jour)
+  // ne montrait aucun de ces pays. Centre décalé sud pour cadrer golfe de Guinée + Niger ensemble.
+  { f: 5380, lon:  2.50, lat: 11.20, zoom: 4.35 },
+  { f: 5520, lon:  2.30, lat: 10.80, zoom: 4.30 },
+  { f: 5640, lon:  2.20, lat: 10.60, zoom: 4.28 },
 ];
 
 export const getPartie2Cam = (frame: number): { lon: number; lat: number; zoom: number } => {

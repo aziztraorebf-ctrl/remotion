@@ -1,10 +1,109 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-07-04 — ⛔⛔ **SESSION B QUASI TERMINÉE (branchement + fixes faits, render complet PAS ENCORE LANCÉ) — reste 1 point audio à traiter avant.** Voir section "✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04)" juste ci-dessous pour la reprise exacte. Les sections "SESSION A TERMINÉE" et "SESSION B — FIXES TECHNIQUES" qui suivent restent la référence détaillée de CE QUI a été demandé (la plupart est fait, quelques exceptions notées ci-dessous). La section "REPRISE 2026-07-01" après est HISTORIQUE (bug trous de frames déjà corrigé).
+**Dernière mise à jour :** 2026-07-05 — ✅✅✅ **VIDÉO VALIDÉE AZIZ, PROMUE `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`.** Reste 2 points avant publication effective : **thumbnail** + **titre** (prochaine session). Voir section "✅✅✅ SESSION C — ÉTAT (2026-07-05)" juste ci-dessous pour le détail complet de ce qui a été fait. Les sections plus anciennes restent la référence historique.
 **Branche :** `fix/senegal-v3-passe-finition` (⚠️ nom historique trompeur — toute la Session B War-Map Sahel
 a été faite ici, pas sur une branche dédiée `feat/warmap-aes-hook-integration` qui n'a en réalité jamais
 été créée/utilisée ; corrigé 2026-07-04, décision Aziz : documenter la réalité plutôt que déplacer les
-commits). **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+commits). **Format :** War-Map Long 16:9, ~7min30. Voix GéoAfrique V2 (V3→STS).
+
+---
+
+## ✅✅✅ PROCHAINE SESSION — DERNIERS POINTS AVANT PUBLICATION
+
+Vidéo finale validée par Aziz (2026-07-05), promue dans `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`
+(386 MB, 7min30, 13501 frames). Reste UNIQUEMENT :
+1. **Thumbnail** — à créer.
+2. **Titre** — à définir (cf `feedback_doctrine-titres-youtube-kora-cartes.md` pour la doctrine de titrage
+   du projet : fait+conséquence+cause inattendue, déclaratif > question).
+
+Une fois ces 2 points faits : programmer la publication (cf `memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md`
+pour la stratégie de distribution, `tools/trypost.md`/`tools/postiz.md` pour les outils de publication).
+
+---
+
+## ✅✅✅ SESSION C — ÉTAT (2026-07-04 → 2026-07-05, CONCLUE) — LIRE EN PREMIER À LA REPRISE
+
+### Fait et validé cette session
+1. **Fix audio "déjà" (P1, f2743)** : backup TTS resynthèse complète validé par Aziz à l'écoute (sans
+   réverb) splicé tel quel dans `narration-v5-expressive.mp3` — décalage de +2.67s assumé en aval SANS
+   retiming des triggers F_* (décision explicite Aziz : chantier disproportionné vs bénéfice, ajuster
+   seulement si un vrai problème de synchro apparaît au visionnage). Backup original :
+   `memory/episodes/warmap-sahel/audio-fixes/narration-v5-expressive-PRE-DEJA-SPLICE-2026-07-04.mp3`.
+2. **Premier render complet bout-en-bout** (Acte1+P1+P2+P3+P4, jamais fait avant cette session) —
+   continuité vérifiée à 100% par `check-frame-continuity.py`.
+3. **CEDEAO — 3e itération, direction actée** : après 2 tentatives rejetées (marqueurs+flèches hors-cadre
+   le 2026-07-01, bande+flèches avec triangles dans l'océan le 2026-07-04 tôt), direction validée par
+   Aziz : zoom élargi pour montrer les VRAIS contours des pays côtiers (Côte d'Ivoire/Ghana/Bénin/Nigeria,
+   extraits de `public/_shared/geo-data/world/world-atlas-countries-110m.json` via `topojson-client`,
+   ajoutés à `sahelCountries.ts`), leurs frontières PULSENT en rouge/ambre (`#D14E2E`), flèches convergentes
+   vers Niamey. Cartouche texte "MENACE D'INTERVENTION ARMÉE" ajouté PUIS retiré (retour Aziz : redondant
+   avec la voix). Code dans `Partie2Blocage.tsx` (bloc `cedeaoEndT`), caméra réélargie dans
+   `SahelCameras.ts` (`PARTIE2_CAM_KEYS`, f5380-5640).
+4. **Portraits dirigeants P4 (Goïta/Traoré/Tiani) refaits 2 fois** :
+   - 1re tentative (Gemini, style soldier-aes.png sans référence de ressemblance) : REJETÉE par Aziz —
+     visages génériques en treillis, pas les vraies illustrations stylisées des dirigeants.
+   - 2e tentative (validée) : vraies photos officielles téléchargées (Wikipedia/Commons, licence libre :
+     Goïta `Assimi_Goïta_in_July_2023.jpg`, Traoré `Ibrahim_Traoré_portrait.jpg`, Tiani
+     `Abdourahamane_Tchiani_in_2025.jpg`) puis restylisées via Recraft (`image_to_image` +
+     `remove_background`, style extrait de `soldier-aes.png` via `create_style`) — fidèles ET nettes au
+     downscale. Fichiers de prod remplacés, anciens (gravure fine floue) backupés dans
+     `memory/episodes/warmap-sahel/assets-backup/`.
+5. **SFX corrigés** (bug root-cause `startFrom` identifié — trim le fichier SOURCE, ne positionne PAS
+   dans la timeline ; `<Sequence from={...}>` est le pattern correct) : Liptako-Gourma (ping par drapeau),
+   Ressources (sons distincts or/uranium/pétrole), CFA (tension-pulse sur le maillon + swing léger de la
+   clé), coût humain P4 (tick sur les compteurs 3M/15M+).
+
+### ⛔ POINT OUVERT NON RÉSOLU — liseré blanc sur les frontières CEDEAO (mineur, pas bloquant)
+Les contours des 4 pays côtiers (CI/Ghana/Bénin/Nigeria) affichent un liseré blanc/crème fin en
+PERMANENCE (visible dès qu'ils entrent dans le cadre, indépendamment du pulse rouge qui, lui, fonctionne
+bien par-dessus). **Confirmé indépendant de mon code** : désactivé le bloc CEDEAO complet (`{false && ...}`)
+et re-rendu la même frame → liseré identique, donc c'est un résidu du fond de carte Mapbox natif, pas le
+pulse/flèches ajoutés cette session.
+**Pistes déjà éliminées par test direct (pas supposition)** :
+- Le "reskin en continu" (listener `sourcedata` réappliquant le style à chaque tuile chargée, ajouté
+  cette session dans `SahelWarMapEngine.tsx`) — aucun changement de pixel avant/après.
+- Layer `admin-0-boundary-bg` (halo de fond) forcé à `line-opacity: 0` — aucun changement.
+- Layer `admin-0-boundary-disputed` forcé à `line-opacity: 0` — aucun changement.
+**Layers Mapbox confirmées présentes** (loggées au runtime) : `admin-1-boundary-bg`, `admin-0-boundary-bg`,
+`admin-1-boundary`, `admin-0-boundary`, `admin-0-boundary-disputed` — toutes couvertes par le filtre
+`l.id.includes("admin-0")` du reskin, sans effet sur ce liseré précis. Cause réelle non identifiée à la
+fin de cette session. Décision Aziz : documenter et avancer, pas bloquant visuellement (pulse+flèches
+lisibles par-dessus), à reprendre si le temps le permet ou si ça gêne au montage final.
+
+### ✅✅✅ 2 DERNIERS FIXES APPLIQUÉS + VALIDÉS (2026-07-05) — VIDÉO FINALE VALIDÉE
+Après un 2e visionnage complet du render v3, Aziz a signalé 2 derniers points, tous deux corrigés,
+validés en mini-render, puis un render complet final relancé et validé :
+
+1. **Hook "3" (Acte1) décentré vers le bas** — mesure pixel précise (`Acte1IntroSlam.tsx`) : centre réel
+   du glyphe à 652px/1080 au lieu de 540px attendu. La compensation optique existante
+   (`bigFontSize * 0.06`, ajoutée le 2026-07-01) était très insuffisante. Recalée à `bigFontSize * 0.183`
+   après itération mesurée (652px → 500px → 529.5px, écart final <1% de la hauteur). Fichier :
+   `src/projects/warmap/_shared/Acte1IntroSlam.tsx`.
+2. **Doublon audio "d'anciennes tensions entre communautés couvent encore"** (P1, ~96-99s narration) —
+   **cause root confirmée par force-alignment Whisper** (`scripts/tools/whisper-align.py`, ~$0.02/run) :
+   le backup TTS resynthétisé pour le fix "déjà" (session précédente) contenait déjà cette phrase à sa
+   fin (le texte demandé pour la resynthèse incluait toute la phrase, pas juste le mot), ET le
+   `post-splice.mp3` de l'époque commençait à 94.18s (AVANT cette phrase dans l'original), donc les deux
+   segments collés se chevauchaient en CONTENU, pas juste en timing. Fix : re-splice avec la bonne borne
+   post-splice à 97.20s (juste après "encore." dans l'original, cf `narration-v5-alignment.json` pré-
+   splice) au lieu de 94.18s. Vérifié par transcription Whisper : 1 seule occurrence après fix. Ancien
+   fichier avec doublon backupé : `memory/episodes/warmap-sahel/audio-fixes/
+   narration-v5-expressive-AVEC-DOUBLON-2026-07-05.mp3`.
+
+⭐ **LEÇON MÉTHODE** : le force-alignment (transcription automatique avec timestamps) est BEAUCOUP plus
+fiable que le calcul manuel de mapping timestamp↔frame pour diagnostiquer un problème audio précis — a
+permis de trancher en quelques minutes ce qu'une investigation manuelle n'aurait fait que deviner.
+Réutilisable pour tout futur doute sur un doublon/décalage audio : extraire la zone suspecte en clip
+court, lancer `scripts/tools/whisper-align.py`, lire le texte+timestamps exact.
+
+### ✅✅✅ VIDÉO FINALE VALIDÉE AZIZ (2026-07-05) — PROMUE PRET-PUBLICATION
+Render complet final (`FULL-acte1-p1-p2-p3-p4-2026-07-05-SessionC-v4-FINAL.mp4`, 13501 frames, 7min30)
+validé Aziz sans réserve après ces 2 derniers fixes. Promu vers
+`out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`. Dossier `wip/` purgé (58 fichiers intermédiaires,
+3.4GB) conformément à l'hygiène `out/` du projet.
+
+**Reste avant publication effective (prochaine session)** : thumbnail + titre. Voir section
+"PROCHAINE SESSION" en tête de fichier.
 
 ---
 

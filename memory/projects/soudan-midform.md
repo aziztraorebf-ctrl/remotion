@@ -81,6 +81,37 @@ UA, ONU : cercle fermé. Les acteurs qui pourraient forcer la paix (EAU, Turquie
 
 ---
 
+## ⭐ IDÉE VISUELLE À EXPLORER — INSERT "WARGAME" plein écran pour mouvements militaires complexes (2026-07-05)
+
+Idée d'Aziz en clôturant War-Map Sahel AES : pour des mouvements militaires trop complexes à lire en
+top-down géographique réel (ex. **Acte 2** : impasse militaire, manœuvres d'encerclement autour d'El-Fasher/
+Darfour — PAS l'Acte 3 qui reste un jeu de 2 flèches simples, déjà bien couvert), emprunter le langage
+visuel des chaînes wargame (type Kings and Generals / Bazbattle / jeux Hearts of Iron) : vue plan/carte
+d'état-major stylisée, blocs/unités qui manœuvrent, flèches de percée/encerclement — PAS un remplacement
+du moteur carte géographique, un **insert ponctuel ADDITIONNEL** (même famille que `LiptakoRevealSVG`/
+`CfaRevealSVG` de War-Map Sahel : plein écran, quelques secondes, sur un beat précis où la vraie
+géographie est plus un obstacle qu'une aide à la lecture).
+
+**Ce qu'on garde absolument** (Aziz explicite : « stupide de ne plus les avoir ») : les jetons/sprites
+prouvés sur AES (chars/avions/figures qui bougent via `interpolate()` frame-driven, jamais CSS/easeTo) —
+l'insert wargame est un COMPLÉMENT pour les beats de manœuvre complexe, pas un remplacement du reste.
+
+**Pistes de forme à trancher en pré-production (INTENTION→FORME→TEMPLATE, ne pas sauter à l'implémentation)** :
+- Vue carte d'état-major (parchemin/kaki, pas satellite) avec blocs géométriques simples (rectangles/
+  losanges type NATO symbol) plutôt que sprites détaillés — lisibilité du mouvement > réalisme.
+- Flèches d'encerclement/pince = le geste visuel central (2 flèches convergentes sur un point = "prise en
+  tenaille", cohérent avec le langage déjà validé sur AES pour CEDEAO).
+- Question ouverte : carte Soudan réelle vue top-down stylisée (garde un ancrage géo) VS diagramme
+  abstrait complet (zéro géo, pur schéma tactique) — à trancher via un mini-prototype avant d'écrire le
+  script de l'Acte 2, pas en supposant.
+
+**À faire en début de pré-production Soudan** : chercher 2-3 références visuelles concrètes (chaînes
+citées par Aziz : Kings and Generals, Bazbattle) pour calibrer le medium (cf méthode `SVG-SCENES-GENERATIVES.md`
+§ idéation Kimi multimodal — joindre des frames de référence, PAS pour copier, pour calibrer la faisabilité),
+puis proto minimal avant tout script définitif de l'Acte 2.
+
+---
+
 ## RÉUTILISATION STACK
 
 - Moteur War-Map `SahelWarMapEngine` → 80% réutilisable (confirmé `memory/projects/peste-1347-midform.md`)

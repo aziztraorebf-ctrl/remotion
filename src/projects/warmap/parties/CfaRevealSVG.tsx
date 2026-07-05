@@ -10,7 +10,7 @@
 // pilotage par frame ABSOLU + inAt (pas de useCurrentFrame local), tension-drone RETIRÉ (SFX banni,
 // décision Aziz 2026-06-27 — cf memory/episodes/warmap-sahel/STATUS.md).
 import React from "react";
-import { AbsoluteFill, interpolate, spring, staticFile, Audio } from "remotion";
+import { AbsoluteFill, interpolate, spring, staticFile, Audio, Sequence } from "remotion";
 
 const ENCRE = "#4A2E1B";
 const PARCHEMIN = "#F4EFE6";
@@ -167,6 +167,10 @@ export const CfaRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width, heigh
   const lysScale = f >= 90 ? 0.6 + 0.4 * lysSpring : 0;
   const lysOp = clampI(f, 90, 105);
   const cleOp = clampI(f, 95, 115);
+  // Balancier léger et continu de la clé (retour Aziz 2026-07-04 : "occasion manquée" de dynamisme sur
+  // un objet inerte qui reste figé) — pivote autour de l'anneau d'attache (245,214), amplitude faible,
+  // cohérent avec la doctrine "objet inerte ne glisse jamais" (il oscille sur son point fixe, pas de dérive).
+  const cleSwing = f >= 95 ? Math.sin((f - 95) * 0.045) * 2.2 : 0;
   const parisTxtOp = clampI(f, 90, 105);
   const chaineStart = 92;
   const chainePerMaillon = 4.2;
@@ -194,10 +198,20 @@ export const CfaRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width, heigh
 
   return (
     <AbsoluteFill style={{ backgroundColor: PARCHEMIN }}>
-      {/* SFX ponctuels seulement (tension-drone RETIRÉ — banni, décision Aziz 2026-06-27) */}
-      <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} startFrom={inAt} volume={0.4} />
-      <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} startFrom={inAt}
-        volume={(fr) => clampI(fr - inAt, 86, 92, 0, 0.32) * clampI(fr - inAt, 120, 135, 1, 0)} />
+      {/* SFX ponctuels seulement (tension-drone RETIRÉ — banni, décision Aziz 2026-06-27). Fix bug
+          startFrom (trim source, pas positionnement timeline — même cause que Liptako/Ressources) :
+          <Sequence from=...> pour chaque SFX. + tension-pulse ajouté sur le maillon qui vibre/tend
+          (retour Aziz 2026-07-04 : autre occasion de dynamisme sur la scène). */}
+      <Sequence from={inAt} durationInFrames={20}>
+        <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.5} />
+      </Sequence>
+      <Sequence from={inAt + 86} durationInFrames={49}>
+        <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")}
+          volume={(fr) => clampI(fr, 0, 6, 0, 0.5) * clampI(fr, 34, 49, 1, 0)} />
+      </Sequence>
+      <Sequence from={inAt + 206} durationInFrames={30}>
+        <Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.5} />
+      </Sequence>
 
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
         <g opacity={collineWarm}>
@@ -233,7 +247,7 @@ export const CfaRevealSVG: React.FC<Props> = ({ frame, inAt, outAt, width, heigh
         </g>
         <Grp body={TXT_PARIS} opacity={parisTxtOp} />
 
-        <Grp body={CLE} opacity={cleOp} />
+        <Grp body={CLE} opacity={cleOp} style={{ transformOrigin: "245px 214px", transform: `rotate(${cleSwing}deg)` }} />
 
         {CHAINE_MAILLONS.map((m, i) => {
           const isLast = i === CHAINE_MAILLONS.length - 1;
