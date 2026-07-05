@@ -241,6 +241,7 @@ import { ProtoCueilletteGrosPlan16x9, PROTO_CUEILLETTE_GROS_PLAN_FRAMES } from "
 import { PecheurSurpeche16x9, PECHEUR_SURPECHE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpeche16x9";
 import { PecheurSurpecheSeedance16x9, PECHEUR_SEEDANCE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpecheSeedance16x9";
 import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
+import { ProtoInsertTactiqueTopDown, PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertTactiqueTopDown";
 import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
 import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
 import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
@@ -354,6 +355,9 @@ import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepo
 import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
 import { WarmapCfaInsertSVG, WARMAP_CFA_INSERT_FRAMES } from "./projects/warmap/parties/WarmapCfaInsertSVG";
+import { LiptakoRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/LiptakoRevealSVG9x16";
+import { ResourcesRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/ResourcesRevealSVG9x16";
+import { CtaCard } from "./projects/warmap/shorts/aes-short-90s/CtaCard";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -2070,6 +2074,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-PecheurSurpeche16x9" component={PecheurSurpeche16x9} durationInFrames={PECHEUR_SURPECHE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-PecheurSurpecheSeedance16x9" component={PecheurSurpecheSeedance16x9} durationInFrames={PECHEUR_SEEDANCE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoInsertTactiqueTopDown" component={ProtoInsertTactiqueTopDown} durationInFrames={PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />
@@ -3421,6 +3426,36 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
+      <Composition
+        id="Test-LiptakoRevealSVG9x16"
+        component={() => {
+          const frame = useCurrentFrame();
+          return <LiptakoRevealSVG9x16 frame={frame} inAt={0} outAt={700} width={1080} height={1920} fps={30} />;
+        }}
+        durationInFrames={700}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="CtaCard-V"
+        component={CtaCard}
+        durationInFrames={235}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Test-ResourcesRevealSVG9x16"
+        component={() => {
+          const frame = useCurrentFrame();
+          return <ResourcesRevealSVG9x16 frame={frame} inAt={0} outAt={790} width={1080} height={1920} fps={30} />;
+        }}
+        durationInFrames={790}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
 
     </>
   );

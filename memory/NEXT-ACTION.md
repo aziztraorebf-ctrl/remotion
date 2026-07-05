@@ -1,7 +1,22 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-05 (Senegal V3 TERMINE + PRET-PUBLICATION — plus d'action technique en attente).
+> Mis a jour : 2026-07-05 (Short AES 90s V1 REJETE par Aziz — repartir en V2, voir section juste dessous).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## ⛔⭐⭐ SHORT AES 90s — PRIORITÉ REPRISE IMMÉDIATE — V1 REJETÉE (2026-07-05)
+
+> Prototype Short "L'AES en 90 secondes" (script+audio+timing validés) mais V1 utilise des composants
+> Mapbox GÉNÉRIQUES (`_shared/mapbox/PulsingRegionFill|DominoContagionFill|FlagDissolveTransition`) pour
+> les beats 1/2/3/4/5+6 → incohérence visuelle totale avec la vraie vidéo longue (carte grise brute,
+> drapeau France/Russie hors-sujet, style diaporama qui saute d'un plan à l'autre). Retour Aziz : repartir
+> en RE-MONTAGE STYLÉ — extraire de VRAIS clips/frames de `warmap-sahel-aes-FINAL.mp4` pour ces beats,
+> pas des gabarits Mapbox neutres. **Plan de reprise complet + repères de frames déjà identifiés** :
+> `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V2-REPRISE.md` — lire ce fichier AVANT de recoder.
+> Ce qui reste valide (ne pas refaire) : script FR + audio GéoAfrique (91.86s) + beats 7/8/10 (Liptako/
+> Ressources/CTA, déjà basés sur les vrais assets) + 3 fixes de bugs Mapbox (`continueRender` avant
+> `map.once("idle")`, utiles pour tout le projet).
 
 ---
 

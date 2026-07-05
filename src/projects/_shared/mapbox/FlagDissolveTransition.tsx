@@ -2,8 +2,8 @@
 // Un pays passe d'un drapeau a un autre (territoire conteste, changement d'influence, BRICS/AES...).
 // Technique : 2 layers superposes, opacite A→(1-t) et B→t, canvas pur pour les deux.
 
-import React, { useEffect, useRef } from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import React, { useEffect, useRef, useState } from "react";
+import { AbsoluteFill, continueRender, delayRender, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
@@ -63,6 +63,7 @@ export const FlagDissolveTransition: React.FC<FlagDissolveTransitionProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef       = useRef<mapboxgl.Map | null>(null);
   const setupRef     = useRef(false);
+  const [handle] = useState(() => delayRender("FlagDissolveTransition: waiting for Mapbox style+idle", { timeoutInMilliseconds: 45000 }));
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -74,6 +75,8 @@ export const FlagDissolveTransition: React.FC<FlagDissolveTransitionProps> = ({
       center, zoom: baseZoom, pitch: basePitch, bearing: bearingStart,
       interactive: false, attributionControl: false, fadeDuration: 0,
     });
+
+    const safetyTimeout = setTimeout(() => continueRender(handle), 40000);
 
     map.on("style.load", () => {
       try {
@@ -115,17 +118,35 @@ export const FlagDissolveTransition: React.FC<FlagDissolveTransitionProps> = ({
           }
         }
 
-        // 2 layers par pays : from et to
+        // 2 layers par pays : from et to. Opacite CALCULEE POUR LA FRAME COURANTE des la creation
+        // — necessaire car en rendu still/headless, le useEffect "Engine frame" plus bas peut ne
+        // jamais s'executer avant la capture (pas de vrai cycle de re-render continu comme en
+        // preview). Sans ca, les drapeaux restaient bloques a l'opacite initiale (0).
         for (const c of countries) {
           const iso = c.iso.toUpperCase();
           const filter = countryFilter(iso, c.boundaryIsos ?? []);
+
+          const maxOp0 = c.opacity ?? 0.80;
+          const dur0   = c.dissolveDur ?? 45;
+          const introFrames0 = Math.min(40, c.dissolveAt);
+          const introOp0 = Math.min(1, frame / Math.max(1, introFrames0));
+          let fromOp0 = introOp0 * maxOp0;
+          let toOp0 = 0;
+          let borderOp0 = introOp0;
+          if (frame >= c.dissolveAt) {
+            const dt0 = Math.min(1, (frame - c.dissolveAt) / dur0);
+            const eased0 = 1 - Math.pow(1 - dt0, 2);
+            fromOp0 = (1 - eased0) * maxOp0;
+            toOp0 = eased0 * maxOp0;
+            borderOp0 = 1.0;
+          }
 
           if (!map.getLayer(`dis-from-${iso}`)) {
             map.addLayer({
               id: `dis-from-${iso}`, type: "fill",
               source: "cb", "source-layer": "country_boundaries",
               filter,
-              paint: { "fill-pattern": `flag-${c.fromIso.toUpperCase()}`, "fill-opacity": 0 },
+              paint: { "fill-pattern": `flag-${c.fromIso.toUpperCase()}`, "fill-opacity": fromOp0 },
             });
           }
           if (!map.getLayer(`dis-to-${iso}`)) {
@@ -133,7 +154,7 @@ export const FlagDissolveTransition: React.FC<FlagDissolveTransitionProps> = ({
               id: `dis-to-${iso}`, type: "fill",
               source: "cb", "source-layer": "country_boundaries",
               filter,
-              paint: { "fill-pattern": `flag-${c.toIso.toUpperCase()}`, "fill-opacity": 0 },
+              paint: { "fill-pattern": `flag-${c.toIso.toUpperCase()}`, "fill-opacity": toOp0 },
             });
           }
           if (!map.getLayer(`dis-border-${iso}`)) {
@@ -141,17 +162,26 @@ export const FlagDissolveTransition: React.FC<FlagDissolveTransitionProps> = ({
               id: `dis-border-${iso}`, type: "line",
               source: "cb", "source-layer": "country_boundaries",
               filter,
-              paint: { "line-color": c.borderColor ?? GOLD, "line-width": 2.0, "line-opacity": 0 },
+              paint: { "line-color": c.borderColor ?? GOLD, "line-width": 2.0, "line-opacity": borderOp0 },
             });
           }
         }
 
         setupRef.current = true;
       } catch (_e) {}
+
+      // Attendre "idle" (tuiles reellement peintes) avant de lever le delayRender — sinon en
+      // rendu still headless, Remotion capture la frame AVANT que Mapbox ait fini de dessiner le
+      // fond de carte (style.load se declenche des que le JSON de style est charge, pas quand les
+      // tuiles sont rendues). Pattern valide sur PulsingRegionFill.tsx / DominoContagionFill.tsx.
+      map.once("idle", () => {
+        clearTimeout(safetyTimeout);
+        continueRender(handle);
+      });
     });
 
     mapRef.current = map;
-    return () => { map.remove(); mapRef.current = null; setupRef.current = false; };
+    return () => { clearTimeout(safetyTimeout); map.remove(); mapRef.current = null; setupRef.current = false; };
   }, []);
 
   // Engine frame

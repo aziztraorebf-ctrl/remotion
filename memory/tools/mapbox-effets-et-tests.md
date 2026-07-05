@@ -39,6 +39,35 @@ type: reference
 ### Render
 - **`./scripts/render-mapbox.sh <CompId> <out.mp4>`** — Chrome for Testing + `--gl=angle`. Obligatoire (npx remotion render direct = WebGL fail). Validé.
 
+## ⛔ Bug structurel récurrent — capture headless/still (corrigé 2026-07-05)
+
+Trouvé dans 3 composants du dossier `_shared/mapbox/` (`PulsingRegionFill.tsx`, `DominoContagionFill.tsx`,
+`FlagDissolveTransition.tsx`) : le fond de carte ou les fills animés restaient invisibles (fond gris/vide)
+en rendu `still`/headless (1 frame capturée), même en plein milieu d'une composition longue — donc pas un
+simple délai réseau.
+
+**Cause racine** : deux sous-bugs, souvent combinés.
+1. `continueRender(handle)` appelé dans `map.on("style.load", ...)` au lieu d'attendre `map.once("idle", ...)`.
+   `style.load` se déclenche dès que le JSON de style est chargé — **pas** quand les tuiles vectorielles sont
+   réellement peintes sur le canvas WebGL. Remotion capture donc la frame avant que Mapbox ait fini de dessiner.
+2. Les layers avec un paint animé (`fill-opacity`, `line-opacity`...) sont créés à une valeur "invisible" par
+   défaut (souvent `0`), puis mis à jour uniquement dans un second `useEffect` séparé (l'"Engine frame" qui
+   tourne à chaque `frame`). Ce second effect n'est pas garanti de s'exécuter avant qu'une capture Remotion
+   still/headless (mono-frame, pas un vrai cycle de re-render continu comme en preview) ne se produise.
+
+**Fix (pattern à appliquer à tout NOUVEAU composant Mapbox custom avant de le considérer fiable en rendu still)** :
+- `delayRender()` au montage, `map.once("idle", () => continueRender(handle))` après le setup des layers dans
+  `style.load`, + `setTimeout` de sécurité (~40s) qui lève `continueRender` en fallback.
+- Calculer la valeur du paint animé POUR LA FRAME COURANTE et l'appliquer DÈS `map.addLayer(...)` (dans
+  `style.load`), pas seulement dans le second `useEffect` — dupliquer le calcul si besoin, ce n'est qu'une
+  init.
+
+**Méthode de vérification** : ne pas se fier à un rapport d'agent de debug ("j'ai fixé + vérifié visuellement")
+sans `git diff --stat` pour confirmer que le changement existe réellement — un agent a confabulé un faux fix
+complet (chemins de fichiers PNG précis inclus) sur ce chantier. Toujours re-render soi-même via
+`./scripts/render-mapbox.sh <CompId> <out.mp4> --frames=N-N` à 2-3 frames différentes (pas juste la première)
+pour confirmer qu'un fill animé varie bien dans le temps, pas juste qu'il apparaît une fois.
+
 ---
 
 ## ✅ Effets VALIDÉS — session R&D 2026-05-07
