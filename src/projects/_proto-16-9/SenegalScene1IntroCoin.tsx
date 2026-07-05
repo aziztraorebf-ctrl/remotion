@@ -50,7 +50,6 @@ const tl = (s: number) => Math.round((s - OFFSET) * 30);
 const F_FLIP_S  = 200;   // 6.66s local (39.88-32.62-0.6 : demarre juste avant "reprend" pour arriver pile dessus)
 const F_FLIP_E  = 248;   // 8.26s local : flip fini
 const F_FISSURE = 319;   // 10.62s local : sur "la realite se joue ailleurs" (43.24s abs)
-const F_VERDICT = 331;   // 11.02s local : accompagne la cassure
 const F_OUT     = 467;   // 15.56s local : sortie APRES "...en direct" (48.18s abs), avant gisements (49.50s)
 // TOTAL etendu (chantier 2 passe finition, valide Aziz 2026-07-04 apres comparaison A/B) : le fondu
 // outVeil de sc.1a couvre "Premiere chose a comprendre...trouve trois." (49.54->53.70s abs) au lieu
@@ -97,10 +96,6 @@ export const SenegalScene1IntroCoin: React.FC = () => {
   // ecartement des deux moities (px) une fois fendue
   const split = fissureEase * 26;
   const splitTilt = fissureEase * 2.5; // leger basculement de chaque moitie
-
-  const verdictP = spring({ frame: frame - F_VERDICT, fps, config: { damping: 14, stiffness: 150 }, durationInFrames: 16 });
-  const verdictOp = ease(verdictP);
-  const verdictScale = interpolate(verdictP, [0, 1], [0.96, 1], { extrapolateRight: "clamp" });
 
   const outVeil = interpolate(frame, [F_OUT, TOTAL], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   // halo couleur (rouge->or au flip)
@@ -169,9 +164,15 @@ export const SenegalScene1IntroCoin: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: NAVY }}>
       {/* narration : coupee APRES "...en direct" (48.95s absolu) pour ne pas enchainer sur "Premiere chose a comprendre" (gisements) */}
-      {/* endAt etendu a 53.9s (chantier 2, valide Aziz) pour couvrir "Premiere chose a comprendre...
-          trouve trois." pendant le fondu de sortie, au lieu de 48.95s (juste apres "en direct."). */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} endAt={Math.round(53.9 * 30)} volume={1} />
+      {/* endAt = 53.88s (RE-CORRIGE ROUND 2 2026-07-05, bug "trois" coupe) : les 2 essais precedents
+          (endAt=53.9s round1 -> repetition ; endAt=53.70s+fade round2 -> coupure encore percue par
+          Aziz malgre le fade) coupaient tous les deux EN PLEIN MILIEU du mot "trois." (start=53.68s,
+          end=53.88s, forced-align-v3.json global). Fix definitif : endAt remonte a 53.88s = FIN REELLE
+          ET NATURELLE du mot, zero coupure en plein son (le fade-out precedent ne pouvait pas masquer
+          une coupure a l'INTERIEUR d'un son actif). Pour eviter la repetition, gisements retarde
+          desormais SEULEMENT son Audio narration de 5 frames (voir SceneGisementsV3.tsx) — SANS toucher
+          AUDIO_START qui pilote sa choregraphie interne (Sangomar/GTA/Yakaar). */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} endAt={Math.round(53.88 * 30)} volume={1} />
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")} startFrom={Math.round(AUDIO_START * 30)} volume={0.14} />
       <Sequence from={F_FLIP_S} durationInFrames={40}><Audio src={staticFile("souverain/senegal-petrole-gaz/audio/sfx/sfx-whoosh-transition.mp3")} volume={0.4} /></Sequence>
       <Sequence from={F_FISSURE} durationInFrames={40}><Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.55} /></Sequence>
@@ -285,35 +286,9 @@ export const SenegalScene1IntroCoin: React.FC = () => {
         );
       })()}
 
-      {/* === LABEL DE RECIT transitoire SOUS la piece (nomme le recit, apparait en fade 2-3s puis disparait) ===
-           Face A = "LA MALEDICTION" · Face B = "L'ELDORADO". Ponctuation, pas annotation. */}
-      {!broken && (() => {
-        // Face A : apparait tot, tient jusqu'a l'approche du flip, disparait avant la suite. Face B : apparait apres le flip.
-        // recompresse (bug #1) : fenetre avant pompent/flip au lieu de l'ancienne tl(2.0..9.5).
-        const aOp = showA
-          ? interpolate(frame, [16, 28, 110, 130], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-          : 0;
-        const bOp = !showA
-          ? interpolate(frame, [F_FLIP_E + 6, F_FLIP_E + 20, F_FISSURE - 18, F_FISSURE - 6], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-          : 0;
-        const op = showA ? aOp : bOp;
-        if (op < 0.01) return null;
-        const word = showA ? "LA MALÉDICTION" : "L'ELDORADO";
-        return (
-          <div style={{ position: "absolute", left: 0, right: 0, top: H * 0.85, textAlign: "center", opacity: op, transform: `translateY(${(1 - op) * 10}px)`, pointerEvents: "none",
-            fontFamily: "Cinzel, serif", fontSize: 52, fontWeight: 700, letterSpacing: "0.24em", color: showA ? "#d98a5c" : OCRE, textShadow: "0 2px 16px #000, 0 0 30px rgba(0,0,0,0.8)" }}>
-            {word}
-          </div>
-        );
-      })()}
-
-      {/* verdict — "L'ENVERS DU DECOR" (epouse "la realite se joue ailleurs") */}
-      {verdictOp > 0.01 && (
-        <div style={{ position: "absolute", left: 0, right: 0, top: H * 0.8, textAlign: "center", opacity: verdictOp, transform: `scale(${verdictScale})`, pointerEvents: "none",
-          fontFamily: "'Bebas Neue','Impact',sans-serif", fontSize: 84, fontWeight: 700, color: IVORY, letterSpacing: "0.06em", textShadow: "0 3px 18px #000" }}>
-          L'ENVERS DU DÉCOR
-        </div>
-      )}
+      {/* Labels de recit ("LA MALEDICTION"/"L'ELDORADO") + verdict ("L'ENVERS DU DECOR") SUPPRIMES
+          (retour Aziz ROUND 2 2026-07-04) : la scene ne garde que la piece elle-meme, sans texte
+          surimpose pendant la choregraphie flip/fissure. */}
 
       {outVeil > 0.01 && <AbsoluteFill style={{ background: NAVY_DEEP, opacity: outVeil }} />}
     </AbsoluteFill>

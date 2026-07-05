@@ -1316,7 +1316,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="SceneGisementsV3"
             component={SceneGisementsV3}
-            durationInFrames={2122}
+            durationInFrames={2086}
             fps={30}
             width={1920}
             height={1080}

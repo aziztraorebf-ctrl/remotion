@@ -34,16 +34,18 @@ import { BarilJaugeIcon } from "../../../_shared/thumbnails/icons/BarilJaugeIcon
 
 const { fontFamily: BEBAS } = loadBebas();
 
-// CORRIGE 2026-07-04 (passe de finition, chantiers #2+#3 REPRISE-PASSE-FINITION.md, valide Aziz apres
-// comparaison Option A/B) : "Premiere chose a comprendre...trouve trois." (49.54->53.70s abs) est
-// desormais couverte par le FONDU DE SORTIE ETENDU de sc.1a (SenegalScene1IntroCoin, TOTAL=641f) —
-// PAS par un pre-roll navy uni dans cette scene (juge "ne fait pas de sens" par Aziz : rester sur le
-// plan precedent qui bouge > fond fixe). AUDIO_START demarre donc directement sur "Le premier s'appelle
-// Sangomar." (53.70s, forced-align propre scene1-realign-2026-07-04.json, loss 0.26) — plus de
-// dedoublement de texte avec sc.1a. Le contenu visuel garde un court PRE_ROLL (58f=1.93s, recalcule
-// pour ce nouvel AUDIO_START) le temps que le fondu de sc.1a finisse de s'estomper a l'ecran.
+// CORRIGE ROUND 2 2026-07-04 (bug B, retour Aziz : mot "trois" repete a la jonction sc.1a->gisements) :
+// le chevauchement venait de sc.1a (SenegalScene1IntroCoin, endAt=53.9s) qui rejouait la fin du mot
+// "trois." (forced-align-v3.json global, le plus fiable : trois. start=53.68s end=53.88s) DEJA couverte
+// par le redemarrage de gisements a AUDIO_START=53.70s. Fix applique cote sc.1a (endAt ramene a 53.70s,
+// pile la fin du mot) plutot que de deplacer AUDIO_START ici — evite de decaler les ~15 beats internes
+// (Sangomar/GTA/Yakaar/pivot 60%) cales a la main sur ce point zero. AUDIO_START/END INCHANGES.
+// PRE_ROLL SUPPRIME ROUND 2 2026-07-05 (retour Aziz, meme session) : maintenant que le mot "trois" tombe
+// parfaitement (sc.1a joue le mot en entier, cf. plus bas), Aziz demande de retirer le fondu de
+// transition — passer directement de sc.1a a la carte Sangomar sans ecran gris intermediaire.
+// PRE_ROLL etait 58f (round 1) -> 20f (round 2, reduction) -> 0f (round 2, suppression complete).
 const AUDIO_START = 53.70;
-const PRE_ROLL = 58; // 1.93s : raccord de fondu avec la fin de sc.1a, avant l'arrivee sur Sangomar
+const PRE_ROLL = 0;
 const NAVY = "#16213a", GOLD = "#c8a951", GREY = "#5a5a5a", IVORY = "#f2efe6";
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const W = 1920, H = 1080;
@@ -74,12 +76,16 @@ const A3 = 1090;  // YAKAAR (la voix dit "un troisieme champ, Yakaar" ~f1090-115
 //   "environ 60%" 108.5s=f1695 · "60% la moyenne" 113s=f1830 · "ni scandale ni jackpot" 117.5s=f1965
 //   "ne dit rien" 120s=f2040 · "du resultat" 122s=f2100 · (scene 2 "regardons trois" 122.5s=f2115)
 const PIV = 1500;  // debut voile carte (recouvre la toute fin de Yakaar f1515, transition douce)
-// END RECALCULE 2026-07-04 (chantier 10, bug de re-dedoublement decouvert a l'assemblage complet) :
-// quand AUDIO_START est passe de 49.5 a 53.70 (chantier 2 Option A), END n'avait PAS ete recalcule en
-// consequence -> la scene rejouait "...decide vraiment du resultat, avant de juger..." EN DOUBLE avec
-// sc.2 (confirme par whisper medium sur le montage assemble). END doit TOUJOURS verifier :
-// AUDIO_START + END/30 = 122.5s abs (fin sur "decide", avant que sc.2 ne reprenne "vraiment du resultat").
-const END = 2064;  // +504f / ~16.8s : "Reste la vraie question..." -> "...ce qui decide" (122.5s abs)
+// END ETENDU ROUND 2 2026-07-05 (retour Aziz : silence/coupure bizarre sur "...qui decide [SILENCE]
+// vraiment du resultat"). Cause : endAt narration coupait a 122.5s (pile apres "decide"), mais la
+// COMPOSITION continuait jusqu'a 123.17s (PRE_ROLL+ancien END) SANS narration -> "vraiment du resultat."
+// (122.56->123.74s) n'etait joue nulle part (sc.2/SceneComparaisonV3 ne reprend qu'a partir de son
+// propre demarrage physique dans le montage, pas de narration@122s). Fix : END etendu pour couvrir
+// toute la composition jusqu'a 123.90s (couvre "resultat." + marge de silence naturel), endAt de
+// l'Audio suit plus bas. Cote SceneComparaisonV3 : narration retardee (Sequence) pour ne pas rejouer
+// "vraiment du resultat" en double (cf. commentaire dans ce fichier la-bas). AUDIO_START + (PRE_ROLL+
+// END)/30 doit TOUJOURS = 123.90s abs.
+const END = 2086;  // (123.90 - 53.70)*30 - PRE_ROLL = 2086f
 
 // ────────────────────────────────────────────────────────────────────────────
 //  brightenMap — eclaircit le fond de carte APRES applyGeoAfriqueV5 (override LOCAL, ne touche pas
@@ -144,12 +150,37 @@ export const SceneGisementsV3: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      {/* endAt AJOUTE 2026-07-04 (chantier 10) : sans lui, l'audio jouait jusqu'a la fin du RENDER
-          (PRE_ROLL+END=2122f=70.73s apres AUDIO_START=53.70 -> 124.43s), au-dela du point voulu 122.5s
-          ("...ce qui decide"), rejouant "avant de juger le Senegal, regardons trois" DEJA dans sc.2. */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={AUDIO_START * fps} endAt={Math.round(122.5 * fps)} />
+      {/* endAt etendu a 123.90s abs ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat") :
+          couvre desormais "...ce qui decide vraiment du resultat." en entier (fin reelle 123.74s) + une
+          marge de silence naturel, au lieu de couper a 122.5s (pile apres "decide", laissant le reste
+          dans un trou). SceneComparaisonV3 retarde sa propre narration en consequence (pas de doublon).
+          Demarrage RETARDE DE 5 FRAMES (bug "trois" re-corrige, meme session) : SenegalScene1IntroCoin
+          joue desormais le mot "trois." EN ENTIER jusqu'a sa fin naturelle (endAt=53.88s, plus de
+          coupure en plein son). Pour ne pas le REJOUER en double ici, cette Audio demarre a 53.88s
+          (5 frames apres AUDIO_START=53.70s) au lieu de rejouer depuis 53.70s. Sequence from={5} SEULE
+          (pas AUDIO_START global) : la choregraphie visuelle (camKeys, PRE_ROLL, Sangomar/GTA/Yakaar)
+          reste cale sur AUDIO_START=53.70s, inchangee. */}
+      <Sequence from={5}>
+        <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(53.88 * fps)} endAt={Math.round(123.90 * fps)} />
+      </Sequence>
+      {/* Musique de fond AJOUTEE ROUND 2 2026-07-04 (bug C, retour Aziz "probleme assez grave" : musique
+          absente sur toute cette scene). Meme piste que sc.2/sc.3 (continuite sonore, "meme piste que la
+          scene gisements" documente dans SceneComparaisonV3), calee sur AUDIO_START comme les autres
+          scenes carto. Fade-in 30f au demarrage (evite un demarrage sec pendant PRE_ROLL/fondu de sc.1a),
+          fade-out 3s en fin de scene (raccord avec sc.2 qui fait de meme). Volume 0.055, aligne sur les
+          autres scenes carto de l'episode. */}
+      <Audio
+        src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
+        startFrom={AUDIO_START * fps}
+        volume={(f) => {
+          const fadeIn = interpolate(f, [0, 30], [0, 1], clamp);
+          const fadeStart = END - 90;
+          const fadeOut = f >= fadeStart ? Math.max(0, 1 - (f - fadeStart) / 90) : 1;
+          return 0.055 * fadeIn * fadeOut;
+        }}
+      />
       <SceneSFX />
-      {/* PRE_ROLL (0->58f) : raccord avec la fin du fondu de sc.1a (deja navy_deep a ce point) —
+      {/* PRE_ROLL (0->20f) : raccord avec la fin du fondu de sc.1a (deja navy_deep a ce point) —
           carte pas encore apparue, fond navy en continuite (evite un cut sec avant Sangomar). */}
       <AbsoluteFill style={{ backgroundColor: NAVY }} />
       <Sequence from={PRE_ROLL}>
@@ -196,7 +227,11 @@ const PivotRevenu: React.FC = () => {
   const veil = interpolate(frame, [PIV, PIV + 70], [0, 1], clamp);
 
   // SEULE ecriture : la question (apparait apres le voile, reste jusqu'au fade final).
-  const qOp = interpolate(frame, [1560, 1600, 2024, 2064], [0, 1, 1, 0], clamp);
+  // Fade final RACCOURCI ROUND 2 2026-07-04 (retour Aziz : ecran gris vide avant Norvege), puis
+  // RE-CALE ROUND 2 2026-07-05 (END etendu 2064->2086 pour couvrir "...vraiment du resultat.") : le
+  // contenu reste visible jusqu'a la toute fin de la phrase (coherent, le baril/60% illustrent
+  // justement "ce qui decide" le resultat), fade sur les 10 dernieres frames.
+  const qOp = interpolate(frame, [1560, 1600, 2076, 2086], [0, 1, 1, 0], clamp);
 
   // P2 — remplissage baril 0->60%, RALENTI et ease-out (le petrole se pose, mouvement ample).
   // Etale sur f1640->1790 (150f = 5s) au lieu de 80f. Le pic reste cale sur "soixante pour cent" (~f1715-1760).
@@ -204,7 +239,8 @@ const PivotRevenu: React.FC = () => {
   const fillEased = 1 - Math.pow(1 - fillT, 2.2); // ease-out : rapide au debut, lent a la fin (se pose)
   const barilRatio = fillEased * 60;
   const num = Math.round(barilRatio);
-  const barilOp = interpolate(frame, [1560, 1620, 2034, 2064], [0, 1, 1, 0], clamp);
+  // Fade final RE-CALE ROUND 2 2026-07-05 (idem qOp, END etendu a 2086).
+  const barilOp = interpolate(frame, [1560, 1620, 2076, 2086], [0, 1, 1, 0], clamp);
   // le 60% se greffe a droite APRES le remplissage (f1770->1820)
   const rightIn = interpolate(frame, [1770, 1820], [0, 1], clamp);
 
@@ -224,8 +260,9 @@ const PivotRevenu: React.FC = () => {
   const haloCalm = interpolate(frame, [1980, 2060], [1, 0.4], clamp); // se calme vers la fin
   const halo = haloBreath * haloCalm;
 
-  // P4 — fade-out global -> navy pur (transition scene 2).
-  const blockOp = interpolate(frame, [2034, 2064], [1, 0], clamp);
+  // P4 — fade-out global -> navy pur (transition scene 2). RACCOURCI ROUND 2 2026-07-04 (ecran gris),
+  // RE-CALE ROUND 2 2026-07-05 (END etendu a 2086, couvre "...vraiment du resultat.").
+  const blockOp = interpolate(frame, [2076, 2086], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
