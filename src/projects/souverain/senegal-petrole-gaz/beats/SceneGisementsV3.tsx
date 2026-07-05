@@ -84,8 +84,13 @@ const PIV = 1500;  // debut voile carte (recouvre la toute fin de Yakaar f1515, 
 // toute la composition jusqu'a 123.90s (couvre "resultat." + marge de silence naturel), endAt de
 // l'Audio suit plus bas. Cote SceneComparaisonV3 : narration retardee (Sequence) pour ne pas rejouer
 // "vraiment du resultat" en double (cf. commentaire dans ce fichier la-bas). AUDIO_START + (PRE_ROLL+
-// END)/30 doit TOUJOURS = 123.90s abs.
-const END = 2086;  // (123.90 - 53.70)*30 - PRE_ROLL = 2086f
+// END)/30 doit TOUJOURS = 125.40s abs (ETENDU ENCORE ROUND 2 2026-07-05, 2e retour Aziz : la phrase
+// "...vraiment du resultat." finissait TROP PRES du cut (123.74s fin reelle vs 123.90s endAt = 0.16s
+// de marge seulement), pas le temps de respirer avant la coupe vers comparaison -> percu comme une
+// coupure abrupte. +1.5s de marge, endAt suit plus bas, couvre desormais toute la phrase "avant de
+// juger le Senegal," avec respiration naturelle avant que "regardons trois" (125.38s) ne soit repris
+// par SceneComparaisonV3.
+const END = 2151;  // (125.40 - 53.70)*30 - PRE_ROLL = 2151f
 
 // ────────────────────────────────────────────────────────────────────────────
 //  brightenMap — eclaircit le fond de carte APRES applyGeoAfriqueV5 (override LOCAL, ne touche pas
@@ -150,18 +155,18 @@ export const SceneGisementsV3: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      {/* endAt etendu a 123.90s abs ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat") :
-          couvre desormais "...ce qui decide vraiment du resultat." en entier (fin reelle 123.74s) + une
-          marge de silence naturel, au lieu de couper a 122.5s (pile apres "decide", laissant le reste
-          dans un trou). SceneComparaisonV3 retarde sa propre narration en consequence (pas de doublon).
-          Demarrage RETARDE DE 5 FRAMES (bug "trois" re-corrige, meme session) : SenegalScene1IntroCoin
-          joue desormais le mot "trois." EN ENTIER jusqu'a sa fin naturelle (endAt=53.88s, plus de
-          coupure en plein son). Pour ne pas le REJOUER en double ici, cette Audio demarre a 53.88s
-          (5 frames apres AUDIO_START=53.70s) au lieu de rejouer depuis 53.70s. Sequence from={5} SEULE
-          (pas AUDIO_START global) : la choregraphie visuelle (camKeys, PRE_ROLL, Sangomar/GTA/Yakaar)
-          reste cale sur AUDIO_START=53.70s, inchangee. */}
+      {/* endAt etendu a 125.40s abs ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat",
+          2e passe apres retour Aziz) : couvre desormais "...ce qui decide vraiment du resultat. Avant
+          de juger le Senegal," en entier + une respiration naturelle, au lieu de couper a 123.90s (a
+          peine 0.16s apres la fin reelle de "resultat.", perçu comme une coupure abrupte). Demarrage
+          RETARDE DE 5 FRAMES (bug "trois" re-corrige) : SenegalScene1IntroCoin joue desormais le mot
+          "trois." EN ENTIER jusqu'a sa fin naturelle (endAt=53.88s, plus de coupure en plein son). Pour
+          ne pas le REJOUER en double ici, cette Audio demarre a 53.88s (5 frames apres AUDIO_START=
+          53.70s) au lieu de rejouer depuis 53.70s. Sequence from={5} SEULE (pas AUDIO_START global) :
+          la choregraphie visuelle (camKeys, PRE_ROLL, Sangomar/GTA/Yakaar) reste cale sur AUDIO_START=
+          53.70s, inchangee. */}
       <Sequence from={5}>
-        <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(53.88 * fps)} endAt={Math.round(123.90 * fps)} />
+        <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(53.88 * fps)} endAt={Math.round(125.40 * fps)} />
       </Sequence>
       {/* Musique de fond AJOUTEE ROUND 2 2026-07-04 (bug C, retour Aziz "probleme assez grave" : musique
           absente sur toute cette scene). Meme piste que sc.2/sc.3 (continuite sonore, "meme piste que la
@@ -227,11 +232,11 @@ const PivotRevenu: React.FC = () => {
   const veil = interpolate(frame, [PIV, PIV + 70], [0, 1], clamp);
 
   // SEULE ecriture : la question (apparait apres le voile, reste jusqu'au fade final).
-  // Fade final RACCOURCI ROUND 2 2026-07-04 (retour Aziz : ecran gris vide avant Norvege), puis
-  // RE-CALE ROUND 2 2026-07-05 (END etendu 2064->2086 pour couvrir "...vraiment du resultat.") : le
-  // contenu reste visible jusqu'a la toute fin de la phrase (coherent, le baril/60% illustrent
-  // justement "ce qui decide" le resultat), fade sur les 10 dernieres frames.
-  const qOp = interpolate(frame, [1560, 1600, 2076, 2086], [0, 1, 1, 0], clamp);
+  // Fade final RACCOURCI ROUND 2 2026-07-04 (retour Aziz : ecran gris vide avant Norvege), RE-CALE
+  // ROUND 2 2026-07-05 x2 (END etendu 2064->2086->2151 pour couvrir "...vraiment du resultat. Avant de
+  // juger le Senegal," avec respiration) : le contenu reste visible jusqu'a la toute fin de la phrase,
+  // fade sur les 10 dernieres frames.
+  const qOp = interpolate(frame, [1560, 1600, 2141, 2151], [0, 1, 1, 0], clamp);
 
   // P2 — remplissage baril 0->60%, RALENTI et ease-out (le petrole se pose, mouvement ample).
   // Etale sur f1640->1790 (150f = 5s) au lieu de 80f. Le pic reste cale sur "soixante pour cent" (~f1715-1760).
@@ -239,8 +244,8 @@ const PivotRevenu: React.FC = () => {
   const fillEased = 1 - Math.pow(1 - fillT, 2.2); // ease-out : rapide au debut, lent a la fin (se pose)
   const barilRatio = fillEased * 60;
   const num = Math.round(barilRatio);
-  // Fade final RE-CALE ROUND 2 2026-07-05 (idem qOp, END etendu a 2086).
-  const barilOp = interpolate(frame, [1560, 1620, 2076, 2086], [0, 1, 1, 0], clamp);
+  // Fade final RE-CALE ROUND 2 2026-07-05 x2 (idem qOp, END etendu a 2151).
+  const barilOp = interpolate(frame, [1560, 1620, 2141, 2151], [0, 1, 1, 0], clamp);
   // le 60% se greffe a droite APRES le remplissage (f1770->1820)
   const rightIn = interpolate(frame, [1770, 1820], [0, 1], clamp);
 
@@ -261,8 +266,9 @@ const PivotRevenu: React.FC = () => {
   const halo = haloBreath * haloCalm;
 
   // P4 — fade-out global -> navy pur (transition scene 2). RACCOURCI ROUND 2 2026-07-04 (ecran gris),
-  // RE-CALE ROUND 2 2026-07-05 (END etendu a 2086, couvre "...vraiment du resultat.").
-  const blockOp = interpolate(frame, [2076, 2086], [1, 0], clamp);
+  // RE-CALE ROUND 2 2026-07-05 x2 (END etendu a 2151, couvre "...vraiment du resultat. Avant de juger
+  // le Senegal," avec respiration).
+  const blockOp = interpolate(frame, [2141, 2151], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>

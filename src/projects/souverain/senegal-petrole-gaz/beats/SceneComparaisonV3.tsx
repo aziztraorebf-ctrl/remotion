@@ -125,15 +125,13 @@ export const SceneComparaisonV3: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY }}>
       {/* Narration RETARDEE ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat"), CORRIGE
-          (le premier essai avec Sequence from={55} avait une erreur de referentiel : le fichier
-          comparaison demarre PHYSIQUEMENT dans le montage a la fin de gisements = 123.90s, pas a
-          AUDIO_START=122s. Sequence from={55} retardait donc l'audio de 55/30=1.83s de PLUS apres ce
-          point, creant un silence de pres de 2s — signale par Aziz a la reecoute). Fix : Sequence
-          from={0} (pas de retard — gisements couvre deja tout jusqu'a 123.90s), startFrom=123.90s pour
-          reprendre EXACTEMENT ou gisements s'est arrete (pile sur "avant de juger", zero silence, zero
-          repetition). AUDIO_START (122s) INCHANGE, pilote toujours tous les beats visuels
-          independamment de cette Audio. */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(123.90 * fps)} endAt={Math.round(187.6 * fps)} />
+          (le premier essai avec Sequence from={55} avait une erreur de referentiel — silence de pres
+          de 2s signale par Aziz). RE-CALE ROUND 2 2026-07-05 x2 (2e retour Aziz : gisements etendu
+          encore, endAt 123.90s->125.40s, pour laisser respirer "...vraiment du resultat." avant la
+          coupe). startFrom suit : reprend EXACTEMENT ou gisements s'est arrete desormais (125.40s,
+          pile sur "regardons trois", zero silence, zero repetition). AUDIO_START (122s) INCHANGE,
+          pilote toujours tous les beats visuels independamment de cette Audio. */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(125.40 * fps)} endAt={Math.round(187.6 * fps)} />
       {/* Musique de fond — meme piste que la scene gisements (continuite sonore), ~5.5%, fade-out 3s a la fin */}
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
