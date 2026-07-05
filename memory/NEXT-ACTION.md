@@ -1,25 +1,26 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-04 (Senegal V3 passe finition ROUND 1 terminee + validee Aziz — 3 bugs mineurs restants ROUND 2).
+> Mis a jour : 2026-07-05 (Senegal V3 TERMINE + PRET-PUBLICATION — plus d'action technique en attente).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
-> ⭐⭐ NEXT = Senegal V3 finition ROUND 2 (session courte, 3 bugs cibles). Starter :
-> `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
 
 ---
 
-## ⭐ SÉNÉGAL V3 — PASSE DE FINITION ROUND 1 TERMINÉE + VALIDÉE AZIZ (2026-07-04)
+## ✅✅ SÉNÉGAL V3 — TERMINÉ + PRÊT-PUBLICATION (2026-07-05)
 
-> Branche `fix/senegal-v3-passe-finition` (pas encore commitée — demander à Aziz avant tout commit).
-> 10 bugs de `REPRISE-PASSE-FINITION.md` corrigés (dédoublements audio sc.0→1a→gisements, écran gris
-> Mapbox structurel, carte gisements pas harmonisée, SFX parasites, point Dakar, texte épuré sc.7).
-> Montage réassemblé, 8 jonctions vérifiées par transcription Whisper. **Aziz a visionné le montage complet
-> et validé le dynamisme** (pas de sur-optimisation à faire, verdict tranché : ne pas retoucher le rythme).
-> Livrable : `out/episodes/senegal-petrole-gaz/senegal-petrole-gaz-V3-COMPLET.mp4` (495.1s) + web catbox
-> https://files.catbox.moe/ejk1nb.mp4.
-> **3 nouveaux bugs relevés par Aziz à l'écoute de CETTE version** (session courte prévue, PAS un nouveau
-> chantier lourd) : mot "précise" coupé fin sc.0 (~31s), mot "trois" répété (~50-53s), **musique de fond
-> absente pendant toute la scène gisements + possiblement sc.3 contrat** (~50s→2min08, jugé "problème
-> assez grave" par Aziz). Détail diagnostic + fix proposés : `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
+> Branche `fix/senegal-v3-passe-finition`, commits `207d223` (ROUND 1+2) et `606aff4` (marge respiration).
+> ROUND 1 : 10 bugs corrigés (dédoublements audio, écran gris Mapbox structurel, carte gisements
+> harmonisée, SFX parasites, point Dakar, texte épuré). ROUND 2 : mot "précise" tronqué, mot "trois"
+> répété/coupé (résolu en faisant jouer le mot en entier + décalage de 5 frames côté scène suivante,
+> plutôt qu'une coupe en plein son), musique gisements absente, silence "décide...vraiment du résultat"
+> (endAt étendu +1.5s pour respiration), labels texte scène coin supprimés, écran gris de transition
+> supprimé. Tout validé Aziz par extraits ciblés + mini-renders à chaque itération.
+> **Livrable final** : `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (+ `-compressed.mp4`).
+> **NEXT** = programmer la publication (décision Aziz, pas une tâche technique).
+>
+> 💡 Note (réflexion Aziz 2026-07-05) : cette vidéo (1ère avec le système Mapbox complet) a été longue en
+> R&D mais constitue un gabarit réutilisable avec War-Map Sahel AES (2e vidéo Mapbox) — à consulter
+> explicitement lors du prochain projet Mapbox pour vérifier le gain de vitesse x2-3 espéré, plutôt que
+> de laisser ces briques enfouies dans le code sans être re-référencées.
 
 ---
 
@@ -449,13 +450,15 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 1. **A5 Géographie** (~37s, MAPBOX). 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité Espagne, Volkswagen) / **triangle Maroc—Europe—Chine**. Pipeline Mapbox (`mapbox-session.py`).
 2. **Assemblage final** : ffmpeg concat des 6 beats + 1 narration globale + mix.
 
-### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-25) ⭐⭐
-**⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
-**+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX).
-- ✅ **LES 8 SCÈNES (0→7) = PRODUITES + MONTAGE COMPLET ASSEMBLÉ** (8min23s, catbox `bq8qtq`). sc.6=`SceneBilanV3` (Balance, data-viz), sc.7=`SceneBonusV3` (Cicatrice, SVG code-main) — premium, sources code-main.
-- ⛔ **PAS TERMINÉ/PUBLIABLE : PASSE DE FINITION en attente** (10 retours Aziz 2026-07-04 : bugs audio aux raccords, harmoniser carte gris clair + typo, retirer SFX parasites, point Dakar instable au zoom, épure texte sc.7).
-- ▶ **REPRISE = `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`** (source passe : `V3-REFONTE/REPRISE-PASSE-FINITION.md`). Objectif sortie → `out/PRET-PUBLICATION/`.
-ℹ️ PÉRIMÉS (supprimés 2026-06-25) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
+### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE — ✅✅ TERMINÉ (MAJ 2026-07-05)
+**⭐ SOURCE DE VÉRITÉ ÉTAT ACTUEL : `memory/episodes/souverain/senegal-petrole-gaz/STATUS.md`**
+- ✅✅ **LES 8 SCÈNES (0→7) = PRODUITES + MONTAGE COMPLET ASSEMBLÉ + PASSE DE FINITION ROUND 1+2 TERMINÉE**.
+  Commits `207d223` + `606aff4` sur `fix/senegal-v3-passe-finition`.
+- ✅✅ **PROMU `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4`** (+ `-compressed.mp4`). Plus aucune
+  action technique en attente — NEXT = programmer la publication (décision Aziz).
+ℹ️ PÉRIMÉS : `STARTER-PROMPT-senegal-v3-passe-finition.md` (archivé, chantier ROUND 2 terminé),
+`STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`,
+`REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
@@ -472,28 +475,20 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## ⭐⭐ PRIORITÉ 2 — WAR-MAP SAHEL : bug trous RÉSOLU, plan 2 SESSIONS en attente (2026-07-04)
+## ✅✅✅ WAR-MAP SAHEL AES — VIDÉO FINALE VALIDÉE + PROMUE PRET-PUBLICATION (2026-07-05)
 
-> ✅ **Bug critique des trous de frames RÉSOLU** (session 2026-07-01) : renders P1/P2/P3/P4 refaits en
-> plages contiguës, validés par `check-frame-continuity.py` (0 trou, sauf 7f/0.2s résiduelles = silence
-> naturel entre 2 phrases, jugé non-problématique). Assemblage complet uploadé (368MB) + version
-> compressée 720p pour mobile/LLM (46MB, technique : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
+> Session C CONCLUE : fix audio "déjà", 1er render complet bout-en-bout, passe complète de retours
+> post-visionnage (CEDEAO 3e itération, portraits dirigeants refaits sur vraies photos, SFX corrigés,
+> hook "3" recentré, doublon audio "tensions..." corrigé via force-alignment Whisper), validée par Aziz
+> SANS RÉSERVE. Promue `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4` (386MB, 7min30). `wip/` purgé.
+> Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "SESSION C — ÉTAT".
 >
-> ⭐⭐ **NEXT SESSION = SESSION C (lire `memory/episodes/warmap-sahel/STATUS.md` § "✅✅✅ SESSION B — ÉTAT
-> DE FIN (2026-07-04)", en tête du fichier — source de vérité complète, ne pas dupliquer ici)**.
-> ✅ **Session B QUASI TERMINÉE (2026-07-04)** : Liptako-Gourma et Ressources (les 2 nouveaux SVG) sont
->    BRANCHÉS dans le moteur réel (`Partie3Rupture.tsx`/`Partie4Cout.tsx`, anciens composants legacy
->    retirés) et validés Aziz en mini-renders contexte réel. 9 fixes techniques appliqués + 1 fondu de
->    transition P3→P4 ajouté, tout validé Aziz.
-> ▶ **Session C reste à faire** : 1 écho audio non résolu (mot "déjà" en P1, f2743 — resynthèse TTS tentée
->    et payée mais décale trop la durée pour être intégrée sans risque, backup gardé, pistes détaillées
->    dans STATUS.md) + **LE RENDER COMPLET bout-en-bout Acte1+P1+P2+P3+P4, JAMAIS ENCORE LANCÉ** (seulement
->    des mini-renders isolés de vérification en Session B), vérifié `check-frame-continuity.py`.
+> ⭐⭐ **NEXT SESSION War-Map Sahel = tâche courte, thumbnail + titre uniquement** (lire
+> `memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`), puis programmer la publication.
 >
-> ✅ Ce qui EST fait Session B (ne pas refaire) : les 2 SVG branchés + validés, HUD résiduel retiré, points
-> villes en continu retirés P1, SFX doublons retirés (CFA + Ressources), sources mal placées corrigées,
-> portraits flous P4 corrigés (cause réelle : style gravure fine incompatible avec le downscale, pas un
-> bug d'opacité), caméra CEDEAO repensée (hors du cadre Sahel), fondu de transition P3→P4 ajouté.
+> Point ouvert non bloquant documenté (ne pas répéter l'investigation) : liseré blanc résiduel sur
+> frontières CEDEAO (résidu Mapbox natif, cause exacte non isolée après 3 tentatives de fix) — cf
+> STATUS.md § "POINT OUVERT NON RÉSOLU".
 
 ---
 

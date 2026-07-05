@@ -5,10 +5,13 @@
 > **`V3-REFONTE/README.md`** (+ `V3-REFONTE/STARTER-SCENE-1.md`). V1 = filet/comparatif, supprimée quand V3 complète.
 > Ce STATUS reste seulement comme référence de l'état V1. NE PAS partir d'ici pour AGIR.
 >
-> ⭐ **2026-07-04 — V3 COMPLÈTE, passe de finition ROUND 1 terminée + validée Aziz (dynamisme OK, ne pas
-> retoucher). 3 bugs mineurs restants → `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`** (prochaine
-> session, courte). Branche `fix/senegal-v3-passe-finition`, pas encore commitée. Livrable actuel :
-> `out/episodes/senegal-petrole-gaz/senegal-petrole-gaz-V3-COMPLET.mp4` + catbox https://files.catbox.moe/ejk1nb.mp4.
+> ✅✅ **2026-07-05 — V3 TERMINÉE + PRÊT-PUBLICATION.** Passe de finition ROUND 1 (dédoublements audio,
+> écran gris Mapbox, carte gisements harmonisée) + ROUND 2 (mot "précise" tronqué, mot "trois"
+> répété/coupé, musique gisements absente, silence "décide...vraiment du résultat", labels texte scène
+> coin supprimés, écran gris de transition supprimé, +1.5s de respiration avant coupe gisements→Norvège)
+> — tous corrigés et validés Aziz. Commits `207d223` + `606aff4` sur branche `fix/senegal-v3-passe-finition`.
+> **Livrable final** : `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (+ `-compressed.mp4`).
+> Plus aucune action technique en attente — NEXT = programmer la publication (décision Aziz).
 
 > Mis à jour : 2026-06-16 (MAKEOVER PREMIUM en cours — ⚠️ approche abandonnée au profit de la refonte V3)
 

@@ -30,7 +30,25 @@ Regeneration FACTUELLE de B4+B5 SEULS (retrait melange demi-lune/FMNR -> FMNR pu
 
 ---
 
-## War-Map Sahel — 2026-07-04 [SESSION B QUASI TERMINÉE · SESSION C EN ATTENTE] — PRIME sur les entrées ci-dessous (périmées)
+## War-Map Sahel — 2026-07-05 [VIDÉO FINALE VALIDÉE, PROMUE PRET-PUBLICATION] — PRIME sur les entrées ci-dessous (périmées)
+
+**[STAGE-FINAL] warmap-sahel — TERMINÉ.** Session C conclue : fix audio "déjà" (splice backup TTS), 1er
+render complet bout-en-bout Acte1+P1+P2+P3+P4 jamais fait avant, puis une passe complète de retours
+post-visionnage Aziz appliqués et validés : CEDEAO 3e itération de direction (zoom élargi + vrais
+contours pays côtiers + pulse+flèches), portraits dirigeants P4 refaits à partir de vraies photos
+officielles (1re tentative sur illustration stylisée REJETÉE), SFX corrigés (bug root `startFrom` sur
+`<Audio>`), hook "3" recentré (mesure pixel), doublon audio "tensions..." corrigé (cause confirmée par
+force-alignment Whisper). **Validé Aziz SANS RÉSERVE** sur le render final. Promu
+`out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4` (386MB, 7min30, 13501 frames). `wip/` purgé (3.4GB).
+**▶ RESTE avant publication** : thumbnail + titre uniquement (tâche courte, starter
+`memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`).
+Point ouvert non bloquant (ne pas ré-investiguer sans piste nouvelle) : liseré blanc résiduel sur
+frontières CEDEAO (Mapbox natif, 3 tentatives de fix éliminées, cause exacte non isolée).
+Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "SESSION C — ÉTAT".
+
+---
+
+## War-Map Sahel — 2026-07-04 [SESSION B QUASI TERMINÉE · SESSION C EN ATTENTE] — PÉRIMÉ, voir entrée 2026-07-05 ci-dessus
 
 **[STAGE-CODE] warmap-sahel — Session B (branchement + fixes) QUASI TERMINÉE.** Les 2 nouveaux composants
 SVG (`LiptakoRevealSVG.tsx`, `ResourcesRevealSVG.tsx`) sont branchés dans le moteur réel
@@ -39,17 +57,10 @@ mini-renders contexte réel. 9 fixes techniques appliqués (HUD résiduel retir�
 retirés P1, SFX doublons retirés, sources mal placées corrigées, portraits flous P4 corrigés — cause
 réelle = style gravure fine qui ne survit pas au downscale, pas un bug d'opacité —, caméra CEDEAO
 repensée hors du cadre Sahel) + un fondu de transition P3→P4 ajouté, tout validé Aziz.
-**⛔ RESTE avant render final** : 1 écho audio non résolu (mot "déjà" en P1, f2743 — resynthèse TTS tentée
-mais décale trop la durée, reportée) + **LE RENDER COMPLET bout-en-bout Acte1+P1+P2+P3+P4 n'a JAMAIS ÉTÉ
-LANCÉ** (seulement des mini-renders isolés de vérification cette session).
-**▶ Session C (starter prêt `memory/STARTER-PROMPT-warmap-sahel-session-C.md`)** : traiter l'écho audio
-(pistes détaillées dans STATUS.md) PUIS le render complet unique, vérifié `check-frame-continuity.py`.
-Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04)",
-en tête de fichier.
 
 ---
 
-## War-Map Sahel — 2026-06-27 [ACTE1 REFAIT+VALIDÉ · P1/P2 AUDITÉS · P4 EN MORCEAUX] — PÉRIMÉ, voir entrée 2026-07-04 ci-dessus
+## War-Map Sahel — 2026-06-27 [ACTE1 REFAIT+VALIDÉ · P1/P2 AUDITÉS · P4 EN MORCEAUX] — PÉRIMÉ, voir entrée 2026-07-05 ci-dessus
 
 **[STAGE-CODE] warmap-sahel — Acte1 refondu (hook+corps+SFX) VALIDÉ Aziz.** Compo `SahelActe1-Refonte` (71s),
 `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e`, v2 SANS tension-drone — le SFX drone d'assise
@@ -214,14 +225,6 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ⚡ Actif
 
-- **Sénégal Pétrole & Gaz — REFONTE V3** ⭐ V3 COMPLÈTE (8 scènes), passe de finition ROUND 1 terminée
-  + validée Aziz 2026-07-04 (dynamisme jugé bon, ne pas retoucher). Branche `fix/senegal-v3-passe-finition`
-  (pas commitée). 3 bugs mineurs restants (mot coupé sc.0, mot répété ~50s, musique absente scène
-  gisements) → NEXT session courte, starter `memory/STARTER-PROMPT-senegal-v3-passe-finition.md`.
-  Livrable : `out/episodes/senegal-petrole-gaz/senegal-petrole-gaz-V3-COMPLET.mp4` (495.1s) + catbox
-  https://files.catbox.moe/ejk1nb.mp4.
-  - Sc.4 dette ✅ FINAL (catbox f1wbdp, 45.4s/1363f) — `beats/SceneDetteV3.tsx`
-  - Sc.5 coulisses ✅ FINAL (catbox clyx8t, 56.5s/1695f) — `beats/SceneCoulissesV3.tsx`
 - **Peste 1347 (Atlas)** — Beat 5 Mali Vivant. Storyboard prêt :
   `public/atlas/peste-1347/storyboard/beat5-storyboard.md`. Workflow B (Atlas direct).
   Démarrage : `python3 scripts/atlas-session.py --episode peste-1347 --beat 5`.
@@ -244,9 +247,10 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ✅ Livrés (PRET-PUBLICATION)
 
-8 vidéos dans `out/PRET-PUBLICATION/` :
+9 vidéos dans `out/PRET-PUBLICATION/` :
 niger-uranium, silicon-savannah, or-africain, sonjata-v7, thiaroye-v5,
-mansa-moussa-atlas-v2, empire-ghana-v2, vraie-taille-afrique.
+mansa-moussa-atlas-v2, empire-ghana-v2, vraie-taille-afrique,
+senegal-petrole-gaz (V3, terminé 2026-07-05, commits `207d223`+`606aff4` sur `fix/senegal-v3-passe-finition`).
 
 Mémoires épisodes archivées dans `memory/archive/episodes-livres/`.
 Code épisodes archivé dans `src/_archive/episodes-livres/`.

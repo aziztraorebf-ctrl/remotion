@@ -31,6 +31,25 @@
   fois) : `startFrom={inAt}` FIXE + moduler `volume` en fonction du frame courant, ex.
   `volume={(fr) => clampI(fr-inAt,90,94,0,0.4) * clampI(fr-inAt,100,110,1,0)}`. Bug trouvé+corrigé 2026-07-04
   (War-Map Sahel, `LiptakoRevealSVG.tsx`/`ResourcesRevealSVG.tsx`).
+- ⚠️ **`<Sequence from={N}>` dans un montage assemblé par concaténation ffmpeg de fichiers séparés** (chaque
+  scène rendue à part, puis `ffmpeg concat`) : N est relatif à où CE FICHIER démarre PHYSIQUEMENT dans le
+  montage final, PAS à une position narrative absolue supposée (ex: une constante type `AUDIO_START` qui a
+  un sens ailleurs dans le projet). Confondre les deux crée soit un silence artificiel (retard appliqué en
+  double), soit une répétition audio (retard manquant). Toujours recalculer : à quelle frame de CE fichier
+  correspond le point de reprise voulu, sachant que frame 0 de ce fichier = son point d'insertion réel dans
+  le montage. Erreur vécue + corrigée Sénégal V3 ROUND 2 (2026-07-05).
+- **Jonction audio propre entre 2 scènes adjacentes** (mot qui tombe à la frontière) : ne PAS couper l'audio
+  en plein mot, même avec fade-out (le fade n'aide pas si la coupe tombe en plein son actif — testé et
+  confirmé inefficace). Faire jouer le mot EN ENTIER dans la scène qui le contient (reculer `endAt` jusqu'à
+  la fin naturelle du mot, confirmée par forced-align), puis décaler UNIQUEMENT le démarrage de l'Audio
+  narration de la scène suivante via `<Sequence from={N}><Audio startFrom={X}/></Sequence>` (N = quelques
+  frames), SANS toucher à la référence temporelle globale qui pilote les beats visuels si d'autres beats y
+  sont calés à la main (camKeys Mapbox, SFX...). Validé Sénégal V3 ROUND 2 (2026-07-05, jonction
+  `SenegalScene1IntroCoin.tsx`→`SceneGisementsV3.tsx`, mot "trois").
+- **Diagnostic audio fiable** : forced-alignment ElevenLabs (API directe, pas Whisper) sur le MONTAGE RÉEL
+  assemblé (pas seulement la narration source isolée) pour confirmer/infirmer un bug avant de coder un fix.
+  Si plusieurs fichiers forced-align existent pour une même zone avec des `loss` différents, toujours
+  privilégier celui au loss le plus bas comme source de vérité.
 
 ### Audio volume partiel
 ```tsx
@@ -43,6 +62,41 @@
 - Trop discret : monter par paliers de 0.03 (0.10, 0.13...)
 - Trop present : descendre par paliers de 0.02 (0.05, 0.03...)
 - Narration : toujours volume={1.0}, jamais toucher
+
+---
+
+## Mapbox — delayRender rend le PRE_ROLL optionnel
+
+`delayRender`/`continueRender` dans une scène Mapbox (ex. `CartoSouverainV5.tsx`) garantit que Remotion
+ne capture JAMAIS le render avant que la carte soit visuellement prête (style chargé, tuiles rendues).
+Un `PRE_ROLL` (fondu/écran gris avant que la carte n'apparaisse) n'est donc utile QUE pour un fondu
+narratif volontaire (transition douce choisie), jamais nécessaire pour masquer un chargement technique —
+supprimer le PRE_ROLL n'introduit pas de flash/vide, la carte est déjà pleinement chargée à la frame 0.
+Validé Sénégal V3 ROUND 2 (2026-07-05), jonction `SenegalScene1IntroCoin.tsx`→`SceneGisementsV3.tsx`.
+
+---
+
+## ⚠️ Mapbox — reskin (recoloration frontières/fond) appliqué une seule fois ne couvre pas les tuiles
+## chargées tardivement (GAP NON RÉSOLU, 2026-07-05, War-Map Sahel)
+
+Un reskin de style Mapbox (ex. `map.setPaintProperty(layerId, "line-color", ...)` sur les couches
+`admin-0`/`admin-1`, appliqué dans un handler `style.load`) ne s'applique qu'aux tuiles DÉJÀ chargées au
+moment de l'event. Si la caméra visite ensuite une zone JAMAIS vue avant (ex. un zoom élargi qui montre
+pour la première fois des pays restés hors-cadre jusque-là), les tuiles vectorielles de cette zone se
+chargent après coup et gardent potentiellement la couleur NATIVE Mapbox (ex. liseré blanc/crème au lieu
+du brun stylisé du reste de la carte).
+
+**3 pistes de fix testées et ÉLIMINÉES par test direct (aucune n'a résolu, vérifié pixel-identique
+avant/après)** :
+1. Listener `sourcedata` qui réapplique le reskin à chaque nouvelle donnée de tuile chargée.
+2. Forcer `line-opacity: 0` sur la sous-couche `*-boundary-bg` (halo de fond).
+3. Forcer `line-opacity: 0` sur la sous-couche `*-boundary-disputed`.
+
+**Cause exacte NON identifiée** à la fin de l'investigation (2026-07-05). Le problème a été laissé
+comme point ouvert non bloquant (résidu visuel discret, pas de contenu manquant). Si ce gotcha
+réapparaît sur un futur projet Mapbox (ex. Soudan, zoom vers de nouveaux pays jamais visités avant) :
+NE PAS repartir des 3 pistes ci-dessus (déjà éliminées), chercher une cause différente — possiblement
+liée à l'ordre de layers ou à une sous-couche non identifiée par `l.id.includes("admin-0")`.
 
 ---
 
