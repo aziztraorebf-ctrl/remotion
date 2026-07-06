@@ -242,6 +242,7 @@ import { PecheurSurpeche16x9, PECHEUR_SURPECHE_FRAMES } from "./projects/_rnd/sv
 import { PecheurSurpecheSeedance16x9, PECHEUR_SEEDANCE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpecheSeedance16x9";
 import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
 import { ProtoInsertTactiqueTopDown, PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertTactiqueTopDown";
+import { ProtoAssemblageKhartoumBeat5, PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAssemblageKhartoumBeat5";
 import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
 import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
 import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
@@ -324,6 +325,8 @@ import { RedlineContagion } from "./projects/_shared/hooks-lib/RedlineContagion"
 import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
 import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
+import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS } from "./projects/warmap/KhartoumEtatMajorSVG";
+import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1664,6 +1667,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="HookAES-Acte1-Proto" component={HookAESActe1Proto} durationInFrames={600} fps={30} width={1920} height={1080} />
         {/* MINI-RENDER VALIDATION — Soudan Acte 1 ouverture (carte + jeton Hemeti + forces RSF + contour, audio fact-check) */}
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
+        <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
+        <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />
@@ -2075,6 +2080,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-PecheurSurpecheSeedance16x9" component={PecheurSurpecheSeedance16x9} durationInFrames={PECHEUR_SEEDANCE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoInsertTactiqueTopDown" component={ProtoInsertTactiqueTopDown} durationInFrames={PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAssemblageKhartoumBeat5" component={ProtoAssemblageKhartoumBeat5} durationInFrames={PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />
