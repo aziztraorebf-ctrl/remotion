@@ -133,6 +133,23 @@ liée à l'ordre de layers ou à une sous-couche non identifiée par `l.id.inclu
 - >= 10 elements : Anime.js hook (paused + seek)
 - Lottie : `@remotion/lottie` UNIQUEMENT (pas `lottie-react`)
 
+### Determinisme frame-driven — gotchas SVG/effets (2026-07-06, insert etat-major Khartoum)
+- ⛔ **`Math.random()` INTERDIT en Remotion** (complete la liste CLAUDE.md setTimeout/@keyframes/rAF qui
+  l'omet) : casse la reproductibilite entre frames — chaque frame re-tire → scintillement/artefacts au
+  render, et un meme render n'est pas reproductible. Pour un jitter/dispersion pseudo-aleatoire mais
+  STABLE (particules, poussiere, dispersion de positions), utiliser un hash deterministe INDEXE :
+  `const jag = (i) => (Math.sin(i * 12.9898) * 43758.5453) % 1`. (⚠️ de vieilles reviews Kimi archivees
+  suggerent naivement `Math.random()` seede — ne pas recopier.)
+- **`feTurbulence` anime** : le `seed` doit VARIER par frame (`seed={Math.floor(frame/4)}`) pour que la
+  deformation/le grain bouge — un seed fixe donne un grain FIGE. (baseFrequency liee a un spring = deja connu.)
+- **Filtres SVG (`<filter id=...>`)** : `id` UNIQUE par instance/composant (deriver de la position ou d'un
+  index), sinon collision dans `<defs>` entre deux usages du meme composant sur la meme frame → un filtre
+  ecrase l'autre (fumee/glow qui "saute" d'une cible a l'autre).
+- **Narrowing TS sur const-literal** : une `const STYLE: "a"|"b" = "a"` jamais reassignee est resserree par
+  TS au litteral → `STYLE === "b"` signale "toujours faux". Caster `(STYLE as string)` ou passer par une
+  variable non-const. (Frequent sur les flags de variante A/B testes en session.)
+- Contexte d'usage detaille : [[doctrines/WARMAP-INSERT-SVG-ETATMAJOR]] (§Gotchas techniques).
+
 ### Sprites & downscale — style graphique vs taille d'affichage
 Un sprite/portrait style **gravure fine à hachures/pointillés** NE SURVIT PAS à un downscale extrême
 (ex: diamètre `vmin*0.065` ≈ 70px sur 1080p → devient du bruit visuel illisible), contrairement à un

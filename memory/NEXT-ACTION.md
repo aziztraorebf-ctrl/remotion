@@ -27,18 +27,16 @@
 
 ---
 
-## ⛔⭐⭐ SHORT AES 90s — PRIORITÉ REPRISE IMMÉDIATE — V1 REJETÉE (2026-07-05)
+## 🔧 SHORT AES 90s — V2 ASSEMBLÉE, reste render complet + validation Aziz (MàJ 2026-07-06)
 
-> Prototype Short "L'AES en 90 secondes" (script+audio+timing validés) mais V1 utilise des composants
-> Mapbox GÉNÉRIQUES (`_shared/mapbox/PulsingRegionFill|DominoContagionFill|FlagDissolveTransition`) pour
-> les beats 1/2/3/4/5+6 → incohérence visuelle totale avec la vraie vidéo longue (carte grise brute,
-> drapeau France/Russie hors-sujet, style diaporama qui saute d'un plan à l'autre). Retour Aziz : repartir
-> en RE-MONTAGE STYLÉ — extraire de VRAIS clips/frames de `warmap-sahel-aes-FINAL.mp4` pour ces beats,
-> pas des gabarits Mapbox neutres. **Plan de reprise complet + repères de frames déjà identifiés** :
-> `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V2-REPRISE.md` — lire ce fichier AVANT de recoder.
+> ✅ **Mise à jour** : la V1 (composants Mapbox génériques, incohérence visuelle) a été REJETÉE PUIS
+> la **V2 a été RECONSTRUITE (2026-07-05)** — vrais extraits croppés 9:16 de `warmap-sahel-aes-FINAL.mp4`
+> + inserts SVG, assemblée dans `AesShort90s.tsx` (compo `WarmapSahel-Short90s-V2`, 2756f). Validée par
+> 7 frames-clés (stills). **Reste UNIQUEMENT** : rendu vidéo complet + validation Aziz au visionnage/écoute
+> (jamais fait — seulement des stills). Détail : `memory/episodes/warmap-sahel/STATUS.md` +
+> `PLAN-SHORT-90S-V2-REPRISE.md`.
 > Ce qui reste valide (ne pas refaire) : script FR + audio GéoAfrique (91.86s) + beats 7/8/10 (Liptako/
-> Ressources/CTA, déjà basés sur les vrais assets) + 3 fixes de bugs Mapbox (`continueRender` avant
-> `map.once("idle")`, utiles pour tout le projet).
+> Ressources/CTA) + 3 fixes de bugs Mapbox (`continueRender` avant `map.once("idle")`, utiles projet-wide).
 
 ---
 
@@ -529,8 +527,13 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## ⭐ PRIORITÉ 1 (APRÈS AES) — SOUDAN MID-FORM 7-8min (pré-prod TRÈS AVANCÉE, session 2026-06-16)
+## ⭐ PRIORITÉ 1 (APRÈS AES) — SOUDAN MID-FORM 7-8min : PRÉ-PROD SCRIPT/AUDIO (pré-prod TRÈS AVANCÉE, session 2026-06-16)
 
+> ℹ️ **Cette section = la PRÉ-PROD SCRIPT/AUDIO des Actes** (distincte de l'insert visuel beat #5, déjà
+> résolu). La couche « insert visuel prise de territoire » a son propre pattern validé cette session
+> (voir la section ✅✅ en tête + `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`). Ici : écrire/verrouiller
+> les Actes 3-5 et l'audio.
+>
 > **SUJET VALIDÉ GO** + grosse session de pré-prod faite le 2026-06-16.
 > 🗂️ **POINT D'ENTRÉE = `memory/projects/soudan-midform.md`**
 >
@@ -540,7 +543,9 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > 1. **Acte 3** : combler 2 trous recherche (Russie/Wagner-or-sanctions + Égypte) → `soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`, PUIS écrire l'acte.
 > 2. Actes 4 (coût humain — inclure nuance génocide ciblé Darfour) + 5 (perspective ouverte).
 > 3. Au lock audio : check + régénération sélective acte par acte (`soudan-midform-AUDIO-ETAT.md`).
-> 4. Production : vrais jetons Hemeti + Al-Burhan (Gemini) → coder Acte 1 complet cadrage serré.
+> 4. Production : ⚠️ le point « jetons Hemeti/Al-Burhan Gemini bitmap » est PARTIELLEMENT DÉPASSÉ — pour
+>    l'incarnation des forces on a désormais le pattern portraits SVG état-major (cf doctrine ci-dessus) ;
+>    réévaluer selon le beat (jeton-portrait carte vs vrai insert plein écran).
 >
 > **Short Soudan en attente** : ACLED toujours inaccessible.
 

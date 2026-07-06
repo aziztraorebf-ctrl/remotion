@@ -93,7 +93,8 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 |---|---|
 | Coder scène/beat War-Map (changement territoire) AVANT CODE | `memory/doctrines/WARMAP-GRAMMAIRE.md` ⭐⭐ CAUSE avant EFFET + 5 techniques causales |
 | War-Map Long (5-7min, 16:9, analytique géopo) | `memory/doctrines/WARMAP-LONG-DOCTRINE.md` ⭐ |
-| Doctrine design War-Map | `memory/doctrines/WARMAP-PLAYBOOK.md` |
+| Insert plein écran « prise de territoire / assaut / mouvement de forces » en SVG pur (PAS Mapbox, pas de géo réelle requise) | `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md` ⭐⭐ (registre médaillon état-major, réf compo `KhartoumEtatMajorSVG`) |
+| Doctrine design War-Map (Mapbox/d3-geo, géo réelle) | `memory/doctrines/WARMAP-PLAYBOOK.md` |
 | Doctrine données War-Map (recherche OSINT) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` |
 | « Quelle brique War-Map pour X ? » | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` (+ LINKING mapanimation) |
 
@@ -135,6 +136,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Mouvement caméra clip AI (orbit, dolly, crane, OTS) | `memory/tools/camera-movements.md` |
 | Seedance, Dreamina, prompt vidéo, clip | `memory/tools/seedance-prompts.md` + `seedance-rules.md` |
 | Seedance storyboard multi-cut (<15s) | `memory/tools/seedance-storyboard-technique.md` |
+| Grok Imagine 1.5, prompt vidéo API, alternative Seedance | `memory/tools/grok-imagine-rules.md` + `grok-imagine-prompts.md` + `memory/checklists/GROK-IMAGINE.md` |
 | Template data-viz pour Gemini (BarRace, StackedBars…) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates) |
 | Asset PixelLab AVANT génération | `memory/tools/PIXELLAB-MASTER-INDEX.md` (~50 assets avec IDs) |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
