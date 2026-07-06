@@ -4,6 +4,11 @@
 > `SOUVERAIN-VISUAL-PLAYBOOK` / `ATLAS-PLAYBOOK`. A LIRE avant toute video war-map.
 > **DERIVE DE CE QUI MARCHE** : prototype Soudan valide en session (2026-06-05).
 > ⭐ **OUTIL SVG-INSERT dispo** : un mecanisme/transformation/metaphore (ex. "l'or sort de la terre et finance la guerre" = pelle/lingot/creuset en SVG) peut etre un insert SVG anime (30s-1min) DANS la war-map. A penser DES le script. Doctrine : [[SVG-MIDFORM-FORMAT]] · couche script : [[DOCTRINE-SCRIPT-UNIFIEE]] regle 17. (⛔ la geo/bataille situee reste Mapbox.)
+> ⭐⭐ **INSERT SVG "ÉTAT-MAJOR" (prise de territoire / assaut) — VALIDÉ 2026-07-06** : pour une scène
+> de mouvement de forces / prise de cibles SANS besoin de géo réelle, doctrine + workflow dédiés :
+> [[WARMAP-INSERT-SVG-ETATMAJOR]] (proto de réf = compo `KhartoumEtatMajorSVG`, registre médaillon
+> gravé, formation de portraits qui avancent, statut capturée). C'est NOTRE manière de faire ce
+> type d'insert. (⛔ la géo situable exacte reste Mapbox/d3-geo, cf. reste de ce playbook.)
 > ⭐ **POINT D'ENTREE CODE : `src/projects/warmap/WARMAP-INDEX.md`** (carte maitre — quel fichier pour quoi).
 > ⭐ **LA REFERENCE = composition `SudanWarMapEpic60`** (60s, tout combine, catbox `4dwqit`). Les variantes
 > plus courtes ne sont PAS la reference.

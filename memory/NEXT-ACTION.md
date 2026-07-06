@@ -1,21 +1,29 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-05 (ajout Soudan — inserts tactiques R&D terminée, NEXT=assemblage).
+> Mis a jour : 2026-07-06 (Soudan — prototype insert SVG état-major VALIDÉ, NEXT=assemblage beat #5).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ⭐⭐ SOUDAN MID-FORM — INSERTS TACTIQUES : R&D TERMINÉE, NEXT = ASSEMBLAGE (2026-07-05)
+## ✅✅ SOUDAN MID-FORM — PROTOTYPE INSERT SVG "ÉTAT-MAJOR" VALIDÉ (2026-07-06)
 
-> Session R&D complète sur les inserts tactiques plein écran (beat #5 du script Acte 2 : attaque RSF
-> simultanée sur Khartoum, 15 avril 2023 — aéroport, palais présidentiel, tour TV). Décision finale
-> tranchée : bâtiments statiques complexes → Gemini image-gen + traitement (désaturation/cadre) ; jetons/
-> véhicules mobiles → SVG (pipeline GLM-5.2 premier jet → agent Sonnet 5 raffinement). Tous les assets sont
-> rapatriés vers des emplacements permanents du repo (pas de scratchpad à retrouver).
-> **Démarrer avec** `memory/PROMPT-REPRISE-soudan-assemblage.md` (prompt prêt à coller) — détail complet
-> `memory/STARTER-PROMPT-inserts-tactiques-soudan.md`. NEXT SESSION = assembler la vraie séquence Remotion
-> 25-30s en combinant le socle `ProtoInsertTactiqueTopDown.tsx` (déjà codé) + les bâtiments Gemini + les
-> jetons SVG en mouvement, puis rendre en vidéo réelle pour jugement Aziz.
+> Le prototype d'insert tactique (beat #5, attaque RSF sur Khartoum) est **VALIDÉ par Aziz** et
+> committé (`c59d0dd`). Compo Remotion `KhartoumEtatMajorSVG`. Render :
+> `out/_rnd/khartoum-etatmajor-svg/versions/khartoum-etatmajor-PROTOTYPE-VALIDE.mp4` · catbox `t96in1`.
+> Registre : médaillon d'état-major SVG pur (formation de 4 portraits RSF qui avancent, impacts onde
+> de choc, fumée, statut capturée = bâtiment semi-transparent + sceau R, 4 phases).
+>
+> **⭐ C'est désormais NOTRE pattern réutilisable pour tout insert « prise de territoire / mouvement
+> de forces »** : doctrine + workflow complets dans `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`.
+>
+> **NEXT (prochaine session Soudan)** :
+> 1. **Assembler la séquence beat #5** : caler l'insert sur la narration/voix off + intégrer au montage
+>    mid-form (le prototype est l'insert visuel isolé, reste le montage audio+séquence).
+> 2. Décider quels autres beats Soudan réutilisent l'insert SVG (autres prises de territoire).
+> 3. Pistes d'extension possibles (voir doctrine §« ce que ça ouvre ») : lignes de front qui reculent,
+>    zones de contrôle qui se remplissent, contre-attaque 2 factions, flèches de manœuvre.
+>
+> État complet : `memory/episodes/soudan-midform/STATUS.md`.
 
 ---
 
