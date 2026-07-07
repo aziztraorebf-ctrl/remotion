@@ -29,6 +29,7 @@ import {
   FactionLegend,
   HoldingFormation,
   AdvancingFormation,
+  ManeuverArrow,
   ClashSparks,
   Impact,
   SmokeColumn,
@@ -50,6 +51,22 @@ const T_BREACH = 300; // le front cede
 const T_EXPLOIT = T_BREACH + 40;
 const EXPLOIT_LEN = 150;
 const T_STABILISE = T_EXPLOIT + EXPLOIT_LEN;
+
+// ── POCHE SAF encerclee : une garnison SAF isolee, exposee a l'est de la breche (dans son propre
+// territoire), que la tenaille RSF va ENVELOPPER. C'est ce qui donne du SENS a la tenaille : on
+// encercle l'ADVERSAIRE, pas du vide (bug corrige : "le RSF s'attaquait lui-meme").
+const POCKET: Vec = { x: FRONT_X + 95, y: BREACH_Y };
+
+// ── TENAILLE : les 2 arcs d'encerclement partent de l'ouest (RSF), franchissent la breche et
+// CONTOURNENT la poche SAF par le nord et le sud pour se rejoindre DERRIERE elle (a l'est) = la
+// poche est encerclee. Arcs et jetons partagent la meme courbe (fleche annonce -> jetons executent).
+// Les targets sont AU-DELA de la poche (a l'est) ; le `bow` prononce fait passer l'arc autour d'elle.
+const PINCER_TOP = { origin: { x: FRONT_X - 300, y: BREACH_Y - 210 }, target: { x: POCKET.x + 70, y: POCKET.y - 8 }, bow: 0.34 };
+const PINCER_BOT = { origin: { x: FRONT_X - 300, y: BREACH_Y + 210 }, target: { x: POCKET.x + 70, y: POCKET.y + 8 }, bow: -0.34 };
+const PINCER_DRAW = 45; // duree du trace de la fleche
+const T_PINCER_ARROW = T_BREACH - 70; // les fleches se tracent avant la percee
+const T_PINCER_MOVE = T_BREACH - 20; // les jetons s'ebranlent APRES que la fleche a commence a se tracer
+const PINCER_TRAVEL = 95; // duree du deplacement des jetons le long de l'arc
 
 // ── Ligne de front parametrique : une sinusoide verticale, qui se DEFORME au point de rupture
 // apres T_BREACH (une pointe s'enfonce vers l'est). Renvoie le path SVG. ──
@@ -80,9 +97,9 @@ const frontXat = (y: number, frame: number): number => {
 const subtitleFor = (f: number): string => {
   if (f < T_ESTAB) return "A l'ouest, la RSF. A l'est, l'armee. Entre les deux, une ligne de front.";
   if (f < T_BREACH) return "Depuis des mois, la ligne ne bouge presque plus. L'impasse.";
-  if (f < T_EXPLOIT) return "Puis un point cede.";
-  if (f < T_STABILISE) return "La RSF s'engouffre dans la breche et pousse l'armee vers l'est.";
-  return "Le front se re-fige, plus loin. L'impasse s'est seulement deplacee.";
+  if (f < T_EXPLOIT) return "Puis un point cede. Une garnison se retrouve exposee.";
+  if (f < T_STABILISE) return "La RSF referme la tenaille et encercle la position isolee.";
+  return "La poche est prise. Ailleurs, le front tient toujours. L'impasse se deplace.";
 };
 
 export const FrontOuvertSVG: React.FC = () => {
@@ -170,17 +187,19 @@ export const FrontOuvertSVG: React.FC = () => {
           <Sonar cx={FRONT_X} cy={BREACH_Y} frame={frame} period={54} rMax={70} color={RSF.front} />
         )}
 
-        {/* Formations RSF de pression le long du front (cote ouest, tiennent contre la ligne) */}
+        {/* Formations RSF de pression le long du front (cote ouest). Le secteur CENTRAL (breach)
+            s'efface a la percee : ce sont les 2 PINCES qui prennent le relais (pas un doublon de
+            jetons au centre). Les secteurs haut/bas tiennent = l'impasse continue ailleurs. */}
         {pressureYs.map((y, i) => {
           if (frame < T_PRESSURE - 10) return null;
-          const fx = frontXat(y, frame);
-          // le secteur central (breach) pousse a l'est apres la percee ; les autres tiennent
           const isBreach = y === BREACH_Y;
-          const push = isBreach && frame >= T_BREACH ? clampI(frame, T_BREACH, T_STABILISE) * 200 : 0;
+          // secteur central : disparait quand les pinces s'ebranlent (evite l'amas au centre)
+          if (isBreach && frame >= T_PINCER_MOVE - 20) return null;
+          const fx = frontXat(y, frame);
           return (
             <HoldingFormation
               key={`rsf-${i}`}
-              center={{ x: fx - 70 + push, y }}
+              center={{ x: fx - 70, y }}
               faction={RSF}
               frame={frame + i * 7}
               count={3}
@@ -190,16 +209,28 @@ export const FrontOuvertSVG: React.FC = () => {
           );
         })}
 
-        {/* Formations SAF qui defendent le front (cote est) — le secteur breach recule */}
-        {pressureYs.map((y, i) => {
+        {/* POCHE SAF encerclee : au secteur central, la garnison SAF ne recule pas — elle est PIEGEE
+            a POCKET et se fait envelopper par la tenaille. Les secteurs haut/bas tiennent leur ligne. */}
+        {frame >= T_BREACH - 20 && (
+          <HoldingFormation
+            center={POCKET}
+            faction={SAF}
+            frame={frame}
+            count={4}
+            spread={30}
+            size={1.5}
+          />
+        )}
+
+        {/* Formations SAF qui defendent le front (cote est) — secteurs HAUT/BAS seulement (le central
+            est devenu la poche encerclee ci-dessus). */}
+        {pressureYs.filter((y) => y !== BREACH_Y).map((y, i) => {
           if (frame < T_PRESSURE - 10) return null;
           const fx = frontXat(y, frame);
-          const isBreach = y === BREACH_Y;
-          const retreat = isBreach && frame >= T_EXPLOIT ? clampI(frame, T_EXPLOIT, T_STABILISE) * 160 : 0;
           return (
             <HoldingFormation
               key={`saf-${i}`}
-              center={{ x: fx + 70 + retreat, y }}
+              center={{ x: fx + 70, y }}
               faction={SAF}
               frame={frame + i * 5 + 3}
               count={3}
@@ -209,18 +240,45 @@ export const FrontOuvertSVG: React.FC = () => {
           );
         })}
 
-        {/* Pointe d'exploitation RSF : une colonne s'enfonce dans la breche vers l'est */}
-        {frame >= T_BREACH && (
-          <AdvancingFormation
-            origin={{ x: FRONT_X - 120, y: BREACH_Y }}
-            front={{ x: FRONT_X + 220, y: BREACH_Y - 10 }}
-            faction={RSF}
-            frame={frame}
-            startFrame={T_BREACH}
-            travelFrames={EXPLOIT_LEN}
-            bow={0.05}
-            size={1.9}
-          />
+        {/* TENAILLE — FLECHES (intention) : les 2 axes d'encerclement se tracent avant la percee.
+            Elles s'effacent une fois que les jetons les ont parcourus (l'intention est consommee par
+            le mouvement). Regle : la fleche annonce, elle ne decore pas. */}
+        {(() => {
+          const arrowsOp = clampI(frame, T_PINCER_ARROW, T_PINCER_ARROW + 30) * clampI(frame, T_PINCER_MOVE + PINCER_TRAVEL - 10, T_PINCER_MOVE + PINCER_TRAVEL + 25, 1, 0);
+          if (arrowsOp <= 0) return null;
+          return (
+            <g>
+              <ManeuverArrow origin={PINCER_TOP.origin} target={PINCER_TOP.target} faction={RSF} frame={frame} startFrame={T_PINCER_ARROW} drawFrames={PINCER_DRAW} bow={PINCER_TOP.bow} width={9} opacity={arrowsOp} />
+              <ManeuverArrow origin={PINCER_BOT.origin} target={PINCER_BOT.target} faction={RSF} frame={frame} startFrame={T_PINCER_ARROW} drawFrames={PINCER_DRAW} bow={PINCER_BOT.bow} width={9} opacity={arrowsOp} />
+            </g>
+          );
+        })()}
+
+        {/* TENAILLE — JETONS (execution) : 2 formations RSF partent des extremites et SUIVENT
+            exactement les 2 arcs traces (memes origin/target/bow) pour converger sur la breche. */}
+        {frame >= T_PINCER_MOVE && (
+          <>
+            <AdvancingFormation
+              origin={PINCER_TOP.origin}
+              front={PINCER_TOP.target}
+              faction={RSF}
+              frame={frame}
+              startFrame={T_PINCER_MOVE}
+              travelFrames={PINCER_TRAVEL}
+              bow={PINCER_TOP.bow}
+              size={1.7}
+            />
+            <AdvancingFormation
+              origin={PINCER_BOT.origin}
+              front={PINCER_BOT.target}
+              faction={RSF}
+              frame={frame}
+              startFrame={T_PINCER_MOVE}
+              travelFrames={PINCER_TRAVEL}
+              bow={PINCER_BOT.bow}
+              size={1.7}
+            />
+          </>
         )}
 
         {/* etincelles de contact : sur les 3 secteurs pendant la pression, concentrees au breach */}

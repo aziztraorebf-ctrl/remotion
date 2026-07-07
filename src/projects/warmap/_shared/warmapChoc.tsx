@@ -311,6 +311,61 @@ export const bezierMid = (a: { x: number; y: number }, b: { x: number; y: number
   y: (a.y + b.y) / 2 - (b.x - a.x) * bow,
 });
 
+// tangente d'une quadratique Bezier a t (derivee) — pour orienter la pointe de fleche
+const quadTangent = (o: Vec, m: Vec, tg: Vec, s: number) => {
+  const dx = 2 * (1 - s) * (m.x - o.x) + 2 * s * (tg.x - m.x);
+  const dy = 2 * (1 - s) * (m.y - o.y) + 2 * s * (tg.y - m.y);
+  return (Math.atan2(dy, dx) * 180) / Math.PI;
+};
+
+// ── ManeuverArrow : fleche de manoeuvre qui SE TRACE (langage Kings & Generals). Technique prouvee
+// (proto archive EtatMajorGptAnimee) : path principal epais (couleur faction) + reflet fin ivoire,
+// strokeDasharray=DASH grand + strokeDashoffset anime L->0 = "la main qui dessine". La pointe
+// (polygon) apparait quand le trace est fini, orientee sur la tangente d'arrivee. Courbure `bow`
+// (signe = sens de l'arc) permet les fleches d'ENCERCLEMENT ; 2 fleches convergentes vers un point
+// = "prise en tenaille". GENERIQUE : origine/cible/courbure/faction/timing tout parametres.
+export const ManeuverArrow: React.FC<{
+  origin: Vec;
+  target: Vec;
+  faction: Faction;
+  frame: number;
+  startFrame: number;
+  drawFrames: number;
+  bow?: number; // courbure de l'arc (0 = droit ; +/- = encerclement gauche/droite)
+  width?: number;
+  dashed?: boolean; // fleche d'INTENTION (pointillee) vs fleche d'ASSAUT (pleine)
+  opacity?: number;
+}> = ({ origin, target, faction, frame, startFrame, drawFrames, bow = 0.18, width = 9, dashed = false, opacity = 1 }) => {
+  const local = frame - startFrame;
+  if (local < 0) return null;
+  const draw = clampI(local, 0, drawFrames);
+  const DASH = 4000;
+  const off = (1 - draw) * DASH;
+  const mid = bezierMid(origin, target, bow);
+  const path = `M${origin.x} ${origin.y} Q ${mid.x} ${mid.y} ${target.x} ${target.y}`;
+  // pointe : orientee sur la tangente d'arrivee (t=1), apparait quand le trace est ~fini
+  const headAngle = quadTangent(origin, mid, target, 1);
+  const headOp = clampI(local, drawFrames - 8, drawFrames) * opacity;
+  return (
+    <g opacity={opacity}>
+      {dashed ? (
+        // fleche d'INTENTION : trait pointille qui apparait en fondu (pas de trace directionnel)
+        <path d={path} fill="none" stroke={faction.body} strokeWidth={width} strokeLinecap="round" strokeDasharray="18 14" opacity={draw} filter="url(#emGlow)" />
+      ) : (
+        // fleche d'ASSAUT : trait plein qui SE TRACE (dashoffset L->0) + reflet ivoire
+        <>
+          <path d={path} fill="none" stroke={faction.body} strokeWidth={width} strokeLinecap="round" strokeDasharray={DASH} strokeDashoffset={off} filter="url(#emGlow)" />
+          <path d={path} fill="none" stroke={EM.ivory} strokeWidth={Math.max(1.6, width * 0.24)} strokeLinecap="round" strokeDasharray={DASH} strokeDashoffset={off} opacity={0.75} />
+        </>
+      )}
+      {/* pointe de fleche (chevron) orientee tangente */}
+      <g transform={`translate(${target.x} ${target.y}) rotate(${headAngle})`} opacity={headOp}>
+        <polygon points={`0,0 ${-width * 2.4},${-width * 1.15} ${-width * 1.5},0 ${-width * 2.4},${width * 1.15}`} fill={faction.body} stroke={EM.ivory} strokeWidth={1} />
+      </g>
+    </g>
+  );
+};
+
 // ── Formation qui AVANCE le long d'une Bezier vers un point d'arret (le front, PAS la cible finale).
 // Reutilise la logique du proto (echelon, swagger/bump organique, poussiere) mais s'arrete au front
 // au lieu de traverser. Parametree par faction. onProgress optionnel : renvoie la position de tete
@@ -405,7 +460,12 @@ export const formationHead = (origin: Vec, front: Vec, local: number, travelFram
   return quadPoint(origin, mid, front, t);
 };
 
-// ── Formation qui DEFEND une position (statique mais vivante : leger frisson defensif, sonar). ──
+// ── Formation qui DEFEND une position (statique mais vivante : leger frisson defensif). ──
+// `facing` (optionnel) : direction vers laquelle la formation fait face (= vers l'assaillant). Si
+// fourni, les jetons se disposent en ARC DEFENSIF oriente vers `facing` (une ligne face a l'ennemi),
+// pas en cercle complet — evite que des jetons se retrouvent DERRIERE l'assaillant (bug "l'armee qui
+// repart dans l'autre sens"). Sans `facing`, disposition circulaire (retrocompatible). Le recul
+// (`retreat` dans `pushDir`) est alors COHERENT : toute la ligne recule du meme cote, face a l'assaut.
 export const HoldingFormation: React.FC<{
   center: Vec;
   faction: Faction;
@@ -415,13 +475,25 @@ export const HoldingFormation: React.FC<{
   size?: number;
   retreat?: number; // 0 = tient ; >0 = recule (px) dans la direction pushDir
   pushDir?: Vec; // direction du recul (normalisee)
-}> = ({ center, faction, frame, count = 4, spread = 40, size = 1.9, retreat = 0, pushDir = { x: -1, y: 0 } }) => {
+  facing?: Vec; // direction vers l'assaillant (arc defensif oriente) ; absent = cercle complet
+  arcSpan?: number; // largeur de l'arc en radians (defaut ~110deg) si facing fourni
+}> = ({ center, faction, frame, count = 4, spread = 40, size = 1.9, retreat = 0, pushDir = { x: -1, y: 0 }, facing, arcSpan = 1.9 }) => {
+  const facingAngle = facing ? Math.atan2(facing.y, facing.x) : 0;
   return (
     <g>
       {Array.from({ length: count }).map((_, i) => {
-        const ang = (i / count) * Math.PI * 2 + jag01(i * 2.3);
-        const rad = spread * (0.5 + jag01(i * 4.1) * 0.5);
-        // frisson defensif : petit tremblement sur place (tient sa position sous pression)
+        let ang: number;
+        let rad: number;
+        if (facing) {
+          // arc defensif : jetons repartis sur `arcSpan` centre sur la direction de l'assaillant,
+          // sur 1-2 rangs (les jetons alternent proche/loin pour une ligne epaisse, pas alignee pile)
+          const frac = count > 1 ? i / (count - 1) - 0.5 : 0; // -0.5..0.5
+          ang = facingAngle + frac * arcSpan;
+          rad = spread * (0.85 + (i % 2) * 0.35); // 2 rangs
+        } else {
+          ang = (i / count) * Math.PI * 2 + jag01(i * 2.3);
+          rad = spread * (0.5 + jag01(i * 4.1) * 0.5);
+        }
         const jitter = Math.sin(frame * 0.4 + i * 1.7) * 1.6;
         const bx = center.x + Math.cos(ang) * rad + pushDir.x * retreat + jitter;
         const by = center.y + Math.sin(ang) * rad * 0.7 + pushDir.y * retreat;
@@ -453,9 +525,12 @@ export const FrontArc: React.FC<{
   return <circle cx={cx} cy={cy} r={r} fill="none" stroke={color} strokeWidth={2.2} strokeDasharray="9 7" opacity={op} />;
 };
 
-// ── Zone de controle qui se REMPLIT par balayage hachure (grammaire EtatMajorGptAnimee) : une
-// region passe sous controle d'une faction. Le remplissage progresse de gauche a droite (ou selon
-// un axe) via un clip anime. Parametree par faction (teinte). ──
+// ── Zone de controle qui BASCULE par balayage (grammaire EtatMajorGptAnimee), enrichie en vraie
+// brique "territoire qui change de camp" : (1) teinte pleine legere DERRIERE la hachure (le sol se
+// colore), (2) hachure faction par-dessus (texture d'occupation), (3) BORD DE PROGRESSION visible
+// (une ligne de front qui AVANCE = la limite du balayage, pas un clip invisible) + halo doux sur ce
+// bord. Direction de balayage parametrable (`dir`) : un territoire peut basculer depuis n'importe
+// quel bord, pas seulement gauche->droite. Parametree par faction. ──
 export const SweepZone: React.FC<{
   id: string;
   pathD: string; // contour de la zone (coord viewBox)
@@ -463,27 +538,54 @@ export const SweepZone: React.FC<{
   frame: number;
   startFrame: number;
   fillFrames: number;
-  bbox: { x: number; y: number; w: number; h: number }; // pour animer le clip de balayage
-}> = ({ id, pathD, faction, frame, startFrame, fillFrames, bbox }) => {
+  bbox: { x: number; y: number; w: number; h: number }; // etendue de la zone (pour le clip de balayage)
+  dir?: "ltr" | "rtl" | "ttb" | "btt"; // sens du balayage (defaut gauche->droite)
+  showEdge?: boolean; // afficher le bord de progression (defaut oui)
+}> = ({ id, pathD, faction, frame, startFrame, fillFrames, bbox, dir = "ltr", showEdge = true }) => {
   const t = clampI(frame, startFrame, startFrame + fillFrames);
   if (t <= 0) return null;
-  const clipW = bbox.w * t;
   const hid = `sweephatch-${id}`;
   const cid = `sweepclip-${id}`;
+  const horizontal = dir === "ltr" || dir === "rtl";
+  // rectangle de clip qui grandit dans le sens `dir`
+  let cx = bbox.x, cy = bbox.y, cw = bbox.w, ch = bbox.h;
+  let edgeX1 = 0, edgeY1 = 0, edgeX2 = 0, edgeY2 = 0;
+  if (dir === "ltr") { cw = bbox.w * t; edgeX1 = edgeX2 = bbox.x + cw; edgeY1 = bbox.y; edgeY2 = bbox.y + bbox.h; }
+  else if (dir === "rtl") { cw = bbox.w * t; cx = bbox.x + bbox.w - cw; edgeX1 = edgeX2 = cx; edgeY1 = bbox.y; edgeY2 = bbox.y + bbox.h; }
+  else if (dir === "ttb") { ch = bbox.h * t; edgeY1 = edgeY2 = bbox.y + ch; edgeX1 = bbox.x; edgeX2 = bbox.x + bbox.w; }
+  else { ch = bbox.h * t; cy = bbox.y + bbox.h - ch; edgeY1 = edgeY2 = cy; edgeX1 = bbox.x; edgeX2 = bbox.x + bbox.w; }
+  const edgeVisible = showEdge && t > 0.01 && t < 0.99;
   return (
     <g>
       <defs>
         <pattern id={hid} width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="14" height="14" fill={faction.zone} opacity={0.14} />
-          <line x1="0" y1="0" x2="0" y2="14" stroke={faction.zone} strokeWidth="2.4" opacity={0.42} />
+          <rect width="14" height="14" fill={faction.zone} opacity={0.12} />
+          <line x1="0" y1="0" x2="0" y2="14" stroke={faction.zone} strokeWidth="2.4" opacity={0.4} />
         </pattern>
         <clipPath id={cid}>
-          <rect x={bbox.x} y={bbox.y} width={clipW} height={bbox.h} />
+          <rect x={cx} y={cy} width={cw} height={ch} />
         </clipPath>
       </defs>
       <g clipPath={`url(#${cid})`}>
-        <path d={pathD} fill={`url(#${hid})`} stroke={faction.zone} strokeWidth={1.5} strokeOpacity={0.5} />
+        {/* teinte pleine legere : le sol se colore */}
+        <path d={pathD} fill={faction.zone} fillOpacity={0.12} />
+        {/* hachure d'occupation par-dessus */}
+        <path d={pathD} fill={`url(#${hid})`} stroke={faction.zone} strokeWidth={1.5} strokeOpacity={0.45} />
       </g>
+      {/* bord de progression : ligne de front qui avance, clippee au contour de la zone */}
+      {edgeVisible && (
+        <g>
+          <defs>
+            <clipPath id={`${cid}-shape`}>
+              <path d={pathD} />
+            </clipPath>
+          </defs>
+          <g clipPath={`url(#${cid}-shape)`}>
+            <line x1={edgeX1} y1={edgeY1} x2={edgeX2} y2={edgeY2} stroke={faction.front} strokeWidth={6} opacity={0.28} />
+            <line x1={edgeX1} y1={edgeY1} x2={edgeX2} y2={edgeY2} stroke={faction.bezel} strokeWidth={2} opacity={0.7} strokeDasharray={horizontal ? "10 6" : "10 6"} />
+          </g>
+        </g>
+      )}
     </g>
   );
 };

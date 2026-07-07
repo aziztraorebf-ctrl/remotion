@@ -30,7 +30,7 @@ import {
   HoldingFormation,
   formationHead,
   FrontArc,
-  SweepZone,
+  ManeuverArrow,
   Sonar,
   Impact,
   ClashSparks,
@@ -119,10 +119,6 @@ export const KhartoumChocSVG: React.FC = () => {
     shakeY += Math.cos(capLocal * 9) * 3;
   }
 
-  // zone RSF conquise (triangle grossier front->palais->staging) qui se remplit a la bascule
-  const zonePath = `M ${FRONT.x} ${FRONT.y} L ${PALAIS.x + 60} ${PALAIS.y - 40} L ${PALAIS.x + 40} ${PALAIS.y + 90} L ${FRONT.x - 30} ${FRONT.y + 80} Z`;
-  const zoneBbox = { x: FRONT.x - 40, y: PALAIS.y - 60, w: PALAIS.x - FRONT.x + 120, h: 200 };
-
   return (
     <AbsoluteFill style={{ background: "#0b1526", transform: `translate(${shakeX}px, ${shakeY}px)` }}>
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
@@ -194,24 +190,29 @@ export const KhartoumChocSVG: React.FC = () => {
           <Sonar cx={PALAIS.x} cy={PALAIS.y} frame={frame} period={50} rMax={62} color={SAF.front} />
         )}
 
-        {/* Zone RSF qui se remplit a la bascule */}
-        <SweepZone id="choc-a" pathD={zonePath} faction={RSF} frame={frame} startFrame={T_BASCULE} fillFrames={BASCULE_LEN} bbox={zoneBbox} />
+        {/* (Zone hachuree conquise RETIREE — retour Aziz : inutile pour un assaut PONCTUEL sur une
+            cible. Colorer un "territoire conquis" n'a de sens que dans le registre "front qui bouge"
+            (variante B / Acte 2), pas quand on saisit UN batiment. SweepZone reste dans le moteur pour B.) */}
 
         {/* Ligne de front SAF (arc devant le palais) qui recule a la bascule */}
         <FrontArc cx={PALAIS.x} cy={PALAIS.y} radius={175} frame={frame} shiftFrame={T_BASCULE} shiftBy={-2.6} color={SAF.front} />
 
-        {/* Formation SAF qui DEFEND devant le palais, recule (nettement) a la bascule puis se fait
-            submerger : elle s'estompe fortement a l'approche de la capture (perd la position). */}
+        {/* Formation SAF qui DEFEND devant le palais : disposee en ARC face a l'assaillant RSF
+            (facing = -PUSH_DIR, vers le sud-est d'ou vient la RSF), pas en cercle — evite que des
+            jetons SAF se retrouvent derriere la RSF ("l'armee qui repart dans l'autre sens", bug
+            corrige). Recule COHEREMMENT vers le palais a la bascule, puis s'estompe (submergee). */}
         {frame < T_CAPTURE + 10 && (
           <g opacity={frame >= T_BASCULE ? clampI(frame, T_BASCULE + 50, T_CAPTURE, 1, 0.15) : 1}>
             <HoldingFormation
-              center={{ x: PALAIS.x - 30, y: PALAIS.y + 30 }}
+              center={{ x: PALAIS.x + 20, y: PALAIS.y + 45 }}
               faction={SAF}
               frame={frame}
               count={4}
-              spread={46}
+              spread={52}
               retreat={safRetreat}
               pushDir={PUSH_DIR}
+              facing={{ x: -PUSH_DIR.x, y: -PUSH_DIR.y }}
+              arcSpan={1.7}
             />
           </g>
         )}
@@ -240,6 +241,22 @@ export const KhartoumChocSVG: React.FC = () => {
             size={1.7}
           />
         )}
+
+        {/* FLECHE DE MANOEUVRE (intention) : l'axe d'offensive RSF->palais se TRACE juste avant que
+            la colonne s'ebranle (grammaire K&G : on montre l'INTENTION, puis les jetons l'executent).
+            Pointillee = intention/plan ; s'efface une fois la bascule engagee (l'axe est consomme). */}
+        <ManeuverArrow
+          origin={{ x: RSF_ORIGIN.x - 30, y: RSF_ORIGIN.y - 20 }}
+          target={{ x: PALAIS.x + 70, y: PALAIS.y + 50 }}
+          faction={RSF}
+          frame={frame}
+          startFrame={T_ESTAB - 30}
+          drawFrames={40}
+          bow={0.14}
+          width={7}
+          dashed
+          opacity={clampI(frame, T_ESTAB - 30, T_ESTAB - 10) * clampI(frame, T_BASCULE, T_BASCULE + 30, 1, 0)}
+        />
 
         {/* Poussee RSF : la colonne avance vers le front (disparait a la bascule, relayee par
             l'exploitation qui recouvre le palais). */}

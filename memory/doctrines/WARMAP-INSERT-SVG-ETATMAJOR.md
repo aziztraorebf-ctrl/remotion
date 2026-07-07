@@ -64,6 +64,42 @@ macro dézoomée** (War-Map Long 16:9, 3 pays). Elle **ne s'applique pas** à l'
 Ce n'est pas une exception à la règle jetons-vs-véhicules, c'est une **précision de son périmètre** :
 elle parlait de la carte macro ; l'insert zoomé est un autre objet. Les deux coexistent proprement.
 
+## ⭐ RÈGLE (Aziz 2026-07-06) — une FLÈCHE de manœuvre annonce toujours un MOUVEMENT, jamais décorative
+
+Une flèche de manœuvre (axe d'offensive, tenaille, encerclement) ne doit **jamais exister seule** :
+elle est **l'INTENTION**, et des jetons doivent **l'EXÉCUTER** en suivant son tracé. Une flèche sans
+mouvement derrière = décoratif et creux (constat validé sur la 1re tenaille de `FrontOuvertSVG` : 2
+arcs tracés mais aucune formation ne les suivait → « un peu inutile si on n'a pas les jetons »).
+
+**Mise en œuvre technique** : flèche et jetons partagent la MÊME courbe (mêmes `origin`/`target`/`bow`
+passés à `ManeuverArrow` ET à `AdvancingFormation`) → le jeton suit exactement l'arc dessiné. Timing :
+la flèche se trace d'abord (annonce le plan), les jetons s'ébranlent juste après et parcourent l'arc,
+la flèche s'efface une fois le mouvement consommé. C'est la grammaire Kings & Generals : on montre le
+plan, puis les unités l'exécutent. Réf : la tenaille de `FrontOuvertSVG` (2 pinces `PINCER_TOP/BOT`).
+
+**Corollaire — la ZONE de contrôle (`SweepZone`) n'est PAS universelle** : colorer un « territoire
+conquis » n'a de sens que pour un **basculement territorial** (registre « front qui bouge », variante
+B / Acte 2). Pour un **assaut PONCTUEL sur une cible** (prendre UN bâtiment, variante A Khartoum), la
+zone hachurée derrière est parasite → retirée. Choisir la brique selon l'échelle du récit : point pris
+= sceau + occupation ; région basculée = SweepZone.
+
+## ⭐⭐ RÈGLE (Aziz 2026-07-06) — PION-VISAGE vs BLOC ABSTRAIT : choisir selon la DENSITÉ
+
+Loi de lisibilité (pas un goût), formulée par Aziz en voyant la tenaille à ~15 jetons rester lisible :
+
+- **Peu de jetons + mouvement simple** (≈ le proto initial, 4 portraits qui avancent ; flèche d'intention
+  + 1 formation) → **PION-VISAGE** (portrait rond humain). Il donne le « QUI », c'est incarné, c'est notre
+  différentiel. À cette densité, ça respire.
+- **Beaucoup de jetons simultanés** (formations denses, encerclements, tenailles, front multi-secteurs) →
+  **BLOC ABSTRAIT LETTRÉ** (nos losanges « R »/« S »). Un symbole abstrait reste lisible en nombre ; 15
+  visages à l'écran = gribouillis illisible. Le visage NE SCALE PAS en nombre, le symbole OUI.
+
+**Pourquoi Kings & Generals / ces chaînes utilisent des amas de blocs abstraits** : ce n'est PAS un choix
+esthétique arbitraire, c'est cette contrainte de lisibilité à densité élevée. Déduction d'Aziz, juste.
+
+**Application** : à densité faible, on peut mêler pion-visage (commandant) + quelques blocs. Dès que la
+scène monte en nombre d'unités simultanées, basculer tout en blocs lettrés. Ne pas mettre 10 portraits.
+
 ## Identité RSF réutilisable (généralisable)
 
 Le **losange biseauté + lettre** = notre système de pion faction, réutilisable pour toute faction
