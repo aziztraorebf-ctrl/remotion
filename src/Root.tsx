@@ -327,6 +327,8 @@ import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
 import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS } from "./projects/warmap/KhartoumEtatMajorSVG";
 import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
+import { KhartoumChocSVG, KHARTOUM_CHOC_FRAMES, KHARTOUM_CHOC_FPS } from "./projects/warmap/KhartoumChocSVG";
+import { FrontOuvertSVG, FRONT_OUVERT_FRAMES, FRONT_OUVERT_FPS } from "./projects/warmap/FrontOuvertSVG";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1669,6 +1671,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
         <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
         <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />
+        {/* Moteur d'affrontement 2 factions (warmapChoc) — 2 variantes d'habillage du meme moteur */}
+        <Composition id="KhartoumChocSVG" component={KhartoumChocSVG} durationInFrames={KHARTOUM_CHOC_FRAMES} fps={KHARTOUM_CHOC_FPS} width={1920} height={1080} />
+        <Composition id="FrontOuvertSVG" component={FrontOuvertSVG} durationInFrames={FRONT_OUVERT_FRAMES} fps={FRONT_OUVERT_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />

@@ -46,6 +46,24 @@
 7. **Séquence en phases** : établissement → cible 1 → cible 2 → cible 3 → résolution. JAMAIS
    simultané (une cible à la fois). Sous-titre qui change par phase. Camera shake au contact.
 
+## ⭐ RÈGLE ENRICHIE (Aziz 2026-07-06) — portrait rond humain OK en INSERT ZOOMÉ
+
+Tension apparente levée avec [[DECISION-jetons-vs-vehicules]] : cette dernière proscrit l'échelle
+« réelle » (véhicules ~50px illisibles) et impose des jetons circulaires abstraits sur la **carte géo
+macro dézoomée** (War-Map Long 16:9, 3 pays). Elle **ne s'applique pas** à l'insert état-major zoomé.
+
+**Distinction actée** — deux registres, deux règles :
+- **Carte géo macro (dézoomée, géographie réelle situable)** → jetons circulaires abstraits, PAS de
+  portraits individuels (répétés, ils saturent + perdent leur impact ; garde-fou 1 storyboard Acte 1).
+- **Insert état-major zoomé (illustration de plan de bataille, pas carte de données)** → le **portrait
+  rond humain est AUTORISÉ et VOULU** : il donne le « QUI » (on voit quel commandant attaque/défend),
+  reste lisible à cette échelle, et sert le registre gravé. Usage validé : **medaillon-commandant** UN
+  par formation (pas un par pion — grammaire Battle Probe : richesse = portrait de commandant par
+  groupe, pas détail de chaque unité). ⚠️ Le portrait NE TOURNE JAMAIS (translate seul).
+
+Ce n'est pas une exception à la règle jetons-vs-véhicules, c'est une **précision de son périmètre** :
+elle parlait de la carte macro ; l'insert zoomé est un autre objet. Les deux coexistent proprement.
+
 ## Identité RSF réutilisable (généralisable)
 
 Le **losange biseauté + lettre** = notre système de pion faction, réutilisable pour toute faction
