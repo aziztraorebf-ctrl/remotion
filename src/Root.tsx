@@ -330,6 +330,10 @@ import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/
 import { KhartoumChocSVG, KHARTOUM_CHOC_FRAMES, KHARTOUM_CHOC_FPS } from "./projects/warmap/KhartoumChocSVG";
 import { FrontOuvertSVG, FRONT_OUVERT_FRAMES, FRONT_OUVERT_FPS } from "./projects/warmap/FrontOuvertSVG";
 import { OrDarfourHook, OR_DARFOUR_HOOK_FRAMES, OR_DARFOUR_HOOK_FPS } from "./projects/warmap/soudan-hook/OrDarfourHook";
+import { SoudanSocleTest, SOUDAN_SOCLE_FRAMES, SOUDAN_SOCLE_FPS } from "./projects/warmap/SoudanSocleTest";
+import { SoudanHighlightTest, SOUDAN_HL_FRAMES, SOUDAN_HL_FPS } from "./projects/warmap/SoudanHighlightTest";
+import { SoudanMouvementTest, SOUDAN_MVT_FRAMES, SOUDAN_MVT_FPS } from "./projects/warmap/SoudanMouvementTest";
+import { SoudanTestFinal, SOUDAN_TF_FRAMES, SOUDAN_TF_FPS } from "./projects/warmap/SoudanTestFinal";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1677,6 +1681,16 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="FrontOuvertSVG" component={FrontOuvertSVG} durationInFrames={FRONT_OUVERT_FRAMES} fps={FRONT_OUVERT_FPS} width={1920} height={1080} />
         {/* HOOK d'ouverture Soudan — "l'or du Darfour" reskin parchemin/encre + continuation */}
         <Composition id="OrDarfourHook" component={OrDarfourHook} durationInFrames={OR_DARFOUR_HOOK_FRAMES} fps={OR_DARFOUR_HOOK_FPS} width={1920} height={1080} />
+        {/* SOCLE carte Soudan (grammaire AES : Soudan crème + voisins kaki + contour permanent + halos locaux) */}
+        {/* 2 variantes comparatives : A = grand bloc vide (AES pur) · B = états très pâles */}
+        <Composition id="SoudanSocleTest-A-BlocVide" component={SoudanSocleTest} durationInFrames={SOUDAN_SOCLE_FRAMES} fps={SOUDAN_SOCLE_FPS} width={1920} height={1080} defaultProps={{ stateLines: 0 }} />
+        <Composition id="SoudanSocleTest-B-EtatsPales" component={SoudanSocleTest} durationInFrames={SOUDAN_SOCLE_FRAMES} fps={SOUDAN_SOCLE_FPS} width={1920} height={1080} defaultProps={{ stateLines: 0.15 }} />
+        {/* "on nomme → ça se trace" : contour d'état coloré qui se dessine au mot (option C) */}
+        <Composition id="SoudanHighlightTest" component={SoudanHighlightTest} durationInFrames={SOUDAN_HL_FRAMES} fps={SOUDAN_HL_FPS} width={1920} height={1080} />
+        {/* MOUVEMENT : jetons qui se déplacent + sillage derrière + highlight au passage (valide socle 100%) */}
+        <Composition id="SoudanMouvementTest" component={SoudanMouvementTest} durationInFrames={SOUDAN_MVT_FRAMES} fps={SOUDAN_MVT_FPS} width={1920} height={1080} />
+        {/* TEST FINAL : régions persistantes + jetons + arrivée qui allume + zoom serré + base iso + retour vide */}
+        <Composition id="SoudanTestFinal" component={SoudanTestFinal} durationInFrames={SOUDAN_TF_FRAMES} fps={SOUDAN_TF_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />

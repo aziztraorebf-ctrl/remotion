@@ -20,11 +20,18 @@ import React from "react";
 import { AbsoluteFill, useCurrentFrame, useVideoConfig, spring, interpolate, Sequence, Audio, staticFile } from "remotion";
 import {
   H_FOND, H_CIEL, H_NUAGES, H_TERRE, H_OMBRE_LINGOT,
-  H_PELLE, H_LINGOT_OR, H_LINGOT_MOBILE, H_VIGNETTE,
+  hookPelle, H_LINGOT_OR, H_LINGOT_MOBILE, H_VIGNETTE,
 } from "./orDarfourGroups";
 
-export const OR_DARFOUR_HOOK_FRAMES = 620;
+export const OR_DARFOUR_HOOK_FRAMES = 700; // VO GéoAfrique = 690f + petite queue
 export const OR_DARFOUR_HOOK_FPS = 30;
+
+// ── DÉCLENCHEURS SYNCHRO VOIX (whisper-align sur hook-or-darfour.mp3, 30fps) ──
+// "Darfour" @4.40s=f132 · 1re "guerre" @12.26s=f368 · "meurtrière" @12.64s=f379 ·
+// "Suivez L'OR" @21.92s=f658 · fin @22.9s=f686. La colorisation/apparition suit CES mots.
+const VO_DARFOUR = 132;   // la pelle-drapeau se plante ICI (le pays entre en scène)
+const VO_GUERRE = 368;    // la fumée monte + la terre vire au sang ICI
+const VO_SUIVEZ_OR = 658; // la traînée d'or se dégage et file hors cadre ICI
 
 const SABLE = "#d9c092";
 const TERRE = "#9a8763";
@@ -42,14 +49,14 @@ export const OrDarfourHook: React.FC = () => {
   const { fps } = useVideoConfig();
 
   // ---------- COUCHE DE FOND ----------
-  const driftScale = interpolate(f, [0, 560], [1.0, 1.05]);
+  const driftScale = interpolate(f, [0, 690], [1.0, 1.05]);
   const driftX = Math.sin(f / 100) * 7;
   const cloudSpan = 760;
   const cloudShift = -((f * 0.95) % cloudSpan);
 
-  // ---------- FUMEE DE GUERRE (reprise Hero) ----------
-  const smokeOn = interpolate(f, [180, 240], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const smokeReach = interpolate(f, [200, 320], [240, 760], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ---------- FUMEE DE GUERRE (reprise Hero) — calée sur le mot "guerre" (VO_GUERRE) ----------
+  const smokeOn = interpolate(f, [VO_GUERRE - 18, VO_GUERRE + 42], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const smokeReach = interpolate(f, [VO_GUERRE - 2, VO_GUERRE + 118], [240, 760], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const SMOKE_BASE = { x: 1430, y: 700 };
   const puffs = Array.from({ length: 18 }, (_, i) => {
     const cycle = ((f / 110) + i / 18) % 1;
@@ -59,49 +66,61 @@ export const OrDarfourHook: React.FC = () => {
     const op = Math.sin(Math.max(0.001, cycle) * Math.PI) * 0.92 * smokeOn;
     return { cx: SMOKE_BASE.x + sway, cy: SMOKE_BASE.y - rise, r, op };
   });
-  const skyBlacken = interpolate(f, [270, 430], [0, 0.9], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const skyBlacken = interpolate(f, [VO_GUERRE + 40, VO_GUERRE + 200], [0, 0.9], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ---------- EVENEMENTS PARTIE 1 (reprise Hero) ----------
   const dropSpring = (startF: number) =>
     spring({ frame: f - startF, fps, config: { mass: 1.0, damping: 12, stiffness: 90 }, durationInFrames: 34 });
 
-  const pelleDrop = dropSpring(10);
-  const pelleVisible = f >= 10;
+  // la pelle-DRAPEAU se plante au mot "Darfour" (elle atterrit ~26f après le start du spring)
+  const PELLE_START = VO_DARFOUR - 26; // 106 -> atterrissage f132
+  const pelleDrop = dropSpring(PELLE_START);
+  const pelleVisible = f >= PELLE_START;
   const pelleY = interpolate(pelleDrop, [0, 1], [-240, 0]);
-  const pelleLandF = 26;
+  const pelleLandF = VO_DARFOUR;
   const plantDust = interpolate(f, [pelleLandF, pelleLandF + 8, pelleLandF + 20], [0, 0.7, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // COLORISATION PROGRESSIVE de la pelle : noire à la chute, puis elle SE PEINT pendant la narration
+  // du Darfour (~f150 -> f350, juste avant que la guerre s'enclenche à VO_GUERRE=368).
+  //  - les 3 bandes du fer montent en fondu SIMULTANÉ (colorFer)
+  //  - le manche vire au VERT EN DERNIER (colorManche), pour finir de "peindre le pays"
+  const colorFer = interpolate(f, [pelleLandF + 18, 300], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const colorManche = interpolate(f, [300, VO_GUERRE - 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  const lingotDrop = dropSpring(70);
-  const lingotVisible = f >= 70;
+  // LINGOT-OR : tombe COLORISÉ D'ENTRÉE sur "les métaux les plus convoités" (~f40-60). C'est l'accent
+  // sémantique dominant (l'or) qui arrive AVANT tout le reste. Drop start f34 -> atterrit ~f60.
+  const LINGOT_START = 34;
+  const lingotDrop = dropSpring(LINGOT_START);
+  const lingotVisible = f >= LINGOT_START;
   const lingotDY = interpolate(lingotDrop, [0, 1], [-300, 0]);
-  const lingotLandF = 86;
+  const lingotLandF = LINGOT_START + 26; // ~60
   const lingotSquash = 1 - Math.max(0, interpolate(f, [lingotLandF, lingotLandF + 5, lingotLandF + 13], [0, 0.14, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }));
   const lingotDust = interpolate(f, [lingotLandF, lingotLandF + 8, lingotLandF + 22], [0, 0.6, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const reflTravel = interpolate(f, [104, 158], [700, 1280], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const reflOn = interpolate(f, [104, 116], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-    * interpolate(f, [148, 164], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // le gros lingot reste PLEIN pendant toute la continuation (il porte le sens : c'est SON or qui
-  // s'echappe en trainee) ; il ne s'estompe qu'a la toute fin, juste avant la coupe vers la carte.
-  const lingotFadeOut = interpolate(f, [592, 618], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // reflet d'or qui balaie le lingot juste après l'atterrissage (l'éclat "convoité")
+  const reflTravel = interpolate(f, [lingotLandF + 18, lingotLandF + 72], [700, 1280], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const reflOn = interpolate(f, [lingotLandF + 18, lingotLandF + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+    * interpolate(f, [lingotLandF + 62, lingotLandF + 78], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // le gros lingot reste PLEIN jusqu'à la coupe finale vers la carte (c'est SON or qui s'échappe).
+  const lingotFadeOut = interpolate(f, [686, 700], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const lingotGlow = (lingotVisible ? 1 : 0) * lingotFadeOut * (0.9 + 0.1 * (Math.sin(f / 17) + 1) / 2);
 
-  const mobileDrop = dropSpring(120);
-  const mobileVisible = f >= 120;
+  // petit lingot mobile : arrive un peu après le gros (avant la pelle), meuble la richesse extraite
+  const mobileDrop = dropSpring(80);
+  const mobileVisible = f >= 80;
   const mobileDY = interpolate(mobileDrop, [0, 1], [-280, 0]);
 
-  const bloodTerre = interpolate(f, [210, 300], [0, 0.58], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const bloodCiel = interpolate(f, [210, 300], [0, 0.28], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // la terre / le ciel virent au SANG sur le mot "guerre" (VO_GUERRE)
+  const bloodTerre = interpolate(f, [VO_GUERRE, VO_GUERRE + 90], [0, 0.58], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const bloodCiel = interpolate(f, [VO_GUERRE, VO_GUERRE + 90], [0, 0.28], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // le petit lingot part le premier (fade pur sur place, objet inerte)
-  const mobileFade = interpolate(f, [430, 480], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // le petit lingot s'efface (fade pur sur place, objet inerte) pendant "personne ne parle"
+  const mobileFade = interpolate(f, [VO_GUERRE + 120, VO_GUERRE + 170], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // ---------- PARTIE 2 — CONTINUATION "l'or qui part" (f460-620) ----------
-  // une pulsation de l'or (le lingot brille fort une derniere fois avant de "s'envoler")
-  const departPulse = interpolate(f, [470, 500, 540], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // TRAINEE D'OR : des particules d'or qui quittent le lingot vers la DROITE (hors Darfour). C'est le
-  // seul mouvement autorise ici = un flux (pas l'objet inerte qui glisse, mais des etincelles/poussiere d'or).
-  const trailOn = interpolate(f, [500, 530], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-    * interpolate(f, [590, 615], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // ---------- PARTIE 2 — CONTINUATION "SUIVEZ L'OR" (calée sur VO_SUIVEZ_OR = f658) ----------
+  // pulsation de l'or juste avant qu'il "s'envole" (le lingot brille fort une dernière fois)
+  const departPulse = interpolate(f, [VO_SUIVEZ_OR - 24, VO_SUIVEZ_OR, VO_SUIVEZ_OR + 30], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // TRAÎNÉE D'OR : particules qui quittent le lingot vers la DROITE (hors Darfour) = "cet or s'en va".
+  // Seul mouvement autorisé ici = un flux (pas l'objet inerte qui glisse).
+  const trailOn = interpolate(f, [VO_SUIVEZ_OR - 6, VO_SUIVEZ_OR + 24], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const goldTrail = Array.from({ length: 14 }, (_, i) => {
     const cycle = ((f / 60) + i / 14) % 1;               // 0 (au lingot) -> 1 (sorti a droite)
     const startX = 1080, startY = 640;
@@ -112,23 +131,48 @@ export const OrDarfourHook: React.FC = () => {
     const op = Math.sin(Math.max(0.001, cycle) * Math.PI) * trailOn;
     return { x, y, r, op };
   });
-  // cartouche grave "OU VA CET OR ?" (pose la question -> repondue Acte 3). Apparait puis tient.
-  const cartoucheOn = interpolate(f, [536, 560], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // cartouche gravé "OU VA CET OR ?" apparaît juste après "l'or" et tient jusqu'à la coupe.
+  const cartoucheOn = interpolate(f, [VO_SUIVEZ_OR + 16, VO_SUIVEZ_OR + 40], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+
+  // ---------- MICRO-ANIMATIONS (dévitaliser la scène, jamais de glissement d'objet inerte) ----------
+  // 1. HALO DU SOLEIL qui respire (dilatation-contraction lente autour du soleil du groupe H_CIEL)
+  const sunPulse = 1 + 0.10 * Math.sin(f / 26);
+  const sunGlowOp = 0.18 + 0.10 * (Math.sin(f / 26) + 1) / 2;
+  // 2. SCINTILLEMENT DE L'OR : petits éclats qui glissent en boucle douce sur le gros lingot (respiration).
+  // Déterministe (zéro Math.random). Actif tant que le lingot est plein.
+  const sparkles = Array.from({ length: 4 }, (_, i) => {
+    const cycle = ((f / 90) + i / 4) % 1;                 // boucle lente
+    const x = 800 + cycle * 360;                          // glisse le long de la face sup du lingot
+    const y = 600 - cycle * 34 + Math.sin(i * 2) * 6;
+    const op = Math.sin(Math.max(0.001, cycle) * Math.PI) * 0.6 * lingotGlow;
+    const r = 3.2 + Math.sin(f / 9 + i) * 0.9;
+    return { x, y, r, op };
+  });
+  // 3. BRAISES / ÉTINCELLES orange qui montent au pied de la fumée (renforce le moment "guerre").
+  // Suivent la fumée (SMOKE_BASE), synchro avec smokeOn.
+  const embers = Array.from({ length: 9 }, (_, i) => {
+    const cycle = ((f / 55) + i / 9) % 1;                 // 0 (au sol) -> 1 (monté + éteint)
+    const ex = SMOKE_BASE.x - 30 + Math.sin(cycle * Math.PI * 2 + i) * 40;
+    const ey = SMOKE_BASE.y - cycle * 210;
+    const eop = Math.sin(Math.max(0.001, cycle) * Math.PI) * 0.75 * smokeOn;
+    const er = 3.4 * (1 - cycle * 0.6);
+    return { ex, ey, eop, er };
+  });
 
   return (
     <AbsoluteFill style={{ background: TERRE }}>
       {/* ===== AUDIO ===== */}
-      <Sequence from={0} durationInFrames={620}>
-        <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.34} loop />
-      </Sequence>
-      <Sequence from={30} durationInFrames={22}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.55} /></Sequence>
-      <Sequence from={86} durationInFrames={22}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.52} /></Sequence>
-      <Sequence from={90} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/plate-pop.mp3")} volume={0.50} /></Sequence>
-      <Sequence from={134} durationInFrames={20}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.46} /></Sequence>
-      <Sequence from={180} durationInFrames={40}><Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} /></Sequence>
-      <Sequence from={270} durationInFrames={50}><Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.5} /></Sequence>
-      {/* l'or qui part (continuation) */}
-      <Sequence from={500} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.5} /></Sequence>
+      {/* VOIX OFF (GéoAfrique V3) = la colonne vertébrale. Drone BANNI (doctrine SFX ponctuels). */}
+      <Sequence from={0}><Audio src={staticFile("_shared/audio/soudan/hook-or-darfour.mp3")} volume={1} /></Sequence>
+      {/* SFX ponctuels, calés sur les gestes (pas de nappe continue) */}
+      <Sequence from={30} durationInFrames={22}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} /></Sequence>
+      {/* pelle-drapeau qui se plante au mot "Darfour" */}
+      <Sequence from={VO_DARFOUR - 4} durationInFrames={22}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.52} /></Sequence>
+      <Sequence from={VO_DARFOUR} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/plate-pop.mp3")} volume={0.42} /></Sequence>
+      {/* la guerre : boom sourd au mot "guerre" */}
+      <Sequence from={VO_GUERRE - 8} durationInFrames={44}><Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.5} /></Sequence>
+      {/* l'or qui file : whoosh sur "Suivez L'OR" */}
+      <Sequence from={VO_SUIVEZ_OR} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.48} /></Sequence>
 
       {/* ===== IMAGE ===== */}
       <svg viewBox="0 0 1920 1080" width="100%" height="100%" style={{ position: "absolute", inset: 0 }}>
@@ -144,6 +188,8 @@ export const OrDarfourHook: React.FC = () => {
 
           <Grp body={H_FOND} />
           <Grp body={H_CIEL} />
+          {/* halo du soleil qui RESPIRE (micro-anim) — superposé sur le soleil du groupe H_CIEL */}
+          <ellipse cx="1500" cy="196" rx={92 * sunPulse} ry={92 * sunPulse} fill={OR_CLAIR} opacity={sunGlowOp} />
           <rect x="0" y="0" width="1920" height="760" fill={SANG} opacity={bloodCiel} style={{ mixBlendMode: "multiply" }} />
 
           <g>
@@ -163,6 +209,10 @@ export const OrDarfourHook: React.FC = () => {
                   <circle cx={p.cx + p.r * 0.25} cy={p.cy + p.r * 0.1} r={p.r * 0.55} fill="#211a12" opacity={p.op * 0.6} />
                 </g>
               ))}
+              {/* braises orange qui montent au pied de la fumée (le moment "guerre") */}
+              {embers.map((e, i) => (
+                <circle key={`em${i}`} cx={e.ex} cy={e.ey} r={e.er} fill="#e6702a" opacity={e.eop} />
+              ))}
             </g>
           )}
 
@@ -175,7 +225,7 @@ export const OrDarfourHook: React.FC = () => {
 
           <Grp body={H_OMBRE_LINGOT} />
 
-          {pelleVisible && <Grp body={H_PELLE} transform={`translate(0 ${pelleY})`} />}
+          {pelleVisible && <Grp body={hookPelle(colorFer, colorManche)} transform={`translate(0 ${pelleY})`} />}
           {plantDust > 0.02 && (
             <g opacity={plantDust}>
               <ellipse cx="603" cy="700" rx={40 + (1 - plantDust) * 30} ry="9" fill={TERRE} opacity="0.6" />
@@ -203,6 +253,13 @@ export const OrDarfourHook: React.FC = () => {
               <rect x={reflTravel} y="500" width="60" height="300" fill="#ffffff" opacity={0.5 * reflOn} transform="skewX(-22)" style={{ mixBlendMode: "screen" }} />
             </g>
           )}
+          {/* scintillement de l'or en boucle lente (micro-anim, respiration du lingot) */}
+          {sparkles.map((s, i) => s.op > 0.01 && (
+            <g key={`spk${i}`}>
+              <circle cx={s.x} cy={s.y} r={s.r} fill="#fff8dc" opacity={s.op} />
+              <circle cx={s.x} cy={s.y} r={s.r * 2.4} fill={OR_CLAIR} opacity={s.op * 0.25} />
+            </g>
+          ))}
 
           {mobileVisible && (
             <Grp body={H_LINGOT_MOBILE} transform={`translate(0 ${mobileDY})`} opacity={mobileFade} />
@@ -226,7 +283,7 @@ export const OrDarfourHook: React.FC = () => {
             <g opacity={cartoucheOn}>
               <rect x="560" y="958" width="800" height="70" fill="#2a120e" rx="4" />
               <rect x="566" y="964" width="788" height="58" fill="none" stroke={SANG} strokeWidth="1.5" rx="2" />
-              <text x="960" y="1002" textAnchor="middle" fill="#f5e6ce" fontFamily="Georgia, 'Times New Roman', serif" fontSize="30" fontStyle="italic" letterSpacing="1.5">Ou va cet or ?</text>
+              <text x="960" y="1002" textAnchor="middle" fill="#f5e6ce" fontFamily="Georgia, 'Times New Roman', serif" fontSize="30" fontStyle="italic" letterSpacing="1.5">Où va cet or ?</text>
             </g>
           )}
 

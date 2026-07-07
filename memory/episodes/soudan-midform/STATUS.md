@@ -1,24 +1,69 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-07 — ✅ **Moteur affrontement 2 factions (+flèches/zones/encerclement)
-+ HOOK d'ouverture "l'or du Darfour" + storyboard Actes 1&2 relu.** Prochaine session = **PILOTE Actes 1-2**.
-**Branche :** `feat/warmap-insert-2factions` (commits `351514e` moteur · `3974235` flèches/zones ·
-`9920643` hook or). Working tree Short Sahel (non à nous) préservé tout du long.
+**Dernière mise à jour :** 2026-07-07 (session 2) — ✅ **HOOK VALIDÉ + SOCLE CARTE SOUDAN CONSTRUIT & VALIDÉ**
+(grammaire AES fidèlement reproduite). Prochaine session = **CONSTRUIRE l'Acte 1** (9 beats sur le socle).
+**Branche :** `feat/warmap-insert-2factions`. Working tree Short Sahel (non à nous) préservé. NB : `@remotion/motion-blur`
+installé (dépendance manquante d'un fichier tiers qui cassait le bundle — OK Aziz, cf [[key-learnings]]).
 
-## 🎯 PROCHAINE SESSION — pilote Actes 1-2 (décision Aziz 2026-07-07)
-1. **Finir le hook** (RAPIDE, quasi fini) : reformuler accroche + pelle-drapeau soudanais + colorisation
-   séquencée synchro voix. Détail : [[soudan-midform-STORYBOARD-ACTE1]] § HOOK.
-2. **Produire Actes 1 & 2 en pilote.** Storyboard relu + support par beat = artifact catbox `pqenlu` /
-   analyse hook `rhq0n8`. Insert état-major = beat 5 A2 (`KhartoumChocSVG`, quasi fini) + beat 8 candidat
-   (`FrontOuvertSVG`). Reste : carte Mapbox à adapter au Soudan (data+géo déjà sur disque, cf §RÉUTILISATION).
-3. **Avant prod complète** : régénérer audio Acte 2 (périmé) ; Actes 3-4 non écrits.
+## ✅✅ SOCLE CARTE SOUDAN — `SoudanWarMapEngine.tsx` (2026-07-07 s2, validé pièce par pièce)
+> On a REJETÉ le mini-render de juin (jetons trop gros) ET l'adaptation directe du moteur Sahel (3689 l couplé).
+> À la place : NOUVEAU moteur propre `engine/SoudanWarMapEngine.tsx` qui reprend le SOCLE générique AES.
+> Référence-or = `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`. Grammaire gravée : [[WARMAP-GRAMMAIRE]] (2 ⭐⭐ en tête).
+- **Fichiers** : `engine/SoudanWarMapEngine.tsx` (moteur, 1 Map continue frame-driven) + `engine/soudanActors.tsx`
+  (SoudanToken jeton D=58px, SoudanTrail sillage, SoudanBase objet iso) + tests `SoudanSocleTest`/`SoudanHighlightTest`/
+  `SoudanMouvementTest`/`SoudanTestFinal` (compos Root). Données : `sudanControlData.ts` (déjà là).
+- **API moteur** : `camKeys` (caméra), `zones` (halos locaux qui rayonnent), `highlights` (états qui se tracent),
+  `stateLineOpacity`, `showNationalBorder`, `children(proj)` (poser acteurs).
+- **VALIDÉ Aziz, pièce par pièce** :
+  1. Voile KHAKI troué à la forme du Soudan (voisins sombres, Soudan crème) — reprojeté par frame. Pas "tout crème".
+  2. CONTOUR national permanent + INTÉRIEUR VIDE (routes Mapbox masquées, Nil discret, états invisibles au repos).
+  3. ⛔ JAMAIS d'aplat de faction plein (testé+rejeté) → la couleur RAYONNE en HALO local, OU trace un CONTOUR d'état.
+  4. ⭐ "ON NOMME → ÇA SE TRACE" (option C, la meilleure) : au mot, le contour de l'état se DESSINE (draw-in) dans
+     la couleur de la faction (rouge RSF/bleu SAF), et RESTE allumé (persistant, cumul de régions de couleurs ≠).
+  5. JETONS AES (portrait-rsf/saf/civil, D=58px fixe) qui se DÉPLACENT + SILLAGE cinétique derrière (traînée qui
+     s'estompe ; ⚠️ mouvement doit être RESSERRÉ/rapide sinon sillage invisible : ~2px/frame mini).
+  6. ZOOM serré (zoom ~5.5) reste lisible · retour à l'état VIDE en fin d'action OK.
+  7. OBJET ISO 3D sur la carte : sprite `base-fr-td.png` = le VRAI fort iso (sacs de sable+tente+drapeau) — ⚠️
+     `base-france.png` = une boussole, PAS un bâtiment. Drapeau FR à régénérer neutre/soudanais pour la prod.
+- **Renders de validation** (catbox) : socle `w0ydbm` · variantes bloc-vide/états `37cfhc`/`etc2n0` · highlight `42v149`
+  · mouvement+sillage `485wub` · **TEST FINAL `i12jyw`** (⭐ LA RÉFÉRENCE — réunit TOUT, point de départ Acte 1).
+- ⭐ **`SoudanTestFinal.tsx` = LE CODE DE RÉFÉRENCE** pour bâtir l'Acte 1 (validé Aziz). S'y fier pour : où placer un
+  jeton, la plaque-nom (design+position), les halos, le highlight, le sillage, la base iso, le zoom. **Zoom serré ~5.5
+  = le zoom de BASE** (validé "parfait, permet de voir l'action"). Tous les socles réutilisables tels quels.
+- ⛔ **PROD ACTE 1 — VRAIS VISAGES des généraux (consigne Aziz)** : Hemeti + al-Burhan = personnes RÉELLES → créer
+  les jetons à partir de VRAIES PHOTOS (comme les généraux AES), PAS de portrait générique. Les SOLDATS peuvent rester
+  génériques (`portrait-rsf/saf`). Recette jeton = cercle parchemin + bordure faction + photo clippée (cf SoudanToken).
+  → générer les 2 portraits (Gemini/vraie photo) au début de l'Acte 1. Base iso : régénérer avec drapeau neutre/soudanais
+  (le `base-fr-td.png` a un drapeau FR).
 
-## 🗺️ RÉUTILISATION AES pour Soudan (analyse faits 2026-07-07)
-- Carte Mapbox AES réutilisable ~80% — **déjà amorcé** : `sudanControlData.ts` + `sudan-outline/states.geojson`
-  + mini-render Acte 1 validé (16 juin). Moteur `SahelWarMapEngine` (3689 l, couplé Sahel) = à ADAPTER.
-- Jetons : **portraits-visage** (peu de jetons = incarné, cf AES) pour figures Soudan (Hemeti/Burhan/civils,
-  sprites `portrait-{rsf,saf,civil}.png` déjà là). **Blocs abstraits** (beaucoup de jetons) = insert état-major.
-  → règle densité gravée dans [[WARMAP-INSERT-SVG-ETATMAJOR]].
+Décision structurante antérieure : carte = moteur AES adapté (mini-render juin REJETÉ). Cartographie moteur AES faite.
+
+## ✅ HOOK "L'OR DU DARFOUR" — VALIDÉ (2026-07-07 session 2)
+- **Validé Aziz** comme hook d'introduction ("si on doit le changer, plus tard"). Livrable permanent :
+  `out/PRET-PUBLICATION/soudan-midform/hook-or-darfour-VALIDE.mp4` · catbox `inys9z`. 23s, plein format.
+- Contenu final : VO GéoAfrique V3 (accroche reformulée, `public/_shared/audio/soudan/hook-or-darfour.mp3`) +
+  colorisation synchro voix (whisper-align) : lingot or d'entrée → **pelle qui tombe NOIRE puis se peint**
+  (3 bandes drapeau en fondu + manche VERT en dernier, ~f150-360) au mot "Darfour" → fumée+sang à "guerre"
+  → traînée d'or à "Suivez L'OR" → cartouche "Où va cet or ?". Micro-anims : halo soleil pulse, scintillement
+  or, braises. Drone banni retiré. Code : `soudan-hook/OrDarfourHook.tsx` + `orDarfourGroups.ts` (`hookPelle()`).
+
+## 🎯 PROCHAINE ÉTAPE — CARTE SOUDAN via moteur AES adapté
+1. **Décision carte = adapter `SahelWarMapEngine`** (référence = `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`).
+   Principe visuel central gravé : [[WARMAP-GRAMMAIRE]] § sommaire "CONTOUR PERMANENT + INTÉRIEUR VIDE" ⭐⭐.
+2. Audio Acte 2 à régénérer (périmé). Actes 3-4 non écrits.
+
+## 🗺️ RÉUTILISATION MOTEUR AES → SOUDAN (cartographie code faite 2026-07-07 s2)
+**Réutilisable TEL QUEL (générique)** : `reskinMap()` (Mapbox reskin parchemin), projection `map.project`+jumpTo
+frame-driven (1 Map continue), couche `sahel-fill`+`controlAt` (DATA-DRIVEN, pointe déjà sur `sudan.warmap.json`
+via `sudanControlData.ts`), composant jeton (div rond+sprite, taille px FIXE 58px ≠ ancrée degrés → NE GROSSIT PAS),
+`SahelAttackArrow`/`TerritorialExpansion`/`RefugeeFlow`/`WarMapBanner`/`WarMapDimmedOverlay`/`WarMapSplitScreen`,
+schema/adapter données. **À ADAPTER (hardcodé Sahel)** : couleurs (`SAHEL_COLORS`/`SAHEL_COUNTRY_COLORS`), chemins
+geojson en dur (`:477` sahel-admin1, `:560` sahel-countries), TOUS les camKeys (`SahelCameras.ts`), acteurs/waypoints
+(`SahelActors.ts`), triggers frames (`SahelTimings.ts`), narration+SFX, les `<PartieX>`. **BLOCAGES** : (a)
+`sudan-states.geojson` n'a que `name` (pas `country`) → sous-système multi-pays (fusion byCountry, contours nationaux
+par pays) à NEUTRALISER (Soudan = 1 pays) ; (b) pas de `sudan-countries.geojson` ; (c) toute la choré narrative est
+en frames LITTÉRALES forced-aligned (pas dans le dataset) → réécriture sur le script Soudan. Pas de couplage ACLED runtime.
+- Jetons : **portraits-visage petits** (Hemeti/Burhan/civils, `portrait-{rsf,saf,civil}.png` déjà là). Règle densité [[WARMAP-INSERT-SVG-ETATMAJOR]].
 
 ---
 

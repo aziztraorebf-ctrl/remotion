@@ -809,3 +809,13 @@ IPv4, wrapper permanent `scripts/tools/run_ipv4.py` (monkeypatch `socket.getaddr
 `python3 scripts/tools/run_ipv4.py <script.py> [args]`). Si un script Python "traîne" sans output ni erreur
 sur un appel réseau externe dans ce projet, suspecter ce gotcha en premier avant de conclure à une limitation
 d'environnement ou un problème d'API. Détail complet : `memory/tools/yt-dlp.md`.
+
+## Dépendance manquante `@remotion/motion-blur` casse TOUT le bundle Remotion (2026-07-07)
+Le fichier commité `src/projects/_shared/_demos/KineticMaskSlamFX.tsx` importe `@remotion/motion-blur`, MAIS
+ce package n'était NI installé (`node_modules/`) NI dans `package.json`. Comme Remotion bundle TOUT `src/` en
+un seul build, un import non résolu dans N'IMPORTE quel fichier fait échouer le bundle ENTIER (`Error: Module
+not found: Can't resolve '@remotion/motion-blur'`) — donc un render d'une compo qui n'a RIEN à voir échoue.
+Symptôme trompeur : un render antérieur pouvait "passer" via le cache de bundle Remotion, puis échouer après
+invalidation du cache. Fix : `npm install @remotion/motion-blur@<version-remotion>` (aligner sur la version de
+`remotion` dans package.json, ici 4.0.456). Leçon : un `Module not found` au bundle Remotine pointe le FICHIER
+fautif dans le message — ce n'est pas forcément la compo qu'on rend. Chercher `grep -rln "<module>" src/`.

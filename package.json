@@ -27,6 +27,7 @@
     "@remotion/lottie": "4.0.456",
     "@remotion/media-parser": "4.0.456",
     "@remotion/media-utils": "4.0.456",
+    "@remotion/motion-blur": "4.0.456",
     "@remotion/paths": "4.0.456",
     "@remotion/player": "4.0.456",
     "@remotion/renderer": "4.0.456",

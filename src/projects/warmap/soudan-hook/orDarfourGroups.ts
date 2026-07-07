@@ -26,6 +26,15 @@ const OR_CLAIR = "#f2d491";
 const OR_PROF = "#dca95e";
 const SANG = "#8a2a20";
 
+// Drapeau soudanais (rouge/blanc/noir + triangle vert), DESATURE pour rester dans le registre
+// encre/parchemin — colorisation SEMANTIQUE : la pelle = le pays. Manche (triangle vert du guindant)
+// vs fer (les 3 bandes). On ne colle pas du rouge vif saturé (casserait la DA gravée) : tons assourdis,
+// contours encre conservés. Hex officiels de référence : #D21034 / #fff / #000 / #007A3D.
+const SD_ROUGE = "#a83b2e"; // rouge drapeau assourdi (proche du SANG etat-major, cohérent)
+const SD_BLANC = "#e8ddc4"; // "blanc" en registre parchemin (pas de blanc pur cru)
+const SD_NOIR = "#2b2117";  // noir = ENCRE (déjà la couleur des traits)
+const SD_VERT = "#3f6b47";  // vert drapeau assourdi (accent semantique unique, discret)
+
 export const H_FOND = `<rect x="0" y="0" width="1920" height="1080" fill="${SABLE}"/><rect x="0" y="0" width="1920" height="760" fill="${SABLE_D}" opacity="0.5"/>`;
 
 // ciel parchemin + SOLEIL qui brille (ajout Aziz : element colore present)
@@ -42,8 +51,32 @@ export const H_TERRE = `<path d="M0 704 C210 678 330 725 520 692 C705 662 860 70
 
 export const H_OMBRE_LINGOT = `<ellipse cx="970" cy="744" rx="340" ry="58" fill="${OR}" opacity="0.4"/><ellipse cx="1072" cy="734" rx="190" ry="34" fill="${ENCRE}" opacity="0.3"/>`;
 
-// pelle : manche encre, fer sable grave
-export const H_PELLE = `<rect x="592" y="255" width="22" height="432" rx="9" fill="${TERRE_D}" stroke="${ENCRE_L}" stroke-width="4"/><line x1="603" y1="276" x2="603" y2="654" stroke="${OR}" stroke-width="3" opacity="0.3"/><path d="M558 670 L648 668 L678 796 C640 828 582 828 536 796 Z" fill="${TERRE}" stroke="${ENCRE_L}" stroke-width="5"/><path d="M580 702 C610 714 635 713 660 699" fill="none" stroke="${ENCRE_L}" stroke-width="3" opacity="0.5"/><path d="M555 770 C592 790 626 790 664 768" fill="none" stroke="${ENCRE_L}" stroke-width="3" opacity="0.35"/><path d="M572 238 C592 218 616 218 636 238 L624 262 L584 262 Z" fill="${TERRE_D}" stroke="${ENCRE_L}" stroke-width="4"/>`;
+// pelle AUX COULEURS DU DRAPEAU SOUDANAIS (colorisation sémantique : la pelle = le pays).
+//  - le FER (lame) = les 3 bandes horizontales du drapeau : rouge (haut) / blanc (milieu) / noir (bas).
+//  - le MANCHE (hampe) = VERT (le triangle vert du drapeau, transposé sur toute la hampe = plus lisible).
+// La pelle TOMBE TOUTE NOIRE (objet d'encre), puis se PEINT progressivement pendant la narration :
+// les 3 bandes montent en fondu simultané, et le manche vire au vert EN DERNIER.
+//   colorFer  0->1 : opacité des bandes blanc+rouge (le noir est le fond, déjà là)
+//   colorManche 0->1 : le manche passe de noir/encre à vert
+// Registre gardé : tons assourdis + contours encre, l'or reste le seul accent éclatant de la scène.
+export const hookPelle = (colorFer: number, colorManche: number): string =>
+  `<clipPath id="pelleFerClip"><path d="M558 670 L648 668 L678 796 C640 828 582 828 536 796 Z"/></clipPath>` +
+  // manche : hampe noire (base) puis VERT qui apparaît par-dessus (colorManche)
+  `<rect x="592" y="255" width="22" height="432" rx="9" fill="${SD_NOIR}" stroke="${ENCRE_L}" stroke-width="4"/>` +
+  `<rect x="592" y="255" width="22" height="432" rx="9" fill="${SD_VERT}" stroke="${ENCRE_L}" stroke-width="4" opacity="${colorManche}"/>` +
+  `<line x1="603" y1="276" x2="603" y2="654" stroke="${OR}" stroke-width="3" opacity="${0.3 * colorManche}"/>` +
+  // lame : fond NOIR de base (pelle noire au départ) puis bandes blanc+rouge en fondu (colorFer)
+  `<g clip-path="url(#pelleFerClip)">` +
+    `<rect x="520" y="660" width="180" height="180" fill="${SD_NOIR}"/>` +
+    `<rect x="520" y="712" width="180" height="54" fill="${SD_BLANC}" opacity="${colorFer}"/>` +
+    `<rect x="520" y="660" width="180" height="52" fill="${SD_ROUGE}" opacity="${colorFer}"/>` +
+  `</g>` +
+  // contour de la lame par-dessus les bandes
+  `<path d="M558 670 L648 668 L678 796 C640 828 582 828 536 796 Z" fill="none" stroke="${ENCRE_L}" stroke-width="5"/>` +
+  `<path d="M580 702 C610 714 635 713 660 699" fill="none" stroke="${ENCRE_L}" stroke-width="3" opacity="0.35"/>` +
+  // collier du manche (haut) — vire au vert avec le manche
+  `<path d="M572 238 C592 218 616 218 636 238 L624 262 L584 262 Z" fill="${SD_NOIR}" stroke="${ENCRE_L}" stroke-width="4"/>` +
+  `<path d="M572 238 C592 218 616 218 636 238 L624 262 L584 262 Z" fill="${SD_VERT}" stroke="${ENCRE_L}" stroke-width="4" opacity="${colorManche}"/>`;
 
 // LINGOT-OR (accent hero, garde et RENFORCE son eclat) — c'est le seul element vraiment brillant
 export const H_LINGOT_OR = `<polygon points="760,562 1102,542 1214,626 870,653" fill="${OR_CLAIR}" stroke="#fff0c2" stroke-width="6"/><polygon points="870,653 1214,626 1190,728 850,756" fill="${OR}" stroke="${OR_CLAIR}" stroke-width="6"/><polygon points="760,562 870,653 850,756 738,662" fill="${OR_PROF}" stroke="${OR}" stroke-width="6"/><path d="M820 586 C905 602 1014 590 1126 574" fill="none" stroke="#fff0c2" stroke-width="5" opacity="0.9"/><path d="M900 626 C990 620 1078 608 1160 594" fill="none" stroke="#fff8dc" stroke-width="3" opacity="0.66"/><path d="M882 690 C980 676 1075 668 1180 656" fill="none" stroke="#fff0c2" stroke-width="4" opacity="0.5"/><path d="M875 720 C966 708 1076 696 1180 686" fill="none" stroke="${OR_PROF}" stroke-width="4" opacity="0.44"/><path d="M786 604 L842 650 M810 628 L856 668 M824 662 L850 684" fill="none" stroke="${ENCRE_L}" stroke-width="3" opacity="0.4"/><path d="M1004 557 L1112 633" fill="none" stroke="#fff0c2" stroke-width="4" opacity="0.5"/><ellipse cx="1005" cy="638" rx="44" ry="18" fill="#fff0c2" opacity="0.28"/>`;
