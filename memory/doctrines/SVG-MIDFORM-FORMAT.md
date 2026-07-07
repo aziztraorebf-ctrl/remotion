@@ -120,6 +120,13 @@ Code de reference : `src/projects/souverain/cacao-chocolat-short/beats/B5PontH.t
   GAUCHE sur la ligne de force (regle des tiers) ; l'espace droit = respiration assumee, pas un vide a meubler.
 - **SANS SOUS-TITRES** : 16:9 = ecran/TV, regarde SON ACTIVE (≠ vertical mobile souvent muet ou le ST est vital).
   Retirer le karaoke LIBERE la composition -> texte DIEGETIQUE (mots-cles/cartons integres DANS la scene, pas un bandeau).
+- ⭐ **LE REGISTRE change aussi avec le RATIO (2026-07-07)** : l'encre-croquis GGW (traits fins, objet isole qui
+  respire) est natif du 9:16 pedagogique — un objet seul y lit "aere". En 16:9 war-map (plan de bataille dense,
+  plusieurs forces), le meme trait fin lit "pauvre/inacheve". Reponse prouvee (insert etat-major Khartoum) :
+  basculer vers un registre GRAVE + DENSE (medaillon d'etat-major, terrain plein, batiments illustres) TOUT en
+  gardant la DISCIPLINE COULEUR GGW (fond neutre + 1-2 accents SEMANTIQUES reserves au sens ; jamais N&B integral).
+  Le ratio impose le registre, pas l'inverse. Cf [[WARMAP-INSERT-SVG-ETATMAJOR]] + hook or Darfour (colorisation
+  selective : la pelle aux couleurs du drapeau = accent semantique, pas decoratif).
 
 ### 3. PROFONDEUR = la reponse au "vide horizontal" (le point cle)
 Un seul element central FAIT VIDE en 16:9 (alors qu'il remplit le cadre etroit vertical). Solution = PLANS MULTIPLES :

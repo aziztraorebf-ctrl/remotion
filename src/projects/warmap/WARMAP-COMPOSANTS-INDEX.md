@@ -82,6 +82,45 @@ mais la **voie production war-map = d3-geo pur** (voir WARMAP-INDEX) → frictio
 se brancheront directement. En attendant, leur PRINCIPE de mouvement (flèche qui pousse, pince qui se
 referme) est réutilisable même en adaptant le rendu.
 
+---
+
+## ⭐⭐ MOTEUR D'AFFRONTEMENT 2 FACTIONS — INSERT SVG "ÉTAT-MAJOR" (Session 2026-07-06, validé Aziz)
+
+> ⚠️ **REGISTRE DIFFÉRENT des composants Mapbox ci-dessus.** Ceux du haut (`SahelAttackArrow`,
+> `TerritorialExpansion`, `RefugeeFlow`) sont pour la **carte Mapbox réelle** (vidéo AES longue).
+> Ce moteur-ci est un **insert SVG pur « médaillon d'état-major »** (Kings & Generals / Battle Probe),
+> PAS de Mapbox, PAS de géo réelle. Registre gravé sable/or/rouge, top-down illustré. À utiliser pour
+> un beat de **prise de territoire / mouvement de forces / affrontement** où la vraie géo est un
+> obstacle à la lecture. Doctrine complète : `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`.
+
+| Quand tu veux... | Composant | Où | Notes |
+|---|---|---|---|
+| **Le moteur complet** (factions, formations, choc, front, zones, sceaux, effets) | `warmapChoc.tsx` | `warmap/_shared/warmapChoc.tsx` | Système `Faction` (RSF/SAF = instances, jamais de lettre en dur). Frame-driven pur. |
+| **Un pion de faction** (losange biseauté + lettre, lisible à toute échelle) | `FactionToken` | idem | `{faction, heading, scale}`. |
+| **Une colonne qui avance** le long d'une courbe (échelon, swagger, poussière) | `AdvancingFormation` | idem | `{origin, front, faction, travelFrames, bow}`. |
+| **Une formation qui défend** (arc face à l'assaillant, recule) | `HoldingFormation` | idem | `facing` = arc défensif orienté. |
+| **Une flèche de manœuvre** qui se trace (axe, tenaille, encerclement) | `ManeuverArrow` | idem | ⛔ jamais décorative : des jetons DOIVENT suivre la même courbe (`bow` partagé). `dashed`=intention. |
+| **Une zone qui bascule** (territoire pris par balayage) | `SweepZone` | idem | Teinte+hachure+bord+`dir`. RÉSERVÉ au basculement territorial, pas à un assaut ponctuel. |
+| **Sceau de capture / défaite** | `CaptureSeal` / `DefeatedSeal` | idem | Losange qui s'installe / se barre. |
+| **Effets** (impact, fumée, poussière, étincelles de choc, sonar) | `Impact`/`SmokeColumn`/`DustTrail`/`ClashSparks`/`Sonar` | idem | Recolorables, déterministes (zéro Math.random). |
+| **Portrait-commandant** (le "qui", FAIBLE densité seulement) | `CommanderMedallion` | idem | ⚠️ règle densité (voir ci-dessous). |
+| **Habillage** (cadre, cartouche, légende, sous-titre) | `EmFrame`/`FactionLegend`/`EmSubtitle`/`EmDefs` | idem | Réutilisable. |
+
+**2 variantes d'habillage validées** (= preuve que le moteur est réutilisable) :
+- **`KhartoumChocSVG`** (compo Root) — assaut ponctuel : RSF prend le palais, SAF défend puis submergée.
+  `out/_rnd/warmap-choc/khartoum-choc-v6.mp4` · catbox `k552fw`.
+- **`FrontOuvertSVG`** (compo Root) — front qui bouge : impasse → tenaille qui encercle une poche SAF.
+  **Brique directe pour l'Acte 2 Soudan** (impasse militaire). `front-ouvert-v5.mp4` · catbox `1ed8vp`.
+
+**3 règles gravées** (détail : doctrine) : (1) une flèche annonce toujours un mouvement ; (2) SweepZone
+seulement pour un vrai basculement territorial ; (3) pion-visage à faible densité / bloc abstrait en nombre
+(loi de lisibilité qui explique le choix Kings & Generals). Commits `351514e` + `3974235`.
+
+**HOOK d'ouverture Soudan (bonus, même registre encre)** : `OrDarfourHook` (`warmap/soudan-hook/`) — insert
+SVG parchemin/encre "l'or du Darfour" (pelle+lingot+fumée de guerre+traînée d'or), pose le fil rouge de
+l'épisode. Reskin par remap couleur (`orDarfourGroups.ts`, zéro LLM). Commit `9920643`. À finir (reformuler
+accroche, pelle-drapeau, colorisation séquencée). Détail : `memory/projects/soudan-midform-STORYBOARD-ACTE1.md` § HOOK.
+
 ## 📐 CONVENTION DE RANGEMENT (où mettre une nouvelle brique)
 
 Pour ne pas re-disperser le pilier quand il grandit :

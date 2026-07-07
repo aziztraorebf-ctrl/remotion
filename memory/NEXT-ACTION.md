@@ -1,29 +1,35 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-06 (Soudan — prototype insert SVG état-major VALIDÉ, NEXT=assemblage beat #5).
+> Mis a jour : 2026-07-06 (Soudan — moteur d'affrontement 2 factions RSF/SAF + 2 variantes VALIDÉS).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ✅✅ SOUDAN MID-FORM — PROTOTYPE INSERT SVG "ÉTAT-MAJOR" VALIDÉ (2026-07-06)
+## ✅✅ SOUDAN MID-FORM — MOTEUR D'AFFRONTEMENT 2 FACTIONS VALIDÉ (2026-07-06, 2e passe)
 
-> Le prototype d'insert tactique (beat #5, attaque RSF sur Khartoum) est **VALIDÉ par Aziz** et
-> committé (`c59d0dd`). Compo Remotion `KhartoumEtatMajorSVG`. Render :
-> `out/_rnd/khartoum-etatmajor-svg/versions/khartoum-etatmajor-PROTOTYPE-VALIDE.mp4` · catbox `t96in1`.
-> Registre : médaillon d'état-major SVG pur (formation de 4 portraits RSF qui avancent, impacts onde
-> de choc, fumée, statut capturée = bâtiment semi-transparent + sceau R, 4 phases).
+> Le proto mono-faction du matin (`KhartoumEtatMajorSVG`, committé `c59d0dd`) a été ÉTENDU en un
+> **moteur d'affrontement à 2 factions (RSF vs SAF) + 2 variantes, VALIDÉS par Aziz** (« les deux
+> versions sont très bon »). Code : `src/projects/warmap/_shared/warmapChoc.tsx` (moteur paramétré
+> `Faction` — RSF/SAF = 2 instances, jamais de « R »/« S » en dur) + `KhartoumChocSVG` (A : RSF
+> assaut, SAF défend le palais, choc, bascule accentuée) + `FrontOuvertSVG` (B : front sinueux qui
+> tient puis cède par un point de rupture = brique directe Acte 2 impasse militaire).
+> Commits `351514e` (moteur) · `3974235` (flèches de manœuvre + zones + encerclement) · `9920643`
+> (HOOK d'ouverture "l'or du Darfour" SVG parchemin/encre) sur branche DÉDIÉE `feat/warmap-insert-2factions`
+> (⚠️ working tree Short Sahel préservé, non emporté). Renders catbox : A `2psuqm` · B `hihedl` ·
+> hook `kes6he`. Doctrine amendée (3 règles : flèche→mouvement, SweepZone territorial, densité jetons).
 >
-> **⭐ C'est désormais NOTRE pattern réutilisable pour tout insert « prise de territoire / mouvement
-> de forces »** : doctrine + workflow complets dans `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`.
+> ℹ️ Clarifié : le proto n'a jamais eu de place dans un storyboard (pas de beat écrit) — R&D pure.
+> Le hook "l'or du Darfour" est retrouvé + reskiné (asset Soudan). On est en **croissance du moteur**.
 >
-> **NEXT (prochaine session Soudan)** :
-> 1. **Assembler la séquence beat #5** : caler l'insert sur la narration/voix off + intégrer au montage
->    mid-form (le prototype est l'insert visuel isolé, reste le montage audio+séquence).
-> 2. Décider quels autres beats Soudan réutilisent l'insert SVG (autres prises de territoire).
-> 3. Pistes d'extension possibles (voir doctrine §« ce que ça ouvre ») : lignes de front qui reculent,
->    zones de contrôle qui se remplissent, contre-attaque 2 factions, flèches de manœuvre.
+> **NEXT (décision Aziz 2026-07-07) = PILOTE Actes 1-2 Soudan** :
+> 1. Finir le hook (RAPIDE) : reformuler accroche + pelle-drapeau soudanais + colorisation synchro voix.
+> 2. Produire Actes 1 & 2 en pilote (carte Mapbox à ADAPTER au Soudan — data+géo déjà sur disque :
+>    `sudanControlData.ts` + `sudan-outline/states.geojson`). Insert = beat 5 A2 (`KhartoumChocSVG`) +
+>    beat 8 candidat (`FrontOuvertSVG`, impasse). Régénérer audio Acte 2 (périmé) ; Actes 3-4 non écrits.
+> 3. Backlog moteur (sur un VRAI beat) : flèches DÉJÀ codées ; zones plus poussées, généraliser en
+>    `WarMapInsert {fond, cibles, faction, séquence}` — ⛔ pas avant 2-3 vrais cas.
 >
-> État complet : `memory/episodes/soudan-midform/STATUS.md`.
+> État complet : `memory/episodes/soudan-midform/STATUS.md` § PROCHAINE SESSION.
 
 ---
 
