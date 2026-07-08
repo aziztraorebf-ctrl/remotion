@@ -1,3 +1,7 @@
+> ⛔ **PÉRIMÉ (2026-07-07 s3)** — ce cadrage « assembler beat #5 » est dépassé de 2 sessions. Depuis : hook + socle
+> carte + ACTE 1 complet (registre carte Mapbox) FAITS. Le beat 5 (insert `KhartoumEtatMajorSVG`) reste une brique
+> pour l'ACTE 2. **NE PAS repartir d'ici** → état réel : `episodes/soudan-midform/STATUS.md` · plan Acte 2 : `projects/soudan-midform-STORYBOARD-ACTE2.md`.
+
 ---
 name: prompt-reprise-soudan-assemblage
 description: Reprise Soudan — insert visuel VALIDÉ, NEXT = assembler la séquence beat #5 avec narration

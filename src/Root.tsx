@@ -327,6 +327,11 @@ import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
 import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS } from "./projects/warmap/KhartoumEtatMajorSVG";
 import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
+import { ProtoSilhouetteRiseFx, PROTO_SILHOUETTE_FRAMES, PROTO_SILHOUETTE_FPS } from "./projects/warmap/_rnd/ProtoSilhouetteRiseFx";
+import { VoxReproMaster, VOX_REPRO_FRAMES, VOX_REPRO_FPS } from "./projects/_rnd/vox-repro/VoxReproMaster";
+import { Scene1Rise, SCENE1_FRAMES, SCENE1_FPS } from "./projects/_rnd/vox-repro/Scene1Rise";
+import { Scene2JetsStrike, SCENE2_FRAMES, SCENE2_FPS } from "./projects/_rnd/vox-repro/Scene2JetsStrike";
+import { Scene3Blockade, SCENE3_FRAMES, SCENE3_FPS } from "./projects/_rnd/vox-repro/Scene3Blockade";
 import { KhartoumChocSVG, KHARTOUM_CHOC_FRAMES, KHARTOUM_CHOC_FPS } from "./projects/warmap/KhartoumChocSVG";
 import { FrontOuvertSVG, FRONT_OUVERT_FRAMES, FRONT_OUVERT_FPS } from "./projects/warmap/FrontOuvertSVG";
 import { OrDarfourHook, OR_DARFOUR_HOOK_FRAMES, OR_DARFOUR_HOOK_FPS } from "./projects/warmap/soudan-hook/OrDarfourHook";
@@ -334,6 +339,7 @@ import { SoudanSocleTest, SOUDAN_SOCLE_FRAMES, SOUDAN_SOCLE_FPS } from "./projec
 import { SoudanHighlightTest, SOUDAN_HL_FRAMES, SOUDAN_HL_FPS } from "./projects/warmap/SoudanHighlightTest";
 import { SoudanMouvementTest, SOUDAN_MVT_FRAMES, SOUDAN_MVT_FPS } from "./projects/warmap/SoudanMouvementTest";
 import { SoudanTestFinal, SOUDAN_TF_FRAMES, SOUDAN_TF_FPS } from "./projects/warmap/SoudanTestFinal";
+import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as SOUDAN_ACTE1_FPS } from "./projects/warmap/soudan-acte1/SoudanActe1";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1676,6 +1682,13 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
         <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
         <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />
+        <Composition id="ProtoSilhouetteRiseFx-A-Parchemin" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: false }} />
+        <Composition id="ProtoSilhouetteRiseFx-B-Epure" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: true }} />
+        {/* VOX REPRO — reproduction fidele reference YouTube MoSidd (world-atlas+TopoJSON+d3-geo, ZERO Mapbox) */}
+        <Composition id="VoxReproMaster" component={VoxReproMaster} durationInFrames={VOX_REPRO_FRAMES} fps={VOX_REPRO_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene1" component={Scene1Rise} durationInFrames={SCENE1_FRAMES} fps={SCENE1_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene2" component={Scene2JetsStrike} durationInFrames={SCENE2_FRAMES} fps={SCENE2_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene3" component={Scene3Blockade} durationInFrames={SCENE3_FRAMES} fps={SCENE3_FPS} width={1920} height={1080} />
         {/* Moteur d'affrontement 2 factions (warmapChoc) — 2 variantes d'habillage du meme moteur */}
         <Composition id="KhartoumChocSVG" component={KhartoumChocSVG} durationInFrames={KHARTOUM_CHOC_FRAMES} fps={KHARTOUM_CHOC_FPS} width={1920} height={1080} />
         <Composition id="FrontOuvertSVG" component={FrontOuvertSVG} durationInFrames={FRONT_OUVERT_FRAMES} fps={FRONT_OUVERT_FPS} width={1920} height={1080} />
@@ -1691,6 +1704,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanMouvementTest" component={SoudanMouvementTest} durationInFrames={SOUDAN_MVT_FRAMES} fps={SOUDAN_MVT_FPS} width={1920} height={1080} />
         {/* TEST FINAL : régions persistantes + jetons + arrivée qui allume + zoom serré + base iso + retour vide */}
         <Composition id="SoudanTestFinal" component={SoudanTestFinal} durationInFrames={SOUDAN_TF_FRAMES} fps={SOUDAN_TF_FPS} width={1920} height={1080} />
+        <Composition id="SoudanActe1" component={SoudanActe1} durationInFrames={SOUDAN_ACTE1_FRAMES} fps={SOUDAN_ACTE1_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />

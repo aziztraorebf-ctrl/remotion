@@ -1,0 +1,37 @@
+Tu es directeur artistique senior spécialisé en cartographie animée éditoriale (style Caspian Report / documentaire géopolitique premium), PAS motion-design TikTok.
+
+CONTEXTE. Ceci est l'ACTE 1 (57s) d'un mid-form documentaire sur la guerre au Soudan (RSF de Hemeti contre l'armée régulière SAF d'al-Burhan). C'est une WAR-MAP en registre GRAVURE / PARCHEMIN À L'ENCRE (crème, sépia, ocre) — c'est un CHOIX ARTISTIQUE ASSUMÉ et VALIDÉ, notre signature. NE propose PAS de changer la palette (pas de "navy/gold", pas de style corporate) : ce registre parchemin est notre identité, juge à l'intérieur de ce registre.
+
+GRAMMAIRE (nos règles, à respecter dans tes suggestions) :
+- 1 seule carte Mapbox continue, caméra frame-driven (jumpTo, jamais flyTo).
+- CONTOUR national permanent + intérieur crème vide (les voisins sont assombris en kaki).
+- La couleur de faction RAYONNE en halo local autour des acteurs (rouge RSF / bleu SAF), JAMAIS un aplat plein.
+- "On nomme -> ça se trace" : un territoire cité voit son contour se dessiner.
+- Jetons = portraits ronds à taille écran fixe (généraux = grands, soldats = petits).
+- Zoom serré sur le Soudan, drift lent permanent.
+
+DÉROULÉ DES 9 BEATS (ce que la voix dit -> ce qu'on voit) :
+1. "il y a 10 ans, cet homme contrôlait les mines d'or du Darfour" -> jeton Hemeti apparaît seul, puis 3 mines d'or iso se posent dans le Darfour (une porte un drapeau soudanais).
+2. "Mohamed Hamdan Dagalo, dit Hemeti. Il fait la guerre au gouvernement et il est en train de gagner" -> son nom s'affiche brièvement puis disparaît, halo RSF rouge.
+3. "le Soudan, 3e plus grand pays d'Afrique, ~50 millions d'habitants" -> une grille de petites silhouettes humaines apparaît le long du Nil (représente les 50M).
+4. "coupé en deux : à l'est l'armée régulière du général al-Burhan, à l'ouest les hommes de Hemeti" -> al-Burhan apparaît à l'est (base militaire soudanaise + soldats bleus), soldats RSF à l'ouest, partition rouge/bleu.
+5. "entre les deux, une population prise au piège. 25 millions ont besoin d'aide" -> jetons de civils divers apparaissent progressivement au centre, les militaires passent en semi-transparent.
+6. "l'une des pires crises humanitaires de la planète" -> fin.
+
+DÉJÀ IDENTIFIÉ COMME À REFAIRE (ne perds pas de temps dessus, on le sait) : le beat "50 millions" (la grille de silhouettes éparpillées sur la carte) NE FONCTIONNE PAS visuellement. On va le remplacer par un INSERT type cartouche (les pions représentant les 50M DANS un encadré, avec le chiffre) — comme un sous-titre visuel. Concentre-toi sur le RESTE.
+
+MES QUESTIONS PRÉCISES (réponds à chacune, numérotées, réponse tranchée + pourquoi) :
+
+Q1. CAMÉRA — faut-il une vue plus rapprochée/serrée sur l'action (surtout beats 1, 2, 4) ou garder le cadrage actuel qui montre le Soudan entier ? Si plus serré : sur quels beats précisément, et à quel risque de couper des jetons ?
+
+Q2. DRIFT CAMÉRA — un drift continu (Ken Burns lent) est-il souhaitable, ou risque-t-il de gêner la lecture des jetons ? Si oui pourquoi, si non pourquoi.
+
+Q3. DYNAMISME — où le rythme MANQUE-t-il (temps morts, beats plats) ? Quelles techniques concrètes ajouter DANS NOTRE REGISTRE (flèches de manœuvre dessinées, objets qui se posent, pulses de territoire, contours qui se tracent) ? Sois précis par beat.
+
+Q4. MINES D'OR — actuellement UNE seule des 3 mines porte le drapeau soudanais, les autres sont nues. Faut-il : (a) une seule avec drapeau, (b) toutes avec drapeau, (c) aucune (image parle seule) ? Justifie.
+
+Q5. RYTHME / CLARTÉ GLOBALE — le récit est-il clair (qui fait quoi, qui contrôle quoi) ? Le rythme des apparitions est-il bon ? Qu'est-ce qui prête à confusion ?
+
+Q6. PREMIUM — 2-3 suggestions concrètes pour rendre l'ensemble "2x plus premium" SANS tout casser (on ne refait pas l'architecture, on améliore) : texture, éclairage, transitions, micro-animations, son. Reste dans ce qu'un moteur Remotion + Mapbox + SVG peut faire.
+
+Format de réponse : Q1..Q6, chacune = verdict tranché en 1-2 phrases + justification courte. Pas de préambule. Priorise l'ACTIONNABLE dans notre registre parchemin.

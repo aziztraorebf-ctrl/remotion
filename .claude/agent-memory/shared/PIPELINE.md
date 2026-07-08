@@ -230,8 +230,13 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ⚡ Actif
 
-- **Soudan Mid-form** — Inserts tactiques R&D TERMINÉE (2026-07-05, décision Gemini/SVG tranchée, assets
-  rapatriés). NEXT = assemblage séquence Remotion beat #5. Démarrage : `memory/PROMPT-REPRISE-soudan-assemblage.md`.
+- **Soudan Mid-form** — ✅✅ HOOK "l'or du Darfour" + SOCLE carte `SoudanWarMapEngine` + **ACTE 1 v5-FINAL construit
+  & rendu** (candidat validé sous réserve dernier visionnage Aziz, 2026-07-07 s3, branche `feat/warmap-insert-2factions`,
+  catbox `qc5dgq`, code `src/projects/warmap/soudan-acte1/SoudanActe1.tsx`). 9 beats câblés audio, vrais visages
+  Hemedti/al-Burhan (encre nette), mine d'or, insert 50M (vraie forme Soudan), ligne de front. NEXT = verdict final →
+  **ACTE 2 (session dédiée)** : régénérer audio Acte 2 (date 2→3 ans), plan registres gravé (`STORYBOARD-ACTE2` :
+  beat 5 insert `KhartoumEtatMajorSVG` validé / beat 6 bloc / beats 7-8 carte), Actes 3-4 non écrits. Briques prêtes :
+  `warmapChoc`/`KhartoumChocSVG`/`FrontOuvertSVG`. État : `memory/episodes/soudan-midform/STATUS.md`.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
   Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).
   URL catbox : https://files.catbox.moe/jyrlj1.mp3. Format visuel : Template B Hybride.
@@ -571,3 +576,130 @@ dans le panier, pieds ancres) MAIS coup trop eleve (~6.85$/clip 10s, ~20$/scene)
 test/iteration) — NE PAS adopter Seedance comme methode par defaut pour les personnages pour l'instant. Retour
 a la piste SVG organique (registre GGW/cacao/cargo, deja maitrise, cout zero). Detail complet + methode
 reutilisable si besoin futur : memory/NEXT-ACTION.md § SEEDANCE PERSONNAGE — TECHNIQUE PROUVEE MAIS ECARTEE.
+
+### Stage 1: Direction Brief (creative-director)
+**Date**: 2026-07-07
+**Sujet**: War-Map Sahel — Short 90s "L'AES en 90 secondes" (reprise V4, apres 4 rejets)
+**Verdict**: NEEDS ANSWERS (concept propose, pas encore valide par Aziz) + APPROCHE CHANGE NEEDED vs les 4 tentatives precedentes
+
+**Script (verbatim)**: `memory/episodes/warmap-sahel/SCRIPT-SHORT-90S-V1.txt` (91.86s, audio deja genere
+`public/_shared/audio/sahel-warmap/short-90s-v1.mp3`, alignement Whisper deja fait
+`src/projects/warmap/_shared/whisper-words-short-90s.ts`). Ne pas regenerer script/audio.
+
+**Historique des 4 rejets (a ne PAS repeter)** — detail complet dans
+`memory/episodes/warmap-sahel/PLAN-SHORT-90S-V3-REPRISE.md` :
+1. Montage extraits video Mapbox coupes -> "slideshow", trop de plans juxtaposes.
+2. Carte Mapbox neuve + icones PNG bricolees -> pas fidele au style maitrise, bricolage visible.
+3. Mix carte Mapbox + inserts SVG existants -> la moitie carte restait un probleme.
+4. Ecu/blason unique qui se fissure/refond (propose par Kimi) -> trop abstrait pour porter la densite
+   factuelle (Libye 2012, France/ONU, coup d'Etat, CEDEAO, ressources) : UN symbole ne peut pas incarner
+   9 faits distincts sans devenir illisible.
+
+**Principe valide (analyse video reference NotebookLM)** : UNE SEULE scene/objet visuel persiste a l'ecran
+en continu du debut a la fin et se TRANSFORME (jamais de cut vers un nouveau decor complet). Sous-titres
+mot-par-mot. Une seule rupture de registre visuel autorisee, au moment le plus dramatique (menace CEDEAO /
+effet inverse).
+
+**Concept propose ("L'Acte qui s'ecrit")** : un unique parchemin gravure/parchemin (registre deja maitrise
+`#EBE0C8`/`#2C1E16`, cf `LiptakoRevealSVG.tsx`/`CfaRevealSVG.tsx`/`ResourcesRevealSVG.tsx`), cadre fixe,
+avec 3 emblemes Mali/Niger/Burkina poses des le debut (meme ancrage visuel du 1er au dernier plan). Chaque
+fait du script recoit SA PROPRE forme concrete qui s'ajoute/se transforme sur CE MEME cadre (jamais un
+nouveau decor) : bases kaki qui implosent (reprend geometrie `ProtoVide.tsx`) -> alliances qui se
+sectionnent (technique maillon CFA) -> cercle CEDEAO qui se fissure (ProtoVide) -> medaillon Libye qui
+craque + contagion vers le sud (technique flow Resources) -> 2 points France/ONU cernes d'un halo rouge
+qui grandit (jauge "40%" de la grammaire WarMap) -> bascule militaire sur les 3 emblemes (spring dur,
+motif civil->kaki) -> RUPTURE DE REGISTRE UNIQUE : sceau CEDEAO menacant + WarMapDimmedOverlay (voile fort
+deja autorise dans WARMAP-GRAMMAIRE.md), qui recule sur "l'inverse de l'effet recherche" -> climax : reprise
+QUASI-LITTERALE de `LiptakoRevealSVG` (sceau AES qui se scelle, deja valide Aziz dans la video longue) au
+centre du meme triangle d'embleme -> reprise de `ResourcesRevealSVG` (3 veines or/uranium/petrole vers le
+meme bouclier) -> "60 ANS" count-up + respiration finale -> CTA (reutilise `CtaCard.tsx` deja code, aucune
+modif necessaire).
+
+**Pourquoi ce concept differe des 4 echecs** : (1) chaque fait a sa forme distincte -> resout le probleme
+"trop abstrait" du blason ; (2) un seul cadre continu du debut a la fin -> resout le probleme "slideshow"/
+"bricolage" des tentatives 1-3 ; (3) reutilise integralement 2 assets deja approuves par Aziz (Liptako,
+Resources, variantes 9:16 deja pretes dans `src/projects/warmap/shorts/aes-short-90s/`) -> reduit le risque
+creatif aux seuls 5 gestes neufs (panels 2-6) plutot que 10 segments inconnus.
+
+**Panels neufs a storyboarder/valider AVANT code** (les autres = reemploi direct) :
+- P2 bases kaki qui implosent + alliances sectionnees + CEDEAO qui se fissure
+- P3 medaillon Libye qui craque + contagion vers Mali
+- P4 halo rouge qui grandit autour des 2 points France/ONU
+- P5 bascule militaire (motif civil -> kaki, spring dur)
+- P6 (RUPTURE) sceau CEDEAO menacant qui recule + WarMapDimmedOverlay
+
+**Next action**: Presenter ce concept a Aziz (question de gout, PAS a trancher seul) : (a) le concept
+"parchemin qui s'ecrit" est-il assez different du blason deja rejete a ses yeux ? (b) valider degre de
+reprise litterale Liptako/Resources vs adaptation ; (c) storyboarder les 5 gestes neufs (P2-P6) via Gemini/
+GPT AVANT tout code, comme prescrit par `PLAN-SHORT-90S-V3-REPRISE.md` etape 1. Consulter pixellab-expert
+SEULEMENT si un asset visuel (flag PNG, texture) manque — ce concept est 100% SVG generatif, pas de sprite
+externe requis au-dela des drapeaux deja utilises par Liptako (`_shared/flags/{code}.png`, deja presents).
+
+### Stage 1: Direction Brief / Storyboard execute (creative-director)
+**Date**: 2026-07-07
+**Sujet**: War-Map Sahel — Short 90s, reprise V4, direction "carte vivante d3-geo pure" DEJA TRANCHEE par Aziz
+**Verdict**: STORYBOARD COMPLET ECRIT — NEEDS ANSWERS (1 point) + 4 gestes a prototyper avant code
+
+**Fichier**: `memory/episodes/warmap-sahel/STORYBOARD-AGENT-A.md` — 12 panels calés sur Whisper reel
+(`whisper-words-short-90s.ts`), timing frame-exact, choix drapeau tranche (aplat couleur, pas image clippee,
+justifie par la concavite des polygones Mali/Niger), choregraphie Libye drapeau->gris->rouge, generalisation
+de `ProtoEffect_Fracture.tsx` au bloc 3 pays+sceau CEDEAO, mapping recolorage Liptako/Resources (6 valeurs
+hex), tableau faisabilite geste par geste, analyse rythme (risque identifie panels 5-6 24.5-35.8s, ~11s de
+geste statique — a traiter avec soin anti-statique).
+
+**Verifications disque faites** (pas d'affirmation non verifiee) :
+- `sahel-countries.geojson` = Mali/Niger/Burkina Faso exacts. `libya-outline.geojson` EXISTE deja.
+- Drapeau Libye `ly.png` ABSENT de `public/_shared/flags/` — non bloquant ici (aplat couleur choisi).
+- `SahelAttackArrow.tsx` est **Mapbox-only** (`map.project()`) — NON reutilisable pour une carte d3-geo pure.
+  Alternative retenue : points+halos pulsants sans fleche (le brief autorisait "eventuellement des fleches").
+- `CtaCard.tsx` (a ne pas toucher) introduit une 2e rupture de registre (fond image+navy, pas parchemin) —
+  signale a Aziz, PAS tranche seul (question de gout : assumer 2 ruptures vs redemander un CTA parchemin).
+
+**Next action**: Consulter pixellab-expert SEULEMENT si besoin de generer `ly.png` (pas necessaire pour ce
+storyboard). Presenter a Aziz : (1) validation du storyboard panel-par-panel, (2) trancher le point CTA/
+rupture de registre, (3) go pour prototyper les 4 gestes a risque (Libye cadre-elargi, fracture generalisee,
+kaki->drapeau, bases qui s'eteignent) AVANT code final — pas de code direct sans ces protos isoles.
+
+### Stage 1: Direction Brief / Storyboard execute (creative-director, 2e agent en parallele "Agent B")
+**Date**: 2026-07-07
+**Sujet**: War-Map Sahel — Short 90s, meme brief que Stage 1 Agent A, execute EN AVEUGLE (angle : audace des
+gestes d'animation, pas de convergence forcee avec l'autre agent).
+**Verdict**: STORYBOARD COMPLET ECRIT — NEEDS ANSWERS (2 points factuels) + 4 points de composition a trancher
+
+**Fichier**: `memory/episodes/warmap-sahel/STORYBOARD-AGENT-B.md` — 12 panels sur Whisper reel, signature
+propre "la carte qui s'ecrit" (accumulation de couches d'encre, jamais d'effacement avant rupture de sens).
+Choix drapeau identique a Agent A (aplat couleur, meme justification concavite). Difference notable : la
+fracture CEDEAO (panel 8b, generalisee de `ProtoEffect_Fracture.tsx`) NE SE REFERME PAS entierement dans son
+propre panel — elle reste ouverte a 70% et se termine SEULEMENT au panel 9 au moment ou le sceau AES apparait
+au point de jonction exact (1 seul mouvement continu sur 2 panels, pas 2 effets juxtaposes).
+
+**Verifications disque faites** :
+- `sahel-countries.geojson` = Mali/Niger/Burkina exact (confirme, meme lecture qu'Agent A probablement).
+- `libya-outline.geojson` EXISTE (`public/_shared/geo-data/sahel/libya-outline.geojson`) — je ne l'avais
+  pas trouve au premier passage et j'avais propose de filtrer le TopoJSON mondial `countries-50m.json` a la
+  place ; le fichier dedie est plus direct, a preferer par l'agent codeur.
+- `ly.png` (drapeau Libye) ABSENT — non bloquant, aplat couleur tranche (pas d'image requise sur le polygone
+  carte). Utile seulement si un medaillon Libye style Liptako est ajoute plus tard.
+- `SahelAttackArrow.tsx` confirme Mapbox-only (`map.project()`) — inutilisable pour la fleche-menace CEDEAO
+  panel 8a ; propose un `<path>+<polygon>` maison a la place (trivial, zero dependance Mapbox).
+- Alerte factuelle NOUVELLE (absente du Stage 1 Agent A) : le geste "drapeau Libye vire gris puis rouge"
+  suppose de partir du TRICOLORE POST-2011 (rouge-noir-vert, croissant/etoile), PAS du vert uni Kadhafi
+  pre-2011 — ambiguite non tranchee, a verifier avant render (le script dit "en 2012 la Libye s'effondre",
+  donc le drapeau "qui s'effondre" est celui d'AVANT la chute narrativement, mais visuellement le geste de
+  bascule a plus de sens depuis le tricolore post-Kadhafi instable).
+- Chiffre "+territoire" (panel 6, "PLUS de territoire qu'en 2012") : PAS de %/chiffre invente, recommande
+  affichage symbolique ("+territoire") sauf source chiffree confirmee dans `FACTS-RESSOURCES-2026.md` ou
+  equivalent.
+
+**Points de composition a trancher (differents des points Agent A)** :
+1. Cadrage vertical : carte ancree tiers-bas de l'ecran (1080x1920) pour liberer la moitie haute aux
+   sous-titres/cartouches — a valider en preview AVANT d'investir le reste du code dessus.
+2. `fitExtent` Sahel+Libye calcule UNE SEULE FOIS des le depart (pas de re-fit dynamique en cours de plan,
+   pour eviter un flottement des pays deja traces) — risque assume : pays Sahel plus petits a l'ecran en
+   fitExtent combine. Plan de repli documente si echec visuel (medaillon Libye separe + trait de liaison).
+
+**Next action**: Les 2 storyboards (Agent A et Agent B) sont maintenant disponibles pour comparaison. Aziz
+devrait arbitrer : (1) les 2 points factuels ci-dessus (drapeau Libye pre/post-Kadhafi, chiffre territoire),
+(2) le cadrage vertical propose par B (non aborde par A a verifier), (3) choisir/fusionner entre les 2
+storyboards ou en garder un comme base + emprunter des idees a l'autre, AVANT tout code. Consulter
+pixellab-expert seulement si besoin d'assets nouveaux (aucun identifie comme bloquant par B).

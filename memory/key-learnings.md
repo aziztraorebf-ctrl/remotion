@@ -20,6 +20,33 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-07-07 — Sprite/portrait BITMAP : JAMAIS de scale oscillant continu (= flou/scintillement)
+Un `scale` qui « respire » en boucle (breathe, ex. `1 + 0.04*sin(frame)`) sur une IMAGE RASTER force un
+ré-échantillonnage sub-pixel à CHAQUE frame → le sprite paraît flou et scintille en permanence (bug vu sur le
+jeton-Hemedti Acte 1 Soudan, Aziz : « les jetons sont flous, un petit brouillard »). **Fix** : spring d'APPARITION
+(0→1.12→1) PUIS scale FIGÉ à 1 — plus aucune interpolation de scale une fois l'objet posé. Pour donner de la vie
+sans flouter : animer l'OPACITÉ, un HALO/glow externe, l'OMBRE portée — jamais le scale de l'image elle-même.
+Vaut pour tout portrait/jeton/sprite bitmap animé.
+
+### 2026-07-07 — Extraire une forme-pays en `<path>` SVG depuis un geojson (pour un INSERT figuratif)
+Pour poser une silhouette nationale nette dans un cartouche/insert (≠ carte Mapbox zoomable) : charger le geojson
+du pays → aplatir les coords de l'anneau ext le plus grand en path → normaliser dans un viewBox → **CORRIGER
+l'aspect par `cos(latitude_centrale)`** (sinon le pays est étiré horizontalement : la projection lon/lat n'est pas
+iso aux latitudes ≠ 0). Échantillonner 1 point/N pour alléger. Donne une silhouette colorable/animable à la frame,
+sans Mapbox. Utilisé pour la vraie silhouette du Soudan de l'insert 50M (Acte 1) — a remplacé une silhouette
+Afrique dessinée à la main qui « ne ressemblait à rien » (Aziz). Réf : `sudan-outline.geojson` → `SUDAN_PATH` dans SoudanActe1.
+
+### 2026-07-07 — ⛔ NOM PROPRE AFFICHÉ À L'ÉCRAN = vérifier l'orthographe contre Wikipédia AVANT render (NON-NEGOTIABLE)
+Faute grave commise Acte 1 Soudan : label écran « HEMETI » alors que l'orthographe correcte est « HEMEDTI »
+(avec le D — nom affiché sur Wikipédia/barre de recherche : « Muhammad Hamdan Dagalo, nom de guerre Hemedti »).
+Un nom propre mal orthographié À L'ÉCRIT dès l'ouverture = perte de crédibilité immédiate (Aziz).
+**RÈGLE** : tout nom propre (personne, ville, organisation) qui APPARAÎT À L'ÉCRAN (label JSX, plaque, sous-titre,
+titre) DOIT être vérifié contre une source de référence (Wikipédia = référence d'orthographe) AVANT le render.
+Ne pas se fier à la transcription phonétique de l'audio (le whisper écrit « Emeti/Hemeti » d'oreille) ni à la
+graphie qu'on a « en tête ». La graphie ORALE (TTS) et la graphie ÉCRITE (label) sont deux vérifications distinctes :
+un nom peut être bien prononcé et mal écrit. Checklist avant tout render d'un beat avec nom à l'écran : lister les
+noms propres affichés → vérifier chacun sur Wikipédia → corriger le label. Détail : [[feedback_nom-propre-ecran-verifier-wikipedia]].
+
 ### 2026-07-04 — Worktree : rapatrier les assets AUDIO gitignores AVANT de rendre dans le tree principal
 Un agent en worktree cree des mp3 dedies (ex `narration-v3-scene6.mp3`, `sc7-audio.mp3`) qui sont GITIGNORES ->
 ils restent dans le worktree et sont ABSENTS du working tree principal. Rendre la compo dans le tree principal

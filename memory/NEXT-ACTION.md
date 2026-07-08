@@ -1,34 +1,36 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-07 (session 2 — Soudan : HOOK VALIDÉ + SOCLE CARTE construit & validé).
+> Mis a jour : 2026-07-07 (session 3 — Soudan : ACTE 1 v5-FINAL construit, candidat validé ; ACTE 2 = session dédiée).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ✅✅✅ SOUDAN MID-FORM — SOCLE CARTE VALIDÉ → NEXT = CONSTRUIRE L'ACTE 1 (2026-07-07 s2)
+## ✅✅✅ SOUDAN MID-FORM — ACTE 1 v5-FINAL CANDIDAT VALIDÉ → NEXT = verdict final + ACTE 2 (session dédiée) (2026-07-07 s3)
 
-> **Session 2 (2026-07-07) : hook finalisé + socle carte Soudan construit ET validé pièce par pièce.**
-> Décision structurante : carte = NOUVEAU moteur `engine/SoudanWarMapEngine.tsx` reprenant le socle
-> générique AES (PAS le mini-render de juin REJETÉ, PAS l'adaptation directe du moteur Sahel 3689 l).
-> Réf-or = `warmap-sahel-aes-FINAL.mp4`. Commit `0bfe76b` (branche `feat/warmap-insert-2factions`,
-> working tree des AUTRES chantiers préservé — VoxRepro/Short/svg-scenes non emportés).
+> **Session 3 (2026-07-07) : ACTE 1 complet construit, rendu, itéré v1→v5 sur retours Aziz + double review Gemini/Kimi.**
+> Rendu retenu : `out/episodes/soudan-midform/wip/acte1_v5-FINAL.mp4` · catbox `qc5dgq` (57.3s). Branche `feat/warmap-insert-2factions`.
+> Code : `src/projects/warmap/soudan-acte1/SoudanActe1.tsx` (compo `SoudanActe1`, 1719f@30, sur socle `SoudanWarMapEngine`).
 >
-> **VALIDÉ (Aziz, render par render)** : voile khaki troué (Soudan crème/voisins sombres) · contour
-> permanent + intérieur vide (routes masquées, Nil discret) · ⛔ JAMAIS d'aplat de faction (halos LOCAUX
-> qui rayonnent) · "on nomme → ça se trace" (contour d'état coloré, persistant, cumul de couleurs) ·
-> jetons AES mobiles + SILLAGE cinétique · objet ISO 3D (`base-fr-td.png` = vrai fort) · zoom serré ~5.5
-> (= zoom de BASE) · retour à l'état vide. **Test final `i12jyw` = LE code de référence (`SoudanTestFinal.tsx`).**
+> **CONTENU Acte 1 (9 beats câblés audio `acte1-factcheck-v2.mp3`)** : mine d'or Darfour (3, iso) → jeton **Hemedti** (VRAI
+> visage, encre nette, FIXE) → soldats RSF → insert **50M** (vraie forme Soudan geojson + "3e plus grand pays") → partition
+> avec **LIGNE DE FRONT** ink-bleed → **al-Burhan** miroir (base soudanaise + soldats SAF) → civils divers "prise au piège" →
+> "pire crise humanitaire". Caméra serrée→dézoom + drift, halo pulse, vignette chaude, AUCUN drapeau mines. Fact-check the-conversation : géo VALIDÉE.
 >
-> **NEXT = CONSTRUIRE L'ACTE 1 (9 beats)** sur ce socle. Se fier à `SoudanTestFinal.tsx` pour placement
-> jeton / plaque-nom / halos / highlight / sillage / base / zoom. Puis Acte 2 (insert `KhartoumChocSVG`
-> beat 5 + `FrontOuvertSVG` beat 8), régénérer audio Acte 2 (périmé). Actes 3-4 non écrits.
-> ⛔ **VRAIS VISAGES** Hemeti + al-Burhan (personnes réelles → jetons depuis vraies photos, comme AES ;
-> soldats OK génériques). Base à régénérer drapeau neutre/soudanais.
-> Grammaire gravée : [[WARMAP-GRAMMAIRE]] (2 ⭐⭐ en tête). État : `episodes/soudan-midform/STATUS.md`.
+> **NEXT immédiat** = verdict final Aziz sur `qc5dgq` → promo `PRET-PUBLICATION` (Acte 1 seul OU attendre montage complet).
+> **PUIS ACTE 2 = SESSION DÉDIÉE** (décision Aziz : session 3 pleine). Plan Acte 2 GRAVÉ : `projects/soudan-midform-STORYBOARD-ACTE2.md`
+> (répartition registres : beats 1-4 carte + jeton 2-visages · beat 5 **insert état-major** `KhartoumEtatMajorSVG` DÉJÀ VALIDÉ ·
+> beat 6 **bloc** territoire-vs-puissance-de-feu · beats 7-8 **carte**). ⛔ Régénérer audio Acte 2 (périmé : "deux ans"→"plus de
+> trois ans", cf `soudan-midform-AUDIO-ETAT`). Actes 3-4 non écrits (Acte 3 = l'or→Émirats/Turquie, fact-check confirme).
+> Règle gravée cette session : nom propre à l'écran → vérifier Wikipédia ([[feedback_nom-propre-ecran-verifier-wikipedia]]).
+> État complet : `episodes/soudan-midform/STATUS.md`.
 
 ---
 
-## ✅✅ SOUDAN — moteur d'affrontement 2 factions (session 2026-07-06, socle insert SVG conservé)
+## ✅✅ SOUDAN — moteur d'affrontement 2 factions = BRIQUE PRÊTE POUR ACTE 2 (session 2026-07-06)
+> 🔧 Section historique conservée pour le contenu moteur. Le §NEXT ci-dessous est PÉRIMÉ (hook + Acte 1 FAITS
+> en session 3 — voir la section Soudan en tête). Ces briques (`warmapChoc`/`KhartoumChocSVG`/`FrontOuvertSVG`)
+> servent l'ACTE 2 selon le plan registres (`STORYBOARD-ACTE2` : beat 5 insert, beat 6 bloc).
+
 
 > Le proto mono-faction du matin (`KhartoumEtatMajorSVG`, committé `c59d0dd`) a été ÉTENDU en un
 > **moteur d'affrontement à 2 factions (RSF vs SAF) + 2 variantes, VALIDÉS par Aziz** (« les deux
@@ -552,7 +554,10 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## ⭐ PRIORITÉ 1 (APRÈS AES) — SOUDAN MID-FORM 7-8min : PRÉ-PROD SCRIPT/AUDIO (pré-prod TRÈS AVANCÉE, session 2026-06-16)
+## 🔧 SOUDAN MID-FORM — PRÉ-PROD SCRIPT/AUDIO : reste ACTES 3-4-5 (Actes 1-2 en production, session 2026-06-16)
+> ⚠️ Rétrogradée de ⭐ PRIORITÉ 1 : AES est fini, Acte 1 est PRODUIT (session 3), Acte 2 a son plan gravé. Cette
+> pré-prod ne concerne plus que les Actes 3-4-5 (Acte 3 = l'or→Émirats/Turquie, non écrits). Audio Acte 1 = fait/recut.
+
 
 > ℹ️ **Cette section = la PRÉ-PROD SCRIPT/AUDIO des Actes** (distincte de l'insert visuel beat #5, déjà
 > résolu). La couche « insert visuel prise de territoire » a son propre pattern validé cette session

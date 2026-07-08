@@ -57,8 +57,33 @@ Un seul jeton, une LIGNE verticale au milieu, **deux demi-visages** (Hemeti | al
 - Chaque lieu nommé (aéroport, palais, TV) = point qui s'allume au mot exact.
 - ⚠️ Animation objets PixelLab = **À TESTER** (jamais fait) — proto avant de s'engager.
 
+## ⭐⭐ PLAN DE MISE EN SCÈNE ACTE 2 — RÉPARTITION DES REGISTRES (gravé 2026-07-07, validé Aziz)
+
+**Découpage par registre (rythme = contraste, jamais 3 beats du même registre d'affilée) :**
+- **Beats 1-4 (alliance→scission)** = CARTE Mapbox + jeton 2-visages (symbole signature) — spatial + acteurs.
+- **Beat 5 (assaut RSF sur Khartoum : aéroport/palais/TV)** = **INSERT état-major** `KhartoumEtatMajorSVG`
+  ⭐ **DÉJÀ PROTOTYPÉ + VALIDÉ Aziz** (registre médaillon gravé, PAS Mapbox). ⛔ Le storyboard disait
+  « animation PixelLab à tester » → PÉRIMÉ : on a l'insert validé, PLUS besoin de tester PixelLab. NEXT = assembler
+  l'insert sur la narration beat 5 (cf [[WARMAP-INSERT-SVG-ETATMAJOR]] + STARTER-inserts-tactiques-soudan §périmé).
+- **Beat 6 (territoire vs puissance de feu)** = **BLOC** (`FrontOuvertSVG`/`warmapChoc`, registre abstrait) — c'est
+  un RAPPORT DE FORCE sans lieu précis → deux masses qu'on oppose. (Nuance le storyboard qui disait « sur la carte » :
+  le concept « puissance de feu » n'a pas d'ancrage géo, le bloc le dit mieux.)
+- **Beats 7-8 (immensité/ravitaillement + front figé)** = **CARTE Mapbox** — 100% spatial (dézoom immensité, ligne de
+  ravitaillement est→ouest qui s'amincit ; front quasi-figé + pulse or Darfour, pont Acte 3).
+- **Beat 9** = dézoom amorcé hors Soudan (pont Acte 3).
+
+**⛔ DÉFINITION INSERT vs BLOC (ne jamais reperdre — les deux sortent de la carte mais ≠) :**
+- **INSERT** = un **LIEU réel vu de près** (figuratif, gravé, reconnaissable : bâtiments/fleuve/flèches à leurs vraies
+  positions). Registre médaillon d'état-major. Répond à « OÙ + QUOI exactement ». C'est un zoom narratif sur un lieu.
+- **BLOC** = un **CONCEPT/rapport de force** (abstrait, formes géométriques, AUCUN lieu). Masses colorées = les forces
+  (rouge RSF / bleu SAF) qui avancent/se percutent/encerclent (Tenaille). Registre schéma tactique. Répond à « COMMENT
+  ça marche » en logique de forces. Non interchangeable avec l'insert : un concept n'a pas d'adresse, un lieu n'est pas
+  un schéma. Enchaîner carte→insert→bloc→carte = rythme par contraste de registres.
+
 ## STATUT
-Script Acte 2 : jet 1 fact-checké + correction temporelle. Storyboard : 1er jet + corrections. Pas codé.
+Script Acte 2 : jet 1 fact-checké + correction temporelle. Storyboard : 1er jet + corrections + **plan registres gravé
+(validé Aziz 2026-07-07)**. Pas codé. NEXT session Acte 2 : régénérer audio (date 2→3 ans, cf §AUDIO) → assembler
+beat 5 insert (prêt) → coder beats 1-4/6/7-8 selon répartition ci-dessus.
 
 ## ⚠️ AUDIO À RÉGÉNÉRER (Acte 2)
 L'audio actuel https://files.catbox.moe/pco5ra.mp3 a été généré AVANT la correction temporelle (« depuis deux ans » → « depuis **plus de trois ans** » + « personne ne peut gagner » → « personne **n'a pu** gagner »). **DONC PÉRIMÉ** → à régénérer au lock audio final. Voir note centralisée [[soudan-midform-AUDIO-ETAT]].
