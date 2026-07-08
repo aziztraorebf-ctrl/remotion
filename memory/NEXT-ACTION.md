@@ -58,12 +58,17 @@
 
 ---
 
-## ⛔ SHORT AES 90s — 4 TENTATIVES REJETÉES, TABLE RASE, reprise via storyboard multi-modèles (MàJ 2026-07-07)
+## ✅✅ SHORT AES 90s — VIDÉO COMPLÈTE 92s PRODUITE & VALIDÉE VISUELLEMENT (MàJ 2026-07-08)
 
-> ⛔ **Mise à jour (2026-07-07)** : 4 tentatives (V1 à V4 + storyboard "écu/blason") toutes REJETÉES,
-> table rase faite (aucun code/rendu conservé). Ce qui reste valide : script FR + audio GéoAfrique
-> (91.86s, alignement Whisper). Diagnostic + plan de reprise (storyboard multi-modèles AVANT tout code) :
-> `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V3-REPRISE.md`.
+> ✅✅ **Reprise RÉUSSIE (2026-07-08)** après 4 échecs (2026-07-07). Registre carte vivante d3-geo PUR
+> (zéro Mapbox), fond navy, contours colorés, sous-titres phrases courtes. Vidéo complète 92s validée
+> visuellement par Aziz. Livrable : `out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` (catbox 8ms702).
+> Code : `src/projects/warmap/shorts/aes-short-90s/` (compo `AES-Short-Full`), branche
+> `feat/aes-short-90s-carte-vivante` (commit 83f5260).
+> **NEXT = finitions AUDIO seulement : (1) MUSIQUE — reprendre celle de la vidéo LONGUE War-Map AES ;
+> (2) SFX — ping/ding sur apparitions d'éléments + 1-2 SFX bien placés (impact fracture, whoosh AES).**
+> Détail : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md` · socle figé :
+> `.claude/.../memory/aes-short-socle-valide.md`.
 
 ---
 

@@ -1,3 +1,7 @@
+> ⛔ **SUPERSEDED (2026-07-08)** — solution finale = carte vivante d3-geo PURE (proche de l'intuition
+> Agent A « vraie géographie interne »). Vidéo 92s produite & validée. Voir `SHORT-90S-PRODUCTION-2026-07-08.md`.
+> Historique créatif conservé pour référence.
+
 # Propositions agents créatifs indépendants — Short AES 90s (2026-07-07)
 
 2 agents lancés en parallèle, brief identique (script + historique des 4 rejets + contrainte "un seul

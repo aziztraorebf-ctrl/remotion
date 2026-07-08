@@ -846,3 +846,20 @@ Symptôme trompeur : un render antérieur pouvait "passer" via le cache de bundl
 invalidation du cache. Fix : `npm install @remotion/motion-blur@<version-remotion>` (aligner sur la version de
 `remotion` dans package.json, ici 4.0.456). Leçon : un `Module not found` au bundle Remotine pointe le FICHIER
 fautif dans le message — ce n'est pas forcément la compo qu'on rend. Chercher `grep -rln "<module>" src/`.
+
+## Cycle de vie d'un élément animé : geste PONCTUEL fade-out vs état DURABLE qui accumule (2026-07-08, Short AES)
+Sur une carte/scène qui superpose des gestes de désignation et des états persistants, distinguer deux cycles de
+vie : un GESTE PONCTUEL (anneau de focus, flèche de menace, ping d'apparition) doit FADE-OUT une fois que le
+beat/panneau qu'il accompagnait est passé ; seuls les ÉTATS DURABLES (couleur de territoire, ghost borders,
+hachures de zone perdue/tenue) restent à l'écran et s'ACCUMULENT. Sinon la scène s'encombre (tous les gestes de
+tous les panneaux restent affichés → illisible). Complète la règle CLAUDE.md "objet inerte ne glisse jamais"
+(qui traite du DÉPLACEMENT) par la dimension apparition→disparition. Prouvé sur le Short AES : les anneaux de coup
+d'État et la flèche CEDEAO devaient s'estomper (fadeOut) une fois l'AES né, sinon ils polluaient le climax.
+
+## Lisibilité cartographique par SOUSTRACTION : retirer un élément qui a fini son rôle + recentrer (2026-07-08, Short AES)
+Quand un élément géographique a fini son rôle narratif (ex. la Libye après avoir expliqué la contagion de 2012),
+le RETIRER de la carte et recentrer/zoomer la caméra sur ce qui reste (le trio AES) rend le sujet principal plus
+GROS et plus LISIBLE, sans aucune perte narrative. Le cadre qui se resserre autour du sujet actif > garder tout à
+l'écran "au cas où". Distinct de la "règle de soustraction" émotionnelle (retrait d'EFFETS aux pics) : ici c'est
+un retrait d'ÉLÉMENT + recadrage pour la lisibilité. Transversal à toute scène multi-lieux (Mapbox ou d3-geo) où
+le foyer d'attention se resserre en cours de récit. Bonne intuition Aziz : "la Libye n'a plus rien à voir ici".

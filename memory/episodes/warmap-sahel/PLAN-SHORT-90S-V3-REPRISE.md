@@ -1,3 +1,7 @@
+> ⛔ **SUPERSEDED (2026-07-08)** — la reprise a RÉUSSI via carte vivante d3-geo PURE (PAS le storyboard
+> multi-modèles décrit ici). Vidéo complète 92s produite & validée. Voir `SHORT-90S-PRODUCTION-2026-07-08.md`.
+> Ce fichier = historique du diagnostic post-4-échecs uniquement.
+
 # Short "L'AES en 90 secondes" — reprise (2026-07-07, après session non concluante)
 
 **Ce qui reste VALIDE et à garder** :

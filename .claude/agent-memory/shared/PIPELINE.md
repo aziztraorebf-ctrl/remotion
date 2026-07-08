@@ -577,6 +577,17 @@ test/iteration) — NE PAS adopter Seedance comme methode par defaut pour les pe
 a la piste SVG organique (registre GGW/cacao/cargo, deja maitrise, cout zero). Detail complet + methode
 reutilisable si besoin futur : memory/NEXT-ACTION.md § SEEDANCE PERSONNAGE — TECHNIQUE PROUVEE MAIS ECARTEE.
 
+## [STAGE-FINAL] Short AES 90s — VIDEO COMPLETE PRODUITE + VALIDEE VISUELLEMENT (2026-07-08)
+Carte vivante d3-geo PUR (zero Mapbox), reprise REUSSIE apres 4 echecs. Livrable
+`out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` (92s, catbox 8ms702). Code
+`src/projects/warmap/shorts/aes-short-90s/` (compo `AES-Short-Full`), branche
+`feat/aes-short-90s-carte-vivante` (commit 83f5260). RESTE : musique + SFX.
+Detail : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md`.
+⛔ Les 3 "Stage 1: Direction Brief" du 2026-07-07 ci-dessous (concept "parchemin" + storyboards Agent A/B
+"a valider AVANT code") sont PERIMES — la production est faite, ils ne sont plus des handoffs actifs.
+
+---
+
 ### Stage 1: Direction Brief (creative-director)
 **Date**: 2026-07-07
 **Sujet**: War-Map Sahel — Short 90s "L'AES en 90 secondes" (reprise V4, apres 4 rejets)
