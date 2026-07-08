@@ -5,10 +5,20 @@
  *   gauche = Hemedti (bordure rouge RSF) · droite = al-Burhan (bordure bleue SAF).
  * PAS un visage chimère — deux moitiés distinctes séparées par la faille dorée.
  *
- * L'objet raconte tout l'arc alliance -> scission via `phase` (0..1 continu, frame-driven) :
+ * L'objet raconte tout l'arc alliance -> scission via les frames (frame-driven) :
  *   - MERGE  (les 2 jetons Acte 1 convergent puis se soudent en un disque : la faille est fine, l'or pulse)
  *   - FEND   (la faille s'élargit et vibre : "qui commande l'autre ?")
  *   - SPLIT  (les 2 moitiés s'écartent physiquement -> redeviennent 2 jetons ronds distincts)
+ *
+ * STRUCTURE (corrige le bug "2 demi-jetons accolés") :
+ *   - un conteneur racine centré, taille D x D, scale(ap).
+ *   - DANS ce conteneur, UN SEUL disque D x D (borderRadius 50%, overflow hidden, fond CREAM) qui contient
+ *     les 2 demi-visages cote a cote SANS gap au régime soudé. Chaque demi = une fenetre D/2 en overflow
+ *     hidden contenant l'image entiere décalée pour centrer le visage sur SA moitié.
+ *   - la bordure soudée = UN SEUL anneau SVG (viewBox = D x D pour éviter tout décalage d'échelle),
+ *     arc gauche rouge / arc droit bleu, parfaitement circulaire et continu (aucune arete a la couture).
+ *   - au SPLIT : les 2 moitiés s'écartent (translate) et se reconstituent chacune en jeton rond COMPLET
+ *     (reveal 0->1) avec sa propre bordure ronde pleine ; l'anneau unique s'efface.
  *
  * ⛔ NO breathe : spring d'apparition puis scale FIGÉ (un scale oscillant sur portrait raster = flou
  * sub-pixel, rejeté Aziz Acte 1). Les seuls mouvements continus sont vectoriels (faille, halo).
@@ -42,48 +52,88 @@ export const TwoFaceToken: React.FC<{
     { ...clamp, easing: Easing.out(Easing.cubic) });
   const fadeIn = interpolate(frame, [appearFrom, appearFrom + 12], [0, 1], clamp);
 
-  // faille : fine à la fusion, s'élargit + vibre au FEND, devient l'écart au SPLIT
-  const fendW = interpolate(frame, [fendAt, fendAt + 40], [0, 8], clamp);       // largeur de la fissure
-  const vibrate = frame >= fendAt && frame < splitAt
-    ? Math.sin((frame - fendAt) * 0.9) * interpolate(frame, [fendAt, fendAt + 20], [0, 2.4], clamp) : 0;
-  const gap = interpolate(frame, [splitAt, splitAt + 40], [0, splitGap],
-    { ...clamp, easing: Easing.inOut(Easing.cubic) });
-  const halfShift = fendW / 2 + gap / 2;        // décalage horizontal de chaque moitié
-  // RECONSTITUTION au SPLIT : chaque demi-conteneur s'élargit de D/2 -> D (le visage complet réapparaît
-  // en glissant vers sa zone). 0 = demi (fusion) · 1 = disque rond complet (retour état Acte 1).
-  const reveal = interpolate(frame, [splitAt + 6, splitAt + 40], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+  // écart entre les 2 moitiés : 0 tant qu'on est soudé, léger a partir du fend, grand au split.
+  const gap = interpolate(frame, [fendAt, fendAt + 40, splitAt, splitAt + 42],
+    [0, 4, 8, splitGap], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+  const halfShift = gap / 2;
+  const vibrate = frame >= fendAt && frame < splitAt + 10
+    ? Math.sin((frame - fendAt) * 0.9) * interpolate(frame, [fendAt, fendAt + 20, splitAt], [0, 2.6, 0], clamp) : 0;
 
-  // l'or de la faille pulse à la fusion (vivant), rougit/s'éteint au split
-  const goldPulse = 0.55 + 0.45 * Math.sin(frame * 0.13);
-  const goldOp = interpolate(frame, [splitAt, splitAt + 30], [1, 0], clamp);
+  // reconstitution : chaque moitié redevient un disque rond plein (0 = demi soudée, 1 = rond complet)
+  const reveal = interpolate(frame, [splitAt + 4, splitAt + 40], [0, 1], { ...clamp, easing: Easing.inOut(Easing.cubic) });
 
-  // une demi-face = un conteneur de largeur D/2 (UNE seule moitié du disque), overflow hidden,
-  // collé à la fente et écarté de halfShift+vibrate. À l'intérieur : le DISQUE COMPLET (D×D, bordure
-  // + portrait centré SANS décalage), positionné à left:0 (moitié gauche) ou left:-D/2 (moitié droite).
-  // Le portrait est centré (objectPosition center) -> chaque moitié montre bien le centre du visage.
-  const HalfFace = (side: "left" | "right", sprite: string, border: string) => {
+  // l'or de la ligne : discret quand soudé (fine ligne de partage), s'illumine au fend, s'éteint au split
+  const goldPulse = 0.5 + 0.5 * Math.sin(frame * 0.13);
+  const goldGlow = interpolate(frame, [fendAt, fendAt + 20, splitAt, splitAt + 24], [0.25, 1, 1, 0], clamp);
+  const goldW = interpolate(frame, [fendAt, fendAt + 30], [2, 6], clamp);
+
+  const BW = D * 0.055;                    // épaisseur de bordure
+
+  // Cadrage du visage (identique au jeton solo Acte 1, réglé visuellement) : l'image remplit un bloc D x D
+  // et le visage est bien centré/cadré dedans. On réutilise ce meme bloc partout (soudé + reconstitué).
+  const IMG_SCALE = 1.18;                  // l'image fait 118% du bloc (comme le solo)
+  const faceImg = (sprite: string) => (
+    <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+      style={{
+        position: "absolute", top: "50%", left: "50%",
+        width: `${IMG_SCALE * 100}%`, height: `${IMG_SCALE * 100}%`,
+        transform: "translate(-50%, -46%)",           // visage un peu haut dans le sprite -> remonte le centre
+        objectFit: "cover", objectPosition: "center top", display: "block",
+      }} />
+  );
+
+  // --- une DEMI-fenetre (régime soudé) : fenetre D/2 en overflow hidden ; DEDANS un bloc-visage D x D
+  // dont le CENTRE est aligné sur le milieu de la demi-fenetre (D/4). Left local = D/4 - D/2 = -D/4 (les 2). ---
+  const halfWindow = (side: "left" | "right") => {
     const dir = side === "left" ? -1 : 1;
-    const edgeShift = dir * halfShift + vibrate * dir;
-    const contW = D / 2 + (D / 2) * reveal;           // D/2 (demi) -> D (rond complet) pendant le split
-    // le disque interne reste ancré du côté FENTE ; le conteneur s'élargit vers l'extérieur en dévoilant
-    // le reste du visage. Gauche : disque collé à droite du conteneur. Droite : collé à gauche.
-    const innerLeft = side === "left" ? contW - D : 0;
+    const shift = dir * halfShift + vibrate * dir;
     return (
-      <div style={{ position: "absolute", left: "50%", top: "50%",
-        transform: `translate(calc(${side === "left" ? "-100%" : "0%"} + ${edgeShift}px), -50%)`,
-        width: contW, height: D, overflow: "hidden" }}>
-        {/* disque circulaire complet ; l'overflow du conteneur ne dévoile qu'une portion, croissante au split */}
-        <div style={{ position: "absolute", top: 0, left: innerLeft, width: D, height: D,
-          borderRadius: "50%", overflow: "hidden", background: CREAM,
-          border: `${D * 0.05}px solid ${border}`, boxSizing: "border-box" }}>
-          <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
-            style={{ position: "absolute", top: "50%", left: "50%",
-              width: "112%", height: "112%", transform: "translate(-50%,-48%)",
-              objectFit: "cover", objectPosition: "top center", display: "block" }} />
+      <div style={{
+        position: "absolute", top: 0, height: D, width: D / 2,
+        left: side === "left" ? 0 : D / 2,
+        transform: `translateX(${shift}px)`,
+        overflow: "hidden",
+      }}>
+        <div style={{ position: "absolute", top: 0, left: -D / 4, width: D, height: D, overflow: "hidden" }}>
+          {faceImg(side === "left" ? "portrait-hemeti" : "portrait-burhan")}
         </div>
       </div>
     );
   };
+
+  // --- un DEMI reconstitué en ROND plein (régime split) : chaque moitié devient son propre jeton ---
+  // Apparait progressivement (reveal). Positionné a +/- (halfShift) du centre, avec sa bordure ronde pleine.
+  const soloHalf = (side: "left" | "right") => {
+    const dir = side === "left" ? -1 : 1;
+    const shift = dir * halfShift + vibrate * dir;
+    const border = side === "left" ? RSF : SAF;
+    return (
+      <div style={{
+        position: "absolute", top: 0, left: 0, width: D, height: D,
+        transform: `translateX(${shift}px)`, opacity: reveal,
+      }}>
+        <div style={{
+          position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden", background: CREAM,
+          boxShadow: "0 5px 14px rgba(0,0,0,0.5)",
+        }}>
+          {faceImg(side === "left" ? "portrait-hemeti" : "portrait-burhan")}
+        </div>
+        <div style={{
+          position: "absolute", inset: 0, borderRadius: "50%",
+          border: `${BW}px solid ${border}`, boxSizing: "border-box",
+        }} />
+      </div>
+    );
+  };
+
+  // --- ANNEAU UNIQUE (soudé) : un seul cercle, arc gauche rouge / arc droit bleu, CONTINU ---
+  // viewBox = D x D pour éviter tout décalage d'échelle. r = D/2 - BW/2, centré cx=cy=D/2.
+  const r = D / 2 - BW / 2;
+  const circ = 2 * Math.PI * r;
+  const ringOp = interpolate(reveal, [0, 0.45], [1, 0], clamp);
+
+  // le disque soudé (fenetres + anneau) glisse en s'écartant au fend/split ; il s'efface au reveal.
+  const weldedOp = interpolate(reveal, [0, 0.55], [1, 0], clamp);
 
   return (
     <div style={{ position: "absolute", left: pos.x, top: pos.y,
@@ -92,16 +142,47 @@ export const TwoFaceToken: React.FC<{
       <div style={{ position: "absolute", left: "50%", top: "68%", width: D * 0.9, height: D * 0.24,
         transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.4)", borderRadius: "50%", filter: "blur(7px)" }} />
 
-      {HalfFace("left", "portrait-hemeti", RSF)}
-      {HalfFace("right", "portrait-burhan", SAF)}
+      {/* --- DISQUE SOUDÉ : un seul rond, 2 demi-visages cote a cote, anneau bicolore continu --- */}
+      {weldedOp > 0.01 && (
+        <div style={{ position: "absolute", left: "50%", top: "50%", width: D, height: D,
+          transform: "translate(-50%,-50%)", opacity: weldedOp }}>
+          {/* le disque lui-meme (clip rond commun) */}
+          <div style={{ position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden",
+            background: CREAM, boxShadow: "0 5px 14px rgba(0,0,0,0.5)" }}>
+            {halfWindow("left")}
+            {halfWindow("right")}
+          </div>
+          {/* anneau bicolore UNIQUE par-dessus (viewBox = D x D) */}
+          <svg width={D} height={D} viewBox={`0 0 ${D} ${D}`}
+            style={{ position: "absolute", inset: 0, opacity: ringOp, overflow: "visible" }}>
+            {/* arc droit (bleu SAF) : demi-cercle droit */}
+            <circle cx={D / 2} cy={D / 2} r={r} fill="none" stroke={SAF} strokeWidth={BW}
+              strokeDasharray={`${circ / 2} ${circ / 2}`} strokeDashoffset={0}
+              transform={`rotate(-90 ${D / 2} ${D / 2})`} strokeLinecap="butt" />
+            {/* arc gauche (rouge RSF) : demi-cercle gauche */}
+            <circle cx={D / 2} cy={D / 2} r={r} fill="none" stroke={RSF} strokeWidth={BW}
+              strokeDasharray={`${circ / 2} ${circ / 2}`} strokeDashoffset={-circ / 2}
+              transform={`rotate(-90 ${D / 2} ${D / 2})`} strokeLinecap="butt" />
+          </svg>
+        </div>
+      )}
 
-      {/* FAILLE dorée au centre : trait vertical (la ligne de fracture pré-inscrite) */}
-      {goldOp > 0.01 && (
+      {/* --- RECONSTITUTION : 2 jetons ronds pleins qui s'écartent (régime split) --- */}
+      {reveal > 0.01 && (
+        <div style={{ position: "absolute", left: "50%", top: "50%", width: D, height: D,
+          transform: "translate(-50%,-50%)" }}>
+          {soloHalf("left")}
+          {soloHalf("right")}
+        </div>
+      )}
+
+      {/* --- LIGNE DE PARTAGE / FAILLE dorée : fine ligne quand soudé, s'ouvre et s'illumine au fend/split --- */}
+      {goldGlow > 0.01 && (
         <div style={{ position: "absolute", left: "50%", top: "50%",
-          transform: "translate(-50%,-50%)", width: Math.max(2, fendW), height: D * 1.02,
+          transform: `translate(calc(-50% + ${vibrate}px),-50%)`, width: goldW, height: D * 1.0,
           background: `linear-gradient(180deg, rgba(233,196,106,0) 0%, ${GOLD} 18%, #FFF2CC 50%, ${GOLD} 82%, rgba(233,196,106,0) 100%)`,
-          opacity: goldOp * (0.7 + goldPulse * 0.3),
-          boxShadow: `0 0 ${8 + goldPulse * 10}px ${goldPulse * 6}px rgba(233,196,106,${goldOp * 0.5})`,
+          opacity: goldGlow * (0.7 + goldPulse * 0.3),
+          boxShadow: `0 0 ${6 + goldPulse * 10}px ${goldGlow * goldPulse * 6}px rgba(233,196,106,${goldGlow * 0.5})`,
           borderRadius: 2 }} />
       )}
     </div>
