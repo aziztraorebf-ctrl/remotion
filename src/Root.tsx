@@ -374,6 +374,9 @@ import { WarmapCfaInsertSVG, WARMAP_CFA_INSERT_FRAMES } from "./projects/warmap/
 import { LiptakoRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/LiptakoRevealSVG9x16";
 import { ResourcesRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/ResourcesRevealSVG9x16";
 import { CtaCard } from "./projects/warmap/shorts/aes-short-90s/CtaCard";
+import { AesShortPart1 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart1";
+import { AesShortPart2 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart2";
+import { AesShortFull } from "./projects/warmap/shorts/aes-short-90s/AesShortFull";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -3483,6 +3486,30 @@ export const RemotionRoot: React.FC = () => {
         id="CtaCard-V"
         component={CtaCard}
         durationInFrames={235}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Part1"
+        component={AesShortPart1}
+        durationInFrames={1080}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Part2"
+        component={AesShortPart2}
+        durationInFrames={1680}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Full"
+        component={AesShortFull}
+        durationInFrames={2756}
         fps={30}
         width={1080}
         height={1920}
