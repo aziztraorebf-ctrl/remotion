@@ -21,7 +21,7 @@ metadata:
 | Acte | Dernier audio | Texte changé depuis ? | Statut |
 |---|---|---|---|
 | **Acte 1** | https://files.catbox.moe/or6tj3.mp3 (jet 3 fact-checké) | NON (aucune modif depuis fact-check) | ✅ **à priori OK** — re-vérifier au lock final, mais probablement à garder tel quel |
-| **Acte 2** | https://files.catbox.moe/pco5ra.mp3 | OUI ⚠️ — « deux ans » → « plus de trois ans » + « personne ne peut » → « personne n'a pu » (correction temporelle 2026-06-16) | ⛔ **PÉRIMÉ — à régénérer** |
+| **Acte 2** | https://files.catbox.moe/6ebnx5.mp3 (2026-07-08, régénéré) | NON | ✅ **À JOUR** — « plus de trois ans » + « personne n'a pu gagner » intégrés. Durée 73.6s. Align : `src/projects/warmap/soudan-acte2/whisper-words-acte2.ts`. ⚠️ bug attrapé : STS disait « aînés »→« ennemis » cassé → reformulé « pas des ennemis, au contraire, ils étaient alliés » (revérifié OK). Fichier local `public/_shared/audio/soudan/acte2-blocage.mp3`. |
 | Acte 3 | — | (pas écrit) | à venir |
 | Acte 4 | — | (pas écrit) | à venir |
 | Acte 5 | — | (pas écrit) | à venir |
