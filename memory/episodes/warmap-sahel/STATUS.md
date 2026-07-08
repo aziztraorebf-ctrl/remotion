@@ -1,7 +1,7 @@
 # War-Map Sahel AES — STATUS
 
 **Dernière mise à jour :** 2026-07-05 — ✅✅✅ **VIDÉO LONGUE VALIDÉE AZIZ, PROMUE `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`.** Reste 2 points avant publication effective : **thumbnail** + **titre** (prochaine session). Voir section "✅✅✅ SESSION C — ÉTAT (2026-07-05)" juste ci-dessous.
-**⛔ NOUVEAU (même jour) : chantier Short "L'AES en 90s" — V1 REJETÉE par Aziz** (incohérence de style vs vidéo longue, composants Mapbox génériques utilisés à tort). Plan de reprise V2 : `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V2-REPRISE.md`. Script+audio+timing (91.86s) restent valides, seul l'habillage visuel des beats 1/2/3/4/5+6 doit être refait avec de vrais extraits de la vidéo longue.
+**⛔ Chantier Short "L'AES en 90s" — SESSION 2026-07-07 NON CONCLUANTE, TABLE RASE FAITE.** 4 tentatives essayées (montage extraits vidéo, carte Mapbox+icônes bricolées, mix carte+inserts SVG, storyboard "écu/blason unique" généré via Gemini) — toutes rejetées par Aziz, aucun code/rendu/storyboard conservé. Ce qui reste valide : script FR + audio (`SCRIPT-SHORT-90S-V1.txt`, `short-90s-v1.mp3`, alignement Whisper). Diagnostic accumulé + plan de reprise (multi-modèles Gemini/GPT/DeepSeek + agents créatifs, AVANT tout code) : `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V3-REPRISE.md`.
 **Branche :** `fix/senegal-v3-passe-finition` (⚠️ nom historique trompeur — toute la Session B War-Map Sahel
 a été faite ici, pas sur une branche dédiée `feat/warmap-aes-hook-integration` qui n'a en réalité jamais
 été créée/utilisée ; corrigé 2026-07-04, décision Aziz : documenter la réalité plutôt que déplacer les

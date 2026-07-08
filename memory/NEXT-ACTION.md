@@ -1,11 +1,34 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-06 (Soudan — moteur d'affrontement 2 factions RSF/SAF + 2 variantes VALIDÉS).
+> Mis a jour : 2026-07-07 (session 2 — Soudan : HOOK VALIDÉ + SOCLE CARTE construit & validé).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ✅✅ SOUDAN MID-FORM — MOTEUR D'AFFRONTEMENT 2 FACTIONS VALIDÉ (2026-07-06, 2e passe)
+## ✅✅✅ SOUDAN MID-FORM — SOCLE CARTE VALIDÉ → NEXT = CONSTRUIRE L'ACTE 1 (2026-07-07 s2)
+
+> **Session 2 (2026-07-07) : hook finalisé + socle carte Soudan construit ET validé pièce par pièce.**
+> Décision structurante : carte = NOUVEAU moteur `engine/SoudanWarMapEngine.tsx` reprenant le socle
+> générique AES (PAS le mini-render de juin REJETÉ, PAS l'adaptation directe du moteur Sahel 3689 l).
+> Réf-or = `warmap-sahel-aes-FINAL.mp4`. Commit `0bfe76b` (branche `feat/warmap-insert-2factions`,
+> working tree des AUTRES chantiers préservé — VoxRepro/Short/svg-scenes non emportés).
+>
+> **VALIDÉ (Aziz, render par render)** : voile khaki troué (Soudan crème/voisins sombres) · contour
+> permanent + intérieur vide (routes masquées, Nil discret) · ⛔ JAMAIS d'aplat de faction (halos LOCAUX
+> qui rayonnent) · "on nomme → ça se trace" (contour d'état coloré, persistant, cumul de couleurs) ·
+> jetons AES mobiles + SILLAGE cinétique · objet ISO 3D (`base-fr-td.png` = vrai fort) · zoom serré ~5.5
+> (= zoom de BASE) · retour à l'état vide. **Test final `i12jyw` = LE code de référence (`SoudanTestFinal.tsx`).**
+>
+> **NEXT = CONSTRUIRE L'ACTE 1 (9 beats)** sur ce socle. Se fier à `SoudanTestFinal.tsx` pour placement
+> jeton / plaque-nom / halos / highlight / sillage / base / zoom. Puis Acte 2 (insert `KhartoumChocSVG`
+> beat 5 + `FrontOuvertSVG` beat 8), régénérer audio Acte 2 (périmé). Actes 3-4 non écrits.
+> ⛔ **VRAIS VISAGES** Hemeti + al-Burhan (personnes réelles → jetons depuis vraies photos, comme AES ;
+> soldats OK génériques). Base à régénérer drapeau neutre/soudanais.
+> Grammaire gravée : [[WARMAP-GRAMMAIRE]] (2 ⭐⭐ en tête). État : `episodes/soudan-midform/STATUS.md`.
+
+---
+
+## ✅✅ SOUDAN — moteur d'affrontement 2 factions (session 2026-07-06, socle insert SVG conservé)
 
 > Le proto mono-faction du matin (`KhartoumEtatMajorSVG`, committé `c59d0dd`) a été ÉTENDU en un
 > **moteur d'affrontement à 2 factions (RSF vs SAF) + 2 variantes, VALIDÉS par Aziz** (« les deux
@@ -33,16 +56,12 @@
 
 ---
 
-## 🔧 SHORT AES 90s — V2 ASSEMBLÉE, reste render complet + validation Aziz (MàJ 2026-07-06)
+## ⛔ SHORT AES 90s — 4 TENTATIVES REJETÉES, TABLE RASE, reprise via storyboard multi-modèles (MàJ 2026-07-07)
 
-> ✅ **Mise à jour** : la V1 (composants Mapbox génériques, incohérence visuelle) a été REJETÉE PUIS
-> la **V2 a été RECONSTRUITE (2026-07-05)** — vrais extraits croppés 9:16 de `warmap-sahel-aes-FINAL.mp4`
-> + inserts SVG, assemblée dans `AesShort90s.tsx` (compo `WarmapSahel-Short90s-V2`, 2756f). Validée par
-> 7 frames-clés (stills). **Reste UNIQUEMENT** : rendu vidéo complet + validation Aziz au visionnage/écoute
-> (jamais fait — seulement des stills). Détail : `memory/episodes/warmap-sahel/STATUS.md` +
-> `PLAN-SHORT-90S-V2-REPRISE.md`.
-> Ce qui reste valide (ne pas refaire) : script FR + audio GéoAfrique (91.86s) + beats 7/8/10 (Liptako/
-> Ressources/CTA) + 3 fixes de bugs Mapbox (`continueRender` avant `map.once("idle")`, utiles projet-wide).
+> ⛔ **Mise à jour (2026-07-07)** : 4 tentatives (V1 à V4 + storyboard "écu/blason") toutes REJETÉES,
+> table rase faite (aucun code/rendu conservé). Ce qui reste valide : script FR + audio GéoAfrique
+> (91.86s, alignement Whisper). Diagnostic + plan de reprise (storyboard multi-modèles AVANT tout code) :
+> `memory/episodes/warmap-sahel/PLAN-SHORT-90S-V3-REPRISE.md`.
 
 ---
 
