@@ -341,6 +341,7 @@ import { SoudanMouvementTest, SOUDAN_MVT_FRAMES, SOUDAN_MVT_FPS } from "./projec
 import { SoudanTestFinal, SOUDAN_TF_FRAMES, SOUDAN_TF_FPS } from "./projects/warmap/SoudanTestFinal";
 import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as SOUDAN_ACTE1_FPS } from "./projects/warmap/soudan-acte1/SoudanActe1";
 import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTest";
+import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -1711,6 +1712,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanActe1" component={SoudanActe1} durationInFrames={SOUDAN_ACTE1_FRAMES} fps={SOUDAN_ACTE1_FPS} width={1920} height={1080} />
         {/* Acte 2 — proto isolé du jeton 2-visages (converge -> fusion -> fend -> split) */}
         <Composition id="TwoFaceTokenTest" component={TwoFaceTokenTest} durationInFrames={300} fps={30} width={1920} height={1080} />
+        {/* Acte 2 "Blocage" — beats 1-4 câblés (carte + jeton 2-visages) ; beats 5-9 en cours */}
+        <Composition id="SoudanActe2" component={SoudanActe2} durationInFrames={SOUDAN_A2_FRAMES} fps={SOUDAN_A2_FPS} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />
@@ -3512,7 +3515,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="AES-Short-Full"
         component={AesShortFull}
-        durationInFrames={2756}
+        durationInFrames={2802}
         fps={30}
         width={1080}
         height={1920}
