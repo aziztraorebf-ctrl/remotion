@@ -141,8 +141,21 @@ const Beats14Map: React.FC = () => {
       <Audio src={staticFile("_shared/audio/soudan/acte2-partie1.mp3")} />
 
       <Sequence from={F.fusion} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.42} /></Sequence>
-      <Sequence from={F.commande} durationInFrames={26}><Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.4} /></Sequence>
+      <Sequence from={F.commande} durationInFrames={26}><Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.3} /></Sequence>
       <Sequence from={F.avril23} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} /></Sequence>
+
+      {/* ── SFX PONCTUELS section 1 ── */}
+      {/* tics discrets du compteur d'année qui recule (2026->2021) entre F.converge et F.fusion */}
+      <Sequence from={F.converge} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={F.converge + 60} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={F.converge + 120} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={F.converge + 180} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      {/* tension quand le jeton se fend ("qui commande l'autre") — complète le map-ping */}
+      <Sequence from={F.commande} durationInFrames={34}><Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.4} /></Sequence>
+      {/* le compteur avance à 2023 (guerre ouverte) */}
+      <Sequence from={F.avril23} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.28} /></Sequence>
+      {/* apparition des forces au split (une seule fois, pas par jeton) */}
+      <Sequence from={F.avril23 + FORCES_AT} durationInFrames={26}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.35} /></Sequence>
 
       <SoudanWarMapEngine camKeys={CAM1} zones={zones} highlights={HIGHLIGHTS1} showNationalBorder stateLineOpacity={0}>
         {(proj) => {
@@ -278,6 +291,22 @@ const Beats69Map: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: "#0b1526" }}>
       {/* audio partie2 : beats 6-7-8-9 en continu (ne PAS resplitter — un seul flux) */}
       <Audio src={staticFile("_shared/audio/soudan/acte2-partie2.mp3")} />
+
+      {/* ── SFX PONCTUELS section 3 (frames relatives à la section entière) ── */}
+      {/* BEAT 6 (BLOC, joue de 0 à ~G.geo=294) : axe de manœuvre -> contact chars -> vibration du front */}
+      <Sequence from={90} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.4} /></Sequence>
+      <Sequence from={100} durationInFrames={40}><Audio src={staticFile("_shared/sfx/sfx-tension-tug.mp3")} volume={0.35} /></Sequence>
+      <Sequence from={178} durationInFrames={34}><Audio src={staticFile("_shared/sfx/sfx-clash-impact.mp3")} volume={0.5} /></Sequence>
+
+      {/* BEAT 7 : tics discrets du compteur km (défile de G.immense=355 à G.ravitailler=430) */}
+      <Sequence from={G.immense} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={G.immense + 25} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={G.immense + 50} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      <Sequence from={G.immense + 75} durationInFrames={20}><Audio src={staticFile("_shared/sfx/data/tick-counter.mp3")} volume={0.25} /></Sequence>
+      {/* points de danger RSF sur la piste de ravitaillement (entre G.ravitailler et G.resultat) */}
+      <Sequence from={G.ravitailler + 10} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/slash-red.mp3")} volume={0.3} /></Sequence>
+      <Sequence from={G.ravitailler + 42} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/slash-red.mp3")} volume={0.3} /></Sequence>
+      <Sequence from={G.ravitailler + 74} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/slash-red.mp3")} volume={0.3} /></Sequence>
 
       {/* BEAT 6 — BLOC plein cadre (rapport de force, illustratif). localFrame = frame de section. */}
       {blocOp > 0.01 && (
@@ -506,9 +535,10 @@ const SupplyLine: React.FC<{
       return { t: phase, p: pathAt(phase) };
     });
 
-    // ── DANGERS RSF : 3 marqueurs le long de la moitié ouest (t ~0.55..0.92), apparition progressive
+    // ── DANGERS RSF : 4 marqueurs répartis sur TOUTE la longueur de la piste (est->ouest, t 0.22..0.85)
+    //   = le harcèlement le long des 1000 km, pas seulement près du front. Apparition progressive
     //   pendant le beat 7 (dangerFrom->dangerTo), clignotement déterministe (Math.sin de i). ──
-    const dangers = [0.58, 0.74, 0.9].map((t, i) => {
+    const dangers = [0.22, 0.45, 0.65, 0.85].map((t, i) => {
       const p = pathAt(t);
       const revealAt = interpolate(frame, [dangerFrom + i * 22, dangerFrom + i * 22 + 20], [0, 1], clamp);
       // clignotement : phase désynchronisée par item (déterministe, pas de random)
