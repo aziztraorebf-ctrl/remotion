@@ -1,9 +1,20 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-07 (session 3) — 🎬 **ACTE 1 v1 CONSTRUIT & RENDU (9 beats, 66.5s) — EN ATTENTE VERDICT AZIZ.**
-Socle + hook validés (sessions précédentes). **Branche :** `feat/warmap-insert-2factions`. Working tree Short Sahel préservé.
+**Dernière mise à jour :** 2026-07-09 (session 4) — 🎬🎬 **ACTE 2 « BLOCAGE » COMPLET & POLI (93.6s, 9 beats).**
+**Branche :** `feat/soudan-acte2-blocage`. Acte 1 v5-FINAL fait (session 3, historique plus bas).
 
-> ⭐ **PROCHAINE ACTION = retour Aziz sur `acte1_v1.mp4`. Si validé → promouvoir + PILOTE Actes 2-4.**
+> ⭐ **PROCHAINE ACTION = verdict Aziz sur l'Acte 2 final (SFX à valider à l'oreille) → si OK, promouvoir. Puis ACTE 3 (session dédiée, contexte vierge).**
+
+## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
+- **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).
+- **Structure 3 sections** (registres alternés, plan gravé) : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx` :
+  - **Section 1 [0..1167]** beats 1-4 = CARTE + **jeton 2-visages** (`TwoFaceToken`, symbole signature : convergence→fusion 2021→fend « qui commande »→split 2023 reconstitution) + **compteur d'année** (`YearCounter`, fil temporel 2026→2021→2023) + **forces au split** (soldats portrait-rsf/saf + technicals/chars, meublage).
+  - **Section 2 [1167..1887]** beat 5 = INSERT `KhartoumEtatMajorSVG` (hideSubtitle) + **narration dédiée** `acte2-beat5.mp3` (assaut Khartoum, la voix nomme aéroport/palais/TV en synchro). Fin du beat 5 pose « la milice tient déjà plusieurs quartiers » = pont vers beat 6.
+  - **Section 3 [1887..2807]** beats 6-9 : **beat 6 = BLOC** `BlocImpasseB6` (rapport de force 100% illustratif : technicals RSF / chars mobiles + avions fixes SAF, poussée→reflux→front tient) puis **beats 7-8-9 = CARTE** (dézoom immensité + **compteur 1000km** + **supply vivante** impulsions/dangers RSF répartis + or du Darfour qui pulse + dézoom hors Soudan). **Continuité front bloc→carte** (`FrontBridge`).
+- **Audio LOCK** : 3 blocs (pa/pb/pc) + narration beat5, stability 0.45, prononciation nettoyée (voir AUDIO-ETAT). Fin « sortir du Soudan » restaurée. Aligns : `whisper-partie1.ts`/`whisper-partie2.ts`.
+- **SFX ponctuels** (plan validé Aziz) : tics compteurs, tension à la faille, whoosh/impact bloc, node-appear forces, slash dangers. ⚠️ **Volumes à valider à l'oreille Aziz** (Claude ne peut pas écouter).
+- **Écartés/backlog** : palais iso (retiré, objet orphelin non nommé par la voix) · relief désertique Mapbox · fissure au split · caméra pitch 3D (rejeté doctrine).
+- Assets neufs : `palais-gouv-td.png` (Gemini, retiré du montage mais conservé). Composants : TwoFaceToken, GovBuilding (inutilisé), BlocImpasseB6, YearCounter/KmCounter/FrontBridge (inline SoudanActe2).
 
 ## 🎬 ACTE 1 v5-FINAL (session 3, 2026-07-07) — CANDIDAT VALIDÉ (sous réserve dernier visionnage Aziz)
 - **Render RETENU** : `out/episodes/soudan-midform/wip/acte1_v5-FINAL.mp4` (57.3s) · catbox `https://files.catbox.moe/qc5dgq.mp4`.
