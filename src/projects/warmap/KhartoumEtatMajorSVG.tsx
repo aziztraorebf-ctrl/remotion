@@ -483,7 +483,9 @@ const TargetReveal: React.FC<{ x: number; y: number; frame: number; appearAt: nu
   );
 };
 
-export const KhartoumEtatMajorSVG: React.FC = () => {
+// hideSubtitle : masque le bandeau sous-titre interne (à utiliser quand une narration off dit déjà
+// la même chose — évite le doublon voix/texte banni par la doctrine WARMAP). Défaut false = autonome.
+export const KhartoumEtatMajorSVG: React.FC<{ hideSubtitle?: boolean }> = ({ hideSubtitle = false }) => {
   const frame = useCurrentFrame();
 
   const pFond = clampI(frame, 0, 25);
@@ -836,14 +838,16 @@ export const KhartoumEtatMajorSVG: React.FC = () => {
           <text x={1850} y={78} textAnchor="end" fill="#4a1f18" fontFamily="Georgia, 'Times New Roman', serif" fontSize={20} fontStyle="italic" letterSpacing={1.5}>15 AVRIL 2023</text>
         </g>
 
-        {/* ============ BANDEAU BAS (sous-titre dynamique par phase) ============ */}
-        <g opacity={pFond}>
-          <rect x={460} y={958} width={1000} height={68} fill="#2a120e" rx={4} />
-          <rect x={465} y={963} width={990} height={58} fill="none" stroke="#8a3324" strokeWidth={1.5} rx={2} />
-          <text x={960} y={1002} textAnchor="middle" fill="#f5e6ce" fontFamily="Georgia, 'Times New Roman', serif" fontSize={22} fontStyle="italic" letterSpacing={0.5}>
-            {subtitleFor()}
-          </text>
-        </g>
+        {/* ============ BANDEAU BAS (sous-titre dynamique par phase) — masqué si narration off ============ */}
+        {!hideSubtitle && (
+          <g opacity={pFond}>
+            <rect x={460} y={958} width={1000} height={68} fill="#2a120e" rx={4} />
+            <rect x={465} y={963} width={990} height={58} fill="none" stroke="#8a3324" strokeWidth={1.5} rx={2} />
+            <text x={960} y={1002} textAnchor="middle" fill="#f5e6ce" fontFamily="Georgia, 'Times New Roman', serif" fontSize={22} fontStyle="italic" letterSpacing={0.5}>
+              {subtitleFor()}
+            </text>
+          </g>
+        )}
       </svg>
     </AbsoluteFill>
   );
