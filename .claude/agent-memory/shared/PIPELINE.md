@@ -230,13 +230,14 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
 
 ### ⚡ Actif
 
-- **Soudan Mid-form** — ✅✅ HOOK "l'or du Darfour" + SOCLE carte `SoudanWarMapEngine` + **ACTE 1 v5-FINAL construit
-  & rendu** (candidat validé sous réserve dernier visionnage Aziz, 2026-07-07 s3, branche `feat/warmap-insert-2factions`,
-  catbox `qc5dgq`, code `src/projects/warmap/soudan-acte1/SoudanActe1.tsx`). 9 beats câblés audio, vrais visages
-  Hemedti/al-Burhan (encre nette), mine d'or, insert 50M (vraie forme Soudan), ligne de front. NEXT = verdict final →
-  **ACTE 2 (session dédiée)** : régénérer audio Acte 2 (date 2→3 ans), plan registres gravé (`STORYBOARD-ACTE2` :
-  beat 5 insert `KhartoumEtatMajorSVG` validé / beat 6 bloc / beats 7-8 carte), Actes 3-4 non écrits. Briques prêtes :
-  `warmapChoc`/`KhartoumChocSVG`/`FrontOuvertSVG`. État : `memory/episodes/soudan-midform/STATUS.md`.
+- **Soudan Mid-form** — ✅✅✅ HOOK + SOCLE `SoudanWarMapEngine` + **ACTE 1 v5-FINAL** (57.3s, catbox `qc5dgq`) +
+  **ACTE 2 « Blocage » COMPLET & POLI** (93.6s, 9 beats, 2026-07-09 s4, branche `feat/aes-short-90s-carte-vivante`,
+  `out/episodes/soudan-midform/wip/acte2-FINAL.mp4`, catbox `jgvhr2`, code `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`).
+  Acte 2 = 3 sections registres alternés : jeton 2-visages `TwoFaceToken` / insert `KhartoumEtatMajorSVG` beat 5 /
+  bloc `BlocImpasseB6` beat 6 / carte dézoom+`KmCounter`+supply+forces figées beats 7-9. Audio LOCK. **[STAGE-6 QUALITY]
+  handoff : ⚠️ SFX VOLUMES À VALIDER À L'OREILLE AZIZ (Claude ne peut écouter).** NEXT = verdict Aziz → promo FINAL →
+  **ACTE 3 (session dédiée vierge, "suivre l'or"→Émirats/Turquie, NON ÉCRIT)**, starter `STARTER-PROMPT-soudan-acte3.md`.
+  État : `memory/episodes/soudan-midform/STATUS.md`.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
   Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).
   URL catbox : https://files.catbox.moe/jyrlj1.mp3. Format visuel : Template B Hybride.

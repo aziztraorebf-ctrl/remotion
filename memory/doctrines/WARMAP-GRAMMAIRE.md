@@ -468,6 +468,31 @@ meublé SUR la carte (lignes tension or accords, zones influence bases, pulse fr
 
 → Render → downstream Gemini/Kimi de contrôle (da-brief.py), 1 appel max, Gemini consultatif jamais juge.
 
+### ⛔ R-V5 — OBJET FIGURATIF NON NOMMÉ PAR LA VOIX = confus, rejeté (Aziz 2026-07-09, Soudan Acte 2)
+Un objet figuratif posé sur la carte (bâtiment, palais, mine, monument, usine…) DOIT être ancré à
+quelque chose que la VOIX prononce à ce moment — sinon le spectateur ne comprend pas ce que c'est ni
+d'où ça sort. **Deux rejets Aziz** cette session : (1) un palais gouvernemental iso au coup d'État et
+(2) une mine d'or au beat 8 — tous deux JAMAIS nommés par la narration → retirés du montage.
+**RÈGLE** : avant de poser un objet, vérifier que la voix le désigne (synchro « on nomme → ça
+apparaît »). Sinon : le supprimer, OU le remplacer par un signe qui se lit SANS être nommé.
+*Alternative validée (beat 8)* : au lieu d'un objet abstrait, montrer les **FORCES qui tiennent leur
+position** (généraux + soldats figés de part et d'autre du front) → ça MONTRE « personne n'a pu
+gagner » sans nommer quoi que ce soit. Distinct de R-V N°2 (overlay-sous-titre) : ici le problème
+n'est pas la redondance mais l'ABSENCE d'ancrage verbal d'un objet figuratif.
+
+### ⭐ BRIQUES SIGNATURE War-Map (vocabulaire réutilisable — NE PAS re-coder, adapter l'existant)
+- **TwoFaceToken** (jeton alliance→rupture) : un jeton UNIQUE coupé par une ligne d'or, deux demi-visages.
+  Grammaire d'états : convergence → **FUSION** (alliance) → la ligne **FEND** (tension, « qui commande ? »)
+  → **SPLIT** (rupture) → reconstitution en 2 jetons. Candidat récurrent pour tout duo d'acteurs qui
+  s'allient puis se déchirent. Code : `src/projects/warmap/soudan-acte2/TwoFaceToken.tsx`.
+- **YearCounter** (fil temporel) : compteur d'année qui RECULE (2026→2021) puis avance (→2023) =
+  matérialise « revenir en arrière » ET meuble un beat sans surcharge. Garder le CHIFFRE seul, retirer
+  tout label texte redondant avec la voix. Cohérent avec **KmCounter** « le chiffre qui frappe ».
+  Code : inline dans `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
+- **BlocImpasseB6** (rapport de force plein cadre) : concept SANS ancrage géo (« puissance de feu vs
+  territoire ») → BLOC état-major, PAS plaqué sur la carte (cf §2 test d'ancrage : d'abord tenté sur
+  carte = raté, basculé en bloc = juste). Code : `src/projects/warmap/soudan-acte2/BlocImpasseB6.tsx`.
+
 ---
 
 ## 9. ⛔ RÈGLE OVERLAY SEMI-TRANSPARENT BANNI (Aziz 2026-06-14)

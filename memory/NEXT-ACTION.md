@@ -1,28 +1,26 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-07 (session 3 — Soudan : ACTE 1 v5-FINAL construit, candidat validé ; ACTE 2 = session dédiée).
+> Mis a jour : 2026-07-09 (session 4 — Soudan : ACTE 2 « Blocage » COMPLET & POLI, 93.6s ; NEXT = verdict Aziz SFX puis ACTE 3 session dédiée).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ✅✅✅ SOUDAN MID-FORM — ACTE 1 v5-FINAL CANDIDAT VALIDÉ → NEXT = verdict final + ACTE 2 (session dédiée) (2026-07-07 s3)
+## ✅✅✅ SOUDAN MID-FORM — ACTE 2 « BLOCAGE » COMPLET & POLI → NEXT = verdict Aziz (SFX) + ACTE 3 (session dédiée) (2026-07-09 s4)
 
-> **Session 3 (2026-07-07) : ACTE 1 complet construit, rendu, itéré v1→v5 sur retours Aziz + double review Gemini/Kimi.**
-> Rendu retenu : `out/episodes/soudan-midform/wip/acte1_v5-FINAL.mp4` · catbox `qc5dgq` (57.3s). Branche `feat/warmap-insert-2factions`.
-> Code : `src/projects/warmap/soudan-acte1/SoudanActe1.tsx` (compo `SoudanActe1`, 1719f@30, sur socle `SoudanWarMapEngine`).
+> **Session 4 (2026-07-09) : ACTE 2 complet construit, poli, itéré sur retours Aziz.** Render :
+> `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` · catbox `jgvhr2` (93.6s, 9 beats). Branche `feat/aes-short-90s-carte-vivante`.
+> Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx` (3 sections registres alternés).
 >
-> **CONTENU Acte 1 (9 beats câblés audio `acte1-factcheck-v2.mp3`)** : mine d'or Darfour (3, iso) → jeton **Hemedti** (VRAI
-> visage, encre nette, FIXE) → soldats RSF → insert **50M** (vraie forme Soudan geojson + "3e plus grand pays") → partition
-> avec **LIGNE DE FRONT** ink-bleed → **al-Burhan** miroir (base soudanaise + soldats SAF) → civils divers "prise au piège" →
-> "pire crise humanitaire". Caméra serrée→dézoom + drift, halo pulse, vignette chaude, AUCUN drapeau mines. Fact-check the-conversation : géo VALIDÉE.
+> **CONTENU Acte 2** : S1 beats 1-4 CARTE + **jeton 2-visages `TwoFaceToken`** (fusion 2021→fend « qui commande »→split 2023) +
+> **`YearCounter`** (2026→2021→2023) + forces au split. S2 beat 5 **insert `KhartoumEtatMajorSVG`** + narration dédiée (assaut
+> Khartoum). S3 beat 6 **BLOC `BlocImpasseB6`** (rapport de force illustratif technicals/chars/avions) + beats 7-9 CARTE (dézoom
+> immensité + **`KmCounter` 1000km** + supply vivante/dangers + **forces figées** de chaque côté « personne n'a pu gagner » + dézoom
+> hors Soudan). Continuité front bloc→carte. SFX ponctuels posés. Audio LOCK (3 blocs + beat5, stability 0.45).
 >
-> **NEXT immédiat** = verdict final Aziz sur `qc5dgq` → promo `PRET-PUBLICATION` (Acte 1 seul OU attendre montage complet).
-> **PUIS ACTE 2 = SESSION DÉDIÉE** (décision Aziz : session 3 pleine). Plan Acte 2 GRAVÉ : `projects/soudan-midform-STORYBOARD-ACTE2.md`
-> (répartition registres : beats 1-4 carte + jeton 2-visages · beat 5 **insert état-major** `KhartoumEtatMajorSVG` DÉJÀ VALIDÉ ·
-> beat 6 **bloc** territoire-vs-puissance-de-feu · beats 7-8 **carte**). ⛔ Régénérer audio Acte 2 (périmé : "deux ans"→"plus de
-> trois ans", cf `soudan-midform-AUDIO-ETAT`). Actes 3-4 non écrits (Acte 3 = l'or→Émirats/Turquie, fact-check confirme).
-> Règle gravée cette session : nom propre à l'écran → vérifier Wikipédia ([[feedback_nom-propre-ecran-verifier-wikipedia]]).
-> État complet : `episodes/soudan-midform/STATUS.md`.
+> **NEXT immédiat** = verdict Aziz sur `jgvhr2` (⚠️ **SFX à valider À L'OREILLE** — Claude ne peut écouter) → promo `PRET-PUBLICATION`.
+> **PUIS ACTE 3 = SESSION DÉDIÉE vierge** (« suivre l'or » → Émirats/Turquie, **NON ÉCRIT** : pré-prod script d'abord).
+> Starter : `STARTER-PROMPT-soudan-acte3.md`. Briques gravées : `WARMAP-GRAMMAIRE.md` §8 (TwoFaceToken/YearCounter/BlocImpasse + R-V5 objet orphelin).
+> État complet : `episodes/soudan-midform/STATUS.md`. Méthode audio TTS gravée : `tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
 
 ---
 
