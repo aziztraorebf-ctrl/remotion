@@ -29,6 +29,7 @@ import { Pt } from "../engine/soudanActors";
 import { TwoFaceToken } from "./TwoFaceToken";
 import { KhartoumEtatMajorSVG } from "../KhartoumEtatMajorSVG";
 import { BlocImpasseB6, BLOC_B6_FRAMES } from "./BlocImpasseB6";
+import { GovBuilding } from "./GovBuilding";
 
 export const SOUDAN_A2_FPS = 30;
 
@@ -143,12 +144,17 @@ const Beats14Map: React.FC = () => {
                     splitGap={200} D={124} appearFrom={F.fusion - 6} />
                 </div>
               )}
+
+              {/* ── b2 : bâtiment gouvernemental (Hamdok) sur Khartoum qui VACILLE + drapeau civil->militaire
+                  au coup d'État. Remplace le cartouche texte : le renversement se VOIT sur le territoire. ── */}
+              {startR && (
+                <GovBuilding pos={startR} frame={frame} at={F.hamdok - 40} coup={F.hamdok + 10} size={116} />
+              )}
             </>
           );
         }}
       </SoudanWarMapEngine>
 
-      <CivilGovCartouche frame={frame} at={F.hamdok} />
       <WarmVignette />
     </AbsoluteFill>
   );
@@ -325,10 +331,45 @@ const Beats789Map: React.FC = () => {
           );
         }}
       </SoudanWarMapEngine>
+
+      {/* ── COMPTEUR KM (b7) : le chiffre qui frappe. Grimpe 0 -> 1000 km pendant le dézoom immensité.
+          Overlay data-viz (un CHIFFRE, pas un sous-titre) — matérialise « mille kilomètres de pistes ». ── */}
+      <KmCounter frame={frame} inAt={G.immense} countTo={G.ravitailler + 18} outAt={G.resultat + 10} />
+
       <WarmVignette />
     </AbsoluteFill>
   );
 };
+
+// ── COMPTEUR KILOMÉTRIQUE (b7) : plaque data-viz ancrée en bas, compteur qui grimpe à 1000 km. ──
+const KmCounter: React.FC<{ frame: number; inAt: number; countTo: number; outAt: number }> =
+  ({ frame, inAt, countTo, outAt }) => {
+    const op = interpolate(frame, [inAt, inAt + 16, outAt, outAt + 22], [0, 1, 1, 0], clamp);
+    if (op <= 0.01) return null;
+    const n = Math.round(interpolate(frame, [inAt + 8, countTo], [0, 1000], clamp) / 10) * 10; // pas de 10
+    const rise = interpolate(frame, [inAt, inAt + 18], [24, 0], { ...clamp, easing: Easing.out(Easing.cubic) });
+    // barre de progression qui se remplit avec le compteur
+    const barFill = interpolate(frame, [inAt + 8, countTo], [0, 1], clamp);
+    return (
+      <div style={{ position: "absolute", left: "50%", bottom: 92,
+        transform: `translate(-50%, ${rise}px)`, opacity: op, pointerEvents: "none",
+        fontFamily: "Georgia, serif", textAlign: "center" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 10 }}>
+          <span style={{ fontSize: 68, fontWeight: 800, color: "#F4E3B0", letterSpacing: -1,
+            textShadow: "0 2px 10px rgba(0,0,0,0.7)" }}>{n.toLocaleString("fr-FR")}</span>
+          <span style={{ fontSize: 30, fontWeight: 700, color: "#C9A968",
+            textShadow: "0 2px 8px rgba(0,0,0,0.7)" }}>KM</span>
+        </div>
+        <div style={{ fontSize: 15, letterSpacing: 3, color: "#E0CDA0", textTransform: "uppercase",
+          marginTop: 2, textShadow: "0 1px 6px rgba(0,0,0,0.8)" }}>de pistes à ravitailler</div>
+        {/* barre de progression (data-viz) */}
+        <div style={{ width: 340, height: 4, background: "rgba(233,196,106,0.22)", borderRadius: 3,
+          margin: "10px auto 0", overflow: "hidden" }}>
+          <div style={{ width: `${barFill * 100}%`, height: "100%", background: "#E9C46A", borderRadius: 3 }} />
+        </div>
+      </div>
+    );
+  };
 
 // ── FRONT LINE : ligne d'encre verticale au centre. Elle frémit (dx) mais TIENT (aucune percée). ──
 const FrontLine: React.FC<{ top: Pt; bot: Pt; dx: number; frame: number; appear: number }> =
@@ -461,29 +502,5 @@ const SoloBig: React.FC<{ pos: Pt; sprite: string; border: string; op: number; f
       </div>
     );
   };
-
-const CivilGovCartouche: React.FC<{ frame: number; at: number }> = ({ frame, at }) => {
-  const inOp = interpolate(frame, [at - 10, at + 8], [0, 1], clamp);
-  const outOp = interpolate(frame, [at + 140, at + 170], [1, 0], clamp);
-  const op = inOp * outOp;
-  if (op <= 0.01) return null;
-  const gray = interpolate(frame, [at + 40, at + 110], [0, 1], clamp);
-  const strike = interpolate(frame, [at + 60, at + 100], [0, 1], clamp);
-  return (
-    <div style={{ position: "absolute", top: 84, left: "50%", transform: "translateX(-50%)", opacity: op,
-      pointerEvents: "none", fontFamily: "Georgia, serif", textAlign: "center",
-      background: "rgba(28,18,8,0.86)", border: "1px solid rgba(233,196,106,0.35)", borderRadius: 5,
-      padding: "10px 26px", filter: `grayscale(${gray}) brightness(${1 - gray * 0.35})` }}>
-      <div style={{ fontSize: 15, letterSpacing: 3, color: "#C9A968", textTransform: "uppercase" }}>
-        Gouvernement de transition
-      </div>
-      <div style={{ position: "relative", fontSize: 26, fontWeight: 700, color: "#F4E3B0", marginTop: 3, letterSpacing: 1 }}>
-        Abdalla Hamdok
-        <div style={{ position: "absolute", left: 0, top: "52%", height: 2, width: `${strike * 100}%`,
-          background: "#B14B3C", transformOrigin: "left" }} />
-      </div>
-    </div>
-  );
-};
 
 export default SoudanActe2;
