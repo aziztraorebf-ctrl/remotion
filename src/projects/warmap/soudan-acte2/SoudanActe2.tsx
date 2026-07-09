@@ -226,14 +226,11 @@ const YearCounter: React.FC<{ frame: number }> = ({ frame }) => {
     interpolate(frame, [F.avril23 + 18, F.avril23 + 28, F.avril23 + 50], [0, 1, 0], clamp),
   );
   return (
-    <div style={{ position: "absolute", left: "50%", bottom: 70, transform: "translateX(-50%)",
+    <div style={{ position: "absolute", left: "50%", bottom: 64, transform: "translateX(-50%)",
       opacity: op, pointerEvents: "none", fontFamily: "Georgia, serif", textAlign: "center" }}>
-      <div style={{ fontSize: 13, letterSpacing: 4, color: "#C9A968", textTransform: "uppercase",
-        marginBottom: 2, textShadow: "0 1px 5px rgba(0,0,0,0.8)" }}>
-        {frame < F.avril23 ? "Retour en arrière" : "Guerre ouverte"}
-      </div>
-      <div style={{ fontSize: 54, fontWeight: 800, letterSpacing: 2, lineHeight: 1,
-        color: "#F4E3B0", textShadow: `0 2px 10px rgba(0,0,0,0.75), 0 0 ${8 + pivotGlow * 16}px rgba(233,196,106,${pivotGlow * 0.7})` }}>
+      {/* juste l'année en GROS (la voix dit déjà "revenir en arrière"/"guerre ouverte" — pas de label redondant) */}
+      <div style={{ fontSize: 80, fontWeight: 800, letterSpacing: 3, lineHeight: 1,
+        color: "#F4E3B0", textShadow: `0 3px 14px rgba(0,0,0,0.8), 0 0 ${10 + pivotGlow * 22}px rgba(233,196,106,${pivotGlow * 0.8})` }}>
         {year}
       </div>
     </div>
@@ -251,6 +248,13 @@ const Beat5Insert: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#0b1526" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte2-beat5.mp3")} />
+
+      {/* ── SFX impact DOUX à chaque cible frappée (aéroport 170 / palais 370 / tour TV 570) : donne
+          vie à l'assaut sans le boom trop fort. Même son récurrent, volume bas. Frames = contact colonne. ── */}
+      <Sequence from={170} durationInFrames={24}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.32} /></Sequence>
+      <Sequence from={370} durationInFrames={24}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.32} /></Sequence>
+      <Sequence from={570} durationInFrames={24}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.32} /></Sequence>
+
       {/* l'insert gère son propre useCurrentFrame (relatif à cette Sequence) et son fond/animation validés.
           hideSubtitle : la narration off dit déjà les cibles -> pas de doublon voix/texte (doctrine). */}
       <AbsoluteFill style={{ opacity: fade }}>
@@ -369,11 +373,21 @@ const CAM3: CamKey[] = [
 const FRONT_LON = 30.0;                                   // ligne de front centrale (elle TIENT)
 const FRONT_LAT_TOP = 17.6;                               // haut du front (nord)
 const FRONT_LAT_BOT = 12.6;                               // bas du front (sud)
-const MINE_OR: [number, number] = [25.0, 13.0];           // or du Darfour (ouest) — pulse beat 8
 // ligne de ravitaillement : de Port-Soudan/est vers le front (s'amincit, pointillés s'espacent)
 const SUPPLY_FROM: [number, number] = [36.2, 19.4];       // Port-Soudan / base arrière est
 const SUPPLY_VIA: [number, number] = [33.0, 17.2];        // Khartoum-nord (coude)
 const SUPPLY_TO: [number, number] = [30.4, 15.9];         // proche du front
+
+// ── FORCES FIGÉES beat 8 : de part et d'autre du front (lon 30). Général (gen:true, portrait) + soldats.
+//   OUEST = RSF (Hemedti), EST = SAF (al-Burhan). Chacun tient sa ligne, immobile. ──
+const HELD_WEST: { at: [number, number]; gen?: boolean }[] = [
+  { at: [28.6, 15.4], gen: true },   // Hemedti (général, près du front, côté ouest)
+  { at: [27.4, 16.6] }, { at: [27.0, 14.2] }, { at: [28.9, 13.4] },
+];
+const HELD_EAST: { at: [number, number]; gen?: boolean }[] = [
+  { at: [31.5, 15.4], gen: true },   // al-Burhan (général, près du front, côté est)
+  { at: [32.6, 16.7] }, { at: [33.0, 14.4] }, { at: [31.4, 13.3] },
+];
 
 // CARTE beats 7-8-9 (le beat 6 est désormais le BLOC ci-dessus, plus sur la carte).
 const Beats789Map: React.FC = () => {
@@ -403,23 +417,22 @@ const Beats789Map: React.FC = () => {
   const frontWobble = Math.sin(frame * 0.9) * 0.6 + Math.sin(frame * 0.31 + 1.3) * 0.4;
   const frontDx = frontWobble * frontAmpPx; // décalage horizontal (px écran) de la ligne, borné
 
-  // ── OR DU DARFOUR : pulse doré qui BAT à partir de G.arreter (pont Acte 3, contraste fixe/vivant) ──
-  const goldReveal = interpolate(frame, [G.arreter - 30, G.arreter], [0, 1], clamp);
-  const goldPulse = 0.5 + 0.5 * Math.sin((frame - G.arreter) * 0.14); // 0..1 lent
-  const goldHaloOp = goldReveal * (0.28 + 0.34 * goldPulse);
-  const goldRingScale = 1 + 0.14 * goldPulse;
+  // ── FORCES FIGÉES (b8) : chaque camp TIENT sa position de part et d'autre du front, immobile =
+  //   « une guerre que personne n'a pu gagner » (chacun reste de son côté, aucun progrès malgré l'immensité).
+  //   Apparaît à G.arreter. Généraux (portraits) + soldats de chaque bord. (Remplace la mine d'or,
+  //   prématurée ici : l'or est réservé à l'Acte 3 « suivre l'or ».) ──
+  const forcesReveal = interpolate(frame, [G.resultat + 30, G.resultat + 70], [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       {/* audio joué par le conteneur Beats69Map (un seul flux) — pas ici. */}
-      {/* SFX ponctuel : révélation de l'or du Darfour (pont Acte 3) */}
-      <Sequence from={G.arreter} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.4} /></Sequence>
+      {/* SFX ponctuel : apparition des forces figées (chacun tient sa position, b8) */}
+      <Sequence from={G.resultat + 30} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.35} /></Sequence>
 
       <SoudanWarMapEngine camKeys={CAM3} zones={zones} highlights={HL3} showNationalBorder stateLineOpacity={0}>
         {(proj) => {
           const topP = proj([FRONT_LON, FRONT_LAT_TOP]);
           const botP = proj([FRONT_LON, FRONT_LAT_BOT]);
-          const minePos = proj(MINE_OR);
           // supply path (est -> front), reprojeté par frame
           const sFrom = proj(SUPPLY_FROM);
           const sVia = proj(SUPPLY_VIA);
@@ -446,10 +459,27 @@ const Beats789Map: React.FC = () => {
               {/* (Le rapport de force SAF chars/avions du beat 6 est raconté dans le BLOC plein cadre,
                   plus sur la carte — décision Aziz : concept = bloc, pas de sprites plaqués géo.) */}
 
-              {/* ── OR DU DARFOUR (b8->b9) : mine + halo doré qui BAT (pont Acte 3) ── */}
-              {minePos && goldReveal > 0.01 && (
-                <MineGold pos={minePos} haloOp={goldHaloOp} ringScale={goldRingScale}
-                  frame={frame} appear={G.arreter - 30} reveal={goldReveal} />
+              {/* ── FORCES FIGÉES (b8) : chaque camp tient sa position de part et d'autre du front.
+                  Généraux (portraits) + soldats, immobiles = « personne n'a pu gagner ». ── */}
+              {forcesReveal > 0.01 && (
+                <>
+                  {/* Hemedti + soldats RSF — OUEST du front (lon < 30) */}
+                  {HELD_WEST.map((c, i) => {
+                    const p = proj(c.at); if (!p) return null;
+                    const appear = G.resultat + 30 + i * 8;
+                    return c.gen
+                      ? <MiniToken key={`w${i}`} pos={p} sprite="portrait-hemeti" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} big />
+                      : <MiniToken key={`w${i}`} pos={p} sprite="portrait-rsf" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} />;
+                  })}
+                  {/* al-Burhan + soldats SAF — EST du front (lon > 30) */}
+                  {HELD_EAST.map((c, i) => {
+                    const p = proj(c.at); if (!p) return null;
+                    const appear = G.resultat + 34 + i * 8;
+                    return c.gen
+                      ? <MiniToken key={`e${i}`} pos={p} sprite="portrait-burhan" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} big />
+                      : <MiniToken key={`e${i}`} pos={p} sprite="portrait-saf" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} />;
+                  })}
+                </>
               )}
             </>
           );
@@ -635,41 +665,6 @@ const SupplyLine: React.FC<{
 
 const mid = (a: Pt, b: Pt, t: number): Pt => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
 
-// ── MINE OR DU DARFOUR : sprite iso + halo doré qui BAT (pulse vectoriel). Pont vers l'Acte 3. ──
-const MineGold: React.FC<{ pos: Pt; haloOp: number; ringScale: number; frame: number; appear: number; reveal: number }> =
-  ({ pos, haloOp, ringScale, frame, appear, reveal }) => {
-    // apparition spring du sprite (scale figé après) — le PULSE vit dans le halo SVG, pas dans le raster
-    const ap = interpolate(frame, [appear, appear + 14, appear + 26], [0.6, 1.08, 1],
-      { ...clamp, easing: Easing.out(Easing.cubic) });
-    const spriteW = 150;
-    return (
-      <>
-        {/* halo doré pulsé (vectoriel, sous le sprite) */}
-        <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" }}>
-          <defs>
-            <radialGradient id="goldPulseGrad" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#f4c545" stopOpacity={0.85} />
-              <stop offset="45%" stopColor="#e0a030" stopOpacity={0.4} />
-              <stop offset="100%" stopColor="#e0a030" stopOpacity={0} />
-            </radialGradient>
-          </defs>
-          <circle cx={pos.x} cy={pos.y} r={100 * ringScale} fill="url(#goldPulseGrad)"
-            opacity={haloOp} style={{ mixBlendMode: "screen" }} />
-          {/* anneau fin qui bat = battement de cœur de l'or */}
-          <circle cx={pos.x} cy={pos.y} r={62 * ringScale} fill="none" stroke="#f4d06a"
-            strokeWidth={2} strokeOpacity={haloOp * 1.1} />
-        </svg>
-        {/* sprite mine iso (raster, scale figé) */}
-        <div style={{ position: "absolute", left: pos.x, top: pos.y, opacity: reveal,
-          transform: `translate(-50%,-52%) scale(${ap})`, pointerEvents: "none" }}>
-          <img src={staticFile("_shared/sprites/warmap/mine-or-td.png")}
-            style={{ width: spriteW, height: spriteW * (768 / 1408), display: "block", objectFit: "contain",
-              filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.45))" }} />
-        </div>
-      </>
-    );
-  };
-
 // ─────────────────────────────────────────────────────────────────────────────
 // PARTAGÉ
 // ─────────────────────────────────────────────────────────────────────────────
@@ -707,9 +702,9 @@ const SoloBig: React.FC<{ pos: Pt; sprite: string; border: string; op: number; f
 
 // ── MINI-TOKEN : jeton-visage soldat rond PETIT (logique SoloBig réduite : rond, bordure, ombre,
 //   spring d'apparition puis scale FIGÉ). Aucun scale oscillant continu. ──
-const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: number; appear: number; op: number }> =
-  ({ pos, sprite, border, frame, appear, op }) => {
-    const D = 46;
+const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: number; appear: number; op: number; big?: boolean }> =
+  ({ pos, sprite, border, frame, appear, op, big }) => {
+    const D = big ? 72 : 46;   // général = plus grand que les soldats
     // spring d'apparition (overshoot léger) puis figé
     const ap = interpolate(frame, [appear, appear + 11, appear + 20], [0, 1.14, 1],
       { ...clamp, easing: Easing.out(Easing.cubic) });
