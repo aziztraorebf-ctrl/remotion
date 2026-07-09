@@ -36,7 +36,7 @@ export const SOUDAN_A2_FPS = 30;
 const S1_FRAMES = 1167;  // beats 1-4  (audio partie1 38.9s)
 const S2_FRAMES = 720;   // beat 5     (voix beat5 21.5s=646f + ~74f de respiration ; insert 750f = laisse
                          //             l'assaut finir sa résolution, léger recouvrement au fondu de sortie)
-const S3_FRAMES = 873;   // beats 6-9  (audio partie2 29.1s)
+const S3_FRAMES = 920;   // beats 6-9  (audio partie2 30.4s, fin "sortir du Soudan" restaurée)
 export const SOUDAN_A2_FRAMES = S1_FRAMES + S2_FRAMES + S3_FRAMES; // 2727 (90.9s)
 
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
@@ -188,8 +188,42 @@ const Beats14Map: React.FC = () => {
         }}
       </SoudanWarMapEngine>
 
+      {/* ── FIL TEMPOREL (beats 1-4) : compteur d'année qui recule 2026->2021 ("revenir en arrière"),
+          fige sur 2021 (l'alliance), puis avance à 2023 au split (guerre ouverte), puis disparaît. ── */}
+      <YearCounter frame={frame} />
+
       <WarmVignette />
     </AbsoluteFill>
+  );
+};
+
+// ── COMPTEUR D'ANNÉE (fil temporel de l'arc alliance->scission). Bandeau discret en bas centre. ──
+const YearCounter: React.FC<{ frame: number }> = ({ frame }) => {
+  // recul 2026 -> 2021 sur [converge..fusion] ; fige 2021 ; avance 2021 -> 2023 au split ; disparaît +1.5s
+  const rewind = interpolate(frame, [F.converge, F.fusion], [2026, 2021], { ...clamp, easing: Easing.inOut(Easing.cubic) });
+  const advance = interpolate(frame, [F.avril23, F.avril23 + 24], [2021, 2023], { ...clamp, easing: Easing.out(Easing.cubic) });
+  const year = frame < F.avril23 ? Math.round(rewind) : Math.round(advance);
+  // apparition au début, disparition ~1.5s après le split
+  const op = interpolate(frame,
+    [F.converge - 6, F.converge + 14, F.avril23 + 50, F.avril23 + 75], [0, 1, 1, 0], clamp);
+  if (op <= 0.01) return null;
+  // léger flash quand le compteur s'arrête sur une année pivot (2021 à la fusion, 2023 au split)
+  const pivotGlow = Math.max(
+    interpolate(frame, [F.fusion - 6, F.fusion + 6, F.fusion + 30], [0, 1, 0], clamp),
+    interpolate(frame, [F.avril23 + 18, F.avril23 + 28, F.avril23 + 50], [0, 1, 0], clamp),
+  );
+  return (
+    <div style={{ position: "absolute", left: "50%", bottom: 70, transform: "translateX(-50%)",
+      opacity: op, pointerEvents: "none", fontFamily: "Georgia, serif", textAlign: "center" }}>
+      <div style={{ fontSize: 13, letterSpacing: 4, color: "#C9A968", textTransform: "uppercase",
+        marginBottom: 2, textShadow: "0 1px 5px rgba(0,0,0,0.8)" }}>
+        {frame < F.avril23 ? "Retour en arrière" : "Guerre ouverte"}
+      </div>
+      <div style={{ fontSize: 54, fontWeight: 800, letterSpacing: 2, lineHeight: 1,
+        color: "#F4E3B0", textShadow: `0 2px 10px rgba(0,0,0,0.75), 0 0 ${8 + pivotGlow * 16}px rgba(233,196,106,${pivotGlow * 0.7})` }}>
+        {year}
+      </div>
+    </div>
   );
 };
 
@@ -217,17 +251,17 @@ const Beat5Insert: React.FC = () => {
 // SECTION 3 — BEATS 6-9 (carte : puissance de feu / immensité / front figé / pont Acte3)
 // ═════════════════════════════════════════════════════════════════════════════
 
-// frames = whisper-partie2.ts (audio partie2 29.1s @30). Ancrages relatifs à la section 3.
+// frames = whisper-partie2.ts (audio partie2 30.4s @30, fin restaurée). Ancrages relatifs à la section 3.
 // La section 3 est en 2 registres : BEAT 6 = BLOC plein cadre [0..B6_END] · BEATS 7-8-9 = CARTE [B6_END..end].
 const G = {
-  armee: 7,        // b6 "L'armée, elle, a les avions et les chars lourds"
+  armee: 6,        // b6 "L'armée, elle, a les avions et les chars lourds"
   gagner: 129,     // b6 "elle devrait gagner / n'y arrive pas"
-  geo: 289,        // b7 "La raison tient à la géographie" = bascule BLOC -> CARTE
-  immense: 348,    // b7 "le Soudan est immense"
-  ravitailler: 420,// b7 "se ravitailler sur mille kilomètres de pistes"
-  resultat: 511,   // b8 "Résultat, depuis plus de trois ans"
-  arreter: 746,    // b8 "que personne ne veut arrêter" -> pulse or
-  sortir: 799,     // b9 "Pour comprendre pourquoi, il faut sortir du Soudan"
+  geo: 294,        // b7 "La raison tient à la géographie" = bascule BLOC -> CARTE
+  immense: 355,    // b7 "le Soudan est immense"
+  ravitailler: 430,// b7 "se ravitailler sur mille kilomètres de pistes"
+  resultat: 517,   // b8 "Résultat, depuis plus de trois ans"
+  arreter: 752,    // b8 "que personne ne veut arrêter" -> pulse or
+  sortir: 887,     // b9 "Pour comprendre pourquoi, il faut sortir du Soudan"
   end: S3_FRAMES,
 };
 const B6_END = G.geo;            // frame de bascule BLOC -> CARTE (fin beat 6)
