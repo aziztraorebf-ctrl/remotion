@@ -28,12 +28,14 @@ import { SoudanWarMapEngine, CamKey, StateHighlight, ZoneControl } from "../engi
 import { Pt } from "../engine/soudanActors";
 import { TwoFaceToken } from "./TwoFaceToken";
 import { KhartoumEtatMajorSVG } from "../KhartoumEtatMajorSVG";
+import { BlocImpasseB6, BLOC_B6_FRAMES } from "./BlocImpasseB6";
 
 export const SOUDAN_A2_FPS = 30;
 
 // ── DURÉES DE SECTION (frames @30) ──
 const S1_FRAMES = 1167;  // beats 1-4  (audio partie1 38.9s)
-const S2_FRAMES = 687;   // beat 5     (audio beat5 22.9s ; insert 25s=750f, on coupe à 687 sur la voix)
+const S2_FRAMES = 720;   // beat 5     (voix beat5 21.5s=646f + ~74f de respiration ; insert 750f = laisse
+                         //             l'assaut finir sa résolution, léger recouvrement au fondu de sortie)
 const S3_FRAMES = 873;   // beats 6-9  (audio partie2 29.1s)
 export const SOUDAN_A2_FRAMES = S1_FRAMES + S2_FRAMES + S3_FRAMES; // 2727 (90.9s)
 
@@ -176,17 +178,49 @@ const Beat5Insert: React.FC = () => {
 // SECTION 3 — BEATS 6-9 (carte : puissance de feu / immensité / front figé / pont Acte3)
 // ═════════════════════════════════════════════════════════════════════════════
 
-// frames = whisper-partie2.ts (audio partie2 29.1s @30). Ancrages relatifs à la section.
+// frames = whisper-partie2.ts (audio partie2 29.1s @30). Ancrages relatifs à la section 3.
+// La section 3 est en 2 registres : BEAT 6 = BLOC plein cadre [0..B6_END] · BEATS 7-8-9 = CARTE [B6_END..end].
 const G = {
   armee: 7,        // b6 "L'armée, elle, a les avions et les chars lourds"
   gagner: 129,     // b6 "elle devrait gagner / n'y arrive pas"
-  geo: 289,        // b7 "La raison tient à la géographie"
+  geo: 289,        // b7 "La raison tient à la géographie" = bascule BLOC -> CARTE
   immense: 348,    // b7 "le Soudan est immense"
   ravitailler: 420,// b7 "se ravitailler sur mille kilomètres de pistes"
   resultat: 511,   // b8 "Résultat, depuis plus de trois ans"
   arreter: 746,    // b8 "que personne ne veut arrêter" -> pulse or
   sortir: 799,     // b9 "Pour comprendre pourquoi, il faut sortir du Soudan"
   end: S3_FRAMES,
+};
+const B6_END = G.geo;            // frame de bascule BLOC -> CARTE (fin beat 6)
+const XFADE = 16;                // durée du morphing/cross-fade bloc<->carte
+
+// ═════════ SECTION 3 conteneur : audio partie2 continu + bascule visuelle BLOC(b6) -> CARTE(b7-9) ═════════
+const Beats69Map: React.FC = () => {
+  const frame = useCurrentFrame();
+  // morphing bloc<->carte : le bloc s'efface (zoom-out léger + fade) pendant que la carte monte (fade)
+  const blocOp = interpolate(frame, [B6_END - XFADE, B6_END], [1, 0], clamp);
+  const mapOp = interpolate(frame, [B6_END - XFADE, B6_END], [0, 1], clamp);
+  const blocScale = interpolate(frame, [B6_END - XFADE, B6_END], [1, 1.06], clamp); // léger recul = bascule de registre
+  return (
+    <AbsoluteFill style={{ backgroundColor: "#0b1526" }}>
+      {/* audio partie2 : beats 6-7-8-9 en continu (ne PAS resplitter — un seul flux) */}
+      <Audio src={staticFile("_shared/audio/soudan/acte2-partie2.mp3")} />
+
+      {/* BEAT 6 — BLOC plein cadre (rapport de force, illustratif). localFrame = frame de section. */}
+      {blocOp > 0.01 && (
+        <AbsoluteFill style={{ opacity: blocOp, transform: `scale(${blocScale})` }}>
+          <BlocImpasseB6 localFrame={frame} />
+        </AbsoluteFill>
+      )}
+
+      {/* BEATS 7-8-9 — CARTE Mapbox. Montée en fondu au morphing. */}
+      {mapOp > 0.01 && (
+        <AbsoluteFill style={{ opacity: mapOp }}>
+          <Beats789Map />
+        </AbsoluteFill>
+      )}
+    </AbsoluteFill>
+  );
 };
 
 // caméra : b6 centre (rapport de force) -> b7 DÉZOOM immensité -> b8 front figé -> b9 dézoom hors Soudan.
@@ -207,26 +241,19 @@ const CAM3: CamKey[] = [
 const FRONT_LON = 30.0;                                   // ligne de front centrale (elle TIENT)
 const FRONT_LAT_TOP = 17.6;                               // haut du front (nord)
 const FRONT_LAT_BOT = 12.6;                               // bas du front (sud)
-// Puissance de feu SAF (est) : chars massés côté armée, poussant vers le front.
-const SAF_TANKS: [number, number][] = [
-  [31.0, 16.3], [31.4, 15.4], [31.1, 14.4],
-];
-// Avions SAF (au-dessus des chars, plus à l'est = base arrière) — pictogrammes SVG.
-const SAF_PLANES: [number, number][] = [
-  [32.4, 16.8], [33.0, 15.6],
-];
 const MINE_OR: [number, number] = [25.0, 13.0];           // or du Darfour (ouest) — pulse beat 8
 // ligne de ravitaillement : de Port-Soudan/est vers le front (s'amincit, pointillés s'espacent)
 const SUPPLY_FROM: [number, number] = [36.2, 19.4];       // Port-Soudan / base arrière est
 const SUPPLY_VIA: [number, number] = [33.0, 17.2];        // Khartoum-nord (coude)
 const SUPPLY_TO: [number, number] = [30.4, 15.9];         // proche du front
 
-const Beats69Map: React.FC = () => {
+// CARTE beats 7-8-9 (le beat 6 est désormais le BLOC ci-dessus, plus sur la carte).
+const Beats789Map: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // Halos de partition persistants (socle). RSF ouest LARGE (territoire étendu, peu d'armes) /
-  // SAF est plus resserré. Montée douce au début de section pour continuité avec le beat 5.
-  const enter = interpolate(frame, [0, 24], [0, 1], clamp);
+  // Halos de partition persistants (socle). RSF ouest LARGE (territoire étendu) / SAF est resserré.
+  // La carte n'apparaît qu'au morphing (~B6_END) ; on monte les halos dès le début de son fondu.
+  const enter = interpolate(frame, [B6_END - XFADE, B6_END + 10], [0, 1], clamp);
   const rsfHalo = 0.78 * enter;
   const safHalo = 0.62 * enter;
   // le rouge RSF déborde encore un peu à l'ouverture du beat 9 (pont : le Darfour reste le centre de gravité)
@@ -239,11 +266,11 @@ const Beats69Map: React.FC = () => {
     { state: "Khartoum", faction: "saf", drawAt: 0, drawFrames: 1, holdFrames: 900, fadeFrames: 0 },
   ];
 
-  // ── FRONT : oscillation frame-driven (vectorielle, tolérée). Beat 6 = léger frémissement sous la
-  //   poussée SAF mais NE CÈDE PAS. Beat 8 = micro-oscillation ~1px (quasi-figé). PAS de percée. ──
-  const frontPushAmp = interpolate(frame, [G.armee, G.gagner, G.geo], [0, 6, 2.5], clamp); // px, poussée qui retombe
+  // ── FRONT (beats 7-8) : le front TIENT, micro-oscillation vectorielle. Beat 8 = quasi-figé (~1px).
+  //   La poussée/impasse du rapport de force est racontée dans le BLOC (beat 6) ; ici le front est juste
+  //   la ligne de contact qui frémit à peine puis se fige (« le front bouge à peine »). PAS de percée. ──
   const frontCalm = interpolate(frame, [G.resultat, G.resultat + 60], [1, 0.16], clamp);   // se fige presque
-  const frontAmpPx = Math.max(1, frontPushAmp * frontCalm + 1);
+  const frontAmpPx = Math.max(1, 2.5 * frontCalm + 1);
   // vibration : somme de 2 sinus (rapide + lent) pour un frémissement organique, jamais un glissement net
   const frontWobble = Math.sin(frame * 0.9) * 0.6 + Math.sin(frame * 0.31 + 1.3) * 0.4;
   const frontDx = frontWobble * frontAmpPx; // décalage horizontal (px écran) de la ligne, borné
@@ -256,10 +283,8 @@ const Beats69Map: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Audio src={staticFile("_shared/audio/soudan/acte2-partie2.mp3")} />
-
-      {/* SFX ponctuels : apparition de la puissance de feu SAF + révélation de l'or (pont Acte 3) */}
-      <Sequence from={G.armee} durationInFrames={26}><Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.4} /></Sequence>
+      {/* audio joué par le conteneur Beats69Map (un seul flux) — pas ici. */}
+      {/* SFX ponctuel : révélation de l'or du Darfour (pont Acte 3) */}
       <Sequence from={G.arreter} durationInFrames={30}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.4} /></Sequence>
 
       <SoudanWarMapEngine camKeys={CAM3} zones={zones} highlights={HL3} showNationalBorder stateLineOpacity={0}>
@@ -280,7 +305,7 @@ const Beats69Map: React.FC = () => {
             <>
               {/* ── LIGNE DE FRONT (elle TIENT) : trait d'encre vertical qui frémit mais ne cède pas ── */}
               {topP && botP && (
-                <FrontLine top={topP} bot={botP} dx={frontDx} frame={frame} appear={G.armee} />
+                <FrontLine top={topP} bot={botP} dx={frontDx} frame={frame} appear={G.geo} />
               )}
 
               {/* ── LIGNE DE RAVITAILLEMENT SAF (b7) : est -> front, s'amincit + pointillés s'espacent ── */}
@@ -288,22 +313,8 @@ const Beats69Map: React.FC = () => {
                 <SupplyLine from={sFrom} via={sVia} to={sTo} draw={supplyDraw} op={supplyFade} />
               )}
 
-              {/* ── PUISSANCE DE FEU SAF (b6) : chars + avions qui apparaissent (spring), scale FIGÉ après ── */}
-              {SAF_TANKS.map((c, i) => {
-                const p = proj(c);
-                if (!p) return null;
-                return (
-                  <FirepowerSprite key={`tk${i}`} pos={p} sprite="tank-td-blue"
-                    size={92} rotate={-90} frame={frame} appear={G.armee + 6 + i * 7} />
-                );
-              })}
-              {SAF_PLANES.map((c, i) => {
-                const p = proj(c);
-                if (!p) return null;
-                return (
-                  <PlaneIcon key={`pl${i}`} pos={p} size={58} frame={frame} appear={G.armee + 24 + i * 9} />
-                );
-              })}
+              {/* (Le rapport de force SAF chars/avions du beat 6 est raconté dans le BLOC plein cadre,
+                  plus sur la carte — décision Aziz : concept = bloc, pas de sprites plaqués géo.) */}
 
               {/* ── OR DU DARFOUR (b8->b9) : mine + halo doré qui BAT (pont Acte 3) ── */}
               {minePos && goldReveal > 0.01 && (
@@ -380,48 +391,6 @@ const SupplyLine: React.FC<{ from: Pt; via: Pt; to: Pt; draw: number; op: number
   };
 
 const mid = (a: Pt, b: Pt, t: number): Pt => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
-
-// ── FIREPOWER SPRITE (char) : apparition spring PUIS scale FIGÉ (pas de breathe sur du raster). ──
-const FirepowerSprite: React.FC<{ pos: Pt; sprite: string; size: number; rotate: number; frame: number; appear: number }> =
-  ({ pos, sprite, size, rotate, frame, appear }) => {
-    const ap = interpolate(frame, [appear, appear + 10, appear + 20], [0, 1.12, 1],
-      { ...clamp, easing: Easing.out(Easing.cubic) });
-    const op = interpolate(frame, [appear, appear + 8], [0, 1], clamp);
-    if (op <= 0.01) return null;
-    return (
-      <div style={{ position: "absolute", left: pos.x, top: pos.y,
-        transform: `translate(-50%,-50%) scale(${ap})`, opacity: op, pointerEvents: "none" }}>
-        {/* ombre portée douce au sol */}
-        <div style={{ position: "absolute", left: "50%", top: "62%", width: size * 0.7, height: size * 0.22,
-          transform: "translate(-50%,-50%)", background: "rgba(30,20,6,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
-        <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
-          style={{ width: size, height: size, display: "block", objectFit: "contain",
-            transform: `rotate(${rotate}deg)`,
-            filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.4))" }} />
-      </div>
-    );
-  };
-
-// ── AVION SAF : pictogramme SVG (silhouette d'encre sombre, cohérent parchemin). Taille écran fixe. ──
-const PlaneIcon: React.FC<{ pos: Pt; size: number; frame: number; appear: number }> =
-  ({ pos, size, frame, appear }) => {
-    const ap = interpolate(frame, [appear, appear + 10, appear + 20], [0, 1.14, 1],
-      { ...clamp, easing: Easing.out(Easing.cubic) });
-    const op = interpolate(frame, [appear, appear + 8], [0, 1], clamp);
-    if (op <= 0.01) return null;
-    return (
-      <div style={{ position: "absolute", left: pos.x, top: pos.y,
-        transform: `translate(-50%,-50%) scale(${ap})`, opacity: op, pointerEvents: "none" }}>
-        {/* nez pointé vers l'ouest (le front) : rotation -90° d'une silhouette qui pointe vers le haut */}
-        <svg width={size} height={size} viewBox="0 0 100 100" style={{ display: "block",
-          transform: "rotate(-90deg)", filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.45))" }}>
-          {/* fuselage + ailes en delta (chasseur), encre sombre bleutée SAF */}
-          <path d="M50 6 L57 42 L92 64 L92 74 L57 60 L55 84 L68 92 L68 97 L50 91 L32 97 L32 92 L45 84 L43 60 L8 74 L8 64 L43 42 Z"
-            fill="#2b3a4d" stroke="#16202c" strokeWidth={2.4} strokeLinejoin="round" />
-        </svg>
-      </div>
-    );
-  };
 
 // ── MINE OR DU DARFOUR : sprite iso + halo doré qui BAT (pulse vectoriel). Pont vers l'Acte 3. ──
 const MineGold: React.FC<{ pos: Pt; haloOp: number; ringScale: number; frame: number; appear: number; reveal: number }> =
