@@ -1,9 +1,10 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-09 (session 4) — 🎬🎬 **ACTE 2 « BLOCAGE » COMPLET & POLI (93.6s, 9 beats).**
-**Branche :** `feat/soudan-acte2-blocage`. Acte 1 v5-FINAL fait (session 3, historique plus bas).
+**Dernière mise à jour :** 2026-07-09 (session 4) — 🎬🎬✅ **ACTE 2 « BLOCAGE » FINAL APPROUVÉ AZIZ (93.6s, 9 beats, SFX validés).**
+**Branche :** `feat/aes-short-90s-carte-vivante`. Acte 1 v5-FINAL fait (session 3, historique plus bas).
+**Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
 
-> ⭐ **PROCHAINE ACTION = verdict Aziz sur l'Acte 2 final (SFX à valider à l'oreille) → si OK, promouvoir. Puis ACTE 3 (session dédiée, contexte vierge).**
+> ⭐ **PROCHAINE ACTION = ACTE 3 (« suivre l'or » → Émirats/Turquie), SESSION DÉDIÉE VIERGE, NON ÉCRIT (pré-prod script d'abord). Starter : `STARTER-PROMPT-soudan-acte3.md`.**
 
 ## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
 - **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).

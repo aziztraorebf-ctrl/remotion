@@ -234,8 +234,8 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
   **ACTE 2 « Blocage » COMPLET & POLI** (93.6s, 9 beats, 2026-07-09 s4, branche `feat/aes-short-90s-carte-vivante`,
   `out/episodes/soudan-midform/wip/acte2-FINAL.mp4`, catbox `jgvhr2`, code `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`).
   Acte 2 = 3 sections registres alternés : jeton 2-visages `TwoFaceToken` / insert `KhartoumEtatMajorSVG` beat 5 /
-  bloc `BlocImpasseB6` beat 6 / carte dézoom+`KmCounter`+supply+forces figées beats 7-9. Audio LOCK. **[STAGE-6 QUALITY]
-  handoff : ⚠️ SFX VOLUMES À VALIDER À L'OREILLE AZIZ (Claude ne peut écouter).** NEXT = verdict Aziz → promo FINAL →
+  bloc `BlocImpasseB6` beat 6 / carte dézoom+`KmCounter`+supply+forces figées beats 7-9. Audio LOCK. **✅ FINAL APPROUVÉ AZIZ
+  (SFX validés), PROMU** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`. NEXT =
   **ACTE 3 (session dédiée vierge, "suivre l'or"→Émirats/Turquie, NON ÉCRIT)**, starter `STARTER-PROMPT-soudan-acte3.md`.
   État : `memory/episodes/soudan-midform/STATUS.md`.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
