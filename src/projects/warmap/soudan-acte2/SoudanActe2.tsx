@@ -321,7 +321,33 @@ const Beats69Map: React.FC = () => {
           <Beats789Map />
         </AbsoluteFill>
       )}
+
+      {/* ── CONTINUITÉ front bloc->carte (idée Gemini) : une ligne de front verticale rouge PERSISTE
+          par-dessus le cross-fade. Le bloc s'efface, la carte monte, mais l'œil suit la MÊME ligne
+          (elle relie le front du bloc à x~960 à la ligne de démarcation de la carte). ── */}
+      <FrontBridge frame={frame} />
     </AbsoluteFill>
+  );
+};
+
+// ── FRONT BRIDGE : ligne de front rouge de continuité pendant la bascule BLOC -> CARTE. Le front du
+// bloc (x~960, centre) se prolonge visuellement en la ligne de démarcation de la carte. Elle vit sur
+// la fenêtre de morphing puis se fond (la FrontLine de la carte prend le relais). ──
+const FrontBridge: React.FC<{ frame: number }> = ({ frame }) => {
+  // visible de la fin du bloc jusqu'à ce que la carte ait posé sa propre ligne
+  const op = interpolate(frame, [B6_END - XFADE, B6_END - 4, B6_END + 26, B6_END + 46], [0, 0.85, 0.85, 0], clamp);
+  if (op <= 0.01) return null;
+  const cx = 960;                       // centre écran = où tombe le front du bloc ET ~le front carte au dézoom
+  const wob = Math.sin(frame * 0.12) * 3;
+  return (
+    <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" }}>
+      {/* glow diffus (headless-safe : traits larges faible opacité) */}
+      <line x1={cx + wob} y1={90} x2={cx - wob} y2={990} stroke="#7a1f14" strokeWidth={20} strokeOpacity={op * 0.14} strokeLinecap="round" />
+      <line x1={cx + wob} y1={90} x2={cx - wob} y2={990} stroke="#7a1f14" strokeWidth={11} strokeOpacity={op * 0.22} strokeLinecap="round" />
+      {/* trait de front (encre) + liseré chaud pointillé */}
+      <line x1={cx + wob} y1={90} x2={cx - wob} y2={990} stroke="#2a1a0c" strokeWidth={3.4} strokeOpacity={op} strokeLinecap="round" strokeDasharray="10 7" />
+      <line x1={cx + wob} y1={90} x2={cx - wob} y2={990} stroke="#c9552f" strokeWidth={1.6} strokeOpacity={op * 0.85} strokeLinecap="round" strokeDasharray="4 11" />
+    </svg>
   );
 };
 
