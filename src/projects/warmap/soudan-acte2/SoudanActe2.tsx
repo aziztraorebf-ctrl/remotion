@@ -29,7 +29,6 @@ import { Pt } from "../engine/soudanActors";
 import { TwoFaceToken } from "./TwoFaceToken";
 import { KhartoumEtatMajorSVG } from "../KhartoumEtatMajorSVG";
 import { BlocImpasseB6, BLOC_B6_FRAMES } from "./BlocImpasseB6";
-import { GovBuilding } from "./GovBuilding";
 
 export const SOUDAN_A2_FPS = 30;
 
@@ -79,6 +78,7 @@ const F = {
   ouverte: 1004,
   end: S1_FRAMES,
 };
+const FORCES_AT = 30;  // délai après F.avril23 avant que les forces commencent à consolider (garder épuré au split)
 
 const CAM1: CamKey[] = [
   { f: F.start, lon: 30.0, lat: 15.4, zoom: 5.0 },
@@ -95,6 +95,31 @@ const HL1 = (state: string, faction: "rsf" | "saf" | "contested", drawAt: number
 const HIGHLIGHTS1: StateHighlight[] = [
   HL1("North Darfur", "rsf", F.avril23 + 20),
   HL1("Khartoum", "saf", F.avril23 + 40),
+];
+
+// ── FORCES QUI CONSOLIDENT AU SPLIT (F.avril23) : chaque général meuble son camp. ──
+// Offsets géographiques (lon/lat) autour de chaque général, ÉVENTAIL bien espacé.
+// kind = jeton-visage soldat ("token") ou matériel raster ("mat").
+// delay = stagger d'apparition (frames après le début du groupe).
+type ForceItem = { dlon: number; dlat: number; kind: "token" | "mat"; delay: number };
+
+// Hemedti (ouest, DARFUR). Le palais est côté KHARTOUM (est) -> pas de collision ici.
+// Le jeton général reste au centre du groupe : les items sont poussés vers l'ouest/nord/sud.
+const HEMEDTI_FORCES: ForceItem[] = [
+  { dlon: -1.7, dlat: 0.95, kind: "token", delay: 0 },   // nord-ouest
+  { dlon: -1.9, dlat: -0.85, kind: "token", delay: 12 }, // sud-ouest
+  { dlon: 0.15, dlat: 1.55, kind: "token", delay: 24 },  // nord
+  { dlon: -2.55, dlat: 0.1, kind: "mat", delay: 7 },     // technical plein ouest
+  { dlon: -0.7, dlat: -1.45, kind: "mat", delay: 19 },   // technical sud
+];
+// al-Burhan (est, KHARTOUM). Le palais est SUR Khartoum (dlon/dlat 0) : on écarte tout vers est/nord/sud,
+// jamais sur le centre. Les 2 jetons généraux (Hemedti/Burhan) sont éloignés (ouest vs est) -> pas de heurt.
+const BURHAN_FORCES: ForceItem[] = [
+  { dlon: 1.75, dlat: 0.9, kind: "token", delay: 5 },    // nord-est
+  { dlon: 1.95, dlat: -0.9, kind: "token", delay: 17 },  // sud-est
+  { dlon: 0.35, dlat: 1.65, kind: "token", delay: 29 },  // nord (au-dessus du palais)
+  { dlon: 2.55, dlat: 0.15, kind: "mat", delay: 11 },    // char plein est
+  { dlon: 1.0, dlat: -1.6, kind: "mat", delay: 23 },     // char sud-est
 ];
 
 const Beats14Map: React.FC = () => {
@@ -145,10 +170,18 @@ const Beats14Map: React.FC = () => {
                 </div>
               )}
 
-              {/* ── b2 : bâtiment gouvernemental (Hamdok) sur Khartoum qui VACILLE + drapeau civil->militaire
-                  au coup d'État. Remplace le cartouche texte : le renversement se VOIT sur le territoire. ── */}
-              {startR && (
-                <GovBuilding pos={startR} frame={frame} at={F.hamdok - 40} coup={F.hamdok + 10} size={116} />
+              {/* (Beat 2 coup d'État : registre épuré — la fusion des jetons "l'armée et la milice main
+                  dans la main" porte le sens. Palais iso retiré : la voix ne le nomme jamais, objet orphelin.) */}
+
+              {/* ── FORCES QUI CONSOLIDENT (à partir du SPLIT +30) : chaque camp meuble son territoire.
+                  RIEN avant F.avril23+30 (les beats 1-3 restent épurés autour du jeton signature). ── */}
+              {frame >= F.avril23 + FORCES_AT && (
+                <>
+                  <GeneralForces proj={proj} center={DARFUR} items={HEMEDTI_FORCES}
+                    faction="rsf" border="#B14B3C" frame={frame} startAt={F.avril23 + FORCES_AT} />
+                  <GeneralForces proj={proj} center={KHARTOUM} items={BURHAN_FORCES}
+                    faction="saf" border="#3E6E9E" frame={frame} startAt={F.avril23 + FORCES_AT} />
+                </>
               )}
             </>
           );
@@ -314,9 +347,11 @@ const Beats789Map: React.FC = () => {
                 <FrontLine top={topP} bot={botP} dx={frontDx} frame={frame} appear={G.geo} />
               )}
 
-              {/* ── LIGNE DE RAVITAILLEMENT SAF (b7) : est -> front, s'amincit + pointillés s'espacent ── */}
+              {/* ── LIGNE DE RAVITAILLEMENT SAF (b7) : est -> front, s'amincit + pointillés s'espacent
+                  + impulsions lumineuses qui circulent (flux logistique) + points de danger RSF ── */}
               {sFrom && sVia && sTo && supplyFade > 0.01 && (
-                <SupplyLine from={sFrom} via={sVia} to={sTo} draw={supplyDraw} op={supplyFade} />
+                <SupplyLine from={sFrom} via={sVia} to={sTo} draw={supplyDraw} op={supplyFade}
+                  frame={frame} dangerFrom={G.ravitailler} dangerTo={G.resultat} />
               )}
 
               {/* (Le rapport de force SAF chars/avions du beat 6 est raconté dans le BLOC plein cadre,
@@ -400,17 +435,53 @@ const FrontLine: React.FC<{ top: Pt; bot: Pt; dx: number; frame: number; appear:
   };
 
 // ── SUPPLY LINE : de l'est (base arrière) vers le front. S'AMINCIT et les pointillés s'ESPACENT
-//   à mesure qu'on s'éloigne (la logistique qui s'épuise). Tracée en 3 segments dégressifs. ──
-const SupplyLine: React.FC<{ from: Pt; via: Pt; to: Pt; draw: number; op: number }> =
-  ({ from, via, to, draw, op }) => {
+//   à mesure qu'on s'éloigne (la logistique qui s'épuise). Tracée en 3 segments dégressifs.
+//   PAR-DESSUS : impulsions lumineuses qui coulent est->ouest (flux logistique vivant) + points de
+//   danger RSF qui clignotent sur la moitié ouest (là où la ligne s'amincit = zone harcelée). ──
+const SupplyLine: React.FC<{
+  from: Pt; via: Pt; to: Pt; draw: number; op: number;
+  frame: number; dangerFrom: number; dangerTo: number;
+}> = ({ from, via, to, draw, op, frame, dangerFrom, dangerTo }) => {
+    // point milieu du dernier segment (le path polyligne réel = from -> via -> midVT -> to)
+    const midVT = mid(via, to, 0.5);
     // 3 segments le long du chemin from->via->to, du plus épais/dense (est) au plus fin/espacé (ouest)
     const segs = [
       { a: from, b: via, w: 3.4, dash: "12 8", part: 0.5 },   // est : gros, dense
-      { a: via, b: mid(via, to, 0.5), w: 2.2, dash: "9 13", part: 0.28 },
-      { a: mid(via, to, 0.5), b: to, w: 1.2, dash: "5 18", part: 0.22 }, // front : fin, espacé (s'épuise)
+      { a: via, b: midVT, w: 2.2, dash: "9 13", part: 0.28 },
+      { a: midVT, b: to, w: 1.2, dash: "5 18", part: 0.22 }, // front : fin, espacé (s'épuise)
     ];
     // draw-in cumulatif : on remplit les segments dans l'ordre est->ouest
     let acc = 0;
+
+    // ── position le long du path (t 0=est/from, 1=ouest/front/to) sur la polyligne réelle,
+    //   parts alignées sur les 3 segments (0.5 / 0.28 / 0.22) ──
+    const pathAt = (t: number): Pt => {
+      const tc = Math.min(1, Math.max(0, t));
+      if (tc <= 0.5) return mid(from, via, tc / 0.5);
+      if (tc <= 0.78) return mid(via, midVT, (tc - 0.5) / 0.28);
+      return mid(midVT, to, (tc - 0.78) / 0.22);
+    };
+
+    // ── IMPULSIONS LUMINEUSES : 4 pastilles décalées qui glissent est->ouest en boucle (frame-driven).
+    //   Chacune n'est visible que jusqu'à la position déjà tracée (draw). Traits larges à faible
+    //   opacité = glow sans filter:blur (headless-safe). ──
+    const PULSES = 4;
+    const SPEED = 62;   // frames pour parcourir tout le path
+    const pulses = Array.from({ length: PULSES }, (_, k) => {
+      const phase = ((frame / SPEED) + k / PULSES) % 1;   // 0->1 en boucle, décalées
+      return { t: phase, p: pathAt(phase) };
+    });
+
+    // ── DANGERS RSF : 3 marqueurs le long de la moitié ouest (t ~0.55..0.92), apparition progressive
+    //   pendant le beat 7 (dangerFrom->dangerTo), clignotement déterministe (Math.sin de i). ──
+    const dangers = [0.58, 0.74, 0.9].map((t, i) => {
+      const p = pathAt(t);
+      const revealAt = interpolate(frame, [dangerFrom + i * 22, dangerFrom + i * 22 + 20], [0, 1], clamp);
+      // clignotement : phase désynchronisée par item (déterministe, pas de random)
+      const blink = 0.45 + 0.55 * Math.abs(Math.sin(frame * 0.14 + i * 12.9898));
+      return { p, op: revealAt * blink, tracedOk: draw >= t - 0.04 };
+    });
+
     return (
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", overflow: "visible" }}>
         {segs.map((s, i) => {
@@ -425,6 +496,47 @@ const SupplyLine: React.FC<{ from: Pt; via: Pt; to: Pt; draw: number; op: number
               strokeDasharray={s.dash} strokeLinecap="round" />
           );
         })}
+
+        {/* ── IMPULSIONS LUMINEUSES (flux logistique) : glow doux + coeur clair, screen ── */}
+        {pulses.map((pu, i) => {
+          if (pu.t > draw + 0.02) return null; // pas au-delà de la portion tracée
+          // fondu aux extrémités du parcours (naissance à l'est, extinction à l'ouest/front)
+          const edge = Math.min(1, pu.t / 0.08, (1 - pu.t) / 0.14);
+          const a = op * Math.max(0, edge);
+          if (a <= 0.02) return null;
+          return (
+            <g key={`p${i}`} style={{ mixBlendMode: "screen" }}>
+              {/* halo diffus (trait large faible opacité, headless-safe) */}
+              <circle cx={pu.p.x} cy={pu.p.y} r={9} fill="#5b86ad" fillOpacity={a * 0.28} />
+              <circle cx={pu.p.x} cy={pu.p.y} r={5} fill="#9dc0e0" fillOpacity={a * 0.55} />
+              {/* coeur clair */}
+              <circle cx={pu.p.x} cy={pu.p.y} r={2.4} fill="#cfe0f2" fillOpacity={a * 0.95} />
+            </g>
+          );
+        })}
+
+        {/* ── DANGERS RSF (croix/cible qui clignote) : pourquoi la logistique échoue ── */}
+        {dangers.map((d, i) => {
+          if (!d.tracedOk || d.op <= 0.02) return null;
+          const R = 8.5;
+          return (
+            <g key={`d${i}`}>
+              {/* halo d'alerte diffus */}
+              <circle cx={d.p.x} cy={d.p.y} r={R + 5} fill="#B14B3C" fillOpacity={d.op * 0.18} />
+              {/* anneau de cible */}
+              <circle cx={d.p.x} cy={d.p.y} r={R} fill="none" stroke="#B14B3C"
+                strokeWidth={1.8} strokeOpacity={d.op} />
+              {/* croix de visée (harcèlement RSF sur la piste) */}
+              <line x1={d.p.x - R} y1={d.p.y} x2={d.p.x + R} y2={d.p.y}
+                stroke="#d1583f" strokeWidth={1.6} strokeOpacity={d.op} strokeLinecap="round" />
+              <line x1={d.p.x} y1={d.p.y - R} x2={d.p.x} y2={d.p.y + R}
+                stroke="#d1583f" strokeWidth={1.6} strokeOpacity={d.op} strokeLinecap="round" />
+              {/* coeur rouge vif */}
+              <circle cx={d.p.x} cy={d.p.y} r={2.2} fill="#e05a3f" fillOpacity={d.op} />
+            </g>
+          );
+        })}
+
         {/* pastille source (base arrière est) */}
         <circle cx={from.x} cy={from.y} r={4.5} fill="#3E6E9E" fillOpacity={op * 0.9} />
       </svg>
@@ -502,5 +614,82 @@ const SoloBig: React.FC<{ pos: Pt; sprite: string; border: string; op: number; f
       </div>
     );
   };
+
+// ── MINI-TOKEN : jeton-visage soldat rond PETIT (logique SoloBig réduite : rond, bordure, ombre,
+//   spring d'apparition puis scale FIGÉ). Aucun scale oscillant continu. ──
+const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: number; appear: number; op: number }> =
+  ({ pos, sprite, border, frame, appear, op }) => {
+    const D = 46;
+    // spring d'apparition (overshoot léger) puis figé
+    const ap = interpolate(frame, [appear, appear + 11, appear + 20], [0, 1.14, 1],
+      { ...clamp, easing: Easing.out(Easing.cubic) });
+    if (op <= 0.01) return null;
+    const CREAM = "#F2E5C8";
+    return (
+      <div style={{ position: "absolute", left: pos.x, top: pos.y,
+        transform: `translate(-50%,-50%) scale(${ap})`, opacity: op, pointerEvents: "none" }}>
+        {/* ombre portée douce */}
+        <div style={{ position: "absolute", left: "50%", top: "70%", width: D * 0.86, height: D * 0.22,
+          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.4)", borderRadius: "50%", filter: "blur(5px)" }} />
+        <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden", background: CREAM,
+          border: `${D * 0.06}px solid ${border}`, boxSizing: "border-box",
+          boxShadow: "0 3px 9px rgba(0,0,0,0.5)" }}>
+          <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+            style={{ position: "absolute", top: "50%", left: "50%", width: "116%", height: "116%",
+              transform: "translate(-50%,-48%)", objectFit: "cover", objectPosition: "top center", display: "block" }} />
+        </div>
+      </div>
+    );
+  };
+
+// ── MINI-SPRITE : matériel raster carré (technical/char), spring d'apparition + FIGÉ, ombre portée douce.
+//   Sprites 1024² -> rendu carré. Aucun scale oscillant continu. ──
+const MiniSprite: React.FC<{ pos: Pt; sprite: string; frame: number; appear: number; op: number; w?: number }> =
+  ({ pos, sprite, frame, appear, op, w = 70 }) => {
+    const ap = interpolate(frame, [appear, appear + 12, appear + 22], [0, 1.1, 1],
+      { ...clamp, easing: Easing.out(Easing.cubic) });
+    if (op <= 0.01) return null;
+    return (
+      <div style={{ position: "absolute", left: pos.x, top: pos.y,
+        transform: `translate(-50%,-54%) scale(${ap})`, opacity: op, pointerEvents: "none" }}>
+        {/* ombre portée douce au sol */}
+        <div style={{ position: "absolute", left: "50%", top: "82%", width: w * 0.8, height: w * 0.2,
+          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.38)", borderRadius: "50%", filter: "blur(6px)" }} />
+        <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+          style={{ width: w, height: w, display: "block", objectFit: "contain",
+            filter: "drop-shadow(0 4px 7px rgba(0,0,0,0.45))" }} />
+      </div>
+    );
+  };
+
+// ── GENERAL FORCES : pose un groupe MIXTE (soldats + matériel) en ÉVENTAIL autour d'un général.
+//   Chaque item apparaît en stagger (delay) avec fade+spring, PERSISTE ensuite. Ancrage géo (proj)
+//   par item -> repositionné à chaque frame avec la caméra (comme le reste des overlays). ──
+const GeneralForces: React.FC<{
+  proj: (c: [number, number]) => Pt | null; center: [number, number]; items: ForceItem[];
+  faction: "rsf" | "saf"; border: string; frame: number; startAt: number;
+}> = ({ proj, center, items, faction, border, frame, startAt }) => {
+  const tokenSprite = faction === "rsf" ? "portrait-rsf" : "portrait-saf";
+  const matSprite = faction === "rsf" ? "tech-td-red" : "tank-td-blue";
+  return (
+    <>
+      {items.map((it, i) => {
+        const p = proj([center[0] + it.dlon, center[1] + it.dlat]);
+        if (!p) return null;
+        const appear = startAt + it.delay;
+        // fade doux d'apparition, puis persiste (reste à 1 jusqu'à la fin de la section)
+        const op = interpolate(frame, [appear, appear + 16], [0, 1], clamp);
+        if (op <= 0.01) return null;
+        return it.kind === "token" ? (
+          <MiniToken key={`f${i}`} pos={p} sprite={tokenSprite} border={border}
+            frame={frame} appear={appear} op={op} />
+        ) : (
+          <MiniSprite key={`f${i}`} pos={p} sprite={matSprite}
+            frame={frame} appear={appear} op={op} w={70} />
+        );
+      })}
+    </>
+  );
+};
 
 export default SoudanActe2;
