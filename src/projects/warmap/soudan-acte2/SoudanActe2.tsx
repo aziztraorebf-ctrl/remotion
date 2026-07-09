@@ -24,7 +24,7 @@ import {
   Easing,
   Sequence,
 } from "remotion";
-import { SoudanWarMapEngine, CamKey, StateHighlight, ZoneControl } from "../engine/SoudanWarMapEngine";
+import { SoudanWarMapEngine, CamKey, StateHighlight, ZoneControl, camAt } from "../engine/SoudanWarMapEngine";
 import { Pt } from "../engine/soudanActors";
 import { TwoFaceToken } from "./TwoFaceToken";
 import { KhartoumEtatMajorSVG } from "../KhartoumEtatMajorSVG";
@@ -422,6 +422,12 @@ const Beats789Map: React.FC = () => {
   //   Apparaît à G.arreter. Généraux (portraits) + soldats de chaque bord. (Remplace la mine d'or,
   //   prématurée ici : l'or est réservé à l'Acte 3 « suivre l'or ».) ──
   const forcesReveal = interpolate(frame, [G.resultat + 30, G.resultat + 70], [0, 1], clamp);
+  // ÉCHELLE CARTE : les forces suivent le zoom (rétrécissent au dézoom beat 9 pour rester proportionnées
+  //   au territoire, pas dominer le pays). Zoom Mapbox logarithmique : facteur = 2^(zoom - zoomRef).
+  //   zoomRef = zoom au moment où les forces apparaissent (beat 8). Clampé pour éviter des jetons minuscules.
+  const zoomRef = camAt(CAM3, G.resultat + 50).zoom;
+  const zoomNow = camAt(CAM3, frame).zoom;
+  const forcesScale = Math.max(0.55, Math.min(1, Math.pow(2, zoomNow - zoomRef)));
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
@@ -468,16 +474,16 @@ const Beats789Map: React.FC = () => {
                     const p = proj(c.at); if (!p) return null;
                     const appear = G.resultat + 30 + i * 8;
                     return c.gen
-                      ? <MiniToken key={`w${i}`} pos={p} sprite="portrait-hemeti" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} big />
-                      : <MiniToken key={`w${i}`} pos={p} sprite="portrait-rsf" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} />;
+                      ? <MiniToken key={`w${i}`} pos={p} sprite="portrait-hemeti" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} big mapScale={forcesScale} />
+                      : <MiniToken key={`w${i}`} pos={p} sprite="portrait-rsf" border="#B14B3C" frame={frame} appear={appear} op={forcesReveal} mapScale={forcesScale} />;
                   })}
                   {/* al-Burhan + soldats SAF — EST du front (lon > 30) */}
                   {HELD_EAST.map((c, i) => {
                     const p = proj(c.at); if (!p) return null;
                     const appear = G.resultat + 34 + i * 8;
                     return c.gen
-                      ? <MiniToken key={`e${i}`} pos={p} sprite="portrait-burhan" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} big />
-                      : <MiniToken key={`e${i}`} pos={p} sprite="portrait-saf" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} />;
+                      ? <MiniToken key={`e${i}`} pos={p} sprite="portrait-burhan" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} big mapScale={forcesScale} />
+                      : <MiniToken key={`e${i}`} pos={p} sprite="portrait-saf" border="#3E6E9E" frame={frame} appear={appear} op={forcesReveal} mapScale={forcesScale} />;
                   })}
                 </>
               )}
@@ -702,8 +708,8 @@ const SoloBig: React.FC<{ pos: Pt; sprite: string; border: string; op: number; f
 
 // ── MINI-TOKEN : jeton-visage soldat rond PETIT (logique SoloBig réduite : rond, bordure, ombre,
 //   spring d'apparition puis scale FIGÉ). Aucun scale oscillant continu. ──
-const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: number; appear: number; op: number; big?: boolean }> =
-  ({ pos, sprite, border, frame, appear, op, big }) => {
+const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: number; appear: number; op: number; big?: boolean; mapScale?: number }> =
+  ({ pos, sprite, border, frame, appear, op, big, mapScale = 1 }) => {
     const D = big ? 72 : 46;   // général = plus grand que les soldats
     // spring d'apparition (overshoot léger) puis figé
     const ap = interpolate(frame, [appear, appear + 11, appear + 20], [0, 1.14, 1],
@@ -712,7 +718,7 @@ const MiniToken: React.FC<{ pos: Pt; sprite: string; border: string; frame: numb
     const CREAM = "#F2E5C8";
     return (
       <div style={{ position: "absolute", left: pos.x, top: pos.y,
-        transform: `translate(-50%,-50%) scale(${ap})`, opacity: op, pointerEvents: "none" }}>
+        transform: `translate(-50%,-50%) scale(${ap * mapScale})`, opacity: op, pointerEvents: "none" }}>
         {/* ombre portée douce */}
         <div style={{ position: "absolute", left: "50%", top: "70%", width: D * 0.86, height: D * 0.22,
           transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.4)", borderRadius: "50%", filter: "blur(5px)" }} />
