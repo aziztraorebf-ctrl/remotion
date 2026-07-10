@@ -144,6 +144,32 @@ vivantes — graines = pierres mortes). Toujours garder UNE couleur d'accent ré
 
 **Corollaire (objet inerte) :** un objet qui ne se déplace pas dans la vraie vie (lingot, coffre, pierre, bâtiment, turbine à l'ARRÊT) NE GLISSE JAMAIS — il s'illumine, change de couleur, ou fade sur place. Seuls les objets naturellement mobiles (eau, flamme, végétation, véhicules) peuvent se déplacer de façon crédible.
 
+**⭐ AXE FRICTION DE PRODUCTION — 3 facteurs qui prédisent le temps/risque de blocage (Aziz 2026-07-10, comparatif rétrospectif).**
+> RECOMMANDATION, pas un gate bloquant — un sujet à friction élevée reste un GO légitime (le Soudan a servi
+> de banc d'essai pour combiner Mapbox + inserts SVG + split-screen + jury LLM densité en un seul projet ; ce
+> code et ces patterns sont maintenant réutilisables, ce n'est pas du temps perdu). L'utilité de l'axe est de
+> **savoir à quoi s'attendre AVANT de s'engager**, pas de refuser un sujet ambitieux.
+
+Comparatif rétrospectif (GGW/Cacao produits en 2 jours-1,5 semaine sans blocage ; Soudan/War-Map Sahel
+étalés sur plusieurs sessions avec blocages répétés) fait ressortir 3 facteurs qui, cumulés, prédisent la
+friction — aucun seul ne suffit à en faire un sujet difficile :
+
+1. **Nombre d'acteurs/entités externes dans le récit.** 0-2 acteurs (GGW, Cacao) = récit auto-contenu, facile
+   à mettre en scène. 4+ acteurs externes (Soudan : EAU/Turquie/Russie/Égypte) exige une fiche de hiérarchie
+   dédiée et une règle anti-complexité explicite ("max 2 acteurs/beat") rien que pour rester lisible.
+2. **Actualité en cours vs fait stable.** Un fait historique/économique stable (GGW, Cacao, Peste 1347) se
+   fact-check une fois et ne bouge plus. Une actualité en cours (guerre active, faits niés officiellement,
+   chiffres disputés) oblige à revoir le script en pleine production quand un fait se précise ou se corrige.
+3. **Registre visuel unique vs hybride.** SVG pur du début à la fin (GGW, Cacao) = un seul système à
+   maîtriser. Combiner Mapbox + inserts SVG narratifs + split-screen (Soudan, War-Map Sahel) transforme
+   chaque insert en mini-chantier de conception à part entière, pas une simple scène de plus.
+
+**Comment s'en servir** : à l'étape 4-5 (typer le moteur narratif), noter ces 3 facteurs pour le sujet
+candidat. 0-1 facteur présent → friction faible attendue, produire directement. 2-3 facteurs cumulés →
+prévoir plus de sessions, un fact-check continu si actualité mouvante, et accepter qu'un ou deux inserts
+techniques (caméra, registre hybride) demandent plusieurs itérations avant validation — ce n'est pas un
+signal d'échec, c'est le coût attendu d'un sujet qui combine plusieurs briques à la fois.
+
 **⭐⭐ DENSITÉ NARRATIVE = le ratio change la GRAMMAIRE DE MONTAGE, pas que la composition (Aziz 2026-06-27, prouvé).**
 > Réfute la doctrine antérieure « format = simple paramètre de composition » (fausse, cf. test
 > `files.catbox.moe/6u1usb.png` vertical vs horizontal + scène-port animée `files.catbox.moe/voh2fv.mp4`).
