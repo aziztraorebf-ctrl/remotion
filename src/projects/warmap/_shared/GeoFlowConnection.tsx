@@ -37,8 +37,11 @@ export interface GeoFlowConnectionProps {
   lineWidth?: number;
   /** Couleur du marqueur (ignorée si markerColorTransition fourni). */
   markerColor?: string;
-  /** Forme du marqueur — pas de sprite raster, cohérent stack SVG pur 2D top-down. */
-  markerIcon?: "dot" | "diamond";
+  /** Forme du marqueur — pas de sprite raster, cohérent stack SVG pur 2D top-down.
+   * "drone" = silhouette orientée dans le sens du trajet (grammaire tête-de-flèche SahelAttackArrow) —
+   * réservé aux VÉHICULES qui glissent de façon crédible (règle doctrine : objet inerte ne glisse jamais,
+   * seul un vrai véhicule voyage). Pour un flux d'argent/or (objet inerte), garder "dot". */
+  markerIcon?: "dot" | "diamond" | "drone";
   /** Rayon/taille du marqueur en px. */
   markerSize?: number;
   /** Le marqueur change de couleur/forme au franchissement d'un seuil sur markerProgress (ex. beat 4 : or→drone à Dubaï). */
@@ -221,6 +224,17 @@ export const GeoFlowConnection: React.FC<GeoFlowConnectionProps> = ({
                 d={`M ${markerSize * 1.3} 0 L 0 ${-markerSize} L ${-markerSize * 1.3} 0 L 0 ${markerSize} Z`}
                 fill={curMarkerColor} stroke="#fff" strokeWidth={1.4} strokeLinejoin="round"
               />
+            </g>
+          )}
+          {markerIcon === "drone" && (
+            <g transform={`rotate(${markerPos.angle}) scale(${markerSize / 24})`}>
+              <circle r={30} fill={curMarkerColor} opacity={0.18} />
+              {/* silhouette drone (GLM-5.2, reasoning high) — même forme que ImpactPictogram, orientée vol */}
+              <line x1={20} y1={-8} x2={20} y2={8} stroke="#3A2A18" strokeWidth={2} strokeLinecap="round" />
+              <path d="M -18,-3 Q -5,-4 5,-2 L 20,0 L 5,2 Q -5,4 -18,3 Z" fill={curMarkerColor} stroke="#3A2A18" strokeWidth={2} strokeLinejoin="round" />
+              <path d="M -4,-3 L -18,-16 L -10,-3 Z" fill={curMarkerColor} stroke="#3A2A18" strokeWidth={2} strokeLinejoin="round" />
+              <path d="M -4,3 L -18,16 L -10,3 Z" fill={curMarkerColor} stroke="#3A2A18" strokeWidth={2} strokeLinejoin="round" />
+              <path d="M -18,-2 L -24,-10 L -14,-2 Z" fill={curMarkerColor} stroke="#3A2A18" strokeWidth={2} strokeLinejoin="round" />
             </g>
           )}
         </g>

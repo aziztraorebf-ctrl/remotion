@@ -84,6 +84,33 @@ export function camAt(keys: CamKey[], frame: number): CamKey {
   return keys[keys.length - 1];
 }
 
+/**
+ * cameraFollowsPath — caméra SUIVEUSE : au lieu d'une séquence de CamKey figée, calcule la CamKey de
+ * la frame courante à partir de la position du marqueur en train de voyager sur un chemin géo.
+ * Référence visuelle : "Silk Road 2" (`_incoming/silk road 2.mov`) — zoom serré en PERMANENCE sur le
+ * point courant du trajet, JAMAIS de vue d'ensemble (contraire de "Silk Road 1" qui dézoome pour tout
+ * révéler). Brique générique, réutilisable pour tout futur beat "suivre un trajet" (pas un hack Acte 3).
+ *
+ * `waypoints` : mêmes points géo lon/lat que ceux passés à GeoFlowConnection (segments linéaires).
+ * `t` : 0..1, position le long du chemin (généralement le même `markerProgress` que le marqueur affiché).
+ * `zoom` : zoom fixe resserré pendant tout le suivi (calibré Silk Road 2 : ~5-6).
+ */
+export function cameraFollowsPath(waypoints: [number, number][], t: number, zoom: number): CamKey {
+  const clamped = Math.max(0, Math.min(1, t));
+  const totalSegments = waypoints.length - 1;
+  const targetIdx = clamped * totalSegments;
+  const floorIdx = Math.min(totalSegments - 1, Math.floor(targetIdx));
+  const frac = targetIdx - floorIdx;
+  const a = waypoints[floorIdx];
+  const b = waypoints[floorIdx + 1] ?? waypoints[floorIdx];
+  return {
+    f: 0, // non utilisé (CamKey construite directement pour la frame courante, pas interpolée par camAt)
+    lon: a[0] + (b[0] - a[0]) * frac,
+    lat: a[1] + (b[1] - a[1]) * frac,
+    zoom,
+  };
+}
+
 // caméra socle par défaut : le Soudan plein cadre + léger drift (démo du socle)
 const DEFAULT_CAM: CamKey[] = [
   { f: 0, lon: 29.6, lat: 15.4, zoom: 5.05 },
@@ -123,8 +150,10 @@ export type StateHighlight = {
 };
 
 export type SoudanEngineProps = {
-  /** keyframes caméra (défaut = Soudan plein cadre) */
-  camKeys?: CamKey[];
+  /** keyframes caméra (défaut = Soudan plein cadre) — OU une fonction (frame) => CamKey pour une caméra
+   * dynamique (ex. cameraFollowsPath, caméra suiveuse qui recalcule sa position chaque frame plutôt que
+   * d'interpoler entre clés figées). */
+  camKeys?: CamKey[] | ((frame: number) => CamKey);
   /** halos de contrôle locaux (rayonnent autour d'un point). JAMAIS d'aplat plein d'état. */
   zones?: ZoneControl[];
   /** "on nomme → ça se trace" : contour d'état coloré qui se dessine au mot, puis s'estompe. */
@@ -140,6 +169,10 @@ export type SoudanEngineProps = {
     proj: (c: [number, number]) => { x: number; y: number } | null,
     mapRef?: React.MutableRefObject<mapboxgl.Map | null>
   ) => React.ReactNode;
+  /** taille du conteneur carte (défaut = plein cadre useVideoConfig). Utile pour poser la carte dans un
+   * panel réduit (ex. volet central d'un WarMapSplitScreen, beat 7 Acte 3) sans casser les usages plein écran. */
+  width?: number;
+  height?: number;
 };
 
 const ZONE_COLORS = { rsf: ATLAS.rsf, saf: ATLAS.saf, contested: ATLAS.contested } as const;
@@ -151,9 +184,13 @@ export const SoudanWarMapEngine: React.FC<SoudanEngineProps> = ({
   showNationalBorder = true,
   stateLineOpacity = 0,
   children,
+  width: widthProp,
+  height: heightProp,
 }) => {
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
+  const videoConfig = useVideoConfig();
+  const width = widthProp ?? videoConfig.width;
+  const height = heightProp ?? videoConfig.height;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<mapboxgl.Map | null>(null);
@@ -175,11 +212,12 @@ export const SoudanWarMapEngine: React.FC<SoudanEngineProps> = ({
     }, 45000);
 
     mapboxgl.accessToken = MAPBOX_TOKEN;
+    const firstCam = typeof camKeys === "function" ? camKeys(0) : camKeys[0];
     const map = new mapboxgl.Map({
       container: containerRef.current,
       style: "mapbox://styles/mapbox/light-v11",
-      center: [camKeys[0].lon, camKeys[0].lat],
-      zoom: camKeys[0].zoom,
+      center: [firstCam.lon, firstCam.lat],
+      zoom: firstCam.zoom,
       pitch: 0,
       bearing: 0,
       interactive: false,
@@ -344,8 +382,8 @@ export const SoudanWarMapEngine: React.FC<SoudanEngineProps> = ({
     const map = mapRef.current;
     if (!ready || !map) return;
 
-    // caméra frame-driven
-    const cam = camAt(camKeys, frame);
+    // caméra frame-driven (séquence figée interpolée par camAt, OU fonction dynamique par frame)
+    const cam = typeof camKeys === "function" ? camKeys(frame) : camAt(camKeys, frame);
     map.jumpTo({ center: [cam.lon, cam.lat], zoom: cam.zoom, pitch: 0, bearing: 0 });
 
     // NB : PAS d'aplat de faction plein (anti-pattern). L'intérieur reste crème+contours.

@@ -243,6 +243,8 @@ import { PecheurSurpecheSeedance16x9, PECHEUR_SEEDANCE_FRAMES } from "./projects
 import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
 import { ProtoInsertTactiqueTopDown, PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertTactiqueTopDown";
 import { ProtoAssemblageKhartoumBeat5, PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAssemblageKhartoumBeat5";
+import { ProtoSolPortraitRigTest, PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolPortraitRigTest";
+import { ProtoSolFullbodyRigTest, PROTO_SOL_FULLBODY_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest";
 import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
 import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
 import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
@@ -343,6 +345,7 @@ import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as 
 import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTest";
 import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
 import { SoudanActe3, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
+import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects/warmap/soudan-acte3/_rnd/GlobeSoudanDubaiTest";
 import { BlocRapportForceTest } from "./projects/warmap/soudan-acte2/BlocRapportForceTest";
 import { GeoFlowConnectionTest, GFC_TEST_FRAMES, GFC_TEST_FPS } from "./projects/warmap/GeoFlowConnectionTest";
 import { BlocImpasseB6Test } from "./projects/warmap/soudan-acte2/BlocImpasseB6Test";
@@ -1727,6 +1730,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="BlocRapportForceTest" component={BlocRapportForceTest} durationInFrames={300} fps={30} width={1920} height={1080} />
         {/* Acte 3 "Suivre l'or" — 100% carte, GeoFlowConnection + drapeaux persistants */}
         <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
+        {/* PROTO ISOLE — globe rotatif night-mode Darfour->Dubai, teste si ca peut remplacer camera suiveuse Mercator beat 3 */}
+        <Composition id="GlobeSoudanDubaiTest" component={GlobeSoudanDubaiTest} durationInFrames={GLOBE_SOUDAN_DUBAI_TEST_FRAMES} fps={30} width={1920} height={1080} />
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />
@@ -2139,6 +2144,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoInsertTactiqueTopDown" component={ProtoInsertTactiqueTopDown} durationInFrames={PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAssemblageKhartoumBeat5" component={ProtoAssemblageKhartoumBeat5} durationInFrames={PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolPortraitRigTest" component={ProtoSolPortraitRigTest} durationInFrames={PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolFullbodyRigTest" component={ProtoSolFullbodyRigTest} durationInFrames={PROTO_SOL_FULLBODY_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />

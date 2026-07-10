@@ -1,27 +1,56 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-10 (session 6) — 🎬 **ACTE 3 « SUIVRE L'OR » RÉVISION v2 CODÉE**
-(caméra suiveuse + pictogrammes + beat 7 rupture registre, tout rendu et validé visuellement — reste
-présentation Aziz). **Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4).
+**Dernière mise à jour :** 2026-07-10 (session 6) — 🎬 **ACTE 3 « SUIVRE L'OR » v7 RENDU, 3 PROBLÈMES
+NON RÉSOLUS malgré 3 itérations** (v5→v6→v7) — écart constaté entre intention et rendu réel sur
+zoom/caméra/drapeaux, 3 agents R&D lancés en fin de session pour repartir avec un diagnostic frais.
+**Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4).
 **Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
 
-## 🎬 ACTE 3 « SUIVRE L'OR » (session 6, 2026-07-10) — RÉVISION v2 CODÉE, À PRÉSENTER
+## 🎬 ACTE 3 « SUIVRE L'OR » (session 6, 2026-07-10) — v7 RENDU, ⛔ 3 PROBLÈMES PERSISTANTS
 
-- **3 chantiers de la révision v2 codés dans `SoudanActe3.tsx` + `SoudanWarMapEngine.tsx`, rendus en
-  headless réel (`render-mapbox.sh`), validés visuellement par Claude** :
-  1. **Caméra suiveuse** : `cameraFollowsPath(waypoints, t, zoom)` ajoutée dans `SoudanWarMapEngine.tsx`
-     (générique, réutilisable) + `camKeys` élargi pour accepter `CamKey[] | (frame)=>CamKey`. `cam2At()`
-     dans `SoudanActe3.tsx` : phases suivi (zoom 5.2, marqueur en mouvement) / repos (zoom 4.6, re-resserre
-     sur Jebel Amer/Dubaï/Darfour entre chaque trajet) avec fondu 18 frames aux transitions. Beats 3-4-5.
-     Fidèle à la référence `_incoming/silk road 2.mov`.
-  2. **Pictogrammes SVG feedback impacts** (`ImpactPictogram`, formes à la main, pas de GLM) : lingots à
-     l'arrivée or/Dubaï, drone rouge à l'arrivée RSF, drone bleu à l'arrivée SAF. 2-3s apparition/disparition,
-     zéro widget permanent.
-  3. **Beat 7 rupture de registre** (`Acte3SideFlags`) : PAS `WarMapSplitScreen` (redimensionner la vraie
-     Mapbox Soudan dans un panel 1/3 casse tous les overlays enfants câblés 1920×1080 — testé, écarté avec
-     Aziz en session). À la place : carte Soudan reste PLEIN ÉCRAN en fond (zéro régression), 2 volets
-     EAU/Turquie glissent depuis les bords par-dessus (silhouette d3-geo + drapeau clippé, pattern copié de
-     `TerritoryFlagPanel`/`SceneComparaisonV3.tsx` Sénégal — pas de Mapbox dupliqué).
+**⚠️ LIRE AVANT DE REPARTIR** : v5→v6→v7 ont chacun ajouté des corrections (caméra suiveuse, pictogrammes
+GLM puis sprites PNG drones, split-screen enrichi, mines pop+onde de choc) et Aziz a validé le PROGRÈS
+relatif à chaque tour — MAIS après vérification factuelle (comparaison directe des frames rendues vs
+`_incoming/silk road 1/2.mov`) en fin de session, **3 problèmes que Claude croyait résolus ne le sont
+PAS réellement** :
+
+1. **Zoom d'intro pas un vrai close-up.** `CAM1` (beat 1, SoudanActe3.tsx) tourne à zoom 5.3-5.8 —
+   resserré RELATIVEMENT à la v5 (qui était à 4.2), mais comparé frame-par-frame à Silk Road 2 le zoom
+   Mapbox nécessaire pour un vrai "close-up sur 2 points" est beaucoup plus élevé. Le rendu v7 montre
+   encore tout le Soudan en contexte, pas 2 portraits en gros plan.
+2. **Caméra suiveuse (`cameraFollowsPath`, beats 3-5) pas assez serrée.** `CAM2_ZOOM_FOLLOW = 5.2` est
+   quasi identique au zoom "large" du beat 1 — aucune vraie différenciation caméra-suiveuse vs vue
+   d'ensemble. L'effet "voyage immersif façon Silk Road 2" n'est PAS obtenu malgré la fonction générique
+   `cameraFollowsPath()` (SoudanWarMapEngine.tsx) qui est correcte techniquement — c'est un problème de
+   VALEUR DE ZOOM, pas de logique.
+3. **Coloriage pays = aplat de couleur unie, PAS le vrai drapeau.** `CountryColorLayer` (fin de
+   SoudanActe3.tsx) clippe juste une TEINTE nationale dans le contour du pays, jamais le motif complet du
+   drapeau — décision héritée d'une note "retour Aziz 2026-07-09" d'une session antérieure, jamais
+   re-tranchée cette session malgré qu'Aziz redemande explicitement plusieurs fois "la couleur du drapeau,
+   pas une seule couleur". Le bon composant existe déjà (`useClipFlags`/`ClipFlagsLayer`,
+   `src/projects/_shared/mapbox/useClipFlags.tsx`, utilisé ailleurs dans le projet pour un vrai clip de
+   drapeau complet, cf `SceneComparaisonV3.tsx` Sénégal) mais n'a pas été branché ici.
+
+**Leçon méthodologique** : Claude a affirmé un progrès ("caméra rapprochée", "drapeau qui se colorie") sur
+la base du DIFF relatif vs la version précédente, sans reconfronter le résultat absolu à la référence
+demandée (Silk Road) ni au brief d'origine (le VRAI drapeau, pas un aplat). À corriger la prochaine
+session : toujours reconfronter au brief original + à la référence visuelle citée, pas juste comparer
+« mieux qu'avant ».
+
+**3 agents R&D lancés en fin de session (diagnostic pur, aucun code touché)** — rapports dans
+`/private/tmp/.../scratchpad/` (session-spécifique, à rapatrier si utile) ou à relire dans la prochaine
+session via les résultats déjà synthétisés par Claude :
+- Agent 1 (camera-drapeaux) : diagnostic chiffré des 3 problèmes ci-dessus + valeurs de zoom concrètes.
+- Agent 2 (exploration-libre) : carte blanche mise en scène, sans contrainte de réutiliser l'existant.
+- Agent 3 (mapanimation-templates) : fouille du catalogue mapanimation.io (89 templates) + composants
+  internes Souverain/warmap sous-exploités, pour les 3 mêmes axes (caméra suiveuse, transformation
+  visuelle, split-screen enrichi).
+
+**Ce qui reste VALIDE et à garder** (progrès réels, pas remis en cause) : moteur `cameraFollowsPath()`
+générique (juste mal paramétré en zoom), sprites PNG drones (nettement mieux que le SVG initial), split-
+screen avec icône+2 faits+contour progressif (Aziz a dit "je trouve cela intéressant"), mines pop+onde de
+choc, convoi de drones échelonnés, lignes épaissies.
+
 - **Piste globe rotatif testée et ÉCARTÉE pour cette session** (nouvelle demande Aziz, vidéo repérage
   `_incoming/globe trial.mov`) : proto `GlobeSoudanDubaiTest.tsx` (adapté de `GlobeLocationReveal.tsx`,
   existant Souverain 9:16 → testé 16:9), style visuel validé (fidèle à la référence night-mode/étoiles),
@@ -30,16 +59,17 @@ présentation Aziz). **Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FIN
   seulement dans les toutes dernières frames). Distinct du bug fills déjà documenté (`rules-outils-
   techniques.md`) qui touche les layers ADDED, pas les layers natifs du style de base. Piste à reprendre
   en session R&D dédiée (`map.once('idle')` ou pré-chauffage tuiles avant capture), PAS à improviser sur
-  un acte en production. Caméra suiveuse Mercator gardée pour les beats 3/5 (déjà validée, zéro risque).
+  un acte en production.
 - **Bug trouvé+corrigé en session** : volet Turquie du beat 7 utilisait `drawFlagCanvas` (codes ISO 3
   lettres, "TUR" absent de la liste → juste "TR" en texte) au lieu du PNG `_shared/flags/tr.png` déjà
   utilisé par `ALL_COUNTRY_FLAGS`/`useClipFlags` ailleurs dans le même fichier — corrigé en `staticFile`.
-- **Reste à faire** : présenter les 4 renders de vérification à Aziz (beats 3/4/5/7), re-render l'acte
-  complet si validé, self-review scriptée (`scripts/tools/mapbox-selfreview.py`).
+- **Renders produits cette session** (`out/episodes/soudan-midform/wip/`) : `acte3_v5.mp4`, `acte3_v6.mp4`,
+  `acte3_v7.mp4` (+ versions `_compressed.mp4` pour mobile, CRF26 faststart) — tous à considérer comme
+  ITÉRATIONS DE TRAVAIL, pas des candidats FINAL (les 3 problèmes ci-dessus ne sont résolus dans aucun).
 
-> ⭐ **PROCHAINE ACTION = présentation Aziz des 4 zones rendues** (`out/_rnd/acte3-v4-beat3/4/5/7*.mp4`) —
-> si validé, render complet de l'acte + promotion. Si retouches, itérer sur `cam2At`/`ImpactPictogram`/
-> `Acte3SideFlags` (tous localisés, faciles à ajuster).
+> ⭐ **PROCHAINE ACTION = lire les 3 rapports d'agents R&D, synthétiser un plan de fix chiffré pour les
+> 3 problèmes (zoom intro, zoom caméra suiveuse, vrai drapeau clippé), coder, RECONFRONTER au brief
+> original + Silk Road avant de présenter comme résolu** (pas juste comparer à la version précédente).
 
 ## ✅ ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — SCRIPT VERROUILLÉ (session 6, 2026-07-10)
 

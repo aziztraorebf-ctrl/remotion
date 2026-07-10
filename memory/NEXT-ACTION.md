@@ -7,26 +7,27 @@
 
 ---
 
-## 🎬 SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » EN COURS, reprise = coder révision mise en scène (2026-07-09/10 s5)
+## 🎬 SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » : v7 rendu, 3 problèmes de mise en scène PERSISTANTS (2026-07-10 s6)
 
-> **Session 5 : Acte 3 avancé bien au-delà de "non écrit"** — script v7 verrouillé (jury 3 LLM + fact-check),
-> audio verrouillé (validé à l'oreille Aziz), breakdown technique v1 PUIS révisé v2, composant
-> `GeoFlowConnection` codé+testé, `SoudanActe3.tsx` codé et rendu v1→v2→v3 (corrections successives),
-> présenté à Aziz. Retours Kimi+Gemini sur le v3 (dézoom vide, flèches sans feedback) → révision de mise
-> en scène actée (breakdown v2) mais **PAS ENCORE CODÉE** dans `SoudanActe3.tsx` — le v3 existant reflète
-> encore l'ancienne mise en scène (v1). Branche `feat/soudan-acte3`.
+> **Session 6 : la révision de mise en scène de la session 5 a été codée (v5→v6→v7), mais une
+> reconfrontation factuelle en fin de session a montré que 3 problèmes restent NON résolus dans l'absolu**
+> malgré 3 itérations successives (chaque tour semblait "mieux qu'avant" sur un diff relatif, mais ne
+> correspondait toujours pas au brief original ni à la référence Silk Road 2 citée par Aziz). Cf
+> [[feedback_reconfronter-brief-original-pas-diff-relatif]]. 3 agents R&D indépendants ont produit un
+> diagnostic chiffré + des pistes créatives, synthétisés dans un starter dédié.
 >
-> **NEXT = coder la révision v2 du breakdown** (détail complet + décisions tranchées :
-> `memory/projects/soudan-midform-ACTE3-BREAKDOWN.md`, section "RÉVISION v2" en tête) :
-> 1. **Caméra suiveuse** (beats 3/5) : fonction `cameraFollowsPath` à écrire, référence vidéo
->    `_incoming/silk road 2.mov` (NE PAS SUPPRIMER), faisabilité déjà vérifiée (`camAt()` déjà générique).
-> 2. **Pictogrammes SVG feedback** aux impacts de flèches (lingots/drones, formes simples codées à la
->    main, pas d'appel GLM pour ça).
-> 3. **Beat 7 en vrai split-screen 3 volets** via `WarMapSplitScreen` (composant prod EXISTANT,
->    `src/projects/warmap/_shared/WarMapSplitScreen.tsx`, jamais utilisé pour ce beat — NE PAS recoder de
->    panneau custom, le prototype `Acte3DashboardTest.tsx` avec panneaux flottants a été TESTÉ ET REJETÉ
->    par Aziz). Contenu des volets latéraux (Mapbox vs 2D flat/SVG) encore à trancher en premier à la reprise.
-> 4. Re-render + self-review + re-présenter Aziz.
+> **NEXT = lire `memory/STARTER-PROMPT-soudan-acte3-v8.md` en entier** (rapports complets des 3 agents
+> rapatriés dans `memory/episodes/soudan-midform/acte3-v8-agents-rnd/`) et trancher 2 clarifications avec
+> Aziz AVANT de coder :
+> 1. **Drapeaux** : aplat de couleur unie actuel vs vrai motif de drapeau (Aziz redemande explicitement
+>    le motif complet — changement d'avis potentiel vs décision du 2026-07-09 à confirmer).
+> 2. **Split-screen beat 7** : `WarMapSplitScreen` (composant prod prévu par le breakdown) a été écarté au
+>    profit de panneaux glissants — une piste de test isolé existe pour le réactiver (cf erratum dans
+>    `soudan-midform-ACTE3-BREAKDOWN.md` Décision 4), pas encore essayée.
+>
+> Puis coder dans l'ordre recommandé (détail chiffré dans le starter v8) : zoom intro (2 temps forts,
+> cause géométrique : Darfour-Khartoum sont à 707km, pas 50-80km) → zoom caméra suiveuse (valeurs
+> chiffrées) → transformation or→drone (recycler `MetamorphoseFiduciaire.tsx`) → split-screen substantiel.
 >
 > Script/audio/breakdown : `memory/projects/soudan-midform-ACTE3-SCRIPT.md` /
 > `-ACTE3-JURY-VERDICTS.md` / `-ACTE3-BREAKDOWN.md`. État complet : `episodes/soudan-midform/STATUS.md`.

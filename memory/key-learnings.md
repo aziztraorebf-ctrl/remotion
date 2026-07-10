@@ -571,6 +571,27 @@ qu'après qu'Aziz ait demandé explicitement "as-tu utilisé le script dédié a
 tentatives de diagnostic GPU (kill de process, `--concurrency=1`, redémarrage) auraient été évitées en
 cherchant d'abord `ls scripts/*.sh scripts/render-*` avant de suspecter l'environnement.
 
+### 2026-07-10 — Caméra suiveuse générique : `cameraFollowsPath` + `camKeys` en fonction
+
+`cameraFollowsPath(waypoints, t, zoom)` (`src/projects/warmap/engine/SoudanWarMapEngine.tsx`, écrit pour
+Soudan Acte 3 mais générique) interpole lon/lat le long d'un trajet géo selon `t∈[0,1]`, zoom fixe passé
+en paramètre — réutilisable pour tout futur beat "caméra qui suit un marqueur en mouvement". `camKeys`
+(prop du moteur) accepte maintenant `CamKey[] | ((frame:number)=>CamKey)`, pas seulement un tableau figé.
+**Piège rencontré** : le bug n'était jamais dans la fonction (correcte dès l'écriture) mais dans la VALEUR
+de zoom passée par l'appelant — un écart <1.0 entre "zoom follow" et "zoom repos" est imperceptible à
+l'image, il faut ~1.5-2.0 niveaux d'écart pour un contraste visible.
+
+### 2026-07-10 — Calculer la distance RÉELLE (haversine) avant de choisir un zoom Mapbox cible
+
+Avant tout cadrage "2 points ensemble" (close-up simultané sur 2 lieux), calculer la distance réelle
+entre eux AVANT de choisir un zoom — ne pas itérer à l'aveugle sur la valeur. Cas vécu (Soudan Acte 3,
+session 6) : Darfour-Khartoum estimés à tort à 50-80km, en réalité **~707km** — ce qui rendait un
+"close-up serré sur les 2 portraits" géométriquement IMPOSSIBLE à un zoom Mapbox cohérent (à cette
+latitude, zoom 6 ≈ 1100km de large à l'écran, zoom 6.5-7.5 ≈ 150-500km — donc au-delà de zoom~5.5-6, l'un
+des deux points sort du cadre). 3 itérations de réglage de zoom ont échoué avant qu'un calcul de distance
+révèle que le problème était géométrique, pas un réglage. Diagnostic complet chiffré :
+`memory/episodes/soudan-midform/acte3-v8-agents-rnd/agent-diagnostic-camera-drapeaux.md`.
+
 ---
 
 ## 🤖 BRIEF AGENTS

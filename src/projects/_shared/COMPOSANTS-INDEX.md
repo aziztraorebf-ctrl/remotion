@@ -73,6 +73,7 @@
 | `CountryFlagFill` | inserts | "Le drapeau épouse ses frontières" — drapeau clipé sur silhouette SVG pays |
 | `FlagPin` | inserts | "Et voilà : le Sénégal." — drapeau circulaire bounce spring + float idle |
 | `OrigamiCarto` | layouts | Carte qui se déplie comme un origami |
+| `GoldRouteAtlasZoom` | templates/travel-map | Caméra qui SUIT un porteur sur un trajet long, zoom qui se RESSERRE progressivement (pas fixe) + territoire traversé qui se teinte au passage et RESTE teinté (pas un tracé fantôme). SVG/d3-geo pur (projet Atlas, pas Mapbox). Jamais croisé avec le pipeline Warmap/Mapbox — candidat pour tout futur beat "trajet qui se resserre" hors Mapbox (2026-07-10). |
 
 ### Templates Mapbox CARTE VIVANTE — Chantier C (2026-06-02, hybrides V+H, render via `scripts/render-mapbox.sh`)
 > Tous dans `_shared/mapbox/`. Vraie carte Mapbox dessous (drift, altitude pays, océan navy, voisins ivory). Charte navy/gold. **Lire `_shared/mapbox/MAPBOX-COMPOSANTS.md` avant usage.**

@@ -110,6 +110,29 @@ Cas d'usage Mapbox-gl runtime justifié : compositions purement cartographiques 
 
 PixelLab map_object montagne sur carte = fonctionne techniquement, bon pour repère géographique passager. Insuffisant pour climax (Hannibal Alpes). Pour wow effect : Seedance hybrid ou Remotion 3D R&D requise.
 
+### ⚠️ Dette connue : `filter: blur()` CSS DOM en dur dans `SenegalActe2Continu.tsx` (à corriger si retouché)
+
+`src/projects/souverain/senegal-petrole-gaz/SenegalActe2Continu.tsx` (lignes 460, 731) utilise `filter:
+blur()` CSS sur un élément DOM — contraire à la doctrine headless-safe ci-dessus (comportement
+imprévisible en Chrome headless, même esprit que l'interdiction CSS transition/@keyframes). Découvert
+2026-07-10 en cherchant une alternative pour un effet de whip pan sur Soudan Acte 3. **Alternative
+conforme** : `<feGaussianBlur stdDeviation={interpolate(frame,...)} />` dans un `<filter>` SVG natif
+appliqué à un `<g>` — prévisible en headless car c'est un filtre SVG du DOM, pas un `style.filter` CSS
+sur un canvas/div. Pas urgent, à corriger si ce composant est retouché.
+
+### Bug globe headless DISTINCT du bug "layers ADDED" ci-dessus : tuiles vector natives du style de base
+
+Testé 2026-07-10 (proto `GlobeSoudanDubaiTest.tsx`, Soudan Acte 3, écarté pour cette raison) : en mode
+`projection:{name:'globe'}`, les tuiles vector NATIVES du style de base (`land`/`water`/`admin-0-boundary`
+— pas des layers ajoutés via `addLayer`, ceux-là sont couverts par le bug documenté plus haut) ne se
+chargent quasi jamais à temps avant la capture canvas headless. Résultat : disque uni (juste le fond
+`space-color`/étoiles du `setFog`) pendant ~95% du render, les continents n'apparaissent que dans les
+toutes dernières frames. Confirmé avec le bon script (`render-mapbox.sh`, chrome-headless-shell +
+`--gl=angle`), donc pas un problème de moteur de rendu. Piste non testée pour un futur essai : attendre
+`map.once('idle')` (au lieu de `style.load`) avant de commencer la capture, ou pré-chauffer les tuiles en
+amont du render. Style/direction artistique validée (fidèle à la référence testée) — seul le TIMING de
+chargement est cassé.
+
 ---
 
 ## SECTION 4 — Audio : règles assemblage Remotion
