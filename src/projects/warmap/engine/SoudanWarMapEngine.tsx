@@ -133,8 +133,13 @@ export type SoudanEngineProps = {
   showNationalBorder?: boolean;
   /** opacité des liserés d'états internes : 0 = grand bloc vide (look AES) ; ~0.15 = états très pâles */
   stateLineOpacity?: number;
-  /** overlays enfants (jetons, flèches, plaques) posés PAR-DESSUS la carte, reçoivent le projecteur */
-  children?: (proj: (c: [number, number]) => { x: number; y: number } | null) => React.ReactNode;
+  /** overlays enfants (jetons, flèches, plaques) posés PAR-DESSUS la carte, reçoivent le projecteur
+   * + le mapRef (accès à l'instance mapboxgl.Map, ex. pour useClipFlags qui a besoin d'un vrai MutableRefObject
+   * et pas juste d'une fonction de projection). */
+  children?: (
+    proj: (c: [number, number]) => { x: number; y: number } | null,
+    mapRef?: React.MutableRefObject<mapboxgl.Map | null>
+  ) => React.ReactNode;
 };
 
 const ZONE_COLORS = { rsf: ATLAS.rsf, saf: ATLAS.saf, contested: ATLAS.contested } as const;
@@ -474,7 +479,7 @@ export const SoudanWarMapEngine: React.FC<SoudanEngineProps> = ({
         }}
       />
       {/* overlays enfants (jetons, flèches, plaques) — reçoivent le projecteur */}
-      {proj && children && children(proj)}
+      {proj && children && children(proj, mapRef)}
       <MapboxBrandingHide />
     </AbsoluteFill>
   );

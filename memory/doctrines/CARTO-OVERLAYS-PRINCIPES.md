@@ -93,6 +93,17 @@ Guadeloupe..La Réunion (bbox 117° de large) → la métropole devient minuscul
 ⚠️ Le drapeau-pays NE doit PAS onduler (style GeoLes3 : plat, solidaire du terrain, suit la caméra sans grouiller).
 L'ondulation est réservée au petit jeton-drapeau (`FlagToken`, mode fill).
 
+⭐ **Nuance War-Map — aplat pays EXTERNE ≠ anti-pattern aplat de faction sur le pays-sujet (tranché Aziz
+2026-07-09, Soudan Acte 3)** : `WARMAP-GRAMMAIRE.md` §sommaire interdit l'aplat de couleur plein sur un
+ÉTAT/territoire DU PAYS EN GUERRE (représenter RSF/SAF sur le Soudan — testé et rejeté, `soudan-socle-test.mp4`).
+Cette interdiction NE S'APPLIQUE PAS à un aplat de couleur nationale (niveau 1 ci-dessus) sur un PAYS TIERS
+externe au conflit (ex. Émirats/Turquie/Égypte qui s'allument au fil d'un récit "follow the money") — ce sont
+deux situations différentes : le pays-sujet reste crème+contours (grammaire intacte), les pays externes
+peuvent recevoir un aplat uni pour signaler leur implication sans violer la règle. Composant utilisé :
+`CountryColorLayer` (`src/projects/warmap/soudan-acte3/SoudanActe3.tsx`), réutilise `useClipFlags` pour la
+géométrie projetée mais ne rend qu'un aplat de couleur (pas l'image drapeau détaillée — à ce niveau de
+dézoom, le motif complet écrase l'écran, cf niveau 1 "neutre" ci-dessus).
+
 ---
 
 ## Génération du SVG des jetons (appel LLM dédié)

@@ -1,24 +1,41 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-09 (session 4 — Soudan : ACTE 2 « Blocage » FINAL APPROUVÉ AZIZ, 93.6s, promu ; NEXT = ACTE 3 session dédiée vierge).
+> Mis a jour : 2026-07-09/10 (session 5 — Soudan : ACTE 3 « Suivre l'or » EN COURS — script+audio verrouillés,
+> breakdown v2 écrit, code v1→v3 rendu mais mise en scène à revoir avant re-présentation).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ✅✅✅ SOUDAN MID-FORM — ACTE 2 « BLOCAGE » FINAL APPROUVÉ (SFX validés) → NEXT = ACTE 3 (session dédiée vierge) (2026-07-09 s4)
+## 🎬 SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » EN COURS, reprise = coder révision mise en scène (2026-07-09/10 s5)
 
-> **Session 4 (2026-07-09) : ACTE 2 complet, poli, itéré, SFX validés à l'oreille — APPROUVÉ AZIZ = FINAL.**
-> Promu : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` · catbox `jgvhr2` (93.6s, 9 beats).
-> Branche `feat/aes-short-90s-carte-vivante`. Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
+> **Session 5 : Acte 3 avancé bien au-delà de "non écrit"** — script v7 verrouillé (jury 3 LLM + fact-check),
+> audio verrouillé (validé à l'oreille Aziz), breakdown technique v1 PUIS révisé v2, composant
+> `GeoFlowConnection` codé+testé, `SoudanActe3.tsx` codé et rendu v1→v2→v3 (corrections successives),
+> présenté à Aziz. Retours Kimi+Gemini sur le v3 (dézoom vide, flèches sans feedback) → révision de mise
+> en scène actée (breakdown v2) mais **PAS ENCORE CODÉE** dans `SoudanActe3.tsx` — le v3 existant reflète
+> encore l'ancienne mise en scène (v1). Branche `feat/soudan-acte3`.
 >
-> **CONTENU Acte 2** : S1 beats 1-4 CARTE + **jeton 2-visages `TwoFaceToken`** (fusion 2021→fend→split 2023) + **`YearCounter`** +
-> forces au split. S2 beat 5 **insert `KhartoumEtatMajorSVG`** + narration dédiée. S3 beat 6 **BLOC `BlocImpasseB6`** + beats 7-9
-> CARTE (dézoom immensité + **`KmCounter` 1000km** + supply vivante + **forces figées** + dézoom hors Soudan). Audio LOCK.
+> **NEXT = coder la révision v2 du breakdown** (détail complet + décisions tranchées :
+> `memory/projects/soudan-midform-ACTE3-BREAKDOWN.md`, section "RÉVISION v2" en tête) :
+> 1. **Caméra suiveuse** (beats 3/5) : fonction `cameraFollowsPath` à écrire, référence vidéo
+>    `_incoming/silk road 2.mov` (NE PAS SUPPRIMER), faisabilité déjà vérifiée (`camAt()` déjà générique).
+> 2. **Pictogrammes SVG feedback** aux impacts de flèches (lingots/drones, formes simples codées à la
+>    main, pas d'appel GLM pour ça).
+> 3. **Beat 7 en vrai split-screen 3 volets** via `WarMapSplitScreen` (composant prod EXISTANT,
+>    `src/projects/warmap/_shared/WarMapSplitScreen.tsx`, jamais utilisé pour ce beat — NE PAS recoder de
+>    panneau custom, le prototype `Acte3DashboardTest.tsx` avec panneaux flottants a été TESTÉ ET REJETÉ
+>    par Aziz). Contenu des volets latéraux (Mapbox vs 2D flat/SVG) encore à trancher en premier à la reprise.
+> 4. Re-render + self-review + re-présenter Aziz.
 >
-> **NEXT = ACTE 3 = SESSION DÉDIÉE VIERGE** (« suivre l'or » → Émirats/Turquie, **NON ÉCRIT** : pré-prod script d'abord —
-> recherche → script → jury LLM → audio → storyboard → code sur socle). Starter : `STARTER-PROMPT-soudan-acte3.md`.
+> Script/audio/breakdown : `memory/projects/soudan-midform-ACTE3-SCRIPT.md` /
+> `-ACTE3-JURY-VERDICTS.md` / `-ACTE3-BREAKDOWN.md`. État complet : `episodes/soudan-midform/STATUS.md`.
+> Méthode audio TTS gravée : `tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+>
+> **Historique Acte 2** (FINAL, promu) : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`
+> · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`. Contenu :
+> S1 beats 1-4 CARTE + jeton 2-visages `TwoFaceToken` + `YearCounter`. S2 beat 5 insert `KhartoumEtatMajorSVG`.
+> S3 beat 6 BLOC `BlocImpasseB6` + beats 7-9 CARTE (`KmCounter` 1000km + supply vivante + forces figées).
 > Briques gravées : `WARMAP-GRAMMAIRE.md` §8 (TwoFaceToken/YearCounter/BlocImpasse + R-V5 objet orphelin).
-> Méthode audio TTS gravée : `tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`. État complet : `episodes/soudan-midform/STATUS.md`.
 
 ---
 

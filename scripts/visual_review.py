@@ -467,8 +467,8 @@ def review_kimi(filepath: str, prompt: str, n_frames: int, offset: float) -> dic
             MOONSHOT_URL,
             headers={'Authorization': f'Bearer {MOONSHOT_API_KEY}', 'Content-Type': 'application/json'},
             json={'model': KIMI_MODEL, 'messages': [{'role': 'user', 'content': content}],
-                  'max_tokens': 2000, 'temperature': 1},
-            timeout=120
+                  'max_tokens': 16000, 'temperature': 1},
+            timeout=180
         )
         if resp.status_code != 200:
             print(f"Kimi error {resp.status_code}: {resp.text[:300]}")
@@ -478,7 +478,8 @@ def review_kimi(filepath: str, prompt: str, n_frames: int, offset: float) -> dic
         tokens_in  = result['usage']['prompt_tokens']
         tokens_out = result['usage']['completion_tokens']
         cost = (tokens_in * 0.60 + tokens_out * 3.00) / 1_000_000
-        text = result['choices'][0]['message']['content']
+        msg = result['choices'][0]['message']
+        text = msg.get('content') or msg.get('reasoning_content') or ''
 
         print(f"\n{'='*80}")
         print(f"KIMI K2.5 — NARRATIVE REVIEW")

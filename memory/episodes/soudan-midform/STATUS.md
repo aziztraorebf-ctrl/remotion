@@ -1,10 +1,42 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-09 (session 4) — 🎬🎬✅ **ACTE 2 « BLOCAGE » FINAL APPROUVÉ AZIZ (93.6s, 9 beats, SFX validés).**
-**Branche :** `feat/aes-short-90s-carte-vivante`. Acte 1 v5-FINAL fait (session 3, historique plus bas).
+**Dernière mise à jour :** 2026-07-09/10 (session 5) — 🎬 **ACTE 3 « SUIVRE L'OR » EN COURS** (script+audio
+verrouillés, breakdown v2 écrit, code v1→v3 rendu mais mise en scène à revoir — détail ci-dessous).
+**Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4, historique plus bas).
 **Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
 
-> ⭐ **PROCHAINE ACTION = ACTE 3 (« suivre l'or » → Émirats/Turquie), SESSION DÉDIÉE VIERGE, NON ÉCRIT (pré-prod script d'abord). Starter : `STARTER-PROMPT-soudan-acte3.md`.**
+## 🎬 ACTE 3 « SUIVRE L'OR » (session 5, 2026-07-09/10) — EN COURS
+
+- **Script v7 VERROUILLÉ** : 9 beats show-don't-tell, jury 3 LLM (GPT-5.5/Gemini 3.1 Pro/Kimi K2.5) +
+  fact-check (Tavily + Sonar Pro) + relecture Aziz (5 corrections texte). Fichier :
+  `memory/projects/soudan-midform-ACTE3-SCRIPT.md`.
+- **Audio VERROUILLÉ, validé à l'oreille Aziz** : Océane V3 → STS GéoAfrique, 3 parties + silences 0.7s,
+  ~126s. `public/_shared/audio/soudan/acte3-suivre-lor-FULL.mp3` + parties p1/p2/p3.
+- **Whisper-align fait** : `src/projects/warmap/soudan-acte3/whisper-p1/p2/p3.ts` + timing frame-précis
+  `soudanActe3Timing.ts`.
+- **Breakdown technique v1 écrit PUIS RÉVISÉ v2** suite jury Kimi/Gemini sur le render v3 (diagnostic :
+  dézoom vide en fin d'acte, flèches sans feedback à l'impact) + référence vidéo Silk Road retrouvée par
+  Aziz (`_incoming/silk road 1.mov` et `2.mov`, NE PAS SUPPRIMER). Fichier :
+  `memory/projects/soudan-midform-ACTE3-BREAKDOWN.md` (section v2 en tête = la référence à jour).
+- **Nouveau composant `GeoFlowConnection`** (`src/projects/warmap/_shared/GeoFlowConnection.tsx`) : tracé
+  courbé + marqueur mobile indépendant + transformation de couleur en cours de route. Testé isolé
+  (`GeoFlowConnectionTest.tsx`) avant intégration.
+- **Assets neufs générés** : `dubai-hub-td.png`, `suakin-dock-td.png` (visual-producer, validés).
+  Drapeaux `ae.png`/`tr.png`/`eg.png`/`sd.png` récupérés Wikimedia.
+- **`SoudanActe3.tsx` codé et rendu v1→v2→v3** (corrections successives : mines invisibles, jeton SAF
+  visible à tort, drapeau disproportionné, drapeaux qui disparaissaient entre sections). v3 validé
+  visuellement par Claude + présenté Aziz.
+- **⚠️ MAIS le v3 reflète encore le breakdown v1 (dézoom classique)** — la révision v2 (caméra suiveuse
+  type "Silk Road 2", pictogrammes SVG feedback aux impacts, beat 7 en vrai split-screen
+  `WarMapSplitScreen`) N'EST PAS ENCORE CODÉE. Prototype `Acte3DashboardTest.tsx` (panneaux flottants)
+  testé et REJETÉ par Aziz — approche à refaire avec `WarMapSplitScreen` (composant prod existant,
+  jamais utilisé pour ce beat).
+
+> ⭐ **PROCHAINE ACTION = coder la révision v2 du breakdown dans `SoudanActe3.tsx`** : (1) fonction
+> `cameraFollowsPath` pour la caméra suiveuse beats 3/5 (référence `_incoming/silk road 2.mov`,
+> faisabilité vérifiée, détail `soudan-midform-ACTE3-BREAKDOWN.md` § Décision 1bis), (2) pictogrammes SVG
+> feedback aux impacts (§ Décision 2-3), (3) beat 7 en vrai `WarMapSplitScreen` 3 volets, contenu des
+> volets latéraux (Mapbox vs 2D flat) encore à trancher (§ Décision 4). Puis re-render + re-présenter.
 
 ## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
 - **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).

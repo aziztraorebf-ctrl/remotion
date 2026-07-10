@@ -1,45 +1,54 @@
 ---
 name: STARTER-PROMPT-soudan-acte3
-description: Prompt de démarrage — produire l'Acte 3 (« Suivre l'or → Émirats/Turquie ») du mid-form Soudan. Actes 1-2 faits, Acte 3 NON ÉCRIT (script à rédiger d'abord).
+description: Prompt de reprise — coder la révision de mise en scène de l'Acte 3 Soudan (« Suivre l'or »). Script+audio verrouillés, breakdown v2 écrit, code v1→v3 rendu mais mise en scène à revoir (caméra suiveuse, feedback flèches, split-screen beat 7).
 metadata:
   type: project
 ---
 
-# STARTER — SOUDAN ACTE 3 (« SUIVRE L'OR »)
+# STARTER — SOUDAN ACTE 3 (« SUIVRE L'OR ») — REPRISE MISE EN SCÈNE
 
-> Actes 1 (v5-FINAL) et 2 (« Blocage », complet & poli) sont FAITS. L'Acte 3 est NON ÉCRIT :
-> la première étape est la PRÉ-PROD SCRIPT, pas le code.
+> Script v7 verrouillé, audio verrouillé (validé à l'oreille Aziz), breakdown technique v1 écrit PUIS
+> révisé v2 (retours jury Kimi/Gemini sur le render v3 + référence vidéo Silk Road retrouvée par Aziz).
+> `SoudanActe3.tsx` codé et rendu v1→v3, mais le v3 reflète encore l'ANCIENNE mise en scène (breakdown v1).
+> **Cette session = coder la révision v2 dans le code, PAS repartir de zéro.**
 
 ## Avant toute réponse technique, lis dans cet ordre :
-1. `memory/episodes/soudan-midform/STATUS.md` — état complet (Actes 1-2 faits, ce qui reste).
-2. `memory/projects/soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md` — trous recherche à combler
-   (Russie/Wagner-or-sanctions + Égypte) AVANT d'écrire l'acte (si le fichier existe).
-3. `memory/projects/soudan-midform-DONNEES.md` — données/faits fact-checkés (or RSF → Émirats/Turquie).
-4. `memory/projects/soudan-midform.md` — point d'entrée pré-prod du sujet.
-5. `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` + `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md`.
+1. `memory/episodes/soudan-midform/STATUS.md` — état complet Acte 3 (section dédiée en tête).
+2. `memory/projects/soudan-midform-ACTE3-BREAKDOWN.md` — **section "RÉVISION v2" en tête = LA référence
+   à coder.** Le reste du doc (v1) garde coordonnées géo/composants/assets, mais camKeys/beat 7 du bas de
+   page sont SUPERSEDED par la v2.
+3. `memory/projects/soudan-midform-ACTE3-SCRIPT.md` — script v7 (texte INCHANGÉ, ne pas retoucher).
+4. `memory/_r-and-d-mapanimation-ANALYSE.md` (lignes 47-53) — gap caméra-suiveuse + référence Silk Road.
 
 ## Étapes de la session (ordre) :
-1. **Combler les trous recherche** (Russie/Wagner, Égypte) → fact-check.
-2. **Écrire le script Acte 3** (« suivre l'or → Émirats/Turquie », acteurs externes) → jury LLM 3 modèles → lock.
-3. **Générer l'audio** (`scripts/generate-narration-expressive.py`, Océane V3 → STS GéoAfrique) → whisper-align.
-   ⛔ **Scanner `memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`** (méthode gravée Acte 2) : é toniques finaux
-   à reformuler, 2-3 gros blocs, silences 0.7s, stability 0.45, audit à l'oreille (whisper ne juge PAS la
-   prononciation). + `[[TTS-V3-TAGS-REGLES]]`.
-4. **Storyboard registres** (proposer, valider Aziz) PUIS breakdown PUIS code sur le socle carte.
+1. **Caméra suiveuse (Décision 1 + 1bis du breakdown v2)** : écrire `cameraFollowsPath(waypoints, t, zoom)`
+   — recalcule une `CamKey` dynamique à partir de la position du marqueur `GeoFlowConnection` au lieu
+   d'une séquence figée. Référence visuelle : `_incoming/silk road 2.mov` (zoom serré permanent sur le
+   point courant, JAMAIS de vue d'ensemble). Appliquer aux beats 3 et 5.
+2. **Feedback aux impacts (Décision 2-3)** : pictogrammes SVG simples (lingots, drones RSF/SAF) codés à
+   la main — 2-3s d'apparition puis disparition, PAS de widget permanent. Pas d'appel GLM pour ça (formes
+   trop simples).
+3. **Beat 7 en vrai split-screen (Décision 4, RÉVISÉE 2 fois — lire l'encart correction dans le
+   breakdown)** : utiliser `WarMapSplitScreen` (`src/projects/warmap/_shared/WarMapSplitScreen.tsx`,
+   composant PROD EXISTANT, gère 2-3 volets nativement) — PAS recoder un panneau custom. Le 1er
+   prototype (`Acte3DashboardTest.tsx`, panneaux flottants) a été testé et REJETÉ par Aziz, supprimé.
+   **À trancher en premier avec Aziz** : contenu des 3 volets — volet central Mapbox Soudan quasi-certain,
+   volets latéraux EAU/Turquie encore ouverts (vraies vues Mapbox indépendantes vs 2D flat/SVG simple).
+4. Re-render, self-review (`scripts/tools/mapbox-selfreview.py`), audit visuel Claude AVANT présentation,
+   re-présenter à Aziz.
 
 ## Socle technique déjà là (réutiliser tel quel, NE PAS re-coder) :
-- Moteur carte : `src/projects/warmap/engine/SoudanWarMapEngine.tsx` (1 Map continue, grammaire AES).
-- Références code : `src/projects/warmap/soudan-acte1/SoudanActe1.tsx` + `soudan-acte2/SoudanActe2.tsx`.
-- Briques signature (cf `WARMAP-GRAMMAIRE.md` §8) : `TwoFaceToken`, `YearCounter`/`KmCounter`,
-  `BlocImpasseB6`, `KhartoumEtatMajorSVG`, supply vivante, forces figées — adapter, pas dupliquer.
-- Assets : `public/_shared/sprites/warmap/` (portraits nets, mine-or-td, base-saf-td, tank/tech).
+- Moteur carte : `SoudanWarMapEngine.tsx` (children() expose maintenant aussi `mapRef`, 2e argument).
+- `GeoFlowConnection.tsx` (`_shared/`) : tracé courbé + marqueur mobile indépendant + transformation
+  couleur — déjà prouvé, réutilisé tel quel pour les 3 trajets (or/drones/Turquie).
+- `CountryColorLayer` (dans `SoudanActe3.tsx`) : aplat de couleur nationale au dézoom large — nuance
+  doctrine tranchée, cf `CARTO-OVERLAYS-PRINCIPES.md` (aplat pays externe ≠ anti-pattern aplat-faction).
+- `WarMapSplitScreen` (`_shared/`) : split 2-3 volets, production validée — à utiliser pour le beat 7.
+- Assets : `mine-or-td`, `dubai-hub-td`, `suakin-dock-td`, drapeaux `ae/tr/eg.png`.
 
-## Non-négociables :
-- Grammaire AES (contour permanent, halos locaux jamais d'aplat), zoom serré + drift, jetons taille écran fixe
-  (rétrécir au dézoom, cf fix Acte 2 beat 9).
-- ⛔ **R-V5 objet orphelin** : un objet figuratif sur la carte doit être NOMMÉ par la voix, sinon confus
-  (rejets palais + mine Acte 2). Cf `WARMAP-GRAMMAIRE.md` §8.
-- ⛔ Nom propre à l'écran → orthographe Wikipédia AVANT render (`Hemedti`, `al-Burhan`, + nouveaux acteurs).
-- Sprite bitmap : PAS de scale oscillant continu (flou). Render plein format (scale=1). Review = signal jamais juge.
-- ⚠️ AVANT ACTE 3 : promouvoir l'Acte 2 en FINAL une fois verdict Aziz + SFX validés
-  (`out/episodes/soudan-midform/wip/acte2-FINAL.mp4`).
+## Non-négociables (hérités v1, toujours valides) :
+- Grammaire AES (contour permanent, halos locaux jamais d'aplat sur le SOUDAN — nuance pays externes OK).
+- ⛔ R-V5 objet orphelin : objet figuratif nommé par la voix, sinon confus.
+- ⛔ Nom propre à l'écran → Wikipédia AVANT render (`Hemedti`, whisper l'écrit "Emmettie" — piège connu).
+- Render plein format (`scripts/render-mapbox.sh`, scale=1). Review = signal jamais juge.
+- `_incoming/silk road 1.mov` et `2.mov` : référence essentielle, NE PAS SUPPRIMER.

@@ -29,6 +29,7 @@
 | `StatComparisonGrid` | layouts | "France vs RDC GDP" — 2 blocs stats face-à-face, VS central, coins crosshair |
 | `ComparisonTable` | inserts | "Chine 6x plus grande que..." — tableau 2 colonnes avec pills cascadants + verdict |
 | `SplitScreenSouverain` | layouts | "D'un côté... de l'autre..." — split 50/50 générique Tailwind avec labels |
+| `WarMapSplitScreen` | warmap/_shared | Split-screen War-Map 2 OU 3 volets (vertical/horizontal), chaque panneau = render-prop indépendant (sa propre carte/data), ouverture animée (volets glissent), connecteur optionnel qui traverse la séparation. Production, promu R&D, validé Aziz 2026-06-14. Cas d'usage roi : opposer 2-3 mondes (carte vs data, ou N pays côte à côte type Sénégal/Botswana/Norvège/Congo). Doctrine : `WARMAP-GRAMMAIRE.md`. |
 | `FaceAFace` | layouts | Deux entités en face-à-face avec tension visuelle |
 | `WealthScale` | inserts | "Riche en ressources. Pauvre en revenus." — balance de justice déséquilibrée |
 | `OsintSplitScreen` | inserts | "Source brute → analyse" — split 50/50 OSINT avec annotations cercles |
@@ -227,6 +228,16 @@
 | `LeSceau` | layouts | Sceau officiel / cachet institutionnel |
 | `LeSemeur` | layouts | Dispersion de données / semis de points |
 | `ParallaxeDiorama` | layouts | Vue diorama avec parallaxe (profondeur de champ) |
+
+### Registre encre SVG plein écran — grille + graphiques (Vox grid)
+
+| Composant | Import | Quand Aziz dit... |
+|---|---|---|
+| `GridBackground` | components (racine) | "Fond quadrillé carnet de données" — grille 2 pas (fin+large) à poser en 1er enfant d'un `<svg>`, registre encre/parchemin data-viz |
+| `InkBarChart` | components (racine) | "Un graphique en barres qui se construit" — barres qui grandissent depuis leur base (spring rebond), axe + graduations, registre encre |
+| `InkDonutChart` | components (racine) | "Un camembert/anneau qui se trace" — segments en arc qui se dessinent (stroke), labels inline ou leader-line |
+| `CounterEncre` | components (racine) | "Un chiffre qui défile jusqu'à sa valeur" — compteur roll-up, variant `badge` (compact encadré) ou `display` (gros chiffre plein écran + légende) |
+| `DataScreen` | components (racine, prévu) | "Un personnage devant un écran/tableau de données" — écran/interface stylisé encre, à poser en arrière-plan d'un personnage (`GeminiRig`/`StickRig`) qui regarde/pointe |
 
 ### ⭐ Templates HERA — motion-design validé externe (décodés hera.video 2026-06-18) — réponses PRIORITAIRES
 > Vrais templates motion-design (Y Combinator, validés par des pros). À privilégier comme réponse à une intention data-viz.
