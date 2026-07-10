@@ -8,6 +8,20 @@
 > vehicules mobiles), le SVG (GLM ou agent Claude) est BATTU par Gemini image-gen + traitement integration
 > (desaturation+cadre) — voir `memory/STARTER-PROMPT-inserts-tactiques-soudan.md` § "VERDICT CONFIRME".
 > Le SVG reste la bonne reponse pour les elements mobiles/nombreux (jetons, vehicules, effets).
+>
+> ⭐⭐⭐ **MISE A JOUR 2026-07-10 — GPT-5.6 Sol teste en profondeur (`openai/gpt-5.6-sol` via OpenRouter),
+> voir section dediee § "GPT-5.6 Sol" tout en bas du fichier pour le detail complet.** Verdict resume :
+> 1. **Portrait/visage rigge** (clignement, parole, expressions) : ✅✅ succes net, premier modele a produire
+>    un vrai rig facial anime robuste (teste avec transforms REELS, pas juste lecture JSON).
+> 2. **Decor/scene riche statique + elements en translation** (carte, paysage, usine, bateau/soleil/oiseaux) :
+>    ✅✅ excellent, bat GPT-5.5 sur ce registre — **remplace GPT-5.5 dans le pipeline** pour ce role.
+> 3. **Personnage COMPLET articule** (corps+bras+jambes visibles) : ⛔ mecaniquement solide (rotation sans
+>    decrochage) MAIS esthetiquement grotesque a l'oeil ("cutout" visible, segments non fondus) — **NE
+>    remplace PAS Gemini** pour un perso destine a bouger en gros plan.
+> 4. **Imitation de style depuis une image de reference** : ✅ CAPABLE, mais seulement si on donne l'image
+>    ET des contraintes verbales explicites sur le trait/couleur — sans ca, Sol impose son propre style
+>    (plus riche/texture) meme quand on lui demande d'imiter. Sans image-ref (texte seul), Sol produit
+>    TOUJOURS son registre par defaut, jamais le style plat/lineaire d'un episode existant.
 
 ## Role de GLM-5.2 (ce qu'on a decide)
 
@@ -287,3 +301,321 @@ plusieurs appels a un modele vision (Gemini, GLM avec image, etc.), donner le **
 en patron dans le prompt est nettement superieur a donner seulement l'image PNG rendue en reference —
 l'image seule fait deriver la geometrie (proportions, structure de groupes) meme quand les couleurs sont
 explicites. Applicable a toute generation de pose/variante SVG via LLM, pas seulement ce personnage precis.
+
+## ⭐⭐ GPT-5.6 Sol (`openai/gpt-5.6-sol` via OpenRouter) — teste 2026-07-10, jour +2 apres sortie (9 juillet)
+
+> Sortie publique du 9 juillet 2026 (limited preview 26 juin). Famille GPT-5.6 = 3 tiers durables (Sol
+> flagship $5/$30 par M tok, Terra equilibre $2.50/$15, Luna rapide $1/$6 — le NUMERO marque la generation,
+> le NOM marque un palier de capacite qui peut evoluer independamment). Recherche Tavily prealable (voir
+> session) : retours communaute MITIGES sur le frontend/SVG anime specifiquement (un benchmarker YouTube
+> note Sol 6-7/10 vs Fable 5 9-10/10 sur SVG panda/animations JS ; double le score GPT-5.5 mais reste
+> derriere Fable/Opus) — nos tests confirment un tableau plus NUANCE que "bond generalise".
+
+**3 registres testes, verdicts opposes selon le registre — PAS un simple "meilleur partout" :**
+
+### 1. Carte/schema compose (registre Souverain, prompt vision reutilise du test Khartoum "3 cibles")
+✅ **Net progres vs GPT-5.5 et Gemini sur CE prompt precis**. Sol a invente une grammaire cartographique
+complete que ni GPT-5.5 ni Gemini n'avaient produite spontanement : cadre coins biseautes type dossier
+militaire, rosace nord + grille de coordonnees, cartouche legende separee, sous-titres par cible
+("OBJECTIF 01 - TRANSMISSIONS"), quartiers nommes, numero de dossier. Batiments plus lisibles en top-down
+(aeroport = vrai fuselage d'avion stylise, original). Gemini reste superieur en texture/matiere (hachures
+plus fines) mais composition plus minimale. Cout : 0,295$/appel (comparable GPT-5.5).
+Fichiers scratch (non conserves dans repo) : render `khartoum-svg-sol-render.png`.
+
+### 2. Personnage articule/animable (prompt EXACT du test decisif documente ci-dessus, § "LE VRAI TEST DECISIF")
+❌ **MEME ECHEC STRUCTUREL que GPT-5.5, pas le comportement Gemini.** Genere les 4 poses (idle/walk-a/
+walk-b/bend-reach) avec la MEME topologie de groupes demandee, silhouette et anatomie VISUELLEMENT
+meilleures que le premier jet GPT-5.5 d'origine (bend-reach bien pese, bassin qui recule correctement).
+MAIS verification XML brute sans appel : **0 `rotate()`, 3 `translate()` seulement (non-imbriques,
+juste tete/chapeau/torse positionnes)** — chaque membre est un `<path>` en COORDONNEES ABSOLUES, pas une
+hierarchie `translate(joint) rotate(angle)` imbriquee. Sol "pense illustration figee", pas "squelette
+articule" — n'a pas herite du comportement spontane de Gemini sur ce type de prompt. Consequence probable
+non testee ici (mais deductible du pattern GPT-5.5 deja documente) : interpolation entre poses = cut sec,
+pas de balancement fluide. **Gemini 3.1 Pro reste donc le SEUL choix pour un personnage destine a etre
+anime en continu.** Cout : 0,191$/appel (6262 tokens dont 1837 de reasoning interne).
+
+### 3. Organique statique (portrait visage + animal) — ⭐⭐ le vrai signal nouveau de cette session
+✅✅ **Franc succes sur les 2 tests, nettement au-dessus de GPT-5.5/GLM sur ce registre.**
+- Portrait pecheur senegalais (buste, chapeau de brousse) : visage EXPRESSIF avec vraie texture (hachures
+  de peau sur front/joues/machoire, regard habite/sourcils fronces qui donnent du caractere), tressage du
+  chapeau detaille avec ombrage — tres au-dessus du "2 points pour les yeux" habituel GLM/GPT-5.5.
+- Aigle en vol (ailes deployees) : plumage credible en groupes de plumes stylisees (PAS geometrique plat,
+  PAS 200 plumes individuelles), vraie sensation de mouvement (lignes de vitesse, posture dynamique),
+  anatomie d'aile coherente, serres repliees correctement en vol.
+- Se rapproche ou egale ce qu'on attendait seulement de Gemini sur l'organique jusqu'ici — **candidat
+  serieux pour tout portrait/personnage FIGE/animal/texture organique**, a confirmer par un comparatif
+  cote-a-cote direct avant adoption definitive (pas encore fait). Cout : 0,172$ (portrait) / 0,151$ (aigle).
+
+**Gotcha operationnel observe (latence variable, pas un bug reseau)** : les appels d'EXECUTION concrete
+(dessiner un SVG contraint) repondent en 1-4min. Un appel de PURE REFLEXION META (demander a Sol d'analyser
+ses propres limites SVG vs GPT-5.5/Gemini/Claude) a timeout 2x de suite (>3min sans reponse, essaye a la
+fois avec `reasoning: medium` explicite et sans override) — abandonne sans reponse obtenue. Hypothese : les
+questions ouvertes/auto-reflexives/comparatives-nommees declenchent plus de reasoning interne cache
+(facture mais invisible) que les taches convergentes d'execution, peut-etre amplifie par les garde-fous
+"positionnement produit" du system card Sol. Ne pas re-tenter ce type de question sans raison forte.
+
+**Verdict operationnel resume** : Sol n'est PAS un remplacement generalise de Gemini/GPT-5.5, mais un
+AJOUT cible pertinent pour 2 registres precis (carte/schema compose riche ; portrait/animal organique
+statique). Ne pas l'utiliser pour un personnage anime en continu (Gemini garde ce role). A re-tester
+si adoption confirmee : comparatif direct cote-a-cote Sol vs Gemini sur un MEME brief organique pour
+trancher lequel devient le candidat principal de ce registre.
+
+### ⭐⭐⭐ Portrait VISAGE rig-first — SUCCES, contrairement au corps entier (2026-07-10, meme session)
+
+> Question d'Aziz apres le §3 ci-dessus : "un bon SVG devrait permettre de manipuler la bouche/cligner
+> des yeux, sinon c'est inutile". Reflexe correct confirme par ce test : **regenerer de zero avec la
+> contrainte de rig des la conception, PAS demander a rigger une image deja generee** (le probleme que le
+> § "reproduire une pose" vs "concevoir pour l'animation" avait deja identifie plus haut dans ce fichier —
+> reproduire une image existante est un probleme DIFFERENT et plus dur que concevoir nativement pour
+> l'animation).
+
+**Protocole** : meme structure que le test "rig-first" GPT-5.5 deja documente dans
+`PERSONNAGE-VIVANT-INDEX.md` (qui avait ECHOUE — JSON de pivots cheerful mais rotation reelle decrochait
+les membres), applique cette fois au VISAGE plutot qu'au corps. Prompt texte-pur (pas d'image-ref)
+demandant explicitement des groupes nommes exacts (`eyebrow-left/right`, `eye-left/right-open`,
+`eyelid-left/right`, `mouth-neutral`, `mouth-open`, `head`, `hat`) + JSON de pivots {pivot_x, pivot_y,
+purpose} pour chacun.
+
+**Resultat structurel** : ✅ tous les groupes demandes presents avec les BONS id. Sol a meme livre le
+mecanisme lui-meme : `eyelid-left/right` ont un `transform="translate(0 y_pivot) scale(1 0.08)
+translate(0 -y_pivot)"` DEJA code en dur (paupiere quasi fermee par defaut, prete a etre pilotee), et
+`mouth-open` a `opacity="0"` par defaut (pret pour cross-fade). Pas juste des groupes nommes a posteriori —
+un vrai design pense pour le pilotage code des la genese.
+
+**LE VRAI TEST (transforms reels appliques, pas juste lecture du JSON)** : proto Remotion
+`src/projects/_rnd/svg-scenes/ProtoSolPortraitRigTest.tsx` (`RND-ProtoSolPortraitRigTest`) — clignement
+(scale Y anime depuis le pivot rapporte, en PLUS du scale de base du SVG source), parole (cross-fade
+opacity mouth-neutral/mouth-open), hochement de tete (rotate autour du pivot head 300,282). **SUCCES NET
+sur les 4 etats verifies visuellement** (repos/clignement/parole/tilt, contact sheet
+`rigtest-final-sheet.png`) : paupieres qui ferment proprement SANS deformer les joues/sourcils voisins,
+bouche qui s'ouvre avec interieur coherent sur le MEME point d'ancrage (pas de saut), tete qui incline
+legerement sans decrochage visible avec le cou (non rigge). **Contraste net avec l'echec GPT-5.5** (rotation
+meme moderee au coude/epaule = decrochage visible) — ici, meme epreuve de "transform reel applique", zero
+decrochage observe.
+
+**Conclusion operationnelle** : Sol reussit le rig-first sur le VISAGE la ou GPT-5.5 avait echoue sur le
+CORPS — pas necessairement une capacite generale "Sol rig mieux que GPT-5.5" (a nuancer, un seul test), mais
+un signal fort et actionnable : **le visage rigge (clignement/parole/tete) est un nouveau registre
+exploitable pour notre pipeline**, complementaire au rig corporel Gemini (marche/gestes complets, role
+inchange). Cout cumule ces 2 essais (1er jet illustration + rig-first) : ~0,35$.
+
+**A tester si cette piste est reprise en production** : (1) plusieurs variantes d'expression (sourire,
+serieux, surprise — comme le catalogue GeminiRig existant) generees separement puis cross-fadees ; (2) un
+2e personnage pour verifier la reproductibilite du pattern (n'est-ce pas un coup de chance sur ce prompt
+precis ?) ; (3) integrer un vrai clignement PERIODIQUE naturel (pas juste 3 clignements scriptes) comme
+fait pour d'autres rigs de production.
+
+Fichiers de session (scratchpad, non persistants) : `test-gpt56-sol-khartoum.py`, `gen-pose-bank-sol.py`,
+`gen-organic-sol.py`, `gen-portrait-rigfirst.py`, prompts et SVG bruts associes. Fichier CONSERVE dans le
+repo (proto reutilisable) : `src/projects/_rnd/svg-scenes/ProtoSolPortraitRigTest.tsx`.
+
+### ⭐⭐⭐⭐ REVIREMENT MAJEUR — personnage COMPLET rig-first (corps entier) : SUCCES (2026-07-10, meme session)
+
+> Suite directe du point precedent. Aziz a pousse plus loin avec 2 questions : (1) peut-on avoir des
+> expressions variees (sourcils faches) sur CE visage ? (2) peut-on avoir un personnage COMPLET (bras+jambes
+> visibles qui bougent), pas juste un buste ? Ma reco initiale etait prudente : le test precedent du MEME
+> jour sur la banque de poses (walk-a/walk-b, prompt SANS contrainte de rig explicite) avait echoue
+> exactement comme GPT-5.5 (0 rotate, paths absolus) — donc hypothese de depart = le succes du visage ne
+> se generalise probablement pas au corps entier. **Cette hypothese s'est revelee FAUSSE.**
+
+**1. Expressions faciales** (`prompt-sol-expressions.txt`, memes contraintes rig-first que le portrait,
+mais demandant 3 variantes eyebrow-left/right + mouth : neutral/angry/surprised, MEME pivot partage entre
+variantes) : ✅ succes net. Les 3 expressions lisibles instantanement (neutral calme, angry = sourcils
+tombants en V + bouche pressee dure, surprised = sourcils hauts arques + bouche en "o") sur EXACTEMENT
+la meme geometrie de base (yeux/nez/oreilles/chapeau identiques) — Sol a gere seul l'opacity par defaut
+(`opacity="1"` sur -neutral, `"0"` sur -angry/-surprised) ET des pivots identiques entre les 3 variantes
+d'une meme partie (verifie : `data-pivot-x="230" data-pivot-y="270"` pour les 3 versions de eyebrow-left).
+Contact sheet : `expr-contact-sheet.png`. Cout 0,151$.
+
+**2. Personnage COMPLET (buste+bras+jambes, profil, prompt EXPLICITEMENT rig-first avec hierarchie
+IMBRIQUEE demandee)** : ✅✅ **succes total, LE resultat le plus significatif de la session.**
+
+Protocole strict (prompt `prompt-sol-fullbody-rigfirst.txt`) : demande explicite d'une hierarchie
+`torso > leg-upper > leg-lower > foot` et `torso > arm-upper > arm-lower > hand` avec CHAQUE enfant
+positionne EN COORDONNEES LOCALES RELATIVES AU PARENT (comme un vrai squelette 2D cutout-puppet), + JSON
+de pivots avec `parent_joint` explicite. **Verification structurelle du XML brut** (pas juste le JSON,
+la vraie balise) : les `<g>` sont REELLEMENT imbriques (`leg-lower-front` est un enfant XML DE
+`leg-upper-front`, pas un sibling au meme niveau) — **23 `translate()` ET 23 `rotate()`**, ratio 1:1
+coherent avec un squelette complet (contraste total avec le test walk-bank du meme jour : 0 rotate).
+
+**LE VRAI TEST (rotations reelles appliquees, proto Remotion, pas juste lecture du XML)** :
+`src/projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest.tsx` (`RND-ProtoSolFullbodyRigTest`) — rotation
+simultanee epaule (-70deg) + coude (+45deg) + hanche (-60deg) + genou (+65deg), amplitude LARGEMENT
+superieure aux ~20-25deg qui avaient fait decrocher le bras dans le test GPT-5.5 documente plus haut dans
+ce fichier (§ PERSONNAGE-VIVANT-INDEX). **Resultat : AUCUN decrochage visible sur toute l'amplitude testee**
+— bras et jambe restent des chaines visuellement connectees et credibles (contact sheet
+`fbtest-contact-sheet.png`, video rendue et confirmee par Aziz). Cout 0,231$.
+
+**Conclusion operationnelle — la nuance qui compte** : ce n'est PAS "Sol rig mieux que GPT-5.5 en general"
+(le test walk-bank du meme jour, SANS la contrainte de hierarchie imbriquee explicitement demandee, a
+echoue pareil que GPT-5.5) — c'est plutot **"Sol EST CAPABLE de produire une vraie hierarchie squelette
+imbriquee QUAND on la lui demande frontalement et en detail (parent/enfant, coordonnees locales, test
+mental de rotation demande dans le prompt lui-meme)"**, la ou GPT-5.5 avait echoue MEME quand on le lui
+demandait explicitement (le fameux test "rig-first" de GPT-5.5 avait produit un JSON de pivots plausible
+mais AUCUNE hierarchie XML reelle — juste des paths absolus annotes a posteriori). C'est un vrai saut de
+capacite generative, pas juste un meilleur prompt de notre part (le meme type de prompt avait deja ete
+tente sur GPT-5.5 sans succes).
+
+**Portee** : Sol devient un candidat serieux pour un personnage COMPLET (visage expressif + corps articule)
+dans un seul modele — combinaison qu'on n'avait jusqu'ici qu'en cumulant 2 pistes distinctes (Gemini pour
+le corps, rien de fiable pour un visage rigge). Reste a valider avant adoption production : (1)
+reproductibilite sur un 2e personnage/sujet (un seul test reussi pour l'instant) ; (2) integration a un
+vrai cycle de marche complet (ce test = pose figee + rotation isolee, pas un pas coordonne) ; (3)
+coherence de style si on genere plusieurs poses du MEME personnage en plusieurs appels (risque deja
+documente ailleurs dans ce fichier : la coherence inter-appels n'est pas garantie).
+
+Fichiers de session (scratchpad, non persistants) : `prompt-sol-expressions.txt`,
+`prompt-sol-fullbody-rigfirst.txt`, `gen-sol-generic.py`, SVG et JSON de pivots associes. Fichier CONSERVE
+dans le repo (proto reutilisable) : `src/projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest.tsx`. Videos de
+preuve (catbox) : portrait rig `https://files.catbox.moe/lzh7rx.mp4`, corps complet rig
+`https://files.catbox.moe/i4yc5z.mp4`.
+
+### ⛔ CORRECTIF JUGEMENT AZIZ — personnage complet : mecaniquement solide MAIS esthetiquement grotesque
+
+> Apres avoir VU la video (pas juste le diagnostic XML), Aziz corrige le verdict "succes total" ci-dessus :
+> le portrait reste excellent, MAIS le corps complet est jugé **desarticule/grotesque** a l'oeil — "on voit
+> litteralement du cutout", les bras ne semblent pas continus. Verdict Aziz : **ne remplace PAS Gemini pour
+> un personnage complet anime**, meme si le rig ne decroche pas mecaniquement.
+
+**Root cause (analyse a froid de l'image de repos, pas juste le mouvement)** : Sol dessine chaque segment de
+membre comme une CAPSULE quasi-cylindrique ISOLEE avec son propre contour ferme complet — a CHAQUE jointure
+(epaule/coude/hanche/genou) le contour d'un segment se termine et un autre recommence, sans fusion de
+silhouette. Resultat : "pantin en papier decoupe" meme a l'ARRET (visible sur `sol-fullbody-rest.png` : le
+coude a un changement de diametre en marche d'escalier). **Sol a resolu le probleme MECANIQUE (rotation sans
+decrochage, § ci-dessus, verifie et confirme) mais PAS le probleme ESTHETIQUE (silhouette organique
+continue)** — ce sont 2 problemes distincts. Cette distinction n'etait pas capturee par la seule verification
+XML/rotation — la lecon methodologique : **verifier aussi le jugement visuel a l'oeil sur l'image de repos**,
+pas seulement la robustesse mecanique sous transform.
+
+**Comparaison a Gemini** : Gemini reste superieur sur ce registre precis car il "pense silhouette organique
+globale" avant de decouper en groupes (comportement deja documente dans ce fichier), alors que Sol semble
+avoir approche le probleme dans l'autre sens : assembler des pieces qui pivotent proprement, en sacrifiant
+la fusion visuelle aux jointures.
+
+**VERDICT REVISE, definitif pour ce chantier** : ⛔ Sol N'EST PAS un remplacement de Gemini pour un
+personnage COMPLET anime (corps+bras+jambes visibles). Le succes du visage seul (buste, § ci-dessus) reste
+valide et confirme. Piste future si reprise : tester le rig CAPSULE existant (`capsuleSegment.ts`, deja en
+prod) comme reference de style a MONTRER a Sol (pas a rigger apres coup, mais comme exemple de "comment
+fondre les segments" dans un futur prompt) — non teste, hypothese seulement.
+
+### ⭐⭐ Sol = decor/scene RICHE anime en TRANSLATION (pas de rig articule) — succes confirme (meme session)
+
+> 3e test de la meme session, suite a la question Aziz "et une vraie scene narrative complete (extrait
+> CargoVoyage) ?". Angle choisi : tester Sol comme illustrateur de DECOR (son point fort deja prouve 2x :
+> carte Khartoum, portrait/aigle) + verifier si bateau/soleil/oiseaux peuvent etre animes en TRANSLATION
+> simple (pas de rotation/rig articule — le probleme different qui vient d'echouer ci-dessus).
+
+Prompt texte-pur (`prompt-sol-cargoscene.txt`) : scene 16:9 depart Afrique de l'Ouest (cacaoyers avec cabosses,
+collines, ocean avec profondeur, soleil bas au lever avec halo en couches, cargo simple, 1-2 oiseaux), avec
+contrainte explicite : `sun`/`ship`/`bird-1`/`bird-2` = groupes SEPARES a origine locale stable (translate
+seulement, pas de rotation), `smoke-wisp` = enfant de `ship` mais anime independamment (pulsation). JSON de
+coordonnees de depart + plages de translation suggerees demande en sortie.
+
+**Resultat visuel** : ✅✅ tres au-dessus de la reference PROTO en production (silhouettes plates, soleil
+disque uni) — halo de soleil 3 couches realiste, ocean avec bandes de profondeur + reflet lumineux, 12
+cacaoyers avec cabosses varies (Sol a utilise `<use href="#cacao-tree">`/`<use href="#cacao-pod">` sur 2
+`<defs>` reutilisees — optimisation spontanee, pas demandee). Bateau unifie coque anthracite + ligne de
+flottaison rouge + conteneurs varies (rust/ochre/green) + fumee texturee.
+
+**Structure verifiee** : groupes `sun`, `ship`, `bird-1`, `bird-2` bien SEPARES avec origine locale stable,
+JSON de coordonnees plausible (`ship: x=400 suggeré translate -1050..1550`). Proto Remotion
+`ProtoSolCargoSceneTest.tsx` (`RND-ProtoSolCargoSceneTest`) : bateau qui navigue (translate x), soleil qui
+monte+derive (translate x/y), fumee qui pulse (scale+opacity independant du deplacement du bateau), oiseaux
+qui glissent en diagonale — **tout fonctionne proprement**, aucun probleme (previsible : translation/scale
+sur groupes stables, pas le probleme d'articulation qui a fait echouer le personnage complet). Cout 0,226$.
+
+**Conclusion operationnelle, cette session au complet** : Sol vaut le remplacement de GPT-5.5 dans le
+pipeline pour TOUT ce qui est portrait/decor/carte/schema/element en translation simple (meilleur rapport
+capacite/prix confirme sur 5 registres distincts) — MAIS reste ECARTE pour tout personnage COMPLET articule
+destine a un mouvement crédible en gros plan (Gemini garde ce role, seul candidat qui "pense corps organique"
+nativement). Portrait/visage riggé (clignement/parole/expressions) = nouveau registre EXPLOITABLE pour Sol,
+independant du corps.
+
+Video de preuve (catbox) : scene decor animee `https://files.catbox.moe/yx6ur5.mp4`. Fichier CONSERVE dans
+le repo : `src/projects/_rnd/svg-scenes/ProtoSolCargoSceneTest.tsx`.
+
+### ⭐ Test imitation de STYLE depuis une image de reference (2026-07-10, dernier test de la session)
+
+> Suite a un 4e test (usine cacao texte-pur, SANS image-ref) que Aziz a juge a raison NON CONCLUANT — Sol a
+> produit sa propre esthetique riche/texturee (traits epais variables, degrades partout, hachures obliques,
+> ombre floue) au lieu du registre PLAT/LINEAIRE de l'episode cacao-chocolat reel (trait fin constant, aplats
+> purs, ombre simple). J'avais d'abord affirme a tort une "polyvalence de style confirmee" en ne comparant
+> que le SUJET/composition, pas le vrai traitement graphique — **erreur de jugement corrigee sur demande
+> d'Aziz**, comparaison cote-a-cote refaite honnetement. Ce test n'a PAS ete conserve/documente en detail
+> (verdict : style par defaut de Sol ≠ style plat de cet episode, sans image-ref).
+
+**Test de rattrapage reussi** : meme usine, cette fois avec l'image reelle (`usine70.png`, frame extraite de
+`out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` ~1:10) envoyee en REFERENCE DE STYLE + instructions verbales
+explicites sur les caracteristiques a matcher (trait fin constant, aplats purs sans degrade/hachure, fond
+creme neutre, ombre simple), avec LIBERTE CREATIVE totale sur le sujet/composition (pas de copie).
+
+**Resultat : ✅ succes net, contraste total avec le test sans image-ref.** Sol a reproduit fidelement le
+registre plat/lineaire (verifie point par point : trait fin regulier, aplats sans degrade, ombre ellipse
+simple, fond neutre) tout en inventant librement son propre contenu — un planteur en stick-figure (meme
+registre pictogramme que le reste de notre pipeline !), un panneau "CACAO COOP", des sacs "BEANS/CACAO/
+COOP", un cacaoyer, un logo cabosse, un texte d'accroche cohérent ("De la cabosse a la valeur locale").
+
+**Conclusion operationnelle (la plus actionnable de toute la session)** : Sol ne devine PAS un style depuis
+une simple mention texte de registre existant — il faut TOUJOURS lui donner (a) une image de reference du
+style visé ET (b) des contraintes verbales explicites sur le traitement graphique (epaisseur de trait, aplat
+vs degrade, traitement d'ombre). Avec ces 2 ingredients, il imite fidelement tout en gardant sa capacite
+d'invention de contenu. **Implication pratique pour la production** : pour generer une NOUVELLE scene devant
+rester visuellement coherente avec un episode DEJA EN COURS/EXISTANT, toujours joindre une frame de
+reference + une description explicite du traitement (pas juste "meme style que d'habitude").
+
+Fichiers CONSERVES (rapatries hors scratchpad ephemere, `out/_rnd/gpt-5.6-sol-svg-test/`) :
+`sol-styleimit.svg` (SVG source), `sol-styleimit.png` (rendu), `style-comparison-v2.png` (comparaison
+cote-a-cote qui a permis le verdict correct), `sol-styleimit-pivots.json`.
+
+## ⭐⭐⭐ SYNTHESE FINALE SESSION 2026-07-10 — GPT-5.6 Sol, verdict complet et fichiers de preuve
+
+**Decision operationnelle** : adopter GPT-5.6 Sol (`openai/gpt-5.6-sol` via OpenRouter, prix ≈ GPT-5.5) en
+remplacement de GPT-5.5 pour : cartes/schemas composes, decors de scene riches, portraits/personnages
+organiques STATIQUES ou avec rig facial (visage seul). NE PAS l'utiliser pour un personnage COMPLET
+articule destine a bouger en gros plan (bras/jambes visibles) — Gemini 3.1 Pro garde ce role exclusif.
+
+**Tableau recapitulatif des 6 tests** :
+
+| # | Test | Registre | Verdict | Fichier preuve permanent |
+|---|---|---|---|---|
+| 1 | Carte tactique Khartoum (vision, prompt reutilise) | Carte/schema compose | ✅✅ bat GPT-5.5 et Gemini | `khartoum-svg-sol-render.png` (scratchpad, non rapatrie) |
+| 2 | Banque de poses corps (texte, SANS rig-first explicite) | Personnage anime | ❌ meme echec que GPT-5.5 (0 rotate) | non conserve |
+| 3 | Portrait + aigle (texte, organique statique) | Illustration organique | ✅✅ excellent, rivalise Gemini | `sol-portrait-pecheur.svg`, `sol-aigle.svg` |
+| 4 | Portrait RIG-FIRST (texte, visage anime) | Visage rigge | ✅✅ succes total, teste avec vrais transforms | `sol-portrait-rigfirst.svg` + `rigtest-final-sheet.png` |
+| 5 | Expressions faciales (neutral/angry/surprised) | Visage rigge | ✅ succes net | `sol-expressions.svg` + `expr-contact-sheet.png` |
+| 6 | Personnage COMPLET rig-first (texte, corps entier) | Personnage anime | ⚠️ mecanique OK, esthetique grotesque | `sol-fullbody-rigfirst.svg` + `fbtest-contact-sheet.png` |
+| 7 | Scene cargo (texte, decor+translation) | Decor riche anime | ✅✅ excellent, bat la reference proto | `sol-cargoscene.svg` + video `https://files.catbox.moe/yx6ur5.mp4` |
+| 8 | Scene usine SANS image-ref (texte seul) | Decor riche (imitation style) | ❌ style par defaut Sol, PAS le style de l'episode | non conserve (verdict initial errone corrige) |
+| 9 | Scene usine AVEC image-ref + contraintes verbales | Imitation de style | ✅ succes net, style fidelement reproduit | `sol-styleimit.svg` + `style-comparison-v2.png` |
+
+**Protos Remotion CONSERVES dans le repo** (composition + animation reelle testee, pas juste le SVG brut) :
+- `src/projects/_rnd/svg-scenes/ProtoSolPortraitRigTest.tsx` (`RND-ProtoSolPortraitRigTest`) — clignement/
+  parole/hochement de tete. Video : `https://files.catbox.moe/lzh7rx.mp4`.
+- `src/projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest.tsx` (`RND-ProtoSolFullbodyRigTest`) — rotations
+  epaule/coude/hanche/genou (test qui a REVELE le probleme esthetique cutout). Video :
+  `https://files.catbox.moe/i4yc5z.mp4`.
+- `src/projects/_rnd/svg-scenes/ProtoSolCargoSceneTest.tsx` (`RND-ProtoSolCargoSceneTest`) — decor maritime
+  anime (bateau/soleil/fumee/oiseaux en translation). Video : `https://files.catbox.moe/yx6ur5.mp4`.
+  ⭐ Piste d'enrichissement identifiee par Aziz, PAS ENCORE FAITE : oscillation des arbres (rotate leger
+  dephase par arbre), ocean qui bouge en boucle (translate horizontal des bandes de vagues), fumee avec
+  vraie derive+dispersion (pas juste pulsation sur place), desaturation progressive, oiseaux qui battent
+  des ailes (demanderait de regenerer l'oiseau en 2 groupes d'ailes avec pivot epaule, meme pattern que
+  le visage — pas encore teste).
+- `src/projects/_rnd/svg-scenes/ProtoSolUsineSceneTest.tsx` (`RND-ProtoSolUsineSceneTest`) — decor usine
+  anime (fumee 4-puffs/oiseaux/wagons). Video : `https://files.catbox.moe/kv3ikd.mp4`. ⚠️ Ce fichier
+  reprend le test SANS image-ref (§8, style par defaut Sol) — le test AVEC image-ref reussi (§9) n'a PAS
+  encore ete converti en proto Remotion anime (reste a faire si cette piste "imitation de style" est reprise).
+
+**Tous les SVG bruts sources + JSON de pivots + images de comparaison** : rapatries hors scratchpad
+ephemere dans `out/_rnd/gpt-5.6-sol-svg-test/` (session 2026-07-10, survivra a la cloture de session).
+
+**Cout total de la session de tests** : ~13 appels GPT-5.6 Sol via OpenRouter, ≈ 2,50$ cumules (0,15-0,25$/
+appel selon complexite). Rapport cout/decouverte tres favorable vu l'impact operationnel (nouveau modele
+principal pour 2 registres + nouveau registre visage-rigge jusqu'ici absent du pipeline).
+
+**Lecon methodologique a retenir** (Aziz a du corriger 2x un verdict trop optimiste de ma part cette
+session — cf. § personnage complet "grotesque" et § usine sans image-ref) : verifier TOUJOURS le jugement
+VISUEL a l'oeil (comparaison cote-a-cote rigoureuse, pas juste "meme sujet present") avant d'affirmer une
+equivalence de style ou de qualite — la verification structurelle/technique (XML, JSON de pivots, rotation
+sans decrochage) ne suffit PAS a elle seule, elle peut passer a cote d'un probleme esthetique evident a
+l'oeil nu.

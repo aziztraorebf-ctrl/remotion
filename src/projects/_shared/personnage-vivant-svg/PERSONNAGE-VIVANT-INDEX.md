@@ -3,6 +3,11 @@
 > ⭐ Brique TRANSVERSALE (tous projets). Un personnage d'encre stylisé, animé 100% par CODE (frame-driven),
 > qui marche / se penche / ramasse — SANS sprites, SANS frame-by-frame. Validé à 100% par Aziz le 2026-06-30
 > (prouvé sur le cacao). Si Aziz dit « une scène où le perso se penche et ramasse » → PARTIR D'ICI, pas de zéro.
+>
+> ⭐ **Nouveau registre 2026-07-10 : VISAGE riggé animable (GPT-5.6 Sol)** — clignement/parole/expressions
+> (neutral/angry/surprised) testés avec succès, complémentaire au rig CORPOREL Gemini ci-dessous (le corps
+> complet articulé reste le domaine exclusif de Gemini — Sol échoue esthétiquement sur ce point précis).
+> Détail complet : `memory/tools/openrouter-svg.md` § "GPT-5.6 Sol".
 
 ## Quand l'utiliser
 Tout sujet où un PERSONNAGE doit incarner une action dans une scène SVG encre/parchemin (planteur, mineur,

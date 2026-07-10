@@ -245,6 +245,8 @@ import { ProtoInsertTactiqueTopDown, PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES } from
 import { ProtoAssemblageKhartoumBeat5, PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAssemblageKhartoumBeat5";
 import { ProtoSolPortraitRigTest, PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolPortraitRigTest";
 import { ProtoSolFullbodyRigTest, PROTO_SOL_FULLBODY_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest";
+import { ProtoSolCargoSceneTest, PROTO_SOL_CARGO_SCENE_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolCargoSceneTest";
+import { ProtoSolUsineSceneTest, PROTO_SOL_USINE_SCENE_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolUsineSceneTest";
 import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
 import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
 import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
@@ -2146,6 +2148,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-ProtoAssemblageKhartoumBeat5" component={ProtoAssemblageKhartoumBeat5} durationInFrames={PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoSolPortraitRigTest" component={ProtoSolPortraitRigTest} durationInFrames={PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoSolFullbodyRigTest" component={ProtoSolFullbodyRigTest} durationInFrames={PROTO_SOL_FULLBODY_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolCargoSceneTest" component={ProtoSolCargoSceneTest} durationInFrames={PROTO_SOL_CARGO_SCENE_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolUsineSceneTest" component={ProtoSolUsineSceneTest} durationInFrames={PROTO_SOL_USINE_SCENE_TEST_FRAMES} fps={30} width={1080} height={1920} />
         <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />
