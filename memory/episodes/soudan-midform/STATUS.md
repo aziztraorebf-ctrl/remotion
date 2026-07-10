@@ -1,42 +1,73 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-09/10 (session 5) — 🎬 **ACTE 3 « SUIVRE L'OR » EN COURS** (script+audio
-verrouillés, breakdown v2 écrit, code v1→v3 rendu mais mise en scène à revoir — détail ci-dessous).
-**Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4, historique plus bas).
+**Dernière mise à jour :** 2026-07-10 (session 6) — 🎬 **ACTE 3 « SUIVRE L'OR » RÉVISION v2 CODÉE**
+(caméra suiveuse + pictogrammes + beat 7 rupture registre, tout rendu et validé visuellement — reste
+présentation Aziz). **Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4).
 **Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
 
-## 🎬 ACTE 3 « SUIVRE L'OR » (session 5, 2026-07-09/10) — EN COURS
+## 🎬 ACTE 3 « SUIVRE L'OR » (session 6, 2026-07-10) — RÉVISION v2 CODÉE, À PRÉSENTER
 
-- **Script v7 VERROUILLÉ** : 9 beats show-don't-tell, jury 3 LLM (GPT-5.5/Gemini 3.1 Pro/Kimi K2.5) +
-  fact-check (Tavily + Sonar Pro) + relecture Aziz (5 corrections texte). Fichier :
-  `memory/projects/soudan-midform-ACTE3-SCRIPT.md`.
-- **Audio VERROUILLÉ, validé à l'oreille Aziz** : Océane V3 → STS GéoAfrique, 3 parties + silences 0.7s,
-  ~126s. `public/_shared/audio/soudan/acte3-suivre-lor-FULL.mp3` + parties p1/p2/p3.
-- **Whisper-align fait** : `src/projects/warmap/soudan-acte3/whisper-p1/p2/p3.ts` + timing frame-précis
-  `soudanActe3Timing.ts`.
-- **Breakdown technique v1 écrit PUIS RÉVISÉ v2** suite jury Kimi/Gemini sur le render v3 (diagnostic :
-  dézoom vide en fin d'acte, flèches sans feedback à l'impact) + référence vidéo Silk Road retrouvée par
-  Aziz (`_incoming/silk road 1.mov` et `2.mov`, NE PAS SUPPRIMER). Fichier :
-  `memory/projects/soudan-midform-ACTE3-BREAKDOWN.md` (section v2 en tête = la référence à jour).
-- **Nouveau composant `GeoFlowConnection`** (`src/projects/warmap/_shared/GeoFlowConnection.tsx`) : tracé
-  courbé + marqueur mobile indépendant + transformation de couleur en cours de route. Testé isolé
-  (`GeoFlowConnectionTest.tsx`) avant intégration.
-- **Assets neufs générés** : `dubai-hub-td.png`, `suakin-dock-td.png` (visual-producer, validés).
-  Drapeaux `ae.png`/`tr.png`/`eg.png`/`sd.png` récupérés Wikimedia.
-- **`SoudanActe3.tsx` codé et rendu v1→v2→v3** (corrections successives : mines invisibles, jeton SAF
-  visible à tort, drapeau disproportionné, drapeaux qui disparaissaient entre sections). v3 validé
-  visuellement par Claude + présenté Aziz.
-- **⚠️ MAIS le v3 reflète encore le breakdown v1 (dézoom classique)** — la révision v2 (caméra suiveuse
-  type "Silk Road 2", pictogrammes SVG feedback aux impacts, beat 7 en vrai split-screen
-  `WarMapSplitScreen`) N'EST PAS ENCORE CODÉE. Prototype `Acte3DashboardTest.tsx` (panneaux flottants)
-  testé et REJETÉ par Aziz — approche à refaire avec `WarMapSplitScreen` (composant prod existant,
-  jamais utilisé pour ce beat).
+- **3 chantiers de la révision v2 codés dans `SoudanActe3.tsx` + `SoudanWarMapEngine.tsx`, rendus en
+  headless réel (`render-mapbox.sh`), validés visuellement par Claude** :
+  1. **Caméra suiveuse** : `cameraFollowsPath(waypoints, t, zoom)` ajoutée dans `SoudanWarMapEngine.tsx`
+     (générique, réutilisable) + `camKeys` élargi pour accepter `CamKey[] | (frame)=>CamKey`. `cam2At()`
+     dans `SoudanActe3.tsx` : phases suivi (zoom 5.2, marqueur en mouvement) / repos (zoom 4.6, re-resserre
+     sur Jebel Amer/Dubaï/Darfour entre chaque trajet) avec fondu 18 frames aux transitions. Beats 3-4-5.
+     Fidèle à la référence `_incoming/silk road 2.mov`.
+  2. **Pictogrammes SVG feedback impacts** (`ImpactPictogram`, formes à la main, pas de GLM) : lingots à
+     l'arrivée or/Dubaï, drone rouge à l'arrivée RSF, drone bleu à l'arrivée SAF. 2-3s apparition/disparition,
+     zéro widget permanent.
+  3. **Beat 7 rupture de registre** (`Acte3SideFlags`) : PAS `WarMapSplitScreen` (redimensionner la vraie
+     Mapbox Soudan dans un panel 1/3 casse tous les overlays enfants câblés 1920×1080 — testé, écarté avec
+     Aziz en session). À la place : carte Soudan reste PLEIN ÉCRAN en fond (zéro régression), 2 volets
+     EAU/Turquie glissent depuis les bords par-dessus (silhouette d3-geo + drapeau clippé, pattern copié de
+     `TerritoryFlagPanel`/`SceneComparaisonV3.tsx` Sénégal — pas de Mapbox dupliqué).
+- **Piste globe rotatif testée et ÉCARTÉE pour cette session** (nouvelle demande Aziz, vidéo repérage
+  `_incoming/globe trial.mov`) : proto `GlobeSoudanDubaiTest.tsx` (adapté de `GlobeLocationReveal.tsx`,
+  existant Souverain 9:16 → testé 16:9), style visuel validé (fidèle à la référence night-mode/étoiles),
+  MAIS bug confirmé en rendu headless réel : les tuiles vector natives du fond de carte (terrain/frontières)
+  ne se chargent quasi jamais à temps avant capture (disque bleu vide ~95% du rendu, continents visibles
+  seulement dans les toutes dernières frames). Distinct du bug fills déjà documenté (`rules-outils-
+  techniques.md`) qui touche les layers ADDED, pas les layers natifs du style de base. Piste à reprendre
+  en session R&D dédiée (`map.once('idle')` ou pré-chauffage tuiles avant capture), PAS à improviser sur
+  un acte en production. Caméra suiveuse Mercator gardée pour les beats 3/5 (déjà validée, zéro risque).
+- **Bug trouvé+corrigé en session** : volet Turquie du beat 7 utilisait `drawFlagCanvas` (codes ISO 3
+  lettres, "TUR" absent de la liste → juste "TR" en texte) au lieu du PNG `_shared/flags/tr.png` déjà
+  utilisé par `ALL_COUNTRY_FLAGS`/`useClipFlags` ailleurs dans le même fichier — corrigé en `staticFile`.
+- **Reste à faire** : présenter les 4 renders de vérification à Aziz (beats 3/4/5/7), re-render l'acte
+  complet si validé, self-review scriptée (`scripts/tools/mapbox-selfreview.py`).
 
-> ⭐ **PROCHAINE ACTION = coder la révision v2 du breakdown dans `SoudanActe3.tsx`** : (1) fonction
-> `cameraFollowsPath` pour la caméra suiveuse beats 3/5 (référence `_incoming/silk road 2.mov`,
-> faisabilité vérifiée, détail `soudan-midform-ACTE3-BREAKDOWN.md` § Décision 1bis), (2) pictogrammes SVG
-> feedback aux impacts (§ Décision 2-3), (3) beat 7 en vrai `WarMapSplitScreen` 3 volets, contenu des
-> volets latéraux (Mapbox vs 2D flat) encore à trancher (§ Décision 4). Puis re-render + re-présenter.
+> ⭐ **PROCHAINE ACTION = présentation Aziz des 4 zones rendues** (`out/_rnd/acte3-v4-beat3/4/5/7*.mp4`) —
+> si validé, render complet de l'acte + promotion. Si retouches, itérer sur `cam2At`/`ImpactPictogram`/
+> `Acte3SideFlags` (tous localisés, faciles à ajuster).
+
+## ✅ ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — SCRIPT VERROUILLÉ (session 6, 2026-07-10)
+
+- **Script v5 VERROUILLÉ** (texte figé, prêt pour l'audio) : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
+  Angle : Russie (bascule de soutien RSF→SAF en 2024, offre de base navale à Port-Soudan 25 ans/300
+  soldats/4 navires) + Égypte (soutien direct au SAF, motif Nil/profondeur stratégique) — pont vers l'Acte 5
+  (verrou institutionnel UA/ONU/Quad + conclusion ouverte). 6 beats, ~70-90s visés.
+- **Décision de structure actée** : **5 actes au total** (pas 4) — Acte 4 = Russie+Égypte dédié, Acte 5 =
+  verrou institutionnel + conclusion, séparés. Durée cumulée vérifiée (ffprobe) hook+Acte1+Acte2+audio Acte3
+  = 5min00 ; reste 2-3min pour Actes 4-5 dans la cible 7-8min totale.
+- **Pipeline complet exécuté** : recherche Tavily (2 trous Russie/Égypte comblés) → script v1 → fact-check
+  Sonar Pro + Tavily de contrôle (1 fait FAUX retiré : pas d'officiers égyptiens tués à Kosti, confabulation
+  — remplacé par le vrai fait vérifié, frappe RSF sur station-service civile 21 juin 2026) → v2 → **jury LLM
+  clarté** (Gemini 3.1 Pro + GPT-5.5 + Kimi k2.5, verdict AJUSTEMENTS MINEURS, 3 défauts unanimes corrigés)
+  → v3 → **jury LLM densité/flux** (2e passage, critères différents : charge cognitive cumulative,
+  continuité des désignations, ordre des beats/fausse causalité) → réordonnancement des beats 4-5 (Kosti
+  déplacé après le motif égyptien) → v4 → 2 corrections manuelles Aziz (« Le Caire » éliminé au profit de
+  « l'Égypte » partout ; « elle n'a rien fait » → « elle est restée inactive », moins accusateur) → **v5
+  final**.
+- **2 leçons méthodologiques gravées dans `DOCTRINE-SCRIPT-UNIFIEE.md`** : (1) règle 4bis — date/durée
+  EXACTE quand elle existe dans les données, jamais d'approximation relative ("dernier"/"longtemps"). (2)
+  règle 6bis — densité CUMULATIVE et flux narratif de bout en bout, testée sur l'acte ENTIER (pas phrase par
+  phrase) : un script peut réussir un jury clarté et rester confus en lecture cumulative, ce sont 2 défauts
+  différents. Gate d'écriture mise à jour (point 0 test voix haute promu en 1er, point 5 densité/flux
+  ajouté). Outil créé : `scripts/tools/jury-script-llm.py` (fusionne les 9 critères des 2 jurys en 1 seul
+  passage, réutilisable pour l'Acte 5).
+- **NEXT = générer l'audio quand on reprendra l'Acte 4** (pipeline Océane V3 → STS GéoAfrique, comme Actes
+  1-3). Le breakdown technique + storyboard visuel + code restent à faire après l'audio (pas commencés).
 
 ## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
 - **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).

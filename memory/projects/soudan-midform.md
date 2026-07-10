@@ -57,7 +57,9 @@ Tout ce qui répond à cette question reste. Tout ce qui n'y répond pas est cou
 
 ## FORMAT — Mid-form 7-8 min
 
-**Structure en 4 actes (principe : 1 concept/min, 1 zone géo/acte, 2 acteurs externes max) :**
+**Structure en 5 actes** (révisée 2026-07-10 — décision actée avec Aziz, voir `NEXT-ACTION.md` +
+`episodes/soudan-midform/STATUS.md` § ACTE 4 ; l'Acte 4 initialement prévu "verrou institutionnel" a été
+scindé en deux) :
 
 **Acte 1 — Le constat (1min30)**
 Carte simple : 2 couleurs. "L'armée" (SAF, nord/est) vs "les paramilitaires" (RSF, ouest/Darfour). Pas de jargon. 1 seul chiffre : 33M personnes. La carte montre l'étendue du territoire bloqué visuellement.
@@ -68,8 +70,12 @@ Zoom lignes de front. Impasse militaire depuis 18 mois. La carte montre les lign
 **Acte 3 — Qui alimente la guerre (2min30)** ← cœur de notre valeur ajoutée
 Carte s'élargit hors Soudan. 2 flèches seulement : EAU → RSF (armes + or), Turquie → SAF (drones). Or du Darfour = routes tracées vers les EAU. Laboratoire de guerre technologique (Bayraktar vs drones EAU). Cet acte n'existe pas en FR cartographié.
 
-**Acte 4 — Pourquoi ça ne s'arrête pas (1min30)**
-UA, ONU : cercle fermé. Les acteurs qui pourraient forcer la paix (EAU, Turquie) ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste).
+**Acte 4 — Même les voisins sont aspirés (Russie + Égypte)**
+Russie (bascule de soutien RSF→SAF en 2024, offre de base navale à Port-Soudan) + Égypte (soutien direct
+au SAF, motif Nil/profondeur stratégique). Script v5 VERROUILLÉ : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
+
+**Acte 5 — Pourquoi ça ne s'arrête pas (verrou institutionnel + conclusion)**
+UA, ONU, Quad : cercle fermé. Les acteurs qui pourraient forcer la paix ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste). Matière de fond déjà documentée dans `soudan-midform-DONNEES.md` (section actuellement étiquetée "ACTE 4" dans ce fichier — à lire comme Acte 5, voir note de clarification qui y est ajoutée).
 
 ---
 

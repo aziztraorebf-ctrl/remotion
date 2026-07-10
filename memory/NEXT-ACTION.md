@@ -1,6 +1,7 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-09/10 (session 5 — Soudan : ACTE 3 « Suivre l'or » EN COURS — script+audio verrouillés,
-> breakdown v2 écrit, code v1→v3 rendu mais mise en scène à revoir avant re-présentation).
+> Mis a jour : 2026-07-10 (session 6 — Soudan sur 2 fronts en parallèle : ACTE 3 code révision v2 avancé
+> (caméra suiveuse+pictogrammes+beat7 codés, reste présentation Aziz) ET ACTE 4 script VERROUILLÉ v5,
+> prêt pour l'audio quand on y reviendra). Structure figée : **5 actes au total** (décision actée).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
@@ -36,6 +37,20 @@
 > S1 beats 1-4 CARTE + jeton 2-visages `TwoFaceToken` + `YearCounter`. S2 beat 5 insert `KhartoumEtatMajorSVG`.
 > S3 beat 6 BLOC `BlocImpasseB6` + beats 7-9 CARTE (`KmCounter` 1000km + supply vivante + forces figées).
 > Briques gravées : `WARMAP-GRAMMAIRE.md` §8 (TwoFaceToken/YearCounter/BlocImpasse + R-V5 objet orphelin).
+>
+> ✅ **DÉCISION TRANCHÉE (2026-07-10) — 5 actes au total** (plus "en attente"). Acte 4 = Russie+Égypte
+> ("même les voisins sont aspirés"), Acte 5 = verrou institutionnel UA/ONU/Quad + conclusion ouverte,
+> séparés. Durée cumulée vérifiée (ffprobe) : hook+Acte1+Acte2+audio Acte3 = 5min00 ; reste 2-3min pour
+> Actes 4-5 dans la cible 7-8min. **Acte 4 SCRIPT VERROUILLÉ v5** (2 trous Russie/Égypte comblés Tavily,
+> fact-check Sonar Pro, 2 jurys LLM — clarté puis densité/flux — corrections appliquées) :
+> `memory/projects/soudan-midform-ACTE4-SCRIPT.md`. **NEXT Acte 4 = générer l'audio** (pipeline Océane V3 →
+> STS GéoAfrique) quand on y reviendra ; breakdown+storyboard+code pas commencés. Détail complet :
+> `episodes/soudan-midform/STATUS.md` § ACTE 4.
+>
+> **2 leçons méthodologiques gravées cette session dans `DOCTRINE-SCRIPT-UNIFIEE.md`** (règle 4bis
+> précision temporelle, règle 6bis densité cumulative/flux narratif) + nouvel outil réutilisable
+> `scripts/tools/jury-script-llm.py` (jury LLM fusionné clarté+densité en 1 seul passage, à utiliser pour
+> l'Acte 5 et tout futur script).
 
 ---
 
@@ -59,15 +74,11 @@
 > ℹ️ Clarifié : le proto n'a jamais eu de place dans un storyboard (pas de beat écrit) — R&D pure.
 > Le hook "l'or du Darfour" est retrouvé + reskiné (asset Soudan). On est en **croissance du moteur**.
 >
-> **NEXT (décision Aziz 2026-07-07) = PILOTE Actes 1-2 Soudan** :
-> 1. Finir le hook (RAPIDE) : reformuler accroche + pelle-drapeau soudanais + colorisation synchro voix.
-> 2. Produire Actes 1 & 2 en pilote (carte Mapbox à ADAPTER au Soudan — data+géo déjà sur disque :
->    `sudanControlData.ts` + `sudan-outline/states.geojson`). Insert = beat 5 A2 (`KhartoumChocSVG`) +
->    beat 8 candidat (`FrontOuvertSVG`, impasse). Régénérer audio Acte 2 (périmé) ; Actes 3-4 non écrits.
-> 3. Backlog moteur (sur un VRAI beat) : flèches DÉJÀ codées ; zones plus poussées, généraliser en
->    `WarMapInsert {fond, cibles, faction, séquence}` — ⛔ pas avant 2-3 vrais cas.
+> ⛔ **§NEXT ci-dessus PÉRIMÉ (2026-07-10)** — datait d'avant les sessions 3-6 où Actes 1-2 sont FAITS/promus,
+> Acte 3 est codé (révision v2 en cours), Acte 4 est SCRIPT VERROUILLÉ v5. Voir la section Soudan en tête
+> de fichier pour l'état réel. Conservé seulement pour le contenu moteur historique (warmapChoc/commits).
 >
-> État complet : `memory/episodes/soudan-midform/STATUS.md` § PROCHAINE SESSION.
+> État complet : `memory/episodes/soudan-midform/STATUS.md`.
 
 ---
 
@@ -572,28 +583,10 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## 🔧 SOUDAN MID-FORM — PRÉ-PROD SCRIPT/AUDIO : reste ACTES 3-4-5 (Actes 1-2 en production, session 2026-06-16)
-> ⚠️ Rétrogradée de ⭐ PRIORITÉ 1 : AES est fini, Acte 1 est PRODUIT (session 3), Acte 2 a son plan gravé. Cette
-> pré-prod ne concerne plus que les Actes 3-4-5 (Acte 3 = l'or→Émirats/Turquie, non écrits). Audio Acte 1 = fait/recut.
-
-
-> ℹ️ **Cette section = la PRÉ-PROD SCRIPT/AUDIO des Actes** (distincte de l'insert visuel beat #5, déjà
-> résolu). La couche « insert visuel prise de territoire » a son propre pattern validé cette session
-> (voir la section ✅✅ en tête + `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`). Ici : écrire/verrouiller
-> les Actes 3-5 et l'audio.
->
-> **SUJET VALIDÉ GO** + grosse session de pré-prod faite le 2026-06-16.
-> 🗂️ **POINT D'ENTRÉE = `memory/projects/soudan-midform.md`**
->
-> **DÉJÀ FAIT (2026-06-16)** : données fact-checkées · scripts Actes 1+2 figés · audio GéoAfrique V3 · storyboards Actes 1-2 · mini-render pipeline validé · positionnement tranché.
->
-> **NEXT (reprise pré-prod Soudan)** :
-> 1. **Acte 3** : combler 2 trous recherche (Russie/Wagner-or-sanctions + Égypte) → `soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`, PUIS écrire l'acte.
-> 2. Actes 4 (coût humain — inclure nuance génocide ciblé Darfour) + 5 (perspective ouverte).
-> 3. Au lock audio : check + régénération sélective acte par acte (`soudan-midform-AUDIO-ETAT.md`).
-> 4. Production : ⚠️ le point « jetons Hemeti/Al-Burhan Gemini bitmap » est PARTIELLEMENT DÉPASSÉ — pour
->    l'incarnation des forces on a désormais le pattern portraits SVG état-major (cf doctrine ci-dessus) ;
->    réévaluer selon le beat (jeton-portrait carte vs vrai insert plein écran).
+## ⛔ PÉRIMÉ — voir section Soudan en tête de fichier
+> Cette section datait du 2026-06-16 (avant que l'Acte 3 soit codé/rendu). État réel à jour = la section
+> Soudan tout en haut de ce fichier (structure 5 actes actée, Acte 4 script v5 verrouillé). Ne pas repartir
+> d'ici. Conservé seulement pour la référence historique ci-dessous.
 >
 > **Short Soudan en attente** : ACLED toujours inaccessible.
 
