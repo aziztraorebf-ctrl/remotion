@@ -25,7 +25,7 @@ import {
   Easing,
   Sequence,
 } from "remotion";
-import { SoudanWarMapEngine, CamKey, ZoneControl, camAt, cameraFollowsPath } from "../engine/SoudanWarMapEngine";
+import { SoudanWarMapEngine, CamKey, ZoneControl, StateHighlight, camAt, cameraFollowsPath } from "../engine/SoudanWarMapEngine";
 import { SoudanToken, SoudanBase, Pt } from "../engine/soudanActors";
 import { GeoFlowConnection } from "../_shared/GeoFlowConnection";
 import { useClipFlags, ClipFlag } from "../../_shared/mapbox/useClipFlags";
@@ -49,7 +49,11 @@ const KHARTOUM: [number, number] = [32.55, 15.6];   // jeton SAF/al-Burhan — p
 const JEBEL_AMER: [number, number] = [23.706, 13.834];
 // Repositionnées (retour Aziz v5 : les 3 points étaient quasi alignés en diagonale parfaite, lisait
 // comme un patron géométrique artificiel plutôt que 3 mines dispersées) — vraie dispersion Darfour.
-const MINE_2: [number, number] = [21.9, 12.4];
+// v9 (retour Aziz 2026-07-10) : MINE_2 [21.9,12.4] tombait ~27km HORS du Soudan (au Tchad, vérifié
+// point-in-polygon contre sudan-outline.geojson) — non-sens géographique repéré à l'écran. Repositionnée
+// à [24.9,12.05] (Southern Darfur, région de Nyala, zone réelle d'extraction d'or artisanale), vérifiée
+// dans le polygone Soudan, dispersion confirmée vs les 3 autres points (237-416km, aucun alignement).
+const MINE_2: [number, number] = [24.9, 12.05];
 const MINE_3: [number, number] = [23.4, 15.5];
 const DUBAI: [number, number] = [55.27, 25.2];
 const ANKARA: [number, number] = [32.86, 39.93];
@@ -68,10 +72,14 @@ type CountryFlag = { iso: string; geoNames: string[]; color: string; atAbsolute:
 // dézoom large où les 2 se touchent presque). Turquie garde le rouge officiel (couleur RSF-adjacente déjà
 // utilisée nulle part ailleurs) ; Égypte passe à un ocre/or distinct de la grammaire carte existante,
 // cohérent avec son rôle "flux discret" (moins spectaculaire que Turquie/EAU dans le script).
+// v9 (retour Aziz 2026-07-10) : les 3 frames étaient DÉCONNECTÉES de l'événement narratif réel — bug
+// trouvé : "ae" pointait sur F2.jetonRsfArrivee (773, arrivée du DRONE côté RSF), pas sur l'arrivée du
+// lingot à Dubaï (F2.argentNeRestePas=368, même frame que ImpactPictogram kind="gold"). Écart mesuré :
+// 13.5s de décalage entre le lingot visible et le drapeau qui s'allume. Corrigé sur les VRAIS jalons :
 const ALL_COUNTRY_FLAGS: CountryFlag[] = [
-  { iso: "ae", geoNames: ["United Arab Emirates"], color: "#00732F", atAbsolute: S1_FRAMES + 773 },   // arrivée or à Dubaï
-  { iso: "tr", geoNames: ["Turkey"], color: "#E30A17", atAbsolute: S1_FRAMES + 1234 },                // "en échange" Turquie
-  { iso: "eg", geoNames: ["Egypt"], color: "#C9973A", atAbsolute: S1_FRAMES + S2_FRAMES + 211 + 150 }, // mot "Égypte" — ocre, distinct du rouge Turquie
+  { iso: "ae", geoNames: ["United Arab Emirates"], color: "#00732F", atAbsolute: S1_FRAMES + 368 },   // F2.argentNeRestePas — lingot arrive à Dubaï (même frame que ImpactPictogram "gold")
+  { iso: "tr", geoNames: ["Turkey"], color: "#E30A17", atAbsolute: S1_FRAMES + 1348 },                // F2.suakinNomme — drone Bayraktar arrive chez SAF (même frame que ImpactPictogram "drone-saf")
+  { iso: "eg", geoNames: ["Egypt"], color: "#C9973A", atAbsolute: S1_FRAMES + S2_FRAMES + 211 },      // F3.routeNordEgypte — départ du trajet SAF->Égypte (mot "route du nord, vers l'Égypte")
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -110,24 +118,59 @@ const F1 = {
   end: S1_FRAMES,
 };
 
-// Retour Aziz (2026-07-10, v5) : 0-20s quasi figé, seulement 2 clés espacées → caméra qui bouge à peine
-// avant les mines. Dérive CONTINUE (Ken Burns lent) sur toute la fenêtre d'attente, jamais 2 positions
-// figées avec un saut — occupe le silence visuel sans rien ajouter de narrativement prématuré.
-// ⭐⭐ Retour Aziz v7 (croisement Gemini+Kimi, convergence forte) : le zoom 4.2 de départ restait une
-// vue "presque tout le Soudan" — pas un vrai close-up. Les 2 modèles indépendamment : "commence direct
-// sur les 2 portraits en vue SERRÉE, pas de dézoom". Zoom resserré ~5.3 dès frame 0 (cohérent zoom mines
-// 5.8), centré sur le point médian RSF/SAF. Transition Darfour (F1.darfourStart) MARQUÉE, pas un fondu mou.
-const A1_CENTER_LON = (DARFUR[0] + KHARTOUM[0]) / 2;
-const A1_CENTER_LAT = (DARFUR[1] + KHARTOUM[1]) / 2;
+// ⭐⭐ v8 (3 agents R&D, 2026-07-10) : la v7 gardait Darfour+Khartoum dans le MÊME cadre (zoom~5.3) —
+// reconfronté à Silk Road 2 frame par frame, ce n'est jamais un vrai close-up (calcul haversine : les 2
+// généraux sont à ~707km, aucun zoom Mapbox ne peut les tenir ENSEMBLE à l'échelle "ville" de la référence,
+// qui ne montre d'ailleurs jamais 2 points lointains simultanément). Option A du diagnostic : abandonner le
+// double-portrait simultané, séquencer en 2 TEMPS FORTS DISTINCTS façon Silk Road (un point nommé à la
+// fois, la caméra progresse vers le suivant par un GESTE MARQUÉ, pas un fondu mou) :
+//   1. Khartoum SEUL, zoom serré ~9.3, tenu (le spectateur voit la capitale/l'armée régulière).
+//   2. Geste de caméra qui se VOIT (pan+dézoom bref, cohérent grammaire WARMAP "transitions marquées").
+//   3. Darfour SEUL, zoom serré ~9.3, tenu jusqu'à `darfourStart` (le texte nomme le Darfour à ce moment).
+// Les 2 jetons ne repartagent le même cadre qu'au beat 2 (minesOr, zoom 5.8 déjà large pour montrer 3 mines
+// dispersées) — cohérent avec cam2At qui re-resserre systématiquement sur UN point à la fois.
+// v10 (retour Aziz 2026-07-10, session "insert graphique") : le geste caméra Khartoum→pan→Darfour
+// (v9) est ENTIÈREMENT REMPLACÉ par un insert SVG plein écran (Beat1Paradoxe, ci-dessous) sur toute la
+// fenêtre 0-523 — même intention narrative ("2 camps qui ne manquent jamais d'argent") mais 100%
+// graphique abstrait plutôt que carte, cf 2 agents R&D + storyboard Gemini rejeté (silhouettes non
+// codables). La carte Mapbox reste montée en dessous (masquée par l'insert) mais figée SUR Darfour dès
+// le départ — elle n'a plus besoin de "jouer" un geste caméra qui ne sera jamais vu à l'écran.
+const CAM1_ZOOM_CLOSE = 9.3; // close-up "ville" — vérifié formule Mercator (~460km d'écran)
 const CAM1: CamKey[] = [
-  { f: F1.start, lon: A1_CENTER_LON, lat: A1_CENTER_LAT, zoom: 5.3 },       // serré sur les 2 portraits dès l'ouverture
-  { f: F1.pourtant, lon: A1_CENTER_LON - 0.3, lat: A1_CENTER_LAT + 0.1, zoom: 5.2 }, // dérive lente continue
-  { f: F1.quelquUnPaie, lon: A1_CENTER_LON - 0.7, lat: A1_CENTER_LAT, zoom: 5.15 },
-  { f: F1.suivreArgent, lon: A1_CENTER_LON - 1.0, lat: A1_CENTER_LAT - 0.1, zoom: 5.2 },
-  { f: F1.darfourStart, lon: 24, lat: 13.5, zoom: 5.8 },       // transition MARQUÉE vers Darfour, pas un fondu mou
+  { f: F1.start, lon: 24, lat: 13.5, zoom: 5.8 },
+  { f: F1.darfourStart, lon: 24, lat: 13.5, zoom: 5.8 },       // "Tout commence au Darfour" — dézoom pour les mines (beat 2)
   { f: F1.minesOr, lon: 24, lat: 13.5, zoom: 5.8 },
   { f: F1.end, lon: 24, lat: 13.5, zoom: 5.75 },
 ];
+
+/**
+ * Beat1Paradoxe — insert SVG plein écran, 0-523 (0-17.4s), REMPLACE le geste caméra Mapbox pour ce beat.
+ * v11 (2026-07-11, retour Aziz) : REMPLACE le concept B (veine qui se scinde) — jugé "dur à comprendre,
+ * manque de narratif" en review. Nouveau concept A "UN PUITS SANS FOND" : une JAUGE qui fuit en continu
+ * (ça coûte cher) pendant que 2 tuyaux RSF/SAF la rechargent visiblement (aucun camp ne manque jamais
+ * d'argent), puis un 3e filet gris mystère vient s'ajouter avant de s'INVERSER (flèche qui se retourne —
+ * "il faut suivre l'argent à rebours"). Chaque phase a un geste CAUSE→EFFET lisible sans légende — validé
+ * en comparaison directe contre le concept B (jugé plus narratif par Aziz) et contre Gemini 3.1 Pro sur
+ * le même brief (Sol nettement supérieur : jauge/tuyaux/flèche lisibles vs cercles R/S quasi invisibles
+ * et recharge peu visible chez Gemini). Colle au texte : "Cette guerre engloutit des centaines de millions
+ * de dollars chaque mois. Pourtant, aucun des deux camps ne manque jamais d'argent pour continuer à se
+ * battre. Quelqu'un paie cette guerre. Il faut suivre l'argent pour comprendre qui — et pourquoi."
+ * v2 (révision, même session) suite retour Gemini partiellement validé par Aziz : recentrage vertical,
+ * fuite initiale plus visible (courbe puissance 1.8 au lieu de linéaire), graduations qui s'éteignent
+ * au niveau du liquide (clipPath dédié), dégradé doré mat sur le liquide, gouttes en fade-out pendant
+ * leur chute, pulsations scintillantes additionnelles sur les tuyaux R/S. Généré par GPT-5.6 Sol
+ * (openai/gpt-5.6-sol via OpenRouter) à partir du code v1 adopté (révision ciblée, pas une regénération).
+ */
+const Beat1Paradoxe: React.FC<{ frame: number }> = ({ frame: f }) => {
+  if (f >= 523) return null;
+  return (
+    <AbsoluteFill style={{ pointerEvents: "none" }}>
+      <svg width={1920} height={1080} viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
+        <g opacity={f < 483 ? 1 : Math.max(0.35, 1 - 0.65 * ((f - 483) / 40))}><rect x="0" y="0" width="1920" height="1080" fill="#F2E5C8"/><rect x="28" y="28" width="1864" height="1024" rx="10" fill="none" stroke="#3A2A18" strokeWidth="3" opacity="0.2"/><path d="M90 190 C310 155 470 205 690 175 M1240 160 C1480 205 1690 145 1840 185 M110 900 C300 865 490 920 670 890 M1260 910 C1470 870 1670 925 1840 880" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.08"/><defs><linearGradient id="goldLiquidGradient" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stopColor="#E0BC8A"/><stop offset="52%" stopColor="#D4A574"/><stop offset="100%" stopColor="#B8935C"/></linearGradient><clipPath id="goldLevelClip"><rect x="880" y="0" width="160" height="1" transform={`translate(0 1014) scale(1 ${-(f < 134 ? 188 + 184 * Math.pow(1 - f / 134, 1.8) : f < 302 ? 188 - 4 * Math.sin((f - 134) * 0.11) : f < 367 ? 188 + 66 * ((f - 302) / 65) - 3 * Math.sin((f - 302) * 0.11) : 254 - 14 * Math.min(1, (f - 367) / 116) - 3 * Math.sin((f - 367) * 0.09))})`}/></clipPath></defs><g transform="translate(0 -100)"><g opacity={Math.max(0, Math.min(1, (f - 134) / 16))}><circle cx="500" cy="700" r="76" fill="#F2E5C8" stroke="#B14B3C" strokeWidth="9"/><circle cx="500" cy="700" r="63" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.35"/><polygon points="500,666 534,700 500,734 466,700" fill="#B14B3C" stroke="#3A2A18" strokeWidth="3"/><text x="500" y="711" textAnchor="middle" fontFamily="Georgia, serif" fontSize="31" fontWeight="700" fill="#F2E5C8">R</text><circle cx="1420" cy="700" r="76" fill="#F2E5C8" stroke="#3E6E9E" strokeWidth="9"/><circle cx="1420" cy="700" r="63" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.35"/><polygon points="1420,666 1454,700 1420,734 1386,700" fill="#3E6E9E" stroke="#3A2A18" strokeWidth="3"/><text x="1420" y="711" textAnchor="middle" fontFamily="Georgia, serif" fontSize="31" fontWeight="700" fill="#F2E5C8">S</text><path d="M570 690 L930 570" fill="none" stroke="#3A2A18" strokeWidth="15" opacity="0.16" strokeLinecap="round"/><path d="M570 690 L930 570" fill="none" stroke="#B14B3C" strokeWidth="7" strokeLinecap="round"/><path d="M1350 690 L990 570" fill="none" stroke="#3A2A18" strokeWidth="15" opacity="0.16" strokeLinecap="round"/><path d="M1350 690 L990 570" fill="none" stroke="#3E6E9E" strokeWidth="7" strokeLinecap="round"/><polygon points="895,568 928,570 904,592" fill="#B14B3C"/><polygon points="1025,568 992,570 1016,592" fill="#3E6E9E"/><g fill="#D4A574" stroke="#3A2A18" strokeWidth="1.5"><circle cx={570 + 360 * ((((f - 134) * 5) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5) % 120) / 120)} r="8"/><circle cx={570 + 360 * ((((f - 134) * 5 + 30) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 30) % 120) / 120)} r="7"/><circle cx={570 + 360 * ((((f - 134) * 5 + 60) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 60) % 120) / 120)} r="8"/><circle cx={570 + 360 * ((((f - 134) * 5 + 90) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 90) % 120) / 120)} r="6"/><circle cx={1350 - 360 * ((((f - 134) * 5) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5) % 120) / 120)} r="8"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 30) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 30) % 120) / 120)} r="7"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 60) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 60) % 120) / 120)} r="8"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 90) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 90) % 120) / 120)} r="6"/></g><g opacity={f < 286 ? 1 : Math.max(0, (302 - f) / 16)} fill="#F2E5C8" strokeWidth="2.5"><circle cx={570 + 360 * ((((f - 134) * 3 + 8) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 8) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24))} stroke="#E0BC8A" opacity={Math.max(0, Math.sin((f - 134) * 0.24))}/><circle cx={570 + 360 * ((((f - 134) * 3 + 56) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 56) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 2.4))} stroke="#B14B3C" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 2.4))}/><circle cx={1350 - 360 * ((((f - 134) * 3 + 26) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 26) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 1.2))} stroke="#E0BC8A" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 1.2))}/><circle cx={1350 - 360 * ((((f - 134) * 3 + 74) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 74) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 3.6))} stroke="#3E6E9E" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 3.6))}/></g></g><g opacity={Math.max(0, Math.min(1, (f - 302) / 12))}><path d="M1920 360 L990 570" fill="none" stroke="#8A8F94" strokeWidth="24" opacity="0.1" strokeLinecap="round"/><path d="M1920 360 L990 570" fill="none" stroke="#8A8F94" strokeWidth="10" strokeDasharray="18 17" strokeDashoffset={f < 367 ? -f * 5 : f * 6} strokeLinecap="round" opacity="0.9"/><polygon points={f < 367 ? '1275,480 1238,514 1287,513' : '1637,404 1674,370 1625,371'} fill="#8A8F94" stroke="#3A2A18" strokeWidth="2"/><g fill="#8A8F94" stroke="#3A2A18" strokeWidth="1.5"><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4) % 140) / 140) : 990 + 930 * ((((f - 367) * 5) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4) % 140) / 140) : 570 - 210 * ((((f - 367) * 5) % 140) / 140)} r="10"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 35) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 35) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 35) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 35) % 140) / 140)} r="8"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 70) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 70) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 70) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 70) % 140) / 140)} r="11"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 105) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 105) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 105) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 105) % 140) / 140)} r="8"/></g></g><g><ellipse cx="960" cy="570" rx="66" ry="17" fill="#3A2A18" opacity="0.22"/><ellipse cx="960" cy="570" rx="53" ry="11" fill="#D4A574" stroke="#3A2A18" strokeWidth="3"/><rect x="900" y="560" width="120" height="470" rx="8" fill="#F2E5C8" fillOpacity="0.72" stroke="#3A2A18" strokeWidth="8"/><rect x="916" y="560" width="88" height="454" fill="url(#goldLiquidGradient)" clipPath="url(#goldLevelClip)"/><path d="M916 1014 L1004 1014" stroke="#3A2A18" strokeWidth="4" opacity="0.5"/><g fill="none" stroke="#3A2A18" strokeWidth="3" opacity="0.3"><path d="M900 650 L914 650 M900 760 L914 760 M900 870 L914 870 M900 980 L914 980 M1006 650 L1020 650 M1006 760 L1020 760 M1006 870 L1020 870 M1006 980 L1020 980"/></g><g fill="none" stroke="#3A2A18" strokeWidth="3" clipPath="url(#goldLevelClip)"><path d="M900 650 L914 650 M900 760 L914 760 M900 870 L914 870 M900 980 L914 980 M1006 650 L1020 650 M1006 760 L1020 760 M1006 870 L1020 870 M1006 980 L1020 980"/></g><ellipse cx="960" cy="1028" rx="25" ry="8" fill="#3A2A18"/><ellipse cx="960" cy="1029" rx="15" ry="5" fill="#D4A574"/></g><g fill="#D4A574" stroke="#3A2A18" strokeWidth="1"><circle cx={952 + 5 * Math.sin(f * 0.13)} cy={1028 + ((f * 7) % 62)} r="6" opacity={1 - ((f * 7) % 62) / 62}/><circle cx={968 + 4 * Math.sin(f * 0.11 + 2)} cy={1028 + ((f * 7 + 16) % 62)} r="5" opacity={1 - ((f * 7 + 16) % 62) / 62}/><circle cx={959 + 7 * Math.sin(f * 0.09 + 4)} cy={1028 + ((f * 7 + 32) % 62)} r="7" opacity={1 - ((f * 7 + 32) % 62) / 62}/><circle cx={944 + 3 * Math.sin(f * 0.15 + 1)} cy={1028 + ((f * 7 + 48) % 62)} r="4" opacity={1 - ((f * 7 + 48) % 62) / 62}/></g><line x1="960" y1="1030" x2="960" y2="1080" stroke="#D4A574" strokeWidth="5" strokeDasharray="5 12" strokeDashoffset={-f * 7} opacity="0.75"/></g></g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
 
 const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   const frame = useCurrentFrame();
@@ -145,6 +188,13 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
     { at: DARFUR, faction: "rsf", radiusKm: 110, intensity: openingPulse * openingFade },
     { at: KHARTOUM, faction: "saf", radiusKm: 110, intensity: openingPulse * openingFade },
   ];
+  // v9 (retour Aziz 2026-07-10) : "30 premières secondes de carte vide, trop long" — territoires
+  // colorés RSF/SAF (contour "on nomme -> ça se trace", pattern déjà validé Acte 1/2) DÈS l'ouverture,
+  // en plus des halos diffus existants. North Darfur = RSF (Hemedti/Darfour), Khartoum = SAF.
+  const highlights: StateHighlight[] = [
+    { state: "North Darfur", faction: "rsf", drawAt: 0, drawFrames: 40, holdFrames: 999999, fadeFrames: 0 },
+    { state: "Khartoum", faction: "saf", drawAt: 8, drawFrames: 40, holdFrames: 999999, fadeFrames: 0 },
+  ];
 
   // jeton SAF masqué pendant les beats 2/2bis (Darfour/RSF pur) — réapparaît juste avant la fin
   // de section 1 pour préparer le beat 3 (qui reprend les 2 jetons), fade doux pas un pop.
@@ -158,10 +208,15 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte3-suivre-lor-p1.mp3")} />
 
-      <Sequence from={F1.darfourStart} durationInFrames={26}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.4} /></Sequence>
-      <Sequence from={F1.hemedtiNomme} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.35} /></Sequence>
+      <Sequence from={F1.darfourStart} durationInFrames={26}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} /></Sequence>
+      {/* v12 (2026-07-11, plan SFX) : 3 impacts échelonnés sur l'apparition des mines d'or — mêmes
+          délais que MineWithHalo (+0/+7/+14), volume discret car 3 coups rapprochés (pas 3x plein volume) */}
+      <Sequence from={F1.minesOr} durationInFrames={18}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} /></Sequence>
+      <Sequence from={F1.minesOr + 7} durationInFrames={18}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} /></Sequence>
+      <Sequence from={F1.minesOr + 14} durationInFrames={18}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} /></Sequence>
+      <Sequence from={F1.hemedtiNomme} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.5} /></Sequence>
 
-      <SoudanWarMapEngine camKeys={CAM1} zones={zones} showNationalBorder stateLineOpacity={0}>
+      <SoudanWarMapEngine camKeys={CAM1} zones={zones} highlights={highlights} showNationalBorder stateLineOpacity={0}>
         {(proj, ref) => {
           mapRef.current = ref?.current ?? null;
           // jetons RSF/SAF déjà en place (continuité fin Acte 2) — visibles dès l'ouverture, reconnaissables
@@ -189,9 +244,11 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
               {frame >= F1.minesOr && (
                 <>
                   {/* tailles augmentées (retour v7 Gemini+Kimi : "quasi imperceptibles") */}
-                  {jebelPos && <MineWithHalo pos={jebelPos} frame={frame} appear={F1.minesOr} size={72} />}
-                  {(() => { const p = proj(MINE_2); return p && <MineWithHalo pos={p} frame={frame} appear={F1.minesOr + 7} size={64} fade={0.9} />; })()}
-                  {(() => { const p = proj(MINE_3); return p && <MineWithHalo pos={p} frame={frame} appear={F1.minesOr + 14} size={62} fade={0.85} />; })()}
+                  {/* v9 (retour Aziz 2026-07-10) : sprite PNG mine-or-td déjà utilisé (pas un point SVG,
+                      cf MineWithHalo->SoudanBase) mais trop petit à l'écran — tailles doublées. */}
+                  {jebelPos && <MineWithHalo pos={jebelPos} frame={frame} appear={F1.minesOr} size={130} />}
+                  {(() => { const p = proj(MINE_2); return p && <MineWithHalo pos={p} frame={frame} appear={F1.minesOr + 7} size={112} fade={0.9} />; })()}
+                  {(() => { const p = proj(MINE_3); return p && <MineWithHalo pos={p} frame={frame} appear={F1.minesOr + 14} size={108} fade={0.85} />; })()}
                 </>
               )}
 
@@ -213,6 +270,7 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
       </SoudanWarMapEngine>
 
       <WarmVignette />
+      <Beat1Paradoxe frame={frame} />
     </AbsoluteFill>
   );
 };
@@ -381,6 +439,47 @@ const DroneConvoy: React.FC<{
   </>
 );
 
+/**
+ * MarkerMetamorphose — v8 (agent 3, mécanisme MetamorphoseFiduciaire.tsx repris ET compressé). La source
+ * est plein écran/glyphes texte fixes (960,540) sur 150 frames — ici positionné au marqueur (petit, mobile,
+ * ~90-25 frames dispo à Dubaï), pictogrammes SVG réutilisés (PICTO_GOLD/dronePicto, déjà dessinés dans ce
+ * fichier pour ImpactPictogram — cohérence visuelle, pas de nouvel asset). Séquence : (1) pictogramme or
+ * fade out, (2) gouttes d'encre en éventail (springs échelonnés), (3) clipPath circulaire grandissant
+ * révèle le pictogramme drone dans une couleur différente. 100% SVG frame-driven, headless-safe.
+ */
+const METAMORPHOSE_DROPS = [
+  { dx: 0, dy: -18, rMax: 5, delay: 0 }, { dx: 13, dy: -9, rMax: 5, delay: 2 },
+  { dx: 13, dy: 9, rMax: 5, delay: 4 }, { dx: 0, dy: 18, rMax: 5, delay: 6 },
+  { dx: -13, dy: 9, rMax: 5, delay: 8 }, { dx: -13, dy: -9, rMax: 5, delay: 10 },
+  { dx: 0, dy: -28, rMax: 3.5, delay: 12 }, { dx: 24, dy: 0, rMax: 3.5, delay: 14 },
+  { dx: 0, dy: 28, rMax: 3.5, delay: 16 }, { dx: -24, dy: 0, rMax: 3.5, delay: 18 },
+];
+const MarkerMetamorphose: React.FC<{ pos: Pt; frame: number; appear: number; fromColor: string; toColor: string }> =
+  ({ pos, frame, appear, fromColor, toColor }) => {
+    const symAOp = interpolate(frame, [appear, appear + 4], [1, 0], clamp);
+    const clipR = interpolate(frame, [appear + 4, appear + 20], [0, 34], clamp);
+    const dropsOp = interpolate(frame, [appear + 16, appear + 24], [1, 0], clamp);
+    if (frame < appear - 2 || frame > appear + 26) return null;
+    const clipId = `metaClip-${Math.round(pos.x)}-${Math.round(pos.y)}`;
+    return (
+      <svg style={{ position: "absolute", inset: 0, pointerEvents: "none" }} width={1920} height={1080}>
+        <defs><clipPath id={clipId}><circle cx={pos.x} cy={pos.y} r={clipR} /></clipPath></defs>
+        <g transform={`translate(${pos.x} ${pos.y})`} opacity={symAOp}>{PICTO_GOLD}</g>
+        <g opacity={dropsOp}>
+          {METAMORPHOSE_DROPS.map((d, i) => {
+            const f = Math.max(0, frame - appear - d.delay);
+            const sc = interpolate(f, [0, 6], [0, 1], clamp);
+            return <circle key={i} cx={pos.x + d.dx} cy={pos.y + d.dy} r={d.rMax * sc} fill={fromColor} opacity={0.85} />;
+          })}
+        </g>
+        <g clipPath={`url(#${clipId})`}>
+          <circle cx={pos.x} cy={pos.y} r={40} fill={fromColor} opacity={0.9} />
+          <g transform={`translate(${pos.x} ${pos.y})`}>{dronePicto(toColor)}</g>
+        </g>
+      </svg>
+    );
+  };
+
 const ImpactPictogram: React.FC<{
   pos: Pt; frame: number; appear: number; kind: "gold" | "drone-rsf" | "drone-saf"; holdFrames?: number;
 }> = ({ pos, frame, appear, kind, holdFrames = 70 }) => {
@@ -435,14 +534,29 @@ const F2 = {
 // en mouvement (cameraFollowsPath) pendant chaque trajet, et RE-RESSERRE sur le Soudan/la destination
 // entre chaque connexion (Kimi : "revenir sur le Soudan entre chaque connexion, ne pas laisser le
 // spectateur perdu") — jamais de vue d'ensemble Soudan+Dubaï+Ankara simultanée avant le beat 6.
-const CAM2_ZOOM_FOLLOW = 5.2; // zoom resserré permanent pendant le suivi (calibré impression Silk Road 2)
-const CAM2_ZOOM_REST = 4.6;   // zoom légèrement plus large aux points de repos (Jebel Amer / Dubaï / Darfour)
+// v8 (diagnostic chiffré agent 1) : 5.2 vs 4.6 = écart de 0.6, imperceptible à l'image (un écart visible
+// démarre vers 1.5-2.0). Resserré à 6.2 (borne haute prudente : le trajet or traverse un désert SANS repère
+// nommé — au-delà de ~6.5 l'écran serait vide/illisible, cf agent 1) + REST creusé à 4.1 pour un vrai
+// contraste "on suit" vs "on contextualise". Labels intermédiaires ajoutés sur le trajet (WP_OR_ALLER_LABELS)
+// pour combler le vide qu'un zoom serré créerait sur un désert sans ville nommée.
+const CAM2_ZOOM_FOLLOW = 6.2; // zoom serré permanent pendant le suivi (calibré impression Silk Road 2)
+const CAM2_ZOOM_REST = 4.1;   // zoom nettement plus large aux points de repos (Jebel Amer / Dubaï / Darfour)
 
 // waypoints courbés (arc net, cf validation test isolé v2 — 2 points intermédiaires trop proches
 // de la droite AB ne suffisent pas, il faut un vrai décalage nord)
 const WP_OR_ALLER: [number, number][] = [JEBEL_AMER, [30, 20.5], [38, 24.5], [47, 25.5], DUBAI];
 const WP_OR_RETOUR: [number, number][] = [DUBAI, [47, 25.5], [38, 24.5], [30, 20.5], DARFUR];
 const WP_TURQUIE: [number, number][] = [ANKARA, [33, 32], [32.7, 24], KHARTOUM];
+
+// Labels génériques intermédiaires (repères géo réels, pas de ville inventée) — comblent le désert vide
+// à zoom serré pendant le suivi. Positions = les points de courbure du trajet lui-même (déjà géo-validés).
+// Frames calculées directement depuis les bornes F2 (allerT/turquieT sont linéaires entre ces bornes).
+const ROUTE_LABEL_ALLER: { pos: [number, number]; label: string } = { pos: [38, 24.5], label: "Mer Rouge" };
+const ROUTE_LABEL_ALLER_T = 0.55;
+const ROUTE_LABEL_ALLER_FRAME = Math.round(F2.dubaiApparait + 10 + (F2.argentNeRestePas - (F2.dubaiApparait + 10)) * ROUTE_LABEL_ALLER_T);
+const ROUTE_LABEL_TURQUIE: { pos: [number, number]; label: string } = { pos: [33, 32], label: "Anatolie" };
+const ROUTE_LABEL_TURQUIE_T = 0.3;
+const ROUTE_LABEL_TURQUIE_FRAME = Math.round(F2.autreCoteFront + (F2.suakinNomme - F2.autreCoteFront) * ROUTE_LABEL_TURQUIE_T);
 
 // fondu court entre 2 CamKey (lisse les bascules suivi<->repos, jamais de saut de zoom instantané)
 const CAM_BLEND = 18; // frames
@@ -533,8 +647,12 @@ const Section2: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte3-suivre-lor-p2.mp3")} />
 
-      <Sequence from={F2.jetonRsfArrivee} durationInFrames={20}><Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.4} /></Sequence>
-      <Sequence from={F2.suakinNomme} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.35} /></Sequence>
+      {/* v12 (plan SFX) : métamorphose or->drone à Dubaï — le vrai pivot visuel de l'acte, calé sur le
+          mi-parcours du wipe circulaire de MarkerMetamorphose (appear=F2.revientForme-26=410, reveal
+          au clip max ~+12f = 422) */}
+      <Sequence from={F2.revientForme - 26 + 12} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/stamp-dossier.mp3")} volume={0.5} /></Sequence>
+      <Sequence from={F2.jetonRsfArrivee} durationInFrames={20}><Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.5} /></Sequence>
+      <Sequence from={F2.suakinNomme} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.5} /></Sequence>
 
       <SoudanWarMapEngine camKeys={cam2At} zones={zones} showNationalBorder stateLineOpacity={0}>
         {(proj, ref) => {
@@ -547,8 +665,13 @@ const Section2: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
                   Point+label (pattern Silk Road 2), remplace l'objet isométrique illisible au dézoom large. */}
               {frame >= F2.dubaiApparait && (() => { const p = proj(DUBAI); return p && <ArrivalLabel pos={p} frame={frame} appear={F2.dubaiApparait} label="Dubaï" />; })()}
 
-              {/* Feedback nommé arrivée or à Dubaï (fin beat 3) — pictogramme lingots, 2-3s puis disparaît */}
-              {frame >= F2.argentNeRestePas && (() => { const p = proj(DUBAI); return p && <ImpactPictogram pos={p} frame={frame} appear={F2.argentNeRestePas} kind="gold" />; })()}
+              {/* Feedback nommé arrivée or à Dubaï (fin beat 3) — pictogramme lingots, tient jusqu'à la
+                  métamorphose (retire le fade-out simple de ImpactPictogram, remplacé par le wipe ci-dessous) */}
+              {frame >= F2.argentNeRestePas && frame < F2.revientForme && (() => { const p = proj(DUBAI); return p && <ImpactPictogram pos={p} frame={frame} appear={F2.argentNeRestePas} kind="gold" holdFrames={F2.revientForme - F2.argentNeRestePas} />; })()}
+              {/* ⭐ v8 — vrai morph de FORME or->drone (pas juste un changement de couleur du marqueur,
+                  signalé "trop faible" par Aziz). Wipe circulaire au point Dubaï, juste avant le départ
+                  du convoi retour (F2.revientForme) — le silence narratif avant la bascule. */}
+              {(() => { const p = proj(DUBAI); return p && <MarkerMetamorphose pos={p} frame={frame} appear={F2.revientForme - 26} fromColor={GOLD} toColor={METAL} />; })()}
 
               {/* BEAT 3-4 : trajet or (aller doré) + retour (drones gris-métal, transformation à Dubaï) */}
               {frame >= F2.dubaiApparait + 8 && (
@@ -556,6 +679,12 @@ const Section2: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
                   lineColor={GOLD} markerColor={GOLD} dashOffsetFrame={frame} lineWidth={5}
                   persistAfterArrival={frame >= F2.argentNeRestePas} persistOpacity={0.35} markerIcon="dot" markerSize={9} />
               )}
+              {/* Label repère intermédiaire (comble le désert vide à zoom serré CAM2_ZOOM_FOLLOW=6.2) —
+                  apparaît quand le marqueur franchit le point de courbure, PAS une ville inventée. */}
+              {frame >= ROUTE_LABEL_ALLER_FRAME && (() => {
+                const p = proj(ROUTE_LABEL_ALLER.pos);
+                return p && <ArrivalLabel pos={p} frame={frame} appear={ROUTE_LABEL_ALLER_FRAME} label={ROUTE_LABEL_ALLER.label} color={METAL} />;
+              })()}
               {frame >= F2.revientForme && (
                 <GeoFlowConnection map={fakeMap} waypoints={WP_OR_RETOUR} progress={1} markerProgress={retourT}
                   lineColor={METAL} markerColor={METAL} lineWidth={5}
@@ -580,6 +709,11 @@ const Section2: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
                   persistAfterArrival={frame >= F2.suakinNomme} persistOpacity={0.35} hideMarker />
               )}
               {frame >= F2.autreCoteFront && <DroneConvoy waypoints={WP_TURQUIE} t={turquieT} proj={proj} faction="saf" frame={frame} />}
+              {/* Label repère intermédiaire trajet Turquie (même logique que ROUTE_LABEL_ALLER) */}
+              {frame >= ROUTE_LABEL_TURQUIE_FRAME && frame < F2.suakinNomme && (() => {
+                const p = proj(ROUTE_LABEL_TURQUIE.pos);
+                return p && <ArrivalLabel pos={p} frame={frame} appear={ROUTE_LABEL_TURQUIE_FRAME} label={ROUTE_LABEL_TURQUIE.label} color={ATLAS.saf} />;
+              })()}
 
               {/* jeton SAF (Khartoum) */}
               {(() => { const p = proj(KHARTOUM); return p && <SoudanToken pos={p} faction="saf" frame={frame} appear={0} />; })()}
@@ -667,7 +801,10 @@ const Section3: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte3-suivre-lor-p3.mp3")} />
 
-      <Sequence from={F3.ceuxDeuxCamps} durationInFrames={24}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.35} /></Sequence>
+      <Sequence from={F3.ceuxDeuxCamps} durationInFrames={24}><Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} /></Sequence>
+      {/* v12 (plan SFX) : étau qui se resserre (fin split-screen, F3.end - outDur=26 = début du
+          resserrement des 2 volets). Climax visuel de l'acte, seul SFX du beat 7. */}
+      <Sequence from={F3.end - 26} durationInFrames={22}><Audio src={staticFile("_shared/sfx/impact/tension-pulse.mp3")} volume={0.5} /></Sequence>
 
       <SoudanWarMapEngine camKeys={cam3At} zones={zones} showNationalBorder stateLineOpacity={0}>
         {(proj, ref) => {
@@ -701,7 +838,7 @@ const Section3: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
 
       {/* BEAT 7 (révision v2, Décision 4) : rupture de registre climax — volets EAU/Turquie glissent
           par-dessus la carte Soudan (qui reste plein écran en fond), remplace le cercle pointillé v3. */}
-      <Acte3SideFlags frame={frame} appear={F3.ceQuiFaitDurer} />
+      <Acte3SideFlags frame={frame} appear={F3.ceQuiFaitDurer} outAt={F3.end} />
     </AbsoluteFill>
   );
 };
@@ -720,6 +857,11 @@ const Section3: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
 // Faits repris tels quels du script v7 (déjà fact-checkés, cf soudan-midform-ACTE3-JURY-VERDICTS.md).
 // Retour v7 (Gemini+Kimi, convergence forte) : "les panneaux latéraux sont trop vides" — ajout d'une
 // icône (réutilise PICTO_GOLD/dronePicto déjà définis pour ImpactPictogram, cohérence visuelle) + 2e fait.
+// v8 : StatComparisonGrid (agent 3) évalué mais NON transposé tel quel — fontSize:180 conçu pour un
+// panel plein écran, illisible/écrasant dans un volet à 27% de largeur. Son mécanisme (count-up chiffré)
+// aurait exigé une statistique numérique NOUVELLE côté Turquie (aucune disponible dans le breakdown
+// fact-checké sans re-vérification — inventer un chiffre est exclu). Gardé : fact/fact2 textuels déjà
+// validés. Le vrai gain visuel appliqué à la place : connector + composition en étau (ci-dessous).
 type SidePanel = { iso: string; geoName: string; icon: "gold" | "drone"; fact: string; fact2: string };
 const SIDE_PANELS: SidePanel[] = [
   { iso: "ae", geoName: "United Arab Emirates", icon: "gold",
@@ -730,7 +872,8 @@ const SIDE_PANELS: SidePanel[] = [
 
 const SidePanelTerritory: React.FC<{
   panel: SidePanel; side: "left" | "right"; topology: any; frame: number; appear: number; panelW: number;
-}> = ({ panel, side, topology, frame, appear, panelW }) => {
+  outAt?: number; outDur?: number;
+}> = ({ panel, side, topology, frame, appear, panelW, outAt, outDur = 26 }) => {
   const H = 1080;
   // même fichier PNG que ALL_COUNTRY_FLAGS/useClipFlags (public/_shared/flags/) — cohérent, déjà validé
   const flagUrl = staticFile(`_shared/flags/${panel.iso}.png`);
@@ -747,8 +890,14 @@ const SidePanelTerritory: React.FC<{
   }, [topology, panel.geoName, panelW]);
 
   const op = interpolate(frame, [appear, appear + 22], [0, 1], clamp);
-  const slide = interpolate(frame, [appear, appear + 26], [side === "left" ? -panelW * 0.4 : panelW * 0.4, 0], clamp);
-  if (op <= 0.01) return null;
+  const slideIn = interpolate(frame, [appear, appear + 26], [side === "left" ? -panelW * 0.4 : panelW * 0.4, 0], clamp);
+  // ⭐ v8 (agent exploration libre, "sortie en étau") : au lieu d'un fade plat, les volets se RESSERRENT
+  // vers le centre avant de disparaître — met en scène littéralement l'étau qui se referme (le message de
+  // dépendance/encerclement porté par la FORME, pas juste le texte). outAt = frame où l'étau se resserre.
+  const squeeze = outAt != null ? interpolate(frame, [outAt - outDur, outAt], [0, 1], clamp) : 0;
+  const slide = slideIn + squeeze * (side === "left" ? -panelW * 0.55 : panelW * 0.55);
+  const opOut = outAt != null ? interpolate(frame, [outAt - outDur, outAt - outDur * 0.3], [1, 0], clamp) : 1;
+  if (op <= 0.01 || opOut <= 0.01) return null;
   const [[bx0, by0], [bx1, by1]] = bbox;
   const clipId = `a3-side-${panel.iso}`;
 
@@ -764,7 +913,7 @@ const SidePanelTerritory: React.FC<{
   return (
     <div style={{
       position: "absolute", top: 0, [side]: 0, width: panelW, height: H, overflow: "hidden",
-      opacity: op, transform: `translateX(${slide}px)`,
+      opacity: op * opOut, transform: `translateX(${slide}px)`,
       background: "radial-gradient(ellipse at 50% 42%, rgba(58,42,24,0.55) 0%, rgba(20,14,7,0.92) 78%)", // dégradé transparent (Aziz a préféré vs noir solide testé)
       boxShadow: side === "left" ? "8px 0 30px rgba(0,0,0,0.5)" : "-8px 0 30px rgba(0,0,0,0.5)",
     }}>
@@ -799,17 +948,48 @@ const SidePanelTerritory: React.FC<{
   );
 };
 
-const Acte3SideFlags: React.FC<{ frame: number; appear: number }> = ({ frame, appear }) => {
+/**
+ * ConvergingConnector — v8 (agent 3, brique WarMapSplitScreen.connector jamais exploitée dans l'Acte 3).
+ * 2 traits qui partent du centre-bas de l'écran (le Soudan) et divergent vers le bord intérieur de chaque
+ * volet — même vocabulaire tireté/doré déjà utilisé pour les trajets or/drones ailleurs dans l'acte. Rend
+ * VISUELLEMENT "le même or paie les deux côtés du front" (texte du beat 6) : un flux qui part du centre et
+ * se divise, au lieu de 3 blocs indépendants sans lien visuel entre eux.
+ */
+const ConvergingConnector: React.FC<{ frame: number; appear: number; panelW: number; outAt?: number; outDur?: number }> =
+  ({ frame, appear, panelW, outAt, outDur = 26 }) => {
+    const op = interpolate(frame, [appear, appear + 24], [0, 0.55], clamp) *
+      (outAt != null ? interpolate(frame, [outAt - outDur, outAt - outDur * 0.3], [1, 0], clamp) : 1);
+    if (op <= 0.01) return null;
+    const W = 1920, H = 1080;
+    const cx = W / 2, cy = H * 0.62; // point de départ = bas-centre carte (le Soudan)
+    const leftX = panelW, rightX = W - panelW;
+    const dashOffset = -(frame * 0.6) % 20; // marching ants lent (grammaire FlightLines déjà établie)
+    return (
+      <svg width={W} height={H} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+        <path d={`M ${cx} ${cy} Q ${(cx + leftX) / 2} ${cy - 60} ${leftX} ${H * 0.5}`}
+          fill="none" stroke={GOLD} strokeWidth={2.2} strokeDasharray="4 8" strokeDashoffset={dashOffset} opacity={op} />
+        <path d={`M ${cx} ${cy} Q ${(cx + rightX) / 2} ${cy - 60} ${rightX} ${H * 0.5}`}
+          fill="none" stroke={ATLAS.saf} strokeWidth={2.2} strokeDasharray="4 8" strokeDashoffset={dashOffset} opacity={op} />
+        <circle cx={cx} cy={cy} r={5} fill={GOLD} opacity={op} />
+      </svg>
+    );
+  };
+
+const Acte3SideFlags: React.FC<{ frame: number; appear: number; outAt?: number }> = ({ frame, appear, outAt }) => {
   const [topo, setTopo] = React.useState<any>(null);
   React.useEffect(() => {
     fetch(staticFile("_shared/geo-data/countries-50m.json")).then((r) => r.json()).then(setTopo).catch(() => {});
   }, []);
   if (!topo || frame < appear - 2) return null;
   const panelW = 1920 * 0.27; // volets latéraux modestes — le Soudan (centre) reste le sujet, pas noyé
+  const rightAppear = appear + 10;
   return (
     <>
-      <SidePanelTerritory panel={SIDE_PANELS[0]} side="left" topology={topo} frame={frame} appear={appear} panelW={panelW} />
-      <SidePanelTerritory panel={SIDE_PANELS[1]} side="right" topology={topo} frame={frame} appear={appear + 10} panelW={panelW} />
+      {/* révélation dissymétrique DÉJÀ en place (centre carte seul, PUIS gauche à +0, PUIS droite à +10) —
+          le connector arrive après les 2 volets pour relier un état déjà établi, pas une apparition simultanée */}
+      <SidePanelTerritory panel={SIDE_PANELS[0]} side="left" topology={topo} frame={frame} appear={appear} panelW={panelW} outAt={outAt} />
+      <SidePanelTerritory panel={SIDE_PANELS[1]} side="right" topology={topo} frame={frame} appear={rightAppear} panelW={panelW} outAt={outAt} />
+      <ConvergingConnector frame={frame} appear={rightAppear + 20} panelW={panelW} outAt={outAt} />
     </>
   );
 };
@@ -819,31 +999,37 @@ const Acte3SideFlags: React.FC<{ frame: number; appear: number }> = ({ frame, ap
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * CountryColorLayer — aplat de COULEUR NATIONALE dans le contour du pays (pas le drapeau détaillé).
- * Réutilise useClipFlags pour la géométrie projetée (le hook ne s'occupe que du contour, l'image du
- * drapeau n'est jamais rendue ici). Corrige le défaut du drapeau complet à ce niveau de dézoom : à
- * zoom ~2.5-2.9, le contour réel de la Turquie/Égypte occupe une portion énorme de l'écran — un motif
- * de drapeau détaillé à cette échelle écrase la carte. Un simple aplat de couleur reste identifiable
- * sans ce poids visuel (retour Aziz 2026-07-09 : "même sans le drapeau en tant que tel").
+ * CountryColorLayer v9 — retour Aziz (2026-07-10, review v8) : motif COMPLET du drapeau EN TOUT TEMPS,
+ * y compris très dézoomé (beat 6/7). Le seuil de zoom v8 (ZOOM_FLAG_DETAIL=4.0) faisait systématiquement
+ * repasser les drapeaux en aplat dès le dézoom du beat 6 (zoom 4.0->2.3) — Aziz veut le motif visible
+ * partout, comme il l'est déjà pour Dubaï dans le split-screen (SidePanelTerritory). Plus de bascule :
+ * toujours `<image>` clippée. `useClipFlags` gère la géométrie ET l'image, `bgColor` comble les bords.
  */
 const CountryColorLayer: React.FC<{
   mapRef: React.MutableRefObject<mapboxgl.Map | null>;
   flags: CountryFlag[];
   absoluteFrame: number;
 }> = ({ mapRef, flags, absoluteFrame }) => {
-  // useClipFlags attend un ClipFlag[] (flagFile requis mais jamais chargé/affiché ici — image ignorée)
-  const asClipFlags: ClipFlag[] = flags.map(f => ({ iso: f.iso, geoNames: f.geoNames, flagFile: `${f.iso}.png`, at: f.atAbsolute }));
+  const asClipFlags: ClipFlag[] = flags.map(f => ({ iso: f.iso, geoNames: f.geoNames, flagFile: `${f.iso}.png`, at: f.atAbsolute, bgColor: f.color }));
   const { paths } = useClipFlags(mapRef, asClipFlags, absoluteFrame);
   return (
     <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+      <defs>
+        {flags.map(f => {
+          const pp = paths[f.iso];
+          return pp ? <clipPath key={f.iso} id={`ccl-${f.iso}`}><path d={pp.path} /></clipPath> : null;
+        })}
+      </defs>
       {flags.map(f => {
         const pp = paths[f.iso];
         if (!pp || absoluteFrame < f.atAbsolute) return null;
-        const op = Math.min(1, Math.max(0, (absoluteFrame - f.atAbsolute) / 20)) * 0.5;
+        const opFlag = Math.min(1, Math.max(0, (absoluteFrame - f.atAbsolute) / 20)) * 0.92;
         return (
           <g key={f.iso}>
-            <path d={pp.path} fill={f.color} opacity={op} />
-            <path d={pp.path} fill="none" stroke="rgba(0,0,0,0.3)" strokeWidth={1.6} opacity={op * 0.7} />
+            <path d={pp.path} fill={f.color} opacity={opFlag * 0.85} />
+            <image href={pp.url} x={pp.bbox.x} y={pp.bbox.y} width={pp.bbox.w} height={pp.bbox.h}
+              preserveAspectRatio="xMidYMid meet" clipPath={`url(#ccl-${f.iso})`} opacity={opFlag} />
+            <path d={pp.path} fill="none" stroke="rgba(0,0,0,0.35)" strokeWidth={1.6} opacity={opFlag * 0.7} />
           </g>
         );
       })}

@@ -107,10 +107,12 @@ pictogrammes géométriques simples — sur-ingénierie inutile).
 > câblés en dur pour un cadre 1920×1080 (`GeoFlowConnection`, `ImpactPictogram`, etc.). Le code réel
 > (`SoudanActe3.tsx`, composant `Acte3SideFlags`) utilise une approche différente : la carte plein écran
 > reste inchangée en fond, 2 volets glissent depuis les bords par-dessus (silhouette d3-geo + drapeau
-> clippé). Piste non encore testée pour revenir au vrai `WarMapSplitScreen` : une DEUXIÈME instance de
-> `SoudanWarMapEngine` réduite (props `width`/`height` déjà ajoutées pour ce cas) SANS les enfants
-> complexes — juste le fond carte + halos. Détail complet : `memory/STARTER-PROMPT-soudan-acte3-v8.md`
-> § clarification 2, `memory/episodes/soudan-midform/STATUS.md`.
+> clippé). ⛔ Piste "2e instance SoudanWarMapEngine réduite" TESTÉE et ÉCARTÉE (2026-07-11, session 7) :
+> 2 Maps Mapbox WebGL simultanées = crash confirmé (`Error: Failed to initialize WebGL` sur la 2e Map,
+> dès l'init) — limite dure de l'environnement de rendu, pas un problème d'enfants complexes. Panneaux
+> glissants gardés et enrichis (connector convergent + sortie en étau). Détail complet (archivé) :
+> `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-soudan-acte3-v8.md` § clarification 2,
+> `memory/episodes/soudan-midform/STATUS.md` § ACTE 3 FINAL.
 
 > ⚠️ **CORRECTION 2026-07-09 tard** : la 1ère version de cette décision (ci-dessous archivée) décrivait
 > des "2 panneaux SVG custom type plaque flottante" — Aziz a testé ce prototype (`Acte3DashboardTest.tsx`)

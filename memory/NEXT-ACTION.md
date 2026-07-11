@@ -1,37 +1,32 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-10 (session 6 — Soudan sur 2 fronts en parallèle : ACTE 3 code révision v2 avancé
-> (caméra suiveuse+pictogrammes+beat7 codés, reste présentation Aziz) ET ACTE 4 script VERROUILLÉ v5,
-> prêt pour l'audio quand on y reviendra). Structure figée : **5 actes au total** (décision actée).
+> Mis a jour : 2026-07-11 (session 7 — ACTE 3 « SUIVRE L'OR » FINAL PROMU, tous les problèmes v7 résolus
+> + Beat 1 refondu + SFX complets). Structure figée : **5 actes au total** (décision actée).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🎬 SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » : v7 rendu, 3 problèmes de mise en scène PERSISTANTS (2026-07-10 s6)
+## ✅✅✅ SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » : FINAL PROMU (2026-07-11 s7)
 
-> **Session 6 : la révision de mise en scène de la session 5 a été codée (v5→v6→v7), mais une
-> reconfrontation factuelle en fin de session a montré que 3 problèmes restent NON résolus dans l'absolu**
-> malgré 3 itérations successives (chaque tour semblait "mieux qu'avant" sur un diff relatif, mais ne
-> correspondait toujours pas au brief original ni à la référence Silk Road 2 citée par Aziz). Cf
-> [[feedback_reconfronter-brief-original-pas-diff-relatif]]. 3 agents R&D indépendants ont produit un
-> diagnostic chiffré + des pistes créatives, synthétisés dans un starter dédié.
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`).
+> Catbox dernier validé : `https://files.catbox.moe/y2swv7.mp4`. Détail complet de la session (corrections
+> v8→v9, refonte Beat 1 en 2 temps, plan SFX) : `episodes/soudan-midform/STATUS.md` § ACTE 3 FINAL.
 >
-> **NEXT = lire `memory/STARTER-PROMPT-soudan-acte3-v8.md` en entier** (rapports complets des 3 agents
-> rapatriés dans `memory/episodes/soudan-midform/acte3-v8-agents-rnd/`) et trancher 2 clarifications avec
-> Aziz AVANT de coder :
-> 1. **Drapeaux** : aplat de couleur unie actuel vs vrai motif de drapeau (Aziz redemande explicitement
->    le motif complet — changement d'avis potentiel vs décision du 2026-07-09 à confirmer).
-> 2. **Split-screen beat 7** : `WarMapSplitScreen` (composant prod prévu par le breakdown) a été écarté au
->    profit de panneaux glissants — une piste de test isolé existe pour le réactiver (cf erratum dans
->    `soudan-midform-ACTE3-BREAKDOWN.md` Décision 4), pas encore essayée.
+> **NEXT = ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS »** — script déjà VERROUILLÉ v5 (session 6), reste à
+> faire dans l'ordre : (1) générer l'audio (pipeline Océane V3 → STS GéoAfrique, même méthode que Actes
+> 1-3), (2) storyboard/breakdown (pas commencés), (3) code. Script : `memory/projects/
+> soudan-midform-ACTE4-SCRIPT.md`. Angle : Russie (bascule soutien RSF→SAF 2024, offre base navale
+> Port-Soudan) + Égypte (soutien direct SAF, motif Nil). 6 beats, ~70-90s visés.
 >
-> Puis coder dans l'ordre recommandé (détail chiffré dans le starter v8) : zoom intro (2 temps forts,
-> cause géométrique : Darfour-Khartoum sont à 707km, pas 50-80km) → zoom caméra suiveuse (valeurs
-> chiffrées) → transformation or→drone (recycler `MetamorphoseFiduciaire.tsx`) → split-screen substantiel.
->
-> Script/audio/breakdown : `memory/projects/soudan-midform-ACTE3-SCRIPT.md` /
-> `-ACTE3-JURY-VERDICTS.md` / `-ACTE3-BREAKDOWN.md`. État complet : `episodes/soudan-midform/STATUS.md`.
-> Méthode audio TTS gravée : `tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`.
+> **Leçon méthodologique gravée cette session (à réutiliser Acte 4/5)** : pour un insert graphique
+> abstrait (pas de carte), TOUJOURS juger un concept sur sa LISIBILITÉ NARRATIVE (peut-on comprendre sans
+> légende ?) avant son exécution technique — un concept visuellement propre mais qui ne raconte rien tout
+> seul doit être rejeté même si son code est meilleur. Workflow prouvé : storyboard image d'abord (repère
+> vite les silhouettes/formes non codables) → si rejeté, 2 agents texte proposent des concepts SVG purs →
+> choisir sur la lisibilité → générer le code via GPT-5.6 Sol (bat Gemini 3.1 Pro sur ce registre
+> "schéma composé") → comparer rendu réel (jamais le JSON brut) → réviser ciblé (pas regénérer) si retour
+> Gemini vision ultérieur, en vérifiant chaque point (Gemini = signal, pas juge — 2 points sur 8 étaient
+> des perceptions à nuancer, pas des faits, dans la review de cette session).
 >
 > **Historique Acte 2** (FINAL, promu) : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`
 > · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`. Contenu :
@@ -75,8 +70,8 @@
 > ℹ️ Clarifié : le proto n'a jamais eu de place dans un storyboard (pas de beat écrit) — R&D pure.
 > Le hook "l'or du Darfour" est retrouvé + reskiné (asset Soudan). On est en **croissance du moteur**.
 >
-> ⛔ **§NEXT ci-dessus PÉRIMÉ (2026-07-10)** — datait d'avant les sessions 3-6 où Actes 1-2 sont FAITS/promus,
-> Acte 3 est codé (révision v2 en cours), Acte 4 est SCRIPT VERROUILLÉ v5. Voir la section Soudan en tête
+> ⛔ **§NEXT ci-dessus PÉRIMÉ (2026-07-10)** — datait d'avant les sessions 3-7 où Actes 1-2-3 sont FAITS/promus
+> (Acte 3 FINAL PROMU 2026-07-11), Acte 4 est SCRIPT VERROUILLÉ v5. Voir la section Soudan en tête
 > de fichier pour l'état réel. Conservé seulement pour le contenu moteur historique (warmapChoc/commits).
 >
 > État complet : `memory/episodes/soudan-midform/STATUS.md`.

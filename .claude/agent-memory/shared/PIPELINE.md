@@ -235,10 +235,13 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
   `out/episodes/soudan-midform/wip/acte2-FINAL.mp4`, catbox `jgvhr2`, code `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`).
   Acte 2 = 3 sections registres alternés : jeton 2-visages `TwoFaceToken` / insert `KhartoumEtatMajorSVG` beat 5 /
   bloc `BlocImpasseB6` beat 6 / carte dézoom+`KmCounter`+supply+forces figées beats 7-9. Audio LOCK. **✅ FINAL APPROUVÉ AZIZ
-  (SFX validés), PROMU** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`. **ACTE 3 « Suivre l'or »
-  EN COURS** (script v7 + audio verrouillés, code rendu v3→v7, 3 problèmes de mise en scène persistants — zoom intro,
-  caméra suiveuse, drapeaux — diagnostiqués par 3 agents R&D fin de session 6, 2026-07-10). NEXT = trancher 2
-  clarifications avec Aziz puis coder, starter `memory/STARTER-PROMPT-soudan-acte3-v8.md`.
+  (SFX validés), PROMU** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`. **✅✅✅ ACTE 3 « Suivre l'or »
+  FINAL PROMU** (2026-07-11 s7 : v7→v12, 3 problèmes v7 résolus — zoom recalibré 9.3, mine repositionnée
+  vraie géo, drapeaux motif complet resynchronisés — Beat 1 refondu 2× (concept A "puits sans fond"
+  adopté), 9 SFX posés), `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+`_compressed`),
+  catbox `y2swv7`, code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`. **NEXT = ACTE 4 « Même les
+  voisins sont aspirés »** — script verrouillé v5 (Russie+Égypte), reste audio (pipeline Océane V3 → STS
+  GéoAfrique) puis storyboard/breakdown/code.
   État : `memory/episodes/soudan-midform/STATUS.md`.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
   Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).

@@ -82,6 +82,12 @@ Différenciateur vs concurrents (stock footage / IA incohérente / statique).
 
 ## SECTION 3 — Mapbox : règles Remotion headless
 
+> ⛔ **Rappel réflexe** : `npx remotion render` direct sur une composition Mapbox échoue quasi toujours en
+> local avec `Error: Failed to initialize WebGL`. Le fix est `./scripts/render-mapbox.sh <CompositionId>
+> <output.mp4>` (chrome-headless-shell dédié + `--gl=angle` + public-dir allégé). Connu depuis 2026-07-04,
+> re-cherché en tâtonnant (dont une tentative Vercel, qui NE supporte PAS Mapbox du tout) le 2026-07-11 —
+> chercher CE script en premier réflexe avant toute autre piste face à une erreur WebGL Mapbox.
+
 ### Layers vector ne fonctionnent PAS en headless globe mode
 
 `map.addLayer` + `setPaintProperty` = invisible (testé exhaustivement ~6 itérations, Atlas Tombouctou 2026-04-29).
@@ -132,6 +138,20 @@ toutes dernières frames. Confirmé avec le bon script (`render-mapbox.sh`, chro
 `map.once('idle')` (au lieu de `style.load`) avant de commencer la capture, ou pré-chauffer les tuiles en
 amont du render. Style/direction artistique validée (fidèle à la référence testée) — seul le TIMING de
 chargement est cassé.
+
+### 2 Maps Mapbox WebGL simultanées dans le même composant = CRASH CONFIRMÉ
+
+Testé 2026-07-11 (Soudan Acte 3, besoin d'un vrai split-screen carte/carte via `WarMapSplitScreen`) :
+monter 2 instances de `SoudanWarMapEngine` (donc 2 `mapboxgl.Map`) en même temps dans le même render
+provoque `Error: Failed to initialize WebGL` sur la 2e Map, **dès l'initialisation**, avant même le
+rendu du moindre enfant complexe. Ce n'est PAS un problème d'enfants lourds (GeoFlowConnection,
+pictogrammes) comme l'hypothèse initiale le supposait — c'est une limite dure de l'environnement de
+rendu headless local (un seul contexte WebGL disponible à la fois). Confirmé même avec `render-mapbox.sh`
+(donc pas un problème du script de render). Conséquence pour `WarMapSplitScreen` (doctrine
+`WARMAP-GRAMMAIRE.md` § template) : rester sur carte+overlay (1 seule vraie Mapbox, l'autre volet en
+SVG/data comme la réf validée CFA P4) — jamais 2 vraies cartes Mapbox simultanées. Alternative pour un
+besoin "carte+carte" : panneaux glissants (silhouette d3-geo + drapeau clippé en SVG) + connector
+convergent, cf `Acte3SideFlags` dans `SoudanActe3.tsx`.
 
 ---
 

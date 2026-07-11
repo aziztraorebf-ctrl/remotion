@@ -396,6 +396,12 @@ split EST la séparation des 2 mondes) au lieu de la décrire. Cas roi : opposit
   CFA pulsante. DROITE drapeau France SVG ondulant + équation "1 € = ~656 FCFA" PERSISTANTE → bascule vers le
   SENS en typewriter (souveraineté + jeunesse, charte analyste : documenter le ressenti sans le valider).
 - Leçon data : afficher les chiffres ARRONDIS sans ambiguïté ("~656" pas "655,957" → lu "655 000"). Voir FACTS-CFA-2026.
+- ⚠️ **GARDE-FOU (Soudan Acte 3, 2026-07-11)** : ce template est validé pour carte+overlay (1 seule vraie
+  Mapbox, l'autre volet en SVG/data comme CFA P4 ci-dessus). **2 vraies instances Mapbox WebGL simultanées
+  dans les 2 panels = CRASH CONFIRMÉ** (`Error: Failed to initialize WebGL` sur la 2e Map, dès l'init —
+  limite dure du renderer headless de ce projet, pas un problème d'enfants complexes). Ne JAMAIS retenter
+  sans changement d'architecture (ex. compositing server-side de 2 renders séparés). Pour "carte+carte",
+  utiliser des panneaux glissants + connector convergent à la place (cf `Acte3SideFlags` dans `SoudanActe3.tsx`).
 
 ### Cas d'application immédiat (Chantier 3 confédération)
 La confédération AES = acte INSTITUTIONNEL (3 pays signent), AUCUN ancrage spatial → ne PAS la forcer sur la

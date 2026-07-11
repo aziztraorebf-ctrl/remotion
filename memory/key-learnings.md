@@ -884,3 +884,15 @@ GROS et plus LISIBLE, sans aucune perte narrative. Le cadre qui se resserre auto
 l'écran "au cas où". Distinct de la "règle de soustraction" émotionnelle (retrait d'EFFETS aux pics) : ici c'est
 un retrait d'ÉLÉMENT + recadrage pour la lisibilité. Transversal à toute scène multi-lieux (Mapbox ou d3-geo) où
 le foyer d'attention se resserre en cours de récit. Bonne intuition Aziz : "la Libye n'a plus rien à voir ici".
+
+## Vérifier indépendamment un calcul chiffré d'agent R&D avant de l'appliquer (2026-07-11, Soudan Acte 3)
+Un diagnostic produit par des agents R&D sur une formule technique/géo (ex. zoom Mapbox ↔ distance réelle à
+l'écran) peut être FAUX d'un facteur significatif (×10 observé) sans que l'erreur soit évidente à la lecture —
+le diagnostic "semblait" cohérent, structuré, chiffré, mais reposait sur une formule mal appliquée. Cas concret :
+le diagnostic initial du problème "zoom intro pas assez resserré" (Beat 1, Khartoum/Darfour) indiquait qu'un
+zoom Mapbox de 6.6 correspondait à ~300km d'écran réel ; un recalcul indépendant (formule Web Mercator exacte,
+mètres/pixel = 156543.03392×cos(lat)/2^zoom) a montré que zoom 6.6 = ~3000km réel — le vrai fix était de
+recalibrer à zoom 9.3, pas d'ajuster autour de 6.6. Règle : avant d'appliquer un correctif CHIFFRÉ proposé par
+un agent R&D sur une formule technique (géo, physique, timing), faire vérifier le calcul indépendamment (recalcul
+manuel ou 2e agent dédié) plutôt que de l'appliquer directement — surtout quand le chiffre conditionne un réglage
+coûteux à re-tester (ex. un render Mapbox complet).

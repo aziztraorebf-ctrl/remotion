@@ -1,12 +1,62 @@
 # Soudan Mid-form — STATUS
 
-**Dernière mise à jour :** 2026-07-10 (session 6) — 🎬 **ACTE 3 « SUIVRE L'OR » v7 RENDU, 3 PROBLÈMES
-NON RÉSOLUS malgré 3 itérations** (v5→v6→v7) — écart constaté entre intention et rendu réel sur
-zoom/caméra/drapeaux, 3 agents R&D lancés en fin de session pour repartir avec un diagnostic frais.
-**Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4).
-**Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
+**Dernière mise à jour :** 2026-07-11 (session 7) — 🎬🎬 **ACTE 3 « SUIVRE L'OR » FINAL PROMU.**
+v7→v12 : 3 problèmes v7 (zoom/caméra/drapeaux) corrigés, Beat 1 refondu 2× (concept B rejeté "pas
+narratif" → concept A "puits sans fond" adopté et affiné suite retour Gemini), plan SFX complet (9 SFX)
+appliqué. **Branche :** `feat/soudan-acte3`. Acte 2 « Blocage » FINAL approuvé (session 4).
+**Promu :** `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`)
+· `soudan-acte2-blocage-FINAL.mp4` (catbox `jgvhr2`).
 
-## 🎬 ACTE 3 « SUIVRE L'OR » (session 6, 2026-07-10) — v7 RENDU, ⛔ 3 PROBLÈMES PERSISTANTS
+## ✅✅ ACTE 3 « SUIVRE L'OR » — FINAL (session 7, 2026-07-11)
+
+**Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (74.6MB, 125.8s)
++ `_compressed.mp4` (24.5MB, mobile). Dernier catbox validé : `https://files.catbox.moe/y2swv7.mp4`.
+
+**Corrections v8→v9 (suite diagnostic v7)** :
+- Zoom intro (beat 1) : diagnostic agents R&D initial FAUX d'un facteur ×10 sur la formule Web Mercator
+  (zoom 6.6 = ~3000km d'écran réel, pas ~300km). Recalibré à zoom 9.3 (vrai close-up ~460km), Khartoum et
+  Darfour ne sont plus jamais visibles simultanément.
+- Mine hors territoire (`MINE_2`) repositionnée dans le vrai Soudan (Southern Darfur), vérifiée
+  point-in-polygon.
+- Drapeaux : motif complet permanent (plus d'aplat au dézoom), resynchronisés sur les vrais événements
+  narratifs (le drapeau EAU était câblé sur le mauvais jalon, 13.5s de décalage avec l'arrivée du lingot).
+- Sprite mine d'or agrandi (72→130px), territoires colorés RSF/SAF ajoutés dès l'ouverture (meuble les
+  30 premières secondes).
+- Split-screen final : `WarMapSplitScreen` réel écarté (2 Maps WebGL simultanées = crash confirmé par
+  test), gardé les panneaux glissants + ajouté connector convergent (trait or) + sortie en étau
+  (resserrement plutôt que fade plat).
+- Métamorphose or→drone à Dubaï : composant `MarkerMetamorphose` (wipe circulaire, adapté de
+  `MetamorphoseFiduciaire`).
+
+**Beat 1 "paradoxe" refondu 2× (session 7)** — leçon clé sur le workflow storyboard→SVG :
+1. Storyboard image généré par Gemini (silhouettes en pose de combat) → REJETÉ, pas réalisable en
+   SVG/Remotion (pas de rig articulé, ça a été confirmé par la doctrine `openrouter-svg.md`).
+2. 2 agents R&D texte ont proposé 2 concepts SVG purs : concept A ("un puits sans fond" — jauge qui fuit
+   + 2 sources qui rechargent + filet mystère qui s'inverse) vs concept B ("la source qui ne tarit
+   jamais" — veine qui se scinde + jauges oscillantes). **B choisi en premier** (meilleur rendu technique)
+   puis **REJETÉ après review** : "dur à comprendre, manque de narratif" (2 cercles R/S + une ligne, sans
+   contexte, ne raconte rien tout seul). **A repris et adopté** — chaque phase a un geste CAUSE→EFFET
+   lisible sans légende.
+   → [[feedback_narratif-avant-esthetique-svg-genere]] (à écrire si le pattern se reproduit).
+3. Génération technique : GPT-5.6 Sol (`openai/gpt-5.6-sol` via OpenRouter) bat nettement Gemini 3.1 Pro
+   sur ce registre "schéma composé riche" (confirmé 2× — storyboard-dual-gen ET génération SVG directe).
+   Prompt→JSON structuré (`{"scene": "<g>...", "notes": "..."}`), scene = JSX directement collable.
+4. Révision ciblée (pas regénération) suite retour Gemini vision sur le rendu : recentrage, fuite plus
+   visible dès le départ (courbe puissance vs linéaire), graduations qui s'éteignent au niveau du
+   liquide, dégradé doré mat, gouttes en fade-out, pulsations sur les tuyaux. Gemini = signal vérifié
+   point par point (2 points sur 8 étaient des perceptions à nuancer, pas des faits — ex. couleur déjà
+   correcte dans le code).
+
+**SFX (session 7)** — 9 SFX au total (5 existants remontés 0.35-0.4→0.50 + 4 nouveaux ciblés sur les
+moments narratifs forts, jamais sur les transitions génériques — whoosh/impacts systématiques écartés
+sur consigne Aziz "pas la peine d'abuser") : 3 impacts échelonnés (mines d'or), stamp-dossier
+(métamorphose or→drone), tension-pulse (étau final). Règle confirmée : `tension-drone.mp3` INTERDIT
+(décision Aziz 2026-06-27, dérange) — jamais de lit sonore continu, combler par musique+SFX ponctuels.
+
+**Nettoyage** : itérations wip/_rnd v7-v12 PAS purgées (permission refusée en session, ~700MB) — à faire
+en session future si besoin d'espace disque, sans urgence (FINAL sécurisé dans PRET-PUBLICATION).
+
+## 🗄️ ACTE 3 v7 (session 6, 2026-07-10) — diagnostic archivé, périmé
 
 **⚠️ LIRE AVANT DE REPARTIR** : v5→v6→v7 ont chacun ajouté des corrections (caméra suiveuse, pictogrammes
 GLM puis sprites PNG drones, split-screen enrichi, mines pop+onde de choc) et Aziz a validé le PROGRÈS
