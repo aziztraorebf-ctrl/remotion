@@ -5,16 +5,25 @@ La vidéo est TERMINÉE et VALIDÉE par Aziz (2026-07-05), promue dans
 n'est attendu — voir `memory/episodes/warmap-sahel/STATUS.md` § "VIDÉO FINALE VALIDÉE AZIZ" pour
 l'historique complet de la Session C si besoin de contexte.
 
-Il reste deux points avant de pouvoir programmer la publication :
+## ✅ Thumbnail FAITE (2026-07-10) — 2 candidats A/B validés Aziz
 
-1. **Thumbnail** — à créer à partir d'une frame forte de la vidéo finale (ou d'un visuel dédié).
-   Regarder le dashboard `dashboard/templates-souverain.html` et le workflow habituel du projet
-   (frame mid/end → catbox → publish-here-now.sh) pour la convention de production.
-2. **Titre** — à définir. Doctrine de titrage du projet :
+Pipeline C (voir `public/_shared/thumbnails-library/README.md`) : script complet collé sur Gemini web →
+4 concepts proposés → 2 retenus → retouche via API `gemini-3.1-flash-image-preview` (vrai sceau AES,
+filigranes retirés, upscale 1920x1080). Fichiers :
+- `public/_shared/thumbnails-library/warmap-sahel-aes/aes-la-rupture.png` (carte fissurée + sceau doré —
+  préféré Aziz)
+- `public/_shared/thumbnails-library/warmap-sahel-aes/aes-le-nouveau-bloc.png` (variante A/B)
+
+## Reste avant publication
+
+1. **Titre** — à définir. Doctrine de titrage du projet :
    `memory/feedback_doctrine-titres-youtube-kora-cartes.md` (fait+conséquence+cause inattendue,
    déclaratif > question).
+2. **Upload** — décision Aziz (2026-07-10) : la vidéo longue AES sera uploadée MANUELLEMENT via YouTube
+   Studio (pas TryPost), pour garder l'accès à Test & Compare (A/B testing natif thumbnails/titres,
+   confirmé Studio-only/aucun accès API) — pertinent vu qu'on a justement 2 thumbnails à tester. TryPost
+   reste réservé aux Shorts/republications/cross-post IG+FB.
 
-Étape 0 : demander à Aziz s'il a des pistes de titre ou d'angle visuel en tête, ne pas présumer.
-Une fois les deux faits et validés : programmer la publication (stratégie de distribution dans
-`memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md`, outils `memory/tools/trypost.md` /
-`memory/tools/postiz.md`).
+Étape 0 : demander à Aziz s'il a des pistes de titre en tête, ne pas présumer. Une fois le titre validé :
+Aziz gère l'upload + le Test & Compare directement dans YouTube Studio (pas d'action Claude requise sur
+cette étape, hors du périmètre TryPost/API).

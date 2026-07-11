@@ -102,6 +102,10 @@ export const AesShortPart2: React.FC<{ noAudio?: boolean }> = ({ noAudio = false
   const uraniumVein = clampI(frame, s(69.2), s(70.2)); // uranium Niger
   const petroleVein = clampI(frame, s(70.2), s(71.0)); // petrole Niger
   const leverOp = clampI(frame, s(62.1), s(63.5)); // "UN LEVIER"
+  // POP anime (retour Aziz : icones agrandies + vrai geste d'apparition, pas juste un fade sur une carte statique)
+  const orPop = spring({ frame: frame - s(66.4), fps: FPS, config: { damping: 11, stiffness: 120 }, durationInFrames: 20 });
+  const uraniumPop = spring({ frame: frame - s(69.2), fps: FPS, config: { damping: 11, stiffness: 120 }, durationInFrames: 20 });
+  const petrolePop = spring({ frame: frame - s(70.2), fps: FPS, config: { damping: 11, stiffness: 120 }, durationInFrames: 20 });
 
   // ===== PANEL 11 — count-up 60 ans (72.3-83.0s) =====
   const countUp = Math.round(clampI(frame, s(74.8), s(77.6), 0, 60));
@@ -342,40 +346,56 @@ export const AesShortPart2: React.FC<{ noAudio?: boolean }> = ({ noAudio = false
             );
           })()}
 
-          {/* --- PANEL 10 : veines de ressources (partent des centroides reels) --- */}
-          {/* OR : lingot dore (Mali ouest + Burkina) */}
+          {/* --- PANEL 10 : ressources (partent des centroides reels) — AGRANDIES + POP anime + BOUCLE
+                (retour Aziz : plus grandes, vrai geste d'apparition, + animation en boucle par ressource
+                pour eviter la carte figee : lingot qui scintille, atome qui tourne, goutte qui pulse) --- */}
+          {/* OR : lingot dore (Mali ouest + Burkina) — scintillement (reflet qui balaie) */}
           {orVein > 0 && ([[-8, 13], [-1.5, 12]] as [number, number][]).map((p, i) => {
             const [x, y] = geo.project(p);
+            const sc = 0.5 + orPop * 1.3; // overshoot puis settle ~1.8x la taille d'origine
+            const shinePhase = ((frame - s(66.4) + i * 15) % 55) / 55; // decale les 2 lingots
+            const shineX = x - 16 + shinePhase * 32;
+            const shineOp = shinePhase < 0.5 ? Math.sin(shinePhase * Math.PI * 2) * 0.8 : 0;
             return (
-              <g key={i} opacity={orVein}>
-                <circle cx={x} cy={y} r={17} fill={NAVY_DEEP} opacity={0.7} />
+              <g key={i} opacity={orVein} transform={`translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})`}>
+                <circle cx={x} cy={y} r={30} fill={NAVY_DEEP} opacity={0.75} stroke={OR} strokeWidth={1.5} strokeOpacity={0.5} />
                 {/* lingot (trapeze) */}
-                <polygon points={`${x - 11},${y + 5} ${x + 11},${y + 5} ${x + 8},${y - 5} ${x - 8},${y - 5}`} fill={OR} stroke="#8a6d1e" strokeWidth={1} />
-                <line x1={x - 6} y1={y - 5} x2={x - 8} y2={y + 5} stroke="#fff2c0" strokeWidth={1} opacity={0.6} />
+                <polygon points={`${x - 19},${y + 9} ${x + 19},${y + 9} ${x + 14},${y - 9} ${x - 14},${y - 9}`} fill={OR} stroke="#8a6d1e" strokeWidth={1.5} />
+                <line x1={x - 10} y1={y - 9} x2={x - 14} y2={y + 9} stroke="#fff2c0" strokeWidth={1.5} opacity={0.65} />
+                {/* reflet qui balaie en boucle */}
+                {shineOp > 0.01 && (
+                  <line x1={shineX} y1={y - 8} x2={shineX + 5} y2={y + 8} stroke="#fffbe6" strokeWidth={3} opacity={shineOp} strokeLinecap="round" />
+                )}
               </g>
             );
           })}
-          {/* URANIUM : symbole atome (Niger nord, Arlit) */}
+          {/* URANIUM : symbole atome (Niger nord, Arlit) — orbites en rotation continue */}
           {uraniumVein > 0 && (() => {
             const [x, y] = geo.project([7.3, 18.7]);
+            const sc = 0.5 + uraniumPop * 1.3;
+            const spin = (frame - s(69.2)) * 2.2; // deg/frame -> rotation continue lente
             return (
-              <g opacity={uraniumVein}>
-                <circle cx={x} cy={y} r={17} fill={NAVY_DEEP} opacity={0.7} />
-                <circle cx={x} cy={y} r={3} fill={URANIUM} />
+              <g opacity={uraniumVein} transform={`translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})`}>
+                <circle cx={x} cy={y} r={30} fill={NAVY_DEEP} opacity={0.75} stroke={URANIUM} strokeWidth={1.5} strokeOpacity={0.5} />
+                <circle cx={x} cy={y} r={5} fill={URANIUM} />
                 {[0, 60, 120].map((a) => (
-                  <ellipse key={a} cx={x} cy={y} rx={12} ry={5} fill="none" stroke={URANIUM} strokeWidth={1.6} transform={`rotate(${a} ${x} ${y})`} opacity={0.9} />
+                  <ellipse key={a} cx={x} cy={y} rx={21} ry={9} fill="none" stroke={URANIUM} strokeWidth={2.2} transform={`rotate(${a + spin} ${x} ${y})`} opacity={0.9} />
                 ))}
               </g>
             );
           })()}
-          {/* PETROLE : goutte noire (Niger est) */}
+          {/* PETROLE : goutte noire (Niger est) — pulsation douce (respiration) */}
           {petroleVein > 0 && (() => {
             const [x, y] = geo.project([11, 16]);
+            const sc = 0.5 + petrolePop * 1.3;
+            const pulse = 1 + 0.06 * Math.sin((frame - s(70.2)) * 0.12);
             return (
-              <g opacity={petroleVein}>
-                <circle cx={x} cy={y} r={17} fill={NAVY_DEEP} opacity={0.7} />
-                <path d={`M ${x} ${y - 11} C ${x + 9} ${y - 1}, ${x + 8} ${y + 9}, ${x} ${y + 9} C ${x - 8} ${y + 9}, ${x - 9} ${y - 1}, ${x} ${y - 11} Z`} fill="#1a1a1a" stroke={GOLD} strokeWidth={1.5} />
-                <ellipse cx={x - 3} cy={y + 1} rx={2} ry={3} fill="#4a4a4a" opacity={0.7} />
+              <g opacity={petroleVein} transform={`translate(${x} ${y}) scale(${sc}) translate(${-x} ${-y})`}>
+                <circle cx={x} cy={y} r={30} fill={NAVY_DEEP} opacity={0.75} stroke={GOLD} strokeWidth={1.5} strokeOpacity={0.4} />
+                <g transform={`translate(${x} ${y}) scale(${pulse}) translate(${-x} ${-y})`}>
+                  <path d={`M ${x} ${y - 19} C ${x + 16} ${y - 2}, ${x + 14} ${y + 16}, ${x} ${y + 16} C ${x - 14} ${y + 16}, ${x - 16} ${y - 2}, ${x} ${y - 19} Z`} fill="#1a1a1a" stroke={GOLD} strokeWidth={2} />
+                  <ellipse cx={x - 5} cy={y + 2} rx={3.5} ry={5} fill="#4a4a4a" opacity={0.7} />
+                </g>
               </g>
             );
           })()}

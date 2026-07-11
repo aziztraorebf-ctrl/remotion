@@ -1734,6 +1734,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
         {/* PROTO ISOLE — globe rotatif night-mode Darfour->Dubai, teste si ca peut remplacer camera suiveuse Mercator beat 3 */}
         <Composition id="GlobeSoudanDubaiTest" component={GlobeSoudanDubaiTest} durationInFrames={GLOBE_SOUDAN_DUBAI_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        {/* Insert Beat1Paradoxe FINAL adopte (concept A, Sol) — rendu isole pour validation avant integration */}
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />

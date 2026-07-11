@@ -83,17 +83,18 @@
 
 ---
 
-## ✅✅ SHORT AES 90s — VIDÉO COMPLÈTE 92s PRODUITE & VALIDÉE VISUELLEMENT (MàJ 2026-07-08)
+## ✅✅✅ SHORT AES 90s — COMPLET (musique+SFX+durée), PROMU PRET-PUBLICATION (MàJ 2026-07-11)
 
-> ✅✅ **Reprise RÉUSSIE (2026-07-08)** après 4 échecs (2026-07-07). Registre carte vivante d3-geo PUR
-> (zéro Mapbox), fond navy, contours colorés, sous-titres phrases courtes. Vidéo complète 92s validée
-> visuellement par Aziz. Livrable : `out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` (catbox 8ms702).
-> Code : `src/projects/warmap/shorts/aes-short-90s/` (compo `AES-Short-Full`), branche
-> `feat/aes-short-90s-carte-vivante` (commit 83f5260).
-> **NEXT = finitions AUDIO seulement : (1) MUSIQUE — reprendre celle de la vidéo LONGUE War-Map AES ;
-> (2) SFX — ping/ding sur apparitions d'éléments + 1-2 SFX bien placés (impact fracture, whoosh AES).**
-> Détail : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md` · socle figé :
-> `.claude/.../memory/aes-short-socle-valide.md`.
+> ✅✅✅ **Finitions audio TERMINÉES (2026-07-11)** : musique `music-D-montee-maitrisee.mp3` (volume 0.10,
+> reprise de la vidéo longue AES), SFX ajoutés (ping sur traces de contour, whoosh remplacé par ping au
+> climax AES, cedeao-snap sur la fracture, ding blip-bubble sur France + coups d'État, counter-tick en
+> boucle sur le count-up 60 ans, animations en boucle sur icônes ressources or/uranium/pétrole), durée
+> rallongée 91.9s→93.5s (2802 frames) pour laisser la narration finir. Livrable :
+> `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4`. Code : `src/projects/warmap/shorts/aes-short-90s/`
+> (compo `AES-Short-Full`).
+> **NEXT = programmer la publication** (Short → TryPost, cf `memory/tools/trypost.md`).
+> Détail production initiale : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md` · socle
+> figé : `.claude/.../memory/aes-short-socle-valide.md`.
 
 ---
 
@@ -107,7 +108,11 @@
 > (endAt étendu +1.5s pour respiration), labels texte scène coin supprimés, écran gris de transition
 > supprimé. Tout validé Aziz par extraits ciblés + mini-renders à chaque itération.
 > **Livrable final** : `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (+ `-compressed.mp4`).
-> **NEXT** = programmer la publication (décision Aziz, pas une tâche technique).
+> ✅ **Thumbnail finalisée et validée (2026-07-11, Pipeline C)** : "PÉTROLE : LE PIÈGE SÉNÉGALAIS ?"
+> (baril enchaîné + LED "132%" = dette publique/PIB citée au script, carte Sénégal + Dakar marqué).
+> Fichier : `public/_shared/thumbnails-library/senegal-petrole-gaz/senegal-piege-baril.png`.
+> **NEXT** = titre à définir, puis upload MANUEL YouTube Studio (même décision que War-Map Sahel AES,
+> cf `memory/tools/trypost.md` — vidéo longue = Studio pour garder Test & Compare).
 >
 > 💡 Note (réflexion Aziz 2026-07-05) : cette vidéo (1ère avec le système Mapbox complet) a été longue en
 > R&D mais constitue un gabarit réutilisable avec War-Map Sahel AES (2e vidéo Mapbox) — à consulter
@@ -575,8 +580,10 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > SANS RÉSERVE. Promue `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4` (386MB, 7min30). `wip/` purgé.
 > Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "SESSION C — ÉTAT".
 >
-> ⭐⭐ **NEXT SESSION War-Map Sahel = tâche courte, thumbnail + titre uniquement** (lire
-> `memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`), puis programmer la publication.
+> ⭐⭐ **Thumbnail FAITE (2026-07-10, Pipeline C — voir `public/_shared/thumbnails-library/README.md`)** :
+> 2 candidats A/B validés dans `public/_shared/thumbnails-library/warmap-sahel-aes/`. NEXT = titre +
+> upload MANUEL YouTube Studio (décision Aziz : garder accès Test & Compare A/B natif, pas TryPost pour
+> cette vidéo). Détail : `memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`.
 >
 > Point ouvert non bloquant documenté (ne pas répéter l'investigation) : liseré blanc résiduel sur
 > frontières CEDEAO (résidu Mapbox natif, cause exacte non isolée après 3 tentatives de fix) — cf

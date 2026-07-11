@@ -16,12 +16,14 @@ metadata:
 
 | Plateforme | Outil | Pourquoi |
 |------------|-------|---------|
-| YouTube | **TryPost** | Analytics natifs, Claude pilote via MCP |
-| Instagram | **TryPost** | Idem |
-| Facebook | **TryPost** | Idem |
+| YouTube Short | **TryPost** | Analytics natifs, Claude pilote via MCP |
+| YouTube vidéo longue | **Manuel (YouTube Studio)** | Garder l'accès à Test & Compare (A/B testing natif thumbnails/titres) et aux end screens/cards — confirmé absents de l'API YouTube Data v3 (feature request Google encore ouverte), donc inaccessibles via tout outil tiers y compris TryPost. Décision Aziz 2026-07-10. |
+| Instagram | **TryPost** | Idem Short |
+| Facebook | **TryPost** | Idem Short |
 | TikTok | Postiz (pas TryPost) | TikTok API non supportée par TryPost |
 
-**Règle d'or** : TryPost = tout sauf TikTok. TikTok → Postiz toujours.
+**Règle d'or** : TryPost = tout sauf TikTok ET sauf les vidéos YouTube longues. Vidéo longue → upload
+manuel Studio (accès Test & Compare) ; Short/IG/FB → TryPost ; TikTok → Postiz toujours.
 
 ---
 

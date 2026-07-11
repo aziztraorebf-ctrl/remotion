@@ -8,6 +8,8 @@
 
 Preuve : `curl -6 https://<host>` timeout à 10s pile ; `curl -4` répond en <1s. Un monkeypatch de `socket.getaddrinfo` pour ne renvoyer que de l'IPv4 fait passer une requête Python de "bloquée" à <0.1s.
 
+Confirmé à nouveau 2026-07-11 sur `da-brief.py`, le moteur du skill `/last30days` (`scripts/last30days.py`), et des scripts ad hoc de génération/retouche d'images Gemini — le fix `scripts/tools/run_ipv4.py` s'applique universellement, pas seulement aux cas déjà listés.
+
 ## Fix 1 — yt-dlp (a un flag natif)
 
 ```bash

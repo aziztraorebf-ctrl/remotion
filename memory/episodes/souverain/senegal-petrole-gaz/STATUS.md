@@ -103,6 +103,16 @@ Pas bloqué techniquement — les beats sont tous validés. Ce qui reste :
 
 ---
 
+## ✅ THUMBNAIL (2026-07-11)
+
+Finalisée et validée Aziz via Pipeline C (voir `public/_shared/thumbnails-library/README.md`) :
+"PÉTROLE : LE PIÈGE SÉNÉGALAIS ?" — baril de pétrole enchaîné + affichage LED rouge "132%" (la dette
+publique/PIB citée dans le script), carte du Sénégal avec Dakar marqué. Fichier :
+`public/_shared/thumbnails-library/senegal-petrole-gaz/senegal-piege-baril.png`. NEXT = titre à définir,
+puis upload MANUEL YouTube Studio (cf `memory/tools/trypost.md`).
+
+---
+
 ## TECHNIQUES DÉVELOPPÉES DEPUIS QUI S'APPLIQUENT ICI
 
 | Technique | Source | Application Sénégal |

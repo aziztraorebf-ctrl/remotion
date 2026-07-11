@@ -1,5 +1,10 @@
 # Short "L'AES en 90 secondes" — PRODUCTION (session 2026-07-08, CONCLUANTE)
 
+> ✅ MàJ 2026-07-11 : musique + SFX ajoutés, durée rallongée 91.9s→93.5s. COMPLET, promu
+> `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4`. Reste = programmer la publication (TryPost). Détail :
+> `memory/NEXT-ACTION.md` § Short AES 90s. Le reste de ce fichier documente la session de production
+> initiale (visuel) — historique, ne plus modifier.
+>
 > Vidéo complète 92s produite et validée VISUELLEMENT par Aziz. Reste : musique + SFX (prochaine session).
 > Livrable : `out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` · catbox https://files.catbox.moe/8ms702.mp4
 
