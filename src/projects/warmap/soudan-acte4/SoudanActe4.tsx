@@ -121,57 +121,149 @@ const F1 = {
   end: S1_FRAMES,
 };
 
-// ⭐ v2 (agent R&D caméra, 2026-07-11) : CAM1 REMPLACE un cadrage fixe par un vrai voyage caméra
-// Moscou->Soudan en 2 temps (cf pattern cameraFollowsPath/cam2At déjà prouvé Acte 3 beats 3-5) — la
-// caméra redescend physiquement de Moscou vers le Soudan au lieu de rester posée pendant que des
-// traits SVG bougent seuls en arrière-plan. Phase 1 (Wagner/RSF, ancien) : voyage bref et qui s'estompe.
-// Pause dédiée resserrée sur le Soudan à la bascule 2024. Phase 2 (Moscou-SAF, net) : second voyage.
+// ⭐ v3 (session 10, 2026-07-12) : CAM1 REMPLACE le simple "suivi de trait à l'échelle régionale" par
+// un vrai WHIP PAN vers Moscou (règle 60f, DOCTRINE-SOUVERAIN.md) — la caméra QUITTE le Soudan, se
+// stabilise sur le territoire russe (régime parchemin temporaire, cf RUSSIA_MASK_FRAMES plus bas) pendant
+// tout le flux Wagner/or, puis whip pan retour vers le Soudan pour la bascule 2024 (2e voyage Moscou->SAF,
+// cf pattern historique cameraFollowsPath conservé pour cette portion).
+const CAM1_ZOOM_MOSCOW = 6.4;   // vrai "atterrissage" sur le territoire russe, pas juste régional
 const CAM1_ZOOM_FOLLOW = 5.2;
 const CAM1_ZOOM_REST = 4.4;
-const WP_RUSSIA_RSF: [number, number][] = [MOSCOW, [34, 35], [30, 25], DARFUR];
 const WP_RUSSIA_SAF: [number, number][] = [MOSCOW, [34, 35], [32.7, 24], KHARTOUM];
 const CAM1_BLEND = 16;
+const WHIP_DUR = 60; // règle 60f whip pan (DOCTRINE-SOUVERAIN.md) — au-delà ça mollit, en-deçà ça saccade
 
 function blendCamSimple(a: CamKey, b: CamKey, frame: number, from: number, to: number): CamKey {
   const t = interpolate(frame, [from, to], [0, 1], clamp);
   return { f: frame, lon: a.lon + (b.lon - a.lon) * t, lat: a.lat + (b.lat - a.lat) * t, zoom: a.zoom + (b.zoom - a.zoom) * t };
 }
 
+// whip pan = trajectoire directe + survol du zoom (dézoome au milieu du trajet, comme un vrai pan caméra
+// qui recule pour balayer la distance, puis se resserre à l'arrivée) — pas un simple lerp linéaire plat.
+function whipPan(a: CamKey, b: CamKey, frame: number, from: number, dur: number): CamKey {
+  const t = interpolate(frame, [from, from + dur], [0, 1], clamp);
+  const te = t * t * (3 - 2 * t); // smoothstep, easing doux aux extrémités
+  const zoomDip = Math.sin(t * Math.PI) * 1.4; // survol : dézoome au milieu du pan
+  return {
+    f: frame,
+    lon: a.lon + (b.lon - a.lon) * te,
+    lat: a.lat + (b.lat - a.lat) * te,
+    zoom: a.zoom + (b.zoom - a.zoom) * te - zoomDip,
+  };
+}
+
 function cam1At(frame: number, f1: typeof F1): CamKey {
   const restSoudan: CamKey = { f: frame, lon: 30, lat: 18, zoom: CAM1_ZOOM_REST };
+  const restStart: CamKey = { f: frame, lon: 30, lat: 20, zoom: CAM1_ZOOM_REST };
+  const onMoscow: CamKey = { f: frame, lon: MOSCOW[0], lat: MOSCOW[1], zoom: CAM1_ZOOM_MOSCOW };
+
   // Phase 0 — repos large avant le mot "troisième pays"
-  if (frame < f1.troisiemePays) return { f: frame, lon: 30, lat: 20, zoom: CAM1_ZOOM_REST };
-  // Phase 1 — voyage Moscou->RSF (Wagner, ancien flux)
-  if (frame < f1.volteFace2024) {
-    const t = interpolate(frame, [f1.troisiemePays, f1.volteFace2024 - CAM1_BLEND], [0, 1], clamp);
-    const follow = cameraFollowsPath(WP_RUSSIA_RSF, t, CAM1_ZOOM_FOLLOW);
-    return frame < f1.troisiemePays + CAM1_BLEND
-      ? blendCamSimple({ f: frame, lon: 30, lat: 20, zoom: CAM1_ZOOM_REST }, follow, frame, f1.troisiemePays, f1.troisiemePays + CAM1_BLEND)
-      : follow;
-  }
-  // Phase 2 — pause dédiée resserrée sur le Soudan à la bascule (le spectateur "atterrit" avant le 2e voyage)
-  const PAUSE = 20;
-  if (frame < f1.volteFace2024 + PAUSE) {
-    return blendCamSimple(cameraFollowsPath(WP_RUSSIA_RSF, 1, CAM1_ZOOM_FOLLOW), restSoudan, frame, f1.volteFace2024, f1.volteFace2024 + CAM1_BLEND);
-  }
-  // Phase 3 — second voyage Moscou->SAF (2024, net et actif)
-  const t2 = interpolate(frame, [f1.volteFace2024 + PAUSE, f1.end - 20], [0, 1], clamp);
+  if (frame < f1.troisiemePays) return restStart;
+
+  // Phase 1 — WHIP PAN Soudan -> Moscou (60f actives, cf WP_RUSSIA_RSF retiré : plus de "suivi de trait",
+  // la caméra saute directement, comme un vrai pan, le trait armes/or se dessine APRÈS l'atterrissage).
+  const whipEnd = f1.troisiemePays + WHIP_DUR;
+  if (frame < whipEnd) return whipPan(restStart, onMoscow, frame, f1.troisiemePays, WHIP_DUR);
+
+  // Phase 2 — STABILISÉE sur Moscou : tout le flux Wagner/or (wagnerArmait) se joue caméra figée sur le
+  // territoire russe (régime parchemin temporaire, cf Section1 masque RUSSIA_MASK_FRAMES).
+  if (frame < f1.volteFace2024 - CAM1_BLEND) return onMoscow;
+
+  // Phase 3 — whip pan RETOUR vers le Soudan à l'approche de la bascule 2024 (le territoire russe se
+  // referme en kaki pendant ce retour, cf Section1).
+  const returnEnd = f1.volteFace2024 + 20;
+  if (frame < returnEnd) return whipPan(onMoscow, restSoudan, frame, f1.volteFace2024 - CAM1_BLEND, CAM1_BLEND + 20);
+
+  // Phase 4 — second voyage Moscou->SAF (2024, net et actif) — pattern historique conservé, la caméra
+  // suit le trait qui se trace vers Khartoum (cohérent avec le reste de l'acte, cameraFollowsPath prouvé).
+  const t2 = interpolate(frame, [returnEnd, f1.end - 20], [0, 1], clamp);
   const follow2 = cameraFollowsPath(WP_RUSSIA_SAF, t2, CAM1_ZOOM_FOLLOW);
-  return frame < f1.volteFace2024 + PAUSE + CAM1_BLEND
-    ? blendCamSimple(restSoudan, follow2, frame, f1.volteFace2024 + PAUSE, f1.volteFace2024 + PAUSE + CAM1_BLEND)
+  return frame < returnEnd + CAM1_BLEND
+    ? blendCamSimple(restSoudan, follow2, frame, returnEnd, returnEnd + CAM1_BLEND)
     : follow2;
 }
+
+// ⭐ MASQUE PARCHEMIN TEMPORAIRE (session 10, 2026-07-12) — extension ponctuelle du principe "CONTOUR
+// PERMANENT + INTÉRIEUR VIDE" (grammaire AES, cf SoudanWarMapEngine.tsx) à un pays voisin le temps d'un
+// beat. Le voile kaki qui assombrit tout ce qui n'est pas le Soudan est troué le temps du beat sur le
+// territoire concerné (ici la Russie), avec un fondu d'ouverture/fermeture — PAS un état binaire figé,
+// pour que le territoire redevienne kaki en douceur une fois le beat terminé (retour à la grammaire
+// normale du reste de l'acte, aucun résidu visuel après la scène).
+function RussiaParchmentMask({
+  proj, frame, openAt, closeAt, width = 1920, height = 1080,
+}: { proj: (c: [number, number]) => { x: number; y: number } | null; frame: number; openAt: number; closeAt: number; width?: number; height?: number }) {
+  const [geo, setGeo] = React.useState<any>(null);
+  React.useEffect(() => {
+    fetch(staticFile("_shared/geo-data/world/russia-outline.geojson")).then((r) => r.json()).then(setGeo).catch(() => {});
+  }, []);
+  const openT = interpolate(frame, [openAt, openAt + 20], [0, 1], clamp);
+  const closeT = interpolate(frame, [closeAt, closeAt + 24], [1, 0], clamp);
+  const op = Math.min(openT, closeT);
+  if (!geo || op <= 0.01) return null;
+
+  const rings: [number, number][][] = [];
+  for (const f of geo.features) {
+    const g = f.geometry;
+    const polys = g.type === "MultiPolygon" ? g.coordinates : [g.coordinates];
+    for (const poly of polys) rings.push(poly[0] as [number, number][]);
+  }
+  const paths = rings.map((ring) => {
+    let d = "";
+    let started = false;
+    for (const [lon, lat] of ring) {
+      // filtre la partie orientale (au-delà de ~100°E) qui traverse l'antiméridien — seule la Russie
+      // européenne/occidentale est visible dans le cadrage Moscou de ce beat (cf mainlandBox ALL_COUNTRY_FLAGS).
+      if (lon > 100 || lon < -20) { started = false; continue; }
+      const p = proj([lon, lat]);
+      if (!p) { started = false; continue; }
+      d += (!started ? "M" : "L") + p.x.toFixed(1) + " " + p.y.toFixed(1);
+      started = true;
+    }
+    return d + "Z";
+  }).filter((d) => d.length > 3);
+  if (!paths.length) return null;
+
+  return (
+    <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+      {/* Le voile kaki NATIF du moteur (SoudanWarMapEngine, troué uniquement sur le Soudan) reste plein
+          sur la Russie — CE calque pose un patch crème PAR-DESSUS pour simuler le "trou" temporaire, au
+          lieu de tenter de re-trouer le voile natif (inaccessible depuis ce composant enfant). */}
+      <defs>
+        <mask id="russiaShow">
+          <rect x="0" y="0" width={width} height={height} fill="black" />
+          {paths.map((d, i) => <path key={i} d={d} fill="white" fillOpacity={op} />)}
+        </mask>
+      </defs>
+      <rect x="0" y="0" width={width} height={height} fill={ATLAS.land} fillOpacity={op} mask="url(#russiaShow)" />
+      {paths.map((d, i) => (
+        <path key={i} d={d} fill="none" stroke={ATLAS.outline} strokeWidth={2.4} opacity={op * 0.85} />
+      ))}
+    </svg>
+  );
+}
+
+// Point placeholder pour les acteurs posés sur le territoire russe pendant la stabilisation (proche
+// Moscou, dans le cadrage du whip pan) — à remplacer par de vrais assets (jeton Wagner/Africa Corps)
+// une fois le principe validé Aziz.
+const WAGNER_SITE: [number, number] = [MOSCOW[0] + 1.2, MOSCOW[1] - 1.6];
 
 const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   const frame = useCurrentFrame();
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
   const camKeys1 = React.useCallback((f: number) => cam1At(f, F1), []);
 
-  // trait RSF (ancien, Wagner) qui s'estompe ; trait SAF (nouveau, 2024) qui apparaît net
-  const rsfTraitOpacity = interpolate(frame, [F1.troisiemePays, F1.troisiemePays + 20, F1.volteFace2024, F1.volteFace2024 + 30], [0, 0.55, 0.55, 0.12], clamp);
+  const whipEnd = F1.troisiemePays + WHIP_DUR;
+
+  // flux ARMES (Moscou/Wagner -> RSF) qui se trace à l'atterrissage sur Moscou, jusqu'à s'estomper à
+  // la bascule 2024. flux OR (RSF -> Moscou/Wagner, retour) — le troc du script (armes contre or) rendu
+  // visible comme un aller-retour, pas un simple flux à sens unique.
+  const armesTraitProgress = interpolate(frame, [whipEnd, whipEnd + 30], [0, 1], clamp);
+  const armesTraitOpacity = interpolate(frame, [whipEnd, whipEnd + 16, F1.volteFace2024, F1.volteFace2024 + 30], [0, 0.6, 0.6, 0.1], clamp);
+  const orTraitProgress = interpolate(frame, [F1.wagnerArmait + 10, F1.wagnerArmait + 42], [0, 1], clamp);
+  const orTraitOpacity = interpolate(frame, [F1.wagnerArmait + 10, F1.wagnerArmait + 26, F1.volteFace2024, F1.volteFace2024 + 30], [0, 0.55, 0.55, 0.08], clamp);
+
   const safTraitOpacity = interpolate(frame, [F1.volteFace2024, F1.volteFace2024 + 24], [0, 0.7], clamp);
   const safTraitProgress = interpolate(frame, [F1.volteFace2024, F1.volteFace2024 + 30], [0, 1], clamp);
-  const rsfTraitProgress = interpolate(frame, [F1.troisiemePays, F1.troisiemePays + 26], [0, 1], clamp);
 
   const rsfHalo = 0.3;
   const safHalo = interpolate(frame, [F1.volteFace2024, F1.volteFace2024 + 30], [0.3, 0.42], clamp);
@@ -194,15 +286,31 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
 
           return (
             <>
-              {/* repère Moscou (hors-cadre nord, label seul) */}
+              {/* masque parchemin temporaire — territoire russe éclairé le temps du beat, referme en kaki
+                  au whip pan retour (cam1At phase 3) */}
+              <RussiaParchmentMask proj={proj} frame={frame} openAt={F1.troisiemePays + 10} closeAt={F1.volteFace2024 - CAM1_BLEND} />
+
+              {/* repère Moscou — reste affiché tant que le territoire russe est ouvert */}
               {frame >= F1.troisiemePays && (() => { const p = proj(MOSCOW); return p && <ArrivalLabel pos={p} frame={frame} appear={F1.troisiemePays} label="Moscou" color={RUSSIA_RED} />; })()}
 
-              {/* trait ancien Moscou->RSF (Wagner, s'estompe) — la caméra VOYAGE avec ce trait (cam1At phase 1) */}
-              {frame >= F1.troisiemePays && (
-                <GeoFlowConnection map={fakeMap} waypoints={WP_RUSSIA_RSF} progress={rsfTraitProgress} markerProgress={rsfTraitProgress}
-                  lineColor={RUSSIA_RED} lineOpacity={rsfTraitOpacity} lineWidth={3} hideMarker dashOffsetFrame={frame} />
+              {/* placeholder acteur Wagner sur le territoire russe (jeton générique — à remplacer par
+                  asset dédié une fois le principe validé) */}
+              {frame >= whipEnd && (() => { const p = proj(WAGNER_SITE); return p && <SoudanToken pos={p} faction="rsf" frame={frame} appear={whipEnd} />; })()}
+              {/* géoplaque Wagner/Africa Corps — le mot est prononcé mais jamais défini visuellement,
+                  1 ligne factuelle courte reliée au jeton (pattern NileFactPlaque, Beat 4) */}
+              <WagnerFactPlaque frame={frame} appear={F1.wagnerArmait} fadeAt={F1.volteFace2024} />
+
+              {/* flux ARMES Moscou/Wagner -> RSF (descend) */}
+              {frame >= whipEnd && (
+                <GeoFlowConnection map={fakeMap} waypoints={[WAGNER_SITE, [34, 35], [30, 25], DARFUR]} progress={armesTraitProgress} markerProgress={armesTraitProgress}
+                  lineColor={RUSSIA_RED} lineOpacity={armesTraitOpacity} lineWidth={3} hideMarker dashOffsetFrame={frame} />
               )}
-              {/* trait nouveau Moscou->SAF (2024, net et actif) — 2e voyage caméra (cam1At phase 3) */}
+              {/* flux OR — retour RSF -> Moscou/Wagner (le troc du script, aller-retour) */}
+              {frame >= F1.wagnerArmait + 10 && (
+                <GeoFlowConnection map={fakeMap} waypoints={[DARFUR, [30, 25], [34, 35], WAGNER_SITE]} progress={orTraitProgress} markerProgress={orTraitProgress}
+                  lineColor={ATLAS.gold} lineOpacity={orTraitOpacity} lineWidth={2.4} hideMarker dashOffsetFrame={frame} />
+              )}
+              {/* trait nouveau Moscou->SAF (2024, net et actif) — 2e voyage caméra (cam1At phase 4) */}
               {frame >= F1.volteFace2024 && (
                 <GeoFlowConnection map={fakeMap} waypoints={WP_RUSSIA_SAF} progress={safTraitProgress} markerProgress={safTraitProgress}
                   lineColor={RUSSIA_RED} lineOpacity={safTraitOpacity} lineWidth={4} hideMarker dashOffsetFrame={frame} />
@@ -217,8 +325,24 @@ const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
         }}
       </SoudanWarMapEngine>
 
-      <WarmVignette />
     </AbsoluteFill>
+  );
+};
+
+const WagnerFactPlaque: React.FC<{ frame: number; appear: number; fadeAt: number }> = ({ frame, appear, fadeAt }) => {
+  const op = interpolate(frame, [appear, appear + 20, fadeAt, fadeAt + 20], [0, 1, 1, 0], clamp);
+  if (op <= 0.01) return null;
+  return (
+    <div style={{
+      position: "absolute", bottom: 90, left: 0, right: 0, textAlign: "center", opacity: op, pointerEvents: "none",
+    }}>
+      <div style={{ display: "inline-block", padding: "10px 22px", background: "rgba(20,14,7,0.55)", borderRadius: 6 }}>
+        <span style={{ color: ATLAS.gold, fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 22,
+          letterSpacing: "0.02em", textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Wagner : groupe paramilitaire russe, sanctionné par l&apos;UE en 2023 pour son commerce d&apos;or au Soudan
+        </span>
+      </div>
+    </div>
   );
 };
 
@@ -370,7 +494,6 @@ const Section3: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
           (cf vigilance script + agents R&D) : ce chiffre porte le raisonnement que le geste seul ne peut pas */}
       <NileFactPlaque frame={frame} appear={F3.redouteInfluence} />
 
-      <WarmVignette />
     </AbsoluteFill>
   );
 };
@@ -528,7 +651,6 @@ const Section4: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
         </SoudanWarMapEngine>
       </HookDisplacementBurst>
 
-      <WarmVignette />
     </AbsoluteFill>
   );
 };
@@ -620,7 +742,6 @@ const Section5: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
       {/* 4 mini-volets territoire empilés par paire — meublent le dézoom avec les 4 puissances réelles */}
       <Beat6PowerPanels frame={frame} appear={F5.quatrePuissances + 10} />
 
-      <WarmVignette />
     </AbsoluteFill>
   );
 };
@@ -753,13 +874,8 @@ const CountryColorLayer: React.FC<{
   );
 };
 
-const WarmVignette: React.FC = () => (
-  <>
-    <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "multiply",
-      background: "radial-gradient(ellipse 74% 70% at 50% 47%, rgba(255,240,210,0.06) 0%, rgba(60,42,18,0.0) 42%, rgba(28,18,8,0.42) 100%)" }} />
-    <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "soft-light",
-      background: "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(255,238,200,0.22) 0%, rgba(255,238,200,0) 60%)" }} />
-  </>
-);
+// WarmVignette retiré (session 10, 2026-07-12) — le halo lumineux central ("lampe de bureau") devenait
+// un effet massif et distrayant sur les cadrages serrés (whip pan Moscou), disproportionné par rapport
+// au reste de l'acte où il passait inaperçu sur des cadrages plus larges. Retiré sur les 5 sections.
 
 export default SoudanActe4;
