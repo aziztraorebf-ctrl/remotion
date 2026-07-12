@@ -146,10 +146,15 @@ export const GradientPathReveal: React.FC<GradientPathRevealProps> = ({
           opacity={baseOpacity} filter={`url(#${filterId})`} />
       )}
 
-      {/* flash — illumine tout le tracé d'un coup au moment clé */}
+      {/* flash — illumine tout le tracé d'un coup au moment clé (halo large + trait net, pour rester
+          lisible même écrasé sous le trait principal déjà à pleine opacité) */}
       {flashT > 0.01 && fullD && (
-        <path d={fullD} fill="none" stroke="#FFFFFF" strokeWidth={strokeWidthAfter * 1.1} strokeLinecap="round" strokeLinejoin="round"
-          opacity={Math.min(0.85, flashT) * baseOpacity} />
+        <>
+          <path d={fullD} fill="none" stroke="#FFFFFF" strokeWidth={strokeWidthAfter * 3.2} strokeLinecap="round" strokeLinejoin="round"
+            opacity={flashT * 0.5} />
+          <path d={fullD} fill="none" stroke="#FFFFFF" strokeWidth={strokeWidthAfter * 1.3} strokeLinecap="round" strokeLinejoin="round"
+            opacity={flashT} />
+        </>
       )}
     </svg>
   );

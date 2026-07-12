@@ -308,7 +308,10 @@ const Section3: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   // remplace le marqueur ponctuel (invisible sur render réel, diff pixel quasi nul) par un front qui
   // avance le long du tracé (déjà dans le sens Soudan->Égypte, cf NILE_WAYPOINTS Khartoum->delta),
   // épaississant et teintant le trait à mesure qu'il progresse. Flash net à "profondeur stratégique".
-  const nilFillProgress = interpolate(frame, [F3.nilNomme, F3.redouteInfluence + 20], [0, 1], clamp);
+  // ⚠️ CORRECTIF (2026-07-12, diagnostic frames réelles) : le fill se figeait à ~2s sur un beat de ~15s
+  // (invisible entre nilNomme+80 et le flash) — étalé jusqu'à juste avant le flash pour une vraie
+  // progression continue sur toute la durée du beat, synchronisée avec "profondeur stratégique".
+  const nilFillProgress = interpolate(frame, [F3.nilNomme, F3.profondeurStrategique - 10], [0, 1], clamp);
   const nilFlashT = interpolate(frame, [F3.profondeurStrategique, F3.profondeurStrategique + 8, F3.profondeurStrategique + 34], [0, 1, 0], clamp);
 
   return (
