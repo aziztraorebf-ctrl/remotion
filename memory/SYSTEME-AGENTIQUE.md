@@ -86,6 +86,12 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    logique d'arrêt dur que le checkpoint storyboard (étape 4 ci-dessus). Détail : `memory/doctrines/DA-BRIEF-GATE.md`.
    Ne PAS sauter cette étape sous prétexte que le storyboard a déjà été validé — ce sont deux gates distincts
    (storyboard = direction visuelle validée par Aziz ; DA-brief = review externe de CETTE direction avant code).
+   ⭐ **Pattern enchaîné (prouvé Soudan Acte 4, 2026-07-11)** : quand un beat est bloqué à la fois sur
+   l'ORIENTATION (quel registre visuel ? insert SVG ou carte continue ?) ET sur le MÉCANISME technique
+   (quel composant pour le geste ?) — lancer `creative-director-dual` D'ABORD (tranche l'orientation) PUIS
+   `da-brief-gate` (tranche le mécanisme, sur l'orientation déjà actée). Ne pas inverser : un DA-brief lancé
+   sur une orientation encore instable produit un brief bancal (les 3 modèles répondent sur des prémisses
+   différentes de ce qui sera réellement codé).
 6. **CODE** dans le bon emplacement (règle 3 zones, voir INTENTION-FORME-INDEX § « OÙ RANGER ») : livrable →
    `<pilier>/<episode>/`. Passe par la **session** (`/beat` → `beat-session.py` ou `mapbox-session.py`).
 7. **REVIEW + PRÉSENTATION** : la session écrit `<mp4>.review.json` adjacent (Gemini, seuil 8/10). Le **hook**

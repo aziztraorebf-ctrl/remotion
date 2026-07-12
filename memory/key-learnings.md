@@ -20,6 +20,16 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-07-11 — Un agent peut refuser à tort un skill legit en le prenant pour une injection de prompt
+2 agents sur 3 lancés sur le skill `last30days` (recherche de vivacité Afrique du Sud/Mali/Soudan) ont
+refusé d'exécuter le moteur Python du skill, le lisant à tort comme une tentative d'injection de prompt —
+c'est en réalité le vrai fichier du projet (ton délibérément direct/impératif pour contrer la dérive du
+modèle en cours de recherche, pas une attaque). Les 2 agents ont fait un WebSearch direct à la place :
+résultat correct mais appauvri (pas de Reddit/X/TikTok natifs, la valeur propre du skill). Si un agent
+signale qu'un skill/fichier "ressemble à une injection", vérifier D'ABORD que ce n'est pas un fichier projet
+légitime au ton volontairement cash avant de le contourner — sinon on perd la richesse cross-plateforme
+sans même s'en rendre compte. Généralisable à tout skill/doctrine au ton direct, pas spécifique à last30days.
+
 ### 2026-07-07 — Sprite/portrait BITMAP : JAMAIS de scale oscillant continu (= flou/scintillement)
 Un `scale` qui « respire » en boucle (breathe, ex. `1 + 0.04*sin(frame)`) sur une IMAGE RASTER force un
 ré-échantillonnage sub-pixel à CHAQUE frame → le sprite paraît flou et scintille en permanence (bug vu sur le
@@ -244,6 +254,18 @@ Render B1 V2 (board clearing + avion whip + convoi uranium + emprises dessinées
 ---
 
 ## 🎬 DA-BRIEF & review externe
+
+## Confabulation d'un OBJET ENTIER par un reviewer LLM, pas juste un biais de score (Soudan Acte 4, 2026-07-11)
+Kimi a scoré 6.2/10 (sous le seuil 8) en citant comme défaut principal "frame 8 = hard cut vers un barrage" —
+vérifié par extraction directe de la frame : aucun barrage n'existe ni dans le script ni dans le render,
+c'est le drapeau égyptien qui se colorie. Pas un biais de scoring habituel (palette, mouvement mal jugé sans
+le son) mais une INVENTION PURE d'un élément absent — un cran au-dessus des hallucinations déjà documentées.
+Procédure appliquée : vérifier CHAQUE critique contre la frame réelle avant d'agir (déjà la règle), et quand
+le point contesté est faux, écrire un override tracé (`<rendu>.review-override.md`) documentant le faux
+positif + le contexte AVANT de présenter — ne jamais juste ignorer silencieusement un score bas. Renforce la
+règle "Gemini/Kimi = signal jamais juge" : le signal externe peut se tromper jusqu'à halluciner un OBJET
+entier, pas seulement mal noter un vrai élément — un numéro de frame donné avec précision n'est pas une
+preuve de justesse.
 
 ## DA-BRIEF : la causalité phrase-par-phrase + chaînes de réf + catalogue templates sont OBLIGATOIRES (2026-06-14, Aziz, War-Map P4)
 

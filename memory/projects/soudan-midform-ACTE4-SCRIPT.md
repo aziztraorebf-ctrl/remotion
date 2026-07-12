@@ -41,7 +41,7 @@ DOIT être réécrit avant jury LLM.
 
 ## BEAT 1 — Le retournement russe [CARTE — flèche depuis le nord, teinte qui change de camp]
 
-VOIX : Un troisième pays arme ce conflit depuis le début. Et il vient de changer de camp.
+VOIX (pont depuis Acte 3, reprend la question sans y répondre, fusionné avec le fait Russie pour rester une seule phrase continue à l'oral) : Personne n'a de réponse simple parce que d'autres acteurs compliquent déjà le tableau — à commencer par un troisième pays, qui arme ce conflit depuis le début et qui vient de changer de camp.
 
 CARTE : un marqueur gris-froid entre par le bord nord du cadre (repère "Moscou", hors-cadre), rejoint d'abord le jeton RSF (halo rouge, comme un flux déjà ancien qui s'éteint — trait qui s'estompe, pas un nouveau tracé net). Puis un second trait, net et actif celui-là, part du même point vers le jeton SAF (halo bleu).
 
@@ -57,7 +57,7 @@ CARTE : le point Port-Soudan (déjà sur la carte depuis l'Acte 3) pulse fort. U
 
 VOIX : Moscou négocie, ici même à Port-Soudan, une base pour sa marine. L'accord porterait sur vingt-cinq ans. Il autoriserait jusqu'à trois cents soldats russes et quatre navires de guerre. Certains pourraient être à propulsion nucléaire.
 
-VOIX : Rien n'est encore signé. Mais la demande russe reste sur la table.
+VOIX : Le Soudan n'a encore rien signé. Mais l'offre russe reste sur la table.
 
 ## BEAT 3 — Le miroir égyptien, mais en plus impliqué [CARTE — flèche courte depuis le nord-ouest, halo bleu qui se renforce]
 
@@ -69,19 +69,106 @@ VOIX : Son soutien passe surtout par le renseignement. Elle coordonne aussi avec
 
 ## BEAT 4 — Le motif égyptien [CARTE — le Nil s'illumine]
 
-VOIX : L'Égypte n'agit pas par solidarité. Le Nil traverse les deux pays, et elle redoute de voir le Soudan basculer sous une influence rivale.
+VOIX : L'Égypte n'agit pas par solidarité, mais par calcul. Le Nil traverse les deux pays, et elle redoute de voir le Soudan basculer sous une influence rivale.
 
 CARTE : aucun nouveau marqueur ne s'ajoute — mais le tracé du Nil, déjà visible en fond de carte depuis les actes précédents, pulse et se surligne du Soudan jusqu'à son delta en Égypte pendant cette phrase (montre l'argument plutôt que de le laisser purement verbal). La caméra reste stable sur l'ensemble Égypte-Soudan-mer Rouge (contraste avec le mouvement constant des beats précédents = souligne qu'on vient de nommer la cause, pas un nouveau fait).
 
 VOIX : Pour l'Égypte, le Soudan n'est pas seulement un voisin. C'est une profondeur stratégique.
 
+> ### ⚠️ VIGILANCE STORYBOARD — risque "forcer un concept abstrait sur la carte" (2026-07-11)
+>
+> Question posée par Aziz après le retour d'expérience Acte 3 beat 1 (le paradoxe d'ouverture avait été
+> refondu 2× : image Gemini rejetée, puis concept SVG "source qui ne tarit jamais" rejeté après review
+> — "dur à comprendre, manque de narratif" —, avant d'aboutir à "un puits sans fond" qui fonctionnait
+> parce que chaque phase avait un geste cause→effet lisible SANS légende, cf STATUS.md §Beat 1 refondu).
+> **Leçon dégagée** : la carte Mapbox excelle à montrer un lieu/trajet concret, mais force quand elle doit
+> incarner une idée abstraite/un raisonnement géopolitique avec un seul geste isolé.
+>
+> **CE beat est le candidat le plus à risque de tout l'Acte 4** pour la même raison : la phrase porte un
+> raisonnement stratégique pur ("elle redoute de voir le Soudan basculer sous une influence rivale... une
+> profondeur stratégique") — le Nil qui pulse est une bonne béquille visuelle concrète (contrairement au
+> paradoxe Acte 3 qui n'avait AUCUN ancrage géo au départ), mais reste à vérifier au storyboard si ce seul
+> geste suffit à porter l'argument ou si le beat "tombe à plat" comme le concept B rejeté sur l'Acte 3.
+>
+> **Décision actée avec Aziz** : NE PAS anticiper de solution insert/overlay maintenant — garder CARTE tel
+> que spécifié, mais RE-ÉVALUER EXPLICITEMENT ce beat au moment du storyboard visuel (pas juste le coder
+> tel quel par défaut). Si le Nil qui pulse ne suffit pas à l'écran, envisager un insert SVG court (registre
+> "carte mentale"/schéma minimal, pas plein écran narratif complexe) plutôt que d'ajouter des éléments
+> carte qui ne feraient que meubler sans vraiment montrer le raisonnement.
+>
+> **Beat 6 (synthèse finale, 4 puissances)** : risque similaire à surveiller aussi, pour la même raison que
+> le climax Acte 3 (dézoom qui doit faire "sentir" un système global) — mais moins urgent, ce beat est
+> d'abord un dézoom de synthèse (répète un pattern déjà montré : jetons/flèches), pas une idée nouvelle à
+> faire naître à l'écran. Rappel : le climax Acte 3 a fini sur un vrai split-screen 3 volets
+> (`WarMapSplitScreen`) après 2 tentatives ratées (cercle pointillé, panneaux flottants) — si le beat 6
+> semble creux au storyboard, ce composant existe déjà et est directement réutilisable.
+>
+> Liens : [[soudan-midform-ACTE3-BREAKDOWN]] (Décision 4, workflow split-screen) · STATUS.md §Beat 1 refondu
+> 2× · [[WARMAP-INSERT-SVG-ETATMAJOR]] (pattern insert SVG si jamais nécessaire ici).
+
 ## BEAT 5 — Le coût civil de cette guerre de drones [CARTE — un point d'impact ponctuel, sobre]
 
-VOIX : Et cette guerre alimentée de l'extérieur change de forme. Le front cesse d'être une ligne : il devient un réseau de frappes, loin de tout champ de bataille.
+VOIX : Tous ces jeux de pouvoir extérieurs ont des conséquences bien réelles au Soudan.
 
 CARTE : un point bref et sobre s'allume sur Kosti (Nil Blanc, déjà dans la grille de contrôle) — pulse une fois, discret, PAS un effet spectaculaire (le fait est grave, pas un spectacle).
 
-VOIX : À Kosti, le 21 juin 2026, les paramilitaires frappent avec un drone. La cible est une station-service. Des civils y attendaient de l'essence.
+VOIX : À Kosti, le 21 juin 2026, les paramilitaires frappent avec un drone une station-service où des civils attendaient de l'essence.
+
+VOIX : Ce n'était pas une cible militaire, mais ce sont bien les mêmes armes venues de l'étranger qui rendent une telle frappe possible, et ce sont des civils qui en payent le prix.
+
+> ### 💡 NOTE STORYBOARD — piste créative Aziz à évaluer pour ce beat (2026-07-11)
+>
+> Aziz veut tenter une régie encore non testée dans le projet pour ce beat précis : **vue top-down (plate,
+> pas isométrique) avec sprite mobile** — un ou plusieurs drones (sprite PNG vu de dessus) qui se rapprochent
+> de l'objet Kosti/station-service (réutiliser un objet isométrique existant adapté ou nouveau sprite plat),
+> puis à l'arrivée déclenchement d'une explosion SVG + fumée qui se dégage après l'impact (montre la
+> CONSÉQUENCE, pas juste l'annoncer).
+>
+> **Référence directe déjà en mémoire** (Aziz se souvenait qu'on avait ça, confirmé) : le catalogue Map
+> Animation contient EXACTEMENT ce registre — templates #158/#159 "Shahed-136 Drone Strike" (Iran→Arabie
+> Saoudite / sur Israël), décodés dans [[_r-and-d-mapanimation-PREMIUM-DECODE]] : sprite drone PNG vu de
+> dessus + mobile, `RadarSweep` (secteur conique rotatif, pas encore codé chez nous — petit gap ~80 lignes
+> SVG), marqueurs cible + emoji 🔥💨 poppés au point d'impact, ripple/anneaux d'impact déjà couvert par notre
+> `LottieGeoAura` (shockwave, ✅ existant). Caméra de référence : zoom serré Mercator dark z~4, sprite
+> traverse en diagonale, pas de pitch (vue de dessus pure, à plat) — cohérent avec la demande "vue top-down".
+>
+> **Ce qui existe déjà côté composants (quasi tout)** :
+> - `GeoFlowConnection` (sprite mobile le long d'un tracé) — prévu pour ce beat de toute façon, il suffirait
+>   de brancher un sprite drone PNG vu de dessus au lieu d'un simple marqueur/flèche (prop `spriteImage`,
+>   gap identifié comme "à ajouter (PNG), pas technique" dans le decode).
+> - `LottieGeoAura` pour le ripple/shockwave à l'impact — ✅ existant, réutilisable tel quel.
+> - Fumée post-impact : gap réel, rien d'équivalent identifié dans nos composants actuels — à valider en
+>   proto avant d'écrire le beat final (particle/SVG animé simple, pas de nouvelle dépendance lourde).
+> - `RadarSweep` : gap mineur, pas indispensable pour CE beat (optionnel, ambiance tactique) — ne pas
+>   bloquer sur ce point.
+>
+> **⚠️ Tension à trancher AVANT de coder** : la direction actuelle du beat dit explicitement "PAS un effet
+> spectaculaire (le fait est grave, pas un spectacle)" — une explosion SVG + fumée est un registre visuel
+> objectivement PLUS spectaculaire que le "point bref et sobre qui pulse une fois" prévu. Pas forcément
+> incompatible (on peut faire un impact clair et lisible SANS tomber dans l'esthétique "jeu vidéo action"
+> des templates Map Animation, qui sont eux volontairement tactiques/spectaculaires) — mais ça mérite un
+> vrai arbitrage de ton au moment du storyboard, pas un copier-coller direct de la recette Map Animation.
+> Rappel doctrine : montrer la CONSÉQUENCE (fumée après coup) plutôt que le SPECTACLE de l'explosion
+> elle-même pourrait être le bon compromis — cohérent avec "coût civil", pas "action militaire".
+>
+> **Prochaine étape quand on arrivera à ce beat** : (1) proto isolé du sprite drone top-down + impact avant
+> de l'intégrer, comme la doctrine l'exige pour tout nouveau composant ; (2) montrer le proto à Aziz pour
+> trancher le niveau de spectacle AVANT storyboard complet du beat ; (3) si validé, documenter comme nouveau
+> pattern réutilisable (probablement utile pour Acte 5 aussi, ou de futurs beats de frappe).
+>
+> **✅ DÉCOUVERTE (2026-07-11, avant de coder l'acte)** : les assets existent DÉJÀ, aucun nouvel appel payant
+> nécessaire. `public/_shared/sprites/warmap/fx-explosion/` (9 frames `0.png`-`8.png`, explosion en fleur,
+> style pixel/illustré cohérent, généré Gemini) + `fx-smoke/` (9 frames, colonne de fumée + foyer, MÊME
+> registre visuel). Le pattern mécanique existe aussi : `smokePingPong()` dans
+> `src/projects/warmap/parties/warmapPremiumKit.ts` (fumée en boucle ping-pong 0→8→0, fade-in configurable)
+> — utilisé ailleurs (`Partie2Blocage.tsx`, contexte "3 temps = approche → pulse d'alerte → chute
+> (explosion+fumée)"). Pas d'équivalent branché pour l'explosion (mentionnée "DÉSACTIVÉE" dans
+> `Partie2Blocage.tsx`), mais le sprite-sheet est prêt et le pattern est trivial à répliquer en one-shot
+> (pas ping-pong, juste jouer 0→8 une fois). **Simplifie fortement l'étape (1) proto** : pas de génération
+> d'asset à faire, juste écrire la mécanique d'animation frame-driven au moment du code de ce beat.
+>
+> Liens : [[_r-and-d-mapanimation-PREMIUM-DECODE]] · [[_r-and-d-mapanimation-catalog]] (json, templates
+> #158/#159) · [[_r-and-d-mapanimation-ANALYSE]].
 
 ## BEAT 6 — La bascule vers l'acte suivant [CARTE — dézoom, quatre flèches visibles ensemble]
 
@@ -171,6 +258,91 @@ jury, proposait "un pouvoir hostile à ses intérêts") — gardé tel quel, la 
 défendable et le changer risquait d'ajouter encore une variation de vocabulaire sur un concept déjà
 introduit une fois.
 
+**v5bis (2026-07-11) — transition Acte 3→Acte 4 ajoutée** : Aziz a signalé un trou perçu à l'écoute
+enchaînée : l'Acte 3 se termine sur une question ouverte ("qui pourrait encore arrêter tout ça ?") mais
+l'Acte 4 démarrait direct sur la Russie sans la reconnaître — lu à tort comme une possible inversion
+Acte 4/Acte 5. Diagnostic : pas d'inversion (5 actes actés, Acte 5 = seul acte qui répond via le verrou
+institutionnel), mais transition manquante. Fix v1 (rejeté) : phrase-pont séparée utilisant "peser sur
+cette guerre" — Aziz a détecté un doublon lexical avec "peser sur l'issue de cette guerre" déjà utilisé au
+beat 6 (à 45s d'intervalle, mauvais pour l'oreille) et a demandé une fusion en une seule phrase continue
+avec le fait Russie (pas deux phrases juxtaposées) pour rester narratif à l'oral, doctrine script.
+**Fix v2 (retenu)** : pont fusionné directement dans la phrase d'ouverture du beat 1 : "Personne n'a de
+réponse simple parce que d'autres acteurs compliquent déjà le tableau — à commencer par un troisième
+pays, qui arme ce conflit depuis le début et qui vient de changer de camp." Une seule respiration
+continue, zéro doublon lexical avec le beat 6, la question de l'Acte 3 est reconnue puis reliée au fait
+Russie par "à commencer par" — formulation choisie parmi 5 variantes proposées (Aziz a retenu l'angle
+"d'autres acteurs compliquent déjà le tableau", qui annonce explicitement le thème de l'acte — la liste
+d'acteurs extérieurs qui s'allonge — plutôt qu'un simple constat neutre). Impact longueur : +~15 mots.
+**Règle gravée pour tout acte futur qui suit un autre acte se terminant sur une question/pont ouvert** :
+(1) vérifier explicitement que le beat 1 du nouvel acte reconnaît ce pont avant d'enchaîner sur son propre
+sujet — un enchaînement de sujet pur (même correct sur le fond) lu/écouté à la suite crée une impression
+de rupture ou d'inversion qui n'existe pas dans la structure réelle ; (2) toute phrase de transition
+ajoutée après coup doit être vérifiée contre le lexique DÉJÀ utilisé ailleurs dans le même acte (grep du
+mot-clé choisi) pour éviter un doublon proche dans le temps d'écoute ; (3) préférer fusionner le pont DANS
+la première phrase du beat suivant (via "parce que"/"et") plutôt que juxtaposer deux phrases séparées —
+plus fidèle à l'oral continu que la doctrine script exige.
+
+**v5ter (2026-07-11) — scan règles TTS FR avant audio, 2 fixes** : scan systématique du texte complet contre
+les règles TTS FR (participes/-é muet en fin de groupe, "ont+voyelle", chiffres en lettres) avant génération
+ElevenLabs. 2 mots à risque trouvés en fin de groupe rythmique (pas juste présence du mot — la règle porte
+sur la position finale avant silence) : (1) beat 2 "Rien n'est encore signé." → reformulé "La Russie n'a
+encore rien signé. Mais la demande reste sur la table." (sujet+verbe explicite, -é n'est plus le dernier
+son avant le point). (2) beat 4 "L'Égypte n'agit pas par solidarité." → reformulé "L'Égypte n'agit pas par
+solidarité, mais par calcul." (ajout d'une suite dans la même phrase, solidarité n'est plus en position
+finale). Aucune occurrence "ont+voyelle". Chiffres "2024" et "21 juin 2026" confirmés à écrire en toutes
+lettres dans le texte taggé V3 (comme "vingt-cinq ans"/"trois cents soldats" déjà en lettres dans le script
+source) — cohérent avec la règle Acte 3 déjà gravée.
+
+**v5quater (2026-07-11) — sujet erroné détecté par Aziz après écoute** : "La Russie n'a encore rien signé"
+laissait penser que c'est la Russie qui bloquerait la signature. Factuellement (cf. STATUT DES FAITS §4) :
+c'est une OFFRE russe (base navale contre armes) que le SOUDAN doit accepter/signer — la Russie est
+l'auteure de la proposition, pas la partie qui doit ratifier. Corrigé : "Le Soudan n'a encore rien signé.
+Mais l'offre russe reste sur la table." **Règle gravée** : dans une phrase "X n'a pas encore signé", vérifier
+explicitement QUI est juridiquement/factuellement la partie qui doit signer avant de choisir le sujet
+grammatical — un sujet actif dans la phrase précédente (ici "Moscou négocie") peut se retrouver réutilisé
+par défaut au sujet suivant sans que ce soit le bon acteur pour CETTE action précise (négocier ≠ signer).
+⚠️ Audio déjà généré sur l'ancienne formulation ("La Russie n'a encore rien signé") — à REGÉNÉRER (au moins
+la partie p2) avant tout usage en storyboard/montage.
+
+**v5quinquies (2026-07-11) — trou causal détecté par Aziz au beat Kosti (beat 5)** : à l'écoute, Aziz a
+identifié que le fait Kosti restait un fait brut suspendu — la phrase de transition ("cette guerre alimentée
+de l'extérieur change de forme... réseau de frappes") annonçait un lien avec l'internationalisation du
+conflit, mais ce lien n'était jamais refermé après la description factuelle de la frappe. Questions posées
+par Aziz, toutes légitimes : quelle est la cause de cette frappe ? Est-ce lié à l'aide extérieure ? Qu'est-ce
+que ça change à la guerre ? Diagnostic : le beat décrivait CE QUI s'est passé (fait vérifié, verrouillé) mais
+jamais POURQUOI on le raconte à ce moment précis de l'acte (Russie+Égypte armant les deux camps) — le
+spectateur ne pouvait pas faire le lien seul. **Fix retenu** : 1 phrase de clôture ajoutée après le fait
+Kosti, qui nomme explicitement la conséquence. **Fix v1 (rejeté par Aziz)** : 3 phrases courtes juxtaposées
+("Ce n'était pas une cible militaire. Ce sont les mêmes armes... Et ce sont des civils...") — Aziz a
+re-détecté le MÊME défaut déjà gravé 2× plus haut dans ce fichier (fragmentation télégraphique confondue
+avec rythme syncopé). **Fix v2 (Claude, incomplet)** : clôture en 1 phrase reliée mais le PROBLÈME RESTAIT
+EN AMONT — la transition d'ouverture du beat ("cette guerre alimentée de l'extérieur change de forme")
+n'annonçait pas explicitement le lien causal ingérence-extérieure→conséquence-civile, laissant le fait Kosti
+ambigu tant qu'on ne l'avait pas lu jusqu'au bout (Aziz : "pourquoi cette frappe a-t-elle eu lieu ? est-ce à
+cause des pouvoirs extérieurs ?"). **Fix v3 (Aziz, retenu — supérieur)** : au lieu de justifier après coup,
+Aziz a réécrit la PHRASE D'OUVERTURE du beat pour poser le lien causal AVANT le fait : "Tous ces jeux de
+pouvoir extérieurs ont des conséquences bien réelles au Soudan." (remplace l'ancienne transition "cette
+guerre alimentée de l'extérieur change de forme..."). Le spectateur sait alors, avant même Kosti, qu'il va
+voir une conséquence concrète de la Russie/Égypte qui viennent d'être racontées — la clôture après le fait
+("Ce n'était pas une cible militaire, mais ce sont bien les mêmes armes venues de l'étranger qui rendent une
+telle frappe possible, et ce sont des civils qui en payent le prix.") confirme/boucle plutôt que d'être seule
+à porter tout le poids causal. Fait Kosti lui-même aussi fusionné en 1 phrase fluide ("frappent avec un drone
+une station-service où des civils attendaient de l'essence" au lieu de 3 phrases courtes). **Règle gravée** :
+quand un fait vérifié reste narrativement orphelin, la solution la plus solide n'est pas toujours d'ajouter
+une phrase de clôture après coup — poser le lien causal AVANT le fait (dans la phrase de transition qui
+l'introduit) est souvent plus fort, car le spectateur interprète le fait déjà éclairé plutôt que de devoir
+réviser sa compréhension après l'avoir entendu. Envisager ce sens de correction en priorité pour tout futur
+trou causal similaire (Acte 5+).
+⚠️ Audio déjà généré sur la version d'avant ce fix (partie p4) — à REGÉNÉRER.
+**Règle gravée** : un fait factuel vérifié et verrouillé (fact-check OK) peut quand même rester un TROU
+NARRATIF si la phrase qui suit ne referme pas explicitement le lien avec le thème de l'acte en cours — la
+véracité d'un fait ne garantit pas sa clarté causale. Vérifier systématiquement, pour tout beat "preuve
+concrète" (comme Kosti), qu'une phrase de conséquence/lien explicite suit la description factuelle brute,
+surtout si le beat arrive après plusieurs beats d'un autre sujet (ici Égypte) qui pourraient créer une fausse
+causalité par simple proximité (déjà un problème identifié et corrigé par le jury densité/flux v3→v4, note
+ligne ~136 — ce nouveau trou est un ÉCHO du même risque, pas totalement neutralisé par le réordonnancement
+seul).
+
 **Leçon méthodologique gravée** : un jury LLM axé sur la clarté PHRASE PAR PHRASE peut valider un script
 qui reste dense/confus en LECTURE CUMULATIVE — ce sont deux défauts différents qui demandent deux types
 de critères de jury différents. Le premier jury (v2→v3) n'a PAS pu détecter le problème d'ordonnancement
@@ -220,11 +392,42 @@ nouveaux qui s'enchaînent.
 - [x] Fact-check Sonar Pro + Tavily de contrôle — FAIT (voir section STATUT DES FAITS). 1 fait retiré (Kosti officiers), 1 fait renforcé (base navale chiffrée), reste nuancé/formulé prudemment.
 - [x] Jury LLM clarté (3 modèles) — FAIT (v2→v3). Jury LLM densité/flux (2 modèles répondants) — FAIT (v3→v4), réordonnancement beats 4/5 appliqué. Voir les 2 sections JURY plus haut.
 
+## AUDIO — généré 2026-07-11
+
+- Texte taggé V3 : `public/_shared/audio/soudan/acte4-voisins-aspires-texte-v3-tags.txt` (5 parties pa-pe,
+  découpage en 5 car transition + reformulations TTS ont allongé le texte vs le v5 initial 4 parties prévu).
+- Pipeline : Océane V3 → STS GéoAfrique (`scripts/generate-narration-expressive.py`), stability 0.45 (défaut).
+- Coût réel : ~4242 crédits (dry-run confirmé avant lancement, validé Aziz).
+- Fichiers : `acte4-voisins-aspires-p1` à `-p5.mp3` (parties, uploadées catbox individuellement par le
+  script) + `acte4-voisins-aspires-FULL.mp3` (concat ffmpeg manuel après échec du script sur l'étape concat
+  — voir bug ci-dessous), ~128s, dans `public/_shared/audio/soudan/`.
+- ⚠️ **Bug pipeline découvert** : `--out public/.../acte4-voisins-aspires` (sans extension) fait échouer
+  ffmpeg à l'étape concat finale ("choose an output format") — le script attend visiblement une extension
+  `.mp3` explicite sur `--out`, pas déduite automatiquement comme le laissait penser l'usage Acte 3.
+  Les 5 parties étaient déjà générées (crédits dépensés, fichiers OK sur disque) donc concat reproduite
+  manuellement via `ffmpeg -f concat -c:a libmp3lame -b:a 128k` (même commande que `concat_mp3()` dans le
+  script) plutôt que relancer les appels API. **Règle pour la prochaine génération** : toujours passer
+  `--out ....mp3` avec l'extension explicite.
+- Durée réelle 128s, au-delà du calibrage "~70-90s" visé au v5 initial (header du fichier) — attendu, la
+  phrase-pont Acte 3→4 + les 2 beats reformulés ont allongé le texte d'environ +30-40 mots vs l'estimation
+  initiale. Pas encore rediscuté avec Aziz si ce délai est acceptable ou s'il faut retailler.
+- **Réparation chirurgicale 2026-07-11** : après écoute, Aziz a signalé 2 corrections (sujet Soudan/Russie
+  au beat 2 ; trou causal Kosti au beat 5, cf sections v5quater/v5quinquies plus haut). Parties p2 et p4
+  régénérées seules (`--only-part p2` / `--only-part p4`, ~1682 crédits au lieu de refaire les 5 parties),
+  p1/p3/p5 inchangées. Concat FULL refaite manuellement (même limitation --out sans extension, contournée
+  pareil). Nouvelle durée : **~131s** (vs 128s avant correction).
+- **Catbox FULL (2026-07-11)** : https://files.catbox.moe/13h1s0.mp3 (upload confirmé explicitement par
+  Aziz après le fix habituel du classifieur auto-mode sur contenu inédit/host public).
+- **Prononciation/tags émotionnels/reste de l'acte (p1, p3, p5) : PAS ENCORE validés à l'oreille par Aziz**
+  — écoute en cours par beats, corrections appliquées au fil de l'eau plutôt qu'en un seul lot (comme pour
+  l'Acte 3, l'oreille d'Aziz prime sur tout scan automatique).
+
 ## PROCHAINE ÉTAPE (ordre acté avec Aziz, une étape à la fois)
 
 1. ✅ Recherche Tavily → 2. ✅ Script v1 → 3. ✅ Fact-check Sonar Pro → 4. ✅ Tavily ciblé de contrôle → 5. ✅
 Script v2 → 6. ✅ Jury LLM clarté (Gemini 3.1 Pro/GPT-5.5/Kimi k2.5) → 7. ✅ Script v3 → 8. ✅ Jury LLM
-densité/flux (Gemini 3.1 Pro/GPT-5.5) → 9. ✅ Script v4 (ce fichier, réordonnancement appliqué) →
-**10. Relecture Aziz finale** → 11. Audio.
+densité/flux (Gemini 3.1 Pro/GPT-5.5) → 9. ✅ Script v4 → **10. ✅ Relecture Aziz finale (transition A3→A4
+ajoutée, v5/v5bis/v5ter)** → **11. ✅ Audio généré (ce fichier, 2026-07-11)** → 12. Validation prononciation
+Aziz à l'oreille → 13. Whisper-align → 14. Storyboard → 15. Breakdown → 16. Code.
 
 Liens : [[soudan-midform-ACTE3-SCRIPT]] · [[soudan-midform-DONNEES]] · [[soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES]] · [[DOCTRINE-SCRIPT-UNIFIEE]] · [[soudan-midform-POSITIONNEMENT]].

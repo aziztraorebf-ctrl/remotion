@@ -28,6 +28,25 @@ ondule sur Kidal (Ph5 Sahel) — « ça me fait penser aux animations que PixelL
 me l'avoir dit plus tôt ? ». Avant de générer un asset, toujours demander : une icône Lucide / une forme SVG
 dessinée / une animation maison ferait-elle le travail ? Souvent OUI = plus net, gratuit, à notre charte.
 
+## ⭐ OBJET QUI COUVRE UNE ÉTENDUE vs OBJET QUI VOYAGE (GradientPathReveal vs GeoFlowConnection, Soudan Acte 4, 2026-07-11)
+
+Distinction structurelle à trancher AVANT de choisir un composant de flux sur la carte :
+- **Objet qui VOYAGE d'un point A vers B** (or, argent, drones, armes qui transitent) → `GeoFlowConnection`
+  (marqueur ponctuel qui se déplace le long d'un tracé, indépendant du tracé lui-même).
+- **Territoire/ressource linéaire qui change D'ÉTAT sur toute sa longueur** (un fleuve qui « s'active »
+  stratégiquement, une frontière qui bascule, un pipeline qui devient un enjeu) → `GradientPathReveal`
+  (`src/projects/warmap/_shared/GradientPathReveal.tsx`) : un FRONT qui avance épaissit et teinte le tracé
+  progressivement (stroke-width variable + dégradé de couleur + `feTurbulence` texture organique), pas un
+  marqueur qui voyage dessus.
+
+Corollaire direct de la règle « objet inerte ne glisse jamais » (CLAUDE.md, § Remotion) appliqué à une BANDE
+entière plutôt qu'à un point unique. Née d'un diagnostic concret : le Nil censé « pulser » (Acte 4 Beat 4,
+motif stratégique égyptien) utilisait `GeoFlowConnection` avec un marqueur — invisible sur render réel (diff
+pixel quasi nul entre deux frames du même beat). La géométrie du sujet (une ligne entière à faire vivre, pas
+un point à faire voyager) réclamait une masse, pas un marqueur. Validé par DA-brief upstream (Gemini 3.1 Pro +
+Kimi K2.5 + DeepSeek V4, convergence 3/3 sur ce mécanisme précis) puis vérifié sur render isolé avant
+intégration. Réutilisable pour tout futur beat avec un fleuve/pipeline/frontière-qui-s'active.
+
 ---
 
 ## 1. LA 3e VOIE — SVG animé par code (le réflexe par défaut)

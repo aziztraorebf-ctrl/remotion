@@ -1,5 +1,36 @@
 # Soudan Mid-form — STATUS
 
+## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-11 fin de session 8)
+
+**acte4-v4-full.mp4 N'EST PAS FINAL — c'est un point de sauvegarde technique, PAS une direction validée.**
+Ne PAS repartir de v4 pour continuer à peaufiner (couleurs, timing, petits fixes) comme si la direction
+était actée. Aziz envisage explicitement de **remettre en question tout le registre visuel de l'Acte 4**,
+possiblement en revenant en arrière sur l'approche.
+
+**Plan pour la prochaine session (dans cet ordre)** :
+1. **Revoir ensemble** (Claude + Aziz) le Short AES 90s (`out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4`)
+   ET les Actes 1-2 du Soudan (`soudan-acte2-blocage-FINAL.mp4`, hook+Acte 1 dans le même dossier) — PAS
+   l'Acte 3 ni l'Acte 4. Objectif : comprendre PAR COMPARAISON ce qui fonctionne dans ces registres validés
+   vs ce qui ne fonctionne pas dans l'Acte 4 actuel (v4). Zéro présomption sur la conclusion avant d'avoir
+   regardé — c'est un diagnostic ouvert, pas une confirmation d'un problème déjà identifié.
+2. Seulement APRÈS ce diagnostic comparatif : décider si l'Acte 4 continue sur son registre actuel
+   (Mapbox continu + `GradientPathReveal` pour le Nil, cf ci-dessous) ou si une direction différente est
+   nécessaire (possiblement une refonte structurelle, pas un simple fix).
+3. Puis clôture de session (`/wrap`).
+
+**Ce qui existe déjà comme matière de travail** (ne pas repartir de zéro, mais ne pas non plus le traiter
+comme acquis) : script v5 verrouillé + audio généré + code écrit + `GradientPathReveal` (nouveau composant
+Beat 4) + synthèse DA-brief 3 modèles dans `PLAN-ACTE4.md`. Tout ça reste EXPLOITABLE si la direction est
+confirmée, mais rien n'est à considérer comme figé tant que le diagnostic comparatif n'a pas eu lieu.
+
+**Ancien renders purgés cette session** (test/v2/v3 supprimés, seul v4 gardé comme dernier point technique) :
+`out/episodes/soudan-midform/wip/acte4-v4-full.mp4` (catbox `https://files.catbox.moe/jc19bc.mp4`) +
+review Kimi 6.2/10 avec override tracé (faux positif "barrage" vérifié et écarté, cf review-override.md
+à côté du mp4). Protos R&D conservés tels quels : `out/_r-and-d/soudan-acte4/` (dont 3 essais de globe
+rotatif écartés, piste distincte).
+
+---
+
 **Dernière mise à jour :** 2026-07-11 (session 7) — 🎬🎬 **ACTE 3 « SUIVRE L'OR » FINAL PROMU.**
 v7→v12 : 3 problèmes v7 (zoom/caméra/drapeaux) corrigés, Beat 1 refondu 2× (concept B rejeté "pas
 narratif" → concept A "puits sans fond" adopté et affiné suite retour Gemini), plan SFX complet (9 SFX)
@@ -121,33 +152,47 @@ choc, convoi de drones échelonnés, lignes épaissies.
 > 3 problèmes (zoom intro, zoom caméra suiveuse, vrai drapeau clippé), coder, RECONFRONTER au brief
 > original + Silk Road avant de présenter comme résolu** (pas juste comparer à la version précédente).
 
-## ✅ ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — SCRIPT VERROUILLÉ (session 6, 2026-07-10)
+## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — CODE ÉCRIT + BEAT 4 CORRIGÉ (session 8, 2026-07-11)
 
-- **Script v5 VERROUILLÉ** (texte figé, prêt pour l'audio) : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
+> ⚠️ **CORRECTION DÉSYNCHRO MÉMOIRE (2026-07-11)** : la section ci-dessous affirmait à tort "breakdown +
+> code restent à faire après l'audio (pas commencés)" — FAUX, détecté par agent `creative-director` lors
+> d'un audit render réel. En réalité : script v5 verrouillé, **audio généré** (5 parties + FULL concat,
+> catbox `13h1s0`), **code écrit** (`src/projects/warmap/soudan-acte4/SoudanActe4.tsx`, ~830 lignes),
+> **3 renders déjà produits** (`acte4-test-full.mp4`, `acte4-v2-full.mp4`, `acte4-v3-full.mp4`,
+> `out/episodes/soudan-midform/wip/`). Toujours croiser code+render réels avant d'affirmer un état
+> d'avancement, ne jamais se fier à une note mémoire seule (règle projet "vérifier CODE + VISUEL").
+
+- **Script v5** verrouillé, audio généré : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
   Angle : Russie (bascule de soutien RSF→SAF en 2024, offre de base navale à Port-Soudan 25 ans/300
   soldats/4 navires) + Égypte (soutien direct au SAF, motif Nil/profondeur stratégique) — pont vers l'Acte 5
-  (verrou institutionnel UA/ONU/Quad + conclusion ouverte). 6 beats, ~70-90s visés.
-- **Décision de structure actée** : **5 actes au total** (pas 4) — Acte 4 = Russie+Égypte dédié, Acte 5 =
-  verrou institutionnel + conclusion, séparés. Durée cumulée vérifiée (ffprobe) hook+Acte1+Acte2+audio Acte3
-  = 5min00 ; reste 2-3min pour Actes 4-5 dans la cible 7-8min totale.
-- **Pipeline complet exécuté** : recherche Tavily (2 trous Russie/Égypte comblés) → script v1 → fact-check
-  Sonar Pro + Tavily de contrôle (1 fait FAUX retiré : pas d'officiers égyptiens tués à Kosti, confabulation
-  — remplacé par le vrai fait vérifié, frappe RSF sur station-service civile 21 juin 2026) → v2 → **jury LLM
-  clarté** (Gemini 3.1 Pro + GPT-5.5 + Kimi k2.5, verdict AJUSTEMENTS MINEURS, 3 défauts unanimes corrigés)
-  → v3 → **jury LLM densité/flux** (2e passage, critères différents : charge cognitive cumulative,
-  continuité des désignations, ordre des beats/fausse causalité) → réordonnancement des beats 4-5 (Kosti
-  déplacé après le motif égyptien) → v4 → 2 corrections manuelles Aziz (« Le Caire » éliminé au profit de
-  « l'Égypte » partout ; « elle n'a rien fait » → « elle est restée inactive », moins accusateur) → **v5
-  final**.
-- **2 leçons méthodologiques gravées dans `DOCTRINE-SCRIPT-UNIFIEE.md`** : (1) règle 4bis — date/durée
-  EXACTE quand elle existe dans les données, jamais d'approximation relative ("dernier"/"longtemps"). (2)
-  règle 6bis — densité CUMULATIVE et flux narratif de bout en bout, testée sur l'acte ENTIER (pas phrase par
-  phrase) : un script peut réussir un jury clarté et rester confus en lecture cumulative, ce sont 2 défauts
-  différents. Gate d'écriture mise à jour (point 0 test voix haute promu en 1er, point 5 densité/flux
-  ajouté). Outil créé : `scripts/tools/jury-script-llm.py` (fusionne les 9 critères des 2 jurys en 1 seul
-  passage, réutilisable pour l'Acte 5).
-- **NEXT = générer l'audio quand on reprendra l'Acte 4** (pipeline Océane V3 → STS GéoAfrique, comme Actes
-  1-3). Le breakdown technique + storyboard visuel + code restent à faire après l'audio (pas commencés).
+  (verrou institutionnel UA/ONU/Quad + conclusion ouverte). 6 beats, durée réelle ~131s.
+- **Pipeline script complet exécuté** : Tavily → v1 → fact-check Sonar Pro+Tavily (1 fait FAUX retiré,
+  Kosti officiers égyptiens confabulé) → v2 → jury LLM clarté (3 modèles) → v3 → jury LLM densité/flux
+  (réordonnancement beats 4-5) → v4 → corrections manuelles Aziz → **v5 final**.
+- **2 leçons méthodologiques gravées dans `DOCTRINE-SCRIPT-UNIFIEE.md`** : règle 4bis (date/durée EXACTE,
+  jamais d'approximation relative) + règle 6bis (densité CUMULATIVE testée sur l'acte ENTIER, pas phrase
+  par phrase). Outil créé : `scripts/tools/jury-script-llm.py`.
+
+### ⭐ Beat 4 (motif égyptien/Nil) — DIAGNOSTIC + CORRECTION (session 8, 2026-07-11)
+
+Le "Nil qui pulse" du code initial était **invisible sur render réel** (v3 : diff pixel quasi nul entre
+frames 68s/72s, confirmé par extraction directe). Débloqué via `creative-director-dual` (2 agents
+indépendants, convergence 100% Mapbox pour tout l'acte) puis `da-brief-gate` upstream (Gemini 3.1 Pro +
+Kimi K2.5 + DeepSeek V4, convergence 3/3 sur la solution) :
+- **Nouveau composant** `GradientPathReveal` (`src/projects/warmap/_shared/GradientPathReveal.tsx`) : le
+  Nil devient une MASSE qui se teinte progressivement (front qui avance dans le sens réel Soudan→Égypte,
+  stroke-width 2→11px, dégradé or→bleu SAF, `feTurbulence` texture eau) au lieu d'un marqueur ponctuel qui
+  voyage — distinct de `GeoFlowConnection` (réservé aux objets qui VOYAGENT A→B, pas un territoire qui
+  change d'état). Flash net synchronisé sur "profondeur stratégique". `NileFactPlaque` (texte 90% eau)
+  conservé en renfort discret, pas porteur seul du sens.
+- **Beat 3** enrichi : onde de choc (cercle qui s'étend et fade) au contact Égypte→halo SAF, arbitrage
+  Aziz entre 2 options DA-brief (onde de choc Gemini retenue vs icône Eye Kimi écartée).
+- **Vérifié sur render réel** (test isolé frames 1975-2415, `render-mapbox.sh`) : le trait est maintenant
+  visiblement épaissi/coloré entre le début et la fin du beat — plus de trait invisible.
+- Synthèse tracée complète : `memory/episodes/soudan-midform/PLAN-ACTE4.md`.
+
+**NEXT = re-render l'acte complet (131s) pour validation à l'écoute/à l'œil par Aziz, puis promotion si
+validé.**
 
 ## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
 - **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).

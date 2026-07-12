@@ -6,49 +6,27 @@
 
 ---
 
-## ✅✅✅ SOUDAN MID-FORM — ACTE 3 « SUIVRE L'OR » : FINAL PROMU (2026-07-11 s7)
+## ⛔⛔⛔ SOUDAN MID-FORM — ACTE 4 : PAUSE DE FOND, NE PAS CONTINUER LE FIX (2026-07-11 s8)
 
-> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`).
-> Catbox dernier validé : `https://files.catbox.moe/y2swv7.mp4`. Détail complet de la session (corrections
-> v8→v9, refonte Beat 1 en 2 temps, plan SFX) : `episodes/soudan-midform/STATUS.md` § ACTE 3 FINAL.
+> **NEXT SESSION = diagnostic comparatif AVANT tout code.** Aziz remet en question tout le registre
+> visuel de l'Acte 4 — v4 (dernier render, catbox `https://files.catbox.moe/jc19bc.mp4`) n'est PAS
+> final, c'est un point de sauvegarde technique. Ne PAS repartir dessus pour peaufiner comme si la
+> direction était actée. Plan : (1) revoir ensemble le Short AES 90s + Actes 1-2 Soudan (PAS Acte 3/4) en
+> comparaison pour diagnostiquer ce qui marche vs ce qui ne marche pas dans l'Acte 4 actuel — diagnostic
+> ouvert, zéro conclusion pré-supposée ; (2) SEULEMENT après, décider si l'Acte 4 continue son registre
+> actuel ou change de direction (possiblement refonte structurelle). Détail complet + matière déjà produite
+> (script v5 verrouillé, audio généré, code écrit, composant `GradientPathReveal`) :
+> `episodes/soudan-midform/STATUS.md` § tout en tête de fichier (bloc NEXT SESSION).
 >
-> **NEXT = ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS »** — script déjà VERROUILLÉ v5 (session 6), reste à
-> faire dans l'ordre : (1) générer l'audio (pipeline Océane V3 → STS GéoAfrique, même méthode que Actes
-> 1-3), (2) storyboard/breakdown (pas commencés), (3) code. Script : `memory/projects/
-> soudan-midform-ACTE4-SCRIPT.md`. Angle : Russie (bascule soutien RSF→SAF 2024, offre base navale
-> Port-Soudan) + Égypte (soutien direct SAF, motif Nil). 6 beats, ~70-90s visés.
->
-> 🔧 **Option conditionnelle (SI blocage créatif sur le storyboard/concept de l'Acte 4, pas systématique)** :
-> si le storyboard d'un beat de l'Acte 4 est rejeté 2 fois ou plus sur le même concept, le skill
-> `creative-director-dual` (2 agents `creative-director` en parallèle, brief identique, indépendants,
-> Aziz tranche) est un candidat concret — déjà prouvé sur le Short War-Map Sahel 90s après 4 rejets
-> (2026-07-07). Pas une obligation, juste une option disponible si besoin. Détail :
-> `~/.claude/skills/creative-director-dual/SKILL.md`.
->
-> **Leçon méthodologique gravée cette session (à réutiliser Acte 4/5)** : pour un insert graphique
-> abstrait (pas de carte), TOUJOURS juger un concept sur sa LISIBILITÉ NARRATIVE (peut-on comprendre sans
-> légende ?) avant son exécution technique — un concept visuellement propre mais qui ne raconte rien tout
-> seul doit être rejeté même si son code est meilleur. Workflow prouvé : storyboard image d'abord (repère
-> vite les silhouettes/formes non codables) → si rejeté, 2 agents texte proposent des concepts SVG purs →
-> choisir sur la lisibilité → générer le code via GPT-5.6 Sol (bat Gemini 3.1 Pro sur ce registre
-> "schéma composé") → comparer rendu réel (jamais le JSON brut) → réviser ciblé (pas regénérer) si retour
-> Gemini vision ultérieur, en vérifiant chaque point (Gemini = signal, pas juge — 2 points sur 8 étaient
-> des perceptions à nuancer, pas des faits, dans la review de cette session).
+> **Acte 3 « Suivre l'or » reste FINAL et promu**, aucun changement : `out/PRET-PUBLICATION/soudan-midform/
+> soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`), catbox `https://files.catbox.moe/y2swv7.mp4`.
 >
 > **Historique Acte 2** (FINAL, promu) : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`
-> · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`. Contenu :
-> S1 beats 1-4 CARTE + jeton 2-visages `TwoFaceToken` + `YearCounter`. S2 beat 5 insert `KhartoumEtatMajorSVG`.
-> S3 beat 6 BLOC `BlocImpasseB6` + beats 7-9 CARTE (`KmCounter` 1000km + supply vivante + forces figées).
-> Briques gravées : `WARMAP-GRAMMAIRE.md` §8 (TwoFaceToken/YearCounter/BlocImpasse + R-V5 objet orphelin).
+> · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
 >
-> ✅ **DÉCISION TRANCHÉE (2026-07-10) — 5 actes au total** (plus "en attente"). Acte 4 = Russie+Égypte
-> ("même les voisins sont aspirés"), Acte 5 = verrou institutionnel UA/ONU/Quad + conclusion ouverte,
-> séparés. Durée cumulée vérifiée (ffprobe) : hook+Acte1+Acte2+audio Acte3 = 5min00 ; reste 2-3min pour
-> Actes 4-5 dans la cible 7-8min. **Acte 4 SCRIPT VERROUILLÉ v5** (2 trous Russie/Égypte comblés Tavily,
-> fact-check Sonar Pro, 2 jurys LLM — clarté puis densité/flux — corrections appliquées) :
-> `memory/projects/soudan-midform-ACTE4-SCRIPT.md`. **NEXT Acte 4 = générer l'audio** (pipeline Océane V3 →
-> STS GéoAfrique) quand on y reviendra ; breakdown+storyboard+code pas commencés. Détail complet :
-> `episodes/soudan-midform/STATUS.md` § ACTE 4.
+> **Structure 5 actes** toujours actée (Acte 5 = verrou institutionnel UA/ONU/Quad + conclusion, pas
+> encore écrit — nouveau fait à fact-checker le moment venu : réseau EAU-Libye-mercenaires colombiens,
+> cf `memory/projects/soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`).
 >
 > **2 leçons méthodologiques gravées cette session dans `DOCTRINE-SCRIPT-UNIFIEE.md`** (règle 4bis
 > précision temporelle, règle 6bis densité cumulative/flux narratif) + nouvel outil réutilisable
@@ -159,7 +137,7 @@
 >   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
 > Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
 
-## ⭐⭐ 4 REGISTRES VIDEO LONGUE SVG — valides + refactoring SVG NEXT (2026-07-02)
+## ✅ 4 REGISTRES VIDEO LONGUE SVG — FAIT (refactoring SVG + Grand Inga ont suivi) (2026-07-02)
 
 > ✅ FAIT depuis (GeminiRig déplacé dans `_shared/`, `ProtoMap2dEncre.tsx` créé) — starter archivé :
 > `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-refactoring-svg-et-map2d.md`.
@@ -175,7 +153,7 @@
 >   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
 > **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
 
-## ⭐ SEEDANCE PERSONNAGE — TECHNIQUE PROUVÉE MAIS ÉCARTÉE POUR L'INSTANT (coût), SVG reste la voie par défaut (2026-07-04)
+## ✅ SEEDANCE PERSONNAGE — TECHNIQUE PROUVÉE, ÉCARTÉE PAR DÉCISION (coût) — backlog conditionnel, SVG reste la voie par défaut (2026-07-04)
 
 > **Test complet fait et réussi** (3 clips, pêcheur, 3 lancers de filet — voir détail technique
 > ci-dessous), **MAIS décision d'Aziz après coup : ne PAS adopter Seedance comme méthode par défaut

@@ -1,0 +1,5 @@
+file '/Users/clawdbot/Workspace/remotion/public/_shared/audio/soudan/acte4-voisins-aspires-p1.mp3'
+file '/Users/clawdbot/Workspace/remotion/public/_shared/audio/soudan/acte4-voisins-aspires-p2.mp3'
+file '/Users/clawdbot/Workspace/remotion/public/_shared/audio/soudan/acte4-voisins-aspires-p3.mp3'
+file '/Users/clawdbot/Workspace/remotion/public/_shared/audio/soudan/acte4-voisins-aspires-p4.mp3'
+file '/Users/clawdbot/Workspace/remotion/public/_shared/audio/soudan/acte4-voisins-aspires-p5.mp3'
