@@ -51,6 +51,11 @@ VOIX : Puis en 2024, Moscou fait volte-face : son aide va désormais à l'armée
 
 ## BEAT 2 — Le prix de ce revirement, chiffré [CARTE — Port-Soudan qui pulse fort, mer Rouge]
 
+> **[NOTE POST-CODE 2026-07-12]** Réalisé finalement en insert SVG plein écran
+> (`PortSoudanNegociationScene.tsx`), pas en régie carte Mapbox — le format "scène narrative" (navire qui
+> navigue vers un port déjà visible) a été jugé plus fort que le pulse de point sur carte pour porter
+> "négociation en cours, pas fait accompli". Cf `PLAN-ACTE4.md` § Régie globale AMENDÉ et `STATUS.md`.
+
 VOIX : Et cette nouvelle alliance, l'armée soudanaise doit la payer cher.
 
 CARTE : le point Port-Soudan (déjà sur la carte depuis l'Acte 3) pulse fort. Une seule icône simple apparaît et reste à l'écran (ancre ou silhouette de base navale, PAS un compteur qui défile — évite l'effet "jeu vidéo RTS", garde le sérieux diplomatique de la chaîne).

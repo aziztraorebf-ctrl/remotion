@@ -31,16 +31,17 @@ import {
   Sequence,
 } from "remotion";
 import { SoudanWarMapEngine, CamKey, ZoneControl, StateHighlight, cameraFollowsPath } from "../engine/SoudanWarMapEngine";
-import { SoudanToken, SoudanBase, Pt } from "../engine/soudanActors";
+import { SoudanToken, Pt } from "../engine/soudanActors";
 import { GeoFlowConnection } from "../_shared/GeoFlowConnection";
 import { GradientPathReveal } from "../_shared/GradientPathReveal";
 import { useClipFlags, ClipFlag } from "../../_shared/mapbox/useClipFlags";
 import { ATLAS } from "../engine/sudanControlData";
-import { Sonar, SmokeColumn } from "../_shared/warmapChoc";
+import { SmokeColumn } from "../_shared/warmapChoc";
 import { HookDisplacementBurst } from "../../_shared/hooks-lib/HookEffects";
 import { feature } from "topojson-client";
 import { geoMercator, geoPath } from "d3-geo";
 import { PART_OFFSETS, BEAT1, BEAT2, BEAT3, BEAT4, BEAT5, BEAT6 } from "./soudanActe4Timing";
+import { PortSoudanNegociationScene } from "./PortSoudanNegociationScene";
 
 export const SOUDAN_A4_FPS = 30;
 
@@ -59,7 +60,6 @@ const DARFUR: [number, number] = [26.0, 14.9];      // jeton RSF
 const KHARTOUM: [number, number] = [32.55, 15.6];   // jeton SAF
 // Nouveaux points Acte 4 :
 const MOSCOW: [number, number] = [37.62, 55.75];
-const PORT_SUDAN: [number, number] = [37.22, 19.62]; // même point que la grille de contrôle (mer Rouge)
 const CAIRO: [number, number] = [31.24, 30.04];
 const NILE_DELTA: [number, number] = [31.0, 31.2];   // repère "delta du Nil" pour le tracé qui pulse
 // ⭐ v2 (agent R&D densité, 2026-07-11) : tracé SINUEUX du Nil (Khartoum -> Atbara -> Assouan -> delta),
@@ -236,105 +236,30 @@ const F2 = {
   end: S2_FRAMES,
 };
 
-// ⭐ v2 (agents R&D arsenal+caméra, 2026-07-11) : remplace l'icône SVG dessinée à la main par le sprite
-// dock déjà en stock (jamais utilisé), 3 jetons Africa Corps espacés côté terre (pas dans l'océan) et un
-// resserrement caméra dédié sur "propulsion nucléaire" — le beat le plus dense en texte avait la caméra
-// la plus figée de tout l'acte.
-const CAM2: CamKey[] = [
-  { f: F2.start, lon: 34, lat: 18, zoom: 4.8 },
-  { f: F2.portSoudanNomme, lon: PORT_SUDAN[0], lat: PORT_SUDAN[1], zoom: 6.0 },
-  { f: F2.propulsionNucleaire, lon: PORT_SUDAN[0], lat: PORT_SUDAN[1], zoom: 6.6 },
-  { f: F2.soudanPasSigne, lon: PORT_SUDAN[0], lat: PORT_SUDAN[1], zoom: 6.2 },
-  { f: F2.end, lon: PORT_SUDAN[0], lat: PORT_SUDAN[1], zoom: 6.2 },
-];
-
-// 3 jetons soldats russes (Africa Corps, sprite déjà utilisé pour l'AES) espacés en arc côté terre
-// soudanaise, près de Port-Soudan mais jamais dans l'océan (retour Aziz explicite).
-const RUSSIAN_TROOPS: [number, number][] = [
-  [37.05, 19.35],
-  [36.95, 19.75],
-  [37.15, 19.95],
-];
-// Navire à propulsion nucléaire — repère en mer Rouge (pas encore de sprite navire dédié dans le
-// projet, cf note agent arsenal ; en attendant, un simple marqueur diamant discret sur l'eau).
-const WARSHIP_POS: [number, number] = [37.85, 19.55];
-
+// ⭐⭐ v3 (2026-07-12, retour Aziz+Gemini+Kimi croisé) : Section2 REMPLACÉE par un insert SVG plein
+// écran (PortSoudanNegociationScene) — le beat "base navale/négociation" est un fait institutionnel
+// sans mouvement spatial fort, exactement le type de contenu que la grammaire du projet (Sahel AES,
+// Actes 2-3 Soudan) réserve au régime "plein écran" plutôt qu'à la carte Mapbox continue. La carte
+// réapparaît normalement au beat 3 (Section3). Cf memory/episodes/soudan-midform/STATUS.md pour le
+// diagnostic complet (comparaison frame-par-frame avec les épisodes de référence).
 const Section2: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   const frame = useCurrentFrame();
-  const mapRef = React.useRef<mapboxgl.Map | null>(null);
-
-  const dockOpacity = interpolate(frame, [F2.portSoudanNomme, F2.portSoudanNomme + 16], [0, 1], clamp);
-  const troopsOpacity = interpolate(frame, [F2.troisCentsSoldats, F2.troisCentsSoldats + 20], [0, 1], clamp);
-  const warshipOpacity = interpolate(frame, [F2.quatreNavires, F2.quatreNavires + 20], [0, 1], clamp);
-
-  const zones: ZoneControl[] = [
-    { at: PORT_SUDAN, faction: "saf", radiusKm: 140, intensity: frame >= F2.portSoudanNomme ? 0.35 : 0 },
-  ];
+  void sectionOffset;
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte4-voisins-aspires-p2.mp3")} />
 
-      <Sequence from={F2.portSoudanNomme} durationInFrames={20}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.5} /></Sequence>
-      <Sequence from={F2.troisCentsSoldats} durationInFrames={18}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.4} /></Sequence>
-
-      <SoudanWarMapEngine camKeys={CAM2} zones={zones} showNationalBorder stateLineOpacity={0}>
-        {(proj, ref) => {
-          mapRef.current = ref?.current ?? null;
-
-          const portPos = proj(PORT_SUDAN);
-          const warshipPos = proj(WARSHIP_POS);
-
-          return (
-            <>
-              {/* dock isométrique (sprite déjà en stock, jamais utilisé — remplace l'icône SVG maison) */}
-              {portPos && dockOpacity > 0.01 && (
-                <div style={{ opacity: dockOpacity }}>
-                  <SoudanBase pos={portPos} frame={frame} appear={F2.portSoudanNomme} sprite="suakin-dock-td" size={110} />
-                </div>
-              )}
-              {/* sonar qui pulse par-dessus le dock — signature "négociation en cours", pas un compteur RTS */}
-              {portPos && frame >= F2.portSoudanNomme && (
-                <svg style={{ position: "absolute", inset: 0, pointerEvents: "none" }} width={1920} height={1080}>
-                  <Sonar cx={portPos.x} cy={portPos.y} frame={frame} period={70} rMax={60} color={RUSSIA_RED} />
-                  <Sonar cx={portPos.x} cy={portPos.y} frame={frame} period={70} phase={35} rMax={60} color={RUSSIA_RED} />
-                </svg>
-              )}
-
-              {portPos && <ArrivalLabel pos={portPos} frame={frame} appear={F2.portSoudanNomme} label="Port-Soudan" color={RUSSIA_RED} />}
-
-              {/* 300 soldats russes — 3 jetons Africa Corps espacés côté terre (pas dans l'océan) */}
-              {troopsOpacity > 0.01 && RUSSIAN_TROOPS.map((coord, i) => {
-                const p = proj(coord);
-                if (!p) return null;
-                return (
-                  <div key={i} style={{ opacity: troopsOpacity }}>
-                    <SoudanBase pos={p} frame={frame} appear={F2.troisCentsSoldats + i * 4} sprite="jeton-africacorps" size={56} />
-                  </div>
-                );
-              })}
-
-              {/* navire à propulsion nucléaire — marqueur discret sur l'eau (pas de sprite navire dédié encore) */}
-              {warshipPos && warshipOpacity > 0.01 && (
-                <svg style={{ position: "absolute", inset: 0, pointerEvents: "none" }} width={1920} height={1080}>
-                  <g transform={`translate(${warshipPos.x} ${warshipPos.y})`} opacity={warshipOpacity}>
-                    <ellipse cx={0} cy={6} rx={16} ry={5} fill="#1a2a3a" opacity={0.3} />
-                    <path d="M-14,4 L14,4 L9,-4 L-9,-4 Z" fill={RUSSIA_RED} stroke="#2b2117" strokeWidth={1.5} />
-                    <circle r={3} fill="#F2E5C8" cy={-6} opacity={0.9} />
-                  </g>
-                </svg>
-              )}
-
-              {(() => { const p = proj(DARFUR); return p && <SoudanToken pos={p} faction="rsf" frame={frame} appear={0} />; })()}
-              {(() => { const p = proj(KHARTOUM); return p && <SoudanToken pos={p} faction="saf" frame={frame} appear={0} />; })()}
-
-              <CountryColorLayer mapRef={mapRef} flags={ALL_COUNTRY_FLAGS} absoluteFrame={sectionOffset + frame} />
-            </>
-          );
-        }}
-      </SoudanWarMapEngine>
-
-      <WarmVignette />
+      <PortSoudanNegociationScene
+        frame={frame}
+        portSoudanNomme={F2.portSoudanNomme}
+        vingtCinqAns={F2.vingtCinqAns}
+        troisCentsSoldats={F2.troisCentsSoldats}
+        quatreNavires={F2.quatreNavires}
+        propulsionNucleaire={F2.propulsionNucleaire}
+        soudanPasSigne={F2.soudanPasSigne}
+        end={F2.end}
+      />
     </AbsoluteFill>
   );
 };

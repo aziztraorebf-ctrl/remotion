@@ -32,7 +32,7 @@ socket.getaddrinfo = _ipv4_only_getaddrinfo
 ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-GPT_MODEL = "openai/gpt-5.5"
+GPT_MODEL = "openai/gpt-5.6-sol"
 
 RATIO_VIEWBOX = {
     "9:16": ("1080 1920", "VERTICAL 9:16"),

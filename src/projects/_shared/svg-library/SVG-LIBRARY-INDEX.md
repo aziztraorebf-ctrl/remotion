@@ -27,6 +27,10 @@
 | Pirogue artisanale bois peint (composant `.tsx`, upgrade GPT) | `elements/peche/PirogueGPT.tsx` | — (doc inline) | Illustratif riche | PecheurSurpeche16x9 |
 | Filet de pêche volumétrique (composant `.tsx`, upgrade Gemini) | `elements/peche/FiletGemini.tsx` | — (doc inline) | Illustratif riche | PecheurSurpeche16x9 |
 | Panier d'osier (composant `.tsx`, codé main) | `elements/peche/PanierOsierEncre.tsx` | — (doc inline) | Encre narrative | PecheurSurpeche16x9 |
+| Ciel crépuscule froid (composant `.tsx`, dégradé bleu-nuit→ocre + nuages) | `elements/ciel/CielCrepusculeFroid.tsx` | — (doc inline) | Encre narrative, registre nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2) |
+| Océan vagues nocturne (composant `.tsx`, 2e variante d'océan — multi-couches bouclées) | `elements/ocean/OceanVaguesNocturne.tsx` | — (doc inline) | Encre narrative, registre nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2) |
+| Navire de guerre (composant `.tsx`, silhouette militaire + variante silhouette réduite) | `elements/maritime/NavireGuerreEncre.tsx` | — (doc inline) | Encre narrative, registre militaire | Soudan Acte4 PortSoudanNegociationScene (Beat 2), mix Gemini 3.1 Pro |
+| Port militaire (composant `.tsx`, quais + 2 grues + lumières scintillantes) | `elements/maritime/PortMilitaireEncre.tsx` | — (doc inline) | Encre narrative, registre militaire/nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2), GPT-5.6 Sol |
 
 ---
 

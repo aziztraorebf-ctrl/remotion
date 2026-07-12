@@ -5,12 +5,22 @@
 > Beat 4. Sorties brutes : `/tmp/da-refs/da-warmap-soudan-acte4-{gemini,kimi,deepseek}.md`.
 > Brief envoyé : `/tmp/da-refs/brief-warmap-soudan-acte4.txt`.
 
-## Régie globale — TRANCHÉ
+## Régie globale — TRANCHÉ, PUIS AMENDÉ
 
-✅ **100% carte Mapbox continue sur les 6 beats** — convergence totale 3/3 modèles + 2/2 creative-director
-internes. Aucun insert SVG état-major (réservé aux assauts, hors-sujet ici). Justification convergente :
-le sujet est l'encerclement géopolitique, la carte est le seul espace qui montre physiquement la
-compression progressive.
+⚠️ **AMENDÉ session 9 (2026-07-12)** : ce plan initial (100% carte) a été relu à la lumière d'un nouveau
+diagnostic comparatif (mapping de code des 4 vidéos de référence du projet, pas juste comparaison de
+frames) qui a révélé que la grammaire du projet réserve systématiquement le régime "insert SVG plein
+écran" aux faits conceptuels/institutionnels SANS ancrage géographique fort (alliance, ressource,
+paradoxe financier) — jamais aux faits spatiaux. **Beat 2 (base navale/négociation) a été identifié comme
+mal servi par la carte pure et refait en insert SVG plein écran** (`PortSoudanNegociationScene.tsx`,
+navire russe qui navigue vers un port déjà visible, mer vivante), validé Aziz. **Beats 1, 3, 4, 5, 6
+restent 100% carte**, non remis en cause. Détail complet : `STATUS.md` § Beat 2 refonte insert SVG.
+
+✅ **Mapbox continue pour 5 des 6 beats** — convergence totale 3/3 modèles + 2/2 creative-director
+internes au moment du DA-brief (2026-07-11). Aucun insert SVG état-major (réservé aux assauts,
+hors-sujet ici). Justification convergente : le sujet est l'encerclement géopolitique, la carte est le
+seul espace qui montre physiquement la compression progressive — vrai pour les beats spatiaux (1, 3, 5,
+6), moins vrai pour un beat de négociation/chiffres sans mouvement géographique propre (Beat 2).
 
 ## Beat 4 — Le Nil (« profondeur stratégique égyptienne ») — LE PROBLÈME CENTRAL
 

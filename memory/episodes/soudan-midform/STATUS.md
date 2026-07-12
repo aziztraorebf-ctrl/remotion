@@ -152,7 +152,7 @@ choc, convoi de drones échelonnés, lignes épaissies.
 > 3 problèmes (zoom intro, zoom caméra suiveuse, vrai drapeau clippé), coder, RECONFRONTER au brief
 > original + Silk Road avant de présenter comme résolu** (pas juste comparer à la version précédente).
 
-## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — CODE ÉCRIT + BEAT 4 CORRIGÉ (session 8, 2026-07-11)
+## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — BEAT 2 REFAIT EN INSERT SVG, BEAT 4 RESTE (session 9, 2026-07-12)
 
 > ⚠️ **CORRECTION DÉSYNCHRO MÉMOIRE (2026-07-11)** : la section ci-dessous affirmait à tort "breakdown +
 > code restent à faire après l'audio (pas commencés)" — FAUX, détecté par agent `creative-director` lors
@@ -191,8 +191,42 @@ Kimi K2.5 + DeepSeek V4, convergence 3/3 sur la solution) :
   visiblement épaissi/coloré entre le début et la fin du beat — plus de trait invisible.
 - Synthèse tracée complète : `memory/episodes/soudan-midform/PLAN-ACTE4.md`.
 
-**NEXT = re-render l'acte complet (131s) pour validation à l'écoute/à l'œil par Aziz, puis promotion si
-validé.**
+### ⭐⭐ Beat 2 (base navale Port-Soudan) — DIAGNOSTIC COMPARATIF + REFONTE EN INSERT SVG (session 9, 2026-07-12)
+
+Suite à la pause de fond décidée en session 8 (NEXT-ACTION "diagnostic comparatif AVANT tout code"), le
+diagnostic a été fait cette session : mapping de CODE (pas juste frames) des 4 vidéos de référence du
+projet (War-Map Sahel AES + Actes 1-3 Soudan), confirmé indépendamment par Gemini 3.1 Pro et Kimi K2.5.
+Conclusion : pas de refonte structurelle globale de l'acte — la grammaire du projet réserve le régime
+"insert SVG plein écran" aux faits conceptuels/institutionnels SANS ancrage géo fort (jamais aux faits
+spatiaux), et l'Acte 4 n'en avait AUCUN sur ses 6 beats malgré 2 beats candidats (2 et 4). Détail complet
+du diagnostic : `PLAN-ACTE4.md` § Régie globale AMENDÉ.
+
+- **Beat 2 sorti de la régie Mapbox continue**, refait en insert SVG plein écran
+  `src/projects/warmap/soudan-acte4/PortSoudanNegociationScene.tsx` : un navire de guerre russe navigue
+  depuis la droite vers Port-Soudan (déjà visible dès l'ouverture), se stabilise, mer vivante (couches de
+  vagues multiples à vitesses différentes), 3 navires secondaires en fondu à "quatre navires". Cartouches
+  texte + halo "propulsion nucléaire" retirés (redondance avec la voix, retour croisé Aziz+Gemini+Kimi) —
+  aucune incarnation visuelle de "300 soldats" non plus (décision Aziz : champ déjà dense, risque
+  d'échelle avec des stick figures à cette distance).
+- **Assets** : mix-and-match GPT-5.6 Sol (port/ciel/mer/navires secondaires, prompt unique) + Gemini 3.1
+  Pro (navire principal, silhouette militaire jugée supérieure) — 1 seul prompt combiné envoyé aux 2
+  modèles (cohérence multi-éléments). `scripts/tools/svg-scene-narrative.py` corrigé en dur (GPT_MODEL
+  `openai/gpt-5.6-sol`, était resté sur `gpt-5.5` malgré la doctrine déjà actée le 2026-07-10).
+- **Leçon méthodologique clé** (coût réel : plusieurs rounds de rafistolage) : une tentative de remplacer
+  la mer d'origine validée (coordonnées Y=520+) par le composant partagé `OceanProfondeurVagues`
+  (coordonnées Y=720 en dur) a cassé le raccord port/mer — corrigé en revenant à la géométrie validée et
+  en enrichissant IN PLACE (couches de vagues ajoutées par-dessus) plutôt qu'en import de système externe.
+  Détail : `feedback_enrichir-existant-vs-composant-partage-geometrie.md`.
+- **4 éléments extraits en composants réutilisables** dans `svg-library/elements/{ciel,ocean,maritime}/`
+  (CielCrepusculeFroid, OceanVaguesNocturne, NavireGuerreEncre, PortMilitaireEncre) — le fichier de
+  production garde son code inline tel quel (extraction pour réutilisation FUTURE, pas un refactor).
+- **Intégré** dans `SoudanActe4.tsx` (ancienne Section2 carte remplacée), imports morts nettoyés,
+  vérifié par render réel de la composition complète sur la plage Beat 2.
+
+**NEXT = Beat 4 (motif égyptien/Nil) reste à traiter en session dédiée future** — même diagnostic
+applicable probablement (concept abstrait sans ancrage spatial fort), composant `GradientPathReveal` de
+la session 8 reste la base technique mais la mise en scène reste à trancher (storyboard + génération).
+PUIS re-render l'acte complet (131s) pour validation à l'écoute/à l'œil par Aziz, puis promotion si validé.
 
 ## 🎬🎬 ACTE 2 « BLOCAGE » (session 4, 2026-07-09) — COMPLET & POLI
 - **Render final** : `out/episodes/soudan-midform/wip/acte2-FINAL.mp4` (à promouvoir) · dernier catbox `https://files.catbox.moe/mxkehy.mp4` (93.6s).

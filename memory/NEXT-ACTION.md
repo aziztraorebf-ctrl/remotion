@@ -6,17 +6,22 @@
 
 ---
 
-## ⛔⛔⛔ SOUDAN MID-FORM — ACTE 4 : PAUSE DE FOND, NE PAS CONTINUER LE FIX (2026-07-11 s8)
+## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : DIAGNOSTIC FAIT, BEAT 2 REFAIT, BEAT 4 RESTE (2026-07-12 s9)
 
-> **NEXT SESSION = diagnostic comparatif AVANT tout code.** Aziz remet en question tout le registre
-> visuel de l'Acte 4 — v4 (dernier render, catbox `https://files.catbox.moe/jc19bc.mp4`) n'est PAS
-> final, c'est un point de sauvegarde technique. Ne PAS repartir dessus pour peaufiner comme si la
-> direction était actée. Plan : (1) revoir ensemble le Short AES 90s + Actes 1-2 Soudan (PAS Acte 3/4) en
-> comparaison pour diagnostiquer ce qui marche vs ce qui ne marche pas dans l'Acte 4 actuel — diagnostic
-> ouvert, zéro conclusion pré-supposée ; (2) SEULEMENT après, décider si l'Acte 4 continue son registre
-> actuel ou change de direction (possiblement refonte structurelle). Détail complet + matière déjà produite
-> (script v5 verrouillé, audio généré, code écrit, composant `GradientPathReveal`) :
-> `episodes/soudan-midform/STATUS.md` § tout en tête de fichier (bloc NEXT SESSION).
+> Le diagnostic comparatif demandé en session 8 (pause de fond) a été fait cette session : mapping de
+> CODE (pas juste frames) des 4 vidéos de référence du projet (Short AES 90s longue + Actes 1-3 Soudan),
+> confirmé indépendamment par Gemini 3.1 Pro et Kimi K2.5. Conclusion : PAS de refonte structurelle
+> globale de l'acte — **le Beat 2 (base navale) est sorti de la régie Mapbox continue** et refait en
+> insert SVG plein écran narratif (`PortSoudanNegociationScene.tsx`, navire russe qui navigue vers
+> Port-Soudan, intégré dans `SoudanActe4.tsx`), validé Aziz. Les beats 1, 3, 4, 5, 6 restent en Mapbox
+> continu, non remis en cause. Détail complet : `episodes/soudan-midform/STATUS.md` § Beat 2 refonte
+> insert SVG (session 9) + `PLAN-ACTE4.md` § Régie globale AMENDÉ.
+>
+> **NEXT SESSION = Beat 4 (motif égyptien/Nil, "profondeur stratégique") reste à traiter**, en session
+> dédiée — même diagnostic applicable probablement (concept abstrait sans ancrage spatial fort, comme le
+> Beat 2 l'était). Composant `GradientPathReveal` de la session 8 reste la base technique mais la mise en
+> scène (storyboard + génération d'assets) reste entièrement à trancher. PUIS re-render l'acte complet
+> (131s) pour validation à l'écoute/à l'œil par Aziz, puis promotion si validé.
 >
 > **Acte 3 « Suivre l'or » reste FINAL et promu**, aucun changement : `out/PRET-PUBLICATION/soudan-midform/
 > soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`), catbox `https://files.catbox.moe/y2swv7.mp4`.
