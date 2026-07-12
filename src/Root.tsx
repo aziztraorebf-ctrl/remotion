@@ -347,6 +347,7 @@ import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as 
 import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTest";
 import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
 import { SoudanActe3, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
+import { SoudanActe4, SOUDAN_A4_FRAMES, SOUDAN_A4_FPS } from "./projects/warmap/soudan-acte4/SoudanActe4";
 import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects/warmap/soudan-acte3/_rnd/GlobeSoudanDubaiTest";
 import { BlocRapportForceTest } from "./projects/warmap/soudan-acte2/BlocRapportForceTest";
 import { GeoFlowConnectionTest, GFC_TEST_FRAMES, GFC_TEST_FPS } from "./projects/warmap/GeoFlowConnectionTest";
@@ -1732,6 +1733,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="BlocRapportForceTest" component={BlocRapportForceTest} durationInFrames={300} fps={30} width={1920} height={1080} />
         {/* Acte 3 "Suivre l'or" — 100% carte, GeoFlowConnection + drapeaux persistants */}
         <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
+        {/* Acte 4 "Même les voisins sont aspirés" — 100% carte, Russie/Égypte + DroneStrikeImpact Kosti */}
+        <Composition id="SoudanActe4" component={SoudanActe4} durationInFrames={SOUDAN_A4_FRAMES} fps={SOUDAN_A4_FPS} width={1920} height={1080} />
         {/* PROTO ISOLE — globe rotatif night-mode Darfour->Dubai, teste si ca peut remplacer camera suiveuse Mercator beat 3 */}
         <Composition id="GlobeSoudanDubaiTest" component={GlobeSoudanDubaiTest} durationInFrames={GLOBE_SOUDAN_DUBAI_TEST_FRAMES} fps={30} width={1920} height={1080} />
         {/* Insert Beat1Paradoxe FINAL adopte (concept A, Sol) — rendu isole pour validation avant integration */}

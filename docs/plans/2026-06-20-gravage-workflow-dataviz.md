@@ -48,7 +48,7 @@
 - CREER `memory/feedbacks/feedback_gemini-detourage-recraft-obligatoire.md` (ou enrichir l'existant
   `feedback_gemini-assets-fond-transparent.md`) : Gemini ne sort pas d'alpha -> Recraft remove_background.
 - `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` : pointer vers WORKFLOW-DATAVIZ comme pipeline storyboard->code.
-- `memory/CHANTIER-PEAUFINAGE-GRAPHISMES.md` : cocher TROU 1/2/3 (tous traites) + noter le workflow grave.
+- `memory/archive/CHANTIER-PEAUFINAGE-GRAPHISMES-2026-06-20.md` : cocher TROU 1/2/3 (tous traites) + noter le workflow grave.
 - `MEMORY.md` : 1 ligne pour WORKFLOW-DATAVIZ (index).
 - `memory/NEXT-ACTION.md` : noter "prochaine session = 3 corrections pixel du cobaye teal (70 plus grand,
   trou du 0, picto reserves plus grand) + appliquer WORKFLOW-DATAVIZ sur une vraie scene".
@@ -69,7 +69,7 @@
   decider sur place. La commande exacte de lancement est dans le fichier de REPRISE (voir E).
 
 ### E. ⭐ FICHIER DE REPRISE UNIQUE (livrable cle — pour qu'Aziz n'ait RIEN a repeter)
-- CREER `memory/REPRISE-WORKFLOW-DATAVIZ.md` = LE point de reprise de la prochaine session. Contenu :
+- CREER `memory/archive/REPRISE-WORKFLOW-DATAVIZ-2026-06-20.md` = LE point de reprise de la prochaine session. Contenu :
   - Etat exact : "workflow data-viz prouve A->Z le 2026-06-20, grave dans WORKFLOW-DATAVIZ.md".
   - TOUS les liens catbox de A a Z (storyboard teal cible, les 5 versions de render, comparatifs, le 70 or,
     le picto, le background) + chemins disque (cobaye TealAssemblyEtat3.tsx, public/_rnd/cobaye-teal/,

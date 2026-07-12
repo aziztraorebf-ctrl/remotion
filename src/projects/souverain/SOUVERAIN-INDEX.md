@@ -42,7 +42,7 @@
 | Angle macro (impact Afrique sur le monde) | `memory/doctrines/ANGLE-MACRO-SOUVERAIN.md` |
 | Structure Mid-form (4 actes, respirations) | `memory/doctrines/MIDFORM-FORMAT-RULES.md` |
 | Couche orale universelle (16 règles) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` |
-| Règles éditoriales (sources, couleurs, script Type B) | `memory/rules-souverain-editorial.md` |
+| Règles éditoriales (sources, couleurs, script Type B) | `memory/rules/rules-souverain-editorial.md` |
 | Distribution Instagram | `memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md` |
 
 ## 📦 Épisodes Souverain

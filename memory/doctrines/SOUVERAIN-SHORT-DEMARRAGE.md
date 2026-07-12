@@ -89,7 +89,7 @@ cp out/episodes/<ep>/wip/short_v1.mp4 out/PRET-PUBLICATION/<ep>-FINAL.mp4
 
 ## Références à lire avant tout
 - `memory/doctrines/SOUVERAIN-SHORT-SKELETON.md` — architecture + patterns techniques
-- `memory/rules-souverain-editorial.md` — règles éditoriales
+- `memory/rules/rules-souverain-editorial.md` — règles éditoriales
 - `memory/doctrines/DOCTRINE-SOUVERAIN.md` — règles visuelles premium
 - `scripts/tools/kimi-mapbox-brief.py` — brief caméra Kimi (OpenRouter)
 - `src/projects/souverain/maroc-batteries/MarocBatteriesShort.tsx` — référence A1 validé

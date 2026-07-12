@@ -21,6 +21,6 @@
 
 **Test rapide avant de valider un titre :** (1) contient une date ? → retirer. (2) dépasse 55 caractères ? → compresser. (3) contient une des formules mortes ? → réécrire. (4) les deux faits en tension sont-ils dans les 48 premiers caractères ? → sinon réordonner.
 
-**OBLIGATOIRE — Appliquer AUSSI la règle du titre hybride (Section 9 de `memory/rules-souverain-editorial.md`) :**
+**OBLIGATOIRE — Appliquer AUSSI la règle du titre hybride (Section 9 de `memory/rules/rules-souverain-editorial.md`) :**
 Les règles techniques ci-dessus valident le FORMAT. La règle hybride valide le PRINCIPE. Les deux sont obligatoires simultanément.
 Résumé règle hybride : tout titre doit passer le **Test Tokyo** — "quelqu'un à Tokyo/Paris/Montréal qui ne s'intéresse pas à l'Afrique a une raison de cliquer ?" Si non → reformuler avec ancrage mondial.

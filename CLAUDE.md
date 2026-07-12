@@ -77,7 +77,7 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 - **Signalement proactif** : signaler un problème AVANT d'implémenter (ordre de scènes incohérent, effet à risque de bug, choix stylistique contraire aux pratiques, assemblage qui casse l'arc). Format : « Je remarque [X]. Reco : [Y]. On en discute avant que je code ? »
 - **⛔ AMÉLIORER/REMPLACER L'EXISTANT AVANT DE CRÉER (source de vérité unique)** : avant tout NOUVEAU fichier (mémoire, doctrine, feedback, script), CHERCHER celui qui couvre déjà le sujet → l'enrichir ou le remplacer. Ne créer un fichier neuf QUE si l'existant deviendrait fouillis/surchargé — et alors le RÉFÉRENCER depuis la source de vérité. UNE source de vérité par sujet ; jamais dupliquer un contenu (mettre un pointeur). La prolifération de notes pêle-mêle = la cause racine de la complexité passée. Vaut pour TOUT le workspace, tout le temps.
 - **Code existant vs décision documentée** : si un fichier contredit une décision (`NEXT-ACTION`/doctrine), le FICHIER est faux. STOP, signaler en 1 phrase, ne pas continuer sur le code.
-- **Fichiers de navigation périment** : STATUS/NEXT-ACTION/starters peuvent être faux (corrections déjà faites, mauvais numéro de beat…). Avant de partir d'une note pour AGIR sur un livrable, vérifier l'état RÉEL dans le livrable lui-même (extraire frames+audio de la vidéo, lire le code du beat) — pas les notes. Puis corriger la note périmée.
+- **Vérifier CODE + VISUEL avant d'agir sur un livrable passé (NON-NEGOTIABLE, pas seulement si une note semble périmée)** : avant de reprendre/juger/continuer une vidéo, un prototype ou un composant déjà produit, TOUJOURS croiser les deux sources — (1) lire le code réel (le fichier du beat/composant, pas un résumé) ET (2) le voir (extraire des frames à des moments choisis — début/milieu/fin + les transitions/changements, pas 1 frame au hasard — plus l'audio si narration). Ni l'un ni l'autre seul ne suffit : le code peut décrire une intention jamais rendue, le visuel seul ne dit pas pourquoi. Si le rendu n'existe plus (supprimé/archivé) → mini-render de vérification avant de conclure sur le code seul. Cas particulier : fichiers de navigation (STATUS/NEXT-ACTION/starters) peuvent être faux (corrections déjà faites, mauvais numéro de beat…) — ne jamais agir sur leur base seule, vérifier l'état réel puis corriger la note périmée.
 - **Vérification avant affirmation** (4 cas) : (1) capacité d'un outil → lire la doc/MCP AVANT d'affirmer « X ne peut pas Y ». (2) état local machine (chemins, versions, binaires) → vérifier avec Bash AVANT d'affirmer, surtout avant d'écrire en mémoire. (4) verdict d'un agent/Gemini → VÉRIFIER dans le code réel avant de le présenter comme un fait (ils hallucinent, ne connaissent pas les décisions d'Aziz ; ne jamais confabuler/sur-corriger un problème non signalé). (3) connaissance générale → affirmer mais signaler l'incertitude dès qu'on en sort.
 - **Langage naturel d'Aziz → Claude traduit** : Aziz parle visuel/narratif, Claude traduit en technique sans demander chemin/frame/variable. Demander un chemin à Aziz = mal faire son travail. Refs persos : `public/assets/library/`. Manifests timing/couleurs : `src/projects/*/manifests/`.
 - **STORYBOARD = le modèle PROPOSE, on valide, PUIS breakdown** (prouvé 4× le 2026-06-20). Pour une scène, le modèle (Gemini/GPT via `storyboard-dual-gen.py`) propose une DIRECTION créative qu'on n'a pas (storyboard multi-états, évolution + épure), Aziz valide, et SEULEMENT APRÈS on décode le breakdown technique → code. Déplace le jugement de goût d'après-render (cher) vers avant-code (gratuit). Mapbox : le modèle approxime la géo (proposition de direction, vraie géo au CODE). Doctrines : `memory/doctrines/STORYBOARD-MAPBOX.md` · `public/_shared/refs/backgrounds/_PALETTE-BACKGROUNDS.md` (§ storyboard) · arsenal/palette : `public/_shared/refs/cartes/_ARSENAL.md` + `backgrounds/`.
@@ -88,31 +88,31 @@ Ne JAMAIS dire « je ne peux pas / je n'ai pas accès » sans avoir consulté la
 
 ## Pipelines Beat (NON-NEGOTIABLE) — détail des étapes dans les scripts
 
-**Beat Souverain REMOTION/Tailwind** : `/beat` (`scripts/beat-session.py`). Doctrine : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`. Phases : scan→storyboard→breakdown→DA-brief→code→self-review→review→upload.
+**Beat Souverain REMOTION/Tailwind** : `/beat` (`scripts/beat-session.py`). Doctrine : `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md`. Storyboard (gate manuel, phase `scan`, vérifie l'existence du PNG) et DA-brief — skill `da-brief-gate` (orchestre `scripts/tools/da-brief.py --upstream`, gate manuel bloquant entre breakdown et code — PAS un `--phase` du script) — précèdent les phases scriptées : `--phase {scan, breakdown, spec-table, self-review, review, upload, full}`. La discipline d'enchaînement storyboard→DA-brief-gate→code n'est PAS bloquée techniquement — c'est à l'agent de la respecter (proposer le skill spontanément, pas attendre qu'Aziz le demande).
 **Absolus** : phase 0 SCAN COMPOSANTS-INDEX gate bloquant · 2 appels Gemini MAX · Tailwind partout (exception SVG/animations) · R1 = max 8s sans changement visuel · self-review ≥19/23 avant Gemini · upload (catbox+ntfy) avant toute présentation.
 
 **Beat Mapbox CARTE** : `scripts/mapbox-session.py` (1 Map continue, getCam+overlays, fichier unique). Doctrine : `memory/doctrines/SOUVERAIN-VISUAL-PLAYBOOK.md`. Self-review scriptée d'abord : `python3 scripts/tools/mapbox-selfreview.py <Beat*.tsx>` (0 erreur avant review).
 **Absolus** : SCAN templates (CATALOGUE-CARTE-VIVANTE + MAPBOX-COMPOSANTS) AVANT code · Production Brief validé Aziz AVANT code (SFX plancher 0.50, pitch 32 si 1-4 pays) · 2 appels Gemini MAX · drapeaux : `MapboxCountryFlagDecal` (source-image) sur carte avec pitch ; `useClipFlags` seulement à pitch=0 — JAMAIS `drawFlagCanvas`. Détail : `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` · drapeau/effet vivant obligatoire. S'applique à TOUT nouveau beat, même un Short fait « comme ça ».
 
 **⛔ GEMINI = SIGNAL, JAMAIS JUGE** (les deux pipelines) : le score est consultatif. Procédure : 1 appel → vérifier chaque point contre le réel → appliquer seulement ce qui est vrai → STOP. JAMAIS de boucle Gemini→fix→Gemini. Le jugement d'Aziz prime. Outils review : `scripts/tools/REVIEW-TOOLS-INDEX.md`.
-ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** (Files API, validé 2026-06-16 ; le bug "répond sans voir" du 13 juin est résolu). Permet de juger MOUVEMENT/rythme/transitions/SON — supérieur aux frames figées pour un breakdown premium. Toujours tester la fiabilité avant (`scripts/tools/gemini-video-upload-test.py`). Détail : `memory/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
+ℹ️ **Upload VIDÉO complète à Gemini 3.1 Pro = FIABLE** (Files API, validé 2026-06-16 ; le bug "répond sans voir" du 13 juin est résolu). Permet de juger MOUVEMENT/rythme/transitions/SON — supérieur aux frames figées pour un breakdown premium. Fiabilité déjà prouvée (test archivé pour référence : `scripts/tools/_archive/gemini-video-upload-test.py`). Détail : `memory/tools/gemini-video-upload-fiable.md`. (Gemini reste SIGNAL, pas juge.)
 
 ---
 
 ## Rappels techniques
 
-**Remotion** (complet : `memory/rules-outils-techniques.md` + `memory/tools/remotion.md`) :
+**Remotion** (complet : `memory/rules/rules-outils-techniques.md` + `memory/tools/remotion.md`) :
 - Audio-derived timing OBLIGATOIRE, jamais hardcodé · `spring()` > `interpolate()` · `premountFor={1*fps}` · `extrapolateRight:'clamp'`.
 - INTERDIT : `CSS transition:`, `setTimeout`, `@keyframes`, `requestAnimationFrame`.
 - Safe zones 1920×1080 : marges 100/60px, sous-titres Y≥850, texte min 32px. Atlas sprites : Spring Pop, `Math.max(0, localF)`, RGB check.
 - **Netteté = full HD only** : juger qualité visuelle UNIQUEMENT sur render `scale=1`. Les renders `scale=0.4-0.5` sont flous et font douter à tort. Avant de conclure « flou/moche » → rendre 1 frame full HD.
 - **Mouvement = intention narrative** : un élément qui bouge sur la carte est OK seulement avec intention claire (prendre un territoire, fuir, avancer). Le « glissement sans but » = le vrai problème, pas le mouvement. **Corollaire (objet inerte)** : un objet qui ne se déplace pas dans la vraie vie (lingot, coffre, pierre, bâtiment, outil) NE GLISSE JAMAIS — il disparaît par fade, change de couleur, ou s'illumine sur place. SEULS les véhicules (navire, avion, voiture, char) glissent de façon crédible.
 
-**TTS ElevenLabs français** (scanner AVANT chaque appel) : (1) ZÉRO participe passé « é/ée » en fin de groupe (reformuler : « la terreur le saisit »). (2) ZÉRO « ont + voyelle » → passé simple. (3) noms de villes « s » final → phonétique si besoin. (4) nombres en lettres (« 1311 » → « treize cent onze »). (5) lister tous les « é/ée » avant génération.
+**TTS ElevenLabs français** : scanner AVANT chaque appel (participes passés « é/ée », « ont + voyelle », noms de villes, nombres en lettres). Détail complet + regex scriptable : `memory/tools/elevenlabs.md`.
 
-**Async PixelLab** : après `animate_character` → `sleep 120` → `get_character()` dans le MÊME flow. « Animations: None yet » après 3min → relancer. Jamais annoncer « j'attends » sans exécuter le sleep Bash.
+**Async PixelLab** : jamais annoncer « j'attends » sans exécuter le `sleep` Bash réel. Détail du flow (`animate_character` → `sleep 120` → `get_character()`, relance si "None yet") : `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md`.
 
-**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine + `quebec-jacques-poc/.env` (Mapbox), jamais hardcoder, détail `memory/apis-and-tools.md`. Render >30s → `scripts/tools/render-on-vercel.py` (défaut). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
+**Config** : Node v24.6.0, npm (pas bun), macOS. Packages : `@remotion/paths`, `@remotion/shapes`, `lucide-react`. Clés API : `.env` racine + `quebec-jacques-poc/.env` (Mapbox), jamais hardcoder, détail `memory/apis-and-tools.md`. Render >30s → `scripts/tools/render-on-vercel.py` (défaut) — **EXCEPTION Mapbox/WebGL → `scripts/render-mapbox.sh` OBLIGATOIRE** (Vercel ne supporte pas WebGL headless, jamais `npx remotion render` brut non plus). QA : `scripts/visual_review.py` (routeur multi-modèles review). Audio : `scripts/generate-narration-expressive.py` (narration ElevenLabs) + `scripts/generate-sfx-elevenlabs.py` (SFX).
 
 ---
 
@@ -124,6 +124,13 @@ out/episodes/<ep>/wip/  (purger fin de session) · /versions/ (candidats) · bea
 out/templates-souverain/ · out/_r-and-d/ (POC, 7j implicite)
 ```
 Nommage : `beatN_v3.mp4` (wip) → `beatN_V3.mp4` (présenté) → `beatN-FINAL.mp4` (validé) → `PRET-PUBLICATION/<ep>-FINAL.mp4`. Jamais de fichier à la racine de `out/`, jamais de dossier par date. À validation : promouvoir versions/ → FINAL, purger wip/+versions/. Dashboard : template validé → frames mid/end → catbox → `dashboard/templates-souverain.html` → `publish-here-now.sh`.
+
+---
+
+## Communication mobile (Aziz est sur mobile la majorité du temps — NON-NEGOTIABLE)
+
+- **Texte long (script, plan, brief, liste) → directement en texte dans le chat, JAMAIS dans un fichier `.md` créé pour l'occasion.** Un fichier est dur à copier/coller/modifier sur mobile ; du texte en chat se sélectionne, se cite et s'édite facilement. Exception : fichier attendu par un pipeline/skill (manifest, script verrouillé qui sera lu par un script) — dans ce cas le fichier est nécessaire, mais en informer Aziz en clair plutôt que de le laisser deviner qu'il doit l'ouvrir.
+- **Tout render (vidéo/image) → uploader AVANT de le présenter, jamais un chemin local.** Ordre de priorité : catbox.moe → Imgur (fallback si catbox down) → uguu.se → Litterbox (dernier recours, 72h seulement). Détail + gotchas (fichier vide silencieux malgré HTTP 200, limite 1min Imgur) : `.claude/.../memory/feedback_upload-hosts-fallback.md`. Toujours vérifier `curl -sI <url> | grep content-length` après upload avant de donner le lien.
 
 ---
 

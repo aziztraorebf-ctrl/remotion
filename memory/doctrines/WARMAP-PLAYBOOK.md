@@ -16,8 +16,9 @@
 > [[feedback_sprites-topdown-gemini-vs-recraft]] (recette sprites).
 
 Format : 9:16 (1080x1920) principal — viral TikTok/Reels/Shorts, 22-60s. 16:9 pour le long.
-Carte parchemin Atlas FLAT TOP-DOWN (pitch 0), data-driven. Moteur prototype = Mapbox light-v11
-reskinne parchemin ; **voie production = d3-geo pur** (socle Atlas, a basculer).
+Carte parchemin Atlas FLAT TOP-DOWN (pitch 0), data-driven. **Moteur de production = Mapbox light-v11
+reskinne parchemin** (tranche 2026-07-11 : la bascule d3-geo envisagee en juin n'a jamais eu lieu en
+6 semaines, Mapbox tourne en production sur Sahel/Soudan sans probleme — assume comme voie definitive).
 
 **Ce n'est PAS un "war-map" : c'est un MOTEUR DE RECIT CARTOGRAPHIQUE TEMPOREL HUMANISE.**
 La guerre = 1er cas (le + dramatique). Le moteur anime TOUTE valeur qui change dans l'espace+temps
@@ -106,4 +107,4 @@ Aux memes procedures que Souverain/Atlas (prochaine session) :
 - **PHASE RECHERCHE = coeur de la prochaine session** : garantir les BONNES infos AVANT de construire.
   Sources OSINT (ISW/ACLED/LiveUAmap GeoJSON ~85$/an/DeepStateMap), jalons par date, verif factuelle,
   schema de donnees (1 fichier jalons -> tout en derive). C'est ce qui rend le pipeline recurrent realiste.
-- Basculer moteur sur d3-geo pur (socle Atlas).
+- ~~Basculer moteur sur d3-geo pur~~ — TRANCHE 2026-07-11 : Mapbox reste le moteur de production (voir §intro).

@@ -54,4 +54,23 @@ paradoxe des arbitres, veto russe compris, y reste). Décision actée avec Aziz 
 2. Appliquer la grammaire carte : dézoom HORS Soudan (le SEUL dézoom autorisé, voir cadrage serré Acte 1) → flèches or→Dubaï + drones. Effet vivant obligatoire.
 3. Hiérarchiser à 2 acteurs/beat max.
 
+## ⭐ AVANT D'ÉCRIRE L'ACTE 5 — nouveau fait à fact-checker (découvert 2026-07-11, veille last30days)
+
+Enquête Lighthouse Reports / Der Spiegel / Sudan War Monitor / Evident, publiée début juillet 2026
+("Inside the Secret Network Fueling Sudan's War"), reprise par Democracy Now! le 8 juillet 2026 : documente
+un **réseau de camps d'entraînement RSF soutenu par les Émirats Arabes Unis**, transitant par la **Libye**
+(via la LNA du général Haftar) et employant des **mercenaires colombiens**. Distinct de l'angle "or du
+Darfour→Dubaï" déjà traité en Acte 3 — c'est la preuve d'un soutien militaire/logistique ORGANISÉ, pas
+seulement financier.
+
+**Pourquoi ça compte pour l'Acte 5 (verrou institutionnel UA/ONU/Quad)** : ce fait illustre concrètement
+*pourquoi* le verrou institutionnel est bloqué — un membre du "Quad" censé négocier une solution organise en
+parallèle un réseau de mercenaires pour armer un camp du conflit. Cohérent avec la charte (pas de méchant
+explicite, laisser les faits porter le jugement) : pas besoin d'accuser, le fait suffit à expliquer
+l'inaction. Sans lui, l'Acte 5 risque de rester abstrait ; avec lui, il devient concret et vérifiable.
+
+**À faire en session Acte 5** : fact-check 3 niveaux (Tavily → Sonar Pro → Tavily ciblé de contrôle, comme
+Actes 3-4) sur ce réseau EAU-Libye-Colombie avant de l'intégrer au script. Aziz tranchera à ce moment si un
+Acte 6 est nécessaire ou si ça rentre dans l'Acte 5 tel que prévu.
+
 Liens : [[soudan-midform-DONNEES]] · [[soudan-midform-STORYBOARD-ACTE2]] · [[WARMAP-LONG-DOCTRINE]] · [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]].

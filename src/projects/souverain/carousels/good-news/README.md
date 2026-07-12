@@ -1,7 +1,7 @@
 # Carrousels "Good News Macro" — composants réutilisables
 
 > Pipeline validé 2026-06-01 (Carrousel #1 : Maroc / Kenya / Algérie). Standard : v3.
-> Doctrine + décisions : `memory/STARTER-PROMPT-carrousel-good-news.md`.
+> Doctrine + décisions : `memory/starters/STARTER-PROMPT-carrousel-good-news.md`.
 > Voisin : carrousels hybrides (issus de vidéos) → `../hybrid/README.md`.
 
 ## Concept

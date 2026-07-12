@@ -21,7 +21,7 @@ SESSION ISOLATION ATOMIQUE — [PROJET] Beat [X]
 1. memory/episodes/souverain/[PROJET]/PROTOCOLE-SESSIONS-AUTONOMES.md
 2. src/projects/souverain/[PROJET]/beat[X]/manifest.ts
 3. memory/tools/gemini.md (modèles — ligne 11)
-4. memory/rules-souverain-editorial.md Section 0B (règle background)
+4. memory/rules/rules-souverain-editorial.md Section 0B (règle background)
 
 Scope unique : beat[X]/ uniquement. Zéro autre fichier modifié.
 

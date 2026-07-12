@@ -1,7 +1,9 @@
 # R&D SVG — Index des protos validés
 
-> Source d'inspiration pour les prochains Shorts SVG. Les fichiers restent dans `src/projects/_rnd/svg-scenes/`
-> (ne pas déplacer — imports Root.tsx). Ce fichier = index avec verdict + lien visuel + ce que le proto prouve.
+> Source d'inspiration pour les prochains Shorts SVG. La plupart des fichiers restent dans `src/projects/_rnd/svg-scenes/`
+> (ne pas déplacer — imports Root.tsx) ; certains protos écartés ont été archivés dans `_archive/` (exclu du build,
+> `git mv` sans casser Root.tsx) — leur rendu catbox reste la référence visuelle même si le fichier source est archivé.
+> Ce fichier = index avec verdict + lien visuel + ce que le proto prouve.
 >
 > Consulter AVANT de coder une nouvelle scène : si le geste existe déjà, adapter plutôt que recoder.
 > Verdict : ✅ VALIDÉ (réutilisable tel quel) · ⭐ RÉFÉRENCE (meilleur exemple du registre) · ⚠️ PARTIEL (bon mais une partie à éviter) · ❌ ÉCARTÉ
@@ -36,7 +38,7 @@
 
 | Proto | Fichier source | Modèle | Animation | Render | Verdict |
 |---|---|---|---|---|---|
-| ⭐⭐ Défense mutuelle AES | `DefenseGptAnimee.tsx` | GPT-5.5 | SE CONSTRUIT + DÉCLENCHE + SFX (boom-coup + liptako-gong) | https://files.catbox.moe/05xbm1.mp4 | ⭐⭐ RÉFÉRENCE TACTIQUE |
+| ⭐⭐ Défense mutuelle AES | `_archive/DefenseGptAnimee.tsx` ⚠️ fichier source archivé (exclu du build) — le rendu catbox reste la référence visuelle | GPT-5.5 | SE CONSTRUIT + DÉCLENCHE + SFX (boom-coup + liptako-gong) | https://files.catbox.moe/05xbm1.mp4 | ⭐⭐ RÉFÉRENCE TACTIQUE |
 
 **Ce que ce proto prouve** : registre tactique = ENCART CONCEPTUEL (un pacte, un mécanisme) — PAS une carte géographique. Nœuds + liens + vecteurs. GPT-5.5 gagne ce registre clairement. Pattern "DÉCLENCHE" (transition activation brusque) prouvé ici.
 
@@ -46,10 +48,10 @@
 
 | Proto | Fichier source | Modèle | Animation | Render | Verdict |
 |---|---|---|---|---|---|
-| Mine d'or Darfour | `MineGeminiAnimee.tsx` | Gemini | RESPIRE (2 couches, 28s) | https://files.catbox.moe/lkf0ia.mp4 | ✅ VALIDÉ |
-| ⭐ Creuset « l'or devient la guerre » | `CreusetAnimee.tsx` | GPT-5.5 | TRANSFORMATION (creuset bascule → balles émergent) | https://files.catbox.moe/yonpoq.mp4 | ⭐ RÉFÉRENCE TRANSFORMATION |
+| Mine d'or Darfour | `_archive/MineGeminiAnimee.tsx` ⚠️ fichier source archivé (exclu du build) — le rendu catbox reste la référence visuelle | Gemini | RESPIRE (2 couches, 28s) | https://files.catbox.moe/lkf0ia.mp4 | ✅ VALIDÉ |
+| ⭐ Creuset « l'or devient la guerre » | `_archive/CreusetAnimee.tsx` ⚠️ fichier source archivé (exclu du build) — le rendu catbox reste la référence visuelle | GPT-5.5 | TRANSFORMATION (creuset bascule → balles émergent) | https://files.catbox.moe/yonpoq.mp4 | ⭐ RÉFÉRENCE TRANSFORMATION |
 
-**Ce que ces protos prouvent** : `braise-or` = scènes chaudes matérées (ressource, conflit, terre africaine ardente). `CreusetAnimee` = meilleure démonstration du pattern TRANSFORMATION (un objet change de nature — réutilisable pour toute métamorphose conceptuelle).
+**Ce que ces protos prouvent** : `braise-or` = scènes chaudes matérées (ressource, conflit, terre africaine ardente). `CreusetAnimee` (archivé) = meilleure démonstration du pattern TRANSFORMATION (un objet change de nature — réutilisable pour toute métamorphose conceptuelle).
 
 ---
 
@@ -57,7 +59,7 @@
 
 | Proto | Fichier source | Modèle | Animation | Render | Verdict |
 |---|---|---|---|---|---|
-| ⭐⭐⭐ « Suivre l'or » Soudan HÉROS | `HeroGptAnimee.tsx` | GPT-5.5 | tomber-sec + bascule couleur + fade + fumée→ciel noir | https://files.catbox.moe/1ws3kh.mp4 | ⭐⭐⭐ RÉFÉRENCE or-jour |
+| ⭐⭐⭐ « Suivre l'or » Soudan HÉROS | `_archive/HeroGptAnimee.tsx` ⚠️ fichier source archivé (exclu du build) — le rendu catbox reste la référence visuelle | GPT-5.5 | tomber-sec + bascule couleur + fade + fumée→ciel noir | https://files.catbox.moe/1ws3kh.mp4 | ⭐⭐⭐ RÉFÉRENCE or-jour |
 
 **Ce que ce proto prouve** : `or-jour` = sortir du sombre dépressif et du parchemin sans tomber dans le joyeux pédagogique. Matin doré, personnage en action, lumineux et premium. GPT-5.5 gagne ce registre.
 
@@ -67,7 +69,7 @@
 
 | Proto | Fichier source | Modèle | Animation | Render | Verdict |
 |---|---|---|---|---|---|
-| ⭐ Graine → arbre (finition complète) | `GraineGeminiAnimee.tsx` | Gemini | SE CONSTRUIT + vent + soleil actif + fruit tombe + feuilles flottent + SFX nature | https://files.catbox.moe/ft5l5g.mp4 | ⭐ RÉFÉRENCE papier-decoupe |
+| ⭐ Graine → arbre (finition complète) | `_archive/GraineGeminiAnimee.tsx` ⚠️ fichier source archivé (exclu du build) — le rendu catbox reste la référence visuelle | Gemini | SE CONSTRUIT + vent + soleil actif + fruit tombe + feuilles flottent + SFX nature | https://files.catbox.moe/ft5l5g.mp4 | ⭐ RÉFÉRENCE papier-decoupe |
 | « D'une graine naît un arbre » PÉDAGOGIQUE | `GraineStatic.tsx` (base) | Gemini | SE CONSTRUIT bas→haut (graine→tronc scaleY→feuillage en vagues) + 2 couches | https://files.catbox.moe/wv4xlm.mp4 | ✅ VALIDÉ |
 
 **Ce que ces protos prouvent** : `papier-decoupe` = registre pédagogique/explainer (Kurzgesagt-papier). Gemini gagne nettement (couches organiques empilées + ombres douces = sa force atmosphérique). Pattern "SE CONSTRUIT bas→haut" avec `scaleY` sur le tronc = réutilisable pour toute croissance végétale.

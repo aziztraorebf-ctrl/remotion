@@ -1,7 +1,7 @@
 # Charte éditoriale Souverain — 1 page
 
 > **Lock 2026-05-19.** Consolide les règles dispersées du projet + apports session "militant vs analyste".
-> Lecture obligatoire avant tout nouveau script Souverain. Détails techniques dans `rules-souverain-editorial.md`.
+> Lecture obligatoire avant tout nouveau script Souverain. Détails techniques dans `memory/rules/rules-souverain-editorial.md`.
 >
 > **Complément 2026-05-27 :** [ANGLE-MACRO-SOUVERAIN.md](ANGLE-MACRO-SOUVERAIN.md) — exécution concrète de la promesse "le viewer à Paris/Tokyo/Montréal" via l'angle macro (sujets africains vus depuis leur impact sur le monde). Ratio 70/30 macro/micro recommandé.
 >
@@ -39,7 +39,7 @@ Concrètement : sur ce thème, toujours coupler l'injustice externe avec ≥1 po
 
 ### 2. Chaque chiffre = source vérifiée (Perplexity sonar-pro après script lock)
 
-Avant TTS, fact-check obligatoire via Perplexity sonar-pro. Croiser au moins 2 sources de camps différents (mainstream international + panafricain + OSINT/officiel). Voir `rules-souverain-editorial.md` Section 1 pour la grille 3 niveaux complète.
+Avant TTS, fact-check obligatoire via Perplexity sonar-pro. Croiser au moins 2 sources de camps différents (mainstream international + panafricain + OSINT/officiel). Voir `memory/rules/rules-souverain-editorial.md` Section 1 pour la grille 3 niveaux complète.
 
 Maximum 3 chiffres par Short. Tout chiffre venant d'une seule partie d'un litige = attribution explicite dans la voix-off.
 
@@ -79,7 +79,7 @@ Pour chaque phrase d'un script Short : "Est-ce que cette phrase génère naturel
 - Oui → garder
 - Non → passer en Mid-form ou couper
 
-Voir `rules-souverain-editorial.md` Section 7 pour gate complet Script-Format Fit.
+Voir `memory/rules/rules-souverain-editorial.md` Section 7 pour gate complet Script-Format Fit.
 
 ---
 
@@ -110,6 +110,6 @@ Le positionnement militant plafonne sur AdSense diaspora et coupe la moitié sup
 
 ## Références internes (détails)
 
-- `memory/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)
+- `memory/rules/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)
 - grille des sources 3 niveaux détaillée (feedback archivé, supprimé)
 - palette + test couper l'audio (feedback archivé, supprimé)

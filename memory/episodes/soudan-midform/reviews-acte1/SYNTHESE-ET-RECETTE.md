@@ -11,7 +11,7 @@ metadata:
 
 - **Gemini VIDÉO complète** : `scripts/tools/gemini-video-review-custom.py <video.mp4> <brief.txt> <out.md>`.
   Upload Files API + attente state ACTIVE (jusqu'à 90×2s) puis `gemini-3.1-pro-preview`, temp 0.4, max_output 4000.
-  Voit MOUVEMENT/rythme/son (supérieur aux frames). Fiable (validé 2026-06-16, cf gemini-video-upload-fiable).
+  Voit MOUVEMENT/rythme/son (supérieur aux frames). Fiable (validé 2026-06-16, cf memory/tools/gemini-video-upload-fiable.md).
 - **Kimi FRAMES** : `scripts/tools/kimi-frames-review.py <brief.txt> <out.md> <img1.jpg> ...`.
   ⛔ GOTCHAS (sinon réponse vide, cf [[kimi-review-bug]]) : OpenRouter `moonshotai/kimi-k2.5` (PAS Moonshot direct
   = content=null) · `temperature: 1` obligatoire · `max_tokens: 4000` (2000 tronque) · fallback `content or reasoning`.

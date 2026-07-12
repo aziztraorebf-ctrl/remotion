@@ -12,7 +12,7 @@
  *     reveal={0..1} sprite="dot" accentColor="#c8a951" width={w} height={h} />
  *
  * Inspiration : mapanimation.io Silk Road (#96) + vol (#256). Voir
- * memory/_r-and-d-mapanimation-PREMIUM-DECODE.md.
+ * memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md.
  *
  * ⚠️ SPRITE & PITCH (NON-NEGOTIABLE) : eux sont en carte 2D PLATE (sprite top-view lisible).
  * Nous sommes souvent en pitch 28-38° (relief). Un sprite "top-view" (plane/cargo) sur une carte

@@ -1,6 +1,6 @@
 # Mid-form Souverain — Règles format 4-6 min
 
-> **Lock 2026-05-19.** Premier test de format long Souverain. Règles à appliquer AVANT toute écriture script Mid-form. Complète `CHARTE-EDITORIALE-SOUVERAIN.md` (positionnement) et `rules-souverain-editorial.md` (règles transversales).
+> **Lock 2026-05-19.** Premier test de format long Souverain. Règles à appliquer AVANT toute écriture script Mid-form. Complète `CHARTE-EDITORIALE-SOUVERAIN.md` (positionnement) et `memory/rules/rules-souverain-editorial.md` (règles transversales).
 >
 > ⚠️ PÉRIMÈTRE (depuis 2026-06-14) — Ce fichier = couche STRUCTURE/VISUEL/PRODUCTION du Mid-form Souverain
 > (4 actes, respirations, ratio map/data/text, render). Pour le NIVEAU ORAL (comment écrire les phrases :
@@ -154,6 +154,6 @@ Quota Hobby : 100 GB-h/mois gratuit
 ## Références internes
 
 - `memory/doctrines/CHARTE-EDITORIALE-SOUVERAIN.md` — positionnement et règles éditoriales
-- `memory/rules-souverain-editorial.md` — règles techniques transversales (sources, couleurs, grammaire)
+- `memory/rules/rules-souverain-editorial.md` — règles techniques transversales (sources, couleurs, grammaire)
 - `memory/feedbacks/feedback_review-mp4-avant-presentation.md` — extraction frames
 - `scripts/tools/render-on-vercel.py` — render cloud Mapbox

@@ -180,7 +180,7 @@ addCountryFocus(map, "NER", ATLAS3D_PALETTE.accentOr);
 **Composition Remotion** : `ProtoA-MapboxSatelliteSenegal` (1920×1080, 180 frames / 6s)
 **Status** : ✅ V1 validé Aziz 2026-05-21 — premier template Mapbox 16:9 cinématique du projet
 **Cas d'usage** : ouverture mid-form documentaire — zoom continent → pays → zone offshore avec pitch progressif (0→55°) + bearing (0→-20°). Look Caspian Report / Johnny Harris.
-**Backlog améliorations** : [`memory/backlog-ameliorations-mapbox-satellite.md`](../../memory/backlog-ameliorations-mapbox-satellite.md) — V2 prioritaire : éclaircir océan (trop sombre actuellement)
+**Backlog améliorations** : [`memory/archive/backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md`](../../memory/archive/backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md) — PÉRIMÉ (projet Sénégal V3 terminé) — V2 prioritaire : éclaircir océan (trop sombre actuellement)
 
 **Anatomie** :
 - Style satellite-v9 + applyAtlasRealiste3D (hillshade)
@@ -1417,7 +1417,7 @@ Zone karaoke réservée : 200px en bas (sous-titres TikTok)
 
 **Path code** : `src/projects/_shared/components/layouts/DataRevealSouverain.tsx`
 **Status** : ✅ VALIDÉ Beat4Prix Silicon Savannah M-PESA (2026-05-15)
-**Fiche technique** : `memory/rules-data-driven-motion-design.md` (8 techniques T1-T8)
+**Fiche technique** : `memory/rules/rules-data-driven-motion-design.md` (8 techniques T1-T8)
 **Props principales** :
 - `pivotAsset` : image centrale flottante (ping ring + glow gold)
 - `leftBar` / `rightBar` : `DataBar { label, value, barFillRatio, color, appearFrame, ... }`

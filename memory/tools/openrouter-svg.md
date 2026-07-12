@@ -6,7 +6,7 @@
 >
 > ⛔ **MISE A JOUR 2026-07-05** : pour les BATIMENTS/infrastructures complexes statiques (pas les jetons/
 > vehicules mobiles), le SVG (GLM ou agent Claude) est BATTU par Gemini image-gen + traitement integration
-> (desaturation+cadre) — voir `memory/STARTER-PROMPT-inserts-tactiques-soudan.md` § "VERDICT CONFIRME".
+> (desaturation+cadre) — voir `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-inserts-tactiques-soudan.md` § "VERDICT CONFIRME".
 > Le SVG reste la bonne reponse pour les elements mobiles/nombreux (jetons, vehicules, effets).
 >
 > ⭐⭐⭐ **MISE A JOUR 2026-07-10 — GPT-5.6 Sol teste en profondeur (`openai/gpt-5.6-sol` via OpenRouter),
@@ -133,8 +133,8 @@ Preuve : marche se dessine au trait noir (colorise=0) PUIS se remplit (tomates r
 **Test realise** : meme protocole que le test Gemini vs GPT (§ PERSONNAGE-VIVANT-INDEX) — prompt "pose bank"
 texte-pur, personnage figE (couleurs hex explicites), demande de rig hierarchique nomme
 (`torso > arm-upper > arm-lower > hand`, translate-au-joint + rotate). 2 poses generees (idle, walk-a),
-portees en JSX Remotion, testees en INTERPOLATION continue (`src/projects/_rnd/svg-scenes/ProtoFuguPoseBankWalk.tsx`,
-compo `RND-ProtoFuguPoseBankWalk`).
+portees en JSX Remotion, testees en INTERPOLATION continue (`src/projects/_rnd/svg-scenes/_archive/ProtoFuguPoseBankWalk.tsx`
+⚠️ archive, exclu du build, compo Root `RND-ProtoFuguPoseBankWalk` desimportee).
 
 **Resultat technique** : ✅ positif — Fugu Ultra produit un vrai rig FK natif (comme Gemini, PAS comme
 GPT-5.5) qui tient sous rotation/interpolation sans decrochage aux joints. Qualite visuelle 1er jet bonne
@@ -157,13 +157,14 @@ extremement complexe hors SVG (le texte-only + raisonnement lourd peut avoir un 
 reconsidere pour ce registre sauf signal fort contraire. Ne pas re-tester sans raison nouvelle.
 
 Fichiers du test (garde comme preuve R&D, PAS a etendre) : `out/_rnd/fugu-ultra-test/` (prompts, reponses
-brutes, SVG extraits, render `fugu-pose-bank-walk.mp4`), `src/projects/_rnd/svg-scenes/ProtoFuguPoseBankWalk.tsx`.
+brutes, SVG extraits, render `fugu-pose-bank-walk.mp4`), `src/projects/_rnd/svg-scenes/_archive/ProtoFuguPoseBankWalk.tsx`
+(⚠️ archive, exclu du build).
 
 Voir aussi : [[SVG-SCENES-GENERATIVES]] (doctrine SVG generatif). Modeles principaux : `memory/tools/gemini.md`, CLAUDE.md (bloc modeles verrouilles).
 
 ## Comparatif texte-only vs vision-from-storyboard — insert tactique Soudan (2026-07-05)
 
-> R&D pour `memory/STARTER-PROMPT-inserts-tactiques-soudan.md`. Meme brief (5 elements : 2 jetons infanterie
+> R&D pour `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-inserts-tactiques-soudan.md`. Meme brief (5 elements : 2 jetons infanterie
 > par camp, vehicule technical, impact/explosion, medaillon commandant) envoye a 5 configurations :
 > GLM-5.2 texte-only, Qwen3.6 texte-only (sans image), puis un storyboard genere par Gemini 3.1 Flash Image
 > envoye en VISION a Gemini 3.1 Pro, GPT-5.5, et Qwen3.6 (vision). But : voir si donner une image de reference

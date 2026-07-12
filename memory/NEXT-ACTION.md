@@ -18,6 +18,13 @@
 > soudan-midform-ACTE4-SCRIPT.md`. Angle : Russie (bascule soutien RSF→SAF 2024, offre base navale
 > Port-Soudan) + Égypte (soutien direct SAF, motif Nil). 6 beats, ~70-90s visés.
 >
+> 🔧 **Option conditionnelle (SI blocage créatif sur le storyboard/concept de l'Acte 4, pas systématique)** :
+> si le storyboard d'un beat de l'Acte 4 est rejeté 2 fois ou plus sur le même concept, le skill
+> `creative-director-dual` (2 agents `creative-director` en parallèle, brief identique, indépendants,
+> Aziz tranche) est un candidat concret — déjà prouvé sur le Short War-Map Sahel 90s après 4 rejets
+> (2026-07-07). Pas une obligation, juste une option disponible si besoin. Détail :
+> `~/.claude/skills/creative-director-dual/SKILL.md`.
+>
 > **Leçon méthodologique gravée cette session (à réutiliser Acte 4/5)** : pour un insert graphique
 > abstrait (pas de carte), TOUJOURS juger un concept sur sa LISIBILITÉ NARRATIVE (peut-on comprendre sans
 > légende ?) avant son exécution technique — un concept visuellement propre mais qui ne raconte rien tout
@@ -47,6 +54,14 @@
 > précision temporelle, règle 6bis densité cumulative/flux narratif) + nouvel outil réutilisable
 > `scripts/tools/jury-script-llm.py` (jury LLM fusionné clarté+densité en 1 seul passage, à utiliser pour
 > l'Acte 5 et tout futur script).
+>
+> 💡 **Option disponible pour PLUS TARD sur cet épisode (pas une obligation, juste visible ici)** : une fois
+> l'Acte 4 (et éventuellement l'Acte 5) avancés en storyboard/code, le skill `passe-amelioration-scene`
+> (N agents 1/scène + 1 agent transversal, doctrine `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`,
+> déjà prouvé sur War-Map Sahel AES) est un candidat naturel pour un audit qualité global de l'épisode
+> Soudan mid-form complet (5 actes déjà écrits/produits à des sessions différentes, avec des acquis
+> techniques différents à chaque fois — terrain typique pour cette méthode). Aziz demandera explicitement
+> ce skill le moment venu — ne pas le lancer de soi-même avant qu'il ne le dise.
 
 ---
 
@@ -146,14 +161,16 @@
 
 ## ⭐⭐ 4 REGISTRES VIDEO LONGUE SVG — valides + refactoring SVG NEXT (2026-07-02)
 
-> **NEXT SESSION** : lire `memory/STARTER-PROMPT-refactoring-svg-et-map2d.md` (dis "on reprend le refactoring SVG + test carte 2D").
+> ✅ FAIT depuis (GeminiRig déplacé dans `_shared/`, `ProtoMap2dEncre.tsx` créé) — starter archivé :
+> `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-refactoring-svg-et-map2d.md`.
 > Session du 2026-07-02 : grammaire visuelle SVG COMPLETE — 4 registres valides pour video longue :
 > 1. Narratif SVG (deja grave) · 2. Data-viz plein ecran Vox (GridBackground + bar/donut/counter) ·
 > 3. Presentateur+data (personnage devant ecran + bulles de dialogue) · 4. 2D flat maps d3-geo (a tester).
 > Cross-fade narratif->data-viz prouve en MP4 (`out/_r-and-d/narratif-plus-data-proto.mp4`).
 > Doctrine mise a jour : `memory/doctrines/SVG-MIDFORM-FORMAT.md` § 4 REGISTRES.
 > **Protos crees** : ProtoDialogueEcran, ProtoDataVizEncre, ProtoDataVizPleinEcran, ProtoNarratifPlusData,
->   ProtoCadrages, ProtoFaceAFace, ProtoFaceExpressions, ProtoFuguPoseBankWalk (tous dans `_rnd/svg-scenes/`).
+>   ProtoCadrages, ProtoFaceAFace, ProtoFaceExpressions (dans `_rnd/svg-scenes/`), ProtoFuguPoseBankWalk
+>   (⚠️ archive dans `_rnd/svg-scenes/_archive/`, exclu du build).
 > **Audit SVG (3 agents)** : GeminiRig a deplacer de `_rnd/` vers `_shared/`, 10+ vieux protos a archiver,
 >   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
 > **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
@@ -259,7 +276,7 @@
 > pour tout futur sujet pêche/mer sans repartir de zéro.
 
 ## ✅✅ 16:9 NARRATIF + PERSONNAGES — SHOWCASE FINAL mis à jour (2026-07-03)
-> Starter : `memory/STARTER-PROMPT-16x9-narratif-personnages.md` (voir note de mise à jour en tête).
+> Starter : `memory/starters/STARTER-PROMPT-16x9-narratif-personnages.md` (voir note de mise à jour en tête).
 > ⭐⭐ **NOUVELLE RÉFÉRENCE (2026-07-03)** : `CargoVoyage16x9_LibreInspire.tsx` (`RND-CargoVoyage16x9-LibreInspire`)
 >   remplace `CargoVoyage16x9.tsx` comme showcase final du format 16:9 — validé par Aziz comme preuve de concept
 >   du pivot 9:16→16:9 (3-5min, style Infographic Show/Kurzgesagt). Issu d'un workflow mix-and-match : 2 agents
@@ -304,8 +321,8 @@
 **✅ Priorité 1 — TERMINÉE cette session : rig volumétrique SVG intégré.** `capsuleSegment.ts` +
 `StickRig.tsx` (nouveau prop `volumetric?: boolean`, défaut false = zéro régression) : jambes (cuisse+mollet+
 genou+pied) ET bras avant (épaule+coude+main) en capsules tapered fermées, testé sur 3 poses
-(debout/marche/bras tendu récolte) via `_rnd/svg-scenes/ProtoCapsuleLimb.tsx` (compo Root
-`RND-ProtoCapsuleLimb`). Cinématique `computePose()` 100% inchangée. **Reste (mineur, pas bloquant)** : léger
+(debout/marche/bras tendu récolte) via `_rnd/svg-scenes/_archive/ProtoCapsuleLimb.tsx` ⚠️ archivé, exclu du
+build (compo Root `RND-ProtoCapsuleLimb` désimportée). Cinématique `computePose()` 100% inchangée. **Reste (mineur, pas bloquant)** : léger
 décrochage visuel cheville/pied observé sur la pose marche (à fixer si le rig est adopté en scène réelle),
 torse/bottes/chapeau restent en formes rigides existantes (pas encore en capsule), vérification 8-directions
 (`StickRigMultiDir`) pas faite.
@@ -436,7 +453,7 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
 > Instagram 24 · TikTok = shadowban (apres suppression de masse — NE PLUS supprimer en masse). DÉCISION : niche
 > viable, prioriser YouTube LONG + Facebook ; depriorise Instagram ; TikTok en quarantaine.
-> Detail : `memory/BILAN-DISTRIBUTION-1MOIS-2026-06.md`. Conforte le pari format LONG (cacao = teaser vers long).
+> Detail : `memory/archive/BILAN-DISTRIBUTION-1MOIS-2026-06.md`. Conforte le pari format LONG (cacao = teaser vers long).
 
 ---
 
@@ -448,12 +465,10 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > **Doctrine gravée :** Scène-Monde Persistante + Split-screen règle d'usage + 3ème voie Zoom Inversé → `memory/doctrines/SVG-MIDFORM-FORMAT.md`.
 > **Prototypes R&D :** `src/projects/_rnd/svg-scenes/Inga*.tsx` (4 fichiers). Renders : `out/_r-and-d/inga-*.mp4`.
 
-## 🆕 PROCHAINE SESSION SUGGÉRÉE (2026-06-28) — La PHYSICALITÉ du sujet
-> ⭐ Point de départ donné par Aziz en fin de session R&D SVG. Hypothèse : c'est la PROPRIÉTÉ du sujet (scènes
-> vivantes incarnées vs concepts abstraits) qui fait vivre ou mourir le style encre. GGW (arbres = gestes) vit ;
-> CFA (mécanisme = métaphore froide) peine. → ajouter un 5e axe "physicalité" au gate [[SUJET-PRIME-SUR-PRODUCTION]],
-> et TESTER sur le MÉGAPROJET BARRAGE (Grand Inga, déjà validé GO dans [[GAZODUC-MEGAPROJETS-SUJET]]).
-> **STARTER COMPLET** : `STARTER-PROCHAINE-SESSION-physicalite-sujet.md` (tableau + livrable + test + rappels acquis).
+## ✅ PHYSICALITÉ du sujet — FAIT (2026-06-28, voir Grand Inga ci-dessus)
+> Axe "physicalité" gravé dans `memory/doctrines/SUJET-PRIME-SUR-PRODUCTION.md`, testé sur Grand Inga (voir
+> section juste au-dessus). Starter d'origine archivé :
+> `memory/archive/starters-perimes-2026-07-11/STARTER-PROCHAINE-SESSION-physicalite-sujet.md`.
 
 ---
 
@@ -484,7 +499,9 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ## 🔧 BACKLOG TECHNIQUE — Système CARTO V5 (reprendre quand Sénégal V3 fini)
 
-> ✅ Système prouvé. Doctrine gravée dans `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`. Point d'entrée : `REPRISE-SYSTEME-CARTO-V5.md`.
+> ✅ Système prouvé. Doctrine gravée dans `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`. Point d'entrée (archivé, snapshot 2026-06-21) : `memory/archive/REPRISE-SYSTEME-CARTO-V5-2026-06-21.md`.
+> ⚠️ Sénégal V3 est désormais TERMINÉ + PRÊT-PUBLICATION (scène gisements harmonisée confirmée dans son STATUS) —
+> le "▶ RESTE" ci-dessous est probablement traité, à vérifier avant de le relancer.
 > ⛔ Carte canonique = **GéoAfrique V5 (navy/gris/or)**. Les fichiers d3-geo parchemin V2 = PÉRIMÉS.
 >
 > **▶ RESTE** : (1) coder la vraie scène Mapbox Sénégal branchée audio · (2) peaufinage scène gisements (popup E4, plaque E2, jauge 18%) · (3) merger dans master. Session dédiée, pas urgent avant Sénégal V3 scène 6.
@@ -493,7 +510,7 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 > **MERGÉ DANS MASTER le 2026-06-20.** Pipeline complet dans `memory/doctrines/WORKFLOW-DATAVIZ.md`.
 > Ce qui reste = optionnel (gate format phase 0 = doublon inutile). **Prochain vrai pas = l'éprouver sur une scène de prod réelle** (ex : Sénégal V3 scène 6).
-> Détails dans `REPRISE-WORKFLOW-DATAVIZ.md` si besoin de relire le système.
+> Détails dans `memory/archive/REPRISE-WORKFLOW-DATAVIZ-2026-06-20.md` si besoin de relire le système.
 
 ---
 
@@ -519,7 +536,7 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 ### ⭐ SUJET VALIDÉ EN RÉSERVE (gate 2026-06-16) — Mégaprojets / Gazoduc Nigeria-Maroc-Europe
 **Etat** : SUJET passé GO par le gate complet [[SUJET-PRIME-SUR-PRODUCTION]].
 **Decision Aziz** : à produire en SESSION DÉDIÉE quand War-Map/Sénégal/Maroc seront finis.
-**Reprise** : ouvrir `memory/GAZODUC-MEGAPROJETS-SUJET.md` + `DECODE-modeles-fr-afrique.md` (camp 3).
+**Reprise** : ouvrir `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md` + `DECODE-modeles-fr-afrique.md` (camp 3).
 
 ### 0. Carrousel "Good News" — pipeline hebdo PRET (2026-06-02)
 **Etat** : Pipeline semi-auto data-driven COMPLET.
@@ -578,7 +595,7 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 > ⭐⭐ **Thumbnail FAITE (2026-07-10, Pipeline C — voir `public/_shared/thumbnails-library/README.md`)** :
 > 2 candidats A/B validés dans `public/_shared/thumbnails-library/warmap-sahel-aes/`. NEXT = titre +
 > upload MANUEL YouTube Studio (décision Aziz : garder accès Test & Compare A/B natif, pas TryPost pour
-> cette vidéo). Détail : `memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`.
+> cette vidéo). Détail : `memory/starters/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`.
 >
 > Point ouvert non bloquant documenté (ne pas répéter l'investigation) : liseré blanc résiduel sur
 > frontières CEDEAO (résidu Mapbox natif, cause exacte non isolée après 3 tentatives de fix) — cf
@@ -625,6 +642,32 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 - `AtlasParcheminGlobe.tsx` → mouvements camera spheriques a adapter en Mercator
 - `AnimatedCaravan.tsx` → route commerciale animee (applicable Atlas + Souverain)
 - `atlas-parchemin-mande.json` → style Mapbox historique (Empire Mali, etc.)
+
+---
+
+## ✅ Skillification 2026-07-11 — 3 skills construits (session ménage workspace)
+
+Le skill `/wrap` a bien marché : un procédé "fichier passif à se souvenir de suivre" transformé en skill invocable avec gate. Aziz a demandé de construire les 3 candidats identifiés le jour même plutôt que d'attendre le seuil de maturité (3+ usages) — tous les 3 ont déjà débloqué au moins une session bloquée, jugé preuve suffisante :
+
+1. ✅ **`da-brief-gate`** — `~/.claude/skills/da-brief-gate/SKILL.md`. Orchestre la review créative amont (Gemini+Kimi+DeepSeek, `scripts/tools/da-brief.py --upstream`) avec gate bloquant réel avant le code. Référencé `ROUTAGE.md`, `SYSTEME-AGENTIQUE.md` (étape 5.5), `CLAUDE.md` (Pipelines Beat).
+2. ✅ **`passe-amelioration-scene`** — `~/.claude/skills/passe-amelioration-scene/SKILL.md`. N agents (1/scène) + 1 agent transversal de synthèse, pour un épisode multi-scènes déjà avancé. Doctrine source : `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`.
+3. ✅ **`creative-director-dual`** — `~/.claude/skills/creative-director-dual/SKILL.md`. 2 agents creative-director en parallèle (brief identique, zéro angle suggéré), déclencheur : 2+ rejets consécutifs sur le même chantier créatif.
+
+Les 3 sont référencés dans `ROUTAGE.md` (table §2 skills) et `memory/SYSTEME-AGENTIQUE.md` (briques du système) — un agent qui consulte ces 2 points d'entrée doit maintenant tomber dessus sans effort de mémoire.
+
+---
+
+## 🔧 BACKLOG — Audit des skills du workspace (demandé 2026-07-11, à traiter en SESSION DÉDIÉE)
+
+**Constat brut** : 88 dossiers sous `.claude/skills/` (génériques + spécifiques Remotion mélangés). Aziz soupçonne qu'une bonne part est inutilisée, redondante, ou mériterait fusion — exactement le même symptôme que le ménage `memory/`/`scripts/` fait cette session, jamais encore appliqué aux skills.
+
+**Report volontaire** : session déjà longue et chargée ce jour-là (audit multi-piliers + 5 scripts + réorg memory/scripts/ + 3 skills construits) — Aziz préfère une tête fraîche dédiée plutôt qu'un audit de plus en bout de session fatiguée.
+
+**Cadrage suggéré pour la session dédiée** (à valider avec Aziz au démarrage, pas à décider seul) :
+- Distinguer skills génériques (gstack, code-review, design-*, superpowers:*...) vs spécifiques Remotion (souverain-preproduction, atlas-video-preproduction, wrap, session-close, memo, beat, les 3 nouveaux d'aujourd'hui...) — l'audit vise probablement surtout les seconds.
+- Pour chaque skill Remotion : cherché des traces d'usage réel (grep dans `PIPELINE.md`/`STATUS.md`) — un skill jamais invoqué est un candidat suppression/fusion, pas un skill qu'on garde "au cas où".
+- Chercher les doublons fonctionnels (ex: `session-close` + `memo` + `wrap` — déjà orchestrés proprement, mais vérifier s'il existe d'autres paires qui se chevauchent).
+- Même méthode que les audits d'aujourd'hui : agents vierges en parallèle pour un diagnostic, puis trancher ensemble avant d'exécuter (fusion/suppression/archivage).
 
 ---
 

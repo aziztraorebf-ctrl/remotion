@@ -20,7 +20,7 @@
 | **Asset PixelLab par ID** (réutiliser un perso existant avant d'en générer un) | `memory/tools/PIXELLAB-MASTER-INDEX.md` | ~50 characters + objects avec IDs PixelLab |
 | **Mouvement caméra Atlas** (code, zéro-cost, Remotion) | `memory/tools/atlas-camera-movements.md` | 16 mouvements validés/à tester |
 | **Tactique / bataille** (flèche, encerclement, tenaille) | `src/projects/atlas/_shared/AtlasAttackArrow.tsx` + `AtlasEncirclement.tsx` | Flèches géodésiques + pincerArrows. Enrichissement mapanimation, codé par nous |
-| **Règles de production non-négociables** | `memory/rules-atlas-production.md` | 13 règles (technique + visuel) |
+| **Règles de production non-négociables** | `memory/rules/rules-atlas-production.md` | 13 règles (technique + visuel) |
 | **SFX** | `public/_shared/sfx/SFX-INDEX.md` | Source unique SFX (partagée Souverain/Atlas) |
 
 ## 🚀 Procédures de DÉMARRAGE (lire AVANT de coder)

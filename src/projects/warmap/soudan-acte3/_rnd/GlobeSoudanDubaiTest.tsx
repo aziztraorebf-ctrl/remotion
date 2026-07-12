@@ -2,7 +2,7 @@
  * PROTO ISOLÉ — Globe Mapbox rotatif night-mode, style "flow map" (référence _incoming/globe trial.mov).
  * Teste : globe sombre + étoiles + connexion pointillée cyan Darfour→Dubaï en overlay SVG.
  *
- * ⚠️ Bug connu (memory/rules-outils-techniques.md) : en mode globe HEADLESS, les vrais layers
+ * ⚠️ Bug connu (memory/rules/rules-outils-techniques.md) : en mode globe HEADLESS, les vrais layers
  * Mapbox fill/circle ne s'appliquent pas de façon fiable. Ce proto contourne : AUCUN layer
  * Mapbox custom (fill/circle/line) n'est ajouté — tout point/label/connexion est dessiné en
  * overlay SVG React via map.project(), même pattern que GeoFlowConnection + GlobeLocationReveal.

@@ -28,7 +28,7 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 ## Services Actifs
 
 ### ElevenLabs (TTS)
-- **Voix Shorts GeoAfrique** : voir `memory/voices-v3.md` (Narratrice + Narrateur africains V3)
+- **Voix Shorts GeoAfrique** : voir `memory/tools/voices-v3.md` (Narratrice + Narrateur africains V3)
 - **Voix Abou Bakari** : Stephyra (QMNPncWXVcTVhJ9rDEQO)
 - **Modele** : eleven_v3 avec language_code "fr"
 - **Plan** : Starter (33K chars/mois)

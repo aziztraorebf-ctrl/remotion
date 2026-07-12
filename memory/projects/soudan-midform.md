@@ -8,7 +8,7 @@ metadata:
 # SUJET RÉSERVÉ — Soudan : Guerre civile RSF/SAF, angle proxys économiques (2026-06-16)
 
 > ⭐ **SUJET VALIDÉ GO** par gate [[SUJET-PRIME-SUR-PRODUCTION]] (2026-06-16).
-> **Ancien statut** : EXCLU dans `BACKLOG-EDITORIAL.md` ("non-monétisable, expertise terrain requise") — RÉVISÉ suite au gate complet.
+> **Ancien statut** : EXCLU dans l'ancien BACKLOG-EDITORIAL (fusionné dans `memory/backlogs/BACKLOG.md`) ("non-monétisable, expertise terrain requise") — RÉVISÉ suite au gate complet.
 > **Priorité recommandée** : après War-Map AES assemblage final. Session dédiée pré-production à lancer dès que AES est bouclé.
 >
 > ⭐ **ÉTOILE POLAIRE ÉDITORIALE** → [[soudan-midform-POSITIONNEMENT]]. Ce qui nous différencie : « les autres font RESSENTIR le drame, nous on fait COMPRENDRE la machine qui le fait durer ». LIRE avant tout acte + titrage.

@@ -21,6 +21,7 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame, Easing } from "remotion";
 import { CacaoTree } from "../../souverain/cacao-chocolat-short/components/VergerCacao";
 import { StickRig } from "../../_shared/personnage-vivant-svg/rig/StickRig";
+import { CargoShipGemini } from "./CargoShipGemini";
 
 export const CARGO_VOYAGE_FPS = 30;
 export const CARGO_VOYAGE_FRAMES = 600; // 20s
@@ -87,8 +88,8 @@ export const CargoVoyage16x9: React.FC = () => {
   const cargoEnter = interpolate(frame, [0, 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE });
   const pitch = Math.sin(wf / 22) * 1.4;
   const bob = Math.sin(wf / 30) * 6;
-  const cargoX = 860 + Math.sin(wf / 200) * 30; // quasi fixe horizontalement (le decor defile, pas le bateau)
-  const cargoY = 738 + bob; // ligne de flottaison DANS l'ocean (calque 1er plan commence a y=720), pas sur l'horizon terre
+  const cargoX = 960 + Math.sin(wf / 200) * 30; // quasi fixe horizontalement (le decor defile, pas le bateau), centre ecran
+  const cargoY = 820 + bob; // descendu vers le milieu de l'ocean (cargo plus grand depuis le mix Gemini) + bob
 
   // CAMERA / PARALLAXE — meme mecanique que B5PontH, mais appliquee au defilement horizontal du decor.
   const camAt = (p: number, speed: number) => {
@@ -239,31 +240,20 @@ export const CargoVoyage16x9: React.FC = () => {
           })}
         </g>
 
-        {/* ===== COUCHE MEDIANE : cargo (parallaxe pleine, quasi fixe horizontalement) — POSE SUR l'ocean ===== */}
+        {/* ===== COUCHE MEDIANE : cargo (parallaxe pleine, quasi fixe horizontalement) — POSE SUR l'ocean =====
+            Silhouette GREFFEE depuis une cible SVG Gemini 3.1 Pro (mix-and-match 2026-07-03, cf CargoShipGemini). */}
         <g opacity={cargoEnter}>
           <g transform={`translate(${cargoX} ${cargoY}) rotate(${pitch})`}>
-            {/* coque */}
-            <path
-              d="M -180 0 L 180 0 L 210 34 L -210 34 Q -180 44 -170 30 Z"
-              fill={INK}
-              opacity={0.88}
-            />
-            {/* superstructure (pont + cheminee) */}
-            <rect x={60} y={-58} width={70} height={58} fill={INK} opacity={0.88} rx={3} />
-            <rect x={78} y={-92} width={18} height={38} fill={INK} opacity={0.9} />
-            {/* fumee legere */}
+            <CargoShipGemini ink={INK} />
+            {/* fumee legere (cheminee du tracé Gemini ~ x=-123.7 y=-108.9 dans le repere local recentre) */}
             {[0, 1, 2].map((k) => {
               const t = ((wf / 3 + k * 40) % 120) / 120;
-              const sx = 87 + Math.sin(wf / 20 + k) * 10 + t * 20;
-              const sy = -96 - t * 60;
+              const sx = -123.7 + Math.sin(wf / 20 + k) * 8 + t * 16;
+              const sy = -108.9 - t * 60;
               const op = interpolate(t, [0, 0.15, 1], [0, 0.28, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
               const r = 8 + t * 16;
               return <circle key={k} cx={sx} cy={sy} r={r} fill={INK} opacity={op} />;
             })}
-            {/* conteneurs stylises sur le pont */}
-            {[-140, -95, -50, -5, 20].map((cx, i) => (
-              <rect key={i} x={cx} y={-24 - (i % 2) * 14} width={40} height={24} fill={PARCH} stroke={INK} strokeWidth={2} opacity={0.85} />
-            ))}
             {/* ombre portee sous la coque (renforce l'ancrage dans l'eau) */}
             <ellipse cx={0} cy={38} rx={200} ry={12} fill={INK} opacity={0.18} />
           </g>

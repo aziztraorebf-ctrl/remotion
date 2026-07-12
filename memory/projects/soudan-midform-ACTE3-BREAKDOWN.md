@@ -49,7 +49,7 @@ sa destination. Beats 3/4/5 redécoupés en micro-travellings :
 ### Décision 1bis — Référence concrète : "Silk Road 2" + faisabilité `cameraFollowsPath` (2026-07-09 tard)
 
 Aziz a retrouvé une référence vidéo précise pour la Décision 1 : le template "Silk Road Trade Route"
-(mapanimation.io, catalogue #96 — déjà analysé `memory/_r-and-d-mapanimation-ANALYSE.md` L47-53) existe
+(mapanimation.io, catalogue #96 — déjà analysé `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md` L47-53) existe
 en 2 variantes, dans `_incoming/silk road 1.mov` et `silk road 2.mov` (NE PAS SUPPRIMER, référence
 essentielle pour coder cette décision) :
 - **Silk Road 1.mov** : dézoom qui S'OUVRE progressivement pour révéler tout le trajet au fur et à mesure
@@ -59,7 +59,7 @@ essentielle pour coder cette décision) :
   référence à viser pour la Décision 1.**
 
 Ce gap ("marqueur animé + camera follow") était déjà noté en mémoire R&D comme jamais comblé
-(`_r-and-d-mapanimation-ANALYSE.md` L53 : "extension de GeoFlowConnection") — cette session confirme
+(`memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md` L53 : "extension de GeoFlowConnection") — cette session confirme
 le besoin avec une référence précise au lieu d'une note abstraite.
 
 **Faisabilité vérifiée (pas de blocage technique)** : `camAt()` (`SoudanWarMapEngine.tsx`) interpole déjà

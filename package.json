@@ -62,7 +62,8 @@
     "remotion-animated": "^2.2.0",
     "three": "^0.184.0",
     "topojson-client": "^3.1.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "world-atlas": "^2.0.2"
   },
   "devDependencies": {
     "@remotion/tailwind": "^4.0.456",

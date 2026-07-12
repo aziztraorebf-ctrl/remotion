@@ -72,6 +72,13 @@ else
   echo "  -> S'assurer qu'Aziz a validé sur mobile avant promotion."
 fi
 
+# GATE 4 — rappel traçabilité (informatif, ne bloque pas — cf. cas War-Map Sahel V4/V5,
+# audit 2026-07-11 : un nom de fichier "FINAL" ne garantit pas qu'il soit vraiment celui
+# qui sert. Ne PAS appeler trace-livrable.py ici automatiquement — appel API payant/lent,
+# juste rappeler que l'outil existe pour lever un doute avant de considérer le rendu figé.)
+echo "[RAPPEL] En cas de doute sur quelle VERSION de script a servi à ce rendu :"
+echo "  -> python3 scripts/tools/trace-livrable.py <rendu.mp4> --episode-dir <dossier-episode>"
+
 echo ""
 if [ $ERRORS -gt 0 ]; then
   echo "================================================"

@@ -3,7 +3,7 @@ import { AbsoluteFill, useCurrentFrame, interpolate } from "remotion";
 import {
   GeminiRig, IDLE,
   type LimbAngles, type FaceExpression,
-} from "./ProtoGeminiPoseBankWalk";
+} from "../../_shared/personnage-vivant-svg/rig/GeminiRig";
 
 const BG = "#16213a";
 

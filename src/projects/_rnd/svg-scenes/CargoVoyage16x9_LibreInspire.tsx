@@ -43,6 +43,9 @@ import { AbsoluteFill, Audio, Sequence, interpolate, staticFile, useCurrentFrame
 import { CacaoTree } from "../../souverain/cacao-chocolat-short/components/VergerCacao";
 import { CargoShipUnified } from "./CargoShipUnified";
 import { CloudQwenGravure } from "./CloudQwenGravure";
+import { camAt, lerpHex, buildHorizonPath, objectVisualBottom } from "../../_shared/svg-library/motion";
+import { SoleilHaloRadial } from "../../_shared/svg-library/elements/ciel/SoleilHaloRadial";
+import { OceanProfondeurVagues } from "../../_shared/svg-library/elements/ocean/OceanProfondeurVagues";
 
 export const CARGO_VOYAGE_LI_FPS = 30;
 export const CARGO_VOYAGE_LI_FRAMES = 750; // 25s (allonge de 5s pour laisser respirer la scene de nuit/lune, demande Aziz 2026-07-03)
@@ -51,13 +54,6 @@ const PARCH = "#e8dcc0";
 const INK = "#2b2117";
 const SERIF = "Georgia, 'Times New Roman', serif";
 const EASE = Easing.bezier(0.4, 0, 0.2, 1);
-
-const lerpHex = (a: string, b: string, t: number) => {
-  const pa = [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16)];
-  const pb = [parseInt(b.slice(1, 3), 16), parseInt(b.slice(3, 5), 16), parseInt(b.slice(5, 7), 16)];
-  const c = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
-  return `#${c.map((v) => v.toString(16).padStart(2, "0")).join("")}`;
-};
 
 // palette AFRIQUE (chaud, ocre/vert) -> SUISSE (froid, bleu/blanc)
 const SKY_A = "#e8dcc0";
@@ -101,22 +97,9 @@ export const CargoVoyage16x9_LibreInspire: React.FC = () => {
   const moonX = 1500; // fixe (pas de trajectoire de soleil a "prendre le relais" -> plus de risque de chevauchement visuel)
   const moonY = 100; // au-dessus de la bande des nuages (y~140-220) pour eviter qu'un nuage passe systematiquement devant
 
-  // le groupe parent (camBack) defile horizontalement (drift ~ -0.15*wf) : sans marge, le bord du
-  // polygone (x=0 et x=1920) se decouvre et dessine une ligne verticale/triangle parasite au bord de
-  // l'ecran (bug observe 2026-07-03). On prolonge le tracé de 300px de chaque cote (segments plats,
-  // memes Y que les points d'extremite) pour que le bord ne soit jamais visible meme au drift max.
-  const horizonPath = (() => {
-    const pts = HORIZON_X.map((x, i) => {
-      const yA = HORIZON_Y_AFRICA[i];
-      const yB = HORIZON_Y_SWISS[i];
-      const y = yA + (yB - yA) * voyage;
-      return { x, y };
-    });
-    const d = pts.map((p, i) => (i === 0 ? `M ${p.x} ${p.y}` : `L ${p.x} ${p.y}`)).join(" ");
-    const yLast = pts[pts.length - 1].y;
-    const yFirst = pts[0].y;
-    return `M -300 ${yFirst} ${d.slice(d.indexOf(" ") + 1)} L 2220 ${yLast} L 2220 1080 L -300 1080 Z`;
-  })();
+  // le groupe parent (camBack) defile horizontalement : le path deborde du cadre (overflow 300px,
+  // voir buildHorizonPath) pour que le bord ne soit jamais visible meme au drift max.
+  const horizonPath = buildHorizonPath({ x: HORIZON_X, yA: HORIZON_Y_AFRICA, yB: HORIZON_Y_SWISS }, voyage, 1920, 1080);
 
   const cargoEnter = interpolate(frame, [0, 50], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: EASE });
   const pitch = Math.sin(wf / 22) * 1.4;
@@ -128,18 +111,14 @@ export const CargoVoyage16x9_LibreInspire: React.FC = () => {
   // cf CargoShipUnified scale/CY). Les vagues entre cargoY et cargoY+23 se dessinaient "1er plan" (donc
   // par-dessus le cargo deja rendu) alors qu'elles tombent visuellement DANS la coque -> effet "vagues qui
   // traversent le bateau", plus visible la nuit (contraste plus fort entre les vagues sombres et le fond).
-  const cargoHullBottom = cargoY + 23;
+  const cargoHullBottom = objectVisualBottom(cargoY, 23);
 
-  const camAt = (p: number, speed: number) => {
-    const driftX = -wf * speed * p;
-    return `translate(${driftX} 0)`;
-  };
   // ecart de vitesse ACCENTUE (demande Aziz 2026-07-03, retour "manque de perspective/planeite") : fond
   // quasi fixe (0.15->0.05, les montagnes lointaines bougent a peine) vs ocean nettement plus rapide
   // (0.9->1.3, l'eau proche defile vite) -- renforce l'impression de profondeur SANS introduire de vraie
   // distorsion 3D qui casserait le style plat/vectoriel de la charte.
-  const camBack = camAt(1, 0.05);
-  const camSea = camAt(1, 1.3);
+  const camBack = camAt(wf, 1, 0.05);
+  const camSea = camAt(wf, 1, 1.3);
 
   // ===== OCEAN — traitement REPRIS FIDELEMENT de la cible SVG Gemini (cargo-upgrade-gemini.png,
   // groupe ocean_base) : vagues en courbes douces (pas des lignes droites ondulees), qui s'epaississent
@@ -172,32 +151,13 @@ export const CargoVoyage16x9_LibreInspire: React.FC = () => {
 
         {/* ===== COUCHE FOND : soleil + horizon (parallaxe faible) ===== */}
         <g transform={camBack}>
+          <SoleilHaloRadial cx={sunX} cy={sunY} color={sunColor} opacity={sunOpacity} idPrefix="cargoSun" ink={INK} />
           <defs>
-            {/* PILLE A GEMINI : halo radial en 3 couches (coeur dur -> bloom -> halo large) au lieu du disque plat d'origine */}
-            <radialGradient id="cargoSunHaloWide" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={sunColor} stopOpacity={0.4} />
-              <stop offset="45%" stopColor={sunColor} stopOpacity={0.16} />
-              <stop offset="100%" stopColor={sunColor} stopOpacity={0} />
-            </radialGradient>
-            <radialGradient id="cargoSunBloom" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#fff6da" stopOpacity={0.9} />
-              <stop offset="60%" stopColor={sunColor} stopOpacity={0.55} />
-              <stop offset="100%" stopColor={sunColor} stopOpacity={0} />
-            </radialGradient>
-            <radialGradient id="cargoSunCore" cx="42%" cy="38%" r="60%">
-              <stop offset="0%" stopColor="#fffbef" />
-              <stop offset="70%" stopColor={sunColor} />
-              <stop offset="100%" stopColor={lerpHex(sunColor, "#8a5f1c", 0.3)} />
-            </radialGradient>
             <radialGradient id="cargoMoonHalo" cx="50%" cy="50%" r="50%">
               <stop offset="0%" stopColor="#d8e2ef" stopOpacity={0.35} />
               <stop offset="100%" stopColor="#d8e2ef" stopOpacity={0} />
             </radialGradient>
           </defs>
-          <circle cx={sunX} cy={sunY} r={230} fill="url(#cargoSunHaloWide)" opacity={sunOpacity} />
-          <circle cx={sunX} cy={sunY} r={128} fill="url(#cargoSunBloom)" opacity={sunOpacity} />
-          <circle cx={sunX} cy={sunY} r={76} fill="url(#cargoSunCore)" opacity={0.97 * sunOpacity} />
-          <circle cx={sunX} cy={sunY} r={76} fill="none" stroke={INK} strokeWidth={2.2} opacity={0.28 * sunOpacity} />
 
           {/* LUNE — remplace le soleil qui disparait en fin de voyage (demande Aziz 2026-07-03).
               LUNE PLEINE (disque simple), PAS un croissant : le croissant (2 cercles superposes qui se
@@ -279,60 +239,18 @@ export const CargoVoyage16x9_LibreInspire: React.FC = () => {
             SVG Gemini (cargo-upgrade-gemini.png, groupe ocean_base) : fond degrade + vagues en courbes
             douces (Q...T, pas des lignes ondulees) qui s'epaississent/s'assombrissent vers le 1er plan. ===== */}
         <g transform={camSea}>
-          <defs>
-            <linearGradient id="seaDepthGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={seaColorDeep} stopOpacity={0.55} />
-              <stop offset="20%" stopColor={seaColor} stopOpacity={0.5} />
-              <stop offset="100%" stopColor={seaColor} stopOpacity={0.42} />
-            </linearGradient>
-            <linearGradient id="sunWaterReflectGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor={sunColor} stopOpacity={0.4} />
-              <stop offset="100%" stopColor={sunColor} stopOpacity={0} />
-            </linearGradient>
-          </defs>
-          <rect x={-800} y={720} width={4000} height={360} fill="url(#seaDepthGrad)" />
-
-          {/* reflet du soleil : TRIANGLE qui s'evase vers le bas (fidele Gemini), suit sunX en temps reel */}
-          {sunOpacity > 0.05 && (
-            <>
-              <path
-                d={`M ${sunX - 50 - camSeaOffset(wf)} 720 L ${sunX + 50 - camSeaOffset(wf)} 720 L ${sunX + 120 - camSeaOffset(wf)} 1080 L ${sunX - 120 - camSeaOffset(wf)} 1080 Z`}
-                fill="url(#sunWaterReflectGrad)"
-                opacity={sunOpacity}
-              />
-              {[
-                { dy: 5, hw: 30, w: 2, op: 0.8 },
-                { dy: 15, hw: 40, w: 3, op: 0.7 },
-                { dy: 30, hw: 50, w: 3, op: 0.6 },
-                { dy: 50, hw: 60, w: 4, op: 0.5 },
-                { dy: 80, hw: 70, w: 4, op: 0.4 },
-                { dy: 120, hw: 90, w: 5, op: 0.3 },
-                { dy: 180, hw: 110, w: 6, op: 0.2 },
-              ].map((r, i) => {
-                const shimmer = 0.6 + 0.4 * Math.sin(wf / 8 + i * 1.7);
-                const cx = sunX - camSeaOffset(wf);
-                return (
-                  <line
-                    key={i}
-                    x1={cx - r.hw * shimmer}
-                    y1={720 + r.dy}
-                    x2={cx + r.hw * shimmer}
-                    y2={720 + r.dy}
-                    stroke="#ffffff"
-                    strokeWidth={r.w}
-                    strokeLinecap="round"
-                    opacity={r.op * sunOpacity}
-                  />
-                );
-              })}
-            </>
-          )}
-
-          {seaWaves.filter((w) => w.y < cargoHullBottom).map((w, i) => {
-            const offset = (wf * (0.4 + i * 0.05)) % 200;
-            const d = `M ${-200 - offset} ${w.y} Q ${0 - offset} ${w.y - 12} ${200 - offset} ${w.y} T ${600 - offset} ${w.y} T ${1000 - offset} ${w.y} T ${1400 - offset} ${w.y} T ${1800 - offset} ${w.y} T ${2200 - offset} ${w.y}`;
-            return <path key={i} d={d} fill="none" stroke={w.color} strokeWidth={w.width} opacity={w.opacity} />;
-          })}
+          <OceanProfondeurVagues
+            frame={wf}
+            part="fond"
+            splitY={cargoHullBottom}
+            seaColor={seaColor}
+            seaColorDeep={seaColorDeep}
+            reflectColor={sunOpacity > 0.05 ? sunColor : undefined}
+            reflectX={sunX - camSeaOffset(wf)}
+            reflectOpacity={sunOpacity}
+            waves={seaWaves}
+            idPrefix="cargoOcean"
+          />
         </g>
 
         {/* ===== COUCHE MEDIANE : cargo (parallaxe pleine, quasi fixe horizontalement) — POSE SUR l'ocean =====
@@ -352,11 +270,15 @@ export const CargoVoyage16x9_LibreInspire: React.FC = () => {
 
         {/* ===== OCEAN — 1er plan (vagues proches qui passent DEVANT le bas de la coque, ancrage final) ===== */}
         <g transform={camSea}>
-          {seaWaves.filter((w) => w.y >= cargoHullBottom).map((w, i) => {
-            const offset = (wf * (0.4 + i * 0.05)) % 200;
-            const d = `M ${-200 - offset} ${w.y} Q ${0 - offset} ${w.y - 12} ${200 - offset} ${w.y} T ${600 - offset} ${w.y} T ${1000 - offset} ${w.y} T ${1400 - offset} ${w.y} T ${1800 - offset} ${w.y} T ${2200 - offset} ${w.y}`;
-            return <path key={i} d={d} fill="none" stroke={w.color} strokeWidth={w.width} opacity={w.opacity} />;
-          })}
+          <OceanProfondeurVagues
+            frame={wf}
+            part="premier-plan"
+            splitY={cargoHullBottom}
+            seaColor={seaColor}
+            seaColorDeep={seaColorDeep}
+            waves={seaWaves}
+            idPrefix="cargoOcean"
+          />
         </g>
       </svg>
 

@@ -166,9 +166,9 @@ La technique (LLM → groupes → anim par frame) est INDÉPENDANTE du registre 
 | **`encre`** (gravure parchemin) | fond parchemin crème #e8dcc0/#e3d5b5, traits brun-noir #2b2117, ombres par hachures (jamais d'aplat noir) ; médaillon ovale/écusson | figures historiques, emblèmes, sceaux, estampes — **idéal Atlas historique** | `SvgSceneParchemin.tsx` |
 | **`tactique`** (état-major) | fond bleu nuit très sombre #0b1526, traits blanc cassé #e8eef5 + bleu acier #5a8fc0, ROUGE-ORANGE #d6552e = menace, OR #c8a951 = solidarité/bouclier ; nœuds + liens + vecteurs | ⭐ **encart CONCEPTUEL** : un PRINCIPE/doctrine (pacte, mécanisme, rapport de force) — PAS une carte. War-Map/AES | (compo dédiée) |
 | **`braise-or`** (gravure chaude sombre) | terre sombre chaude #1c1108/#2a1a0d, ocres #7a4a22/#9c5f2c/#b8763a, OR lumineux #e8b44a/#f2cf72/#ffe39a, braise/guerre #d6552e/#c23a1e ; AUCUN bleu/gris | scène CHAUDE matérée (mine d'or, ressource, terre africaine, désert ardent). Coucher de soleil/fournaise | (compos dédiées) |
-| **`or-jour`** (illustration chaude LUMINEUSE) | ciel ambre clair #f2cf72/#ffd98a/#ffe8b8, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a/#b8763a/#e0b878, or #f2cf72/#ffe39a, guerre rouge #d6552e discrète ; AUCUN bleu/gris/noir plat | scène chaude LUMINEUSE et premium (matin doré sur désert). Sort du « technique froid » et du « sombre dépressif » sans tomber dans le parchemin | (compo `HeroGptAnimee`) |
+| **`or-jour`** (illustration chaude LUMINEUSE) | ciel ambre clair #f2cf72/#ffd98a/#ffe8b8, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a/#b8763a/#e0b878, or #f2cf72/#ffe39a, guerre rouge #d6552e discrète ; AUCUN bleu/gris/noir plat | scène chaude LUMINEUSE et premium (matin doré sur désert). Sort du « technique froid » et du « sombre dépressif » sans tomber dans le parchemin | (compo `HeroGptAnimee`, ⚠️ archivée `_archive/`, rendu réf https://files.catbox.moe/1ws3kh.mp4) |
 
-| **`papier-decoupe`** (paper-cut pédagogique) | couches pleines EMPILÉES + ombre portée douce sous chaque couche ; palette CLAIRE chaude : ciel pastel #bfe3ef/#a8d8e8, crème #fdf3df/#f7ecd2, terre ocre #caa46a/#b3823f/#8a5a2c, verts étagés #3e7c34/#569b43/#7cba5a/#a8d678, bois #8a5a2c/#a06b35, or doux #f2cf72/#ffd98a, corail #e0795b ; AUCUNE hachure, AUCUN noir plat, profondeur par empilement de couches | ⭐ scène PÉDAGOGIQUE / explainer (croissance, cycle, processus illustré façon Kurzgesagt-papier) — joyeux, clair, premium | `GraineGeminiAnimee` |
+| **`papier-decoupe`** (paper-cut pédagogique) | couches pleines EMPILÉES + ombre portée douce sous chaque couche ; palette CLAIRE chaude : ciel pastel #bfe3ef/#a8d8e8, crème #fdf3df/#f7ecd2, terre ocre #caa46a/#b3823f/#8a5a2c, verts étagés #3e7c34/#569b43/#7cba5a/#a8d678, bois #8a5a2c/#a06b35, or doux #f2cf72/#ffd98a, corail #e0795b ; AUCUNE hachure, AUCUN noir plat, profondeur par empilement de couches | ⭐ scène PÉDAGOGIQUE / explainer (croissance, cycle, processus illustré façon Kurzgesagt-papier) — joyeux, clair, premium | `GraineGeminiAnimee` ⚠️ archivée `_archive/`, rendu réf https://files.catbox.moe/ft5l5g.mp4 |
 
 À TESTER (registres non encore sondés) : néon/data-terminal (data-viz moderne). (encre ✅ · braise-or ✅ · or-jour ✅ · papier-decoupe ✅ prouvés.)
 
@@ -227,7 +227,7 @@ belle. Une scène peut être riche EN OBJETS MANUFACTURÉS sans casser ; seul l'
 de la cohérence sens↔image, PAS du nombre de traits. Si on hésite entre ajouter un détail ou épurer → ÉPURER. C'est le
 point commun entre le blueprint (chaque flèche = un sens) ET la pièce Sénégal (chaque objet = un mot) : « épuré + chaque
 élément pilotable », pas « abstrait vs illustratif ». Prouvé : la mine chargée (8 éléments, wagonnet/poussière illisibles)
-< la version héros épurée (pelle + lingot + terre, 4 gestes limpides). Cobaye `HeroGptAnimee` « suivre l'or » Soudan.
+< la version héros épurée (pelle + lingot + terre, 4 gestes limpides). Cobaye `HeroGptAnimee` « suivre l'or » Soudan (⚠️ fichier archivé, rendu réf https://files.catbox.moe/1ws3kh.mp4).
 
 ### 2. ⭐ DOCTRINE DES 2 COUCHES (tient une scène 14–28s + règle des 5s) — À APPLIQUER À TOUTE SCÈNE
 - **Couche de FOND permanente** (démarre f0, ne s'arrête JAMAIS) : drift Ken Burns lent + un élément qui respire (soleil
@@ -258,7 +258,7 @@ Idem la TERRE : un sol ne « vague » pas comme de l'eau (solide) → il CHANGE 
 Un objet qui s'installe = il TOMBE du haut + REBOND net à l'arrivée (`spring({config:{mass:1, damping:12, stiffness:90},
 durationInFrames:34})`) + poussière d'impact brève + SFX sec (`impact/impact.mp3`) + léger squash vertical à l'atterrissage.
 Bien plus tangible qu'un fade. Chute VISIBLE (~16f, pas 6f : baisser stiffness). Cascade lisible (pelle → gros lingot →
-petit lingot, décalés). `spring > interpolate` (doctrine Remotion). Prouvé `HeroGptAnimee`.
+petit lingot, décalés). `spring > interpolate` (doctrine Remotion). Prouvé `HeroGptAnimee` (⚠️ fichier archivé, rendu réf https://files.catbox.moe/1ws3kh.mp4).
 
 ### 5. ⭐⭐ GRAMMAIRE DE COLORISATION = notre signature (analyse GGW complète 7 beats, 2026-06-27)
 > Vérifiée frame par frame sur les 7 beats GGW + code. ⛔ CORRIGE un contresens : le monde NE se colorise PAS
@@ -397,7 +397,7 @@ inner = m.group(1) if m else svg
 ```
 Pour ANIMER un groupe injecté : wrapper JSX `<g transform={...} opacity={...} dangerouslySetInnerHTML={{__html: body}} />`
 — le wrapper (créé en JSX) EST animable même si son contenu est injecté. C'est LA technique pour contourner « innerHTML
-n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`, `GraineGeminiAnimee.tsx`.)
+n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`, `GraineGeminiAnimee.tsx` — ⚠️ les 3 fichiers sont archivés dans `_rnd/svg-scenes/_archive/`, exclus du build ; rendus catbox toujours valides : 1ws3kh, yonpoq, ft5l5g.)
 
 7. **Gemini met parfois les styles en `<style>`/`class="..."` dans `<defs>`** (ex ombres portées paper-cut `class="shadow"`).
    En injection innerHTML ces classes perdent leur scope → l'élément devient invisible. Les INLINER avant injection :
@@ -443,7 +443,7 @@ n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `Creu
 | ⭐ Graine → arbre (16:9) | papier-decoupe | Gemini | SE CONSTRUIT + FINITION orchestrée (vent · soleil actif · fruit tombe · feuilles flottent · SFX nature) | https://files.catbox.moe/ft5l5g.mp4 |
 | ⭐ « D'une graine naît un arbre » PÉDAGOGIQUE (16:9) | papier-decoupe | Gemini | SE CONSTRUIT bas→haut (graine→tronc scaleY→feuillage en vagues) + 2 couches | https://files.catbox.moe/wv4xlm.mp4 |
 
-Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee, GraineGeminiAnimee}.tsx`.
+Code : `src/projects/_rnd/svg-scenes/_archive/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee, GraineGeminiAnimee}.tsx` — ⚠️ tous ces fichiers sont archivés (`_archive/`, exclus du `tsconfig.json`), les rendus catbox listés ci-dessus restent la référence visuelle valide.
 
 📼 **RENDUS DE RÉFÉRENCE (fichiers .mp4 gardés) → `out/_r-and-d/svg-scenes-refs/`** (voir son README). ⚠️ Réfs R&D
 « ce qu'on sait faire », PAS des livrables — réadapter au script/audio réels avant tout usage épisode.

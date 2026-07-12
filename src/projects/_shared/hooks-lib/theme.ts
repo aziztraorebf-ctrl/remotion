@@ -4,7 +4,7 @@
  * Source unique des couleurs de charte (fini les `const GOLD = ...` redefinis dans chaque hook)
  * et des profils de spring (evite l'AI-slop "tous les springs identiques" signale par le DA 3 modeles).
  *
- * Doctrine : memory/HOOKS-LIBRARY-PLAN.md (chantier hooks reutilisables, 2026-06-15).
+ * Doctrine : memory/projects/HOOKS-LIBRARY-PLAN.md (chantier hooks reutilisables, 2026-06-15).
  */
 
 import type { SpringConfig } from "remotion";

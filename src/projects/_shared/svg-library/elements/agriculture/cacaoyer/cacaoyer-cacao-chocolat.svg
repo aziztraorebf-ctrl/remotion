@@ -1,0 +1,74 @@
+<!-- Cacaoyer — extrait de CacaoTree (VergerCacao.tsx), cacao-chocolat-short -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #4a2c14 (tronc brun-vie), #6b4423 (feuillage brun-cacao), #a26432 (cabosse) -->
+<!-- Dimensions originales : viewBox parent 1080×1920 | coordonnées relatives (0,0) = base du tronc, Y négatif = vers le haut -->
+<!-- État figé documenté ici : alive=1 (brun-vie plein), grow=1 (pousse complète), breath=1, podWf=0 (pods au repos) -->
+<!-- Date extraction : 2026-07-04 -->
+<!--
+  USAGE REMOTION : le vrai composant réutilisable est <CacaoTree /> dans
+  src/projects/souverain/cacao-chocolat-short/components/VergerCacao.tsx (ne pas dupliquer le code ici).
+  Ce SVG documente la géométrie statique par défaut (alive=1) pour repérage visuel rapide.
+  Chaque partie (tronc, branches, couronne, cabosses) est un groupe distinct, animable séparément.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-260 -580 520 600" width="400" height="460">
+
+  <!-- Tronc ramifié (rempli si vivant, silhouette pleine) -->
+  <g id="tronc">
+    <path
+      d="M-34 0 C-22 -92 -24 -165 -28 -252 C-12 -266 12 -266 30 -252 C24 -165 30 -92 42 0 Z"
+      fill="#4a2c14"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+  </g>
+
+  <!-- Branches courtes, restent SOUS la couronne (pas de squelette qui dépasse) -->
+  <g id="branches">
+    <path
+      d="M-12 0 C-8 -90 -6 -170 -12 -254 C-30 -278 -52 -300 -72 -330 M-10 -254 C14 -284 40 -306 70 -336 M-6 -200 C24 -226 54 -238 84 -252 M-13 -160 C-40 -188 -68 -208 -94 -232"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Couronne irrégulière (silhouette pleine, groupe translaté -260 en Y = base du houppier) -->
+  <g id="couronne" transform="translate(0 -260)">
+    <path
+      d="M-194 -340 C-238 -410 -182 -488 -100 -474 C-66 -558 58 -562 102 -480 C184 -502 250 -426 204 -350 C238 -292 150 -232 70 -262 C18 -212 -92 -222 -126 -282 C-188 -268 -238 -302 -194 -340 Z"
+      fill="#6b4423"
+      stroke="#2b2117"
+      stroke-width="4"
+      stroke-linejoin="round"
+    />
+    <!-- Nervures de feuillage (détail) -->
+    <path
+      d="M-100 -474 C-48 -444 -8 -450 36 -480 M-126 -282 C-68 -326 -14 -330 50 -296 M102 -480 C138 -430 166 -402 204 -350"
+      fill="none"
+      stroke="#2b2117"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      opacity="0.8"
+    />
+    <!-- Cabosses ovales sur le tronc (signature du cacaoyer — 4 cabosses, tailles dégressives) -->
+    <g id="cabosses-tronc">
+      <ellipse cx="4" cy="-128" rx="23" ry="42" fill="#a26432" stroke="#2b2117" stroke-width="3.4"/>
+      <ellipse cx="-46" cy="-206" rx="19" ry="37" fill="#a26432" stroke="#2b2117" stroke-width="3.4"/>
+      <ellipse cx="50" cy="-182" rx="18" ry="35" fill="#a26432" stroke="#2b2117" stroke-width="3.4"/>
+      <ellipse cx="-14" cy="-238" rx="15" ry="29" fill="#a26432" stroke="#2b2117" stroke-width="3"/>
+      <!-- Côtes des cabosses (texture striée) -->
+      <path
+        d="M4 -166 L4 -90 M-10 -158 C-2 -142 -2 -114 -10 -98 M18 -158 C10 -142 10 -114 18 -98 M-46 -240 L-46 -172 M50 -214 L50 -150 M-14 -266 L-14 -210"
+        fill="none"
+        stroke="#2b2117"
+        stroke-width="2.2"
+        stroke-linecap="round"
+      />
+    </g>
+  </g>
+
+  <!-- Ombre portée au sol (ancrage) -->
+  <ellipse cx="0" cy="20" rx="132" ry="30" fill="#2b2117" opacity="0.12"/>
+
+</svg>

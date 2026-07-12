@@ -91,10 +91,10 @@ Le Mid-form peut basculer 50/50 car il a plus d'espace pour la complexité.
 
 ### Dérive 3 : Sources fragiles pour pousser l'angle macro
 - L'angle macro est tellement séduisant qu'on est tenté d'inventer ou d'exagérer le lien
-- ✅ La règle existe déjà : **Charte règle ferme #2** + `rules-souverain-editorial.md` Section 1 (Perplexity sonar-pro après script lock, croisement 2 sources camps différents, ~$0.027)
+- ✅ La règle existe déjà : **Charte règle ferme #2** + `memory/rules/rules-souverain-editorial.md` Section 1 (Perplexity sonar-pro après script lock, croisement 2 sources camps différents, ~$0.027)
 - **Pas de nouveau processus** — juste appliquer le fact-check existant avec attention aux sources tech/industrie (USGS, BGS, Apple SEC 1502, T.I.C., etc.) en plus des sources panafricaines/mainstream habituelles
 - Les **15 sujets candidats ci-dessus = angles à auditer**, pas faits prêts à diffuser. Mes chiffres dans la liste (ex: "95% des smartphones") sont des illustrations approximatives à valider via Perplexity avant tout script
-- **Test** : la grille 3 niveaux de `rules-souverain-editorial.md` Section 1
+- **Test** : la grille 3 niveaux de `memory/rules/rules-souverain-editorial.md` Section 1
 
 ---
 
@@ -114,6 +114,6 @@ Le hook (première phrase) doit toujours faire le pont :
 ## Liens
 
 - Charte éditoriale complète : [CHARTE-EDITORIALE-SOUVERAIN.md](CHARTE-EDITORIALE-SOUVERAIN.md)
-- Règles détaillées sources et écriture : [rules-souverain-editorial.md](rules-souverain-editorial.md)
+- Règles détaillées sources et écriture : [memory/rules/rules-souverain-editorial.md](../rules/rules-souverain-editorial.md)
 - Format Mid-form : [MIDFORM-FORMAT-RULES.md](MIDFORM-FORMAT-RULES.md)
 - Checklist vulgarisation : [MIDFORM-CHECKLIST-VULGARISATION.md](MIDFORM-CHECKLIST-VULGARISATION.md)

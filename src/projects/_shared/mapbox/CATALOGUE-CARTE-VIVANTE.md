@@ -144,7 +144,7 @@ Un bon combo = une **progression narrative** (pas une superposition). Le secret 
 |---|---|---|---|---|
 | **GeoFlowConnection** ⭐ V2 | Route ville→ville→ville qui se DESSINE progressivement (dashed doré, dash animé) + city markers Spring Pop + labels + sprite mobile (avion orienté tangente / point) + caméra qui suit la tête puis dézoom final | Routes commerciales, corridors (gazoduc, Lobito), migrations, axes logistiques, "le trajet de X vers Y" | `waypoints[]` ({name,coord:[lon,lat],labelDx/Dy}), `title`, `accentColor`, `sprite` (plane/dot/none), `drawStartFrame`, `drawPerSegment`, `cameraFollow`, `zoom?` (auto-fit sinon) | Silk Road demo (R&D mapanimation.io) |
 
-> Headless-safe : Catmull-Rom smoothing + map.project() frame-driven + halo par opacité (PAS feGaussianBlur ni filter:blur CSS). Différent de `ConvergingFlows` (convergence multi-source) et `FlowArrowsMap` (SVG pur non géo-attaché). Inspiration : mapanimation.io "Silk Road Caravan". R&D : `memory/_r-and-d-mapanimation-ANALYSE.md`.
+> Headless-safe : Catmull-Rom smoothing + map.project() frame-driven + halo par opacité (PAS feGaussianBlur ni filter:blur CSS). Différent de `ConvergingFlows` (convergence multi-source) et `FlowArrowsMap` (SVG pur non géo-attaché). Inspiration : mapanimation.io "Silk Road Caravan". R&D : `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md`.
 
 ## 📋 Backlog (idées Gemini non codées)
 

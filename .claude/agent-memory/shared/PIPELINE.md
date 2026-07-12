@@ -41,7 +41,7 @@ officielles (1re tentative sur illustration stylisée REJETÉE), SFX corrigés (
 force-alignment Whisper). **Validé Aziz SANS RÉSERVE** sur le render final. Promu
 `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4` (386MB, 7min30, 13501 frames). `wip/` purgé (3.4GB).
 **▶ RESTE avant publication** : thumbnail + titre uniquement (tâche courte, starter
-`memory/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`).
+`memory/starters/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`).
 Point ouvert non bloquant (ne pas ré-investiguer sans piste nouvelle) : liseré blanc résiduel sur
 frontières CEDEAO (Mapbox natif, 3 tentatives de fix éliminées, cause exacte non isolée).
 Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "SESSION C — ÉTAT".
@@ -160,7 +160,7 @@ Pipeline 6 phases automatisées par script, Claude main code en direct :
 6. upload       → Catbox + ntfy mobile Aziz pour validation finale
 ```
 
-Documentation complète : `memory/rules-beat-production.md` + section
+Documentation complète : `memory/rules/rules-beat-production.md` + section
 "Pipeline Beat Souverain" du CLAUDE.md projet.
 
 ### Workflow B — Atlas direct
@@ -276,10 +276,10 @@ Code épisodes archivé dans `src/_archive/episodes-livres/`.
 
 - **Hook Short (pattern teaser 5s)** — voir `memory/templates/` et BrutalHookSplit dans `src/projects/_shared/components/layouts/`.
 - **Musique Minimax 2.6** — `memory/tools/minimax.md`. Coût ~$0.30/track 3min.
-- **Narration ElevenLabs V3** — voix GéoAfrique V2 `z3gESu49naEZW8Af2Upm`. Règles TTS françaises NON-NÉGOCIABLES (voir `memory/voices-v3.md` + CLAUDE.md projet).
+- **Narration ElevenLabs V3** — voix GéoAfrique V2 `z3gESu49naEZW8Af2Upm`. Règles TTS françaises NON-NÉGOCIABLES (voir `memory/tools/voices-v3.md` + CLAUDE.md projet).
 - **Integration Remotion audio** — `<Audio src={staticFile(...)} />` + `AUDIO_SEGMENTS` audio-derived timing.
 - **Atlas Blueprints Library (8 patterns)** — `src/projects/atlas/_blueprints/` (walk-to-destination, confrontation, orbital-city, zoom-revelation, shake-impact, alliance, empire-expansion, flashback).
-- **Beat Souverain workflow** — voir `scripts/beat-session.py` + `memory/rules-beat-production.md`.
+- **Beat Souverain workflow** — voir `scripts/beat-session.py` + `memory/rules/rules-beat-production.md`.
 
 ---
 
@@ -432,7 +432,7 @@ Hooks backlog : TacticalRadarScan, EpicenterShockwave, SatelliteTargetLock, Glit
 Nouveau 3e type de carrousel (bonnes nouvelles macro Afrique, indépendant d'une vidéo).
 Charte LUMINEUSE (ivoire/or/navy), 100% Remotion animé. Briques réutilisables : `gauge`, `flow` (icônes Lucide), `bars`, `map` (Mapbox Caspian beige).
 Carrousel #1 (Maroc/Kenya/Algérie) programmé 3 juin sur IG+FB (carrousel) + TikTok (vidéo unique).
-Pipeline + briques consolidés : `src/projects/souverain/carousels/good-news/README.md`. Décisions : `memory/STARTER-PROMPT-carrousel-good-news.md`.
+Pipeline + briques consolidés : `src/projects/souverain/carousels/good-news/README.md`. Décisions : `memory/starters/STARTER-PROMPT-carrousel-good-news.md`.
 NEXT possible : script d'automatisation hebdo (last30days → briques → Postiz), semi-auto avec validation humaine.
 Fix collatéral : `scripts/render-mapbox.sh` (chemin chrome-headless-shell) + stubs beats Maroc Batteries manquants (dette repo).
 
@@ -453,7 +453,7 @@ Fix collatéral : `scripts/render-mapbox.sh` (chemin chrome-headless-shell) + st
 - Coloration pays : NOR=gold, COG=orange, BWA=vert — persistent sur vue finale
 - Audio : `narration-v1-congo-brazzaville.mp3` (splice "Le Congo" → "Le Congo-Brazzaville"), `endAt={5718}` pour couper avant "Mécanisme 1"
 - Catbox final : https://files.catbox.moe/yx177g.mp4
-- **Leçons R11 ajoutées** dans `memory/rules-beat-production.md` (splice audio, endAt, public-dir minimal, renders parallèles)
+- **Leçons R11 ajoutées** dans `memory/rules/rules-beat-production.md` (splice audio, endAt, public-dir minimal, renders parallèles)
 - **NEXT** : Beat11 (Mécanisme 1) + suite Acte 3
 
 ## Sénégal Pétrole & Gaz — ÉPISODE COMPLET — 2026-05-25 [TOUS BEATS VALIDÉS — ASSEMBLAGE RESTANT]
@@ -720,3 +720,56 @@ devrait arbitrer : (1) les 2 points factuels ci-dessus (drapeau Libye pre/post-K
 (2) le cadrage vertical propose par B (non aborde par A a verifier), (3) choisir/fusionner entre les 2
 storyboards ou en garder un comme base + emprunter des idees a l'autre, AVANT tout code. Consulter
 pixellab-expert seulement si besoin d'assets nouveaux (aucun identifie comme bloquant par B).
+
+---
+
+## [STAGE-META] Grand menage workspace multi-piliers — orchestrateur principal (2026-07-11)
+
+**Pas un stage de production video** — session dediee a l'audit/nettoyage du workspace lui-meme (memory/,
+scripts/, skills/), a la demande d'Aziz apres plusieurs sessions ou des contradictions doctrine-vs-code
+avaient cause des hesitations. Note ici pour que le prochain STAGE de production sache que ce menage a eu
+lieu et puisse s'appuyer dessus.
+
+**Fait cette session** :
+- 4 audits paralleles (Warmap/Souverain/Atlas-SVG/Methode) : jury LLM perime (GPT-4o+Grok) archive, agent
+  creative-director fantome rapatrie, WarMapOverlayExplicatif.tsx corrige (violait WARMAP-GRAMMAIRE §9),
+  dette Mapbox vs d3-geo TRANCHEE (Mapbox = moteur de production definitif, plus jamais "a basculer").
+- Reorganisation `memory/` : 37 fichiers en vrac a la racine -> 6 (nouveaux dossiers `rules/`, `backlogs/`,
+  `starters/`, `projects/`). `MEMORY.md` (auto-memory) recompacte 20.6KB->16.2KB.
+- 5 scripts crees et testes contre du code reel : `check-script-density.py` (Souverain), `atlas-selfreview.py`
+  (Atlas), `warmap-session.py` (War-Map, detecte retroactivement le bug zoom x10 Soudan Acte 3),
+  `trace-livrable.py` (traçabilite script->rendu, croise code+audio Whisper), `check-doctrine-violations.py`
+  (grep patterns interdits CLAUDE.md contre code deja merge).
+- Nettoyage `scripts/` : 128->110 scripts actifs (17 one-shot d'episodes livres archives).
+- 3 skills construits dans `~/.claude/skills/` : `da-brief-gate`, `passe-amelioration-scene`,
+  `creative-director-dual` — tous les 3 deja references dans ROUTAGE.md et SYSTEME-AGENTIQUE.md.
+- Skill `/wrap` etendu : nouvelle Phase 1.5 "Retrospective de friction" (orchestrateur seul, audite le
+  VECU de la session, pas les fichiers).
+- Regles CLAUDE.md ajoutees : communication mobile (texte long en chat, upload catbox/Imgur/uguu.se/
+  Litterbox avant presentation render), regle elargie "verifier CODE + VISUEL avant d'agir sur un livrable
+  passe".
+- 2 contradictions residuelles trouvees et corrigees en fin de session (agent COHERENCE du wrap) :
+  `WARMAP-INDEX.md` et `WARMAP-COMPOSANTS-INDEX.md` affirmaient encore "voie production = d3-geo pur"
+  alors que la decision "Mapbox definitif" avait ete tranchee plus tot dans la meme session — corrige.
+
+**Next action** : Acte 4 Soudan "Meme les voisins sont aspires" — script v5 verrouille, reste audio (pipeline
+Oceane V3 -> STS GeoAfrique) puis storyboard/breakdown/code. NEXT-ACTION.md note `passe-amelioration-scene`
+et `creative-director-dual` comme options disponibles (pas obligatoires) si ce chantier bloque. Audit des
+88 skills du workspace reporte a une session dediee (note dans NEXT-ACTION.md, cadrage suggere).
+
+---
+
+## [STAGE-1] creative-director (instance A, indépendante) — Soudan Acte 4 régie + Beat 4 — 2026-07-11
+
+**Verdict** : Acte 4 = 100% carte Mapbox continue (aucun beat ne relève du périmètre insert SVG
+état-major, réservé prise de territoire/assaut — cf `WARMAP-INSERT-SVG-ETATMAJOR.md`). Beat 4 (Nil/Égypte)
+confirmé point à risque : code actuel (`SoudanActe4.tsx`) a déjà un `NileFactPlaque` texte en béquille
+à côté du Nil qui pulse — signe que le geste seul ne racontait rien (même piège que concept B rejeté Acte3B1).
+
+**Proposition** : Nil pointe Soudan→Égypte (sens du courant réel, pas le pouls remontant actuel qui est
+narrativement inversé) + halo bleu du jeton SAF (établi Beat 3 juste avant) VACILLE au moment de "elle
+redoute de voir le Soudan basculer" — reprise inversée du geste Beat 3 (où ce halo se renforçait), cause→effet
+sans nouveau signe abstrait. Retirer `NileFactPlaque` (béquille texte = aveu que le geste seul ne suffisait pas).
+
+**Next action** : comparer avec la proposition de l'autre instance creative-director en parallèle (brief
+identique, indépendant) avant tranchage Aziz. Détail complet : `.claude/agent-memory/creative-director/soudan-acte4-beat4-nil-brief.md`.

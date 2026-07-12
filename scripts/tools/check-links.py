@@ -47,22 +47,35 @@ PATH_RE = re.compile(
 # Liens markdown relatifs longs vers le repo depuis l'auto-memory.
 REPO_REL_RE = re.compile(r"\]\((?:\.\./)+Workspace/remotion/([A-Za-z0-9_./-]+\.\w+)\)")
 
+# Liens markdown relatifs COURTS `[texte](chemin/fichier.md)` sans préfixe memory/src/scripts/public
+# ni ../../.. — le cas de l'auto-memory qui pointe vers un fichier du MÊME dossier (ex: feedbacks/x.md).
+# Ajouté 2026-07-11 : un lien mort de ce type (feedbacks/feedback_deux-agents-creatifs-...) a survécu
+# à check-links.py jusqu'à découverte accidentelle, car ni PATH_RE ni REPO_REL_RE ne le couvraient.
+SHORT_REL_RE = re.compile(r"\]\(((?!https?://|\.\./)[A-Za-z0-9_./-]+\.(?:tsx|ts|md|py|sh|json))\)")
 
-def scan_file(path, label=None):
-    """Retourne la liste des (ligne, chemin_cite, existe?) pour un fichier."""
+
+def scan_file(path, label=None, base_dir=None):
+    """Retourne la liste des (ligne, chemin_cite, existe?) pour un fichier.
+    base_dir : dossier de résolution pour les liens relatifs courts (défaut = ROOT,
+    mais l'auto-memory doit résoudre relatif à SON PROPRE dossier, pas ROOT)."""
     label = label or path
     full = path if os.path.isabs(path) else os.path.join(ROOT, path)
     if not os.path.exists(full):
         return [("-", label, False, "FICHIER NAV ABSENT")]
+    resolve_dir = base_dir or ROOT
     results = []
     with open(full, encoding="utf-8", errors="ignore") as f:
         for i, line in enumerate(f, 1):
-            cited = set(PATH_RE.findall(line)) | set(REPO_REL_RE.findall(line))
-            for c in cited:
-                # ignorer les patterns/globs et les chemins avec wildcard
+            repo_rooted = set(PATH_RE.findall(line)) | set(REPO_REL_RE.findall(line))
+            for c in repo_rooted:
                 if "*" in c or "|" in c:
                     continue
                 target = os.path.join(ROOT, c)
+                results.append((i, c, os.path.exists(target), label))
+            for c in SHORT_REL_RE.findall(line):
+                if "*" in c or "|" in c:
+                    continue
+                target = os.path.join(resolve_dir, c)
                 results.append((i, c, os.path.exists(target), label))
     return results
 
@@ -90,10 +103,12 @@ def main():
             if not exists:
                 broken.append((label, ln, cited))
 
-    # auto-memory (chemin fixe hors repo)
+    # auto-memory (chemin fixe hors repo) — base_dir = son propre dossier pour les liens
+    # relatifs courts (feedbacks/x.md), PAS ROOT (le repo Remotion) sinon faux positifs massifs.
     if not args or args == ["--all"]:
         if os.path.exists(AUTO_MEMORY):
-            for ln, cited, exists, label in scan_file(AUTO_MEMORY, label="AUTO-MEMORY/MEMORY.md"):
+            auto_memory_dir = os.path.dirname(AUTO_MEMORY)
+            for ln, cited, exists, label in scan_file(AUTO_MEMORY, label="AUTO-MEMORY/MEMORY.md", base_dir=auto_memory_dir):
                 checked += 1
                 if not exists:
                     broken.append((label, ln, cited))

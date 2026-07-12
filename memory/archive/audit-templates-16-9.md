@@ -210,7 +210,7 @@ Test grandeur réelle. Combine MapboxSatelliteSenegal (V2 avec océan éclairci)
 ## 4. Références
 
 - **V1 Mapbox 16:9 validée** : [ASSETS-INDEX Template C-bis](../public/_shared/ASSETS-INDEX.md)
-- **Backlog améliorations Mapbox** : [`backlog-ameliorations-mapbox-satellite.md`](backlog-ameliorations-mapbox-satellite.md)
+- **Backlog améliorations Mapbox** : [`memory/archive/backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md`](backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md)
 - **Pattern canonique render Mapbox** : [`feedback_mapbox-render-pattern-canonique.md`](feedback_mapbox-render-pattern-canonique.md)
 - **Rapport benchmark détaillé (7 vidéos, 22 mécaniques)** : `/tmp/benchmark-docs-16-9.md` + frames `/tmp/benchmark-frames/`
 - **Rapport audit composants opaques détaillé** : `/tmp/audit-composants-opaques.md`

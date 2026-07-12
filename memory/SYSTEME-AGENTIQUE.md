@@ -67,6 +67,11 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    sa validation — ne PAS enchaîner sur le breakdown/code sous l'élan. (Erreur du chef RÉPÉTÉE 2× les 2026-06-20 :
    storyboard texte produit puis checkpoint sauté. Graver la règle ne suffit pas — le chef doit s'ARRÊTER ici, point
    d'arrêt dur, comme un fan-out qui attend les complétions avant le checkpoint.)
+   ⚠️ **Si ce checkpoint est REJETÉ 2 FOIS OU PLUS sur le même chantier** (même scène/concept qui ne convainc
+   toujours pas après un 2e essai) → proposer le skill `creative-director-dual` : 2 agents `creative-director`
+   en parallèle, brief identique, zéro suggestion d'angle, indépendance mutuelle — Aziz tranche ensuite entre
+   les 2 propositions. Pas au 1er rejet (itérer normalement suffit). Preuve : Short War-Map Sahel 90s débloqué
+   après 4 rejets (2026-07-07), détail `memory/episodes/warmap-sahel/DETAIL-creative-director-reprise-2026-07-07.md`.
 5. **BREAKDOWN** : on décode le storyboard validé en plan technique. ⛔ Il TRANSCRIT, il ne CRÉE pas (la
    direction est déjà tranchée au storyboard) → ne peut pas brider, il PROTÈGE. **FORMAT défini pour les DEUX
    branches** (même esprit : JSON par état, `intention_etat` libre, `forme_connue`/`si_nouveau` anti-rabotage,
@@ -74,6 +79,13 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    - **Carte/Mapbox** → `memory/doctrines/STORYBOARD-MAPBOX.md` § FORMAT (caméra frame-driven lon/lat/zoom).
    - **Data-viz/Remotion** → `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` § FORMAT BREAKDOWN (anim spring/interpolate,
      états calés sur les PIVOTS de la voix — jamais frames réparties arbitrairement).
+5.5. **DA-BRIEF-GATE — ⛔ ARRÊT DUR, AVANT le code, APRÈS le breakdown.** Vision validée + templates/assets
+   décidés → LANCER le skill `da-brief-gate` (pas juste lire la doctrine). Il orchestre l'appel
+   `da-brief.py --upstream` (Gemini+Kimi+DeepSeek, MAX 1 appel/modèle/acte), écrit la synthèse tracée dans
+   le PLAN de l'épisode, puis BLOQUE le passage au code tant qu'Aziz n'a pas explicitement tranché — même
+   logique d'arrêt dur que le checkpoint storyboard (étape 4 ci-dessus). Détail : `memory/doctrines/DA-BRIEF-GATE.md`.
+   Ne PAS sauter cette étape sous prétexte que le storyboard a déjà été validé — ce sont deux gates distincts
+   (storyboard = direction visuelle validée par Aziz ; DA-brief = review externe de CETTE direction avant code).
 6. **CODE** dans le bon emplacement (règle 3 zones, voir INTENTION-FORME-INDEX § « OÙ RANGER ») : livrable →
    `<pilier>/<episode>/`. Passe par la **session** (`/beat` → `beat-session.py` ou `mapbox-session.py`).
 7. **REVIEW + PRÉSENTATION** : la session écrit `<mp4>.review.json` adjacent (Gemini, seuil 8/10). Le **hook**
@@ -88,6 +100,8 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
 |---|---|
 | Produire/refaire une scène (porte unique) | `/beat` (`.claude/commands/beat.md`) → route Mapbox vs Remotion vs proto |
 | Storyboard (le modèle propose) | `_PALETTE-BACKGROUNDS.md` (§ storyboard) · `STORYBOARD-MAPBOX.md` · outil `storyboard-dual-gen.py` |
+| Review créative AMONT avant code (gate bloquant) | skill `da-brief-gate` (orchestre `da-brief.py --upstream`) — voir étape 5.5 ci-dessus · doctrine `memory/doctrines/DA-BRIEF-GATE.md` |
+| **Audit qualité AVAL d'un épisode multi-scènes déjà avancé/produit** (le pendant de DA-BRIEF-GATE côté sortie : pas avant le code, mais après plusieurs scènes déjà là) | skill `passe-amelioration-scene` — N agents (1/scène) + 1 agent transversal de synthèse. Doctrine `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`. À proposer quand un épisode multi-actes semble avoir des scènes datées (techniques apprises après leur render) ou avant promotion finale d'un épisode long suspecté incohérent. |
 | Palette de fonds + arsenal de capacités | `public/_shared/refs/backgrounds/` · `public/_shared/refs/cartes/_ARSENAL.md` |
 | ORCHESTRATION (chef + agents frais) | ce fichier (SYSTEME-AGENTIQUE) — découper, fan-out N beats, 2-3 checkpoints, isolation worktree. Méthode prouvée 3 vagues (consolidation 2026-06-25) |
 | Intention → forme → template | `src/projects/_shared/INTENTION-FORME-INDEX.md` + `CONTINUITE-SCENE-INTENTION-DABORD.md` |

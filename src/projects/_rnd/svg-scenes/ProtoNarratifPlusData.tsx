@@ -1,111 +1,27 @@
 import React from "react";
-import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, spring, useVideoConfig } from "remotion";
-import { CargoVoyage16x9 } from "./CargoVoyage16x9";
+import { AbsoluteFill, Sequence, useCurrentFrame, interpolate, useVideoConfig } from "remotion";
+import { CargoVoyage16x9_LibreInspire } from "./CargoVoyage16x9_LibreInspire";
+import { GridBackground } from "../../_shared/components/GridBackground";
+import { InkDonutChart } from "../../_shared/components/InkDonutChart";
+import { DATAVIZ_BG, PARCH, PARCH_DIM } from "../../_shared/svg-library/palette";
 
-const BG = "#0f1a2e";
-const GRID_COLOR = "#1e2d47";
-const INK = "#2b2117";
-const PARCH = "#e8dcc0";
-const PARCH_DIM = "#b0a58a";
+const BG = DATAVIZ_BG;
 
-export const PROTO_NARRATIF_PLUS_DATA_FRAMES = 420;
-
-const GridBackground: React.FC = () => {
-  const stepSmall = 30;
-  const stepLarge = 150;
-  const lines: React.ReactNode[] = [];
-  for (let x = 0; x <= 1920; x += stepSmall) {
-    const isLarge = x % stepLarge === 0;
-    lines.push(
-      <line key={`v${x}`} x1={x} y1={0} x2={x} y2={1080}
-        stroke={GRID_COLOR} strokeWidth={isLarge ? 1 : 0.5} opacity={isLarge ? 0.6 : 0.3} />
-    );
-  }
-  for (let y = 0; y <= 1080; y += stepSmall) {
-    const isLarge = y % stepLarge === 0;
-    lines.push(
-      <line key={`h${y}`} x1={0} y1={y} x2={1920} y2={y}
-        stroke={GRID_COLOR} strokeWidth={isLarge ? 1 : 0.5} opacity={isLarge ? 0.6 : 0.3} />
-    );
-  }
-  return <g>{lines}</g>;
-};
-
-const DonutScene: React.FC<{ localFrame: number; fps: number }> = ({ localFrame, fps }) => {
-  const segments = [
-    { label: "Planteurs", pct: 0.06, color: "#8B5A2B" },
-    { label: "Intermediaires", pct: 0.08, color: "#5e7245" },
-    { label: "Transformation", pct: 0.35, color: "#e07a5f" },
-    { label: "Marques & distrib.", pct: 0.51, color: "#b5552f" },
-  ];
-
-  const cx = 960;
-  const cy = 500;
-  const r = 260;
-  const innerR = r * 0.52;
-  const progress = spring({ frame: localFrame - 5, fps, config: { damping: 20, mass: 1.2 } });
-
-  let cumAngle = -Math.PI / 2;
-
-  return (
-    <g>
-      {segments.map((seg, i) => {
-        const angle = seg.pct * 2 * Math.PI * progress;
-        const startAngle = cumAngle;
-        cumAngle += angle;
-        const endAngle = cumAngle;
-
-        const x1 = cx + r * Math.cos(startAngle);
-        const y1 = cy + r * Math.sin(startAngle);
-        const x2 = cx + r * Math.cos(endAngle);
-        const y2 = cy + r * Math.sin(endAngle);
-        const ix1 = cx + innerR * Math.cos(endAngle);
-        const iy1 = cy + innerR * Math.sin(endAngle);
-        const ix2 = cx + innerR * Math.cos(startAngle);
-        const iy2 = cy + innerR * Math.sin(startAngle);
-        const largeArc = angle > Math.PI ? 1 : 0;
-
-        const midAngle = (startAngle + endAngle) / 2;
-        const labelR = r + 40;
-        const lx = cx + labelR * Math.cos(midAngle);
-        const ly = cy + labelR * Math.sin(midAngle);
-        const labelOp = interpolate(localFrame, [40 + i * 10, 55 + i * 10], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-
-        return (
-          <g key={i}>
-            <path
-              d={`M ${x1},${y1} A ${r},${r} 0 ${largeArc} 1 ${x2},${y2} L ${ix1},${iy1} A ${innerR},${innerR} 0 ${largeArc} 0 ${ix2},${iy2} Z`}
-              fill={seg.color} opacity={0.8} stroke={INK} strokeWidth={2.5}
-            />
-            <g opacity={labelOp}>
-              <line x1={cx + (r + 5) * Math.cos(midAngle)} y1={cy + (r + 5) * Math.sin(midAngle)}
-                x2={lx} y2={ly} stroke={PARCH_DIM} strokeWidth={1} />
-              <text x={lx} y={ly - 6} textAnchor={midAngle > Math.PI / 2 && midAngle < 3 * Math.PI / 2 ? "end" : "start"}
-                fill={PARCH} fontSize={22} fontFamily="Georgia, serif" fontWeight="bold">
-                {Math.round(seg.pct * 100)}%
-              </text>
-              <text x={lx} y={ly + 18} textAnchor={midAngle > Math.PI / 2 && midAngle < 3 * Math.PI / 2 ? "end" : "start"}
-                fill={PARCH_DIM} fontSize={16} fontFamily="Georgia, serif" fontStyle="italic">
-                {seg.label}
-              </text>
-            </g>
-          </g>
-        );
-      })}
-      <circle cx={cx} cy={cy} r={innerR - 3} fill={BG} />
-      <text x={cx} y={cy - 10} textAnchor="middle" fill={PARCH} fontSize={32} fontFamily="Georgia, serif" fontWeight="bold">
-        6%
-      </text>
-      <text x={cx} y={cy + 22} textAnchor="middle" fill={PARCH_DIM} fontSize={16} fontFamily="Georgia, serif" fontStyle="italic">
-        pour les planteurs
-      </text>
-    </g>
-  );
-};
-
-const CARGO_END = 270;
-const CROSSFADE = 30;
+// CARGO_END cale APRES que la nuit soit installee (nightFade atteint 1 vers 680f dans le
+// cargo, signature GeoAfrique apparait 500-560f) : couper plus tot tronquerait la scene de
+// nuit/lune qu'Aziz a explicitement demande d'allonger le 2026-07-03 (voir CargoVoyage16x9_LibreInspire).
+const CARGO_END = 690;
+const CROSSFADE = 40;
 const DATA_START = CARGO_END - CROSSFADE;
+
+export const PROTO_NARRATIF_PLUS_DATA_FRAMES = CARGO_END + 240;
+
+const CACAO_VALUE_SEGMENTS = [
+  { label: "Planteurs", value: 0.06, color: "#8B5A2B" },
+  { label: "Intermediaires", value: 0.08, color: "#5e7245" },
+  { label: "Transformation", value: 0.35, color: "#e07a5f" },
+  { label: "Marques & distrib.", value: 0.51, color: "#b5552f" },
+];
 
 export const ProtoNarratifPlusData: React.FC = () => {
   const frame = useCurrentFrame();
@@ -123,7 +39,7 @@ export const ProtoNarratifPlusData: React.FC = () => {
     <AbsoluteFill style={{ background: BG }}>
       {frame < CARGO_END && (
         <AbsoluteFill style={{ opacity: cargoOpacity }}>
-          <CargoVoyage16x9 />
+          <CargoVoyage16x9_LibreInspire />
         </AbsoluteFill>
       )}
 
@@ -135,7 +51,25 @@ export const ProtoNarratifPlusData: React.FC = () => {
               QUI CAPTE LA VALEUR DU CACAO ?
             </text>
             <line x1={660} y1={108} x2={1260} y2={108} stroke={PARCH_DIM} strokeWidth={1} opacity={titleOp * 0.5} />
-            <DonutScene localFrame={dataLocalFrame} fps={fps} />
+            <InkDonutChart
+              cx={960} cy={500} r={260}
+              segments={CACAO_VALUE_SEGMENTS}
+              labelStyle="leader"
+              backgroundColor={BG}
+              backgroundInset={3}
+              innerRatio={0.52}
+              segmentOpacity={0.8}
+              segmentStrokeWidth={2.5}
+              startFrame={5}
+              springDamping={20}
+              frame={dataLocalFrame} fps={fps}
+            />
+            <text x={960} y={490} textAnchor="middle" fill={PARCH} fontSize={32} fontFamily="Georgia, serif" fontWeight="bold">
+              6%
+            </text>
+            <text x={960} y={522} textAnchor="middle" fill={PARCH_DIM} fontSize={16} fontFamily="Georgia, serif" fontStyle="italic">
+              pour les planteurs
+            </text>
             <text x={960} y={1040} textAnchor="middle" fill={PARCH_DIM} fontSize={14} fontFamily="Georgia, serif" fontStyle="italic" opacity={sourceOp}>
               Source : Mighty Earth / ICCO, 2024
             </text>

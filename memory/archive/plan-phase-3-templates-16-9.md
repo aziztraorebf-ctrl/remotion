@@ -266,7 +266,7 @@ Pour chaque template :
 ## RÉFÉRENCES
 
 - **Audit + benchmark consolidés** : [`audit-templates-16-9.md`](audit-templates-16-9.md)
-- **V1 MapboxSatelliteSenegal** : [`backlog-ameliorations-mapbox-satellite.md`](backlog-ameliorations-mapbox-satellite.md)
+- **V1 MapboxSatelliteSenegal** : [`memory/archive/backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md`](backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md)
 - **Pattern canonique render Mapbox** : [`feedback_mapbox-render-pattern-canonique.md`](feedback_mapbox-render-pattern-canonique.md)
 - **Brainstorms verbatim sources** : [`brainstorms/`](brainstorms/)
   - `2026-05-21-gemini-shortlist-utilitaires.md` → vague 2

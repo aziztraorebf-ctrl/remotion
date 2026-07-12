@@ -1,0 +1,80 @@
+<!-- Usine de transformation (toit dents-de-scie) — extrait de UsineConstruction.tsx, cacao-chocolat-short -->
+<!-- Registre : encre narrative | Palette : #332A20 (encre), #d8c4a2/#c2a878 (murs palette "cacao"), #8a5b35/#6f4628 (toit palette "cacao"), #b88a5a (cheminée) -->
+<!-- Dimensions originales : viewBox parent 1080×1920 -->
+<!-- État figé documenté ici : build=1, colorize=1, chocOut=1 (usine complète, colorisée, palette="cacao" par défaut) -->
+<!-- Date extraction : 2026-07-04 -->
+<!--
+  USAGE REMOTION : le vrai composant réutilisable est <UsineConstruction build colorize chocOut windPhase
+  groundFromCrack palette /> dans src/projects/souverain/cacao-chocolat-short/components/UsineConstruction.tsx
+  (ne pas dupliquer le code ici). 3 palettes disponibles dans le composant source : "cacao" (terre, défaut),
+  "ivoire" (drapeau CI vif orange/vert), "ivoire-douce" (drapeau CI désaturé/terre).
+  Construction progressive dans le composant source : sol -> murs (contour) -> toit (contour) ->
+  détails (porte/lignes) -> cheminée + fumée. Sortie chocolat = convoyeur avec tablettes en flux continu.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="200 400 750 850" width="500" height="567">
+
+  <!-- Bâtiment : mur latéral (ombre) + mur de face -->
+  <g id="batiment">
+    <polygon points="650,1180 920,1050 920,800 650,900" fill="#c2a878" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <polygon points="250,1180 650,1180 650,900 250,900" fill="#d8c4a2" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <!-- Lignes intérieures (détails, apparaissent après la structure) -->
+    <g stroke="#332A20" stroke-width="2">
+      <line x1="350" y1="1180" x2="350" y2="900"/>
+      <line x1="450" y1="1180" x2="450" y2="900"/>
+      <line x1="550" y1="1180" x2="550" y2="900"/>
+      <line x1="740" y1="1135" x2="740" y2="865"/>
+      <line x1="830" y1="1090" x2="830" y2="835"/>
+    </g>
+  </g>
+
+  <!-- Toit en dents de scie (3 sheds, face claire + pans arrière sombres) -->
+  <g id="toit">
+    <polygon points="516,900 650,750 650,900" fill="#8a5b35" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <polygon points="650,750 920,620 920,800 650,900" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="516,900 650,750 920,620 786,770" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="383,900 516,750 516,900" fill="#8a5b35" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <polygon points="516,750 786,620 786,800 516,900" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="383,900 516,750 786,620 653,770" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="250,900 383,750 383,900" fill="#8a5b35" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <polygon points="383,750 653,620 653,800 383,900" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+    <polygon points="250,900 383,750 653,620 520,770" fill="#6f4628" stroke="#332A20" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Porte (arche pleine + contour) -->
+  <g id="porte">
+    <path d="M 400 1180 L 400 1000 A 50 50 0 0 1 500 1000 L 500 1180 Z" fill="#332A20"/>
+    <path d="M 385 1180 L 385 1000 A 65 65 0 0 1 515 1000 L 515 1180" fill="none" stroke="#332A20" stroke-width="3.5"/>
+  </g>
+
+  <!-- Cheminée (corps + chapeau, sans fumée — animation permanente dans le composant source) -->
+  <g id="cheminee">
+    <path d="M 820 840 L 820 480 L 890 480 L 890 800" fill="#b88a5a" stroke="#332A20" stroke-width="3.5" stroke-linejoin="round"/>
+    <rect x="812" y="462" width="86" height="22" fill="#b88a5a" stroke="#332A20" stroke-width="3.5"/>
+    <g stroke="#332A20" stroke-width="2">
+      <line x1="820" y1="780" x2="890" y2="780"/>
+      <line x1="820" y1="700" x2="890" y2="700"/>
+      <line x1="820" y1="620" x2="890" y2="620"/>
+      <line x1="820" y1="540" x2="890" y2="540"/>
+    </g>
+  </g>
+
+  <!-- Convoyeur de sortie (rails, sans tablettes en mouvement — flux continu dans le composant source) -->
+  <g id="convoyeur">
+    <path d="M 458 1180 C 620 1320 820 1480 1090 1640" fill="none" stroke="#332A20" stroke-width="3.5" stroke-linecap="round"/>
+    <path d="M 500 1180 C 660 1310 860 1455 1090 1585" fill="none" stroke="#332A20" stroke-width="3.5" stroke-linecap="round"/>
+    <g stroke="#332A20" stroke-width="2">
+      <line x1="640" y1="1320" x2="640" y2="1430"/>
+      <line x1="820" y1="1430" x2="820" y2="1560"/>
+      <line x1="980" y1="1530" x2="980" y2="1680"/>
+    </g>
+    <!-- Une tablette figée à titre d'exemple (le composant source en anime 4 en flux continu) -->
+    <g transform="translate(596 1298) rotate(36 44 22)">
+      <rect x="0" y="0" width="88" height="44" rx="3" fill="#5E4633" stroke="#332A20" stroke-width="3.5"/>
+      <line x1="22" y1="0" x2="22" y2="44" stroke="#332A20" stroke-width="2"/>
+      <line x1="44" y1="0" x2="44" y2="44" stroke="#332A20" stroke-width="2"/>
+      <line x1="66" y1="0" x2="66" y2="44" stroke="#332A20" stroke-width="2"/>
+      <line x1="0" y1="22" x2="88" y2="22" stroke="#332A20" stroke-width="2"/>
+    </g>
+  </g>
+
+</svg>

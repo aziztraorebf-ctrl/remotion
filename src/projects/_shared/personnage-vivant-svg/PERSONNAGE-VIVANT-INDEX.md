@@ -277,8 +277,9 @@ construction) — verdict : **"étendre le rig actuel en cutout puppet volumétr
 poses dessinées à la main"**. Chaque segment ligne devient un `<path>` fermé tapered (`Segment(endpointA,
 endpointB, widthA, widthB)`), la cinématique (`computePose`) reste 100% inchangée — seul le RENDU change.
 
-**Prototype réalisé** (`capsuleSegment.ts` + `_rnd/svg-scenes/ProtoCapsuleLimb.tsx`, compo Root
-`RND-ProtoCapsuleLimb`) : helper `capsulePath()` génère un contour fermé tapered avec bouts arrondis entre 2
+**Prototype réalisé** (`capsuleSegment.ts` + `_rnd/svg-scenes/_archive/ProtoCapsuleLimb.tsx` ⚠️ fichier source
+archivé, exclu du build, compo Root `RND-ProtoCapsuleLimb` désimportée) : helper `capsulePath()` génère un
+contour fermé tapered avec bouts arrondis entre 2
 points, testé isolément sur le bras avant à 3 poses (debout/marche/bras tendu) superposé au `StickRig` normal
 sans le modifier. **Résultat visuel concluant** : le bras capsule se distingue nettement de la ligne d'origine,
 volume cohérent avec la pose, aucune régression sur la cinématique.
@@ -459,11 +460,12 @@ Inspection du XML brut des 2 sets a révélé une différence structurelle majeu
   des angles `rotate()` entre walk-a et walk-b frame par frame (`lerpAngles`, easing linéaire, ~14 frames par
   demi-pas). **Résultat : marche FLUIDE, ZÉRO décrochage, mouvement crédible** — confirmé visuellement
   frame par frame (contact sheet `walk-contact-sheet.png`, render `out/_rnd/pose-bank-test/gemini-walk-test.mp4`).
-- `src/projects/_rnd/svg-scenes/ProtoGptPoseBankWalk.tsx` (compo Root `RND-ProtoGptPoseBankWalk`) : les 4 SVG
-  GPT bruts (`public/_rnd/gpt-pose-bank/*.svg`) affichés en **CUT SEC** (pas d'interpolation possible, vu
-  l'absence de hiérarchie de joints) au même rythme (~14 frames/pose). Résultat : chaque pose individuelle
-  reste correcte, mais le mouvement SAUTE d'un état à l'autre au lieu de progresser — pas une vraie marche
-  animée, un slideshow à 2 images (render `out/_rnd/pose-bank-test/gpt-walk-test.mp4`).
+- `src/projects/_rnd/svg-scenes/_archive/ProtoGptPoseBankWalk.tsx` ⚠️ fichier source archivé, exclu du build
+  (compo Root `RND-ProtoGptPoseBankWalk` désimportée) : les 4 SVG GPT bruts (`public/_rnd/gpt-pose-bank/*.svg`)
+  affichés en **CUT SEC** (pas d'interpolation possible, vu l'absence de hiérarchie de joints) au même rythme
+  (~14 frames/pose). Résultat : chaque pose individuelle reste correcte, mais le mouvement SAUTE d'un état à
+  l'autre au lieu de progresser — pas une vraie marche animée, un slideshow à 2 images (render
+  `out/_rnd/pose-bank-test/gpt-walk-test.mp4`).
 
 **VERDICT FINAL — renversement complet du jugement du 1er passage** : **Gemini 3.1 Pro l'emporte nettement**
 pour ce cas d'usage (personnage articulé destiné à être animé), pas GPT-5.5. La raison structurelle : Gemini
@@ -511,8 +513,8 @@ mûre pour un vrai personnage de production.
 
 Fichiers de ce test (scratch) : `out/_rnd/pose-bank-test/` (prompt, réponses brutes GPT+Gemini, 8 SVG,
 2 renders MP4, contact sheets). Fichiers gardés dans le repo (protos réutilisables) :
-`src/projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx`, `ProtoGptPoseBankWalk.tsx`,
-`public/_rnd/gpt-pose-bank/*.svg`.
+`src/projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk.tsx` (actif), `_archive/ProtoGptPoseBankWalk.tsx`
+⚠️ archivé, exclu du build, `public/_rnd/gpt-pose-bank/*.svg`.
 
 ### ⭐⭐⭐ Chaîne d'actions complète (2026-07-02) — enchaînement marche→arrêt→penché→ramasse→relève→repart
 

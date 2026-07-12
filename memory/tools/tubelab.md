@@ -4,6 +4,13 @@
 > [[SUJET-PRIME-SUR-PRODUCTION]] (valider la demande d'un sujet AVANT de produire).
 > ⚠️ NON DÉFINITIF : l'espace bouge vite. "L'outil de découverte d'outliers actuel = TubeLab" — si un meilleur/
 > moins cher apparaît (VidIQ, TubeBuddy, autre), on remplace ICI, le gate ne change pas. Crédits : voir `get_credits_balance`.
+>
+> ⭐⭐ **TubeLab et `last30days` s'utilisent TOUJOURS ENSEMBLE, jamais l'un sans l'autre (Aziz 2026-07-11).**
+> TubeLab = SIGNAL YouTube seul (quel FORMAT/sujet a déjà cartonné, historique). `last30days` = SIGNAL CHAUD
+> cross-plateformes (Reddit/X/TikTok/IG/HN en plus de YouTube — qu'est-ce qui se dit VIVANT maintenant, quels
+> angles émergent). Un sujet validé par TubeLab seul peut être un evergreen mort ; un sujet chaud sur `last30days`
+> seul peut ne pas avoir de format YouTube qui marche. Les deux se croisent systématiquement, dans n'importe
+> quel ordre selon ce qu'on a sous la main en premier.
 
 ## CE QUI EST PROPRIÉTAIRE (irremplaçable gratuitement) vs WRAPPING (gratuit ailleurs)
 TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaînes/vidéos + analytics dessus.
@@ -39,12 +46,12 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
 | Outil | Quand l'utiliser | Statut usage |
 |---|---|---|
 | `search_outliers` | "ce SUJET/mot-clé a-t-il produit des viraux ?" (query sémantique, filtres langue/durée/ratio) | ✅ rôdé |
-| ⭐ `search_related_channels` | "qui sont les chaînes VOISINES de X ?" (pointer sur Sahel Chronicles/Bellona/TIH → cartographie de niche + concurrents) | ⬜ à exploiter |
-| ⭐ `search_related_outliers` | "quels SUJETS gagnants chez les chaînes voisines de X ?" = sujets qui marchent dans NOTRE niche exacte | ⬜ à exploiter |
-| ⭐ `search_channels` | "trouve des chaînes par niche + filtres" (faceless, ratio vues/subs, revenus, médiane) → modèles à étudier + créneaux sous-servis | ⬜ à exploiter |
+| ⭐ `search_related_channels` | "qui sont les chaînes VOISINES de X ?" (pointer sur Sahel Chronicles/Bellona/TIH → cartographie de niche + concurrents) | ✅ testé 2026-06-16 |
+| ⭐ `search_related_outliers` | "quels SUJETS gagnants chez les chaînes voisines de X ?" = sujets qui marchent dans NOTRE niche exacte | ✅ testé 2026-06-16 |
+| ⭐ `search_channels` | "trouve des chaînes par niche + filtres" (faceless, ratio vues/subs, revenus, médiane) → modèles à étudier + créneaux sous-servis | ✅ testé 2026-07-11 (mais résultats sans stats exploitables tels quels — préférer `search_related_channels`/`get_channel_shorts` pour de vraies stats) |
 | `get_channel` | stats d'une chaîne (subs, vues, médiane, ratio, revenus est.) | ✅ un peu |
 | `get_channel_videos` | dernières vidéos + leurs stats (z-score par vidéo) | ✅ un peu |
-| `get_channel_shorts` | shorts récents d'une chaîne → vital pour la stratégie SHORTS | ⬜ à exploiter (shorts) |
+| `get_channel_shorts` | shorts récents d'une chaîne → vital pour la stratégie SHORTS | ✅ testé 2026-07-11 (donne stats complètes + averageViewsRatio par short, très riche) |
 | `get_video` | détails complets d'une vidéo (souvent remplaçable yt-dlp) | 🆓 préférer yt-dlp |
 | `get_video_transcript` | transcript via TubeLab (mais yt-dlp gratuit fait pareil) | 🆓 préférer yt-dlp |
 | `get_video_comments` | top commentaires (mine d'or sur ce que le public aime/reproche — cf. Sahel Chronicles) | 🆓 préférer yt-dlp |
@@ -57,6 +64,40 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
 - ⚠️ Repérer le piège d'angle : si les outliers sont tous militants/pompeux (registre qu'on refuse), le sujet "marche"
   mais pas pour nous → angle analyste distinct OU écarter (charte).
 - Réévaluer le ROI de l'abonnement après 1-2 mois d'usage COMPLET (pas 3 outils sur 11).
+
+## ⭐ AUDIT TRANSCRIPTS CHAÎNE OFFICIELLE (2026-07-11) — 4 leviers sous-exploités
+Agent dédié a extrait (yt-dlp, gratuit) + lu les transcripts des 13 vidéos tutoriels de
+`youtube.com/@tubelabhq` (aucune manquante). Confirme/précise ce qui est déjà listé ci-dessus :
+- **Ratio vues/abonnés = LE critère de tri actif**, pas un chiffre qu'on lit après coup. Ex donné dans leurs
+  vidéos : 40k abonnés / 100k vues moyennes (ratio 2.5x+) = signal de niche chaude, supérieur au volume de vues brut.
+  Trier/filtrer `search_outliers`/`search_channels` PAR CE RATIO dès la requête, pas juste `viewCount`.
+- **Filtre LANGUE = sous-exploité chez nous, pertinent pour notre créneau.** TubeLab le présente comme LE hack pour
+  trouver des niches à faible concurrence (ex. marchés FR/DE/JP moins saturés qu'EN). On n'a cherché qu'en anglais
+  jusqu'ici → tester `language: "fr"` (ou liste FR+EN) sur nos recherches Afrique/Sahel, marché probablement sous-servi.
+- **Sujets ADJACENTS, pas le mot-clé exact** — leur conseil verbatim : ne pas chercher QUE "NBA" mais aussi "football
+  star controversies", "NFL underdog stories" etc. Transposé chez nous : pour un sujet Sahel/AES, chercher aussi
+  "coup d'état explainer", "war documentary map" — pas seulement le mot-clé du sujet précis.
+- **Filtre "recent outliers only"** pour capter la tendance ACTUELLE plutôt qu'un pic ancien (à date de publication).
+- **Taxonomie 5 niveaux pour trouver des idées** (grille de lecture AVANT de lancer une recherche) : C = remake de ses
+  propres tops ; B = sujet tendance hors-YouTube ; A = "competition stealing" (copier un format qui marche dans SA
+  niche) ; S = "audience first" (piocher niches adjacentes déjà regardées par son audience) ; S bonus = "format
+  transfer" (voler un format d'une niche totalement différente — c'est ce qu'on fait avec le moteur AES/aesGeo.ts
+  transposé à d'autres sujets, cf. session 2026-07-11).
+- **Fonctionnalités NON exposées dans le MCP (web-only, à date)** : Collections (bookmark de vidéos/chaînes +
+  génération d'idées "twist" à partir d'une collection), rapports hebdomadaires automatiques par chaîne suivie
+  (proche watchlist — "add a channel, get weekly trend reports"), Rank Tracker (suivi quotidien du classement de
+  NOS vidéos sur des mots-clés + comparaison SERP vs concurrents), nœud n8n officiel pour automatiser un pipeline
+  hebdo (TubeLab Node → LLM analyse → rapport). Si besoin de veille continue/automatique (pas juste ponctuelle
+  comme aujourd'hui) ou de suivre le rang de nos propres vidéos publiées → passer par l'interface web, pas le MCP.
+
+## VidIQ MCP — comparatif fait (2026-07-11), verdict : PAS prioritaire
+VidIQ propose un MCP (18 outils, plan Max requis, 5 crédits/requête) avec un outil `outliers` cross-chaînes
+comparable à `search_outliers`. MAIS son cœur de métier reste SEO/optimisation de SA PROPRE chaîne (`score_title`,
+`score_thumbnail`, `keyword_research`, analytics connectées) — angle que TubeLab ne couvre pas du tout.
+**Verdict : complémentaire, pas redondant, mais gain marginal pour notre veille cross-chaînes.** TubeLab reste
+supérieur pour repérer des sujets/formats viraux ailleurs (filtres plus fins, pas de coût crédit additionnel).
+VidIQ ne vaudrait le coup QUE si on veut aussi scorer nos titres/thumbnails avant publication (post-production,
+pas pré-production) — pas un besoin actuel, à réévaluer si ce besoin émerge.
 - 🆓 **TOP COMMENTAIRES via yt-dlp (gratuit, mine d'or à angle)** : `yt-dlp --write-comments --extractor-args "youtube:comment_sort=top;max_comments=N" --skip-download <url>`. Donne les commentaires les + likés (ce que le public dit/reproche/réclame = matière à angle + phrases-titres). Préférer à `get_video_comments` TubeLab (économise des crédits). Parser le `.info.json` (champ `comments`, filtrer `parent=='root'`, trier par `like_count`). Prouvé recherche CFA 2026-06-27.
 - ⚠️ **Cross-plateforme via `/last30days`** (le "poumon présent") : Reddit/HN/YouTube = commentaires natifs ; TikTok/IG/Threads = clé ScrapeCreators (`~/.config/last30days/.env`). GOTCHA : `INCLUDE_SOURCES` n'est PAS lu depuis le `.env` du skill → le passer en variable d'environnement au lancement si besoin d'activer youtube_comments/threads.
 

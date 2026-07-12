@@ -7,7 +7,7 @@
 > ⭐ POURQUOI CE DÉCODAGE COMPTE : Aziz a rappelé que cette vidéo + le hook Sénégal utilisent LE MÊME principe
 > (objet-héros central qui RESTE, on enrichit autour) = notre doctrine de continuité. C'est la FORME JUSTE de
 > beaucoup de moments "data/abstrait". La règle n'est PAS "pas de templates" mais "intention → Data-Hero est
-> souvent la forme juste". Lié à [[CONTINUITE-SCENE-INTENTION-DABORD]] + `rules-data-driven-motion-design.md` (T1-T8).
+> souvent la forme juste". Lié à [[CONTINUITE-SCENE-INTENTION-DABORD]] + `memory/rules/rules-data-driven-motion-design.md` (T1-T8).
 > ⚠️ NE PAS en faire un template-first aveugle : abstrait→Data-Hero Remotion OK, mais SPATIAL/jugements→CARTE (Aziz).
 
 ## 1. LE PIVOT CENTRAL (la technique-clé)
@@ -62,7 +62,7 @@ Données = SEULEMENT les 8 zones périph. Max 2 zones occupées à la fois (souv
 6. Fond évolue avec le sens (chaud→froid→sombre), vignette+grain montent.
 7. Transition : cut/fondu court, OU morph du pivot si narratif.
 
-## MAPPING vers notre doctrine T1-T8 (rules-data-driven-motion-design.md)
+## MAPPING vers notre doctrine T1-T8 (memory/rules/rules-data-driven-motion-design.md)
 T5 Permanent Motion Anchor = LE PIVOT. T1 Narration-Synced Reveal = data qui apparaît sur le mot.
 T3 Counter = compteur. T2 Asymmetric Bar = comparaison LEFT/RIGHT. T7 Verdict Impact = le verdict rouge.
 T6 Progressive Background = fond=sens. T8 Separator = la ligne diviseur État/Privé. → On AVAIT déjà tout.

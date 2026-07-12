@@ -24,6 +24,9 @@
 | Une dégradation / mort progressive | L'élément rétrécit et perd sa couleur vers le gris | `opacity` + `scale` vers 0 + filtre desaturation | Arbre Sahel → Souche, Sol vert → Sol aride |
 | Une graine qui germe (micro-naissance) | Graine apparaît (spring rebond), puis se fend, poussin émerge | `spring-elastique-overshoot` puis `reveal-clippath-bottom-up` | Graine (`elements/nature/trees/`) |
 | Un soleil qui se lève | Disque monte depuis le bas, rayons s'étendent | `reveal-clippath-bottom-up` (disque) + `strokeDashoffset-drawing` (rayons) | Soleil radiant (`elements/nature/sun/`) |
+| Une barre de données qui apparaît avec vitalité | Barre grandit depuis sa base avec léger rebond | `spring-bar-grow-in` (spring damping:12-14, stiffness:80-100, ancre = base de la barre) | `InkBarChart` |
+| Une part d'un tout qui se dessine (camembert/anneau) | Arc qui se trace en cercle depuis un point de départ | `donut-arc-draw` (`strokeDashoffset` sur `<circle>`/`<path>` arc, `pathLength:1`) | `InkDonutChart` |
+| Un chiffre qui défile jusqu'à sa valeur finale | Chiffres qui roulent (odomètre) puis se stabilisent | `counter-roll-up` (interpolate valeur 0→cible, easing ease-out, pas de linéaire) | `CounterEncre` |
 
 ---
 

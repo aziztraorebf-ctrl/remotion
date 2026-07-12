@@ -8,7 +8,7 @@
  * - HookDisplacementBurst : onde de choc DEFORMANTE a un frame donne (feDisplacementMap qui s'attenue).
  *                           Donne le "tremblement de terre / deflagration" a un impact (lock, contagion).
  *
- * Doctrine : memory/HOOKS-LIBRARY-PLAN.md (Partie B). Catalogue : HOOKS-LIBRARY-CATALOGUE.md.
+ * Doctrine : memory/projects/HOOKS-LIBRARY-PLAN.md (Partie B). Catalogue : HOOKS-LIBRARY-CATALOGUE.md.
  */
 
 import React from "react";

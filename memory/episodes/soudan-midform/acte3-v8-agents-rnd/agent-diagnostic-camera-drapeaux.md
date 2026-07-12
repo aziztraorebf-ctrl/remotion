@@ -6,7 +6,7 @@ Fichiers examinés : `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`,
 `src/projects/warmap/engine/SoudanWarMapEngine.tsx`,
 `src/projects/_shared/mapbox/useClipFlags.tsx`, `MapboxCountryFlagDecal.tsx`,
 `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`, `memory/doctrines/WARMAP-GRAMMAIRE.md`,
-`memory/_r-and-d-mapanimation-ANALYSE.md`. Frames extraites de `_incoming/silk road 1.mov`
+`memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md`. Frames extraites de `_incoming/silk road 1.mov`
 et `_incoming/silk road 2.mov` (ffmpeg fps=0.5).
 
 **Correctif factuel préalable** : la consigne indique Darfour/Khartoum "50-80km" — c'est

@@ -6,7 +6,8 @@ import os, sys, base64, requests
 from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv(Path("/Users/clawdbot/Workspace/remotion/.env"))
+ROOT = Path(__file__).resolve().parents[2]
+load_dotenv(ROOT / ".env")
 URL = "https://openrouter.ai/api/v1/chat/completions"
 MODEL = "moonshotai/kimi-k2.5"
 

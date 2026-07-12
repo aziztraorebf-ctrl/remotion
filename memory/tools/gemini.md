@@ -73,6 +73,9 @@ for part in response.candidates[0].content.parts:
 config={"responseModalities": ["image", "text"]}
 ```
 
+**GOTCHA — SDK `google-genai` (client.models.generate_content) hang silencieusement (2026-07-04) :**
+Observé sur `google-genai==1.63.0` dans cet environnement : `client.models.generate_content(...)` (via `genai.Client`, package `from google import genai`) peut bloquer indéfiniment (aucune exception, aucun timeout, CPU figé) sur un appel i2i avec image de référence, alors que le MÊME prompt via l'API REST brute (`requests.post` vers `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key=...`) répond normalement en quelques secondes. Reproduit 2x de suite (y compris après kill+relance du process). Contournement : appeler l'API REST directement avec `requests` au lieu du SDK — body `{"contents":[{"parts":[{"inline_data":{"mime_type":"image/png","data":base64...}},{"text":prompt}]}]}`, reponse dans `data["candidates"][0]["content"]["parts"]` avec `part["inlineData"]["data"]` (base64 à decoder explicitement ici, contrairement au SDK). Si un script Gemini i2i/génération semble bloqué sans log au-delà de 60-90s, ne pas re-essayer le SDK — basculer direct sur requests.
+
 **GOTCHA — parts=None (prompt refusé) :**
 Si `response.candidates[0].content.parts` retourne `None`, Gemini a refusé de générer l'image.
 Causes fréquentes : prompt trop abstrait ("pure dark", "no shapes", "black background") → reformuler avec description concrète de texture photographique.

@@ -230,7 +230,7 @@ view map 0–4s cinematic zoom into India... → 12–15s slow zoom-out keeping 
 "Dual Slow Zoom-Out" mais le prompt (intégral, 155 caractères, pas tronqué) décrit juste UNE carte avec
 2 pays cadrés ensemble à la fin, PAS un split-screen structurel à volets séparés. **mapanimation.io n'a
 aucun template split-screen** — leur format est mono-carte du début à la fin, cohérent avec le constat
-déjà écrit dans `_r-and-d-mapanimation-ANALYSE.md` (§3 AXE A/B) qui ne liste aucun split dans leur
+déjà écrit dans `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md` (§3 AXE A/B) qui ne liste aucun split dans leur
 catalogue. Ce n'est pas un gap de recherche, c'est une case vide chez eux.
 
 **Verdict problème 3** : rien à emprunter au concurrent (ils n'ont pas ce pattern). La vraie voie est
