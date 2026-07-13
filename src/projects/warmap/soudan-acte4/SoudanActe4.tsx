@@ -37,8 +37,6 @@ import { useClipFlags, ClipFlag } from "../../_shared/mapbox/useClipFlags";
 import { ATLAS } from "../engine/sudanControlData";
 import { SmokeColumn } from "../_shared/warmapChoc";
 import { HookDisplacementBurst } from "../../_shared/hooks-lib/HookEffects";
-import { feature } from "topojson-client";
-import { geoMercator, geoPath } from "d3-geo";
 import { PART_OFFSETS, BEAT1, BEAT2, BEAT3, BEAT4, BEAT5, BEAT6 } from "./soudanActe4Timing";
 
 export const SOUDAN_A4_FPS = 30;
@@ -808,28 +806,38 @@ const CAM5: CamKey[] = [
   { f: F5.end, lon: 33, lat: 24, zoom: 2.5 },
 ];
 
-// ⭐ v2 (agents R&D densité+synthèse, 2026-07-11) : le texte dit "quatre puissances" mais seules 2
-// flèches (Russie/Égypte) étaient dessinées — EAU et Turquie (établies Acte 3) manquaient, laissant un
-// dézoom large sur une carte majoritairement vide. Fix : 4 flèches + 4 mini-volets territoire empilés
-// par paire (gauche: EAU+Turquie, droite: Russie+Égypte) — pattern SidePanelTerritory/ConvergingConnector
-// de l'Acte 3, étendu. NE PAS réduire le zoom (le système global doit se lire d'un coup d'œil, cf agents).
+// géo des 2 puissances "nouvelles" au beat 6 (EAU, Turquie — Russie/Égypte déjà définies plus haut)
 const DUBAI: [number, number] = [55.27, 25.2];
-const ANKARA: [number, number] = [32.86, 39.93];
-type Beat6Panel = { iso: string; geoName: string; color: string; fact: string };
-const BEAT6_PANELS_LEFT: Beat6Panel[] = [
-  { iso: "ae", geoName: "United Arab Emirates", color: ATLAS.gold, fact: "Or et drones vers les RSF" },
-  { iso: "tr", geoName: "Turkey", color: ATLAS.saf, fact: "Drones Bayraktar vers le SAF" },
+// décalé au nord du vrai Ankara (35.5, 39.93 -> 35, 40.5) — le point réel est trop proche du bord sud du
+// pays, son label ArrivalLabel se faisait recouvrir par le drapeau turc qui se colorie juste en dessous.
+const ANKARA: [number, number] = [35, 40.8];
+
+// ⭐ v2 (session 10, 2026-07-12, retour Kimi via Aziz) : SÉQUENÇAGE TEMPOREL remplace les 4 panneaux fixes
+// (~40% d'écran occupé en permanence, la carte devenait un fond décoratif). La voix ne nomme les 4
+// puissances qu'UNE FOIS ("quatre puissances étrangères", pas une par une) — le séquençage est donc un
+// choix de MONTAGE PUR après ce mot-déclencheur, pas une synchro vocale phrase par phrase. Chaque
+// puissance apparaît l'une après l'autre (flux qui se trace + label), puis convergence finale où les 4
+// flux "respirent" en phase (pression coordonnée, cf note Kimi "pas un chaos").
+type PowerFlow = { key: string; waypoints: [number, number][]; color: string; label: string; fact: string };
+const POWER_FLOWS: PowerFlow[] = [
+  { key: "ru", waypoints: [MOSCOW, KHARTOUM], color: RUSSIA_RED, label: "Russie", fact: "Base navale en négociation" },
+  { key: "ae", waypoints: [DUBAI, [47, 25.5], [38, 24.5], DARFUR], color: ATLAS.gold, label: "Émirats", fact: "Or et drones vers les RSF" },
+  { key: "tr", waypoints: [ANKARA, [33, 32], [32.7, 24], KHARTOUM], color: ATLAS.saf, label: "Turquie", fact: "Drones Bayraktar vers le SAF" },
+  { key: "eg", waypoints: [CAIRO, KHARTOUM], color: "#C9973A", label: "Égypte", fact: "Renseignement, profondeur stratégique" },
 ];
-const BEAT6_PANELS_RIGHT: Beat6Panel[] = [
-  { iso: "ru", geoName: "Russia", color: RUSSIA_RED, fact: "Base navale en négociation" },
-  { iso: "eg", geoName: "Egypt", color: "#C9973A", fact: "Renseignement, profondeur stratégique" },
-];
+const FLOW_STAGGER = 26; // ~0.87s entre chaque puissance — assez pour lire, pas assez pour traîner
+const FLOW_DRAW = 22; // durée du tracé lui-même
 
 const Section5: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   const frame = useCurrentFrame();
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
 
-  const flechesOpacity = interpolate(frame, [F5.quatrePuissances, F5.quatrePuissances + 30], [0, 0.5], clamp);
+  const flowStartAt = (i: number) => F5.quatrePuissances + i * FLOW_STAGGER;
+  const convergeAt = flowStartAt(POWER_FLOWS.length - 1) + FLOW_DRAW + 20; // après la dernière puissance
+
+  // convergence finale : les 4 flux "respirent" ensemble en phase (sinus commun), pas un chaos
+  const breathPhase = (Math.sin((frame - convergeAt) * 0.08) + 1) / 2; // 0..1
+  const convergeT = interpolate(frame, [convergeAt, convergeAt + 20], [0, 1], clamp);
 
   const alternPhase = Math.sin(frame * 0.04);
   const zones: ZoneControl[] = [
@@ -850,20 +858,47 @@ const Section5: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
 
           return (
             <>
-              {/* 4 flèches externes visibles ensemble (EAU, Turquie, Russie, Égypte) — traces fantômes,
-                  reprend les trajets déjà établis Acte 3 (or/drones Turquie) + Acte 4 (Russie/Égypte) */}
-              {frame >= F5.quatrePuissances && (
-                <>
-                  <GeoFlowConnection map={fakeMap} waypoints={[MOSCOW, KHARTOUM]} progress={1} markerProgress={1}
-                    lineColor={RUSSIA_RED} lineOpacity={flechesOpacity} hideMarker persistAfterArrival persistOpacity={flechesOpacity} dashOffsetFrame={frame} />
-                  <GeoFlowConnection map={fakeMap} waypoints={[CAIRO, KHARTOUM]} progress={1} markerProgress={1}
-                    lineColor={ATLAS.saf} lineOpacity={flechesOpacity} hideMarker persistAfterArrival persistOpacity={flechesOpacity} dashOffsetFrame={frame} />
-                  <GeoFlowConnection map={fakeMap} waypoints={[DUBAI, [47, 25.5], [38, 24.5], DARFUR]} progress={1} markerProgress={1}
-                    lineColor={ATLAS.gold} lineOpacity={flechesOpacity} hideMarker persistAfterArrival persistOpacity={flechesOpacity} dashOffsetFrame={frame} />
-                  <GeoFlowConnection map={fakeMap} waypoints={[ANKARA, [33, 32], [32.7, 24], KHARTOUM]} progress={1} markerProgress={1}
-                    lineColor={ATLAS.saf} lineOpacity={flechesOpacity} hideMarker persistAfterArrival persistOpacity={flechesOpacity} dashOffsetFrame={frame} />
-                </>
-              )}
+              {POWER_FLOWS.map((f, i) => {
+                const startAt = flowStartAt(i);
+                if (frame < startAt) return null;
+                const drawProgress = interpolate(frame, [startAt, startAt + FLOW_DRAW], [0, 1], clamp);
+                // avant convergence : chaque flux à opacité pleine dès qu'il apparaît. Après convergence :
+                // les 4 respirent ensemble (même fonction sinus) pour figurer la pression coordonnée.
+                const baseOp = interpolate(frame, [startAt, startAt + 14], [0, 0.55], clamp);
+                const op = frame >= convergeAt ? 0.4 + breathPhase * 0.3 : baseOp;
+                const startPt = proj(f.waypoints[0]);
+                return (
+                  <React.Fragment key={f.key}>
+                    <GeoFlowConnection map={fakeMap} waypoints={f.waypoints} progress={drawProgress} markerProgress={drawProgress}
+                      lineColor={f.color} lineOpacity={op} hideMarker persistAfterArrival persistOpacity={op} dashOffsetFrame={frame} />
+                    {startPt && (
+                      <ArrivalLabel pos={startPt} frame={frame} appear={startAt} label={f.label} color={f.color} />
+                    )}
+                  </React.Fragment>
+                );
+              })}
+
+              {/* halo central de convergence — le moment fort désigné par Kimi, où le système global se lit.
+                  ⭐ v2 (renforcé, diagnostic frame réelle) : anneau simple trop discret (stroke 2px), passé
+                  à 3 anneaux échelonnés + flash net au pic d'entrée pour que le moment soit VRAIMENT visible. */}
+              {convergeT > 0.01 && (() => {
+                const centerPt = proj([32, 20]);
+                if (!centerPt) return null;
+                const entryFlash = interpolate(frame, [convergeAt, convergeAt + 6, convergeAt + 26], [0, 1, 0], clamp);
+                return (
+                  <svg style={{ position: "absolute", inset: 0, pointerEvents: "none" }} width={1920} height={1080}>
+                    {[0, 0.33, 0.66].map((offset) => {
+                      const t = (breathPhase + offset) % 1;
+                      const r = 30 + t * 90;
+                      const op = (1 - t) * convergeT * 0.55;
+                      return <circle key={offset} cx={centerPt.x} cy={centerPt.y} r={r} fill="none" stroke={ATLAS.gold} strokeWidth={3} opacity={op} />;
+                    })}
+                    {entryFlash > 0.01 && (
+                      <circle cx={centerPt.x} cy={centerPt.y} r={70} fill="none" stroke="#FFFFFF" strokeWidth={4} opacity={entryFlash * 0.7} />
+                    )}
+                  </svg>
+                );
+              })()}
 
               {(() => { const p = proj(DARFUR); return p && <SoudanToken pos={p} faction="rsf" frame={frame} appear={0} />; })()}
               {(() => { const p = proj(KHARTOUM); return p && <SoudanToken pos={p} faction="saf" frame={frame} appear={0} />; })()}
@@ -874,76 +909,28 @@ const Section5: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
         }}
       </SoudanWarMapEngine>
 
-      {/* 4 mini-volets territoire empilés par paire — meublent le dézoom avec les 4 puissances réelles */}
-      <Beat6PowerPanels frame={frame} appear={F5.quatrePuissances + 10} />
-
+      {/* géoplaque factuelle séquentielle — 1 fait à la fois, synchronisée avec l'apparition de chaque
+          flux (remplace les 4 panneaux fixes qui occupaient ~40% de l'écran en permanence) */}
+      {POWER_FLOWS.map((f, i) => {
+        const startAt = flowStartAt(i);
+        const nextAt = i < POWER_FLOWS.length - 1 ? flowStartAt(i + 1) : convergeAt;
+        return <SinglePowerFact key={f.key} frame={frame} appear={startAt + 8} fadeAt={nextAt} label={f.label} fact={f.fact} color={f.color} />;
+      })}
     </AbsoluteFill>
   );
 };
 
-const Beat6PowerPanels: React.FC<{ frame: number; appear: number }> = ({ frame, appear }) => {
-  const [topo, setTopo] = React.useState<any>(null);
-  React.useEffect(() => {
-    fetch(staticFile("_shared/geo-data/countries-50m.json")).then((r) => r.json()).then(setTopo).catch(() => {});
-  }, []);
-  if (!topo || frame < appear - 2) return null;
-  const panelW = 1920 * 0.16;
-  const panelH = 1080 * 0.42;
-  return (
-    <>
-      {BEAT6_PANELS_LEFT.map((p, i) => (
-        <MiniPowerPanel key={p.iso} panel={p} side="left" row={i} topology={topo} frame={frame}
-          appear={appear + i * 8} panelW={panelW} panelH={panelH} />
-      ))}
-      {BEAT6_PANELS_RIGHT.map((p, i) => (
-        <MiniPowerPanel key={p.iso} panel={p} side="right" row={i} topology={topo} frame={frame}
-          appear={appear + 16 + i * 8} panelW={panelW} panelH={panelH} />
-      ))}
-    </>
-  );
-};
-
-const MiniPowerPanel: React.FC<{
-  panel: Beat6Panel; side: "left" | "right"; row: number; topology: any; frame: number; appear: number;
-  panelW: number; panelH: number;
-}> = ({ panel, side, row, topology, frame, appear, panelW, panelH }) => {
-  const flagUrl = staticFile(`_shared/flags/${panel.iso}.png`);
-  const { pathD, bbox } = React.useMemo(() => {
-    try {
-      const fc = feature(topology, topology.objects.countries) as unknown as { features: any[] };
-      const feat = fc.features.find((f: any) => f.properties?.name === panel.geoName);
-      if (!feat) return { pathD: "", bbox: [[0, 0], [panelW, panelH]] as [[number, number], [number, number]] };
-      const proj = geoMercator().fitExtent([[16, 16], [panelW - 16, panelH - 60]], feat);
-      const gp = geoPath(proj);
-      return { pathD: gp(feat) ?? "", bbox: gp.bounds(feat) as [[number, number], [number, number]] };
-    } catch { return { pathD: "", bbox: [[0, 0], [panelW, panelH]] as [[number, number], [number, number]] }; }
-  }, [topology, panel.geoName, panelW, panelH]);
-
-  const op = interpolate(frame, [appear, appear + 20], [0, 1], clamp);
-  const slideIn = interpolate(frame, [appear, appear + 22], [side === "left" ? -panelW * 0.4 : panelW * 0.4, 0], clamp);
+const SinglePowerFact: React.FC<{ frame: number; appear: number; fadeAt: number; label: string; fact: string; color: string }> =
+  ({ frame, appear, fadeAt, label, fact, color }) => {
+  const op = interpolate(frame, [appear, appear + 14, fadeAt, fadeAt + 14], [0, 1, 1, 0], clamp);
   if (op <= 0.01) return null;
-  const [[bx0, by0], [bx1, by1]] = bbox;
-  const clipId = `a4-mini-${panel.iso}`;
-  const top = 90 + row * (panelH + 12);
-
   return (
-    <div style={{
-      position: "absolute", top, [side]: 14, width: panelW, height: panelH, overflow: "hidden",
-      opacity: op, transform: `translateX(${slideIn}px)`, borderRadius: 8,
-      background: "radial-gradient(ellipse at 50% 42%, rgba(58,42,24,0.5) 0%, rgba(20,14,7,0.85) 78%)",
-      boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
-    }}>
-      <svg width={panelW} height={panelH} viewBox={`0 0 ${panelW} ${panelH}`} style={{ position: "absolute", inset: 0 }}>
-        <defs><clipPath id={clipId}><path d={pathD} /></clipPath></defs>
-        {flagUrl && pathD && (
-          <image href={flagUrl} x={bx0} y={by0} width={bx1 - bx0} height={by1 - by0}
-            preserveAspectRatio="xMidYMid slice" clipPath={`url(#${clipId})`} opacity={0.92} />
-        )}
-        <path d={pathD} fill="none" stroke={ATLAS.cream} strokeWidth={1.6} opacity={0.7} />
-      </svg>
-      <div style={{ position: "absolute", bottom: 8, left: 8, right: 8, textAlign: "center" }}>
-        <div style={{ color: ATLAS.cream, fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 13,
-          lineHeight: 1.2, textShadow: "0 2px 6px rgba(0,0,0,0.9)" }}>{panel.fact}</div>
+    <div style={{ position: "absolute", bottom: 90, left: 0, right: 0, textAlign: "center", opacity: op, pointerEvents: "none" }}>
+      <div style={{ display: "inline-block", padding: "10px 22px", background: "rgba(20,14,7,0.55)", borderRadius: 6, borderLeft: `4px solid ${color}` }}>
+        <span style={{ color: ATLAS.gold, fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 20,
+          letterSpacing: "0.02em", textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          {label} — {fact}
+        </span>
       </div>
     </div>
   );
