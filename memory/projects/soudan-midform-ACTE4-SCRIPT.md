@@ -4,6 +4,10 @@
 > **5 actes au total**, pas 4. Acte 4 = Russie + Égypte, angle "même les voisins qui devraient calmer le
 > jeu sont aspirés dedans" — distinct de l'angle Acte 3 ("qui finance"). Acte 5 (à écrire ensuite) = verrou
 > institutionnel UA/ONU/Quad + conclusion ouverte.
+> [NOTE 2026-07-12 : re-scission — l'Acte 5 mentionné ci-dessus est lui-même scindé en 2. Le pont VOIX en
+> fin de ce script ("une organisation existe... reste inactive") reste intact et fonctionne pour les deux :
+> le nouvel Acte 5 (réseau EAU-Libye-Haftar, script écrit `soudan-midform-ACTE5-SCRIPT.md`) y répond par un
+> fait concret ; le nouvel Acte 6 (pas encore écrit) détaille le verrou institutionnel décrit ci-dessus.]
 > **v1 → Tavily → Sonar Pro → Tavily ciblé de contrôle → v2 → Jury LLM clarté → v3 → Jury LLM densité/flux
 > → v4 → relecture finale Aziz → v5 (ce fichier)**. Le v1 écrivait un fait FAUX (officiers égyptiens tués
 > à Kosti) — corrigé en v2. Le 1er jury (clarté phrase-par-phrase) a corrigé 3 défauts unanimes → v3. Un

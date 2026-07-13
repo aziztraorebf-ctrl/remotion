@@ -139,7 +139,7 @@ Le gate factuel a invalidé/nuancé 4 affirmations du fichier sujet. **À ne PAS
 
 ---
 
-## ACTE 4 [NOTE 2026-07-10 : cette section documente en fait la matière de l'ACTE 5 actuel — verrou institutionnel + conclusion. La structure a été scindée en 5 actes (décision actée, voir `NEXT-ACTION.md`/`STATUS.md` § ACTE 4). Les données Russie/Égypte du NOUVEL Acte 4 sont dans `soudan-midform-ACTE4-SCRIPT.md`, PAS ici] — POURQUOI ÇA NE S'ARRÊTE PAS (UA/ONU + paradoxe)
+## ACTE 4 [NOTE 2026-07-10 : cette section documente en fait la matière de l'ACTE 5 actuel — verrou institutionnel + conclusion. La structure a été scindée en 5 actes (décision actée, voir `NEXT-ACTION.md`/`STATUS.md` § ACTE 4). Les données Russie/Égypte du NOUVEL Acte 4 sont dans `soudan-midform-ACTE4-SCRIPT.md`, PAS ici] [NOTE 2026-07-12 : re-décalage — depuis la scission de l'Acte 5 en 2 (Acte 5 = réseau EAU-Libye-Haftar, Acte 6 = ce contenu institutionnel), cette section documente maintenant l'ACTE 6, pas l'Acte 5. Voir `soudan-midform-ACTE5-SCRIPT.md` pour le nouvel Acte 5.] — POURQUOI ÇA NE S'ARRÊTE PAS (UA/ONU + paradoxe)
 
 - **UA** : Soudan **suspendu depuis oct. 2021** (coup d'État). Al-Burhan refuse médiation UA tant que suspension non levée → UA récusée comme médiateur. Membres-clés UA eux-mêmes parties par proxy (Égypte pro-SAF). [Garowe Online — 2025]
 - **ONU** : **veto russe 18 nov. 2024** (résolution UK + Sierra Leone, cessez-le-feu) = seul vote contre sur 15. Embargo ONU sur le **Darfour seulement** (pas tout le Soudan), monitoring défaillant. [France24 / HRW / UN Press — nov. 2024]
@@ -148,7 +148,8 @@ Le gate factuel a invalidé/nuancé 4 affirmations du fichier sujet. **À ne PAS
 - **Polymarket** : ceasefire 2026 ≈ **28%** (pas 19%), bouge → revérifier au montage.
 
 ⛔ **CONTRAINTE D'ÉCRITURE [NOTE 2026-07-10 : concerne maintenant l'ACTE 5, ou potentiellement l'Acte 1
-comme le texte lui-même le suggère plus bas] (Aziz 2026-06-16) — NUANCE DARFOUR (report depuis Acte 2)** :
+comme le texte lui-même le suggère plus bas] [NOTE 2026-07-12 : depuis la scission, "ACTE 5" ci-dessus
+signifie maintenant ACTE 6] (Aziz 2026-06-16) — NUANCE DARFOUR (report depuis Acte 2)** :
 L'Acte 2 dit « les forces de Hemeti sont chez elles à l'ouest » — juste MILITAIREMENT (sanctuaire logistique, recrutement tribal arabe) mais NE DOIT PAS laisser croire que toute la population du Darfour les soutient. **Cet acte (coût humain) DOIT révéler explicitement** : la RSF y commet un **génocide ciblé** contre les communautés non-arabes (**Zaghawa, Masalit, Fur** — qualification Mission ONU 17-19 fév. 2026 + CPI, voir El Fasher). Le Darfour n'est PAS un bloc RSF homogène (poche pro-SAF Zaghawa au NO Darfour : Tina/Kornoi, déjà dans la grille territoriale). Effet recherché : le spectateur réalise rétroactivement le vrai sens de « chez elles » = un fief tenu par la terreur, pas un soutien populaire. Le visuel Acte 1 peut déjà le suggérer (la poche pro-SAF visible dans le Darfour RSF).
 
 ---

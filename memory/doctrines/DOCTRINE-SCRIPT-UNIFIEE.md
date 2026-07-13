@@ -260,6 +260,20 @@ Formules validées :
 
 **C'est la règle la plus souvent oubliée.** Un script techniquement juste mais sans présence = un exposé. Si en relisant un acte le narrateur n'apparaît jamais → ajouter un connecteur.
 
+> ⚠️ **PIÈGE (gravé 2026-07-12, Soudan Acte 5)** : ajouter un connecteur en COCHANT la règle ("il en manque
+> un, où le caser ?") plutôt qu'en le SENTANT phrase par phrase produit un résultat PIRE que l'original,
+> même si la règle individuelle était juste. Preuve : passe "incarnation" sur le script Acte 5 a inséré
+> "Et voici ce qu'on sait" juste après "il faut comprendre pourquoi elle reste bloquée" — connecteur
+> techniquement conforme à la règle 10, mais décrochage de ton immédiatement repéré par Aziz ("en voulant
+> trop simplifier, on se retrouve avec quelque chose qui sonne peut-être même moins bien qu'avant"). C'est
+> la MÊME erreur de fond que le point 0 de la gate (une règle qualitative traitée comme un algorithme de
+> remplissage plutôt qu'un jugement d'oreille) — ici reproduite spécifiquement sur la règle 10, après avoir
+> déjà été gravée pour l'ensemble de la gate le 2026-07-10. **Test réel** : lis la phrase AVANT et APRÈS le
+> connecteur à voix haute, dans l'ordre — est-ce que la 2e phrase répondrait naturellement à la 1re SANS le
+> connecteur ? Si oui, le connecteur est décoratif, pas nécessaire, potentiellement il casse le rythme. Un
+> connecteur ne s'ajoute QUE là où son absence crée un vrai saut ou une sécheresse audible — jamais pour
+> remplir un quota "au moins un par acte".
+
 ## Règle 11 — Le paradoxe en premier, les preuves ensuite + zéro phrase sans verbe
 
 **Le paradoxe d'abord :** installer la contradiction centrale AVANT de montrer les faits. Les faits deviennent les preuves d'une thèse déjà posée, pas une accumulation qui mène à une conclusion. Et surtout — **tenir le paradoxe en tension**, ne pas le résoudre trop vite. C'est la tension non résolue qui retient.

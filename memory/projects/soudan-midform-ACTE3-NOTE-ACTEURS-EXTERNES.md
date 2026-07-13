@@ -73,4 +73,9 @@ l'inaction. Sans lui, l'Acte 5 risque de rester abstrait ; avec lui, il devient 
 Actes 3-4) sur ce réseau EAU-Libye-Colombie avant de l'intégrer au script. Aziz tranchera à ce moment si un
 Acte 6 est nécessaire ou si ça rentre dans l'Acte 5 tel que prévu.
 
+[NOTE 2026-07-12 : TRANCHÉ — Acte 6 créé. Fact-check fait (CONFIRMÉ, 4 sources indépendantes), script Acte
+5 écrit autour de ce fait (v6, non verrouillé, révision finale requise avant code) : voir
+`soudan-midform-ACTE5-SCRIPT.md`. Le contenu institutionnel UA/ONU/Quad + conclusion devient l'Acte 6, pas
+encore écrit.]
+
 Liens : [[soudan-midform-DONNEES]] · [[soudan-midform-STORYBOARD-ACTE2]] · [[WARMAP-LONG-DOCTRINE]] · [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]].

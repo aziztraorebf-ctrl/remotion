@@ -25,6 +25,7 @@ type: project
 - **Ancrage géo vérifié avant code** — test §2 obligatoire : "ancrage géographique réel ?" OUI → sur carte ; NON → overlay solide/plein écran
 - **6-8 événements pour un beat <60s** — entre les gros jalons, micro-événements (pulse, label, micro-zoom) pour ne jamais laisser la carte au repos (D-1)
 - **Overlay = MÉCANISME, jamais le texte de la voix** — un overlay qui affiche ce que la voix prononce = sous-titre = interdit (§8, D-8)
+- **⭐ SOUS-DIMENSIONNEMENT RÉCURRENT** — tout objet/effet (sprite, zoom, trajectoire, flash) doit être visible dès le premier coup d'œil sur render RÉEL, pas juste correct dans le code ; réflexe = agrandir/étaler/allonger l'ensemble, jamais une valeur isolée (R-V5)
 
 ---
 
@@ -355,6 +356,33 @@ HC porte la causalité par des BULLES de dialogue (`WTF!`, `DEBT ABOLITION!`, `T
 Le carré qui parle = l'acteur. C'est leur substitut au manque de personnages animés. NOUS avons jetons
 incarnés (chèche/cagoule) + PixelLab — notre incarnation est supérieure. On peut emprunter l'IDÉE (un
 acteur "réagit" → micro-pulse, léger recul du jeton) sans copier les bulles cartoon (trahirait l'ADN doc).
+
+### R-V5 — SOUS-DIMENSIONNEMENT RÉCURRENT : agrandir/étaler/allonger, jamais un ajustement isolé
+> Gravée 2026-07-12 (Soudan Acte 4, session 10). Pattern répété 4x dans le MÊME acte, nommé explicitement
+> par Aziz comme récurrent "à travers l'acte 4 et autres" — pas un bug isolé par beat mais un biais
+> systématique du premier jet en War-Map. Doctrines SŒURS déjà gravées pour ce même biais dans d'autres
+> registres du projet — le principe est mûr, juste absent d'un registre à l'autre : `SOUVERAIN-REMOTION-
+> PLAYBOOK.md` (« erreur récurrente de Claude : faire les textes/graphismes TROP PETITS et TROP TARDIFS au
+> premier jet », règle d'or élément HERO = 40-60% largeur/hauteur écran) · `WORKFLOW-DATAVIZ.md` (pictos
+> sous-dimensionnés, réflexe : agrandir de +40 à +50% vs la 1re estimation).
+
+**4 occurrences dans le même acte (Soudan Acte 4)** :
+- Whip pan Moscou : zoom 6.4 (échelle "ville") sur un territoire filtré immense (Russie occidentale,
+  `mainlandBox` lon 19-100°) — se lisait comme un point isolé perdu dans un vide kaki. Corrigé à zoom 3.6.
+- Drone Kosti (Beat 5) : sprite 40px fixe, trajectoire 272px sur 1.2s, zéro contraste avec le fond crème —
+  invisible <1s à l'écran malgré un code fonctionnel. Corrigé à 95px, ~770px/2s, + traînée + halo.
+- Jeton naval Port-Soudan (Beat 2) : 140px jugé "beaucoup trop petit" par Aziz au premier test sur la vraie
+  carte, alors même que c'était déjà plus gros qu'un jeton portrait standard (D=58px). Agrandi +50% (210px).
+- Flash "profondeur stratégique" (Beat 4, Nil) : trait blanc à la MÊME largeur que le trait plein déjà
+  affiché — techniquement présent dans le code, invisible sur render réel (noyé visuellement).
+
+**Règle** : tout objet/effet War-Map (sprite, trajectoire, flash, jeton, zoom) doit être jugé "est-il
+visible dès le premier coup d'œil sur render RÉEL, pas juste correct en lisant le code" — même test que
+`SOUVERAIN-REMOTION-PLAYBOOK.md` ("si après render il flotte petit avec du vide autour → trop petit,
+agrandir"). Le réflexe de correction est TOUJOURS d'agrandir/étaler/allonger la valeur en question, jamais
+un ajustement ponctuel isolé d'une seule propriété (ex. juste l'opacité sans la taille, ou juste la taille
+sans la durée du mouvement) — le sous-dimensionnement touche généralement plusieurs dimensions à la fois
+(taille ET durée ET contraste) et se corrige comme un ensemble, pas une variable seule.
 
 ---
 

@@ -57,9 +57,12 @@ Tout ce qui répond à cette question reste. Tout ce qui n'y répond pas est cou
 
 ## FORMAT — Mid-form 7-8 min
 
-**Structure en 5 actes** (révisée 2026-07-10 — décision actée avec Aziz, voir `NEXT-ACTION.md` +
+**Structure en 6 actes** (révisée 2026-07-10 — décision actée avec Aziz, voir `NEXT-ACTION.md` +
 `episodes/soudan-midform/STATUS.md` § ACTE 4 ; l'Acte 4 initialement prévu "verrou institutionnel" a été
-scindé en deux) :
+scindé en deux). [NOTE 2026-07-12 : re-scission — l'Acte 5 "verrou institutionnel + conclusion" décrit
+plus bas est lui-même scindé en 2. Nouvel Acte 5 = réseau EAU-Libye-Haftar (fait concret, script écrit :
+`soudan-midform-ACTE5-SCRIPT.md`). Nouvel Acte 6 = le contenu institutionnel/conclusion décrit ci-dessous
+sous "Acte 5", pas encore écrit.] :
 
 **Acte 1 — Le constat (1min30)**
 Carte simple : 2 couleurs. "L'armée" (SAF, nord/est) vs "les paramilitaires" (RSF, ouest/Darfour). Pas de jargon. 1 seul chiffre : 33M personnes. La carte montre l'étendue du territoire bloqué visuellement.
@@ -74,8 +77,11 @@ Carte s'élargit hors Soudan. 2 flèches seulement : EAU → RSF (armes + or), T
 Russie (bascule de soutien RSF→SAF en 2024, offre de base navale à Port-Soudan) + Égypte (soutien direct
 au SAF, motif Nil/profondeur stratégique). Script v5 VERROUILLÉ : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
 
-**Acte 5 — Pourquoi ça ne s'arrête pas (verrou institutionnel + conclusion)**
-UA, ONU, Quad : cercle fermé. Les acteurs qui pourraient forcer la paix ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste). Matière de fond déjà documentée dans `soudan-midform-DONNEES.md` (section actuellement étiquetée "ACTE 4" dans ce fichier — à lire comme Acte 5, voir note de clarification qui y est ajoutée).
+**Acte 5 — Le réseau qui arme dans l'ombre (EAU-Libye-Haftar)** [nouveau, 2026-07-12]
+Réseau de camps d'entraînement RSF financé par les Émirats, opéré via la Libye/maréchal Haftar, jusqu'au Soudan (El-Fasher). Répond concrètement au pont de l'Acte 4 ("pourquoi l'organisation reste inactive"). Script v6 écrit, fact-checké (4 sources indépendantes), jury LLM fait — **PAS verrouillé**, révision finale par Aziz requise avant storyboard/audio/code. Détail : `soudan-midform-ACTE5-SCRIPT.md`.
+
+**Acte 6 — Pourquoi ça ne s'arrête pas (verrou institutionnel + conclusion)** [ex-Acte 5, pas encore écrit]
+UA, ONU, Quad : cercle fermé. Les acteurs qui pourraient forcer la paix ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste). Matière de fond déjà documentée dans `soudan-midform-DONNEES.md` (section étiquetée "ACTE 4" dans ce fichier — à lire comme Acte 6 depuis 2026-07-12, voir note de clarification qui y est ajoutée).
 
 ---
 

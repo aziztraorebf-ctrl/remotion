@@ -1,27 +1,60 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-11 (session 7 — ACTE 3 « SUIVRE L'OR » FINAL PROMU, tous les problèmes v7 résolus
-> + Beat 1 refondu + SFX complets). Structure figée : **5 actes au total** (décision actée).
+> Mis a jour : 2026-07-12 (session 10 — Acte 4 refondu en 4 lots + script Acte 5 écrit). Structure
+> **6 actes au total** (Acte 5 scindé en 2 cette session, voir ci-dessous — décision actée).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : DIAGNOSTIC FAIT, BEAT 2 REFAIT, BEAT 4 RESTE (2026-07-12 s9)
+## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : SCRIPT ÉCRIT, RÉVISION FINALE REQUISE AVANT CODE (2026-07-12 s10)
 
-> Le diagnostic comparatif demandé en session 8 (pause de fond) a été fait cette session : mapping de
-> CODE (pas juste frames) des 4 vidéos de référence du projet (Short AES 90s longue + Actes 1-3 Soudan),
-> confirmé indépendamment par Gemini 3.1 Pro et Kimi K2.5. Conclusion : PAS de refonte structurelle
-> globale de l'acte — **le Beat 2 (base navale) est sorti de la régie Mapbox continue** et refait en
-> insert SVG plein écran narratif (`PortSoudanNegociationScene.tsx`, navire russe qui navigue vers
-> Port-Soudan, intégré dans `SoudanActe4.tsx`), validé Aziz. Les beats 1, 3, 4, 5, 6 restent en Mapbox
-> continu, non remis en cause. Détail complet : `episodes/soudan-midform/STATUS.md` § Beat 2 refonte
-> insert SVG (session 9) + `PLAN-ACTE4.md` § Régie globale AMENDÉ.
+> **PRIORITÉ 1.** Script Acte 5 (réseau EAU-Libye-Haftar-mercenaires, "le pourquoi concret" du blocage
+> institutionnel) écrit et sauvegardé : `memory/projects/soudan-midform-ACTE5-SCRIPT.md` (v6, historique
+> complet v1→v6 en note). Fact-check 3 niveaux CONFIRMÉ (4 sources indépendantes), jury LLM 3 modèles fait
+> (`memory/projects/soudan-midform-ACTE5-SCRIPT-jury-results.md`), plusieurs itérations de ton avec Aziz.
 >
-> **NEXT SESSION = Beat 4 (motif égyptien/Nil, "profondeur stratégique") reste à traiter**, en session
-> dédiée — même diagnostic applicable probablement (concept abstrait sans ancrage spatial fort, comme le
-> Beat 2 l'était). Composant `GradientPathReveal` de la session 8 reste la base technique mais la mise en
-> scène (storyboard + génération d'assets) reste entièrement à trancher. PUIS re-render l'acte complet
-> (131s) pour validation à l'écoute/à l'œil par Aziz, puis promotion si validé.
+> ⛔ **CE SCRIPT N'EST PAS VERROUILLÉ** comme le sont les scripts Actes 3-4 — **Aziz demande explicitement
+> une révision finale dans le mois, AVANT tout storyboard/audio/code**. Ne pas lancer de production sur ce
+> script sans repasser par lui d'abord.
+>
+> **Décision structurelle de cette session** : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad +
+> conclusion ouverte) est scindé en 2 — **nouvel Acte 5 = ce fait concret** (pourquoi le verrou est
+> bloqué, illustré par le réseau EAU-Libye) ; **nouvel Acte 6 = le verrou institutionnel détaillé +
+> conclusion** (reprend tel quel le contenu que l'ancien "Acte 5" devait couvrir, pas encore écrit).
+> Raison : 7 blocs factuels distincts ne tenaient pas confortablement dans un seul acte sans sous-
+> développer chaque beat (même leçon de densité que le diagnostic Acte 4 cette session). Le pont de
+> l'Acte 4 déjà verrouillé ("une organisation existe... elle est restée inactive") reste intact et
+> fonctionne pour les deux : Acte 5 y répond par le fait concret, Acte 6 detaille l'institution elle-même.
+>
+> **Plusieurs fichiers mémoire encore désynchronisés avec cette scission** (notes de clarification
+> ajoutées cette session, voir commit) : `soudan-midform.md`, `soudan-midform-POSITIONNEMENT.md`,
+> `soudan-midform-DONNEES.md`, `soudan-midform-ACTE4-SCRIPT.md` — tous décrivaient l'ancien "Acte 5 =
+> tout" avant cette clarification.
+
+## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : 4 LOTS DE REFONTE FAITS, EN ATTENTE VALIDATION AZIZ (2026-07-12 s10)
+
+> **PRIORITÉ 2.** Suite au visionnage du v6 (session 9) par Aziz, refonte en profondeur en 4 lots
+> (chacun vérifié par render isolé avant intégration) :
+> 1. **Beat 1 (Russie/Wagner)** : zoom Moscou dézoomé (6.4→3.6, le territoire filtré se lisait comme un
+>    point isolé) + bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
+> 2. **Beat 5 (Kosti, drone)** : pattern MapAnimation appliqué (sprite 40→95px, trajectoire 272→770px sur
+>    2s, traînée, halo de contraste, caméra qui accompagne) — corrige la scène jugée "la plus faible".
+> 3. **Beat 2 (Port-Soudan)** : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
+>    généré GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte, `_rnd/PortSoudanJetonCompare.tsx`),
+>    agrandi +50% (140→210px, sous-dimensionnement récurrent identifié sur tout l'acte, cf doctrine gravée
+>    ci-dessous).
+> 4. **Beat 3-4 (Égypte/Nil)** : zoom resserré (4.0-4.6→5.2-5.8), `CountryParchmentMask` (généralisé de
+>    `RussiaParchmentMask`) appliqué à l'Égypte, drapeau égyptien retiré de cette section (écrasait le
+>    masque à 92% opacité — bug diagnostiqué par indicateur de debug temporaire, cf leçon gravée). Nil :
+>    `GradientPathReveal` abandonné au profit d'un simple éclaircissement du tracé natif déjà dessiné par
+>    le fond de carte.
+> 5. **Beat 6 (synthèse 4 puissances)** : séquençage temporel (chaque puissance apparaît l'une après
+>    l'autre + convergence finale avec halo) remplace 4 panneaux fixes qui occupaient ~40% de l'écran en
+>    permanence (retour Kimi via Aziz).
+>
+> Render complet v7 fait (`out/episodes/soudan-midform/wip/acte4-v7-full.mp4`, catbox
+> `https://files.catbox.moe/riedly.mp4`, override tracé). **PAS encore promu FINAL** — en attente du
+> visionnage complet par Aziz (audio+visuel, pas juste des frames) avant promotion.
 >
 > **Acte 3 « Suivre l'or » reste FINAL et promu**, aucun changement : `out/PRET-PUBLICATION/soudan-midform/
 > soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`), catbox `https://files.catbox.moe/y2swv7.mp4`.
@@ -29,22 +62,22 @@
 > **Historique Acte 2** (FINAL, promu) : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`
 > · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
 >
-> **Structure 5 actes** toujours actée (Acte 5 = verrou institutionnel UA/ONU/Quad + conclusion, pas
-> encore écrit — nouveau fait à fact-checker le moment venu : réseau EAU-Libye-mercenaires colombiens,
-> cf `memory/projects/soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`).
+> **Leçon transversale gravée cette session dans `WARMAP-GRAMMAIRE.md`** : sous-dimensionnement récurrent
+> (whip pan trop serré, drone 40px, jeton 140px, flash noyé) — pattern nommé explicitement par Aziz comme
+> répété "à travers l'acte 4 et autres", pas un bug isolé par beat. Doctrines sœurs déjà existantes pour
+> ce même biais dans d'autres registres : `SOUVERAIN-REMOTION-PLAYBOOK.md` (textes/graphismes trop petits,
+> règle 40-60%), `WORKFLOW-DATAVIZ.md` (pictos sous-dimensionnés, +40-50%).
 >
-> **2 leçons méthodologiques gravées cette session dans `DOCTRINE-SCRIPT-UNIFIEE.md`** (règle 4bis
-> précision temporelle, règle 6bis densité cumulative/flux narratif) + nouvel outil réutilisable
-> `scripts/tools/jury-script-llm.py` (jury LLM fusionné clarté+densité en 1 seul passage, à utiliser pour
-> l'Acte 5 et tout futur script).
+> **Leçon méthodologique gravée dans `DOCTRINE-SCRIPT-UNIFIEE.md`** (règle 10, doctrine Tremblay) : une
+> doctrine d'écriture appliquée comme une checklist mécanique plutôt qu'un ressenti phrase par phrase
+> produit un résultat PIRE que l'original (script Acte 5, connecteurs de présence plaqués détectés
+> immédiatement par Aziz). 2e occurrence du même biais méthodologique déjà gravé pour la gate générale
+> (2026-07-10) — cette fois sur la règle 10 spécifiquement.
 >
-> 💡 **Option disponible pour PLUS TARD sur cet épisode (pas une obligation, juste visible ici)** : une fois
-> l'Acte 4 (et éventuellement l'Acte 5) avancés en storyboard/code, le skill `passe-amelioration-scene`
-> (N agents 1/scène + 1 agent transversal, doctrine `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`,
-> déjà prouvé sur War-Map Sahel AES) est un candidat naturel pour un audit qualité global de l'épisode
-> Soudan mid-form complet (5 actes déjà écrits/produits à des sessions différentes, avec des acquis
-> techniques différents à chaque fois — terrain typique pour cette méthode). Aziz demandera explicitement
-> ce skill le moment venu — ne pas le lancer de soi-même avant qu'il ne le dise.
+> 💡 **Option disponible pour PLUS TARD** : une fois l'Acte 4 validé et l'Acte 5/6 avancés, le skill
+> `passe-amelioration-scene` (doctrine `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`) est un
+> candidat naturel pour un audit qualité global de l'épisode complet. Aziz demandera explicitement ce
+> skill le moment venu — ne pas le lancer de soi-même avant qu'il ne le dise.
 
 ---
 

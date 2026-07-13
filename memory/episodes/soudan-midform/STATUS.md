@@ -1,33 +1,37 @@
 # Soudan Mid-form — STATUS
 
-## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-11 fin de session 8)
+## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-12 fin de session 10)
 
-**acte4-v4-full.mp4 N'EST PAS FINAL — c'est un point de sauvegarde technique, PAS une direction validée.**
-Ne PAS repartir de v4 pour continuer à peaufiner (couleurs, timing, petits fixes) comme si la direction
-était actée. Aziz envisage explicitement de **remettre en question tout le registre visuel de l'Acte 4**,
-possiblement en revenant en arrière sur l'approche.
+**DEUX chantiers en attente, dans cet ordre de priorité :**
 
-**Plan pour la prochaine session (dans cet ordre)** :
-1. **Revoir ensemble** (Claude + Aziz) le Short AES 90s (`out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4`)
-   ET les Actes 1-2 du Soudan (`soudan-acte2-blocage-FINAL.mp4`, hook+Acte 1 dans le même dossier) — PAS
-   l'Acte 3 ni l'Acte 4. Objectif : comprendre PAR COMPARAISON ce qui fonctionne dans ces registres validés
-   vs ce qui ne fonctionne pas dans l'Acte 4 actuel (v4). Zéro présomption sur la conclusion avant d'avoir
-   regardé — c'est un diagnostic ouvert, pas une confirmation d'un problème déjà identifié.
-2. Seulement APRÈS ce diagnostic comparatif : décider si l'Acte 4 continue sur son registre actuel
-   (Mapbox continu + `GradientPathReveal` pour le Nil, cf ci-dessous) ou si une direction différente est
-   nécessaire (possiblement une refonte structurelle, pas un simple fix).
-3. Puis clôture de session (`/wrap`).
+1. **Acte 5 (nouveau, script écrit) — révision finale par Aziz requise AVANT tout storyboard/audio/code.**
+   Script v6 sauvegardé : `memory/projects/soudan-midform-ACTE5-SCRIPT.md`. Sujet : réseau de camps
+   d'entraînement RSF financé par les Émirats, opéré via la Libye/maréchal Haftar, jusqu'au Soudan
+   (El-Fasher). Fact-check 3 niveaux CONFIRMÉ (4 sources indépendantes), jury LLM 3 modèles fait. **PAS
+   verrouillé comme les scripts Actes 3-4** — Aziz veut le rouvrir "dans le mois" avant de lancer la
+   production. Décision structurelle : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad + conclusion)
+   est scindé — devient l'**Acte 6**, pas encore écrit.
 
-**Ce qui existe déjà comme matière de travail** (ne pas repartir de zéro, mais ne pas non plus le traiter
-comme acquis) : script v5 verrouillé + audio généré + code écrit + `GradientPathReveal` (nouveau composant
-Beat 4) + synthèse DA-brief 3 modèles dans `PLAN-ACTE4.md`. Tout ça reste EXPLOITABLE si la direction est
-confirmée, mais rien n'est à considérer comme figé tant que le diagnostic comparatif n'a pas eu lieu.
+2. **Acte 4 — 4 lots de refonte faits, en attente de validation par VISIONNAGE COMPLET (audio+visuel).**
+   Suite au retour d'Aziz sur le v6 (session 9), refonte en profondeur cette session (10) :
+   - Beat 1 (Russie) : zoom Moscou dézoomé 6.4→3.6 (territoire filtré se lisait comme un point isolé) +
+     bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
+   - Beat 5 (Kosti, drone) : pattern MapAnimation appliqué (sprite 40→95px, trajectoire 272→770px/2s,
+     traînée, halo de contraste, caméra qui accompagne) — corrige la scène jugée "la plus faible" de l'acte.
+   - Beat 2 (Port-Soudan) : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
+     GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte), agrandi +50% (140→210px).
+   - Beat 3-4 (Égypte/Nil) : zoom resserré 4.0-4.6→5.2-5.8, `CountryParchmentMask` appliqué à l'Égypte
+     (drapeau retiré de cette section, écrasait le masque). Nil : `GradientPathReveal` abandonné pour un
+     simple éclaircissement du tracé natif déjà dessiné par le fond de carte.
+   - Beat 6 (synthèse) : séquençage temporel (1 puissance à la fois + convergence finale) remplace 4
+     panneaux fixes qui occupaient ~40% de l'écran en permanence.
+   Render complet v7 fait : `out/episodes/soudan-midform/wip/acte4-v7-full.mp4`, catbox
+   `https://files.catbox.moe/riedly.mp4`, override tracé (pas de review Gemini bloquante ce tour, faux
+   positif palette "navy" déjà tracé 3x cette session). **PAS encore promu FINAL.**
 
-**Ancien renders purgés cette session** (test/v2/v3 supprimés, seul v4 gardé comme dernier point technique) :
-`out/episodes/soudan-midform/wip/acte4-v4-full.mp4` (catbox `https://files.catbox.moe/jc19bc.mp4`) +
-review Kimi 6.2/10 avec override tracé (faux positif "barrage" vérifié et écarté, cf review-override.md
-à côté du mp4). Protos R&D conservés tels quels : `out/_r-and-d/soudan-acte4/` (dont 3 essais de globe
-rotatif écartés, piste distincte).
+**Leçon transversale gravée cette session** (`WARMAP-GRAMMAIRE.md` § R-V5) : sous-dimensionnement
+récurrent des objets/effets (4 occurrences dans le même acte) — réflexe de correction = toujours
+agrandir/étaler/allonger l'ensemble, jamais un ajustement isolé d'une seule valeur.
 
 ---
 
