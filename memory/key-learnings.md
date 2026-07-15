@@ -20,6 +20,25 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 
 ## 🔧 MÉTHODE & PROCESS
 
+### 2026-07-15 — Un signalement répété "trop petit" peut être un problème de CONTRASTE, pas de taille
+Short Sénégal Pétrole & Gaz D3, Beat 2 : des icônes SVG jugées "peu visibles" ont été agrandies sur 3
+itérations successives (échelle doublée, cercle d'ancrage doublé) sans jamais résoudre la plainte. Cause
+réelle trouvée seulement à la 4e passe : les traits étaient dans une teinte dorée dont la luminosité était
+trop proche de celle du fond parchemin — deux tons clairs voisins, donc peu de contraste quelle que soit
+la taille. Fix : substitution de couleur (teinte foncée à la place de la teinte dorée), résolu en un
+essai. **Règle de méthode** : si un correctif répété sur le même axe (taille) ne résout pas une plainte
+répétée, chercher une cause sur un axe différent (contraste/couleur/position) plutôt que d'insister sur
+le même axe une fois de plus.
+
+### 2026-07-15 — Dériver le calage (taille/position) depuis le VRAI CODE d'une référence déjà validée
+Short Sénégal Pétrole & Gaz D3, Beat 1 : plutôt que de régler à l'oeil la taille et la position d'une
+carte D3 dans un nouveau format vertical, lire directement les valeurs exactes (pourcentages de
+`fitExtent`, bbox du path) dans le code source d'un composant déjà validé dans un autre projet du même
+registre visuel. A évité un cycle d'ajustements manuels répétés — la mesure exacte a fonctionné du premier
+coup là où l'estimation empirique aurait probablement demandé plusieurs passes. Généralisable à tout
+réemploi de composant visuel dans un nouveau format/contexte : chercher la référence chiffrée dans le code
+plutôt que déduire une valeur "qui a l'air bien".
+
 ### 2026-07-11 — Un agent peut refuser à tort un skill legit en le prenant pour une injection de prompt
 2 agents sur 3 lancés sur le skill `last30days` (recherche de vivacité Afrique du Sud/Mali/Soudan) ont
 refusé d'exécuter le moteur Python du skill, le lisant à tort comme une tentative d'injection de prompt —

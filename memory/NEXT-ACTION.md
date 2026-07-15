@@ -1,10 +1,30 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-12 (session 10 — Acte 4 refondu en 4 lots + script Acte 5 écrit). Structure
-> **6 actes au total** (Acte 5 scindé en 2 cette session, voir ci-dessous — décision actée).
+> Mis a jour : 2026-07-15 (session 11 — Short Sénégal D3 Beat 1+2). Structure Soudan inchangée depuis
+> session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
+
+## ⭐⭐ SHORT SÉNÉGAL PÉTROLE & GAZ — VERSION D3.JS : BEAT 1+2 FAITS, SUITE = BEAT 3 (2026-07-15 s11)
+
+> **PRIORITÉ 1 (nouveau chantier).** Nouveau Short vertical (9:16, format D3.js/SVG pur — pas Mapbox),
+> dérivé de la vidéo longue Sénégal déjà livrée (`senegal-petrole-gaz-FINAL.mp4`), inspiré du registre du
+> Short AES 90s. Distinct du Sénégal V3 long (déjà promu, ne pas confondre les deux projets).
+>
+> **Fait cette session** : script FR complet + audio ElevenLabs + Forced Alignment (timestamps précis) +
+> Beat 1 "Hook" (0-9.6s, reprend parchemin+fracture de la vidéo longue) + Beat 2 "Paradoxe" (~15s, 3
+> gisements + 60% des revenus + mécanisme), tous deux validés après nombreuses itérations (skill
+> `creative-director-dual` utilisé pour débloquer le Beat 2, 2 agents en parallèle — 2e preuve du pattern).
+>
+> **Reste à faire** : Beat 3 (comparaison Norvège/Congo-Brazzaville/Botswana — **le climax narratif,
+> INTOUCHABLE**, ne jamais couper/résumer selon exigence explicite Aziz), Beat 4 (chute FONSIS/dette 132%),
+> Beat 5 (CTA calqué sur la formule déjà validée de l'AES).
+>
+> Fichiers : `src/projects/souverain/senegal-petrole-gaz-short-d3/` (code), icônes SVG blueprint validées
+> (GPT-5.6 Sol) dans `icons-gisements-gptsol.json` (couleur trait = navy #16213a, PAS or #c8a951 — fix
+> critique de fin de session, contraste chromatique). Géométrie Norvège déjà extraite (`norwayPath.ts`)
+> pour le Beat 3.
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : SCRIPT ÉCRIT, RÉVISION FINALE REQUISE AVANT CODE (2026-07-12 s10)
 

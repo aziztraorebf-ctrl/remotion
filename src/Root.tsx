@@ -267,6 +267,8 @@ import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petr
 import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
 import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
+import { Scene1Hook as SenegalShortD3Scene1Hook } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene1Hook";
+import { Scene2Paradoxe as SenegalShortD3Scene2Paradoxe } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene2Paradoxe";
 import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
 import { Beat3 as SenegalBeat3 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat3";
 import { Beat5 as SenegalBeat5 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat5";
@@ -1590,6 +1592,24 @@ export const RemotionRoot: React.FC = () => {
             fps={30}
             width={1280}
             height={720}
+          />
+        </Folder>
+        <Folder name="senegal-petrole-gaz-short-d3">
+          <Composition
+            id="SenegalShortD3-Scene1-Hook"
+            component={SenegalShortD3Scene1Hook}
+            durationInFrames={288}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene2-Paradoxe"
+            component={SenegalShortD3Scene2Paradoxe}
+            durationInFrames={489}
+            fps={30}
+            width={1080}
+            height={1920}
           />
         </Folder>
 
