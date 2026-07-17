@@ -178,3 +178,27 @@ sans casser l'épure ; jeter le bruit). Détail : `scripts/tools/REVIEW-TOOLS-IN
 - Lié au chantier [[decode-hera-templates]] : les 3 fonds + 6 familles servent comme *réponses* à une
   intention, jamais comme catalogue où l'on « cherche quoi mettre ».
 - Cas incarné : hook Sénégal `ProtoEffect_MapDrawParchemin` + suite `ProtoEffect_Fracture`.
+
+## Élément visuel qui traverse une frontière de scène (continuité au raccord)
+
+Quand un même élément visuel doit VIVRE EN CONTINU à cheval sur deux beats/scènes codés dans des
+fichiers séparés (une jauge qui monte sur Beat N puis déborde au début de Beat N+1, une barre qui se
+remplit, un niveau qui progresse), NE PAS le ré-instancier localement dans chaque scène avec une frame
+locale : extraire un COMPOSANT PARTAGÉ unique piloté par le TEMPS ABSOLU de narration (`tAbs` en
+secondes depuis le début de la vidéo), PAS par `useCurrentFrame()` local à la scène.
+
+**Pourquoi** : la frame locale redémarre à 0 à chaque `<Sequence>`/scène → l'élément « saute » au
+raccord. Le temps absolu de narration est le seul référentiel commun aux deux scènes → même formule des
+deux côtés = continuité EXACTE, vérifiable par calcul avant tout render.
+
+**Pattern (prouvé — Short Sénégal D3, `CalebasseDettePartagee.tsx`, 2026-07-17)** :
+- 1 seul composant partagé = SOURCE DE VÉRITÉ, importé dans les 2 scènes.
+- Il calcule sa progression à partir de `tAbs` (constantes de calage internes, ex. `START=82.4s`,
+  `FULL=100.8s`), jamais de `frame` locale.
+- Chaque `<Scene>` conserve son `T_OFFSET` absolu à l'assemblage pour que `tAbs` reste cohérent bout-à-bout.
+- Vérifier la continuité PAR CALCUL avant render : progression fin Beat N == progression début Beat N+1
+  (ex. 78% fin Beat 4 → 84% début Beat 5, zéro saut).
+- Gap narratif au raccord (ex. 1.14s de silence) : il fait partie du calage `tAbs`, le gérer selon le
+  montage audio, pas l'ignorer.
+
+Réf épisode : `memory/episodes/souverain/senegal-petrole-gaz/STATUS-SHORT-D3.md` (§ Continuité calebasse).

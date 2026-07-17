@@ -269,6 +269,10 @@ import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/sene
 import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
 import { Scene1Hook as SenegalShortD3Scene1Hook } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene1Hook";
 import { Scene2Paradoxe as SenegalShortD3Scene2Paradoxe } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene2Paradoxe";
+import { Scene3Comparaison as SenegalShortD3Scene3Comparaison } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene3Comparaison";
+import { Scene4Dette as SenegalShortD3Scene4Dette } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene4Dette";
+import { Scene5Cta as SenegalShortD3Scene5Cta } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene5Cta";
+import { ShortComplet as SenegalShortD3ShortComplet, SHORT_COMPLET_FRAMES } from "./projects/souverain/senegal-petrole-gaz-short-d3/ShortComplet";
 import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
 import { Beat3 as SenegalBeat3 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat3";
 import { Beat5 as SenegalBeat5 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat5";
@@ -1607,6 +1611,38 @@ export const RemotionRoot: React.FC = () => {
             id="SenegalShortD3-Scene2-Paradoxe"
             component={SenegalShortD3Scene2Paradoxe}
             durationInFrames={489}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene3-Comparaison"
+            component={SenegalShortD3Scene3Comparaison}
+            durationInFrames={1534}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene4-Dette"
+            component={SenegalShortD3Scene4Dette}
+            durationInFrames={605}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene5-Cta"
+            component={SenegalShortD3Scene5Cta}
+            durationInFrames={451}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-COMPLET"
+            component={SenegalShortD3ShortComplet}
+            durationInFrames={SHORT_COMPLET_FRAMES}
             fps={30}
             width={1080}
             height={1920}

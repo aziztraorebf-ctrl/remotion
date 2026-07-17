@@ -235,8 +235,12 @@ const GisementIcon: React.FC<{
 
   return (
     <g>
-      {/* halo doux derriere l'icone (ancrage visuel, pattern AES) */}
-      <circle cx={x} cy={y} r={58 * scale} fill="none" stroke={GOLD} strokeWidth={1.6} opacity={glowPulse * iconOp} />
+      {/* anneau d'ancrage autour de l'icone. FIX (retour Aziz : "cercles dores invisibles") : avant =
+          un seul trait OR clair (1.6px, opacite max 0.6) sur parchemin clair -> se noyait. Maintenant
+          DOUBLE anneau : (1) anneau NAVY epais (3px, opacite pleine) = contraste fort sur parchemin,
+          comme les icones ; (2) fin lisere OR qui PULSE par-dessus = garde l'accent dore vivant. */}
+      <circle cx={x} cy={y} r={58 * scale} fill="none" stroke={NAVY} strokeWidth={3} opacity={iconOp} />
+      <circle cx={x} cy={y} r={58 * scale} fill="none" stroke={GOLD_BRIGHT} strokeWidth={1.8} opacity={(0.5 + 0.4 * Math.sin(loopT * 0.12)) * iconOp} />
 
       {/* ICONE SVG EN GRAND, directement sur la carte — remplace le point d'ancrage (retour Aziz) */}
       <g
@@ -357,7 +361,10 @@ export const Scene2Paradoxe: React.FC = () => {
   // ResourcesRevealSVG9x16.tsx "res9-hatch") : le territoire lui-meme porte l'info, pas un widget a
   // cote. Wipe bas->haut jusqu'a 60% de la hauteur du path, puis "fuite" = le niveau redescend de
   // facon IRREGULIERE (pas un simple fade) sur la phrase "l'argent qui rentre ne garantit rien".
-  const hatchRiseT = interpolate(frame, [F_PIPE_START, F_PCT_SETTLE], [0, 1], clamp);
+  // FIX (retour Aziz : "ralentir pour qu'on ait le temps de voir le remplissage") : la montee etait
+  // sur F_PIPE_START->F_PCT_SETTLE (~2.7s). Etalee jusqu'a F_LEAK_START-8 (~3.3s, toute la fenetre
+  // avant la fuite) pour un remplissage plus progressif et lisible.
+  const hatchRiseT = interpolate(frame, [F_PIPE_START, F_LEAK_START - 8], [0, 1], clamp);
   const hatchLeakT = interpolate(frame, [F_LEAK_START, F_LEAK_END], [0, 1], clamp);
   // niveau cible : monte a 0.60 puis redescend vers 0.22 (fuite partielle, pas totale — reste un
   // residu visible, coherent avec "il y a de vrais garde-fous" du script complet plus loin dans la video)
@@ -389,8 +396,11 @@ export const Scene2Paradoxe: React.FC = () => {
           </filter>
           {/* hachures 60% des revenus — pattern repris de ResourcesRevealSVG9x16.tsx (AES, deja
               valide Aziz), transposees au registre Souverain (or sur ocre au lieu de noir sur couleur) */}
-          <pattern id="s2hatch60" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <line x1="0" y1="0" x2="0" y2="10" stroke={NAVY} strokeWidth={2.2} opacity={0.5} />
+          {/* FIX visibilite (retour Aziz : "60% un peu invisible") : hachures DENSIFIEES (width 10->7)
+              + opacite MONTEE (0.5->0.8) + trait un peu plus epais (2.2->2.6) -> le remplissage se voit
+              nettement sur l'ocre. */}
+          <pattern id="s2hatch60" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1="0" y1="0" x2="0" y2="7" stroke={NAVY} strokeWidth={2.6} opacity={0.8} />
           </pattern>
           <clipPath id="s2senegalClip">
             <path d={SENEGAL_PATH} />

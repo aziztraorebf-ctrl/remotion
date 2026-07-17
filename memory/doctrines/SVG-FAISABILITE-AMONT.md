@@ -103,6 +103,16 @@ par l'image-cible), Aziz tranche, PUIS on genere. Evite les idees hors-sol (le m
 generer l'image-cible. Voir avant de coder. La diagonale isometrique > le top-down pur pour des objets qui doivent LIRE
 (arbres, batiments)." -> deplace la decouverte des problemes AVANT le code, gratuitement.
 
+## ⭐⭐ EXTENSION AU MOUVEMENT — objet MECANIQUE anime (porte/couvercle/bras qui s'ouvre)
+Cette doctrine couvre la FORME STATIQUE (quelle vue, ca lit-il ?). Pour un objet a GEOMETRIE MECANIQUE ANIMEE
+(porte de coffre qui pivote, couvercle, cadenas, tiroir, bras articule, engrenage, valve), il y a un 2e trou :
+le MOUVEMENT se devine aussi mal que la forme. Cas coffre-fort Senegal Short D3 (2026-07-16) : 5 essais sur
+2 sessions pour un door-swing, parce que le transform (rotate/scale/pivot) a ete DEVINE et corrige au render
+au lieu d'etre MODELISE + verifie PAR CALCUL avant de coder. Regle complementaire, meme esprit "voir/prouver
+avant de coder" : `feedback_animer-objet-mecanique-svg-verifier-par-calcul` (image-cible du mecanisme AVANT le
+code + calcul Python de chaque etat-cle AVANT le render + preferer un transform a invariant explicite type
+`scale(sx,1)` autour d'un bord fixe plutot que `rotate()` imprevisible + escalade a 2 essais rates).
+
 ## ⭐⭐ REFS DE NIVEAU = NOS PROPRES VIDÉOS (passer de l'objet à l'écosystème) — prouvé Cacao B3/B4 (2026-06-29)
 Pour que le brief amont produise une SCÈNE HABITÉE (avant-plan fort, horizon, sol travaillé, profondeur) et pas une
 frise d'objets dans du vide, JOINDRE 2-3 frames de NOS MEILLEURES scènes SVG comme refs de NIVEAU narratif, avec

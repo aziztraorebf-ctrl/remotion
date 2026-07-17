@@ -274,12 +274,16 @@ export const Scene1Hook: React.FC = () => {
   // BREAK = frame d'impact (le mot "tombe" tombe pile sur la dechirure, meme logique que le hook long
   // ou "limoge" declenche la cassure). Split s'ouvre puis reste ouvert (pas de recomposition, le
   // short se termine juste apres — contrairement au hook long qui referme sur "la verite").
-  const BREAK = F_GOV_TOMBE - 8;
+  // Retour Aziz : la fissure etait trop rapide (~0.33s) et trop tardive. On la DEVANCE (BREAK -8 -> -24,
+  // soit ~0.5s plus tot) ET on l'ETALE (propagation 10->22f, split 14->28f) pour qu'elle ait le temps
+  // de jouer. Le SFX dechirure (cale sur BREAK, plus bas) suit automatiquement. Le mot "tombe" (f~277)
+  // arrive alors pendant que la fissure est deja bien engagee, pas au tout debut.
+  const BREAK = F_GOV_TOMBE - 24;
   const since = frame - BREAK;
-  const crackProg = interpolate(since, [0, 10], [0, 1], clamp);
-  const split = interpolate(since, [0, 14], [0, 26], clamp);
+  const crackProg = interpolate(since, [0, 22], [0, 1], clamp);
+  const split = interpolate(since, [0, 28], [0, 26], clamp);
   // secousse (shake) brusque a la cassure, amortie — meme mecanique que le proto original
-  const shakeAmp = since > 0 ? Math.max(0, 14 - since * 1.3) : 0;
+  const shakeAmp = since > 0 ? Math.max(0, 14 - since * 0.9) : 0; // amorti un peu plus lent (coherent fissure etalee)
   const shakeX = since > 0 ? (random(`s1sx${Math.floor(frame / 2)}`) - 0.5) * 2 * shakeAmp : 0;
   const shakeY = since > 0 ? (random(`s1sy${Math.floor(frame / 2)}`) - 0.5) * 2 * shakeAmp : 0;
 

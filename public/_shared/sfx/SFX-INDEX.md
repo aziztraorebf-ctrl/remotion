@@ -158,3 +158,16 @@ ffmpeg -i senegal-acte1-FINAL.mp4 \
        out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4
 ```
 Tous les fichiers source : `out/episodes/senegal-petrole-gaz/`
+
+---
+
+## Générer un SFX sur mesure (quand la banque n'a pas le son)
+
+Si aucun fichier ci-dessus ne couvre le son voulu, NE PAS improviser un son approximatif ni bricoler à
+partir d'un fichier proche : générer un SFX dédié via ElevenLabs Sound Effects.
+- Outil : `scripts/generate-sfx-elevenlabs.py` (endpoint `sound-generation`, prompt en anglais,
+  `duration_seconds` 0.5-30). API + prompts qui marchent : `memory/tools/elevenlabs.md` (§ Sound Effects API).
+- Prouvé (Short Sénégal D3, 2026-07-17) : `ui/vault-lock.mp3` (verrou de coffre) et `ui/typewriter.mp3`
+  (machine à écrire) générés sur mesure, absents de la banque.
+- Après génération : vérifier la DURÉE (`ffprobe`) — un SFX UI/impact propre fait < 2s — puis ranger dans
+  `_shared/sfx/<catégorie>/`, l'ajouter au tableau ci-dessus, et respecter le plancher volume 0.50 (règle projet).

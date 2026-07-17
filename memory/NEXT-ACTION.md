@@ -1,30 +1,28 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-15 (session 11 — Short Sénégal D3 Beat 1+2). Structure Soudan inchangée depuis
-> session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
+> Mis a jour : 2026-07-17 (session 12 — Short Sénégal D3 TERMINÉ + promu). Structure Soudan inchangée
+> depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ⭐⭐ SHORT SÉNÉGAL PÉTROLE & GAZ — VERSION D3.JS : BEAT 1+2 FAITS, SUITE = BEAT 3 (2026-07-15 s11)
+## ✅✅ SHORT SÉNÉGAL PÉTROLE & GAZ — VERSION D3.JS : COMPLET, PROMU PRET-PUBLICATION (2026-07-17 s12)
 
-> **PRIORITÉ 1 (nouveau chantier).** Nouveau Short vertical (9:16, format D3.js/SVG pur — pas Mapbox),
-> dérivé de la vidéo longue Sénégal déjà livrée (`senegal-petrole-gaz-FINAL.mp4`), inspiré du registre du
-> Short AES 90s. Distinct du Sénégal V3 long (déjà promu, ne pas confondre les deux projets).
+> **TERMINÉ.** Short vertical (9:16, D3.js/SVG pur — pas Mapbox), dérivé de la vidéo longue Sénégal,
+> registre Short AES 90s. Les 5 beats + assemblage + audio complet sont faits et validés Aziz.
 >
-> **Fait cette session** : script FR complet + audio ElevenLabs + Forced Alignment (timestamps précis) +
-> Beat 1 "Hook" (0-9.6s, reprend parchemin+fracture de la vidéo longue) + Beat 2 "Paradoxe" (~15s, 3
-> gisements + 60% des revenus + mécanisme), tous deux validés après nombreuses itérations (skill
-> `creative-director-dual` utilisé pour débloquer le Beat 2, 2 agents en parallèle — 2e preuve du pattern).
+> **Livrable** : `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4` (112.96s, full HD) +
+> lien durable Vercel Blob. Composition = `SenegalShortD3-COMPLET` (`ShortComplet.tsx`, 5 beats +
+> narration + musique AES + SFX dont 2 générés ElevenLabs : vault-lock, typewriter).
 >
-> **Reste à faire** : Beat 3 (comparaison Norvège/Congo-Brazzaville/Botswana — **le climax narratif,
-> INTOUCHABLE**, ne jamais couper/résumer selon exigence explicite Aziz), Beat 4 (chute FONSIS/dette 132%),
-> Beat 5 (CTA calqué sur la formule déjà validée de l'AES).
+> ⭐ **NEXT (seule action restante, administrative — pas de production)** : programmer la publication
+> via TryPost (Shorts YouTube + IG + FB, cf. `memory/tools/trypost.md`).
 >
-> Fichiers : `src/projects/souverain/senegal-petrole-gaz-short-d3/` (code), icônes SVG blueprint validées
-> (GPT-5.6 Sol) dans `icons-gisements-gptsol.json` (couleur trait = navy #16213a, PAS or #c8a951 — fix
-> critique de fin de session, contraste chromatique). Géométrie Norvège déjà extraite (`norwayPath.ts`)
-> pour le Beat 3.
+> Détail complet : `memory/episodes/souverain/senegal-petrole-gaz/STATUS-SHORT-D3.md`.
+>
+> **Gotcha réutilisable (leçon)** : `scripts/visual_review.py` peut bloquer en SYN_SENT IPv6 (9m+ sans
+> erreur) — vérifier `lsof -p <pid>` avant de conclure à une lenteur Gemini normale. Et sur ce beat sans
+> storyboard, Gemini review hallucine une palette sépia fantôme (juger sur override tracé + Aziz).
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : SCRIPT ÉCRIT, RÉVISION FINALE REQUISE AVANT CODE (2026-07-12 s10)
 

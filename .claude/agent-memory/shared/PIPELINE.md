@@ -10,6 +10,14 @@
 
 ---
 
+## Short Sénégal Pétrole & Gaz D3 — ✅✅ TERMINÉ + PROMU (2026-07-17)
+> Short vertical 9:16 (112,96s), D3.js/SVG pur (pas Mapbox), pilier Souverain. 5 beats + assemblage +
+> audio complet (narration + musique AES + SFX). COMPLET et validé Aziz, promu PRET-PUBLICATION.
+> Livrable : `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4`. NEXT = publication TryPost.
+> Source de vérité : `memory/episodes/souverain/senegal-petrole-gaz/STATUS-SHORT-D3.md`.
+
+---
+
 ## Cacao → Chocolat Short — ✅✅ TERMINÉ, PUBLIÉ (2026-07-01)
 > Short SVG vertical 9:16 (98,5s), pilier Souverain, registre encre GGW. COMPLET et validé Aziz.
 > Livrable : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`. Publication YT 2026-07-01 14h UTC.
