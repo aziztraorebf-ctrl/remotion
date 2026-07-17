@@ -1,0 +1,159 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <pattern id="dotted-grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+      <circle cx="1.5" cy="1.5" r="1.5" fill="#856f54" opacity="0.24"/>
+    </pattern>
+
+    <pattern id="fine-grid" x="0" y="0" width="192" height="192" patternUnits="userSpaceOnUse">
+      <path d="M192 0H0V192" fill="none" stroke="#725d47" stroke-width="1.5" opacity="0.17"/>
+    </pattern>
+
+    <filter id="paper-grain" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="2" seed="21" result="noise"/>
+      <feColorMatrix in="noise" type="saturate" values="0" result="grayNoise"/>
+      <feComponentTransfer in="grayNoise" result="softNoise">
+        <feFuncA type="table" tableValues="0 0.055"/>
+      </feComponentTransfer>
+      <feBlend in="SourceGraphic" in2="softNoise" mode="multiply"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1920" height="1080" fill="#d9c092"/>
+  <rect x="0" y="0" width="1920" height="1080" fill="#d9c092" filter="url(#paper-grain)"/>
+  <rect x="28" y="28" width="1864" height="1024" fill="url(#dotted-grid)"/>
+  <rect x="28" y="28" width="1864" height="1024" fill="url(#fine-grid)"/>
+
+  
+
+  <g id="west-bank-label">
+    <line x1="945" y1="340" x2="1088" y2="340"
+          stroke="#5d493c" stroke-width="2" stroke-dasharray="8 8" opacity="0.62"/>
+    <circle cx="934" cy="340" r="5" fill="#5d493c" opacity="0.72"/>
+    <text x="918" y="347"
+          fill="#513a31"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="18"
+          font-weight="700"
+          letter-spacing="4"
+          text-anchor="end">KOSTI · RIVE OUEST</text>
+  </g>
+
+  <g id="access-road">
+    <path d="M250 895 C420 831 527 751 613 668 C682 602 755 565 939 536"
+          fill="none" stroke="#957e5d" stroke-width="46" opacity="0.30"/>
+    <path d="M250 895 C420 831 527 751 613 668 C682 602 755 565 939 536"
+          fill="none" stroke="#765f48" stroke-width="2" stroke-dasharray="13 12" opacity="0.52"/>
+  </g>
+
+  <g id="station">
+    <path d="M586 540 L820 503 L909 558 L675 600 Z"
+          fill="#b7a276" stroke="#554338" stroke-width="3"/>
+
+    <path d="M610 485 L798 455 L866 491 L676 525 Z"
+          fill="#8f7d5d" stroke="#4f3d34" stroke-width="4"/>
+
+    <path d="M620 473 L800 444 L866 479 L681 510 Z"
+          fill="#c8b381" stroke="#5b4739" stroke-width="3"/>
+
+    <line x1="635" y1="493" x2="635" y2="565" stroke="#58483b" stroke-width="8"/>
+    <line x1="841" y1="487" x2="841" y2="545" stroke="#58483b" stroke-width="8"/>
+    <line x1="635" y1="493" x2="635" y2="565" stroke="#b9a778" stroke-width="3"/>
+    <line x1="841" y1="487" x2="841" y2="545" stroke="#b9a778" stroke-width="3"/>
+
+    <path d="M675 529 L711 523 L725 531 L689 538 Z"
+          fill="#6a5745" stroke="#47372f" stroke-width="2"/>
+    <path d="M681 537 L718 531 L718 574 L681 580 Z"
+          fill="#a6895f" stroke="#4d3c32" stroke-width="3"/>
+    <rect x="689" y="542" width="20" height="13"
+          fill="#d9c092" stroke="#5c4939" stroke-width="2"/>
+    <path d="M718 541 C735 541 735 559 725 564"
+          fill="none" stroke="#513f35" stroke-width="3"/>
+
+    <path d="M755 516 L790 510 L804 518 L768 525 Z"
+          fill="#6a5745" stroke="#47372f" stroke-width="2"/>
+    <path d="M761 524 L797 518 L797 561 L761 567 Z"
+          fill="#a6895f" stroke="#4d3c32" stroke-width="3"/>
+    <rect x="769" y="529" width="19" height="13"
+          fill="#d9c092" stroke="#5c4939" stroke-width="2"/>
+    <path d="M797 529 C816 529 815 547 805 553"
+          fill="none" stroke="#513f35" stroke-width="3"/>
+
+    <line x1="600" y1="589" x2="877" y2="541"
+          stroke="#6b5541" stroke-width="4"/>
+    <line x1="613" y1="602" x2="891" y2="553"
+          stroke="#6b5541" stroke-width="2"/>
+
+    <rect x="590" y="457" width="99" height="29"
+          fill="#d9c092" stroke="#513b32" stroke-width="3"/>
+    <text x="639.5" y="477"
+          fill="#51312a"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="14"
+          font-weight="700"
+          letter-spacing="3"
+          text-anchor="middle">ESSENCE</text>
+  </g>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  <g id="smoke-anchor">
+    <circle cx="744" cy="628" r="7"
+            fill="#3d3732" stroke="#d9c092" stroke-width="2" opacity="0.42"/>
+  </g>
+
+  
+
+  
+
+  <g id="frame">
+    <rect x="28" y="28" width="1864" height="1024"
+          fill="none" stroke="#512923" stroke-width="6"/>
+    <rect x="42" y="42" width="1836" height="996"
+          fill="none" stroke="#725043" stroke-width="2"/>
+
+    <line x1="42" y1="98" x2="1878" y2="98"
+          stroke="#725043" stroke-width="2"/>
+
+    <path d="M28 62 H56 M42 28 V76
+             M1864 28 V76 M1892 62 H1864
+             M28 1018 H56 M42 1052 V1004
+             M1864 1052 V1004 M1892 1018 H1864"
+          fill="none" stroke="#512923" stroke-width="4"/>
+  </g>
+
+  <g id="title-cartouche">
+    <rect x="58" y="39" width="626" height="46"
+          fill="#d9c092" opacity="0.92"/>
+    <text x="70" y="70"
+          fill="#4d2924"
+          font-family="Arial, Helvetica, sans-serif"
+          font-size="22"
+          font-weight="700"
+          letter-spacing="5">KOSTI — 21 JUIN 2026</text>
+
+    <text x="1848" y="70"
+          fill="#4d2924"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="17"
+          font-style="italic"
+          font-weight="700"
+          letter-spacing="2"
+          text-anchor="end">CARTE DE SITUATION</text>
+  </g>
+</svg>

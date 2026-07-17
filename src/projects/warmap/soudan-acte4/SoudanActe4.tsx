@@ -38,6 +38,7 @@ import { ATLAS } from "../engine/sudanControlData";
 import { SmokeColumn } from "../_shared/warmapChoc";
 import { HookDisplacementBurst } from "../../_shared/hooks-lib/HookEffects";
 import { PART_OFFSETS, BEAT1, BEAT2, BEAT3, BEAT4, BEAT5, BEAT6 } from "./soudanActe4Timing";
+import { KostiInsertSVG } from "./KostiInsertSVG";
 
 export const SOUDAN_A4_FPS = 30;
 
@@ -748,42 +749,30 @@ const Section4: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
     { at: KHARTOUM, faction: "saf", radiusKm: 200, intensity: 0.25 },
   ];
 
-  // impact calé sur "frappent avec un drone" (droneFrappe) — approche démarre 2s avant (allongée depuis
-  // 1.2s, session 10 : le drone doit traverser l'écran assez lentement pour être vu, pas juste traversé).
-  const approachAt = F4.droneFrappe - 60;
-  const impactAt = F4.droneFrappe + 6;
+  // ⭐ REFONTE 2026-07-17 (Aziz) : le Beat 5 Kosti passe de la CARTE Mapbox top-down (drone illisible,
+  // fait de coût civil mal servi par la vue d'état-major froide) à un INSERT SVG plein écran (registre
+  // état-major "civil" — jetons civils qui s'éteignent). Doctrine : intention "coût humain incarné"
+  // = QUOI/COMMENT → insert SVG, pas carte. Composant : KostiInsertSVG (composition GPT-5.6 Sol validée +
+  // nos assets). Le SFX impact reste calé sur "drone" (F4.droneFrappe). Ancien code carte : voir historique
+  // git (DroneStrikeImpact, CAM4, HookDisplacementBurst — conservés plus haut mais non montés ici).
+  const impactAt = F4.droneFrappe;
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#000" }}>
+    <AbsoluteFill style={{ backgroundColor: "#d9c092" }}>
       <Audio src={staticFile("_shared/audio/soudan/acte4-voisins-aspires-p4.mp3")} />
 
       <Sequence from={F4.kostiNomme} durationInFrames={22}><Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.45} /></Sequence>
       <Sequence from={impactAt} durationInFrames={24}><Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.55} /></Sequence>
 
-      {/* ⭐ v2 (agent R&D synthèse, 2026-07-11) : la CARTE ELLE-MÊME encaisse le choc à l'impact — jamais
-          utilisé dans la série Soudan (Actes 1-3), réservé au seul pic émotionnel de tout l'Acte 4. */}
-      <HookDisplacementBurst at={impactAt} dur={22} scale={22}>
-        <SoudanWarMapEngine camKeys={CAM4} zones={zones} showNationalBorder stateLineOpacity={0}>
-          {(proj, ref) => {
-            mapRef.current = ref?.current ?? null;
-
-            const kostiPos = proj(KOSTI);
-
-            return (
-              <>
-                {kostiPos && <ArrivalLabel pos={kostiPos} frame={frame} appear={F4.kostiNomme} label="Kosti" color={RUSSIA_RED} />}
-                {kostiPos && <DroneStrikeImpact pos={kostiPos} frame={frame} approachAt={approachAt} impactAt={impactAt} />}
-
-                {(() => { const p = proj(DARFUR); return p && <SoudanToken pos={p} faction="rsf" frame={frame} appear={0} />; })()}
-                {(() => { const p = proj(KHARTOUM); return p && <SoudanToken pos={p} faction="saf" frame={frame} appear={0} />; })()}
-
-                <CountryColorLayer mapRef={mapRef} flags={ALL_COUNTRY_FLAGS} absoluteFrame={sectionOffset + frame} />
-              </>
-            );
-          }}
-        </SoudanWarMapEngine>
-      </HookDisplacementBurst>
-
+      <KostiInsertSVG f4={{
+        kostiNomme: F4.kostiNomme,
+        droneFrappe: F4.droneFrappe,
+        stationService: F4.stationService,
+        civilsEssence: F4.civilsEssence,
+        pasCibleMilitaire: F4.pasCibleMilitaire,
+        civilsPayentPrix: F4.civilsPayentPrix,
+        end: F4.end,
+      }} />
     </AbsoluteFill>
   );
 };

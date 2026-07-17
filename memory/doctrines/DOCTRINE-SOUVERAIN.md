@@ -40,7 +40,7 @@ Quand on a le choix entre deux solutions :
 **Règle** : un pattern visuel/narratif déjà utilisé dans un acte précédent **peut** être réutilisé dans un acte suivant si :
 1. Il explique mieux la scène que toute alternative
 2. Il reste en version premium (pas de raccourci ou dégradation)
-3. À défaut, une **variation** (couleur, géométrie, timing, échelle) est valide
+3. À défaut, une **variation** (couleur, géométrie, timing, échelle) est valide — ou une **inflexion du registre selon le SENS de la scène** (ex. registre état-major MILITAIRE réutilisé mais infléchi CIVIL pour un lieu civil de même nature cartographique : jetons civils au lieu de jetons de faction). Réutiliser le registre crée le langage visuel ; l'infléchir selon le sens évite le copier-coller hors-sujet. Prouvé : Kosti (Soudan Acte 4, 2026-07-17) réutilise le registre de `KhartoumEtatMajorSVG` mais en civil.
 
 **Les plus grandes chaînes documentaires réutilisent volontairement leurs patterns** — c'est ce qui crée le langage visuel d'une série. La cohérence est une force, pas une faiblesse.
 

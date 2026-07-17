@@ -323,6 +323,20 @@ militaire, rosace nord + grille de coordonnees, cartouche legende separee, sous-
 plus fines) mais composition plus minimale. Cout : 0,295$/appel (comparable GPT-5.5).
 Fichiers scratch (non conserves dans repo) : render `khartoum-svg-sol-render.png`.
 
+> ⭐ **CORRECTION 2026-07-17 (Aziz) — le SVG ANIMABLE se DEMANDE, il n'est pas hors de portee.** Un ancien
+> rail nous faisait croire que Sol/GPT ne rendaient "que des images/PNG statiques". FAUX : ils ne donnaient
+> pas de SVG animable parce qu'on ne le DEMANDAIT pas explicitement. Pour une carte/schema compose (registre
+> #1, dont Kosti etat-major), demander DES LE PROMPT : (1) sortie **SVG vectoriel** (pas raster), (2) chaque
+> element mobile/modifiable dans un **`<g id="...">` nomme** (drone, chaque jeton-civil, station, fumee,
+> impact), (3) **coordonnees absolues** de chaque groupe + un **JSON de positions/plages de translation
+> suggerees** en fin de reponse, (4) zero CSS/HTML wrapper (on anime en Remotion frame-driven — striper tout
+> `<style>` a l'extraction). ⚠️ Budget tokens : viser MODERE (~8-12k), PAS enorme. Nuance (clarifiee
+> 2026-07-17, cf `gemini.md` gotcha lenteur SVG) : un `max_tokens` trop BAS => sortie vide/tronquee (le
+> reasoning cache de Sol/GLM consomme tout) ; mais trop HAUT (32-40k) => le modele sur-reflechit et met
+> 8min+. Le bon reglage est entre les deux (ou absent/defaut si le provider s'arrete proprement), + un
+> `timeout` dur (240s). Distinct du registre #2 (perso articule complet) ou Sol echoue : un JETON
+> (position + fade) n'est PAS un squelette a articuler, donc Sol convient.
+
 ### 2. Personnage articule/animable (prompt EXACT du test decisif documente ci-dessus, § "LE VRAI TEST DECISIF")
 ❌ **MEME ECHEC STRUCTUREL que GPT-5.5, pas le comportement Gemini.** Genere les 4 poses (idle/walk-a/
 walk-b/bend-reach) avec la MEME topologie de groupes demandee, silhouette et anatomie VISUELLEMENT

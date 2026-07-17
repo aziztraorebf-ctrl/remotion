@@ -21,6 +21,8 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Doute sur si le SVG sera LISIBLE (forme nouvelle, angle incertain) ? | → **SVG-FAISABILITE-AMONT** obligatoire AVANT tout code |
 | Organique humain/animal réaliste, émotion de visage, scène filmée ? | → image générée (Gemini/Recraft/Seedance), pas SVG |
 
+> ⭐ **Vue d'ensemble « quel moteur pour quelle nature de contenu » (3 moteurs D3/SVG/Mapbox sur 1 socle Remotion, combos signatures, Mapbox+D3 sous-exploités, décision AU SCRIPT)** : `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`. Cet arbre en est la version rapide « trancher ici » ; la doctrine donne le raisonnement complet.
+
 ---
 
 ### Points d'entrée maîtres (lire EN PREMIER en cas de doute « où chercher ? »)
@@ -152,7 +154,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Template data-viz pour Gemini (BarRace, StackedBars…) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates) |
 | Asset PixelLab AVANT génération | `memory/tools/PIXELLAB-MASTER-INDEX.md` (~50 assets avec IDs) |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
-| Gemini, retouche image, character sheet | `memory/tools/gemini.md` |
+| Gemini, retouche image, character sheet | `memory/tools/gemini.md` ⚠️ **LIRE AVANT tout appel Gemini SCRIPTÉ** : la lib `google-genai` HANG sur image (→ REST direct) et ne PAS plafonner `max_tokens` haut pour du SVG (sur-reasoning 8min). Gotchas gravés en tête du fichier — les relire évite de re-perdre 15min (leçon 2026-07-17). |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
 | ElevenLabs, voix, TTS, narration | `memory/tools/elevenlabs.md` |
 | Minimax, musique de fond, kora, griot | `memory/tools/minimax.md` |

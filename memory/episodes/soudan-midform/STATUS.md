@@ -16,8 +16,17 @@
    Suite au retour d'Aziz sur le v6 (session 9), refonte en profondeur cette session (10) :
    - Beat 1 (Russie) : zoom Moscou dézoomé 6.4→3.6 (territoire filtré se lisait comme un point isolé) +
      bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
-   - Beat 5 (Kosti, drone) : pattern MapAnimation appliqué (sprite 40→95px, trajectoire 272→770px/2s,
-     traînée, halo de contraste, caméra qui accompagne) — corrige la scène jugée "la plus faible" de l'acte.
+   - Beat 5 (Kosti, drone) : **⭐ REFONTE 2026-07-17 — carte Mapbox top-down REMPLACÉE par un INSERT SVG
+     plein écran** (`src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx`). Raison : la vue carte servait mal
+     un fait de COÛT CIVIL (intention "coût humain incarné" = QUOI/COMMENT → insert SVG, pas carte = OÙ ;
+     doctrine `MOTEURS-VISUELS-ET-SOCLE.md`). Registre "carte d'état-major" (écho de `KhartoumEtatMajorSVG`
+     déjà vu dans la vidéo) mais infléchi CIVIL : 6 jetons civils distincts (portraits) qui s'ÉTEIGNENT à la
+     frappe, pas de jeton militaire. Composition de base proposée par GPT-5.6 Sol (validée Aziz), nos assets
+     branchés (drone-rsf-td.png + portraits + Nil animé). Calé sur narration p4 (drone frappe sur "drone"
+     F4.droneFrappe, civils éteints étalés jusqu'à "civils qui en payent le prix"). Proto validé :
+     `KostiFrappeProtoV3`. Ancien code carte (DroneStrikeImpact/CAM4/HookDisplacementBurst) laissé en place
+     dans le fichier mais NON monté (voir historique git). Décor : `public/_rnd/kosti-sol-decor-noriver.svg`.
+     ⚠️ v7 (`acte4-v7-full.mp4`) est PÉRIMÉ pour le Beat 5 — re-render complet de l'acte nécessaire.
    - Beat 2 (Port-Soudan) : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
      GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte), agrandi +50% (140→210px).
    - Beat 3-4 (Égypte/Nil) : zoom resserré 4.0-4.6→5.2-5.8, `CountryParchmentMask` appliqué à l'Égypte

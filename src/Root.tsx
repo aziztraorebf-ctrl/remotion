@@ -18,6 +18,7 @@ import { SceneMultiPlanTest, SCENE_MULTIPLAN_TEST_FRAMES } from "./projects/_sha
 import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
+import { VoxPapercutAvion16x9, VOX_PAPERCUT_AVION_FRAMES } from "./projects/_rnd/svg-scenes/VoxPapercutAvion16x9";
 import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
 import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
@@ -96,6 +97,9 @@ import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
 import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
 import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
 import { P1_OrthoLinksDemo, P1_FRAMES } from "./projects/warmap/_rnd/maxbellona/P1_OrthoLinks";
+import { KostiFrappeProto, KOSTI_PROTO_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProto";
+import { KostiFrappeProtoV2, KOSTI_V2_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProtoV2";
+import { KostiFrappeProtoV3, KOSTI_V3_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProtoV3";
 import { P2_FactionBadgeDemo, P2_FRAMES } from "./projects/warmap/_rnd/maxbellona/P2_FactionBadge";
 import { P4_DashedFlowDemo, P4_FRAMES } from "./projects/warmap/_rnd/maxbellona/P4_DashedFlow";
 import { P3_MapTransformDemo, P3_FRAMES } from "./projects/warmap/_rnd/maxbellona/P3_MapTransform";
@@ -590,6 +594,30 @@ export const RemotionRoot: React.FC = () => {
           id="MaxBellona-P1-OrthoLinks"
           component={P1_OrthoLinksDemo}
           durationInFrames={P1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProto"
+          component={KostiFrappeProto}
+          durationInFrames={KOSTI_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProtoV2"
+          component={KostiFrappeProtoV2}
+          durationInFrames={KOSTI_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProtoV3"
+          component={KostiFrappeProtoV3}
+          durationInFrames={KOSTI_V3_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -3510,6 +3538,14 @@ export const RemotionRoot: React.FC = () => {
           id="Cacao-ChaineValeur-16x9"
           component={CacaoChaineValeur16x9}
           durationInFrames={CACAO_CHAINE_16X9_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Vox-Papercut-Avion-16x9"
+          component={VoxPapercutAvion16x9}
+          durationInFrames={VOX_PAPERCUT_AVION_FRAMES}
           fps={30}
           width={1920}
           height={1080}

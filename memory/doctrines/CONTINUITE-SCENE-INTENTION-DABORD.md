@@ -171,6 +171,7 @@ sans casser l'épure ; jeter le bruit). Détail : `scripts/tools/REVIEW-TOOLS-IN
 ---
 
 ## RAPPORT AVEC LES AUTRES DOCTRINES
+- **Quel MOTEUR pour quelle nature de contenu** (le chaînon après « je sais quelle forme ») : [[MOTEURS-VISUELS-ET-SOCLE]] — 3 moteurs (D3/SVG/Mapbox) sur 1 socle (Remotion), table nature→moteur, à consulter APRÈS l'intention, jamais avant.
 - Ne REMPLACE pas le scan templates — le **réordonne** : intention d'abord, template en vérification finale.
 - Complète [[feedback_premium-d-abord-anti-paresse]] (le premium = direction, pas un composant plaqué).
 - Porte d'entrée des templates : `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme).

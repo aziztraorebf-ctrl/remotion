@@ -1,0 +1,233 @@
+{
+  "constat_nature": "Les éléments texturés, volumétriques (papercraft) et photos tramées sont des images générées. Les textes, flèches, graphiques et formes simples sont des overlays codés.",
+  "elements": [
+    {
+      "id": "photo-seats-halftone",
+      "label": "Photo sièges 70s",
+      "nature": "image_generee",
+      "pourquoi": "Effet trame (halftone) complexe et bords déchirés irréguliers.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft (style vintage halftone print)",
+        "prompt_exact": "Vintage 1970s airplane interior, brown seats, halftone print effect, on torn paper, transparent background.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "text-number-center",
+      "label": "Chiffre central (35/30)",
+      "nature": "overlay_code",
+      "pourquoi": "Texte vectoriel plat et net.",
+      "si_overlay_code": {
+        "police": "Impact, bold",
+        "couleur": "#1A1A1A",
+        "taille_approx": "250px",
+        "position": "Centre",
+        "fond_du_texte": "Bandeau papier déchiré (image séparée)",
+        "animation": "Cut",
+        "comment_remotion": "Texte simple par-dessus l'image du bandeau."
+      }
+    },
+    {
+      "id": "seat-profile-blue",
+      "label": "Siège profil bleu",
+      "nature": "image_generee",
+      "pourquoi": "Volume 3D, ombres douces, style papercraft.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft (style 3D papercraft)",
+        "prompt_exact": "Side profile of modern airplane seat, blue, 3D papercraft style, layered paper, soft shadows, transparent background.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "arrow-orange",
+      "label": "Flèche orange",
+      "nature": "overlay_code",
+      "pourquoi": "Forme vectorielle 2D simple.",
+      "si_overlay_code": {
+        "police": "null",
+        "couleur": "#D97B29",
+        "taille_approx": "150px",
+        "position": "Entre les sièges",
+        "fond_du_texte": "aucun",
+        "animation": "Slide in",
+        "comment_remotion": "Tracé SVG animé avec stroke-dashoffset."
+      }
+    },
+    {
+      "id": "airplane-cutaway",
+      "label": "Avion en coupe",
+      "nature": "image_generee",
+      "pourquoi": "Modèle 3D complexe, multiples couches de papier, ombres internes.",
+      "si_image_generee": {
+        "moteur_conseille": "Gemini 3.1 Flash image",
+        "prompt_exact": "3D papercraft airplane cutaway, blue seats inside, light blue exterior, soft studio lighting, transparent background.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "bar-chart",
+      "label": "Graphique à barres",
+      "nature": "overlay_code",
+      "pourquoi": "Rectangles unis, animation d'échelle simple.",
+      "si_overlay_code": {
+        "police": "null",
+        "couleur": "#D97B29",
+        "taille_approx": "300x200px",
+        "position": "Bas droite",
+        "fond_du_texte": "aucun",
+        "animation": "Scale Y (spring)",
+        "comment_remotion": "Divs HTML avec transform: scaleY."
+      }
+    },
+    {
+      "id": "map-usa",
+      "label": "Carte USA",
+      "nature": "image_generee",
+      "pourquoi": "Relief 3D papercraft, ombres portées sur le fond.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft (style 3D papercraft)",
+        "prompt_exact": "Map of USA, blue, 3D papercraft style, raised edges, drop shadows, transparent background.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "map-arrows-red",
+      "label": "Flèches rouges carte",
+      "nature": "overlay_code",
+      "pourquoi": "Lignes courbes 2D sans texture.",
+      "si_overlay_code": {
+        "police": "null",
+        "couleur": "#C43B3B",
+        "taille_approx": "Variable",
+        "position": "Sur la carte",
+        "fond_du_texte": "aucun",
+        "animation": "Draw path",
+        "comment_remotion": "SVG paths avec animation de tracé."
+      }
+    },
+    {
+      "id": "person-silhouette",
+      "label": "Silhouette humaine",
+      "nature": "image_generee",
+      "pourquoi": "Texture papier, léger volume 3D sur les bords.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft (style 3D papercraft)",
+        "prompt_exact": "Silhouette of a standing person, blue paper, 3D papercraft style, transparent background.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "cross-yellow",
+      "label": "Croix jaune",
+      "nature": "overlay_code",
+      "pourquoi": "Forme géométrique plate, opacité simple.",
+      "si_overlay_code": {
+        "police": "null",
+        "couleur": "#F2C94C",
+        "taille_approx": "400px",
+        "position": "Centre",
+        "fond_du_texte": "aucun",
+        "animation": "Pop in",
+        "comment_remotion": "Deux divs croisées ou SVG."
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "prompt_exact_si_image": "Texture papier journal ancien, fond beige #E8E3D9, colonnes de texte floues, grain léger.",
+    "note": "Alterne entre papier uni, journal, et collage de papiers déchirés (1:15)."
+  },
+  "palette": [
+    "#E8E3D9",
+    "#3B739E",
+    "#D97B29",
+    "#C43B3B",
+    "#F2C94C",
+    "#1A1A1A"
+  ],
+  "grammaire_animation": "Stop-motion simulé (faible framerate), pop in (spring), ombres portées dures, cuts francs.",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:06",
+      "description": "Intro sièges 70s.",
+      "elements_ids": [
+        "photo-seats-halftone",
+        "text-number-center"
+      ],
+      "texte_exact_ecran": "35, 30",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:07",
+      "t_end": "0:15",
+      "description": "Définition du pitch.",
+      "elements_ids": [
+        "seat-profile-blue",
+        "arrow-orange"
+      ],
+      "texte_exact_ecran": "PITCH",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:16",
+      "t_end": "0:24",
+      "description": "Dérégulation et baisse des prix.",
+      "elements_ids": [
+        "airplane-cutaway",
+        "bar-chart"
+      ],
+      "texte_exact_ecran": "1978",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 4,
+      "t_start": "0:25",
+      "t_end": "0:32",
+      "description": "Propagation mondiale.",
+      "elements_ids": [
+        "map-usa",
+        "map-arrows-red"
+      ],
+      "texte_exact_ecran": "39, 35, 33, 32, 36, 34, 40",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 5,
+      "t_start": "1:15",
+      "t_end": "1:22",
+      "description": "Collision taille/espace.",
+      "elements_ids": [
+        "person-silhouette",
+        "cross-yellow"
+      ],
+      "texte_exact_ecran": "",
+      "transition_sortie": "cut"
+    }
+  ],
+  "plan_de_production": {
+    "assets_images_a_generer": [
+      "photo-seats-halftone",
+      "seat-profile-blue",
+      "airplane-cutaway",
+      "map-usa",
+      "person-silhouette"
+    ],
+    "overlays_a_coder": [
+      "text-number-center",
+      "arrow-orange",
+      "bar-chart",
+      "map-arrows-red",
+      "cross-yellow"
+    ],
+    "verdict_cout": "Génération d'images pour les assets 3D/texturés (coût initial), animation et textes gérés gratuitement via code Remotion."
+  }
+}

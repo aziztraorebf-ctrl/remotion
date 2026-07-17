@@ -6,6 +6,23 @@
 
 ---
 
+## 🧪 R&D — WORKFLOW "VOX PAPERCRAFT" (reproduire un style vidéo tiers sans Higgsfield) — 1re PARTIE VALIDÉE (2026-07-17)
+
+> **PROTO CONCLUANT, pipeline officialisé.** Prouvé qu'on reproduit le style Vox/Higgsfield en HYBRIDE
+> déterministe (images Gemini 3.1 Flash réutilisables + overlays Remotion), au niveau du tiers, pour des
+> centimes vs ~200 crédits/vidéo re-tirés chez Higgsfield. Boucle de raffinement V1→V2 (notre rendu +
+> réf → Gemini compare → écarts croisés Gemini/Claude/Aziz) validée.
+>
+> **Doctrine + méthode complète** : `memory/doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
+> **Scripts** : `gemini-vox-reverse-breakdown.py` (breakdown), `gemini-compare-2videos.py` (diff V2),
+> `gemini-genimg-ipv4.sh` (génération image, corrigé extension JPEG/PNG).
+> **Livrables R&D** : composition `Vox-Papercut-Avion-16x9` (`src/projects/_rnd/svg-scenes/VoxPapercutAvion16x9.tsx`),
+> 6 assets + rendus dans `public/_rnd/vox-repro/`, vidéo `out/_r-and-d/vox-papercut-avion-v2.mp4`.
+>
+> ⭐ **NEXT (prochaine session, quand Aziz veut)** : finitions restantes du plan (halo détourage résiduel,
+> retirer noms d'États sur la carte, intégrer photo halftone) ; puis monter une SÉQUENCE multi-plans ;
+> décider si on officialise ce format "motion graphic V2" comme brique de production réutilisable.
+
 ## ✅✅ SHORT SÉNÉGAL PÉTROLE & GAZ — VERSION D3.JS : COMPLET, PROMU PRET-PUBLICATION (2026-07-17 s12)
 
 > **TERMINÉ.** Short vertical (9:16, D3.js/SVG pur — pas Mapbox), dérivé de la vidéo longue Sénégal,
@@ -49,14 +66,28 @@
 > `soudan-midform-DONNEES.md`, `soudan-midform-ACTE4-SCRIPT.md` — tous décrivaient l'ancien "Acte 5 =
 > tout" avant cette clarification.
 
-## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : 4 LOTS DE REFONTE FAITS, EN ATTENTE VALIDATION AZIZ (2026-07-12 s10)
+## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10
 
+> ⚠️⚠️ **CHANGEMENT 2026-07-17 (session en cours) — À SAVOIR EN REPRENANT L'ACTE 4** : le **Beat 5 (Kosti)
+> a été REFONDU** — la carte Mapbox top-down (drone illisible sur fond crème) est REMPLACÉE par un **INSERT
+> SVG plein écran** (`src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx`), monté dans `Section4` de
+> `SoudanActe4.tsx`. Décidé + validé Aziz par proto (`KostiFrappeProtoV3`, litter.catbox `xxm8ic`).
+> Registre "carte d'état-major civil" : 6 jetons civils (portraits distincts) qui s'éteignent à la frappe +
+> notre drone-rsf-td.png + Nil animé, sur une composition de base proposée par GPT-5.6 Sol. Calé sur la
+> narration p4. **CONSÉQUENCE : le render v7 (`acte4-v7-full.mp4`) est PÉRIMÉ pour le Beat 5 → RE-RENDER
+> COMPLET de l'Acte 4 nécessaire avant toute promotion.** Doctrine appliquée : `MOTEURS-VISUELS-ET-SOCLE.md`
+> (intention "coût humain incarné" = QUOI/COMMENT → insert SVG, pas carte). L'ancien code carte Beat 5
+> (DroneStrikeImpact/CAM4/HookDisplacementBurst) est laissé dans le fichier mais NON monté (récupérable via
+> git si besoin). Reste à faire par Aziz : re-render Acte 4 complet + visionner le Beat 5 intégré (calage
+> audio + transition avec Beat 4 et Beat 6).
+>
 > **PRIORITÉ 2.** Suite au visionnage du v6 (session 9) par Aziz, refonte en profondeur en 4 lots
 > (chacun vérifié par render isolé avant intégration) :
 > 1. **Beat 1 (Russie/Wagner)** : zoom Moscou dézoomé (6.4→3.6, le territoire filtré se lisait comme un
 >    point isolé) + bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
-> 2. **Beat 5 (Kosti, drone)** : pattern MapAnimation appliqué (sprite 40→95px, trajectoire 272→770px sur
->    2s, traînée, halo de contraste, caméra qui accompagne) — corrige la scène jugée "la plus faible".
+> 2. **Beat 5 (Kosti, drone)** — ⛔ **PÉRIMÉ 2026-07-17** : ce lot (pattern MapAnimation sur CARTE Mapbox,
+>    sprite 40→95px, trajectoire) est REMPLACÉ par l'insert SVG plein écran (voir bloc CHANGEMENT en tête de
+>    section). Conservé ici comme trace historique du lot s10 uniquement — ne PAS coder d'après cette ligne.
 > 3. **Beat 2 (Port-Soudan)** : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
 >    généré GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte, `_rnd/PortSoudanJetonCompare.tsx`),
 >    agrandi +50% (140→210px, sous-dimensionnement récurrent identifié sur tout l'acte, cf doctrine gravée
