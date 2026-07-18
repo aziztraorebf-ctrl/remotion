@@ -634,3 +634,56 @@ VISUEL a l'oeil (comparaison cote-a-cote rigoureuse, pas juste "meme sujet prese
 equivalence de style ou de qualite — la verification structurelle/technique (XML, JSON de pivots, rotation
 sans decrochage) ne suffit PAS a elle seule, elle peut passer a cote d'un probleme esthetique evident a
 l'oeil nu.
+
+---
+
+## Kimi K3 (moonshotai/kimi-k3) — R&D 2026-07-17 : SVG + VISION creative
+
+Modele Moonshot sorti le 16 juillet 2026 (MoE 2.8T, contexte 1M, multimodal texte+image en ENTREE ;
+sortie texte only). n1 sur Arena Frontend Code (devant Fable 5). Via OpenRouter : `moonshotai/kimi-k3`,
+$3/$15 par M tokens, endpoint chat/completions standard (meme pattern que GLM/GPT dans `llm-gen-svg.py`).
+
+### LE MUR : reasoning "max" FORCE (seul niveau dispo pour l'instant)
+K3 n'a qu'un mode de raisonnement aujourd'hui : `max`. Pas desactivable. Consequence mesuree :
+- Jetons SVG (lot de 5) : 0,20$ / ~14k tokens (10,6k reasoning = 82%) / ~90s.
+- Blueprint derrick annote : 0,45$ / ~30k tokens (24k reasoning) / ~2min.
+- Vision Kosti (remplir coquille) : 0,435$ / 28k tokens (19,6k reasoning).
+- Vision Khartoum (3 cibles a orchestrer) : 0,676$ / 44k tokens (34k reasoning).
+La COMPLEXITE de la demande pilote le volume de reasoning (Khartoum >> Kosti). Chaque appel "pense"
+5x plus qu'il ne produit. => INEXPLOITABLE pour du SVG EN LOT / repete (GLM-5.2 ou GPT-5.6 Sol restent
+le defaut : qualite equivalente, effort reglable, 10-200x moins cher/rapide). "Bientot" des niveaux
+d'effort inferieurs cote Moonshot — RE-TESTER a ce moment (a effort reglable, concurrent serieux, moins
+cher que Fable pour frontend/SVG).
+
+### L'ATOUT REEL : VISION -> mise en scene SVG one-shot (a GARDER)
+Test cle : on montre a K3 une COQUILLE NUE (carte d'etat-major sans elements narratifs, PNG) + la partie
+du SCRIPT, et on lui demande d'INVENTER et coder la couche SVG qui raconte la scene. Resultat = le plus
+concluant des 3 tests :
+- VISION excellente : lit palette/grille/routes/terrain de la coquille et s'y aligne. A Kosti, a compris
+  que "la route se termine" pour y poser la station. A Khartoum, a lu la jonction routiere comme le
+  CONFLUENT DES DEUX NILS (geo juste) et place le palais dessus.
+- INVENTE de la GEOMETRIE credible : station-service top-down (auvent, 3 pompes, cuve, camion-citerne) ;
+  3 batiments-cible graves (tour TV + crosshair, palais, aeroport avec pistes en croix). Le DRONE qu'il
+  cree ressemble a un VRAI drone (quadrirotor) — la ou GLM/GPT/notre existant font une simple fleche.
+  Jugement Aziz : sa station-service est MEILLEURE que celle qu'on avait avant.
+- DIRECTION ARTISTIQUE reelle (choix non dictes par le script) : sceaux de capture HORODATES
+  (TENU PAR LA RSF 05H55/06H20/07H05), axes d'attaque convergents, legende RSF/SAF, triangle de
+  coordination reliant les 3 cibles, titre date.
+=> Usage retenu : "remplis creativement cette coquille depuis le script" en ONE-SHOT (pas un lot repete).
+Un plan d'etat-major complet + mis en scene a ~0,50$ / <=~4min qui aurait pris a un agent Sonnet
+plusieurs allers-retours. La profondeur de reasoning PAIE sur ce cas precis.
+
+### Scripts R&D (reutilisables)
+- `scripts/tools/llm-gen-svg.py --provider kimi` : jetons SVG lot (brief fige, meme que GLM).
+- `scripts/tools/llm-gen-blueprint.py --subject {derrick|tanker}` : schema blueprint technique annote.
+- `scripts/tools/kimi-vision-fill-scene.py --scene {kosti|khartoum} --image <coquille.png>` : VISION,
+  image (data URL base64 en `image_url`) + script -> couche SVG inventee. NE PAS passer max_tokens.
+- Gotcha JSX : le SVG genere par K3 utilise kebab-case (stroke-width, text-anchor...) + font-family a
+  quotes multiples -> convertir en camelCase + neutraliser font-family avant injection JSX Remotion
+  (voir la fonction to_jsx du parsing). Ne PAS faire un `.replace("'",'"')` global : casse les apostrophes
+  FR du texte ("AXE D'ATTAQUE"). Parser depuis le JSON (apostrophes intactes), convertir SEULEMENT les
+  attributs. Composants demo : `src/projects/_rnd/svg-scenes/Vision{Kosti,Khartoum}K3.tsx`,
+  `BlueprintDerrickK3.tsx`, `DuelKimiGlm.tsx`.
+
+Cout total session tests K3 : ~1,9$ (jetons + 2 blueprints partiels + 2 vision). Rapport cout/decouverte
+favorable : a identifie un usage NOUVEAU (vision->SVG one-shot) absent du pipeline, non couvert par GLM/GPT.

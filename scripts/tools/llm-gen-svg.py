@@ -28,6 +28,10 @@ GPT_MODEL = "openai/gpt-5.5"
 # text-only (pas d'image-ref) ; brief verbal sans contradiction ; ne PAS limiter max_tokens (raisonnement).
 # Detail : memory/tools/openrouter-svg.md. (Qwen3.6 et MiniMax M3 testes puis ecartes — voir le memo.)
 GLM_MODEL = "z-ai/glm-5.2"
+# Kimi K3 (sorti 2026-07-16) via OpenRouter : MoE 2.8T, contexte 1M, multimodal (vision en entree).
+# n1 sur Arena Frontend Code (devant Fable 5). R&D 2026-07-17 : duel SVG vs GLM-5.2 sur brief fige identique.
+# ATTENTION : reasoning force a "max" (seul niveau dispo) -> sortie lourde/chere, NE PAS passer max_tokens.
+KIMI_K3_MODEL = "moonshotai/kimi-k3"
 
 # Le brief : ce qu'on veut, le registre exact, la contrainte technique (frame-driven, centre 0,0).
 PROMPT = r"""
@@ -115,9 +119,28 @@ def gen_glm(out: Path):
     print(f"[glm] Saved raw: {out}  ({len(text)} chars)")
 
 
+def gen_kimi(out: Path):
+    """Kimi K3 via OpenRouter (R&D 2026-07-17) : duel SVG vs GLM sur brief identique.
+    reasoning="max" force -> NE PAS passer max_tokens. Timeout large (reasoning lourd)."""
+    import requests
+    key = os.getenv("OPENROUTER_API_KEY")
+    if not key:
+        print("ERROR: OPENROUTER_API_KEY missing"); sys.exit(1)
+    headers = {"Authorization": f"Bearer {key}", "Content-Type": "application/json"}
+    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": PROMPT}]}
+    print(f"Generating SVG tokens with {KIMI_K3_MODEL} via OpenRouter...")
+    r = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=payload, timeout=900)
+    r.raise_for_status()
+    data = r.json()
+    text = data["choices"][0]["message"]["content"]
+    out.write_text(text, encoding="utf-8")
+    usage = data.get("usage", {})
+    print(f"[kimi-k3] Saved raw: {out}  ({len(text)} chars)  usage={usage}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "glm"])
+    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "glm", "kimi"])
     ap.add_argument("--out", required=True)
     args = ap.parse_args()
     out = Path(args.out)
@@ -126,6 +149,8 @@ def main():
         gen_gemini(out)
     elif args.provider == "glm":
         gen_glm(out)
+    elif args.provider == "kimi":
+        gen_kimi(out)
     else:
         gen_gpt(out)
 
