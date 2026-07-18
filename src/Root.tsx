@@ -19,6 +19,12 @@ import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
 import { VoxPapercutAvion16x9, VOX_PAPERCUT_AVION_FRAMES } from "./projects/_rnd/svg-scenes/VoxPapercutAvion16x9";
+import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
+import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
+import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
+import { VisionKhartoumK3 } from "./projects/_rnd/svg-scenes/VisionKhartoumK3";
+import { KostiInsertSVG } from "./projects/warmap/soudan-acte4/KostiInsertSVG";
+import { Audio as RAudio, Sequence as RSequence, staticFile as rStaticFile, AbsoluteFill as RAbsoluteFill } from "remotion";
 import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
 import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
@@ -358,6 +364,7 @@ import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTes
 import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
 import { SoudanActe3, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
 import { SoudanActe4, SOUDAN_A4_FRAMES, SOUDAN_A4_FPS } from "./projects/warmap/soudan-acte4/SoudanActe4";
+import { SoudanActe5, SOUDAN_A5_FRAMES, SOUDAN_A5_FPS } from "./projects/warmap/soudan-acte5/SoudanActe5";
 import { PortSoudanJetonCompare, PORT_SOUDAN_COMPARE_FRAMES, PORT_SOUDAN_COMPARE_FPS } from "./projects/warmap/_rnd/PortSoudanJetonCompare";
 import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects/warmap/soudan-acte3/_rnd/GlobeSoudanDubaiTest";
 import { BlocRapportForceTest } from "./projects/warmap/soudan-acte2/BlocRapportForceTest";
@@ -1820,6 +1827,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
         {/* Acte 4 "Même les voisins sont aspirés" — 100% carte, Russie/Égypte + DroneStrikeImpact Kosti */}
         <Composition id="SoudanActe4" component={SoudanActe4} durationInFrames={SOUDAN_A4_FRAMES} fps={SOUDAN_A4_FPS} width={1920} height={1080} />
+        {/* Acte 5 "Le réseau qui arme dans l'ombre" — 100% carte, Émirats→Libye/Haftar→El-Fasher */}
+        <Composition id="SoudanActe5" component={SoudanActe5} durationInFrames={SOUDAN_A5_FRAMES} fps={SOUDAN_A5_FPS} width={1920} height={1080} />
         {/* PROTO ISOLE — globe rotatif night-mode Darfour->Dubai, teste si ca peut remplacer camera suiveuse Mercator beat 3 */}
         <Composition id="GlobeSoudanDubaiTest" component={GlobeSoudanDubaiTest} durationInFrames={GLOBE_SOUDAN_DUBAI_TEST_FRAMES} fps={30} width={1920} height={1080} />
         {/* PROTO ISOLE — comparaison 2 propositions jeton Port-Soudan (navale iso vs cartouche ancre), session 10 */}
@@ -3653,6 +3662,62 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+      />
+      <Composition
+        id="Duel-KimiK3-vs-GLM"
+        component={DuelKimiGlm}
+        durationInFrames={90}
+        fps={30}
+        width={1080}
+        height={960}
+      />
+      <Composition
+        id="Blueprint-Derrick-K3"
+        component={BlueprintDerrickK3}
+        durationInFrames={120}
+        fps={30}
+        width={1600}
+        height={900}
+      />
+      <Composition
+        id="Vision-Kosti-K3"
+        component={VisionKostiK3}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Vision-Khartoum-K3"
+        component={VisionKhartoumK3}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* Kosti Beat 5 en ISOLE (SVG pur, pas de Mapbox) — reproduit Section4 de SoudanActe4 :
+          KostiInsertSVG + audio p4 + SFX, F4 en frames locales @30fps. Pour re-render/valider la scene seule. */}
+      <Composition
+        id="Kosti-Beat5-Standalone"
+        component={() => (
+          <RAbsoluteFill style={{ backgroundColor: "#d9c092" }}>
+            <RAudio src={rStaticFile("_shared/audio/soudan/acte4-voisins-aspires-p4.mp3")} />
+            <RSequence from={164} durationInFrames={22}>
+              <RAudio src={rStaticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.45} />
+            </RSequence>
+            <RSequence from={305} durationInFrames={24}>
+              <RAudio src={rStaticFile("_shared/sfx/impact/impact.mp3")} volume={0.55} />
+            </RSequence>
+            <KostiInsertSVG f4={{
+              kostiNomme: 164, droneFrappe: 305, stationService: 323,
+              civilsEssence: 365, pasCibleMilitaire: 448, civilsPayentPrix: 700, end: 766,
+            }} />
+          </RAbsoluteFill>
+        )}
+        durationInFrames={766}
+        fps={30}
+        width={1920}
+        height={1080}
       />
 
     </>
