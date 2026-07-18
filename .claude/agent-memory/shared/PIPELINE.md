@@ -247,10 +247,11 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
   FINAL PROMU** (2026-07-11 s7 : v7→v12, 3 problèmes v7 résolus — zoom recalibré 9.3, mine repositionnée
   vraie géo, drapeaux motif complet resynchronisés — Beat 1 refondu 2× (concept A "puits sans fond"
   adopté), 9 SFX posés), `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+`_compressed`),
-  catbox `y2swv7`, code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`. **NEXT = ACTE 4 « Même les
-  voisins sont aspirés »** — script verrouillé v5 (Russie+Égypte), reste audio (pipeline Océane V3 → STS
-  GéoAfrique) puis storyboard/breakdown/code.
-  État : `memory/episodes/soudan-midform/STATUS.md`.
+  catbox `y2swv7`, code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`.
+  ⚠️ **CE BLOC EST EN RETARD — source de vérité = `memory/episodes/soudan-midform/STATUS.md`.** État réel
+  (2026-07-17) : Acte 4 CODÉ + rendu v7 + 4 lots refonte (s10) + Beat 5 Kosti refondu 2× (dont Kimi K3 sur
+  branche `feat/kosti-refonte-k3` NON mergée, re-render Acte 4 complet en attente) · Acte 5 script verrouillé
+  + audio + timing faits, code non commencé.
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
   Script v3 LOCKED (jury 8/10). Audio retenu : `public/souverain/maroc-batteries/audio/narration-maroc-v3.mp3` (109s).
   URL catbox : https://files.catbox.moe/jyrlj1.mp3. Format visuel : Template B Hybride.
@@ -781,3 +782,103 @@ sans nouveau signe abstrait. Retirer `NileFactPlaque` (béquille texte = aveu qu
 
 **Next action** : comparer avec la proposition de l'autre instance creative-director en parallèle (brief
 identique, indépendant) avant tranchage Aziz. Détail complet : `.claude/agent-memory/creative-director/soudan-acte4-beat4-nil-brief.md`.
+
+---
+
+## [STAGE-1] creative-director — Soudan Acte 5 (5 beats) — régie mise en scène amont — 2026-07-17
+
+**Contexte** : script Acte 5 v6 verrouillé (5 beats), AUCUN storyboard/breakdown codé. Exercice demandé
+= appliquer CONTINUITE-SCENE-INTENTION-DABORD avec angle "recherche active de rupture hors-carte" pour
+chaque beat, en comparant explicitement au précédent Port-Soudan Acte 4 (sorti en insert SVG).
+
+**Verdict** : 0 sortie de carte sur 5 beats. Tous restent Mapbox continue. Différence structurelle avec
+Port-Soudan (insert SVG, Acte 4) : Port-Soudan = fait 100% incarné SANS ancrage géo porteur au moment où
+il survient. Acte 5 = chaque beat, même documentaire (enquête EAU, rapport ONU), arrive AVEC un point géo
+concret et nouveau à révéler (Abou Dabi, Kufra, Benghazi, El-Fasher) — nature "enquête cartographique".
+
+**Détail par beat** :
+- Beat 1 (pont Acte 4→5) : intention SITUER. Zoom-out El-Fasher→Libye, aucune étiquette encore (garder
+  mystère jusqu'à Beat 2 qui nomme). Carte, évident.
+- Beat 2 (EAU, enquête Lighthouse/Der Spiegel) : intention RÉVÉLER. Candidat sérieux à rupture (fait
+  documentaire type Port-Soudan) mais REJETÉ car le zoom Beat 1 vient d'arriver sur ce territoire —
+  payoff géo frais non consommé. Carte + médaillon presse discret en surimpression (PAS plein écran),
+  jamais un insert qui remplace la carte.
+- Beat 3 (Haftar/corridor, rapport ONU avril 2026) : intention RELIER. Zone teintée est-libyen (Benghazi)
+  + trait corridor Kufra→sud qui s'amorce + tampon ONU discret (même registre que Beat 2).
+  Carte.
+- Beat 4 (El-Fasher, chaîne se boucle) : intention FAIRE CONVERGER. Carte — ⚠️ POINT D'ATTENTION CODE :
+  le trait du corridor doit être LE MÊME trait qui se prolonge depuis Beat 3 (amorce Kufra→sud), PAS un
+  second trait indépendant retracé de zéro. Sinon perte du sens "chaîne qui se boucle" explicite au script
+  ("on la retrouve", "Résumons"). Résumé verbal de la voix = zéro texte à l'écran, le bouclage du trait
+  EST le résumé visuel.
+- Beat 5 (clôture "documenté... et pourtant") : intention PESER. Candidat sérieux n°2 à rupture (script dit
+  lui-même "CARTE stabilisée"). REJETÉ : le poids vient de VOIR la carte à 3 points bâtie sur 4 beats,
+  immobile. Rupture ici disperserait l'attention juste avant le vrai moment de rupture qui doit être
+  RÉSERVÉ au cut vers Acte 6 (sujet institutions, hors-carte par nature). Léger assombrissement/grain sur
+  "il continue de fonctionner" = signal de bascule tonale SANS changer de monde.
+
+**Anti-redondance transversale** : Beats 2/3/5 utilisent un registre de "preuve documentaire" (tampon
+presse/ONU) cohérent et discret — à traiter comme UN système récurrent sur les 3 occurrences, pas 3 idées
+différentes.
+
+**Next action** : Aziz arbitre ce brief (accepte tel quel / ajuste) → si validé, breakdown technique
+(coordonnées précises Kufra/Benghazi/Abou Dabi sur la Map continue déjà existante des Actes 1-4, continuité
+du corridor Beat3→Beat4 à modéliser comme UNE variable de trajectoire, pas deux tracés) avant tout code.
+Consulter pixellab-expert si besoin d'assets neufs pour les médaillons presse/ONU (aucun identifié comme
+bloquant à ce stade — probablement SVG maison, pas de génération payante requise).
+
+---
+
+## [STAGE-1] creative-director — Soudan Acte 5 (5 beats) — densité/variété visuelle (retour Aziz Kings & Generals) — 2026-07-17
+
+**Contexte** : suite directe du brief mise-en-scène ci-dessus (0 sortie de carte, déjà tranché, non
+remis en cause). Nouveau retour Aziz post-Acte 4 : "je préfère une carte remplie qu'une carte vide tout
+le temps... être conservateur ne donne rien non plus" — référence explicite Kings and Generals. Exercice
+= chercher où AUGMENTER la densité d'objets figuratifs (pas de points/halos abstraits) sous contrainte
+d'ancrage strict à la voix, sans violer R-V5 (contour permanent + intérieur vide = toile) ni répéter
+l'échec Acte 2 (objet figuratif non nommé par la voix = rejeté).
+
+**Arbitrage de tension retenu** : R-V5 protège contre le remplissage GRATUIT et PERMANENT, pas contre un
+objet ancré à un mot précis qui apparaît sur la fenêtre du segment vocal puis s'efface/se fige. Filtre :
+chaque ajout doit avoir (a) un mot/segment vocal exact qui le déclenche, (b) une fenêtre d'apparition
+liée au rythme de la phrase (pas posé en permanence dès l'entrée du beat).
+
+**Verdict par beat** :
+- **Beat 1** (pont, aucun lieu nommé) : rester épuré. Ajouter un objet ici anticiperait le reveal du
+  Beat 2. Seul geste = le grain/texture déjà acté.
+- **Beat 2** (EAU financent) : +1 enrichissement. Sur "camps d'entraînement" — remplacer 1 des 3-4
+  jetons diffus génériques par `base-saf-td.png` reskinné neutre (silhouette camp iso déjà en stock,
+  correspondance directe au mot). Ne pas remplacer les 3-4 jetons pour garder Beat 2 moins chargé que
+  Beat 3 (rythme croissant).
+- **Beat 3** (Haftar/corridor) — MEILLEUR CANDIDAT DE L'ACTE : la voix énumère 3 objets concrets
+  ("armes, carburant, combattants"). Remplacer les 3 pulses abstraits par 3 micro-jetons synchronisés
+  1-mot=1-objet, apparition puis effacement (pas de rémanence) : armes→`tech-td-red.png`,
+  carburant→`wagon-cargo-or.png` (ou jerrican SVG low-cost), combattants→`portrait-rsf.png` ou
+  `technical-jnim.png`. Le trait corridor reste seul élément persistant.
+- **Beat 4** (El-Fasher bouclage) : rester épuré, AUCUN objet neuf — le point non-négociable des 2 agents
+  précédents (même trait prolongé, pas retracé) prime, et la voix est elle-même un résumé (risque de
+  paraphrase déjà identifié). Option secondaire seulement (à trancher Aziz) : réutiliser le MÊME sprite
+  combattant du Beat 3 à El-Fasher sur "y ont été repérés, sur le terrain" — écho reconnaissable, pas un
+  nouvel objet.
+- **Beat 5** (clôture) : rester épuré, aucun objet neuf. La voix ne nomme plus d'objet concret ; le
+  contraste figé/vivant déjà acté (1 seul point qui pulse) est le geste juste, une carte qui décélère
+  visuellement sert le sens de clôture.
+
+**Résultat** : 2 beats gagnent réellement en incarnation (Beat 2 = 1 objet, Beat 3 = 3 objets
+synchronisés — le vrai gain), 1 gain optionnel à trancher (Beat 4), 2 restent volontairement épurés
+(Beat 1, Beat 5). Courbe de densité = respiration (vide→1→3→écho optionnel→vide), pas un remplissage
+uniforme — c'est le geste Kings & Generals réel (concentration sur l'énumération concrète, pas partout).
+Aucun élément sans mot déclencheur : zéro risque de répéter le rejet Acte 2.
+
+**Next action** : Aziz tranche (1) accepte/ajuste Beat 2+3, (2) décide Beat 4 sprite-écho oui/non, PUIS
+breakdown technique (coordonnées + timing frame-exact des jetons synchronisés sur les 3 mots Beat 3) avant
+tout code. Détail complet : `.claude/agent-memory/creative-director/soudan-acte5-densite-brief.md`.
+
+**Complément (repasse indépendante même jour, 2e agent)** : verdicts Beat 1/3/4/5 confirmés à l'identique
+(bon signal croisé). Nuance ajoutée sur Beat 2 : garder STRICTEMENT "1 jeton camp" générique (pas 3-4) —
+plusieurs icônes identiques côte à côte, même sans chiffre à l'oral, se lisent comme un compte implicite
+et contredisent la contrainte factuelle du script ("pas de nombre exact de camps, sources divergent").
+Vérifié aussi : `CountryParchmentMask` (cité comme "réutilisable" dans le doc script Acte 5) introuvable
+dans le repo à ce jour, et aucun composant "tampon presse/ONU" n'existe encore — les deux sont donc à
+CODER neuf, pas à réutiliser tel quel, à budgéter en conséquence au breakdown. Détail : même fichier
+`soudan-acte5-densite-brief.md` § "Complément — re-passe indépendante".

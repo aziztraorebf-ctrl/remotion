@@ -5,8 +5,12 @@
  * Doctrine appliquee : intention "cout humain incarne" = QUOI/COMMENT -> insert SVG, pas carte (OU).
  * Registre "carte d'etat-major" (echo de KhartoumEtatMajorSVG deja vu dans la video) mais INFLECHI civil :
  * pas de jeton militaire, pas de faction — des jetons CIVILS (6 visages distincts) qui s'ETEIGNENT a la
- * frappe. Composition de base proposee par GPT-5.6 Sol (validee Aziz 2026-07-17), nos assets branches
- * dessus : drone-rsf-td.png + portraits civils + Nil anime. Proto valide : KostiFrappeProtoV3.
+ * frappe. Proto valide : KostiFrappeProtoV3.
+ *
+ * ⭐ REFONTE 2026-07-17 (Kimi K3, vision->SVG) : la STATION-SERVICE et le corps du DRONE sont dessines par
+ * Kimi K3 (test vision : coquille nue + script -> K3 invente la geometrie) et rendus INLINE (StationDecor +
+ * DroneBodyK3). Le sprite drone-rsf-td.png et le decor externe kosti-sol-decor-noriver.svg ne sont PLUS
+ * rendus (fond de carte redessine inline MapBackdrop). Portraits civils : inchanges (Img sprites).
  *
  * ⭐ CALE SUR LA NARRATION (frames locales p4, audio acte4-voisins-aspires-p4.mp3, 25.54s @30fps) :
  *   kostiNomme 164 · droneFrappe 305 · stationService 323 · civilsEssence 365 · civilsPayentPrix 700 · end 766.
@@ -14,11 +18,9 @@
  * payent le prix" (700). Fumee persiste jusqu'a la fin.
  *
  * Decor : STATION dessinee par Kimi K3 (extraits _k3-refonte-ref/kosti-k3-extraits.json), rendue
- * inline dans <StationDecor/> et alignee sur STATION_CENTER via un <g translate>. Le fond ivoire +
- * grille + cadre est redessine INLINE ici (le SVG public/_rnd/kosti-sol-decor-noriver.svg n'est PLUS
- * utilise : il contenait l'ancienne station Sol, une route/labels, et surtout un cartouche
- * "CARTE DE SITUATION" interdit — on repart d'un fond propre reproduisant ses patterns/couleurs).
- * Nil redessine anime ici (eau qui s'ecoule). Aucun asset payant.
+ * inline dans <StationDecor/> et alignee sur STATION_CENTER via un <g translate scale>. Le fond ivoire +
+ * grille + cadre est redessine INLINE (<MapBackdrop/>, sans cartouche "CARTE DE SITUATION"), + une route
+ * reliant la file de civils aux pompes. Nil affine, redessine anime ici (eau qui s'ecoule). Aucun asset payant.
  */
 import React from "react";
 import { AbsoluteFill, Img, useCurrentFrame, interpolate, Easing, staticFile } from "remotion";

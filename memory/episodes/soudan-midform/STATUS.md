@@ -1,18 +1,46 @@
 # Soudan Mid-form — STATUS
 
-## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-12 fin de session 10)
+## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-17 fin de session 11)
 
-**DEUX chantiers en attente, dans cet ordre de priorité :**
+**UN chantier restant en attente (Acte 5 traité cette session) :**
 
-1. **Acte 5 (nouveau, script écrit) — révision finale par Aziz requise AVANT tout storyboard/audio/code.**
-   Script v6 sauvegardé : `memory/projects/soudan-midform-ACTE5-SCRIPT.md`. Sujet : réseau de camps
-   d'entraînement RSF financé par les Émirats, opéré via la Libye/maréchal Haftar, jusqu'au Soudan
-   (El-Fasher). Fact-check 3 niveaux CONFIRMÉ (4 sources indépendantes), jury LLM 3 modèles fait. **PAS
-   verrouillé comme les scripts Actes 3-4** — Aziz veut le rouvrir "dans le mois" avant de lancer la
-   production. Décision structurelle : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad + conclusion)
-   est scindé — devient l'**Acte 6**, pas encore écrit.
+0. **🎬 Acte 5 — script verrouillé + mise en scène actée + AUDIO GÉNÉRÉ + timing frame-exact FAIT
+   (session 11, 2026-07-17). Reste : le CODE de la scène (pas commencé).**
+   - Script v6 relu par Aziz, verrouillé, 2 micro-reformulations TTS (scan anti-pièges FR : "bloquée."
+     fin de phrase → "dans l'impasse." ; "ont été repérés" → "on les y a repérés"). Texte final dans
+     `memory/projects/soudan-midform-ACTE5-SCRIPT.md`.
+   - Mise en scène actée par 2 agents `creative-director-dual` (angles opposés carte-first vs
+     rupture-au-service-du-sens) → convergence indépendante sur 0 sortie de carte, 5 beats/5 Mapbox
+     continue. Densité objets affinée par 2 agents supplémentaires (angle enrichissement vs garde-fou) :
+     Beat1/5 épurés, Beat2 max 1 jeton camp, Beat3 = 3 micro-objets synchronisés mot-à-mot
+     (armes/carburant/combattants), Beat4 sans objet neuf. Détail complet dans le fichier script §
+     MISE EN SCÈNE ACTÉE. ⛔ **Point technique non-négociable** : trait corridor Kufra→El-Fasher = UNE
+     seule variable de trajectoire continue (Beat3→4), jamais deux tracés indépendants.
+   - **da-brief externe (Gemini+Kimi+DeepSeek) ABANDONNÉ cette session** — bloqué indéfiniment sans
+     erreur (diagnostic : Kimi part en raisonnement long sur prompt structuré, pas un bug de notre
+     script). Détail + comment diagnostiquer la prochaine fois : `.claude/.../memory/
+     tools_da-brief-lenteur-kimi-2026-07-17.md`. On a avancé avec le seul verdict des 4 agents Claude
+     internes (solide et convergent).
+   - **Coordonnées géo vérifiées WebSearch** (Kufra 24.18°N/23.28°E, Benghazi 32.11°N/20.07°E, Abou
+     Dabi 24.45°N/54.37°E) — écart négligeable vs script initial. El-Fasher déjà dans
+     `sudan.warmap.json` (25.35/13.63), réutilisé tel quel. Kufra/Benghazi/Abou Dabi sont HORS du
+     dataset (centré Soudan) — à poser comme points fixes indépendants.
+   - **Audio généré** (pipeline `generate-narration-expressive.py`, TTS V3 Océane → STS GéoAfrique,
+     4 parties + concat) : `public/_shared/audio/soudan/acte5-reseau-ombre.mp3` (80.11s total,
+     ~2609 crédits ElevenLabs). Parties : p1=30.65s, p2=18.25s, p3=17.04s, p4=14.16s.
+   - **Forced-alignment ElevenLabs v1 fait** (v2 = 404, endpoint inexistant/changé — noter pour la
+     prochaine fois) : `public/_shared/audio/soudan/acte5-reseau-ombre-alignment.json` (198 mots,
+     loss=0.107, zéro bug timestamps bloqués).
+   - **Timing frame-exact écrit** : `src/projects/warmap/soudan-acte5/soudanActe5Timing.ts` (5 BEATN,
+     marqueurs calés sur les vrais timestamps forced-alignment, PART_OFFSETS sur durées ffprobe réelles,
+     TOTAL_FRAMES=2400 @30fps).
+   - **NEXT immédiat** : écrire `SoudanActe5.tsx` (le composant Remotion lui-même — carte Mapbox +
+     jetons Beat2/3 + tampons presse/ONU à coder neuf, `CountryParchmentMask` réutilisable des Actes
+     précédents mais confirmé ABSENT du repo malgré la mention dans le script — à vérifier/coder).
+     Puis self-review scriptée, render, Gemini review, validation Aziz. Pas commencé — prochaine étape
+     à lancer avec feu vert explicite (chantier de code conséquent).
 
-2. **Acte 4 — 4 lots de refonte faits, en attente de validation par VISIONNAGE COMPLET (audio+visuel).**
+1. **Acte 4 — 4 lots de refonte faits, en attente de validation par VISIONNAGE COMPLET (audio+visuel).**
    Suite au retour d'Aziz sur le v6 (session 9), refonte en profondeur cette session (10) :
    - Beat 1 (Russie) : zoom Moscou dézoomé 6.4→3.6 (territoire filtré se lisait comme un point isolé) +
      bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
@@ -25,8 +53,16 @@
      branchés (drone-rsf-td.png + portraits + Nil animé). Calé sur narration p4 (drone frappe sur "drone"
      F4.droneFrappe, civils éteints étalés jusqu'à "civils qui en payent le prix"). Proto validé :
      `KostiFrappeProtoV3`. Ancien code carte (DroneStrikeImpact/CAM4/HookDisplacementBurst) laissé en place
-     dans le fichier mais NON monté (voir historique git). Décor : `public/_rnd/kosti-sol-decor-noriver.svg`.
-     ⚠️ v7 (`acte4-v7-full.mp4`) est PÉRIMÉ pour le Beat 5 — re-render complet de l'acte nécessaire.
+     dans le fichier mais NON monté (voir historique git).
+     **⚠️ 2e REFONTE 2026-07-17 (session Kimi K3, branche `feat/kosti-refonte-k3`, commits bd302d24 +
+     718244f3, NON mergée)** : la STATION-SERVICE et le corps du DRONE sont désormais dessinés par Kimi K3
+     (test vision→SVG one-shot) et rendus INLINE (`StationDecor` + `DroneBodyK3` dans KostiInsertSVG.tsx).
+     Le sprite `drone-rsf-td.png` ET le décor externe `kosti-sol-decor-noriver.svg` ne sont PLUS rendus
+     (fond de carte redessiné inline `MapBackdrop`, sans mention "CARTE DE SITUATION"). Portraits civils
+     INCHANGÉS (toujours `Img` sprites). Mentions inventées par K3 retirées (VECTEUR RSF, 4,2 km, réticule
+     horodaté). Re-render isolé validé par Aziz (`Kosti-Beat5-Standalone`). Détail R&D K3 : `memory/tools/openrouter-svg.md` § Kimi K3.
+     ⚠️ v7 (`acte4-v7-full.mp4`) est PÉRIMÉ pour le Beat 5 — re-render complet de l'acte nécessaire (jamais
+     fait sur la version K3). Merge `feat/kosti-refonte-k3` → master en attente.
    - Beat 2 (Port-Soudan) : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
      GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte), agrandi +50% (140→210px).
    - Beat 3-4 (Égypte/Nil) : zoom resserré 4.0-4.6→5.2-5.8, `CountryParchmentMask` appliqué à l'Égypte

@@ -655,6 +655,15 @@ le defaut : qualite equivalente, effort reglable, 10-200x moins cher/rapide). "B
 d'effort inferieurs cote Moonshot — RE-TESTER a ce moment (a effort reglable, concurrent serieux, moins
 cher que Fable pour frontend/SVG).
 
+### Methode de test "reverse coquille" (evaluer la vision creative d'un modele, reutilisable)
+Pour mesurer si un modele SAIT METTRE EN SCENE (pas juste remplir), lui donner une COQUILLE VRAIMENT VIDE :
+retirer du PNG de reference les elements narratifs (station, batiments, jetons) et ne garder que le decor nu
+(carte, grille, routes, terrain) + la partie du script. Une coquille encore peuplee teste le remplissage/
+mimetisme ; une coquille vide teste l'INVENTION de geometrie + la direction artistique (choix non dictes).
+C'est le protocole qui a revele le point fort de K3. Distinct de REVERSE-STYLE-VIDEO-VERS-ASSETS (qui reverse
+un STYLE tiers) : ici on teste la capacite d'invention d'un modele sur NOTRE decor. Outil : retrait de groupes
+SVG par compteur de profondeur <g>/</g> (le regex non-greedy `.*?</g>` casse sur les groupes imbriques).
+
 ### L'ATOUT REEL : VISION -> mise en scene SVG one-shot (a GARDER)
 Test cle : on montre a K3 une COQUILLE NUE (carte d'etat-major sans elements narratifs, PNG) + la partie
 du SCRIPT, et on lui demande d'INVENTER et coder la couche SVG qui raconte la scene. Resultat = le plus

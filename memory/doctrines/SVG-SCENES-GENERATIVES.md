@@ -409,6 +409,12 @@ n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `Creu
    (ex feuillage = 5 paires ombre+couleur dans `<g id="feuillage">`), les séparer côté JSX par regex pour les animer en
    vagues : `const parts = G_FEUILLAGE.match(/<g[\s\S]*?<\/g>/g); // puis regrouper par paires`. (Backlog : helper
    `growFrom(anchor, scale)` pour les ancres de croissance, analogue au `flowAlongAxis` déjà noté.)
+10. **NE JAMAIS faire un `.replace("'", '"')` GLOBAL sur la réponse brute** pour convertir les apostrophes
+    d'attributs : ça casse aussi les apostrophes FR du CONTENU texte affiché (`<text>AXE D'ATTAQUE</text>` →
+    `AXE D"ATTAQUE`). Quand le modèle renvoie un JSON `{scene_svg}` : parser depuis le JSON (apostrophes du
+    texte intactes), PUIS convertir SEULEMENT les attributs (camelCase/kebab + quotes) via le regex d'attributs
+    — pas un replace aveugle sur toute la string. (Confirmé Kimi K3 2026-07-17 ; vaut pour tout modèle qui
+    mêle attributs à apostrophes et texte FR affiché.)
 
 ## ⭐⭐⭐ FINITION ORCHESTRÉE — l'agent fait le gros œuvre, Claude+Aziz ajoutent la VIE (prouvé 2026-06-22)
 > Vision d'Aziz pour scaler : un AGENT produit la scène A→Z (gros œuvre), PUIS on regarde le rendu réel et on ajoute une

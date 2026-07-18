@@ -41,30 +41,34 @@
 > erreur) — vérifier `lsof -p <pid>` avant de conclure à une lenteur Gemini normale. Et sur ce beat sans
 > storyboard, Gemini review hallucine une palette sépia fantôme (juger sur override tracé + Aziz).
 
-## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : SCRIPT ÉCRIT, RÉVISION FINALE REQUISE AVANT CODE (2026-07-12 s10)
+## ✅✅ SOUDAN MID-FORM — ACTE 5 : SCRIPT v6 VERROUILLÉ + MISE EN SCÈNE ACTÉE (2026-07-17 s11)
 
-> **PRIORITÉ 1.** Script Acte 5 (réseau EAU-Libye-Haftar-mercenaires, "le pourquoi concret" du blocage
-> institutionnel) écrit et sauvegardé : `memory/projects/soudan-midform-ACTE5-SCRIPT.md` (v6, historique
-> complet v1→v6 en note). Fact-check 3 niveaux CONFIRMÉ (4 sources indépendantes), jury LLM 3 modèles fait
-> (`memory/projects/soudan-midform-ACTE5-SCRIPT-jury-results.md`), plusieurs itérations de ton avec Aziz.
+> **PRIORITÉ 1 précédente, désormais traitée.** Script Acte 5 (réseau EAU-Libye-Haftar, "le pourquoi
+> concret" du blocage institutionnel) relu par Aziz et **VERROUILLÉ tel quel** (aucune retouche texte) :
+> `memory/projects/soudan-midform-ACTE5-SCRIPT.md` (v6). Fact-check 3 niveaux CONFIRMÉ (4 sources
+> indépendantes), jury LLM 3 modèles déjà fait.
 >
-> ⛔ **CE SCRIPT N'EST PAS VERROUILLÉ** comme le sont les scripts Actes 3-4 — **Aziz demande explicitement
-> une révision finale dans le mois, AVANT tout storyboard/audio/code**. Ne pas lancer de production sur ce
-> script sans repasser par lui d'abord.
+> **Exercice de mise en scène amont fait avant verrouillage** (test méthodologique `creative-director-dual`
+> avec 2 angles OPPOSÉS plutôt qu'un brief identique — évite la fausse convergence) : 2 agents
+> `creative-director` lancés en parallèle (Agent A "carte-first" vs Agent B "rupture au service du sens"),
+> **convergence indépendante sur 0 sortie de carte, 5 beats/5 en Mapbox continue** — réfute l'hypothèse
+> initiale de Claude (Beat 2 candidat insert SVG comme le précédent Port-Soudan Acte 4). Raison retenue :
+> Port-Soudan n'avait rien à montrer sur la carte à ce moment du récit (huis clos sans ancrage géo neuf) ;
+> l'Acte 5 est une "enquête cartographique" où chaque beat, même documentaire, arrive avec un point géo
+> neuf (Abou Dabi, Kufra, Benghazi, El-Fasher). Détail complet + mise en scène beat par beat actée :
+> `memory/projects/soudan-midform-ACTE5-SCRIPT.md` § MISE EN SCÈNE ACTÉE.
 >
-> **Décision structurelle de cette session** : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad +
-> conclusion ouverte) est scindé en 2 — **nouvel Acte 5 = ce fait concret** (pourquoi le verrou est
-> bloqué, illustré par le réseau EAU-Libye) ; **nouvel Acte 6 = le verrou institutionnel détaillé +
-> conclusion** (reprend tel quel le contenu que l'ancien "Acte 5" devait couvrir, pas encore écrit).
-> Raison : 7 blocs factuels distincts ne tenaient pas confortablement dans un seul acte sans sous-
-> développer chaque beat (même leçon de densité que le diagnostic Acte 4 cette session). Le pont de
-> l'Acte 4 déjà verrouillé ("une organisation existe... elle est restée inactive") reste intact et
-> fonctionne pour les deux : Acte 5 y répond par le fait concret, Acte 6 detaille l'institution elle-même.
+> ⛔ **Point technique non-négociable pour le futur breakdown/code** : le trait corridor Kufra→El-Fasher
+> (Beat 3→4) doit être UNE SEULE variable de trajectoire pilotée par temps absolu (`tAbs`), jamais deux
+> tracés indépendants — sinon le sens "chaîne qui se boucle" du script se perd visuellement.
 >
-> **Plusieurs fichiers mémoire encore désynchronisés avec cette scission** (notes de clarification
-> ajoutées cette session, voir commit) : `soudan-midform.md`, `soudan-midform-POSITIONNEMENT.md`,
-> `soudan-midform-DONNEES.md`, `soudan-midform-ACTE4-SCRIPT.md` — tous décrivaient l'ancien "Acte 5 =
-> tout" avant cette clarification.
+> **NEXT** : storyboard/breakdown technique (coordonnées précises, corridor Beat3→4 modélisé) avant tout
+> code — pas commencé, session dédiée future. Pas de production lancée ce tour.
+>
+> **Décision structurelle (rappel, session 10)** : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad +
+> conclusion ouverte) reste scindé — **Acte 5 = ce fait concret** (réseau EAU-Libye) ; **Acte 6 = le verrou
+> institutionnel détaillé + conclusion** (pas encore écrit). Le pont de l'Acte 4 déjà verrouillé ("une
+> organisation existe... elle est restée inactive") fonctionne pour les deux.
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10
 
@@ -80,6 +84,15 @@
 > (DroneStrikeImpact/CAM4/HookDisplacementBurst) est laissé dans le fichier mais NON monté (récupérable via
 > git si besoin). Reste à faire par Aziz : re-render Acte 4 complet + visionner le Beat 5 intégré (calage
 > audio + transition avec Beat 4 et Beat 6).
+>
+> ⚠️⚠️ **2e CHANGEMENT 2026-07-17 (session Kimi K3) — branche `feat/kosti-refonte-k3`, NON mergée** : la
+> STATION-SERVICE et le corps du DRONE du Beat 5 sont désormais dessinés par **Kimi K3** (test vision→SVG
+> one-shot) et rendus INLINE (`StationDecor` + `DroneBodyK3`). Le sprite `drone-rsf-td.png` et le décor
+> externe `kosti-sol-decor-noriver.svg` ne sont PLUS rendus (fond redessiné inline `MapBackdrop`, route
+> ajoutée reliant la file aux pompes, Nil affiné). Mentions inventées par K3 retirées. Re-render isolé validé
+> Aziz (compo `Kosti-Beat5-Standalone`). **Commits bd302d24 + 718244f3 sur `feat/kosti-refonte-k3` (NON
+> mergée à master).** Reste : merge branche + re-render Acte 4 complet (jamais fait sur la version K3).
+> Détail R&D K3 : `memory/tools/openrouter-svg.md` § Kimi K3.
 >
 > **PRIORITÉ 2.** Suite au visionnage du v6 (session 9) par Aziz, refonte en profondeur en 4 lots
 > (chacun vérifié par render isolé avant intégration) :
