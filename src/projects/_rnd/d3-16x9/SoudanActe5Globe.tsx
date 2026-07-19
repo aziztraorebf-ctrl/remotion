@@ -220,7 +220,10 @@ export const SoudanActe5Globe: React.FC = () => {
   // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar (Benghazi) + SES SOLDATS autour (son autorité
   // militaire, retour Aziz) + camp/dépôt à Kufra + CHECKPOINTS le long du corridor (contrôle du terrain).
   // Les 2 disent des choses différentes et se complètent. Tout RESTE affiché (nom→persiste). =====
-  const haftarReveal = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 18], [0, 1], clampB);
+  const haftarReveal = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 18], [0, 1], clampB); // jeton = persiste
+  // label "Maréchal Haftar" : apparaît puis DISPARAÎT après ~2s (retour Aziz — inutile tout l'acte).
+  // Le jeton-portrait, lui, reste (nom→persiste).
+  const haftarLabelOp = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 16, T.b3HaftarNomme + 55, T.b3HaftarNomme + 70], [0, 1, 1, 0], clampB);
   const campReveal = interpolate(frame, [T.b3Corridor - 4, T.b3Corridor + 20], [0, 1], clampB); // camp/dépôt à Kufra
   // SOLDATS RSF autour de Haftar (sa force) — cluster SOUS lui, vers l'intérieur libyen (jamais en mer).
   const soldierReveal = (i: number) => interpolate(frame, [T.b3HaftarNomme + 12 + i * 7, T.b3HaftarNomme + 30 + i * 7], [0, 1], clampB); // cascade
@@ -474,7 +477,7 @@ export const SoudanActe5Globe: React.FC = () => {
         {/* label Benghazi décalé au-dessus du jeton Haftar (évite le chevauchement) */}
         {pBenghazi && (
           <div style={{ position: "absolute", left: pBenghazi.x, top: pBenghazi.y - 52,
-            transform: "translateX(-50%)", opacity: haftarReveal,
+            transform: "translateX(-50%)", opacity: haftarLabelOp,
             fontFamily: "Georgia, serif", fontWeight: 800, fontSize: 20, letterSpacing: "0.02em",
             color: t.labelFill, textShadow: "0 2px 8px rgba(0,0,0,0.9)", whiteSpace: "nowrap", pointerEvents: "none" }}>
             Maréchal Haftar
