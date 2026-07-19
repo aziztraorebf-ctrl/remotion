@@ -118,8 +118,9 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
   const egT = egReveal;
 
   // #2 REVEAL SYSTEME (beat 6) : au "meme or paie les deux camps", les pays NON-impliques s'assombrissent
-  // pour faire ressortir le triangle Soudan-EAU-Turquie-Egypte + les flux. Monte puis se maintient.
-  const systemReveal = interpolate(frame, [T.b6Start, T.b6MemeOrPaie, T.b7End], [0, 0.55, 0.45], clampB);
+  // pour faire ressortir le triangle Soudan-EAU-Turquie-Egypte + les flux. Monte, se maintient, PUIS
+  // s'estompe pendant la replongee de sortie (sinon le Soudan arriverait assombri au raccord Acte 4).
+  const systemReveal = interpolate(frame, [T.b6Start, T.b6MemeOrPaie, T.b7PauseAvantQuestion, T.b7Question], [0, 0.55, 0.5, 0], clampB);
 
   // ===== REACTIONS CIBLE (drapeaux + illumination) =====
   const uaeLight = interpolate(frame, [T.b3PremierImportateur - 4, T.b3PremierImportateur + 18, T.b6Start], [0, 1, 0.88], clampB);

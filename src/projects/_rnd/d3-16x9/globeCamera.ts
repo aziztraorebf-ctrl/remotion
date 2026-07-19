@@ -71,8 +71,12 @@ export function buildInsertCam(T: Record<string, number>): CamKey[] {
     // BEAT 6 : LE SYSTEME — dezoom large pour voir les 4 flux + 3 pays colores ENSEMBLE
     // (ce que le globe rend possible et que le Mapbox plat interdisait).
     { frame: T.b6MemeOrPaie, lon: 37, lat: 22, scaleMul: 1.5 },
-    // BEAT 7 : sortie / pont Acte 4 — dezoom continu, camera stabilisee sur la question finale.
-    { frame: T.b7PauseAvantQuestion, lon: 37, lat: 20, scaleMul: 1.35 },
-    { frame: T.b7End, lon: 37, lat: 20, scaleMul: 1.3 },
+    // BEAT 7 : sortie = RACCORD ZOOM-IN vers le Soudan (miroir de l'entree). La question finale reste
+    // sur un plan un peu large (camera qui commence a se recentrer sur le Soudan), PUIS on REPLONGE :
+    // scale remonte fort + centre sur le Soudan -> courbure s'aplatit = raccord vers la carte 2D Acte 4.
+    { frame: T.b7PauseAvantQuestion, lon: 34, lat: 18, scaleMul: 1.7 }, // recentrage doux vers le Soudan
+    { frame: T.b7Question, lon: 31, lat: 15.8, scaleMul: 2.4 }, // la question : on se rapproche
+    // fin : replongee finale — Soudan quasi plein cadre, courbure imperceptible (= match carte 2D Acte 4).
+    { frame: T.b7End, lon: 30, lat: 15.5, scaleMul: 4.2 },
   ];
 }
