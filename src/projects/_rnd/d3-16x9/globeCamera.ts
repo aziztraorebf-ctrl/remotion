@@ -54,11 +54,11 @@ const CARREFOUR: LonLat = [38, 20];
  * Construit les keyframes camera de l'insert a partir des ancrages de timing (T, relatifs a l'insert).
  * Chaque beat amene son point d'interet au 1er plan, en mouvement continu.
  */
-export function buildInsertCam(T: Record<string, number>): CamKey[] {
+export function buildInsertCam(T: Record<string, number>, startScaleMul = 4.4): CamKey[] {
   return [
-    // ENTREE : raccord zoom-out depuis le Darfour (match approx derniere frame Mapbox : Soudan plein
-    // cadre, tres zoome) -> on prend de l'altitude vers le plan carrefour a mesure que l'or part.
-    { frame: T.b3Start, lon: GEO.jebelAmer[0], lat: GEO.jebelAmer[1], scaleMul: 4.4 },
+    // ENTREE : raccord zoom-out depuis le Darfour (match derniere frame Mapbox : Soudan plein cadre,
+    // zoom 5.75). startScaleMul cale le zoom de depart pour matcher la fin de Section 1 -> zoom-out continu.
+    { frame: T.b3Start, lon: GEO.jebelAmer[0], lat: GEO.jebelAmer[1], scaleMul: startScaleMul },
     { frame: T.b3EmiratsMot, lon: (GEO.jebelAmer[0] + GEO.dubai[0]) / 2, lat: 22, scaleMul: 2.3 },
     // BEAT 3-4 : plan de reference carrefour, centre pour voir Darfour->Dubai + retour.
     { frame: T.b3End, lon: CARREFOUR[0], lat: CARREFOUR[1], scaleMul: 2.1 },
@@ -78,5 +78,45 @@ export function buildInsertCam(T: Record<string, number>): CamKey[] {
     { frame: T.b7Question, lon: 31, lat: 15.8, scaleMul: 2.4 }, // la question : on se rapproche
     // fin : replongee finale — Soudan quasi plein cadre, courbure imperceptible (= match carte 2D Acte 4).
     { frame: T.b7End, lon: 30, lat: 15.5, scaleMul: 4.2 },
+  ];
+}
+
+// ============================================================================================
+// ACTE 5 "Le reseau qui arme dans l'ombre" — camera continue du globe INTEGRAL (0 Mapbox).
+// Chaine lineaire a 3 maillons : Abou Dabi (~54E) -> est libyen/Kufra (~23E) -> El-Fasher (~13N).
+// La camera ne bouge JAMAIS sans cible (correction directe du diagnostic Gemini/Kimi).
+// T = ancrages ABSOLUS (frame 0 = debut de l'acte), cf soudanActe5GlobeTiming.ts.
+// ============================================================================================
+
+// Centre "carrefour" Beat 2 : tient la Libye ET la peninsule arabique dans l'hemisphere visible
+// (les 37deg d'ecart Abou Dabi<->Libye se lisent sur la COURBURE, pas dans le vide plat = le gain globe).
+const A5_CARREFOUR: LonLat = [38, 24];
+// Centre est-libyen Beat 3 (Benghazi/Kufra au 1er plan) — zoom serre, courbure quasi plate.
+const A5_EST_LIBYE: LonLat = [22, 27];
+// Centre Soudan/Darfour Beat 4 (arrivee El-Fasher).
+const A5_DARFOUR: LonLat = [25, 15];
+
+export function buildActe5Cam(T: Record<string, number>): CamKey[] {
+  return [
+    // BEAT 1 — pont : ouverture Soudan tres zoome (raccord doux Acte 4, courbure quasi plate).
+    { frame: T.b1Start, lon: 30, lat: 15.4, scaleMul: 4.4 },
+    // a "elle reste dans l'impasse" : le globe PREND DE L'ALTITUDE et pivote vers la Libye
+    // (dezoom + rotation = le mouvement que Mapbox ne pouvait pas faire).
+    { frame: T.b1ResteImpasse, lon: 26, lat: 20, scaleMul: 3.2 },
+    { frame: T.b1InstalleLibye, lon: GEO.libyaCenter[0], lat: GEO.libyaCenter[1], scaleMul: 2.4 },
+    // BEAT 2 — carrefour : Libye + peninsule arabique ensemble (montre la relation EAU->Libye).
+    { frame: T.b2EmiratsNommes, lon: A5_CARREFOUR[0], lat: A5_CARREFOUR[1], scaleMul: 2.0 },
+    { frame: T.b2CampsEntrainement, lon: A5_CARREFOUR[0], lat: A5_CARREFOUR[1], scaleMul: 2.0 },
+    // BEAT 3 — l'intermediaire : zoom+rotation SERRE vers l'est libyen (Benghazi/Kufra au 1er plan).
+    { frame: T.b3HaftarNomme, lon: A5_EST_LIBYE[0], lat: A5_EST_LIBYE[1], scaleMul: 3.8 },
+    { frame: T.b3Corridor, lon: A5_EST_LIBYE[0], lat: A5_EST_LIBYE[1], scaleMul: 3.8 },
+    // BEAT 4 — bouclage : la camera DESCEND avec le corridor (Kufra->El-Fasher, ~11deg de trajet)
+    // puis se RESSERRE sur El-Fasher pour l'embrasement, puis DEZOOM LARGE a "Resumons" (3 maillons).
+    { frame: T.b4ElFasherNomme, lon: 24, lat: 19, scaleMul: 3.0 }, // suit le milieu du corridor
+    { frame: T.b4CombattantsRepere, lon: GEO.elFasher[0], lat: GEO.elFasher[1], scaleMul: 3.8 }, // serre sur l'embrasement
+    { frame: T.b4Resumons, lon: 38, lat: 21, scaleMul: 1.55 }, // dezoom large : les 3 maillons ensemble
+    // BEAT 5 — cloture : plan stabilise, resserre doucement sur le systeme (pas de dezoom brusque).
+    { frame: T.b5Documente, lon: 34, lat: 19, scaleMul: 2.0 },
+    { frame: T.b5End, lon: 32, lat: 17, scaleMul: 2.2 },
   ];
 }

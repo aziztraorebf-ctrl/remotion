@@ -88,4 +88,10 @@ export const GEO = {
   suakin: [37.33, 19.11] as LonLat, // ile de Suakin, mer Rouge
   cairo: [31.24, 30.04] as LonLat, // sortie or SAF -> Egypte
   sudanCenter: [30.0, 15.5] as LonLat,
+  // --- Acte 5 "Le reseau qui arme dans l'ombre" (verif WebSearch 2026-07-17, cf script v6) ---
+  abuDhabi: [54.37, 24.45] as LonLat, // Emirats — origine du financement
+  kufra: [23.28, 24.18] as LonLat, // Libye SE — depart corridor (bataillon Subul al-Salam, LNA)
+  benghazi: [20.07, 32.11] as LonLat, // Libye NE — siege politique Haftar/LNA
+  elFasher: [25.35, 13.63] as LonLat, // Soudan, Darfour — arrivee corridor (deja dans sudan.warmap.json)
+  libyaCenter: [17.5, 26.5] as LonLat, // point de repos camera sur le territoire libyen
 };

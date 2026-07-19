@@ -26,6 +26,7 @@ import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
+import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -707,6 +708,15 @@ export const RemotionRoot: React.FC = () => {
           id="D3-SoudanActe3-GlobeInsert"
           component={SoudanActe3GlobeInsert}
           durationInFrames={SOUDAN_A3_INSERT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Acte 5 "Le réseau qui arme dans l'ombre" — GLOBE D3 INTÉGRAL (Émirats→Libye/Haftar→El-Fasher) */}
+        <Composition
+          id="D3-SoudanActe5-Globe"
+          component={SoudanActe5Globe}
+          durationInFrames={SOUDAN_A5_GLOBE_FRAMES}
           fps={30}
           width={1920}
           height={1080}
