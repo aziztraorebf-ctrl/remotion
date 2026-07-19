@@ -58,6 +58,36 @@ demandée. Explorer > conserver : un proto pas cher qui échoue vaut mieux que n
 ainsi qu'on a trouvé FlagFill, le cargo SVG, les jetons). Garde-fou : proto bon marché AVANT tout asset
 payant (GATE n°1 + validation avant paid API). 1 proposition ciblée = un pari testable, JAMAIS un catalogue.
 
+## ⭐ Capacités D3 PROUVÉES en 16:9 (R&D 2026-07-18, s13) — D3 n'est plus « cantonné aux contours »
+
+D3 n'était utilisé qu'en 9:16 (Short AES, `geoMercator` seul). Session de protos (dossier
+`src/projects/_rnd/d3-16x9/`, README dédié) : **D3 est agnostique au ratio** ; le 16:9 débloque le
+LATÉRAL (côte à côte, panneaux, frises) que le 9:16 interdit. Formes neuves prouvées :
+- **Globe orthographique** (`geoOrthographic` frame-driven) : rotation image-par-image, clip natif de
+  l'hémisphère caché, graticule, halo. Validé Aziz « excellent, contrôle > Mapbox ». = plan « vu de
+  l'espace ». Monde = `public/_rnd/vox-repro/countries-110m.json` (TopoJSON NE 110m) via `topojson-client`.
+- **Raccord GLOBE → CARTE PLATE continu (waouh)** : UNE seule projection ortho dont on augmente le `scale`
+  (zoom-in) jusqu'à courbure imperceptible = un globe très zoomé EST visuellement une carte plate. + lerp
+  palette. **JAMAIS de crossfade entre 2 projections** (saccade). Validé « très smooth ».
+- **Ancrage ZÉRO-DÉRIVE** : `project([lon,lat])` place jetons ET carte dans le MÊME SVG → ancrage parfait
+  même en mouvement/dézoom. Avantage DÉCISIF sur Mapbox (qui exige `map.project()` reprojeté chaque frame =
+  la cause des overlays qui dérivent, cf `CARTO-OVERLAYS-PRINCIPES`).
+- **Carte + panneau data (A5)** : disposition 16:9 (carte ~60% gauche + panneau ~40% droite qui réagit),
+  impossible en 9:16.
+
+**Compositing « posé sur la carte » = IDENTIQUE D3 et Mapbox** (SVG/CSS pur, portable tel quel). Recette
+médaillon posé (code Mapbox réel `Partie4Cout` l.907-925) : disque plein crème `#F5EFD6` + bordure +
+DOUBLE ombre (boxShadow du disque + ombre-sol floue décalée). Règle d'ombre : objet iso illustré (ombre
+native) = ZÉRO ombre externe ; buste/médaillon = ombre externe requise. Détail :
+`.claude/.../feedbacks/feedback_jeton-iso-pas-d-ombre-externe.md`.
+
+**Seule limite résiduelle D3 vs Mapbox = LE SOL** : D3 = aplat uni ; Mapbox = terrain raster texturé où
+l'objet se fond. N'empêche PAS de poser des objets, mais le « terrain habité » manque (piste : polygone
+enrichi dégradé+grain+ombre interne, à tester). **Render D3/SVG pur = `npx remotion render` classique**
+(aucun WebGL, PAS `render-mapbox.sh`). `d3` installé : array/format/geo/scale ; MANQUE pour flux/réseaux :
+`d3-force`, `d3-shape`. Backlog complet (globe 2.0, choroplèthe, flux, HUD, scène complète Soudan Acte 3) :
+`memory/NEXT-ACTION.md` § R&D D3 en 16:9.
+
 ## Mapbox = dominant par défaut (bonne raison)
 
 Le plus fréquent — parce que nos sujets sont géopolitiques, donc le territoire réel est souvent le bon

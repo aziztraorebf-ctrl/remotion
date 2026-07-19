@@ -1,8 +1,69 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-17 (session 12 — Short Sénégal D3 TERMINÉ + promu). Structure Soudan inchangée
+> Mis a jour : 2026-07-18 (session 13 — R&D D3 en 16:9 lancee). Structure Soudan inchangée
 > depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🧪 R&D — D3.js EN 16:9 (elargir le moteur D3 au format horizontal) — SESSION 13 FAITE (2026-07-18)
+
+> **Contexte** : le Short AES 90s (D3 pur, `src/projects/warmap/shorts/aes-short-90s/`, `aesGeo.ts`) prouve
+> notre maitrise D3 en VERTICAL. Le moteur est AGNOSTIQUE AU RATIO ; le 16:9 debloque le LATERAL (cote a
+> cote, panneaux, frises) que le 9:16 interdit. D3 etait SOUS-EXPLOITE (on n'utilisait que geoMercator).
+> **Pourquoi D3 > Mapbox ici** : SVG pur deterministe, controle au pixel, zero WebGL (vs render-mapbox.sh).
+>
+> **Branche** : `feat/d3-16x9-protos` (commit `716b7ff8` = 5 protos ; A5 pas encore commite au 2026-07-18).
+> **Dossier + README** : `src/projects/_rnd/d3-16x9/README.md` (table des protos, socles, palette AES).
+>
+> ### ✅ PROUVE cette session (protos mecaniques, sans audio, sujet Sahel/AES)
+> - **A1 Globe orthographique** (`geoOrthographic` frame-driven, clip hemisphere natif, graticule, halo).
+>   VALIDE Aziz ("excellent, controle > Mapbox"). Monde = `public/_rnd/vox-repro/countries-110m.json`
+>   (TopoJSON NE 110m) via `topojson-client`.
+> - **A1-K1 Raccord globe -> carte parchemin AES** : 1 seule projection ortho dont on augmente le scale
+>   (zoom-in jusqu'a courbure imperceptible) + lerp palette bleu->parchemin. VALIDE ("tres smooth").
+> - **Jetons/objets/mouvement/dezoom** (`SahelJetonsDezoom16x9`) : jetons ancres project([lon,lat]),
+>   jeton en mouvement, base iso, dezoom camera. Prouve que D3 fait tout ce que faisait la video Mapbox.
+> - **Comparatif compositing** (`JetonsComparatif16x9`) : buste plante vs medaillon pose vs objet iso.
+>   ⭐ LECON GRAVEE `feedback_jeton-iso-pas-d-ombre-externe` : objet iso ILLUSTRE = ZERO ombre externe
+>   (sinon flotte) ; buste/medaillon = ombre externe requise. Compositing objets = IDENTIQUE D3/Mapbox.
+> - **A5 Carte + panneau data** (`CartePanneau16x9`) : carte gauche 60% + panneau droit 40% qui REAGIT
+>   (compteur 0->3 coups, frise chrono qui s'allume, barre population qui monte). La disposition 16:9
+>   signature, impossible en 9:16. Chiffres pop = ESTIMES (mention "est." affichee, a sourcer si usage reel).
+>
+> ### ⭐ VRAIE LIMITE RESIDUELLE identifiee (seule diff D3 vs Mapbox)
+> Le **SOL** : Mapbox pose sur terrain raster texture (l'objet s'y fond), D3 sur aplat de couleur uni.
+> N'empeche pas les objets d'etre bien poses (compositing OK), mais le "terrain habite" manque.
+>
+> ### 🎯 BACKLOG PROCHAINES SESSIONS (Aziz veut TOUT + une VRAIE SCENE COMPLETE, 2026-07-18)
+> **d3 installe** : d3-array, d3-format, d3-geo, d3-scale. **MANQUE** : d3-force, d3-shape (npm install).
+> 1. **⭐ PASSAGE A L'ECHELLE — une VRAIE scene complete** (script + audio + montage, PAS un proto isole).
+>    Le vrai saut : de "la technique marche" a "livrable jugeable dans son ensemble".
+>    **⭐⭐ CANDIDAT N°1 (idee Aziz 2026-07-18) — SOUDAN ACTE 3 "SUIVRE L'OR" en GLOBE D3.** L'Acte 3 EST
+>    un recit de flux internationaux (or Darfour->Dubai, drones Dubai->RSF, drones Turquie->SAF, or
+>    SAF->Port-Soudan, lignes Libye + mer Rouge). Le rendu ACTUEL (Mapbox PLAT, FINAL promu) montre les flux
+>    mais ne fait pas RESSENTIR que le Soudan est un CARREFOUR (a plat, les flux partent dans tous les sens,
+>    abstrait). Concept : globe D3 centre Soudan (pulse dore au centre) + partenaires qui s'allument un par
+>    un (Dubai/Turquie/Libye/Russie/Tchad/Egypte) + ARCS geoInterpolate qui suivent la sphere (point lumineux
+>    qui circule, or qui sort / gris-metal qui rentre) + globe qui pivote pour amener chaque partenaire au
+>    1er plan. = assemblage de tout ce qu'on a prouve s13 (globe A1 + raccord K1 + arcs globe2.0 + pulses +
+>    compositing medaillon deja reproduit). AUDIO EXISTE (Acte 3 FINAL), script VERROUILLE, pays definis ->
+>    matiere prete + comparaison directe Mapbox-plat vs D3-globe. NUANCE : globe = les FLUX MONDIAUX (beats
+>    internationaux) ; garder une carte rapprochee pour l'INTERIEUR Soudan (mines Darfour, front RSF/SAF).
+>    Le globe ne remplace pas TOUT l'Acte 3, il sublime les beats "carrefour". Source Acte 3 :
+>    `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` · script
+>    `memory/projects/soudan-midform-ACTE3-SCRIPT.md` · code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`.
+>    ⚠️ A tester/valider avec Aziz avant de lancer — pas encore commence.
+> 2. **SOL ENRICHI** (Aziz a dit OUI) : polygone D3 avec degrade radial + grain + ombre interne + relief
+>    simule, pour voir si D3 rattrape le "terrain habite" Mapbox et fermer le debat objets-poses.
+> 3. **Waouh globe 2.0** : arcs de trajectoire `geoInterpolate` (effet vol d'avion sur la sphere),
+>    terminateur jour/nuit, globe fil conducteur qui pivote entre chapitres.
+> 4. **Data-viz cartographique** : choroplethe animee (`d3-scale` sequentiel + legende), cartogramme
+>    (pays deformes selon une valeur), small multiples (meme carte x N annees en grille).
+> 5. **Flux & reseaux** : A2 reseau de force (`d3-force`, structure de pouvoir/dependance) + A3 rubans de
+>    flux (`d3-chord`/`d3-shape`, ou va la ressource/l'argent — complete l'AES qui montre QUE, pas OU).
+> 6. **Registre videoludique** : A6 HUD tactique salle d'operation (reticules, leader lines, scan-line,
+>    compteurs live) + A7 timeline-scrubber horizontale (curseur qui declenche des events sur la carte).
 
 ---
 
@@ -41,34 +102,19 @@
 > erreur) — vérifier `lsof -p <pid>` avant de conclure à une lenteur Gemini normale. Et sur ce beat sans
 > storyboard, Gemini review hallucine une palette sépia fantôme (juger sur override tracé + Aziz).
 
-## ✅✅ SOUDAN MID-FORM — ACTE 5 : SCRIPT v6 VERROUILLÉ + MISE EN SCÈNE ACTÉE (2026-07-17 s11)
+## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : CODE+RENDU v2 FAITS, DIAGNOSTIC DOWNSTREAM À TRIER (2026-07-18)
 
-> **PRIORITÉ 1 précédente, désormais traitée.** Script Acte 5 (réseau EAU-Libye-Haftar, "le pourquoi
-> concret" du blocage institutionnel) relu par Aziz et **VERROUILLÉ tel quel** (aucune retouche texte) :
-> `memory/projects/soudan-midform-ACTE5-SCRIPT.md` (v6). Fact-check 3 niveaux CONFIRMÉ (4 sources
-> indépendantes), jury LLM 3 modèles déjà fait.
+> Script v6 verrouillé, audio+timing+code+render v2 tous FAITS cette session (s12). Détail complet +
+> les 4 fichiers de diagnostic downstream (Gemini+Kimi, comparatif + génératif) : voir
+> `memory/episodes/soudan-midform/STATUS.md` § tout en tête — **NE PAS re-coder au jugé avant d'avoir
+> lu `memory/doctrines/WARMAP-DENSIFICATION-CARTE.md` et tranché l'arbitrage Abou Dabi avec Aziz.**
 >
-> **Exercice de mise en scène amont fait avant verrouillage** (test méthodologique `creative-director-dual`
-> avec 2 angles OPPOSÉS plutôt qu'un brief identique — évite la fausse convergence) : 2 agents
-> `creative-director` lancés en parallèle (Agent A "carte-first" vs Agent B "rupture au service du sens"),
-> **convergence indépendante sur 0 sortie de carte, 5 beats/5 en Mapbox continue** — réfute l'hypothèse
-> initiale de Claude (Beat 2 candidat insert SVG comme le précédent Port-Soudan Acte 4). Raison retenue :
-> Port-Soudan n'avait rien à montrer sur la carte à ce moment du récit (huis clos sans ancrage géo neuf) ;
-> l'Acte 5 est une "enquête cartographique" où chaque beat, même documentaire, arrive avec un point géo
-> neuf (Abou Dabi, Kufra, Benghazi, El-Fasher). Détail complet + mise en scène beat par beat actée :
-> `memory/projects/soudan-midform-ACTE5-SCRIPT.md` § MISE EN SCÈNE ACTÉE.
+> ⛔ Point technique non-négociable conservé (déjà respecté dans le code actuel) : trait corridor
+> Kufra→El-Fasher = UNE seule variable de trajectoire continue (Beat3→4).
 >
-> ⛔ **Point technique non-négociable pour le futur breakdown/code** : le trait corridor Kufra→El-Fasher
-> (Beat 3→4) doit être UNE SEULE variable de trajectoire pilotée par temps absolu (`tAbs`), jamais deux
-> tracés indépendants — sinon le sens "chaîne qui se boucle" du script se perd visuellement.
->
-> **NEXT** : storyboard/breakdown technique (coordonnées précises, corridor Beat3→4 modélisé) avant tout
-> code — pas commencé, session dédiée future. Pas de production lancée ce tour.
->
-> **Décision structurelle (rappel, session 10)** : l'ancien "Acte 5" (verrou institutionnel UA/ONU/Quad +
-> conclusion ouverte) reste scindé — **Acte 5 = ce fait concret** (réseau EAU-Libye) ; **Acte 6 = le verrou
-> institutionnel détaillé + conclusion** (pas encore écrit). Le pont de l'Acte 4 déjà verrouillé ("une
-> organisation existe... elle est restée inactive") fonctionne pour les deux.
+> **Décision structurelle (rappel, session 10)** : Acte 5 = fait concret (réseau EAU-Libye) ; Acte 6 =
+> verrou institutionnel détaillé + conclusion (pas encore écrit). Pont Acte 4 déjà verrouillé valable
+> pour les deux.
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10
 
