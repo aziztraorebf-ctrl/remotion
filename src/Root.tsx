@@ -23,6 +23,7 @@ import { GlobeSahel16x9, GLOBE_SAHEL_FRAMES } from "./projects/_rnd/d3-16x9/Glob
 import { GlobeToParchemin16x9, GLOBE_PARCHEMIN_FRAMES } from "./projects/_rnd/d3-16x9/GlobeToParchemin16x9";
 import { SahelJetonsDezoom16x9, SAHEL_JETONS_FRAMES } from "./projects/_rnd/d3-16x9/SahelJetonsDezoom16x9";
 import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/d3-16x9/JetonsComparatif16x9";
+import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -637,6 +638,14 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Jetons-Comparatif16x9"
           component={JetonsComparatif16x9}
           durationInFrames={JETONS_COMPARATIF_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A5-CartePanneau16x9"
+          component={CartePanneau16x9}
+          durationInFrames={CARTE_PANNEAU_FRAMES}
           fps={30}
           width={1920}
           height={1080}
