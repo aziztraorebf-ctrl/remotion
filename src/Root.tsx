@@ -19,6 +19,10 @@ import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
 import { VoxPapercutAvion16x9, VOX_PAPERCUT_AVION_FRAMES } from "./projects/_rnd/svg-scenes/VoxPapercutAvion16x9";
+import { GlobeSahel16x9, GLOBE_SAHEL_FRAMES } from "./projects/_rnd/d3-16x9/GlobeSahel16x9";
+import { GlobeToParchemin16x9, GLOBE_PARCHEMIN_FRAMES } from "./projects/_rnd/d3-16x9/GlobeToParchemin16x9";
+import { SahelJetonsDezoom16x9, SAHEL_JETONS_FRAMES } from "./projects/_rnd/d3-16x9/SahelJetonsDezoom16x9";
+import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/d3-16x9/JetonsComparatif16x9";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -601,6 +605,38 @@ export const RemotionRoot: React.FC = () => {
           id="MaxBellona-P1-OrthoLinks"
           component={P1_OrthoLinksDemo}
           durationInFrames={P1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A1-GlobeSahel16x9"
+          component={GlobeSahel16x9}
+          durationInFrames={GLOBE_SAHEL_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A1K1-GlobeToParchemin16x9"
+          component={GlobeToParchemin16x9}
+          durationInFrames={GLOBE_PARCHEMIN_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Jetons-SahelDezoom16x9"
+          component={SahelJetonsDezoom16x9}
+          durationInFrames={SAHEL_JETONS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Jetons-Comparatif16x9"
+          component={JetonsComparatif16x9}
+          durationInFrames={JETONS_COMPARATIF_FRAMES}
           fps={30}
           width={1920}
           height={1080}
