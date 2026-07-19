@@ -59,6 +59,38 @@ const DocumentStamp: React.FC<{ frame: number; appear: number; fadeAt: number; l
   );
 };
 
+// ── PortraitToken — jeton-visage (recette EXACTE du Mapbox SoudanToken / insert Acte 3 : cercle
+//    parchemin + bordure faction + portrait clippé rond + ombre). Overlay HTML aux coords projetées. ──
+const PortraitToken: React.FC<{ x: number; y: number; sprite: string; border: string; op: number; size?: number }> =
+  ({ x, y, sprite, border, op, size = 62 }) => {
+    if (op <= 0.01) return null;
+    const D = size;
+    return (
+      <div style={{ position: "absolute", left: x, top: y, transform: "translate(-50%,-50%)", opacity: op, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", left: "50%", top: "72%", width: D * 0.82, height: D * 0.26,
+          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
+        <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden", background: "#F5EFD6",
+          border: `3.5px solid ${border}`, boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
+          <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+            style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
+              transform: "translate(-8%, 2%)", display: "block" }} />
+        </div>
+      </div>
+    );
+  };
+
+// ── IsoBase — sprite iso/topdown (camp, dépôt) posé sur la carte, ancré aux coords projetées ──
+const IsoBase: React.FC<{ x: number; y: number; sprite: string; op: number; width?: number }> =
+  ({ x, y, sprite, op, width = 92 }) => {
+    if (op <= 0.01) return null;
+    return (
+      <div style={{ position: "absolute", left: x, top: y, width, transform: "translate(-50%,-55%)", opacity: op,
+        pointerEvents: "none", filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.5))" }}>
+        <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)} style={{ width: "100%", height: "auto", display: "block" }} />
+      </div>
+    );
+  };
+
 // ── Label géo-ancré (Abou Dabi, Benghazi, El-Fasher) — SVG point + texte HTML ──
 const GeoLabel: React.FC<{ x: number; y: number; label: string; op: number; color: string }> = ({ x, y, label, op, color }) => {
   if (op <= 0.01) return null;
@@ -108,7 +140,31 @@ export const SoudanActe5Globe: React.FC = () => {
     [0, CORRIDOR_SUSPEND, CORRIDOR_SUSPEND, 1],
     clampB
   );
-  const corridorArcD = frame >= T.b3Corridor ? arcPathD(proj, path, CORRIDOR_A, CORRIDOR_B, corridorProgress) : "";
+  // ARTÈRE = faisceau de 3 routes parallèles (pas UNE ligne — c'est un "réseau" de contrebande, pas un
+  // vol unique). 3 trajectoires légèrement décalées géographiquement, MÊME progress continu (la trajectoire
+  // maîtresse reste unique au sens narratif : elles avancent/s'arrêtent/reprennent ensemble).
+  const CORRIDOR_ROUTES: [[number, number], [number, number]][] = [
+    [CORRIDOR_A, CORRIDOR_B],
+    [[CORRIDOR_A[0] - 1.3, CORRIDOR_A[1] - 0.4], [CORRIDOR_B[0] - 1.0, CORRIDOR_B[1] + 0.5]],
+    [[CORRIDOR_A[0] + 1.1, CORRIDOR_A[1] - 0.3], [CORRIDOR_B[0] + 0.9, CORRIDOR_B[1] + 0.4]],
+  ];
+  const corridorArcs = frame >= T.b3Corridor
+    ? CORRIDOR_ROUTES.map(([a, b]) => arcPathD(proj, path, a, b, corridorProgress))
+    : [];
+  const corridorArcD = corridorArcs[0] || ""; // route maîtresse (compat + pulses ancrés dessus)
+
+  // CONVOIS qui circulent en boucle sur l'artère une fois le corridor établi (Beat 4→5) — l'artère VIT
+  // (constance de l'effort de guerre, cf diagnostic "artère pulsante" vs "ligne statique"). 4 marqueurs
+  // échelonnés en phase, sur les 3 routes, qui bouclent tant que le réseau est actif.
+  const convoyActive = frame >= T.b4ElFasherNomme;
+  const convoyMarkers = convoyActive
+    ? [0, 1, 2, 3].map((i) => {
+        const route = CORRIDOR_ROUTES[i % CORRIDOR_ROUTES.length];
+        const phase = ((frame - T.b4ElFasherNomme) * 0.006 + i * 0.27) % 1; // boucle continue
+        const tt = phase * Math.min(1, corridorProgress); // ne dépasse pas la portion tracée
+        return pointAlongArc(proj, route[0], route[1], tt, visible);
+      })
+    : [];
 
   // 3 pulses armes/carburant/combattants sur la tête du tracé (verbes → s'effacent)
   const pulseObj = (appear: number) => interpolate(frame, [appear, appear + 8, appear + 32, appear + 44], [0, 1, 1, 0], clampB);
@@ -141,6 +197,15 @@ export const SoudanActe5Globe: React.FC = () => {
   const pBenghazi = projectPoint(proj, GEO.benghazi, visible);
   const pKufra = projectPoint(proj, GEO.kufra, visible);
   const pElFasher = projectPoint(proj, GEO.elFasher, visible);
+
+  // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar + soldats RSF entraînés + camp/dépôt à Kufra.
+  // Apparaissent quand Haftar est nommé et RESTENT (nom→persiste : ce sont des acteurs, pas des verbes). =====
+  const haftarReveal = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 18], [0, 1], clampB);
+  const soldierReveal = (i: number) => interpolate(frame, [T.b3HaftarNomme + 10 + i * 7, T.b3HaftarNomme + 28 + i * 7], [0, 1], clampB); // cascade
+  const campReveal = interpolate(frame, [T.b3Corridor - 4, T.b3Corridor + 20], [0, 1], clampB); // camp/dépôt à Kufra
+  // positions des soldats en cluster SOUS Haftar, vers l'intérieur libyen (jamais au-dessus = mer)
+  const soldierPos = [[-1.4, -2.4], [1.5, -2.2], [0.1, -3.6]].map(([dLon, dLat]) =>
+    projectPoint(proj, [GEO.benghazi[0] + dLon, GEO.benghazi[1] + dLat] as LonLat, visible));
 
   const fadeIn = interpolate(frame, [0, 12], [0, 1], clampB);
 
@@ -263,7 +328,19 @@ export const SoudanActe5Globe: React.FC = () => {
 
           {/* ===== ARCS ===== */}
           {arcStroke(financeArcD, t.flowGold, 1)}
-          {arcStroke(corridorArcD, CORRIDOR_COL, 1)}
+          {/* ARTÈRE = faisceau de 3 routes (réseau, pas ligne unique). Route maîtresse pleine, les 2
+              latérales plus discrètes (0.6) = épaisseur de trafic. */}
+          {corridorArcs.map((d, i) => (
+            <React.Fragment key={i}>{arcStroke(d, CORRIDOR_COL, i === 0 ? 1 : 0.6)}</React.Fragment>
+          ))}
+
+          {/* CONVOIS qui circulent sur l'artère (marqueurs en boucle = l'effort de guerre est CONSTANT) */}
+          {convoyMarkers.map((p, i) => p && (
+            <g key={`cv${i}`} transform={`translate(${p.x} ${p.y})`}>
+              <circle r={5.5} fill={CORRIDOR_COL} opacity={0.9} />
+              <circle r={9} fill="none" stroke={CORRIDOR_COL} strokeWidth={1.4} opacity={0.4} />
+            </g>
+          ))}
 
           {/* pulses armes/carburant/combattants (verbes → s'effacent) */}
           {glowDot(posArmes, t.flowGold, pArmes, 12)}
@@ -308,13 +385,32 @@ export const SoudanActe5Globe: React.FC = () => {
         </svg>
 
         {/* LABELS géo-ancrés (overlay HTML) */}
+        {/* ===== ACTEURS INCARNÉS (Beat 3) — camp/dépôt Kufra + soldats RSF + le maréchal Haftar =====
+            Densifient la carte, restent affichés (nom→persiste). Ordre : base (fond) → soldats → Haftar. */}
+        {pKufra && <IsoBase x={pKufra.x} y={pKufra.y} sprite="base-africacorps" op={campReveal} width={104} />}
+        {soldierPos.map((p, i) => p && (
+          <PortraitToken key={`sold${i}`} x={p.x} y={p.y} sprite="portrait-rsf" border="#B14B3C" op={soldierReveal(i)} size={40} />
+        ))}
+        {pBenghazi && <PortraitToken x={pBenghazi.x} y={pBenghazi.y - 4} sprite="portrait-haftar" border="#9B5A2E" op={haftarReveal} size={66} />}
+
         {pAbuDhabi && <GeoLabel x={pAbuDhabi.x} y={pAbuDhabi.y} label="Abou Dabi" op={uaeReveal} color="#00732F" />}
-        {pBenghazi && <GeoLabel x={pBenghazi.x} y={pBenghazi.y} label="Benghazi" op={haftarTint > 0.01 ? interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 16], [0, 1], clampB) : 0} color={LIBYA_INK} />}
+        {/* label Benghazi décalé au-dessus du jeton Haftar (évite le chevauchement) */}
+        {pBenghazi && (
+          <div style={{ position: "absolute", left: pBenghazi.x, top: pBenghazi.y - 52,
+            transform: "translateX(-50%)", opacity: haftarReveal,
+            fontFamily: "Georgia, serif", fontWeight: 800, fontSize: 20, letterSpacing: "0.02em",
+            color: t.labelFill, textShadow: "0 2px 8px rgba(0,0,0,0.9)", whiteSpace: "nowrap", pointerEvents: "none" }}>
+            Maréchal Haftar
+          </div>
+        )}
         {pElFasher && <GeoLabel x={pElFasher.x} y={pElFasher.y} label="El-Fasher" op={interpolate(frame, [T.b4ElFasherNomme, T.b4ElFasherNomme + 16], [0, 1], clampB)} color={RSF_RED} />}
 
-        {/* TAMPONS documentaires (presse Beat 2, ONU Beat 3) */}
-        <DocumentStamp frame={frame} appear={T.b2SourcesNommees} fadeAt={T.b2End - 10} lines={["29 juin 2026", "Lighthouse Reports · Der Spiegel"]} />
-        <DocumentStamp frame={frame} appear={T.b3RapportOnu} fadeAt={T.b3End - 10} lines={["Rapport ONU", "Avril 2026 — Panel of Experts on Libya"]} />
+        {/* TAMPONS documentaires — SOURCES EXACTES (titre enquête / rapport, pas juste le nom du média).
+            Réfs vérifiées WebSearch 2026-07-19, 4 sources concordantes (cf script v6 + fact-check). */}
+        <DocumentStamp frame={frame} appear={T.b2SourcesNommees} fadeAt={T.b2End - 10}
+          lines={["« Inside the Secret Network Fueling Sudan's War »", "Lighthouse Reports · Der Spiegel · 29 juin 2026"]} />
+        <DocumentStamp frame={frame} appear={T.b3RapportOnu} fadeAt={T.b3End - 10}
+          lines={["ONU — Panel of Experts on Libya", "Rapport avril 2026 · corridor de Kufra (bataillon Subul al-Salam)"]} />
 
         {/* vignette pont Acte 6 (Beat 5, "les institutions") */}
         {vignette > 0.01 && (
