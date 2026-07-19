@@ -58,6 +58,18 @@ const PortraitToken: React.FC<{ x: number; y: number; faction: "rsf" | "saf"; pu
   );
 };
 
+// DroneSprite — sprite drone PNG (vehicule) qui glisse le long d'un flux RETOUR (armes), oriente dans
+// le sens du vol (recette Mapbox : rotate angle+90, le sprite pointe vers le haut au repos). Overlay HTML.
+// Sprites 1408x768 (ratio ~1.83). faction rsf/saf = drone livre au camp correspondant.
+const DroneSprite: React.FC<{ x: number; y: number; angle: number; faction: "rsf" | "saf"; size?: number }> = ({ x, y, angle, faction, size = 82 }) => (
+  <div style={{ position: "absolute", left: x, top: y, width: size, height: size * (768 / 1408),
+      transform: `translate(-50%,-50%) rotate(${angle + 90}deg)`, pointerEvents: "none",
+      filter: "drop-shadow(0 2px 3px rgba(0,0,0,0.5))" }}>
+    <img src={staticFile(`_shared/sprites/warmap/drone-${faction}-td.png`)}
+      style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} />
+  </div>
+);
+
 export const SoudanActe3GlobeInsert: React.FC = () => {
   const frame = useCurrentFrame();
 
@@ -72,7 +84,8 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
 
   const rotLambda = -camLon;
   const rotLat = -camLat;
-  const proj = orthoAt(rotLambda, rotLat).scale(GLOBE_R * cam.scaleMul * scaleZoom);
+  const globeR = GLOBE_R * cam.scaleMul * scaleZoom; // rayon effectif du globe a l'ecran (pour ombre/halo)
+  const proj = orthoAt(rotLambda, rotLat).scale(globeR);
   const path = pathOf(proj);
   const visible = (ll: LonLat) => isVisibleGeo(ll, rotLambda, rotLat);
 
@@ -104,6 +117,10 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
   const egReveal = interpolate(frame, [T.b5bisRouteNordEgypte, T.b5bisEnd], [0, 1], clampB);
   const egT = egReveal;
 
+  // #2 REVEAL SYSTEME (beat 6) : au "meme or paie les deux camps", les pays NON-impliques s'assombrissent
+  // pour faire ressortir le triangle Soudan-EAU-Turquie-Egypte + les flux. Monte puis se maintient.
+  const systemReveal = interpolate(frame, [T.b6Start, T.b6MemeOrPaie, T.b7End], [0, 0.55, 0.45], clampB);
+
   // ===== REACTIONS CIBLE (drapeaux + illumination) =====
   const uaeLight = interpolate(frame, [T.b3PremierImportateur - 4, T.b3PremierImportateur + 18, T.b6Start], [0, 1, 0.88], clampB);
   const shockDubai = interpolate(frame, [T.b3PremierImportateur, T.b3PremierImportateur + 45], [0, 1], clampB);
@@ -119,9 +136,18 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
   const egArcD = arcPathD(proj, path, GEO.safToken, GEO.cairo, egReveal);
 
   // marqueurs voyageurs (null si derriere le globe / hors fenetre)
+  // OR aller = flux lumineux abstrait (objet inerte, ne "vole" pas). RETOURS armes = SPRITE DRONE
+  // oriente (vehicule, glisse credible — doctrine + convergence Gemini/Kimi). On calcule aussi l'angle
+  // du trajet (point en avance t+eps) pour orienter le sprite dans le sens du vol.
   const orMarker = frame >= T.b3Start && frame <= T.b4RevientForme ? pointAlongArc(proj, GEO.jebelAmer, GEO.dubai, orT, visible) : null;
-  const retMarker = frame >= T.b4RevientForme && frame <= T.b4JetonRsfPulse ? pointAlongArc(proj, GEO.dubai, GEO.rsfToken, retT, visible) : null;
-  const turkMarker = frame >= T.b5TurquieBayraktar && frame <= T.b5EnEchange ? pointAlongArc(proj, GEO.ankara, GEO.safToken, turkT, visible) : null;
+  const droneAngle = (a: LonLat, b: LonLat, tt: number, pos: { x: number; y: number }) => {
+    const ahead = pointAlongArc(proj, a, b, Math.min(1, tt + 0.03), visible);
+    return ahead ? Math.atan2(ahead.y - pos.y, ahead.x - pos.x) * (180 / Math.PI) : 0;
+  };
+  const retPos = frame >= T.b4RevientForme && frame <= T.b4JetonRsfPulse ? pointAlongArc(proj, GEO.dubai, GEO.rsfToken, retT, visible) : null;
+  const retMarker = retPos ? { ...retPos, angle: droneAngle(GEO.dubai, GEO.rsfToken, retT, retPos) } : null;
+  const turkPos = frame >= T.b5TurquieBayraktar && frame <= T.b5EnEchange ? pointAlongArc(proj, GEO.ankara, GEO.safToken, turkT, visible) : null;
+  const turkMarker = turkPos ? { ...turkPos, angle: droneAngle(GEO.ankara, GEO.safToken, turkT, turkPos) } : null;
   const egMarker = frame >= T.b5bisRouteNordEgypte && frame <= T.b5bisEnd ? pointAlongArc(proj, GEO.safToken, GEO.cairo, egT, visible) : null;
 
   // points fixes
@@ -167,9 +193,10 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
       <AbsoluteFill style={{ opacity: fadeIn }}>
         <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
           <defs>
+            {/* halo atmospherique renforce (#3 volume) : plus large + plus present */}
             <radialGradient id="atmoI" cx="50%" cy="50%" r="50%">
-              <stop offset="82%" stopColor={t.atmoColor} stopOpacity="0" />
-              <stop offset="94%" stopColor={t.atmoColor} stopOpacity={t.atmoOpacity} />
+              <stop offset="80%" stopColor={t.atmoColor} stopOpacity="0" />
+              <stop offset="93%" stopColor={t.atmoColor} stopOpacity={t.atmoOpacity + 0.15} />
               <stop offset="100%" stopColor={t.atmoColor} stopOpacity="0" />
             </radialGradient>
             <radialGradient id="oceanI" cx="42%" cy="38%" r="70%">
@@ -177,9 +204,19 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
               <stop offset="70%" stopColor={t.oceanMid} />
               <stop offset="100%" stopColor={t.oceanOuter} />
             </radialGradient>
+            {/* #3 OMBRE SPHERIQUE : lumiere haut-gauche, ombre bas-droite = volume 3D. userSpaceOnUse
+                pour centrer sur le globe reel (centre W/2,H/2 decale vers le haut-gauche, rayon = globe). */}
+            <radialGradient id="sphereShade" gradientUnits="userSpaceOnUse"
+              cx={W / 2 - globeR * 0.24} cy={H / 2 - globeR * 0.3} r={globeR * 1.35}>
+              <stop offset="0%" stopColor="#000" stopOpacity="0" />
+              <stop offset="58%" stopColor="#000" stopOpacity="0" />
+              <stop offset="100%" stopColor="#05070d" stopOpacity="0.5" />
+            </radialGradient>
+            <clipPath id="sphereClip"><path d={sphere} /></clipPath>
           </defs>
 
-          <circle cx={W / 2} cy={H / 2} r={GLOBE_R * cam.scaleMul * scaleZoom + 26} fill="url(#atmoI)" />
+          {/* halo atmospherique (double couche pour un halo plus riche) */}
+          <circle cx={W / 2} cy={H / 2} r={globeR + 34} fill="url(#atmoI)" />
           <path d={sphere} fill="url(#oceanI)" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.55} />
           <path d={grat} fill="none" stroke={t.grat} strokeWidth={0.8} strokeOpacity={t.gratOpacity} />
 
@@ -204,9 +241,9 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
           {arcStroke(egArcD, "#C9973A", 0.85)}
 
           {/* marqueurs voyageurs */}
+          {/* OR aller + OR->Egypte = flux lumineux abstrait (objet inerte). Les RETOURS armes sont des
+              SPRITES DRONE (overlay HTML plus bas), pas des points. */}
           {travelDot(orMarker, t.flowGold)}
-          {travelDot(retMarker, t.flowMetal)}
-          {travelDot(turkMarker, t.flowMetal)}
           {travelDot(egMarker, "#C9973A")}
 
           {/* onde de choc Dubai */}
@@ -229,11 +266,25 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
             </g>
           )}
 
+          {/* #2 VOILE REVEAL SYSTEME (beat 6) : assombrit le globe uniformement pour faire ressortir
+              drapeaux/flux/portraits (qui sont au-dessus). Clippe a la sphere. */}
+          {systemReveal > 0.01 && (
+            <rect x={0} y={0} width={W} height={H} fill="#05070d" opacity={systemReveal * 0.5} clipPath="url(#sphereClip)" />
+          )}
+
+          {/* #3 OMBRE SPHERIQUE (volume) : par-dessus tout le contenu, clippee a la sphere. Lumiere
+              haut-gauche / ombre bas-droite = le globe a du corps, ne trahit plus l'aplat vectoriel. */}
+          <rect x={0} y={0} width={W} height={H} fill="url(#sphereShade)" clipPath="url(#sphereClip)" pointerEvents="none" />
+
         </svg>
 
         {/* jetons factions = PORTRAITS (overlay HTML, recette Mapbox, ancres coords projetees) */}
         {pRSF && <PortraitToken x={pRSF.x} y={pRSF.y} faction="rsf" pulse={rsfPulse} />}
         {pSAF && <PortraitToken x={pSAF.x} y={pSAF.y} faction="saf" pulse={safPulse} />}
+
+        {/* DRONES (flux retour armes) — sprites orientes, overlay HTML */}
+        {retMarker && <DroneSprite x={retMarker.x} y={retMarker.y} angle={retMarker.angle} faction="rsf" />}
+        {turkMarker && <DroneSprite x={turkMarker.x} y={turkMarker.y} angle={turkMarker.angle} faction="saf" />}
       </AbsoluteFill>
     </AbsoluteFill>
   );

@@ -9,6 +9,10 @@ on garde ce qui ELEVE sans casser l'epure, on jette le reste.
 Usage : python3 scripts/tools/gemini-video-da-brief.py <video.mp4> [--out brief.md]
 """
 import os, sys, time, argparse
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import force_ipv4  # noqa: E402,F401 — DOIT s'importer avant google.genai (IPv6 mort en sandbox = SYN_SENT pendu)
+
 from pathlib import Path
 from google import genai
 from google.genai import types
