@@ -24,7 +24,7 @@ import { arcPathD, pointAlongArc, projectPoint, GEO, type LonLat } from "./geoAr
 // la projection ORTHO courante (le pays reste a sa place sur la sphere, avec la courbure). Le drapeau
 // se clippe dans la forme projetee : effet "le territoire prend les couleurs de sa nation", sur globe.
 // Plus direct que Mapbox (fill-pattern + sources GeoJSON) : le path EST deja notre geometrie.
-const GlobeFlagFill: React.FC<{
+export const GlobeFlagFill: React.FC<{
   feature: any;
   proj: GeoProjection;
   path: (o: any) => string | null;
@@ -68,9 +68,9 @@ export const PROTO_FRAMES = 540; // 18s @30fps
 // "space" = bleu nuit vu-de-l'espace (registre A1 globe). "parchemin" = palette video Mapbox portee au
 // globe (ocean creme). "mixte" (choix Aziz 2026-07-19) = terres KAKI/parchemin (coherence episode) +
 // OCEAN BLEU (contraste terre/mer + signal "niveau mondial") + flux SATURES (l'or pale se noyait sur kaki).
-type ThemeName = "space" | "parchemin" | "mixte";
+export type ThemeName = "space" | "parchemin" | "mixte";
 
-interface GlobeTheme {
+export interface GlobeTheme {
   bg: string;
   oceanInner: string; // centre du degrade radial ocean (cote eclaire)
   oceanMid: string;
@@ -96,10 +96,10 @@ interface GlobeTheme {
   landActiveStroke: string; // contour renforce du territoire actif
 }
 
-const RSF_RED = "#C0392B";
-const SAF_BLUE = "#2E6DB4";
+export const RSF_RED = "#C0392B";
+export const SAF_BLUE = "#2E6DB4";
 
-const THEMES: Record<ThemeName, GlobeTheme> = {
+export const THEMES: Record<ThemeName, GlobeTheme> = {
   space: {
     bg: "#0b1220",
     oceanInner: "#1d3055",
@@ -186,7 +186,7 @@ const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as
 
 // Medaillon jeton pose (recette prouvee : disque creme + bordure + double ombre). Ici sans portrait
 // raster (proto) : disque + initiale, mais la geometrie/ombre est la vraie recette portable.
-const Medallion: React.FC<{ x: number; y: number; color: string; label: string; scale: number; pulse: number; t: GlobeTheme }> = ({ x, y, color, label, scale, pulse, t }) => {
+export const Medallion: React.FC<{ x: number; y: number; color: string; label: string; scale: number; pulse: number; t: GlobeTheme }> = ({ x, y, color, label, scale, pulse, t }) => {
   const R = 17 * scale;
   return (
     <g transform={`translate(${x} ${y})`} opacity={scale <= 0 ? 0 : 1}>
@@ -205,7 +205,7 @@ const Medallion: React.FC<{ x: number; y: number; color: string; label: string; 
 
 // Objet-destination (Dubai, Ankara) : point + label. Peut se transformer en OBJET-ICONE hangar
 // a l'arrivee d'un flux (hangarIn 0->1 : le point cede la place au hangar qui se materialise).
-const DestPoint: React.FC<{ x: number; y: number; label: string; on: number; flash: number; t: GlobeTheme; hangarIn?: number }> = ({ x, y, label, on, flash, t, hangarIn = 0 }) => {
+export const DestPoint: React.FC<{ x: number; y: number; label: string; on: number; flash: number; t: GlobeTheme; hangarIn?: number }> = ({ x, y, label, on, flash, t, hangarIn = 0 }) => {
   const dotOp = 1 - hangarIn; // le point s'efface a mesure que le hangar apparait
   return (
     <g transform={`translate(${x} ${y})`} opacity={on}>
@@ -235,7 +235,7 @@ const DestPoint: React.FC<{ x: number; y: number; label: string; on: number; fla
 
 // Jeton-drapeau rond flottant : drapeau clippe dans un disque + bordure + ombre. Plus GROS et NET que
 // le drapeau clippe dans le petit territoire => porte la LISIBILITE (le remplissage porte l'ancrage geo).
-const FlagToken: React.FC<{ x: number; y: number; flagCode: string; reveal: number; ring: string }> = ({ x, y, flagCode, reveal, ring }) => {
+export const FlagToken: React.FC<{ x: number; y: number; flagCode: string; reveal: number; ring: string }> = ({ x, y, flagCode, reveal, ring }) => {
   if (reveal <= 0) return null;
   const R = 26 * reveal;
   const clipId = `ft-${flagCode}`;
@@ -258,7 +258,7 @@ const FlagToken: React.FC<{ x: number; y: number; flagCode: string; reveal: numb
 };
 
 // Onde de choc geo-ancree : anneau qui se propage depuis un point d'impact (shockT 0->1).
-const ShockRing: React.FC<{ x: number; y: number; shockT: number; color: string }> = ({ x, y, shockT, color }) => {
+export const ShockRing: React.FC<{ x: number; y: number; shockT: number; color: string }> = ({ x, y, shockT, color }) => {
   if (shockT <= 0 || shockT >= 1) return null;
   const r = 8 + 70 * shockT;
   const op = 0.6 * (1 - shockT);
