@@ -1,5 +1,12 @@
 # Soudan Mid-form — STATUS
 
+## ✅ ACTE 3 GLOBE D3 — INSERT beats 3-7 FAIT (2026-07-19, session 14)
+> Insert globe D3 ~87s (flux internationaux, beats 3-7) valide Aziz, cale sur l'audio reel. Branche
+> `feat/soudan-acte3-globe-d3` · render `out/_r-and-d/soudan-a3-globe-insert-v4.mp4`. RESTE = assembler
+> avec Section 1 Mapbox + promouvoir (Acte 3 FINAL Mapbox reste INTACT) → starter
+> `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`. Moteur reutilisable +
+> Acte 5 candidat n°2 : `.claude/.../feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+
 ## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-18 fin de session 12)
 
 **Acte 5 : CODE ÉCRIT + RENDU v2 (80.15s) + 2 DOWNSTREAM COMPLETS (Gemini+Kimi). Verdict net à trier

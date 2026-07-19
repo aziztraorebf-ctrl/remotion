@@ -1,6 +1,6 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-18 (session 13 — R&D D3 en 16:9 lancee). Structure Soudan inchangée
-> depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
+> Mis a jour : 2026-07-19 (session 14 — INSERT globe D3 Acte 3 beats 3-7 FAIT + review LLM + Acte 5 candidat n°2).
+> Structure Soudan inchangée depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
@@ -37,23 +37,25 @@
 >
 > ### 🎯 BACKLOG PROCHAINES SESSIONS (Aziz veut TOUT + une VRAIE SCENE COMPLETE, 2026-07-18)
 > **d3 installe** : d3-array, d3-format, d3-geo, d3-scale. **MANQUE** : d3-force, d3-shape (npm install).
-> 1. **⭐ PASSAGE A L'ECHELLE — une VRAIE scene complete** (script + audio + montage, PAS un proto isole).
->    Le vrai saut : de "la technique marche" a "livrable jugeable dans son ensemble".
->    **⭐⭐ CANDIDAT N°1 (idee Aziz 2026-07-18) — SOUDAN ACTE 3 "SUIVRE L'OR" en GLOBE D3.** L'Acte 3 EST
->    un recit de flux internationaux (or Darfour->Dubai, drones Dubai->RSF, drones Turquie->SAF, or
->    SAF->Port-Soudan, lignes Libye + mer Rouge). Le rendu ACTUEL (Mapbox PLAT, FINAL promu) montre les flux
->    mais ne fait pas RESSENTIR que le Soudan est un CARREFOUR (a plat, les flux partent dans tous les sens,
->    abstrait). Concept : globe D3 centre Soudan (pulse dore au centre) + partenaires qui s'allument un par
->    un (Dubai/Turquie/Libye/Russie/Tchad/Egypte) + ARCS geoInterpolate qui suivent la sphere (point lumineux
->    qui circule, or qui sort / gris-metal qui rentre) + globe qui pivote pour amener chaque partenaire au
->    1er plan. = assemblage de tout ce qu'on a prouve s13 (globe A1 + raccord K1 + arcs globe2.0 + pulses +
->    compositing medaillon deja reproduit). AUDIO EXISTE (Acte 3 FINAL), script VERROUILLE, pays definis ->
->    matiere prete + comparaison directe Mapbox-plat vs D3-globe. NUANCE : globe = les FLUX MONDIAUX (beats
->    internationaux) ; garder une carte rapprochee pour l'INTERIEUR Soudan (mines Darfour, front RSF/SAF).
->    Le globe ne remplace pas TOUT l'Acte 3, il sublime les beats "carrefour". Source Acte 3 :
->    `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` · script
->    `memory/projects/soudan-midform-ACTE3-SCRIPT.md` · code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`.
->    ⚠️ A tester/valider avec Aziz avant de lancer — pas encore commence.
+> 1. **⭐ PASSAGE A L'ECHELLE — une VRAIE scene complete** (script + audio + montage). LE SAUT EST FAIT.
+>    **✅⭐⭐ CANDIDAT N°1 — SOUDAN ACTE 3 "SUIVRE L'OR" GLOBE D3 : INSERT beats 3-7 FAIT+valide Aziz (2026-07-19).**
+>    Insert globe D3 de ~87s (beats 3-7, les flux internationaux), cale sur l'audio reel, valide Aziz.
+>    Branche `feat/soudan-acte3-globe-d3` · render `out/_r-and-d/soudan-a3-globe-insert-v4.mp4` · compo
+>    `SoudanActe3GlobeInsert.tsx`. Contient : palette MIXTE (terres kaki + ocean bleu + frontieres premium),
+>    arcs geoInterpolate, reactions cible (onde+illumination+drapeau+objet), drapeaux clippes territoire,
+>    portraits factions (recette Mapbox), drone-sprites sur flux retour (or=flux lumineux, drone=sprite),
+>    volume globe (ombre spherique), reveal systeme, raccords entree zoom-out + sortie zoom-in. Review
+>    Gemini+Kimi appliquee (4 retenus convergents).
+>    **RESTE (delegue, starter pret)** = assembler avec Section 1 Mapbox (beats 1-2bis, WebGL) + valider
+>    raccords + promouvoir. Methode = CONCATENATION 2 mp4 (Section1 via render-mapbox.sh + insert classique),
+>    compo SEPAREE, l'Acte 3 FINAL Mapbox reste INTACT. → `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`.
+>    Moteur reutilisable grave : `.claude/.../memory/feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+>    **⭐ CANDIDAT N°2 — SOUDAN ACTE 5 "le reseau qui arme"** : chaine LINEAIRE 3 maillons trans-continentaux
+>    (Abou Dabi->Haftar/Libye->El-Fasher), le geste le PLUS PUR pour un arc geoInterpolate (encore plus que
+>    l'Acte 3, etoile multidirectionnelle). Matiere prete (script v6, audio 80s, `soudanActe5Timing.ts`,
+>    corridor Kufra->El-Fasher deja en 1 trajectoire). Decoupage : Beats 1-2 = globe · Beat 3 = Mapbox ·
+>    Beat 4 hybride · Beat 5 = Mapbox. ⚠️ verrou institutionnel = ACTE 6, pas Acte 5. A FAIRE apres validation
+>    du passage a l'echelle Acte 3 (assemblage). Analyse detaillee dans le feedback moteur globe.
 > 2. **SOL ENRICHI** (Aziz a dit OUI) : polygone D3 avec degrade radial + grain + ombre interne + relief
 >    simule, pour voir si D3 rattrape le "terrain habite" Mapbox et fermer le debat objets-poses.
 > 3. **Waouh globe 2.0** : arcs de trajectoire `geoInterpolate` (effet vol d'avion sur la sphere),
