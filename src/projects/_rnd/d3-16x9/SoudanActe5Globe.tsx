@@ -42,19 +42,17 @@ const CORRIDOR_A: LonLat = GEO.kufra;
 const CORRIDOR_B: LonLat = GEO.elFasher;
 const CORRIDOR_SUSPEND = 0.55; // s'arrête en suspens à 55% en fin de Beat 3
 
-// ── Tampon "preuve documentaire" (presse Beat 2, ONU Beat 3) — overlay HTML, coin haut-droit ──
-const DocumentStamp: React.FC<{ frame: number; appear: number; fadeAt: number; lines: string[] }> = ({ frame, appear, fadeAt, lines }) => {
-  const op = interpolate(frame, [appear, appear + 16, fadeAt, fadeAt + 20], [0, 0.92, 0.92, 0], clampB);
+// ── Source "preuve documentaire" — UNE SEULE LIGNE compacte (retour Aziz : pas un pavé). Apparaît
+//    ~2s avant de disparaître, bas de l'écran, discrète. `label` = ligne unique déjà formatée. ──
+const SourceLine: React.FC<{ frame: number; appear: number; fadeAt: number; label: string }> = ({ frame, appear, fadeAt, label }) => {
+  const op = interpolate(frame, [appear, appear + 12, fadeAt, fadeAt + 14], [0, 0.9, 0.9, 0], clampB);
   if (op <= 0.01) return null;
   return (
-    <div style={{ position: "absolute", top: 64, right: 64, opacity: op, pointerEvents: "none",
-      padding: "10px 18px", background: "rgba(12,18,26,0.72)", borderRadius: 4,
-      border: `1.4px solid ${t.flowGold}`, maxWidth: 380 }}>
-      {lines.map((l, i) => (
-        <div key={i} style={{ fontFamily: "Georgia, serif", fontSize: i === 0 ? 15 : 13,
-          fontWeight: i === 0 ? 700 : 400, color: t.labelFill, letterSpacing: 0.3, lineHeight: 1.4,
-          textTransform: i === 0 ? "uppercase" : "none" }}>{l}</div>
-      ))}
+    <div style={{ position: "absolute", bottom: 54, left: "50%", transform: "translateX(-50%)", opacity: op,
+      pointerEvents: "none", padding: "6px 16px", background: "rgba(12,18,26,0.66)", borderRadius: 3,
+      borderLeft: `2.5px solid ${t.flowGold}`, whiteSpace: "nowrap" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 15, fontWeight: 500,
+        color: t.labelFill, letterSpacing: 0.3 }}>{label}</span>
     </div>
   );
 };
@@ -131,6 +129,16 @@ export const SoudanActe5Globe: React.FC = () => {
   // ===== ARC FINANCEMENT (Abou Dabi → Libye) — maillon 1 =====
   const financeReveal = interpolate(frame, [T.b2EmiratsNommes, T.b2SourcesNommees], [0, 1], clampB);
   const financeArcD = arcPathD(proj, path, GEO.abuDhabi, GEO.libyaCenter, financeReveal);
+  // PARTICULES d'argent qui parcourent l'arc en continu (le flux financier VIT, pas un arc statique).
+  // 3 marqueurs dorés échelonnés qui bouclent Abou Dabi→Libye tant que le financement est actif.
+  const financeActive = frame >= T.b2EmiratsNommes;
+  const financeParticles = financeActive
+    ? [0, 1, 2].map((i) => {
+        const ph = ((frame - T.b2EmiratsNommes) * 0.009 + i * 0.34) % 1;
+        return pointAlongArc(proj, GEO.abuDhabi, GEO.libyaCenter, ph * financeReveal, visible);
+      })
+    : [];
+  const sourcePulse = financeActive ? 0.3 + 0.2 * Math.sin((frame - T.b2EmiratsNommes) * 0.12) : 0; // pulse à la source
 
   // ===== CORRIDOR (Kufra → El-Fasher) — maillon 2→3, UNE SEULE trajectoire continue =====
   // Beat 3 : 0 → 55% (suspens). Beat 4 : 55% → 100%. Piloté par temps ABSOLU (jamais 2 arcs).
@@ -176,17 +184,20 @@ export const SoudanActe5Globe: React.FC = () => {
   const posCarburant = frame >= T.b3Carburant ? pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, 0.32, visible) : null;
   const posCombattants = frame >= T.b3Combattants ? pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, 0.46, visible) : null;
 
-  // ===== EMBRASEMENT FORT EL-FASHER (Beat 4, "on les y a repérés") =====
-  // 2 ondes de choc échelonnées (embrasement FORT) — chacune monte 0→1 puis se réinitialise pour
-  // repartir (ShockRing s'auto-masque à shockT>=1, donc on boucle 2 fois via modulo temporel).
+  // ===== EMBRASEMENT EL-FASHER (Beat 4, "on les y a repérés") — registre ENQUÊTE (ondes de propagation,
+  // pas de croix/frappe). 3 ondes échelonnées (calcul par onde au rendu via shockRaw). =====
   const shockRaw = Math.max(0, frame - T.b4CombattantsRepere);
-  const shockElFasher = shockRaw > 0 ? (shockRaw % 40) / 40 : 0; // onde qui se répète toutes les 40f
-  const shockActive = shockRaw > 0 && shockRaw < 90; // 2 ondes puis stop
-  const darfourGlow = interpolate(frame, [T.b4CombattantsRepere - 6, T.b4CombattantsRepere + 20], [0, 1], clampB);
-  const impactMarker = interpolate(frame, [T.b4CombattantsRepere, T.b4CombattantsRepere + 16, T.b4CombattantsRepere + 60], [0, 1, 0.6], clampB);
+  const shockActive = shockRaw > 0 && shockRaw < 120; // fenêtre des ondes de propagation
+  // halo Darfour qui monte puis RESPIRE (battement lent) — installe le siège sans registre combat.
+  const darfourRise = interpolate(frame, [T.b4CombattantsRepere - 6, T.b4CombattantsRepere + 20], [0, 1], clampB);
+  const darfourBreathe = frame >= T.b4CombattantsRepere + 20 ? 0.85 + 0.15 * Math.sin((frame - T.b4CombattantsRepere) * 0.07) : 1;
+  const darfourGlow = darfourRise * darfourBreathe;
 
   // ===== "RÉSUMONS" — glow cascade sur les 3 maillons, ZÉRO texte =====
   const resumonsBase = interpolate(frame, [T.b4Resumons, T.b4Resumons + 30], [0, 1], clampB);
+  // ISOLER LE SYSTÈME (retour G+K) : au dézoom "Résumons", assombrir le globe pour que le réseau
+  // (arcs + acteurs + EAU/Libye/Soudan, rendus AU-DESSUS du voile) se détache du reste du monde.
+  const systemReveal = interpolate(frame, [T.b4Resumons, T.b4Resumons + 30, T.b5End], [0, 0.42, 0.42], clampB);
 
   // ===== BEAT 5 — figé + El-Fasher seul pulse + vignette pont Acte 6 =====
   const b5ElFasherPulse = frame >= T.b5EtPourtant ? 0.4 + 0.28 * Math.sin((frame - T.b5EtPourtant) * 0.09) : 0;
@@ -198,14 +209,17 @@ export const SoudanActe5Globe: React.FC = () => {
   const pKufra = projectPoint(proj, GEO.kufra, visible);
   const pElFasher = projectPoint(proj, GEO.elFasher, visible);
 
-  // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar + soldats RSF entraînés + camp/dépôt à Kufra.
-  // Apparaissent quand Haftar est nommé et RESTENT (nom→persiste : ce sont des acteurs, pas des verbes). =====
+  // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar (commandement, Benghazi) + camp/dépôt à Kufra
+  // + CHECKPOINTS le long du corridor (retour G+K : disperser plutôt qu'un cluster "photo de famille").
+  // Tout RESTE affiché (nom→persiste). =====
   const haftarReveal = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 18], [0, 1], clampB);
-  const soldierReveal = (i: number) => interpolate(frame, [T.b3HaftarNomme + 10 + i * 7, T.b3HaftarNomme + 28 + i * 7], [0, 1], clampB); // cascade
   const campReveal = interpolate(frame, [T.b3Corridor - 4, T.b3Corridor + 20], [0, 1], clampB); // camp/dépôt à Kufra
-  // positions des soldats en cluster SOUS Haftar, vers l'intérieur libyen (jamais au-dessus = mer)
-  const soldierPos = [[-1.4, -2.4], [1.5, -2.2], [0.1, -3.6]].map(([dLon, dLat]) =>
-    projectPoint(proj, [GEO.benghazi[0] + dLon, GEO.benghazi[1] + dLat] as LonLat, visible));
+  // CHECKPOINTS = relais le long du corridor Kufra→El-Fasher (fractions du grand cercle). S'allument
+  // quand la tête du tracé les dépasse (contrôle du terrain matérialisé, cf source ONU "corridor de Kufra").
+  const CHECKPOINTS = [0.28, 0.5, 0.72];
+  const checkpointPos = CHECKPOINTS.map((f) => pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, f, visible));
+  const checkpointReveal = (f: number) => corridorProgress >= f
+    ? interpolate(corridorProgress, [f, f + 0.08], [0, 1], clampB) : 0;
 
   const fadeIn = interpolate(frame, [0, 12], [0, 1], clampB);
 
@@ -326,13 +340,38 @@ export const SoudanActe5Globe: React.FC = () => {
             );
           })()}
 
+          {/* VOILE "isoler le système" (dézoom Résumons) : assombrit le globe entier — les arcs/acteurs
+              rendus APRÈS ce rect ressortent. Clippé à la sphère. (retour convergent G+K) */}
+          {systemReveal > 0.01 && (
+            <rect x={0} y={0} width={W} height={H} fill="#05070d" opacity={systemReveal} clipPath="url(#a5sphereClip)" pointerEvents="none" />
+          )}
+
           {/* ===== ARCS ===== */}
           {arcStroke(financeArcD, t.flowGold, 1)}
+          {/* pulse à la source (Abou Dabi) + particules d'argent qui parcourent l'arc en continu */}
+          {pAbuDhabi && sourcePulse > 0.01 && (
+            <circle cx={pAbuDhabi.x} cy={pAbuDhabi.y} r={20} fill={t.flowGold} opacity={sourcePulse} style={{ filter: "blur(7px)" }} />
+          )}
+          {financeParticles.map((p, i) => p && (
+            <circle key={`fp${i}`} cx={p.x} cy={p.y} r={4} fill={t.flowGold} opacity={0.95} />
+          ))}
           {/* ARTÈRE = faisceau de 3 routes (réseau, pas ligne unique). Route maîtresse pleine, les 2
               latérales plus discrètes (0.6) = épaisseur de trafic. */}
           {corridorArcs.map((d, i) => (
             <React.Fragment key={i}>{arcStroke(d, CORRIDOR_COL, i === 0 ? 1 : 0.6)}</React.Fragment>
           ))}
+
+          {/* CHECKPOINTS le long du corridor (relais/contrôle du terrain, cf ONU "corridor de Kufra").
+              Petits carrés qui s'allument quand la tête du tracé les dépasse. RESTENT (nom→persiste). */}
+          {checkpointPos.map((p, i) => {
+            const op = checkpointReveal(CHECKPOINTS[i]);
+            return p && op > 0.01 ? (
+              <g key={`ckp${i}`} transform={`translate(${p.x} ${p.y})`} opacity={op}>
+                <rect x={-6} y={-6} width={12} height={12} fill="#C8B384" stroke={CORRIDOR_COL} strokeWidth={2} rx={1.5} />
+                <rect x={-2.5} y={-2.5} width={5} height={5} fill={CORRIDOR_COL} />
+              </g>
+            ) : null;
+          })}
 
           {/* CONVOIS qui circulent sur l'artère (marqueurs en boucle = l'effort de guerre est CONSTANT) */}
           {convoyMarkers.map((p, i) => p && (
@@ -347,16 +386,16 @@ export const SoudanActe5Globe: React.FC = () => {
           {glowDot(posCarburant, t.flowGold, pCarburant, 12)}
           {glowDot(posCombattants, RSF_RED, pCombattants, 12)}
 
-          {/* EMBRASEMENT EL-FASHER : onde de choc + impact marker croix/fumée (embrasement FORT) */}
-          {pElFasher && shockActive && <ShockRing x={pElFasher.x} y={pElFasher.y} shockT={shockElFasher} color={RSF_RED} />}
-          {pElFasher && impactMarker > 0.01 && (
-            <g transform={`translate(${pElFasher.x} ${pElFasher.y})`} opacity={impactMarker}>
-              {/* croix d'impact (frappe) */}
-              <line x1={-13} y1={-13} x2={13} y2={13} stroke="#fff" strokeWidth={2.6} strokeLinecap="round" opacity={0.85} />
-              <line x1={13} y1={-13} x2={-13} y2={13} stroke="#fff" strokeWidth={2.6} strokeLinecap="round" opacity={0.85} />
-              <circle r={9} fill="none" stroke={RSF_RED} strokeWidth={2.4} />
-            </g>
-          )}
+          {/* EMBRASEMENT EL-FASHER — registre ENQUÊTE (retour convergent G+K : la croix d'impact faisait
+              "frappe / jeu vidéo", retirée). Le halo rouge (rendu plus haut, clippé au Soudan) INSTALLE le
+              siège ; ici 3 ONDES concentriques échelonnées = propagation du conflit (réfugiés, instabilité
+              qui gagne la région), PAS une explosion. */}
+          {pElFasher && shockActive && [0, 13, 26].map((delay) => {
+            const st = ((shockRaw - delay) % 40) / 40;
+            return shockRaw > delay && st > 0 && st < 1 ? (
+              <ShockRing key={delay} x={pElFasher.x} y={pElFasher.y} shockT={st} color={RSF_RED} />
+            ) : null;
+          })}
 
           {/* points fixes. Abou Dabi = FlagToken (pastille drapeau ronde, lisible même sur pays minuscule) */}
           {pAbuDhabi && <FlagToken x={pAbuDhabi.x} y={pAbuDhabi.y} flagCode="ae" reveal={uaeReveal} ring="#00732F" />}
@@ -384,13 +423,9 @@ export const SoudanActe5Globe: React.FC = () => {
           <rect x={0} y={0} width={W} height={H} fill="url(#a5shade)" clipPath="url(#a5sphereClip)" pointerEvents="none" />
         </svg>
 
-        {/* LABELS géo-ancrés (overlay HTML) */}
-        {/* ===== ACTEURS INCARNÉS (Beat 3) — camp/dépôt Kufra + soldats RSF + le maréchal Haftar =====
-            Densifient la carte, restent affichés (nom→persiste). Ordre : base (fond) → soldats → Haftar. */}
+        {/* ===== ACTEURS INCARNÉS — camp/dépôt Kufra + le maréchal Haftar (commandement) =====
+            (les checkpoints du corridor sont rendus en SVG plus haut, avec les convois). */}
         {pKufra && <IsoBase x={pKufra.x} y={pKufra.y} sprite="base-africacorps" op={campReveal} width={104} />}
-        {soldierPos.map((p, i) => p && (
-          <PortraitToken key={`sold${i}`} x={p.x} y={p.y} sprite="portrait-rsf" border="#B14B3C" op={soldierReveal(i)} size={40} />
-        ))}
         {pBenghazi && <PortraitToken x={pBenghazi.x} y={pBenghazi.y - 4} sprite="portrait-haftar" border="#9B5A2E" op={haftarReveal} size={66} />}
 
         {pAbuDhabi && <GeoLabel x={pAbuDhabi.x} y={pAbuDhabi.y} label="Abou Dabi" op={uaeReveal} color="#00732F" />}
@@ -405,12 +440,12 @@ export const SoudanActe5Globe: React.FC = () => {
         )}
         {pElFasher && <GeoLabel x={pElFasher.x} y={pElFasher.y} label="El-Fasher" op={interpolate(frame, [T.b4ElFasherNomme, T.b4ElFasherNomme + 16], [0, 1], clampB)} color={RSF_RED} />}
 
-        {/* TAMPONS documentaires — SOURCES EXACTES (titre enquête / rapport, pas juste le nom du média).
-            Réfs vérifiées WebSearch 2026-07-19, 4 sources concordantes (cf script v6 + fact-check). */}
-        <DocumentStamp frame={frame} appear={T.b2SourcesNommees} fadeAt={T.b2End - 10}
-          lines={["« Inside the Secret Network Fueling Sudan's War »", "Lighthouse Reports · Der Spiegel · 29 juin 2026"]} />
-        <DocumentStamp frame={frame} appear={T.b3RapportOnu} fadeAt={T.b3End - 10}
-          lines={["ONU — Panel of Experts on Libya", "Rapport avril 2026 · corridor de Kufra (bataillon Subul al-Salam)"]} />
+        {/* SOURCES EXACTES — une ligne compacte, bas d'écran, ~2s (retour Aziz : pas un pavé). Réfs
+            vérifiées WebSearch 2026-07-19, 4 sources concordantes. Apparaît 60f (~2s) avant de disparaître. */}
+        <SourceLine frame={frame} appear={T.b2SourcesNommees} fadeAt={T.b2SourcesNommees + 60}
+          label="Enquête Lighthouse Reports · Der Spiegel — 29 juin 2026" />
+        <SourceLine frame={frame} appear={T.b3RapportOnu} fadeAt={T.b3RapportOnu + 60}
+          label="Rapport ONU · Panel of Experts on Libya — avril 2026" />
 
         {/* vignette pont Acte 6 (Beat 5, "les institutions") */}
         {vignette > 0.01 && (
