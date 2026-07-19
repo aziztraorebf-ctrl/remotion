@@ -18,7 +18,7 @@
 import React from "react";
 import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "remotion";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
-import { arcPathD, pointAlongArc, projectPoint, GEO, type LonLat } from "./geoArc";
+import { arcPathD, windingPathD, pointAlongArc, pointAlongWinding, projectPoint, GEO, type LonLat } from "./geoArc";
 import { THEMES, FlagToken, ShockRing } from "./SoudanActe3GlobeProto16x9";
 import { buildActe5Cam, camAt } from "./globeCamera";
 import { T, A5_GLOBE_FRAMES, AUDIO_FULL } from "./soudanActe5GlobeTiming";
@@ -126,18 +126,22 @@ export const SoudanActe5Globe: React.FC = () => {
   const uaeReveal = interpolate(frame, [T.b2EmiratsNommes - 4, T.b2EmiratsNommes + 18], [0, 1], clampB);
   const haftarTint = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 24], [0, 0.34], clampB);
 
-  // ===== ARC FINANCEMENT (Abou Dabi → Libye) — maillon 1 =====
+  // ===== ARC FINANCEMENT (Abou Dabi → CAMP près de Benghazi) — maillon 1 =====
+  // L'argent émirati aboutit à un objet CONCRET (le camp d'entraînement, "Camp 17" à ~20km de Benghazi
+  // selon l'enquête), pas à un point abstrait au milieu du territoire (retour Aziz : "la ligne pointe vers quoi ?").
+  const CAMP_BENGHAZI: LonLat = [GEO.benghazi[0] - 0.3, GEO.benghazi[1] - 1.1];
   const financeReveal = interpolate(frame, [T.b2EmiratsNommes, T.b2SourcesNommees], [0, 1], clampB);
-  const financeArcD = arcPathD(proj, path, GEO.abuDhabi, GEO.libyaCenter, financeReveal);
-  // PARTICULES d'argent qui parcourent l'arc en continu (le flux financier VIT, pas un arc statique).
-  // 3 marqueurs dorés échelonnés qui bouclent Abou Dabi→Libye tant que le financement est actif.
+  const financeArcD = arcPathD(proj, path, GEO.abuDhabi, CAMP_BENGHAZI, financeReveal);
   const financeActive = frame >= T.b2EmiratsNommes;
   const financeParticles = financeActive
     ? [0, 1, 2].map((i) => {
         const ph = ((frame - T.b2EmiratsNommes) * 0.009 + i * 0.34) % 1;
-        return pointAlongArc(proj, GEO.abuDhabi, GEO.libyaCenter, ph * financeReveal, visible);
+        return pointAlongArc(proj, GEO.abuDhabi, CAMP_BENGHAZI, ph * financeReveal, visible);
       })
     : [];
+  // le camp apparaît quand l'argent arrive (fin du tracé de l'arc financement)
+  const campBenghaziReveal = interpolate(frame, [T.b2SourcesNommees, T.b2SourcesNommees + 20], [0, 1], clampB);
+  const pCampBenghazi = projectPoint(proj, CAMP_BENGHAZI, visible);
   const sourcePulse = financeActive ? 0.3 + 0.2 * Math.sin((frame - T.b2EmiratsNommes) * 0.12) : 0; // pulse à la source
 
   // ===== CORRIDOR (Kufra → El-Fasher) — maillon 2→3, UNE SEULE trajectoire continue =====
@@ -148,29 +152,33 @@ export const SoudanActe5Globe: React.FC = () => {
     [0, CORRIDOR_SUSPEND, CORRIDOR_SUSPEND, 1],
     clampB
   );
-  // ARTÈRE = faisceau de 3 routes parallèles (pas UNE ligne — c'est un "réseau" de contrebande, pas un
-  // vol unique). 3 trajectoires légèrement décalées géographiquement, MÊME progress continu (la trajectoire
-  // maîtresse reste unique au sens narratif : elles avancent/s'arrêtent/reprennent ensemble).
-  const CORRIDOR_ROUTES: [[number, number], [number, number]][] = [
-    [CORRIDOR_A, CORRIDOR_B],
-    [[CORRIDOR_A[0] - 1.3, CORRIDOR_A[1] - 0.4], [CORRIDOR_B[0] - 1.0, CORRIDOR_B[1] + 0.5]],
-    [[CORRIDOR_A[0] + 1.1, CORRIDOR_A[1] - 0.3], [CORRIDOR_B[0] + 0.9, CORRIDOR_B[1] + 0.4]],
-  ];
-  const corridorArcs = frame >= T.b3Corridor
-    ? CORRIDOR_ROUTES.map(([a, b]) => arcPathD(proj, path, a, b, corridorProgress))
+  // ARTÈRE = 1 piste principale qui SERPENTE (inspiration GPT-5.6 Sol : une route de contrebande n'est
+  // PAS une ligne GPS droite) + 2 pistes secondaires plus fines (le réseau, pas un vol unique). MÊME
+  // progress continu. La piste principale porte la double-ligne (bordure sable + rouge) et les checkpoints.
+  const CORRIDOR_AMP = 1.1; // amplitude d'ondulation (degrés)
+  const CORRIDOR_WAVES = 2.5;
+  const corridorMainD = frame >= T.b3Corridor
+    ? windingPathD(proj, path, CORRIDOR_A, CORRIDOR_B, corridorProgress, CORRIDOR_AMP, CORRIDOR_WAVES)
+    : "";
+  // pistes secondaires (décalées + ondulation différente = traces alternatives dans le désert)
+  const corridorSecondary = frame >= T.b3Corridor
+    ? [
+        windingPathD(proj, path, [CORRIDOR_A[0] - 1.2, CORRIDOR_A[1] - 0.3], [CORRIDOR_B[0] - 0.8, CORRIDOR_B[1] + 0.4], corridorProgress, 0.7, 3.0),
+        windingPathD(proj, path, [CORRIDOR_A[0] + 1.0, CORRIDOR_A[1] - 0.2], [CORRIDOR_B[0] + 0.7, CORRIDOR_B[1] + 0.3], corridorProgress, 0.8, 1.8),
+      ]
     : [];
-  const corridorArcD = corridorArcs[0] || ""; // route maîtresse (compat + pulses ancrés dessus)
 
   // CONVOIS qui circulent en boucle sur l'artère une fois le corridor établi (Beat 4→5) — l'artère VIT
   // (constance de l'effort de guerre, cf diagnostic "artère pulsante" vs "ligne statique"). 4 marqueurs
   // échelonnés en phase, sur les 3 routes, qui bouclent tant que le réseau est actif.
+  // helper : position le long de la piste principale SINUEUSE (mêmes params que le tracé)
+  const onCorridor = (tt: number) => pointAlongWinding(proj, CORRIDOR_A, CORRIDOR_B, tt, visible, CORRIDOR_AMP, CORRIDOR_WAVES);
   const convoyActive = frame >= T.b4ElFasherNomme;
   const convoyMarkers = convoyActive
     ? [0, 1, 2, 3].map((i) => {
-        const route = CORRIDOR_ROUTES[i % CORRIDOR_ROUTES.length];
         const phase = ((frame - T.b4ElFasherNomme) * 0.006 + i * 0.27) % 1; // boucle continue
         const tt = phase * Math.min(1, corridorProgress); // ne dépasse pas la portion tracée
-        return pointAlongArc(proj, route[0], route[1], tt, visible);
+        return onCorridor(tt);
       })
     : [];
 
@@ -179,10 +187,10 @@ export const SoudanActe5Globe: React.FC = () => {
   const pArmes = pulseObj(T.b3Armes);
   const pCarburant = pulseObj(T.b3Carburant);
   const pCombattants = pulseObj(T.b3Combattants);
-  // positions des pulses le long du corridor (échelonnées sur la portion tracée du Beat 3)
-  const posArmes = frame >= T.b3Armes ? pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, 0.18, visible) : null;
-  const posCarburant = frame >= T.b3Carburant ? pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, 0.32, visible) : null;
-  const posCombattants = frame >= T.b3Combattants ? pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, 0.46, visible) : null;
+  // positions des pulses le long du corridor sinueux (échelonnées sur la portion tracée du Beat 3)
+  const posArmes = frame >= T.b3Armes ? onCorridor(0.18) : null;
+  const posCarburant = frame >= T.b3Carburant ? onCorridor(0.32) : null;
+  const posCombattants = frame >= T.b3Combattants ? onCorridor(0.46) : null;
 
   // ===== EMBRASEMENT EL-FASHER (Beat 4, "on les y a repérés") — registre ENQUÊTE (ondes de propagation,
   // pas de croix/frappe). 3 ondes échelonnées (calcul par onde au rendu via shockRaw). =====
@@ -209,15 +217,19 @@ export const SoudanActe5Globe: React.FC = () => {
   const pKufra = projectPoint(proj, GEO.kufra, visible);
   const pElFasher = projectPoint(proj, GEO.elFasher, visible);
 
-  // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar (commandement, Benghazi) + camp/dépôt à Kufra
-  // + CHECKPOINTS le long du corridor (retour G+K : disperser plutôt qu'un cluster "photo de famille").
-  // Tout RESTE affiché (nom→persiste). =====
+  // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar (Benghazi) + SES SOLDATS autour (son autorité
+  // militaire, retour Aziz) + camp/dépôt à Kufra + CHECKPOINTS le long du corridor (contrôle du terrain).
+  // Les 2 disent des choses différentes et se complètent. Tout RESTE affiché (nom→persiste). =====
   const haftarReveal = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 18], [0, 1], clampB);
   const campReveal = interpolate(frame, [T.b3Corridor - 4, T.b3Corridor + 20], [0, 1], clampB); // camp/dépôt à Kufra
+  // SOLDATS RSF autour de Haftar (sa force) — cluster SOUS lui, vers l'intérieur libyen (jamais en mer).
+  const soldierReveal = (i: number) => interpolate(frame, [T.b3HaftarNomme + 12 + i * 7, T.b3HaftarNomme + 30 + i * 7], [0, 1], clampB); // cascade
+  const soldierPos = [[-1.6, -2.6], [1.6, -2.4], [0.0, -3.9]].map(([dLon, dLat]) =>
+    projectPoint(proj, [GEO.benghazi[0] + dLon, GEO.benghazi[1] + dLat] as LonLat, visible));
   // CHECKPOINTS = relais le long du corridor Kufra→El-Fasher (fractions du grand cercle). S'allument
   // quand la tête du tracé les dépasse (contrôle du terrain matérialisé, cf source ONU "corridor de Kufra").
   const CHECKPOINTS = [0.28, 0.5, 0.72];
-  const checkpointPos = CHECKPOINTS.map((f) => pointAlongArc(proj, CORRIDOR_A, CORRIDOR_B, f, visible));
+  const checkpointPos = CHECKPOINTS.map((f) => onCorridor(f)); // sur la piste sinueuse
   const checkpointReveal = (f: number) => corridorProgress >= f
     ? interpolate(corridorProgress, [f, f + 0.08], [0, 1], clampB) : 0;
 
@@ -355,22 +367,46 @@ export const SoudanActe5Globe: React.FC = () => {
           {financeParticles.map((p, i) => p && (
             <circle key={`fp${i}`} cx={p.x} cy={p.y} r={4} fill={t.flowGold} opacity={0.95} />
           ))}
-          {/* ARTÈRE = faisceau de 3 routes (réseau, pas ligne unique). Route maîtresse pleine, les 2
-              latérales plus discrètes (0.6) = épaisseur de trafic. */}
-          {corridorArcs.map((d, i) => (
-            <React.Fragment key={i}>{arcStroke(d, CORRIDOR_COL, i === 0 ? 1 : 0.6)}</React.Fragment>
-          ))}
+          {/* ARTÈRE (inspiration GPT-5.6 Sol) : pistes secondaires fines en pointillé (traces alternatives)
+              + piste PRINCIPALE qui serpente, en DOUBLE-LIGNE (bordure sable claire large sous le rouge). */}
+          {corridorSecondary.map((d, i) => d ? (
+            <path key={`sec${i}`} d={d} fill="none" stroke={CORRIDOR_COL} strokeWidth={2} strokeLinecap="round"
+              strokeDasharray="3 9" opacity={0.4} />
+          ) : null)}
+          {corridorMainD && (
+            <>
+              {/* bordure sable de la piste (la route dans le désert) */}
+              <path d={corridorMainD} fill="none" stroke="#E8D9B0" strokeWidth={11} strokeLinecap="round" opacity={0.55} />
+              <path d={corridorMainD} fill="none" stroke="rgba(10,14,22,0.5)" strokeWidth={7.5} strokeLinecap="round" opacity={0.5} />
+              {/* trait rouge du corridor de contrebande */}
+              <path d={corridorMainD} fill="none" stroke={CORRIDOR_COL} strokeWidth={4.4} strokeLinecap="round" />
+              {/* marching ants (le flux) */}
+              <path d={corridorMainD} fill="none" stroke="#F2E5C8" strokeWidth={1.5} strokeLinecap="round"
+                strokeDasharray="7 12" strokeDashoffset={-(frame * 0.9) % 19} opacity={0.6} />
+            </>
+          )}
 
-          {/* CHECKPOINTS le long du corridor (relais/contrôle du terrain, cf ONU "corridor de Kufra").
-              Petits carrés qui s'allument quand la tête du tracé les dépasse. RESTENT (nom→persiste). */}
+          {/* CHECKPOINTS VARIÉS le long du corridor (inspiration GPT : formes différentes + barres
+              perpendiculaires = signalétique de contrôle). S'allument quand la tête du tracé les dépasse. */}
           {checkpointPos.map((p, i) => {
             const op = checkpointReveal(CHECKPOINTS[i]);
-            return p && op > 0.01 ? (
+            if (!p || op <= 0.01) return null;
+            return (
               <g key={`ckp${i}`} transform={`translate(${p.x} ${p.y})`} opacity={op}>
-                <rect x={-6} y={-6} width={12} height={12} fill="#C8B384" stroke={CORRIDOR_COL} strokeWidth={2} rx={1.5} />
-                <rect x={-2.5} y={-2.5} width={5} height={5} fill={CORRIDOR_COL} />
+                {/* barres perpendiculaires (poste de contrôle) */}
+                <line x1={-11} y1={-8} x2={-11} y2={8} stroke={CORRIDOR_COL} strokeWidth={2.4} />
+                <line x1={11} y1={-8} x2={11} y2={8} stroke={CORRIDOR_COL} strokeWidth={2.4} />
+                {/* forme centrale variée : cercle / losange / cercle-double */}
+                {i === 1 ? (
+                  <rect x={-6} y={-6} width={12} height={12} fill="#E8D9B0" stroke={CORRIDOR_COL} strokeWidth={2.4} transform="rotate(45)" />
+                ) : (
+                  <>
+                    <circle r={7} fill="#E8D9B0" stroke={CORRIDOR_COL} strokeWidth={2.4} />
+                    <circle r={2.5} fill={CORRIDOR_COL} />
+                  </>
+                )}
               </g>
-            ) : null;
+            );
           })}
 
           {/* CONVOIS qui circulent sur l'artère (marqueurs en boucle = l'effort de guerre est CONSTANT) */}
@@ -425,7 +461,13 @@ export const SoudanActe5Globe: React.FC = () => {
 
         {/* ===== ACTEURS INCARNÉS — camp/dépôt Kufra + le maréchal Haftar (commandement) =====
             (les checkpoints du corridor sont rendus en SVG plus haut, avec les convois). */}
+        {/* camp d'entraînement près de Benghazi = ce que finance l'argent émirati (bout de l'arc financement) */}
+        {pCampBenghazi && <IsoBase x={pCampBenghazi.x} y={pCampBenghazi.y} sprite="camp-entrainement-td" op={campBenghaziReveal} width={92} />}
         {pKufra && <IsoBase x={pKufra.x} y={pKufra.y} sprite="base-africacorps" op={campReveal} width={104} />}
+        {/* soldats RSF autour de Haftar (sa force) — rendus AVANT le portrait pour qu'il passe au-dessus */}
+        {soldierPos.map((p, i) => p && (
+          <PortraitToken key={`sold${i}`} x={p.x} y={p.y} sprite="portrait-rsf" border="#B14B3C" op={soldierReveal(i)} size={38} />
+        ))}
         {pBenghazi && <PortraitToken x={pBenghazi.x} y={pBenghazi.y - 4} sprite="portrait-haftar" border="#9B5A2E" op={haftarReveal} size={66} />}
 
         {pAbuDhabi && <GeoLabel x={pAbuDhabi.x} y={pAbuDhabi.y} label="Abou Dabi" op={uaeReveal} color="#00732F" />}

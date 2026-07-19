@@ -48,6 +48,65 @@ export function arcPathD(
 }
 
 /**
+ * Piste SINUEUSE A->B (inspiration GPT-5.6 Sol : une route de contrebande serpente, ce n'est pas une
+ * ligne GPS droite). = grand cercle + ondulation sinusoïdale PERPENDICULAIRE en degrés (amplitude `amp`,
+ * `waves` oscillations). Reste géo-cohérente (autour du vrai trajet), juste organique.
+ */
+export function windingCircle(a: LonLat, b: LonLat, amp = 0.9, waves = 2.5, samples = 80): LonLat[] {
+  const base = greatCircle(a, b, samples);
+  // direction moyenne A->B pour la perpendiculaire (approx plane, suffisant à cette échelle)
+  const dLon = b[0] - a[0];
+  const dLat = b[1] - a[1];
+  const len = Math.hypot(dLon, dLat) || 1;
+  const perpLon = -dLat / len; // perpendiculaire unitaire
+  const perpLat = dLon / len;
+  return base.map((p, i) => {
+    const t = i / (base.length - 1);
+    const env = Math.sin(t * Math.PI); // amplitude nulle aux extrémités (part et arrive droit)
+    const off = Math.sin(t * Math.PI * waves) * amp * env;
+    return [p[0] + perpLon * off, p[1] + perpLat * off] as LonLat;
+  });
+}
+
+/** Chemin SVG de la portion révélée [0..reveal] d'une piste sinueuse (cf windingCircle). */
+export function windingPathD(
+  proj: GeoProjection,
+  path: (obj: any) => string | null,
+  a: LonLat,
+  b: LonLat,
+  reveal: number,
+  amp = 0.9,
+  waves = 2.5,
+  samples = 80
+): string {
+  const r = Math.max(0, Math.min(1, reveal));
+  if (r <= 0) return "";
+  const full = windingCircle(a, b, amp, waves, samples);
+  const cut = Math.max(1, Math.round(full.length * r));
+  const d = path({ type: "LineString", coordinates: full.slice(0, cut + 1) } as any);
+  return d || "";
+}
+
+/** Position écran {x,y} à la fraction t d'une piste sinueuse, ou null si derrière le globe. */
+export function pointAlongWinding(
+  proj: GeoProjection,
+  a: LonLat,
+  b: LonLat,
+  t: number,
+  visible: (p: LonLat) => boolean,
+  amp = 0.9,
+  waves = 2.5,
+  samples = 80
+): { x: number; y: number } | null {
+  const pts = windingCircle(a, b, amp, waves, samples);
+  const idx = Math.max(0, Math.min(pts.length - 1, Math.round(Math.max(0, Math.min(1, t)) * (pts.length - 1))));
+  const ll = pts[idx];
+  if (!visible(ll)) return null;
+  const xy = proj(ll);
+  return xy ? { x: xy[0], y: xy[1] } : null;
+}
+
+/**
  * Position ECRAN {x,y} du marqueur a la fraction t du grand cercle A->B, ou null si le point
  * est derriere le globe (face cachee) — dans ce cas on ne dessine pas le marqueur.
  * `visible` = helper isVisible du socle (evite de dessiner un marqueur "fantome" a l'arriere).
