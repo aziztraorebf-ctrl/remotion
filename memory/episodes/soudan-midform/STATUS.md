@@ -1,44 +1,51 @@
 # Soudan Mid-form — STATUS
 
-## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-17 fin de session 11)
+## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-18 fin de session 12)
 
-**UN chantier restant en attente (Acte 5 traité cette session) :**
+**Acte 5 : CODE ÉCRIT + RENDU v2 (80.15s) + 2 DOWNSTREAM COMPLETS (Gemini+Kimi). Verdict net à trier
+AVANT toute nouvelle passe de code — ne pas re-coder au jugé, lire les 4 fichiers ci-dessous d'abord.**
 
-0. **🎬 Acte 5 — script verrouillé + mise en scène actée + AUDIO GÉNÉRÉ + timing frame-exact FAIT
-   (session 11, 2026-07-17). Reste : le CODE de la scène (pas commencé).**
-   - Script v6 relu par Aziz, verrouillé, 2 micro-reformulations TTS (scan anti-pièges FR : "bloquée."
-     fin de phrase → "dans l'impasse." ; "ont été repérés" → "on les y a repérés"). Texte final dans
-     `memory/projects/soudan-midform-ACTE5-SCRIPT.md`.
-   - Mise en scène actée par 2 agents `creative-director-dual` (angles opposés carte-first vs
-     rupture-au-service-du-sens) → convergence indépendante sur 0 sortie de carte, 5 beats/5 Mapbox
-     continue. Densité objets affinée par 2 agents supplémentaires (angle enrichissement vs garde-fou) :
-     Beat1/5 épurés, Beat2 max 1 jeton camp, Beat3 = 3 micro-objets synchronisés mot-à-mot
-     (armes/carburant/combattants), Beat4 sans objet neuf. Détail complet dans le fichier script §
-     MISE EN SCÈNE ACTÉE. ⛔ **Point technique non-négociable** : trait corridor Kufra→El-Fasher = UNE
-     seule variable de trajectoire continue (Beat3→4), jamais deux tracés indépendants.
-   - **da-brief externe (Gemini+Kimi+DeepSeek) ABANDONNÉ cette session** — bloqué indéfiniment sans
-     erreur (diagnostic : Kimi part en raisonnement long sur prompt structuré, pas un bug de notre
-     script). Détail + comment diagnostiquer la prochaine fois : `.claude/.../memory/
-     tools_da-brief-lenteur-kimi-2026-07-17.md`. On a avancé avec le seul verdict des 4 agents Claude
-     internes (solide et convergent).
-   - **Coordonnées géo vérifiées WebSearch** (Kufra 24.18°N/23.28°E, Benghazi 32.11°N/20.07°E, Abou
-     Dabi 24.45°N/54.37°E) — écart négligeable vs script initial. El-Fasher déjà dans
-     `sudan.warmap.json` (25.35/13.63), réutilisé tel quel. Kufra/Benghazi/Abou Dabi sont HORS du
-     dataset (centré Soudan) — à poser comme points fixes indépendants.
-   - **Audio généré** (pipeline `generate-narration-expressive.py`, TTS V3 Océane → STS GéoAfrique,
-     4 parties + concat) : `public/_shared/audio/soudan/acte5-reseau-ombre.mp3` (80.11s total,
-     ~2609 crédits ElevenLabs). Parties : p1=30.65s, p2=18.25s, p3=17.04s, p4=14.16s.
-   - **Forced-alignment ElevenLabs v1 fait** (v2 = 404, endpoint inexistant/changé — noter pour la
-     prochaine fois) : `public/_shared/audio/soudan/acte5-reseau-ombre-alignment.json` (198 mots,
-     loss=0.107, zéro bug timestamps bloqués).
-   - **Timing frame-exact écrit** : `src/projects/warmap/soudan-acte5/soudanActe5Timing.ts` (5 BEATN,
-     marqueurs calés sur les vrais timestamps forced-alignment, PART_OFFSETS sur durées ffprobe réelles,
-     TOTAL_FRAMES=2400 @30fps).
-   - **NEXT immédiat** : écrire `SoudanActe5.tsx` (le composant Remotion lui-même — carte Mapbox +
-     jetons Beat2/3 + tampons presse/ONU à coder neuf, `CountryParchmentMask` réutilisable des Actes
-     précédents mais confirmé ABSENT du repo malgré la mention dans le script — à vérifier/coder).
-     Puis self-review scriptée, render, Gemini review, validation Aziz. Pas commencé — prochaine étape
-     à lancer avec feu vert explicite (chantier de code conséquent).
+0. **🎬 Acte 5 — script verrouillé, audio+timing+code+render v2 FAITS. Reste : TRIER le diagnostic
+   downstream + décider quoi appliquer (session 12, 2026-07-18).**
+   - Script v6 verrouillé (`memory/projects/soudan-midform-ACTE5-SCRIPT.md`), audio généré
+     (`public/_shared/audio/soudan/acte5-reseau-ombre.mp3`, 80.11s), forced-alignment fait, timing
+     frame-exact (`src/projects/warmap/soudan-acte5/soudanActe5Timing.ts`).
+   - **Code écrit et rendu** : `src/projects/warmap/soudan-acte5/SoudanActe5.tsx` (100% carte, 4
+     sections). Render v2 validé par self-review render réel (2 bugs de jonction Beat2→3 trouvés et
+     corrigés : caméra qui sautait sèchement + masque parchemin Libye qui clignotait kaki→crème).
+     Lien 72h (à re-uploader si expiré) : `https://litter.catbox.moe/4ov6bx.mp4`.
+   - ⛔⛔ **DIAGNOSTIC DOWNSTREAM FAIT — verdict net, PAS ENCORE APPLIQUÉ AU CODE.** 2 appels
+     séquentiels (Gemini + Kimi K2.5, 4 réponses indépendantes), tous rapatriés dans
+     `memory/episodes/soudan-midform/da-briefs-acte5/` :
+     - `01-comparatif-{gemini,kimi}.md` : vs référence Sahel P2 — convergence 2/2 sur LE problème n°1 :
+       **absence de conséquence territoriale du mouvement** (le trait Kufra→El-Fasher n'a aucun impact
+       visuel à l'arrivée), **absence d'acteurs visuels** (portraits Haftar/RSF jamais montrés), et le
+       dézoom caméra vers Abou Dabi (ajouté cette session) jugé "motivé par rien" par les deux — mais
+       PAS d'accord sur LA solution de remplacement (Gemini : plaque depuis le bord / Kimi : garder en
+       persistance réduite).
+     - `02-densification-{gemini,kimi}.md` : brainstorm prospectif (PAS un jugement) sur comment
+       meubler la carte avec notre arsenal — condensé dans la doctrine `memory/doctrines/
+       WARMAP-DENSIFICATION-CARTE.md` (⭐⭐ à lire en premier, 15+ techniques classées par couche
+       acteurs/territoire/événements/UI + règle simple garder/effacer : "verbe→efface, nom→persiste").
+   - **NEXT SESSION — trier avec Aziz, PUIS coder** (pas l'inverse) : quelles techniques de
+     `WARMAP-DENSIFICATION-CARTE.md` s'appliquent à l'Acte 5 précisément (la doctrine propose déjà 5
+     points d'application immédiate en fin de fichier, à valider/ajuster, pas à appliquer aveuglément).
+     Point d'arbitrage explicite requis : la divergence Gemini/Kimi sur le point Abou Dabi.
+   - ⛔ **Point technique non-négociable conservé** : trait corridor Kufra→El-Fasher = UNE seule
+     variable de trajectoire continue (Beat3→4), déjà respecté dans le code actuel.
+   - Coordonnées géo vérifiées WebSearch (Kufra 24.18°N/23.28°E, Benghazi 32.11°N/20.07°E, Abou Dabi
+     24.45°N/54.37°E), El-Fasher déjà dans `sudan.warmap.json`.
+
+**Outils créés/fixés cette session (2026-07-18), réutilisables pour tout futur acte** :
+- `scripts/tools/force_ipv4.py` — fix IPv6-mort-en-sandbox importé nativement dans `da-brief.py`,
+  `da-compare.py`, `visual_review.py`, `kimi-video-compare.py` (plus besoin du wrapper CLI manuel).
+  Détail root-cause : `memory/tools/yt-dlp.md`.
+- `scripts/tools/kimi-video-compare.py` — équivalent Kimi K2.5 natif de `da-compare.py` (vidéo complète
+  en base64, API Moonshot directe — liens HTTP publics refusés, testé et confirmé). Détail :
+  `memory/tools/kimi-video-native-base64.md`.
+- Pattern **2 appels séquentiels** (comparatif PUIS génératif) documenté dans `DA-BRIEF-GATE.md` — après
+  tout downstream comparatif, TOUJOURS proposer le 2e appel prospectif plutôt que s'arrêter au diagnostic.
+  Brief générique réutilisable : `scripts/warmap/templates/warmap-densification-brief.txt`.
 
 1. **Acte 4 — 4 lots de refonte faits, en attente de validation par VISIONNAGE COMPLET (audio+visuel).**
    Suite au retour d'Aziz sur le v6 (session 9), refonte en profondeur cette session (10) :

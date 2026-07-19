@@ -21,6 +21,10 @@ Références par pilier (--ref warmap|atlas|souverain) : voir REFERENCES ci-dess
 """
 import os
 import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import force_ipv4  # noqa: E402,F401 — DOIT s'importer avant tout appel réseau (IPv6 mort en sandbox)
+
 import time
 import argparse
 
@@ -144,7 +148,7 @@ def main():
     ap.add_argument("--expert", action="store_true", help="Approfondir le point de vue expert")
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver l'approfondissement AI-slop")
     ap.add_argument("--no-angles", action="store_true", help="Désactiver le socle d'angles obligatoires (déconseillé)")
-    ap.add_argument("--max-tokens", type=int, default=7000)
+    ap.add_argument("--max-tokens", type=int, default=8000)
     args = ap.parse_args()
 
     load_env()

@@ -249,3 +249,21 @@ Si on reutilise un segment video d'un render precedent (qui contient deja narrat
 
 ### Whisper word-level
 - `whisper <mp3> --model tiny --language French --word_timestamps True --output_format json` (model small TIMEOUT 2min, tiny OK ~90s en bg).
+
+---
+
+## SESSION 2026-07-17 — Kosti Acte 4 : intégration station+drone K3 (feat/kosti-refonte-k3)
+
+### Livrable
+- `src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx` : décor statique K3 + drone SVG K3 remplacent l'ancien décor Img + sprite drone-rsf-td.png. Calage voix F4 INCHANGÉ.
+- Frames de contrôle (scratchpad session) : avant-drone global 2678, drone-vol 2733, flash 2773, après 2868 (via compo `SoudanActe4`, 1920x1080, 30fps).
+
+### Patterns/décisions réutilisables
+- **Extraits K3 JSON déjà quasi-JSX** : camelCase présent, seule conversion = apostrophes attributs `'` → `"`. Nettoyage décor statique = retirer `opacity={...(f-N)/...}` (apparitions) + surcouches destruction `#4a1f18 opacity={...(f>150)...}`.
+- **SVG dessiné dans SON viewBox → recaler via `<g transform="translate(DX DY)">`** : station K3 centrée ~(1010,500), cible STATION_CENTER {744,526} → DX=-266, DY=+26. Validé visuellement (auvent sous la file de civils, impact au pied des pompes).
+- **Corps SVG animé dans un conteneur `<div>` positionné** : un `<div>` ne peut PAS contenir du SVG brut → wrapper `<svg viewBox="-46 -46 92 92">` centré origine, `<g transform="scale(1.6)">` pour lisibilité (corps K3 ±21 → ±34, tient). Le `rotate(155)` design K3 se compose avec le `rotate(heading)` externe du div (trajectoire). Rotors animés via `f` = useCurrentFrame global — OK.
+- **GOTCHA timing "creux à l'impact"** : à `frame === impactAt`, le drone `droneOp=0` (disparu) ET le flash `flashOp=0` (t=0). Pour tester l'impact, rendre local ~impactAt+20 (flash+fumée actifs), pas impactAt pile.
+- **Décor SVG "sol" chargé de contenu périmé** : `public/_rnd/kosti-sol-decor-noriver.svg` contenait ancienne station Sol + route + labels + cartouche "CARTE DE SITUATION" (interdit). NON réutilisé → fond ivoire+grille+cadre redessiné INLINE (`MapBackdrop`), sans cartouche. Leçon : vérifier le CONTENU réel d'un asset "fond" avant de le réutiliser comme simple backdrop.
+
+### Point mineur non corrigé (hors périmètre)
+- Label "CUVE" masqué par le 1er portrait civil tant qu'il est vivant (on voit "VE"). Réapparaît après extinction. Non bloquant, pas touché (risque calage).
