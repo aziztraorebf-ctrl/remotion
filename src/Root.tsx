@@ -369,8 +369,14 @@ import { SoudanTestFinal, SOUDAN_TF_FRAMES, SOUDAN_TF_FPS } from "./projects/war
 import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as SOUDAN_ACTE1_FPS } from "./projects/warmap/soudan-acte1/SoudanActe1";
 import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTest";
 import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
-import { SoudanActe3, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
+import { SoudanActe3, Section1 as SoudanActe3Section1, S1_FRAMES as SOUDAN_A3_S1_FRAMES, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
 import { SoudanActe4, SOUDAN_A4_FRAMES, SOUDAN_A4_FPS } from "./projects/warmap/soudan-acte4/SoudanActe4";
+// Section 1 Mapbox isolée (beats 1-2-2bis, 1166 frames) — pour concat avec l'insert globe D3 (assemblage Acte 3 version GLOBE)
+const SoudanActe3Section1Only: React.FC = () => (
+  <RAbsoluteFill style={{ backgroundColor: "#000" }}>
+    <SoudanActe3Section1 sectionOffset={0} />
+  </RAbsoluteFill>
+);
 import { SoudanActe5, SOUDAN_A5_FRAMES, SOUDAN_A5_FPS } from "./projects/warmap/soudan-acte5/SoudanActe5";
 import { PortSoudanJetonCompare, PORT_SOUDAN_COMPARE_FRAMES, PORT_SOUDAN_COMPARE_FPS } from "./projects/warmap/_rnd/PortSoudanJetonCompare";
 import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects/warmap/soudan-acte3/_rnd/GlobeSoudanDubaiTest";
@@ -1925,6 +1931,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="BlocRapportForceTest" component={BlocRapportForceTest} durationInFrames={300} fps={30} width={1920} height={1080} />
         {/* Acte 3 "Suivre l'or" — 100% carte, GeoFlowConnection + drapeaux persistants */}
         <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
+        {/* Section 1 seule (beats 1-2-2bis, 1166 frames) — assemblage Acte 3 version GLOBE D3 */}
+        <Composition id="SoudanActe3-Section1" component={SoudanActe3Section1Only} durationInFrames={SOUDAN_A3_S1_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
         {/* Acte 4 "Même les voisins sont aspirés" — 100% carte, Russie/Égypte + DroneStrikeImpact Kosti */}
         <Composition id="SoudanActe4" component={SoudanActe4} durationInFrames={SOUDAN_A4_FRAMES} fps={SOUDAN_A4_FPS} width={1920} height={1080} />
         {/* Acte 5 "Le réseau qui arme dans l'ombre" — 100% carte, Émirats→Libye/Haftar→El-Fasher */}

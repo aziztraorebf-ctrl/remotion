@@ -36,7 +36,7 @@ import { geoMercator, geoPath } from "d3-geo";
 
 export const SOUDAN_A3_FPS = 30;
 
-const S1_FRAMES = PART_OFFSETS.p2;                    // beats 1-2-2bis (audio p1, 38.02s)
+export const S1_FRAMES = PART_OFFSETS.p2;             // beats 1-2-2bis (audio p1, 38.02s)
 const S2_FRAMES = PART_OFFSETS.p3 - PART_OFFSETS.p2;  // beats 3-4-5    (audio p2, 50.88s)
 const S3_FRAMES = 1064;                                // beats 5bis-6-7 (audio p3, 35.46s + marge)
 export const SOUDAN_A3_FRAMES = S1_FRAMES + S2_FRAMES + S3_FRAMES;
@@ -172,7 +172,7 @@ const Beat1Paradoxe: React.FC<{ frame: number }> = ({ frame: f }) => {
   );
 };
 
-const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
+export const Section1: React.FC<{ sectionOffset: number }> = ({ sectionOffset }) => {
   const frame = useCurrentFrame();
   const mapRef = React.useRef<mapboxgl.Map | null>(null);
 
