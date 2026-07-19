@@ -25,6 +25,7 @@ import { SahelJetonsDezoom16x9, SAHEL_JETONS_FRAMES } from "./projects/_rnd/d3-1
 import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/d3-16x9/JetonsComparatif16x9";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
+import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -695,6 +696,14 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ theme: "mixte" as const, variant: "zoom" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeInsert"
+          component={SoudanActe3GlobeInsert}
+          durationInFrames={SOUDAN_A3_INSERT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
         <Composition
           id="KostiFrappeProto"
