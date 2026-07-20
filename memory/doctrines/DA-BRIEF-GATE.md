@@ -239,8 +239,43 @@ TOUT pilier. Le pilier ne change QUE le contexte technique (stack, axes), JAMAIS
    - **Preuve de valeur (2026-06-07)** : a tranché "palette vs cadrage" sur le Sahel → palette =
      FAUX coupable, vrai pb = fragmentation géographique. A évité de refaire la palette pour rien.
 
+**3. `scripts/tools/kimi-video-compare.py`** — équivalent Kimi K2.5 de `da-compare.py`. API Moonshot
+   NATIVE directe (pas OpenRouter — testé 2026-07-18, OpenRouter renvoie `404 no endpoints support
+   video` sur Kimi K2.5 et K3). Vidéo envoyée en BASE64 (`data:video/mp4;base64,...`) — un lien HTTP
+   public (catbox/uguu) est REFUSÉ par l'API (`400 unsupported video url`), seul le base64 ou un
+   fichier pré-uploadé `ms://file_id` marche. Downscaler les 2 vidéos AVANT appel (720p CRF~28) — le
+   base64 gonfle la taille de ~33%. ⚠️ `temperature` DOIT être `1` (seule valeur acceptée par ce
+   modèle, erreur 400 sinon). Détail : `memory/tools/kimi-video-native-base64.md`.
+
 Prototypes d'origine : `scripts/warmap/da-brief-acte1.py` + briefs `review-acte1-aislop.txt` /
 `compare-sudan-sahel.txt` (War-Map Sahel).
+
+---
+
+## ⭐⭐ PATTERN 2 APPELS SÉQUENTIELS — comparatif PUIS génératif (validé 2026-07-18, Soudan Acte 5)
+
+Le downstream n'est pas UN appel — c'est potentiellement DEUX temps distincts, complémentaires :
+
+1. **Appel comparatif** (`da-compare.py` + `kimi-video-compare.py`, même paire ref/nouveau, en
+   PARALLÈLE) : "qu'est-ce qui cloche vs notre référence-or ?" → diagnostic.
+2. **Appel génératif/prospectif** (brief dédié, PAS un jugement qualité) : "comment on corrige,
+   concrètement, avec notre arsenal ?" → brainstorm actionnable, brief-type dans
+   `scripts/warmap/templates/warmap-densification-brief.txt` (généraliste, pas lié à un acte précis —
+   dupliquer/adapter si un autre axe que la densité doit être creusé).
+
+**Après le 1er appel (comparatif), TOUJOURS proposer le 2e à Aziz** plutôt que de s'arrêter au
+diagnostic seul — c'est le 2e temps qui a produit la vraie valeur actionnable (15+ techniques
+concrètes classées par couche, cf `WARMAP-DENSIFICATION-CARTE.md`). Les deux appels utilisent
+Gemini ET Kimi en parallèle à chaque fois (2 signaux indépendants par temps, 4 réponses au total) —
+la convergence entre les deux modèles, à chaque temps, est ce qui distingue un vrai signal d'un
+artefact de prompt.
+
+**Preuve de valeur (2026-07-18)** : le 1er appel (comparatif) a révélé que le vrai problème n°1 de
+l'Acte 5 n'était PAS ce qu'on pensait avoir corrigé (cadrage caméra) mais l'absence de conséquence
+territoriale du mouvement. Le 2e appel (génératif) a produit une doctrine réutilisable
+(`WARMAP-DENSIFICATION-CARTE.md`) qui remet en question un réflexe du projet (épurer par défaut) —
+un axe qu'aucun agent Claude interne n'avait soulevé en amont dans la même session, malgré 4 agents
+dédiés à la mise en scène de ce même acte.
 
 ---
 

@@ -22,11 +22,11 @@ en groupes nommés, qu'on anime ensuite par la frame (Remotion). Doctrine compl�
 | `VilleCompare` / `VilleGeminiAnimee` | médaille | ville/port | « scène qui RESPIRE » |
 | `EtatMajorCompare` / `EtatMajorGptAnimee` | médaille | carte d'état-major | « SE CONSTRUIT » (flèches tracées) |
 | `OffshoreCompare` / `OffshoreGeminiAnimee` / `…SFX` | blueprint | plateforme offshore | SE CONSTRUIT + flux + ⭐ SFX timé |
-| `DefenseCompare` / `DefenseGptAnimee` | tactique | défense mutuelle AES | ⭐ encart conceptuel, issu du vrai script Sahel |
+| `DefenseCompare` / `DefenseGptAnimee` ⚠️ archivé (`_archive/DefenseGptAnimee.tsx`, exclu du build) | tactique | défense mutuelle AES | ⭐ encart conceptuel, issu du vrai script Sahel — rendu réf : https://files.catbox.moe/05xbm1.mp4 |
 | `CfaCompare` / `CfaFrancAnimee` / `…SFX` | tactique | mécanisme Franc CFA | produit par l'AGENT VIERGE (test reproductibilité) |
-| `MineCompare` / `MineGeminiAnimee` | braise-or | mine d'or Darfour (16:9) | 1er test 16:9 + chaud + 28s (chargée — leçon : trop d'éléments) |
-| ⭐ `HeroGptAnimee` | or-jour | « suivre l'or » Soudan HÉROS (16:9) | scène-référence ÉPURE : tomber-sec + bascule couleur + remap palette + fumée réécrite à la main |
-| `GraineStatic` / `GraineGeminiAnimee` | encre | graine / germination GGW | proto botanique |
+| `MineCompare` / `MineGeminiAnimee` ⚠️ archivé (`_archive/MineGeminiAnimee.tsx`, exclu du build) | braise-or | mine d'or Darfour (16:9) | 1er test 16:9 + chaud + 28s (chargée — leçon : trop d'éléments) — rendu réf : https://files.catbox.moe/lkf0ia.mp4 |
+| ⭐ `HeroGptAnimee` ⚠️ archivé (`_archive/HeroGptAnimee.tsx`, exclu du build) | or-jour | « suivre l'or » Soudan HÉROS (16:9) | scène-référence ÉPURE : tomber-sec + bascule couleur + remap palette + fumée réécrite à la main — rendu réf : https://files.catbox.moe/1ws3kh.mp4 |
+| `GraineStatic` / `GraineGeminiAnimee` ⚠️ archivé (`_archive/GraineGeminiAnimee.tsx`, exclu du build) | encre | graine / germination GGW | proto botanique — rendu réf : https://files.catbox.moe/ft5l5g.mp4 |
 | `CfaMidformTest` | tactique | test mid-form CFA 3 scenes | ⭐ preuve format long SVG (catbox fe3u3g) |
 | `JetonsGlmDemo` / `JetonsQwenDemo` | tactique | jetons carte GLM/Qwen | comparaison modeles |
 | `GisementTokensGlm` / `GisementTokensQwen` | tactique | gisements Sénégal tokens | comparaison modeles |

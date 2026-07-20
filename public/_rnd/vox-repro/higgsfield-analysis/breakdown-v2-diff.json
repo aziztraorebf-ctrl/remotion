@@ -1,0 +1,61 @@
+{
+  "verdict_global": "A is a static, scaled-down mockup. Major gaps include airplane orientation/size, missing seat animations, and an incorrect, static bar chart.",
+  "ecarts": [
+    {
+      "element": "avion",
+      "dans_A": "Petit, orienté vers la gauche, 5 sièges statiques.",
+      "dans_B": "Grand, orienté vers la droite, animation de 3 à 6 sièges.",
+      "ecart": "Taille, orientation et animation interne.",
+      "correction": "Miroiter l'avion (vers la droite), agrandir x2, animer l'ajout de sièges.",
+      "priorite": "haute"
+    },
+    {
+      "element": "graphique_barres",
+      "dans_A": "3 barres 3D statiques.",
+      "dans_B": "5 barres 2D animées (croissance), sommet jaune sur la dernière, flèche noire.",
+      "ecart": "Style, nombre, animation et éléments annexes.",
+      "correction": "Passer en 2D plat, 5 barres, animer la croissance, ajouter flèche et sommet jaune.",
+      "priorite": "haute"
+    },
+    {
+      "element": "etiquette_1978",
+      "dans_A": "Police serif, bordure pointillée, sans scotch.",
+      "dans_B": "Police manuscrite, scotch jaune en haut à droite.",
+      "ecart": "Typographie et fixation.",
+      "correction": "Changer la police (style marqueur), ajouter un morceau de scotch jaune.",
+      "priorite": "moyenne"
+    },
+    {
+      "element": "sous_titre",
+      "dans_A": "Texte brut gris.",
+      "dans_B": "Texte noir sur fond de papier déchiré blanc.",
+      "ecart": "Absence de fond texturé.",
+      "correction": "Ajouter un bandeau en papier déchiré sous le texte.",
+      "priorite": "moyenne"
+    },
+    {
+      "element": "mouvement",
+      "dans_A": "Apparition simple, statique.",
+      "dans_B": "Effet stop-motion (wiggle) constant.",
+      "ecart": "Manque de texture animée.",
+      "correction": "Appliquer un effet wiggle global (position/rotation) à 12 fps.",
+      "priorite": "moyenne"
+    }
+  ],
+  "elements_manquants_dans_A": [
+    "Scotch jaune sur l'étiquette 1978",
+    "Flèche noire courbée sur le graphique",
+    "Sommet jaune sur la 5ème barre",
+    "Fond en papier déchiré pour les sous-titres",
+    "Animation d'expansion de la carlingue et duplication des sièges",
+    "Effet stop-motion (wiggle)"
+  ],
+  "plan_v2": [
+    "Miroiter l'avion vers la droite et l'agrandir pour remplir l'écran.",
+    "Refaire le graphique : 5 barres 2D, animer la croissance, ajouter la flèche.",
+    "Créer l'animation interne de l'avion (3 sièges s'étendant à 6).",
+    "Mettre à jour l'étiquette 1978 (police manuscrite + scotch jaune).",
+    "Ajouter le fond papier déchiré aux sous-titres.",
+    "Appliquer un effet wiggle global pour le style stop-motion."
+  ]
+}

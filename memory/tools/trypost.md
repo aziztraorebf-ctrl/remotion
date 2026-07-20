@@ -16,12 +16,14 @@ metadata:
 
 | Plateforme | Outil | Pourquoi |
 |------------|-------|---------|
-| YouTube | **TryPost** | Analytics natifs, Claude pilote via MCP |
-| Instagram | **TryPost** | Idem |
-| Facebook | **TryPost** | Idem |
+| YouTube Short | **TryPost** | Analytics natifs, Claude pilote via MCP |
+| YouTube vidéo longue | **Manuel (YouTube Studio)** | Garder l'accès à Test & Compare (A/B testing natif thumbnails/titres) et aux end screens/cards — confirmé absents de l'API YouTube Data v3 (feature request Google encore ouverte), donc inaccessibles via tout outil tiers y compris TryPost. Décision Aziz 2026-07-10. |
+| Instagram | **TryPost** | Idem Short |
+| Facebook | **TryPost** | Idem Short |
 | TikTok | Postiz (pas TryPost) | TikTok API non supportée par TryPost |
 
-**Règle d'or** : TryPost = tout sauf TikTok. TikTok → Postiz toujours.
+**Règle d'or** : TryPost = tout sauf TikTok ET sauf les vidéos YouTube longues. Vidéo longue → upload
+manuel Studio (accès Test & Compare) ; Short/IG/FB → TryPost ; TikTok → Postiz toujours.
 
 ---
 
@@ -96,6 +98,7 @@ curl -s -X POST "UPLOAD_URL_ICI" \
 | Fichier rejeté silencieusement | > 50 MB | Compresser avant upload |
 | `delete-post-tool` bloqué par auto-mode | Classifier permission | Utiliser Postiz REST DELETE si le post est sur Postiz |
 | Post sans média après create | Oubli step 4 `attach-media` | Toujours faire attach AVANT publish |
+| ⛔ Caption YouTube trop longue publiée quand même | `create-post-tool` / `update-post-tool` n'ont AUCUN champ caption par-plateforme (`platforms[].content` n'existe pas dans le schema, il est ignoré silencieusement à la création — vérifié via `tools/list`). Le `content` est TOUJOURS global au post, partagé par toutes les plateformes activées. | Créer un post SÉPARÉ par groupe de plateformes qui partage la même limite de caption (ex: 1 post YouTube seul avec caption ≤100 car, 1 post IG+FB avec caption longue+hashtags). Même vidéo (réuploader ou réutiliser le fichier), 2+ post_id distincts, même `scheduled_at`. TOUJOURS vérifier après création avec `get-post-tool` que `len(content)` correspond à ce qui a été demandé, PAS juste faire confiance à l'argument envoyé. |
 
 ---
 
@@ -136,6 +139,18 @@ for p in r.json().get('data', []):
 | 16 juin 15h UTC | silicon-savannah | `019ea30b-9c71-70cc-be71-933554847b27` | YT+IG+FB |
 
 > or-africain et vraie-taille = IG+FB uniquement (déjà sur YouTube avant la republication).
+
+## Calendrier actif (1–3 juillet 2026) — 1er cas concret de la règle "2 posts séparés"
+
+| Date | Vidéo | Post ID TryPost | Plateformes |
+|------|-------|-----------------|-------------|
+| 1 juil 14h UTC | cacao-chocolat | `019f1b9a-482d-70a7-989d-4ec1ea6ee6af` | YT seul |
+| 1 juil 14h UTC | cacao-chocolat | `019f1b9a-48e3-70a7-b714-2a921a26df6d` | IG+FB |
+| 3 juil 14h UTC | ggw-muraille-verte | `019f1b9a-49ae-7046-a920-f7c8f6a8da4e` | YT seul |
+| 3 juil 14h UTC | ggw-muraille-verte | `019f1b9a-4a7c-73a9-bc12-44f127cf7b80` | IG+FB |
+
+> Chaque vidéo = 2 posts (pas 1) car TryPost n'a pas de caption par-plateforme (cf § Erreurs connues).
+> TikTok manuel pour les deux (compte en quarantaine, cf `NEXT-ACTION.md`).
 
 ---
 

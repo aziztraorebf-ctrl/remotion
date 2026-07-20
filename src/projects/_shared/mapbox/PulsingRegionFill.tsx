@@ -3,8 +3,8 @@
 // C'est le territoire entier qui est "vivant / sous tension".
 // Supporte plusieurs zones avec des frequences/phases decalees.
 
-import React, { useEffect, useRef } from "react";
-import { AbsoluteFill, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
+import React, { useEffect, useRef, useState } from "react";
+import { AbsoluteFill, continueRender, delayRender, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
@@ -71,6 +71,7 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef       = useRef<mapboxgl.Map | null>(null);
   const setupRef     = useRef(false);
+  const [handle] = useState(() => delayRender("PulsingRegionFill: waiting for Mapbox style+idle", { timeoutInMilliseconds: 45000 }));
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -82,6 +83,8 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
       center, zoom: baseZoom, pitch: basePitch, bearing: bearingStart,
       interactive: false, attributionControl: false, fadeDuration: 0,
     });
+
+    const safetyTimeout = setTimeout(() => continueRender(handle), 40000);
 
     map.on("style.load", () => {
       try {
@@ -124,12 +127,26 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
 
           const filter = countryFilter(iso, c.boundaryIsos ?? []);
 
+          // Opacite CALCULEE POUR LA FRAME COURANTE des la creation du layer — necessaire car en
+          // rendu still/headless (1 frame capturee), le useEffect "Engine frame" plus bas peut ne
+          // jamais s'executer avant la capture (pas de vrai cycle de re-render continu comme en
+          // preview). Sans ca, le fill restait bloque a l'opacite initiale (0) a toutes les frames.
+          const at0     = c.at ?? 0;
+          const period0 = c.period ?? 60;
+          const opMin0  = c.opacityMin ?? 0.15;
+          const opMax0  = c.opacityMax ?? 0.55;
+          const phase0  = c.phaseOffset ?? 0;
+          const fadeIn0 = frame >= at0 ? Math.min(1, (frame - at0) / 20) : 0;
+          const t0      = (frame - at0) / period0;
+          const pulse0  = (Math.sin(t0 * Math.PI * 2 + phase0) + 1) / 2;
+          const initialOpacity = frame >= at0 ? (opMin0 + (opMax0 - opMin0) * pulse0) * fadeIn0 : 0;
+
           if (!map.getLayer(`pulse-fill-${iso}`)) {
             map.addLayer({
               id: `pulse-fill-${iso}`, type: "fill",
               source: "cb", "source-layer": "country_boundaries",
               filter,
-              paint: { "fill-color": color, "fill-opacity": 0 },
+              paint: { "fill-color": color, "fill-opacity": initialOpacity },
             });
           }
           if (!map.getLayer(`pulse-border-${iso}`)) {
@@ -137,7 +154,7 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
               id: `pulse-border-${iso}`, type: "line",
               source: "cb", "source-layer": "country_boundaries",
               filter,
-              paint: { "line-color": borderColor, "line-width": c.borderWidth ?? 1.8, "line-opacity": 0 },
+              paint: { "line-color": borderColor, "line-width": c.borderWidth ?? 1.8, "line-opacity": frame >= at0 ? (0.5 + pulse0 * 0.5) * fadeIn0 : 0 },
             });
           }
 
@@ -152,7 +169,7 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
                 paint: {
                   "line-color": glowColor,
                   "line-width": c.glowWidth ?? 10,
-                  "line-opacity": 0,
+                  "line-opacity": frame >= at0 ? pulse0 * 0.4 * fadeIn0 : 0,
                   "line-blur": 6,
                 },
               });
@@ -162,10 +179,15 @@ export const PulsingRegionFill: React.FC<PulsingRegionFillProps> = ({
 
         setupRef.current = true;
       } catch (_e) {}
+
+      map.once("idle", () => {
+        clearTimeout(safetyTimeout);
+        continueRender(handle);
+      });
     });
 
     mapRef.current = map;
-    return () => { map.remove(); mapRef.current = null; setupRef.current = false; };
+    return () => { clearTimeout(safetyTimeout); map.remove(); mapRef.current = null; setupRef.current = false; };
   }, []);
 
   // Engine frame

@@ -16,6 +16,21 @@
 | Soleil radiant (variante jaune + or ardent) | `elements/nature/astre/soleil-radiant-ggw.svg` | `soleil-radiant-ggw.md` | Encre narrative | GGW B2, B3, B4, B5, B7 |
 | Sol aride + craquelures (3 variantes) | `elements/nature/sol/sol-craquele-ggw.svg` | `sol-craquele-ggw.md` | Encre narrative | GGW B3, B4, B6 |
 | Structures (bâtiments, murs, remparts) | — | — | — | extension future |
+| Cacaoyer (tronc + couronne pleine + 4 cabosses) | `elements/agriculture/cacaoyer/cacaoyer-cacao-chocolat.svg` | `cacaoyer-cacao-chocolat.md` | Encre narrative | Cacao-Chocolat VergerCacao (B3, B4) |
+| Cabosse ouverte (2 moitiés + fèves) | `elements/agriculture/cabosse/cabosse-ouverte-cacao-chocolat.svg` | `cabosse-ouverte-cacao-chocolat.md` | Encre narrative | Cacao-Chocolat transition B2→B3 |
+| Usine transformation (toit dents-de-scie + convoyeur) | `elements/agriculture/usine/usine-transformation-cacao-chocolat.svg` | `usine-transformation-cacao-chocolat.md` | Encre narrative | Cacao-Chocolat B4 (4C) |
+| Poisson (corps ovale + queue + oeil) | `elements/peche/poisson-encre.svg` | `poisson-encre.md` | Encre narrative | PecheurSurpeche16x9 (codé main après échec LLM) |
+| Soleil halo radial (3 couches, composant `.tsx`) | `elements/ciel/SoleilHaloRadial.tsx` | — (doc inline) | Encre narrative | CargoVoyage16x9_LibreInspire, PecheurSurpeche16x9 |
+| Océan profondeur+vagues (composant `.tsx`, fond/1er-plan) | `elements/ocean/OceanProfondeurVagues.tsx` | — (doc inline) | Encre narrative | CargoVoyage16x9_LibreInspire, PecheurSurpeche16x9 |
+| Nuage gravure (composant `.tsx`, déjà existant) | `_rnd/svg-scenes/CloudQwenGravure.tsx` | — (doc inline) | Encre narrative | CargoVoyage16x9_LibreInspire, PecheurSurpeche16x9 |
+| Chalutier industriel (composant `.tsx`, upgrade Gemini) | `elements/peche/ChalutierGemini.tsx` | — (doc inline) | Illustratif riche | PecheurSurpeche16x9 |
+| Pirogue artisanale bois peint (composant `.tsx`, upgrade GPT) | `elements/peche/PirogueGPT.tsx` | — (doc inline) | Illustratif riche | PecheurSurpeche16x9 |
+| Filet de pêche volumétrique (composant `.tsx`, upgrade Gemini) | `elements/peche/FiletGemini.tsx` | — (doc inline) | Illustratif riche | PecheurSurpeche16x9 |
+| Panier d'osier (composant `.tsx`, codé main) | `elements/peche/PanierOsierEncre.tsx` | — (doc inline) | Encre narrative | PecheurSurpeche16x9 |
+| Ciel crépuscule froid (composant `.tsx`, dégradé bleu-nuit→ocre + nuages) | `elements/ciel/CielCrepusculeFroid.tsx` | — (doc inline) | Encre narrative, registre nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2) |
+| Océan vagues nocturne (composant `.tsx`, 2e variante d'océan — multi-couches bouclées) | `elements/ocean/OceanVaguesNocturne.tsx` | — (doc inline) | Encre narrative, registre nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2) |
+| Navire de guerre (composant `.tsx`, silhouette militaire + variante silhouette réduite) | `elements/maritime/NavireGuerreEncre.tsx` | — (doc inline) | Encre narrative, registre militaire | Soudan Acte4 PortSoudanNegociationScene (Beat 2), mix Gemini 3.1 Pro |
+| Port militaire (composant `.tsx`, quais + 2 grues + lumières scintillantes) | `elements/maritime/PortMilitaireEncre.tsx` | — (doc inline) | Encre narrative, registre militaire/nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2), GPT-5.6 Sol |
 
 ---
 
@@ -29,8 +44,17 @@
 | `strokeDashoffset-drawing.md` | `techniques/` | Un trait se dessine progressivement : hachures du sol, lignes de contour, silhouette |
 | `glow-pulse-sinusoidal.md` | `techniques/` | Un élément respire ou brille en boucle : soleil, lueur de vie, pulsation |
 | `sway-houppier.md` | `techniques/` | Un feuillage se balance au vent : rotation sinusoïdale sur le houppier isolé |
+| `parallaxe-camAt-horizon.md` | `techniques/` | Scène 16:9 voyage/transformation : parallaxe 3 calques, horizon paramétrique 2 silhouettes, palette double-état, séquençage strict jour/nuit — code dans `motion.ts` |
 
 > Les fiches `techniques/*.md` sont créées séparément (agent dédié). Ce tableau en liste les noms définitifs et leur rôle.
+
+## Code de mouvement partagé (`motion.ts`)
+
+> `camAt(frame,p,speed)` (parallaxe), `lerpHex(a,b,t)` (palette double-état), `buildHorizonPath(spec,t,w,h)`
+> (horizon paramétrique 2 silhouettes, déborde du cadre), `sequenceExclusive(progress,threshold)` (2 éléments
+> mutuellement exclusifs, ex. soleil/lune), `objectVisualBottom(refY,offset)` (split fond/1er-plan calé sur
+> le vrai bas visuel d'un objet posé). Extrait de `CargoVoyage16x9_LibreInspire.tsx` (2026-07-03). Détail
+> complet + bugs déjà corrigés à ne pas réintroduire : `techniques/parallaxe-camAt-horizon.md`.
 
 ---
 
@@ -71,8 +95,8 @@
 | `blueprint` | Bleu nuit #0d1b3a, cyan #7fd4ff, or #c8a951 | Infrastructure, mécanisme, schéma technique (gazoduc, barrage) | Gemini (justesse technique) · GPT (lisibilité flux) | `SvgScenePlanche.tsx` |
 | `tactique` | Bleu très sombre #0b1526, rouge #d6552e (menace), or #c8a951 | Encart conceptuel : pacte, rapport de force, doctrine (War-Map/AES) | GPT-5.5 | compo dédiée |
 | `braise-or` | Terre sombre #1c1108, ocres #7a4a22→#b8763a, or lumineux #e8b44a | Scène chaude matérée : mine, ressource, désert ardent | Gemini | compos dédiées |
-| `or-jour` | Ciel ambre #f2cf72, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a | Scène chaude LUMINEUSE et premium (matin doré, héros en action) | GPT-5.5 | `HeroGptAnimee.tsx` |
-| `papier-decoupe` | Couches pleines empilées + ombre portée, palette claire chaude (ciel pastel, crème, verts étagés) | Scène pédagogique/explainer : cycle, croissance, processus (façon Kurzgesagt) | Gemini (couches organiques) | `GraineGeminiAnimee.tsx` |
+| `or-jour` | Ciel ambre #f2cf72, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a | Scène chaude LUMINEUSE et premium (matin doré, héros en action) | GPT-5.5 | `_archive/HeroGptAnimee.tsx` ⚠️ fichier source archivé — rendu réf : https://files.catbox.moe/1ws3kh.mp4 |
+| `papier-decoupe` | Couches pleines empilées + ombre portée, palette claire chaude (ciel pastel, crème, verts étagés) | Scène pédagogique/explainer : cycle, croissance, processus (façon Kurzgesagt) | Gemini (couches organiques) | `_archive/GraineGeminiAnimee.tsx` ⚠️ fichier source archivé — rendu réf : https://files.catbox.moe/ft5l5g.mp4 |
 
 **Règle de choix** : intention ORGANIQUE/profondeur → Gemini. Intention GÉOMÉTRIE/schéma → GPT-5.5. Toujours générer les 2 et choisir sur render statique.
 

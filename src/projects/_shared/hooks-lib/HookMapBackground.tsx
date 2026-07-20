@@ -13,7 +13,7 @@
  * Le drift est frame-driven (useCurrentFrame + map.jumpTo) — JAMAIS flyTo/easeTo (incompat headless).
  * Render via scripts/render-mapbox.sh (WebGL headless).
  *
- * Doctrine : memory/HOOKS-LIBRARY-PLAN.md.
+ * Doctrine : memory/projects/HOOKS-LIBRARY-PLAN.md.
  */
 
 import mapboxgl from "mapbox-gl";

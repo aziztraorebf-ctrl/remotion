@@ -28,5 +28,5 @@ type: feedback
 
 Score ≥ 4 = lancer. Score 2-3 = reformuler l'angle. Score < 2 = mettre en pause.
 
-**Complément — règle du titre hybride (Section 9 rules-souverain-editorial.md) :**
+**Complément — règle du titre hybride (Section 9 memory/rules/rules-souverain-editorial.md) :**
 Le titre hybride amplifie la demande existante en connectant un sujet africain à une question que le grand public se pose déjà (énergie, prix, technologie, géopolitique).

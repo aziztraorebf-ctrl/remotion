@@ -14,7 +14,7 @@ mapanimation.io = **générateur AI text-to-map-video**. Architecture en 2 temps
 
 ## Endpoint utile (re-scraper le catalogue)
 
-`GET https://mapanimation.io/Animation/Templates/GetLandingPageTemplates` (header `X-Requested-With: XMLHttpRequest`, pas d'auth). Renvoie 89 templates avec **`userPrompt` COMPLET** (= storyboard scène-par-scène, même grammaire que nos Production Briefs). Catalogue sauvegardé : `memory/_r-and-d-mapanimation-catalog.json`. Analyse : `memory/_r-and-d-mapanimation-ANALYSE.md`. Clips R&D : `out/_r-and-d/mapanimation/`.
+`GET https://mapanimation.io/Animation/Templates/GetLandingPageTemplates` (header `X-Requested-With: XMLHttpRequest`, pas d'auth). Renvoie 89 templates avec **`userPrompt` COMPLET** (= storyboard scène-par-scène, même grammaire que nos Production Briefs). Catalogue sauvegardé : `memory/_r-and-d-mapanimation-catalog.json`. Analyse : `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md`. Clips R&D : `out/_r-and-d/mapanimation/`.
 
 ## Process veille (validé Aziz)
 
@@ -28,7 +28,7 @@ La 1re version de la doctrine était PIÉGEUSE ("toujours un élément mobile, j
 - **4 garde-fous** : (1) plafond simultanéité, (2) suit-la-voix, (3) lisible + TEST DE RETRAIT, (4) séquentiel pas métronome.
 - **2D-flat-satellite (eux) ≠ 3D-pitch-vectoriel (nous)** : tout se TRADUIT, jamais copier. Sprite top-view FAUX en pitch>0.
 - Ce qu'on capture chez eux : SÉQUENTIEL maîtrisé + traitement COULEUR/FRONTIÈRES (pas "faire apparaître des objets").
-Détail complet : `SOUVERAIN-VISUAL-PLAYBOOK.md` section 2bis. Décode premium : `_r-and-d-mapanimation-PREMIUM-DECODE.md`.
+Détail complet : `SOUVERAIN-VISUAL-PLAYBOOK.md` section 2bis. Décode premium : `memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md`.
 
 ## Méthode de validation qui a marché (à réutiliser)
 

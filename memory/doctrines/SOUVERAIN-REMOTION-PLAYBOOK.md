@@ -50,6 +50,7 @@ Une seule idée visuelle par plan. L'évolution se fait par **reveal successif**
 L'élément hero occupe 40-60% de l'espace central. Métadonnées (sources, dates) reléguées aux marges, IBM Plex Mono, opacité réduite (~40%), letter-spacing large.
 - *Pourquoi :* hiérarchise la lecture — impact émotionnel d'abord (gros chiffre), crédibilité ensuite (petite source).
 - *Pousser plus loin :* chiffre `text-stat-2xl`/`text-stat-xl`, source `text-mono-sm` opacity-40.
+- ⚠️ **MÉCANIQUE DE PLACEMENT (non-négociable)** : disposer les blocs (titre / hero / chiffre / label) via UN conteneur **flex/grid** (`justify-content:center` + `gap` + `padding` safe-zones), JAMAIS des `top`/`bottom` en pixels posés à l'œil. Le positionnement absolu deviné = la cause racine du symptôme récurrent « recentre / c'est mal placé » (Aziz). `position:absolute` réservé au fond pleine page, aux éléments géo-ancrés à coord SVG calculées, et aux overlays volontaires. Vaut 16:9 ET 9:16 (juste l'axe flex qui change). Détail : `feedback_layout-flex-jamais-positions-absolues-au-juge`.
 
 ### P5 — Respiration vectorielle / Secondary motion (axe E)
 Un objet statique reste vivant via animations secondaires cycliques : ping-ring (ondes concentriques), glow pulsant, float sinusoïdal, tracé lent (stroke-dashoffset).

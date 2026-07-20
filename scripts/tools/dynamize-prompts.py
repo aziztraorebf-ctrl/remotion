@@ -178,10 +178,10 @@ Remember:
 - Anti-instructions header
 - COLOR GRADE section at the end of each prompt"""
 
-    print("Calling Gemini API (gemini-3.1-flash)...")
+    print("Calling Gemini API (gemini-3.1-pro-preview)...")
 
     response = client.models.generate_content(
-        model="models/gemini-3.1-flash",
+        model="models/gemini-3.1-pro-preview",
         contents=[user_msg],
         config=types.GenerateContentConfig(
             system_instruction=SYSTEM_PROMPT,

@@ -73,7 +73,7 @@ Lignes de flux animées via line-dasharray frame par frame (routes, exports). Po
 >
 > **Leçon du test A5 (V4 rejeté) : on a confondu "carte vivante" avec "carte chargée" — ce sont des OPPOSÉS.** "Jamais 1,2s sans mouvement" est LEUR philosophie d'outil de masse, PAS la nôtre. Notre principe : **mieux vaut voir peu que voir énormément.** On a empilé 6 éléments (drapeau + popup + arc + flux + texture + sprite) → illisible. Erreurs précises : labels Mines/Chimie ajoutés alors que la voix ne les dit pas ; cargo trop petit pour être identifiable = bruit.
 >
-> Source (À LA DEMANDE, jamais en mémoire de session) : `memory/_r-and-d-mapanimation-PREMIUM-DECODE.md` + `_r-and-d-mapanimation-catalog.json` + clips `out/_r-and-d/mapanimation/`.
+> Source (À LA DEMANDE, jamais en mémoire de session) : `memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md` + `_r-and-d-mapanimation-catalog.json` + clips `out/_r-and-d/mapanimation/`.
 
 ### ⚠️ DIFFÉRENCE STRUCTURELLE : leur 2D-plat-satellite ≠ notre 3D-pitch-vectoriel (NON-NEGOTIABLE)
 

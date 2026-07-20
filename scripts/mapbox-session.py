@@ -98,7 +98,7 @@ def phase_storyboard(episode: str, acte: str) -> None:
     print(">>>   l'enrichirait-elle, LISIBLEMENT, EN SUIVANT LA VOIX ? Sinon ne rien ajouter.")
     print(">>>   3 garde-fous ABSOLUS : (1) suit la voix, (2) lisible, (3) sequentiel pas metronome.")
     print(">>>   Lecon test A5 : 'mieux voir peu que voir enormement'. Voir Playbook section 2bis.")
-    print(">>>   Source a la demande : memory/_r-and-d-mapanimation-PREMIUM-DECODE.md")
+    print(">>>   Source a la demande : memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md")
     print("\n>>> ETAPE 2 — STORYBOARD D'EVOLUTION (le modele PROPOSE la direction, doctrine complete) :")
     print(">>>   memory/doctrines/STORYBOARD-MAPBOX.md — preambule 4 couches a JOINDRE au generateur :")
     print(">>>   [1] NOTRE carte (frame ref selon pilier) [2] chaines de ref citees par NOM")

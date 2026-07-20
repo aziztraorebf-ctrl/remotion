@@ -218,5 +218,5 @@ PRÉ-PRODUCTION : COMPLÈTE ✓ — 2026-05-16
 - Checklist générique Atlas : `memory/checklists/ATLAS.md`
 - Composants Atlas : `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md`
 - Assets Mansa Moussa réutilisables : `PIXELLAB-MASTER-INDEX.md`
-- Philosophie Atlas pur (Section 9) : `memory/rules-atlas-production.md`
+- Philosophie Atlas pur (Section 9) : `memory/rules/rules-atlas-production.md`
 - Vidéo concurrente analysée : https://www.youtube.com/watch?v=tnBQtH7G0hI (History Matters, 1.2M vues, 3min12)

@@ -2,7 +2,7 @@
 
 **Créé :** 2026-06-07
 **Contexte :** Identifié en fin de session 2026-06-07. Ces 4 templates doivent être codés en session parallèle AVANT d'intégrer dans SahelWarMapEngine.tsx.
-**Source analyse :** `memory/_r-and-d-mapanimation-ANALYSE.md` + `memory/_r-and-d-mapanimation-PREMIUM-DECODE.md` + catalogue 89 templates.
+**Source analyse :** `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md` + `memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md` + catalogue 89 templates.
 
 ---
 

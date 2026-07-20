@@ -31,16 +31,51 @@ metadata:
 | **Russie (Wagner / Africa Corps)** | ambigu (historiquement Hemeti pour l'or ; ponts aussi avec SAF) | ⚠️ **SOUS-TRAITÉ** — n'apparaît qu'en marge (Meroe Gold sanctionnée, routes RCA). PAS dans l'architecture d'acteurs. | **Recherche ciblée à lancer** (Tavily + Deep Research) : rôle or-pour-contourner-sanctions occidentales (crucial Moscou), bascule SAF↔RSF, concession Port-Soudan avr.2024 (déjà notée en données ISPI). Angle : l'or soudanais finance l'effort de guerre russe en contournant les sanctions. |
 | **Égypte** | SAF (Burhan) | ⚠️ **SOUS-DÉVELOPPÉ** — mentionnée (pro-SAF, ~60% or zones SAF → Égypte) mais pas son rôle stratégique de fond. | Préciser : soutien traditionnel à l'armée régulière, privilégie la stabilité des institutions à sa frontière sud. Drones ? bases ? (traiter en allégation si non forensique). |
 
-## DÉCISION DE STRUCTURE À TRANCHER (en écrivant l'Acte 3, choix de goût Aziz)
-Russie + Égypte = où les placer ?
+## DÉCISION DE STRUCTURE — TRANCHÉE (2026-07-10)
+Russie + Égypte : option **(B) retenue et exécutée** — Russie/Égypte ont leur propre acte dédié. Nuance
+vs la reco provisoire initiale (ci-dessous, conservée pour trace) : la scission est allée plus loin que
+prévu — au lieu de "Acte 4 = R+E + paradoxe des arbitres" combinés, la structure finale (5 actes) sépare
+en **Acte 4 = Russie+Égypte** ("même les voisins sont aspirés", script v5 verrouillé
+`soudan-midform-ACTE4-SCRIPT.md`) et **Acte 5 = verrou institutionnel UA/ONU/Quad + conclusion** (le
+paradoxe des arbitres, veto russe compris, y reste). Décision actée avec Aziz 2026-07-10.
+
+<details>
+<summary>Reco provisoire d'origine (2026-06-16, conservée pour trace)</summary>
+
 - **(A)** Mention rapide dans l'Acte 3 (l'axe reste EAU/Turquie, R+E en couche secondaire) — risque : charge.
 - **(B)** Reléguées à l'Acte 4 (le paradoxe des arbitres : tous les médiateurs sont des belligérants par proxy) — la Russie au Conseil de sécurité (veto nov. 2024) y a déjà sa place.
 - **(C)** Un beat dédié « la table des puissances » si le rythme le permet.
 → Reco provisoire : axe EAU/Turquie à l'Acte 3 + **Russie/Égypte basculées à l'Acte 4** (cohérent avec le veto russe déjà en données Acte 4, et le paradoxe du Quad). À valider en écrivant.
 
+</details>
+
 ## AVANT D'ÉCRIRE L'ACTE 3
 1. **Lancer la recherche manquante** : Russie/Wagner-or-sanctions + Égypte rôle militaire (Tavily actu + Deep Research fond). Combler les 2 trous.
 2. Appliquer la grammaire carte : dézoom HORS Soudan (le SEUL dézoom autorisé, voir cadrage serré Acte 1) → flèches or→Dubaï + drones. Effet vivant obligatoire.
 3. Hiérarchiser à 2 acteurs/beat max.
+
+## ⭐ AVANT D'ÉCRIRE L'ACTE 5 — nouveau fait à fact-checker (découvert 2026-07-11, veille last30days)
+
+Enquête Lighthouse Reports / Der Spiegel / Sudan War Monitor / Evident, publiée début juillet 2026
+("Inside the Secret Network Fueling Sudan's War"), reprise par Democracy Now! le 8 juillet 2026 : documente
+un **réseau de camps d'entraînement RSF soutenu par les Émirats Arabes Unis**, transitant par la **Libye**
+(via la LNA du général Haftar) et employant des **mercenaires colombiens**. Distinct de l'angle "or du
+Darfour→Dubaï" déjà traité en Acte 3 — c'est la preuve d'un soutien militaire/logistique ORGANISÉ, pas
+seulement financier.
+
+**Pourquoi ça compte pour l'Acte 5 (verrou institutionnel UA/ONU/Quad)** : ce fait illustre concrètement
+*pourquoi* le verrou institutionnel est bloqué — un membre du "Quad" censé négocier une solution organise en
+parallèle un réseau de mercenaires pour armer un camp du conflit. Cohérent avec la charte (pas de méchant
+explicite, laisser les faits porter le jugement) : pas besoin d'accuser, le fait suffit à expliquer
+l'inaction. Sans lui, l'Acte 5 risque de rester abstrait ; avec lui, il devient concret et vérifiable.
+
+**À faire en session Acte 5** : fact-check 3 niveaux (Tavily → Sonar Pro → Tavily ciblé de contrôle, comme
+Actes 3-4) sur ce réseau EAU-Libye-Colombie avant de l'intégrer au script. Aziz tranchera à ce moment si un
+Acte 6 est nécessaire ou si ça rentre dans l'Acte 5 tel que prévu.
+
+[NOTE 2026-07-12 : TRANCHÉ — Acte 6 créé. Fact-check fait (CONFIRMÉ, 4 sources indépendantes), script Acte
+5 écrit autour de ce fait (v6, non verrouillé, révision finale requise avant code) : voir
+`soudan-midform-ACTE5-SCRIPT.md`. Le contenu institutionnel UA/ONU/Quad + conclusion devient l'Acte 6, pas
+encore écrit.]
 
 Liens : [[soudan-midform-DONNEES]] · [[soudan-midform-STORYBOARD-ACTE2]] · [[WARMAP-LONG-DOCTRINE]] · [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]].

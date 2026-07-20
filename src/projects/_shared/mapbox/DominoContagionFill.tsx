@@ -109,6 +109,7 @@ export const DominoContagionFill: React.FC<DominoContagionFillProps> = ({
       fadeDuration: 0,
     });
     mapRef.current = map;
+    const safetyTimeout = setTimeout(() => continueRender(handle), 40000);
     map.on("style.load", () => {
       try {
         (map as mapboxgl.Map & { setProjection?: (p: string) => void }).setProjection?.(
@@ -132,7 +133,27 @@ export const DominoContagionFill: React.FC<DominoContagionFillProps> = ({
           paint: { "fill-color": IVORY, "fill-opacity": 0.04 },
         });
       }
+      // Opacite/largeur CALCULEES POUR LA FRAME COURANTE des la creation des layers — necessaire
+      // car en rendu still/headless (1 frame capturee), le useEffect "Drift + propagation" plus bas
+      // peut ne jamais s'executer avant la capture (pas de vrai cycle de re-render continu comme en
+      // preview). Sans ca, les fills de contagion restaient bloques a l'opacite initiale (0).
       for (const iso of allIso) {
+        const wave0 = isoWave[iso];
+        const at0 = waveAt + wave0 * waveGap;
+        const rel0 = frame - at0;
+        const isEpi0 = iso === epicenterIso;
+        const peak0 = isEpi0 ? 0.7 : 0.5;
+        const fillOp0 = interpolate(rel0, [0, 6, 16], [0, peak0 + 0.15, peak0], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        const breathe0 = rel0 > 16 ? peak0 + 0.05 * Math.sin((rel0 - 16) * 0.1) : fillOp0;
+        const lineOp0 = interpolate(rel0, [0, 8], [0, 0.85], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+        const lineW0 = interpolate(rel0, [0, 6, 16], [1, 3.5, 2], {
+          extrapolateLeft: "clamp", extrapolateRight: "clamp",
+        });
+
         if (!map.getLayer(fillId(iso))) {
           map.addLayer({
             id: fillId(iso),
@@ -140,7 +161,7 @@ export const DominoContagionFill: React.FC<DominoContagionFillProps> = ({
             source: "cb-source",
             "source-layer": "country_boundaries",
             filter: ["==", ["get", "iso_3166_1_alpha_3"], iso],
-            paint: { "fill-color": accentColor, "fill-opacity": 0 },
+            paint: { "fill-color": accentColor, "fill-opacity": rel0 > 16 ? breathe0 : fillOp0 },
           });
         }
         if (!map.getLayer(lineId(iso))) {
@@ -150,14 +171,29 @@ export const DominoContagionFill: React.FC<DominoContagionFillProps> = ({
             source: "cb-source",
             "source-layer": "country_boundaries",
             filter: ["==", ["get", "iso_3166_1_alpha_3"], iso],
-            paint: { "line-color": accentColor, "line-width": 1.5, "line-opacity": 0 },
+            paint: { "line-color": accentColor, "line-width": lineW0, "line-opacity": lineOp0 },
           });
         }
       }
+
+      if (epicenterIso && COUNTRY_CENTERS[epicenterIso]) {
+        const s = map.project(COUNTRY_CENTERS[epicenterIso]);
+        setEpiPos({ x: s.x, y: s.y });
+      }
+
       setReady(true);
-      continueRender(handle);
+      // Attendre "idle" (tuiles reellement peintes sur le canvas WebGL) avant de lever le
+      // delayRender — sinon en rendu still headless, Remotion capture la frame AVANT que
+      // Mapbox ait fini de dessiner le fond de carte (style.load se declenche des que le style
+      // JSON est charge, pas quand les tuiles sont rendues). Pattern deja valide dans
+      // PulsingRegionFill.tsx.
+      map.once("idle", () => {
+        clearTimeout(safetyTimeout);
+        continueRender(handle);
+      });
     });
     return () => {
+      clearTimeout(safetyTimeout);
       map.remove();
       mapRef.current = null;
     };

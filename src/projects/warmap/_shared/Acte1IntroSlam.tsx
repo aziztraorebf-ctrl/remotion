@@ -46,6 +46,12 @@ export const Acte1IntroSlam: React.FC<Acte1IntroSlamProps> = ({
   const veilOpacity = interpolate(frame, [revealEnd - 16, revealEnd], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   const bigFontSize = height * 0.62;
+  // Compensation optique : dominantBaseline="central" centre l'em-box de la police, pas le glyphe visuel.
+  // Cormorant Garamond a un fort undershoot sous la ligne de base -> le "3" paraissait trop bas (retour Aziz
+  // 2026-07-01, PUIS confirmé encore trop bas le 2026-07-05 malgré cette 1re compensation insuffisante :
+  // mesure pixel sur le rendu réel = centre du glyphe à 652px/1080 au lieu de 540px attendu, soit ~0.227×
+  // bigFontSize de décalage réel contre seulement 0.06× compensé avant — recalé à la valeur mesurée.
+  const bigTextY = height / 2 - bigFontSize * 0.183;
   const subOp = subText ? interpolate(frame, [slamAt + 8, slamAt + 20, revealStart, revealStart + 10], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
 
   return (
@@ -57,14 +63,14 @@ export const Acte1IntroSlam: React.FC<Acte1IntroSlamProps> = ({
             <rect x="0" y="0" width={width} height={height} fill="white" />
             <text
               x={width / 2}
-              y={height / 2}
+              y={bigTextY}
               textAnchor="middle"
               dominantBaseline="central"
               fontFamily="'Cormorant Garamond', Georgia, serif"
               fontWeight={800}
               fontSize={bigFontSize}
               fill="black"
-              transform={`translate(${width / 2} ${height / 2}) scale(${textScale}) translate(${-width / 2} ${-height / 2})`}
+              transform={`translate(${width / 2} ${bigTextY}) scale(${textScale}) translate(${-width / 2} ${-bigTextY})`}
             >
               {bigText}
             </text>
@@ -76,7 +82,7 @@ export const Acte1IntroSlam: React.FC<Acte1IntroSlamProps> = ({
         {revealProg < 0.5 && (
           <text
             x={width / 2}
-            y={height / 2}
+            y={bigTextY}
             textAnchor="middle"
             dominantBaseline="central"
             fontFamily="'Cormorant Garamond', Georgia, serif"
@@ -86,7 +92,7 @@ export const Acte1IntroSlam: React.FC<Acte1IntroSlamProps> = ({
             stroke={ink}
             strokeWidth={3}
             opacity={0.5 * (1 - revealProg * 2)}
-            transform={`translate(${width / 2} ${height / 2}) scale(${textScale}) translate(${-width / 2} ${-height / 2})`}
+            transform={`translate(${width / 2} ${bigTextY}) scale(${textScale}) translate(${-width / 2} ${-bigTextY})`}
           >
             {bigText}
           </text>

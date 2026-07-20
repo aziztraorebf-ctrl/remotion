@@ -70,6 +70,11 @@ Pour CHAQUE moment du beat, répondre :
 
 ## PHASE 3 — SELF-REVIEW (avant présentation)
 
+- [ ] **Lancer `python3 scripts/tools/atlas-selfreview.py <Beat*.tsx>` AVANT présentation à Aziz** (check EXTERNE
+      mécanique — clipPath continental dupliqué, composant partagé redéfini localement, caméra recalculée à la
+      main, SVG racine multiple, sprite archive/ au lieu du chemin canonique). Exit 0 requis. Voir §À OUTILLER
+      PLUS TARD — FAIT le 2026-07-11.
+
 Cocher les principes (§1 PLAYBOOK) + lisibilité :
 - [ ] Carte jamais statique (drift visible) · tilt présent · annulé en gros plan sprite
 - [ ] Overlays lisibles (plaque cream/encre, pas de texte nu) · cartouches en haut · bas libre pour sous-titres
@@ -98,5 +103,12 @@ Cocher les principes (§1 PLAYBOOK) + lisibilité :
 
 Transformer cette checklist en scripts/atlas-beat-session.py (miroir `beat-session.py`) :
 phases scan / storyboard / code / self-review / review, avec gates bloquants et scoring.
-Plus un `atlas-selfreview.py` (assertions automatiques : SFX dans Sequence, sprites pixelated,
-ancrage-pied, timing forced-alignment, lisibilité d'échelle).
+
+✅ **FAIT (2026-07-11)** : `scripts/tools/atlas-selfreview.py` — miroir de `mapbox-selfreview.py`.
+Assertions automatiques codées : clipPath continental redéfini en dur (E-CLIP, bug réel répété
+Peste-1347 sur 6/6 beats), redéfinition locale d'un composant/helper déjà exporté par
+`_shared/atlas-components.tsx` ou `mapConfig.ts` du projet (E-DUP, ex: `makeMapCoord` dupliqué
+dans Beat2Setup.tsx), SVG racine multiple (E-SVG), caméra recalculée à la main hors AtlasMercator
+(W-CAM, signal), sprite `archive/` au lieu du chemin canonique PixelLab (E-SPRITE). Reste en
+backlog : SFX dans Sequence, ancrage-pied, timing forced-alignment, lisibilité d'échelle
+(pas encore couverts, à ajouter si un audit futur documente un bug répété sur ces points).

@@ -8,7 +8,7 @@ metadata:
 # SUJET RÉSERVÉ — Soudan : Guerre civile RSF/SAF, angle proxys économiques (2026-06-16)
 
 > ⭐ **SUJET VALIDÉ GO** par gate [[SUJET-PRIME-SUR-PRODUCTION]] (2026-06-16).
-> **Ancien statut** : EXCLU dans `BACKLOG-EDITORIAL.md` ("non-monétisable, expertise terrain requise") — RÉVISÉ suite au gate complet.
+> **Ancien statut** : EXCLU dans l'ancien BACKLOG-EDITORIAL (fusionné dans `memory/backlogs/BACKLOG.md`) ("non-monétisable, expertise terrain requise") — RÉVISÉ suite au gate complet.
 > **Priorité recommandée** : après War-Map AES assemblage final. Session dédiée pré-production à lancer dès que AES est bouclé.
 >
 > ⭐ **ÉTOILE POLAIRE ÉDITORIALE** → [[soudan-midform-POSITIONNEMENT]]. Ce qui nous différencie : « les autres font RESSENTIR le drame, nous on fait COMPRENDRE la machine qui le fait durer ». LIRE avant tout acte + titrage.
@@ -57,7 +57,12 @@ Tout ce qui répond à cette question reste. Tout ce qui n'y répond pas est cou
 
 ## FORMAT — Mid-form 7-8 min
 
-**Structure en 4 actes (principe : 1 concept/min, 1 zone géo/acte, 2 acteurs externes max) :**
+**Structure en 6 actes** (révisée 2026-07-10 — décision actée avec Aziz, voir `NEXT-ACTION.md` +
+`episodes/soudan-midform/STATUS.md` § ACTE 4 ; l'Acte 4 initialement prévu "verrou institutionnel" a été
+scindé en deux). [NOTE 2026-07-12 : re-scission — l'Acte 5 "verrou institutionnel + conclusion" décrit
+plus bas est lui-même scindé en 2. Nouvel Acte 5 = réseau EAU-Libye-Haftar (fait concret, script écrit :
+`soudan-midform-ACTE5-SCRIPT.md`). Nouvel Acte 6 = le contenu institutionnel/conclusion décrit ci-dessous
+sous "Acte 5", pas encore écrit.] :
 
 **Acte 1 — Le constat (1min30)**
 Carte simple : 2 couleurs. "L'armée" (SAF, nord/est) vs "les paramilitaires" (RSF, ouest/Darfour). Pas de jargon. 1 seul chiffre : 33M personnes. La carte montre l'étendue du territoire bloqué visuellement.
@@ -68,8 +73,15 @@ Zoom lignes de front. Impasse militaire depuis 18 mois. La carte montre les lign
 **Acte 3 — Qui alimente la guerre (2min30)** ← cœur de notre valeur ajoutée
 Carte s'élargit hors Soudan. 2 flèches seulement : EAU → RSF (armes + or), Turquie → SAF (drones). Or du Darfour = routes tracées vers les EAU. Laboratoire de guerre technologique (Bayraktar vs drones EAU). Cet acte n'existe pas en FR cartographié.
 
-**Acte 4 — Pourquoi ça ne s'arrête pas (1min30)**
-UA, ONU : cercle fermé. Les acteurs qui pourraient forcer la paix (EAU, Turquie) ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste).
+**Acte 4 — Même les voisins sont aspirés (Russie + Égypte)**
+Russie (bascule de soutien RSF→SAF en 2024, offre de base navale à Port-Soudan) + Égypte (soutien direct
+au SAF, motif Nil/profondeur stratégique). Script v5 VERROUILLÉ : `memory/projects/soudan-midform-ACTE4-SCRIPT.md`.
+
+**Acte 5 — Le réseau qui arme dans l'ombre (EAU-Libye-Haftar)** [nouveau, 2026-07-12]
+Réseau de camps d'entraînement RSF financé par les Émirats, opéré via la Libye/maréchal Haftar, jusqu'au Soudan (El-Fasher). Répond concrètement au pont de l'Acte 4 ("pourquoi l'organisation reste inactive"). Script v6 écrit, fact-checké (4 sources indépendantes), jury LLM fait — **PAS verrouillé**, révision finale par Aziz requise avant storyboard/audio/code. Détail : `soudan-midform-ACTE5-SCRIPT.md`.
+
+**Acte 6 — Pourquoi ça ne s'arrête pas (verrou institutionnel + conclusion)** [ex-Acte 5, pas encore écrit]
+UA, ONU, Quad : cercle fermé. Les acteurs qui pourraient forcer la paix ont intérêt à ce que ça continue. Pas de jargon institutionnel — juste la logique du cercle. Conclusion ouverte honnête (pas de résolution = posture analyste). Matière de fond déjà documentée dans `soudan-midform-DONNEES.md` (section étiquetée "ACTE 4" dans ce fichier — à lire comme Acte 6 depuis 2026-07-12, voir note de clarification qui y est ajoutée).
 
 ---
 
@@ -78,6 +90,37 @@ UA, ONU : cercle fermé. Les acteurs qui pourraient forcer la paix (EAU, Turquie
 1. *"L'or qui paie la guerre — comment le Darfour finance les RSF"* (angle proxys éco, le plus différenciant)
 2. *"Soudan : pourquoi l'Union Africaine regarde sans agir"* (ce que le public réclame explicitement)
 3. *"Pourquoi la plus grande guerre du monde dure depuis 3 ans sans fin"* (angle impasse / mécanique)
+
+---
+
+## ⭐ IDÉE VISUELLE À EXPLORER — INSERT "WARGAME" plein écran pour mouvements militaires complexes (2026-07-05)
+
+Idée d'Aziz en clôturant War-Map Sahel AES : pour des mouvements militaires trop complexes à lire en
+top-down géographique réel (ex. **Acte 2** : impasse militaire, manœuvres d'encerclement autour d'El-Fasher/
+Darfour — PAS l'Acte 3 qui reste un jeu de 2 flèches simples, déjà bien couvert), emprunter le langage
+visuel des chaînes wargame (type Kings and Generals / Bazbattle / jeux Hearts of Iron) : vue plan/carte
+d'état-major stylisée, blocs/unités qui manœuvrent, flèches de percée/encerclement — PAS un remplacement
+du moteur carte géographique, un **insert ponctuel ADDITIONNEL** (même famille que `LiptakoRevealSVG`/
+`CfaRevealSVG` de War-Map Sahel : plein écran, quelques secondes, sur un beat précis où la vraie
+géographie est plus un obstacle qu'une aide à la lecture).
+
+**Ce qu'on garde absolument** (Aziz explicite : « stupide de ne plus les avoir ») : les jetons/sprites
+prouvés sur AES (chars/avions/figures qui bougent via `interpolate()` frame-driven, jamais CSS/easeTo) —
+l'insert wargame est un COMPLÉMENT pour les beats de manœuvre complexe, pas un remplacement du reste.
+
+**Pistes de forme à trancher en pré-production (INTENTION→FORME→TEMPLATE, ne pas sauter à l'implémentation)** :
+- Vue carte d'état-major (parchemin/kaki, pas satellite) avec blocs géométriques simples (rectangles/
+  losanges type NATO symbol) plutôt que sprites détaillés — lisibilité du mouvement > réalisme.
+- Flèches d'encerclement/pince = le geste visuel central (2 flèches convergentes sur un point = "prise en
+  tenaille", cohérent avec le langage déjà validé sur AES pour CEDEAO).
+- Question ouverte : carte Soudan réelle vue top-down stylisée (garde un ancrage géo) VS diagramme
+  abstrait complet (zéro géo, pur schéma tactique) — à trancher via un mini-prototype avant d'écrire le
+  script de l'Acte 2, pas en supposant.
+
+**À faire en début de pré-production Soudan** : chercher 2-3 références visuelles concrètes (chaînes
+citées par Aziz : Kings and Generals, Bazbattle) pour calibrer le medium (cf méthode `SVG-SCENES-GENERATIVES.md`
+§ idéation Kimi multimodal — joindre des frames de référence, PAS pour copier, pour calibrer la faisabilité),
+puis proto minimal avant tout script définitif de l'Acte 2.
 
 ---
 

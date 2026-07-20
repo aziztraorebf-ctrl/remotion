@@ -16,6 +16,14 @@ Cette regle remplace la hierarchie generique "V4 superieur a V3" qui vient par d
 
 ---
 
+## Recraft vs Gemini — quel moteur pour quel style (prouve 2026-07-17)
+
+- **Style a MATIERE / relief / texture (papier 3D papercraft, photo, 3D, halftone)** -> **GEMINI 3.1 Flash image**, pas Recraft. Test cote-a-cote (siege avion papercraft, meme prompt + meme frame-ref) : Recraft `digital_illustration/handmade_3d` derive vers la **pate a modeler (clay)**, Gemini rend du **vrai papier decoupe texture**. Ce n'est pas que Recraft est mauvais — c'est que son STYLE INTERNE colle moins bien a ce look.
+- **Style VECTORIEL PLAT pur (icones, logos, cartes SVG a plat, pictos)** -> **Recraft** reste superieur (c'est sa force).
+- Pipeline complet reverse-engineering video tierce -> assets : `doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
+
+---
+
 ## Modeles utiles
 
 | Modele | Acces | Format | Usage |

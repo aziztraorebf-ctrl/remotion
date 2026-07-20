@@ -1,0 +1,59 @@
+CONTEXTE
+Documentaire mid-form "Soudan" (War-Map), 16:9, chaîne "Kora & Cartes", ton analyste grave.
+Stack : Remotion + Mapbox reskin parchemin (navy/gris/or). Nouvel acte, script verrouillé, ZÉRO
+code/storyboard écrit. Tu conseilles la construction, sois créatif et concret.
+
+SUJET : un pays du Golfe (Émirats) finance, via la Libye/maréchal Haftar, un réseau qui arme la
+guerre au Soudan jusqu'à El-Fasher (Darfour). Fait confirmé par 4 sources indépendantes.
+Contraintes factuelles : PAS de nombre exact de camps ni de mercenaires (non recoupé) — rester sur
+"un réseau de plusieurs camps" / "des mercenaires colombiens" sans chiffre figé.
+
+NOTRE STACK (reste dedans) : Mapbox carte parchemin, drift/zoom caméra frame-driven, remplissage
+territorial data-driven (teinte de contrôle par zone), traits qui se tracent point à point, ondes/
+pulses/glows SVG, cartouches/tampons texte, jetons/sprites isométriques déjà existants qu'on pose
+sur la carte (bases, drones, convois, mines, ports, portraits, réfugiés, véhicules factionnels),
+SFX synchronisés au mot exact, easing spring/cubic.
+INTERDIT : filter:blur CSS, 3D/relief (carte plate, déjà testé et écarté), particules, depth-of-
+field, After Effects, volumétrique, lens flare.
+
+SCRIPT COMPLET (5 beats, narration FR verbatim) :
+
+BEAT 1 : "Cette organisation, on y reviendra. Mais avant, il faut comprendre pourquoi elle reste
+bloquée." / "Une partie de la réponse tient dans un circuit extérieur. Un pays du Golfe finance un
+réseau, installé en Libye. Ce réseau alimente la guerre elle-même."
+
+BEAT 2 : "Ce pays, c'est les Émirats arabes unis. Le 29 juin 2026, Lighthouse Reports et Der Spiegel
+sortent une enquête commune sur leur rôle." / "Selon cette enquête, les Émirats financent des camps
+d'entraînement."
+
+BEAT 3 : "En Libye, ce réseau s'appuie sur les forces du maréchal Haftar, qui contrôlent l'est du
+pays." / "Et ce n'est pas nouveau. Un rapport des Nations unies avait déjà repéré ce corridor, en
+avril 2026. Des armes, du carburant, des combattants — tout ça en route vers le Soudan."
+
+BEAT 4 : "Et cette route, on la retrouve à El-Fasher, au Darfour, pendant le siège de la ville. Des
+combattants qui en viennent y ont été repérés, sur le terrain." / "Résumons. Un financement émirati,
+un relais libyen, une guerre qui continue au Darfour."
+
+BEAT 5 : "Ce réseau est donc documenté, y compris par les Nations unies." / "Et pourtant, il continue
+de fonctionner. Pour comprendre pourquoi, il faut regarder du côté des institutions censées justement
+empêcher ça."
+
+Ancrages géo : Kufra (Libye SE), Benghazi (Libye NE, siège Haftar), Jufra (Libye centre), Abou Dabi
+(EAU), El-Fasher (Soudan Darfour, déjà ancré dans les actes précédents du projet).
+
+CE QU'ON DEMANDE (3 volets)
+
+VOLET A — MISE EN SCÈNE beat par beat
+Pour chaque beat : carte continue (Mapbox) ou rupture (insert plein écran) ? Quel geste visuel porte
+l'intention ? Sois créatif — propose ce que TOI tu ferais si tu construisais ça de zéro.
+
+VOLET B — DENSITÉ VISUELLE
+Carte vide/épurée vs carte peuplée d'objets (jetons, convois, bases) : où et comment densifier sans
+tomber dans le remplissage gratuit ? Chaque objet doit être ancré à un mot précis de la narration.
+
+VOLET C — ÉVITER L'AI-SLOP
+Qu'est-ce qui risque de faire "amateur/généré par IA" une fois codé ? Parade concrète pour chaque
+risque, dans notre stack.
+
+FORMAT : concret, actionnable, par beat. Dis "déjà faisable" ou "à coder mais faisable" pour chaque
+suggestion. Pas de prose vague.

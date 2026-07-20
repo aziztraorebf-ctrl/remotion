@@ -21,7 +21,7 @@ metadata:
 | Acte | Dernier audio | Texte changé depuis ? | Statut |
 |---|---|---|---|
 | **Acte 1** | https://files.catbox.moe/or6tj3.mp3 (jet 3 fact-checké) | NON (aucune modif depuis fact-check) | ✅ **à priori OK** — re-vérifier au lock final, mais probablement à garder tel quel |
-| **Acte 2** | https://files.catbox.moe/pco5ra.mp3 | OUI ⚠️ — « deux ans » → « plus de trois ans » + « personne ne peut » → « personne n'a pu » (correction temporelle 2026-06-16) | ⛔ **PÉRIMÉ — à régénérer** |
+| **Acte 2** | https://files.catbox.moe/wx4373.mp3 (2026-07-08 LOCK) | NON | ✅✅ **LOCK (validé Aziz à l'oreille)** — 74.0s, stability 0.45, 3 blocs (pa/pb/pc) + 2 pauses 0.7s aux jonctions + coupe à 74s. Mots "é" toniques neutralisés : alliés→partenaires, rivalité→affrontement, accepté/céder→voulu reculer, tiré→ouvert le feu. Align : `whisper-words-acte2.ts`. Local `acte2-blocage.mp3` + blocs `acte2-blocage-p{a,b,c}.mp3`. |
 | Acte 3 | — | (pas écrit) | à venir |
 | Acte 4 | — | (pas écrit) | à venir |
 | Acte 5 | — | (pas écrit) | à venir |

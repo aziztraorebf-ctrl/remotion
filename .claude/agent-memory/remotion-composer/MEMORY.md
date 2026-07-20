@@ -216,3 +216,54 @@ Si on reutilise un segment video d'un render precedent (qui contient deja narrat
 - 2026-04-22 : Sonjata session 8, pattern Hook + Option B musique valide (reference : `SonjataShortFull.tsx`)
 - 2026-04-24 : refactor memoire (creation RULES-ACTIVE.md + CHECKLIST-PRE-COMPOSE.md, split Geo vers `memory/tools/remotion-geo.md`)
 - 2026-04-25 : safe zones table -> pointeur RULES-ACTIVE.md ; section Identite GeoAfrique Shorts ajoutee
+
+---
+
+## SESSION 2026-06-28 — Cacao Short VERSION B (B1HookVB + B2SourceVB)
+
+### Livrable
+- B1HookVB.tsx (365f) + B2SourceVB.tsx (286f), 1080x1920, tsc propre.
+- Renders full HD : B1 https://files.catbox.moe/kxx95a.mp4 · B2 https://files.catbox.moe/cdapaf.mp4
+
+### Pattern reutilisable : TRANSFUSION cross-composition (continuite visuelle entre 2 beats separes)
+- 2 compositions Remotion = 2 timelines independantes -> PAS de camera/pan continu possible.
+- Astuce : faire correspondre EXACTEMENT un element (couleur + position Y) entre fin-beat-N et debut-beat-N+1.
+  Ici : flaque brune a Y=1720 a la fin de B1 (poolFill clampe a 1) reprise a Y=1720 (FLOW_POOL_Y_START) au debut de B2.
+  Constantes partagees a la main (pas d'import cross-fichier) : FLOW_POOL_Y / FLOW_BASE_Y identiques dans les 2 fichiers.
+- Resultat : "illusion de continuite" convaincante. Risque connu : l'amorce du beat 2 (~0.8s) peut paraitre vide si seul l'element repris est present -> demarrer le trace du contenu suivant tot.
+
+### Pattern : remplissage qui se VIDE (drain) dans une silhouette clippee
+- fillLevel = max(0, fillUp - drain). fillUp monte (colorisation), drain descend (vidage).
+- IMPORTANT : faire finir fillUp AVANT le debut du drain, sinon la silhouette n'est jamais "pleine" et le
+  geste luxe-parfait-puis-vidage ne se lit pas (bug rencontre : F_BAR_COLOR_END=88 vs F_DRAIN=90 -> tablette
+  jamais pleine ; corrige a F_BAR_COLOR_END=84).
+- Remplissage = <rect> clippe par <clipPath> sur le path de la silhouette ; le niveau = y du rect.
+
+### Pattern : compromis couleur (brun PUIS drapeau)
+- Dans FlagCountry : (1) rect brun clippe monte du bas, (2) bandes drapeau clippees par-dessus, (3) contour encre trace au-dessus.
+- Ordre de rendu = ordre semantique : matiere brute -> identite nationale -> trait.
+
+### Gotcha lisibilite : 2 elements verticaux au meme X se telescopent
+- Germination avortee (encre) + colonne de flux brun etaient toutes deux au centre (barCx) -> illisibles.
+- Fix : decaler la germination (baseX = centre - 175) ET retrecir la colonne de flux. Un seul element brun vertical au centre.
+
+### Whisper word-level
+- `whisper <mp3> --model tiny --language French --word_timestamps True --output_format json` (model small TIMEOUT 2min, tiny OK ~90s en bg).
+
+---
+
+## SESSION 2026-07-17 — Kosti Acte 4 : intégration station+drone K3 (feat/kosti-refonte-k3)
+
+### Livrable
+- `src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx` : décor statique K3 + drone SVG K3 remplacent l'ancien décor Img + sprite drone-rsf-td.png. Calage voix F4 INCHANGÉ.
+- Frames de contrôle (scratchpad session) : avant-drone global 2678, drone-vol 2733, flash 2773, après 2868 (via compo `SoudanActe4`, 1920x1080, 30fps).
+
+### Patterns/décisions réutilisables
+- **Extraits K3 JSON déjà quasi-JSX** : camelCase présent, seule conversion = apostrophes attributs `'` → `"`. Nettoyage décor statique = retirer `opacity={...(f-N)/...}` (apparitions) + surcouches destruction `#4a1f18 opacity={...(f>150)...}`.
+- **SVG dessiné dans SON viewBox → recaler via `<g transform="translate(DX DY)">`** : station K3 centrée ~(1010,500), cible STATION_CENTER {744,526} → DX=-266, DY=+26. Validé visuellement (auvent sous la file de civils, impact au pied des pompes).
+- **Corps SVG animé dans un conteneur `<div>` positionné** : un `<div>` ne peut PAS contenir du SVG brut → wrapper `<svg viewBox="-46 -46 92 92">` centré origine, `<g transform="scale(1.6)">` pour lisibilité (corps K3 ±21 → ±34, tient). Le `rotate(155)` design K3 se compose avec le `rotate(heading)` externe du div (trajectoire). Rotors animés via `f` = useCurrentFrame global — OK.
+- **GOTCHA timing "creux à l'impact"** : à `frame === impactAt`, le drone `droneOp=0` (disparu) ET le flash `flashOp=0` (t=0). Pour tester l'impact, rendre local ~impactAt+20 (flash+fumée actifs), pas impactAt pile.
+- **Décor SVG "sol" chargé de contenu périmé** : `public/_rnd/kosti-sol-decor-noriver.svg` contenait ancienne station Sol + route + labels + cartouche "CARTE DE SITUATION" (interdit). NON réutilisé → fond ivoire+grille+cadre redessiné INLINE (`MapBackdrop`), sans cartouche. Leçon : vérifier le CONTENU réel d'un asset "fond" avant de le réutiliser comme simple backdrop.
+
+### Point mineur non corrigé (hors périmètre)
+- Label "CUVE" masqué par le 1er portrait civil tant qu'il est vivant (on voit "VE"). Réapparaît après extinction. Non bloquant, pas touché (risque calage).

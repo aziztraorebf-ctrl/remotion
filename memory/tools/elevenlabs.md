@@ -432,6 +432,15 @@ with open(audio_path, "rb") as f:
 
 **Usage dans le pipeline** : Forced Alignment ElevenLabs v2 EN PREMIER (plus precis). Whisper API en COMPLEMENT si crossvalidation necessaire (ex: verifier syllabe ambigue). Jamais Whisper local.
 
+**⭐ Usage DIAGNOSTIC (validé 2026-07-05, War-Map Sahel)** : pour tout DOUTE sur un doublon/décalage/
+contenu audio précis (ex. "j'entends une phrase répétée deux fois"), lancer le force-alignment
+(`scripts/tools/whisper-align.py <clip.mp3> --out <file>.ts`, ~$0.02/run) sur un clip court de la zone
+suspecte AVANT toute chose — pas de calcul manuel de mapping timestamp↔frame. Le texte+timestamps exacts
+tranchent en quelques minutes ce qu'une investigation manuelle ne ferait que deviner. Preuve : a confirmé
+en 2 minutes un vrai doublon ("tensions entre communautés couvent encore" répété 2x, cause = chevauchement
+entre un backup TTS resynthétisé et un splice mal borné) que le calcul manuel n'avait pas su localiser.
+Réflexe à adopter systématiquement, sans attendre qu'Aziz le suggère.
+
 ---
 
 ## Voice Design — Guide de prompt (doc officielle 2026-04-19)
@@ -495,3 +504,16 @@ arabes → écrire en lettres) + participes `-é/-ée/-és/-ées` en fin de grou
 
 **Réglages expressivité** : `stability` BAS = plus de variation émotionnelle (0.22 défaut Sahel ; tester
 0.10/0.05 + style 0.75-0.90 si trop monotone). Voir benchmark `memory/tools/TTS-VOIX-VIVANTE-BENCHMARK-2026-06.md`.
+
+**Granularité = générer la narration par BEAT, pas en bloc (prouvé cacao-chocolat 2026-06-28)** : un fichier
+audio par beat (beat1.mp3, beat2.mp3…) plutôt qu'un seul monolithe. AVANTAGE : un beat qui sonne faux (participe,
+intonation, erreur TTS FR comme "pèse"/"sous-payée") se RÉGÉNÈRE seul, sans refaire toute la narration (itération
+bon marché) ET le timing audio-derived se mesure par beat (ffprobe par fichier) = storyboard plus simple. Garder
+`beatN-FINAL.mp3` + une version COMPLETE concaténée (concat `filter_complex`, PAS `-c copy` qui casse les timestamps).
+
+⚠️ **GOTCHA `--only-part` de `generate-narration-expressive.py` (Soudan Acte 6, 2026-07-19)** : régénérer UNE
+seule partie avec `--only-part pN` NE re-concatène PAS le fichier complet (message "pas de concat global :
+mode partie unique"). Le `.mp3` global garde donc l'ANCIENNE durée → on peut présenter par erreur un lien
+qui pointe vers la version périmée. APRÈS tout `--only-part`, re-concaténer MANUELLEMENT les parties :
+`ffmpeg -y -i p1 -i p2 ... -filter_complex "[0:a][1:a]...concat=n=N:v=0:a=1[out]" -map "[out]" -c:a libmp3lame -q:a 2 out.mp3`
+(filter_complex, jamais `-c copy`). Toujours revérifier la durée `ffprobe` du global après re-concat.

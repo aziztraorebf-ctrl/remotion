@@ -1,21 +1,651 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-06-25 (élagage archive → `memory/archive/NEXT-ACTION-historique-2026-06-25.md`). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-19 (session 16 — Acte 6 Soudan CONÇU : script+audio verrouillés + storyboard. Sessions 14-15 : Acte 3/5 globe D3).
+> Structure Soudan inchangée depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
+> A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## ⭐⭐ PISTE STRATÉGIQUE FRAÎCHE (2026-06-22) — Shorts SVG ↔ Longs Mapbox (Hub & Spoke)
+## 🎬 SOUDAN MID-FORM — ACTE 6 « POURQUOI PERSONNE NE L'ARRÊTE » : SCRIPT + AUDIO VERROUILLÉS + STORYBOARD ACTÉS, CODE À FAIRE (2026-07-19 s16)
+
+> **Acte FINAL du mid-form** (verrou institutionnel UA/ONU + paradoxe des médiateurs + conclusion ouverte),
+> suite directe du pont Acte 5 (« …il faut regarder du côté des institutions censées justement empêcher ça »).
+> Conçu entièrement cette session — reste le CODE.
+>
+> - **Script v5 STABLE** (jury LLM 3 modèles passé, verdict unanime) : `memory/projects/soudan-midform-ACTE6-SCRIPT.md`.
+>   5 beats : B1 on cherche l'arbitre · B2 UA écartée · B3 veto russe ONU · B4 paradoxe Émirats · B5 coût humain + clôture.
+> - **Audio VERROUILLÉ Aziz** (133.2s) : `public/_shared/audio/soudan/acte6-verrou-institutionnel.mp3` (p1-p5, voix
+>   Kora et Cartes, pipeline Océane V3→STS). Coût humain ajouté en fin (13,6M déplacés), 7 mini-pauses [pause] pour le débit.
+> - **CTA : AUCUN** (tranché — jury dédié + décence sur sujet grave, cf script § DÉCISION CTA).
+> - **STORYBOARD acté** (upstream Gemini+Kimi, convergence totale) : registre **GLOBE D3** (continuité Acte 5) +
+>   **overlay UI** au vote B3 (hémicycle 15 sièges) + **insert SVG** à la table B4 (globe ne porte pas l'abstrait pur).
+>   Détail : script § STORYBOARD + `memory/episodes/soudan-midform/da-briefs-acte6/miseenscene-{gemini,kimi}.md`.
+>   ⚠️ Critique AI-slop de nos effets à corriger au code (halo radial = gradient basique, drop-shadow lourd).
+> - **NEXT = CODE session dédiée** : moule `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx`. Forced-alignment audio →
+>   timing frame-exact → code beat par beat → self-review CODE+VISUEL → render. Puis mid-form Soudan COMPLET (6 actes) → assemblage final.
+
+---
+
+## 🧪 R&D — D3.js EN 16:9 (elargir le moteur D3 au format horizontal) — SESSION 13 FAITE (2026-07-18)
+
+> **Contexte** : le Short AES 90s (D3 pur, `src/projects/warmap/shorts/aes-short-90s/`, `aesGeo.ts`) prouve
+> notre maitrise D3 en VERTICAL. Le moteur est AGNOSTIQUE AU RATIO ; le 16:9 debloque le LATERAL (cote a
+> cote, panneaux, frises) que le 9:16 interdit. D3 etait SOUS-EXPLOITE (on n'utilisait que geoMercator).
+> **Pourquoi D3 > Mapbox ici** : SVG pur deterministe, controle au pixel, zero WebGL (vs render-mapbox.sh).
+>
+> **Branche** : `feat/d3-16x9-protos` (commit `716b7ff8` = 5 protos ; A5 pas encore commite au 2026-07-18).
+> **Dossier + README** : `src/projects/_rnd/d3-16x9/README.md` (table des protos, socles, palette AES).
+>
+> ### ✅ PROUVE cette session (protos mecaniques, sans audio, sujet Sahel/AES)
+> - **A1 Globe orthographique** (`geoOrthographic` frame-driven, clip hemisphere natif, graticule, halo).
+>   VALIDE Aziz ("excellent, controle > Mapbox"). Monde = `public/_rnd/vox-repro/countries-110m.json`
+>   (TopoJSON NE 110m) via `topojson-client`.
+> - **A1-K1 Raccord globe -> carte parchemin AES** : 1 seule projection ortho dont on augmente le scale
+>   (zoom-in jusqu'a courbure imperceptible) + lerp palette bleu->parchemin. VALIDE ("tres smooth").
+> - **Jetons/objets/mouvement/dezoom** (`SahelJetonsDezoom16x9`) : jetons ancres project([lon,lat]),
+>   jeton en mouvement, base iso, dezoom camera. Prouve que D3 fait tout ce que faisait la video Mapbox.
+> - **Comparatif compositing** (`JetonsComparatif16x9`) : buste plante vs medaillon pose vs objet iso.
+>   ⭐ LECON GRAVEE `feedback_jeton-iso-pas-d-ombre-externe` : objet iso ILLUSTRE = ZERO ombre externe
+>   (sinon flotte) ; buste/medaillon = ombre externe requise. Compositing objets = IDENTIQUE D3/Mapbox.
+> - **A5 Carte + panneau data** (`CartePanneau16x9`) : carte gauche 60% + panneau droit 40% qui REAGIT
+>   (compteur 0->3 coups, frise chrono qui s'allume, barre population qui monte). La disposition 16:9
+>   signature, impossible en 9:16. Chiffres pop = ESTIMES (mention "est." affichee, a sourcer si usage reel).
+>
+> ### ⭐ VRAIE LIMITE RESIDUELLE identifiee (seule diff D3 vs Mapbox)
+> Le **SOL** : Mapbox pose sur terrain raster texture (l'objet s'y fond), D3 sur aplat de couleur uni.
+> N'empeche pas les objets d'etre bien poses (compositing OK), mais le "terrain habite" manque.
+>
+> ### 🎯 BACKLOG PROCHAINES SESSIONS (Aziz veut TOUT + une VRAIE SCENE COMPLETE, 2026-07-18)
+> **d3 installe** : d3-array, d3-format, d3-geo, d3-scale. **MANQUE** : d3-force, d3-shape (npm install).
+> 1. **⭐ PASSAGE A L'ECHELLE — une VRAIE scene complete** (script + audio + montage). LE SAUT EST FAIT.
+>    **✅✅ CANDIDAT N°1 — SOUDAN ACTE 3 "SUIVRE L'OR" GLOBE 2-REGISTRES : PROMU FINAL (2026-07-19, session 15).**
+>    Refonte complete validee Aziz : 3 registres (SVG+Mapbox+Globe) → **2 registres (SVG+Globe)**, toute la
+>    carte en globe D3. Section 1 refaite en globe (SVG intro + fade doux + North Darfur/Khartoum colores +
+>    mines + Hemedti + jetons herites), echelle 6.5 CONSTANTE = raccord parfait avec l'insert (recale 4.4→6.5).
+>    SVG argent = billets $ dores (au lieu du liquide abstrait). 3 plaques de sources reelles (Amnesty/WaPo/
+>    Chatham House, fact-check jury 2026-07-09), sans le mot "Source:".
+>    **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4` (l'ancien
+>    Mapbox `-FINAL.mp4` reste INTACT, Aziz choisit lequel publier). Code : `SoudanActe3Section1Globe.tsx` +
+>    `SoudanActe3GlobeInsert.tsx`. Branche `feat/soudan-acte3-globe-d3`.
+>    Moteur globe reutilisable grave : `.claude/.../memory/feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+>    **✅ ACTE 5 "le reseau qui arme" = FAIT + PROMU FINAL v5 (2026-07-19)** — refait en GLOBE D3 INTEGRAL
+>    (le decoupage hybride globe/Mapbox envisage a ete abandonne au profit du globe integral : 0 couture).
+>    Voir section Acte 5 en bas de ce fichier + `episodes/soudan-midform/STATUS.md`. Le moteur globe est
+>    desormais prouve sur 2 actes (3 et 5). Acte 6 (verrou institutionnel) = script+audio+storyboard FAITS (2026-07-19), CODE a faire (voir section Acte 6 en tete de fichier).
+> 2. **SOL ENRICHI** (Aziz a dit OUI) : polygone D3 avec degrade radial + grain + ombre interne + relief
+>    simule, pour voir si D3 rattrape le "terrain habite" Mapbox et fermer le debat objets-poses.
+> 3. **Waouh globe 2.0** : arcs de trajectoire `geoInterpolate` (effet vol d'avion sur la sphere),
+>    terminateur jour/nuit, globe fil conducteur qui pivote entre chapitres.
+> 4. **Data-viz cartographique** : choroplethe animee (`d3-scale` sequentiel + legende), cartogramme
+>    (pays deformes selon une valeur), small multiples (meme carte x N annees en grille).
+> 5. **Flux & reseaux** : A2 reseau de force (`d3-force`, structure de pouvoir/dependance) + A3 rubans de
+>    flux (`d3-chord`/`d3-shape`, ou va la ressource/l'argent — complete l'AES qui montre QUE, pas OU).
+> 6. **Registre videoludique** : A6 HUD tactique salle d'operation (reticules, leader lines, scan-line,
+>    compteurs live) + A7 timeline-scrubber horizontale (curseur qui declenche des events sur la carte).
+
+---
+
+## 🧪 R&D — WORKFLOW "VOX PAPERCRAFT" (reproduire un style vidéo tiers sans Higgsfield) — 1re PARTIE VALIDÉE (2026-07-17)
+
+> **PROTO CONCLUANT, pipeline officialisé.** Prouvé qu'on reproduit le style Vox/Higgsfield en HYBRIDE
+> déterministe (images Gemini 3.1 Flash réutilisables + overlays Remotion), au niveau du tiers, pour des
+> centimes vs ~200 crédits/vidéo re-tirés chez Higgsfield. Boucle de raffinement V1→V2 (notre rendu +
+> réf → Gemini compare → écarts croisés Gemini/Claude/Aziz) validée.
+>
+> **Doctrine + méthode complète** : `memory/doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`.
+> **Scripts** : `gemini-vox-reverse-breakdown.py` (breakdown), `gemini-compare-2videos.py` (diff V2),
+> `gemini-genimg-ipv4.sh` (génération image, corrigé extension JPEG/PNG).
+> **Livrables R&D** : composition `Vox-Papercut-Avion-16x9` (`src/projects/_rnd/svg-scenes/VoxPapercutAvion16x9.tsx`),
+> 6 assets + rendus dans `public/_rnd/vox-repro/`, vidéo `out/_r-and-d/vox-papercut-avion-v2.mp4`.
+>
+> ⭐ **NEXT (prochaine session, quand Aziz veut)** : finitions restantes du plan (halo détourage résiduel,
+> retirer noms d'États sur la carte, intégrer photo halftone) ; puis monter une SÉQUENCE multi-plans ;
+> décider si on officialise ce format "motion graphic V2" comme brique de production réutilisable.
+
+## ✅✅ SHORT SÉNÉGAL PÉTROLE & GAZ — VERSION D3.JS : COMPLET, PROMU PRET-PUBLICATION (2026-07-17 s12)
+
+> **TERMINÉ.** Short vertical (9:16, D3.js/SVG pur — pas Mapbox), dérivé de la vidéo longue Sénégal,
+> registre Short AES 90s. Les 5 beats + assemblage + audio complet sont faits et validés Aziz.
+>
+> **Livrable** : `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4` (112.96s, full HD) +
+> lien durable Vercel Blob. Composition = `SenegalShortD3-COMPLET` (`ShortComplet.tsx`, 5 beats +
+> narration + musique AES + SFX dont 2 générés ElevenLabs : vault-lock, typewriter).
+>
+> ⭐ **NEXT (seule action restante, administrative — pas de production)** : programmer la publication
+> via TryPost (Shorts YouTube + IG + FB, cf. `memory/tools/trypost.md`).
+>
+> Détail complet : `memory/episodes/souverain/senegal-petrole-gaz/STATUS-SHORT-D3.md`.
+>
+> **Gotcha réutilisable (leçon)** : `scripts/visual_review.py` peut bloquer en SYN_SENT IPv6 (9m+ sans
+> erreur) — vérifier `lsof -p <pid>` avant de conclure à une lenteur Gemini normale. Et sur ce beat sans
+> storyboard, Gemini review hallucine une palette sépia fantôme (juger sur override tracé + Aziz).
+
+## ✅✅ SOUDAN MID-FORM — ACTE 5 : REFAIT EN GLOBE D3, PROMU FINAL v5 (2026-07-19)
+
+> **TERMINÉ + PROMU.** Acte 5 entièrement REFAIT en GLOBE D3 intégral (abandon Mapbox), densifié, review
+> Gemini/Kimi appliqué, validé Aziz. Moteur globe D3 prouvé sur 2 actes (3 et 5).
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (+ `_compressed`).
+> **Code (le vrai livrable)** : `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` (compo `D3-SoudanActe5-Globe`).
+> **Branche** : `feat/soudan-acte5-globe` (NON mergée). Détail : `episodes/soudan-midform/STATUS.md` § tête.
+>
+> ⛔ **PÉRIMÉ** : mise en scène Mapbox actée s12 (100% carte, insert chirurgical, arbitrage Abou Dabi,
+> diagnostic densification à trier), code `warmap/soudan-acte5/SoudanActe5.tsx` (v2), et starter
+> `STARTER-PROMPT-soudan-acte5-densification.md` — tous remplacés par le globe. Trace uniquement.
+>
+> **Décision structurelle (rappel, session 10)** : Acte 5 = fait concret (réseau EAU-Libye) ; Acte 6 =
+> verrou institutionnel détaillé + conclusion (**script+audio verrouillés + storyboard actés 2026-07-19, CODE à faire**). Pont Acte 4 déjà verrouillé valable
+> pour les deux.
+
+## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10
+
+> ⚠️⚠️ **CHANGEMENT 2026-07-17 (session en cours) — À SAVOIR EN REPRENANT L'ACTE 4** : le **Beat 5 (Kosti)
+> a été REFONDU** — la carte Mapbox top-down (drone illisible sur fond crème) est REMPLACÉE par un **INSERT
+> SVG plein écran** (`src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx`), monté dans `Section4` de
+> `SoudanActe4.tsx`. Décidé + validé Aziz par proto (`KostiFrappeProtoV3`, litter.catbox `xxm8ic`).
+> Registre "carte d'état-major civil" : 6 jetons civils (portraits distincts) qui s'éteignent à la frappe +
+> notre drone-rsf-td.png + Nil animé, sur une composition de base proposée par GPT-5.6 Sol. Calé sur la
+> narration p4. **CONSÉQUENCE : le render v7 (`acte4-v7-full.mp4`) est PÉRIMÉ pour le Beat 5 → RE-RENDER
+> COMPLET de l'Acte 4 nécessaire avant toute promotion.** Doctrine appliquée : `MOTEURS-VISUELS-ET-SOCLE.md`
+> (intention "coût humain incarné" = QUOI/COMMENT → insert SVG, pas carte). L'ancien code carte Beat 5
+> (DroneStrikeImpact/CAM4/HookDisplacementBurst) est laissé dans le fichier mais NON monté (récupérable via
+> git si besoin). Reste à faire par Aziz : re-render Acte 4 complet + visionner le Beat 5 intégré (calage
+> audio + transition avec Beat 4 et Beat 6).
+>
+> ⚠️⚠️ **2e CHANGEMENT 2026-07-17 (session Kimi K3) — branche `feat/kosti-refonte-k3`, NON mergée** : la
+> STATION-SERVICE et le corps du DRONE du Beat 5 sont désormais dessinés par **Kimi K3** (test vision→SVG
+> one-shot) et rendus INLINE (`StationDecor` + `DroneBodyK3`). Le sprite `drone-rsf-td.png` et le décor
+> externe `kosti-sol-decor-noriver.svg` ne sont PLUS rendus (fond redessiné inline `MapBackdrop`, route
+> ajoutée reliant la file aux pompes, Nil affiné). Mentions inventées par K3 retirées. Re-render isolé validé
+> Aziz (compo `Kosti-Beat5-Standalone`). **Commits bd302d24 + 718244f3 sur `feat/kosti-refonte-k3` (NON
+> mergée à master).** Reste : merge branche + re-render Acte 4 complet (jamais fait sur la version K3).
+> Détail R&D K3 : `memory/tools/openrouter-svg.md` § Kimi K3.
+>
+> **PRIORITÉ 2.** Suite au visionnage du v6 (session 9) par Aziz, refonte en profondeur en 4 lots
+> (chacun vérifié par render isolé avant intégration) :
+> 1. **Beat 1 (Russie/Wagner)** : zoom Moscou dézoomé (6.4→3.6, le territoire filtré se lisait comme un
+>    point isolé) + bascule 2024 fusionnée en un seul mouvement caméra (au lieu d'un aller-retour saccadé).
+> 2. **Beat 5 (Kosti, drone)** — ⛔ **PÉRIMÉ 2026-07-17** : ce lot (pattern MapAnimation sur CARTE Mapbox,
+>    sprite 40→95px, trajectoire) est REMPLACÉ par l'insert SVG plein écran (voir bloc CHANGEMENT en tête de
+>    section). Conservé ici comme trace historique du lot s10 uniquement — ne PAS coder d'après cette ligne.
+> 3. **Beat 2 (Port-Soudan)** : insert SVG plein écran abandonné, retour à la carte. Jeton naval iso/topdown
+>    généré GPT-5.6 Sol (choisi par Aziz après comparaison sur la vraie carte, `_rnd/PortSoudanJetonCompare.tsx`),
+>    agrandi +50% (140→210px, sous-dimensionnement récurrent identifié sur tout l'acte, cf doctrine gravée
+>    ci-dessous).
+> 4. **Beat 3-4 (Égypte/Nil)** : zoom resserré (4.0-4.6→5.2-5.8), `CountryParchmentMask` (généralisé de
+>    `RussiaParchmentMask`) appliqué à l'Égypte, drapeau égyptien retiré de cette section (écrasait le
+>    masque à 92% opacité — bug diagnostiqué par indicateur de debug temporaire, cf leçon gravée). Nil :
+>    `GradientPathReveal` abandonné au profit d'un simple éclaircissement du tracé natif déjà dessiné par
+>    le fond de carte.
+> 5. **Beat 6 (synthèse 4 puissances)** : séquençage temporel (chaque puissance apparaît l'une après
+>    l'autre + convergence finale avec halo) remplace 4 panneaux fixes qui occupaient ~40% de l'écran en
+>    permanence (retour Kimi via Aziz).
+>
+> Render complet v7 fait (`out/episodes/soudan-midform/wip/acte4-v7-full.mp4`, catbox
+> `https://files.catbox.moe/riedly.mp4`, override tracé). **PAS encore promu FINAL** — en attente du
+> visionnage complet par Aziz (audio+visuel, pas juste des frames) avant promotion.
+>
+> **Acte 3 « Suivre l'or » reste FINAL et promu**, aucun changement : `out/PRET-PUBLICATION/soudan-midform/
+> soudan-acte3-suivre-lor-FINAL.mp4` (+ `_compressed`), catbox `https://files.catbox.moe/y2swv7.mp4`.
+>
+> **Historique Acte 2** (FINAL, promu) : `out/PRET-PUBLICATION/soudan-midform/soudan-acte2-blocage-FINAL.mp4`
+> · catbox `jgvhr2` (93.6s, 9 beats). Code : `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
+>
+> **Leçon transversale gravée cette session dans `WARMAP-GRAMMAIRE.md`** : sous-dimensionnement récurrent
+> (whip pan trop serré, drone 40px, jeton 140px, flash noyé) — pattern nommé explicitement par Aziz comme
+> répété "à travers l'acte 4 et autres", pas un bug isolé par beat. Doctrines sœurs déjà existantes pour
+> ce même biais dans d'autres registres : `SOUVERAIN-REMOTION-PLAYBOOK.md` (textes/graphismes trop petits,
+> règle 40-60%), `WORKFLOW-DATAVIZ.md` (pictos sous-dimensionnés, +40-50%).
+>
+> **Leçon méthodologique gravée dans `DOCTRINE-SCRIPT-UNIFIEE.md`** (règle 10, doctrine Tremblay) : une
+> doctrine d'écriture appliquée comme une checklist mécanique plutôt qu'un ressenti phrase par phrase
+> produit un résultat PIRE que l'original (script Acte 5, connecteurs de présence plaqués détectés
+> immédiatement par Aziz). 2e occurrence du même biais méthodologique déjà gravé pour la gate générale
+> (2026-07-10) — cette fois sur la règle 10 spécifiquement.
+>
+> 💡 **Option disponible pour PLUS TARD** : une fois l'Acte 4 validé et l'Acte 5/6 avancés, le skill
+> `passe-amelioration-scene` (doctrine `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`) est un
+> candidat naturel pour un audit qualité global de l'épisode complet. Aziz demandera explicitement ce
+> skill le moment venu — ne pas le lancer de soi-même avant qu'il ne le dise.
+
+---
+
+## ✅✅ SOUDAN — moteur d'affrontement 2 factions = BRIQUE PRÊTE POUR ACTE 2 (session 2026-07-06)
+> 🔧 Section historique conservée pour le contenu moteur. Le §NEXT ci-dessous est PÉRIMÉ (hook + Acte 1 FAITS
+> en session 3 — voir la section Soudan en tête). Ces briques (`warmapChoc`/`KhartoumChocSVG`/`FrontOuvertSVG`)
+> servent l'ACTE 2 selon le plan registres (`STORYBOARD-ACTE2` : beat 5 insert, beat 6 bloc).
+
+
+> Le proto mono-faction du matin (`KhartoumEtatMajorSVG`, committé `c59d0dd`) a été ÉTENDU en un
+> **moteur d'affrontement à 2 factions (RSF vs SAF) + 2 variantes, VALIDÉS par Aziz** (« les deux
+> versions sont très bon »). Code : `src/projects/warmap/_shared/warmapChoc.tsx` (moteur paramétré
+> `Faction` — RSF/SAF = 2 instances, jamais de « R »/« S » en dur) + `KhartoumChocSVG` (A : RSF
+> assaut, SAF défend le palais, choc, bascule accentuée) + `FrontOuvertSVG` (B : front sinueux qui
+> tient puis cède par un point de rupture = brique directe Acte 2 impasse militaire).
+> Commits `351514e` (moteur) · `3974235` (flèches de manœuvre + zones + encerclement) · `9920643`
+> (HOOK d'ouverture "l'or du Darfour" SVG parchemin/encre) sur branche DÉDIÉE `feat/warmap-insert-2factions`
+> (⚠️ working tree Short Sahel préservé, non emporté). Renders catbox : A `2psuqm` · B `hihedl` ·
+> hook `kes6he`. Doctrine amendée (3 règles : flèche→mouvement, SweepZone territorial, densité jetons).
+>
+> ℹ️ Clarifié : le proto n'a jamais eu de place dans un storyboard (pas de beat écrit) — R&D pure.
+> Le hook "l'or du Darfour" est retrouvé + reskiné (asset Soudan). On est en **croissance du moteur**.
+>
+> ⛔ **§NEXT ci-dessus PÉRIMÉ (2026-07-10)** — datait d'avant les sessions 3-7 où Actes 1-2-3 sont FAITS/promus
+> (Acte 3 FINAL PROMU 2026-07-11), Acte 4 est SCRIPT VERROUILLÉ v5. Voir la section Soudan en tête
+> de fichier pour l'état réel. Conservé seulement pour le contenu moteur historique (warmapChoc/commits).
+>
+> État complet : `memory/episodes/soudan-midform/STATUS.md`.
+
+---
+
+## ✅✅✅ SHORT AES 90s — COMPLET (musique+SFX+durée), PROMU PRET-PUBLICATION (MàJ 2026-07-11)
+
+> ✅✅✅ **Finitions audio TERMINÉES (2026-07-11)** : musique `music-D-montee-maitrisee.mp3` (volume 0.10,
+> reprise de la vidéo longue AES), SFX ajoutés (ping sur traces de contour, whoosh remplacé par ping au
+> climax AES, cedeao-snap sur la fracture, ding blip-bubble sur France + coups d'État, counter-tick en
+> boucle sur le count-up 60 ans, animations en boucle sur icônes ressources or/uranium/pétrole), durée
+> rallongée 91.9s→93.5s (2802 frames) pour laisser la narration finir. Livrable :
+> `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4`. Code : `src/projects/warmap/shorts/aes-short-90s/`
+> (compo `AES-Short-Full`).
+> **NEXT = programmer la publication** (Short → TryPost, cf `memory/tools/trypost.md`).
+> Détail production initiale : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md` · socle
+> figé : `.claude/.../memory/aes-short-socle-valide.md`.
+
+---
+
+## ✅✅ SÉNÉGAL V3 — TERMINÉ + PRÊT-PUBLICATION (2026-07-05)
+
+> Branche `fix/senegal-v3-passe-finition`, commits `207d223` (ROUND 1+2) et `606aff4` (marge respiration).
+> ROUND 1 : 10 bugs corrigés (dédoublements audio, écran gris Mapbox structurel, carte gisements
+> harmonisée, SFX parasites, point Dakar, texte épuré). ROUND 2 : mot "précise" tronqué, mot "trois"
+> répété/coupé (résolu en faisant jouer le mot en entier + décalage de 5 frames côté scène suivante,
+> plutôt qu'une coupe en plein son), musique gisements absente, silence "décide...vraiment du résultat"
+> (endAt étendu +1.5s pour respiration), labels texte scène coin supprimés, écran gris de transition
+> supprimé. Tout validé Aziz par extraits ciblés + mini-renders à chaque itération.
+> **Livrable final** : `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (+ `-compressed.mp4`).
+> ✅ **Thumbnail finalisée et validée (2026-07-11, Pipeline C)** : "PÉTROLE : LE PIÈGE SÉNÉGALAIS ?"
+> (baril enchaîné + LED "132%" = dette publique/PIB citée au script, carte Sénégal + Dakar marqué).
+> Fichier : `public/_shared/thumbnails-library/senegal-petrole-gaz/senegal-piege-baril.png`.
+> **NEXT** = titre à définir, puis upload MANUEL YouTube Studio (même décision que War-Map Sahel AES,
+> cf `memory/tools/trypost.md` — vidéo longue = Studio pour garder Test & Compare).
+>
+> 💡 Note (réflexion Aziz 2026-07-05) : cette vidéo (1ère avec le système Mapbox complet) a été longue en
+> R&D mais constitue un gabarit réutilisable avec War-Map Sahel AES (2e vidéo Mapbox) — à consulter
+> explicitement lors du prochain projet Mapbox pour vérifier le gain de vitesse x2-3 espéré, plutôt que
+> de laisser ces briques enfouies dans le code sans être re-référencées.
+
+---
+
+## ✅✅ PESTE 1347 — BUG GÉO + AUDIO CORRIGÉS, VALIDÉ AZIZ (2026-07-01)
+
+> Livrable : `out/PRET-PUBLICATION/peste-1347-FINAL.mp4` (42 Mo, 103.4s). Catbox : files.catbox.moe/hptvlc.mp4
+> Fix géo (territoires d'outre-mer rouges Beat1/2/3) + fix mix (musique 0.04, narration continue sans cuts).
+> **VALIDÉ AZIZ** — transitions fluides, musique bien dosée. NEXT = programmer publication TryPost (comme cacao/GGW).
+> **2 chantiers actés pour PROCHAINE SESSION** (détail : `episodes/peste-1347/STATUS.md` § PROCHAINE SESSION) :
+>   1. Régénérer la narration avec le pipeline voix vivante (`PIPELINE-VOIX-VIVANTE-VALIDE.md`, Océane V3 + tags
+>      + Speech-to-Speech GéoAfrique) — la narration actuelle (2026-05-15) est antérieure à ce pipeline (2026-06-10),
+>      jugée "monotone" par Aziz par comparaison avec cacao/GGW.
+>   2. Lancer un système multi-agent pour proposer des idées d'amélioration sur l'épisode (post-fix), en tenant
+>      compte des acquis récents (personnage-vivant-svg, patterns SVG, etc.) — décider le type d'agents en session.
+
+## ✅✅ CACAO + GGW — PUBLICATIONS PROGRAMMÉES (2026-07-01)
+
+> Cacao : YT 2026-07-01 14h UTC · GGW : YT 2026-07-03 14h UTC (posts séparés YT vs IG+FB, TryPost n'a pas de
+> caption par-plateforme — leçon gravée dans `memory/tools/trypost.md`). GGW coverB corrigé (bug sample-rate
+> 44100/48000 qui ralentissait l'audio). TikTok reste manuel (compte en quarantaine).
+
+## ✅✅ CACAO → CHOCOLAT SHORT — TERMINÉ, PRET PUBLICATION (2026-06-29)
+
+> Short SVG vertical 9:16 (98,5s), pilier Souverain, registre encre/parchemin GGW. COMPLET et validé Aziz.
+> **Livrable : `out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4`** · Catbox 72h : https://files.catbox.moe/bvbm63.mp4
+> 5 beats (B1-B5) + musique B + SFX (palette GGW réutilisée + 4 créés, ALIGNÉS force alignment) + usine aux couleurs CI.
+> Compo Remotion = `Cacao-FULL` (CacaoChocolatFull.tsx). ⛔ NE PAS refaire/re-rendre sans raison.
+> **NEXT = PUBLIER** : trypost (YT+IG+FB) / postiz (TikTok — mais TikTok en quarantaine, cf bilan distrib).
+>   Vu le bilan : prioriser YouTube + Facebook. Le short = teaser vers la version LONGUE (CTA renvoie au long).
+> Détail session : `episodes/souverain/cacao-chocolat-short/STATUS.md` (§ TERMINE). Decisions Aziz tracees dedans.
+
+## ✅ 4 REGISTRES VIDEO LONGUE SVG — FAIT (refactoring SVG + Grand Inga ont suivi) (2026-07-02)
+
+> ✅ FAIT depuis (GeminiRig déplacé dans `_shared/`, `ProtoMap2dEncre.tsx` créé) — starter archivé :
+> `memory/archive/starters-perimes-2026-07-11/STARTER-PROMPT-refactoring-svg-et-map2d.md`.
+> Session du 2026-07-02 : grammaire visuelle SVG COMPLETE — 4 registres valides pour video longue :
+> 1. Narratif SVG (deja grave) · 2. Data-viz plein ecran Vox (GridBackground + bar/donut/counter) ·
+> 3. Presentateur+data (personnage devant ecran + bulles de dialogue) · 4. 2D flat maps d3-geo (a tester).
+> Cross-fade narratif->data-viz prouve en MP4 (`out/_r-and-d/narratif-plus-data-proto.mp4`).
+> Doctrine mise a jour : `memory/doctrines/SVG-MIDFORM-FORMAT.md` § 4 REGISTRES.
+> **Protos crees** : ProtoDialogueEcran, ProtoDataVizEncre, ProtoDataVizPleinEcran, ProtoNarratifPlusData,
+>   ProtoCadrages, ProtoFaceAFace, ProtoFaceExpressions (dans `_rnd/svg-scenes/`), ProtoFuguPoseBankWalk
+>   (⚠️ archive dans `_rnd/svg-scenes/_archive/`, exclu du build).
+> **Audit SVG (3 agents)** : GeminiRig a deplacer de `_rnd/` vers `_shared/`, 10+ vieux protos a archiver,
+>   GridBackground/donut/bar chart dupliques, palette a harmoniser, documentation SVG en retard.
+> **2 chantiers prochaine session** (ordre) : (1) refactoring SVG via agents Sonnet, (2) test carte 2D flat d3-geo.
+
+## ✅ SEEDANCE PERSONNAGE — TECHNIQUE PROUVÉE, ÉCARTÉE PAR DÉCISION (coût) — backlog conditionnel, SVG reste la voie par défaut (2026-07-04)
+
+> **Test complet fait et réussi** (3 clips, pêcheur, 3 lancers de filet — voir détail technique
+> ci-dessous), **MAIS décision d'Aziz après coup : ne PAS adopter Seedance comme méthode par défaut
+> pour les personnages.** Raison = le coût (~6.85$/clip de 10s, donc ~18-20$ pour une seule scène
+> personnage complète) est disproportionné pour une piste encore en phase de test/itération — surtout
+> qu'en pratique plusieurs essais sont souvent nécessaires avant d'obtenir le bon résultat. Verdict
+> d'Aziz : "de la folie, un peu trop cher pour l'instant" pour ce qu'on fait actuellement.
+>
+> **Ce qui reste vrai et acquis (ne pas re-tester, c'est prouvé)** : Seedance PEUT très bien animer
+> notre registre encre minimaliste (aucune dérive de style), suivre un prompt narratif riche (lancer,
+> halage, retournement, dépôt précis dans un panier, pieds ancrés en permanence) sans storyboard multi-
+> images. Si le budget/contexte change un jour (scène ponctuelle à fort enjeu, budget dédié), la méthode
+> documentée plus bas reste directement réutilisable telle quelle.
+>
+> **Décision actée pour la suite immédiate** : privilégier et consolider la piste SVG organique (le
+> registre qu'on maîtrise, prouvé sur GGW/cacao/cargo) plutôt que des personnages articulés complexes en
+> attendant une meilleure solution de rig. Retirer/réduire les personnages organiques compliqués des
+> scènes plutôt que de continuer à batailler avec leur coût (temps de code OU argent Seedance) tant
+> qu'aucune des deux voies n'est pleinement satisfaisante. Cohérent avec la discussion actée avec Aziz :
+> le personnage animé n'est PAS un prérequis pour des vidéos captivantes (GGW et cacao le prouvent déjà,
+> quasi zéro personnage animé, sujet+carte+data-viz suffisent) — le personnage est un AJOUT ponctuel,
+> pas une fondation manquante. Chantier séparé identifié pour plus tard, PAS prioritaire : représenter
+> des FIGURES RÉELLES NOMMÉES (ex. Yacouba Sawadogo pour GGW) — barre de qualité différente (portrait
+> fidèle vs personnage générique), à traiter à part si/quand ça devient pertinent.
+>
+> **Détail technique de la méthode (conservé pour référence future, PAS à appliquer par défaut
+> maintenant)** :
+> 1. UNE SEULE image source (pas de storyboard multi-panels envoyé à Seedance — cette technique
+>    "reference-to-video" a un historique d'échec 0/3 à 0/5 sur tout style non-standard testé avant,
+>    cf `memory/tools/seedance-rules.md` règles 75/76/83/86/97).
+> 2. Prompt NARRATIF (verbes d'action enchaînés en langage naturel : "il lance, il se retourne, il
+>    dépose"), PAS de timecodes frame-exacts — Seedance exécute l'INTENTION du geste, pas une partition
+>    chronométrée (règle 29).
+> 3. Clause STRICT STYLE FIDELITY obligatoire (registre non-standard) + identity lock + interdits
+>    explicites (no text/dialogue/particules). `aspect_ratio` natif API, `generate_audio: false`.
+> 4. Le décor (océan/ciel/chalutier/pirogue) reste ENTIÈREMENT en SVG codé — seul le personnage+geste
+>    serait délégué, pas de rupture visuelle car même décor SVG en frame source.
+> **Leçon méthodologique générale (au-delà de Seedance)** : lors d'une vérification vidéo, échantillonner
+> SERRÉ (tous les 0.3-0.5s) autour des beats narratifs attendus avant de conclure à un échec — un premier
+> passage avait conclu à tort à un échec (dépôt dans le panier "manqué") simplement parce que
+> l'échantillonnage était trop grossier (toutes les 2s) et ratait la fenêtre exacte du geste.
+>
+> **Fichiers conservés** (pas supprimés, coexistent avec le rig codé) : `PecheurSurpecheSeedance16x9.tsx`
+> (`RND-PecheurSurpecheSeedance16x9`), clips `public/_rnd/pecheur-seedance/cast{1,2,3}.mp4`, scripts
+> `scripts/tools/seedance-pecheur-cast{2,3}.py`. Render : https://files.catbox.moe/24fbuy.mp4.
+
+## ✅✅ 16:9 NARRATIF + PERSONNAGES — 4 chantiers + mix-and-match + indexation TERMINÉS (2026-07-04)
+
+> Session 2026-07-04 (2 passes) : les 4 chantiers du 07-03 sont FAITS, PUIS la scène pêcheur a été
+> upgradée (svg-scene-upgrade.py Gemini+GPT) et recomposée en mix-and-match, ET un chantier d'indexation
+> d'objets visuels (arbres/océan/bateaux/etc., demandé par Aziz après avoir vu qu'aucun objet dessiné
+> n'était réutilisable) a été fait en parallèle par agent. **MUSIQUE validée par Aziz** (cordes minimales
+> sahel-warmap — ton correct pour le sujet, gardée).
+>
+> **1-4 (1re passe)** : extraction motion.ts (camAt/lerpHex/buildHorizonPath/sequenceExclusive/
+> objectVisualBottom) · raccordement ProtoNarratifPlusData→CargoVoyage16x9_LibreInspire · cadrage serré
+> personnage prouvé (ProtoCueilletteGrosPlan16x9, bug main↔objet corrigé par calcul algébrique plutôt
+> que par l'œil — leçon clé) · 1re version de PecheurSurpeche16x9.tsx (filet en pointillé, chalutier/
+> pirogue en formes géométriques brutes, poisson via 2 échecs LLM Qwen/GLM puis codé main).
+>
+> **2e passe — MIX-AND-MATCH + INDEXATION (demandée par Aziz après visionnage)** :
+> - **Constat d'Aziz, juste** : la scène pêcheur ne réutilisait RIEN visuellement (océan/ciel/soleil du
+>   cargo recodés en double, chalutier/pirogue improvisés) — seule la MÉCANIQUE (camAt, rig) était
+>   partagée, pas les OBJETS. Comparé aux grands studios qui indexent tout objet créé.
+> - **Chantier indexation (agent dédié, cacao+GGW)** : 3 éléments extraits de `cacao-chocolat-short/`
+>   vers `svg-library/elements/agriculture/` (cacaoyer, cabosse ouverte, usine transformation) + 2
+>   exclusions justifiées (PlanteurEncre = doublon obsolète de StickRig/GeminiRig ; TabletteMorphBarre =
+>   trop couplée au chiffre du short cacao, pas un objet générique).
+> - **Ciel/océan du cargo extraits** : `SoleilHaloRadial.tsx` + `OceanProfondeurVagues.tsx`
+>   (`svg-library/elements/ciel/` et `elements/ocean/`) — `CargoVoyage16x9_LibreInspire.tsx` REFACTORISÉ
+>   pour les consommer (zéro régression visuelle vérifiée par render). `CloudQwenGravure.tsx` déjà
+>   partagé (juste mal rangé dans `_rnd/` au lieu de `_shared/` — pas déplacé, hors scope).
+> - **Mix-and-match upgrade Gemini/GPT** (brief générique "ta meilleure version de cette scène", frame
+>   SANS personnage envoyée pour éviter que les modèles le retouchent — leçon des échecs précédents) :
+>   chalutier retenu = Gemini (plus détaillé/menaçant) → `ChalutierGemini.tsx`. Pirogue + ciel retenus =
+>   GPT (motifs bois peints, plus sobre/cohérent charte) → `PirogueGPT.tsx`. Filet retenu = Gemini
+>   (maillage/plombs/éclaboussures) → `FiletGemini.tsx`. Tous dans `svg-library/elements/peche/`.
+> - **3 bugs réels trouvés et corrigés en vérifiant par render (pas juste "ça compile")** :
+>   1. `seaColorDeep` codé en constantes bleu-froid FIXES, jamais réchauffées par la palette temporelle
+>      → au crépuscule (ciel orange), le rectangle de profondeur océan restait bleu et se lisait comme
+>      un bloc dissonant qui coupe l'écran. Fix : dériver `seaColorDeep` de `seaColor` (déjà réchauffé).
+>   2. **Composition de `transform` SVG avec scale+translate** : `translate(-apex) scale(s)` scale
+>      autour de l'origine DÉJÀ translatée, pas du point voulu — corrigé en ordre `scale(s)
+>      translate(-apex)` (le point recentré à 0,0 devient le pivot naturel du scale). Piège répété 2 fois
+>      dans la même session (1er essai avec `style={{transformOrigin}}` CSS, inefficace en SVG statique).
+>   3. **Composant non recentré = coordonnées natives qui sortent du cadre** : `FiletGemini` gardait ses
+>      coordonnées sources (apex à x=750,y=820) sans jamais les recentrer sur (0,0) — composé avec la
+>      position du personnage, l'apex réel sortait du cadre visible (y calculé à 1278 sur un cadre 1080)
+>      → filet invisible malgré opacity=1, bug diagnostiqué par calcul, pas résolu à l'œil. **Leçon
+>      générale reconductible** : tout composant `svg-library/elements/*` DOIT recentrer ses coordonnées
+>      natives sur (0,0) en interne (comme fait correctement pour PirogueGPT/ChalutierGemini) — vérifier
+>      ce recentrage EXPLICITEMENT avant tout nouveau composant extrait d'un SVG source à coordonnées
+>      absolues.
+> Render final : `/tmp/pecheur-mix-final.mp4` (12 Mo, upload catbox en cours).
+> **NEXT si repris** : option 2 (caravane sel/camion — 2 véhicules à vitesses différentes dans la même
+> couche, vraie inconnue technique jamais testée) ou option 3 (cabosse→conteneur) si Aziz veut itérer.
+> Le catalogue `svg-library/elements/peche/` (chalutier/pirogue/filet/poisson) est directement réutilisable
+> pour tout futur sujet pêche/mer sans repartir de zéro.
+
+## ✅✅ 16:9 NARRATIF + PERSONNAGES — SHOWCASE FINAL mis à jour (2026-07-03)
+> Starter : `memory/starters/STARTER-PROMPT-16x9-narratif-personnages.md` (voir note de mise à jour en tête).
+> ⭐⭐ **NOUVELLE RÉFÉRENCE (2026-07-03)** : `CargoVoyage16x9_LibreInspire.tsx` (`RND-CargoVoyage16x9-LibreInspire`)
+>   remplace `CargoVoyage16x9.tsx` comme showcase final du format 16:9 — validé par Aziz comme preuve de concept
+>   du pivot 9:16→16:9 (3-5min, style Infographic Show/Kurzgesagt). Issu d'un workflow mix-and-match : 2 agents
+>   Sonnet en isolation worktree (gardien-de-charte vs libre-inspiré-encadré) ont chacun produit une version
+>   complète en piochant dans Gemini 3.1 Pro + GPT-5.5 + code existant + doctrine ; version "libre inspiré"
+>   retenue (reflet de soleil animé frame-driven, océan avec profondeur, cargo unifié). Détail complet du
+>   process (bug réseau IPv4/IPv6 Gemini, pattern "upgrade prototype", verdict Qwen3.6 vs GLM-5.2) :
+>   `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` § UPGRADE PROTOTYPE + `memory/tools/openrouter-svg.md`.
+> **NEXT SESSION — 4 chantiers dans cet ordre (décidé Aziz 2026-07-03)** :
+>   1. Extraire/indexer les briques réutilisables de CargoVoyage16x9_LibreInspire en composants nommés dans
+>      `src/projects/_shared/svg-library/` (pas laissés locaux au fichier) : `camAt(p,speed)` (moteur parallaxe
+>      3 couches), horizon paramétrique (interpolation 2 silhouettes via points de contrôle X fixes), palette
+>      double-état `lerpHex` (chaud→froid / jour→nuit), séquençage strict d'éléments mutuellement exclusifs
+>      (soleil/lune — jamais les 2 visibles en même temps), split fond/1er-plan calé sur le VRAI bas d'un objet
+>      posé (pas sa position de référence).
+>   2. Raccorder `ProtoNarratifPlusData.tsx` (fade scène-narrative→data-viz, DÉJÀ CODÉ 2026-07-02, ne PAS
+>      recréer) au nouveau `CargoVoyage16x9_LibreInspire` — il pointe encore vers l'ancien `CargoVoyage16x9`.
+>   3. Résoudre l'intégration personnage autrement que "plan large + fond minuscule" (a échoué 2x cette
+>      session : StickRig et GeminiRig tous deux illisibles/mal proportionnés à cette échelle) — tester un
+>      cadrage plus serré où le personnage EST le sujet (geste cueillette-arbre déjà prouvé, cf
+>      `PERSONNAGE-VIVANT-INDEX.md`).
+>   4. Produire une VRAIE scène complète ~1min (script + musique + montage), pas des tests de rendu isolés —
+>      changement d'échelle : de "prouver la technique" à "livrable jugeable dans son ensemble". Réutiliser le
+>      workflow "upgrade prototype" (`scripts/tools/svg-scene-upgrade.py`, codifié pour le 16:9 uniquement —
+>      pas encore adapté au 9:16) dès le début de cette nouvelle scène, pas en rattrapage après coup.
+>
+> --- Historique (2026-07-02, patron 2-scènes original, toujours valide comme référence secondaire) ---
+> ✅✅ **VALIDÉ AZIZ (2026-07-02)** : patron 2-scènes "voyage→arrivée/transformation" PROUVÉ de bout en bout —
+>   `CargoVoyage16x9.tsx` (`RND-CargoVoyage16x9`) + `PortDechargement16x9.tsx` (`RND-PortDechargement16x9`),
+>   archivés `out/templates-souverain/FINAL-CargoVoyage16x9-v1.mp4` + `FINAL-PortDechargement16x9-v1.mp4`.
+>   Réutilisable tel quel pour un autre sujet Souverain (or→raffinerie, minerai→usine).
+
+## ✅ PERSONNAGE VOLUMÉTRIQUE SVG — SYSTÈME GRAVÉ, catalogue de 7 gestes complet (2026-07-02)
+> Rétrogradé depuis ⭐⭐ PRIORITÉ IMMÉDIATE — le catalogue est maintenant COMPLET (7/7 gestes), plus une
+> priorité active. Seule extension optionnelle en backlog : `planter-arbre` (2 personnages). Contenu
+> conservé ci-dessous pour l'historique des décisions.
+
+> Contexte complet : `src/projects/_shared/personnage-vivant-svg/PERSONNAGE-VIVANT-INDEX.md` (§ Segments
+> VOLUMÉTRIQUES, § GPT-5.5 générant du vrai code SVG, § LE VRAI TEST DÉCISIF, § Chaîne d'actions complète,
+> § Extension du set de poses) + `memory/tools/pixellab.md` (§ PixelLab vs registre SVG, § Gamelabs Studio).
+
+**✅ Priorité 1 — TERMINÉE cette session : rig volumétrique SVG intégré.** `capsuleSegment.ts` +
+`StickRig.tsx` (nouveau prop `volumetric?: boolean`, défaut false = zéro régression) : jambes (cuisse+mollet+
+genou+pied) ET bras avant (épaule+coude+main) en capsules tapered fermées, testé sur 3 poses
+(debout/marche/bras tendu récolte) via `_rnd/svg-scenes/_archive/ProtoCapsuleLimb.tsx` ⚠️ archivé, exclu du
+build (compo Root `RND-ProtoCapsuleLimb` désimportée). Cinématique `computePose()` 100% inchangée. **Reste (mineur, pas bloquant)** : léger
+décrochage visuel cheville/pied observé sur la pose marche (à fixer si le rig est adopté en scène réelle),
+torse/bottes/chapeau restent en formes rigides existantes (pas encore en capsule), vérification 8-directions
+(`StickRigMultiDir`) pas faite.
+
+**✅ Priorité 2 — TESTÉE 2026-07-02, RÉSULTAT NÉGATIF : prompt GPT "rig-first" écarté.** GPT-5.5 a produit un
+SVG 15 groupes + JSON de pivots syntaxiquement parfait, mais dès qu'on applique les rotations déclarées
+(`transform="rotate(angle,pivot)"`), les jointures coude/épaule se DISLOQUENT visuellement (paths dessinés en
+pose figée, pas d'emboîtement géométrique garanti sous rotation). Le rig capsule (`capsuleSegment.ts`,
+priorité 1) reste la seule approche production-ready — la robustesse vient du recalcul géométrique par le
+code à chaque frame, pas de la qualité du prompt. Détail + fichiers test : `PERSONNAGE-VIVANT-INDEX.md`
+§ "Nuance importante — reproduire une pose ≠ concevoir pour l'animation" (verdict en fin de section).
+**NEXT = Priorité 3 ci-dessous (déjà traitée, voir résultats) ou reprendre le rig capsule pour finir les
+points mineurs (décrochage cheville/pied pose marche, torse/bottes/chapeau en capsule, vérif 8-directions).**
+
+**✅✅✅ Priorité 3 — TESTÉE A FOND 2026-07-02, VERDICT FINAL : Gemini 3.1 Pro gagne pour marche/statique,
+squat écarté, personnalisation validée.** 1er passage avait conclu GPT meilleur sur images fixes — Aziz a
+challengé et posé LA question décisive : est-ce que ça bouge vraiment ? **Gemini produit un vrai rig FK
+imbriqué** (`translate(joint) rotate(angle)` parent→enfant) → marche FLUIDE par interpolation continue.
+**GPT produit des paths en coordonnées absolues SANS hiérarchie** → cut sec obligatoire, ça saute. Chaîne
+d'actions codée (`ProtoGeminiActionChain.tsx`) : marche→arrêt→repart→idle solide (viewBox élargi pour ne
+plus couper le pied avant en pleine foulée — bug réel confirmé par Aziz). **Volet accroupissement/squat
+TESTÉ PUIS ÉCARTÉ** : la pose générée par un appel Gemini séparé donnait un personnage aux couleurs
+DIFFÉRENTES de celui qui marche (Aziz a détecté ça à l'œil, confirmé par grep des couleurs) — ET c'est un
+registre marginal selon notre propre doctrine (`MISE-EN-SCENE-INFOGRAPHICS-SHOW.md` : statique+marche =
+dominant chez les studios pro, actions articulées au sol = rares). Leçon gravée : générer toutes les poses
+d'un personnage en UN SEUL appel avec description figée, jamais pose par pose séparément. **Personnalisation
+par palette VALIDÉE** : `GeminiRig` paramétré par un objet couleurs (6 clés), 3 variantes démontrées
+synchronisées en marche, zéro coût API, zéro risque d'incohérence — approche à privilégier pour différencier
+des personnages. Détail complet : `PERSONNAGE-VIVANT-INDEX.md` § "LE VRAI TEST DÉCISIF" + § "Chaîne
+d'actions complète" + § "Pose accroupissement/squat — ÉCARTÉE".
+
+**✅✅✅ DERNIER TEST DE SESSION — méthode "1 appel, personnage figé" PROUVÉE (2026-07-02)** : set étendu à
+5 poses (idle/walk-a/walk-b + **offer** bras tendu + **reach-up** cueillette) généré en 1 SEUL appel Gemini
+avec 6 couleurs hex explicites données dans le prompt + consigne "même personnage, pas 5 différents".
+Résultat vérifié par grep : couleurs **strictement identiques** sur les 5 SVG (zéro variation, contraste
+net avec l'échec squat). Scène narrative test codée (`ProtoGeminiOfferScene.tsx`, compo Root
+`RND-ProtoGeminiOfferScene`) : marche→arrêt→tend le bras→hold→repart, rendu fluide et cohérent
+(`out/_rnd/pose-bank-test/gemini-offer-scene.mp4`). **C'est la procédure à suivre pour toute extension
+future du set de poses** — jamais un appel séparé par pose.
+
+**NEXT si repris en prod** : étendre encore le set (porte-charge, immobile-contemplatif) avec la même
+méthode 1-appel-personnage-figé, écrire un script d'extraction automatique JSX depuis le SVG brut (fait à
+la main pour ces tests). Le rig capsule (`capsuleSegment.ts`, zéro dépendance LLM) reste l'option la plus
+robuste pour la PRODUCTION immédiate si on veut zéro dépendance API.
+> ✅ MISE À JOUR 2026-07-02 (session suivante) : porte-charge et immobile-contemplatif sont désormais
+> FAITS (voir catalogue 7/7 plus bas dans cette section) — seul `planter-arbre` reste en extension
+> optionnelle. La méthode a aussi été affinée : 1 pose par appel Gemini (pas un lot de 5+), SVG source
+> littéral en patron plutôt que l'image PNG seule — voir § "Deux systèmes distincts" dans
+> `PERSONNAGE-VIVANT-INDEX.md` pour le détail complet.
+
+**✅✅✅ SESSION 2026-07-02 (suite) — "Demander à Gemini ses propres capacités" TESTÉE, catalogue de 7
+gestes COMPLET.** Consultation en 2 questions séparées (script Cacao précis vs éventail large) : réponses
+concrètes et actionnables, aucune hallucination (Gemini a bien respecté le contexte technique donné,
+marquant même l'accroupissement "Borderline/Risky" — cohérent avec notre propre écart déjà acté).
+**Insight inattendu** : le short Cacao publié n'utilise en fait AUCUN personnage — 100% data-viz
+symbolique (tablette, carte, arbres, usine). Comparaison aux propositions Gemini restée théorique de ce
+fait, mais a débloqué la vraie question de fond.
+
+**⭐⭐⭐ RECADRAGE MAJEUR (Aziz) — 2 systèmes complémentaires, pas concurrents** : le rig capsule
+(`capsuleSegment.ts`/`StickRig.tsx`/`poses.ts`) = la MÉCANIQUE de mouvement (comment un bras porte un
+poids crédiblement, comment plier un genou, 8 directions), 100% code, zéro dépendance API. Le personnage
+Gemini = l'HABILLAGE (silhouette/couleurs/style), décliné en poses figées. Le vrai travail de la session a
+été de **transposer la mécanique du rig capsule vers le personnage Gemini**, geste par geste, PAS une
+"migration" en un coup. Détail complet + leçons : `PERSONNAGE-VIVANT-INDEX.md` § "Deux systèmes distincts".
+
+**Catalogue complet, 7/7 gestes** (tous testés en rendu réel, pas juste en théorie) :
+1. `ProtoGeminiHandBasketWalk.tsx` — panier tenu à la main, balancier amorti par le poids.
+2. `ProtoGeminiShoulderSackWalk.tsx` — sac à l'épaule, torse penché, cadence ralentie.
+3. `ProtoGeminiBendPickup.tsx` — recolte-au-sol (marche→penche→ramasse→redresse→repart).
+4. `ProtoGeminiManipulateObject.tsx` — ramasse→transporte→dépose dans un contenant.
+5. `ProtoGeminiHandoff.tsx` — 2 personnages, transfert d'objet main-à-main.
+6. `ProtoGeminiTreeCueillette.tsx` — cueillette-arbre (bras levé), 1er geste SANS référence rig capsule.
+7. `ProtoGeminiContemplatif.tsx` — immobile-contemplatif, respiration en boucle.
+
+**Leçons gravées les plus importantes** (détail complet dans `PERSONNAGE-VIVANT-INDEX.md`) :
+- Donner le SVG SOURCE littéral en patron (pas juste l'image PNG rendue) est nécessaire pour préserver la
+  continuité du personnage — image seule fait dériver la géométrie.
+- 1 pose par appel Gemini >> lot de plusieurs poses d'un coup (instructions oubliées si trop cumulées).
+- **Bug structurel répété 2 fois** : un bras qui tient un objet ne peut PAS suivre le grand balancier de la
+  marche libre (±45°) — doit être figé à un angle réduit. Repéré la 1ère fois sur `marche-porte-charge`,
+  RE-repéré sur `cueillette-arbre` malgré la leçon déjà gravée — signal qu'une leçon en mémoire doit être
+  activement relue avant de coder un geste similaire, pas seulement découverte après un nouveau bug.
+- Un membre qui ne doit pas suivre un tilt de torse doit être structurellement SORTI du groupe SVG qui
+  applique ce tilt (bug "effet planche" sur le penché, jambes qui héritaient à tort de `rotate(torsoTilt)`).
+- Un objet mal positionné vs invisible sont deux bugs différents à diagnostiquer séparément — test debug
+  (couleur/taille volontairement absurdes) pour trancher vite.
+- Les gestes qui RECOMBINENT des briques déjà validées (`passer-objet-main-a-main`) réussissent du 1er
+  coup ; ceux qui inventent une mécanique from scratch demandent systématiquement 2-3 corrections.
+
+**Position sur la délégation à un agent (question Aziz)** : PAS ENCORE — le goulot d'étranglement de
+cette session était le jugement visuel itératif (repérer qu'un rendu est faux, comprendre pourquoi,
+corriger), pas la génération de code. Un agent sans supervision visuelle serrée déclarerait "fait" sur un
+rendu cassé. Reprendre l'idée une fois que le catalogue est assez stable pour qu'un agent ait une check-list
+de vérification visuelle explicite à suivre.
+
+**NEXT si repris** : `planter-arbre` (2 personnages, creuser+déposer un jeune plant — seul item du §
+Recettes rapides encore non transposé). Fichiers scratch de toute la session :
+`out/_rnd/pose-bank-test/response-capabilities-{A-script,B-broad}.md` + `Proto*.tsx` (7 composants Root).
+
+**Priorité 4 — Exploration continue Gamelabs Studio pour un registre RASTER séparé** (pas urgent, en fond).
+Pipeline API REST complet validé et documenté (`memory/tools/pixellab.md` § Gamelabs) : image→video→spritesheet
+fonctionnel, résultat NET une fois le personnage correctement cadré (règle : sujet doit remplir ≥80% du cadre).
+Walk cycle testé et cohérent (jambes qui alternent, bras en balancier). Bug MCP contourné (appeler l'API REST
+directement, PAS le serveur MCP qui route vers localhost:8000 — 401 systématique). ⛔ Reste un moteur RASTER
+(PNG/MP4) — pas un remplacement de StickRig pour notre registre SVG mixte actuel, mais piste sérieuse pour un
+FUTUR projet 100% raster où le contrôle frame-exact importe moins que la richesse visuelle immédiate (animations
+pré-générées directionnelles, comme fait pour Atlas/PixelLab). 14 crédits gratuits restants sur le compte Aziz.
+Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué, contourner via REST direct).
+> ✅ **Scène 3 "RetourAuChamp16x9" prototypée mais PAS validée** (`_rnd/svg-scenes/`, `RND-RetourAuChamp16x9`) —
+>   jugée "plate narrativement" après comparaison avec des propositions LLM plus riches (voir ci-dessous).
+> ⭐⭐ **3 doctrines R&D gravées cette session** (5 chaînes tierces analysées, yt-dlp+vision+lecture script) :
+>   `doctrines/MISE-EN-SCENE-INFOGRAPHICS-SHOW.md` (grammaire caméra — marche plan large OK SI elle est le
+>   sujet), `doctrines/STRUCTURE-NARRATIVE-HYPOTHETICALLY.md` (architecture narrative format long),
+>   `doctrines/SCRIPTWRITING-MASTER-STORYTELLING-HYPOTHETICALLY.md` (écriture phrase par phrase, la plus
+>   actionnable). ⚠️ Hypothèses de studios tiers — PAS ENCORE testées sur notre propre matière.
+> 🔧 **Test comparatif Gemini vs GPT (svg-scene-narrative.py --ratio 16:9, nouveau flag)** : GPT-5.5 bat
+>   nettement Gemini 3.1 Pro sur une scène complète (Gemini a produit un arbre déformé) — INVERSE du test
+>   personnage-seul du 2026-06-29 (Gemini+ref avait gagné). Hypothèse à vérifier : Gemini meilleur sur asset
+>   isolé, GPT meilleur en composition de scène. Résultats : `out/_rnd/gemini-gpt-svg-test/`.
+> ⭐⭐ **OUVRIR LA PROCHAINE SESSION PAR Seedance 2.5 (fal.ai)** — modèle inconnu de notre mémoire projet
+>   (`memory/tools/seedance-rules.md` ne documente que 2.0) et hors knowledge cutoff Claude : Tavily d'abord,
+>   ne rien affirmer sur ses capacités avant vérification. Objectif : image-to-video sur une frame de nos
+>   propres scènes SVG (registre stick-figure), voir si Seedance anime notre style directement. Puis
+>   priorités 1-3 : personnages Gemini/GPT en style libre d'abord (pas bridé), re-test Gemini vs GPT sur les
+>   2 cas d'usage, parallaxe/mouvement de véhicules générés par les LLM (jamais testé — outil actuel = statique).
+
+## 📊 BILAN DISTRIBUTION 1 MOIS (2026-06-28) — niche VIABLE, prioriser YouTube long + Facebook
+> Premiere donnee perf reelle a J+1mois : YouTube 88 abos/8 vidéos · Facebook 1100 followers (croissance ATYPIQUE) ·
+> Instagram 24 · TikTok = shadowban (apres suppression de masse — NE PLUS supprimer en masse). DÉCISION : niche
+> viable, prioriser YouTube LONG + Facebook ; depriorise Instagram ; TikTok en quarantaine.
+> Detail : `memory/archive/BILAN-DISTRIBUTION-1MOIS-2026-06.md`. Conforte le pari format LONG (cacao = teaser vers long).
+
+---
+
+## 🆕 PROCHAINE SESSION DÉDIÉE — Grand Inga : Zoom Inversé (Powers of Ten)
+
+> Session R&D Grand Inga 2026-06-28 : physicalité du sujet PROUVÉE. 4 prototypes produits (`IngaMondeVivant`, `IngaMondeV2` avec option C désaturation, `IngaDualScene`, `IngaSplitScreen`). Review Gemini reçue.
+> **NEXT :** coder le "Zoom Inversé" (proposition Gemini, technique la plus forte) : macro turbine → dé-zoom carte SVG → câble d'or qui se trace → zoom sur village → bougies. Session dédiée.
+> **À appliquer avant le Zoom Inversé :** turbine toujours ACTIVE en scène B (erreur narrative dans DualScene), câble émet halo froid sur les toits des maisons sans entrer dans les fenêtres, "siphon effect" sur les bougies au passage du câble.
+> **Doctrine gravée :** Scène-Monde Persistante + Split-screen règle d'usage + 3ème voie Zoom Inversé → `memory/doctrines/SVG-MIDFORM-FORMAT.md`.
+> **Prototypes R&D :** `src/projects/_rnd/svg-scenes/Inga*.tsx` (4 fichiers). Renders : `out/_r-and-d/inga-*.mp4`.
+
+## ✅ PHYSICALITÉ du sujet — FAIT (2026-06-28, voir Grand Inga ci-dessus)
+> Axe "physicalité" gravé dans `memory/doctrines/SUJET-PRIME-SUR-PRODUCTION.md`, testé sur Grand Inga (voir
+> section juste au-dessus). Starter d'origine archivé :
+> `memory/archive/starters-perimes-2026-07-11/STARTER-PROCHAINE-SESSION-physicalite-sujet.md`.
+
+---
+
+## 🆕 FRANC CFA — MID-FORM SVG (pré-prod faite, 2026-06-27)
+> ✅ Sujet validé + angle (B) "le courage + le coût réel" + TRIPLE fact-check + script de référence (V6) + jury LLM.
+> ⭐ Pivot acté : MID-FORM, pas short (sujet à MÉCANISME → veut de la construction visuelle séquentielle, cf règle
+> sujet→format dans [[SUJET-PRIME-SUR-PRODUCTION]]). Tout se transpose. → `episodes/souverain/franc-cfa-short/STATUS.md`.
+> **NEXT** : étendre script V6 → mid-form 4-6min + storyboard SVG-d'abord (scènes parité/Dakar/entrée déjà esquissées dans STATUS §7).
+> ⚙️ MÉTA prouvé cette session : la CHAÎNE [[RECHERCHE-PRESCRIPT-UNIFIEE]] (valider→écrire→fact-check 3 niveaux→jury) fonctionne A→Z.
+
+## 🆕 MÉTA — TYPAGE SUJET enrichi : moteur narratif + trousseau de style (2026-06-27)
+> Décortiqué avec Aziz suite au CFA. Conclusion : le CFA n'était pas un MAUVAIS sujet, il était mal FORMATÉ.
+> Cause racine = on ne typait pas le **moteur narratif** (ce qui crée la tension), seulement la durée.
+> ✅ GRAVÉ : (1) axe « moteur narratif » (retournement/mécanisme/récit/révélation-chiffre → dynamisme+format+style)
+> dans [[SUJET-PRIME-SUR-PRODUCTION]] § TYPER LE MOTEUR NARRATIF. (2) Trousseau « encre » 3 clés (parchemin/blanc-cassé/
+> blanc-froid selon le TON, accent sémantique unique, N&B intégral proscrit) dans [[SUJET-PRIME]] + [[SVG-MIDFORM-FORMAT]].
+> Comparaison visuelle 3 registres : files.catbox.moe/jb8puk.png. **À éprouver au prochain typage de sujet réel.**
+
+## 🔧 BACKLOG STRATÉGIQUE — Shorts SVG ↔ Longs Mapbox (Hub & Spoke) — assemblage short SVG désormais PROUVÉ (GGW)
 > 🗂️ Analyse Hub & Spoke gravée dans `memory/doctrines/SVG-SCENES-GENERATIVES.md` § Hub & Spoke + `ETAT-GGW-MURAILLE-VERTE.md` (acquis GGW). Aziz veut s'y lancer « pendant que c'est frais ».
 > En bref : 2 formats séparés MÊME niche — longs analytiques (Mapbox/3D, autorité) + shorts SVG génératifs
 > (paper-cut/blueprint, pédagogiques, multi-plateforme, gardent la chaîne vivante). PAS de la dilution = Hub & Spoke.
 > ⚠️ AVANT d'industrialiser : (1) créer une SIGNATURE VISUELLE commune longs↔shorts · (2) tunnel = NOTORIÉTÉ
 > cross-plateforme, pas conversion directe · (3) garder le gate [[SUJET-PRIME-SUR-PRODUCTION]] sur les shorts.
-> CHANTIER NEUF = **assembler/monter PLUSIEURS scènes SVG en récit court** (storyboard de short + transitions/collage
-> entre scènes — jamais testé, on a des scènes ISOLÉES). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
+> Assemblage de PLUSIEURS scènes SVG en récit court = PROUVÉ (Short GGW Muraille Verte terminé ; cacao-chocolat
+> 2e short SVG multi-scènes terminé 2026-06-29). Le chantier restant = INDUSTRIALISER (signature commune longs↔shorts,
+> cadence). Prérequis prouvé = [[SVG-SCENES-GENERATIVES]].
 
 ## 🔧 BACKLOG TECHNIQUE — Système CARTO V5 (reprendre quand Sénégal V3 fini)
 
-> ✅ Système prouvé. Doctrine gravée dans `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`. Point d'entrée : `REPRISE-SYSTEME-CARTO-V5.md`.
+> ✅ Système prouvé. Doctrine gravée dans `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md`. Point d'entrée (archivé, snapshot 2026-06-21) : `memory/archive/REPRISE-SYSTEME-CARTO-V5-2026-06-21.md`.
+> ⚠️ Sénégal V3 est désormais TERMINÉ + PRÊT-PUBLICATION (scène gisements harmonisée confirmée dans son STATUS) —
+> le "▶ RESTE" ci-dessous est probablement traité, à vérifier avant de le relancer.
 > ⛔ Carte canonique = **GéoAfrique V5 (navy/gris/or)**. Les fichiers d3-geo parchemin V2 = PÉRIMÉS.
 >
 > **▶ RESTE** : (1) coder la vraie scène Mapbox Sénégal branchée audio · (2) peaufinage scène gisements (popup E4, plaque E2, jauge 18%) · (3) merger dans master. Session dédiée, pas urgent avant Sénégal V3 scène 6.
@@ -24,7 +654,7 @@
 
 > **MERGÉ DANS MASTER le 2026-06-20.** Pipeline complet dans `memory/doctrines/WORKFLOW-DATAVIZ.md`.
 > Ce qui reste = optionnel (gate format phase 0 = doublon inutile). **Prochain vrai pas = l'éprouver sur une scène de prod réelle** (ex : Sénégal V3 scène 6).
-> Détails dans `REPRISE-WORKFLOW-DATAVIZ.md` si besoin de relire le système.
+> Détails dans `memory/archive/REPRISE-WORKFLOW-DATAVIZ-2026-06-20.md` si besoin de relire le système.
 
 ---
 
@@ -50,7 +680,7 @@
 ### ⭐ SUJET VALIDÉ EN RÉSERVE (gate 2026-06-16) — Mégaprojets / Gazoduc Nigeria-Maroc-Europe
 **Etat** : SUJET passé GO par le gate complet [[SUJET-PRIME-SUR-PRODUCTION]].
 **Decision Aziz** : à produire en SESSION DÉDIÉE quand War-Map/Sénégal/Maroc seront finis.
-**Reprise** : ouvrir `memory/GAZODUC-MEGAPROJETS-SUJET.md` + `DECODE-modeles-fr-afrique.md` (camp 3).
+**Reprise** : ouvrir `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md` + `DECODE-modeles-fr-afrique.md` (camp 3).
 
 ### 0. Carrousel "Good News" — pipeline hebdo PRET (2026-06-02)
 **Etat** : Pipeline semi-auto data-driven COMPLET.
@@ -73,12 +703,15 @@
 1. **A5 Géographie** (~37s, MAPBOX). 3 sub-moments : Maroc (monter dans la chaîne) / Europe (proximité Espagne, Volkswagen) / **triangle Maroc—Europe—Chine**. Pipeline Mapbox (`mapbox-session.py`).
 2. **Assemblage final** : ffmpeg concat des 6 beats + 1 narration globale + mix.
 
-### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE (MAJ 2026-06-25) ⭐⭐
-**⭐ SOURCE DE VÉRITÉ UNIQUE : `memory/episodes/souverain/senegal-petrole-gaz/V3-REFONTE/README.md`**
-**+ `out/episodes/senegal-petrole-gaz/_ASSEMBLAGE-V3.md`** (renders FINAUX).
-- ✅ **SCÈNES 0, 1, 2, 3, 4, 5 = FAITES, gravées FINALES.** Audio 0→344.46s ≈ 70% narration.
-- ⬜ **SCÈNE 6 = NEXT** (bilan : de zéro à exportateur, Beat14, ~344.46s→). Remotion data-viz.
-ℹ️ PÉRIMÉS (supprimés 2026-06-25) : `STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`, `REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
+### 2. Senegal Petrole & Gaz — REFONTE V3 SCÈNE PAR SCÈNE — ✅✅ TERMINÉ (MAJ 2026-07-05)
+**⭐ SOURCE DE VÉRITÉ ÉTAT ACTUEL : `memory/episodes/souverain/senegal-petrole-gaz/STATUS.md`**
+- ✅✅ **LES 8 SCÈNES (0→7) = PRODUITES + MONTAGE COMPLET ASSEMBLÉ + PASSE DE FINITION ROUND 1+2 TERMINÉE**.
+  Commits `207d223` + `606aff4` sur `fix/senegal-v3-passe-finition`.
+- ✅✅ **PROMU `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4`** (+ `-compressed.mp4`). Plus aucune
+  action technique en attente — NEXT = programmer la publication (décision Aziz).
+ℹ️ PÉRIMÉS : `STARTER-PROMPT-senegal-v3-passe-finition.md` (archivé, chantier ROUND 2 terminé),
+`STARTER-PROMPT-senegal-makeover-premium.md`, `STATUS.md` (V1), `REPRISE-SCENE-1.md`, `STARTER-SCENE-1.md`,
+`REPRISE-SCENE-2-COMPARAISON.md`, `REPRISE-SCENE-4-DETTE.md`.
 
 ### 3. Carousels Instagram (PRIORITE 3)
 **Etat** : Or Africain + Thiaroye PRET-PUBLICATION. Mansa Moussa a refaire.
@@ -89,40 +722,35 @@
 **Statut** : concept validé, backlog — NE PAS commencer avant fin AES + Maroc Batteries.
 **Fiche complète** : `memory/projects/peste-1347-midform.md`.
 
-### 4. Peste 1347 Atlas — REFONTE AU PLAYBOOK QUASI TERMINÉE (2026-06-05) ⭐
-**Etat** : Beats 1-4 **FINAL premium**. Beat 5 V9 **COMPLET** mais pas encore FINAL.
-**Decision en attente** : verdict global Aziz sur Beat5 + générer anims NORTH premium caravane (pont PixelLab).
-**Reprise** : lire `memory/episodes/peste-1347/STATUS.md`.
+### 4. Peste 1347 Atlas — VALIDÉ AZIZ, voir section ✅✅ en tête de fichier
+**État à jour** : voir la section "✅✅ PESTE 1347 — BUG GÉO + AUDIO CORRIGÉS, VALIDÉ AZIZ" tout en haut de ce fichier
+(cette entrée-ci datait d'avant le bugfix du 2026-07-01, conservée seulement comme redirection).
 
 ---
 
-## 🟡 PRIORITÉ 2 — WAR-MAP SAHEL : PASSE SÉQUENTIELLE scène par scène
+## ✅✅✅ WAR-MAP SAHEL AES — VIDÉO FINALE VALIDÉE + PROMUE PRET-PUBLICATION (2026-07-05)
 
-> ⚠️ **CHANGEMENT DE MÉTHODE (Aziz)** : NE PAS assembler tant que CHAQUE scène n'est pas validée à 100%.
+> Session C CONCLUE : fix audio "déjà", 1er render complet bout-en-bout, passe complète de retours
+> post-visionnage (CEDEAO 3e itération, portraits dirigeants refaits sur vraies photos, SFX corrigés,
+> hook "3" recentré, doublon audio "tensions..." corrigé via force-alignment Whisper), validée par Aziz
+> SANS RÉSERVE. Promue `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4` (386MB, 7min30). `wip/` purgé.
+> Détail complet : `memory/episodes/warmap-sahel/STATUS.md` § "SESSION C — ÉTAT".
 >
-> ✅ **TOUTES SCÈNES FINAL** : acte1 · p1 · p2 · p3 · p4 (6 scènes).
-> ▶ **RESTE = ASSEMBLAGE FINAL UNIQUEMENT** : render P4 complète → concat + narration `narration-v5-expressive.mp3` + mix.
-> 🎵 Musique : Aziz a choisi **D-montee-maitrisee** (`public/_shared/audio/sahel-warmap/music/`).
-> 📂 DOCS : `memory/episodes/warmap-sahel/STATUS.md` · ⛔ OBSOLÈTES : `PLAN-REFONTE-P4.md`, `BRIEF-PASSATION-P4*.md`.
+> ⭐⭐ **Thumbnail FAITE (2026-07-10, Pipeline C — voir `public/_shared/thumbnails-library/README.md`)** :
+> 2 candidats A/B validés dans `public/_shared/thumbnails-library/warmap-sahel-aes/`. NEXT = titre +
+> upload MANUEL YouTube Studio (décision Aziz : garder accès Test & Compare A/B natif, pas TryPost pour
+> cette vidéo). Détail : `memory/starters/STARTER-PROMPT-warmap-sahel-thumbnail-titre.md`.
 >
-> ▶ **ACTE 1 = SESSION DÉDIÉE — ⭐ LIRE `memory/episodes/warmap-sahel/PLAN-REFONTE-ACTE1.md` EN PREMIER.**
->   ACQUIS : triggers Acte 1 RECALÉS + synchro VALIDÉE Aziz · prototype hook CrosshairLock+V5 testé. RESTE (4 problèmes, voir PLAN) :
->   (P1) carte hook ≠ carte moteur · (P2) zoom de transition hook→corps à ~10s · (P3) retirer légende+timeline + grammaire P3/P4 contours · (P4) recaler timing question.
+> Point ouvert non bloquant documenté (ne pas répéter l'investigation) : liseré blanc résiduel sur
+> frontières CEDEAO (résidu Mapbox natif, cause exacte non isolée après 3 tentatives de fix) — cf
+> STATUS.md § "POINT OUVERT NON RÉSOLU".
 
 ---
 
-## ⭐ PRIORITÉ 1 (APRÈS AES) — SOUDAN MID-FORM 7-8min (pré-prod TRÈS AVANCÉE, session 2026-06-16)
-
-> **SUJET VALIDÉ GO** + grosse session de pré-prod faite le 2026-06-16.
-> 🗂️ **POINT D'ENTRÉE = `memory/projects/soudan-midform.md`**
->
-> **DÉJÀ FAIT (2026-06-16)** : données fact-checkées · scripts Actes 1+2 figés · audio GéoAfrique V3 · storyboards Actes 1-2 · mini-render pipeline validé · positionnement tranché.
->
-> **NEXT (reprise pré-prod Soudan)** :
-> 1. **Acte 3** : combler 2 trous recherche (Russie/Wagner-or-sanctions + Égypte) → `soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES.md`, PUIS écrire l'acte.
-> 2. Actes 4 (coût humain — inclure nuance génocide ciblé Darfour) + 5 (perspective ouverte).
-> 3. Au lock audio : check + régénération sélective acte par acte (`soudan-midform-AUDIO-ETAT.md`).
-> 4. Production : vrais jetons Hemeti + Al-Burhan (Gemini) → coder Acte 1 complet cadrage serré.
+## ⛔ PÉRIMÉ — voir section Soudan en tête de fichier
+> Cette section datait du 2026-06-16 (avant que l'Acte 3 soit codé/rendu). État réel à jour = la section
+> Soudan tout en haut de ce fichier (structure 5 actes actée, Acte 4 script v5 verrouillé). Ne pas repartir
+> d'ici. Conservé seulement pour la référence historique ci-dessous.
 >
 > **Short Soudan en attente** : ACLED toujours inaccessible.
 
@@ -135,6 +763,14 @@
 2. **Template CTA commentaire** à insérer à 30-60s dans chaque script.
 
 ---
+
+## 💡 BACKLOG ENRICHI — Xénophobie SA (2026-07-01)
+
+> Statut : MISE EN PAUSE enrichie. Angle validé ("double face" / colère mal dirigée / apartheid économique).
+> Données 2026 intégrées (25k expulsés, ultimatums, March and March, réaction continentale).
+> Format Hub & Spoke (Long Mapbox + Short SVG) intellectuellement pertinent mais complexe — Short SVG testé (images-cibles GPT/Gemini générées, faisable pour scènes symboliques, difficile pour foule/paradoxe).
+> **Gate AVANT production** : TubeLab validation demande audience → candidat pour "3e sujet" prochain cycle.
+> Dossier : `memory/episodes/souverain/xenophobie-sa-EXPLORATION/`. État complet : `04-DECISIONS-OUVERTES.md` § 7-8.
 
 ## 💡 IDÉE BACKLOG — Pipeline Shorts automatisé trending (2026-06-13)
 
@@ -150,6 +786,32 @@ Dossier `_reference-atlas-poc/` : patterns pas encore portés dans le pipeline :
 - `AtlasParcheminGlobe.tsx` → mouvements camera spheriques a adapter en Mercator
 - `AnimatedCaravan.tsx` → route commerciale animee (applicable Atlas + Souverain)
 - `atlas-parchemin-mande.json` → style Mapbox historique (Empire Mali, etc.)
+
+---
+
+## ✅ Skillification 2026-07-11 — 3 skills construits (session ménage workspace)
+
+Le skill `/wrap` a bien marché : un procédé "fichier passif à se souvenir de suivre" transformé en skill invocable avec gate. Aziz a demandé de construire les 3 candidats identifiés le jour même plutôt que d'attendre le seuil de maturité (3+ usages) — tous les 3 ont déjà débloqué au moins une session bloquée, jugé preuve suffisante :
+
+1. ✅ **`da-brief-gate`** — `~/.claude/skills/da-brief-gate/SKILL.md`. Orchestre la review créative amont (Gemini+Kimi+DeepSeek, `scripts/tools/da-brief.py --upstream`) avec gate bloquant réel avant le code. Référencé `ROUTAGE.md`, `SYSTEME-AGENTIQUE.md` (étape 5.5), `CLAUDE.md` (Pipelines Beat).
+2. ✅ **`passe-amelioration-scene`** — `~/.claude/skills/passe-amelioration-scene/SKILL.md`. N agents (1/scène) + 1 agent transversal de synthèse, pour un épisode multi-scènes déjà avancé. Doctrine source : `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`.
+3. ✅ **`creative-director-dual`** — `~/.claude/skills/creative-director-dual/SKILL.md`. 2 agents creative-director en parallèle (brief identique, zéro angle suggéré), déclencheur : 2+ rejets consécutifs sur le même chantier créatif.
+
+Les 3 sont référencés dans `ROUTAGE.md` (table §2 skills) et `memory/SYSTEME-AGENTIQUE.md` (briques du système) — un agent qui consulte ces 2 points d'entrée doit maintenant tomber dessus sans effort de mémoire.
+
+---
+
+## 🔧 BACKLOG — Audit des skills du workspace (demandé 2026-07-11, à traiter en SESSION DÉDIÉE)
+
+**Constat brut** : 88 dossiers sous `.claude/skills/` (génériques + spécifiques Remotion mélangés). Aziz soupçonne qu'une bonne part est inutilisée, redondante, ou mériterait fusion — exactement le même symptôme que le ménage `memory/`/`scripts/` fait cette session, jamais encore appliqué aux skills.
+
+**Report volontaire** : session déjà longue et chargée ce jour-là (audit multi-piliers + 5 scripts + réorg memory/scripts/ + 3 skills construits) — Aziz préfère une tête fraîche dédiée plutôt qu'un audit de plus en bout de session fatiguée.
+
+**Cadrage suggéré pour la session dédiée** (à valider avec Aziz au démarrage, pas à décider seul) :
+- Distinguer skills génériques (gstack, code-review, design-*, superpowers:*...) vs spécifiques Remotion (souverain-preproduction, atlas-video-preproduction, wrap, session-close, memo, beat, les 3 nouveaux d'aujourd'hui...) — l'audit vise probablement surtout les seconds.
+- Pour chaque skill Remotion : cherché des traces d'usage réel (grep dans `PIPELINE.md`/`STATUS.md`) — un skill jamais invoqué est un candidat suppression/fusion, pas un skill qu'on garde "au cas où".
+- Chercher les doublons fonctionnels (ex: `session-close` + `memo` + `wrap` — déjà orchestrés proprement, mais vérifier s'il existe d'autres paires qui se chevauchent).
+- Même méthode que les audits d'aujourd'hui : agents vierges en parallèle pour un diagnostic, puis trancher ensemble avant d'exécuter (fusion/suppression/archivage).
 
 ---
 

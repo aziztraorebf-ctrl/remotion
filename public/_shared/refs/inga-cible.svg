@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+
+  <!-- FOND PARCHEMIN -->
+  <rect width="1920" height="1080" fill="#e8dcc0"/>
+
+  <!-- Cadre double pointillé (signature GGW) -->
+  <rect x="28" y="28" width="1864" height="1024" fill="none" stroke="#2b2117" stroke-width="1.5" stroke-dasharray="6 10" opacity="0.45"/>
+  <rect x="42" y="42" width="1836" height="996" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FLEUVE CONGO — ossature permanente, tiers inférieur
+       Lignes courbes ondulantes, encre pâle
+       ═══════════════════════════════════════════════════════ -->
+  <path d="M 0 760 C 300 720 600 800 960 755 S 1400 700 1920 740" fill="none" stroke="#2b2117" stroke-width="2" opacity="0.35"/>
+  <path d="M 0 820 C 280 870 650 800 1000 840 S 1500 800 1920 820" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.28"/>
+  <path d="M 0 890 C 350 850 700 920 1050 880 S 1550 860 1920 900" fill="none" stroke="#2b2117" stroke-width="1.5" opacity="0.22"/>
+  <path d="M 0 960 C 400 1010 750 950 1100 980 S 1600 940 1920 970" fill="none" stroke="#2b2117" stroke-width="1" opacity="0.18"/>
+
+  <!-- Léger remplissage bleu entre les lignes du fleuve (mécanisme A — l'eau est vivante) -->
+  <path d="M 0 760 C 300 720 600 800 960 755 S 1400 700 1920 740 L 1920 1080 L 0 1080 Z" fill="#3a7bd4" opacity="0.06"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TURBINE (héros gauche)
+       Grand cercle abstrait + ligne verticale + rayons
+       Colorisation partielle gris-béton (mécanisme B)
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- Demi-cercle colorisé (la puissance installée) -->
+  <path d="M 300 260 A 210 210 0 0 0 300 680" fill="#8a8070" opacity="0.28"/>
+
+  <!-- Cercle principal — contour encre -->
+  <circle cx="300" cy="470" r="210" fill="none" stroke="#2b2117" stroke-width="3.5"/>
+
+  <!-- Ligne verticale épaisse (le barrage/mur) -->
+  <line x1="300" y1="200" x2="300" y2="750" stroke="#2b2117" stroke-width="9" stroke-linecap="round"/>
+
+  <!-- Rayons internes (8 pales) -->
+  <g stroke="#2b2117" stroke-width="2.5" opacity="0.55">
+    <line x1="300" y1="470" x2="300" y2="265"/>
+    <line x1="300" y1="470" x2="300" y2="675"/>
+    <line x1="300" y1="470" x2="495" y2="470"/>
+    <line x1="300" y1="470" x2="105" y2="470"/>
+    <line x1="300" y1="470" x2="438" y2="332"/>
+    <line x1="300" y1="470" x2="162" y2="608"/>
+    <line x1="300" y1="470" x2="438" y2="608"/>
+    <line x1="300" y1="470" x2="162" y2="332"/>
+  </g>
+
+  <!-- Axe central -->
+  <circle cx="300" cy="470" r="22" fill="#2b2117"/>
+  <circle cx="300" cy="470" r="10" fill="#8a8070"/>
+
+  <!-- Anneau extérieur (détail technique) -->
+  <circle cx="300" cy="470" r="230" fill="none" stroke="#2b2117" stroke-width="1" stroke-dasharray="8 14" opacity="0.3"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CÂBLE CONDUCTEUR — le héros narratif (fil conducteur)
+       Arc doux turbine → pylône → sort du cadre
+       Colorisé or #f2b53a (mécanisme B : l'énergie passe)
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- Ombre du câble (profondeur) -->
+  <path d="M 510 470 C 720 280 950 240 1100 310 C 1280 390 1480 480 1920 520" fill="none" stroke="#2b2117" stroke-width="3" opacity="0.12"/>
+
+  <!-- Câble principal or -->
+  <path d="M 510 470 C 720 280 950 240 1100 310 C 1280 390 1480 480 1920 520" fill="none" stroke="#f2b53a" stroke-width="5.5" stroke-linecap="round"/>
+
+  <!-- Filet secondaire (câble double) -->
+  <path d="M 510 480 C 720 292 950 252 1100 322 C 1280 402 1480 492 1920 532" fill="none" stroke="#f2b53a" stroke-width="2" opacity="0.35"/>
+
+  <!-- Points d'attache sur le pylône -->
+  <circle cx="1100" cy="310" r="8" fill="#f2b53a" opacity="0.8"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       PYLÔNE (héros central-droit)
+       Structure triangulaire stylisée, immense
+       Encre neutre — il ne reçoit pas la couleur
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- Corps principal — deux montants qui convergent -->
+  <line x1="1030" y1="748" x2="1100" y2="80" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+  <line x1="1170" y1="748" x2="1100" y2="80" stroke="#2b2117" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Traverses horizontales (5 niveaux) -->
+  <g stroke="#2b2117" stroke-width="2.2">
+    <line x1="1042" y1="628" x2="1158" y2="628"/>
+    <line x1="1054" y1="508" x2="1146" y2="508"/>
+    <line x1="1064" y1="388" x2="1136" y2="388"/>
+    <line x1="1074" y1="268" x2="1126" y2="268"/>
+    <line x1="1084" y1="168" x2="1116" y2="168"/>
+  </g>
+
+  <!-- Diagonales de renfort en X entre les traverses -->
+  <g stroke="#2b2117" stroke-width="1.4" opacity="0.65">
+    <line x1="1042" y1="748" x2="1158" y2="628"/>
+    <line x1="1158" y1="748" x2="1042" y2="628"/>
+    <line x1="1042" y1="628" x2="1158" y2="508"/>
+    <line x1="1158" y1="628" x2="1042" y2="508"/>
+    <line x1="1054" y1="508" x2="1146" y2="388"/>
+    <line x1="1146" y1="508" x2="1054" y2="388"/>
+    <line x1="1064" y1="388" x2="1136" y2="268"/>
+    <line x1="1136" y1="388" x2="1064" y2="268"/>
+    <line x1="1074" y1="268" x2="1126" y2="168"/>
+    <line x1="1126" y1="268" x2="1074" y2="168"/>
+  </g>
+
+  <!-- Sommet et bras du pylône -->
+  <line x1="1060" y1="168" x2="1140" y2="168" stroke="#2b2117" stroke-width="3"/>
+  <line x1="1100" y1="80" x2="1100" y2="168" stroke="#2b2117" stroke-width="2.5"/>
+
+  <!-- Base du pylône -->
+  <rect x="1008" y="748" width="184" height="16" fill="#2b2117" opacity="0.25" rx="2"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       VILLAGE CONGOLAIS (extrême droite, bas)
+       Maisons simples, fenêtres ÉTEINTES (mécanisme C)
+       ═══════════════════════════════════════════════════════ -->
+
+  <!-- Maison 1 -->
+  <g transform="translate(1520, 660)">
+    <ellipse cx="40" cy="68" rx="48" ry="7" fill="#2b2117" opacity="0.05"/>
+    <rect x="10" y="20" width="60" height="48" fill="none" stroke="#2b2117" stroke-width="2"/>
+    <polygon points="0,20 40,-18 80,20" fill="none" stroke="#2b2117" stroke-width="1.8"/>
+    <rect x="18" y="32" width="14" height="14" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+    <rect x="48" y="32" width="14" height="14" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+    <line x1="35" y1="68" x2="45" y2="68" stroke="#2b2117" stroke-width="1" opacity="0.4"/>
+  </g>
+
+  <!-- Maison 2 (légèrement en retrait, plus petite) -->
+  <g transform="translate(1620, 680)">
+    <ellipse cx="34" cy="58" rx="40" ry="6" fill="#2b2117" opacity="0.04"/>
+    <rect x="8" y="16" width="52" height="42" fill="none" stroke="#2b2117" stroke-width="1.8"/>
+    <polygon points="-2,16 34,-16 70,16" fill="none" stroke="#2b2117" stroke-width="1.5"/>
+    <rect x="14" y="26" width="11" height="11" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+    <rect x="41" y="26" width="11" height="11" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+  </g>
+
+  <!-- Maison 3 (avant-plan, plus grande) -->
+  <g transform="translate(1700, 648)">
+    <ellipse cx="44" cy="74" rx="52" ry="8" fill="#2b2117" opacity="0.05"/>
+    <rect x="12" y="22" width="64" height="52" fill="none" stroke="#2b2117" stroke-width="2.2"/>
+    <polygon points="0,22 44,-20 88,22" fill="none" stroke="#2b2117" stroke-width="2"/>
+    <rect x="20" y="36" width="14" height="14" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+    <rect x="54" y="36" width="14" height="14" fill="#e8dcc0" stroke="#2b2117" stroke-width="1"/>
+    <line x1="44" y1="74" x2="44" y2="74" stroke="#2b2117" stroke-width="1" opacity="0.3"/>
+  </g>
+
+  <!-- Maison 4 (arrière-plan, petite) -->
+  <g transform="translate(1800, 690)">
+    <rect x="6" y="14" width="44" height="36" fill="none" stroke="#2b2117" stroke-width="1.5"/>
+    <polygon points="-4,14 28,-14 60,14" fill="none" stroke="#2b2117" stroke-width="1.3"/>
+    <rect x="12" y="22" width="9" height="9" fill="#e8dcc0" stroke="#2b2117" stroke-width="0.8"/>
+    <rect x="34" y="22" width="9" height="9" fill="#e8dcc0" stroke="#2b2117" stroke-width="0.8"/>
+  </g>
+
+  <!-- Ligne de sol village -->
+  <path d="M 1500 740 C 1600 730 1700 745 1870 735" fill="none" stroke="#2b2117" stroke-width="1" opacity="0.25"/>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HACHURES DE TERRAIN — sol entre les objets
+       Très légères, encre pâle (comme les dunes GGW)
+       ═══════════════════════════════════════════════════════ -->
+  <g stroke="#2b2117" stroke-width="1" opacity="0.08">
+    <path d="M 600 680 C 750 660 900 700 1000 680"/>
+    <path d="M 550 720 C 700 700 850 735 980 715"/>
+    <path d="M 1250 680 C 1350 665 1450 685 1500 670"/>
+    <path d="M 1200 720 C 1320 705 1440 720 1510 710"/>
+  </g>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FLÈCHE NARRATIVE — le câble sort du cadre
+       Confirme visuellement l'exil de l'électricité
+       ═══════════════════════════════════════════════════════ -->
+  <path d="M 1870 510 L 1910 518 L 1870 526" fill="none" stroke="#f2b53a" stroke-width="3" stroke-linejoin="round"/>
+
+</svg>

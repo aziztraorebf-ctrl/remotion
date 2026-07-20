@@ -1,6 +1,10 @@
 # DÉCISION STRUCTURANTE — Jetons-combattants vs véhicules (War-Map Long 16:9)
 
 > Aziz 2026-06-07, après reconstruction Acte 1 Sahel. Apprentissage de FOND, durable.
+> ⭐ PÉRIMÈTRE (précisé 2026-07-06) : cette règle vaut pour la **carte géo macro dézoomée**. Sur un
+> **insert état-major ZOOMÉ** (illustration de plan de bataille, pas carte de données), le **portrait
+> rond humain est autorisé** (médaillon-commandant, donne le « qui »). Détail : [[WARMAP-INSERT-SVG-ETATMAJOR]]
+> § RÈGLE ENRICHIE. Pas une contradiction : deux registres, deux règles.
 
 ## LE CONSTAT
 Les VÉHICULES (chars/technicals sprites) fonctionnent en format SHORT (9:16, serré, zoomé) :

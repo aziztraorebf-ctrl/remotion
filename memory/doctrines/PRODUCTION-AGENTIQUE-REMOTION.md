@@ -54,6 +54,25 @@ evidents (1-2 iter), review Gemini (signal), upload catbox. + compte-rendu lucid
    typecheck, review, upload catbox. Enregistrer la compo dans Root.tsx.
 8. La consigne d'AUTO-EVAL (compte-rendu : fait / trous / avec plus de temps) — c'est ce qui fait progresser le systeme.
 
+## ⛔⛔ STORYBOARD PHASE A = PANEL D'ÉVOLUTION, JAMAIS UNE AFFICHE (regle orchestrateur, gravee 2026-06-26)
+> Erreur commise par l'orchestrateur (Opus) sur sc.6+7 Senegal V3 : a brief les agents Phase A avec
+> "genere 1 image representative par direction" via `gemini-gen-image.py`. Resultat = une FRAME isolee figee
+> (un poster), PAS un storyboard. Aziz a tranche : ce n'est PAS notre format. Le format canonique est rappele ici
+> pour que l'orchestrateur ne refasse PLUS l'erreur — c'est SA responsabilite, pas celle de l'agent.
+
+**Le storyboard canonique = un PANEL MULTI-CASES (4 cases) qui montre l'ÉVOLUTION TEMPORELLE de la scene**
+(etat_debut → etat_2 → etat_3 → etat_fin). C'est un outil de CHOREGRAPHIE : on doit VOIR le mouvement de la scene,
+pas une image d'affiche. Une frame unique ne raconte aucun mouvement et ne permet pas le breakdown.
+- **OUTIL = `gemini-storyboard-panels.py`** (montre la PROGRESSION intro→dev→climax), PAS `gemini-gen-image.py`.
+- ⛔ **JAMAIS de photoréalisme** : pas de photos reelles (tanker photo, mur de pierre photo), pas de visages
+  photoréalistes (Faye/Sonko), pas de drapeaux raster réalistes. Tout reste dans le registre DATA-HERO / motion
+  design VECTORIEL : fond navy #16213a, grille or, formes géométriques épurées, BebasNeue, accents or/blanc.
+  (Sc.7 Dualite A = photomontage TV tanker+mur = HORS univers. Sc.7 Cicatrice B = visages photo = HORS univers.)
+- **16:9 HORIZONTAL** : panel en bande horizontale ou grille 2×2, chaque case en 16:9, JAMAIS portrait empilé.
+- ⚠️ Le point 3 ci-dessous ("générer 4 images séparées via gemini-gen-image.py") visait à éviter le portrait,
+  mais a poussé vers la frame-affiche. CORRECTIF : utiliser `gemini-storyboard-panels.py` (panel d'évolution) ;
+  s'il sort du portrait, relancer avec ratio 16:9 explicite — ne PAS retomber sur la frame isolée.
+
 ## TROUS DE DOCTRINE / OUTILS REMONTES PAR LES AGENTS (a garder a jour)
 1. **`visual_review.py` — bug parseur de score** : sur certains formats de sortie Gemini (liste de criteres au lieu
    d'un score global), le score ressort `"?"` -> le hook `pre-presentation-review.sh` bloque l'upload comme si <8.

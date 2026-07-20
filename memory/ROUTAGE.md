@@ -3,6 +3,7 @@
 > **Consulter ce fichier au DÉBUT de toute tâche de production** (avant d'écrire code ou prompt).
 > C'est la table d'aiguillage extraite du CLAUDE.md pour alléger le démarrage. Pointeurs uniquement.
 > Deux tables : (1) Routage OUTILS — quel fichier LIRE. (2) Routage PROCÉDÉS — quel skill LANCER.
+> **Rôle vs MEMORY.md (clarifié 2026-07-11)** : ce fichier = table COMPLÈTE et exhaustive, fait autorité en cas de doute sur où chercher. `MEMORY.md` (`.claude/.../memory/`) = résumé court auto-chargé à chaque session (projets actifs + feedbacks-clés + doctrines les plus critiques), pas remplacé par ce fichier.
 
 ---
 
@@ -10,11 +11,26 @@
 
 Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire du code ou un prompt**. Si la ligne mentionne aussi un skill, le consulter en complément (jamais à la place de la mémoire projet).
 
+### ⚡ ARBRE DE DÉCISION — SVG ou Mapbox ? (trancher ici avant tout)
+
+| Question | Réponse → Format |
+|---|---|
+| Le sujet a une **géographie réelle** (frontières, trajet, territoire) ? | → **Mapbox** frame-driven |
+| Le sujet est une **transformation visuelle de formes** (mécanisme, flux, montage financier, récit incarné par des formes qui évoluent) ? | → **SVG génératif** |
+| Les deux à la fois (géo + transfo narrative) ? | → **Mapbox** pour la géo + **SVG-insert** pour la couche narrative (ex. War-Map AES = carte Mapbox + insert CFA en SVG). Doctrine : `SVG-MIDFORM-FORMAT.md` § "SVG-insert" |
+| Doute sur si le SVG sera LISIBLE (forme nouvelle, angle incertain) ? | → **SVG-FAISABILITE-AMONT** obligatoire AVANT tout code |
+| Organique humain/animal réaliste, émotion de visage, scène filmée ? | → image générée (Gemini/Recraft/Seedance), pas SVG |
+
+> ⭐ **Vue d'ensemble « quel moteur pour quelle nature de contenu » (3 moteurs D3/SVG/Mapbox sur 1 socle Remotion, combos signatures, Mapbox+D3 sous-exploités, décision AU SCRIPT)** : `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`. Cet arbre en est la version rapide « trancher ici » ; la doctrine donne le raisonnement complet.
+
+---
+
 ### Points d'entrée maîtres (lire EN PREMIER en cas de doute « où chercher ? »)
 
 | Sujet | Fichier |
 |---|---|
-| **État actuel du projet (session précédente)** | `memory/COMPACT_CURRENT.md` — résumé dense post-session (GGW livré, projets en attente, état bibliothèque SVG). Lire si doute sur "où on en était". |
+| **État actuel du projet (session précédente)** | `memory/NEXT-ACTION.md` (à jour) — ⚠️ `memory/COMPACT_CURRENT.md` est un fichier MÉCANIQUE ciblé par `scripts/atlas-session.py` et le skill `checkpoint`, mais son contenu actuel date de 2026-06-25 et est dépassé par NEXT-ACTION.md. Ne PAS s'y fier pour "où on en était" sans vérifier la date. |
+| **DÉMARRER / RECHERCHER une nouvelle vidéo OU un script (short, mid-form, macro)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ DÉCLENCHEUR : dès qu'Aziz dit « je veux faire une vidéo / une recherche sur X / un script sur Y ». La chaîne complète 9 étapes (valider sujet→écrire→fact-check→jury). Aziz n'a PAS à se rappeler des étapes — suivre ce fichier. |
 | **PRODUIRE/REFAIRE une scène — le SYSTÈME complet** | `memory/SYSTEME-AGENTIQUE.md` ⭐⭐ carte du système : le FLUX (storyboard→validation→breakdown→code→review), l'orchestration (chef+agents frais), où est chaque brique. Activable à tout moment (« consulte notre système agentique »). |
 | **Construire/prolonger TOUTE scène (AVANT de chercher un composant)** | `memory/doctrines/CONTINUITE-SCENE-INTENTION-DABORD.md` ⭐⭐ NON-NEGOTIABLE — déduis l'INTENTION (1 verbe) d'abord, le template en dernier. PUIS porte d'entrée `src/projects/_shared/INTENTION-FORME-INDEX.md` (table intention→forme→réponse, inclut templates Hera ⭐) |
 | **Doute sur quel catalogue ouvrir (tout domaine)** | `src/projects/_shared/INDEX-DES-INDEX.md` ⭐ carte de TOUS les catalogues (fiches techniques, consultées APRÈS l'intention) |
@@ -27,12 +43,20 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | **« Quel SCRIPT lancer pour faire X ? » (render/audio/publish/gen/review/data)** | `scripts/SCRIPTS-INDEX.md` ⭐ index des scripts par cas d'usage. Review : `scripts/tools/REVIEW-TOOLS-INDEX.md`. |
+| **Chaîne complète idée→script blindé (valider sujet → écrire → fact-check → jury)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ 9 étapes. Enchaîne `SUJET-PRIME` (0-6) + script + fact-check 3 niveaux + jury. |
 | Écrire/valider TOUT script narratif (couche orale universelle) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` ⭐ 16 règles (clarté/incarnation/rétention) |
 | Script Short narratif (Héros Oubliés, conte, tragédie) | `memory/templates/script-ebauche-v1.md` |
 | Script Atlas (géo, taille, richesse-record, comparaison) | `memory/templates/script-atlas-v1.md` |
 | Hook 5s / cold open (narration) | `memory/templates/hook-short.md` |
 | Sous-titres Shorts (TikTok/Karaoké), camera shake | `memory/templates/subtitles-shorts.md` |
 | Formule César, 7 beats Shorts, dynamisation | `memory/tools/seedance-community.md` |
+| **Template combat AVANT tout prompt/image (checklist obligatoire, ZÉRO exception)** | `memory/templates/combat.md` |
+| **Template narratif AVANT tout prompt/image** | `memory/templates/narratif.md` |
+| **Template montage AVANT tout prompt/image** | `memory/templates/montage.md` |
+| **Template exploration AVANT tout prompt/image** | `memory/templates/exploration.md` |
+| **Vérifier densité de mots d'un script (avant TTS payant)** | `scripts/tools/check-script-density.py <script> --format <format>` — gate NON-NEGOTIABLE, déjà intégré au skill `souverain-preproduction`. |
+| **Douter de quelle VERSION de script a servi à un rendu final** | `scripts/tools/trace-livrable.py <rendu.mp4> --episode-dir <dossier>` — croise code + audio transcrit, jamais deviner sur le nom du fichier seul. |
+| **Vérifier qu'une décision doctrine tranchée (Mapbox frame-driven, anti-patterns Remotion, overlay banni) est bien respectée dans le CODE DÉJÀ ÉCRIT** | `scripts/tools/check-doctrine-violations.py [dossier]` — à lancer périodiquement (pas juste au moment d'éditer), rattrape la dérive du code jamais re-scanné. |
 
 ### Souverain
 
@@ -41,7 +65,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Doute « où chercher ? » Souverain — POINT D'ENTRÉE** | `src/projects/souverain/SOUVERAIN-INDEX.md` ⭐ carte maître du pilier |
 | Démarrer/coder un Short Souverain Mapbox (point d'entrée) | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` ⭐ 7 étapes → puis `SOUVERAIN-SHORT-SKELETON.md` |
 | Doctrine Souverain (durable) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` (LIRE en entier avant tout code Souverain) |
-| Règles éditoriales Souverain (sources, couleurs, script Type B) | `memory/rules-souverain-editorial.md` |
+| Règles éditoriales Souverain (sources, couleurs, script Type B) | `memory/rules/rules-souverain-editorial.md` |
 | Tailwind (tokens gold/navy/ivory) — TOUT composant Souverain | `memory/feedbacks/feedback_tailwind-remotion-setup.md` · Framer Motion INTERDIT · lire `tailwind.config.ts` |
 | SplitScreen 50/50, entité vs entité | `src/projects/_shared/components/layouts/SplitScreenSouverain.tsx` |
 | Data-viz Souverain (StackedBars, ProcessFlow, comparaisons $) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` §9 + `PrototypeD3StackedBars.tsx` (D3 utility-only) |
@@ -56,7 +80,8 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | « Quel composant Atlas pour X ? » | `src/projects/atlas/_shared/COMPOSANTS-INDEX.md` · doc : `ATLAS-COMPOSANTS.md` |
 | Asset Atlas (sprite, map-object, geo) AVANT générer | `src/projects/atlas/_shared/ATLAS-ASSETS-INDEX.md` (19 persos / 568 sprites) |
 | Personnage/sprite PixelLab dans un beat Atlas | `memory/doctrines/ATLAS-PIXELLAB-PLAYBOOK.md` ⭐ · code `AtlasPixelChar.tsx` |
-| Règles production Atlas (non-négociable, checklist) | `memory/rules-atlas-production.md` |
+| Règles production Atlas (non-négociable, checklist) | `memory/rules/rules-atlas-production.md` |
+| **Self-review SCRIPTÉE d'un beat Atlas (clipPath dupliqué, composant partagé redéfini, caméra à la main)** | `scripts/tools/atlas-selfreview.py <Beat*.tsx>` — miroir `mapbox-selfreview.py`, Phase 3 AVANT présentation Aziz. |
 | Format « concept expliqué comme un jeu vidéo » | `memory/doctrines/ATLAS-FORMAT-VIDEO-GAME.md` (concepts oui, drames non) |
 
 ### SVG génératif / Shorts SVG
@@ -77,10 +102,14 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 
 | Sujet | Fichier |
 |---|---|
+| **Avant de coder une scène War-Map — scan doctrine + zoom-check ⭐** | `python3 scripts/warmap-session.py --phase scan` (4 pointeurs essentiels) puis `--phase zoom-check <f.tsx> --zoom N --intent close-up\|territorial\|regional` (anti-bug ×10 zoom Mapbox, cf Soudan Acte 3) |
 | Coder scène/beat War-Map (changement territoire) AVANT CODE | `memory/doctrines/WARMAP-GRAMMAIRE.md` ⭐⭐ CAUSE avant EFFET + 5 techniques causales |
 | War-Map Long (5-7min, 16:9, analytique géopo) | `memory/doctrines/WARMAP-LONG-DOCTRINE.md` ⭐ |
-| Doctrine design War-Map | `memory/doctrines/WARMAP-PLAYBOOK.md` |
+| Insert plein écran « prise de territoire / assaut / mouvement de forces » en SVG pur (PAS Mapbox, pas de géo réelle requise) | `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md` ⭐⭐ (registre médaillon état-major, réf compo `KhartoumEtatMajorSVG`) |
+| Doctrine design War-Map (Mapbox, géo réelle — voie de production assumée, voir note) | `memory/doctrines/WARMAP-PLAYBOOK.md` |
 | Doctrine données War-Map (recherche OSINT) | `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` |
+| Overlays géo-ancrés sur carte (jetons, drapeaux, plaques, RÈGLE ZÉRO anti-dérive) | `memory/doctrines/CARTO-OVERLAYS-PRINCIPES.md` ⭐⭐ |
+| Quel outil pour animer quel objet War-Map (SVG/Gemini/PixelLab) | `memory/doctrines/WARMAP-ANIMER-OBJETS.md` |
 | « Quelle brique War-Map pour X ? » | `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md` (+ LINKING mapanimation) |
 
 ### Composants & templates — SCAN OBLIGATOIRE AVANT TOUT CODE
@@ -121,10 +150,11 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Mouvement caméra clip AI (orbit, dolly, crane, OTS) | `memory/tools/camera-movements.md` |
 | Seedance, Dreamina, prompt vidéo, clip | `memory/tools/seedance-prompts.md` + `seedance-rules.md` |
 | Seedance storyboard multi-cut (<15s) | `memory/tools/seedance-storyboard-technique.md` |
+| Grok Imagine 1.5, prompt vidéo API, alternative Seedance | `memory/tools/grok-imagine-rules.md` + `grok-imagine-prompts.md` + `memory/checklists/GROK-IMAGINE.md` |
 | Template data-viz pour Gemini (BarRace, StackedBars…) | `memory/tools/CATALOGUE-TEMPLATES-REMOTION.md` (40+ templates) |
 | Asset PixelLab AVANT génération | `memory/tools/PIXELLAB-MASTER-INDEX.md` (~50 assets avec IDs) |
 | Kling, fal.ai, clip 4K, start/end frame | `memory/tools/kling.md` |
-| Gemini, retouche image, character sheet | `memory/tools/gemini.md` |
+| Gemini, retouche image, character sheet | `memory/tools/gemini.md` ⚠️ **LIRE AVANT tout appel Gemini SCRIPTÉ** : la lib `google-genai` HANG sur image (→ REST direct) et ne PAS plafonner `max_tokens` haut pour du SVG (sur-reasoning 8min). Gotchas gravés en tête du fichier — les relire évite de re-perdre 15min (leçon 2026-07-17). |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
 | ElevenLabs, voix, TTS, narration | `memory/tools/elevenlabs.md` |
 | Minimax, musique de fond, kora, griot | `memory/tools/minimax.md` |
@@ -138,12 +168,24 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 |---|---|
 | Remotion, animation, render, headless, composition | `memory/tools/remotion.md` + skills `remotion-best-practices/rules/`, `remotion-video-toolkit/rules/rendering.md` |
 | Render cloud Vercel (>30s, libérer machine) | `scripts/tools/render-on-vercel.py` (défaut render long, 100GB-h/mois gratuit) |
-| Règles outils techniques (Lottie, Mapbox headless, audio, geo) | `memory/rules-outils-techniques.md` |
+| **Montrer un render/image à Aziz (mobile — JAMAIS de chemin local)** | Uploader d'abord : ordre catbox.moe → Imgur → uguu.se → Litterbox (dernier recours, 72h). Détail + gotchas (fichier vide silencieux, limite 1min Imgur) : `.claude/.../memory/feedback_upload-hosts-fallback.md`. Contexte mobile : `.claude/.../memory/feedback_aziz-mobile-uploads-vercel.md`. |
+| Règles outils techniques (Lottie, Mapbox headless, audio, geo) | `memory/rules/rules-outils-techniques.md` |
 | Publier YouTube + Instagram + Facebook | `memory/tools/trypost.md` (TryPost, limites 50MB, jamais REST `/api/uploads`) |
 | Publier TikTok | `memory/tools/postiz.md` (Postiz REST, coverB obligatoire) |
 | Calendrier éditorial Kora & Cartes | `memory/episodes/lancement-kora/CALENDRIER-EDITORIAL-JUIN-2026.md` |
 | Pipeline, ordre des étapes | `memory/tools/pipeline.md` ⚠️ daté 2026-05-02 — pour data-viz voir WORKFLOW-DATAVIZ.md |
-| Règles workflow/processus (jury APIs, go/no-go) | `memory/rules-workflow-processus.md` |
+| API/outil découvert en session → où sauvegarder | `memory/apis-and-tools.md` |
+| Leçon/bug/anti-pattern → où sauvegarder | `memory/key-learnings.md` |
+
+### Rangement mémoire (réorg 2026-07-11 — racine `memory/` mise à plat en sous-dossiers)
+
+| Sujet | Dossier |
+|---|---|
+| Règles de production transverses (`rules-*.md`, ex-racine) | `memory/rules/` (7 fichiers : atlas/beat/data-driven-motion/outils-techniques/souverain-editorial/souverain-script/souverain-storyboard) |
+| Backlogs (éditorial + templates reveal-mécanique, fusionnés) | `memory/backlogs/BACKLOG.md` — source unique, sections par thème |
+| Starters de reprise de session actifs | `memory/starters/` (STARTER-PROMPT-*.md non périmés) |
+| Starters périmés / snapshots de session dépassés | `memory/archive/` (voir aussi `memory/archive/starters-perimes-*/`) |
+| Sujets en réserve / stratégiques sans dossier épisode dédié | `memory/projects/` (ex : GAZODUC-MEGAPROJETS-SUJET, HOOKS-LIBRARY-PLAN, heros-oublies-series-signature, EXPLORATION-DIVERSIFICATION-CHAINES) |
 
 ### Workflows agentiques et data-viz (2026-06)
 
@@ -153,7 +195,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Agent autonome scène REMOTION data-viz** (flux 2 phases, checklist, outils) | `memory/doctrines/PRODUCTION-AGENTIQUE-REMOTION.md` ⭐⭐ |
 | **Agent autonome scène SVG** (flux 2 phases, checklist, outils) | `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` ⭐⭐ |
 | Templates Remotion (CATALOGUE) | `src/projects/_shared/COMPOSANTS-INDEX.md` (71 composants, inclut HERO DATA et templates Mapbox aussi référencés) |
-| Règles motion design data-driven | `memory/rules-data-driven-motion-design.md` ⭐ |
+| Règles motion design data-driven | `memory/rules/rules-data-driven-motion-design.md` ⭐ |
 
 ---
 
@@ -177,9 +219,11 @@ Nos procédés SONT des skills exécutables. Quand un procédé démarre, **LANC
 | Intégrer feedback / corrections post-review | `integrate-feedback` |
 | Bilan/checkpoint de session | `checkpoint` (Souverain) ou `atlas-session` (Atlas) |
 | **Review externe (plan OU rendu) — quel outil ?** | `scripts/tools/REVIEW-TOOLS-INDEX.md` ⭐ vue unifiée. Système principal = `da-brief.py` (3 voix, upstream/downstream). Modèles CONSULTATIFS jamais juges. |
-| **AVANT de coder un acte/beat (vision validée + assets décidés)** | DA-BRIEF-GATE — `memory/doctrines/DA-BRIEF-GATE.md` + `scripts/tools/da-brief.py --upstream` (Gemini+Kimi+DeepSeek → synthèse tracée → Aziz tranche → code). NON-NEGOTIABLE tous projets. MAX 1 appel/modèle/acte |
+| **AVANT de coder un acte/beat (vision validée + assets décidés)** | LANCER le skill `da-brief-gate` (Gemini+Kimi+DeepSeek → synthèse tracée dans le PLAN épisode → GATE BLOQUANT, Aziz tranche AVANT le code). Détail procédé : `memory/doctrines/DA-BRIEF-GATE.md`. NON-NEGOTIABLE tous projets. MAX 1 appel/modèle/acte |
 | **Bug Remotion/Mapbox — 2e fix sur MÊME symptôme échoue** | `superpowers:systematic-debugging` OBLIGATOIRE. STOP → instrumenter (prouver la valeur réelle) AVANT de fixer. Jamais « c'est l'environnement » sans preuve |
 | Beat vidéo qui échoue 2+ fois (visuel) | AVANT de re-coder : œil externe sur la vidéo ratée via `scripts/tools/da-brief.py` (downstream, frames). Voir REVIEW-TOOLS-INDEX. |
+| **Chantier créatif bloqué après 2+ rejets consécutifs du même concept/storyboard** (pas au 1er jet) | LANCER le skill `creative-director-dual` — 2 agents `creative-director` en parallèle, brief strictement identique, zéro suggestion d'angle, indépendance mutuelle, Aziz tranche (garde A / garde B / fusionne). Preuve : Short War-Map Sahel 90s débloqué après 4 rejets (2026-07-07), détail `memory/episodes/warmap-sahel/DETAIL-creative-director-reprise-2026-07-07.md`. |
+| **Audit qualité approfondi d'un épisode MULTI-SCÈNES déjà avancé/produit** (ménage global, avant promotion finale, session bloquée sur cohérence d'ensemble) | LANCER le skill `passe-amelioration-scene` — N agents (1/scène, checklist identique, cherchent des problèmes concrets) + 1 agent transversal de synthèse. Doctrine : `memory/doctrines/PASSE-AMELIORATION-SCENE-PAR-SCENE.md`. Preuve : `memory/episodes/warmap-sahel/AUDIT-TRANSVERSAL-SYNTHESE.md`. NE PAS utiliser sur un tout premier jet ou une scène unique. |
 | Gros chantier multi-étapes (épisode, pipeline, refactor) | `superpowers:writing-plans` |
 | Avant de dire « c'est fait/terminé » | `superpowers:verification-before-completion` |
 

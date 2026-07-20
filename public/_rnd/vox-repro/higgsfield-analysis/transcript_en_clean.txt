@@ -1,0 +1,624 @@
+[00:00:01] Are these motion graphics familiar to
+[00:00:01] Are these motion graphics familiar to you? These paper cutout collages are the
+[00:00:04] you? These paper cutout collages are the
+[00:00:05] you? These paper cutout collages are the kind of motion graphics that you always
+[00:00:07] kind of motion graphics that you always
+[00:00:07] kind of motion graphics that you always see in those Vox [music] videos. And it
+[00:00:09] see in those Vox [music] videos. And it
+[00:00:09] see in those Vox [music] videos. And it used to take an entire studio, but we
+[00:00:11] used to take an entire studio, but we
+[00:00:11] used to take an entire studio, but we can now make it with just a single
+[00:00:14] can now make it with just a single
+[00:00:14] can now make it with just a single prompt. One that Claude writes for me,
+[00:00:16] prompt. One that Claude writes for me,
+[00:00:16] prompt. One that Claude writes for me, that carries the entire visual
+[00:00:18] that carries the entire visual
+[00:00:18] that carries the entire visual direction, and it builds
+[00:00:20] direction, and it builds
+[00:00:20] direction, and it builds everything. The motion graphics, the
+[00:00:22] everything. The motion graphics, the
+[00:00:22] everything. The motion graphics, the transitions, the script, and even the
+[00:00:25] transitions, the script, and even the
+[00:00:25] transitions, the script, and even the audio for me. And here's the part that's
+[00:00:27] audio for me. And here's the part that's
+[00:00:27] audio for me. And here's the part that's really so insane. This technique isn't
+[00:00:31] really so insane. This technique isn't
+[00:00:31] really so insane. This technique isn't limited to creating Vox style motion
+[00:00:33] limited to creating Vox style motion
+[00:00:33] limited to creating Vox style motion graphics or even videos. You can
+[00:00:36] graphics or even videos. You can
+[00:00:36] graphics or even videos. You can customize it to fit any look, any style
+[00:00:38] customize it to fit any look, any style
+[00:00:38] customize it to fit any look, any style that you want. And it's all inside
+[00:00:40] that you want. And it's all inside
+[00:00:40] that you want. And it's all inside Claude code with just a single
+[00:00:42] Claude code with just a single
+[00:00:43] Claude code with just a single connector. So, if it's a whiteboard,
+[00:00:46] connector. So, if it's a whiteboard,
+[00:00:46] connector. So, if it's a whiteboard, pixel art, or any other motion graphic
+[00:00:49] pixel art, or any other motion graphic
+[00:00:49] pixel art, or any other motion graphic that you need for your videos, you can
+[00:00:51] that you need for your videos, you can
+[00:00:51] that you need for your videos, you can create it in just a few minutes with
+[00:00:54] create it in just a few minutes with
+[00:00:54] create it in just a few minutes with this system. So, in this video, I'm
+[00:00:56] this system. So, in this video, I'm
+[00:00:56] this system. So, in this video, I'm going to show you how to create stunning
+[00:00:58] going to show you how to create stunning
+[00:00:58] going to show you how to create stunning motion graphics right inside Claude.
+[00:01:01] motion graphics right inside Claude.
+[00:01:01] motion graphics right inside Claude. Now, for all of this, you'll need a
+[00:01:03] Now, for all of this, you'll need a
+[00:01:03] Now, for all of this, you'll need a Higgs Field account. It's the foundation
+[00:01:06] Higgs Field account. It's the foundation
+[00:01:06] Higgs Field account. It's the foundation that makes all of this possible. So,
+[00:01:08] that makes all of this possible. So,
+[00:01:08] that makes all of this possible. So, make sure to sign up using the link in
+[00:01:10] make sure to sign up using the link in
+[00:01:10] make sure to sign up using the link in the description below if you don't have
+[00:01:12] the description below if you don't have
+[00:01:12] the description below if you don't have an account already. Go and check that
+[00:01:13] an account already. Go and check that
+[00:01:13] an account already. Go and check that out. Also, go and check out our free
+[00:01:14] out. Also, go and check out our free
+[00:01:14] out. Also, go and check out our free school community. That link is also in
+[00:01:16] school community. That link is also in
+[00:01:16] school community. That link is also in the description below. But right now,
+[00:01:19] the description below. But right now,
+[00:01:19] the description below. But right now, let's get started and let's set
+[00:01:20] let's get started and let's set
+[00:01:20] let's get started and let's set everything up. So now, let's start off
+[00:01:22] everything up. So now, let's start off
+[00:01:22] everything up. So now, let's start off with the setup, okay? But before we
+[00:01:24] with the setup, okay? But before we
+[00:01:24] with the setup, okay? But before we build anything, there's one thing that
+[00:01:26] build anything, there's one thing that
+[00:01:26] build anything, there's one thing that you need to know. And the good news is
+[00:01:28] you need to know. And the good news is
+[00:01:28] you need to know. And the good news is that you only ever have to do it once.
+[00:01:30] that you only ever have to do it once.
+[00:01:30] that you only ever have to do it once. We are going to connect the Higgs Field
+[00:01:33] We are going to connect the Higgs Field
+[00:01:33] We are going to connect the Higgs Field MCP to Claude code. So, this is what
+[00:01:35] MCP to Claude code. So, this is what
+[00:01:35] MCP to Claude code. So, this is what gives Claude its own creative toolkit,
+[00:01:37] gives Claude its own creative toolkit,
+[00:01:38] gives Claude its own creative toolkit, direct access to every AI video and
+[00:01:41] direct access to every AI video and
+[00:01:41] direct access to every AI video and image generation model in the world.
+[00:01:43] image generation model in the world.
+[00:01:43] image generation model in the world. Now, first, check the link in the
+[00:01:44] Now, first, check the link in the
+[00:01:44] Now, first, check the link in the description below, and it will take you
+[00:01:46] description below, and it will take you
+[00:01:46] description below, and it will take you straight to Higgs Field. Now, once you
+[00:01:48] straight to Higgs Field. Now, once you
+[00:01:48] straight to Higgs Field. Now, once you are there, you need to create an account
+[00:01:50] are there, you need to create an account
+[00:01:50] are there, you need to create an account if you don't have one already. And this
+[00:01:52] if you don't have one already. And this
+[00:01:52] if you don't have one already. And this is the core tool for the setup. So,
+[00:01:54] is the core tool for the setup. So,
+[00:01:54] is the core tool for the setup. So, don't miss this, okay? Then what you can
+[00:01:56] don't miss this, okay? Then what you can
+[00:01:56] don't miss this, okay? Then what you can do is you're going to copy the MCP URL,
+[00:01:59] do is you're going to copy the MCP URL,
+[00:01:59] do is you're going to copy the MCP URL, then you're going to come back to
+[00:02:00] then you're going to come back to
+[00:02:00] then you're going to come back to Claude, and then you're going to go to
+[00:02:01] Claude, and then you're going to go to
+[00:02:01] Claude, and then you're going to go to customize, and then add a custom
+[00:02:03] customize, and then add a custom
+[00:02:03] customize, and then add a custom connector, then just add in the URL, and
+[00:02:06] connector, then just add in the URL, and
+[00:02:06] connector, then just add in the URL, and then it will run through a quick off
+[00:02:08] then it will run through a quick off
+[00:02:08] then it will run through a quick off flow, and it's going to be with your
+[00:02:10] flow, and it's going to be with your
+[00:02:10] flow, and it's going to be with your Higgs Field account. Now, it's so easy,
+[00:02:12] Higgs Field account. Now, it's so easy,
+[00:02:12] Higgs Field account. Now, it's so easy, and once everything is connected, you
+[00:02:14] and once everything is connected, you
+[00:02:14] and once everything is connected, you have every image and video model
+[00:02:16] have every image and video model
+[00:02:16] have every image and video model available inside Claude. And that's
+[00:02:18] available inside Claude. And that's
+[00:02:19] available inside Claude. And that's basically it. It's super quick to get
+[00:02:20] basically it. It's super quick to get
+[00:02:20] basically it. It's super quick to get started. Now, let's build some motion
+[00:02:23] started. Now, let's build some motion
+[00:02:23] started. Now, let's build some motion graphics together because trust me, like
+[00:02:25] graphics together because trust me, like
+[00:02:25] graphics together because trust me, like you're going to see how simple all of
+[00:02:27] you're going to see how simple all of
+[00:02:27] you're going to see how simple all of this is. The first thing that we are
+[00:02:29] this is. The first thing that we are
+[00:02:29] this is. The first thing that we are going to do is, now that we have the
+[00:02:31] going to do is, now that we have the
+[00:02:31] going to do is, now that we have the setup, we are going to get our first
+[00:02:33] setup, we are going to get our first
+[00:02:33] setup, we are going to get our first prompt. So, I'm going to jump into a
+[00:02:35] prompt. So, I'm going to jump into a
+[00:02:35] prompt. So, I'm going to jump into a regular Claude chat, and then I'm going
+[00:02:36] regular Claude chat, and then I'm going
+[00:02:36] regular Claude chat, and then I'm going to ask it for a vox style prompt on my
+[00:02:39] to ask it for a vox style prompt on my
+[00:02:39] to ask it for a vox style prompt on my topic, okay? So, why airline seats keep
+[00:02:43] topic, okay? So, why airline seats keep
+[00:02:43] topic, okay? So, why airline seats keep shrinking, okay? And then I'm specific
+[00:02:45] shrinking, okay? And then I'm specific
+[00:02:45] shrinking, okay? And then I'm specific about the style that I want. I want a
+[00:02:47] about the style that I want. I want a
+[00:02:47] about the style that I want. I want a paper cutout collage. I want halftone
+[00:02:50] paper cutout collage. I want halftone
+[00:02:50] paper cutout collage. I want halftone archival photos, maybe some hand-drawn
+[00:02:53] archival photos, maybe some hand-drawn
+[00:02:53] archival photos, maybe some hand-drawn annotation arrows. And now I'm going to
+[00:02:55] annotation arrows. And now I'm going to
+[00:02:55] annotation arrows. And now I'm going to hit enter, and then Claude comes back
+[00:02:57] hit enter, and then Claude comes back
+[00:02:57] hit enter, and then Claude comes back with a ready-to-paste prompt. Now,
+[00:03:00] with a ready-to-paste prompt. Now,
+[00:03:00] with a ready-to-paste prompt. Now, that's basically the whole ticket. Now,
+[00:03:01] that's basically the whole ticket. Now,
+[00:03:02] that's basically the whole ticket. Now, I have a custom prompt for the exact
+[00:03:03] I have a custom prompt for the exact
+[00:03:03] I have a custom prompt for the exact motion graphic that I want. Now, I've
+[00:03:06] motion graphic that I want. Now, I've
+[00:03:06] motion graphic that I want. Now, I've got the prompt sitting in Claude chat.
+[00:03:08] got the prompt sitting in Claude chat.
+[00:03:08] got the prompt sitting in Claude chat. Now, I'm going to be taking it over to
+[00:03:10] Now, I'm going to be taking it over to
+[00:03:10] Now, I'm going to be taking it over to Claude code, and then it's basically
+[00:03:12] Claude code, and then it's basically
+[00:03:12] Claude code, and then it's basically going to be the exact same app that I'm
+[00:03:14] going to be the exact same app that I'm
+[00:03:14] going to be the exact same app that I'm using, the same connection. I'm just
+[00:03:15] using, the same connection. I'm just
+[00:03:15] using, the same connection. I'm just going to copy it out, and then I'm going
+[00:03:17] going to copy it out, and then I'm going
+[00:03:17] going to copy it out, and then I'm going to paste it in. And this is where I can
+[00:03:19] to paste it in. And this is where I can
+[00:03:19] to paste it in. And this is where I can actually build, generate, and write the
+[00:03:21] actually build, generate, and write the
+[00:03:21] actually build, generate, and write the whole project desk. Now, here's what I'm
+[00:03:23] whole project desk. Now, here's what I'm
+[00:03:23] whole project desk. Now, here's what I'm doing here. One instruction I'm going to
+[00:03:25] doing here. One instruction I'm going to
+[00:03:25] doing here. One instruction I'm going to put in, and it's going to say, "Take
+[00:03:27] put in, and it's going to say, "Take
+[00:03:27] put in, and it's going to say, "Take that prompt and build it." Okay. Now,
+[00:03:30] that prompt and build it." Okay. Now,
+[00:03:30] that prompt and build it." Okay. Now, it's literally turning a script into a
+[00:03:31] it's literally turning a script into a
+[00:03:31] it's literally turning a script into a finished video in the style that used to
+[00:03:34] finished video in the style that used to
+[00:03:34] finished video in the style that used to mean breaking it into dozens of shots,
+[00:03:37] mean breaking it into dozens of shots,
+[00:03:37] mean breaking it into dozens of shots, generating every one of them, and then
+[00:03:38] generating every one of them, and then
+[00:03:38] generating every one of them, and then syncing the whole thing together. Now,
+[00:03:41] syncing the whole thing together. Now,
+[00:03:41] syncing the whole thing together. Now, with Higgs Field plus Claude, it
+[00:03:43] with Higgs Field plus Claude, it
+[00:03:43] with Higgs Field plus Claude, it basically does all of that for me. Now,
+[00:03:46] basically does all of that for me. Now,
+[00:03:46] basically does all of that for me. Now, take a look at this.
+[00:03:47] take a look at this.
+[00:03:47] take a look at this. It breaks the script into scenes, it
+[00:03:49] It breaks the script into scenes, it
+[00:03:49] It breaks the script into scenes, it generates every shot, and then it locks
+[00:03:51] generates every shot, and then it locks
+[00:03:51] generates every shot, and then it locks the same style of defense across all of
+[00:03:53] the same style of defense across all of
+[00:03:53] the same style of defense across all of them. So, [music] shot 40 still looks as
+[00:03:55] them. So, [music] shot 40 still looks as
+[00:03:55] them. So, [music] shot 40 still looks as good as it did on shot one.
+[00:03:58] good as it did on shot one.
+[00:03:58] good as it did on shot one. It lays in the voiceover, it times the
+[00:04:00] It lays in the voiceover, it times the
+[00:04:00] It lays in the voiceover, it times the blocks so that the audio and the visuals
+[00:04:02] blocks so that the audio and the visuals
+[00:04:02] blocks so that the audio and the visuals actually land perfectly in sync. And the
+[00:04:05] actually land perfectly in sync. And the
+[00:04:05] actually land perfectly in sync. And the best part is when it's all done, the
+[00:04:07] best part is when it's all done, the
+[00:04:07] best part is when it's all done, the entire project, every asset, all of it
+[00:04:09] entire project, every asset, all of it
+[00:04:09] entire project, every asset, all of it is just sitting in a folder right over
+[00:04:11] is just sitting in a folder right over
+[00:04:11] is just sitting in a folder right over here. And I mean, it's narrated, it's
+[00:04:14] here. And I mean, it's narrated, it's
+[00:04:14] here. And I mean, it's narrated, it's animated, it's annotated, the arrows are
+[00:04:16] animated, it's annotated, the arrows are
+[00:04:16] animated, it's annotated, the arrows are there, the caption is there, the map is
+[00:04:20] there, the caption is there, the map is
+[00:04:20] there, the caption is there, the map is there. Everything that I wanted is all
+[00:04:22] there. Everything that I wanted is all
+[00:04:22] there. Everything that I wanted is all there. And I mean, [music] I never
+[00:04:23] there. And I mean, [music] I never
+[00:04:23] there. And I mean, [music] I never touched the timeline at all. It
+[00:04:25] touched the timeline at all. It
+[00:04:25] touched the timeline at all. It basically did everything for me. You're
+[00:04:26] basically did everything for me. You're
+[00:04:26] basically did everything for me. You're not imagining it.
+[00:04:28] not imagining it.
+[00:04:28] not imagining it. In the 1970s,
+[00:04:29] In the 1970s,
+[00:04:29] In the 1970s, >> [music]
+[00:04:30] >> [music]
+[00:04:30] >> [music] >> an economy seat gave you 35 in.
+[00:04:33] >> an economy seat gave you 35 in.
+[00:04:33] >> an economy seat gave you 35 in. Today, it's closer to 30.
+[00:04:36] Today, it's closer to 30.
+[00:04:36] Today, it's closer to 30. The measurement that matters isn't
+[00:04:38] The measurement that matters isn't
+[00:04:38] The measurement that matters isn't [music] width. It's pitch. The distance
+[00:04:41] [music] width. It's pitch. The distance
+[00:04:41] [music] width. It's pitch. The distance from your seat back to the one in front.
+[00:04:44] from your seat back to the one in front.
+[00:04:44] from your seat back to the one in front. That's [music] the whole game.
+[00:04:46] That's [music] the whole game.
+[00:04:46] That's [music] the whole game. After deregulation in 1978,
+[00:04:49] After deregulation in 1978,
+[00:04:49] After deregulation in 1978, airlines [music] competed on price. The
+[00:04:51] airlines [music] competed on price. The
+[00:04:51] airlines [music] competed on price. The cheapest way to cut a fare was another
+[00:04:53] cheapest way to cut a fare was another
+[00:04:53] cheapest way to cut a fare was another row. Each row steals an inch. It started
+[00:04:57] row. Each row steals an inch. It started
+[00:04:57] row. Each row steals an inch. It started in America, then spread. Europe in the
+[00:04:59] in America, then spread. Europe in the
+[00:04:59] in America, then spread. Europe in the '90s, then everywhere. [music]
+[00:05:01] '90s, then everywhere. [music]
+[00:05:01] '90s, then everywhere. [music] Every market raced the same pitch
+[00:05:03] Every market raced the same pitch
+[00:05:03] Every market raced the same pitch downward.
+[00:05:05] downward.
+[00:05:05] downward. So, here's the collision.
+[00:05:07] So, here's the collision.
+[00:05:07] So, here's the collision. We keep getting taller, while [music]
+[00:05:08] We keep getting taller, while [music]
+[00:05:08] We keep getting taller, while [music] the seat keeps getting tighter.
+[00:05:10] the seat keeps getting tighter.
+[00:05:10] the seat keeps getting tighter. Two lines heading straight for each
+[00:05:12] Two lines heading straight for each
+[00:05:12] Two lines heading straight for each other. Plus, there's one more thing I
+[00:05:13] other. Plus, there's one more thing I
+[00:05:13] other. Plus, there's one more thing I want to mention. I'll just prompt it to
+[00:05:16] want to mention. I'll just prompt it to
+[00:05:16] want to mention. I'll just prompt it to make a version in Spanish, okay? Let's
+[00:05:18] make a version in Spanish, okay? Let's
+[00:05:18] make a version in Spanish, okay? Let's see how that goes. Okay, and there.
+[00:05:21] see how that goes. Okay, and there.
+[00:05:21] see how that goes. Okay, and there. As you can see, a no translator required
+[00:05:24] As you can see, a no translator required
+[00:05:24] As you can see, a no translator required whatsoever.
+[00:05:40] >> [music] >> So, now, in the same Vox style, I'm
+[00:05:42] >> So, now, in the same Vox style, I'm
+[00:05:42] >> So, now, in the same Vox style, I'm going to create a motion graphic video
+[00:05:44] going to create a motion graphic video
+[00:05:44] going to create a motion graphic video about the AI bubble. So, again, just
+[00:05:47] about the AI bubble. So, again, just
+[00:05:47] about the AI bubble. So, again, just creating the prompt in the Claude, and
+[00:05:49] creating the prompt in the Claude, and
+[00:05:49] creating the prompt in the Claude, and then I'm pasting it into Claude Code.
+[00:05:50] then I'm pasting it into Claude Code.
+[00:05:50] then I'm pasting it into Claude Code. And just like I did in just a few
+[00:05:52] And just like I did in just a few
+[00:05:52] And just like I did in just a few minutes, we have a video now ready. And
+[00:05:55] minutes, we have a video now ready. And
+[00:05:55] minutes, we have a video now ready. And I mean, just look at these clean
+[00:05:56] I mean, just look at these clean
+[00:05:56] I mean, just look at these clean graphics and the same style with a
+[00:05:58] graphics and the same style with a
+[00:05:58] graphics and the same style with a completely different topic.
+[00:06:00] completely different topic.
+[00:06:00] completely different topic. >> Microsoft invests in OpenAI, which buys
+[00:06:03] >> Microsoft invests in OpenAI, which buys
+[00:06:03] >> Microsoft invests in OpenAI, which buys cloud power from Microsoft.
+[00:06:06] cloud power from Microsoft.
+[00:06:06] cloud power from Microsoft. Microsoft [music] poured 13 billion into
+[00:06:08] Microsoft [music] poured 13 billion into
+[00:06:08] Microsoft [music] poured 13 billion into OpenAI.
+[00:06:09] OpenAI.
+[00:06:09] OpenAI. That stake is now worth 135 billion,
+[00:06:12] That stake is now worth 135 billion,
+[00:06:12] That stake is now worth 135 billion, plus 250 billion in Azure.
+[00:06:15] plus 250 billion in Azure.
+[00:06:15] plus 250 billion in Azure. Nvidia does the same thing.
+[00:06:18] Nvidia does the same thing.
+[00:06:18] Nvidia does the same thing. It invested [music] 40 billion in AI
+[00:06:20] It invested [music] 40 billion in AI
+[00:06:20] It invested [music] 40 billion in AI companies.
+[00:06:21] companies.
+[00:06:21] companies. 30 billion to OpenAI, and 2 billion to
+[00:06:24] 30 billion to OpenAI, and 2 billion to
+[00:06:24] 30 billion to OpenAI, and 2 billion to Coreweave.
+[00:06:25] Coreweave.
+[00:06:25] Coreweave. Then those companies buy Nvidia chips.
+[00:06:28] Then those companies buy Nvidia chips.
+[00:06:28] Then those companies buy Nvidia chips. Coreweave signed a $6 billion GPU
+[00:06:30] Coreweave signed a $6 billion GPU
+[00:06:30] Coreweave signed a $6 billion GPU agreement with Nvidia.
+[00:06:32] agreement with Nvidia.
+[00:06:32] agreement with Nvidia. The money goes out and comes right
+[00:06:34] The money goes out and comes right
+[00:06:34] The money goes out and comes right [music] back.
+[00:06:39] It's a literal money carousel, spinning
+[00:06:39] It's a literal money carousel, spinning faster and faster. Each company funding
+[00:06:41] faster and faster. Each company funding
+[00:06:41] faster and faster. Each company funding the next round of purchases. [music]
+[00:06:49] Is this a genius flywheel? A perfectly
+[00:06:49] Is this a genius flywheel? A perfectly engineered loop?
+[00:06:50] engineered loop?
+[00:06:50] engineered loop? >> Now, those are Vox style videos. But,
+[00:06:53] >> Now, those are Vox style videos. But,
+[00:06:53] >> Now, those are Vox style videos. But, I've got my own style in mind for this.
+[00:06:55] I've got my own style in mind for this.
+[00:06:55] I've got my own style in mind for this. Something that's colorful and also
+[00:06:57] Something that's colorful and also
+[00:06:57] Something that's colorful and also bright. Um a little bit cartoonish, and
+[00:07:00] bright. Um a little bit cartoonish, and
+[00:07:00] bright. Um a little bit cartoonish, and also I want to make a video about like
+[00:07:01] also I want to make a video about like
+[00:07:01] also I want to make a video about like cool ladybug facts. So, that's basically
+[00:07:04] cool ladybug facts. So, that's basically
+[00:07:04] cool ladybug facts. So, that's basically a whole different niche. So, what I'm
+[00:07:06] a whole different niche. So, what I'm
+[00:07:06] a whole different niche. So, what I'm going to do is watch what changes here,
+[00:07:08] going to do is watch what changes here,
+[00:07:09] going to do is watch what changes here, okay? Nothing about my method, but I'm
+[00:07:11] okay? Nothing about my method, but I'm
+[00:07:11] okay? Nothing about my method, but I'm just going to describe the new look, the
+[00:07:13] just going to describe the new look, the
+[00:07:13] just going to describe the new look, the same style that I just described to the
+[00:07:16] same style that I just described to the
+[00:07:16] same style that I just described to the Vox one. Again, you look Claude. And
+[00:07:18] Vox one. Again, you look Claude. And
+[00:07:18] Vox one. Again, you look Claude. And now, there we go. It likes the prompt,
+[00:07:20] now, there we go. It likes the prompt,
+[00:07:20] now, there we go. It likes the prompt, and then it pastes it into Claude Code
+[00:07:22] and then it pastes it into Claude Code
+[00:07:22] and then it pastes it into Claude Code to actually start building this. And
+[00:07:25] to actually start building this. And
+[00:07:25] to actually start building this. And there you can see it. That's it. A
+[00:07:27] there you can see it. That's it. A
+[00:07:27] there you can see it. That's it. A completely different show. It's a
+[00:07:29] completely different show. It's a
+[00:07:29] completely different show. It's a different palette. It's a different
+[00:07:31] different palette. It's a different
+[00:07:31] different palette. It's a different energy, different pacing, and nothing
+[00:07:33] energy, different pacing, and nothing
+[00:07:33] energy, different pacing, and nothing got carried over from the first video,
+[00:07:34] got carried over from the first video,
+[00:07:34] got carried over from the first video, except the simple three steps that I put
+[00:07:36] except the simple three steps that I put
+[00:07:37] except the simple three steps that I put forward. Now, they are full of motion
+[00:07:38] forward. Now, they are full of motion
+[00:07:38] forward. Now, they are full of motion graphic videos. But, if you have
+[00:07:41] graphic videos. But, if you have
+[00:07:41] graphic videos. But, if you have recorded a video, okay? And you just
+[00:07:43] recorded a video, okay? And you just
+[00:07:43] recorded a video, okay? And you just want to add in maybe a few motion
+[00:07:45] want to add in maybe a few motion
+[00:07:45] want to add in maybe a few motion graphic elements, you can also do that.
+[00:07:48] graphic elements, you can also do that.
+[00:07:48] graphic elements, you can also do that. All you have to do is just come to
+[00:07:49] All you have to do is just come to
+[00:07:49] All you have to do is just come to create the specific motion graphic
+[00:07:51] create the specific motion graphic
+[00:07:51] create the specific motion graphic element that you need, and that's
+[00:07:53] element that you need, and that's
+[00:07:53] element that you need, and that's basically it. The most important thing
+[00:07:55] basically it. The most important thing
+[00:07:55] basically it. The most important thing is that the system is for any kind of
+[00:07:59] is that the system is for any kind of
+[00:07:59] is that the system is for any kind of motion graphics. So, for me, Vvox Style
+[00:08:01] motion graphics. So, for me, Vvox Style
+[00:08:01] motion graphics. So, for me, Vvox Style was the inspiration. But, the real magic
+[00:08:03] was the inspiration. But, the real magic
+[00:08:03] was the inspiration. But, the real magic is the ability to create any kind of
+[00:08:05] is the ability to create any kind of
+[00:08:05] is the ability to create any kind of motion graphic that I want, anything I
+[00:08:07] motion graphic that I want, anything I
+[00:08:07] motion graphic that I want, anything I can think of. But, if you want to try
+[00:08:08] can think of. But, if you want to try
+[00:08:08] can think of. But, if you want to try something even simpler, then you can try
+[00:08:10] something even simpler, then you can try
+[00:08:10] something even simpler, then you can try Higgsville Explainer directly on the web
+[00:08:12] Higgsville Explainer directly on the web
+[00:08:13] Higgsville Explainer directly on the web as well without Claude. Now, we're going
+[00:08:15] as well without Claude. Now, we're going
+[00:08:15] as well without Claude. Now, we're going to do the second topic, and it's going
+[00:08:16] to do the second topic, and it's going
+[00:08:16] to do the second topic, and it's going to be how the lightbulb actually got
+[00:08:17] to be how the lightbulb actually got
+[00:08:17] to be how the lightbulb actually got invented. It's a completely different
+[00:08:19] invented. It's a completely different
+[00:08:19] invented. It's a completely different topic, and this one is kind of
+[00:08:21] topic, and this one is kind of
+[00:08:21] topic, and this one is kind of historical, and also I'm dropping the
+[00:08:23] historical, and also I'm dropping the
+[00:08:23] historical, and also I'm dropping the prompt that I made straight into
+[00:08:24] prompt that I made straight into
+[00:08:24] prompt that I made straight into Higgsville Explainer. So, you can see
+[00:08:27] Higgsville Explainer. So, you can see
+[00:08:27] Higgsville Explainer. So, you can see there's a preset library over here.
+[00:08:29] there's a preset library over here.
+[00:08:29] there's a preset library over here. There's pixel art, clay motion, mixed
+[00:08:31] There's pixel art, clay motion, mixed
+[00:08:31] There's pixel art, clay motion, mixed media, 3D, paper craft, um 2D [music]
+[00:08:33] media, 3D, paper craft, um 2D [music]
+[00:08:33] media, 3D, paper craft, um 2D [music] Illustrator, whiteboard doodle, low
+[00:08:36] Illustrator, whiteboard doodle, low
+[00:08:36] Illustrator, whiteboard doodle, low poly, 3D mix, isometric, flat vector,
+[00:08:40] poly, 3D mix, isometric, flat vector,
+[00:08:40] poly, 3D mix, isometric, flat vector, fluffy toy. There's a bunch of different
+[00:08:42] fluffy toy. There's a bunch of different
+[00:08:42] fluffy toy. There's a bunch of different options here. So, just pick the style
+[00:08:43] options here. So, just pick the style
+[00:08:43] options here. So, just pick the style that you want, and I'm going to go with
+[00:08:46] that you want, and I'm going to go with
+[00:08:46] that you want, and I'm going to go with whiteboard doodle style. I think that
+[00:08:47] whiteboard doodle style. I think that
+[00:08:47] whiteboard doodle style. I think that one's going to work. Now, just take a
+[00:08:49] one's going to work. Now, just take a
+[00:08:49] one's going to work. Now, just take a look at what happens. It's a different
+[00:08:51] look at what happens. It's a different
+[00:08:51] look at what happens. It's a different story, a different script, but all of it
+[00:08:53] story, a different script, but all of it
+[00:08:53] story, a different script, but all of it is handled in just a few minutes. And
+[00:08:55] is handled in just a few minutes. And
+[00:08:55] is handled in just a few minutes. And here's the thing about this. If I simply
+[00:08:57] here's the thing about this. If I simply
+[00:08:57] here's the thing about this. If I simply change the preset, then I can change the
+[00:08:59] change the preset, then I can change the
+[00:08:59] change the preset, then I can change the entire visual direction. Your channel
+[00:09:01] entire visual direction. Your channel
+[00:09:01] entire visual direction. Your channel doesn't have to look like Vvox, and you
+[00:09:03] doesn't have to look like Vvox, and you
+[00:09:03] doesn't have to look like Vvox, and you can build your own customized style with
+[00:09:06] can build your own customized style with
+[00:09:06] can build your own customized style with this. So, that's basically both ways.
+[00:09:08] this. So, that's basically both ways.
+[00:09:08] this. So, that's basically both ways. Claude dives the whole pipeline, or the
+[00:09:10] Claude dives the whole pipeline, or the
+[00:09:10] Claude dives the whole pipeline, or the Explainer on its own.
+[00:09:13] Explainer on its own.
+[00:09:13] Explainer on its own. >> Before Edison, people lit their homes
+[00:09:14] >> Before Edison, people lit their homes
+[00:09:14] >> Before Edison, people lit their homes with candles [music] and gas lamps.
+[00:09:16] with candles [music] and gas lamps.
+[00:09:16] with candles [music] and gas lamps. Darkness ruled after sundown, and fire
+[00:09:19] Darkness ruled after sundown, and fire
+[00:09:19] Darkness ruled after sundown, and fire was a constant danger.
+[00:09:22] was a constant danger.
+[00:09:22] was a constant danger. In 1879, [music]
+[00:09:23] In 1879, [music]
+[00:09:23] In 1879, [music] at his Menlo Park laboratory in New
+[00:09:26] at his Menlo Park laboratory in New
+[00:09:26] at his Menlo Park laboratory in New Jersey, Edison [music] and his team
+[00:09:28] Jersey, Edison [music] and his team
+[00:09:28] Jersey, Edison [music] and his team tested thousands of materials for a
+[00:09:30] tested thousands of materials for a
+[00:09:30] tested thousands of materials for a lasting filament. On October [music]
+[00:09:32] lasting filament. On October [music]
+[00:09:32] lasting filament. On October [music] 22nd, a carbonized cotton thread glowed
+[00:09:36] 22nd, a carbonized cotton thread glowed
+[00:09:36] 22nd, a carbonized cotton thread glowed inside a glass bulb for over 14 hours.
+[00:09:39] inside a glass bulb for over 14 hours.
+[00:09:39] inside a glass bulb for over 14 hours. >> [music]
+[00:09:40] >> [music] >> Edison knew he had found the answer.
+[00:09:43] >> Edison knew he had found the answer.
+[00:09:43] >> Edison knew he had found the answer. >> Now, this isn't just a tool for creating
+[00:09:44] >> Now, this isn't just a tool for creating
+[00:09:44] >> Now, this isn't just a tool for creating explainer videos. This can also be used
+[00:09:47] explainer videos. This can also be used
+[00:09:47] explainer videos. This can also be used for making individual motion graphics.
+[00:09:50] for making individual motion graphics.
+[00:09:50] for making individual motion graphics. So, if you were previously using After
+[00:09:53] So, if you were previously using After
+[00:09:53] So, if you were previously using After Effects or browsing the internet to find
+[00:09:55] Effects or browsing the internet to find
+[00:09:55] Effects or browsing the internet to find the perfect graphic tool to [music] add,
+[00:09:57] the perfect graphic tool to [music] add,
+[00:09:57] the perfect graphic tool to [music] add, this tool can make it for you. At the
+[00:09:59] this tool can make it for you. At the
+[00:09:59] this tool can make it for you. At the same time, you can also make product
+[00:10:01] same time, you can also make product
+[00:10:01] same time, you can also make product explainers or even a course they said if
+[00:10:04] explainers or even a course they said if
+[00:10:04] explainers or even a course they said if you want.
+[00:10:06] you want.
+[00:10:06] you want. Honestly, with this, the best part is
+[00:10:07] Honestly, with this, the best part is
+[00:10:07] Honestly, with this, the best part is that there's no limits whatsoever. But,
+[00:10:11] that there's no limits whatsoever. But,
+[00:10:11] that there's no limits whatsoever. But, before we wrap up everything, there's
+[00:10:13] before we wrap up everything, there's
+[00:10:13] before we wrap up everything, there's two things that you do need to know
+[00:10:15] two things that you do need to know
+[00:10:15] two things that you do need to know about this.
+[00:10:17] about this.
+[00:10:17] about this. The style puts claims on the screen,
+[00:10:19] The style puts claims on the screen,
+[00:10:19] The style puts claims on the screen, okay? Now, that's basically what it's
+[00:10:21] okay? Now, that's basically what it's
+[00:10:22] okay? Now, that's basically what it's for. The number in the arrow, the date
+[00:10:24] for. The number in the arrow, the date
+[00:10:24] for. The number in the arrow, the date on the timeline, the figure in the
+[00:10:26] on the timeline, the figure in the
+[00:10:26] on the timeline, the figure in the chart, which means that when the model
+[00:10:28] chart, which means that when the model
+[00:10:28] chart, which means that when the model gets a number wrong, then it's not a
+[00:10:31] gets a number wrong, then it's not a
+[00:10:31] gets a number wrong, then it's not a throwaway line in like a voiceover,
+[00:10:33] throwaway line in like a voiceover,
+[00:10:33] throwaway line in like a voiceover, okay? It's branded into the graphic in a
+[00:10:36] okay? It's branded into the graphic in a
+[00:10:36] okay? It's branded into the graphic in a style that's built to look
+[00:10:38] style that's built to look
+[00:10:38] style that's built to look authoritative. And also, fixing it
+[00:10:41] authoritative. And also, fixing it
+[00:10:41] authoritative. And also, fixing it basically means regenerating the shot,
+[00:10:43] basically means regenerating the shot,
+[00:10:43] basically means regenerating the shot, okay? So, pen your facts down before the
+[00:10:46] okay? So, pen your facts down before the
+[00:10:46] okay? So, pen your facts down before the plant, not after the render. Super super
+[00:10:49] plant, not after the render. Super super
+[00:10:49] plant, not after the render. Super super super important. And also, I checked the
+[00:10:51] super important. And also, I checked the
+[00:10:51] super important. And also, I checked the seed pitch numbers in the video against
+[00:10:53] seed pitch numbers in the video against
+[00:10:53] seed pitch numbers in the video against the multiple sources before a single
+[00:10:55] the multiple sources before a single
+[00:10:55] the multiple sources before a single frame existed. Now, I want you to do
+[00:10:57] frame existed. Now, I want you to do
+[00:10:57] frame existed. Now, I want you to do that. And secondly, is that you don't
+[00:11:00] that. And secondly, is that you don't
+[00:11:00] that. And secondly, is that you don't only rely on presets because in that
+[00:11:02] only rely on presets because in that
+[00:11:03] only rely on presets because in that way, you will get something that's that
+[00:11:05] way, you will get something that's that
+[00:11:05] way, you will get something that's that generic and other people will have
+[00:11:07] generic and other people will have
+[00:11:07] generic and other people will have basically the exact same style. So, what
+[00:11:09] basically the exact same style. So, what
+[00:11:09] basically the exact same style. So, what you want to basically make sure is you
+[00:11:11] you want to basically make sure is you
+[00:11:11] you want to basically make sure is you want to customize everything. So, that's
+[00:11:13] want to customize everything. So, that's
+[00:11:14] want to customize everything. So, that's the bold. You simply just pick a story
+[00:11:15] the bold. You simply just pick a story
+[00:11:15] the bold. You simply just pick a story worth telling. You pick a look that
+[00:11:17] worth telling. You pick a look that
+[00:11:17] worth telling. You pick a look that nobody else in your niche is using, and
+[00:11:19] nobody else in your niche is using, and
+[00:11:19] nobody else in your niche is using, and then you get it live this week. The link
+[00:11:23] then you get it live this week. The link
+[00:11:23] then you get it live this week. The link to Higgs Field is down in the
+[00:11:24] to Higgs Field is down in the
+[00:11:24] to Higgs Field is down in the description below, and that's the engine
+[00:11:26] description below, and that's the engine
+[00:11:26] description below, and that's the engine doing all the heavy lifting over here.
+[00:11:28] doing all the heavy lifting over here.
+[00:11:29] doing all the heavy lifting over here. So, what you want to do is you want to
+[00:11:30] So, what you want to do is you want to
+[00:11:30] So, what you want to do is you want to sign up today, and then you want to go
+[00:11:32] sign up today, and then you want to go
+[00:11:32] sign up today, and then you want to go and build something awesome. And if you
+[00:11:34] and build something awesome. And if you
+[00:11:34] and build something awesome. And if you plant found this video, both of them,
+[00:11:36] plant found this video, both of them,
+[00:11:36] plant found this video, both of them, all of it is inside our free school
+[00:11:38] all of it is inside our free school
+[00:11:38] all of it is inside our free school community. That link is down in the
+[00:11:39] community. That link is down in the
+[00:11:39] community. That link is down in the description below. So, hit the subscribe
+[00:11:41] description below. So, hit the subscribe
+[00:11:41] description below. So, hit the subscribe button, give this video a like, also
+[00:11:42] button, give this video a like, also
+[00:11:42] button, give this video a like, also drop a comment down below. And as
+[00:11:44] drop a comment down below. And as
+[00:11:44] drop a comment down below. And as always, we'll catch you on the next one.

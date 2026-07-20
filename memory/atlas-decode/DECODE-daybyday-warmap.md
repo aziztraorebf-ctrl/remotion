@@ -39,7 +39,7 @@
 ## 6. FAISABILITE CHEZ NOUS (Remotion + Mapbox frame-driven) — OUI, superieur sur la rigueur
 
 Notre stack reproduit ce format SANS Google Earth Studio ni AE, et de facon data-driven (zero retracage manuel) :
-- **Fond** : Mapbox Satellite (V1 validee, voir backlog-ameliorations-mapbox-satellite.md). Gotcha headless : GPU off -> `preserveDrawingBuffer:true` + Remotion `--gl=angle`.
+- **Fond** : Mapbox Satellite (V1 validee, voir memory/archive/backlogs-perimes-2026-07-11/backlog-ameliorations-mapbox-satellite.md (PERIME, projet Senegal termine)). Gotcha headless : GPU off -> `preserveDrawingBuffer:true` + Remotion `--gl=angle`.
 - **Front anime** : GeoJSON 1 polygone par date-jalon -> interpolation temporelle entre jalons (turf.js). `useCurrentFrame` -> date courante -> polygone interpole. Frame-driven = doctrine Souverain deja en place.
 - **Date + pertes** : overlay DOM/SVG frame-driven trivial (briques HERO DATA / countUp existent).
 - **Rendu MP4** : exemple officiel remotion-dev/mapbox-example. Nos scripts render-mapbox.sh / render-on-vercel.py.

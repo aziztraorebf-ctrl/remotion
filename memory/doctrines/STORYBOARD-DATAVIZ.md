@@ -9,7 +9,7 @@
 > auto** (`--background parchemin` notre réf + `--background libre` exploration, le libre propose souvent mieux)
 > · **illustration plate obligatoire** (réaliste = non reproductible). Tout dans `gemini-storyboard-panels.py`.
 
-> Posée 2026-06-20 (toi + Claude), comble le **TROU 3** du `CHANTIER-PEAUFINAGE-GRAPHISMES.md`.
+> Posée 2026-06-20 (toi + Claude), comble le **TROU 3** du `memory/archive/CHANTIER-PEAUFINAGE-GRAPHISMES-2026-06-20.md`.
 > Pendant symétrique de [[STORYBOARD-MAPBOX]] : la carte avait un préambule riche (notre carte + chaînes citées +
 > ARSENAL + directive « carte vivante »), le data-viz Remotion N'AVAIT QUE des « principes » jamais passés au modèle
 > au moment de générer le storyboard. Résultat : storyboard « correct mais plat », sans cible de qualité à viser.
@@ -104,4 +104,4 @@ pas « mineral icon ». Champ `asset` explicite, vérifié (grep'd) comme `forme
 ✅ Comble TROU 3 (préambule) + TROU 1 cause-2 (ratio) + amorce TROU 2 (champ asset précis).
 ⏳ À éprouver sur un cobaye réel (régénérer le storyboard data-viz Maroc 70% avec le nouveau préambule + ratio 16:9 →
    comparer au render plat précédent). C'est la validation de cette doctrine.
-Branché dans : `MEMORY.md`, `CHANTIER-PEAUFINAGE-GRAPHISMES.md`, `SOUVERAIN-REMOTION-PLAYBOOK.md` (renvoi storyboard).
+Branché dans : `MEMORY.md`, `memory/archive/CHANTIER-PEAUFINAGE-GRAPHISMES-2026-06-20.md`, `SOUVERAIN-REMOTION-PLAYBOOK.md` (renvoi storyboard).

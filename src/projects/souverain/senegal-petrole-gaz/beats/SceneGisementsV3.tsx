@@ -34,7 +34,18 @@ import { BarilJaugeIcon } from "../../../_shared/thumbnails/icons/BarilJaugeIcon
 
 const { fontFamily: BEBAS } = loadBebas();
 
-const AUDIO_START = 52; // la scene gisements commence a 52s dans l'audio de l'episode
+// CORRIGE ROUND 2 2026-07-04 (bug B, retour Aziz : mot "trois" repete a la jonction sc.1a->gisements) :
+// le chevauchement venait de sc.1a (SenegalScene1IntroCoin, endAt=53.9s) qui rejouait la fin du mot
+// "trois." (forced-align-v3.json global, le plus fiable : trois. start=53.68s end=53.88s) DEJA couverte
+// par le redemarrage de gisements a AUDIO_START=53.70s. Fix applique cote sc.1a (endAt ramene a 53.70s,
+// pile la fin du mot) plutot que de deplacer AUDIO_START ici — evite de decaler les ~15 beats internes
+// (Sangomar/GTA/Yakaar/pivot 60%) cales a la main sur ce point zero. AUDIO_START/END INCHANGES.
+// PRE_ROLL SUPPRIME ROUND 2 2026-07-05 (retour Aziz, meme session) : maintenant que le mot "trois" tombe
+// parfaitement (sc.1a joue le mot en entier, cf. plus bas), Aziz demande de retirer le fondu de
+// transition — passer directement de sc.1a a la carte Sangomar sans ecran gris intermediaire.
+// PRE_ROLL etait 58f (round 1) -> 20f (round 2, reduction) -> 0f (round 2, suppression complete).
+const AUDIO_START = 53.70;
+const PRE_ROLL = 0;
 const NAVY = "#16213a", GOLD = "#c8a951", GREY = "#5a5a5a", IVORY = "#f2efe6";
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const W = 1920, H = 1080;
@@ -65,7 +76,49 @@ const A3 = 1090;  // YAKAAR (la voix dit "un troisieme champ, Yakaar" ~f1090-115
 //   "environ 60%" 108.5s=f1695 · "60% la moyenne" 113s=f1830 · "ni scandale ni jackpot" 117.5s=f1965
 //   "ne dit rien" 120s=f2040 · "du resultat" 122s=f2100 · (scene 2 "regardons trois" 122.5s=f2115)
 const PIV = 1500;  // debut voile carte (recouvre la toute fin de Yakaar f1515, transition douce)
-const END = 2120;  // +560f / ~18.7s : "Reste la vraie question..." -> "...du resultat." (122s)
+// END ETENDU ROUND 2 2026-07-05 (retour Aziz : silence/coupure bizarre sur "...qui decide [SILENCE]
+// vraiment du resultat"). Cause : endAt narration coupait a 122.5s (pile apres "decide"), mais la
+// COMPOSITION continuait jusqu'a 123.17s (PRE_ROLL+ancien END) SANS narration -> "vraiment du resultat."
+// (122.56->123.74s) n'etait joue nulle part (sc.2/SceneComparaisonV3 ne reprend qu'a partir de son
+// propre demarrage physique dans le montage, pas de narration@122s). Fix : END etendu pour couvrir
+// toute la composition jusqu'a 123.90s (couvre "resultat." + marge de silence naturel), endAt de
+// l'Audio suit plus bas. Cote SceneComparaisonV3 : narration retardee (Sequence) pour ne pas rejouer
+// "vraiment du resultat" en double (cf. commentaire dans ce fichier la-bas). AUDIO_START + (PRE_ROLL+
+// END)/30 doit TOUJOURS = 125.40s abs (ETENDU ENCORE ROUND 2 2026-07-05, 2e retour Aziz : la phrase
+// "...vraiment du resultat." finissait TROP PRES du cut (123.74s fin reelle vs 123.90s endAt = 0.16s
+// de marge seulement), pas le temps de respirer avant la coupe vers comparaison -> percu comme une
+// coupure abrupte. +1.5s de marge, endAt suit plus bas, couvre desormais toute la phrase "avant de
+// juger le Senegal," avec respiration naturelle avant que "regardons trois" (125.38s) ne soit repris
+// par SceneComparaisonV3.
+const END = 2151;  // (125.40 - 53.70)*30 - PRE_ROLL = 2151f
+
+// ────────────────────────────────────────────────────────────────────────────
+//  brightenMap — eclaircit le fond de carte APRES applyGeoAfriqueV5 (override LOCAL, ne touche pas
+//  le composant partage). CHANTIER 6 (passe finition 2026-07-04) : cette scene etait la seule des 3
+//  scenes cartos (gisements/comparaison/coulisses) a ne PAS avoir ce fix -> rupture de charte "carte
+//  sombre" au debut de la video (retour Aziz ~1min04 montage). Copie identique de SceneComparaisonV3/
+//  SceneCoulissesV3 (source de verite unique du style carte claire).
+// ────────────────────────────────────────────────────────────────────────────
+const brightenMap = (map: mapboxgl.Map) => {
+  const safe = (id: string, prop: string, val: unknown) => {
+    try { if (map.getLayer(id)) (map.setPaintProperty as any)(id, prop, val); } catch (_e) {}
+  };
+  const LAND = "#6f7480";   // terres : gris desature plus CLAIR (etait #4a4a4a)
+  const WATER = "#274b73";  // eau : bleu un peu plus clair, contraste terre/eau maintenu (etait #1a3a5c)
+  const BORDER = "#eef0f3"; // frontieres : blanc franc (etait #c8c8c8)
+  safe("land", "background-color", LAND);
+  safe("landuse", "fill-color", LAND);
+  safe("national-park", "fill-color", LAND);
+  safe("landcover", "fill-color", LAND);
+  safe("water", "fill-color", WATER);
+  safe("water-shadow", "fill-color", WATER);
+  // frontieres : couleur franche + epaisseur croissante au zoom (lisible de loin SANS bouillie de pres)
+  safe("admin-0-boundary", "line-color", BORDER);
+  safe("admin-0-boundary", "line-width", ["interpolate", ["linear"], ["zoom"], 2, 0.8, 4, 1.6, 6, 2.6]);
+  safe("admin-0-boundary", "line-opacity", 0.9);
+  safe("admin-0-boundary-disputed", "line-color", BORDER);
+  safe("admin-1-boundary", "line-color", "rgba(210,210,210,0.18)");
+};
 
 export const SceneGisementsV3: React.FC = () => {
   const { fps } = useVideoConfig();
@@ -102,24 +155,57 @@ export const SceneGisementsV3: React.FC = () => {
 
   return (
     <AbsoluteFill>
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={AUDIO_START * fps} />
+      {/* endAt etendu a 125.40s abs ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat",
+          2e passe apres retour Aziz) : couvre desormais "...ce qui decide vraiment du resultat. Avant
+          de juger le Senegal," en entier + une respiration naturelle, au lieu de couper a 123.90s (a
+          peine 0.16s apres la fin reelle de "resultat.", perçu comme une coupure abrupte). Demarrage
+          RETARDE DE 5 FRAMES (bug "trois" re-corrige) : SenegalScene1IntroCoin joue desormais le mot
+          "trois." EN ENTIER jusqu'a sa fin naturelle (endAt=53.88s, plus de coupure en plein son). Pour
+          ne pas le REJOUER en double ici, cette Audio demarre a 53.88s (5 frames apres AUDIO_START=
+          53.70s) au lieu de rejouer depuis 53.70s. Sequence from={5} SEULE (pas AUDIO_START global) :
+          la choregraphie visuelle (camKeys, PRE_ROLL, Sangomar/GTA/Yakaar) reste cale sur AUDIO_START=
+          53.70s, inchangee. */}
+      <Sequence from={5}>
+        <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(53.88 * fps)} endAt={Math.round(125.40 * fps)} />
+      </Sequence>
+      {/* Musique de fond AJOUTEE ROUND 2 2026-07-04 (bug C, retour Aziz "probleme assez grave" : musique
+          absente sur toute cette scene). Meme piste que sc.2/sc.3 (continuite sonore, "meme piste que la
+          scene gisements" documente dans SceneComparaisonV3), calee sur AUDIO_START comme les autres
+          scenes carto. Fade-in 30f au demarrage (evite un demarrage sec pendant PRE_ROLL/fondu de sc.1a),
+          fade-out 3s en fin de scene (raccord avec sc.2 qui fait de meme). Volume 0.055, aligne sur les
+          autres scenes carto de l'episode. */}
+      <Audio
+        src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}
+        startFrom={AUDIO_START * fps}
+        volume={(f) => {
+          const fadeIn = interpolate(f, [0, 30], [0, 1], clamp);
+          const fadeStart = END - 90;
+          const fadeOut = f >= fadeStart ? Math.max(0, 1 - (f - fadeStart) / 90) : 1;
+          return 0.055 * fadeIn * fadeOut;
+        }}
+      />
       <SceneSFX />
-      <CartoSouverainV5 camKeys={camKeys} focusIsos={["SEN"]} onMapReady={(m) => { mapRef.current = m; force((n) => n + 1); }}>
-        {/* DRAPEAU SEN drape des le debut (heros, colorie la carte) — opacite dosee */}
-        <MapboxCountryFlagDecal mapRef={mapRef} iso="SEN" geoNames={["Senegal"]} drawFlag={(s) => drawFlagCanvas("SEN", s)} opacity={0.5} />
-        {/* Drapeaux des pays convoiteurs — apparaissent pendant le DEZOOM monde (acte 2, f880-1090),
-            quand Europe/Asie/Russie sont dans le cadre et que les flux les relient. La couleur est
-            posee la (carte vivante, pas du gris), avant le retour Senegal pour le climax Yakaar.
-            Europe + Asie = destinations (positives) · Russie = concurrent evince mais on l'affiche
-            aussi (le spectateur voit QUI on remplace). */}
-        {/* France : clipBbox metropolitaine (sinon Natural Earth inclut Guadeloupe..Reunion → metropole minuscule, drapeau blanc) */}
-        <AnimatedFlagDecal mapRef={mapRef} iso="FRA" geoNames={["France"]} appearAt={905} maxOpacity={1} clipBbox={[-5.5, 41.0, 9.8, 51.5]} />
-        <AnimatedFlagDecal mapRef={mapRef} iso="IND" geoNames={["India"]} appearAt={950} maxOpacity={0.9} />
-        <AnimatedFlagDecal mapRef={mapRef} iso="RUS" geoNames={["Russia"]} appearAt={905} maxOpacity={0.5} fadeOutAt={1000} />
-        <Effets mapRef={mapRef} />
-      </CartoSouverainV5>
-      {/* ── PIVOT 60% : voile navy + chiffre hero + jauge + nuance (premier plan, par-dessus la carte) ── */}
-      <PivotRevenu />
+      {/* PRE_ROLL (0->20f) : raccord avec la fin du fondu de sc.1a (deja navy_deep a ce point) —
+          carte pas encore apparue, fond navy en continuite (evite un cut sec avant Sangomar). */}
+      <AbsoluteFill style={{ backgroundColor: NAVY }} />
+      <Sequence from={PRE_ROLL}>
+        <CartoSouverainV5 camKeys={camKeys} focusIsos={["SEN"]} onMapReady={(m) => { mapRef.current = m; brightenMap(m); force((n) => n + 1); }}>
+          {/* DRAPEAU SEN drape des le debut (heros, colorie la carte) — opacite dosee */}
+          <MapboxCountryFlagDecal mapRef={mapRef} iso="SEN" geoNames={["Senegal"]} drawFlag={(s) => drawFlagCanvas("SEN", s)} opacity={0.5} />
+          {/* Drapeaux des pays convoiteurs — apparaissent pendant le DEZOOM monde (acte 2, f880-1090),
+              quand Europe/Asie/Russie sont dans le cadre et que les flux les relient. La couleur est
+              posee la (carte vivante, pas du gris), avant le retour Senegal pour le climax Yakaar.
+              Europe + Asie = destinations (positives) · Russie = concurrent evince mais on l'affiche
+              aussi (le spectateur voit QUI on remplace). */}
+          {/* France : clipBbox metropolitaine (sinon Natural Earth inclut Guadeloupe..Reunion → metropole minuscule, drapeau blanc) */}
+          <AnimatedFlagDecal mapRef={mapRef} iso="FRA" geoNames={["France"]} appearAt={905} maxOpacity={1} clipBbox={[-5.5, 41.0, 9.8, 51.5]} />
+          <AnimatedFlagDecal mapRef={mapRef} iso="IND" geoNames={["India"]} appearAt={950} maxOpacity={0.9} />
+          <AnimatedFlagDecal mapRef={mapRef} iso="RUS" geoNames={["Russia"]} appearAt={905} maxOpacity={0.5} fadeOutAt={1000} />
+          <Effets mapRef={mapRef} />
+        </CartoSouverainV5>
+        {/* ── PIVOT 60% : voile navy + chiffre hero + jauge + nuance (premier plan, par-dessus la carte) ── */}
+        <PivotRevenu />
+      </Sequence>
     </AbsoluteFill>
   );
 };
@@ -146,7 +232,11 @@ const PivotRevenu: React.FC = () => {
   const veil = interpolate(frame, [PIV, PIV + 70], [0, 1], clamp);
 
   // SEULE ecriture : la question (apparait apres le voile, reste jusqu'au fade final).
-  const qOp = interpolate(frame, [1560, 1600, 2080, 2120], [0, 1, 1, 0], clamp);
+  // Fade final RACCOURCI ROUND 2 2026-07-04 (retour Aziz : ecran gris vide avant Norvege), RE-CALE
+  // ROUND 2 2026-07-05 x2 (END etendu 2064->2086->2151 pour couvrir "...vraiment du resultat. Avant de
+  // juger le Senegal," avec respiration) : le contenu reste visible jusqu'a la toute fin de la phrase,
+  // fade sur les 10 dernieres frames.
+  const qOp = interpolate(frame, [1560, 1600, 2141, 2151], [0, 1, 1, 0], clamp);
 
   // P2 — remplissage baril 0->60%, RALENTI et ease-out (le petrole se pose, mouvement ample).
   // Etale sur f1640->1790 (150f = 5s) au lieu de 80f. Le pic reste cale sur "soixante pour cent" (~f1715-1760).
@@ -154,7 +244,8 @@ const PivotRevenu: React.FC = () => {
   const fillEased = 1 - Math.pow(1 - fillT, 2.2); // ease-out : rapide au debut, lent a la fin (se pose)
   const barilRatio = fillEased * 60;
   const num = Math.round(barilRatio);
-  const barilOp = interpolate(frame, [1560, 1620, 2090, 2120], [0, 1, 1, 0], clamp);
+  // Fade final RE-CALE ROUND 2 2026-07-05 x2 (idem qOp, END etendu a 2151).
+  const barilOp = interpolate(frame, [1560, 1620, 2141, 2151], [0, 1, 1, 0], clamp);
   // le 60% se greffe a droite APRES le remplissage (f1770->1820)
   const rightIn = interpolate(frame, [1770, 1820], [0, 1], clamp);
 
@@ -174,8 +265,10 @@ const PivotRevenu: React.FC = () => {
   const haloCalm = interpolate(frame, [1980, 2060], [1, 0.4], clamp); // se calme vers la fin
   const halo = haloBreath * haloCalm;
 
-  // P4 — fade-out global -> navy pur (transition scene 2).
-  const blockOp = interpolate(frame, [2090, 2120], [1, 0], clamp);
+  // P4 — fade-out global -> navy pur (transition scene 2). RACCOURCI ROUND 2 2026-07-04 (ecran gris),
+  // RE-CALE ROUND 2 2026-07-05 x2 (END etendu a 2151, couvre "...vraiment du resultat. Avant de juger
+  // le Senegal," avec respiration).
+  const blockOp = interpolate(frame, [2141, 2151], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -276,14 +369,16 @@ const SFX = {
 // SFX EPURE (retour Aziz) : on NE met PAS un son a chaque mouvement de camera (saturation).
 // Garder : (1) le PING d'apparition de chaque jeton/gisement · (2) le bruit de REMPLISSAGE du baril.
 // Retire : TOUS les swooshs/whooshs de camera (mal cales, n'ajoutent rien), arrows de flux, pops.
+// SceneSFX est au niveau RACINE (pas dans la Sequence from={PRE_ROLL} de la carte) -> ses "at" doivent
+// inclure le PRE_ROLL (+75f) pour rester synchro avec Sangomar/GTA/Yakaar/remplissage (bug #2 fix).
 const SceneSFX: React.FC = () => (
   <>
     {/* ping a l'apparition de chaque gisement (ponctue la decouverte) */}
-    <Sfx at={165} src={SFX.ping} dur={16} volume={0.5} />  {/* SANGOMAR */}
-    <Sfx at={575} src={SFX.ping} dur={16} volume={0.5} />  {/* GTA */}
-    <Sfx at={1165} src={SFX.ping} dur={16} volume={0.5} /> {/* YAKAAR */}
+    <Sfx at={PRE_ROLL + 165} src={SFX.ping} dur={16} volume={0.5} />  {/* SANGOMAR */}
+    <Sfx at={PRE_ROLL + 575} src={SFX.ping} dur={16} volume={0.5} />  {/* GTA */}
+    <Sfx at={PRE_ROLL + 1165} src={SFX.ping} dur={16} volume={0.5} /> {/* YAKAAR */}
     {/* remplissage du baril 60% : liquide qui monte, cale sur le remplissage (f1640-1790) */}
-    <Sfx at={1640} src={SFX.barilFill} dur={150} volume={0.42} />
+    <Sfx at={PRE_ROLL + 1640} src={SFX.barilFill} dur={150} volume={0.42} />
   </>
 );
 

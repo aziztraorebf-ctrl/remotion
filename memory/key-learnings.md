@@ -9,7 +9,7 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 - **🔧 MÉTHODE & PROCESS** — reorg workspace (liens en dur dans le code), grand ménage mémoire+disque (baseline), bug visuel = extraire frames + instrumenter, validation mini-renders comparatifs (pas des stills)
 - **🗺️ WAR-MAP — grammaire & narration** — HOOK partir de NOS templates (pas grammaire externe), GRAMMAIRE CAUSALE + AUDIO-FIRST (standard), scanner catalogue carte-vivante avant code, structure linéaire + fact-check avant audio lock, sprite invisible = CONTRASTE, vrai coupable B1 = CODE LEGACY parallèle
 - **🎬 DA-BRIEF & review externe** — DA-brief causalité phrase-par-phrase + chaînes réf + catalogue, DeepSeek V4 3e voix conceptuelle (aveugle visuel), Gemini diff visuel obligatoire après 1er render, **DA-brief VIDÉO (analyse d'écart vers refs, scène finie)**
-- **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée)
+- **🎨 SVG GÉNÉRATIF ANIMÉ** (2026-06-21, ⭐ NOUVELLE VOIE) — Gemini génère une SCÈNE illustrée complexe en SVG propre (50-100 paths, ~20Ko, groupes #id sémantiques) → animable PAR PARTIES dans Remotion via useCurrentFrame (pas Lottie, pas AE). Net à toute taille, couleurs modifiables à la frame. GOTCHA : ne JAMAIS sortir un élément du cadre clippé (artefact de coupe) → "repart" = avance légère + fade out · **BIBLIOTHÈQUE SVG** (2026-06-25) — capitaliser chaque projet SVG en éléments (.svg) + techniques (.md) + index R&D (RD-INDEX.md avec renders catbox + verdicts). Un agent vierge peut réutiliser sans relire les TSX source. · **TEST NAVIGABILITÉ** : lancer un agent vierge avec 5 questions concrètes → les lacunes qu'il ne trouve pas = trous à corriger immédiatement (lien mort, prompt TODO, décision non tranchée) · **PERSONNAGE VIVANT** (2026-06-30) — perso d'encre animé par CODE (frame-driven, pas sprites) ; FOOT-PLANT / compensation bassin / objet-enfant-de-la-main ; LLM=banc d'idées pas rig-en-bloc → biblio `personnage-vivant-svg/`
 - **🎬 SCÈNE & CONTINUITÉ** — doctrine intention→forme→template (anti-cercle-vicieux templates), forced alignment ElevenLabs > Whisper pour le CALAGE d'animation (Whisper dérive ~0.4s)
 - **🔊 AUDIO & SOUS-TITRES** — trimAfter ABSOLU (depuis début media), sous-titres ffmpeg sans libass → overlay ProRes alpha, beats GLOBALE vs STANDALONE (noir+queue morte+musique coupée), musique 1 morceau → plusieurs durées
 - **🗺️ MAPBOX & RENDU GÉO** — stroke=fill → frontières invisibles, pays outre-mer → clipPath
@@ -19,6 +19,84 @@ Lecons transversales, patterns et anti-patterns valides au fil des sessions.
 ---
 
 ## 🔧 MÉTHODE & PROCESS
+
+### 2026-07-15 — Un signalement répété "trop petit" peut être un problème de CONTRASTE, pas de taille
+Short Sénégal Pétrole & Gaz D3, Beat 2 : des icônes SVG jugées "peu visibles" ont été agrandies sur 3
+itérations successives (échelle doublée, cercle d'ancrage doublé) sans jamais résoudre la plainte. Cause
+réelle trouvée seulement à la 4e passe : les traits étaient dans une teinte dorée dont la luminosité était
+trop proche de celle du fond parchemin — deux tons clairs voisins, donc peu de contraste quelle que soit
+la taille. Fix : substitution de couleur (teinte foncée à la place de la teinte dorée), résolu en un
+essai. **Règle de méthode** : si un correctif répété sur le même axe (taille) ne résout pas une plainte
+répétée, chercher une cause sur un axe différent (contraste/couleur/position) plutôt que d'insister sur
+le même axe une fois de plus.
+
+### 2026-07-15 — Dériver le calage (taille/position) depuis le VRAI CODE d'une référence déjà validée
+Short Sénégal Pétrole & Gaz D3, Beat 1 : plutôt que de régler à l'oeil la taille et la position d'une
+carte D3 dans un nouveau format vertical, lire directement les valeurs exactes (pourcentages de
+`fitExtent`, bbox du path) dans le code source d'un composant déjà validé dans un autre projet du même
+registre visuel. A évité un cycle d'ajustements manuels répétés — la mesure exacte a fonctionné du premier
+coup là où l'estimation empirique aurait probablement demandé plusieurs passes. Généralisable à tout
+réemploi de composant visuel dans un nouveau format/contexte : chercher la référence chiffrée dans le code
+plutôt que déduire une valeur "qui a l'air bien".
+
+### 2026-07-11 — Un agent peut refuser à tort un skill legit en le prenant pour une injection de prompt
+2 agents sur 3 lancés sur le skill `last30days` (recherche de vivacité Afrique du Sud/Mali/Soudan) ont
+refusé d'exécuter le moteur Python du skill, le lisant à tort comme une tentative d'injection de prompt —
+c'est en réalité le vrai fichier du projet (ton délibérément direct/impératif pour contrer la dérive du
+modèle en cours de recherche, pas une attaque). Les 2 agents ont fait un WebSearch direct à la place :
+résultat correct mais appauvri (pas de Reddit/X/TikTok natifs, la valeur propre du skill). Si un agent
+signale qu'un skill/fichier "ressemble à une injection", vérifier D'ABORD que ce n'est pas un fichier projet
+légitime au ton volontairement cash avant de le contourner — sinon on perd la richesse cross-plateforme
+sans même s'en rendre compte. Généralisable à tout skill/doctrine au ton direct, pas spécifique à last30days.
+
+### 2026-07-07 — Sprite/portrait BITMAP : JAMAIS de scale oscillant continu (= flou/scintillement)
+Un `scale` qui « respire » en boucle (breathe, ex. `1 + 0.04*sin(frame)`) sur une IMAGE RASTER force un
+ré-échantillonnage sub-pixel à CHAQUE frame → le sprite paraît flou et scintille en permanence (bug vu sur le
+jeton-Hemedti Acte 1 Soudan, Aziz : « les jetons sont flous, un petit brouillard »). **Fix** : spring d'APPARITION
+(0→1.12→1) PUIS scale FIGÉ à 1 — plus aucune interpolation de scale une fois l'objet posé. Pour donner de la vie
+sans flouter : animer l'OPACITÉ, un HALO/glow externe, l'OMBRE portée — jamais le scale de l'image elle-même.
+Vaut pour tout portrait/jeton/sprite bitmap animé.
+
+### 2026-07-07 — Extraire une forme-pays en `<path>` SVG depuis un geojson (pour un INSERT figuratif)
+Pour poser une silhouette nationale nette dans un cartouche/insert (≠ carte Mapbox zoomable) : charger le geojson
+du pays → aplatir les coords de l'anneau ext le plus grand en path → normaliser dans un viewBox → **CORRIGER
+l'aspect par `cos(latitude_centrale)`** (sinon le pays est étiré horizontalement : la projection lon/lat n'est pas
+iso aux latitudes ≠ 0). Échantillonner 1 point/N pour alléger. Donne une silhouette colorable/animable à la frame,
+sans Mapbox. Utilisé pour la vraie silhouette du Soudan de l'insert 50M (Acte 1) — a remplacé une silhouette
+Afrique dessinée à la main qui « ne ressemblait à rien » (Aziz). Réf : `sudan-outline.geojson` → `SUDAN_PATH` dans SoudanActe1.
+
+### 2026-07-07 — ⛔ NOM PROPRE AFFICHÉ À L'ÉCRAN = vérifier l'orthographe contre Wikipédia AVANT render (NON-NEGOTIABLE)
+Faute grave commise Acte 1 Soudan : label écran « HEMETI » alors que l'orthographe correcte est « HEMEDTI »
+(avec le D — nom affiché sur Wikipédia/barre de recherche : « Muhammad Hamdan Dagalo, nom de guerre Hemedti »).
+Un nom propre mal orthographié À L'ÉCRIT dès l'ouverture = perte de crédibilité immédiate (Aziz).
+**RÈGLE** : tout nom propre (personne, ville, organisation) qui APPARAÎT À L'ÉCRAN (label JSX, plaque, sous-titre,
+titre) DOIT être vérifié contre une source de référence (Wikipédia = référence d'orthographe) AVANT le render.
+Ne pas se fier à la transcription phonétique de l'audio (le whisper écrit « Emeti/Hemeti » d'oreille) ni à la
+graphie qu'on a « en tête ». La graphie ORALE (TTS) et la graphie ÉCRITE (label) sont deux vérifications distinctes :
+un nom peut être bien prononcé et mal écrit. Checklist avant tout render d'un beat avec nom à l'écran : lister les
+noms propres affichés → vérifier chacun sur Wikipédia → corriger le label. Détail : [[feedback_nom-propre-ecran-verifier-wikipedia]].
+
+### 2026-07-04 — Worktree : rapatrier les assets AUDIO gitignores AVANT de rendre dans le tree principal
+Un agent en worktree cree des mp3 dedies (ex `narration-v3-scene6.mp3`, `sc7-audio.mp3`) qui sont GITIGNORES ->
+ils restent dans le worktree et sont ABSENTS du working tree principal. Rendre la compo dans le tree principal
+echoue alors sur `readFile` (fichier introuvable) — le "DONE" d'un echo suivant peut MASQUER l'echec du render.
+REGLE : avant de rendre dans le tree principal une compo produite en worktree, COPIER les assets gitignores (audio
+mp3, SFX) du worktree vers le principal. C'est le sens INVERSE du gotcha connu #2 de [[PRODUCTION-AGENTIQUE-REMOTION]]
+(principal->worktree part sans assets) : le probleme joue dans les DEUX sens. Cause de render casse = >30min a
+diagnostiquer si on ne pense pas a l'asset gitignore.
+
+### 2026-06-26 — Réécriture d'historique git (filter-repo) drope le travail NON-COMMITÉ (piège silencieux)
+Le hook AES Acte 1 a été PERDU entre sessions : un `git filter-repo` (réécriture d'historique) suivi d'un commit
+d'intégration avait gardé les FICHIERS composants (`WarMapBanner`, `Acte1IntroSlam`) mais PAS leur câblage dans le
+moteur (modifs non commitées au moment de la réécriture). **Le piège = les fichiers survivent, seule l'intégration
+disparaît → régression SILENCIEUSE découverte tard** (le hook ne s'affichait plus, mais rien ne cassait au build).
+Règle : **commiter un JALON (même wip) avant toute opération filter-repo / rebase / reset**. Re-câblé + commité `23a550a`.
+
+### 2026-06-26 — Ondulation de tissu/bannière en headless : bandes DOM, JAMAIS clipPath SVG
+Effet ONDULATION (drapeau qui flotte, voile qui vague, déchirure animée) en rendu Mapbox headless : NE PAS utiliser
+`clipPath` SVG (fragile, échoue en headless — l'image clippée disparaît). Préférer **N bandes verticales DOM**, chacune
+affichant une tranche de l'image via `background-position`, avec `translateY` sinusoïdal déphasé (amplitude croissante
+du mât vers le bord libre). 100% DOM/CSS, robuste. Prouvé `WarMapBanner.tsx` (STRIPS=16, drapeaux AES plantés).
 
 ### 2026-06-15 — Methode de reorg workspace (gros menage : memoire, scripts, doctrines)
 
@@ -196,6 +274,18 @@ Render B1 V2 (board clearing + avion whip + convoi uranium + emprises dessinées
 
 ## 🎬 DA-BRIEF & review externe
 
+## Confabulation d'un OBJET ENTIER par un reviewer LLM, pas juste un biais de score (Soudan Acte 4, 2026-07-11)
+Kimi a scoré 6.2/10 (sous le seuil 8) en citant comme défaut principal "frame 8 = hard cut vers un barrage" —
+vérifié par extraction directe de la frame : aucun barrage n'existe ni dans le script ni dans le render,
+c'est le drapeau égyptien qui se colorie. Pas un biais de scoring habituel (palette, mouvement mal jugé sans
+le son) mais une INVENTION PURE d'un élément absent — un cran au-dessus des hallucinations déjà documentées.
+Procédure appliquée : vérifier CHAQUE critique contre la frame réelle avant d'agir (déjà la règle), et quand
+le point contesté est faux, écrire un override tracé (`<rendu>.review-override.md`) documentant le faux
+positif + le contexte AVANT de présenter — ne jamais juste ignorer silencieusement un score bas. Renforce la
+règle "Gemini/Kimi = signal jamais juge" : le signal externe peut se tromper jusqu'à halluciner un OBJET
+entier, pas seulement mal noter un vrai élément — un numéro de frame donné avec précision n'est pas une
+preuve de justesse.
+
 ## DA-BRIEF : la causalité phrase-par-phrase + chaînes de réf + catalogue templates sont OBLIGATOIRES (2026-06-14, Aziz, War-Map P4)
 
 > ⭐ **Doctrine absorbée dans `memory/doctrines/DA-BRIEF-GATE.md`** — lire avant tout DA-brief.
@@ -352,6 +442,21 @@ Whisper = bon pour le TEXTE et la structure des actes ; ElevenLabs forced-align 
 le bon texte établi. Les deux ne s'opposent pas : Whisper vérifie QUOI/QUAND grossier, ElevenLabs affine le QUAND.
 Cas d'école de la règle « fichiers de navigation périment → vérifier l'état RÉEL du livrable » appliquée à l'audio.
 
+⛔ **ÉPILOGUE (2026-07-04, passe de finition Sénégal V3)** — ce même `scene1-alignment.json` avait en fait
+un **loss aberrant sur plusieurs mots** (>2.0, et un mot "on" étalé sur 6.8s→13.6s — signe clair de dérive
+causée par un mauvais découpage de la fenêtre audio source `/tmp/senegal-s1-window.mp3`), resté non détecté
+car personne n'avait vérifié le LOSS SCORE du fichier avant de coder toute une scène dessus. Résultat concret :
+`AUDIO_START` de la scène était décalé de +12.5s par rapport à la réalité, causant un dédoublement audio massif
+au montage (texte répété entre deux scènes consécutives). **Règle ajoutée** : avant de figer un `AUDIO_START`
+sur un fichier de forced-align hérité, vérifier le `loss` de chaque mot-clé utilisé — un loss > 1.5-2.0 ou une
+durée de mot anormale (plusieurs secondes) est un signal de dérive du fichier lui-même, pas juste d'imprécision.
+Recroiser avec UNE source indépendante (nouveau forced-align sur le fichier source complet + Whisper) avant de
+coder. **Corollaire** : si un forced-align est confirmé corrompu, REFAIRE proprement l'appel API (scripts
+`scripts/senegal-scene1-realign.py` / `scene4-5-realign.py`, réutilisables comme template) plutôt que de
+reconstruire le timing à la main par déduction — reconstruire à la main risque de recréer le même genre
+d'erreur de dérive qu'on cherchait à corriger (constaté : une reconstruction manuelle a eu besoin d'un 2e
+passage de correction dans la même session).
+
 ### 2026-06-18 — DA-brief VIDÉO : analyse d'écart vers refs, Gemini = signal filtré
 
 Pour faire monter en gamme une scène FINIE (mouvement/rythme/son), `scripts/tools/gemini-video-da-brief.py`
@@ -375,6 +480,17 @@ Symptome (Peste 1347, assemblage) : 8-24s d'ecran noir au debut de Beat2/Beat3, 
 
 Verif anti-figé apres assemblage : echantillonner 1 frame/2s, comparer le md5 (frame identique a t-2 = figee) + taille <15KB = noir.
 
+⛔ **4e piege trouve en reassemblant apres un fix de code (peste-1347, 2026-07-01)** : meme en respectant les
+points 1-3 (musique en 1 piste), si la NARRATION reste concatenee par segments (chaque beat garde son propre
+`<Audio startFrom= trimAfter=>` sur le fichier narration source, et on concatene les beats DEJA rendus avec leur
+son), on obtient quand meme des coupures nettes audibles a chaque frontiere de beat — meme fichier source, mais
+6 flux audio recolles au lieu d'un seul continu. **Fix : au REASSEMBLAGE (pas au premier render), rejouer le
+fichier narration SOURCE ORIGINAL en 1 SEUL flux continu par-dessus la video concatenee rendue SILENCIEUSE
+(`-an` sur le concat video), plutot que de garder l'audio deja decoupe par beat.** Verifier ensuite l'absence de
+derive cumulative : comparer les durees RELATIVES de render par beat (`durationInFrames` Root.tsx) aux durees
+ABSOLUES de la narration source (timing.ts) — un ecart CONSTANT et faible (~2 frames, padding initial) est
+normal, un ecart qui GRANDIT progressivement d'un beat a l'autre indique une vraie derive a corriger.
+
 ### 2026-06-08 — Sous-titres : ffmpeg local SANS libass -> overlay couche Remotion ProRes alpha
 
 Le ffmpeg brew local (8.0.1) est compile SANS libass : les filtres `subtitles` et `ass` n'existent pas
@@ -387,6 +503,27 @@ Le ffmpeg brew local (8.0.1) est compile SANS libass : les filtres `subtitles` e
    `--public-dir=/tmp/empty-public` si la couche n'a pas d'assets (evite la copie 1.3GB qui bloque le render).
 4. Overlay sur la video : `ffmpeg -i video.mp4 -i subs.mov -filter_complex "[0:v][1:v]overlay=0:0:shortest=1[v]" -map "[v]" -map 0:a`.
 Le filtre `overlay` LUI est dispo sans libass. Bonus : style sous-titres 100% controle Remotion (coherent charte).
+⛔ **PIEGE reproduit 2026-07-01 (peste-1347)** : si `--prores-profile=4444` est OMIS (meme avec `--pixel-format=
+yuva444p10le` demande), Remotion encode SANS canal alpha (`pix_fmt` reel = `yuv444p10le`, sans le "a") sans
+erreur ni warning. L'overlay produit alors un ecran QUASI-NOIR sur toute la video (le calque opaque ecrase tout).
+**Symptome diagnostique rapide** : bitrate du fichier assemble final anormalement bas (~70 kb/s au lieu de
+plusieurs milliers) + `ffprobe -show_entries stream=pix_fmt` sur le fichier subs.mov ne montre PAS de "a" dans
+le pix_fmt. Verifier ce point AVANT de lancer l'overlay final, pas apres.
+
+### 2026-07-04 — ffmpeg local SANS drawtext -> incruster du texte via PNG + overlay (cartouches de source)
+Le ffmpeg local n'a PAS non plus le filtre `drawtext` (compile sans libfreetype ; `ffmpeg -filters | grep drawtext`
+= vide). Pour incruster un cartouche de source / texte sur une video (ex : sources factuelles bas d'ecran de
+l'assemblage Senegal V3) : (1) generer un PNG du texte via PIL (police systeme, ex `DIN Condensed Bold` = condensee
+majuscule proche BebasNeue), fond transparent ; (2) overlay ffmpeg AVEC `-loop 1 -framerate 30` sur l'entree PNG
+(SINON le `fade` in/out ne s'applique pas a un PNG statique — piege) :
+`ffmpeg -i in.mp4 -loop 1 -framerate 30 -t <dur> -i tag.png -filter_complex "[1]format=rgba,fade=in:st=A:d=0.5:alpha=1,fade=out:st=B-0.5:d=0.5:alpha=1[t];[0][t]overlay=64:H-92:enable='between(t,A,B)'"`.
+Meme famille que le gotcha libass ci-dessus (ffmpeg amoindri = on overlay une couche image au lieu du filtre natif).
+
+### 2026-07-04 — Compression video web : CRF 27 preset slow + faststart pour livrer < 200MB (catbox)
+Livrer une video mobile-friendly sous la limite catbox (200MB) : `ffmpeg -crf 27 -preset slow -movflags +faststart
+-c:a aac -b:a 128k`. Prouve Senegal V3 : 203MB -> 60MB en 1080p sans perte visible. Le motion design navy/or
+(aplats, peu de grain) compresse TRES bien -> CRF 27 = bon defaut pour nos livrables. (Baisser le CRF si la video
+a beaucoup de film grain/bruit.) `+faststart` = lecture qui demarre avant fin du telechargement (mobile).
 
 ### 2026-06-08 — Remotion `<Audio>` : `trimAfter` est ABSOLU (depuis le debut du media), pas relatif a `startFrom`
 
@@ -399,6 +536,31 @@ Le filtre `overlay` LUI est dispo sans libass. Bonus : style sous-titres 100% co
 **Regle de verif audio (NON-NEGOTIABLE avant "audio OK")** : mesurer le niveau REEL dans le render, jamais se fier au code.
 `ffmpeg -i render.mp4 -vn out.wav` puis `ffmpeg -ss T -t D -i out.wav -af volumedetect -f null -` -> mean_volume.
 Voix presente ~ -15 a -20 dB ; quasi-silence <= -32 dB. Si Aziz dit "je n'entends pas la voix", LE CROIRE et instrumenter.
+
+### 2026-07-04 — Décaler une constante de timing SANS recalculer ses dérivées réintroduit le même bug qu'on vient de corriger
+
+En corrigeant un bug de dédoublement audio (Sénégal V3), `AUDIO_START` d'une scène a été décalé (49.5s →
+53.70s) pour répondre à une demande de montage — mais la constante `END` (calculée depuis l'ancien
+`AUDIO_START`) n'a pas été recalculée en conséquence, et surtout l'élément `<Audio>` n'avait **aucun
+`endAt`** du tout : il jouait donc jusqu'à la fin du RENDER (durée totale de la composition) au lieu de
+s'arrêter au bon moment, rejouant un bout de texte déjà présent dans la scène suivante. Le bug n'a été
+détecté qu'en réassemblant le montage COMPLET (pas la scène isolée) et en transcrivant TOUTES les jonctions
+avec Whisper — un test scène-par-scène ne l'aurait pas révélé puisque chaque scène individuelle semblait
+correcte. **Règle** : quand on décale une constante de timing dont d'autres constantes dépendent (`END`,
+durées de composition, offsets de SFX), TOUJOURS grep toutes les constantes DÉRIVÉES et vérifier qu'elles
+sont recalculées — et vérifier explicitement que CHAQUE élément `<Audio>` a un `endAt`/`trimAfter` défini,
+jamais supposer qu'il s'arrêtera correctement tout seul à la fin du render. Après toute correction de bug de
+timing, réassembler et re-transcrire le montage COMPLET (pas juste la scène touchée) avant de conclure.
+
+### 2026-07-04 — Whisper "small" peut halluciner des répétitions → utiliser "medium" pour confirmer un diagnostic de bug audio
+
+Un premier test de détection de dédoublement audio (jonction de montage) avec le modèle Whisper **small**
+n'a PAS détecté un bug réel (faux négatif) — un second test avec le modèle **medium** l'a confirmé
+clairement. Le modèle small a tendance à halluciner des répétitions de segments sur de l'audio ambigu,
+ce qui peut aussi bien masquer un vrai bug que faire croire à un faux positif. **Règle** : pour toute
+vérification de bug audio (dédoublement, trou, coupure) par transcription automatique, utiliser le modèle
+**medium** au minimum pour confirmer avant de conclure "pas de bug" — le modèle small sert seulement de
+premier passage rapide, jamais de verdict final.
 
 ---
 
@@ -422,6 +584,54 @@ NOR->Svalbard (Arctique), NLD->Caraibes, PRT->Acores. Au pull-back / vue large -
 Pour l'Europe (carte peste mercLarge 720x1280) : `<rect x={118} y={236} width={470} height={328} />`. Le rect est en coords
 SVG carte ; sur un `<g transform=camera>`, le clip s'applique dans l'espace local (apres transform) = coords carte = correct,
 clip stable a tout zoom. Meme nature que le bug `mainlandBox` des drapeaux (`useClipFlags`).
+
+### 2026-07-04 — Composant Mapbox CANONIQUE promu sans reprendre les patterns déjà éprouvés ailleurs dans le même projet
+
+`CartoSouverainV5.tsx` (composant Mapbox "canonique", utilisé par 3 scènes Sénégal V3 différentes) n'avait
+NI `map.resize()` NI `delayRender`/`continueRender` — causant (a) un flash "petit carré non plein écran" aux
+premières frames de chaque scène (le canvas Mapbox s'initialise parfois avant que son container ait sa taille
+CSS finale, race condition headless connue), et (b) un flash gris avant que le style Mapbox ne soit peint
+(`style.load` ne garantit qu'un JSON de style appliqué, pas un vrai paint GPU — il faut `map.once("idle", ...)`
+avant `continueRender`). **Le pire** : un AUTRE composant Mapbox du MÊME projet, `MapboxIsolateZone.tsx`, avait
+déjà ce pattern `delayRender`/`continueRender` correctement implémenté — le composant "canonique" nouvellement
+promu l'avait tout simplement oublié/pas cherché. **Règle** : avant d'écrire ou de valider un composant partagé
+qui gère un problème structurel connu (headless WebGL, race conditions, chargement async), grep les composants
+existants du même domaine dans le projet pour vérifier s'ils ont déjà résolu ce problème — un composant
+"canonique" doit être audité CONTRE l'existant, pas juste écrit à neuf en supposant qu'il n'y a rien à reprendre.
+Fix appliqué : `map.resize()` + `map.once("idle", () => continueRender(handle))` dans `style.load`, avec un
+`delayRender()` au montage. Bénéficie à toutes les scènes qui utilisent ce composant partagé.
+
+### 2026-07-04 — Render Mapbox local échoue "Failed to initialize WebGL" → chercher le script dédié AVANT de suspecter le GPU
+
+`npx remotion render <CompoMapbox>` échouait systématiquement avec `Failed to initialize WebGL`, y compris
+après nettoyage de process zombies `chrome-headless-shell` (donc pas un problème de ressources GPU saturées).
+La vraie cause : il fallait utiliser `scripts/render-mapbox.sh <CompoId> <output.mp4>`, qui encapsule les
+vrais prérequis (chrome-headless-shell explicite, `--public-dir` symlinké "slim" pour éviter de copier ~2.4GB
+de `public/` à chaque render, flag `--gl=angle`). Le script existait déjà dans le projet et n'a été trouvé
+qu'après qu'Aziz ait demandé explicitement "as-tu utilisé le script dédié aux renders Mapbox ?" — plusieurs
+tentatives de diagnostic GPU (kill de process, `--concurrency=1`, redémarrage) auraient été évitées en
+cherchant d'abord `ls scripts/*.sh scripts/render-*` avant de suspecter l'environnement.
+
+### 2026-07-10 — Caméra suiveuse générique : `cameraFollowsPath` + `camKeys` en fonction
+
+`cameraFollowsPath(waypoints, t, zoom)` (`src/projects/warmap/engine/SoudanWarMapEngine.tsx`, écrit pour
+Soudan Acte 3 mais générique) interpole lon/lat le long d'un trajet géo selon `t∈[0,1]`, zoom fixe passé
+en paramètre — réutilisable pour tout futur beat "caméra qui suit un marqueur en mouvement". `camKeys`
+(prop du moteur) accepte maintenant `CamKey[] | ((frame:number)=>CamKey)`, pas seulement un tableau figé.
+**Piège rencontré** : le bug n'était jamais dans la fonction (correcte dès l'écriture) mais dans la VALEUR
+de zoom passée par l'appelant — un écart <1.0 entre "zoom follow" et "zoom repos" est imperceptible à
+l'image, il faut ~1.5-2.0 niveaux d'écart pour un contraste visible.
+
+### 2026-07-10 — Calculer la distance RÉELLE (haversine) avant de choisir un zoom Mapbox cible
+
+Avant tout cadrage "2 points ensemble" (close-up simultané sur 2 lieux), calculer la distance réelle
+entre eux AVANT de choisir un zoom — ne pas itérer à l'aveugle sur la valeur. Cas vécu (Soudan Acte 3,
+session 6) : Darfour-Khartoum estimés à tort à 50-80km, en réalité **~707km** — ce qui rendait un
+"close-up serré sur les 2 portraits" géométriquement IMPOSSIBLE à un zoom Mapbox cohérent (à cette
+latitude, zoom 6 ≈ 1100km de large à l'écran, zoom 6.5-7.5 ≈ 150-500km — donc au-delà de zoom~5.5-6, l'un
+des deux points sort du cadre). 3 itérations de réglage de zoom ont échoué avant qu'un calcul de distance
+révèle que le problème était géométrique, pas un réglage. Diagnostic complet chiffré :
+`memory/episodes/soudan-midform/acte3-v8-agents-rnd/agent-diagnostic-camera-drapeaux.md`.
 
 ---
 
@@ -561,3 +771,169 @@ fact-check ; distinguer production (conjoncturel, volatil) vs réserves/rang/inf
 **Exemples corrigés 2026-06-25** : `feedback_flagfill` disait useClipFlags=NON-NEGOTIABLE (V5 dit BANNI au pitch→MapboxCountryFlagDecal) · 2 feedbacks "scan template d'abord" (doctrine = INTENTION-d'abord) · rules-atlas §7 `flipX:true` (bug moonwalk) · CLAUDE.md lui-même en retard sur les drapeaux V5.
 **How to apply** : à CHAQUE révision de doctrine, faire un `grep` du sujet dans `memory/feedbacks/` + CLAUDE.md + les index, et rétropropager (bandeau "⚠️ MAJ <date>" en tête du feedback périmé, pas suppression — le corps reste utile dans son ancien contexte). Le feedback est la couche qui dérive le plus vite car personne ne le re-relit.
 **Corollaire** : nos PROPRES ménages créent des régressions (fichier supprimé encore cité, fichier extrait non documenté dans l'index). Après toute purge/refactor, `grep` les noms supprimés/déplacés dans TOUTE la mémoire, pas seulement les 8 fichiers de check-links.py (qui ne couvre pas feedbacks/NEXT-ACTION/tools/ ni la résolution relative depuis l'auto-memory).
+
+## 🎬 SVG narratif : SCÈNE-ÉCOSYSTÈME, jamais OBJET-DANS-CADRE (2026-06-29, cacao B3/B4)
+**Cas déclencheur** : briefs SVG cacao (verger/tablette/CI-usine) → cibles correctes en objets MAIS « des arbres à droite à gauche », tablette posée sur 2 traits dans du vide, CI = patate beige au milieu du parchemin. Aziz : « où sont nos scènes narratives comme la Grande Muraille Verte ? »
+**Cause racine** : le brief décrivait des OBJETS dans un cadre, pas une SCÈNE. Un objet + 2 lignes de sol = inventaire, pas récit.
+**La référence-étalon** (ce qui RACONTE) = la pièce-malédiction Sénégal (`SenegalCoinFaceA_SVG`, render `scene1-intro-coin-FINAL.mp4`) : derrick qui POMPE au-dessus de la mer + navire qui FLOTTE sur la mer + vagues qui REMPLISSENT le bas. Chaque élément AGIT sur les autres dans UN espace unifié. Idem GGW : champ avec échelle premier-plan/fond, sol qui se fend + racines SOUS l'horizon, mosaïque en perspective qu'on traverse.
+**RÈGLE (à mettre dans tout brief SVG narratif)** :
+1. **Scène-écosystème** : avant-plan FORT (un objet-héros proche, grand), sol ET ciel HABITÉS, éléments EN RELATION/action les uns sur les autres. PAS un objet centré dans du vide.
+2. **Matière partout** : le « vide GGW » = respiration CIBLÉE, pas un fond mort. Remplir : sol (feuilles, cabosses, sillons), ciel (soleil correct, oiseaux, collines horizon), accessoires qui racontent le travail.
+3. **Perspective qu'on traverse** : 3/4 plongeante, point de fuite, étagement profond — pas frontal-frise.
+4. **Joindre la frame pièce-malédiction + frames GGW** comme refs de NIVEAU (strictement : « ne copie pas, vise CETTE richesse »).
+**How to apply** : avant de juger une cible SVG « bonne », test = « est-ce que les éléments INTERAGISSENT dans un monde, ou sont-ils juste posés ? ». Si posés → re-brief écosystème. Lié à [[SVG-FAISABILITE-AMONT]] et au pré-plan DA cacao.
+
+## ⚠️ LE SCRIPT TEXTE EST PÉRIMÉ DÈS QUE L'AUDIO FINAL EST VALIDÉ (Cacao B5, 2026-06-29)
+**Cas prouvé** : le CTA de B5 dans SCRIPT-V4 ("quel produit veux-tu qu'on suive jusqu'au bout") DIFFÉRAIT de l'audio
+réel ("quel produit t'intéresse le plus que tu voudrais voir traité en vidéo" + "la version longue DE CETTE VIDEO").
+Aziz l'a signalé d'instinct ; transcription Whisper de l'audio FINAL l'a confirmé.
+**RÈGLE** : pour tout beat avec narration FINAL, le fichier de référence du karaoké/des supports calés sur la voix =
+l'AUDIO (transcrit Whisper word-level), JAMAIS le script texte. Avant de coder le karaoké d'un beat : (1) transcrire
+l'audio réel (`scripts/tools/whisper-align.py <beat>-FINAL.mp3 --out <beat>-words.ts`), (2) confronter au script,
+(3) coder sur l'audio. Le script peut avoir été ré-écrit après la génération TTS sans que l'audio soit regénéré.
+**How to apply** : flaguer "⛔ TEXTE PÉRIMÉ, vérité = <beat>-words.ts" dans tout script/DA-brief dès qu'une divergence
+audio↔script est trouvée, pour qu'un agent futur ne reparte pas sur le mauvais texte.
+
+---
+
+## SFX premium : réutiliser la palette GGW + ALIGNER par force alignment (prouvé cacao 2026-06-29)
+**Leçon** : pour poser les SFX d'un short SVG encre/parchemin, 2 règles qui font la différence premium.
+**Why** : les SFX décident de la perception "premium" autant que la musique ; mal placés (estimation manuelle), ils sonnent faux.
+**How to apply** :
+1. **RÉUTILISER avant créer** : la palette `public/audio/ggw-muraille-verte/sfx/` (sillon=trace, pousse=vie,
+   fissure, goutte=fuite, soleil-embrase=colorisation, ombre-dissoute, reveal-souterrain=racines, vent=ambiance) est
+   le MÊME registre que tout short encre/parchemin. + UI `_shared/sfx/ui/` (stamp-dossier, plate-pop). ⛔ reveal.mp3 BANNI.
+   Ne créer (ElevenLabs `sound-generation`, prompts EN sobres) que les 3-5 gestes manquants. Parcimonie : 8-22 events max.
+2. **FORCE ALIGNMENT** (sinon décalages perçus) : reconstruire la timeline ABSOLUE des mots depuis les `beatN-words.ts`
+   (Whisper word-level déjà dispo) + offsets cumulatifs des beats (frames/30). Caler chaque SFX sur le MOT déclencheur,
+   pas sur une estimation. Volumes 0.08-0.38 SOUS la narration ; vérifier mix (mean/max dB, pas de clipping).
+3. Spotting délégable à un agent (lui donner timeline + inventaire SFX réel). Mais le TIMING final = force alignment, pas l'agent.
+
+---
+
+## PERSONNAGE VIVANT = animation procédurale frame-driven (PAS sprites, PAS rig-LLM-en-bloc) — 2026-06-30 ⭐⭐
+Faire AGIR un personnage dans une scène SVG (marche/penche/ramasse/transporte/dépose/plante/porte) = silhouette
+stick figure SIMPLE (segments DROITS, pictogramme digne) animée 100% par CODE via `useCurrentFrame` + une fonction
+cinématique source-de-vérité (`computePose`). Validé Aziz sur cacao + GGW, 9:16 ET 16:9, 1 à 3 personnages.
+
+**Le corps n'est jamais le problème — l'ANIMATION l'est.** 5 causes-racines à connaître (détail : la feuille de
+route) :
+- marche qui "glisse" → **FOOT-PLANT** (le pied d'appui reste fixe au sol pendant son appui ; clamp y≤0).
+- penché qui bascule en arrière → **COMPENSATION DU BASSIN** (le bassin RECULE + DESCEND quand le torse se penche).
+- objet qui "lévite" → **machine à états + HOLD + objet enfant-de-la-main** : l'objet reste collé à la position
+  RÉELLE de la main (`computePose`), JAMAIS de glissade autonome vers sa cible — c'est la main qui l'amène. Le corps
+  s'arrête AVANT le contenant (`depotStopX`) pour que la main tendue arrive au-dessus.
+- Marche = translation à vitesse CONSTANTE (linéaire, pas d'easing sur les segments de marche).
+- **arrêt de marche qui "saute" (2026-07-01)** → couper `moving: true→false` net fige les jambes en pleine foulée
+  (parfois écartées). FIX : `moveAmt` continu (0..1) qui décroît sur ~15 frames AVANT l'arrêt, jamais un cut.
+  Résiduel mineur même avec le fix — acceptable en proto, à reprendre si visible en vraie production.
+
+**2 personnages qui interagissent (2026-07-01, piste "B" R&D 16:9 narratif)** : prouvé sur `passer-objet-main-a-main`
+(planteur→acheteur, `PasserObjetMainAMain.tsx`). Nouveau param `offerReach` (bras tendu HORIZONTAL ~88°, ≠ `armReach`
+qui pointe vers le sol pour ramasser) + `handoffState` (`objectHandling.ts`) : objet suit main A → point de contact
+FIGÉ au frame du HOLD (pas recalculé en continu, sinon glissade) → suit main B. Calculer la distance entre les 2
+persos pour que les mains tendues se REJOIGNENT (vérifié numériquement, pas à l'œil — 1er essai avait 250px d'écart).
+
+**LLM (GLM/GPT/Gemini) = banc d'idées UTILE (capacité, pas plafond), mais NE PAS prendre un rig généré EN BLOC** :
+le rig "noodle"/courbes tue le pictogramme. On garde NOS lignes droites et on pilote la cadence nous-mêmes.
+
+**8 DIRECTIONS complétées (2026-07-01/02) — profil/3-4/dos/face × miroir** : 2 familles de projection de jambe,
+JAMAIS interchangeables — LATÉRALE (profil/3-4 : le pas se lit en X écran, near/far = longueur+amplitude
+différentes) vs PROFONDEUR (dos/face : le pas se lit en Y écran, PAS X — piège du 1er essai dos qui a réutilisé
+la mécanique latérale = lisait comme un pas chassé, pas une marche vers le fond ; bug repéré par Aziz, confirmé
+fondamental par Gemini+GPT). Dos et face partagent la MÊME formule Y-stride, seul le signe de `advance` s'inverse
+(vers la caméra vs vers le fond). Draw-order : FIXE en 3/4 (far toujours derrière), DYNAMIQUE en dos/face (par
+profondeur réelle du pied) — ne JAMAIS mélanger les 2 (bug trouvé en consolidant : jambes qui se chevauchent).
+Honnêteté technique confirmée par 2 modèles : le DOS PUR est la vue la plus limitée du système (même les jeux
+vidéo trichent en 3/4-dos). Méthode qui a payé 3× : proto isolé → render EN MOUVEMENT (jamais un still) → si
+doute, GPT-5.5 + Gemini 3.1 Pro EN PARALLÈLE, appliquer ce qui converge. Consolidé en briques partagées
+(`rig/multiDirection.ts` + `rig/StickRigMultiDir.tsx`) après les 3 protos isolés, AVANT d'attaquer une scène
+narrative qui change de vue en mouvement — éviter la duplication x3 de la même projection.
+
+**Torse = 3e axe de différenciation perso** : au-delà de `tunicColor`, `tunicPattern` (rayures/col) et `neckwear`
+(cravate/foulard noué) — combinables avec `ink` (trait) et `hat` (tête), reste pictogramme digne (pas caricatural).
+
+**RÈGLE PRO 2026-07-02** : dos/face illisibles à petite échelle (contrainte géométrique 2D, pas un bug) →
+`StickFigureSimplified` (Scale & Bob : rebond du corps + bras + échelle, sans jambes articulées) sous le seuil
+d'échelle ~0.85. DÉCISION AZIZ : pas de marche de FACE en production (réservée gros plans/statique) — confirmé
+par Gemini+GPT ET observation directe d'Aziz sur The Infographics Show (persos détaillés restent quasi
+toujours en profil/3-4 en mouvement). Piste R&D ouverte : analyser The Infographics Show via yt-dlp
+(frames+vision) → doctrine mise en scène/caméra. Détail : `PERSONNAGE-VIVANT-INDEX.md` § RÈGLE PRO.
+
+**Biblio réutilisable — PARTIR D'ICI, ne pas recoder un perso de zéro** :
+`src/projects/_shared/personnage-vivant-svg/` (`PERSONNAGE-VIVANT-INDEX.md` = doc · `rig/poses.ts` = cinématique
+source de vérité · `rig/StickRig.tsx` = rig générique ink+hat(straw/cap/scarf)+carry · `rig/objectHandling.ts` ·
+`scenes-proto/RecolteAuSol.tsx`). Feuille de route anim (Gemini+web concordants) :
+`memory/episodes/souverain/cacao-chocolat-short/ANIMATION-STICKFIGURE-FEUILLE-ROUTE.md`. Évolution : [[IDEE-PERSO-8-DIRECTIONS]].
+
+**Portrait stylisé d'une personne RÉELLE identifiable = toujours partir d'une VRAIE PHOTO, jamais d'une
+illustration déjà stylisée (2026-07-05, War-Map Sahel P4)** : pour régénérer/corriger un portrait de
+dirigeant réel (Goïta/Traoré/Tiani), la 1re tentative a utilisé l'ancienne illustration stylisée du
+projet comme référence de ressemblance pour Gemini (style cible = `soldier-aes.png`) — REJETÉE par Aziz,
+résultat = visages génériques en treillis militaire, plus la même personne. Fix qui a marché : télécharger
+la vraie photo officielle (Wikipedia/Commons, licence libre) de la personne, PUIS la restyliser via
+Recraft (`image_to_image` + `remove_background`, style extrait via `create_style` depuis un asset déjà
+validé du projet) — fidèle ET net au downscale. Le modèle de génération dérive vers un visage générique
+dès que la référence de ressemblance n'est plus une vraie photo, même si l'illustration de départ était
+censée représenter la même personne.
+
+**Quand une direction visuelle est rejetée 2 fois pour la MÊME raison de fond, changer de PARADIGME à la
+3e tentative, pas ajuster les détails (2026-07-05, visuel CEDEAO War-Map Sahel)** : tentative 1
+(marqueurs+flèches hors-cadre, 2026-07-01) et tentative 2 (bande+flèches créant des triangles visibles
+dans l'océan, 2026-07-04) rejetées pour le même défaut de fond ("pas assez concret / trop symbolique").
+La tentative 3, validée, a changé de paradigme entier (vraie géographie des pays menaçants via zoom
+élargi + contours réels extraits d'un atlas mondial, plutôt qu'un symbole abstrait affiné) au lieu de
+re-doser la tentative 2. Signal à surveiller : 2 rejets consécutifs pour la même raison = le problème
+n'est pas dans l'exécution, il est dans l'approche choisie.
+
+**IPv6 mort dans le sandbox réseau bloque silencieusement TOUT client Python HTTPS (2026-07-05)** :
+`yt-dlp`, `google-genai` (Gemini), `requests` (OpenRouter) restaient bloqués sans erreur ni respect du
+timeout déclaré sur toute requête réseau, alors que `curl` répondait normalement en <2s sur les mêmes hosts.
+Root cause : `getaddrinfo()` renvoie les adresses IPv6 avant les IPv4, la route IPv6 sortante est totalement
+morte dans ce sandbox (`networksetup -getinfo Wi-Fi` : "IPv6 IP address: none"), et Python n'a pas de
+fallback rapide type happy-eyeballs contrairement à `curl` — la connexion reste pendue bien au-delà du
+timeout. Diagnostic qui débloque en ~20 min : comparer `curl -6 https://<host>` (timeout) vs `curl -4` (rapide)
+sur le host concerné. Fix : `yt-dlp --force-ipv4` (flag natif) ; pour tout autre script Python sans flag
+IPv4, wrapper permanent `scripts/tools/run_ipv4.py` (monkeypatch `socket.getaddrinfo` via `runpy`, usage :
+`python3 scripts/tools/run_ipv4.py <script.py> [args]`). Si un script Python "traîne" sans output ni erreur
+sur un appel réseau externe dans ce projet, suspecter ce gotcha en premier avant de conclure à une limitation
+d'environnement ou un problème d'API. Détail complet : `memory/tools/yt-dlp.md`.
+
+## Dépendance manquante `@remotion/motion-blur` casse TOUT le bundle Remotion (2026-07-07)
+Le fichier commité `src/projects/_shared/_demos/KineticMaskSlamFX.tsx` importe `@remotion/motion-blur`, MAIS
+ce package n'était NI installé (`node_modules/`) NI dans `package.json`. Comme Remotion bundle TOUT `src/` en
+un seul build, un import non résolu dans N'IMPORTE quel fichier fait échouer le bundle ENTIER (`Error: Module
+not found: Can't resolve '@remotion/motion-blur'`) — donc un render d'une compo qui n'a RIEN à voir échoue.
+Symptôme trompeur : un render antérieur pouvait "passer" via le cache de bundle Remotion, puis échouer après
+invalidation du cache. Fix : `npm install @remotion/motion-blur@<version-remotion>` (aligner sur la version de
+`remotion` dans package.json, ici 4.0.456). Leçon : un `Module not found` au bundle Remotine pointe le FICHIER
+fautif dans le message — ce n'est pas forcément la compo qu'on rend. Chercher `grep -rln "<module>" src/`.
+
+## Cycle de vie d'un élément animé : geste PONCTUEL fade-out vs état DURABLE qui accumule (2026-07-08, Short AES)
+Sur une carte/scène qui superpose des gestes de désignation et des états persistants, distinguer deux cycles de
+vie : un GESTE PONCTUEL (anneau de focus, flèche de menace, ping d'apparition) doit FADE-OUT une fois que le
+beat/panneau qu'il accompagnait est passé ; seuls les ÉTATS DURABLES (couleur de territoire, ghost borders,
+hachures de zone perdue/tenue) restent à l'écran et s'ACCUMULENT. Sinon la scène s'encombre (tous les gestes de
+tous les panneaux restent affichés → illisible). Complète la règle CLAUDE.md "objet inerte ne glisse jamais"
+(qui traite du DÉPLACEMENT) par la dimension apparition→disparition. Prouvé sur le Short AES : les anneaux de coup
+d'État et la flèche CEDEAO devaient s'estomper (fadeOut) une fois l'AES né, sinon ils polluaient le climax.
+
+## Lisibilité cartographique par SOUSTRACTION : retirer un élément qui a fini son rôle + recentrer (2026-07-08, Short AES)
+Quand un élément géographique a fini son rôle narratif (ex. la Libye après avoir expliqué la contagion de 2012),
+le RETIRER de la carte et recentrer/zoomer la caméra sur ce qui reste (le trio AES) rend le sujet principal plus
+GROS et plus LISIBLE, sans aucune perte narrative. Le cadre qui se resserre autour du sujet actif > garder tout à
+l'écran "au cas où". Distinct de la "règle de soustraction" émotionnelle (retrait d'EFFETS aux pics) : ici c'est
+un retrait d'ÉLÉMENT + recadrage pour la lisibilité. Transversal à toute scène multi-lieux (Mapbox ou d3-geo) où
+le foyer d'attention se resserre en cours de récit. Bonne intuition Aziz : "la Libye n'a plus rien à voir ici".
+
+## Vérifier indépendamment un calcul chiffré d'agent R&D avant de l'appliquer (2026-07-11, Soudan Acte 3)
+Un diagnostic produit par des agents R&D sur une formule technique/géo (ex. zoom Mapbox ↔ distance réelle à
+l'écran) peut être FAUX d'un facteur significatif (×10 observé) sans que l'erreur soit évidente à la lecture —
+le diagnostic "semblait" cohérent, structuré, chiffré, mais reposait sur une formule mal appliquée. Cas concret :
+le diagnostic initial du problème "zoom intro pas assez resserré" (Beat 1, Khartoum/Darfour) indiquait qu'un
+zoom Mapbox de 6.6 correspondait à ~300km d'écran réel ; un recalcul indépendant (formule Web Mercator exacte,
+mètres/pixel = 156543.03392×cos(lat)/2^zoom) a montré que zoom 6.6 = ~3000km réel — le vrai fix était de
+recalibrer à zoom 9.3, pas d'ajuster autour de 6.6. Règle : avant d'appliquer un correctif CHIFFRÉ proposé par
+un agent R&D sur une formule technique (géo, physique, timing), faire vérifier le calcul indépendamment (recalcul
+manuel ou 2e agent dédié) plutôt que de l'appliquer directement — surtout quand le chiffre conditionne un réglage
+coûteux à re-tester (ex. un render Mapbox complet).

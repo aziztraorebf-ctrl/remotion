@@ -7,6 +7,34 @@ metadata:
 
 # STORYBOARD — SOUDAN ACTE 1 (RUPTURE)
 
+## ⭐⭐ HOOK D'OUVERTURE — "L'OR DU DARFOUR" (ajouté 2026-07-07, validé concept Aziz)
+
+> **Insert SVG parchemin/encre AVANT le beat 1 de la carte.** Corrige le piège chronologique du
+> script actuel (« il y a dix ans… » = ouverture qui fait droper, cf [[HOOK-PREMIERE-MINUTE]] règle 4).
+> Le hook pose l'ENJEU (or → guerre) avant l'histoire. **Compo `OrDarfourHook`** (commit `9920643`,
+> `src/projects/warmap/soudan-hook/`). Render actuel : `out/_rnd/warmap-choc/or-darfour-hook-encre.mp4`
+> · catbox `kes6he`. ~21s. Registre reskin encre (soleil+or+sang en accents, remap couleur zéro LLM).
+
+**Script du hook (à affiner — reformulation actée) :**
+| Voix | Visuel (synchro) |
+|---|---|
+| ⚠️ REFORMULER (pas « ceci est de l'or » = ton plat). Ex : « De cette terre sort l'un des métaux les plus convoités au monde. » Puis : « …le Darfour, à l'ouest du Soudan, une des régions les plus pauvres de la planète. » | Les **lingots arrivent colorisés d'entrée** (reflets). Au mot « Darfour » : la **pelle arrive** — ⭐ **aux couleurs du DRAPEAU soudanais** (manche vs fer = 2 couleurs du drapeau, colorisation SÉMANTIQUE : la pelle = le pays). |
+| « Et depuis trois ans, cet or alimente la guerre la plus meurtrière de la planète — une guerre dont presque personne ne parle. » | La **fumée de guerre monte** + la **terre vire au rouge sang** (déclenché à ce mot). |
+| « Pour comprendre pourquoi elle ne s'arrête pas, il ne faut pas suivre les armes. Il faut suivre l'or. » | La **traînée d'or se dégage des lingots** et file hors cadre → cartouche « Où va cet or ? ». **COUPE → carte Mapbox** (beat 1). |
+
+**Raccord organique au beat 1 (structure en ANNEAU) :** « il faut suivre l'or » est DÉJÀ la phrase du
+beat 9 (transition Acte 3). Le hook l'annonce, l'Acte 1 la referme → fil rouge scellé. **Seul changement
+au script existant : 1 mot** — beat 1 « gardait **les** mines » → « gardait **ces** mines » (lie au hook).
+
+**Améliorations actées Aziz (prochaine session, RAPIDE — le hook est quasi fini) :**
+1. Reformuler l'accroche (supra). 2. Pelle aux couleurs du drapeau soudanais. 3. Colorisation +
+apparition SÉQUENCÉES synchro voix (lingots colorés → pelle-drapeau au « Darfour » → fumée/sang à
+« guerre » → traînée à « suivre l'or »). 4. Discipline couleur type GGW mais registre gravé gardé
+(mix validé : l'or = accent dominant, sémantique, pas juste décoratif). Détail analyse : catbox `rhq0n8`.
+
+---
+
+
 > Pour [[soudan-midform]] · données [[soudan-midform-DONNEES]] · format War-Map Long 5 actes (carte primaire + overlay/plein écran de sauvetage, doctrine révisée 2026-06-16).
 > **Script = jet 3 FACT-CHECKÉ figé.** ✅ Corrections appliquées (Deep Research + Sonar Pro + Tavily, triple-confirmées) : « contrôlait les mines avec la bénédiction du gouvernement » (≠ gardait pour le compte de) · « Dagalo » (≠ Daglo) · « près de 50 millions » · « besoin d'aide pour survivre » · « l'une des pires crises » (≠ la plus grande). **AUDIO À VALIDER** : https://files.catbox.moe/or6tj3.mp3 (pipeline Océane V3 → STS GéoAfrique, tags [grave]/[emphatic]/[solemn]/[tense], CAPS GAGNER/L'OR, 1 [pause]). Versions antérieures : v3 pré-factcheck https://files.catbox.moe/3wio8y.mp3.
 > Fact-check complet : `out/_r-and-d/deep-research-soudan-actes1-2.md` + `sonar-pro-soudan-actes1-2.md`. Méthodo : [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]].

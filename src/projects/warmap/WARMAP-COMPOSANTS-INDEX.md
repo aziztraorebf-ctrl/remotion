@@ -28,6 +28,16 @@
 **Showcase de validation** : `MapAnimationShowcase` (composition Root.tsx) — 40s, 3 segments.
 Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
 
+### ⭐ HOOK AES — Sahel Session 2026-06-26 (décode Castile, intégrés au moteur)
+
+| Quand tu veux... | Composant | Où | Props clés |
+|---|---|---|---|
+| **Un pays s'allume / plante son étendard / affirme sa souveraineté** (drapeau RÉEL qui se plante one-shot avec rebond sec + ondule) | `WarMapBanner` | `warmap/_shared/WarMapBanner.tsx` | `frame`, `fps`, `pos{x,y}` (déjà projeté par le moteur), `flag` (staticFile `_shared/flags/*.png` — JAMAIS `drawFlagCanvas`), `appearAt`, `accent`, `poleH/flagW/flagH`, `yOffset`. ⚠️ Ondulation = **bandes verticales DOM** (background-position + translateY sinusoïdal), PAS clipPath SVG (échoue en headless). |
+| **Chiffre/mot géant qui slamme, carte visible À TRAVERS, puis zoom-reveal jusqu'à la carte pleine — SANS amener de 2e carte** (mécanique KineticMaskSlam adaptée à la contrainte « 1 seule Map continue ») | `Acte1IntroSlam` | `warmap/_shared/Acte1IntroSlam.tsx` | `bigText` ("3"), `slamAt`, `revealStart`, `revealEnd`, `veilColor` (parchemin), `ink`. Overlay PUR (voile troué par le texte via mask SVG) au-dessus de la carte du moteur. |
+
+> Intégrés dans `SahelWarMapEngine` (compo `SahelActe1-Refonte`, commit `23a550a`) : hook « détachement+soudure »
+> (3 → drapeaux plantés f145/217/286 → détachement vignette → liséré d'union AES). Doctrine décodage : `feedback_decode-castile-warmap-vivante.md`.
+
 ### ⭐ CONTOURS NATIONAUX COLORÉS (Sahel, Aziz 2026-06-14) — "touche de couleur épurée"
 
 | Quand tu veux... | Mécanisme | Où | Règle |
@@ -48,7 +58,7 @@ Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
 | **Des personnes/réfugiés/figures qui se déplacent** (côté humain) | `REFUGEES` (jetons-visage mouvants) | `engine/warmapVehicles.ts` | Portrait Gemini en cercle. Sur la carte, jamais plein écran (R1) |
 | **Incarner une figure ponctuelle** (chef, victime) | jeton-visage statique (`unitStyle: "token"`) | `engine/WarMapEngine.tsx` | Usage ponctuel/statique, pas pour remplacer les véhicules |
 | **Poser une DONNÉE majeure** (chiffre sans équivalent carto : famine, PIB) | `WarMapOverlayData` ⭐ **_shared** | `_shared/WarMapOverlayData.tsx` | Fond SOLIDE parchemin, centré, fige l'action 7-10s. Data-driven (props : kicker, big, unit, sub, tagline, source, accentColor). Plus de dict hardcodé |
-| **Expliquer ce qui se passe sur la carte** (exode, contexte) | `WarMapOverlayExplicatif` ⭐ **_shared** | `_shared/WarMapOverlayExplicatif.tsx` | Fond SEMI-TRANSPARENT, centré (jamais en haut), R4 : pas de voile carte. Props : title, text, topOffset, wobble |
+| **Expliquer ce qui se passe sur la carte** (exode, contexte) | `WarMapOverlayExplicatif` ⭐ **_shared** | `_shared/WarMapOverlayExplicatif.tsx` | Plaque OPAQUE centrée (jamais en haut), AUCUN voile sur la carte (corrigé 2026-07-11). Props : title, text, topOffset, wobble |
 | **Présenter une figure en gros** (portrait + légende) | `WarMapFigureOverlay` | `engine/WarMapDataOverlay.tsx` | Cercle parchemin. (Note : la figure du déplacé est passée en jeton-mouvant, voir R1) |
 | **HUD date/horloge/pertes** | bloc HUD dans `WarMapEngine` | `engine/WarMapEngine.tsx` | Date plaque haut, pertes/légende bas, safe zones mobiles. Horloge = polish ouvert (→ JOUR N) |
 | **Symbole véhicule SVG** (fallback sans Gemini) | `VehicleSymbol` | `engine/VehicleSymbols.tsx` | DÉPRÉCIÉ par les sprites Gemini. Garder comme fallback only |
@@ -64,13 +74,53 @@ Render : litter.catbox.moe/lhgy3u.mp4 (72h, 2026-06-07)
 | **Une flèche tactique** (axe d'offensive, poussée RSF/SAF) | `AtlasAttackArrow` (flèche géodésique séquentielle) | `src/projects/atlas/_shared/AtlasAttackArrow.tsx` + `AtlasAttackArrowDemo.tsx` |
 | **Un encerclement / tenaille / pince** (poche, siège El Fasher) | `AtlasEncirclement` (pincerArrows) | `src/projects/atlas/_shared/AtlasEncirclement.tsx` + demo |
 | **Vocabulaire de manœuvre** (colonne, ligne, flanquement, embuscade, repli) | décode BazBattles | `memory/atlas-decode/DECODE-bazbattles-manoeuvres.md` |
-| **Catalogue mapanimation premium** (effets, flux, transitions cartographiques) | analyse + catalog | `memory/_r-and-d-mapanimation-PREMIUM-DECODE.md` + `memory/_r-and-d-mapanimation-catalog.json` + `memory/_r-and-d-mapanimation-ANALYSE.md` |
+| **Catalogue mapanimation premium** (effets, flux, transitions cartographiques) | analyse + catalog | `memory/archive/_r-and-d-mapanimation-PREMIUM-DECODE-2026-06-03.md` + `memory/_r-and-d-mapanimation-catalog.json` + `memory/archive/_r-and-d-mapanimation-ANALYSE-2026-06-03.md` |
 | **Faisabilité / verdict d'intégration** (ce qui marche chez nous) | feedback faisabilité | `memory/feedbacks/feedback_atlas-inspiration-externe-faisabilite.md` + `memory/feedbacks/feedback_mapanimation-veille-et-geoflow.md` |
 
-**Note technique** : ces composants sont d3-geo (socle Atlas). War-Map prototype est Mapbox reskinné,
-mais la **voie production war-map = d3-geo pur** (voir WARMAP-INDEX) → friction de projection nulle, ils
-se brancheront directement. En attendant, leur PRINCIPE de mouvement (flèche qui pousse, pince qui se
-referme) est réutilisable même en adaptant le rendu.
+**Note technique (corrigée 2026-07-11)** : ces composants sont d3-geo (socle Atlas). War-Map utilise
+Mapbox reskinné en PRODUCTION DÉFINITIVE (tranché 2026-07-11, voir `WARMAP-PLAYBOOK.md` intro — la bascule
+vers d3-geo pur n'a jamais eu lieu en 6 semaines et n'est plus envisagée). Ces composants Atlas ne se
+brancheront donc PAS directement (pas de friction de projection nulle) — mais leur PRINCIPE de mouvement
+(flèche qui pousse, pince qui se referme) reste réutilisable en l'adaptant au rendu Mapbox.
+
+---
+
+## ⭐⭐ MOTEUR D'AFFRONTEMENT 2 FACTIONS — INSERT SVG "ÉTAT-MAJOR" (Session 2026-07-06, validé Aziz)
+
+> ⚠️ **REGISTRE DIFFÉRENT des composants Mapbox ci-dessus.** Ceux du haut (`SahelAttackArrow`,
+> `TerritorialExpansion`, `RefugeeFlow`) sont pour la **carte Mapbox réelle** (vidéo AES longue).
+> Ce moteur-ci est un **insert SVG pur « médaillon d'état-major »** (Kings & Generals / Battle Probe),
+> PAS de Mapbox, PAS de géo réelle. Registre gravé sable/or/rouge, top-down illustré. À utiliser pour
+> un beat de **prise de territoire / mouvement de forces / affrontement** où la vraie géo est un
+> obstacle à la lecture. Doctrine complète : `memory/doctrines/WARMAP-INSERT-SVG-ETATMAJOR.md`.
+
+| Quand tu veux... | Composant | Où | Notes |
+|---|---|---|---|
+| **Le moteur complet** (factions, formations, choc, front, zones, sceaux, effets) | `warmapChoc.tsx` | `warmap/_shared/warmapChoc.tsx` | Système `Faction` (RSF/SAF = instances, jamais de lettre en dur). Frame-driven pur. |
+| **Un pion de faction** (losange biseauté + lettre, lisible à toute échelle) | `FactionToken` | idem | `{faction, heading, scale}`. |
+| **Une colonne qui avance** le long d'une courbe (échelon, swagger, poussière) | `AdvancingFormation` | idem | `{origin, front, faction, travelFrames, bow}`. |
+| **Une formation qui défend** (arc face à l'assaillant, recule) | `HoldingFormation` | idem | `facing` = arc défensif orienté. |
+| **Une flèche de manœuvre** qui se trace (axe, tenaille, encerclement) | `ManeuverArrow` | idem | ⛔ jamais décorative : des jetons DOIVENT suivre la même courbe (`bow` partagé). `dashed`=intention. |
+| **Une zone qui bascule** (territoire pris par balayage) | `SweepZone` | idem | Teinte+hachure+bord+`dir`. RÉSERVÉ au basculement territorial, pas à un assaut ponctuel. |
+| **Sceau de capture / défaite** | `CaptureSeal` / `DefeatedSeal` | idem | Losange qui s'installe / se barre. |
+| **Effets** (impact, fumée, poussière, étincelles de choc, sonar) | `Impact`/`SmokeColumn`/`DustTrail`/`ClashSparks`/`Sonar` | idem | Recolorables, déterministes (zéro Math.random). |
+| **Portrait-commandant** (le "qui", FAIBLE densité seulement) | `CommanderMedallion` | idem | ⚠️ règle densité (voir ci-dessous). |
+| **Habillage** (cadre, cartouche, légende, sous-titre) | `EmFrame`/`FactionLegend`/`EmSubtitle`/`EmDefs` | idem | Réutilisable. |
+
+**2 variantes d'habillage validées** (= preuve que le moteur est réutilisable) :
+- **`KhartoumChocSVG`** (compo Root) — assaut ponctuel : RSF prend le palais, SAF défend puis submergée.
+  `out/_rnd/warmap-choc/khartoum-choc-v6.mp4` · catbox `k552fw`.
+- **`FrontOuvertSVG`** (compo Root) — front qui bouge : impasse → tenaille qui encercle une poche SAF.
+  **Brique directe pour l'Acte 2 Soudan** (impasse militaire). `front-ouvert-v5.mp4` · catbox `1ed8vp`.
+
+**3 règles gravées** (détail : doctrine) : (1) une flèche annonce toujours un mouvement ; (2) SweepZone
+seulement pour un vrai basculement territorial ; (3) pion-visage à faible densité / bloc abstrait en nombre
+(loi de lisibilité qui explique le choix Kings & Generals). Commits `351514e` + `3974235`.
+
+**HOOK d'ouverture Soudan (bonus, même registre encre)** : `OrDarfourHook` (`warmap/soudan-hook/`) — insert
+SVG parchemin/encre "l'or du Darfour" (pelle+lingot+fumée de guerre+traînée d'or), pose le fil rouge de
+l'épisode. Reskin par remap couleur (`orDarfourGroups.ts`, zéro LLM). Commit `9920643`. À finir (reformuler
+accroche, pelle-drapeau, colorisation séquencée). Détail : `memory/projects/soudan-midform-STORYBOARD-ACTE1.md` § HOOK.
 
 ## 📐 CONVENTION DE RANGEMENT (où mettre une nouvelle brique)
 

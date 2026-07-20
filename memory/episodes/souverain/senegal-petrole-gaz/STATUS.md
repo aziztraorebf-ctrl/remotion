@@ -4,6 +4,14 @@
 > Depuis le 2026-06-18, le projet est en **REFONTE V3 scène par scène**. SOURCE DE VÉRITÉ UNIQUE =
 > **`V3-REFONTE/README.md`** (+ `V3-REFONTE/STARTER-SCENE-1.md`). V1 = filet/comparatif, supprimée quand V3 complète.
 > Ce STATUS reste seulement comme référence de l'état V1. NE PAS partir d'ici pour AGIR.
+>
+> ✅✅ **2026-07-05 — V3 TERMINÉE + PRÊT-PUBLICATION.** Passe de finition ROUND 1 (dédoublements audio,
+> écran gris Mapbox, carte gisements harmonisée) + ROUND 2 (mot "précise" tronqué, mot "trois"
+> répété/coupé, musique gisements absente, silence "décide...vraiment du résultat", labels texte scène
+> coin supprimés, écran gris de transition supprimé, +1.5s de respiration avant coupe gisements→Norvège)
+> — tous corrigés et validés Aziz. Commits `207d223` + `606aff4` sur branche `fix/senegal-v3-passe-finition`.
+> **Livrable final** : `out/PRET-PUBLICATION/senegal-petrole-gaz-FINAL.mp4` (+ `-compressed.mp4`).
+> Plus aucune action technique en attente — NEXT = programmer la publication (décision Aziz).
 
 > Mis à jour : 2026-06-16 (MAKEOVER PREMIUM en cours — ⚠️ approche abandonnée au profit de la refonte V3)
 
@@ -92,6 +100,16 @@ Pas bloqué techniquement — les beats sont tous validés. Ce qui reste :
 - Musiques A/B/C : `public/souverain/senegal-petrole-gaz/`
 - Composant LaCalebasse (Beat11) : `src/projects/_shared/components/layouts/LaCalebasse.tsx`
 - Composant SenegalActe2Continu (Mapbox continu) : `src/projects/souverain/senegal-petrole-gaz/SenegalActe2Continu.tsx`
+
+---
+
+## ✅ THUMBNAIL (2026-07-11)
+
+Finalisée et validée Aziz via Pipeline C (voir `public/_shared/thumbnails-library/README.md`) :
+"PÉTROLE : LE PIÈGE SÉNÉGALAIS ?" — baril de pétrole enchaîné + affichage LED rouge "132%" (la dette
+publique/PIB citée dans le script), carte du Sénégal avec Dakar marqué. Fichier :
+`public/_shared/thumbnails-library/senegal-petrole-gaz/senegal-piege-baril.png`. NEXT = titre à définir,
+puis upload MANUEL YouTube Studio (cf `memory/tools/trypost.md`).
 
 ---
 

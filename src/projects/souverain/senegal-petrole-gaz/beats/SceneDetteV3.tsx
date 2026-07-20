@@ -556,8 +556,8 @@ const Sfx: React.FC<{ at: number; src: string; volume?: number; dur?: number }> 
 );
 const SceneSFX: React.FC = () => (
   <>
-    {/* le mur/reserve se met en place */}
-    <Sfx at={F_FONSIS} src={SFX.fill} volume={0.38} dur={90} />
+    {/* SFX liquide (SFX.fill) RETIRE ici (chantier 7 passe finition 2026-07-04, retour Aziz : SFX
+        distrayant ~4min15/3 mecanismes). Le mur/reserve se met en place SANS son de remplissage. */}
     {/* verrouillage (mur scelle) */}
     <Sfx at={F_VERROU} src={SFX.lock} volume={0.4} dur={36} />
     {/* la dette monte : pression sourde */}

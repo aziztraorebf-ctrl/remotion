@@ -1,0 +1,8 @@
+{
+  "tokens": {
+    "cible_aeroport": "<g><rect x='-35' y='-5' width='70' height='10' fill='#8a7d63' stroke='#2b2117' stroke-width='2.5'/><line x1='-28' y1='0' x2='28' y2='0' stroke='#2b2117' stroke-width='1.5' stroke-dasharray='5 3'/><rect x='10' y='8' width='24' height='14' fill='#8a7d63' stroke='#2b2117' stroke-width='2'/></g>",
+    "cible_palais": "<g><rect x='-22' y='-22' width='44' height='44' fill='#8a7d63' stroke='#2b2117' stroke-width='2.5'/><rect x='-10' y='-10' width='20' height='20' fill='#d1b27c' stroke='#2b2117' stroke-width='1.5'/><line x1='0' y1='10' x2='0' y2='22' stroke='#2b2117' stroke-width='1.5'/><line x1='-22' y1='0' x2='-10' y2='0' stroke='#2b2117' stroke-width='1.5'/><line x1='10' y1='0' x2='22' y2='0' stroke='#2b2117' stroke-width='1.5'/></g>",
+    "cible_tour_tv": "<g><rect x='-15' y='-15' width='30' height='30' fill='#8a7d63' stroke='#2b2117' stroke-width='2.5'/><line x1='-30' y1='0' x2='30' y2='0' stroke='#2b2117' stroke-width='1.5'/><line x1='0' y1='-30' x2='0' y2='30' stroke='#2b2117' stroke-width='1.5'/><line x1='-21' y1='-21' x2='21' y2='21' stroke='#2b2117' stroke-width='1.5'/><line x1='-21' y1='21' x2='21' y2='-21' stroke='#2b2117' stroke-width='1.5'/><circle cx='0' cy='0' r='3' fill='#2b2117'/></g>"
+  },
+  "notes": "La coherence visuelle est garantie par l'utilisation d'une unique palette (contours #2b2117, remplissage infrastructures #8a7d63, trou de cour #d1b27c). Les epaisseurs de trait sont standardisees : 2.5 pour les contours exterieurs principaux des batiments et 1.5 pour les details internes (marquages, antennes). Toutes les icones sont centrees sur (0,0) et occupent une surface visuelle equivalente (rayon approximatif de 30 a 35 unites) pour former un set uni et lisible sur la carte."
+}

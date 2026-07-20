@@ -4,11 +4,19 @@
 > En cas de contradiction avec un autre fichier (STORYBOARD, STARTER, REPRISE...), CE FICHIER prime.
 > Tout agent qui produit un beat de ce short PART D'ICI. Doctrine SVG generale : [[SVG-SCENES-GENERATIVES]].
 
-## ✅✅ STATUT FINAL — PRET A PUBLIER (2026-06-25)
+## ✅✅ STATUT FINAL — PUBLICATION PROGRAMMEE (2026-07-03 14h UTC)
 Fichier : `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.mp4` (17 Mo, 140.99s, 7 beats)
+CoverB : `out/PRET-PUBLICATION/ggw-muraille-verte-coverB.mp4` (20 Mo) — frame f500 (soleil or + mur arbres + titre).
+⛔ BUG CORRIGE (2026-06-30) : 1ere version coverB avait un concat audio 44100Hz/48000Hz mismatch (still silencieux
+  genere a 44100 vs narration originale 48000) -> voix ralentie + desync 13s + musique quasi-inaudible sur toute la
+  video. Root cause : `anullsrc=r=44100` different du sample rate de la narration. FIX : re-generer le still +
+  concat en un seul appel ffmpeg `-filter_complex` avec `anullsrc=r=48000` cohérent (jamais de concat multi-passes
+  a sample rates differents). TOUJOURS verifier `ffprobe` duration+sample_rate video vs audio apres un montage cover.
 Blob permanent : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/ggw-FINAL-v3-GxFL2poUa84eU3ZcHAIEy17CUFfvgT.mp4
-Note publication : `out/PRET-PUBLICATION/ggw-muraille-verte-FINAL.PUBLICATION-NOTE.md`
-▶ Publier via TryPost (Instagram Reels) dès crédits rechargés.
+⛔ TryPost n'a PAS de caption par-plateforme (`content` global, `platforms[].content` ignore a la creation) -> 2 posts SEPARES :
+  - Post YouTube seul : `019f1b9a-49ae-7046-a920-f7c8f6a8da4e` — "On a cru qu'un mur d'arbres arrêterait le désert. On avait tort. #short" (71 car).
+  - Post IG+FB : `019f1b9a-4a7c-73a9-bc12-44f127cf7b80` — caption longue + hashtags (446 car).
+TikTok = MANUEL (compte en quarantaine).
 
 ## SUJET / ANGLE (fige)
 Short vertical 9:16, ~141s, 7 beats. Grande Muraille Verte (mur d'arbres 8000km cense arreter le desert).

@@ -93,6 +93,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Une courbe qui monte/descend dans le temps | line chart qui se trace | ⭐ `ProtoHera_ChartsParchemin` (line, parchemin), ⭐ `HeraFidele_V12_LineChart` (bande highlight, modulable couleur) | _proto-16-9 |
 | Comparer 2 grandeurs (A vs B) | bars / poll-bar | ⭐ `ProtoHera_ChartsParchemin` (bars, poll), `DualStat`, `StatComparisonGrid` | _proto-16-9 / COMPOSANTS § COMPARAISON |
 | Répartition d'un tout (parts) | donut | ⭐ `ProtoHera_TerminalNeon` (donut glow, registre marché/tech) | _proto-16-9 |
+| Présenter des données (registre encre SVG, plein écran) | grille de données + graphiques encre qui se construisent | `GridBackground` + `InkBarChart`/`InkDonutChart`/`CounterEncre` (Vox grid) | COMPOSANTS-INDEX § DONNÉES |
 
 ### Faire RESSENTIR la GÉOGRAPHIE / le territoire
 > ⭐ **RÉPONSES PAR DÉFAUT, ne pas réinventer :** drapeau sur un pays **avec PITCH (relief V5)** = **`MapboxCountryFlagDecal`** (source image découpée à la silhouette — la SEULE qui ne dérive ni ne carrelle, prouvé 2026-06-21) · drapeau sur carte **plate** (pitch 0) = `useClipFlags` (images HD, JAMAIS `drawFlagCanvas`) · annoncer un pays avec donnée+source = `GeoCountryPlaque`. Filtrer un pays = `countryFilter(iso,…)` par **ISO**. Relief = `camCountryApproach()` pitch ~32.
@@ -154,6 +155,9 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Un territoire qui s'effondre (choc) | Dutch tilt + shake + désaturation continent | [A] blueprint `ShakeImpact`/`DutchTiltCollapse` + grisaille narrative (lerp RGB sauf protagoniste) | _blueprints / ATLAS-PLAYBOOK §3 |
 | Nommer un lieu / chiffre-impact (registre Atlas) | pill Cormorant spring · cartouche Cinzel wobble · pulse-marker radar | [A] `AtlasLabel`, `AtlasCartouche`, `AtlasPulseMarker` | atlas-components |
 | L'échange (sel↔or) / insert chiffré sur carte | dim carte + boîte parchemin double-cadre glow | [A] `SpotlightInsert` (Ghana — à extraire en composant) | ATLAS-PLAYBOOK §3 |
+| Un personnage qui VIT une scène SVG encre (marche, se penche, ramasse) — PAS sur carte | stick figure d'encre animé par code (frame-driven) | ⭐ `StickRig` + scène-proto `RecolteAuSol` (`_shared/personnage-vivant-svg/`) | PERSONNAGE-VIVANT-INDEX |
+| Dialoguer (2 personnages échangent) | 2 personnages face-à-face + bulle de parole | `SpeechBubble` + 2 personnages `GeminiRig`/`StickRig` face-à-face | COMPOSANTS-INDEX § CITATION/TEXTE FORT · PERSONNAGE-VIVANT-INDEX |
+| Montrer un écran/interface (données, tableau de bord) qu'un personnage regarde | écran/tableau de données + personnage devant | `DataScreen` + personnage (`GeminiRig`/`StickRig`) devant | COMPOSANTS-INDEX § DONNÉES · PERSONNAGE-VIVANT-INDEX |
 
 ### Faire RESSENTIR du CONCEPTUEL sans quitter la carte  ← ⭐ CATÉGORIE WAR-MAP (manquait)
 > Voir **RÈGLE MAÎTRESSE 2**. Composants dans `src/projects/warmap/_shared/` — chemins exacts + props : `src/projects/warmap/WARMAP-COMPOSANTS-INDEX.md`. ⛔ `semitransp` BANNI (voile < 0.5 qui montre la carte derrière). Plein écran = masquer carte Mapbox ET contours moteur. Combiner l'ARSENAL (jetons + zones + contours + plaques), jamais 1 seul asset. CAUSE avant EFFET (jamais pop magique). Registre grave/solennel = voile plus dense + montée lente + 1 plateau tenu (halo qui respire).

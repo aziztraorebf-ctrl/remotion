@@ -1,7 +1,7 @@
 # HOOKS LIBRARY — Catalogue ("quand Aziz dit X -> tel hook")
 
 > Bibliotheque de hooks d'ouverture REUTILISABLES. Cree 2026-06-15 (chantier strategique "on est a court de hooks").
-> Code : `src/projects/_shared/hooks-lib/`. Plan/decisions : `memory/HOOKS-LIBRARY-PLAN.md`.
+> Code : `src/projects/_shared/hooks-lib/`. Plan/decisions : `memory/projects/HOOKS-LIBRARY-PLAN.md`.
 > Render : `scripts/render-mapbox.sh <CompoId> <out.mp4>` (WebGL headless). Compos enregistrees dans Root.tsx.
 
 ---

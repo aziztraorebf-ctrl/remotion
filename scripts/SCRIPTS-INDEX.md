@@ -96,6 +96,7 @@
 | Comparer un nouveau travail à une RÉFÉRENCE validée (vidéo entière) | `scripts/tools/da-compare.py` | `--ref <pilier\|mp4> --new x.mp4 --label X`. Gemini Files API. |
 | Reviewer un beat Mapbox (directeur cartographique premium) | `scripts/tools/gemini-mapbox-review.py` | `<video.mp4> [--observations]`. JSON scoré CONSULTATIF. |
 | Self-review SCRIPTÉE d'un beat Mapbox (assertions bloquantes) | `scripts/tools/mapbox-selfreview.py` | `<Beat*.tsx>`. Exit 0 si 0 ERROR. Phase 3. |
+| Self-review SCRIPTÉE d'un beat Atlas (clipPath dupliqué, composant partagé redéfini, caméra à la main) | `scripts/tools/atlas-selfreview.py` | `<Beat*.tsx>`. Miroir de `mapbox-selfreview.py`. Exit 0 si 0 ERROR. Phase 3, AVANT présentation à Aziz. Détecte le bug clipPath continental répété Peste-1347. |
 | Brief Mapbox caméra+overlays via Kimi | `scripts/tools/kimi-mapbox-brief.py` | `--prompt "..." \| --prompt-file f`. OpenRouter kimi-k2.5. |
 | Reviewer un render (routeur multi-modèles : kimi narratif / qwen JSON / gemini) ⭐ | `scripts/visual_review.py` | `<video> --model gemini --storyboard PATH`. Remplace review_with_kimi (archivé). |
 | Reviewer un beat data-viz Remotion (Gemini 1 breakdown) | `scripts/beat-breakdown.py` | `--beat N [--storyboard] [--output]`. Appel Gemini 1. |
@@ -112,6 +113,7 @@
 |---|---|---|
 | Produire un beat Souverain Remotion/Tailwind (seuil 19/23) | `scripts/beat-session.py` | `--episode X --beat N --phase scan\|preflight\|breakdown\|spec-table\|self-review\|review\|upload\|full`. Lancé via `/beat`. 8 phases. |
 | Produire un beat Souverain Mapbox (carte, seuil 8/10) | `scripts/mapbox-session.py` | `--episode X --acte AN --phase storyboard\|breakdown\|self-review\|review\|upload`. 5 phases (breakdown = décode direction validée en plan technique). |
+| **Scan doctrine + zoom-check War-Map (anti-bug ×10) ⭐** | `scripts/warmap-session.py` | `--phase scan\|zoom-check\|self-review`. Court et ciblé (PAS un pipeline complet) : scan = 4 pointeurs doctrine essentiels ; zoom-check `<f.tsx> --zoom N --intent close-up\|territorial\|regional` = calcule la distance réelle km visible (formule Web Mercator) et alerte si incohérente (a détecté rétroactivement le bug ×10 Soudan Acte 3, zoom 6.6 déclaré close-up = ~3000km réels) ; self-review = wrapper `mapbox-selfreview.py` + zooms détectés. À lancer AVANT de coder une scène War-Map. |
 | Bilan + audit + next actions d'une session Atlas | `scripts/atlas-session.py` | `--episode X [--beat N \| --beats N M]`. |
 
 ---
@@ -155,7 +157,10 @@
 | Préparer la recherche hebdo Good News (last30days → BRIEF) | `scripts/prepare-goodnews-weekly.py` | `[--days N]`. Étape 1, jugement éditorial reste manuel. |
 | Détecter des outliers YouTube dans une niche | `scripts/tools/outlier-scan.py` | `[--queries "..."] [--min-ratio N]`. ScrapeCreators. |
 | Vérifier les liens morts dans les fichiers de navigation | `scripts/tools/check-links.py` | NON-NEGOTIABLE après tout déplacement/renommage. |
+| Vérifier la densité de mots d'un script (mots/min, mots total) contre la table `DOCTRINE-SCRIPT-UNIFIEE.md` | `scripts/tools/check-script-density.py` | `<script.md> --format short-90s\|midform-5min\|midform-8min\|warmap-long\|atlas [--duration-audio N]`. NON-NEGOTIABLE : gate après script lock, avant tout appel TTS payant. 100% offline. |
+| Tracer quel script/version a VRAIMENT servi à un rendu final (code + audio transcrit, 2 sources croisées) | `scripts/tools/trace-livrable.py` | `<rendu.mp4> --episode-dir <dossier> [--composition-id X] [--skip-transcription]`. À utiliser en cas de doute sur quelle version fait foi (plusieurs SCRIPT-V*.md dans un dossier épisode) — a résolu rétroactivement le cas War-Map Sahel V4/V5. Nécessite `OPENAI_API_KEY` (Whisper) sauf `--skip-transcription`. |
+| Vérifier mécaniquement qu'une décision doctrine tranchée est respectée dans le code déjà mergé (flyTo/easeTo, setTimeout/keyframes, overlay semi-transp banni, emojis affichés) | `scripts/tools/check-doctrine-violations.py` | `[dossier\|fichier]` (défaut `src/`). Complète les gates au moment de l'édit (hooks) en rattrapant la dérive du code déjà écrit, jamais re-scanné. Exit 0 si 0 ERROR (WARN n'échoue pas). |
 
 ---
 
-_Total : ~55 scripts actifs mappés (élagage 2026-06-19 : 47 scripts one-shot/épisode-spécifiques archivés dans `scripts/_archive/` + `scripts/tools/_archive/`, 4 tests morts supprimés). Si un script n'est pas ici, vérifier `_archive/`._
+_Total : ~55 scripts actifs mappés (élagage 2026-06-19 : 47 scripts one-shot/épisode-spécifiques archivés dans `scripts/_archive/` + `scripts/tools/_archive/`, 4 tests morts supprimés). Élagage suivant 2026-07-11 : 17 scripts supplémentaires archivés (épisodes Sénégal V3/GGW/Cacao/Soudan Acte 3 tous FINAL/promus + tests R&D jetables grok-imagine/seedance-pêcheur + `svg-scene-libre.py` déjà marqué DEPRECATED) — 128 scripts actifs mappés avant ménage → 110 après. Si un script n'est pas ici, vérifier `_archive/`._

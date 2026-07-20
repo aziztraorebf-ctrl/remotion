@@ -97,6 +97,99 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    → On sort avec : SUJET validé + ANGLE libre + pré-TITRE + ce que le public veut + FORMAT pressenti.
    → SEULEMENT ENSUITE : pré-production. Jamais avant. **MAIS le 1er livrable de la pré-prod = le POSITIONNEMENT (ci-dessous), AVANT le script.**
 
+### ⭐ TYPER LE MOTEUR NARRATIF → dynamisme + format + style (à l'étape 4-5, AVANT toute prod) — Aziz 2026-06-27
+> Évolution de la simple règle « narratif→short / mécanisme→long ». Le franc CFA a montré que le format seul ne
+> suffit pas : il faut prédire AUSSI le DYNAMISME (ce sujet va-t-il claquer comme GGW ?) et le STYLE, dès qu'on
+> type le sujet. Le **moteur narratif** (la mécanique qui crée la tension) est le bon prédicteur des trois.
+> ⚠️ Ce n'est PAS « bon sujet vs mauvais sujet » : c'est l'ADÉQUATION moteur ↔ format. Le CFA n'était pas mauvais,
+> il était mal formaté (short) → son moteur (mécanisme) voulait du mid-form. On type le moteur, le reste suit.
+
+**Les 4 moteurs narratifs** (déduits à l'étape 4 Synthèse-angle, en même temps que l'angle) :
+
+| Moteur du sujet | Dynamisme natif | Format | Registre / accent visuel pressenti |
+|---|---|---|---|
+| **RETOURNEMENT** — « on croyait X, c'est faux, la vraie réponse est Y » | Fort (surprise par beat) | Short OU mid | Encre **parchemin** + colorisation sémantique verte (GGW : inerte→la vie apparaît) |
+| **MÉCANISME** — « A cause B cause C » (système financier/juridique/institutionnel) | Moyen, à DOSER (construction) | Mid/long | Encre **blanc cassé** (analytique, net) + accent or/bleu-acier (valeur). Blueprint qui se construit (CFA) |
+| **RÉCIT / CHRONOLOGIE** — « il s'est passé X, puis Y, puis l'effondrement » | Fort (tension temporelle) | Mid/long | Carte vivante Mapbox OU encre **blanc froid** grave (Soudan, Thiaroye) |
+| **RÉVÉLATION-CHIFFRE** — « un chiffre qui tue » | Fort mais BREF (choc unique) | Short | Échelle objet + colorisation du chiffre (or africain, vraie-taille-Afrique) |
+
+**Comment lire la table :**
+- Le **moteur prédit le PUNCH** : retournement / récit / révélation-chiffre claquent nativement (comme GGW). Le
+  mécanisme est le seul à dynamisme « moyen » → il a besoin de la CONSTRUCTION séquentielle pour vivre (et donc de
+  durée). C'est pour ça que le CFA en short était plat : on coupait la construction qui EST son dynamisme.
+- Le **moteur prédit le FORMAT** : mécanisme/récit → mid/long ; retournement/chiffre → short possible. Signal-clé :
+  « je coupe sans perdre le sens » = retournement/chiffre (short OK) ; « je coupe et le sens se mutile » = mécanisme (mid).
+- Le **moteur oriente le STYLE par le TON** (cf. trousseau ci-dessous), il ne le FIGE pas : le DA-brief tranche en aval.
+
+**⭐ FOND + ACCENT selon le TON (ce N'EST PAS un nouveau registre — Aziz 2026-06-27, test `files.catbox.moe/jb8puk.png`).**
+⚠️ CORRECTION d'une formulation initiale fausse : changer la couleur d'accent (vert→or→rouge) et le fond
+(parchemin→blanc) NE CRÉE PAS un nouveau registre. C'est exactement ce que la colorisation sémantique fait DÉJÀ
+par design. Le registre `encre` reste UN registre (cf. les 7 registres réels dans [[SVG-SCENES-GENERATIVES]]). Le
+seul acquis réel du test : **le fond n'est pas obligé d'être le parchemin** — un blanc cassé / blanc froid tient
+aussi bien et adapte le TON. Le N&B intégral est PROSCRIT (sans accent, les formes grises ne lisent plus comme
+vivantes — graines = pierres mortes). Toujours garder UNE couleur d'accent réservée au sens.
+
+| Ton du sujet | Fond | Accent sémantique (le seul colorisé) |
+|---|---|---|
+| Espoir / nature / vie | parchemin `#e8dcc0` | vert (la vie qui revient) |
+| Analytique / mécanisme / argent | blanc cassé `#f4f1ea` | or ou bleu-acier (la valeur) |
+| Tragique / guerre / perte | blanc froid `#fbfaf7` | rouge sang (le seul accent, jamais de vert) |
+
+**⭐ AXE PHYSICALITÉ — le sujet a-t-il une incarnation physique naturelle ? (prouvé Grand Inga 2026-06-28)**
+> Hypothèse validée en R&D : GGW vit car arbres = gestes physiques (croissance, ombre, vent). CFA peinait car mécanisme = métaphore froide (flux monétaire = abstraction). Ce n'est pas un nouveau moteur narratif — c'est un MODIFICATEUR qui affecte la vivacité native d'un moteur.
+
+**Test de physicalité :** « Est-ce que l'objet central de cette scène bougerait dans la vraie vie sans intervention humaine ? »
+- OUI (turbine qui tourne, eau qui coule, arbre qui pousse, flamme qui vacille) → **SVG encre vivant natif**. L'animation raconte sans effort.
+- NON (mécanisme pur, flux monétaire, abstraction réglementaire) → **SVG possible** mais demande un VECTEUR D'INCARNATION explicite (un objet porteur : la pièce, le décret, la main qui signe, la bougie). Sans vecteur → effet PowerPoint garanti.
+
+**Corollaire (objet inerte) :** un objet qui ne se déplace pas dans la vraie vie (lingot, coffre, pierre, bâtiment, turbine à l'ARRÊT) NE GLISSE JAMAIS — il s'illumine, change de couleur, ou fade sur place. Seuls les objets naturellement mobiles (eau, flamme, végétation, véhicules) peuvent se déplacer de façon crédible.
+
+**⭐ AXE FRICTION DE PRODUCTION — 3 facteurs qui prédisent le temps/risque de blocage (Aziz 2026-07-10, comparatif rétrospectif).**
+> RECOMMANDATION, pas un gate bloquant — un sujet à friction élevée reste un GO légitime (le Soudan a servi
+> de banc d'essai pour combiner Mapbox + inserts SVG + split-screen + jury LLM densité en un seul projet ; ce
+> code et ces patterns sont maintenant réutilisables, ce n'est pas du temps perdu). L'utilité de l'axe est de
+> **savoir à quoi s'attendre AVANT de s'engager**, pas de refuser un sujet ambitieux.
+
+Comparatif rétrospectif (GGW/Cacao produits en 2 jours-1,5 semaine sans blocage ; Soudan/War-Map Sahel
+étalés sur plusieurs sessions avec blocages répétés) fait ressortir 3 facteurs qui, cumulés, prédisent la
+friction — aucun seul ne suffit à en faire un sujet difficile :
+
+1. **Nombre d'acteurs/entités externes dans le récit.** 0-2 acteurs (GGW, Cacao) = récit auto-contenu, facile
+   à mettre en scène. 4+ acteurs externes (Soudan : EAU/Turquie/Russie/Égypte) exige une fiche de hiérarchie
+   dédiée et une règle anti-complexité explicite ("max 2 acteurs/beat") rien que pour rester lisible.
+2. **Actualité en cours vs fait stable.** Un fait historique/économique stable (GGW, Cacao, Peste 1347) se
+   fact-check une fois et ne bouge plus. Une actualité en cours (guerre active, faits niés officiellement,
+   chiffres disputés) oblige à revoir le script en pleine production quand un fait se précise ou se corrige.
+3. **Registre visuel unique vs hybride.** SVG pur du début à la fin (GGW, Cacao) = un seul système à
+   maîtriser. Combiner Mapbox + inserts SVG narratifs + split-screen (Soudan, War-Map Sahel) transforme
+   chaque insert en mini-chantier de conception à part entière, pas une simple scène de plus.
+
+**Comment s'en servir** : à l'étape 4-5 (typer le moteur narratif), noter ces 3 facteurs pour le sujet
+candidat. 0-1 facteur présent → friction faible attendue, produire directement. 2-3 facteurs cumulés →
+prévoir plus de sessions, un fact-check continu si actualité mouvante, et accepter qu'un ou deux inserts
+techniques (caméra, registre hybride) demandent plusieurs itérations avant validation — ce n'est pas un
+signal d'échec, c'est le coût attendu d'un sujet qui combine plusieurs briques à la fois.
+
+**⭐⭐ DENSITÉ NARRATIVE = le ratio change la GRAMMAIRE DE MONTAGE, pas que la composition (Aziz 2026-06-27, prouvé).**
+> Réfute la doctrine antérieure « format = simple paramètre de composition » (fausse, cf. test
+> `files.catbox.moe/6u1usb.png` vertical vs horizontal + scène-port animée `files.catbox.moe/voh2fv.mp4`).
+- **VERTICAL 9:16** = séquence dans le TEMPS. Plan-objet : UN héros-objet qui pose une idée, remplacé par le suivant.
+  Le vide est élégant (page de carnet). L'encre minimaliste y excelle nativement.
+- **HORIZONTAL 16:9** = séquence dans l'ESPACE. Le champ large a une EXIGENCE DE DENSITÉ que le vertical n'a pas :
+  un seul objet au centre lit « inachevé / perdu », pas « aéré ». Remède = **densité NARRATIVE, jamais décorative** :
+  une **scène-lieu composée** (plusieurs objets cohérents d'un même lieu, SANS organique humain) qu'on POSE calme,
+  PUIS qu'on ACTIVE objet par objet (colorisation / traçage / mouvement timé sur le script). L'attention VOYAGE
+  d'objet en objet = le moteur de rétention sur ~1 min. Chaque objet porte un SENS activable, aucun n'est du remplissage.
+- **Bonus** : la contrainte du champ large FORCE à montrer une séquence causale (port : la ressource sort → le prix
+  vient d'ailleurs) → le format pousse vers l'explication, qui est la force Souverain. Parent du pattern Data-Hero
+  ([[DECODE-mpesa-data-hero-MOTION]]) étendu à une scène-lieu narrative. Détail technique : [[SVG-MIDFORM-FORMAT]].
+
+- **Le short reste la PORTE D'ENTRÉE audience** : un sujet à mécanisme PEUT donner un short SI on en fait l'amuse-bouche
+  émotionnel (1 angle, 1 image forte) + CTA vers le long — sans vouloir TOUT expliquer (piège CFA). Cf. [[RECHERCHE-PRESCRIPT-UNIFIEE]] étape 7.
+- **Notre avantage structurel** (data-driven Remotion) s'exprime MIEUX sur le long : un long ne coûte pas
+  proportionnellement plus cher qu'à un YouTuber qui filme. → ne pas fuir le long par réflexe « short = plus simple ».
+- Détail du trousseau visuel : [[SVG-MIDFORM-FORMAT]] · palettes de fond : [[_PALETTE-BACKGROUNDS]] (§ backgrounds).
+
 ## ⭐ ÉTAPE 6 — L'ÉTOILE POLAIRE DE POSITIONNEMENT (1er livrable de pré-prod, AVANT le script) — Aziz 2026-06-16
 Une fois le sujet validé (étapes 0-5), AVANT d'écrire le script ou de choisir la manière visuelle : **écrire l'étoile polaire**. C'est ce qui empêche les dérives en aval — sans elle, on écrit des actes « corrects » qui glissent vers le générique. Avec elle, chaque décision (titre, phrase, choix visuel) a un juge : *« est-ce que ça sert notre différenciation ? »*.
 
@@ -124,5 +217,9 @@ re-tourne/re-monte à la main). Donc le coût marginal du contenu réutilisable 
 performance — mais ça ne dispense PAS de valider le sujet : produire pas cher un sujet sans demande reste du
 temps perdu.
 
+**SUITE → APRÈS le verdict GO + positionnement, enchaîner sur [[RECHERCHE-PRESCRIPT-UNIFIEE]]** (étapes 7-9 :
+script conforme DOCTRINE-SCRIPT-UNIFIEE → fact-check 3 niveaux → jury LLM). Ce fichier-ci = étapes 0-6 ; ne pas dupliquer.
+
 Liens : [[CHARTE-EDITORIALE-SOUVERAIN]] · [[feedback_doctrine-titres-youtube-kora-cartes]] · [[ANGLE-MACRO-SOUVERAIN]] ·
-[[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]].
+[[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]] ·
+[[RECHERCHE-PRESCRIPT-UNIFIEE]] (la suite : script + fact-check + jury).

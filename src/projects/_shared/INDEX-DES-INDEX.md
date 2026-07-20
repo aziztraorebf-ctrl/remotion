@@ -33,7 +33,7 @@
 |---|---|---|
 | **Short Souverain Mapbox** | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` | 7 étapes : script→Camera Brief (mvts caméra par acte)→choix template par acte→code→review. **Point d'entrée d'un Short.** |
 | Short Souverain — structure code | `memory/doctrines/SOUVERAIN-SHORT-SKELETON.md` | Architecture : 1 fichier TSX, 6 actes, getCam(frame), 1 Map continue |
-| Beat Souverain (beat par beat) | `memory/rules-beat-production.md` + `/beat` | 11 règles non-négociables (R0-R11) |
+| Beat Souverain (beat par beat) | `memory/rules/rules-beat-production.md` + `/beat` | 11 règles non-négociables (R0-R11) |
 | Beat Atlas | `src/projects/atlas/_shared/ATLAS-COMPOSANTS.md` | Lire AVANT 1ère ligne de code Atlas |
 | Pré-production complète | skill `souverain-preproduction` / `atlas-video-preproduction` | Script→jury→audio→planning visuel |
 

@@ -50,3 +50,15 @@ Carte pays minimale pour être reconnaissable sur mobile : **400px × 400px mini
 **Why:** Aziz a dit "je pense que tu n'as pas pris des frames de la vidéo en tant que telle". C'est exact — j'avais pris 2 frames mais pas regardé les 5 premières secondes. L'erreur de positionnement est évidente dès la frame 2s.
 
 **How to apply:** Systématique après chaque render. Pas optionnel. Même pour une "correction rapide".
+
+## Corollaire UPLOAD — vérifier le lien que AZIZ reçoit, pas seulement mon fichier local (2026-07-17, R&D Vox)
+
+**Erreur commise** : j'ai qualifié un asset (carte USA) de "superbe" en me fiant à ma lecture LOCALE du fichier, alors que le lien uploadé était corrompu chez Aziz (bandes vertes). Il a dû me reprendre 2 fois. Cause racine double : (1) le fichier était un JPEG déguisé en .png (voir `tools/gemini.md` gotcha magic bytes) ; (2) je livrais un lien sans vérifier son RENDU côté destinataire.
+
+**Règle** : je livre un ASSET → je suis responsable du lien que Aziz reçoit, pas de mon fichier local.
+1. Après génération image Gemini : vérifier magic bytes = extension (FF D8 FF=jpeg, 89 50 4E 47=png) AVANT d'uploader — un JPEG en .png = glitch au décodage.
+2. Après upload : **télécharger le lien par GET réel et vérifier la taille** (`curl -s "$url" -o /tmp/check; stat -f%z /tmp/check`). NE PAS se fier au HEAD (catbox renvoie content-length:0 en HEAD même quand OK) NI à `Image.verify()` de Pillow (tolère les fichiers tronqués/mal typés). 
+3. **catbox échoue SILENCIEUSEMENT** (rend une URL mais stocke un fichier vide) — observé 2× cette session. Ordre de fallback + gotchas (Vercel Blob durable priorité 1, uguu expire ~3h pas 72h, etc.) : voir `.claude/.../memory/feedback_upload-hosts-fallback.md` (source de vérité upload). uguu a bien marché cette session (`curl -F "files[]=@f" https://uguu.se/upload` → `.files[0].url`), toujours vérifier par GET réel.
+4. En dernier recours si un lien bugge de façon inexplicable : ouvrir le fichier local dans Preview (`open f.png`) OU l'intégrer dans un mini-render pour qu'Aziz le voie autrement.
+
+Ne jamais affirmer "cet asset est bon" sans avoir vu ce que le lien affiche réellement.

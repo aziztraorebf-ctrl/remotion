@@ -12,7 +12,7 @@
    3 hooks (CrosshairLock=traquer / RedlineContagion=propager / MaskReveal=chiffre-masque) + insert
    ArteryDrain + `HookMapBackground` (fond agnostique : theme dark/parchemin + camKeys caméra serrée
    + countriesGeoJson raccord carte + litStagger + punchZoom) + `HookEffects` (grain + displacement).
-   Catalogue : `hooks-lib/HOOKS-LIBRARY-CATALOGUE.md`. Synthèse DA : `memory/HOOKS-LIBRARY-PLAN.md`.
+   Catalogue : `hooks-lib/HOOKS-LIBRARY-CATALOGUE.md`. Synthèse DA : `memory/projects/HOOKS-LIBRARY-PLAN.md`.
 
 2. ✅ **Acte 1 RECALÉ sur narration V5** (commit a43f2ab). La v1 était désynchro (visuel en retard,
    -14f au hook → -342f dans le corps). Recalé : bloc `A1.*` + `F_HOOK_*`/`F_*` + `ACTE1_CAM_KEYS` +

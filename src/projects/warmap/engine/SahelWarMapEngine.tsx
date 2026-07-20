@@ -58,6 +58,8 @@ import { ProtoFicelles } from "../parties/ProtoFicelles";
 import { ProtoVide } from "../parties/ProtoVide";
 import { Proto24Extinction } from "../parties/Proto24Extinction";
 import { WarMapPlaque } from "../parties/WarMapPlaque";
+import { WarMapBanner } from "../_shared/WarMapBanner";
+import { Acte1IntroSlam } from "../_shared/Acte1IntroSlam";
 import {
   SAHEL_STATES,
   SAHEL_CITIES,
@@ -184,6 +186,16 @@ const interpPath = (path: GeoPathPoint[], t: number): [number, number] => {
 
 const MAPBOX_TOKEN = process.env.REMOTION_MAPBOX_TOKEN ?? "";
 
+// HOOK AES (Aziz 2026-06-19) : direction "detachement + soudure" SANS viseur (cliche du genre).
+// VISEUR_ON=false -> le viseur crosshair est desactive (remettre true pour comparer).
+const VISEUR_ON = false;
+// Drapeaux REELS (decode Castile : etendard plante = souverainete). JAMAIS drawFlagCanvas.
+const COUNTRY_FLAG: Record<string, string> = {
+  MLI: "_shared/flags/ml.png",
+  BFA: "_shared/flags/bf.png",
+  NER: "_shared/flags/ne.png",
+};
+
 export const SAHEL_FPS = 30;
 // 439.37s narration + 3s fade out + 4s CTA = 446s -> arrondi a 13380 frames
 export const SAHEL_DURATION = 13380;
@@ -254,9 +266,6 @@ export type SahelTestProps = {
   // Héritent du look acte1Refonte (carte épurée + contours). Couches dans leur propre fichier.
   acte1ProtoFicelles?: boolean;
   acte1ProtoVide?: boolean;
-  // Maquette A/B Ph1 (naissance AES) : false = panneau SEMI-TRANSPARENT sur carte (reco Gemini) ;
-  // true = PLEIN ÉCRAN parchemin qui casse la carte (idée Aziz). À trancher par Aziz.
-  ph1Fullscreen?: boolean;
   // ⚠️ PROTO 2.4 — LEGACY (compo de test historique, prototype du beat 2.4 avant la P2 narrative).
   // NE PAS prendre comme modèle pour P3/P4 (le modèle = partie2). Conservé isolé : ne touche ni P1 ni P2.
   // Couche <Proto24Extinction>. `proto24Pitch` comparait à-plat (0) vs pitch 3D (~32).
@@ -290,12 +299,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
   acte1ProtoFicelles = false,
   acte1ProtoVide = false,
   countryBordersTest = false,
-  ph1Fullscreen = false,
   proto24 = false,
   proto24Pitch = 0,
 }) => {
   const frame = useCurrentFrame();
-  const { width, height } = useVideoConfig();
+  const { width, height, fps } = useVideoConfig();
 
   // ACTE 2 prolonge l'Acte 1 : tout le LOOK acte1Final s'applique aussi en acte2.
   // `isFinalLook` = pilote le rendu visuel (jetons, taches, palette, fusion, grain).
@@ -417,8 +425,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
     map.on("error", (e) => console.error("[Sahel] error:", e?.error?.message ?? e));
 
-    map.on("style.load", async () => {
-      // RESKIN PARCHEMIN (meme traitement que Sudan)
+    // RESKIN PARCHEMIN (même traitement que Sudan) — factorisé en fonction réutilisable (2026-07-04,
+    // fix bug "frontières blanches natives Mapbox" : les tuiles vectorielles se chargent À LA VOLÉE
+    // quand la caméra visite une zone jamais vue avant (ex. pays CEDEAO côtiers, jamais montrés avant
+    // le zoom élargi de la Partie 2) — un reskin appliqué UNE SEULE FOIS à `style.load` ne couvre pas
+    // ces tuiles tardives, qui gardent alors la couleur claire native Mapbox (visible en fond blanc/
+    // crème). Réappliqué sur `sourcedata` (avec throttle) pour couvrir tout chargement tardif, pas
+    // seulement cette zone — un futur zoom vers une région jamais visitée aurait le même symptôme.
+    const reskinMap = () => {
       try {
         const layers = map.getStyle().layers ?? [];
         for (const l of layers) {
@@ -434,6 +448,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
             try { map.setPaintProperty(l.id, "fill-color", SAHEL_COLORS.land); } catch {}
           }
           if (l.id.includes("admin-0")) {
+            try { map.setPaintProperty(l.id, "line-opacity", (l.id.includes("-bg") || l.id.includes("-disputed")) ? 0 : 1); } catch {}
             map.setPaintProperty(l.id, "line-color", SAHEL_COLORS.outline);
           }
           if (l.id.includes("admin-1")) {
@@ -444,6 +459,19 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           map.setPaintProperty("background", "background-color", SAHEL_COLORS.land);
         }
       } catch (e) { console.warn("[Sahel] reskin partial:", e); }
+    };
+
+    let reskinPending = false;
+    map.on("sourcedata", () => {
+      if (reskinPending) return;
+      reskinPending = true;
+      // Throttle léger (microtask) : plusieurs sourcedata arrivent en rafale par tuile, un seul
+      // reskin suffit à les couvrir toutes.
+      Promise.resolve().then(() => { reskinPending = false; reskinMap(); });
+    });
+
+    map.on("style.load", async () => {
+      reskinMap();
 
       // Charger sahel-admin1.geojson (32 regions)
       const res = await fetch(staticFile("_shared/geo-data/sahel/sahel-admin1.geojson"));
@@ -787,44 +815,31 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     //  Pour un vrai "war room relief", il faudrait activer un hillshade/terrain Mapbox = chantier séparé.)
     map.jumpTo({ center: [camLon, camLat], zoom: camZoom, pitch: effPitch, bearing: effBearing });
 
-    // PARTIE 1 (V5) — VIDE D'ÉTAT (beat 1.3) : au mot "absent" (f2743), l'opacité du
-    // fill de contrôle CHUTE (l'État rural s'évapore). On multiplie l'expression
-    // d'opacité existante par un facteur décroissant (garde la structure coalesce).
+    // PARTIE 1 (V5) — NEUTRALISATION DU FILL MOSAÏQUE (révisé 2026-07-01, cohérence Acte1/P3/P4,
+    // annule la décision "P1 garde son fond mosaïque" du 2026-06-14). Le fond devient PARCHEMIN
+    // UNIFORME comme acte1Refonte/P3/P4 : toute la couleur passe par les CONTOURS NATIONAUX (ci-dessus).
+    // Le "vide d'État" (beat 1.3, f2743) reste porté par les hachures + la teinte diffuse de
+    // Partie1Origine.tsx (VOID_ZONE), pas par ce fill — il n'a donc plus besoin de chuter en fin de scène.
     if (partie1 && map.getLayer("sahel-fill")) {
-      const F_ABSENT = 2743;
-      const voidFactor = interpolate(frame, [F_ABSENT, F_ABSENT + 70], [1, 0.16], {
-        extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic),
-      });
-      const baseOp: any = effSeqIgnite
-        ? ["coalesce", ["get", "igniteOp"], 0]
-        : 0.82;
       try {
-        map.setPaintProperty("sahel-fill", "fill-opacity",
-          (["*", baseOp, voidFactor] as any));
+        map.setPaintProperty("sahel-fill", "fill-color", SAHEL_COLORS.land);
+        map.setPaintProperty("sahel-fill", "fill-opacity", 0.5);
       } catch {}
+      try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
     }
 
-    // PARTIE 2 (V5) — CARTE CALME pour l'installation FR/ONU (DA : "sécurité apparente"
-    // avant la tempête). Le fill de contrôle (rouge/orange Acte 1) baisse à ~0.42 au début
-    // (board clearing f3050), pour que les bases FR + surfaces rouges DÉDIÉES P2 (couche
-    // <Partie2Blocage>) se lisent clairement par-dessus. Reste calme tout P2.
+    // PARTIE 2 (V5) — NEUTRALISATION DU FILL MOSAÏQUE (révisé 2026-07-01, retour Aziz pt.5 :
+    // cohérence avec Acte1/P1/P3/P4 — le fond mosaïque plein rouge/orange ne se voyait jamais
+    // neutralisé, contrairement à P1. Le fond devient PARCHEMIN UNIFORME comme les autres
+    // parties ; toute la couleur passe par les CONTOURS NATIONAUX (countryBorderPaths ci-dessous),
+    // pas par ce fill. Les surfaces rouges DÉDIÉES du beat 2.4 (couche <Partie2Blocage>) restent
+    // le vecteur de l'explosion visuelle attendue par-dessus le fond calme.
     if (partie2 && map.getLayer("sahel-fill")) {
-      // DA fix #2 (priorité absolue) : Frame A doit être CLINIQUEMENT propre (bleu dominant,
-      // rouge quasi invisible) pour que l'explosion rouge du beat 2.4 soit un choc. Le fill de
-      // contrôle (rouge/orange) tombe très bas à l'install (0.10), puis REMONTE un peu au beat
-      // 2.4 (l'État conteste) tandis que les surfaces rouges DÉDIÉES explosent par-dessus.
-      const F_ECHEC = 3887; // "dix ans plus tard" (trigger V5, miroir Partie2Blocage)
-      const calmFactor = interpolate(frame,
-        [3050, 3120, F_ECHEC, F_ECHEC + 120],
-        [1, 0.10, 0.10, 0.22],
-        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.cubic) });
-      const baseOp: any = effSeqIgnite
-        ? ["coalesce", ["get", "igniteOp"], 0]
-        : 0.82;
       try {
-        map.setPaintProperty("sahel-fill", "fill-opacity",
-          (["*", baseOp, calmFactor] as any));
+        map.setPaintProperty("sahel-fill", "fill-color", SAHEL_COLORS.land);
+        map.setPaintProperty("sahel-fill", "fill-opacity", 0.5);
       } catch {}
+      try { if (map.getLayer("sahel-front-glow")) map.setPaintProperty("sahel-front-glow", "line-opacity", 0); } catch {}
     }
 
     // PARTIE 3 — CARTE CALME (miroir partie2) : le fill de contrôle (rouge jihadiste Acte 1) reste BAS
@@ -919,9 +934,11 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     }
 
     // CONTOURS NATIONAUX COLORÉS : reprojeter chaque pays + mesurer la longueur du tracé.
-    // Actif UNIQUEMENT sur les parties ÉPURÉES (P3, P4 à venir) + le test. Acte1/Acte2/P1
-    // gardent leur fond mosaïque qui porte déjà la couleur (décision Aziz 2026-06-14).
-    if ((countryBordersTest || partie3 || partie4 || acte1Refonte) && srcC && (srcC as any)._data) {
+    // Actif sur les parties ÉPURÉES (P1+P2 depuis 2026-07-01, P3, P4) + le test. Décision Aziz
+    // révisée 2026-07-01 : P1 puis P2 doivent être cohérentes avec Acte1/P3/P4 (contours, pas de
+    // blocs pleins de couleur) — les anciennes décisions "fond mosaïque" (2026-06-14) sont
+    // annulées. Acte2 (legacy) garde son fond mosaïque, hors du périmètre de cette révision.
+    if ((countryBordersTest || partie1 || partie2 || partie3 || partie4 || acte1Refonte) && srcC && (srcC as any)._data) {
       const fcC = (srcC as any)._data;
       const cbp: { country: string; d: string; len: number }[] = [];
       for (const feat of fcC.features) {
@@ -1394,14 +1411,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
   // Flèches Liptako (f502) : 3 traits beige continus capitales→centre qui se DESSINENT
   // (stroke-dashoffset), puis pulse or UNIQUE à l'arrivée ("soudure" de l'alliance).
-  const arrowDraw = interpolate(frame, [A1.LIPTAKO, A1.LIPTAKO + 50], [0, 1], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
-  });
-  const arrowFade = interpolate(frame, [A1.FREEZE + 40, A1.FREEZE + 80], [1, 0], {
-    extrapolateLeft: "clamp", extrapolateRight: "clamp",
-  });
-  const weldPulse = interpolate(frame, [A1.LIPTAKO + 48, A1.LIPTAKO + 62, A1.LIPTAKO + 90],
+  // Flash or FRANC accompagnant l'emergence du sceau (climax "batissent quelque chose de nouveau").
+  // Cale sur l'apparition du sceau (LIPTAKO+58) pour culminer QUAND le sceau devient lisible.
+  const weldFlash = interpolate(frame, [A1.LIPTAKO + 60, A1.LIPTAKO + 80, A1.LIPTAKO + 110],
     [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Sceau "AES" au centre du triangle : emerge a la soudure, RESTE jusqu'au drift (meuble le creux).
+  // Apparait apres le flash (le concept se NOMME une fois les 3 soudes), reste plein, fade avant le drift.
+  const aesSealOp = interpolate(frame,
+    [A1.LIPTAKO + 58, A1.LIPTAKO + 82, A1.DRIFT - 24, A1.DRIFT],
+    [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const aesSealRise = interpolate(frame, [A1.LIPTAKO + 58, A1.LIPTAKO + 90], [10, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) });
+  const aesSealBreath = 1 + 0.025 * Math.sin((frame - A1.LIPTAKO) * 0.08);
 
   // Nettoyage cognitif (f726) : les couleurs politiques baissent (0.82→0.3) pour faire
   // place à la couche tactique. "éteindre la géopolitique pour allumer la tactique".
@@ -1510,6 +1531,86 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
+          SFX CORPS ACTE 1 REFONTE (f684→END) — le corps etait MUET (les pistes son
+          vivaient dans acte2/partie2/partie3, jamais en acte1Refonte). Grammaire P2/P3 :
+          PING discret a la pose des jetons (clic carto, pas whoosh qui fatigue) · ink-spread
+          sur l'etalement des zones · impact sourd a la friction. Tout en <Sequence>, plancher
+          bas (sous voix + musique).
+          ⛔ tension-drone d'assise RETIRE (decision Aziz 2026-06-27 : le grondement continu derange ;
+             la musique de fond suffit comme lit). Ne PAS le re-cabler — vaut aussi pour les autres scenes.
+          ====================================================== */}
+      {acte1Refonte && !acte1CameraOnly && (
+        <>
+          {/* PING discret a la pose des jetons — clic cartographique (marqueur qui se pose).
+              Pas sur CHAQUE jeton (7 = trop) : 2 par grappe, espaces, pour le sentiment de cascade. */}
+          <Sequence from={945} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.34} />
+          </Sequence>
+          <Sequence from={1002} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={1348} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.34} />
+          </Sequence>
+          <Sequence from={1378} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          {/* etalement des zones d'influence — ink-spread doux (JNIM puis EIGS) */}
+          <Sequence from={A1.JNIM + 30} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={A1.EIGS + 30} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.30} />
+          </Sequence>
+          {/* friction — impact sourd quand les deux fronts se touchent (f1840) */}
+          <Sequence from={A1.FRICTION} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.40} />
+          </Sequence>
+        </>
+      )}
+
+      {/* ======================================================
+          SFX PARTIE 1 (ORIGINE 2012) — P1 etait MUETTE (0 SFX cable en mode `partie1`,
+          cf AUDIT-AMELIORATIONS-P1.md #1/#2/#3). Grammaire identique aux autres scenes :
+          PING discret a la pose du repere LIBYE · boom-coup grave unique au pic du pulse
+          d'effondrement · impact sourd sur chacune des 3 chutes de villes (degressif,
+          net puis echo, cale sur F_IMPACT + delay de IMPACTS[] : Kidal 0/Gao 42/Tombouctou 50)
+          · ink-spread doux sur l'apparition des hachures de tension. Les SFX demarrent des
+          F_LIBYE/F_PULSE (avant meme F_TRAIT) : couvre par construction la jointure avec la
+          fin de l'Acte 1 (plus de vide sonore net a la coupure, cf point #4 de l'audit).
+          ⛔ PAS de tension-drone (decision Aziz 2026-06-27, banni partout).
+          Triggers V5 (Partie1Origine.tsx) : F_LIBYE=2178 · F_PULSE=2210 · F_TRAIT=2305 ·
+          F_IMPACT=F_TRAIT+70-6=2369 (Kidal +0=2369, Gao +42=2411, Tombouctou +50=2419) ·
+          F_TENSIONS=2844.
+          ====================================================== */}
+      {partie1 && !acte1CameraOnly && (
+        <>
+          {/* ping discret — pose du repere LIBYE (avant le pulse, couvre la jointure Acte1->P1) */}
+          <Sequence from={2178} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.32} />
+          </Sequence>
+          {/* boom-coup grave unique — pic du pulse d'effondrement Libye (la cause de toute la chaine) */}
+          <Sequence from={2210} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.5} />
+          </Sequence>
+          {/* impact sourd sur les 3 chutes de villes — degressif : Kidal net, Gao/Tombouctou en echo */}
+          <Sequence from={2369} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={2411} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.46} />
+          </Sequence>
+          <Sequence from={2419} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.46} />
+          </Sequence>
+          {/* ink-spread doux — apparition des hachures de tension (vide d'Etat) */}
+          <Sequence from={2844} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.30} />
+          </Sequence>
+        </>
+      )}
+
+      {/* ======================================================
           SFX B1 V2 (acte2) — sobres, plancher 0.50, dans <Sequence> (jamais frame===X).
           Board clearing (gong rappel "fin de chapitre") · avion (whoosh whip) ·
           convoi (grondement bas) · emprises bases (ink-spread cascade ×3).
@@ -1546,16 +1647,31 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       )}
 
       {/* ======================================================
-          SFX PARTIE 2 (NARRATIVE) — 5 ponctuels forts + drone de tension (Aziz 2026-06-12).
-          Silencieux sur poses/avancées (réservé aux moments forts). Tous dans <Sequence> (règle projet).
-          Triggers V5 : sillage F_ECHEC=3887 · chutes bases ~4037/4117/4197 · Burkina F_DEBORDENT=4955 ·
+          SFX PARTIE 2 (NARRATIVE) — 5 ponctuels forts + pings de pose du setup (Aziz 2026-06-12,
+          corrige 2026-07-01 : le tension-drone d'assise a ete RETIRE, cf AUDIT-AMELIORATIONS-P2.md
+          A1 corrige — ce SFX est banni partout depuis 2026-06-27, "le grondement continu derange".
+          Le lit sonore = musique de fond (score-epic.mp3) + les SFX ponctuels ci-dessous ; ne PAS le
+          remplacer par un autre son continu). Silencieux sur poses/avancées (réservé aux moments
+          forts). Tous dans <Sequence> (règle projet).
+          Triggers V5 : setup F_SERVAL=3196 (Gao 3208/Ménaka 3226/Tessalit 3280/MINUSMA-Kidal 3660) ·
+          sillage F_ECHEC=3887 · chutes bases ~4037/4117/4197 · Burkina F_DEBORDENT=4955 ·
           Niger F_NIGER=5380 · CEDEAO F_CEDEAO=5639.
           ====================================================== */}
       {partie2 && !acte1CameraOnly && (
         <>
-          {/* drone de tension très bas pendant l'avancée jihadiste (2.4) — assise sonore continue */}
-          <Sequence from={3880} durationInFrames={Math.ceil(8.0 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.12} />
+          {/* pings de pose du setup — bases FR (Gao/Ménaka/Tessalit) + MINUSMA (Kidal), espacés,
+              pas systématique sur chaque pose (A5 : couvre le vide sonore initial sans sur-mixer) */}
+          <Sequence from={3208} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={3226} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.28} />
+          </Sequence>
+          <Sequence from={3280} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
+          </Sequence>
+          <Sequence from={3660} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
           </Sequence>
           {/* sillage = l'encre rouge s'étale (apparition du territoire au 2.4) */}
           <Sequence from={3887} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
@@ -1579,12 +1695,18 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={5380} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.58} />
           </Sequence>
-          {/* (SFX cedeao-snap RETIRÉ — Aziz : pas de support visuel CEDEAO, le son n'a pas lieu d'être.) */}
+          {/* SFX cedeao-snap RETIRÉ (2026-07-04, retour Aziz confirmé) : le visuel CEDEAO (marqueurs+
+              flèches, bande+flèches) est retiré entièrement de Partie2Blocage.tsx (pulse AES à la place),
+              ce SFX de craquement n'a donc plus de support visuel — parasite sans lui. */}
         </>
       )}
 
       {/* ======================================================
-          SFX PARTIE 3 — 3 moments structurants (décision Aziz : SFX seulement si support visuel fort).
+          SFX PARTIE 3 — 3 moments structurants (décision Aziz : SFX seulement si support visuel fort)
+          + 1 ajout ciblé (2026-07-01, cf AUDIT-AMELIORATIONS-P3.md A3) : ink-spread doux sur le
+          sillage bleu revele (Ph6-7, F_AFRICA=7794 -> F_FLOTTE=8132), jusque-la muet. NOTE : le
+          starburst/unionFlash du climax convergence Liptako (F_LIPTAKO=6616) est DEJA couvert par le
+          gong ci-dessous (meme trigger) — verifie, pas de doublon ajoute.
           Gong naissance AES (Liptako f6616) · impact "Kidal." (f7083) · whoosh reprise "flotte" (f8132).
           PAS de SFX sur attaques 2026 (pulses dispersés/refoulés = support visuel diffus). Tous <Sequence>.
           ====================================================== */}
@@ -1598,6 +1720,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={7083} durationInFrames={Math.ceil(1.48 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.5} />
           </Sequence>
+          {/* sillage bleu qui se révèle (offensive FAMa/Africa Corps, Ph6-7) — ink-spread doux */}
+          <Sequence from={7794} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.32} />
+          </Sequence>
           {/* reprise de Kidal (drapeau planté) : whoosh + impact sourd renforcé (3 voix : SFX fort au climax) */}
           <Sequence from={8132} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.5} />
@@ -1605,12 +1731,64 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           <Sequence from={8140} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />
           </Sequence>
-          {/* MOURA (flashback grave) : boom sourd profond + drone de tension sous tout le beat (gravité 500 morts) */}
+          {/* MOURA (flashback grave) : boom sourd profond. Le tension-drone d'assise a été RETIRÉ
+              (2026-07-01, cf AUDIT-AMELIORATIONS-P3.md A1) : résidu oublié lors du ménage Aziz du
+              2026-06-27 (SFX banni partout, "le grondement continu dérange"). La gravité du beat
+              repose désormais sur ce boom-coup + la musique de fond + le meublage visuel du plateau
+              (cf Partie3Rupture.tsx, plus de mouvement pendant le hold Moura). */}
           <Sequence from={8580} durationInFrames={Math.ceil(1.4 * SAHEL_FPS)}>
             <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.5} />
           </Sequence>
-          <Sequence from={8580} durationInFrames={Math.ceil(7.0 * SAHEL_FPS)}>
-            <Audio src={staticFile("_shared/sfx/warmap/tension-drone.mp3")} volume={0.14} />
+        </>
+      )}
+
+      {/* ======================================================
+          SFX PARTIE 4 (LE COUT, LE LEVIER, LA PERSPECTIVE) — P4 etait MUETTE (0 SFX cable en
+          mode `partie4`, cf AUDIT-AMELIORATIONS-P4.md #1). Grammaire identique aux autres scenes :
+          impact/ping sur les 3 pulses villes assiegees · ink-spread/ping sur l'emergence des 3
+          icones ressources · arrow-whoosh sur la convergence des 3 drapeaux confederation +
+          boom-coup sur le coup de tampon du sceau AES · ping de pose sur la piece CFA (CfaRevealSVG
+          gere son propre SFX interne ink-spread, pas de doublon moteur ici). ⛔ PAS de tension-drone
+          (banni partout). Triggers V5 (Partie4Cout.tsx) : F_DJIBO=9790 · F_MENAKA=9809 ·
+          F_TILLABERI=9835 · F_OR=10667 · F_URANIUM=10804 · F_PETROLE=10835 · F_NIAMEY_QG=11613
+          (sceau confed, coup de tampon) · F_CFA=11869 (piece CFA posee, CfaRevealSVG inAt).
+          ====================================================== */}
+      {partie4 && !acte1CameraOnly && (
+        <>
+          {/* 3 pulses villes assiégées (Djibo/Ménaka/Tillabéri) — impact sourd, léger décalage */}
+          <Sequence from={9790} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.48} />
+          </Sequence>
+          {/* compteurs coût humain (3M déplacés puis 15M+ insécurité) — tick par count-up, retour
+              Aziz 2026-07-04 : occasion manquée de SFX sur ces chiffres qui montent. */}
+          <Sequence from={10047 + 16} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/data/stat-tick.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={10047 + 100} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/data/stat-tick.mp3")} volume={0.5} />
+          </Sequence>
+          <Sequence from={9809} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />
+          </Sequence>
+          <Sequence from={9835} durationInFrames={Math.ceil(1.2 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/impact/impact.mp3")} volume={0.45} />
+          </Sequence>
+          {/* émergence des 3 veines ressources (or/uranium/pétrole) : SFX géré EN INTERNE par
+              ResourcesRevealSVG (ink-spread à inAt+20/+157/+188 = mêmes frames absolues 10667/
+              10804/10835) — pas de doublon moteur ici (fix Aziz 2026-07-04, même logique que CFA). */}
+          {/* convergence des 3 drapeaux confédération — arrow-whoosh (les lignes se tracent vers le
+              centre ; ConfederationReveal inAt=F_FORCE=11521, converge L=18->58, soit f11539->11579 ;
+              on demarre au milieu de la fenetre, avant le sceau qui nait a L=54=f11575) */}
+          <Sequence from={11556} durationInFrames={Math.ceil(0.6 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/arrow-whoosh.mp3")} volume={0.48} />
+          </Sequence>
+          {/* coup de tampon du sceau AES — climax institutionnel (F_NIAMEY_QG), boom-coup */}
+          <Sequence from={11613} durationInFrames={Math.ceil(1.3 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/warmap/boom-coup.mp3")} volume={0.55} />
+          </Sequence>
+          {/* pose de la pièce CFA — ping discret */}
+          <Sequence from={11869} durationInFrames={Math.ceil(0.5 * SAHEL_FPS)}>
+            <Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.30} />
           </Sequence>
         </>
       )}
@@ -1633,24 +1811,33 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           le Sahel = contraste par le calme. Masque-trou = silhouette AES reprojetée.
           Placé SOUS la couche narrative → véhicules/labels restent nets sur l'AES.
           ====================================================== */}
-      {effVignette && aesPaths.length > 0 && (
-        <svg width={width} height={height}
-          style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-          <defs>
-            <mask id="aesHole">
-              <rect x="0" y="0" width={width} height={height} fill="white" />
-              {aesPaths.map((d, i) => (
-                <path key={i} d={d} fill="black" />
-              ))}
-            </mask>
-          </defs>
-          {/* couche sépia sombre, trouée sur l'AES */}
-          <rect x="0" y="0" width={width} height={height}
-            fill="#241809"
-            fillOpacity={effVignetteOp}
-            mask="url(#aesHole)" />
-        </svg>
-      )}
+      {effVignette && aesPaths.length > 0 && (() => {
+        // DÉTACHEMENT (Aziz 2026-06-19) : en acte1Refonte, le fond RECULE PROGRESSIVEMENT.
+        // Avant le 1er detachement (f145) : vignette faible (les 3 pays "dans la masse").
+        // Au fil des detachements f145->f286 : le fond s'assombrit -> les 3 pays ressortent SEULS.
+        const vOp = acte1RefonteProp
+          ? effVignetteOp * interpolate(frame, [80, F_HOOK_MALI, F_HOOK_NIGER + 40], [0.18, 0.4, 1],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+          : effVignetteOp;
+        return (
+          <svg width={width} height={height}
+            style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
+            <defs>
+              <mask id="aesHole">
+                <rect x="0" y="0" width={width} height={height} fill="white" />
+                {aesPaths.map((d, i) => (
+                  <path key={i} d={d} fill="black" />
+                ))}
+              </mask>
+            </defs>
+            {/* couche sépia sombre, trouée sur l'AES — opacite animee (fond qui recule) */}
+            <rect x="0" y="0" width={width} height={height}
+              fill="#241809"
+              fillOpacity={vOp}
+              mask="url(#aesHole)" />
+          </svg>
+        );
+      })()}
 
       {/* ======================================================
           B3 — FRONTS QUI SE DESSINENT (draw-in stroke-dashoffset)
@@ -1711,31 +1898,51 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           ACTE 1 FINAL — FLÈCHES LIPTAKO (f502) : 3 traits beige continus
           capitales→centre qui se dessinent (dashoffset) + pulse or unique "soudure".
           ====================================================== */}
-      {isFinalLook && showChrome && arrowDraw > 0 && hookPx.liptako &&
-        hookPx.bamako && hookPx.ouaga && hookPx.niamey && (() => {
+      {isFinalLook && showChrome && aesSealOp > 0 && hookPx.liptako && (() => {
         const L = hookPx.liptako;
-        const caps = [hookPx.bamako, hookPx.ouaga, hookPx.niamey];
+        // SCEAU "AES" repositionne AU-DESSUS du groupe de drapeaux (nord-Mali vide) pour ne pas
+        // chevaucher les bannieres/capitales. Le sceau EST le geste de soudure (les 3 deviennent UN) :
+        // les 3 traits capitales->Liptako etaient illisibles a ce zoom (capitales trop proches) -> retires.
+        const sealX = L.x;
+        const sealY = L.y - 118;
         return (
-          <svg width={width} height={height} style={{ position: "absolute", top: 0, left: 0, pointerEvents: "none" }}>
-            {caps.map((cap, i) => {
-              if (!cap) return null;
-              const len = Math.hypot(L.x - cap.x, L.y - cap.y);
-              const off = len * (1 - arrowDraw);
-              return (
-                <line key={i} x1={cap.x} y1={cap.y} x2={L.x} y2={L.y}
-                  stroke="#F3E9C8" strokeWidth={3.5 * arrowDraw + 0.5} strokeLinecap="round"
-                  strokeDasharray={len} strokeDashoffset={off}
-                  opacity={0.85 * arrowFade}
-                  style={{ filter: "drop-shadow(0 0 2px rgba(243,233,200,0.4))" }} />
-              );
-            })}
-            {/* pulse or UNIQUE "soudure" au centre à l'arrivée */}
-            {weldPulse > 0 && (
-              <circle cx={L.x} cy={L.y} r={18 + weldPulse * 34} fill="none"
-                stroke={SAHEL_COLORS.contested} strokeWidth={4}
-                opacity={weldPulse * 0.9} />
-            )}
-          </svg>
+          <>
+          {/* FLASH or franc a l'emergence du sceau (climax "batissent quelque chose de nouveau").
+              Element FRERE (opacite propre) pour ne pas heriter de l'opacite encore basse du sceau. */}
+          {weldFlash > 0 && (
+            <div style={{
+              position: "absolute", left: sealX, top: sealY,
+              width: 300, height: 300, marginLeft: -150, marginTop: -150,
+              borderRadius: "50%", pointerEvents: "none", zIndex: 39,
+              background: `radial-gradient(circle, rgba(242,210,122,${weldFlash * 0.92}) 0%, rgba(201,154,58,${weldFlash * 0.5}) 40%, rgba(201,154,58,0) 70%)`,
+            }} />
+          )}
+          {aesSealOp > 0 && (
+            <div style={{
+              position: "absolute", left: sealX, top: sealY,
+              transform: `translate(-50%, calc(-50% + ${aesSealRise}px)) scale(${aesSealBreath})`,
+              opacity: aesSealOp, pointerEvents: "none", textAlign: "center", zIndex: 40,
+            }}>
+              <div style={{
+                position: "relative",
+                display: "inline-block",
+                background: "rgba(245,239,214,0.95)",
+                border: `2.5px solid ${SAHEL_COLORS.contested}`,
+                borderRadius: 9, padding: "7px 18px 5px",
+                boxShadow: `0 0 18px rgba(201,154,58,0.45), 0 4px 10px rgba(40,28,16,0.4)`,
+              }}>
+                <div style={{
+                  fontFamily: "'Cormorant Garamond', Georgia, serif", fontSize: 40, fontWeight: 800,
+                  lineHeight: 1, letterSpacing: "5px", color: SAHEL_COLORS.ink,
+                }}>AES</div>
+                <div style={{
+                  marginTop: 4, fontFamily: "Georgia, serif", fontSize: 12.5, fontWeight: 700,
+                  letterSpacing: "1.4px", textTransform: "uppercase", color: "#7A5A1E",
+                }}>Alliance des États du Sahel</div>
+              </div>
+            </div>
+          )}
+          </>
         );
       })()}
 
@@ -2392,8 +2599,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           B3 — POINTS-VILLES PULSANTS liés à l'allumage de l'état.
           Quand un état s'allume, sa ville-clé apparaît : point beige plein +
           anneau qui pulse (scale+opacity). Cause→effet lisible sans la voix.
-          ====================================================== */}
-      {showChrome && effCityPulse && effSeqIgnite &&
+          RETIRÉ sur les Parties V5 (isPartie, fix Aziz 2026-07-04 pt.7) : ces points restaient
+          affichés EN CONTINU (jamais de fadeOut hors acte1Refonte) pendant toute la P1, pas
+          nécessaire — ce bloc ne sert que l'allumage narratif de l'Acte 1. ====================================================== */}
+      {showChrome && effCityPulse && effSeqIgnite && !isPartie &&
         Object.entries(effSeqIgnite).map(([country, ignF]) => {
           const cityName = COUNTRY_KEY_CITY[country];
           if (!cityName) return null;
@@ -2401,9 +2610,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           // STAGGER : la ville apparaît 10f APRÈS le fill du pays (fond→contour→ville).
           const cityStart = ignF + 10;
           if (!cityPos || frame < cityStart) return null;
+          // En refonte : le marqueur (drapeau + onde + micro-centre) CEDE la place a la couche
+          // tactique apres les premiers jetons (fade-out f954->990, aligne sur WarMapBanner hideAt).
+          const refonteFadeOut = acte1Refonte
+            ? interpolate(frame, [954, 990], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
+            : 1;
           const appearOp = interpolate(frame, [cityStart, cityStart + 16], [0, 1], {
             extrapolateLeft: "clamp", extrapolateRight: "clamp",
-          });
+          }) * refonteFadeOut;
           // HIÉRARCHIE PULSE (plan upstream) : 3 ondes à l'apparition PUIS calme.
           // Évite le "sapin de Noël" (anneaux qui pulsent en boucle tout l'acte).
           const sinceCity = frame - cityStart;
@@ -2436,32 +2650,52 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           // (ocre/brique/sarcelle) au lieu du beige invisible sur le fond ivoire.
           const countryColor = SAHEL_COUNTRY_COLORS[country] ?? "#3A2A18";
           if (isRefonte) {
-            // STRUCTURE acte1Refonte : anneau + micro-centre dans le div parent geo-ancre,
-            // PLAQUE elegante (WarMapPlaque) rendue en sibling (elle se positionne elle-meme
-            // en absolute via sa prop pos). Remplace l'ancien label texte nu.
+            // STRUCTURE acte1Refonte v2 (decode Castile + intention RUPTURE/SOUVERAINETE, Aziz 2026-06-19) :
+            //  - ONDE BRÈVE au plantage (snap, pas respiration molle) : le pays s'allume d'un COUP.
+            //  - DRAPEAU REEL qui se PLANTE + ondule (remplace l'anneau) = souverainete affirmee.
+            //  - PLAQUE elegante SOUS le point (below), Niamey decalee a droite (anti-chevauchement).
+            const ONDE = 22;
+            const ow = Math.min(1, sinceCity / ONDE);
+            const ondeScale = 0.4 + ow * 2.2;
+            const ondeOp = (1 - ow) * 0.7 * appearOp;
             return (
               <React.Fragment key={`pulse-${country}`}>
                 <div style={{ position: "absolute", left: cityPos.x, top: cityPos.y,
-                    transform: "translate(-50%, -50%)", opacity: appearOp, pointerEvents: "none" }}>
-                  {/* anneau pulsant — couleur du pays, opacite franche, respiration douce */}
+                    transform: "translate(-50%, -50%)", pointerEvents: "none" }}>
+                  {/* onde de rupture (one-shot, snap) */}
                   <div style={{ position: "absolute", left: "50%", top: "50%",
-                    width: 22, height: 22, marginLeft: -11, marginTop: -11, borderRadius: "50%",
-                    border: `3px solid ${countryColor}`,
-                    transform: `scale(${ringScale})`, opacity: ringOp }} />
-                  {/* micro-centre : meme couleur que le pays (coherence) */}
+                    width: 26, height: 26, marginLeft: -13, marginTop: -13, borderRadius: "50%",
+                    border: `2.5px solid ${countryColor}`,
+                    transform: `scale(${ondeScale})`, opacity: ondeOp }} />
+                  {/* micro-centre (point d'ancrage du mat) */}
                   <div style={{ position: "absolute", left: "50%", top: "50%",
                     width: 4, height: 4, marginLeft: -2, marginTop: -2, borderRadius: "50%",
-                    background: countryColor, opacity: 0.8 * appearOp }} />
+                    background: countryColor, opacity: 0.85 * appearOp }} />
                 </div>
-                {/* PLAQUE elegante geo-ancree : accent = couleur du pays (relie plaque <-> pays) */}
+                {/* DRAPEAU REEL qui se plante (decode Castile, banniere flottante flat) */}
+                <WarMapBanner
+                  frame={frame}
+                  fps={fps}
+                  pos={cityPos}
+                  flag={COUNTRY_FLAG[country] ?? "_shared/flags/ml.png"}
+                  appearAt={cityStart}
+                  hideAt={990}
+                  fadeFrames={36}
+                  accent={countryColor}
+                />
+                {/* PLAQUE SOUS le point (below) — le drapeau plante occupe le HAUT.
+                    Niamey (NER) decalee a droite pour ne pas chevaucher Ouagadougou. */}
                 <WarMapPlaque
                   frame={frame}
                   name={cityName}
                   pos={cityPos}
                   appearAt={cityStart}
-                  hideAt={460}
+                  hideAt={560}
                   accent={countryColor}
                   size={18}
+                  yOffset={18}
+                  below
+                  xOffset={country === "NER" ? 70 : 0}
                 />
               </React.Fragment>
             );
@@ -2532,9 +2766,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           gate ce fragment sur !partieN, on masque AUSSI la timeline (même si sa condition propre est vraie).
           → gater chaque sous-bloc individuellement (ici la légende), JAMAIS le fragment entier. */}
       {!acte1CameraOnly && !proto24 && !countryBordersTest && <>
-      {/* Legende factions — haut gauche (masquée en partie2/partie3/partie4 : table rase, les jetons parlent d'eux-mêmes ;
-          masquée aussi en acte1Refonte : epuration totale du HUD pour la lisibilite, decision Aziz Task 2) */}
-      {!partie2 && !partie3 && !partie4 && !acte1Refonte && (
+      {/* Legende factions — haut gauche (masquée en partie1/partie2/partie3/partie4 : table rase, les jetons/contours
+          parlent d'eux-mêmes ; masquée aussi en acte1Refonte : epuration totale du HUD pour la lisibilite,
+          decision Aziz Task 2 — puis étendue à partie1 le 2026-07-01, absente des autres scènes, inutile). */}
+      {!partie1 && !partie2 && !partie3 && !partie4 && !acte1Refonte && (
       <div style={{ position: "absolute", top: 40, left: 44, opacity: hudOpEff,
           transform: `rotate(${paperWobble(frame, 3)}deg)` }}>
         <div style={{ ...plaque, padding: "12px 20px" }}>
@@ -2581,13 +2816,12 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           Encoches aux événements (JNIM/EIGS/Friction). Position remontée (Option B)
           → la source reste lisible en dessous. Blueprint série.
           ====================================================== */}
-      {isFinalLook && (showChrome || partie2 || partie3) && !partie1 && !proto24 && !acte1Refonte && (() => {
-        // PARTIE 2 (V5) : timeline graduée Acte 1 RÉACTIVÉE (Aziz 2026-06-12 : la frise doit être pleine
-        // largeur, présente DÈS LE DÉBUT de la P2, exactement comme l'Acte 1). Axe 2013→2024, curseur
-        // qui glisse sur toute la P2 (f3000→f5690 mappé 2013→2024). Encoches aux événements P2.
-        // PARTIE 3 : axe 2023→2026 (la rupture), curseur f6118→f9372. RECULE visiblement à Moura (flashback
-        // mars 2022 — le curseur sort à gauche, marqueur de flashback validé DA). Encoches AES/Kidal/2026.
-        // PARTIE 1 garde son cartouche "2012" (frise masquée). Acte 1 (non-acte2) garde son axe 2020.5→2022.2.
+      {isFinalLook && showChrome && !partie1 && !partie2 && !partie3 && !proto24 && !acte1Refonte && (() => {
+        // Timeline graduée RETIRÉE de P2 et P3 (Aziz 2026-07-01, révision de la décision du
+        // 2026-06-12 qui l'avait réactivée) : absente d'Acte1-refonte/P1/P4, incohérence de
+        // registre entre scènes. Ne reste active que sur l'Acte 1 legacy (acte2, hors périmètre
+        // de la refonte) et l'Acte 1 non-final via showChrome. Le code de calcul ci-dessous garde
+        // les branches partie2/partie3 pour mémoire (mortes désormais, gate au-dessus les exclut).
         const AX_Y0 = partie3 ? 2022 : (acte2 || partie2) ? 2013 : 2020.5;
         const AX_Y1 = partie3 ? 2026.3 : (acte2 || partie2) ? 2024 : 2022.2;
         const yearNow = partie3
@@ -2694,11 +2928,17 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
         );
       })()}
 
-      {/* Source bas droite */}
+      {/* Source bas droite — RETIRÉE en acte1Refonte (Aziz 2026-06-27) : l'Acte 1 est une ouverture
+          NARRATIVE sans chiffre précis → une mention "Données estimées · Sources..." est trompeuse
+          (elle suggère des données chiffrées absentes). RETIRÉE aussi sur toutes les Parties V5
+          (isPartie, fix Aziz 2026-07-04) : P3/P4 ont déjà leurs sources ponctuelles à l'écran
+          (Moura, cartouche coût humain), ce HUD générique fait doublon/parasite partout ailleurs. */}
+      {!acte1Refonte && !isPartie && (
       <div style={{ position: "absolute", bottom: 20, right: 30, fontSize: 12,
           color: SAHEL_COLORS.cream, opacity: hudOp * 0.65 }}>
         Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR
       </div>
+      )}
       </>}
 
       {/* ======================================================
@@ -3154,7 +3394,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
       {acte1ProtoVide && <ProtoVide ctx={sahelCtx} />}
       {partie1 && <Partie1Origine ctx={sahelCtx} />}
       {partie2 && <Partie2Blocage ctx={sahelCtx} />}
-      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} ph1Fullscreen={ph1Fullscreen} />}
+      {partie3 && <Partie3Rupture ctx={sahelCtx} map={mapRef.current} />}
       {partie4 && <Partie4Cout ctx={sahelCtx} map={mapRef.current} />}
       {proto24 && <Proto24Extinction ctx={sahelCtx} />}
 
@@ -3193,8 +3433,9 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
 
       {/* CONTOURS NATIONAUX COLORÉS (1 ton/pays) — PERMANENTS + draw-in (Acte 1) + pulse.
           Acte 1 : se dessinent quand la voix nomme le pays (f150/231/301). P1→P4 : présents
-          en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES). */}
-      {(countryBordersTest || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
+          en permanence (respiration douce) + pulse aux moments clés (COUNTRY_PULSES).
+          P1 ajoutée 2026-07-01 (cohérence Acte1/P3/P4, remplace le fond mosaïque plein). */}
+      {(countryBordersTest || partie1 || partie2 || partie3 || partie4 || acte1Refonte) && countryBorderPaths.length > 0 && (() => {
         // Draw-in : en test (séquence démo) ET en acte1Refonte (allumage des 3 pays PAR LE CONTOUR,
         // calé sur la narration V5 : Mali f145 "chassent" → Burkina f217 "Rompent" → Niger f286 "quittent").
         // En P3/P4 les contours sont déjà tracés (offset 0) + pulse aux moments clés (COUNTRY_PULSES).
@@ -3296,7 +3537,7 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           centre AES via sahelCtx.project().
           Fenetre : f0..420 (recherche -> lock f135 juste avant "chassent" f145 -> effacement f350-400).
           ============================================================ */}
-      {acte1RefonteProp && !acte1ProtoActif && frame >= 0 && frame < 420 && (() => {
+      {VISEUR_ON && acte1RefonteProp && !acte1ProtoActif && frame >= 0 && frame < 420 && (() => {
         const CL_INK = "#3A2A18";        // trait de recherche brun fonce (lisible sur parchemin)
         const CL_LOCK = "#B14B3C";       // accent lock brique sobre
         const LOCK_AT = 135;             // verrouillage juste avant "chassent" (f145)
@@ -3385,6 +3626,55 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           </AbsoluteFill>
         );
       })()}
+
+      {/* ============================================================
+          LISÉRÉ D'UNION AES — "et batissent, a la place, quelque chose de nouveau" (f477).
+          Direction "detachement + soudure" : apres que les 3 pays se sont detaches + drapeaux plantes,
+          un trait relie leurs capitales = la soudure AES. Trace one-shot + pulse de fermeture.
+          ============================================================ */}
+      {acte1RefonteProp && !acte1ProtoActif && frame >= F_HOOK_LIPTAKO && (() => {
+        const bamako = cityPx.find((c) => c.name === "Bamako");
+        const ouaga = cityPx.find((c) => c.name === "Ouagadougou");
+        const niamey = cityPx.find((c) => c.name === "Niamey");
+        if (!bamako || !ouaga || !niamey) return null;
+        const draw = interpolate(frame, [F_HOOK_LIPTAKO, F_HOOK_LIPTAKO + 40], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const op = interpolate(frame, [F_HOOK_LIPTAKO, F_HOOK_LIPTAKO + 16], [0, 0.85],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const pts = [bamako, ouaga, niamey, bamako];
+        let total = 0;
+        for (let i = 1; i < pts.length; i++) total += Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y);
+        const d = `M ${pts.map((p) => `${p.x} ${p.y}`).join(" L ")}`;
+        const GOLD = SAHEL_COLORS.contested;
+        const closed = interpolate(frame, [F_HOOK_LIPTAKO + 40, F_HOOK_LIPTAKO + 52], [0, 1],
+          { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const pulse = interpolate(frame, [F_HOOK_LIPTAKO + 40, F_HOOK_LIPTAKO + 50, F_HOOK_LIPTAKO + 66],
+          [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+        const fillD = `M ${[bamako, ouaga, niamey].map((p) => `${p.x} ${p.y}`).join(" L ")} Z`;
+        return (
+          <AbsoluteFill style={{ pointerEvents: "none" }}>
+            <svg width={width} height={height} style={{ position: "absolute", inset: 0 }} key="union-svg">
+              <path d={fillD} fill={GOLD} opacity={closed * 0.10} />
+              <path d={d} fill="none" stroke={GOLD} strokeWidth={10 + pulse * 8} opacity={op * (0.16 + pulse * 0.25)}
+                strokeDasharray={total} strokeDashoffset={total * (1 - draw)} strokeLinejoin="round" />
+              <path d={d} fill="none" stroke={GOLD} strokeWidth={4.5} opacity={Math.min(1, op + 0.1)}
+                strokeDasharray={total} strokeDashoffset={total * (1 - draw)} strokeLinejoin="round" />
+              {closed > 0.01 && [bamako, ouaga, niamey].map((p, i) => (
+                <circle key={i} cx={p.x} cy={p.y} r={3 + pulse * 2.5} fill={GOLD} opacity={closed * 0.9} />
+              ))}
+            </svg>
+          </AbsoluteFill>
+        );
+      })()}
+
+      {/* ============================================================
+          INTRO SLAM — le chiffre "3" (= "trois pays") slamme, carte du moteur visible A TRAVERS,
+          puis zoom-reveal jusqu'a la carte pleine. Mecanique KineticMaskSlam adaptee SANS 2e carte.
+          Premier plan. Avant "chassent" (f145).
+          ============================================================ */}
+      {acte1RefonteProp && !acte1ProtoActif && (
+        <Acte1IntroSlam bigText="3" slamAt={2} revealStart={70} revealEnd={120} />
+      )}
 
     </AbsoluteFill>
   );

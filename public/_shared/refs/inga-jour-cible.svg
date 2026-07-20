@@ -1,0 +1,283 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+    <defs>
+        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#5aaad8"/>
+            <stop offset="60%" stop-color="#9dcfed"/>
+            <stop offset="100%" stop-color="#d8eeee"/>
+        </linearGradient>
+        <radialGradient id="sunHalo" cx="1700" cy="120" r="320" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fff8d0" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#5aaad8" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candleGlow1" cx="1535" cy="615" r="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffcc60" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#ffcc60" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candleGlow2" cx="1655" cy="585" r="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffcc60" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ffcc60" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candleGlow3" cx="1758" cy="600" r="32" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffcc60" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#ffcc60" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="candleGlow4" cx="1850" cy="592" r="28" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffcc60" stop-opacity="0.45"/>
+            <stop offset="100%" stop-color="#ffcc60" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="blur" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="18"/>
+        </filter>
+    </defs>
+
+    <!-- CIEL -->
+    <rect width="1920" height="1080" fill="url(#skyGrad)"/>
+    <rect width="1920" height="1080" fill="url(#sunHalo)"/>
+
+    <!-- SOLEIL -->
+    <circle cx="1700" cy="110" r="62" fill="#fff5a0" opacity="0.95"/>
+    <circle cx="1700" cy="110" r="90" fill="#fff8c0" opacity="0.25"/>
+    <circle cx="1700" cy="110" r="130" fill="#fff0a0" opacity="0.10"/>
+
+    <!-- NUAGES -->
+    <g opacity="0.92">
+        <ellipse cx="720" cy="140" rx="130" ry="48" fill="white"/>
+        <ellipse cx="620" cy="158" rx="80" ry="38" fill="white"/>
+        <ellipse cx="830" cy="162" rx="90" ry="36" fill="white"/>
+        <ellipse cx="720" cy="170" rx="140" ry="36" fill="white"/>
+    </g>
+    <g opacity="0.80">
+        <ellipse cx="200" cy="200" rx="80" ry="30" fill="white"/>
+        <ellipse cx="140" cy="212" rx="50" ry="24" fill="white"/>
+        <ellipse cx="260" cy="215" rx="60" ry="26" fill="white"/>
+    </g>
+    <g opacity="0.75">
+        <ellipse cx="1200" cy="170" rx="100" ry="36" fill="white"/>
+        <ellipse cx="1110" cy="184" rx="68" ry="28" fill="white"/>
+        <ellipse cx="1290" cy="186" rx="72" ry="28" fill="white"/>
+    </g>
+    <g opacity="0.65">
+        <ellipse cx="1520" cy="90" rx="70" ry="26" fill="white"/>
+        <ellipse cx="1460" cy="100" rx="45" ry="20" fill="white"/>
+    </g>
+
+    <!-- TERRAIN SAVANE -->
+    <path d="M0 560 Q 400 520 960 575 T 1920 530 L 1920 1080 L 0 1080 Z" fill="#5a8a30" opacity="0.55"/>
+    <path d="M0 630 Q 500 680 1000 610 T 1920 650 L 1920 1080 L 0 1080 Z" fill="#6a9a38" opacity="0.85"/>
+    <path d="M0 690 Q 600 650 1200 720 T 1920 700 L 1920 1080 L 0 1080 Z" fill="#4a7a28" opacity="0.75"/>
+
+    <!-- FLEUVE CONGO — bleu vif de jour -->
+    <path d="M0 720 C 400 740 800 700 1920 760 L 1920 1080 L 0 1080 Z" fill="#2a7abf"/>
+    <path d="M 200 760 Q 380 750 560 768" stroke="#a0d8f0" stroke-width="2.5" fill="none" opacity="0.6"/>
+    <path d="M 750 810 Q 1020 795 1320 825" stroke="#a0d8f0" stroke-width="2" fill="none" opacity="0.5"/>
+    <path d="M 1450 900 Q 1650 918 1860 895" stroke="#a0d8f0" stroke-width="1.8" fill="none" opacity="0.4"/>
+    <ellipse cx="900" cy="800" rx="120" ry="18" fill="#d0f0ff" opacity="0.25" filter="url(#blur)"/>
+    <ellipse cx="300" cy="870" rx="150" ry="38" fill="#8ab0d0" opacity="0.15" filter="url(#blur)"/>
+
+    <!-- BARRAGE — béton gris clair en plein soleil -->
+    <rect x="275" y="290" width="50" height="460" fill="#b0b8a8"/>
+    <rect x="275" y="290" width="50" height="460" fill="none" stroke="#909888" stroke-width="2"/>
+    <line x1="275" y1="380" x2="325" y2="380" stroke="#909888" stroke-width="1" opacity="0.5"/>
+    <line x1="275" y1="470" x2="325" y2="470" stroke="#909888" stroke-width="1" opacity="0.5"/>
+    <line x1="275" y1="560" x2="325" y2="560" stroke="#909888" stroke-width="1" opacity="0.5"/>
+    <line x1="275" y1="650" x2="325" y2="650" stroke="#909888" stroke-width="1" opacity="0.5"/>
+
+    <!-- TURBINE — métal acier au soleil -->
+    <g>
+        <ellipse cx="300" cy="600" rx="180" ry="60" fill="#808898"/>
+        <rect x="120" y="500" width="360" height="100" fill="#909898"/>
+        <path d="M 120 550 A 180 60 0 0 0 480 550" fill="none" stroke="#606870" stroke-width="2"/>
+        <circle cx="160" cy="565" r="4" fill="#b0b8b8" stroke="#606870" stroke-width="1"/>
+        <circle cx="230" cy="595" r="4" fill="#b0b8b8" stroke="#606870" stroke-width="1"/>
+        <circle cx="300" cy="610" r="4" fill="#b0b8b8" stroke="#606870" stroke-width="1"/>
+        <circle cx="370" cy="595" r="4" fill="#b0b8b8" stroke="#606870" stroke-width="1"/>
+        <circle cx="440" cy="565" r="4" fill="#b0b8b8" stroke="#606870" stroke-width="1"/>
+    </g>
+    <g transform="translate(300, 500)">
+        <circle cx="0" cy="0" r="200" fill="#a0a8b0" stroke="#606870" stroke-width="3"/>
+        <circle cx="0" cy="0" r="170" fill="none" stroke="#606870" stroke-width="2"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(0)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(45)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(90)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(135)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(180)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(225)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(270)"/>
+        <path d="M -12 -40 L -20 -168 A 168 168 0 0 1 20 -168 L 12 -40 Z" fill="#9098a8" stroke="#606870" stroke-width="2" transform="rotate(315)"/>
+        <circle cx="0" cy="0" r="50" fill="#c0c8d0" opacity="0.4"/>
+        <circle cx="0" cy="0" r="30" fill="#d8e0e8"/>
+        <circle cx="-8" cy="-8" r="10" fill="white" opacity="0.5"/>
+        <circle cx="0" cy="-185" r="5" fill="#606870"/>
+        <circle cx="0" cy="185" r="5" fill="#606870"/>
+        <circle cx="-185" cy="0" r="5" fill="#606870"/>
+        <circle cx="185" cy="0" r="5" fill="#606870"/>
+    </g>
+
+    <!-- PYLÔNE — acier galvanisé gris clair -->
+    <g>
+        <rect x="1020" y="750" width="40" height="20" fill="#b0b8c0"/>
+        <rect x="1180" y="750" width="40" height="20" fill="#b0b8c0"/>
+        <g stroke="#a0a8b0" stroke-width="1.5" opacity="0.8">
+            <line x1="1040" y1="750" x2="1182" y2="600"/>
+            <line x1="1200" y1="750" x2="1058" y2="600"/>
+            <line x1="1058" y1="600" x2="1168" y2="480"/>
+            <line x1="1182" y1="600" x2="1072" y2="480"/>
+            <line x1="1072" y1="480" x2="1154" y2="360"/>
+            <line x1="1168" y1="480" x2="1086" y2="360"/>
+            <line x1="1086" y1="360" x2="1139" y2="240"/>
+            <line x1="1154" y1="360" x2="1101" y2="240"/>
+            <line x1="1101" y1="240" x2="1125" y2="120"/>
+            <line x1="1139" y1="240" x2="1115" y2="120"/>
+        </g>
+        <line x1="1058" y1="600" x2="1182" y2="600" stroke="#b0b8c0" stroke-width="3"/>
+        <line x1="1072" y1="480" x2="1168" y2="480" stroke="#b0b8c0" stroke-width="3"/>
+        <line x1="1086" y1="360" x2="1154" y2="360" stroke="#b0b8c0" stroke-width="3"/>
+        <line x1="1101" y1="240" x2="1139" y2="240" stroke="#b0b8c0" stroke-width="3"/>
+        <line x1="1040" y1="750" x2="1120" y2="80" stroke="#b0b8c0" stroke-width="5"/>
+        <line x1="1200" y1="750" x2="1120" y2="80" stroke="#b0b8c0" stroke-width="5"/>
+        <rect x="1100" y="70" width="40" height="12" fill="#b0b8c0"/>
+        <line x1="1060" y1="340" x2="1180" y2="340" stroke="#b0b8c0" stroke-width="5"/>
+        <line x1="1200" y1="750" x2="1120" y2="80" stroke="white" stroke-width="1.5" opacity="0.3"/>
+    </g>
+
+    <!-- CÂBLE — or solaire -->
+    <path d="M 480 490 C 750 320 980 280 1120 340 C 1360 420 1600 500 1920 540" stroke="#e8c030" stroke-width="20" fill="none" opacity="0.15"/>
+    <path d="M 480 490 C 750 320 980 280 1120 340 C 1360 420 1600 500 1920 540" stroke="#e8c030" stroke-width="7" fill="none"/>
+    <path d="M 480 490 C 750 320 980 280 1120 340 C 1360 420 1600 500 1920 540" stroke="white" stroke-width="2" fill="none" opacity="0.35"/>
+
+    <!-- ISOLATEURS -->
+    <g transform="translate(650,385) rotate(-20)">
+        <rect x="-4" y="-15" width="8" height="30" fill="#c0c8d0"/>
+        <circle cx="0" cy="-10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(900,295) rotate(5)">
+        <rect x="-4" y="-15" width="8" height="30" fill="#c0c8d0"/>
+        <circle cx="0" cy="-10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(1120,340) rotate(15)">
+        <rect x="-4" y="-15" width="8" height="30" fill="#c0c8d0"/>
+        <circle cx="0" cy="-10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(1400,440) rotate(20)">
+        <rect x="-4" y="-15" width="8" height="30" fill="#c0c8d0"/>
+        <circle cx="0" cy="-10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+    </g>
+    <g transform="translate(1700,515) rotate(10)">
+        <rect x="-4" y="-15" width="8" height="30" fill="#c0c8d0"/>
+        <circle cx="0" cy="-10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="0" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+        <circle cx="0" cy="10" r="5" fill="#e8ecf0" stroke="#8090a0" stroke-width="1.5"/>
+    </g>
+
+    <!-- VILLAGE VIVANT — bougies visibles en plein jour (contraste narratif) -->
+    <g>
+        <rect width="1920" height="1080" fill="url(#candleGlow1)"/>
+        <rect width="1920" height="1080" fill="url(#candleGlow2)"/>
+        <rect width="1920" height="1080" fill="url(#candleGlow3)"/>
+        <rect width="1920" height="1080" fill="url(#candleGlow4)"/>
+
+        <!-- MAISON 1 -->
+        <g transform="translate(1480, 570)">
+            <ellipse cx="55" cy="128" rx="70" ry="10" fill="#2a4010" opacity="0.3"/>
+            <rect x="0" y="20" width="110" height="90" fill="#d4b888" stroke="#a88840" stroke-width="1.5"/>
+            <rect x="-8" y="6" width="126" height="18" fill="#c04020" stroke="#902010" stroke-width="1.5"/>
+            <rect x="-8" y="0" width="126" height="8" fill="#902010"/>
+            <line x1="4" y1="50" x2="106" y2="50" stroke="#b89860" stroke-width="1" opacity="0.5"/>
+            <line x1="4" y1="75" x2="106" y2="75" stroke="#b89860" stroke-width="1" opacity="0.5"/>
+            <rect x="12" y="40" width="28" height="28" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="26" cy="60" rx="5" ry="7" fill="#ffcc60" opacity="0.7"/>
+            <ellipse cx="26" cy="57" rx="3" ry="5" fill="#fff0a0" opacity="0.9"/>
+            <line x1="26" y1="40" x2="26" y2="68" stroke="#1a1008" stroke-width="0.8"/>
+            <line x1="12" y1="54" x2="40" y2="54" stroke="#1a1008" stroke-width="0.8"/>
+            <rect x="70" y="40" width="28" height="28" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="84" cy="60" rx="5" ry="7" fill="#ffcc60" opacity="0.7"/>
+            <ellipse cx="84" cy="57" rx="3" ry="5" fill="#fff0a0" opacity="0.9"/>
+            <line x1="84" y1="40" x2="84" y2="68" stroke="#1a1008" stroke-width="0.8"/>
+            <line x1="70" y1="54" x2="98" y2="54" stroke="#1a1008" stroke-width="0.8"/>
+            <rect x="42" y="72" width="26" height="38" fill="#1a3a8a" stroke="#a88840" stroke-width="1"/>
+            <circle cx="65" cy="91" r="3" fill="#c8a040"/>
+        </g>
+
+        <!-- MAISON 2 -->
+        <g transform="translate(1610, 540)">
+            <ellipse cx="42" cy="108" rx="52" ry="8" fill="#2a4010" opacity="0.25"/>
+            <rect x="0" y="16" width="84" height="76" fill="#c8a870" stroke="#a88840" stroke-width="1.2"/>
+            <rect x="-6" y="4" width="96" height="15" fill="#c04020" stroke="#902010" stroke-width="1.2"/>
+            <rect x="-6" y="0" width="96" height="6" fill="#902010"/>
+            <line x1="4" y1="42" x2="80" y2="42" stroke="#a88040" stroke-width="1" opacity="0.4"/>
+            <rect x="10" y="32" width="22" height="22" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="21" cy="49" rx="4" ry="6" fill="#ffcc60" opacity="0.7"/>
+            <ellipse cx="21" cy="46" rx="2.5" ry="4" fill="#fff0a0" opacity="0.9"/>
+            <rect x="52" y="32" width="22" height="22" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="63" cy="49" rx="4" ry="6" fill="#ffcc60" opacity="0.7"/>
+            <ellipse cx="63" cy="46" rx="2.5" ry="4" fill="#fff0a0" opacity="0.9"/>
+            <rect x="31" y="60" width="22" height="32" fill="#1a6030" stroke="#a88840" stroke-width="1"/>
+            <circle cx="50" cy="76" r="2.5" fill="#c8a040"/>
+        </g>
+
+        <!-- MAISON 3 -->
+        <g transform="translate(1720, 555)">
+            <ellipse cx="38" cy="95" rx="46" ry="7" fill="#2a4010" opacity="0.2"/>
+            <rect x="0" y="14" width="76" height="66" fill="#c0a060" stroke="#a88840" stroke-width="1.2"/>
+            <rect x="-5" y="4" width="86" height="13" fill="#c04020" stroke="#902010" stroke-width="1"/>
+            <rect x="-5" y="0" width="86" height="6" fill="#902010"/>
+            <rect x="8" y="28" width="20" height="18" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="18" cy="41" rx="3.5" ry="5" fill="#ffcc60" opacity="0.7"/>
+            <ellipse cx="18" cy="38" rx="2" ry="3.5" fill="#fff0a0" opacity="0.9"/>
+            <rect x="48" y="28" width="20" height="18" fill="#1a1208" stroke="#a88840" stroke-width="1"/>
+            <ellipse cx="58" cy="41" rx="3.5" ry="5" fill="#ffcc60" opacity="0.65"/>
+            <ellipse cx="58" cy="38" rx="2" ry="3.5" fill="#fff0a0" opacity="0.85"/>
+            <rect x="28" y="52" width="20" height="28" fill="#1a3a8a" stroke="#a88840" stroke-width="0.8"/>
+        </g>
+
+        <!-- MAISON 4 -->
+        <g transform="translate(1820, 565)">
+            <ellipse cx="30" cy="82" rx="36" ry="6" fill="#2a4010" opacity="0.18"/>
+            <rect x="0" y="12" width="60" height="58" fill="#b89858" stroke="#a88840" stroke-width="1"/>
+            <rect x="-4" y="3" width="68" height="12" fill="#c04020" stroke="#902010" stroke-width="1"/>
+            <rect x="-4" y="0" width="68" height="5" fill="#902010"/>
+            <rect x="8" y="22" width="16" height="14" fill="#1a1208" stroke="#a88840" stroke-width="0.8"/>
+            <ellipse cx="16" cy="33" rx="3" ry="4.5" fill="#ffcc60" opacity="0.65"/>
+            <ellipse cx="16" cy="30" rx="1.8" ry="3" fill="#fff0a0" opacity="0.85"/>
+            <rect x="36" y="22" width="16" height="14" fill="#1a1208" stroke="#a88840" stroke-width="0.8"/>
+            <ellipse cx="44" cy="33" rx="3" ry="4.5" fill="#ffcc60" opacity="0.65"/>
+            <ellipse cx="44" cy="30" rx="1.8" ry="3" fill="#fff0a0" opacity="0.85"/>
+            <rect x="22" y="44" width="16" height="26" fill="#206040" stroke="#a88840" stroke-width="0.8"/>
+        </g>
+
+        <!-- Ligne de sol commune -->
+        <path d="M 1470 700 C 1580 690 1700 705 1895 695" fill="none" stroke="#5a8a30" stroke-width="1.5" opacity="0.4"/>
+
+        <!-- Palmiers entre les maisons -->
+        <g transform="translate(1590, 560)">
+            <line x1="0" y1="140" x2="0" y2="60" stroke="#5a3810" stroke-width="5"/>
+            <ellipse cx="0" cy="55" rx="22" ry="12" fill="#3a7a20" opacity="0.9"/>
+            <ellipse cx="-16" cy="64" rx="18" ry="8" fill="#4a8a28" opacity="0.8" transform="rotate(-30,-16,64)"/>
+            <ellipse cx="16" cy="64" rx="18" ry="8" fill="#4a8a28" opacity="0.8" transform="rotate(30,16,64)"/>
+        </g>
+        <g transform="translate(1710, 548)">
+            <line x1="0" y1="130" x2="0" y2="55" stroke="#5a3810" stroke-width="4"/>
+            <ellipse cx="0" cy="50" rx="18" ry="10" fill="#3a7a20" opacity="0.85"/>
+            <ellipse cx="-13" cy="58" rx="14" ry="7" fill="#4a8a28" opacity="0.75" transform="rotate(-25,-13,58)"/>
+            <ellipse cx="13" cy="58" rx="14" ry="7" fill="#4a8a28" opacity="0.75" transform="rotate(25,13,58)"/>
+        </g>
+        <g transform="translate(1810, 558)">
+            <line x1="0" y1="125" x2="0" y2="50" stroke="#5a3810" stroke-width="4"/>
+            <ellipse cx="0" cy="46" rx="16" ry="9" fill="#3a7a20" opacity="0.8"/>
+            <ellipse cx="-12" cy="54" rx="13" ry="6" fill="#4a8a28" opacity="0.7" transform="rotate(-28,-12,54)"/>
+            <ellipse cx="12" cy="54" rx="13" ry="6" fill="#4a8a28" opacity="0.7" transform="rotate(28,12,54)"/>
+        </g>
+    </g>
+
+    <!-- FLÈCHE NARRATIVE — câble sort du cadre -->
+    <path d="M 1870 510 L 1910 518 L 1870 526" fill="none" stroke="#e8c030" stroke-width="3.5" stroke-linejoin="round"/>
+
+</svg>

@@ -1,0 +1,60 @@
+<!-- Cabosse ouverte — extrait de CabosseOuverture.tsx, cacao-chocolat-short -->
+<!-- Registre : encre narrative | Palette : #2b2117 (encre), #a26432 (cabosse), #7a3f1f (côtes/nervures), #6b3e22 (fèves) -->
+<!-- Dimensions originales : viewBox parent 1080×1920, centre CX=540 CY=900 (recentré ici sur 0,0) -->
+<!-- État figé documenté ici : progress=1 (ouverte en 2 moitiés, fèves révélées, avant le fade final) -->
+<!-- Date extraction : 2026-07-04 -->
+<!--
+  USAGE REMOTION : le vrai composant réutilisable est <CabosseOuverture progress={0..1} /> dans
+  src/projects/souverain/cacao-chocolat-short/components/CabosseOuverture.tsx (ne pas dupliquer le code ici).
+  Objet INERTE (doctrine Remotion) : ne glisse jamais — s'ouvre sur place (écartement horizontal des 2 moitiés).
+  Animation source : draw (contour se trace 0->0.4) -> colorize (0.2->0.45) -> open (écartement 0.45->0.75)
+  -> fèves révélées (0.55->0.78) -> fade out global (0.78->1).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-200 -180 400 360" width="360" height="324">
+
+  <!-- Moitié gauche (miroir de la moitié droite, écartée de -70 en X à progress=1) -->
+  <g id="moitie-gauche" transform="translate(-70 0) scale(-1 1)">
+    <path
+      d="M0 -150 C70 -150 110 -70 110 0 C110 70 70 150 0 150 Z"
+      fill="#a26432"
+      stroke="#2b2117"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M0 -130 L0 130 M40 -120 C58 -60 58 60 40 120 M78 -90 C92 -45 92 45 78 90"
+      fill="none"
+      stroke="#7a3f1f"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Moitié droite -->
+  <g id="moitie-droite" transform="translate(70 0)">
+    <path
+      d="M0 -150 C70 -150 110 -70 110 0 C110 70 70 150 0 150 Z"
+      fill="#a26432"
+      stroke="#2b2117"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+    <path
+      d="M0 -130 L0 130 M40 -120 C58 -60 58 60 40 120 M78 -90 C92 -45 92 45 78 90"
+      fill="none"
+      stroke="#7a3f1f"
+      stroke-width="3"
+      stroke-linecap="round"
+    />
+  </g>
+
+  <!-- Fèves révélées au centre (5 fèves, positions/rotations fixes) -->
+  <g id="feves">
+    <ellipse cx="0" cy="-40" rx="18" ry="28" transform="rotate(-12 0 -40)" fill="#6b3e22" stroke="#2b2117" stroke-width="2.5"/>
+    <ellipse cx="-28" cy="10" rx="18" ry="28" transform="rotate(8 -28 10)" fill="#6b3e22" stroke="#2b2117" stroke-width="2.5"/>
+    <ellipse cx="26" cy="18" rx="18" ry="28" transform="rotate(-6 26 18)" fill="#6b3e22" stroke="#2b2117" stroke-width="2.5"/>
+    <ellipse cx="-6" cy="64" rx="18" ry="28" transform="rotate(14 -6 64)" fill="#6b3e22" stroke="#2b2117" stroke-width="2.5"/>
+    <ellipse cx="30" cy="-22" rx="18" ry="28" transform="rotate(4 30 -22)" fill="#6b3e22" stroke="#2b2117" stroke-width="2.5"/>
+  </g>
+
+</svg>

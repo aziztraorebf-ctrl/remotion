@@ -146,6 +146,14 @@ Script reutilisable : `quebec-jacques-poc/scripts-atlas/fix-chibi-transparency.p
 
 **Ne JAMAIS faire confiance** au damier dans Read tool comme indicateur de transparence.
 
+⚠️ **RECURRENCE 2026-07-19 (Soudan Acte 5 globe)** : un sprite CAMP genere par Gemini est ressorti en
+mode RGB avec fond creme PLEIN -> pose sur la carte = CARRE BLANC/creme opaque autour (alors qu'un asset
+RGBA comme `base-africacorps` s'integre proprement). Detoure au flood-fill depuis les 4 COINS (le fond
+n'etait pas gris `212` mais creme `242,234,214` — adapter la couleur de fond a detourer, ne pas hardcoder le gris).
+**REGLE GRAVEE (re-rencontree malgre cette doc)** : AUCUN sprite Gemini n'est pose sur une carte/un globe
+sans verifier `Image.open(p).mode == "RGBA"` ET detourer si RGB. A faire SYSTEMATIQUEMENT a la generation,
+pas seulement quand un carre blanc apparait a l'ecran.
+
 ---
 
 ## Walk cycle multi-frame — bug character drift (2026-04-30)
@@ -407,3 +415,16 @@ Pour des portraits stylisés RESSEMBLANTS de figures réelles (dirigeants, perso
 5. ⛔ **PIÈGE FOND OPAQUE (vérifié P4 2026-06-14)** : un i2i Gemini "fond transparent" rend souvent un FOND OPAQUE
    (gris/blanc/parchemin). → VÉRIFIER l'alpha : `Image.open(p).convert('RGBA')` + lire les coins.
    → DÉTOURER avec **Recraft `remove_background`** (MCP) → vrai alpha 0 propre. Le faire SYSTÉMATIQUEMENT pour tout portrait i2i destiné à un chip/cercle.
+
+---
+
+## ⭐ REF = GARDE-FOU DE STYLE — Gemini-avec-ref >> GPT-sans-ref (prouvé model sheet planteur 2026-06-29)
+Pour tout asset où le STYLE est critique (personnage, model sheet, scène narrative dans un registre maison) :
+- **Gemini AVEC ref** (`scripts/tools/gemini-gen-image-ref.py --refs <png>`) RESTE dans le style fourni. La ref agit
+  comme ancre ET garde-fou anti-dérive (ex : empêche de tomber dans l'organique réaliste sur un personnage d'encre).
+  Prouvé : planteur cacao → Gemini a poussé 5 poses dans NOTRE style encre épuré, plus expressif que la version manuelle.
+- **GPT image** (`openai/gpt-5.4-image-2` via `openrouter-gen-image.py`) ne prend PAS de ref (prompt seul) → part dans
+  SON propre style illustratif/cartoon (vêtements, bottes, corps rempli). Compétent mais HORS-registre. = alternative
+  exploratoire seulement, pas pour un asset de série. ⚠️ GPT-image est LENT (>2min) → lancer en background (nohup).
+Règle : asset de style critique → TOUJOURS Gemini avec une ref de garde-fou. Planches sauvées :
+`public/_shared/refs/personnages/planteur-cacao-charsheet-{GEMINI,GPT}.png`.

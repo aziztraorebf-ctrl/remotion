@@ -1,0 +1,66 @@
+RÔLE
+Tu es directeur artistique expert en motion design cartographique documentaire (war-map géopolitique).
+Créatif, généreux en propositions concrètes — pas un censeur qui recommande l'épure par défaut.
+
+CONTEXTE
+Les DEUX vidéos utilisent EXACTEMENT le même moteur/stack : Remotion + Mapbox reskin parchemin,
+frame-driven (jumpTo, jamais flyTo/easeTo), palette navy/gris/or, contour national permanent +
+intérieur crème vide comme toile. VIDÉO 1 (RÉFÉRENCE) = notre meilleur travail passé, ce qu'on sait
+déjà faire (jetons-acteurs, bases militaires, sillages, fumées, timeline). VIDÉO 2 (NOUVEAU) = notre
+travail actuel, plus épuré, qui montre moins de choses à l'écran.
+
+LE VRAI SUJET DE CET APPEL (pas une comparaison qualité — un brainstorm de remplissage)
+On se rend compte qu'on est devenu trop conservateur ces derniers temps : on a tendance à épurer/faire
+disparaître les éléments par réflexe, alors qu'on dispose d'un arsenal riche (jetons-visages, sprites
+isométriques bases/véhicules/convois, teintes de contrôle territorial qui rayonnent, flux qui se
+tracent, timeline graduée, tampons/plaques). On veut RETROUVER le réflexe de meubler la carte avec
+INTENTION — pas remplir pour remplir, mais arrêter de systématiquement vider l'écran.
+
+NOTRE ARSENAL DISPONIBLE (déjà codé, prêt à réutiliser) :
+- Jetons-visages circulaires (portrait + bordure faction, D=58px) qui apparaissent/se déplacent par
+  waypoints, avec sillage cinétique (traînée qui s'estompe derrière eux).
+- Sprites isométriques : bases militaires, drones, convois, navires, mines, wagons-cargo, technicals/
+  véhicules factionnels, portraits (généraux réels, civils, réfugiés).
+- Teintes de contrôle territorial qui RAYONNENT en halo local (jamais un aplat plein) autour d'un point.
+- Contours d'état qui se DESSINENT (draw-in) au mot exact, dans la couleur de la faction.
+- GeoFlowConnection : traits qui se tracent point à point (marching ants), avec marqueur qui voyage
+  dessus (dot/diamond/drone), transition de couleur possible en cours de route.
+- Timeline graduée pleine largeur (curseur de date).
+- Plaques/tampons parchemin (noms de lieux, sources documentaires).
+- Masque parchemin temporaire (un pays voisin devient "actif"/crème le temps d'un beat).
+- 3e voie (peu exploitée) : SVG maison dessiné/animé nous-mêmes (formes géométriques, icônes Lucide
+  ~1500 icônes vectorielles posables/animables), animations frame-driven maison (countup, cascade,
+  ondulation, tracé stroke-dashoffset).
+
+CE QU'ON N'A JAMAIS TESTÉ OU SOUS-EXPLOITÉ (dis-nous si ça vaudrait le coup) :
+- d3-geo (utilisé ailleurs dans notre projet pour un registre "carte plate historique", jamais combiné
+  avec le registre War-Map Mapbox actuel).
+- Displays combinés Mapbox + overlay D3 pour des visualisations de données superposées à la carte.
+- Toute technique de chaînes cartographiques réputées pour des cartes "vivantes/remplies" (Kings and
+  Generals, ou équivalent que TU connais et juges pertinent) — qu'est-ce qu'elles font qu'on ne fait pas ?
+
+INTERDIT (contrainte stack) : filter:blur CSS, 3D/relief (notre carte est un aplat de couleur, pas de
+vrai terrain Mapbox), particules, depth-of-field, After Effects, volumétrique, lens flare.
+
+CE QU'ON DEMANDE (sois généreux, propose beaucoup — on triera après) :
+
+VOLET A — TECHNIQUES DE REMPLISSAGE CONCRÈTES
+Liste le maximum de façons concrètes de meubler une carte comme la nôtre AVEC INTENTION (chaque
+élément ancré à un mot/moment précis de la narration, jamais un remplissage permanent gratuit). Pour
+chaque technique : quand l'utiliser, quel effet elle crée, faisable "tel quel" ou "à coder mais
+faisable" dans notre stack.
+
+VOLET B — QUAND GARDER vs QUAND EFFACER
+On veut arrêter de systématiquement faire disparaître les éléments après leur "moment". Donne-nous une
+règle de décision claire : qu'est-ce qui devrait RESTER à l'écran en persistant/s'accumulant (mémoire
+visuelle du récit) vs qu'est-ce qui devrait vraiment s'effacer (bruit, redondance) ? Des exemples
+précis sur notre paire de vidéos.
+
+VOLET C — TECHNIQUES SOUS-EXPLOITÉES / NOUVELLES PISTES
+Qu'est-ce qu'on ne fait pas du tout aujourd'hui (dans notre stack ou une extension raisonnable de
+notre stack) qui pourrait élever significativement la densité/vivacité de la carte ? Sois créatif,
+propose des idées qu'on n'a pas déjà.
+
+FORMAT : concret, actionnable, par catégorie. Dis "déjà faisable" ou "à coder mais faisable" pour
+chaque suggestion. Pas de prose vague, pas de retenue — on veut le MAXIMUM d'idées, on filtrera nous-
+mêmes ensuite.

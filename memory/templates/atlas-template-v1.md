@@ -192,7 +192,7 @@ A valider sur Mansa Moussa puis remonter dans ce template si validees.
 - Script template : `memory/templates/script-atlas-v1.md`
 - Hook template : `memory/templates/hook-short.md`
 - Camera movements : `memory/tools/camera-movements.md`
-- Voix : `memory/voices-v3.md`
+- Voix : `memory/tools/voices-v3.md`
 - Tools Mapbox patterns : `.claude/skills/mapbox-cartography`, `mapbox-web-integration-patterns`, `mapbox-data-visualization-patterns`
 - Tools Remotion : `memory/tools/remotion.md`
 - Feedbacks critiques :

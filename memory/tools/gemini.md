@@ -73,6 +73,15 @@ for part in response.candidates[0].content.parts:
 config={"responseModalities": ["image", "text"]}
 ```
 
+**GOTCHA — SDK `google-genai` (client.models.generate_content) hang silencieusement (2026-07-04) :**
+Observé sur `google-genai==1.63.0` dans cet environnement : `client.models.generate_content(...)` (via `genai.Client`, package `from google import genai`) peut bloquer indéfiniment (aucune exception, aucun timeout, CPU figé) sur un appel i2i avec image de référence, alors que le MÊME prompt via l'API REST brute (`requests.post` vers `https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key=...`) répond normalement en quelques secondes. Reproduit 2x de suite (y compris après kill+relance du process). Contournement : appeler l'API REST directement avec `requests` au lieu du SDK — body `{"contents":[{"parts":[{"inline_data":{"mime_type":"image/png","data":base64...}},{"text":prompt}]}]}`, reponse dans `data["candidates"][0]["content"]["parts"]` avec `part["inlineData"]["data"]` (base64 à decoder explicitement ici, contrairement au SDK). Si un script Gemini i2i/génération semble bloqué sans log au-delà de 60-90s, ne pas re-essayer le SDK — basculer direct sur requests.
+
+**GOTCHA — lenteur SVG génératif : ne PAS plafonner `max_output_tokens` haut (2026-07-17, Kosti) :**
+Pour un appel de GÉNÉRATION SVG longue (carte/scène composée, pas un jury vision court), un `maxOutputTokens`/`max_tokens` élevé (ex. 32-40k) autorise le modèle à consommer un ÉNORME budget de reasoning avant de répondre → 8 min+ (observé Gemini 3.1 Pro ET `gpt-5.6-sol` le même jour). Notre `llm-gen-svg.py` le grave déjà : « ne PAS limiter max_tokens » = ne pas le FORCER haut non plus, le laisser par défaut/absent → le modèle s'arrête quand il a fini. `gpt-5.6-sol` a quand même rendu un SVG complet+exploitable mais en 473s à cause du plafond 40k. Règle : génération SVG = pas de `max_tokens` explicite (ou modéré ~8-12k), et TOUJOURS un `timeout` dur (240s) pour ne pas hang indéfiniment. Distinct du hang SDK ci-dessus : ici l'appel REST fonctionne, il est juste lent par sur-reasoning.
+
+**GOTCHA — image renvoyée en `image/jpeg` mais sauvée en `.png` = GLITCH bandes vertes/jaunes (2026-07-17, Vox papercraft) :**
+Gemini 3.1 Flash image renvoie SOUVENT `mimeType: "image/jpeg"` dans `part.inlineData`, MÊME quand la sortie voulue est un `.png`. Si le script écrit brutalement les octets dans un fichier `.png`, on obtient un JPEG déguisé en PNG → les décodeurs (Preview macOS, catbox, navigateurs, PIL en partie) le rendent en **bandes vertes/jaunes/marron** (le haut de l'image est parfois correct puis part en glitch). Piège TROMPEUR : `PIL.Image.verify()` et même `.load()` "réussissent" (Pillow tolère), et le fichier s'affiche parfois chez soi — donc on croit à un bug d'upload ou de Preview alors que c'est l'EXTENSION. Diagnostic infaillible : lire les magic bytes (`FF D8 FF` = JPEG, `89 50 4E 47` = PNG) et comparer à l'extension. FIX appliqué dans `scripts/tools/gemini-genimg-ipv4.sh` : écrire la VRAIE extension selon magic bytes / mimeType, jamais forcer `.png`. À rétro-appliquer à `gemini-gen-image.py` et `gemini-gen-image-ref.py` si un jour ils écrivent en `.png` en dur. Règle : après toute génération image Gemini, vérifier magic bytes = extension AVANT d'uploader/présenter.
+
 **GOTCHA — parts=None (prompt refusé) :**
 Si `response.candidates[0].content.parts` retourne `None`, Gemini a refusé de générer l'image.
 Causes fréquentes : prompt trop abstrait ("pure dark", "no shapes", "black background") → reformuler avec description concrète de texture photographique.
@@ -86,6 +95,41 @@ if not parts:
 - INTERDIT : "pure dark", "noir pur", "no shapes", "no forms", "completely abstract" → Gemini refuse
 - OBLIGATOIRE : descriptions photographiques concrètes : "close-up aged paper texture", "dark brushed concrete surface"
 - COULEURS : jamais #000000 ni "noir pur" — utiliser #0d1420, #12192a, #1a1f2e (désaturés sombres)
+
+---
+
+## GOTCHA — visual_review.py / pre-presentation-review.sh = faux positifs sur registre non-War-Map (2026-06-29)
+Le hook gate `pre-presentation-review.sh` + `visual_review.py` (Gemini) juge implicitement contre la charte
+War-Map (navy/gold) et produit des FAUX POSITIFS récurrents sur d'autres registres — prouvé sur le registre
+encre/parchemin (Cacao→Chocolat) où Gemini pénalisait l'épure encre comme « manque de contraste/couleur » et
+réclamait des éléments retirés volontairement (soleil/dunes/storyboard pré-nettoyage). Scores 3,5–5,5/REBUILD à répétition.
+- Rappel : Gemini = SIGNAL, jamais JUGE. Sur un registre hors War-Map, attendre des scores bas STRUCTURELS.
+- Procédure : override le verdict quand il vise le registre lui-même (pas un défaut réel), TRACER l'override
+  (fichier `<render>.review-override.md` adjacent + 1 ligne STATUS projet). Le jugement d'Aziz prime.
+
+---
+
+## GOTCHA RÉSEAU — IPv6 sans route sortante bloque les appels Gemini en Python (2026-07-03)
+Symptôme : un script Gemini (SDK `google-genai` / `httpx`) reste bloqué INDÉFINIMENT, sans erreur, même sur
+un appel minimal texte-only sans image. `curl` sur le même endpoint fonctionne normalement.
+- **Root cause confirmée** : la machine résout `generativelanguage.googleapis.com` en IPv6, mais n'a PAS de
+  route sortante IPv6 réelle (`socket.create_connection` direct vers l'IP IPv6 timeout après 5s). `curl` a un
+  fallback rapide (Happy Eyeballs : essaie IPv6, bascule vite en IPv4) — Python (`httpx`/SDK) n'a PAS ce
+  fallback rapide et reste bloqué sur la tentative IPv6.
+- **Diagnostic rapide** : si un script Gemini hang sans log ni erreur (même `client.models.list()` bloque),
+  tester `socket.create_connection((ipv6_addr, 443), timeout=5)` directement — si ça timeout, c'est ce gotcha.
+- **Fix** : monkeypatch `socket.getaddrinfo` en tête du script pour forcer IPv4-only :
+  ```python
+  import socket
+  _orig = socket.getaddrinfo
+  def _ipv4_only(host, port, family=0, type=0, proto=0, flags=0):
+      return _orig(host, port, socket.AF_INET, type, proto, flags)
+  socket.getaddrinfo = _ipv4_only
+  ```
+- **État de propagation** : fix appliqué UNIQUEMENT dans `scripts/tools/svg-scene-narrative.py` (2026-07-03).
+  PAS ENCORE propagé à `svg-faisabilite-brief.py`, `gemini-gen-image.py`, `gemini-i2i.py` et autres scripts
+  Gemini. Si un de ces scripts hang un jour sans raison apparente, appliquer ce même monkeypatch en premier
+  réflexe avant de chercher ailleurs (clé API, quota, brief trop long — tous écartés lors du diagnostic 2026-07-03).
 
 ---
 

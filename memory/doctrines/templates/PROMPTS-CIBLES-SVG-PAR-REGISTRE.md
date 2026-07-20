@@ -106,7 +106,7 @@ la recoler au bon element. Colorisation = AJOUTEE EN CODE (tronc->vert, nappe->b
 
 ## REGISTRE 2A — APLATS + DEGRADES CHAUD SOMBRE (braise-or : mine, ressource, désert ardent) ✅ CALIBRÉ
 
-> Calibré sur protos `MineGeminiAnimee.tsx` (lkf0ia) + `CreusetAnimee.tsx` (yonpoq). Frame-ref : `REGISTRE_braise-or_mine.png`.
+> Calibré sur protos `MineGeminiAnimee.tsx` (lkf0ia) + `CreusetAnimee.tsx` (yonpoq) — ⚠️ les 2 fichiers sources sont archivés (`_rnd/svg-scenes/_archive/`, exclus du build), les rendus catbox référencés restent valides. Frame-ref : `REGISTRE_braise-or_mine.png`.
 > Modèle : **Gemini** (gagne sur l'organique/profondeur). Générer Gemini + GPT, choisir sur render statique.
 > USAGE : scène chaude et matérée (mine, ressource africaine, désert ardent, conflit pour une richesse, nuit de braise).
 
@@ -128,7 +128,7 @@ NETTOYAGE attendu : vérifier que `fill` n'utilise pas de couleurs froides (bleu
 
 ## REGISTRE 2B — APLATS + DEGRADES CHAUD LUMINEUX (or-jour : héros en action, matin doré, victoire) ✅ CALIBRÉ
 
-> Calibré sur proto `HeroGptAnimee.tsx` (1ws3kh). Frame-ref : `REGISTRE_or-jour_hero.png`.
+> Calibré sur proto `HeroGptAnimee.tsx` (1ws3kh) — ⚠️ fichier source archivé (`_rnd/svg-scenes/_archive/`, exclu du build), rendu catbox référencé reste valide. Frame-ref : `REGISTRE_or-jour_hero.png`.
 > Modèle : **GPT-5.5** (gagne sur la lisibilité du personnage en action). Générer les 2, choisir.
 > USAGE : scène lumineuse et premium (personnage actif, matin doré, découverte, victoire, contraste chaud/lumière).
 
@@ -149,7 +149,7 @@ Generate a VERTICAL 9:16 [SCENE]:
 
 ## REGISTRE 2C — PAPIER DÉCOUPÉ PÉDAGOGIQUE (paper-cut : cycle, croissance, explainer) ✅ CALIBRÉ
 
-> Calibré sur proto `GraineGeminiAnimee.tsx` (ft5l5g / wv4xlm). Frame-ref : `REGISTRE_papier-decoupe_arbre.png`.
+> Calibré sur proto `GraineGeminiAnimee.tsx` (ft5l5g / wv4xlm) — ⚠️ fichier source archivé (`_rnd/svg-scenes/_archive/`, exclu du build), rendus catbox référencés restent valides. Frame-ref : `REGISTRE_papier-decoupe_arbre.png`.
 > Modèle : **Gemini** (gagne nettement — couches organiques empilées + ombres douces = sa force).
 > USAGE : scène pédagogique/explainer (croissance, cycle, processus, Kurzgesagt-papier). Joyeux, clair, accessible.
 
@@ -171,7 +171,7 @@ NETTOYAGE attendu : Gemini peut ajouter ombres en `<style>`/`class` → extraire
 
 ## REGISTRE 3 — CARTE/SCHEMA TACTIQUE (médaille/tactique : zones, flèches, liens) ✅ CALIBRÉ
 
-> Calibré sur protos `EtatMajorGptAnimee.tsx` (pt5od0) + `DefenseGptAnimee.tsx` (05xbm1). Frame-ref : `REGISTRE_medaille-tactique_carte-schema.png`.
+> Calibré sur protos `EtatMajorGptAnimee.tsx` (pt5od0) + `DefenseGptAnimee.tsx` (05xbm1) — ⚠️ les 2 fichiers sources sont archivés (`_rnd/svg-scenes/_archive/`, exclus du build), les rendus catbox référencés restent valides. Frame-ref : `REGISTRE_medaille-tactique_carte-schema.png`.
 > Modèle : **GPT-5.5** gagne (géométrie nette, flèches à poids, cartouche propre). Générer les 2, choisir.
 > USAGE : encart conceptuel — un PRINCIPE, un RAPPORT DE FORCE, un PACTE (PAS une carte géo-réaliste → d3-geo pour ça).
 > ⚠️ PAS une carte géo réelle : la vraie géo s'effondre en SVG (test top-down). SVG = schéma/abstraction UNIQUEMENT.

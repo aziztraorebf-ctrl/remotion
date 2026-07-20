@@ -28,26 +28,33 @@ const NAVY = "#16213a", NAVY_DEEP = "#0d1424", OCRE = "#e7bd78";
 const IVORY = "#f2ebd9", CRISIS = "#c8553d", NOIR = "#050505"; // rouge patine (charte navy/or), pas vif
 
 // ⛔ AUDIO : narration-v3-VALIDEE.mp3 = narration COMPLETE (492s) qui commence par "avril 2026".
-// Le segment "duel des recits" (scene 1) demarre a 20.08s ABSOLU (cf. scripts/senegal-scene1-alignment.py
-// WINDOW_OFFSET=20). On fait donc demarrer l'audio a AUDIO_START et on cale les beats en LOCAL (frame 0 = "Ces").
-// Timecodes LOCAUX (depuis scene1-alignment.json, relatifs au debut du duel) :
-//   0.1s  "Ces deux recits"            -> piece Face A se revele
-//   3.5s  "recits"                     -> le pompage demarre
-//  17.18s "multinationales qui pompent"-> navire CHARGE + ocean NOIRCIT
-//  17.66s "et repartent"               -> navire s'efface
-//  18.8s  "De l'autre, une nation"     -> FLIP (image precede)
-//  23.1s  "la realite se joue ailleurs"-> FISSURE + oxydation
-//  23.3s  "ailleurs"                   -> verdict "L'ENVERS DU DECOR"
-//  24.5s  "details qu'on ne montre"    -> sortie vers les gisements
-const AUDIO_START = 20.08;     // s, debut du duel dans le fichier complet
+// CORRIGE 2026-07-04 (passe de finition, bug #1 REPRISE-PASSE-FINITION.md) : l'ancien AUDIO_START=20.08
+// venait de scene1-alignment.json, un forced-align LOCAL corrompu (loss aberrant, ex. mot "on" etale sur
+// 6.8->13.6s) genere sur un extrait /tmp mal decoupe. Verifie CONTRE forced-align-v3.json (global, fiable)
+// + whisper-words-v3.ts (concordants) : le texte "Ces deux recits" tombe en realite a 32.62s ABSOLU, pas
+// 20.08s. A 20.08s se trouve encore le texte de la SCENE 0 ("...tourmente politique ? Pour le comprendre,
+// il faut oublier les deux recits habituels..."), d'ou le DEDOUBLEMENT audio au raccord sc.0->sc.1a.
+// Consequence : la fenetre reelle disponible pour cette scene est ~15.6s (32.62->48.18s "en direct."),
+// PAS 28.8s comme l'ancien decoupage le supposait -> tous les beats ci-dessous sont RE-ANCRES sur les
+// vrais mots du forced-align global (pas de simple translation, l'ancien alignement derivait).
+// Timecodes ABSOLUS (narration-v3-VALIDEE.mp3, forced-align-v3.json) :
+//   32.62s "Ces deux recits"             -> piece Face A se revele (frame 0 locale)
+//   37.20s "...qui pompent"              -> navire CHARGE + ocean NOIRCIT
+//   39.88s "une nation qui reprend"      -> FLIP (image precede)
+//   43.24s "la realite se joue ailleurs" -> FISSURE + oxydation
+//   45.36s "...qu'on ne montre jamais."  -> tenue verdict
+//   48.18s fin de "...en direct."        -> sortie vers les gisements (sc.1b demarre a 49.50s, cf. chantier 2)
+const AUDIO_START = 32.62;     // s, debut du duel dans le fichier complet (ex-20.08, corrige)
 const OFFSET = 0;
 const tl = (s: number) => Math.round((s - OFFSET) * 30);
-const F_FLIP_S  = tl(19.8);   // flip retarde : laisse le navire finir de partir (17.2->19s) + ~0.8s pièce vide qui respire. Tombe sur "une nation qui reprend".
-const F_FLIP_E  = tl(21.6);   // flip fini
-const F_FISSURE = tl(23.0);   // sur "la realite se joue"
-const F_VERDICT = tl(23.4);   // accompagne la cassure
-const F_OUT     = tl(28.8);   // sortie APRES "...en direct" (fin de phrase a 28.6s), avant "Premiere" (29.5s) = gisements
-const TOTAL     = tl(29.4);   // la scene tient jusqu'a la fin de la phrase complete
+const F_FLIP_S  = 200;   // 6.66s local (39.88-32.62-0.6 : demarre juste avant "reprend" pour arriver pile dessus)
+const F_FLIP_E  = 248;   // 8.26s local : flip fini
+const F_FISSURE = 319;   // 10.62s local : sur "la realite se joue ailleurs" (43.24s abs)
+const F_OUT     = 467;   // 15.56s local : sortie APRES "...en direct" (48.18s abs), avant gisements (49.50s)
+// TOTAL etendu (chantier 2 passe finition, valide Aziz 2026-07-04 apres comparaison A/B) : le fondu
+// outVeil de sc.1a couvre "Premiere chose a comprendre...trouve trois." (49.54->53.70s abs) au lieu
+// d'un pre-roll navy separe dans gisements (juge "ne fait pas de sens" par Aziz). endAt Audio suit plus bas.
+const TOTAL     = 641;   // 21.38s local : jusqu'a la fin de "...trouve trois." (53.70s abs + marge)
 
 const DIAM = 760;             // reduite (920->760) pour degager un VRAI espace sous la piece (label recit). Aziz 21/06.
 const CX = W / 2, CY = H * 0.40;  // remontee pour liberer le bas
@@ -90,10 +97,6 @@ export const SenegalScene1IntroCoin: React.FC = () => {
   const split = fissureEase * 26;
   const splitTilt = fissureEase * 2.5; // leger basculement de chaque moitie
 
-  const verdictP = spring({ frame: frame - F_VERDICT, fps, config: { damping: 14, stiffness: 150 }, durationInFrames: 16 });
-  const verdictOp = ease(verdictP);
-  const verdictScale = interpolate(verdictP, [0, 1], [0.96, 1], { extrapolateRight: "clamp" });
-
   const outVeil = interpolate(frame, [F_OUT, TOTAL], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   // halo couleur (rouge->or au flip)
   const haloGold = ease(interpolate(rotateY, [80, 180], [0, 1]));
@@ -113,28 +116,33 @@ export const SenegalScene1IntroCoin: React.FC = () => {
   // 4) OMBRE PORTEE EVOLUTIVE : suit le scale (plus la piece "recule", plus l'ombre se resserre).
   const shadowY = interpolate(frame, [0, camEnd], [26, 10], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const shadowBlur = interpolate(frame, [0, camEnd], [40, 16], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // 3) SPECULAR SWEEP : reflet doux qui balaie le metal (s2->s8), le metal "vit" sans animer la gravure.
-  const sweepX = interpolate(frame, [60, 240], [-130, 130], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // % de la piece
-  const sweepOp = interpolate(frame, [60, 90, 210, 240], [0, 0.55, 0.55, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // 3) SPECULAR SWEEP : reflet doux qui balaie le metal, le metal "vit" sans animer la gravure.
+  // recompresse (bug #1) : fenetre avant pompent (16f->137f) au lieu de l'ancienne 60f->240f.
+  const sweepX = interpolate(frame, [16, 137], [-130, 130], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }); // % de la piece
+  const sweepOp = interpolate(frame, [16, 28, 110, 137], [0, 0.55, 0.55, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
-  // === EFFETS FACE A SVG (gravure vivante), cales sur la voix — ETALES (respiration, Aziz) ===
-  //  T1  0s     : pompage DEJA actif + piece revelee (parent)
-  //  T2  ~3.5s  "Ces deux recits" -> l'OCEAN COMMENCE A NOIRCIR, lentement jusqu'a ~12s
-  //  T3  ~8s    : SWEEP lumineux + goutte de petrole (tension)
-  //  T4  ~17.2s "pompent" -> le NAVIRE charge puis s'efface (part). Pièce finit vide (derrick+mer noire) avant le flip.
-  const F_RECITS   = tl(3.5);    // "Ces deux recits" -> noircissement demarre
-  const F_SHIMMER  = tl(8.0);
-  const F_DROP     = tl(9.0);
-  const F_POMPENT  = tl(17.18);  // "pompent" -> le navire part
+  // === EFFETS FACE A SVG (gravure vivante), cales sur la voix ===
+  // RECOMPRESSE 2026-07-04 (bug #1) : la fenetre reelle avant le flip n'est que ~6.66s (pas 19.8s comme
+  // l'ancien alignement corrompu le supposait). "pompent" reste l'ancrage texte fiable (137f/4.58s) ;
+  // les etapes intermediaires (pompage/noircissement/shimmer/goutte) sont compressees proportionnellement
+  // pour garder le meme ORDRE narratif dans la fenetre disponible.
+  //  T1  0f     : pompage DEJA actif + piece revelee (parent)
+  //  T2  28f    : "Ces deux recits" -> l'OCEAN COMMENCE A NOIRCIR
+  //  T3  64f    : SWEEP lumineux + goutte de petrole (tension)
+  //  T4  137f   : "pompent" -> le NAVIRE charge puis s'efface (part). Pièce finit vide avant le flip (200f).
+  const F_RECITS   = 28;    // 0.93s "Ces deux recits" -> noircissement demarre
+  const F_SHIMMER  = 64;    // 2.13s
+  const F_DROP     = 72;    // 2.39s
+  const F_POMPENT  = 137;   // 4.58s "pompent" (ancrage texte reel) -> le navire part
   // pompage actif des le debut (la pompe tourne deja)
-  const faceA_pump = interpolate(frame, [0, tl(2.0)], [0.4, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // OCEAN NOIRCIT : demarre sur "ces deux recits" (3.5s), montee LENTE jusqu'a ~12s
-  const faceA_oil = interpolate(frame, [F_RECITS, tl(12.0)], [0, 0.92], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const faceA_pump = interpolate(frame, [0, 16], [0.4, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // OCEAN NOIRCIT : demarre sur "ces deux recits", montee jusqu'a la fin du pompage
+  const faceA_oil = interpolate(frame, [F_RECITS, 96], [0, 0.92], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   // shimmer + goutte (tension) sur la zone mediane, avant le depart
-  const faceA_shimmer = interpolate(frame, [F_SHIMMER, tl(10.0)], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const faceA_drop = frame >= F_DROP && frame < tl(15.0) ? 1 : 0;
-  // NAVIRE part sur "pompent" (17.2s) -> charge puis fade, FINI ~0.6s AVANT le flip (piece vide respire)
-  const faceA_sail = interpolate(frame, [F_POMPENT, tl(19.2)], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const faceA_shimmer = interpolate(frame, [F_SHIMMER, 80], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const faceA_drop = frame >= F_DROP && frame < 120 ? 1 : 0;
+  // NAVIRE part sur "pompent" -> charge puis fade, FINI juste AVANT le flip (200f) (piece vide respire)
+  const faceA_sail = interpolate(frame, [F_POMPENT, 198], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ligne de fissure (zigzag) en coords locales piece (DIAM x DIAM), du haut vers le bas.
   // Un seul tableau de points -> derive proprement le trace + les deux demi-masques (pas de replace/reverse fragile).
@@ -156,7 +164,15 @@ export const SenegalScene1IntroCoin: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: NAVY }}>
       {/* narration : coupee APRES "...en direct" (48.95s absolu) pour ne pas enchainer sur "Premiere chose a comprendre" (gisements) */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} endAt={Math.round(48.95 * 30)} volume={1} />
+      {/* endAt = 53.88s (RE-CORRIGE ROUND 2 2026-07-05, bug "trois" coupe) : les 2 essais precedents
+          (endAt=53.9s round1 -> repetition ; endAt=53.70s+fade round2 -> coupure encore percue par
+          Aziz malgre le fade) coupaient tous les deux EN PLEIN MILIEU du mot "trois." (start=53.68s,
+          end=53.88s, forced-align-v3.json global). Fix definitif : endAt remonte a 53.88s = FIN REELLE
+          ET NATURELLE du mot, zero coupure en plein son (le fade-out precedent ne pouvait pas masquer
+          une coupure a l'INTERIEUR d'un son actif). Pour eviter la repetition, gisements retarde
+          desormais SEULEMENT son Audio narration de 5 frames (voir SceneGisementsV3.tsx) — SANS toucher
+          AUDIO_START qui pilote sa choregraphie interne (Sangomar/GTA/Yakaar). */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(AUDIO_START * 30)} endAt={Math.round(53.88 * 30)} volume={1} />
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")} startFrom={Math.round(AUDIO_START * 30)} volume={0.14} />
       <Sequence from={F_FLIP_S} durationInFrames={40}><Audio src={staticFile("souverain/senegal-petrole-gaz/audio/sfx/sfx-whoosh-transition.mp3")} volume={0.4} /></Sequence>
       <Sequence from={F_FISSURE} durationInFrames={40}><Audio src={staticFile("_shared/sfx/warmap/cedeao-snap.mp3")} volume={0.55} /></Sequence>
@@ -270,34 +286,9 @@ export const SenegalScene1IntroCoin: React.FC = () => {
         );
       })()}
 
-      {/* === LABEL DE RECIT transitoire SOUS la piece (nomme le recit, apparait en fade 2-3s puis disparait) ===
-           Face A = "LA MALEDICTION" · Face B = "L'ELDORADO". Ponctuation, pas annotation. */}
-      {!broken && (() => {
-        // Face A : apparait ~2s, tient jusqu'a ~9s, disparait avant la suite. Face B : apparait apres le flip.
-        const aOp = showA
-          ? interpolate(frame, [tl(2.0), tl(3.0), tl(8.5), tl(9.5)], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-          : 0;
-        const bOp = !showA
-          ? interpolate(frame, [F_FLIP_E + 6, F_FLIP_E + 20, F_FISSURE - 18, F_FISSURE - 6], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
-          : 0;
-        const op = showA ? aOp : bOp;
-        if (op < 0.01) return null;
-        const word = showA ? "LA MALÉDICTION" : "L'ELDORADO";
-        return (
-          <div style={{ position: "absolute", left: 0, right: 0, top: H * 0.85, textAlign: "center", opacity: op, transform: `translateY(${(1 - op) * 10}px)`, pointerEvents: "none",
-            fontFamily: "Cinzel, serif", fontSize: 52, fontWeight: 700, letterSpacing: "0.24em", color: showA ? "#d98a5c" : OCRE, textShadow: "0 2px 16px #000, 0 0 30px rgba(0,0,0,0.8)" }}>
-            {word}
-          </div>
-        );
-      })()}
-
-      {/* verdict — "L'ENVERS DU DECOR" (epouse "la realite se joue ailleurs") */}
-      {verdictOp > 0.01 && (
-        <div style={{ position: "absolute", left: 0, right: 0, top: H * 0.8, textAlign: "center", opacity: verdictOp, transform: `scale(${verdictScale})`, pointerEvents: "none",
-          fontFamily: "'Bebas Neue','Impact',sans-serif", fontSize: 84, fontWeight: 700, color: IVORY, letterSpacing: "0.06em", textShadow: "0 3px 18px #000" }}>
-          L'ENVERS DU DÉCOR
-        </div>
-      )}
+      {/* Labels de recit ("LA MALEDICTION"/"L'ELDORADO") + verdict ("L'ENVERS DU DECOR") SUPPRIMES
+          (retour Aziz ROUND 2 2026-07-04) : la scene ne garde que la piece elle-meme, sans texte
+          surimpose pendant la choregraphie flip/fissure. */}
 
       {outVeil > 0.01 && <AbsoluteFill style={{ background: NAVY_DEEP, opacity: outVeil }} />}
     </AbsoluteFill>

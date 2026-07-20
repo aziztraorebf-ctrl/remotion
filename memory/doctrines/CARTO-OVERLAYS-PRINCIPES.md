@@ -93,6 +93,17 @@ Guadeloupe..La Réunion (bbox 117° de large) → la métropole devient minuscul
 ⚠️ Le drapeau-pays NE doit PAS onduler (style GeoLes3 : plat, solidaire du terrain, suit la caméra sans grouiller).
 L'ondulation est réservée au petit jeton-drapeau (`FlagToken`, mode fill).
 
+⭐ **Nuance War-Map — aplat pays EXTERNE ≠ anti-pattern aplat de faction sur le pays-sujet (tranché Aziz
+2026-07-09, Soudan Acte 3)** : `WARMAP-GRAMMAIRE.md` §sommaire interdit l'aplat de couleur plein sur un
+ÉTAT/territoire DU PAYS EN GUERRE (représenter RSF/SAF sur le Soudan — testé et rejeté, `soudan-socle-test.mp4`).
+Cette interdiction NE S'APPLIQUE PAS à un aplat de couleur nationale (niveau 1 ci-dessus) sur un PAYS TIERS
+externe au conflit (ex. Émirats/Turquie/Égypte qui s'allument au fil d'un récit "follow the money") — ce sont
+deux situations différentes : le pays-sujet reste crème+contours (grammaire intacte), les pays externes
+peuvent recevoir un aplat uni pour signaler leur implication sans violer la règle. Composant utilisé :
+`CountryColorLayer` (`src/projects/warmap/soudan-acte3/SoudanActe3.tsx`), réutilise `useClipFlags` pour la
+géométrie projetée mais ne rend qu'un aplat de couleur (pas l'image drapeau détaillée — à ce niveau de
+dézoom, le motif complet écrase l'écran, cf niveau 1 "neutre" ci-dessus).
+
 ---
 
 ## Génération du SVG des jetons (appel LLM dédié)
@@ -115,11 +126,12 @@ opacity ~0.52 + trou radial autour du point focus, rendus validés Aziz).
 - L'ancienne note « semi-transp banni » venait du registre data-viz/Souverain Remotion (où le fond est plein),
   PAS de la carte. Sur une CARTE V5, le voile navy semi-transp est un outil légitime. Pas de contradiction.
 
-> ⚠️ NOTE SESSION FUTURE (WAR-MAP, à ne PAS oublier) : 3 contradictions de doctrine restent ouvertes CÔTÉ WAR-MAP
+> ⚠️ NOTE SESSION FUTURE (WAR-MAP, à ne PAS oublier) : 2 contradictions de doctrine restent ouvertes CÔTÉ WAR-MAP
 > (hors V5, à traiter dans une session dédiée War-Map) : (1) `WARMAP-PLAYBOOK.md` R4 « carte JAMAIS assombrie »
 > (voile cream) vs `WARMAP-GRAMMAIRE.md` `WarMapDimmedOverlay` (« on l'assombrit, voile ~0.62 ») — surface
-> contradictoire à harmoniser ; (2) techno WarMap : `WARMAP-PLAYBOOK` dit « voie prod = d3-geo pur à basculer »
-> alors que WarMap tourne sur Mapbox reskinné — dette à trancher ; (3) cohérence semi-transp WarMap vs Souverain.
+> contradictoire à harmoniser ; (2) cohérence semi-transp WarMap vs Souverain.
+> **Tranché 2026-07-11** : techno WarMap = Mapbox assumé comme voie de production définitive (voir
+> `WARMAP-PLAYBOOK.md` intro) — la mention "d3-geo à basculer" est retirée, ce n'était plus qu'un vœu non tenu.
 
 ## ⚠️ CLARIFICATIONS / LIMITES CONNUES (révélées par le test agent vierge 2026-06-21, Nigéria)
 

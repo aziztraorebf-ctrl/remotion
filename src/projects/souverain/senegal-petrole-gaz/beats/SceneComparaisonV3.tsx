@@ -124,7 +124,14 @@ export const SceneComparaisonV3: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: NAVY }}>
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={AUDIO_START * fps} endAt={Math.round(187.6 * fps)} />
+      {/* Narration RETARDEE ROUND 2 2026-07-05 (bug silence "decide...vraiment du resultat"), CORRIGE
+          (le premier essai avec Sequence from={55} avait une erreur de referentiel — silence de pres
+          de 2s signale par Aziz). RE-CALE ROUND 2 2026-07-05 x2 (2e retour Aziz : gisements etendu
+          encore, endAt 123.90s->125.40s, pour laisser respirer "...vraiment du resultat." avant la
+          coupe). startFrom suit : reprend EXACTEMENT ou gisements s'est arrete desormais (125.40s,
+          pile sur "regardons trois", zero silence, zero repetition). AUDIO_START (122s) INCHANGE,
+          pilote toujours tous les beats visuels independamment de cette Audio. */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} startFrom={Math.round(125.40 * fps)} endAt={Math.round(187.6 * fps)} />
       {/* Musique de fond — meme piste que la scene gisements (continuite sonore), ~5.5%, fade-out 3s a la fin */}
       <Audio
         src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")}

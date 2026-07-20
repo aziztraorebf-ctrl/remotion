@@ -1,0 +1,159 @@
+<svg viewBox="0 0 1080 1920" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .ink { fill: none; stroke: #332A20; stroke-linejoin: round; stroke-linecap: round; }
+      .ink-thick { stroke-width: 3.5; }
+      .ink-med { stroke-width: 2; }
+      .ink-thin { stroke-width: 1; }
+      .ink-dash { stroke-dasharray: 6 8; }
+      .fill-cream { fill: #EAE3D3; }
+      .fill-dark { fill: #332A20; }
+      .fill-accent-orange { fill: #CE8954; }
+      .fill-accent-choc { fill: #5E4633; }
+      /* palette sol empruntee a GPT (chaude, vivante) */
+      .ground-warm { fill: #e8d6b4; }
+      .ground-terre { fill: #d99a5e; }
+      .ground-light { fill: #f3ead5; }
+      .ground-green { fill: #71844e; }
+      /* usine coloree : brun cacao chaud (toit) + facade creme cacao */
+      .wall-front { fill: #d8c4a2; }
+      .wall-side { fill: #c2a878; }
+      .roof-front { fill: #8a5b35; }
+      .roof-back { fill: #6f4628; }
+      .chimney { fill: #b88a5a; }
+    </style>
+  </defs>
+
+  <!-- BACKGROUND (cadre pointille SUPPRIME) -->
+  <rect width="1080" height="1920" class="fill-cream" />
+
+  <!-- CIEL : soleil JAUNE PLEIN monte HAUT A GAUCHE (anime, id=soleil), nuages legers -->
+  <g id="ciel">
+    <!-- soleil plein jaune, coin haut-gauche -->
+    <circle id="soleil" cx="270" cy="280" r="125" fill="#f2c14e" />
+    <circle cx="270" cy="280" r="125" class="ink ink-med" opacity="0.5" />
+    <!-- rayons doux (animables) -->
+    <g id="soleil_rayons" stroke="#f2c14e" stroke-width="6" stroke-linecap="round" opacity="0.85">
+      <line x1="270" y1="80" x2="270" y2="135" />
+      <line x1="270" y1="425" x2="270" y2="480" />
+      <line x1="55" y1="280" x2="110" y2="280" />
+      <line x1="430" y1="280" x2="485" y2="280" />
+      <line x1="118" y1="128" x2="158" y2="168" />
+      <line x1="382" y1="392" x2="422" y2="432" />
+      <line x1="422" y1="128" x2="382" y2="168" />
+      <line x1="158" y1="392" x2="118" y2="432" />
+    </g>
+    <!-- nuages stylises -->
+    <path d="M 600 240 Q 650 220 700 260 T 800 240" class="ink ink-med" opacity="0.55" />
+    <path d="M 760 330 Q 800 310 850 335 T 950 320" class="ink ink-med" opacity="0.5" />
+  </g>
+
+  <!-- SOL & PAYS : ENCRE qui ANCRE l'usine (ligne de sol au pied + ombre portee + plans de terrain).
+       Munition couleur gardee pour soleil/usine/chocolat — le sol RACONTE par le trait, pas par la couleur. -->
+  <g id="sol_pays">
+    <!-- ligne de SOL principale (l'usine pose dessus, pied ~y1180) -->
+    <path d="M-35 1180C180 1168 360 1182 540 1192C760 1204 920 1190 1115 1172" class="ink ink-thick" />
+    <!-- plan de terrain DERRIERE l'usine (colline d'horizon) -->
+    <path d="M-35 1100C160 1060 360 1078 560 1100C760 1122 930 1098 1115 1062" class="ink ink-med" opacity="0.8" />
+    <!-- plans de terrain DEVANT (profondeur) -->
+    <path d="M-15 1380C210 1330 424 1392 618 1470C767 1532 905 1556 1110 1530" class="ink ink-med" />
+    <path d="M-10 1660C230 1582 438 1640 622 1740C755 1812 896 1872 1105 1888" class="ink ink-thin" opacity="0.7" />
+    <!-- OMBRE PORTEE de l'usine au sol (ancrage) -->
+    <ellipse cx="500" cy="1188" rx="290" ry="26" class="fill-dark" opacity="0.16" />
+    <!-- hachures de champ / sillons (texture encre = un vrai terrain de plantation) -->
+    <g class="ink ink-thin" opacity="0.32">
+      <path d="M120 1280C200 1268 300 1276 380 1290" />
+      <path d="M740 1300C820 1288 920 1296 1000 1310" />
+      <path d="M160 1460C260 1446 380 1456 480 1474" />
+      <path d="M640 1480C760 1466 880 1476 990 1496" />
+      <path d="M300 1600C440 1586 600 1596 740 1616" />
+    </g>
+    <!-- silhouette Cote d'Ivoire gravee discrete dans le sol (encre seule) -->
+    <path d="M 380 1640 C 450 1610 520 1620 570 1650 C 620 1690 630 1740 600 1800 C 550 1850 480 1840 420 1810 C 370 1770 350 1690 380 1640 Z" class="ink ink-thin ink-dash" opacity="0.45" />
+  </g>
+
+  <!-- USINE - BATIMENT PRINCIPAL (colore) -->
+  <g id="usine_batiment">
+    <polygon points="650,1180 920,1050 920,800 650,900" class="wall-side ink ink-thick" />
+    <polygon points="250,1180 650,1180 650,900 250,900" class="wall-front ink ink-thick" />
+    <line x1="350" y1="1180" x2="350" y2="900" class="ink ink-med" />
+    <line x1="450" y1="1180" x2="450" y2="900" class="ink ink-med" />
+    <line x1="550" y1="1180" x2="550" y2="900" class="ink ink-med" />
+    <line x1="250" y1="1050" x2="650" y2="1050" class="ink ink-thin ink-dash" />
+    <line x1="740" y1="1135" x2="740" y2="865" class="ink ink-med" />
+    <line x1="830" y1="1090" x2="830" y2="835" class="ink ink-med" />
+  </g>
+
+  <!-- TOIT EN DENTS DE SCIE (colore brun cacao) -->
+  <g id="toit_dents_scie">
+    <polygon points="516,900 650,750 650,900" class="roof-front ink ink-thick" />
+    <polygon points="650,750 920,620 920,800 650,900" class="roof-back ink ink-med" />
+    <polygon points="516,900 650,750 920,620 786,770" class="roof-back ink ink-med" />
+    <polygon points="383,900 516,750 516,900" class="roof-front ink ink-thick" />
+    <polygon points="516,750 786,620 786,800 516,900" class="roof-back ink ink-med" />
+    <polygon points="383,900 516,750 786,620 653,770" class="roof-back ink ink-med" />
+    <polygon points="250,900 383,750 383,900" class="roof-front ink ink-thick" />
+    <polygon points="383,750 653,620 653,800 383,900" class="roof-back ink ink-med" />
+    <polygon points="250,900 383,750 653,620 520,770" class="roof-back ink ink-med" />
+  </g>
+
+  <!-- PORTE -->
+  <g id="porte">
+    <path d="M 400 1180 L 400 1000 A 50 50 0 0 1 500 1000 L 500 1180 Z" class="fill-dark" />
+    <path d="M 385 1180 L 385 1000 A 65 65 0 0 1 515 1000 L 515 1180" class="ink ink-thick" />
+  </g>
+
+  <!-- CHEMINEE propre (sommet net, fumee douce) -->
+  <g id="cheminee">
+    <path d="M 820 840 L 820 480 L 890 480 L 890 800" class="chimney ink ink-thick" />
+    <!-- couronnement net -->
+    <rect x="812" y="462" width="86" height="22" class="chimney ink ink-thick" />
+    <!-- segments brique -->
+    <line x1="820" y1="780" x2="890" y2="780" class="ink ink-med" />
+    <line x1="820" y1="700" x2="890" y2="700" class="ink ink-med" />
+    <line x1="820" y1="620" x2="890" y2="620" class="ink ink-med" />
+    <line x1="820" y1="540" x2="890" y2="540" class="ink ink-med" />
+    <!-- fumee douce (animable) -->
+    <g id="fumee" class="ink ink-med" opacity="0.5">
+      <path d="M 850 455 Q 835 420 855 390 T 850 330" />
+      <path d="M 868 455 Q 882 425 866 398" opacity="0.6" />
+    </g>
+  </g>
+
+  <!-- SORTIE CHOCOLAT : convoyeur PART DE LA PORTE (x~458, base y~1180) et descend JUSQU'AU BORD bas-droit.
+       Les tablettes glissent et SORTENT du cadre (fade a coder). Seul flux colore. -->
+  <g id="sortie_tablettes">
+    <!-- rampe / convoyeur depuis le seuil de la porte -->
+    <path d="M 458 1180 C 620 1320 820 1480 1090 1640" class="ink ink-thick" />
+    <path d="M 500 1180 C 660 1310 860 1455 1090 1585" class="ink ink-thick" />
+    <!-- supports verticaux -->
+    <line x1="640" y1="1320" x2="640" y2="1430" class="ink ink-med" />
+    <line x1="820" y1="1430" x2="820" y2="1560" class="ink ink-med" />
+    <line x1="980" y1="1530" x2="980" y2="1680" class="ink ink-med" />
+    <!-- tablette 1 (pres de la porte) -->
+    <g transform="translate(500, 1192) rotate(40)">
+      <rect x="0" y="0" width="78" height="38" rx="2" class="fill-accent-choc ink ink-thick" />
+      <line x1="19" y1="0" x2="19" y2="38" class="ink ink-med" />
+      <line x1="39" y1="0" x2="39" y2="38" class="ink ink-med" />
+      <line x1="58" y1="0" x2="58" y2="38" class="ink ink-med" />
+      <line x1="0" y1="19" x2="78" y2="19" class="ink ink-med" />
+    </g>
+    <!-- tablette 2 (milieu de rampe) -->
+    <g transform="translate(700, 1352) rotate(38)">
+      <rect x="0" y="0" width="92" height="46" rx="2" class="fill-accent-choc ink ink-thick" />
+      <line x1="23" y1="0" x2="23" y2="46" class="ink ink-med" />
+      <line x1="46" y1="0" x2="46" y2="46" class="ink ink-med" />
+      <line x1="69" y1="0" x2="69" y2="46" class="ink ink-med" />
+      <line x1="0" y1="23" x2="92" y2="23" class="ink ink-med" />
+    </g>
+    <!-- tablette 3 (gros plan, sort du cadre bas-droit) -->
+    <g transform="translate(920, 1500) rotate(34) scale(1.4)">
+      <rect x="0" y="0" width="120" height="58" rx="3" class="fill-accent-choc ink ink-thick" />
+      <line x1="24" y1="0" x2="24" y2="58" class="ink ink-med" />
+      <line x1="48" y1="0" x2="48" y2="58" class="ink ink-med" />
+      <line x1="72" y1="0" x2="72" y2="58" class="ink ink-med" />
+      <line x1="96" y1="0" x2="96" y2="58" class="ink ink-med" />
+      <line x1="0" y1="29" x2="120" y2="29" class="ink ink-med" />
+    </g>
+  </g>
+</svg>

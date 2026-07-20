@@ -139,16 +139,54 @@ Le gate factuel a invalidé/nuancé 4 affirmations du fichier sujet. **À ne PAS
 
 ---
 
-## ACTE 4 — POURQUOI ÇA NE S'ARRÊTE PAS (UA/ONU + paradoxe)
+## ACTE 4 [NOTE 2026-07-10 : cette section documente en fait la matière de l'ACTE 5 actuel — verrou institutionnel + conclusion. La structure a été scindée en 5 actes (décision actée, voir `NEXT-ACTION.md`/`STATUS.md` § ACTE 4). Les données Russie/Égypte du NOUVEL Acte 4 sont dans `soudan-midform-ACTE4-SCRIPT.md`, PAS ici] [NOTE 2026-07-12 : re-décalage — depuis la scission de l'Acte 5 en 2 (Acte 5 = réseau EAU-Libye-Haftar, Acte 6 = ce contenu institutionnel), cette section documente maintenant l'ACTE 6, pas l'Acte 5. Voir `soudan-midform-ACTE5-SCRIPT.md` pour le nouvel Acte 5.] — POURQUOI ÇA NE S'ARRÊTE PAS (UA/ONU + paradoxe)
 
 - **UA** : Soudan **suspendu depuis oct. 2021** (coup d'État). Al-Burhan refuse médiation UA tant que suspension non levée → UA récusée comme médiateur. Membres-clés UA eux-mêmes parties par proxy (Égypte pro-SAF). [Garowe Online — 2025]
 - **ONU** : **veto russe 18 nov. 2024** (résolution UK + Sierra Leone, cessez-le-feu) = seul vote contre sur 15. Embargo ONU sur le **Darfour seulement** (pas tout le Soudan), monitoring défaillant. [France24 / HRW / UN Press — nov. 2024]
-- **Médiations échouées** : Jeddah (US-Saoudite, mai 2023, effondré ~1 mois) · cadre actuel **« Quad »** (US, Arabie S., Égypte, EAU), déclaration 12 sept. 2025, trêve jamais tenue.
+- **Médiations échouées** : Jeddah (US-Saoudite, mai 2023, effondré ~1 mois) · cadre **« Quad »** (US, Arabie S., Égypte, EAU), déclaration 12 sept. 2025, trêve jamais tenue.
 - **PARADOXE FINAL (l'angle)** : les 2 puissances capables de forcer la paix — **EAU (arme RSF) + Turquie (arme SAF)** — tirent bénéfice (mer Rouge, or, influence) de la continuation. **L'EAU siège dans le Quad censé arrêter la guerre que son client mène.** Chaque médiateur potentiel est aussi un belligérant par proxy. [Washington Institute / MEE — 2025-26]
 - **Polymarket** : ceasefire 2026 ≈ **28%** (pas 19%), bouge → revérifier au montage.
 
-⛔ **CONTRAINTE D'ÉCRITURE ACTE 4 (Aziz 2026-06-16) — NUANCE DARFOUR (report depuis Acte 2)** :
-L'Acte 2 dit « les forces de Hemeti sont chez elles à l'ouest » — juste MILITAIREMENT (sanctuaire logistique, recrutement tribal arabe) mais NE DOIT PAS laisser croire que toute la population du Darfour les soutient. **L'Acte 4 (coût humain) DOIT révéler explicitement** : la RSF y commet un **génocide ciblé** contre les communautés non-arabes (**Zaghawa, Masalit, Fur** — qualification Mission ONU 17-19 fév. 2026 + CPI, voir El Fasher). Le Darfour n'est PAS un bloc RSF homogène (poche pro-SAF Zaghawa au NO Darfour : Tina/Kornoi, déjà dans la grille territoriale). Effet recherché : le spectateur réalise rétroactivement le vrai sens de « chez elles » = un fief tenu par la terreur, pas un soutien populaire. Le visuel Acte 1 peut déjà le suggérer (la poche pro-SAF visible dans le Darfour RSF).
+### ⭐ RAFRAÎCHISSEMENT ACTE 6 (2026-07-19, fact-check 3 niveaux Tavily) — faits neufs + actualité
+
+- **UA suspension RECONFIRMÉE 12 fév. 2026** : au 39e sommet UA, le Conseil paix et sécurité (PSC) a
+  RÉAFFIRMÉ la suspension du Soudan (en place depuis oct. 2021), maintenue jusqu'au rétablissement d'une
+  autorité civile de transition. L'UA a REJETÉ la proposition de cessez-le-feu du PM Kamil Idris (monitoring
+  ONU+UA+Ligue arabe). [ASIL — 19 mars 2026, source primaire PSC]
+- **Veto russe = 18 nov. 2024** : re-confirmé (résolution UK+Sierra Leone, 14 pour dont les 3 membres
+  africains Algérie/Mozambique/Sierra Leone + Chine, Russie seule contre). Lammy : « a disgrace ».
+  Justification russe = « souveraineté du Soudan ». [BBC / Reuters / HRW / Amnesty — nov. 2024]
+- **⭐ NOUVEAU — le "QUINTET"** (distinct du Quad, ne pas confondre) : **UA + IGAD + Ligue arabe + UE + ONU**
+  = mécanisme régional/international de coordination. 3e Conférence internationale sur le Soudan à **Berlin,
+  15 avril 2026** (d'où les "Berlin principles" cités par le G7). Le Quintet pousse un dialogue "Sudanese-
+  owned", civil. → DEUX enceintes concurrentes : Quad (puissances à influence sur les belligérants, dont
+  l'EAU) vs Quintet (organisations multilatérales). [EEAS/UE + peaceau.org (UA) + MEMO — avril 2026]
+- **⭐ ACTUALITÉ CHAUDE (juillet 2026) — le processus au point mort, à la date de production** :
+  - Plan US porté par l'envoyé **Massad Boulos** (extension du Quad, pas un cadre séparé) : **trêve
+    humanitaire 90 jours → processus politique → cessez-le-feu global → reconstruction**. Présenté juin 2026.
+  - **RSF** : accepte la trêve 90 j MAIS **refuse tout retrait** des territoires conquis (sa présence au sol
+    = sa garantie d'un rôle futur). [Africa Center / Sudan Tribune — 15 juil. 2026]
+  - **SAF/al-Burhan** : conditionne son accord au **retrait+désarmement TOTAL de la RSF de toutes les villes
+    AVANT** toute trêve. Boulos a dit au Conseil de sécurité que Burhan a **rejeté** la dernière version (2e
+    fois). Le point de blocage = l'ORDRE des étapes (retrait d'abord vs cessez-le-feu d'abord). [Anadolu /
+    allAfrica / Mada Masr — 10-17 juil. 2026]
+  - **G7** (16 juil. 2026, dont France) : appelle à cesser les hostilités + demande **l'extension de
+    l'embargo ONU du seul Darfour à TOUT le Soudan** + cesser tout soutien externe ("Berlin principles").
+    [US State Dept — 16 juil. 2026]
+  - ⚠️ **VOLATIL — à re-vérifier en J-1 montage** : l'état exact de l'acceptation/rejet du plan bouge de
+    jour en jour (SAF "provisional nod" puis rejet, communiqués contradictoires). Pour le script : rester
+    sur le FAIT STRUCTUREL STABLE (« un plan existe, les deux camps posent des conditions inconciliables,
+    rien n'aboutit ») plutôt que sur l'état d'un round précis qui sera périmé au rendu. Même prudence que
+    Polymarket.
+- **Paradoxe confirmé/renforcé** : Critical Threats (2 juil. 2026) — « le soutien externe aux deux camps a
+  OBSTRUÉ le Quad », l'EAU y siège comme "indispensable backer" de la RSF ; al-Burhan accuse l'envoyé US
+  Boulos de favoriser RSF/EAU. La structure du paradoxe (médiateur = belligérant par proxy) est vérifiée à
+  jour, pas seulement 2025.
+
+⛔ **CONTRAINTE D'ÉCRITURE [NOTE 2026-07-10 : concerne maintenant l'ACTE 5, ou potentiellement l'Acte 1
+comme le texte lui-même le suggère plus bas] [NOTE 2026-07-12 : depuis la scission, "ACTE 5" ci-dessus
+signifie maintenant ACTE 6] (Aziz 2026-06-16) — NUANCE DARFOUR (report depuis Acte 2)** :
+L'Acte 2 dit « les forces de Hemeti sont chez elles à l'ouest » — juste MILITAIREMENT (sanctuaire logistique, recrutement tribal arabe) mais NE DOIT PAS laisser croire que toute la population du Darfour les soutient. **Cet acte (coût humain) DOIT révéler explicitement** : la RSF y commet un **génocide ciblé** contre les communautés non-arabes (**Zaghawa, Masalit, Fur** — qualification Mission ONU 17-19 fév. 2026 + CPI, voir El Fasher). Le Darfour n'est PAS un bloc RSF homogène (poche pro-SAF Zaghawa au NO Darfour : Tina/Kornoi, déjà dans la grille territoriale). Effet recherché : le spectateur réalise rétroactivement le vrai sens de « chez elles » = un fief tenu par la terreur, pas un soutien populaire. Le visuel Acte 1 peut déjà le suggérer (la poche pro-SAF visible dans le Darfour RSF).
 
 ---
 

@@ -16,6 +16,11 @@ Ces règles valent pour TOUTE scène SVG animée, pas seulement la Muraille Vert
    éteinte"). Claude FILTRE ensuite par connaissance du projet. Le bug provider OpenRouter (réponse parasite
    JSON) se contourne en RELANÇANT l'appel (retry jusqu'à réponse valide).
 2. **Image-cible = SVG NATIF** (gemini-3.1-pro / gpt-5.5), jamais raster → écart faisabilité nul. Voir [[SVG-FAISABILITE-AMONT]].
+   ⚠️ **Exception 2026-07-05** (inserts tactiques Soudan) : cette règle vaut pour le raster comme ÉTAPE
+   INTERMÉDIAIRE (image-cible qu'on reproduit ensuite en SVG). Elle NE s'applique PAS quand le raster est
+   l'ASSET FINAL affiché directement (pas de SVG à coder derrière) — cas des bâtiments/objets complexes
+   uniques sans vocabulaire géométrique universel (palais, tour TV), où Gemini image-gen + traitement
+   d'intégration bat le SVG codé à l'aveugle. Détail : `memory/tools/openrouter-svg.md`.
 3. **Colorisation TIMÉE maîtrisée** : ne pas tout colorer d'emblée. Le monde reste en encre ; chaque touche de
    couleur a un TIMING + un SENS, espacée. Garder de la "munition couleur" pour le climax.
 4. **État VIVANT au départ, dégradation = ÉVÉNEMENT** : les éléments naissent pleins/vivants et se dégradent
@@ -56,6 +61,39 @@ la prod — réadapter avant tout usage vidéo.
 
 ---
 
+## ⛔⛔ GATE AMONT — GÉNÉRER LE SVG PAR LLM vs LE CODER À LA MAIN (trancher AVANT de coder, gravé 2026-07-04, Aziz)
+
+> LE trou comblé : la doctrine décrivait UN seul flux (LLM génère → on anime) sans dire QUAND ne PAS appeler le LLM.
+> Deux usages distincts du LLM, à ne jamais confondre :
+
+**1. L'IMAGE-CIBLE (storyboard visuel)** — un PNG généré par LLM juste pour VOIR et faire valider la direction par
+Aziz AVANT de coder. ✅ Toujours légitime (brouillon jetable). N'entre JAMAIS telle quelle dans la vidéo.
+
+**2. LE MATÉRIAU FINAL (ce qui finit dans le render)** — tranché par **LE CRITÈRE-AXE** :
+> ⭐⭐ **Le SVG est-il le HÉROS QUI SE DESSINE, ou un OUTIL au service d'une démo ?**
+> - **Le SVG EST le HÉROS** : on a décidé DÈS LE DÉPART que la scène SERAIT un dessin qui prend vie — le trait se
+>   trace, la couleur apparaît, les formes poussent/se transforment, ET CE DESSIN PORTE TOUTE LA SCÈNE du début à
+>   la fin (vidéo narrative type GGW Muraille Verte : graine→arbre, mur qui se construit). → 🤖 **APPEL LLM dès le
+>   départ** : il compose la masse riche (organique, paysage gravé dense), découpée en groupes nommés qu'on
+>   mix-and-match et anime. C'est le cœur du livrable (pipeline complet du WORKFLOW ci-dessous).
+> - **Le SVG est un OUTIL** : la scène est data-viz / conceptuelle, et le SVG n'est qu'un support graphique parmi
+>   d'autres — silhouette, fissure, icônes cercle/trapèze, drapeaux plats, jauge. Le dessin n'est PAS le spectacle ;
+>   il sert le propos, un effet à la fois. → 🖐️ **CODE-MAIN** : on écrit le SVG inline à la main
+>   (`<path>`/`<circle>`/`<rect>`), en s'inspirant du PNG-cible comme simple référence. ⛔ **Un appel LLM pour le
+>   matériau final ici = gaspillage de tokens + risque que le LLM redessine une compo différente (déformation).**
+>   Ex prouvé : sc.7 Sénégal « Cicatrice » (fracture + jetons-monogramme + drapeaux = tout code-main).
+
+**TEST DE CONFIRMATION (secondaire)** : « pourrais-je (ou Claude) coder ça à la main sans peine ? » OUI → code-main ;
+NON (masse organique riche) → LLM. En cas de doute, pencher code-main (réversible, zéro coût, zéro déformation).
+
+**⛔ RÈGLE GÉO (non-négociable)** — le continent/pays ne se génère JAMAIS par LLM (les modèles DÉFORMENT la géo :
+Gambie fausse, côtes approximatives). Pour toute vraie carte/pays : **réutiliser un PATH d3-geo / Natural Earth
+EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui se dessine au trait par
+`stroke-dashoffset`). Ne jamais laisser un LLM dessiner la géo, ni la redessiner soi-même à l'œil. (Cohérent Mapbox :
+« le modèle approxime la géo, vraie géo au CODE ».)
+
+---
+
 ## ⭐⭐⭐ WORKFLOW A→Z (la checklist ordonnée — suivre dans CET ordre pour TOUTE nouvelle scène)
 
 1. **INTENTION** (1 verbe : ce qu'on veut faire RESSENTIR) → **FORME** (le geste visuel) → **REGISTRE** (palette).
@@ -73,6 +111,10 @@ la prod — réadapter avant tout usage vidéo.
    événements échelonnés, règle des 5s). Objet inerte = fade/couleur (jamais glisser). Tomber-sec = `spring()`.
 8. **SFX TIMÉ** frame-perfect (banque `_shared/sfx/`, `<Sequence from>` obligatoire, plancher 0.50, drone 0.40).
 9. **RENDER full HD** + vérifier piste audio (`volumedetect`, mean dB ≠ silence) + **upload catbox** avant de présenter.
+   ⚠️ Une validation sur IMAGE STATIQUE ne suffit pas : des défauts n'apparaissent qu'en MOUVEMENT/superposition
+   de calques (ex : un texte caché par une veine animée une fois superposés, un résidu d'une génération
+   précédente invisible sur un aperçu figé). Toujours REVALIDER après le 1er rendu animé réel, pas seulement
+   sur l'image comparative statique (prouvé warmap-sahel 2026-07-04, Liptako/Ressources).
 10. **ENRICHIR la doctrine** si nouvel acquis (registre, gotcha, pattern).
 
 ---
@@ -124,9 +166,9 @@ La technique (LLM → groupes → anim par frame) est INDÉPENDANTE du registre 
 | **`encre`** (gravure parchemin) | fond parchemin crème #e8dcc0/#e3d5b5, traits brun-noir #2b2117, ombres par hachures (jamais d'aplat noir) ; médaillon ovale/écusson | figures historiques, emblèmes, sceaux, estampes — **idéal Atlas historique** | `SvgSceneParchemin.tsx` |
 | **`tactique`** (état-major) | fond bleu nuit très sombre #0b1526, traits blanc cassé #e8eef5 + bleu acier #5a8fc0, ROUGE-ORANGE #d6552e = menace, OR #c8a951 = solidarité/bouclier ; nœuds + liens + vecteurs | ⭐ **encart CONCEPTUEL** : un PRINCIPE/doctrine (pacte, mécanisme, rapport de force) — PAS une carte. War-Map/AES | (compo dédiée) |
 | **`braise-or`** (gravure chaude sombre) | terre sombre chaude #1c1108/#2a1a0d, ocres #7a4a22/#9c5f2c/#b8763a, OR lumineux #e8b44a/#f2cf72/#ffe39a, braise/guerre #d6552e/#c23a1e ; AUCUN bleu/gris | scène CHAUDE matérée (mine d'or, ressource, terre africaine, désert ardent). Coucher de soleil/fournaise | (compos dédiées) |
-| **`or-jour`** (illustration chaude LUMINEUSE) | ciel ambre clair #f2cf72/#ffd98a/#ffe8b8, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a/#b8763a/#e0b878, or #f2cf72/#ffe39a, guerre rouge #d6552e discrète ; AUCUN bleu/gris/noir plat | scène chaude LUMINEUSE et premium (matin doré sur désert). Sort du « technique froid » et du « sombre dépressif » sans tomber dans le parchemin | (compo `HeroGptAnimee`) |
+| **`or-jour`** (illustration chaude LUMINEUSE) | ciel ambre clair #f2cf72/#ffd98a/#ffe8b8, nuages ivoire #f7eccf, terre ocre CLAIRE #c98a4a/#b8763a/#e0b878, or #f2cf72/#ffe39a, guerre rouge #d6552e discrète ; AUCUN bleu/gris/noir plat | scène chaude LUMINEUSE et premium (matin doré sur désert). Sort du « technique froid » et du « sombre dépressif » sans tomber dans le parchemin | (compo `HeroGptAnimee`, ⚠️ archivée `_archive/`, rendu réf https://files.catbox.moe/1ws3kh.mp4) |
 
-| **`papier-decoupe`** (paper-cut pédagogique) | couches pleines EMPILÉES + ombre portée douce sous chaque couche ; palette CLAIRE chaude : ciel pastel #bfe3ef/#a8d8e8, crème #fdf3df/#f7ecd2, terre ocre #caa46a/#b3823f/#8a5a2c, verts étagés #3e7c34/#569b43/#7cba5a/#a8d678, bois #8a5a2c/#a06b35, or doux #f2cf72/#ffd98a, corail #e0795b ; AUCUNE hachure, AUCUN noir plat, profondeur par empilement de couches | ⭐ scène PÉDAGOGIQUE / explainer (croissance, cycle, processus illustré façon Kurzgesagt-papier) — joyeux, clair, premium | `GraineGeminiAnimee` |
+| **`papier-decoupe`** (paper-cut pédagogique) | couches pleines EMPILÉES + ombre portée douce sous chaque couche ; palette CLAIRE chaude : ciel pastel #bfe3ef/#a8d8e8, crème #fdf3df/#f7ecd2, terre ocre #caa46a/#b3823f/#8a5a2c, verts étagés #3e7c34/#569b43/#7cba5a/#a8d678, bois #8a5a2c/#a06b35, or doux #f2cf72/#ffd98a, corail #e0795b ; AUCUNE hachure, AUCUN noir plat, profondeur par empilement de couches | ⭐ scène PÉDAGOGIQUE / explainer (croissance, cycle, processus illustré façon Kurzgesagt-papier) — joyeux, clair, premium | `GraineGeminiAnimee` ⚠️ archivée `_archive/`, rendu réf https://files.catbox.moe/ft5l5g.mp4 |
 
 À TESTER (registres non encore sondés) : néon/data-terminal (data-viz moderne). (encre ✅ · braise-or ✅ · or-jour ✅ · papier-decoupe ✅ prouvés.)
 
@@ -185,7 +227,7 @@ belle. Une scène peut être riche EN OBJETS MANUFACTURÉS sans casser ; seul l'
 de la cohérence sens↔image, PAS du nombre de traits. Si on hésite entre ajouter un détail ou épurer → ÉPURER. C'est le
 point commun entre le blueprint (chaque flèche = un sens) ET la pièce Sénégal (chaque objet = un mot) : « épuré + chaque
 élément pilotable », pas « abstrait vs illustratif ». Prouvé : la mine chargée (8 éléments, wagonnet/poussière illisibles)
-< la version héros épurée (pelle + lingot + terre, 4 gestes limpides). Cobaye `HeroGptAnimee` « suivre l'or » Soudan.
+< la version héros épurée (pelle + lingot + terre, 4 gestes limpides). Cobaye `HeroGptAnimee` « suivre l'or » Soudan (⚠️ fichier archivé, rendu réf https://files.catbox.moe/1ws3kh.mp4).
 
 ### 2. ⭐ DOCTRINE DES 2 COUCHES (tient une scène 14–28s + règle des 5s) — À APPLIQUER À TOUTE SCÈNE
 - **Couche de FOND permanente** (démarre f0, ne s'arrête JAMAIS) : drift Ken Burns lent + un élément qui respire (soleil
@@ -194,6 +236,16 @@ point commun entre le blueprint (chaque flèche = un sens) ET la pièce Sénéga
   toutes les ~4-5s) et, une fois lancés, CONTINUENT. « On ne l'arrête plus » = vrai par geste ; mais ils ne démarrent
   PAS tous en même temps (sinon tout est dit à la 1re s, le reste est plat). L'entrée échelonnée = ce qui crée la règle
   des 5s et tient la durée. La scène SE CONSTRUIT jusqu'à un apogée. Prouvé sur 28s (mine) ET 14s (héros).
+
+**⭐ 2 techniques prouvées (retour Aziz explicite 2026-07-04, warmap-sahel Ressources) pour éviter le figé** :
+- **stroke-dasharray > fade-in pour l'apparition d'un objet-héros** : dessiner le CONTOUR au trait (comme un
+  crayon qui trace) plutôt qu'un simple fondu d'opacité — jugé "beau" et "qui fonctionne très bien", technique
+  PAR DÉFAUT pour l'apparition de l'élément central d'une scène (bouclier, sceau, objet-héros).
+- **FlowDots (gouttes qui glissent en continu le long d'un path)** : pour tout flux/veine/circulation qui ne
+  doit PAS retomber figé après son apparition initiale — `strokeDasharray` "segment court / gap long" +
+  `strokeDashoffset` qui défile en continu (valeur croissante, PAS de modulo nécessaire, l'offset négatif
+  boucle nativement le long du path). Composant helper prouvé dans `ResourcesRevealSVG.tsx`
+  (`src/projects/warmap/parties/`), réutilisable pour tout élément "qui doit se sentir vivant" une fois tracé.
 
 ### 3. ⛔ RÈGLE OBJET INERTE — un objet qui ne se déplace pas dans la vraie vie NE GLISSE JAMAIS
 Lingot, coffre, pierre, bâtiment, pelle = pas de jambes → une translation latérale fait FAUX (« glissement bizarre »).
@@ -206,12 +258,31 @@ Idem la TERRE : un sol ne « vague » pas comme de l'eau (solide) → il CHANGE 
 Un objet qui s'installe = il TOMBE du haut + REBOND net à l'arrivée (`spring({config:{mass:1, damping:12, stiffness:90},
 durationInFrames:34})`) + poussière d'impact brève + SFX sec (`impact/impact.mp3`) + léger squash vertical à l'atterrissage.
 Bien plus tangible qu'un fade. Chute VISIBLE (~16f, pas 6f : baisser stiffness). Cascade lisible (pelle → gros lingot →
-petit lingot, décalés). `spring > interpolate` (doctrine Remotion). Prouvé `HeroGptAnimee`.
+petit lingot, décalés). `spring > interpolate` (doctrine Remotion). Prouvé `HeroGptAnimee` (⚠️ fichier archivé, rendu réf https://files.catbox.moe/1ws3kh.mp4).
 
-### 5. ⭐ PILOTAGE COULEUR SÉMANTIQUE = notre signature (ce que Seedance ne fait pas sur commande)
-La terre/le ciel qui VIRENT au ROUGE SANG sur le mot « la guerre » (overlay `<rect>` en `mixBlendMode:"multiply"`, opacité
-montée par interpolate) = exactement l'océan qui noircissait dans la pièce Sénégal (`oilSpread`). La couleur dit le SENS,
-timée sur la voix. Choisir la couleur PAR le sens : rouge sang = guerre/violence (PAS noir, qui dirait pétrole/pollution).
+### 5. ⭐⭐ GRAMMAIRE DE COLORISATION = notre signature (analyse GGW complète 7 beats, 2026-06-27)
+> Vérifiée frame par frame sur les 7 beats GGW + code. ⛔ CORRIGE un contresens : le monde NE se colorise PAS
+> entièrement à la fin (« voile chaud global » = FAUX). La couleur reste localisée au SENS ; le décor reste en encre.
+
+**3 MÉCANISMES de couleur, choisis par la NATURE de l'objet (pas un seul) :**
+- **A — ENTRE DÉJÀ COLORÉ** : ce qui *apparaît* comme acte neuf/vivant naît AVEC sa couleur native (la pelle, les
+  arbres plantés, les pousses, les récoltes). La couleur naît avec l'objet — on n'« active » pas sa couleur après.
+  C'est la SÉQUENCE D'APPARITION (timée sur le mot) qui porte le récit, pas une colorisation différée.
+- **B — PRÉSENT EN ENCRE PUIS SE COLORISE** : ce qui *existe déjà en contour* et se RÉVÈLE au mot-clé (le soleil
+  contour→or, le sol mort encre→ocre, les souches encre→cœur vert, le champ final B7 encre→forêt). **Le PAYOFF d'un
+  beat est presque toujours un mécanisme B** (la révélation). Overlay/fill monté par interpolate, timé sur la voix.
+- **C — DÉ-COLORISATION = MORT** : la couleur se RETIRE (vert→gris en vague/cascade quand les arbres meurent). Par
+  cross-fade d'opacité entre calques encre/couleur/mort du même objet — JAMAIS par glissement (objet inerte ne glisse pas).
+
+**Invariants (non négociables) :**
+- Couleur TOUJOURS sémantique, **frame-calée sur le mot** du script (cues de l'alignement audio). Jamais décorative.
+- **Le décor permanent reste en ENCRE pour toujours** (dunes, horizon, fond crème). Le fond ne se colorise jamais —
+  SEULE exception inversée : un virage GLOBAL au GRIS (`multiply`) pour marquer la mort/l'échec (= mécanisme C à l'échelle de la scène).
+- **Palette à code FIXE** (anti-décor) : vert=vie · or/jaune=soleil (ambivalent : ambition puis menace/sécheresse) ·
+  **ocre=couleur-DIAGNOSTIC** (le sol mort qui s'allume quand on NOMME la cause) · gris=mort · sépia=archive/humain. Rien hors lexique.
+- **Parcimonie** : « garder la munition » (le vert vif réservé au climax) — sauf au beat d'ABONDANCE prouvée où il se déverse.
+- **Sous-titres** : mot dit = encre pleine · mot en cours = couleur d'accent · mot à venir = encre 0.45. (Convention constante.)
+- **Porté à l'HORIZONTAL** : même lexique, simplement plus d'objets (la scène-lieu dense = la frise GGW en paysage). Cf. [[SVG-MIDFORM-FORMAT]] § scène-lieu.
 
 ## ⭐⭐⭐ DEUX CAPACITÉS DE WORKFLOW NOUVELLES (le LLM = matière première, pas contrainte) — 2026-06-22
 
@@ -259,6 +330,14 @@ un lieu ni un mouvement territorial) → candidat encart SVG. Si elle montre QUI
 
 **Verdict modèle sur l'encart conceptuel** : GPT-5.5 GAGNE (schéma géométrique sec, lisible en 5s, doctrine à l'écran).
 4e confirmation de la règle Gemini=organique / GPT=schéma.
+
+**⚠️ Remplacement legacy → SVG : vérifier les doublons SFX moteur.** Quand un encart SVG remplace un
+composant legacy (ex: `ResourcesReveal` → `ResourcesRevealSVG`, `CfaReveal` → `CfaRevealSVG`), TOUJOURS
+vérifier si le moteur (`SahelWarMapEngine.tsx` ou équivalent) a des `<Sequence><Audio/></Sequence>` câblés
+en dur sur les anciennes frames absolues de l'ANCIEN composant — ces SFX deviennent des DOUBLONS
+inaudibles/parasites si le nouveau composant gère déjà son propre SFX interne aux mêmes frames. 2
+occurrences trouvées et corrigées sur War-Map Sahel (2026-07-04) : SFX impact CFA résiduel + SFX
+ink-spread Ressources résiduel.
 
 ## 🎛️ LEVIERS DE RAFFINAGE (tous faciles, prouvés ou triviaux — réglages, pas refontes)
 - **Épurer les écritures** : chaque texte est dans un groupe (`titre`, labels) → masquer/réduire par un flag. (« jamais de texte nu » reste, mais on peut alléger fortement.)
@@ -318,7 +397,7 @@ inner = m.group(1) if m else svg
 ```
 Pour ANIMER un groupe injecté : wrapper JSX `<g transform={...} opacity={...} dangerouslySetInnerHTML={{__html: body}} />`
 — le wrapper (créé en JSX) EST animable même si son contenu est injecté. C'est LA technique pour contourner « innerHTML
-n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`, `GraineGeminiAnimee.tsx`.)
+n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `CreusetAnimee.tsx`, `GraineGeminiAnimee.tsx` — ⚠️ les 3 fichiers sont archivés dans `_rnd/svg-scenes/_archive/`, exclus du build ; rendus catbox toujours valides : 1ws3kh, yonpoq, ft5l5g.)
 
 7. **Gemini met parfois les styles en `<style>`/`class="..."` dans `<defs>`** (ex ombres portées paper-cut `class="shadow"`).
    En injection innerHTML ces classes perdent leur scope → l'élément devient invisible. Les INLINER avant injection :
@@ -330,6 +409,12 @@ n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `Creu
    (ex feuillage = 5 paires ombre+couleur dans `<g id="feuillage">`), les séparer côté JSX par regex pour les animer en
    vagues : `const parts = G_FEUILLAGE.match(/<g[\s\S]*?<\/g>/g); // puis regrouper par paires`. (Backlog : helper
    `growFrom(anchor, scale)` pour les ancres de croissance, analogue au `flowAlongAxis` déjà noté.)
+10. **NE JAMAIS faire un `.replace("'", '"')` GLOBAL sur la réponse brute** pour convertir les apostrophes
+    d'attributs : ça casse aussi les apostrophes FR du CONTENU texte affiché (`<text>AXE D'ATTAQUE</text>` →
+    `AXE D"ATTAQUE`). Quand le modèle renvoie un JSON `{scene_svg}` : parser depuis le JSON (apostrophes du
+    texte intactes), PUIS convertir SEULEMENT les attributs (camelCase/kebab + quotes) via le regex d'attributs
+    — pas un replace aveugle sur toute la string. (Confirmé Kimi K3 2026-07-17 ; vaut pour tout modèle qui
+    mêle attributs à apostrophes et texte FR affiché.)
 
 ## ⭐⭐⭐ FINITION ORCHESTRÉE — l'agent fait le gros œuvre, Claude+Aziz ajoutent la VIE (prouvé 2026-06-22)
 > Vision d'Aziz pour scaler : un AGENT produit la scène A→Z (gros œuvre), PUIS on regarde le rendu réel et on ajoute une
@@ -364,7 +449,7 @@ n'anime pas les `<g>` internes ». (Modèle complet : `HeroGptAnimee.tsx`, `Creu
 | ⭐ Graine → arbre (16:9) | papier-decoupe | Gemini | SE CONSTRUIT + FINITION orchestrée (vent · soleil actif · fruit tombe · feuilles flottent · SFX nature) | https://files.catbox.moe/ft5l5g.mp4 |
 | ⭐ « D'une graine naît un arbre » PÉDAGOGIQUE (16:9) | papier-decoupe | Gemini | SE CONSTRUIT bas→haut (graine→tronc scaleY→feuillage en vagues) + 2 couches | https://files.catbox.moe/wv4xlm.mp4 |
 
-Code : `src/projects/_rnd/svg-scenes/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee, GraineGeminiAnimee}.tsx`.
+Code : `src/projects/_rnd/svg-scenes/_archive/{VilleGeminiAnimee, EtatMajorGptAnimee, OffshoreGeminiAnimee, OffshoreGeminiAnimeeSFX, DefenseGptAnimee, MineGeminiAnimee, HeroGptAnimee, CreusetAnimee, GraineGeminiAnimee}.tsx` — ⚠️ tous ces fichiers sont archivés (`_archive/`, exclus du `tsconfig.json`), les rendus catbox listés ci-dessus restent la référence visuelle valide.
 
 📼 **RENDUS DE RÉFÉRENCE (fichiers .mp4 gardés) → `out/_r-and-d/svg-scenes-refs/`** (voir son README). ⚠️ Réfs R&D
 « ce qu'on sait faire », PAS des livrables — réadapter au script/audio réels avant tout usage épisode.
@@ -425,7 +510,9 @@ l'image, OU image synchronisée sur une nappe/voix posée d'abord (= notre doctr
 **Mapping geste → son (proto `OffshoreGeminiAnimeeSFX.tsx`, 100% banque `_shared/sfx/`, zéro génération)** :
 - trait de structure qui se trace → `warmap/arrow-whoosh.mp3` (whoosh bas et sec) sur CHAQUE frame de tracé
 - apparition (torchère/réservoir) → `ui/node-appear.mp3` · structure complète → `impact/impact.mp3`
-- flux continu (pétrole qui monte) → `warmap/tension-drone.mp3` (drone grave, volume bas 0.4, sous le reste)
+- flux continu (pétrole qui monte) → ⛔ PAS `tension-drone` (proscrit, décision Aziz 2026-06-27 : le grondement
+  d'assise continu dérange à l'écoute — retiré de War-Map Sahel partout). Préférer un SFX PONCTUEL répété en
+  boucle discrète (ex `ink-spread.mp3` espacé) ou laisser la musique de fond porter la continuité.
 - annotation (cote/étiquette) → `data/tick-counter.mp3` (tick sec) échelonné
 - ouverture de planche → `ui/whoosh.mp3`
 
@@ -446,3 +533,14 @@ render au `ffprobe`/`volumedetect` (mean dB ≠ silence) avant de présenter.
 - Formes organiques NON-figuratives (flamme, fumée, eau, fluides) : pas encore testées, potentiellement OK (pas d'uncanny).
 - Registres visuels NEUFS restants : **néon/data-terminal**, **papier découpé** (pédagogique). (médaille ✅ · blueprint ✅ · encre ✅.)
 - Brancher une scène SVG dans une VRAIE vidéo (plein écran + voix off + SFX timé) — le proto SFX est prouvé, reste l'intégration épisode.
+
+## ⭐⭐ DEUX RÈGLES D'IMPLÉMENTATION (prouvées Cacao B3/B4, 2026-06-29)
+
+### 1. COUCHE DE VIE PERMANENTE (sin) — obligatoire pour toute scène > 5s
+Une scène SVG a DEUX couches d'animation, pas une :
+1. **Gestes narratifs forts** : `interpolate()` timés (un arbre pousse, une barre se forme, l'usine se construit). One-shot, ils FINISSENT.
+2. **Couche ambiante permanente** : `Math.sin(frame/...)` qui ne s'arrête JAMAIS — sway feuillage (TOUS les arbres, même morts), glow soleil qui respire, rayons qui tournent, nuages qui dérivent (fade aux bords, jamais hors cadre), fumée en bouffées désync, oiseaux qui battent.
+**Si on n'a que (1)**, la scène se fige entre les gestes → Gemini diagnostiquera « trop statique » (c'est arrivé sur le verger B3 v4, corrigé en v5). Implémentation : passer `windPhase={frame}` au composant, calculer les oscillations à l'intérieur. La couche ambiante tourne tant que la scène dure.
+
+### 2. COMPOSANT À ÉTATS PILOTÉ PAR PROPS = fil de transformation multi-beats
+Coder un composant SVG à N états dont TOUTE la logique de transformation est en **props** — ZÉRO `useCurrentFrame` interne. Le beat parent calcule les progressions (audio-derived) et les passe en props. Prouvé : `VergerCacao` (états mort/reverdit/fissure) réutilisé tel quel en B3 ET B4 — même monde qui évolue (le verger de B3 reverdit puis se fissure en B4), sans dupliquer le code. Avantages : continuité du monde (fil de transformation, cf [[INTENTION-FORME-SVG]]), état de chaque beat testable isolément (compo preview), un seul endroit à corriger. Pattern complémentaire : un composant "construction" piloté par `build`/`colorize` (trace ordonné structure→détails) — cf `UsineConstruction`.

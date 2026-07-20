@@ -18,7 +18,12 @@
 - `mcp__tavily__tavily_search` — recherche web. Params utiles : `search_depth` (basic/advanced/fast/ultra-fast), `time_range` (day/week/month/year), `start_date`/`end_date` (YYYY-MM-DD), `include_domains`/`exclude_domains`, `country`, `max_results`. = remplace `firecrawl_search`.
 - `mcp__tavily__tavily_extract` — lire le contenu d'URLs précises. Params : `urls[]`, `extract_depth` (basic/advanced — advanced pour tables/sites protégés), `format` (markdown/text), `query` (rerank des chunks par pertinence). = remplace `firecrawl_scrape` + WebFetch+PDF.
 - `tavily_crawl` / `tavily_map` — crawl/cartographie de site (NON testés en réel ; pour le crawl lourd, Firecrawl reste plus éprouvé).
-- `tavily_research` — recherche multi-sources agentique (non testé).
+- `tavily_research` — recherche multi-sources agentique. **Testé et validé 2026-07-04** (mode `pro`) : synthèse structurée avec sources citées sur un sujet complexe (usage réel app Grok Imagine), bien plus fiable que le skill `/last30days` sur un sujet où les vidéos YouTube trouvées n'ont pas de transcripts (voir section fallback ci-dessous).
+
+## Fallback quand `/last30days` bloque (sujet sans transcripts YouTube)
+Observé 2026-07-04 : le skill `/last30days` peut échouer silencieusement (bouclage sans jamais atteindre la synthèse finale) quand les vidéos YouTube trouvées sur un sujet n'ont aucun sous-titre/transcript disponible — le moteur retente indéfiniment (yt-dlp → fallback HTTP → ScrapeCreators) sans jamais abandonner proprement. Confirmé 2x de suite sur le même sujet (~20 min puis ~16 min avant kill manuel), y compris après avoir retiré "youtube" des sources du plan JSON (le moteur y retourne quand même).
+- **Symptôme** : process qui progresse (CPU/lignes de log qui bougent) mais qui boucle sur les memes tentatives YouTube sans jamais sauvegarder de rapport final.
+- **Fallback recommandé** : basculer sur `mcp__tavily__tavily_research` (mode `pro`) directement plutôt que de retenter `/last30days` ou d'attendre indéfiniment qu'il se débloque. A fourni l'essentiel des informations utiles dans ce cas, avec sources citées.
 
 ## Quotas (page pricing officielle, vérifié 2026-06-16)
 - **Free (Researcher)** : 1 000 crédits/mois, sans carte. ← plan actuel.

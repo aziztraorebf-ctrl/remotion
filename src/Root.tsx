@@ -1,4 +1,42 @@
-import { Composition, Folder, staticFile as staticFileRoot } from "remotion";
+import { Composition, Folder, staticFile as staticFileRoot, useCurrentFrame } from "remotion";
+import { B1Hook, B1_HOOK_FRAMES, B1_HOOK_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B1Hook";
+import { B2Source, B2_SOURCE_FRAMES, B2_SOURCE_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B2Source";
+import { VergerPreviewB3, VergerPreviewReverdit, VergerPreviewFissure } from "./projects/souverain/cacao-chocolat-short/components/VergerPreview";
+import { TabletteMorphPreview0, TabletteMorphPreview1 } from "./projects/souverain/cacao-chocolat-short/components/TabletteMorphBarre";
+import { B3Extraction, B3_EXTRACTION_FRAMES, B3_EXTRACTION_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B3Extraction";
+import { B4Lien, B4Fade, B4_RENVERSEMENT_FRAMES, B4_RENVERSEMENT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B4Renversement";
+import { B5Pont, B5_PONT_FRAMES, B5_PONT_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5Pont";
+import { B5PontH, B5_PONT_H_FRAMES, B5_PONT_H_FPS } from "./projects/souverain/cacao-chocolat-short/beats/B5PontH";
+import { ProtoPlanteur, PROTO_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/beats/ProtoPlanteur";
+import { RecolteAuSol, RECOLTE_AU_SOL_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/RecolteAuSol";
+import { PasserObjetMainAMain, PASSER_OBJET_FRAMES } from "./projects/_shared/personnage-vivant-svg/scenes-proto/PasserObjetMainAMain";
+import { Proto3Quarter, PASSER3Q_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/Proto3Quarter";
+import { ProtoBack, PASSER_BACK_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoBack";
+import { ProtoFace, PASSER_FACE_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoFace";
+import { ProtoMultiDirTest, PASSER_MULTIDIR_TEST_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/ProtoMultiDirTest";
+import { SceneMultiPlanTest, SCENE_MULTIPLAN_TEST_FRAMES } from "./projects/_shared/personnage-vivant-svg/rnd-8dir/SceneMultiPlanTest";
+import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain/cacao-chocolat-short/_rnd/HistoirePlanteur";
+import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
+import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
+import { VoxPapercutAvion16x9, VOX_PAPERCUT_AVION_FRAMES } from "./projects/_rnd/svg-scenes/VoxPapercutAvion16x9";
+import { GlobeSahel16x9, GLOBE_SAHEL_FRAMES } from "./projects/_rnd/d3-16x9/GlobeSahel16x9";
+import { GlobeToParchemin16x9, GLOBE_PARCHEMIN_FRAMES } from "./projects/_rnd/d3-16x9/GlobeToParchemin16x9";
+import { SahelJetonsDezoom16x9, SAHEL_JETONS_FRAMES } from "./projects/_rnd/d3-16x9/SahelJetonsDezoom16x9";
+import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/d3-16x9/JetonsComparatif16x9";
+import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
+import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
+import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
+import { SoudanActe3GlobeMinesProto, GLOBE_MINES_PROTO_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeMinesProto";
+import { SoudanActe3Section1Globe, SECTION1_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3Section1Globe";
+import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
+import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
+import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
+import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
+import { VisionKhartoumK3 } from "./projects/_rnd/svg-scenes/VisionKhartoumK3";
+import { KostiInsertSVG } from "./projects/warmap/soudan-acte4/KostiInsertSVG";
+import { Audio as RAudio, Sequence as RSequence, staticFile as rStaticFile, AbsoluteFill as RAbsoluteFill } from "remotion";
+import { CacaoChocolatFull, CACAO_FULL_FRAMES } from "./projects/souverain/cacao-chocolat-short/CacaoChocolatFull";
+import { UsinePreviewCacao, UsinePreviewIvoire, UsinePreviewIvoireDouce, UsinePreviewIvoireDouceChemVerte } from "./projects/souverain/cacao-chocolat-short/components/UsineConstruction";
 import { CarouselSouverain, CarouselSouverainProps } from "./projects/_shared/components/layouts/CarouselSouverain";
 import { CAROUSELS } from "./projects/souverain/carousels/carousel-data";
 import { Beat0Hook } from "./projects/souverain/maroc-batteries/beats/Beat0Hook";
@@ -75,6 +113,9 @@ import { PesteMapPreview } from "./projects/atlas/peste-1347/PesteMap";
 import { AtlasAttackArrowDemo } from "./projects/atlas/_shared/AtlasAttackArrowDemo";
 import { AtlasEncirclementDemo } from "./projects/atlas/_shared/AtlasEncirclementDemo";
 import { P1_OrthoLinksDemo, P1_FRAMES } from "./projects/warmap/_rnd/maxbellona/P1_OrthoLinks";
+import { KostiFrappeProto, KOSTI_PROTO_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProto";
+import { KostiFrappeProtoV2, KOSTI_V2_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProtoV2";
+import { KostiFrappeProtoV3, KOSTI_V3_FRAMES } from "./projects/warmap/_rnd/KostiFrappeProtoV3";
 import { P2_FactionBadgeDemo, P2_FRAMES } from "./projects/warmap/_rnd/maxbellona/P2_FactionBadge";
 import { P4_DashedFlowDemo, P4_FRAMES } from "./projects/warmap/_rnd/maxbellona/P4_DashedFlow";
 import { P3_MapTransformDemo, P3_FRAMES } from "./projects/warmap/_rnd/maxbellona/P3_MapTransform";
@@ -173,7 +214,6 @@ import { GgwHookEncreVivant } from "./projects/_rnd/svg-scenes/GgwHookEncreVivan
 import { B2LigneBrisee } from "./projects/_rnd/svg-scenes/B2LigneBrisee";
 import { B3Malentendu } from "./projects/_rnd/svg-scenes/B3Malentendu";
 import { DefenseCompare } from "./projects/_rnd/svg-scenes/DefenseCompare";
-import { DefenseGptAnimee } from "./projects/_rnd/svg-scenes/DefenseGptAnimee";
 import { CfaCompare } from "./projects/_rnd/svg-scenes/CfaCompare";
 import { B4Demilune } from "./projects/_rnd/svg-scenes/B4Demilune";
 import { B5LaPreuve } from "./projects/_rnd/svg-scenes/B5LaPreuve";
@@ -181,15 +221,57 @@ import { B6Outro } from "./projects/_rnd/svg-scenes/B6Outro";
 import { B7MosaiqueFinal } from "./projects/_rnd/svg-scenes/B7MosaiqueFinal";
 import { WhiteboardTest } from "./projects/_rnd/svg-scenes/WhiteboardTest";
 import { FoyerColorTest } from "./projects/_rnd/svg-scenes/FoyerColorTest";
-import { MineGeminiAnimee } from "./projects/_rnd/svg-scenes/MineGeminiAnimee";
-import { HeroGptAnimee } from "./projects/_rnd/svg-scenes/HeroGptAnimee";
-import { CreusetAnimee } from "./projects/_rnd/svg-scenes/CreusetAnimee";
 import { FluxPetroleAnimee } from "./projects/_rnd/svg-scenes/FluxPetroleAnimee";
 import { JetonsQwenDemo } from "./projects/_rnd/svg-scenes/JetonsQwenDemo";
 import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
 import { CfaMidformTest } from "./projects/_rnd/svg-scenes/CfaMidformTest";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
-import { GraineGeminiAnimee } from "./projects/_rnd/svg-scenes/GraineGeminiAnimee";
+import { IngaH16x9, INGA_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaH16x9";
+import { IngaV9x16, INGA_V_FRAMES } from "./projects/_rnd/svg-scenes/IngaV9x16";
+import { IngaEncreH, INGA_ENCRE_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaEncreH";
+import { IngaNarratifParchemin, IngaNarratifBlanc, INGA_NARRATIF_FRAMES } from "./projects/_rnd/svg-scenes/IngaNarratif";
+import { IngaMondeVivant, INGA_MONDE_FRAMES } from "./projects/_rnd/svg-scenes/IngaMondeVivant";
+import { IngaMondeV2, INGA_MONDE_V2_FRAMES } from "./projects/_rnd/svg-scenes/IngaMondeV2";
+import { IngaDualScene, INGA_DUAL_FRAMES } from "./projects/_rnd/svg-scenes/IngaDualScene";
+import { IngaSplitScreen, INGA_SPLIT_FRAMES } from "./projects/_rnd/svg-scenes/IngaSplitScreen";
+import { CargoVoyage16x9, CARGO_VOYAGE_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9";
+import { CargoVoyage16x9_LibreInspire, CARGO_VOYAGE_LI_FRAMES } from "./projects/_rnd/svg-scenes/CargoVoyage16x9_LibreInspire";
+import { PortDechargement16x9, PORT_DECHARGEMENT_FRAMES } from "./projects/_rnd/svg-scenes/PortDechargement16x9";
+import { RetourAuChamp16x9, RETOUR_CHAMP_FRAMES } from "./projects/_rnd/svg-scenes/RetourAuChamp16x9";
+import { ProtoGeminiPoseBankWalk, PROTO_GEMINI_POSE_BANK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPoseBankWalk";
+import { ProtoGeminiActionChain, PROTO_GEMINI_ACTION_CHAIN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiActionChain";
+import { ProtoGeminiPaletteDemo, PROTO_GEMINI_PALETTE_DEMO_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiPaletteDemo";
+import { ProtoGeminiOfferScene, PROTO_GEMINI_OFFER_SCENE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiOfferScene";
+import { ProtoGeminiHeadLoadWalk, PROTO_GEMINI_HEAD_LOAD_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiHeadLoadWalk";
+import { ProtoGeminiHandBasketWalk, PROTO_GEMINI_HAND_BASKET_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiHandBasketWalk";
+import { ProtoGeminiShoulderSackWalk, PROTO_GEMINI_SHOULDER_SACK_WALK_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiShoulderSackWalk";
+import { ProtoGeminiBendPickup, PROTO_GEMINI_BEND_PICKUP_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiBendPickup";
+import { ProtoGeminiManipulateObject, PROTO_GEMINI_MANIPULATE_OBJECT_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiManipulateObject";
+import { ProtoGeminiHandoff, PROTO_GEMINI_HANDOFF_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiHandoff";
+import { ProtoGeminiTreeCueillette, PROTO_GEMINI_TREE_CUEILLETTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiTreeCueillette";
+import { ProtoGeminiContemplatif, PROTO_GEMINI_CONTEMPLATIF_FRAMES } from "./projects/_rnd/svg-scenes/ProtoGeminiContemplatif";
+import { ProtoFaceExpressions } from "./projects/_rnd/svg-scenes/ProtoFaceExpressions";
+import { ProtoCadrages } from "./projects/_rnd/svg-scenes/ProtoCadrages";
+import { ProtoFaceAFace, PROTO_FACE_A_FACE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoFaceAFace";
+import { ProtoDialogueEcran, PROTO_DIALOGUE_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDialogueEcran";
+import { ProtoDataVizEncre, PROTO_DATAVIZ_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizEncre";
+import { ProtoDataVizPleinEcran, PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoDataVizPleinEcran";
+import { ProtoNarratifPlusData, PROTO_NARRATIF_PLUS_DATA_FRAMES } from "./projects/_rnd/svg-scenes/ProtoNarratifPlusData";
+import { ProtoCueilletteGrosPlan16x9, PROTO_CUEILLETTE_GROS_PLAN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoCueilletteGrosPlan16x9";
+import { PecheurSurpeche16x9, PECHEUR_SURPECHE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpeche16x9";
+import { PecheurSurpecheSeedance16x9, PECHEUR_SEEDANCE_FRAMES } from "./projects/_rnd/svg-scenes/PecheurSurpecheSeedance16x9";
+import { ProtoMap2dEncre, PROTO_MAP2D_ENCRE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMap2dEncre";
+import { ProtoInsertTactiqueTopDown, PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertTactiqueTopDown";
+import { ProtoAssemblageKhartoumBeat5, PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAssemblageKhartoumBeat5";
+import { ProtoSolPortraitRigTest, PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolPortraitRigTest";
+import { ProtoSolFullbodyRigTest, PROTO_SOL_FULLBODY_RIG_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolFullbodyRigTest";
+import { ProtoSolCargoSceneTest, PROTO_SOL_CARGO_SCENE_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolCargoSceneTest";
+import { ProtoSolUsineSceneTest, PROTO_SOL_USINE_SCENE_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoSolUsineSceneTest";
+import { ProtoAtlasMercator16x9, PROTO_ATLAS_MERCATOR_16X9_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMercator16x9";
+import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondePalimpseste";
+import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
+import { ProtoMapboxMondeGrisTest, PROTO_MAPBOX_MONDE_GRIS_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMapboxMondeGrisTest";
+import { ProtoAtlasMondeGrisSVG, PROTO_ATLAS_MONDE_GRIS_SVG_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeGrisSVG";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -205,6 +287,12 @@ import { Beat0Accroche as SenegalBeat0 } from "./projects/souverain/senegal-petr
 import { Beat0AccrocheV7 as SenegalBeat0V7 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0AccrocheV7";
 import { Beat0PlaqueProto as SenegalBeat0Proto } from "./projects/souverain/senegal-petrole-gaz/beats/Beat0PlaqueProto";
 import { Beat1 as SenegalBeat1 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat1";
+import { Scene1Hook as SenegalShortD3Scene1Hook } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene1Hook";
+import { Scene2Paradoxe as SenegalShortD3Scene2Paradoxe } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene2Paradoxe";
+import { Scene3Comparaison as SenegalShortD3Scene3Comparaison } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene3Comparaison";
+import { Scene4Dette as SenegalShortD3Scene4Dette } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene4Dette";
+import { Scene5Cta as SenegalShortD3Scene5Cta } from "./projects/souverain/senegal-petrole-gaz-short-d3/Scene5Cta";
+import { ShortComplet as SenegalShortD3ShortComplet, SHORT_COMPLET_FRAMES } from "./projects/souverain/senegal-petrole-gaz-short-d3/ShortComplet";
 import { Beat2 as SenegalBeat2 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat2";
 import { Beat3 as SenegalBeat3 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat3";
 import { Beat5 as SenegalBeat5 } from "./projects/souverain/senegal-petrole-gaz/beats/Beat5";
@@ -232,6 +320,8 @@ import { SceneComparaisonV3, SCENE_COMPARAISON_V3_FRAMES } from "./projects/souv
 import { SceneContratV3, SCENE_CONTRAT_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneContratV3";
 import { SceneDetteV3, SCENE_DETTE_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneDetteV3";
 import { SceneCoulissesV3, SCENE_COULISSES_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneCoulissesV3";
+import { SceneBilanV3, SCENE_BILAN_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBilanV3";
+import { SceneBonusV3, SCENE_BONUS_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBonusV3";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -265,6 +355,38 @@ import { RedlineContagion } from "./projects/_shared/hooks-lib/RedlineContagion"
 import { MaskReveal } from "./projects/_shared/hooks-lib/MaskReveal";
 import { HookAESActe1Proto } from "./projects/warmap/HookAESActe1Proto";
 import { SoudanActe1Ouverture, SOUDAN_A1_DURATION, SOUDAN_A1_FPS } from "./projects/warmap/SoudanActe1Ouverture";
+import { KhartoumEtatMajorSVG, KHARTOUM_EM_FRAMES, KHARTOUM_EM_FPS } from "./projects/warmap/KhartoumEtatMajorSVG";
+import { KhartoumFxDemo, KHARTOUM_FX_FRAMES, KHARTOUM_FX_FPS } from "./projects/warmap/_rnd/KhartoumFxDemo";
+import { ProtoSilhouetteRiseFx, PROTO_SILHOUETTE_FRAMES, PROTO_SILHOUETTE_FPS } from "./projects/warmap/_rnd/ProtoSilhouetteRiseFx";
+import { VoxReproMaster, VOX_REPRO_FRAMES, VOX_REPRO_FPS } from "./projects/_rnd/vox-repro/VoxReproMaster";
+import { Scene1Rise, SCENE1_FRAMES, SCENE1_FPS } from "./projects/_rnd/vox-repro/Scene1Rise";
+import { Scene2JetsStrike, SCENE2_FRAMES, SCENE2_FPS } from "./projects/_rnd/vox-repro/Scene2JetsStrike";
+import { Scene3Blockade, SCENE3_FRAMES, SCENE3_FPS } from "./projects/_rnd/vox-repro/Scene3Blockade";
+import { KhartoumChocSVG, KHARTOUM_CHOC_FRAMES, KHARTOUM_CHOC_FPS } from "./projects/warmap/KhartoumChocSVG";
+import { FrontOuvertSVG, FRONT_OUVERT_FRAMES, FRONT_OUVERT_FPS } from "./projects/warmap/FrontOuvertSVG";
+import { OrDarfourHook, OR_DARFOUR_HOOK_FRAMES, OR_DARFOUR_HOOK_FPS } from "./projects/warmap/soudan-hook/OrDarfourHook";
+import { SoudanSocleTest, SOUDAN_SOCLE_FRAMES, SOUDAN_SOCLE_FPS } from "./projects/warmap/SoudanSocleTest";
+import { SoudanHighlightTest, SOUDAN_HL_FRAMES, SOUDAN_HL_FPS } from "./projects/warmap/SoudanHighlightTest";
+import { SoudanMouvementTest, SOUDAN_MVT_FRAMES, SOUDAN_MVT_FPS } from "./projects/warmap/SoudanMouvementTest";
+import { SoudanTestFinal, SOUDAN_TF_FRAMES, SOUDAN_TF_FPS } from "./projects/warmap/SoudanTestFinal";
+import { SoudanActe1, SOUDAN_A1_FRAMES as SOUDAN_ACTE1_FRAMES, SOUDAN_A1_FPS as SOUDAN_ACTE1_FPS } from "./projects/warmap/soudan-acte1/SoudanActe1";
+import { TwoFaceTokenTest } from "./projects/warmap/soudan-acte2/TwoFaceTokenTest";
+import { SoudanActe2, SOUDAN_A2_FRAMES, SOUDAN_A2_FPS } from "./projects/warmap/soudan-acte2/SoudanActe2";
+import { SoudanActe3, Section1 as SoudanActe3Section1, S1_FRAMES as SOUDAN_A3_S1_FRAMES, SOUDAN_A3_FRAMES, SOUDAN_A3_FPS } from "./projects/warmap/soudan-acte3/SoudanActe3";
+import { SoudanActe4, SOUDAN_A4_FRAMES, SOUDAN_A4_FPS } from "./projects/warmap/soudan-acte4/SoudanActe4";
+// Section 1 Mapbox isolée (beats 1-2-2bis, 1166 frames) — pour concat avec l'insert globe D3 (assemblage Acte 3 version GLOBE)
+const SoudanActe3Section1Only: React.FC = () => (
+  <RAbsoluteFill style={{ backgroundColor: "#000" }}>
+    <SoudanActe3Section1 sectionOffset={0} />
+  </RAbsoluteFill>
+);
+import { SoudanActe5, SOUDAN_A5_FRAMES, SOUDAN_A5_FPS } from "./projects/warmap/soudan-acte5/SoudanActe5";
+import { PortSoudanJetonCompare, PORT_SOUDAN_COMPARE_FRAMES, PORT_SOUDAN_COMPARE_FPS } from "./projects/warmap/_rnd/PortSoudanJetonCompare";
+import { GlobeSoudanDubaiTest, GLOBE_SOUDAN_DUBAI_TEST_FRAMES } from "./projects/warmap/soudan-acte3/_rnd/GlobeSoudanDubaiTest";
+import { BlocRapportForceTest } from "./projects/warmap/soudan-acte2/BlocRapportForceTest";
+import { GeoFlowConnectionTest, GFC_TEST_FRAMES, GFC_TEST_FPS } from "./projects/warmap/GeoFlowConnectionTest";
+import { BlocImpasseB6Test } from "./projects/warmap/soudan-acte2/BlocImpasseB6Test";
+import { BLOC_B6_FRAMES, BLOC_B6_FPS } from "./projects/warmap/soudan-acte2/BlocImpasseB6";
 import { ComboSweepDominoFlag } from "./projects/_shared/mapbox/ComboSweepDominoFlag";
 import { ComboFiberAuraPopup } from "./projects/_shared/mapbox/ComboFiberAuraPopup";
 // ── N1-N4 Fill-Pattern templates (session 2026-06-03)
@@ -295,6 +417,13 @@ import { SahelFriseOverlayDemo } from "./projects/warmap/_shared/SahelFriseOverl
 import { SahelPrepositionnementDemo } from "./projects/warmap/_shared/SahelPrepositionnementDemo";
 import { GeoConvergenceDemo } from "./projects/warmap/_shared/GeoConvergenceDemo";
 import { MapAnimationShowcase, SHOWCASE_FPS, SHOWCASE_DURATION } from "./projects/warmap/engine/MapAnimationShowcase";
+import { WarmapCfaInsertSVG, WARMAP_CFA_INSERT_FRAMES } from "./projects/warmap/parties/WarmapCfaInsertSVG";
+import { LiptakoRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/LiptakoRevealSVG9x16";
+import { ResourcesRevealSVG9x16 } from "./projects/warmap/shorts/aes-short-90s/ResourcesRevealSVG9x16";
+import { CtaCard } from "./projects/warmap/shorts/aes-short-90s/CtaCard";
+import { AesShortPart1 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart1";
+import { AesShortPart2 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart2";
+import { AesShortFull } from "./projects/warmap/shorts/aes-short-90s/AesShortFull";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -302,6 +431,7 @@ import { GoldRouteAtlasZoom } from "./projects/_shared/templates/travel-map/Gold
 import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute8Dir";
 import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
+import { HalftoneDemo } from "./projects/_rnd/cutout-halftone/HalftoneDemo";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -487,6 +617,162 @@ export const RemotionRoot: React.FC = () => {
           id="MaxBellona-P1-OrthoLinks"
           component={P1_OrthoLinksDemo}
           durationInFrames={P1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A1-GlobeSahel16x9"
+          component={GlobeSahel16x9}
+          durationInFrames={GLOBE_SAHEL_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A1K1-GlobeToParchemin16x9"
+          component={GlobeToParchemin16x9}
+          durationInFrames={GLOBE_PARCHEMIN_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Jetons-SahelDezoom16x9"
+          component={SahelJetonsDezoom16x9}
+          durationInFrames={SAHEL_JETONS_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Jetons-Comparatif16x9"
+          component={JetonsComparatif16x9}
+          durationInFrames={JETONS_COMPARATIF_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-A5-CartePanneau16x9"
+          component={CartePanneau16x9}
+          durationInFrames={CARTE_PANNEAU_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeProto16x9"
+          component={SoudanActe3GlobeProto16x9}
+          durationInFrames={SOUDAN_A3_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ theme: "space" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeProto16x9-Parchemin"
+          component={SoudanActe3GlobeProto16x9}
+          durationInFrames={SOUDAN_A3_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ theme: "parchemin" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeProto16x9-Mixte"
+          component={SoudanActe3GlobeProto16x9}
+          durationInFrames={SOUDAN_A3_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ theme: "mixte" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeProto16x9-Mixte-Token"
+          component={SoudanActe3GlobeProto16x9}
+          durationInFrames={SOUDAN_A3_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ theme: "mixte" as const, variant: "token" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeProto16x9-Mixte-Zoom"
+          component={SoudanActe3GlobeProto16x9}
+          durationInFrames={SOUDAN_A3_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ theme: "mixte" as const, variant: "zoom" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeInsert"
+          component={SoudanActe3GlobeInsert}
+          durationInFrames={SOUDAN_A3_INSERT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO calage (2026-07-19) : beat 2 mines+portrait en GLOBE topdown, contours renforcés (v2 retour Aziz) */}
+        <Composition
+          id="D3-SoudanActe3-GlobeMines-Marque"
+          component={SoudanActe3GlobeMinesProto}
+          durationInFrames={GLOBE_MINES_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ scaleVariant: "topdown" as const, borderVariant: "marque" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeMines-Fort"
+          component={SoudanActe3GlobeMinesProto}
+          durationInFrames={GLOBE_MINES_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ scaleVariant: "topdown" as const, borderVariant: "fort" as const }}
+        />
+        {/* Section 1 Acte 3 refaite en GLOBE D3 integral (2026-07-19) : SVG intro (Beat1Paradoxe)
+            + Globe (frontieres RSF/SAF, jetons, 3 mines, portrait Hemedti) — remplace le patchwork
+            SVG+Mapbox+Globe par SVG+Globe (2 registres). Cross-fade doux 483->540. */}
+        <Composition
+          id="D3-SoudanActe3-Section1Globe"
+          component={SoudanActe3Section1Globe}
+          durationInFrames={SECTION1_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Acte 5 "Le réseau qui arme dans l'ombre" — GLOBE D3 INTÉGRAL (Émirats→Libye/Haftar→El-Fasher) */}
+        <Composition
+          id="D3-SoudanActe5-Globe"
+          component={SoudanActe5Globe}
+          durationInFrames={SOUDAN_A5_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProto"
+          component={KostiFrappeProto}
+          durationInFrames={KOSTI_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProtoV2"
+          component={KostiFrappeProtoV2}
+          durationInFrames={KOSTI_V2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="KostiFrappeProtoV3"
+          component={KostiFrappeProtoV3}
+          durationInFrames={KOSTI_V3_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -1256,7 +1542,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="SceneGisementsV3"
             component={SceneGisementsV3}
-            durationInFrames={2120}
+            durationInFrames={2151}
             fps={30}
             width={1920}
             height={1080}
@@ -1289,6 +1575,22 @@ export const RemotionRoot: React.FC = () => {
             id="SceneCoulissesV3"
             component={SceneCoulissesV3}
             durationInFrames={SCENE_COULISSES_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SceneBilanV3"
+            component={SceneBilanV3}
+            durationInFrames={SCENE_BILAN_V3_FRAMES}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="SceneBonusV3"
+            component={SceneBonusV3}
+            durationInFrames={SCENE_BONUS_V3_FRAMES}
             fps={30}
             width={1920}
             height={1080}
@@ -1479,6 +1781,56 @@ export const RemotionRoot: React.FC = () => {
             height={720}
           />
         </Folder>
+        <Folder name="senegal-petrole-gaz-short-d3">
+          <Composition
+            id="SenegalShortD3-Scene1-Hook"
+            component={SenegalShortD3Scene1Hook}
+            durationInFrames={288}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene2-Paradoxe"
+            component={SenegalShortD3Scene2Paradoxe}
+            durationInFrames={489}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene3-Comparaison"
+            component={SenegalShortD3Scene3Comparaison}
+            durationInFrames={1534}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene4-Dette"
+            component={SenegalShortD3Scene4Dette}
+            durationInFrames={605}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-Scene5-Cta"
+            component={SenegalShortD3Scene5Cta}
+            durationInFrames={451}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+          <Composition
+            id="SenegalShortD3-COMPLET"
+            component={SenegalShortD3ShortComplet}
+            durationInFrames={SHORT_COMPLET_FRAMES}
+            fps={30}
+            width={1080}
+            height={1920}
+          />
+        </Folder>
 
 
 
@@ -1584,6 +1936,54 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="HookAES-Acte1-Proto" component={HookAESActe1Proto} durationInFrames={600} fps={30} width={1920} height={1080} />
         {/* MINI-RENDER VALIDATION — Soudan Acte 1 ouverture (carte + jeton Hemeti + forces RSF + contour, audio fact-check) */}
         <Composition id="SoudanActe1Ouverture" component={SoudanActe1Ouverture} durationInFrames={SOUDAN_A1_DURATION} fps={SOUDAN_A1_FPS} width={1920} height={1080} />
+        <Composition id="KhartoumEtatMajorSVG" component={KhartoumEtatMajorSVG} durationInFrames={KHARTOUM_EM_FRAMES} fps={KHARTOUM_EM_FPS} width={1920} height={1080} />
+        <Composition id="KhartoumFxDemo" component={KhartoumFxDemo} durationInFrames={KHARTOUM_FX_FRAMES} fps={KHARTOUM_FX_FPS} width={1920} height={1080} />
+        <Composition id="ProtoSilhouetteRiseFx-A-Parchemin" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: false }} />
+        <Composition id="ProtoSilhouetteRiseFx-B-Epure" component={ProtoSilhouetteRiseFx} durationInFrames={PROTO_SILHOUETTE_FRAMES} fps={PROTO_SILHOUETTE_FPS} width={1920} height={1080} defaultProps={{ epure: true }} />
+        {/* VOX REPRO — reproduction fidele reference YouTube MoSidd (world-atlas+TopoJSON+d3-geo, ZERO Mapbox) */}
+        <Composition id="VoxReproMaster" component={VoxReproMaster} durationInFrames={VOX_REPRO_FRAMES} fps={VOX_REPRO_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene1" component={Scene1Rise} durationInFrames={SCENE1_FRAMES} fps={SCENE1_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene2" component={Scene2JetsStrike} durationInFrames={SCENE2_FRAMES} fps={SCENE2_FPS} width={1920} height={1080} />
+        <Composition id="VoxReproScene3" component={Scene3Blockade} durationInFrames={SCENE3_FRAMES} fps={SCENE3_FPS} width={1920} height={1080} />
+        {/* Moteur d'affrontement 2 factions (warmapChoc) — 2 variantes d'habillage du meme moteur */}
+        <Composition id="KhartoumChocSVG" component={KhartoumChocSVG} durationInFrames={KHARTOUM_CHOC_FRAMES} fps={KHARTOUM_CHOC_FPS} width={1920} height={1080} />
+        <Composition id="FrontOuvertSVG" component={FrontOuvertSVG} durationInFrames={FRONT_OUVERT_FRAMES} fps={FRONT_OUVERT_FPS} width={1920} height={1080} />
+        {/* Beat 6 Acte 2 Soudan — impasse militaire (SAF pousse et echoue), registre etat-major */}
+        <Composition id="BlocImpasseB6Test" component={BlocImpasseB6Test} durationInFrames={BLOC_B6_FRAMES} fps={BLOC_B6_FPS} width={1920} height={1080} />
+        {/* HOOK d'ouverture Soudan — "l'or du Darfour" reskin parchemin/encre + continuation */}
+        <Composition id="OrDarfourHook" component={OrDarfourHook} durationInFrames={OR_DARFOUR_HOOK_FRAMES} fps={OR_DARFOUR_HOOK_FPS} width={1920} height={1080} />
+        {/* SOCLE carte Soudan (grammaire AES : Soudan crème + voisins kaki + contour permanent + halos locaux) */}
+        {/* 2 variantes comparatives : A = grand bloc vide (AES pur) · B = états très pâles */}
+        <Composition id="SoudanSocleTest-A-BlocVide" component={SoudanSocleTest} durationInFrames={SOUDAN_SOCLE_FRAMES} fps={SOUDAN_SOCLE_FPS} width={1920} height={1080} defaultProps={{ stateLines: 0 }} />
+        <Composition id="SoudanSocleTest-B-EtatsPales" component={SoudanSocleTest} durationInFrames={SOUDAN_SOCLE_FRAMES} fps={SOUDAN_SOCLE_FPS} width={1920} height={1080} defaultProps={{ stateLines: 0.15 }} />
+        {/* "on nomme → ça se trace" : contour d'état coloré qui se dessine au mot (option C) */}
+        <Composition id="SoudanHighlightTest" component={SoudanHighlightTest} durationInFrames={SOUDAN_HL_FRAMES} fps={SOUDAN_HL_FPS} width={1920} height={1080} />
+        {/* MOUVEMENT : jetons qui se déplacent + sillage derrière + highlight au passage (valide socle 100%) */}
+        <Composition id="SoudanMouvementTest" component={SoudanMouvementTest} durationInFrames={SOUDAN_MVT_FRAMES} fps={SOUDAN_MVT_FPS} width={1920} height={1080} />
+        {/* TEST FINAL : régions persistantes + jetons + arrivée qui allume + zoom serré + base iso + retour vide */}
+        <Composition id="SoudanTestFinal" component={SoudanTestFinal} durationInFrames={SOUDAN_TF_FRAMES} fps={SOUDAN_TF_FPS} width={1920} height={1080} />
+        <Composition id="SoudanActe1" component={SoudanActe1} durationInFrames={SOUDAN_ACTE1_FRAMES} fps={SOUDAN_ACTE1_FPS} width={1920} height={1080} />
+        {/* Acte 3 — test isolé GeoFlowConnection : trajet Darfour->Dubaï aller-retour + transformation marqueur */}
+        <Composition id="GeoFlowConnectionTest" component={GeoFlowConnectionTest} durationInFrames={GFC_TEST_FRAMES} fps={GFC_TEST_FPS} width={1920} height={1080} />
+        {/* Acte 2 — proto isolé du jeton 2-visages (converge -> fusion -> fend -> split) */}
+        <Composition id="TwoFaceTokenTest" component={TwoFaceTokenTest} durationInFrames={300} fps={30} width={1920} height={1080} />
+        {/* Acte 2 "Blocage" — beats 1-4 câblés (carte + jeton 2-visages) ; beats 5-9 en cours */}
+        <Composition id="SoudanActe2" component={SoudanActe2} durationInFrames={SOUDAN_A2_FRAMES} fps={SOUDAN_A2_FPS} width={1920} height={1080} />
+        {/* Acte 2 beat 6 — proto isolé du bloc rapport de force (puissance vs territoire) */}
+        <Composition id="BlocRapportForceTest" component={BlocRapportForceTest} durationInFrames={300} fps={30} width={1920} height={1080} />
+        {/* Acte 3 "Suivre l'or" — 100% carte, GeoFlowConnection + drapeaux persistants */}
+        <Composition id="SoudanActe3" component={SoudanActe3} durationInFrames={SOUDAN_A3_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
+        {/* Section 1 seule (beats 1-2-2bis, 1166 frames) — assemblage Acte 3 version GLOBE D3 */}
+        <Composition id="SoudanActe3-Section1" component={SoudanActe3Section1Only} durationInFrames={SOUDAN_A3_S1_FRAMES} fps={SOUDAN_A3_FPS} width={1920} height={1080} />
+        {/* Acte 4 "Même les voisins sont aspirés" — 100% carte, Russie/Égypte + DroneStrikeImpact Kosti */}
+        <Composition id="SoudanActe4" component={SoudanActe4} durationInFrames={SOUDAN_A4_FRAMES} fps={SOUDAN_A4_FPS} width={1920} height={1080} />
+        {/* Acte 5 "Le réseau qui arme dans l'ombre" — 100% carte, Émirats→Libye/Haftar→El-Fasher */}
+        <Composition id="SoudanActe5" component={SoudanActe5} durationInFrames={SOUDAN_A5_FRAMES} fps={SOUDAN_A5_FPS} width={1920} height={1080} />
+        {/* PROTO ISOLE — globe rotatif night-mode Darfour->Dubai, teste si ca peut remplacer camera suiveuse Mercator beat 3 */}
+        <Composition id="GlobeSoudanDubaiTest" component={GlobeSoudanDubaiTest} durationInFrames={GLOBE_SOUDAN_DUBAI_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        {/* PROTO ISOLE — comparaison 2 propositions jeton Port-Soudan (navale iso vs cartouche ancre), session 10 */}
+        <Composition id="PortSoudanJetonCompare" component={PortSoudanJetonCompare} durationInFrames={PORT_SOUDAN_COMPARE_FRAMES} fps={PORT_SOUDAN_COMPARE_FPS} width={1920} height={1080} />
+        {/* Insert Beat1Paradoxe FINAL adopte (concept A, Sol) — rendu isole pour validation avant integration */}
         {/* CrosshairLock — VRAI hook (tension viseur->lock). theme parchment=War-Map / dark=Souverain */}
         <Composition id="CrosshairLock-Mali-Parchment-V" component={() => <CrosshairLock center={[-2, 17]} baseZoom={4.6} theme="parchment" focusIso="MLI" label="MALI" subLabel="LE COEUR DU SAHEL" />} durationInFrames={110} fps={30} width={1080} height={1920} />
         <Composition id="CrosshairLock-Senegal-Dark-V" component={() => <CrosshairLock center={[-14.5, 14.5]} baseZoom={5.2} theme="dark" focusIso="SEN" label="SENEGAL" subLabel="CE QU'ON VOUS CACHE" />} durationInFrames={110} fps={30} width={1080} height={1920} />
@@ -1940,7 +2340,6 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="ProtoEffect-Loupe" component={ProtoEffect_Loupe} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-MapDraw" component={ProtoEffect_MapDraw} durationInFrames={150} fps={30} width={1920} height={1080} />
         <Composition id="RND-DefenseCompare" component={DefenseCompare} durationInFrames={60} fps={30} width={2200} height={1200} />
-        <Composition id="RND-DefenseGptAnimee" component={DefenseGptAnimee} durationInFrames={180} fps={30} width={1080} height={1080} />
         <Composition id="RND-CfaCompare" component={CfaCompare} durationInFrames={60} fps={30} width={2048} height={1024} />
         <Composition id="RND-GgwHookEncreVivant" component={GgwHookEncreVivant} durationInFrames={640} fps={30} width={1080} height={1920} />
         <Composition id="RND-B2LigneBrisee" component={B2LigneBrisee} durationInFrames={606} fps={30} width={1080} height={1920} />
@@ -1951,15 +2350,61 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-B7MosaiqueFinal" component={B7MosaiqueFinal} durationInFrames={642} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
-        <Composition id="RND-MineGeminiAnimee" component={MineGeminiAnimee} durationInFrames={840} fps={30} width={1920} height={1080} />
-        <Composition id="RND-HeroGptAnimee" component={HeroGptAnimee} durationInFrames={520} fps={30} width={1920} height={1080} />
-        <Composition id="RND-CreusetAnimee" component={CreusetAnimee} durationInFrames={420} fps={30} width={1920} height={1080} />
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
+        <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
+        {/* LiptakoRevealSVG-Test / ResourcesRevealSVG-Test RETIRÉES (2026-07-04) : intégration réelle
+            faite et validée dans Partie3Rupture.tsx / Partie4Cout.tsx (SahelPartie3 / SahelPartie4). */}
         <Composition id="RND-GraineStatic" component={GraineStatic} durationInFrames={60} fps={30} width={1920} height={1080} />
-        <Composition id="RND-GraineGeminiAnimee" component={GraineGeminiAnimee} durationInFrames={480} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaH16x9" component={IngaH16x9} durationInFrames={INGA_H_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaV9x16" component={IngaV9x16} durationInFrames={INGA_V_FRAMES} fps={30} width={1080} height={1920} />
+        <Composition id="RND-IngaEncreH" component={IngaEncreH} durationInFrames={INGA_ENCRE_H_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaNarratif-Parchemin" component={IngaNarratifParchemin} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaNarratif-Blanc" component={IngaNarratifBlanc} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaMondeVivant" component={IngaMondeVivant} durationInFrames={INGA_MONDE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaMondeV2" component={IngaMondeV2} durationInFrames={INGA_MONDE_V2_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaDualScene" component={IngaDualScene} durationInFrames={INGA_DUAL_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-IngaSplitScreen" component={IngaSplitScreen} durationInFrames={INGA_SPLIT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-CargoVoyage16x9" component={CargoVoyage16x9} durationInFrames={CARGO_VOYAGE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-CargoVoyage16x9-LibreInspire" component={CargoVoyage16x9_LibreInspire} durationInFrames={CARGO_VOYAGE_LI_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PortDechargement16x9" component={PortDechargement16x9} durationInFrames={PORT_DECHARGEMENT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-RetourAuChamp16x9" component={RetourAuChamp16x9} durationInFrames={RETOUR_CHAMP_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiPoseBankWalk" component={ProtoGeminiPoseBankWalk} durationInFrames={PROTO_GEMINI_POSE_BANK_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiActionChain" component={ProtoGeminiActionChain} durationInFrames={PROTO_GEMINI_ACTION_CHAIN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiPaletteDemo" component={ProtoGeminiPaletteDemo} durationInFrames={PROTO_GEMINI_PALETTE_DEMO_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiOfferScene" component={ProtoGeminiOfferScene} durationInFrames={PROTO_GEMINI_OFFER_SCENE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiHeadLoadWalk" component={ProtoGeminiHeadLoadWalk} durationInFrames={PROTO_GEMINI_HEAD_LOAD_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiHandBasketWalk" component={ProtoGeminiHandBasketWalk} durationInFrames={PROTO_GEMINI_HAND_BASKET_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiShoulderSackWalk" component={ProtoGeminiShoulderSackWalk} durationInFrames={PROTO_GEMINI_SHOULDER_SACK_WALK_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiBendPickup" component={ProtoGeminiBendPickup} durationInFrames={PROTO_GEMINI_BEND_PICKUP_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiManipulateObject" component={ProtoGeminiManipulateObject} durationInFrames={PROTO_GEMINI_MANIPULATE_OBJECT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiHandoff" component={ProtoGeminiHandoff} durationInFrames={PROTO_GEMINI_HANDOFF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiTreeCueillette" component={ProtoGeminiTreeCueillette} durationInFrames={PROTO_GEMINI_TREE_CUEILLETTE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGeminiContemplatif" component={ProtoGeminiContemplatif} durationInFrames={PROTO_GEMINI_CONTEMPLATIF_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoFaceExpressions" component={ProtoFaceExpressions} durationInFrames={120} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCadrages" component={ProtoCadrages} durationInFrames={150} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoFaceAFace" component={ProtoFaceAFace} durationInFrames={PROTO_FACE_A_FACE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDialogueEcran" component={ProtoDialogueEcran} durationInFrames={PROTO_DIALOGUE_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDataVizEncre" component={ProtoDataVizEncre} durationInFrames={PROTO_DATAVIZ_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoDataVizPleinEcran" component={ProtoDataVizPleinEcran} durationInFrames={PROTO_DATAVIZ_PLEIN_ECRAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoNarratifPlusData" component={ProtoNarratifPlusData} durationInFrames={PROTO_NARRATIF_PLUS_DATA_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCueilletteGrosPlan16x9" component={ProtoCueilletteGrosPlan16x9} durationInFrames={PROTO_CUEILLETTE_GROS_PLAN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PecheurSurpeche16x9" component={PecheurSurpeche16x9} durationInFrames={PECHEUR_SURPECHE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PecheurSurpecheSeedance16x9" component={PecheurSurpecheSeedance16x9} durationInFrames={PECHEUR_SEEDANCE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoMap2dEncre" component={ProtoMap2dEncre} durationInFrames={PROTO_MAP2D_ENCRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoInsertTactiqueTopDown" component={ProtoInsertTactiqueTopDown} durationInFrames={PROTO_INSERT_TACTIQUE_TOPDOWN_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAssemblageKhartoumBeat5" component={ProtoAssemblageKhartoumBeat5} durationInFrames={PROTO_ASSEMBLAGE_KHARTOUM_BEAT5_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolPortraitRigTest" component={ProtoSolPortraitRigTest} durationInFrames={PROTO_SOL_PORTRAIT_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolFullbodyRigTest" component={ProtoSolFullbodyRigTest} durationInFrames={PROTO_SOL_FULLBODY_RIG_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolCargoSceneTest" component={ProtoSolCargoSceneTest} durationInFrames={PROTO_SOL_CARGO_SCENE_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoSolUsineSceneTest" component={ProtoSolUsineSceneTest} durationInFrames={PROTO_SOL_USINE_SCENE_TEST_FRAMES} fps={30} width={1080} height={1920} />
+        <Composition id="RND-ProtoAtlasMercator16x9" component={ProtoAtlasMercator16x9} durationInFrames={PROTO_ATLAS_MERCATOR_16X9_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondePalimpseste" component={ProtoAtlasMondePalimpseste} durationInFrames={PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondeCameraTest" component={ProtoAtlasMondeCameraTest} durationInFrames={PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoMapboxMondeGrisTest" component={ProtoMapboxMondeGrisTest} durationInFrames={PROTO_MAPBOX_MONDE_GRIS_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoAtlasMondeGrisSVG" component={ProtoAtlasMondeGrisSVG} durationInFrames={PROTO_ATLAS_MONDE_GRIS_SVG_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-TypewriterStock" component={ProtoEffect_TypewriterStock} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Newspaper3D" component={ProtoEffect_Newspaper3D} durationInFrames={180} fps={30} width={1920} height={1080} />
         <Composition id="ProtoEffect-Loupe3D" component={ProtoEffect_Loupe3D} durationInFrames={180} fps={30} width={1920} height={1080} />
@@ -1973,7 +2418,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="SenegalScene0" component={SenegalScene0} durationInFrames={970} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1" component={SenegalScene1} durationInFrames={3015} fps={30} width={1920} height={1080} />
         <Composition id="SenegalScene1Intro" component={SenegalScene1Intro} durationInFrames={750} fps={30} width={1920} height={1080} />
-        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={900} fps={30} width={1920} height={1080} />
+        <Composition id="SenegalScene1IntroCoin" component={SenegalScene1IntroCoin} durationInFrames={641} fps={30} width={1920} height={1080} />
         <Composition id="SenegalCoinSVGProbe" component={SenegalCoinSVGProbe} durationInFrames={330} fps={30} width={1920} height={1080} />
       </Folder>
 
@@ -2723,6 +3168,15 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* R&D — Cutout halftone + stroke offset (technique Vox-style) */}
+        <Composition
+          id="RND-CutoutHalftone"
+          component={HalftoneDemo}
+          durationInFrames={120}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         {/* TEMPLATE PRINCIPAL VERTICAL (overlay Remotion, carte claire) — 3e pilier */}
         <Composition
           id="SudanWarMapVertical"
@@ -2920,12 +3374,15 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         {/* PARTIE 2 Sahel — le blocage (intervention FR/ONU qui échoue 10 ans).
-            Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides. */}
+            Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides.
+            durationInFrames étendu 5700→6119 (2026-07-01) : couvre le beat CEDEAO (menace d'intervention
+            armée) jusqu'au relais exact de P3 (F_BAMAKO=6118) — sans cette extension, le render s'arrêtait
+            à 5699 et coupait ~14s de narration avant que P3 ne prenne le relais (bug trous de jonction). */}
         <Composition
           id="SahelPartie2"
           component={SahelWarMapEngine}
           defaultProps={{ partie2: true }}
-          durationInFrames={5700}
+          durationInFrames={6119}
           fps={30}
           width={1920}
           height={1080}
@@ -3067,6 +3524,351 @@ export const RemotionRoot: React.FC = () => {
         />
       </Folder>
 
+      <Folder name="cacao-chocolat-short">
+        <Composition
+          id="Cacao-B1Hook"
+          component={B1Hook}
+          durationInFrames={B1_HOOK_FRAMES}
+          fps={B1_HOOK_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B2Source"
+          component={B2Source}
+          durationInFrames={B2_SOURCE_FRAMES}
+          fps={B2_SOURCE_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerB3"
+          component={VergerPreviewB3}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerReverdit"
+          component={VergerPreviewReverdit}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-VergerFissure"
+          component={VergerPreviewFissure}
+          durationInFrames={60}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-TabletteMorph0"
+          component={TabletteMorphPreview0}
+          durationInFrames={30}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-TabletteMorph1"
+          component={TabletteMorphPreview1}
+          durationInFrames={30}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B3Extraction"
+          component={B3Extraction}
+          durationInFrames={B3_EXTRACTION_FRAMES}
+          fps={B3_EXTRACTION_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B4-Lien"
+          component={B4Lien}
+          durationInFrames={B4_RENVERSEMENT_FRAMES}
+          fps={B4_RENVERSEMENT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B4-Fade"
+          component={B4Fade}
+          durationInFrames={B4_RENVERSEMENT_FRAMES}
+          fps={B4_RENVERSEMENT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B5Pont"
+          component={B5Pont}
+          durationInFrames={B5_PONT_FRAMES}
+          fps={B5_PONT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-B5PontH-16x9"
+          component={B5PontH}
+          durationInFrames={B5_PONT_H_FRAMES}
+          fps={B5_PONT_H_FPS}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Cacao-ProtoPlanteur-16x9"
+          component={ProtoPlanteur}
+          durationInFrames={PROTO_PLANTEUR_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="PersoVivant-RecolteAuSol"
+          component={RecolteAuSol}
+          durationInFrames={RECOLTE_AU_SOL_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="PersoVivant-PasserObjetMainAMain"
+          component={PasserObjetMainAMain}
+          durationInFrames={PASSER_OBJET_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-Proto3Quarter"
+          component={Proto3Quarter}
+          durationInFrames={PASSER3Q_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoBack"
+          component={ProtoBack}
+          durationInFrames={PASSER_BACK_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoFace"
+          component={ProtoFace}
+          durationInFrames={PASSER_FACE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-ProtoMultiDirTest"
+          component={ProtoMultiDirTest}
+          durationInFrames={PASSER_MULTIDIR_TEST_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-8dir-SceneMultiPlanTest"
+          component={SceneMultiPlanTest}
+          durationInFrames={SCENE_MULTIPLAN_TEST_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Cacao-HistoirePlanteur"
+          component={HistoirePlanteur}
+          durationInFrames={HISTOIRE_PLANTEUR_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-ChaineValeur-16x9"
+          component={CacaoChaineValeur16x9}
+          durationInFrames={CACAO_CHAINE_16X9_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Vox-Papercut-Avion-16x9"
+          component={VoxPapercutAvion16x9}
+          durationInFrames={VOX_PAPERCUT_AVION_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="GGW-HistoirePlanteurs"
+          component={HistoireGGW}
+          durationInFrames={HISTOIRE_GGW_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-FULL"
+          component={CacaoChocolatFull}
+          durationInFrames={CACAO_FULL_FRAMES}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineCacao"
+          component={UsinePreviewCacao}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoire"
+          component={UsinePreviewIvoire}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoireDouce"
+          component={UsinePreviewIvoireDouce}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Cacao-UsineIvoireDouceChemVerte"
+          component={UsinePreviewIvoireDouceChemVerte}
+          durationInFrames={90}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+      </Folder>
+
+      <Composition
+        id="Test-LiptakoRevealSVG9x16"
+        component={() => {
+          const frame = useCurrentFrame();
+          return <LiptakoRevealSVG9x16 frame={frame} inAt={0} outAt={700} width={1080} height={1920} fps={30} />;
+        }}
+        durationInFrames={700}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="CtaCard-V"
+        component={CtaCard}
+        durationInFrames={235}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Part1"
+        component={AesShortPart1}
+        durationInFrames={1080}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Part2"
+        component={AesShortPart2}
+        durationInFrames={1680}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="AES-Short-Full"
+        component={AesShortFull}
+        durationInFrames={2802}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Test-ResourcesRevealSVG9x16"
+        component={() => {
+          const frame = useCurrentFrame();
+          return <ResourcesRevealSVG9x16 frame={frame} inAt={0} outAt={790} width={1080} height={1920} fps={30} />;
+        }}
+        durationInFrames={790}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="Duel-KimiK3-vs-GLM"
+        component={DuelKimiGlm}
+        durationInFrames={90}
+        fps={30}
+        width={1080}
+        height={960}
+      />
+      <Composition
+        id="Blueprint-Derrick-K3"
+        component={BlueprintDerrickK3}
+        durationInFrames={120}
+        fps={30}
+        width={1600}
+        height={900}
+      />
+      <Composition
+        id="Vision-Kosti-K3"
+        component={VisionKostiK3}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Vision-Khartoum-K3"
+        component={VisionKhartoumK3}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      {/* Kosti Beat 5 en ISOLE (SVG pur, pas de Mapbox) — reproduit Section4 de SoudanActe4 :
+          KostiInsertSVG + audio p4 + SFX, F4 en frames locales @30fps. Pour re-render/valider la scene seule. */}
+      <Composition
+        id="Kosti-Beat5-Standalone"
+        component={() => (
+          <RAbsoluteFill style={{ backgroundColor: "#d9c092" }}>
+            <RAudio src={rStaticFile("_shared/audio/soudan/acte4-voisins-aspires-p4.mp3")} />
+            <RSequence from={164} durationInFrames={22}>
+              <RAudio src={rStaticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.45} />
+            </RSequence>
+            <RSequence from={305} durationInFrames={24}>
+              <RAudio src={rStaticFile("_shared/sfx/impact/impact.mp3")} volume={0.55} />
+            </RSequence>
+            <KostiInsertSVG f4={{
+              kostiNomme: 164, droneFrappe: 305, stationService: 323,
+              civilsEssence: 365, pasCibleMilitaire: 448, civilsPayentPrix: 700, end: 766,
+            }} />
+          </RAbsoluteFill>
+        )}
+        durationInFrames={766}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
 
     </>
   );

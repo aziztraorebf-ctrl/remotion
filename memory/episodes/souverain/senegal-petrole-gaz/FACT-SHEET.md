@@ -65,7 +65,7 @@
 | Illustration (tangible) | ~60 % des revenus reviennent à l'État (tous mécanismes confondus) | AFP Factuel fact-check + présidence sénégalaise | 26/10/2022 | ✅ (estimation officielle) |
 | Bascule (conséquence) | GTA : 1re cargaison GNL exportée avril 2025 — Sénégal + Mauritanie = nouveaux exportateurs GNL | BP annonce officielle + Petrole.africa | Avril 2025 | ✅ |
 
-**Chiffre de contexte additionnel** (pour le script, non dans les 3 piliers) : dette ~70-75 % du PIB (FMI 2023) — sert à montrer l'enjeu de la manne attendue.
+**Chiffre de contexte additionnel** (pour le script, non dans les 3 piliers) : **dette ~132 % du PIB** (FMI officiel, communiqué 6 nov 2025 : « 132 % à fin 2024 » — après révélation de la « dette cachée » 2024, audit Forvis Mazars/Cour des comptes ; corroboré Tavily 2026-07-04). ⚠️ Le « ~70-75 % (FMI 2023) » cité auparavant est PÉRIMÉ (chiffre pré-dette-cachée). Affichable à l'écran : `Source : FMI, novembre 2025`. Sert à montrer l'enjeu de la manne attendue.
 
 **Chiffres à NE PAS affirmer** :
 - 62,5 M€ redressement Woodside → trop incertain (verdict contesté)
@@ -92,7 +92,7 @@
 
 4. **Récit dissident / opposition interne** : "60 % pour l'État ? On nous enfume. Petrosen n'a que 18 %, les montants réels ne sont pas publiés, et le FONSIS peut être pillé demain." — Porté par : candidats opposition, militants CAP22, analystes économiques indépendants sénégalais (ASCOSEN, Urgences Panafricaines).
 
-5. **Récit FMI/BM** : "La manne arrive mais la dette est à 70 % du PIB. Sans règle budgétaire stricte pour isoler les revenus pétroliers, le Sénégal risque de budgétiser plutôt que d'investir." Recommandation : règle d'or type Botswana/Norvège. — Porté par : FMI Article IV, World Bank country reports.
+5. **Récit FMI/BM** : "La manne arrive mais la dette est à 132 % du PIB (FMI, nov 2025 — après la dette cachée). Sans règle budgétaire stricte pour isoler les revenus pétroliers, le Sénégal risque de budgétiser plutôt que d'investir." Recommandation : règle d'or type Botswana/Norvège. — Porté par : FMI Article IV, World Bank country reports.
 
 **Règle appliquée** : la vidéo ne valide aucun de ces récits. Elle les expose étiquetés.
 

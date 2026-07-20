@@ -128,7 +128,7 @@ Bibliothèque dispo (`public/_shared/sfx/`) — mapping scène 1 :
 - halos s'allument (B) → `node-appear.mp3` / `sfx-map-ping.mp3`
 - count-up 60% (F) → `stat-tick.mp3` / `counter-tick.mp3` (cliquetis rapides)
 - arcs export + transitions caméra → `arrow-whoosh.mp3` / `sfx-swoosh-zoomin.mp3`
-- Yakaar capitales (E) → `tension-drone.mp3` / `tension-pulse.mp3`
+- Yakaar capitales (E) → ⛔ PAS `tension-drone.mp3` (proscrit, decision Aziz 2026-06-27 — derange) · preferer `tension-pulse.mp3` (ponctuel) ou musique de fond
 - balayage 2 récits (A) → `arrow-whoosh.mp3`
 - **À GÉNÉRER si besoin (ElevenLabs SFX)** : glissement méthanier (D) · pulse FROID distinct Yakaar · ping de désaturation (F).
 Doctrine : SFX en `<Sequence>` (pas Audio nu), plancher volume ~0.35-0.50.

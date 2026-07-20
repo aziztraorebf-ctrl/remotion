@@ -1,8 +1,581 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-06-15 (après-midi) — P4 VALIDÉE · PASSE SÉQUENTIELLE en cours · HOOK en session dédiée.
-**Branche :** `feat/p3-ambient-vie`. **Format :** War-Map Long 16:9, ~7min26. Voix GéoAfrique V2 (V3→STS).
+**Dernière mise à jour :** 2026-07-05 — ✅✅✅ **VIDÉO LONGUE VALIDÉE AZIZ, PROMUE `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`.** Reste 2 points avant publication effective : **thumbnail** + **titre** (prochaine session). Voir section "✅✅✅ SESSION C — ÉTAT (2026-07-05)" juste ci-dessous.
+**✅✅ Chantier Short "L'AES en 90s" — SESSION 2026-07-08 CONCLUANTE : VIDÉO COMPLÈTE 92s PRODUITE, validée visuellement par Aziz.** Après les 4 échecs du 2026-07-07 (table rase), reprise RÉUSSIE via carte vivante d3-geo PUR (registre totalement différent de la vidéo longue Mapbox, mais qui s'y raccorde — style qu'on maîtrise). Livrable : `out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` (92s ; catbox https://files.catbox.moe/8ms702.mp4). Code : `src/projects/warmap/shorts/aes-short-90s/`, composition Remotion `AES-Short-Full` (assemble Part1 0-36s + Part2 36-92s). **RESTE 2 finitions (prochaine session) : (1) MUSIQUE — reprendre celle de la vidéo LONGUE War-Map AES + (2) SFX — ping/ding sur apparitions d'éléments + 1-2 SFX bien placés (aucun son actuellement à part la narration). Vérifier aussi la luminosité au soleil.** Socle + décisions figées : `.claude/.../memory/aes-short-socle-valide.md`. Détail complet : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md`.
+**Branche :** `fix/senegal-v3-passe-finition` (⚠️ nom historique trompeur — toute la Session B War-Map Sahel
+a été faite ici, pas sur une branche dédiée `feat/warmap-aes-hook-integration` qui n'a en réalité jamais
+été créée/utilisée ; corrigé 2026-07-04, décision Aziz : documenter la réalité plutôt que déplacer les
+commits). **Format :** War-Map Long 16:9, ~7min30. Voix GéoAfrique V2 (V3→STS).
 
+---
+
+## ✅✅✅ PROCHAINE SESSION — DERNIERS POINTS AVANT PUBLICATION
+
+Vidéo finale validée par Aziz (2026-07-05), promue dans `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`
+(386 MB, 7min30, 13501 frames). Reste UNIQUEMENT :
+1. **Thumbnail** — à créer.
+2. **Titre** — à définir (cf `feedback_doctrine-titres-youtube-kora-cartes.md` pour la doctrine de titrage
+   du projet : fait+conséquence+cause inattendue, déclaratif > question).
+
+Une fois ces 2 points faits : programmer la publication (cf `memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md`
+pour la stratégie de distribution, `tools/trypost.md`/`tools/postiz.md` pour les outils de publication).
+
+---
+
+## ✅✅✅ SESSION C — ÉTAT (2026-07-04 → 2026-07-05, CONCLUE) — LIRE EN PREMIER À LA REPRISE
+
+### Fait et validé cette session
+1. **Fix audio "déjà" (P1, f2743)** : backup TTS resynthèse complète validé par Aziz à l'écoute (sans
+   réverb) splicé tel quel dans `narration-v5-expressive.mp3` — décalage de +2.67s assumé en aval SANS
+   retiming des triggers F_* (décision explicite Aziz : chantier disproportionné vs bénéfice, ajuster
+   seulement si un vrai problème de synchro apparaît au visionnage). Backup original :
+   `memory/episodes/warmap-sahel/audio-fixes/narration-v5-expressive-PRE-DEJA-SPLICE-2026-07-04.mp3`.
+2. **Premier render complet bout-en-bout** (Acte1+P1+P2+P3+P4, jamais fait avant cette session) —
+   continuité vérifiée à 100% par `check-frame-continuity.py`.
+3. **CEDEAO — 3e itération, direction actée** : après 2 tentatives rejetées (marqueurs+flèches hors-cadre
+   le 2026-07-01, bande+flèches avec triangles dans l'océan le 2026-07-04 tôt), direction validée par
+   Aziz : zoom élargi pour montrer les VRAIS contours des pays côtiers (Côte d'Ivoire/Ghana/Bénin/Nigeria,
+   extraits de `public/_shared/geo-data/world/world-atlas-countries-110m.json` via `topojson-client`,
+   ajoutés à `sahelCountries.ts`), leurs frontières PULSENT en rouge/ambre (`#D14E2E`), flèches convergentes
+   vers Niamey. Cartouche texte "MENACE D'INTERVENTION ARMÉE" ajouté PUIS retiré (retour Aziz : redondant
+   avec la voix). Code dans `Partie2Blocage.tsx` (bloc `cedeaoEndT`), caméra réélargie dans
+   `SahelCameras.ts` (`PARTIE2_CAM_KEYS`, f5380-5640).
+4. **Portraits dirigeants P4 (Goïta/Traoré/Tiani) refaits 2 fois** :
+   - 1re tentative (Gemini, style soldier-aes.png sans référence de ressemblance) : REJETÉE par Aziz —
+     visages génériques en treillis, pas les vraies illustrations stylisées des dirigeants.
+   - 2e tentative (validée) : vraies photos officielles téléchargées (Wikipedia/Commons, licence libre :
+     Goïta `Assimi_Goïta_in_July_2023.jpg`, Traoré `Ibrahim_Traoré_portrait.jpg`, Tiani
+     `Abdourahamane_Tchiani_in_2025.jpg`) puis restylisées via Recraft (`image_to_image` +
+     `remove_background`, style extrait de `soldier-aes.png` via `create_style`) — fidèles ET nettes au
+     downscale. Fichiers de prod remplacés, anciens (gravure fine floue) backupés dans
+     `memory/episodes/warmap-sahel/assets-backup/`.
+5. **SFX corrigés** (bug root-cause `startFrom` identifié — trim le fichier SOURCE, ne positionne PAS
+   dans la timeline ; `<Sequence from={...}>` est le pattern correct) : Liptako-Gourma (ping par drapeau),
+   Ressources (sons distincts or/uranium/pétrole), CFA (tension-pulse sur le maillon + swing léger de la
+   clé), coût humain P4 (tick sur les compteurs 3M/15M+).
+
+### ⛔ POINT OUVERT NON RÉSOLU — liseré blanc sur les frontières CEDEAO (mineur, pas bloquant)
+Les contours des 4 pays côtiers (CI/Ghana/Bénin/Nigeria) affichent un liseré blanc/crème fin en
+PERMANENCE (visible dès qu'ils entrent dans le cadre, indépendamment du pulse rouge qui, lui, fonctionne
+bien par-dessus). **Confirmé indépendant de mon code** : désactivé le bloc CEDEAO complet (`{false && ...}`)
+et re-rendu la même frame → liseré identique, donc c'est un résidu du fond de carte Mapbox natif, pas le
+pulse/flèches ajoutés cette session.
+**Pistes déjà éliminées par test direct (pas supposition)** :
+- Le "reskin en continu" (listener `sourcedata` réappliquant le style à chaque tuile chargée, ajouté
+  cette session dans `SahelWarMapEngine.tsx`) — aucun changement de pixel avant/après.
+- Layer `admin-0-boundary-bg` (halo de fond) forcé à `line-opacity: 0` — aucun changement.
+- Layer `admin-0-boundary-disputed` forcé à `line-opacity: 0` — aucun changement.
+**Layers Mapbox confirmées présentes** (loggées au runtime) : `admin-1-boundary-bg`, `admin-0-boundary-bg`,
+`admin-1-boundary`, `admin-0-boundary`, `admin-0-boundary-disputed` — toutes couvertes par le filtre
+`l.id.includes("admin-0")` du reskin, sans effet sur ce liseré précis. Cause réelle non identifiée à la
+fin de cette session. Décision Aziz : documenter et avancer, pas bloquant visuellement (pulse+flèches
+lisibles par-dessus), à reprendre si le temps le permet ou si ça gêne au montage final.
+
+### ✅✅✅ 2 DERNIERS FIXES APPLIQUÉS + VALIDÉS (2026-07-05) — VIDÉO FINALE VALIDÉE
+Après un 2e visionnage complet du render v3, Aziz a signalé 2 derniers points, tous deux corrigés,
+validés en mini-render, puis un render complet final relancé et validé :
+
+1. **Hook "3" (Acte1) décentré vers le bas** — mesure pixel précise (`Acte1IntroSlam.tsx`) : centre réel
+   du glyphe à 652px/1080 au lieu de 540px attendu. La compensation optique existante
+   (`bigFontSize * 0.06`, ajoutée le 2026-07-01) était très insuffisante. Recalée à `bigFontSize * 0.183`
+   après itération mesurée (652px → 500px → 529.5px, écart final <1% de la hauteur). Fichier :
+   `src/projects/warmap/_shared/Acte1IntroSlam.tsx`.
+2. **Doublon audio "d'anciennes tensions entre communautés couvent encore"** (P1, ~96-99s narration) —
+   **cause root confirmée par force-alignment Whisper** (`scripts/tools/whisper-align.py`, ~$0.02/run) :
+   le backup TTS resynthétisé pour le fix "déjà" (session précédente) contenait déjà cette phrase à sa
+   fin (le texte demandé pour la resynthèse incluait toute la phrase, pas juste le mot), ET le
+   `post-splice.mp3` de l'époque commençait à 94.18s (AVANT cette phrase dans l'original), donc les deux
+   segments collés se chevauchaient en CONTENU, pas juste en timing. Fix : re-splice avec la bonne borne
+   post-splice à 97.20s (juste après "encore." dans l'original, cf `narration-v5-alignment.json` pré-
+   splice) au lieu de 94.18s. Vérifié par transcription Whisper : 1 seule occurrence après fix. Ancien
+   fichier avec doublon backupé : `memory/episodes/warmap-sahel/audio-fixes/
+   narration-v5-expressive-AVEC-DOUBLON-2026-07-05.mp3`.
+
+⭐ **LEÇON MÉTHODE** : le force-alignment (transcription automatique avec timestamps) est BEAUCOUP plus
+fiable que le calcul manuel de mapping timestamp↔frame pour diagnostiquer un problème audio précis — a
+permis de trancher en quelques minutes ce qu'une investigation manuelle n'aurait fait que deviner.
+Réutilisable pour tout futur doute sur un doublon/décalage audio : extraire la zone suspecte en clip
+court, lancer `scripts/tools/whisper-align.py`, lire le texte+timestamps exact.
+
+### ✅✅✅ VIDÉO FINALE VALIDÉE AZIZ (2026-07-05) — PROMUE PRET-PUBLICATION
+Render complet final (`FULL-acte1-p1-p2-p3-p4-2026-07-05-SessionC-v4-FINAL.mp4`, 13501 frames, 7min30)
+validé Aziz sans réserve après ces 2 derniers fixes. Promu vers
+`out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`. Dossier `wip/` purgé (58 fichiers intermédiaires,
+3.4GB) conformément à l'hygiène `out/` du projet.
+
+**Reste avant publication effective (prochaine session)** : thumbnail + titre. Voir section
+"PROCHAINE SESSION" en tête de fichier.
+
+---
+
+## ✅✅✅ SESSION B — ÉTAT DE FIN (2026-07-04) — LIRE EN PREMIER À LA REPRISE
+
+### Fait et validé cette session
+1. **Liptako-Gourma branché** dans `Partie3Rupture.tsx` (remplace `WarMapOverlayDynamic`) — validé Aziz sur mini-render contexte réel (catbox `ui241w`).
+2. **Ressources branché** dans `Partie4Cout.tsx` (remplace `ResourcesReveal`, code mort supprimé) — validé Aziz (catbox `5g2fua`).
+3. **HUD "Données estimées"** retiré sur toutes les Parties V5 (`SahelWarMapEngine.tsx`, gate `!isPartie` ajouté).
+4. **Points Bamako/Ouaga/Niamey en continu** retirés en P1 (même gate `!isPartie`, `SahelWarMapEngine.tsx` ~2585).
+5. **SFX résiduels doublons retirés** : impact CFA (`SahelWarMapEngine.tsx` ~1776, l'ancien split-screen) + ink-spread Ressources (les 2 nouveaux composants SVG gèrent déjà leur propre SFX interne).
+6. **Mot "Sources :"** retiré du cartouche coût humain P4 (reste juste "OCHA · PAM · HCR").
+7. **Source Moura déplacée** hors de la carte (bas-droite écran, même pattern que P4) au lieu d'incrustée aux coordonnées géo.
+8. **Portraits dirigeants P4 agrandis** (`D = vmin*0.065 → 0.08`, `Partie4Cout.tsx` ~1115) — cause réelle du flou identifiée : gravure fine des sprites `p4-assets/leader-*.png` qui ne survit pas au downscale extrême (~70px), PAS un bug d'opacité `attenuate` comme le diagnostic initial le suggérait. Vérifié visuellement, plus de chevauchement Ouaga/Niamey avec cette valeur.
+9. **CEDEAO P2 repensé** (`Partie2Blocage.tsx`) : les anciens marqueurs+flèches vers CI/Ghana/Bénin/Nigeria (hors-cadre Sahel) remplacés par une bande de dégradé qui pulse en bas d'écran + 3 flèches COURTES vers Niamey, jamais hors du cadre serré. `CEDEAO_RING` (code mort) supprimé de ce fichier.
+10. **Fondu de transition f9410 (P3→P4)** ajouté : ~0.6s fondu au noir en fin de `Partie3Rupture.tsx` + fondu symétrique en début de `Partie4Cout.tsx` — Aziz confirme l'effet correct (une fausse alerte dictée vocale a semé le doute, tranchée : c'est bon).
+
+### ⛔ SEUL POINT BLOQUANT AVANT RENDER FINAL — écho/reverb sur "déjà" (P1, f2743)
+Aziz confirme à l'écoute : ce n'est PAS une répétition de mot (le script n'a qu'une occurrence à cet endroit,
+vérifié dans `narration-v5-alignment.json` index 434, "parce que l'État est **déjà** absent de ces immenses
+zones rurales"), mais un artefact du fichier audio lui-même — une aspérité façon écho/reverb sur cette syllabe
+précise. Diagnostic (forme d'onde + spectrogramme, voir historique conversation) : PAS une reverb de salle
+classique (pas de queue de décroissance séparée dans le temps), donc un simple filtre ffmpeg de-reverb
+générique risque de ne rien arranger ou d'abîmer le reste du mot.
+
+**Tentative faite cette session** : régénération TTS de la phrase complète ("Mais il faut bien comprendre une
+chose : si ces groupes s'enracinent aussi facilement, c'est parce que l'État est déjà absent de ces immenses
+zones rurales, où d'anciennes tensions entre communautés couvent encore.", tag `[solemn]`, même pipeline
+`scripts/generate-narration-expressive.py` V3→STS GeoAfrique) — coût ~443 crédits, déjà payé. **Résultat
+gardé en backup** : `memory/episodes/warmap-sahel/audio-fixes/deja-resynth-backup-2026-07-04.mp3` (12.49s).
+**PROBLÈME** : dure 12.49s contre 10.0s pour l'originale (fenêtre 84.48s→94.18s dans `narration-v5-expressive.mp3`,
+soit frames 2534→2825 à 30fps) — le TTS a inséré des pauses plus longues sur le ":" et la virgule après
+"facilement,". Intégrer tel quel décalerait TOUT le reste de la narration de +2.49s, désynchronisant les
+centaines de triggers F_* frame-précis du reste de la vidéo (P1 fin + P2 + P3 + P4 entiers). **PAS FAIT** —
+décision Aziz : ne pas risquer la désynchro globale pour un artefact mineur sur 1 mot, traiter dans une
+session dédiée.
+
+**Pistes à explorer en session dédiée (aucune tranchée)** :
+- Recouper les silences internes de `deja-resynth-backup-2026-07-04.mp3` (retirer ~2.5s dans les pauses,
+  SANS toucher la voix elle-même) pour le faire tenir dans la fenêtre de 10.0s originale, puis re-tenter le splice.
+- Tester un filtre ffmpeg ciblé (de-esser / spectral repair / compression transitoire) sur le SEUL mot "déjà"
+  (90.94s→91.42s dans le fichier original) avant de conclure que rien de générique ne fonctionne — cette
+  session a analysé (forme d'onde+spectrogramme) mais n'a PAS testé de filtre réel.
+- Envisager un outil de "speech repair" dédié (ex. Adobe Podcast enhance, Resemble AI, ou équivalent) plutôt
+  qu'un filtre ffmpeg brut, si disponible.
+- En dernier recours : accepter l'artefact tel quel (Aziz : "pas bloquant pour le render final" si rien de
+  fiable n'est trouvé rapidement).
+
+### ▶ PROCHAINE SESSION — ORDRE DE TRAVAIL RECOMMANDÉ
+1. Traiter l'écho "déjà" (voir pistes ci-dessus) OU décider de l'accepter tel quel.
+2. **UN SEUL render complet Acte1+P1+P2+P3+P4** (jamais fait cette session — tout le travail ci-dessus n'a
+   été vérifié qu'en mini-renders isolés). Vérifier avec `check-frame-continuity.py` avant tout envoi à Aziz.
+3. Si le render complet révèle un souci non anticipé (calage Liptako/Ressources en contexte VRAIMENT bout-en-
+   bout avec musique, pas juste narration isolée comme testé cette session) : ajuster les constantes de timing
+   internes (nommées en tête de `LiptakoRevealSVG.tsx`/`ResourcesRevealSVG.tsx`), PAS tronquer le SVG.
+4. Une fois le render complet propre et validé Aziz : promouvoir vers `out/PRET-PUBLICATION/`.
+
+---
+
+## ⛔⛔⛔ REPRISE SESSION SUIVANTE (2026-07-04) — SOURCE DE VÉRITÉ ACTUELLE
+
+### Contexte : plan en 2 sessions, décidé avec Aziz le 2026-07-04
+
+Après le fix du bug critique des trous de frames (session 2026-07-01, voir section "REPRISE 2026-07-01"
+ci-dessous pour le détail), Aziz a visionné les renders corrigés et donné une deuxième vague de retours
+précis (frame-par-frame, captures d'écran à l'appui). Le contexte de cette session devenait trop long pour
+tout traiter — **décision : scinder en 2 sessions dédiées**, dans cet ordre strict :
+
+- **SESSION A (celle-ci ou la suivante) — CONSTRUCTION DES SVG.** Construire/valider les 3 inserts SVG
+  narratifs SANS toucher au reste du code, SANS render complet (juste des mini-renders isolés pour juger
+  chaque SVG). Détail des 3 SVG plus bas.
+- **SESSION B (après validation des SVG) — INTÉGRATION + FIXES + RENDER FINAL UNIQUE.** Tous les fixes
+  techniques listés ci-dessous (jetons flous, coupures, sources, caméra, HUD "données estimées") + brancher
+  les 3 SVG validés en Session A + **UN SEUL render complet bout-en-bout** (Acte1+P1+P2+P3+P4), vérifié
+  par `check-frame-continuity.py` avant toute présentation.
+
+Ne PAS mélanger les deux : la Session B ne doit démarrer QUE quand les 3 SVG de la Session A sont validés
+par Aziz (évite de re-render tout après coup si un SVG déplaît).
+
+### 🎨 SESSION A — LES 3 SVG À CONSTRUIRE/VALIDER
+
+1. **CFA (déjà fait, à finaliser)** — `src/projects/warmap/parties/CfaRevealSVG.tsx` existe déjà (adapté du
+   prototype validé `out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`), branché dans `Partie4Cout.tsx` à
+   la place de l'ancien `CfaReveal` (split-screen "PowerPoint"). **Codé mais JAMAIS re-rendu/vu** — la
+   Session A doit juste faire un mini-render isolé (P4, `--frames=11860-12200` environ, autour de F_CFA=11869)
+   pour qu'Aziz le valide visuellement. Si ok → rien d'autre à faire dessus.
+2. **Liptako-Gourma (à construire)** — remplace l'encadré actuel jugé "peu convaincant" au début de P3
+   (`WarMapOverlayDynamic` dans `Partie3Rupture.tsx`, inAt=F_BAMAKO=6118, outAt=F_EPREUVE=6800). Piste
+   Aziz : SVG narratif façon Cacao/CFA. Pas de design existant — à concevoir de zéro (pipeline
+   `PRODUCTION-AGENTIQUE-SVG.md` recommandé). Contenu narratif à porter : "16 septembre 2023 · Charte du
+   Liptako-Gourma" + les 3 drapeaux (Mali/Burkina/Niger) + citation du pacte. Réutiliser le concept
+   symbolique déjà choisi pour le CFA (objet central + ramifications) si ça colle : ex. un sceau/pacte qui
+   se scelle, 3 fils qui convergent vers un centre.
+3. **Triple-screen ressources (à construire)** — remplace `ResourcesReveal` (`Partie4Cout.tsx` ligne ~1057,
+   inAt=F_OR-20≈10647, outAt=F_CONFED-16≈11433), jugé "statique tout le long" malgré son animation actuelle
+   (contours pays qui se remplissent + icônes). Piste Aziz (déjà actée session 2026-06-15/07-01) :
+   graphisme SVG narratif dynamique façon "objet-héros unique" — référence explicite = la dernière scène
+   du Short Cacao (`out/PRET-PUBLICATION/cacao-chocolat-FINAL.mp4` ou ses sources SVG) où le cacao devient
+   un objet central avec des ramifications vers callbot/or/pétrole. Ici : un objet central (ex. le Sahel/
+   les 3 pays en bloc) avec 3 ramifications vers or (Mali/Burkina)/uranium(Niger)/pétrole(Niger). Pas de
+   design existant — à concevoir de zéro.
+
+Pour 2 et 3 : suivre la doctrine `memory/doctrines/SVG-SCENES-GENERATIVES.md` et le pipeline
+`memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` (agent A→Z, prouvé sur GGW + cargo). Valider l'image-cible
+AVANT le code (`SVG-FAISABILITE-AMONT.md`).
+
+### ✅✅ SESSION A TERMINÉE (2026-07-04) — LES 3 SVG SONT VALIDÉS AZIZ, CODÉS, TESTÉS ISOLÉMENT
+
+**Les 3 chantiers sont CLOS.** Reste UNIQUEMENT le branchement dans le moteur + calage de durée fin en
+Session B (détail plus bas — ⛔ point d'attention explicite, ne pas juste copier-coller le composant).
+
+1. **CFA** — `src/projects/warmap/parties/CfaRevealSVG.tsx`. Déjà branché dans `Partie4Cout.tsx:1154`
+   (`inAt={F_CFA}` `outAt={F_STATU-24}`, soit f11869→f12273, 404 frames ≈13.5s). Validé Aziz sur mini-render
+   isolé (catbox `lncgo6`). **Rien à changer dans le composant.** Un seul point pour Session B : un SFX
+   résiduel de l'ANCIEN split-screen (`SahelWarMapEngine.tsx:1780-1783`, `Sequence from={12193}` qui joue
+   `impact.mp3`, commentaire "climax du fil de parité vibrate") fait doublon avec le SFX interne du SVG —
+   **à retirer** (+ mettre à jour le commentaire lignes 1740-1742 qui référence encore l'ancien layout SFX).
+
+2. **Liptako-Gourma** — NOUVEAU fichier `src/projects/warmap/parties/LiptakoRevealSVG.tsx` (n'existait pas
+   avant cette session). Concept : miroir narratif du CFA — un SCEAU DE CIRE qui SE SCELLE (3 cordages
+   Mali/Niger/Burkina Faso convergent, sceau passe de cire terne à écarlate vif au mot "scellent", impact +
+   3 anneaux entrelacés + étoile gravés, texte circulaire "CHARTE DU LIPTAKO-GOURMA · UNION SAHÉLIENNE"),
+   avec les 3 VRAIS drapeaux (ml/ne/bf.png, `_shared/flags/`) qui apparaissent en séquence étalée (L90/150/
+   210) dans des écussons, ondulant en continu (clip-path sinusoïdal). Cible SVG source : `out/_r-and-d/
+   warmap-svg-inserts/liptako-gemini.svg` (générée Gemini 3.1 Pro, brief "exigence+liberté" sans image de
+   référence — cf doctrine GUIDER SANS BRIDER). Mini-render validé Aziz : catbox `hlt9kt` (v3, 682 frames
+   = 22.7s, correspond exactement à la fenêtre F_BAMAKO=6118→F_EPREUVE=6800 du moteur).
+   **PAS ENCORE BRANCHÉ dans `Partie3Rupture.tsx`** — actuellement l'ancien `WarMapOverlayDynamic` (lignes
+   858-879) est toujours actif. Session B doit : importer `LiptakoRevealSVG`, le brancher avec
+   `inAt={F_BAMAKO}` `outAt={F_EPREUVE}`, retirer/commenter l'ancien `WarMapOverlayDynamic`.
+
+3. **Ressources ("le levier des ressources")** — NOUVEAU fichier `src/projects/warmap/parties/
+   ResourcesRevealSVG.tsx` (n'existait pas avant cette session). Concept : objet-héros unique = un BOUCLIER
+   MÉDIÉVAL AES (silhouette écu, rebord doré épais, rivets) qui SE DESSINE au contour (stroke-dasharray),
+   avec le SCEAU AES réel en blason central (étoile + "A·E·S", repris de `ConfederationReveal` dans
+   `Partie4Cout.tsx` — cohérence visuelle avec le sceau qui scelle la confédération plus loin dans P4), et
+   3 VEINES texturées (or/uranium/pétrole) qui se tracent en cascade puis ont des GOUTTES DE FLUX qui glissent
+   en continu vers le bouclier (ravitaillement, pas extraction-fuite). Cible SVG source : mix-and-match de
+   `out/_r-and-d/warmap-svg-inserts/ressources-gemini.svg` (1re génération, veines organiques) + le fix
+   bouclier ciblé (`ressources-gemini-v3-shield.svg`) — historique complet dans le dossier `out/_r-and-d/
+   warmap-svg-inserts/`. Mini-render validé Aziz : catbox `9w86rf` (v2, 786 frames = 26.2s, correspond
+   exactement à F_OR-20=10647→F_CONFED-16=11433 du moteur).
+   **PAS ENCORE BRANCHÉ** — actuellement l'ancien `ResourcesReveal` (`Partie4Cout.tsx:1057`, composant défini
+   ligne ~376) est toujours actif. Session B doit : importer `ResourcesRevealSVG`, le brancher avec
+   `inAt={F_OR-20}` `outAt={F_CONFED-16}` à la place de l'appel à `ResourcesReveal`.
+
+**⛔⛔ POINT D'ATTENTION EXPLICITE POUR LA SESSION B (demande Aziz 2026-07-04) — CALAGE DE DURÉE :**
+Les 2 nouveaux composants ont été chorégraphiés et testés ISOLÉMENT (composition de test `LiptakoRevealSVG-
+Test`/`ResourcesRevealSVG-Test` dans `Root.tsx`, sans la vraie narration/musique jouée par-dessus). Leur
+durée interne (682f et 786f) a été calée sur le DÉCOUPAGE AUDIO RÉEL extrait de `narration-v5-alignment.json`
+au moment de cette session — mais **à l'intégration finale (Session B), il FAUT reconfirmer que ce calage
+colle exactement à la voix + musique jouées en contexte réel** (le moteur peut avoir des micro-décalages
+non testés ici : mixage audio final, éventuel padding/silence ajouté au montage, timing réel vs timing
+mesuré). Si un écart apparaît : ALLONGER ou RESSERRER la chorégraphie interne (les frames de chaque geste
+sont des constantes nommées en tête de fonction dans chaque fichier, faciles à retimer) plutôt que de
+tronquer/couper le SVG — l'intention (cause→effet, payoff couleur au bon mot) doit rester intacte même si
+le calage bouge de quelques frames. Vérifier au moins une fois avec l'audio réel avant le render final unique.
+
+Les 2 compositions de test (`LiptakoRevealSVG-Test`, `ResourcesRevealSVG-Test` dans `Root.tsx`) peuvent être
+retirées de `Root.tsx` une fois l'intégration réelle faite en Session B (ou laissées, elles ne gênent rien).
+
+### 🔧 SESSION B — FIXES TECHNIQUES (tous nouveaux retours Aziz du 2026-07-04, précis frame-par-frame)
+
+**Bloc 1 (Acte1+P1+P2) :**
+1. **HUD "Données estimées · Sources : Wikipedia, ONU, HRW, UNHCR" encore visible** — CAUSE TROUVÉE :
+   `SahelWarMapEngine.tsx:2924` gate `{!acte1Refonte && (...)}` → ce HUD bas-droite s'affiche sur TOUS les
+   modes SAUF `acte1Refonte` (donc visible sur P1/P2/P3/P4, alors qu'il ne devrait l'être nulle part sauf
+   remplacé par les sources ponctuelles déjà ajoutées en P3/P4). Fix : étendre le gate à
+   `!acte1Refonte && !partie1 && !partie2 && !partie3 && !partie4` (ou l'inverse : gate positif sur les
+   seuls modes qui en ont VRAIMENT besoin, probablement aucun vu que P3/P4 ont déjà leurs sources
+   ponctuelles). Concerne tout le bloc 1 ET le bloc 2 (HUD global du moteur, pas par Partie).
+2. **Dirigeants AES (P1, ~f530-950) : ré-apparition en début de séquence.** Après le sceau AES (~f530), en
+   PLUS de leur apparition finale (déjà en place), faire apparaître les 3 portraits dirigeants dans leurs
+   positions respectives, rester en place, puis disparaître juste quand le 1er jeton JNIM apparaît
+   clairement (~f950). Réutiliser les sprites `p4-assets/{...}.png` déjà utilisés en P4 (LEADERS).
+3. **Coupure nette ~f1100 (mot "revenir")** : flash net, pas de raccord seamless. Cause suspectée par Aziz :
+   le mot/label "2012" apparaît/se répète deux fois à ce moment précis, ce qui casserait la continuité
+   visuelle. À investiguer dans `Partie1Origine.tsx` autour de F_2012=2102 (attention : ce chiffre est en
+   frames ABSOLUES du moteur, pas la frame locale ~f1100 mentionnée par Aziz dans son retour vidéo — vérifier
+   la conversion, probablement un time code lecteur vidéo local au bloc uploadé, pas la frame absolue).
+4. **Garder "2012" affiché en bas à gauche de la carte** au moment du bascule — confirmation, NE PAS
+   retirer ce label (contrairement à d'anciennes notes qui pourraient suggérer le contraire).
+5. **"déjà" prononcé/affiché deux fois** (au moment "l'État est déjà absent", ~f2800 zone) — confirmé
+   encore présent après le fix des trous. Investiguer `Partie1Origine.tsx` autour de F_ABSENT=2743.
+6. **Dézoom complet qui montre toute l'Afrique reste problématique** (violences hors Mali) — CONFIRMÉ non
+   résolu par le fix des trous (contrairement à l'hypothèse de la session précédente). Localiser dans
+   `getPartie2Cam` (`SahelCameras.ts`) le keyframe responsable du dézoom large et le retirer/resserrer —
+   Aziz veut rester en plan serré tout le long de cette phase.
+7. **Retirer les points Bamako/Ouagadougou/Niamey affichés en continu** pendant toute la P1 (Partie1Origine.tsx)
+   — pas nécessaires selon Aziz sur toute la durée de cette partie.
+8. **CEDEAO (~f5700-6200) : repenser complètement** (déjà acté 2026-07-01, confirmé 2026-07-04). Rejette les
+   triangles oranges + SFX craquement. Direction actée avec Aziz (2026-07-01) : frontière Sud qui pulse/
+   s'illumine au bord de l'écran + flèches courtes vers Niamey, SANS jamais sortir du cadre serré. Si aucune
+   solution visuelle satisfaisante n'est trouvée, Aziz accepte qu'on NE MONTRE PAS visuellement la CEDEAO
+   (la voix seule suffit) plutôt que de garder les triangles actuels.
+9. **~f6200 "face à cette menace, Bamako et Ouagadougou..." : coupure nette** (pas un raccord) au moment de
+   la transition vers l'encadré Liptako-Gourma. Sera probablement résolu une fois l'encadré remplacé par le
+   SVG narratif (Session A point 2) — à revérifier après intégration.
+
+**Bloc 2 (P3+P4) :**
+10. **Source Moura : ne PAS l'afficher SUR la carte** — actuellement `Partie3Rupture.tsx` affiche
+    "Source : Haut-Commissariat de l'ONU aux droits de l'homme" directement sur la carte près de Moura
+    (fix de cette session 2026-07-01, pt.12/7). Aziz veut cette source déplacée vers l'emplacement standard
+    où les autres sources du projet s'affichent d'habitude (PAS sur la carte elle-même). Clarifier avec
+    Aziz where "d'habitude" pointe exactement si ambigu (probablement bas d'écran, cartouche dédié, pas
+    incrusté dans la géographie).
+11. **Cartouche coût humain (P4, ~F_COUT=10047) : retirer le mot "Source :"** — actuellement affiche
+    "Sources : OCHA · PAM · HCR" (fix 2026-07-01 pt.7, `Partie4Cout.tsx` ligne ~1135). Aziz veut juste le nom
+    de l'institution, SANS le mot "Source(s) :" — sauf si Claude juge que ça fait sens de le garder à cet
+    endroit précis (à trancher au moment du fix, pas à deviner maintenant).
+12. **Printemps 2026 attaques (P3, zone F_REPOUSSE=9121) : jetons/soldats trop tardifs.** Aziz veut que les
+    jetons apparaissent plus tôt, dès le début des mouvements de caméra vers les zones concernées (pas
+    seulement au moment du trigger narratif), pour combler les micro-vides visuels pendant les transitions
+    caméra.
+13. **~f9500 "territoire conservé... derrière les drapeaux" (fin P3→début P4) : coupure nette + 10s de
+    "sceaux qui clignotent" jugées pauvres.** Aziz veut plus de matière visuelle avant la scène des réfugiés
+    (P4 M1 Exode). Zone : fin `Partie3Rupture.tsx` (F_CONSERVER=9372, F_END=9410) → début `Partie4Cout.tsx`
+    (F_FAMILLES). Proposer des idées concrètes à Aziz avant de coder (pas trancher seul, décision de goût).
+14. **Zoom ~f12456 (P4, entre CFA et dirigeants finaux) : ~10s vide.** Après l'insert CFA, les 3 pays sont
+    affichés ~10s sans rien avant le zoom+dirigeants (F_LEADERS=12640). Meubler cette zone (dézoom continental
+    Ph9-10, cf `Partie4Cout.tsx` F_STATU=12297 → F_LEADERS=12640).
+15. **Écran final (dos noir, extinction) : ajouter un son typewriter** pour la ligne finale "durer... c'est
+    ce qu'il reste à démontrer" (F_DURER=13290 → F_END=13500, `Partie4Cout.tsx`).
+16. **⭐ JETONS FLOUS/SEMI-TRANSPARENTS en P4 (dirigeants + jetons, capture à l'appui) — PRIORITÉ.** Aziz
+    confirme n'avoir JAMAIS eu ce problème sur aucun jeton d'aucune autre partie — bug spécifique à cette
+    zone P4 (dirigeants+soldats, ~F_LEADERS=12640 à F_SOLDIERS=12820). PISTE DE CAUSE TROUVÉE cette session :
+    `Partie4Cout.tsx` ligne ~1204 (`attenuate` soldats tombe à opacité **0.55** au moment F_THREAT) et ligne
+    ~1231 (`attenuate` dirigeants tombe à **0.7**, alors que le commentaire dans le code dit "40%" — décalage
+    documentation/code à vérifier). Combiné à un `spring()` qui peut ne jamais atteindre 1.0 selon la frame
+    observée, ça peut expliquer l'effet flou/fantôme vu sur la capture. À investiguer et corriger en
+    PRIORITÉ dans cette liste (bug visuel net, pas une préférence de goût).
+17. **SFX résiduel à retirer — "boom"/impact à la toute fin du CFA.** Aziz confirme le CFA (Session A,
+    mini-render catbox `lncgo6`) mais signale un SFX qui "se fait attendre" en toute fin, dont il ne se
+    souvient plus bien de la raison. TROUVÉ dans le code : `SahelWarMapEngine.tsx:1780-1783`, `Sequence
+    from={12193}` (commentaire "climax du fil de parité (vibrate), ~F_CFA+324") joue `impact.mp3` volume
+    0.35 — c'est un résidu de l'ANCIEN `CfaReveal` (split-screen "PowerPoint", remplacé par `CfaRevealSVG`
+    depuis, cf commentaire ligne 1741 qui référence encore "climax vibrate fil de parité"). Le nouveau SVG
+    n'a pas de geste correspondant à ce moment précis (F_CFA+324=12193 tombe pendant la phase de tension/
+    rupture du maillon, mais le SVG a son PROPRE SFX interne — `ink-spread` dans `CfaRevealSVG.tsx:199-200`
+    — donc ce 2e impact au niveau moteur fait doublon/parasite). **Fix Session B : retirer purement ce
+    `<Sequence from={12193}>` bloc (lignes 1780-1783) et mettre à jour le commentaire ligne 1740-1742 qui
+    référence encore l'ancien layout SFX.**
+
+### 📋 Rappel process (ne pas relire toute l'ancienne section sauf besoin)
+- Le bug des trous de frames (jonctions P1→P2→P3→P4) est **RÉSOLU** cette session (2026-07-01) — bornes
+  contiguës validées par `check-frame-continuity.py`. Ne pas revérifier sauf régression suspectée.
+- Fichiers déjà re-rendus avec les fixes du 2026-07-01 : `wip/p1-continuous.mp4`, `wip/p2-continuous.mp4`,
+  `wip/p3-continuous.mp4`, `wip/p4-continuous.mp4` (+ assemblage `wip/FULL-acte1-p1-p2-p3-p4-FIXED.mp4`,
+  368MB, et sa version compressée 720p `wip/FULL-acte1-p1-p2-p3-p4-720p.mp4`, 46MB, pour mobile/LLM externe
+  — technique de compression : `ffmpeg -vf scale=1280:720 -c:v libx264 -crf 23`).
+- **NE PAS repartir de ces fichiers tels quels pour la Session B** : ils datent d'AVANT tous les fixes listés
+  ci-dessus (sauf CFA qui est codé mais pas re-rendu). La Session B doit re-render P1/P2/P3/P4 à nouveau
+  après avoir appliqué tous les fixes 1-16 + branché les 3 SVG validés en Session A.
+- Overrides tracés créés pour contourner le hook `pre-presentation-review.sh` sur ces renders intermédiaires
+  (fix technique, pas de storyboard applicable) : voir `wip/*.review-override.md`. Pattern réutilisable si
+  le même besoin se présente (upload direct sans passer par Gemini, sur décision explicite Aziz).
+
+---
+
+## ⛔⛔⛔ REPRISE SESSION SUIVANTE — LIRE CECI EN PREMIER (2026-07-01)
+
+### Contexte de cette session (2026-07-01)
+Passe de correction post-audit (voir section "PASSE AUDIT" plus bas pour le détail du backlog de départ).
+Corrections codées et rendues : chantier SFX unifié P1-P4, raccord CEDEAO P2→P3 renforcé, drone résiduel Moura
+retiré + plateau meublé, bugs P4 (labels superposés + cartouche transparent) corrigés, onde de choc Niger +
+sillage renforcé P2, puis 2e passe : légende retirée P1, contours nationaux colorés étendus à P1 (au lieu du
+fond mosaïque plein), drapeau libyen géographique réel sur le territoire P1, "2012" qui s'efface au lieu de
+rester affiché, timeline graduée retirée de P2 ET P3. Tout ce code est BON et VALIDÉ visuellement par Aziz
+dans les grandes lignes (voir ses retours détaillés ci-dessous — ce sont des affinages, pas des rejets).
+
+### ⛔ BUG CRITIQUE DÉCOUVERT : les 2 blocs présentés à Aziz (bloc1 catbox `sjy5ua`, bloc2 catbox `yzx3dh`)
+### ont des TROUS DE FRAMES aux jonctions — pas un problème de code/script, un problème de MES COMMANDES DE RENDER.
+
+Chaque render de scène a été fait avec `--frames=X-Y` en isolant des plages qui ne se raccordent PAS bout à
+bout avec la plage suivante. L'audio de narration, lui, est continu dans le moteur — donc à chaque jonction
+mal calculée, des SECONDES ENTIÈRES de narration+visuel ont été sautées dans le fichier final. C'est la cause
+directe de tout ce qu'Aziz a perçu comme "voix qui saute / se répète / coupures brutales / contenu manquant"
+(il a listé ~8 endroits distincts avec ce symptôme dans son retour du 2026-07-01, voir section "RETOURS AZIZ"
+ci-dessous — TOUS ou presque sont probablement ce même bug, pas 8 bugs différents).
+
+**Trous mesurés (frames absolues moteur, @30fps) :**
+| Jonction | Fin segment A | Début segment B | Trou | Durée manquante |
+|---|---|---|---|---|
+| P1 → P2 | 2939 | 3196 | 257f | **8.6s** (coupe AVANT le board-clearing qui commence à f3050 — coupe en plein milieu d'une transition) |
+| P2 → P3 | 5699 | 6118 | 419f | **14.0s** |
+| P4a (exode) → P4b (ressources) | 10247 | 10647 | 400f | **13.3s** — explique le "boum" ressenti par Aziz à 2:16 du bloc2 |
+| P4b → P4c (confed) | 11469 | 11501 | 32f | 1.1s |
+| P4c → P4d (cfa) | 11887 | 11849 | **-38f** | **CHEVAUCHEMENT NÉGATIF** — P4d rejoue ~1.3s déjà jouées par P4c → explique la voix "CFA" répétée 2x entendue par Aziz vers 2:43-2:45 |
+| P4d → fin réelle | 12297 | F_END=13500 | 1203f | **40.1s ENTIÈREMENT ABSENTES** — toute la séquence Chantier 4 "fin habitée" (dirigeants f12640 → soldats f12820 → menace f13000 → extinction f13290→13500) N'A JAMAIS ÉTÉ RENDUE. Aziz n'a donc PAS vu la vraie fin de la vidéo. |
+
+**Ce qui n'a PAS ce problème** : Acte1 (fichier existant `acte1-FINAL.mp4`, inchangé) ; P1 en lui-même (2055-2939,
+continu) ; P2 en lui-même (3196-5699, continu) ; P3 en lui-même (6118-9409, continu). Le bug est uniquement
+AUX JONCTIONS entre fichiers séparés, pas à l'intérieur de chaque scène.
+
+### ✅ ACTION #1 PROCHAINE SESSION (avant tout le reste) : re-render en plages CONTINUES, sans trou
+- **Bloc 1** : Acte1 (fichier existant, inchangé) + P1+P2 en **UN SEUL render continu `--frames=2055-5699`**
+  (au lieu de 2 renders séparés) + P3 `--frames=5699-9409` (étendre le début pour couvrir le trou vers P3 —
+  vérifier d'abord ce qu'il y a réellement entre 5699 et 6118 dans le code, probablement un board-clearing
+  similaire à celui de P1→P2, confirmer avant de trancher la borne exacte).
+- **Bloc 2 (P4)** : **UN SEUL render continu `--frames=9416-13500`** (4084 frames, long — utiliser
+  `scripts/render-mapbox.sh`, PAS `npx remotion render` en direct, cf leçon apprise cette session : le script
+  gère chrome-headless-shell + `--gl=angle` + public-dir allégé, sans lui l'erreur `Failed to initialize WebGL`
+  apparaît). Ce fichier couvrira ENFIN la vraie fin de la vidéo (extinction) qu'Aziz n'a jamais vue.
+- Réassembler les 2 blocs (ou tenter directement UN SEUL fichier complet Acte1+P1+P2+P3+P4 si Aziz préfère —
+  voir sa demande initiale de découpage en "2-4 points de jugement max", à reconfirmer selon ce qui est
+  gérable niveau temps de render : P4 seul continu = ~136s de contenu = plusieurs dizaines de minutes de render).
+- ⛔ **Avant de présenter à nouveau à Aziz : vérifier qu'il n'y a AUCUN autre trou.** Un garde-fou a été créé
+  cette session : `python3 scripts/tools/check-frame-continuity.py <start-end> <start-end> ...` (mêmes bornes
+  que les `--frames=` de chaque segment, dans l'ordre) — DOIT renvoyer exit 0 (OK) avant tout `ffmpeg concat`
+  ou envoi à Aziz. Testé et fonctionnel (détecte les 3 trous/chevauchements de cette session avec les bonnes
+  durées). Règle gravée dans `memory/doctrines/DOCTRINE-SOUVERAIN.md` §3.8 point 6 (checklist Mapbox-in-Beat) —
+  s'applique à TOUT render Mapbox multi-segments futur, pas seulement cet épisode.
+
+### 📋 RETOURS AZIZ DÉTAILLÉS (2026-07-01, visionnage bloc1+bloc2) — à traiter APRÈS le fix des trous
+
+**Bloc 1 (Acte1+P1+P2) :**
+1. Hook chiffre "3" pas centré (trop bas à l'écran) — à recentrer.
+2. 1:09-1:11 raccord Acte1→P1 brutal, sensation de répétition de la bascule — **probablement résolu par le
+   fix des trous ci-dessus** (P1 commençait à 2055, AVANT le board-clearing complet), à revérifier après.
+3. 1:39 coupure "tensions entre communautés" → "Serval" — **= le trou P1→P2 documenté ci-dessus, résolu par le fix**.
+4. ~2:30 la caméra dézoome large (on voit une grande partie de l'Afrique) sans raison narrative claire — Aziz
+   préfère rester serré comme le reste de la vidéo. Localiser ce zoom dans le code caméra de P2 (probablement
+   `getPartie2Cam`) et vérifier s'il est voulu ou un residu — semble correspondre à la zone du trou P2→P3
+   documenté ci-dessus (le contenu manquant pourrait expliquer pourquoi ce zoom "sort de nulle part" — à
+   revérifier une fois le trou comblé, il est possible que ce zoom ait un sens dans le contenu qui manquait).
+5. **Constat transversal sur tout le bloc 1** : après les 30 premières secondes (Acte1), les contours nationaux
+   colorés (Mali/Burkina/Niger) ne sont JAMAIS visibles, et la technique "contour qui s'allume/pulse à la
+   nomination du pays" n'est jamais utilisée. Ceci concerne P2 spécifiquement (P1 vient d'être corrigée cette
+   session pour avoir les contours — à reconfirmer après re-render sans trou qu'ils sont bien visibles ; P2
+   n'a PAS eu cette correction cette session, contrairement à P1 — **P2 doit recevoir le même traitement que P1**
+   point 2 de la passe précédente : fond mosaïque neutralisé + contours nationaux colorés actifs).
+6. 1:33-1:34 le mot "déjà" semble prononcé deux fois / réverbération étrange — à vérifier après fix des trous
+   (pourrait aussi être un artefact de coupure).
+7. **Mention "données estimées"** (et suggestion "sources Wikipédia" etc.) jugée insuffisante — Aziz veut de
+   VRAIES SOURCES qui apparaissent ponctuellement à l'écran (comme dans d'autres vidéos du projet), pas juste
+   une mention discrète en bas d'écran. Concerne TOUT le bloc 1 ET le bloc 2. Chantier : identifier chaque
+   endroit où une donnée chiffrée est affichée sans source claire, ajouter une source réelle (2-3s d'affichage,
+   suffisamment visible, jamais permanente sur la carte).
+8. Fin bloc 1 (~3:00-3:03, beat CEDEAO) : les flèches qui apparaissent (~3:00) ne sont pas claires dans leur
+   sens (censées représenter les pays CEDEAO ? pas évident). SFX "craquement" jugé inutile. Aziz suggère de
+   rester en caméra SERRÉE sur la zone Sahel plutôt que d'élargir pour montrer la CEDEAO hors-zone — trouver
+   une autre manière de représenter la menace CEDEAO sans sortir du cadre serré habituel de la vidéo.
+   ⚠️ NOTE : ce point (CEDEAO renforcée) est PRÉCISÉMENT ce qui a été ajouté cette session (agent SFX, cf
+   plus haut "raccord CEDEAO P2→P3 renforcé") suite à l'audit P2 — Aziz n'aime PAS le résultat visuel obtenu,
+   à repenser (pas juste re-doser, RE-CONCEVOIR la représentation).
+
+**Raccord bloc1 → bloc2 :**
+9. Aziz ne sait pas si le raccord bloc1(fin ~3:03, "CEDEAO, la grande coalition")→bloc2(début, "toute agression
+   contre le Niger" + encadré Charte Liptako-Gourma) sera fluide une fois tout assemblé en continu — sensation
+   qu'il manque un morceau entre les deux. **Probablement lié au trou P2→P3 documenté ci-dessus** (le bloc2
+   commence directement par P3, qui elle-même commençait avec un trou de 14s avant elle) — à revérifier après fix.
+10. L'encadré "Charte du Liptako-Gourma" (~20s au début P3) juge peu convaincant tel quel — Aziz propose
+    d'explorer un remplacement en SVG narratif (comme le pipeline `PRODUCTION-AGENTIQUE-SVG.md` prouvé sur
+    Cacao/CFA) pour meubler ce passage plutôt que garder l'encadré actuel — À ÉVALUER PROCHAINE SESSION,
+    pas trancher seul, decision de goût + faisabilité technique à explorer ensemble ou via agent dédié.
+
+**Bloc 2 (P3+P4) :**
+11. Ville de Kidal / casques bleus ONU : actuellement seules les bases MINUSMA sont représentées. Aziz propose
+    d'ajouter 1-2 jetons "casques bleus" physiques (en plus des bases, ou en remplacement partiel) pour mieux
+    montrer visuellement qu'ils sont présents mais sans mandat d'intervenir par les armes — pas juste des
+    bâtiments, des figurants qui incarnent l'impuissance. Vérifier faisabilité (asset existant ou à générer).
+12. Moura : retirer le texte typewriter "500+ morts recensés · aucune réponse officielle de Bamako" ajouté
+    cette session (Aziz juge que la plaque "MOURA · MARS 2022 · RAPPORT ONU" existante suffit, le texte
+    supplémentaire n'apporte rien) — MAIS garder l'intention de meubler le plateau figé de mouvement, trouver
+    une autre solution (piste : la source ONU pourrait apparaître visiblement 2-3s au lieu du texte retiré,
+    cf point 7 sur les sources — pourrait résoudre 2 problèmes à la fois).
+13. ~1:49 saut abrupt juste avant le début du récit réfugiés — **= le trou P2→P3 documenté ci-dessus (bloc2
+    commence par P3), résolu par le fix des trous**.
+14. Passage réfugiés (jetons qui fuient les villes, ~2:03) : Aziz trouve ça "quand même assez bien" mais se
+    demande si ça pourrait être plus intéressant visuellement — pas un rejet, une piste d'amélioration à
+    explorer si le temps le permet, pas prioritaire.
+15. ~2:16 coupure brutale coût humain (overlay "3M déplacés / 15M+ sécurité alimentaire") → triple-screen
+    ressources — **= très probablement le trou P4a→P4b documenté ci-dessus (13.3s manquantes), résolu par le fix**.
+16. Triple-screen ressources (Mali/Burkina/Niger, or/uranium/pétrole) : Aziz le juge "statique tout le long",
+    suggère de le remplacer par un graphisme SVG narratif dynamique façon "objet-héros unique" (référence
+    explicite : la dernière scène du Short Cacao où le cacao devient un objet central avec des ramifications
+    vers callbot/or/pétrole) plutôt qu'un triple-screen figé. **À évaluer prochaine session** (piste forte,
+    mais refonte complète d'une scène — décision de goût + effort, pas à trancher seul).
+17. ~2:43-2:45 raccord confédération→sceau AES : voix qui saute, "comme si on venait de raccorder des scènes
+    de manière brusque" — **très probablement le trou P4b→P4c documenté ci-dessus (1.1s), résolu par le fix,
+    mais à revérifier précisément car l'écart mesuré est faible (1.1s) par rapport à la gêne perçue — si le
+    fix ne résout pas totalement ce point, creuser plus (peut-être aussi un souci de mixage audio à ce point,
+    pas seulement un trou de frames)**.
+18. Confédération AES jugée à rendre "plus dynamique" (dans la continuité du point 16, même diagnostic —
+    scène jugée trop statique/overlay figé).
+19. Franc CFA : la voix dit "celle du franc CFA" **deux fois de suite** — **= très probablement le
+    CHEVAUCHEMENT NÉGATIF P4c→P4d documenté ci-dessus (P4d rejoue du contenu déjà joué par P4c), résolu par
+    le fix**. Aziz confirme aussi vouloir sortir cette scène de l'effet "PowerPoint" — remplacement SVG
+    narratif suggéré, ET rappel qu'**un prototype SVG du CFA existe déjà** (`out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`,
+    produit lors d'une session antérieure via le système agentique SVG, jamais encore comparé/tranché vs la
+    version Remotion actuelle) — à ADAPTER/réutiliser plutôt que reconstruire de zéro.
+20. Aziz rappelle qu'il n'a PAS vu la fin réelle de la vidéo (le bloc2 présenté s'arrêtait à P4d/CFA) —
+    **confirmé par le diagnostic ci-dessus : les 40 dernières secondes n'ont jamais été rendues**. La
+    "Partie 4 à re-vérifier" mentionnée par Aziz = cette séquence finale jamais vue, pas une partie 4 distincte
+    au sens du projet (le projet n'a que Acte1+P1+P2+P3+P4, P4 EST la dernière partie, son extinction finale
+    n'a simplement jamais été rendue dans les fichiers présentés).
+
+### 🔧 LEÇON PROCESS — méthode d'audit agent à améliorer (constat Aziz explicite)
+> "Je suis surpris que les agents n'aient pas vu tout ceci... il va falloir qu'on améliore notre process,
+> comment les agents font une review."
+
+Aucun des 4 audits scène + l'agent transversal (session du 2026-07-01, cf section PASSE AUDIT ci-dessous)
+n'a détecté qu'un futur découpage en fichiers séparés créerait des trous de jonction — logique, ces audits
+jugeaient les scènes EXISTANTES déjà rendues à l'époque, pas un futur re-découpage. Mais la leçon plus large :
+**aucun agent (ni Aziz avant son visionnage manuel) n'a vérifié que les plages de frames rendues COUVRENT
+BIEN la continuité narrative attendue avant de présenter le livrable.** Piste pour la prochaine session : avant
+tout envoi de render à Aziz, un agent (ou une étape scriptée) devrait comparer systématiquement les bornes de
+chaque segment aux triggers F_* du code source pour détecter les trous — un simple calcul arithmétique aurait
+détecté ce bug en quelques secondes, avant même de faire tourner ffmpeg. À formaliser comme étape obligatoire
+(checklist ou script `check-frame-continuity.py`) pour tout découpage futur en morceaux.
+
+### 🎯 DÉCISION PROCESS EN ATTENTE (à trancher en ouverture de la prochaine session)
+Aziz hésite entre finaliser la suite (fix trous + tous les retours ci-dessus) **via système agentique** ou
+**en direct avec l'instance suivante** (lui + Claude, sans fan-out d'agents). Vu le volume de retours et
+qu'il s'agit maintenant surtout d'affinages + 1 bug technique bien cerné (pas une exploration ouverte), une
+approche mixte est probable : fix des trous + retouches ciblées en direct (rapide, chirurgical), PUIS
+évaluation SVG narratif (points 10/16/19) éventuellement via agent dédié si Aziz valide la direction créative
+d'abord sur un mini-prototype. À poser comme première question de la prochaine session, ne pas présumer.
+
+---
+
+
+> ✅✅ **SESSION 2026-06-27 — ACTE 1 COMPLET FINALISÉ + VALIDÉ AZIZ.** Compo `SahelActe1-Refonte` (f0-2125, 71s).
+> Render : `out/episodes/warmap-sahel/acte1-FINAL.mp4` (catbox `6azb9e` — v2 SANS tension-drone, validé Aziz 2026-06-27
+> après retrait du SFX drone qui dérangeait ; l'ancien `91solc` avec drone est PÉRIMÉ). Commits 98efe6f + 02a2864 + 5099489 + 6dd6120.
+> **HOOK (f0-684)** : chiffre « 3 » slam (`Acte1IntroSlam`) → drapeaux réels plantés (`WarMapBanner`) f145/217/286
+>   → détachement vignette → **sceau « AES » central + flash or** au climax « bâtissent » (f557 ; les 3 traits
+>   convergents illisibles à ce zoom ont été RETIRÉS) → sceau reste jusqu'au drift (comble le creux). Fix `hideAt=560`.
+> **CORPS (f684-2125)** : grammaire P3/P4 déjà en place (contours nationaux, jetons JNIM/EIGS, zones, friction),
+>   triggers calés alignment V5 (écart 0f). **SFX câblés** (le corps était MUET) : drone d'assise + PING carto
+>   à la pose des jetons (clic, pas whoosh) + ink-spread zones + impact friction. **Drapeaux s'effacent f954-990**
+>   (après 1ers jetons → cèdent à la couche tactique ; contours conservés). Mention « Données estimées » RETIRÉE
+>   (Acte 1 narratif sans chiffre → trompeuse).
+> ⚠️ **ÉCART connu** : `acte1-FINAL.mp4` a été rendu AVANT le retrait de la mention source → il l'affiche encore.
+>   Le CODE ne l'a plus. Au re-render de l'assemblage final, la mention sera absente. (Pas re-rendu : décision Aziz.)
+> ⚠️ **Mix audio** : pic transitoire ~0 dB à ~18s (gong Liptako + voix + musique). Non audible signalé. Le mastering
+>   de l'assemblage normalisera. Si saturation perçue : baisser `liptako-gong` 0.58→0.48 (ligne ~1523 moteur).
+>
+> ✅ **SVG-INSERT CFA ALTERNATIF PRODUIT + VALIDÉ AZIZ (2026-06-27)** via système agentique SVG (cas test prouvé,
+>   bloc isolé). Compo `WarmapCfaInsertSVG` (11s, 16:9) → `out/_r-and-d/cfa-svg/cfa-insert-svg-ALT-FINAL.mp4`
+>   (catbox `228hiw`). Cible = verrou + chaîne/maillon de rupture + racines (mix-and-match Claude maison).
+>   ⭐ COMPARATIF À FAIRE à l'assemblage : cette version SVG vs le CFA Remotion existant (`p4-cfa-FINAL.mp4`).
+>   3 trous méthode comblés (ratio explicite · chorégraphie Phase 1 · mix-and-match maison) → `PRODUCTION-AGENTIQUE-SVG.md`.
+>
+> 🔜 **PROCHAINE SESSION — PASSE AMÉLIORATION P1 + P2 (plan Aziz 2026-06-27)** :
+>   1. Renders P1/P2 existent → upload catbox direct (`p1-FINAL.mp4`, `p2-FINAL.mp4`) pour qu'Aziz revoie les scènes.
+>   2. Aziz valide les corrections de `AUDIT-AMELIORATIONS-P1.md` + `AUDIT-AMELIORATIONS-P2.md` (backlog priorisé).
+>   3. Lancer agents de CORRECTION (système agentique) qui appliquent les corrections validées.
+>   ⭐ Constat dominant audits = AUDIO : P1 n'a AUCUN SFX câblé (`partie1`) · P2 dernier tiers faible (CEDEAO vide,
+>   raccord P3). P1 reste en "soustraction" (PAS de SVG/jetons).
+>   ⛔ **NE PAS utiliser le `tension-drone`** (décision Aziz 2026-06-27 : il dérange, RETIRÉ du corps Acte 1).
+>   Combler les trous de silence via la musique de fond + SFX PONCTUELS (ping carto, ink-spread, impact), JAMAIS un drone.
+>
+> **▶ RESTE SUR LA VIDÉO** : (0) passe amélioration P1+P2 ci-dessus ; (1) assembler P4 (morceaux : exode + ressources
+>   + confed + CFA) en p4-FINAL unique — au CFA, TRANCHER SVG-ALT vs Remotion ; (2) ASSEMBLAGE FINAL
+>   (concat Acte1+P1+P2+P3+P4 + musique D + mix/master).
+>
+> ⛔⭐ **DÉCISION EN ATTENTE — RUPTURE BURKINA/FRANCE (26 juin 2026) À INTÉGRER (Aziz 2026-06-28)** :
+>   La vidéo AES NE DOIT PAS ÊTRE FINALISÉE/ASSEMBLÉE avant qu'on décide quoi faire de cet événement historique.
+>   FAIT : le 26 juin 2026, le Burkina d'Ibrahim Traoré a ROMPU ses relations diplomatiques avec la France
+>   (motif officiel : « activisme néocolonial », accusation de soutien aux terroristes du Sahel). Rupture
+>   DIPLOMATIQUE seulement (liens culturels/humains préservés). Aboutissement de l'escalade : départ armée FR 2023
+>   → rappel ambassadeur 2023 → rupture totale 2026. Réalignement Russie/Turquie/Iran. Sources : France 24, RTS,
+>   Al Jazeera, Washington Post (26-27 juin 2026).
+>   PISTE AZIZ : scène BONUS ou avant-dernière scène (« pendant qu'on monte cette vidéo, le 26 juin 2026… »)
+>   = preuve en temps réel de la thèse AES « le Sahel se détache de la France ». Surfer l'actu chaude.
+>   ⚠️ RISQUE à peser : ça DATE la vidéo (scène figée dans 6 mois). Acceptable pour sujet d'actu géopolitique.
+>   ⭐ LIÉ : Aziz envisage de PUBLIER L'AES AVANT LE SÉNÉGAL (momentum actu Burkina vs Sénégal intemporel).
+> 📎 Candidats SVG-inserts (détail + comparatif) → `SVG-INSERTS-CANDIDATS.md`.
+> 📜 Hook source décodage : `feedback_decode-castile-warmap-vivante.md`.
+>
 > ⛔⭐ **REPRISE AU RETOUR — LIRE CECI (l'ancien "reste l'assemblage" est PÉRIMÉ) :**
 >
 > **CHANGEMENT DE MÉTHODE (Aziz 2026-06-15) : PASSE SÉQUENTIELLE scène par scène AVANT tout assemblage.**

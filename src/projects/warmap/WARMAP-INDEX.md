@@ -90,6 +90,7 @@ factcheck, build_warmap_data + fixtures + golden test). Voir WARMAP-RESEARCH-PLA
 
 ## 🚀 COMMENT DÉMARRER (3 étapes)
 
+0. **Avant de coder une scène War-Map** → `python3 scripts/warmap-session.py --phase scan` (aide-mémoire des 4 pointeurs doctrine essentiels, évite de redécouvrir à la main) puis, une fois le zoom Mapbox choisi, `--phase zoom-check <fichier.tsx> --zoom N --intent close-up|territorial|regional` (vérifie la distance réelle km visible à l'écran — a détecté rétroactivement le bug ×10 du zoom Soudan Acte 3).
 1. **Lire** `memory/doctrines/WARMAP-GRAMMAIRE.md` (⭐⭐ réalisation, AVANT de coder) + `WARMAP-PLAYBOOK.md` (design) + `WARMAP-RESEARCH-PLAYBOOK.md` (données si nouveau sujet).
 2. **Choisir le moteur selon l'épisode :**
    - **Sahel (production active)** → `src/projects/warmap/engine/SahelWarMapEngine.tsx` ⭐ moteur principal long-format 16:9. État épisode : `memory/episodes/warmap-sahel/STATUS.md`.
@@ -109,5 +110,5 @@ factcheck, build_warmap_data + fixtures + golden test). Voir WARMAP-RESEARCH-PLA
 
 ## ⏳ NEXT (structurer le pilier aux procédures Souverain/Atlas)
 - Skill `warmap-preproduction` (miroir `souverain-preproduction` / `atlas-video-preproduction`) — À CRÉER.
-- Découpler moteur/donnée au 2e sujet. Basculer moteur sur d3-geo pur (socle Atlas).
+- Découpler moteur/donnée au 2e sujet (indépendant du choix de moteur). ~~Basculer moteur sur d3-geo pur~~ — TRANCHÉ 2026-07-11 : Mapbox reste le moteur de production (voir `WARMAP-PLAYBOOK.md` intro), la bascule n'a jamais eu lieu en 6 semaines et Mapbox tourne sans problème en production.
 - Décision polish ouverte : remplacer la fausse horloge par `JOUR N de guerre` (voir NEXT-ACTION).

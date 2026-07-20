@@ -153,7 +153,7 @@ Wait for explicit "go" from Aziz.
 1. Read the locked script
 2. Read `memory/tools/elevenlabs.md` (MANDATORY before any TTS)
 3. Read project memory to find established voice ID / musical identity
-4. Read `memory/voices-v3.md` for voice profiles if multi-voice project
+4. Read `memory/tools/voices-v3.md` for voice profiles if multi-voice project
 
 ### Step 1 — TTS Scan (BLOCKING)
 Produce the scan table. Submit to Aziz. Wait for approval of corrections.
@@ -165,7 +165,7 @@ Produce the scan table. Submit to Aziz. Wait for approval of corrections.
 | Narration Shorts GeoAfrique (principal) | Narrateur `ICHuIqamER7XZMdm2HYC` (Voice Studio, V3 compat) |
 | Narration feminine | Narratrice `Y8XqpS6sj6cx5cCTLp8a` (Voice Studio, V3 compat) |
 | Antagoniste / personnage royal | Matrone Froide `5eScDXbqClEhrA46NN4r` (Voice Design V3) |
-| Projet custom | Chercher dans `memory/voices-v3.md` |
+| Projet custom | Chercher dans `memory/tools/voices-v3.md` |
 
 **NEVER use** : Stephyra PVC (`QMNPncWXVcTVhJ9rDEQO`) — PVC non optimises pour V3, ignore les audio tags.
 

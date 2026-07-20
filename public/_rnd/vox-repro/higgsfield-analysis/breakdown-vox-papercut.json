@@ -1,0 +1,357 @@
+{
+  "style_global": {
+    "palette": [
+      "#EAE5D9",
+      "#5B84A4",
+      "#D97B29",
+      "#8C4A32",
+      "#222222"
+    ],
+    "fond": "Textured off-white paper with subtle grain, slight vignetting, and occasional newspaper print textures.",
+    "typographies": [
+      "Impact / Anton (for large numbers and bold labels)",
+      "Courier / Typewriter (for specific labels like '1978')",
+      "Bebas Neue / Oswald (for subtitles on torn paper)"
+    ],
+    "traitement_photos": "Heavy halftone dot pattern, sepia/vintage color grading, torn edges, taped corners with semi-transparent masking tape.",
+    "grammaire_animation": "Stop-motion style: elements pop in with slight overshoot (spring physics), constant subtle wiggle (position and rotation noise) on all elements, drop shadows to simulate physical paper layers stacked on top of each other.",
+    "sfx_percus": "non audible"
+  },
+  "assets_a_generer": [
+    {
+      "id": "asset-bg-paper",
+      "type": "texture_fond",
+      "description": "Off-white textured paper background",
+      "prompt_generation": "high resolution scan of blank off-white textured watercolor paper, subtle grain, flat lighting",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-bg-newspaper",
+      "type": "texture_fond",
+      "description": "Faded newspaper background",
+      "prompt_generation": "high resolution scan of vintage newspaper page, dense text, faded, low contrast, sepia tone",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-photo-cabin",
+      "type": "photo_halftone",
+      "description": "1970s airplane cabin interior",
+      "prompt_generation": "vintage 1970s airplane cabin interior, wide body, empty seats, sepia tone, heavy halftone dot pattern effect, printed on paper",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-tape",
+      "type": "forme_papier",
+      "description": "Piece of masking tape",
+      "prompt_generation": "SVG code (semi-transparent polygon with jagged edges and slight yellow tint)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-torn-text-bg",
+      "type": "forme_papier",
+      "description": "Torn paper strip for subtitles",
+      "prompt_generation": "SVG code (white rectangle with roughened, torn-looking edges and drop shadow)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-seat-side",
+      "type": "icone",
+      "description": "Side view of an airplane seat",
+      "prompt_generation": "SVG code (blue and grey stylized airplane seat, paper cutout style with drop shadow)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-plane-exterior",
+      "type": "icone",
+      "description": "Side view of airplane exterior with a torn cutout revealing the inside",
+      "prompt_generation": "SVG code (light blue and white airplane fuselage, torn paper edge revealing empty space inside)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-map-usa",
+      "type": "icone",
+      "description": "Map of USA",
+      "prompt_generation": "SVG code (solid blue silhouette of USA with dark outline and drop shadow)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-map-world",
+      "type": "icone",
+      "description": "World map",
+      "prompt_generation": "SVG code (solid blue silhouette of world continents with dark outline and drop shadow)",
+      "reutilisable": true
+    },
+    {
+      "id": "asset-person-silhouette",
+      "type": "icone",
+      "description": "Silhouette of a person",
+      "prompt_generation": "SVG code (solid blue silhouette of a standing person, paper cutout style)",
+      "reutilisable": false
+    },
+    {
+      "id": "asset-collage-scraps",
+      "type": "forme_papier",
+      "description": "Various torn colored paper scraps (red, blue, yellow)",
+      "prompt_generation": "SVG code (polygons with roughened edges and solid colors)",
+      "reutilisable": false
+    }
+  ],
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:06",
+      "description": "Introduction with cabin photo and seat pitch numbers.",
+      "elements": [
+        {
+          "asset_id": "asset-bg-paper",
+          "entree": "fade",
+          "position": "plein cadre",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-photo-cabin",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "scale(0.9) rotate(-2deg)",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "pop spring",
+          "position": "centre sur la photo",
+          "transform": "rotate(1deg)",
+          "texte_affiche": "35"
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "slide up",
+          "position": "bas centre",
+          "transform": "none",
+          "texte_affiche": "In the 1970s an"
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:07",
+      "t_end": "0:15",
+      "description": "Explanation of seat pitch with two side-view seats.",
+      "elements": [
+        {
+          "asset_id": "asset-seat-side",
+          "entree": "pop spring",
+          "position": "tiers-gauche",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-seat-side",
+          "entree": "slide from left",
+          "position": "tiers-droit",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "pop spring",
+          "position": "haut centre",
+          "transform": "rotate(-3deg)",
+          "texte_affiche": "PITCH"
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:16",
+      "t_end": "0:24",
+      "description": "Airplane exterior showing seats being squeezed to add a row.",
+      "elements": [
+        {
+          "asset_id": "asset-bg-newspaper",
+          "entree": "fade",
+          "position": "plein cadre",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-plane-exterior",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "pop spring",
+          "position": "haut droit",
+          "transform": "rotate(2deg)",
+          "texte_affiche": "1978"
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 4,
+      "t_start": "0:25",
+      "t_end": "0:32",
+      "description": "Map showing the spread of shrinking seat pitch from USA to the world.",
+      "elements": [
+        {
+          "asset_id": "asset-map-usa",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "scale(0.8)",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-map-world",
+          "entree": "scale up from USA map",
+          "position": "centre",
+          "transform": "none",
+          "texte_affiche": null
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 5,
+      "t_start": "0:33",
+      "t_end": "0:36",
+      "description": "Live action talking head.",
+      "elements": [],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 6,
+      "t_start": "0:37",
+      "t_end": "0:45",
+      "description": "Repeat of Plan 1 with different initial subtitles.",
+      "elements": [
+        {
+          "asset_id": "asset-photo-cabin",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "scale(0.9) rotate(-2deg)",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "slide up",
+          "position": "bas centre",
+          "transform": "none",
+          "texte_affiche": "You're not imagining it"
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 7,
+      "t_start": "0:46",
+      "t_end": "0:54",
+      "description": "Repeat of Plan 2.",
+      "elements": [
+        {
+          "asset_id": "asset-seat-side",
+          "entree": "pop spring",
+          "position": "tiers-gauche",
+          "transform": "none",
+          "texte_affiche": null
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 8,
+      "t_start": "0:55",
+      "t_end": "1:04",
+      "description": "Repeat of Plan 3 with different subtitles.",
+      "elements": [
+        {
+          "asset_id": "asset-plane-exterior",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "none",
+          "texte_affiche": null
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 9,
+      "t_start": "1:05",
+      "t_end": "1:14",
+      "description": "Repeat of Plan 4.",
+      "elements": [
+        {
+          "asset_id": "asset-map-usa",
+          "entree": "pop spring",
+          "position": "centre",
+          "transform": "scale(0.8)",
+          "texte_affiche": null
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 10,
+      "t_start": "1:15",
+      "t_end": "1:22",
+      "description": "Collage showing a person getting taller and a seat getting tighter.",
+      "elements": [
+        {
+          "asset_id": "asset-collage-scraps",
+          "entree": "pop spring",
+          "position": "plein cadre",
+          "transform": "none",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-person-silhouette",
+          "entree": "pop spring",
+          "position": "centre gauche",
+          "transform": "scaleY(1.2) over time",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-seat-side",
+          "entree": "pop spring",
+          "position": "centre droit",
+          "transform": "scaleX(0.8) over time",
+          "texte_affiche": null
+        },
+        {
+          "asset_id": "asset-torn-text-bg",
+          "entree": "slide up",
+          "position": "bas centre",
+          "transform": "none",
+          "texte_affiche": "So here's the collision"
+        }
+      ],
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 11,
+      "t_start": "1:23",
+      "t_end": "1:27",
+      "description": "Live action talking head and screen recording.",
+      "elements": [],
+      "transition_sortie": "none"
+    }
+  ],
+  "structure_code_remotion": {
+    "approche": "1 Sequence par plan principal. Utilisation intensive de composants wrapper pour appliquer le style stop-motion global.",
+    "composants_a_creer": [
+      "WiggleWrapper — applique un bruit 2D sur x, y et rotation pour simuler l'imperfection du stop-motion",
+      "PaperCutout — applique un drop-shadow CSS specifique pour donner de l'epaisseur",
+      "TornSubtitle — genere un fond SVG blanc aux bords dechires derriere le texte dynamique",
+      "HandDrawnArrow — anime le stroke-dashoffset d'un SVG path avec un filtre feTurbulence"
+    ],
+    "notes_timing": "Animation a 30fps. Les pop-ins utilisent spring({ fps: 30, damping: 12, stiffness: 150 }). Les sous-titres apparaissent en cut ou slide rapide synchronises avec la voix.",
+    "pieges": "Le rendu fidele des bords dechires en pur SVG/CSS est couteux en perfs (feDisplacementMap). Il vaut mieux utiliser des masques SVG pre-generes. L'effet halftone sur la photo necessite soit une image pre-traitee, soit un shader complexe."
+  },
+  "verdict_reproductibilite": "L'animation (mouvements, pop, wiggle) est triviale en Remotion, mais l'esthetique tactile (halftone, papier dechire) necessite des assets pre-generes de haute qualite pour etre fidele sans exploser les temps de rendu."
+}

@@ -20,8 +20,12 @@ Usage :
 
 Les frames sont automatiquement downscalées (scale=1280, JPEG q4) — règle perf NON-NEGOTIABLE.
 """
-import os
 import sys
+import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import force_ipv4  # noqa: E402,F401 — DOIT s'importer avant tout appel réseau (IPv6 mort en sandbox)
+
 import json
 import base64
 import argparse
@@ -297,7 +301,7 @@ def main():
     ap.add_argument("--catalog", default=None, help="Catalogue d'inspiration compact (texte)")
     ap.add_argument("--frame", action="append", default=[], help="path:caption (repetable, auto-downscale)")
     ap.add_argument("--only", choices=["gemini", "kimi", "deepseek"], default=None, help="Un seul modele")
-    ap.add_argument("--max-tokens", type=int, default=8000)
+    ap.add_argument("--max-tokens", type=int, default=16000)  # Kimi = thinking model, <16000 tronque (finish_reason:length)
     ap.add_argument("--no-aislop", action="store_true", help="Désactiver le bloc AI-slop (ON par défaut)")
     ap.add_argument("--expert", action="store_true", help="Ajouter le bloc point-de-vue expert")
     ap.add_argument("--upstream", action="store_true",

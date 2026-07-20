@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-40 -40 80 80" width="400" height="400">
+<rect x="-40" y="-40" width="80" height="80" fill="#d1b27c"/>
+<g stroke="#2b2117" stroke-width="1" stroke-linejoin="round" stroke-linecap="round">
+
+  <!-- Allee d'acces depuis le bord de la carte vers la cour du site -->
+  <path d="M -40,30 L -14,17" fill="none" stroke="#6b5c42" stroke-width="2.4" stroke-dasharray="0.1,3.2"/>
+
+  <!-- Aire de service / cour (enclos clos autour des batiments) -->
+  <rect x="-30" y="4" width="34" height="26" fill="none" stroke="#5c4d38" stroke-width="0.8" stroke-dasharray="2,1.6"/>
+
+  <!-- Parking : quelques places marquees -->
+  <g stroke="#5c4d38" stroke-width="0.6">
+    <line x1="-27" y1="26" x2="-27" y2="21"/>
+    <line x1="-24" y1="26" x2="-24" y2="21"/>
+    <line x1="-21" y1="26" x2="-21" y2="21"/>
+    <line x1="-18" y1="26" x2="-18" y2="21"/>
+  </g>
+
+  <!-- Corps de batiment principal (technique/emetteur) : rectangle large, toit plat -->
+  <rect x="-27" y="6" width="20" height="12" fill="#8a7c5e" stroke="#2b2117" stroke-width="1.1"/>
+  <!-- Trame de toiture (lignes de structure/rangees de climatiseurs, discret) -->
+  <g stroke="#6b5c42" stroke-width="0.5">
+    <line x1="-24" y1="6" x2="-24" y2="18"/>
+    <line x1="-20" y1="6" x2="-20" y2="18"/>
+    <line x1="-16" y1="6" x2="-16" y2="18"/>
+    <line x1="-12" y1="6" x2="-12" y2="18"/>
+  </g>
+
+  <!-- Corps annexe (bureaux/accueil), perpendiculaire, forme un L avec le corps principal -->
+  <rect x="-9" y="10" width="10" height="16" fill="#7a6d53" stroke="#2b2117" stroke-width="1.1"/>
+  <line x1="-9" y1="16" x2="1" y2="16" stroke="#6b5c42" stroke-width="0.5"/>
+  <line x1="-9" y1="21" x2="1" y2="21" stroke="#6b5c42" stroke-width="0.5"/>
+
+  <!-- Petit local technique secondaire (groupe electrogene / relais), separe -->
+  <rect x="-2" y="4" width="6" height="5" fill="#9a8d73" stroke="#2b2117" stroke-width="0.9"/>
+
+  <!-- ===== Tour de diffusion, a l'ecart des batiments, reliee par un chemin ===== -->
+
+  <!-- Petit chemin technique reliant les batiments a la base de la tour -->
+  <path d="M 1,17 L 13,4" fill="none" stroke="#6b5c42" stroke-width="1" stroke-dasharray="1.6,1.4"/>
+
+  <!-- Points d'ancrage des haubans, disposes en triangle autour de la tour -->
+  <circle cx="13" cy="-14" r="1.1" fill="#7a6d53" stroke="#2b2117" stroke-width="0.7"/>
+  <circle cx="26" cy="6" r="1.1" fill="#7a6d53" stroke="#2b2117" stroke-width="0.7"/>
+  <circle cx="4" cy="12" r="1.1" fill="#7a6d53" stroke="#2b2117" stroke-width="0.7"/>
+
+  <!-- Haubans : lignes fines rayonnant depuis la base de la tour vers les ancrages -->
+  <g stroke="#4a3f2e" stroke-width="0.55">
+    <line x1="14" y1="1" x2="13" y2="-14"/>
+    <line x1="14" y1="1" x2="26" y2="6"/>
+    <line x1="14" y1="1" x2="4" y2="12"/>
+  </g>
+
+  <!-- Base de la tour : treillis en plan (carre avec croisillons en losange serre) -->
+  <rect x="10.5" y="-2.5" width="7" height="7" fill="#9a8d73" stroke="#2b2117" stroke-width="1"/>
+  <path d="M 10.5,-2.5 L 17.5,4.5 M 17.5,-2.5 L 10.5,4.5" stroke="#2b2117" stroke-width="0.5"/>
+  <rect x="12" y="-1" width="4" height="4" fill="none" stroke="#2b2117" stroke-width="0.45"/>
+
+  <!-- Mat central de la tour vu en plan -->
+  <circle cx="14" cy="1" r="1.3" fill="#5c4d38" stroke="#2b2117" stroke-width="0.7"/>
+  <circle cx="14" cy="1" r="0.4" fill="#2b2117"/>
+
+</g>
+</svg>

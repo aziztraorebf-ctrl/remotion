@@ -4,6 +4,11 @@
 > `SOUVERAIN-VISUAL-PLAYBOOK` / `ATLAS-PLAYBOOK`. A LIRE avant toute video war-map.
 > **DERIVE DE CE QUI MARCHE** : prototype Soudan valide en session (2026-06-05).
 > ⭐ **OUTIL SVG-INSERT dispo** : un mecanisme/transformation/metaphore (ex. "l'or sort de la terre et finance la guerre" = pelle/lingot/creuset en SVG) peut etre un insert SVG anime (30s-1min) DANS la war-map. A penser DES le script. Doctrine : [[SVG-MIDFORM-FORMAT]] · couche script : [[DOCTRINE-SCRIPT-UNIFIEE]] regle 17. (⛔ la geo/bataille situee reste Mapbox.)
+> ⭐⭐ **INSERT SVG "ÉTAT-MAJOR" (prise de territoire / assaut) — VALIDÉ 2026-07-06** : pour une scène
+> de mouvement de forces / prise de cibles SANS besoin de géo réelle, doctrine + workflow dédiés :
+> [[WARMAP-INSERT-SVG-ETATMAJOR]] (proto de réf = compo `KhartoumEtatMajorSVG`, registre médaillon
+> gravé, formation de portraits qui avancent, statut capturée). C'est NOTRE manière de faire ce
+> type d'insert. (⛔ la géo situable exacte reste Mapbox/d3-geo, cf. reste de ce playbook.)
 > ⭐ **POINT D'ENTREE CODE : `src/projects/warmap/WARMAP-INDEX.md`** (carte maitre — quel fichier pour quoi).
 > ⭐ **LA REFERENCE = composition `SudanWarMapEpic60`** (60s, tout combine, catbox `4dwqit`). Les variantes
 > plus courtes ne sont PAS la reference.
@@ -11,8 +16,9 @@
 > [[feedback_sprites-topdown-gemini-vs-recraft]] (recette sprites).
 
 Format : 9:16 (1080x1920) principal — viral TikTok/Reels/Shorts, 22-60s. 16:9 pour le long.
-Carte parchemin Atlas FLAT TOP-DOWN (pitch 0), data-driven. Moteur prototype = Mapbox light-v11
-reskinne parchemin ; **voie production = d3-geo pur** (socle Atlas, a basculer).
+Carte parchemin Atlas FLAT TOP-DOWN (pitch 0), data-driven. **Moteur de production = Mapbox light-v11
+reskinne parchemin** (tranche 2026-07-11 : la bascule d3-geo envisagee en juin n'a jamais eu lieu en
+6 semaines, Mapbox tourne en production sur Sahel/Soudan sans probleme — assume comme voie definitive).
 
 **Ce n'est PAS un "war-map" : c'est un MOTEUR DE RECIT CARTOGRAPHIQUE TEMPOREL HUMANISE.**
 La guerre = 1er cas (le + dramatique). Le moteur anime TOUTE valeur qui change dans l'espace+temps
@@ -101,4 +107,4 @@ Aux memes procedures que Souverain/Atlas (prochaine session) :
 - **PHASE RECHERCHE = coeur de la prochaine session** : garantir les BONNES infos AVANT de construire.
   Sources OSINT (ISW/ACLED/LiveUAmap GeoJSON ~85$/an/DeepStateMap), jalons par date, verif factuelle,
   schema de donnees (1 fichier jalons -> tout en derive). C'est ce qui rend le pipeline recurrent realiste.
-- Basculer moteur sur d3-geo pur (socle Atlas).
+- ~~Basculer moteur sur d3-geo pur~~ — TRANCHE 2026-07-11 : Mapbox reste le moteur de production (voir §intro).

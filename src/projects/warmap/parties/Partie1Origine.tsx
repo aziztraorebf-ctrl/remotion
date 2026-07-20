@@ -15,6 +15,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, Easing } from "remotion";
 import type { SahelRenderContext } from "../engine/SahelContext";
+import { LIBYE_RING } from "./sahelCountries";
 
 // ============================================================
 // TRIGGERS V5 (alignment narration-v5-alignment.json, x30fps)
@@ -106,10 +107,12 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
 
   // -------- BEAT 1.0 : reperes "2012" (encre qui se remplit) + "LIBYE" --------
   // "2012" : apparait au mot "bascule", mask de remplissage gauche->droite (encre).
+  // Corrigé 2026-07-01 (Aziz) : ne reste plus affiché en permanence toute la scène — s'efface
+  // au moment du trait d'encre (F_TRAIT), le repère temporel a fait son office, laisse la place à l'action.
   const y2012Fill = interpolate(frame, [F_2012, F_2012 + 24], [0, 1], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic),
   });
-  const y2012Op = interpolate(frame, [F_2012, F_2012 + 12], [0, 1], {
+  const y2012Op = interpolate(frame, [F_2012, F_2012 + 12, F_TRAIT - 20, F_TRAIT], [0, 1, 1, 0], {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
 
@@ -169,6 +172,22 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
     ? "M" + voidPx.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z"
     : "";
 
+  // -------- DRAPEAU LIBYEN sur le territoire (Aziz 2026-07-01) : le territoire de la Libye se
+  // colore aux couleurs du drapeau national à l'apparition du repère "LIBYE", puis s'efface au
+  // moment du trait d'encre/zoom (F_TRAIT) — pour ne pas distraire une fois l'action lancée.
+  const libyeFlagOp = interpolate(frame, [F_LIBYE, F_LIBYE + 20, F_TRAIT - 16, F_TRAIT], [0, 1, 1, 0], {
+    extrapolateLeft: "clamp", extrapolateRight: "clamp",
+  });
+  const libyePx = LIBYE_RING.map(([lon, lat]) => project(lon, lat));
+  const libyeD = libyePx.length
+    ? "M" + libyePx.map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join("L") + "Z"
+    : "";
+  const libyeMinY = libyePx.length ? Math.min(...libyePx.map((p) => p.y)) : 0;
+  const libyeMaxY = libyePx.length ? Math.max(...libyePx.map((p) => p.y)) : 0;
+  const libyeMinX = libyePx.length ? Math.min(...libyePx.map((p) => p.x)) : 0;
+  const libyeMaxX = libyePx.length ? Math.max(...libyePx.map((p) => p.x)) : 0;
+  const libyeBandH = (libyeMaxY - libyeMinY) / 3;
+
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
       <svg
@@ -190,6 +209,10 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
           {/* clip = zone du vide (pour borner les hachures) */}
           <clipPath id="p1-void-clip">
             {voidD && <path d={voidD} />}
+          </clipPath>
+          {/* clip = territoire libyen (pour peindre les 3 bandes du drapeau à l'intérieur) */}
+          <clipPath id="p1-libye-clip">
+            {libyeD && <path d={libyeD} />}
           </clipPath>
         </defs>
 
@@ -399,6 +422,37 @@ export const Partie1Origine: React.FC<Props> = ({ ctx }) => {
             >
               2012
             </text>
+          </g>
+        )}
+
+        {/* TERRITOIRE LIBYEN colore au drapeau national (Aziz 2026-07-01) : 3 bandes horizontales
+            rouge/noir/vert + croissant+etoile blanche sur la bande noire, clippees au contour reel
+            du pays. Apparait avec le repere LIBYE, s'efface au trait d'encre (F_TRAIT). */}
+        {libyeFlagOp > 0.01 && libyeD && (
+          <g opacity={libyeFlagOp} clipPath="url(#p1-libye-clip)" style={{ mixBlendMode: "multiply" }}>
+            <rect x={libyeMinX} y={libyeMinY} width={libyeMaxX - libyeMinX} height={libyeBandH} fill="#E4312B" />
+            <rect x={libyeMinX} y={libyeMinY + libyeBandH} width={libyeMaxX - libyeMinX} height={libyeBandH} fill="#1A1A1A" />
+            <rect x={libyeMinX} y={libyeMinY + libyeBandH * 2} width={libyeMaxX - libyeMinX} height={libyeBandH} fill="#237F52" />
+            {/* croissant + etoile blanche, centres sur la bande noire */}
+            {(() => {
+              const cx = (libyeMinX + libyeMaxX) / 2;
+              const cy = libyeMinY + libyeBandH * 1.5;
+              const r = Math.min(libyeMaxX - libyeMinX, libyeBandH) * 0.16;
+              return (
+                <g fill="#FFFFFF">
+                  <circle cx={cx} cy={cy} r={r} />
+                  <circle cx={cx + r * 0.5} cy={cy} r={r * 0.82} fill="#1A1A1A" />
+                  <polygon points={
+                    Array.from({ length: 5 }).map((_, i) => {
+                      const a = -Math.PI / 2 + (i * 4 * Math.PI) / 5;
+                      const px = cx + r * 1.7 + Math.cos(a) * r * 0.42;
+                      const py = cy + Math.sin(a) * r * 0.42;
+                      return `${px.toFixed(1)},${py.toFixed(1)}`;
+                    }).join(" ")
+                  } />
+                </g>
+              );
+            })()}
           </g>
         )}
 

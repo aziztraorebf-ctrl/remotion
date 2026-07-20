@@ -203,13 +203,13 @@ export const Beat3Densite: React.FC = () => {
     extrapolateLeft: "clamp", extrapolateRight: "clamp",
   });
 
-  // ── Highlight pays : Mali en or + pays infectés en rouge terne (hérité Beat 2)
+  // ── Highlight pays : Mali en or (pays infectés en rouge = plus bas, clippé)
+  // ISO_PLAGUE ne passe PAS dans highlightFills : AtlasMercator n'a pas de
+  // clipPath et peindrait aussi les territoires d'outre-mer (Açores/Réunion/
+  // Guyane/Svalbard) en pleine mer. Le rouge est dessiné dans un
+  // <g clipPath="url(#europeClipB3)"> (GBR géré séparément, focus narratif).
   const highlightFills: Record<string, string> = {};
   ISO_MALI_ZONE.forEach((iso) => { highlightFills[iso] = MALI_GOLD; });
-  ISO_PLAGUE.forEach((iso) => {
-    // GBR géré séparément avec PLAGUE_RED_BRIGHT (focus narratif)
-    if (iso !== "GBR") highlightFills[iso] = PLAGUE_COUNTRY_COLOR;
-  });
 
   // Highlight GBR fade-in au mot "Angleterre", pulse continu jusqu'à fin beat
   const angleterreOpacity = interpolate(localF, [F_ANGL, F_ANGL + 20], [0, 0.7],

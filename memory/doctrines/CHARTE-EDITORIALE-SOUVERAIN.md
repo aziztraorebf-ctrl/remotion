@@ -1,7 +1,7 @@
 # Charte éditoriale Souverain — 1 page
 
 > **Lock 2026-05-19.** Consolide les règles dispersées du projet + apports session "militant vs analyste".
-> Lecture obligatoire avant tout nouveau script Souverain. Détails techniques dans `rules-souverain-editorial.md`.
+> Lecture obligatoire avant tout nouveau script Souverain. Détails techniques dans `memory/rules/rules-souverain-editorial.md`.
 >
 > **Complément 2026-05-27 :** [ANGLE-MACRO-SOUVERAIN.md](ANGLE-MACRO-SOUVERAIN.md) — exécution concrète de la promesse "le viewer à Paris/Tokyo/Montréal" via l'angle macro (sujets africains vus depuis leur impact sur le monde). Ratio 70/30 macro/micro recommandé.
 >
@@ -29,9 +29,29 @@ Aucune vidéo ne pointe un acteur comme coupable. On décrit les forces structur
 - INTERDIT : "La France pille encore l'Afrique"
 - CORRECT : "Comment 14 pays partagent une monnaie qu'ils ne contrôlent pas"
 
+> ⭐ **ACTEUR "CANDIDAT MÉCHANT" = LE PREMIER EXEMPLE VISIBLE DU MÉCANISME, PAS UNE EXCEPTION DIABOLISÉE**
+> (gravé 2026-07-19, Soudan Acte 6, retour Aziz sur la Russie). Quand un acteur risque d'être perçu comme
+> LE méchant (ex. la Russie qui bloque seule un cessez-le-feu par veto), NE PAS le traiter en exception :
+> le présenter comme le PREMIER cas visible d'un mécanisme GÉNÉRAL d'intérêt qui joue des DEUX côtés. Le
+> mécanisme devient la thèse, l'acteur en est l'illustration inaugurale ("autour de cette guerre, plus
+> personne n'est vraiment neutre" — la Russie devient le 1er exemple, les Émirats le suivant). Deux gestes :
+> (1) donner la nuance factuelle réelle de l'acteur (la Russie invoque la souveraineté du Soudan +
+> intérêts croisés documentés) — "officiellement… en réalité…", pas "le méchant bloque". (2) RETIRER tout
+> écho du ton à charge d'un camp ("disgrace", "paria", vocabulaire occidental sur la Russie ou
+> anti-occidental sur les Émirats) qui trahirait un clan. Un acteur controversé introduit ainsi RENFORCE la
+> crédibilité analyste au lieu de la trahir. Lié : [[DOCTRINE-SCRIPT-UNIFIEE]] règle 1 charte.
+
+⭐ **DEMANDE PROUVÉE DU PUBLIC (2026-06-28, validée 2× en commentaires Machi + Bhargav)** : sur le thème
+« Afrique riche mais pauvre », le public RÉCLAME explicitement la nuance de RESPONSABILITÉ INTERNE (gouvernance,
+institutions, choix locaux, faible transformation) — pas seulement le récit extractiviste/colonial. Les commentaires
+les + likés sous les viraux du thème le confirment ("our thieves parading as leaders" 4,1k likes ; "after independence
+we turned on each other"). C'est exactement le CRÉNEAU analyste vs désinfo : ni militantisme victimaire (qui plafonne),
+ni racolage "EXPOSED". Mentionner la part interne RENFORCE la crédibilité (validé jury LLM 8,5/10 sur le short cacao).
+Concrètement : sur ce thème, toujours coupler l'injustice externe avec ≥1 point factuel de responsabilité interne.
+
 ### 2. Chaque chiffre = source vérifiée (Perplexity sonar-pro après script lock)
 
-Avant TTS, fact-check obligatoire via Perplexity sonar-pro. Croiser au moins 2 sources de camps différents (mainstream international + panafricain + OSINT/officiel). Voir `rules-souverain-editorial.md` Section 1 pour la grille 3 niveaux complète.
+Avant TTS, fact-check obligatoire via Perplexity sonar-pro. Croiser au moins 2 sources de camps différents (mainstream international + panafricain + OSINT/officiel). Voir `memory/rules/rules-souverain-editorial.md` Section 1 pour la grille 3 niveaux complète.
 
 Maximum 3 chiffres par Short. Tout chiffre venant d'une seule partie d'un litige = attribution explicite dans la voix-off.
 
@@ -71,7 +91,7 @@ Pour chaque phrase d'un script Short : "Est-ce que cette phrase génère naturel
 - Oui → garder
 - Non → passer en Mid-form ou couper
 
-Voir `rules-souverain-editorial.md` Section 7 pour gate complet Script-Format Fit.
+Voir `memory/rules/rules-souverain-editorial.md` Section 7 pour gate complet Script-Format Fit.
 
 ---
 
@@ -102,6 +122,6 @@ Le positionnement militant plafonne sur AdSense diaspora et coupe la moitié sup
 
 ## Références internes (détails)
 
-- `memory/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)
+- `memory/rules/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)
 - grille des sources 3 niveaux détaillée (feedback archivé, supprimé)
 - palette + test couper l'audio (feedback archivé, supprimé)

@@ -184,9 +184,9 @@ Spécificités War-Map Long :
 
 ---
 
-## Référence script canonique — À IMITER (lock 2026-06-07)
+## Référence script canonique — À IMITER (lock 2026-06-07, corrigé 2026-07-11)
 
-**`memory/episodes/warmap-sahel/SCRIPT-V4-FINAL-2026-06-07.md`** — référence obligatoire pour tout nouveau script War-Map Long.
+**`memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md`** — référence obligatoire pour tout nouveau script War-Map Long (V5 = version réellement utilisée pour le rendu promu, confirmé via le fichier narration monté dans le code ; l'ancien pointeur vers "V4-FINAL" était périmé — ce fichier a été renommé `SCRIPT-V4-2026-06-07-remplace-par-V5.md`).
 
 Ce script est la référence canonique à imiter sur :
 - **Ton** : réalisme stratégique sobre, jamais partisan, multi-perspective explicite (France = intérêts nommés + Moura documenté + CFA posé comme question ouverte)
@@ -244,4 +244,4 @@ Ce script est la référence canonique à imiter sur :
 - `memory/doctrines/WARMAP-RESEARCH-PLAYBOOK.md` — doctrine données OSINT
 - `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` — règles script oral grade 10-11
 - `src/projects/warmap/WARMAP-INDEX.md` — point d'entrée code
-- `memory/episodes/warmap-sahel/SCRIPT-V4-FINAL-2026-06-07.md` — **RÉFÉRENCE CANONIQUE** (remplace V3-FINAL)
+- `memory/episodes/warmap-sahel/SCRIPT-V5-LINEAIRE-2026-06-10.md` — **RÉFÉRENCE CANONIQUE** (V5, remplace V4)

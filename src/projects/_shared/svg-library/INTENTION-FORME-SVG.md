@@ -24,8 +24,30 @@
 | Une dégradation / mort progressive | L'élément rétrécit et perd sa couleur vers le gris | `opacity` + `scale` vers 0 + filtre desaturation | Arbre Sahel → Souche, Sol vert → Sol aride |
 | Une graine qui germe (micro-naissance) | Graine apparaît (spring rebond), puis se fend, poussin émerge | `spring-elastique-overshoot` puis `reveal-clippath-bottom-up` | Graine (`elements/nature/trees/`) |
 | Un soleil qui se lève | Disque monte depuis le bas, rayons s'étendent | `reveal-clippath-bottom-up` (disque) + `strokeDashoffset-drawing` (rayons) | Soleil radiant (`elements/nature/sun/`) |
+| Une barre de données qui apparaît avec vitalité | Barre grandit depuis sa base avec léger rebond | `spring-bar-grow-in` (spring damping:12-14, stiffness:80-100, ancre = base de la barre) | `InkBarChart` |
+| Une part d'un tout qui se dessine (camembert/anneau) | Arc qui se trace en cercle depuis un point de départ | `donut-arc-draw` (`strokeDashoffset` sur `<circle>`/`<path>` arc, `pathLength:1`) | `InkDonutChart` |
+| Un chiffre qui défile jusqu'à sa valeur finale | Chiffres qui roulent (odomètre) puis se stabilisent | `counter-roll-up` (interpolate valeur 0→cible, easing ease-out, pas de linéaire) | `CounterEncre` |
 
 ---
+
+## PATTERNS NARRATIFS GGW (au-delà de l'effet unitaire — ils STRUCTURENT le récit)
+
+> La table ci-dessus = effets unitaires. Ces patterns = comment ENCHAÎNER les effets sur plusieurs beats pour
+> raconter, pas une suite de plans. Prouvés GGW Muraille Verte + Cacao→Chocolat (2026-06-29).
+> Preuve cacao : `memory/episodes/souverain/cacao-chocolat-short/DA-BRIEF-ANIMATION.md` (leçons + pré-plan B3/B4).
+
+| Pattern narratif | Geste | Quand l'utiliser |
+|---|---|---|
+| PROPORTION = CHIFFRE | X éléments sur N s'allument/se colorisent (ex: 2 plants /14 en brun-vie, reste en encre morte) | Porter un chiffre du script (« un septième », « 3 sur 4 ») sans infographie LLM |
+| BOUCLER LA BOUCLE | L'image finale fait écho à l'image-problème initiale, résolue | Climax / fin — fermer l'arc visuellement |
+| EXPLOITER UN SILENCE par l'animation | Un élément discret s'éveille (réseau racinaire, lueur) pendant un temps mort audio | Meubler un blanc de narration sans ajouter d'info |
+| FIL DE TRANSFORMATION CONTINU (⭐ dépasse GGW) | Les éléments se TRANSFORMENT et REVIENNENT au lieu d'apparaître/disparaître : tablette→graphique→revient ; champ qui reverdit puis ternit ; carte qui réapparaît. Un même monde qui évolue sur N beats. | Tout Short/scène multi-beats — crée la continuité (GGW bouclait 1×, le fil = mieux) |
+
+### Règle anti-sur-épurage (corollaire premium-d'abord)
+« Registre encre » != « minimal/pauvre ». Viser la RICHESSE NARRATIVE (sens par geste, tension, transformation)
+DÈS le 1er brief, JAMAIS en rattrapage. Anti-pattern prouvé coûteux (cacao B1/B2) : briefer une tablette/carte
+nue puis devoir ajouter geste/couleur après render. Et : on sur-utilise le split-screen — scanner d'abord
+buvard-circulaire / proportion=chiffre / fil continu AVANT de défaut sur split.
 
 ## Règles de composition SVG (non-negotiables)
 

@@ -19,8 +19,13 @@ const PART_A = 270; // 9s @30fps : la partie A occupe les 9 premieres secondes
 export const SenegalScene0: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: "#0d1424" }}>
-      {/* AUDIO CONTINU (une seule narration + musique pour toute la scene) */}
-      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} volume={1} />
+      {/* AUDIO CONTINU (une seule narration + musique pour toute la scene).
+          endAt=32.30s (CORRIGE ROUND 2 2026-07-04, bug A) : l'ancien 31.68s coupait au DEBUT du mot
+          "precise." (forced-align-v3.json global : precise. start=31.68s end=32.24s) au lieu de sa fin
+          -> le mot etait tronque a l'ecoute (retour Aziz). Nouveau endAt=32.30s couvre la fin reelle du
+          mot (32.24s) + marge, tout en restant sous 32.62s (debut de "Ces" dans sc.1a, AUDIO_START de
+          SenegalScene1IntroCoin) pour ne pas recreer de dedoublement. */}
+      <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/narration-v3-VALIDEE.mp3")} endAt={Math.round(32.30 * 30)} volume={1} />
       <Audio src={staticFile("souverain/senegal-petrole-gaz/audio/music-A-ambient-souverain.mp3")} volume={0.16} />
 
       {/* PARTIE A : carte qui se dessine + count-up (audio off, gere par la scene) */}

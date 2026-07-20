@@ -8,6 +8,8 @@ type: project
 
 ## ⚡ SOMMAIRE EXÉCUTIF — RÈGLES NON-NEGOTIABLE (extrait du corps, détail ci-dessous)
 
+- **⭐⭐ CONTOUR PERMANENT + INTÉRIEUR VIDE = LA CARACTÉRISTIQUE CENTRALE (Aziz 2026-07-07, "les parties les plus importantes").** Le(s) territoire(s) actif(s) ont un **contour TOUJOURS présent** (squelette permanent, encre affirmée). Leur **intérieur reste TRANSPARENT/crème UNI** — aucune bordure interne, aucun remplissage, aucun label parasite. Cette **surface vide est la TOILE de l'action** (jetons, flèches, halos). Les voisins/hors-sujet = assombris (kaki/olive, voile SVG troué à la forme du pays) → l'œil ne va QUE sur le territoire actif. Réf : `warmap-sahel-aes-FINAL.mp4`. Implémentation : `reskinMap()` (land crème uni, symboles masqués) + contour national permanent + voile khaki troué.
+- **⭐⭐ JAMAIS D'APLAT DE FACTION PLEIN — la couleur RAYONNE localement, elle ne "colorie" pas le pays (Aziz 2026-07-07, confirmé sur contre-exemple).** Dans TOUTE la vidéo AES, on ne voit JAMAIS un état/pays rempli en aplat de couleur pleine. C'est un ANTI-PATTERN (testé, rejeté : `soudan-socle-test.mp4` avec états bleu/rouge/or pleins = FAUX). Le bon système : le fond reste **crème+contours en permanence** ; une faction se manifeste par un **HALO de couleur DOUX et LOCAL qui rayonne autour du jeton/de l'action** (le rouge RSF s'étend depuis Hemeti, le bleu SAF depuis al-Burhan), en dégradé diffus, SANS bord net d'état, SANS jamais peindre la carte entière. La couleur SUIT l'action, elle ne remplit pas la géographie. **Nuance autorisée** : pour une bascule territoriale précise (ex. "El Fasher tombe"), une teinte douce (opacité ~0.25 max) peut monter BRIÈVEMENT sur CET état seul le temps du beat, puis redescendre — jamais permanent, jamais toute la carte. Réf halo : le halo rouge translucide autour des jetons + la zone grise qui déborde dans AES.
 - **CAUSE avant EFFET** — un territoire ne change jamais par magie : un acteur agit → le territoire change en conséquence (§1)
 - **Carte = CAUSAL/SPATIAL ; overlay = CONCEPTUEL** — ce qui n'a pas d'ancrage géographique va en overlay solide ou plein écran, puis on revient sur la carte (§2)
 - **JAMAIS 5 secondes sans mouvement visible** — déplacement, pulse, révélation ; viser moins (D-0)
@@ -23,6 +25,7 @@ type: project
 - **Ancrage géo vérifié avant code** — test §2 obligatoire : "ancrage géographique réel ?" OUI → sur carte ; NON → overlay solide/plein écran
 - **6-8 événements pour un beat <60s** — entre les gros jalons, micro-événements (pulse, label, micro-zoom) pour ne jamais laisser la carte au repos (D-1)
 - **Overlay = MÉCANISME, jamais le texte de la voix** — un overlay qui affiche ce que la voix prononce = sous-titre = interdit (§8, D-8)
+- **⭐ SOUS-DIMENSIONNEMENT RÉCURRENT** — tout objet/effet (sprite, zoom, trajectoire, flash) doit être visible dès le premier coup d'œil sur render RÉEL, pas juste correct dans le code ; réflexe = agrandir/étaler/allonger l'ensemble, jamais une valeur isolée (R-V5)
 
 ---
 
@@ -354,6 +357,33 @@ Le carré qui parle = l'acteur. C'est leur substitut au manque de personnages an
 incarnés (chèche/cagoule) + PixelLab — notre incarnation est supérieure. On peut emprunter l'IDÉE (un
 acteur "réagit" → micro-pulse, léger recul du jeton) sans copier les bulles cartoon (trahirait l'ADN doc).
 
+### R-V5 — SOUS-DIMENSIONNEMENT RÉCURRENT : agrandir/étaler/allonger, jamais un ajustement isolé
+> Gravée 2026-07-12 (Soudan Acte 4, session 10). Pattern répété 4x dans le MÊME acte, nommé explicitement
+> par Aziz comme récurrent "à travers l'acte 4 et autres" — pas un bug isolé par beat mais un biais
+> systématique du premier jet en War-Map. Doctrines SŒURS déjà gravées pour ce même biais dans d'autres
+> registres du projet — le principe est mûr, juste absent d'un registre à l'autre : `SOUVERAIN-REMOTION-
+> PLAYBOOK.md` (« erreur récurrente de Claude : faire les textes/graphismes TROP PETITS et TROP TARDIFS au
+> premier jet », règle d'or élément HERO = 40-60% largeur/hauteur écran) · `WORKFLOW-DATAVIZ.md` (pictos
+> sous-dimensionnés, réflexe : agrandir de +40 à +50% vs la 1re estimation).
+
+**4 occurrences dans le même acte (Soudan Acte 4)** :
+- Whip pan Moscou : zoom 6.4 (échelle "ville") sur un territoire filtré immense (Russie occidentale,
+  `mainlandBox` lon 19-100°) — se lisait comme un point isolé perdu dans un vide kaki. Corrigé à zoom 3.6.
+- Drone Kosti (Beat 5) : sprite 40px fixe, trajectoire 272px sur 1.2s, zéro contraste avec le fond crème —
+  invisible <1s à l'écran malgré un code fonctionnel. Corrigé à 95px, ~770px/2s, + traînée + halo.
+- Jeton naval Port-Soudan (Beat 2) : 140px jugé "beaucoup trop petit" par Aziz au premier test sur la vraie
+  carte, alors même que c'était déjà plus gros qu'un jeton portrait standard (D=58px). Agrandi +50% (210px).
+- Flash "profondeur stratégique" (Beat 4, Nil) : trait blanc à la MÊME largeur que le trait plein déjà
+  affiché — techniquement présent dans le code, invisible sur render réel (noyé visuellement).
+
+**Règle** : tout objet/effet War-Map (sprite, trajectoire, flash, jeton, zoom) doit être jugé "est-il
+visible dès le premier coup d'œil sur render RÉEL, pas juste correct en lisant le code" — même test que
+`SOUVERAIN-REMOTION-PLAYBOOK.md` ("si après render il flotte petit avec du vide autour → trop petit,
+agrandir"). Le réflexe de correction est TOUJOURS d'agrandir/étaler/allonger la valeur en question, jamais
+un ajustement ponctuel isolé d'une seule propriété (ex. juste l'opacité sans la taille, ou juste la taille
+sans la durée du mouvement) — le sous-dimensionnement touche généralement plusieurs dimensions à la fois
+(taille ET durée ET contraste) et se corrige comme un ensemble, pas une variable seule.
+
 ---
 
 ## 6. TEMPLATES OVERLAY VALIDÉS
@@ -394,6 +424,12 @@ split EST la séparation des 2 mondes) au lieu de la décrire. Cas roi : opposit
   CFA pulsante. DROITE drapeau France SVG ondulant + équation "1 € = ~656 FCFA" PERSISTANTE → bascule vers le
   SENS en typewriter (souveraineté + jeunesse, charte analyste : documenter le ressenti sans le valider).
 - Leçon data : afficher les chiffres ARRONDIS sans ambiguïté ("~656" pas "655,957" → lu "655 000"). Voir FACTS-CFA-2026.
+- ⚠️ **GARDE-FOU (Soudan Acte 3, 2026-07-11)** : ce template est validé pour carte+overlay (1 seule vraie
+  Mapbox, l'autre volet en SVG/data comme CFA P4 ci-dessus). **2 vraies instances Mapbox WebGL simultanées
+  dans les 2 panels = CRASH CONFIRMÉ** (`Error: Failed to initialize WebGL` sur la 2e Map, dès l'init —
+  limite dure du renderer headless de ce projet, pas un problème d'enfants complexes). Ne JAMAIS retenter
+  sans changement d'architecture (ex. compositing server-side de 2 renders séparés). Pour "carte+carte",
+  utiliser des panneaux glissants + connector convergent à la place (cf `Acte3SideFlags` dans `SoudanActe3.tsx`).
 
 ### Cas d'application immédiat (Chantier 3 confédération)
 La confédération AES = acte INSTITUTIONNEL (3 pays signent), AUCUN ancrage spatial → ne PAS la forcer sur la
@@ -465,6 +501,31 @@ meublé SUR la carte (lignes tension or accords, zones influence bases, pulse fr
 5. Soustraction : assumer le hors-champ France (route qui sort + label), ne pas dézoomer pour la montrer.
 
 → Render → downstream Gemini/Kimi de contrôle (da-brief.py), 1 appel max, Gemini consultatif jamais juge.
+
+### ⛔ R-V5 — OBJET FIGURATIF NON NOMMÉ PAR LA VOIX = confus, rejeté (Aziz 2026-07-09, Soudan Acte 2)
+Un objet figuratif posé sur la carte (bâtiment, palais, mine, monument, usine…) DOIT être ancré à
+quelque chose que la VOIX prononce à ce moment — sinon le spectateur ne comprend pas ce que c'est ni
+d'où ça sort. **Deux rejets Aziz** cette session : (1) un palais gouvernemental iso au coup d'État et
+(2) une mine d'or au beat 8 — tous deux JAMAIS nommés par la narration → retirés du montage.
+**RÈGLE** : avant de poser un objet, vérifier que la voix le désigne (synchro « on nomme → ça
+apparaît »). Sinon : le supprimer, OU le remplacer par un signe qui se lit SANS être nommé.
+*Alternative validée (beat 8)* : au lieu d'un objet abstrait, montrer les **FORCES qui tiennent leur
+position** (généraux + soldats figés de part et d'autre du front) → ça MONTRE « personne n'a pu
+gagner » sans nommer quoi que ce soit. Distinct de R-V N°2 (overlay-sous-titre) : ici le problème
+n'est pas la redondance mais l'ABSENCE d'ancrage verbal d'un objet figuratif.
+
+### ⭐ BRIQUES SIGNATURE War-Map (vocabulaire réutilisable — NE PAS re-coder, adapter l'existant)
+- **TwoFaceToken** (jeton alliance→rupture) : un jeton UNIQUE coupé par une ligne d'or, deux demi-visages.
+  Grammaire d'états : convergence → **FUSION** (alliance) → la ligne **FEND** (tension, « qui commande ? »)
+  → **SPLIT** (rupture) → reconstitution en 2 jetons. Candidat récurrent pour tout duo d'acteurs qui
+  s'allient puis se déchirent. Code : `src/projects/warmap/soudan-acte2/TwoFaceToken.tsx`.
+- **YearCounter** (fil temporel) : compteur d'année qui RECULE (2026→2021) puis avance (→2023) =
+  matérialise « revenir en arrière » ET meuble un beat sans surcharge. Garder le CHIFFRE seul, retirer
+  tout label texte redondant avec la voix. Cohérent avec **KmCounter** « le chiffre qui frappe ».
+  Code : inline dans `src/projects/warmap/soudan-acte2/SoudanActe2.tsx`.
+- **BlocImpasseB6** (rapport de force plein cadre) : concept SANS ancrage géo (« puissance de feu vs
+  territoire ») → BLOC état-major, PAS plaqué sur la carte (cf §2 test d'ancrage : d'abord tenté sur
+  carte = raté, basculé en bloc = juste). Code : `src/projects/warmap/soudan-acte2/BlocImpasseB6.tsx`.
 
 ---
 

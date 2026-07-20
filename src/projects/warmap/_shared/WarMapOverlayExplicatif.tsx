@@ -8,9 +8,11 @@
  *   apparaisse sur la carte, cree une continuite narrative (on comprend
  *   pourquoi le jeton sera pose sur la carte ensuite).
  *
- * Regle R2 : fond SEMI-TRANSPARENT cream (pas solide — la carte reste visible
- * en silhouette derriere, ce qui rappelle qu'on parle de ce lieu).
- * Regle R4 : voile cream clair, jamais noir.
+ * CORRIGE 2026-07-11 : l'ancien voile semi-transparent (R2 d'origine) violait
+ * WARMAP-GRAMMAIRE §9 (overlay semi-transparent BANNI, decision Aziz 2026-06-14 —
+ * voir WarMapOverlayDynamic qui a deja fait cette correction). Remplace par AUCUN
+ * voile : la carte reste visible et lisible derriere, seule la plaque centrale
+ * (deja opaque) porte le texte.
  * Regle R3 : l'action est figee pendant l'overlay (gestion dans WarMapEngine
  * via EPIC_WINDOWS — ajouter cette fenetre dans le tableau).
  *
@@ -77,8 +79,7 @@ export const WarMapOverlayExplicatif: React.FC<Props> = ({
 
   return (
     <AbsoluteFill style={{ opacity: op, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
-      {/* voile semi-transparent cream (R4 + R2 : rappelle le lieu, pas de noir) */}
-      <AbsoluteFill style={{ background: `${ATLAS.cream}72` }} />
+      {/* AUCUN voile sur la carte (corrige 2026-07-11, cf. WARMAP-GRAMMAIRE §9) — la plaque opaque suffit */}
 
       <AbsoluteFill style={{ justifyContent: "center", alignItems: "center", padding: "0 60px" }}>
         <div style={{

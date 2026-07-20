@@ -38,7 +38,7 @@ Test de réussite : un spectateur ressort en disant **« Ah — l'or paie la gue
 
 ## IMPLICATIONS CONCRÈTES
 - **Titrage** : déclaratif + mécanique (« L'or qui paie la guerre »), pas émotionnel (« le génocide que le monde ignore »). Doctrine [[feedback_doctrine-titres-youtube-kora-cartes]].
-- **Actes restants (3-4-5)** : tenir la neutralité clinique (voir [[soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES]]). L'Acte 4 (coût humain) porte l'émotion MAIS par les faits nus (famine déclarée, génocide ciblé qualifié ONU), jamais par l'emphase.
-- **Conclusion (Acte 5)** : ouverte, honnête, pas de fausse résolution. Posture analyste : on a fait COMPRENDRE, on ne prétend pas résoudre.
+- **Actes restants (3-4-5)** : tenir la neutralité clinique (voir [[soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES]]). Structure actée 2026-07-10 (5 actes) : l'Acte 4 = Russie+Égypte ("même les voisins sont aspirés", script v5 verrouillé), le coût humain (famine déclarée, génocide ciblé qualifié ONU) est traité en fait nu réparti sur les actes concernés (voir `soudan-midform-DONNEES.md`), jamais par l'emphase.
+- **Conclusion (Acte 6)** [NOTE 2026-07-12 : ex-Acte 5, scindé — l'Acte 5 traite maintenant le réseau EAU-Libye-Haftar, cf `soudan-midform-ACTE5-SCRIPT.md`] : verrou institutionnel UA/ONU/Quad + ouverte, honnête, pas de fausse résolution. Posture analyste : on a fait COMPRENDRE, on ne prétend pas résoudre.
 
 Liens : [[soudan-midform]] · [[soudan-midform-DONNEES]] · [[soudan-midform-ACTE3-NOTE-ACTEURS-EXTERNES]] · [[CHARTE-EDITORIALE-SOUVERAIN]] · [[feedback_doctrine-titres-youtube-kora-cartes]] · [[SUJET-PRIME-SUR-PRODUCTION]].
