@@ -1,11 +1,37 @@
 # Soudan Mid-form — STATUS
 
-## ✅ ACTE 3 GLOBE D3 — INSERT beats 3-7 FAIT (2026-07-19, session 14)
-> Insert globe D3 ~87s (flux internationaux, beats 3-7) valide Aziz, cale sur l'audio reel. Branche
-> `feat/soudan-acte3-globe-d3` · render `out/_r-and-d/soudan-a3-globe-insert-v4.mp4`. RESTE = assembler
-> avec Section 1 Mapbox + promouvoir (Acte 3 FINAL Mapbox reste INTACT) → starter
-> `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`. Moteur reutilisable +
-> Acte 5 candidat n°2 : `.claude/.../feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+## ✅✅ ACTE 3 « SUIVRE L'OR » GLOBE 2-REGISTRES — PROMU FINAL (2026-07-19, session 15)
+
+> **TERMINÉ + PROMU.** Refonte complète validée Aziz : passage de 3 registres visuels (SVG + Mapbox 2D +
+> Globe) à **2 registres (SVG + Globe)**. Toute la carte est désormais en GLOBE D3, plus aucun Mapbox.
+>
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4` (55.9MB, 125.9s).
+> ⚠️ L'ancien Mapbox `soudan-acte3-suivre-lor-FINAL.mp4` (74.6MB) reste INTACT — Aziz choisit lequel publier.
+> **Code = le vrai livrable** : Section 1 = `src/projects/_rnd/d3-16x9/SoudanActe3Section1Globe.tsx`
+> (compo `D3-SoudanActe3-Section1Globe`, 1162f) · insert = `SoudanActe3GlobeInsert.tsx` (compo
+> `D3-SoudanActe3-GlobeInsert`, 2611f). Assemblage = CONCATÉNATION des 2 mp4 (jamais compo mixte).
+> **Branche** : `feat/soudan-acte3-globe-d3`.
+>
+> **Fait cette session (retours Aziz appliqués)** :
+> 1. **Section 1 refaite en Globe** (agent remotion-composer) : SVG intro (Beat1Paradoxe copié tel quel)
+>    + fade doux cross-fade [483,540] + carte globe (North Darfur rouge/Khartoum bleu depuis
+>    `sudan-states.geojson` chargé via fetch+delayRender, 3 mines, portrait Hemedti recentré+écarté,
+>    jetons hérités RSF/SAF). Échelle topdown **6.5 CONSTANTE** (raccord parfait avec l'insert qui démarre
+>    à 6.5). Contours "marque" (borderColor #1c150a, w 1.1, op 0.8 — surcharge LOCALE, PAS THEMES.mixte).
+> 2. **Insert : zoom d'entrée recalé 4.4→6.5** (`globeCamera.ts buildInsertCam(T, startScaleMul)`) pour
+>    matcher l'échelle de la Section 1. Calage fait par rendu-test, pas au jugé.
+> 3. **SVG argent** (Beat1Paradoxe) : le liquide doré abstrait → **billets $ dorés** empilés clippés par
+>    `goldLevelClip` (montent/descendent avec le niveau) + fuite = billets $ qui tombent. Couleur or
+>    conservée (unité, "or = argent"). Codé directement (géométrie maîtrisée), pas via LLM.
+> 4. **3 plaques de sources** sobres parchemin, bas-droite, 1 ligne, ~1.8s fade in/out, SANS le mot
+>    "Source:" (retiré sur demande). Composant `SourcePlaque` dans l'insert. Sources RÉELLES du fact-check
+>    jury 2026-07-09 (`soudan-midform-ACTE3-JURY-VERDICTS.md`) : Amnesty International mai 2025 (f634) ·
+>    Washington Post/ADF/Euronews (f1133) · Chatham House/The Soufan Center (f1754), frames relatives insert.
+>
+> Moteur globe D3 désormais prouvé sur 3 actes (1 Section + 3 + 5). Doctrine moteur :
+> `.claude/.../feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+> ⛔ **PÉRIMÉ** : le starter `STARTER-PROMPT-soudan-acte3-globe-assemblage.md` (assemblage fait) + toute la
+> Section 1 Mapbox de `src/projects/warmap/soudan-acte3/SoudanActe3.tsx` (remplacée par le globe D3).
 
 ## ✅✅ ACTE 5 « LE RÉSEAU QUI ARME DANS L'OMBRE » — REFAIT EN GLOBE D3, PROMU FINAL v5 (2026-07-19)
 

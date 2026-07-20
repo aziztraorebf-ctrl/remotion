@@ -58,18 +58,16 @@
 > ### 🎯 BACKLOG PROCHAINES SESSIONS (Aziz veut TOUT + une VRAIE SCENE COMPLETE, 2026-07-18)
 > **d3 installe** : d3-array, d3-format, d3-geo, d3-scale. **MANQUE** : d3-force, d3-shape (npm install).
 > 1. **⭐ PASSAGE A L'ECHELLE — une VRAIE scene complete** (script + audio + montage). LE SAUT EST FAIT.
->    **✅⭐⭐ CANDIDAT N°1 — SOUDAN ACTE 3 "SUIVRE L'OR" GLOBE D3 : INSERT beats 3-7 FAIT+valide Aziz (2026-07-19).**
->    Insert globe D3 de ~87s (beats 3-7, les flux internationaux), cale sur l'audio reel, valide Aziz.
->    Branche `feat/soudan-acte3-globe-d3` · render `out/_r-and-d/soudan-a3-globe-insert-v4.mp4` · compo
->    `SoudanActe3GlobeInsert.tsx`. Contient : palette MIXTE (terres kaki + ocean bleu + frontieres premium),
->    arcs geoInterpolate, reactions cible (onde+illumination+drapeau+objet), drapeaux clippes territoire,
->    portraits factions (recette Mapbox), drone-sprites sur flux retour (or=flux lumineux, drone=sprite),
->    volume globe (ombre spherique), reveal systeme, raccords entree zoom-out + sortie zoom-in. Review
->    Gemini+Kimi appliquee (4 retenus convergents).
->    **RESTE (delegue, starter pret)** = assembler avec Section 1 Mapbox (beats 1-2bis, WebGL) + valider
->    raccords + promouvoir. Methode = CONCATENATION 2 mp4 (Section1 via render-mapbox.sh + insert classique),
->    compo SEPAREE, l'Acte 3 FINAL Mapbox reste INTACT. → `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`.
->    Moteur reutilisable grave : `.claude/.../memory/feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
+>    **✅✅ CANDIDAT N°1 — SOUDAN ACTE 3 "SUIVRE L'OR" GLOBE 2-REGISTRES : PROMU FINAL (2026-07-19, session 15).**
+>    Refonte complete validee Aziz : 3 registres (SVG+Mapbox+Globe) → **2 registres (SVG+Globe)**, toute la
+>    carte en globe D3. Section 1 refaite en globe (SVG intro + fade doux + North Darfur/Khartoum colores +
+>    mines + Hemedti + jetons herites), echelle 6.5 CONSTANTE = raccord parfait avec l'insert (recale 4.4→6.5).
+>    SVG argent = billets $ dores (au lieu du liquide abstrait). 3 plaques de sources reelles (Amnesty/WaPo/
+>    Chatham House, fact-check jury 2026-07-09), sans le mot "Source:".
+>    **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-globe-FINAL.mp4` (l'ancien
+>    Mapbox `-FINAL.mp4` reste INTACT, Aziz choisit lequel publier). Code : `SoudanActe3Section1Globe.tsx` +
+>    `SoudanActe3GlobeInsert.tsx`. Branche `feat/soudan-acte3-globe-d3`.
+>    Moteur globe reutilisable grave : `.claude/.../memory/feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
 >    **✅ ACTE 5 "le reseau qui arme" = FAIT + PROMU FINAL v5 (2026-07-19)** — refait en GLOBE D3 INTEGRAL
 >    (le decoupage hybride globe/Mapbox envisage a ete abandonne au profit du globe integral : 0 couture).
 >    Voir section Acte 5 en bas de ce fichier + `episodes/soudan-midform/STATUS.md`. Le moteur globe est
