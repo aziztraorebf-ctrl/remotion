@@ -26,6 +26,8 @@ import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
+import { SoudanActe3GlobeMinesProto, GLOBE_MINES_PROTO_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeMinesProto";
+import { SoudanActe3Section1Globe, SECTION1_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3Section1Globe";
 import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
@@ -708,6 +710,36 @@ export const RemotionRoot: React.FC = () => {
           id="D3-SoudanActe3-GlobeInsert"
           component={SoudanActe3GlobeInsert}
           durationInFrames={SOUDAN_A3_INSERT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO calage (2026-07-19) : beat 2 mines+portrait en GLOBE topdown, contours renforcés (v2 retour Aziz) */}
+        <Composition
+          id="D3-SoudanActe3-GlobeMines-Marque"
+          component={SoudanActe3GlobeMinesProto}
+          durationInFrames={GLOBE_MINES_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ scaleVariant: "topdown" as const, borderVariant: "marque" as const }}
+        />
+        <Composition
+          id="D3-SoudanActe3-GlobeMines-Fort"
+          component={SoudanActe3GlobeMinesProto}
+          durationInFrames={GLOBE_MINES_PROTO_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ scaleVariant: "topdown" as const, borderVariant: "fort" as const }}
+        />
+        {/* Section 1 Acte 3 refaite en GLOBE D3 integral (2026-07-19) : SVG intro (Beat1Paradoxe)
+            + Globe (frontieres RSF/SAF, jetons, 3 mines, portrait Hemedti) — remplace le patchwork
+            SVG+Mapbox+Globe par SVG+Globe (2 registres). Cross-fade doux 483->540. */}
+        <Composition
+          id="D3-SoudanActe3-Section1Globe"
+          component={SoudanActe3Section1Globe}
+          durationInFrames={SECTION1_GLOBE_FRAMES}
           fps={30}
           width={1920}
           height={1080}

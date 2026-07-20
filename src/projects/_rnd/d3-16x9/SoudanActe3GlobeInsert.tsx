@@ -24,8 +24,9 @@ export const SOUDAN_A3_INSERT_FRAMES = INSERT_FRAMES; // ~2607
 const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const t = THEMES.mixte;
 
-// Keyframes camera de l'insert (T = ancrages relatifs).
-const CAM = buildInsertCam(T as any);
+// Keyframes camera de l'insert (T = ancrages relatifs). startScaleMul = zoom d'entree (cale le raccord
+// avec la fin de la Section 1 Mapbox, zoom 5.75). Overridable via inputProps pour le calage.
+export const INSERT_START_SCALE_MUL = 6.5;
 
 // PortraitToken — jeton-visage faction (recette EXACTE du Mapbox SoudanToken : cercle parchemin +
 // bordure faction + portrait clippe rond + ombre). Coherence totale avec la Section 1 Mapbox (memes
@@ -58,6 +59,25 @@ const PortraitToken: React.FC<{ x: number; y: number; faction: "rsf" | "saf"; pu
   );
 };
 
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (retour Aziz
+// 2026-07-19 : "afficher les sources des gros faits ~1.5-2s puis disparaitre"). Sources REELLES issues
+// du fact-check jury du 2026-07-09 (soudan-midform-ACTE3-JURY-VERDICTS.md). Fade in/out ~1.8s a l'ecran.
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number }> = ({ text, appear, frame, holdFrames = 54 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  // fade in 10f, hold, fade out 12f. holdFrames=54 -> ~1.8s a plein.
+  const op = interpolate(frame, [appear, appear + 10, appear + holdFrames, appear + holdFrames + 12], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  return (
+    <div style={{ position: "absolute", right: 40, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
+  );
+};
+
 // DroneSprite — sprite drone PNG (vehicule) qui glisse le long d'un flux RETOUR (armes), oriente dans
 // le sens du vol (recette Mapbox : rotate angle+90, le sprite pointe vers le haut au repos). Overlay HTML.
 // Sprites 1408x768 (ratio ~1.83). faction rsf/saf = drone livre au camp correspondant.
@@ -70,10 +90,11 @@ const DroneSprite: React.FC<{ x: number; y: number; angle: number; faction: "rsf
   </div>
 );
 
-export const SoudanActe3GlobeInsert: React.FC = () => {
+export const SoudanActe3GlobeInsert: React.FC<{ startScaleMul?: number }> = ({ startScaleMul = INSERT_START_SCALE_MUL }) => {
   const frame = useCurrentFrame();
 
   // ===== CAMERA CONTINUE =====
+  const CAM = buildInsertCam(T as any, startScaleMul);
   const cam = camAt(CAM, frame);
   // zoom-pivot ponctuel sur Dubai a l'arrivee de l'or (beat 4, transformation) — se cumule au scale cam.
   const zoomPivot = interpolate(frame, [T.b4RevientForme - 20, T.b4RevientForme + 10, T.b4AchetentDrones, T.b4AchetentDrones + 30], [0, 1, 1, 0], clampB);
@@ -286,6 +307,12 @@ export const SoudanActe3GlobeInsert: React.FC = () => {
         {/* DRONES (flux retour armes) — sprites orientes, overlay HTML */}
         {retMarker && <DroneSprite x={retMarker.x} y={retMarker.y} angle={retMarker.angle} faction="rsf" />}
         {turkMarker && <DroneSprite x={turkMarker.x} y={turkMarker.y} angle={turkMarker.angle} faction="saf" />}
+
+        {/* PLAQUES SOURCES (fact-check jury 2026-07-09) — 3 faits sensibles, frames relatives a l'insert.
+            Amnesty=634 (drones documentes) · Bayraktar=1134 (contrat Turquie->SAF) · Egypte=1754 (or SAF hors-circuit). */}
+        <SourcePlaque frame={frame} appear={634} text="Amnesty International, mai 2025" />
+        <SourcePlaque frame={frame} appear={1133} text="Washington Post, ADF, Euronews" />
+        <SourcePlaque frame={frame} appear={1754} text="Chatham House, The Soufan Center" />
       </AbsoluteFill>
     </AbsoluteFill>
   );
