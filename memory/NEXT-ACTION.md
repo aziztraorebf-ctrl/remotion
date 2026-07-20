@@ -1,28 +1,32 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-19 (session 16 — Acte 6 Soudan CONÇU : script+audio verrouillés + storyboard. Sessions 14-15 : Acte 3/5 globe D3).
-> Structure Soudan inchangée depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
-> A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-20 (session 17 — Acte 6 Soudan CODÉ + PROMU FINAL. Mid-form = 5/6 actes FINAUX).
+> Structure Soudan inchangée (**6 actes au total**). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🎬 SOUDAN MID-FORM — ACTE 6 « POURQUOI PERSONNE NE L'ARRÊTE » : SCRIPT + AUDIO VERROUILLÉS + STORYBOARD ACTÉS, CODE À FAIRE (2026-07-19 s16)
+## 🎬 SOUDAN MID-FORM — PLAN PROCHAINE SESSION (acté Aziz 2026-07-20) : FINIR L'ACTE 4 → AUDIO → ASSEMBLAGE
 
-> **Acte FINAL du mid-form** (verrou institutionnel UA/ONU + paradoxe des médiateurs + conclusion ouverte),
-> suite directe du pont Acte 5 (« …il faut regarder du côté des institutions censées justement empêcher ça »).
-> Conçu entièrement cette session — reste le CODE.
+> **ÉTAT : 5/6 actes FINAUX** (Actes 1,2,3-globe,5-globe,6-globe tous PROMUS). Reste UNIQUEMENT l'**ACTE 4**
+> (« Même les voisins sont aspirés » — Russie/Égypte). Le globe D3 a débloqué toute la vidéo (grosse évolution).
 >
-> - **Script v5 STABLE** (jury LLM 3 modèles passé, verdict unanime) : `memory/projects/soudan-midform-ACTE6-SCRIPT.md`.
->   5 beats : B1 on cherche l'arbitre · B2 UA écartée · B3 veto russe ONU · B4 paradoxe Émirats · B5 coût humain + clôture.
-> - **Audio VERROUILLÉ Aziz** (133.2s) : `public/_shared/audio/soudan/acte6-verrou-institutionnel.mp3` (p1-p5, voix
->   Kora et Cartes, pipeline Océane V3→STS). Coût humain ajouté en fin (13,6M déplacés), 7 mini-pauses [pause] pour le débit.
-> - **CTA : AUCUN** (tranché — jury dédié + décence sur sujet grave, cf script § DÉCISION CTA).
-> - **STORYBOARD acté** (upstream Gemini+Kimi, convergence totale) : registre **GLOBE D3** (continuité Acte 5) +
->   **overlay UI** au vote B3 (hémicycle 15 sièges) + **insert SVG** à la table B4 (globe ne porte pas l'abstrait pur).
->   Détail : script § STORYBOARD + `memory/episodes/soudan-midform/da-briefs-acte6/miseenscene-{gemini,kimi}.md`.
->   ⚠️ Critique AI-slop de nos effets à corriger au code (halo radial = gradient basique, drop-shadow lourd).
-> - **NEXT = CODE session dédiée** : moule `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx`. Forced-alignment audio →
->   timing frame-exact → code beat par beat → self-review CODE+VISUEL → render. Puis mid-form Soudan COMPLET (6 actes) → assemblage final.
+> **ORDRE DE LA PROCHAINE SESSION (plan Aziz) :**
+> 1. **RE-RENDER Acte 4 FINAL** : l'Acte 4 était en pause (voir sa section plus bas). Le v7 est PÉRIMÉ (Beat 5
+>    Kosti refait en insert SVG jamais re-rendu complet, + branche `feat/kosti-refonte-k3` non mergée). D'abord
+>    reprendre l'état réel (croiser code+render), re-render complet.
+> 2. **APPLIQUER nos doctrines/outils récents à l'Acte 4** — maintenant qu'on a : GPT-5.6 Sol/Gemini/**Kimi K3
+>    débloqué**/**Fable 5 (excellent SVG)** en mix-and-match, la cartographie globe D3, et surtout la **passe LLM
+>    en 2 temps** (densification MAIS SURTOUT **dynamisme** — le 2e appel qui a transformé l'Acte 6). Intention→
+>    forme→template. Conclure l'Acte 4 à ce niveau de finition.
+> 3. **AUDIO GLOBAL de la vidéo** (avant assemblage) : choisir une **MUSIQUE** (procédé habituel — Minimax
+>    `fal-ai/minimax-music/v2.6` instrumental, réutiliser piste AES/Soudan existante ou nouvelle) + **SFX**
+>    (créer quelques nouveaux + réutiliser les existants de la lib). Sur tout le mid-form, pas acte par acte.
+> 4. **ASSEMBLAGE FINAL** des 6 actes (concaténation, comme Acte 3 : jamais compo mixte). Si le contexte de la
+>    session le permet ; sinon session dédiée séparée.
+>
+> ✅ **ACTE 6 FAIT** (voir `episodes/soudan-midform/STATUS.md` § tête) : globe D3 + inserts LLM mix-and-match +
+> passe dynamisme, promu `out/PRET-PUBLICATION/soudan-midform/soudan-acte6-verrou-institutionnel-FINAL.mp4`.
+> Branche `feat/soudan-acte6-globe` mergée dans master. Code `SoudanActe6Globe.tsx` (compo `D3-SoudanActe6-Globe-Nu`).
 
 ---
 
