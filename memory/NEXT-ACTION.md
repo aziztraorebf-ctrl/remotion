@@ -22,7 +22,20 @@
 >    `fal-ai/minimax-music/v2.6` instrumental, réutiliser piste AES/Soudan existante ou nouvelle) + **SFX**
 >    (créer quelques nouveaux + réutiliser les existants de la lib). Sur tout le mid-form, pas acte par acte.
 > 4. **ASSEMBLAGE FINAL** des 6 actes (concaténation, comme Acte 3 : jamais compo mixte). Si le contexte de la
->    session le permet ; sinon session dédiée séparée.
+>    session le permet ; sinon session dédiée séparée. AVANT de figer : **visionnage d'enchaînement**
+>    (transitions inter-actes, surtout le raccord globe Acte 5→6 déjà soigné) une fois bout à bout.
+> 5. **⚠️ AUDIT JETONS PERSONNAGES NOMMÉS (retour Aziz 2026-07-20, IMPORTANT)** — scène par scène, sur TOUT le
+>    mid-form : vérifier que les PERSONNES NOMMÉES (Hemedti, al-Burhan, Haftar…) gardent leur VRAI VISAGE
+>    partout (`portrait-hemeti/burhan/haftar`), PAS un jeton générique (`portrait-rsf/saf`). Suspicion Aziz :
+>    les vrais visages sont bien utilisés Actes 1-2 (soignés) mais dérivent en génériques dès l'Acte 3+
+>    (ex. Hemedti redevient un soldat RSF générique). Règle : une personne nommée = même vrai visage partout ;
+>    un soldat = générique. À corriger acte par acte avant l'assemblage.
+> 6. **⚠️ PASSE LLM DOWNSTREAM sur la vidéo ASSEMBLÉE complète (retour Aziz)** — une fois les 6 actes bout à
+>    bout, un DERNIER brief downstream (Gemini+Kimi) sur la vidéo entière : lisibilité, ATTAQUE, DYNAMISME,
+>    JETONS. Diagnostic de fond Aziz : le mid-form a commencé TROP CONSERVATEUR — les premiers actes n'ont pas
+>    bénéficié des doctrines acquises depuis (nom→persiste vs verbe→efface / « ce qui reste, ce qui s'en va »,
+>    densification, dynamisme, passe LLM 2 temps). Cette passe finale rattrape l'écart de niveau début↔fin.
+>    C'est la vraie touche finale AVANT de promouvoir le mid-form complet.
 >
 > ✅ **ACTE 6 FAIT** (voir `episodes/soudan-midform/STATUS.md` § tête) : globe D3 + inserts LLM mix-and-match +
 > passe dynamisme, promu `out/PRET-PUBLICATION/soudan-midform/soudan-acte6-verrou-institutionnel-FINAL.mp4`.
