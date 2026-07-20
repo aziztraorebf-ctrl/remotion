@@ -29,6 +29,18 @@ Aucune vidéo ne pointe un acteur comme coupable. On décrit les forces structur
 - INTERDIT : "La France pille encore l'Afrique"
 - CORRECT : "Comment 14 pays partagent une monnaie qu'ils ne contrôlent pas"
 
+> ⭐ **ACTEUR "CANDIDAT MÉCHANT" = LE PREMIER EXEMPLE VISIBLE DU MÉCANISME, PAS UNE EXCEPTION DIABOLISÉE**
+> (gravé 2026-07-19, Soudan Acte 6, retour Aziz sur la Russie). Quand un acteur risque d'être perçu comme
+> LE méchant (ex. la Russie qui bloque seule un cessez-le-feu par veto), NE PAS le traiter en exception :
+> le présenter comme le PREMIER cas visible d'un mécanisme GÉNÉRAL d'intérêt qui joue des DEUX côtés. Le
+> mécanisme devient la thèse, l'acteur en est l'illustration inaugurale ("autour de cette guerre, plus
+> personne n'est vraiment neutre" — la Russie devient le 1er exemple, les Émirats le suivant). Deux gestes :
+> (1) donner la nuance factuelle réelle de l'acteur (la Russie invoque la souveraineté du Soudan +
+> intérêts croisés documentés) — "officiellement… en réalité…", pas "le méchant bloque". (2) RETIRER tout
+> écho du ton à charge d'un camp ("disgrace", "paria", vocabulaire occidental sur la Russie ou
+> anti-occidental sur les Émirats) qui trahirait un clan. Un acteur controversé introduit ainsi RENFORCE la
+> crédibilité analyste au lieu de la trahir. Lié : [[DOCTRINE-SCRIPT-UNIFIEE]] règle 1 charte.
+
 ⭐ **DEMANDE PROUVÉE DU PUBLIC (2026-06-28, validée 2× en commentaires Machi + Bhargav)** : sur le thème
 « Afrique riche mais pauvre », le public RÉCLAME explicitement la nuance de RESPONSABILITÉ INTERNE (gouvernance,
 institutions, choix locaux, faible transformation) — pas seulement le récit extractiviste/colonial. Les commentaires

@@ -81,6 +81,19 @@ DOUBLE ombre (boxShadow du disque + ombre-sol floue décalée). Règle d'ombre :
 native) = ZÉRO ombre externe ; buste/médaillon = ombre externe requise. Détail :
 `.claude/.../feedbacks/feedback_jeton-iso-pas-d-ombre-externe.md`.
 
+> ⭐ **LIMITE DU GLOBE SUR L'ABSTRAIT INSTITUTIONNEL — overlay UI ou insert SVG selon le degré d'abstraction**
+> (gravé 2026-07-19, Soudan Acte 6, upstream Gemini+Kimi convergence totale). Le globe D3 excelle pour les
+> FLUX géographiques entre lieux (Actes 3/5 : or, armes, corridors) mais atteint sa limite sur du contenu
+> institutionnel/abstrait. Règle de bascule selon la nature du beat : (1) un fait institutionnel qui a un
+> ANCRAGE géo (un pays suspendu, un pays qui vote) → globe + éventuel badge géo-ancré (icône Lucide au
+> centroïde). (2) un MÉCANISME abstrait (un VOTE 14 contre 1, un veto) → globe + **OVERLAY UI** posé
+> par-dessus (hémicycle 15 sièges SVG, compteurs, panneau) en `position:absolute` HORS du canvas D3 — la
+> géo seule ne dit pas "vote". (3) une scène SANS géographie du tout (une TABLE DE NÉGOCIATION, un huis
+> clos) → le globe est FORCÉ → basculer en **INSERT SVG plein écran** (cross-fade "on entre dans la
+> Terre"). Le globe reste le liant de continuité inter-actes mais ne se force jamais sur le pur abstrait.
+> ⚠️ Anti-slop confirmé par les 2 modèles sur nos effets : halo radial = gradient CSS basique qui bave →
+> SVG clippé aux frontières ; drop-shadow lourd sur jetons = "asset jeu mobile" → cercle net stroke 2px.
+
 **Seule limite résiduelle D3 vs Mapbox = LE SOL** : D3 = aplat uni ; Mapbox = terrain raster texturé où
 l'objet se fond. N'empêche PAS de poser des objets, mais le « terrain habité » manque (piste : polygone
 enrichi dégradé+grain+ombre interne, à tester). **Render D3/SVG pur = `npx remotion render` classique**

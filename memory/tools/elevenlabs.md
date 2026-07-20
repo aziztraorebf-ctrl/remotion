@@ -510,3 +510,10 @@ audio par beat (beat1.mp3, beat2.mp3…) plutôt qu'un seul monolithe. AVANTAGE 
 intonation, erreur TTS FR comme "pèse"/"sous-payée") se RÉGÉNÈRE seul, sans refaire toute la narration (itération
 bon marché) ET le timing audio-derived se mesure par beat (ffprobe par fichier) = storyboard plus simple. Garder
 `beatN-FINAL.mp3` + une version COMPLETE concaténée (concat `filter_complex`, PAS `-c copy` qui casse les timestamps).
+
+⚠️ **GOTCHA `--only-part` de `generate-narration-expressive.py` (Soudan Acte 6, 2026-07-19)** : régénérer UNE
+seule partie avec `--only-part pN` NE re-concatène PAS le fichier complet (message "pas de concat global :
+mode partie unique"). Le `.mp3` global garde donc l'ANCIENNE durée → on peut présenter par erreur un lien
+qui pointe vers la version périmée. APRÈS tout `--only-part`, re-concaténer MANUELLEMENT les parties :
+`ffmpeg -y -i p1 -i p2 ... -filter_complex "[0:a][1:a]...concat=n=N:v=0:a=1[out]" -map "[out]" -c:a libmp3lame -q:a 2 out.mp3`
+(filter_complex, jamais `-c copy`). Toujours revérifier la durée `ffprobe` du global après re-concat.

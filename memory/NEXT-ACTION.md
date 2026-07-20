@@ -1,8 +1,28 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-19 (session 15 — Acte 5 Soudan REFAIT EN GLOBE D3, PROMU FINAL v5. Acte 3 globe insert = session 14).
+> Mis a jour : 2026-07-19 (session 16 — Acte 6 Soudan CONÇU : script+audio verrouillés + storyboard. Sessions 14-15 : Acte 3/5 globe D3).
 > Structure Soudan inchangée depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🎬 SOUDAN MID-FORM — ACTE 6 « POURQUOI PERSONNE NE L'ARRÊTE » : SCRIPT + AUDIO VERROUILLÉS + STORYBOARD ACTÉS, CODE À FAIRE (2026-07-19 s16)
+
+> **Acte FINAL du mid-form** (verrou institutionnel UA/ONU + paradoxe des médiateurs + conclusion ouverte),
+> suite directe du pont Acte 5 (« …il faut regarder du côté des institutions censées justement empêcher ça »).
+> Conçu entièrement cette session — reste le CODE.
+>
+> - **Script v5 STABLE** (jury LLM 3 modèles passé, verdict unanime) : `memory/projects/soudan-midform-ACTE6-SCRIPT.md`.
+>   5 beats : B1 on cherche l'arbitre · B2 UA écartée · B3 veto russe ONU · B4 paradoxe Émirats · B5 coût humain + clôture.
+> - **Audio VERROUILLÉ Aziz** (133.2s) : `public/_shared/audio/soudan/acte6-verrou-institutionnel.mp3` (p1-p5, voix
+>   Kora et Cartes, pipeline Océane V3→STS). Coût humain ajouté en fin (13,6M déplacés), 7 mini-pauses [pause] pour le débit.
+> - **CTA : AUCUN** (tranché — jury dédié + décence sur sujet grave, cf script § DÉCISION CTA).
+> - **STORYBOARD acté** (upstream Gemini+Kimi, convergence totale) : registre **GLOBE D3** (continuité Acte 5) +
+>   **overlay UI** au vote B3 (hémicycle 15 sièges) + **insert SVG** à la table B4 (globe ne porte pas l'abstrait pur).
+>   Détail : script § STORYBOARD + `memory/episodes/soudan-midform/da-briefs-acte6/miseenscene-{gemini,kimi}.md`.
+>   ⚠️ Critique AI-slop de nos effets à corriger au code (halo radial = gradient basique, drop-shadow lourd).
+> - **NEXT = CODE session dédiée** : moule `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx`. Forced-alignment audio →
+>   timing frame-exact → code beat par beat → self-review CODE+VISUEL → render. Puis mid-form Soudan COMPLET (6 actes) → assemblage final.
 
 ---
 
@@ -53,7 +73,7 @@
 >    **✅ ACTE 5 "le reseau qui arme" = FAIT + PROMU FINAL v5 (2026-07-19)** — refait en GLOBE D3 INTEGRAL
 >    (le decoupage hybride globe/Mapbox envisage a ete abandonne au profit du globe integral : 0 couture).
 >    Voir section Acte 5 en bas de ce fichier + `episodes/soudan-midform/STATUS.md`. Le moteur globe est
->    desormais prouve sur 2 actes (3 et 5). NEXT structure Soudan = Acte 6 (verrou institutionnel, a ecrire).
+>    desormais prouve sur 2 actes (3 et 5). Acte 6 (verrou institutionnel) = script+audio+storyboard FAITS (2026-07-19), CODE a faire (voir section Acte 6 en tete de fichier).
 > 2. **SOL ENRICHI** (Aziz a dit OUI) : polygone D3 avec degrade radial + grain + ombre interne + relief
 >    simule, pour voir si D3 rattrape le "terrain habite" Mapbox et fermer le debat objets-poses.
 > 3. **Waouh globe 2.0** : arcs de trajectoire `geoInterpolate` (effet vol d'avion sur la sphere),
@@ -115,7 +135,7 @@
 > `STARTER-PROMPT-soudan-acte5-densification.md` — tous remplacés par le globe. Trace uniquement.
 >
 > **Décision structurelle (rappel, session 10)** : Acte 5 = fait concret (réseau EAU-Libye) ; Acte 6 =
-> verrou institutionnel détaillé + conclusion (**PAS ENCORE écrit — NEXT structure**). Pont Acte 4 déjà verrouillé valable
+> verrou institutionnel détaillé + conclusion (**script+audio verrouillés + storyboard actés 2026-07-19, CODE à faire**). Pont Acte 4 déjà verrouillé valable
 > pour les deux.
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10

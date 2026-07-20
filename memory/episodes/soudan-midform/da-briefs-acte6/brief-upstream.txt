@@ -1,0 +1,91 @@
+BRIEF DA-UPSTREAM — Mise en scene de l'ACTE 6 (dernier acte) d'un mid-form documentaire sur la guerre au Soudan.
+
+Chaine "Kora et Cartes" : vulgarisation geopolitique africaine, voix off analyste NEUTRE, charte stricte
+"pas de mechant explicite, les faits portent le jugement". On decide MAINTENANT la mise en scene visuelle
+AVANT de coder. Ta reponse doit etre CONCRETE et REALISABLE avec nos outils reels (decrits plus bas), pas
+un fantasme cinema.
+
+=== NOTRE ARSENAL VISUEL REEL (3 moteurs, tout frame-driven, Remotion/React) ===
+
+1. MAPBOX frame-driven : carte reelle zoomable, 1 seule Map continue, halos/contours/drapeaux clippes,
+   jetons-portraits geo-ancres. Registre "carte de guerre au sol". Utilise sur les Actes 1-2-4.
+
+2. INSERT SVG plein ecran : scene dessinee (etat-major, table, batiment) quand un fait n'a PAS d'ancrage
+   geo (huis clos, negociation). Registre "carte d'etat-major". Utilise ponctuellement (Port-Soudan).
+
+3. GLOBE D3.js orthographique frame-driven (NOTRE MOTEUR LE PLUS RECENT, prouve sur 2 actes) : globe qui
+   tourne facon "vu de l'espace", camera continue (keyframes lon/lat/scale interpoles). SAIT FAIRE, tout
+   prouve en rendu reel :
+   - isoler/illuminer un PAYS (drapeau clippe dans le territoire projete, ou pastille ronde au centroide)
+   - arcs de flux qui suivent la courbure du globe (grand-cercle), marqueur voyageur, piste serpentante
+   - jetons-portraits geo-ancres (cercle parchemin + portrait clippe + bordure)
+   - reactions cible a l'arrivee (onde de choc geo-ancree, illumination clippee au territoire, icone qui
+     se materialise), timeline/badges UI en overlay HTML aux coords projetees
+   - palette "mixte" : terres KAKI + OCEAN BLEU marine + frontieres premium + flux satures.
+   Registre "niveau MONDIAL / vue planetaire". IMPORTANT : jusqu'ici le globe n'a porte que des FLUX
+   GEOGRAPHIQUES entre lieux (or, armes, corridors) — jamais de l'abstrait pur.
+
+Une frame de l'Acte 5 (globe D3) est jointe : c'est le registre EXACT que l'Acte 6 heriterait.
+
+=== CONTEXTE : l'ACTE 6 encha ne DIRECTEMENT sur l'Acte 5 (globe D3) ===
+
+L'Acte 5 (juste avant) a ete fait en GLOBE D3 INTEGRAL et validel : il montre la chaine Emirats/Abou Dabi
+-> Haftar/Libye -> El-Fasher/Soudan (un reseau qui arme la guerre). Il se termine sur : "Ce reseau
+continue de fonctionner. Pour comprendre pourquoi, il faut regarder du cote des institutions censees
+justement empecher ca." => C'EST LA QUESTION QUE L'ACTE 6 REPOND.
+
+=== L'ACTE 6 — texte VOIX complet (5 beats, ~2min13, audio DEJA verrouille) ===
+
+BEAT 1 (on cherche l'arbitre) : "Une guerre comme celle-la, normalement, le monde a des outils pour
+l'arreter. Des organisations, des mediateurs, un Conseil de securite. Tout ca existe. Sauf qu'ici, rien
+n'a marche."
+
+BEAT 2 (l'Union africaine ecartee) : "Le premier reflexe, c'est l'Union africaine. Mais le Soudan en a ete
+suspendu depuis le coup d'Etat de 2021. Alors l'armee soudanaise refuse qu'elle arbitre — l'UA est mise a
+l'ecart avant meme d'avoir commence."
+
+BEAT 3 (le veto ONU) : "Reste le Conseil de securite de l'ONU. En novembre 2024, il tente d'imposer un
+cessez-le-feu. Quatorze pays votent pour. La Russie vote contre — son seul veto suffit a tout bloquer.
+Officiellement elle defend la souverainete du Soudan ; en realite elle a aussi ses interets. Autour de
+cette guerre, plus personne n'est vraiment neutre."
+
+BEAT 4 (le paradoxe) : "Le meme probleme revient autour des tables ou on negocie la paix. La s'assoient
+les grandes puissances. Et a cette table, il y a les Emirats — ceux dont on vient de suivre l'argent et
+les camps d'entrainement (Acte 5). On demande d'eteindre l'incendie a celui qui l'alimente de l'autre main."
+
+BEAT 5 (cout humain + cloture) : "Les plans de paix se suivent et se ressemblent, la guerre continue. Et
+pendant que ces tables tournent a vide, un pays entier s'effondre : treize millions et demi de deplaces,
+la famine, la pire crise humanitaire de la planete. Au fond, le probleme n'est pas qu'on ne peut pas
+arreter cette guerre. C'est que ceux qui en ont le pouvoir ont tous une bonne raison de ne pas le faire."
+
+=== LE PROBLEME DE MISE EN SCENE (le coeur de ta mission) ===
+
+Contrairement aux Actes 3 et 5 (des FLUX entre lieux, ideaux pour le globe), l'Acte 6 est de nature
+INSTITUTIONNELLE et ABSTRAITE : une institution suspendue (UA), un VOTE (14 pour / 1 contre a l'ONU), une
+TABLE DE NEGOCIATION. Ce ne sont PAS des flux geographiques. Un vote a l'ONU ne "voyage" pas sur un globe.
+
+Notre hypothese de depart (a challenger) : puisque l'Acte 5 juste avant est un globe D3, l'Acte 6 devrait
+ENCHAINER sur le meme globe pour la continuite, ET parce que le registre "vue planetaire" colle au niveau
+institutionnel/mondial. MAIS on n'a jamais teste le globe sur de l'abstrait (vote, table).
+
+TA MISSION — reponds precisement a CECI :
+
+1. Le GLOBE D3 peut-il porter credible ment ces beats institutionnels abstraits ? Beat par beat (1 a 5),
+   dis-moi CONCRETEMENT quel geste visuel realisable (parmi/autour de ce que le globe sait faire) rend :
+   - une institution (UA) ecartee/suspendue — comment montrer une "porte qui se ferme" sur un globe ?
+   - un VOTE 14 contre 1 (le veto russe) — badges autour du globe ? pays qui s'illuminent ? un hemicycle
+     en overlay UI par-dessus le globe ? Sois precis.
+   - une TABLE de negociation ou siege un acteur compromis (les Emirats) — comment, sans quitter le globe ?
+   - le cout humain final (13,5M deplaces) — retour geo-ancre sur le Soudan/Darfour ?
+
+2. Ou le globe ATTEINT SA LIMITE : y a-t-il des beats ou le globe seul ne suffit pas et ou il faut soit
+   des OVERLAYS UI (hemicycle stylise, tableau de vote, sieges) par-dessus le globe, soit basculer
+   ponctuellement en INSERT SVG (ex : la table de negociation en gros plan) ? Si oui, lesquels et pourquoi.
+   Ne force pas le globe si un autre registre sert mieux un beat precis — dis-le franchement.
+
+3. Ta RECOMMANDATION de decoupage beat par beat : pour chacun des 5 beats, quel registre (globe / globe +
+   overlay UI / insert SVG) et quel geste visuel unique et memorable. Priorite a la CONTINUITE avec l'Acte
+   5 globe et a la charte neutre (pas de symbole accusateur, les faits portent le jugement).
+
+Sois concret, realisable, et honnete sur les limites. On preferera une idee simple qui marche a une idee
+spectaculaire infaisable.

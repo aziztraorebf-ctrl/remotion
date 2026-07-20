@@ -26,7 +26,10 @@
 > (v2), le diagnostic downstream densification (`da-briefs-acte5/`), l'arbitrage Abou Dabi et le starter
 > `STARTER-PROMPT-soudan-acte5-densification.md` sont tous périmés (remplacés par le globe). Trace uniquement.
 >
-> **NEXT structure** : l'Acte 6 (verrou institutionnel UA/ONU/Quad + conclusion) reste à écrire/produire.
+> **Acte 6 (verrou institutionnel UA/ONU + conclusion)** : script v5 + audio VERROUILLÉS + storyboard actés
+> (2026-07-19) — voir `memory/projects/soudan-midform-ACTE6-SCRIPT.md`. Audio `public/_shared/audio/soudan/
+> acte6-verrou-institutionnel.mp3` (133.2s). Storyboard = globe D3 + overlay UI vote + insert SVG table
+> (`da-briefs-acte6/`). CTA : aucun. **NEXT = CODE (session dédiée)** → mid-form Soudan COMPLET (6 actes) + assemblage.
 
 ---
 

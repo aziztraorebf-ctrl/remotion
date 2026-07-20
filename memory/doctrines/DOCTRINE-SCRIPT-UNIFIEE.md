@@ -12,7 +12,7 @@
 >
 > **Comment l'utiliser :** la doctrine de PILIER te dit QUOI raconter et dans quel ordre.
 > CETTE doctrine te dit COMMENT l'écrire pour que ça s'écoute bien. Les DEUX ensemble, toujours.
-> S'applique à TOUTES les chaînes (GéoAfrique ET futures chaînes hors catégorie), TOUS les formats.
+> S'applique à TOUTES les chaînes (Kora et Cartes ET futures chaînes hors catégorie), TOUS les formats.
 
 ---
 
@@ -159,6 +159,15 @@ Chaque transition d'acte = une demi-phrase qui répond à "pourquoi on en parle 
 > "C'est là que les deux groupes qu'on vient de voir prennent racine."
 > "La première grande épreuve de ce nouveau bloc va se jouer sur un seul point de la carte."
 
+> ⭐ **RAPPELER UN ÉLÉMENT PAR LE CONTENU MONTRÉ, JAMAIS PAR LE NUMÉRO DE CHAPITRE** (gravé 2026-07-19,
+> Soudan Acte 6). Le spectateur ne pense PAS en "actes"/"chapitres" — c'est une commodité de production,
+> pas une réalité perçue. Quand un script ré-évoque un élément vu plus tôt, le formuler par le CONTENU
+> concret montré ("ceux dont on vient de suivre l'argent et les camps d'entraînement, quelques minutes
+> plus tôt"), JAMAIS par une référence structurelle ("les mêmes que dans l'acte précédent" = ambigu +
+> hors-registre, signalé par Aziz). Registre RÉALISATEUR : on renvoie à sa propre scène par son image, pas
+> à un rang. "quelques minutes plus tôt" ancre dans le VISIONNAGE du spectateur, "l'acte précédent" dans
+> notre découpage. La liaison efficace ré-évoque un CONTENU, pas une numérotation.
+
 ## Règle 6bis — Densité CUMULATIVE et flux narratif de bout en bout (NON-NÉGOCIABLE)
 
 > Gravée 2026-07-10 (Soudan Acte 4, 2e jury LLM). Un script peut passer un jury "clarté phrase-par-phrase"
@@ -246,6 +255,19 @@ Demander like/abonnement/commentaire dans les 30 premières secondes = demander 
 
 **Placement :** Hook = AUCUN CTA (ancrage rhétorique + promesse). Milieu = invitation discrète SI naturelle. Fin = le seul vrai CTA d'abonnement, ton adulte ("si cette analyse vous a éclairés, la suite est ici", jamais "likez et abonnez-vous !!!").
 
+> ⭐ **SUJET GRAVE → LA QUESTION N'EST PAS "QUEL CTA" MAIS "UN CTA EST-IL DÉCENT ?" — SOUMETTRE LA
+> DÉCISION À UN JURY LLM DÉDIÉ, ARC COMPLET EN CONTEXTE** (gravé 2026-07-19, Soudan Acte 6). Sur un sujet
+> grave (guerre, famine, victimes), un CTA d'abonnement ou d'invitation au débat peut être INDÉCENT après
+> la clôture — même sobre. Procédure : soumettre l'EXISTENCE du CTA (pas seulement sa formulation) à un
+> jury LLM dédié, brief = l'arc narratif COMPLET de la vidéo (tous les actes/beats + la fin), pas le seul
+> segment final. Verdict possible convergent : options "débat"/"promo" REJETÉES comme indécentes → trancher
+> pour **AUCUN CTA** (ni voix ni écran). Principe : "si les gens apprécient, ils s'abonnent d'eux-mêmes"
+> (Aziz). Le CTA n'est pas obligatoire ; son absence peut être le choix le plus fort — un dernier mot fort
+> ne veut pas être affaibli par une relance. ⚠️ Attention aussi au VOCABULAIRE d'un CTA sur sujet
+> géopolitique sensible : "populations qui paient / puissances / ressources" déclenche la récupération
+> militante et trahit la neutralité tenue tout le long — bannir, préférer la MÉTHODE ("des logiques qu'on
+> prend le temps de démonter, sans slogan").
+
 ## Règle 10 — Un connecteur de présence du narrateur par acte
 
 Le narrateur doit apparaître au moins une fois par acte/beat. Pas plus — sinon ton édito lourd. C'est ce qui fait "quelqu'un me parle" au lieu de "je lis un manuel".
@@ -323,6 +345,18 @@ Deux pièges symétriques à éviter quand on retravaille un script :
 revenir à la version dense, et n'y appliquer QUE le correctif minimal (verbe manquant, connecteur unique).
 La précision est reine ; on coupe le télégraphique SANS noyer l'intelligence.
 
+> ⭐ **COUDRE UN SCRIPT EXPLICATIF PAR UNE ÉMOTION HUMAINE, PAS PAR UNE ÉNUMÉRATION NUMÉROTÉE** (gravé
+> 2026-07-19, Soudan Acte 6). Anti-pattern journalistique/dissertation PROUVÉ : un script qui explique
+> des mécanismes ou facteurs retombe naturellement en squelette de plan ("premier arbitre / deuxième
+> arbitre", "d'abord X, ensuite Y") — techniquement correct mais l'oreille ENTEND la structure de
+> dissertation (signalé par Aziz : "où est le temps conversationnel/vulgarisateur ?"). Correctif : coudre
+> les faits par un FIL ÉMOTIONNEL/une posture humaine, pas par un compteur de points. Sur l'Acte 6, la
+> couture retenue = la DÉCEPTION (quelqu'un qui cherche une issue et se cogne à chaque porte fermée) : "le
+> premier réflexe, c'est… mais… écartée avant d'avoir commencé" → "reste l'échelon au-dessus… un seul
+> veto, et la porte se referme". Chaque beat finit sur une porte qui se ferme, ce qui APPELLE le suivant —
+> pas une numérotation. C'est la couche B (Incarnation) appliquée à la STRUCTURE, pas seulement aux
+> phrases : le liant entre les faits doit être un fil vivant, jamais un "premier/deuxième".
+
 ## Règle 11quater — AFFIRMER le paradoxe, ne JAMAIS annoncer la question rhétorique (NON-NÉGOCIABLE)
 
 > Gravée 2026-06-28. ERREUR PROUVÉE (Short cacao, hook V3) : "Où sont les cacaoyers en Suisse ? Posons la question."
@@ -367,6 +401,18 @@ Toujours fermer chaque boucle ouverte. Une boucle non fermée = frustration, pas
 La courbe émotionnelle va du FROID (chiffres, diagnostic) au CHAUD (le coût humain, qui paie) au LUMINEUX (une solution existe, l'espoir). Cette courbe empêche le plateau qui fait décrocher vers la minute 4-5 des mid-forms.
 
 Diagnostic → conséquence humaine → ouverture. Jamais diagnostic → diagnostic → diagnostic.
+
+> ⭐ **LE COÛT HUMAIN EST LE "CHAUD" — À PLACER JUSTE AVANT LA CLÔTURE, JAMAIS APRÈS** (gravé 2026-07-19,
+> Soudan Acte 6, intuition Aziz). Un acte/segment institutionnel ou abstrait (diplomatie, mécanismes,
+> chiffres) finit "FROID SUR FROID" s'il n'introduit pas le coût humain concret (déplacés, famine,
+> victimes) — c'est le "chaud" manquant de la courbe. **Diagnostic de la GATE** : relire la courbe
+> émotionnelle de l'acte ENTIER — si elle finit froide (sur un constat institutionnel), il manque le coût
+> humain avant la bascule finale. **Placement optimal** : coût humain JUSTE AVANT la clôture, la clôture
+> reste le dernier mot. Le froid institutionnel ne doit pas être la dernière image émotionnelle ; mais la
+> révélation humaine ne doit pas non plus voler le mot de la fin (la conclusion tranchante tombe PLUS fort
+> juste après avoir entendu le prix payé). Preuve : l'Acte 6 finissait sur "ceux qui pourraient l'arrêter
+> ont une raison de ne pas le faire" (froid, intelligent) — l'ajout du coût humain (13,6M déplacés) AVANT
+> cette clôture a donné le poids qui manquait.
 
 ## Règle 14 — Le rythme syncopé (phrase coup de poing)
 
