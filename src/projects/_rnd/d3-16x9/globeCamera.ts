@@ -120,3 +120,42 @@ export function buildActe5Cam(T: Record<string, number>): CamKey[] {
     { frame: T.b5End, lon: 32, lat: 17, scaleMul: 2.2 },
   ];
 }
+
+/**
+ * CAMERA ACTE 6 "Pourquoi personne ne l'arrete" (verrou institutionnel).
+ *
+ * ⚠️ RACCORD EXACT sur la fin de l'Acte 5 : l'Acte 5 finit RE-ZOOME (lon 32, lat 17, scaleMul 2.2,
+ * region Soudan). L'Acte 6 DEMARRE sur cet etat PUIS fait un vrai zoom-out narratif vers la vue
+ * planetaire (le geste "on s'eloigne du terrain pour chercher les institutions"). Verifie contre le
+ * code Acte 5 reel (buildActe5Cam derniere keyframe), pas contre le storyboard (valeurs "0.8->2.5" fausses).
+ *
+ * Beat 4 (paradoxe) = insert SVG plein ecran : la camera globe est GELEE pendant l'insert (on cross-fade
+ * en opacite vers l'insert, le globe ne bouge pas dessous). On la repositionne pour le retour B5.
+ */
+export function buildActe6Cam(T: Record<string, number>): CamKey[] {
+  return [
+    // BEAT 1 — raccord Acte 5 (region Soudan, re-zoome) -> zoom-out COURT (2-3s) qui s'ARRETE sur
+    // l'Afrique/carrefour Soudan. Retour Aziz : pas de long dezoom sans destination ; on cadre le
+    // continent, on se pose, et c'est le B2 (drapeaux voisins un par un) qui remplit, pas le mouvement.
+    { frame: T.b1Start, lon: 32, lat: 17, scaleMul: 2.2 }, // = derniere frame Acte 5 (continuite parfaite)
+    { frame: T.b1Start + 75, lon: 29, lat: 14, scaleMul: 1.5 }, // ~2.5s : Afrique cadree, Soudan au centre — ON S'ARRETE ICI
+    { frame: T.b1RienMarche, lon: 29, lat: 14, scaleMul: 1.5 }, // reste pose (le vide se dit par la voix, pas par le zoom)
+    // BEAT 2 — l'UA : camera POSEE sur le carrefour Soudan (les voisins prennent leur drapeau un par un).
+    { frame: T.b2UnionAfricaine, lon: 29, lat: 14, scaleMul: 1.5 },
+    { frame: T.b2Suspendu, lon: 30, lat: 15, scaleMul: 1.62 }, // leger rapproche quand le Soudan se barre (focus centre)
+    { frame: T.b2End, lon: 30, lat: 15, scaleMul: 1.62 },
+    // BEAT 3 — le veto : dezoom leger + recentrer (vue globe posee pour l'overlay hemicycle par-dessus).
+    { frame: T.b3Start, lon: 28, lat: 20, scaleMul: 1.3 },
+    { frame: T.b3Novembre, lon: 28, lat: 22, scaleMul: 1.25 }, // globe pose, overlay UI prend le devant
+    { frame: T.b3Neutre, lon: 28, lat: 22, scaleMul: 1.25 },
+    { frame: T.b3End, lon: 28, lat: 22, scaleMul: 1.25 },
+    // BEAT 4 — paradoxe : globe GELE (insert SVG par-dessus en opacite). Meme cadrage que fin B3.
+    { frame: T.b4Start, lon: 28, lat: 20, scaleMul: 1.3 },
+    { frame: T.b4End, lon: 30, lat: 17, scaleMul: 1.6 }, // repositionne doucement pour le retour B5
+    // BEAT 5 — cout humain : retour globe, zoom sur le Soudan (cercles concentriques deplacement).
+    { frame: T.b5Start, lon: 30, lat: 16, scaleMul: 1.9 },
+    { frame: T.b5TreizeMillions, lon: 29, lat: 14, scaleMul: 2.5 }, // serre sur Darfour/Khartoum (les foyers)
+    { frame: T.b5Cloture, lon: 29, lat: 14, scaleMul: 2.5 },
+    { frame: T.b5End, lon: 29, lat: 14, scaleMul: 2.5 }, // fige avant fade to black
+  ];
+}

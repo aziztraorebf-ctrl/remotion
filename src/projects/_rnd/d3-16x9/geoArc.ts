@@ -153,4 +153,9 @@ export const GEO = {
   benghazi: [20.07, 32.11] as LonLat, // Libye NE — siege politique Haftar/LNA
   elFasher: [25.35, 13.63] as LonLat, // Soudan, Darfour — arrivee corridor (deja dans sudan.warmap.json)
   libyaCenter: [17.5, 26.5] as LonLat, // point de repos camera sur le territoire libyen
+  // --- Acte 6 "Pourquoi personne ne l'arrete" (verrou institutionnel, verif 2026-07-20) ---
+  khartoum: [32.53, 15.5] as LonLat, // capitale — foyer de deplacement (cercles concentriques B5)
+  nyala: [24.88, 12.05] as LonLat, // Darfour Sud — 2e foyer de deplacement B5
+  addisAbeba: [38.74, 9.03] as LonLat, // siege Union africaine (jeton institutionnel B1 optionnel)
+  newYork: [-73.97, 40.7] as LonLat, // siege ONU (jeton institutionnel B1 optionnel)
 };

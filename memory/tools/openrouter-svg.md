@@ -1,5 +1,25 @@
 # OpenRouter pour la generation SVG — GLM-5.2 (3e modele low-cost)
 
+> ⭐⭐ **MISE A JOUR 2026-07-20 — FABLE 5 teste en SVG (via AGENT workspace, PAS OpenRouter) + comparatif
+> 4 modeles sur meme brief (insert "table de negociation" + "hemicycle vote"). Verdict :**
+> - **Fable 5 (`model: "fable"` dans l'outil Agent) = EXCELLENT en SVG scene composee**, jamais teste avant.
+>   Le plus DETAILLE techniquement des 4 : gradients multiples, cone de lumiere flouté, grain feTurbulence,
+>   vignette, silhouettes en perspective (echelle decroissante), groupes `<g id>` PARFAITEMENT nommes +
+>   documente lui-meme la numerotation pour l'animation. Ambiance/atmosphere = son point fort. **GRATUIT via
+>   plan Claude Max** (ne PAS passer par OpenRouter pour Fable — c'est un modele du workspace, appelable
+>   comme n'importe quel Agent). Sortie = bloc ```jsx directement, attributs camelCase (pas de conversion).
+> - **Comparatif 4 modeles (GPT-5.6 Sol / Gemini 3.1 Pro / Kimi K3 / Fable 5), meme brief** : tous reussissent
+>   le concept. GPT = le plus propre/equilibre (matiere chaude, pret a l'emploi) ; Gemini = geste lumiere le
+>   plus dramatique mais centre vide ; Kimi = epure + imbattable cout/vitesse (50s/0,03-0,05$, cf § Kimi K3) ;
+>   Fable = le plus atmospherique + code le plus animable. **MIX-AND-MATCH = la vraie force** : Aziz a pris
+>   base Fable + plateau-table GPT pour le B4, et decor GPT pour le B3. Preuve : `SoudanActe6TableInsert.tsx`
+>   + `SoudanActe6VoteInsert.tsx` (Acte 6 Soudan). Methode validee = 4 modeles meme brief → comparer rendus
+>   rasterises (rsvg-convert) → Aziz choisit/mixe les groupes `<g id>` par element.
+> - **Pipeline agent Fable SVG** : Agent `subagent_type: general-purpose`, `model: "fable"`, brief = scene +
+>   contraintes (viewBox 16:9, `<g id>` nommes animables, camelCase JSX, anti-slop, zero texte). Recuperer le
+>   bloc jsx du resultat, reconstruire en composant Remotion (les defs/gradients se collent tels quels).
+
+
 > R&D 2026-06-24 (branche `rnd/svg-qwen3.6-test`). Test de modeles OpenRouter pour generer du SVG
 > (jetons, assets, scenes) a cote de nos modeles principaux GPT-5.5 + Gemini 3.1 Pro.
 > Verdict : **GLM-5.2 adopte comme 3e modele complementaire low-cost. Qwen3.6 et MiniMax M3 ecartes.**
@@ -643,8 +663,22 @@ Modele Moonshot sorti le 16 juillet 2026 (MoE 2.8T, contexte 1M, multimodal text
 sortie texte only). n1 sur Arena Frontend Code (devant Fable 5). Via OpenRouter : `moonshotai/kimi-k3`,
 $3/$15 par M tokens, endpoint chat/completions standard (meme pattern que GLM/GPT dans `llm-gen-svg.py`).
 
-### LE MUR : reasoning "max" FORCE (seul niveau dispo pour l'instant)
-K3 n'a qu'un mode de raisonnement aujourd'hui : `max`. Pas desactivable. Consequence mesuree :
+### ✅ MUR LEVE (2026-07-20) : `reasoning_effort` MARCHE MAINTENANT — K3 devient exploitable
+RE-TEST fait le 2026-07-20 (le "bientot" annonce est arrive). L'API OpenRouter accepte desormais
+`reasoning_effort` sur `moonshotai/kimi-k3` (verifie dans `supported_parameters`). Appel DIRECT
+(payload chat/completions, `reasoning_effort: "medium"`, `response_format: {type: json_object}`,
+timeout 1200s, PAS de max_tokens) sur un insert composé "table de negociation vue de dessus" :
+- **50 secondes, 0,03$, 25 reasoning_tokens seulement** (vs ~2-4 min et 0,50-0,70$ en mode max).
+- Sortie propre : JSON `{svg, plan}`, 4119 chars, groupes `<g id>` nommes, rasterise sans souci.
+=> **K3 est maintenant un concurrent SERIEUX pour du SVG one-shot** : rapide, pas cher, bon.
+Reco : `reasoning_effort: "medium"` par defaut (bon compromis) ; "low" si 1er jet ultra-rapide.
+Script d'appel direct de reference : `scratchpad .../kimi-b4-direct.py` (a rapatrier si reutilise).
+⚠️ Pas de script a brief libre dans le repo (kimi-vision-fill-scene.py a des scenes hardcodees) →
+appel OpenRouter direct pour tout brief nouveau. Conversion JSX : kebab→camelCase attributs SEULEMENT
+(jamais `.replace("'",'"')` global, casse les apostrophes FR du texte).
+
+### (HISTORIQUE) LE MUR : reasoning "max" FORCE — leve le 2026-07-20 (voir ci-dessus)
+K3 n'avait qu'un mode de raisonnement au 17 juillet : `max`. Pas desactivable. Consequence mesuree :
 - Jetons SVG (lot de 5) : 0,20$ / ~14k tokens (10,6k reasoning = 82%) / ~90s.
 - Blueprint derrick annote : 0,45$ / ~30k tokens (24k reasoning) / ~2min.
 - Vision Kosti (remplir coquille) : 0,435$ / 28k tokens (19,6k reasoning).
