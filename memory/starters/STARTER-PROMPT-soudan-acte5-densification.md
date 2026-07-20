@@ -1,3 +1,14 @@
+# ⛔ STARTER PÉRIMÉ (2026-07-19) — Acte 5 refait en GLOBE D3 et PROMU FINAL v5, ne PAS suivre ce starter
+
+> Ce starter décrivait la piste Mapbox v2 + le tri du diagnostic densification (état s12). ABANDONNÉ :
+> l'Acte 5 a été entièrement refait en globe D3 (`src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx`, compo
+> `D3-SoudanActe5-Globe`), densifié, reviewé, et PROMU
+> `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (branche `feat/soudan-acte5-globe`).
+> Le code Mapbox `warmap/soudan-acte5/SoudanActe5.tsx` et le diagnostic densification ne sont plus le
+> livrable. Conservé pour trace historique uniquement. État réel = `memory/episodes/soudan-midform/STATUS.md` § tête.
+
+---
+
 # Starter — Soudan Acte 5 : trier le diagnostic densification, puis coder
 
 Reprise session Soudan Mid-form, Acte 5. État à la fin de la session précédente (2026-07-18, s12) :

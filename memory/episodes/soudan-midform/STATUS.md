@@ -7,10 +7,30 @@
 > `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`. Moteur reutilisable +
 > Acte 5 candidat n°2 : `.claude/.../feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
 
-## ⛔⛔⛔ NEXT SESSION — LIRE EN PREMIER, AVANT TOUT (Aziz 2026-07-18 fin de session 12)
+## ✅✅ ACTE 5 « LE RÉSEAU QUI ARME DANS L'OMBRE » — REFAIT EN GLOBE D3, PROMU FINAL v5 (2026-07-19)
 
-**Acte 5 : CODE ÉCRIT + RENDU v2 (80.15s) + 2 DOWNSTREAM COMPLETS (Gemini+Kimi). Verdict net à trier
-AVANT toute nouvelle passe de code — ne pas re-coder au jugé, lire les 4 fichiers ci-dessous d'abord.**
+> **TERMINÉ + PROMU.** L'Acte 5 a été entièrement REFAIT en GLOBE D3 intégral (abandon de la piste Mapbox
+> v2 de la s12), densifié, review Gemini/Kimi appliqué, validé Aziz.
+>
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (+ `_compressed`).
+> **Code = le vrai livrable** : `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` (compo `D3-SoudanActe5-Globe`).
+> **Branche** : `feat/soudan-acte5-globe` (NON mergée). Sprites neufs : `camp-entrainement-td.png`,
+> `portrait-haftar.png` (`public/_shared/sprites/warmap/`). Moteur globe D3 désormais prouvé sur 2 actes (3 et 5).
+>
+> Fait cette session : globe D3 intégral (5 beats) · densification (jeton Haftar vraie photo + soldats +
+> 2 camps + checkpoints, artère multi-lignes + convois) · corridor stylisé piste sinueuse (`windingCircle`,
+> inspiration GPT-5.6 Sol) · sources exactes (enquête Lighthouse/Der Spiegel + rapport ONU) · review
+> Gemini+Kimi appliqué (croix d'impact retirée → ondes ; système isolé au dézoom ; plaques sources 1 ligne).
+>
+> ⛔ **PÉRIMÉ — ne pas repartir dessus** : le code Mapbox `src/projects/warmap/soudan-acte5/SoudanActe5.tsx`
+> (v2), le diagnostic downstream densification (`da-briefs-acte5/`), l'arbitrage Abou Dabi et le starter
+> `STARTER-PROMPT-soudan-acte5-densification.md` sont tous périmés (remplacés par le globe). Trace uniquement.
+>
+> **NEXT structure** : l'Acte 6 (verrou institutionnel UA/ONU/Quad + conclusion) reste à écrire/produire.
+
+---
+
+## 🗄️ ACTE 5 — état s12 (Mapbox v2, PÉRIMÉ 2026-07-19, trace historique)
 
 0. **🎬 Acte 5 — script verrouillé, audio+timing+code+render v2 FAITS. Reste : TRIER le diagnostic
    downstream + décider quoi appliquer (session 12, 2026-07-18).**

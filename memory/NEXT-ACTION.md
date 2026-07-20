@@ -1,5 +1,5 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-19 (session 14 — INSERT globe D3 Acte 3 beats 3-7 FAIT + review LLM + Acte 5 candidat n°2).
+> Mis a jour : 2026-07-19 (session 15 — Acte 5 Soudan REFAIT EN GLOBE D3, PROMU FINAL v5. Acte 3 globe insert = session 14).
 > Structure Soudan inchangée depuis session 10 (**6 actes au total**, voir sections ci-dessous, toujours valides).
 > A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
@@ -50,12 +50,10 @@
 >    raccords + promouvoir. Methode = CONCATENATION 2 mp4 (Section1 via render-mapbox.sh + insert classique),
 >    compo SEPAREE, l'Acte 3 FINAL Mapbox reste INTACT. → `memory/starters/STARTER-PROMPT-soudan-acte3-globe-assemblage.md`.
 >    Moteur reutilisable grave : `.claude/.../memory/feedbacks/feedback_globe-d3-moteur-cartographique-reutilisable.md`.
->    **⭐ CANDIDAT N°2 — SOUDAN ACTE 5 "le reseau qui arme"** : chaine LINEAIRE 3 maillons trans-continentaux
->    (Abou Dabi->Haftar/Libye->El-Fasher), le geste le PLUS PUR pour un arc geoInterpolate (encore plus que
->    l'Acte 3, etoile multidirectionnelle). Matiere prete (script v6, audio 80s, `soudanActe5Timing.ts`,
->    corridor Kufra->El-Fasher deja en 1 trajectoire). Decoupage : Beats 1-2 = globe · Beat 3 = Mapbox ·
->    Beat 4 hybride · Beat 5 = Mapbox. ⚠️ verrou institutionnel = ACTE 6, pas Acte 5. A FAIRE apres validation
->    du passage a l'echelle Acte 3 (assemblage). Analyse detaillee dans le feedback moteur globe.
+>    **✅ ACTE 5 "le reseau qui arme" = FAIT + PROMU FINAL v5 (2026-07-19)** — refait en GLOBE D3 INTEGRAL
+>    (le decoupage hybride globe/Mapbox envisage a ete abandonne au profit du globe integral : 0 couture).
+>    Voir section Acte 5 en bas de ce fichier + `episodes/soudan-midform/STATUS.md`. Le moteur globe est
+>    desormais prouve sur 2 actes (3 et 5). NEXT structure Soudan = Acte 6 (verrou institutionnel, a ecrire).
 > 2. **SOL ENRICHI** (Aziz a dit OUI) : polygone D3 avec degrade radial + grain + ombre interne + relief
 >    simule, pour voir si D3 rattrape le "terrain habite" Mapbox et fermer le debat objets-poses.
 > 3. **Waouh globe 2.0** : arcs de trajectoire `geoInterpolate` (effet vol d'avion sur la sphere),
@@ -104,18 +102,20 @@
 > erreur) — vérifier `lsof -p <pid>` avant de conclure à une lenteur Gemini normale. Et sur ce beat sans
 > storyboard, Gemini review hallucine une palette sépia fantôme (juger sur override tracé + Aziz).
 
-## ⭐⭐ SOUDAN MID-FORM — ACTE 5 : CODE+RENDU v2 FAITS, DIAGNOSTIC DOWNSTREAM À TRIER (2026-07-18)
+## ✅✅ SOUDAN MID-FORM — ACTE 5 : REFAIT EN GLOBE D3, PROMU FINAL v5 (2026-07-19)
 
-> Script v6 verrouillé, audio+timing+code+render v2 tous FAITS cette session (s12). Détail complet +
-> les 4 fichiers de diagnostic downstream (Gemini+Kimi, comparatif + génératif) : voir
-> `memory/episodes/soudan-midform/STATUS.md` § tout en tête — **NE PAS re-coder au jugé avant d'avoir
-> lu `memory/doctrines/WARMAP-DENSIFICATION-CARTE.md` et tranché l'arbitrage Abou Dabi avec Aziz.**
+> **TERMINÉ + PROMU.** Acte 5 entièrement REFAIT en GLOBE D3 intégral (abandon Mapbox), densifié, review
+> Gemini/Kimi appliqué, validé Aziz. Moteur globe D3 prouvé sur 2 actes (3 et 5).
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (+ `_compressed`).
+> **Code (le vrai livrable)** : `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` (compo `D3-SoudanActe5-Globe`).
+> **Branche** : `feat/soudan-acte5-globe` (NON mergée). Détail : `episodes/soudan-midform/STATUS.md` § tête.
 >
-> ⛔ Point technique non-négociable conservé (déjà respecté dans le code actuel) : trait corridor
-> Kufra→El-Fasher = UNE seule variable de trajectoire continue (Beat3→4).
+> ⛔ **PÉRIMÉ** : mise en scène Mapbox actée s12 (100% carte, insert chirurgical, arbitrage Abou Dabi,
+> diagnostic densification à trier), code `warmap/soudan-acte5/SoudanActe5.tsx` (v2), et starter
+> `STARTER-PROMPT-soudan-acte5-densification.md` — tous remplacés par le globe. Trace uniquement.
 >
 > **Décision structurelle (rappel, session 10)** : Acte 5 = fait concret (réseau EAU-Libye) ; Acte 6 =
-> verrou institutionnel détaillé + conclusion (pas encore écrit). Pont Acte 4 déjà verrouillé valable
+> verrou institutionnel détaillé + conclusion (**PAS ENCORE écrit — NEXT structure**). Pont Acte 4 déjà verrouillé valable
 > pour les deux.
 
 ## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10

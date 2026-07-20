@@ -146,6 +146,14 @@ Script reutilisable : `quebec-jacques-poc/scripts-atlas/fix-chibi-transparency.p
 
 **Ne JAMAIS faire confiance** au damier dans Read tool comme indicateur de transparence.
 
+⚠️ **RECURRENCE 2026-07-19 (Soudan Acte 5 globe)** : un sprite CAMP genere par Gemini est ressorti en
+mode RGB avec fond creme PLEIN -> pose sur la carte = CARRE BLANC/creme opaque autour (alors qu'un asset
+RGBA comme `base-africacorps` s'integre proprement). Detoure au flood-fill depuis les 4 COINS (le fond
+n'etait pas gris `212` mais creme `242,234,214` — adapter la couleur de fond a detourer, ne pas hardcoder le gris).
+**REGLE GRAVEE (re-rencontree malgre cette doc)** : AUCUN sprite Gemini n'est pose sur une carte/un globe
+sans verifier `Image.open(p).mode == "RGBA"` ET detourer si RGB. A faire SYSTEMATIQUEMENT a la generation,
+pas seulement quand un carre blanc apparait a l'ecran.
+
 ---
 
 ## Walk cycle multi-frame — bug character drift (2026-04-30)

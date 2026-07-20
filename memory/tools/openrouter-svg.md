@@ -696,3 +696,16 @@ plusieurs allers-retours. La profondeur de reasoning PAIE sur ce cas precis.
 
 Cout total session tests K3 : ~1,9$ (jetons + 2 blueprints partiels + 2 vision). Rapport cout/decouverte
 favorable : a identifie un usage NOUVEAU (vision->SVG one-shot) absent du pipeline, non couvert par GLM/GPT.
+
+## ⚠️ GOTCHA `scripts/tools/svg-scene-narrative.py` — prompt systeme EMOTIONNEL cable (2026-07-19)
+
+Ce script (qui appelle GPT-5.6 Sol ou Gemini) a un PROMPT SYSTEME cable "genere une SCENE QUI RACONTE UN
+MOMENT charge d'emotion" (lignes 43-59 du script) qui ECRASE le brief passe en `--brief`. Sur un brief de
+**schema CARTOGRAPHIQUE** (corridor/flux/tracé geo-ancre, Soudan Acte 5), il a HALLUCINE un contenu
+emotionnel hors-sujet ("un enfant abandonne son ours et court vers un parent agenouille dans la lumiere").
+**REGLE** : `svg-scene-narrative.py` convient aux scenes d'EMOTION/personnage, PAS aux schemas composes /
+cartographiques. Pour un schema (carte d'etat-major, corridor, diagramme) → appel OpenRouter **DIRECT** avec
+le brief pur (bypass du prompt systeme cable). Prouve : le meme brief en appel direct a produit la bonne
+proposition (`corridor-gpt-direct.txt`). ⚠️ Rappel : une proposition SVG de Sol reste un SIGNAL d'intention
+graphique — un SVG PLAT n'est PAS collable sur un globe D3 anime (qui se reprojette frame par frame), on
+RE-DESSINE le trace en coords lon/lat (cf [[globe-d3-moteur-cartographique-reutilisable]] § windingCircle).
