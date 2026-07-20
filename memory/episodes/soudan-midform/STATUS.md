@@ -119,7 +119,7 @@
 >
 > **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (+ `_compressed`).
 > **Code = le vrai livrable** : `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` (compo `D3-SoudanActe5-Globe`).
-> **Branche** : `feat/soudan-acte5-globe` (NON mergée). Sprites neufs : `camp-entrainement-td.png`,
+> **Branche** : `feat/soudan-acte5-globe` (mergée dans master, commit d92ef780). Sprites neufs : `camp-entrainement-td.png`,
 > `portrait-haftar.png` (`public/_shared/sprites/warmap/`). Moteur globe D3 désormais prouvé sur 2 actes (3 et 5).
 >
 > Fait cette session : globe D3 intégral (5 beats) · densification (jeton Haftar vraie photo + soldats +
@@ -134,7 +134,7 @@
 > **Acte 6 (verrou institutionnel UA/ONU + conclusion)** : script v5 + audio VERROUILLÉS + storyboard actés
 > (2026-07-19) — voir `memory/projects/soudan-midform-ACTE6-SCRIPT.md`. Audio `public/_shared/audio/soudan/
 > acte6-verrou-institutionnel.mp3` (133.2s). Storyboard = globe D3 + overlay UI vote + insert SVG table
-> (`da-briefs-acte6/`). CTA : aucun. **NEXT = CODE (session dédiée)** → mid-form Soudan COMPLET (6 actes) + assemblage.
+> (`da-briefs-acte6/`). CTA : aucun. **→ CODÉ + PROMU FINAL 2026-07-20 (voir section tête).** Reste Acte 4 puis assemblage.
 
 ---
 

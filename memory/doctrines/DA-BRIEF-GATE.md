@@ -277,6 +277,17 @@ territoriale du mouvement. Le 2e appel (génératif) a produit une doctrine réu
 un axe qu'aucun agent Claude interne n'avait soulevé en amont dans la même session, malgré 4 agents
 dédiés à la mise en scène de ce même acte.
 
+**⭐ AXE DYNAMISME (≠ densité) — 2e appel génératif variante (validé 2026-07-20, Soudan Acte 6).** Sur
+une vidéo DENSE mais STATIQUE (l'info est là, mais rien ne respire/bouge), le 2e appel (génératif) ne
+demande PAS "qu'ajouter ?" (densité) mais "qu'est-ce qui MANQUE EN DYNAMISME/mouvement ?". Gemini + Kimi
+en parallèle sur ce brief ; la CONVERGENCE quasi totale des deux = signal fort à coder. Retours obtenus
+(tous codables en SVG/Remotion frame-driven, zéro AE) : onde de choc (bascule qui se propage), particules
+god-rays dans un faisceau, dérive/parallaxe caméra, respiration des silhouettes, stagger d'apparition,
+count-up de chiffres + rebond. A transformé l'Acte 6 (dense mais figé → vivant). ⚠️ Distinct de la
+DENSIFICATION (`WARMAP-DENSIFICATION-CARTE` = quelle INFO ajouter) : ici on ne rajoute AUCUNE info, on fait
+VIVRE l'existant. Garde-fou : filtrer les retours contre les INTERDITS techniques (les LLM surestiment le
+faisable — ex. "vue 3/4 plongeante" impossible proprement en SVG, cf `key-learnings.md` § SVG génératif).
+
 ---
 
 ## Preuve de valeur (1er usage 2026-06-07, War-Map Sahel Acte 1)

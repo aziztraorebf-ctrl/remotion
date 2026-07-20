@@ -564,6 +564,14 @@ Le composant `WarMapOverlayDynamic` n'a que 2 modes utilisables (semitransp=bann
 opaque carte visible autour) → pour une plaque opaque ancrée locale, coder une plaque inline à fond solide (pas le
 composant). À terme : ajouter un mode "solid-anchor".
 
+**⚠️ PRÉCISION EXÉCUTION (2026-07-20, Soudan Acte 6) — le fond opaque ne suffit PAS si son OPACITÉ MONTE.**
+Un cartouche/plaque au fond ciblé 100% solide redevient une bouillie transparente PENDANT toute la phase où
+son opacité monte progressivement (fade-in long 0→1 : la carte/scène transparaît à travers = brouillon,
+exactement comme un semi-transparent). Le fix : le FOND doit être plein dès la 1re frame d'apparition —
+animer l'ENTRÉE par un fade TRÈS court (~4 frames) + un scale (pop), PAS par une longue montée d'opacité du
+fond. L'opacité du fond n'est jamais un canal d'animation d'entrée ; le mouvement d'apparition passe par
+scale/translate/clip, jamais par la transparence du fond. (Bug réel : cartouche "13,5M déplacés" Acte 6.)
+
 ---
 
 ## 10. L'ÉQUILIBRE dynamisme vs discipline + HIÉRARCHIE PAR SOUSTRACTION

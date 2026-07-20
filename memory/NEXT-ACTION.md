@@ -143,7 +143,7 @@
 > Gemini/Kimi appliqué, validé Aziz. Moteur globe D3 prouvé sur 2 actes (3 et 5).
 > **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte5-reseau-ombre-FINAL.mp4` (+ `_compressed`).
 > **Code (le vrai livrable)** : `src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` (compo `D3-SoudanActe5-Globe`).
-> **Branche** : `feat/soudan-acte5-globe` (NON mergée). Détail : `episodes/soudan-midform/STATUS.md` § tête.
+> **Branche** : `feat/soudan-acte5-globe` (mergée dans master, commit d92ef780). Détail : `episodes/soudan-midform/STATUS.md` § tête.
 >
 > ⛔ **PÉRIMÉ** : mise en scène Mapbox actée s12 (100% carte, insert chirurgical, arbitrage Abou Dabi,
 > diagnostic densification à trier), code `warmap/soudan-acte5/SoudanActe5.tsx` (v2), et starter

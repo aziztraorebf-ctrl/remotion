@@ -365,6 +365,16 @@ tout élément qui dépasse le cercle → artefact "navire coupé / qui bave sur
 élément "part/disparaît" : **avance LÉGÈRE (translate faible) + FADE OUT (opacity→0)**, jamais une sortie
 hors champ. Règle valable pour toute scène SVG/clippée.
 
+**⛔ GOTCHA (2026-07-20, Soudan Acte 6) — vue 3/4 plongeante IMPOSSIBLE proprement en SVG.** SVG est 2D.
+Une "vue 3/4 plongeante" sur un élément dessiné top-down (ex: table de négociation vue de dessus) ne se
+fabrique PAS par `rotateX` CSS : ça donne un APLATISSEMENT ("carton qui bascule"), pas du vrai volume
+(aucune face latérale, aucune perspective réelle). ⚠️ Les reviewers LLM (Gemini/Kimi) SURESTIMENT cette
+faisabilité et la proposent quand même — c'est un cas où leur suggestion est techniquement fausse, à
+FILTRER. La bonne réponse pour l'illusion de profondeur sur un asset 2D : **dérive/parallaxe caméra**
+(translate+scale léger décorrélés par couche) + **particules/god-rays** = ~80% de l'effet ressenti, sans
+bascule bancale. Si un vrai volume 3/4 est indispensable → ce n'est plus du SVG (asset perspectif généré
+en amont, ou D3/3D dédié).
+
 **Comparatif outils (testé 21/06)** : **Gemini SVG = GAGNANT NET pour le SVG de SCÈNE** (riche, dense,
 groupes sémantiques, ~20Ko). GPT-5.5 testé en API DIRECTE OpenAI (`api.openai.com`, modèle `gpt-5.5`,
 `max_completion_tokens`) → SVG bien trop SCHÉMATIQUE (12 paths vs 119 chez Gemini sur la même Face B arbre).
