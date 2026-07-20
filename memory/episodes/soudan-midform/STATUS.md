@@ -33,6 +33,85 @@
 > ⛔ **PÉRIMÉ** : le starter `STARTER-PROMPT-soudan-acte3-globe-assemblage.md` (assemblage fait) + toute la
 > Section 1 Mapbox de `src/projects/warmap/soudan-acte3/SoudanActe3.tsx` (remplacée par le globe D3).
 
+## ✅✅ ACTE 6 « POURQUOI PERSONNE NE L'ARRÊTE » — PROMU FINAL (2026-07-20)
+
+> **TERMINÉ + PROMU + VALIDÉ AZIZ.** Acte final du mid-form, codé en globe D3 + 2 inserts SVG mix-and-match
+> LLM + passe dynamisme LLM. Aziz : « le globe a débloqué cette vidéo sur le Soudan, la grosse évolution ».
+> **Livrable** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte6-verrou-institutionnel-FINAL.mp4` (138s,
+> + `_compressed`). **Code** : `src/projects/_rnd/d3-16x9/SoudanActe6Globe.tsx` (compo `D3-SoudanActe6-Globe-Nu`,
+> 4140f@30) + `SoudanActe6VoteInsert.tsx` (B3) + `SoudanActe6TableInsert.tsx` (B4) + `soudanActe6Overlays.tsx`
+> (B5 cartouche) + `soudanActe6GlobeTiming.ts` + `whisper-words-acte6.ts`. Branche `feat/soudan-acte6-globe`.
+> Variante `-Jetons` (jetons institutionnels B1) existe mais NON retenue (Aziz : globe nu).
+>
+> **Détail des passes ci-dessous (historique de production).** Mid-form Soudan = 5/6 actes FINAUX (1,2,3,5,6) ;
+> reste l'Acte 4 (voir NEXT-ACTION). Prochaine session = Acte 4 puis musique+SFX puis assemblage final.
+
+### Historique production Acte 6 (3 passes)
+
+## 🎬 (passe 1-2) ACTE 6 — code initial + retours Aziz (2026-07-20)
+
+> **Verrou institutionnel = acte FINAL du mid-form.** Code en globe D3 + 2 inserts SVG mix-and-match LLM.
+> Branche `feat/soudan-acte5-globe` mergée dans master en début de session (Actes 3+5 sécurisés).
+>
+> **Fichiers** : `src/projects/_rnd/d3-16x9/SoudanActe6Globe.tsx` (compo `D3-SoudanActe6-Globe-Nu` + `-Jetons`,
+> 3997f@30) · `soudanActe6GlobeTiming.ts` (timing forced-alignment Whisper de l'audio verrouillé) ·
+> `soudanActe6Overlays.tsx` (DisplacementCounter B5) · `SoudanActe6TableInsert.tsx` (B4) ·
+> `SoudanActe6VoteInsert.tsx` (B3) · `whisper-words-acte6.ts`. Caméra `buildActe6Cam` dans `globeCamera.ts`.
+>
+> **5 beats codés + vérifiés au rendu** :
+> - B1 (l'arbitre manquant) : raccord EXACT fin Acte 5 (scaleMul 2.2) → zoom-out COURT ~2.5s qui s'ARRÊTE
+>   sur l'Afrique (retour Aziz : pas de long dézoom sans destination). Variante `-Nu` retenue (globe nu).
+> - B2 (UA écartée) : **cascade de DRAPEAUX voisins un par un** (GlobeFlagFill, ~11 pays UA) dès ~5s,
+>   Soudan désaturé gris + barré au centre + accentué (contour clair), voile focus-Afrique, mini-plaque
+>   "Union africaine — 55 États". Idée+validation Aziz. Anneau UA à trou ESSAYÉ puis RETIRÉ (noyé).
+> - B3 (veto ONU) : **DÉCOR GPT-5.6 Sol** (amphithéâtre, croix retirée) + 14 sièges verts cascade +
+>   **jeton DRAPEAU RUSSE au siège-veto** (recette jeton, idée Aziz : le veto incarné). `SoudanActe6VoteInsert`.
+> - B4 (paradoxe) : **MIX Fable 5 (base : silhouettes+spotlight) + GPT-5.6 (plateau bois)**, jeton Émirats
+>   spotlight. `SoudanActe6TableInsert`. Silhouettes-bustes gardées (choix Aziz).
+> - B5 (coût humain) : compteur 13,5M + cercles concentriques déplacement (Khartoum/El-Fasher/Nyala), fade
+>   to black sur la clôture. PAS de CTA.
+>
+> **PASSE 2 (retours Aziz 2026-07-20, 6 lots appliqués)** — durée portée à 4140f (138s, queue de fin) :
+> 1. Plaques éphémères (Union africaine + titre Conseil = 2s+fade, comme nos sources, pas gardées tout le beat).
+> 2. Cascade des 14 verts RALENTIE (gi*7 au lieu de gi*4).
+> 3. ⭐ CARTE PERSISTANTE (non-négociable) : les drapeaux UA + Soudan barré RESTENT affichés tout l'acte
+>    (uaFade=1, sudanDesat/banOp persistants) — plus jamais de "carte vierge" aux retours au globe (post-vote,
+>    post-table, B5). Les inserts B3/B4 les masquent avec leur fond opaque, la carte réapparaît intacte.
+> 4. TABLE B4 ANIMÉE (glow qui respire, reflet balayant clippé au plateau, spotlight de recherche qui tourne
+>    avant de se fixer sur les Émirats, bobbing/tilt des silhouettes). `SoudanActe6TableInsert`.
+> 5. B5 COÛT HUMAIN refait en CARTOUCHE AES : registre `WarMapOverlayData` (règle R2 "fond SOLIDE parchemin
+>    CENTRÉ, fige l'action" + R4 "cream jamais noir"). Chiffre count-up 13,5M + grille de 27 pictos-silhouettes
+>    (PersonIcon) + tagline + source OCHA. CENTRÉ, fond solide (retour Aziz : PAS semi-transparent en bas).
+>    Cercles concentriques gardés en amorce courte avant le cartouche. `DisplacementCounter` refait.
+> 6. FIN EN 2 TEMPS (registre War-Map AES LONGUE, vérifié sur `warmap-sahel-aes-FINAL.mp4`) : dissolution du
+>    globe EN CONTOURS (remplissages/drapeaux/océan fondent, ne restent que les traits de frontières, le SOUDAN
+>    reste très visible contour marqué + barré) PUIS noir + phrase finale TYPEWRITER une ligne : "Personne ne
+>    peut l'arrêter. Personne n'a de raison de le faire." (validée Aziz). PAS de CTA.
+>
+> ⚠️ Registres AES vérifiés cette passe (code+frames réels, ne pas confabuler) : le cartouche data = la
+> VIDÉO LONGUE (`Partie4Cout.tsx`, WarMapOverlayData), PAS le Short 90s. La fin contours = fin de la longue
+> ("Durer — reste à le démontrer" sur contours). Drapeaux voisins UA : `public/_shared/flags/` (td,ss,et,er,
+> ke,cf,ly,cd,dz,ru + eg,ne,ng existants).
+>
+> **PASSE 3 — DYNAMISME (passe LLM Gemini 3.1 Pro + Kimi K2.5, convergence quasi totale) — appliquée + PROMU** :
+> Aziz a demandé une passe "dynamisme" (pas densification, la scène est déjà dense) via nos 2 modèles habituels
+> sur la vidéo complète. Verdict convergent + appliqué :
+> - **Veto ONU** : ONDE DE CHOC depuis la Russie (sièges basculent au rouge QUAND l'onde les touche, ~4s,
+>   ralenti retour Aziz "trop rapide") + X qui se DESSINE (stroke-dashoffset) + MARTEAU qui frappe au veto.
+> - **Table B4** : DÉRIVE de caméra (push-in+drift lent) + PARTICULES "god rays" dans le faisceau + respiration
+>   silhouettes renforcée + 1 qui tapote. ⚠️ PAS de vraie vue 3D (impossible proprement en SVG — Claude l'a
+>   signalé, Gemini/Kimi surestimaient ; dérive/parallaxe = 80% de l'effet sans le faux-3D bancal).
+> - **B2 exclusion** : FLASH + pop d'impact au "suspendu" (SANS camera-shake, Aziz l'a exclu).
+> - **B5 compteur** : chiffre qui incrémente 0→13,5 + REBOND + pictos en STAGGER (tombent en place). ⚠️ BUG
+>   corrigé : le cartouche crème doit être OPAQUE dès l'apparition (fade court 4f + scale), PAS une longue
+>   montée d'opacité (sinon transparent = carte visible à travers = brouillon).
+> - **Fin** : typewriter démarre 1,7s plus tôt (pendant la dernière phrase parlée).
+> Rapports LLM : `/tmp/da-refs/kimi-compare-acte6-dynamisme.md` + scratchpad `dyn-gemini.md` (rapatrier si utile).
+> Leçon gravée : `openrouter-svg.md` § Fable 5 (test SVG) + passe dynamisme (Gemini/Kimi = signal codable).
+>
+> ✅ **PROMU FINAL 2026-07-20 (v6)** : `out/PRET-PUBLICATION/soudan-midform/soudan-acte6-verrou-institutionnel-FINAL.mp4`
+> (+ `_compressed`). Validé Aziz. Lien 72h : https://litter.catbox.moe/16wwtd.mp4.
+
 ## ✅✅ ACTE 5 « LE RÉSEAU QUI ARME DANS L'OMBRE » — REFAIT EN GLOBE D3, PROMU FINAL v5 (2026-07-19)
 
 > **TERMINÉ + PROMU.** L'Acte 5 a été entièrement REFAIT en GLOBE D3 intégral (abandon de la piste Mapbox

@@ -29,6 +29,7 @@ import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd
 import { SoudanActe3GlobeMinesProto, GLOBE_MINES_PROTO_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeMinesProto";
 import { SoudanActe3Section1Globe, SECTION1_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3Section1Globe";
 import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
+import { SoudanActe6Globe, SOUDAN_A6_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe6Globe";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -752,6 +753,26 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+        {/* Acte 6 "Pourquoi personne ne l'arrête" — GLOBE D3 + overlay vote ONU (B3) + insert table (B4).
+            2 VARIANTES B1 à comparer (Aziz 2026-07-20) : -Nu (globe nu, reco) vs -Jetons (ONU+UA posés). */}
+        <Composition
+          id="D3-SoudanActe6-Globe-Nu"
+          component={SoudanActe6Globe}
+          durationInFrames={SOUDAN_A6_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showInstitutionTokens: false }}
+        />
+        <Composition
+          id="D3-SoudanActe6-Globe-Jetons"
+          component={SoudanActe6Globe}
+          durationInFrames={SOUDAN_A6_GLOBE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+          defaultProps={{ showInstitutionTokens: true }}
         />
         <Composition
           id="KostiFrappeProto"

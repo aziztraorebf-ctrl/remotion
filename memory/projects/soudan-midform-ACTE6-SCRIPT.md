@@ -124,7 +124,7 @@ PORTE l'abstrait À CONDITION d'overlays UI aux 2 beats abstraits, + 1 insert SV
 
 | Beat | Intention | Registre | Geste visuel (consensus 3 sources) |
 |------|-----------|----------|-----------------------------------|
-| **B1** l'arbitre manquant | POSER | Globe D3 | Zoom-out depuis Acte 5 (arcs de flux fade out), vue planétaire. Installer le vide "rien n'a marché". |
+| **B1** l'arbitre manquant | POSER | Globe D3 | ⚠️ CORRIGÉ 2026-07-20 (vérif code Acte 5 réel) : l'Acte 5 NE finit PAS en vue planétaire — il finit RE-ZOOMÉ (`scaleMul 2.2`, plan resserré région Soudan `lon32/lat17`, globe assombri par le voile "isoler le système" + vignette pont Acte 6). Donc B1 = raccord EXACT sur cet état (scaleMul ~2.2, voile qui se lève) PUIS zoom-out narratif vers vue planétaire pendant "le monde a des outils pour l'arrêter". Le zoom-out = geste "on s'éloigne du terrain pour chercher les institutions". Installe le vide "rien n'a marché". (Les valeurs storyboard "scale 0.8→2.5" étaient fausses — l'Acte 5 tourne entre 1.55 et 4.4.) |
 | **B2** l'UA écartée | ÉCARTER | Globe D3 | Territoires UA s'illuminent → au mot "suspendu" le Soudan se DÉSATURE (kaki→gris) + icône Lucide `ban` géo-ancrée centroïde Soudan. "Un trou dans la carte de l'institution." |
 | **B3** le veto | BLOQUER | Globe + OVERLAY UI ⭐ | Hémicycle stylisé (15 cercles SVG demi-cercle) par-dessus le globe. 14 vert sauge `#6B8E23` sur "Quatorze", 1 (Russie) rouge BRIQUE `#8B4513` (PAS rouge vif = anti-accusation) sur "Russie". Composant `<UNVoteOverlay>` SVG pur, position:absolute (pas dans le canvas D3). Label "Conseil de Sécurité — Nov 2024". |
 | **B4** le paradoxe | RÉVÉLER | INSERT SVG ⭐ | Globe atteint sa limite (table de négo = pas de GPS → forcer = AI-slop). Cross-fade opacity vers insert plein écran : table vue de dessus, jeton ÉMIRATS repris de l'Acte 5 (= pont continuité), spotlight subtil dessus (halo jaune `#DAA520` op 0.3), autres acteurs en silhouettes GRISES. Le fait visuel (lumière) porte le jugement, pas une flèche. Validé Aziz. |
@@ -133,7 +133,7 @@ PORTE l'abstrait À CONDITION d'overlays UI aux 2 beats abstraits, + 1 insert SV
 **2 décisions structurantes (convergence totale)** : B3 = globe+overlay UI (un vote a besoin de la
 métaphore "parlement", le globe seul ne la donne pas) · B4 = insert SVG (une table n'a pas de géo).
 
-**Transitions** : Acte5→B1 = zoom-out continu (scale 0.8→2.5, arcs op 1→0). B3→B4 = cross-fade "on entre
+**Transitions** : Acte5→B1 = RACCORD EXACT sur l'état de fin d'Acte 5 (scaleMul ~2.2, lon32/lat17, voile actif) → zoom-out narratif continu vers vue planétaire (scaleMul 2.2→~1.2) + voile qui se lève. (⚠️ les valeurs "0.8→2.5" du storyboard initial étaient fausses, cf tableau B1.) B3→B4 = cross-fade "on entre
 dans la Terre voir l'intérieur des institutions" (globe op 1→0 + insert scale 0.95→1). B4→B5 = cross-fade
 retour globe.
 
