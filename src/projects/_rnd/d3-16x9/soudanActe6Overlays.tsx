@@ -248,7 +248,7 @@ export const DisplacementCounter: React.FC<{
           La pire crise humanitaire de la planète
         </div>
         <div style={{ fontFamily: "Georgia, serif", fontSize: 14, color: "#8a7a5e", marginTop: 12, letterSpacing: "0.02em" }}>
-          Source : Nations unies (OCHA), 2026
+          Nations unies (OCHA), 2026
         </div>
       </div>
     </div>
