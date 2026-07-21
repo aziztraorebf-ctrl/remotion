@@ -27,6 +27,7 @@ import { ForceNetworkProto16x9, FORCE_NETWORK_FRAMES } from "./projects/_rnd/d3-
 import { Globe2Proto16x9, GLOBE2_FRAMES } from "./projects/_rnd/d3-16x9/Globe2Proto16x9";
 import { SoudanActe4B6Globe, ACTE4_B6_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B6Globe";
 import { SoudanActe4B1B2Globe, ACTE4_B1B2_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B1B2Globe";
+import { SoudanActe4B3Force, ACTE4_B3_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B3Force";
 import { PieMorphProto16x9, PIE_MORPH_FRAMES } from "./projects/_rnd/d3-16x9/PieMorphProto16x9";
 import { SplitScreenProto16x9, SPLIT_SCREEN_FRAMES } from "./projects/_rnd/d3-16x9/SplitScreenProto16x9";
 import { ChartogramProto16x9, CHARTOGRAM_FRAMES } from "./projects/_rnd/d3-16x9/ChartogramProto16x9";
@@ -667,6 +668,14 @@ export const RemotionRoot: React.FC = () => {
           id="D3-SoudanActe4-B1B2-Globe"
           component={SoudanActe4B1B2Globe}
           durationInFrames={ACTE4_B1B2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-SoudanActe4-B3-Force"
+          component={SoudanActe4B3Force}
+          durationInFrames={ACTE4_B3_FRAMES}
           fps={30}
           width={1920}
           height={1080}
