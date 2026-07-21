@@ -43,7 +43,7 @@ import {
 } from "./globeGeo";
 import { GEO, windingPathD, projectPoint, type LonLat } from "./geoArc";
 import { camAt, type CamKey } from "./globeCamera";
-import { THEMES, GlobeFlagFill, RSF_RED, SAF_BLUE } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, RSF_RED, SAF_BLUE, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
 import { NavireGuerreEncre } from "../../_shared/svg-library/elements/maritime/NavireGuerreEncre";
 import { PART_OFFSETS, BEAT1, BEAT2, BEAT3, BEAT4 } from "../../warmap/soudan-acte4/soudanActe4Timing";
 
@@ -141,22 +141,10 @@ function buildActe4B1B4Cam(): CamKey[] {
 const CAM = buildActe4B1B4Cam();
 
 // ============================================================================================
-// GEOPLAQUE — fond sombre semi-opaque derriere chaque label geo-ancre (retour Aziz : le texte
-// blanc + textShadow etait dur a lire). Coins arrondis, padding, Georgia serif clair sur fond
-// sombre. Remplace tous les <text> SVG bruts des fichiers sources par un <div> HTML positionne.
+// GEOPLAQUE — voir GeoPlaqueSVG (SoudanActe3GlobeProto16x9.tsx), source de verite unique du label
+// geo-ancre (unification 2026-07-21). L'ancien GeoPlaque local (HTML <div> overlay) est SUPPRIME ;
+// les appels ci-dessous utilisent desormais GeoPlaqueSVG, rendu DANS le <svg> (voir plus bas).
 // ============================================================================================
-const GeoPlaque: React.FC<{ x: number; y: number; label: string; op: number; accent?: string; dy?: number }> =
-  ({ x, y, label, op, accent = t.flowGold, dy = -34 }) => {
-    if (op <= 0.01) return null;
-    return (
-      <div style={{ position: "absolute", left: x, top: y + dy, transform: "translate(-50%,-50%)", opacity: op,
-        pointerEvents: "none", padding: "5px 14px", background: "rgba(10,16,24,0.76)", borderRadius: 6,
-        borderLeft: `2.5px solid ${accent}`, whiteSpace: "nowrap", boxShadow: "0 3px 8px rgba(0,0,0,0.4)" }}>
-        <span style={{ fontFamily: "Georgia, serif", fontWeight: 700, fontSize: 20, letterSpacing: "0.01em",
-          color: t.labelFill }}>{label}</span>
-      </div>
-    );
-  };
 
 // --- PortraitToken (repris EXACTEMENT de SoudanActe5Globe.tsx) — jeton-visage : cercle parchemin +
 // bordure faction + portrait clippe rond + ombre-sol. Remplace les Medallion-lettre RSF/SAF par les
@@ -648,6 +636,13 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
               <path d={nilD} fill="none" stroke={NIL_BLUE} strokeWidth={2.6} strokeOpacity={0.95} strokeLinecap="round" />
             </g>
           )}
+
+          {/* GEOPLAQUES (GeoPlaqueSVG, unification 2026-07-21) — labels geo-ancres, DANS le svg
+              (le composant partage est rendu en SVG, pas en HTML). Meme x/y/op/accent/dy que
+              l'ancien GeoPlaque local ; persistent une fois posees. */}
+          {pMoscou && <GeoPlaqueSVG x={pMoscou.x} y={pMoscou.y} label="Moscou" op={russiaReveal} accent="#c74d4d" dy={-30} />}
+          {pPortSoudan && <GeoPlaqueSVG x={pPortSoudan.x} y={pPortSoudan.y} label="Port-Soudan" op={portSoudanReveal} accent={t.flowMetal} dy={38} />}
+          {pEgypte && <GeoPlaqueSVG x={pEgypte.x} y={pEgypte.y} label="Le Caire" op={egypteRevealFinal} accent="#7fae6a" dy={-30} />}
         </g>
 
         <circle cx={cx} cy={cy} r={globeR} fill="none" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.4} />
@@ -677,11 +672,6 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
           size={60}
         />
       )}
-
-      {/* ===== GEOPLAQUES (labels HTML lisibles, fond sombre) — persistent une fois posees ===== */}
-      {pMoscou && <GeoPlaque x={pMoscou.x} y={pMoscou.y} label="Moscou" op={russiaReveal} accent="#c74d4d" dy={-30} />}
-      {pPortSoudan && <GeoPlaque x={pPortSoudan.x} y={pPortSoudan.y} label="Port-Soudan" op={portSoudanReveal} accent={t.flowMetal} dy={38} />}
-      {pEgypte && <GeoPlaque x={pEgypte.x} y={pEgypte.y} label="Le Caire" op={egypteRevealFinal} accent="#7fae6a" dy={-30} />}
 
       {/* ZERO sous-titre bas d'ecran (regle constante : bas de cadre reserve aux SOURCES uniquement,
           ce bloc n'a pas de source a afficher — la voix off + la densite visuelle du globe portent

@@ -19,7 +19,7 @@ import {
 } from "./globeGeo";
 import { GEO, windingPathD, projectPoint, type LonLat } from "./geoArc";
 import { camAt, type CamKey } from "./globeCamera";
-import { THEMES, GlobeFlagFill, BorderPulse } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, BorderPulse, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
 
 // Palette = THEMES.mixte (source de verite unique du globe Soudan, utilisee par Actes 3/5/6 —
 // coherence episode par construction, pas de couleurs en dur qui derivent).
@@ -65,27 +65,9 @@ const COL = {
 
 const KHARTOUM: LonLat = GEO.khartoum;
 
-// GeoPlaqueSVG — label geo-ancre sur FOND SOMBRE (retour Aziz : les noms de pays en <text> blanc sont
-// durs a lire sur la carte ; utiliser la meme technique de geoplaque que le bloc B1toB4). Dessine en SVG
-// (le B6 est full-SVG) : rect arrondi sombre + liseret couleur nationale + texte clair Georgia.
-// Largeur estimee au nombre de caracteres (SVG n'auto-dimensionne pas un rect sur le texte).
-const GeoPlaqueSVG: React.FC<{ x: number; y: number; label: string; op: number; accent: string; dy?: number }> =
-  ({ x, y, label, op, accent, dy = -20 }) => {
-    if (op <= 0.01) return null;
-    const fs = 21;
-    const w = label.length * fs * 0.62 + 24; // largeur approx (padding inclus)
-    const h = 30;
-    const cxp = x;
-    const cyp = y + dy;
-    return (
-      <g opacity={op}>
-        <rect x={cxp - w / 2} y={cyp - h / 2} width={w} height={h} rx={6} fill="rgba(10,16,24,0.80)" />
-        <rect x={cxp - w / 2} y={cyp - h / 2} width={3} height={h} rx={1.5} fill={accent} />
-        <text x={cxp} y={cyp + fs * 0.34} fill={t.labelFill} fontSize={fs} fontFamily="Georgia, serif"
-          fontWeight={700} textAnchor="middle" letterSpacing={0.3}>{label}</text>
-      </g>
-    );
-  };
+// GeoPlaqueSVG — voir SoudanActe3GlobeProto16x9.tsx (source de verite unique, unification 2026-07-21).
+// L'ancien composant local (identique visuellement, labelFill fige a t.labelFill) est SUPPRIME ; les
+// appels ci-dessous passent labelFill={t.labelFill} pour conserver exactement la meme couleur de texte.
 
 // Les 4 puissances etrangeres + leur point d'origine geo + couleur nationale + jalon d'apparition.
 // Ordre = apparition sequentielle serree autour de "quatre puissances" (elles se posent l'une apres
@@ -311,7 +293,7 @@ export const SoudanActe4B6Globe: React.FC = () => {
             });
             if (app <= 0.01) return null;
             return (
-              <GeoPlaqueSVG key={`lbl-${p.label}`} x={pt.x} y={pt.y} label={p.label} op={app} accent={p.color} dy={-20} />
+              <GeoPlaqueSVG key={`lbl-${p.label}`} x={pt.x} y={pt.y} label={p.label} op={app} accent={p.color} dy={-20} labelFill={t.labelFill} />
             );
           })}
 
@@ -375,7 +357,7 @@ export const SoudanActe4B6Globe: React.FC = () => {
                   stroke={COL.ink}
                   strokeWidth={1}
                 />
-                <GeoPlaqueSVG x={0} y={0} label="Khartoum" op={1} accent={COL.danger} dy={26} />
+                <GeoPlaqueSVG x={0} y={0} label="Khartoum" op={1} accent={COL.danger} dy={26} labelFill={t.labelFill} />
               </g>
             );
           })()}

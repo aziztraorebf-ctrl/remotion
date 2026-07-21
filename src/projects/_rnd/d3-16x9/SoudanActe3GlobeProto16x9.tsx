@@ -228,7 +228,15 @@ export const DestPoint: React.FC<{ x: number; y: number; label: string; on: numb
           <rect x={-22} y={8} width={44} height={4} fill={t.landStroke} opacity={0.7} />
         </g>
       )}
-      <text x={hangarIn > 0.5 ? 26 : 13} y={5} fontSize={22} fontWeight={700} fill={t.labelFill} stroke={t.labelStroke} strokeWidth={0.6} fontFamily="'Archivo', sans-serif">{label}</text>
+      {/* geo-plaque (unification 2026-07-21) : remplace le <text> nu — la plaque est centree sur son x,
+          donc on decale son centre a droite du point/hangar (gap + moitie de sa largeur estimee) pour
+          que son bord gauche ne chevauche pas l'icone. Meme formule de largeur que GeoPlaqueSVG. */}
+      {(() => {
+        const fs = 22;
+        const plaqueW = label.length * fs * 0.62 + 24;
+        const gap = hangarIn > 0.5 ? 14 : 8;
+        return <GeoPlaqueSVG x={gap + plaqueW / 2} y={0} dy={0} label={label} op={1} accent={t.flowGold} labelFill={t.labelFill} fs={fs} />;
+      })()}
     </g>
   );
 };

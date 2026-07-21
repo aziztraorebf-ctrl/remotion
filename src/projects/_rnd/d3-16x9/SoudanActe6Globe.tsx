@@ -18,7 +18,7 @@ import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "r
 import { Ban } from "lucide-react";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
 import { projectPoint, GEO, type LonLat } from "./geoArc";
-import { THEMES, GlobeFlagFill } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
 import { buildActe6Cam, camAt } from "./globeCamera";
 import { T, A6_GLOBE_FRAMES, AUDIO_FULL } from "./soudanActe6GlobeTiming";
 import { DisplacementCounter } from "./soudanActe6Overlays";
@@ -303,8 +303,8 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
             <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
               {pNewYork && <InstitutionMark x={pNewYork.x} y={pNewYork.y} label="ONU" op={tokOp} color="#4B92DB" />}
               {pAddis && <InstitutionMark x={pAddis.x} y={pAddis.y} label="UA" op={tokOp} color="#C9A24B" />}
-              {pNewYork && <InstLabel x={pNewYork.x} y={pNewYork.y} label="Nations unies" op={tokOp} />}
-              {pAddis && <InstLabel x={pAddis.x} y={pAddis.y} label="Union africaine" op={tokOp} />}
+              {pNewYork && <GeoPlaqueSVG x={pNewYork.x} y={pNewYork.y} label="Nations unies" op={tokOp} accent="#4B92DB" dy={42} labelFill={THEMES.mixte.labelFill} />}
+              {pAddis && <GeoPlaqueSVG x={pAddis.x} y={pAddis.y} label="Union africaine" op={tokOp} accent="#C9A24B" dy={42} labelFill={THEMES.mixte.labelFill} />}
             </svg>
           );
         })()}
@@ -379,10 +379,7 @@ const InstitutionMark: React.FC<{ x: number; y: number; label: string; op: numbe
     </g>
   );
 
-const InstLabel: React.FC<{ x: number; y: number; label: string; op: number }> = ({ x, y, label, op }) => (
-  <text x={x} y={y + 42} textAnchor="middle" fontFamily="Georgia, serif" fontSize={19} fontWeight={700}
-    fill={THEMES.mixte.labelFill} opacity={op}
-    style={{ paintOrder: "stroke" }} stroke="#0a1018" strokeWidth={0.8}>{label}</text>
-);
+// InstLabel (texte SVG nu) SUPPRIME (unification 2026-07-21) — remplace par GeoPlaqueSVG (voir
+// SoudanActe3GlobeProto16x9.tsx), appele directement au site d'usage ci-dessus.
 
 export default SoudanActe6Globe;
