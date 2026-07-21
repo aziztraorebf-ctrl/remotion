@@ -72,7 +72,10 @@ const transientLabel = (frame: number, at: number, holdS = 2.5) => {
 // pays" (avant al-Burhan) → LARGE pour la partition. + drift lent permanent (keyframes rapprochés
 // avec micro-variation lon/lat = Ken Burns ; les jetons taille écran fixe suivent sans distorsion). ──
 const CAM: CamKey[] = [
-  { f: 0, lon: 25.2, lat: 14.3, zoom: 5.95 },      // SERRÉ Darfour (Hemeti + mines occupent l'écran)
+  // LOT 3.1 (accroche cinématique) : ENTRÉE plongée — on démarre plus serré (zoom 6.45) et on desserre
+  // en ~0.6s sur le plan Darfour de référence = mouvement d'ouverture qui "descend" sur la scène.
+  { f: 0, lon: 25.0, lat: 14.2, zoom: 6.45 },
+  { f: 18, lon: 25.2, lat: 14.3, zoom: 5.95 },     // SERRÉ Darfour (Hemeti + mines occupent l'écran)
   { f: F.dagalo, lon: 25.6, lat: 14.5, zoom: 5.9 }, // drift lent pendant beat 1-2
   { f: F.guerre, lon: 26.0, lat: 14.7, zoom: 5.85 },
   { f: F.soudan, lon: 29.8, lat: 15.2, zoom: 5.05 }, // "3e plus grand pays" → DÉZOOM révèle le Soudan
@@ -285,6 +288,12 @@ const MineOr: React.FC<{ pos: Pt; frame: number; appear: number; fade: number }>
       { ...clamp, easing: Easing.out(Easing.cubic) });
     const fadeIn = interpolate(frame, [appear, appear + 10], [0, 1], clamp);
     const gleam = 0.6 + 0.4 * Math.sin(frame * 0.1);
+    // LOT 3.1 (accroche) : PULSE DORÉ fort à l'apparition — un halo radial ample qui bat ~3 fois puis
+    // retombe sur le gleam doux, pour attirer l'oeil sur les mines (l'enjeu = l'or) au tout début de l'acte.
+    // Enveloppe qui tient plein ~1.3s puis décroît (le battement reste lisible tout du long).
+    const pulseEnv = interpolate(frame, [appear, appear + 6, appear + 40, appear + 78], [0, 1, 1, 0], clamp);
+    const pulseBeat = 0.55 + 0.45 * Math.sin((frame - appear) * 0.5); // battement ~3.5 cycles sur la fenêtre
+    const goldPulse = pulseEnv * pulseBeat;
     // physique : l'ombre commence large/floue puis se resserre quand l'objet "touche"
     const shBlur = interpolate(frame, [appear, appear + 22], [16, 5], clamp);
     const shScale = interpolate(frame, [appear, appear + 22], [1.5, 1], clamp);
@@ -298,6 +307,12 @@ const MineOr: React.FC<{ pos: Pt; frame: number; appear: number; fade: number }>
         <div style={{ position: "absolute", left: "50%", top: "58%", width: size * 0.9, height: size * 0.4,
           transform: "translate(-50%,-50%)",
           background: `radial-gradient(circle, rgba(233,162,59,${0.35 * gleam}) 20%, rgba(233,162,59,0) 70%)` }} />
+        {/* LOT 3.1 : halo doré qui PULSE à l'apparition (accroche) — ample et vif, décolle bien du fond kaki */}
+        {goldPulse > 0.01 && (
+          <div style={{ position: "absolute", left: "50%", top: "50%", width: size * (1.9 + 0.7 * goldPulse), height: size * (1.9 + 0.7 * goldPulse),
+            transform: "translate(-50%,-50%)", pointerEvents: "none",
+            background: `radial-gradient(circle, rgba(255,222,140,${0.85 * goldPulse}) 6%, rgba(240,180,70,${0.5 * goldPulse}) 30%, rgba(233,162,59,${0.18 * goldPulse}) 55%, rgba(233,162,59,0) 72%)` }} />
+        )}
         <img src={staticFile("_shared/sprites/warmap/mine-or-td.png")}
           style={{ position: "relative", width: size, height: size * (768 / 1408), objectFit: "contain", display: "block" }} />
       </div>

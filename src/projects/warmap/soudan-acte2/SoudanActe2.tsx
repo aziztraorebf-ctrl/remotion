@@ -89,6 +89,46 @@ const CAM1: CamKey[] = [
   { f: F.end, lon: 30.4, lat: 15.35, zoom: 5.15 },
 ];
 
+// ── LOT 3.2 : LIGNE DE FAILLE (fracture RSF/SAF au SPLIT) — path SVG craquelé N→S qui APPARAÎT EN SNAP
+//    NET (0→1 en ~3 frames, PAS de tracé progressif, PAS de shake — retour Aziz) au moment où les jetons
+//    se séparent. Souligne la cassure du pays entre l'ouest (RSF, rouge) et l'est (SAF, bleu). ──
+const FaultLine: React.FC<{ proj: (c: [number, number]) => Pt | null; frame: number; snapAt: number }> =
+  ({ proj, frame, snapAt }) => {
+    if (frame < snapAt) return null;
+    // tracé géo craquelé (zigzag serré) le long du centre du pays, du nord au sud.
+    const geo: [number, number][] = [
+      [30.9, 19.8], [30.4, 18.6], [31.1, 17.5], [30.3, 16.4], [30.9, 15.4],
+      [30.1, 14.4], [30.7, 13.3], [30.0, 12.2], [30.5, 11.2],
+    ];
+    const pts = geo.map(proj).filter(Boolean) as Pt[];
+    if (pts.length < 2) return null;
+    const d = pts.map((p, i) => (i === 0 ? "M" : "L") + p.x.toFixed(1) + " " + p.y.toFixed(1)).join(" ");
+    // SNAP : opacité 0→1 en ~3 frames (net), léger flash blanc à l'impact, puis se stabilise.
+    const snap = interpolate(frame, [snapAt, snapAt + 3], [0, 1], clamp);
+    const flash = interpolate(frame, [snapAt, snapAt + 2, snapAt + 12], [0, 1, 0], clamp);
+    return (
+      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+        <defs>
+          <filter id="faultInk" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05 0.09" numOctaves={2} seed={11} result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale={7} />
+          </filter>
+        </defs>
+        <g filter="url(#faultInk)" opacity={snap}>
+          {/* ombre sombre de la faille (donne de la profondeur = "cassure") */}
+          <path d={d} fill="none" stroke="rgba(10,6,4,0.85)" strokeWidth={7} strokeLinecap="round" strokeLinejoin="round" />
+          {/* liseré chaud (la fracture "brûle" un instant) */}
+          <path d={d} fill="none" stroke="#E8A23B" strokeWidth={2.6} strokeLinecap="round" strokeLinejoin="round"
+            opacity={0.5 + 0.5 * flash} />
+          {/* flash blanc à l'impact (snap) */}
+          {flash > 0.01 && (
+            <path d={d} fill="none" stroke="#FFF6E0" strokeWidth={4.5} strokeLinecap="round" strokeLinejoin="round" opacity={flash * 0.9} />
+          )}
+        </g>
+      </svg>
+    );
+  };
+
 const HL1 = (state: string, faction: "rsf" | "saf" | "contested", drawAt: number): StateHighlight => ({
   state, faction, drawAt, drawFrames: 34, holdFrames: 600, fadeFrames: 0,
 });
@@ -182,6 +222,9 @@ const Beats14Map: React.FC = () => {
                     splitGap={200} D={124} appearFrom={F.fusion - 6} />
                 </div>
               )}
+
+              {/* LOT 3.2 : ligne de faille SNAP NET au split (les jetons se séparent → le pays se fend) */}
+              <FaultLine proj={proj} frame={frame} snapAt={F.avril23} />
 
               {/* (Beat 2 coup d'État : registre épuré — la fusion des jetons "l'armée et la milice main
                   dans la main" porte le sens. Palais iso retiré : la voix ne le nomme jamais, objet orphelin.) */}
