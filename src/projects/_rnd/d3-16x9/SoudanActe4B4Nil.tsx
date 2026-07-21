@@ -3,8 +3,6 @@ import {
   AbsoluteFill,
   useCurrentFrame,
   interpolate,
-  spring,
-  useVideoConfig,
   Audio,
   staticFile,
 } from "remotion";
@@ -79,16 +77,27 @@ const NIL: LonLat[] = [
   [31.0, 31.4], // delta, Mediterranee
 ];
 
-// Echantillonnage lineaire simple entre les points de controle (assez dense pour un stroke lisse
-// avec la courbure geoPath — pas besoin de grand-cercle ici, le cours du Nil EST la geometrie).
-function densifyNil(pts: LonLat[], perSegment = 10): LonLat[] {
+// Echantillonnage CATMULL-ROM (spline lisse passant par tous les points de controle) — remplace
+// l'interpolation lineaire qui rendait le fleuve ANGULEUX/zigzag. La courbe est douce comme un vrai
+// cours d'eau, tout en passant exactement par les reperes geo (Khartoum, Assouan, Le Caire, delta).
+function catmullRom(p0: LonLat, p1: LonLat, p2: LonLat, p3: LonLat, f: number): LonLat {
+  const f2 = f * f;
+  const f3 = f2 * f;
+  const lon =
+    0.5 * ((2 * p1[0]) + (-p0[0] + p2[0]) * f + (2 * p0[0] - 5 * p1[0] + 4 * p2[0] - p3[0]) * f2 + (-p0[0] + 3 * p1[0] - 3 * p2[0] + p3[0]) * f3);
+  const lat =
+    0.5 * ((2 * p1[1]) + (-p0[1] + p2[1]) * f + (2 * p0[1] - 5 * p1[1] + 4 * p2[1] - p3[1]) * f2 + (-p0[1] + 3 * p1[1] - 3 * p2[1] + p3[1]) * f3);
+  return [lon, lat];
+}
+function densifyNil(pts: LonLat[], perSegment = 14): LonLat[] {
   const out: LonLat[] = [];
   for (let i = 0; i < pts.length - 1; i++) {
-    const [lon0, lat0] = pts[i];
-    const [lon1, lat1] = pts[i + 1];
+    const p0 = pts[i - 1] ?? pts[i]; // extremites : dupliquer le point de bord (tangente naturelle)
+    const p1 = pts[i];
+    const p2 = pts[i + 1];
+    const p3 = pts[i + 2] ?? pts[i + 1];
     for (let s = 0; s < perSegment; s++) {
-      const f = s / perSegment;
-      out.push([lon0 + (lon1 - lon0) * f, lat0 + (lat1 - lat0) * f]);
+      out.push(catmullRom(p0, p1, p2, p3, s / perSegment));
     }
   }
   out.push(pts[pts.length - 1]);
@@ -126,7 +135,6 @@ const NIL_BLUE = "#7FC8E8"; // stroke lumineux du Nil (distinct du bleu ocean, d
 
 export const SoudanActe4B4Nil: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
   const features = useMemo(() => worldFeatures(), []);
 
   const cam = camAt(CAM, frame);
@@ -162,9 +170,6 @@ export const SoudanActe4B4Nil: React.FC = () => {
     [0, 0.55],
     { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
   );
-
-  // Sous-titre bas de cadre (traitement discret, coherent avec B6).
-  const subtitleOp = spring({ frame: frame - T.profondeurStrategique, fps, config: { damping: 200 } });
 
   return (
     <AbsoluteFill style={{ backgroundColor: t.bg }}>
@@ -268,24 +273,8 @@ export const SoudanActe4B4Nil: React.FC = () => {
         <circle cx={cx} cy={cy} r={globeR} fill="none" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.4} />
       </svg>
 
-      {/* "profondeur strategique" — phrase coup de poing, traitement typographique discret bas de cadre. */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 58,
-          textAlign: "center",
-          color: t.labelFill,
-          fontFamily: "Georgia, serif",
-          fontSize: 33,
-          letterSpacing: 1,
-          opacity: subtitleOp,
-          textShadow: "0 2px 8px rgba(0,0,0,0.8)",
-        }}
-      >
-        Une profondeur stratégique.
-      </div>
+      {/* Pas de sous-titre bas de cadre (retour Aziz : bas d'ecran reserve aux SOURCES uniquement,
+          jamais de sous-titre qui repete la voix = effet "TikTok" proscrit). */}
     </AbsoluteFill>
   );
 };

@@ -140,13 +140,6 @@ export const SoudanActe4B6Globe: React.FC = () => {
   const nightCenter: LonLat = [sunLon + 180, -15];
   const nightPt = visible(nightCenter) ? proj(nightCenter) : null;
 
-  // Pont Acte 5 : opacite du liseré typographique discret.
-  const pontOp = interpolate(
-    frame,
-    [T.pontActe5, T.pontActe5 + 18, T.resteInactive + 30, ACTE4_B6_FRAMES],
-    [0, 1, 1, 0.85],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
-  );
 
   return (
     <AbsoluteFill style={{ backgroundColor: t.bg }}>
@@ -328,25 +321,9 @@ export const SoudanActe4B6Globe: React.FC = () => {
         <circle cx={cx} cy={cy} r={globeR} fill="none" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.4} />
       </svg>
 
-      {/* PONT Acte 5 — traitement typographique discret (le seul texte du beat, script : "aucun texte"
-          sur les 4 puissances). Bas de cadre, sobre, prepare la question de l'Acte 5. */}
-      <div
-        style={{
-          position: "absolute",
-          left: 0,
-          right: 0,
-          bottom: 58,
-          textAlign: "center",
-          color: COL.ink,
-          fontFamily: "Georgia, serif",
-          fontSize: 33,
-          letterSpacing: 1,
-          opacity: pontOp,
-          textShadow: "0 2px 8px rgba(0,0,0,0.8)",
-        }}
-      >
-        Une organisation existe pour l'arrêter.
-      </div>
+      {/* Pas de sous-titre bas de cadre (retour Aziz : bas d'ecran reserve aux SOURCES uniquement,
+          ~2s + fade ; jamais de sous-titre qui repete/synthetise la voix = effet "TikTok" proscrit).
+          La voix off + la densite visuelle du globe portent le sens. */}
     </AbsoluteFill>
   );
 };
