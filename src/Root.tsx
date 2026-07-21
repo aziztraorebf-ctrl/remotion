@@ -26,6 +26,7 @@ import { JetonsComparatif16x9, JETONS_COMPARATIF_FRAMES } from "./projects/_rnd/
 import { ForceNetworkProto16x9, FORCE_NETWORK_FRAMES } from "./projects/_rnd/d3-16x9/ForceNetworkProto16x9";
 import { Globe2Proto16x9, GLOBE2_FRAMES } from "./projects/_rnd/d3-16x9/Globe2Proto16x9";
 import { SoudanActe4B6Globe, ACTE4_B6_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B6Globe";
+import { SoudanActe4B1toB4Globe, ACTE4_B1B4_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B1toB4Globe";
 import { SoudanActe4B1B2Globe, ACTE4_B1B2_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B1B2Globe";
 import { SoudanActe4B3Globe, ACTE4_B3_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B3Globe";
 import { SoudanActe4B4Nil, ACTE4_B4_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B4Nil";
@@ -667,6 +668,14 @@ export const RemotionRoot: React.FC = () => {
           id="D3-SoudanActe4-B6-Globe"
           component={SoudanActe4B6Globe}
           durationInFrames={ACTE4_B6_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-SoudanActe4-B1B4-Globe"
+          component={SoudanActe4B1toB4Globe}
+          durationInFrames={ACTE4_B1B4_FRAMES}
           fps={30}
           width={1920}
           height={1080}
