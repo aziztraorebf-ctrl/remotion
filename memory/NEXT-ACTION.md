@@ -1,7 +1,23 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-20 (session 17 — Acte 6 Soudan CODÉ + PROMU FINAL. Mid-form = 5/6 actes FINAUX).
+> Mis a jour : 2026-07-21 (session R&D SVG/D3/Fable 5 — grosse exploration capacités, EN PARALLÈLE de la session Acte 4).
 > Structure Soudan inchangée (**6 actes au total**). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+---
+
+## 🧪 SESSION R&D 2026-07-21 — ARSENAL SVG/D3/FABLE 5 ÉLARGI (exploration capacités, pas de prod épisode)
+
+> Session dédiée à PROUVER de nouvelles capacités (en // de la prod Acte 4 Soudan). Tout référencé + gravé.
+
+**D3 — 8 protos prouvés** (`src/projects/_rnd/d3-16x9/README.md`, compos `D3-*` dans Root) : réseau force (recompose physique), globe 2.0 (arcs à OCCLUSION réelle), camembert, split-screen, chartogram (carte→donnée), sankey, cartogramme, pie-morph. **Constat : la force de D3 = la CARTO ; les charts restent proches du SVG-maison.**
+
+**FABLE 5 = MODÈLE SVG MAISON par défaut** (gravé CLAUDE.md table modèles + `SVG-SCENES-GENERATIVES.md`) : appelé comme AGENT Claude Code, ZÉRO API, inclus abonnement (~2% quota/semaine pour 5 scènes). Mode élevé (scènes/objets/jetons) · mode MAX (narratif/organique/visage/parallaxe). **Visage organique ≥ Kimi K3.** 3 principaux = Fable+Gemini+GPT ; GLM+Kimi K3 complémentaires (gardés).
+
+**Registres SVG neufs prouvés** : néon/data-terminal (prod-ready), feu/fumée organique (non-figuratif OK). **Portrait-médaillon v2 MAÎTRISÉ** (buste FIXE + colorisation progressive zone par zone + clignements ; PAS de parole). **Village parallaxe 26s** (jour→nuit) = vraie séquence narrative SVG pur.
+
+**⛔ DOCTRINE RECENTRÉE** : notre force = **scène-lieu vivante + objets non-organiques qui voyagent** (cargo, structures) ; le **personnage complet animé = prouvé mais ÉCARTÉ en prod** (« pantin bien animé », pas maîtrisé).
+
+**PROCHAINE VIDÉO envisagée = format « RÉCIT-RESSOURCE » majorité-SVG** (mélange 3 moteurs comme Soudan, ratio inversé). Squelette prédonné = 3 protos (`CargoVoyage16x9_LibreInspire`, `ProtoNarratifPlusData`, `ProtoDataVizPleinEcran`) À AUGMENTER avec l'arsenal 2026 (Sankey/chartogram/carte D3/inserts). Détail + vision « cobalt » : `memory/doctrines/SVG-MIDFORM-FORMAT.md` § FORMAT RÉCIT-RESSOURCE. ⛔ RIEN de figé — sujet à valider via pipeline (sujet prime). NON décidé cette session.
 
 ---
 

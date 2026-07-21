@@ -450,3 +450,22 @@ Proposition Gemini sur les prototypes Inga — technique à coder en session dé
 **Pourquoi supérieur :** montre physiquement l'écrasement technologique — l'infrastructure enjambe les habitants comme des grains de poussière. Exploite la vraie force du SVG vectoriel : zoom infini sans perte de résolution. C'est le seul format qui encode l'ÉCHELLE de l'injustice, pas seulement le contraste.
 
 **Geste manquant des deux protos (Gemini) :** Le câble d'or qui passe au-dessus des maisons doit émettre un halo FROID qui éclaire les toits mais n'entre jamais dans les fenêtres — et les flammes des bougies vacillent au passage ("siphon effect"). L'énergie les frôle, ne les pénètre pas.
+
+---
+
+## ⭐⭐ FORMAT "RÉCIT-RESSOURCE" (référence prouvée 2026-07-20) — squelette prédonné, à AUGMENTER
+
+> ⛔ RIEN DE FIGÉ DANS LE MARBRE : ces protos donnent une BASE, pas un gabarit rigide. L'ordre des registres visuels, le choix scène/carte/chart, tout peut CHANGER à la conception de la vraie vidéo. Rester flexible.
+
+3 protos existants (sources sur disque, reproductibles/corrigeables — les .mp4 uguu partagés étaient temporaires, INUTILE de les garder) qui prouvent le langage visuel « voyage d'une ressource + chaîne de valeur », SANS personnage-acteur :
+- **`CargoVoyage16x9_LibreInspire`** (compo `RND-CargoVoyage16x9-LibreInspire`) : cargo qui VOYAGE, décor mer+montagnes qui passe JOUR→NUIT (lune, étoiles). Objet-véhicule qui glisse crédiblement (règle véhicule). ⚠️ signature « GéoAfrique » PÉRIMÉE → Kora et Cartes.
+- **`ProtoNarratifPlusData`** (compo `RND-ProtoNarratifPlusData`) : le cargo se FOND (cargoOpacity→0) vers un DONUT premium « QUI CAPTE LA VALEUR DU CACAO ? » (6% planteurs… 51% marques, source Mighty Earth/ICCO). = LE modèle scène-narrative→chart-data.
+- **`ProtoDataVizPleinEcran`** (compo `RND-ProtoDataVizPleinEcran`) + variante parallaxe arbres/labels COBALT-CAFÉ-OR-CACAO : chart qui pousse DANS la scène.
+
+**⭐ POINT CLÉ (Aziz) : ces protos datent d'AVANT notre arsenal 2026.** Ils sont le SQUELETTE narratif prédonné (voyage→fondu→chart). Ce qu'on AJOUTE aujourd'hui pour élever la vraie vidéo :
+- donut statique → **Sankey** (valeur qui se ramifie, rubans proportionnels)
+- fond montagnes générique → **vraie route maritime carte D3/globe à occlusion** (Afrique→Suez→Europe)
+- **chartogram** (pays producteur qui se déforme selon sa part misérable) · **cartogramme**
+- **inserts SVG premium** (néon marchés, registres Fable 5 max) · **portraits-médaillons** pour les acteurs (jamais perso-acteur)
+
+= la future vidéo = ces protos AUGMENTÉS par tout l'arsenal D3/Sankey/chartogram/inserts construit depuis. Mélange 3 moteurs à majorité SVG. Cf [[SVG-SCENES-GENERATIVES]] § NOTRE VRAIE FORCE.
