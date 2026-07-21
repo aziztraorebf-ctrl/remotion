@@ -1,0 +1,26 @@
+Tu es directeur artistique. Meme video mid-form Soudan (6 actes, 10min26). Un DIAGNOSTIC a identifie : un DEBUT trop conservateur (0:00-2:30), des moments-chiffres sous-densifies, des problemes de lisibilite de jetons, et l absence de musique/SFX.
+
+CONTRAINTES NON-NEGOCIABLES DE NOTRE MOTEUR (lis AVANT de proposer) :
+- Notre moteur = D3.js + SVG 2D frame-driven, rendu deterministe. NOUS NE FAISONS PAS : After Effects, GEO layers, 3D volumetrique, simulation de particules physiques, moteurs de fluides. Ne propose AUCUN effet qui exigerait ces outils.
+- Tout effet doit etre realisable comme : un trace SVG (path/cercle/gradient), une opacite animee, une transformation geometrique (scale/rotate/translate), un mouvement de camera D3 (rotation de la projection orthographique, changement d echelle), un masque/clip, un degrade radial ou lineaire. Rien d autre.
+- Exemples de TRADUCTION acceptable : "brouillard de guerre" -> voile de gradient sombre semi-transparent en SVG ; "heatmap" -> halo radial pulse ; "relief 3D" -> ecarte ou simple texture de hachures SVG legere ; "particules" -> quelques cercles animes discrets, jamais une nuee.
+- REGLE ABSOLUE : ne JAMAIS nuire a la lisibilite de l action. Un effet qui encombre, distrait, ou brouille la lecture geographique est a REJETER. On vise l elegance sobre documentaire, pas la surcharge. La voix off et l action cartographique priment toujours.
+- C est du 16:9 horizontal (ignore toute safe-zone mobile/verticale).
+- Pour CHAQUE proposition : precise "DEJA FAISABLE avec ce quon voit a lecran" ou "A CODER mais realiste en D3/SVG", + un timecode.
+
+
+TA MISSION = solutions CONCRETES en 5 volets :
+
+1. MUSCLER LE DEBUT (0:00-2:30). Comment faire monter l energie sans casser la sobriete documentaire ? Precise : l accroche (0:00-0:15), la fracture RSF/SAF (~1:26, "pas de snap" note), la transition 2019->2021 (~0:57, simple fondu). Effets D3/SVG realisables uniquement.
+
+2. DENSIFIER LES MOMENTS-CHIFFRES. "50 millions d habitants" (~0:29, desert vide), l empire de l or (~2:48), le bilan humain final (~10:00, stats textuelles). Comment incarner un chiffre spatialement en SVG (pictogrammes, remplissage progressif, comparaison d aire) sans nuire a la lecture ?
+
+3. RENDRE LA SALLE ONU/UA MOINS ABSTRAITE (~8:08-9:11). Cercles vides actuellement. Que rajouter en SVG (drapeaux membres, silhouettes stylisees, jeton Russie distinct pour le veto) tout en restant sobre ?
+
+4. LISIBILITE DES JETONS. Jetons-visages trop petits au debut (0:33-1:15), cercles de faction trop fins, croisement de flux confus (~3:48). Solutions concretes de taille/contraste/hierarchie.
+
+5. AUDIO (crucial, on n a rien pour l instant) :
+   a) MUSIQUE : recommande un style PRECIS (genre, instrumentation, tempo, evolution sur 10min) qui soutienne la tension geopolitique SANS JAMAIS enterrer la voix off (la voix prime absolument). Decris ce que tu generais (on utilise Minimax music instrumental).
+   b) SFX : quelle palette de sons PONCTUELS (pas de nappe continue) pour ce registre carte/geopolitique — apparition de jeton, trace de flux, frappe de drone, revelation de pays, impact ? Donne des timecodes precis ou un SFX renforcerait un moment.
+
+Format : par volet, propositions priorisees avec timecode + "DEJA FAISABLE" ou "A CODER". Concret et sobre.

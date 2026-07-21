@@ -1,0 +1,24 @@
+Tu es directeur artistique. Meme video mid-form Soudan (6 actes, carte animee, globe D3 pour actes 3-6, 10min26). Un DIAGNOSTIC a deja identifie que le LANGAGE DU GLOBE est sous-exploite (dependance aux fleches/arcs, camera trop fixe, pas d effet de matiere, contours de pays juste remplis sans emphase).
+
+CONTRAINTES NON-NEGOCIABLES DE NOTRE MOTEUR (lis AVANT de proposer) :
+- Notre moteur = D3.js + SVG 2D frame-driven, rendu deterministe. NOUS NE FAISONS PAS : After Effects, GEO layers, 3D volumetrique, simulation de particules physiques, moteurs de fluides. Ne propose AUCUN effet qui exigerait ces outils.
+- Tout effet doit etre realisable comme : un trace SVG (path/cercle/gradient), une opacite animee, une transformation geometrique (scale/rotate/translate), un mouvement de camera D3 (rotation de la projection orthographique, changement d echelle), un masque/clip, un degrade radial ou lineaire. Rien d autre.
+- Exemples de TRADUCTION acceptable : "brouillard de guerre" -> voile de gradient sombre semi-transparent en SVG ; "heatmap" -> halo radial pulse ; "relief 3D" -> ecarte ou simple texture de hachures SVG legere ; "particules" -> quelques cercles animes discrets, jamais une nuee.
+- REGLE ABSOLUE : ne JAMAIS nuire a la lisibilite de l action. Un effet qui encombre, distrait, ou brouille la lecture geographique est a REJETER. On vise l elegance sobre documentaire, pas la surcharge. La voix off et l action cartographique priment toujours.
+- C est du 16:9 horizontal (ignore toute safe-zone mobile/verticale).
+- Pour CHAQUE proposition : precise "DEJA FAISABLE avec ce quon voit a lecran" ou "A CODER mais realiste en D3/SVG", + un timecode.
+
+
+TA MISSION = solutions CONCRETES et REALISABLES pour ENRICHIR LE LANGAGE DU GLOBE, en 5 volets :
+
+1. EMPHASE SUR UN PAYS QU ON NOMME. Actuellement quand on nomme un pays (Turquie ~3:40, Russie ~4:43, Egypte ~4:10, Emirats), on le remplit de son drapeau. Comment marquer davantage ce moment SANS surcharge ? (ex : contour qui s illumine/pulse une fois, onde breve partant du pays, epaississement de frontiere). Donne l effet SVG precis.
+
+2. MOUVEMENTS DE CAMERA D3. Le globe est trop fixe. Ou et comment ajouter : rotation continue lente de la projection, dolly-in (montee d echelle) sur un point cle (Port-Soudan ~5:07, El-Fasher ~7:36), recentrage dynamique ? Precise l intention narrative de chaque mouvement (pas du mouvement gratuit).
+
+3. VARIER LE VOCABULAIRE DES FLUX. On n a que des arcs. Quelles AUTRES facons de montrer une ingerence/un lien, realisables en SVG 2D ? (ex : pointille qui coule, convoi de points, epaisseur variable selon l importance, couleur par nature du flux).
+
+4. MARQUER UN LIEU DE CRISE. El-Fasher (~7:36) est un simple point alors que c est une ville assiegee centrale. Comment la rendre dramatique en SVG (halo pulse, cercle de siege, anneaux concentriques) sans nuire a la lecture ?
+
+5. MATIERE & AMBIANCE SOBRE. Le globe est un peu nu. Quels effets d ambiance LEGERS et realisables en SVG (voile de gradient, terminateur jour/nuit deja present a renforcer, teinte d atmosphere) donneraient de la profondeur sans distraire ?
+
+Format : par volet, propositions priorisees, chacune avec timecode + "DEJA FAISABLE" ou "A CODER" + description de l effet SVG/D3 exact. Sois concret, refuse toi-meme ce qui violerait nos contraintes.

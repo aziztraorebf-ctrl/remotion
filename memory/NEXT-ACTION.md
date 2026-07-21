@@ -21,9 +21,33 @@
 
 ---
 
-## 🎬 SOUDAN MID-FORM — ACTE 4 REFAIT EN GLOBE 3 REGISTRES (v12), RESTE PHASE 2 → AUDIO → ASSEMBLAGE
+## 🎬 SOUDAN MID-FORM — PHASE 2 ACTE 4 FAITE + 1er ASSEMBLAGE 6 ACTES + PASSE LLM EN COURS (MàJ 2026-07-21 soir)
 
-> **ÉTAT (MàJ 2026-07-21) : 6/6 actes CODÉS.** Actes 1,2,3-globe,5-globe,6-globe FINAUX+promus. **Acte 4
+> **⭐ ÉTAT RÉEL FIN DE SESSION 2026-07-21 (soir) — remplace le bloc v12 ci-dessous (périmé) :**
+> - **Acte 4 PHASE 2 = FAITE** : 5 lots (flux qui coulent · navire vivant · jetons-portraits Hemedti/al-Burhan +
+>   glows RSF/SAF · climax B6 stagger+ondes · frappe Kosti + Nil transparent) + **4 corrections Aziz** :
+>   (1) navire PROPORTIONNEL au globe (ne grossit plus au dézoom, prop `camScale`) · (2) RESPIRATION NIL (Le Caire
+>   devient crème + TOUS les flux s'effacent ~2,5s pour voir le Nil seul, puis retour ; jetons+géoplaques restent) ·
+>   (3) Kosti civils NE REVIENNENT PLUS (figés + disparition totale) · (4) noms de pays B6 en GÉOPLAQUES sombres.
+>   Livrable = `out/episodes/soudan-midform/wip/acte4-v14-phase2-full.mp4` (130.8s). Commit `3000dbbe` sur
+>   `feat/soudan-acte4-globe-3registres`. **PAS encore promu FINAL** (attend validation Aziz + passe LLM).
+> - **AUDIT JETONS PERSONNAGES NOMMÉS = FAIT** : dérive ISOLÉE à l'Acte 3 (Hemedti Section1+Insert, al-Burhan Insert
+>   affichés en sprites génériques portrait-rsf/saf). CORRIGÉ → portrait-hemeti/portrait-burhan. Commit `8481e8b9`.
+>   Actes 1,2,5,6 = OK. ⚠️ Acte 3 corrigé PAS encore re-promu FINAL (renders faits : `/tmp/a3-section1-fix.mp4`
+>   + `/tmp/a3-insert-fix.mp4`, concat `wip/acte3-globe-jetons-fix-full.mp4` 125.9s).
+> - **1er ASSEMBLAGE 6 ACTES = FAIT** (narration seule, PAS de musique/SFX) : `wip/soudan-midform-ASSEMBLAGE-v1-6actes.mp4`
+>   (625.8s = 10min26) + `-compressed.mp4` (720p 30.6mo). Ordre A1(hook 57s)+A2+A3-globe+A4-v14+A5+A6. Raccords OK.
+>   ⚠️ **Acte 1 jamais promu PRET-PUBLICATION** (wip purgé) — récupéré depuis catbox `qc5dgq` = v5-FINAL validé.
+> - **PASSE LLM DOWNSTREAM = EN COURS** (doctrine 2 temps) : appel 1 DIAGNOSTIC (Gemini+Kimi sur la vidéo 720p
+>   complète) lancé — dynamisation/écart début↔fin + densif + **langage visuel du globe (au-delà des flèches :
+>   contours lumineux, halos, caméra, effets au-dessus du globe)** + lisibilité. Brief `/tmp/da-refs/soudan-diagnostic-brief.txt`.
+>   PUIS appel 2 PROSPECTIF (corrections + **reco musique qui n'enterre pas la voix + SFX**). Scripts : `review-video-llm-scripts.md`.
+> - **RESTE APRÈS LLM** : appliquer la passe → promouvoir Acte 3+4 FINAL → AUDIO GLOBAL (musique Minimax + SFX,
+>   guidé par le LLM) → ré-assemblage final avec audio → promotion mid-form 6/6 complet.
+
+> ⛔ **BLOC v12 CI-DESSOUS PÉRIMÉ** (garde la trace de la refonte structurelle Phase 1) :
+
+> **ÉTAT (Phase 1, 2026-07-21) : 6/6 actes CODÉS.** Actes 1,2,3-globe,5-globe,6-globe FINAUX+promus. **Acte 4
 > refait cette session en GLOBE D3 3 registres (v12 = base validée Aziz, PAS encore promu FINAL — reste la Phase 2).**
 >
 > **✅ FAIT cette session — Acte 4 « Même les voisins sont aspirés » refonte structurelle complète :**

@@ -1,5 +1,11 @@
 # STARTER — Soudan Acte 4, Phase 2 (densification + dynamisation LLM)
 
+> ⛔ **PÉRIMÉ (2026-07-21 soir) — PHASE 2 FAITE.** Les 5 lots + les 4 corrections Aziz (navire proportionnel,
+> respiration Nil, Kosti sans retour, géoplaques B6) sont appliqués et commités (`3000dbbe`, livrable
+> `out/episodes/soudan-midform/wip/acte4-v14-phase2-full.mp4`). Starter conservé comme trace historique des lots.
+> **PROCHAINE SESSION = `STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`** (les 6 lots de la passe LLM finale
+> sur le mid-form assemblé complet). Voir `episodes/soudan-midform/STATUS.md` § ÉTAT COURANT.
+
 > Session dédiée pour APPLIQUER les effets densification/dynamisation sur l'Acte 4 refait en 3 registres.
 > La Phase 1 (refonte structurelle) est TERMINÉE et validée Aziz. Cette session = Phase 2 = finition premium.
 

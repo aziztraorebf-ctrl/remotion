@@ -288,6 +288,44 @@ DENSIFICATION (`WARMAP-DENSIFICATION-CARTE` = quelle INFO ajouter) : ici on ne r
 VIVRE l'existant. Garde-fou : filtrer les retours contre les INTERDITS techniques (les LLM surestiment le
 faisable — ex. "vue 3/4 plongeante" impossible proprement en SVG, cf `key-learnings.md` § SVG génératif).
 
+## ⭐⭐ PASSE LLM DOWNSTREAM SUR VIDÉO COMPLÈTE ASSEMBLÉE — 1 diagnostic + 2 prospectifs SCINDÉS (validé 2026-07-21, Soudan mid-form 6 actes) — MÉTHODE GÉNÉRIQUE, PAS liée au Soudan
+
+> ⭐ **À RECOMMANDER SPONTANÉMENT dès qu'on arrive à la phase "passe LLM finale sur une vidéo LONGUE assemblée"**
+> (mid-form / long-form complet, pas une scène isolée). Aziz a explicitement demandé que ce pattern lui soit
+> re-proposé au bon moment (risque de l'oublier au fil des sessions). Générique : adapter les axes au sujet.
+
+**Quand** : la vidéo complète est assemblée (narration au moins), on veut une dernière passe d'amélioration avant
+promotion finale + avant de poser l'audio. Diagnostic Aziz typique : "commencé trop conservateur, rattraper l'écart
+début↔fin". Envoyer la vidéo en **720p compressée** (~30 Mo pour 10min : `-vf scale=1280:720 -crf 28`) — passe via
+Gemini Files API ET Kimi base64 (300 Mo ne passerait pas). Qualité max / taille min.
+
+**Structure en 3 temps (pas 2), chacun = Gemini 3.1 Pro + Kimi en parallèle (`gemini-video-review-custom.py` +
+`kimi-video-compare.py` même vidéo aux 2 slots), cf `tools/review-video-llm-scripts.md`** :
+1. **APPEL DIAGNOSTIC** (1 brief) : 4 volets — dynamisation/écart début↔fin · densification · **langage visuel
+   propre au moteur** (ex globe : "on abuse des flèches, quelles techniques n'utilise-t-on PAS ? contours
+   lumineux, caméra, matière") · lisibilité/jetons. Timecodes exigés. On LIT la synthèse croisée AVANT de continuer.
+2. **PROSPECTIF SCINDÉ EN 2 APPELS THÉMATIQUES** (au lieu d'UN seul prospectif fourre-tout — la scission évite la
+   dilution et laisse chaque modèle approfondir) :
+   - **Prospectif A = créatif/registre** (ex : langage du globe & caméra — emphase pays nommé, mouvements caméra,
+     vocabulaire des flux, lieu de crise, matière/ambiance).
+   - **Prospectif B = exécution + AUDIO** (rythme/muscler le début, densification chiffres, lisibilité, PUIS
+     **musique** — style qui n'enterre pas la voix, prompt Minimax — et **SFX** — palette + timecodes).
+   → 4 appels prospectifs au total (A+B × Gemini+Kimi), 6 appels sur la passe entière.
+
+**⭐ CADRAGE CONTRAINTES OBLIGATOIRE dans CHAQUE brief prospectif** (sinon les LLM proposent du VFX irréalisable) :
+bloc explicite en tête — "moteur = D3.js/SVG 2D frame-driven ; PAS d'After Effects / GEO layers / 3D volumétrique /
+particules physiques ; tout effet = tracé SVG, gradient, opacité animée, transform géométrique, ou mouvement caméra
+D3 ; LA LISIBILITÉ DE L'ACTION PRIME — un effet qui encombre = rejeté ; pour chaque proposition dire DÉJÀ FAISABLE
+vs À CODER + timecode". Ça force les modèles à TRADUIRE ("brouillard de guerre" → voile de gradient SVG ; "heatmap"
+→ halo radial pulsé ; "relief 3D" → écarté/hachures). Aziz insiste : on n'est pas dans AE, la lisibilité prime.
+
+**Preuve de valeur (2026-07-21)** : convergence Gemini/Kimi ~95% sur les 2 prospectifs (les 2 modèles, sans se voir,
+proposent les MÊMES effets avec les MÊMES implémentations SVG → signal très fiable). A produit un plan de 6 lots
+exécutables (souffle de frontière, anneaux de siège, inner glow, convoi de points, caméra D3, muscler le début,
+densif chiffres, salle ONU incarnée, audio complet). Starter d'exécution : `starters/STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`.
+Rapports bruts archivés : `episodes/soudan-midform/da-briefs-passe-llm-2026-07-21/` (01-06 + briefs). RÈGLE D'OR
+inchangée : LLM=SIGNAL jamais juge, vérifier chaque effet contre le code réel (écarter le déjà-fait), appliquer, STOP.
+
 ---
 
 ## Preuve de valeur (1er usage 2026-06-07, War-Map Sahel Acte 1)

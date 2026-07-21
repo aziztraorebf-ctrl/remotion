@@ -1,6 +1,31 @@
 # Soudan Mid-form — STATUS
 
-## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — REFONTE GLOBE D3 3 REGISTRES, v12 BASE VALIDÉE (2026-07-21)
+## ⭐ ÉTAT COURANT (2026-07-21 soir) — PHASE 2 ACTE 4 FAITE + 1er ASSEMBLAGE 6 ACTES + PASSE LLM → 6 LOTS
+
+> **Remplace la section « v12 base validée » ci-dessous (désormais Phase 1, périmée pour l'état courant).**
+>
+> - **Acte 4 PHASE 2 = FAITE** : 5 lots (flux qui coulent · navire vivant · jetons-portraits Hemedti/al-Burhan +
+>   glows RSF/SAF · climax B6 stagger+ondes · frappe Kosti + Nil) + **4 corrections Aziz** : (1) navire
+>   PROPORTIONNEL au globe (ne grossit plus au dézoom) · (2) RESPIRATION NIL (Le Caire crème + flux effacés ~2,5s
+>   → Nil seul → retour) · (3) Kosti civils NE REVIENNENT PLUS (figés + disparition) · (4) noms de pays B6 en
+>   GÉOPLAQUES. **Livrable** : `out/episodes/soudan-midform/wip/acte4-v14-phase2-full.mp4` (130.8s). **Commit
+>   `3000dbbe`** sur `feat/soudan-acte4-globe-3registres`. ⚠️ PAS promu FINAL (attend l'application des 6 lots).
+> - **AUDIT JETONS PERSONNAGES NOMMÉS = FAIT** : dérive ISOLÉE à l'Acte 3 (Hemedti Section1+Insert, al-Burhan
+>   Insert = sprites génériques). CORRIGÉ → portrait-hemeti/portrait-burhan. **Commit `8481e8b9`**. Actes 1,2,5,6 OK.
+>   Renders faits (`/tmp/a3-*-fix.mp4`, concat `wip/acte3-globe-jetons-fix-full.mp4`). ⚠️ PAS re-promu FINAL.
+> - **1er ASSEMBLAGE 6 ACTES = FAIT** (narration seule) : `wip/soudan-midform-ASSEMBLAGE-v1-6actes.mp4` (625.8s =
+>   10min26) + `-compressed.mp4` (720p 30.6mo). Ordre A1(hook 57s, récup catbox `qc5dgq` — ⚠️ jamais promu
+>   PRET-PUBLICATION)+A2+A3-globe+A4-v14+A5+A6. Raccords vérifiés OK.
+> - **PASSE LLM DOWNSTREAM = FAITE** (nouveau pattern générique gravé dans `doctrines/DA-BRIEF-GATE.md`) :
+>   1 diagnostic + 2 prospectifs scindés (globe/caméra + exécution/audio) × Gemini+Kimi = 6 appels, cadrés par
+>   nos contraintes (D3/SVG 2D, lisibilité prime). Convergence ~95%. Rapports : `da-briefs-passe-llm-2026-07-21/`.
+> - **⏭️ PROCHAINE SESSION = LES 6 LOTS** → `starters/STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`
+>   (LOT1 langage globe · LOT2 caméra D3 · LOT3 muscler début · LOT4 lisibilité jetons · LOT5 densif chiffres+ONU
+>   · LOT6 audio musique+SFX). PUIS : promouvoir Acte 1/3/4 FINAL · audio global · ré-assemblage final · mid-form 6/6.
+
+---
+
+## 🗄️ ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — REFONTE GLOBE D3 3 REGISTRES, v12 BASE VALIDÉE (2026-07-21) — PHASE 1 (trace)
 
 > **Refonte structurelle COMPLÈTE cette session. v12 = base validée Aziz, PAS ENCORE promu FINAL** (reste la Phase 2
 > densif/dynamisation → session dédiée, starter `STARTER-PROMPT-soudan-acte4-phase2-densif-dynamisation.md`).
