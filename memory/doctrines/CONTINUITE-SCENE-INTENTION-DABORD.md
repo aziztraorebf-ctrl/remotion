@@ -51,6 +51,15 @@ continué la scène en rajoutant des éléments. »*
   du monde précédent (nouvelles constantes proches) casse la continuité perçue aussi sûrement qu'un monde
   différent. Détail + cas vécu (rejet Aziz sur `PortDechargement16x9.tsx` puis fix) :
   [[SVG-MIDFORM-FORMAT]] § 4ter CONTINUITÉ DE SCÈNE EN SÉQUENCE.
+- ⭐ **Cas rupture de REGISTRE, info juste ≠ forme juste (Acte 4 Soudan, 2026-07-21)** : le proto D3-force
+  (`ForceNetworkProto16x9`, "boules qui se connectent" pour représenter un réseau d'acteurs) a été essayé
+  pour un beat de l'Acte 4 puis REJETÉ par Aziz — non pas parce que l'info était fausse, mais parce que le
+  bloc environnant était entièrement en globe/cartes (registre géographique continu) et le schéma abstrait
+  rompait ce monde. **Le coût de la rupture de registre dépasse le gain informationnel**, même quand le
+  contenu du schéma est correct. Le beat a été refait en globe (même monde que le reste du bloc). Généralise
+  le principe "changer de monde" ci-dessus : un CHANGEMENT DE GRAMMAIRE VISUELLE (schéma abstrait vs carte
+  géo, iconographie vs photo, etc.) est une rupture de monde au même titre qu'un changement de template —
+  à évaluer d'abord contre la continuité du bloc, pas seulement contre la justesse de l'info à transmettre.
 
 ### 3. ÉPURE = ANTI-REDONDANCE (l'écran ne répète pas la voix) — ⭐ LE FIL ROUGE D'AZIZ
 **Règle gravée (répétée par Aziz depuis le début du sujet) : à l'écran, GARDER L'ESSENTIEL, alléger

@@ -1,0 +1,16 @@
+CONTEXTE. Ceci est l'Acte 4 d'un mini-documentaire géopolitique (16:9, chaîne "Kora et Cartes") sur la guerre au Soudan, intitulé « Même les voisins sont aspirés ». Il montre comment des puissances étrangères (Russie, Égypte, puis Émirats/Turquie) soutiennent les camps de la guerre soudanaise (SAF = armée régulière, RSF = paramilitaires). Durée ~131s.
+
+STRUCTURE (3 registres, NE PAS proposer d'en changer) :
+- 0-81s : CARTE GLOBE CONTINUE (D3, style parchemin kaki + océan bleu). La carte s'ACCUMULE et ne se vide JAMAIS : Russie (drapeau + flux vers RSF puis SAF, bascule 2024) → Port-Soudan (base navale russe, un navire) → Égypte (drapeau + soutien au SAF) → le Nil qui se surligne (motif géographique). Tout persiste jusqu'au bout.
+- 81-107s : INSERT SVG plein écran (vue d'état-major d'une station-service à Kosti frappée par un drone, coût civil). Registre volontairement différent (gros plan humain).
+- 107-131s : GLOBE 3D « synthèse » : 4 arcs (Russie/Émirats/Turquie/Égypte) convergent vers Khartoum.
+
+CE QU'ON TE DEMANDE — PASSE DENSIFICATION / LISIBILITÉ. Cette vidéo doit être RICHE et LISIBLE (registre premium type Vox/télé, pas amateur). Analyse la vidéo COMPLÈTE (mouvement inclus) et réponds en 3 volets, en étant CONCRET et priorisé :
+
+VOLET A — DENSITÉ : la carte est-elle assez habitée / riche à chaque moment, ou y a-t-il des temps morts visuels (zones vides, moments où l'écran ne raconte pas assez) ? Où précisément (timecode) et que rajouter avec notre arsenal (jetons, glows de territoire contrôlé, labels, drapeaux, effets d'encre) ?
+
+VOLET B — LISIBILITÉ : les éléments sont-ils lisibles et hiérarchisés ? Points d'attention : les labels/géoplaques (fond sombre sous le texte), la taille des objets (le navire de Port-Soudan est-il assez visible ?), la clarté des flux (qui va vers qui), les couleurs (Russie=rouge, SAF=bleu, RSF=rouge sombre, Égypte=vert). Signale tout ce qui est trop petit, illisible, ou ambigu, avec timecode.
+
+VOLET C — CE QUI EST SOUS-EXPLOITÉ : quelle capacité de notre arsenal (carte globe D3, drapeaux clippés dans les pays, glows de contrôle territorial, jetons-portraits de dirigeants, effets d'encre, ondes) pourrait rendre un moment plus fort et qu'on n'utilise pas encore ici ?
+
+Pour chaque point : timecode + "déjà faisable simplement" vs "à coder mais faisable". Priorise (les 3-4 points qui changent le plus). Sois un directeur artistique exigeant, pas complaisant.

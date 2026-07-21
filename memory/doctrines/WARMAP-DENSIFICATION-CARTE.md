@@ -86,6 +86,36 @@ ce point précis (formulé quasi identiquement par les deux, indépendamment).
 - **Cluster tokens** (K, à coder) : au lieu de multiplier les jetons dans une zone saturée, les fusionner
   en un badge numéroté qui se déploie en éventail au moment suivant.
 
+## VOLET D — Persistance inter-beats (globe D3, prouvé Soudan Actes 4/5/6, 2026-07-21)
+
+> Extension du VOLET B (GARDER vs EFFACER) au cas d'un **bloc multi-beats sur UNE seule caméra continue**
+> (globe D3, pas War-Map jetons). Le principe GARDER/EFFACER s'applique, mais le mécanisme diffère :
+> pas de suppression/ghosting par élément, c'est la **caméra qui ne coupe jamais**.
+
+**Le pattern** (Actes 3/5/6 Soudan, généralisé à l'Acte 4 en 3 registres B1-B4 continu + B5 insert + B6 synthèse) :
+- **1 seule caméra/Map pour tout le bloc** — jamais de cut sec ni de carte vidée entre deux beats qui
+  appartiennent au même mouvement narratif. Le globe reste monté du beat N au beat N+1.
+- **Éléments gouvernés par jalon `frame >= seuilBeat`** : chaque objet (arc, jeton, plaque, flux) apparaît
+  à son frame de déclenchement et **PERSISTE** ensuite — jamais retiré au changement de beat suivant, sauf
+  s'il s'agit d'un VERBE ponctuel (règle VOLET B : NOM persiste, VERBE s'efface).
+  Concrètement en code : condition d'affichage `frame >= JALON_BEatX` (pas `beat === X` isolé), pour que
+  l'élément du beat 1 reste visible pendant les beats 2, 3, 4 du même bloc.
+- **Conséquence directrice** : au moment d'écrire un nouveau beat dans un bloc continu, se demander
+  "qu'est-ce qui est DÉJÀ à l'écran depuis le beat précédent et doit rester ?" avant d'ajouter du nouveau —
+  jamais repartir d'un état vide comme si c'était un nouveau plan.
+- **Limite du bloc continu** : un insert hors-registre (ex. Kosti B5 en carte plate) ou une synthèse en
+  registre différent (globe 2.0 arcs occlusion B6) CASSENT intentionnellement la continuité caméra —
+  c'est un choix de montage (rupture volontaire entre BLOCS), pas une négation du principe à l'intérieur d'un bloc.
+
+**Pourquoi une extension et pas une nouvelle doctrine** : le VOLET B dit déjà "NOM persiste, VERBE s'efface"
+pour les éléments War-Map/jetons. Le VOLET D transpose cette même logique au registre globe D3 avec un
+mécanisme technique précis (jalon de frame cumulatif, pas de reset de state entre Sequence) — c'est le
+même principe de fond, un médium différent. Voir aussi [[CONTINUITE-SCENE-INTENTION-DABORD]] §2 (continuité
+> nouveauté), dont ceci est la confirmation pratique pour le pilier globe D3 (l'hypothèse "Mapbox/War-Map
+ont déjà un état continu" y était notée 🔶 non confirmée — le globe D3 la confirme désormais ✅).
+
+---
+
 ## ⚠️ Divergence notable entre les 2 modèles (à trancher au cas par cas, pas une règle figée)
 
 Sur le dézoom caméra pour montrer un acteur lointain (ex. Abou Dabi) : Gemini propose de le retirer

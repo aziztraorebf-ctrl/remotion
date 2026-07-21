@@ -14,7 +14,9 @@
 | `gemini-video-review-custom.py <video> <brief.txt> <out.md>` | Gemini 3.1 Pro (Files API) | 1 vidéo full (pas de downscale) | Review 1 vidéo, **brief LIBRE** (fichier) | ✅ OUI (3e arg) | ✅ corrigé 2026-07-19 |
 | `gemini-video-da-brief.py <video> [--out]` | Gemini 3.1 Pro | 1 vidéo full | DA-brief à brief HARDCODÉ (câblé Sénégal) — non générique | ❌ non | ✅ corrigé 2026-07-19 |
 | `da-compare.py --ref <A> --new <B> ...` | Gemini 3.1 Pro | 2 vidéos | COMPARATIF (temps 1 downstream) : réf-qui-marche vs nouveau | template | ✅ avait déjà |
-| `kimi-video-compare.py --ref <A> --new <B> --label L [--question Q]` | Kimi K2.5 (Moonshot NATIF, base64) | 2 vidéos 720p | Équivalent Kimi du comparatif ; `--question` = brief libre | ✅ (`--question`) | ✅ natif (l.18) |
+| `kimi-video-compare.py --ref <A> --new <B> --label L [--question Q] [--max-tokens N]` | Kimi K2.5 (Moonshot NATIF, base64) | 2 vidéos 720p | Équivalent Kimi du comparatif ; `--question` = brief libre | ✅ (`--question`) | ✅ natif (l.18) |
+
+⚠️ **PAS de `--out`** : `kimi-video-compare.py` N'ACCEPTE PAS `--out` (erreur "unrecognized arguments" qui tue la commande AVANT tout appel API). Il écrit TOUJOURS dans `<OUT_DIR>/kimi-compare-<label>.md` (auto). Args valides : `--ref --new --label --question --max-tokens`. Erreur commise 2026-07-21.
 
 ## Gotchas NON-NÉGOCIABLES (sinon blocage/erreur)
 

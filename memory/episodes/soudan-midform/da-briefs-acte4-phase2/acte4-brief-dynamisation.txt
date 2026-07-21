@@ -1,0 +1,20 @@
+CONTEXTE. Acte 4 d'un mini-documentaire géopolitique (16:9, "Kora et Cartes") sur la guerre au Soudan : « Même les voisins sont aspirés ». Montre les puissances étrangères (Russie, Égypte, puis Émirats/Turquie) qui soutiennent les camps de la guerre (SAF = armée, RSF = paramilitaires). ~131s.
+
+STRUCTURE (NE PAS proposer d'en changer) :
+- 0-81s : carte globe D3 CONTINUE qui accumule (Russie+flux → Port-Soudan+navire → Égypte → Nil).
+- 81-107s : insert SVG plein écran (station-service Kosti frappée par drone).
+- 107-131s : globe 3D synthèse, 4 arcs convergent vers Khartoum.
+
+CE QU'ON TE DEMANDE — PASSE DYNAMISATION (MOUVEMENT / RYTHME / VIE). C'est la passe la PLUS IMPORTANTE. La scène ne doit JAMAIS sembler figée ou inerte. Une bonne carte animée a du mouvement PERMANENT et INTENTIONNEL (caméra qui vole, éléments qui pulsent/apparaissent, flux qui coulent) — mais chaque mouvement doit avoir un SENS narratif (pas de glissement gratuit).
+
+Analyse la vidéo COMPLÈTE (le MOUVEMENT, pas des frames figées) et réponds :
+
+1. MOMENTS INERTES / FIGÉS : où l'écran manque de vie, semble statique, ou traîne (un plan qui tient trop longtemps sans que rien évolue) ? Timecode précis. Que faire bouger/pulser/évoluer ?
+
+2. RYTHME / CAMÉRA : les mouvements de caméra (zoom, déplacement d'un point à l'autre) sont-ils fluides et motivés ? Y a-t-il des cuts trop secs entre les moments ? Des transitions à adoucir ? Le rythme suit-il la voix ?
+
+3. VIE DES ÉLÉMENTS : les éléments posés (jetons, drapeaux, navire, flux) restent-ils "vivants" une fois apparus (pulsation douce, flux qui coule, respiration) ou deviennent-ils des images mortes ? Le navire de Port-Soudan a-t-il un mouvement crédible (tangage) ? Les flux "coulent"-ils ?
+
+4. MOMENTS FORTS À AMPLIFIER : quel(s) moment(s)-clé(s) mériterait(ent) un effet de dynamisme plus marqué (impact, onde, flash, accélération) pour souligner un point narratif fort (la bascule russe 2024, la frappe de Kosti, la convergence finale des 4 puissances) ?
+
+Pour chaque point : timecode + effet concret RÉALISABLE en SVG/D3 frame-driven (PAS de vraie 3D, PAS de particules lourdes — on est en composition déterministe). Priorise les 3-4 changements qui rendraient la scène la plus vivante. Sois exigeant : c'est cette passe qui fait la différence entre "correct" et "premium".

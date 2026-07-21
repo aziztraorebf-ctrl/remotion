@@ -1,5 +1,34 @@
 # Soudan Mid-form — STATUS
 
+## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — REFONTE GLOBE D3 3 REGISTRES, v12 BASE VALIDÉE (2026-07-21)
+
+> **Refonte structurelle COMPLÈTE cette session. v12 = base validée Aziz, PAS ENCORE promu FINAL** (reste la Phase 2
+> densif/dynamisation → session dédiée, starter `STARTER-PROMPT-soudan-acte4-phase2-densif-dynamisation.md`).
+> Mid-form = 6/6 actes CODÉS (5 promus FINAUX + Acte 4 en finition).
+>
+> **Passé de Mapbox plat (v8 périmé) à GLOBE D3**, cohérence avec Actes 3/5/6. **Architecture 3 registres :**
+> - **Bloc globe CONTINU B1→B4** : `src/projects/_rnd/d3-16x9/SoudanActe4B1toB4Globe.tsx` (compo
+>   `D3-SoudanActe4-B1B4-Globe`, ~81s). UNE caméra continue qui ACCUMULE (Russie+drapeau+flux Moscou→RSF/SAF bascule
+>   2024 → Port-Soudan+navire encre `NavireGuerreEncre` → Égypte+drapeau+arc Le Caire→SAF → Nil qui se surligne).
+>   La carte ne se vide JAMAIS entre beats (persistance inter-beats totale). Labels en géoplaques (fond sombre).
+> - **B5 Kosti** : insert SVG plein écran `Kosti-Beat5-Standalone` (Root.tsx) — station-service K3, frappe drone. INCHANGÉ.
+> - **B6 synthèse** : `SoudanActe4B6Globe.tsx` (compo `D3-SoudanActe4-B6-Globe`, ~24s). Globe 2.0, 4 arcs
+>   Russie/EAU/Turquie/Égypte convergent vers Khartoum (occlusion 3D + drapeaux clippés).
+> - Assemblage = CONCATÉNATION (bloc + Kosti + B6) → `out/episodes/soudan-midform/wip/acte4-v12-continu-full.mp4` (130.8s).
+> **Branche** : `feat/soudan-acte4-globe-3registres` (PAS mergée master).
+>
+> **Retours Aziz appliqués (v8→v12)** : persistance inter-beats · ZÉRO sous-titre (bas = sources) · géoplaques
+> lisibles vs texte blanc · zoom caméra Port-Soudan (navire visible) · **B3 refait sur globe** (D3-force ESSAYÉ puis
+> REJETÉ = rupture de registre) · cohérence couleur par ACTEUR (Russie=rouge #c74d4d partout) · palette THEMES.mixte
+> (source unique). Plaques-texte factuelles retirées (dans la voix).
+>
+> **Production** : B6 codé par Claude (modèle) ; B1-B4 délégués à agents frais (worktrees), mergés ; bloc continu
+> fusionné par agent. Passe LLM 2 temps (Gemini+Kimi × densif+dynam) faite → 4 rapports dans
+> `da-briefs-acte4-phase2/`, forte convergence, application = Phase 2 session dédiée (5 lots validés).
+>
+> ⛔ **PÉRIMÉ** : toute l'architecture Mapbox de l'Acte 4 (v7/v8, `SoudanActe4.tsx`, sections carte Mapbox). Trace
+> uniquement. L'ancienne section STATUS « BEAT 2 REFAIT EN INSERT SVG » (plus bas) = périmée sauf l'insert Kosti.
+
 ## ✅✅ ACTE 3 « SUIVRE L'OR » GLOBE 2-REGISTRES — PROMU FINAL (2026-07-19, session 15)
 
 > **TERMINÉ + PROMU.** Refonte complète validée Aziz : passage de 3 registres visuels (SVG + Mapbox 2D +
@@ -343,7 +372,10 @@ choc, convoi de drones échelonnés, lignes épaissies.
 > 3 problèmes (zoom intro, zoom caméra suiveuse, vrai drapeau clippé), coder, RECONFRONTER au brief
 > original + Silk Road avant de présenter comme résolu** (pas juste comparer à la version précédente).
 
-## 🎬 ACTE 4 « MÊME LES VOISINS SONT ASPIRÉS » — BEAT 2 REFAIT EN INSERT SVG, BEAT 4 RESTE (session 9, 2026-07-12)
+## 🗄️ ACTE 4 (Mapbox, PÉRIMÉ 2026-07-21) — BEAT 2 INSERT SVG, BEAT 4 (session 9, 2026-07-12) — TRACE
+
+> ⛔ **PÉRIMÉ (2026-07-21)** : l'Acte 4 est REFAIT en globe D3 3 registres (voir section tête). L'architecture
+> Mapbox ci-dessous est ABANDONNÉE. Seul l'insert Kosti K3 (Beat 5) reste valide et réutilisé. Trace historique.
 
 > ⚠️ **CORRECTION DÉSYNCHRO MÉMOIRE (2026-07-11)** : la section ci-dessous affirmait à tort "breakdown +
 > code restent à faire après l'audio (pas commencés)" — FAUX, détecté par agent `creative-director` lors

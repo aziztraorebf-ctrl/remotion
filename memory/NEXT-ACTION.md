@@ -21,41 +21,38 @@
 
 ---
 
-## 🎬 SOUDAN MID-FORM — PLAN PROCHAINE SESSION (acté Aziz 2026-07-20) : FINIR L'ACTE 4 → AUDIO → ASSEMBLAGE
+## 🎬 SOUDAN MID-FORM — ACTE 4 REFAIT EN GLOBE 3 REGISTRES (v12), RESTE PHASE 2 → AUDIO → ASSEMBLAGE
 
-> **ÉTAT : 5/6 actes FINAUX** (Actes 1,2,3-globe,5-globe,6-globe tous PROMUS). Reste UNIQUEMENT l'**ACTE 4**
-> (« Même les voisins sont aspirés » — Russie/Égypte). Le globe D3 a débloqué toute la vidéo (grosse évolution).
+> **ÉTAT (MàJ 2026-07-21) : 6/6 actes CODÉS.** Actes 1,2,3-globe,5-globe,6-globe FINAUX+promus. **Acte 4
+> refait cette session en GLOBE D3 3 registres (v12 = base validée Aziz, PAS encore promu FINAL — reste la Phase 2).**
 >
-> **ORDRE DE LA PROCHAINE SESSION (plan Aziz) :**
-> 1. **RE-RENDER Acte 4 FINAL** : l'Acte 4 était en pause (voir sa section plus bas). Le v7 est PÉRIMÉ (Beat 5
->    Kosti refait en insert SVG jamais re-rendu complet, + branche `feat/kosti-refonte-k3` non mergée). D'abord
->    reprendre l'état réel (croiser code+render), re-render complet.
-> 2. **APPLIQUER nos doctrines/outils récents à l'Acte 4** — maintenant qu'on a : GPT-5.6 Sol/Gemini/**Kimi K3
->    débloqué**/**Fable 5 (excellent SVG)** en mix-and-match, la cartographie globe D3, et surtout la **passe LLM
->    en 2 temps** (densification MAIS SURTOUT **dynamisme** — le 2e appel qui a transformé l'Acte 6). Intention→
->    forme→template. Conclure l'Acte 4 à ce niveau de finition.
-> 3. **AUDIO GLOBAL de la vidéo** (avant assemblage) : choisir une **MUSIQUE** (procédé habituel — Minimax
->    `fal-ai/minimax-music/v2.6` instrumental, réutiliser piste AES/Soudan existante ou nouvelle) + **SFX**
->    (créer quelques nouveaux + réutiliser les existants de la lib). Sur tout le mid-form, pas acte par acte.
-> 4. **ASSEMBLAGE FINAL** des 6 actes (concaténation, comme Acte 3 : jamais compo mixte). Si le contexte de la
->    session le permet ; sinon session dédiée séparée. AVANT de figer : **visionnage d'enchaînement**
->    (transitions inter-actes, surtout le raccord globe Acte 5→6 déjà soigné) une fois bout à bout.
-> 5. **⚠️ AUDIT JETONS PERSONNAGES NOMMÉS (retour Aziz 2026-07-20, IMPORTANT)** — scène par scène, sur TOUT le
->    mid-form : vérifier que les PERSONNES NOMMÉES (Hemedti, al-Burhan, Haftar…) gardent leur VRAI VISAGE
->    partout (`portrait-hemeti/burhan/haftar`), PAS un jeton générique (`portrait-rsf/saf`). Suspicion Aziz :
->    les vrais visages sont bien utilisés Actes 1-2 (soignés) mais dérivent en génériques dès l'Acte 3+
->    (ex. Hemedti redevient un soldat RSF générique). Règle : une personne nommée = même vrai visage partout ;
->    un soldat = générique. À corriger acte par acte avant l'assemblage.
-> 6. **⚠️ PASSE LLM DOWNSTREAM sur la vidéo ASSEMBLÉE complète (retour Aziz)** — une fois les 6 actes bout à
->    bout, un DERNIER brief downstream (Gemini+Kimi) sur la vidéo entière : lisibilité, ATTAQUE, DYNAMISME,
->    JETONS. Diagnostic de fond Aziz : le mid-form a commencé TROP CONSERVATEUR — les premiers actes n'ont pas
->    bénéficié des doctrines acquises depuis (nom→persiste vs verbe→efface / « ce qui reste, ce qui s'en va »,
->    densification, dynamisme, passe LLM 2 temps). Cette passe finale rattrape l'écart de niveau début↔fin.
->    C'est la vraie touche finale AVANT de promouvoir le mid-form complet.
+> **✅ FAIT cette session — Acte 4 « Même les voisins sont aspirés » refonte structurelle complète :**
+> - Passé de Mapbox plat (v8 périmé) à **GLOBE D3**, cohérent avec les Actes 3/5/6. Architecture 3 registres :
+>   **bloc globe CONTINU B1→B4** (`SoudanActe4B1toB4Globe.tsx`, compo `D3-SoudanActe4-B1B4-Globe`) — UNE caméra
+>   continue qui accumule Russie+flux → Port-Soudan+navire → Égypte → Nil, la carte ne se vide JAMAIS +
+>   **insert Kosti** (`Kosti-Beat5-Standalone`, inchangé) + **B6 globe 2.0** (`SoudanActe4B6Globe.tsx`, arcs convergents).
+> - Assemblage = concaténation → `out/episodes/soudan-midform/wip/acte4-v12-continu-full.mp4` (130.8s).
+> - Retours Aziz appliqués : persistance inter-beats totale · zéro sous-titre (bas = sources) · géoplaques lisibles ·
+>   zoom Port-Soudan (navire) · B3 refait sur globe (D3-force rejeté = rupture registre) · cohérence couleur par acteur.
+> - **Branche `feat/soudan-acte4-globe-3registres`** (PAS encore mergée master). ⛔ La note « v7 périmé / branche
+>   kosti-refonte-k3 non mergée » était fausse (kosti-k3 EST mergée depuis longtemps) — corrigée.
 >
-> ✅ **ACTE 6 FAIT** (voir `episodes/soudan-midform/STATUS.md` § tête) : globe D3 + inserts LLM mix-and-match +
-> passe dynamisme, promu `out/PRET-PUBLICATION/soudan-midform/soudan-acte6-verrou-institutionnel-FINAL.mp4`.
-> Branche `feat/soudan-acte6-globe` mergée dans master. Code `SoudanActe6Globe.tsx` (compo `D3-SoudanActe6-Globe-Nu`).
+> **⏭️ PROCHAINE SESSION — ACTE 4 PHASE 2 (densif + dynamisation) :** starter prêt →
+> `memory/starters/STARTER-PROMPT-soudan-acte4-phase2-densif-dynamisation.md`. Les 4 rapports LLM (Gemini+Kimi ×
+> densif+dynam, forte convergence) sont dans `episodes/soudan-midform/da-briefs-acte4-phase2/`. 5 lots validés Aziz :
+> (1) flux qui coulent (stroke-dashoffset) · (2) navire Port-Soudan vivant · (3) glows contrôle RSF/SAF +
+> **jetons-portraits Hemedti/Burhan/Poutine** (couvre partiellement l'audit jetons ci-dessous, pour l'Acte 4) ·
+> (4) climax B6 (stagger arcs + onde Khartoum) + frappe Kosti plus violente · (5) B4 drapeau égyptien transparent
+> pour voir le Nil. Écartés : logo ONU glitché, minimap PiP, camera-shake, changer couleur des lignes.
+>
+> **PUIS (plan global mid-form, après Acte 4 FINAL) :**
+> - **AUDIO GLOBAL** (Minimax `fal-ai/minimax-music/v2.6` instrumental + SFX) sur tout le mid-form.
+> - **ASSEMBLAGE FINAL** 6 actes (concaténation, jamais compo mixte) + visionnage d'enchaînement.
+> - **⚠️ AUDIT JETONS PERSONNAGES NOMMÉS** (retour Aziz) — sur TOUS les actes : personnes nommées (Hemedti,
+>   al-Burhan, Haftar) = VRAI VISAGE partout (`portrait-hemeti/burhan/haftar`), pas jeton générique. Suspicion :
+>   OK Actes 1-2, dérive dès Acte 3+. Le LOT 3 Phase 2 le traite pour l'Acte 4 ; reste Actes 1-2-3-5-6.
+> - **⚠️ PASSE LLM DOWNSTREAM sur la vidéo ASSEMBLÉE** — dernier brief Gemini+Kimi (lisibilité/attaque/dynamisme/
+>   jetons). Diagnostic Aziz : mid-form commencé TROP CONSERVATEUR, rattraper l'écart début↔fin avant promotion.
 
 ---
 
@@ -169,9 +166,16 @@
 > verrou institutionnel détaillé + conclusion (**script+audio verrouillés + storyboard actés 2026-07-19, CODE à faire**). Pont Acte 4 déjà verrouillé valable
 > pour les deux.
 
-## ⭐⭐ SOUDAN MID-FORM — ACTE 4 : REFONTE BEAT 5 KOSTI (INSERT SVG) INTÉGRÉE 2026-07-17 + 4 LOTS s10
+## 🗄️ SOUDAN MID-FORM — ACTE 4 (Mapbox v7, PÉRIMÉ 2026-07-21) : REFONTE BEAT 5 KOSTI + 4 LOTS s10 — TRACE HISTORIQUE
 
-> ⚠️⚠️ **CHANGEMENT 2026-07-17 (session en cours) — À SAVOIR EN REPRENANT L'ACTE 4** : le **Beat 5 (Kosti)
+> ⛔ **PÉRIMÉ (2026-07-21)** : l'Acte 4 a été INTÉGRALEMENT REFAIT en GLOBE D3 3 registres (voir section tête de
+> fichier + `episodes/soudan-midform/STATUS.md`). L'architecture Mapbox décrite ci-dessous (carte continue Mapbox +
+> lots zoom/caméra) est ABANDONNÉE. **NE PAS repartir dessus.** Seul l'insert Kosti (Beat 5, `Kosti-Beat5-Standalone`)
+> reste VALIDE et réutilisé tel quel dans le globe. Section conservée UNIQUEMENT pour : les leçons méthodologiques
+> (sous-dimensionnement récurrent `WARMAP-GRAMMAIRE.md`, doctrine Tremblay règle 10 `DOCTRINE-SCRIPT-UNIFIEE.md`) et
+> l'historique de production Kosti K3 (toujours pertinent, l'insert n'a pas changé).
+>
+> ⚠️⚠️ **CHANGEMENT 2026-07-17 (trace) — le Beat 5 (Kosti)
 > a été REFONDU** — la carte Mapbox top-down (drone illisible sur fond crème) est REMPLACÉE par un **INSERT
 > SVG plein écran** (`src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx`), monté dans `Section4` de
 > `SoudanActe4.tsx`. Décidé + validé Aziz par proto (`KostiFrappeProtoV3`, litter.catbox `xxm8ic`).

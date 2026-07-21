@@ -249,8 +249,10 @@ Format de handoff entre agents : voir `.claude/agent-memory/shared/TODOWRITE-PAT
   adopté), 9 SFX posés), `out/PRET-PUBLICATION/soudan-midform/soudan-acte3-suivre-lor-FINAL.mp4` (+`_compressed`),
   catbox `y2swv7`, code `src/projects/warmap/soudan-acte3/SoudanActe3.tsx`.
   ⚠️ **CE BLOC EST EN RETARD — source de vérité = `memory/episodes/soudan-midform/STATUS.md`.** État réel
-  (2026-07-18, s12) : Acte 4 CODÉ + rendu v7 + 4 lots refonte (s10) + Beat 5 Kosti refondu 2× (dont Kimi K3 sur
-  branche `feat/kosti-refonte-k3` NON mergée, re-render Acte 4 complet en attente) · **Acte 5 script
+  (2026-07-21) : **Acte 4 REFAIT en GLOBE D3 3 registres** (bloc continu B1-B4 + Kosti insert + B6 globe 2.0),
+  v12 = base validée Aziz, branche `feat/soudan-acte4-globe-3registres`, PAS promu FINAL — reste Phase 2
+  (densif/dynam, starter dédié). ⛔ L'ancien état « v7 Mapbox / kosti-k3 non mergée » est PÉRIMÉ (kosti-k3
+  mergée depuis longtemps, Acte 4 refait). · **Acte 5 script
   verrouillé + audio + timing + CODE + RENDER v2 FAITS, diagnostic downstream Gemini+Kimi (densification
   territoriale) fait mais NON appliqué — à trier prochaine session avant nouvelle passe de code.**
 - **Maroc Batteries Short 90s** — PRÉ-PROD COMPLÈTE (2026-05-30).
