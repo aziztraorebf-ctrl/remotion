@@ -121,7 +121,19 @@ export const SoudanActe4B6Globe: React.FC = () => {
   const features = useMemo(() => worldFeatures(), []);
 
   const cam = camAt(CAM, frame);
-  const rotLambda = -cam.lon;
+  // DÉRIVE LENTE (LOT 2) — pendant la synthèse "quatre puissances" (plan large tenu), on ajoute une
+  // rotation continue très douce de la longitude (~+4° sur la fenêtre) = "monde en mouvement" dramatique
+  // au lieu d'un plan strictement fixe. Off ailleurs (les autres segments ont déjà leur mouvement de cadrage).
+  // Ease-in/out pour zéro à-coup au raccord avec les keyframes fixes autour.
+  // monte 0->4° pendant la synthèse, PUIS redescend à 0 sur le pont Acte 5 (sinon le décalage
+  // persisterait et casserait le raccord de sortie exact lon32/lat17 attendu par l'Acte 5).
+  const driftLon = interpolate(
+    frame,
+    [T.quatrePuissances, T.quatrePuissances + 20, T.peserIssue, T.pontActe5],
+    [0, 2.0, 4.0, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
+  const rotLambda = -(cam.lon + driftLon);
   const rotLat = -cam.lat;
   const globeR = GLOBE_R * cam.scaleMul;
   const proj = useMemo(
