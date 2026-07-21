@@ -1,0 +1,13 @@
+{
+  "request_id": "019f2bf2-e66a-7c90-b544-4067a1b33a21",
+  "endpoint": "bytedance/seedance-2.0/image-to-video",
+  "duration_s": 10,
+  "generate_audio": false,
+  "seed": 1623088460,
+  "video_url": "https://v3b.fal.media/files/b/0aa0de8b/01L7k2G5CB-8LwdD46jZI_video.mp4",
+  "file_size": 6750610,
+  "source_image": "pecheur-source-v1.png",
+  "source_image_url": "https://v3b.fal.media/files/b/0aa0de86/UfTzrhc7bLTHPremdrtsj_pecheur-source-v1.png",
+  "prompt": "Animate this exact illustration. STRICT STYLE FIDELITY: minimalist ink-line 2D flat illustration \u2014 thin black outlined stick-figure character, flat solid color fills, no shading beyond the existing sun halo, no added texture or detail, no photorealism, no 3D rendering. Do NOT drift toward anime or cartoon style.\n\nThe fisherman stands in his pirogue on calm water. He performs one full fishing sequence, narrated as continuous action: He WINDS UP his cast, torso leaning back, arm raised high with the folded net. He RELEASES the throw \u2014 the net WHIPS forward and fans open over the water. He HAULS the net back in with visible effort, torso straightening, net dragging against the pirogue's side. He TURNS in a three-quarter angle toward the inside of the boat \u2014 never facing the camera directly \u2014 a fish in hand, and LOWERS it into the wicker basket resting at the bottom of the pirogue. He STRAIGHTENS, gaze drifting toward the horizon. His expression DARKENS \u2014 brow lowers, mouth flattens \u2014 and he goes still.\n\nIdentity lock: dark brown skin, teal shirt, dark slate-grey pants, shaved head, calm profile face, same proportions throughout. Pirogue and flat ink ocean/sky stay consistent with the source image. The wicker basket stays in the same position at the bottom of the boat throughout.\n\nCamera holds steady, gentle handheld sway only. No unnecessary rotations. Normal human body structure, no anatomical distortion.\n\nNo text, no banners, no signs, no writing visible anywhere. No music, no words, no dialogue. No dust motes, no floating particles.",
+  "cost_usd_estimate": 6.83
+}

@@ -97,8 +97,10 @@ native) = ZÉRO ombre externe ; buste/médaillon = ombre externe requise. Détai
 **Seule limite résiduelle D3 vs Mapbox = LE SOL** : D3 = aplat uni ; Mapbox = terrain raster texturé où
 l'objet se fond. N'empêche PAS de poser des objets, mais le « terrain habité » manque (piste : polygone
 enrichi dégradé+grain+ombre interne, à tester). **Render D3/SVG pur = `npx remotion render` classique**
-(aucun WebGL, PAS `render-mapbox.sh`). `d3` installé : array/format/geo/scale ; MANQUE pour flux/réseaux :
-`d3-force`, `d3-shape`. Backlog complet (globe 2.0, choroplèthe, flux, HUD, scène complète Soudan Acte 3) :
+(aucun WebGL, PAS `render-mapbox.sh`). `d3` installé LARGEMENT (vérifié 2026-07-20) : array/format/geo/scale MAIS AUSSI `d3-force`, `d3-shape`,
+`d3-sankey`, `d3-hierarchy`, etc. — la note « MANQUE d3-force/d3-shape » était FAUSSE. Réseau de force PROUVÉ
+(proto `ForceNetworkProto16x9`, méthode = simulation CUITE en useMemo, 2 layouts pré-calculés, zéro
+Math.random = déterministe). Backlog restant (globe 2.0, choroplèthe, Sankey, HUD) :
 `memory/NEXT-ACTION.md` § R&D D3 en 16:9.
 
 ## Mapbox = dominant par défaut (bonne raison)

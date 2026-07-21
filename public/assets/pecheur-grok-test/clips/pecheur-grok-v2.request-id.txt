@@ -1,0 +1,3 @@
+1ed3d6f6-d8ef-9f54-9d12-2a8e57b7205b
+# model: grok-imagine-video-1.5
+# saved_at: 2026-07-04 12:56:04

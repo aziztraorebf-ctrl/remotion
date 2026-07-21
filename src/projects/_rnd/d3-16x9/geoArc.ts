@@ -158,4 +158,7 @@ export const GEO = {
   nyala: [24.88, 12.05] as LonLat, // Darfour Sud — 2e foyer de deplacement B5
   addisAbeba: [38.74, 9.03] as LonLat, // siege Union africaine (jeton institutionnel B1 optionnel)
   newYork: [-73.97, 40.7] as LonLat, // siege ONU (jeton institutionnel B1 optionnel)
+  // --- Acte 4 "Meme les voisins sont aspires" (Russie/Egypte, verif 2026-07-20) ---
+  moscou: [37.62, 55.75] as LonLat, // Russie — base navale Port-Soudan + bascule RSF->SAF 2024
+  portSoudan: [37.22, 19.62] as LonLat, // Port-Soudan, mer Rouge (base navale russe negociee)
 };
