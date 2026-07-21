@@ -163,15 +163,18 @@ const CREAM_B5 = "#F2E5C8";
 const INK_B5 = "#3A2A18";
 const RSF_B5 = "#B14B3C";
 
-// pop 0->1 : le picto TOMBE en place (scale + translateY) quand il s'allume (stagger, Gemini/Kimi)
-const PersonIcon: React.FC<{ pop: number }> = ({ pop }) => {
-  const on = pop > 0.01;
-  const scale = 0.6 + 0.4 * pop;
-  const ty = (1 - pop) * 6;
+// pop 0->1 : le picto s'allume ROUGE (déplacé) sur fond de la grille des pictos gris (population totale).
+// `lit` = ce picto fait-il partie des déplacés (rouge) ou reste-t-il gris (population non déplacée) ?
+// LOT 5.3 : grille dense (~135 pictos = pop totale ~50M), ~37 s'allument en rouge = ratio déplacés 13,5M/50M.
+const PersonIcon: React.FC<{ pop: number; lit: boolean }> = ({ pop, lit }) => {
+  const on = lit && pop > 0.01;
+  // le picto allumé (déplacé) "tombe" en place (scale + translateY) ; les gris sont posés d'emblée.
+  const scale = lit ? 0.6 + 0.4 * pop : 1;
+  const ty = lit ? (1 - pop) * 6 : 0;
   return (
-    <svg viewBox="0 0 24 24" style={{ width: 30, height: 34, transform: `translateY(${ty}px) scale(${scale})` }}>
-      <circle cx={12} cy={7} r={4.2} fill={on ? RSF_B5 : INK_B5} opacity={on ? pop : 0.16} />
-      <path d="M4 22 C4 15, 20 15, 20 22 Z" fill={on ? RSF_B5 : INK_B5} opacity={on ? pop : 0.16} />
+    <svg viewBox="0 0 24 24" style={{ width: 15, height: 17, transform: `translateY(${ty}px) scale(${scale})` }}>
+      <circle cx={12} cy={7} r={4.2} fill={on ? RSF_B5 : INK_B5} opacity={on ? Math.max(0.85, pop) : 0.14} />
+      <path d="M4 22 C4 15, 20 15, 20 22 Z" fill={on ? RSF_B5 : INK_B5} opacity={on ? Math.max(0.85, pop) : 0.14} />
     </svg>
   );
 };
@@ -188,13 +191,23 @@ export const DisplacementCounter: React.FC<{
   if (op <= 0.01) return null;
   const prog = easeOrganic(interpolate(frame, [tStart, tHold], [0, 1], clampB));
   const txt = (prog * 13.5).toFixed(1).replace(".", ",");
-  const N = 27; // 27 silhouettes (~0,5M chacune) qui s'allument avec le compteur
+  // LOT 5.3 : grille DENSE = population totale du Soudan (~50M). N=135 pictos (~0,37M chacun).
+  // ~37 d'entre eux s'allument en ROUGE = les déplacés (13,5M / 50M ≈ 27%). Le reste reste gris.
+  // (On représente la PART chassée sur le tout — pas une "extinction", les déplacés sont vivants.)
+  const N = 135;
+  const LIT_COUNT = Math.round(N * 13.5 / 50); // ≈ 37 déplacés
+  // Répartir les déplacés de façon RÉGULIÈRE dans la grille (pas un bloc) = lecture "une part partout".
+  const litStep = N / LIT_COUNT;
+  const litSet = new Set(Array.from({ length: LIT_COUNT }, (_, k) => Math.round(k * litStep)));
   // rebond du chiffre a l'arrivee de 13,5 (Gemini/Kimi : "claque" en place)
   const numBounce = interpolate(frame, [tHold - 4, tHold + 4, tHold + 14], [0, -6, 0], clampB);
-  // pop par picto (stagger, tombe en place) : chaque picto s'allume sur ~9 frames autour de son seuil
+  // pop par picto ALLUMÉ (stagger, tombe en place) : les déplacés s'allument un par un avec le compteur.
   const fillDur = tHold - tStart;
+  const litOrder = Array.from(litSet).sort((a, b) => a - b);
   const iconPop = (i: number) => {
-    const a = tStart + (i / N) * fillDur;
+    const rank = litOrder.indexOf(i);
+    if (rank < 0) return 0;
+    const a = tStart + (rank / LIT_COUNT) * fillDur;
     return interpolate(frame, [a, a + 9], [0, 1], clampB);
   };
 
@@ -222,8 +235,14 @@ export const DisplacementCounter: React.FC<{
         <div style={{ fontFamily: "Georgia, serif", fontSize: 26, fontWeight: 500, color: INK_B5, marginTop: 4 }}>
           de personnes ont dû fuir leur maison
         </div>
-        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 6, marginTop: 22 }}>
-          {Array.from({ length: N }, (_, i) => <PersonIcon key={i} pop={iconPop(i)} />)}
+        {/* grille DENSE population (135 pictos) : ~37 s'allument rouge = déplacés sur le tout */}
+        <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 4, marginTop: 22,
+          maxWidth: 620, marginLeft: "auto", marginRight: "auto" }}>
+          {Array.from({ length: N }, (_, i) => <PersonIcon key={i} pop={iconPop(i)} lit={litSet.has(i)} />)}
+        </div>
+        {/* légende du ratio (rend le rouge lisible : ce ne sont pas des morts mais des chassés de chez eux) */}
+        <div style={{ fontFamily: "Georgia, serif", fontSize: 15, color: RSF_B5, marginTop: 12, letterSpacing: "0.02em" }}>
+          soit près d'un Soudanais sur quatre
         </div>
         <div style={{ fontFamily: "Georgia, serif", fontSize: 22, fontStyle: "italic", color: RSF_B5, marginTop: 20 }}>
           La pire crise humanitaire de la planète

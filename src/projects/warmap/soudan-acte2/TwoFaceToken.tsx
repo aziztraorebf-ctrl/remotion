@@ -114,7 +114,8 @@ export const TwoFaceToken: React.FC<{
       }}>
         <div style={{
           position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden", background: CREAM,
-          boxShadow: "0 5px 14px rgba(0,0,0,0.5)",
+          // LOT 4.1 : anneau blanc net + ombre renforcée (cohérent avec le disque soudé)
+          boxShadow: "0 0 0 2.5px #FFFFFF, 0 0 0 3.8px rgba(20,14,6,0.5), 0 6px 16px rgba(0,0,0,0.55)",
         }}>
           {faceImg(side === "left" ? "portrait-hemeti" : "portrait-burhan")}
         </div>
@@ -146,9 +147,10 @@ export const TwoFaceToken: React.FC<{
       {weldedOp > 0.01 && (
         <div style={{ position: "absolute", left: "50%", top: "50%", width: D, height: D,
           transform: "translate(-50%,-50%)", opacity: weldedOp }}>
-          {/* le disque lui-meme (clip rond commun) */}
+          {/* le disque lui-meme (clip rond commun) — LOT 4.1 : anneau blanc net + ombre renforcée
+              (l'anneau bicolore SVG se pose par-dessus, le blanc reste visible en liseré externe) */}
           <div style={{ position: "absolute", inset: 0, borderRadius: "50%", overflow: "hidden",
-            background: CREAM, boxShadow: "0 5px 14px rgba(0,0,0,0.5)" }}>
+            background: CREAM, boxShadow: "0 0 0 3px #FFFFFF, 0 0 0 4.4px rgba(20,14,6,0.5), 0 6px 17px rgba(0,0,0,0.55)" }}>
             {halfWindow("left")}
             {halfWindow("right")}
           </div>

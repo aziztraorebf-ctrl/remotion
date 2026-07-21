@@ -109,7 +109,8 @@ export const SoudanToken: React.FC<{
         transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
       <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden",
         background: CREAM, border: `3.5px solid ${border}`,
-        boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
+        // LOT 4.1 : anneau blanc net + ombre renforcée = jeton décollé du parchemin (lisibilité)
+        boxShadow: "0 0 0 2.5px #FFFFFF, 0 0 0 3.6px rgba(20,14,6,0.5), 0 5px 13px rgba(0,0,0,0.5)" }}>
         <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
           style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
             transform: "translate(-8%, 2%)", display: "block" }} />

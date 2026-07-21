@@ -352,7 +352,9 @@ const TokenBase: React.FC<{
         transform: "translate(-50%,-50%)", background: "rgba(30,20,6,0.5)", borderRadius: "50%", filter: "blur(6px)" }} />
       <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden",
         background: CREAM, border: `${D * 0.062}px solid ${border}`,
-        boxShadow: "0 5px 14px rgba(0,0,0,0.55), 0 0 0 1.5px rgba(20,14,6,0.5)" }}>
+        // LOT 4.1 : anneau BLANC net (2.5px) autour de la bordure faction = décolle le jeton du fond
+        // (carte kaki/rouge), + ombre portée renforcée + liseré sombre externe pour tenir sur fond clair.
+        boxShadow: "0 0 0 2.5px #FFFFFF, 0 0 0 3.8px rgba(20,14,6,0.55), 0 6px 18px rgba(0,0,0,0.6)" }}>
         <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
           style={{ width: "116%", height: "116%", objectFit: "cover", objectPosition: "top center",
             transform: "translate(-7%, 1%)", display: "block" }} />

@@ -190,7 +190,10 @@ export const SoudanActe3GlobeInsert: React.FC<{ startScaleMul?: number }> = ({ s
   const arcStroke = (d: string, color: string, op = 1) =>
     d ? (
       <>
-        <path d={d} fill="none" stroke="rgba(10,14,22,0.55)" strokeWidth={6} strokeLinecap="round" opacity={0.6 * op} />
+        {/* LOT 4.2 — PONT VISUEL AUX CROISEMENTS : halo sombre ÉLARGI (9px) + plus opaque = "gaine" neutre
+            qui marche sur terre ET mer. Quand cet arc est rendu APRÈS un autre, il "coupe" franchement
+            celui du dessous au croisement (l'ordre de tracé = qui passe par-dessus) au lieu de se mélanger. */}
+        <path d={d} fill="none" stroke="rgba(10,14,22,0.78)" strokeWidth={9} strokeLinecap="round" opacity={0.82 * op} />
         <path d={d} fill="none" stroke={color} strokeWidth={11} strokeLinecap="round" opacity={0.16 * op} />
         <path d={d} fill="none" stroke={color} strokeWidth={4.4} strokeLinecap="round" opacity={op} />
         <path d={d} fill="none" stroke="#fff" strokeWidth={1.5} strokeLinecap="round" strokeDasharray="7 12" strokeDashoffset={-(frame * 0.9) % 19} opacity={0.55 * op} />
