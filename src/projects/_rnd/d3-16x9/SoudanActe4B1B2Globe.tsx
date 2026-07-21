@@ -41,6 +41,7 @@ import {
 import { GEO, windingPathD, projectPoint, type LonLat } from "./geoArc";
 import { camAt, type CamKey } from "./globeCamera";
 import { THEMES, GlobeFlagFill, Medallion, RSF_RED, SAF_BLUE } from "./SoudanActe3GlobeProto16x9";
+import { NavireGuerreEncre } from "../../_shared/svg-library/elements/maritime/NavireGuerreEncre";
 import { BEAT1, BEAT2 } from "../../warmap/soudan-acte4/soudanActe4Timing";
 
 const t = THEMES.mixte;
@@ -121,61 +122,6 @@ function buildB1B2Cam(): CamKey[] {
 
 const CAM = buildB1B2Cam();
 
-// --- Plaque factuelle sobre (Beat 2) — apparait en fondu, TIENT, puis cede la place a la suivante.
-// Registre diplomatique serieux : pas de compteur qui defile (regle explicite du brief).
-const FactPlate: React.FC<{ frame: number; appearF: number; label: string; value: string; index: number }> = ({
-  frame,
-  appearF,
-  label,
-  value,
-  index,
-}) => {
-  const op = interpolate(frame, [appearF, appearF + 16], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  if (op <= 0.01) return null;
-  const y = 150 + index * 64;
-  return (
-    <div
-      style={{
-        position: "absolute",
-        left: 100,
-        top: y,
-        opacity: op,
-        transform: `translateX(${interpolate(op, [0, 1], [-16, 0])}px)`,
-        display: "flex",
-        flexDirection: "column",
-        gap: 2,
-      }}
-    >
-      <div
-        style={{
-          fontFamily: "Georgia, serif",
-          fontSize: 15,
-          letterSpacing: 1.4,
-          textTransform: "uppercase",
-          color: t.legendSur,
-          textShadow: "0 2px 6px rgba(0,0,0,0.8)",
-        }}
-      >
-        {label}
-      </div>
-      <div
-        style={{
-          fontFamily: "Georgia, serif",
-          fontSize: 30,
-          fontWeight: 700,
-          color: t.labelFill,
-          textShadow: "0 2px 8px rgba(0,0,0,0.85)",
-        }}
-      >
-        {value}
-      </div>
-    </div>
-  );
-};
-
 // --- Icone base navale sobre (ancre stylisee) — apparait a Port-Soudan et RESTE (pas d'animation
 // de repetition, juste une presence stable qui ancre le sujet).
 const NavalBaseIcon: React.FC<{ x: number; y: number; reveal: number; pulse: number }> = ({ x, y, reveal, pulse }) => {
@@ -190,6 +136,54 @@ const NavalBaseIcon: React.FC<{ x: number; y: number; reveal: number; pulse: num
         <line x1={0} y1={-3.5} x2={0} y2={7} />
         <path d="M -6 3 Q 0 11 6 3" />
         <line x1={-5} y1={-1} x2={5} y2={-1} />
+      </g>
+    </g>
+  );
+};
+
+// --- Navire de guerre SVG encre a Port-Soudan (Beat 2) — le globe seul est trop inerte a ce plan
+// resserre ; un navire ancre stylise, avec un leger tangage et un sillage de vaguelettes anime,
+// donne du mouvement vivant SANS texte plaque. Reutilise NavireGuerreEncre (bibliotheque SVG
+// partagee, registre encre coherent episode). Coordonnees natives du composant : boite ~x873-1679
+// y367-758 (repere 1920x1080) -> on centre via translate(-cx,-cy) avant le scale-a-l'echelle-globe.
+const NAVIRE_CX = (873 + 1679) / 2;
+const NAVIRE_CY = (367 + 758) / 2;
+const NavireEncreAuGlobe: React.FC<{ x: number; y: number; reveal: number; frame: number }> = ({
+  x,
+  y,
+  reveal,
+  frame,
+}) => {
+  if (reveal <= 0.01) return null;
+  // Echelle globe : le navire (large ~806px natif) doit rester lisible sans dominer le plan
+  // resserre Port-Soudan (scaleMul ~2.6-2.95 dans buildB1B2Cam) — 0.1 donne une coque d'environ
+  // 80px de large a l'ecran, assez pour lire la silhouette (coque+superstructure) sans dominer.
+  const scale = 0.1 * reveal;
+  // Tangage subtil (bob vertical + roulis leger) — mouvement vivant mais sobre, jamais un glissement
+  // (le navire est ANCRE au point geo, cf regle "objet inerte ne glisse jamais" ; ici c'est un
+  // vehicule au mouillage, le tangage est le seul mouvement credible, pas une translation).
+  const bobY = Math.sin(frame / 11) * 1.6;
+  const rollDeg = Math.sin(frame / 14) * 0.9;
+  // Vaguelettes d'encre qui pulsent doucement autour de la coque (sillage au mouillage, pas une
+  // approche) — plusieurs anneaux dephases pour un effet organique.
+  const waveA = 0.5 + 0.5 * Math.sin(frame / 18);
+  const waveB = 0.5 + 0.5 * Math.sin(frame / 18 + Math.PI * 0.66);
+  const waveC = 0.5 + 0.5 * Math.sin(frame / 18 + Math.PI * 1.33);
+  return (
+    <g transform={`translate(${x} ${y + bobY}) rotate(${rollDeg})`} opacity={reveal}>
+      {/* vaguelettes d'encre autour de la coque (trois anneaux ellipse, phases decalees) — coordonnees
+          locales au repere ecran (le groupe parent n'est pas mis a l'echelle, seul le navire l'est). */}
+      <ellipse cx={0} cy={17} rx={62} ry={9} fill="none" stroke={t.oceanInner} strokeWidth={1.4} opacity={0.32 * waveA} />
+      <ellipse cx={-14} cy={22} rx={44} ry={6.5} fill="none" stroke={t.oceanInner} strokeWidth={1.2} opacity={0.28 * waveB} />
+      <ellipse cx={16} cy={25} rx={36} ry={5.5} fill="none" stroke={t.oceanInner} strokeWidth={1.1} opacity={0.26 * waveC} />
+      {/* fumee de cheminee, monte lentement (registre encre, traits fins) */}
+      <g opacity={0.35 * reveal}>
+        <circle cx={5.6} cy={-30} r={3.2} fill={t.grat} opacity={0.5} />
+        <circle cx={7.4} cy={-36 - Math.sin(frame / 20) * 2} r={4.2} fill={t.grat} opacity={0.36} />
+        <circle cx={9.6} cy={-43 - Math.sin(frame / 20) * 3} r={5.2} fill={t.grat} opacity={0.24} />
+      </g>
+      <g transform={`scale(${scale}) translate(${-NAVIRE_CX} ${-NAVIRE_CY})`}>
+        <NavireGuerreEncre wakeOpacity={0.15} deckLineColor={t.flowGold} hatchPatternId="a4b1navireInk" />
       </g>
     </g>
   );
@@ -213,8 +207,7 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
   const cy = H / 2;
 
   // --- BEAT 1 : reveal Russie (drapeau) + flux RSF (ancien, s'estompe) + flux SAF (net, 2024) -----
-  const b1Local = frame; // B1 occupe frame 0..B1_FRAMES
-  const inB1 = b1Local < B1_FRAMES;
+  const b1Local = frame; // B1 occupe frame 0..B1_FRAMES (tout ce qui apparait ici PERSISTE ensuite)
 
   // Russie se remplit de son drapeau des "troisieme pays".
   const russiaReveal = interpolate(b1Local, [T1.troisiemePays, T1.troisiemePays + 22], [0, 1], {
@@ -261,13 +254,11 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  // Fondu de sortie des jetons/flux B1 sur les 20 dernieres frames du beat (raccord propre vers B2).
-  const b1ExitFade = interpolate(b1Local, [T1.end - 20, T1.end], [1, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // PERSISTANCE (regle "nom->persiste", retour Aziz) : les jetons R/S, les flux Moscou et le drapeau
+  // Russie NE DISPARAISSENT PLUS a la fin du B1 — ils restent affiches jusqu'a la fin du B2. La
+  // carte s'ENRICHIT (Port-Soudan s'ajoute au B2) et ne se vide jamais. Zero fondu de sortie ici.
 
-  // --- BEAT 2 : Port-Soudan pulse + icone base navale + plaques factuelles sequentielles -----------
+  // --- BEAT 2 : Port-Soudan pulse + icone base navale + navire encre anime, S'AJOUTENT a B1 --------
   const b2Local = frame - B2_LOCAL_START; // negatif avant B2, 0..B2_FRAMES pendant B2
   const portSoudanReveal = interpolate(b2Local, [T2.portSoudanNomme, T2.portSoudanNomme + 18], [0, 1], {
     extrapolateLeft: "clamp",
@@ -330,6 +321,10 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
+          {/* hachures encre pour les ombres du navire (NavireGuerreEncre hatchPatternId) */}
+          <pattern id="a4b1navireInk" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <path d="M0 0V10" stroke="#0c1318" strokeWidth={2.4} opacity={0.5} />
+          </pattern>
         </defs>
 
         <circle cx={cx} cy={cy} r={globeR + 14} fill="url(#a4b1atmo)" />
@@ -366,39 +361,40 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
             />
           )}
 
-          {/* FLUX ANCIEN Moscou -> RSF (Wagner armait, s'estompe) */}
-          {inB1 && rsfFlowProg > 0.01 && (
+          {/* FLUX ANCIEN Moscou -> RSF (Wagner armait, s'estompe MAIS PERSISTE en trait fin/pointille
+              residuel — ne disparait jamais completement, cf regle "nom->persiste"). */}
+          {rsfFlowProg > 0.01 && (
             <path
               d={windingPathD(proj, path, MOSCOU, RSF_TOKEN, rsfFlowProg, -2.2, 1)}
               fill="none"
               stroke={RSF_RED}
               strokeWidth={3.2}
-              strokeOpacity={0.85 * rsfFlowFade * b1ExitFade}
+              strokeOpacity={0.85 * rsfFlowFade}
               strokeLinecap="round"
               strokeDasharray={rsfFlowFade < 0.5 ? "5 7" : undefined}
             />
           )}
 
-          {/* FLUX NET Moscou -> SAF (2024, volte-face, tient) */}
-          {inB1 && safFlowProg > 0.01 && (
+          {/* FLUX NET Moscou -> SAF (2024, volte-face, tient et PERSISTE jusqu'a la fin du B2). */}
+          {safFlowProg > 0.01 && (
             <path
               d={windingPathD(proj, path, MOSCOU, SAF_TOKEN, safFlowProg, 1.8, 1)}
               fill="none"
               stroke={SAF_BLUE}
               strokeWidth={3.6}
-              strokeOpacity={safFlowOp * b1ExitFade}
+              strokeOpacity={safFlowOp}
               strokeLinecap="round"
             />
           )}
 
-          {/* Jetons RSF/SAF (medaillons) a l'arrivee des flux — SCENE B1 uniquement (le focus B2 est
-              Port-Soudan ; on efface les jetons en fondu sur les dernieres frames de B1 pour ne pas
-              polluer visuellement le plan Port-Soudan). */}
-          {inB1 && pRSF && medallionScale > 0.01 && (
-            <Medallion x={pRSF.x} y={pRSF.y} color={RSF_RED} label="R" scale={medallionScale * Math.max(0.4, rsfFlowFade) * b1ExitFade} pulse={rsfPulse} t={t as any} />
+          {/* Jetons RSF/SAF (medaillons) a l'arrivee des flux — PERSISTENT jusqu'a la fin du B2 (regle
+              "nom->persiste", retour Aziz : ce qui est nomme/trace reste sur la carte, la carte
+              s'enrichit sans jamais se vider quand Port-Soudan s'ajoute). */}
+          {pRSF && medallionScale > 0.01 && (
+            <Medallion x={pRSF.x} y={pRSF.y} color={RSF_RED} label="R" scale={medallionScale * Math.max(0.4, rsfFlowFade)} pulse={rsfPulse} t={t as any} />
           )}
-          {inB1 && pSAF && safMedallionScale > 0.01 && (
-            <Medallion x={pSAF.x} y={pSAF.y} color={SAF_BLUE} label="S" scale={safMedallionScale * b1ExitFade} pulse={safPulse} t={t as any} />
+          {pSAF && safMedallionScale > 0.01 && (
+            <Medallion x={pSAF.x} y={pSAF.y} color={SAF_BLUE} label="S" scale={safMedallionScale} pulse={safPulse} t={t as any} />
           )}
 
           {/* Label Moscou */}
@@ -419,9 +415,15 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
             </text>
           )}
 
-          {/* BEAT 2 : Port-Soudan pulse fort + icone base navale (reste) */}
+          {/* BEAT 2 : Port-Soudan pulse fort + icone base navale (reste) + navire de guerre encre
+              anime (tangage + vaguelettes + fumee) — donne du mouvement vivant au plan resserre,
+              pose a la bonne position geo (proj(GEO.portSoudan)), PERSISTE jusqu'a la fin. */}
           {pPortSoudan && portSoudanReveal > 0.01 && (
             <>
+              {/* Navire decale EST/SUD dans la mer Rouge (le point Port-Soudan est cotier — le decalage
+                  evite de poser la coque sur la terre et degage entierement le label "Port-Soudan"
+                  sous l'icone ancre, zero chevauchement texte/navire). */}
+              <NavireEncreAuGlobe x={pPortSoudan.x + 78} y={pPortSoudan.y + 48} reveal={portSoudanReveal} frame={frame} />
               <NavalBaseIcon x={pPortSoudan.x} y={pPortSoudan.y} reveal={portSoudanReveal} pulse={portSoudanPulse} />
               <text
                 x={pPortSoudan.x}
@@ -445,16 +447,11 @@ export const SoudanActe4B1B2Globe: React.FC = () => {
         <circle cx={cx} cy={cy} r={globeR} fill="none" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.4} />
       </svg>
 
-      {/* Plaques factuelles sequentielles (Beat 2) — sobres, en fondu, PAS de compteur qui defile. */}
-      {!inB1 && (
-        <>
-          <FactPlate frame={b2Local} appearF={T2.vingtCinqAns} label="Duree de l'accord" value="25 ans" index={0} />
-          <FactPlate frame={b2Local} appearF={T2.troisCentsSoldats} label="Personnel militaire" value="300 soldats russes" index={1} />
-          <FactPlate frame={b2Local} appearF={T2.quatreNavires} label="Flotte" value="4 navires de guerre" index={2} />
-          <FactPlate frame={b2Local} appearF={T2.propulsionNucleaire} label="Propulsion" value="Nucleaire (certains navires)" index={3} />
-          <FactPlate frame={b2Local} appearF={T2.soudanPasSigne} label="Statut" value="Accord PAS encore signe" index={4} />
-        </>
-      )}
+      {/* Pas de plaques factuelles plaquees sur la carte (retour Aziz : "tres moche, ne fait pas de
+          sens sur la carte") et pas de sous-titre bas d'ecran (bas d'ecran reserve aux SOURCES
+          uniquement ; ce beat n'a pas de source a afficher). Les chiffres (25 ans, 300 soldats,
+          4 navires, propulsion nucleaire, accord pas signe) restent portes par la voix off seule —
+          la carte montre Port-Soudan qui s'ancre + le navire encre anime, rien de plus. */}
     </AbsoluteFill>
   );
 };
