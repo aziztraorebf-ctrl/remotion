@@ -270,6 +270,84 @@ export const ShockRing: React.FC<{ x: number; y: number; shockT: number; color: 
   );
 };
 
+// ── BorderPulse (LOT 1.1 passe finale) — "souffle de frontiere" : quand on NOMME un pays, on duplique
+//    le path de sa frontiere (deja projetee) et on l'anime en onde lumineuse qui epouse sa forme :
+//    stroke-width 1->10px + stroke-opacity 0.85->0 en ~800ms (ease-out). Ne masque PAS le drapeau/remplissage
+//    (fill=none). `d` = path SVG du pays a la frame courante ; `pulse` = progression [0..1] du souffle.
+//    Convergence Gemini+Kimi (prospectif A globe). Usage : un seul passage a l'apparition (nom->persiste,
+//    mais l'ONDE, elle, ne se joue qu'une fois). color = or/blanc casse par defaut.
+export const BorderPulse: React.FC<{ d: string; pulse: number; color?: string }> = ({ d, pulse, color = "#FFE9B0" }) => {
+  if (!d || pulse <= 0 || pulse >= 1) return null;
+  // ease-out : l'onde part vite puis ralentit
+  const e = 1 - Math.pow(1 - pulse, 2);
+  const sw = 1 + 9 * e; // 1 -> 10px
+  const op = 0.85 * (1 - e); // 0.85 -> 0
+  return (
+    <>
+      {/* halo large flou (le "souffle") */}
+      <path d={d} fill="none" stroke={color} strokeWidth={sw * 1.8} strokeLinejoin="round"
+        opacity={op * 0.5} style={{ filter: "blur(4px)" }} />
+      {/* trait net qui epouse la frontiere */}
+      <path d={d} fill="none" stroke={color} strokeWidth={sw} strokeLinejoin="round" opacity={op} />
+    </>
+  );
+};
+
+// ── SiegeRings (LOT 1.2 passe finale — PRIORITE n1 Kimi) — "anneau de siege / radar SOS" pour une ville
+//    assiegee (El-Fasher). 3 cercles concentriques (stroke rouge, fill=none) qui GRANDISSENT+s'estompent
+//    en cascade (decalage de phase) = effet radar continu + point central clignotant. Vient EN PLUS du halo
+//    d'embrasement existant (il ne le remplace pas) : le halo dit "zone chaude", l'anneau dit "ville cernee,
+//    urgence active". `t` = temps continu (frames depuis activation) ; `intensity` [0..1] = fade in/out global.
+export const SiegeRings: React.FC<{ x: number; y: number; t: number; intensity: number; color?: string }> = ({ x, y, t, intensity, color = "#FF4438" }) => {
+  if (intensity <= 0.01) return null;
+  const PERIOD = 46; // frames par cycle radar (~1.5s @30fps)
+  const RMIN = 10;
+  const RMAX = 62;
+  const rings = [0, 1, 2].map((i) => {
+    const ph = ((t - i * (PERIOD / 3)) % PERIOD) / PERIOD; // cascade : decalage 1/3 de periode
+    if (ph < 0) return null;
+    const r = RMIN + (RMAX - RMIN) * ph;
+    const op = intensity * 0.75 * (1 - ph); // s'estompe en grandissant
+    return { r, op, key: i };
+  });
+  // point central : clignote lentement (opacity 0.6<->1)
+  const centerOp = intensity * (0.7 + 0.3 * Math.sin(t * 0.14));
+  return (
+    <g transform={`translate(${x} ${y})`} pointerEvents="none">
+      {rings.map((rg) => rg && (
+        <circle key={rg.key} r={rg.r} fill="none" stroke={color} strokeWidth={2.2}
+          strokeDasharray="4 5" opacity={rg.op} />
+      ))}
+      {/* point central clignotant (le foyer) */}
+      <circle r={5.5} fill={color} stroke="#fff" strokeWidth={1.6} opacity={centerOp} />
+      <circle r={2} fill="#fff" opacity={centerOp} />
+    </g>
+  );
+};
+
+// ── GeoPlaqueSVG (retour Aziz 2026-07-21, unification 6 actes) — label géo-ancré POSÉ SUR LA CARTE, en
+//    SVG : rect arrondi sombre semi-opaque + liseret couleur nationale + texte clair Georgia. Remplace
+//    partout les <GeoLabel> "texte plaqué" (HTML flottant avec ombre) qu'Aziz trouve moins lisibles.
+//    ⭐ SOURCE DE VÉRITÉ UNIQUE du label géo-ancré des actes globe. `labelFill` = couleur du texte (défaut
+//    crème clair). `dy` = décalage vertical par rapport au point (négatif = au-dessus). Largeur estimée au
+//    nombre de caractères (SVG n'auto-dimensionne pas un rect sur le texte).
+export const GeoPlaqueSVG: React.FC<{ x: number; y: number; label: string; op: number; accent: string; dy?: number; labelFill?: string; fs?: number }> =
+  ({ x, y, label, op, accent, dy = -20, labelFill = "#F3EAD2", fs = 21 }) => {
+    if (op <= 0.01) return null;
+    const w = label.length * fs * 0.62 + 24; // largeur approx (padding inclus)
+    const h = fs + 9;
+    const cxp = x;
+    const cyp = y + dy;
+    return (
+      <g opacity={op} pointerEvents="none">
+        <rect x={cxp - w / 2} y={cyp - h / 2} width={w} height={h} rx={6} fill="rgba(10,16,24,0.80)" />
+        <rect x={cxp - w / 2} y={cyp - h / 2} width={3} height={h} rx={1.5} fill={accent} />
+        <text x={cxp} y={cyp + fs * 0.34} fill={labelFill} fontSize={fs} fontFamily="Georgia, serif"
+          fontWeight={700} textAnchor="middle" letterSpacing={0.3}>{label}</text>
+      </g>
+    );
+  };
+
 // variant : "token" = jeton-drapeau flottant (option A) · "zoom" = camera qui se rapproche du pays a
 // l'arrivee (option B) · "none" = ni l'un ni l'autre (base v3).
 export const SoudanActe3GlobeProto16x9: React.FC<{ theme?: ThemeName; variant?: "none" | "token" | "zoom" }> = ({ theme = "space", variant = "none" }) => {

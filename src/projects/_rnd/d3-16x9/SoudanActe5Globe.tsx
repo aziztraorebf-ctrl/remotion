@@ -19,7 +19,7 @@ import React from "react";
 import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "remotion";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
 import { arcPathD, windingPathD, pointAlongArc, pointAlongWinding, projectPoint, GEO, type LonLat } from "./geoArc";
-import { THEMES, FlagToken, ShockRing } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, FlagToken, ShockRing, SiegeRings, BorderPulse, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
 import { buildActe5Cam, camAt } from "./globeCamera";
 import { T, A5_GLOBE_FRAMES, AUDIO_FULL } from "./soudanActe5GlobeTiming";
 
@@ -89,16 +89,6 @@ const IsoBase: React.FC<{ x: number; y: number; sprite: string; op: number; widt
     );
   };
 
-// ── Label géo-ancré (Abou Dabi, Benghazi, El-Fasher) — SVG point + texte HTML ──
-const GeoLabel: React.FC<{ x: number; y: number; label: string; op: number; color: string }> = ({ x, y, label, op, color }) => {
-  if (op <= 0.01) return null;
-  return (
-    <div style={{ position: "absolute", left: x + 14, top: y - 12, opacity: op,
-      fontFamily: "Georgia, serif", fontWeight: 800, fontSize: 21, letterSpacing: "0.02em",
-      color: t.labelFill, textShadow: "0 2px 8px rgba(0,0,0,0.9), 0 0 4px rgba(0,0,0,0.6)",
-      whiteSpace: "nowrap", pointerEvents: "none" }}>{label}</div>
-  );
-};
 
 export const SoudanActe5Globe: React.FC = () => {
   const frame = useCurrentFrame();
@@ -125,6 +115,16 @@ export const SoudanActe5Globe: React.FC = () => {
   // Beat 2 : Abou Dabi + drapeau EAU. Beat 3 : teinte de contrôle est-libyen (Haftar).
   const uaeReveal = interpolate(frame, [T.b2EmiratsNommes - 4, T.b2EmiratsNommes + 18], [0, 1], clampB);
   const haftarTint = interpolate(frame, [T.b3HaftarNomme, T.b3HaftarNomme + 24], [0, 0.34], clampB);
+
+  // ===== SOUFFLE DE FRONTIERE (LOT 1.1) — la Libye est le pays NOMME de l'acte : au moment ou elle
+  // s'active (parchemin), une onde lumineuse epouse sa frontiere une seule fois (~24f ~= 800ms). =====
+  const libyaPulse = interpolate(frame, [T.b1InstalleLibye, T.b1InstalleLibye + 24], [0, 1], clampB);
+
+  // ===== ANNEAU DE SIEGE EL-FASHER (LOT 1.2, prio n1 Kimi) — radar SOS qui persiste tant que la ville
+  // est cernee : demarre a l'embrasement (b4CombattantsRepere) et reste actif jusqu'a la fin. Le `t`
+  // continu alimente la cascade des anneaux ; `siegeIntensity` fade in a l'arrivee, reste plein ensuite. =====
+  const siegeT = Math.max(0, frame - T.b4CombattantsRepere);
+  const siegeIntensity = interpolate(frame, [T.b4CombattantsRepere, T.b4CombattantsRepere + 20], [0, 1], clampB);
 
   // ===== ARC FINANCEMENT (Abou Dabi → CAMP près de Benghazi) — maillon 1 =====
   // L'argent émirati aboutit à un objet CONCRET (le camp d'entraînement, "Camp 17" à ~20km de Benghazi
@@ -318,6 +318,8 @@ export const SoudanActe5Globe: React.FC = () => {
                 {libyaActive > 0.01 && (
                   <path d={d} fill={t.landActive} fillOpacity={libyaActive * 0.92} stroke={t.landActiveStroke} strokeWidth={1.8} strokeOpacity={libyaActive} />
                 )}
+                {/* SOUFFLE DE FRONTIERE (LOT 1.1) : onde lumineuse qui epouse la Libye a son activation */}
+                <BorderPulse d={d} pulse={libyaPulse} />
               </g>
             );
           })()}
@@ -447,6 +449,12 @@ export const SoudanActe5Globe: React.FC = () => {
             </g>
           )}
 
+          {/* ANNEAU DE SIEGE EL-FASHER (LOT 1.2, prio n1 Kimi) — radar SOS persistant PAR-DESSUS le halo
+              d'embrasement : le halo dit "zone chaude", l'anneau dit "ville cernee, urgence active". */}
+          {pElFasher && siegeIntensity > 0.01 && (
+            <SiegeRings x={pElFasher.x} y={pElFasher.y} t={siegeT} intensity={siegeIntensity} color={RSF_RED} />
+          )}
+
           {/* "RÉSUMONS" — glow cascade sur les 3 maillons (Abou Dabi → Kufra → El-Fasher), ZÉRO texte */}
           {resumonsBase > 0.01 && [GEO.abuDhabi, GEO.kufra, GEO.elFasher].map((pt, i) => {
             const p = projectPoint(proj, pt as LonLat, visible);
@@ -460,6 +468,14 @@ export const SoudanActe5Globe: React.FC = () => {
 
           {/* ombre sphérique (volume) — par-dessus le contenu, clippée à la sphère */}
           <rect x={0} y={0} width={W} height={H} fill="url(#a5shade)" clipPath="url(#a5sphereClip)" pointerEvents="none" />
+
+          {/* ===== GÉOPLAQUES (labels posés sur la carte — unification retour Aziz : remplace les
+              <GeoLabel> texte plaqué, moins lisibles). Rendues APRÈS l'ombre sphérique pour rester nettes.
+              Abou Dabi (accent vert EAU) · Maréchal Haftar (accent brun-orangé, disparaît après ~2s) ·
+              El-Fasher (accent rouge RSF). ===== */}
+          {pAbuDhabi && <GeoPlaqueSVG x={pAbuDhabi.x} y={pAbuDhabi.y} label="Abou Dabi" op={uaeReveal} accent="#00732F" dy={-20} />}
+          {pBenghazi && <GeoPlaqueSVG x={pBenghazi.x} y={pBenghazi.y - 4} label="Maréchal Haftar" op={haftarLabelOp} accent="#9B5A2E" dy={-52} />}
+          {pElFasher && <GeoPlaqueSVG x={pElFasher.x} y={pElFasher.y} label="El-Fasher" op={interpolate(frame, [T.b4ElFasherNomme, T.b4ElFasherNomme + 16], [0, 1], clampB)} accent={RSF_RED} dy={-20} />}
         </svg>
 
         {/* ===== ACTEURS INCARNÉS — camp/dépôt Kufra + le maréchal Haftar (commandement) =====
@@ -472,18 +488,7 @@ export const SoudanActe5Globe: React.FC = () => {
           <PortraitToken key={`sold${i}`} x={p.x} y={p.y} sprite="portrait-rsf" border="#B14B3C" op={soldierReveal(i)} size={38} />
         ))}
         {pBenghazi && <PortraitToken x={pBenghazi.x} y={pBenghazi.y - 4} sprite="portrait-haftar" border="#9B5A2E" op={haftarReveal} size={66} />}
-
-        {pAbuDhabi && <GeoLabel x={pAbuDhabi.x} y={pAbuDhabi.y} label="Abou Dabi" op={uaeReveal} color="#00732F" />}
-        {/* label Benghazi décalé au-dessus du jeton Haftar (évite le chevauchement) */}
-        {pBenghazi && (
-          <div style={{ position: "absolute", left: pBenghazi.x, top: pBenghazi.y - 52,
-            transform: "translateX(-50%)", opacity: haftarLabelOp,
-            fontFamily: "Georgia, serif", fontWeight: 800, fontSize: 20, letterSpacing: "0.02em",
-            color: t.labelFill, textShadow: "0 2px 8px rgba(0,0,0,0.9)", whiteSpace: "nowrap", pointerEvents: "none" }}>
-            Maréchal Haftar
-          </div>
-        )}
-        {pElFasher && <GeoLabel x={pElFasher.x} y={pElFasher.y} label="El-Fasher" op={interpolate(frame, [T.b4ElFasherNomme, T.b4ElFasherNomme + 16], [0, 1], clampB)} color={RSF_RED} />}
+        {/* (labels Abou Dabi / Maréchal Haftar / El-Fasher = géoplaques SVG rendues dans le <svg> ci-dessus) */}
 
         {/* SOURCES EXACTES — une ligne compacte, bas d'écran, ~2s (retour Aziz : pas un pavé). Réfs
             vérifiées WebSearch 2026-07-19, 4 sources concordantes. Apparaît 60f (~2s) avant de disparaître. */}

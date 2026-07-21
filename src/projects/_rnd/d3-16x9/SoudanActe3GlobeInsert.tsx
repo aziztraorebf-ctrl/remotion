@@ -15,7 +15,7 @@ import React from "react";
 import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "remotion";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
 import { arcPathD, pointAlongArc, projectPoint, GEO, type LonLat } from "./geoArc";
-import { THEMES, GlobeFlagFill, DestPoint, ShockRing } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, DestPoint, ShockRing, BorderPulse } from "./SoudanActe3GlobeProto16x9";
 import { buildInsertCam, camAt } from "./globeCamera";
 import { T, INSERT_FRAMES, AUDIO_FULL, AUDIO_START_FROM } from "./soudanActe3GlobeInsertTiming";
 
@@ -151,6 +151,9 @@ export const SoudanActe3GlobeInsert: React.FC<{ startScaleMul?: number }> = ({ s
   const hangarDubai = interpolate(frame, [T.b3PremierImportateur + 16, T.b3PremierImportateur + 36], [0, 1], clampB);
   const turkeyLight = interpolate(frame, [T.b5TurquieBayraktar - 4, T.b5TurquieBayraktar + 18, T.b6Start], [0, 1, 0.85], clampB);
   const egyptLight = interpolate(frame, [T.b5bisRouteNordEgypte - 4, T.b5bisRouteNordEgypte + 18, T.b6Start], [0, 1, 0.8], clampB);
+  // BorderPulse (LOT 1.1) — souffle de frontiere a la NOMINATION de Turquie/Egypte (une seule fois, ~800ms).
+  const turkeyPulse = interpolate(frame, [T.b5TurquieBayraktar, T.b5TurquieBayraktar + 24], [0, 1], clampB);
+  const egyptPulse = interpolate(frame, [T.b5bisRouteNordEgypte, T.b5bisRouteNordEgypte + 24], [0, 1], clampB);
 
   // ===== ARCS (d) =====
   const orArcD = arcPathD(proj, path, GEO.jebelAmer, GEO.dubai, orReveal);
@@ -252,8 +255,8 @@ export const SoudanActe3GlobeInsert: React.FC<{ startScaleMul?: number }> = ({ s
           })}
           {/* pays-cibles : base neutre + drapeau qui se materialise a l'arrivee du flux */}
           {uae && <g>{countryPath(uae, "uae")}<GlobeFlagFill feature={uae} proj={proj} path={path} flagCode="ae" reveal={uaeLight} glow={t.landActiveStroke} /></g>}
-          {turkey && <g>{countryPath(turkey, "tr")}<GlobeFlagFill feature={turkey} proj={proj} path={path} flagCode="tr" reveal={turkeyLight} glow={t.landActiveStroke} /></g>}
-          {egypt && <g>{countryPath(egypt, "eg")}<GlobeFlagFill feature={egypt} proj={proj} path={path} flagCode="eg" reveal={egyptLight} glow={t.landActiveStroke} /></g>}
+          {turkey && <g>{countryPath(turkey, "tr")}<GlobeFlagFill feature={turkey} proj={proj} path={path} flagCode="tr" reveal={turkeyLight} glow={t.landActiveStroke} />{(() => { const dT = path(turkey as any); return dT ? <BorderPulse d={dT} pulse={turkeyPulse} /> : null; })()}</g>}
+          {egypt && <g>{countryPath(egypt, "eg")}<GlobeFlagFill feature={egypt} proj={proj} path={path} flagCode="eg" reveal={egyptLight} glow={t.landActiveStroke} />{(() => { const dE = path(egypt as any); return dE ? <BorderPulse d={dE} pulse={egyptPulse} /> : null; })()}</g>}
           {/* Soudan clair au centre */}
           {sudan && (() => { const d = path(sudan as any); return d ? <path d={d} fill={t.sudanFill} fillOpacity={0.95} stroke={t.sudanStroke} strokeWidth={1.6} /> : null; })()}
 

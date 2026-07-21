@@ -19,7 +19,7 @@ import {
 } from "./globeGeo";
 import { GEO, windingPathD, projectPoint, type LonLat } from "./geoArc";
 import { camAt, type CamKey } from "./globeCamera";
-import { THEMES, GlobeFlagFill } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, BorderPulse } from "./SoudanActe3GlobeProto16x9";
 
 // Palette = THEMES.mixte (source de verite unique du globe Soudan, utilisee par Actes 3/5/6 —
 // coherence episode par construction, pas de couleurs en dur qui derivent).
@@ -251,6 +251,21 @@ export const SoudanActe4B6Globe: React.FC = () => {
                 glow={p.color}
               />
             );
+          })}
+
+          {/* BorderPulse (LOT 1.1) — souffle de frontiere sur chaque PAYS SOURCE a sa nomination
+              (complementaire a l'onde radiale sur Khartoum plus bas, qui reste intacte — celle-ci
+              dit "la cible est touchee", celle-la dit "la source s'active"). Couleur = camp (p.color). */}
+          {PUISSANCES.map((p, i) => {
+            const feat = puissanceFeatures[i];
+            if (!feat) return null;
+            const d = path(feat as any);
+            if (!d) return null;
+            const pulse = interpolate(frame, [p.appearF, p.appearF + 24], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            });
+            return <BorderPulse key={`pulse-${p.label}`} d={d} pulse={pulse} color={p.color} />;
           })}
 
           {/* ARCS A OCCLUSION + COURBURE : chaque puissance trace un arc SINUEUX vers Khartoum.
