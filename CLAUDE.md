@@ -23,7 +23,8 @@ Claude est Expert Video Director (Remotion). Aziz est le réalisateur : il décr
 | DeepSeek — 3e voix DA-brief (TEXTE only, PAS de vision) | `deepseek/deepseek-v4-pro` via OpenRouter |
 | GPT — texte+vision (SVG, breakdown JSON, idéation) | `openai/gpt-5.5` via OpenRouter |
 | GPT — génération image | `gpt-5.4-image-2` via OpenRouter (PAS `gpt-5.5-image`, n'existe pas) |
-| SVG jetons/assets low-cost | `z-ai/glm-5.2` via OpenRouter |
+| **SVG maison (défaut) — scènes/objets/jetons** | **Fable 5 (`claude-fable-5`) appelé comme AGENT Claude Code, ZÉRO appel API — inclus dans l'abonnement Max.** Mode **élevé** = scènes normales + objets/jetons ; mode **MAX** = complexe (narratif, organique, visage, parallaxe, perso riggable). Prouvé 2026-07-20 (visage ≥ Kimi K3). Détail : `memory/doctrines/SVG-SCENES-GENERATIVES.md`. |
+| SVG — modèles COMPLÉMENTAIRES (à côté des 3 principaux) | **GLM `z-ai/glm-5.2`** (jetons/assets low-cost, planche N-en-lot, géométrie/schéma) + **Kimi K3** (vision→SVG one-shot, visage organique). GARDÉS — Fable 5 devient le défaut mais on conserve ces 2 modèles puissants en réserve/comparaison (décision Aziz 2026-07-20 : « bien d'avoir GLM aussi fort à côté »). |
 | Claude (moi-même) | `claude-opus-4-8`, `claude-sonnet-4-6`, `claude-haiku-4-5-20251001` |
 
 **INTERDITS** : toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-image`, `imagen`, `nano-banana` ; les vieux Claude (séries 3.x). Détail exhaustif des bannis : `memory/tools/gemini.md`.

@@ -34,6 +34,12 @@ import { SplitScreenProto16x9, SPLIT_SCREEN_FRAMES } from "./projects/_rnd/d3-16
 import { ChartogramProto16x9, CHARTOGRAM_FRAMES } from "./projects/_rnd/d3-16x9/ChartogramProto16x9";
 import { SankeyProto16x9, SANKEY_FRAMES } from "./projects/_rnd/d3-16x9/SankeyProto16x9";
 import { CartogramProto16x9, CARTOGRAM_FRAMES } from "./projects/_rnd/d3-16x9/CartogramProto16x9";
+import { NeonTerminalAnime16x9, NEON_TERMINAL_FRAMES } from "./projects/_rnd/fable-svg/NeonTerminalAnime16x9";
+import { PecheurVisageAnime, PECHEUR_VISAGE_FRAMES } from "./projects/_rnd/fable-svg/PecheurVisageAnime";
+import { PecheurVisageAnimeV2, PECHEUR_VISAGE_V2_FRAMES } from "./projects/_rnd/fable-svg/PecheurVisageAnimeV2";
+import { FlammeAnime16x9, FLAMME_ANIME_FRAMES } from "./projects/_rnd/fable-svg/FlammeAnime16x9";
+import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-svg/PecheurPersoAnime";
+import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
@@ -725,6 +731,54 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Cartogram-Proto16x9"
           component={CartogramProto16x9}
           durationInFrames={CARTOGRAM_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Fable-NeonTerminal-Anime16x9"
+          component={NeonTerminalAnime16x9}
+          durationInFrames={NEON_TERMINAL_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Fable-PecheurVisage-Anime"
+          component={PecheurVisageAnime}
+          durationInFrames={PECHEUR_VISAGE_FRAMES}
+          fps={30}
+          width={1080}
+          height={1080}
+        />
+        <Composition
+          id="Fable-PecheurVisage-Anime-V2"
+          component={PecheurVisageAnimeV2}
+          durationInFrames={PECHEUR_VISAGE_V2_FRAMES}
+          fps={30}
+          width={1080}
+          height={1080}
+        />
+        <Composition
+          id="Fable-Flamme-Anime16x9"
+          component={FlammeAnime16x9}
+          durationInFrames={FLAMME_ANIME_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Fable-PecheurPerso-Anime"
+          component={PecheurPersoAnime}
+          durationInFrames={PECHEUR_PERSO_FRAMES}
+          fps={30}
+          width={1080}
+          height={1080}
+        />
+        <Composition
+          id="Fable-VillageParallaxe-Anime"
+          component={VillageParallaxeAnime}
+          durationInFrames={VILLAGE_PARALLAXE_FRAMES}
           fps={30}
           width={1920}
           height={1080}
