@@ -72,7 +72,7 @@ const PortraitToken: React.FC<{ x: number; y: number; appear: number; frame: num
         transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
       <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden", background: "#F5EFD6",
         border: `3.5px solid ${border}`, boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
-        <img src={staticFile("_shared/sprites/warmap/portrait-rsf.png")}
+        <img src={staticFile("_shared/sprites/warmap/portrait-hemeti.png")}
           style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center", transform: "translate(-8%, 2%)", display: "block" }} />
       </div>
     </div>

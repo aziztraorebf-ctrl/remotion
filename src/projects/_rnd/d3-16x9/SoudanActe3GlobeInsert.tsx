@@ -31,9 +31,11 @@ export const INSERT_START_SCALE_MUL = 6.5;
 // PortraitToken — jeton-visage faction (recette EXACTE du Mapbox SoudanToken : cercle parchemin +
 // bordure faction + portrait clippe rond + ombre). Coherence totale avec la Section 1 Mapbox (memes
 // visages Hemedti/al-Burhan). HTML overlay positionne aux coords projetees du globe.
+// Personnes NOMMEES = vrais visages (audit jetons 2026-07-21) : le jeton RSF = Hemedti, le jeton
+// SAF = al-Burhan. On affiche leur portrait reel, pas le sprite generique portrait-rsf/saf (soldat anonyme).
 const PORTRAIT: Record<"rsf" | "saf", { sprite: string; border: string }> = {
-  rsf: { sprite: "portrait-rsf", border: "#B14B3C" },
-  saf: { sprite: "portrait-saf", border: "#3E6E9E" },
+  rsf: { sprite: "portrait-hemeti", border: "#B14B3C" },
+  saf: { sprite: "portrait-burhan", border: "#3E6E9E" },
 };
 const PortraitToken: React.FC<{ x: number; y: number; faction: "rsf" | "saf"; pulse: number }> = ({ x, y, faction, pulse }) => {
   const D = 64;
