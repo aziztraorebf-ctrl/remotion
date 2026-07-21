@@ -162,15 +162,38 @@ const NileAnime: React.FC<{ frame: number }> = ({ frame }) => {
   );
 };
 
-const CivilToken: React.FC<{ x: number; y: number; asset: string; appearAt: number; extinctAt: number | null; frame: number; idx: number }> =
-  ({ x, y, asset, appearAt, extinctAt, frame, idx }) => {
+const CivilToken: React.FC<{ x: number; y: number; asset: string; appearAt: number; extinctAt: number | null; frame: number; idx: number; impactAt: number }> =
+  ({ x, y, asset, appearAt, extinctAt, frame, idx, impactAt }) => {
     const appear = clampI(frame, appearAt, appearAt + 14);
-    const idle = Math.sin((frame + idx * 11) * 0.06) * 1.4;
-    const alive = extinctAt === null || frame < extinctAt ? 1
-      : interpolate(frame, [extinctAt, extinctAt + 26], [1, 0.1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
     const dead = extinctAt !== null && frame >= extinctAt;
+    // RETOUR AZIZ : apres la frappe, les jetons ecartes ne DOIVENT PAS revenir a la file. Une fois eteints
+    // ils DISPARAISSENT TOTALEMENT (opacite -> 0, pas 0.1) et RESTENT figes a leur position d'ecartement.
+    const alive = extinctAt === null || frame < extinctAt ? 1
+      : interpolate(frame, [extinctAt, extinctAt + 26], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+    // idle (respiration de la file) UNIQUEMENT tant que le civil est vivant — gele des l'extinction pour
+    // qu'il ne semble pas "bouger/revenir" une fois touche.
+    const idle = dead ? 0 : Math.sin((frame + idx * 11) * 0.06) * 1.4;
+
+    // La file se BRISE a l'impact : chaque civil s'ECARTE de l'impact (direction opposee au souffle).
+    const dx0 = x - IMPACT.x;
+    const dy0 = y - IMPACT.y;
+    const dist = Math.max(1, Math.hypot(dx0, dy0));
+    const ux = dx0 / dist;
+    const uy = dy0 / dist;
+    // les morts s'ecartent moins loin (ils tombent), les survivants fuient plus loin.
+    const fleeMax = dead ? 26 : 58 + idx * 6;
+    // fuite ARRETEE a l'extinction : le civil se FIGE a sa position d'ecartement (frame gelee = extinctAt),
+    // il n'y a plus aucun mouvement apres la mort (ni retour, ni derive). Pour un vivant, la fuite continue.
+    const fleeFrame = dead ? (extinctAt as number) : frame;
+    const flee = interpolate(fleeFrame, [impactAt, impactAt + 40], [0, fleeMax], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.quad) });
+    const fx = ux * flee;
+    const fy = uy * flee;
+    // les morts basculent (petite rotation de chute figee) ; les vivants restent droits.
+    const tilt = dead ? interpolate(frame, [extinctAt as number, (extinctAt as number) + 20], [0, 14], { extrapolateLeft: "clamp", extrapolateRight: "clamp" }) : 0;
+
+    if (appear * alive <= 0.001) return null; // une fois disparu, plus rien (pas de fantome a 0.1)
     return (
-      <div style={{ position: "absolute", left: x, top: y + idle, transform: "translate(-50%,-50%)", width: 38, height: 38, borderRadius: "50%", opacity: appear * alive, border: "2.4px solid #5c4d38", background: IVORY, overflow: "hidden", boxShadow: "0 4px 6px rgba(26,11,8,0.45)" }}>
+      <div style={{ position: "absolute", left: x + fx, top: y + fy + idle, transform: `translate(-50%,-50%) rotate(${tilt}deg)`, width: 38, height: 38, borderRadius: "50%", opacity: appear * alive, border: "2.4px solid #5c4d38", background: IVORY, overflow: "hidden", boxShadow: "0 4px 6px rgba(26,11,8,0.45)" }}>
         <Img src={staticFile(`_shared/sprites/warmap/${asset}.png`)} style={{ width: "100%", height: "100%", objectFit: "cover", filter: dead ? "grayscale(1)" : "none" }} />
       </div>
     );
@@ -236,16 +259,26 @@ const DroneStrike: React.FC<{ frame: number; startAt: number; impactAt: number }
 const Impact: React.FC<{ frame: number; impactAt: number }> = ({ frame, impactAt }) => {
   const t = frame - impactAt;
   if (t < 0) return null;
-  const flashOp = interpolate(t, [0, 4, 22], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const r1 = interpolate(t, [0, 60], [10, 165], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const op1 = interpolate(t, [0, 10, 60], [0, 0.85, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const r2 = interpolate(t, [14, 78], [10, 205], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const op2 = interpolate(t, [14, 26, 78], [0, 0.55, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // LOT 4b : frappe plus violente. Flash initial plus grand et plus bref (coeur de la detonation),
+  // + 3 ondes de choc (au lieu de 2), rayons agrandis, depart plus sec (easing out).
+  const easeOut = Easing.out(Easing.quad);
+  const flashOp = interpolate(t, [0, 3, 16], [0, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  const flashR = interpolate(t, [0, 3, 16], [18, 48, 40], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // onde 1 (rouge, la plus rapide/violente)
+  const r1 = interpolate(t, [0, 52], [10, 230], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut });
+  const op1 = interpolate(t, [0, 6, 52], [0, 0.95, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // onde 2 (or, decalee)
+  const r2 = interpolate(t, [10, 74], [10, 280], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut });
+  const op2 = interpolate(t, [10, 20, 74], [0, 0.7, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // onde 3 (ajout — souffle large, plus tardif, plus fin)
+  const r3 = interpolate(t, [22, 96], [10, 340], { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: easeOut });
+  const op3 = interpolate(t, [22, 34, 96], [0, 0.4, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return (
     <svg style={{ position: "absolute", inset: 0 }} width={1920} height={1080}>
-      <circle cx={IMPACT.x} cy={IMPACT.y} r={r1} fill="none" stroke={RED} strokeWidth={4} opacity={op1} />
-      <circle cx={IMPACT.x} cy={IMPACT.y} r={r2} fill="none" stroke="#bf9442" strokeWidth={2.5} opacity={op2} />
-      <circle cx={IMPACT.x} cy={IMPACT.y} r={26} fill={IVORY} opacity={flashOp} />
+      <circle cx={IMPACT.x} cy={IMPACT.y} r={r1} fill="none" stroke={RED} strokeWidth={5} opacity={op1} />
+      <circle cx={IMPACT.x} cy={IMPACT.y} r={r2} fill="none" stroke="#bf9442" strokeWidth={3} opacity={op2} />
+      <circle cx={IMPACT.x} cy={IMPACT.y} r={r3} fill="none" stroke={RED} strokeWidth={2} opacity={op3} />
+      <circle cx={IMPACT.x} cy={IMPACT.y} r={flashR} fill={IVORY} opacity={flashOp} />
     </svg>
   );
 };
@@ -255,27 +288,31 @@ const SmokeCol: React.FC<{ frame: number; smokeAt: number; ax: number; ay: numbe
   if (rel < 0) return null;
   const appear = interpolate(rel, [0, 20], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   const seed = Math.floor(frame / 4) % 20;
-  const puffs = [0, 22, 44].map((offset, i) => {
-    const tt = (((rel + offset) % 72) + 72) % 72 / 72;
-    const py = -tt * 74 * scale;
-    const sc = (0.5 + tt * 1.1) * scale;
-    const op = interpolate(tt, [0, 0.15, 0.75, 1], [0, 0.52, 0.33, 0], { extrapolateRight: "clamp" }) * appear;
-    return { py, sc, op, i };
+  // LOT 4b : colonne plus fournie (4 bouffees au lieu de 3) qui monte PLUS HAUT (74->118) et
+  // grossit davantage. Cycle plus long (72->96) = la fumee persiste et domine la fin de scene.
+  const puffs = [0, 18, 36, 54].map((offset, i) => {
+    const tt = (((rel + offset) % 96) + 96) % 96 / 96;
+    const py = -tt * 118 * scale;
+    const sc = (0.55 + tt * 1.5) * scale;
+    const op = interpolate(tt, [0, 0.12, 0.7, 1], [0, 0.6, 0.4, 0], { extrapolateRight: "clamp" }) * appear;
+    // le coeur (bas de colonne, tt petit) est plus sombre/dense pres de l'impact
+    const dark = tt < 0.3;
+    return { py, sc, op, i, dark };
   });
   return (
     <svg style={{ position: "absolute", inset: 0 }} width={1920} height={1080}>
       <defs>
         <filter id={id}>
           <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed={seed} result="n" />
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="10" />
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="12" />
         </filter>
       </defs>
       <g filter={`url(#${id})`} transform={`translate(${ax} ${ay})`}>
         {puffs.map((p) => (
           <g key={p.i} transform={`translate(0 ${p.py}) scale(${p.sc})`} opacity={p.op}>
-            <ellipse cx={0} cy={0} rx={16} ry={18} fill="#6b5c42" />
-            <ellipse cx={-6} cy={-5} rx={11} ry={13} fill="#5c4d38" />
-            <ellipse cx={6} cy={-2} rx={9} ry={11} fill="#4a3f2e" />
+            <ellipse cx={0} cy={0} rx={19} ry={21} fill={p.dark ? "#4a3f2e" : "#6b5c42"} />
+            <ellipse cx={-7} cy={-6} rx={13} ry={15} fill={p.dark ? "#3a3123" : "#5c4d38"} />
+            <ellipse cx={7} cy={-2} rx={11} ry={13} fill={p.dark ? "#2e271b" : "#4a3f2e"} />
           </g>
         ))}
       </g>
@@ -312,13 +349,13 @@ export const KostiInsertSVG: React.FC<{ f4: KostiF4 }> = ({ f4 }) => {
 
       {CIVILS.map((c, i) => (
         <CivilToken key={i} x={c.x} y={c.y} asset={c.asset} appearAt={civilsAppear + i * 7}
-          extinctAt={extinctFor(i)} frame={frame} idx={i} />
+          extinctAt={extinctFor(i)} frame={frame} idx={i} impactAt={impactAt} />
       ))}
 
       <DroneStrike frame={frame} startAt={droneStart} impactAt={impactAt} />
       <Impact frame={frame} impactAt={impactAt} />
-      <SmokeCol frame={frame} smokeAt={smokeAt} ax={STATION_CENTER.x} ay={STATION_CENTER.y + 30} scale={1.25} id="kostiSmokeStation" />
-      <SmokeCol frame={frame} smokeAt={smokeAt} ax={IMPACT.x - 30} ay={IMPACT.y} scale={0.8} id="kostiSmokeImpact" />
+      <SmokeCol frame={frame} smokeAt={smokeAt} ax={STATION_CENTER.x} ay={STATION_CENTER.y + 30} scale={1.6} id="kostiSmokeStation" />
+      <SmokeCol frame={frame} smokeAt={smokeAt} ax={IMPACT.x - 30} ay={IMPACT.y} scale={0.95} id="kostiSmokeImpact" />
     </AbsoluteFill>
   );
 };

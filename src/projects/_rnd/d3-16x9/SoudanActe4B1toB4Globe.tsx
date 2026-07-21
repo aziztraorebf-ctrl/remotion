@@ -43,7 +43,7 @@ import {
 } from "./globeGeo";
 import { GEO, windingPathD, projectPoint, type LonLat } from "./geoArc";
 import { camAt, type CamKey } from "./globeCamera";
-import { THEMES, GlobeFlagFill, Medallion, RSF_RED, SAF_BLUE } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, RSF_RED, SAF_BLUE } from "./SoudanActe3GlobeProto16x9";
 import { NavireGuerreEncre } from "../../_shared/svg-library/elements/maritime/NavireGuerreEncre";
 import { PART_OFFSETS, BEAT1, BEAT2, BEAT3, BEAT4 } from "../../warmap/soudan-acte4/soudanActe4Timing";
 
@@ -158,6 +158,48 @@ const GeoPlaque: React.FC<{ x: number; y: number; label: string; op: number; acc
     );
   };
 
+// --- PortraitToken (repris EXACTEMENT de SoudanActe5Globe.tsx) — jeton-visage : cercle parchemin +
+// bordure faction + portrait clippe rond + ombre-sol. Remplace les Medallion-lettre RSF/SAF par les
+// vrais visages des dirigeants (retour Aziz : lisibilite/incarnation superieure a une lettre).
+const PortraitToken: React.FC<{ x: number; y: number; sprite: string; border: string; op: number; size?: number }> =
+  ({ x, y, sprite, border, op, size = 62 }) => {
+    if (op <= 0.01) return null;
+    const D = size;
+    return (
+      <div style={{ position: "absolute", left: x, top: y, transform: "translate(-50%,-50%)", opacity: op, pointerEvents: "none" }}>
+        <div style={{ position: "absolute", left: "50%", top: "72%", width: D * 0.82, height: D * 0.26,
+          transform: "translate(-50%,-50%)", background: "rgba(40,27,8,0.42)", borderRadius: "50%", filter: "blur(6px)" }} />
+        <div style={{ width: D, height: D, borderRadius: "50%", overflow: "hidden", background: "#F5EFD6",
+          border: `3.5px solid ${border}`, boxShadow: "0 4px 10px rgba(0,0,0,0.45), 0 1px 2px rgba(0,0,0,0.3)" }}>
+          <img src={staticFile(`_shared/sprites/warmap/${sprite}.png`)}
+            style={{ width: "118%", height: "118%", objectFit: "cover", objectPosition: "top center",
+              transform: "translate(-8%, 2%)", display: "block" }} />
+        </div>
+      </div>
+    );
+  };
+
+// --- Glow territorial ancre-geo (RSF/SAF) — le Soudan "porte" la guerre civile au lieu de rester
+// un territoire vide : un halo radial pose sous les jetons, qui persiste et pulse legerement.
+const TerritoryGlow: React.FC<{ x: number; y: number; color: string; op: number; frame: number; id: string }> =
+  ({ x, y, color, op, frame, id }) => {
+    if (op <= 0.01) return null;
+    const pulse = 0.9 + 0.1 * Math.sin(frame / 26);
+    const r = 62 * pulse;
+    return (
+      <g opacity={op}>
+        <defs>
+          <radialGradient id={id} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={color} stopOpacity={0.30} />
+            <stop offset="55%" stopColor={color} stopOpacity={0.16} />
+            <stop offset="100%" stopColor={color} stopOpacity={0} />
+          </radialGradient>
+        </defs>
+        <circle cx={x} cy={y} r={r} fill={`url(#${id})`} />
+      </g>
+    );
+  };
+
 // --- Icone base navale sobre (reprise EXACTE de B1B2Globe) — apparait a Port-Soudan et RESTE.
 const NavalBaseIcon: React.FC<{ x: number; y: number; reveal: number; pulse: number }> = ({ x, y, reveal, pulse }) => {
   if (reveal <= 0.01) return null;
@@ -179,25 +221,53 @@ const NavalBaseIcon: React.FC<{ x: number; y: number; reveal: number; pulse: num
 // zoom camera plus serre + une echelle relative plus grande rendent le navire nettement plus lisible).
 const NAVIRE_CX = (873 + 1679) / 2;
 const NAVIRE_CY = (367 + 758) / 2;
-const NavireEncreAuGlobe: React.FC<{ x: number; y: number; reveal: number; frame: number }> = ({ x, y, reveal, frame }) => {
+const NavireEncreAuGlobe: React.FC<{ x: number; y: number; reveal: number; frame: number; camScale: number }> = ({ x, y, reveal, frame, camScale }) => {
   if (reveal <= 0.01) return null;
-  // scale 0.1 -> 0.13 (retour Aziz : navire trop petit dans B1B2Globe original). Combine avec le
-  // scaleMul camera plus fort (3.3-3.5 vs 2.6-2.95), le navire est visiblement plus grand a l'ecran.
-  const scale = 0.13 * reveal;
+  // TAILLE PROPORTIONNELLE AU GLOBE (retour Aziz : "le navire n'est pas fixe, il devient gigantesque
+  // quand on dezoome"). Le navire est un objet POSE SUR LA MER — il doit grossir/retrecir AVEC la carte,
+  // pas garder une taille ecran fixe (sinon il parait enorme des que la camera dezoome). On calibre a
+  // scaleMul=3.4 (zoom Port-Soudan du B2) ou 0.20 est la bonne taille, et on met a l'echelle lineairement.
+  const NAVIRE_CALIB_SCALE = 3.4;
+  const scale = 0.20 * (camScale / NAVIRE_CALIB_SCALE) * reveal;
+  // le sillage/vagues/ondes suivent la meme echelle relative pour rester coherents avec la coque.
+  const rel = camScale / NAVIRE_CALIB_SCALE;
   const bobY = Math.sin(frame / 11) * 1.6;
-  const rollDeg = Math.sin(frame / 14) * 0.9;
+  const rollDeg = Math.sin(frame / 14) * 1.6; // tangage plus marque (retour Aziz : navire trop statique)
   const waveA = 0.5 + 0.5 * Math.sin(frame / 18);
   const waveB = 0.5 + 0.5 * Math.sin(frame / 18 + Math.PI * 0.66);
   const waveC = 0.5 + 0.5 * Math.sin(frame / 18 + Math.PI * 1.33);
+  // apparition : petit halo/splash d'encre autour de la coque, s'estompe une fois le navire installe.
+  const splash = interpolate(reveal, [0, 0.3], [1, 0], clampB);
+  // sillage anime derriere la poupe : dashes qui defilent vers l'arriere (le navire "avance" sur place).
+  // Cote +x (droite) : dans l'asset NavireGuerreEncre, le sillage natif (wakeOpacity) est dessine a
+  // x=1655..1887, PASSE le bord droit de la coque (873..1679) -> la poupe est du cote droit (+x) du
+  // repere local. On prolonge ce meme cote, hors silhouette (coque scaled ~ +80px de large).
+  const wakeOffset = -(frame * 2.4) % 26;
   return (
-    <g transform={`translate(${x} ${y + bobY}) rotate(${rollDeg})`} opacity={reveal}>
-      <ellipse cx={0} cy={17} rx={62} ry={9} fill="none" stroke={t.oceanInner} strokeWidth={1.4} opacity={0.32 * waveA} />
-      <ellipse cx={-14} cy={22} rx={44} ry={6.5} fill="none" stroke={t.oceanInner} strokeWidth={1.2} opacity={0.28 * waveB} />
-      <ellipse cx={16} cy={25} rx={36} ry={5.5} fill="none" stroke={t.oceanInner} strokeWidth={1.1} opacity={0.26 * waveC} />
-      <g opacity={0.35 * reveal}>
-        <circle cx={5.6} cy={-30} r={3.2} fill={t.grat} opacity={0.5} />
-        <circle cx={7.4} cy={-36 - Math.sin(frame / 20) * 2} r={4.2} fill={t.grat} opacity={0.36} />
-        <circle cx={9.6} cy={-43 - Math.sin(frame / 20) * 3} r={5.2} fill={t.grat} opacity={0.24} />
+    <g transform={`translate(${x} ${y + bobY * rel}) rotate(${rollDeg})`} opacity={reveal}>
+      {/* toutes les decorations (vagues, ondes, sillage) mises a l'echelle relative du globe (rel) pour
+          rester coherentes avec la coque, elle-meme scalee par `scale` = 0.20 * rel * reveal. */}
+      <g transform={`scale(${rel})`}>
+        {splash > 0.01 && (
+          <circle r={16 + 26 * (1 - splash)} fill={t.oceanInner} opacity={0.3 * splash} />
+        )}
+        <ellipse cx={0} cy={17} rx={62} ry={9} fill="none" stroke={t.oceanInner} strokeWidth={1.4} opacity={0.32 * waveA} />
+        <ellipse cx={-14} cy={22} rx={44} ry={6.5} fill="none" stroke={t.oceanInner} strokeWidth={1.2} opacity={0.28 * waveB} />
+        <ellipse cx={16} cy={25} rx={36} ry={5.5} fill="none" stroke={t.oceanInner} strokeWidth={1.1} opacity={0.26 * waveC} />
+        <g opacity={0.35 * reveal}>
+          <circle cx={5.6} cy={-30} r={3.2} fill={t.grat} opacity={0.5} />
+          <circle cx={7.4} cy={-36 - Math.sin(frame / 20) * 2} r={4.2} fill={t.grat} opacity={0.36} />
+          <circle cx={9.6} cy={-43 - Math.sin(frame / 20) * 3} r={5.2} fill={t.grat} opacity={0.24} />
+        </g>
+        {/* sillage a la poupe (cote droit, hors silhouette) : traits qui defilent vers l'arriere. */}
+        <g stroke={t.oceanInner} strokeLinecap="round" opacity={0.65 * reveal}>
+          <line x1={90} y1={2} x2={128} y2={2} strokeWidth={2.6} strokeOpacity={0.55}
+            strokeDasharray="7 11" strokeDashoffset={wakeOffset} />
+          <line x1={86} y1={10} x2={122} y2={13} strokeWidth={2} strokeOpacity={0.4}
+            strokeDasharray="6 10" strokeDashoffset={wakeOffset * 0.8} />
+          <line x1={84} y1={-6} x2={116} y2={-8} strokeWidth={1.6} strokeOpacity={0.32}
+            strokeDasharray="5 9" strokeDashoffset={wakeOffset * 0.65} />
+        </g>
       </g>
       <g transform={`scale(${scale}) translate(${-NAVIRE_CX} ${-NAVIRE_CY})`}>
         <NavireGuerreEncre wakeOpacity={0.15} deckLineColor={t.flowGold} hatchPatternId="a4fusedNavireInk" />
@@ -270,6 +340,10 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
   const cx = W / 2;
   const cy = H / 2;
 
+  // Offset commun du filet lumineux qui coule sur les flux traces (RSF/SAF B1, arc B3) — un seul
+  // rythme de "coule" partage par tous les flux vivants de l'Acte.
+  const flowOffset = (frame * 2) % 40;
+
   // ===== BEAT 1 : Russie (drapeau) + flux RSF (ancien, s'estompe MAIS persiste) + flux SAF (net) ====
   const russiaReveal = interpolate(frame, [T.troisiemePays, T.troisiemePays + 22], [0, 1], clampB);
   const rsfFlowProg = interpolate(frame, [T.wagnerArmait, T.wagnerArmait + 40], [0, 1], clampB);
@@ -292,7 +366,6 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
   const arcProg = interpolate(frame, [T.egypteNommee, T.egypteNommee + 46], [0, 1], clampB);
   const arcOp = interpolate(frame, [T.egypteNommee, T.egypteNommee + 18], [0, 0.95], clampB);
   const arcPulse = interpolate(frame, [T.egypteNommee + 30, T.egypteNommee + 70], [1, 0], clampB);
-  const flowOffset = (frame * 2) % 40;
   const safRenforce = interpolate(
     frame,
     [T.egypteNommee, T.egypteNommee + 20, T.renseignement, T.renseignement + 20, T.coordonne, T.coordonne + 20],
@@ -310,7 +383,25 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
   // le drapeau egyptien (deja pose au B3) se renforce encore un peu au B4 ("elle redoute...") — MAX
   // avec le reveal B3 pour ne jamais regresser.
   const egyptFlagReinforceB4 = interpolate(frame, [T.redouteInfluence, T.redouteInfluence + 30], [0, 0.2], clampB);
-  const egypteRevealFinal = Math.min(1, egypteReveal + egyptFlagReinforceB4);
+  const egypteRevealBase = Math.min(1, egypteReveal + egyptFlagReinforceB4);
+  // ===== RESPIRATION NIL (retour Aziz) — une fois le Nil trace, on OUVRE une fenetre de ~2-3s ou :
+  //   (a) le drapeau egyptien devient le MEME aplat creme que le Soudan (plus de drapeau du tout),
+  //   (b) TOUS les flux/arcs s'effacent, pour que SEUL le trace bleu du Nil respire, bien lisible,
+  //   (c) puis tout REVIENT comme avant (drapeau + fleches). Les jetons + geoplaques RESTENT (ancrage).
+  // nilBreath : 0 -> 1 (ouverture) -> tient -> 0 (retour). Cale apres le trace du Nil (nilNomme+30).
+  const breathStart = T.nilNomme + 34; // le Nil vient de finir de se tracer
+  const nilBreath = interpolate(
+    frame,
+    [breathStart, breathStart + 18, breathStart + 78, breathStart + 100],
+    [0, 1, 1, 0],
+    clampB,
+  );
+  // pendant la respiration, le drapeau egyptien -> aplat creme (comme le Soudan). En dehors, il reprend
+  // sa valeur normale (attenuee par le B4 pour laisser voir le Nil de base).
+  const egyptFlagDimForNil = interpolate(frame, [T.nilNomme, T.nilNomme + 30], [1, 0.55], clampB);
+  const egypteRevealFinal = egypteRevealBase * egyptFlagDimForNil * (1 - nilBreath);
+  // facteur d'effacement des flux pendant la respiration (1 = plein, 0 = efface).
+  const fluxBreathe = 1 - nilBreath;
 
   // ===== POINTS PROJETES =====
   const pMoscou = projectPoint(proj, MOSCOU, visible);
@@ -396,6 +487,23 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
 
           {nightPt && <circle cx={nightPt[0]} cy={nightPt[1]} r={globeR * 1.05} fill="url(#a4fusedNight)" />}
 
+          {/* GLOWS TERRITORIAUX — le Soudan "porte" la guerre civile (RSF Darfour / SAF Khartoum-Nil)
+              au lieu de rester un territoire vide. Poses APRES les pays, AVANT les jetons/drapeaux
+              pour rester lisibles derriere le contenu ancre-point. Apparaissent avec leur jeton, PERSISTENT. */}
+          {pRSF && (
+            <TerritoryGlow x={pRSF.x} y={pRSF.y} color={RSF_RED} op={medallionScale * Math.max(0.4, rsfFlowFade)} frame={frame} id="a4glowRSF" />
+          )}
+          {pSAF && (
+            <TerritoryGlow
+              x={pSAF.x}
+              y={pSAF.y}
+              color={SAF_BLUE}
+              op={Math.max(safMedallionScale, safMedallionScaleB3 * (0.7 + 0.3 * safRenforce))}
+              frame={frame}
+              id="a4glowSAF"
+            />
+          )}
+
           {/* RUSSIE — drapeau, pose au B1, PERSISTE jusqu'a la fin */}
           {russiaFeature && russiaReveal > 0.01 && (
             <GlobeFlagFill feature={russiaFeature} proj={proj} path={path} flagCode="ru" reveal={russiaReveal} glow="#c74d4d" />
@@ -405,30 +513,76 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
           {egypteFeature && egypteRevealFinal > 0.01 && (
             <GlobeFlagFill feature={egypteFeature} proj={proj} path={path} flagCode="eg" reveal={egypteRevealFinal} glow="#7fae6a" />
           )}
+          {/* RESPIRATION NIL : pendant la fenetre, l'Egypte prend le MEME aplat creme que le Soudan
+              (le drapeau s'efface via egypteRevealFinal*(1-nilBreath)) -> la vallee Soudan+Egypte devient
+              un seul aplat clair et le trace bleu du Nil ressort nettement. Retour du drapeau ensuite. */}
+          {egypteFeature && nilBreath > 0.01 && (
+            <path
+              d={path(egypteFeature as any) || ""}
+              fill={t.sudanFill}
+              fillOpacity={nilBreath}
+              stroke={t.sudanStroke}
+              strokeWidth={0.9}
+              strokeOpacity={0.6 * nilBreath}
+            />
+          )}
 
+          {/* TOUS LES FLUX/ARCS regroupes sous un g dont l'opacite tombe a 0 pendant la RESPIRATION NIL
+              (retour Aziz : effacer les fleches ~2-3s pour voir le trace du Nil, puis les remettre). */}
+          <g opacity={fluxBreathe}>
           {/* FLUX ANCIEN Moscou -> RSF (B1, s'estompe mais ne s'efface JAMAIS totalement) */}
           {rsfFlowProg > 0.01 && (
-            <path
-              d={windingPathD(proj, path, MOSCOU, RSF_TOKEN, rsfFlowProg, -2.2, 1)}
-              fill="none"
-              stroke={RSF_RED}
-              strokeWidth={3.2}
-              strokeOpacity={0.85 * rsfFlowFade}
-              strokeLinecap="round"
-              strokeDasharray={rsfFlowFade < 0.5 ? "5 7" : undefined}
-            />
+            <g>
+              <path
+                d={windingPathD(proj, path, MOSCOU, RSF_TOKEN, rsfFlowProg, -2.2, 1)}
+                fill="none"
+                stroke={RSF_RED}
+                strokeWidth={3.2}
+                strokeOpacity={0.85 * rsfFlowFade}
+                strokeLinecap="round"
+                strokeDasharray={rsfFlowFade < 0.5 ? "5 7" : undefined}
+              />
+              {/* filet lumineux qui coule (Moscou -> jeton) une fois le trace bien avance */}
+              {rsfFlowProg > 0.9 && (
+                <path
+                  d={windingPathD(proj, path, MOSCOU, RSF_TOKEN, 1, -2.2, 1)}
+                  fill="none"
+                  stroke="#E8776B"
+                  strokeWidth={2.4}
+                  strokeOpacity={0.6 * rsfFlowFade}
+                  strokeDasharray="5 26"
+                  strokeDashoffset={-flowOffset}
+                  strokeLinecap="round"
+                />
+              )}
+            </g>
           )}
 
           {/* FLUX NET Moscou -> SAF (B1, 2024, tient et PERSISTE) */}
           {safFlowProg > 0.01 && (
-            <path
-              d={windingPathD(proj, path, MOSCOU, SAF_TOKEN, safFlowProg, 1.8, 1)}
-              fill="none"
-              stroke={SAF_BLUE}
-              strokeWidth={3.6}
-              strokeOpacity={safFlowOp}
-              strokeLinecap="round"
-            />
+            <g>
+              <path
+                d={windingPathD(proj, path, MOSCOU, SAF_TOKEN, safFlowProg, 1.8, 1)}
+                fill="none"
+                stroke={SAF_BLUE}
+                strokeWidth={3.6}
+                strokeOpacity={safFlowOp}
+                strokeLinecap="round"
+              />
+              {/* filet lumineux qui coule (Moscou -> jeton) une fois le trace bien avance */}
+              {safFlowProg > 0.9 && (
+                <path
+                  d={windingPathD(proj, path, MOSCOU, SAF_TOKEN, 1, 1.8, 1)}
+                  fill="none"
+                  stroke="#7FC8F0"
+                  strokeWidth={2.6}
+                  strokeOpacity={0.65 * safFlowOp}
+                  strokeDasharray="5 26"
+                  strokeDashoffset={-flowOffset}
+                  strokeLinecap="round"
+                />
+              )}
+            </g>
           )}
 
           {/* ARC Le Caire -> SAF (B3, nouveau soutien egyptien, PERSISTE) */}
@@ -456,27 +610,33 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
               )}
             </g>
           )}
+          </g>
 
-          {/* Jetons RSF/SAF (medaillons) — poses au B1, RENFORCES au B3 (SAF), PERSISTENT */}
-          {pRSF && medallionScale > 0.01 && (
-            <Medallion x={pRSF.x} y={pRSF.y} color={RSF_RED} label="R" scale={medallionScale * Math.max(0.4, rsfFlowFade)} pulse={rsfPulse} t={t as any} />
+          {/* Jetons RSF/SAF : PULSE d'arrivee du flux seul reste en SVG (halo geo-ancre). Le disque-visage
+              (PortraitToken) est rendu en HTML apres le </svg> (cf plus bas), meme pattern que GeoPlaque. */}
+          {pRSF && medallionScale > 0.01 && rsfPulse > 0 && (
+            <>
+              <circle cx={pRSF.x} cy={pRSF.y} r={17 + 34 * rsfPulse} fill={RSF_RED} opacity={0.28 * (1 - rsfPulse)} />
+              <circle cx={pRSF.x} cy={pRSF.y} r={17 + 16 * rsfPulse} fill="none" stroke={RSF_RED} strokeWidth={2.5} opacity={0.7 * (1 - rsfPulse)} />
+            </>
           )}
-          {pSAF && (safMedallionScale > 0.01 || safMedallionScaleB3 > 0.01) && (
-            <Medallion
-              x={pSAF.x}
-              y={pSAF.y}
-              color={SAF_BLUE}
-              label="S"
-              scale={Math.max(safMedallionScale, safMedallionScaleB3 * (0.7 + 0.3 * safRenforce))}
-              pulse={Math.max(safPulse, arcPulse)}
-              t={t as any}
-            />
+          {pSAF && (safMedallionScale > 0.01 || safMedallionScaleB3 > 0.01) && Math.max(safPulse, arcPulse) > 0 && (
+            <>
+              <circle cx={pSAF.x} cy={pSAF.y} r={17 + 34 * Math.max(safPulse, arcPulse)} fill={SAF_BLUE} opacity={0.28 * (1 - Math.max(safPulse, arcPulse))} />
+              <circle cx={pSAF.x} cy={pSAF.y} r={17 + 16 * Math.max(safPulse, arcPulse)} fill="none" stroke={SAF_BLUE} strokeWidth={2.5} opacity={0.7 * (1 - Math.max(safPulse, arcPulse))} />
+            </>
           )}
 
           {/* BASE NAVALE + NAVIRE ENCRE a Port-Soudan (B2, PERSISTE) */}
           {pPortSoudan && portSoudanReveal > 0.01 && (
             <>
-              <NavireEncreAuGlobe x={pPortSoudan.x + 78} y={pPortSoudan.y + 48} reveal={portSoudanReveal} frame={frame} />
+              <NavireEncreAuGlobe
+                x={pPortSoudan.x + 78 * (cam.scaleMul / 3.4)}
+                y={pPortSoudan.y + 48 * (cam.scaleMul / 3.4)}
+                reveal={portSoudanReveal}
+                frame={frame}
+                camScale={cam.scaleMul}
+              />
               <NavalBaseIcon x={pPortSoudan.x} y={pPortSoudan.y} reveal={portSoudanReveal} pulse={portSoudanPulse} />
             </>
           )}
@@ -492,6 +652,31 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
 
         <circle cx={cx} cy={cy} r={globeR} fill="none" stroke={t.sphereStroke} strokeWidth={1.5} strokeOpacity={0.4} />
       </svg>
+
+      {/* ===== JETONS-PORTRAITS (visages Hemeti/Burhan, HTML overlay) — remplacent les medaillons-lettre
+          RSF/SAF. Meme logique d'apparition/persistance/echelle que les anciens Medallion (op = echelle
+          courante clampee 0..1). PAS de sprite Poutine dispo -> aucun jeton-visage a Moscou, seul le
+          drapeau russe + le pulse d'arrivee (SVG) marquent le foyer. ===== */}
+      {pRSF && (
+        <PortraitToken
+          x={pRSF.x}
+          y={pRSF.y}
+          sprite="portrait-hemeti"
+          border={RSF_RED}
+          op={Math.max(0, Math.min(1, medallionScale * Math.max(0.4, rsfFlowFade)))}
+          size={60}
+        />
+      )}
+      {pSAF && (
+        <PortraitToken
+          x={pSAF.x}
+          y={pSAF.y}
+          sprite="portrait-burhan"
+          border={SAF_BLUE}
+          op={Math.max(0, Math.min(1, Math.max(safMedallionScale, safMedallionScaleB3 * (0.7 + 0.3 * safRenforce))))}
+          size={60}
+        />
+      )}
 
       {/* ===== GEOPLAQUES (labels HTML lisibles, fond sombre) — persistent une fois posees ===== */}
       {pMoscou && <GeoPlaque x={pMoscou.x} y={pMoscou.y} label="Moscou" op={russiaReveal} accent="#c74d4d" dy={-30} />}

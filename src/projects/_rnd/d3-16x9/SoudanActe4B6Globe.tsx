@@ -65,6 +65,28 @@ const COL = {
 
 const KHARTOUM: LonLat = GEO.khartoum;
 
+// GeoPlaqueSVG — label geo-ancre sur FOND SOMBRE (retour Aziz : les noms de pays en <text> blanc sont
+// durs a lire sur la carte ; utiliser la meme technique de geoplaque que le bloc B1toB4). Dessine en SVG
+// (le B6 est full-SVG) : rect arrondi sombre + liseret couleur nationale + texte clair Georgia.
+// Largeur estimee au nombre de caracteres (SVG n'auto-dimensionne pas un rect sur le texte).
+const GeoPlaqueSVG: React.FC<{ x: number; y: number; label: string; op: number; accent: string; dy?: number }> =
+  ({ x, y, label, op, accent, dy = -20 }) => {
+    if (op <= 0.01) return null;
+    const fs = 21;
+    const w = label.length * fs * 0.62 + 24; // largeur approx (padding inclus)
+    const h = 30;
+    const cxp = x;
+    const cyp = y + dy;
+    return (
+      <g opacity={op}>
+        <rect x={cxp - w / 2} y={cyp - h / 2} width={w} height={h} rx={6} fill="rgba(10,16,24,0.80)" />
+        <rect x={cxp - w / 2} y={cyp - h / 2} width={3} height={h} rx={1.5} fill={accent} />
+        <text x={cxp} y={cyp + fs * 0.34} fill={t.labelFill} fontSize={fs} fontFamily="Georgia, serif"
+          fontWeight={700} textAnchor="middle" letterSpacing={0.3}>{label}</text>
+      </g>
+    );
+  };
+
 // Les 4 puissances etrangeres + leur point d'origine geo + couleur nationale + jalon d'apparition.
 // Ordre = apparition sequentielle serree autour de "quatre puissances" (elles se posent l'une apres
 // l'autre en ~1.6s total, puis tiennent ensemble = "les quatre" se lit d'un coup).
@@ -84,11 +106,12 @@ const PUISSANCES: Puissance[] = [
   // Russie (nord lointain) : grande courbe vers l'OUEST pour degager de la Turquie.
   { from: GEO.moscou, label: "Russie", featureName: "Russia", flagCode: "ru", color: "#c74d4d", appearF: T.quatrePuissances - 8, amp: -3.2, waves: 1 },
   // Emirats (est) : deja bien separe, courbure douce.
-  { from: GEO.dubai, label: "Emirats", featureName: "United Arab Emirates", flagCode: "ae", color: t.flowGold, appearF: T.quatrePuissances + 4, amp: 1.0, waves: 1 },
+  { from: GEO.dubai, label: "Emirats", featureName: "United Arab Emirates", flagCode: "ae", color: t.flowGold, appearF: T.quatrePuissances + 6, amp: 1.0, waves: 1 },
   // Turquie : courbe vers l'EST (oppose a la Russie) pour s'ecarter.
-  { from: GEO.ankara, label: "Turquie", featureName: "Turkey", flagCode: "tr", color: "#e0733a", appearF: T.quatrePuissances + 16, amp: 2.0, waves: 1 },
-  // Egypte (proche, au nord direct) : trajet court, quasi droit (leger).
-  { from: GEO.cairo, label: "Egypte", featureName: "Egypt", flagCode: "eg", color: "#7fae6a", appearF: T.quatrePuissances + 28, amp: -0.8, waves: 1 },
+  { from: GEO.ankara, label: "Turquie", featureName: "Turkey", flagCode: "tr", color: "#e0733a", appearF: T.quatrePuissances + 20, amp: 2.0, waves: 1 },
+  // Egypte (proche, au nord direct) : trajet court, quasi droit (leger). Derniere arrivee = le "coup"
+  // final de la convergence, juste avant "peser sur l'issue de cette guerre" (T.peserIssue = 245).
+  { from: GEO.cairo, label: "Egypte", featureName: "Egypt", flagCode: "eg", color: "#7fae6a", appearF: T.quatrePuissances + 34, amp: -0.8, waves: 1 },
 ];
 
 // --- Camera : plan carrefour resserre (raccord depuis l'insert Kosti B5) -> DEZOOM large a
@@ -245,15 +268,16 @@ export const SoudanActe4B6Globe: React.FC = () => {
             return (
               <g key={p.label}>
                 <path d={d} fill="none" stroke={p.color} strokeWidth={3.4} strokeOpacity={0.92} strokeLinecap="round" />
-                {/* gouttes qui filent (une fois l'arc arrive) — le flux "alimente" le carrefour */}
+                {/* gouttes qui filent (une fois l'arc arrive) — le flux COULE en continu vers Khartoum,
+                    dasharray dense + forte opacite = le filet se lit nettement, pas un scintillement. */}
                 {prog > 0.96 && (
                   <path
                     d={d}
                     fill="none"
                     stroke={COL.goldHi}
                     strokeWidth={4}
-                    strokeOpacity={0.8}
-                    strokeDasharray="4 34"
+                    strokeOpacity={0.85}
+                    strokeDasharray="5 22"
                     strokeDashoffset={-flow}
                     strokeLinecap="round"
                   />
@@ -272,46 +296,71 @@ export const SoudanActe4B6Globe: React.FC = () => {
             });
             if (app <= 0.01) return null;
             return (
-              <text
-                key={`lbl-${p.label}`}
-                x={pt.x}
-                y={pt.y - 18}
-                fill={COL.ink}
-                fontSize={22}
-                fontFamily="Georgia, serif"
-                fontWeight={700}
-                textAnchor="middle"
-                stroke={t.labelStroke}
-                strokeWidth={0.6}
-                opacity={app}
-              >
-                {p.label}
-              </text>
+              <GeoPlaqueSVG key={`lbl-${p.label}`} x={pt.x} y={pt.y} label={p.label} op={app} accent={p.color} dy={-20} />
             );
           })}
 
-          {/* Khartoum = le carrefour (hub rouge pulsant) */}
+          {/* Khartoum = le carrefour (hub rouge pulsant + ONDE D'IMPACT a chaque arrivee de flux).
+              Chaque puissance ARRIVE a appearF+46 (meme jalon que le seuil "flux qui coule" ci-dessus,
+              prog>0.96) -> une onde de choc part du hub a cet instant precis (climax "ca pese d'un coup"). */}
           {(() => {
             const pt = projectPoint(proj, KHARTOUM, visible);
             if (!pt) return null;
             const pulse = 1 + 0.4 * Math.sin(frame / 7);
+
+            const WAVE_DUR = 18; // ~0.6s a 30fps
+            const arrivals = PUISSANCES.map((p, i) => ({
+              frame: p.appearF + 46,
+              isLast: i === PUISSANCES.length - 1, // Egypte = arrivee la plus tardive, onde renforcee
+            }));
+            // Halo de base intensifie pendant la fenetre de convergence (de la 1re a la derniere arrivee).
+            const firstArrival = arrivals[0].frame;
+            const lastArrival = arrivals[arrivals.length - 1].frame;
+            const convergeBoost = interpolate(
+              frame,
+              [firstArrival, lastArrival, lastArrival + 30],
+              [0, 1, 0],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+            );
+
             return (
               <g transform={`translate(${pt.x} ${pt.y})`}>
-                <circle r={10 * pulse} fill={COL.danger} opacity={0.28} />
-                <circle r={6} fill={COL.danger} filter="url(#a4b6glow)" stroke={COL.ink} strokeWidth={1} />
-                <text
-                  x={0}
-                  y={20}
-                  fill={COL.ink}
-                  fontSize={20}
-                  fontFamily="Georgia, serif"
-                  fontWeight={600}
-                  textAnchor="middle"
-                  stroke={t.labelStroke}
-                  strokeWidth={0.5}
-                >
-                  Khartoum
-                </text>
+                {/* ondes de choc — une par arrivee, par-dessus le pulse permanent */}
+                {arrivals.map((arr, i) => {
+                  const localF = frame - arr.frame;
+                  if (localF < 0 || localF > WAVE_DUR) return null;
+                  const rBase = arr.isLast ? 70 : 55; // derniere arrivee (Egypte) = onde plus ample
+                  const r = interpolate(localF, [0, WAVE_DUR], [6, rBase], { extrapolateRight: "clamp" });
+                  const op = interpolate(localF, [0, WAVE_DUR], [0.8, 0], { extrapolateRight: "clamp" });
+                  return (
+                    <circle
+                      key={`wave-${i}`}
+                      r={r}
+                      fill="none"
+                      stroke={COL.danger}
+                      strokeWidth={arr.isLast ? 2.6 : 1.8}
+                      opacity={op}
+                    />
+                  );
+                })}
+                {/* 2e onde renforcee (decalee) sur la derniere arrivee = "les quatre puissances pesent d'un coup" */}
+                {(() => {
+                  const lastArr = arrivals[arrivals.length - 1];
+                  const localF = frame - lastArr.frame - 6;
+                  if (localF < 0 || localF > WAVE_DUR) return null;
+                  const r = interpolate(localF, [0, WAVE_DUR], [6, 55], { extrapolateRight: "clamp" });
+                  const op = interpolate(localF, [0, WAVE_DUR], [0.6, 0], { extrapolateRight: "clamp" });
+                  return <circle r={r} fill="none" stroke={COL.danger} strokeWidth={2} opacity={op} />;
+                })()}
+                <circle r={10 * pulse} fill={COL.danger} opacity={0.28 + convergeBoost * 0.14} />
+                <circle
+                  r={6 + convergeBoost * 2}
+                  fill={COL.danger}
+                  filter="url(#a4b6glow)"
+                  stroke={COL.ink}
+                  strokeWidth={1}
+                />
+                <GeoPlaqueSVG x={0} y={0} label="Khartoum" op={1} accent={COL.danger} dy={26} />
               </g>
             );
           })()}
