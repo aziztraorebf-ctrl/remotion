@@ -1,3 +1,6 @@
+> ⛔⛔ **PÉRIMÉ 2026-07-22** : assemblage fait (v2 puis v3). La v3 est produite + validée globalement.
+> **→ SUITE (12 points polish) = [STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md](STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md)**. Ce fichier est conservé pour trace.
+
 # STARTER — Soudan mid-form : ASSEMBLAGE FINAL + MIX AUDIO (passe finale terminée côté visuel+audio-assets)
 
 > Session dédiée : re-render des 6 actes (visuels passe finale déjà codés+commités), concat dans l'ordre

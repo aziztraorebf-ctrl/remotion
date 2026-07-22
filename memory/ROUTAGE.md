@@ -157,6 +157,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Gemini, retouche image, character sheet | `memory/tools/gemini.md` ⚠️ **LIRE AVANT tout appel Gemini SCRIPTÉ** : la lib `google-genai` HANG sur image (→ REST direct) et ne PAS plafonner `max_tokens` haut pour du SVG (sur-reasoning 8min). Gotchas gravés en tête du fichier — les relire évite de re-perdre 15min (leçon 2026-07-17). |
 | Recraft, SVG, asset, vivid_shapes | `memory/tools/recraft.md` |
 | ElevenLabs, voix, TTS, narration | `memory/tools/elevenlabs.md` |
+| **Corriger le RYTHME/pauses d'une narration validée SANS régénérer** (voix se précipite, phrase coupée, pause manquante) | `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md` ⭐⭐ silences ffmpeg exacts sur l'audio original + whisper mot-à-mot + garde-fou. Outil `scripts/tools/soudan-audio/pauses-sur-original.py`. Réutilisable TOUT projet. |
 | Minimax, musique de fond, kora, griot | `memory/tools/minimax.md` |
 | Twelve Labs, analyse vidéo post-render | `memory/tools/twelve-labs.md` |
 | SFX, effet sonore AVANT chercher/créer | `public/_shared/sfx/SFX-INDEX.md` |

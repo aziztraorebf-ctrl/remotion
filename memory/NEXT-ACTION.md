@@ -21,29 +21,40 @@
 
 ---
 
-## 🎬 SOUDAN MID-FORM — PHASE 2 ACTE 4 FAITE + 1er ASSEMBLAGE 6 ACTES + PASSE LLM EN COURS (MàJ 2026-07-21 soir)
+## 🎬 SOUDAN MID-FORM — v3 PRODUITE + VALIDÉE GLOBALEMENT → RESTE 12 PTS POLISH (MàJ 2026-07-22)
 
-> **⭐ ÉTAT RÉEL FIN DE SESSION 2026-07-21 (soir) — remplace le bloc v12 ci-dessous (périmé) :**
+> **⭐ ÉTAT RÉEL 2026-07-22 — remplace tout le contenu daté 2026-07-21 ci-dessous (désormais « trace ») :**
+> - **v3 PRODUITE + VALIDÉE GLOBALEMENT par Aziz** (2026-07-22, « quasiment finie »). L'assemblage est FAIT
+>   (v2 puis v3 re-rendus 6 actes + concat + mix audio). ⛔ **NE PAS RE-ASSEMBLER / NE PAS RE-PRODUIRE l'assemblage.**
+> - **Livrable v3 = base de travail (636s)** :
+>   `out/episodes/soudan-midform/wip/passe-finale-v3/soudan-midform-v3-MIX.mp4`.
+> - **Branche `feat/soudan-passe-finale-6lots`**, commit v3 = `ec7eb98c`.
+> - **RESTE = 12 points POLISH** (session dédiée) : SFX count-up · pauses audio déterministes · plaques de sources ·
+>   globe habité début A6 · (+ autres points détaillés dans le starter actif).
+> - **Pipeline audio réutilisable** (pauses déterministes calées whisper + garde-fou) :
+>   `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`.
+> - **⏭️ PROCHAINE SESSION = PASSE FINALE POLISH (12 pts)** → `memory/starters/STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md` (starter ACTIF).
+
+> ⛔ **TOUT LE CONTENU CI-DESSOUS (daté 2026-07-21) EST UNE TRACE HISTORIQUE PÉRIMÉE** — conservé pour la
+> généalogie de la production (Phase 2 Acte 4, 1er assemblage, passe LLM). Ne rien exécuter sur sa base.
+
+> **[TRACE 2026-07-21 soir] — Acte 4 PHASE 2 + 1er assemblage + passe LLM :**
 > - **Acte 4 PHASE 2 = FAITE** : 5 lots (flux qui coulent · navire vivant · jetons-portraits Hemedti/al-Burhan +
 >   glows RSF/SAF · climax B6 stagger+ondes · frappe Kosti + Nil transparent) + **4 corrections Aziz** :
 >   (1) navire PROPORTIONNEL au globe (ne grossit plus au dézoom, prop `camScale`) · (2) RESPIRATION NIL (Le Caire
 >   devient crème + TOUS les flux s'effacent ~2,5s pour voir le Nil seul, puis retour ; jetons+géoplaques restent) ·
 >   (3) Kosti civils NE REVIENNENT PLUS (figés + disparition totale) · (4) noms de pays B6 en GÉOPLAQUES sombres.
 >   Livrable = `out/episodes/soudan-midform/wip/acte4-v14-phase2-full.mp4` (130.8s). Commit `3000dbbe` sur
->   `feat/soudan-acte4-globe-3registres`. **PAS encore promu FINAL** (attend validation Aziz + passe LLM).
+>   `feat/soudan-acte4-globe-3registres`.
 > - **AUDIT JETONS PERSONNAGES NOMMÉS = FAIT** : dérive ISOLÉE à l'Acte 3 (Hemedti Section1+Insert, al-Burhan Insert
 >   affichés en sprites génériques portrait-rsf/saf). CORRIGÉ → portrait-hemeti/portrait-burhan. Commit `8481e8b9`.
->   Actes 1,2,5,6 = OK. ⚠️ Acte 3 corrigé PAS encore re-promu FINAL (renders faits : `/tmp/a3-section1-fix.mp4`
->   + `/tmp/a3-insert-fix.mp4`, concat `wip/acte3-globe-jetons-fix-full.mp4` 125.9s).
+>   Actes 1,2,5,6 = OK. Renders faits : `/tmp/a3-section1-fix.mp4` + `/tmp/a3-insert-fix.mp4`,
+>   concat `wip/acte3-globe-jetons-fix-full.mp4` 125.9s.
 > - **1er ASSEMBLAGE 6 ACTES = FAIT** (narration seule, PAS de musique/SFX) : `wip/soudan-midform-ASSEMBLAGE-v1-6actes.mp4`
 >   (625.8s = 10min26) + `-compressed.mp4` (720p 30.6mo). Ordre A1(hook 57s)+A2+A3-globe+A4-v14+A5+A6. Raccords OK.
->   ⚠️ **Acte 1 jamais promu PRET-PUBLICATION** (wip purgé) — récupéré depuis catbox `qc5dgq` = v5-FINAL validé.
-> - **PASSE LLM DOWNSTREAM = EN COURS** (doctrine 2 temps) : appel 1 DIAGNOSTIC (Gemini+Kimi sur la vidéo 720p
->   complète) lancé — dynamisation/écart début↔fin + densif + **langage visuel du globe (au-delà des flèches :
->   contours lumineux, halos, caméra, effets au-dessus du globe)** + lisibilité. Brief `/tmp/da-refs/soudan-diagnostic-brief.txt`.
->   PUIS appel 2 PROSPECTIF (corrections + **reco musique qui n'enterre pas la voix + SFX**). Scripts : `review-video-llm-scripts.md`.
-> - **RESTE APRÈS LLM** : appliquer la passe → promouvoir Acte 3+4 FINAL → AUDIO GLOBAL (musique Minimax + SFX,
->   guidé par le LLM) → ré-assemblage final avec audio → promotion mid-form 6/6 complet.
+>   Acte 1 récupéré depuis catbox `qc5dgq` = v5-FINAL validé.
+> - **PASSE LLM DOWNSTREAM** (doctrine 2 temps) : diagnostic Gemini+Kimi + prospectifs → a produit les 6 lots
+>   de la passe finale, puis les assemblages v2 et v3.
 
 > ⛔ **BLOC v12 CI-DESSOUS PÉRIMÉ** (garde la trace de la refonte structurelle Phase 1) :
 

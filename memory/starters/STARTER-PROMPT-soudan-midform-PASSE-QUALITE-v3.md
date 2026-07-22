@@ -1,3 +1,6 @@
+> ⛔⛔ **PÉRIMÉ 2026-07-22** : cette passe a produit la v3, validée globalement par Aziz.
+> **→ 12 points polish restants = [STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md](STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md)**. Ce fichier est conservé pour trace.
+
 # STARTER — Soudan mid-form : PASSE QUALITÉ v3 (retours Aziz sur assemblage v2)
 
 > Assemblage v2 (6 actes re-rendus passe finale + mix audio) PRODUIT et VISIONNÉ par Aziz le 2026-07-21.

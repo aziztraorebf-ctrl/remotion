@@ -26,7 +26,12 @@
 | Générer des SFX (sound design, pas TTS) | `scripts/generate-sfx-elevenlabs.py` | ElevenLabs Sound Effects → `public/_shared/sfx/`. Prompts EN. |
 | Générer les SFX War-Map (set signature + bonus réutilisable) | `scripts/warmap/generate-warmap-sfx.py` | Sortie `public/_shared/sfx/warmap/`. Indexer dans SFX-INDEX. |
 | Forced alignment + découpe d'un mp3 narration par PARTIES (Sahel) | `scripts/sahel-align-and-split-v5.py` | Découpe le bloc validé aux vraies frontières, zéro regen. |
-| Alignement mot-à-mot Whisper → fichier TS pour Subtitles | `scripts/tools/whisper-align.py` | `<audio.mp3> [--out x.ts]`. ~$0.006/min. |
+| ⭐⭐ **CORRIGER LE RYTHME/LES PAUSES d'une narration validée SANS régénérer** (voix se précipite, phrase coupée, pause manquante) | `scripts/tools/soudan-audio/pauses-sur-original.py` | `<manifest.json> <out.mp3>`. Insère des silences EXACTS sur l'audio original (prononciation intacte). Manifest = `{cuts:[{cut_s,resume_s,sil_s}]}` calés whisper MOT-À-MOT. **GARDE-FOU whisper obligatoire après.** Doctrine complète : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`. |
+| Retirer un MOT d'une narration validée (ex « Résumons ») | idem `pauses-sur-original.py` (cut à la frontière du mot) | + garde-fou whisper (le mot doit disparaître, rien d'autre). |
+| Générer une narration par SEGMENTS (1 fichier/phrase) + assembler avec silences | `scripts/tools/soudan-audio/gen-segments.py` + `assemble-segments.py` | Variante "nouvel audio". ⚠️ régénère la voix (risque re-rate mots) — préférer pauses-sur-original si audio validé existe. |
+| Construire une boucle musique (crossfade) pour couvrir une durée | `scripts/tools/soudan-audio/build-music-loop.sh` | `<music.mp3> <duree_s> <out.mp3> [crossfade_s]`. |
+| Mixer musique (vol + bass domptées) + SFX (liste fichier:tc:vol) | `scripts/tools/soudan-audio/mix-soudan-v3.sh` | Template réutilisable. Musique 0.08 + `bass=g=-7`, SFX 0.5, voix reine. |
+| Alignement mot-à-mot Whisper → fichier TS pour Subtitles / GARDE-FOU anti-coupure | `scripts/tools/whisper-align.py` | `<audio.mp3> [--out x.ts]`. ~$0.006/min. Sert aussi à VÉRIFIER qu'une coupe audio n'a pas mangé de mot. |
 | Transcrire une narration (Whisper, word-level JSON) | `scripts/tools/transcribe-openai.py` | OpenAI Whisper. Chemins Soundjata en dur (adapter). |
 | Générer une musique de fond (Minimax v2.6, A/B/C variantes) | `scripts/tools/_archive/minimax-music-3variants.py` | Archive : recette de référence (one-shot par épisode). Pour un nouvel épisode, paramétrer plutôt que dupliquer. |
 

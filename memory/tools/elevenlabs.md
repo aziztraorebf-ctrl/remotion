@@ -165,6 +165,15 @@
 
 ### Pauses et rythme
 
+> ⛔⛔ **DEUX RÉGIMES DISTINCTS — NE PAS CONFONDRE (leçon 2026-07-22)** :
+> - **À la GÉNÉRATION d'un NOUVEL audio** : tags `[pause]` ci-dessous OK (le modèle place la couleur/le rythme).
+> - **Pour CORRIGER LE RYTHME d'un audio DÉJÀ VALIDÉ** (voix se précipite, phrase coupée, pause manquante) :
+>   ⛔ NE PAS régénérer avec des tags (le modèle INTERPRÈTE = hasard, prouvé 2× ; + régénérer re-rate des mots
+>   corrects). → Utiliser la méthode DÉTERMINISTE : insérer des silences ffmpeg EXACTS sur l'audio original,
+>   calés whisper mot-à-mot + garde-fou. **Doctrine complète : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`**
+>   (outils `scripts/tools/soudan-audio/pauses-sur-original.py` + `assemble-segments.py`). Inclut aussi la formule
+>   de RE-TIMING des visuels après ajout de pauses : `F_new = F + 30*Σ(sil_s − gap_naturel)` (pas la brute).
+
 ```
 [pause]       — pause naturelle (~0.5s)
 [short pause] — micro-pause (~0.2s)

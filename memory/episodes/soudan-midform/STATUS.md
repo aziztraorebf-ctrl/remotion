@@ -1,8 +1,24 @@
 # Soudan Mid-form — STATUS
 
-## ⭐ ÉTAT COURANT (2026-07-21 soir) — PHASE 2 ACTE 4 FAITE + 1er ASSEMBLAGE 6 ACTES + PASSE LLM → 6 LOTS
+## ⭐ ÉTAT COURANT (2026-07-22) — v3 PRODUITE + VALIDÉE GLOBALEMENT → RESTE 12 PTS POLISH
 
-> **Remplace la section « v12 base validée » ci-dessous (désormais Phase 1, périmée pour l'état courant).**
+> **Source de vérité. Remplace tous les blocs datés 2026-07-21 ci-dessous (rétrogradés « trace historique »).**
+>
+> - **PASSE FINALE v3 PRODUITE** : globe vivant Actes 3/4/6 (« on navigue dans le globe ») + frontières allumées +
+>   géoplaques éphémères + Suakin géopôle + drone SVG + Nil brillant ; **Acte 4 début habité** ; **audio à pauses
+>   déterministes** calées sur whisper (+ garde-fou) ; **hook remonté en tête** ; puits « sans fond » supprimé ;
+>   **fin A6 sans typewriter** ; SFX sobres.
+> - **v3 VALIDÉE GLOBALEMENT par Aziz** (2026-07-22, « quasiment finie »). ⛔ **NE PAS RE-ASSEMBLER / RE-PRODUIRE.**
+> - **Livrable v3 (base, 636s)** : `out/episodes/soudan-midform/wip/passe-finale-v3/soudan-midform-v3-MIX.mp4`.
+> - **Branche `feat/soudan-passe-finale-6lots`**, commit v3 = `ec7eb98c`.
+> - **RESTE = 12 points POLISH** (session dédiée) → `starters/STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md`
+>   (starter ACTIF). Pipeline audio réutilisable : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`.
+
+---
+
+## 🗄️ [TRACE HISTORIQUE 2026-07-21 soir] — PHASE 2 ACTE 4 FAITE + 1er ASSEMBLAGE 6 ACTES + PASSE LLM → 6 LOTS
+
+> **PÉRIMÉ — conservé pour la généalogie de production. Ne rien exécuter sur sa base (cf. ÉTAT COURANT ci-dessus).**
 >
 > - **Acte 4 PHASE 2 = FAITE** : 5 lots (flux qui coulent · navire vivant · jetons-portraits Hemedti/al-Burhan +
 >   glows RSF/SAF · climax B6 stagger+ondes · frappe Kosti + Nil) + **4 corrections Aziz** : (1) navire

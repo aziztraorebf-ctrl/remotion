@@ -46,6 +46,16 @@
 ## NOTES
 - Points 5/8/9 = phrases coupées/pauses déjà connues ; 8/9 traités sur A6 (re-vérifier post-retiming), 5 = A3 pas encore fait.
 - La v3 a été VALIDÉE globalement : ces 12 points = polish, PAS une refonte. Après = promotion FINAL + publication.
-- État git : branche `feat/soudan-passe-finale-6lots` (commit v3 fait). Session CFA restaurée (stash pop).
+- État git : branche `feat/soudan-passe-finale-6lots` (commit v3 fait). CFA = worktree séparé actif (voir § ÉTAT GIT RÉEL ci-dessous).
 EOF
 echo "backlog passe finale gravé (12 points)"
+## ⚠️ ÉTAT GIT RÉEL EN FIN DE SESSION v3 (2026-07-22) — CORRIGÉ
+- Repo principal `/Users/clawdbot/Workspace/remotion` = branche `feat/soudan-passe-finale-6lots`, commit v3 `ec7eb98c` (travail Soudan v3 sécurisé).
+- ⭐ La branche CFA `feat/cfa-nuit1994-svg-mix` a REPRIS via SON PROPRE WORKTREE `/Users/clawdbot/Workspace/remotion-cfa`
+  (session CFA active en parallèle, HEAD 393835bb). Donc PAS besoin (ni possible) de "restaurer CFA" côté repo principal.
+- Les 2 stashs CFA (`stash@{0}` WIP Acte3 Parite, `stash@{1}` Acte2) sont PRÉSERVÉS INTACTS — la session CFA les gérera si besoin.
+  NE PAS y toucher depuis la session Soudan.
+- Fichiers non-trackés inertes sur le repo principal (CfaActe3Parite16x9.tsx, gpt/kimi-cfa-beat3) : artefacts, non référencés
+  par Root.tsx Soudan (build OK). Backups : scratchpad/cfa-backup-avant-restauration/.
+- Pour la passe finale Soudan : rester sur `feat/soudan-passe-finale-6lots` (repo principal) OU créer un worktree Soudan dédié
+  si CFA occupe encore la branche — la session Soudan et CFA cohabitent via worktrees séparés.
