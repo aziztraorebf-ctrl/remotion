@@ -947,3 +947,9 @@ recalibrer à zoom 9.3, pas d'ajuster autour de 6.6. Règle : avant d'appliquer 
 un agent R&D sur une formule technique (géo, physique, timing), faire vérifier le calcul indépendamment (recalcul
 manuel ou 2e agent dédié) plutôt que de l'appliquer directement — surtout quand le chiffre conditionne un réglage
 coûteux à re-tester (ex. un render Mapbox complet).
+
+## Public dir slim = renders accélérés (généralisable, pas que Mapbox) — 2026-07-21
+Le `public/` fait ~2.2 GB et est RECOPIÉ à chaque render → lenteur. Un public dir MINIMAL (symlinks vers
+seulement `_shared/{sfx,sprites,audio,geo-data,flags}` + le `_rnd/<projet>` en cours, ~98 MB) passé via
+`--public-dir=<slim>` accélère fortement. `scripts/render-mapbox.sh` le fait DÉJÀ (slim /tmp) — le réutiliser
+comme référence. Généralisable à TOUT render D3 classique, pas seulement Mapbox/ProRes.

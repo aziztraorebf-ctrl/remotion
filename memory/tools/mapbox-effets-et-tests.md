@@ -38,6 +38,7 @@ type: reference
 
 ### Render
 - **`./scripts/render-mapbox.sh <CompId> <out.mp4>`** — Chrome for Testing + `--gl=angle`. Obligatoire (npx remotion render direct = WebGL fail). Validé.
+  - ⚠️ **`npx remotion still` classique ne rend PAS le fond Mapbox non plus** (fond crème/vide, même après le fix continueRender/idle ci-dessous) → `render-mapbox.sh` obligatoire AUSSI pour une simple vérif frame unique, pas seulement pour un render vidéo. Confirmé 2026-07-21 (Acte1 Soudan : still WebGL = carte absente).
 
 ## ⛔ Bug structurel récurrent — capture headless/still (corrigé 2026-07-05)
 

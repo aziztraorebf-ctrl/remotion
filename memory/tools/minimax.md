@@ -228,6 +228,20 @@ python3 scripts/tools/upload-to-blob.py --gallery "Title" \
 
 Voir src/projects/geoafrique-shorts/SonjataShortFull.tsx pour l'implementation reference.
 
+### Mix ffmpeg POST-render (mid-form long, doc "sérieux") — 2026-07-21 (Soudan)
+Quand la musique est mixée en ffmpeg SUR l'assemblage (pas via `<Audio>` Remotion), cas d'un mid-form long :
+- **Niveau musique sous-narration** : cible **-12/-15 dB sous la voix** (docs "sérieux" Arte/BBC vont -18/-20).
+  En volume ffmpeg linéaire ≈ **0.06-0.09** (choisi Soudan : 0.08 ; →0.06 si trop fort). Plus bas que le 0.15
+  Remotion ci-dessus, cohérent (cas mix externe, voix reine).
+- **Dompter les basses de la musique** : `bass=g=-7:f=200:w=0.6` — les graves masquent la voix davantage que les
+  aigus, donc une kora/dundun riche en basse doit être atténuée dans le grave (garde la présence sans enterrer).
+- **Boucle organique** (musique courte < vidéo) : crossfade triangulaire entre répétitions,
+  `acrossfade=d=3:c1=tri:c2=tri` en chaîne (N copies), + fade-in 2s/out 3s. Zéro raccord audible.
+- **amix** : `amix=inputs=N:duration=first:normalize=0` (normalize=0 sinon baisse tout). Vérifier `max_volume < 0 dB` après (pas de clipping).
+- Scripts de référence : `scripts/tools/soudan-audio/` (minimax-music, sfx, mix).
+- ⚠️ Prompt musique : les prompts "thriller/synth geopolitical" (ex. suggestion Gemini) produisent de l'électronique
+  hors-charte Kora et Cartes → TOUJOURS revenir à la formule kora/percussion validée ci-dessus (rejet daté Soudan 2026-07-21).
+
 ---
 
 ## References

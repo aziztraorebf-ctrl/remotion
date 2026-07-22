@@ -19,9 +19,12 @@
 > - **PASSE LLM DOWNSTREAM = FAITE** (nouveau pattern générique gravé dans `doctrines/DA-BRIEF-GATE.md`) :
 >   1 diagnostic + 2 prospectifs scindés (globe/caméra + exécution/audio) × Gemini+Kimi = 6 appels, cadrés par
 >   nos contraintes (D3/SVG 2D, lisibilité prime). Convergence ~95%. Rapports : `da-briefs-passe-llm-2026-07-21/`.
-> - **⏭️ PROCHAINE SESSION = LES 6 LOTS** → `starters/STARTER-PROMPT-soudan-midform-passe-finale-6lots.md`
->   (LOT1 langage globe · LOT2 caméra D3 · LOT3 muscler début · LOT4 lisibilité jetons · LOT5 densif chiffres+ONU
->   · LOT6 audio musique+SFX). PUIS : promouvoir Acte 1/3/4 FINAL · audio global · ré-assemblage final · mid-form 6/6.
+> - **✅ LES 6 LOTS SONT FAITS (2026-07-21 nuit)** sur branche **`feat/soudan-passe-finale-6lots`** (worktree dédié
+>   `/Users/clawdbot/Workspace/remotion-soudan`) : LOT1 souffle frontière+anneaux siège El-Fasher · géoplaques
+>   unifiées 6 actes · LOT2 dérive caméra B6 · LOT3 accroche mines/zoom+fracture snap · LOT4 contour jetons+pont
+>   croisements · LOT5 bilan 135 pts (ONU/veto+empire or déjà faits). Audio : musique **B kora-dundun** + 7 SFX générés.
+> - **⏭️ PROCHAINE SESSION = ASSEMBLAGE** → `starters/STARTER-PROMPT-soudan-midform-ASSEMBLAGE-FINAL.md`
+>   (re-render 6 actes + concat 625.8s + mix audio). PUIS promouvoir Acte 1/3/4 FINAL · mid-form 6/6 complet.
 
 ---
 

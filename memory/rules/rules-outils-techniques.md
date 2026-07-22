@@ -334,3 +334,10 @@ Si prompt Gemini mêle texte à rendre et indications de style ("IBM Plex Mono 2
 **Solution :** sortir les annotations style des blocs guillemets. Les mettre en commentaires ou parenthèses hors du texte à rendre.
 
 Cas : Niger uranium S4 2026-05-07.
+
+## Vérif visuelle rapide : `remotion still` + public-dir slim — 2026-07-21
+Pour vérifier un effet frame-par-frame en cours de dev (surtout en worktree où le render vidéo peut HANG),
+préférer `npx remotion still <Comp> --frame=N --scale=1 --public-dir=<slim>` à un render vidéo complet : plus
+rapide, plus fiable, et diagnostique — si le still marche mais la vidéo hang → suspecter l'encodage ffmpeg/symlink,
+PAS le composant. EXCEPTION Mapbox : le still classique ne charge pas le WebGL (fond vide) → `render-mapbox.sh`
+obligatoire même pour une frame (cf `memory/tools/mapbox-effets-et-tests.md`). Contexte worktree : `feedbacks/feedback_worktree-git-isolation-gotchas.md`.

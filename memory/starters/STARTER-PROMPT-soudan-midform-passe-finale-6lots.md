@@ -1,3 +1,7 @@
+> ⛔⛔ **PÉRIMÉ (2026-07-21 nuit)** — LES 6 LOTS SONT FAITS (codés+commités+validés sur branche
+> `feat/soudan-passe-finale-6lots`). Ce starter décrivait le travail À FAIRE ; conservé pour trace.
+> **→ POUR LA SUITE (assemblage), LIRE : [STARTER-PROMPT-soudan-midform-ASSEMBLAGE-FINAL.md](STARTER-PROMPT-soudan-midform-ASSEMBLAGE-FINAL.md)**
+
 # STARTER — Soudan mid-form, PASSE FINALE (6 lots) issue de la passe LLM downstream
 
 > Session dediee : appliquer les 6 lots d'amelioration issus de la passe LLM (Gemini+Kimi, diagnostic +
