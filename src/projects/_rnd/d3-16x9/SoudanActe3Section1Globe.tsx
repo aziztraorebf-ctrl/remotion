@@ -1,19 +1,18 @@
 /**
- * SoudanActe3Section1Globe — SECTION 1 "SUIVRE L'OR" (0->38.8s) REFAITE EN VUE GLOBE D3 INTEGRALE.
+ * SoudanActe3Section1Globe — SECTION 1 "SUIVRE L'OR" REFAITE EN VUE GLOBE D3 INTEGRALE.
  *
- * But (decide avec Aziz 2026-07-19) : supprimer un registre visuel. Avant : SVG intro (Beat1Paradoxe)
- * + Mapbox 2D (Section1 dans SoudanActe3.tsx) + Globe D3 (protos de calage) = 3 registres qui ne se
- * parlent pas. Apres : SVG intro + Globe D3 = 2 registres, raccord direct par cross-fade doux.
+ * ⛔ SUPPRESSION "PUITS SANS FOND" (decision figee Aziz 2026-07-22) : l'ancienne Partie A (Beat1Paradoxe
+ * = SVG parchemin "puits sans fond", jauge or qui fuit + tuyaux R/S, 0->523 = 0->17.4s) a ete
+ * TOTALEMENT retiree — VISUEL + VOIX + TIMING. L'Acte 3 DEMARRE desormais directement sur la carte des
+ * mines du Darfour ("Tout commence au Darfour..."). L'audio p1 a ete re-coupe a 17.30s (le narratif
+ * "Cette guerre engloutit... qui et pourquoi" est retire du fichier voix), tous les jalons visuels sont
+ * decales de -519 frames (17.30s @30fps) pour rester synchro avec l'audio coupe.
  *
- * Modele repris fidelement :
- *  - Partie A (0->523) : Beat1Paradoxe COPIE A L'IDENTIQUE depuis SoudanActe3.tsx (jauge or qui fuit
- *    + tuyaux R/S). Zero modification — il gere deja son propre fade de sortie (483->523).
- *  - Partie B (523->1162) : Globe D3, meme moteur EXACT que SoudanActe3GlobeMinesProto.tsx (echelle
- *    "topdown" + contours "marque", tous deux valides par Aziz), enrichi avec TOUT le contenu de la
- *    Section1 Mapbox originale (frontieres RSF/SAF, jetons herites, 3 mines, portrait Hemedti, halos).
- *
- * Cross-fade : le globe apparait par un fondu doux [483,540] pendant que le SVG s'efface [483,523]
- * (demande explicite Aziz) — pas de coupe franche entre les 2 registres.
+ * Modele restant :
+ *  - Globe D3 (0->643) : meme moteur EXACT que SoudanActe3GlobeMinesProto.tsx (echelle "topdown" +
+ *    contours "marque", tous deux valides par Aziz), enrichi avec TOUT le contenu de la Section1 Mapbox
+ *    originale (frontieres RSF/SAF, jetons herites, 3 mines, portrait Hemedti, halos). Fondu d'entree
+ *    doux [0,20] a la place de l'ancien cross-fade depuis le SVG.
  *
  * Ce fichier est un COMPOSANT ISOLE (_rnd) : ne touche AUCUN fichier existant (SoudanActe3.tsx, le
  * proto GlobeMinesProto, THEMES.mixte ne sont pas modifies — uniquement lus/copies).
@@ -77,22 +76,22 @@ const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as
 const easeInOut = (x: number) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
 // ─────────────────────────────────────────────────────────────────────────────
-// TIMING — ancrages whisker p1 (frames absolues @30fps), identiques a soudanActe3Timing F1.
+// TIMING — ancrages whisper p1 (frames @30fps). Apres SUPPRESSION du "puits sans fond" (2026-07-22),
+// tout est decale de -519 frames (audio p1 re-coupe a 17.30s). Les anciens jalons du puits
+// (start=0, pourtant=134, quelquUnPaie=302, suivreArgent=367) sont supprimes : le narratif
+// correspondant n'existe plus dans l'audio. Le globe demarre a frame 0 ("Tout commence au Darfour").
+// Verifie contre whisper de acte3-p1-sans-puits.mp3 : darfour f0, mines ~f100, chef ~f328, milliard ~f595.
 // ─────────────────────────────────────────────────────────────────────────────
 const F = {
-  start: 0,
-  pourtant: 134,
-  quelquUnPaie: 302,
-  suivreArgent: 367,
-  darfourStart: 523,
-  minesOr: 619,
-  plusImportante: 667,
-  hemedtiNomme: 847,
-  milliard: 1114,
-  end: 1162,
+  darfourStart: 4, // petit souffle d'entree (mot "Tout" a ~0.12s dans l'audio coupe)
+  minesOr: 100,
+  plusImportante: 148,
+  hemedtiNomme: 328,
+  milliard: 595,
+  end: 643,
 };
 
-export const SECTION1_GLOBE_FRAMES = 1162;
+export const SECTION1_GLOBE_FRAMES = 643;
 
 // ── Coordonnees geo (identiques Section1 Mapbox original, pour fidelite) ──
 const DARFUR: LonLat = [26.0, 14.9];
@@ -102,22 +101,8 @@ const MINE_2: LonLat = [24.9, 12.05];
 const MINE_3: LonLat = [23.4, 15.5];
 
 // ═════════════════════════════════════════════════════════════════════════════
-// PARTIE A — Beat1Paradoxe, COPIE A L'IDENTIQUE depuis SoudanActe3.tsx (ne pas modifier).
-// SVG plein ecran, 0->523 (0->17.4s), jauge or qui fuit + tuyaux R/S + fleche qui s'inverse.
-// ═════════════════════════════════════════════════════════════════════════════
-const Beat1Paradoxe: React.FC<{ frame: number }> = ({ frame: f }) => {
-  if (f >= 523) return null;
-  return (
-    <AbsoluteFill style={{ pointerEvents: "none" }}>
-      <svg width={1920} height={1080} viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
-        <g opacity={f < 483 ? 1 : Math.max(0.35, 1 - 0.65 * ((f - 483) / 40))}><rect x="0" y="0" width="1920" height="1080" fill="#F2E5C8"/><rect x="28" y="28" width="1864" height="1024" rx="10" fill="none" stroke="#3A2A18" strokeWidth="3" opacity="0.2"/><path d="M90 190 C310 155 470 205 690 175 M1240 160 C1480 205 1690 145 1840 185 M110 900 C300 865 490 920 670 890 M1260 910 C1470 870 1670 925 1840 880" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.08"/><defs><linearGradient id="goldLiquidGradient" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox"><stop offset="0%" stopColor="#E0BC8A"/><stop offset="52%" stopColor="#D4A574"/><stop offset="100%" stopColor="#B8935C"/></linearGradient><clipPath id="goldLevelClip"><rect x="880" y="0" width="160" height="1" transform={`translate(0 1014) scale(1 ${-(f < 134 ? 188 + 184 * Math.pow(1 - f / 134, 1.8) : f < 302 ? 188 - 4 * Math.sin((f - 134) * 0.11) : f < 367 ? 188 + 66 * ((f - 302) / 65) - 3 * Math.sin((f - 302) * 0.11) : 254 - 14 * Math.min(1, (f - 367) / 116) - 3 * Math.sin((f - 367) * 0.09))})`}/></clipPath></defs><g transform="translate(0 -100)"><g opacity={Math.max(0, Math.min(1, (f - 134) / 16))}><circle cx="500" cy="700" r="76" fill="#F2E5C8" stroke="#B14B3C" strokeWidth="9"/><circle cx="500" cy="700" r="63" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.35"/><polygon points="500,666 534,700 500,734 466,700" fill="#B14B3C" stroke="#3A2A18" strokeWidth="3"/><text x="500" y="711" textAnchor="middle" fontFamily="Georgia, serif" fontSize="31" fontWeight="700" fill="#F2E5C8">R</text><circle cx="1420" cy="700" r="76" fill="#F2E5C8" stroke="#3E6E9E" strokeWidth="9"/><circle cx="1420" cy="700" r="63" fill="none" stroke="#3A2A18" strokeWidth="2" opacity="0.35"/><polygon points="1420,666 1454,700 1420,734 1386,700" fill="#3E6E9E" stroke="#3A2A18" strokeWidth="3"/><text x="1420" y="711" textAnchor="middle" fontFamily="Georgia, serif" fontSize="31" fontWeight="700" fill="#F2E5C8">S</text><path d="M570 690 L930 570" fill="none" stroke="#3A2A18" strokeWidth="15" opacity="0.16" strokeLinecap="round"/><path d="M570 690 L930 570" fill="none" stroke="#B14B3C" strokeWidth="7" strokeLinecap="round"/><path d="M1350 690 L990 570" fill="none" stroke="#3A2A18" strokeWidth="15" opacity="0.16" strokeLinecap="round"/><path d="M1350 690 L990 570" fill="none" stroke="#3E6E9E" strokeWidth="7" strokeLinecap="round"/><polygon points="895,568 928,570 904,592" fill="#B14B3C"/><polygon points="1025,568 992,570 1016,592" fill="#3E6E9E"/><g fill="#D4A574" stroke="#3A2A18" strokeWidth="1.5"><circle cx={570 + 360 * ((((f - 134) * 5) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5) % 120) / 120)} r="8"/><circle cx={570 + 360 * ((((f - 134) * 5 + 30) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 30) % 120) / 120)} r="7"/><circle cx={570 + 360 * ((((f - 134) * 5 + 60) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 60) % 120) / 120)} r="8"/><circle cx={570 + 360 * ((((f - 134) * 5 + 90) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 90) % 120) / 120)} r="6"/><circle cx={1350 - 360 * ((((f - 134) * 5) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5) % 120) / 120)} r="8"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 30) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 30) % 120) / 120)} r="7"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 60) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 60) % 120) / 120)} r="8"/><circle cx={1350 - 360 * ((((f - 134) * 5 + 90) % 120) / 120)} cy={690 - 120 * ((((f - 134) * 5 + 90) % 120) / 120)} r="6"/></g><g opacity={f < 286 ? 1 : Math.max(0, (302 - f) / 16)} fill="#F2E5C8" strokeWidth="2.5"><circle cx={570 + 360 * ((((f - 134) * 3 + 8) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 8) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24))} stroke="#E0BC8A" opacity={Math.max(0, Math.sin((f - 134) * 0.24))}/><circle cx={570 + 360 * ((((f - 134) * 3 + 56) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 56) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 2.4))} stroke="#B14B3C" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 2.4))}/><circle cx={1350 - 360 * ((((f - 134) * 3 + 26) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 26) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 1.2))} stroke="#E0BC8A" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 1.2))}/><circle cx={1350 - 360 * ((((f - 134) * 3 + 74) % 96) / 96)} cy={690 - 120 * ((((f - 134) * 3 + 74) % 96) / 96)} r={3.5 + 1.5 * Math.max(0, Math.sin((f - 134) * 0.24 + 3.6))} stroke="#3E6E9E" opacity={Math.max(0, Math.sin((f - 134) * 0.24 + 3.6))}/></g></g><g opacity={Math.max(0, Math.min(1, (f - 302) / 12))}><path d="M1920 360 L990 570" fill="none" stroke="#8A8F94" strokeWidth="24" opacity="0.1" strokeLinecap="round"/><path d="M1920 360 L990 570" fill="none" stroke="#8A8F94" strokeWidth="10" strokeDasharray="18 17" strokeDashoffset={f < 367 ? -f * 5 : f * 6} strokeLinecap="round" opacity="0.9"/><polygon points={f < 367 ? '1275,480 1238,514 1287,513' : '1637,404 1674,370 1625,371'} fill="#8A8F94" stroke="#3A2A18" strokeWidth="2"/><g fill="#8A8F94" stroke="#3A2A18" strokeWidth="1.5"><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4) % 140) / 140) : 990 + 930 * ((((f - 367) * 5) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4) % 140) / 140) : 570 - 210 * ((((f - 367) * 5) % 140) / 140)} r="10"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 35) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 35) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 35) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 35) % 140) / 140)} r="8"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 70) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 70) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 70) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 70) % 140) / 140)} r="11"/><circle cx={f < 367 ? 1920 - 930 * ((((f - 302) * 4 + 105) % 140) / 140) : 990 + 930 * ((((f - 367) * 5 + 105) % 140) / 140)} cy={f < 367 ? 360 + 210 * ((((f - 302) * 4 + 105) % 140) / 140) : 570 - 210 * ((((f - 367) * 5 + 105) % 140) / 140)} r="8"/></g></g><g><ellipse cx="960" cy="570" rx="66" ry="17" fill="#3A2A18" opacity="0.22"/><ellipse cx="960" cy="570" rx="53" ry="11" fill="#D4A574" stroke="#3A2A18" strokeWidth="3"/><rect x="900" y="560" width="120" height="470" rx="8" fill="#F2E5C8" fillOpacity="0.72" stroke="#3A2A18" strokeWidth="8"/><g clipPath="url(#goldLevelClip)">{[0,1,2,3,4,5,6,7,8,9,10,11,12].map((i) => { const by = 996 - i * 34; return (<g key={i} transform={`translate(0 ${by})`}><rect x="922" y="0" width="76" height="27" rx="4" fill="#D4A574" stroke="#8A6A2E" strokeWidth="1.5"/><rect x="927" y="4" width="66" height="19" rx="2.5" fill="none" stroke="#B8935C" strokeWidth="1" opacity="0.7"/><circle cx="960" cy="13.5" r="8" fill="#E6C98A" stroke="#8A6A2E" strokeWidth="1"/><text x="960" y="19" textAnchor="middle" fontFamily="Georgia, serif" fontSize="13" fontWeight="700" fill="#6B4E1C">$</text></g>); })}</g><path d="M916 1014 L1004 1014" stroke="#3A2A18" strokeWidth="4" opacity="0.5"/><g fill="none" stroke="#3A2A18" strokeWidth="3" opacity="0.3"><path d="M900 650 L914 650 M900 760 L914 760 M900 870 L914 870 M900 980 L914 980 M1006 650 L1020 650 M1006 760 L1020 760 M1006 870 L1020 870 M1006 980 L1020 980"/></g><g fill="none" stroke="#3A2A18" strokeWidth="3" clipPath="url(#goldLevelClip)"><path d="M900 650 L914 650 M900 760 L914 760 M900 870 L914 870 M900 980 L914 980 M1006 650 L1020 650 M1006 760 L1020 760 M1006 870 L1020 870 M1006 980 L1020 980"/></g><ellipse cx="960" cy="1028" rx="25" ry="8" fill="#3A2A18"/><ellipse cx="960" cy="1029" rx="15" ry="5" fill="#D4A574"/></g>{[0,16,32,48].map((ph, i) => { const p = ((f * 7 + ph) % 62); const bx = [952,968,959,944][i] + [5,4,7,3][i] * Math.sin(f * [0.13,0.11,0.09,0.15][i] + i); const by = 1028 + p; const op = 1 - p / 62; const rot = -18 + 36 * Math.sin(f * 0.1 + i); return (<g key={i} transform={`translate(${bx} ${by}) rotate(${rot})`} opacity={op}><rect x="-13" y="-8" width="26" height="16" rx="2.5" fill="#D4A574" stroke="#8A6A2E" strokeWidth="1"/><text x="0" y="5" textAnchor="middle" fontFamily="Georgia, serif" fontSize="12" fontWeight="700" fill="#6B4E1C">$</text></g>); })}<line x1="960" y1="1030" x2="960" y2="1080" stroke="#D4A574" strokeWidth="5" strokeDasharray="5 12" strokeDashoffset={-f * 7} opacity="0.75"/></g></g>
-      </svg>
-    </AbsoluteFill>
-  );
-};
-
-// ═════════════════════════════════════════════════════════════════════════════
-// PARTIE B — Globe D3 (523->1162), moteur identique SoudanActe3GlobeMinesProto (topdown + marque).
+// Globe D3 (0->643), moteur identique SoudanActe3GlobeMinesProto (topdown + marque).
+// (L'ancienne "Partie A" = SVG "puits sans fond" a ete supprimee — cf en-tete du fichier.)
 // ═════════════════════════════════════════════════════════════════════════════
 
 // Sprite mine iso pose au sol — ZERO ombre externe (ombre deja dessinee dans le sprite), halo dore
@@ -211,15 +196,25 @@ const GlobeMapPart: React.FC = () => {
   const borderW = 1.1;
   const borderOp = 0.8;
 
-  // Fade doux d'entree du globe pendant que le SVG Beat1Paradoxe s'efface (cross-fade demande par Aziz).
-  const globeFadeIn = interpolate(frame, [483, 540], [0, 1], clampB);
+  // Fondu d'entree doux du globe (l'ancien cross-fade depuis le SVG "puits" a ete supprime — le globe
+  // ouvre l'Acte 3 directement, plus de registre parchemin en amont).
+  const globeFadeIn = interpolate(frame, [0, 20], [0, 1], clampB);
 
   // ===== CAMERA topdown centree Darfour — echelle CONSTANTE 6.5 sur toute la partie carte.
   // Raccord parfait avec l'insert globe qui DEMARRE a 6.5 puis dezoome : le dezoom devient une action
   // narrative reservee au moment "l'or quitte le pays" (pas un aller-retour d'echelle a la jonction).
   const centerLon = 24;
   const centerLat = 14;
-  const rotLambda = -centerLon;
+
+  // MICRO-DERIVE DE FOND (dosage B6, retour Aziz "on NAVIGUE dans le globe, jamais statique") — meme sur
+  // la phase topdown des mines : une derive de longitude quasi imperceptible (~±0.35°, parallaxe douce,
+  // PAS un glissement) donne de la vie au lieu d'un plan strictement fige. ENVELOPPE stricte a 0 aux DEUX
+  // bornes (entree fondu du globe ET raccord vers l'insert a F.end, echelle 6.5) : le raccord
+  // Section1->Insert reste EXACT (derniere frame identique a avant), la derive ne vit qu'au milieu.
+  // Bornes recalees apres suppression du "puits" (le globe demarre a frame 0 au lieu de 540).
+  const s1DriftEnv = interpolate(frame, [20, 120, F.milliard, F.end], [0, 1, 1, 0], clampB);
+  const s1DriftLon = 0.35 * Math.sin((frame - 20) / 60) * s1DriftEnv;
+  const rotLambda = -(centerLon + s1DriftLon);
   const rotLat = -centerLat;
 
   const scaleMul = 6.5;
@@ -237,8 +232,9 @@ const GlobeMapPart: React.FC = () => {
   const statesFC = useSudanStatesGeoJson();
   const northDarfur = statesFC?.features.find((f) => f.properties.name === "North Darfur");
   const khartoumState = statesFC?.features.find((f) => f.properties.name === "Khartoum");
-  const northDarfurReveal = interpolate(frame, [523, 563], [0, 1], clampB);
-  const khartoumReveal = interpolate(frame, [531, 571], [0, 1], clampB);
+  // Reveals recales -519 (suppression "puits") : le trace des etats se fait a l'ouverture du globe.
+  const northDarfurReveal = interpolate(frame, [4, 44], [0, 1], clampB);
+  const khartoumReveal = interpolate(frame, [12, 52], [0, 1], clampB);
 
   const pDarfur = projectPoint(proj, DARFUR, visible);
   const pKhartoum = projectPoint(proj, KHARTOUM, visible);
@@ -254,7 +250,7 @@ const GlobeMapPart: React.FC = () => {
 
   // Halos doux pulsants Darfour/Khartoum des l'ouverture + halo Jebel Amer qui monte/sature.
   const openingPulse = 0.16 + 0.08 * Math.sin(frame * 0.05);
-  const openingFade = interpolate(frame, [523, 553], [1, 0], clampB);
+  const openingFade = interpolate(frame, [4, 34], [1, 0], clampB);
   const jebelHalo = interpolate(frame, [F.plusImportante, F.plusImportante + 60], [0, 0.55], clampB);
   const jebelSature = interpolate(frame, [F.milliard, F.milliard + 40], [0, 0.35], clampB);
   const jebelHaloTotal = jebelHalo + jebelSature;
@@ -341,12 +337,12 @@ const GlobeMapPart: React.FC = () => {
       {/* jetons herites RSF (Darfour) / SAF (Khartoum) — continuite fin Acte 2 */}
       {pDarfur && (
         <div style={{ opacity: rsfHeritedOpacity }}>
-          <SoudanToken pos={pDarfur} faction="rsf" frame={frame} appear={523} />
+          <SoudanToken pos={pDarfur} faction="rsf" frame={frame} appear={F.darfourStart} />
         </div>
       )}
       {pKhartoum && (
         <div style={{ opacity: safOpacity }}>
-          <SoudanToken pos={pKhartoum} faction="saf" frame={frame} appear={523} />
+          <SoudanToken pos={pKhartoum} faction="saf" frame={frame} appear={F.darfourStart} />
         </div>
       )}
 
@@ -362,14 +358,15 @@ const GlobeMapPart: React.FC = () => {
 };
 
 // ═════════════════════════════════════════════════════════════════════════════
-// COMPOSANT RACINE — Section 1 integrale (SVG intro + Globe D3) + audio p1.
+// COMPOSANT RACINE — Section 1 (Globe D3 des mines) + audio p1 SANS PUITS.
+// L'ancien SVG "puits sans fond" (Beat1Paradoxe) + son narratif d'ouverture ont ete supprimes
+// (decision Aziz 2026-07-22). Audio = acte3-suivre-lor-p1-sans-puits.mp3 (p1 re-coupee a 17.30s,
+// demarre sur "Tout commence au Darfour"). Original p1 conserve intact en public/.
 // ═════════════════════════════════════════════════════════════════════════════
 export const SoudanActe3Section1Globe: React.FC = () => {
-  const frame = useCurrentFrame();
-
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Audio src={staticFile("_shared/audio/soudan/acte3-suivre-lor-p1.mp3")} />
+      <Audio src={staticFile("_shared/audio/soudan/acte3-suivre-lor-p1-sans-puits.mp3")} />
 
       <Sequence from={F.darfourStart} durationInFrames={26}>
         <Audio src={staticFile("_shared/sfx/warmap/ink-spread.mp3")} volume={0.5} />
@@ -387,11 +384,9 @@ export const SoudanActe3Section1Globe: React.FC = () => {
         <Audio src={staticFile("_shared/sfx/ui/node-appear.mp3")} volume={0.5} />
       </Sequence>
 
-      {/* Globe D3 SOUS le SVG — masque jusqu'a 523, puis apparait par cross-fade doux (483->540)
-          pendant que le SVG Beat1Paradoxe s'efface (483->523). */}
+      {/* Globe D3 des mines du Darfour — ouvre directement l'Acte 3 (plus de SVG "puits" en amont),
+          fondu d'entree doux [0,20]. */}
       <GlobeMapPart />
-
-      <Beat1Paradoxe frame={frame} />
     </AbsoluteFill>
   );
 };

@@ -8,6 +8,17 @@
 > Le verdict jetons (jetons hexa) reste dans [[key-learnings]] + [[CARTO-OVERLAYS-PRINCIPES]] — NE PAS dupliquer.
 > Pour un short SVG concret (statut/registre/outils) : voir l'ETAT du projet (ex [[ETAT-GGW-MURAILLE-VERTE]]).
 
+## ⛔⛔ RÈGLE N°0 — LE MODÈLE DESSINE (SVG STATIQUE), NOUS ANIMONS. JAMAIS l'inverse. (gravé 2026-07-21)
+Demander au modèle (Fable/Kimi K3/GLM/GPT) de coder **l'ANIMATION Remotion complète** d'un beat = anti-pattern.
+Le workflow correct, TOUJOURS : le modèle produit **UN SVG STATIQUE découpé en `<g id>` nommés** (image-cible),
+et **c'est NOUS qui codons l'animation frame-driven** (strokeDashoffset, interpolate, spring, colorisation timée).
+**Pourquoi 3 raisons (prouvé Beat 3 CFA)** : (1) TOKENS — Kimi K3 image-cible = ~2k tokens / 0,035$ / 50s,
+vs faire animer un agent Fable = ~105k tokens + fichier même pas écrit du 1er coup ; (2) VITESSE — 50s vs ~6min ;
+(3) CONTRÔLE — le montage temporel est CE QUI SÉPARE le PowerPoint du niveau GGW (leçon récurrente de ce projet) ;
+le laisser au modèle nous fait perdre la main sur le rythme. **Exception unique** : si Aziz demande explicitement
+un composant animé "base à retoucher" pour gagner du temps sur un cas précis — sinon, statique + animation maison.
+Lié : [[llm-generation-multi-variantes-figer-description]] · [[MOTEURS-VISUELS-ET-SOCLE]].
+
 ## ⭐⭐ ACQUIS TRANSVERSES (prouvés Beat 1 hook + Beat 2 échec GGW, 2026-06-24)
 Ces règles valent pour TOUTE scène SVG animée, pas seulement la Muraille Verte :
 1. **Idéation via Kimi K2.5 MULTIMODAL** (`scripts/tools/kimi-svg-ideation.py`) : joindre 2-3 frames SVG comme

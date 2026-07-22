@@ -1,0 +1,11 @@
+{
+  "_doc": "PAUSES DETERMINISTES sur AUDIO ORIGINAL VALIDE Acte 3 (acte3-suivre-lor-FULL.mp3, compo D3-SoudanActe3-GlobeInsert, AUDIO_FULL). cut_s/resume_s issus du whisper /tmp/align-acte3.ts. Acte long+dense: beaucoup de fins d'idees ont DEJA des gaps 1.4-2.1s (Tout commence au Darfour, Ce qui fait durer, Une question reste en suspens) -> NON touchees. On renforce 4 fins d'idees evidentes au gap court. GARDE-FOU whisper obligatoire.",
+  "source_audio": "public/_shared/audio/soudan/acte3-suivre-lor-FULL.mp3",
+  "source_duration_s": 126.045,
+  "cuts": [
+    { "label": "apres 'Quelqu'un paie cette guerre' -> avant 'Il faut suivre l'or' (fin du probleme pose). resume recule a 12.05 (marge -0.17s) : le 'Il' original ne dure que 0.02s, coupe a 12.22 pile risquait de manger l'attaque (garde-fou whisper a detecte -1 mot)", "cut_s": 11.20, "resume_s": 12.05, "sil_s": 1.0 },
+    { "label": "apres 'jusqu'aux Emirats arabes unis' -> avant 'Les Emirats sont...' (arrivee du flux a destination)", "cut_s": 44.76, "resume_s": 45.92, "sil_s": 1.2 },
+    { "label": "apres 'revient sous une autre forme' -> avant 'Avec cet argent' (bascule argent->armes)", "cut_s": 54.88, "resume_s": 55.80, "sil_s": 1.0 },
+    { "label": "apres 'route du nord vers l'Egypte' -> avant 'Ces deux camps' (fin exposé, avant la synthese)", "cut_s": 100.88, "resume_s": 102.38, "sil_s": 1.2 }
+  ]
+}

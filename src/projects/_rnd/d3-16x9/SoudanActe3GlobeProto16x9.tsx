@@ -205,7 +205,10 @@ export const Medallion: React.FC<{ x: number; y: number; color: string; label: s
 
 // Objet-destination (Dubai, Ankara) : point + label. Peut se transformer en OBJET-ICONE hangar
 // a l'arrivee d'un flux (hangarIn 0->1 : le point cede la place au hangar qui se materialise).
-export const DestPoint: React.FC<{ x: number; y: number; label: string; on: number; flash: number; t: GlobeTheme; hangarIn?: number }> = ({ x, y, label, on, flash, t, hangarIn = 0 }) => {
+// labelOp (defaut 1) : opacite de la geo-plaque SEULE — permet un label EPHEMERE (apparait ~2s puis
+// fade) tout en gardant l'icone geo-ancree allumee (retour Aziz 2026-07-22, dosage B6). `accent`
+// (defaut or) : couleur du liseret de la plaque, pour matcher le camp national du pays.
+export const DestPoint: React.FC<{ x: number; y: number; label: string; on: number; flash: number; t: GlobeTheme; hangarIn?: number; labelOp?: number; accent?: string }> = ({ x, y, label, on, flash, t, hangarIn = 0, labelOp = 1, accent }) => {
   const dotOp = 1 - hangarIn; // le point s'efface a mesure que le hangar apparait
   return (
     <g transform={`translate(${x} ${y})`} opacity={on}>
@@ -231,11 +234,11 @@ export const DestPoint: React.FC<{ x: number; y: number; label: string; on: numb
       {/* geo-plaque (unification 2026-07-21) : remplace le <text> nu — la plaque est centree sur son x,
           donc on decale son centre a droite du point/hangar (gap + moitie de sa largeur estimee) pour
           que son bord gauche ne chevauche pas l'icone. Meme formule de largeur que GeoPlaqueSVG. */}
-      {(() => {
+      {labelOp > 0.01 && (() => {
         const fs = 22;
         const plaqueW = label.length * fs * 0.62 + 24;
         const gap = hangarIn > 0.5 ? 14 : 8;
-        return <GeoPlaqueSVG x={gap + plaqueW / 2} y={0} dy={0} label={label} op={1} accent={t.flowGold} labelFill={t.labelFill} fs={fs} />;
+        return <GeoPlaqueSVG x={gap + plaqueW / 2} y={0} dy={0} label={label} op={labelOp} accent={accent ?? t.flowGold} labelFill={t.labelFill} fs={fs} />;
       })()}
     </g>
   );

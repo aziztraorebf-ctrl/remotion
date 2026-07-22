@@ -180,8 +180,10 @@ const CivilToken: React.FC<{ x: number; y: number; asset: string; appearAt: numb
     const dist = Math.max(1, Math.hypot(dx0, dy0));
     const ux = dx0 / dist;
     const uy = dy0 / dist;
-    // les morts s'ecartent moins loin (ils tombent), les survivants fuient plus loin.
-    const fleeMax = dead ? 26 : 58 + idx * 6;
+    // FIX retraction : le fleeMax d'un mort ne doit JAMAIS retomber sous sa valeur "vivant" — sinon le
+    // jeton qui a d'abord fui vivant (~58+idx*6) recule vers la file au moment de la mort. On gele donc
+    // fleeMax a la valeur vivante pour tous (mort comme vivant) : dispersion -> FIGE a l'ecartement max -> fade.
+    const fleeMax = 58 + idx * 6;
     // fuite ARRETEE a l'extinction : le civil se FIGE a sa position d'ecartement (frame gelee = extinctAt),
     // il n'y a plus aucun mouvement apres la mort (ni retour, ni derive). Pour un vivant, la fuite continue.
     const fleeFrame = dead ? (extinctAt as number) : frame;
@@ -202,8 +204,10 @@ const CivilToken: React.FC<{ x: number; y: number; asset: string; appearAt: numb
 // Corps quadrirotor K3 (extrait drone_body_rotate155). Dessine centre sur l'origine (0,0), rotors qui
 // tournent via `f` (useCurrentFrame global). Rendu inline dans un <svg> centre, scale 1.6 pour lisibilite
 // (corps brut ~±21 unites -> ~±34 apres scale, tient dans le viewBox -46..46). rotate(155) = design K3.
-const DRONE_SVG = 92; // px (taille coherente avec l'ancien sprite)
-const DroneBodyK3: React.FC<{ f: number }> = ({ f }) => (
+// EXPORTE (2026-07-22) : reutilise par le globe Acte 3 (SoudanActe3GlobeInsert) qui remplace ses
+// sprites drone PNG par ce vrai drone SVG vectoriel (net a toute echelle, coherent inter-actes).
+export const DRONE_SVG = 92; // px (taille coherente avec l'ancien sprite)
+export const DroneBodyK3: React.FC<{ f: number }> = ({ f }) => (
   <svg width={DRONE_SVG} height={DRONE_SVG} viewBox="-46 -46 92 92" style={{ overflow: "visible", filter: "drop-shadow(0 3px 5px rgba(0,0,0,0.5))" }}>
     <g transform="scale(1.6)">
       <g transform="rotate(155)">

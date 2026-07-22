@@ -896,9 +896,9 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
           defaultProps={{ scaleVariant: "topdown" as const, borderVariant: "fort" as const }}
         />
-        {/* Section 1 Acte 3 refaite en GLOBE D3 integral (2026-07-19) : SVG intro (Beat1Paradoxe)
-            + Globe (frontieres RSF/SAF, jetons, 3 mines, portrait Hemedti) — remplace le patchwork
-            SVG+Mapbox+Globe par SVG+Globe (2 registres). Cross-fade doux 483->540. */}
+        {/* Section 1 Acte 3 en GLOBE D3 integral. SVG "puits sans fond" SUPPRIME (Aziz 2026-07-22) :
+            demarre directement sur la carte des mines du Darfour (frontieres RSF/SAF, jetons, 3 mines,
+            portrait Hemedti). Audio p1 re-coupe a 17.30s. Fondu d'entree doux [0,20]. */}
         <Composition
           id="D3-SoudanActe3-Section1Globe"
           component={SoudanActe3Section1Globe}

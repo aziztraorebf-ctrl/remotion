@@ -1,0 +1,12 @@
+{
+  "_doc": "PAUSES DETERMINISTES sur AUDIO ORIGINAL VALIDE Acte 1 (acte1-factcheck-v2.mp3, compo SoudanActe1). cut_s/resume_s issus du whisper mot-a-mot /tmp/align-acte1.ts. UNE passe fins d'idees evidentes seulement. GARDE-FOU whisper obligatoire apres assemblage.",
+  "source_audio": "public/_shared/audio/soudan/acte1-factcheck-v2.mp3",
+  "source_duration_s": 57.300,
+  "cuts": [
+    { "label": "apres 'benediction du gouvernement soudanais' -> avant 'Il s'appelle' (fin contexte, avant l'identite)", "cut_s": 6.02, "resume_s": 7.00, "sil_s": 1.0 },
+    { "label": "apres 'sous le nom de Hemeti' -> avant 'Aujourd'hui' (bascule temporelle)", "cut_s": 11.40, "resume_s": 12.46, "sil_s": 1.0 },
+    { "label": "apres 'en train de la gagner' -> avant 'Pour comprendre' (fin hook, transition carte)", "cut_s": 18.96, "resume_s": 20.34, "sil_s": 1.4 },
+    { "label": "apres 'coupe en deux' -> avant 'A l'est' (annonce des deux camps)", "cut_s": 32.88, "resume_s": 33.88, "sil_s": 0.9 },
+    { "label": "apres 'prise au piege' -> avant '25 millions' (bascule bilan humain)", "cut_s": 48.24, "resume_s": 49.34, "sil_s": 1.2 }
+  ]
+}

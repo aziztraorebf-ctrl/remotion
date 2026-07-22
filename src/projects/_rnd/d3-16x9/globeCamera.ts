@@ -138,24 +138,30 @@ export function buildActe6Cam(T: Record<string, number>): CamKey[] {
     // l'Afrique/carrefour Soudan. Retour Aziz : pas de long dezoom sans destination ; on cadre le
     // continent, on se pose, et c'est le B2 (drapeaux voisins un par un) qui remplit, pas le mouvement.
     { frame: T.b1Start, lon: 32, lat: 17, scaleMul: 2.2 }, // = derniere frame Acte 5 (continuite parfaite)
-    { frame: T.b1Start + 75, lon: 29, lat: 14, scaleMul: 1.5 }, // ~2.5s : Afrique cadree, Soudan au centre — ON S'ARRETE ICI
-    { frame: T.b1RienMarche, lon: 29, lat: 14, scaleMul: 1.5 }, // reste pose (le vide se dit par la voix, pas par le zoom)
-    // BEAT 2 — l'UA : camera POSEE sur le carrefour Soudan (les voisins prennent leur drapeau un par un).
-    { frame: T.b2UnionAfricaine, lon: 29, lat: 14, scaleMul: 1.5 },
+    { frame: T.b1Start + 75, lon: 29, lat: 14, scaleMul: 1.5 }, // ~2.5s : Afrique cadree, Soudan au centre
+    // "le vide" — ON NE FIGE PLUS : lente prise d'altitude + glissement doux (le globe RESPIRE pendant que
+    // la voix cherche l'arbitre absent). Micro-amplitude, aucun saut narratif ; la dérive de fond (drift,
+    // voir composant) s'ajoute par-dessus. Retour Aziz "dosage B6" : mouvement partout, jamais figé.
+    { frame: T.b1RienMarche, lon: 30.5, lat: 15, scaleMul: 1.42 }, // recule/glisse imperceptiblement — "on flotte"
+    // BEAT 2 — l'UA : camera qui GLISSE lentement vers le carrefour Soudan (les voisins prennent leur drapeau).
+    { frame: T.b2UnionAfricaine, lon: 30, lat: 14.5, scaleMul: 1.48 },
     { frame: T.b2Suspendu, lon: 30, lat: 15, scaleMul: 1.62 }, // leger rapproche quand le Soudan se barre (focus centre)
-    { frame: T.b2End, lon: 30, lat: 15, scaleMul: 1.62 },
+    { frame: T.b2MiseEcart, lon: 30.4, lat: 15.4, scaleMul: 1.68 }, // continue de se resserrer doucement (pas de gel)
+    { frame: T.b2End, lon: 30.6, lat: 15.6, scaleMul: 1.7 },
     // BEAT 3 — le veto : dezoom leger + recentrer (vue globe posee pour l'overlay hemicycle par-dessus).
     { frame: T.b3Start, lon: 28, lat: 20, scaleMul: 1.3 },
     { frame: T.b3Novembre, lon: 28, lat: 22, scaleMul: 1.25 }, // globe pose, overlay UI prend le devant
-    { frame: T.b3Neutre, lon: 28, lat: 22, scaleMul: 1.25 },
-    { frame: T.b3End, lon: 28, lat: 22, scaleMul: 1.25 },
+    // overlay vote par-dessus : le globe de fond DERIVE tres lentement (ne fige pas derriere l'hemicycle).
+    { frame: T.b3Neutre, lon: 26.5, lat: 22.5, scaleMul: 1.22 },
+    { frame: T.b3End, lon: 26, lat: 22.5, scaleMul: 1.22 },
     // BEAT 4 — paradoxe : globe GELE (insert SVG par-dessus en opacite). Meme cadrage que fin B3.
     { frame: T.b4Start, lon: 28, lat: 20, scaleMul: 1.3 },
     { frame: T.b4End, lon: 30, lat: 17, scaleMul: 1.6 }, // repositionne doucement pour le retour B5
-    // BEAT 5 — cout humain : retour globe, zoom sur le Soudan (cercles concentriques deplacement).
+    // BEAT 5 — cout humain : retour globe, ZOOM narratif continu sur le Soudan (le mini-zoom qu'Aziz aime).
     { frame: T.b5Start, lon: 30, lat: 16, scaleMul: 1.9 },
     { frame: T.b5TreizeMillions, lon: 29, lat: 14, scaleMul: 2.5 }, // serre sur Darfour/Khartoum (les foyers)
-    { frame: T.b5Cloture, lon: 29, lat: 14, scaleMul: 2.5 },
-    { frame: T.b5End, lon: 29, lat: 14, scaleMul: 2.5 }, // fige avant fade to black
+    // hold final : on NE FIGE PLUS — resserrement TRES lent (2.5->2.62) = "on s'enfonce dans le drame".
+    { frame: T.b5Cloture, lon: 28.8, lat: 13.8, scaleMul: 2.62 },
+    { frame: T.b5End, lon: 28.8, lat: 13.8, scaleMul: 2.62 }, // fige avant fade to black (fin validee intacte)
   ];
 }

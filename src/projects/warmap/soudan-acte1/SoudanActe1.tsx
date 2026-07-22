@@ -31,7 +31,7 @@ import { SoudanToken, Pt } from "../engine/soudanActors";
 import { SoudanBase } from "../engine/soudanActors";
 
 export const SOUDAN_A1_FPS = 30;
-export const SOUDAN_A1_FRAMES = 1719; // 57.3s
+export const SOUDAN_A1_FRAMES = 1718; // 57.28s (audio pauses-sur-original : net -1 frame vs 1719)
 
 // ── ANCRAGES GÉO RÉELS ──
 const DARFUR: [number, number] = [26.0, 14.9];     // Hemeti FIXE (Nord-Darfour)
@@ -39,24 +39,25 @@ const KHARTOUM: [number, number] = [32.98, 15.67]; // al-Burhan (capitale, SAF)
 // plusieurs mines d'or réparties dans le Darfour (territoire contrôlé par Hemeti)
 const MINES: [number, number][] = [[24.0, 12.8], [23.2, 14.6], [25.6, 13.0]];
 
-// ── FRAMES (whisper-words-acte1-v2.ts, 30fps) ──
+// ── FRAMES (whisper-words-acte1-v2.ts, 30fps) — RE-TIMÉ pour audio pauses-sur-original
+// (décalage cumulatif net = sil_s - gap_naturel supprimé ; ±4 frames max, cf manifest acte1-pauses). ──
 const F = {
   cetHomme: 45,       // "cet homme" → Hemeti pop EN PREMIER
   darfour: 87,        // "mines d'or du Darfour" → les mines s'égrènent
-  dagalo: 250,        // "Mohamed Hamdan Dagalo"
-  hemeti: 333,        // "connu sous le nom de Hemeti" → label nom
-  guerre: 450,        // "il fait la guerre"
-  gagner: 560,        // "en train de la gagner"
-  soudan: 744,        // "Le Soudan, 3e plus grand pays"
-  cinquante: 846,     // "près de 50 millions" → grille de pions
-  cinqEnd: 990,       // grille disparaît avant la partition
-  coupe: 978,         // "coupé en deux"
-  est: 1020,          // "à l'est, l'armée régulière"
-  burhan: 1104,       // "Abdel Fattah al-Burhan" → label nom + base SAF
-  ouest: 1194,        // "à l'ouest, les hommes de Hemeti" → SOLDATS RSF ICI
-  piege: 1446,        // "population prise au piège"
-  vingtcinq: 1479,    // "25 millions" → civils divers
-  crises: 1638,       // "pires crises humanitaires"
+  dagalo: 251,        // "Mohamed Hamdan Dagalo"
+  hemeti: 334,        // "connu sous le nom de Hemeti" → label nom
+  guerre: 449,        // "il fait la guerre"
+  gagner: 559,        // "en train de la gagner"
+  soudan: 743,        // "Le Soudan, 3e plus grand pays"
+  cinquante: 845,     // "près de 50 millions" → grille de pions
+  cinqEnd: 986,       // grille disparaît avant la partition
+  coupe: 977,         // "coupé en deux"
+  est: 1016,          // "à l'est, l'armée régulière"
+  burhan: 1100,       // "Abdel Fattah al-Burhan" → label nom + base SAF
+  ouest: 1190,        // "à l'ouest, les hommes de Hemeti" → SOLDATS RSF ICI
+  piege: 1442,        // "population prise au piège"
+  vingtcinq: 1478,    // "25 millions" → civils divers
+  crises: 1637,       // "pires crises humanitaires"
   fin: SOUDAN_A1_FRAMES,
 };
 
@@ -131,7 +132,7 @@ export const SoudanActe1: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
-      <Audio src={staticFile("_shared/audio/soudan/acte1-factcheck-v2.mp3")} />
+      <Audio src={staticFile("_shared/audio/soudan/acte1-factcheck-v2-pauses.mp3")} />
 
       {/* SFX ancrés au mot */}
       <Sequence from={F.cetHomme} durationInFrames={20}><Audio src={staticFile("_shared/sfx/camera/sfx-map-ping.mp3")} volume={0.55} /></Sequence>
@@ -288,12 +289,8 @@ const MineOr: React.FC<{ pos: Pt; frame: number; appear: number; fade: number }>
       { ...clamp, easing: Easing.out(Easing.cubic) });
     const fadeIn = interpolate(frame, [appear, appear + 10], [0, 1], clamp);
     const gleam = 0.6 + 0.4 * Math.sin(frame * 0.1);
-    // LOT 3.1 (accroche) : PULSE DORÉ fort à l'apparition — un halo radial ample qui bat ~3 fois puis
-    // retombe sur le gleam doux, pour attirer l'oeil sur les mines (l'enjeu = l'or) au tout début de l'acte.
-    // Enveloppe qui tient plein ~1.3s puis décroît (le battement reste lisible tout du long).
-    const pulseEnv = interpolate(frame, [appear, appear + 6, appear + 40, appear + 78], [0, 1, 1, 0], clamp);
-    const pulseBeat = 0.55 + 0.45 * Math.sin((frame - appear) * 0.5); // battement ~3.5 cycles sur la fenêtre
-    const goldPulse = pulseEnv * pulseBeat;
+    // RETOUR AZIZ : le PULSE/FLASH doré clignotant des mines faisait "cheap" — retiré. Les mines
+    // apparaissent en douceur (spring pop + fadeIn) et gardent le gleam doux du sol, sans halo battant.
     // physique : l'ombre commence large/floue puis se resserre quand l'objet "touche"
     const shBlur = interpolate(frame, [appear, appear + 22], [16, 5], clamp);
     const shScale = interpolate(frame, [appear, appear + 22], [1.5, 1], clamp);
@@ -307,12 +304,7 @@ const MineOr: React.FC<{ pos: Pt; frame: number; appear: number; fade: number }>
         <div style={{ position: "absolute", left: "50%", top: "58%", width: size * 0.9, height: size * 0.4,
           transform: "translate(-50%,-50%)",
           background: `radial-gradient(circle, rgba(233,162,59,${0.35 * gleam}) 20%, rgba(233,162,59,0) 70%)` }} />
-        {/* LOT 3.1 : halo doré qui PULSE à l'apparition (accroche) — ample et vif, décolle bien du fond kaki */}
-        {goldPulse > 0.01 && (
-          <div style={{ position: "absolute", left: "50%", top: "50%", width: size * (1.9 + 0.7 * goldPulse), height: size * (1.9 + 0.7 * goldPulse),
-            transform: "translate(-50%,-50%)", pointerEvents: "none",
-            background: `radial-gradient(circle, rgba(255,222,140,${0.85 * goldPulse}) 6%, rgba(240,180,70,${0.5 * goldPulse}) 30%, rgba(233,162,59,${0.18 * goldPulse}) 55%, rgba(233,162,59,0) 72%)` }} />
-        )}
+        {/* LOT 3.1 : halo doré pulsé RETIRÉ (retour Aziz : effet "cheap"). Apparition douce conservée via spring pop + fadeIn. */}
         <img src={staticFile("_shared/sprites/warmap/mine-or-td.png")}
           style={{ position: "relative", width: size, height: size * (768 / 1408), objectFit: "contain", display: "block" }} />
       </div>

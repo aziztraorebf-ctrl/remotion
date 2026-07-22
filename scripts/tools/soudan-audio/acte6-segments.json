@@ -1,0 +1,35 @@
+{
+  "_doc": "Systeme audio DETERMINISTE Acte 6. Chaque segment = 1 fichier TTS genere proprement (debit naturel, PAS de pause interne forcee). Le silence APRES chaque segment est insere par ffmpeg (sil_after_s), exactement ou Aziz veut respirer. Ajuster = changer les nombres, pas regenerer. Les 5 pauses precises demandees par Aziz sont marquees _aziz.",
+  "voice_pipeline": "voix vivante Ocean V3 -> STS GeoAfrique z3gESu49naEZW8Af2Upm",
+  "segments": [
+    { "id": "b1s1", "text": "Une guerre comme celle-la, normalement, le monde a des outils pour l'arreter.", "sil_after_s": 0.7 },
+    { "id": "b1s2", "text": "Des organisations, des mediateurs, un Conseil de securite. Tout ca existe.", "sil_after_s": 0.9 },
+    { "id": "b1s3", "text": "Sauf qu'ici, rien n'a marche.", "sil_after_s": 0.9 },
+    { "id": "b1s4", "text": "Et l'histoire de ces echecs, elle en dit long.", "sil_after_s": 1.8, "_aziz": "PAUSE FORTE avant 'le premier reflexe' (fin beat 1, on a pose le probleme)" },
+
+    { "id": "b2s1", "text": "Le premier reflexe, c'est de se tourner vers l'Union africaine.", "sil_after_s": 0.6 },
+    { "id": "b2s2", "text": "C'est chez elle que ca se passe, c'est a elle de jouer.", "sil_after_s": 1.0 },
+    { "id": "b2s3", "text": "Mais le Soudan en a ete suspendu depuis le coup d'Etat de deux mille vingt et un.", "sil_after_s": 0.7 },
+    { "id": "b2s4", "text": "Alors l'armee soudanaise refuse qu'elle arbitre, et l'Union africaine se retrouve mise a l'ecart avant meme d'avoir commence.", "sil_after_s": 1.8, "_aziz": "PAUSE FORTE avant 'l'echelon au-dessus' (fin palier UA)" },
+
+    { "id": "b3s1", "text": "Reste l'echelon au-dessus : le Conseil de securite de l'ONU.", "sil_after_s": 0.6 },
+    { "id": "b3s2", "text": "En novembre deux mille vingt-quatre, il tente d'imposer un cessez-le-feu.", "sil_after_s": 0.9 },
+    { "id": "b3s3", "text": "Quatorze pays votent pour. La Russie vote contre, et son seul veto suffit a tout bloquer.", "sil_after_s": 0.9 },
+    { "id": "b3s4", "text": "Officiellement, elle defend la souverainete du Soudan. En realite, elle a, elle aussi, ses interets dans le pays.", "sil_after_s": 0.9 },
+    { "id": "b3s5", "text": "Et c'est deja tout le probleme qui se dessine : autour de cette guerre, plus personne n'est vraiment neutre.", "sil_after_s": 1.4, "_aziz": "PAUSE apres 'personne n'est neutre' avant 'Et ce n'est pas qu'une histoire...'" },
+
+    { "id": "b4s1", "text": "Et ce n'est pas qu'une histoire de Conseil de securite. Le meme probleme revient ailleurs, a un autre endroit : autour des tables ou on negocie la paix.", "sil_after_s": 0.8 },
+    { "id": "b4s2", "text": "La s'assoient les grandes puissances, celles qui pesent vraiment.", "sil_after_s": 0.8 },
+    { "id": "b4s3", "text": "Et a cette table, il y a les Emirats.", "sil_after_s": 1.2 },
+    { "id": "b4s4", "text": "Ces memes Emirats dont on vient de suivre l'argent et les camps d'entrainement, quelques minutes plus tot.", "sil_after_s": 0.9 },
+    { "id": "b4s5", "text": "On demande d'eteindre l'incendie a celui qui l'alimente de l'autre main.", "sil_after_s": 1.6, "_aziz": "PAUSE FORTE avant 'Dans ces conditions' (table Emirats bien separee) — mais NETTE pas trop longue" },
+
+    { "id": "b5s1", "text": "Dans ces conditions, les plans de paix se suivent et se ressemblent.", "sil_after_s": 0.7 },
+    { "id": "b5s2", "text": "Chaque camp reclame ce que l'autre refuse, et pendant ce temps, la guerre, elle, continue.", "sil_after_s": 1.2 },
+    { "id": "b5s3", "text": "Et pendant que ces tables de negociation tournent a vide, c'est un pays entier qui s'effondre.", "sil_after_s": 0.8 },
+    { "id": "b5s4", "text": "Treize millions et demi de personnes ont du fuir leur maison. La famine s'installe.", "sil_after_s": 0.9 },
+    { "id": "b5s5", "text": "L'ONU parle de la pire crise humanitaire de la planete.", "sil_after_s": 1.6 },
+    { "id": "b5s6", "text": "Au fond, le probleme n'est pas qu'on ne peut pas arreter cette guerre.", "sil_after_s": 1.0 },
+    { "id": "b5s7", "text": "C'est que ceux qui en ont le pouvoir ont tous, quelque part, une bonne raison de ne pas le faire.", "sil_after_s": 2.0 }
+  ]
+}

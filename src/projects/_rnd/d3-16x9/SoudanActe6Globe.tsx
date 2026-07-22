@@ -18,14 +18,14 @@ import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "r
 import { Ban } from "lucide-react";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
 import { projectPoint, GEO, type LonLat } from "./geoArc";
-import { THEMES, GlobeFlagFill, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, GlobeFlagFill, GeoPlaqueSVG, BorderPulse } from "./SoudanActe3GlobeProto16x9";
 import { buildActe6Cam, camAt } from "./globeCamera";
 import { T, A6_GLOBE_FRAMES, AUDIO_FULL } from "./soudanActe6GlobeTiming";
 import { DisplacementCounter } from "./soudanActe6Overlays";
 import { SoudanActe6TableInsert } from "./SoudanActe6TableInsert";
 import { SoudanActe6VoteInsert } from "./SoudanActe6VoteInsert";
 
-export const SOUDAN_A6_GLOBE_FRAMES = A6_GLOBE_FRAMES; // 3997
+export const SOUDAN_A6_GLOBE_FRAMES = A6_GLOBE_FRAMES; // 4270 (audio pauses re-timé, cf timing)
 
 const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const t = THEMES.mixte;
@@ -67,7 +67,18 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
 
   // ===== CAMERA CONTINUE =====
   const cam = camAt(CAM, frame);
-  const rotLambda = -cam.lon;
+  // MICRO-DERIVE DE FOND (dosage "globe vivant" B6, retour Aziz 2026-07-22) — une respiration continue
+  // tres douce de la longitude par-dessus les keyframes, pour que le globe ne soit JAMAIS strictement
+  // figé sur les segments "posés" (le vide B1, l'UA B2, le fond du vote B3, le hold final B5). Pattern
+  // repris de SoudanActe4B6Globe (driftLon), ici en oscillation lente bornée = "monde en mouvement".
+  //  - amplitude montée en douceur apres le raccord exact Acte 5 (les 1eres frames restent fideles a
+  //    lon32/lat17, sinon on casserait la continuite inter-actes),
+  //  - RETOMBE a 0 sur le fade final (la fin validée = carte qui s'assombrit, aucun glissement parasite).
+  const driftEnvIn = interpolate(frame, [T.b1Start, T.b1Start + 90], [0, 1], clampB); // 0 au raccord, 1 apres ~3s
+  const driftEnvOut = interpolate(frame, [T.b5Cloture, T.b5Raison], [1, 0], clampB); // s'eteint quand la fin s'assombrit
+  const driftAmp = 1.6 * driftEnvIn * driftEnvOut; // ±1.6° max — imperceptible en saut, present en mouvement
+  const driftLon = driftAmp * Math.sin((frame - T.b1Start) / 190); // periode lente ~40s (jamais un va-et-vient visible)
+  const rotLambda = -(cam.lon + driftLon);
   const rotLat = -cam.lat;
   const globeR = GLOBE_R * cam.scaleMul;
   const proj = orthoAt(rotLambda, rotLat).scale(globeR);
@@ -129,20 +140,15 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
 
   // ===== FIN (registre War-Map AES longue, retour Aziz 2026-07-20 avec CAPTURE de reference) =====
   // La carte s'ASSOMBRIT vers l'opacite exacte de la capture Aziz (carte encore lisible, drapeaux
-  // devines, Soudan barre net) — PAS jusqu'aux contours-purs-sur-noir. On S'ARRETE la, la phrase
-  // typewriter apparait EN BAS (registre sources, un peu plus haut), on tient ~1.5s, PUIS fade au noir.
+  // devines, Soudan barre net) — PAS jusqu'aux contours-purs-sur-noir. On S'ARRETE la, PUIS fade au noir.
   const DISSOLVE_MAX = 0.55; // opacite d'arret (capture Aziz) — la carte reste visible dessous
   const dissolve = interpolate(frame, [T.b5Cloture, T.b5Raison], [0, DISSOLVE_MAX], clampB);
   const fillFade = 1 - dissolve; // opacite des remplissages (reste ~0.45 = carte lisible)
-  // phrase finale : UNE ligne, typewriter, EN BAS sur la carte assombrie (retour Aziz).
-  // Commence ~1.7s AVANT la fin de la voix (retour Aziz : demarrer plus tot) — b5Raison=4010, voix
-  // finit ~3964 ; typStart=3910 => le texte s'ecrit pendant la derniere phrase parlee.
-  const FINAL_LINE = "Personne ne peut l'arrêter. Personne n'a de raison de le faire.";
-  const typStart = T.b5Raison - 50; // ~1.7s plus tot
-  const typEnd = typStart + 70; // ~2.3s pour ecrire la ligne
-  const typChars = Math.floor(interpolate(frame, [typStart, typEnd], [0, FINAL_LINE.length], clampB));
-  // hold ~1.5s (45f) apres la fin de frappe, PUIS fade au noir
-  const fadeBlack = interpolate(frame, [typEnd + 45, typEnd + 75], [0, 1], clampB);
+  // PHRASE FINALE typewriter RETIREE (retour Aziz 2026-07-22). La phrase reste dite a la voix ;
+  // l'ecran finit sur la carte assombrie qui fond au noir, sans texte. On PROLONGE la fin (~2-3s de
+  // musique + carte qui s'assombrit) : le fade au noir demarre apres la fin de la voix (3964) + une
+  // respiration, et se termine avant b5End (4140). Plus de dependance au typewriter.
+  const fadeBlack = interpolate(frame, [T.b5Raison + 40, T.b5End - 10], [0, 1], clampB);
 
   const fadeIn = interpolate(frame, [0, 14], [0, 1], clampB);
 
@@ -200,6 +206,14 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
               <stop offset="58%" stopColor="#000" stopOpacity="0" />
               <stop offset="100%" stopColor="#05070d" stopOpacity="0.5" />
             </radialGradient>
+            {/* glow pour la FRONTIERE PERSISTANTE LUMINEUSE des membres UA (B2) — meme filtre que l'Acte 4 B6 */}
+            <filter id="a6glow" x="-200%" y="-200%" width="500%" height="500%">
+              <feGaussianBlur stdDeviation="4" result="b" />
+              <feMerge>
+                <feMergeNode in="b" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
             <clipPath id="a6sphereClip"><path d={sphere} /></clipPath>
             {sudan && (() => { const d = path(sudan as any); return d ? <clipPath id="a6sudanClip"><path d={d} /></clipPath> : null; })()}
             {/* voile "focus Afrique" (B2) : radial centre sur le Soudan projete — clair au centre
@@ -238,6 +252,38 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
             if (rev <= 0.01) return null;
             return <GlobeFlagFill key={`ua${i}`} feature={f} proj={proj} path={path} flagCode={m.flag} reveal={rev} glow={UA_GLOW} />;
           })}
+
+          {/* FRONTIERE PERSISTANTE LUMINEUSE des membres UA (pattern valide Acte 4 B6, retour Aziz
+              2026-07-22) — une fois qu'un pays a pris son drapeau, son CONTOUR reste "chaud" : trait dore
+              qui RESPIRE doucement (breathe = 0.55+0.45*sin), glow via a6glow. Rend l'illumination de
+              l'UA vivante (le cercle de l'exclusion pulse au lieu de retomber inerte). Le recul au
+              "suspendu" (ringRecoil) l'attenue avec les drapeaux ; fond a la dissolution finale (fillFade). */}
+          {UA_RING.map((m, i) => {
+            const f = featureByName(m.name);
+            if (!f) return null;
+            const d = path(f as any);
+            if (!d) return null;
+            // s'allume ~1s apres l'apparition du drapeau (le contour "prend" apres le remplissage)
+            const span = (CASCADE_END - CASCADE_START) / UA_RING.length;
+            const a = CASCADE_START + i * span;
+            const on = interpolate(frame, [a + 20, a + 46], [0, 1], clampB) * ringRecoil * uaFade * fillFade;
+            if (on <= 0.01) return null;
+            const breathe = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin((frame - a) / 11));
+            return (
+              <path key={`uaglow${i}`} d={d} fill="none" stroke={UA_GLOW} strokeWidth={2}
+                strokeOpacity={on * breathe * 0.85} strokeLinejoin="round" filter="url(#a6glow)" />
+            );
+          })}
+
+          {/* BorderPulse SOUDAN au "suspendu" (retour Aziz 2026-07-22) — souffle one-shot de frontiere
+              au moment EXACT de l'exclusion (complementaire du flash blanc + pop du ban plus bas : le
+              souffle dit "la frontiere encaisse le coup"). Rouge danger = le camp qui subit. */}
+          {sudan && (() => {
+            const d = path(sudan as any);
+            if (!d) return null;
+            const pulse = interpolate(frame, [T.b2Suspendu + 4, T.b2Suspendu + 34], [0, 1], clampB);
+            return <BorderPulse d={d} pulse={pulse} color={DISPLACE_COL} />;
+          })()}
 
           {/* SOUDAN — clair au repos, DESATURE (gris) au "suspendu". ACCENTUE (retour Aziz) : contour
               renforce lumineux pour qu'il RESSORTE au milieu des drapeaux voisins (c'est le sujet). */}
@@ -349,17 +395,10 @@ export const SoudanActe6Globe: React.FC<{ showInstitutionTokens?: boolean }> = (
         {/* ===== B5 — compteur 13,5 millions deplaces ===== */}
         <DisplacementCounter frame={frame} tStart={T.b5TreizeMillions} tHold={displaceHold} tOut={cartoucheOut} />
 
-        {/* ===== PHRASE FINALE typewriter EN BAS sur la carte assombrie (registre sources, retour Aziz +
-            capture de reference). Apparait sur la carte a l'opacite d'arret, PAS sur un noir plein. ===== */}
-        {typChars > 0 && (
-          <div style={{ position: "absolute", left: "50%", bottom: 150, transform: "translateX(-50%)",
-            pointerEvents: "none", fontFamily: "'Courier New', monospace", fontSize: 32, fontWeight: 500,
-            color: "#f2e9cf", letterSpacing: "0.02em", maxWidth: "82%", textAlign: "center", lineHeight: 1.5,
-            textShadow: "0 2px 12px rgba(0,0,0,0.95)" }}>
-            {FINAL_LINE.slice(0, typChars)}
-            {typChars < FINAL_LINE.length && <span style={{ opacity: 0.6 }}>|</span>}
-          </div>
-        )}
+        {/* ===== PHRASE FINALE typewriter RETIREE (retour Aziz 2026-07-22 : "enleve le texte type
+            typewriter, contente-toi de prolonger la scene de 2 a 3s, juste la musique et le Soudan qui
+            fade vers le black. C'est suffisant."). La phrase reste DITE a la voix ; l'ecran finit sur la
+            carte assombrie qui fond au noir, sans texte. ===== */}
       </AbsoluteFill>
 
       {/* fade au noir FINAL (apres le hold ~1.5s sur la carte + texte) */}

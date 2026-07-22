@@ -21,13 +21,31 @@ import {
   BEAT5,
 } from "../../warmap/soudan-acte5/soudanActe5Timing";
 
-export { FPS, TOTAL_FRAMES };
+export { FPS };
 
-export const AUDIO_FULL = "_shared/audio/soudan/acte5-reseau-ombre.mp3";
-export const A5_GLOBE_FRAMES = TOTAL_FRAMES; // 2400
+// ── RE-TIMING PAUSES-SUR-ORIGINAL (assemblage) ──────────────────────────────
+// L'assemblage joue l'audio acte5-reseau-ombre-PAUSES.mp3 (3 pauses déterministes insérées, cf
+// scripts/tools/soudan-audio/acte5-pauses-sur-original.json). La méthode "pauses-sur-original"
+// SUPPRIME le gap naturel (cut_s→resume_s) et le remplace par sil_s : le décalage d'un jalon n'est
+// donc PAS +30*sil_s mais +30*(sil_s - gap_naturel) cumulé pour toutes les pauses AVANT lui.
+// Ici net total ≈ 0 (les silences insérés ≈ les gaps supprimés), décalages intermédiaires ≤ 4 frames.
+// La version Mapbox (SoudanActe5.tsx) garde l'audio ORIGINAL et le timing source non re-timé — on
+// n'applique le décalage QUE dans ce fichier globe (celui de l'assemblage).
+const PAUSES: { cutF: number; netF: number }[] = [
+  { cutF: Math.round(16.06 * FPS), netF: Math.round((1.3 - (17.42 - 16.06)) * FPS) }, // net -0.06s
+  { cutF: Math.round(36.32 * FPS), netF: Math.round((0.9 - (37.10 - 36.32)) * FPS) }, // net +0.12s
+  { cutF: Math.round(73.46 * FPS), netF: Math.round((1.1 - (74.62 - 73.46)) * FPS) }, // net -0.06s
+];
+const reTime = (f: number): number =>
+  f + PAUSES.reduce((acc, p) => acc + (p.cutF < f ? p.netF : 0), 0);
 
-// Ancrages absolus (frame 0 = début de l'acte). Réexport plat, aucune valeur recalculée.
-export const T = {
+const NET_TOTAL = PAUSES.reduce((a, p) => a + p.netF, 0);
+export const A5_GLOBE_FRAMES = TOTAL_FRAMES + NET_TOTAL; // 2400 + 0 = 2400
+
+export const AUDIO_FULL = "_shared/audio/soudan/acte5-reseau-ombre-pauses.mp3";
+
+// Ancrages absolus (frame 0 = début de l'acte), RE-TIMÉS via reTime() pour l'audio pauses.
+const T0 = {
   // BEAT 1 — pose de la chaîne (pont Acte 4 → Libye)
   b1Start: BEAT1.start,
   b1ResteImpasse: BEAT1.resteImpasse, // dézoom/pivot amorcé, globe prend de l'altitude vers la Libye
@@ -71,6 +89,11 @@ export const T = {
   b5Institutions: BEAT5.institutions, // vignette périphérique = pont Acte 6
   b5End: BEAT5.end,
 };
+
+// T = T0 re-timé jalon par jalon (décalage cumulatif net des pauses AVANT chaque jalon).
+export const T = Object.fromEntries(
+  Object.entries(T0).map(([k, v]) => [k, reTime(v)])
+) as { [K in keyof typeof T0]: number };
 
 // ⚠️ Noms propres à l'écran (vérifier orthographe Wikipédia AVANT render, jamais dériver du whisper) :
 //   "Abou Dabi", "Benghazi", "El-Fasher". Le nom "Kufra" reste un repère visuel discret (non affiché

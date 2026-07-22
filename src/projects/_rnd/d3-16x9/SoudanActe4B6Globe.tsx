@@ -262,6 +262,36 @@ export const SoudanActe4B6Globe: React.FC = () => {
             return <BorderPulse key={`pulse-${p.label}`} d={d} pulse={pulse} color={p.color} />;
           })}
 
+          {/* FRONTIERE PERSISTANTE LUMINEUSE (retour Aziz : "que les frontieres du pays restent
+              allumees, meme vues de l'espace"). Apres le souffle one-shot (BorderPulse qui s'eteint),
+              on garde un contour colore qui RESPIRE doucement tant que le pays est actif — le pays
+              nomme reste visuellement "chaud" au lieu de retomber inerte. glow via le filtre a4b6glow. */}
+          {PUISSANCES.map((p, i) => {
+            const feat = puissanceFeatures[i];
+            if (!feat) return null;
+            const d = path(feat as any);
+            if (!d) return null;
+            const on = interpolate(frame, [p.appearF + 20, p.appearF + 40], [0, 1], {
+              extrapolateLeft: "clamp",
+              extrapolateRight: "clamp",
+            });
+            if (on <= 0.01) return null;
+            // respiration lente du halo (1.0..0.55) — vivant sans clignoter
+            const breathe = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin((frame - p.appearF) / 11));
+            return (
+              <path
+                key={`glowborder-${p.label}`}
+                d={d}
+                fill="none"
+                stroke={p.color}
+                strokeWidth={2.2}
+                strokeOpacity={on * breathe * 0.9}
+                strokeLinejoin="round"
+                filter="url(#a4b6glow)"
+              />
+            );
+          })}
+
           {/* ARCS A OCCLUSION + COURBURE : chaque puissance trace un arc SINUEUX vers Khartoum.
               windingPathD courbe l'arc (amp/waves) pour DESEMPILER les 3 sources du nord ; geoPath
               clippe nativement les segments derriere le globe. */}
@@ -295,14 +325,19 @@ export const SoudanActe4B6Globe: React.FC = () => {
             );
           })}
 
-          {/* Labels des pays source (le drapeau porte la couleur, le label nomme), masques si face cachee */}
+          {/* Labels des pays source — GEOPLAQUES EPHEMERES (retour Aziz) : la plaque apparait a la
+              nomination, tient ~2s, PUIS disparait (le drapeau qui remplit le pays reste, lui, la
+              reference visuelle permanente). Evite l'accumulation de plaques figees tout l'acte. */}
           {PUISSANCES.map((p, i) => {
             const pt = projectPoint(proj, p.from, visible);
             if (!pt) return null;
-            const app = interpolate(frame, [p.appearF, p.appearF + 20], [0, 1], {
-              extrapolateLeft: "clamp",
-              extrapolateRight: "clamp",
-            });
+            const EPHEM = 60; // ~2s visible avant fade
+            const app = interpolate(
+              frame,
+              [p.appearF, p.appearF + 16, p.appearF + EPHEM, p.appearF + EPHEM + 16],
+              [0, 1, 1, 0],
+              { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+            );
             if (app <= 0.01) return null;
             return (
               <GeoPlaqueSVG key={`lbl-${p.label}`} x={pt.x} y={pt.y} label={p.label} op={app} accent={p.color} dy={-20} labelFill={t.labelFill} />

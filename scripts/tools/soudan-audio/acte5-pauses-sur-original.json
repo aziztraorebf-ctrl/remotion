@@ -1,0 +1,10 @@
+{
+  "_doc": "PAUSES DETERMINISTES sur AUDIO ORIGINAL VALIDE Acte 5 (acte5-reseau-ombre.mp3, compo D3-SoudanActe5-Globe, AUDIO_FULL). cut_s/resume_s issus du whisper /tmp/align-acte5.ts. Cet acte respirait DEJA bien (gaps naturels 2-3.3s a 'Resumons', 'Et pourtant'): on n'y touche PAS, on renforce seulement 3 fins d'idees au gap trop court. GARDE-FOU whisper obligatoire.",
+  "source_audio": "public/_shared/audio/soudan/acte5-reseau-ombre.mp3",
+  "source_duration_s": 80.109,
+  "cuts": [
+    { "label": "apres 'alimente la guerre elle-meme' -> avant 'Ce pays c'est' (avant revelation Emirats)", "cut_s": 16.06, "resume_s": 17.42, "sil_s": 1.3 },
+    { "label": "apres 'controle l'est du pays' -> avant 'Et ce n'est pas nouveau'", "cut_s": 36.32, "resume_s": 37.10, "sil_s": 0.9 },
+    { "label": "apres 'continue de fonctionner' -> avant 'Pour comprendre pourquoi' (pont vers Acte 6)", "cut_s": 73.46, "resume_s": 74.62, "sil_s": 1.1 }
+  ]
+}
