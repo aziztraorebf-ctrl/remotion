@@ -1,18 +1,40 @@
 # Soudan Mid-form — STATUS
 
-## ⭐ ÉTAT COURANT (2026-07-22) — v3 PRODUITE + VALIDÉE GLOBALEMENT → RESTE 12 PTS POLISH
+## ⭐⭐ ÉTAT COURANT (2026-07-22 nuit) — v4 PRODUITE, 11/12 PTS POLISH FAITS → RESTE RACCORDS AUDIO
 
-> **Source de vérité. Remplace tous les blocs datés 2026-07-21 ci-dessous (rétrogradés « trace historique »).**
+> **Source de vérité. Remplace le bloc v3 ci-dessous (rétrogradé « trace historique »).**
 >
+> - **v4 PRODUITE** (11 des 12 points polish appliqués, cf détail `starters/STARTER-PROMPT-
+>   soudan-midform-PASSE-FINALE-DETAILS.md`) : audio pauses déterministes actes 3/4/5/6 (garde-fou whisper
+>   validé sur les 4) · SFX count-up 50M/13,5M + cascade dings sièges ONU (remplace SFX Russie) · globe
+>   début Acte 5 peuplé (continuité fin Acte 4 — ⚠️ le starter l'appelait "début A6" par erreur, corrigé) ·
+>   fade plaque hook "Où va cet or ?" · 8 plaques sources ajoutées actes 1-4.
+> - **⛔ BUG CRITIQUE TROUVÉ PAR AZIZ APRÈS PRÉSENTATION, CORRIGÉ** : le premier assemblage v4 avait une
+>   image FIGÉE ~4min (fin Acte 3 → tout l'Acte 4, 2:55→7:00) pendant que l'audio continuait normalement.
+>   Cause : concat des 6 actes via concat DEMUXER (`-c:v copy`) sur un `a3.mp4` lui-même issu d'une
+>   concaténation interne (Section1+Insert) → DTS non-monotones qui gèlent l'image en aval. **Corrigé** en
+>   ré-assemblant via le filtre ffmpeg `concat=` (décode/ré-encode réel des 7 sources : hook+a1..a6) au lieu
+>   du concat demuxer. **Leçon gravée** : `memory/feedbacks/feedback_verifier-mouvement-video-pas-juste-frames-isolees.md`
+>   — mes vérifications ne testaient QUE des frames isolées, jamais la continuité du mouvement. Ne PAS répéter.
+> - **Livrable v4 corrigé et vérifié** (hash MD5 sur 318 frames échantillonnées sur toute la durée, 0 gel
+>   >6s détecté sauf 1 plateau mineur ~7s à 9:10 dans l'Acte 6, probablement voulu, signalé à Aziz) :
+>   `out/episodes/soudan-midform/wip/passe-finale-v4/soudan-midform-v4-MIX.mp4` (635.1s) +
+>   `-MIX-compressed.mp4` (43MB, 720p, celui envoyé à Aziz).
+> - **Branche `feat/soudan-passe-finale-6lots`**, commit v4 code = `828e1d27`.
+> - **RESTE (retour Aziz post-vision v4, 2026-07-22 nuit)** : quelques raccords où la voix coupe
+>   brusquement (à identifier précisément — Aziz dira les timecodes en session suivante) + 1-2 points
+>   mineurs. **Session suivante : Aziz + Claude en direct, PAS d'agents** (Aziz : "ça ira peut-être plus
+>   vite"). Pipeline audio réutilisable : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`.
+
+## 🗄️ [TRACE 2026-07-22 après-midi] v3 PRODUITE + VALIDÉE GLOBALEMENT → 12 PTS POLISH (périmé, remplacé ci-dessus)
+
 > - **PASSE FINALE v3 PRODUITE** : globe vivant Actes 3/4/6 (« on navigue dans le globe ») + frontières allumées +
 >   géoplaques éphémères + Suakin géopôle + drone SVG + Nil brillant ; **Acte 4 début habité** ; **audio à pauses
 >   déterministes** calées sur whisper (+ garde-fou) ; **hook remonté en tête** ; puits « sans fond » supprimé ;
 >   **fin A6 sans typewriter** ; SFX sobres.
-> - **v3 VALIDÉE GLOBALEMENT par Aziz** (2026-07-22, « quasiment finie »). ⛔ **NE PAS RE-ASSEMBLER / RE-PRODUIRE.**
+> - **v3 VALIDÉE GLOBALEMENT par Aziz** (2026-07-22, « quasiment finie »).
 > - **Livrable v3 (base, 636s)** : `out/episodes/soudan-midform/wip/passe-finale-v3/soudan-midform-v3-MIX.mp4`.
 > - **Branche `feat/soudan-passe-finale-6lots`**, commit v3 = `ec7eb98c`.
-> - **RESTE = 12 points POLISH** (session dédiée) → `starters/STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md`
->   (starter ACTIF). Pipeline audio réutilisable : `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`.
 
 ---
 

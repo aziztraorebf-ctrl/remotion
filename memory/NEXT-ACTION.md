@@ -21,19 +21,30 @@
 
 ---
 
-## 🎬 SOUDAN MID-FORM — v3 PRODUITE + VALIDÉE GLOBALEMENT → RESTE 12 PTS POLISH (MàJ 2026-07-22)
+## 🎬🎬 SOUDAN MID-FORM — v4 PRODUITE, 11/12 PTS FAITS → RESTE RACCORDS AUDIO (MàJ 2026-07-22 nuit)
 
-> **⭐ ÉTAT RÉEL 2026-07-22 — remplace tout le contenu daté 2026-07-21 ci-dessous (désormais « trace ») :**
-> - **v3 PRODUITE + VALIDÉE GLOBALEMENT par Aziz** (2026-07-22, « quasiment finie »). L'assemblage est FAIT
->   (v2 puis v3 re-rendus 6 actes + concat + mix audio). ⛔ **NE PAS RE-ASSEMBLER / NE PAS RE-PRODUIRE l'assemblage.**
-> - **Livrable v3 = base de travail (636s)** :
->   `out/episodes/soudan-midform/wip/passe-finale-v3/soudan-midform-v3-MIX.mp4`.
-> - **Branche `feat/soudan-passe-finale-6lots`**, commit v3 = `ec7eb98c`.
-> - **RESTE = 12 points POLISH** (session dédiée) : SFX count-up · pauses audio déterministes · plaques de sources ·
->   globe habité début A6 · (+ autres points détaillés dans le starter actif).
-> - **Pipeline audio réutilisable** (pauses déterministes calées whisper + garde-fou) :
->   `memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`.
-> - **⏭️ PROCHAINE SESSION = PASSE FINALE POLISH (12 pts)** → `memory/starters/STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md` (starter ACTIF).
+> **⭐⭐ ÉTAT RÉEL 2026-07-22 nuit — remplace le bloc v3 ci-dessous (désormais « trace ») :**
+> - **v4 produite** : 11 des 12 points polish appliqués (audio pauses actes 3/4/5/6 + garde-fou whisper ·
+>   SFX count-up + cascade dings ONU · globe début Acte 5 peuplé (⚠️ pas Acte 6, erreur du starter corrigée) ·
+>   fade plaque hook · 8 plaques sources actes 1-4). Commit code `828e1d27` sur `feat/soudan-passe-finale-6lots`.
+> - **⛔ BUG CRITIQUE trouvé par Aziz après présentation + CORRIGÉ** : image figée ~4min (2:55→7:00, fin
+>   Acte3→tout Acte4) due à un concat demuxer sur un acte déjà issu d'un concat interne (DTS cassés). Fix :
+>   filtre ffmpeg `concat=` (réencodage réel) au lieu du concat demuxer. Leçon gravée :
+>   `.claude/.../memory/feedbacks/feedback_verifier-mouvement-video-pas-juste-frames-isolees.md` ⭐⭐ (ne
+>   jamais vérifier un assemblage avec des frames isolées seules — toujours tester le MOUVEMENT).
+> - **Livrable v4 (corrigé, vérifié hash MD5 sur 318 frames)** :
+>   `out/episodes/soudan-midform/wip/passe-finale-v4/soudan-midform-v4-MIX.mp4` (635.1s) + `-compressed.mp4`
+>   (43MB, envoyé à Aziz via litter.catbox.moe — catbox.moe normal instable ce jour, servait des liens vides
+>   HTTP 200/content-length=0, préférer uguu.se ou litterbox.catbox.moe en 1er choix jusqu'à nouvel ordre).
+> - **RESTE (retour Aziz 2026-07-22 nuit, post-vision v4)** : des raccords où la voix coupe brusquement
+>   (timecodes précis à donner par Aziz en session suivante) + 1-2 points mineurs. Point mineur repéré côté
+>   Claude (à confirmer avec Aziz, pas forcément un bug) : plateau ~7s dans l'Acte 6 vers 9:10-9:17 (animation
+>   veto ONU qui ne bouge plus juste avant la transition suivante).
+> - **⏭️ PROCHAINE SESSION : Aziz + Claude EN DIRECT, PAS d'agents** (décision explicite Aziz — chantier plus
+>   petit, raccords audio ciblés, pas besoin du parallélisme agentique qui a servi cette session pour les 12
+>   points larges). Repartir de `soudan-midform-v4-MIX.mp4`, PAS re-régénérer — méthode pauses déterministes
+>   toujours valable (`memory/doctrines/AUDIO-PAUSES-DETERMINISTES.md`), retirer/déplacer une coupe = éditer
+>   le manifest JSON concerné (`scripts/tools/soudan-audio/acte{N}-pauses-*.json`) + ré-appliquer + garde-fou.
 
 > ⛔ **TOUT LE CONTENU CI-DESSOUS (daté 2026-07-21) EST UNE TRACE HISTORIQUE PÉRIMÉE** — conservé pour la
 > généalogie de la production (Phase 2 Acte 4, 1er assemblage, passe LLM). Ne rien exécuter sur sa base.
