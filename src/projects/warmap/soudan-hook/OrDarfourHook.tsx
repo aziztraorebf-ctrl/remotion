@@ -131,8 +131,16 @@ export const OrDarfourHook: React.FC = () => {
     const op = Math.sin(Math.max(0.001, cycle) * Math.PI) * trailOn;
     return { x, y, r, op };
   });
-  // cartouche gravé "OU VA CET OR ?" apparaît juste après "l'or" et tient jusqu'à la coupe.
-  const cartoucheOn = interpolate(f, [VO_SUIVEZ_OR + 16, VO_SUIVEZ_OR + 40], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // cartouche gravé "OU VA CET OR ?" apparaît juste après "l'or" et FADE avant la coupe vers l'Acte 1
+  // (passe finale polish 2026-07-22 : la plaque restait affichée jusqu'à la coupe brute, retour Aziz).
+  // Apparition avancée (+16f au lieu de +16..+40) pour laisser un vrai hold avant le fade-out final —
+  // l'apparition d'origine finissait à f698/700, quasi aucune marge pour redescendre proprement.
+  const cartoucheOn = interpolate(
+    f,
+    [VO_SUIVEZ_OR + 4, VO_SUIVEZ_OR + 16, OR_DARFOUR_HOOK_FRAMES - 16, OR_DARFOUR_HOOK_FRAMES - 4],
+    [0, 1, 1, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
+  );
 
   // ---------- MICRO-ANIMATIONS (dévitaliser la scène, jamais de glissement d'objet inerte) ----------
   // 1. HALO DU SOLEIL qui respire (dilatation-contraction lente autour du soleil du groupe H_CIEL)

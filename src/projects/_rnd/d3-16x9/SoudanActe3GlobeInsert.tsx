@@ -462,6 +462,10 @@ export const SoudanActe3GlobeInsert: React.FC<{ startScaleMul?: number }> = ({ s
         <SourcePlaque frame={frame} appear={634} text="Amnesty International, mai 2025" />
         <SourcePlaque frame={frame} appear={1133} text="Washington Post, ADF, Euronews" />
         <SourcePlaque frame={frame} appear={1754} text="Chatham House, The Soufan Center" />
+        {/* PLAQUE SOURCE (passe finale polish, 2026-07-22, migree depuis l'ancien SoudanActe3.tsx perime
+            vers ce fichier ACTIF) — EAU 1er importateur d'or africain, calee juste apres "importateur"
+            (T.b3PremierImportateur = ancrage whisper exact repris de soudanActe3Timing.ts). */}
+        <SourcePlaque frame={frame} appear={T.b3PremierImportateur + 15} text="DW, nov. 2025 · AFP/L'Express" />
       </AbsoluteFill>
     </AbsoluteFill>
   );

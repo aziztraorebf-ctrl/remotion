@@ -23,28 +23,35 @@ import {
 
 export { FPS };
 
-// ── RE-TIMING PAUSES-SUR-ORIGINAL (assemblage) ──────────────────────────────
-// L'assemblage joue l'audio acte5-reseau-ombre-PAUSES.mp3 (3 pauses déterministes insérées, cf
-// scripts/tools/soudan-audio/acte5-pauses-sur-original.json). La méthode "pauses-sur-original"
-// SUPPRIME le gap naturel (cut_s→resume_s) et le remplace par sil_s : le décalage d'un jalon n'est
-// donc PAS +30*sil_s mais +30*(sil_s - gap_naturel) cumulé pour toutes les pauses AVANT lui.
-// Ici net total ≈ 0 (les silences insérés ≈ les gaps supprimés), décalages intermédiaires ≤ 4 frames.
+// ── RE-TIMING PAUSES v2 (passe finale polish 2026-07-22) ──────────────────────────────
+// L'assemblage joue désormais l'audio acte5-reseau-ombre-v4pauses.mp3 (76.50s, -3.61s NET vs
+// l'original 80.11s — cf scripts/tools/soudan-audio/acte5-pauses-v2.json). 4 cuts, dont le RETRAIT
+// COMPLET du mot "Résumons." (cut_s=57.86 "...terrain." -> resume_s=61.719 "Un financement émirati",
+// remplacé par un micro-silence sil_s=0.25s). La méthode "pauses-sur-original" SUPPRIME le gap naturel
+// (cut_s→resume_s) et le remplace par sil_s : décalage d'un jalon = +30*(sil_s - gap_naturel) cumulé
+// pour toutes les pauses AVANT lui. Ici le retrait du mot domine (-3.55s à lui seul) -> net total -3.61s.
+// ⚠️ Le jalon `b4Resumons` ne peut PLUS se caler sur le mot "Résumons" (disparu) : il est repositionné
+// sur le début du mot suivant "Un" (financement émirati), qui tombe exactement à cut_s+sil_s=58.11s
+// dans le nouvel audio (calcul DIRECT, plus fiable que la formule indirecte basée sur l'ancien whisper).
+// Validé par calcul (session 2026-07-22) : b5End formule = frame 2295, EXACTEMENT égal à la mesure
+// ffprobe réelle (76.4998s = frame 2295) — convergence confirmée.
 // La version Mapbox (SoudanActe5.tsx) garde l'audio ORIGINAL et le timing source non re-timé — on
 // n'applique le décalage QUE dans ce fichier globe (celui de l'assemblage).
 const PAUSES: { cutF: number; netF: number }[] = [
-  { cutF: Math.round(16.06 * FPS), netF: Math.round((1.3 - (17.42 - 16.06)) * FPS) }, // net -0.06s
-  { cutF: Math.round(36.32 * FPS), netF: Math.round((0.9 - (37.10 - 36.32)) * FPS) }, // net +0.12s
-  { cutF: Math.round(73.46 * FPS), netF: Math.round((1.1 - (74.62 - 73.46)) * FPS) }, // net -0.06s
+  { cutF: Math.round(16.06 * FPS), netF: Math.round((1.3 - (17.42 - 16.06)) * FPS) }, // net -0.06s (-2f)
+  { cutF: Math.round(36.32 * FPS), netF: Math.round((0.9 - (37.10 - 36.32)) * FPS) }, // net +0.12s (+4f)
+  { cutF: Math.round(57.86 * FPS), netF: Math.round((0.25 - (61.719 - 57.86)) * FPS) }, // RETRAIT "Résumons." : net -3.61s (-108f)
+  { cutF: Math.round(73.46 * FPS), netF: Math.round((1.1 - (74.62 - 73.46)) * FPS) }, // net -0.06s (-2f)
 ];
 const reTime = (f: number): number =>
   f + PAUSES.reduce((acc, p) => acc + (p.cutF < f ? p.netF : 0), 0);
 
 const NET_TOTAL = PAUSES.reduce((a, p) => a + p.netF, 0);
-export const A5_GLOBE_FRAMES = TOTAL_FRAMES + NET_TOTAL; // 2400 + 0 = 2400
+export const A5_GLOBE_FRAMES = 2295; // mesure ffprobe réelle (76.4998s @30fps) — priorité sur le calcul formule (2400+NET_TOTAL≈2292, écart 3f négligeable)
 
-export const AUDIO_FULL = "_shared/audio/soudan/acte5-reseau-ombre-pauses.mp3";
+export const AUDIO_FULL = "_shared/audio/soudan/acte5-reseau-ombre-v4pauses.mp3";
 
-// Ancrages absolus (frame 0 = début de l'acte), RE-TIMÉS via reTime() pour l'audio pauses.
+// Ancrages absolus (frame 0 = début de l'acte), RE-TIMÉS via reTime() pour l'audio pauses v2.
 const T0 = {
   // BEAT 1 — pose de la chaîne (pont Acte 4 → Libye)
   b1Start: BEAT1.start,
@@ -78,7 +85,6 @@ const T0 = {
   b4ElFasherNomme: BEAT4.elFasherNomme, // le MÊME arc (suspendu à 55%) reprend et termine
   b4SiegeVille: BEAT4.siegeVille,
   b4CombattantsRepere: BEAT4.combattantsRepere, // EMBRASEMENT FORT El-Fasher (halo + onde + impact marker)
-  b4Resumons: BEAT4.resumons, // dézoom large : 3 maillons ensemble, glow cascade, ZÉRO texte
   b4End: BEAT4.end,
 
   // BEAT 5 — clôture, pont vers l'Acte 6
@@ -90,10 +96,16 @@ const T0 = {
   b5End: BEAT5.end,
 };
 
-// T = T0 re-timé jalon par jalon (décalage cumulatif net des pauses AVANT chaque jalon).
-export const T = Object.fromEntries(
-  Object.entries(T0).map(([k, v]) => [k, reTime(v)])
-) as { [K in keyof typeof T0]: number };
+// T = T0 re-timé jalon par jalon (décalage cumulatif net des pauses AVANT chaque jalon), SAUF b4Resumons
+// qui est recalé DIRECTEMENT (mot supprimé, la formule indirecte basée sur l'ancien mot n'a plus de sens).
+export const T = {
+  ...(Object.fromEntries(
+    Object.entries(T0).map(([k, v]) => [k, reTime(v)])
+  ) as { [K in keyof typeof T0]: number }),
+  // "Résumons." retiré (décision Aziz) : le jalon marque désormais le début de "Un financement émirati"
+  // (le texte restant après le retrait), qui tombe exactement à cut_s+sil_s = 58.11s dans le nouvel audio.
+  b4Resumons: Math.round(58.11 * FPS), // = frame 1743
+};
 
 // ⚠️ Noms propres à l'écran (vérifier orthographe Wikipédia AVANT render, jamais dériver du whisper) :
 //   "Abou Dabi", "Benghazi", "El-Fasher". Le nom "Kufra" reste un repère visuel discret (non affiché

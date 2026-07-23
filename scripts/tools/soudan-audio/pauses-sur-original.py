@@ -37,13 +37,24 @@ def main():
 
     tmp = tempfile.mkdtemp(prefix="soudan-orig-pauses-")
     parts = []
+
+    prepend_s = m.get("prepend_silence_s", 0.0)
+    if prepend_s > 0:
+        pre = os.path.join(tmp, "prepend_sil.mp3")
+        silence(prepend_s, pre)
+        parts.append(pre)
+        print(f"(prepend silence {prepend_s:.2f}s before start)")
+
     prev_resume = 0.0
     print(f"{'segment voix':40s} {'sil apres':>9s}")
     for i, c in enumerate(cuts):
         # tranche de voix : de la reprise precedente jusqu'a cette coupure
-        seg = os.path.join(tmp, f"voice_{i}.mp3")
-        slice_audio(src, prev_resume, c["cut_s"], seg)
-        parts.append(seg)
+        # (si cut_s <= prev_resume : rien a couper, on insere juste le silence sans slice -
+        #  cas d'une pause pure sans retrait de contenu, ex. cut_s==resume_s)
+        if c["cut_s"] > prev_resume + 0.005:
+            seg = os.path.join(tmp, f"voice_{i}.mp3")
+            slice_audio(src, prev_resume, c["cut_s"], seg)
+            parts.append(seg)
         print(f"[{prev_resume:7.2f}..{c['cut_s']:7.2f}]  {c['label'][:26]:26s}  {c['sil_s']:6.2f}s")
         # silence insere
         sil = os.path.join(tmp, f"sil_{i}.mp3")
@@ -55,6 +66,13 @@ def main():
     slice_audio(src, prev_resume, total_src, tail)
     parts.append(tail)
     print(f"[{prev_resume:7.2f}..{total_src:7.2f}]  (fin)")
+
+    append_s = m.get("append_silence_s", 0.0)
+    if append_s > 0:
+        post = os.path.join(tmp, "append_sil.mp3")
+        silence(append_s, post)
+        parts.append(post)
+        print(f"(append silence {append_s:.2f}s after end)")
 
     listf = os.path.join(tmp, "list.txt")
     with open(listf,"w") as f:

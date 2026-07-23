@@ -818,10 +818,29 @@ export const SoudanActe4B1toB4Globe: React.FC = () => {
         />
       )}
 
-      {/* ZERO sous-titre bas d'ecran (regle constante : bas de cadre reserve aux SOURCES uniquement,
-          ce bloc n'a pas de source a afficher — la voix off + la densite visuelle du globe portent
-          le sens, meme discipline que B1B2/B3/B4/B6). */}
+      {/* PLAQUE SOURCE (passe finale polish, 2026-07-22, migree depuis l'ancien SoudanActe4.tsx perime
+          vers ce fichier ACTIF) — accord base navale chiffre (25 ans/300 soldats/4 navires/nucleaire),
+          calee sur le dernier fait du bloc B2 ("Soudan pas signe"). Bas de cadre reserve aux SOURCES
+          uniquement (bandeau discret coin bas-droite, pas un sous-titre plein largeur). */}
+      <SourcePlaque frame={frame} appear={T.soudanPasSigne + 15} text="Asharq Al-Awsat, 2026" />
     </AbsoluteFill>
+  );
+};
+
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (recette exacte
+// SoudanActe3GlobeInsert.tsx, recopiee a l'identique). Fade in 10f / hold 54f / fade out 12f = ~1.8s.
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number }> = ({ text, appear, frame, holdFrames = 54 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  const op = interpolate(frame, [appear, appear + 10, appear + holdFrames, appear + holdFrames + 12], [0, 1, 1, 0], clampB);
+  return (
+    <div style={{ position: "absolute", right: 40, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
   );
 };
 

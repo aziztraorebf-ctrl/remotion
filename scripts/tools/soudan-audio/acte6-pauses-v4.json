@@ -1,0 +1,13 @@
+{
+  "_doc": "PAUSES DETERMINISTES v4 sur AUDIO ORIGINAL VALIDE Acte 6 (acte6-verrou-institutionnel.mp3). Recalees via whisper-align frais (2026-07-22, run passe-finale-polish) car le run precedent (acte6-pauses-sur-original.json) datait d'un autre alignment legerement decale. Les 5 pauses _aziz sont conservees, positions ajustees sur mots exacts. Le silence en TETE d'acte (avant 'Une guerre comme celle-la') est gere SEPAREMENT par prepend-silence (pas un cut interne) car il precede le premier mot du fichier.",
+  "source_audio": "public/_shared/audio/soudan/acte6-verrou-institutionnel.mp3",
+  "source_duration_s": 133.236,
+  "prepend_silence_s": 1.15,
+  "cuts": [
+    { "label": "apres '...dit long' -> avant 'Le premier reflexe' (gap naturel 0.32s)", "cut_s": 15.24, "resume_s": 15.56, "sil_s": 1.6, "_aziz": true },
+    { "label": "apres '...coup d'Etat de 2021' -> avant 'Alors' (gap naturel 0.84s)", "cut_s": 26.70, "resume_s": 27.54, "sil_s": 0.9, "_aziz": true },
+    { "label": "apres '...avant meme d'avoir commence' -> avant 'Reste l'echelon au-dessus' (BUG CORRIGE 2026-07-22 : 'commence' finit a 34.08 ET 'Reste' est colle juste apres SANS aucun gap naturel, de 34.08 a 34.56 - verifie par isolement whisper precis, l'ancien resume_s=34.56 mangeait tout le mot 'Reste'. Corrige a cut_s==resume_s==34.08 : rien n'est retire, seul le silence de 1.6s est insere pile a cet endroit, 'Reste' est entierement preserve dans la tranche suivante)", "cut_s": 34.08, "resume_s": 34.08, "sil_s": 1.6, "_aziz": true },
+    { "label": "apres '...plus personne n'est vraiment neutre' -> avant 'Et ce n'est pas' (gap naturel 0.14s, tres court -> renforce)", "cut_s": 64.94, "resume_s": 65.08, "sil_s": 1.3, "_aziz": true },
+    { "label": "apres '...l'alimente de l'autre main' -> avant 'Dans ces conditions' (gap naturel 0.26s)", "cut_s": 93.60, "resume_s": 93.86, "sil_s": 1.5, "_aziz": true }
+  ]
+}

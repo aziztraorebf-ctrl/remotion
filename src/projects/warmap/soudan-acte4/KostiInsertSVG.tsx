@@ -360,7 +360,31 @@ export const KostiInsertSVG: React.FC<{ f4: KostiF4 }> = ({ f4 }) => {
       <Impact frame={frame} impactAt={impactAt} />
       <SmokeCol frame={frame} smokeAt={smokeAt} ax={STATION_CENTER.x} ay={STATION_CENTER.y + 30} scale={1.6} id="kostiSmokeStation" />
       <SmokeCol frame={frame} smokeAt={smokeAt} ax={IMPACT.x - 30} ay={IMPACT.y} scale={0.95} id="kostiSmokeImpact" />
+
+      {/* PLAQUE SOURCE (passe finale polish, 2026-07-22, migree depuis l'ancien SoudanActe4.tsx perime
+          vers ce composant ACTIF, reutilise tel quel dans Kosti-Beat5-Standalone). Frappe drone Kosti,
+          21 juin 2026, calee juste apres l'impact (le fait est confirme, pas un spectacle : plaque
+          discrete apres coup). rightOffset=68 : le cadre decoratif MapBackdrop va jusqu'a x=1892 (28px
+          de marge), le defaut right:40 chevauchait le double-liseré — decale pour ce beat uniquement. */}
+      <SourcePlaque frame={frame} appear={impactAt + 20} text="Sudan Doctors Network, juin 2026" rightOffset={68} />
     </AbsoluteFill>
+  );
+};
+
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (recette exacte
+// SoudanActe3GlobeInsert.tsx, recopiee a l'identique). Fade in 10f / hold 54f / fade out 12f = ~1.8s.
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number; rightOffset?: number }> = ({ text, appear, frame, holdFrames = 54, rightOffset = 40 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  const op = clampI(frame, appear, appear + 10, 0, 1) * (1 - clampI(frame, appear + holdFrames, appear + holdFrames + 12, 0, 1));
+  return (
+    <div style={{ position: "absolute", right: rightOffset, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
   );
 };
 

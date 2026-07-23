@@ -15,11 +15,21 @@
 // Moule = SoudanActe3GlobeInsert.tsx (validé Aziz). Biblio réutilisée : THEMES.mixte, GlobeFlagFill,
 // ShockRing, DestPoint. Ajouts propres à l'Acte 5 : masque parchemin Libye, teinte Haftar (sans drapeau
 // national), embrasement fort El-Fasher (halo + onde + impact marker croix/fumée), tampons presse/ONU.
+//
+// ⭐ RACCORD DE CONTINUITÉ A4→A5 (2026-07-22, polish passe-finale-v3) : l'Acte 4 se termine sur un globe
+// dense (drapeaux, arcs, jetons Hemedti/al-Burhan, territoires RSF/SAF colorés) ; l'Acte 5 démarrait sur
+// un Soudan crème totalement vide (0 jeton, 0 territoire) — rupture de continuité constatée frame par
+// frame. Recette réutilisée TELLE QUELLE depuis SoudanActe4B1toB4Globe.tsx (composants copiés, pas
+// réinventés : TerritoryGlow, PortraitToken déjà présent plus bas dans ce fichier, RSF_TOKEN/SAF_TOKEN
+// = mêmes coordonnées GEO.rsfToken/GEO.safToken). L'état PERSISTE à pleine opacité de frame 0 jusqu'à
+// "elle reste dans l'impasse" (b1ResteImpasse, ~5.7s — le récit parle encore du Soudan), puis fondu doux
+// jusqu'à "un circuit extérieur" (b1CircuitExterieur, ~9s — le sujet pivote vers l'international/Libye).
+// Aucune frame ajoutée à la durée totale (SOUDAN_A5_GLOBE_FRAMES inchangé).
 import React from "react";
 import { AbsoluteFill, Audio, useCurrentFrame, interpolate, staticFile } from "remotion";
 import { W, H, GLOBE_R, GRATICULE, worldFeatures, featureByName, orthoAt, pathOf, isVisible as isVisibleGeo } from "./globeGeo";
 import { arcPathD, windingPathD, pointAlongArc, pointAlongWinding, projectPoint, GEO, type LonLat } from "./geoArc";
-import { THEMES, FlagToken, ShockRing, SiegeRings, BorderPulse, GeoPlaqueSVG } from "./SoudanActe3GlobeProto16x9";
+import { THEMES, FlagToken, ShockRing, SiegeRings, BorderPulse, GeoPlaqueSVG, SAF_BLUE } from "./SoudanActe3GlobeProto16x9";
 import { buildActe5Cam, camAt } from "./globeCamera";
 import { T, A5_GLOBE_FRAMES, AUDIO_FULL } from "./soudanActe5GlobeTiming";
 
@@ -27,6 +37,11 @@ export const SOUDAN_A5_GLOBE_FRAMES = A5_GLOBE_FRAMES; // 2400
 
 const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const t = THEMES.mixte;
+
+// Points RSF/SAF — MÊMES coordonnées que SoudanActe4B1toB4Globe.tsx (GEO.rsfToken = Darfour,
+// GEO.safToken = vallée du Nil/Khartoum). Ne PAS dupliquer les valeurs numériques, référencer GEO.
+const RSF_TOKEN: LonLat = GEO.rsfToken;
+const SAF_TOKEN: LonLat = GEO.safToken;
 
 const LIBYA_INK = "#9B5A2E"; // teinte de contrôle est-libyen (Haftar/LNA) — brun-orangé lisible
 const CORRIDOR_COL = "#B23A2E"; // corridor = rouge sombre lisible (le "réseau qui arme") — tranche sur le kaki
@@ -56,6 +71,27 @@ const SourceLine: React.FC<{ frame: number; appear: number; fadeAt: number; labe
     </div>
   );
 };
+
+// ── TerritoryGlow — halo de territoire contrôlé (repris EXACTEMENT de SoudanActe4B1toB4Globe.tsx,
+//    ligne 209) : SVG, à poser DANS le <svg> (avant le </svg>), pas en overlay HTML. ──
+const TerritoryGlow: React.FC<{ x: number; y: number; color: string; op: number; frame: number; id: string }> =
+  ({ x, y, color, op, frame, id }) => {
+    if (op <= 0.01) return null;
+    const pulse = 0.9 + 0.1 * Math.sin(frame / 26);
+    const r = 62 * pulse;
+    return (
+      <g opacity={op}>
+        <defs>
+          <radialGradient id={id} cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor={color} stopOpacity={0.30} />
+            <stop offset="55%" stopColor={color} stopOpacity={0.16} />
+            <stop offset="100%" stopColor={color} stopOpacity={0} />
+          </radialGradient>
+        </defs>
+        <circle cx={x} cy={y} r={r} fill={`url(#${id})`} />
+      </g>
+    );
+  };
 
 // ── PortraitToken — jeton-visage (recette EXACTE du Mapbox SoudanToken / insert Acte 3 : cercle
 //    parchemin + bordure faction + portrait clippé rond + ombre). Overlay HTML aux coords projetées. ──
@@ -218,6 +254,20 @@ export const SoudanActe5Globe: React.FC = () => {
   const pKufra = projectPoint(proj, GEO.kufra, visible);
   const pElFasher = projectPoint(proj, GEO.elFasher, visible);
 
+  // ===== RACCORD DE CONTINUITÉ A4→A5 — territoires RSF/SAF + portraits Hemedti/al-Burhan =====
+  // PERSISTENT à pleine opacité de frame 0 (le récit parle encore du Soudan) jusqu'à b1ResteImpasse,
+  // puis fondu doux jusqu'à b1CircuitExterieur (le sujet pivote vers l'international/Libye). Ce N'EST
+  // PAS une ré-apparition progressive (fade-in) : l'état DOIT être là dès la 1ère frame (raccord avec
+  // la dernière frame de l'Acte 4), donc opacité pleine puis fondu de SORTIE, jamais fondu d'entrée.
+  const pRSF = projectPoint(proj, RSF_TOKEN, visible);
+  const pSAF = projectPoint(proj, SAF_TOKEN, visible);
+  const continuiteOp = interpolate(
+    frame,
+    [T.b1Start, T.b1ResteImpasse, T.b1CircuitExterieur],
+    [1, 1, 0],
+    clampB
+  );
+
   // ===== ACTEURS incarnés (Beat 3) — le maréchal Haftar (Benghazi) + SES SOLDATS autour (son autorité
   // militaire, retour Aziz) + camp/dépôt à Kufra + CHECKPOINTS le long du corridor (contrôle du terrain).
   // Les 2 disent des choses différentes et se complètent. Tout RESTE affiché (nom→persiste). =====
@@ -345,6 +395,15 @@ export const SoudanActe5Globe: React.FC = () => {
             return (
               <g>
                 <path d={d} fill={t.sudanFill} fillOpacity={0.95} stroke={t.sudanStroke} strokeWidth={1.6} />
+                {/* RACCORD A4→A5 : territoires RSF (Darfour)/SAF (Khartoum-Nil) PERSISTENT depuis la fin
+                    de l'Acte 4 — le Soudan n'est jamais montré vide au tout début de l'acte (cf note de
+                    tête du fichier). Fondu de SORTIE (continuiteOp) quand le récit pivote vers l'international. */}
+                {pRSF && (
+                  <TerritoryGlow x={pRSF.x} y={pRSF.y} color={RSF_RED} op={continuiteOp} frame={frame} id="a5glowRSF" />
+                )}
+                {pSAF && (
+                  <TerritoryGlow x={pSAF.x} y={pSAF.y} color={SAF_BLUE} op={continuiteOp} frame={frame} id="a5glowSAF" />
+                )}
                 {/* embrasement FORT : le Darfour vire au rouge RSF à l'arrivée du corridor. Clippé au
                     Soudan (ne bave pas hors territoire), dense (3 couches : large diffus + moyen + cœur vif). */}
                 {darfourGlow > 0.01 && pElFasher && (
@@ -490,6 +549,13 @@ export const SoudanActe5Globe: React.FC = () => {
         ))}
         {pBenghazi && <PortraitToken x={pBenghazi.x} y={pBenghazi.y - 4} sprite="portrait-haftar" border="#9B5A2E" op={haftarReveal} size={66} />}
         {/* (labels Abou Dabi / Maréchal Haftar / El-Fasher = géoplaques SVG rendues dans le <svg> ci-dessus) */}
+
+        {/* RACCORD A4→A5 : Hemedti (RSF) + al-Burhan (SAF) PERSISTENT depuis la fin de l'Acte 4 (mêmes
+            sprites/couleurs/tailles que dans SoudanActe4B1toB4Globe.tsx). Rendus ICI (après les acteurs
+            de l'Acte 5) pour ne jamais passer devant Haftar/soldats — ils s'effacent avant que la caméra
+            ne s'éloigne du Soudan (continuiteOp). */}
+        {pRSF && <PortraitToken x={pRSF.x} y={pRSF.y} sprite="portrait-hemeti" border={RSF_RED} op={continuiteOp} size={60} />}
+        {pSAF && <PortraitToken x={pSAF.x} y={pSAF.y} sprite="portrait-burhan" border={SAF_BLUE} op={continuiteOp} size={60} />}
 
         {/* SOURCES EXACTES — une ligne compacte, bas d'écran, ~2s (retour Aziz : pas un pavé). Réfs
             vérifiées WebSearch 2026-07-19, 4 sources concordantes. Apparaît 60f (~2s) avant de disparaître. */}

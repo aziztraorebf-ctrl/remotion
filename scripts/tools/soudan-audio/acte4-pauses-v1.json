@@ -1,0 +1,8 @@
+{
+  "_doc": "PAUSES DETERMINISTES sur AUDIO ORIGINAL VALIDE Acte 4 (acte4-voisins-aspires-FULL.mp3). 1 seule pause demandee : avant 'Ce ne sont donc plus seulement deux camps soudanais...' (correspond au 'debut Acte 4' dans le mix final, meme si ce n'est pas le tout debut du fichier source - localise par whisper-align frais 2026-07-22). cut_s = fin de 'prix' (phrase precedente), resume_s = debut de 'Ce'.",
+  "source_audio": "public/_shared/audio/soudan/acte4-voisins-aspires-FULL.mp3",
+  "source_duration_s": 130.914,
+  "cuts": [
+    { "label": "apres '...si on paye le prix' -> avant 'Ce ne sont donc plus seulement deux camps soudanais' (gap naturel 0.22s)", "cut_s": 107.08, "resume_s": 107.30, "sil_s": 0.85, "_aziz": true }
+  ]
+}

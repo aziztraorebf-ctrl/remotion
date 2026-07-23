@@ -16,16 +16,30 @@ import { FPS, PART_OFFSETS, BEAT3, BEAT4, BEAT5, BEAT5BIS, BEAT6, BEAT7 } from "
 
 export { FPS };
 
-// L'insert commence a BEAT3.start (= PART_OFFSETS.p2 + 0 = 1166) dans le referentiel Mapbox.
-export const INSERT_OFFSET = BEAT3.start; // 1166
-export const INSERT_FRAMES = BEAT7.end - INSERT_OFFSET; // 3773 - 1166 = 2607 (~86.9s)
+// ⚠️ RE-TIMÉ (passe finale polish 2026-07-22) pour l'audio PAUSES v2 (acte3-suivre-lor-v2pauses.mp3,
+// 126.51s, cf scripts/tools/soudan-audio/acte3-pauses-v2.json). 4 cuts déterministes sur le fichier FULL ;
+// SEULS les 3 derniers (44.76/54.88/100.88s) tombent APRÈS le début de l'insert (BEAT3.start=38.87s) — le
+// 1er cut (11.20s, "Quelqu'un paie...") est dans la portion Section1/puits, hors du périmètre de l'insert.
+// Formule NETTE (sil_s - gap_naturel) cumulée : deltas +4/+5/+7/-2f selon la position (cf calcul détaillé
+// scratchpad session 2026-07-22). INSERT_OFFSET lui-même se décale (BEAT3.start recalé à 1170).
+export const INSERT_OFFSET = 1170; // ex-1166, +4f (cut à 11.20s tombe avant, mais BEAT3.start doit suivre le décalage cumulé au même instant)
+export const INSERT_FRAMES = 2601; // ex-2607, b7End re-timé (3771) - INSERT_OFFSET re-timé (1170)
 
-// Portion audio a jouer dans l'insert : startFrom = INSERT_OFFSET sur le fichier FULL.
+// Portion audio a jouer dans l'insert : startFrom = INSERT_OFFSET sur le NOUVEAU fichier avec pauses.
 export const AUDIO_START_FROM = INSERT_OFFSET; // startFrom du <Audio> (frames)
-export const AUDIO_FULL = "_shared/audio/soudan/acte3-suivre-lor-FULL.mp3";
+export const AUDIO_FULL = "_shared/audio/soudan/acte3-suivre-lor-v2pauses.mp3";
 
-// Helper : convertit un ancrage Mapbox-absolu en frame relative a l'insert.
-const rel = (absFrame: number) => absFrame - INSERT_OFFSET;
+// Helper : convertit un ancrage Mapbox-absolu (référentiel ORIGINAL, pré-pauses) en frame relative a
+// l'insert RE-TIMÉ. Applique le décalage net cumulé des pauses puis soustrait le nouvel INSERT_OFFSET.
+const PAUSES: { cutF: number; netF: number }[] = [
+  { cutF: Math.round(11.20 * FPS), netF: 4 },
+  { cutF: Math.round(44.76 * FPS), netF: 1 },
+  { cutF: Math.round(54.88 * FPS), netF: 2 },
+  { cutF: Math.round(100.88 * FPS), netF: -9 },
+];
+const retime = (absFrame: number): number =>
+  absFrame + PAUSES.reduce((acc, p) => acc + (p.cutF < absFrame ? p.netF : 0), 0);
+const rel = (absFrame: number) => retime(absFrame) - INSERT_OFFSET;
 
 // ==== Ancrages relatifs a l'insert (frame 0 = debut du globe) ====
 export const T = {

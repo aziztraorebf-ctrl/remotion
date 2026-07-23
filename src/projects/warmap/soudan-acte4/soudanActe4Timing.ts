@@ -11,12 +11,17 @@
 export const FPS = 30;
 
 // Offsets absolus (frame 0 = début du fichier concat FULL) — durées réelles ffprobe, PAS de silence ajouté.
+// ⚠️ RE-TIMÉ (passe finale polish 2026-07-22) : 1 pause déterministe insérée entre p4 et p5
+// (acte4-voisins-aspires-v1pauses.mp3, 131.54s, cf scripts/tools/soudan-audio/acte4-pauses-v1.json).
+// cut_s=107.08 (fin "...si on paye le prix", = juste avant p5), resume_s=107.30 (gap naturel 0.22s),
+// sil_s=0.85 -> net +0.63s (+19 frames). Le cut tombe pile à la jonction p4->p5 : p1-p4 (BEAT1-4)
+// NE bougent PAS (le cut est APRES eux), seul p5 (BEAT6) décale de +19f. p5_new = p5_old + 19.
 export const PART_OFFSETS = {
   p1: 0,
   p2: Math.round(24.845351 * FPS), // = 745
   p3: Math.round((24.845351 + 22.244717) * FPS), // = 1413
   p4: Math.round((24.845351 + 22.244717 + 34.504853) * FPS), // = 2448
-  p5: Math.round((24.845351 + 22.244717 + 34.504853 + 25.541950) * FPS), // = 3214
+  p5: Math.round((24.845351 + 22.244717 + 34.504853 + 25.541950) * FPS) + 19, // = 3214 + 19 = 3233 (pause +0.63s)
 };
 
 // BEAT 1 — Le retournement russe (+ pont depuis Acte 3) [partie 1]

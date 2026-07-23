@@ -353,7 +353,29 @@ const GlobeMapPart: React.FC = () => {
 
       {/* portrait Hemedti, ecarte de la mine Jebel Amer */}
       {frame >= F.hemedtiNomme && pHemedti && <PortraitToken x={pHemedti.x} y={pHemedti.y} appear={F.hemedtiNomme} frame={frame} />}
+
+      {/* PLAQUE SOURCE (passe finale polish, 2026-07-22, migree depuis l'ancien SoudanActe3.tsx perime
+          vers ce fichier ACTIF) — Jebel Amer/Al Junaid ~1 Md USD, calee juste apres le mot "milliard".
+          Section courte (643f) : le hold ne va pas jusqu'au bout, coupe par la fin de section — normal. */}
+      <SourcePlaque frame={frame} appear={F.milliard + 15} text="US Treasury / The Sentry, 2023-2025" />
     </AbsoluteFill>
+  );
+};
+
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (recette exacte
+// SoudanActe3GlobeInsert.tsx, recopiee a l'identique). Fade in 10f / hold 54f / fade out 12f = ~1.8s.
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number }> = ({ text, appear, frame, holdFrames = 54 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  const op = interpolate(frame, [appear, appear + 10, appear + holdFrames, appear + holdFrames + 12], [0, 1, 1, 0], clampB);
+  return (
+    <div style={{ position: "absolute", right: 40, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
   );
 };
 

@@ -214,6 +214,11 @@ export const SoudanActe1: React.FC = () => {
           au-dessus de la carte sans la quitter (fond parchemin opaque local). Remplace la grille ratée. ── */}
       <Insert50M frame={frame} inAt={F.cinquante} outAt={F.cinqEnd + 10} />
 
+      {/* ── PLAQUES SOURCE (passe finale polish, 2026-07-22) — bandeau bas-droite sobre, 1 source par
+          plaque, ~1.8s à l'écran. Calées juste après l'énoncé du fait pour ne jamais couper la voix. ── */}
+      <SourcePlaque frame={frame} appear={F.cinqEnd + 10} text="UN DESA, projections janv. 2026" />
+      <SourcePlaque frame={frame} appear={F.vingtcinq + 20} text="UN News, 10 janv. 2026" />
+
       {/* ── VIGNETTE CHAUDE (review : "lampe de bureau" — centre chaud/lumineux, bords sombres) ── */}
       <AbsoluteFill style={{ pointerEvents: "none", mixBlendMode: "multiply",
         background: "radial-gradient(ellipse 74% 70% at 50% 47%, rgba(255,240,210,0.06) 0%, rgba(60,42,18,0.0) 42%, rgba(28,18,8,0.42) 100%)" }} />
@@ -402,6 +407,26 @@ const CivilTokens: React.FC<{ proj: (c: [number, number]) => Pt | null; frame: n
       })}
     </>
   );
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (recette exacte
+// SoudanActe3GlobeInsert.tsx, recopiée à l'identique — retour Aziz 2026-07-19 : "afficher les sources
+// des gros faits ~1.5-2s puis disparaître"). Fade in 10f / hold 54f / fade out 12f = ~1.8s à l'écran.
+// ─────────────────────────────────────────────────────────────────────────────
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number }> = ({ text, appear, frame, holdFrames = 54 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  const op = interpolate(frame, [appear, appear + 10, appear + holdFrames, appear + holdFrames + 12], [0, 1, 1, 0], clamp);
+  return (
+    <div style={{ position: "absolute", right: 40, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
+  );
+};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Cartouche d'ouverture (contexte lieu)

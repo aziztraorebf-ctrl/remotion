@@ -1,0 +1,12 @@
+{
+  "_doc": "PAUSES DETERMINISTES v2 sur AUDIO ORIGINAL VALIDE Acte 3 (acte3-suivre-lor-FULL.mp3). Reprend les 4 cuts de acte3-pauses-sur-original.json (jamais encore appliques sur disque - verifie 2026-07-22, aucun fichier acte3-*pauses*.mp3 n'existait). Ajoute append_silence_s en fin de fichier : le fichier source va bien jusqu'a 126.045s et le dernier mot 'ca' (de tout ca) finit a 126.02s SANS troncature dans le fichier source lui-meme -> le bug de coupure signale par Aziz vient d'un usage en aval (montage video cale sur une duree figee). Le padding de securite +0.5s en fin protege la phrase quel que soit le cut aval.",
+  "source_audio": "public/_shared/audio/soudan/acte3-suivre-lor-FULL.mp3",
+  "source_duration_s": 126.045,
+  "append_silence_s": 0.5,
+  "cuts": [
+    { "label": "apres 'Quelqu'un paie cette guerre' -> avant 'Il faut suivre l'or'", "cut_s": 11.20, "resume_s": 12.05, "sil_s": 1.0 },
+    { "label": "apres 'jusqu'aux Emirats arabes unis' -> avant 'Les Emirats sont...'", "cut_s": 44.76, "resume_s": 45.92, "sil_s": 1.2 },
+    { "label": "apres 'revient sous une autre forme' -> avant 'Avec cet argent'", "cut_s": 54.88, "resume_s": 55.80, "sil_s": 1.0 },
+    { "label": "apres 'route du nord vers l'Egypte' -> avant 'Ces deux camps'", "cut_s": 100.88, "resume_s": 102.38, "sil_s": 1.2 }
+  ]
+}

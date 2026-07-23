@@ -539,6 +539,11 @@ const Beats789Map: React.FC = () => {
           Overlay data-viz (un CHIFFRE, pas un sous-titre) — matérialise « mille kilomètres de pistes ». ── */}
       <KmCounter frame={frame} inAt={G.immense} countTo={G.ravitailler + 18} outAt={G.resultat + 10} />
 
+      {/* ── PLAQUES SOURCE (passe finale polish, 2026-07-22) — calées juste après l'énoncé du fait,
+          jamais pendant que le KmCounter (bas-centre) est encore visible. ── */}
+      <SourcePlaque frame={frame} appear={G.resultat + 10} text="ACLED, 2026 — lignes d'approvisionnement" />
+      <SourcePlaque frame={frame} appear={G.arreter + 20} text="Al Jazeera, 16 avr. 2026" />
+
       <WarmVignette />
     </AbsoluteFill>
   );
@@ -726,6 +731,25 @@ const WarmVignette: React.FC = () => (
       background: "radial-gradient(ellipse 55% 50% at 50% 45%, rgba(255,238,200,0.22) 0%, rgba(255,238,200,0) 60%)" }} />
   </>
 );
+
+// SourcePlaque — bandeau SOURCE discret, bas-droite, 1 ligne, style sobre parchemin (recette exacte
+// SoudanActe3GlobeInsert.tsx, recopiée à l'identique — passe finale polish 2026-07-22). Fade in 10f /
+// hold 54f / fade out 12f = ~1.8s à l'écran. Bandeau bas-CENTRE (PortSoudanFactPlaques-like) déjà pris
+// par le KmCounter (b7) — cette plaque reste bas-DROITE, jamais de chevauchement.
+const SourcePlaque: React.FC<{ text: string; appear: number; frame: number; holdFrames?: number }> = ({ text, appear, frame, holdFrames = 54 }) => {
+  if (frame < appear || frame > appear + holdFrames + 12) return null;
+  const op = interpolate(frame, [appear, appear + 10, appear + holdFrames, appear + holdFrames + 12], [0, 1, 1, 0], clamp);
+  return (
+    <div style={{ position: "absolute", right: 40, bottom: 40, opacity: op, pointerEvents: "none",
+      background: "rgba(242,229,200,0.86)", border: "1px solid rgba(58,42,24,0.35)", borderRadius: 4,
+      padding: "5px 12px", maxWidth: 620, boxShadow: "0 2px 6px rgba(0,0,0,0.25)" }}>
+      <span style={{ fontFamily: "Georgia, serif", fontSize: 20, fontWeight: 600, color: "#3A2A18",
+        letterSpacing: 0.2, whiteSpace: "nowrap" }}>
+        {text}
+      </span>
+    </div>
+  );
+};
 
 const SoloBig: React.FC<{ pos: Pt; sprite: string; border: string; op: number; frame: number; appear: number }> =
   ({ pos, sprite, border, op, frame, appear }) => {
