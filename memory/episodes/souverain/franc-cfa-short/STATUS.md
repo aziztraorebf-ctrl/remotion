@@ -1,5 +1,11 @@
 # Franc CFA — MID-FORM SVG — STATUS
 
+> ## 0-QUATER. ÉTAT RÉEL (2026-07-22) — le corps de ce STATUS ci-dessous date du 2026-06-27 (phase pré-prod, périmé sur l'avancement).
+> - Beats FINAL : **Beat 1** (nuit 1994 `CfaNuit1994Anime16x9`) · **Beat 2** « Deux monnaies » = **CARTE PLATE D3** `CfaActe2Carte16x9.tsx` (⚠️ PAS le globe `CfaActe2Globe16x9` = variante écartée) · **Beat 3** « parité fixe » = `CfaActe3PariteGpt16x9.tsx` (base GPT-5.6 Sol, 985f, plaque « TAUX FIXE », chiffre 655957 retiré). Renders `out/_r-and-d/cfa-nuit1994/`.
+> - **Beat 2 = la grammaire de référence pour tout beat carte** : carte plate `cfaGeoWide.json` (14 pays CFA + France), UEMOA=OR `#b8860b`, CEMAC=cuivre `#c17e3a`, France révélée par dézoom, **médaillon € posé sur Paris** (bug DOM-TOM corrigé), **flux tendu France→CFA = la « laisse » du taux fixe**. Moteur = short AES (lignes/points/SVG, carte D3 plate), PAS globe ortho.
+> - **Beat 3 raccord de sortie** : la **clé cuivre** (`#c17e3a`) se dessine au-dessus du cadenas (~x1620,y290) et s'éloigne LÉGÈREMENT (reste à l'écran). Fade `#182746`.
+> - **ACTE 4 « qui tient la clé » — EN COURS (2026-07-22)** : direction validée Aziz = **MÊME CARTE PLATE D3 que Beat 2** (PAS globe 3D « qui arrive de nulle part »). 3 mvts : (1) clé arrive→se pose sur Paris/€ + flux OR Paris→CFA (garantie) ; (2) flux inverse CFA→Paris (dépôt réserves) puis 2020 = ligne UEMOA se coupe / CEMAC reste / garantie descendante reste ; (3) **bascule encre/nuit** (registre Beat 3) : décret nocturne, signatures africaines une à une + poids FMI/France + tampon rouge −50% « mais ils l'ont signée ». Palette exacte Beat 3.
+>
 > Projet ouvert 2026-06-27. ⭐ DÉCISION AZIZ 2026-06-27 : **FORMAT = MID-FORM SVG, PAS short.** Pilier = Souverain.
 > RAISON (preuve, cf [[SUJET-PRIME-SUR-PRODUCTION]] règle sujet→format) : le CFA est un sujet à MÉCANISME —
 > chaque idée (parité, garantie, marché) a besoin de se CONSTRUIRE visuellement en plusieurs temps (cadenas, flèches,

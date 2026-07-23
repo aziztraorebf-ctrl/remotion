@@ -36,7 +36,10 @@ import urllib.request
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 OUT_DIR = "/tmp/da-refs"
 GEMINI_MODEL = "gemini-3.1-pro-preview"
-KIMI_MODEL = "moonshotai/kimi-k2.5"
+KIMI_MODEL = "moonshotai/kimi-k2.5"  # k3 dispo mais thinking non-borne -> hang 6-8min sur gros prompt+images
+# (root cause confirmee 2026-07-22 : k3 part en reasoning long AVANT tout content ; sans "reasoning":{"max_tokens":N}
+# dans le payload OpenRouter, un appel non-streame peut ne jamais retourner avant le timeout urllib. Revenir a
+# k2.5 = fiable/rapide. Pour re-tenter k3 un jour : passer reasoning.max_tokens ~2000 dans le payload call_kimi.)
 DEEPSEEK_MODEL = "deepseek/deepseek-v4-pro"  # 3e voix CONCEPTUELLE, ~10-20x moins cher. TEXTE ONLY (pas de vision).
 OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions"
 

@@ -1,13 +1,12 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-21 (session R&D SVG/D3/Fable 5 — grosse exploration capacités, EN PARALLÈLE de la session Acte 4).
-> Structure Soudan inchangée (**6 actes au total**). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-22 nuit (Soudan passe finale v4). A relire en debut de session, APRES PIPELINE.md.
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
-## 🧪 SESSION R&D 2026-07-21 — ARSENAL SVG/D3/FABLE 5 ÉLARGI (exploration capacités, pas de prod épisode)
+## ✅ ARSENAL SVG/D3/FABLE 5 — SYSTÈME GRAVÉ (référence disponible, pas une action à mener — rétrogradé depuis ⭐⭐, session R&D du 2026-07-21)
 
-> Session dédiée à PROUVER de nouvelles capacités (en // de la prod Acte 4 Soudan). Tout référencé + gravé.
+> Session dédiée à PROUVER de nouvelles capacités (en // de la prod Acte 4 Soudan). Tout référencé + gravé. Ce contenu reste VALIDE (Fable 5 toujours modèle SVG par défaut, protos D3 toujours actifs) mais n'est plus l'action prioritaire — c'est un acquis à consulter au besoin, pas une reprise à faire.
 
 **D3 — 8 protos prouvés** (`src/projects/_rnd/d3-16x9/README.md`, compos `D3-*` dans Root) : réseau force (recompose physique), globe 2.0 (arcs à OCCLUSION réelle), camembert, split-screen, chartogram (carte→donnée), sankey, cartogramme, pie-morph. **Constat : la force de D3 = la CARTO ; les charts restent proches du SVG-maison.**
 

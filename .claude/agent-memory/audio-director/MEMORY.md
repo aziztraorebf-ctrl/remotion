@@ -257,3 +257,14 @@ Pendant la production Soundjata Acte V (hors agent, fait par Claude principal), 
 - hook-sfx.aac : integre en Remotion-native via staticFile() + `<Audio>`
 - Render final : Vercel Blob
 - Integration Remotion-native : narration + musique + SFX separes, pas de pre-bake
+
+---
+
+## SESSION 2026-07-22 — Franc CFA Beat4 (worktree remotion-cfa)
+
+- **Projet** : Franc CFA mid-form, Acte 4 « qui tient la clé -> Paris ». Worktree `/Users/clawdbot/Workspace/remotion-cfa`, branche `feat/cfa-nuit1994-svg-mix`.
+- **Voix** : TTS V3 Océane -> STS GéoAfrique `z3gESu49naEZW8Af2Upm` via `scripts/generate-narration-expressive.py`. C'est LE pipeline VO du projet CFA (beats précédents beat2/beat3 identiques).
+- **Livrables** : `public/_rnd/cfa-nuit1994/beat4-vo.mp3` (50.02s) + `out/_r-and-d/cfa-nuit1994/beat4-alignment.json` (271 mots).
+- **Coût** : ~1726 crédits (819 V3 + 907 STS). Balance ElevenLabs après : ~160k chars restants.
+- **FORMAT ALIGNMENT** : le `beat2-alignment.json` de réf = **forced-alignment ElevenLabs** (characters[]+words[]+loss), PAS whisper-align.py (qui sort du .ts). Pour matcher le format beat2, TOUJOURS forced-alignment ElevenLabs. Template repris : `scripts/_archive/episodes-livres/generate-thiaroye-v5-alignment.py`. Script réutilisable créé : `scripts/tools/cfa-beat4-alignment.py`.
+- **GOTCHA tokenizing forced-alignment** : les mots gardent la ponctuation attachée (`manquent,`, `stable.`, `quatre-vingt-quatorze,`) ET l'API insère des tokens espace ` ` entre mots. Pour matcher un mot/séquence : normaliser (NFD sans accents + strip ponctuation) ET filtrer les tokens espace. Sinon les séquences numériques/composées renvoient rien à tort.

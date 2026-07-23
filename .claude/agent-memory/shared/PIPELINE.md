@@ -10,6 +10,64 @@
 
 ---
 
+## [STAGE-5] remotion-composer — Soudan mid-form, plaques SOURCE Actes 1-4 — COMPLETE (2026-07-22)
+
+> Point de POLISH post-v3 (le "PLUS DE VALEUR" selon Aziz) : ajout de plaques SOURCE bas-droite
+> (recette `SourcePlaque` EXACTE de `SoudanActe3GlobeInsert.tsx`, recopiée à l'identique dans les
+> 4 fichiers d'actes réellement montés) sur les faits chiffrés/allégations fortes des Actes 1 à 4
+> qui n'en avaient pas encore. 8 plaques ajoutées, 2 par acte MAX, 1 source par plaque, format
+> "Nom source, date" sans le mot "Source:". Overlays purement additifs — AUCUNE frame ajoutée à
+> la durée totale des 4 compositions, timing narratif intact.
+
+**Fichiers réellement actifs identifiés AVANT édition** (le mid-form a plusieurs fichiers R&D
+périmés — vérifié via Root.tsx quel composant produit vraiment `a{1,2,3,4}.mp4`) :
+- `src/projects/warmap/soudan-acte1/SoudanActe1.tsx` (Composition `SoudanActe1`)
+- `src/projects/warmap/soudan-acte2/SoudanActe2.tsx` (Composition `SoudanActe2`)
+- `src/projects/warmap/soudan-acte3/SoudanActe3.tsx` (Composition `SoudanActe3` — PAS
+  `_rnd/d3-16x9/SoudanActe3GlobeInsert.tsx`/`SoudanActe3Section1Globe.tsx`, qui sont des protos R&D
+  non montés dans le montage final malgré des noms proches)
+- `src/projects/warmap/soudan-acte4/SoudanActe4.tsx` (Composition `SoudanActe4` — PAS les fichiers
+  `_rnd/d3-16x9/SoudanActe4B1toB4Globe.tsx`/`SoudanActe4B6Globe.tsx`, préfixe `D3-` = protos isolés
+  non montés). `KostiInsertSVG.tsx` (même dossier) EST actif, monté en interne par `SoudanActe4.tsx`.
+
+**Plaques ajoutées (fait · source · frame absolue)** :
+| Acte | Fait | Source | Frame absolue |
+|---|---|---|---|
+| 1 | ~50M habitants / 3e plus grand pays d'Afrique | UN DESA, projections janv. 2026 | 1006 |
+| 1 | 25M en besoin d'aide | UN News, 10 janv. 2026 | 1498 |
+| 2 | 1000km de pistes de ravitaillement | ACLED, 2026 | 2414 |
+| 2 | Impasse ("personne ne gagne/n'arrête") | Al Jazeera, 16 avr. 2026 | 2772 |
+| 3 | Jebel Amer/Al Junaid ~1 Md USD (Hemedti) | US Treasury / The Sentry, 2023-2025 | 1129 |
+| 3 | EAU 1er importateur d'or africain | DW, nov. 2025 · AFP/L'Express | 1394 |
+| 4 | Base navale Port-Soudan (25 ans/300 soldats/4 navires/nucléaire) | Asharq Al-Awsat, 2026 | 1310 |
+| 4 | Frappe drone Kosti (21 juin 2026) | Sudan Doctors Network, juin 2026 | 2773 |
+
+**Note factuelle importante** : le brief initial supposait un contenu UA/ONU/veto russe/Quad dans
+l'Acte 4 — VÉRIFIÉ FAUX. Le vrai Acte 4 actif traite Russie/Port-Soudan/Égypte-Nil/Kosti/4-puissances ;
+le contenu UA/ONU (veto 18 nov. 2024, suspension UA) est dans l'Acte 5/6 (`soudan-midform-DONNEES.md`
+note explicitement ce décalage de numérotation historique). Non traité ici (hors périmètre demandé).
+
+**Bug trouvé + corrigé en mini-render** : dans `KostiInsertSVG` (Acte 4, Kosti), le cadre décoratif
+`MapBackdrop` (double-liseré SVG) va jusqu'à x=1892 (28px de marge seulement) — le `right:40` par
+défaut de `SourcePlaque` faisait chevaucher le texte long avec ce liseré. Fix : prop optionnel
+`rightOffset` ajouté au composant local de `SoudanActe4.tsx` (`rightOffset={68}` pour ce cas), plus
+texte raccourci ("21 juin 2026" → "juin 2026"). Pattern à réutiliser si un futur insert plein-écran
+avec cadre décoratif proche du bord a besoin d'une SourcePlaque.
+
+**Mini-render vérifié** : 8 renders ciblés (`scripts/render-mapbox.sh`, WebGL headless obligatoire
+pour Mapbox — `npx remotion still` échoue avec "Failed to initialize WebGL"), 1 frame full HD
+extraite par plaque, inspection visuelle systématique. Toutes propres après le fix Kosti — aucun
+chevauchement avec portraits/jetons/bandeaux existants (PortSoudanFactPlaques et KmCounter sont
+bas-CENTRE, la SourcePlaque reste bas-DROITE, jamais de collision).
+
+**tsc --noEmit** : 0 erreur sur les 4 fichiers édités (quelques erreurs préexistantes non liées dans
+`GlobalPulse.tsx`/`GoldVein.tsx`/`LoomWeaver.tsx`, hors périmètre).
+
+→ Prêt pour quality-reviewer / render final. Fichiers modifiés : `SoudanActe1.tsx`, `SoudanActe2.tsx`,
+`SoudanActe3.tsx` (warmap/soudan-acte3/), `SoudanActe4.tsx` (warmap/soudan-acte4/).
+
+---
+
 ## Short Sénégal Pétrole & Gaz D3 — ✅✅ TERMINÉ + PROMU (2026-07-17)
 > Short vertical 9:16 (112,96s), D3.js/SVG pur (pas Mapbox), pilier Souverain. 5 beats + assemblage +
 > audio complet (narration + musique AES + SFX). COMPLET et validé Aziz, promu PRET-PUBLICATION.
@@ -885,3 +943,35 @@ Vérifié aussi : `CountryParchmentMask` (cité comme "réutilisable" dans le do
 dans le repo à ce jour, et aucun composant "tampon presse/ONU" n'existe encore — les deux sont donc à
 CODER neuf, pas à réutiliser tel quel, à budgéter en conséquence au breakdown. Détail : même fichier
 `soudan-acte5-densite-brief.md` § "Complément — re-passe indépendante".
+
+---
+
+[STAGE-5] remotion-composer soudan-midform/Acte5-continuite-A4A5 — COMPLETE : mini-render validé
+`src/projects/_rnd/d3-16x9/SoudanActe5Globe.tsx` corrigé (jetons Hemedti/al-Burhan + territoires
+RSF/SAF persistent au début de l'Acte 5 au lieu d'un Soudan vide). 0 frame ajoutée. Détail complet dans
+`.claude/agent-memory/remotion-composer/MEMORY.md` § "Soudan Mid-form — Polish continuité A4→A5".
+Reste : re-render complet de l'Acte 5 (ou au moins ses 3 premières secondes en contexte) + réintégration
+dans l'assemblage v3 si Aziz valide visuellement le fix.
+
+---
+
+[STAGE-5] remotion-composer soudan-midform/SourcePlaques-CORRECTION-fichiers-actifs — COMPLETE :
+correction d'une erreur de la session précédente (2 des 4 plaques SOURCE avaient été posées sur les
+registres Mapbox PÉRIMÉS `soudan-acte3/SoudanActe3.tsx` + `soudan-acte4/SoudanActe4.tsx`, confirmé mort
+par extraction frames a3.mp4/a4.mp4 = globe D3, pas Mapbox plat). Revert propre (`git checkout --`, diff
+vide après, 0 résidu `SourcePlaque`/import). Plaques réappliquées sur les 4 VRAIS fichiers actifs :
+- `src/projects/_rnd/d3-16x9/SoudanActe3Section1Globe.tsx` — "US Treasury / The Sentry, 2023-2025"
+  (Jebel Amer/Al Junaid ~1Md USD), ancrage local `F.milliard+15` (frame 610).
+- `src/projects/_rnd/d3-16x9/SoudanActe3GlobeInsert.tsx` — "DW, nov. 2025 · AFP/L'Express" (EAU 1er
+  importateur d'or), 4e plaque ajoutée à côté des 3 existantes, ancrage `T.b3PremierImportateur+15`
+  (déjà défini dans soudanActe3GlobeInsertTiming.ts, pas inventé).
+- `src/projects/_rnd/d3-16x9/SoudanActe4B1toB4Globe.tsx` — "Asharq Al-Awsat, 2026" (base navale
+  Port-Soudan), ancrage `T.soudanPasSigne+15` (frame 1310).
+- `src/projects/warmap/soudan-acte4/KostiInsertSVG.tsx` — "Sudan Doctors Network, juin 2026" (frappe
+  drone Kosti), ancrage local `impactAt+20` (frame 325), `rightOffset=68` (cadre décoratif MapBackdrop
+  va jusqu'à x=1892/1920). Ce fichier N'ÉTAIT PAS périmé — confirmé réutilisé tel quel dans
+  `Kosti-Beat5-Standalone` (Root.tsx).
+Mini-renders `npx remotion still` sur les 4 emplacements = tous OK visuellement (frames lues), aucun
+chevauchement avec jetons/portraits/cadre décoratif. 0 erreur `tsc --noEmit` sur les 4 fichiers touchés.
+Reste : re-render complet des 3 actes concernés (ou au moins les segments touchés) + réintégration dans
+l'assemblage v3 si Aziz valide visuellement.
