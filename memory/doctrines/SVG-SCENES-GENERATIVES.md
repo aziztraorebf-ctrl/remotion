@@ -410,6 +410,11 @@ confirmation)→animation JSX→SFX timé→render→upload. **Le système est r
    `'` → `"` en plus du camelCase→kebab. (Découvert 2026-06-22, scène héros GPT.)
 6. **Gemini enveloppe souvent tout dans un `<g id="scene-root">`** unique → descendre d'un niveau pour extraire les
    groupes internes. (2026-06-22.)
+7. **Fences markdown autour du SVG (non déterministe)** : un modèle (observé sur Gemini, mais pas systématique —
+   le même modèle peut le faire sur un appel et pas un autre) peut enrober sa réponse en ` ```xml ... ``` ` malgré
+   la consigne "réponds en SVG brut". Ça casse `rsvg-convert` (erreur XML parse, "Start tag expected"). TOUJOURS
+   nettoyer les fences (regex `^```[a-zA-Z]*\n?` / `\n?```$`) avant toute conversion PNG d'un SVG généré par LLM,
+   quel que soit le modèle. (2026-07-24, comparatif image-cible Tour Eiffel CFA.)
 
 ### ⭐ SNIPPET extraction de groupes (réutilisable — gère apostrophes GPT, guillemets Gemini, imbrication scene-root)
 ```python

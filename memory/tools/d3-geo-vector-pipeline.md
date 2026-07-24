@@ -16,6 +16,11 @@ type: workflow
 
 - **`d3-geo`** : projection geographique (geoOrthographic globe, geoMercator plat)
 - **Natural Earth 50m** (`ne_50m_countries.geojson`) : frontieres modernes precises
+- **Natural Earth 10m rivers** (`ne_10m_rivers_lake_centerlines.geojson`, github.com/nvkelso/natural-earth-vector)
+  : cours d'eau/rivieres reels (prouve 2026-07-24, geodata Seine cropee sur Paris pour CFA Acte 4 — 1 seule
+  feature par riviere nommee, cropper sur la fenetre lon/lat voulue + lisser via courbes Q). Meme source que
+  `ne_10m_admin_1_states_provinces.geojson` (regions administratives, cf `scripts/warmap/generate-sahel-admin1.py`)
+  — pattern jumeau reutilisable pour toute geodata reelle absente du projet (JAMAIS laisser un modele dessiner la geo).
 - **Historical Basemaps GitHub** (`world_1300.geojson`, etc.) : empires medievaux GPL-3.0
 - **Precompute SVG paths** : Node.js script (build-time) -> JSON consomme par Remotion
 - **Remotion overlays** : SVG natif + spring + interpolate + Audio + Sequence

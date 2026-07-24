@@ -221,6 +221,20 @@ TOUT pilier. Le pilier ne change QUE le contexte technique (stack, axes), JAMAIS
    (3) détails géo/factuels à vérifier. **Règle** : DeepSeek = 3e angle conceptuel, jamais juge du visuel ;
    Gemini/Kimi restent indispensables pour l'œil (jusqu'au multimodal DeepSeek).
 
+   ### ⭐⭐ VARIANTE SVG/DA CRÉATIVE — trio GPT-5.6 Sol + Kimi K3 + Fable (validée 2026-07-24)
+   Pour un brief créatif amont qui porte sur du **jugement SVG/direction artistique** (pas une review de
+   rendu déjà codé), remplacer le trio Gemini+Kimi+DeepSeek par **GPT-5.6 Sol + Kimi K3 + Fable** (agent
+   Claude Code, `model: "fable"`, mode élevé). Preuve : sur 2 briefs consécutifs (scène signature 1994 CFA,
+   dispositif split-screen CFA), Fable a livré les réponses les plus précises et actionnables des 3 —
+   nettement supérieure en spécificité technique à Gemini/Kimi sur ce type de brief.
+   **Fable n'est PAS appelable via `da-brief.py`** (pas de support API/OpenRouter pour Fable) — le lancer
+   directement via l'outil Agent (`model: "fable"`), en parallèle des appels `da-brief.py --only gemini`
+   et `--only kimi` (ou d'un script dédié GPT+Kimi si le brief est hors gabarit da-brief.py).
+   Kimi K3 (pas K2.5) est recommandé ici pour sa puissance sur le jugement créatif SVG — mais ⛔ voir
+   piège reasoning non-borné : passer `"reasoning": {"max_tokens": ~2000}` dans le payload OpenRouter,
+   sinon l'appel peut hang 6-8min sur un prompt volumineux (root cause confirmée 2026-07-22, cf
+   `scripts/tools/da-brief.py` commentaire inline + `memory/tools/openrouter-svg.md`).
+
 **2. `scripts/tools/da-compare.py`** — test COMPARATIF (vs référence validée). Gemini SEUL
    (Files API → ingère les VIDÉOS complètes, capte mouvement+rythme, pas juste des frames).
    - `--ref <pilier|chemin.mp4>` : la référence qui MARCHE (étalon). Piliers : `warmap`=Soudan,

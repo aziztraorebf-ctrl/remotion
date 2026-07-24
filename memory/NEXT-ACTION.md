@@ -698,12 +698,18 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## 🆕 FRANC CFA — MID-FORM SVG (pré-prod faite, 2026-06-27)
-> ✅ Sujet validé + angle (B) "le courage + le coût réel" + TRIPLE fact-check + script de référence (V6) + jury LLM.
-> ⭐ Pivot acté : MID-FORM, pas short (sujet à MÉCANISME → veut de la construction visuelle séquentielle, cf règle
-> sujet→format dans [[SUJET-PRIME-SUR-PRODUCTION]]). Tout se transpose. → `episodes/souverain/franc-cfa-short/STATUS.md`.
-> **NEXT** : étendre script V6 → mid-form 4-6min + storyboard SVG-d'abord (scènes parité/Dakar/entrée déjà esquissées dans STATUS §7).
-> ⚙️ MÉTA prouvé cette session : la CHAÎNE [[RECHERCHE-PRESCRIPT-UNIFIEE]] (valider→écrire→fact-check 3 niveaux→jury) fonctionne A→Z.
+## 🆕 FRANC CFA — MID-FORM SVG (Beats 1-2-3 FINAL, Acte 4 EN PAUSE, MàJ 2026-07-24)
+> ⛔ Script complet = `episodes/souverain/franc-cfa-short/SCRIPT-MIDFORM-V2.md` (8 beats, colonne vertébrale
+> validée) — PAS `SCRIPT-V6.md` (ça c'est la version SHORT différente, 2:20). Nos "Actes" 1-4 en prod = Beats 1-4 du V2.
+> ✅ Beats 1-2-3 FINAL (encre/nuit). ⏸️ **Acte 4 « qui tient la clé » EN PAUSE** (2026-07-24) : direction non
+> stabilisée après plusieurs itérations (carte D3 seule jugée trop proche de l'Acte 2 → tentative split-screen
+> Paris/zones-CFA → aucune option Tour Eiffel/Seine ne convainc). Code en chantier non commité `CfaActe4Cle16x9.tsx`
+> (worktree `remotion-cfa`). Ce qui MARCHE et à réutiliser si repris : Beat 1 garantie en carte D3 recentrée Paris
+> + scène encre/nuit 1994 (murs FMI/France + signatures qui s'écrivent seules, validée par comparatif 4 modèles).
+> **NEXT = Beat 5a/5b** (pas l'Acte 4) : **5a "Le quotidien"** (scène Dakar, braise-or/encre chaude, PAS d'humain,
+> riz importé/dollar) · **5b "Le levier perdu"** (registre ⭐À TESTER "salle de contrôle monétaire"/data-terminal
+> néon : manette "TAUX DE CHANGE" active pour un pays normal, verrouillée pour la zone CFA). Détail →
+> `episodes/souverain/franc-cfa-short/STATUS.md` § 0-QUATER.
 
 ## 🆕 MÉTA — TYPAGE SUJET enrichi : moteur narratif + trousseau de style (2026-06-27)
 > Décortiqué avec Aziz suite au CFA. Conclusion : le CFA n'était pas un MAUVAIS sujet, il était mal FORMATÉ.

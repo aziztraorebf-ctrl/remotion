@@ -677,6 +677,15 @@ Script d'appel direct de reference : `scratchpad .../kimi-b4-direct.py` (a rapat
 appel OpenRouter direct pour tout brief nouveau. Conversion JSX : kebab→camelCase attributs SEULEMENT
 (jamais `.replace("'",'"')` global, casse les apostrophes FR du texte).
 
+### ⚠️ PIÈGE DISTINCT (2026-07-24) : `reasoning.max_tokens` sur un GROS prompt (multi-image, brief long)
+Root cause confirmée (diagnostic agent dédié) : sur un prompt volumineux (~9k+ chars + images), K3 peut
+partir en raisonnement non borné et bloquer l'appel OpenRouter 6-8min voire indéfiniment (pas d'erreur,
+juste un hang) SI le paramètre `reasoning` n'est PAS explicitement borné dans le payload — même avec
+`reasoning_effort: "medium"` fixé par ailleurs. Fix qui marche : passer `"reasoning": {"max_tokens": 2000}`
+dans le payload JSON (distinct de `reasoning_effort`). Détail : `scripts/tools/da-brief.py` (commentaire
+inline ligne ~39-42) — ce script est repassé sur `kimi-k2.5` par défaut suite à ce constat (plus fiable/
+rapide pour ses cas d'usage), K3 reste utilisable pour sa puissance supérieure via ce fix.
+
 ### (HISTORIQUE) LE MUR : reasoning "max" FORCE — leve le 2026-07-20 (voir ci-dessus)
 K3 n'avait qu'un mode de raisonnement au 17 juillet : `max`. Pas desactivable. Consequence mesuree :
 - Jetons SVG (lot de 5) : 0,20$ / ~14k tokens (10,6k reasoning = 82%) / ~90s.
