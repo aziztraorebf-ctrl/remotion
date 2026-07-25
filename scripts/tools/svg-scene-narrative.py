@@ -33,6 +33,7 @@ ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.6-sol"
+KIMI_K3_MODEL = "moonshotai/kimi-k3"  # reasoning force a "max" -> NE PAS passer max_tokens, timeout large
 
 RATIO_VIEWBOX = {
     "9:16": ("1080 1920", "VERTICAL 9:16"),
@@ -124,9 +125,28 @@ def gen_gpt(brief, narr, style, out, ratio):
     out.write_text(rr.json()["choices"][0]["message"]["content"], encoding="utf-8")
     print(f"[gpt] saved -> {out}")
 
+def gen_kimi(brief, narr, style, out, ratio):
+    import requests
+    content = [{"type": "text", "text": build(brief, bool(narr), bool(style), ratio)}]
+    for img in _imgs(narr, style):
+        b64 = base64.b64encode(Path(img).read_bytes()).decode()
+        content.append({"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}})
+    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": content}]}
+    print(f"[kimi-k3] {KIMI_K3_MODEL} svg-narrative ratio={ratio} ({len(_imgs(narr,style))} ref) ...")
+    rr = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                       headers={"Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}", "Content-Type": "application/json"},
+                       json=payload, timeout=900)
+    rr.raise_for_status()
+    data = rr.json()
+    msg = data["choices"][0]["message"]
+    text = msg.get("content") or msg.get("reasoning") or "[vide]"
+    out.write_text(text, encoding="utf-8")
+    print(f"[kimi-k3] saved -> {out}  usage={data.get('usage', {})}")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--provider", required=True, choices=["gemini", "gpt"])
+    ap.add_argument("--provider", required=True, choices=["gemini", "gpt", "kimi"])
     ap.add_argument("--brief", required=True)
     ap.add_argument("--narrative-ref", default="")
     ap.add_argument("--style-ref", default="")
@@ -136,7 +156,8 @@ def main():
     out = Path(a.out); out.parent.mkdir(parents=True, exist_ok=True)
     narr = a.narrative_ref if a.narrative_ref.strip() else None
     style = a.style_ref if a.style_ref.strip() else None
-    (gen_gemini if a.provider == "gemini" else gen_gpt)(a.brief, narr, style, out, a.ratio)
+    fn = {"gemini": gen_gemini, "gpt": gen_gpt, "kimi": gen_kimi}[a.provider]
+    fn(a.brief, narr, style, out, a.ratio)
 
 if __name__ == "__main__":
     main()

@@ -130,6 +130,54 @@ EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui 
 
 ---
 
+## ⭐⭐⭐ PIPELINE 3 MODÈLES + FUSION + ENRICHISSEMENT (raffinement des points 4-6, prouvé 2026-07-24 CFA 5a/5b)
+
+> **DÉCLENCHEUR — quand le proposer spontanément** : scène NEUVE qu'aucun composant du
+> `COMPOSANTS-INDEX` ne couvre, et dont la direction visuelle n'est pas encore arrêtée.
+> ⛔ PAS pour : un ajustement, un fix, une variante d'une scène existante (là on édite le code).
+> Le proposer, ne JAMAIS le déclencher seul : chaque appel est un risque de dérive, et Aziz doit
+> valider la direction avant qu'on dépense des appels.
+
+**Le principe de tri, qui commande tout le reste : OUTILLER LA MÉCANIQUE, JAMAIS LE JUGEMENT.**
+Ce qui a de la valeur ici, ce sont les points d'ARRÊT (quelle direction, quel élément de quel
+modèle, est-ce que l'enrichissement dénature). Un pipeline qui déciderait à notre place
+produirait la moyenne des trois modèles — c'est-à-dire le résultat le plus fade possible.
+
+| # | Étape | Qui | Gate |
+|---|---|---|---|
+| 1 | Brainstorm amont **TEXTE** (pas d'image) : GPT-5.6 Sol + Kimi K3 + Fable, question OUVERTE sur la mise en scène | 3 modèles en parallèle | — |
+| 2 | Synthèse extractive tracée → **direction** | Claude | ⛔ **Aziz valide la direction** |
+| 3 | **Image-cible SVG STATIQUE** chez les 3, même brief (palette + compo tranchées dedans) | 3 modèles | — |
+| 4 | **FUSION mix-and-match** : composer le SVG final élément par élément | ⛔ **CLAUDE, jamais un modèle** | ⛔ **Aziz voit le mix** |
+| 5 | **Appel 2 — enrichissement** : on envoie le CODE + l'IMAGE RENDUE, critères stricts + liberté encadrée, **justification obligatoire de chaque ajout** | Fable (agent) | — |
+| 6 | Vérif conjointe (rendu + code : superpositions, orthographe, cohérence de registre) | Claude + Aziz | ⛔ |
+| 7 | **Animation maison** (règle N°0), puis VO → forced-align → passe downstream | Claude | — |
+
+**2 APPELS MODÈLE MAXIMUM** (génération + enrichissement). La fusion N'EST PAS un appel : Claude
+a les codes sources sous la main, c'est de l'ÉDITION. Détail et le pourquoi (verbatim Aziz) :
+[[feedback_svg-generatif-2-appels-fusion-par-claude]]. Avant tout appel sur un SVG qui existe
+déjà, se demander : **création (→ appel justifié) ou édition/assemblage (→ je le fais moi-même)** ?
+Fusion, repositionnement, collision, changement de couleur, renommage de groupes = TOUJOURS Claude.
+
+**OUTILS** (la mécanique, pour ne pas la réécrire à chaque scène) :
+- `scripts/tools/svg-image-cible-compare.py` — brief → N modèles en parallèle → SVG → PNG →
+  planche comparative labellisée → upload, en un geste. `--assemble-only` re-assemble sans
+  rappeler les API (pour intégrer le JSON de Fable, déposé sous `<label>-fable.json`).
+  ⚠️ Fable n'y est pas : c'est un agent Claude Code (`model: "fable"`), pas une API — le lancer
+  en parallèle avec le MÊME brief.
+- `scripts/tools/forced-align.py` — audio + texte → timestamps mot-par-mot et **frames des
+  repères narratifs**, pour caler le bloc `T` sur la voix réelle. Moteur ElevenLabs (fiable même
+  quand le quota Whisper/OpenAI saute). Une durée estimée "au nombre de mots" se trompe de ~20%.
+
+**⚠️ PIÈGE VÉRIFIÉ — un raccord peut casser la scène qu'il raccorde.** En câblant la transition
+5a→5b, l'onde est devenue une forme unique sur toute la largeur : les deux moitiés s'animaient
+donc simultanément et la démonstration séquentielle ("le levier gauche agit → ENSUITE on découvre
+que le droit ne peut pas") s'est effondrée en un état simultané. La jonction avait été vérifiée
+image par image ; la lecture INTERNE de la scène suivante, non. **Après tout changement de
+structure, revérifier la séquence narrative, pas seulement le point de couture.**
+
+---
+
 ## ⭐⭐ RÈGLE MAÎTRESSE — le choix du modèle DÉPEND de la scène (générer les 2, choisir)
 
 Test ville + carte d'état-major, Gemini 3.1 Pro vs GPT-5.5, même prompt :
