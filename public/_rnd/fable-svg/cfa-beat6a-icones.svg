@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 220" fill="none">
+  <!-- Planche icones beat 6a "La volonte de partir" - registre encre/nuit CFA -->
+  <!-- Palette : fond #182746 / or #b8860b / rouge #a8281f / encre claire #f0e8d2 -->
+  <!-- Chaque icone = groupe nomme, coordonnees locales 0-200, extraction directe -->
+
+  <g id="fond">
+    <rect x="0" y="0" width="660" height="220" fill="#182746"/>
+  </g>
+
+  <!-- ================= 1. CALENDRIER (dementi) ================= -->
+  <!-- Contour net + grille suggeree : lisible meme a moitie dessine. -->
+  <!-- Le trait rouge de barrage est un sous-groupe separe (calendrier-barre) -->
+  <!-- a reveler independamment. Un jour est cercle en or : la date qui "circule". -->
+  <g id="calendrier" transform="translate(10,10)">
+    <g id="calendrier-corps" stroke="#f0e8d2" stroke-width="3" stroke-linecap="round">
+      <rect x="35" y="50" width="130" height="115" rx="8"/>
+      <line x1="35" y1="82" x2="165" y2="82"/>
+      <!-- anneaux de reliure, en or -->
+      <line x1="65" y1="36" x2="65" y2="60" stroke="#b8860b"/>
+      <line x1="135" y1="36" x2="135" y2="60" stroke="#b8860b"/>
+    </g>
+    <g id="calendrier-grille" stroke="#f0e8d2" stroke-width="1.8" opacity="0.4">
+      <line x1="78.3" y1="82" x2="78.3" y2="165"/>
+      <line x1="121.7" y1="82" x2="121.7" y2="165"/>
+      <line x1="35" y1="110" x2="165" y2="110"/>
+      <line x1="35" y1="138" x2="165" y2="138"/>
+    </g>
+    <g id="calendrier-dates" stroke="#f0e8d2" stroke-width="2.4" stroke-linecap="round" opacity="0.6">
+      <line x1="50" y1="96" x2="62" y2="96"/>
+      <line x1="94" y1="96" x2="106" y2="96"/>
+      <line x1="137" y1="96" x2="149" y2="96"/>
+      <line x1="50" y1="124" x2="62" y2="124"/>
+      <line x1="137" y1="124" x2="149" y2="124"/>
+      <line x1="50" y1="152" x2="62" y2="152"/>
+      <line x1="94" y1="152" x2="106" y2="152"/>
+    </g>
+    <!-- la date supposee : cerclee d'or, au centre -->
+    <circle id="calendrier-date-or" cx="100" cy="124" r="13" stroke="#b8860b" stroke-width="2.4"/>
+    <line x1="94" y1="124" x2="106" y2="124" stroke="#b8860b" stroke-width="2.4" stroke-linecap="round"/>
+    <!-- barrage du dementi : a animer separement -->
+    <g id="calendrier-barre" stroke="#a8281f" stroke-width="5" stroke-linecap="round">
+      <path d="M27 42 C 70 72, 132 132, 173 172"/>
+    </g>
+  </g>
+
+  <!-- ================= 2. TRAITE : LA PORTE DANS LE TEXTE ================= -->
+  <!-- Metaphore choisie : la porte de sortie est dessinee DANS le corps du -->
+  <!-- texte du traite - une clause qui s'ouvre. Panneau or entrouvert vers -->
+  <!-- l'exterieur + lueur dans l'embrasure. -->
+  <g id="traite" transform="translate(230,10)">
+    <g id="traite-page" stroke="#f0e8d2" stroke-width="3" stroke-linejoin="round">
+      <path d="M45 30 H133 L155 52 V175 H45 Z"/>
+      <path d="M133 30 V52 H155" stroke-width="2"/>
+    </g>
+    <g id="traite-texte" stroke="#f0e8d2" stroke-width="2.2" stroke-linecap="round" opacity="0.55">
+      <line x1="58" y1="66" x2="142" y2="66"/>
+      <line x1="58" y1="81" x2="142" y2="81"/>
+      <line x1="58" y1="96" x2="118" y2="96"/>
+    </g>
+    <g id="traite-porte">
+      <!-- lueur dans l'embrasure -->
+      <path id="traite-lueur" d="M82 112 H114 V164 H82 Z" fill="#b8860b" opacity="0.38"/>
+      <line x1="98" y1="120" x2="98" y2="156" stroke="#f0e8d2" stroke-width="1.6" stroke-linecap="round" opacity="0.5"/>
+      <!-- chambranle -->
+      <path d="M82 164 V112 H114 V164" stroke="#b8860b" stroke-width="2.6" stroke-linejoin="round"/>
+      <!-- panneau entrouvert, gonds a droite -->
+      <path d="M114 112 L138 100 V152 L114 164 Z" stroke="#b8860b" stroke-width="2.6" stroke-linejoin="round"/>
+      <!-- trace du battant au sol -->
+      <path d="M114 164 Q 132 164 138 152" stroke="#b8860b" stroke-width="1.6" stroke-dasharray="3 5" stroke-linecap="round"/>
+      <!-- seuil -->
+      <line x1="70" y1="164" x2="126" y2="164" stroke="#f0e8d2" stroke-width="2.2" stroke-linecap="round" opacity="0.55"/>
+    </g>
+  </g>
+
+  <!-- ================= 3. SCEAU OFFICIEL ================= -->
+  <!-- Sobre : double cercle (or + pointille encre), etoile a cinq branches, -->
+  <!-- deux rubans a queue d'aronde. Zero ornement superflu. -->
+  <g id="sceau" transform="translate(450,10)">
+    <!-- rubans retires (decision Aziz 2026-07-25 : lisait "medaille de recompense", pas "cachet officiel") -->
+    <circle cx="100" cy="95" r="52" fill="#182746"/>
+    <circle id="sceau-cercle-or" cx="100" cy="95" r="52" stroke="#b8860b" stroke-width="3"/>
+    <circle id="sceau-cercle-encre" cx="100" cy="95" r="42" stroke="#f0e8d2" stroke-width="1.8" stroke-dasharray="0.5 7" stroke-linecap="round" opacity="0.7"/>
+    <path id="sceau-etoile" d="M100 73 L105.3 87.7 L120.9 88.2 L108.6 97.8 L112.9 112.8 L100 104 L87.1 112.8 L91.4 97.8 L79.1 88.2 L94.7 87.7 Z" stroke="#f0e8d2" stroke-width="2.4" stroke-linejoin="round"/>
+  </g>
+</svg>

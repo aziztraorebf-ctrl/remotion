@@ -5,24 +5,26 @@
 ---
 
 
-## 🎬 FRANC CFA — MID-FORM SVG (Beats 1,2,3 + **5a,5b FINAL** — NEXT = 6a, MàJ 2026-07-25)
+## 🎬 FRANC CFA — MID-FORM SVG (Beats 1,2,3,5a,5b,**6a FINAL** — NEXT = 6b, MàJ 2026-07-25)
 
 ⚠️ **TOUT le code, le script et le STATUS a jour vivent dans le WORKTREE** `/Users/clawdbot/Workspace/remotion-cfa`
 (branche `feat/cfa-nuit1994-svg-mix`). Les copies du repo principal sont PERIMEES (un bandeau d'avertissement
-y a ete pose). Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md` § 0-QUINQUIES.
+y a ete pose). Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md` § 0-SEPTIES.
 
-- **FAIT cette session** : beats **5a "Le quotidien"** + **5b "Le levier perdu"** = FINAL (VO GeoAfrique,
-  SFX, raccord joue entre les deux). Renders dans le worktree (`out/` est gitignore — ne pas fermer le
-  worktree sans rapatrier).
-- **NEXT = Beat 6a** (carte D3 AES) : ⛔ AVANT de coder, analyser le Short AES 90s
-  (`out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4` + `src/projects/warmap/shorts/aes-short-90s/`) et
-  REUTILISER ses briques (coloriage drapeau-dans-polygone, jetons). ⚠️ ce short est en **9:16** : combiner
-  avec `CfaActe2Carte16x9.tsx` qui est notre grammaire carte **16:9** deja FINAL. Geo prete :
-  `public/_shared/geo-data/sahel/sahel-16x9-mercator.json` (deja projete 16:9).
-- **PUIS 6b** (conclusion) = banc d'essai du **pipeline SVG narratif** outille le 2026-07-25.
+- **FAIT cette session** : Beat **6a "La volonte de partir" = FINAL** (carte D3 continent africain seul,
+  drapeaux Mali/Niger/Burkina, jeton CFA pose sur la carte a la jonction des 3 pays, Guinee en hachures
+  cuivre, jeton monnaie "Sira" qui se DISSOUT EN PARTICULES au dementi officiel — effet "Thanos" extrait
+  en brique reutilisable `_shared/svg-library/elements/effects/ParticleDissolve.tsx`). Passe downstream
+  Gemini+Kimi faite (convergence forte : cartouche calendrier abandonne au profit du jeton lui-meme).
+- **NEXT = Beat 6b** "Le prix du depart" (conclusion de l'episode) = banc d'essai du **pipeline SVG
+  narratif** outille le 2026-07-25. Scene neuve, direction non arretee. VO deja ecrite + ecran de fin
+  fige (carte typewriter, cf `SCRIPT-MIDFORM-V2.md` § BEAT 6b).
 - ⭐ **REGLE D'EPISODE** : fond unifie `#182746` sur TOUS les beats. La rupture se porte par les OBJETS,
   jamais par le decor. A ecrire dans le brief si on passe par le pipeline 3 modeles.
 - ⛔ Piste "piece CFA fil conducteur" **ABANDONNEE** (2026-07-25) — ne pas la ressortir.
+- 💡 Piste notee (non tranchee) : une video separee future sur le sujet Sira/AES (terrain deja fertile,
+  dementi officiel date). Egalement note : associer l'effet de particules a une fracture differente du
+  franc CFA — amelioration future non decidee.
 
 ## ⏳ ACTION OUVERTE — RECHARGER LE CREDIT OPENAI
 Quota epuise constate le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-align.py`,

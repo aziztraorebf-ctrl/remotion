@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!--
+    SIRA - jeton concept "monnaie pas encore reelle"
+    Registre encre/nuit episode franc CFA : fond #182746, or #b8860b.
+    Pas de rouge : le Sira n'est pas un moment de rupture, c'est une hypothese.
+    Structure animable : chaque <g id> est une couche independante.
+      sira-body               disque support (fade-in global)
+      sira-guide              cercle de construction + ticks (apparait en premier, facon compas)
+      sira-ring-solid         partie "deja tracee" de l'anneau (stroke-dashoffset friendly)
+      sira-ring-dashed        la main qui hesite
+      sira-ring-dots          le trace qui s'evanouit -> le vide en haut a gauche = inacheve
+      sira-arcs-confederation trois arcs (arc-etat-1/2/3), a faire converger sans jamais se toucher
+      sira-monogram-ghost     le S complet en fantome pointille (le futur possible)
+      sira-monogram-stroke    le S reel, interrompu aux deux tiers (le present)
+  -->
+  <defs>
+    <radialGradient id="siraBody" cx="42%" cy="38%" r="72%">
+      <stop offset="0%" stop-color="#25396b"/>
+      <stop offset="62%" stop-color="#1c2d55"/>
+      <stop offset="100%" stop-color="#182746"/>
+    </radialGradient>
+  </defs>
+
+  <g id="jeton-sira">
+
+    <g id="sira-body">
+      <circle cx="100" cy="100" r="78" fill="url(#siraBody)" opacity="0.94"/>
+      <circle cx="100" cy="100" r="78" stroke="#b8860b" stroke-width="1" opacity="0.14"/>
+    </g>
+
+    <g id="sira-guide" opacity="0.9">
+      <circle cx="100" cy="100" r="90" stroke="#b8860b" stroke-width="0.8"
+              stroke-dasharray="2 6" opacity="0.16"/>
+      <path d="M 100 6 L 100 13" stroke="#b8860b" stroke-width="1" opacity="0.22"/>
+      <path d="M 100 187 L 100 194" stroke="#b8860b" stroke-width="1" opacity="0.22"/>
+      <path d="M 6 100 L 13 100" stroke="#b8860b" stroke-width="1" opacity="0.22"/>
+      <path d="M 187 100 L 194 100" stroke="#b8860b" stroke-width="1" opacity="0.22"/>
+    </g>
+
+    <g id="sira-ring-solid">
+      <path d="M 100 16 A 84 84 0 1 1 71.3 178.9"
+            stroke="#b8860b" stroke-width="5" stroke-linecap="round"/>
+    </g>
+
+    <g id="sira-ring-dashed">
+      <path d="M 71.3 178.9 A 84 84 0 0 1 16.3 92.7"
+            stroke="#b8860b" stroke-width="4" stroke-linecap="round"
+            stroke-dasharray="7 10" opacity="0.85"/>
+    </g>
+
+    <g id="sira-ring-dots">
+      <circle cx="21.1" cy="71.3" r="2.6" fill="#b8860b" opacity="0.75"/>
+      <circle cx="31.2" cy="51.8" r="2.0" fill="#b8860b" opacity="0.5"/>
+      <circle cx="46.0" cy="35.7" r="1.4" fill="#b8860b" opacity="0.28"/>
+      <!-- vide volontaire de ~40deg jusqu'au sommet : le cercle ne se ferme pas -->
+    </g>
+
+    <g id="sira-arcs-confederation" opacity="0.65">
+      <path id="arc-etat-1" d="M 150.9 68.2 A 60 60 0 0 1 150.9 131.8"
+            stroke="#b8860b" stroke-width="2.4" stroke-linecap="round"/>
+      <path id="arc-etat-2" d="M 102.1 160.0 A 60 60 0 0 1 47.0 128.2"
+            stroke="#b8860b" stroke-width="2.4" stroke-linecap="round"/>
+      <path id="arc-etat-3" d="M 47.0 71.8 A 60 60 0 0 1 102.1 40.0"
+            stroke="#b8860b" stroke-width="2.4" stroke-linecap="round"/>
+    </g>
+
+    <g id="sira-monogram-ghost" opacity="0.26">
+      <path d="M 118 76 C 112 67, 88 65, 82 78 C 76 91, 92 96, 100 100
+               C 108 104, 124 109, 118 122 C 112 135, 88 133, 82 124"
+            stroke="#d4a437" stroke-width="6" stroke-linecap="round"
+            stroke-dasharray="3 8"/>
+    </g>
+
+    <g id="sira-monogram-stroke">
+      <path d="M 118 76 C 112 67, 88 65, 82 78 C 76 91, 92 96, 100 100
+               C 106 103, 113 106.5, 117 112"
+            stroke="#d4a437" stroke-width="7" stroke-linecap="round"/>
+    </g>
+
+  </g>
+</svg>

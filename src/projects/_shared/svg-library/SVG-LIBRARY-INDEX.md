@@ -31,6 +31,7 @@
 | Océan vagues nocturne (composant `.tsx`, 2e variante d'océan — multi-couches bouclées) | `elements/ocean/OceanVaguesNocturne.tsx` | — (doc inline) | Encre narrative, registre nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2) |
 | Navire de guerre (composant `.tsx`, silhouette militaire + variante silhouette réduite) | `elements/maritime/NavireGuerreEncre.tsx` | — (doc inline) | Encre narrative, registre militaire | Soudan Acte4 PortSoudanNegociationScene (Beat 2), mix Gemini 3.1 Pro |
 | Port militaire (composant `.tsx`, quais + 2 grues + lumières scintillantes) | `elements/maritime/PortMilitaireEncre.tsx` | — (doc inline) | Encre narrative, registre militaire/nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2), GPT-5.6 Sol |
+| Dissolution en particules (composant `.tsx`, "effet Thanos" — objet qui se désagrège radialement) | `elements/effects/ParticleDissolve.tsx` | — (doc inline) | Tout registre (couleurs paramétrables) | CFA mid-form Beat 6a (jeton monnaie Sira qui se dissout au démenti officiel) |
 
 ---
 
