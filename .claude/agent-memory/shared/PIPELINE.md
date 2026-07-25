@@ -975,3 +975,19 @@ Mini-renders `npx remotion still` sur les 4 emplacements = tous OK visuellement 
 chevauchement avec jetons/portraits/cadre décoratif. 0 erreur `tsc --noEmit` sur les 4 fichiers touchés.
 Reste : re-render complet des 3 actes concernés (ou au moins les segments touchés) + réintégration dans
 l'assemblage v3 si Aziz valide visuellement.
+
+
+---
+
+## [STAGE-5] franc-cfa-midform / Beat 5a + 5b — COMPLETE (2026-07-25)
+
+- **Livrables** : `CfaActe5aMarche16x9.tsx` (720f) + `CfaActe5bLevier16x9.tsx` (710f), VO GeoAfrique,
+  SFX, raccord joue entre les deux beats. Renders `out/_r-and-d/cfa-nuit1994/beat5*-FINAL.mp4`.
+- ⚠️ **TOUT est sur le WORKTREE** `/Users/clawdbot/Workspace/remotion-cfa` (branche
+  `feat/cfa-nuit1994-svg-mix`). Les renders et les VO sont en zone **gitignoree** : fermer le worktree
+  sans rapatrier = perdre les livrables. STATUS a jour : § 0-QUINQUIES du STATUS du worktree.
+- **Etat de l'episode** : beats 1, 2, 3 FINAL · **5a, 5b FINAL** · Acte 4 EN PAUSE (direction non
+  stabilisee, code non commite volontairement) · **6a et 6b restants** · puis assemblage.
+- **NEXT = Beat 6a** (carte D3 AES) : reutiliser les briques du Short AES 90s, combinees a la grammaire
+  carte 16:9 `CfaActe2Carte16x9`. Puis 6b = banc d'essai du pipeline SVG narratif.
+- **Regle d'episode** : fond unifie `#182746` sur tous les beats.

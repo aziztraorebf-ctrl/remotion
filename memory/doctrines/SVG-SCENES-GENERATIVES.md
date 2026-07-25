@@ -169,6 +169,14 @@ Fusion, repositionnement, collision, changement de couleur, renommage de groupes
   repères narratifs**, pour caler le bloc `T` sur la voix réelle. Moteur ElevenLabs (fiable même
   quand le quota Whisper/OpenAI saute). Une durée estimée "au nombre de mots" se trompe de ~20%.
 
+**⚠️ GOTCHA FUSION — en SVG, l'ORDRE DU DOCUMENT EST L'ORDRE DE RENDU.** Un élément inséré plus haut
+dans le document est peint EN PREMIER, donc RECOUVERT par tout ce qui suit — sans erreur ni warning, il
+"n'apparaît simplement pas". Ça concerne directement l'étape 4 (fusion) : quand on prend le sac de X et
+l'étiquette de Y, **l'ordre d'insertion décide de l'occlusion autant que les coordonnées**.
+→ **Réflexe** : un élément ajouté qui n'apparaît pas alors que ses coordonnées sont bonnes → vérifier sa
+POSITION DANS LE DOCUMENT avant de toucher aux coordonnées ou à l'opacité. (Vécu 2026-07-25 : un bandeau
+de label injecté après `<svg>` passait derrière le rect de fond plein cadre.)
+
 **⚠️ PIÈGE VÉRIFIÉ — un raccord peut casser la scène qu'il raccorde.** En câblant la transition
 5a→5b, l'onde est devenue une forme unique sur toute la largeur : les deux moitiés s'animaient
 donc simultanément et la démonstration séquentielle ("le levier gauche agit → ENSUITE on découvre

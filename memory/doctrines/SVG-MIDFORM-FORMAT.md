@@ -469,3 +469,24 @@ Proposition Gemini sur les prototypes Inga — technique à coder en session dé
 - **inserts SVG premium** (néon marchés, registres Fable 5 max) · **portraits-médaillons** pour les acteurs (jamais perso-acteur)
 
 = la future vidéo = ces protos AUGMENTÉS par tout l'arsenal D3/Sankey/chartogram/inserts construit depuis. Mélange 3 moteurs à majorité SVG. Cf [[SVG-SCENES-GENERATIVES]] § NOTRE VRAIE FORCE.
+
+
+## ⭐⭐ LE FOND EST LA CONSTANTE DE L'ÉPISODE — la variation passe par les OBJETS (prouvé CFA 5a, 2026-07-25)
+
+**Nuance indispensable à la règle anti-monotonie** ("changer de registre toutes les 1-2 scènes") : ce qui
+change d'une scène à l'autre, c'est le **REGISTRE** (architecture de la scène, accents sémantiques,
+densité) — **PAS LE FOND**. Un épisode qui enchaîne trois fonds différents se lit comme trois vidéos
+collées, et ça ne se voit PAS scène par scène.
+
+**Erreur commise** : chercher "le bon fond" pour une scène neuve (crème, puis nuit chaude) alors que les
+beats 1-3 étaient tous en bleu nuit `#182746`. **La solution (Aziz)** : garder le fond de la série et
+faire ressortir les objets par des couleurs claires — la chaleur du marché est venue de la **toile ocre
+du sac, de l'or de l'étal, du braise des tomates**, pas du décor. Plus simple, plus cohérent, et un
+raccord entre deux scènes n'a alors **plus aucun fond à animer**.
+
+**⭐ CHECK D'ÉPISODE (5 min, avant de figer la palette d'une scène neuve)** : monter la **bande
+chromatique** — 1 frame par beat déjà rendu, `hstack` — et regarder l'arc complet. C'est le seul moyen
+de voir qu'un beat va devenir une île. Détail du cas : [[feedback_ne-pas-inventer-forme-scene-verifier-livrable]] § Cas 4.
+
+**Principe généralisable** : quand je cherche la meilleure valeur d'un paramètre nouveau, me demander
+d'abord si je dois introduire ce paramètre.

@@ -68,3 +68,26 @@ sans gain perçu. [[feedback_tester-avant-de-douter-gate]]
 ## Voir aussi
 `memory/tools/elevenlabs.md` (génération + tags + règles FR à scanner) · `feedback_whisper-api-openai-jamais-local`
 (whisper API only) · Soudan : `starters/STARTER-PROMPT-soudan-midform-PASSE-FINALE-DETAILS.md` (application concrète).
+
+
+## ⭐⭐ ALIGNER AVANT DE FIGER LES GESTES — pas après pour recaler (prouvé CFA 5a/5b, 2026-07-25)
+
+Deux acquis **mesurés**, qui changent l'ORDRE des étapes de production :
+
+1. **Une durée estimée au nombre de mots se trompe d'environ 20% par excès** (28s/26s estimées pour
+   22.9s/22.5s réelles). ⛔ Ne jamais figer le `durationInFrames` d'une scène sur une estimation textuelle.
+2. **L'audio réel DÉPLACE des choix de mise en scène.** Sur le beat 5b, la "soudure en direct" du cadenas
+   devait tomber sur « ne le peut pas » (f355) et non en intro sur « arrimée à l'euro » (f38) — au moment
+   exact où la voix dit que l'outil manque. **Décision impossible à prendre sans l'audio.** C'est une
+   application directe de "matière finale d'abord".
+
+→ **Générer la VO et l'aligner AVANT de placer les gestes visuels.** Isoler les timings dans un bloc `T`
+en tête de composant rend alors le calage trivial.
+
+**OUTIL** : `scripts/tools/forced-align.py <audio.mp3> <texte.txt> [reperes...]` → donne directement les
+**frames** des mots-repères. ⚠️ Le garde-fou whisper de cette doctrine est **inexécutable tant que le
+quota OpenAI est épuisé** (429 constaté 2026-07-25) — `forced-align.py` (ElevenLabs) le remplace.
+
+**Gotcha** : normaliser casse, ponctuation **ET ACCENTS** avant de chercher un mot dans un alignement.
+Un repère tapé « devaluer » sur une VO qui dit « dévaluer » ressort INTROUVABLE — faux négatif silencieux
+(corrigé dans l'outil, mais le réflexe vaut pour toute recherche de mot dans un script/sous-titre FR).

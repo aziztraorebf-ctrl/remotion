@@ -169,3 +169,13 @@
 ---
 
 _Total : ~55 scripts actifs mappés (élagage 2026-06-19 : 47 scripts one-shot/épisode-spécifiques archivés dans `scripts/_archive/` + `scripts/tools/_archive/`, 4 tests morts supprimés). Élagage suivant 2026-07-11 : 17 scripts supplémentaires archivés (épisodes Sénégal V3/GGW/Cacao/Soudan Acte 3 tous FINAL/promus + tests R&D jetables grok-imagine/seedance-pêcheur + `svg-scene-libre.py` déjà marqué DEPRECATED) — 128 scripts actifs mappés avant ménage → 110 après. Si un script n'est pas ici, vérifier `_archive/`._
+
+### ⭐ Ajouts 2026-07-25 — pipeline SVG generatif & calage audio
+
+| Besoin | Script | Notes |
+|---|---|---|
+| Comparer N modeles sur une MEME image-cible SVG (planche labellisee + upload) | `scripts/tools/svg-image-cible-compare.py` | `--brief b.txt --label X --models gpt,kimi` · `--assemble-only` reassemble sans rappeler les API (pour integrer le JSON de Fable, depose en `<label>-fable.json`). ⚠️ Fable = agent Claude Code, a lancer en // avec le MEME brief. |
+| ⭐ Caler un bloc `T` Remotion sur la VO REELLE (timestamps mot-par-mot + **FRAMES des reperes**) | `scripts/tools/forced-align.py` | `<audio.mp3> <texte.txt> [reperes...]` · moteur ElevenLabs forced-alignment : marche meme quand le quota Whisper/OpenAI est epuise. Loss constatee 0.04-0.09. **Remplace les scripts d'alignement ad hoc par episode — ne plus en ecrire un par projet.** |
+
+⚠️ **Quota OpenAI EPUISE au 2026-07-25** (`429 insufficient_quota`) : `whisper-align.py` et
+`transcribe-openai.py` echouent tant que le credit n'est pas recharge → utiliser `forced-align.py`.

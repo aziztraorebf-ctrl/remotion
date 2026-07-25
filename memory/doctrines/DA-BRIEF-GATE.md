@@ -125,6 +125,24 @@ la matière. Les modèles nous MONTRENT LA VOIE — chaque idée exploitable doi
 **Règle d'or** : après cette synthèse, RIEN d'exploitable d'un modèle ne doit avoir disparu sans une décision
 explicite (retenu / option / écarté+raison). Si une idée n'est ni dans le code ni écartée avec raison = trou à combler.
 
+### ⭐⭐ LES 3 FAMILLES DE FAUX POSITIFS — et comment les repérer vite (mesuré CFA 5a/5b, 2026-07-25)
+
+Sur une passe downstream Gemini+Kimi appliquée à une scène SVG **déjà animée**, la majorité des
+propositions n'étaient pas applicables. Trois familles, chacune avec sa signature :
+
+| Famille | Signature pour la repérer | Exemple vécu |
+|---|---|---|
+| **(a) Déjà-fait** | La proposition nomme un effet **qu'on a déjà codé** : le modèle décrit ce qu'il VOIT et le présente comme un manque | ~5 propositions : dissolution du pointillé, pulses le long de la ligne causale, respiration du médaillon, overshoot de l'étiquette |
+| **(b) Erreur de perception** | La proposition nomme un **composant qu'on n'a jamais dessiné** → vérifier le nom de l'objet dans le code AVANT de lire la suite | Kimi a pris nos leviers pour des **thermomètres** et proposait d'animer « le liquide dans le tube ». Proposition parfaitement cohérente… sur un objet inexistant |
+| **(c) Auto-contradiction** | Le rapport se contredit **d'une section à l'autre** → ne jamais appliquer section par section | Kimi recommande des particules de poussière en partie A, puis **les interdit** en partie D |
+
+⛔ **Conséquence opératoire** : lire le rapport ENTIER avant le premier fix, et vérifier chaque point
+contre le code réel. Les appliquer aveuglément aurait cassé de l'existant qui fonctionnait.
+
+⭐ **PRÉVENTION (à faire dès le brief)** : joindre au brief downstream (1) la liste explicite de **ce qui
+est DÉJÀ animé**, et (2) une **légende nommant les objets** de la scène ("ce sont des leviers dans une
+glissière, pas des thermomètres"). Les deux premières familles disparaissent à la source.
+
 ### ⭐⭐ VÉRIFIER CHAQUE SOLUTION CONTRE NOS CONTRAINTES RÉELLES (Aziz 2026-06-14, NON-NEGOTIABLE)
 
 > Les modèles diagnostiquent bien le PROBLÈME mais proposent parfois une SOLUTION qui ne marche pas dans NOTRE

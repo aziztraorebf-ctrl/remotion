@@ -18,6 +18,26 @@ metadata:
 - **Symlink par-dessus un chemin qui contient des fichiers TRACKÉS** → git les voit "deleted" (fantômes). Fix : `git update-index --skip-worktree <fichiers>` sur ces fichiers. Et **NE JAMAIS `git add -A`** dans un worktree (risque de committer les suppressions) — toujours `git add <fichier précis>`.
 - **Render VIDÉO (mp4) HANG à l'encoding** dans un worktree quand les assets sont accédés via symlink (ffmpeg muxing bloque à 0% CPU). MAIS `remotion still` (PNG) fonctionne normalement. → réserver le worktree aux itérations **code + still**, faire les **renders vidéo finaux dans le repo PRINCIPAL**.
 - **⚠️ ASSET AUDIO/SFX via symlink → 404 dans le bundle webpack Remotion** (vécu CFA Beat 3, 2026-07-22) : un render mp4 SANS audio passe très bien en worktree, MAIS dès qu'un `<Audio staticFile("_shared/sfx/...")>` pointe un mp3 **symlinké**, Remotion copie `public/` dans un bundle temporaire et NE SUIT PAS le symlink → `{"statusCode":404,"message":"...ink-spread.mp3 could not be found"}`, render avorté. **Fix** : pour les mp3 utilisés en `staticFile` (voix + SFX), COPIER les vrais fichiers dans le worktree (`cp`), PAS symlinker. Distinct du "hang encoding" ci-dessus (ça = 404 au chargement d'asset, pas un hang ffmpeg). C'est spécifique aux assets référencés par `staticFile()` dans le code ; les symlinks node_modules/.env restent OK.
+
+  **🔎 SIGNATURE OBSERVABLE — `exit code 0` + AUCUN fichier produit = c'est CE bug, pas autre chose.**
+  Le render échoue au chargement d'asset mais la commande retourne 0 et se rapporte « terminé ».
+  → chercher `404` / `could not be found` dans le log, ne pas diagnostiquer ailleurs.
+  → corollaire : **un exit code 0 ne prouve JAMAIS le fichier** — toujours `ls -la` sur le chemin de sortie.
+
+  **⛔ VÉRIFICATION PRÉVENTIVE — à lancer en OUVRANT le worktree, pas après un render raté (friction 2026-07-25) :**
+  ```bash
+  find public -type l          # doit renvoyer VIDE. Tout symlink listé = un render qui echouera.
+  ```
+  Vécu ce jour : un seul mp3 symlinké (`blip-bubble.mp3`) a fait echouer un render **qui a quand même
+  rapporté "terminé, exit code 0" sans produire de fichier**. Le gotcha était déjà écrit ici — mais relu
+  seulement APRÈS l'échec. Une commande en 2 secondes à l'ouverture évite le diagnostic à froid.
+
+  **⭐ PRÉCISION EMPIRIQUE (2026-07-25) — les renders VIDÉO marchent en worktree si `public/` est propre.**
+  La règle « faire les renders vidéo finaux dans le repo principal » (ci-dessus) vient du hang à l'encoding
+  lié aux symlinks. Une fois **zéro symlink** dans `public/`, 6 renders mp4 successifs (avec audio + SFX,
+  jusqu'à 25s) ont été produits dans le worktree sans aucun hang. → la contrainte réelle n'est pas
+  « worktree », c'est « symlink ». Rester prudent sur les très longs renders, mais ne pas s'interdire
+  le worktree par principe.
 - **⛔ ISOLER PLUS TÔT — appliquer la règle AU SIGNAL, pas au 2e télescopage** (re-vécu CFA Beat 3, 2026-07-22) : la mémoire (MEMORY.md/NEXT-ACTION) signalait DÉJÀ une session Soudan concurrente active (worktree `remotion-soudan`). J'ai quand même codé dans le repo principal → il a rebasculé sur la branche Soudan sous mes pieds, fichiers CFA disparus du disque + edits Root.tsx perdus. **Déclencheur renforcé** : si la mémoire mentionne une session concurrente sur un AUTRE projet, créer le worktree dédié AVANT la 1re ligne de code, même sans avoir encore vu de bascule. Le signal mémoire SUFFIT.
 - **Récupérer le travail non commité d'un worktree** vers une autre branche : `git -C <worktree> diff > patch && git apply patch` (les worktrees ne partagent pas leur working tree).
 - **Fermer** quand le chantier est fini : `git worktree remove <path>` (+ `git branch -D worktree-<id>` si branche auto).

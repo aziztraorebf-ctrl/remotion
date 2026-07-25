@@ -31,6 +31,9 @@ NAV_FILES = [
     "src/projects/warmap/WARMAP-INDEX.md",
     "scripts/SCRIPTS-INDEX.md",
     "scripts/tools/REVIEW-TOOLS-INDEX.md",
+    # Ajoute 2026-07-25 : CLAUDE.md en fait une lecture OBLIGATOIRE de debut de session (etape 2),
+    # mais ses liens n'etaient jamais verifies -> un pointeur vers un fichier absent y a survecu.
+    "memory/NEXT-ACTION.md",
 ]
 
 # L'auto-memory MEMORY.md vit hors repo (chemin fixe). On le scanne aussi s'il existe.

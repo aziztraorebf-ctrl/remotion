@@ -1,5 +1,19 @@
 # Franc CFA — MID-FORM SVG — STATUS
 
+> # ⛔⛔ CETTE COPIE EST PÉRIMÉE — LA VERSION À JOUR EST SUR LA BRANCHE DU WORKTREE
+> Le projet CFA se développe dans le **worktree `/Users/clawdbot/Workspace/remotion-cfa`**
+> (branche `feat/cfa-nuit1994-svg-mix`). Le STATUS à jour y vit, avec l'état réel (§ 0-QUINQUIES).
+> **Ce fichier-ci est la copie de la branche Soudan et retarde d'une ou plusieurs sessions.**
+>
+> ⚠️ Au 2026-07-25, cette copie dit encore que les beats 5a/5b sont À FAIRE : **c'est FAUX, ils sont
+> FINAL**. Agir sur cette copie ferait re-produire des beats déjà livrés.
+>
+> ```bash
+> cat /Users/clawdbot/Workspace/remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md
+> ```
+> Idem pour le SCRIPT (`SCRIPT-MIDFORM-V2.md`) et TOUS les composants `Cfa*16x9.tsx` : ils
+> n'existent QUE dans le worktree.
+
 > ## 0-QUATER. ÉTAT RÉEL (2026-07-22) — le corps de ce STATUS ci-dessous date du 2026-06-27 (phase pré-prod, périmé sur l'avancement).
 > - Beats FINAL : **Beat 1** (nuit 1994 `CfaNuit1994Anime16x9`) · **Beat 2** « Deux monnaies » = **CARTE PLATE D3** `CfaActe2Carte16x9.tsx` (⚠️ PAS le globe `CfaActe2Globe16x9` = variante écartée) · **Beat 3** « parité fixe » = `CfaActe3PariteGpt16x9.tsx` (base GPT-5.6 Sol, 985f, plaque « TAUX FIXE », chiffre 655957 retiré). Renders `out/_r-and-d/cfa-nuit1994/`.
 > - **Beat 2 = la grammaire de référence pour tout beat carte** : carte plate `cfaGeoWide.json` (14 pays CFA + France), UEMOA=OR `#b8860b`, CEMAC=cuivre `#c17e3a`, France révélée par dézoom, **médaillon € posé sur Paris** (bug DOM-TOM corrigé), **flux tendu France→CFA = la « laisse » du taux fixe**. Moteur = short AES (lignes/points/SVG, carte D3 plate), PAS globe ortho.

@@ -90,6 +90,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 |---|---|
 | **(0) Faisabilité SVG AMONT — LIRE AVANT toute génération** | `memory/doctrines/SVG-FAISABILITE-AMONT.md` ⭐⭐ le LLM dit SA meilleure approche + image-cible AVANT le code. ÉTAPE 0 obligatoire (évite les aller-retours coûteux). |
 | **(1) Technique génération+animation SVG (manuel principal)** | `memory/doctrines/SVG-SCENES-GENERATIVES.md` ⭐ LLM dessine groupes nommés → Remotion anime, registres, grammaires, acquis transverses |
+| **Obtenir la FRAME exacte d'un mot de la VO / caler un geste visuel sur la voix** | `scripts/tools/forced-align.py <audio> <texte.txt> [reperes]` — timestamps + frames. Moteur ElevenLabs (⚠️ quota OpenAI/Whisper epuise au 2026-07-25). Vaut pour TOUT beat (SVG, Mapbox, D3), pas seulement le SVG |
 | **Scène SVG NEUVE, direction pas encore arrêtée** | `SVG-SCENES-GENERATIVES.md` § PIPELINE 3 MODÈLES — brainstorm texte 3 voix → gate Aziz → image-cible ×3 → **fusion par Claude** → 1 appel d'enrichissement. 2 appels modèle MAX. Outils : `scripts/tools/svg-image-cible-compare.py` + `forced-align.py`. À PROPOSER, jamais déclencher seul |
 | **Orchestration agents SVG (A→Z par beat)** | `memory/doctrines/PRODUCTION-AGENTIQUE-SVG.md` ⭐⭐ flux 2 phases + point de contrôle, checklist de lancement, preuve Beat 3 GGW |
 | **Format SVG long (5-7min) ou SVG-insert dans Mapbox/Remotion** | `memory/doctrines/SVG-MIDFORM-FORMAT.md` ⭐⭐ critère = transformation visuelle de formes ; pipeline script-first ; playbook assemblage multi-beats |

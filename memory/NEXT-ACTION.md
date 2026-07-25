@@ -1,8 +1,33 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-22 nuit (Soudan passe finale v4). A relire en debut de session, APRES PIPELINE.md.
+> Mis a jour : 2026-07-25 (CFA beats 5a/5b FINAL + outillage pipeline SVG generatif)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
+
+
+## 🎬 FRANC CFA — MID-FORM SVG (Beats 1,2,3 + **5a,5b FINAL** — NEXT = 6a, MàJ 2026-07-25)
+
+⚠️ **TOUT le code, le script et le STATUS a jour vivent dans le WORKTREE** `/Users/clawdbot/Workspace/remotion-cfa`
+(branche `feat/cfa-nuit1994-svg-mix`). Les copies du repo principal sont PERIMEES (un bandeau d'avertissement
+y a ete pose). Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md` § 0-QUINQUIES.
+
+- **FAIT cette session** : beats **5a "Le quotidien"** + **5b "Le levier perdu"** = FINAL (VO GeoAfrique,
+  SFX, raccord joue entre les deux). Renders dans le worktree (`out/` est gitignore — ne pas fermer le
+  worktree sans rapatrier).
+- **NEXT = Beat 6a** (carte D3 AES) : ⛔ AVANT de coder, analyser le Short AES 90s
+  (`out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4` + `src/projects/warmap/shorts/aes-short-90s/`) et
+  REUTILISER ses briques (coloriage drapeau-dans-polygone, jetons). ⚠️ ce short est en **9:16** : combiner
+  avec `CfaActe2Carte16x9.tsx` qui est notre grammaire carte **16:9** deja FINAL. Geo prete :
+  `public/_shared/geo-data/sahel/sahel-16x9-mercator.json` (deja projete 16:9).
+- **PUIS 6b** (conclusion) = banc d'essai du **pipeline SVG narratif** outille le 2026-07-25.
+- ⭐ **REGLE D'EPISODE** : fond unifie `#182746` sur TOUS les beats. La rupture se porte par les OBJETS,
+  jamais par le decor. A ecrire dans le brief si on passe par le pipeline 3 modeles.
+- ⛔ Piste "piece CFA fil conducteur" **ABANDONNEE** (2026-07-25) — ne pas la ressortir.
+
+## ⏳ ACTION OUVERTE — RECHARGER LE CREDIT OPENAI
+Quota epuise constate le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-align.py`,
+`transcribe-openai.py` et le garde-fou whisper d'[[AUDIO-PAUSES-DETERMINISTES]].
+**Contournement en place** : `scripts/tools/forced-align.py` (moteur ElevenLabs) couvre l'alignement.
 
 ## ✅ ARSENAL SVG/D3/FABLE 5 — SYSTÈME GRAVÉ (référence disponible, pas une action à mener — rétrogradé depuis ⭐⭐, session R&D du 2026-07-21)
 
@@ -698,7 +723,7 @@ Clé dans `.env` (`GAMELABS_API_KEY`), config `.mcp.json` → `gamelabs` (bugué
 
 ---
 
-## 🆕 FRANC CFA — MID-FORM SVG (Beats 1-2-3 FINAL, Acte 4 EN PAUSE, MàJ 2026-07-24)
+## ✅ FRANC CFA — archive du 2026-07-24 (PERIME — voir la section 🎬 FRANC CFA en tete de fichier)
 > ⛔ Script complet = `episodes/souverain/franc-cfa-short/SCRIPT-MIDFORM-V2.md` (8 beats, colonne vertébrale
 > validée) — PAS `SCRIPT-V6.md` (ça c'est la version SHORT différente, 2:20). Nos "Actes" 1-4 en prod = Beats 1-4 du V2.
 > ✅ Beats 1-2-3 FINAL (encre/nuit). ⏸️ **Acte 4 « qui tient la clé » EN PAUSE** (2026-07-24) : direction non
