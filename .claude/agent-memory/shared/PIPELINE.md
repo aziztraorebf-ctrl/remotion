@@ -10,6 +10,23 @@
 
 ---
 
+## Franc CFA mid-form — 7/8 beats FINAUX, musique+mix verrouillés — EN COURS (2026-07-26)
+
+**État** : Beat 6b "Le prix du départ" = FINAL (pile de 3 pièces BANQUE CENTRALE/RESERVES/CONFIANCE qui
+s'effondre sur un sac, v1 "trop abstrait" REJETÉE et conservée en trace). Musique unique de l'épisode
+choisie (Minimax, déjà équalisée) + mix voix/musique mesuré PAR BANDE (masquage fréquentiel détecté et
+corrigé, volume verrouillé `0.26`). 7 des 8 beats sont FINAUX, rassemblés dans `out/_r-and-d/cfa-nuit1994/`
+du repo principal.
+
+**RESTE** : Beat 4 "Qui tient la clé" (seul beat non produit, amorce `CfaActe4Cle16x9.tsx` dans le
+worktree) puis assemblage final des 8 beats + musique.
+
+⚠️ Tout le code/script/STATUS à jour vivent dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`
+(branche `feat/cfa-nuit1994-svg-mix`). Source de vérité : `STATUS.md` § 0-OCTIES (worktree) /
+§ 0-SEPTIES (repo principal, périmé). Détail : `memory/NEXT-ACTION.md` § FRANC CFA.
+
+---
+
 ## [STAGE-5] remotion-composer — Soudan mid-form, plaques SOURCE Actes 1-4 — COMPLETE (2026-07-22)
 
 > Point de POLISH post-v3 (le "PLUS DE VALEUR" selon Aziz) : ajout de plaques SOURCE bas-droite

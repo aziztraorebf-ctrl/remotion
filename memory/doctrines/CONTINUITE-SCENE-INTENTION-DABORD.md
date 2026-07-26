@@ -90,7 +90,32 @@ immédiat (du 1er coup). Quand on plaque un template, l'instinct sent le décala
 
 ---
 
+### 5. ⭐⭐ UN SEUL MONDE D'OBJETS — la scène doit se lire SANS explication (prouvé par un rejet, CFA 6b 2026-07-26)
+
+**Anti-pattern** : empiler plusieurs métaphores qui n'appartiennent pas au même monde. Le beat 6b CFA v1
+posait une colonne de strates géologiques (= la monnaie se construit) SUR un sac de riz (= les prix du
+quotidien), avec une presse à monnaie en arrière-plan (= la monnaie future). Chaque métaphore se défendait
+isolément. Verdict Aziz : *« trop abstrait, je n'arrivais pas à comprendre en quoi tout ceci avait rapport
+l'un avec l'autre »*. Un sac de riz ne porte pas une carotte géologique — le lien devait être EXPLIQUÉ pour
+tenir, donc il ne tenait pas.
+
+**L'erreur de méthode en amont** : la direction avait été choisie sur son **élégance conceptuelle** (un match
+cut malin, une double boucle narrative) au lieu de sa **lisibilité immédiate**. C'est le piège du critère :
+ce qui est satisfaisant à décrire n'est pas ce qui est compréhensible à l'écran.
+
+**LE CRITÈRE À APPLIQUER** : *si je dois expliquer à l'oral le rapport entre deux éléments de la scène,
+c'est que la scène ne le porte pas.* Un objet doit être ce qu'il est — une pièce de monnaie EST de la
+monnaie, il n'y a rien à traduire. La v2 (une pile de 3 pièces qui s'effondre sur un sac dont l'étiquette
+s'affole) est passée du 1er coup : causalité VISIBLE, pas symbolique.
+
+**Corollaire** : préférer la causalité physique montrée (A tombe → B encaisse → C monte) au lien symbolique
+à décoder. Le spectateur suit une chaîne de cause à effet sans effort ; il ne décode pas une allégorie.
+
+---
+
 ## CHECKLIST (30 secondes, avant de coder/prolonger une scène)
+0. **Lisibilité** : si je devais expliquer le rapport entre 2 éléments à l'oral, la scène ne le porte pas
+   → un seul monde d'objets, causalité visible (§ 5).
 1. **Intention** : ce moment doit faire ressentir QUOI ? (1 verbe dominant)
 2. **Continuité** : quel monde est déjà à l'écran ? Je le PROLONGE (je ne le remplace pas).
 3. **Forme** : quel geste porte l'intention ? (ne pas penser « composant » encore)

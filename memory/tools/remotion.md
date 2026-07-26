@@ -63,6 +63,58 @@
 - Trop present : descendre par paliers de 0.02 (0.05, 0.03...)
 - Narration : toujours volume={1.0}, jamais toucher
 
+⚠️ **0.07 est un POINT DE DEPART, pas une valeur universelle — il suppose une musique generee FORTE.**
+Sur une piste deja discrete a la source, 0.07 donne une musique **inaudible** (vecu CFA 2026-07-26 :
+32.5 dB d'ecart avec la voix, soit le silence). **Toujours MESURER voix ET musique avant de fixer le
+volume**, jamais appliquer le defaut a l'aveugle. Valeur retenue sur CFA : **0.26**.
+
+### ⭐⭐ Mixer voix + musique : MESURER PAR BANDE, pas en RMS global (grave 2026-07-26, CFA)
+
+**Un ecart RMS GLOBAL correct ne garantit PAS que la voix passe.** Vecu : musique posee a -18 dB sous
+la voix (la cible documentaire Arte/BBC, donc "conforme"), et Aziz entend quand meme *"elle concurrence
+la voix"*.
+
+Cause reelle = **MASQUAGE FREQUENTIEL**. La mesure par bande le montre :
+
+| Bande | Voix | Musique | Marge reelle |
+|---|---|---|---|
+| grave < 200 Hz | -25.2 dB | -32.4 dB | 7.2 dB |
+| **medium 200 Hz–2 kHz** | **-19.0 dB** | **-27.2 dB** | **8.2 dB** ← les deux y vivent |
+| aigu > 2 kHz | -42.6 dB | -38.2 dB | — |
+
+8.2 dB de marge dans le medium, contre 17.9 dB en global. **La voix et la musique occupent la meme
+bande** : ce n'est pas un probleme de niveau brut, c'est une place disputee.
+
+**Fix en 2 temps (mieux que baisser le volume seul, qui tue la musique sans liberer la voix)** :
+1. **EQ sur le fichier source** : creux **-5 dB a 700 Hz** (Q~2.2) et **-3 dB a 1.8 kHz**.
+   `ffmpeg -i in.mp3 -af "equalizer=f=700:width_type=o:width=2.2:g=-5,equalizer=f=1800:width_type=o:width=1.5:g=-3" out.mp3`
+   Libere ~3.8 dB dans la bande de la voix **sans changer le caractere** de la piste.
+2. **Puis** ajuster le volume Remotion.
+
+⚠️ **Hypothese "trop de basses" INFIRMEE par la mesure** — le grave de la musique etait plus faible que
+son medium. Ne pas deviner : mesurer.
+
+**Verification d'un mix reussi** : comparer le rendu avec et sans musique, tranche par tranche.
+Sous la voix l'ajout doit etre **+0.0 / +0.1 dB** (la musique ne lui dispute rien) ; dans les silences
+elle remonte (elle habille le vide au lieu de laisser un trou).
+
+### ⚠️ `ffmpeg volumedetect` echoue silencieusement sur les extraits — decoder en PCM
+
+`volumedetect` marche sur un fichier entier mais **retourne du vide** sur un segment (`-ss`/`-t`, extrait
+copie, WAV decoupe) : la commande sort sans erreur ET sans mesure, on croit a un silence. Idem `astats`.
+**Ne pas s'acharner** — decoder en PCM et calculer le RMS soi-meme :
+
+```python
+raw = subprocess.run(["ffmpeg","-v","error","-i",path,"-f","s16le","-ac","1","-ar","8000","-"],
+                     capture_output=True).stdout
+n = len(raw)//2; s = struct.unpack(f"<{n}h", raw[:n*2])
+rms = math.sqrt(sum(x*x for x in seg)/len(seg)); db = 20*math.log10(rms/32768)
+```
+Filtrer les tranches sous un seuil (`rms > 300`) pour mesurer la voix **hors blancs de narration**,
+sinon les silences tirent la moyenne vers le bas et faussent le calcul de volume.
+Bonus : la meme boucle donne le **profil d'energie** d'une musique (detecte les ruptures de section —
+c'est ce qui a fait ecarter une piste candidate sur CFA : chutes a -33 dB = trous audibles en boucle).
+
 ---
 
 ## Mapbox — delayRender rend le PRE_ROLL optionnel

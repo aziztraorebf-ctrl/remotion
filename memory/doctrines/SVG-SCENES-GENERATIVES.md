@@ -169,6 +169,19 @@ Fusion, repositionnement, collision, changement de couleur, renommage de groupes
   repères narratifs**, pour caler le bloc `T` sur la voix réelle. Moteur ElevenLabs (fiable même
   quand le quota Whisper/OpenAI saute). Une durée estimée "au nombre de mots" se trompe de ~20%.
 
+**⚠️⚠️ 1er PASSAGE EN PROD REELLE (CFA Beat 6b, 2026-07-26) — LES 3 MODELES API ONT DERIVE, FABLE A TENU.**
+Sur l'etape 3 (image-cible), avec un brief qui interdisait EXPLICITEMENT tout personnage humain :
+GPT-5.6 Sol a produit un marche nocturne avec 2 personnages · Gemini 3.1 Pro un chantier de pipeline avec
+silhouettes · Kimi K3 un apprenti sur une mobylette. **2e tentative en leur donnant l'image de Fable en
+reference a REPRODUIRE fidelement** : GPT a garde la structure demandee mais a quand meme invente une
+"chercheuse en blouse blanche" ; Kimi a enfin lache le personnage mais a ajoute lune + balise hors-brief.
+**Seul FABLE (agent Claude Code, pas une API) a respecte le brief des le 1er jet.**
+→ Hypothese : sur un sujet a forte charge emotionnelle/documentaire, les modeles API veulent RACONTER UNE
+HISTOIRE HUMAINE, et l'interdit explicite ne suffit pas a les retenir — meme avec une image-reference.
+→ Consequence operatoire : pour une scene d'OBJETS avec interdit de personnage, **lancer Fable en premier**
+et ne solliciter les API que pour de l'enrichissement (etape 5), pas pour l'image-cible. Ca economise 2
+appels payants sur 3. Confirme concretement la doctrine "Fable 5 = modele SVG par defaut".
+
 **⚠️ GOTCHA FUSION — en SVG, l'ORDRE DU DOCUMENT EST L'ORDRE DE RENDU.** Un élément inséré plus haut
 dans le document est peint EN PREMIER, donc RECOUVERT par tout ce qui suit — sans erreur ni warning, il
 "n'apparaît simplement pas". Ça concerne directement l'étape 4 (fusion) : quand on prend le sac de X et

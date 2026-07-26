@@ -16,6 +16,26 @@ metadata:
 - **Assets gitignorés ABSENTS du worktree neuf** (`.env`, `node_modules`, `public/_shared/audio` + `sfx` mp3) → les LIER par symlink depuis le repo principal, ne pas copier :
   `ln -s /Users/clawdbot/Workspace/remotion/{node_modules,.env} .` puis remplacer les sous-dossiers `public/_shared/{audio,sfx}` par des symlinks vers le repo principal.
 - **Symlink par-dessus un chemin qui contient des fichiers TRACKÉS** → git les voit "deleted" (fantômes). Fix : `git update-index --skip-worktree <fichiers>` sur ces fichiers. Et **NE JAMAIS `git add -A`** dans un worktree (risque de committer les suppressions) — toujours `git add <fichier précis>`.
+- ⚠️⚠️ **Les FICHIERS DE NAVIGATION existent en DEUX exemplaires et DIVERGENT** — `memory/NEXT-ACTION.md`,
+  `memory/PIPELINE.md`, les `STATUS.md`… sont versionnés, donc le worktree en a sa propre copie, figée à
+  la date où la branche a divergé. Dès la 1re session qui ne met à jour que l'un des deux, ils mentent.
+  Vécu 2026-07-26 : le `NEXT-ACTION.md` du worktree CFA datait du 22/07 et n'avait AUCUNE section CFA,
+  alors que le CFA y était le chantier actif — j'ai édité le mauvais fichier avant de m'en apercevoir.
+  → **Réflexe à l'ouverture d'un worktree** : `ls -la` les deux `NEXT-ACTION.md` et comparer les dates
+  avant de faire confiance à l'un. Puis **poser un bandeau de péremption** sur celui qui ne fait pas
+  autorité, en nommant explicitement lequel gagne pour quoi.
+  → Répartition qui a marché sur CFA : **NEXT-ACTION → le repo PRINCIPAL fait autorité** (c'est lui qui
+  est chargé en début de session) · **STATUS de l'épisode → le WORKTREE fait autorité** (c'est là qu'on
+  travaille). L'écrire noir sur blanc dans les deux fichiers, sinon la prochaine instance repayera l'erreur.
+
+- ⚠️ **Un asset audio FINAL (musique choisie, mix verrouillé) doit être tracé avec `git add -f`** — `*.mp3`
+  et `*.wav` sont gitignorés, donc un fichier qu'on vient de valider N'EST PAS versionné et **disparaît**
+  à la prochaine purge ou sur une autre machine. Distinct du gotcha symlink ci-dessus (qui concerne le
+  RENDER) : ici c'est la PERSISTANCE d'une décision entre sessions. Vécu 2026-07-26 (CFA) : le rendu FINAL
+  du beat 1 était introuvable sur disque, il a fallu le re-rendre depuis le composant — et la musique de
+  l'épisode aurait subi le même sort sans `git add -f`.
+  → Réflexe : dès qu'un asset audio est VALIDÉ (pas juste testé), le committer explicitement.
+
 - **Render VIDÉO (mp4) HANG à l'encoding** dans un worktree quand les assets sont accédés via symlink (ffmpeg muxing bloque à 0% CPU). MAIS `remotion still` (PNG) fonctionne normalement. → réserver le worktree aux itérations **code + still**, faire les **renders vidéo finaux dans le repo PRINCIPAL**.
 - **⚠️ ASSET AUDIO/SFX via symlink → 404 dans le bundle webpack Remotion** (vécu CFA Beat 3, 2026-07-22) : un render mp4 SANS audio passe très bien en worktree, MAIS dès qu'un `<Audio staticFile("_shared/sfx/...")>` pointe un mp3 **symlinké**, Remotion copie `public/` dans un bundle temporaire et NE SUIT PAS le symlink → `{"statusCode":404,"message":"...ink-spread.mp3 could not be found"}`, render avorté. **Fix** : pour les mp3 utilisés en `staticFile` (voix + SFX), COPIER les vrais fichiers dans le worktree (`cp`), PAS symlinker. Distinct du "hang encoding" ci-dessus (ça = 404 au chargement d'asset, pas un hang ffmpeg). C'est spécifique aux assets référencés par `staticFile()` dans le code ; les symlinks node_modules/.env restent OK.
 
