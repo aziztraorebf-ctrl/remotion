@@ -1,30 +1,48 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-25 (CFA beats 5a/5b FINAL + outillage pipeline SVG generatif)
+> Mis a jour : 2026-07-26 (CFA 7/8 beats FINAUX + musique et mix verrouilles — reste le beat 4 puis assemblage)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
 
-## 🎬 FRANC CFA — MID-FORM SVG (Beats 1,2,3,5a,5b,**6a FINAL** — NEXT = 6b, MàJ 2026-07-25)
+## 🎬 FRANC CFA — MID-FORM SVG — **7/8 BEATS FINAUX · NEXT = BEAT 4 PUIS ASSEMBLAGE** (MàJ 2026-07-26)
 
 ⚠️ **TOUT le code, le script et le STATUS a jour vivent dans le WORKTREE** `/Users/clawdbot/Workspace/remotion-cfa`
-(branche `feat/cfa-nuit1994-svg-mix`). Les copies du repo principal sont PERIMEES (un bandeau d'avertissement
-y a ete pose). Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md` § 0-SEPTIES.
+(branche `feat/cfa-nuit1994-svg-mix`). Les copies du repo principal sont PERIMEES.
+Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md` § **0-OCTIES**.
 
-- **FAIT cette session** : Beat **6a "La volonte de partir" = FINAL** (carte D3 continent africain seul,
-  drapeaux Mali/Niger/Burkina, jeton CFA pose sur la carte a la jonction des 3 pays, Guinee en hachures
-  cuivre, jeton monnaie "Sira" qui se DISSOUT EN PARTICULES au dementi officiel — effet "Thanos" extrait
-  en brique reutilisable `_shared/svg-library/elements/effects/ParticleDissolve.tsx`). Passe downstream
-  Gemini+Kimi faite (convergence forte : cartouche calendrier abandonne au profit du jeton lui-meme).
-- **NEXT = Beat 6b** "Le prix du depart" (conclusion de l'episode) = banc d'essai du **pipeline SVG
-  narratif** outille le 2026-07-25. Scene neuve, direction non arretee. VO deja ecrite + ecran de fin
-  fige (carte typewriter, cf `SCRIPT-MIDFORM-V2.md` § BEAT 6b).
-- ⭐ **REGLE D'EPISODE** : fond unifie `#182746` sur TOUS les beats. La rupture se porte par les OBJETS,
-  jamais par le decor. A ecrire dans le brief si on passe par le pipeline 3 modeles.
+- **FAIT session 2026-07-26** :
+  - **Beat 6b "Le prix du depart" = FINAL** (commit `8c389945`). 1re version REJETEE par Aziz ("trop
+    abstrait, je n'arrivais pas a comprendre en quoi tout ceci avait rapport l'un avec l'autre" —
+    3 metaphores heterogenes empilees : strates geologiques + sac + presse). Refonte via DA upstream
+    3 voix -> **pile de 3 pieces (BANQUE CENTRALE / RESERVES / CONFIANCE) qui s'effondre sur un sac
+    dont l'etiquette de prix s'affole**. Lisibilite immediate : une piece EST de la monnaie.
+  - **MUSIQUE DE L'EPISODE CHOISIE + MIX VERROUILLE** (commit `eb10da82`).
+  - **7 beats FINAUX rassembles** dans `out/_r-and-d/cfa-nuit1994/` du repo PRINCIPAL.
+
+- ⭐⭐ **MUSIQUE + VOLUME = DECIDES, A REUTILISER TELS QUELS A L'ASSEMBLAGE** :
+  piste UNIQUE `public/_rnd/cfa-nuit1994/musique-episode.mp3` (Minimax "tension retenue", **deja
+  EQualisee** — ne pas repartir de la brute), **volume `0.26`** + fade-in 1.5s, **MEME piste et MEME
+  volume sur TOUS les beats**. Silence sur l'ecran de fin typewriter. ⛔ Ne pas re-generer, ne pas
+  re-calculer un volume par beat.
+  ⭐ **LECON** : un ecart RMS **global** correct (-18 dB, cible Arte/BBC) ne garantit PAS que la voix
+  passe — voix et musique vivaient dans la MEME bande 200Hz-2kHz (8.2 dB de marge reelle vs 17.9 en
+  global) = **masquage frequentiel**. Toujours mesurer PAR BANDE. Le defaut `0.07` de la doctrine
+  aurait donne une musique inaudible ici.
+
+- ⛔ **RESTE : LE BEAT 4 "Qui tient la cle"** — seul beat non produit. Direction deja actee (STATUS
+  § 0-QUATER) : la cle du beat 3 VOYAGE vers Paris, flux garantie, depot des reserves + nuance
+  reforme 2020, registre **encre/nuit** (⛔ PAS blueprint). Composant amorce `CfaActe4Cle16x9.tsx`
+  (untracked dans le worktree, a reprendre/verifier).
+
+- ⏭️ **PROCHAINE SESSION** : (1) finaliser le **beat 4** · (2) **ASSEMBLAGE FINAL** des 8 beats + musique.
+  ⚠️ Assemblage : filtre ffmpeg `concat=` (reencodage reel), **JAMAIS le concat demuxer** sur des actes
+  deja issus d'un concat (DTS casses = image gelee avec audio normal, vecu Soudan 4 min). Verifier le
+  MOUVEMENT par hachage dense 1 frame/s, jamais des frames isolees.
+
+- ⭐ **REGLE D'EPISODE** : fond unifie `#182746` sur TOUS les beats. La rupture se porte par les OBJETS.
 - ⛔ Piste "piece CFA fil conducteur" **ABANDONNEE** (2026-07-25) — ne pas la ressortir.
-- 💡 Piste notee (non tranchee) : une video separee future sur le sujet Sira/AES (terrain deja fertile,
-  dementi officiel date). Egalement note : associer l'effet de particules a une fracture differente du
-  franc CFA — amelioration future non decidee.
+- 💡 Piste notee (non tranchee) : video separee future sur le sujet Sira/AES.
 
 ## ⏳ ACTION OUVERTE — RECHARGER LE CREDIT OPENAI
 Quota epuise constate le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-align.py`,
