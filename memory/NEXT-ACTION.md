@@ -1,11 +1,54 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-26 (CFA 7/8 beats FINAUX + musique et mix verrouilles — reste le beat 4 puis assemblage)
+> Mis a jour : 2026-07-26 fin de session (CFA **ÉPISODE COMPLET, VALIDÉ AZIZ, PROMU JALON v2** — next = 3 fixes puis musique à changer)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ---
 
 
-## 🎬 FRANC CFA — MID-FORM SVG — **7/8 BEATS FINAUX · NEXT = BEAT 4 PUIS ASSEMBLAGE** (MàJ 2026-07-26)
+## 🎬 FRANC CFA — MID-FORM SVG — **ÉPISODE COMPLET, VALIDÉ, PROMU JALON v2 · NEXT = 3 FIXES PUIS MUSIQUE** (MàJ 2026-07-26 fin)
+
+> ### ⛔⛔ NEXT SESSION — DANS CET ORDRE (décisions d'Aziz du 2026-07-26, post-visionnage)
+> **Épisode VALIDÉ** (« l'épisode est très bien ») et promu jalon v2 dans
+> `out/episodes/franc-cfa-midform/` — ⛔ **PAS dans `PRET-PUBLICATION/`** car la musique doit changer.
+> 1. **LES 3 FIXES RELEVÉS AU VISIONNAGE, EN PREMIER** → starter avec les causes déjà mesurées dans le
+>    code : `remotion-cfa/memory/starters/STARTER-PROMPT-cfa-fixes-post-visionnage.md`
+>    · **beat 3** : ping/ding quand chaque courbe REJOINT sa devise (les 2 SFX actuels sont sur le tracé)
+>    · **beat 5b** : ⛔ **RETIRER le rappel du sac de riz** (audio ~9.6→18.3 s + visuel) — retour en
+>      arrière ASSUMÉ sur l'ajout du 2026-07-25, ne pas re-plaider pour le garder. Fix audio MAISON.
+>      ⚠️ recaler les timings après la coupe + refaire l'assemblage (4min38 → ~4min29).
+>    · **beat 6a** : Guinée quasi invisible (hachures `#c17e3a` sur fond `#c17e3a` à 0.42 d'opacité) →
+>      hachures en **crème `#f0e8d2`**, contour 2.2→~4, zoom 1.15→~1.40 **recentré sur la Guinée**.
+> 2. **LA MUSIQUE** (déverrouillée, cf. bloc ci-dessous) : inventaire + index AVANT de générer.
+> 3. **PASSE DOWNSTREAM sur la vidéo complète** (Gemini accepte les 4min38 via Files API — il juge le
+>    rythme et les enchaînements). 2 appels séquentiels, critère n°1 ÉLIMINATOIRE dans le brief.
+> 4. Points connus non traités : **plateau statique ~2 s dans le beat 5a** (t≈154 s, PRÉ-EXISTANT) ·
+>    **SFX du beat 2** « à revoir à l'assemblage ».
+
+> ### ✅✅ SESSION 2026-07-26 (fin) — LE BEAT 4 EST PRODUIT ET L'ÉPISODE EST ASSEMBLÉ
+> - **BEAT 4 "Qui tient la clé" = FAIT** (commit `a5ed7f12`). Le composant `CfaActe4Cle16x9.tsx` existait
+>   déjà, non commité, et n'était **pas une amorce** : complet, 2 passes de review downstream appliquées,
+>   timings vérifiés mot à mot contre le forced-alignment réel. La note « à retravailler » était PÉRIMÉE.
+>   2 vrais défauts trouvés **en regardant le rendu** puis corrigés : (1) **353 px de la zone CFA hors cadre**
+>   (42 % visible seulement) → cadrage élargi, Paris domine par la lumière et non par l'échelle ;
+>   (2) les 2 arcs de dépôt indiscernables → étiquettes **UEMOA / CEMAC**, la coupure 2020 devient lisible.
+> - **1er ASSEMBLAGE COMPLET + MUSIQUE = FAIT** : `out/_r-and-d/cfa-nuit1994/cfa-midform-ASSEMBLAGE-v1-MIX.mp4`
+>   — **8347 frames / 278.23s / 4min38**. Lien 72h : https://litter.catbox.moe/kqzcfn.mp4
+>   Musique appliquée **telle que verrouillée** (piste unique déjà EQ, **0.26**, fade-in 1.5s), fenêtre
+>   19.5s→268.167s : démarre après le beat 1 (déjà mixé) et **s'arrête pile à l'écran typewriter**.
+> - ⚠️ **La piste (154s) est plus courte que la fenêtre (248.7s) → boucle OBLIGATOIRE par `acrossfade` 4s** :
+>   la queue est 5.5 dB plus forte que la tête, un bout-à-bout ferait une couture audible.
+> - ⭐⭐ **LEÇON NEUVE — `concat=` seul ne suffit pas** : il a donné **8357 frames au lieu de 8347** parce que
+>   l'audio AAC de chaque beat est plus long que sa vidéo (+23 à +63 ms) ; `concat=` étire la vidéo pour
+>   rattraper, et ça **s'accumule** (0.38s ≈ 11 frames). **Fix : `atrim` chaque audio à la durée exacte de sa
+>   vidéo AVANT le concat.** Vaut aussi pour le Soudan.
+> - **Vérifs** : hachage dense 1 f/s sur 278s (276/278 uniques, les 2 plateaux de 2s sont des pauses de
+>   contenu confirmées au 1/2 s, **aucun gel**) · −17.1 LUFS · **mix par bande** 200Hz-2kHz : voix −21.9 dB
+>   vs musique −42.0 dB = **20.1 dB de marge dans la bande de la voix**.
+> - ⏭️ **NEXT = Aziz regarde l'assemblage.** Point pré-existant à trancher (PAS causé par l'assemblage) :
+>   **plateau statique ~2s dans le beat 5a** (t≈154s global / local ~13.3s), beat déjà FINAL. Plus les SFX
+>   du beat 2 « à revoir à l'assemblage » (note ancienne), non traités.
+
+> ⛔ **BLOC CI-DESSOUS = TRACE** (état 7/8 d'avant cette session). Le beat 4 n'est plus un reste-à-faire.
 
 ⚠️ **TOUT le code, le script et le STATUS a jour vivent dans le WORKTREE** `/Users/clawdbot/Workspace/remotion-cfa`
 (branche `feat/cfa-nuit1994-svg-mix`). Les copies du repo principal sont PERIMEES.
@@ -20,22 +63,35 @@ Source de verite : `remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATU
   - **MUSIQUE DE L'EPISODE CHOISIE + MIX VERROUILLE** (commit `eb10da82`).
   - **7 beats FINAUX rassembles** dans `out/_r-and-d/cfa-nuit1994/` du repo PRINCIPAL.
 
-- ⭐⭐ **MUSIQUE + VOLUME = DECIDES, A REUTILISER TELS QUELS A L'ASSEMBLAGE** :
-  piste UNIQUE `public/_rnd/cfa-nuit1994/musique-episode.mp3` (Minimax "tension retenue", **deja
-  EQualisee** — ne pas repartir de la brute), **volume `0.26`** + fade-in 1.5s, **MEME piste et MEME
-  volume sur TOUS les beats**. Silence sur l'ecran de fin typewriter. ⛔ Ne pas re-generer, ne pas
-  re-calculer un volume par beat.
-  ⭐ **LECON** : un ecart RMS **global** correct (-18 dB, cible Arte/BBC) ne garantit PAS que la voix
-  passe — voix et musique vivaient dans la MEME bande 200Hz-2kHz (8.2 dB de marge reelle vs 17.9 en
-  global) = **masquage frequentiel**. Toujours mesurer PAR BANDE. Le defaut `0.07` de la doctrine
-  aurait donne une musique inaudible ici.
+- ⛔⛔ **MUSIQUE = DEVERROUILLEE (2026-07-26, apres visionnage de l'assemblage)** — le bloc
+  « MUSIQUE + VOLUME DECIDES / VERROUILLE » ci-dessus (ligne 46) est **ANNULE pour le CHOIX DE LA
+  PISTE**. Retour Aziz : « la musique n'est peut-etre pas si adaptee que ça a cette video ».
+  → La piste `musique-episode.mp3` et le volume `0.26` **ne sont plus la reference**.
+  → ⛔ **AVANT de generer une nouvelle piste : INVENTAIRE + INDEX de l'existant** (consigne Aziz).
+    **Mesure 2026-07-26 : 71 pistes musicales deja produites dans `public/`, AUCUN index.** On a
+    probablement deja la bonne piste, et on a paye plusieurs fois des variantes introuvables.
+    Emplacements : `public/_shared/audio/{soudan,sahel-warmap,sudan-warmap}/music/`,
+    `public/souverain/<ep>/audio/`, `public/atlas/<ep>/audio/`, `public/audio/<ep>/`.
+    ⚠️ `public/_shared/audio/soudan/music/_rejete-thriller/` = REJETE, ne pas ressortir.
+  ⭐ **CE QUI RESTE ACQUIS = la METHODE, pas la piste** : un ecart RMS **global** correct (-18 dB,
+  cible Arte/BBC) ne garantit PAS que la voix passe — voix et musique vivaient dans la MEME bande
+  200Hz-2kHz (8.2 dB de marge reelle vs 17.9 en global) = **masquage frequentiel**. **Toujours
+  mesurer PAR BANDE.** Le volume `0.26` etait calibre POUR l'ancienne piste → **a RECALCULER** pour
+  la nouvelle. Le defaut `0.07` de la doctrine aurait donne une musique inaudible ici.
+  ⚠️ Ecarter d'emblee une piste a forte amplitude (l'ancienne « A-souverain-nocturne » : 19 dB
+  d'amplitude, chutes a -33.7 dB → trous audibles sous la narration).
 
-- ⛔ **RESTE : LE BEAT 4 "Qui tient la cle"** — seul beat non produit. Direction deja actee (STATUS
-  § 0-QUATER) : la cle du beat 3 VOYAGE vers Paris, flux garantie, depot des reserves + nuance
-  reforme 2020, registre **encre/nuit** (⛔ PAS blueprint). Composant amorce `CfaActe4Cle16x9.tsx`
-  (untracked dans le worktree, a reprendre/verifier).
+- ✅ **[FAIT 2026-07-26] Le beat 4 "Qui tient la cle" est PRODUIT** — mais PAS selon la direction
+  decrite ci-dessous. ⛔ La direction « la cle voyage vers Paris » (carte plate + flux) a ete
+  **ABANDONNEE** : elle rejouait litteralement la carte du beat 2 (meme geo `cfaGeoWide`, meme camera,
+  memes arcs France→UEMOA/CEMAC, renomme « garantie » au lieu de « laisse »). Le composant
+  `CfaActe4Cle16x9.tsx` n'est PLUS le beat 4 (conserve comme trace).
+  → **Le beat 4 est desormais `CfaActe4Filet16x9.tsx`** : un FILET DE SECURITE sous un FUNAMBULE
+  (une seule metaphore, lisible en 2s, validee par TEST AVEUGLE) + la scene 1994 conservee et
+  extraite dans `CfaActe4Signature1994.tsx`. Commit `72e6e35c`.
 
-- ⏭️ **PROCHAINE SESSION** : (1) finaliser le **beat 4** · (2) **ASSEMBLAGE FINAL** des 8 beats + musique.
+- ⏭️ **[PERIME] "PROCHAINE SESSION"** ci-dessous = FAIT (beat 4 + assemblage). Voir le bloc NEXT en
+  tete de section. Conserve pour les 2 lecons d'assemblage qui restent VALIDES :
   ⚠️ Assemblage : filtre ffmpeg `concat=` (reencodage reel), **JAMAIS le concat demuxer** sur des actes
   deja issus d'un concat (DTS casses = image gelee avec audio normal, vecu Soudan 4 min). Verifier le
   MOUVEMENT par hachage dense 1 frame/s, jamais des frames isolees.

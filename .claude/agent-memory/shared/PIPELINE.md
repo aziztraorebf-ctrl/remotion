@@ -10,20 +10,21 @@
 
 ---
 
-## Franc CFA mid-form — 7/8 beats FINAUX, musique+mix verrouillés — EN COURS (2026-07-26)
+## Franc CFA mid-form — 8/8 beats + assemblage v2 promu jalon — EN COURS (2026-07-26)
 
-**État** : Beat 6b "Le prix du départ" = FINAL (pile de 3 pièces BANQUE CENTRALE/RESERVES/CONFIANCE qui
-s'effondre sur un sac, v1 "trop abstrait" REJETÉE et conservée en trace). Musique unique de l'épisode
-choisie (Minimax, déjà équalisée) + mix voix/musique mesuré PAR BANDE (masquage fréquentiel détecté et
-corrigé, volume verrouillé `0.26`). 7 des 8 beats sont FINAUX, rassemblés dans `out/_r-and-d/cfa-nuit1994/`
-du repo principal.
+**État** : Beat 4 "Qui tient la clé" REFAIT de zéro (la carte redondante avec le beat 2 remplacée par la
+métaphore du filet de sécurité sous un funambule, de profil — `CfaActe4Filet16x9.tsx`). Scène 1994
+extraite dans `CfaActe4Signature1994.tsx`. Les 8 beats assemblés (4min38), validés par Aziz, promus en
+jalon v2 dans `out/episodes/franc-cfa-midform/` (PAS dans `out/PRET-PUBLICATION/` — musique jugée
+inadaptée par Aziz, à refaire).
 
-**RESTE** : Beat 4 "Qui tient la clé" (seul beat non produit, amorce `CfaActe4Cle16x9.tsx` dans le
-worktree) puis assemblage final des 8 beats + musique.
+**RESTE** : musique à changer (après inventaire des 71 pistes existantes) + 3 fixes relevés au
+visionnage (ping par devise beat 3 · retirer rappel sac de riz beat 5b · rendre la Guinée visible beat
+6a) → `memory/starters/STARTER-PROMPT-cfa-fixes-post-visionnage.md`.
 
 ⚠️ Tout le code/script/STATUS à jour vivent dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`
-(branche `feat/cfa-nuit1994-svg-mix`). Source de vérité : `STATUS.md` § 0-OCTIES (worktree) /
-§ 0-SEPTIES (repo principal, périmé). Détail : `memory/NEXT-ACTION.md` § FRANC CFA.
+(branche `feat/cfa-nuit1994-svg-mix`, 6 commits ff11bf21→84e0ad0c, NON mergés dans master). Source de
+vérité : `STATUS.md` § 0-DECIES (worktree). Détail : `memory/NEXT-ACTION.md` § FRANC CFA.
 
 ---
 

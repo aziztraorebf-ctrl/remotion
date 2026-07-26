@@ -25,6 +25,20 @@ Pas 4 piliers parallèles : **3 moteurs visuels posés sur 1 socle**.
 | **QUOI / COMMENT** — objet, processus, trajet, métaphore | **SVG** | Contrôle total frame-driven, simplifie ce qui serait lourd en After Effects |
 | **LE LIANT** — texte, chiffre-choc, transition, rythme | **Remotion** (socle) | Toujours |
 
+⚠️ **PIÈGE VÉCU — la géo réutilisée qui contourne cette table** (beat 4 CFA, 2026-07-26).
+Un texte **purement CONCEPTUEL** (une garantie financière, une contrepartie, une réforme juridique)
+a été codé en **carte** simplement parce qu'une géo existait déjà dans un beat antérieur — on hérite
+de la carte sans jamais repasser par la table. Résultat : la scène rejouait le beat 2 (même géo, même
+caméra, mêmes arcs qui pulsent), renommée. **Aucune vérification technique ne détecte ça** : le code
+tournait, les timings étaient justes, le rendu était propre.
+
+**Le tell** : si le texte du beat ne contient **aucune relation SPATIALE réelle** (un lieu qui agit sur
+un autre lieu) mais seulement un **mécanisme** (garantir, déposer, réformer), alors la carte est un
+habillage, pas une réponse — même si le geste visuel *semble* juste. Ligne **QUOI/COMMENT → SVG**.
+→ Vérifier le TEXTE avant la FORME, et ne jamais hériter d'une géo par simple continuité.
+Détail : [[feedback_pourquoi-le-beat4-cfa-a-marche-repartition-jugement]] · garde-fou opérationnel
+(comparer géo + caméra + geste entre beats) : checklist § 2bis de [[CONTINUITE-SCENE-INTENTION-DABORD]].
+
 ## Les 3 usages du SVG (pas seulement les sprites Gemini)
 
 Les sprites Gemini ne sont qu'une *source d'assets*. Trois usages distincts :

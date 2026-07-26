@@ -14,6 +14,31 @@ Tout sujet où un PERSONNAGE doit incarner une action dans une scène SVG encre/
 pêcheur, ouvrier, marchand…). Le rig est GÉNÉRIQUE : on change l'accessoire (`hat`) et la couleur (`ink`),
 pas la mécanique. ⛔ Garde-fou doctrine : silhouette stylisée pictogramme, JAMAIS un humain réaliste. Segments DROITS.
 
+## ⭐ AVANT LE RIG — l'option LÉGÈRE : stick figure de PROFIL, sans rig (2026-07-26, funambule CFA)
+
+Si le personnage est **secondaire/symbolique** et **petit à l'écran** (~74 px de haut sur 1080), le rig
+complet est surdimensionné. Une stick figure **DE PROFIL** marche, trébuche, tombe et rebondit avec ~20
+lignes, **sans rig, sans foot-plant, sans machine à états** :
+- 2 jambes en **ciseau** depuis une hanche commune (angle piloté par `Math.sin(phase)`),
+- un **bob vertical** du corps (`Math.abs(Math.cos(phase))`) — c'est lui qui fait lire « il marche »,
+- **aucune articulation genou/cheville** : invisible à cette taille, et c'est ce qui fait le pantin,
+- chute + rebond par `spring()`.
+
+⛔ **Fonctionne SEULEMENT de PROFIL.** De FACE, une stick figure ne peut que **glisser** (les jambes ne
+peuvent pas marcher dans ce plan) → la garder immobile et ne faire vivre que son équilibre.
+✅ **Le trait bat la silhouette pleine** à cette taille (testé au comparatif : la version « pleine »
+referme la posture et se lit moins bien).
+
+**Implémentation de référence** : `FunambuleProfil` dans
+`src/projects/_rnd/fable-svg/CfaActe4Filet16x9.tsx` — ⚠️ pas encore extrait vers `_shared/`, candidat à
+extraction dès la 2e réutilisation. R&D en cours pour élargir le registre (gestes, vues, interactions à
+2) : `remotion-cfa/memory/starters/STARTER-PROMPT-rnd-stick-figures-registre.md`.
+Leçon : [[feedback_stick-figure-profil-marche-capacite-debloquee]].
+
+> **Choisir entre les deux** : rig Gemini = personnage PRINCIPAL, gros plan, poses complexes, objets
+> tenus, foot-plant sur sol visible. Stick figure de profil = personnage SECONDAIRE, petit, un geste
+> simple mais juste. Ne pas sortir le rig pour un funambule à 74 px.
+
 ## ⭐⭐ Rig FK Gemini — LE rig canonique (`rig/GeminiRig.tsx`)
 
 **Chemin** : `src/projects/_shared/personnage-vivant-svg/rig/GeminiRig.tsx`. Composant `GeminiRig` (props

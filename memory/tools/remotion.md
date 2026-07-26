@@ -66,7 +66,11 @@
 ⚠️ **0.07 est un POINT DE DEPART, pas une valeur universelle — il suppose une musique generee FORTE.**
 Sur une piste deja discrete a la source, 0.07 donne une musique **inaudible** (vecu CFA 2026-07-26 :
 32.5 dB d'ecart avec la voix, soit le silence). **Toujours MESURER voix ET musique avant de fixer le
-volume**, jamais appliquer le defaut a l'aveugle. Valeur retenue sur CFA : **0.26**.
+volume**, jamais appliquer le defaut a l'aveugle.
+⚠️ **Le 0.26 retenu sur le CFA n'est PAS une valeur a reutiliser** : il etait calibre POUR une piste
+precise (`musique-episode.mp3`, deja EQualisee), **abandonnee le 2026-07-26** (Aziz : musique pas
+adaptee a la video). C'est la METHODE ci-dessous qui se transporte, jamais le chiffre — recalculer
+par bande pour chaque nouvelle piste.
 
 ### ⭐⭐ Mixer voix + musique : MESURER PAR BANDE, pas en RMS global (grave 2026-07-26, CFA)
 
@@ -97,6 +101,36 @@ son medium. Ne pas deviner : mesurer.
 **Verification d'un mix reussi** : comparer le rendu avec et sans musique, tranche par tranche.
 Sous la voix l'ajout doit etre **+0.0 / +0.1 dB** (la musique ne lui dispute rien) ; dans les silences
 elle remonte (elle habille le vide au lieu de laisser un trou).
+
+### ⭐⭐ ASSEMBLAGE MULTI-BEATS : `atrim` l'audio AVANT le `concat=` (grave 2026-07-26, CFA)
+
+Le filtre `concat=` est OBLIGATOIRE pour assembler des beats (jamais le concat demuxer — DTS casses =
+image gelee avec audio normal, vecu Soudan 4 min). **Mais il ne suffit pas.**
+
+**Symptome** : l'assemblage CFA a produit **8357 frames au lieu des 8347** attendues (= la somme exacte
+des 8 beats). Une derive de 10 frames, invisible sur un plateau mais qui decale chaque beat un peu plus.
+
+**Cause** : dans CHAQUE beat rendu separement, la piste **audio AAC est plus longue que la video**
+(+23 a +63 ms, granularite de trame de l'encodeur). `concat=` **etire la video** de chaque segment pour
+rattraper son audio, et ces paddings **s'ACCUMULENT** (0.38 s ≈ 11 frames sur 8 beats).
+
+**Fix** : mesurer la duree video exacte de chaque beat (`ffprobe -select_streams v:0 -show_entries
+stream=duration`) et `atrim` sa piste audio a CETTE duree AVANT le concat :
+```
+[0:a]atrim=0:19.5,asetpts=N/SR/TB[a0];[1:a]atrim=0:35.833333,asetpts=N/SR/TB[a1]; ...
+[0:v][a0][1:v][a1]...concat=n=8:v=1:a=1[v][a]
+```
+→ 8347 frames pile. **A appliquer a TOUT assemblage multi-beats** (vaut aussi pour le Soudan).
+⚠️ Distinct du bug de continuite inter-segments (trous/chevauchements aux bornes de rendu) : ici c'est
+une derive de DUREE cumulative d'origine intra-segment.
+
+**Boucler une musique plus courte que la fenetre a couvrir** : JAMAIS bout-a-bout. La tete et la queue
+d'une piste n'ont pas la meme amplitude (mesure 5.5 dB d'ecart sur la piste CFA, crete a -3.9 dB) → la
+jonction s'entend. Utiliser un **`acrossfade` de ~4 s** :
+```
+[0:a]atrim=0:150,asetpts=N/SR/TB[a1];[1:a]atrim=0:150,asetpts=N/SR/TB[a2];
+[a1][a2]acrossfade=d=4:c1=tri:c2=tri[out]
+```
 
 ### ⚠️ `ffmpeg volumedetect` echoue silencieusement sur les extraits — decoder en PCM
 
