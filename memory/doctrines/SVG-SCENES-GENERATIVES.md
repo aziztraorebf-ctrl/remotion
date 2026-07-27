@@ -19,6 +19,33 @@ le laisser au modèle nous fait perdre la main sur le rythme. **Exception unique
 un composant animé "base à retoucher" pour gagner du temps sur un cas précis — sinon, statique + animation maison.
 Lié : [[llm-generation-multi-variantes-figer-description]] · [[MOTEURS-VISUELS-ET-SOCLE]].
 
+## ⛔⛔ RÈGLE DE VÉRIFICATION — UN CALCUL STATIQUE NE PROUVE JAMAIS UN COMPORTEMENT DYNAMIQUE (gravé 2026-07-27)
+
+Vécu **3 fois dans une seule session** (R&D stick figure). Le cas le plus net : un agent a validé
+« l'écart entre les jambes est ≥ 15px » **par calcul** — et concluait que la marche était correcte. Les
+jambes étaient en réalité **parfaitement immobiles** pendant que le corps avançait (un glissement, signalé
+par Aziz). Un écart constant de 15px passe ce test tout en ne bougeant pas d'un pixel. Deux autres agents
+ont fait passer leur correctif à un test de calcul avant qu'il échoue au rendu réel.
+
+**Pourquoi** : un calcul géométrique vérifie une **POSE à un instant T**. Le mouvement — patinage,
+tremblote, glissement, dérive, gel — n'existe QU'ENTRE les frames. Aucune vérification instantanée ne
+peut le voir. C'est une erreur de nature, pas de rigueur : l'agent qui calcule est méticuleux, il mesure
+juste la mauvaise chose.
+
+**Comment vérifier (le seul test qui vaut)** : extraire **des frames CONSÉCUTIVES** (33ms d'écart à 30fps),
+zoomer au crop sur l'élément, et **REGARDER les images**. Si la posture est identique alors que la position
+a changé → glissement. Si elle change alors qu'elle devrait être stable → tremblote.
+⚠️ Corollaire d'orchestration : l'exiger EXPLICITEMENT dans le brief d'agent. Sans ça, un agent conclut
+naturellement depuis le code, parce que c'est ce qu'il a sous les yeux.
+
+**⭐ COROLLAIRE — L'ÉCHELLE CHANGE LE VERDICT.** Des défauts invisibles à 74px deviennent grotesques à
+424px : pastille au coude (2 capsules `strokeLinecap` qui se chevauchent), patinage des pieds, bras plié en
+équerre. **Juger à l'échelle d'usage prévue dans la scène finale**, jamais sur un aperçu réduit.
+Voisin mais distinct de la règle « Netteté = full HD only » du CLAUDE.md (qui parle de RÉSOLUTION de render ;
+ici il s'agit de la TAILLE DU SUJET à l'écran — plan large vs plan rapproché).
+Complémentaire de [[feedback_animer-objet-mecanique-svg-verifier-par-calcul]] : le calcul reste supérieur au
+jugé-à-l'œil pour poser une GÉOMÉTRIE ; il ne remplace jamais le rendu pour valider un MOUVEMENT.
+
 ## ⭐⭐ ACQUIS TRANSVERSES (prouvés Beat 1 hook + Beat 2 échec GGW, 2026-06-24)
 Ces règles valent pour TOUTE scène SVG animée, pas seulement la Muraille Verte :
 1. **Idéation via Kimi K2.5 MULTIMODAL** (`scripts/tools/kimi-svg-ideation.py`) : joindre 2-3 frames SVG comme
@@ -142,6 +169,34 @@ EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui 
 Ce qui a de la valeur ici, ce sont les points d'ARRÊT (quelle direction, quel élément de quel
 modèle, est-ce que l'enrichissement dénature). Un pipeline qui déciderait à notre place
 produirait la moyenne des trois modèles — c'est-à-dire le résultat le plus fade possible.
+
+### ⭐⭐ PANEL 4 MODÈLES SUR VÊTEMENT/RÔLE — FABLE 5 GAGNE LARGEMENT (2026-07-27)
+
+Même brief, même image de référence, 4 modèles : habiller une stick figure (silhouettes de rôle +
+objets manipulables). Verdict d'Aziz sur le gagnant : « **remarquable, niveau très professionnel** ».
+
+| Modèle | Résultat |
+|---|---|
+| **Fable 5** (agent, **0 API**) | 4 silhouettes complètes + 6 objets, points d'accroche documentés. **RETENU.** |
+| Kimi K3 | 2e — seul autre à dessiner les persos **TENANT** leur objet. Greffe retenue pour ça. |
+| Gemini 3.1 Pro | Plus pauvre + **contresens culturel** (chapeau conique asiatique pour l'agriculteur africain). |
+| GPT-5.5 | Vêtements livrés **SANS LES CORPS** — inutilisable tel quel. |
+
+**⭐ CE QUI A FAIT LA DIFFÉRENCE — Fable est le seul à s'être AUTO-RELU SUR SON PROPRE RENDU.** Sa v1
+avait un foulard **or** ; il l'a rendu, regardé, constaté que sur une carnation claire ça lisait comme
+des **cheveux blonds**, et l'a passé en teal. Il a aussi élargi un liseré trop fin après contrôle à
+400px. **C'est la capacité différenciante, plus que la qualité de génération brute** — un modèle qui ne
+regarde pas ce qu'il produit livre des défauts, quel que soit son talent.
+
+**⚠️ LEÇON DE BRIEFING — un brief littéral est suivi littéralement.** « Dessine ce qui s'AJOUTE au
+personnage » a produit chez GPT-5.5 des vêtements flottant dans le vide, sans corps. Techniquement
+conforme. Quand on demande un ÉLÉMENT qui se pose sur un TOUT (vêtement sur corps, accessoire sur
+personnage, décor autour d'un sujet), **exiger explicitement la silhouette COMPLÈTE** — ne jamais
+compter sur l'inférence du contexte implicite.
+
+Panel archivé (code + rendus des 4) : `public/_shared/refs/stick-figure-panel/` du worktree
+`remotion-cfa` — le COMPARATIF a de la valeur, pas seulement le gagnant.
+Script réutilisable : `scripts/tools/svg-stickfigure-roles-gen.py`.
 
 | # | Étape | Qui | Gate |
 |---|---|---|---|
@@ -276,6 +331,19 @@ La technique (LLM → groupes → anim par frame) est INDÉPENDANTE du registre 
 
 > ⭐⭐⭐ **NOTRE VRAIE FORCE SVG ANIMÉ = LA SCÈNE-LIEU VIVANTE + LES OBJETS NON-ORGANIQUES QUI LA TRAVERSENT (recentrage Aziz 2026-07-20)** — distinction cardinale :
 > - ⛔ **Organique humain qui « joue »** (perso qui marche, buste qui bouge, visage qui parle) = écarté, uncanny, NON maîtrisé.
+>   > ⚠️⚠️ **NUANCE MAJEURE (2026-07-26/27) — ce verdict vaut pour le personnage RICHE, PAS pour la STICK FIGURE DE PROFIL.**
+>   > Le rejet ci-dessus (« pantin bien animé », décrochement aux articulations, marche de face) portait sur le
+>   > personnage RIGGABLE volumétrique (GeminiRig, rig capsule, 13 segments). **La stick figure de profil — traits nus,
+>   > ~20 lignes de code, segments rigides, sans rig — est désormais VALIDÉE POUR LA PRODUCTION** : programme R&D
+>   > complet en 4 vagues (gestes · interactions · identité · vues), verdict Aziz « mieux que ce que j'aurais pensé
+>   > au départ, **surtout en plans éloignés** » puis « c'est parfait, je valide ».
+>   > Origine : découverte fortuite sur le beat 4 du Franc CFA (le funambule qui marche, vacille, tombe, rebondit).
+>   > ⛔ Les 2 conditions qui font que ça marche, et qui délimitent le verdict : **DE PROFIL** (de face elle ne peut que
+>   > glisser — testé, écarté) et **SANS VISAGE** (un œil fixe paraît PLUS MORT qu'une tête nue — testé, écarté).
+>   > ⭐ **SOURCE DE VÉRITÉ** : `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (worktree `remotion-cfa`,
+>   > branche `rnd/stick-figures-gestes`) — 5 briques techniques, règles dures, pistes écartées, bugs connus.
+>   > 💡 Ce que ça change stratégiquement : la scène-lieu vivante (notre force, ci-dessous) peut désormais être
+>   > **HABITÉE**. L'humain qui subit/attend/reçoit est ce qu'aucune carte ne sait montrer.
 > - ✅ **Le MONDE qui vit + les OBJETS MANUFACTURÉS qui le parcourent** = EXCELLEMMENT maîtrisé, prouvé N fois. C'est là qu'on a « plus de possibilités qu'on ne pense », et qu'AUCUN générateur vidéo n'a notre contrôle.
 > - PREUVES accumulées : **cargo qui voyage** (scène-mètre 16:9, navire qui défile côtes Afrique→Suez, scène qui change — véhicule qui GLISSE = crédible, cf règle « objet inerte ne glisse jamais SAUF véhicules ») · **port Soudan** (scène complète d'objets) · **Grande Muraille Verte short** (graine→arbre, mur qui se construit, zéro organique) · **village parallaxe** (pirogues, cases, jour→nuit).
 > - RÈGLE : pour une vidéo majorité-SVG, bâtir sur SCÈNES-LIEUX qui évoluent (parallaxe, jour→nuit, construction, colorisation qui se répand) + OBJETS-VOYAGEURS (véhicules, structures) + inserts data + portraits-médaillons. JAMAIS le personnage-acteur.

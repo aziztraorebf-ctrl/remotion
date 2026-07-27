@@ -1,6 +1,56 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-26 fin de session (CFA **ÉPISODE COMPLET, VALIDÉ AZIZ, PROMU JALON v2** — next = 3 fixes puis musique à changer)
+> Mis a jour : 2026-07-27 (**REGISTRE STICK FIGURE : programme 4 vagues COMPLET et VALIDÉ**)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
+
+> **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
+> Vécu le 2026-07-27 : j'ai annoncé à Aziz un état périmé d'une session entière (« le beat 4 reste à
+> faire ») alors qu'il était refait et l'épisode assemblé — l'info était dans le worktree, et
+> l'avertissement était enfoui en milieu de fichier au lieu d'être ici.
+>
+> | Worktree | Branche | Chantier | Source de vérité |
+> |---|---|---|---|
+> | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
+>
+> **Réflexe d'ouverture de session** : `git worktree list` + `git log --oneline -5` DANS le worktree
+> concerné, AVANT d'annoncer un état à Aziz. Un commit récent là-bas prime sur ce fichier-ci.
+
+---
+
+## ✅✅ REGISTRE STICK FIGURE — PROGRAMME COMPLET, PRÊT POUR LA PRODUCTION (2026-07-26/27)
+
+> **Verdict Aziz** : « mieux que ce que j'aurais pensé au départ, surtout en plans éloignés » ·
+> sur les rôles habillés : « **c'est parfait, je valide** ».
+
+⭐⭐ **SOURCE DE VÉRITÉ UNIQUE** : `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md`
+(dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`, branche `rnd/stick-figures-gestes`,
+commits `a8f2bab2` · `25514277` · `4fdb8f4d`). Y consulter : les 5 briques techniques, les règles
+dures, les pistes écartées, les bugs connus.
+
+**Origine** : découverte fortuite sur le beat 4 du Franc CFA (le funambule de profil qui marche,
+vacille, tombe et rebondit). La doctrine avait écarté le personnage animé (« pantin bien animé ») —
+cette conclusion valait pour le personnage RICHE, pas pour la stick figure de profil.
+
+**Ce que le registre sait faire (8 planches V1 dans `out/_r-and-d/stick-figures/v1-valide/`)** :
+marcher (5 variantes) · porter/pousser/tirer (le poids se voit) · tomber et se relever · lever les
+bras (3 intentions) · trembler · s'asseoir · donner/recevoir/**tendre la main sans recevoir** ·
+duo ASYMÉTRIQUE (rapport de force) · groupe jusqu'à 12 · manipuler des objets · porter une tenue de
+rôle (mineur/commerçante/fonctionnaire/agriculteur) sur 5 carnations.
+
+⛔ **PISTES ÉCARTÉES — ne pas ressortir** : personnage + carte (« nos cartes sont déjà fortes, le
+stick figure vaut pour ce qu'elles ne montrent pas ») · vues de dos et trois-quarts (**profil seul**) ·
+tout visage, même un point d'œil (« plus mort qu'une tête nue »).
+
+⭐ **PANEL LLM — FABLE 5 gagne largement** (vs GPT-5.5 / Gemini 3.1 Pro / Kimi K3, même brief) et à
+coût NUL (agent, pas d'API). Seul modèle à s'être **auto-relu sur rendu**. Les 4 propositions sont
+archivées dans `public/_shared/refs/stick-figure-panel/` — le comparatif a de la valeur.
+
+⏭️ **NEXT possible** : engager le registre sur une VRAIE SCÈNE d'épisode (c'est le seul test restant).
+Chantiers ouverts non bloquants, à traiter en production : relevage encore en stop-motion · largeur
+des tenues · 5 bugs mineurs tracés dans l'index.
 
 ---
 
