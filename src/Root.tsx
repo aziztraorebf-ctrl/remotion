@@ -41,6 +41,8 @@ import { PecheurVisageAnimeV2, PECHEUR_VISAGE_V2_FRAMES } from "./projects/_rnd/
 import { FlammeAnime16x9, FLAMME_ANIME_FRAMES } from "./projects/_rnd/fable-svg/FlammeAnime16x9";
 import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-svg/PecheurPersoAnime";
 import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
+import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
+import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
@@ -788,6 +790,22 @@ export const RemotionRoot: React.FC = () => {
           id="Fable-VillageParallaxe-Anime"
           component={VillageParallaxeAnime}
           durationInFrames={VILLAGE_PARALLAXE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-PortDecorStatique"
+          component={PortDecorStatique}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-PortVivant16x9"
+          component={PortVivant16x9}
+          durationInFrames={PORT_VIVANT_FRAMES}
           fps={30}
           width={1920}
           height={1080}
