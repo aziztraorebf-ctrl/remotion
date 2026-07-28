@@ -10,6 +10,26 @@
 
 ---
 
+## Registre STICK FIGURE — PASSE EN PRODUCTION (2026-07-28)
+
+**État** : le registre est **validé pour la production**. 6 scènes narratives produites et jugées
+sur rendu par Aziz (« le socle en tant que tel est validé, ça fonctionne, le placement, les
+distances »). Le programme R&D 4 vagues est derrière nous.
+
+**Livrables** : `src/projects/_rnd/stick-figures/` (12 fichiers, 16 compositions `Stick-*`),
+rendus dans `out/_r-and-d/stick-figures/`. Commits `25cab1c9` (scènes) + `5aeafd85` (doctrine)
+sur `rnd/stick-figures-gestes` du worktree `/Users/clawdbot/Workspace/remotion-cfa`.
+⚠️ **NON mergée dans master.** ⚠️ `node_modules` non ignoré dans ce worktree : jamais `git add -A`.
+
+**2 verdicts tranchés par test** (gravés dans `STICK-FIGURE-INDEX.md`) : le modèle dessine le
+DÉCOR / nous animons les PERSONNAGES · Fable 5 confirmé modèle SVG par défaut (test aveugle vs
+Opus élevé), l'écart venant de la MÉTHODE — Fable rend et regarde son travail.
+
+**NEXT** : la scène avec NARRATION (timings dérivés du forced-align au lieu d'être codés à la
+main) → `remotion-cfa/memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`
+
+---
+
 ## Franc CFA mid-form — 8/8 beats + assemblage v2 promu jalon — EN COURS (2026-07-26)
 
 **État** : Beat 4 "Qui tient la clé" REFAIT de zéro (la carte redondante avec le beat 2 remplacée par la

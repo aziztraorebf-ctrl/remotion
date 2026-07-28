@@ -1,5 +1,5 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-27 (**REGISTRE STICK FIGURE : programme 4 vagues COMPLET et VALIDÉ**)
+> Mis a jour : 2026-07-28 (**REGISTRE STICK FIGURE : 6 SCÈNES NARRATIVES, passe en PRODUCTION**)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -20,40 +20,59 @@
 
 ---
 
-## ✅✅ REGISTRE STICK FIGURE — PROGRAMME COMPLET, PRÊT POUR LA PRODUCTION (2026-07-26/27)
+## 🧍 REGISTRE STICK FIGURE — **PASSE EN PRODUCTION, 6 SCÈNES NARRATIVES** (MàJ 2026-07-28)
 
-> **Verdict Aziz** : « mieux que ce que j'aurais pensé au départ, surtout en plans éloignés » ·
-> sur les rôles habillés : « **c'est parfait, je valide** ».
+> ⭐⭐ **LE REGISTRE EST VALIDÉ POUR LA PRODUCTION.** Verdict Aziz sur la dernière scène : « le socle
+> en tant que tel est validé, ça fonctionne, le placement, les distances — il y a juste quelques
+> améliorations à faire plus tard. »
+>
+> **Où** : worktree `/Users/clawdbot/Workspace/remotion-cfa`, branche `rnd/stick-figures-gestes`,
+> commits `25cab1c9` (6 scènes) + `5aeafd85` (3 verdicts gravés). **NON mergée dans master.**
+> ⚠️ `node_modules` n'est PAS ignoré dans ce worktree → **jamais `git add -A`**.
+>
+> **⏭️ NEXT = LA SCÈNE AVEC NARRATION** (le seul test qui reste) →
+> `remotion-cfa/memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`
+> Aujourd'hui tous les timings sont ARBITRAIRES (codés à la main). Le prochain saut : script court
+> → narration ElevenLabs → **forced-align** (`scripts/tools/forced-align.py`, moteur ElevenLabs car
+> le quota OpenAI/whisper est épuisé) → timings dérivés → scène. Un personnage n'entre plus « à la
+> frame 60 » mais **quand la voix le nomme**.
 
-⭐⭐ **SOURCE DE VÉRITÉ UNIQUE** : `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md`
-(dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`, branche `rnd/stick-figures-gestes`,
-commits `a8f2bab2` · `25514277` · `4fdb8f4d`). Y consulter : les 5 briques techniques, les règles
-dures, les pistes écartées, les bugs connus.
+**Ce que le registre sait faire (prouvé sur rendu, validé Aziz)** : marcher (5 variantes, verrou
+pas/distance) · manipuler un objet qui change d'état et de contenant · échanger un objet à deux ·
+une foule (3 marchands + 5 passants, perspective unifiée, zéro collision) · des marchands DE FACE
+immobiles qui hèlent · une apparition dessinée puis animée · des bulles d'ambiance.
 
-**Origine** : découverte fortuite sur le beat 4 du Franc CFA (le funambule de profil qui marche,
-vacille, tombe et rebondit). La doctrine avait écarté le personnage animé (« pantin bien animé ») —
-cette conclusion valait pour le personnage RICHE, pas pour la stick figure de profil.
+**⭐⭐ 2 VERDICTS TRANCHÉS PAR TEST** (gravés dans `STICK-FIGURE-INDEX.md`, ne pas rediscuter) :
+1. **Le modèle dessine le DÉCOR, NOUS animons les PERSONNAGES.** Un modèle briefé avec le socle
+   SAIT animer, mais son costume est « cousu sur un seul mouvement » (s'asseoir = redessin).
+   À récupérer de lui : l'HABILLAGE, jamais le squelette.
+2. **FABLE 5 confirmé modèle SVG par défaut, décor compris** — test AVEUGLE contre Opus élevé,
+   brief identique, verdict Aziz sans hésitation. ⭐ L'écart s'explique par la MÉTHODE : Fable a
+   rendu et REGARDÉ son travail (2 passes), Opus a déclaré ne pas l'avoir vu. Nuance : rien ne
+   prouve un avantage Fable sur du RAISONNEMENT (audit/refactor) — Opus y a produit une vérif par
+   script qui a rattrapé 2 violations réelles.
 
-**Ce que le registre sait faire (8 planches V1 dans `out/_r-and-d/stick-figures/v1-valide/`)** :
-marcher (5 variantes) · porter/pousser/tirer (le poids se voit) · tomber et se relever · lever les
-bras (3 intentions) · trembler · s'asseoir · donner/recevoir/**tendre la main sans recevoir** ·
-duo ASYMÉTRIQUE (rapport de force) · groupe jusqu'à 12 · manipuler des objets · porter une tenue de
-rôle (mineur/commerçante/fonctionnaire/agriculteur) sur 5 carnations.
+**⚠️ 3 améliorations relevées par Aziz, NON traitées** (à faire en production, pas en R&D) :
+objet qui « pop » en montant à l'épaule · premier plan qui se vide quand les allures varient trop ·
+personnages d'arrière-plan encore trop statiques (piste : varier la POSTURE plutôt qu'animer).
 
-⛔ **PISTES ÉCARTÉES — ne pas ressortir** : personnage + carte (« nos cartes sont déjà fortes, le
-stick figure vaut pour ce qu'elles ne montrent pas ») · vues de dos et trois-quarts (**profil seul**) ·
-tout visage, même un point d'œil (« plus mort qu'une tête nue »).
+**⭐ LA RÈGLE DE COMPOSITION** (née de village réussi vs pêche ratée) : une scène convient au
+registre si elle a **un SOL**, si le geste central est un geste **du CORPS**, et si le décor a été
+**RENDU ET REGARDÉ**. ≥2 « non » = refuser la scène comme banc d'essai.
 
-⭐ **PANEL LLM — FABLE 5 gagne largement** (vs GPT-5.5 / Gemini 3.1 Pro / Kimi K3, même brief) et à
-coût NUL (agent, pas d'API). Seul modèle à s'être **auto-relu sur rendu**. Les 4 propositions sont
-archivées dans `public/_shared/refs/stick-figure-panel/` — le comparatif a de la valeur.
-
-⏭️ **NEXT possible** : engager le registre sur une VRAIE SCÈNE d'épisode (c'est le seul test restant).
-Chantiers ouverts non bloquants, à traiter en production : relevage encore en stop-motion · largeur
-des tenues · 5 bugs mineurs tracés dans l'index.
+> ### 🗄️ TRACE — LE PROGRAMME R&D 4 VAGUES (2026-07-26/27), socle de tout ce qui précède
+> Origine : découverte fortuite sur le beat 4 du Franc CFA (le funambule qui marche, vacille, tombe).
+> La doctrine avait écarté le personnage animé (« pantin bien animé ») — cette conclusion valait pour
+> le personnage RICHE, pas pour la stick figure de profil.
+> **8 planches V1** (`out/_r-and-d/stick-figures/v1-valide/`), commits `a8f2bab2` · `25514277` ·
+> `4fdb8f4d`. Verdict Aziz sur les rôles habillés : « **c'est parfait, je valide** ».
+> ⛔ **Pistes écartées, ne pas ressortir** : personnage + carte · vues de dos et trois-quarts
+> (**profil seul**) · tout visage, même un point d'œil.
+> ⭐ **Panel LLM** : Fable 5 gagne largement (vs GPT-5.5 / Gemini 3.1 Pro / Kimi K3, même brief), à
+> coût nul — seul modèle à s'être auto-relu sur rendu. Archives : `public/_shared/refs/stick-figure-panel/`.
+> Chantiers ouverts non bloquants : relevage en stop-motion · largeur des tenues · 5 bugs mineurs.
 
 ---
-
 
 ## 🎬 FRANC CFA — MID-FORM SVG — **ÉPISODE COMPLET, VALIDÉ, PROMU JALON v2 · NEXT = 3 FIXES PUIS MUSIQUE** (MàJ 2026-07-26 fin)
 
