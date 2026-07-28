@@ -1,5 +1,16 @@
 # STARTER — Format 16:9 NARRATIF + PERSONNAGES (prochaine session)
 
+> ⛔⛔ **MISE À JOUR 2026-07-28 — LE VOLET « PERSONNAGES » DE CE STARTER EST DÉPASSÉ.**
+> Ce document date de juillet et suppose le **GeminiRig** (personnage riche articulé) — registre
+> ÉCARTÉ en production (« pantin bien animé, pas maîtrisé »).
+> **Le personnage narratif se fait désormais en STICK FIGURE**, registre passé en production le
+> 2026-07-28 (6 scènes, socle validé par Aziz). Entrée :
+> `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` et le starter
+> `remotion-cfa/memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`.
+> ✅ **Ce qui reste VALIDE ici** : tout le volet DÉCOR/format 16:9 (parallaxe, palette chaud→froid,
+> patron « plan large + véhicule »). C'est le volet PERSONNAGES qu'il ne faut plus suivre.
+
+
 > ⭐⭐ **MISE À JOUR 2026-07-03** : `CargoVoyage16x9.tsx` (mentionné ci-dessous comme patron validé) est
 > REMPLACÉ par `CargoVoyage16x9_LibreInspire.tsx` (`RND-CargoVoyage16x9-LibreInspire`) comme showcase final
 > du format 16:9 — validé par Aziz. Les leçons du patron 2-scènes ci-dessous restent valides (parallaxe,
