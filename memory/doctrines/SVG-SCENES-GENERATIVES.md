@@ -32,6 +32,29 @@ tremblote, glissement, dérive, gel — n'existe QU'ENTRE les frames. Aucune vé
 peut le voir. C'est une erreur de nature, pas de rigueur : l'agent qui calcule est méticuleux, il mesure
 juste la mauvaise chose.
 
+### ⭐ COROLLAIRE — LA RÉCIPROQUE EST VRAIE AUSSI (prouvé 2026-07-28, 6 scènes)
+
+La règle ci-dessus dit « le calcul ne suffit pas ». Elle ne dit PAS « le calcul est inutile » — et la
+session du 2026-07-28 a prouvé la symétrie : **les deux vérifications attrapent des défauts de NATURE
+DIFFÉRENTE, aucune ne remplace l'autre.**
+
+| Ce que seul le CALCUL a vu | Ce que seul le RENDU a vu |
+|---|---|
+| bras en butée IK (tension 1.32 > 0.97) | personnage qui marche **sur l'eau**, sa barque 253px plus bas |
+| **fenêtre de temps NÉGATIVE** (`verse+46 > revient` → une phase ne jouait jamais) | chalutier qui vogue **dans le ciel** |
+| conservation d'un stock (12 unités sur 900 frames) | objet porté qui **masque la tête** |
+| collisions entre 5 personnages sur 600 frames | **perspective INVERSÉE** (le plus loin était le plus grand) |
+
+**La formulation à retenir** : le **calcul prouve les INVARIANTS** (conservation, bornes, fenêtres de
+temps, non-collision, monotonie) · le **rendu prouve la CRÉDIBILITÉ** (ancrage, occlusion, profondeur,
+lecture). Faire les deux, systématiquement.
+
+⭐ **Preuve d'appui dans la même session** : le test aveugle Fable 5 vs Opus élevé s'explique
+exactement par ce partage — Fable a **regardé son rendu** (et corrigé une passe), Opus a **vérifié par
+script** (et rattrapé 2 violations réelles de contrainte que Fable n'avait pas vues). Aziz a choisi
+Fable, mais la méthode d'Opus n'était pas fausse : elle était **incomplète**, comme l'aurait été celle
+de Fable sans son script. Le bon brief d'agent exige LES DEUX.
+
 **Comment vérifier (le seul test qui vaut)** : extraire **des frames CONSÉCUTIVES** (33ms d'écart à 30fps),
 zoomer au crop sur l'élément, et **REGARDER les images**. Si la posture est identique alors que la position
 a changé → glissement. Si elle change alors qu'elle devrait être stable → tremblote.
@@ -260,11 +283,17 @@ Test ville + carte d'état-major, Gemini 3.1 Pro vs GPT-5.5, même prompt :
 
 | Type de scène | Gagnant | Pourquoi |
 |---|---|---|
-| **Organique / profondeur / paysage** (ville, port, plans étagés, nature) | **GEMINI 3.1 Pro** | illustrateur : densité, profondeur réelle (plans), détails gravés (soleil rayonnant, cuves, treillis), meilleur découpage de groupes |
+| **⭐ DÉFAUT — tout décor de scène, PAYSAGE COMPRIS** | **FABLE 5** (agent, 0 API) | ⭐ *amendé 2026-07-28* — **TEST AVEUGLE contre Opus élevé** sur un décor de marché de nuit (ville, plans étagés, lumières) : verdict Aziz sans hésitation (« clairement plus riche, les étals beaucoup plus beaux, ça raconte une histoire »). Fable était déjà n°1 sur le visage (07-20) et le vêtement (07-27) : il l'est aussi sur le **décor**. ⭐ L'écart s'explique par la MÉTHODE — Fable **rend son travail et le REGARDE** (2 passes), là où l'autre s'est arrêté à une vérif par script. |
+| **Organique / profondeur / paysage** (ville, port, plans étagés, nature) | ~~GEMINI 3.1 Pro~~ → **en COMPARAISON seulement** | ⚠️ *rétrogradé 2026-07-28* : cette ligne disait « Gemini gagne le paysage », ce qui **contredisait le corps de cette même doctrine** (« Fable 5 = modèle SVG par défaut »). Gemini reste un bon illustrateur (densité, découpage de groupes) — à solliciter en 2e avis quand le registre est incertain, pas en premier réflexe. |
 | **Géométrie / schéma / symbole** (carte d'état-major, diagramme, hachures réglées, flèches) | **GPT-5.5** | ingénieur : relief hachuré net, zones de contrôle lisibles, flèches tactiques à poids, rose des vents + cartouche propres |
 
-**Conséquence opératoire** : pour une scène SVG, **TOUJOURS générer les 2 (Gemini + GPT-5.5) et choisir selon la
-nature**. Cohérent avec le verdict transversal : Gemini gagne la GÉNÉRATION d'image, GPT gagne le BREAKDOWN/schéma.
+**Conséquence opératoire (amendée 2026-07-28)** : **lancer FABLE en premier** (coût nul, inclus dans
+l'abonnement), et ne solliciter Gemini/GPT que pour **enrichir ou comparer** quand le registre est
+incertain ou que le rendu de Fable déçoit. L'ancienne consigne « toujours générer les 2 » coûtait 2 appels
+payants pour un arbitrage que le test aveugle a tranché.
+⛔ **À exiger dans TOUT brief d'agent SVG** : qu'il **RENDE son travail et le REGARDE** avant de conclure,
+ET qu'il vérifie sa géométrie **par script**. C'est le partage calcul/rendu de la § RÈGLE DE VÉRIFICATION —
+les deux modèles du test aveugle n'en faisaient chacun que la moitié.
 
 ### ⭐ GLM-5.2 — 3e modèle low-cost pour JETONS et ASSETS SVG (R&D 2026-06-24)
 

@@ -66,11 +66,22 @@ qui se reproduira pour quiconque positionne `GeminiRig` sans le savoir.
 - **Rig capsule** (`StickRig.tsx`, `capsuleSegment.ts`) = la MÉCANIQUE, 100% code, zéro dépendance API. Rig de
   PRODUCTION historique, éprouvé sur ≥5 scènes, gère nativement 8 directions (`StickRigMultiDir`), charges
   (`carry`), objets (`objectHandling.ts`).
-- **Rig FK Gemini** (`GeminiRig.tsx`, CE chemin) = le rig CANONIQUE pour toute NOUVELLE scène narrative avec
-  personnage (silhouette + couleurs + visage dessinés par Gemini, mécanique de mouvement transposée à la main
-  depuis le rig capsule action par action). Catalogue de 7 gestes déjà transposés (marche, panier, sac-épaule,
-  récolte-au-sol, manipuler-objet, passer-main-à-main, cueillette-arbre, contemplatif) + trio visage/expressions
-  + vue frontale. Pour une NOUVELLE scène avec personnage, partir d'ici.
+- ⛔⛔ **MàJ 2026-07-28 — LE GEMINIRIG N'EST PLUS LE RIG CANONIQUE.** Pour toute NOUVELLE scène
+  narrative avec personnage, **partir du registre STICK FIGURE**, passé en PRODUCTION le 2026-07-28
+  (6 scènes, socle validé Aziz sur rendu) :
+  `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` ⭐⭐
+  (worktree `remotion-cfa`, branche `rnd/stick-figures-gestes`). Il sait faire : marcher (5 variantes,
+  verrou pas/distance) · porter/tirer · manipuler un objet à états · échanger à deux · foule (≤12,
+  perspective unifiée) · marchands de face qui hèlent · apparition dessinée. Et il porte le **filtre de
+  scène** (sol ? geste du corps ? décor déjà rendu ?).
+  **Raison** : le GeminiRig avait été écarté en prod (« pantin bien animé, pas maîtrisé ») ; la stick
+  figure de profil, elle, a été validée geste après geste.
+- **Rig FK Gemini** (`GeminiRig.tsx`, CE chemin) = **rig HISTORIQUE, conservé** (ne pas supprimer : son
+  catalogue garde de la valeur pour le GROS PLAN et les poses complexes, registres où la stick figure
+  n'a rien à dire). Silhouette + couleurs + visage dessinés par Gemini, mécanique transposée à la main
+  depuis le rig capsule. Catalogue de 7 gestes (marche, panier, sac-épaule, récolte-au-sol,
+  manipuler-objet, passer-main-à-main, cueillette-arbre, contemplatif) + trio visage/expressions
+  + vue frontale. ⛔ **Ne PAS en faire le point de départ d'une nouvelle scène narrative.**
 
 ## Fichiers
 - `rig/poses.ts` — ⭐ SOURCE DE VÉRITÉ de la cinématique. `computePose({walkPhase,moveAmt,bend,armReach,offerReach})` →
