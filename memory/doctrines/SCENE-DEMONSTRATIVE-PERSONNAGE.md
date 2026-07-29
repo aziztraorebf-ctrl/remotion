@@ -9,6 +9,39 @@
 
 ---
 
+## ⭐⭐⭐ LES 3 REGISTRES DE SCÈNE — LA TYPOLOGIE QUI CADRE TOUT (posée par Aziz, 2026-07-29)
+
+> Ce ne sont **pas des concurrents**, ce sont des **registres différents**. Toute la journée du
+> 29 a opposé décor et personnage comme si l'un devait gagner — c'était la mauvaise façon de poser
+> le problème. Le choix se fait par **ce que la scène doit faire**.
+
+| Registre | Ce qui porte l'information | Décor | Exemples |
+|---|---|---|---|
+| **CONTEMPLATIF** | **le LIEU** — on colorie, on révèle, des choses apparaissent | riche et détaillé, c'est le sujet | le port vivant · le village de pêcheurs |
+| **SCHÉMATIQUE** | **la donnée / l'objet** — pas de personnage du tout | ce qu'on fait depuis toujours | cartes Mapbox/D3, data-viz, hook Or du Darfour |
+| **DÉMONSTRATIF** | **le CORPS d'un personnage** qui EST l'argument | épuré, voire absent | le funambule CFA · **le porteur** |
+
+### ⭐ CE QUE ÇA CORRIGE — le port et le village ne sont PAS des ratés
+
+Le 29 au matin, ils ont été classés « décoratifs » — **jugés au critère du démonstratif**, qui
+n'est pas le leur. Dans une scène CONTEMPLATIVE, **le lieu EST le sujet** : son décor porte donc
+bien une information que rien d'autre ne porte, et il passe le critère établi le même jour
+(« le décor doit porter une information que les éléments principaux ne portent pas déjà »).
+⛔ **Ne plus les présenter comme des contre-exemples.** Ce sont des réussites d'un AUTRE registre.
+La hiérarchie *absence > participant > inerte* vaut **dans le registre démonstratif**, pas partout.
+
+### ⏭️ Question ouverte du 2026-07-29 (en cours de test)
+
+Un **personnage RICHE** (habillé, carnation — `PersonnageRole`) tient-il le rôle démonstratif aussi
+bien que la stick figure ? Enjeu réel : le porteur marche parce qu'il est **ANONYME** (c'est
+n'importe qui, donc c'est un pays, une économie). Un personnage identifiable devient *quelqu'un* —
+une histoire individuelle peut **affaiblir** une démonstration macro, ou l'**incarner**. Non mesuré.
+⚠️ Rappel du dossier : le personnage complet animé est « écarté en prod (pantin bien animé) » —
+mais cette conclusion **ne valait que pour le personnage RICHE, pas pour la stick figure de
+profil**, et n'a jamais été retestée depuis que le socle a mûri.
+
+---
+
 ## ⛔ LES DEUX RÉGIMES DE SCÈNE À PERSONNAGES — NE PAS LES CONFONDRE
 
 | | **AMBIANTE** | **DÉMONSTRATIVE** |
@@ -45,6 +78,17 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 4. **LA MÉCANIQUE DU CORPS PORTE L'ARGUMENT.** Le trébuchement dit la crise, le rattrapage dit
    la garantie, le rebond dit que le système tient. C'est le geste qui démontre — pas un texte
    posé à côté du geste.
+
+   ⭐⭐ **PRÉCISION CAPITALE (Aziz, 2026-07-29) — LA VOIX OFF N'EST PAS « UN TEXTE À CÔTÉ ».**
+   Ce principe vise le **texte AFFICHÉ à l'écran** (une étiquette qui répète ce qu'on voit déjà).
+   Il ne vise PAS la narration. Quand la voix dit « le pas se raccourcit » et que le pas
+   raccourcit au même instant, **ce n'est pas de la redondance : c'est de la SYNCHRONISATION**,
+   et c'est exactement ce qui fait fonctionner la scène.
+   > Mot d'Aziz : « je ne trouve pas que c'est redondant que le personnage ralentisse le pas avec
+   > la voix. Dans une scène telle que celle-ci, justement, **on veut que le personnage illustre
+   > ce que la voix dit**. Donc ça fonctionne très bien. »
+   ⛔ Erreur commise par Claude le même jour (corrigée par Aziz) : avoir présenté ce calage comme
+   « le premier mot à changer en production ». **Faux.** La voix est le fil, le corps l'illustre.
 
 5. **AUCUNE CONCURRENCE VISUELLE — ET AUCUN DÉCOR INERTE.** Le décor du funambule = 1 ligne +
    1 filet + 2 étiquettes. ⭐ **Borne trouvée au rendu le 2026-07-29** (section dédiée ci-dessous) :
@@ -258,6 +302,40 @@ du sens.* Le plafond n'est pas une timidité, c'est la condition de la lisibilit
 ⛔ **Parade au bug BRAS_LAG appliquée** : à l'arrêt final, la phase de marche n'est plus lue — une
 `Pose` explicite est forcée. Sans ça la phase se fige sur une valeur quelconque, potentiellement la
 pose dégénérée (jambes superposées) — exactement le défaut observé à t≈15 s sur le funambule.
+
+## ✅✅✅ LA SCÈNE NARRÉE — PROUVÉE LE 2026-07-29 (« LE PORTEUR NARRÉ »)
+
+`PorteurNarre16x9.tsx` + `porteurNarreTiming.ts` · compo `Porteur-Narre` · 719 f ·
+rendu `out/_r-and-d/porteur-charge/narre-v2.mp4`. **Variable unique** : seule la SOURCE des
+timings change (codés à la main → dérivés du forced-align). Corps, charge, mécanique : identiques.
+
+> **Verdict d'Aziz** : « la scène est beaucoup plus intéressante. **C'est vraiment la première
+> scène qui marche en tant que telle.** »
+
+**Le pipeline** : script 5 phrases validé par Aziz AVANT génération → `generate-narration-expressive.py`
+(`--dry-run` d'abord : 817 crédits) → `forced-align.py <audio> <script> <mots-repères> --fps 30`
+(66 mots, loss 0.099) → `porteurNarreTiming.ts` (**aucune valeur choisie**) → la scène.
+
+| mot | frame | ce que fait le corps |
+|---|---|---|
+| avance | 124 | pas ample, charge légère |
+| grossit | 266 | la charge s'emballe |
+| stagnent | 414 | le corps cesse de compenser — il subit |
+| raccourcit | 475 | le pas raccourcit (13.4° → 7.1°) |
+| avancer | 652 | il est ARRÊTÉ quand le mot tombe |
+
+⭐ **Détail de conception qui compte** : l'arrêt s'amorce **24 frames AVANT** le mot, pour que
+l'immobilité soit déjà **acquise** quand il tombe. Un geste qui *commence* sur le mot se lit en
+retard — anticiper l'amorce est la règle, pas l'exception.
+
+⛔ **PIÈGE À ÉVITER — source unique pour le pas** : la boucle d'intégration de la distance ET
+l'affichage doivent appeler **la même fonction** `swingAt(f)`. Deux formules qui divergeraient d'un
+demi-degré feraient **glisser les pieds** (le corps avance d'une distance qui ne correspond pas à
+l'ouverture de son ciseau).
+
+⚠️ **Les courbes articulées sur les mots CHANGENT le parcours** : à scale 3.2 (valeur de la version
+manuelle) le porteur ne faisait plus que 1436 px et s'arrêtait aux 2/3 du cadre. **Recalculer le
+scale après tout recalage sur la voix** — ici 3.8. Mesuré par script, jamais réglé à l'œil.
 
 ## CE QUI RESTE À PROUVER SUR LE PERSONNAGE DÉMONSTRATIF
 - **Un DUO démonstratif** : l'asymétrie fort/faible et l'échange à deux sont prouvés
