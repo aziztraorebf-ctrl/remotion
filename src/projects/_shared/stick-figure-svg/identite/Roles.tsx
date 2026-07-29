@@ -76,6 +76,33 @@ export const bodyPoints = (phase: number, p?: Partial<WalkParams>, torsoOverride
 // bp.hx/hy/sx/sy) : meme rotation que vetementBuste, mais point a point plutot que quadrilatere
 // fige, pour recopier des PATHS COURBES (Q, arcs) sans les deformer en quadrilatere.
 // ============================================================================================
+// ⛔⛔ BUG CORRIGE LE 2026-07-29 (trouve par Aziz sur captures, cause isolee par calcul) :
+// LE VETEMENT GLISSAIT LE LONG DU CORPS A CHAQUE PAS.
+//
+// Ancienne formule :  t = (fy - hy) / (sy - hy)
+// `fy` est une constante du dessin Fable, mais `hy` et `sy` sont les positions COURANTES du corps
+// anime — elles oscillent avec le bob de la marche. Donc `t` oscillait, et le point transporte
+// restait colle a son `fy` ABSOLU pendant que le corps rebondissait DESSOUS. Mesure :
+// l'ecart col-epaule variait de 2.5 unites par cycle a lean=0 — enorme sur un buste qui fait
+// ~6.6px a l'ecran. Symptome vu par Aziz : le chandail remonte pendant la marche et finit SUR LE
+// VISAGE ; et a l'arret, la camisole (qui pivote avec le buste) se separe du pagne (qui ne pivote
+// pas), les deux pieces n'ayant pas le meme referentiel.
+//
+// LA REGLE (mot d'Aziz) : les couleurs qui representent le corps ne doivent JAMAIS bouger
+// independamment de lui. Un vetement est SOLIDAIRE du corps qu'il habille.
+//
+// Fix : `t` est une fraction FIXE du buste, calculee dans le repere de REFERENCE de Fable
+// (hanche y=-26, epaule y=-58), et non plus sur la position courante. Le vetement suit alors
+// exactement le bob, le lean et le hipDrop, comme n'importe quel membre du squelette.
+const FABLE_HIP_Y = -26;      // hanche dans le repere du dessin Fable (= HIP_Y_STANDING du socle)
+const FABLE_SHOULDER_Y = -58; // epaule dans le repere du dessin Fable
+
+// Fraction du lean du buste que suivent les pieces attachees au BASSIN (pagne, jupe). 0 = jupe
+// rigoureusement verticale quel que soit le buste (ancien comportement, casse a lean eleve) ;
+// 1 = jupe alignee sur le torse (faux : une jupe pend, elle ne s'aligne pas). 0.45 = elle
+// accompagne le mouvement sans le suivre entierement.
+const PAGNE_SUIVI_LEAN = 0.45;
+
 const busteXf = (bp: BodyPoints) => {
   const { hx, hy, sx, sy } = bp;
   const dx = sx - hx, dy = sy - hy; // vecteur hanche->epaule, deja a TORSO_LENGTH
@@ -84,8 +111,9 @@ const busteXf = (bp: BodyPoints) => {
   const nx = -uy, ny = ux;                   // normale (vers l'avant du corps, +x local Fable)
   // fx,fy = coordonnees FABLE ABSOLUES (memes coordonnees que le fichier .svg.txt : hanche a
   // (0,-26), epaule a (1,-58)~(0,-58)). t=0 a la hanche, t=1 a l'epaule.
+  // ⭐ t est calcule dans le repere FABLE (constantes), donc il ne bouge JAMAIS avec l'animation.
   return (fx: number, fy: number) => {
-    const t = (fy - hy) / (sy - hy || -1);
+    const t = (fy - FABLE_HIP_Y) / (FABLE_SHOULDER_Y - FABLE_HIP_Y);
     return { x: hx + ux * len * t + nx * fx, y: hy + uy * len * t + ny * fx };
   };
 };
@@ -241,14 +269,27 @@ const FUCHSIA_SOMBRE = "#8e3563";
 
 export const RoleCommercante: React.FC<{ bp: BodyPoints }> = ({ bp }) => {
   const { hx, hy } = bp;
+  // ⛔ CORRIGE LE 2026-07-29 — 2e symptome du meme defaut (cf. busteXf ci-dessus).
+  // Le pagne etait ancre sur hx,hy SANS AUCUNE rotation, au motif (commentaire d'origine) qu'"une
+  // jupe suit le BASSIN, pas le lean du torse". Physiquement defendable, mais FAUX ICI : le socle
+  // n'expose aucun angle de bassin (le bassin ne tourne jamais), donc la jupe restait
+  // RIGOUREUSEMENT VERTICALE pendant que le buste s'inclinait jusqu'a 14deg — l'articulation
+  // devenait visible et les deux pieces de la tenue se separaient.
+  // Compromis physiquement juste : le pagne suit une FRACTION du lean (une jupe portee par
+  // quelqu'un qui se penche accompagne partiellement le mouvement sans s'aligner sur le torse).
+  const pagneDeg = bp.torso * PAGNE_SUIVI_LEAN;
+  const P = (fx: number, fy: number) => {
+    const a = rad(pagneDeg);
+    // rotation autour de la hanche (hx,hy) dans le plan de l'image
+    return `${hx + fx * Math.cos(a) - fy * Math.sin(a)} ${hy + fx * Math.sin(a) + fy * Math.cos(a)}`;
+  };
   return (
     <>
-      {/* PAGNE — attache: hanche (repris de Fable, quadrilatere evase hx,hy-relatif : la taille
-          nouee au-dessus de la hanche, l'ourlet s'evase au mollet). Pas de rotation avec le buste
-          (une jupe suit le BASSIN, pas le lean du torse) — ancre directement sur hx,hy. */}
-      <path d={`M ${hx - 6} ${hy - 7} L ${hx + 8} ${hy - 7} L ${hx + 11.5} ${hy + 17} L ${hx - 9.5} ${hy + 17} Z`}
+      {/* PAGNE — attache: hanche, suit PAGNE_SUIVI_LEAN du lean du buste (voir note ci-dessus).
+          Quadrilatere evase repris de Fable : taille nouee au-dessus de la hanche, ourlet au mollet. */}
+      <path d={`M ${P(-6, -7)} L ${P(8, -7)} L ${P(11.5, 17)} L ${P(-9.5, 17)} Z`}
         fill={TEAL} stroke={TEAL_SOMBRE} strokeWidth={1.2} strokeLinejoin="round" />
-      <path d={`M ${hx - 9} ${hy + 13} L ${hx + 11} ${hy + 13} L ${hx + 11.5} ${hy + 17} L ${hx - 9.5} ${hy + 17} Z`}
+      <path d={`M ${P(-9, 13)} L ${P(11, 13)} L ${P(11.5, 17)} L ${P(-9.5, 17)} Z`}
         fill={JAUNE_SECU} />
       {/* CAMISOLE — quadrilatere EXACT Fable, attache: buste. Coords Fable :
           M -5,-56 L 7.5,-56 L 8.5,-31.5 L -6.5,-31.5 Z — col etire de NECK_EXTEND. */}
