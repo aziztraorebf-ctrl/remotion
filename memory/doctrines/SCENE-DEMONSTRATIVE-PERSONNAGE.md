@@ -30,7 +30,51 @@ bien une information que rien d'autre ne porte, et il passe le critère établi 
 ⛔ **Ne plus les présenter comme des contre-exemples.** Ce sont des réussites d'un AUTRE registre.
 La hiérarchie *absence > participant > inerte* vaut **dans le registre démonstratif**, pas partout.
 
-### ⏭️ Question ouverte du 2026-07-29 (en cours de test)
+### ✅ TESTÉ LE 2026-07-29 — LE PERSONNAGE RICHE TIENT LE RÔLE DÉMONSTRATIF
+
+`PorteurRiche16x9.tsx` (compo `Porteur-Riche`) = le porteur narré avec `<Figure>` remplacée par
+`<PersonnageRole role="commercante" avecObjet={false}>`. Variable unique : **seul le corps change**
+(même voix, mêmes timings forced-align, même charge, même cadrage).
+
+> **Verdict d'Aziz** : « la scène marche assez bien, ça a plusieurs avantages. Ça donne un
+> personnage **en gros plan** dont on voit les détails, plutôt qu'un minuscule stick figure — et il
+> y a de la **personnalisation**. »
+
+⭐⭐ **DÉCISION DE DIRECTION QUI EN DÉCOULE — LES PERSONNAGES ARCHÉTYPES** : si on fait ce genre de
+scènes, **le script doit désigner 2-3 personnages archétypes MAXIMUM dès l'écriture**, qui
+reviennent tout au long de la vidéo. Pas quinze personnages différents. Le personnage riche n'a
+d'intérêt que s'il est **reconnu** d'une scène à l'autre — sinon autant garder l'anonymat du stick
+figure. ⛔ Ça se décide **au script**, pas au moment de coder la scène.
+
+⛔ **RÉSERVE BLOQUANTE** : le test a révélé que **`PersonnageRole` casse à `lean` élevé** — la
+camisole pivote avec le buste, le pagne non, les pièces se séparent et le vêtement finit sur le
+visage. Voir [[vetement-solidaire-du-corps-jamais-independant]]. **À corriger avant tout usage en
+production.** Corollaire de casting : préférer une tenue qui **laisse voir les jambes** (mineur,
+agriculteur) — la robe longue masque le ciseau, or c'est lui qui dit la marche et donc l'effort.
+
+### ⏭️ LES 2 CHANTIERS OUVERTS PAR CE TEST (Aziz, 2026-07-29) — non lancés
+
+**1. RENDRE LA SCÈNE DÉMONSTRATIVE VRAIMENT VIVANTE.** Une ligne blanche + un personnage qui
+marche, c'est le squelette prouvé — pas la forme finale. Mot d'Aziz : « le prochain défi, ce sera
+de les intégrer avec un background, ou de trouver une manière de rendre cela vivant pour de vrai ».
+⚠️ **Attention à ne pas rejouer le test décor du 29** : la réponse n'est pas « ajouter un décor »
+(hiérarchie *absence > participant > inerte* déjà tranchée), mais trouver ce qui **participe**.
+
+**2. LES ENCADRÉS / GRAPHISMES SYNCHRONISÉS AU GESTE.** Rien n'interdit de faire apparaître des
+graphismes pendant que le personnage agit — « quand le personnage est à l'extrême gauche, un
+graphisme qui apparaît à droite ». ⛔ Condition posée par Aziz : que ça n'ait pas « l'air d'être
+juste posé sur l'image ». C'est la même exigence que pour le décor : **participer, pas décorer**.
+⭐ Piste : les faire naître du geste ou du mot (forced-align), pas d'une horloge.
+
+### 🧍 ET POUR LES SCÈNES CONTEMPLATIVES : LE STICK FIGURE ANONYME
+
+Décision d'Aziz : dans le registre **contemplatif**, on utilise des **stick figures anonymes** pour
+peupler la scène, leur faire faire des actions, l'habiter. L'anonymat y est un ATOUT (des
+figurants, pas des personnages). ⭐ Le personnage riche est donc pour le **démonstratif**
+(reconnaissable, archétype), la stick figure pour le **contemplatif** (foule, ambiance) — et pour
+le démonstratif quand l'argument exige l'anonymat (« c'est n'importe qui, donc c'est un pays »).
+
+### ⏭️ Question ouverte du 2026-07-29 (RÉSOLUE ci-dessus, conservée pour la généalogie)
 
 Un **personnage RICHE** (habillé, carnation — `PersonnageRole`) tient-il le rôle démonstratif aussi
 bien que la stick figure ? Enjeu réel : le porteur marche parce qu'il est **ANONYME** (c'est

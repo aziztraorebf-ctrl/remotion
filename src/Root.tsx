@@ -46,6 +46,7 @@ import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/P
 import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDecorTest16x9";
 import { PorteurCharge16x9, PORTEUR_CHARGE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurCharge16x9";
 import { PorteurNarre16x9, PORTEUR_NARRE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurNarre16x9";
+import { PorteurRiche16x9 } from "./projects/_rnd/svg-scenes/PorteurRiche16x9";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
@@ -867,6 +868,15 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Porteur-Narre"
           component={PorteurNarre16x9}
+          durationInFrames={PORTEUR_NARRE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Test : MEME scene, MEME voix, MEMES timings — seul LE CORPS change (personnage habille). */}
+        <Composition
+          id="Porteur-Riche"
+          component={PorteurRiche16x9}
           durationInFrames={PORTEUR_NARRE_FRAMES}
           fps={30}
           width={1920}
