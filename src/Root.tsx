@@ -841,6 +841,17 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* 2e manche : MEME decor que B, mais il REAGIT au geste central.
+             Si D bat B, c'est la REACTION qui l'explique — pas un dessin different. */}
+        <Composition
+          id="Funambule-D-Reactif"
+          component={FunambuleDecorTest16x9}
+          defaultProps={{ fond: "reactif" as const }}
+          durationInFrames={975}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
         <Composition
           id="D3-A1K1-GlobeToParchemin16x9"
           component={GlobeToParchemin16x9}

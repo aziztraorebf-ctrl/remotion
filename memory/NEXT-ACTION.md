@@ -52,18 +52,29 @@ sauve : C atténué = B, et B reste inerte). Principe n.5 reformulé. Détail + 
 `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`. Code : `FunambuleDecorTest16x9.tsx` +
 `skylineDecorGroups.tsx` (Fable 5, 2 intensités). Rendus : `out/_r-and-d/funambule-decor-test/`.
 
-**⏭️ NEXT possibles (aucun tranché)** :
-1. **Le personnage qui AGIT** (porte une charge qui grossit, se fait délester) — le funambule prouve
-   un perso qui SUBIT ; l'action dans le registre démonstratif reste à prouver.
-2. **⭐ NOUVEAU, ouvert par le test du 29** : **le décor qui RÉAGIT au geste central** (fenêtres qui
-   s'éteignent à la chute, circulation qui s'arrête à l'impact). Le fond cesse d'être un fond et
-   devient un participant. Test d'une autre NATURE que celui du 29 — il ne porte pas sur
-   l'intensité mais sur le STATUT du décor. Ne rien présumer du résultat.
-3. **Les timings dérivés du forced-align** — le funambule était calé sur la voix ; toutes nos scènes
-   R&D depuis ont des timings arbitraires. Rejoint le NEXT stick figure (scène narrée).
-4. Varier les boucles des figurants du port (aujourd'hui 8× le même geste de marche).
-   ⚠️ Relativisé par le verdict du 29 : le port est du régime AMBIANT/décoratif — varier ses
-   boucles ne le rendra pas participant.
+**✅✅ 2e MANCHE TRANCHÉE LE MÊME JOUR — variante D, le décor qui RÉAGIT** (le décor de B repris à
+l'identique, seule la lumière varie sur une courbe calée au forced-align). Verdict Aziz : « **c'est
+beaucoup mieux, mais rien ne bat la version témoin sans décor** ».
+⛔ **HIÉRARCHIE COMPLÈTE : ABSENCE > PARTICIPANT > INERTE.** Ce n'est PAS « le minimalisme gagne » —
+*participant > inerte* est un acquis solide et réutilisable ; c'est *absence > participant* qui vaut
+**pour cette scène-là**.
+⭐⭐ **LE CRITÈRE À RETENIR** : **le décor doit porter une information que les éléments principaux ne
+portent pas déjà.** Le funambule a une métaphore DÉJÀ COMPLÈTE (fil = parité · filet = garantie ·
+vide = risque) → la ville était **redondante**, et une redondance même belle se paie en attention.
+⚠️ Ne pas sur-généraliser : dans une scène où le LIEU porte une info propre (port = dépendance
+maritime, frontière = blocage), la réponse pourrait s'inverser — non mesuré.
+
+**⏭️ NEXT — ⭐ LE PERSONNAGE QUI AGIT (choisi par Aziz le 2026-07-29, en cours)** :
+Le funambule prouve un perso qui **SUBIT** ; l'action au service d'un argument reste le vrai trou de
+la doctrine. Le registre sait faire les gestes ([[STICK-FIGURE-INDEX]]) — ils n'ont jamais servi une
+démonstration.
+
+Autres pistes, non tranchées :
+- **Les timings dérivés du forced-align** — rejoint le NEXT stick figure (scène narrée).
+- ⛔ **Décor : chantier CLOS pour le régime démonstratif.** Raffiner des fonds répondrait à une
+  question qu'on ne se pose plus. Rouvrir seulement pour une scène où le lieu porte une information.
+- Varier les boucles des figurants du port : **relativisé** — le port est du régime AMBIANT, varier
+  ses boucles ne le rendra pas participant.
 
 **✅ ACQUIS TECHNIQUES DE LA SESSION** (gravés, ne pas re-prouver) :
 - **Le partage à 3 ÉTAGES** : le modèle dessine le DÉCOR · nous animons l'ambiance · nos briques

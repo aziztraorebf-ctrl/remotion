@@ -135,12 +135,53 @@ soit il participe, soit il ne doit pas être là.
 **Le principe n.5 se reformule donc ainsi** : *le décor ne dispute jamais l'attention au
 personnage — et s'il ne participe pas à la démonstration, son absence vaut mieux que sa présence.*
 
-### ⏭️ CE QUE ÇA OUVRE (non testé, ne pas présumer du résultat)
+### ⭐⭐ 2e MANCHE (même jour) — LE DÉCOR QUI RÉAGIT : TESTÉ, ET LA HIÉRARCHIE EST COMPLÈTE
 
-Un décor qui **RÉAGIT au geste central** : les fenêtres qui s'éteignent quand il tombe, la
-circulation qui s'arrête à l'impact, la ville qui accuse le coup. Le fond cesserait alors d'être un
-fond et deviendrait un participant. **C'est un test d'une autre nature que celui-ci** — il ne dit
-rien de l'intensité, tout du statut. À lancer seulement si Aziz le demande.
+**Protocole** : variante **D** = le décor de **B** repris À L'IDENTIQUE (le perdant, mêmes tours,
+mêmes fenêtres, aucune géométrie changée) — seules les valeurs de lumière varient, pilotées par une
+courbe `reaction` calée sur les mêmes repères forced-align que le personnage. Reprendre le perdant
+tel quel est ce qui rend le test concluant : si D gagne, c'est la RÉACTION, pas un meilleur dessin.
+⛔ Pas un flash : la ville sent au vacillement (0.45), accuse le coup à l'impact (1.0 en 0.35 s), se
+rallume en 2.2 s — **plus lentement qu'elle s'est éteinte** — et encaisse 2020 plus SOURDEMENT
+(0.35 : une décision juridique, pas un accident). Courbe vérifiée par calcul avant rendu (bornée
+[0,1], nulle avant le vacillement, retour au repos à 15 s).
+
+> **Verdict d'Aziz** : « c'est beaucoup mieux, mais franchement rien ne bat la version témoin sans
+> décor. […] le funambule avait été conçu de manière minimaliste dès le départ et ça fonctionnait
+> très bien — juste le personnage, juste le filet. »
+
+### ⛔ LA HIÉRARCHIE ÉTABLIE : **ABSENCE > PARTICIPANT > INERTE**
+
+Ce n'est PAS « le minimalisme gagne toujours ». Les deux manches disent deux choses distinctes,
+toutes deux réutilisables :
+1. **participant > inerte** — un décor qui réagit bat nettement le même décor figé (acquis solide).
+2. **absence > participant** — mais il ne bat toujours pas le vide. **Pour CETTE scène.**
+
+### ⭐⭐ LE CRITÈRE QUI EN SORT (plus solide que « fais minimaliste »)
+
+**Le décor doit porter une information que les éléments principaux ne portent pas déjà.**
+
+Le funambule a une particularité que peu de scènes auront : **sa métaphore est déjà complète**. Le
+fil EST la parité · le filet EST la garantie · le vide EST le risque. Chaque élément porte du sens,
+aucun n'est décoratif. Une ville n'avait donc rien à ajouter — au mieux elle illustrait « c'est
+haut », ce que le vide disait déjà mieux. Le décor n'était pas mal fait : il était **REDONDANT**.
+Et une redondance, même belle, même réactive, **se paie en attention**.
+
+⚠️ **NE PAS SUR-GÉNÉRALISER** : rien dans ces 2 manches ne dit qu'un décor est toujours de trop.
+Dans une scène où le LIEU porte une information propre (un port qui explique une dépendance
+maritime, une frontière qui explique un blocage), la réponse pourrait s'inverser — ce cas n'a pas
+été mesuré. Le critère est l'information apportée, pas la quantité de pixels.
+
+### 🗄️ CONSÉQUENCE SUR LES SCÈNES DE RÉFÉRENCE
+
+2 des 4 bancs d'essai (le port vivant, le village de pêcheurs) relèvent du régime AMBIANT, donc
+décoratif. Après ces 2 manches, leur statut a changé : ils servent désormais de **contre-exemples
+documentés** autant que de bancs d'essai. ⛔ Décision d'Aziz de les GARDER : maintenue, elle n'est
+pas remise en cause — c'est leur usage qui se précise.
+
+⭐ **CE QUI RESTE ACQUIS DE LA MÉTHODE** : le test à VARIABLE UNIQUE a tranché 2 questions en une
+session, et la 1re manche a montré qu'on posait la MAUVAISE QUESTION (intensité, alors que c'était
+le statut). Un débat au raisonnement serait resté sur « riche vs vide ». **Réutiliser ce protocole.**
 
 ⛔ **Leçon de méthode confirmée une fois de plus** : cette question ne pouvait pas se trancher au
 raisonnement. Elle s'est tranchée en REGARDANT — et le rendu n'a pas répondu à la question posée,

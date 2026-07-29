@@ -480,3 +480,43 @@ const renderSkyline = (cfg: Intensity): React.ReactElement => (
 export const SkylineAttenue: React.FC = () => renderSkyline(ATTENUE);
 
 export const SkylinePlein: React.FC = () => renderSkyline(PLEIN);
+
+// =============================================================================
+// SKYLINE REACTIF — le decor PARTICIPE (test du 2026-07-29, 2e manche)
+//
+// Verdict de la 1re manche : la ligne de partage n'est pas riche vs vide, c'est
+// PARTICIPANT vs DECORATIF. Un decor inerte nuit meme attenue. Ce composant teste
+// l'autre branche : le meme decor, mais qui REAGIT au geste central.
+//
+// ⛔ PROTOCOLE : la GEOMETRIE est celle d'ATTENUE, a l'identique (memes tours,
+// memes fenetres, meme rue). SEULES varient les valeurs pilotees par `reaction`.
+// Si cette variante bat B, c'est la REACTION qui l'explique — pas un dessin
+// different. C'est pour ca qu'on reprend le PERDANT tel quel.
+//
+// `reaction` in [0,1] : 0 = ville normale · 1 = ville qui accuse le coup
+// (fenetres eteintes, halos baisses, enseignes coupees, marquage efface).
+// L'appelant construit sa courbe sur l'arc reel de la scene — pas un flash.
+// =============================================================================
+export const SkylineReactif: React.FC<{ reaction: number }> = ({ reaction }) => {
+  const r = Math.max(0, Math.min(1, reaction));
+  const lerp = (a: number, b: number) => a + (b - a) * r;
+  // Etat "ville qui accuse le coup" : on ETEINT, on ne rallume rien. Les fenetres
+  // tombent presque a zero, les halos et enseignes suivent, le bati reste (une
+  // ville ne disparait pas — elle s'eteint).
+  const cfg: Intensity = {
+    ...ATTENUE,
+    // id variable : il sert de cle aux <defs> des degrades. Fixe, les degrades
+    // resteraient figes sur la 1re frame. Quantifie pour limiter le nombre de defs.
+    id: `att-r${Math.round(r * 20)}`,
+    litNear: lerp(ATTENUE.litNear, 0.008),
+    litMid: lerp(ATTENUE.litMid, 0.004),
+    winOpBase: lerp(ATTENUE.winOpBase, 0.05),
+    glowOp: lerp(ATTENUE.glowOp, 0.03),
+    signOp: lerp(ATTENUE.signOp, 0.0),
+    beaconOp: lerp(ATTENUE.beaconOp, 0.06),
+    shopWinOp: lerp(ATTENUE.shopWinOp, 0.02),
+    markingOp: lerp(ATTENUE.markingOp, 0.04),
+    detailOp: lerp(ATTENUE.detailOp, 0.3),
+  };
+  return renderSkyline(cfg);
+};

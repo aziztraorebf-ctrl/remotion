@@ -77,10 +77,11 @@
 import React from "react";
 import { AbsoluteFill, Audio, Sequence, useCurrentFrame, interpolate, spring, useVideoConfig, staticFile } from "remotion";
 import { Mvt3Signature1994 } from "./_funambuleSignature1994";
-import { SkylineAttenue, SkylinePlein } from "./skylineDecorGroups";
+import { SkylineAttenue, SkylinePlein, SkylineReactif } from "./skylineDecorGroups";
 
 // Le fond teste. "vide" = temoin (fond d'origine, inchange).
-export type FondMode = "vide" | "attenue" | "plein";
+// "reactif" = 2e manche : MEME decor qu'"attenue", mais il REAGIT au geste central.
+export type FondMode = "vide" | "attenue" | "plein" | "reactif";
 
 const W = 1920;
 const H = 1080;
@@ -426,6 +427,30 @@ export const FunambuleDecorTest16x9: React.FC<{
   // sortie : tout s'assombrit sauf le filet
   const fadeAutres = 1 - ramp(frame, T.sortie, T.sortie + 1.2) * 0.85;
 
+  // ===== LA REACTION DE LA VILLE (fond "reactif" uniquement) =====
+  // ⛔ CE N'EST PAS UN FLASH. Un decor qui s'eteint d'un coup serait un EFFET ;
+  // ce qui rend un decor PARTICIPANT, c'est qu'il ait un avant et un apres, comme
+  // le personnage. La courbe suit donc l'arc reel, sur les memes reperes forced-align :
+  //   vacille 8.7  -> la ville commence a sentir (montee lente, partielle : ~0.45)
+  //   chute  10.0  -> elle accuse le coup (montee franche en 0.35s, plateau)
+  //   remonte 12.5 -> il est sauve : elle se rallume, plus lentement qu'elle s'est
+  //                   eteinte (2.2s) — on se remet moins vite qu'on ne tombe
+  //   detache 26.4 -> 2e secousse, plus SOURDE (0.35) : 2020 est une decision
+  //                   juridique, pas un accident. Elle ne merite pas le meme choc.
+  const reactVacille = interpolate(frame,
+    [S(T.vacille), S(T.vacille + 0.8), S(T.chute)], [0, 0.45, 0.45], clamp);
+  const reactChute = interpolate(frame,
+    [S(T.chute), S(T.chute + 0.35), S(T.remonte), S(T.remonte + 2.2)],
+    [0, 1, 1, 0], clamp);
+  const react2020 = interpolate(frame,
+    [S(T.detache), S(T.detache + 0.45), S(T.retend + 1.2), S(T.retend + 3.0)],
+    [0, 0.35, 0.35, 0], clamp);
+  const reaction = Math.max(
+    frame < S(T.chute) ? reactVacille : 0,
+    reactChute,
+    react2020,
+  );
+
   return (
     <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 40%, ${NUIT} 0%, ${NUIT2} 100%)`, opacity: op }}>
       <Audio src={staticFile("_rnd/cfa-nuit1994/beat4-vo.mp3")} />
@@ -444,7 +469,9 @@ export const FunambuleDecorTest16x9: React.FC<{
                sauf le filet, exactement comme dans la version temoin. Aucun traitement de faveur. */}
           {fond !== "vide" && (
             <g opacity={fadeAutres}>
-              {fond === "attenue" ? <SkylineAttenue /> : <SkylinePlein />}
+              {fond === "attenue" && <SkylineAttenue />}
+              {fond === "plein" && <SkylinePlein />}
+              {fond === "reactif" && <SkylineReactif reaction={reaction} />}
             </g>
           )}
 
