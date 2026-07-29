@@ -46,9 +46,10 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
    la garantie, le rebond dit que le système tient. C'est le geste qui démontre — pas un texte
    posé à côté du geste.
 
-5. **AUCUNE CONCURRENCE VISUELLE.** Le décor du funambule = 1 ligne + 1 filet + 2 étiquettes.
-   ⚠️ **VOIR L'HYPOTHÈSE OUVERTE CI-DESSOUS** — ce principe est le seul dont on ne connaît pas
-   encore la vraie borne.
+5. **AUCUNE CONCURRENCE VISUELLE — ET AUCUN DÉCOR INERTE.** Le décor du funambule = 1 ligne +
+   1 filet + 2 étiquettes. ⭐ **Borne trouvée au rendu le 2026-07-29** (section dédiée ci-dessous) :
+   la ligne de partage n'est pas *riche vs vide*, c'est **participant vs décoratif**. Un fond qui
+   ne participe pas à la démonstration nuit même atténué — son absence vaut mieux que sa présence.
 
 6. **L'ÉCHELLE PORTE L'ENJEU.** Le funambule fait ~3 % de la hauteur du cadre : le vide sous lui
    EST la hauteur de chute, donc le danger. La taille du personnage est un choix narratif, pas
@@ -96,24 +97,56 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 
 ---
 
-## ⚠️ L'HYPOTHÈSE OUVERTE (posée par Aziz le 2026-07-28) — À TESTER, PAS ENCORE ACQUISE
+## ⭐⭐ TRANCHÉ AU RENDU LE 2026-07-29 — LA QUESTION ÉTAIT MAL POSÉE
 
-> « Ce qui serait vraiment excellent, c'est par exemple, je m'imagine à quoi aurait ressemblé la
-> scène du funambule si on avait fait avec des gratte-ciel en arrière, peut-être une rue en
-> dessous de lui. Le but, c'est de transposer quelque chose comme le funambule mais dans des
-> scènes plus riches s'il le faut. »
+> **Verdict d'Aziz sur les 3 rendus** : « le témoin, pour cette scène en particulier, est le
+> meilleur de tous. […] on dessine le filet, on dessine la ligne sur laquelle le funambule
+> marche, mais c'est comme si on a un décor, un background, **qui ne fait rien en arrière-plan,
+> rien ne se passe dans le background, il est juste là pour être là**, le personnage est placé
+> par-dessus, le filet est placé par-dessus. Tandis que dans la variante A, l'absence de
+> background fait en sorte que **ce n'est même pas quelque chose auquel on pense** : on pense
+> juste aux trois éléments qui sont là, et c'est tout. »
 
-**La question exacte** : le funambule marche-t-il *grâce au vide*, ou grâce à **l'absence de
-concurrence** ? Ce n'est pas la même chose. Si c'est la seconde, alors un décor RICHE mais
-**atténué** (contraste bas, mouvement lent, palette froide, hors du regard) remplirait la même
-fonction — avec beaucoup plus de matière et de contexte.
+**LE PROTOCOLE** (branche `rnd/port-decor-scene-vivante`) : le funambule porté à l'identique dans
+le repo principal (`FunambuleDecorTest16x9.tsx`), **une seule variable changée — le fond**. Prouvé
+par diff : hors commentaires, seuls 2 imports, la signature du composant et le bloc skyline
+diffèrent de la version validée. 3 rendus de 975 frames exactement, même audio, mêmes timings
+forced-align : **A** témoin · **B** skyline atténué · **C** skyline plein (contre-test, sans lequel
+un échec de B aurait été ambigu). Décor dessiné par Fable 5 (`skylineDecorGroups.tsx`, 2 intensités
+à géométrie strictement partagée). Vide fil→filet préservé : la rue passe SOUS le filet, donc le
+principe n.6 n'est pas touché.
 
-**Ce que le test devra isoler** : même personnage, même arc, même métaphore ; on ne change QUE
-le fond (vide ↔ riche-atténué). Si la démonstration survit au décor riche, le principe n.5 se
-reformule en « **le décor ne dispute jamais l'attention au personnage** » — plus riche et plus
-utile que « il faut du vide ».
+### ⛔ LA VRAIE LIGNE DE PARTAGE : **PARTICIPANT vs DÉCORATIF** — pas riche vs vide
 
-⛔ Ne pas trancher cette question au raisonnement : la trancher au rendu, en regardant.
+La question « riche ou vide ? » supposait que l'axe pertinent était l'**intensité**. Il ne l'est
+pas. Ce qui a fait perdre B et C, ce n'est pas leur richesse : c'est que **leur décor ne participe
+à rien**. Les tours existent, les voitures existent, mais rien ne leur arrive. Le fil et le filet,
+eux, sont DANS la scène — tendus entre des points, ils encaissent la chute, ils lâchent en 2020.
+L'œil sent cette différence de statut, et **un décor qui ne participe pas est pire qu'un décor
+absent : il occupe sans rien rendre.**
+
+⭐ **Pourquoi A gagne** : ses trois éléments ne sont pas « seuls faute de décor », ils sont **tout
+ce qui existe** — donc chacun compte, et il n'y a aucune couche à ignorer.
+
+⛔ **Corollaire opératoire** : aucune atténuation ne rattrape un décor inerte. C atténué donne B,
+et B reste inerte. **Ne jamais chercher à sauver un fond décoratif en baissant son contraste** —
+soit il participe, soit il ne doit pas être là.
+
+**Le principe n.5 se reformule donc ainsi** : *le décor ne dispute jamais l'attention au
+personnage — et s'il ne participe pas à la démonstration, son absence vaut mieux que sa présence.*
+
+### ⏭️ CE QUE ÇA OUVRE (non testé, ne pas présumer du résultat)
+
+Un décor qui **RÉAGIT au geste central** : les fenêtres qui s'éteignent quand il tombe, la
+circulation qui s'arrête à l'impact, la ville qui accuse le coup. Le fond cesserait alors d'être un
+fond et deviendrait un participant. **C'est un test d'une autre nature que celui-ci** — il ne dit
+rien de l'intensité, tout du statut. À lancer seulement si Aziz le demande.
+
+⛔ **Leçon de méthode confirmée une fois de plus** : cette question ne pouvait pas se trancher au
+raisonnement. Elle s'est tranchée en REGARDANT — et le rendu n'a pas répondu à la question posée,
+il a montré qu'elle était mal posée. C'est précisément ce qu'un raisonnement n'aurait pas produit.
+Trace du biais côté Claude : j'avais lu l'hésitation du regard sur C comme un effet de l'INTENSITÉ
+(bon symptôme, mauvaise cause) — la cause était l'inertie, visible dans les 2 variantes à la fois.
 
 ---
 

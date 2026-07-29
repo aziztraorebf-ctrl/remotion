@@ -43,6 +43,7 @@ import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-s
 import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
+import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDecorTest16x9";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
@@ -806,6 +807,36 @@ export const RemotionRoot: React.FC = () => {
           id="RND-PortVivant16x9"
           component={PortVivant16x9}
           durationInFrames={PORT_VIVANT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* ===== TEST DU DECOR — 3 variantes, SEUL LE FOND CHANGE =====
+             Hypothese Aziz : le funambule tient-il grace au VIDE ou a l'ABSENCE DE CONCURRENCE ?
+             975 frames = 32.5s (la partie funambule seule ; la scene 1994 est hors perimetre). */}
+        <Composition
+          id="Funambule-A-Vide"
+          component={FunambuleDecorTest16x9}
+          defaultProps={{ fond: "vide" as const }}
+          durationInFrames={975}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Funambule-B-Attenue"
+          component={FunambuleDecorTest16x9}
+          defaultProps={{ fond: "attenue" as const }}
+          durationInFrames={975}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Funambule-C-Plein"
+          component={FunambuleDecorTest16x9}
+          defaultProps={{ fond: "plein" as const }}
+          durationInFrames={975}
           fps={30}
           width={1920}
           height={1080}

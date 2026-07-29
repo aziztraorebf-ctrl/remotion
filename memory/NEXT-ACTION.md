@@ -42,18 +42,28 @@
 **7 principes du funambule** (détail dans la doctrine) · **table des 4 scènes de référence à NE PAS
 JETER** (décision Aziz) : funambule CFA · port vivant · village pêcheurs · hook Or du Darfour.
 
-**⚠️ HYPOTHÈSE OUVERTE, explicitement non tranchée** (posée par Aziz) : le funambule tient-il grâce
-au **VIDE** ou grâce à l'**ABSENCE DE CONCURRENCE** ? Si c'est la 2e, un décor riche mais atténué
-ferait aussi bien — avec beaucoup plus de contexte. « À quoi aurait ressemblé le funambule avec des
-gratte-ciel derrière, une rue en dessous ? » **À trancher au rendu, pas au raisonnement.**
+**✅✅ HYPOTHÈSE TRANCHÉE AU RENDU LE 2026-07-29 — ELLE ÉTAIT MAL POSÉE.** Test à variable unique
+(3 rendus de 975 frames, seul le fond change, prouvé par diff) : **A** témoin · **B** skyline
+atténué · **C** skyline plein. **Verdict Aziz : A gagne**, mais pas pour la raison attendue — « le
+background **ne fait rien**, rien ne s'y passe, il est juste là pour être là ; dans A, on pense
+juste aux trois éléments qui sont là ». ⭐ **La ligne de partage n'est pas riche vs vide, c'est
+PARTICIPANT vs DÉCORATIF.** Un décor inerte nuit **même atténué** (aucune baisse de contraste ne le
+sauve : C atténué = B, et B reste inerte). Principe n.5 reformulé. Détail + protocole :
+`memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`. Code : `FunambuleDecorTest16x9.tsx` +
+`skylineDecorGroups.tsx` (Fable 5, 2 intensités). Rendus : `out/_r-and-d/funambule-decor-test/`.
 
 **⏭️ NEXT possibles (aucun tranché)** :
 1. **Le personnage qui AGIT** (porte une charge qui grossit, se fait délester) — le funambule prouve
    un perso qui SUBIT ; l'action dans le registre démonstratif reste à prouver.
-2. **Le décor riche atténué** (l'hypothèse ci-dessus).
+2. **⭐ NOUVEAU, ouvert par le test du 29** : **le décor qui RÉAGIT au geste central** (fenêtres qui
+   s'éteignent à la chute, circulation qui s'arrête à l'impact). Le fond cesse d'être un fond et
+   devient un participant. Test d'une autre NATURE que celui du 29 — il ne porte pas sur
+   l'intensité mais sur le STATUT du décor. Ne rien présumer du résultat.
 3. **Les timings dérivés du forced-align** — le funambule était calé sur la voix ; toutes nos scènes
    R&D depuis ont des timings arbitraires. Rejoint le NEXT stick figure (scène narrée).
 4. Varier les boucles des figurants du port (aujourd'hui 8× le même geste de marche).
+   ⚠️ Relativisé par le verdict du 29 : le port est du régime AMBIANT/décoratif — varier ses
+   boucles ne le rendra pas participant.
 
 **✅ ACQUIS TECHNIQUES DE LA SESSION** (gravés, ne pas re-prouver) :
 - **Le partage à 3 ÉTAGES** : le modèle dessine le DÉCOR · nous animons l'ambiance · nos briques
