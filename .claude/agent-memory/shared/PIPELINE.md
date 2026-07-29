@@ -40,6 +40,34 @@ ouverte de la doctrine) · les timings dérivés du forced-align · varier les b
 
 ---
 
+## Scènes à PERSONNAGES — SOCLE COMPLET, 7 tests tranchés (2026-07-29)
+
+**État** : le socle des scènes démonstratives à personnage est **complet et validé sur rendu**.
+7 tests à variable unique en une journée, tous tranchés par Aziz. ⛔ **Décision de fin de session :
+on arrête la R&D et on passe à la production** — « continuer éternellement pourrait être un piège
+pour faire ce qui est le plus important : créer des vidéos et les publier ».
+
+**Livrables** : `src/projects/_rnd/svg-scenes/` — `FunambuleDecorTest16x9` · `PorteurCharge16x9` ·
+`PorteurNarre16x9` + `porteurNarreTiming.ts` · `PorteurRiche16x9` · `PorteurPousse16x9` ·
+`PorteurGrille16x9` · `skylineDecorGroups.tsx` (Fable 5). Rendus dans
+`out/_r-and-d/funambule-decor-test/` et `out/_r-and-d/porteur-charge/`.
+Branche `rnd/port-decor-scene-vivante` (repo principal), **NON mergée dans master**.
+
+**Acquis** : 3 registres (contemplatif / schématique / démonstratif) · le personnage qui AGIT ·
+la scène NARRÉE (gestes dérivés du forced-align) · le personnage RICHE (exige 2-3 archétypes
+désignés AU SCRIPT) · ce qui élève une scène (zoom, sol qui fléchit, graphique hors caméra) ·
+ce qui ne sert à rien (décor même réactif, grille même déformée, compteur collé à l'objet, sueur).
+**Le fond reste UNI.**
+
+**2 corrections de socle** (les 2 copies synchronisées) : le verrou pas/distance mal énoncé
+(→ « x dérive des pas AU MOMENT OÙ ILS SONT FAITS ») et le vêtement qui dérivait du corps dans
+`Roles.tsx` (non-régression vérifiée sur rendu, les 4 rôles préservés).
+
+**NEXT** : la prochaine VIDÉO — gazoduc Nigeria-Maroc-Europe en SVG. C'est elle qui dira ce qui
+manque vraiment. Détail complet : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`.
+
+---
+
 ## Registre STICK FIGURE — PASSE EN PRODUCTION (2026-07-28)
 
 **État** : le registre est **validé pour la production**. 6 scènes narratives produites et jugées

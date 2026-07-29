@@ -26,7 +26,64 @@
 
 ---
 
-## 🎭 SCÈNES À PERSONNAGES — DOCTRINE ÉCRITE, 2 RÉGIMES DISTINGUÉS (MàJ 2026-07-28 soir)
+## 🎭🎭 SCÈNES À PERSONNAGES — **SOCLE COMPLET, 7 TESTS TRANCHÉS EN 1 JOURNÉE** (MàJ 2026-07-29)
+
+> ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`** — tout y est détaillé.
+> Branche `rnd/port-decor-scene-vivante`, **NON mergée dans master** (⚠️ le fix du socle
+> `Roles.tsx` bénéficierait à tout le monde une fois mergé).
+>
+> ### ⛔ LA DÉCISION DE FIN DE SESSION (Aziz) : ON ARRÊTE LA R&D, ON PASSE À LA PRODUCTION
+> « Continuer éternellement pourrait être un piège pour faire ce qui est le plus important :
+> créer des vidéos et les publier. » **Les socles sont validés.** Les questions qui restent ne se
+> tranchent plus en laboratoire — elles demandent un vrai sujet, avec de vraies contraintes.
+> ⏭️ **PROCHAINE VIDÉO ENVISAGÉE = LE GAZODUC Nigeria-Maroc-Europe, en SVG** (comme le Franc CFA).
+> C'est là qu'on testera tout ceci pour de vrai — et on découvrira peut-être qu'un personnage n'y
+> a aucune place (un gazoduc est spatial/causal = plutôt de la CARTE). C'est un résultat en soi.
+> Sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
+
+### ✅ CE QUI EST ACQUIS, VALIDÉ SUR RENDU (ne pas re-prouver)
+
+| | |
+|---|---|
+| **3 registres** | CONTEMPLATIF (le lieu porte l'info) · SCHÉMATIQUE (la donnée, zéro perso) · DÉMONSTRATIF (le corps porte l'argument). **Pas des concurrents** — le choix se fait AU SCRIPT. |
+| **Le personnage qui AGIT** | `PorteurCharge16x9` — la charge grossit, lui ne change pas (= un RATIO, zéro chiffre). |
+| **La scène NARRÉE** | `PorteurNarre16x9` + `porteurNarreTiming.ts` — chaque geste tombe sur un mot du forced-align. « La 1re scène qui marche en tant que telle » (Aziz). |
+| **Le personnage RICHE** | `PorteurRiche16x9` — tient le rôle démonstratif, gros plan + personnalisation. ⭐ Exige **2-3 ARCHÉTYPES MAX désignés au SCRIPT** (il n'a d'intérêt que s'il est reconnu d'une scène à l'autre). |
+| **Ce qui élève la scène** | ✅ zoom push-in · ✅ sol qui fléchit sous le poids · ✅ graphique hors caméra (une info que le corps ne peut pas dire). |
+| **Ce qui ne sert à rien** | ⛔ décor riche (même réactif) · ⛔ grille de fond (même déformée) · ⛔ compteur collé au sac · ⛔ sueur. **Le fond reste UNI.** |
+
+### ⭐⭐ LES 2 RÈGLES GÉNÉRALES QUI EN SORTENT
+
+1. **Un élément doit porter une information que les autres ne portent pas déjà — ET cette
+   information doit être utile à la démonstration.** « Participer » est nécessaire mais **pas
+   suffisant** : la grille déformée participait vraiment et a perdu quand même.
+2. **Un paramètre d'effort poussé à fond dégrade la lecture avant d'ajouter du sens.** Le plafond
+   n'est pas de la timidité, c'est la condition de la lisibilité (`lean` 23° → 14°).
+
+### 🔧 2 CORRECTIONS DE SOCLE (les 2 copies synchronisées, tsc OK des 2 côtés)
+
+- ⭐⭐ **Le verrou pas/distance était MAL ÉNONCÉ** : « x dérive des pas » est insuffisant dès que le
+  pas VARIE → `walkDistance(pasTotal, swingCourant)` raccourcit rétroactivement les pas déjà faits
+  (**recul de 430 px**). Formulation exacte : **x dérive des pas AU MOMENT OÙ ILS SONT FAITS**
+  (intégration incrémentale). Gravé dans `StickFigure.tsx`.
+- ⭐⭐ **Le vêtement DÉRIVAIT du corps** (`Roles.tsx`) : `busteXf` ancrait dans le repère du MONDE
+  (`t` calculé sur `hy` courant, qui oscille avec le bob) → 2.5 unités de dérive par cycle, le
+  chandail finissait **sur le visage**. Fix : `t` dans le repère de RÉFÉRENCE Fable. + le pagne ne
+  pivotait pas du tout (`PAGNE_SUIVI_LEAN = 0.45`). **Non-régression vérifiée sur rendu** (planche
+  `Stick-Roles-Demo` avant/après) : les 4 rôles préservés, et le fix AMÉLIORE les planches
+  d'origine. → [[vetement-solidaire-du-corps-jamais-independant]]
+
+### ⏳ RESTE OUVERT (non bloquant)
+
+- ⚠️ **`BRAS_LAG` toujours non appliqué** par `Figure` → pose dégénérée ~9 % du cycle. ⭐ On sait
+  maintenant **comment** trancher ce genre de correction sans tout revalider à l'aveugle : rendre
+  avant/après et comparer, comme pour le vêtement.
+- Les pieds passent légèrement à travers le sol fléchi (fix = échantillonner sous chaque pied).
+- Autres formes de graphique (frise, barres) · un graphique qui **réagirait** au geste.
+
+---
+
+## 🎭 SCÈNES À PERSONNAGES — trace du 2026-07-28 (2 régimes distingués)
 
 > ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` AVANT toute scène à personnage.**
 > Branche `rnd/port-decor-scene-vivante` (repo principal), 5 commits `66ad70f8` → `e1e49815`.

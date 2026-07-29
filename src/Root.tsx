@@ -47,6 +47,8 @@ import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDeco
 import { PorteurCharge16x9, PORTEUR_CHARGE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurCharge16x9";
 import { PorteurNarre16x9, PORTEUR_NARRE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurNarre16x9";
 import { PorteurRiche16x9 } from "./projects/_rnd/svg-scenes/PorteurRiche16x9";
+import { PorteurPousse16x9 } from "./projects/_rnd/svg-scenes/PorteurPousse16x9";
+import { PorteurGrille16x9 } from "./projects/_rnd/svg-scenes/PorteurGrille16x9";
 import { CartePanneau16x9, CARTE_PANNEAU_FRAMES } from "./projects/_rnd/d3-16x9/CartePanneau16x9";
 import { SoudanActe3GlobeProto16x9, PROTO_FRAMES as SOUDAN_A3_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeProto16x9";
 import { SoudanActe3GlobeInsert, SOUDAN_A3_INSERT_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3GlobeInsert";
@@ -877,6 +879,46 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Porteur-Riche"
           component={PorteurRiche16x9}
+          durationInFrames={PORTEUR_NARRE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* 3 ajouts testes ensemble : zoom push-in + sol qui flechit + compteur.
+             MEME code pour les 2 personnages (prop `perso`) — sinon la comparaison ne vaut rien. */}
+        <Composition
+          id="Porteur-Pousse-Stick"
+          component={PorteurPousse16x9}
+          defaultProps={{ perso: "stick" as const }}
+          durationInFrames={PORTEUR_NARRE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Porteur-Pousse-Habille"
+          component={PorteurPousse16x9}
+          defaultProps={{ perso: "habille" as const }}
+          durationInFrames={PORTEUR_NARRE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* 3e manche : grille FIXE vs DEFORMEE (le camembert est identique dans les 2, donc il
+             n'interfere pas avec la comparaison). Zoom + sol qui flechit conserves. */}
+        <Composition
+          id="Porteur-Grille-Fixe"
+          component={PorteurGrille16x9}
+          defaultProps={{ perso: "stick" as const, grille: "fixe" as const }}
+          durationInFrames={PORTEUR_NARRE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="Porteur-Grille-Deformee"
+          component={PorteurGrille16x9}
+          defaultProps={{ perso: "stick" as const, grille: "deformee" as const }}
           durationInFrames={PORTEUR_NARRE_FRAMES}
           fps={30}
           width={1920}

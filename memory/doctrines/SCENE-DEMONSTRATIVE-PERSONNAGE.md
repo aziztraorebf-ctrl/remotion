@@ -52,19 +52,51 @@ visage. Voir [[vetement-solidaire-du-corps-jamais-independant]]. **À corriger a
 production.** Corollaire de casting : préférer une tenue qui **laisse voir les jambes** (mineur,
 agriculteur) — la robe longue masque le ciseau, or c'est lui qui dit la marche et donc l'effort.
 
+### ✅✅ 3e ET 4e MANCHES (2026-07-29 soir) — CE QUI ÉLÈVE LA SCÈNE, ET CE QUI NE SERT À RIEN
+
+Origine : pistes proposées par **Gemini** à Aziz sur les 2 prototypes. Testées, pas admises sur
+parole. `PorteurPousse16x9.tsx` puis `PorteurGrille16x9.tsx`.
+
+| Ajout | Verdict | Pourquoi |
+|---|---|---|
+| **Zoom lent** (camera push-in) | ✅ **GARDÉ** | N'ajoute AUCUN élément — change la focale sur ce qui existe. Démarre quand la charge s'emballe. ⛔ `<g transform>`, viewBox FIXE ([[camera-svg-g-transform-jamais-viewbox]]). |
+| **Sol qui fléchit** sous le poids | ✅ **GARDÉ** | ⭐ **LE « décor qui participe » enfin trouvé.** Le sol n'est pas un fond : il CÈDE. Il porte une info que le corps ne porte pas (le terrain n'encaisse plus). La flèche suit **la charge**, pas une horloge — la cause reste visible. |
+| **Graphique en haut du cadre** | ✅ **GARDÉ** | Camembert « à qui la dette est due » : il dit ce que le corps NE PEUT PAS dire (la structure, pas le poids). Se construit sur un mot du forced-align puis reste STABLE. ⛔ **Hors du groupe caméra** : un graphique qui zoomerait avec la scène se lirait comme un objet posé dans le décor, pas comme une couche d'information. |
+| **Compteur collé au sac** | ⛔ **RETIRÉ** | Diagnostic d'Aziz, **plus juste que celui de Claude** : Claude craignait un problème de FOND (montant vs ratio) ; le vrai problème était **la PLACE**. Un chiffre collé au sac est lu comme *l'étiquette du sac* — il double l'objet au lieu d'ajouter une couche. |
+| **Grille de fond** (fixe ET déformée) | ⛔ **REJETÉE, les 2** | Testées en comparatif. Verdict Aziz après visionnage : « **je préfère le fond uni** ». Même déformée-avec-le-sol — donc même *participante* — elle n'apporte rien. |
+| **Gouttes de sueur** | ⛔ **ÉCARTÉE SANS TEST** | Convergence Aziz + doctrine : suppose un visage/une peau (⛔ aucun visage, verrou validé), tire vers le cartoon, et l'effort est **déjà porté par la mécanique du corps** → redondance (principe 7). |
+
+⭐⭐ **CE QUE LA GRILLE APPREND, ET QUI COMPLÈTE LE VERDICT DU MATIN** : « participer » est une
+condition **nécessaire mais pas suffisante**. La grille déformée participait vraiment (elle
+matérialisait le terrain qui cède) — et elle a quand même perdu contre le fond uni. Il faut donc
+aussi que l'élément **apporte quelque chose que le spectateur avait besoin de savoir**. Un maillage
+qui redit « le sol plie » alors que la ligne de sol le dit déjà = du bruit, même participant.
+⛔ Formulation finale : *un élément doit porter une information que les autres ne portent pas déjà —
+ET cette information doit être utile à la démonstration.*
+
+⭐ **Corollaire utile** : ce qui a survécu aux 4 manches ne sont PAS des éléments ajoutés au décor,
+mais **la focale (zoom), la matière déjà présente (le sol), et une couche d'un AUTRE ordre
+(le graphique, hors caméra)**. Le fond, lui, reste uni.
+
+⚠️ Défaut connu non corrigé (décision d'Aziz, « c'est juste un test ») : les pieds passent
+légèrement à travers le sol fléchi — le personnage suit `solYAt(x)` au point exact alors que ses
+2 pieds sont écartés. Fix = échantillonner le sol sous chaque pied.
+
 ### ⏭️ LES 2 CHANTIERS OUVERTS PAR CE TEST (Aziz, 2026-07-29) — non lancés
 
-**1. RENDRE LA SCÈNE DÉMONSTRATIVE VRAIMENT VIVANTE.** Une ligne blanche + un personnage qui
-marche, c'est le squelette prouvé — pas la forme finale. Mot d'Aziz : « le prochain défi, ce sera
-de les intégrer avec un background, ou de trouver une manière de rendre cela vivant pour de vrai ».
-⚠️ **Attention à ne pas rejouer le test décor du 29** : la réponse n'est pas « ajouter un décor »
-(hiérarchie *absence > participant > inerte* déjà tranchée), mais trouver ce qui **participe**.
+**1. ✅ LARGEMENT TRAITÉ LE SOIR MÊME** (voir la table des 4 manches ci-dessus). « Rendre la scène
+vivante » a reçu 3 réponses gardées — zoom, sol qui fléchit, graphique hors caméra — et 3 rejets
+(grille fixe, grille déformée, compteur collé au sac). ⛔ **Le fond reste UNI** : ce n'est pas en
+habillant l'arrière-plan qu'on élève la scène. Reste ouvert : d'autres formes de matière *déjà
+présente* qu'on pourrait faire participer (le sol était la première).
 
-**2. LES ENCADRÉS / GRAPHISMES SYNCHRONISÉS AU GESTE.** Rien n'interdit de faire apparaître des
-graphismes pendant que le personnage agit — « quand le personnage est à l'extrême gauche, un
-graphisme qui apparaît à droite ». ⛔ Condition posée par Aziz : que ça n'ait pas « l'air d'être
-juste posé sur l'image ». C'est la même exigence que pour le décor : **participer, pas décorer**.
-⭐ Piste : les faire naître du geste ou du mot (forced-align), pas d'une horloge.
+**2. ✅ TRAITÉ AUSSI — les graphismes synchronisés.** Le camembert « à qui elle est due » répond à
+la demande (« un graphisme qui apparaît pendant que le personnage agit »), et il satisfait la
+condition d'Aziz (« pas l'air d'être juste posé sur l'image ») par 3 moyens : il naît d'un **mot du
+forced-align**, il reste **stable** ensuite (aucune pulsation décorative), et il est **hors du
+groupe caméra** — donc il se lit comme une couche d'information et non comme un objet du décor.
+⏭️ Reste à explorer : d'autres formes que le camembert (frise, barres), et le cas où le graphique
+**réagirait** au geste plutôt que d'être seulement déclenché par la voix.
 
 ### 🧍 ET POUR LES SCÈNES CONTEMPLATIVES : LE STICK FIGURE ANONYME
 
