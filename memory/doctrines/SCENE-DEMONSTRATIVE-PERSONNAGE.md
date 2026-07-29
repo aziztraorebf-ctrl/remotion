@@ -213,12 +213,53 @@ entre les événements.
 
 ---
 
-## CE QUI RESTE À PROUVER SUR LE PERSONNAGE DÉMONSTRATIF
+## ✅✅ LE PERSONNAGE QUI AGIT — PROUVÉ LE 2026-07-29 (« LE PORTEUR »)
 
-- **Un personnage qui AGIT** (porte une charge qui grossit, pousse, se fait délester) au service
-  d'un argument économique. Le funambule prouve un personnage qui **subit** ; l'action reste
-  à prouver dans ce régime. Le registre sait faire les gestes ([[STICK-FIGURE-INDEX]]) — ils
-  n'ont jamais servi une démonstration.
+`src/projects/_rnd/svg-scenes/PorteurCharge16x9.tsx` · compo `Porteur-Charge` · 24 s ·
+rendu `out/_r-and-d/porteur-charge/v3.mp4`. **L'action au service d'un argument est prouvée** —
+le funambule prouvait un personnage qui SUBIT, celui-ci AGIT.
+
+**L'argument** : un homme porte une charge qui grossit pendant qu'il marche. **Lui ne change pas.**
+C'est le ratio dette/capacité, pas le montant — aucun chiffre à l'écran, le corps dit le rapport.
+
+> **Lecture d'Aziz, sans qu'on la lui explique** (= le test décisif passé) : « la charge grossit et
+> l'homme est vivant […] il fait plus d'effort, la charge l'empêche de marcher aussi vite
+> qu'auparavant, et à la fin il est penché, il est stoppé. » Et : « c'est simple mais ça fonctionne
+> […] **surtout le personnage qui apparaît en gros plan** : on n'a pas dix mille choses à traiter,
+> l'information peut passer. »
+
+⭐ **Ça confirme le verdict décor par un autre chemin** : ce n'est pas qu'on renonce au décor —
+c'est que **la place libérée profite au personnage**.
+
+### ⭐⭐ LE VERROU PAS/DISTANCE EST PLUS SUBTIL QU'ÉNONCÉ — bug attrapé PAR LE CALCUL
+
+La règle disait « x dérive des pas, jamais l'inverse ». **Insuffisant.** 1re version :
+`walkDistance(pasTotal, swingCourant)` — ça applique la longueur de pas COURANTE à TOUS les pas
+déjà faits. Or ici le pas RACCOURCIT (c'est le sujet même de la scène) → les 29 pas déjà posés
+étaient rétroactivement raccourcis → **le personnage RECULAIT de 430 px**. Physiquement absurde :
+un pas déjà posé ne se raccourcit pas après coup.
+
+**Formulation corrigée** : *x dérive des pas **au moment où ils sont faits*** — intégration
+incrémentale, `walkDistance(dPas, swingDeLaFrame)` sommé frame par frame.
+⛔ Au rendu, ce bug se serait vu comme « un glissement bizarre » sans cause identifiable. **C'est le
+calcul qui l'a attrapé, avant le 1er rendu.**
+
+### LA COMPLÉMENTARITÉ CALCUL / RENDU, ILLUSTRÉE SUR UNE SEULE SCÈNE
+
+| Attrapé par le CALCUL (invariants) | Attrapé par le RENDU (crédibilité) |
+|---|---|
+| le recul de 430 px (verrou cassé) | le sac montait au-dessus de l'épaule et **cachait la tête** |
+| sortie de cadre (x_final 2095 > 1920) | le sac **recouvrait le buste** → la posture, donc l'effort, disparaissait |
+| monotonie de x, bornes, vitesse → 0 | `lean` à 23° achevait de masquer le corps (plafonné à 14°) |
+
+⭐ **Règle qui en sort** : *un paramètre d'effort poussé à fond dégrade la lecture avant d'ajouter
+du sens.* Le plafond n'est pas une timidité, c'est la condition de la lisibilité.
+
+⛔ **Parade au bug BRAS_LAG appliquée** : à l'arrêt final, la phase de marche n'est plus lue — une
+`Pose` explicite est forcée. Sans ça la phase se fige sur une valeur quelconque, potentiellement la
+pose dégénérée (jambes superposées) — exactement le défaut observé à t≈15 s sur le funambule.
+
+## CE QUI RESTE À PROUVER SUR LE PERSONNAGE DÉMONSTRATIF
 - **Un DUO démonstratif** : l'asymétrie fort/faible et l'échange à deux sont prouvés
   techniquement, jamais au service d'un raisonnement.
 - **Le décor riche atténué** (l'hypothèse ci-dessus).

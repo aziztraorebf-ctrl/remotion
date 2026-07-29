@@ -64,13 +64,28 @@ vide = risque) → la ville était **redondante**, et une redondance même belle
 ⚠️ Ne pas sur-généraliser : dans une scène où le LIEU porte une info propre (port = dépendance
 maritime, frontière = blocage), la réponse pourrait s'inverser — non mesuré.
 
-**⏭️ NEXT — ⭐ LE PERSONNAGE QUI AGIT (choisi par Aziz le 2026-07-29, en cours)** :
-Le funambule prouve un perso qui **SUBIT** ; l'action au service d'un argument reste le vrai trou de
-la doctrine. Le registre sait faire les gestes ([[STICK-FIGURE-INDEX]]) — ils n'ont jamais servi une
-démonstration.
+**✅✅ LE PERSONNAGE QUI AGIT = PROUVÉ (2026-07-29) — « LE PORTEUR »** : `PorteurCharge16x9.tsx`,
+compo `Porteur-Charge`, 24 s, rendu `out/_r-and-d/porteur-charge/v3.mp4`. Un homme porte une charge
+qui grossit ; **lui ne change pas** (= le ratio dette/capacité, zéro chiffre à l'écran).
+Lecture d'Aziz sans explication = test décisif passé : « la charge grossit et l'homme est vivant […]
+à la fin il est penché, il est stoppé » · « c'est simple mais ça fonctionne, **le personnage en gros
+plan**, on n'a pas dix mille choses à traiter ». ⭐ Confirme le verdict décor par un autre chemin :
+**la place libérée profite au personnage**.
+⭐⭐ **LE VERROU PAS/DISTANCE ÉTAIT MAL ÉNONCÉ** — « x dérive des pas » est INSUFFISANT quand le pas
+varie : `walkDistance(pasTotal, swingCourant)` raccourcit rétroactivement les pas déjà faits →
+**recul de 430 px**. Formulation exacte : **x dérive des pas AU MOMENT OÙ ILS SONT FAITS**
+(intégration incrémentale). Bug attrapé PAR LE CALCUL avant le 1er rendu — gravé dans le socle
+`StickFigure.tsx` (les 2 copies synchronisées).
 
-Autres pistes, non tranchées :
-- **Les timings dérivés du forced-align** — rejoint le NEXT stick figure (scène narrée).
+**⏭️ NEXT — ⭐ LA SCÈNE NARRÉE (choisi par Aziz le 2026-07-29)** : reprendre **le porteur** et
+**redériver ses timings du forced-align** au lieu de les coder à la main. Variable unique (seule la
+source des timings change) — même protocole que le test décor. La question ouverte : est-ce que le
+geste et la voix se **renforcent** ou se **gênent** ? Un corps qui bouge pendant qu'une voix parle
+peut diviser l'attention au lieu de l'additionner : **non mesuré**. Script = Claude propose 4-5
+phrases EN TEXTE, Aziz valide AVANT toute génération audio (aucun coût engagé avant accord).
+⭐ **Pourquoi la narration AVANT l'enchaînement de scènes** : enchaîner sur des durées arbitraires
+obligerait à tout recaler ensuite. Une fois qu'un geste sait tomber sur un mot, l'enchaînement
+devient un problème de montage, pas de conception.
 - ⛔ **Décor : chantier CLOS pour le régime démonstratif.** Raffiner des fonds répondrait à une
   question qu'on ne se pose plus. Rouvrir seulement pour une scène où le lieu porte une information.
 - Varier les boucles des figurants du port : **relativisé** — le port est du régime AMBIANT, varier

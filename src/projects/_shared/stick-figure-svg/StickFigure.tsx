@@ -168,6 +168,21 @@ export const stepLength = (swingDeg: number, legLength: number = LEG_LENGTH): nu
 // d'easing, la coherence pied/sol est garantie par construction quelle que soit l'acceleration).
 // `scale` est OBLIGATOIRE et NON DEFAUTE : c'est le garde-fou anti-glissement (cf. § UNITE DU
 // DEPLACEMENT). Passez 1 si vous animez x dans le meme repere local que <Figure>.
+//
+// ⛔⛔ SI `swingDeg` VARIE DANS LA SCENE : NE PAS APPELER CETTE FONCTION SUR LE TOTAL DES PAS.
+// Elle multiplie `pas` par la longueur de pas correspondant au swingDeg PASSE — donc l'appeler
+// avec (pasTotal, swingCourant) applique retroactivement la longueur de pas COURANTE a tous les
+// pas deja faits. Si le pas RACCOURCIT (personnage qui peine, qui ralentit, qui se charge), les
+// pas deja poses retrecissent apres coup et LE PERSONNAGE RECULE.
+// Bug reel, vecu le 2026-07-29 sur PorteurCharge16x9 : 430px de recul, attrape PAR LE CALCUL
+// avant le 1er rendu (au rendu il se serait vu comme "un glissement bizarre" sans cause claire).
+//
+//   ⛔ FAUX  : const x = x0 + walkDistance(pasTotal, swingCourant, scale);
+//   ✅ JUSTE : integration incrementale — a chaque frame, le DELTA de pas avec le swing de CETTE
+//              frame-la :   d += walkDistance(dPas, swingDeCetteFrame, scale);
+//
+// Formulation exacte du verrou : x derive des pas AU MOMENT OU ILS SONT FAITS.
+// (Si swingDeg est CONSTANT sur toute la scene, l'appel sur le total reste correct.)
 export const walkDistance = (pas: number, swingDeg: number, scale: number, legLength: number = LEG_LENGTH): number =>
   pas * stepLength(swingDeg, legLength) * scale;
 
