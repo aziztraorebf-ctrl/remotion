@@ -177,7 +177,12 @@ devient un problème de montage, pas de conception.
 > commits `25cab1c9` (6 scènes) + `5aeafd85` (3 verdicts gravés). **NON mergée dans master.**
 > ⚠️ `node_modules` n'est PAS ignoré dans ce worktree → **jamais `git add -A`**.
 >
-> **⏭️ NEXT = LA SCÈNE AVEC NARRATION** (le seul test qui reste) →
+> ✅✅ **CE « NEXT » EST FAIT (2026-07-29) — ne pas le rejouer.** La scène narrée existe
+> (`PorteurNarre16x9.tsx` + `porteurNarreTiming.ts`, timings dérivés du forced-align), validée par
+> Aziz : « la 1re scène qui marche en tant que telle ». ⛔ **Voir la section SCÈNES À PERSONNAGES en
+> tête de ce fichier** — le socle est déclaré COMPLET et la R&D est close.
+> *(Texte d'origine conservé ci-dessous comme trace de l'état du 2026-07-28.)*
+> ~~NEXT = LA SCÈNE AVEC NARRATION (le seul test qui reste)~~ →
 > `remotion-cfa/memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`
 > Aujourd'hui tous les timings sont ARBITRAIRES (codés à la main). Le prochain saut : script court
 > → narration ElevenLabs → **forced-align** (`scripts/tools/forced-align.py`, moteur ElevenLabs car

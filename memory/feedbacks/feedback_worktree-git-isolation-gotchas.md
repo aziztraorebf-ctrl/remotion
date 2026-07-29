@@ -70,6 +70,32 @@ metadata:
   « worktree », c'est « symlink ». Rester prudent sur les très longs renders, mais ne pas s'interdire
   le worktree par principe.
 - **⛔ ISOLER PLUS TÔT — appliquer la règle AU SIGNAL, pas au 2e télescopage** (re-vécu CFA Beat 3, 2026-07-22) : la mémoire (MEMORY.md/NEXT-ACTION) signalait DÉJÀ une session Soudan concurrente active (worktree `remotion-soudan`). J'ai quand même codé dans le repo principal → il a rebasculé sur la branche Soudan sous mes pieds, fichiers CFA disparus du disque + edits Root.tsx perdus. **Déclencheur renforcé** : si la mémoire mentionne une session concurrente sur un AUTRE projet, créer le worktree dédié AVANT la 1re ligne de code, même sans avoir encore vu de bascule. Le signal mémoire SUFFIT.
+- ⛔⛔ **AVANT DE CONCLURE À UNE DISPARITION : VÉRIFIER SON PROPRE `pwd`** (vécu 2026-07-29, ~4 appels
+  d'outil perdus). Symptômes identiques au gotcha ci-dessus — `npm error could not determine
+  executable to run`, `ls node_modules` → "No such file or directory", **`git log` → "not a git
+  repository"** — alors que RIEN n'avait disparu : un `cd` vers le scratchpad (fait pour lancer un
+  script de vérification) avait **persisté d'un appel Bash au suivant**, et tous mes chemins relatifs
+  pointaient hors du repo. J'ai commencé à chercher un coupable (un agent qui aurait nettoyé) avant
+  de vérifier où j'étais.
+  **Le signal qui distingue les deux cas** : si `git log`/`git status` répond *"not a git
+  repository"*, ce n'est PAS une suppression de fichiers — un repo qui perd `node_modules` garde son
+  `.git`. Une disparition réelle laisse git fonctionnel.
+  **Parade** : `pwd` en premier réflexe, et surtout **chemins ABSOLUS dans les commandes de
+  vérification** (`ls /Users/.../remotion/src/...`), jamais relatifs après un `cd` de convenance.
+  ⚠️ Corollaire coûteux : le même `cd` dérivé a fait écrire des renders dans
+  `out/_r-and-d/<projet>/out/_r-and-d/<projet>/` — un sous-dossier **orphelin en miroir** (6 Mo de
+  doublons) qu'il faut penser à purger. Si un chemin de sortie se duplique dans l'arborescence,
+  c'est la signature de ce bug.
+- ⭐ **UN SOCLE PARTAGÉ EN 2 COPIES NE SE SYNCHRONISE PAS TOUT SEUL** (repo principal ↔ worktree).
+  `src/projects/_shared/stick-figure-svg/{StickFigure.tsx, habillage.ts, identite/Roles.tsx}` existe
+  dans les deux et **rien ne vérifie qu'ils sont identiques**. Corriger un bug de socle d'un seul
+  côté = un bug qui réapparaît la session suivante depuis l'autre copie.
+  **Après toute modification du socle** : `cp` vers l'autre copie **puis PROUVER** —
+  `diff -q <principal> <worktree> && echo SYNCHRO OK` — et lancer `tsc` **des deux côtés**
+  (une copie peut compiler et l'autre non si ses appelants diffèrent).
+  ⚠️ Attention : seuls les fichiers de socle sont censés être identiques. La doc
+  (`STICK-FIGURE-INDEX.md`), le dossier `gestes/` et les démos d'identité ne vivent que côté
+  worktree CFA — un `diff -r` du dossier entier remonte donc des écarts LÉGITIMES.
 - **Récupérer le travail non commité d'un worktree** vers une autre branche : `git -C <worktree> diff > patch && git apply patch` (les worktrees ne partagent pas leur working tree).
 - **Fermer** quand le chantier est fini : `git worktree remove <path>` (+ `git branch -D worktree-<id>` si branche auto).
 

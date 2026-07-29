@@ -397,6 +397,22 @@ La technique (LLM → groupes → anim par frame) est INDÉPENDANTE du registre 
 > - ✅ **Le MONDE qui vit + les OBJETS MANUFACTURÉS qui le parcourent** = EXCELLEMMENT maîtrisé, prouvé N fois. C'est là qu'on a « plus de possibilités qu'on ne pense », et qu'AUCUN générateur vidéo n'a notre contrôle.
 > - PREUVES accumulées : **cargo qui voyage** (scène-mètre 16:9, navire qui défile côtes Afrique→Suez, scène qui change — véhicule qui GLISSE = crédible, cf règle « objet inerte ne glisse jamais SAUF véhicules ») · **port Soudan** (scène complète d'objets) · **Grande Muraille Verte short** (graine→arbre, mur qui se construit, zéro organique) · **village parallaxe** (pirogues, cases, jour→nuit).
 > - RÈGLE : pour une vidéo majorité-SVG, bâtir sur SCÈNES-LIEUX qui évoluent (parallaxe, jour→nuit, construction, colorisation qui se répand) + OBJETS-VOYAGEURS (véhicules, structures) + inserts data + portraits-médaillons. JAMAIS le personnage-acteur.
+>
+> ⛔⛔ **CETTE RÈGLE EST PÉRIMÉE SUR SON DERNIER MOT (mise à jour 2026-07-29) — « JAMAIS le
+> personnage-acteur » NE VAUT PLUS.** Elle décrit fidèlement le registre **CONTEMPLATIF**
+> (scène-lieu), qui reste entièrement valide *pour son registre*. Mais elle a été écrite avant
+> qu'un 2e registre soit prouvé.
+> ⭐ **Depuis le 2026-07-29, le régime DÉMONSTRATIF est validé et il fait l'inverse** : UN
+> personnage EN GROS PLAN qui EST l'argument, **fond UNI, aucun décor** — validé sur rendu par
+> Aziz sur 4 scènes (funambule CFA · le porteur · le porteur narré · le porteur riche), et jugé
+> « la 1re scène qui marche en tant que telle ». Le personnage-acteur n'est donc plus exclu : il
+> est le cœur d'un registre à part entière, y compris en **personnage RICHE** (habillé), pas
+> seulement en stick figure et pas seulement en plan éloigné.
+> ⛔ **Ne pas lire « JAMAIS le personnage-acteur » comme une règle générale** : c'est une règle
+> **du registre contemplatif**. Les 3 registres ne sont pas concurrents — le choix se fait AU
+> SCRIPT selon ce que la scène doit faire.
+> ⭐⭐ **AUTORITÉ** : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` (§ LES 3 REGISTRES) fait
+> foi sur tout ce qui concerne les scènes à personnage.
 
 > ⭐ NOUVEAU REGISTRE `papier-decoupe` PROUVÉ (2026-06-22, scène « graine→arbre » 16:9, Gemini) : https://files.catbox.moe/wv4xlm.mp4
 > Gemini GAGNE nettement ce registre (couches organiques empilées + ombres douces = sa force atmosphérique). GPT non

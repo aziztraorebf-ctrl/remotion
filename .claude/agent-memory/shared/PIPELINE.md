@@ -84,8 +84,9 @@ sur `rnd/stick-figures-gestes` du worktree `/Users/clawdbot/Workspace/remotion-c
 DÉCOR / nous animons les PERSONNAGES · Fable 5 confirmé modèle SVG par défaut (test aveugle vs
 Opus élevé), l'écart venant de la MÉTHODE — Fable rend et regarde son travail.
 
-**NEXT** : la scène avec NARRATION (timings dérivés du forced-align au lieu d'être codés à la
-main) → `remotion-cfa/memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`
+✅✅ **CE « NEXT » EST FAIT le 2026-07-29** (`PorteurNarre16x9.tsx` + `porteurNarreTiming.ts`,
+timings dérivés du forced-align — validé Aziz). ⛔ Ne pas le rejouer : voir la section
+**« Scènes à PERSONNAGES — SOCLE COMPLET »** en tête de ce fichier.
 
 ---
 
