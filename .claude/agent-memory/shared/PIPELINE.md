@@ -12,9 +12,8 @@
 
 ## Scènes à PERSONNAGES — DOCTRINE ÉCRITE + partage à 3 étages prouvé (2026-07-28 soir)
 
-**État** : session de R&D pure (aucun épisode de production touché). Branche
-`rnd/port-decor-scene-vivante` du repo principal, 5 commits `66ad70f8` → `e1e49815`,
-**NON mergée dans master**.
+**État** : session de R&D pure (aucun épisode de production touché). Commits `66ad70f8` →
+`e1e49815` — ✅ **mergés dans `master`** le 2026-07-29 (branche supprimée après merge).
 
 **⭐⭐ Le livrable principal est une DOCTRINE** : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`
 — distingue 2 régimes (**AMBIANT** : figurants qui habitent un lieu · **DÉMONSTRATIF** : 1 perso
@@ -51,7 +50,9 @@ pour faire ce qui est le plus important : créer des vidéos et les publier ».
 `PorteurNarre16x9` + `porteurNarreTiming.ts` · `PorteurRiche16x9` · `PorteurPousse16x9` ·
 `PorteurGrille16x9` · `skylineDecorGroups.tsx` (Fable 5). Rendus dans
 `out/_r-and-d/funambule-decor-test/` et `out/_r-and-d/porteur-charge/`.
-Branche `rnd/port-decor-scene-vivante` (repo principal), **NON mergée dans master**.
+✅ **MERGÉ DANS `master`** le 2026-07-29 (fast-forward, 57 commits — la branche
+`rnd/port-decor-scene-vivante` a été supprimée après merge). Le socle stick figure et ses 2
+corrections sont donc disponibles directement sur master, sans branche à retrouver.
 
 **Acquis** : 3 registres (contemplatif / schématique / démonstratif) · le personnage qui AGIT ·
 la scène NARRÉE (gestes dérivés du forced-align) · le personnage RICHE (exige 2-3 archétypes

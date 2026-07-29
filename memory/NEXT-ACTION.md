@@ -14,7 +14,7 @@
 > | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
 > | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
 > | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
-> | `/Users/clawdbot/Workspace/remotion` | `rnd/port-decor-scene-vivante` | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
+> | `/Users/clawdbot/Workspace/remotion` | ✅ **`master`** (branche R&D perso MERGÉE le 2026-07-29, supprimée) | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
 >
 > **Réflexe d'ouverture de session** : `git worktree list` + `git log --oneline -5` DANS le worktree
 > concerné, AVANT d'annoncer un état à Aziz. Un commit récent là-bas prime sur ce fichier-ci.
@@ -29,8 +29,10 @@
 ## 🎭🎭 SCÈNES À PERSONNAGES — **SOCLE COMPLET, 7 TESTS TRANCHÉS EN 1 JOURNÉE** (MàJ 2026-07-29)
 
 > ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`** — tout y est détaillé.
-> Branche `rnd/port-decor-scene-vivante`, **NON mergée dans master** (⚠️ le fix du socle
-> `Roles.tsx` bénéficierait à tout le monde une fois mergé).
+> ✅ **MERGÉ DANS `master` le 2026-07-29** (fast-forward, 57 commits, branche supprimée) — donc le
+> socle stick figure ET ses 2 corrections sont désormais disponibles pour TOUT le monde, sans
+> branche à retrouver. ⚠️ 6 erreurs `tsc` subsistent sur master (`GlobalPulse`, `GoldVein`,
+> `LoomWeaver` — typages Mapbox) : **vérifiées PRÉEXISTANTES**, le merge n'en a introduit aucune.
 >
 > ### ⛔ LA DÉCISION DE FIN DE SESSION (Aziz) : ON ARRÊTE LA R&D, ON PASSE À LA PRODUCTION
 > « Continuer éternellement pourrait être un piège pour faire ce qui est le plus important :
@@ -86,8 +88,8 @@
 ## 🎭 SCÈNES À PERSONNAGES — trace du 2026-07-28 (2 régimes distingués)
 
 > ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` AVANT toute scène à personnage.**
-> Branche `rnd/port-decor-scene-vivante` (repo principal), 5 commits `66ad70f8` → `e1e49815`.
-> **NON mergée dans master.**
+> Commits `66ad70f8` → `e1e49815` — ✅ **mergés dans `master`** le 2026-07-29 (la branche
+> `rnd/port-decor-scene-vivante` a été supprimée après merge).
 
 **LA DISTINCTION QUI CADRE TOUT** — deux régimes à ne pas confondre :
 - **AMBIANT** (port vivant, village de pêcheurs) : 6-12 figurants en boucle, aucun arc, le perso

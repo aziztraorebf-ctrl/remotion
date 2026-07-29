@@ -227,7 +227,7 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 > background fait en sorte que **ce n'est même pas quelque chose auquel on pense** : on pense
 > juste aux trois éléments qui sont là, et c'est tout. »
 
-**LE PROTOCOLE** (branche `rnd/port-decor-scene-vivante`) : le funambule porté à l'identique dans
+**LE PROTOCOLE** (sur `master` depuis le merge du 2026-07-29) : le funambule porté à l'identique dans
 le repo principal (`FunambuleDecorTest16x9.tsx`), **une seule variable changée — le fond**. Prouvé
 par diff : hors commentaires, seuls 2 imports, la signature du composant et le bloc skyline
 diffèrent de la version validée. 3 rendus de 975 frames exactement, même audio, mêmes timings
@@ -319,7 +319,7 @@ animation, un compositing, une idée. **Ne pas les jeter, les référencer.**
 | Scène | Où | Ce qu'elle prouve |
 |---|---|---|
 | **Le funambule CFA** | `remotion-cfa` : `_rnd/fable-svg/CfaActe4Filet16x9.tsx` · rendu `out/_r-and-d/cfa-nuit1994/beat4-filet-v3.mp4` | **LA scène démonstrative.** 1 perso = 1 argument, arc complet, chute/rattrapage/rebond. |
-| **Le port vivant** | `rnd/port-decor-scene-vivante` : `_rnd/svg-scenes/PortVivant16x9.tsx` + `portDecorGroups.ts` | Décor Fable riche + parallaxe 6 plans + arc nuit→jour + grues + **8 figurants à marche non-glissante** + 1 héros habillé. Le partage à 3 étages. |
+| **Le port vivant** | `master` : `_rnd/svg-scenes/PortVivant16x9.tsx` + `portDecorGroups.ts` | Décor Fable riche + parallaxe 6 plans + arc nuit→jour + grues + **8 figurants à marche non-glissante** + 1 héros habillé. Le partage à 3 étages. |
 | **Le village de pêcheurs** | `_rnd/fable-svg/VillageParallaxeAnime.tsx` | Parallaxe 7 plans + vie ambiante + coucher de soleil. La 1re preuve du lieu vivant. |
 | **Le hook Or du Darfour** | `warmap/soudan-hook/OrDarfourHook.tsx` · `out/PRET-PUBLICATION/soudan-midform/hook-or-darfour-VALIDE.mp4` | **La grammaire OBJET** : 3 objets, chacun double (la pelle *devient* le drapeau), 3 événements déclenchés par 3 mots du forced-align, colorisation = l'événement, objet inerte qui ne glisse jamais. |
 
