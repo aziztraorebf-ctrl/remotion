@@ -27,8 +27,9 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 
 ## LES 7 PRINCIPES DU FUNAMBULE (chacun vérifié sur le rendu)
 
-> Les 6 premiers portent sur la **composition** ; le 7e porte sur l'**animation** — et c'est le
-> plus facile à oublier quand on sait techniquement en faire plus.
+> Les 6 premiers portent sur la **composition** ; le 7e porte sur le **dimensionnement de
+> l'animation** — ni un plafond de simplicité, ni une course à la complexité : on évalue scène
+> par scène ce que l'argument réclame.
 
 1. **LE PERSONNAGE EST L'ARGUMENT, pas son illustration.** Le funambule *est* l'économie en
    équilibre · le fil *est* la parité fixe · le filet *est* la garantie du Trésor. Test décisif :
@@ -53,34 +54,45 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
    EST la hauteur de chute, donc le danger. La taille du personnage est un choix narratif, pas
    un réglage de lisibilité.
 
-7. **⭐⭐ L'ANIMATION RESTE SIMPLE — LA COMPLEXITÉ DÉPENSE LA CLARTÉ, ELLE NE LA PRODUIT PAS.**
-   (Principe ajouté le 2026-07-28 sur observation d'Aziz — le plus contre-intuitif des sept.)
+7. **⭐⭐ L'ANIMATION SE DIMENSIONNE SUR CE QU'IL Y A À DÉMONTRER — ni plus, ni moins.**
+   (Principe ajouté le 2026-07-28 sur observation d'Aziz, puis **précisé par lui** — la nuance
+   ci-dessous est le cœur du principe, pas une réserve de bas de page.)
+
+   ⛔ **CE PRINCIPE N'EST PAS « FAITES SIMPLE ».** Le funambule est simple **parce que son
+   argument était simple** — une chose à expliquer, une animation qui suffit à l'expliquer. Ce
+   n'est pas la simplicité qui l'a fait réussir : c'est le fait de **ne pas avoir ajouté ce dont
+   on n'avait pas besoin**. Mot exact d'Aziz : « son animation est restée simple parce que de
+   toute façon c'était quelque chose à expliquer et c'était une animation simple. Nous n'avons
+   pas essayé de rajouter ce que nous n'avions pas besoin, et c'est la vraie leçon. »
+
+   ⭐ **Corollaire dans l'autre sens, tout aussi valable** : certaines scènes futures
+   **exigeront** des mouvements neufs, des enchaînements complexes, des gestes qu'on n'a pas
+   encore. **Il ne faut pas s'en priver** — s'auto-imposer un plafond de simplicité serait une
+   erreur symétrique. On évalue **scène par scène**, sur ce que l'argument réclame.
 
    **Ce que fait RÉELLEMENT le funambule** : marcher en ligne droite avec un balancier · vaciller ·
-   tomber · rebondir · se remettre debout · repartir. **Six états, aucun techniquement difficile** —
-   notre socle les fait tous depuis la vague A. La scène ne tient sur AUCUNE prouesse d'animation.
-   Elle tient parce que **chaque état arrive exactement quand la voix le dit**.
+   tomber · rebondir · se remettre debout · repartir. Six états, aucun techniquement difficile —
+   notre socle les fait tous depuis la vague A. La scène ne tient sur AUCUNE prouesse d'animation :
+   elle tient parce que **chaque état arrive exactement quand la voix le dit**.
 
-   **Le renversement à retenir** : la même session (2026-07-28) a produit une scène de port avec
-   6 couches simultanées, 90 rides d'eau à phases indépendantes, 8 figurants désynchronisés,
-   grues à cycle de levage, arc nuit→jour. Tout fonctionne techniquement. **Et pourtant elle ne
-   démontre rien**, là où le funambule — dix fois moins de mouvement — porte un argument
-   économique entier.
+   **Le contre-exemple de la même session** : la scène du port a 6 couches simultanées, 90 rides
+   d'eau à phases indépendantes, 8 figurants désynchronisés, grues à cycle de levage, arc
+   nuit→jour. Tout fonctionne techniquement. **Et pourtant elle ne démontre rien** — non pas
+   parce qu'elle est trop complexe, mais parce que **sa complexité ne sert aucun argument**.
+   C'est exactement la distinction : complexité AU SERVICE d'une démonstration = légitime ;
+   complexité qui ne sert rien = elle prélève de l'attention sans rien rendre.
 
-   **Pourquoi** : chaque élément qui bouge PRÉLÈVE une part de l'attention. Dans une scène
-   AMBIANTE c'est acceptable (l'attention y est diffuse par nature, c'est même le but). Dans une
-   scène DÉMONSTRATIVE, c'est un coût direct sur la lecture de l'argument.
+   ⭐ **Ce qui en découle sur notre socle** : il couvre déjà l'essentiel (marcher / porter /
+   pousser / tirer / tomber / se relever / donner / recevoir / se faire délester —
+   cf. [[STICK-FIGURE-INDEX]]). Beaucoup de scènes démonstratives n'auront besoin de rien de
+   plus, et **ce qui reste alors à travailler est le CALAGE SUR LA NARRATION et le CHOIX DE
+   L'ARGUMENT**, pas la capacité technique. Mais quand une scène réclame un geste neuf, on le
+   crée — c'est ainsi que le registre s'est construit.
 
-   ⭐ **Corollaire majeur — notre socle SUFFIT DÉJÀ.** Il ne faut PAS inventer de nouveaux gestes
-   pour produire de bonnes scènes démonstratives : marcher / porter / pousser / tirer / tomber /
-   se relever / donner / recevoir / se faire délester couvrent l'essentiel (cf. [[STICK-FIGURE-INDEX]]).
-   **Ce qui reste à travailler n'est pas la capacité technique — c'est le CALAGE SUR LA NARRATION
-   et le CHOIX DE L'ARGUMENT.** Mot d'Aziz : « ce n'est pas toujours d'en rajouter plus, c'est la
-   clarté de la scène en tant que telle ».
-
-   ⛔ Anti-pattern qui découle : devant une scène démonstrative qui ne fonctionne pas, **ne jamais
-   ajouter du mouvement**. Chercher d'abord si l'argument est clair, si la métaphore est unique,
-   et si les gestes tombent sur les bons mots.
+   ⛔ **Anti-pattern** : devant une scène démonstrative qui ne fonctionne pas, ne pas ajouter du
+   mouvement par réflexe. Vérifier d'abord si l'argument est clair, si la métaphore est unique,
+   et si les gestes tombent sur les bons mots. Si le diagnostic dit qu'il manque vraiment un
+   geste — alors le coder.
 
 ---
 
