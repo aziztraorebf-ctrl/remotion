@@ -16,6 +16,17 @@ metadata:
 - **Assets gitignorés ABSENTS du worktree neuf** (`.env`, `node_modules`, `public/_shared/audio` + `sfx` mp3) → les LIER par symlink depuis le repo principal, ne pas copier :
   `ln -s /Users/clawdbot/Workspace/remotion/{node_modules,.env} .` puis remplacer les sous-dossiers `public/_shared/{audio,sfx}` par des symlinks vers le repo principal.
 - **Symlink par-dessus un chemin qui contient des fichiers TRACKÉS** → git les voit "deleted" (fantômes). Fix : `git update-index --skip-worktree <fichiers>` sur ces fichiers. Et **NE JAMAIS `git add -A`** dans un worktree (risque de committer les suppressions) — toujours `git add <fichier précis>`.
+- ⚠️⚠️ **UN WORKTREE D'AGENT QUI SE NETTOIE PEUT EMPORTER LE `node_modules` DU REPO PRINCIPAL**
+  (vécu 2026-07-28) : en pleine session, `npx remotion render` s'est mis à échouer avec
+  `npm error could not determine executable to run`, et `ls node_modules` renvoyait « No such file
+  or directory » **à la racine du repo principal** — alors que les worktrees d'agents, eux, avaient
+  toujours le leur. Cause probable : le nettoyage automatique d'un worktree d'agent (isolation
+  `worktree` du tool Agent) a suivi/supprimé le lien. **Diagnostic en 5 s** : `ls -d node_modules`
+  → absent = c'est ça, pas un bug Remotion. **Fix** : `npm install` depuis la racine (long mais
+  seule voie propre). **Prévention** : après une salve d'agents en isolation `worktree`, vérifier
+  `ls -d node_modules` AVANT de lancer un render — ça évite de diagnostiquer un faux problème de
+  rendu. ⚠️ Corollaire shell : lancer `npm install` avec le shell resté dans un scratchpad échoue
+  sur `ENOENT package.json` — toujours `cd /Users/clawdbot/Workspace/remotion && npm install`.
 - ⚠️⚠️ **Les FICHIERS DE NAVIGATION existent en DEUX exemplaires et DIVERGENT** — `memory/NEXT-ACTION.md`,
   `memory/PIPELINE.md`, les `STATUS.md`… sont versionnés, donc le worktree en a sa propre copie, figée à
   la date où la branche a divergé. Dès la 1re session qui ne met à jour que l'un des deux, ils mentent.

@@ -23,6 +23,7 @@ Pas 4 piliers parallèles : **3 moteurs visuels posés sur 1 socle**.
 | **COMBIEN (simple)** — chiffre, barre, courbe standard | **Remotion** | Sait déjà dessiner graphes/chiffres animés |
 | **COMBIEN (géométrie complexe)** — flux, réseaux, arcs, projection, choropleth | **D3** | Moteur de calcul de géométrie (pas de « graphiques »). SOUS-EXPLOITÉ |
 | **QUOI / COMMENT** — objet, processus, trajet, métaphore | **SVG** | Contrôle total frame-driven, simplifie ce qui serait lourd en After Effects |
+| **⭐ QUI** — un acteur humain, un geste, un rapport de force, une charge subie | **`_shared/stick-figure-svg/` (NOS briques)** | ⛔ **Jamais un modèle, jamais Seedance** : le socle stick figure (profil) est validé en production depuis le 2026-07-28 et bat ce qu'un modèle produit. **AVANT de coder, choisir le RÉGIME** : AMBIANT (figurants qui habitent un lieu) vs **DÉMONSTRATIF** (1 perso qui EST l'argument — plus fort, moins cher, à privilégier). Recette : [[SCENE-DEMONSTRATIVE-PERSONNAGE]]. Habillage : [[brique-habillage-stick-figure]] (ne JAMAIS l'improviser). |
 | **LE LIANT** — texte, chiffre-choc, transition, rythme | **Remotion** (socle) | Toujours |
 
 ⚠️ **PIÈGE VÉCU — la géo réutilisée qui contourne cette table** (beat 4 CFA, 2026-07-26).

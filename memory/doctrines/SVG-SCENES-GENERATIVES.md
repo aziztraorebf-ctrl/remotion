@@ -17,6 +17,27 @@ vs faire animer un agent Fable = ~105k tokens + fichier même pas écrit du 1er 
 (3) CONTRÔLE — le montage temporel est CE QUI SÉPARE le PowerPoint du niveau GGW (leçon récurrente de ce projet) ;
 le laisser au modèle nous fait perdre la main sur le rythme. **Exception unique** : si Aziz demande explicitement
 un composant animé "base à retoucher" pour gagner du temps sur un cas précis — sinon, statique + animation maison.
+
+⭐⭐ **(4) QUALITÉ DU DESSIN — la raison qui rend la règle NON-NÉGOCIABLE (mesuré 2026-07-28).**
+Les 3 raisons ci-dessus sont des arguments d'EFFICACITÉ : un « tant pis, je paie » suffit à les écarter.
+La 4e est d'une autre nature. **Un agent à qui on demande de dessiner ET d'animer dépense les deux tiers
+de son effort dans la mécanique du mouvement, et livre un décor PAUVRE** : mesure sur le test du port
+(Opus 5 effort max, règle n°0 levée volontairement) = **939 lignes d'animation contre 459 de matière SVG**,
+et les 3 passes de correction de l'agent ont TOUTES porté sur de la mécanique, **aucune** sur
+l'enrichissement du dessin. Même modèle, même durée, consigne « dessine SEULEMENT » → décor sans commune
+mesure (tôle ondulée, enseignes, rouille, 40 groupes adressables). **Seule la consigne avait changé.**
+Autrement dit : demander l'animation ne fait pas que gaspiller des tokens — **ça DÉGRADE le dessin, qui
+est la seule chose qu'on venait chercher.** Preuve archivée + README :
+`src/projects/_rnd/svg-scenes/_archive/test-agent-dessine-et-anime/`.
+
+⭐⭐ **LE PARTAGE EST À 3 ÉTAGES, PAS 2** (complément gravé 2026-07-28) : le modèle dessine le **DÉCOR** ·
+nous animons l'**AMBIANCE** (lumière, parallaxe, machines, eau) · **nos briques prennent les PERSONNAGES**
+(`_shared/stick-figure-svg/` : socle + `habillage.ts` + `identite/Roles.tsx`). ⛔ **Ne jamais laisser un
+modèle produire un personnage animé** — il produit plus faible que notre socle validé. C'est ce 3e étage
+qui manquait à cette règle, et son absence a coûté 3 tentatives ratées + 1 agent délégué le 2026-07-28.
+Détail : [[partage-decor-animation-personnages]] · [[brique-habillage-stick-figure]] ·
+[[SCENE-DEMONSTRATIVE-PERSONNAGE]] (quel RÉGIME de scène choisir avant de coder).
+
 Lié : [[llm-generation-multi-variantes-figer-description]] · [[MOTEURS-VISUELS-ET-SOCLE]].
 
 ## ⛔⛔ RÈGLE DE VÉRIFICATION — UN CALCUL STATIQUE NE PROUVE JAMAIS UN COMPORTEMENT DYNAMIQUE (gravé 2026-07-27)

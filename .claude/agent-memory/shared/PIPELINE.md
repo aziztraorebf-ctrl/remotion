@@ -10,6 +10,36 @@
 
 ---
 
+## Scènes à PERSONNAGES — DOCTRINE ÉCRITE + partage à 3 étages prouvé (2026-07-28 soir)
+
+**État** : session de R&D pure (aucun épisode de production touché). Branche
+`rnd/port-decor-scene-vivante` du repo principal, 5 commits `66ad70f8` → `e1e49815`,
+**NON mergée dans master**.
+
+**⭐⭐ Le livrable principal est une DOCTRINE** : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`
+— distingue 2 régimes (**AMBIANT** : figurants qui habitent un lieu · **DÉMONSTRATIF** : 1 perso
+qui EST l'argument, plus fort et moins cher, à privilégier), 7 principes du funambule CFA, et une
+table des **4 scènes de référence à conserver comme bancs d'essai** (décision Aziz).
+
+**Acquis techniques prouvés** :
+- **Partage à 3 étages** : le modèle dessine le DÉCOR · nous animons l'AMBIANCE · nos briques
+  prennent les PERSONNAGES. Mesuré : un agent qui dessine ET anime produit 939 lignes d'animation
+  pour 459 de matière et livre un décor pauvre (preuve archivée dans
+  `src/projects/_rnd/svg-scenes/_archive/test-agent-dessine-et-anime/`).
+- **Fable 5 gagne un 2e test aveugle** contre Opus max, cette fois sur un décor riche.
+- **Hiérarchie figurant/héros** validée par Aziz sur rendu.
+- **Briques d'habillage remontées au socle** (`habillage.ts` + pointeur dans `StickFigure.tsx`),
+  **synchronisées dans les 2 copies** du socle (repo principal + worktree `remotion-cfa`, commit
+  `ae7f5c2d` là-bas) — une divergence avait été introduite et corrigée en clôture.
+- ⚠️ **Bug du socle découvert** : `BRAS_LAG` exporté mais jamais appliqué par `Figure` (~9 % de
+  chaque cycle en pose dégénérée). Touche potentiellement toutes les scènes stick figure. Parade
+  côté appelant ; corriger le socle obligerait à revalider les 6 planches → décision d'Aziz.
+
+**NEXT possibles (aucun tranché)** : le personnage qui AGIT · le décor riche atténué (hypothèse
+ouverte de la doctrine) · les timings dérivés du forced-align · varier les boucles des figurants.
+
+---
+
 ## Registre STICK FIGURE — PASSE EN PRODUCTION (2026-07-28)
 
 **État** : le registre est **validé pour la production**. 6 scènes narratives produites et jugées

@@ -1,5 +1,5 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-28 (**REGISTRE STICK FIGURE : 6 SCÈNES NARRATIVES, passe en PRODUCTION**)
+> Mis a jour : 2026-07-28 soir (**DOCTRINE SCÈNE DÉMONSTRATIVE + partage à 3 étages prouvé**)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -14,9 +14,61 @@
 > | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
 > | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
 > | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
+> | `/Users/clawdbot/Workspace/remotion` | `rnd/port-decor-scene-vivante` | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
 >
 > **Réflexe d'ouverture de session** : `git worktree list` + `git log --oneline -5` DANS le worktree
 > concerné, AVANT d'annoncer un état à Aziz. Un commit récent là-bas prime sur ce fichier-ci.
+>
+> ⚠️ **STASH À RÉCUPÉRER** : `stash@{0}` = `wip-soudan-itineraire-avant-rnd-port` — le chantier
+> « itinéraire multi-étapes » d'Aziz (`ItineraireMultiEtapes16x9.tsx`, `RouteMultiEtapes.tsx`,
+> `RouteMultiEtapesDemo.tsx` + une modif de `Root.tsx`), mis de côté le 2026-07-28 pour créer la
+> branche R&D. **À restaurer (`git stash pop stash@{0}`) au retour sur `feat/soudan-passe-finale-6lots`.**
+
+---
+
+## 🎭 SCÈNES À PERSONNAGES — DOCTRINE ÉCRITE, 2 RÉGIMES DISTINGUÉS (MàJ 2026-07-28 soir)
+
+> ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` AVANT toute scène à personnage.**
+> Branche `rnd/port-decor-scene-vivante` (repo principal), 5 commits `66ad70f8` → `e1e49815`.
+> **NON mergée dans master.**
+
+**LA DISTINCTION QUI CADRE TOUT** — deux régimes à ne pas confondre :
+- **AMBIANT** (port vivant, village de pêcheurs) : 6-12 figurants en boucle, aucun arc, le perso
+  habite un lieu. Coûteux, décoratif.
+- **DÉMONSTRATIF** (le funambule CFA) : **UN** perso qui **EST** l'argument, arc complet. Moins
+  cher, plus fort. ⭐ **C'est par lui qu'il faut commencer.**
+  Test décisif : *si on retire le personnage et que la démonstration tient, la scène est décorative.*
+
+**7 principes du funambule** (détail dans la doctrine) · **table des 4 scènes de référence à NE PAS
+JETER** (décision Aziz) : funambule CFA · port vivant · village pêcheurs · hook Or du Darfour.
+
+**⚠️ HYPOTHÈSE OUVERTE, explicitement non tranchée** (posée par Aziz) : le funambule tient-il grâce
+au **VIDE** ou grâce à l'**ABSENCE DE CONCURRENCE** ? Si c'est la 2e, un décor riche mais atténué
+ferait aussi bien — avec beaucoup plus de contexte. « À quoi aurait ressemblé le funambule avec des
+gratte-ciel derrière, une rue en dessous ? » **À trancher au rendu, pas au raisonnement.**
+
+**⏭️ NEXT possibles (aucun tranché)** :
+1. **Le personnage qui AGIT** (porte une charge qui grossit, se fait délester) — le funambule prouve
+   un perso qui SUBIT ; l'action dans le registre démonstratif reste à prouver.
+2. **Le décor riche atténué** (l'hypothèse ci-dessus).
+3. **Les timings dérivés du forced-align** — le funambule était calé sur la voix ; toutes nos scènes
+   R&D depuis ont des timings arbitraires. Rejoint le NEXT stick figure (scène narrée).
+4. Varier les boucles des figurants du port (aujourd'hui 8× le même geste de marche).
+
+**✅ ACQUIS TECHNIQUES DE LA SESSION** (gravés, ne pas re-prouver) :
+- **Le partage à 3 ÉTAGES** : le modèle dessine le DÉCOR · nous animons l'ambiance · nos briques
+  prennent les PERSONNAGES. Mesuré : un agent qui dessine ET anime met 939 lignes d'animation pour
+  459 de matière, et livre un décor pauvre. Preuve archivée :
+  `src/projects/_rnd/svg-scenes/_archive/test-agent-dessine-et-anime/`.
+- **Fable 5 gagne un 2e test aveugle** (sur décor riche, terrain favorable à Opus).
+- **Hiérarchie figurant/héros** validée par Aziz.
+- ⛔ **La brique d'habillage EXISTE** : `_shared/stick-figure-svg/habillage.ts` + `identite/Roles.tsx`
+  (4 rôles, 7 objets, `PersonnageRole`). **Ne jamais improviser un vêtement** — l'oubli a coûté
+  3 tentatives + 1 agent cette session.
+- ⚠️ **BUG DU SOCLE** : `BRAS_LAG` est exporté et documenté mais `Figure` ne l'applique JAMAIS →
+  ~9 % de chaque cycle en pose dégénérée (trait vertical). **Touche potentiellement toutes les
+  scènes stick figure existantes.** Parade côté appelant ; socle non modifié (corriger le socle
+  obligerait à revalider les 6 planches — décision à prendre par Aziz).
 
 ---
 
@@ -184,7 +236,7 @@ Quota epuise constate le 2026-07-25 (`429 insufficient_quota`). Bloque `whisper-
 
 **Registres SVG neufs prouvés** : néon/data-terminal (prod-ready), feu/fumée organique (non-figuratif OK). **Portrait-médaillon v2 MAÎTRISÉ** (buste FIXE + colorisation progressive zone par zone + clignements ; PAS de parole). **Village parallaxe 26s** (jour→nuit) = vraie séquence narrative SVG pur.
 
-**⛔ DOCTRINE RECENTRÉE** : notre force = **scène-lieu vivante + objets non-organiques qui voyagent** (cargo, structures) ; le **personnage complet animé = prouvé mais ÉCARTÉ en prod** (« pantin bien animé », pas maîtrisé).
+**⛔ DOCTRINE RECENTRÉE** : notre force = **scène-lieu vivante + objets non-organiques qui voyagent** (cargo, structures) ; le **personnage complet animé = prouvé mais ÉCARTÉ en prod** (« pantin bien animé », pas maîtrisé). ⭐ **AMENDÉ 2026-07-28** : ce verdict ne vaut QUE pour le personnage **RICHE/riggable** (GeminiRig). La **STICK FIGURE DE PROFIL est passée en PRODUCTION** — voir la section REGISTRE STICK FIGURE en tête de ce fichier + `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`.
 
 **PROCHAINE VIDÉO envisagée = format « RÉCIT-RESSOURCE » majorité-SVG** (mélange 3 moteurs comme Soudan, ratio inversé). Squelette prédonné = 3 protos (`CargoVoyage16x9_LibreInspire`, `ProtoNarratifPlusData`, `ProtoDataVizPleinEcran`) À AUGMENTER avec l'arsenal 2026 (Sankey/chartogram/carte D3/inserts). Détail + vision « cobalt » : `memory/doctrines/SVG-MIDFORM-FORMAT.md` § FORMAT RÉCIT-RESSOURCE. ⛔ RIEN de figé — sujet à valider via pipeline (sujet prime). NON décidé cette session.
 
