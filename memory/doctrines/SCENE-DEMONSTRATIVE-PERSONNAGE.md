@@ -25,7 +25,10 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 
 ---
 
-## LES 6 PRINCIPES DU FUNAMBULE (chacun vérifié sur le rendu)
+## LES 7 PRINCIPES DU FUNAMBULE (chacun vérifié sur le rendu)
+
+> Les 6 premiers portent sur la **composition** ; le 7e porte sur l'**animation** — et c'est le
+> plus facile à oublier quand on sait techniquement en faire plus.
 
 1. **LE PERSONNAGE EST L'ARGUMENT, pas son illustration.** Le funambule *est* l'économie en
    équilibre · le fil *est* la parité fixe · le filet *est* la garantie du Trésor. Test décisif :
@@ -49,6 +52,35 @@ L'ambiant est un décor coûteux ; le démonstratif est un raisonnement. Commenc
 6. **L'ÉCHELLE PORTE L'ENJEU.** Le funambule fait ~3 % de la hauteur du cadre : le vide sous lui
    EST la hauteur de chute, donc le danger. La taille du personnage est un choix narratif, pas
    un réglage de lisibilité.
+
+7. **⭐⭐ L'ANIMATION RESTE SIMPLE — LA COMPLEXITÉ DÉPENSE LA CLARTÉ, ELLE NE LA PRODUIT PAS.**
+   (Principe ajouté le 2026-07-28 sur observation d'Aziz — le plus contre-intuitif des sept.)
+
+   **Ce que fait RÉELLEMENT le funambule** : marcher en ligne droite avec un balancier · vaciller ·
+   tomber · rebondir · se remettre debout · repartir. **Six états, aucun techniquement difficile** —
+   notre socle les fait tous depuis la vague A. La scène ne tient sur AUCUNE prouesse d'animation.
+   Elle tient parce que **chaque état arrive exactement quand la voix le dit**.
+
+   **Le renversement à retenir** : la même session (2026-07-28) a produit une scène de port avec
+   6 couches simultanées, 90 rides d'eau à phases indépendantes, 8 figurants désynchronisés,
+   grues à cycle de levage, arc nuit→jour. Tout fonctionne techniquement. **Et pourtant elle ne
+   démontre rien**, là où le funambule — dix fois moins de mouvement — porte un argument
+   économique entier.
+
+   **Pourquoi** : chaque élément qui bouge PRÉLÈVE une part de l'attention. Dans une scène
+   AMBIANTE c'est acceptable (l'attention y est diffuse par nature, c'est même le but). Dans une
+   scène DÉMONSTRATIVE, c'est un coût direct sur la lecture de l'argument.
+
+   ⭐ **Corollaire majeur — notre socle SUFFIT DÉJÀ.** Il ne faut PAS inventer de nouveaux gestes
+   pour produire de bonnes scènes démonstratives : marcher / porter / pousser / tirer / tomber /
+   se relever / donner / recevoir / se faire délester couvrent l'essentiel (cf. [[STICK-FIGURE-INDEX]]).
+   **Ce qui reste à travailler n'est pas la capacité technique — c'est le CALAGE SUR LA NARRATION
+   et le CHOIX DE L'ARGUMENT.** Mot d'Aziz : « ce n'est pas toujours d'en rajouter plus, c'est la
+   clarté de la scène en tant que telle ».
+
+   ⛔ Anti-pattern qui découle : devant une scène démonstrative qui ne fonctionne pas, **ne jamais
+   ajouter du mouvement**. Chercher d'abord si l'argument est clair, si la métaphore est unique,
+   et si les gestes tombent sur les bons mots.
 
 ---
 
