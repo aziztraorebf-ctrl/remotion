@@ -6,7 +6,7 @@ R&D 2026-07-17 : on montre a K3 une COQUILLE NUE (carte d'etat-major sans elemen
 (y compris la geometrie des batiments) pour raconter la scene. Test de vision + liberte creative + geometrie.
 
 Vision : K3 accepte des images en entree (multimodal). On envoie l'image en data URL base64.
-reasoning "max" force -> long/cher. NE PAS passer max_tokens. Timeout tres large.
+⚠️ CORRIGE 2026-07-30 : il faut AU CONTRAIRE borner `reasoning.max_tokens` (ex 2000) + max_tokens 16000 — sans borne K3 rend content=null. L'ancienne consigne "ne pas passer max_tokens" datait du 17/07 et est FAUSSE depuis. Detail : memory/tools/kimi-k3-reasoning-borne.md Timeout tres large.
 
 Usage :
     python3 scripts/tools/kimi-vision-fill-scene.py --scene kosti    --image <coquille.png> --out <out.json>

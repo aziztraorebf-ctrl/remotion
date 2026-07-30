@@ -33,7 +33,10 @@ ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(ROOT / ".env")
 GEMINI_MODEL = "gemini-3.1-pro-preview"
 GPT_MODEL = "openai/gpt-5.6-sol"
-KIMI_K3_MODEL = "moonshotai/kimi-k3"  # reasoning force a "max" -> NE PAS passer max_tokens, timeout large
+# ⚠️ CORRIGE 2026-07-30 : l'ancien commentaire disait "NE PAS passer max_tokens" — c'etait vrai au
+# 17/07 (K3 n'avait que reasoning:max non desactivable), FAUX depuis. Sans borne, K3 ne rend JAMAIS
+# de contenu (content=null). Borner `reasoning.max_tokens` (cf. payload de gen_kimi plus bas).
+KIMI_K3_MODEL = "moonshotai/kimi-k3"
 
 RATIO_VIEWBOX = {
     "9:16": ("1080 1920", "VERTICAL 9:16"),
@@ -131,17 +134,44 @@ def gen_kimi(brief, narr, style, out, ratio):
     for img in _imgs(narr, style):
         b64 = base64.b64encode(Path(img).read_bytes()).decode()
         content.append({"type": "image_url", "image_url": {"url": f"data:image/png;base64,{b64}"}})
-    payload = {"model": KIMI_K3_MODEL, "messages": [{"role": "user", "content": content}]}
+    # ⛔ BORNER LE REASONING, SINON K3 NE REND JAMAIS DE CONTENU (verifie 2026-07-30).
+    # K3 est un thinking model dont le raisonnement n'est PAS borne par defaut sur OpenRouter :
+    # il consomme tout le budget de completion en reasoning et laisse content=null.
+    # Le champ a borner est `reasoning.max_tokens`, PAS `max_tokens` (qui plafonne l'ENSEMBLE
+    # reasoning+contenu, donc se fait manger par le reasoning avant la moindre sortie).
+    # Mesure : sans borne = hang >2min sur gros prompt / avec borne = 33s, SVG complet et ferme.
+    payload = {
+        "model": KIMI_K3_MODEL,
+        "messages": [{"role": "user", "content": content}],
+        "reasoning": {"max_tokens": 2000},
+        "max_tokens": 16000,
+    }
     print(f"[kimi-k3] {KIMI_K3_MODEL} svg-narrative ratio={ratio} ({len(_imgs(narr,style))} ref) ...")
     rr = requests.post("https://openrouter.ai/api/v1/chat/completions",
                        headers={"Authorization": f"Bearer {os.getenv('OPENROUTER_API_KEY')}", "Content-Type": "application/json"},
                        json=payload, timeout=900)
-    rr.raise_for_status()
+    # OpenRouter renvoie frequemment une erreur en HTTP 200 : raise_for_status() ne leve rien
+    # et l'acces direct a ["choices"] explose en KeyError en MASQUANT le message reel de l'API.
+    if rr.status_code != 200:
+        raise SystemExit(f"[kimi-k3] HTTP {rr.status_code} : {rr.text[:500]}")
     data = rr.json()
+    if "choices" not in data:
+        raise SystemExit(f"[kimi-k3] reponse sans 'choices' : {data.get('error', data)}")
     msg = data["choices"][0]["message"]
-    text = msg.get("content") or msg.get("reasoning") or "[vide]"
+    usage = data.get("usage", {})
+    text = msg.get("content")
+    if not text:
+        # Ne PAS ecrire silencieusement le reasoning brut dans le fichier de sortie : c'est ce
+        # fallback muet qui a camoufle le bug (un .json de "reflexion" passait pour un succes).
+        fr = data["choices"][0].get("finish_reason")
+        rt = usage.get("completion_tokens_details", {}).get("reasoning_tokens")
+        raise SystemExit(
+            f"[kimi-k3] AUCUN CONTENU (content=null). finish_reason={fr} reasoning_tokens={rt}.\n"
+            f"  -> le reasoning a mange tout le budget. Augmenter max_tokens ou baisser "
+            f"reasoning.max_tokens."
+        )
     out.write_text(text, encoding="utf-8")
-    print(f"[kimi-k3] saved -> {out}  usage={data.get('usage', {})}")
+    print(f"[kimi-k3] saved -> {out}  usage={usage}")
 
 
 def main():

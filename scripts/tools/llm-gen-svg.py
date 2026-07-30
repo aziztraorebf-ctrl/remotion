@@ -30,7 +30,7 @@ GPT_MODEL = "openai/gpt-5.5"
 GLM_MODEL = "z-ai/glm-5.2"
 # Kimi K3 (sorti 2026-07-16) via OpenRouter : MoE 2.8T, contexte 1M, multimodal (vision en entree).
 # n1 sur Arena Frontend Code (devant Fable 5). R&D 2026-07-17 : duel SVG vs GLM-5.2 sur brief fige identique.
-# ATTENTION : reasoning force a "max" (seul niveau dispo) -> sortie lourde/chere, NE PAS passer max_tokens.
+# ⚠️ CORRIGE 2026-07-30 : il faut AU CONTRAIRE borner `reasoning.max_tokens` (ex 2000) + max_tokens 16000 — sans borne K3 rend content=null. L'ancienne consigne "ne pas passer max_tokens" datait du 17/07 et est FAUSSE depuis. Detail : memory/tools/kimi-k3-reasoning-borne.md
 KIMI_K3_MODEL = "moonshotai/kimi-k3"
 
 # Le brief : ce qu'on veut, le registre exact, la contrainte technique (frame-driven, centre 0,0).
@@ -104,7 +104,7 @@ def gen_gpt(out: Path):
 
 def gen_glm(out: Path):
     """GLM-5.2 via OpenRouter : 3e modele low-cost pour jetons / assets SVG en lot (R&D 2026-06-24).
-    Ne PAS passer max_tokens (le raisonnement etouffe la sortie). text-only : pas d'image-ref."""
+    ⚠️ CORRIGE 2026-07-30 : il faut AU CONTRAIRE borner `reasoning.max_tokens` (ex 2000) + max_tokens 16000 — sans borne K3 rend content=null. L'ancienne consigne "ne pas passer max_tokens" datait du 17/07 et est FAUSSE depuis. Detail : memory/tools/kimi-k3-reasoning-borne.md text-only : pas d'image-ref."""
     import requests
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
@@ -121,7 +121,7 @@ def gen_glm(out: Path):
 
 def gen_kimi(out: Path):
     """Kimi K3 via OpenRouter (R&D 2026-07-17) : duel SVG vs GLM sur brief identique.
-    reasoning="max" force -> NE PAS passer max_tokens. Timeout large (reasoning lourd)."""
+    ⚠️ CORRIGE 2026-07-30 : il faut AU CONTRAIRE borner `reasoning.max_tokens` (ex 2000) + max_tokens 16000 — sans borne K3 rend content=null. L'ancienne consigne "ne pas passer max_tokens" datait du 17/07 et est FAUSSE depuis. Detail : memory/tools/kimi-k3-reasoning-borne.md Timeout large."""
     import requests
     key = os.getenv("OPENROUTER_API_KEY")
     if not key:
