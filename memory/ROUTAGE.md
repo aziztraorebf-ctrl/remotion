@@ -177,7 +177,9 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Règles outils techniques (Lottie, Mapbox headless, audio, geo) | `memory/rules/rules-outils-techniques.md` |
 | Publier YouTube + Instagram + Facebook | `memory/tools/trypost.md` (TryPost, limites 50MB, jamais REST `/api/uploads`) |
 | Publier TikTok | `memory/tools/postiz.md` (Postiz REST, coverB obligatoire) |
-| Calendrier éditorial Kora & Cartes | `memory/episodes/lancement-kora/CALENDRIER-EDITORIAL-JUIN-2026.md` |
+| Calendrier éditorial Kora & Cartes (chaîne) | `memory/episodes/lancement-kora/CALENDRIER-EDITORIAL-JUIN-2026.md` |
+| **Freelance / LinkedIn / offre de services** (≠ chaîne : LinkedIn cible des CLIENTS) | `memory/freelance-linkedin/README.md` — porte d'entrée. Le moat chiffré + les 4 obstacles réels : `STRATEGIE-LINKEDIN-FREELANCE.md` · 30 histoires postables + chemin parcouru mars→juil. 2026 : `INVENTAIRE-HISTOIRES.md` · 12 semaines dont 3 posts rédigés : `CALENDRIER-EDITORIAL.md` |
+| Distribution Instagram/réseaux (audience chaîne) | `memory/doctrines/STRATEGIE-DISTRIBUTION-INSTAGRAM-2026.md` |
 | Pipeline, ordre des étapes | `memory/tools/pipeline.md` ⚠️ daté 2026-05-02 — pour data-viz voir WORKFLOW-DATAVIZ.md |
 | API/outil découvert en session → où sauvegarder | `memory/apis-and-tools.md` |
 | Leçon/bug/anti-pattern → où sauvegarder | `memory/key-learnings.md` |

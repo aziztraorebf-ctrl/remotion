@@ -1,5 +1,6 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-28 soir (**DOCTRINE SCÈNE DÉMONSTRATIVE + partage à 3 étages prouvé**)
+> Mis a jour : 2026-07-29 (2e session — R&D scènes à personnages CLOSE, Gazoduc = prochaine vidéo ;
+> session 2 = recherche/veille, offre freelance + LinkedIn cadrés → `memory/freelance-linkedin/`)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -136,7 +137,8 @@ varie : `walkDistance(pasTotal, swingCourant)` raccourcit rétroactivement les p
 (intégration incrémentale). Bug attrapé PAR LE CALCUL avant le 1er rendu — gravé dans le socle
 `StickFigure.tsx` (les 2 copies synchronisées).
 
-**⏭️ NEXT — ⭐ LA SCÈNE NARRÉE (choisi par Aziz le 2026-07-29)** : reprendre **le porteur** et
+**✅ CE NEXT EST FAIT (2026-07-29) — `PorteurNarre16x9` existe, voir la section de tête. Ne pas
+relancer ce chantier.** ~~⏭️ NEXT — LA SCÈNE NARRÉE~~ : reprendre **le porteur** et
 **redériver ses timings du forced-align** au lieu de les coder à la main. Variable unique (seule la
 source des timings change) — même protocole que le test décor. La question ouverte : est-ce que le
 geste et la voix se **renforcent** ou se **gênent** ? Un corps qui bouge pendant qu'une voix parle

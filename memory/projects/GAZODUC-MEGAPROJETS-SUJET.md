@@ -4,6 +4,120 @@
 > NE PAS perdre : Aziz veut le travailler en SESSION DÉDIÉE quand les autres vidéos (War-Map assemblage,
 > Sénégal, Maroc batteries) seront finies. On y revient n'importe quand — toutes les bases sont posées ici.
 > Données détaillées (modèles, ratios, transcripts) : [[DECODE-modeles-fr-afrique]] camp 3.
+>
+> ⛔ **RE-FACT-CHECKER OBLIGATOIRE avant script** : tout ce qui suit (§ MISE À JOUR 2026-07-25) est un
+> instantané pris à cette date. Vu le temps qui s'écoulera avant production réelle (CFA + autres chantiers
+> d'abord), les chiffres/étapes peuvent avoir bougé (FID, financement, nouveaux accords). Relancer
+> Tavily/recherche avant d'écrire le script, ne jamais réutiliser ces faits tels quels sans revérifier.
+
+## ⭐⭐ MISE À JOUR 2026-07-25 — actualité fraîche + angle affiné + faisabilité technique jugée
+
+### Le sujet vient de percer dans l'actu grand public (preuve TubeLab + yt-dlp)
+- **Les Echos** (média FR mainstream, 458k abonnés) a publié un Short le 21/07/2026 sur CE sujet exact
+  ("C'est quoi cet énorme projet de gazoduc entre le Nigeria et le Maroc ? Clarisse t'explique") — 164k vues,
+  1500+ commentaires en 4 jours. Ratio d'engagement commentaires/vues ~0.9% = sujet qui déclenche un vrai débat.
+- Transcript complet extrait (yt-dlp) : pur descriptif factuel (110s), carte STATIQUE montrée une fois
+  ("mets en pause pour la consulter"), ZÉRO carte animée, ZÉRO mention du tracé concurrent algérien.
+- **Commentaires les plus likés (52, 46, 44...) reprochent à Les Echos une omission structurelle** : il existe
+  un second tracé concurrent plus avancé, **Nigeria→Niger→Algérie (TSGP)**, qui rejoint le même gazoduc
+  Maghreb-Europe mais côté algérien. Un commentaire très détaillé (15+ likes) démonte : le gazoduc
+  Maghreb-Europe existant démarre en Algérie (pas au Maroc), le tracé Nigeria-Maroc nécessiterait de
+  traverser les eaux sénégalaises (opposition prévisible de la pêche, ~1/4 des emplois au Sénégal), et
+  "sert uniquement les intérêts du Maroc" en le rendant garant unique de l'approvisionnement gazier UE.
+- ⭐ **Le créneau identifié par le gate (juin) est CONFIRMÉ toujours vide** : aucun média FR ne traite la
+  RIVALITÉ des deux tracés (Maroc/façade atlantique vs Algérie/intérieur des terres) avec une carte vivante.
+
+### Fait vérifié (Tavily, sources croisées Le Monde/AFP, RFI, Reuters, NNPC, ONHYM, Hespress, Punch) — le point que Les Echos survolait
+- **19 juillet 2026, sommet CEDEAO à Freetown (Sierra Leone)** : les chefs d'État ont signé l'**Accord
+  Intergouvernemental (IGA)** du projet, nom officiel **African Atlantic Gas Pipeline (AAGP)**.
+- Chiffres à jour (plus précis que Les Echos) : **~6900 km** (pas 6000), **25 milliards $** (pas 23 Mds€),
+  **30 milliards de m³/an** dont **15 Mds pour Maroc/Europe**.
+- Cadre juridique harmonisé posé : gouvernance, fiscalité, stabilité réglementaire, sécurité des
+  investissements, coopération transfrontalière (Amina Benkhadra, DG ONHYM, à RFI).
+- Prochaines étapes déjà actées : signature bilatérale Maroc-Mauritanie à venir, **Pipeline Higher
+  Authority à Abuja** (gouvernance) + **AAGP Project Company à Casablanca** (opérationnel) — répartition
+  de pouvoir Nigeria/Maroc déjà actée dans l'accord.
+- Construction visée **2028**, premières livraisons **2031**.
+- **Point d'incertitude réel** : financement pas bouclé, "funding gap persists" (Ecofin) — aucun
+  engagement ferme des investisseurs internationaux, Décision Finale d'Investissement (FID) pas encore prise.
+- Aucune source presse trouvée ne traite l'AAGP en rivalité explicite avec le TSGP algérien — confirme
+  que cet angle est un vrai différentiel, pas du bruit de commentaires YouTube.
+
+### Angle affiné (vs angle juin, toujours valide mais précisé)
+L'angle gate initial ("qui dépend de qui pour son énergie") tient, mais les commentaires + le fact-check
+suggèrent un angle plus riche et défendable : **la RIVALITÉ des deux tracés concurrents** (AAGP côtier
+Maroc-Atlantique vs TSGP intérieur via Algérie/Sahel) — pas juste "un tuyau impressionnant". Montrer les
+DEUX routes sur la carte, les enjeux géopolitiques réels (Maroc vs Algérie, traversée Sénégal, sécurité
+Sahel pour le tracé intérieur), sans prendre parti (charte analyste).
+⏭️ **NEXT recherche (au moment de la reprise)** : creuser l'état réel du TSGP (Trans-Saharan Gas Pipeline,
+Nigeria-Niger-Algérie) — avancement, financement, comparaison crédibilité vs AAGP.
+
+### Faisabilité technique jugée (étude du CFA mid-form validé, code + STATUS, 2026-07-25)
+Format envisagé par Aziz : **solo narratif SVG + D3 cartographie** (carte plate ou globe), comme le CFA —
+PAS le mid-form Mapbox prévu au gate initial (à retrancher/discuter à la reprise).
+- **Verdict : oui, le registre se transpose bien**, et le gazoduc est même plus favorable que le CFA sur
+  un point — c'est un objet géographique concret qui bouge dans l'espace (terrain de force du D3), alors
+  que le CFA devait rendre visible une abstraction financière.
+- **Briques CFA directement réutilisables** (`remotion-cfa` worktree, branche `feat/cfa-nuit1994-svg-mix`) :
+  - Beat 2 `CfaActe2Carte16x9.tsx` = le plus proche mécaniquement : carte D3 qui se trace
+    (`strokeDashoffset`), **comptage incarné pays par pays** (14 pays s'illuminent 1 par 1 — transposable
+    direct aux 13 pays du tracé), zoom/dézoom caméra pour révéler un acteur lointain (France → transposable
+    à Europe/Espagne au bout du pipeline), **flux tendu entre 2 points en `path` courbe qui se trace**
+    (mécanisme quasi identique à un tracé de pipeline qui avance).
+  - Beat 6a `CfaActe6aVolonte16x9.tsx` : drapeaux clippés dans le contour RÉEL du pays (`FlagBands`,
+    bandes SVG clippées à la géométrie) — pour marquer Nigeria/Maroc. Effet `ParticleDissolve` (jeton qui
+    se dissout en particules, "effet Thanos") extrait en brique partagée
+    `_shared/svg-library/elements/effects/ParticleDissolve.tsx` — utile si on veut visualiser un tracé qui
+    s'efface/une incertitude de financement.
+- **Scènes possibles esquissées** (non arrêtées, à valider au script) : (1) carte Afrique de l'Ouest+Maroc
+  se trace, 13 pays qui s'illuminent au fil du tracé ; (2) le tracé AAGP lui-même en `path` géographique
+  réel qui se dessine le long de la côte ; (3) le tracé concurrent TSGP en contraste (teinte différente,
+  ex. sourde comme la Guinée en 6a) pour la rivalité ; (4) drapeaux Nigeria/Maroc clippés aux deux
+  extrémités ; (5) éventuel jeton/symbole gaz qui se dissout pour l'incertitude du financement.
+- **Ce qui manque et est à produire en NEUF** (rien d'existant) : géo dédiée du tracé (13 pays + Maroc +
+  connexion Europe, Natural Earth/topojson, JAMAIS dessinée par un modèle — même règle que le CFA) ; la
+  **polyligne géographique réelle du tracé du pipeline** (donnée à obtenir, aucun proto actuel) ; idem
+  pour le tracé TSGP si l'angle rivalité est retenu.
+- ⭐ **Brique R&D pertinente trouvée le 2026-07-25 (session map-animation styles)** :
+  `RouteMultiEtapes.tsx` (`_shared/components/inserts/`, demo `RouteMultiEtapesDemo.tsx`) — composant
+  générique carte D3 plate + itinéraire à N étapes nommées, glow + label en cascade par étape, dégradé de
+  couleur le long du trait. Structure directement reprenable pour AAGP (13 pays comme `stages`), mais le
+  tracé lui-même (`windingCircle`, sinusoïde stylisée) N'EST PAS un vrai tracé d'infrastructure — pour le
+  rendu final, combiner la structure (labels/cascade/glow/dégradé) avec un vrai path géographique du
+  pipeline comme le fait déjà `CfaActe2Carte16x9.tsx` (`strokeDashoffset` sur polyligne réelle). Utile
+  aussi pour visualiser AAGP vs TSGP en 2 couleurs si l'angle rivalité est retenu.
+
+### ⭐⭐ Le CFA n'est PAS juste "carte+narratif en alternance" — c'est un TRIPTYQUE à 3 registres (relecture complète des beats 1/3/5a en plus de 2/6a)
+Analyse initiale incomplète (n'avait lu que les beats carte). Après lecture de `CfaNuit1994Anime16x9.tsx`
+(hook Beat 1), `CfaActe3PariteGpt16x9.tsx` (Beat 3) et `CfaActe5aMarche16x9.tsx` (Beat 5a), le CFA alterne
+en fait 3 registres distincts, chacun choisi selon ce que CHAQUE idée du script doit incarner :
+1. **Scène-lieu narrative sans humain** (Beat 1, hook "nuit 1994") : décor FIXE (chambre/rue/ville qui
+   dort), objets qui s'activent séquentiellement au fil de la voix (réveil, pièce qui apparaît, fracture,
+   décret vertical qui frappe). Caméra STATIQUE, viewBox fixe — théâtre d'objets, pas de géographie.
+2. **Carte D3 géographique** (Beat 2, Beat 6a) : pays qui se tracent, zones colorisées, comptage incarné
+   pays par pays, flux entre points, drapeaux clippés — déjà documenté ci-dessus.
+3. **Scène mécanique/schématique abstraite** (Beat 3 "parité fixe", Beat 5a "marché de Dakar") : NI carte
+   NI scène-lieu — des objets-symboles purs qui construisent une métaphore visuelle d'un mécanisme
+   (courbes de devises qui ondulent vs ligne CFA plate + cadenas EUR↔CFA qui claque ; sac de riz + balance
+   qui penche + médaillon $ + ligne causale qui pulse jusqu'à l'étiquette qui rougit). Colorisation
+   sélective doctrine GGW partout : encre pâle neutre par défaut, la couleur n'arrive QU'au climax narratif.
+
+**Verdict gazoduc : le triptyque se prête TRÈS bien, potentiellement mieux que le CFA** — le sujet a un
+vrai liant narratif concret que le CFA n'avait pas au même degré (un objet physique qui voyage sur des
+milliers de km, deux dates fortes incarnable en scène-lieu) :
+- **Registre 1 (scène-lieu narrative)** — candidats : la scène de la genèse (roi du Maroc + président
+  nigérian, 2016, un lieu/moment précis qui lance l'idée, décor fixe + objets qui s'activent) OU la
+  signature du 19 juillet 2026 à Freetown (chefs d'État qui signent, chambre de sommet, stylo qui pose
+  l'encre, comme le décret du Beat 1 CFA).
+- **Registre 2 (carte D3)** — déjà couvert ci-dessus : tracé des 13 pays, comptage incarné, rivalité
+  AAGP/TSGP, drapeaux Nigeria/Maroc.
+- **Registre 3 (mécanique/schématique)** — plusieurs mécanismes abstraits du sujet s'y prêtent bien,
+  repérés par analogie directe aux beats CFA : le **financement manquant** ("funding gap persists", jauge/
+  balance qui ne s'équilibre pas — écho balance 5a) ; le **partage des revenus entre pays traversés** à
+  régler (balance qui penche) ; la **double gouvernance Abuja/Casablanca** (deux plaques/médaillons qui se
+  répondent, écho cadenas EUR↔CFA du Beat 3) ; le **flux de gaz comme grandeur qui varie** (30 Mds m³/an
+  dont 15 vers l'Europe — courbe/jauge qui monte, écho courbes de devises du Beat 3).
+- ⏭️ Aucune de ces 3 scènes n'est encore écrite/arrêtée — à trancher au script, pas maintenant.
 
 ## POURQUOI C'EST UN BON SUJET (résumé du gate)
 1. **Demande prouvée + CHAUDE.** Outliers passés massifs (ratios ×8 à ×17, qualité positive, faceless, FR :

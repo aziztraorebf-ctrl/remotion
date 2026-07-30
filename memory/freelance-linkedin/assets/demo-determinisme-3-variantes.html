@@ -1,0 +1,549 @@
+<title>Trois versions, une seule ligne changée</title>
+
+<style>
+  :root {
+    --nuit:      #22345c;
+    --nuit2:     #182746;
+    --encre:     #f0e8d2;
+    --or:        #b8860b;
+    --or-clair:  #d9a93a;
+    --cuivre:    #c17e3a;
+
+    --ground:    #0f1830;
+    --surface:   #182746;
+    --surface-2: #22345c;
+    --ink:       #f0e8d2;
+    --ink-soft:  #a9b4cc;
+    --ink-faint: #6c7a99;
+    --rule:      #2c3f68;
+    --accent:    #d9a93a;
+
+    --measure: 66ch;
+    --pad: clamp(20px, 5vw, 68px);
+  }
+
+  :root[data-theme="light"] {
+    --ground:    #efeadd;
+    --surface:   #ffffff;
+    --surface-2: #f6f1e4;
+    --ink:       #1a2540;
+    --ink-soft:  #4c5875;
+    --ink-faint: #8a93a8;
+    --rule:      #d8d0bd;
+    --accent:    #9a6f0d;
+  }
+
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --ground:    #efeadd;
+      --surface:   #ffffff;
+      --surface-2: #f6f1e4;
+      --ink:       #1a2540;
+      --ink-soft:  #4c5875;
+      --ink-faint: #8a93a8;
+      --rule:      #d8d0bd;
+      --accent:    #9a6f0d;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: var(--pad);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(38px, 6vw, 74px);
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead { display: flex; flex-direction: column; gap: 18px; }
+
+  .eyebrow {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0;
+  }
+
+  h1 {
+    font-size: clamp(31px, 5.6vw, 55px);
+    line-height: 1.06;
+    font-weight: 400;
+    letter-spacing: -0.017em;
+    text-wrap: balance;
+    margin: 0;
+  }
+
+  h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .standfirst {
+    max-width: var(--measure);
+    color: var(--ink-soft);
+    font-size: clamp(16px, 2.1vw, 19px);
+    margin: 0;
+  }
+
+  .rule { height: 1px; background: var(--rule); border: 0; margin: 0; }
+
+  /* ---------- la scène ---------- */
+
+  .stage-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px 22px;
+    margin-bottom: 14px;
+  }
+
+  .stage-head h2 {
+    font-size: clamp(19px, 2.6vw, 24px);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+
+  .stage-head .meta {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.07em;
+    color: var(--ink-faint);
+  }
+
+  .frames {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(11px, 1.6vw, 20px);
+  }
+
+  @media (max-width: 760px) {
+    .frames { grid-template-columns: 1fr; gap: 22px; }
+  }
+
+  figure { margin: 0; display: flex; flex-direction: column; gap: 9px; }
+
+  .shot {
+    position: relative;
+    border: 1px solid var(--rule);
+    background: var(--nuit2);
+    overflow: hidden;
+  }
+
+  .shot svg { display: block; width: 100%; height: auto; }
+
+  .tag {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    background: rgba(15, 24, 48, 0.82);
+    color: #f0e8d2;
+    border: 1px solid rgba(240, 232, 210, 0.22);
+  }
+
+  figcaption {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  figcaption b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .delta {
+    color: var(--accent);
+  }
+
+  /* ---------- le diff ---------- */
+
+  .diff-block {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    overflow: hidden;
+  }
+
+  .diff-block > .bar {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--rule);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    background: var(--surface-2);
+  }
+
+  pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    color: var(--ink-soft);
+  }
+
+  pre .cm { color: var(--ink-faint); font-style: italic; }
+  pre .kw { color: var(--ink-faint); }
+  pre .on { color: var(--accent); font-weight: 600; }
+  pre .off { text-decoration: line-through; opacity: 0.5; }
+
+  /* ---------- comparatif ---------- */
+
+  .two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(14px, 2.2vw, 26px);
+  }
+
+  @media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+
+  .card {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    padding: clamp(17px, 2.6vw, 25px);
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .card.mine { border-color: var(--accent); }
+
+  .card h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+  }
+
+  .card .price {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: clamp(25px, 4vw, 33px);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .card.mine .price { color: var(--accent); }
+
+  .card ul { margin: 0; padding-left: 17px; display: flex; flex-direction: column; gap: 7px; }
+  .card li { font-size: 14.5px; color: var(--ink-soft); }
+  .card li b { color: var(--ink); font-weight: 600; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+
+  .scroller { overflow-x: auto; border: 1px solid var(--rule); }
+
+  th, td {
+    text-align: left;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+
+  thead th {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 11px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 400;
+    background: var(--surface-2);
+  }
+
+  tbody tr:last-child td { border-bottom: 0; }
+
+  td.num {
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  td.mine { color: var(--accent); font-weight: 600; }
+
+  /* ---------- clôture ---------- */
+
+  .pull {
+    border-left: 2px solid var(--accent);
+    padding: 4px 0 4px 22px;
+    max-width: var(--measure);
+    font-size: clamp(18px, 2.7vw, 23px);
+    line-height: 1.45;
+    font-style: italic;
+    text-wrap: pretty;
+  }
+
+  footer {
+    color: var(--ink-faint);
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    padding-bottom: 10px;
+  }
+
+  h2.section {
+    font-size: clamp(19px, 2.6vw, 24px);
+    font-weight: 400;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  p { max-width: var(--measure); margin: 0 0 12px; }
+  p:last-child { margin-bottom: 0; }
+  .soft { color: var(--ink-soft); }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Démonstration · production vidéo déterministe</p>
+    <h1>Trois versions de la même scène.<br><em>Une seule ligne changée.</em></h1>
+    <p class="standfirst">
+      Chaque image ci-dessous sort du même fichier. Seul le paramètre indiqué a bougé —
+      tout le reste du plan est strictement identique, au pixel près. C'est ce qui rend
+      les révisions gratuites, exactes, et sans risque pour ce qui était déjà validé.
+    </p>
+  </header>
+
+  <hr class="rule">
+
+  <section>
+    <div class="stage-head">
+      <h2>Le filet de sécurité — épisode Franc CFA, 52 s</h2>
+      <span class="meta">1920 × 1080 · SVG calculé · frame 315</span>
+    </div>
+
+    <div class="frames">
+
+      <!-- ============ V1 ============ -->
+      <figure>
+        <div class="shot">
+          <span class="tag">Version livrée</span>
+          <svg viewBox="0 0 1920 1080" role="img" aria-label="Funambule sur un fil au-dessus d'un filet de sécurité, chiffre 43,7 %, ancrages dorés.">
+            <rect width="1920" height="1080" fill="#182746"/>
+            <line x1="120" y1="170" x2="1800" y2="170" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(890 170)">
+              <line x1="-92" y1="-44" x2="92" y2="-40" stroke="#f0e8d2" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="3" cy="-66" r="9" fill="#f0e8d2"/>
+              <line x1="1" y1="-58" x2="0" y2="-26" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="-10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+              <line x1="1" y1="-52" x2="26" y2="-42" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round"/>
+            <path d="M 430 824 Q 960 912 1490 824" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="1.6" opacity="0.42"
+              stroke-dasharray="3 26"/>
+            <path d="M 195 690 Q 312 762 430 790" fill="none" stroke="#b8860b" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 1725 690 Q 1608 762 1490 790" fill="none" stroke="#b8860b" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="195" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <circle cx="1725" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <text x="960" y="1006" text-anchor="middle" font-family="Georgia, serif" font-size="86"
+              fill="#f0e8d2" letter-spacing="2">43,7 %</text>
+            <text x="960" y="1054" text-anchor="middle" font-family="Georgia, serif" font-size="27"
+              fill="#f0e8d2" letter-spacing="3" opacity="0.86">TAUX DE COUVERTURE</text>
+          </svg>
+        </div>
+        <figcaption><b>V1</b> — livraison initiale, validée en réunion.</figcaption>
+      </figure>
+
+      <!-- ============ V2 : le chiffre ============ -->
+      <figure>
+        <div class="shot">
+          <span class="tag">Révision 1</span>
+          <svg viewBox="0 0 1920 1080" role="img" aria-label="Scène identique, chiffre corrigé en 48,2 %.">
+            <rect width="1920" height="1080" fill="#182746"/>
+            <line x1="120" y1="170" x2="1800" y2="170" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(890 170)">
+              <line x1="-92" y1="-44" x2="92" y2="-40" stroke="#f0e8d2" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="3" cy="-66" r="9" fill="#f0e8d2"/>
+              <line x1="1" y1="-58" x2="0" y2="-26" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="-10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+              <line x1="1" y1="-52" x2="26" y2="-42" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round"/>
+            <path d="M 430 824 Q 960 912 1490 824" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="1.6" opacity="0.42"
+              stroke-dasharray="3 26"/>
+            <path d="M 195 690 Q 312 762 430 790" fill="none" stroke="#b8860b" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 1725 690 Q 1608 762 1490 790" fill="none" stroke="#b8860b" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="195" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <circle cx="1725" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <text x="960" y="1006" text-anchor="middle" font-family="Georgia, serif" font-size="86"
+              fill="#d9a93a" letter-spacing="2">48,2 %</text>
+            <text x="960" y="1054" text-anchor="middle" font-family="Georgia, serif" font-size="27"
+              fill="#f0e8d2" letter-spacing="3" opacity="0.86">TAUX DE COUVERTURE</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>V2</b> — « le rapport a été corrigé ».<br>
+          <span class="delta">Le chiffre change. Rien d'autre.</span>
+        </figcaption>
+      </figure>
+
+      <!-- ============ V3 : couleur + texte ============ -->
+      <figure>
+        <div class="shot">
+          <span class="tag">Révision 2 + 3</span>
+          <svg viewBox="0 0 1920 1080" role="img" aria-label="Scène identique, ancrages en bleu de marque et libellé remplacé par garantie de convertibilité.">
+            <rect width="1920" height="1080" fill="#182746"/>
+            <line x1="120" y1="170" x2="1800" y2="170" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            <g transform="translate(890 170)">
+              <line x1="-92" y1="-44" x2="92" y2="-40" stroke="#f0e8d2" stroke-width="3.5" stroke-linecap="round"/>
+              <circle cx="3" cy="-66" r="9" fill="#f0e8d2"/>
+              <line x1="1" y1="-58" x2="0" y2="-26" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round"/>
+              <line x1="0" y1="-26" x2="-10" y2="6" stroke="#f0e8d2" stroke-width="4.5" stroke-linecap="round" opacity="0.75"/>
+              <line x1="1" y1="-52" x2="26" y2="-42" stroke="#f0e8d2" stroke-width="4" stroke-linecap="round"/>
+            </g>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round"/>
+            <path d="M 430 824 Q 960 912 1490 824" fill="none" stroke="#f0e8d2" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M 430 790 Q 960 878 1490 790" fill="none" stroke="#f0e8d2" stroke-width="1.6" opacity="0.42"
+              stroke-dasharray="3 26"/>
+            <path d="M 195 690 Q 312 762 430 790" fill="none" stroke="#2f6fb5" stroke-width="6" stroke-linecap="round"/>
+            <path d="M 1725 690 Q 1608 762 1490 790" fill="none" stroke="#2f6fb5" stroke-width="6" stroke-linecap="round"/>
+            <circle cx="195" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <circle cx="1725" cy="690" r="10" fill="none" stroke="#f0e8d2" stroke-width="3"/>
+            <text x="960" y="1006" text-anchor="middle" font-family="Georgia, serif" font-size="86"
+              fill="#d9a93a" letter-spacing="2">48,2 %</text>
+            <text x="960" y="1054" text-anchor="middle" font-family="Georgia, serif" font-size="27"
+              fill="#f0e8d2" letter-spacing="3" opacity="0.86">GARANTIE DE CONVERTIBILITÉ</text>
+          </svg>
+        </div>
+        <figcaption>
+          <b>V3</b> — couleur de marque + libellé juridique.<br>
+          <span class="delta">Deux constantes. Le plan ne bouge pas.</span>
+        </figcaption>
+      </figure>
+
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section">Ce qui a changé entre V1 et V3</h2>
+    <p class="soft">
+      Trois demandes client, trois lignes. Le funambule, le fil, la courbure du filet,
+      les timings, le son : intouchés — et surtout, impossibles à altérer par accident.
+    </p>
+    <div class="diff-block">
+      <div class="bar">manifest.ts</div>
+      <pre><span class="cm">// Épisode Franc CFA · scène 4 « le filet »</span>
+<span class="kw">export const</span> SCENE = {
+  <span class="off">valeur:      "43,7 %",</span>
+  <span class="on">valeur:      "48,2 %",</span>              <span class="cm">// rév. 1 — donnée corrigée</span>
+  <span class="off">libelle:     "TAUX DE COUVERTURE",</span>
+  <span class="on">libelle:     "GARANTIE DE CONVERTIBILITÉ",</span>  <span class="cm">// rév. 3 — validation juridique</span>
+  <span class="off">ancrage:     OR,</span>
+  <span class="on">ancrage:     MARQUE_BLEU,</span>          <span class="cm">// rév. 2 — charte client</span>
+};</pre>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section">La même demande, dans les deux méthodes</h2>
+    <div class="two">
+      <div class="card">
+        <h3>Vidéo générée par IA</h3>
+        <div class="price">207 – 433 $</div>
+        <ul>
+          <li>Chaque révision <b>relance une génération payante</b> — et rend un autre plan, pas le plan corrigé.</li>
+          <li>Un chiffre exact à l'écran <b>n'est pas garanti</b> : le texte est dessiné, pas composé.</li>
+          <li>Changer la couleur de marque impose de <b>tout régénérer</b> : ce qui était validé peut bouger.</li>
+          <li>Les raccords avec les plans voisins sont <b>à refaire</b>.</li>
+        </ul>
+      </div>
+      <div class="card mine">
+        <h3>Composition déterministe</h3>
+        <div class="price">5 – 8 $</div>
+        <ul>
+          <li>Une révision = <b>une valeur</b>. Coût marginal nul, autant de fois qu'il le faut.</li>
+          <li>Le chiffre affiché est <b>exactement celui du rapport</b>, par construction.</li>
+          <li>La couleur est une constante : <b>un seul point de vérité</b> pour tout l'épisode.</li>
+          <li>Tout ce qui n'a pas été touché est <b>bit-identique</b>. Rien ne dérive.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="section">Coût des révisions sur un épisode de 4 min 38</h2>
+    <div class="scroller">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Demande du client</th>
+            <th scope="col">Vidéo générée</th>
+            <th scope="col">Ici</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Un chiffre change après correction du rapport</td>
+            <td class="num">≈ 16 $ · 9 plans régénérés</td>
+            <td class="num mine">0 $</td>
+          </tr>
+          <tr>
+            <td>Passer tout l'épisode à la couleur de marque</td>
+            <td class="num">63 – 189 $ · 35 plans</td>
+            <td class="num mine">0 $</td>
+          </tr>
+          <tr>
+            <td>Refaire une scène de 52 s jugée redondante</td>
+            <td class="num">≈ 38 $ · sans garantie</td>
+            <td class="num mine">0 $</td>
+          </tr>
+          <tr>
+            <td>Les trois, puis trois de plus</td>
+            <td class="num">le coût s'empile</td>
+            <td class="num mine">toujours 0 $</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <hr class="rule">
+
+  <section>
+    <p class="pull">
+      « Changer un chiffre après validation coûte à mon concurrent une vingtaine de dollars
+      et une image qui n'est plus tout à fait la même. Ici c'est une ligne, et le reste de
+      la vidéo est rigoureusement identique. C'est pour ça que les révisions sont incluses. »
+    </p>
+  </section>
+
+  <footer>
+    Scène réelle · épisode Franc CFA, acte 4 — géométrie, palette et silhouette reprises du fichier de production.
+  </footer>
+
+</div>

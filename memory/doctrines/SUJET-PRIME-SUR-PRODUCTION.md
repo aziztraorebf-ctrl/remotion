@@ -223,3 +223,46 @@ script conforme DOCTRINE-SCRIPT-UNIFIEE → fact-check 3 niveaux → jury LLM). 
 Liens : [[CHARTE-EDITORIALE-SOUVERAIN]] · [[feedback_doctrine-titres-youtube-kora-cartes]] · [[ANGLE-MACRO-SOUVERAIN]] ·
 [[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]] ·
 [[RECHERCHE-PRESCRIPT-UNIFIEE]] (la suite : script + fact-check + jury).
+
+---
+
+## ⭐⭐ PREUVE EMPIRIQUE 2026-07-29 — L'EXPÉRIENCE À VARIABLE NEUTRALISÉE
+
+Cette doctrine reposait sur un verbatim et des analyses qualitatives. Elle a maintenant une **preuve
+quasi-expérimentale** : une chaîne concurrente où la variable PRODUCTION est strictement neutralisée
+entre un flop et un outlier.
+
+**Le dispositif** (Guinée en Données, 459 abonnés, économie guinéenne = notre créneau exact ; 9 vidéos
+mesurées yt-dlp + TubeLab ; ratio vues/abonnés 4,07 → YouTube distribue bien, elle ne plafonne pas :
+elle a un problème de VARIANCE) :
+
+| | Vidéo à 64 vues (4 j) | Vidéo à 10 000 vues |
+|---|---|---|
+| Durée | 21 min 47 | ~21 min 30 |
+| Habillage | fond noir + typo | identique |
+| Matière visuelle | stock footage, **162 Mo** de flux | stock footage, **42 Mo** — soit MOINS |
+| Voix | synthèse | synthèse (identique) |
+
+**Écart ×157 à production constante — et l'outlier a MOINS de matière visuelle que le flop.** L'écart
+est donc produit ENTIÈREMENT par le titre, la miniature et le choix du sujet. Ce n'est plus une
+conviction, c'est une mesure.
+
+**Les 3 transferts actionnables** :
+1. **Sujet MATÉRIEL > sujet MÉTA.** « L'argent qui part » bat « la statistique qui manque ». Si l'angle
+   candidat porte sur une absence/lacune/donnée manquante → le reformuler sur l'objet matériel en jeu,
+   ou l'écarter.
+2. **Miniature décodable en 0,4 s.** Objet de valeur + sujet humain **DESSINÉ** (l'outlier raté
+   n'affichait que 2 pourcentages nus). ⛔ **décodable ≠ criard** : la Décision 4 de
+   [[feedback_strategie-vs-chaines-youtube-2026-05]] (validée Aziz 2026-05-28) refuse les visages-photos
+   clickbait — notre niche les rejette activement. Portraits en médaillon dessinés = OK, photo criarde = non.
+3. **Le chiffre tombe en < 3 s.** Le hook globe + plongée caméra de 15 s de l'outlier RATÉ était ABSENT
+   de la vidéo qui a marché. Cf [[HOOK-PREMIERE-MINUTE]] : le mouvement caméra RETIENT après le clic,
+   il n'ACCROCHE pas.
+
+**⛔ La conséquence inconfortable** : notre moat visuel (moteur déterministe, SVG, D3, cartes vivantes)
+agit **entièrement APRÈS le clic**. Il décide de la rétention, de l'abonnement, de la valeur perçue — il
+ne déclenche RIEN. Un épisode magnifique avec une miniature typographique et un titre à absence fera
+64 vues. D'où : ne jamais sauter le gate sujet+angle au motif qu'« on produit mieux qu'eux ».
+
+Angle commercial de ce constat (offre freelance) : `memory/freelance-linkedin/STRATEGIE-LINKEDIN-FREELANCE.md`.
+⚠️ Chiffres de chaîne périssables (mesure 2026-07-29) ; le MÉCANISME ne périme pas.
