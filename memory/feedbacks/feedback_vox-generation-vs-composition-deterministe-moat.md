@@ -57,3 +57,36 @@ Quand on presente/enseigne ce qu'on fait (making-of, script pedagogique, pitch d
 
 ## Voir aussi
 [[mapanimation-veille-et-geoflow]] · [[d3-vitesse-iteration-vs-mapbox]] · [[globe-d3-moteur-cartographique-reutilisable]] · [[reverse-style-video-vers-assets]] (memoire workspace : REVERSE-STYLE-VIDEO-VERS-ASSETS.md)
+
+## ⭐ RE-ÉVALUATION 2026-07-29 — VAGUE HIGGSFIELD/MCP : le constat TIENT, et il est maintenant CHIFFRÉ
+
+Le § ci-dessus demandait de re-évaluer à chaque nouvelle vague. Fait sur **Higgsfield + MCP** (« vidéo
+style Vox en un prompt ») : 2 vidéos analysées — un Short à 16k vues et un tuto à 5,8k vues qui est un
+**lien affilié Higgsfield non divulgué clairement** (même schéma que le cas aiTrends : le « gratuit »
+est l'aimant, l'API payante est le produit).
+
+**Verdict : toujours de l'orchestration de générateurs payants, pas de l'animation.** Rien de neuf côté
+contrôle (ni keyframing, ni révision ciblée).
+
+**⭐ Ce qui est NOUVEAU : la mesure.** Construite sur un projet RÉEL (Franc CFA : 278,25 s, 8 beats,
+beat 4 de 52,5 s effectivement refait le 2026-07-26) :
+
+| | Génératif (v1 + 3 révisions) | Nous |
+|---|---|---|
+| Coût | **207 – 433 $** | **5 – 8 $** d'API |
+
+→ Rapport **30 à 60×**. Tarifs vérifiés (firecrawl, 2026-07-29) : Ultra 3000 cr = 99 $/an ou 129 $/mois ·
+top-up ~5 $/100 cr · Seedance 2.0 Standard 36 cr/clip 8 s, Fast 28 cr.
+
+**Le coût caché est confirmé par leurs propres utilisateurs** (commentaires les plus likés sous les
+vidéos promotionnelles — des praticiens, pas des concurrents) : « $300 per 10 minutes video » (32 likes) ·
+« 1 generated video can easily blow away all of your credits » (26) · « no control over the result
+whatsoever » (3) · « that's not motion graphics, that's Seedance » (2, ils identifient eux-mêmes le tour
+de passe-passe) · un praticien : « two 5-minute explainer vids = 4000+ credits ».
+
+**Méthode d'analyse enrichie** : extraire transcript + frames via yt-dlp, croiser DIT vs DÉDUIT, **lire
+les commentaires les plus likés** (ce sont eux qui révèlent le coût que la vidéo cache), **et vérifier
+les tarifs à la source** (firecrawl sur la page pricing) plutôt que de croire le chiffre du tuto.
+
+Développement commercial (obstacles, prix, à qui vendre) : `memory/freelance-linkedin/STRATEGIE-LINKEDIN-FREELANCE.md`
+— ne pas dupliquer ici. ⚠️ Tarifs périmés en ~3 mois : re-vérifier avant tout usage client.

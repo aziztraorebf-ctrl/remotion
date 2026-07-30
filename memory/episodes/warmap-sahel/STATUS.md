@@ -28,8 +28,9 @@ pour la stratégie de distribution, `tools/trypost.md`/`tools/postiz.md` pour le
 1. **Fix audio "déjà" (P1, f2743)** : backup TTS resynthèse complète validé par Aziz à l'écoute (sans
    réverb) splicé tel quel dans `narration-v5-expressive.mp3` — décalage de +2.67s assumé en aval SANS
    retiming des triggers F_* (décision explicite Aziz : chantier disproportionné vs bénéfice, ajuster
-   seulement si un vrai problème de synchro apparaît au visionnage). Backup original :
-   `memory/episodes/warmap-sahel/audio-fixes/narration-v5-expressive-PRE-DEJA-SPLICE-2026-07-04.mp3`.
+   seulement si un vrai problème de synchro apparaît au visionnage). Backup original
+   (`narration-v5-expressive-PRE-DEJA-SPLICE-2026-07-04.mp3`) absent du disque à ce jour
+   (vérifié 2026-07-30) — fix appliqué et validé, épisode publié, sans conséquence.
 2. **Premier render complet bout-en-bout** (Acte1+P1+P2+P3+P4, jamais fait avant cette session) —
    continuité vérifiée à 100% par `check-frame-continuity.py`.
 3. **CEDEAO — 3e itération, direction actée** : après 2 tentatives rejetées (marqueurs+flèches hors-cadre
@@ -88,8 +89,8 @@ validés en mini-render, puis un render complet final relancé et validé :
    segments collés se chevauchaient en CONTENU, pas juste en timing. Fix : re-splice avec la bonne borne
    post-splice à 97.20s (juste après "encore." dans l'original, cf `narration-v5-alignment.json` pré-
    splice) au lieu de 94.18s. Vérifié par transcription Whisper : 1 seule occurrence après fix. Ancien
-   fichier avec doublon backupé : `memory/episodes/warmap-sahel/audio-fixes/
-   narration-v5-expressive-AVEC-DOUBLON-2026-07-05.mp3`.
+   fichier avec doublon (`narration-v5-expressive-AVEC-DOUBLON-2026-07-05.mp3`) absent du disque à ce
+   jour (vérifié 2026-07-30) — fix appliqué et validé, épisode publié, sans conséquence.
 
 ⭐ **LEÇON MÉTHODE** : le force-alignment (transcription automatique avec timestamps) est BEAUCOUP plus
 fiable que le calcul manuel de mapping timestamp↔frame pour diagnostiquer un problème audio précis — a

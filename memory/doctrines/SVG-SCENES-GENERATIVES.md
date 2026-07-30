@@ -660,6 +660,16 @@ confirmation)→animation JSX→SFX timé→render→upload. **Le système est r
    la consigne "réponds en SVG brut". Ça casse `rsvg-convert` (erreur XML parse, "Start tag expected"). TOUJOURS
    nettoyer les fences (regex `^```[a-zA-Z]*\n?` / `\n?```$`) avant toute conversion PNG d'un SVG généré par LLM,
    quel que soit le modèle. (2026-07-24, comparatif image-cible Tour Eiffel CFA.)
+8. **⛔ Ne JAMAIS sortir un élément du CADRE clippé** (Aziz, prouvé). Un `<g clipPath>` TRANCHE tout élément qui
+   dépasse le cercle → artefact "navire coupé / qui bave sur le fond". Pour signifier qu'un élément "part/disparaît" :
+   **avance LÉGÈRE (translate faible) + FADE OUT (opacity→0)**, jamais une sortie hors champ. Règle valable pour
+   toute scène SVG/clippée.
+9. **Vue 3/4 plongeante IMPOSSIBLE proprement en SVG** (2026-07-20, Soudan Acte 6). SVG est 2D. Une "vue 3/4
+   plongeante" sur un élément dessiné top-down (ex: table vue de dessus) ne se fabrique PAS par `rotateX` CSS :
+   ça donne un APLATISSEMENT ("carton qui bascule"), pas du vrai volume. ⚠️ Les reviewers LLM (Gemini/Kimi)
+   SURESTIMENT cette faisabilité et la proposent quand même — à FILTRER. Pour l'illusion de profondeur sur un
+   asset 2D : **dérive/parallaxe caméra** (translate+scale léger décorrélés par couche) + particules/god-rays
+   = ~80% de l'effet ressenti. Si un vrai volume 3/4 est indispensable → ce n'est plus du SVG.
 
 ### ⭐ SNIPPET extraction de groupes (réutilisable — gère apostrophes GPT, guillemets Gemini, imbrication scene-root)
 ```python

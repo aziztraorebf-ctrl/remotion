@@ -110,27 +110,13 @@ Apprentissages durables de la session de reorg complete (validee par un test age
 
 ---
 
-### 2026-06-15 — Grand menage memoire + disque (etat de reference post-menage)
+### Méthode de ménage mémoire — validée sur 3 chantiers (2026-06-15, 2026-07-30)
 
-Session dediee au menage. Resultats a retenir comme nouvelle baseline :
-
-**Contexte/demarrage (-62%)** : CLAUDE.md projet 47->14KB (routage extrait vers `memory/ROUTAGE.md`,
-regles non-negociables resumees+pointees). MEMORY.md 36->17.5KB (index pur 1 ligne/entree).
-COMPACT_CURRENT.md 920->134 lignes (historique mort -> STATUS.md par episode).
-**9 MCP debranches** (supabase/neon/vercel/netlify/render/sentry/stitch/cavalry/phaser-editor) —
-`.mcp.json` NON tracke git, defs sauvees `/tmp/menage-backups-2026-06-15/` pour rebrancher.
-
-**Disque (~4.4 GB recuperes)** : 3 worktrees git abandonnes (`git worktree remove --force`),
-`out/*/wip` purges (warmap-sahel garde v3+FINAL car projet actif), `out/_r-and-d` >7j purge,
-CSV UCDP 239M (re-telechargeable via ucdp_connector.py). Travail Cannae non commite sauve dans
-`memory/_recup-worktree-cannae-2026-06-04/`.
-
-**Gisement restant non traite** : connecteurs `claude_ai_*` (~30, cote app claude.ai, pas pilotables
-d'ici) ; `public/` 2GB (assets episodes livres, archivable mais delicat car partiellement versionne) ;
-142 vieux feedbacks dans l'auto-memory `~/.claude/.../memory/` (uniques, jamais migres au repo).
-
-**Methode validee** : auditer/mesurer AVANT de supprimer · verifier dérivabilité (FINAL existe ailleurs ?) ·
-backups avant config · `git add` chirurgical jamais `-A`.
+**Méthode qui marche** : auditer/mesurer AVANT de supprimer · vérifier dérivabilité (le FINAL existe-t-il
+ailleurs ?) · délier les références (STATUS/pointeurs) avant de supprimer un binaire cité · backups/git
+avant toute config · `git add` chirurgical, jamais `-A`. Un fichier de recommandations n'a de valeur que
+si le clos en sort — sinon il devient trop gros pour être relu, donc jamais corrigé (cause racine
+observée 2× : NEXT-ACTION 116 Ko et PIPELINE.md 88 Ko en juillet, 85% de contenu mort).
 
 ---
 
@@ -204,7 +190,7 @@ carte 2D flat top-down, au lieu de partir de CE QUI MARCHE CHEZ NOUS.
 2. NOS hooks prouves = `KineticMaskSlam` + `ComboMaskSweep` ("carte a travers un chiffre", masque SVG + zoom-reveal).
    `src/projects/_shared/mapbox/`. Penses pour notre carte 2D, drift Mapbox continu, cinetique en overlay SVG.
 3. Un DA-brief peut pousser une direction INADAPTEE a notre stack — le verifier contre nos templates AVANT de coder.
-4. Chantier ouvert : SESSION DEDIEE HOOKS (`memory/SESSION-DEDIEE-HOOKS.md`) = bibliotheque de hooks reutilisables
+4. Chantier ouvert : SESSION DEDIEE HOOKS (jamais lancée, pas de fichier dédié à ce jour) = bibliotheque de hooks reutilisables
    pour TOUTES nos videos (on est "a court de bons hooks", manque structurel — Aziz 2026-06-15).
 
 ---
@@ -224,7 +210,7 @@ carte 2D flat top-down, au lieu de partir de CE QUI MARCHE CHEZ NOUS.
 
 ## SCANNER LE CATALOGUE CARTE-VIVANTE AVANT DE CODER UN BEAT WAR-MAP (2026-06-11)
 
-> Règle gravée dans CLAUDE.md et ROUTAGE.md. Rappel court : AVANT de coder TOUT beat carto, scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md`. Cause de l'erreur P2 : 30+ composants premium non utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill...) car le scan avait été sauté. "Sobre/analytique" n'est PAS une excuse pour "plat/pauvre". Réf complète : `episodes/warmap-sahel/REFONTE-PREMIUM-P2-techniques.md`.
+> Règle gravée dans CLAUDE.md et ROUTAGE.md. Rappel court : AVANT de coder TOUT beat carto, scanner `CATALOGUE-CARTE-VIVANTE.md` + `MAPBOX-COMPOSANTS.md`. Cause de l'erreur P2 : 30+ composants premium non utilisés (LottieGeoAura, ContagionFlagSpread, PulsingRegionFill...) car le scan avait été sauté. "Sobre/analytique" n'est PAS une excuse pour "plat/pauvre".
 
 ---
 
@@ -252,7 +238,8 @@ majeur (confédération AES + force conjointe 2024). Outil : `perplexity/sonar-p
 **Symptôme** : insigne base militaire (sprite Gemini) invisible sur la carte, alors qu'un `<div>` opaque aux mêmes coords s'affichait. 4 "fixes" de rendu tentés en vain (Img/img/SVG, viewBox, delayRender).
 **Vraie cause** : le sprite détouré n'occupait que 3.6% de surface opaque, couleur moyenne sépia clair [139,116,81] sur fond parchemin clair [245,239,214] → quasi invisible. PAS un bug technique.
 **Leçon** : appliquer la règle "matière finale d'abord" AUSSI au debug visuel — composer le sprite sur le FOND RÉEL (`PIL alpha_composite` sur la couleur de la carte) AVANT de chercher un bug de rendu. Un insigne fin/clair sur fond clair a besoin d'un support (pastille/cartouche foncée) ou d'un détourage dense (encre noire franche).
-**Acquis collatéraux réels (gardés)** : (1) `ConvergingFlows` viewBox était hardcodé 1080×1920 → props width/height ajoutées. (2) Pattern `delayRender` PAR FRAME + `map.once("idle")` requis pour charger sprites en headless (extrait dans `SahelMapBase`). (3) Extraction plomberie Mapbox → `SahelMapBase.tsx` (hook `useSahelMap`) réutilisable Actes 2-5 + Peste.
+**Acquis collatéraux réels (gardés)** : (1) `ConvergingFlows` viewBox était hardcodé 1080×1920 → props width/height ajoutées. (2) Pattern `delayRender` PAR FRAME + `map.once("idle")` requis pour charger sprites en headless (extrait dans `SahelMapBase`). (3) Extraction plomberie Mapbox → hook `useSahelMap`, réutilisable Actes 2-5 + Peste (⚠️ le fichier
+`SahelMapBase.tsx` d'origine n'existe plus — vérifier son successeur avant réutilisation).
 
 ## 2026-06-09 — Le vrai coupable de B1 raté : du CODE LEGACY qui tournait en parallèle (Sahel)
 Pendant la refonte de B1 V2, j'ai d'abord blâmé mon nouveau code (sprites invisibles, carte dense)
@@ -303,7 +290,7 @@ preuve de justesse.
 `deepseek/deepseek-v4-pro` (~$0.44/M in, $0.87/M out = ~10-20x moins cher qu'Opus). 1.6T MoE, contexte 1M.
 **Frein confirmé** : PAS de vision/multimodal au lancement (en dev). Nos briefs DA reposent sur des frames.
 **Walkaround validé** : remplacer les images par une DESCRIPTION TEXTUELLE fidèle (Claude a vu les frames).
-Script : scripts/tools/deepseek-b1-test.py.
+Script de test supprimé depuis — voir `memory/tools/openrouter-svg.md` pour l'usage courant de DeepSeek V4.
 **Verdict** (2 briefs B1 War-Map, comparés à gemini+kimi qui avaient les images) :
 - CONCEPTUEL (séquencier, logique narrative, structure) = 80-90% de la valeur Gemini/Kimi. A même apporté
   une idée neuve (chaîne uranium Arlit→port Cotonou→cargo, que ni Gemini ni Kimi n'avaient).
@@ -341,59 +328,8 @@ Réponses test : `memory/episodes/warmap-sahel/reviews-acte2/deepseek-b1-{downst
 
 ### 2026-06-21 — ⭐⭐ NOUVELLE VOIE : SVG génératif (Gemini) animé PAR PARTIES dans Remotion
 
-Découverte majeure (session Sénégal Scène 1, validée par Aziz). Comble un manque : faire vivre une
-illustration RICHE sans Lottie, sans After Effects, sans dépendre d'un bitmap figé.
-
-**Le pipeline (prouvé)** :
-1. **Gemini 3.1 Pro génère un SVG de SCÈNE** (pas une icône) — prompt = sujet + STYLE/palette EXACTE +
-   exigence de STRUCTURE : `<g id="...">` sémantiques (ex: #ship, #derrick avec #pumphead, #waves, #rim),
-   chaque élément animable AUTONOME. Résultat typique : 50-100 paths, ~12-20 Ko. PROPRE et léger.
-2. **Convertir en composant React** : inliner le SVG, kebab→camelCase (stroke-width→strokeWidth,
-   clip-path→clipPath, transform-origin→transformOrigin), virer les `style="..."` inline.
-3. **Animer chaque groupe** par `transform`/`opacity` pilotés par `useCurrentFrame` + `interpolate`.
-   Ex : #waves translateY sinusoïdal (océan respire), #pumphead translateY (derrick pompe), #ship translate+opacity.
-
-**Pourquoi ça bat bitmap ET Lottie** :
-- vs BITMAP (PNG GPT/Gemini) : le bitmap est NÉ figé → animable seulement de l'extérieur (sweep/parallaxe),
-  tout ajout SVG par-dessus fait "sticker". Le SVG est NÉ animable (intérieur vivant : vagues, navire…).
-- vs LOTTIE : Lottie est figé une fois exporté ; ici chaque path répond à la frame → synchro voix exacte.
-- VECTORIEL : net à TOUTE taille (push-in/zoom sans pixellisation) + couleur de chaque élément modifiable
-  à la frame (ex: mer qui vire au rouge sang, oxydation progressive).
-
-**⛔ GOTCHA (Aziz, prouvé) — NE JAMAIS sortir un élément du CADRE clippé.** Un `<g clipPath>` TRANCHE
-tout élément qui dépasse le cercle → artefact "navire coupé / qui bave sur le fond". Pour signifier qu'un
-élément "part/disparaît" : **avance LÉGÈRE (translate faible) + FADE OUT (opacity→0)**, jamais une sortie
-hors champ. Règle valable pour toute scène SVG/clippée.
-
-**⛔ GOTCHA (2026-07-20, Soudan Acte 6) — vue 3/4 plongeante IMPOSSIBLE proprement en SVG.** SVG est 2D.
-Une "vue 3/4 plongeante" sur un élément dessiné top-down (ex: table de négociation vue de dessus) ne se
-fabrique PAS par `rotateX` CSS : ça donne un APLATISSEMENT ("carton qui bascule"), pas du vrai volume
-(aucune face latérale, aucune perspective réelle). ⚠️ Les reviewers LLM (Gemini/Kimi) SURESTIMENT cette
-faisabilité et la proposent quand même — c'est un cas où leur suggestion est techniquement fausse, à
-FILTRER. La bonne réponse pour l'illusion de profondeur sur un asset 2D : **dérive/parallaxe caméra**
-(translate+scale léger décorrélés par couche) + **particules/god-rays** = ~80% de l'effet ressenti, sans
-bascule bancale. Si un vrai volume 3/4 est indispensable → ce n'est plus du SVG (asset perspectif généré
-en amont, ou D3/3D dédié).
-
-**Comparatif outils (testé 21/06)** : **Gemini SVG = GAGNANT NET pour le SVG de SCÈNE** (riche, dense,
-groupes sémantiques, ~20Ko). GPT-5.5 testé en API DIRECTE OpenAI (`api.openai.com`, modèle `gpt-5.5`,
-`max_completion_tokens`) → SVG bien trop SCHÉMATIQUE (12 paths vs 119 chez Gemini sur la même Face B arbre).
-⚠️ Note importante : c'est l'INVERSE du breakdown JSON (où GPT-5.5 écrase Gemini). Donc : SVG de scène → Gemini ;
-breakdown JSON → GPT-5.5. ⚠️ OpenRouter avait son provider OpenAI DOWN tout le 21/06 ("Provider returned error"
-sur tous les gpt-5.x) → passer par la clé OpenAI DIRECTE (`OPENAI_API_KEY` dans .env) quand OpenRouter flanche.
-Recraft vectorize/generate = magnifiques MAIS 1-3 Mo, 4700-5700 paths, non-groupés → INANIMABLE par partie, lourds.
-Donc : Recraft = bon pour un asset fixe vectorisé, PAS pour de l'animation par parties.
-
-**Piège prompt** : "crée une PIÈCE D'OR" force le fond doré/parchemin dans l'intention même (Gemini dérive
-sépia même si on verrouille la palette). L'intention du prompt conditionne le rendu — formuler le sujet
-voulu, pas l'objet-support.
-
-**Transposable** (Aziz) : inserts Mapbox (scène gravée qui surgit sur la carte), Hero-d'état (objet central
-riche vivant au lieu d'une icône Lucide), Atlas. Méthode = [[CONTINUITE-SCENE-INTENTION-DABORD]] : générer
-le SVG AVEC les éléments animables prévus pour le geste (calé sur la voix), pas générer puis chercher quoi animer.
-
-**Preuves** : `out/_r-and-d/svg-anime-coin/` (protos mp4 + SVG). Code : `src/projects/_proto-16-9/SenegalCoinFaceA_SVG.tsx`
-(+ probe `SenegalCoinSVGProbe.tsx`). Geste prouvé : navire charge ("pompent") puis fade ("repartent"), océan respire, derrick pompe.
+Doctrine complète (pipeline, comparatif outils, gotchas clippage/3-4-plongeante) : [[SVG-SCENES-GENERATIVES]].
+Restent ici les erreurs d'exécution récurrentes, non couvertes par la doctrine :
 
 **⛔ 3 ERREURS D'EXÉCUTION récurrentes (repérées par Aziz, scène 1 — à VÉRIFIER à chaque branchement/assemblage) :**
 1. **AUDIO mal calé** : `narration-v3-VALIDEE.mp3` est la narration COMPLÈTE (492s). Un segment de scène commence
@@ -439,7 +375,7 @@ reste. Test : si le texte à l'écran peut être lu à voix haute en même temps
 Pour caler une animation sur la voix, utiliser le **forced alignment ElevenLabs** (`/v1/forced-alignment`,
 loss < 0.3), PAS Whisper. Whisper **dérive de ~0.4s** : sur le hook Sénégal il situait "saute" à 11.46s, le
 forced alignment à 11.84s (le vrai). 0.4s d'écart = un SFX/animation qui tombe à côté. Script de réf :
-`scripts/senegal-hook-alignment.py` (texte = TTS exact SANS tags, audio = extrait). Règle : caler l'animation
+`scripts/senegal-scene1-realign.py` (texte = TTS exact SANS tags, audio = extrait). Règle : caler l'animation
 pour **culminer ~1s AVANT** le mot-clé (l'image précède l'oreille = vivacité ; en retard = sensation de lenteur).
 
 ⚠️ **NUANCE (2026-06-21, scène gisements Sénégal) — un fichier d'alignment peut être FAUX SUR LE CONTENU,
