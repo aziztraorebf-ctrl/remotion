@@ -1,12 +1,28 @@
 # Franc CFA — MID-FORM SVG — STATUS
 
-> # ⛔⛔ CETTE COPIE EST PÉRIMÉE — LA VERSION À JOUR EST SUR LA BRANCHE DU WORKTREE
-> Le projet CFA se développe dans le **worktree `/Users/clawdbot/Workspace/remotion-cfa`**
-> (branche `feat/cfa-nuit1994-svg-mix`). Le STATUS à jour y vit, avec l'état réel (§ 0-QUINQUIES).
-> **Ce fichier-ci est la copie de la branche Soudan et retarde d'une ou plusieurs sessions.**
+> # 🏁 L'ÉPISODE EST TERMINÉ ET PROMU (2026-07-30) — CETTE COPIE NE FAIT PAS AUTORITÉ
 >
-> ⚠️ Au 2026-07-25, cette copie dit encore que les beats 5a/5b sont À FAIRE : **c'est FAUX, ils sont
-> FINAL**. Agir sur cette copie ferait re-produire des beats déjà livrés.
+> **Livrable** : `out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4` — 4 min 28 · 8046 frames ·
+> −17,2 LUFS · MD5 vérifié. **Reste = publication TryPost** (administratif), rien de technique.
+> **Musique** : `music-A-ambient-souverain` · **volume 0.0716** · fenêtre **19,6 → 259,7 s** ·
+> **aucune boucle**. ⛔ Chiffres propres à CETTE version, ne jamais les transposer
+> (`memory/tools/remotion.md` § « un réglage appartient à la VERSION »).
+> ⛔ **Écartés APRÈS test, ne pas rouvrir** : le **grain** (invisible même à 6× le réglage) · les
+> **creux d'animation** (jugés non gênants). Sur 4 recommandations LLM testées, **zéro correction**.
+>
+> Le projet CFA vit dans le **worktree `/Users/clawdbot/Workspace/remotion-cfa`**
+> (branche `feat/cfa-nuit1994-svg-mix`, **non mergée — c'est VOULU**, ses composants SVG peuvent
+> servir à un Short). Le STATUS à jour y vit — **§ 0-DUODECIES** pour l'état final.
+>
+> ⚠️ **Ce fichier-ci retarde de plusieurs sessions sur l'AVANCEMENT** (au 2026-07-25 il disait encore
+> que les beats 5a/5b étaient à faire : faux, ils sont FINAL). ✅ **Mais il est CONSERVÉ** : son corps
+> contient la **pré-production du 2026-06-27** (leçons de registre, scènes storyboardées, faits
+> verrouillés triple-fact-checkés) qui n'est pas dupliquée dans le worktree. **Le lire pour la
+> pré-prod, jamais pour l'état d'avancement.**
+>
+> ```bash
+> cat /Users/clawdbot/Workspace/remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md
+> ```
 >
 > ```bash
 > cat /Users/clawdbot/Workspace/remotion-cfa/memory/episodes/souverain/franc-cfa-short/STATUS.md

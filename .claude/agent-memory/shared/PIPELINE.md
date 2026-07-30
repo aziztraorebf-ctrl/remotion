@@ -90,7 +90,10 @@ timings dérivés du forced-align — validé Aziz). ⛔ Ne pas le rejouer : voi
 
 ---
 
-## Franc CFA mid-form — 3 FIXES FAITS + ASSEMBLAGE v3 (4 min 28) — EN COURS (2026-07-29)
+## Franc CFA mid-form — 🏁 TERMINÉ ET PROMU PRET-PUBLICATION (2026-07-30)
+
+> **Livrable** : `out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4` (4 min 28 · 8046 frames ·
+> −17,2 LUFS · MD5 vérifié à la promotion). **Reste = publication TryPost** (administratif).
 
 **État** : les **3 fixes relevés au visionnage sont APPLIQUÉS et VALIDÉS par Aziz** (commits
 `f8c72545` · `0456ff96` · `a2c36905`) : beat 6a Guinée visible (hachures crème + zoom recentré sur son
@@ -105,11 +108,17 @@ forced-align, décalage −301 frames constant) · beat 3 pings de connexion **a
 `out/episodes/franc-cfa-midform/v3-post-fixes/` (+ les 2 reviews LLM et la VO coupée).
 ⚠️ Le jalon v2 reste INTACT comme jalon daté — ne pas l'écraser.
 
-**RESTE (ordre fixé par Aziz)** : **(1) la MUSIQUE** en partant de
-`public/_shared/audio/INDEX-MUSIQUES.md` (créé cette session : 71 fichiers → **67 pistes uniques**
-mesurées ; ⛔ la durée n'est PAS un critère, les pistes Minimax bouclent) — choix à l'oreille par
-Aziz · **(2) le GRAIN sur UNE SEULE SCÈNE d'abord** (test à variable unique) avant les 8 beats.
-Starter : `memory/starters/STARTER-PROMPT-cfa-musique-puis-grain.md`.
+**✅ MUSIQUE = FAITE (2026-07-30)** : `music-A-ambient-souverain`, **volume 0.0716** (recalculé par
+bande — PAS le 0.26 de l'ancienne piste), fenêtre **19,6 → 259,7 s**, **aucune boucle** (321 s
+couvrent la fenêtre d'un seul tenant). Choisie à l'oreille par Aziz sur **banc d'écoute comparatif**
+(4 candidates sous le même extrait narré, à marge mesurée identique). Méthode gravée dans
+`memory/tools/remotion.md` § banc d'écoute + § un réglage appartient à la VERSION.
+
+⛔ **CHANTIERS ÉCARTÉS APRÈS TEST — ne pas les rouvrir** : le **GRAIN** (3 intensités rendues jusqu'à
+6× le réglage préconisé → +3,2 / +13,5 / +18,2 % de bruit mesuré, **aucune différence perceptible** ;
+aucun beat modifié, rien commité) · les **creux d'animation** mesurés (jugés non gênants).
+⭐⭐ **Sur 4 recommandations LLM testées, ZÉRO correction** : 3 factuellement fausses contre le code,
+la 4e vraie mais sans objet ici → `feedback_defaut-signale-par-llm-verifier-quil-nous-concerne.md`.
 Grille de jugement du format (baseline) : `memory/doctrines/GRILLE-JUGEMENT-MIDFORM.md`.
 
 ⚠️ Tout le code/script/STATUS à jour vivent dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`

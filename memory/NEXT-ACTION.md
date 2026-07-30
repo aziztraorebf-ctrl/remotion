@@ -3,6 +3,42 @@
 > preuve de concept slide→SVG notée pour session future)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
+## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
+
+> **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
+> Vécu le 2026-07-27 : j'ai annoncé à Aziz un état périmé d'une session entière (« le beat 4 reste à
+> faire ») alors qu'il était refait et l'épisode assemblé — l'info était dans le worktree, et
+> l'avertissement était enfoui en milieu de fichier au lieu d'être ici.
+>
+> | Worktree | Branche | Chantier | Source de vérité |
+> |---|---|---|---|
+> | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
+> | `/Users/clawdbot/Workspace/remotion` | ✅ **`master`** (branche R&D perso MERGÉE le 2026-07-29, supprimée) | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
+>
+> ### ⛔ LA COMMANDE À LANCER — pas un conseil à lire, une commande à EXÉCUTER
+> **AVANT d'annoncer le moindre état à Aziz**, coller ceci :
+> ```bash
+> for w in $(git worktree list --porcelain | grep ^worktree | cut -d' ' -f2); do
+>   echo "=== $w [$(git -C $w branch --show-current)]"; git -C $w log --oneline -3
+> done
+> ```
+> Un commit récent dans un worktree **prime sur ce fichier-ci**, toujours.
+>
+> ⚠️ **CET AVERTISSEMENT A DÉJÀ ÉCHOUÉ DEUX FOIS** (2026-07-27 et **2026-07-30**) : les deux fois
+> il était PRÉSENT et LU, et l'état périmé a quand même été annoncé. Cause identifiée le 30/07 :
+> chaque session insère sa section au-dessus, donc **l'avertissement descend et se fait enterrer**.
+> ⭐ **RÈGLE DE MAINTENANCE : ce bloc reste le PREMIER du fichier. Toute nouvelle section de
+> session s'insère APRÈS lui, jamais avant.** Le vérifier à chaque `/wrap`.
+>
+> ⚠️ **STASH À RÉCUPÉRER** : `stash@{0}` = `wip-soudan-itineraire-avant-rnd-port` — le chantier
+> « itinéraire multi-étapes » d'Aziz (`ItineraireMultiEtapes16x9.tsx`, `RouteMultiEtapes.tsx`,
+> `RouteMultiEtapesDemo.tsx` + une modif de `Root.tsx`), mis de côté le 2026-07-28 pour créer la
+> branche R&D. **À restaurer (`git stash pop stash@{0}`) au retour sur `feat/soudan-passe-finale-6lots`.**
+
+---
+
 ## 🏁 CFA = TERMINÉ (2026-07-30) · ⏭️ 2 CHANTIERS NOTÉS POUR PLUS TARD
 
 > **L'épisode Franc CFA est PROMU** → `out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4`
@@ -27,11 +63,16 @@
 >    transcripts, après 3 usages et 2 Shorts publiés) →
 >    `memory/tools/notebooklm-boucle-short.md`. Prompt CFA prêt dans la conversation.
 
-## ⏭️⏭️ SESSION CFA DU 2026-07-29 SOIR — PROCHAINE ÉTAPE FIXÉE PAR AZIZ
+## 🗄️ TRACE — SESSION CFA DU 2026-07-29 SOIR (⛔ LES 2 CHANTIERS SONT CLOS)
+
+> ⛔ **PÉRIMÉ le 2026-07-30** — voir la section 🏁 CFA = TERMINÉ en tête. La **musique est choisie**
+> (`music-A-ambient-souverain`, volume 0.0716) et le **grain a été testé puis ÉCARTÉ** (invisible même
+> à 6× le réglage). Ne PAS exécuter les « 1. » et « 2. » ci-dessous.
+> ✅ **Ce qui reste UTILE dans ce bloc** : les vrais creux mesurés et les 3 points LLM vérifiés FAUX.
 
 > ⚠️ Bloc ajouté par une session parallèle (worktree `remotion-cfa`) — il ne remplace pas les
 > priorités ci-dessous, il ajoute le chantier CFA qui reprend là où on s'est arrêté.
-> ⭐ **STARTER PRÊT** : `memory/starters/STARTER-PROMPT-cfa-musique-puis-grain.md`
+> 🗄️ **STARTER ACCOMPLI, ARCHIVÉ le 2026-07-30** : `memory/archive/starters-perimes-2026-07-30/STARTER-PROMPT-cfa-musique-puis-grain.md`
 >
 > **1. LA MUSIQUE — commencer par l'index qu'on vient de créer.**
 >    `public/_shared/audio/INDEX-MUSIQUES.md` : 67 pistes uniques mesurées (durée · amplitude ·
@@ -58,29 +99,7 @@
 > (7 critères observables + baseline : forces = métaphore/lisibilité, marge = **matière 2/10** et
 > **poids 4/10**) · outil `scripts/tools/kimi-video-review-custom.py`.
 
-## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
-> **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
-> Vécu le 2026-07-27 : j'ai annoncé à Aziz un état périmé d'une session entière (« le beat 4 reste à
-> faire ») alors qu'il était refait et l'épisode assemblé — l'info était dans le worktree, et
-> l'avertissement était enfoui en milieu de fichier au lieu d'être ici.
->
-> | Worktree | Branche | Chantier | Source de vérité |
-> |---|---|---|---|
-> | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
-> | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
-> | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
-> | `/Users/clawdbot/Workspace/remotion` | ✅ **`master`** (branche R&D perso MERGÉE le 2026-07-29, supprimée) | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
->
-> **Réflexe d'ouverture de session** : `git worktree list` + `git log --oneline -5` DANS le worktree
-> concerné, AVANT d'annoncer un état à Aziz. Un commit récent là-bas prime sur ce fichier-ci.
->
-> ⚠️ **STASH À RÉCUPÉRER** : `stash@{0}` = `wip-soudan-itineraire-avant-rnd-port` — le chantier
-> « itinéraire multi-étapes » d'Aziz (`ItineraireMultiEtapes16x9.tsx`, `RouteMultiEtapes.tsx`,
-> `RouteMultiEtapesDemo.tsx` + une modif de `Root.tsx`), mis de côté le 2026-07-28 pour créer la
-> branche R&D. **À restaurer (`git stash pop stash@{0}`) au retour sur `feat/soudan-passe-finale-6lots`.**
-
----
 
 ## 🎭🎭 SCÈNES À PERSONNAGES — **SOCLE COMPLET, 7 TESTS TRANCHÉS EN 1 JOURNÉE** (MàJ 2026-07-29)
 
@@ -283,7 +302,14 @@ registre si elle a **un SOL**, si le geste central est un geste **du CORPS**, et
 
 ---
 
-## 🎬 FRANC CFA — MID-FORM SVG — **ÉPISODE COMPLET, VALIDÉ, PROMU JALON v2 · NEXT = 3 FIXES PUIS MUSIQUE** (MàJ 2026-07-26 fin)
+## 🗄️ FRANC CFA — TRACE HISTORIQUE (jalon v2 du 2026-07-26) — ⛔ L'ÉPISODE EST TERMINÉ
+
+> ⛔⛔ **TOUT CE BLOC EST PÉRIMÉ depuis le 2026-07-30.** Les 3 fixes sont FAITS · la musique est
+> CHOISIE (volume **0.0716**) · l'index musique EXISTE · l'épisode est **dans `PRET-PUBLICATION/`**.
+> État courant → section 🏁 en tête de fichier. Conservé pour la généalogie de production.
+> ⚠️ **2 chiffres faux subsistent ci-dessous** : « AUCUN index » (il en existe 2 depuis le 29/07) et
+> « 19 dB d'amplitude » (la re-mesure du 30/07 donne **6,9 dB** — écart non expliqué, ne plus citer
+> le 19 ; la piste reste écartée, mais pour son **plancher à −31,5 dB**).
 
 > ### ⛔⛔ NEXT SESSION — DANS CET ORDRE (décisions d'Aziz du 2026-07-26, post-visionnage)
 > **Épisode VALIDÉ** (« l'épisode est très bien ») et promu jalon v2 dans

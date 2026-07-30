@@ -56,6 +56,42 @@
 <Audio src={...} volume={(f) => interpolate(f, [MUTE_START, MUTE_END], [1, 0], {extrapolateLeft: "clamp", extrapolateRight: "clamp"})} />
 ```
 
+### ⭐⭐ AVANT de mixer : CHOISIR la piste — le banc d'ecoute a variable unique (2026-07-30, CFA)
+
+Un choix de musique est **perceptif**. La mesure sert a EGALISER les candidats, jamais a choisir
+a la place de l'oreille. Ne jamais demander a Aziz de trancher sur un tableau de chiffres ni sur
+des fichiers isoles ecoutes a la suite (les niveaux different → il compare des volumes, pas des
+musiques).
+
+**La chaine en 3 temps :**
+1. **Presolection MESUREE** → `public/_shared/audio/MUSIQUE-INDEX.md` (72 pistes deja produites,
+   avec LUFS / amplitude par fenetres de 5 s / plancher). ⛔ **Inventorier AVANT de generer** — on
+   possede probablement deja la bonne piste. Ecarter d'emblee toute piste a **plancher bas**
+   (creux audibles sous la narration) ou **forte amplitude**. Outil rejouable :
+   `scripts/tools/measure-music-track.py`.
+2. **BANC D'ECOUTE a variable unique** → N candidates posees sous le **MEME extrait narre**
+   (~35 s d'un beat central), **a marge mesuree identique** : seule la musique change. Une page
+   HTML mobile, un seul son a la fois (deux lecteurs superposes ruinent la comparaison), plus un
+   **temoin voix seule** en premier. ⛔ Page HTML pour mobile = **here.now**, pas un Artifact
+   (`memory/tools/here-now-hosting.md`).
+3. **Mix par bande** (section ci-dessous) une fois la piste choisie.
+
+⭐ Le meme dispositif a fait ECHOUER une hypothese le meme jour (3 intensites de grain → « je ne
+vois vraiment pas de difference ») : **un bon banc rend le NON aussi lisible que le OUI.**
+
+### ⛔⛔ UN REGLAGE APPARTIENT A LA **VERSION**, PAS A L'EPISODE (2026-07-30)
+
+Un chiffre de mix est valide pour le couple **(piste, montage)** qui l'a produit. Toute nouvelle
+version **re-mesure**, ne reporte jamais. Les deux plus dangereux sont ceux qui ont l'air stables :
+
+| Chiffre | Pourquoi il se perime | Vecu CFA v2 → v3 |
+|---|---|---|
+| **Le volume** | change avec la PISTE | `0.26` (ancienne piste) → **0.0716** : la nouvelle arrivait 2,9 dB plus fort dans la bande voix. Reporter = musique bien trop presente. |
+| **Les bornes de fenetre** | changent avec toute COUPE en amont | fin `268.167 s` (v2) → **259.7 s** : une coupe de ~10 s au beat 5b avait decale toute la fin. Reporter = la musique joue par-dessus l'ecran de fin. |
+
+⭐ **Regle** : **toute coupe en amont invalide TOUTES les bornes en aval.** Les re-localiser sur
+**FRAMES** (extraire des images autour de la zone, regarder), jamais par soustraction mentale.
+
 ### Musique de fond — valeur par defaut
 
 **0.07** est le volume de depart pour toute musique de fond Souverain/Atlas. Ajuster en hausse ou en baisse selon ressenti, mais toujours commencer a 0.07. Validé Niger Uranium 2026-05-12.

@@ -62,3 +62,29 @@ Carte pays minimale pour être reconnaissable sur mobile : **400px × 400px mini
 4. En dernier recours si un lien bugge de façon inexplicable : ouvrir le fichier local dans Preview (`open f.png`) OU l'intégrer dans un mini-render pour qu'Aziz le voie autrement.
 
 Ne jamais affirmer "cet asset est bon" sans avoir vu ce que le lien affiche réellement.
+
+## Corollaire HOOK — le cas légitime « vidéo INCHANGÉE, audio remixé » (2026-07-30, CFA)
+
+Le hook `.claude/hooks/pre-presentation-review.sh` bloque tout upload de `.mp4` sous `out/` sans
+`<nom>.review.json` à jour. Sa logique est SAINE, garde-la. Mais il existe un cas récurrent qu'il
+ne sait pas reconnaître, et qui a coûté **3 overrides quasi identiques dans la même session** :
+
+> **Un rendu dont le flux vidéo est copié bit pour bit** (`ffmpeg -c:v copy`, ou une simple `cp`
+> de promotion) **et dont seul l'audio change.** Les frames sont IDENTIQUES à celles déjà
+> reviewées — une nouvelle review visuelle n'apprendrait rien.
+
+**La marche à suivre, sans réfléchir deux fois :**
+1. **PROUVER que la vidéo est inchangée** avant d'invoquer ce cas — jamais l'affirmer :
+   `ffprobe -v error -show_entries stream=nb_frames` sur les deux fichiers (même compte de frames),
+   et `md5` si c'est une copie de promotion. Sans cette preuve, faire une vraie review.
+2. Écrire l'override `<nom>.review-override.md` **plus récent que le mp4** (le hook compare les
+   dates), en y mettant : la preuve chiffrée, où vivent les reviews existantes, et ce qui a changé.
+3. Relancer l'upload.
+
+⭐ **Pourquoi ce n'est PAS un contournement** : le gate demande qu'un jugement visuel ait eu lieu
+sur ce qui est à l'écran. Si les frames sont les mêmes, il a eu lieu. Ce que le hook n'attrape
+pas, c'est une review au bon format sous un autre nom (nos reviews « downstream premium » sont
+en `.md` libre, pas en `.review.json` produit par `visual_review.py`).
+
+⛔ **Ne JAMAIS invoquer ce cas** quand le rendu a été RE-RENDU (frames recalculées), même si « le
+changement est minime » — là, les frames diffèrent et la review doit être refaite.
