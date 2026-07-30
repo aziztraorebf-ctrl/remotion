@@ -252,6 +252,7 @@ import { FluxPetroleAnimee } from "./projects/_rnd/svg-scenes/FluxPetroleAnimee"
 import { JetonsQwenDemo } from "./projects/_rnd/svg-scenes/JetonsQwenDemo";
 import { JetonsGlmDemo } from "./projects/_rnd/svg-scenes/JetonsGlmDemo";
 import { CfaMidformTest } from "./projects/_rnd/svg-scenes/CfaMidformTest";
+import { PiliersGouffre16x9, PILIERS_GOUFFRE_FRAMES } from "./projects/_rnd/svg-scenes/PiliersGouffre16x9";
 import { GraineStatic } from "./projects/_rnd/svg-scenes/GraineStatic";
 import { IngaH16x9, INGA_H_FRAMES } from "./projects/_rnd/svg-scenes/IngaH16x9";
 import { IngaV9x16, INGA_V_FRAMES } from "./projects/_rnd/svg-scenes/IngaV9x16";
@@ -2669,6 +2670,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
+        <Composition id="RND-PiliersGouffre" component={PiliersGouffre16x9} durationInFrames={PILIERS_GOUFFRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         {/* LiptakoRevealSVG-Test / ResourcesRevealSVG-Test RETIRÉES (2026-07-04) : intégration réelle
             faite et validée dans Partie3Rupture.tsx / Partie4Cout.tsx (SahelPartie3 / SahelPartie4). */}
