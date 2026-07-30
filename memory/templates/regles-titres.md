@@ -19,7 +19,15 @@
    - "They don't want you to know" / "Ils ne veulent pas que tu saches"
    - Titres en ALL-CAPS intégral
 
-**Test rapide avant de valider un titre :** (1) contient une date ? → retirer. (2) dépasse 55 caractères ? → compresser. (3) contient une des formules mortes ? → réécrire. (4) les deux faits en tension sont-ils dans les 48 premiers caractères ? → sinon réordonner.
+**Test rapide avant de valider un titre :** (1) contient une date ? → retirer. (2) dépasse 55 caractères ? → compresser. (3) contient une des formules mortes ? → réécrire. (4) les deux faits en tension sont-ils dans les 48 premiers caractères ? → sinon réordonner. (5) le titre porte-t-il sur un objet MATÉRIEL (règle 6 ci-dessous) ? (6) le mot-clé cherchable (pays + ressource) y est-il, de préférence tôt ?
+
+6. **SUJET MATÉRIEL > SUJET MÉTA** (mesuré : écart ×157 de vues à production strictement identique sur une chaîne concurrente — cf `memory/doctrines/SUJET-PRIME-SUR-PRODUCTION.md` § PREUVE EMPIRIQUE 2026-07-29). « L'argent qui part » bat « la statistique qui manque ». Un titre portant sur une absence, une lacune, une leçon abstraite ou une comparaison conceptuelle est à REFORMULER sur l'objet matériel en jeu, ou à écarter. ⚠️ *Erreur vécue le 2026-07-30* : « Même ressource, trois destins : Norvège, Congo, Botswana » — format impeccable au regard des règles 1-5, mais sujet méta, donc écarté.
+
+7. **NE JAMAIS RETIRER LE MOT-CLÉ CHERCHABLE** (nom du pays + ressource), même s'il figure déjà dans la miniature. YouTube indexe le TITRE ; le texte gravé dans l'image ne le remplace pas. ⚠️ *Erreur vécue le 2026-07-30* : « Sénégal » retiré d'un titre pour éviter une redondance avec le thumbnail = désindexer la vidéo pour un gain esthétique. Corollaire du Test Tokyo, qui demande d'AJOUTER un enjeu universel — jamais de SUPPRIMER l'ancrage local.
+
+8. **LE TITRE NE REDIT PAS CE QUE LA MINIATURE MONTRE.** L'image montre, le titre nomme ce qui n'est pas montrable. Si les deux disent la même chose, l'un des deux est gaspillé. (Décidé sur le CFA 2026-07-30 : le titre n°1 du jury a été écarté parce qu'il reprenait mot pour mot le texte gravé.)
+
+⭐ **Ne jamais générer ET juger un titre soi-même** (juge et partie). Outil : `scripts/tools/jury-titres-llm.py` — 4 modèles indépendants, ~2 min ; le signal est la CONVERGENCE. Détail : `.claude/…/memory/feedback_jury-titres-llm-4-modeles.md`.
 
 **OBLIGATOIRE — Appliquer AUSSI la règle du titre hybride (Section 9 de `memory/rules/rules-souverain-editorial.md`) :**
 Les règles techniques ci-dessus valident le FORMAT. La règle hybride valide le PRINCIPE. Les deux sont obligatoires simultanément.

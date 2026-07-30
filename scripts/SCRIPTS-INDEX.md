@@ -41,6 +41,8 @@
 
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
+| ⭐⭐ **Trouver le TITRE d'une vidéo** (longue, Short, caption) | `scripts/tools/jury-titres-llm.py` | `<script.md> --contexte "..." [--out x.md]`. Jury 4 modèles (Kimi+Gemini+GPT-5.5+**Grok**), 10 titres classés chacun, ~2 min. ⛔ ne JAMAIS générer ET juger un titre soi-même. Le signal = la CONVERGENCE. ⚠️ recompter les caractères (limite 55). |
+| ⭐⭐ **Concevoir une MINIATURE** | `scripts/tools/jury-thumbnail-llm.py` | `<script.md> --contexte "..." [--out x.md]`. 5 concepts **composables en SVG** (pas d'image générée), classés. Puis composer le SVG soi-même → `rsvg-convert -w 1920 -h 1080 x.svg -o x.png`, et vérifier à 320 px. |
 | Programmer les vidéos Kora & Cartes sur Postiz (4 plateformes, 3 sem.) | `scripts/schedule-postiz.py` | `[--dry-run]`. |
 | Programmer le carrousel Good News (IG + FB + TikTok Photo Mode) | `scripts/schedule-goodnews-carousel.py` | `[--dry-run] [--date ISO]`. |
 | Programmer la version TikTok vidéo du carrousel Good News | `scripts/schedule-goodnews-tiktok.py` | `[--dry-run]`. Vidéo unique (pas carrousel). |

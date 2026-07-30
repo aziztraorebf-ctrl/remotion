@@ -39,6 +39,18 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Doute catalogue / démarrer War-Map** | `src/projects/warmap/WARMAP-INDEX.md` ⭐ (LA réf = `SudanWarMapEpic60`) |
 | **Assets / templates / refs (source unique)** | `public/_shared/ASSETS-INDEX.md` |
 
+### 📤 Publier une vidéo (titre · miniature · calendrier)
+
+| Sujet | Fichier / outil |
+|---|---|
+| **⭐⭐ TROUVER LE TITRE d'une vidéo (longue, Short, caption)** | `scripts/tools/jury-titres-llm.py <script.md> --contexte "..."` — jury 4 modèles (Kimi + Gemini + GPT-5.5 + **Grok**), 10 titres classés chacun, ~2 min. ⛔ **Ne JAMAIS générer ET juger un titre soi-même** (juge et partie : 3 séries rejetées + 1 titre factuellement faux le 2026-07-30). Le signal = la CONVERGENCE entre modèles. ⚠️ recompter les caractères soi-même (limite 55). Détail : `.claude/…/memory/feedback_jury-titres-llm-4-modeles.md` |
+| **⭐⭐ CONCEVOIR UNE MINIATURE** | `scripts/tools/jury-thumbnail-llm.py <script.md> --contexte "..."` → 5 concepts SVG classés, PUIS composer le SVG soi-même (ou agent Fable). ⛔ **Une miniature EST une scène SVG statique — on la COMPOSE, on ne la génère pas par IA** (texte exact avec accents, registre cohérent avec la vidéo, coût nul). Vérifier à 320 px et REGARDER. Détail : `.claude/…/memory/feedback_thumbnail-svg-compose-maison.md` |
+| Règles de titrage (format mesuré : ≤55 car., zéro date, tension binaire, formules mortes) | `memory/templates/regles-titres.md` + doctrine `fait + conséquence + cause inattendue` : `.claude/…/memory/feedback_doctrine-titres-youtube-kora-cartes.md` |
+| Grammaire des miniatures validées (métaphore, palette, pipelines A/B/C) | `public/_shared/thumbnails-library/README.md` |
+| **Où publier quoi** | `memory/tools/trypost.md` (Shorts + IG + FB, piloté MCP) · **vidéo LONGUE = upload MANUEL YouTube Studio** (garder Test & Compare) · `memory/tools/postiz.md` (TikTok) |
+| **Calendrier éditorial en cours + contraintes d'ordre** | `.claude/…/memory/calendrier-publication-2026-08.md` ⭐ ⛔ un Short dont le CTA renvoie à une vidéo longue ne sort JAMAIS avant elle. |
+| Tirer un SHORT d'une vidéo LONGUE | `memory/tools/notebooklm-boucle-short.md` ⭐⭐ (NotebookLM produit un Short → on en extrait le PACING ; gotcha n°1 : il perd le climax) |
+
 ### Scripts & validation
 
 | Sujet | Fichier |

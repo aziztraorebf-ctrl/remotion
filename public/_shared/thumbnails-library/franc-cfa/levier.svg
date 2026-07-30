@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="halo" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#C9A227" stop-opacity="0.40"/>
+      <stop offset="0.45" stop-color="#C9A227" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="shaft" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#E4C55C"/>
+      <stop offset="0.5" stop-color="#C9A227"/>
+      <stop offset="1" stop-color="#9E7E1E"/>
+    </linearGradient>
+    <radialGradient id="knob" cx="0.38" cy="0.35" r="0.8">
+      <stop offset="0" stop-color="#EED47A"/>
+      <stop offset="0.55" stop-color="#C9A227"/>
+      <stop offset="1" stop-color="#8F711B"/>
+    </radialGradient>
+    <radialGradient id="haloConsole" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#C9A227" stop-opacity="0.14"/>
+      <stop offset="0.55" stop-color="#C9A227" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#C9A227" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="vignette" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0.62" stop-color="#0D1730" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0D1730" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Fond -->
+  <rect width="1920" height="1080" fill="#182746"/>
+
+  <!-- Halo dore derriere la manette -->
+  <ellipse cx="1020" cy="470" rx="660" ry="540" fill="url(#halo)"/>
+
+  <!-- Console : face avant pleine largeur -->
+  <rect x="0" y="660" width="1920" height="420" fill="#1D2F54"/>
+  <!-- Prolongement du halo sur la face de la console -->
+  <ellipse cx="1020" cy="750" rx="600" ry="220" fill="url(#haloConsole)"/>
+  <line x1="0" y1="660" x2="1920" y2="660" stroke="#F4F1EA" stroke-width="4" opacity="0.85"/>
+  <line x1="0" y1="678" x2="1920" y2="678" stroke="#F4F1EA" stroke-width="2" opacity="0.22"/>
+
+  <!-- Separations de panneaux -->
+  <line x1="452" y1="694" x2="452" y2="1060" stroke="#F4F1EA" stroke-width="3" opacity="0.3"/>
+  <line x1="1470" y1="694" x2="1470" y2="1060" stroke="#F4F1EA" stroke-width="3" opacity="0.3"/>
+
+  <!-- Vis de la console -->
+  <g stroke="#F4F1EA" fill="none" opacity="0.4" stroke-width="3">
+    <circle cx="42" cy="702" r="10"/><line x1="35" y1="695" x2="49" y2="709"/>
+    <circle cx="1878" cy="702" r="10"/><line x1="1871" y1="695" x2="1885" y2="709"/>
+    <circle cx="42" cy="1038" r="10"/><line x1="35" y1="1031" x2="49" y2="1045"/>
+    <circle cx="1878" cy="1038" r="10"/><line x1="1871" y1="1031" x2="1885" y2="1045"/>
+  </g>
+
+  <!-- Panneau gauche : cadran rond -->
+  <g stroke="#F4F1EA" fill="none" opacity="0.55">
+    <circle cx="220" cy="870" r="88" stroke-width="4"/>
+    <g stroke-width="3">
+      <line x1="220" y1="790" x2="220" y2="806"/>
+      <line x1="150" y1="828" x2="164" y2="836"/>
+      <line x1="290" y1="828" x2="276" y2="836"/>
+      <line x1="138" y1="898" x2="154" y2="893"/>
+      <line x1="302" y1="898" x2="286" y2="893"/>
+    </g>
+    <line x1="220" y1="870" x2="176" y2="812" stroke-width="5"/>
+    <circle cx="220" cy="870" r="8" fill="#F4F1EA" stroke="none"/>
+  </g>
+
+  <!-- Panneau droit : indicateurs -->
+  <g stroke="#F4F1EA" opacity="0.5">
+    <rect x="1560" y="790" width="280" height="18" fill="none" stroke-width="3"/>
+    <rect x="1566" y="795" width="150" height="8" fill="#F4F1EA" stroke="none"/>
+    <rect x="1560" y="846" width="280" height="18" fill="none" stroke-width="3"/>
+    <rect x="1566" y="851" width="92" height="8" fill="#F4F1EA" stroke="none"/>
+    <rect x="1560" y="902" width="280" height="18" fill="none" stroke-width="3"/>
+    <rect x="1566" y="907" width="196" height="8" fill="#F4F1EA" stroke="none"/>
+    <g fill="none" stroke-width="3">
+      <circle cx="1585" cy="975" r="12"/>
+      <circle cx="1645" cy="975" r="12"/>
+      <circle cx="1705" cy="975" r="12"/>
+      <circle cx="1765" cy="975" r="12"/>
+    </g>
+  </g>
+
+  <!-- Glissiere graduee -->
+  <rect x="500" y="700" width="560" height="44" rx="22" fill="#0F1B38" stroke="#F4F1EA" stroke-width="4" opacity="0.95"/>
+  <!-- Graduations sous la glissiere -->
+  <g stroke="#F4F1EA" stroke-width="3" opacity="0.55">
+    <line x1="556" y1="762" x2="556" y2="782"/>
+    <line x1="612" y1="762" x2="612" y2="778"/>
+    <line x1="668" y1="762" x2="668" y2="782"/>
+    <line x1="724" y1="762" x2="724" y2="778"/>
+    <line x1="780" y1="762" x2="780" y2="782"/>
+    <line x1="836" y1="762" x2="836" y2="778"/>
+    <line x1="892" y1="762" x2="892" y2="782"/>
+    <line x1="948" y1="762" x2="948" y2="778"/>
+  </g>
+  <g stroke="#F4F1EA" stroke-width="5" opacity="0.85">
+    <line x1="502" y1="760" x2="502" y2="792"/>
+    <line x1="1058" y1="760" x2="1058" y2="792"/>
+  </g>
+
+  <!-- Manette fantome : la position que le levier DEVRAIT pouvoir atteindre -->
+  <g opacity="0.3" stroke="#F4F1EA" fill="none">
+    <line x1="560" y1="716" x2="560" y2="392" stroke-width="16" stroke-dasharray="20 16" stroke-linecap="round"/>
+    <circle cx="560" cy="308" r="82" stroke-width="7" stroke-dasharray="17 14"/>
+    <rect x="536" y="700" width="48" height="44" rx="8" stroke-width="5" stroke-dasharray="12 10"/>
+  </g>
+
+  <!-- Manette reelle, soudee en butee droite -->
+  <g>
+    <rect x="996" y="698" width="48" height="50" rx="8" fill="url(#shaft)" stroke="#8F711B" stroke-width="3"/>
+    <rect x="1004" y="308" width="32" height="404" rx="6" fill="url(#shaft)"/>
+    <circle cx="1020" cy="298" r="90" fill="url(#knob)" stroke="#8F711B" stroke-width="4"/>
+  </g>
+
+  <!-- Points de soudure : grossiers, definitifs -->
+  <g fill="#C9A227" stroke="#7D621A" stroke-width="4">
+    <circle cx="980" cy="738" r="24"/>
+    <circle cx="956" cy="750" r="16"/>
+    <circle cx="998" cy="756" r="14"/>
+    <circle cx="1060" cy="738" r="24"/>
+    <circle cx="1084" cy="750" r="16"/>
+    <circle cx="1042" cy="756" r="14"/>
+    <circle cx="986" cy="700" r="13"/>
+    <circle cx="1054" cy="700" r="13"/>
+  </g>
+  <!-- Cordon de soudure au pied du levier -->
+  <g fill="#E4C55C" stroke="#7D621A" stroke-width="3">
+    <circle cx="1000" cy="754" r="11"/>
+    <circle cx="1014" cy="758" r="11"/>
+    <circle cx="1028" cy="758" r="11"/>
+    <circle cx="1042" cy="754" r="11"/>
+  </g>
+
+  <!-- Plaque FIXE en butee -->
+  <rect x="1096" y="690" width="152" height="62" rx="8" fill="#14213F" stroke="#F4F1EA" stroke-width="3" opacity="0.95"/>
+  <text x="1172" y="734" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="42" font-weight="700" letter-spacing="5" fill="#F4F1EA">FIXE</text>
+
+  <!-- Plaque gravee TAUX DE CHANGE -->
+  <rect x="580" y="878" width="760" height="122" rx="10" fill="#17244A" stroke="#F4F1EA" stroke-width="4" opacity="0.95"/>
+  <g stroke="#F4F1EA" fill="none" opacity="0.5" stroke-width="2.5">
+    <circle cx="606" cy="904" r="7"/>
+    <circle cx="1314" cy="904" r="7"/>
+    <circle cx="606" cy="974" r="7"/>
+    <circle cx="1314" cy="974" r="7"/>
+  </g>
+  <text x="960" y="962" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="7" fill="#F4F1EA">TAUX DE CHANGE</text>
+
+  <!-- Titre -->
+  <text x="960" y="176" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="122" fill="#F4F1EA" letter-spacing="2">Le levier perdu</text>
+  <g stroke="#F4F1EA" stroke-width="3" opacity="0.5">
+    <line x1="380" y1="140" x2="490" y2="140"/>
+    <line x1="1430" y1="140" x2="1540" y2="140"/>
+  </g>
+
+  <!-- Vignette -->
+  <rect width="1920" height="1080" fill="url(#vignette)"/>
+</svg>

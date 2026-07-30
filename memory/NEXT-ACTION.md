@@ -1,6 +1,7 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : **2026-07-30** (CFA PROMU PRÊT-PUBLICATION · boucle NotebookLM documentée ·
-> preuve de concept slide→SVG notée pour session future)
+> Mis a jour : **2026-07-30, 2e session** — ⭐ **PUBLICATION DÉMARRÉE** : Sénégal PUBLIÉ, AES PROGRAMMÉ
+> le 4 août 14h45, CFA habillé (titre + miniature) · jury titres + jury miniature créés · miniature SVG
+> composée maison. *(1re session : CFA promu · boucle NotebookLM · preuve slide→SVG)*
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
@@ -12,9 +13,13 @@
 >
 > | Worktree | Branche | Chantier | Source de vérité |
 > |---|---|---|---|
-> | `/Users/clawdbot/Workspace/remotion-cfa` | `feat/cfa-nuit1994-svg-mix` | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
-> | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
-> | `/Users/clawdbot/Workspace/remotion` | `feat/soudan-passe-finale-6lots` | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
+> ⚠️ **Colonne « branche » = la branche ACTUELLEMENT checked out** (état vérifié `git worktree list` le
+> 2026-07-30 en fin de session). Un worktree n'a qu'UNE branche active à la fois — les autres branches
+> citées existent mais demandent un `git checkout` explicite.
+>
+> | `/Users/clawdbot/Workspace/remotion-cfa` | ✅ **`feat/cfa-nuit1994-svg-mix`** (actif, `97fb09aa` NON mergé) | **Franc CFA mid-form** | `memory/episodes/souverain/franc-cfa-short/STATUS.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion-cfa` | `rnd/stick-figures-gestes` — ⚠️ **même worktree, PAS checked out** | **Registre stick figure** | `remotion-cfa/src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` (du worktree) |
+> | `/Users/clawdbot/Workspace/remotion` | ✅ **`rnd/slide-nlm-vers-svg`** (actif) — ⚠️ le Soudan vit sur `feat/soudan-passe-finale-6lots`, **à re-checkout** ; le `stash@{0}` ci-dessous n'est PAS restaurable avant ça | Soudan mid-form | `memory/episodes/soudan-midform/STATUS.md` |
 > | `/Users/clawdbot/Workspace/remotion` | ✅ **`master`** (branche R&D perso MERGÉE le 2026-07-29, supprimée) | **R&D scène vivante + doctrine perso** | `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md` |
 >
 > ### ⛔ LA COMMANDE À LANCER — pas un conseil à lire, une commande à EXÉCUTER
@@ -39,12 +44,40 @@
 
 ---
 
+## 📤 PUBLICATION — LA PRIORITÉ ACTIVE (2026-07-30, 2e session)
+
+> ⭐⭐ **La chaîne publie enfin.** Après 25 jours de blocage (2 vidéos longues finies dormaient depuis le
+> 5 juillet), la publication est démarrée. **Vider le calendrier éditorial est la priorité n°1** — le
+> GAZODUC vient après.
+>
+> | Vidéo | État |
+> |---|---|
+> | 🇸🇳 Sénégal Pétrole & Gaz | ✅ **PUBLIÉ** le 2026-07-30 |
+> | ⚔️ War-Map Sahel AES | 🗓️ **PROGRAMMÉ mardi 4 août 2026, 14h45** |
+> | 💰 Franc CFA | titre + miniature prêts → upload manuel Studio ~11 août |
+>
+> ⛔ **CONTRAINTE BLOQUANTE** : le **Short AES ne sort JAMAIS avant le 4 août 14h45** (son CTA renvoie à
+> la vidéo longue). Le Short Sénégal, lui, est libre.
+> ⏭️ **Prochaine session** : programmer les Shorts Sénégal + AES (prêts), puis **CONSTRUIRE** les Shorts
+> CFA et Soudan (⚠️ ils n'existent PAS, vérifié sur disque le 30/07).
+>
+> **Source de vérité unique** (dates, titres figés, thumbnails, interdits) :
+> `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
+> Outils : `scripts/tools/jury-titres-llm.py` · `scripts/tools/jury-thumbnail-llm.py` ·
+> ROUTAGE.md § « Publier une vidéo ».
+
+---
+
 ## 🏁 CFA = TERMINÉ (2026-07-30) · ⏭️ 2 CHANTIERS NOTÉS POUR PLUS TARD
 
 > **L'épisode Franc CFA est PROMU** → `out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4`
 > (4 min 28 · 8046 frames · −17,2 LUFS). Musique = `music-A-ambient-souverain`, **volume 0.0716**,
 > fenêtre 19,6→259,7 s, **aucune boucle**. Détail + les 2 chiffres à ne jamais transposer :
-> STATUS du worktree § 0-DUODECIES. **Reste = publication TryPost** (administratif).
+> STATUS du worktree § 0-DUODECIES. ✅ **Titre et miniature FIGÉS le 2026-07-30** : titre
+> `Une nuit, l'argent a fondu. Le système est resté.` (48 car.) · miniature
+> `public/_shared/thumbnails-library/franc-cfa/minuit.png` (SVG source à côté).
+> **Reste = upload MANUEL YouTube Studio (~11 août)** — ⛔ une vidéo LONGUE ne passe JAMAIS par TryPost
+> (règle d'or `memory/tools/trypost.md` : garder Test & Compare, décision Aziz 2026-07-10).
 >
 > ⭐ **v4 du 2026-07-30 — le mot « CONFIANCE » n'est plus tronqué par le sac** (on lisait
 > « CONFIANC » sur toute la fin du beat 6b, y compris dans la version déjà promue). Fix

@@ -10,6 +10,24 @@
 
 ---
 
+## 📤 PUBLICATION — état de diffusion (2026-07-30, 2e session)
+
+> ⭐ La chaîne a commencé à publier après 25 jours de blocage. **État de DIFFUSION** (distinct de l'état
+> de production ci-dessous : une vidéo « ✅ LIVRÉ » n'est pas forcément publiée).
+
+| Vidéo | Production | Diffusion |
+|---|---|---|
+| Sénégal Pétrole & Gaz (long 8min16) | ✅ livré | ✅ **PUBLIÉ 2026-07-30** |
+| War-Map Sahel AES (long 7min30) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04 14h45** |
+| Franc CFA (mid-form 4min28) | ✅ livré | titre + miniature prêts → upload manuel Studio ~11 août |
+| Short Sénégal D3 · Short AES 90s | ✅ livrés | à programmer (⛔ Short AES jamais avant le 4 août 14h45) |
+| Short CFA · Short Soudan | ⚠️ **n'existent pas** | à CONSTRUIRE |
+
+**Source de vérité unique** : `.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
+⛔ Vidéo LONGUE = upload MANUEL YouTube Studio (jamais TryPost — garder Test & Compare). Shorts = TryPost.
+
+---
+
 ## Scènes à PERSONNAGES — DOCTRINE ÉCRITE + partage à 3 étages prouvé (2026-07-28 soir)
 
 **État** : session de R&D pure (aucun épisode de production touché). Commits `66ad70f8` →

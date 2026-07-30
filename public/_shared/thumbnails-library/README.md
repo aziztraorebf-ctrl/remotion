@@ -120,10 +120,40 @@ d'une frame existante").
 **Quand l'utiliser** : sujet géopolitique/actualité avec un script narratif déjà écrit, où on veut
 plusieurs directions créatives vraiment différentes plutôt qu'une seule idée affinée.
 
-## Choix Pipeline A, B ou C selon le sujet
+## Pipeline SVG — composé maison, ZÉRO génération d'image (validé 2026-07-30, cas Franc CFA)
+
+> ⭐⭐ **Le défaut pour toute vidéo au registre SVG/vectoriel.** Une miniature n'est rien d'autre qu'une
+> **scène SVG statique** — exactement ce que le studio produit déjà. On la COMPOSE, on ne la génère pas.
+
+**Pourquoi il bat les pipelines A/B/C sur ces sujets :**
+- **Texte exact, accents compris.** Un modèle d'image ne sait pas écrire du français fiable — observé le
+  2026-07-30 sur 4 images Gemini web : « BANQUE CENTRALE DES **ÉETATS** », « **FRAC** CFA », « WEST AFRIC ».
+- **Zéro rupture d'attente.** Une miniature 3D photoréaliste sur une vidéo 100 % SVG fait cliquer sur du
+  3D pour tomber sur de l'illustration animée → abîme la rétention des premières secondes.
+- **Coût nul**, itération en secondes (`rsvg-convert -w 1920 -h 1080 x.svg -o x.png`).
+- **Signature de chaîne** : des miniatures dans le même langage visuel que les vidéos rendent la chaîne
+  reconnaissable dans un feed. Actif qui se capitalise.
+
+**Les 4 étapes :**
+1. `python3 scripts/tools/jury-thumbnail-llm.py <script.md> --contexte "..."` → 5 concepts SVG classés
+   (4 modèles). Le brief exige ≥2 vraies SCÈNES NARRATIVES : un schéma/graphique est un sujet méta, il
+   explique au lieu de raconter et lit comme un slide de rapport en vignette.
+2. Composer le SVG (agent Fable ou soi-même).
+3. ⭐ **L'orchestrateur reprend le SVG à la main** — un agent auto-évalue mal son propre rendu visuel.
+4. **Vérifier à 320 px et REGARDER** (`rsvg-convert -w 320 -h 180`). Non négociable.
+
+**Référence produite** : `franc-cfa/minuit.png` (+ `.svg` source) — horloge arrêtée à minuit, billet
+déchiré dont la moitié droite tombe ET s'assombrit en sortant du halo. Texte gravé : « FRANC CFA ·
+Divisé par deux en une nuit ». Variante écartée conservée : `franc-cfa/levier.png`.
+Doctrine complète : `.claude/…/memory/feedback_thumbnail-svg-compose-maison.md`.
+
+## Choix Pipeline SVG, A, B ou C selon le sujet
 
 | Type de sujet | Pipeline recommandé | Pourquoi |
 |---------------|---------------------|----------|
+| **Vidéo au registre SVG/vectoriel (encre, blueprint, D3, schéma animé)** | **SVG** ⭐⭐ | Cohérence de registre + texte français exact. Ne PAS générer une image 3D pour une vidéo vectorielle. |
+| **Texte français accentué à graver dans l'image** | **SVG** ⭐⭐ | Les modèles d'image fautent sur les accents et les chiffres précis (« ÉETATS », « FRAC »). |
+| **Sujet éditorialement sensible (neutralité stricte à tenir)** | **SVG** ⭐ | On contrôle chaque forme — un modèle d'image glisse vers l'allégorie accusatrice (2 concepts sur 4 montraient le CFA enchaîné par l'euro). |
 | Sujet à ratio mesurable, objet symbolique (baril, ampoule, coffre, balance) | A | Le SVG permet de fixer le ratio précisément, Gemini ajoute la matière |
 | Sujet géographique stylisé (carte ancienne, territoire highlight) | A | SVG pose la géométrie reconnaissable, Gemini ajoute texture/détails époque |
 | Sujet à esthétique cartoon storybook | **B** | Impossible à coder en SVG primitif, Gemini imite l'esthétique des frames de référence |
