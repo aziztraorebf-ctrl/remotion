@@ -103,6 +103,19 @@ REJETEE pour ca (composants Mapbox generiques vs DA parchemin du long).
 | **AES 90s** | `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4` | narration 82,5 s calibree sur les 82 s du NotebookLM ; V1-V4 rejetees avant la bonne |
 | **Senegal Petrole & Gaz D3** | `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4` | ⭐ la plus directe : `SCRIPT-FR.txt` = traduction FR de la 3e generation ; scenes calquees (`Scene1Hook`/`Scene2Paradoxe`/`Scene3Comparaison`/`Scene4Dette`/`Scene5Cta`) ; commentaire en tete de `whisper-words-senegal-short.ts` : « script FR condense NotebookLM » |
 
+## 🔬 SECOND USAGE — la planche de slides pour IDÉER des scènes (à prouver)
+
+Découvert le 2026-07-30 : les **slideshows** de NotebookLM proposent des traductions
+visuelles qu'on n'aurait pas cherchées (il ignore tout de notre arsenal → remède au biais
+du catalogue). Preuve de concept décidée par Aziz, **session future** :
+→ `memory/starters/STARTER-PROMPT-preuve-concept-slide-nlm-vers-svg.md`
+Références conservées : `public/_shared/refs/notebooklm-slides/` (1 bonne + 1 contre-exemple).
+
+⭐ **La règle qui sort des 2 slides** : ce qui vaut, c'est la **trouvaille de traduction**,
+jamais l'exécution — environ **une par lot**, pas une par slide.
+⚠️ Ça inverse INTENTION → FORME → TEMPLATE : **écrire ce que la scène doit faire ressentir
+AVANT d'ouvrir les images**, sinon on choisit la plus jolie et pas la plus juste.
+
 ## Faux ami
 
 `scripts/archive/export-for-notebooklm.ts` — exporte la base de connaissance du projet pour

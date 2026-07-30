@@ -1,7 +1,31 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-29 (2e session — R&D scènes à personnages CLOSE, Gazoduc = prochaine vidéo ;
-> session 2 = recherche/veille, offre freelance + LinkedIn cadrés → `memory/freelance-linkedin/`)
+> Mis a jour : **2026-07-30** (CFA PROMU PRÊT-PUBLICATION · boucle NotebookLM documentée ·
+> preuve de concept slide→SVG notée pour session future)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
+
+## 🏁 CFA = TERMINÉ (2026-07-30) · ⏭️ 2 CHANTIERS NOTÉS POUR PLUS TARD
+
+> **L'épisode Franc CFA est PROMU** → `out/PRET-PUBLICATION/franc-cfa-midform-FINAL.mp4`
+> (4 min 28 · 8046 frames · −17,2 LUFS). Musique = `music-A-ambient-souverain`, **volume 0.0716**,
+> fenêtre 19,6→259,7 s, **aucune boucle**. Détail + les 2 chiffres à ne jamais transposer :
+> STATUS du worktree § 0-DUODECIES. **Reste = publication TryPost** (administratif).
+>
+> ⛔ **Chantiers ÉCARTÉS APRÈS TEST — ne pas les rouvrir** : le **grain** (3 intensités rendues,
+> jusqu'à 6× le réglage préconisé → invisible ; « as-tu vraiment besoin d'un grain dans ce
+> cas-ci ? » = non) · les **creux d'animation** mesurés (jugés non gênants au visionnage).
+> ⭐⭐ **Sur 4 recommandations LLM testées, ZÉRO correction** : 3 étaient factuellement fausses
+> contre le code, la 4e vraie mais sans objet. Leçon :
+> `feedback_defaut-signale-par-llm-verifier-quil-nous-concerne.md`.
+>
+> ### ⏭️ NOTÉ POUR UNE SESSION FUTURE (décidé par Aziz, PAS commencé)
+> 1. ⭐ **PREUVE DE CONCEPT : une slide NotebookLM → une scène SVG animée**
+>    → `memory/starters/STARTER-PROMPT-preuve-concept-slide-nlm-vers-svg.md`
+>    Objet = les « 3 piliers au-dessus d'un gouffre ». ⛔ **Pas pour l'intégrer dans le CFA**
+>    (l'épisode est clos) — pour **prouver le concept**. Si ça tient : ça ouvre l'idéation de
+>    scènes par planche de slides, candidat n°1 = le **GAZODUC**.
+> 2. **La boucle NotebookLM long→short est enfin DOCUMENTÉE** (elle ne vivait que dans les
+>    transcripts, après 3 usages et 2 Shorts publiés) →
+>    `memory/tools/notebooklm-boucle-short.md`. Prompt CFA prêt dans la conversation.
 
 ## ⏭️⏭️ SESSION CFA DU 2026-07-29 SOIR — PROCHAINE ÉTAPE FIXÉE PAR AZIZ
 
