@@ -91,6 +91,33 @@ Et ça déplace le jugement de goût AVANT le code, comme le storyboard l'a fait
 tout poser sur une carte, alors que le sujet est fait d'abstractions (financement, délais,
 dépendance, rapport de force) — exactement là où une carte échoue et où une scène-objet gagne.
 
+## 🎥 AZIZ APPORTERA DES VIDÉOS À NOTEBOOKLM (décidé le 2026-07-30)
+
+Second volet de la même session future. Aziz va **donner des vidéos en source à NotebookLM**
+pour qu'il les examine, et en tirer :
+- le **pacing** (où ça coupe, combien de temps une idée est tenue, comment ça ouvre et referme)
+- **la manière dont la vidéo est faite** (structure, enchaînement, montage)
+- **le script** — à adapter ou non à notre façon de faire
+- **l'usage des visuels**, pour voir ce qui se transpose chez nous
+
+Le but reste **la version courte** : nourrir la boucle long→short avec des références externes,
+et non plus seulement avec nos propres scripts.
+
+⭐ **Ce que ça change par rapport à la boucle documentée** : jusqu'ici on lui donnait NOTRE
+script long et on observait comment il le condensait. Là on lui donne une **vidéo tierce** —
+donc on n'observe plus sa condensation de nous, mais **sa lecture d'un objet qui marche déjà**.
+Deux usages distincts à ne pas confondre.
+
+⚠️ **Rappels qui s'appliquent quand même** (cf. `memory/tools/notebooklm-boucle-short.md`) :
+- Transcript = **API OpenAI Whisper**, jamais le binaire local · **forcer la langue source**
+  (en auto il traduit littéralement et fabrique des non-sens sur les noms propres).
+- ⛔ Ne jamais reprendre un chiffre ou un nom propre depuis un transcript sans revérifier.
+- On garde la STRUCTURE, on jette l'exécution — même règle que pour les slides.
+- ⛔ Ne pas lui demander un avis écrit sur le pacing : **ça se juge en le voyant**.
+
+📌 **À faire au démarrage de la session** : demander à Aziz QUELLES vidéos il veut soumettre
+(les siennes ? des références tierces ? un mélange ?) — la réponse change ce qu'on cherche.
+
 ## Piste annexe notée le même jour (NON testée)
 
 **La scène de marché + cadenas.** Un décor de marché organique généré par modèle, sur lequel
