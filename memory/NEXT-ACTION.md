@@ -3,6 +3,37 @@
 > session 2 = recherche/veille, offre freelance + LinkedIn cadrés → `memory/freelance-linkedin/`)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 
+## ⏭️⏭️ SESSION CFA DU 2026-07-29 SOIR — PROCHAINE ÉTAPE FIXÉE PAR AZIZ
+
+> ⚠️ Bloc ajouté par une session parallèle (worktree `remotion-cfa`) — il ne remplace pas les
+> priorités ci-dessous, il ajoute le chantier CFA qui reprend là où on s'est arrêté.
+> ⭐ **STARTER PRÊT** : `memory/starters/STARTER-PROMPT-cfa-musique-puis-grain.md`
+>
+> **1. LA MUSIQUE — commencer par l'index qu'on vient de créer.**
+>    `public/_shared/audio/INDEX-MUSIQUES.md` : 67 pistes uniques mesurées (durée · amplitude ·
+>    bande 200 Hz–2 kHz · **écart de boucle**). ⛔ **La durée n'est PAS un critère** (correction
+>    d'Aziz : les pistes Minimax sont faites pour BOUCLER — ma 1re version filtrait sur ≥ 249 s
+>    et ne gardait que 12 pistes sur 67, erreur corrigée → **58 retenues**). Le choix est un
+>    **jugement d'Aziz à l'oreille**, sur 3-4 extraits courts mixés sous un passage narré réel.
+>    Puis volume recalculé **par bande 200 Hz–2 kHz**, jamais en RMS global.
+>
+> **2. LE GRAIN, SUR UNE SEULE SCÈNE D'ABORD** (consigne explicite d'Aziz) — test à variable
+>    unique avant de toucher les 8 beats. Scène recommandée : beat 6a (frame de réf sous la main).
+>    Seul point que les 2 modèles ET le code confirment : aucun grain nulle part.
+>    Si validé → brique partagée → re-render complet → validation.
+>
+> **⛔ NE PAS APPLIQUER** 3 des 6 points des TOP 3 LLM, vérifiés FAUX : funambule « linéaire »
+> (c'est une Bézier quadratique), signatures « en fondu » (elles se tracent déjà), et les 2
+> « temps morts » de Gemini qui sont les passages les PLUS animés du film. Les VRAIS creux,
+> mesurés par nous : 2:29 (6 s) · 4:11 · 4:24 · 0:43 · 0:52.
+>
+> **✅ FAIT cette session** : les 3 fixes du visionnage VALIDÉS Aziz (`f8c72545` `0456ff96`
+> `a2c36905`) · **ré-assemblage v3** 4 min 28 / 8046 frames / aucun gel / −17,1 LUFS, rapatrié
+> dans `out/episodes/franc-cfa-midform/v3-post-fixes/` · **INDEX-MUSIQUES** (71 fichiers → 67
+> uniques, 4 doublons binaires) `aed31c4a` `c907c34b` · ⭐⭐ **`memory/doctrines/GRILLE-JUGEMENT-MIDFORM.md`**
+> (7 critères observables + baseline : forces = métaphore/lisibilité, marge = **matière 2/10** et
+> **poids 4/10**) · outil `scripts/tools/kimi-video-review-custom.py`.
+
 ## ⛔⛔ AVANT DE LIRE QUOI QUE CE SOIT — LES CHANTIERS VIVANTS SONT DANS DES WORKTREES
 
 > **Ce fichier (repo principal) est structurellement EN RETARD** sur les chantiers qui vivent ailleurs.
