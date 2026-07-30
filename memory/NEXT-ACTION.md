@@ -46,6 +46,16 @@
 > fenêtre 19,6→259,7 s, **aucune boucle**. Détail + les 2 chiffres à ne jamais transposer :
 > STATUS du worktree § 0-DUODECIES. **Reste = publication TryPost** (administratif).
 >
+> ⭐ **v4 du 2026-07-30 — le mot « CONFIANCE » n'est plus tronqué par le sac** (on lisait
+> « CONFIANC » sur toute la fin du beat 6b, y compris dans la version déjà promue). Fix
+> `destX` 502→410 (commit `97fb09aa`, worktree `remotion-cfa`), beat re-rendu et **remplacé
+> chirurgicalement** dans le montage — même durée exacte (1275 f / 42,560 s), donc zéro dérive.
+> Re-vérifié : 8046 f · −17,2 LUFS · aucun gel (268/268 empreintes uniques).
+> ⛔ **Ne PAS re-assembler l'épisode depuis les rushes `beats/`** : `beat5b-levier-FINAL.mp4`
+> est la version PRÉ-COUPE (910 f) ; la coupe v3 (−301 f → 609 f) n'existe que dans le montage,
+> pas comme rush. Un re-assemblage naïf rallongerait l'épisode de 10 s.
+> Lien : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/franc-cfa-midform-FINAL-7ql4EsuCSBVOnATbDeAcyPnpVn7ZS9.mp4
+>
 > ⛔ **Chantiers ÉCARTÉS APRÈS TEST — ne pas les rouvrir** : le **grain** (3 intensités rendues,
 > jusqu'à 6× le réglage préconisé → invisible ; « as-tu vraiment besoin d'un grain dans ce
 > cas-ci ? » = non) · les **creux d'animation** mesurés (jugés non gênants au visionnage).
