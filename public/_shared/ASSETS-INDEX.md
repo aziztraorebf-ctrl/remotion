@@ -5,6 +5,14 @@
 > Dernière mise à jour : 2026-05-21 (+3 layouts Vague 7 : PortraitSilhouette, MosaïqueActeurs, PassationPouvoir — templates personnages & réseaux).
 > **Règle visuelle** : texte à l'écran = erreur par défaut. Icônes Lucide > texte. Max 1-2 mots par élément. Jamais de phrase.
 
+## 🎵 MUSIQUES — 67 pistes existantes, index dédié
+
+⛔ **AVANT TOUT APPEL Minimax/fal.ai : lire `public/_shared/audio/INDEX-MUSIQUES.md`.**
+71 fichiers musicaux (67 uniques + 4 doublons binaires) vivaient dans `public/` **sans aucun index** —
+d'où des variantes payées plusieurs fois parce qu'introuvables. L'index les mesure toutes
+(durée · amplitude · **bande 200 Hz–2 kHz de la voix**) et isole les **12 pistes longues+stables**
+utilisables telles quelles sur un mid-form. Générer sans l'avoir lu = re-payer ce qu'on possède.
+
 ## 🎨 Mockups Gemini — blueprints de design
 
 **Path** : `public/_shared/previews/mockups-gemini/`
