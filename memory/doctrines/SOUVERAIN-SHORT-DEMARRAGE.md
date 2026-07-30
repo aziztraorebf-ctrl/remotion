@@ -3,6 +3,13 @@
 > Utiliser pour TOUT nouveau Short, peu importe le sujet ou le pays.
 > Lire dans cet ordre avant de toucher au code.
 
+## Étape 0 — Le Short est tiré d'une vidéo LONGUE existante ?
+→ `memory/tools/notebooklm-boucle-short.md` ⭐⭐ **AVANT l'étape 1.**
+NotebookLM produit un Short à partir du script long ; on en extrait le **pacing / découpage /
+hook / chute**, jamais son visuel ni son texte anglais. C'est ce qui produit le « script locked »
+que l'étape 1 suppose acquis. Éprouvé 3×, 2 Shorts publiés (AES, Sénégal D3).
+⛔ Gotcha n°1 : **il perd le climax** → imposer une « section intouchable » + dire où couper.
+
 ## Étape 1 — Pré-production (si pas déjà faite)
 → Skill `/souverain-preproduction`
 Résultat : script locked + audio ElevenLabs + musique Minimax + timing.ts + maroc-words.ts (forced alignment)

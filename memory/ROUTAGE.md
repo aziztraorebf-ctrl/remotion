@@ -64,6 +64,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | **Doute « où chercher ? » Souverain — POINT D'ENTRÉE** | `src/projects/souverain/SOUVERAIN-INDEX.md` ⭐ carte maître du pilier |
+| **Tirer un SHORT d'une vidéo LONGUE (condensation, script court)** | `memory/tools/notebooklm-boucle-short.md` ⭐⭐ NotebookLM PRODUIT un Short, on en extrait le PACING (jamais un avis écrit). Gabarit « section intouchable » + 6 gotchas. **En AMONT** de SOUVERAIN-SHORT-DEMARRAGE |
 | Démarrer/coder un Short Souverain Mapbox (point d'entrée) | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` ⭐ 7 étapes → puis `SOUVERAIN-SHORT-SKELETON.md` |
 | Doctrine Souverain (durable) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` (LIRE en entier avant tout code Souverain) |
 | Règles éditoriales Souverain (sources, couleurs, script Type B) | `memory/rules/rules-souverain-editorial.md` |
