@@ -103,18 +103,82 @@ REJETEE pour ca (composants Mapbox generiques vs DA parchemin du long).
 | **AES 90s** | `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4` | narration 82,5 s calibree sur les 82 s du NotebookLM ; V1-V4 rejetees avant la bonne |
 | **Senegal Petrole & Gaz D3** | `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4` | ⭐ la plus directe : `SCRIPT-FR.txt` = traduction FR de la 3e generation ; scenes calquees (`Scene1Hook`/`Scene2Paradoxe`/`Scene3Comparaison`/`Scene4Dette`/`Scene5Cta`) ; commentaire en tete de `whisper-words-senegal-short.ts` : « script FR condense NotebookLM » |
 
-## 🔬 SECOND USAGE — la planche de slides pour IDÉER des scènes (à prouver)
+## ✅ SECOND USAGE — la planche de slides pour IDÉER des scènes : **PROUVÉ (2026-07-30)**
 
-Découvert le 2026-07-30 : les **slideshows** de NotebookLM proposent des traductions
-visuelles qu'on n'aurait pas cherchées (il ignore tout de notre arsenal → remède au biais
-du catalogue). Preuve de concept décidée par Aziz, **session future** :
-→ `memory/starters/STARTER-PROMPT-preuve-concept-slide-nlm-vers-svg.md`
-Références conservées : `public/_shared/refs/notebooklm-slides/` (1 bonne + 1 contre-exemple).
+Les **slideshows** de NotebookLM proposent des traductions visuelles qu'on n'aurait pas
+cherchées (il ignore tout de notre arsenal → remède au biais du catalogue).
+**La preuve de concept est FAITE et RÉUSSIE.**
+
+La slide « The Sira Chasm » (3 piliers enjambant un gouffre, tablier commun, socles fissurés)
+est devenue une scène SVG animée dans notre registre encre/nuit — 390 frames 1920×1080,
+78 empreintes uniques sur 78 (aucun gel). `src/projects/_rnd/svg-scenes/PiliersGouffre16x9.tsx`
++ `PiliersGouffreBodies.ts`, compo `RND-PiliersGouffre` (commit `4f35233b`).
+⛔ **Destinée au GAZODUC, PAS au CFA** (épisode clos — décision d'Aziz).
+Références : `public/_shared/refs/notebooklm-slides/` (1 bonne + 1 contre-exemple).
 
 ⭐ **La règle qui sort des 2 slides** : ce qui vaut, c'est la **trouvaille de traduction**,
 jamais l'exécution — environ **une par lot**, pas une par slide.
 ⚠️ Ça inverse INTENTION → FORME → TEMPLATE : **écrire ce que la scène doit faire ressentir
 AVANT d'ouvrir les images**, sinon on choisit la plus jolie et pas la plus juste.
+
+### ⭐⭐ CE QUE LA PREUVE A APPRIS (réutilisable bien au-delà de NotebookLM)
+
+- **La v1 a été REJETÉE au rendu**, sur 3 défauts invisibles dans le code : gouffre inexistant
+  (sol continu → métaphore morte), contraste bleu-sur-bleu, emblèmes en cartouches rapportés.
+  La v2 les a corrigés après un brief qui **NOMMAIT chaque défaut**.
+- ⭐ **PRÉVOIR UN FALLBACK DANS LE BRIEF.** La poignée de main a échoué **3 fois** (lue comme un
+  raccord de tuyau, puis une boucle de ceinture) → remplacée par le **sceau gravé, prévu comme
+  repli dans le brief initial**. Coût : une ligne. Gain : 1 à N itérations. À faire pour tout
+  élément à lecture ambiguë (mains, gestes, jonctions d'objets, symboles de contact).
+- ⭐⭐ **BALAYAGE vs FONDU = une différence de SENS, pas d'effet.** Un fondu dit « elles étaient
+  déjà là » ; un balayage dit « elles s'ouvrent MAINTENANT ». Le script parlait au présent →
+  balayage. Le mode de révélation se tranche sur ce que la phrase dit du TEMPS, jamais sur le joli.
+- **Un clip qui « ne marche pas » se résout par la MESURE** : le masque des fissures démarrait à
+  `y=655` alors que les fissures vivent en `y∈[686,771]` — mesuré dans le SVG source, pas estimé à l'œil.
+- **Le « rends et regarde » se COMMANDE** : l'agent a itéré 17 fois parce que le brief l'exigeait.
+  Ce n'est pas un trait acquis du modèle, c'est une consigne à écrire.
+
+## 🎯 CE QU'AZIZ ATTEND DE CE SECOND USAGE (verbatim 2026-07-30)
+
+> « Une fois le script construit, on peut l'utiliser pour générer des **slide decks custom**
+> [...] on lui donne **le minimum** [d'instructions], et après **on regarde les graphismes
+> qu'il prépare**. »
+
+1. **La granularité visée est la SCÈNE / le BEAT**, pas l'épisode. Une planche **ajustée par beat**.
+2. **Le minimum d'instructions, délibérément.** ⚠️ Ça semble contredire le gabarit dirigé du
+   § LE GABARIT — ce n'en est pas un : **les deux usages n'ont pas le même but**. Pour le SCRIPT
+   on dirige (il faut protéger un climax précis) ; pour l'IDÉATION on sous-spécifie **exprès**,
+   parce que la valeur vient de ce qu'il propose et qu'on n'aurait pas cherché. Sur-briefer
+   l'idéation revient à lui faire dessiner notre propre idée.
+3. **NotebookLM sait produire DIFFÉRENTS TYPES de slide decks** — noté par Aziz, non exploré.
+   Le type de deck est un levier gratuit, à sonder.
+
+⭐ **CANDIDAT n°1 : le GAZODUC Nigeria-Maroc-Europe** (`memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`).
+C'est le piège de la carte : le réflexe sera de tout poser sur une carte, alors que le sujet est fait
+d'abstractions (financement, délais, dépendance, rapport de force) — là où une carte échoue et où une
+scène-objet gagne.
+⭐⭐ **Corollaire du comparatif 4 modèles** : on lui demandera de **TROUVER, pas de dessiner**.
+NotebookLM = l'idéateur, Fable = le dessinateur. Ne pas les intervertir.
+(Détail : `memory/doctrines/SVG-SCENES-GENERATIVES.md` § SANS IMAGE, PERSONNE NE TROUVE LA FORME.)
+
+## 🔌 AUTOMATISER LA BOUCLE ? — recherché le 2026-07-30, verdict : NON pour l'instant
+
+**API officielle** : existe (**Gemini Notebook Enterprise**, ex-NotebookLM Enterprise, renommé le
+2026-07-16) mais **ne couvre NI la vidéo NI les slides — uniquement l'audio**. Entreprise / Google
+Cloud payant → **impossible depuis un compte perso**. Donc inutile pour notre boucle.
+
+**CLI officiel** : n'existe pas. Meilleur tiers = **`teng-lin/notebooklm-py`** (18 351 étoiles, actif
+au 2026-07-29), qui fait **exactement notre boucle** : créer un notebook, uploader une source, Video
+Overview **avec instructions custom**, slide deck, télécharger `.mp4` / `.pptx`.
+
+**Quotas Video Overview** (utile même en usage manuel) : gratuit **3/jour** · Plus 6 · Pro 20 · Ultra 100-200.
+
+⛔ **POURQUOI C'EST ÉCARTÉ (décision d'Aziz)** : le mode automatisable repose sur un **« master token »**
+que **ses propres auteurs qualifient d'`infostealer-grade`** — un identifiant **PLEIN COMPTE Google**
+(Gmail, Drive, YouTube) qui **survit au changement de mot de passe**. Contraire aux CGU Google, qui
+poursuit SerpApi sur ce motif exact.
+→ **Écarté pour le compte principal.** Si un jour on scripte : **compte Google dédié**, jamais le compte
+de travail. En attendant, boucle manuelle — les quotas suffisent à notre rythme.
 
 ## Faux ami
 

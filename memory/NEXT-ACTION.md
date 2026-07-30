@@ -63,15 +63,25 @@
 > contre le code, la 4e vraie mais sans objet. Leçon :
 > `feedback_defaut-signale-par-llm-verifier-quil-nous-concerne.md`.
 >
-> ### ⏭️ NOTÉ POUR UNE SESSION FUTURE (décidé par Aziz, PAS commencé)
-> 1. ⭐ **PREUVE DE CONCEPT : une slide NotebookLM → une scène SVG animée**
->    → `memory/starters/STARTER-PROMPT-preuve-concept-slide-nlm-vers-svg.md`
->    Objet = les « 3 piliers au-dessus d'un gouffre ». ⛔ **Pas pour l'intégrer dans le CFA**
->    (l'épisode est clos) — pour **prouver le concept**. Si ça tient : ça ouvre l'idéation de
->    scènes par planche de slides, candidat n°1 = le **GAZODUC**.
-> 2. **La boucle NotebookLM long→short est enfin DOCUMENTÉE** (elle ne vivait que dans les
->    transcripts, après 3 usages et 2 Shorts publiés) →
->    `memory/tools/notebooklm-boucle-short.md`. Prompt CFA prêt dans la conversation.
+> ### ✅ LES 2 CHANTIERS « SESSION FUTURE » SONT FAITS (2026-07-30)
+> 1. ✅ **PREUVE DE CONCEPT slide NotebookLM → scène SVG = FAITE ET RÉUSSIE.**
+>    Livrable `RND-PiliersGouffre` (390 frames, aucun gel, commit `4f35233b`).
+>    ⛔ **Destinée au GAZODUC, PAS au CFA** — Aziz a envisagé de l'intégrer au beat 6b puis a
+>    tranché NON : la 6b porte le sac à 5584, le Sira en suspens et le « ? », que les piliers
+>    n'ont pas. **Une scène plus belle qui dit moins de choses n'est pas un gain.** Ne pas rouvrir.
+>    ⭐ Principe transversal : avant de substituer une scène à une autre, **énumérer ce que
+>    l'ancienne PORTE** (chiffres, objets narratifs, questions ouvertes). Le critère est la
+>    charge narrative, pas la beauté.
+>    Acquis gravés : `memory/tools/notebooklm-boucle-short.md` § SECOND USAGE ·
+>    comparatif 4 modèles : `memory/doctrines/SVG-SCENES-GENERATIVES.md`.
+> 2. ✅ **La boucle NotebookLM long→short est DOCUMENTÉE** → `memory/tools/notebooklm-boucle-short.md`.
+>
+> ### ⏭️ CE QUI RESTE OUVERT (jamais commencé)
+> → `memory/starters/STARTER-PROMPT-notebooklm-planche-slides-et-videos.md`
+> **(a)** générer une **planche de slides pour idéer les scènes du GAZODUC** (candidat n°1 —
+> c'est le piège de la carte : sujet fait d'abstractions) · **(b)** Aziz apportera des **VIDÉOS
+> tierces en source** à NotebookLM (demander lesquelles au démarrage) · (c) piste annexe non
+> testée : la scène marché + cadenas.
 
 ## 🗄️ TRACE — SESSION CFA DU 2026-07-29 SOIR (⛔ LES 2 CHANTIERS SONT CLOS)
 

@@ -28,6 +28,7 @@ en groupes nommés, qu'on anime ensuite par la frame (Remotion). Doctrine compl�
 | ⭐ `HeroGptAnimee` ⚠️ archivé (`_archive/HeroGptAnimee.tsx`, exclu du build) | or-jour | « suivre l'or » Soudan HÉROS (16:9) | scène-référence ÉPURE : tomber-sec + bascule couleur + remap palette + fumée réécrite à la main — rendu réf : https://files.catbox.moe/1ws3kh.mp4 |
 | `GraineStatic` / `GraineGeminiAnimee` ⚠️ archivé (`_archive/GraineGeminiAnimee.tsx`, exclu du build) | encre | graine / germination GGW | proto botanique — rendu réf : https://files.catbox.moe/ft5l5g.mp4 |
 | `CfaMidformTest` | tactique | test mid-form CFA 3 scenes | ⭐ preuve format long SVG (catbox fe3u3g) |
+| ⭐⭐ `PiliersGouffre16x9` | encre/nuit | 3 piliers au-dessus d'un gouffre | **1re preuve slide NotebookLM → scène SVG animée** (2026-07-30). Décor = Fable 5 statique (23 `<g id>`), animation = nous. ⛔ **PAS pour le CFA** (épisode clos, décision Aziz) — **destinée au GAZODUC** |
 | `JetonsGlmDemo` / `JetonsQwenDemo` | tactique | jetons carte GLM/Qwen | comparaison modeles |
 | `GisementTokensGlm` / `GisementTokensQwen` | tactique | gisements Sénégal tokens | comparaison modeles |
 | **Beats GGW (encre narrative)** | | | |
@@ -64,4 +65,10 @@ Dossier `_archive/` créé mais vide en attente de ce chantier.
 - Animation = fonction de `frame` UNIQUEMENT (jamais CSS transition / @keyframes / setTimeout).
 - innerHTML = rendu STATIQUE (juger la matière) ; pour ANIMER → réécrire en JSX (voir doctrine, gotcha).
 - SFX : `<Sequence from>` obligatoire, plancher 0.50, vérifier durée au ffprobe.
-- Choix du modèle : Gemini = organique/profondeur · GPT-5.5 = schéma/géométrie → générer les 2, choisir.
+- ⛔ **Choix du modèle — MIS À JOUR 2026-07-30. L'ancienne règle « Gemini vs GPT-5.5, générer les 2 »
+  est PÉRIMÉE** (elle envoyait vers 2 appels payants). Depuis le 2026-07-20, **Fable 5 est le DÉFAUT**
+  (agent Claude Code, **zéro appel API**, inclus dans l'abonnement) — il gagne sur la MATIÈRE, qui est
+  ce qu'on vient chercher. Gemini 3.1 Pro / GPT-5.6 Sol / GLM / Kimi K3 restent en complément ciblé.
+  ⭐⭐ **Et ne jamais lancer un panel en espérant qu'il TROUVE la forme** : mesuré le 2026-07-30, sans
+  image-cible aucun modèle ne la trouve ; avec, tous l'exécutent. **L'idéation est le maillon rare, pas
+  le dessin.** Détail : `memory/doctrines/SVG-SCENES-GENERATIVES.md`.

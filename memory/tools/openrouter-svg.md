@@ -677,14 +677,30 @@ Script d'appel direct de reference : `scratchpad .../kimi-b4-direct.py` (a rapat
 appel OpenRouter direct pour tout brief nouveau. Conversion JSX : kebab→camelCase attributs SEULEMENT
 (jamais `.replace("'",'"')` global, casse les apostrophes FR du texte).
 
-### ⚠️ PIÈGE DISTINCT (2026-07-24) : `reasoning.max_tokens` sur un GROS prompt (multi-image, brief long)
-Root cause confirmée (diagnostic agent dédié) : sur un prompt volumineux (~9k+ chars + images), K3 peut
-partir en raisonnement non borné et bloquer l'appel OpenRouter 6-8min voire indéfiniment (pas d'erreur,
-juste un hang) SI le paramètre `reasoning` n'est PAS explicitement borné dans le payload — même avec
-`reasoning_effort: "medium"` fixé par ailleurs. Fix qui marche : passer `"reasoning": {"max_tokens": 2000}`
-dans le payload JSON (distinct de `reasoning_effort`). Détail : `scripts/tools/da-brief.py` (commentaire
-inline ligne ~39-42) — ce script est repassé sur `kimi-k2.5` par défaut suite à ce constat (plus fiable/
-rapide pour ses cas d'usage), K3 reste utilisable pour sa puissance supérieure via ce fix.
+### ⛔⛔ `reasoning.max_tokens` — CE N'EST PAS UN CAS LIMITE, C'EST LE DEFAUT (revise 2026-07-30)
+
+> **SOURCE DE VERITE UNIQUE : [[kimi-k3-reasoning-borne]]** (`memory/tools/kimi-k3-reasoning-borne.md`).
+> Ce bloc n'en garde que l'essentiel — ne pas dupliquer le detail ici.
+
+Le diagnostic du 2026-07-24 presentait ca comme un piege reserve aux GROS prompts (~9k+ chars + images).
+**Re-mesure du 2026-07-30 : le symptome se produit AUSSI sur un prompt trivial** (« Reply with exactly:
+OK » -> `content: null`, `finish_reason: length`, tout le budget en `reasoning`).
+
+⛔ **`max_tokens` seul ne protege PAS** : il plafonne l'ENSEMBLE (reasoning + contenu), donc il est
+mange par le reasoning avant la moindre sortie. Payload obligatoire pour TOUT appel K3 :
+```json
+"reasoning": {"max_tokens": 2000},
+"max_tokens": 16000
+```
+Mesure production : 4243 completion_tokens dont **281** de reasoning (vs 12756 tous en reasoning), 0,10 $.
+
+⛔ **Limite NON resolue** : K3 renvoie **504 des qu'une image est jointe** (vision + gros prompt).
+Pour une vague avec reference visuelle, il ne participe que via description ecrite.
+
+⚠️ **Etat des scripts** : seul `svg-scene-narrative.py` a le fix. `llm-gen-svg.py`,
+`llm-gen-blueprint.py` et `kimi-vision-fill-scene.py` ont leur COMMENTAIRE corrige mais **pas leur
+payload** (dette tracee dans la doctrine). `da-brief.py` reste sur `kimi-k2.5` — il avait contourne
+le probleme plutot que de le resoudre, ce qui explique que le fix n'ait jamais ete propage.
 
 ### (HISTORIQUE) LE MUR : reasoning "max" FORCE — leve le 2026-07-20 (voir ci-dessus)
 K3 n'avait qu'un mode de raisonnement au 17 juillet : `max`. Pas desactivable. Consequence mesuree :
@@ -729,7 +745,11 @@ plusieurs allers-retours. La profondeur de reasoning PAIE sur ce cas precis.
 - `scripts/tools/llm-gen-svg.py --provider kimi` : jetons SVG lot (brief fige, meme que GLM).
 - `scripts/tools/llm-gen-blueprint.py --subject {derrick|tanker}` : schema blueprint technique annote.
 - `scripts/tools/kimi-vision-fill-scene.py --scene {kosti|khartoum} --image <coquille.png>` : VISION,
-  image (data URL base64 en `image_url`) + script -> couche SVG inventee. NE PAS passer max_tokens.
+  image (data URL base64 en `image_url`) + script -> couche SVG inventee.
+  ⛔ **CORRIGE 2026-07-30 : « NE PAS passer max_tokens » etait FAUX.** Il faut AU CONTRAIRE borner
+  `reasoning.max_tokens` (2000) + `max_tokens` (16000), sinon K3 rend `content: null` ou hang.
+  Doctrine : [[kimi-k3-reasoning-borne]] (`memory/tools/kimi-k3-reasoning-borne.md`).
+  ⚠️ Ce script a son commentaire corrige mais **son payload PAS encore fixe** (dette tracee).
 - Gotcha JSX : le SVG genere par K3 utilise kebab-case (stroke-width, text-anchor...) + font-family a
   quotes multiples -> convertir en camelCase + neutraliser font-family avant injection JSX Remotion
   (voir la fonction to_jsx du parsing). Ne PAS faire un `.replace("'",'"')` global : casse les apostrophes

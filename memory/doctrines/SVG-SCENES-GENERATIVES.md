@@ -242,6 +242,48 @@ Panel archivé (code + rendus des 4) : `public/_shared/refs/stick-figure-panel/`
 `remotion-cfa` — le COMPARATIF a de la valeur, pas seulement le gagnant.
 Script réutilisable : `scripts/tools/svg-stickfigure-roles-gen.py`.
 
+### ⭐⭐⭐ SANS IMAGE, PERSONNE NE TROUVE LA FORME ; AVEC IMAGE, TOUT LE MONDE L'EXÉCUTE (2026-07-30)
+
+Deux vagues sur le MÊME brief (`scripts/tools/svg-scene-narrative.py`), scène « trois supports
+portent une charge au-dessus d'un vide ».
+
+**VAGUE 1 — INTENTION SEULE** (le brief ne prononçait JAMAIS « pilier », « pont », « gouffre ») :
+
+| Modèle | Ce qu'il a produit | Verdict |
+|---|---|---|
+| GPT-5.6 Sol | 3 objets juxtaposés (fronton, coffre, foule) reliés par un cordage ; une pièce flotte au-dessus **sans lien**. Rien ne repose sur eux. | ÉCHEC |
+| Gemini 3.1 Pro | Trépied qui bascule + astrolabe suspendu + zigzags cuivre. Il faut DÉCODER. Contraste inversé. | ÉCHEC |
+| Kimi K3 | Rien produit (bug `reasoning` non borné, cf. [[kimi-k3-reasoning-borne]]) | — |
+
+⭐ Les 2 modèles qui ont répondu ont **convergé sur l'IDÉE** (trois supports + un lien + une menace
+dessous) mais **AUCUN n'a trouvé la FORME PORTANTE** — celle où l'on VOIT le poids reposer sur les trois.
+
+**VAGUE 2 — même brief + une slide en `--narrative-ref` + notre rendu Fable en `--style-ref`** :
+
+| Modèle | Résultat |
+|---|---|
+| GPT-5.6 Sol | **Écart spectaculaire avec sa propre vague 1** : vraie structure portante, 18 groupes exactement nommés. Défauts : matière plate, cuivre envahissant, emblèmes posés et non incisés. ⭐ **Ses FISSURES sont les meilleures des 4.** |
+| Gemini 3.1 Pro | Structure correcte mais faces latérales en **cuivre plein** (3 bandes orange) = palette non respectée ; roche en contour filaire, sans matière. |
+| Kimi K3 | **504 dès qu'une image est jointe.** A produit une structure correcte **en TEXTE SEUL, sans jamais voir la slide**. |
+| **Fable 5** | Reste **DEVANT sur la matière** (cannelures, appareillage de pierre) — ce qu'on venait chercher. |
+
+#### La conclusion, et ce qu'elle change
+
+**L'IDÉATION EST LE MAILLON RARE, PAS LE DESSIN.** Une fois la forme trouvée, les modèles l'exécutent
+honorablement ; aucun ne la trouve seul. Ça confirme « le modèle PROPOSE, on valide, PUIS on code » **en
+déplaçant le constat** : ce qu'on va chercher chez un modèle, c'est l'IDÉATION — pas l'exécution (on a Fable).
+
+⛔ **Ne jamais lancer un panel de modèles en espérant qu'il TROUVE la forme.** Soit on a déjà l'image-cible
+(slide, réf, croquis) → le panel exécute et on prend les meilleurs morceaux ; soit on ne l'a pas → il faut
+un support d'idéation (planche NotebookLM, storyboard), **PAS un appel SVG de plus**.
+⚠️ Ça amende le déclencheur du PIPELINE 3 MODÈLES ci-dessous (« scène neuve dont la direction n'est pas
+arrêtée ») : sans image-cible, l'étape de génération produit du déchet.
+
+⭐ **Kimi a produit la structure depuis la seule DESCRIPTION ÉCRITE** : une description *structurelle*
+précise (pas stylistique) porte déjà l'essentiel de la forme. L'image reste supérieure, mais elle n'est
+pas toujours indispensable.
+⛔ **Limite Kimi K3** : 504 systématique dès qu'une image est jointe.
+
 | # | Étape | Qui | Gate |
 |---|---|---|---|
 | 1 | Brainstorm amont **TEXTE** (pas d'image) : GPT-5.6 Sol + Kimi K3 + Fable, question OUVERTE sur la mise en scène | 3 modèles en parallèle | — |

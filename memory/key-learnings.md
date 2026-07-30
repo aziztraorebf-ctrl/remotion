@@ -953,3 +953,27 @@ Le `public/` fait ~2.2 GB et est RECOPIÉ à chaque render → lenteur. Un publi
 seulement `_shared/{sfx,sprites,audio,geo-data,flags}` + le `_rnd/<projet>` en cours, ~98 MB) passé via
 `--public-dir=<slim>` accélère fortement. `scripts/render-mapbox.sh` le fait DÉJÀ (slim /tmp) — le réutiliser
 comme référence. Généralisable à TOUT render D3 classique, pas seulement Mapbox/ProRes.
+
+## ⛔⛔ Un rush `-FINAL` n'est PAS forcément ce qui est dans le montage — 2026-07-30 (CFA)
+**Le piège** : `out/episodes/franc-cfa-midform/beats/beat5b-levier-FINAL.mp4` est la version **PRÉ-COUPE**
+(910 frames). La coupe validée en v3 (**−301 frames → 609**) n'existe **QUE dans le montage assemblé**,
+jamais comme rush séparé. Le suffixe `-FINAL` désigne l'état final du BEAT, pas l'état retenu dans l'ÉPISODE.
+→ **Un ré-assemblage naïf depuis `beats/` rallongerait l'épisode de 10 s et défairait une décision d'Aziz**,
+sans aucune erreur ni warning.
+
+⛔ **Ne JAMAIS reconstruire un épisode livré en re-concaténant ses rushes `beats/`.** Toute coupe décidée au
+montage vit dans l'assemblage et **nulle part ailleurs**. Avant tout ré-assemblage : comparer `nb_frames` de
+chaque rush à sa durée réelle dans le montage — si ça diffère, le rush est périmé.
+
+**La parade — le REMPLACEMENT CHIRURGICAL** : quand un seul beat doit être corrigé dans un livrable déjà
+promu, re-rendre ce beat **à la durée EXACTE** et le substituer dans le montage. Cas réel : segment 6b
+remplacé à 1275 f / 42,560 s identiques → 8046 frames et −17,2 LUFS **inchangés**, aucun gel (268/268).
+⚠️ **Gotcha ffmpeg** : `-c copy` coupe sur la **keyframe la plus proche** (6772 au lieu de 6771 demandé).
+Pour couper **au frame près**, il faut **réencoder**.
+
+**Le défaut lui-même, trouvé par hasard dans un livrable DÉJÀ PROMU** : le mot « CONFIANCE » était tronqué
+en « CONFIANC » par le sac, sur toute la fin du beat 6b. Cause mesurée : le sac est peint APRÈS les pièces
+(il doit rester devant) → bord droit de la pièce 1309 vs bord gauche du sac 1155 = **154 px de recouvrement**.
+Fix : `destX` 502 → 410. → **La promotion en `PRET-PUBLICATION` ne vaut pas relecture** : un texte
+partiellement occulté ne se voit ni au code (les deux éléments sont corrects isolément) ni sur une frame
+prise avant l'occlusion.
