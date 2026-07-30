@@ -90,21 +90,32 @@ timings dérivés du forced-align — validé Aziz). ⛔ Ne pas le rejouer : voi
 
 ---
 
-## Franc CFA mid-form — 8/8 beats + assemblage v2 promu jalon — EN COURS (2026-07-26)
+## Franc CFA mid-form — 3 FIXES FAITS + ASSEMBLAGE v3 (4 min 28) — EN COURS (2026-07-29)
 
-**État** : Beat 4 "Qui tient la clé" REFAIT de zéro (la carte redondante avec le beat 2 remplacée par la
-métaphore du filet de sécurité sous un funambule, de profil — `CfaActe4Filet16x9.tsx`). Scène 1994
-extraite dans `CfaActe4Signature1994.tsx`. Les 8 beats assemblés (4min38), validés par Aziz, promus en
-jalon v2 dans `out/episodes/franc-cfa-midform/` (PAS dans `out/PRET-PUBLICATION/` — musique jugée
-inadaptée par Aziz, à refaire).
+**État** : les **3 fixes relevés au visionnage sont APPLIQUÉS et VALIDÉS par Aziz** (commits
+`f8c72545` · `0456ff96` · `a2c36905`) : beat 6a Guinée visible (hachures crème + zoom recentré sur son
+centroïde réel — la cause cachée était la concurrence visuelle du trio en drapeaux pleins) · beat 5b
+rappel du sac de riz **RETIRÉ** (coupe maison dans les silences mesurés, timings redérivés au
+forced-align, décalage −301 frames constant) · beat 3 pings de connexion **audibles** (+14 dB via
+`_shared/sfx/ui/ping-connexion.mp3`, créé pour ça).
 
-**RESTE** : musique à changer (après inventaire des 71 pistes existantes) + 3 fixes relevés au
-visionnage (ping par devise beat 3 · retirer rappel sac de riz beat 5b · rendre la Guinée visible beat
-6a) → `memory/starters/STARTER-PROMPT-cfa-fixes-post-visionnage.md`.
+**ASSEMBLAGE v3** : **8046 frames / 268.20 s / 4 min 28** (le jalon v2 faisait 4 min 38 ; l'écart de
+−301 frames est exactement la coupe du 5b). Zéro dérive (`atrim` avant `concat=`), **aucun gel**
+(265 empreintes uniques/268), **−17.1 LUFS**. Livrable :
+`out/episodes/franc-cfa-midform/v3-post-fixes/` (+ les 2 reviews LLM et la VO coupée).
+⚠️ Le jalon v2 reste INTACT comme jalon daté — ne pas l'écraser.
+
+**RESTE (ordre fixé par Aziz)** : **(1) la MUSIQUE** en partant de
+`public/_shared/audio/INDEX-MUSIQUES.md` (créé cette session : 71 fichiers → **67 pistes uniques**
+mesurées ; ⛔ la durée n'est PAS un critère, les pistes Minimax bouclent) — choix à l'oreille par
+Aziz · **(2) le GRAIN sur UNE SEULE SCÈNE d'abord** (test à variable unique) avant les 8 beats.
+Starter : `memory/starters/STARTER-PROMPT-cfa-musique-puis-grain.md`.
+Grille de jugement du format (baseline) : `memory/doctrines/GRILLE-JUGEMENT-MIDFORM.md`.
 
 ⚠️ Tout le code/script/STATUS à jour vivent dans le **worktree** `/Users/clawdbot/Workspace/remotion-cfa`
-(branche `feat/cfa-nuit1994-svg-mix`, 6 commits ff11bf21→84e0ad0c, NON mergés dans master). Source de
-vérité : `STATUS.md` § 0-DECIES (worktree). Détail : `memory/NEXT-ACTION.md` § FRANC CFA.
+(branche `feat/cfa-nuit1994-svg-mix`, NON mergée dans master). Source de vérité : `STATUS.md`
+§ **0-UNDECIES** (worktree) — la § 0-DECIES décrit la v2, c'est un jalon daté.
+⛔ `node_modules` non ignoré dans ce worktree → **jamais `git add -A`**.
 
 ---
 

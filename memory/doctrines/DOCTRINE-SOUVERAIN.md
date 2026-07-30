@@ -208,6 +208,9 @@ Avant de render un beat avec Mapbox, vérifier :
   - Voix-off : 1.0
   - **SFX : PLANCHER 0.50 — JAMAIS en dessous.** Tous les SFX (ping, tick, snap, whoosh, swoosh, drone) à 0.50 minimum. Peut monter à 0.60 sur les gros moments cinématiques (swoosh caméra qui descend/monte, impact). L'ancienne fourchette UI 0.25-0.35 était trop basse → SFX inaudibles. Référence validée : volume où Aziz entend chaque SFX même sur haut-parleur sans monter le son.
   - Musique de fond : 0.12-0.15 (baisser si elle masque les SFX)
+  - ⭐⭐ **JUGER L'AUDIBILITÉ D'UN SFX SUR LA SONIE (RMS ~100 ms), JAMAIS SUR LA CRÊTE** (2026-07-29, CFA beat 3). Un ping trop faible ne se corrige pas en cherchant le candidat au pic le plus fort : la crête est un transitoire trop bref pour que l'oreille l'intègre. Mesuré : `camera/sfx-map-ping` a une crête MEILLEURE (−8.4 vs −16.1 dB) mais s'est révélé **10 à 12 dB PLUS FAIBLE en sonie** — il fallait l'écarter, pas le choisir. Mesure juste = RMS sur la fenêtre glissante de 100 ms la plus forte du fichier ; ⛔ ni le sample max, ni le RMS global (dilué par la queue de silence).
+    - **Corollaire** : un ping qui PONCTUE (marque un contact, une connexion, un verrou) est un **SFX PORTEUR** → plancher 0.50 ci-dessus, pas une fourchette basse. Vécu : des pings posés à 0.30-0.42 étaient tous sous le plancher, donc inaudibles sous la narration (retour Aziz « je les entends à peine »).
+    - **Si aucun fichier de la banque n'atteint le niveau requis sans saturer** (mesuré : node-appear 1.24, plate-pop 1.55, sfx-map-ping 7.20 — tous > 1.0) → **NORMALISER un SFX dédié** plutôt que pousser un fichier faible dans le rouge. Recette : `volume=+11dB,alimiter=...` → `_shared/sfx/ui/ping-connexion.mp3` (+14 dB gagnés, crête −5.4 dB donc zéro clipping), réutilisable.
 
 ---
 

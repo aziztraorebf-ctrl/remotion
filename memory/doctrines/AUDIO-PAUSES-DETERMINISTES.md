@@ -35,6 +35,29 @@ ffmpeg** aux points voulus. On ne touche JAMAIS à la voix, on ajoute/ajuste seu
    et VÉRIFIER que TOUS les mots du script sont présents (aucun coupé/sauté). Si un mot manque → la coupure est
    mal calée, recaler `cut_s` sur le timing mot-à-mot exact. NE JAMAIS présenter un audio à pauses sans ce contrôle.
 
+### ⭐ Retirer un BLOC de phrases (≠ retirer un mot / poser une pause) — 2026-07-29, CFA beat 5b
+Cas vécu : retirer une phrase éditoriale entière (« Mais l'arme est à double tranchant… 1994 »), soit
+~10 s, sur décision d'Aziz. Ici on croise les DEUX sources, et `silencedetect` devient utile :
+1. **L'alignement mot-à-mot borne le BLOC** (quel est le 1er et le dernier mot à retirer) — c'est lui
+   qui dit QUOI couper, et la règle de l'étape 2 ci-dessus reste entière.
+2. **`silencedetect -25dB` place le COUTEAU** dans les silences réels qui encadrent le bloc, et on
+   coupe *dedans* — pas sur la frontière exacte du mot. Le risque « manger un mot » (étape 2) ne
+   s'applique pas : on retire des phrases ENTIÈRES bordées de longs silences, on n'ajuste pas une
+   pause fine entre deux mots. Mesuré : silences de 1,02 s avant et 1,58 s après.
+3. **Viser ~0,5 s de respiration au raccord** (garder ~0,30 s après le dernier mot d'avant, ~0,25 s
+   avant le premier mot d'après). Couper au MILIEU des deux silences donnait 1,30 s = un trou audible.
+4. `acrossfade=d=0.05` au raccord (anti-clic), puis **re-forced-align la nouvelle VO** et REDÉRIVER
+   tous les timings postérieurs. ⛔ Jamais décaler à la main au jugé.
+   ⭐ **Contrôle de netteté de la coupe** : le décalage doit être **CONSTANT** sur tous les repères
+   d'après-coupe (mesuré : −301 frames sur 4 repères). Un décalage qui varie = la coupe a mangé ou
+   ajouté quelque chose.
+
+⛔ **UN TIMECODE ÉCRIT DANS UNE NOTE N'EST PAS UNE MESURE.** Le starter annonçait la phrase à couper
+à « ~9,6 s » ; le signal disait **8,92 s**. Suivre la note aurait coupé en plein milieu du mot
+« Mais ». La note portait bien la garde (« à affiner sur les silences réels ») mais un chiffre
+d'apparence précise la fait oublier. **Re-mesurer AVANT de couper, toujours** — c'est le pendant
+audio de la règle « vérifier CODE + VISUEL » du CLAUDE.md.
+
 ### Retirer un MOT (ex « Résumons ») — même principe
 Re-couper l'audio à la frontière du mot (whisper) : garder [0..avant_le_mot] + [après_le_mot..fin], sans le mot.
 Garde-fou whisper après (le mot retiré ne doit plus apparaître, RIEN d'autre ne doit manquer).

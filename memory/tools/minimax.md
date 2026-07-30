@@ -407,3 +407,29 @@ ffmpeg -i music_raw.mp3 -t 60 -af "afade=t=in:st=0:d=1.5,afade=t=out:st=57:d=3,v
 - Le `afade=out` (2-3s) masque la coupure : l'oreille perçoit une CONCLUSION, pas un arrêt net.
 
 **Limite** : marche tant que la vidéo < durée du brut. Pour 3+ min : générer un morceau plus long OU vraie boucle (point de boucle calé sur le beat, pattern Remotion 2e `<Audio>` `startFrom` — voir feedback_audio-music-loop-startfrom-tardif).
+
+---
+
+## ⛔⛔ LA DURÉE GÉNÉRÉE N'EST PAS UN CRITÈRE DE SÉLECTION (correction Aziz, 2026-07-29)
+
+> ⚠️ À lire AVANT de trier la banque de pistes existantes — et à ne pas confondre avec la « Limite »
+> ci-dessus, qui parle de couper UN morceau, pas de CHOISIR parmi plusieurs.
+
+Minimax génère des morceaux courts **faits pour boucler**. Ne jamais filtrer ni écarter une piste sur
+sa durée brute : c'est un **attribut** (il dit combien de boucles il faudra), jamais une
+disqualification.
+
+**Erreur vécue** : un premier tri de la banque de 67 pistes filtrait sur `durée >= 249 s` et n'en
+retenait que **12**. Correction d'Aziz : « la très grande majorité des musiques générées via Minimax
+sont des musiques que l'on boucle en tant que telles, donc le fait que ce ne soient pas des musiques
+qui vont au format long n'est pas discriminant. » → **58 pistes retenues** après correction. Leçon
+plus large : ne pas transformer un attribut technique en critère éliminatoire.
+
+**Le vrai critère pour une piste destinée à boucler** : l'écart de niveau **tête(3 s) ↔ queue(3 s)**.
+< 2 dB = boucle quasi transparente · > 5 dB = `acrossfade` long obligatoire (une piste de l'épisode
+CFA à 5.5 dB imposait un fondu de 4 s).
+
+⭐ **AVANT TOUT NOUVEL APPEL Minimax : lire `public/_shared/audio/INDEX-MUSIQUES.md`** — 67 pistes
+uniques déjà produites, toutes mesurées (durée · amplitude · bande 200 Hz–2 kHz de la voix · écart de
+boucle). Générer sans l'avoir lu, c'est re-payer ce qu'on possède : 4 groupes de doublons binaires
+exacts y ont été trouvés (24.8 Mo), dont 3 pistes stockées deux fois sous des noms différents.

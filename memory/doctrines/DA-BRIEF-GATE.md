@@ -284,6 +284,25 @@ Prototypes d'origine : `scripts/warmap/da-brief-acte1.py` + briefs `review-acte1
 
 ---
 
+## ⛔ AVANT D'ÉCRIRE LE BRIEF : CORRECTIF ou PREMIUM ? (le mode se choisit AVANT, pas après)
+
+> Vécu 2026-07-29 (CFA v3) : brief orienté **correctif** (« qu'est-ce qui cloche ») lancé sur une vidéo
+> dont le fond était **VALIDÉ** → le modèle a cherché — et « trouvé » — une cicatrice de coupe qui
+> n'existait pas, au mauvais endroit (à près d'une minute et deux beats de la vraie coupe). Appel
+> largement gaspillé, Aziz a dû recadrer : « ce que nous cherchons, c'est de voir comment on peut
+> **améliorer** la vidéo ».
+
+- **Fond PAS validé / on chasse un défaut** → mode **CORRECTIF** (le pattern 2 appels ci-dessous).
+- **Fond VALIDÉ, on veut faire MONTER EN GAMME** → mode **PREMIUM** : mandat « elle est bonne, comment
+  devient-elle excellente, dans notre stack, sans rien refaire ni rallonger », écart mesuré contre des
+  refs **EXTERNES** (Bloomberg/FT/Economist, Vox/Kurzgesagt, Al Jazeera), défauts explicitement **hors
+  périmètre**. ⭐ Indispensable pour la **PREMIÈRE vidéo d'un format** : elle sert de BASELINE, pas de
+  rattrapage — il n'existe rien en interne pour la comparer.
+  Outils vidéo complète à brief libre : `gemini-video-review-custom.py` + `kimi-video-review-custom.py`.
+  **Grille de critères observables + mode d'emploi des reviews** (dont : exiger des notes NON aplaties,
+  dire que la version est sans musique, et mesurer objectivement la densité cinétique par diff de
+  frames — c'est ce qui a démasqué de faux timecodes) : `memory/doctrines/GRILLE-JUGEMENT-MIDFORM.md`.
+
 ## ⭐⭐ PATTERN 2 APPELS SÉQUENTIELS — comparatif PUIS génératif (validé 2026-07-18, Soudan Acte 5)
 
 Le downstream n'est pas UN appel — c'est potentiellement DEUX temps distincts, complémentaires :
