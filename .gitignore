@@ -134,3 +134,4 @@ scripts/warmap/fixtures/ucdp/*.csv
 
 # Scratchpad de session a la racine du repo (le vrai scratchpad vit sous /private/tmp)
 scratchpad/
+scratchpad-yt/
