@@ -84,9 +84,9 @@ Render : `out/episodes/_r-and-d/poc-mali-videogame/poc-hud-v1.mp4` · catbox p9d
 AJUSTEMENTS si on pousse (réglages, pas blocages) : grossir le sprite OU zoomer caméra dessus quand il
 porte le récit (se perd à l'échelle continent) · doser le grain papier (trop présent) · équilibre compo
 (penche à gauche). Décision Aziz sur le GOÛT du registre = en attente.
-Scripts démo prêts : `memory/exploration-scripts/SCRIPT-DEMO-mali-video-game.md` (récit, simple) +
-`SCRIPT-DEMO-route-commerciale-video-game.md` (système, complexe). Faisabilité : récit = coût Atlas+habillage ;
-système (route, Peste) = vrai chantier (logique d'état + jauges synchro).
+Scripts démo (récit simple Mali + système route commerciale) supprimés au ménage du 2026-07-31,
+piste jamais lancée depuis mai — à réécrire si la piste redémarre. Faisabilité : récit = coût
+Atlas+habillage ; système (route, Peste) = vrai chantier (logique d'état + jauges synchro).
 
 ### Multiplicateur transversal à exploiter (emprunté aux faceless)
 **Le produit digital ajouté** (ebook/guide créé une fois, vendu 10-47$, marge ~100%). C'est le multiplicateur
