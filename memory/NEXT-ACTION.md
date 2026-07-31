@@ -35,12 +35,13 @@
 > |---|---|
 > | 🇸🇳 Sénégal Pétrole & Gaz | ✅ **PUBLIÉ** le 2026-07-30 |
 > | ⚔️ War-Map Sahel AES | 🗓️ **PROGRAMMÉ mardi 4 août 2026, 14h45** |
-> | 💰 Franc CFA | titre + miniature prêts → upload manuel Studio ~11 août |
+> | 💰 Franc CFA (longue) | titre + miniature prêts → upload manuel Studio ~11 août |
+> | 💰 Franc CFA (Short 9:16) | ✅ **PRET-PUBLICATION** (construit 2026-07-31), bloqué crédits TryPost |
 >
-> ⛔ **CONTRAINTE BLOQUANTE** : le **Short AES ne sort JAMAIS avant le 4 août 14h45** (son CTA renvoie
-> à la vidéo longue). Le Short Sénégal, lui, est libre.
-> ⏭️ **Prochaine session** : programmer les Shorts Sénégal + AES (prêts), puis **CONSTRUIRE** les
-> Shorts CFA et Soudan (⚠️ ils n'existent PAS, vérifié sur disque le 30/07).
+> ⛔ Règle générale (corrigée 2026-07-31) : un Short lié à une longue sort **le MÊME JOUR** (jamais
+> avant, jamais plusieurs jours après — le Short booste l'algo de la longue en lancement).
+> ⏭️ **Prochaine session** : recharger crédits TryPost, programmer Shorts Sénégal + AES + CFA (tous
+> prêts), puis **CONSTRUIRE** le Short Soudan (⚠️ il n'existe PAS, vérifié sur disque le 30/07).
 >
 > **Source de vérité unique** (dates, titres figés, thumbnails, interdits) :
 > `/Users/clawdbot/.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`

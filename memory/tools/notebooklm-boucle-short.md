@@ -96,12 +96,13 @@ du long. Il prouve qu'un style simple et coherent avec lui-meme fonctionne. Deci
 Short reste reconnaissable comme teaser du long (meme univers visuel). La V1 du Short AES a ete
 REJETEE pour ca (composants Mapbox generiques vs DA parchemin du long).
 
-## Les 2 Shorts publies par cette boucle
+## Les Shorts produits par cette boucle (2 publies, 1 pret)
 
 | Short | Livrable | Trace |
 |---|---|---|
 | **AES 90s** | `out/PRET-PUBLICATION/aes-short-90s-FINAL.mp4` | narration 82,5 s calibree sur les 82 s du NotebookLM ; V1-V4 rejetees avant la bonne |
 | **Senegal Petrole & Gaz D3** | `out/PRET-PUBLICATION/senegal-petrole-gaz-short-d3-FINAL.mp4` | ⭐ la plus directe : `SCRIPT-FR.txt` = traduction FR de la 3e generation ; scenes calquees (`Scene1Hook`/`Scene2Paradoxe`/`Scene3Comparaison`/`Scene4Dette`/`Scene5Cta`) ; commentaire en tete de `whisper-words-senegal-short.ts` : « script FR condense NotebookLM » |
+| **Franc CFA** | `out/PRET-PUBLICATION/franc-cfa-short-9x16-FINAL.mp4` (2026-07-31, PRET, pas encore publie) | video source jamais sauvegardee lors du 1er passage (contrairement aux 2 autres) — recuperee via lien tmpfiles.org fourni par Aziz. ⚠️ **GOTCHA tmpfiles.org** : le lien colle pointe vers la PAGE WEB, pas le fichier — il faut parser le HTML (`grep -oE 'href="[^"]*\.mp4"'`) pour trouver le vrai lien `/dl/...` avant `curl`. Climax choisi = le levier de devaluation coince (Beat 5b du mid-form), pas 1994 seul — convergence spontanee avec un beat deja ecrit = signal fort. Transcript par ElevenLabs Scribe (Whisper en quota epuise ce jour-la). |
 
 ## ✅ SECOND USAGE — la planche de slides pour IDÉER des scènes : **PROUVÉ (2026-07-30)**
 

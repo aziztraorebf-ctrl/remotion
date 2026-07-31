@@ -24,8 +24,8 @@
 | Sénégal Pétrole & Gaz (long) | ✅ livré | ✅ **PUBLIÉ 2026-07-30** |
 | War-Map Sahel AES (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04 14h45** |
 | Franc CFA (mid-form) | ✅ livré | titre + miniature prêts → upload manuel Studio ~11 août |
-| Short Sénégal D3 · Short AES 90s | ✅ livrés | à programmer (⛔ Short AES jamais avant le 4 août 14h45) |
-| Short CFA · Short Soudan | ⚠️ n'existent pas | à CONSTRUIRE |
+| Short Sénégal D3 · Short AES 90s · Short CFA | ✅ livrés | à programmer, tous bloqués crédits TryPost épuisés (⛔ règle : Short + longue liés sortent le MÊME JOUR) |
+| Short Soudan | ⚠️ n'existe pas | à CONSTRUIRE |
 
 **Source de vérité unique** : `/Users/clawdbot/.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
 ⛔ Vidéo LONGUE = upload MANUEL YouTube Studio (jamais TryPost). Shorts = TryPost.
