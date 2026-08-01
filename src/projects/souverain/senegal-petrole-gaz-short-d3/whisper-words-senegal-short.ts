@@ -264,5 +264,5 @@ export const WHISPER_WORDS: { word: string; start: number; end: number }[] = [
   { word: "longue.", start: 108.059, end: 108.839 },
   { word: "Lien", start: 108.879, end: 109.179 },
   { word: "en", start: 109.220, end: 109.319 },
-  { word: "description.", start: 109.360, end: 109.859 },
+  { word: "bio.", start: 109.360, end: 109.859 },
 ];

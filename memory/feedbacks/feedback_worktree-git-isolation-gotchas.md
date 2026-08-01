@@ -101,4 +101,31 @@ metadata:
 
 **Preuve** : session passe finale Soudan 2026-07-21 — worktree `remotion-soudan` a permis de continuer malgré une session CFA qui rebasculait le repo 2×. ~40 min perdus AVANT d'isoler (leçon : isoler plus tôt) + 2 échecs render Mapbox (exit 9/1) avant de comprendre les assets gitignorés à lier.
 
+- ⛔⛔ **AVANT DE FOUILLER `git log`/`git show` POUR UN FICHIER "SUPPRIMÉ" : CHERCHER D'ABORD SUR LE
+  DISQUE ENTIER, worktrees inclus** (vécu 2026-08-01, Short CFA 9x16). Les fichiers source du Short
+  CFA n'existaient plus dans le repo principal (`src/projects/souverain/cfa-short-9x16/` absent) —
+  réflexe immédiat : remonter l'historique git commit par commit pour les restaurer. Correction
+  d'Aziz : « la vidéo est dans prêt pour production, pourquoi ne pas chercher là ? le code est-il
+  encore présent ? » — un `find /Users/clawdbot/Workspace -iname "*cfa-short*"` aurait immédiatement
+  révélé que le worktree `remotion-cfa` (branche `feat/cfa-short-9x16`) avait TOUJOURS les fichiers
+  intacts, sans avoir besoin de reconstituer quoi que ce soit depuis git. La restauration git a quand
+  même été faite dans le repo principal (décision explicite d'avoir les 2 copies), mais l'ordre de
+  recherche était inversé : disque d'abord (`find` large, tous worktrees), git seulement si vraiment
+  introuvable nulle part.
+  → **Réflexe correct** : fichier introuvable dans le repo courant → `find /Users/clawdbot/Workspace
+  -iname "*<mot-clé>*"` en premier (couvre tous les worktrees en une commande) → seulement si vide,
+  `git log --all --oneline -- "*nom*"` pour remonter l'historique.
+
+- ⚠️ **CORRIGER un socle/composant dans le repo principal SANS vérifier si une copie worktree
+  diverge crée une divergence documentée-mais-oubliée** (vécu 2026-08-01, suite directe du point
+  ci-dessus). Après restauration + correction du CTA CFA ("EN DESCRIPTION"→"EN BIO") dans le repo
+  principal, le worktree `remotion-cfa` original garde sa version NON corrigée — les deux copies
+  divergent maintenant sur un point précis (le texte du CTA), en plus de leur divergence de base
+  (branches différentes). Ce n'est découvert qu'en fin de session, par l'agent CLEANUP du `/wrap`,
+  pas pendant le travail actif. → Cf. le point "UN SOCLE PARTAGÉ EN 2 COPIES NE SE SYNCHRONISE PAS
+  TOUT SEUL" ci-dessus : la même règle s'applique à un Short entier, pas seulement à un socle
+  partagé nommé comme tel. **Dès qu'un fichier corrigé dans le repo principal a une copie connue
+  dans un autre worktree, le signaler explicitement dans NEXT-ACTION.md avec les 2 chemins et l'état
+  de chacun** — pas seulement le laisser à la découverte du prochain `/wrap`.
+
 Lié : [[chercher-outil-existant-avant-improviser]] · voir aussi `memory/tools/mapbox-effets-et-tests.md` (render-mapbox.sh + still WebGL).

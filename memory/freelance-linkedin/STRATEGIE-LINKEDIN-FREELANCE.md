@@ -238,14 +238,46 @@ maintenant si activé ; Fiverr Pro = test après Gazoduc). Mais toute décision 
 prise dans l'un doit rester cohérente avec l'autre — se relire les deux avant de trancher le prix
 (point 2 de la section suivante) ou de rédiger un post qui mentionne un tarif.
 
-## 6. Décisions à trancher par Aziz (non tranchées au 2026-07-29)
+## 6. Décisions à trancher par Aziz
 
-1. **Assumer publiquement l'usage de l'IA dans le process ?** Position la plus solide sur LinkedIn :
-   la mentionner franchement comme OUTIL D'ANALYSE qu'Aziz arbitre. Mais c'est son appel.
+1. ✅ **TRANCHÉ 2026-08-01 : assumer publiquement l'usage de l'IA, ton casual.** Aziz a explicitement
+   choisi de mentionner l'IA franchement (pas de détour), avec un ton décontracté "comme à un ami" —
+   pas corporate, pas de jargon technique — en réaction à l'allergie croissante observée sur LinkedIn
+   envers les posts trop artificiels/robotiques. Voir § 6bis pour le texte de profil qui applique
+   cette décision.
 2. **Le prix.** Aucun prix n'a encore été dit à voix haute à qui que ce soit. C'est la seule
    hypothèse qui compte et elle n'est pas testée.
 3. **Les 2 histoires sensibles** (pipeline concurrent nommé, chaîne YouTube nommée) : postables mais
    à reformuler sans les noms pour éviter l'accroche polémique.
+
+## 6bis. Profil LinkedIn — état d'avancement (2026-08-01)
+
+Le compte LinkedIn personnel d'Aziz (ancien compte, vide, jamais utilisé) a été connecté à TryPost
+(`social_account_id: 019fbb12-0555-70e7-9886-0071425c0431`). Décision : compléter le profil
+(titre + section "À propos") AVANT tout premier post — un profil vide contredirait la vitrine de
+crédibilité visée par cette stratégie.
+
+**Textes rédigés et validés par Aziz**, à coller MANUELLEMENT sur LinkedIn (aucun outil ne peut
+éditer un profil LinkedIn — ni TryPost ni un autre MCP) :
+
+- **Titre de profil** : « Je produis des vidéos explicatives sur l'économie et la géopolitique
+  africaines — Kora & Cartes »
+- **Section "À propos"** : « Je fais des vidéos qui expliquent l'économie et la géopolitique
+  africaines — la chaîne s'appelle Kora & Cartes. J'utilise l'IA, sans complexe : pour la
+  recherche, la voix, la musique. Mais tout ce qui s'affiche à l'écran — cartes, chiffres,
+  animations — je le construis, ligne par ligne, avec l'IA. Ça change tout pour les corrections :
+  un chiffre à changer, une couleur, un mot — c'est une ligne, pas un nouveau tournage. Si vous
+  cherchez quelqu'un pour raconter une histoire de données ou de territoire, simplement et sans
+  sur-tournage inutile, dites-moi. »
+
+⚠️ **Variante de formulation à noter** : ce texte dit « je le construis, ligne par ligne, avec
+l'IA » — légèrement différent de la signature de référence au § 5 (« tout est composé par code »).
+Les deux sont cohérentes avec l'interdit « jamais dire je code » (ici on dit explicitement qu'on
+utilise l'IA, pas qu'on écrit le code soi-même), mais à harmoniser en une seule formulation à la
+prochaine passe sur le gabarit de post.
+
+**Prochaine session** : vérifier si Aziz a collé ces textes avant de proposer le premier post du
+calendrier éditorial LinkedIn.
 
 ---
 

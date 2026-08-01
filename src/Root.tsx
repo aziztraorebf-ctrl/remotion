@@ -350,6 +350,7 @@ import { SceneDetteV3, SCENE_DETTE_V3_FRAMES } from "./projects/souverain/senega
 import { SceneCoulissesV3, SCENE_COULISSES_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneCoulissesV3";
 import { SceneBilanV3, SCENE_BILAN_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBilanV3";
 import { SceneBonusV3, SCENE_BONUS_V3_FRAMES } from "./projects/souverain/senegal-petrole-gaz/beats/SceneBonusV3";
+import { ShortComplet as CfaShort9x16ShortComplet, CFA_SHORT_TOTAL_FRAMES } from "./projects/souverain/cfa-short-9x16/ShortComplet";
 import { TokenShowcaseV5 } from "./projects/_shared/mapbox/_demos/TokenShowcaseV5";
 import { SvgTokenCompare } from "./projects/_shared/mapbox/_demos/SvgTokenCompare";
 import { CartoGeoStickTest } from "./projects/_shared/mapbox/CartoGeoStickTest";
@@ -452,6 +453,7 @@ import { CtaCard } from "./projects/warmap/shorts/aes-short-90s/CtaCard";
 import { AesShortPart1 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart1";
 import { AesShortPart2 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart2";
 import { AesShortFull } from "./projects/warmap/shorts/aes-short-90s/AesShortFull";
+import { GlobeRecitProto as SoudanShortGlobeRecitProto, GLOBE_RECIT_FRAMES as SOUDAN_SHORT_GLOBE_FRAMES } from "./projects/warmap/shorts/soudan-short/d3-globe/GlobeRecitProto";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -4185,6 +4187,27 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1920}
         height={1080}
+      />
+
+      <Composition
+        id="CfaShort9x16-COMPLET"
+        component={CfaShort9x16ShortComplet}
+        durationInFrames={CFA_SHORT_TOTAL_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
+      {/* Proto globe D3 adapte 9:16 pour le Short Soudan (branche feat/soudan-short-9x16).
+          Couvre Mouvement A + Pivot + Mouvement B (jusqu'au climax "incendie/main") — la Chute et
+          le CTA sont d'autres scenes visuelles (cf timing.ts), pas rendues ici. */}
+      <Composition
+        id="SoudanShort-GlobeRecit-Proto"
+        component={SoudanShortGlobeRecitProto}
+        durationInFrames={SOUDAN_SHORT_GLOBE_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
       />
 
     </>

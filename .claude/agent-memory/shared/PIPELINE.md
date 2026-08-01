@@ -25,8 +25,8 @@
 | War-Map Sahel AES (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04** |
 | Franc CFA (mid-form) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-11** |
 | Soudan mid-form (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-20** (titre/miniature/description faits 2026-07-31) |
-| Short Sénégal D3 · Short AES 90s · Short CFA | ✅ livrés | à programmer, tous bloqués crédits TryPost épuisés (⛔ règle : Short + longue liés sortent le MÊME JOUR) |
-| Short Soudan | ⚠️ n'existe pas | à CONSTRUIRE |
+| Short Sénégal D3 · Short AES 90s · Short CFA | ✅ TOUS PROGRAMMÉS via TryPost (2026-08-01/04/11) | CTA corrigé "EN BIO" — reste Short Soudan à construire |
+| Short Soudan | ⏳ timing.ts LOCKED, assets/composition à faire | à CONSTRUIRE (Stage 3+) |
 
 **Source de vérité unique** : `/Users/clawdbot/.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
 ⛔ Vidéo LONGUE = upload MANUEL YouTube Studio (jamais TryPost). Shorts = TryPost.
@@ -162,4 +162,22 @@ TodoWrite cross-agent.
 > Un agent ajoute son entrée en terminant son stage. **Elle se supprime** une fois le stage suivant
 > engagé — l'état durable va dans `memory/episodes/<ep>/STATUS.md`.
 
-*(Aucun handoff en cours au 2026-07-30.)*
+## Stage 2 — storyboarder — Soudan Short — 2026-08-01 [COMPLETE]
+- Input : audio mesuré `public/_shared/audio/soudan-short/narration-v1-pauses-v2.mp3` — 111.337506s
+  (ffprobe), LOCKED, ne pas régénérer. Alignement mot-à-mot déjà vérifié 311/311 mots
+  (`whisper-words-soudan-short.ts`).
+- Output : `src/projects/warmap/shorts/soudan-short/timing.ts`
+- Format : SCENES-only flat, 7 blocs (mouvementA / pause1 / pivot / mouvementB / pause2 / chute / cta)
+- FPS : 30 | TOTAL_FRAMES : 3340
+- BEATS : 26 frames-repères géo-alignées (Darfour, Émirats x4, Égypte x2, Russie x2, Turquie, Hemeti,
+  climax "incendie/main"…) — toutes vérifiées par script indépendant contre le whisper source.
+- Écarts signalés dans le fichier (à lire avant de coder) : les 2 pauses "1.0s déterministes"
+  prévues au script mesurent en réalité 0.94s et 0.66s dans l'audio livré — timing.ts suit les
+  valeurs réelles, pas la valeur planifiée. Texte overlay CTA doit dire "EN BIO", jamais
+  "en description" (l'audio dit "lien en description", Aziz a tranché que ça ne s'affiche pas).
+- Notes pour Stage 3 : GEO_SEQUENCE documentée (Sudan / United Arab Emirates / Egypt / Russia /
+  Turkey — noms Natural Earth 110m vérifiés présents dans
+  `public/_rnd/vox-repro/countries-110m.json`). Le composant visuel prévu `GlobeRecitProto.tsx`
+  n'existe QUE sur le worktree `remotion-soudan` (branche `feat/soudan-passe-finale-6lots`), PAS sur
+  master — devra être adapté au format 9:16 avant utilisation dans ce Short.
+- Status : READY FOR STAGE 3 (visual-producer/remotion-composer).

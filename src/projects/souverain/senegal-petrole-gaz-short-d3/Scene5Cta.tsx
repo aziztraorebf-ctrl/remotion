@@ -178,7 +178,7 @@ const CtaCartouche: React.FC<{ frame: number; fps: number; op: number }> = ({ fr
           {accroche("PÉKIN QUI OBSERVE", a3Op)}
         </div>
         <div style={{ opacity: descOp, marginTop: 8, fontFamily: BEBAS, fontSize: 40, color: GOLD, background: NAVY, borderRadius: 10, padding: "12px 32px", letterSpacing: 3 }}>
-          VIDÉO COMPLÈTE EN DESCRIPTION
+          VIDÉO COMPLÈTE EN BIO
         </div>
       </div>
     </div>

@@ -33,16 +33,31 @@
 >
 > | Vidéo | État |
 > |---|---|
-> | 🇸🇳 Sénégal Pétrole & Gaz | ✅ **PUBLIÉ** le 2026-07-30 |
-> | ⚔️ War-Map Sahel AES | 🗓️ **PROGRAMMÉ** 2026-08-04 |
+> | 🇸🇳 Sénégal Pétrole & Gaz (longue) | ✅ **PUBLIÉ** le 2026-07-30 |
+> | 🇸🇳 Sénégal (Short 9:16) | ✅ **PROGRAMMÉ** 2026-08-01 15h30 UTC (2 posts TryPost) |
+> | ⚔️ War-Map Sahel AES (longue) | 🗓️ **PROGRAMMÉ** 2026-08-04 |
+> | ⚔️ AES (Short 90s) | ✅ **PROGRAMMÉ** 2026-08-04 19h UTC (2 posts TryPost) |
 > | 💰 Franc CFA (longue) | 🗓️ **PROGRAMMÉ** 2026-08-11 |
-> | 💰 Franc CFA (Short 9:16) | ✅ **PRET-PUBLICATION** (construit 2026-07-31), bloqué crédits TryPost |
+> | 💰 Franc CFA (Short 9:16) | ✅ **PROGRAMMÉ** 2026-08-11 15h UTC (2 posts TryPost) |
 > | 🇸🇩 Soudan mid-form (longue) | 🗓️ **PROGRAMMÉ** 2026-08-20 (titre/thumbnail/description faits le 2026-07-31) |
+> | 🇸🇩 Soudan (Short) | ⚠️ **N'EXISTE PAS ENCORE** — seul chantier Short restant |
 >
 > ⛔ Règle générale (corrigée 2026-07-31) : un Short lié à une longue sort **le MÊME JOUR** (jamais
 > avant, jamais plusieurs jours après — le Short booste l'algo de la longue en lancement).
-> ⏭️ **Prochaine session** : recharger crédits TryPost, programmer Shorts Sénégal + AES + CFA (tous
-> prêts), puis **CONSTRUIRE** le Short Soudan et le Short AES (⚠️ aucun des deux n'existe encore).
+> ✅ **2026-08-01 : les 3 Shorts existants (Sénégal/AES/CFA) sont TOUS programmés** — crédits TryPost
+> rechargés, bug MCP résolu (cf `memory/tools/mcp-servers-env-resolution.md`), CTA corrigé "EN BIO"
+> (cf `feedback_cta-lien-en-bio-shorts-multiplateforme.md`). Détail complet + IDs de posts :
+> `calendrier-publication-2026-08.md`.
+> ⏭️ **Prochaine session** : **CONSTRUIRE** le Short Soudan (boucle NotebookLM, scripts déjà présents
+> dans `scripts/tools/soudan-short-audio/`) — dernier Short manquant. Puis **GAZODUC**.
+>
+> ⚠️ **Dette signalée 2026-08-01** : le worktree `/Users/clawdbot/Workspace/remotion-cfa` (branche
+> `feat/cfa-short-9x16`) contient une version DU SHORT CFA NON CORRIGÉE (CTA dit encore "EN
+> DESCRIPTION") — divergente du repo principal qui, lui, a le fix. Contient aussi un fichier
+> `cfaShortWhisperWords.ts` orphelin (jamais importé, sans risque sur le publié — vérifié). À trancher
+> explicitement avec Aziz : soit appliquer le même fix là-bas pour resynchroniser, soit fermer ce
+> worktree si le repo principal fait désormais foi (le Short CFA est déjà publié/programmé depuis le
+> repo principal, ce worktree n'a peut-être plus d'utilité).
 >
 > **Source de vérité unique** (dates, titres figés, thumbnails, interdits) :
 > `/Users/clawdbot/.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
@@ -52,6 +67,11 @@
 > ⚠️ **Leçon structurelle** : ce qui n'est pas outillé ne se fait pas — zéro checklist « de FINAL à
 > publié » a coûté 25 j de blocage (2 vidéos finies dormaient depuis le 5 juillet). Si une session
 > démarre une prod alors qu'un FINAL non publié dort → le signaler.
+>
+> **LinkedIn** : compte perso Aziz connecté à TryPost (vide). Titre + section "À propos" rédigés et
+> validés (ton casual, assume l'IA franchement) — Aziz doit encore les coller manuellement sur son
+> profil (aucun outil ne peut éditer un profil LinkedIn). Vérifier si fait avant de proposer le
+> premier post — cf `memory/freelance-linkedin/STRATEGIE-LINKEDIN-FREELANCE.md`.
 
 ---
 

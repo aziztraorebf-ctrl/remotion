@@ -1,0 +1,9 @@
+{
+  "_doc": "PAUSES DETERMINISTES sur AUDIO ORIGINAL VALIDE Short Soudan (narration-v1.mp3, PAS la version deja coupee). cut_s/resume_s issus du whisper mot-a-mot (OpenAI, 311 mots) sur l'ORIGINAL. v4 (2026-08-01) : la v1 (cut pile sur les timestamps whisper, sil 0.5s) a mange le debut du mot 'Pendant'. DIAGNOSTIC REEL (pas l'outil, qui coupe exactement aux bornes demandees) : les timestamps WHISPER sont approximatifs -- le debut RAPPORTE d'un mot apres un silence tombe souvent legerement APRES l'attaque phonetique reelle. Couper resume_s pile sur ce timestamp ampute l'attaque. FIX : reculer resume_s de ~0.08s avant le timestamp whisper (garde une marge de securite sur l'attaque), et avancer cut_s de ~0.05s avant la fin whisper du mot precedent (evite de mordre sa fin si elle aussi est approximative). Retour Aziz : passer sil_s de 0.5 a 1.0s (pause plus franche).",
+  "source_audio": "public/_shared/audio/soudan-short/narration-v1.mp3",
+  "source_duration_s": 109.737506,
+  "cuts": [
+    { "label": "apres 'le meme or paie les deux cotes du front' -> avant 'Mais l'argent...' (fin Mouvement A, avant le pivot). whisper: 'front' finit 48.98, 'Mais' demarre 49.14 -> marge de securite : cut_s 48.93 (avant fin whisper), resume_s 49.06 (avant debut whisper, pour garder l'attaque du M).", "cut_s": 48.93, "resume_s": 49.06, "sil_s": 1.0, "_aziz": true },
+    { "label": "apres 'on demande d'eteindre l'incendie a celui qui l'alimente de l'autre main' -> avant 'Pendant ce temps...' (fin second climax, avant la chute). whisper: 'main' finit 88.54, 'Pendant' demarre 88.84 -> marge de securite : cut_s 88.49, resume_s 88.76 (avant le debut whisper, pour garder l'attaque du P -- c'est le point qui avait mange 'Pendant' en v1).", "cut_s": 88.49, "resume_s": 88.76, "sil_s": 1.0, "_aziz": true }
+  ]
+}

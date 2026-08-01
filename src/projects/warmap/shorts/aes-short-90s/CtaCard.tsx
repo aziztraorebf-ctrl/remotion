@@ -78,7 +78,7 @@ export const CtaCard: React.FC = () => {
               opacity: subOp,
             }}
           >
-            VIDÉO COMPLÈTE EN DESCRIPTION
+            VIDÉO COMPLÈTE EN BIO
           </div>
         </div>
       </AbsoluteFill>

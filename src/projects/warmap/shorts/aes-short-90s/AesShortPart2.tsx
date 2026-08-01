@@ -443,7 +443,7 @@ export const AesShortPart2: React.FC<{ noAudio?: boolean }> = ({ noAudio = false
         <div style={{ position: "absolute", top: "40%", left: "50%", transform: "translate(-50%,-50%)", opacity: ctaTextOp, textAlign: "center", width: "88%" }}>
           <div style={{ fontFamily: NUM, fontSize: 64, letterSpacing: 2, color: GOLD, lineHeight: 1.05 }}>L'HISTOIRE COMPLÈTE</div>
           <div style={{ fontFamily: SANS, fontSize: 24, letterSpacing: 4, color: "#eaf0fb", marginTop: 14 }}>LIBYE · KIDAL · LE VRAI COÛT HUMAIN</div>
-          <div style={{ fontFamily: NUM, fontSize: 34, letterSpacing: 3, color: "#ff8a5c", marginTop: 22 }}>VIDÉO COMPLÈTE EN DESCRIPTION</div>
+          <div style={{ fontFamily: NUM, fontSize: 34, letterSpacing: 3, color: "#ff8a5c", marginTop: 22 }}>VIDÉO COMPLÈTE EN BIO</div>
         </div>
       )}
 
