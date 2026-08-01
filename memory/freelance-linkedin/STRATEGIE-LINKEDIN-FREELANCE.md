@@ -222,6 +222,22 @@ COMMUNICATION. Vaut AUSSI pour le registre commercial LinkedIn — pas seulement
 
 ---
 
+## 5bis. Articulation avec la piste Fiverr Pro (décidé 2026-07-31)
+
+Ce fichier (LinkedIn) et `freelance-dataviz-fiverr-pro.md` (marketplace Fiverr Pro/B2B direct) sont
+**complémentaires, pas concurrents** — décision Aziz du 2026-07-31, après qu'un audit mémoire ait
+signalé le chevauchement (les deux pistent "vendre le savoir-faire en freelance" sans se référencer).
+
+- **LinkedIn = vitrine/preuve** — montrer le processus, construire la crédibilité, poser le moat
+  (déterminisme, révision gratuite) dans la durée, sans dépendre d'un algorithme de marketplace.
+- **Fiverr Pro = canal de vente réel** — là où une commande se concrétise, avec le positionnement
+  "cartographie éditoriale data-sourcée premium" déjà tranché dans ce fichier-là.
+
+Ne pas les fusionner en un seul document : les horizons diffèrent (LinkedIn = contenu continu dès
+maintenant si activé ; Fiverr Pro = test après Gazoduc). Mais toute décision de prix/positionnement
+prise dans l'un doit rester cohérente avec l'autre — se relire les deux avant de trancher le prix
+(point 2 de la section suivante) ou de rédiger un post qui mentionne un tarif.
+
 ## 6. Décisions à trancher par Aziz (non tranchées au 2026-07-29)
 
 1. **Assumer publiquement l'usage de l'IA dans le process ?** Position la plus solide sur LinkedIn :
