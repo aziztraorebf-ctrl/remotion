@@ -454,6 +454,8 @@ import { AesShortPart1 } from "./projects/warmap/shorts/aes-short-90s/AesShortPa
 import { AesShortPart2 } from "./projects/warmap/shorts/aes-short-90s/AesShortPart2";
 import { AesShortFull } from "./projects/warmap/shorts/aes-short-90s/AesShortFull";
 import { GlobeRecitProto as SoudanShortGlobeRecitProto, GLOBE_RECIT_FRAMES as SOUDAN_SHORT_GLOBE_FRAMES } from "./projects/warmap/shorts/soudan-short/d3-globe/GlobeRecitProto";
+import { GlobeRecitProto as SoudanShortGlobeZoomVariant } from "./projects/warmap/shorts/soudan-short/d3-globe/GlobeRecitProto_ZoomVariant";
+import { GlobeRecitProto as SoudanShortGlobeDriftVariant } from "./projects/warmap/shorts/soudan-short/d3-globe/GlobeRecitProto_DriftVariant";
 import { MotoVintageMap } from "./projects/_shared/templates/travel-map/MotoVintageMap";
 import { SatelliteTravelMap } from "./projects/_shared/templates/travel-map/SatelliteTravelMap";
 import { GoldRouteAtlas } from "./projects/_shared/templates/travel-map/GoldRouteAtlas";
@@ -4204,6 +4206,24 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="SoudanShort-GlobeRecit-Proto"
         component={SoudanShortGlobeRecitProto}
+        durationInFrames={SOUDAN_SHORT_GLOBE_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+
+      {/* Test A/B mouvement camera post-trace (retour Aziz 2026-08-01) — 2 variantes a comparer */}
+      <Composition
+        id="SoudanShort-GlobeRecit-ZoomVariant"
+        component={SoudanShortGlobeZoomVariant}
+        durationInFrames={SOUDAN_SHORT_GLOBE_FRAMES}
+        fps={30}
+        width={1080}
+        height={1920}
+      />
+      <Composition
+        id="SoudanShort-GlobeRecit-DriftVariant"
+        component={SoudanShortGlobeDriftVariant}
         durationInFrames={SOUDAN_SHORT_GLOBE_FRAMES}
         fps={30}
         width={1080}

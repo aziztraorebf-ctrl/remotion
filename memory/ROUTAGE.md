@@ -228,7 +228,7 @@ Nos procédés SONT des skills exécutables. Quand un procédé démarre, **LANC
 | Préproduction Short Souverain (90s éco/géopo Afrique) | `souverain-preproduction` |
 | Préproduction épisode Atlas (carto, géo, richesse) | `atlas-video-preproduction` |
 | Préproduction vidéo narrative (Seedance, personnages) | `video-narrative-preproduction` |
-| Écrire/structurer un script YouTube (8-15min animé) | `youtube-scriptwriting` |
+| Écrire/structurer un script YouTube (chaîne complète idée→blindé) | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` (9 étapes) + `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` (16 règles écriture orale) — remplace l'ex-skill `youtube-scriptwriting` (supprimé 2026-08-01, mort depuis mars, remplacé par ces doctrines internes plus mûres) |
 | Produire/coder une WAR-MAP | POINT D'ENTRÉE `src/projects/warmap/WARMAP-INDEX.md` · doctrine `WARMAP-PLAYBOOK.md` + `WARMAP-RESEARCH-PLAYBOOK.md` |
 | **Coder un beat Souverain MAPBOX** (carte, getCam, overlays) | SYSTÈME `scripts/mapbox-session.py` — voir « Pipeline Beat Mapbox » dans CLAUDE.md. Self-review `scripts/tools/mapbox-selfreview.py` (0 erreur avant Gemini). Base : `MarocBatteriesShort.tsx` |
 | **Coder un beat Souverain REMOTION/Tailwind** (graphisme, data-viz) | SYSTÈME `/beat` (`scripts/beat-session.py`) — voir « Pipeline Beat Souverain ». Doctrine `memory/doctrines/SOUVERAIN-REMOTION-PLAYBOOK.md` |

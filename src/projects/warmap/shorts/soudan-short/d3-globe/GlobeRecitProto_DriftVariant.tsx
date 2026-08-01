@@ -158,6 +158,13 @@ export const GlobeRecitProto: React.FC = () => {
   // diametre affiche fasse ~85% de W=1080 (calcule : 1080*0.85/2 / 749 ~ 0.61). Le dezoom reste (le
   // globe recule legerement a mesure que le reseau s'etend) mais dans une fourchette RESTREINTE
   // (0.62 -> 0.42), jamais retour a des scales >1 qui feraient a nouveau deborder.
+  // ⭐⭐⭐ VARIANTE "DRIFT" v2 (retour Aziz 2026-08-01 : "a peine perceptible, on ne voit meme pas ce
+  // que tu as dit par drift") : amplitude MULTIPLIEE PAR 6 (0.008 -> 0.05 deg/frame, soit 1.5deg/s au
+  // lieu de 0.24deg/s) + un VA-ET-VIENT sinusoidal (pas juste une derive dans un seul sens, qui finirait
+  // par faire sortir le pays du cadre sur une longue fenetre) — le globe oscille visiblement d'un cote
+  // a l'autre du pays affiche, TOUJOURS actif uniquement en fenetre de pose (jamais pendant un pivot).
+  const DRIFT_SPEED = 0.05; // degres/frame de la vitesse angulaire du va-et-vient (nettement visible)
+  const DRIFT_AMPLITUDE = 4.5; // amplitude en degres du va-et-vient (avant: aucune, derive infinie)
   const cam = useMemo(() => {
     const KEYS = [
       { f: 0, lon: 29.8, lat: 16.0, s: 0.62 }, // globe ENTIER visible, leger zoom sur le Soudan
@@ -178,8 +185,13 @@ export const GlobeRecitProto: React.FC = () => {
     while (k < KEYS.length - 2 && frame >= KEYS[k + 1].f) k++;
     const a = KEYS[k], b = KEYS[k + 1];
     const p = interpolate(frame, [a.f, b.f], [0, 1], { ...clampB, easing: easeInOut });
+    // Drift actif UNIQUEMENT quand la camera est POSEE (fenetre ou a et b partagent la meme position —
+    // jamais pendant un pivot, sinon le trace en cours serait invalide). VA-ET-VIENT sinusoidal (pas
+    // une derive a sens unique) : amplitude DRIFT_AMPLITUDE degres, vitesse angulaire DRIFT_SPEED.
+    const isPoseWindow = a.lon === b.lon && a.lat === b.lat;
+    const driftLon = isPoseWindow ? DRIFT_AMPLITUDE * Math.sin(DRIFT_SPEED * (frame - a.f)) : 0;
     return {
-      lon: a.lon + (b.lon - a.lon) * p,
+      lon: a.lon + (b.lon - a.lon) * p + driftLon,
       lat: a.lat + (b.lat - a.lat) * p,
       s: a.s + (b.s - a.s) * p,
     };

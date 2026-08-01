@@ -272,15 +272,15 @@ Demander like/abonnement/commentaire dans les 30 premières secondes = demander 
 
 Le narrateur doit apparaître au moins une fois par acte/beat. Pas plus — sinon ton édito lourd. C'est ce qui fait "quelqu'un me parle" au lieu de "je lis un manuel".
 
-Formules validées :
-- "Et c'est là où ça devient vraiment important..."
-- "Voici ce qu'on sait."
-- "Ce qui est fascinant, c'est que..."
-- "Ce détail dit tout sur..."
-- "Pour comprendre ce qui suit, il faut garder en tête..."
-- "Vous voyez le problème ?"
+> ⛔ **NE JAMAIS PIOCHER UNE FORMULE TOUTE FAITE — INVENTER À CHAQUE FOIS** (corrigé 2026-08-01, script
+> Gazoduc). Cette règle contenait autrefois une liste de "formules validées" ("Et c'est là où ça devient
+> vraiment important...", "Voici ce qu'on sait.", etc.). Retirée : une formule qui sonne oral la première
+> fois qu'on l'invente sonne robotique la centième fois qu'on la récite depuis une liste — signalé par Aziz
+> sur "c'est là que ça devient intéressant", un tic reconnaissable de voix off générique, pas une pensée.
+> Le connecteur doit naître du CONTENU précis de ce beat (ex. "Ce qui frappe, c'est le contraste : là où X
+> attend encore, Y a déjà..." — nomme le fait, ne l'annonce pas). Détail : [[feedback_connecteurs-tremblay-formules-cliches-a-eviter]].
 
-**C'est la règle la plus souvent oubliée.** Un script techniquement juste mais sans présence = un exposé. Si en relisant un acte le narrateur n'apparaît jamais → ajouter un connecteur.
+**C'est la règle la plus souvent oubliée.** Un script techniquement juste mais sans présence = un exposé. Si en relisant un acte le narrateur n'apparaît jamais → ajouter un connecteur, INVENTÉ pour ce moment précis.
 
 > ⚠️ **PIÈGE (gravé 2026-07-12, Soudan Acte 5)** : ajouter un connecteur en COCHANT la règle ("il en manque
 > un, où le caser ?") plutôt qu'en le SENTANT phrase par phrase produit un résultat PIRE que l'original,

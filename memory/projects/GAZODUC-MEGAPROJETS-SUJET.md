@@ -5,10 +5,90 @@
 > Sénégal, Maroc batteries) seront finies. On y revient n'importe quand — toutes les bases sont posées ici.
 > Données détaillées (modèles, ratios, transcripts) : [[DECODE-modeles-fr-afrique]] camp 3.
 >
-> ⛔ **RE-FACT-CHECKER OBLIGATOIRE avant script** : tout ce qui suit (§ MISE À JOUR 2026-07-25) est un
-> instantané pris à cette date. Vu le temps qui s'écoulera avant production réelle (CFA + autres chantiers
-> d'abord), les chiffres/étapes peuvent avoir bougé (FID, financement, nouveaux accords). Relancer
-> Tavily/recherche avant d'écrire le script, ne jamais réutiliser ces faits tels quels sans revérifier.
+> ⛔ **RE-FACT-CHECKER OBLIGATOIRE avant script** : tout ce qui suit (§ MISE À JOUR 2026-07-25 et
+> 2026-08-01) est un instantané pris à ces dates. Vu le temps qui s'écoulera avant production réelle,
+> les chiffres/étapes peuvent encore avoir bougé (FID, financement, nouveaux accords, sécurité Sahel).
+> Relancer recherche fraîche avant d'écrire le script si plus de ~1 semaine s'est écoulée depuis le
+> 2026-08-01, ne jamais réutiliser ces faits tels quels sans revérifier.
+
+## ⭐⭐⭐ MISE À JOUR 2026-08-01 — le TSGP est BEAUCOUP plus avancé qu'estimé, nouveau squelette narratif
+
+### Le vrai résultat de cette recherche : TSGP en chantier réel, pas juste sur papier
+- **4 juin 2026** : lancement OFFICIEL de la construction du tronçon ALGÉRIEN (Adrar) du TSGP
+  (Trans-Saharan Gas Pipeline, Nigeria-Niger-Algérie), confirmé par communiqué **Sonatrach** lui-même
+  (source officielle, recoupée Enerdata/Egypt Oil & Gas/PGJ Online). **L'AAGP, lui, n'a toujours pas
+  de FID (Décision Finale d'Investissement)** — le TSGP a une longueur d'avance matérielle concrète.
+- Contexte du dégel : **12-16 février 2026**, rapprochement Algérie-Niger (visite du général Tiani à
+  Alger, retour des ambassadeurs après ~10 mois de brouille liée à un incident de drone). 5e réunion
+  du comité de pilotage tripartite (Algérie/Nigeria/Niger) le 3 juin 2026 à Alger.
+- **Coût TSGP : 13 Mds$** (moitié de l'AAGP à 25-26 Mds$) — **financement intra-étatique**
+  (Sonatrach + NNPC = 90%, Niger/SONIDEP = 10%), donc PAS dépendant de bailleurs internationaux non
+  bouclés (contrairement à l'AAGP qui court après EXIM Bank US + Banque Mondiale, discussions
+  "préliminaires" seulement).
+- ⚠️ **Nuance à afficher au script, ne jamais montrer brut** : un chiffre "60% du tracé déjà posé"
+  (2400/4128 km) vient d'une source unique (energynews.africa) non recoupée par Reuters/AFP —
+  probablement gonflé par de l'infrastructure gazière existante réutilisée côté Algérie/Nigeria, pas
+  60% de tube neuf trans-saharien construit pour ce projet précis. Segments réellement neufs restants :
+  ~100 km Nigeria, ~700 km Niger, ~1000 km Algérie. Niger/Nigeria visent leur portion début 2027.
+
+### Le vrai talon d'Achille du TSGP : sécurité, pas financement
+- Le tronçon nigérien traverse une zone active **JNIM** (al-Qaeda Sahel) / **ISSP** (État islamique
+  Sahel). **Attaque meurtrière le 25/06/2026** : assaut sur l'aéroport de Niamey, 35 morts, revendiqué
+  JNIM (source : Critical Threats "Africa File") — en pleine période de relance du projet.
+- Aucune preuve d'implication russe/Gazprom actuelle sur le TSGP (mentions Gazprom datent de 2008-2009,
+  abandonnées) — mais analyses d'opinion (Times of Israel blog) qualifient l'axe Algérie-Niger d'
+  "architecture à inclinaison russe" vu la proximité Niger junte/Wagner-Africa Corps. À traiter comme
+  hypothèse d'analyste, PAS un fait establi — ne pas l'affirmer comme confirmé au script.
+
+### AAGP — ce qui a précisé depuis le 25/07
+- **Maroc et Mauritanie ne sont PAS membres CEDEAO** — n'ont donc pas signé l'IGA du 19/07. Leur
+  accord bilatéral séparé (indispensable à la continuité géographique du tracé) est maintenant
+  **daté à l'automne 2026** (était "à venir" sans date dans l'instantané du 25/07).
+- Financement toujours pas bouclé : discussions EXIM Bank US + Banque Mondiale "préliminaires"
+  uniquement (Middle East Observer, 26/07/2026). Aucun FID.
+
+### Le créneau éditorial n'est plus TOTALEMENT vide, mais reste notre différentiel FR
+4-5 sources spécialisées (PAS mainstream FR/AFP/Le Monde/RFI) traitent déjà la rivalité AAGP/TSGP :
+Morocco World News (24/07), Middle East Eye (opinion), Times of Israel blog, Global Connectivities
+(mars 2026), et surtout **MENA+ Edition/Enterprise (29/07/2026)** — le plus utile pour le script : sa
+thèse est que le gaz nigérian disponible (4,5-5,5 bcf/d commercialisable) ne suffit MÊME PAS à remplir
+UN SEUL des deux pipelines à pleine capacité (30 bcm/an chacun visé), et que les deux ensemble
+demanderaient ~70% de la production nigériane actuelle. Bon matériau pour la posture analyste neutre
+("aucun des deux ne marche à plein tel quel"). Aucune source FR mainstream n'a encore traité la
+rivalité — toujours notre créneau.
+Contrepoint macro utile : demande gazière européenne projetée en baisse de ~8% d'ici 2030 (IEA,
+citée par Global Connectivities/MENA+ Edition) — fragilise la rationale économique des DEUX projets
+à la fois, indépendamment de la rivalité politique. Renforce la posture neutre (ne pas trancher qui
+"gagne").
+
+### ⭐⭐ NOUVEAU SQUELETTE NARRATIF (remplace/enrichit "qui dépend de qui")
+Deux modèles de risque OPPOSÉS, course entre eux :
+- **AAGP** : mûr diplomatiquement (Pipeline Higher Authority Abuja + société de projet Casablanca),
+  tracé côtier jugé plus sûr, MAIS zéro financement de construction bouclé.
+- **TSGP** : déjà en chantier (segment algérien), moitié moins cher, financé en interne par les États
+  producteurs, MAIS assis sur une poudrière sécuritaire (Sahel/JNIM) sur son tronçon critique.
+C'est un bien meilleur squelette de script que l'angle seul "dépendance énergétique" — deux paris,
+deux façons de perdre, posture analyste qui ne prend pas parti entre les deux.
+
+### ⭐ Corroboration Sonar Pro (2026-08-01) — voir `gazoduc-fact-check-sonar-2026-08-01.md`
+Second passage fact-check (Perplexity Sonar Pro via OpenRouter), en corroboration indépendante du
+rapport WebSearch ci-dessus, AVANT écriture du script (méthode `FACT-CHECK-DEEP-RESEARCH-VS-SONAR.md`).
+- **CONFIRMÉ ET RENFORCÉ** (2e source indépendante trouvée) : lancement travaux TSGP 4/06/2026
+  (Sonatrach + ObservAlgérie) · coût TSGP ~13 Mds$ (Financial Afrik, ObservAlgérie) · dégel Algérie-Niger,
+  visite Tiani à Alger précisée aux **15-16 février 2026** · chiffre "60% du tracé posé" existe bien en
+  presse (ObservAlgérie 9/04) mais confirmé À NUANCER (chiffre de presse, pas un fait dur).
+- **JUGEMENT DE FOND CONFIRMÉ INDÉPENDAMMENT** : "le TSGP est plus avancé matériellement que l'AAGP à
+  ce jour" — convergence forte entre WebSearch et Sonar Pro sur le point qui structure le script.
+- **Marqué "non vérifiable" par Sonar** (IGA 19/07 Freetown, attaque Niamey 25/06, -8% AIE, chiffres
+  AAGP 6900km/25Mds$) : artefact de méthode (Sonar n'a pas eu accès aux sources fraîches FR/spécialisées
+  que WebSearch avait — Medias24, Le Desk, Critical Threats) — comportement documenté et attendu de
+  Sonar Pro (`FACT-CHECK-DEEP-RESEARCH-VS-SONAR.md` : "trop prudent, rate des faits que Tavily a").
+  Ne PAS traiter comme une infirmation — rien dans le rapport Sonar ne contredit ces faits.
+- **⚠️ Non confirmé par AUCUN des deux outils, à garder approximatif au script** : répartition exacte
+  financement TSGP 90%(Sonatrach+NNPC)/10%(Niger) — dire "financé essentiellement par les États
+  producteurs" plutôt qu'un ratio précis. Chiffre AIE "-8% demande gazière UE d'ici 2030" — dire
+  "projetée en baisse" sans le pourcentage exact, ou revérifier la source AIE primaire si le chiffre
+  doit apparaître à l'écran.
 
 ## ⭐⭐ MISE À JOUR 2026-07-25 — actualité fraîche + angle affiné + faisabilité technique jugée
 

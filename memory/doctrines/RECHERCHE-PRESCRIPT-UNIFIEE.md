@@ -33,22 +33,101 @@ Ne pas recopier ici. Résumé pointeur :
    - Penser DÈS le script : registre visuel par beat + "quoi générer exactement" (colorisation sélective, objets à dessiner).
 
 ### PHASE C — BLINDER LE SCRIPT (étapes 8-9)
-**8. FACT-CHECK 3 NIVEAUX (sujet sensible) → [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]] pour le routage outil.**
-   Les 3 sont COMPLÉMENTAIRES, pas concurrents. Lancer en parallèle :
-   - **Tavily** (MCP, gratuit) = roi ACTU FRAÎCHE vérifiable (chiffres à jour, réformes récentes, état 2026). LE SOCLE.
-   - **Sonar Pro** (`perplexity/sonar-pro` via OpenRouter) = rapide + actu live + citations. Confirme le présent.
-   - **Deep Research** (`perplexity/sonar-deep-research` via OpenRouter, ~4min) = roi NUANCE/ATTRIBUTION/BIAIS.
-     Cutoff fin-2024 = OK pour les faits STRUCTURELS/HISTORIQUES (le terrain où il excelle). Détecte le récit "à charge".
-   - PROCÉDURE : 1 passe chaque → CONVERGENCE = corrections critiques sûres → appliquer → STOP. Pas de boucle.
-   - ⛔ ATTRIBUTION HONNÊTE (charte analyste) : un fait vrai mal attribué = biais. Vérifier "qui a décidé quoi".
-     (Prouvé CFA : "décidé ailleurs" → FAUX cadrage ; les chefs d'État africains ONT signé, sous pression FMI/France.)
 
-**9. JURY LLM (critique CRÉATIVE de l'angle/structure/hook — PAS le fact-check, déjà fait étape 8).**
-   - 3 modèles divers (GPT-5.5 + Gemini 3.1 Pro + Kimi/DeepSeek) : l'angle accroche-t-il ? le hook tient-il ?
-     le CTA marche-t-il ? la structure est-elle fluide ? Chacun son point de vue → je synthétise → Aziz tranche.
-   - But : sortir du regard d'un seul LLM (moi). Anti-boucle : 1 passe, synthèse des divergences, décision.
+> ⭐⭐ **ORDRE INVERSÉ 2026-08-01 (prouvé Gazoduc AAGP/TSGP)** : le JURY CRÉATIF passe AVANT le fact-check
+> formulations, pas après. Raison : le jury peut faire réécrire des pans entiers du script (hook, actes) —
+> fact-checker une version qu'on va de toute façon jeter/réécrire est du travail perdu. Fact-checker APRÈS
+> le jury garantit qu'on vérifie le texte qui sera réellement dit. Les faits BRUTS (chiffres, dates,
+> événements) restent vérifiés en amont, à la Phase A/recherche (WebSearch/Tavily/Sonar Pro), AVANT
+> d'écrire le V1 — ça ne bouge pas. Ce qui change c'est le fact-check FINAL (formulations exactes) : lui
+> se fait sur le texte déjà retravaillé par le jury, pas sur le V1 brut.
 
-→ SORTIE : script Vfinal (factuellement blindé + incarné + validé jury) → PUIS production (storyboard/breakdown/code).
+**7. SCRIPT V1 → conforme [[DOCTRINE-SCRIPT-UNIFIEE]] DÈS la 1re version**, sur la base d'une recherche
+   factuelle déjà verrouillée (Phase A + recherche fraîche si sujet daté/mouvant). Voir gate d'écriture
+   ci-dessus (étape 7 originale, 4 règles).
+
+**8. JURY LLM CRÉATIF (critique de l'angle/structure/hook/rythme — PAS le fact-check factuel) →
+   sur le script V1, AVANT tout fact-check de formulation.**
+   - **4 modèles** (élargi de 3 à 4, 2026-08-01) : GPT-5.6 Sol + Gemini 3.1 Pro + Kimi k2.5 + **Grok**
+     (`grok-4.20-reasoning` via xAI, ajouté pour sa tendance à sortir du consensus/angle réseaux sociaux —
+     même logique que son inclusion au jury titres, cf `feedback_jury-titres-llm-4-modeles.md`).
+   - **Brief structuré, même prompt aux 4, dans UN SEUL appel qui inclut la réécriture** (pas un 2e passage
+     séparé) : (1) niveau de technicité / où ça décroche pour un spectateur novice, avec passages précis
+     cités ; (2) force du hook / la 1re minute, sévère ; (3) dynamisme et rétention, zones plates
+     identifiées ; (4) équilibre vulgarisation/sérieux/ton humain, AVEC référence à des techniques
+     concrètes de chaînes connues pour leur écriture (pas juste journalistiques) ; (5) note /10 justifiée ;
+     (6) **réécriture complète** du script, mêmes faits/mêmes actes, s'il devait tout refaire.
+   - Outil : `scripts/tools/jury-script-creatif-llm.py` (committé 2026-08-01, même pattern d'appel 4
+     modèles que `jury-titres-llm.py` — IPv6 fix, parallélisation). ⚠️ NE PAS confondre avec
+     `scripts/tools/jury-script-llm.py` (existant, périmètre différent : conformité DOCTRINE-SCRIPT-UNIFIEE
+     — clarté phrase-par-phrase + densité cumulative règle 6bis, PAS la critique créative hook/rythme/ton).
+     Usage : `python3 scripts/tools/jury-script-creatif-llm.py <script.md> --contexte "..."`.
+   - **Fusion manuelle par Aziz, pas automatique** : Aziz lit les 4 verdicts + réécritures, choisit ses
+     préférés PAR MORCEAU (ex. hook de X, Acte 2 de Y), et peut lui-même composer un mix à la main. Le mix
+     d'Aziz prime toujours sur toute fusion algorithmique — c'est un choix de goût, pas une moyenne.
+   - **Piège du mix manuel à surveiller (Claude)** : un copier-coller de 2 sources différentes laisse
+     souvent des DOUBLONS (mêmes idées dites 2x, un paragraphe entier répété) et des TROUS de cohérence
+     (connecteur-cliché resté d'une source non nettoyée, contradiction jamais reliée entre 2 passages
+     venant de scripts différents). Après tout mix manuel : une passe de nettoyage CIBLÉE (uniquement les
+     doublons/trous, ne pas retoucher les choix de phrase d'Aziz) est un service à rendre systématiquement,
+     pas à attendre qu'Aziz les repère lui-même.
+
+**9. FACT-CHECK 3 NIVEAUX SUR LE TEXTE FINAL (formulations exactes, pas les faits déjà vérifiés en
+   amont) → [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]] pour le routage outil.**
+   - Sur un sujet 100% daté de l'année courante, **Deep Research est peu utile** (cutoff fin-2024, aveugle) —
+     remplacer par un 2e/3e passage Sonar Pro ciblé plutôt que de s'acharner (Deep Research a aussi un bug
+     connu de réponse VIDE malgré HTTP 200 sur prompt long, observé 2026-08-01 — ne pas retenter en boucle,
+     basculer sur Sonar Pro).
+   - **1 passage "faits datés"** (chiffres/dates/événements tels que FORMULÉS dans le texte final, pas le
+     fait brut) + **1 passage "attribution/neutralité"** dédié — brief explicite : le texte traite-t-il les
+     2 camps avec la même rigueur, des formulations prêtent-elles une intention non sourcée, etc.
+   - ⛔⛔ **LE MODÈLE DE FACT-CHECK NE CONNAÎT PAS NOTRE CHARTE — FILTRER SES VERDICTS À TRAVERS
+     [[CHARTE-EDITORIALE-SOUVERAIN]], NE PAS LES APPLIQUER TELS QUELS** (gravé 2026-08-01, Gazoduc). Un
+     modèle générique juge contre une neutralité journalistique plate ("ni parti pris ni ton"). Notre
+     charte dit explicitement : *"Je ne suis ni militant ni neutre. Je suis analyste."* — du TON, du style,
+     une tension narrative sont ATTENDUS, pas des défauts. Sur le script Gazoduc, ~10 corrections
+     "neutralité" ont été proposées par Sonar Pro ; 7 étaient des faux positifs (ton analyste normal :
+     "guerre silencieuse", "maître du gaz", "paradoxe de cette course" — aucun jugement moral, aucun
+     méchant désigné, à garder tels quels) et seulement 3 touchaient un vrai problème couvert par la
+     charte (règle 1 "pas de méchant désigné" implique aussi PAS DE HÉROS IMPLICITE — le même TYPE de fait,
+     ex. la source de financement d'un projet, cadré en vertu pour un camp et en faiblesse pour l'autre).
+     **Test de tri** : la correction retire-t-elle un jugement moral non sourcé sur un FAIT (à garder), ou
+     retire-t-elle simplement du STYLE/de la tension narrative (à écarter, ce n'est pas notre définition de
+     neutralité) ? Si le camp Claude n'est pas sûr → demander à Aziz plutôt que d'appliquer en masse.
+   - PROCÉDURE : 1 passe chaque outil → lister CHAQUE correction proposée avec verdict retenu/écarté et
+     pourquoi → appliquer seulement le retenu → STOP. Pas de boucle, pas d'auto-application en masse.
+
+→ SORTIE : script Vfinal (jury créatif intégré + factuellement blindé sur les formulations + neutralité
+filtrée par la vraie charte) → PUIS gate voix haute + densité mots → audio → production (storyboard/code).
+
+## EXEMPLE COMPLET — Gazoduc AAGP/TSGP (2026-08-01, 1er run de la méthode réordonnée)
+
+Script complet + toutes les versions : `memory/episodes/souverain/gazoduc-aagp-tsgp/` (SCRIPT-V1 brouillon
+→ jury 4 modèles → SCRIPT-V2 synthèse Claude → mix manuel Aziz → SCRIPT-V3 nettoyé + fact-checké, verrouillé).
+
+**Ce que le jury a produit concrètement** : sur le hook du V1 ("Deux pays construisent, en ce moment même,
+deux gazoducs presque identiques...", jugé "clinique/universitaire" par Aziz), les 4 modèles ont convergé
+(note moyenne ~6,5-7,4/10) sur le même diagnostic — trop d'acronymes d'un coup (AAGP/TSGP/CEDEAO/EXIM en 3
+phrases), hook qui énonce des faits au lieu d'installer une tension, manque de "texture orale". Gemini a
+produit le hook finalement retenu quasi-verbatim : *"Imaginez deux immenses tuyaux qui partent du même
+pays... Voici la course secrète pour devenir le futur maître du gaz africain."* — Aziz l'a jugé "extrêmement
+bien dit, je le garderai verbatim" avant même de voir le nettoyage.
+
+**Ce que le mix manuel d'Aziz a nécessité comme nettoyage (étape "piège du mix" ci-dessus, appliquée pour
+de vrai)** : le copier-coller Grok+Gemini d'Aziz contenait un paragraphe entier ("Le problème de ce bras de
+fer, c'est le timing...") répété MOT POUR MOT 2 fois consécutives, une phrase sur "aucun kilomètre de
+tracé" dupliquée dans le hook, le connecteur-cliché "Comment est-ce possible ?" resté d'une source, et le
+mot "terroriste" (repéré par Aziz comme vocabulaire à charge, incompatible charte analyste) réapparu d'un
+bloc non nettoyé. 6 corrections chirurgicales, zéro retouche du choix de phrases d'Aziz.
+
+**Ce que le fact-check final a vraiment trouvé (utile pour calibrer les attentes)** : sur ~15 affirmations
+datées vérifiées, TOUTES confirmées ou nuancées mineurement (aucune fausse) — le vrai gain n'était pas de
+"trouver des erreurs factuelles" (la recherche amont était déjà solide) mais de détecter le déséquilibre de
+CADRAGE entre les 2 camps (Algérie systématiquement cadrée en "vertueuse/autonome", Maroc en "dépendant") à
+travers un vocabulaire répété (Algérie = "ses propres fonds", "pas besoin d'attendre" ; Maroc = "suspendu
+au bon vouloir des banquiers"). Sur le même TYPE de fait (source de financement), corriger ce déséquilibre
+a demandé 3 reformulations ciblées, pas une réécriture — leçon : le fact-check final sert surtout à
+l'ATTRIBUTION, les faits bruts sont généralement déjà bons si la recherche amont (Phase A) était sérieuse.
 
 ## LEÇON RACINE — POURQUOI J'AI SAUTÉ DES ÉTAPES (à ne pas reproduire)
 Sur le CFA, j'ai écrit un script V1-V3 JUSTE mais TÉLÉGRAPHIQUE (phrases sans verbe) et SANS connecteurs Tremblay

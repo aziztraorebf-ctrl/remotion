@@ -158,18 +158,38 @@ export const GlobeRecitProto: React.FC = () => {
   // diametre affiche fasse ~85% de W=1080 (calcule : 1080*0.85/2 / 749 ~ 0.61). Le dezoom reste (le
   // globe recule legerement a mesure que le reseau s'etend) mais dans une fourchette RESTREINTE
   // (0.62 -> 0.42), jamais retour a des scales >1 qui feraient a nouveau deborder.
+  // ⭐⭐⭐ VARIANTE "ZOOM" v2 (retour Aziz 2026-08-01 : "le zoom est a peine perceptible, il faudrait un
+  // zoom agressif, zoom-in PUIS zoom-out, sinon le tout reste statique") : apres le GESTE de trace
+  // (2.5s), la camera fait une VRAIE respiration prononcee — zoom-in fort vers le pays, PUIS zoom-out
+  // qui revient au cadrage de base, sur toute la fenetre d'affichage. Delta de scale x3.3 plus fort
+  // que la v1 (ZOOM_BUMP 0.06 -> 0.20) + un VRAI retour (pas juste un plateau) pour que le mouvement
+  // soit visible sans ambiguite. Le zoom in/out reste dans le CENTRE de la fenetre (ne chevauche pas
+  // le pivot suivant, qui doit rester net) — 3 sous-cles : base -> zoom max (milieu) -> retour base.
+  const ZOOM_BUMP = 0.20; // delta de scale du zoom max (fort, prevu pour etre nettement visible)
   const cam = useMemo(() => {
+    const zoomKey = (etape: Etape, lon: number, lat: number, s: number) => {
+      const traceGestEnd = etape.camEnd + etape.traceDuration;
+      const windowLen = etape.staysUntil - traceGestEnd;
+      const zoomPeak = traceGestEnd + windowLen * 0.5; // pic de zoom au milieu de la fenetre
+      const zoomBack = etape.staysUntil - Math.min(20, windowLen * 0.15); // retour termine avant le pivot suivant
+      return [
+        { f: traceGestEnd, lon, lat, s }, // fin du trace : scale de base
+        { f: zoomPeak, lon, lat, s: s + ZOOM_BUMP }, // ZOOM-IN prononce, pic au milieu de la fenetre
+        { f: zoomBack, lon, lat, s }, // ZOOM-OUT : retour complet au cadrage de base avant le pivot
+        { f: etape.staysUntil, lon, lat, s }, // stable au cadrage de base jusqu'au pivot
+      ];
+    };
     const KEYS = [
       { f: 0, lon: 29.8, lat: 16.0, s: 0.62 }, // globe ENTIER visible, leger zoom sur le Soudan
-      { f: ETAPES[0].staysUntil, lon: 29.8, lat: 16.0, s: 0.62 }, // pose pendant le trace + affichage Soudan
+      ...zoomKey(ETAPES[0], 29.8, 16.0, 0.62),
       { f: ETAPES[1].camEnd, lon: 54.2, lat: 23.9, s: 0.58 }, // pivot vers Emirats + recul leger
-      { f: ETAPES[1].staysUntil, lon: 54.2, lat: 23.9, s: 0.58 }, // pose pendant le trace + affichage Emirats
+      ...zoomKey(ETAPES[1], 54.2, 23.9, 0.58),
       { f: ETAPES[2].camEnd, lon: 40.0, lat: 22.0, s: 0.54 }, // pivot vers Egypte (cadrage median) + recul
-      { f: ETAPES[2].staysUntil, lon: 40.0, lat: 22.0, s: 0.54 }, // pose pendant le trace + affichage Egypte = fin Mouvement A
+      ...zoomKey(ETAPES[2], 40.0, 22.0, 0.54),
       { f: ETAPES[3].camEnd, lon: 37.6, lat: 55.7, s: 0.50 }, // pivot vers la Russie (Moscou) + recul
-      { f: ETAPES[3].staysUntil, lon: 37.6, lat: 55.7, s: 0.50 }, // pose pendant le trace + affichage Russie
+      ...zoomKey(ETAPES[3], 37.6, 55.7, 0.50),
       { f: ETAPES[4].camEnd, lon: 35.1, lat: 39.1, s: 0.46 }, // pivot vers la Turquie + recul (les 4 puissances doivent tenir)
-      { f: ETAPES[4].staysUntil, lon: 35.1, lat: 39.1, s: 0.46 }, // pose pendant le trace + affichage Turquie
+      ...zoomKey(ETAPES[4], 35.1, 39.1, 0.46),
       { f: RE_MENTIONS[0].camEnd, lon: 29.9, lat: 26.5, s: 0.46 }, // re-pivot Egypte (highlight, deja trace)
       { f: RE_MENTIONS[1].camEnd, lon: 42.0, lat: 30.0, s: 0.42 }, // re-pivot Emirats + dezoom final : les 5 pays + Soudan tiennent
       { f: GLOBE_RECIT_FRAMES, lon: 42.0, lat: 30.0, s: 0.42 }, // pose final : le climax "incendie/main" tient sans mouvement

@@ -76,10 +76,10 @@ import { Lottie } from "@remotion/lottie";
 | Skill | Usage |
 |-------|-------|
 | `remotion-best-practices` | 37 rules (voir ci-dessous) |
-| `batch-short-production` | Pipeline production Shorts |
-| `video-production` | Workflow production générique |
-| `youtube-scriptwriting` | Script 5 phases |
 | `checkpoint` | Vérification avant "c'est fait" |
+
+(`batch-short-production`, `video-production`, `youtube-scriptwriting` supprimés 2026-08-01 — morts
+depuis mars, remplacés par `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` + `DOCTRINE-SCRIPT-UNIFIEE.md`)
 
 ### Skills globaux (`~/.claude/skills/remotion-best-practices/rules/`) — 37 fichiers
 Fichiers clés **qu'on n'exploite pas encore** :

@@ -80,7 +80,8 @@ Cout evite : 30+ min debug Remotion + mini-renders rates. Cout d'appliquer : +$0
     Brief structure : contraintes generateur + nuance morale + frame chaining + script complet
     Output Kimi : arcs narratifs, objets-ponts, placement chromatique, ton par clip
     Max 3 iterations. Cout : ~$0.01-0.02/passe.
-    Ref : `.claude/skills/batch-short-production/references/kimi-direction-example.md`
+    Ref : exemple archivé (skill `batch-short-production` supprimé 2026-08-01, mort depuis mars — voir
+    `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` pour le pipeline script actuel).
 4b-bis. KIMI CONSULTATION STORYBOARD (OPTIONNEL mais recommande si bloque) :
     Quand le storyboard rate apres 2 iterations, envoyer a Kimi K2.5 :
     - Le storyboard actuel + les refs canons + le contexte narratif + les contraintes Seedance
@@ -267,7 +268,9 @@ Learnings : le biais "reverse" sur objets tombes est un probleme du modele, pas 
 
 ## Skill complet
 
-`.claude/skills/batch-short-production/` — 9 phases, scripts, checkpoints.
+(skill `batch-short-production` supprimé 2026-08-01 — mort depuis mars, jamais retouché depuis, son seul
+test réel documenté comme "validation pipeline uniquement, pas production". Pipeline Shorts actuel :
+`memory/tools/notebooklm-boucle-short.md` + `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md`.)
 
 ---
 

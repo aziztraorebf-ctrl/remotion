@@ -119,9 +119,9 @@ memory/                       Memoire projet (regles, briefs, learnings)
 .claude/
   agents/                     5 agents de production (voir ci-dessous)
   agent-memory/               Memoire par agent + PIPELINE.md partage
-  skills/
-    batch-short-production/   Skill d'orchestration Shorts (9 phases)
-    youtube-scriptwriting/    Skill scriptwriting YouTube
+  skills/                     (batch-short-production/video-production/youtube-scriptwriting
+                                supprimes 2026-08-01, morts depuis mars, remplaces par
+                                memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md + DOCTRINE-SCRIPT-UNIFIEE.md)
 
 public/
   assets/library/             Assets REF canoniques par projet/personnage

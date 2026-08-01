@@ -17,6 +17,13 @@ metadata:
 | **Sonar Pro** | `perplexity/sonar-pro` via OpenRouter | Rapide, recherche web live, citations | Moins de profondeur analytique que Deep Research | $3/M in, $15/M out |
 | **Tavily** | MCP `tavily_search`/`extract` | **Actu FRAÎCHE** (juin 2026 OK), sources datées, scorées | Pas de raisonnement multi-step (c'est moi qui synthétise) | gratuit 1000/mois |
 
+⚠️ **BUG CONNU (2026-08-01, fact-check Gazoduc)** : Deep Research peut renvoyer une **réponse VIDE malgré
+un HTTP 200** — pas d'exception, `choices` absent ou contenu vide, silencieux. Constaté sur un prompt long
+(script complet en contexte). TOUJOURS vérifier que le texte retourné est non-vide avant de traiter l'appel
+comme réussi. Ne PAS s'acharner à relancer le même outil — basculer sur un 2e/3e passage Sonar Pro ciblé,
+surtout si le sujet est 100% daté de l'année courante (Deep Research y est de toute façon peu utile, cutoff
+fin-2024).
+
 ## RÈGLE D'USAGE (qui pour quoi)
 - **Fond historique / structurel + détection de biais/nuance** → **Deep Research**. (Ex : relations de pouvoir, « qui a commencé », formulations qui prennent parti involontairement.) Le plus utile sur un sujet COMPLEXE où une simplification peut devenir de la propagande.
 - **Actu récente / ce qui bouge** (situation militaire, chiffres à jour, événement 2025-2026) → **Tavily** (ou Sonar Pro). Deep Research est aveugle dessus.
