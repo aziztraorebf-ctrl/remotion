@@ -1,6 +1,22 @@
 # Soudan Mid-form — STATUS
 
-## ⭐⭐ ÉTAT COURANT (2026-07-22 nuit) — v4 PRODUITE, 11/12 PTS POLISH FAITS → RESTE RACCORDS AUDIO
+## 🏁 TERMINÉ — v7 promue FINAL (2026-07-31)
+
+> **Source de vérité actuelle. Remplace le bloc v4 ci-dessous (rétrogradé « trace historique »).**
+>
+> - **Livrable final** : `out/PRET-PUBLICATION/soudan-midform-FINAL.mp4` (10min36, 1920×1080,
+>   19 066 frames @30fps, -16,9 LUFS). Validé par Aziz ("presque parfaite" + correctif de raccord final).
+>   Détail complet de la v7 (dynamisation globe, 13 retours de visionnage, vérifications) :
+>   `out/PRET-PUBLICATION/soudan-midform-FINAL.PUBLICATION-NOTE.md`.
+> - **Titre, miniature, description, programmation YouTube : FAITS (2026-07-31)**. Titre :
+>   « L'empire de l'or qui rend la guerre au Soudan impossible à arrêter ». Miniature : concept
+>   "Machine à guerre" (`public/_shared/thumbnails-library/soudan-midform/machine-a-guerre-final.png`).
+>   Programmée le 2026-08-20 (4e position). Détail pipeline complet dans PUBLICATION-NOTE.md ci-dessus.
+> - **Reste à faire** : Short Soudan (boucle NotebookLM, cf `memory/tools/notebooklm-boucle-short.md`)
+>   — n'existe pas encore.
+> - **Chantier globe D3 CLOS** (Aziz : « seuil de rendement décroissant ») — ne pas rouvrir sans raison neuve.
+
+## 🗄️ [TRACE 2026-07-22 nuit] v4 PRODUITE, 11/12 PTS POLISH FAITS → RESTE RACCORDS AUDIO (périmé, remplacé ci-dessus)
 
 > **Source de vérité. Remplace le bloc v3 ci-dessous (rétrogradé « trace historique »).**
 >

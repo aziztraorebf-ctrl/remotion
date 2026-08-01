@@ -22,8 +22,9 @@
 | Vidéo | Production | Diffusion |
 |---|---|---|
 | Sénégal Pétrole & Gaz (long) | ✅ livré | ✅ **PUBLIÉ 2026-07-30** |
-| War-Map Sahel AES (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04 14h45** |
-| Franc CFA (mid-form) | ✅ livré | titre + miniature prêts → upload manuel Studio ~11 août |
+| War-Map Sahel AES (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04** |
+| Franc CFA (mid-form) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-11** |
+| Soudan mid-form (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-20** (titre/miniature/description faits 2026-07-31) |
 | Short Sénégal D3 · Short AES 90s · Short CFA | ✅ livrés | à programmer, tous bloqués crédits TryPost épuisés (⛔ règle : Short + longue liés sortent le MÊME JOUR) |
 | Short Soudan | ⚠️ n'existe pas | à CONSTRUIRE |
 
@@ -34,11 +35,11 @@
 
 ## ÉTAT DES PROJETS VIVANTS
 
-### Soudan mid-form — v4 produite, reste les raccords audio
+### Soudan mid-form — 🏁 TERMINÉ, v7 promue FINAL (2026-07-31)
 **Source de vérité** : `memory/episodes/soudan-midform/STATUS.md`.
-6/6 actes codés, v4 assemblée 2026-07-22 (11/12 pts polish faits). Livrable :
-`out/episodes/soudan-midform/wip/passe-finale-v4/soudan-midform-v4-MIX.mp4`.
-**Reste** : raccords audio + plateau ~7 s Acte 6. Prochaine session **en direct, sans agents**.
+6/6 actes codés. Livrable final : `out/PRET-PUBLICATION/soudan-midform-FINAL.mp4` (10min36).
+Titre, miniature, description, programmation (2026-08-20) : FAITS. **Reste** : Short Soudan
+(boucle NotebookLM) — n'existe pas encore.
 
 > ⛔⛔ **Fichiers actifs des Actes 3/4 — vérifié 2026-07-30 par date de commit + contenu du montage
 > final réel** (le v4-MIX contient `a3-section1.mp4` + `a3-insert.mp4`, noms qui correspondent aux

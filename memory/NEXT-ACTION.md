@@ -34,14 +34,15 @@
 > | Vidéo | État |
 > |---|---|
 > | 🇸🇳 Sénégal Pétrole & Gaz | ✅ **PUBLIÉ** le 2026-07-30 |
-> | ⚔️ War-Map Sahel AES | 🗓️ **PROGRAMMÉ mardi 4 août 2026, 14h45** |
-> | 💰 Franc CFA (longue) | titre + miniature prêts → upload manuel Studio ~11 août |
+> | ⚔️ War-Map Sahel AES | 🗓️ **PROGRAMMÉ** 2026-08-04 |
+> | 💰 Franc CFA (longue) | 🗓️ **PROGRAMMÉ** 2026-08-11 |
 > | 💰 Franc CFA (Short 9:16) | ✅ **PRET-PUBLICATION** (construit 2026-07-31), bloqué crédits TryPost |
+> | 🇸🇩 Soudan mid-form (longue) | 🗓️ **PROGRAMMÉ** 2026-08-20 (titre/thumbnail/description faits le 2026-07-31) |
 >
 > ⛔ Règle générale (corrigée 2026-07-31) : un Short lié à une longue sort **le MÊME JOUR** (jamais
 > avant, jamais plusieurs jours après — le Short booste l'algo de la longue en lancement).
 > ⏭️ **Prochaine session** : recharger crédits TryPost, programmer Shorts Sénégal + AES + CFA (tous
-> prêts), puis **CONSTRUIRE** le Short Soudan (⚠️ il n'existe PAS, vérifié sur disque le 30/07).
+> prêts), puis **CONSTRUIRE** le Short Soudan et le Short AES (⚠️ aucun des deux n'existe encore).
 >
 > **Source de vérité unique** (dates, titres figés, thumbnails, interdits) :
 > `/Users/clawdbot/.claude/projects/-Users-clawdbot-Workspace-remotion/memory/calendrier-publication-2026-08.md`
@@ -118,22 +119,6 @@ si les allures varient trop · figurants d'arrière-plan trop statiques (piste :
 **→ RENDRE ET REGARDER le beat avant de conclure quoi que ce soit** (règle CODE + VISUEL).
 Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 **Starter** (à revérifier avant usage vu l'erreur ci-dessus) : `memory/archive/starters-perimes-2026-06-15/STARTER-PROMPT-maroc-a5-geographie.md`.
-
----
-
-## 🎬 Soudan mid-form — v4 produite, reste les raccords audio
-
-11/12 pts de polish faits (audio pauses actes 3-6 · SFX count-up/dings · globe Acte 5 peuplé · 8
-plaques sources). Livrable : `out/episodes/soudan-midform/wip/passe-finale-v4/soudan-midform-v4-MIX.mp4`.
-⛔ **Bug gel vidéo trouvé et corrigé** (concat demuxer sur acte déjà concaténé = DTS cassés, image figée
-4 min avec audio normal) → toujours utiliser le filtre `concat=` (réencodage réel), jamais le demuxer.
-**Reste** : raccords audio (timecodes à donner par Aziz) + plateau ~7 s Acte 6 vers 9:10.
-**Méthode** : éditer le manifest JSON (`scripts/tools/soudan-audio/acte{N}-pauses-*.json`), ⛔ ne PAS
-régénérer la narration → [[AUDIO-PAUSES-DETERMINISTES]].
-⏭️ **Prochaine session : Aziz + Claude EN DIRECT, pas d'agents** (chantier ciblé, pas besoin du
-parallélisme agentique).
-⚠️ **Code actif = les Globe D3** (`src/projects/_rnd/d3-16x9/*Globe.tsx`, Actes 3/4/5/6). Les
-`warmap/soudan-acte3|4/*.tsx` Mapbox existent encore sur disque mais sont PÉRIMÉS — ne pas les rouvrir.
 
 ---
 

@@ -114,6 +114,18 @@ d'une frame existante").
    - Résolution native de sortie ≈ 1376×768, PAS du vrai 1920×1080. Upscale Lanczos avant publication :
      `ffmpeg -i in.png -vf "scale=1920:1080:flags=lanczos" out.png` (sans perte visible sur ce type de
      visuel vectoriel/texte, mais ce n'est pas du Full HD généré nativement — le signaler si demandé).
+     ⚠️ Le web app Gemini, lui, peut sortir en pleine résolution (2752×1536 observé, cas Soudan
+     2026-07-31) — supérieur à l'API, pas besoin d'upscale si le fichier vient du web.
+   - **Vérifier le CONTENU RÉEL d'un fichier téléchargé avant de l'utiliser**, jamais se fier au nom
+     de fichier seul (cas Soudan 2026-07-31) : 2 images partagées par Aziz via des liens tmpfiles.org
+     étaient DÉJÀ inversées au moment du transfert (le lien nommé "machine à guerre" pointait vers
+     l'image du "serpent" et vice-versa). Un 1er appel API de correction a donc été lancé sur la
+     mauvaise image, et Gemini a improvisé un résultat halluciné (texte jamais demandé) au lieu de
+     rien faire, faute de correspondre au prompt. Toujours ouvrir/afficher l'image avant un appel API
+     de référence, surtout si plusieurs fichiers similaires sont transférés en même temps.
+     Gotcha lié : tmpfiles.org retourne une page HTML de download sur son URL "normale" (curl -sL
+     télécharge du HTML déguisé en .png, détectable via `file` : "HTML document text") — le vrai lien
+     direct suit le pattern `https://tmpfiles.org/dl/{id}/{filename}`.
 
 **Coût** : gratuit pour l'étape web (1-4), quelques centimes pour les itérations API de correction (5).
 
