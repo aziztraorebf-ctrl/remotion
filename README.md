@@ -83,7 +83,7 @@ Details complets : `memory/tools/pipeline.md` et `.claude/agent-memory/shared/PI
 
 ### Rendu
 - Local : `npx remotion render`
-- Cloud : Vercel Sandbox via `scripts/tools/render-on-vercel.py`, retourne MP4 public
+- Cloud : `scripts/tools/render-on-vercel.py` — POC ABANDONNÉ (2026-03-27), pointe vers un repo séparé jamais synchronisé. NE PAS UTILISER. Pour D3/SVG pur : `npx remotion render` local. Pour Mapbox/WebGL : `scripts/render-mapbox.sh` (obligatoire).
 - Upload : Vercel Blob pour review mobile-friendly
 
 ---
@@ -102,7 +102,7 @@ src/
 scripts/
   generate-audio.ts           Pipeline ElevenLabs
   polish-audio.ts             Pipeline Auphonic (normalisation)
-  render-on-vercel.py         Render cloud via Vercel Sandbox
+  render-on-vercel.py         POC ABANDONNE (2026-03-27) - NE PAS UTILISER, voir section Rendu
   pipeline_gates.py           13 gates pre-API bloquants
   batch_runner.py             Batch de generations Seedance
   tools/                      Scripts one-shot par scene (generate-sceneX, seedance-acteY, etc.)
@@ -161,8 +161,7 @@ npx tsx scripts/generate-audio.ts
 # Render local
 npx remotion render SonjataPapercraft out/sonjata.mp4
 
-# Render cloud (Vercel)
-python scripts/tools/render-on-vercel.py
+# Render cloud (Vercel) -- POC ABANDONNE, NE PAS UTILISER (voir section Rendu ci-dessus)
 ```
 
 ---

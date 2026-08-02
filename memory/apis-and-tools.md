@@ -108,7 +108,7 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 | `extract-lastframe.sh` | Derniere frame d'un clip pour frame chaining |
 | `review_with_kimi.py` | Review video/image via Kimi K2.5 |
 | `upload-to-blob.py` | Upload vers Vercel Blob |
-| `render-on-vercel.py` | Render Remotion en cloud via Vercel Sandbox |
+| `render-on-vercel.py` | ⛔ POC ABANDONNÉ (2026-03-27, repo séparé jamais synchronisé) — NE PAS UTILISER. `npx remotion render` local pour D3/SVG, `render-mapbox.sh` pour Mapbox/WebGL |
 
 ### Recherche (`research/`)
 | Script | Usage |

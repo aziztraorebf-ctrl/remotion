@@ -11,8 +11,8 @@
 
 | Quand tu veux... | Script | Usage / note |
 |---|---|---|
-| Rendre une compo lourde / Mapbox (> 30s) sur le cloud (libérer la machine) | `scripts/tools/render-on-vercel.py` | `--comp GeoTest --props '{...}' [--open]` → URL Vercel Blob MP4. DÉFAUT render long. |
-| Rendre une compo Mapbox/WebGL en local (headless WebGL) | `scripts/render-mapbox.sh` | `<CompositionId> <output.mp4> [args remotion...]` chrome-headless-shell, public-dir slim. |
+| Rendre une compo lourde D3/SVG (> 30s) | `npx remotion render` (local) | DÉFAUT render long. ⛔ `scripts/tools/render-on-vercel.py` = POC abandonné (2026-03-27, repo séparé non synchronisé) — NE PAS UTILISER. |
+| Rendre une compo Mapbox/WebGL en local (headless WebGL) | `scripts/render-mapbox.sh` | `<CompositionId> <output.mp4> [args remotion...]` chrome-headless-shell, public-dir slim. OBLIGATOIRE pour Mapbox/WebGL. |
 | Rendre les 8 slides du carrousel Good News + musique | `scripts/render-goodnews-carousel.sh` | Lit CURRENT_EDITION. Sortie `out/_r-and-d/good-news/final/`. |
 | Rendre les slides d'un carrousel (PNG via remotion still) | `scripts/generate-carousels.py` | Sortie `out/carousels/<id>/slide-N.png`. Édite CAROUSELS en tête. |
 
