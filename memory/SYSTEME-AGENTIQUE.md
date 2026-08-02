@@ -42,6 +42,17 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    - **Image générée (TOUJOURS)** : `storyboard-dual-gen.py` (Gemini + GPT, le modèle PROPOSE). Carte/Mapbox →
      préambule 4 couches de `STORYBOARD-MAPBOX.md` (joindre NOTRE carte + chaînes de réf + ARSENAL + directive carte
      vivante ; géo approximative OK, vraie géo au CODE).
+   - ⛔ **EXCEPTION — globe D3 avec socle déjà prouvé (tranché Aziz 2026-08-02, Gazoduc Acte 1)** : PAS d'image
+     storyboard générée quand la scène est un globe D3 (`globeGeo.ts`/`globeCamera.ts`/occlusion réelle) et que le
+     registre visuel (globe, arcs, drapeaux, caméra continue) est déjà un moteur prouvé — cf
+     `feedback_globe-d3-moteur-cartographique-reutilisable.md`. Raison : un modèle image ne connaît ni notre GeoJSON
+     réel ni notre moteur d'occlusion — il produirait soit du 3D photoréaliste hors-charte, soit des tracés géo
+     inexacts qu'on ne peut/veut pas reproduire fidèlement au code ; ce référentiel visuel biaise plus qu'il n'aide
+     (même logique que "géo approximative OK, vraie géo au CODE" en Mapbox, poussée à son terme : ici même
+     l'approximation n'apporte rien). Dans ce cas : sauter direct à l'étape 5.5 (DA-BRIEF-GATE upstream) — le
+     mécanisme (placement des flux/arcs, cadrage caméra par pivot) est le vrai inconnu, pas la direction visuelle.
+     Ne s'applique qu'au globe D3 à socle prouvé — reste NON-SAUTABLE pour toute scène-lieu/décor/personnage/mécanique
+     qui invente une direction visuelle neuve.
    - ⛔⛔ **ÉPURE DU TEXTE À L'ÉCRAN — le texte n'apparaît QUE pour l'essentiel (gravé 2026-06-26, Aziz, sc.7 Sénégal V3).**
      La VOIX porte le récit ; l'écran porte le GRAPHISME. Un texte n'est justifié à l'écran QUE s'il est une
      information-clé que le spectateur doit RETENIR ou qui n'est PAS dite par la voix (un chiffre qui frappe, une

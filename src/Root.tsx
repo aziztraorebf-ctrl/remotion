@@ -56,6 +56,7 @@ import { SoudanActe3GlobeMinesProto, GLOBE_MINES_PROTO_FRAMES } from "./projects
 import { SoudanActe3Section1Globe, SECTION1_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3Section1Globe";
 import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
 import { SoudanActe6Globe, SOUDAN_A6_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe6Globe";
+import { GazoducActe1Hook, GAZODUC_A1_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -1072,6 +1073,16 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
           defaultProps={{ showInstitutionTokens: true }}
+        />
+        {/* Gazoduc AAGP vs TSGP — Acte 1 "L'anomalie" (hook), globe D3 (occlusion reelle des 2
+            tracés qui divergent + reveal en cascade par pays + starfield porté du Short 9:16). */}
+        <Composition
+          id="D3-Gazoduc-Acte1-Hook"
+          component={GazoducActe1Hook}
+          durationInFrames={GAZODUC_A1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
         />
         <Composition
           id="KostiFrappeProto"
