@@ -1,0 +1,11 @@
+{
+  "source_audio": "out/_voix-test/splice-p4-round2/step-c-v2.mp3",
+  "cuts": [
+    {
+      "label": "avant Sur le papier",
+      "cut_s": 3.495,
+      "resume_s": 3.505,
+      "sil_s": 1.0
+    }
+  ]
+}

@@ -8,7 +8,7 @@ metadata:
 # RÈGLES TAGS ELEVENLABS V3 (à scanner AVANT chaque fichier V3)
 
 > Vérifié 2026-06-16 : doc officielle EL (best-practices, v3-audiotags, precision-delivery) + [[TTS-EXPRESSIVITE-RECHERCHE-2026-06]].
-> Pipeline concerné : `scripts/generate-narration-expressive.py` (Océane V3 → STS GéoAfrique). Doctrine pipeline : [[PIPELINE-VOIX-VIVANTE-VALIDE]].
+> Pipeline concerné : `scripts/generate-narration-expressive.py` (Harmonie V3, ex-Océane → STS GéoAfrique, révisé 2026-08-01). Doctrine pipeline : [[PIPELINE-VOIX-VIVANTE-VALIDE]].
 > ⭐ **PRINCIPE DIRECTEUR (Aziz 2026-06-16) : OSER les tags émotionnels — c'est CE QUI tue le ton robotique/monotone.** Le danger n'est PAS « trop d'émotion », c'est « pas assez » (= GéoAfrique monotone, le problème qu'on combat). Ne JAMAIS sous-doser par excès de prudence.
 > Distinguer DEUX choses :
 > - **Registre** (ce qui reste cadré) : doc géopo → pas de tags HORS-SUJET (`[laughs]`, `[whispers]` théâtral, `[pirate voice]`, SFX, accents). Ça reste exclu.
@@ -35,11 +35,14 @@ Doc EL : ellipses ajoutent du poids, laissent un moment « atterrir ». Plus nat
 - Ex : `Trois années de combats... et personne ne parvient à les arrêter.`
 - Combinable : `Il faut suivre... l'or.`
 
-### R3-bis — ⚠️ PAUSES PARCIMONIEUSES : GéoAfrique (et Océane V3) sont DÉJÀ des voix LENTES (Aziz 2026-06-16)
+### R3-bis — ⚠️ PAUSES PARCIMONIEUSES : GéoAfrique reste une voix LENTE en sortie (Aziz 2026-06-16)
 Une fois la voix GéoAfrique appliquée (STS), le débit est déjà posé/lent. Empiler des `[pause]` → la rend TRAÎNANTE, pas dramatique. La pause perd son pouvoir si elle est partout.
 - ✅ RÈGLE : `[pause]` réservé aux **1-2 pics les plus forts** de l'acte (le moment qu'on VEUT faire respirer). Ailleurs : laisser la ponctuation naturelle (virgule, point) + le débit lent intrinsèque faire le travail.
 - Préférer souvent l'ellipse `...` (poids sans silence mort) à un `[pause]` sec quand on veut juste « peser » un peu.
 - ❌ ANTI-PATTERN : un `[pause]` à chaque transition de phrase → effet diaporama lent, ennuyeux.
+- ⭐ **Précision 2026-08-02** : ceci vaut pour le DOSAGE des pauses (n'en mettre que sur les vrais pics),
+  pas contre la technique elle-même — un `[pause]` NATIF régénéré (pas posé après-coup sur un audio déjà
+  figé) donne la transition la plus naturelle, cf [[PIPELINE-VOIX-VIVANTE-VALIDE]] § PAUSES.
 
 ### R4 — NE PAS HACHER : phrases/segments LONGS (>250 caractères), pas de mini-fragments
 ⚠️ CONTRE-INTUITIF (inverse de v2). Source interne : *« v3 instable sur prompts courts. Phrases trop courtes APPAUVRISSENT l'expressivité v3. »*

@@ -142,17 +142,15 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — SCRIPT V3 VERROUILLÉ, AUDIO GÉNÉRÉ
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — AUDIO COMPLET, RESTE CODE
 
-**État (2026-08-01)** : script V3 verrouillé (~12 min narration, durée assumée par Aziz — pas de coupe)
-via jury créatif 4 modèles + mix manuel + fact-check final 3 niveaux + gate voix haute. Narration
-ElevenLabs générée et uploadée (Vercel Blob) : `out/episodes/gazoduc-aagp-tsgp/narration.mp3`.
-Dossier script : `memory/episodes/souverain/gazoduc-aagp-tsgp/` (SCRIPT-V1/V2/V3.md, V3-VOIX.md) +
-fact-check : `memory/projects/gazoduc-fact-check-sonar-2026-08-01.md`.
-**Décision en attente** : Aziz doit écouter `narration.mp3` et valider/ajuster les poses avant le code.
-**Prochaine étape** : après validation audio → coder la 1ère scène (registre scène-lieu narrative SVG,
+**État (2026-08-02)** : voix source changée Océane→**Harmonie** (décision Aziz après comparaison 9 voix),
+méthode texte revue (paragraphes fusionnés, CAPS, tags ciblés), nouvel outil
+`scripts/tools/splice-segment.py`. **`narration.mp3` final assemblé, uploadé, `SCRIPT-V3-VOIX.md` à
+jour** (détail : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`).
+**Prochaine étape** : storyboard/timing puis coder la 1ère scène (registre scène-lieu narrative SVG,
 genèse 2016 Mohammed VI + Buhari). ⛔ **Piège de la carte** : sujet abstrait → scène-objet, pas une carte.
-Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md` (mis à jour) + `DECODE-modeles-fr-afrique.md` (camp 3).
+Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 ---
 

@@ -6,10 +6,18 @@
 > ici on couvre la CORRECTION DU RYTHME d'un audio déjà généré et validé.
 
 ## LE PROBLÈME (pourquoi cette méthode existe)
-Quand Aziz dit « la voix se précipite / n'a pas de pause ici / la phrase est coupée » :
-1. ❌ **NE PAS** compter sur ElevenLabs pour placer les pauses via tags `[pause]` / ponctuation. Le modèle
-   INTERPRÈTE : il met la pause où LUI juge, pas où on demande. Prouvé 2 fois (v2/v3 tags) : une pause
-   apparaît, une autre disparaît à chaque régénération = jeu de hasard, on tourne en rond.
+> ⚠️ **Cadrage 2026-08-02** : les 2 points ci-dessous valent pour CORRIGER un audio DÉJÀ VALIDÉ (le cas
+> qui a motivé ce fichier). Pour une GÉNÉRATION INITIALE (ou un segment qu'on accepte de régénérer), le
+> `[pause]` NATIF écrit dans le texte donne au contraire la transition la plus naturelle — méthode
+> PAR DÉFAUT désormais, cf [[PIPELINE-VOIX-VIVANTE-VALIDE]] § PAUSES. Les deux doctrines ne se
+> contredisent pas : elles répondent à deux situations différentes (corriger sans régénérer vs générer).
+
+Quand Aziz dit « la voix se précipite / n'a pas de pause ici / la phrase est coupée » **sur un audio déjà
+approuvé qu'on ne veut pas relancer au hasard** :
+1. ❌ **NE PAS** compter sur ElevenLabs pour placer les pauses via tags `[pause]` / ponctuation SUR UN
+   AUDIO EXISTANT qu'on regénère juste pour ça. Le modèle INTERPRÈTE : il met la pause où LUI juge, pas où
+   on demande. Prouvé 2 fois (v2/v3 tags) : une pause apparaît, une autre disparaît à chaque régénération =
+   jeu de hasard, on tourne en rond.
 2. ❌ **NE PAS RÉGÉNÉRER** un audio déjà validé pour « juste rajouter une pause ». Régénérer = nouveau tirage
    TTS → le modèle RE-RATE des mots qui étaient CORRECTS dans l'audio validé (prononciation qui dérive).
    Constaté : la version segments-régénérés avait des mots mal prononcés absents de l'original.

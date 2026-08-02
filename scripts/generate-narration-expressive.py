@@ -40,8 +40,8 @@ if not API_KEY:
     print("ERROR: ELEVENLABS_API_KEY missing dans .env")
     sys.exit(1)
 
-# --- Voix (doctrine) ---
-VOICE_V3_OCEANE = "CqTrL0ThT2GJVJEIiLcY"   # source expressive V3 FR
+# --- Voix (doctrine, revisee 2026-08-01 : Harmonie remplace Oceane comme source par defaut) ---
+VOICE_V3_OCEANE = "obmcfXCePmPgsNsLIWIj"   # Harmonie - source expressive V3 FR (ex-Oceane CqTrL0ThT2GJVJEIiLcY)
 VOICE_GEOAFRIQUE = "z3gESu49naEZW8Af2Upm"  # cible STS (timbre de marque)
 
 MODEL_V3 = "eleven_v3"

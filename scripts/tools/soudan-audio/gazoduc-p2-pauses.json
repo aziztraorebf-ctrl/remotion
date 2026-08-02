@@ -1,0 +1,17 @@
+{
+  "source_audio": "out/_voix-test/splice-p2/p2-spliced-v2.mp3",
+  "cuts": [
+    {
+      "label": "apres 6900km longueur",
+      "cut_s": 30.70,
+      "resume_s": 30.71,
+      "sil_s": 1.0
+    },
+    {
+      "label": "apres atteindre le Maroc",
+      "cut_s": 39.76,
+      "resume_s": 39.80,
+      "sil_s": 1.0
+    }
+  ]
+}
