@@ -29,6 +29,9 @@ import { SoudanActe4B6Globe, ACTE4_B6_FRAMES } from "./projects/_rnd/d3-16x9/Sou
 import { SoudanActe4B1toB4Globe, ACTE4_B1B4_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B1toB4Globe";
 import { SoudanActe4B1B2Globe, ACTE4_B1B2_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B1B2Globe";
 import { SoudanActe4B3Globe, ACTE4_B3_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B3Globe";
+import { ProtoGazoducArcContinu, PROTO_GAZODUC_ARC_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducArcContinu";
+import { ProtoGazoducCartePlate, PROTO_GAZODUC_PLATE_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducCartePlate";
+import { ProtoGazoducAfriqueComplete, PROTO_GAZODUC_AFRIQUE_COMPLETE_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducAfriqueComplete";
 import { SoudanActe4B4Nil, ACTE4_B4_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe4B4Nil";
 import { PieMorphProto16x9, PIE_MORPH_FRAMES } from "./projects/_rnd/d3-16x9/PieMorphProto16x9";
 import { SplitScreenProto16x9, SPLIT_SCREEN_FRAMES } from "./projects/_rnd/d3-16x9/SplitScreenProto16x9";
@@ -56,6 +59,8 @@ import { SoudanActe3GlobeMinesProto, GLOBE_MINES_PROTO_FRAMES } from "./projects
 import { SoudanActe3Section1Globe, SECTION1_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe3Section1Globe";
 import { SoudanActe5Globe, SOUDAN_A5_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe5Globe";
 import { SoudanActe6Globe, SOUDAN_A6_GLOBE_FRAMES } from "./projects/_rnd/d3-16x9/SoudanActe6Globe";
+import { ProtoGazoducZoomRobuste, PROTO_GAZODUC_ZOOM_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducZoomRobuste";
+import { ProtoGazoducGlobeFusion, PROTO_GAZODUC_FUSION_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion";
 import { GazoducActe1Hook, GAZODUC_A1_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
@@ -465,6 +470,7 @@ import { GoldRoute8Dir } from "./projects/_shared/templates/travel-map/GoldRoute
 import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateCarte";
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 import { HalftoneDemo } from "./projects/_rnd/cutout-halftone/HalftoneDemo";
+import { EnchainementGestesValides, ENCHAINEMENT_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesValides";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -1080,6 +1086,27 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte1-Hook"
           component={GazoducActe1Hook}
           durationInFrames={GAZODUC_A1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO isole (2026-08-02) — preuve objective que globeR pilote TOUS les cercles de sphere
+            (pas de reproduction du bug scaleMul documente sur GazoducActe1Hook). Zoom ample
+            scaleMul 1.3->4.4, ne touche a aucun fichier existant. */}
+        <Composition
+          id="RND-ProtoGazoducZoomRobuste"
+          component={ProtoGazoducZoomRobuste}
+          durationInFrames={PROTO_GAZODUC_ZOOM_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO FUSION (2026-08-02) — combine l'amplitude de camera du proto Zoom Robuste avec
+            l'arc en S (windingPathD) qui corrige la ligne quasi droite du proto Arc Continu. */}
+        <Composition
+          id="RND-ProtoGazoducGlobeFusion"
+          component={ProtoGazoducGlobeFusion}
+          durationInFrames={PROTO_GAZODUC_FUSION_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -2686,6 +2713,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
         <Composition id="RND-PiliersGouffre" component={PiliersGouffre16x9} durationInFrames={PILIERS_GOUFFRE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-EnchainementGestesValides" component={EnchainementGestesValides} durationInFrames={ENCHAINEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         {/* LiptakoRevealSVG-Test / ResourcesRevealSVG-Test RETIRÉES (2026-07-04) : intégration réelle
             faite et validée dans Partie3Rupture.tsx / Partie4Cout.tsx (SahelPartie3 / SahelPartie4). */}
@@ -2693,6 +2721,9 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-IngaH16x9" component={IngaH16x9} durationInFrames={INGA_H_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaV9x16" component={IngaV9x16} durationInFrames={INGA_V_FRAMES} fps={30} width={1080} height={1920} />
         <Composition id="RND-IngaEncreH" component={IngaEncreH} durationInFrames={INGA_ENCRE_H_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGazoducArcContinu" component={ProtoGazoducArcContinu} durationInFrames={PROTO_GAZODUC_ARC_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGazoducCartePlate" component={ProtoGazoducCartePlate} durationInFrames={PROTO_GAZODUC_PLATE_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoGazoducAfriqueComplete" component={ProtoGazoducAfriqueComplete} durationInFrames={PROTO_GAZODUC_AFRIQUE_COMPLETE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaNarratif-Parchemin" component={IngaNarratifParchemin} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaNarratif-Blanc" component={IngaNarratifBlanc} durationInFrames={INGA_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-IngaMondeVivant" component={IngaMondeVivant} durationInFrames={INGA_MONDE_FRAMES} fps={30} width={1920} height={1080} />
