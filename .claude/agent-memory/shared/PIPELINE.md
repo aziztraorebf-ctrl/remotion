@@ -69,8 +69,11 @@ PERSONNAGES** · **Fable 5 = modèle SVG par défaut** (2 tests aveugles gagnés
 Doctrine : `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`.
 ⚠️ Bug `BRAS_LAG` non corrigé au socle — décision d'Aziz en attente (corriger obligerait à
 revalider 6 planches).
-⚠️ Registre stick figure (6 scènes narratives) reste sur worktree `remotion-cfa`,
+⚠️ Registre stick figure (6 scènes narratives sources) reste sur worktree `remotion-cfa`,
 `rnd/stick-figures-gestes`, **non mergé** — `jamais git add -A` (node_modules non ignoré).
+✅ 2026-08-03 : nouveau travail (héritage de pose 2e cas + portage P_SOL) fait et **commité dans le
+repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
+voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
 ### Gazoduc — PROCHAINE VIDÉO
 Sujet GO. Hérite des R&D closes (piliers SVG, personnages, planche NotebookLM).

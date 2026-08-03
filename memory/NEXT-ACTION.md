@@ -123,6 +123,17 @@ avant d'ajouter du sens (`lean` 23°→14°).
 ⛔ **Hiérarchie** : ABSENCE > PARTICIPANT > INERTE — vaut pour cette scène-là (funambule, métaphore déjà
 complète), pas une loi générale (un lieu qui porte une info propre pourrait inverser la réponse).
 
+⭐ **2026-08-03 — Héritage de pose CONFIRMÉ sur 2e cas + pose "au sol" débloquée.** Brique n°7
+(continuité par héritage, jamais fondu) prouvée sur un 2e enchaînement indépendant (gestes expressifs
+sans objet). La pose "corps effondré au sol", jugée impossible sur `<Stick>` après 2 rounds de
+tâtonnement, était en fait DÉJÀ VALIDÉE sur l'autre moteur (`<Figure>`, geste `BandeChute`/`P_SOL`) —
+portée par IK + paramètre `headTuck` manquant. Effondrement validé visuellement par Aziz sur rendu.
+Commit `14990278` (repo principal, PAS le worktree remotion-cfa — voir décision ci-dessous).
+Détail : `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7.
+⛔ **DÉCISION EN ATTENTE** : intégrer ce résultat dans une vraie scène de production (pas juste
+`_rnd/fable-libre/`), et généraliser la méthode de portage IK en fonction réutilisable (2 cas réels
+seulement pour l'instant, seuil de généralisation à rediscuter avec Aziz).
+
 ⚠️ **Bug `BRAS_LAG` non appliqué par `Figure`** — ~9% du cycle en pose dégénérée, touche potentiellement
 toutes les scènes stick figure. Parade côté appelant en place ; socle non corrigé (décision Aziz en
 attente, corriger obligerait à revalider 6 planches).

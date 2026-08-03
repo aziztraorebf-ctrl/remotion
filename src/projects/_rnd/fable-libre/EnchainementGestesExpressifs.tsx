@@ -2,6 +2,13 @@
 // ENCHAINEMENT DE GESTES EXPRESSIFS — 2e CAS D'USAGE DE L'HERITAGE DE POSE (2026-08-03)
 // ============================================================================================
 //
+// ⛔⛔ MISE A JOUR (2026-08-03, fin de session) : ce fichier conclut plus bas que P_SOL (pose au sol)
+// est "structurellement insoluble" sur <Stick> (bras trop long). CETTE CONCLUSION EST REFUTEE — voir
+// EnchainementGestesExpressifsSol.tsx (meme dossier) qui porte P_SOL avec succes via IK + parametre
+// headTuck. La vraie cause n'etait pas la longueur du bras (verifie par balayage 14u-46u, 0 solution
+// partout) mais un parametre manquant. Ne pas repartir du diagnostic "insoluble" ci-dessous sans
+// avoir lu STICK-FIGURE-INDEX.md brique n°7 (sous-section portage de pose entre moteurs) d'abord.
+//
 // POURQUOI CE FICHIER EXISTE : la brique n°7 de STICK-FIGURE-INDEX.md ("continuite de pose aux
 // jonctions par HERITAGE, jamais par fondu") est prouvee sur UN SEUL enchainement — marche /
 // arret / pousser / marche / assis (EnchainementGestesValides.tsx). Un cas unique ne dit pas si
