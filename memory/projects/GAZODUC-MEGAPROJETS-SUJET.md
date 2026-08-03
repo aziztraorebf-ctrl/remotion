@@ -5,6 +5,10 @@
 > Sénégal, Maroc batteries) seront finies. On y revient n'importe quand — toutes les bases sont posées ici.
 > Données détaillées (modèles, ratios, transcripts) : [[DECODE-modeles-fr-afrique]] camp 3.
 >
+> ⚠️ **Registre finalement retenu en production : globe D3, pas Mapbox** (ce document propose plus bas
+> "Souverain Mapbox Mid-form... 1 Map continue... FlagFill", mais la décision de production 2026-08-03
+> a tranché pour un globe D3 orthographique — voir `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`).
+>
 > ⛔ **RE-FACT-CHECKER OBLIGATOIRE avant script** : tout ce qui suit (§ MISE À JOUR 2026-07-25 et
 > 2026-08-01) est un instantané pris à ces dates. Vu le temps qui s'écoulera avant production réelle,
 > les chiffres/étapes peuvent encore avoir bougé (FID, financement, nouveaux accords, sécurité Sahel).

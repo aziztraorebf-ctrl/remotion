@@ -75,9 +75,13 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — PROCHAINE VIDÉO
-Sujet GO. Hérite des R&D closes (piliers SVG, personnages, planche NotebookLM).
-⛔ Piège de la carte : sujet abstrait → scène-objet.
+### Gazoduc — Acte 1 TERMINÉ (globe D3), Acte 2 à venir
+Acte 1 (hook, 84.68s, globe D3) écrit de bout en bout dans `GazoducActe1Hook.tsx`, validé par Aziz
+comme base de production (render v6, 2026-08-03) après refonte caméra continue + tracé AAGP côtier
+réel + correction factuelle Maroc/Espagne + review downstream 3 voix. 3 points de polish reportés
+sciemment à la passe finale (`memory/episodes/souverain/gazoduc-aagp-tsgp/POLISH-TODO-FINAL-RENDER.md`).
+⏭️ Prochaine étape : Acte 2 (scène-lieu narrative, genèse 2016, Mohammed VI + Buhari, décor fixe).
+Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion

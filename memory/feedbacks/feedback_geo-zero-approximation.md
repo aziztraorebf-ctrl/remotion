@@ -66,3 +66,24 @@ Tester avec scale=1.0 d'abord, ajuster visuellement.
 **Why:** 3.1-pro fournit des paths SVG géographiques approximatifs "as placeholder". Ces placeholders produisent des formes méconnaissables (cercles, polygones vagues). Le public reconnaît mal son pays = perte de crédibilité éditoriale. Le d3-geo prend 2 minutes et donne la forme exacte.
 
 **How to apply:** Quand le breakdown JSON contient un `svg_path` pour une géographie, ignorer le `filename_or_content` et extraire le path d3-geo avant de coder.
+
+## Corollaire — coordonnées de DESTINATION héritées d'un prototype (2026-08-03, Gazoduc Acte 1)
+
+La règle "zéro approximation" ne couvre pas que les FORMES de pays — elle couvre aussi les FAITS
+géographiques (quel pays est la vraie destination d'un tracé, quelle frontière un flux traverse
+réellement). Cas vécu : le code du globe D3 Gazoduc utilisait l'Espagne comme destination du
+gazoduc AAGP depuis le prototype (`ProtoGazoducGlobeFusion.tsx`) — jamais vérifié contre le script
+verrouillé (`SCRIPT-V3.md`). En préparant un fix de tracé côtier (sans rapport avec la destination
+elle-même), la recherche de jalons géographiques réels a révélé que le script dit explicitement
+"pour finalement atteindre le **Maroc**" — l'Espagne n'était qu'un pays client européen cité plus
+tard (avec France/Italie/Allemagne), jamais la destination du pipeline.
+
+**Cause racine** : le prototype avait été validé sur la MÉCANIQUE (est-ce que 2 tracés se dessinent
+et divergent correctement), jamais sur l'exactitude FACTUELLE de chaque destination — une
+coordonnée qui "marche" visuellement dans un prototype (le tracé se dessine, arrive quelque part)
+n'a pas été vérifiée pour autant contre la source de vérité narrative.
+
+**Règle étendue** : toute coordonnée géographique reprise d'un prototype antérieur (ou d'une
+session précédente) doit être re-vérifiée contre le script verrouillé AU MOMENT de la production,
+pas juste reprise telle quelle sous prétexte qu'elle fonctionnait dans le prototype. Grep le nom
+du lieu dans le script verrouillé avant d'écrire la constante géo dans le fichier de production.

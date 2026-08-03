@@ -153,19 +153,16 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 GLOBE D3 PROTOTYPÉ, DRAPEAUX NON TRANCHÉS
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 TERMINÉ, ACTE 2 À DÉMARRER
 
-**État (2026-08-03)** : audio complet (Harmonie, `narration.mp3`). Prototype de l'Acte 1 (hook) codé
-en globe D3 (`src/projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion.tsx`, 8 rounds d'itération) — PAS
-encore le fichier de production (`GazoducActe1Hook.tsx` existant est une version antérieure buguée,
-à remplacer pas patcher). Registre retenu = **globe D3**, pas une scène-lieu SVG genèse 2016 (piste
-écartée). Review upstream à 3 voix (Gemini+Kimi+GPT-5.6 Sol) faite et synthétisée.
-⛔ **DÉCISION EN ATTENTE (priorité à la reprise)** : les 3 modèles convergent pour dire que le
-remplissage plein par drapeau (Espagne/Algérie) lit comme amateur ("carte de Risk") — options
-proposées (suppression / pastille+halo / flash puis désaturation), Aziz doit trancher avec un
-regard neuf avant de continuer.
-Détail complet : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
-`memory/episodes/souverain/gazoduc-aagp-tsgp/da-brief-acte1-v8-review/SYNTHESE.md`.
+**État (2026-08-03)** : Acte 1 (hook, globe D3, 84.68s) écrit de bout en bout dans
+`src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (10 beats, caméra continue,
+tracé AAGP côtier réel Nigeria→Maroc, drapeaux tranchés — retardés jusqu'à l'arrivée du tracé).
+Validé par Aziz comme base de production (render v6). 3 points de polish mineurs reportés
+sciemment à la passe finale (tous actes assemblés) : `memory/episodes/souverain/gazoduc-aagp-tsgp/POLISH-TODO-FINAL-RENDER.md`.
+**Prochaine étape** : Acte 2 (scène-lieu narrative, genèse 2016, Mohammed VI + Buhari, décor fixe)
+— registre visuel déjà fixé dans `SCRIPT-V3.md` § Registres visuels par acte.
+Détail complet : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 ---

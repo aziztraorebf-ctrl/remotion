@@ -1,5 +1,10 @@
 # Gazoduc Acte 1 (v8) — Review upstream à 3 voix (2026-08-03)
 
+> ⚠️ **MIS À JOUR** : le point drapeaux ci-dessous a été TRANCHÉ le 2026-08-03 (drapeaux gardés,
+> retardés jusqu'à l'arrivée du tracé — ni suppression, ni pastille/halo, ni flash-désaturation).
+> Voir `STATUS.md` § Historique pour la décision finale. Ce document reste la trace de la review
+> upstream telle que reçue au moment du prototype v8 (avant la décision).
+
 > Appel `scripts/tools/da-brief-video-3voix.py` (nouveau script, créé cette session) : Gemini 3.1 Pro
 > + Kimi K2.5 en VIDEO NATIVE (upload direct du prototype v8, pas juste des frames), GPT-5.6 Sol en
 > frames (12, denses) — **GPT-5.6 Sol REFUSE la vidéo via OpenRouter** (testé, `404 No endpoints

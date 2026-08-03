@@ -2,16 +2,27 @@
 
 **Mis à jour** : 2026-08-03
 
-## État — PROTOTYPE ACTE 1 (GLOBE) VALIDÉ TECHNIQUE + REVIEW UPSTREAM 3 VOIX FAITE, PAS ENCORE TRANCHÉE
+## État — ACTE 1 (GLOBE, 84.68s) VALIDÉ COMME BASE DE PRODUCTION ✅
 
-Après 8 rounds d'itération (session 2026-08-02/03, galerie complète :
-https://polite-quinoa-2sgv.here.now/) PUIS une review upstream à 3 voix (Gemini+Kimi+GPT-5.6 Sol,
-détail complet `da-brief-acte1-v8-review/SYNTHESE.md`), le prototype du globe (v8, 16s) est
-techniquement robuste et prouve le mécanisme, MAIS la review upstream signale que ce n'est encore
-qu'un "état" (Nigeria qui se pose), pas le RÉCIT complet visé sur 84.68s. Fichier source :
-`src/projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion.tsx` (compo Root `RND-ProtoGazoducGlobeFusion`)
-— **PAS ENCORE le fichier de production** (`GazoducActe1Hook.tsx` existant est une version
-antérieure buguée, à remplacer/fusionner à la reprise, pas à patcher).
+Après le prototypage (8 rounds, review upstream 3 voix) puis PLUSIEURS passes de production complètes
+sur `GazoducActe1Hook.tsx` (10 beats, caméra continue refondue sur le modèle `camAt()`/`CamKey`, tracé
+AAGP côtier réel via jalons géographiques Nigeria→Maroc, correction factuelle Maroc/Espagne, drapeaux
+retardés jusqu'à l'arrivée, overlay échelle km, review downstream 3 voix appliquée), Aziz a validé le
+render **v6** comme base de production le 2026-08-03 :
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte1-v6-m5QFFUpozes11al9Vs2NxEXfaZkPdU.mp4
+
+**3 points de polish restants, VOLONTAIREMENT reportés à la passe finale** (tous actes assemblés,
+pas acte par acte) — détail complet + citations Aziz : `POLISH-TODO-FINAL-RENDER.md`.
+
+Fichier de production : `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (composition
+Root `D3-Gazoduc-Acte1-Hook`). Le prototype `ProtoGazoducGlobeFusion.tsx` (16s) reste la trace du
+mécanisme d'origine mais n'est plus le fichier de référence.
+
+**Prochaine étape** : passer à l'Acte 2 (scène-lieu narrative, genèse 2016) — cf `NEXT-ACTION.md`.
+
+---
+
+## Historique (rounds de prototypage, archivé pour trace)
 
 **⛔ POINT NON TRANCHÉ, À DÉCIDER EN PRIORITÉ À LA REPRISE (décision Aziz explicite : ne pas trancher
 en fin de session, regard neuf requis)** : les 3 modèles convergent (3/3) pour dire que le
@@ -51,11 +62,12 @@ qui ne s'arrête jamais de bouger porte mieux cette durée qu'une carte plate st
 plate reste une option pour un acte plus tardif nécessitant plus de précision géographique
 (13 pays du tracé détaillé).
 
-**Prochaine étape (reprise)** : transposer/fusionner `ProtoGazoducGlobeFusion.tsx` en vrai fichier
-de production pour l'Acte 1, en respectant le découpage en 12 états du breakdown DA
-(`da-brief-acte1/BREAKDOWN-ACTE1.md`) et le timing exact aligné sur `narration.mp3`. Ne PAS repartir
-du fichier `GazoducActe1Hook.tsx` existant (buggé, plusieurs itérations ratées avant diagnostic) —
-repartir du prototype validé.
+**Prochaine étape (reprise)** *(FAIT — voir État en tête de fichier, la transposition a été faite le
+2026-08-03, GazoducActe1Hook.tsx est maintenant le fichier de production validé v6)* : transposer/
+fusionner `ProtoGazoducGlobeFusion.tsx` en vrai fichier de production pour l'Acte 1, en respectant
+le découpage en 12 états du breakdown DA (`da-brief-acte1/BREAKDOWN-ACTE1.md`) et le timing exact
+aligné sur `narration.mp3`. Ne PAS repartir du fichier `GazoducActe1Hook.tsx` existant (buggé,
+plusieurs itérations ratées avant diagnostic) — repartir du prototype validé.
 
 ## État — AUDIO COMPLET ✅
 5 parties audio individuellement validées par Aziz (voix Harmonie→GéoAfrique, méthode texte

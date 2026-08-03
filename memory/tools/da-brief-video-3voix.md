@@ -58,3 +58,12 @@ Review de `ProtoGazoducGlobeFusion.tsx` v8 (16s) avec le script complet de l'Act
 (84.68s visés) — 3 réponses substantielles obtenues, convergence forte 3/3 sur plusieurs points
 (cf `memory/episodes/souverain/gazoduc-aagp-tsgp/da-brief-acte1-v8-review/SYNTHESE.md`). Coût/temps
 raisonnable (~2-3 min pour les 3 appels en parallèle sur une vidéo de 16s/12Mo).
+
+## ⭐ Bonne pratique confirmée — lister "ce qui est DÉJÀ fait" dans un brief DOWNSTREAM (2026-08-03)
+
+Sur une review downstream (rendu proche du final, pas un prototype partiel), TOUJOURS inclure dans
+le brief la liste explicite des points déjà tranchés/implémentés lors de passes précédentes — sinon
+les 3 modèles re-proposent des points déjà réglés (perte de temps + dilution des vrais points neufs
+dans le rapport). Cas validé : brief downstream Gazoduc Acte 1 v5 listant 10 points déjà actés
+(caméra refondue, drapeaux retardés, fond uniforme, etc.) — aucun des 3 rapports n'a redécouvert un
+point déjà tranché, les 3 modèles se sont concentrés sur ce qui restait réellement à corriger.

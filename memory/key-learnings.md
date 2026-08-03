@@ -913,3 +913,38 @@ en « CONFIANC » par le sac, sur toute la fin du beat 6b. Cause mesurée : le s
 Fix : `destX` 502 → 410. → **La promotion en `PRET-PUBLICATION` ne vaut pas relecture** : un texte
 partiellement occulté ne se voit ni au code (les deux éléments sont corrects isolément) ni sur une frame
 prise avant l'occlusion.
+
+## Fix appliqué à une entité, oublié sur ses symétriques — 2026-08-03 (Gazoduc Acte 1)
+
+Après un refactor touchant plusieurs entités qui partagent le même mécanisme (ici : 3 pays avec le
+même geste "base fixe kaki avant PaysTrace", pour éviter un trou océan visible avant que le reveal
+du pays ne démarre), le fix trouvé sur UNE entité (Espagne/Algérie) avait été appliqué là où le bug
+avait été repéré en premier, mais **pas répliqué sur Nigeria** lors d'un refactor ultérieur — le même
+bug (océan bleu en transparence sous le contour) est réapparu, trouvé seulement par extraction de
+frames à un moment choisi, jamais par lecture du code (le code semblait cohérent isolément).
+
+**Règle** : après un fix sur une entité parmi plusieurs symétriques (même mécanisme, même geste,
+même pattern répété N fois), vérifier EXPLICITEMENT que le fix a été répliqué sur TOUTES les
+entités concernées — grep le nom du mécanisme/pattern dans le fichier pour lister toutes les
+occurrences, pas seulement corriger celle où le symptôme a été vu en premier.
+
+## Pattern tracé géo côtier/frontalier via jalons chaînés — 2026-08-03 (Gazoduc Acte 1)
+
+Pour qu'un tracé D3/geo lise comme suivant une géographie réelle (côte, frontière, route), composer
+plusieurs segments courts (`arcPathD` chaînés bout à bout) via de VRAIS points géographiques
+intermédiaires — obtenus par `geoCentroid()` calculé directement sur le dataset topojson du projet,
+jamais inventés à la main — plutôt qu'un seul segment avec une déformation mathématique stylisée
+(ex: une ondulation artificielle en S sur tout le trajet). Le style "côtier" émerge naturellement de
+la vraie géométrie composée, au lieu d'être une approximation qui ne convainc jamais visuellement.
+Appliqué avec succès sur le tracé AAGP Nigeria→Maroc (jalons Bénin/Ghana/Liberia/Guinée/Sénégal/
+Mauritanie/Maroc), après que la version en courbe mathématique unique ait été jugée par une review
+downstream comme "ressemble à une 2e traversée saharienne stylisée", pas comme un détour côtier.
+
+**Techniques de motion design cartographique confirmées transposables** (recherche web ciblée,
+2026-08-03, sur les techniques Johnny Harris/Vox/RealLifeLore) : (1) caméra qui suit un tracé qui se
+dessine = viser (lookAt) légèrement EN AVANT du point de tête plutôt que sur le point lui-même
+("camera-on-path"/fly-along) ; (2) distinguer 2 tracés simultanés = décalage temporel (stagger) +
+marqueur de tête animé bien visible, pas seulement une couleur différente ; (3) révéler une
+destination progressivement = pattern "mask reveal" — assombrir tout le reste pour faire ressortir
+la cible ; (4) lier un label à un tracé mobile = ancrer via la position le long du path (pas au
+point fixe de destination). Les 4 patterns appliqués avec succès sur ce même chantier.
