@@ -173,6 +173,30 @@ fichier (chaque cas est différent, pas une seule formule magique) :
   de fondu) reste le meilleur compromis : un fondu, lui, DOUBLERAIT l'écart de proportion au lieu de
   le masquer (vérifié au rendu — un fondu de 6 frames sur un écart de pose nulle mais un écart de
   proportion réel produisait un dédoublement visible, pire qu'une bascule instantanée).
+  ⭐⭐ **NUANCE IMPORTANTE (2026-08-03) — portage d'une POSE-CLÉ ponctuelle, cas différent de
+  l'enchaînement continu ci-dessus** : porter une pose-clé PONCTUELLE et déjà validée d'un moteur vers
+  l'autre (au lieu de faire cohabiter les 2 moteurs en continu) EST réconciliable, par GÉOMÉTRIE et non
+  par angles. Méthode prouvée sur `P_SOL` (le geste de chute `BandeChute`, `GestesLocomotion16x9.tsx`,
+  moteur `Figure`) porté vers `Stick` : (1) ne JAMAIS retraduire un angle de bras d'une convention à
+  l'autre (c'est le bug « oreilles de lapin », mesuré à 180px d'erreur) ; (2) calculer la POSITION DE
+  MAIN que la pose source produit (donnée géométrique objective) puis résoudre par IK 2 segments
+  (brique n°2) l'angle qui atteint cette même position sur le moteur cible ; (3) le sens de coude (+1
+  ou -1 par bras) se RÉSOUT en testant les 4 combinaisons contre un critère de dégagement de la tête,
+  jamais deviné. Résultat mesuré : 0.00u d'écart sur mains/hanche/épaule entre les 2 moteurs.
+  ⚠️ **Le degré de liberté manquant qui a fait échouer 2 tentatives avant de réussir** : `Figure` a un
+  paramètre `headTuck` (« rentre la tête vers le buste ») qui manquait totalement à `Stick` — sans
+  lui, la tête reste colinéaire avec hanche/épaule dans une pose à plat et tombe droit dans l'axe du
+  bras, quelle que soit sa longueur (balayage 14u→46u testé, 0 solution). `headTuck` porté fidèlement
+  dans `Stick` (`headLen = 11 - tuck*7`, même formule que `Figure` à `12 - tuck*7`) débloque le
+  portage. **Leçon générale : avant de conclure qu'une pose est géométriquement impossible sur un
+  moteur, vérifier qu'aucun degré de liberté existant sur l'AUTRE moteur (ex. tuck de tête, longueur
+  de segment variable) n'est simplement absent de celui qu'on utilise.**
+  ⚠️ **Le bon critère de dégagement est coude↔tête, pas segment↔tête** : un critère qui interdit à
+  TOUT point de TOUT segment de bras de s'approcher de la tête est trop strict — la pose `P_SOL`
+  validée en production traverse la tête avec le segment du bras (mesuré 2-3u) sans que ça choque à
+  l'œil ; ce qui casse la lecture, c'est uniquement un COUDE planté sur le crâne (silhouette fermée en
+  losange). Un critère trop strict a fait déclarer « insoluble » une pose qui ne l'était pas — vérifier
+  le critère contre une pose déjà validée avant de l'utiliser pour rejeter des candidats.
 
 ⛔ **GARDE-FOU qui a permis cette refonte sans rien casser** : on ne modifie QUE le point d'entrée
 (pose initiale / condition de départ) de chaque geste. On ne touche JAMAIS au cœur d'un geste une

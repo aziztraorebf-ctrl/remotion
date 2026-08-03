@@ -471,6 +471,11 @@ import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cob
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 import { HalftoneDemo } from "./projects/_rnd/cutout-halftone/HalftoneDemo";
 import { EnchainementGestesValides, ENCHAINEMENT_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesValides";
+import { EnchainementGestesExpressifs, EXPRESSIFS_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesExpressifs";
+import { TestPoseSolOptions } from "./projects/_rnd/fable-libre/TestPoseSolOptions";
+import { TestPoseSolRound2 } from "./projects/_rnd/fable-libre/TestPoseSolRound2";
+import { PoseSolPortee } from "./projects/_rnd/fable-libre/PoseSolPortee";
+import { EnchainementGestesExpressifsSol, EXPRESSIFS_SOL_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesExpressifsSol";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -2714,6 +2719,13 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-CfaMidformTest" component={CfaMidformTest} durationInFrames={1264} fps={30} width={1920} height={1080} />
         <Composition id="RND-PiliersGouffre" component={PiliersGouffre16x9} durationInFrames={PILIERS_GOUFFRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-EnchainementGestesValides" component={EnchainementGestesValides} durationInFrames={ENCHAINEMENT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-EnchainementGestesExpressifs" component={EnchainementGestesExpressifs} durationInFrames={EXPRESSIFS_FRAMES} fps={30} width={1920} height={1080} />
+        {/* PROTOTYPE JETABLE (2026-08-03) — comparatif pose "au sol", a retirer apres decision d'Aziz */}
+        <Composition id="RND-TestPoseSolOptions" component={TestPoseSolOptions} durationInFrames={30} fps={30} width={1920} height={1080} />
+        <Composition id="RND-TestPoseSolRound2" component={TestPoseSolRound2} durationInFrames={30} fps={30} width={1920} height={1080} />
+        {/* ⭐ ROUND 3 (2026-08-03) — P_SOL PORTEE grace au parametre `headTuck` manquant a <Stick> */}
+        <Composition id="RND-PoseSolPortee" component={PoseSolPortee} durationInFrames={45} fps={30} width={1920} height={1080} />
+        <Composition id="RND-EnchainementGestesExpressifsSol" component={EnchainementGestesExpressifsSol} durationInFrames={EXPRESSIFS_SOL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="WarmapCfaInsertSVG" component={WarmapCfaInsertSVG} durationInFrames={WARMAP_CFA_INSERT_FRAMES} fps={30} width={1920} height={1080} />
         {/* LiptakoRevealSVG-Test / ResourcesRevealSVG-Test RETIRÉES (2026-07-04) : intégration réelle
             faite et validée dans Partie3Rupture.tsx / Partie4Cout.tsx (SahelPartie3 / SahelPartie4). */}
