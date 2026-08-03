@@ -53,6 +53,18 @@ imbriquée — comportement spontané du modèle sur ce type de prompt, jamais o
 tentatives, cf. § tests comparatifs plus bas dans ce fichier). Promu depuis le proto `ProtoGeminiPoseBankWalk.tsx`
 vers ce fichier `rig/` le 2026-07-03 (le proto garde un re-export temporaire pour compatibilité).
 
+### ⛔ Mains à doigts individuels articulés — PAS VIABLE en un seul jet (2026-08-03)
+
+Testé (référence TED-Ed "Red gold"/safran, main qui manipule un mortier-pilon) : un rig de main à
+15 phalanges généré par Gemini 3.1 Pro text-to-SVG, en réutilisant le même composant
+(`geoArc`/`PaysTrace`) que le rig corporel canonique ci-dessus. Résultat : structure FK CORRECTE
+(hiérarchie translate/rotate imbriquée, comme pour le corps) mais rendu VISUEL confus en prise
+fermée — chevauchement des phalanges, illisible. Alors que Gemini réussit sans réserve le rig du
+CORPS ENTIER (bras/jambes/torse, § ci-dessus), il échoue sur l'échelle plus fine des doigts en un
+seul jet. Piste de repli notée mais **pas implémentée** : main-silhouette simplifiée à 2-3 formes
+(pas de doigts individuels) plutôt qu'un rig à phalanges. Ne pas retenter un rig à doigts
+individuels sans cette simplification préalable.
+
 ### ⚠️ Piège d'intégration — offset vertical pieds-au-sol (520*scale, pas 210*scale)
 Découvert 2026-07-03 (scène cargo 16:9) : pour aligner les pieds de `GeminiRig` au sol dans une NOUVELLE
 scène à une NOUVELLE échelle, l'offset vertical de positionnement doit être `~520 * scale` (pas `210 * scale`,

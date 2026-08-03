@@ -1,6 +1,61 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-02
+**Mis à jour** : 2026-08-03
+
+## État — PROTOTYPE ACTE 1 (GLOBE) VALIDÉ TECHNIQUE + REVIEW UPSTREAM 3 VOIX FAITE, PAS ENCORE TRANCHÉE
+
+Après 8 rounds d'itération (session 2026-08-02/03, galerie complète :
+https://polite-quinoa-2sgv.here.now/) PUIS une review upstream à 3 voix (Gemini+Kimi+GPT-5.6 Sol,
+détail complet `da-brief-acte1-v8-review/SYNTHESE.md`), le prototype du globe (v8, 16s) est
+techniquement robuste et prouve le mécanisme, MAIS la review upstream signale que ce n'est encore
+qu'un "état" (Nigeria qui se pose), pas le RÉCIT complet visé sur 84.68s. Fichier source :
+`src/projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion.tsx` (compo Root `RND-ProtoGazoducGlobeFusion`)
+— **PAS ENCORE le fichier de production** (`GazoducActe1Hook.tsx` existant est une version
+antérieure buguée, à remplacer/fusionner à la reprise, pas à patcher).
+
+**⛔ POINT NON TRANCHÉ, À DÉCIDER EN PRIORITÉ À LA REPRISE (décision Aziz explicite : ne pas trancher
+en fin de session, regard neuf requis)** : les 3 modèles convergent (3/3) pour dire que le
+remplissage PLEIN par drapeau réel (Espagne/Algérie, ajouté en Round 8 à la demande d'Aziz) lit
+comme amateur ("carte de Risk", "défilé d'emblèmes surdimensionnés"). Solutions proposées
+différentes (suppression complète / pastille+halo / flash bref puis désaturation) — voir
+`da-brief-acte1-v8-review/SYNTHESE.md` pour le détail. NE PAS appliquer un fix par réflexe sans
+qu'Aziz tranche — c'est un changement direct par rapport à sa propre demande.
+
+**Reste de la review upstream (séquençage 85s, dynamisme caméra, hiérarchie du regard) à
+appliquer à l'extension du prototype de 16s → 84.68s complètes** — chantier distinct de la question
+des drapeaux, détaillé dans `da-brief-acte1-v8-review/SYNTHESE.md`.
+
+**Ce qui fonctionne et est validé visuellement (Aziz)** :
+- Zoom caméra ample (scaleMul 1.3→4.1+), jamais figé, sphère+contenu toujours solidaires
+  (discipline `globeR` unique — ne jamais réintroduire `GLOBE_R` brut, cf
+  [[feedback_globe-d3-scaleMul-doit-piloter-tous-les-cercles-dessines]]).
+- **2 tracés distincts** : AAGP (Nigeria→Espagne, arc en S via `windingPathD`, doré) et TSGP
+  (Nigeria→Algérie, ligne directe via `arcPathD`, orange pointillé) — démarrent ensemble, TSGP finit
+  ~2s avant (trajet plus court, écho au texte "l'un mise sur la vitesse").
+- Geste "contour se trace PUIS se remplit" (`PaysTrace`, repris de `GlobeRecitProto.tsx`) sur
+  Nigeria, Espagne, Algérie — fill toujours progressif, jamais figé à 1 (bug corrigé, cf
+  round 4-5).
+- Fond neutre kaki (`t.land`) peint dès la frame 0 sous tout pays pas encore actif à opacité 0.88
+  (PAS 0.16-0.42, trop faible pour contraster avec l'océan sombre — bug de contraste diagnostiqué
+  à tort comme "mauvais thème" avant d'être correctement isolé comme un problème d'opacité,
+  cf retour croisé Kimi+Gemini round 6).
+- Vague continentale organique (décalage par distance réelle au Nigeria via `geoDistance`, jamais
+  tous les pays au même rythme) — caméra tenue en hold pendant ce geste.
+- Champ d'étoiles (140 points, PRNG seed=42 déterministe, repris tel quel de `GlobeRecitProto.tsx`).
+
+**Piste carte plate alternative** (`ProtoGazoducAfriqueComplete.tsx`, compo `RND-ProtoGazoducAfriqueComplete`)
+également fonctionnelle et testée en parallèle — palette CFA (bleu-marine/crème, copiée de
+`CfaActe2Carte16x9.tsx`), continent africain entier visible, mêmes 2 tracés. Décision Aziz
+2026-08-03 : **garder le globe pour l'ouverture** (l'Acte 1 dure ~85s sur tout le texte, un globe
+qui ne s'arrête jamais de bouger porte mieux cette durée qu'une carte plate statique) — la carte
+plate reste une option pour un acte plus tardif nécessitant plus de précision géographique
+(13 pays du tracé détaillé).
+
+**Prochaine étape (reprise)** : transposer/fusionner `ProtoGazoducGlobeFusion.tsx` en vrai fichier
+de production pour l'Acte 1, en respectant le découpage en 12 états du breakdown DA
+(`da-brief-acte1/BREAKDOWN-ACTE1.md`) et le timing exact aligné sur `narration.mp3`. Ne PAS repartir
+du fichier `GazoducActe1Hook.tsx` existant (buggé, plusieurs itérations ratées avant diagnostic) —
+repartir du prototype validé.
 
 ## État — AUDIO COMPLET ✅
 5 parties audio individuellement validées par Aziz (voix Harmonie→GéoAfrique, méthode texte

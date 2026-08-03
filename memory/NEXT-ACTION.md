@@ -142,14 +142,19 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — AUDIO COMPLET, RESTE CODE
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 GLOBE D3 PROTOTYPÉ, DRAPEAUX NON TRANCHÉS
 
-**État (2026-08-02)** : voix source changée Océane→**Harmonie** (décision Aziz après comparaison 9 voix),
-méthode texte revue (paragraphes fusionnés, CAPS, tags ciblés), nouvel outil
-`scripts/tools/splice-segment.py`. **`narration.mp3` final assemblé, uploadé, `SCRIPT-V3-VOIX.md` à
-jour** (détail : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`).
-**Prochaine étape** : storyboard/timing puis coder la 1ère scène (registre scène-lieu narrative SVG,
-genèse 2016 Mohammed VI + Buhari). ⛔ **Piège de la carte** : sujet abstrait → scène-objet, pas une carte.
+**État (2026-08-03)** : audio complet (Harmonie, `narration.mp3`). Prototype de l'Acte 1 (hook) codé
+en globe D3 (`src/projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion.tsx`, 8 rounds d'itération) — PAS
+encore le fichier de production (`GazoducActe1Hook.tsx` existant est une version antérieure buguée,
+à remplacer pas patcher). Registre retenu = **globe D3**, pas une scène-lieu SVG genèse 2016 (piste
+écartée). Review upstream à 3 voix (Gemini+Kimi+GPT-5.6 Sol) faite et synthétisée.
+⛔ **DÉCISION EN ATTENTE (priorité à la reprise)** : les 3 modèles convergent pour dire que le
+remplissage plein par drapeau (Espagne/Algérie) lit comme amateur ("carte de Risk") — options
+proposées (suppression / pastille+halo / flash puis désaturation), Aziz doit trancher avec un
+regard neuf avant de continuer.
+Détail complet : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
+`memory/episodes/souverain/gazoduc-aagp-tsgp/da-brief-acte1-v8-review/SYNTHESE.md`.
 Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 ---

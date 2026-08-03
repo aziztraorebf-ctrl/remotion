@@ -52,6 +52,11 @@ export function arcPathD(
  * ligne GPS droite). = grand cercle + ondulation sinusoïdale PERPENDICULAIRE en degrés (amplitude `amp`,
  * `waves` oscillations). Reste géo-cohérente (autour du vrai trajet), juste organique.
  */
+// ⚠️ waves DOIT etre >= 2 pour obtenir un vrai virage en S. L'enveloppe env=sin(t*PI) (amplitude
+// nulle aux 2 extremites) rend l'offset sin(t*PI*waves)*amp*env MATHEMATIQUEMENT MONOTONE (jamais
+// de vrai changement de sens de courbure) tant que waves < 2 — verifie par calcul isole le
+// 2026-08-03 (Gazoduc Acte 1) apres qu'un waves=1.4 ait produit un trace visuellement quasi droit
+// malgre l'intention d'un arc en S. waves=2.3-2.5 donne un S lisible.
 export function windingCircle(a: LonLat, b: LonLat, amp = 0.9, waves = 2.5, samples = 80): LonLat[] {
   const base = greatCircle(a, b, samples);
   // direction moyenne A->B pour la perpendiculaire (approx plane, suffisant à cette échelle)

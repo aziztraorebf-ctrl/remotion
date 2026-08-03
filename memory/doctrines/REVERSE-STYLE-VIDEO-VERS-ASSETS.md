@@ -73,3 +73,25 @@ Inspiration à voir (sans Higgsfield) : chaînes RSA Animate, CGP Grey, Kurzgesa
 
 ## Assets R&D produits (2026-07-17)
 `public/_rnd/vox-repro/higgsfield-analysis/` : clip, transcript, breakdown-vox-v2.json, gen-avion-01.png (✅ niveau tiers), gen-seat-gemini.png (✅) vs gen-seat-recraft.webp (clay). Proto SVG plat abandonné (VoxPapercutAvion16x9.tsx — garde la valeur des overlays, PAS de l'avion).
+
+## ⭐ MISE À JOUR 2026-08-03 (session refs TED-Ed/GEOlayers, Gazoduc) — simplicité RECONFIRMÉE + filtre feutre testé (statique seulement)
+
+Nouvelle analyse de refs (TED-Ed "poverty", TED-Ed Mansa Musa, whiteboard/feutre) : **CONFIRME** la
+conclusion whiteboard ci-dessus (§ 2026-07-17) par la preuve la plus forte possible — nos VRAIES
+productions publiées (cacao, GGW) n'ont **jamais eu besoin** de personnages humains articulés
+complexes pour porter le message ; elles passent par la métaphore graphique (arbre/racines/objets).
+La simplicité n'est pas juste une contrainte technique acceptée, c'est ce qui MARCHE en pratique sur
+nos propres livrables.
+
+**Nouveau test technique — filtre SVG natif "feutre à main levée"** : `feTurbulence` +
+`feDisplacementMap` en double-trace décalée (2 copies du même path, chacune légèrement déplacée par
+le displacement map, superposées) reproduit avec succès le grain "tracé à main levée au feutre" sur
+nos formes SVG existantes — **gratuit et natif**, aucun appel API. ⚠️ **Testé UNIQUEMENT sur image
+fixe, jamais en mouvement** (frame figée) — le comportement en animation (le displacement doit-il
+rester figé ou varier par frame comme le grain `feTurbulence` documenté dans `tools/remotion.md`
+ligne 265 `seed={Math.floor(frame/4)}` ?) reste à vérifier avant tout usage en production. Piste
+gardée en réserve, **pas retenue pour Gazoduc** (le globe D3 ne s'y prête pas — registre différent).
+
+**Mains articulées (TED-Ed safran, main+mortier-pilon)** : testé, PAS viable en un jet — détail
+technique complet (pourquoi, ce qui a été tenté) dans `PERSONNAGE-VIVANT-INDEX.md` § "Mains à
+doigts individuels articulés".

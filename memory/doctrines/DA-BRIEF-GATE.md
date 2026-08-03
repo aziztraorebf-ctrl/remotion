@@ -177,6 +177,13 @@ Quand on cherche COMMENT animer/résoudre un plan (pas un diagnostic d'écart su
 2. **CONTRAINTE TECHNIQUE EXPLICITE** — ce que notre stack PEUT et NE PEUT PAS faire ("c'est une image plate dans
    Remotion, je ne peux pas animer l'intérieur / pas d'After Effects / un SVG plaqué fait sticker, déjà rejeté").
    Sans ça, les modèles proposent des solutions infaisables chez nous.
+   ⭐ **Envoyer le CONTEXTE technique en texte (stack React/Remotion/SVG), jamais le CODE complet du
+   prototype** (confirmé 2026-08-03, review upstream Gazoduc Acte 1 v8) : le code complet est long
+   pour un gain marginal ; le vrai levier est une contrainte EXPLICITE dans le brief — "décris
+   l'intention visuelle, jamais de code". Sans cette contrainte, Kimi+Gemini ont halluciné du code
+   hors-stack (`d3.geoPath`, manipulation DOM directe, incompatible React/Remotion frame-driven) sur
+   un round antérieur de la même session. Avec la contrainte explicite dans le brief, 3/3 modèles
+   sont restés en langage d'intention, zéro hallucination de code hors-stack.
 3. **RÉFÉRENCES DE CHAÎNES/STUDIOS CONCRETS à imiter** — "comme le ferait Finary / Polymatter / Wendover / Ordinary
    Folk". Ancre la réponse dans des solutions ÉPROUVÉES au lieu d'inventer du générique.
 4. **DEMANDE ACTIONNABLE** : liste PRIORISÉE de techniques concrètes + "ce que ça fait ressentir" + valeurs chiffrées
