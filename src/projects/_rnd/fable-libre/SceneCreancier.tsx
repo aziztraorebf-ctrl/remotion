@@ -48,13 +48,25 @@ import {
 // TIMING — 4 beats, un seul enchainement, aucune boucle
 // --------------------------------------------------------------------------------------------
 const FPS = 30;
-const T_ARRIVEE = 0;        // le creancier entre en marchant depuis le bord GAUCHE (cf. note
-                             // orientation ci-dessous : le socle avance naturellement vers +x)
-const T_ARRET = 90;         // il s'arrete face au debiteur (3s de marche)
-const T_MAIN_TENDUE = 130;  // la main se tend, exige (1.33s d'approche + arret tenu)
-const T_SOUMISSION = 190;   // le debiteur incline la tete (2s apres la main tendue)
-const T_DEPART = 260;       // le creancier tourne les talons et repart (2.33s de tenue du silence)
-const T_FIN = 340;          // le debiteur reste seul, immobile — 2.67s de plan tenu
+const T_ARRIVEE = 0;         // le creancier entre en marchant depuis le bord GAUCHE (cf. note
+                              // orientation ci-dessous : le socle avance naturellement vers +x)
+const T_ARRET = 90;          // il s'arrete face au debiteur (3s de marche)
+const T_MAIN_TENDUE = 130;   // la main se tend, exige (1.33s d'approche + arret tenu)
+const T_SOUMISSION = 190;    // le debiteur incline la tete (2s apres la main tendue)
+// ⭐ MISE EN SCENE CORRIGEE (retour Aziz 2026-08-04) : ils sortent l'un APRES l'autre, espaces —
+// PAS ensemble, PAS a reculons. D'abord le DEBITEUR (brise, courbe) qui s'en va en marchant, en
+// GARDANT sa posture voutee — c'est lui qui part, tete basse, sous nos yeux. Puis, une fois qu'il
+// est sorti, le CREANCIER (qui etait reste immobile en position d'arret) repart a son tour, dans
+// le MEME sens (+x, coherent avec l'orientation du socle) — il n'a jamais besoin de croiser le
+// debiteur puisque celui-ci est deja hors-champ.
+const T_DEBITEUR_PART = 220; // le debiteur se met en marche, courbe, peu apres la soumission
+// ⭐ timings calcules (pas devines) via walkDistance : a la cadence lente du debiteur (0.62
+// cycle/s, swing 12deg), il lui faut ~170 frames pour parcourir les 480px qui le separent du
+// bord droit du cadre (1440 -> 1920) — donc T_CREANCIER_PART = T_DEBITEUR_PART + 170. Le
+// creancier, plus rapide (1.1 cycle/s, swing 18deg), sort ensuite en ~90 frames (760px, de 1160
+// a 1920) — donc T_FIN = T_CREANCIER_PART + 90 + marge.
+const T_CREANCIER_PART = 390; // le creancier ne repart qu'UNE FOIS le debiteur hors du cadre
+const T_FIN = 500;
 export const CREANCIER_FRAMES = T_FIN;
 
 // --------------------------------------------------------------------------------------------
@@ -104,19 +116,30 @@ const FAIBLE_STROKE_SCALE = 0.74; // brique asymetrie : trait plus fin
 const bruitDeterministe = (t: number, amp: number) =>
   amp * (Math.sin(t * 1) + Math.sin(t * 1.618 + 1.1) * 0.6 + Math.sin(t * 2.718 + 2.3) * 0.35) / 1.95;
 
+// marche du debiteur, BRISEE : cadence lente, pas de moitie moindre — quelqu'un qui traine les
+// pieds, pas quelqu'un qui s'enfuit. Deliberement plus lente que celle du creancier (WALK_CREANCIER).
+const WALK_DEBITEUR: WalkParams = { swingMax: 12, bobAmp: 1.6, lean: 0, hipDrop: 0, armSwing: 10 };
+const DEBITEUR_CADENCE = 0.62; // cycles/s — lent, traine les pieds
+const DEBITEUR_X_SORTIE = 1920 + 80; // sort hors-champ a droite (continue au-dela de la facade)
+
 const Debiteur: React.FC<{ frame: number }> = ({ frame }) => {
   const t = frame / FPS;
 
   // le tremblement ne commence QUE quand le creancier exige (T_ARRET), pas avant : posture
-  // droite/calme jusque-la, puis nervosite croissante qui accompagne l'affaissement.
-  const envelopeTremble = interpolate(frame, [T_ARRET, T_ARRET + 40, T_SOUMISSION], [0, 1, 0.7], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // droite/calme jusque-la, puis nervosite croissante qui accompagne l'affaissement. S'attenue
+  // une fois la marche de sortie engagee (on ne tremble pas en marchant, cf. registre : gestes du
+  // CORPS ne se cumulent pas sans intention — ici l'intention change, de subir a partir).
+  const envelopeTremble = interpolate(
+    frame,
+    [T_ARRET, T_ARRET + 40, T_SOUMISSION, T_DEBITEUR_PART],
+    [0, 1, 0.7, 0],
+    { extrapolateLeft: "clamp", extrapolateRight: "clamp" },
+  );
   const tremble = bruitDeterministe(t * 3.4, 2.2) * envelopeTremble;
 
-  // inclinaison de tete + voute (soumission) : demarre a T_ARRET (le bras qui se leve), pas a
-  // T_SOUMISSION seul — T_SOUMISSION reste le point ou l'affaissement est PLEINEMENT installe.
+  // inclinaison de tete + voute (soumission) : demarre a T_ARRET (le bras qui se leve), PLEINEMENT
+  // installee a T_SOUMISSION, et RESTE (le debiteur part dans cet etat — brique n7, heritage de
+  // pose : la marche de sortie herite de la voute, elle ne repart pas d'une pose neutre).
   const soumission = spring({
     frame: frame - T_ARRET,
     fps: FPS,
@@ -126,22 +149,36 @@ const Debiteur: React.FC<{ frame: number }> = ({ frame }) => {
   const headTuck = interpolate(soumission, [0, 1], [0, 0.62], { extrapolateRight: "clamp" });
   const torsoVoute = interpolate(soumission, [0, 1], [0, 14], { extrapolateRight: "clamp" });
 
-  const pose: Pose = {
-    torsoDeg: torsoVoute + tremble * 0.4,
-    leg1Deg: 2 + tremble * 0.3,
-    leg2Deg: -2 - tremble * 0.3,
-    arm1Deg: 4 + tremble * 0.6,
-    arm2Deg: -4 - tremble * 0.6,
-    headTuck,
-  };
+  // -- MARCHE DE SORTIE (T_DEBITEUR_PART -> hors champ), verrou pas/distance (brique n1) --
+  const enMarche = frame >= T_DEBITEUR_PART;
+  const marcheFrame = Math.max(0, frame - T_DEBITEUR_PART);
+  const tMarche = marcheFrame / FPS;
+  const cyclesMarche = tMarche * DEBITEUR_CADENCE;
+  const dMarche = walkDistance(cyclesMarche * 2, WALK_DEBITEUR.swingMax, PERSO_SCALE);
+  const x = enMarche ? Math.min(DEBITEUR_X + dMarche, DEBITEUR_X_SORTIE) : DEBITEUR_X;
+  const phase = enMarche ? cyclesMarche % 1 : 0.25;
+
+  const pose: Pose = enMarche
+    ? { torsoDeg: torsoVoute, headTuck } // en marche : SEULE la voute/tete est manuelle, les
+                                          // jambes/bras redeviennent le cycle naturel de <Figure>
+                                          // (sinon la marche ne peut pas s'exprimer, cf. socle)
+    : {
+        torsoDeg: torsoVoute + tremble * 0.4,
+        leg1Deg: 2 + tremble * 0.3,
+        leg2Deg: -2 - tremble * 0.3,
+        arm1Deg: 4 + tremble * 0.6,
+        arm2Deg: -4 - tremble * 0.6,
+        headTuck,
+      };
 
   return (
     <svg width="100%" height="100%" viewBox="0 0 1920 1080" style={{ position: "absolute", inset: 0 }}>
       <g transform={`scale(${FAIBLE_STROKE_SCALE})`}>
         <Figure
-          x={DEBITEUR_X / FAIBLE_STROKE_SCALE}
+          x={x / FAIBLE_STROKE_SCALE}
           y={SOL_Y / FAIBLE_STROKE_SCALE}
-          phase={0.25}
+          phase={phase}
+          p={WALK_DEBITEUR}
           pose={pose}
           color={FAIBLE_COLOR}
           scale={PERSO_SCALE / FAIBLE_STROKE_SCALE}
@@ -191,14 +228,19 @@ const Creancier: React.FC<{ frame: number }> = ({ frame }) => {
   });
   const armReach = interpolate(tendreMain, [0, 1], [0, 1]);
 
-  // -- DEPART, repart par ou il est arrive (T_DEPART -> T_FIN) --
-  const departFrame = Math.max(0, frame - T_DEPART);
+  // -- DEPART, CONTINUE tout droit vers la droite (T_CREANCIER_PART -> T_FIN) --
+  // ⭐ retour Aziz (2026-08-04) : reculer pour sortir se lit mal ("a reculons"). Le socle ne sait
+  // marcher que vers +x (profil unique) — la bonne logique n'est donc pas de rebrousser chemin,
+  // mais de CONTINUER dans le meme sens. Et surtout : il ne repart QU'APRES que le debiteur soit
+  // sorti (T_CREANCIER_PART > T_DEBITEUR_PART + duree de sa sortie) — l'un puis l'autre, jamais
+  // ensemble, donc aucune collision/fusion des deux silhouettes possible.
+  const departFrame = Math.max(0, frame - T_CREANCIER_PART);
   const tDepart = departFrame / FPS;
   const cyclesDepart = tDepart * CADENCE;
   const dDepart = walkDistance(cyclesDepart * 2, WALK_CREANCIER.swingMax, PERSO_SCALE);
-  const xDepart = CREANCIER_X_ARRET - dDepart; // recule vers la gauche, hors champ
+  const xDepart = CREANCIER_X_ARRET + dDepart; // continue vers la droite, hors champ
   const departPhase = cyclesDepart % 1;
-  const enDepart = frame >= T_DEPART;
+  const enDepart = frame >= T_CREANCIER_PART;
 
   const finalX = enDepart ? xDepart : x;
 
@@ -209,10 +251,6 @@ const Creancier: React.FC<{ frame: number }> = ({ frame }) => {
   // (retour Aziz : le bras leve doit se voir clairement, pas rester en retrait derriere le corps).
   const armDegExige = interpolate(armReach, [0, 1], [4, -78]);
 
-  // NB mise en scene : le socle n'anime QUE le profil (decision Aziz, dos ecarte). "Tourner les
-  // talons" reste donc visuellement un DEMI-TOUR non represente — on le joue plus simplement : le
-  // creancier RECULE par ou il est venu (repart vers la gauche, hors champ), ce qui se lit deja
-  // "il s'en va" sans avoir besoin d'un mirror qui casserait la geometrie du socle (facing unique).
   // ecart de jambes en position d'arret : le socle interdit deux membres au meme angle
   // ("un seul trait", regle dure du registre) — 9deg est un ecart d'arret stable et lisible,
   // largement au-dela du seuil de confusion visuelle.
