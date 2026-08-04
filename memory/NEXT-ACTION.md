@@ -153,22 +153,19 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 TERMINÉ, ACTE 2 EN COURS (reprise session fraîche)
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 ET ACTE 2 TERMINÉS, ACTE 3 À DÉMARRER
 
-**État (2026-08-03)** : Acte 1 (hook, globe D3, 84.68s) validé par Aziz comme base de production
+**État (2026-08-04)** : Acte 1 (hook, globe D3, 84.68s) validé par Aziz comme base de production
 (render v6) — `GazoducActe1Hook.tsx`, 3 polish mineurs reportés à la passe finale
-(`POLISH-TODO-FINAL-RENDER.md`).
+(`POLISH-TODO-FINAL-RENDER.md`). **Acte 2 produit et validé en finale** :
+`out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s), 4 segments montés bout à bout (insert
+signature Freetown 22s → carte D3 tracé AAGP 20.8s → insert flashback genèse 2016 33.4s → insert
+financement manquant 51.3s). Détail complet (mix de modèles retenus, bugs corrigés, technique
+dessin progressif) : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 
-**Acte 2 — pivot tranché, code à reprendre** : 3 segments distincts (insert SVG signature → segment
-carte COURT ~25-30s tracé seul → insert SVG financement), PAS un fichier monolithique. Erreur de la
-session précédente à corriger : la carte avait été rendue en fichier complet 4165 frames (2min18)
-avec placeholders inserts dedans, au lieu d'un segment court isolé. 12 SVG candidats (dirigés + Fable
-libre) déjà générés et sauvegardés dans
-`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`. Nouvelle idée à intégrer :
-géoplaques qui fade sur les points d'arrêt du tracé (remplace les `CountryLabel` fixes). Test à
-lancer : liberté créative sur modèles externes (pas que Fable). Plan de reprise détaillé + citations
-Aziz : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` (section en tête de fichier).
-Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
+**Prochaine priorité : Acte 3 (TSGP, gazoduc transsaharien algérien)** — script Partie 3 déjà
+verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore produit. Repère sujet :
+`memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 ---
 

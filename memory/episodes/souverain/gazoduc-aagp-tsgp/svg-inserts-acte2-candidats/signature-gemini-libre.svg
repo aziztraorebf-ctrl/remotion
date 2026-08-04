@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Filtres et dégradés sont interdits, tout le relief est créé par superposition de vecteurs plats -->
+    <style>
+      /* Styles statiques uniquement pour l'organisation */
+      .bg-line { fill: none; stroke: #2a3f66; stroke-width: 1; }
+      .bg-line-thick { fill: none; stroke: #2a3f66; stroke-width: 3; }
+      .paper-shadow { fill: #0f1930; }
+      .paper-base { fill: #1c2d52; stroke: #3a5488; stroke-width: 2; }
+      .engraving-border { fill: none; stroke: #5c79ad; }
+      .engraving-fine { fill: none; stroke: #7a96c7; stroke-width: 1.5; }
+      .engraving-text { fill: none; stroke: #a0b4d8; stroke-width: 3; stroke-linecap: round; }
+      .blueprint-node { fill: #1c2d52; stroke: #a0b4d8; stroke-width: 3; }
+      .blueprint-line { fill: none; stroke: #a0b4d8; stroke-width: 4; stroke-dasharray: 8 6; }
+      .signature-mark { fill: none; stroke: #5c79ad; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- FOND -->
+  <rect id="background_base" x="0" y="0" width="1920" height="1080" fill="#182746" />
+
+  <!-- GRILLE GÉOPOLITIQUE ARRIÈRE-PLAN -->
+  <g id="ambient_geopolitical_grid">
+    <!-- Cercles concentriques -->
+    <circle cx="960" cy="540" r="900" class="bg-line" />
+    <circle cx="960" cy="540" r="750" class="bg-line" />
+    <circle cx="960" cy="540" r="600" class="bg-line-thick" />
+    <circle cx="960" cy="540" r="450" class="bg-line" />
+    <circle cx="960" cy="540" r="300" class="bg-line" />
+    
+    <!-- Lignes radiales -->
+    <line x1="60" y1="540" x2="1860" y2="540" class="bg-line-thick" />
+    <line x1="960" y1="60" x2="960" y2="1020" class="bg-line-thick" />
+    <line x1="323" y1="115" x2="1596" y2="964" class="bg-line" />
+    <line x1="323" y1="964" x2="1596" y2="115" class="bg-line" />
+    <line x1="196" y1="300" x2="1723" y2="780" class="bg-line" />
+    <line x1="196" y1="780" x2="1723" y2="300" class="bg-line" />
+  </g>
+
+  <!-- DOCUMENT OFFICIEL (LE TRAITÉ) -->
+  <g id="treaty_document_group">
+    <!-- Ombre du document -->
+    <rect id="treaty_shadow" x="520" y="60" width="880" height="960" class="paper-shadow" rx="10" />
+    
+    <!-- Base du document -->
+    <rect id="treaty_base" x="500" y="40" width="880" height="960" class="paper-base" rx="4" />
+
+    <!-- Ornementation et bordures (style billet de banque / gravure d'état) -->
+    <g id="treaty_engraved_borders">
+      <rect x="530" y="70" width="820" height="900" class="engraving-border" stroke-width="4" />
+      <rect x="542" y="82" width="796" height="876" class="engraving-border" stroke-width="1" />
+      
+      <!-- Coins ornementaux -->
+      <path d="M530 110 L570 70 M530 130 L590 70 M530 150 L610 70" class="engraving-border" stroke-width="1" />
+      <path d="M1350 110 L1310 70 M1350 130 L1290 70 M1350 150 L1270 70" class="engraving-border" stroke-width="1" />
+      <path d="M530 930 L570 970 M530 910 L590 970 M530 890 L610 970" class="engraving-border" stroke-width="1" />
+      <path d="M1350 930 L1310 970 M1350 910 L1290 970 M1350 890 L1270 970" class="engraving-border" stroke-width="1" />
+    </g>
+
+    <!-- Sceau d'en-tête (Guilloché Abstrait) -->
+    <g id="treaty_header_crest">
+      <ellipse cx="940" cy="160" rx="60" ry="20" class="engraving-fine" />
+      <ellipse cx="940" cy="160" rx="60" ry="20" class="engraving-fine" transform="rotate(45 940 160)" />
+      <ellipse cx="940" cy="160" rx="60" ry="20" class="engraving-fine" transform="rotate(90 940 160)" />
+      <ellipse cx="940" cy="160" rx="60" ry="20" class="engraving-fine" transform="rotate(135 940 160)" />
+      <circle cx="940" cy="160" r="30" class="engraving-border" stroke-width="2" />
+      <circle cx="940" cy="160" r="24" class="engraving-fine" />
+    </g>
+
+    <!-- Texte abstrait (Lignes de clauses diplomatiques) -->
+    <g id="treaty_abstract_text">
+      <!-- Paragraphe 1 -->
+      <line x1="600" y1="260" x2="1280" y2="260" class="engraving-text" />
+      <line x1="600" y1="290" x2="1250" y2="290" class="engraving-text" />
+      <line x1="600" y1="320" x2="1180" y2="320" class="engraving-text" />
+      
+      <!-- Paragraphe 2 (plus court) -->
+      <line x1="600" y1="380" x2="1280" y2="380" class="engraving-text" />
+      <line x1="600" y1="410" x2="1220" y2="410" class="engraving-text" />
+      <line x1="600" y1="440" x2="950" y2="440" class="engraving-text" />
+    </g>
+
+    <!-- Motif "Blueprint" du projet de Gazoduc (Le Rêve de 2016) -->
+    <g id="treaty_pipeline_blueprint">
+      <rect x="580" y="480" width="720" height="200" fill="#213359" stroke="#5c79ad" stroke-width="1" />
+      <!-- Grille interne blueprint -->
+      <path d="M580 530 L1300 530 M580 580 L1300 580 M580 630 L1300 630" stroke="#2a3f66" stroke-width="1" />
+      <path d="M700 480 L700 680 M820 480 L820 680 M940 480 L940 680 M1060 480 L1060 680 M1180 480 L1180 680" stroke="#2a3f66" stroke-width="1" />
+      
+      <!-- Tracé du gazoduc -->
+      <path d="M620 580 L740 640 L880 600 L1020 650 L1160 520 L1260 550" class="blueprint-line" />
+      
+      <!-- Noeuds symboliques -->
+      <circle cx="620" cy="580" r="8" class="blueprint-node" />
+      <circle cx="740" cy="640" r="8" class="blueprint-node" />
+      <circle cx="880" cy="600" r="10" class="blueprint-node" />
+      <circle cx="1020" cy="650" r="8" class="blueprint-node" />
+      <circle cx="1160" cy="520" r="12" class="blueprint-node" />
+      <circle cx="1260" cy="550" r="8" class="blueprint-node" />
+    </g>
+
+    <!-- LES 15 SIGNATURES (Chefs d'État Ouest-Africains) -->
+    <g id="fifteen_state_signatures">
+      <!-- Ligne 1 -->
+      <g id="signature_01" transform="translate(600, 740)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 5 Q 30 0, 40 15 T 70 5" class="signature-mark" />
+      </g>
+      <g id="signature_02" transform="translate(740, 740)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 15 L 20 5 L 30 18 Q 50 0, 75 12" class="signature-mark" />
+      </g>
+      <g id="signature_03" transform="translate(880, 740)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M15 10 C 30 -5, 40 25, 65 5" class="signature-mark" />
+      </g>
+      <g id="signature_04" transform="translate(1020, 740)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 18 L 30 2 L 35 15 Q 60 5, 70 18" class="signature-mark" />
+      </g>
+      <g id="signature_05" transform="translate(1160, 740)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 5 Q 40 30, 75 5" class="signature-mark" />
+      </g>
+
+      <!-- Ligne 2 -->
+      <g id="signature_06" transform="translate(600, 810)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 10 L 25 10 L 25 2 L 60 18" class="signature-mark" />
+      </g>
+      <g id="signature_07" transform="translate(740, 810)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 18 Q 20 -5, 45 15 T 75 5" class="signature-mark" />
+      </g>
+      <g id="signature_08" transform="translate(880, 810)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M15 5 L 15 18 M 30 5 C 50 20, 60 0, 70 15" class="signature-mark" />
+      </g>
+      <g id="signature_09" transform="translate(1020, 810)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 15 C 25 -10, 45 25, 70 5" class="signature-mark" />
+      </g>
+      <g id="signature_10" transform="translate(1160, 810)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 5 L 20 18 L 40 2 Q 60 15, 75 5" class="signature-mark" />
+      </g>
+
+      <!-- Ligne 3 -->
+      <g id="signature_11" transform="translate(600, 880)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 15 Q 35 -5, 40 18 L 70 5" class="signature-mark" />
+      </g>
+      <g id="signature_12" transform="translate(740, 880)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 2 L 20 18 L 35 2 L 75 15" class="signature-mark" />
+      </g>
+      <g id="signature_13" transform="translate(880, 880)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 5 C 30 25, 50 -5, 70 15" class="signature-mark" />
+      </g>
+      <g id="signature_14" transform="translate(1020, 880)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M10 18 L 10 2 M 25 10 Q 50 -5, 70 18" class="signature-mark" />
+      </g>
+      <g id="signature_15" transform="translate(1160, 880)">
+        <line x1="0" y1="20" x2="80" y2="20" class="engraving-fine" />
+        <path d="M5 10 Q 25 25, 45 5 T 75 15" class="signature-mark" />
+      </g>
+    </g>
+  </g>
+
+  <!-- LE CLIMAX DORÉ : SCEAU D'OFFICIALISATION DIPLOMATIQUE -->
+  <!-- Conçu pour être affiché/animé en dernier via Remotion -->
+  <g id="climax_golden_seal" transform="translate(1320, 840)">
+    
+    <!-- Ombre portée du sceau -->
+    <circle cx="0" cy="15" r="140" class="paper-shadow" />
+
+    <!-- Bordure extérieure dentelée (superposition géométrique) -->
+    <g id="seal_outer_ridges" fill="#d4a32a">
+      <rect x="-105" y="-105" width="210" height="210" transform="rotate(0)" />
+      <rect x="-105" y="-105" width="210" height="210" transform="rotate(22.5)" />
+      <rect x="-105" y="-105" width="210" height="210" transform="rotate(45)" />
+      <rect x="-105" y="-105" width="210" height="210" transform="rotate(67.5)" />
+    </g>
+
+    <!-- Base principale du sceau -->
+    <circle cx="0" cy="0" r="135" fill="#FFC742" />
+
+    <!-- Anneaux de gravure internes -->
+    <circle cx="0" cy="0" r="120" fill="none" stroke="#b3881d" stroke-width="4" />
+    <circle cx="0" cy="0" r="112" fill="none" stroke="#e3af32" stroke-width="2" />
+    <circle cx="0" cy="0" r="85" fill="none" stroke="#b3881d" stroke-width="6" />
+    
+    <!-- Anneau de perles internes (tirets) -->
+    <circle cx="0" cy="0" r="100" fill="none" stroke="#8c6712" stroke-width="4" stroke-dasharray="6 6" />
+
+    <!-- Emblème central : Étoile Boussole (Symbolisant la géopolitique et l'accord pan-africain) -->
+    <g id="seal_center_emblem">
+      <!-- Pointe Nord/Sud/Est/Ouest -->
+      <polygon points="0,-65 15,-20 65,0 15,20 0,65 -15,20 -65,0 -15,-20" fill="#b3881d" />
+      <polygon points="0,-65 0,65 -15,20 -65,0 -15,-20" fill="#8c6712" />
+      
+      <!-- Pointes diagonales -->
+      <polygon points="0,-45 10,-10 45,0 10,10 0,45 -10,10 -45,0 -10,-10" fill="#e3af32" transform="rotate(45)" />
+      <polygon points="0,-45 0,45 -10,10 -45,0 -10,-10" fill="#c49323" transform="rotate(45)" />
+      
+      <!-- Centre absolu -->
+      <circle cx="0" cy="0" r="12" fill="#FFC742" stroke="#8c6712" stroke-width="3" />
+    </g>
+  </g>
+</svg>

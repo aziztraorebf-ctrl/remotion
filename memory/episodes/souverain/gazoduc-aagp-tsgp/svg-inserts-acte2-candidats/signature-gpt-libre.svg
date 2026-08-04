@@ -1,0 +1,293 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <pattern id="hachures_fond" width="18" height="18" patternUnits="userSpaceOnUse" patternTransform="rotate(28)">
+      <path d="M0 2H18" fill="none" stroke="#3a5488" stroke-width="1" opacity="0.2"/>
+    </pattern>
+
+    <pattern id="hachures_table" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <path d="M0 1H12" fill="none" stroke="#9ca9be" stroke-width="1" opacity="0.12"/>
+    </pattern>
+
+    <pattern id="hachures_papier" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(32)">
+      <path d="M0 1H14" fill="none" stroke="#7285a7" stroke-width="0.8" opacity="0.12"/>
+    </pattern>
+
+    <clipPath id="decoupe_document">
+      <path d="M611 374 L1309 374 L1486 902 L433 902 Z"/>
+    </clipPath>
+
+    <g id="forme_fauteuil">
+      <path d="M-42 8 Q-42-34-26-50 Q0-68 26-50 Q42-34 42 8 L36 90 H-36 Z"
+            fill="#22375c" stroke="#91a0b8" stroke-width="2"/>
+      <path d="M-27 3 Q-27-27-16-36 Q0-47 16-36 Q27-27 27 3 L24 67 H-24 Z"
+            fill="#182746" stroke="#3a5488" stroke-width="2"/>
+      <path d="M-36 76 H36 L48 96 H-48 Z" fill="#2a3f66" stroke="#7285a7" stroke-width="2"/>
+      <path d="M-30 96 L-35 126 M30 96 L35 126" fill="none" stroke="#7285a7" stroke-width="3"/>
+      <circle cx="0" cy="-41" r="5" fill="#9ca9be"/>
+    </g>
+
+    <g id="motif_rosette">
+      <circle cx="0" cy="0" r="26" fill="none" stroke="#7285a7" stroke-width="2"/>
+      <circle cx="0" cy="0" r="18" fill="none" stroke="#7285a7" stroke-width="1.5"/>
+      <path d="M0-18 L5-6 L18 0 L5 6 L0 18 L-5 6 L-18 0 L-5-6 Z"
+            fill="none" stroke="#7285a7" stroke-width="1.4"/>
+      <circle cx="0" cy="0" r="4" fill="#7285a7"/>
+    </g>
+  </defs>
+
+  <g id="fond_bleu_marine">
+    <rect width="1920" height="1080" fill="#182746"/>
+    <rect width="1920" height="1080" fill="url(#hachures_fond)"/>
+    <path d="M0 0H1920V1080H0Z" fill="none" stroke="#2a3f66" stroke-width="28"/>
+  </g>
+
+  <g id="rayonnement_institutionnel" opacity="0.42">
+    <path d="M960 180 L182 688 M960 180 L318 810 M960 180 L505 950
+             M960 180 L714 1015 M960 180 L960 1040 M960 180 L1206 1015
+             M960 180 L1415 950 M960 180 L1602 810 M960 180 L1738 688"
+          fill="none" stroke="#3a5488" stroke-width="2"/>
+    <path d="M960 180 L89 432 M960 180 L1831 432" fill="none" stroke="#3a5488" stroke-width="2"/>
+    <circle cx="960" cy="180" r="52" fill="none" stroke="#3a5488" stroke-width="2"/>
+    <circle cx="960" cy="180" r="86" fill="none" stroke="#2a3f66" stroke-width="2"/>
+  </g>
+
+  <g id="architecture_salle_diplomatique">
+    <path d="M92 653V154 H238 V653 M1682 653V154 H1828 V653"
+          fill="#22375c" stroke="#7285a7" stroke-width="3"/>
+    <path d="M72 154H258V122H72Z M1662 154H1848V122H1662Z"
+          fill="#2a3f66" stroke="#91a0b8" stroke-width="3"/>
+    <path d="M105 154V653 M139 154V653 M191 154V653 M225 154V653
+             M1695 154V653 M1729 154V653 M1781 154V653 M1815 154V653"
+          fill="none" stroke="#3a5488" stroke-width="4"/>
+    <path d="M92 653H238 M1682 653H1828" fill="none" stroke="#9ca9be" stroke-width="4"/>
+
+    <path d="M238 312 Q960-130 1682 312" fill="none" stroke="#7285a7" stroke-width="4"/>
+    <path d="M270 327 Q960-75 1650 327" fill="none" stroke="#3a5488" stroke-width="12"/>
+    <path d="M308 337 Q960-28 1612 337" fill="none" stroke="#2a3f66" stroke-width="24"/>
+
+    <path d="M320 350V575 M1600 350V575" fill="none" stroke="#3a5488" stroke-width="5"/>
+    <path d="M320 350 Q960 30 1600 350" fill="none" stroke="#91a0b8" stroke-width="2" opacity="0.65"/>
+
+    <g id="medaillon_architectural" transform="translate(960 177)">
+      <circle r="42" fill="#182746" stroke="#91a0b8" stroke-width="3"/>
+      <circle r="31" fill="none" stroke="#3a5488" stroke-width="3"/>
+      <path d="M0-23 L6-8 L22-4 L10 6 L13 22 L0 13 L-13 22 L-10 6 L-22-4 L-6-8 Z"
+            fill="none" stroke="#9ca9be" stroke-width="2"/>
+    </g>
+  </g>
+
+  <g id="quinze_fauteuils_des_signataires">
+    <g id="fauteuil_signataire_01" transform="translate(350 385) scale(.76)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_02" transform="translate(438 345) scale(.8)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_03" transform="translate(525 314) scale(.84)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_04" transform="translate(612 288) scale(.88)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_05" transform="translate(699 270) scale(.92)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_06" transform="translate(786 257) scale(.95)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_07" transform="translate(873 250) scale(.98)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_08" transform="translate(960 247)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_09" transform="translate(1047 250) scale(.98)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_10" transform="translate(1134 257) scale(.95)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_11" transform="translate(1221 270) scale(.92)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_12" transform="translate(1308 288) scale(.88)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_13" transform="translate(1395 314) scale(.84)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_14" transform="translate(1482 345) scale(.8)">
+      <use href="#forme_fauteuil"/>
+    </g>
+    <g id="fauteuil_signataire_15" transform="translate(1570 385) scale(.76)">
+      <use href="#forme_fauteuil"/>
+    </g>
+  </g>
+
+  <g id="estrade_protocolaire">
+    <path d="M208 535 L1712 535 L1848 729 L72 729 Z"
+          fill="#22375c" stroke="#7285a7" stroke-width="3"/>
+    <path d="M72 729H1848V787H72Z" fill="#2a3f66" stroke="#91a0b8" stroke-width="3"/>
+    <path d="M114 755H1806" fill="none" stroke="#3a5488" stroke-width="2"/>
+    <path d="M172 535 L78 729 M1748 535 L1842 729" fill="none" stroke="#3a5488" stroke-width="3"/>
+  </g>
+
+  <g id="table_de_signature">
+    <path d="M281 460 L1639 460 L1826 1001 L94 1001 Z"
+          fill="#202f50" stroke="#9ca9be" stroke-width="4"/>
+    <path d="M281 460 L1639 460 L1686 596 L234 596 Z"
+          fill="#2a3f66" stroke="#7285a7" stroke-width="3"/>
+    <path d="M94 1001H1826L1806 1041H114Z"
+          fill="#101d35" stroke="#3a5488" stroke-width="3"/>
+    <path d="M281 460 L1639 460 L1826 1001 L94 1001 Z"
+          fill="url(#hachures_table)"/>
+    <path d="M151 930 L1769 930" fill="none" stroke="#3a5488" stroke-width="3"/>
+  </g>
+
+  <g id="dossier_officiel_sous_jacent">
+    <path d="M566 404 L1345 404 L1531 916 L407 916 Z"
+          fill="#273b61" stroke="#91a0b8" stroke-width="3"/>
+    <path d="M594 389 L1326 389 L1352 462 L568 462 Z"
+          fill="#3a5488" stroke="#9ca9be" stroke-width="2"/>
+    <path d="M594 389 L790 389 L812 423 L606 423 Z"
+          fill="#7285a7" opacity="0.45"/>
+  </g>
+
+  <g id="traite_sur_parchemin">
+    <path d="M611 374 L1309 374 L1486 902 L433 902 Z"
+          fill="#d9deea" stroke="#aeb8c9" stroke-width="5"/>
+    <path d="M638 402 L1284 402 L1443 871 L477 871 Z"
+          fill="#cbd2df" stroke="#7285a7" stroke-width="2"/>
+    <path d="M611 374 L1309 374 L1486 902 L433 902 Z"
+          fill="url(#hachures_papier)"/>
+
+    <g id="bordure_gravee_du_traite" clip-path="url(#decoupe_document)">
+      <path d="M661 430 L1257 430 L1392 834 L526 834 Z"
+            fill="none" stroke="#7285a7" stroke-width="3"/>
+      <path d="M675 446 L1245 446 L1372 816 L548 816 Z"
+            fill="none" stroke="#9ca9be" stroke-width="1.5"/>
+      <path d="M673 447 l18 10 -13 14 M1246 447 l-18 10 13 14
+               M548 816 l18-10 -13-14 M1372 816 l-18-10 13-14"
+            fill="none" stroke="#7285a7" stroke-width="2"/>
+    </g>
+
+    <g id="embleme_collectif_du_document" transform="translate(960 488)">
+      <use href="#motif_rosette"/>
+      <path d="M-92 0H-38 M38 0H92" fill="none" stroke="#7285a7" stroke-width="2"/>
+      <path d="M-76-9H-42 M42-9H76 M-76 9H-42 M42 9H76"
+            fill="none" stroke="#9ca9be" stroke-width="1.5"/>
+    </g>
+
+    <g id="lignes_formelles_du_document" fill="none" stroke="#8493aa">
+      <path d="M706 535H1214" stroke-width="3"/>
+      <path d="M682 556H1238" stroke-width="2"/>
+      <path d="M697 575H1223" stroke-width="2"/>
+      <path d="M714 594H1206" stroke-width="1.5"/>
+    </g>
+
+    <g id="quinze_signatures_officielles" fill="none" stroke="#526684" stroke-linecap="round" stroke-linejoin="round">
+      <g id="signature_01">
+        <path d="M608 646 C622 620 623 672 644 640 C650 631 647 666 674 645 C683 638 682 655 697 651" stroke-width="3"/>
+        <path d="M593 661H711" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_02">
+        <path d="M772 647 C783 628 790 671 806 640 C814 625 818 666 839 645 C850 635 852 659 871 650" stroke-width="3"/>
+        <path d="M758 661H878" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_03">
+        <path d="M937 649 C950 621 955 670 972 638 C980 626 985 671 1004 644 C1014 630 1020 662 1038 648" stroke-width="3"/>
+        <path d="M921 661H1044" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_04">
+        <path d="M1101 648 C1115 625 1120 669 1139 640 C1146 629 1152 669 1170 646 C1181 633 1189 660 1203 649" stroke-width="3"/>
+        <path d="M1088 661H1211" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_05">
+        <path d="M1261 648 C1274 626 1281 671 1298 640 C1307 625 1311 667 1332 644 C1340 636 1349 662 1362 651" stroke-width="3"/>
+        <path d="M1248 661H1370" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+
+      <g id="signature_06">
+        <path d="M575 719 C590 692 596 744 615 708 C622 695 630 741 650 712 C659 699 667 733 683 718" stroke-width="3"/>
+        <path d="M559 733H692" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_07">
+        <path d="M750 717 C761 700 769 738 786 707 C795 691 802 741 821 712 C831 698 840 734 855 716" stroke-width="3"/>
+        <path d="M734 733H864" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_08">
+        <path d="M920 717 C934 694 939 742 958 707 C967 691 973 741 992 713 C1002 698 1011 735 1029 716" stroke-width="3"/>
+        <path d="M904 733H1038" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_09">
+        <path d="M1093 718 C1107 691 1114 745 1132 707 C1141 690 1147 741 1168 711 C1178 698 1188 736 1203 716" stroke-width="3"/>
+        <path d="M1077 733H1212" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_10">
+        <path d="M1265 717 C1278 695 1284 741 1303 706 C1312 692 1320 742 1339 711 C1349 697 1358 735 1375 716" stroke-width="3"/>
+        <path d="M1249 733H1384" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+
+      <g id="signature_11">
+        <path d="M548 789 C562 763 569 816 588 779 C597 763 604 812 624 784 C633 770 642 805 660 788" stroke-width="3"/>
+        <path d="M531 804H669" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_12">
+        <path d="M733 788 C747 765 753 810 772 780 C781 765 788 812 808 783 C817 770 827 806 844 787" stroke-width="3"/>
+        <path d="M716 804H853" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_13">
+        <path d="M918 788 C932 761 939 815 958 779 C967 764 974 813 995 783 C1004 769 1014 807 1031 787" stroke-width="3"/>
+        <path d="M901 804H1040" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_14">
+        <path d="M1103 788 C1117 763 1124 813 1143 779 C1151 765 1159 813 1179 783 C1188 770 1198 805 1216 788" stroke-width="3"/>
+        <path d="M1086 804H1225" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+      <g id="signature_15">
+        <path d="M1288 788 C1302 765 1309 812 1328 779 C1337 764 1345 814 1365 783 C1374 769 1384 807 1402 787" stroke-width="3"/>
+        <path d="M1271 804H1411" stroke="#8493aa" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+
+  <g id="sceau_dore_officialisation">
+    <path d="M927 813 L896 951 L950 922 L977 966 L991 816 Z"
+          fill="#dca92f" stroke="#182746" stroke-width="4"/>
+    <path d="M991 816 L1007 964 L1037 920 L1088 947 L1029 809 Z"
+          fill="#e8b635" stroke="#182746" stroke-width="4"/>
+    <path d="M960 776
+             C978 759 997 769 1007 783
+             C1028 778 1044 794 1040 815
+             C1057 829 1049 852 1031 860
+             C1031 881 1011 894 992 885
+             C978 902 954 899 944 880
+             C923 885 907 868 911 847
+             C894 833 902 810 920 802
+             C920 788 936 774 960 776Z"
+          fill="#FFC742" stroke="#182746" stroke-width="5"/>
+    <circle cx="976" cy="832" r="48" fill="none" stroke="#182746" stroke-width="4"/>
+    <circle cx="976" cy="832" r="36" fill="none" stroke="#9b741d" stroke-width="2"/>
+    <path d="M976 801 L984 821 L1006 827 L988 840 L990 862 L976 850 L962 862 L964 840 L946 827 L968 821 Z"
+          fill="none" stroke="#182746" stroke-width="3"/>
+  </g>
+
+  <g id="plume_ceremonielle">
+    <path d="M1192 861 L1453 690" fill="none" stroke="#111d34" stroke-width="22" stroke-linecap="round"/>
+    <path d="M1212 847 L1438 699" fill="none" stroke="#7285a7" stroke-width="5" stroke-linecap="round"/>
+    <path d="M1438 699 L1516 658 L1471 733 Z"
+          fill="#FFC742" stroke="#182746" stroke-width="5"/>
+    <path d="M1471 733 L1480 684" fill="none" stroke="#182746" stroke-width="3"/>
+    <circle cx="1479" cy="684" r="5" fill="#182746"/>
+    <path d="M1170 879 Q1210 856 1245 867 Q1210 891 1170 879Z"
+          fill="#2a3f66" stroke="#91a0b8" stroke-width="3"/>
+  </g>
+
+  <g id="avant_plan_grave">
+    <path d="M0 1017 Q246 974 478 1014 T960 1018 T1442 1014 T1920 1017 V1080H0Z"
+          fill="#111d34"/>
+    <path d="M0 1022 Q246 979 478 1019 T960 1023 T1442 1019 T1920 1022"
+          fill="none" stroke="#3a5488" stroke-width="3"/>
+    <path d="M72 1051H1848" fill="none" stroke="#2a3f66" stroke-width="2"/>
+  </g>
+</svg>

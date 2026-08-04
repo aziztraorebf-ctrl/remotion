@@ -853,3 +853,26 @@ dessiner). Le brief libre a gagné sur les 2 scènes — métaphores plus riches
 redevient plan d'ingénieur plutôt qu'une jauge classique). Règle : pour une scène-clé (climax
 narratif, pas un jeton/asset utilitaire), préférer poser le CADRE (registre + intention + interdits)
 et laisser le modèle composer, plutôt que dicter une liste fermée de `<g id>`.
+
+Confirmé le même jour sur 4 modèles externes en plus de Fable (Gemini 3.1 Pro, GPT-5.6 Sol, GLM-5.2,
+Kimi K3) — pas un résultat isolé à Fable. Script réutilisable pour ce comparatif dirigé-vs-libre sur
+les mêmes 4 providers : `scripts/tools/gazoduc-svg-inserts-gen-libre.py`.
+
+### 4. DRAPEAUX/COULEURS NATIONALES AFFICHÉS EN SÉRIE — ne jamais trier par ordre alphabétique
+Plusieurs pays africains partagent une palette quasi-identique par héritage historique réel (ex. le
+Ghana 1957 a été copié par la Guinée puis la Guinée-Bissau — même rouge/jaune/vert ; Cap-Vert/Gambie/
+Libéria partagent un rouge/blanc/bleu proche). Trier N drapeaux/bannières par ordre alphabétique du
+nom de pays colle mécaniquement ces paires quasi-identiques côte à côte — pas un bug de code, un fait
+réel sur les couleurs nationales à anticiper à CHAQUE fois qu'on affiche plusieurs drapeaux côte à
+côte. Fix : réordonner manuellement pour qu'aucune paire adjacente ne partage la même famille de
+couleurs. Vécu 2026-08-04, Gazoduc Acte 2 (12 bannières ECOWAS) — retour Aziz : "on dirait que c'est
+tout le temps le même drapeau qui revient".
+
+### 5. PATTERN NARRATIF — geste SVG qui EN ARRÊTE un autre (métaphore sans texte)
+Faire coïncider spatialement/temporellement 2 gestes SVG indépendants pour créer une métaphore visuelle
+SANS texte à l'écran : un trait qui progresse (`strokeDashoffset`) et une position fixe qui l'arrête
+juste avant qu'il n'aboutisse. Vécu 2026-08-04, Gazoduc Acte 2 scène financement — une ligne de
+signature en pointillé se dessine vers un stylo posé, mais s'arrête juste avant de l'atteindre (le
+stylo n'écrit jamais). Citation Aziz (validation forte) : « j'adore la métaphore du trait qui s'arrête
+juste au stylo, la signature qui empêche le tracé de continuer ». À retenir pour toute scène narrative
+où un accord/une décision reste en suspens.

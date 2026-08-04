@@ -2,72 +2,43 @@
 
 **Mis à jour** : 2026-08-04
 
-## État — ACTE 2 EN COURS — SESSION 2026-08-03 INTERROMPUE, REPRISE À FAIRE (session fraîche)
+## État — ACTE 2 TERMINÉ ET VALIDÉ (finale produite le 2026-08-04)
 
-**Pivot doctrinal tranché par Aziz (2026-08-03)** : l'Acte 2 n'est PAS une seule scène carte. C'est
-**3 segments distincts** qui s'enchaînent au montage :
-1. **INSERT SVG narratif "signature"** (~genèse 2016 + signature du traité, PAS un beat carte —
-   aucun ancrage géo fort requis pour ce sens).
-2. **SEGMENT CARTE COURT (~25-30s, PAS 2min18)** — D3 plate, montre SEULEMENT le tracé physique
-   AAGP (Nigeria→Maroc→traversée Europe), à jouer APRÈS l'insert signature. ⛔ Erreur commise en
-   session précédente : j'ai rendu et présenté le FICHIER COMPLET (4165 frames = 2min18, avec 2
-   placeholders bleus pour les inserts intégrés dedans) au lieu d'un segment court isolé. Citation
-   Aziz : *"tu as créé une carte de 2 minutes 18 alors que ce que je t'ai dit c'est que nous allions
-   créer la carte de la scène, spécialement qu'elle arrivait après le SVG [...] Le modèle de la
-   carte [...] ne devrait pas faire plus de 25 secondes. Je pense 30 secondes avec la carte qui
-   montre le tracé."* → **à refaire en session suivante, plus simple, plus court, isolé.**
-3. **INSERT SVG narratif "financement"** (accord manquant, tuyaux virtuels, Mauritanie — même
-   logique, pas d'ancrage géo fort).
+**Livrable** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s, validé explicitement par
+Aziz). Structure = **4 segments montés bout à bout** (pas un fichier monolithique) :
+1. **Insert SVG signature Freetown** (22s) — `GazoducActe2Signature.tsx`
+   (`GazoducActe2SignatureFreetown` + `GazoducActe2SignatureFlashback`).
+2. **Carte D3 tracé AAGP** (20.8s) — `GazoducActe2AAGP.tsx` refondu en v4, segment court comme
+   tranché par Aziz (25-30s visé, PAS 2min18 comme la version précédente).
+3. **Insert SVG flashback genèse 2016** (33.4s) — dans le même fichier `GazoducActe2Signature.tsx`.
+4. **Insert SVG financement manquant** (51.3s) — `GazoducActe2Financement.tsx`.
 
-**Nouvelle idée visuelle à intégrer sur le segment carte (pas encore codée)** : pendant le tracé,
-remplacer les `CountryLabel` (noms de pays fixes qui restent à l'écran) par des **géoplaques qui
-apparaissent et fade** aux points d'arrêt du tracé — réutiliser la technique géoplaque déjà connue
-du projet plutôt que des labels statiques. Citation Aziz : *"durant le tracé on devrait mettre des
-petits points qui représentent les points d'arrêt. Peut-être [...] réutiliser les géoplaques qui
-apparaissent et fade, au lieu de juste avoir les noms des villes qui restent sur place."*
+Montage assemblé dans `GazoducActe2Montage.tsx`, tous les segments importés/composés dans
+`src/Root.tsx` (compositions `D3-Gazoduc-Acte2-Signature-Freetown`, `-Signature-Flashback`,
+`-AAGP`, `-Financement`, `-Montage`). Audio `narration-p2.mp3` synchronisé par segment.
 
-**Pipeline SVG génératif comparatif lancé (2026-08-03)** — 2 scènes (signature + financement) × 2
-techniques de brief testées :
-- **Brief "dirigé"** (5 groupes `<g id>` imposés) sur 5 modèles : Fable 5, Gemini 3.1 Pro, GPT-5.6
-  Sol, GLM-5.2, Kimi K3.
-- **Brief "liberté créative"** (registre + exigence narrative + interdits, SANS dicter les éléments)
-  testé sur **Fable 5 seulement** pour l'instant — résultat jugé visuellement plus riche que le
-  dirigé (confirmé sur les 2 scènes).
-- **12 SVG + 8 JSON sauvegardés** dans
-  `memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/` (copie persistante,
-  l'original `out/_rnd/gazoduc-svg-inserts/` sera purgé en fin de session).
-- **Résumé des 2 versions Fable "liberté créative"** (les plus prometteuses à ce stade) :
-  - `signature-fable-libre.svg` : moment JUSTE APRÈS la signature (pas le geste de signer) — sceau
-    doré déjà posé et rayonnant sur le traité, plume reposée à côté, 15 bannières anonymes en arc
-    (15 chefs d'État signataires, sans visages/drapeaux identifiables). Élément clé : le tracé du
-    pipeline est dessiné EN POINTILLÉS DORÉS DIRECTEMENT SUR LE DOCUMENT (pas sur une carte), départ
-    plein / arrivée creuse = objectif pas encore atteint. Pierre fantôme quasi effacée en bas à
-    gauche = rappel discret de la genèse 2016.
-  - `financement-fable-libre.svg` : métaphore "matérialisation qui s'interrompt en plein vol" — le
-    même tuyau vu sur la carte apparaît PLEIN/réel à gauche (riveté, pylônes ancrés), puis après une
-    jonction rompue (boulons en apesanteur, halo = point de bascule), redevient un PLAN D'INGÉNIEUR
-    (tirets de plus en plus lâches, cotations techniques, pylônes fantômes ne touchant jamais le
-    sol, ligne de terre qui s'efface). 2 touches dorées séparées = les 2 absences : coffre-fort
-    ouvert/vide avec pièces en pointillés qui s'évaporent (chéquier jamais sorti) + ligne de
-    signature pointillée vers laquelle un stylo hésite sans se poser (accord manquant, probablement
-    Mauritanie).
+**Pipeline SVG "liberté créative" étendu à 4 modèles externes** (Gemini 3.1 Pro / GPT-5.6 Sol /
+GLM-5.2 / Kimi K3) en plus de Fable 5 — 20 candidats comparés au total. Mix retenus :
+- **Signature** : base GPT-5.6 Sol (arche + colonnes) + bannières de Fable (12 drapeaux ECOWAS
+  réels, remplace les 15 bannières anonymes du candidat Fable seul décrit précédemment).
+- **Financement** : document/plume/goutte de Gemini + tuyau/gouffre de GPT-5.6 Sol.
 
-**À FAIRE en session suivante (reprise, dans cet ordre)** :
-1. Examiner les 12 SVG candidats (dirigés + Fable libre) → choisir/mix-and-match par scène.
-2. **Nouveau test à lancer** : relancer la technique "liberté créative" sur les modèles EXTERNES
-   (Gemini 3.1 Pro / GPT-5.6 Sol / GLM-5.2 / Kimi K3), pas seulement Fable 5, pour comparer.
-3. Reconstruire `GazoducActe2AAGP.tsx` comme SEGMENT COURT (~25-30s), tracé seul, à jouer après
-   l'insert SVG signature — pas le fichier complet actuel (4165 frames). Le fichier actuel garde son
-   mécanisme de caméra continue validé (`buildFullPathSamples`/`windowBBox`/`camFor`, palette
-   éclaircie `#3a5488`/`#2a3f66`/`#4a608e`/`#e8ecf5`) — c'est la DURÉE et le CONTENU (retirer les
-   placeholders inserts) qui doivent changer, pas le mécanisme caméra.
-4. Ajouter les géoplaques fade sur les points d'arrêt (remplace `CountryLabel`).
-5. Monter les 3 segments (insert signature → carte courte → insert financement) plutôt qu'un fichier
-   monolithique.
+Technique de dessin progressif (`strokeDasharray`/`strokeDashoffset`) généralisée à tous les
+éléments structurants des inserts SVG. 3 bugs de synchro audio corrigés (marge +300ms, chéquier
+resynchronisé). Contresens narratif corrigé : signature manuscrite retirée du segment financement
+(incohérente avec le texte — l'accord manque, on ne montre pas une signature).
 
-Décision explicite Aziz de tout reporter : *"je pense que on devrait refaire tout ceci de la
-prochaine session. Cette session devient assez chargée, assez longue [...] avec une session plus
-fraîche."*
+**Géoplaque Mauritanie retirée** de la carte (le pays sans accord n'a pas de géoplaque d'arrivée,
+cohérent avec le narratif "financement manquant").
+
+Les 20 SVG candidats "liberté créative" (12 sauvegardés initialement + 8 des modèles externes
+ajoutés) sont dans `memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`
+(copie persistante). Script réutilisable : `scripts/tools/gazoduc-svg-inserts-gen-libre.py`.
+
+## Prochaine priorité : Acte 3 (TSGP, gazoduc transsaharien algérien)
+
+Script Partie 3 déjà verrouillé, audio `narration-p3.mp3` déjà généré. **Aucun visuel encore
+produit** — à démarrer en session fraîche (storyboard/breakdown avant code, cf `SYSTEME-AGENTIQUE.md`).
 
 ---
 

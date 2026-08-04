@@ -75,13 +75,14 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Acte 1 TERMINÉ (globe D3), Acte 2 pivoté en cours
+### Gazoduc — Actes 1 et 2 TERMINÉS, Acte 3 à démarrer
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz comme base de production (render v6, 2026-08-03).
-Acte 2 pivoté (2026-08-04) : 3 segments distincts (insert SVG signature → carte D3 courte ~25-30s
-tracé seul → insert SVG financement), PAS un fichier monolithique — erreur d'un rendu 2min18 avec
-placeholders internes corrigée, reprise prévue en session fraîche. 12 SVG candidats déjà générés et
-sauvegardés (`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`).
-Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
+Acte 2 **produit et validé en finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4`
+(127.4s), 4 segments montés bout à bout (insert signature Freetown → carte D3 tracé AAGP courte →
+insert flashback genèse 2016 → insert financement manquant). 20 SVG candidats "liberté créative"
+(5 modèles) sauvegardés (`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`).
+**Prochaine priorité : Acte 3 (TSGP)** — script verrouillé, audio `narration-p3.mp3` généré, aucun
+visuel produit. Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion

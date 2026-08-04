@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <!-- ============ FOND ============ -->
+  <g id="fond">
+    <rect x="0" y="0" width="1920" height="1080" fill="#182746"/>
+    <rect x="40" y="40" width="1840" height="1000" fill="none" stroke="#2a3f66" stroke-width="2"/>
+    <rect x="52" y="52" width="1816" height="976" fill="none" stroke="#2a3f66" stroke-width="1" opacity="0.5"/>
+  </g>
+
+  <!-- ============ CARTE FANTÔME (le souvenir du tracé, estompé) ============ -->
+  <g id="carte-fantome" opacity="0.35">
+    <!-- côte Afrique de l'Ouest, stylisée en pointillés fins -->
+    <path d="M 210 640 C 260 600 300 560 320 500 C 340 440 330 380 360 330 C 390 280 450 250 520 240 C 590 230 660 250 700 300 C 740 350 730 420 760 470 C 790 520 850 540 900 530"
+          fill="none" stroke="#3a5488" stroke-width="2" stroke-dasharray="2 8"/>
+    <!-- côte Europe / Méditerranée, en haut -->
+    <path d="M 620 130 C 700 110 780 120 850 105 C 920 90 1000 105 1070 95"
+          fill="none" stroke="#3a5488" stroke-width="2" stroke-dasharray="2 8"/>
+    <!-- rose des vents gravée, disquette -->
+    <g id="rose-des-vents" opacity="0.6">
+      <circle cx="1620" cy="220" r="70" fill="none" stroke="#3a5488" stroke-width="1.5"/>
+      <circle cx="1620" cy="220" r="52" fill="none" stroke="#3a5488" stroke-width="1"/>
+      <path d="M 1620 150 L 1632 220 L 1620 290 L 1608 220 Z" fill="#3a5488" opacity="0.7"/>
+      <path d="M 1550 220 L 1620 208 L 1690 220 L 1620 232 Z" fill="#3a5488" opacity="0.4"/>
+    </g>
+    <!-- méridiens fantômes -->
+    <path d="M 400 90 L 400 1000 M 800 90 L 800 1000 M 1200 90 L 1200 1000 M 1600 90 L 1600 1000"
+          stroke="#2a3f66" stroke-width="1" opacity="0.4" fill="none"/>
+    <path d="M 60 300 L 1860 300 M 60 560 L 1860 560 M 60 820 L 1860 820"
+          stroke="#2a3f66" stroke-width="1" opacity="0.4" fill="none"/>
+  </g>
+
+  <!-- ============ PIPELINE SOLIDE (la partie "réelle" du rêve, déjà tracée) ============ -->
+  <g id="pipeline-solide">
+    <path d="M 520 890 C 560 830 590 780 620 720 C 650 660 680 620 720 580"
+          fill="none" stroke="#c9d4e8" stroke-width="7" stroke-linecap="round"/>
+    <path d="M 520 890 C 560 830 590 780 620 720 C 650 660 680 620 720 580"
+          fill="none" stroke="#182746" stroke-width="2" stroke-dasharray="10 14"/>
+    <!-- stations / nœuds -->
+    <circle cx="520" cy="890" r="12" fill="#182746" stroke="#c9d4e8" stroke-width="3"/>
+    <circle cx="620" cy="720" r="9" fill="#182746" stroke="#c9d4e8" stroke-width="3"/>
+  </g>
+
+  <!-- ============ PIPELINE POINTILLÉS (la partie virtuelle, qui s'affaiblit) ============ -->
+  <g id="pipeline-pointilles">
+    <path d="M 720 580 C 770 530 830 500 890 480"
+          fill="none" stroke="#c9d4e8" stroke-width="5" stroke-dasharray="12 14" stroke-linecap="round" opacity="0.75"/>
+    <path d="M 890 480 C 930 468 960 462 990 458"
+          fill="none" stroke="#c9d4e8" stroke-width="4" stroke-dasharray="8 14" stroke-linecap="round" opacity="0.45"/>
+    <path d="M 990 458 C 1010 455 1022 453 1034 452"
+          fill="none" stroke="#c9d4e8" stroke-width="3" stroke-dasharray="4 14" stroke-linecap="round" opacity="0.22"/>
+  </g>
+
+  <!-- ============ POINT DE RUPTURE (la cassure, seule touche dorée de la carte) ============ -->
+  <g id="point-rupture">
+    <circle cx="1052" cy="450" r="26" fill="none" stroke="#FFC742" stroke-width="2.5"/>
+    <circle cx="1052" cy="450" r="15" fill="none" stroke="#FFC742" stroke-width="1.5" opacity="0.6"/>
+    <path d="M 1040 462 L 1064 438 M 1040 438 L 1064 462" stroke="#FFC742" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- extrémités "coupées" du tuyau -->
+    <path d="M 1030 448 L 1042 452" stroke="#c9d4e8" stroke-width="3" stroke-linecap="round" opacity="0.3"/>
+    <path d="M 1066 448 L 1078 444" stroke="#c9d4e8" stroke-width="3" stroke-linecap="round" opacity="0.15"/>
+  </g>
+
+  <!-- ============ PORTE / FRONTIÈRE FERMÉE (le pays qui n'a pas signé) ============ -->
+  <g id="frontiere-fermee">
+    <path d="M 1120 340 L 1120 560" stroke="#3a5488" stroke-width="3" stroke-dasharray="14 10"/>
+    <!-- barrière symbolique -->
+    <g id="barriere">
+      <rect x="1096" y="418" width="48" height="10" rx="3" fill="#2a3f66" stroke="#c9d4e8" stroke-width="1.5" transform="rotate(-4 1120 423)"/>
+      <rect x="1108" y="400" width="6" height="100" fill="#2a3f66" stroke="#c9d4e8" stroke-width="1.5"/>
+      <rect x="1128" y="400" width="6" height="100" fill="#2a3f66" stroke="#c9d4e8" stroke-width="1.5"/>
+      <!-- cadenas -->
+      <rect x="1108" y="440" width="26" height="22" rx="4" fill="#182746" stroke="#c9d4e8" stroke-width="2"/>
+      <path d="M 1114 440 L 1114 432 A 7 7 0 0 1 1128 432 L 1128 440" fill="none" stroke="#c9d4e8" stroke-width="2"/>
+      <circle cx="1121" cy="450" r="3" fill="#c9d4e8"/>
+    </g>
+  </g>
+
+  <!-- ============ CONTINENT EUROPE, INATTEIGNABLE (très fantôme) ============ -->
+  <g id="arrivee-fantome" opacity="0.18">
+    <path d="M 1150 380 C 1220 330 1300 290 1380 260 C 1440 238 1500 225 1560 218"
+          fill="none" stroke="#c9d4e8" stroke-width="3" stroke-dasharray="3 16" stroke-linecap="round"/>
+    <circle cx="1560" cy="218" r="14" fill="none" stroke="#c9d4e8" stroke-width="2" stroke-dasharray="4 6"/>
+  </g>
+
+  <!-- ============ TABLE / PLANS DESSOUS (ancrage "retour au réel") ============ -->
+  <g id="table-basse">
+    <rect x="0" y="940" width="1920" height="140" fill="#141f38"/>
+    <line x1="0" y1="940" x2="1920" y2="940" stroke="#2a3f66" stroke-width="2"/>
+  </g>
+
+  <!-- ============ CONTRAT NON SIGNÉ ============ -->
+  <g id="contrat-non-signe">
+    <g transform="rotate(-3 1300 830)">
+      <rect x="1180" y="700" width="260" height="300" rx="4" fill="#e8e4d8"/>
+      <rect x="1180" y="700" width="260" height="300" rx="4" fill="none" stroke="#b9b29e" stroke-width="1.5"/>
+      <!-- en-tête gravé -->
+      <rect x="1206" y="726" width="120" height="8" rx="2" fill="#8a8672" opacity="0.8"/>
+      <rect x="1206" y="742" width="80" height="5" rx="2" fill="#8a8672" opacity="0.5"/>
+      <!-- lignes de texte simulées -->
+      <g fill="#a39d86" opacity="0.7">
+        <rect x="1206" y="772" width="208" height="4" rx="2"/>
+        <rect x="1206" y="786" width="208" height="4" rx="2"/>
+        <rect x="1206" y="800" width="160" height="4" rx="2"/>
+        <rect x="1206" y="822" width="208" height="4" rx="2"/>
+        <rect x="1206" y="836" width="190" height="4" rx="2"/>
+        <rect x="1206" y="850" width="208" height="4" rx="2"/>
+        <rect x="1206" y="864" width="120" height="4" rx="2"/>
+      </g>
+      <!-- ligne de signature VIDE -->
+      <g id="ligne-signature-vide">
+        <line x1="1206" y1="950" x2="1340" y2="950" stroke="#6e6a58" stroke-width="2"/>
+        <path d="M 1206 962 L 1240 962" stroke="#a39d86" stroke-width="3" opacity="0.5"/>
+      </g>
+      <!-- cadre de cachet VIDE (le sceau qui n'a pas été apposé) -->
+      <g id="cachet-vide">
+        <circle cx="1380" cy="940" r="34" fill="none" stroke="#8a8672" stroke-width="2" stroke-dasharray="6 6"/>
+        <circle cx="1380" cy="940" r="24" fill="none" stroke="#8a8672" stroke-width="1" stroke-dasharray="3 5" opacity="0.6"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ CHÉQUIER OUVERT, VIERGE ============ -->
+  <g id="chequier-vierge">
+    <g transform="rotate(2 880 870)">
+      <rect x="740" y="800" width="280" height="150" rx="4" fill="#ded9c9"/>
+      <rect x="740" y="800" width="280" height="150" rx="4" fill="none" stroke="#b0a98f" stroke-width="1.5"/>
+      <line x1="880" y1="800" x2="880" y2="950" stroke="#b0a98f" stroke-width="1.5"/>
+      <!-- page gauche : souche -->
+      <g fill="#a39d86" opacity="0.6">
+        <rect x="756" y="822" width="90" height="4" rx="2"/>
+        <rect x="756" y="836" width="70" height="4" rx="2"/>
+        <rect x="756" y="850" width="90" height="4" rx="2"/>
+      </g>
+      <!-- page droite : le chèque, montant VIDE -->
+      <g id="montant-vide">
+        <rect x="896" y="822" width="108" height="4" rx="2" fill="#a39d86" opacity="0.6"/>
+        <rect x="896" y="840" width="108" height="22" rx="3" fill="none" stroke="#8a8672" stroke-width="1.5" stroke-dasharray="5 4"/>
+        <line x1="896" y1="900" x2="1004" y2="900" stroke="#8a8672" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- ============ PLUME POSÉE (elle n'a pas signé — touche dorée maîtresse) ============ -->
+  <g id="plume-posee">
+    <g transform="rotate(24 1240 970)">
+      <rect x="1090" y="962" width="240" height="10" rx="5" fill="#2a3f66" stroke="#c9d4e8" stroke-width="1.5"/>
+      <rect x="1300" y="960" width="34" height="14" rx="4" fill="#182746" stroke="#c9d4e8" stroke-width="1.5"/>
+      <!-- plume / bec doré -->
+      <path d="M 1090 967 L 1052 957 L 1062 967 L 1052 977 Z" fill="#FFC742"/>
+      <line x1="1062" y1="967" x2="1054" y2="967" stroke="#182746" stroke-width="1.5"/>
+    </g>
+    <!-- goutte d'encre suspendue, jamais tombée -->
+    <circle id="goutte-encre" cx="1050" cy="1006" r="4" fill="#FFC742" opacity="0.85"/>
+  </g>
+
+  <!-- ============ OMBRE PORTÉE LÉGÈRE SOUS OBJETS ============ -->
+  <g id="ombres" opacity="0.35" fill="#0d1526">
+    <ellipse cx="1310" cy="1002" rx="150" ry="10"/>
+    <ellipse cx="880" cy="955" rx="150" ry="8"/>
+  </g>
+
+  <!-- ============ VIGNETTAGE GRAVURE (coins assombris, sans filtre) ============ -->
+  <g id="vignettage" opacity="0.5">
+    <path d="M 0 0 L 260 0 L 0 260 Z" fill="#101b31"/>
+    <path d="M 1920 0 L 1660 0 L 1920 260 Z" fill="#101b31"/>
+    <path d="M 0 1080 L 260 1080 L 0 820 Z" fill="#101b31"/>
+    <path d="M 1920 1080 L 1660 1080 L 1920 820 Z" fill="#101b31"/>
+  </g>
+</svg>

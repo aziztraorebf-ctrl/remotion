@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!-- ===== FOND ===== -->
+  <g id="background">
+    <rect x="0" y="0" width="1920" height="1080" fill="#182746"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="none" stroke="#0e1830" stroke-width="40"/>
+  </g>
+
+  <!-- ===== CADRE GRAVÉ ORNEMENTAL ===== -->
+  <g id="engraved-frame" fill="none" stroke="#3a5488" stroke-width="2">
+    <rect x="70" y="70" width="1780" height="940"/>
+    <rect x="86" y="86" width="1748" height="908" stroke-width="1"/>
+    <!-- coins -->
+    <g id="frame-corners" stroke="#3a5488" stroke-width="2">
+      <path d="M70 130 L70 70 L130 70 M96 140 L96 96 L140 96"/>
+      <path d="M1850 130 L1850 70 L1790 70 M1824 140 L1824 96 L1780 96"/>
+      <path d="M70 950 L70 1010 L130 1010 M96 940 L96 984 L140 984"/>
+      <path d="M1850 950 L1850 1010 L1790 1010 M1824 940 L1824 984 L1780 984"/>
+    </g>
+  </g>
+
+  <!-- ===== FANTÔME DE CÔTE OUEST-AFRICAINE (gravure de fond, très discret) ===== -->
+  <g id="ghost-coastline" fill="none" stroke="#2a3f66" stroke-width="2" opacity="0.55">
+    <path d="M240 420 Q260 380 300 370 Q340 360 360 385 Q375 410 360 440 Q345 470 355 500 Q365 535 395 555 Q425 575 430 610 Q435 650 410 680 Q390 705 395 735"/>
+    <path d="M300 372 Q305 400 295 425 M340 445 Q330 470 340 495 M380 560 Q370 590 385 615" stroke-width="1"/>
+    <!-- hachures de mer -->
+    <g id="sea-hatching" stroke-width="1" opacity="0.6">
+      <path d="M150 460 l30 -18 M160 500 l30 -18 M150 540 l30 -18 M170 580 l30 -18 M160 620 l30 -18 M180 660 l30 -18"/>
+      <path d="M450 640 l30 -18 M470 680 l30 -18 M460 720 l30 -18"/>
+    </g>
+  </g>
+
+  <!-- ===== LIGNE DE PIPELINE FANTÔME (le rêve, pas encore réel) ===== -->
+  <g id="ghost-pipeline" fill="none" stroke="#3a5488" stroke-width="3" stroke-dasharray="2 14" stroke-linecap="round" opacity="0.8">
+    <path d="M360 385 Q420 480 400 560 Q385 640 420 700 Q450 750 520 780"/>
+  </g>
+
+  <!-- ===== TABLE / SOCLE SOUS LE DOCUMENT ===== -->
+  <g id="document-shadow">
+    <path d="M560 860 L1420 860 L1460 900 L520 900 Z" fill="#0e1830" opacity="0.7"/>
+  </g>
+
+  <!-- ===== LE TRAITÉ (parchemin central) ===== -->
+  <g id="treaty-document">
+    <path d="M600 200 L1380 200 L1380 860 L600 860 Z" fill="#e8e4d8"/>
+    <path d="M600 200 L1380 200 L1380 860 L600 860 Z" fill="none" stroke="#b9b2a0" stroke-width="3"/>
+    <!-- bord roulé haut -->
+    <path d="M600 200 Q600 176 628 176 L1352 176 Q1380 176 1380 200 Z" fill="#d6d0c0"/>
+    <path d="M600 200 Q600 176 628 176 L1352 176 Q1380 176 1380 200" fill="none" stroke="#b9b2a0" stroke-width="2"/>
+    <!-- double filet intérieur -->
+    <rect x="626" y="222" width="728" height="612" fill="none" stroke="#a89f88" stroke-width="1.5"/>
+    <rect x="634" y="230" width="712" height="596" fill="none" stroke="#a89f88" stroke-width="0.75"/>
+  </g>
+
+  <!-- ===== EN-TÊTE DU TRAITÉ (fleuron gravé, sans texte) ===== -->
+  <g id="document-header" stroke="#4a4436" fill="none">
+    <path d="M860 268 Q900 240 940 268 Q980 240 1020 268 Q1060 240 1100 268" stroke-width="2.5"/>
+    <circle cx="980" cy="254" r="6" fill="#4a4436" stroke="none"/>
+    <path d="M820 292 L1140 292" stroke-width="1.5"/>
+    <path d="M880 306 L1080 306" stroke-width="1"/>
+    <!-- petit fleuron central -->
+    <path d="M980 318 q-10 14 0 26 q10 -12 0 -26 M966 331 h28" stroke-width="1.5"/>
+  </g>
+
+  <!-- ===== QUINZE SIGNATURES (les quinze chefs d'État) ===== -->
+  <g id="signatures" stroke="#3a3630" fill="none" stroke-width="2" stroke-linecap="round">
+    <g id="signature-01"><path d="M680 400 q14 -22 26 0 q8 14 22 -6 q10 -14 20 2"/><path d="M676 416 h84" stroke-width="1"/></g>
+    <g id="signature-02"><path d="M830 400 q10 -26 24 -4 q12 18 26 -8 q8 -12 18 4"/><path d="M826 416 h84" stroke-width="1"/></g>
+    <g id="signature-03"><path d="M980 402 q16 -20 24 2 q6 16 24 -10 q12 -14 18 6"/><path d="M976 416 h84" stroke-width="1"/></g>
+    <g id="signature-04"><path d="M1130 400 q12 -24 26 -2 q10 16 24 -8 q10 -12 18 4"/><path d="M1126 416 h84" stroke-width="1"/></g>
+    <g id="signature-05"><path d="M680 470 q18 -18 24 4 q4 16 24 -12 q10 -10 16 6"/><path d="M676 486 h84" stroke-width="1"/></g>
+    <g id="signature-06"><path d="M830 472 q12 -22 26 0 q10 14 24 -10 q8 -10 16 4"/><path d="M826 486 h84" stroke-width="1"/></g>
+    <g id="signature-07"><path d="M980 470 q14 -24 24 -2 q8 18 26 -8 q8 -12 16 4"/><path d="M976 486 h84" stroke-width="1"/></g>
+    <g id="signature-08"><path d="M1130 472 q16 -20 24 2 q8 14 22 -10 q10 -12 18 6"/><path d="M1126 486 h84" stroke-width="1"/></g>
+    <g id="signature-09"><path d="M680 540 q12 -24 26 -2 q10 16 24 -8 q8 -12 18 4"/><path d="M676 556 h84" stroke-width="1"/></g>
+    <g id="signature-10"><path d="M830 542 q16 -20 24 2 q6 16 24 -10 q10 -12 16 6"/><path d="M826 556 h84" stroke-width="1"/></g>
+    <g id="signature-11"><path d="M980 540 q14 -22 26 0 q8 14 22 -6 q10 -14 20 2"/><path d="M976 556 h84" stroke-width="1"/></g>
+    <g id="signature-12"><path d="M1130 542 q10 -26 24 -4 q12 18 26 -8 q8 -12 18 4"/><path d="M1126 556 h84" stroke-width="1"/></g>
+    <g id="signature-13"><path d="M755 612 q16 -20 24 2 q6 16 24 -10 q12 -14 18 6"/><path d="M751 628 h84" stroke-width="1"/></g>
+    <g id="signature-14"><path d="M905 610 q12 -24 26 -2 q10 16 24 -8 q10 -12 18 4"/><path d="M901 626 h84" stroke-width="1"/></g>
+    <g id="signature-15"><path d="M1055 612 q18 -18 24 4 q4 16 24 -12 q10 -10 16 6"/><path d="M1051 628 h84" stroke-width="1"/></g>
+  </g>
+
+  <!-- ===== RUBANS DU SCEAU ===== -->
+  <g id="seal-ribbons">
+    <path d="M1210 760 L1160 850 L1196 838 L1216 872 L1240 792 Z" fill="#8a1f2d"/>
+    <path d="M1258 760 L1308 850 L1272 838 L1252 872 L1228 792 Z" fill="#a32838"/>
+    <path d="M1210 760 L1160 850 L1196 838 L1216 872 L1240 792 Z" fill="none" stroke="#5e1420" stroke-width="1.5"/>
+    <path d="M1258 760 L1308 850 L1272 838 L1252 872 L1228 792 Z" fill="none" stroke="#5e1420" stroke-width="1.5"/>
+  </g>
+
+  <!-- ===== SCEAU DE CIRE DORÉ (l'accent unique — l'officialisation) ===== -->
+  <g id="golden-seal">
+    <circle cx="1234" cy="722" r="62" fill="#FFC742"/>
+    <circle cx="1234" cy="722" r="62" fill="none" stroke="#c79a2a" stroke-width="3"/>
+    <circle cx="1234" cy="722" r="50" fill="none" stroke="#c79a2a" stroke-width="1.5"/>
+    <!-- quinze étoiles gravées sur le pourtour du sceau -->
+    <g id="seal-stars" fill="#8a6a12">
+      <circle cx="1234" cy="666" r="3"/><circle cx="1262" cy="672" r="3"/><circle cx="1282" cy="690" r="3"/>
+      <circle cx="1288" cy="716" r="3"/><circle cx="1280" cy="742" r="3"/><circle cx="1262" cy="762" r="3"/>
+      <circle cx="1236" cy="770" r="3"/><circle cx="1208" cy="764" r="3"/><circle cx="1188" cy="746" r="3"/>
+      <circle cx="1180" cy="720" r="3"/><circle cx="1186" cy="694" r="3"/><circle cx="1204" cy="676" r="3"/>
+      <circle cx="1220" cy="668" r="3"/><circle cx="1248" cy="668" r="3"/><circle cx="1272" cy="680" r="3"/>
+    </g>
+    <!-- emblème central du sceau : flamme de gaz stylisée -->
+    <g id="seal-emblem" fill="#8a6a12">
+      <path d="M1234 688 q16 20 8 34 q-4 8 -8 10 q-4 -2 -8 -10 q-8 -14 8 -34 Z"/>
+      <circle cx="1234" cy="736" r="4"/>
+    </g>
+    <!-- reflet gravé -->
+    <path d="M1196 696 q14 -18 38 -22" fill="none" stroke="#ffe9b0" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- ===== PLUME D'OIE (le geste de signer, posée) ===== -->
+  <g id="quill">
+    <path d="M1470 830 Q1560 660 1700 560 Q1600 640 1540 780 Q1510 830 1470 830 Z" fill="#e8e4d8"/>
+    <path d="M1470 830 Q1560 660 1700 560" fill="none" stroke="#b9b2a0" stroke-width="2"/>
+    <path d="M1485 815 Q1565 665 1685 575" fill="none" stroke="#8f887a" stroke-width="2.5"/>
+    <g id="quill-barbs" stroke="#b9b2a0" stroke-width="1.2" fill="none">
+      <path d="M1530 745 l34 6 M1552 712 l36 2 M1575 680 l36 -2 M1598 650 l34 -6 M1622 622 l30 -10"/>
+      <path d="M1512 780 l30 12 M1545 728 l-38 8 M1570 696 l-40 4 M1593 666 l-38 0 M1616 638 l-34 -4"/>
+    </g>
+    <path d="M1470 830 L1452 852 L1462 856 L1480 834 Z" fill="#4a4436"/>
+  </g>
+
+  <!-- ===== ENCRIER ===== -->
+  <g id="inkwell">
+    <path d="M1560 880 L1620 880 L1612 930 L1568 930 Z" fill="#0e1830"/>
+    <path d="M1560 880 L1620 880 L1612 930 L1568 930 Z" fill="none" stroke="#3a5488" stroke-width="2"/>
+    <ellipse cx="1590" cy="880" rx="30" ry="8" fill="#0a1226" stroke="#3a5488" stroke-width="2"/>
+    <path d="M1570 906 h40" stroke="#2a3f66" stroke-width="1.5"/>
+  </g>
+
+  <!-- ===== ÉTOILES / POUSSIÈRE SOLENNELLE ===== -->
+  <g id="solemn-motes" fill="#3a5488">
+    <circle cx="480" cy="300" r="2.5"/><circle cx="1500" cy="240" r="2"/><circle cx="1620" cy="420" r="2.5"/>
+    <circle cx="380" cy="760" r="2"/><circle cx="1720" cy="760" r="2"/><circle cx="280" cy="560" r="2.5"/>
+    <circle cx="1660" cy="180" r="2"/><circle cx="520" cy="140" r="2"/>
+  </g>
+</svg>

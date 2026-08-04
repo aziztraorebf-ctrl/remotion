@@ -63,6 +63,9 @@ import { ProtoGazoducZoomRobuste, PROTO_GAZODUC_ZOOM_FRAMES } from "./projects/_
 import { ProtoGazoducGlobeFusion, PROTO_GAZODUC_FUSION_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion";
 import { GazoducActe1Hook, GAZODUC_A1_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook";
 import { GazoducActe2AAGP, GAZODUC_A2_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2AAGP";
+import { GazoducActe2SignatureFreetown, GazoducActe2SignatureFlashback, GAZODUC_A2_SIGNATURE_FREETOWN_FRAMES, GAZODUC_A2_SIGNATURE_FLASHBACK_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Signature";
+import { GazoducActe2Financement, GAZODUC_A2_FINANCEMENT_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Financement";
+import { GazoducActe2Montage, GAZODUC_A2_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Montage";
 import { ProtoA2CameraProche, ProtoA2VoisinsVisibles, ProtoA2Mix, ProtoA2CameraContinueSurMix, ProtoA2CameraContinue13Jalons, PROTO_A2_COMPARE_FRAMES, PROTO_A2_13JALONS_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
@@ -479,6 +482,7 @@ import { TestPoseSolRound2 } from "./projects/_rnd/fable-libre/TestPoseSolRound2
 import { PoseSolPortee } from "./projects/_rnd/fable-libre/PoseSolPortee";
 import { EnchainementGestesExpressifsSol, EXPRESSIFS_SOL_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesExpressifsSol";
 import { SceneCreancier, CREANCIER_FRAMES } from "./projects/_rnd/fable-libre/SceneCreancier";
+import { SceneUnSeulPecheur, UN_SEUL_PECHEUR_FRAMES } from "./projects/_rnd/fable-libre/SceneUnSeulPecheur";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -1108,6 +1112,45 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte2-AAGP"
           component={GazoducActe2AAGP}
           durationInFrames={GAZODUC_A2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 2 — Insert SVG "signature", joué en 2 temps distincts du montage (cf en-tête
+            GazoducActe2Signature.tsx) : Freetown (décor+bannières grises) puis Flashback 2016
+            (bannières colorées + signatures synchronisées + sceau). */}
+        <Composition
+          id="D3-Gazoduc-Acte2-Signature-Freetown"
+          component={GazoducActe2SignatureFreetown}
+          durationInFrames={GAZODUC_A2_SIGNATURE_FREETOWN_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="D3-Gazoduc-Acte2-Signature-Flashback"
+          component={GazoducActe2SignatureFlashback}
+          durationInFrames={GAZODUC_A2_SIGNATURE_FLASHBACK_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 2 — Insert SVG "financement" (chéquier absent + tuyau virtuel + Mauritanie),
+            joué après le segment carte. Base statique Gemini 3.1 Pro (choix Aziz 2026-08-04). */}
+        <Composition
+          id="D3-Gazoduc-Acte2-Financement"
+          component={GazoducActe2Financement}
+          durationInFrames={GAZODUC_A2_FINANCEMENT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 2 — MONTAGE FINAL des 4 segments (Freetown → Carte → Flashback 2016 →
+            Financement), audio narration-p2.mp3 synchronisé par segment (startFrom réel). */}
+        <Composition
+          id="D3-Gazoduc-Acte2-Montage"
+          component={GazoducActe2Montage}
+          durationInFrames={GAZODUC_A2_MONTAGE_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -2792,6 +2835,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-EnchainementGestesValides" component={EnchainementGestesValides} durationInFrames={ENCHAINEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-EnchainementGestesExpressifs" component={EnchainementGestesExpressifs} durationInFrames={EXPRESSIFS_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-SceneCreancier" component={SceneCreancier} durationInFrames={CREANCIER_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-SceneUnSeulPecheur" component={SceneUnSeulPecheur} durationInFrames={UN_SEUL_PECHEUR_FRAMES} fps={30} width={1920} height={1080} />
         {/* PROTOTYPE JETABLE (2026-08-03) — comparatif pose "au sol", a retirer apres decision d'Aziz */}
         <Composition id="RND-TestPoseSolOptions" component={TestPoseSolOptions} durationInFrames={30} fps={30} width={1920} height={1080} />
         <Composition id="RND-TestPoseSolRound2" component={TestPoseSolRound2} durationInFrames={30} fps={30} width={1920} height={1080} />

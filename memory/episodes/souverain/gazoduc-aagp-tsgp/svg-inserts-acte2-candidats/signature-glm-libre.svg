@@ -1,0 +1,272 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" text-rendering="geometricPrecision">
+  <defs>
+    <radialGradient id="vignette" cx="50%" cy="54%" r="70%">
+      <stop offset="55%" stop-color="#182746" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0a1326" stop-opacity="0.92"/>
+    </radialGradient>
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#3a5488" stroke-width="0.5" opacity="0.16"/>
+    </pattern>
+    <pattern id="floor-hatch" width="14" height="14" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="14" y2="0" stroke="#2a3f66" stroke-width="0.6" opacity="0.5"/>
+    </pattern>
+    <!-- une ligne de rayon (vers le haut depuis le centre du sceau) -->
+    <line id="ray" x1="960" y1="528" x2="960" y2="-60" stroke="#FFC742" stroke-width="1" opacity="0.09"/>
+    <!-- un dash du bord du sceau -->
+    <line id="dash" x1="960" y1="598" x2="960" y2="593" stroke="#182746" stroke-width="1.3" stroke-linecap="round"/>
+    <!-- une signature stylisée -->
+    <g id="sig-mark">
+      <path d="M-7 3 Q-3 -7 0 1 Q3 -7 7 3" fill="none" stroke="#FFC742" stroke-width="1.7" stroke-linecap="round"/>
+    </g>
+  </defs>
+
+  <!-- ============ ARRIÈRE-PLAN ============ -->
+  <g id="background">
+    <rect x="0" y="0" width="1920" height="1080" fill="#182746"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#hatch)"/>
+  </g>
+
+  <!-- ============ HALO RADIAL (lumière solennelle derrière le sceau) ============ -->
+  <g id="sunburst">
+    <use href="#ray" transform="rotate(-88 960 660)"/>
+    <use href="#ray" transform="rotate(-80 960 660)"/>
+    <use href="#ray" transform="rotate(-72 960 660)"/>
+    <use href="#ray" transform="rotate(-64 960 660)"/>
+    <use href="#ray" transform="rotate(-56 960 660)"/>
+    <use href="#ray" transform="rotate(-48 960 660)"/>
+    <use href="#ray" transform="rotate(-40 960 660)"/>
+    <use href="#ray" transform="rotate(-32 960 660)"/>
+    <use href="#ray" transform="rotate(-24 960 660)"/>
+    <use href="#ray" transform="rotate(-16 960 660)"/>
+    <use href="#ray" transform="rotate(-8 960 660)"/>
+    <use href="#ray" transform="rotate(0 960 660)"/>
+    <use href="#ray" transform="rotate(8 960 660)"/>
+    <use href="#ray" transform="rotate(16 960 660)"/>
+    <use href="#ray" transform="rotate(24 960 660)"/>
+    <use href="#ray" transform="rotate(32 960 660)"/>
+    <use href="#ray" transform="rotate(40 960 660)"/>
+    <use href="#ray" transform="rotate(48 960 660)"/>
+    <use href="#ray" transform="rotate(56 960 660)"/>
+    <use href="#ray" transform="rotate(64 960 660)"/>
+    <use href="#ray" transform="rotate(72 960 660)"/>
+    <use href="#ray" transform="rotate(80 960 660)"/>
+    <use href="#ray" transform="rotate(88 960 660)"/>
+  </g>
+
+  <!-- ============ ARCHITECTURE : arc triomphal, colonnes, sol ============ -->
+  <g id="architecture">
+    <!-- arc extérieur -->
+    <path d="M 260 760 A 700 700 0 0 1 1660 760" fill="none" stroke="#3a5488" stroke-width="2.5"/>
+    <path d="M 260 760 A 700 700 0 0 1 1660 760" fill="none" stroke="#3a5488" stroke-width="1" opacity="0.45" transform="translate(0,16)"/>
+    <!-- arc intérieur -->
+    <path d="M 360 760 A 600 600 0 0 1 1560 760" fill="none" stroke="#2a3f66" stroke-width="1.4"/>
+    <path d="M 360 760 A 600 600 0 0 1 1560 760" fill="none" stroke="#2a3f66" stroke-width="0.8" opacity="0.5" transform="translate(0,14)"/>
+    <!-- impostes -->
+    <line x1="260" y1="760" x2="360" y2="760" stroke="#3a5488" stroke-width="2"/>
+    <line x1="1560" y1="760" x2="1660" y2="760" stroke="#3a5488" stroke-width="2"/>
+
+    <!-- colonne gauche -->
+    <g id="column-left">
+      <rect x="180" y="240" width="100" height="640" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+      <line x1="202" y1="240" x2="202" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="222" y1="240" x2="222" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="242" y1="240" x2="242" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="262" y1="240" x2="262" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <rect x="165" y="212" width="130" height="32" fill="#2a3f66" stroke="#3a5488" stroke-width="1"/>
+      <rect x="158" y="196" width="144" height="18" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+      <rect x="165" y="880" width="130" height="30" fill="#2a3f66" stroke="#3a5488" stroke-width="1"/>
+      <rect x="152" y="910" width="156" height="22" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+    </g>
+    <!-- colonne droite (miroir) -->
+    <g id="column-right">
+      <rect x="1640" y="240" width="100" height="640" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+      <line x1="1662" y1="240" x2="1662" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="1682" y1="240" x2="1682" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="1702" y1="240" x2="1702" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <line x1="1722" y1="240" x2="1722" y2="880" stroke="#2a3f66" stroke-width="0.7"/>
+      <rect x="1625" y="212" width="130" height="32" fill="#2a3f66" stroke="#3a5488" stroke-width="1"/>
+      <rect x="1618" y="196" width="144" height="18" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+      <rect x="1625" y="880" width="130" height="30" fill="#2a3f66" stroke="#3a5488" stroke-width="1"/>
+      <rect x="1612" y="910" width="156" height="22" fill="#1f3358" stroke="#3a5488" stroke-width="1"/>
+    </g>
+
+    <!-- sol -->
+    <g id="floor">
+      <rect x="0" y="932" width="1920" height="148" fill="#0f1c38"/>
+      <rect x="0" y="932" width="1920" height="148" fill="url(#floor-hatch)"/>
+      <line x1="0" y1="932" x2="1920" y2="932" stroke="#3a5488" stroke-width="1.5"/>
+      <line x1="0" y1="948" x2="1920" y2="948" stroke="#2a3f66" stroke-width="0.7" opacity="0.55"/>
+    </g>
+  </g>
+
+  <!-- ============ 15 BANNIÈRES suspendues à l'arc = 15 chefs d'État ============ -->
+  <g id="banners">
+    <g><line x1="1636" y1="579" x2="1636" y2="617" stroke="#3a5488" stroke-width="1.2"/><circle cx="1636" cy="621" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1591" y1="456" x2="1591" y2="494" stroke="#3a5488" stroke-width="1.2"/><circle cx="1591" cy="498" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1523" y1="345" x2="1523" y2="383" stroke="#3a5488" stroke-width="1.2"/><circle cx="1523" cy="387" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1437" y1="248" x2="1437" y2="286" stroke="#3a5488" stroke-width="1.2"/><circle cx="1437" cy="290" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1332" y1="167" x2="1332" y2="205" stroke="#3a5488" stroke-width="1.2"/><circle cx="1332" cy="209" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1215" y1="108" x2="1215" y2="146" stroke="#3a5488" stroke-width="1.2"/><circle cx="1215" cy="150" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="1090" y1="72" x2="1090" y2="110" stroke="#3a5488" stroke-width="1.2"/><circle cx="1090" cy="114" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="960" y1="60" x2="960" y2="100" stroke="#3a5488" stroke-width="1.5"/><circle cx="960" cy="105" r="4.6" fill="#FFC742"/></g>
+    <g><line x1="830" y1="72" x2="830" y2="110" stroke="#3a5488" stroke-width="1.2"/><circle cx="830" cy="114" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="705" y1="108" x2="705" y2="146" stroke="#3a5488" stroke-width="1.2"/><circle cx="705" cy="150" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="588" y1="167" x2="588" y2="205" stroke="#3a5488" stroke-width="1.2"/><circle cx="588" cy="209" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="483" y1="248" x2="483" y2="286" stroke="#3a5488" stroke-width="1.2"/><circle cx="483" cy="290" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="397" y1="345" x2="397" y2="383" stroke="#3a5488" stroke-width="1.2"/><circle cx="397" cy="387" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="329" y1="456" x2="329" y2="494" stroke="#3a5488" stroke-width="1.2"/><circle cx="329" cy="498" r="3.6" fill="#FFC742"/></g>
+    <g><line x1="284" y1="579" x2="284" y2="617" stroke="#3a5488" stroke-width="1.2"/><circle cx="284" cy="621" r="3.6" fill="#FFC742"/></g>
+  </g>
+
+  <!-- ============ TABLE ============ -->
+  <g id="table">
+    <!-- ombre plate sous le document -->
+    <ellipse cx="960" cy="848" rx="600" ry="8" fill="#0a1326" opacity="0.55"/>
+    <rect x="200" y="850" width="1520" height="14" fill="#2a3f66"/>
+    <rect x="200" y="864" width="1520" height="68" fill="#13203c"/>
+    <line x1="200" y1="864" x2="1720" y2="864" stroke="#3a5488" stroke-width="0.8"/>
+    <line x1="200" y1="880" x2="1720" y2="880" stroke="#2a3f66" stroke-width="0.5" opacity="0.5"/>
+    <line x1="200" y1="900" x2="1720" y2="900" stroke="#2a3f66" stroke-width="0.5" opacity="0.4"/>
+  </g>
+
+  <!-- ============ DOCUMENT (le traité sur parchemin) ============ -->
+  <g id="document">
+    <!-- extrémité gauche (rouleau) -->
+    <rect x="356" y="572" width="30" height="276" rx="15" fill="#1a2a4d" stroke="#3a5488" stroke-width="1"/>
+    <circle cx="371" cy="572" r="15" fill="#FFC742" opacity="0.85"/>
+    <circle cx="371" cy="848" r="15" fill="#FFC742" opacity="0.85"/>
+    <circle cx="371" cy="572" r="6" fill="#182746"/>
+    <circle cx="371" cy="848" r="6" fill="#182746"/>
+    <!-- extrémité droite (rouleau) -->
+    <rect x="1534" y="572" width="30" height="276" rx="15" fill="#1a2a4d" stroke="#3a5488" stroke-width="1"/>
+    <circle cx="1549" cy="572" r="15" fill="#FFC742" opacity="0.85"/>
+    <circle cx="1549" cy="848" r="15" fill="#FFC742" opacity="0.85"/>
+    <circle cx="1549" cy="572" r="6" fill="#182746"/>
+    <circle cx="1549" cy="848" r="6" fill="#182746"/>
+    <!-- parchemin -->
+    <rect x="384" y="585" width="1152" height="250" fill="#ECE4CC"/>
+    <!-- liserés dorés haut/bas -->
+    <rect x="384" y="585" width="1152" height="4" fill="#FFC742" opacity="0.75"/>
+    <rect x="384" y="831" width="1152" height="4" fill="#FFC742" opacity="0.75"/>
+    <!-- doubles filets d'encadrement -->
+    <rect x="404" y="605" width="1112" height="210" fill="none" stroke="#2a3f66" stroke-width="1"/>
+    <rect x="411" y="612" width="1098" height="196" fill="none" stroke="#2a3f66" stroke-width="0.5" opacity="0.6"/>
+    <!-- ornementations de coin -->
+    <g stroke="#2a3f66" stroke-width="1" fill="none">
+      <path d="M 404 625 L 404 605 L 424 605"/>
+      <path d="M 1516 605 L 1496 605"/>
+      <path d="M 404 795 L 404 815 L 424 815"/>
+      <path d="M 1516 815 L 1496 815"/>
+    </g>
+    <!-- lignes de texte -->
+    <g id="text-lines" stroke="#2a3f66" stroke-width="0.9" opacity="0.55">
+      <line x1="430" y1="628" x2="1490" y2="628"/>
+      <line x1="430" y1="637" x2="1490" y2="637"/>
+      <line x1="430" y1="646" x2="1490" y2="646"/>
+      <line x1="430" y1="655" x2="1490" y2="655"/>
+      <line x1="430" y1="664" x2="1490" y2="664"/>
+      <line x1="430" y1="673" x2="1490" y2="673"/>
+      <line x1="430" y1="682" x2="1490" y2="682"/>
+      <line x1="430" y1="691" x2="1490" y2="691"/>
+      <line x1="430" y1="700" x2="1490" y2="700"/>
+      <line x1="430" y1="709" x2="1490" y2="709"/>
+      <line x1="430" y1="718" x2="1490" y2="718"/>
+      <line x1="430" y1="727" x2="1490" y2="727"/>
+      <line x1="430" y1="736" x2="1490" y2="736"/>
+      <line x1="430" y1="745" x2="1490" y2="745"/>
+    </g>
+    <!-- filet séparateur doré avant les signatures -->
+    <line x1="430" y1="760" x2="1490" y2="760" stroke="#FFC742" stroke-width="1.1" opacity="0.75"/>
+    <line x1="430" y1="763" x2="1490" y2="763" stroke="#FFC742" stroke-width="0.5" opacity="0.5"/>
+    <!-- 15 signatures alignées -->
+    <g id="signatures">
+      <use href="#sig-mark" x="430"  y="792"/>
+      <use href="#sig-mark" x="506"  y="792"/>
+      <use href="#sig-mark" x="581"  y="792"/>
+      <use href="#sig-mark" x="657"  y="792"/>
+      <use href="#sig-mark" x="733"  y="792"/>
+      <use href="#sig-mark" x="809"  y="792"/>
+      <use href="#sig-mark" x="884"  y="792"/>
+      <use href="#sig-mark" x="960"  y="792"/>
+      <use href="#sig-mark" x="1036" y="792"/>
+      <use href="#sig-mark" x="1111" y="792"/>
+      <use href="#sig-mark" x="1187" y="792"/>
+      <use href="#sig-mark" x="1263" y="792"/>
+      <use href="#sig-mark" x="1339" y="792"/>
+      <use href="#sig-mark" x="1414" y="792"/>
+      <use href="#sig-mark" x="1490" y="792"/>
+    </g>
+  </g>
+
+  <!-- ============ ANNEAUX D'IMPACT (le sceau vient de frapper) ============ -->
+  <g id="impact-ring">
+    <circle cx="960" cy="660" r="95"  fill="none" stroke="#FFC742" stroke-width="2"   opacity="0.55"/>
+    <circle cx="960" cy="660" r="108" fill="none" stroke="#FFC742" stroke-width="1"   opacity="0.30"/>
+    <circle cx="960" cy="660" r="122" fill="none" stroke="#FFC742" stroke-width="0.6" opacity="0.16"/>
+  </g>
+
+  <!-- ============ SCEAU (l'élément central : le tampon officiel) ============ -->
+  <g id="seal">
+    <!-- manche vertical -->
+    <g id="seal-handle">
+      <rect x="953" y="278" width="14" height="312" fill="#2a3f66" stroke="#FFC742" stroke-width="1"/>
+      <line x1="950" y1="360" x2="970" y2="360" stroke="#FFC742" stroke-width="1"/>
+      <line x1="950" y1="455" x2="970" y2="455" stroke="#FFC742" stroke-width="1"/>
+      <line x1="950" y1="548" x2="970" y2="548" stroke="#FFC742" stroke-width="1"/>
+      <!-- pommeau -->
+      <circle cx="960" cy="262" r="24" fill="#2a3f66" stroke="#FFC742" stroke-width="1.6"/>
+      <circle cx="960" cy="262" r="14" fill="#1a2a4d"/>
+      <circle cx="960" cy="262" r="7" fill="#FFC742"/>
+    </g>
+
+    <!-- disque du sceau -->
+    <g id="seal-disc">
+      <circle cx="960" cy="660" r="78" fill="#FFC742"/>
+      <circle cx="960" cy="660" r="78" fill="none" stroke="#182746" stroke-width="1.2"/>
+      <circle cx="960" cy="660" r="68" fill="none" stroke="#182746" stroke-width="1.4"/>
+      <circle cx="960" cy="660" r="60" fill="none" stroke="#182746" stroke-width="0.7" opacity="0.7"/>
+      <!-- 24 dashes en bordure -->
+      <g id="seal-dashes">
+        <use href="#dash" transform="rotate(0 960 660)"/>
+        <use href="#dash" transform="rotate(15 960 660)"/>
+        <use href="#dash" transform="rotate(30 960 660)"/>
+        <use href="#dash" transform="rotate(45 960 660)"/>
+        <use href="#dash" transform="rotate(60 960 660)"/>
+        <use href="#dash" transform="rotate(75 960 660)"/>
+        <use href="#dash" transform="rotate(90 960 660)"/>
+        <use href="#dash" transform="rotate(105 960 660)"/>
+        <use href="#dash" transform="rotate(120 960 660)"/>
+        <use href="#dash" transform="rotate(135 960 660)"/>
+        <use href="#dash" transform="rotate(150 960 660)"/>
+        <use href="#dash" transform="rotate(165 960 660)"/>
+        <use href="#dash" transform="rotate(180 960 660)"/>
+        <use href="#dash" transform="rotate(195 960 660)"/>
+        <use href="#dash" transform="rotate(210 960 660)"/>
+        <use href="#dash" transform="rotate(225 960 660)"/>
+        <use href="#dash" transform="rotate(240 960 660)"/>
+        <use href="#dash" transform="rotate(255 960 660)"/>
+        <use href="#dash" transform="rotate(270 960 660)"/>
+        <use href="#dash" transform="rotate(285 960 660)"/>
+        <use href="#dash" transform="rotate(300 960 660)"/>
+        <use href="#dash" transform="rotate(315 960 660)"/>
+        <use href="#dash" transform="rotate(330 960 660)"/>
+        <use href="#dash" transform="rotate(345 960 660)"/>
+      </g>
+      <!-- motif central : un tracé/gazoduc abstrait (3 nœuds reliés) -->
+      <line x1="922" y1="660" x2="998" y2="660" stroke="#182746" stroke-width="2.6" stroke-linecap="round"/>
+      <circle cx="922" cy="660" r="5" fill="#182746"/>
+      <circle cx="960" cy="660" r="5" fill="#182746"/>
+      <circle cx="998" cy="660" r="5" fill="#182746"/>
+      <path d="M 932 642 Q 960 626 988 642" fill="none" stroke="#182746" stroke-width="1.1" opacity="0.75"/>
+      <path d="M 932 678 Q 960 694 988 678" fill="none" stroke="#182746" stroke-width="1.1" opacity="0.75"/>
+      <!-- points cardinaux -->
+      <circle cx="960" cy="618" r="2" fill="#182746"/>
+      <circle cx="960" cy="702" r="2" fill="#182746"/>
+      <circle cx="918" cy="660" r="2" fill="#182746" opacity="0"/>
+      <circle cx="1002" cy="660" r="2" fill="#182746" opacity="0"/>
+    </g>
+  </g>
+
+  <!-- vignette finale par-dessus -->
+  <rect x="0" y="0" width="1920" height="1080" fill="url(#vignette)" pointer-events="none"/>
+</svg>

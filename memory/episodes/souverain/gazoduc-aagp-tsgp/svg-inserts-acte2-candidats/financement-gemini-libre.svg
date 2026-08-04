@@ -1,0 +1,179 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <!-- Les définitions sont vides car nous n'utilisons aucun filtre ni dégradé selon les contraintes -->
+  </defs>
+
+  <!-- FOND ET GRILLE TECHNIQUE (L'aspect "Blueprint/Projet mûr") -->
+  <g id="background_and_grid">
+    <rect width="1920" height="1080" fill="#182746" />
+    
+    <!-- Grille polaire type radar/carte géopolitique -->
+    <g stroke="#1f2e4d" stroke-width="1" fill="none">
+      <circle cx="960" cy="540" r="250" />
+      <circle cx="960" cy="540" r="500" />
+      <circle cx="960" cy="540" r="750" />
+      <circle cx="960" cy="540" r="1000" />
+      <!-- Lignes radiales -->
+      <path d="M 960 0 L 960 1080" />
+      <path d="M 0 540 L 1920 540" />
+      <path d="M 200 0 L 1720 1080" />
+      <path d="M 200 1080 L 1720 0" />
+    </g>
+
+    <!-- Grille isométrique/orthogonale fine en arrière-plan -->
+    <g stroke="#223355" stroke-width="0.5" fill="none">
+      <path d="M 0 100 L 1920 100" />
+      <path d="M 0 200 L 1920 200" />
+      <path d="M 0 300 L 1920 300" />
+      <path d="M 0 800 L 1920 800" />
+      <path d="M 0 900 L 1920 900" />
+      <path d="M 0 1000 L 1920 1000" />
+    </g>
+  </g>
+
+  <!-- LE DOSSIER DIPLOMATIQUE (La table des négociations, vide) -->
+  <g id="diplomatic_dossier">
+    <!-- Ombre portée du dossier -->
+    <polygon points="320,970 1520,970 1320,670 120,670" fill="#151e32" />
+    
+    <!-- Base du dossier -->
+    <polygon points="300,950 1500,950 1300,650 100,650" fill="#1a2744" stroke="#3a5488" stroke-width="3" />
+    
+    <!-- Marges intérieures -->
+    <polygon points="340,920 1440,920 1260,680 160,680" fill="none" stroke="#2a3f66" stroke-width="1.5" />
+    
+    <!-- Lignes de texte simulant la complexité diplomatique du projet -->
+    <g id="document_text_blocks" stroke="#3a5488" stroke-width="2" fill="none">
+      <path d="M 220,720 L 1150,720" stroke-dasharray="60 15 200 20 80 15 300 30" />
+      <path d="M 240,750 L 1170,750" stroke-dasharray="150 20 50 15 400 25 100 20" />
+      <path d="M 260,780 L 1190,780" stroke-dasharray="80 15 300 20 150 15 200 30" />
+      <path d="M 280,810 L 800,810" stroke-dasharray="250 20 100 15 150 40" />
+      <path d="M 300,840 L 750,840" stroke-dasharray="100 15 200 20" />
+    </g>
+
+    <!-- Zone de signature et cachet (La validation manquante) -->
+    <g id="empty_signature_block">
+      <!-- Ligne de signature formelle -->
+      <path d="M 900,880 L 1350,880" stroke="#4c6a99" stroke-width="2" />
+      <path d="M 930,900 L 1380,900" stroke="#2a3f66" stroke-width="1" />
+      
+      <!-- Emplacement du sceau (vide et en attente) -->
+      <ellipse cx="1250" cy="800" rx="70" ry="30" stroke="#3a5488" stroke-width="2" stroke-dasharray="8 4" fill="none" />
+      <ellipse cx="1250" cy="800" rx="55" ry="22" stroke="#2a3f66" stroke-width="1" fill="none" />
+      <path d="M 1240,795 L 1260,805 M 1260,795 L 1240,805" stroke="#3a5488" stroke-width="1" />
+    </g>
+  </g>
+
+  <!-- LE PIPELINE SOLIDE (L'ambition, le projet mûr sur le papier) -->
+  <g id="pipeline_solid">
+    <!-- Cylindre principal (partie construite/solide) -->
+    <path d="M -100,150 L 750,150" stroke="#4c6a99" stroke-width="4" fill="none" />
+    <path d="M -100,170 L 750,170" stroke="#3a5488" stroke-width="2" fill="none" />
+    <path d="M -100,450 L 750,450" stroke="#4c6a99" stroke-width="4" fill="none" />
+    <path d="M -100,430 L 750,430" stroke="#3a5488" stroke-width="2" fill="none" />
+    
+    <!-- Lignes de structure internes (volume) -->
+    <path d="M -100,220 L 750,220" stroke="#2a3f66" stroke-width="1" fill="none" />
+    <path d="M -100,380 L 750,380" stroke="#2a3f66" stroke-width="1" fill="none" />
+    <path d="M -100,300 L 750,300" stroke="#2a3f66" stroke-width="1" stroke-dasharray="20 10" fill="none" />
+
+    <!-- Brides et renforts métalliques (Ancrage dans la réalité physique) -->
+    <ellipse cx="150" cy="300" rx="35" ry="150" stroke="#7393c8" stroke-width="2" fill="#182746" />
+    <ellipse cx="150" cy="300" rx="20" ry="130" stroke="#4c6a99" stroke-width="1" fill="none" />
+    
+    <ellipse cx="450" cy="300" rx="35" ry="150" stroke="#7393c8" stroke-width="2" fill="#182746" />
+    <ellipse cx="450" cy="300" rx="20" ry="130" stroke="#4c6a99" stroke-width="1" fill="none" />
+
+    <!-- La grande bride de rupture (Où la réalité s'arrête) -->
+    <ellipse cx="750" cy="300" rx="40" ry="170" stroke="#7393c8" stroke-width="4" fill="#1a2744" />
+    <ellipse cx="750" cy="300" rx="25" ry="145" stroke="#4c6a99" stroke-width="2" fill="none" />
+    <!-- Rivets de la bride -->
+    <ellipse cx="750" cy="300" rx="33" ry="158" stroke="#7393c8" stroke-width="3" stroke-dasharray="2 18" fill="none" />
+  </g>
+
+  <!-- LE PIPELINE VIRTUEL (La réalité du terrain : des pointillés en attente) -->
+  <g id="pipeline_virtual">
+    <!-- Dégradation Segment 1 : Pointillés serrés -->
+    <g stroke="#4c6a99" stroke-width="3" fill="none" stroke-dasharray="15 15">
+      <path d="M 750,150 L 1100,150" />
+      <path d="M 750,450 L 1100,450" />
+    </g>
+    <!-- Dégradation Segment 2 : Pointillés espacés et plus fins -->
+    <g stroke="#3a5488" stroke-width="2" fill="none" stroke-dasharray="8 25">
+      <path d="M 1100,150 L 1500,150" />
+      <path d="M 1100,450 L 1500,450" />
+    </g>
+    <!-- Dégradation Segment 3 : Fils de fer fantômes disparaissant -->
+    <g stroke="#2a3f66" stroke-width="1" fill="none" stroke-dasharray="3 40">
+      <path d="M 1500,150 L 1920,150" />
+      <path d="M 1500,450 L 1920,450" />
+    </g>
+
+    <!-- Anneaux structurels virtuels (Hologrammes/Plans) -->
+    <ellipse cx="1000" cy="300" rx="35" ry="150" stroke="#3a5488" stroke-width="2" stroke-dasharray="10 15" fill="none" />
+    <ellipse cx="1300" cy="300" rx="35" ry="150" stroke="#2a3f66" stroke-width="1.5" stroke-dasharray="5 20" fill="none" />
+    <ellipse cx="1600" cy="300" rx="35" ry="150" stroke="#1f2e4d" stroke-width="1" stroke-dasharray="2 30" fill="none" />
+    
+    <!-- Ligne centrale virtuelle -->
+    <path d="M 750,300 L 1920,300" stroke="#3a5488" stroke-width="1" stroke-dasharray="10 30" fill="none" />
+  </g>
+
+  <!-- LE STYLO PLUME (L'outil du pouvoir, suspendu) -->
+  <g id="fountain_pen">
+    <!-- Ombre projetée du stylo sur le document -->
+    <polygon points="1230,810 1620,380 1650,390 1260,820" fill="#151e32" />
+
+    <!-- Corps du stylo : Face gauche (Sombre) -->
+    <polygon points="1225,665 1580,220 1610,230 1250,685" fill="#1f2e4d" stroke="#1f2e4d" stroke-width="1" />
+    <!-- Corps du stylo : Face droite (Éclairée) -->
+    <polygon points="1250,685 1610,230 1630,260 1270,705" fill="#2a3f66" stroke="#2a3f66" stroke-width="1" />
+    
+    <!-- Lignes de flûtage (Détail premium) -->
+    <path d="M 1235,675 L 1590,230 M 1245,685 L 1600,240 M 1260,695 L 1620,250" stroke="#3a5488" stroke-width="1.5" fill="none" />
+    
+    <!-- Bagues métalliques du stylo (Bleu argenté) -->
+    <polygon points="1225,665 1270,705 1285,685 1240,645" fill="#4c6a99" />
+    <polygon points="1232,655 1277,695 1282,688 1237,648" fill="#7393c8" />
+
+    <!-- La Plume (Nib) -->
+    <!-- Base de la plume -->
+    <polygon points="1240,645 1285,685 1260,730 1215,690" fill="#4c6a99" />
+    <!-- Forme courbée de la plume vers la pointe (1190, 750) -->
+    <path d="M 1215,690 Q 1195,730 1190,750 Q 1235,745 1260,730 Z" fill="#7393c8" />
+    <path d="M 1215,690 Q 1195,730 1190,750 L 1237,710 Z" fill="#4c6a99" />
+    
+    <!-- Fente de la plume et trou de respiration -->
+    <path d="M 1190,750 L 1228,702" stroke="#182746" stroke-width="2" />
+    <circle cx="1230" cy="700" r="4" fill="#182746" />
+  </g>
+
+  <!-- L'INVESTISSEMENT SUSPENDU (L'unique touche d'Or, le moment de vérité figé) -->
+  <g id="suspended_golden_investment">
+    <!-- Cible sur le papier (Là où l'argent DOIT tomber, mais ne tombe pas) -->
+    <ellipse cx="1190" cy="840" rx="25" ry="10" stroke="#FFC742" stroke-width="2" fill="none" />
+    <ellipse cx="1190" cy="840" rx="40" ry="16" stroke="#FFC742" stroke-width="1" stroke-dasharray="4 6" fill="none" />
+    <ellipse cx="1190" cy="840" rx="60" ry="24" stroke="#8a7336" stroke-width="0.5" stroke-dasharray="2 10" fill="none" />
+    
+    <!-- Ligne de tension / suspense reliant la goutte à la cible -->
+    <path d="M 1190,775 L 1190,840" stroke="#FFC742" stroke-width="1.5" stroke-dasharray="4 6" fill="none" />
+
+    <!-- La Goutte d'Encre Dorée (Le chéquier suspendu) -->
+    <path d="M 1190,755 C 1182,768 1182,775 1190,775 C 1198,775 1198,768 1190,755 Z" fill="#FFC742" />
+    <!-- Reflet premium sur la goutte -->
+    <path d="M 1187,768 A 2.5 2.5 0 0 0 1190,772" stroke="#FFFFFF" stroke-width="1" fill="none" />
+  </g>
+
+  <!-- LIGNES DE CONNEXION CONCEPTUELLES (Relient le manque d'argent à l'état virtuel du tuyau) -->
+  <g id="connecting_blueprint_lines" stroke="#4c6a99" stroke-width="1" fill="none">
+    <!-- Ligne technique reliant le sceau vide à la fracture du pipeline -->
+    <path d="M 750,450 L 750,840 L 1150,840" stroke-dasharray="5 5" />
+    <circle cx="750" cy="450" r="4" fill="#182746" stroke="#4c6a99" stroke-width="2" />
+    <circle cx="750" cy="840" r="3" />
+    
+    <!-- Cotes de mesure techniques soulignant le vide -->
+    <path d="M 1250,840 L 1250,450" stroke-dasharray="2 4" />
+    <path d="M 1240,450 L 1260,450" stroke-width="2" />
+    <path d="M 1240,840 L 1260,840" stroke-width="2" />
+  </g>
+
+</svg>

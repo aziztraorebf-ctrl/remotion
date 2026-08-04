@@ -1,0 +1,416 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="gridFine" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#2a3f66" stroke-width="0.5" opacity="0.40"/>
+    </pattern>
+    <pattern id="gridMajor" width="200" height="200" patternUnits="userSpaceOnUse">
+      <path d="M200 0H0V200" fill="none" stroke="#3a5488" stroke-width="0.9" opacity="0.55"/>
+    </pattern>
+    <pattern id="hatchGold" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="5" stroke="#FFC742" stroke-width="0.4" opacity="0.20"/>
+    </pattern>
+    <pattern id="hatchInk" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="4" stroke="#9fb2d6" stroke-width="0.4" opacity="0.28"/>
+    </pattern>
+    <pattern id="atmosHatch" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(0)">
+      <line x1="0" y1="0" x2="3" y2="0" stroke="#2a3f66" stroke-width="0.3" opacity="0.25"/>
+    </pattern>
+    <radialGradient id="vignette" cx="50%" cy="50%" r="78%">
+      <stop offset="55%" stop-color="#182746" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#0a1228" stop-opacity="0.85"/>
+    </radialGradient>
+    <radialGradient id="parchmentGlow" cx="48%" cy="42%" r="62%">
+      <stop offset="0%" stop-color="#22355c"/>
+      <stop offset="100%" stop-color="#1a2a4d"/>
+    </radialGradient>
+    <radialGradient id="sealEmpty" cx="50%" cy="50%" r="55%">
+      <stop offset="0%" stop-color="#0c1830"/>
+      <stop offset="100%" stop-color="#1a2a4d"/>
+    </radialGradient>
+    <linearGradient id="goldLine" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFC742" stop-opacity="0.15"/>
+      <stop offset="35%" stop-color="#FFC742" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#FFC742" stop-opacity="1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ============================================================
+       BACKGROUND — deep navy, engraved atmosphere
+       ============================================================ -->
+  <g id="background">
+    <rect x="0" y="0" width="1920" height="1080" fill="#182746"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#atmosHatch)"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#vignette)"/>
+    <!-- faint corner engraving arcs, premium framing -->
+    <g stroke="#2a3f66" stroke-width="0.8" fill="none" opacity="0.5">
+      <path d="M40 120 A 80 80 0 0 1 120 40"/>
+      <path d="M1800 40 A 80 80 0 0 1 1880 120"/>
+      <path d="M1880 960 A 80 80 0 0 1 1800 1040"/>
+      <path d="M120 1040 A 80 80 0 0 1 40 960"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       PARCHMENT / BLUEPRINT SHEET — the project lives on paper
+       ============================================================ -->
+  <g id="parchment">
+    <!-- soft drop shadow slab -->
+    <rect x="222" y="158" width="1500" height="800" rx="6" fill="#0a1228" opacity="0.55"/>
+    <!-- main sheet -->
+    <rect x="210" y="140" width="1500" height="800" rx="6" fill="url(#parchmentGlow)"/>
+    <!-- double engraved edge -->
+    <rect x="210" y="140" width="1500" height="800" rx="6" fill="none" stroke="#3a5488" stroke-width="1.2" opacity="0.7"/>
+    <rect x="218" y="148" width="1484" height="784" rx="4" fill="none" stroke="#2a3f66" stroke-width="0.6" opacity="0.6"/>
+    <!-- top roll curl -->
+    <path d="M210 146 q 750 -22 1500 0 l 0 18 q -750 -14 -1500 0 Z" fill="#0f1c38" opacity="0.55"/>
+    <path d="M210 146 q 750 -22 1500 0" fill="none" stroke="#3a5488" stroke-width="0.8" opacity="0.5"/>
+    <!-- bottom roll curl -->
+    <path d="M210 934 q 750 22 1500 0 l 0 -18 q -750 14 -1500 0 Z" fill="#0f1c38" opacity="0.55"/>
+    <path d="M210 934 q 750 22 1500 0" fill="none" stroke="#3a5488" stroke-width="0.8" opacity="0.5"/>
+    <!-- corner ornaments -->
+    <g stroke="#3a5488" stroke-width="0.8" fill="none" opacity="0.55">
+      <path d="M240 170 h 28 M240 170 v 28"/>
+      <path d="M1680 170 h -28 M1680 170 v 28"/>
+      <path d="M240 910 h 28 M240 910 v -28"/>
+      <path d="M1680 910 h -28 M1680 910 v -28"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       GRID — technical blueprint grid overlay
+       ============================================================ -->
+  <g id="grid">
+    <rect x="210" y="140" width="1500" height="800" fill="url(#gridFine)"/>
+    <rect x="210" y="140" width="1500" height="800" fill="url(#gridMajor)"/>
+  </g>
+
+  <!-- ============================================================
+       COASTLINE — abstract NW-African silhouette sketched on the sheet
+       (echoes the previous map scene, now reduced to a drawing)
+       ============================================================ -->
+  <g id="coastline" stroke="#9fb2d6" fill="none">
+    <!-- Atlantic coast + landmass silhouette -->
+    <path d="M300 360
+             C 360 330 440 340 500 380
+             C 560 420 600 470 640 500
+             C 700 540 760 560 820 580
+             C 880 600 920 640 940 700
+             C 960 760 940 820 900 860
+             L 360 860
+             C 320 820 300 760 300 700
+             C 300 620 280 540 300 480
+             C 310 430 300 390 300 360 Z"
+          stroke-width="1.4" opacity="0.7"/>
+    <!-- shoreline hatching (engraved coast) -->
+    <g stroke-width="0.5" opacity="0.45">
+      <path d="M305 372 h 10 M308 388 h 12 M302 408 h 10 M306 428 h 14 M300 450 h 12
+               M304 472 h 12 M300 494 h 14 M302 516 h 12 M300 538 h 14
+               M302 560 h 12 M300 582 h 14 M300 604 h 12 M302 626 h 14
+               M300 648 h 12 M302 670 h 14 M300 692 h 12 M302 714 h 14
+               M300 736 h 12 M302 758 h 14 M300 780 h 12 M302 802 h 14
+               M300 824 h 12 M302 846 h 14"/>
+    </g>
+    <!-- internal country borders (dashed, tentative) -->
+    <g stroke-width="1" stroke-dasharray="6 5" opacity="0.5">
+      <path d="M540 420 C 600 480 640 560 660 660 C 670 720 660 780 640 840"/>
+      <path d="M760 540 C 780 600 800 660 820 740"/>
+      <path d="M640 500 C 700 520 760 530 820 540"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       BORDER MARKER — frontier post with empty flag
+       (the country that hasn't signed)
+       ============================================================ -->
+  <g id="border-marker">
+    <!-- pole -->
+    <line x1="780" y1="540" x2="780" y2="476" stroke="#9fb2d6" stroke-width="1.4" opacity="0.85"/>
+    <!-- finial -->
+    <circle cx="780" cy="474" r="3" fill="#FFC742" opacity="0.9"/>
+    <!-- empty / limp flag outline (no flag fabric filled) -->
+    <path d="M780 482 q 24 4 40 -2 q -16 10 -40 14 Z"
+          fill="none" stroke="#9fb2d6" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/>
+    <!-- base ground tick -->
+    <line x1="768" y1="540" x2="792" y2="540" stroke="#9fb2d6" stroke-width="1.2" opacity="0.7"/>
+    <!-- ground hatching -->
+    <g stroke="#9fb2d6" stroke-width="0.5" opacity="0.4">
+      <path d="M772 542 h 6 M780 542 h 6 M788 542 h 6"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       PIPELINE SOLID — the committed, "agreed" portion
+       ============================================================ -->
+  <g id="pipeline-solid">
+    <!-- underlay halo (faint) -->
+    <path d="M360 470
+             C 440 470 520 480 580 510
+             C 640 540 690 545 760 542"
+          fill="none" stroke="#FFC742" stroke-width="9" opacity="0.12" stroke-linecap="round"/>
+    <!-- main solid golden pipe -->
+    <path d="M360 470
+             C 440 470 520 480 580 510
+             C 640 540 690 545 760 542"
+          fill="none" stroke="url(#goldLine)" stroke-width="4" stroke-linecap="round"/>
+    <!-- pipe seam engraving (thin center line) -->
+    <path d="M360 470
+             C 440 470 520 480 580 510
+             C 640 540 690 545 760 542"
+          fill="none" stroke="#0a1228" stroke-width="0.7" opacity="0.6" stroke-dasharray="2 4"/>
+    <!-- origin node (offshore landfall) -->
+    <circle cx="360" cy="470" r="7" fill="#FFC742" opacity="0.9"/>
+    <circle cx="360" cy="470" r="11" fill="none" stroke="#FFC742" stroke-width="1" opacity="0.5"/>
+    <!-- segment joint ticks -->
+    <g stroke="#FFC742" stroke-width="1" opacity="0.7">
+      <line x1="448" y1="475" x2="452" y2="465"/>
+      <line x1="528" y1="487" x2="532" y2="477"/>
+      <line x1="612" y1="520" x2="616" y2="510"/>
+      <line x1="690" y1="544" x2="694" y2="534"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       PIPELINE VIRTUAL — the uncommitted portion, ghost / dashed / dissolving
+       ============================================================ -->
+  <g id="pipeline-virtual">
+    <!-- ghost underlay -->
+    <path d="M760 542
+             C 880 545 1000 580 1110 640
+             C 1200 690 1280 740 1360 780"
+          fill="none" stroke="#FFC742" stroke-width="6" opacity="0.06" stroke-linecap="round"/>
+    <!-- dashed ghost line -->
+    <path d="M760 542
+             C 880 545 1000 580 1110 640
+             C 1200 690 1280 740 1360 780"
+          fill="none" stroke="#FFC742" stroke-width="2" stroke-linecap="round"
+          stroke-dasharray="10 8 4 10" opacity="0.55"/>
+    <!-- dotted echo trail, fading toward terminus -->
+    <path d="M760 542
+             C 880 545 1000 580 1110 640
+             C 1200 690 1280 740 1360 780"
+          fill="none" stroke="#9fb2d6" stroke-width="1" stroke-dasharray="1 14" opacity="0.5"/>
+    <!-- transition node at border (open ring — undecided) -->
+    <circle cx="760" cy="542" r="6" fill="none" stroke="#FFC742" stroke-width="1.5" opacity="0.8"/>
+  </g>
+
+  <!-- ============================================================
+       PIPELINE TERMINUS — the line dissolves into particles before reaching the seal
+       ============================================================ -->
+  <g id="pipeline-terminus">
+    <!-- dispersing dots -->
+    <g fill="#FFC742" opacity="0.7">
+      <circle cx="1370" cy="784" r="2.4"/>
+      <circle cx="1386" cy="792" r="2.0"/>
+      <circle cx="1402" cy="800" r="1.6"/>
+      <circle cx="1416" cy="808" r="1.3"/>
+      <circle cx="1428" cy="816" r="1.0"/>
+      <circle cx="1438" cy="822" r="0.8"/>
+    </g>
+    <g fill="#FFC742" opacity="0.35">
+      <circle cx="1374" cy="772" r="1.2"/>
+      <circle cx="1392" cy="778" r="1.0"/>
+      <circle cx="1410" cy="788" r="0.9"/>
+      <circle cx="1424" cy="798" r="0.7"/>
+      <circle cx="1368" cy="798" r="1.0"/>
+      <circle cx="1388" cy="808" r="0.8"/>
+      <circle cx="1406" cy="818" r="0.7"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       COIN STACK GHOST — "no one has opened the chequebook"
+       (coins exist only as outlines)
+       ============================================================ -->
+  <g id="coin-stack-ghost">
+    <!-- ghost underlay shadow -->
+    <ellipse cx="380" cy="868" rx="68" ry="10" fill="#0a1228" opacity="0.45"/>
+    <!-- 4 ghost coins, dashed outlines, no fill -->
+    <g fill="none" stroke="#FFC742" stroke-width="1.4" opacity="0.5">
+      <ellipse cx="380" cy="858" rx="58" ry="12" stroke-dasharray="5 4"/>
+      <ellipse cx="380" cy="838" rx="58" ry="12" stroke-dasharray="5 4"/>
+      <ellipse cx="380" cy="818" rx="58" ry="12" stroke-dasharray="5 4"/>
+      <!-- top coin crumbles / displaced -->
+      <ellipse cx="392" cy="794" rx="56" ry="11" stroke-dasharray="3 5" opacity="0.7" transform="rotate(-6 392 794)"/>
+    </g>
+    <!-- faint emblem on top coin (engraved, unfinished) -->
+    <g stroke="#FFC742" stroke-width="0.7" fill="none" opacity="0.4">
+      <circle cx="392" cy="794" r="6" transform="rotate(-6 392 794)"/>
+      <line x1="386" y1="794" x2="398" y2="794" transform="rotate(-6 392 794)"/>
+    </g>
+    <!-- dispersing flecks above the crumbling coin -->
+    <g fill="#FFC742" opacity="0.35">
+      <circle cx="430" cy="780" r="1.0"/>
+      <circle cx="440" cy="772" r="0.8"/>
+      <circle cx="448" cy="766" r="0.6"/>
+      <circle cx="424" cy="772" r="0.8"/>
+    </g>
+    <!-- base ground line -->
+    <line x1="312" y1="872" x2="448" y2="872" stroke="#2a3f66" stroke-width="0.8" opacity="0.6"/>
+  </g>
+
+  <!-- ============================================================
+       INKWELL — empty, dry
+       ============================================================ -->
+  <g id="inkwell">
+    <!-- base ground shadow -->
+    <ellipse cx="560" cy="708" rx="42" ry="6" fill="#0a1228" opacity="0.5"/>
+    <!-- well body -->
+    <path d="M528 700 L 532 660 Q 532 648 560 648 Q 588 648 588 660 L 592 700 Z"
+          fill="#1a2a4d" stroke="#9fb2d6" stroke-width="1.1" opacity="0.85"/>
+    <!-- rim -->
+    <ellipse cx="560" cy="660" rx="28" ry="6" fill="#0c1830" stroke="#9fb2d6" stroke-width="1" opacity="0.85"/>
+    <!-- empty interior (no ink pool — just faint dry residue) -->
+    <ellipse cx="560" cy="662" rx="22" ry="4" fill="#0a1228" opacity="0.9"/>
+    <!-- dry residue trace (very faint) -->
+    <path d="M548 662 q 6 -2 12 0 q 6 2 12 0" fill="none" stroke="#2a3f66" stroke-width="0.6" opacity="0.6"/>
+    <!-- side engraving hatch -->
+    <g stroke="#9fb2d6" stroke-width="0.5" opacity="0.35">
+      <line x1="535" y1="670" x2="535" y2="696"/>
+      <line x1="585" y1="670" x2="585" y2="696"/>
+      <line x1="545" y1="672" x2="545" y2="694"/>
+      <line x1="575" y1="672" x2="575" y2="694"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       QUILL — resting, nib lifted, dry (never wrote)
+       ============================================================ -->
+  <g id="quill">
+    <!-- feather body -->
+    <path d="M620 760
+             C 760 720 920 720 1060 770
+             C 1100 784 1110 804 1080 812
+             C 940 800 780 800 640 784 Z"
+          fill="#1a2a4d" stroke="#9fb2d6" stroke-width="1" opacity="0.55"/>
+    <!-- rachis (central rib) -->
+    <path d="M624 762 C 760 730 920 732 1072 778"
+          fill="none" stroke="#9fb2d6" stroke-width="1.4" opacity="0.85"/>
+    <!-- barbs (engraved feather filaments) -->
+    <g stroke="#9fb2d6" stroke-width="0.5" opacity="0.5">
+      <line x1="650" y1="752" x2="656" y2="772"/>
+      <line x1="680" y1="744" x2="688" y2="770"/>
+      <line x1="710" y1="738" x2="720" y2="768"/>
+      <line x1="740" y1="734" x2="752" y2="766"/>
+      <line x1="770" y1="732" x2="784" y2="766"/>
+      <line x1="800" y1="731" x2="816" y2="766"/>
+      <line x1="830" y1="732" x2="848" y2="768"/>
+      <line x1="860" y1="734" x2="880" y2="770"/>
+      <line x1="890" y1="738" x2="912" y2="774"/>
+      <line x1="920" y1="744" x2="944" y2="778"/>
+      <line x1="950" y1="752" x2="976" y2="784"/>
+      <line x1="980" y1="760" x2="1006" y2="790"/>
+      <line x1="1010" y1="770" x2="1036" y2="796"/>
+      <line x1="1040" y1="780" x2="1062" y2="800"/>
+    </g>
+    <!-- nib -->
+    <path d="M1072 778 L 1086 800 L 1078 804 Z"
+          fill="#9fb2d6" opacity="0.85"/>
+    <!-- nib slit -->
+    <line x1="1078" y1="786" x2="1082" y2="802" stroke="#0a1228" stroke-width="0.7"/>
+    <!-- dry nib hover gap (no ink stain beneath — just a small empty circle marker) -->
+    <circle cx="1090" cy="816" r="3" fill="none" stroke="#FFC742" stroke-width="0.7" opacity="0.35" stroke-dasharray="2 2"/>
+  </g>
+
+  <!-- ============================================================
+       SEAL EMPTY — blank wax medallion, awaiting imprint that never came
+       ============================================================ -->
+  <g id="seal-empty">
+    <!-- ground shadow -->
+    <ellipse cx="1430" cy="888" rx="86" ry="12" fill="#0a1228" opacity="0.6"/>
+    <!-- outer rim -->
+    <circle cx="1430" cy="820" r="74" fill="url(#sealEmpty)" stroke="#FFC742" stroke-width="1.4" opacity="0.9"/>
+    <!-- inner rim -->
+    <circle cx="1430" cy="820" r="64" fill="none" stroke="#FFC742" stroke-width="0.8" opacity="0.55"/>
+    <!-- decorative engraved ring (where imprint SHOULD be) -->
+    <circle cx="1430" cy="820" r="52" fill="none" stroke="#3a5488" stroke-width="0.6" stroke-dasharray="2 4" opacity="0.7"/>
+    <!-- center: BLANK — only a faint hollow target ring -->
+    <circle cx="1430" cy="820" r="6" fill="none" stroke="#FFC742" stroke-width="0.7" opacity="0.4"/>
+    <!-- radial registration ticks around inner ring (engraved guide marks) -->
+    <g stroke="#FFC742" stroke-width="0.6" opacity="0.4">
+      <line x1="1430" y1="758" x2="1430" y2="766"/>
+      <line x1="1430" y1="874" x2="1430" y2="882"/>
+      <line x1="1368" y1="820" x2="1376" y2="820"/>
+      <line x1="1484" y1="820" x2="1492" y2="820"/>
+      <line x1="1386" y1="776" x2="1392" y2="782"/>
+      <line x1="1468" y1="858" x2="1474" y2="864"/>
+      <line x1="1474" y1="776" x2="1468" y2="782"/>
+      <line x1="1392" y1="858" x2="1386" y2="864"/>
+    </g>
+    <!-- faint inner hatch, the "ghost" of an imprint that isn't there -->
+    <circle cx="1430" cy="820" r="44" fill="url(#hatchGold)" opacity="0.5"/>
+  </g>
+
+  <!-- ============================================================
+       SEAL STAMP — hovering above the seal, never pressed down
+       ============================================================ -->
+  <g id="seal-stamp">
+    <!-- shadow on the parchment below stamp (small gap = not pressed) -->
+    <ellipse cx="1430" cy="748" rx="46" ry="8" fill="#0a1228" opacity="0.35"/>
+    <!-- handle -->
+    <rect x="1424" y="600" width="12" height="92" rx="3" fill="#1a2a4d" stroke="#9fb2d6" stroke-width="1" opacity="0.9"/>
+    <!-- handle knob -->
+    <circle cx="1430" cy="596" r="9" fill="#1a2a4d" stroke="#FFC742" stroke-width="1.2" opacity="0.9"/>
+    <circle cx="1430" cy="596" r="4" fill="#FFC742" opacity="0.55"/>
+    <!-- handle engraving -->
+    <line x1="1430" y1="608" x2="1430" y2="688" stroke="#9fb2d6" stroke-width="0.5" opacity="0.5"/>
+    <!-- stamp head collar -->
+    <rect x="1410" y="690" width="40" height="10" rx="2" fill="#1a2a4d" stroke="#9fb2d6" stroke-width="1" opacity="0.9"/>
+    <!-- stamp base disc (the engraved matrix, tilted slightly toward viewer) -->
+    <g transform="rotate(-4 1430 742)">
+      <ellipse cx="1430" cy="742" rx="44" ry="12" fill="#1a2a4d" stroke="#FFC742" stroke-width="1.3" opacity="0.95"/>
+      <!-- engraved emblem on the underside (a stylized pipeline glyph) -->
+      <g stroke="#FFC742" stroke-width="1.1" fill="none" opacity="0.95">
+        <path d="M1408 742 q 8 -6 22 0 q 8 4 22 0" />
+        <circle cx="1408" cy="742" r="2.4" fill="#FFC742"/>
+        <circle cx="1452" cy="742" r="2.4" fill="none"/>
+      </g>
+      <!-- matrix rim tick -->
+      <ellipse cx="1430" cy="742" rx="38" ry="9" fill="none" stroke="#FFC742" stroke-width="0.5" opacity="0.4"/>
+    </g>
+    <!-- motion-pause accent: two thin bracket marks suggesting suspension -->
+    <g stroke="#FFC742" stroke-width="0.7" opacity="0.45" fill="none">
+      <path d="M1370 720 q 60 -10 120 0"/>
+      <path d="M1370 760 q 60 10 120 0"/>
+    </g>
+  </g>
+
+  <!-- ============================================================
+       SUSPENSION MARKS — vertical "hold" ticks around the stamp
+       (premium engraved cue: project on hold)
+       ============================================================ -->
+  <g id="suspension-marks" stroke="#FFC742" opacity="0.5">
+    <line x1="1330" y1="600" x2="1330" y2="700" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="1530" y1="600" x2="1530" y2="700" stroke-width="0.8" stroke-dasharray="2 4"/>
+    <line x1="1330" y1="600" x2="1342" y2="600" stroke-width="1"/>
+    <line x1="1330" y1="700" x2="1342" y2="700" stroke-width="1"/>
+    <line x1="1530" y1="600" x2="1518" y2="600" stroke-width="1"/>
+    <line x1="1530" y1="700" x2="1518" y2="700" stroke-width="1"/>
+  </g>
+
+  <!-- ============================================================
+       RIGHT-EDGE GAUGE — decorative measurement scale, "blueprint" feel
+       ============================================================ -->
+  <g id="blueprint-gauge" stroke="#3a5488" opacity="0.55">
+    <line x1="1640" y1="200" x2="1640" y2="880" stroke-width="0.8"/>
+    <g stroke-width="0.6">
+      <line x1="1632" y1="220" x2="1648" y2="220"/>
+      <line x1="1636" y1="260" x2="1644" y2="260"/>
+      <line x1="1636" y1="300" x2="1644" y2="300"/>
+      <line x1="1632" y1="340" x2="1648" y2="340"/>
+      <line x1="1636" y1="380" x2="1644" y2="380"/>
+      <line x1="1636" y1="420" x2="1644" y2="420"/>
+      <line x1="1632" y1="460" x2="1648" y2="460"/>
+      <line x1="1636" y1="500" x2="1644" y2="500"/>
+      <line x1="1636" y1="540" x2="1644" y2="540"/>
+      <line x1="1632" y1="580" x2="1648" y2="580"/>
+      <line x1="1636" y1="620" x2="1644" y2="620"/>
+      <line x1="1636" y1="660" x2="1644" y2="660"/>
+      <line x1="1632" y1="700" x2="1648" y2="700"/>
+      <line x1="1636" y1="740" x2="1644" y2="740"/>
+      <line x1="1636" y1="780" x2="1644" y2="780"/>
+      <line x1="1632" y1="820" x2="1648" y2="820"/>
+      <line x1="1636" y1="860" x2="1644" y2="860"/>
+    </g>
+  </g>
+
+</svg>

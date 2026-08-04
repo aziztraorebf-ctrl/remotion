@@ -948,3 +948,39 @@ marqueur de tête animé bien visible, pas seulement une couleur différente ; (
 destination progressivement = pattern "mask reveal" — assombrir tout le reste pour faire ressortir
 la cible ; (4) lier un label à un tracé mobile = ancrer via la position le long du path (pas au
 point fixe de destination). Les 4 patterns appliqués avec succès sur ce même chantier.
+
+## Marge de sécurité audio sur `<Sequence>` Remotion — 2026-08-04 (Gazoduc Acte 2)
+
+Une `<Sequence>` qui coupe un `<Audio>` enfant net à `durationInFrames` calé PILE sur le timestamp
+de fin du dernier mot mesuré par forced-align tranche perceptiblement la fin du mot à l'écoute —
+même si le calcul frame-précis est mathématiquement exact (`fin_mot_reelle == duration_frame`,
+marge 0). C'est le même problème que la marge ~40ms déjà connue pour les découpes ffmpeg (splice/
+pauses), mais sous une forme différente — une Sequence Remotion coupe l'Audio enfant sans aucune
+tolérance implicite, contrairement à un fondu.
+
+**Règle** : toujours ajouter une marge de sécurité ~300ms (9 frames à 30fps) après la fin mesurée
+du dernier mot avant de fixer la durée d'une `<Sequence>` qui contient un `<Audio>` en fin de
+segment. Répété 2× dans le montage Gazoduc Acte 2 (coupures sur "an." et "s'enchaînent.") avant
+d'être corrigé sur les 3 segments concernés.
+
+## Dessin progressif (`strokeDasharray`) vs fondu (`opacity`) pour tout SVG narratif — 2026-08-04 (Gazoduc Acte 2)
+
+Un élément SVG avec un contour fermé ou une ligne signifiante (tuyau, document, arche, colonnes)
+qui apparaît en `opacity={reveal}` (fondu ~1-3s) au lieu de se DESSINER progressivement
+(`strokeDasharray`/`strokeDashoffset`, comme un tracé de carte D3 ou une signature manuscrite) rend
+une scène longue quasi statique après ses premières secondes — un fondu ne "meuble" pas le temps,
+un tracé qui progresse le fait. Retour Aziz répété 2× sur les inserts signature/financement de
+l'Acte 2 : "tout se trace d'un bloc en 12 secondes, problématique pour une scène de 50s [...]
+pourquoi tout faire apparaître d'un bloc et ne pas juste dessiner le SVG".
+
+**Règle** : dès qu'un élément SVG narratif a un contour/une ligne significative, le faire DESSINER
+(stroke qui se trace) plutôt que FONDRE (opacity qui monte), et étaler ce dessin sur une fraction
+significative de la durée totale de la scène — pas sur 1-3 secondes en tête suivies d'un hold
+statique. Règle transversale à tout futur beat Remotion utilisant du SVG narratif, pas spécifique
+à Gazoduc.
+
+**Complément (pattern de validation)** : avant de coder une animation complexe sur un SVG mixte
+(plusieurs modèles combinés), construire d'abord un SVG STATIQUE (script Python de manipulation de
+groupes `<g id>`), le publier sur here.now (jamais Vercel Blob/catbox pour du HTML), et faire
+valider le PLACEMENT par Aziz avant d'investir le travail de code d'animation — a évité 2× de coder
+une animation sur un placement qui aurait été rejeté, sur ce même chantier.

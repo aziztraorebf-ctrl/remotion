@@ -1,0 +1,269 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" role="img" aria-labelledby="sceneTitle sceneDesc">
+  <title id="sceneTitle">Gazoduc interrompu, financement absent et accord non signé</title>
+  <desc id="sceneDesc">Un gazoduc massif s'interrompt au-dessus d'un vide. Son prolongement n'existe plus que sous forme de tracé technique doré, tandis qu'une caisse vide et un document sans sceau matérialisent les obstacles financiers et diplomatiques.</desc>
+
+  <defs>
+    <pattern id="fineEngraving" width="22" height="22" patternUnits="userSpaceOnUse">
+      <path d="M-4 22L22-4M7 29L29 7" fill="none" stroke="#3a5488" stroke-width="1" opacity="0.22"/>
+    </pattern>
+
+    <pattern id="denseHatching" width="12" height="12" patternUnits="userSpaceOnUse">
+      <path d="M-3 12L12-3M3 15L15 3" fill="none" stroke="#8fa0bb" stroke-width="1.2" opacity="0.34"/>
+    </pattern>
+
+    <pattern id="paperHatching" width="16" height="16" patternUnits="userSpaceOnUse">
+      <path d="M0 4H16M0 11H16" fill="none" stroke="#8fa0bb" stroke-width="0.8" opacity="0.2"/>
+    </pattern>
+
+    <clipPath id="leftPipeClip">
+      <path d="M0 350H724L768 398V542L724 590H0Z"/>
+    </clipPath>
+
+    <clipPath id="chasmClip">
+      <path d="M538 680L722 594L833 640L958 596L1086 649L1209 603L1387 686L1510 1080H417Z"/>
+    </clipPath>
+  </defs>
+
+  <g id="fond_bleu_marine">
+    <rect width="1920" height="1080" fill="#182746"/>
+    <rect width="1920" height="1080" fill="url(#fineEngraving)"/>
+    <path d="M0 170C330 116 595 137 861 189C1136 243 1463 239 1920 155V0H0Z"
+          fill="#2a3f66" opacity="0.28"/>
+    <path d="M0 874C337 810 634 824 931 891C1260 966 1568 944 1920 846V1080H0Z"
+          fill="#101c34" opacity="0.55"/>
+  </g>
+
+  <g id="cadre_grave">
+    <rect x="34" y="34" width="1852" height="1012" rx="8"
+          fill="none" stroke="#8fa0bb" stroke-width="2" opacity="0.55"/>
+    <rect x="48" y="48" width="1824" height="984" rx="5"
+          fill="none" stroke="#3a5488" stroke-width="1"/>
+    <path d="M34 124H116M34 124V42M1886 124H1804M1886 124V42M34 956H116M34 956V1038M1886 956H1804M1886 956V1038"
+          fill="none" stroke="#d8deea" stroke-width="3" opacity="0.62"/>
+  </g>
+
+  <g id="repères_cartographiques_fantomes" fill="none" stroke="#8fa0bb" opacity="0.18">
+    <ellipse cx="960" cy="497" rx="779" ry="290" stroke-width="1.5"/>
+    <ellipse cx="960" cy="497" rx="610" ry="220" stroke-width="1"/>
+    <path d="M172 497H1748M960 185V848" stroke-width="1"/>
+    <path d="M300 312C554 391 716 395 960 348C1196 303 1416 322 1631 401" stroke-width="1"/>
+    <path d="M279 664C548 588 732 598 961 650C1194 704 1436 679 1661 589" stroke-width="1"/>
+  </g>
+
+  <g id="gouffre_de_realite">
+    <path d="M0 716L336 701L538 680L722 594L833 640L958 596L1086 649L1209 603L1387 686L1607 713L1920 724V1080H0Z"
+          fill="#101a30"/>
+    <path d="M538 680L722 594L833 640L958 596L1086 649L1209 603L1387 686"
+          fill="none" stroke="#d8deea" stroke-width="4" opacity="0.72"/>
+    <g clip-path="url(#chasmClip)" opacity="0.35">
+      <path d="M383 691L918 1080M502 645L1037 1080M660 611L1177 1080M829 626L1326 1080M1001 615L1489 1080M1179 616L1631 1010"
+            fill="none" stroke="#3a5488" stroke-width="3"/>
+      <path d="M1457 690L937 1080M1314 638L823 1080M1168 620L696 1080M1010 614L566 1080M849 618L445 1003"
+            fill="none" stroke="#2a3f66" stroke-width="2"/>
+    </g>
+    <path d="M544 698L719 624M1381 702L1212 631"
+          fill="none" stroke="#8fa0bb" stroke-width="2" opacity="0.38"/>
+  </g>
+
+  <g id="plateforme_physique_gauche">
+    <path d="M0 591H699L731 624L683 686H0Z" fill="#2a3f66"/>
+    <path d="M0 591H699L731 624" fill="none" stroke="#d8deea" stroke-width="4"/>
+    <path d="M0 622H682L707 641" fill="none" stroke="#8fa0bb" stroke-width="2"/>
+    <path d="M38 650H650M73 676H613" fill="none" stroke="#3a5488" stroke-width="2"/>
+    <path d="M95 591L39 686M195 591L139 686M295 591L239 686M395 591L339 686M495 591L439 686M595 591L539 686"
+          fill="none" stroke="#8fa0bb" stroke-width="1.5" opacity="0.38"/>
+  </g>
+
+  <g id="gazoduc_physique">
+    <path d="M0 370H691C725 370 750 396 750 429V511C750 544 725 570 691 570H0Z"
+          fill="#2a3f66" stroke="#d8deea" stroke-width="5"/>
+    <path d="M0 391H690C709 391 727 408 727 429V511C727 530 709 548 690 548H0"
+          fill="url(#denseHatching)" opacity="0.54"/>
+    <path d="M0 407H690M0 530H690" fill="none" stroke="#8fa0bb" stroke-width="2" opacity="0.6"/>
+
+    <g id="joints_du_gazoduc" fill="#182746" stroke="#d8deea">
+      <path d="M151 359H181V581H151Z" stroke-width="4"/>
+      <path d="M329 359H359V581H329Z" stroke-width="4"/>
+      <path d="M507 359H537V581H507Z" stroke-width="4"/>
+      <path d="M150 386H181M150 553H181M328 386H359M328 553H359M506 386H537M506 553H537"
+            fill="none" stroke="#8fa0bb" stroke-width="2"/>
+    </g>
+
+    <g id="reflets_graves_du_tuyau" clip-path="url(#leftPipeClip)" opacity="0.35">
+      <path d="M-40 531L271 350M38 590L349 368M190 590L501 368M342 590L653 368M494 590L805 368"
+            fill="none" stroke="#8fa0bb" stroke-width="2"/>
+    </g>
+  </g>
+
+  <g id="bride_de_rupture">
+    <ellipse cx="744" cy="470" rx="58" ry="111" fill="#182746" stroke="#d8deea" stroke-width="6"/>
+    <ellipse cx="744" cy="470" rx="39" ry="84" fill="#0e192e" stroke="#8fa0bb" stroke-width="4"/>
+    <ellipse cx="744" cy="470" rx="23" ry="57" fill="#101a30" stroke="#3a5488" stroke-width="2"/>
+    <g fill="#d8deea">
+      <circle cx="728" cy="377" r="5"/>
+      <circle cx="758" cy="381" r="5"/>
+      <circle cx="776" cy="414" r="5"/>
+      <circle cx="782" cy="470" r="5"/>
+      <circle cx="776" cy="526" r="5"/>
+      <circle cx="758" cy="559" r="5"/>
+      <circle cx="728" cy="563" r="5"/>
+      <circle cx="708" cy="516" r="5"/>
+      <circle cx="705" cy="424" r="5"/>
+    </g>
+    <path d="M713 398L728 416M708 505L726 491M759 404L768 429M759 536L769 511"
+          fill="none" stroke="#8fa0bb" stroke-width="2"/>
+  </g>
+
+  <g id="tuyau_virtuel_suspendu">
+    <path d="M788 388C930 359 1074 359 1224 391C1321 412 1415 421 1510 414"
+          fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="18 18" opacity="0.55"/>
+    <path d="M788 552C930 581 1074 581 1224 549C1321 528 1415 519 1510 526"
+          fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="18 18" opacity="0.55"/>
+
+    <path d="M797 470C941 448 1087 448 1231 470C1328 485 1420 484 1510 470"
+          fill="none" stroke="#FFC742" stroke-width="8" stroke-linecap="round"
+          stroke-dasharray="28 24"/>
+
+    <g id="anneaux_techniques_fantomes" fill="none" stroke="#8fa0bb" opacity="0.62">
+      <ellipse cx="872" cy="470" rx="20" ry="87" stroke-width="2" stroke-dasharray="8 9"/>
+      <ellipse cx="1015" cy="470" rx="20" ry="99" stroke-width="2" stroke-dasharray="8 9"/>
+      <ellipse cx="1164" cy="470" rx="20" ry="92" stroke-width="2" stroke-dasharray="8 9"/>
+      <ellipse cx="1310" cy="477" rx="20" ry="72" stroke-width="2" stroke-dasharray="8 9"/>
+      <ellipse cx="1444" cy="474" rx="20" ry="58" stroke-width="2" stroke-dasharray="8 9"/>
+    </g>
+
+    <g id="cotes_de_plan_non_realise" fill="none" stroke="#8fa0bb" opacity="0.38">
+      <path d="M860 345V594M850 345H870M850 594H870"/>
+      <path d="M1153 336V605M1143 336H1163M1143 605H1163"/>
+      <path d="M1434 389V555M1424 389H1444M1424 555H1444"/>
+      <path d="M803 326H1490M803 315V337M1490 315V337" stroke-dasharray="6 10"/>
+    </g>
+  </g>
+
+  <g id="destination_en_plan_seulement">
+    <path d="M1510 414H1648L1694 448V503L1648 526H1510Z"
+          fill="#182746" fill-opacity="0.24" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="14 12"/>
+    <ellipse cx="1510" cy="470" rx="27" ry="57"
+             fill="#182746" fill-opacity="0.25" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="10 9"/>
+    <path d="M1648 414V526M1574 414V526M1694 448H1742V503H1694"
+          fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="12 10"/>
+    <path d="M1722 448V353H1782V503M1722 381H1782M1752 353V318"
+          fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="12 10"/>
+    <path d="M1704 528H1801L1834 572H1669Z"
+          fill="#2a3f66" fill-opacity="0.28" stroke="#8fa0bb" stroke-width="2" stroke-dasharray="9 8"/>
+    <path d="M1678 572L1638 680M1824 572L1861 694"
+          fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="11 10"/>
+  </g>
+
+  <g id="caisse_de_financement_vide">
+    <path d="M250 810L481 758L617 806L391 866Z"
+          fill="#101a30" stroke="#d8deea" stroke-width="4"/>
+    <path d="M250 810V939L391 997V866Z"
+          fill="#2a3f66" stroke="#d8deea" stroke-width="4"/>
+    <path d="M391 866V997L617 930V806Z"
+          fill="#182746" stroke="#d8deea" stroke-width="4"/>
+    <path d="M276 814L477 775L584 808L390 850Z"
+          fill="#0b1529" stroke="#8fa0bb" stroke-width="3"/>
+
+    <g id="couvercle_ouvert_du_coffre">
+      <path d="M259 798L208 622L425 570L482 759Z"
+            fill="#2a3f66" stroke="#d8deea" stroke-width="5"/>
+      <path d="M280 770L232 640L410 598L457 740Z"
+            fill="url(#denseHatching)" stroke="#8fa0bb" stroke-width="2"/>
+      <path d="M269 791L482 741M251 814L470 762"
+            fill="none" stroke="#8fa0bb" stroke-width="3"/>
+    </g>
+
+    <g id="interieur_manifestement_vide">
+      <path d="M289 816L477 781L568 808L389 842Z"
+            fill="#081225" stroke="#3a5488" stroke-width="2"/>
+      <path d="M310 818L389 835L543 808M389 835V849"
+            fill="none" stroke="#8fa0bb" stroke-width="1.5" opacity="0.45"/>
+    </g>
+
+    <g id="fermoir_sans_cheque">
+      <path d="M354 856L426 872V919L354 898Z"
+            fill="#182746" stroke="#d8deea" stroke-width="3"/>
+      <circle cx="389" cy="889" r="8" fill="none" stroke="#8fa0bb" stroke-width="3"/>
+      <path d="M389 897V908" stroke="#8fa0bb" stroke-width="3"/>
+    </g>
+
+    <path d="M274 909L365 948M451 961L573 924"
+          fill="none" stroke="#8fa0bb" stroke-width="2" opacity="0.5"/>
+  </g>
+
+  <g id="dossier_daccord_non_signe">
+    <path d="M787 748L1132 702L1238 912L877 971Z"
+          fill="#d8deea" fill-opacity="0.92" stroke="#182746" stroke-width="7"/>
+    <path d="M811 770L1117 729L1209 892L894 941Z"
+          fill="url(#paperHatching)" stroke="#3a5488" stroke-width="2"/>
+
+    <g id="lignes_du_document_sans_texte" fill="none" stroke="#3a5488" opacity="0.62">
+      <path d="M866 793L1074 765M877 818L1134 784M888 843L1146 808M899 868L1096 842"
+            stroke-width="5"/>
+      <path d="M930 910L1101 882" stroke-width="3"/>
+      <path d="M1080 883C1101 870 1121 870 1145 879" stroke-width="2" stroke-dasharray="5 7"/>
+    </g>
+
+    <g id="emplacement_du_sceau_vide">
+      <ellipse cx="1139" cy="856" rx="52" ry="43"
+               fill="none" stroke="#FFC742" stroke-width="6"/>
+      <ellipse cx="1139" cy="856" rx="38" ry="30"
+               fill="none" stroke="#FFC742" stroke-width="2" stroke-dasharray="5 7"/>
+    </g>
+
+    <g id="medaillon_du_pays_cle">
+      <path d="M830 714L899 705L929 755L893 804L825 794L797 747Z"
+            fill="#182746" stroke="#d8deea" stroke-width="4"/>
+      <path d="M858 728C843 742 845 765 862 777C875 786 894 782 903 768C891 777 874 773 866 761C858 749 859 738 868 728Z"
+            fill="none" stroke="#8fa0bb" stroke-width="4"/>
+      <path d="M886 736L891 746L902 747L894 754L897 765L887 759L878 765L880 754L872 747L883 746Z"
+            fill="#8fa0bb"/>
+    </g>
+  </g>
+
+  <g id="tampon_officiel_suspendu">
+    <path d="M1173 620C1184 579 1214 555 1250 555C1287 555 1317 580 1327 620L1313 720H1187Z"
+          fill="#2a3f66" stroke="#d8deea" stroke-width="4"/>
+    <path d="M1204 618C1211 591 1228 579 1250 579C1272 579 1289 592 1296 618"
+          fill="none" stroke="#8fa0bb" stroke-width="3"/>
+    <path d="M1187 720H1313L1330 748L1308 772H1192L1170 748Z"
+          fill="#182746" stroke="#d8deea" stroke-width="4"/>
+    <ellipse cx="1250" cy="769" rx="63" ry="14"
+             fill="#101a30" stroke="#8fa0bb" stroke-width="3"/>
+    <path d="M1250 554V512" fill="none" stroke="#8fa0bb" stroke-width="3" stroke-dasharray="7 8"/>
+    <circle cx="1250" cy="500" r="7" fill="#8fa0bb"/>
+    <path d="M1216 778L1168 826" fill="none" stroke="#8fa0bb" stroke-width="2" stroke-dasharray="7 8"/>
+  </g>
+
+  <g id="feuilles_techniques_emportees">
+    <path d="M1378 812L1545 773L1600 891L1431 932Z"
+          fill="#2a3f66" stroke="#8fa0bb" stroke-width="3"/>
+    <path d="M1401 825L1514 799M1412 850L1555 817M1424 876L1566 842M1440 902L1534 879"
+          fill="none" stroke="#8fa0bb" stroke-width="2" opacity="0.7"/>
+    <circle cx="1497" cy="860" r="38" fill="none" stroke="#8fa0bb" stroke-width="2" stroke-dasharray="6 7"/>
+    <path d="M1497 822V898M1459 860H1535" fill="none" stroke="#8fa0bb" stroke-width="1.5"/>
+
+    <path d="M1589 742L1731 771L1694 891L1550 857Z"
+          fill="#182746" stroke="#8fa0bb" stroke-width="3"/>
+    <path d="M1604 767L1700 787M1597 792L1682 810M1589 817L1664 833"
+          fill="none" stroke="#8fa0bb" stroke-width="2"/>
+    <path d="M1550 857L1589 817L1598 864Z"
+          fill="#2a3f66" stroke="#8fa0bb" stroke-width="2"/>
+  </g>
+
+  <g id="petites_pieces_en_suspens" fill="none" stroke="#8fa0bb">
+    <path d="M690 742L711 723L734 742L713 760Z" stroke-width="3"/>
+    <circle cx="742" cy="803" r="10" stroke-width="3"/>
+    <path d="M1368 750L1394 738L1412 759L1384 771Z" stroke-width="3"/>
+    <path d="M1298 930L1325 914L1348 935L1321 951Z" stroke-width="3"/>
+    <path d="M676 864L697 848M685 876L706 860" stroke-width="4"/>
+  </g>
+
+  <g id="ombre_finale_du_vide">
+    <path d="M716 1008C887 958 1056 963 1222 1009"
+          fill="none" stroke="#081225" stroke-width="34" opacity="0.5"/>
+    <path d="M757 1015C916 981 1064 985 1191 1017"
+          fill="none" stroke="#3a5488" stroke-width="2" opacity="0.35"/>
+  </g>
+</svg>
