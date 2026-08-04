@@ -75,12 +75,12 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Acte 1 TERMINÉ (globe D3), Acte 2 à venir
-Acte 1 (hook, 84.68s, globe D3) écrit de bout en bout dans `GazoducActe1Hook.tsx`, validé par Aziz
-comme base de production (render v6, 2026-08-03) après refonte caméra continue + tracé AAGP côtier
-réel + correction factuelle Maroc/Espagne + review downstream 3 voix. 3 points de polish reportés
-sciemment à la passe finale (`memory/episodes/souverain/gazoduc-aagp-tsgp/POLISH-TODO-FINAL-RENDER.md`).
-⏭️ Prochaine étape : Acte 2 (scène-lieu narrative, genèse 2016, Mohammed VI + Buhari, décor fixe).
+### Gazoduc — Acte 1 TERMINÉ (globe D3), Acte 2 pivoté en cours
+Acte 1 (hook, 84.68s, globe D3) validé par Aziz comme base de production (render v6, 2026-08-03).
+Acte 2 pivoté (2026-08-04) : 3 segments distincts (insert SVG signature → carte D3 courte ~25-30s
+tracé seul → insert SVG financement), PAS un fichier monolithique — erreur d'un rendu 2min18 avec
+placeholders internes corrigée, reprise prévue en session fraîche. 12 SVG candidats déjà générés et
+sauvegardés (`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`).
 Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage

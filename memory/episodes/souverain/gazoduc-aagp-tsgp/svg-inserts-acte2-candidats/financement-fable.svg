@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <defs>
+    <radialGradient id="bg_vignette" cx="50%" cy="45%" r="75%">
+      <stop offset="0%" stop-color="#1d2f54"/>
+      <stop offset="100%" stop-color="#182746"/>
+    </radialGradient>
+    <pattern id="dot_grid" width="90" height="90" patternUnits="userSpaceOnUse">
+      <circle cx="45" cy="45" r="1.6" fill="#c9d4e8"/>
+    </pattern>
+  </defs>
+
+  <!-- ===================== FOND ===================== -->
+  <g id="fond">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#bg_vignette)"/>
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#dot_grid)" opacity="0.05"/>
+  </g>
+
+  <!-- ===================== CADRE / DECOR MINIMAL ===================== -->
+  <g id="decor_cadre">
+    <rect x="60" y="60" width="1800" height="960" rx="6" fill="none" stroke="#3a5488" stroke-width="2" opacity="0.35"/>
+    <!-- baseline schematique -->
+    <line x1="200" y1="946" x2="1720" y2="946" stroke="#3a5488" stroke-width="2" stroke-dasharray="2 14" opacity="0.45"/>
+  </g>
+
+  <!-- ===================== TRACE POINTILLE (pipeline schematique) ===================== -->
+  <g id="trace_pointille">
+    <!-- ghost tube: wide translucent stroke under the dashed line, pipeline feel -->
+    <g id="trace_tube_fantome" opacity="0.12">
+      <path d="M 160 640 C 260 600, 360 585, 470 620 C 580 655, 660 655, 760 610 C 860 565, 1020 550, 1180 560"
+            fill="none" stroke="#c9d4e8" stroke-width="18" stroke-linecap="round"/>
+      <path d="M 1180 560 C 1340 572, 1430 500, 1560 480 C 1650 466, 1720 445, 1780 430"
+            fill="none" stroke="#c9d4e8" stroke-width="18" stroke-linecap="round" opacity="0.55"/>
+    </g>
+
+    <!-- dashed segment BEFORE the stop point (denser, more present) -->
+    <path id="trace_avant"
+          d="M 160 640 C 260 600, 360 585, 470 620 C 580 655, 660 655, 760 610 C 860 565, 1020 550, 1180 560"
+          fill="none" stroke="#aebbd6" stroke-width="7" stroke-linecap="round"
+          stroke-dasharray="26 20" opacity="0.9"/>
+
+    <!-- dashed segment AFTER the stop point (sparser, fainter = more virtual) -->
+    <path id="trace_apres"
+          d="M 1180 560 C 1340 572, 1430 500, 1560 480 C 1650 466, 1720 445, 1780 430"
+          fill="none" stroke="#7484a6" stroke-width="6" stroke-linecap="round"
+          stroke-dasharray="14 28" opacity="0.5"/>
+
+    <!-- validated nodes along the route (already-agreed countries, symbolic) -->
+    <g id="noeuds_valides">
+      <g id="noeud_depart">
+        <circle cx="160" cy="640" r="12" fill="#22345a" stroke="#c9d4e8" stroke-width="3"/>
+        <circle cx="160" cy="640" r="4" fill="#c9d4e8"/>
+      </g>
+      <g id="noeud_2">
+        <circle cx="470" cy="620" r="10" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+        <circle cx="470" cy="620" r="3.5" fill="#aebbd6"/>
+      </g>
+      <g id="noeud_3">
+        <circle cx="760" cy="610" r="10" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+        <circle cx="760" cy="610" r="3.5" fill="#aebbd6"/>
+      </g>
+    </g>
+
+    <!-- THE golden touch: the short segment that TRIES to solidify, dies at x=1180 -->
+    <path id="trace_tentative_solide"
+          d="M 1000 552 C 1060 548, 1120 552, 1180 560"
+          fill="none" stroke="#FFC742" stroke-width="8" stroke-linecap="round" opacity="0.85"/>
+  </g>
+
+  <!-- ===================== HALO INCERTITUDE (no blur, concentric rings) ===================== -->
+  <g id="halo_incertitude">
+    <circle cx="1180" cy="560" r="150" fill="#2a3f66" opacity="0.18"/>
+    <circle cx="1180" cy="560" r="55"  fill="none" stroke="#8fa2c6" stroke-width="2" opacity="0.30"/>
+    <circle cx="1180" cy="560" r="90"  fill="none" stroke="#8fa2c6" stroke-width="2" opacity="0.16"/>
+    <circle cx="1180" cy="560" r="130" fill="none" stroke="#8fa2c6" stroke-width="2"
+            stroke-dasharray="6 12" opacity="0.10"/>
+  </g>
+
+  <!-- ===================== JETON MAURITANIE (inert grey token on the stop point) ===================== -->
+  <g id="jeton_mauritanie">
+    <circle cx="1180" cy="560" r="32" fill="#24365c" stroke="#8a97b3" stroke-width="5"/>
+    <circle cx="1180" cy="560" r="17" fill="none" stroke="#5a6a8a" stroke-width="3"/>
+    <circle cx="1180" cy="560" r="4" fill="#5a6a8a"/>
+  </g>
+
+  <!-- ===================== JAUGE FINANCEMENT (coin stack, top coin ready to drop) ===================== -->
+  <g id="jauge_financement">
+    <g id="graduation_jauge" opacity="0.7">
+      <line x1="180" y1="910" x2="180" y2="640" stroke="#5a6a8a" stroke-width="2"/>
+      <line x1="180" y1="876" x2="194" y2="876" stroke="#5a6a8a" stroke-width="2"/>
+      <line x1="180" y1="842" x2="194" y2="842" stroke="#5a6a8a" stroke-width="2"/>
+      <line x1="180" y1="808" x2="194" y2="808" stroke="#5a6a8a" stroke-width="2"/>
+      <line x1="180" y1="774" x2="194" y2="774" stroke="#5a6a8a" stroke-width="2"/>
+      <line x1="180" y1="740" x2="194" y2="740" stroke="#5a6a8a" stroke-width="2"/>
+      <!-- target level = the missing slot -->
+      <line x1="180" y1="706" x2="202" y2="706" stroke="#c9d4e8" stroke-width="4"/>
+    </g>
+
+    <g id="socle_jauge">
+      <line x1="200" y1="910" x2="480" y2="910" stroke="#3a5488" stroke-width="4"/>
+      <line x1="216" y1="920" x2="464" y2="920" stroke="#3a5488" stroke-width="2" opacity="0.4"/>
+    </g>
+
+    <g id="pile_pieces">
+      <rect x="240" y="876" width="200" height="30" rx="15" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+      <line x1="318" y1="891" x2="362" y2="891" stroke="#8a97b3" stroke-width="2" opacity="0.5"/>
+      <rect x="240" y="842" width="200" height="30" rx="15" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+      <line x1="318" y1="857" x2="362" y2="857" stroke="#8a97b3" stroke-width="2" opacity="0.5"/>
+      <rect x="240" y="808" width="200" height="30" rx="15" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+      <line x1="318" y1="823" x2="362" y2="823" stroke="#8a97b3" stroke-width="2" opacity="0.5"/>
+      <rect x="240" y="774" width="200" height="30" rx="15" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+      <line x1="318" y1="789" x2="362" y2="789" stroke="#8a97b3" stroke-width="2" opacity="0.5"/>
+      <rect x="240" y="740" width="200" height="30" rx="15" fill="#22345a" stroke="#aebbd6" stroke-width="3"/>
+      <line x1="318" y1="755" x2="362" y2="755" stroke="#8a97b3" stroke-width="2" opacity="0.5"/>
+    </g>
+
+    <!-- dashed empty slot: where the missing coin SHOULD land (echoes the dashed pipeline) -->
+    <rect id="emplacement_manquant" x="240" y="706" width="200" height="30" rx="15"
+          fill="none" stroke="#8a97b3" stroke-width="3" stroke-dasharray="10 10" opacity="0.7"/>
+
+    <!-- the bigger, distinct coin hovering above, tilted, ready to drop or vanish -->
+    <g id="piece_qui_lache" transform="rotate(-9 340 653)">
+      <rect x="225" y="636" width="230" height="34" rx="17" fill="#2c4270" stroke="#c9d4e8" stroke-width="4"/>
+      <line x1="314" y1="653" x2="366" y2="653" stroke="#c9d4e8" stroke-width="2" opacity="0.6"/>
+    </g>
+  </g>
+</svg>

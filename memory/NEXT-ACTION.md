@@ -1,5 +1,5 @@
 # NEXT-ACTION — Recommandations actives
-> Mis a jour : 2026-07-30 (ménage mémoire : 116 Ko → ce fichier. Sections closes supprimées, git garde tout)
+> Mis a jour : 2026-08-04 (ménage mémoire initial 2026-07-30 : 116 Ko → ce fichier. Sections closes supprimées, git garde tout)
 > Ce fichier repond a : "Que fait-on maintenant ?" et "Quelle voie je recommande ?"
 > ⛔ **Format : 3 lignes max par projet.** Un projet TERMINÉ se SUPPRIME de ce fichier, il ne
 > s'accumule pas — c'est faute d'appliquer cette règle qu'il a atteint 116 Ko (~85% de contenu mort).
@@ -153,16 +153,21 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 TERMINÉ, ACTE 2 À DÉMARRER
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 TERMINÉ, ACTE 2 EN COURS (reprise session fraîche)
 
-**État (2026-08-03)** : Acte 1 (hook, globe D3, 84.68s) écrit de bout en bout dans
-`src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (10 beats, caméra continue,
-tracé AAGP côtier réel Nigeria→Maroc, drapeaux tranchés — retardés jusqu'à l'arrivée du tracé).
-Validé par Aziz comme base de production (render v6). 3 points de polish mineurs reportés
-sciemment à la passe finale (tous actes assemblés) : `memory/episodes/souverain/gazoduc-aagp-tsgp/POLISH-TODO-FINAL-RENDER.md`.
-**Prochaine étape** : Acte 2 (scène-lieu narrative, genèse 2016, Mohammed VI + Buhari, décor fixe)
-— registre visuel déjà fixé dans `SCRIPT-V3.md` § Registres visuels par acte.
-Détail complet : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
+**État (2026-08-03)** : Acte 1 (hook, globe D3, 84.68s) validé par Aziz comme base de production
+(render v6) — `GazoducActe1Hook.tsx`, 3 polish mineurs reportés à la passe finale
+(`POLISH-TODO-FINAL-RENDER.md`).
+
+**Acte 2 — pivot tranché, code à reprendre** : 3 segments distincts (insert SVG signature → segment
+carte COURT ~25-30s tracé seul → insert SVG financement), PAS un fichier monolithique. Erreur de la
+session précédente à corriger : la carte avait été rendue en fichier complet 4165 frames (2min18)
+avec placeholders inserts dedans, au lieu d'un segment court isolé. 12 SVG candidats (dirigés + Fable
+libre) déjà générés et sauvegardés dans
+`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`. Nouvelle idée à intégrer :
+géoplaques qui fade sur les points d'arrêt du tracé (remplace les `CountryLabel` fixes). Test à
+lancer : liberté créative sur modèles externes (pas que Fable). Plan de reprise détaillé + citations
+Aziz : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` (section en tête de fichier).
 Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 ---

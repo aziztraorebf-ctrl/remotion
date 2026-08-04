@@ -62,6 +62,8 @@ import { SoudanActe6Globe, SOUDAN_A6_GLOBE_FRAMES } from "./projects/_rnd/d3-16x
 import { ProtoGazoducZoomRobuste, PROTO_GAZODUC_ZOOM_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducZoomRobuste";
 import { ProtoGazoducGlobeFusion, PROTO_GAZODUC_FUSION_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducGlobeFusion";
 import { GazoducActe1Hook, GAZODUC_A1_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe1Hook";
+import { GazoducActe2AAGP, GAZODUC_A2_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2AAGP";
+import { ProtoA2CameraProche, ProtoA2VoisinsVisibles, ProtoA2Mix, ProtoA2CameraContinueSurMix, ProtoA2CameraContinue13Jalons, PROTO_A2_COMPARE_FRAMES, PROTO_A2_13JALONS_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
 import { VisionKostiK3 } from "./projects/_rnd/svg-scenes/VisionKostiK3";
@@ -476,6 +478,7 @@ import { TestPoseSolOptions } from "./projects/_rnd/fable-libre/TestPoseSolOptio
 import { TestPoseSolRound2 } from "./projects/_rnd/fable-libre/TestPoseSolRound2";
 import { PoseSolPortee } from "./projects/_rnd/fable-libre/PoseSolPortee";
 import { EnchainementGestesExpressifsSol, EXPRESSIFS_SOL_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesExpressifsSol";
+import { SceneCreancier, CREANCIER_FRAMES } from "./projects/_rnd/fable-libre/SceneCreancier";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -1091,6 +1094,74 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte1-Hook"
           component={GazoducActe1Hook}
           durationInFrames={GAZODUC_A1_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc AAGP vs TSGP — Acte 2 "AAGP" (Partie 2 script), carte D3 plate (rupture de
+            registre assumee vs le globe Acte 1, fondu enchaine entre les 2, PAS de morphing de
+            projection — decision Aziz 2026-08-03). Fichier neuf, briques importees/adaptees
+            (InsertEchelle/PaysTrace recrees sur le modele Acte 1, geo/camera du proto
+            ProtoGazoducAfriqueComplete.tsx). Cf da-brief-acte2/BREAKDOWN-ACTE2.md pour le detail
+            frame-precis des 5 beats. */}
+        <Composition
+          id="D3-Gazoduc-Acte2-AAGP"
+          component={GazoducActe2AAGP}
+          durationInFrames={GAZODUC_A2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* PROTO comparatif 10s (2026-08-03) — retour Aziz sur le 1er rendu Acte 2 : fond trop
+            sombre, ouverture statique, vide autour du continent "ne marche pas". Variante A =
+            camera toujours resserree ; Variante B = memes reglages camera large MAIS geo etendue
+            (voisins Ameriqe du Sud/Europe/Moyen-Orient visibles). A trancher par Aziz avant
+            d'appliquer au fichier de prod GazoducActe2AAGP.tsx. */}
+        <Composition
+          id="RND-ProtoA2-CameraProche"
+          component={ProtoA2CameraProche}
+          durationInFrames={PROTO_A2_COMPARE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-ProtoA2-VoisinsVisibles"
+          component={ProtoA2VoisinsVisibles}
+          durationInFrames={PROTO_A2_COMPARE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* MIX (Aziz 2026-08-03) : camera resserree (A) + voisins visibles (B) — A seule laisse
+            encore du vide au jugement d'Aziz, B seule dilue le sujet. */}
+        <Composition
+          id="RND-ProtoA2-Mix"
+          component={ProtoA2Mix}
+          durationInFrames={PROTO_A2_COMPARE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* CAMERA CONTINUE (2026-08-03) — Regle 1 du cadre REVISION-V2-APRES-REJET-V1.md : position
+            recalculee CHAQUE FRAME le long du trace complet (anticipation + sillage), remplace le
+            systeme camFor/lerpCam a 3-4 points fixes. Construite sur la geo elargie du Mix deja
+            valide (voisins visibles). Convergence Gemini + agent Map Animation sur ce mecanisme. */}
+        <Composition
+          id="RND-ProtoA2-CameraContinue"
+          component={ProtoA2CameraContinueSurMix}
+          durationInFrames={PROTO_A2_COMPARE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Meme mecanisme de camera continue, teste sur les 13 VRAIS jalons AAGP (Nigeria->Maroc,
+            20s) — le test a 4 jalons proches ne faisait quasiment pas bouger la camera (echantillon
+            trop court, Aziz 2026-08-03). */}
+        <Composition
+          id="RND-ProtoA2-CameraContinue13Jalons"
+          component={ProtoA2CameraContinue13Jalons}
+          durationInFrames={PROTO_A2_13JALONS_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -2720,6 +2791,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-PiliersGouffre" component={PiliersGouffre16x9} durationInFrames={PILIERS_GOUFFRE_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-EnchainementGestesValides" component={EnchainementGestesValides} durationInFrames={ENCHAINEMENT_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-EnchainementGestesExpressifs" component={EnchainementGestesExpressifs} durationInFrames={EXPRESSIFS_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-SceneCreancier" component={SceneCreancier} durationInFrames={CREANCIER_FRAMES} fps={30} width={1920} height={1080} />
         {/* PROTOTYPE JETABLE (2026-08-03) — comparatif pose "au sol", a retirer apres decision d'Aziz */}
         <Composition id="RND-TestPoseSolOptions" component={TestPoseSolOptions} durationInFrames={30} fps={30} width={1920} height={1080} />
         <Composition id="RND-TestPoseSolRound2" component={TestPoseSolRound2} durationInFrames={30} fps={30} width={1920} height={1080} />

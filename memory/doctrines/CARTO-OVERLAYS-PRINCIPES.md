@@ -18,6 +18,10 @@ le re-render). JAMAIS de `left/top` fixe en pixels. Sinon l'élément DÉRIVE qu
 
 ## 5 PRINCIPES OVERLAY (issus des retours Aziz sur la scène gisements E1)
 - **P1 — jamais de texte nu sur la carte** → toujours une géoplaque (`GeoCountryPlaque`), un jeton ou une plaque cadrée.
+  ⚠️ Rappel (2026-08-04, Gazoduc Acte 2) : sur un tracé en progression (caméra qui suit un trajet
+  multi-pays), un label texte fixe qui RESTE affiché en continu (ex. `CountryLabel` codé sans passer
+  par `GeoCountryPlaque`) encombre l'écran — préférer une géoplaque qui APPARAÎT et FADE au point
+  d'arrêt, pas un texte qui persiste pendant tout le reste du trajet.
 - **P2 — plaque déportée** dans l'océan / à gauche (colonne libre), reliée au point, jamais posée SUR le continent.
 - **P3 — leader FLÉCHÉ** visible du point géo vers la plaque déportée (ligne or + pointe).
 - **P4 — marqueurs gros + pulse rapide**, viser au-delà du cercle (sonar qui se propage).

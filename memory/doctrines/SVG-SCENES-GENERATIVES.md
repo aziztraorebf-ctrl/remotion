@@ -843,3 +843,13 @@ Une scène SVG a DEUX couches d'animation, pas une :
 
 ### 2. COMPOSANT À ÉTATS PILOTÉ PAR PROPS = fil de transformation multi-beats
 Coder un composant SVG à N états dont TOUTE la logique de transformation est en **props** — ZÉRO `useCurrentFrame` interne. Le beat parent calcule les progressions (audio-derived) et les passe en props. Prouvé : `VergerCacao` (états mort/reverdit/fissure) réutilisé tel quel en B3 ET B4 — même monde qui évolue (le verger de B3 reverdit puis se fissure en B4), sans dupliquer le code. Avantages : continuité du monde (fil de transformation, cf [[INTENTION-FORME-SVG]]), état de chaque beat testable isolément (compo preview), un seul endroit à corriger. Pattern complémentaire : un composant "construction" piloté par `build`/`colorize` (trace ordonné structure→détails) — cf `UsineConstruction`.
+
+### 3. BRIEF "LIBERTÉ CRÉATIVE" > BRIEF DIRIGÉ POUR LA RICHESSE DU DESSIN (2026-08-04, Gazoduc Acte 2)
+Deux techniques de brief comparées sur les mêmes 2 scènes (Fable 5, inserts SVG signature+financement) :
+un **brief dirigé** (5 groupes `<g id>` imposés, éléments listés) vs un **brief liberté créative**
+(registre visuel + exigence narrative/le sens à porter + interdits, SANS lister les éléments à
+dessiner). Le brief libre a gagné sur les 2 scènes — métaphores plus riches et plus originales
+(ex. tracé pointillé doré directement sur le document plutôt qu'une carte séparée ; tuyau qui
+redevient plan d'ingénieur plutôt qu'une jauge classique). Règle : pour une scène-clé (climax
+narratif, pas un jeton/asset utilitaire), préférer poser le CADRE (registre + intention + interdits)
+et laisser le modèle composer, plutôt que dicter une liste fermée de `<g id>`.

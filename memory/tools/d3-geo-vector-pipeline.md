@@ -200,3 +200,7 @@ Pour 80s scene complete (extrapolation) : ~15-25 min render. Pour scene narrativ
 - Composition template : `quebec-jacques-poc/src/AtlasV2GlobeTest.tsx` + `AtlasV2SceneS3Test.tsx`
 - Precompute script : `quebec-jacques-poc/scripts-atlas/precompute-atlas-v2-data.mjs`
 - Data extracted : `quebec-jacques-poc/src/atlas-v2-data.json` (1.2 MB, 4 datasets)
+- **Geo elargie Gazoduc** (2026-08-04) : `scripts/tools/generate-gazoduc-geo-elargie.mjs` genere
+  `src/projects/_rnd/d3-16x9/gazoducGeoElargie.json` — 76 pays (Afrique + voisins : Bresil/Venezuela,
+  Europe complete, Moyen-Orient) vs les 54 pays de l'original Afrique seule, meme fitExtent. Reutilisable
+  pour tout futur beat carte D3 necessitant un cadrage plus large que l'Afrique stricte.

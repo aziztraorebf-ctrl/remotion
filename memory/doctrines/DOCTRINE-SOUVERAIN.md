@@ -174,6 +174,19 @@ Avant de render un beat avec Mapbox, vérifier :
 - L'esthétique réelle change tout (couleurs dominantes, équilibre composition, vide négatif)
 - Exception : prototype rapide pour valider mécanique d'animation → placeholders OK
 
+### 4.4 Acte multi-registres = segments distincts au montage, jamais un fichier monolithique
+- Test pour trancher CARTE vs INSERT SVG narratif : le sens dépend-il d'une position géographique
+  réelle (spatial/causal → CARTE) ou d'une relation/état/émotion sans ancrage géo fort (→ INSERT SVG) ?
+- Si un acte mélange les deux registres (ex: genèse d'un accord + tracé physique + financement
+  manquant), NE PAS les fusionner dans un seul fichier avec des placeholders internes pour les
+  parties non-carte — découper en fichiers/segments séparés dès le breakdown, montés bout à bout.
+- Preuve (Gazoduc Acte 2, 2026-08-04) : un fichier carte unique de 2min18 avec 2 placeholders
+  d'inserts intégrés dedans a été rejeté — la demande était un segment carte COURT (~25-30s, tracé
+  seul) encadré par 2 inserts SVG narratifs distincts (signature, financement), montés séparément.
+- Corollaire : le mécanisme technique d'un segment (ex. caméra continue D3) reste valide et
+  réutilisable indépendamment de ce découpage — c'est la DURÉE et le CONTENU du fichier qui doivent
+  suivre le découpage en segments, pas le mécanisme d'animation lui-même.
+
 ---
 
 ## 5. GRAPHISME PREMIUM

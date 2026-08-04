@@ -189,6 +189,14 @@ Quand on cherche COMMENT animer/résoudre un plan (pas un diagnostic d'écart su
 4. **DEMANDE ACTIONNABLE** : liste PRIORISÉE de techniques concrètes + "ce que ça fait ressentir" + valeurs chiffrées
    (ex: scale 1.0→1.04 sur 16s, ease-out). Pas de prose, pas de score.
 
+⚠️ **Corollaire palette/esthétique (2026-08-04, Gazoduc Acte 2)** : la contrainte "décris l'intention,
+jamais de code" (point 2) a un revers — sans voir le fichier réel, les 3 voix peuvent aussi halluciner
+un CHOIX ESTHÉTIQUE (palette, teinte) cohérent en apparence mais absent du prototype existant (halluciné
+doré/orange alors que le prototype réel utilisait teal). La convergence 3/3 sur une couleur ne prouve
+rien si aucune des 3 n'a vu le code. Avant de présenter une recommandation de palette/style au gate,
+vérifier contre le fichier .tsx réel (grep les constantes de couleur), pas seulement contre la
+description texte du brief.
+
 **3 modèles, pas 1** (Gemini + DeepSeek + Kimi, même prompt EXACT) : la convergence VALIDE le filon (techniques citées
 par 3/3 = on code sans douter), la divergence signale le risqué (cité par 1/3 = à écarter ou tester). Coût quasi nul.
 Puis appliquer la section ci-dessus (vérifier chaque solution contre nos contraintes + test court si testable).

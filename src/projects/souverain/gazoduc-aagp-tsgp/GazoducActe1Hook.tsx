@@ -509,13 +509,23 @@ export const GazoducActe1Hook: React.FC = () => {
                         stroke={t.flowGold} strokeWidth={1.8 + europePulse * 1.2} strokeOpacity={europeReveal * europePulse} />
                     );
                   })}
+                  {/* glow SANS filter:blur CSS (interdit projet) — halo large+transparent superpose
+                      a un second trait plus fin, meme technique que le glow des arcs AAGP/TSGP
+                      (strokeWidth 11/opacity 0.18 puis strokeWidth 4.4 plein, plus bas dans ce fichier) */}
                   {europeFeats.map((f, i) => {
                     const d = path(f as any);
                     if (!d) return null;
                     return (
                       <path key={`eu-glow-${i}`} d={d} fill="none"
-                        stroke={t.flowGold} strokeWidth={5} strokeOpacity={europeReveal * europePulse * 0.35}
-                        style={{ filter: "blur(3px)" }} />
+                        stroke={t.flowGold} strokeWidth={9} strokeOpacity={europeReveal * europePulse * 0.18} />
+                    );
+                  })}
+                  {europeFeats.map((f, i) => {
+                    const d = path(f as any);
+                    if (!d) return null;
+                    return (
+                      <path key={`eu-glow2-${i}`} d={d} fill="none"
+                        stroke={t.flowGold} strokeWidth={5} strokeOpacity={europeReveal * europePulse * 0.35} />
                     );
                   })}
                 </>

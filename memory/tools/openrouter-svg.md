@@ -772,3 +772,11 @@ le brief pur (bypass du prompt systeme cable). Prouve : le meme brief en appel d
 proposition (`corridor-gpt-direct.txt`). ⚠️ Rappel : une proposition SVG de Sol reste un SIGNAL d'intention
 graphique — un SVG PLAT n'est PAS collable sur un globe D3 anime (qui se reprojette frame par frame), on
 RE-DESSINE le trace en coords lon/lat (cf [[globe-d3-moteur-cartographique-reutilisable]] § windingCircle).
+
+## Script comparatif 4-providers `scripts/tools/gazoduc-svg-inserts-gen.py` (2026-08-04)
+
+Nouveau script generique multi-provider (gemini/gpt/glm/kimi, un appel par modele, meme brief), utilise
+pour comparer 4 propositions SVG sur les memes 2 scenes (inserts narratifs Gazoduc Acte 2). Modeles exacts :
+`gemini-3.1-pro-preview`, `openai/gpt-5.6-sol`, `z-ai/glm-5.2`, `moonshotai/kimi-k3` (Kimi K3 avec
+`max_tokens=16000` + `reasoning.max_tokens=2000`, sinon `content=null` — cf [[kimi-k3-reasoning-borne]]).
+Pattern reutilisable pour toute future comparaison a 4 voix sur une meme scene SVG.

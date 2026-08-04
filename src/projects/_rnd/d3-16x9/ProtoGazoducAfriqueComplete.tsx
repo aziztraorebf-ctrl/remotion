@@ -583,7 +583,11 @@ export const ProtoGazoducAfriqueComplete: React.FC = () => {
           </g>
         </svg>
 
-        {/* legende minimale (repere lecture, pas de sous-titre bas d'ecran — safe zone) */}
+        {/* legende minimale (repere lecture, pas de sous-titre bas d'ecran — safe zone) :
+            titre de test "NIGERIA" / "DEUX GAZODUCS RIVAUX" retire (etait un placeholder de proto,
+            pas un texte destine au rendu final, demande Aziz 2026-08-03) — ne reste que les 2
+            acronymes AAGP/TSGP avec pastille de couleur, pour que le spectateur sache toujours
+            a quel trace se fier. A retirer entierement si juge distrayant a l'usage (Aziz). */}
         <div
           style={{
             position: "absolute",
@@ -593,16 +597,14 @@ export const ProtoGazoducAfriqueComplete: React.FC = () => {
             color: TARGET_GLOW,
           }}
         >
-          <div style={{ fontSize: 22, letterSpacing: 5, color: "#8fa3c8", fontWeight: 700 }}>NIGERIA</div>
-          <div style={{ fontSize: 36, fontWeight: 900 }}>DEUX GAZODUCS RIVAUX</div>
-          <div style={{ display: "flex", gap: 28, marginTop: 14, fontSize: 20 }}>
+          <div style={{ display: "flex", gap: 28, fontSize: 20 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 26, height: 4, background: AAGP_COLOR, borderRadius: 2 }} />
-              <span>AAGP — cotier, jusqu&apos;en Europe</span>
+              <span>AAGP</span>
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <div style={{ width: 26, height: 4, background: TSGP_COLOR, borderRadius: 2 }} />
-              <span>TSGP — direct, Sahara</span>
+              <span>TSGP</span>
             </div>
           </div>
         </div>

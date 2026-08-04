@@ -1,0 +1,153 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="desk-clip">
+      <polygon points="100,300 1820,300 1920,1080 0,1080" />
+    </clipPath>
+  </defs>
+
+  <!-- FOND DE LA SCÈNE -->
+  <rect width="1920" height="1080" fill="#182746" />
+
+  <!-- DECOR : Bureau stylisé (perspective cartographique/isométrique) -->
+  <g id="decor">
+    <!-- Surface principale du bureau -->
+    <polygon points="100,300 1820,300 1920,1080 0,1080" fill="#121d36" />
+    
+    <!-- Ligne d'horizon du bureau -->
+    <line x1="0" y1="300" x2="1920" y2="300" stroke="#3a5488" stroke-width="4" />
+    <line x1="0" y1="308" x2="1920" y2="308" stroke="#2a3f66" stroke-width="1" />
+
+    <!-- Grille de perspective radiale (style gravure / blueprint) -->
+    <g clip-path="url(#desk-clip)" stroke="#1a2b4c" stroke-width="2">
+      <!-- Lignes fuyantes vers un point de fuite central virtuel -->
+      <line x1="960" y1="-200" x2="-300" y2="1080" />
+      <line x1="960" y1="-200" x2="-50" y2="1080" />
+      <line x1="960" y1="-200" x2="200" y2="1080" />
+      <line x1="960" y1="-200" x2="450" y2="1080" />
+      <line x1="960" y1="-200" x2="700" y2="1080" />
+      <line x1="960" y1="-200" x2="960" y2="1080" />
+      <line x1="960" y1="-200" x2="1220" y2="1080" />
+      <line x1="960" y1="-200" x2="1470" y2="1080" />
+      <line x1="960" y1="-200" x2="1720" y2="1080" />
+      <line x1="960" y1="-200" x2="1970" y2="1080" />
+      <line x1="960" y1="-200" x2="2220" y2="1080" />
+      
+      <!-- Lignes horizontales pour la profondeur (espacement progressif) -->
+      <line x1="0" y1="350" x2="1920" y2="350" />
+      <line x1="0" y1="420" x2="1920" y2="420" />
+      <line x1="0" y1="510" x2="1920" y2="510" />
+      <line x1="0" y1="630" x2="1920" y2="630" />
+      <line x1="0" y1="780" x2="1920" y2="780" />
+      <line x1="0" y1="970" x2="1920" y2="970" />
+    </g>
+
+    <!-- Rose des vents cartographique intégrée au bureau (très pâle) -->
+    <ellipse cx="960" cy="600" rx="600" ry="240" fill="none" stroke="#2a3f66" stroke-width="2" />
+    <ellipse cx="960" cy="600" rx="580" ry="232" fill="none" stroke="#2a3f66" stroke-width="1" stroke-dasharray="10 15" />
+    <ellipse cx="960" cy="600" rx="200" ry="80" fill="none" stroke="#2a3f66" stroke-width="2" opacity="0.5" />
+  </g>
+
+  <!-- RAPPEL 2016 : Genèse symbolique flottant discrètement -->
+  <g id="rappel_2016" transform="translate(350, 300)" opacity="0.7">
+    <!-- Ligne de connexion pointillée vers le futur (document central) -->
+    <path d="M 100 60 Q 400 200, 600 350" fill="none" stroke="#3a5488" stroke-width="2" stroke-dasharray="8 12" />
+    
+    <!-- Bloc fondateur / Première pierre en filaire isométrique -->
+    <polygon points="0,0 80,-40 160,0 80,40" fill="none" stroke="#4a6b9c" stroke-width="2" stroke-dasharray="6 4" />
+    <polygon points="0,0 80,40 80,120 0,80" fill="none" stroke="#4a6b9c" stroke-width="2" stroke-dasharray="6 4" />
+    <polygon points="160,0 80,40 80,120 160,80" fill="none" stroke="#4a6b9c" stroke-width="2" stroke-dasharray="6 4" />
+    <!-- Arêtes cachées -->
+    <polyline points="0,80 80,40 160,80" stroke="#2a3f66" stroke-width="1" fill="none" />
+    
+    <!-- Symbole de la poignée de main / accord : deux anneaux entrelacés suspendus -->
+    <ellipse cx="60" cy="-50" rx="45" ry="20" fill="none" stroke="#5473a1" stroke-width="3" />
+    <ellipse cx="100" cy="-50" rx="45" ry="20" fill="none" stroke="#5473a1" stroke-width="3" />
+    <!-- Points de lumière (blueprint) -->
+    <circle cx="80" cy="-40" r="3" fill="#5473a1" />
+    <circle cx="80" cy="40" r="4" fill="#5473a1" />
+  </g>
+
+  <!-- LE DOCUMENT : Traité de juillet 2026 -->
+  <g id="document">
+    <!-- Ombre portée sur le bureau -->
+    <polygon points="620,410 1340,410 1490,870 470,870" fill="#0b1221" />
+    
+    <!-- Feuille principale en perspective -->
+    <polygon points="600,400 1320,400 1470,850 450,850" fill="#1a2845" stroke="#4a6b9c" stroke-width="4" />
+    
+    <!-- Cadre intérieur élégant -->
+    <polygon points="620,420 1300,420 1440,830 480,830" fill="none" stroke="#3a5488" stroke-width="2" />
+    <!-- Accents aux 4 coins du cadre -->
+    <circle cx="620" cy="420" r="4" fill="#5473a1" />
+    <circle cx="1300" cy="420" r="4" fill="#5473a1" />
+    <circle cx="480" cy="830" r="4" fill="#5473a1" />
+    <circle cx="1440" cy="830" r="4" fill="#5473a1" />
+
+    <!-- Représentation abstraite du texte du traité (Lignes alignées en perspective) -->
+    <path d="M 750 480 L 1170 480 M 735 520 L 1185 520 M 720 560 L 1200 560 M 705 600 L 1215 600 M 690 640 L 980 640" stroke="#5473a1" stroke-width="3" stroke-linecap="round" />
+    
+    <!-- Les 15 encarts de signature pour les chefs d'État ouest-africains -->
+    <!-- Ligne 1 -->
+    <path d="M 740 720 L 790 720 M 840 720 L 890 720 M 940 720 L 990 720 M 1040 720 L 1090 720 M 1140 720 L 1190 720" stroke="#3a5488" stroke-width="3" stroke-linecap="round" />
+    <!-- Ligne 2 -->
+    <path d="M 710 760 L 765 760 M 820 760 L 875 760 M 930 760 L 985 760 M 1040 760 L 1095 760 M 1150 760 L 1205 760" stroke="#3a5488" stroke-width="3" stroke-linecap="round" />
+    <!-- Ligne 3 -->
+    <path d="M 680 800 L 740 800 M 800 800 L 860 800 M 920 800 L 980 800 M 1040 800 L 1100 800 M 1160 800 L 1220 800" stroke="#3a5488" stroke-width="3" stroke-linecap="round" />
+  </g>
+
+  <!-- HALO ET SCEAU : Point d'impact final du tampon (Climax, doré) -->
+  <!-- Il est pré-positionné sur le document, prêt à être affiché/animé via opacité/scale en code -->
+  <g id="halo_sceau">
+    <!-- Halo d'énergie doré avec cercles concentriques (pas de blur) -->
+    <ellipse cx="960" cy="700" rx="200" ry="80" fill="none" stroke="#FFC742" stroke-width="1" opacity="0.1" />
+    <ellipse cx="960" cy="700" rx="150" ry="60" fill="none" stroke="#FFC742" stroke-width="2" opacity="0.3" />
+    <ellipse cx="960" cy="700" rx="100" ry="40" fill="#FFC742" opacity="0.1" />
+    <ellipse cx="960" cy="700" rx="60" ry="24" fill="#FFC742" opacity="0.2" />
+
+    <!-- L'empreinte physique du sceau (mise à plat via transform) -->
+    <g transform="translate(960, 700) scale(1, 0.4)">
+      <!-- Contour du tampon -->
+      <circle cx="0" cy="0" r="70" fill="none" stroke="#FFC742" stroke-width="4" />
+      <circle cx="0" cy="0" r="60" fill="none" stroke="#FFC742" stroke-width="1" stroke-dasharray="5 5" />
+      <!-- Étoile centrale majestueuse à 8 branches -->
+      <path d="M 0 -60 L 15 -15 L 60 0 L 15 15 L 0 60 L -15 15 L -60 0 L -15 -15 Z" fill="#FFC742" opacity="0.8" />
+      <g transform="rotate(45)">
+        <path d="M 0 -45 L 10 -10 L 45 0 L 10 10 L 0 45 L -10 10 L -45 0 L -10 -10 Z" fill="none" stroke="#182746" stroke-width="3" />
+      </g>
+      <!-- Cœur du sceau -->
+      <circle cx="0" cy="0" r="15" fill="#182746" />
+      <circle cx="0" cy="0" r="8" fill="#FFC742" />
+    </g>
+  </g>
+
+  <!-- LE TAMPON OFFICIEL : En lévitation, prêt à frapper (construction Z-index parfaite) -->
+  <g id="tampon" transform="translate(960, 250)">
+    <!-- Plaque de frappe dorée (Partie la plus basse physiquement) -->
+    <ellipse cx="0" cy="95" rx="70" ry="25" fill="#FFC742" opacity="0.9" />
+    <path d="M -70 85 L -70 95 A 70 25 0 0 0 70 95 L 70 85 Z" fill="#FFC742" stroke="#FFC742" stroke-width="1" />
+    <!-- Gravure sous la plaque (détail subtil) -->
+    <ellipse cx="0" cy="95" rx="55" ry="18" fill="none" stroke="#b38b2e" stroke-width="2" />
+    <ellipse cx="0" cy="95" rx="45" ry="14" fill="none" stroke="#b38b2e" stroke-width="1" stroke-dasharray="4 4" />
+
+    <!-- Flanc de la base du tampon -->
+    <path d="M -70 60 L -70 85 A 70 25 0 0 0 70 85 L 70 60 Z" fill="#0d1526" stroke="#5473a1" stroke-width="2" />
+    <!-- Sommet de la base -->
+    <ellipse cx="0" cy="60" rx="70" ry="25" fill="#1a2b4c" stroke="#5473a1" stroke-width="2" />
+
+    <!-- Manche : Partie inférieure (évasée) -->
+    <path d="M -15 -20 C -15 20, -25 30, -30 60 L 30 60 C 25 30, 15 20, 15 -20 Z" fill="#121d36" stroke="#5473a1" stroke-width="2" />
+    <!-- Manche : Partie centrale / supérieure (courbe) -->
+    <path d="M -45 -110 C -45 -70, -15 -60, -15 -20 L 15 -20 C 15 -60, 45 -70, 45 -110 Z" fill="#182746" stroke="#5473a1" stroke-width="2" />
+
+    <!-- Pommeau supérieur du manche -->
+    <!-- Base du pommeau (caché partiellement par le corps) -->
+    <ellipse cx="0" cy="-110" rx="45" ry="15" fill="#121d36" stroke="#3a5488" stroke-width="2" />
+    <!-- Flanc du pommeau -->
+    <path d="M -45 -140 L -45 -110 A 45 15 0 0 0 45 -110 L 45 -140 Z" fill="#152443" stroke="#5473a1" stroke-width="2" />
+    <!-- Sommet du pommeau (face la plus haute) -->
+    <ellipse cx="0" cy="-140" rx="45" ry="15" fill="#1a2b4c" stroke="#5473a1" stroke-width="2" />
+    
+    <!-- Reflet élégant sur le pommeau -->
+    <path d="M -35 -140 Q 0 -150 35 -140" fill="none" stroke="#5473a1" stroke-width="2" stroke-linecap="round" />
+  </g>
+</svg>
