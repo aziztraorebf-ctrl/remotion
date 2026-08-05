@@ -483,6 +483,10 @@ import { PoseSolPortee } from "./projects/_rnd/fable-libre/PoseSolPortee";
 import { EnchainementGestesExpressifsSol, EXPRESSIFS_SOL_FRAMES } from "./projects/_rnd/fable-libre/EnchainementGestesExpressifsSol";
 import { SceneCreancier, CREANCIER_FRAMES } from "./projects/_rnd/fable-libre/SceneCreancier";
 import { SceneUnSeulPecheur, UN_SEUL_PECHEUR_FRAMES } from "./projects/_rnd/fable-libre/SceneUnSeulPecheur";
+import { FlowdeskAbstrait2A, FLOWDESK_ABSTRAIT_FRAMES, FLOWDESK_ABSTRAIT_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstrait2A";
+import { FlowdeskAbstraitV3, FLOWDESK_V3_FRAMES, FLOWDESK_V3_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV3";
+import { FlowdeskV4Panel1Preview, FLOWDESK_V4_PANEL1_PREVIEW_FRAMES } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV4";
+import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } from "./projects/_client-sim/flowdesk/FlowdeskPersonne2B";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -4398,6 +4402,46 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1080}
         height={1920}
+      />
+
+      {/* Client-sim Flowdesk — Volet 2A, registre abstrait geometrique (4 panneaux Fable5). */}
+      <Composition
+        id="Flowdesk-Abstrait-2A"
+        component={FlowdeskAbstrait2A}
+        durationInFrames={FLOWDESK_ABSTRAIT_FRAMES}
+        fps={FLOWDESK_ABSTRAIT_FPS}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Client-sim Flowdesk — V3, refonte semantique (vocabulaire nomme + plein cadre + principes motion design). */}
+      <Composition
+        id="Flowdesk-Abstrait-V3"
+        component={FlowdeskAbstraitV3}
+        durationInFrames={FLOWDESK_V3_FRAMES}
+        fps={FLOWDESK_V3_FPS}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Client-sim Flowdesk — V4 Panneau 1 seul (preview de validation avant les 3 autres panneaux). */}
+      <Composition
+        id="Flowdesk-V4-Panel1-Preview"
+        component={FlowdeskV4Panel1Preview}
+        durationInFrames={FLOWDESK_V4_PANEL1_PREVIEW_FRAMES}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Client-sim Flowdesk — Volet 2B, registre personne/emotion (silhouette MiniMax H3). */}
+      <Composition
+        id="Flowdesk-Personne-2B"
+        component={FlowdeskPersonne2B}
+        durationInFrames={FLOWDESK_PERSONNE_FRAMES}
+        fps={FLOWDESK_PERSONNE_FPS}
+        width={1920}
+        height={1080}
       />
 
     </>

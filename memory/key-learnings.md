@@ -984,3 +984,39 @@ statique. Règle transversale à tout futur beat Remotion utilisant du SVG narra
 groupes `<g id>`), le publier sur here.now (jamais Vercel Blob/catbox pour du HTML), et faire
 valider le PLACEMENT par Aziz avant d'investir le travail de code d'animation — a évité 2× de coder
 une animation sur un placement qui aurait été rejeté, sur ce même chantier.
+
+## Wrapper `<div>` sans `position` = hauteur 0 si tous ses enfants sont en `position:absolute` — 2026-08-06 (Flowdesk)
+
+Piège CSS générique (pas spécifique à Remotion), rencontré sur `FlowdeskPersonne2B.tsx` : un
+`<div>` wrapper appliquant un `transform: scale()` sur un groupe d'icônes SVG, SANS
+`position: absolute` explicite sur ce wrapper lui-même. Comme tous ses enfants (`DrawnIconV2`)
+étaient eux-mêmes en `position: absolute`, ils étaient hors du flux normal — le wrapper n'avait donc
+AUCUN contenu dans le flux et mesurait une hauteur de **0px**. Deux conséquences en cascade :
+(1) tous les `top: ${yPct}%` des enfants se résolvaient contre une hauteur de 0 → tous les enfants
+s'empilaient sur y=0 quel que soit leur `yPct` visé ; (2) le `transformOrigin` du wrapper (ex.
+`"50% 20%"`) se calculait sur cette hauteur nulle, décalant tout le groupe hors cadre au moindre
+`scale()` appliqué.
+
+**Symptôme trompeur** : le bug ressemblait à un problème de `transformOrigin` mal réglé sur le
+scale — 2 tentatives de fix ont ciblé le MAUVAIS élément (le wrapper zoom parent) avant qu'un agent
+dédié (délégué après le 2e échec, protocole CLAUDE.md respecté) ne mesure objectivement (DOM réel
+dans un navigateur) que le vrai coupable était ce wrapper enfant à hauteur 0.
+
+**Règle** : dès qu'un groupe d'éléments `position: absolute` a besoin d'un wrapper commun pour lui
+appliquer un `transform` (scale/rotate collectif), ce wrapper DOIT avoir explicitement
+`position: absolute; inset: 0` (ou height/width fixes) — jamais un simple `<div>` sans position en
+espérant qu'il "contienne" ses enfants absolus, il ne le fera jamais. Vérifier la hauteur CSS
+calculée du wrapper AVANT de diagnostiquer les enfants quand des `%` de positionnement semblent
+ignorés ou qu'un `scale()` collectif produit un décalage inattendu.
+
+## Vercel Blob (plan Hobby, 1GB) sature vite sur une session itérative multi-renders — 2026-08-06 (Flowdesk)
+
+Session de test MiniMax H3 avec ~9 itérations de render (v1 à v9) sur la même composition, chaque
+upload de vérification laissé sur Vercel Blob sans nettoyage entre les itérations. Quota 1GB atteint
+en fin de session (964MB cumulés, tous projets confondus) — bloquant pour uploader le rendu final.
+
+**Règle** : sur une session de production itérative (plusieurs variantes du même render en
+quelques heures), nettoyer les uploads de vérification intermédiaires AU FIL DE L'EAU
+(`scripts/tools/cleanup-blob.py <prefix>` après chaque itération validée/dépassée), pas seulement
+en fin de session. Le quota Hobby (1GB) est petit face à des vidéos 2K de plusieurs Mo chacune —
+une dizaine d'itérations suffit à le saturer.

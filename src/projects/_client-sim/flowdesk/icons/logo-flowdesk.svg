@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300">
+  <g id="logo-shape">
+    <circle cx="150" cy="150" r="138" fill="#0B1F3A"/>
+    <circle cx="150" cy="150" r="138" fill="none" stroke="#FF6B1A" stroke-width="6"/>
+  </g>
+  <g id="logo-letter" fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+    <path id="logo-letter-spine" d="M108 208 V92" />
+    <path id="logo-letter-arm-top" d="M108 92 H186" />
+    <path id="logo-letter-arm-mid" d="M108 150 H172" />
+  </g>
+  <g id="logo-flow">
+    <path id="logo-flow-line" d="M74 226 C 110 246, 190 246, 226 226" fill="none" stroke="#FF6B1A" stroke-width="10" stroke-linecap="round"/>
+    <path id="logo-flow-arrow" d="M212 214 L228 226 L214 240" fill="none" stroke="#FF6B1A" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

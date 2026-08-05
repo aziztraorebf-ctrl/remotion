@@ -1,5 +1,51 @@
 # Brief de passation — Flowdesk, prochaine session (ANIMATION)
 
+## ⭐⭐ MISE A JOUR 2026-08-06 — Volet 2B (personne/émotion) PRODUIT, lire AVANT le reste du fichier
+
+Le reste de ce fichier (ci-dessous) décrit l'état du 2026-08-04, où RIEN n'était animé — c'est
+maintenant FAUX pour le Volet 2B. Section conservée pour l'historique des décisions (palette,
+leçons par modèle LLM), mais le statut "reste à faire" ne s'applique plus qu'aux points listés ici.
+
+**Livrable produit et validé (panneaux 1 "Chaos" + 2 "Bascule") :**
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/flowdesk-personne-2b-v9-final-UKKPrAI1m7eK91F1hC5aGZfH7OuzHU.mp4
+(fallback disque si le lien expire : `out/_r-and-d/flowdesk-personne-2b-v9-final.mp4`)
+
+**Ce qui a été fait** : silhouette du personnage animée via **MiniMax H3** (nouveau modèle
+image-to-video, fal.ai, ~$1.30/5s en 2K — voir `memory/tools/minimax.md` section H3 pour le détail
+technique, notamment la contrainte ping-pong via `ffmpeg -vf reverse`, pas de reverse natif
+Remotion/navigateur) + icônes SVG (Fable5, 2 passes : v1 cercles puis v2 bulles rectangulaires après
+comparaison au vrai storyboard de référence) + logo Flowdesk animé (tracé séquentiel SVG) + 6 SFX
+notification + 1 lit de tension générés via ElevenLabs Sound Effects API + narration/musique déjà
+existantes. Composition : `src/projects/_client-sim/flowdesk/FlowdeskPersonne2B.tsx` (enregistrée
+dans `Root.tsx` sous l'id `Flowdesk-Personne-2B`).
+
+**DA-brief upstream lancé pour la première fois sur ce projet** (Gemini+Kimi+DeepSeek, brief adapté
+format pub 45s/YouTube-premium) → synthèse tracée complète dans
+`src/projects/_client-sim/flowdesk/PLAN-DA-BRIEF-PERSONNE2B.md`.
+
+**Décision de goût notable (Aziz, 2026-08-06)** : exception ASSUMÉE et SCOPÉE à ce panneau précis —
+les icônes de notification volent en continu de façon désordonnée sur tout le cadre (haut ET bas),
+pas juste apparaître-puis-rester-figées. Le chaos volant EST le sujet du panneau. Ne s'applique PAS
+aux autres registres/objets inertes (règle générale CLAUDE.md inchangée par ailleurs).
+
+**⚠️ CHANTIER PARALLÈLE** : une autre session travaille SIMULTANÉMENT sur le même dossier
+`flowdesk/`, sur le registre ABSTRAIT (`FlowdeskAbstrait2A.tsx`, `FlowdeskAbstraitV3.tsx`,
+`FlowdeskAbstraitV4.tsx`, `camera.ts`, `groups-v3/` — tous untracked, datés d'aujourd'hui). Aucun
+conflit de fichier avec le Volet 2B, mais **vérifier l'état des DEUX fronts avant de trancher entre
+eux** — Aziz n'a pas encore comparé/choisi entre registre abstrait et registre personne.
+
+**Reste à faire (confirmé par Aziz avant coupure de session)** :
+1. Générer les vidéos MiniMax H3 pour panneaux 3 (Mécanisme) et 4 (Résolution), 5s chacune
+2. Coder leur animation — fond CRÈME validé pour le panneau 3 (rupture de palette assumée),
+   structure tripartite entrée/traitement/sortie suggérée par les 3 modèles du DA-brief mais
+   PAS encore débattue en détail avec Aziz
+3. Questions ouvertes non tranchées : le dosage du chaos/débordement des icônes panneau 1 en v9
+   est-il définitif ou encore à ajuster ? Jugement d'Aziz sur les 6 SFX une fois entendus en contexte ?
+
+---
+
+## État au 2026-08-04 (historique — palette, décisions par registre, leçons LLM)
+
 Session de test client simulé "visual storytelling explicatif" (positionnement freelance, pas
 Souverain). Toute la matière STATIQUE est prête. Cette session-ci n'a PAS animé — reste à faire.
 

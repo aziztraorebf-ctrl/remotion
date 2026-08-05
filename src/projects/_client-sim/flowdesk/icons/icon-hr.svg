@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="92" fill="#F5EFE4"/>
+  <path d="M40 60 h120 a12 12 0 0 1 12 12 v44 a12 12 0 0 1 -12 12 h-70 l-26 24 v-24 h-24 a12 12 0 0 1 -12 -12 v-44 a12 12 0 0 1 12 -12 z"
+        fill="none" stroke="#0B1F3A" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+  <text x="100" y="103" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700"
+        fill="#FF6B1A" text-anchor="middle" dominant-baseline="middle">RH</text>
+</svg>

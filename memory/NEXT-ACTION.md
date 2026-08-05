@@ -167,12 +167,12 @@ dessin progressif) : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore produit. Repère sujet :
 `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
-> ⚠️ **Aparté 2026-08-05** : le test client simulé "Flowdesk" a eu 4 itérations complètes cette
-> session (V1→V4, registre abstrait 2A). V4 (hybride 2A+2B avec clips vidéo) en cours, Panneau 1
-> seul codé, panneaux 2-4 à écrire — n'annule PAS la priorité Gazoduc Acte 3 ci-dessus. Pour
-> reprendre ce fil : `memory/episodes/_client-sim/flowdesk/STATUS.md` (source de vérité, remplace
-> l'ancien `BRIEF-PASSATION-ANIMATION.md` périmé). **Lequel reprendre en premier à la prochaine
-> session reste à décider avec Aziz — pas tranché ici.**
+> ⚠️ **Aparté 2026-08-06** : le test client simulé "Flowdesk" avance sur 2 registres en parallèle —
+> n'annule PAS la priorité Gazoduc Acte 3 ci-dessus. Registre 2A abstrait : V1→V4, V4 en cours
+> (Panneau 1 seul codé). Registre 2B personnage (MiniMax H3) : **panneaux 1+2 TERMINÉS ET VALIDÉS**
+> (livrable v9, lien dans STATUS.md), panneaux 3+4 restants. Pour reprendre : `memory/episodes/
+> _client-sim/flowdesk/STATUS.md` (source de vérité). **Quel registre finaliser en premier reste à
+> décider avec Aziz — pas tranché ici.**
 
 ---
 

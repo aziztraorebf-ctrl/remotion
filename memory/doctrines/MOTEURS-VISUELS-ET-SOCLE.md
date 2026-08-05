@@ -146,3 +146,24 @@ qu'une scène ne marche pas dans le moteur prévu) ; (2) **traçabilité des rou
 carte, c'était plat → passé en insert SVG »). Concrètement : le moteur dominant devient une COLONNE du
 script/storyboard ; puis chaque scène confirme/ajuste via intention → forme → moteur. S'intègre à
 [[DOCTRINE-SCRIPT-UNIFIEE]] et au pipeline storyboard→validation→breakdown.
+
+## ⭐ Techniques de motion design classique — vocabulaire sous-exploité (introduit 2026-08-06)
+
+3 techniques d'animation fondamentales, jamais utilisées dans ce repo avant le projet Flowdesk
+(panneau chaos de notifications, `FlowdeskPersonne2B.tsx`), suggérées à la demande explicite d'Aziz
+("qu'est-ce que toi tu vois, en tant qu'expert ?") — à considérer pour TOUT futur panneau avec du
+mouvement rapide/chaotique/désordonné, pas seulement Flowdesk :
+
+- **Squash & stretch** : un élément qui accélère/change de direction s'étire légèrement dans le sens
+  du mouvement (`scaleX`/`scaleY` différenciés selon la vitesse instantanée, pas un `scale` uniforme).
+  Donne du poids/de la vie à un pictogramme 2D plat — l'absence de cette technique est ce qui rend un
+  mouvement "plat" par comparaison à un mouvement animé classiquement.
+- **Anticipation** : un léger mouvement inverse (2-3 frames) précède un changement de direction marqué
+  — vend un mouvement chaotique comme intentionnel plutôt qu'aléatoire/random.
+- **Trails fantômes** : 2-3 copies dupliquées de l'élément en mouvement, décalées de quelques frames
+  dans le passé, opacité dégressive — vend la vitesse sans `filter: blur` (interdit en Remotion
+  headless). Technique gratuite en SVG (juste des `<g>` supplémentaires avec un délai de frame).
+
+Implémentation de référence : `src/projects/_client-sim/flowdesk/FlowdeskPersonne2B.tsx`, composant
+`FlyingIcon` (trajectoire Lissajous bruitée + squash/stretch dérivé de la vitesse instantanée +
+anticipation + trails).

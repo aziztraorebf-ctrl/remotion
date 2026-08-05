@@ -85,10 +85,26 @@ Le clip panel1 n'a pas ce problème (fond déjà `#0B1F3A`, joué en MP4 direct 
 
 ## Registre 2B (AUTRE session parallèle, ne pas toucher ni interpréter comme "à moi")
 
-`FlowdeskPersonne2B.tsx` · `PLAN-DA-BRIEF-PERSONNE2B.md` (diagnostic DA-brief : "wallpaper animé",
-mouvement présent mais pas de mise en scène — écho direct au problème rencontré côté 2A) ·
-`test-minimax-h3/` (clips source, utilisés en LECTURE par V4 mais produits par l'autre session) ·
-`icons/`, `videoPingPong.ts` (probablement 2B aussi, laisser tel quel sauf preuve contraire).
+⭐ **MISE À JOUR 2026-08-06 (fin de session 2B)** : panneaux 1 (Chaos) + 2 (Bascule) TERMINÉS ET
+VALIDÉS par Aziz. Livrable v9 : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/flowdesk-personne-2b-v9-final-UKKPrAI1m7eK91F1hC5aGZfH7OuzHU.mp4
+(fallback disque `out/_r-and-d/flowdesk-personne-2b-v9-final.mp4`). Personnage animé via **MiniMax
+H3** (nouveau modèle image-to-video, fal.ai, ~$1.30/5s — voir `memory/tools/minimax.md` § H3),
+icônes SVG en vol chaotique continu (squash&stretch/anticipation/trails — voir
+`memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md` § techniques motion design), logo animé, 6 SFX
+ElevenLabs intégrés. DA-brief upstream 3-modèles fait (`PLAN-DA-BRIEF-PERSONNE2B.md`) — même
+diagnostic initial "wallpaper animé" que 2A, corrigé depuis côté 2B (whip-pan, vol chaotique,
+zoom-in continu). **Reste côté 2B : panneaux 3+4** (5s chacun à générer via H3, puis coder
+l'animation — fond CRÈME validé pour panneau 3, structure tripartite suggérée par le DA-brief pas
+encore débattue en détail avec Aziz).
+
+Fichiers : `FlowdeskPersonne2B.tsx` · `PLAN-DA-BRIEF-PERSONNE2B.md` · `test-minimax-h3/` (clips
+source + v9-check/, utilisés en LECTURE par V4 mais produits par cette session) · `icons/`
+(iconsInline.ts v1 + iconsInlineV2.ts, TOUJOURS les deux actifs, pas un remplacement complet) ·
+`videoPingPong.ts` · `scripts/generate-sfx-flowdesk.py`.
+
+⚠️ **Décision d'Aziz en attente** : comparer 2A (V3 ou V4 selon avancement) et 2B (v9) une fois les
+deux complets, pour choisir le registre final ou un hybride — pas encore tranché à la clôture de
+cette session (2026-08-06).
 
 ## Prochaine priorité précise
 

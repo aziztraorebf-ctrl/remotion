@@ -1,9 +1,29 @@
-# Minimax Music 2.6 — Guide complet
+# Minimax — Guide complet (Music + TTS + H3 image-to-video)
 
-> Mise a jour : 2026-05-24
+> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3)
 > Endpoint musique : `fal-ai/minimax-music/v2.6`
 > Endpoint TTS : `fal-ai/minimax/speech-2.8-hd` (validé 2026-05-24)
 > **Note** : consulter ce fichier AVANT tout appel Minimax
+
+## ⭐ MiniMax H3 — image-to-video (produit DISTINCT, validé 2026-08-06)
+
+⚠️ Ne pas confondre avec Minimax Music/TTS ci-dessous — H3 est un modèle **vidéo**, sorti fin
+juillet/début août 2026, testé pour la première fois sur le projet Flowdesk (_client-sim, registre
+personne/émotion, panneaux "Chaos" et "Bascule" — voir `src/projects/_client-sim/flowdesk/`).
+
+- **Endpoint** : `minimax/h3/image-to-video` (fal.ai)
+- **Coût observé** : ~$1.30 pour 5s de vidéo en 2K
+- **Usage validé** : anime une image statique (silhouette flat-design SVG-like) en gardant
+  fidèlement le style d'origine — contrairement à Recraft qui ne produisait que des blocs SVG
+  rigides non-animables par partie. Résout le blocage "personnage ne peut pas être animé via
+  vectoriel" identifié dans une session antérieure.
+- **⛔ Pas de lecture inversée native** (limitation Remotion ET navigateur, pas spécifique à H3) —
+  pour un effet ping-pong (aller-retour en boucle), pré-générer la vidéo inversée via
+  `ffmpeg -vf reverse` puis alterner/concaténer les deux fichiers en `<Sequence>` Remotion. Ne
+  jamais tenter un `playbackRate` négatif au runtime, ça ne marche pas.
+- Fichiers de référence dans le repo : `src/projects/_client-sim/flowdesk/videoPingPong.ts`
+  (wrapper Remotion ping-pong) et `src/projects/_client-sim/flowdesk/test-minimax-h3/` (itérations
+  de test v1→v9).
 
 ## Minimax TTS — speech-2.8-hd (validé 2026-05-24)
 

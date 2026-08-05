@@ -94,12 +94,13 @@ Seul **A5 Géographie** (Mapbox) reste à produire — et son état « stub/plac
 le 3 juin est LUI AUSSI faux (`Beat4Geographie.tsx` fait 417 lignes, Mapbox complet). **Rendre et
 regarder le beat avant de conclure quoi que ce soit.**
 
-### Flowdesk (test client simulé) — EN COURS, V4 non terminé
-Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→V3 tranchées
-(V3 = dernière complète validée techniquement, jugement sémantique Aziz en attente), V4 (hybride
-2A+2B vidéo) en cours, Panneau 1 seul codé, panneaux 2-4 à écrire. Registre 2B (personnage
-vectoriel) mené par une session parallèle. ⚠️ Pas de branche dédiée (sur `feat/gazoduc-acte1-hook-
-globe`, hérité d'un autre chantier). Source de vérité : `memory/episodes/_client-sim/flowdesk/STATUS.md`.
+### Flowdesk (test client simulé) — EN COURS, 2 registres en comparaison
+Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→V3 tranchées, V4
+(hybride 2A+2B vidéo) en cours, Panneau 1 seul codé. Registre 2B (personnage, MiniMax H3) :
+**panneaux 1+2 TERMINÉS ET VALIDÉS** (livrable v9, lien dans STATUS.md), panneaux 3+4 restants.
+⚠️ Pas de branche dédiée (sur `feat/gazoduc-acte1-hook-globe`, hérité d'un autre chantier).
+Décision finale (2A vs 2B vs hybride) EN ATTENTE d'Aziz. Source de vérité :
+`memory/episodes/_client-sim/flowdesk/STATUS.md`.
 
 ### 💤 Dormants
 Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience) · Maroc Batteries
