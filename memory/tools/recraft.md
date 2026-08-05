@@ -116,3 +116,22 @@ Si la composition ne convient pas -> regenerer avec nouveau prompt, pas modifier
 ```
 
 **End frame = sujet seul + pose finale. Pas d'armee — Kling les invente mieux.**
+
+---
+
+## `generate_image` vs `vectorize_image` — silhouettes/illustration (test 2026-08-04)
+
+MCP `mcp__recraft__*` confirme connecte/fonctionnel (7380 credits au 2026-08-04, test client-sim
+Flowdesk — premier usage concret documente hors pipeline video ci-dessus).
+
+- **`vectorize_image`** (raster->SVG) produit des MILLIERS de `<path>` separes (8835 sur un test
+  silhouette), **zero groupe `<g id>` nomme** — inutilisable pour animer par partie (pas de
+  squelette/articulation), seulement animable comme BLOC RIGIDE ENTIER (fade/scale d'ensemble).
+- **`generate_image`** avec `style: vector_illustration` (substyle `line_art` teste) produit un SVG
+  propre (14-16 `<path>` seulement) et a donne le MEILLEUR rendu de silhouette humaine obtenu toutes
+  sources confondues sur ce test (mains/visage credibles, meilleur que Fable 5/Gemini/GPT sur ce cas
+  precis).
+- ⚠️ **Le substyle peut ECRASER la consigne de couleur du prompt texte** : le test est sorti en
+  noir/blanc pur malgre une consigne explicite de palette (bleu marine/orange) dans le prompt.
+  Toujours prevoir un **recolor manuel** (Python/Pillow, remplacement RGB direct) apres generation
+  si une palette de marque stricte est requise — ne pas compter sur le prompt seul face au style.

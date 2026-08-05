@@ -22,6 +22,15 @@ prendre 2 templates existants (`NewsClippingV2` coupure de presse + `FaceAFace` 
 de texte. Verdict Aziz : *« les deux sont intéressants mais ça ne le fait pas à 100%. »* → exactement le
 symptôme. On était parti **du template, pas du sens**.
 
+**Cas connexe (le même piège, version « modèle externe » — 2026-08-04, client-sim Flowdesk)** : en
+ouvrant un domaine métier neuf (SaaS/produit, hors registre Souverain habituel), l'orchestrateur est
+parti direct sur des générateurs d'image EXTERNES (Gemini/GPT storyboards génériques « illustration
+vectorielle premium ») sans même questionner le socle SVG MAISON (Fable 5) — même reflexe que « voici
+71 composants, lequel colle ? » mais appliqué au choix d'OUTIL plutôt qu'au choix de TEMPLATE. Corrigé
+par Aziz en session. **Généralisation** : sur tout nouveau domaine/registre inconnu, tester le socle
+maison (Fable 5 SVG) EN PARALLÈLE des générateurs externes dès le départ — ne jamais assumer qu'un
+domaine neuf implique par défaut un outil externe.
+
 ---
 
 ## LA RÈGLE (ce qui a marché, prouvé)

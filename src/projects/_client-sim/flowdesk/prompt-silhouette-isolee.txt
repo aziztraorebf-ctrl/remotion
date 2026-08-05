@@ -1,0 +1,12 @@
+L'image jointe est un storyboard 4 panneaux pour une video produit "Flowdesk". Regarde le PREMIER
+panneau (en haut a gauche, "ETAT INITIAL") : une silhouette humaine assise a un bureau devant un
+laptop.
+
+TACHE : genere UNIQUEMENT cette silhouette humaine assise au bureau (avec le laptop et la chaise),
+ISOLEE sur fond TRANSPARENT (ou fond vert uni #00FF00 si le transparent n'est pas possible) --
+PAS d'icones, PAS de texte, PAS de fond bleu, PAS d'autres elements de decor. Juste la figure +
+bureau + laptop + chaise, en aplat blanc simple (silhouette flat-design), meme registre que
+l'original (contour propre, pas de detail de visage necessaire).
+
+Cadrage serre autour de la silhouette (pas tout le cadre 1920x1080 vide autour). Palette :
+uniquement blanc (#FFFFFF) pour la silhouette, sur fond transparent ou vert cle.

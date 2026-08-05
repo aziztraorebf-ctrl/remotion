@@ -1,0 +1,42 @@
+CONTEXTE — Video explicative produit (landing page), 45 secondes, style "visual storytelling explicatif"
+
+PRODUIT : Flowdesk, un logiciel qui centralise les demandes internes des employes.
+Aujourd'hui les demandes arrivent partout : email, Slack, Teams, messages directs, formulaires.
+Quelqu'un demande un nouvel ordinateur. Quelqu'un d'autre a besoin d'un acces logiciel. Une facture
+doit etre approuvee. Une demande RH doit etre traitee. Les gestionnaires perdent le fil.
+Flowdesk rassemble toutes ces demandes dans une seule plateforme. Chaque demande est automatiquement
+envoyee a la bonne equipe, son statut peut etre suivi, et les employes recoivent une notification
+quand elle est completee.
+
+CE QUE LE MESSAGE DOIT FAIRE RESSENTIR (l'intention, pas la technique) :
+1. ETAT INITIAL — fragmentation, dispersion, canaux multiples qui se chevauchent, un signal qui se perd
+   dans le bruit (le gestionnaire ne sait plus ou regarder).
+2. BASCULE — tout converge vers un point unique. Le chaos devient un flux ordonne.
+3. MECANISME — chaque demande est automatiquement aiguillee vers la bonne destination (equipe/personne),
+   sans intervention manuelle.
+4. RESOLUTION — boucle fermee : statut visible a tout moment, notification claire a la completion.
+Objectif final : quelqu'un qui ne connaissait pas Flowdesk doit penser "ce probleme de chaos organisationnel
+etait dur a expliquer, mais la je le VOIS et je comprends la solution."
+
+MARQUE (contrainte dure, a respecter) :
+- Bleu fonce, blanc, orange (couleur accent). Pas de logo existant — vous pouvez proposer une forme de
+  marque (typographie ou symbole simple) si elle sert la metaphore, sans obligation.
+- Ton : moderne, premium. PAS corporate/plat/powerpoint. PAS non plus flashy/gadget.
+
+CE QUE CE N'EST PAS (a eviter par defaut, sans interdiction absolue) :
+- Pas un montage d'ecrans/mockups laptop-telephone qui defile comme unique idee.
+- Pas une interface qui bouge juste pour "faire dynamique" sans porter le sens.
+- Si un ecran/UI sert reellement a MONTRER le mecanisme (ex: un statut qui change, une notification qui
+  arrive), il peut apparaitre — mais comme un DETAIL au service de la metaphore, jamais la metaphore entiere.
+
+CONSIGNE POUR LE MODELE :
+Propose une direction visuelle forte pour representer CE systeme (flux/convergence/tri automatique/boucle
+de confirmation) sans t'appuyer sur des ecrans d'interface comme solution par defaut. Pense en TERMES DE
+FORMES et de MOUVEMENT : qu'est-ce qui, visuellement, INCARNE le passage du chaos a l'ordre ? Ose une
+metaphore materielle/abstraite/spatiale si elle est plus parlante qu'une UI (ex: des signaux epars qui se
+rassemblent en un seul flux ordonne, un systeme de tri/aiguillage, une porte qui se ferme sur une boucle
+completee -- CE SONT DES EXEMPLES POUR CADRER LE TYPE DE PENSEE, PAS UNE DIRECTIVE A SUIVRE LITTERALEMENT).
+
+FORMAT DE SORTIE : un storyboard en 4 etats (DEBUT -> BASCULE -> MECANISME -> RESOLUTION), image unique
+avec les 4 panneaux juxtaposes, annotations breves sur ce que chaque etat fait ressentir. Palette bleu
+fonce / blanc / orange accent uniquement. Registre epure, premium, pas charge.

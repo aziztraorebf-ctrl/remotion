@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1080" width="960" height="1080">
+  <defs>
+    <radialGradient id="impactGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF6B1A" stop-opacity="0.95"/>
+      <stop offset="30%" stop-color="#FF6B1A" stop-opacity="0.45"/>
+      <stop offset="65%" stop-color="#FF6B1A" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+      <stop offset="45%" stop-color="#FF6B1A" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="trail" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FF6B1A" stop-opacity="0"/>
+      <stop offset="55%" stop-color="#FF6B1A" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="trailWhite" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="70%" stop-color="#FFFFFF" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.55"/>
+    </linearGradient>
+    <filter id="packetGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#FF6B1A" flood-opacity="0.95"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="26" flood-color="#FF6B1A" flood-opacity="0.6"/>
+    </filter>
+    <filter id="ringGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FFFFFF" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="1080" fill="#0B1F3A"/>
+
+  <rect x="64" y="70" width="10" height="10" fill="#FF6B1A"/>
+  <text x="88" y="80" font-family="Helvetica, Arial, sans-serif" font-size="17" letter-spacing="3.5" fill="#FFFFFF" opacity="0.85">RESOLUTION — BOUCLE FERMEE ET CONFIRMATION</text>
+
+  <path d="M 96 905 C 260 905 430 800 505 700" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.08"/>
+  <circle cx="96" cy="905" r="3" fill="#FFFFFF" opacity="0.2"/>
+
+  <path d="M -30 215 C 170 265 330 420 508 548" fill="none" stroke="url(#trail)" stroke-width="26" stroke-linecap="round" opacity="0.5"/>
+  <path d="M -30 215 C 170 265 330 420 508 548" fill="none" stroke="url(#trail)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M -30 215 C 170 265 330 420 508 548" fill="none" stroke="url(#trailWhite)" stroke-width="2" stroke-linecap="round"/>
+
+  <circle cx="212" cy="302" r="2.5" fill="#FFFFFF" opacity="0.35"/>
+  <circle cx="318" cy="398" r="2" fill="#FFFFFF" opacity="0.3"/>
+  <circle cx="402" cy="472" r="2.5" fill="#FFFFFF" opacity="0.4"/>
+
+  <circle cx="610" cy="565" r="172" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.1"/>
+  <circle cx="610" cy="565" r="136" fill="none" stroke="#FFFFFF" stroke-width="1.5" opacity="0.18"/>
+
+  <circle cx="530" cy="565" r="210" fill="url(#impactGlow)"/>
+  <circle cx="530" cy="565" r="80" fill="url(#coreGlow)"/>
+
+  <circle cx="610" cy="565" r="96" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="543 60" stroke-linecap="butt" transform="rotate(200 610 565)" filter="url(#ringGlow)"/>
+  <circle cx="610" cy="565" r="96" fill="none" stroke="#FF6B1A" stroke-width="5" stroke-dasharray="60 543" stroke-linecap="butt" transform="rotate(200 610 565)"/>
+
+  <circle cx="610" cy="565" r="62" fill="none" stroke="#FF6B1A" stroke-width="2" opacity="0.55"/>
+
+  <circle cx="530" cy="565" r="15" fill="#FF6B1A" filter="url(#packetGlow)"/>
+  <circle cx="530" cy="565" r="6" fill="#FFFFFF"/>
+
+  <path d="M 530 565 L 610 565" stroke="#FF6B1A" stroke-width="1.5" opacity="0.35"/>
+  <path d="M 530 565 L 558 493" stroke="#FF6B1A" stroke-width="1" opacity="0.2"/>
+  <path d="M 530 565 L 558 637" stroke="#FF6B1A" stroke-width="1" opacity="0.2"/>
+
+  <circle cx="700" cy="505" r="3" fill="#FFFFFF" opacity="0.5"/>
+  <circle cx="726" cy="575" r="2.5" fill="#FF6B1A" opacity="0.7"/>
+  <circle cx="692" cy="640" r="2" fill="#FFFFFF" opacity="0.4"/>
+  <circle cx="640" cy="452" r="2" fill="#FFFFFF" opacity="0.35"/>
+
+  <circle cx="150" cy="150" r="1.5" fill="#FFFFFF" opacity="0.15"/>
+  <circle cx="850" cy="220" r="1.5" fill="#FFFFFF" opacity="0.12"/>
+  <circle cx="820" cy="880" r="1.5" fill="#FFFFFF" opacity="0.12"/>
+  <circle cx="240" cy="720" r="1.5" fill="#FFFFFF" opacity="0.1"/>
+</svg>

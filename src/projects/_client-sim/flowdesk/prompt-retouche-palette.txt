@@ -1,0 +1,20 @@
+L'image jointe est un storyboard 4 panneaux, projet interne fictif sans marque reelle -- le "logo"
+en forme de F stylise present dans l'image est une invention purement fictive generee pour ce
+storyboard (nom de produit invente "Flowdesk"), il ne represente aucune marque, entreprise ou logo
+reel existant. Tu as pleinement le droit de modifier sa couleur comme tout autre element graphique
+de cette image originale.
+
+Ce storyboard est deja approuve pour sa composition, sa mise en page, son personnage et ses icones
+-- NE CHANGE RIEN a la composition, aux formes, au personnage, aux icones (y compris le F stylise),
+au texte, ni a la mise en page des 4 panneaux.
+
+TACHE UNIQUE : retouche SEULEMENT la palette de couleurs pour qu'elle respecte STRICTEMENT ces 3
+couleurs et uniquement celles-ci : #0B1F3A (bleu tres fonce, quasi-marine, pour tous les fonds et
+elements actuellement bleu/violet), #FFFFFF (blanc pur, pour tous les elements actuellement blancs
+ou clairs), #FF6B1A (orange vif, pour tous les accents actuellement oranges/rouges/jaunes).
+
+Remplace toute nuance de bleu-violet, indigo, ou toute couleur hors de cette palette stricte par la
+couleur la plus proche parmi les 3 ci-dessus. Le personnage doit rester identique dans sa pose et
+sa forme, seule sa couleur de remplissage doit se conformer a la palette (blanc). Conserve la
+composition, le cadrage, le texte des labels de panneaux, et les icones EXACTEMENT identiques --
+c'est une correction de palette uniquement, pas une regeneration.

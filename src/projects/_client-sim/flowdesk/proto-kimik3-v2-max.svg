@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+<defs>
+<linearGradient id="trailW" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0.9"/>
+</linearGradient>
+<linearGradient id="trailO" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#FF6B1A" stop-opacity="0"/>
+<stop offset="1" stop-color="#FF6B1A" stop-opacity="0.95"/>
+</linearGradient>
+<linearGradient id="flowO" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#FF6B1A" stop-opacity="0"/>
+<stop offset="1" stop-color="#FF6B1A" stop-opacity="1"/>
+</linearGradient>
+<linearGradient id="flowW" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+<stop offset="1" stop-color="#FFFFFF" stop-opacity="0.9"/>
+</linearGradient>
+<radialGradient id="hubGlow" cx="0.5" cy="0.5" r="0.5">
+<stop offset="0" stop-color="#FF6B1A" stop-opacity="0.9"/>
+<stop offset="0.4" stop-color="#FF6B1A" stop-opacity="0.35"/>
+<stop offset="1" stop-color="#FF6B1A" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="vign" cx="0.5" cy="0.5" r="0.75">
+<stop offset="0" stop-color="#0B1F3A" stop-opacity="0"/>
+<stop offset="1" stop-color="#0B1F3A" stop-opacity="0.9"/>
+</radialGradient>
+<filter id="b1"><feGaussianBlur stdDeviation="1.2"/></filter>
+<filter id="b2"><feGaussianBlur stdDeviation="2.5"/></filter>
+<filter id="b3"><feGaussianBlur stdDeviation="4.5"/></filter>
+<filter id="b6"><feGaussianBlur stdDeviation="8"/></filter>
+</defs>
+
+<rect width="1920" height="1080" fill="#0B1F3A"/>
+<rect x="0" y="0" width="960" height="1080" fill="#0B1F3A"/>
+<rect x="960" y="0" width="960" height="1080" fill="#0B1F3A" opacity="0"/>
+
+<g filter="url(#b6)" opacity="0.25">
+<rect x="120" y="160" width="90" height="90" fill="#FFFFFF" transform="rotate(23 165 205)"/>
+<circle cx="420" cy="120" r="55" fill="#FFFFFF"/>
+<polygon points="700,180 760,260 640,260" fill="#FF6B1A"/>
+<rect x="820" y="420" width="110" height="14" fill="#FFFFFF" transform="rotate(-35 875 427)"/>
+<circle cx="200" cy="520" r="40" fill="#FF6B1A"/>
+<polygon points="480,760 560,760 520,840" fill="#FFFFFF"/>
+<rect x="120" y="880" width="140" height="16" fill="#FFFFFF" transform="rotate(18 190 888)"/>
+<circle cx="620" cy="980" r="60" fill="#FFFFFF"/>
+<rect x="780" y="780" width="70" height="70" fill="#FF6B1A" transform="rotate(40 815 815)"/>
+</g>
+
+<g filter="url(#b3)" opacity="0.4">
+<rect x="80" y="60" width="34" height="34" fill="#FFFFFF" transform="rotate(12 97 77)"/>
+<circle cx="300" cy="90" r="14" fill="#FF6B1A"/>
+<polygon points="520,70 545,105 495,105" fill="#FFFFFF"/>
+<rect x="760" y="90" width="90" height="7" fill="#FF6B1A" transform="rotate(-22 805 93)"/>
+<polygon points="880,240 905,275 855,275" fill="#FFFFFF"/>
+<rect x="60" y="330" width="70" height="8" fill="#FFFFFF" transform="rotate(45 95 334)"/>
+<circle cx="360" cy="300" r="22" fill="#FFFFFF"/>
+<rect x="560" y="340" width="42" height="42" fill="#FF6B1A" transform="rotate(60 581 361)"/>
+<polygon points="820,560 855,605 785,605" fill="#FFFFFF"/>
+<circle cx="120" cy="700" r="18" fill="#FFFFFF"/>
+<rect x="300" y="640" width="100" height="7" fill="#FFFFFF" transform="rotate(-15 350 643)"/>
+<polygon points="640,640 665,675 615,675" fill="#FF6B1A"/>
+<rect x="880" y="900" width="60" height="8" fill="#FFFFFF" transform="rotate(70 910 904)"/>
+<circle cx="460" cy="960" r="16" fill="#FF6B1A"/>
+<polygon points="260,1010 285,1045 235,1045" fill="#FFFFFF"/>
+</g>
+
+<g filter="url(#b2)" opacity="0.6">
+<g transform="rotate(30 250 200)"><rect x="160" y="196" width="160" height="9" fill="url(#trailW)"/></g>
+<g transform="rotate(-55 480 240)"><rect x="400" y="236" width="140" height="8" fill="url(#trailO)"/></g>
+<g transform="rotate(75 720 120)"><rect x="640" y="116" width="150" height="9" fill="url(#trailW)"/></g>
+<g transform="rotate(-15 180 420)"><rect x="100" y="416" width="150" height="8" fill="url(#trailO)"/></g>
+<g transform="rotate(50 560 460)"><rect x="470" y="456" width="170" height="9" fill="url(#trailW)"/></g>
+<g transform="rotate(-70 840 380)"><rect x="760" y="376" width="150" height="8" fill="url(#trailW)"/></g>
+<g transform="rotate(10 380 620)"><rect x="290" y="616" width="170" height="9" fill="url(#trailO)"/></g>
+<g transform="rotate(85 700 720)"><rect x="620" y="716" width="150" height="8" fill="url(#trailW)"/></g>
+<g transform="rotate(-40 160 860)"><rect x="80" y="856" width="150" height="9" fill="url(#trailW)"/></g>
+<g transform="rotate(60 540 900)"><rect x="460" y="896" width="150" height="8" fill="url(#trailO)"/></g>
+<rect x="330" y="170" width="26" height="26" fill="#FFFFFF" transform="rotate(35 343 183)"/>
+<circle cx="620" cy="220" r="16" fill="#FFFFFF"/>
+<polygon points="830,300 858,345 802,345" fill="#FF6B1A"/>
+<rect x="90" y="560" width="30" height="30" fill="#FF6B1A" transform="rotate(20 105 575)"/>
+<circle cx="420" cy="420" r="12" fill="#FF6B1A"/>
+<polygon points="240,700 268,745 212,745" fill="#FFFFFF"/>
+<rect x="660" y="540" width="24" height="24" fill="#FFFFFF" transform="rotate(55 672 552)"/>
+<circle cx="880" cy="640" r="14" fill="#FFFFFF"/>
+<rect x="480" y="820" width="28" height="28" fill="#FFFFFF" transform="rotate(10 494 834)"/>
+<polygon points="760,940 786,982 734,982" fill="#FF6B1A"/>
+</g>
+
+<g filter="url(#b1)" opacity="0.85">
+<g transform="rotate(-25 200 120)"><rect x="120" y="114" width="200" height="12" fill="url(#trailW)"/><circle cx="330" cy="120" r="9" fill="#FFFFFF"/></g>
+<g transform="rotate(60 400 300)"><rect x="300" y="292" width="230" height="14" fill="url(#trailO)"/><polygon points="540,290 566,322 528,330" fill="#FF6B1A"/></g>
+<g transform="rotate(-80 650 420)"><rect x="540" y="413" width="210" height="13" fill="url(#trailW)"/><rect x="752" y="408" width="22" height="22" fill="#FFFFFF" transform="rotate(20 763 419)"/></g>
+<g transform="rotate(35 850 180)"><rect x="740" y="173" width="200" height="13" fill="url(#trailO)"/><circle cx="945" cy="180" r="10" fill="#FF6B1A"/></g>
+<g transform="rotate(-45 300 540)"><rect x="180" y="532" width="240" height="14" fill="url(#trailW)"/><polygon points="425,530 455,562 412,570" fill="#FFFFFF"/></g>
+<g transform="rotate(15 700 620)"><rect x="580" y="614" width="220" height="12" fill="url(#trailW)"/><circle cx="805" cy="620" r="9" fill="#FFFFFF"/></g>
+<g transform="rotate(70 120 760)"><rect x="20" y="753" width="200" height="13" fill="url(#trailO)"/><rect x="225" y="748" width="20" height="20" fill="#FF6B1A" transform="rotate(45 235 758)"/></g>
+<g transform="rotate(-60 520 880)"><rect x="410" y="873" width="220" height="13" fill="url(#trailW)"/><polygon points="635,870 665,902 620,912" fill="#FFFFFF"/></g>
+<g transform="rotate(25 880 800)"><rect x="770" y="793" width="200" height="13" fill="url(#trailW)"/><circle cx="980" cy="800" r="9" fill="#FFFFFF"/></g>
+</g>
+
+<g opacity="1">
+<g transform="rotate(12 460 150)"><rect x="300" y="140" width="300" height="20" fill="url(#trailW)"/><polygon points="600,132 646,160 600,188" fill="#FFFFFF"/></g>
+<g transform="rotate(-52 180 380)"><rect x="40" y="368" width="280" height="22" fill="url(#trailO)"/><polygon points="320,356 372,384 320,412" fill="#FF6B1A"/></g>
+<g transform="rotate(78 780 300)"><rect x="650" y="288" width="260" height="20" fill="url(#trailW)"/><rect x="915" y="286" width="30" height="30" fill="#FFFFFF" transform="rotate(45 930 301)"/></g>
+<g transform="rotate(-28 560 560)"><rect x="420" y="548" width="300" height="22" fill="url(#trailO)"/><polygon points="722,536 772,566 722,596" fill="#FF6B1A"/></g>
+<g transform="rotate(42 260 720)"><rect x="110" y="710" width="280" height="20" fill="url(#trailW)"/><circle cx="400" cy="720" r="14" fill="#FFFFFF"/></g>
+<g transform="rotate(-65 860 540)"><rect x="720" y="528" width="270" height="22" fill="url(#trailW)"/><polygon points="992,514 1040,544 992,574" fill="#FFFFFF"/></g>
+<g transform="rotate(30 700 940)"><rect x="560" y="930" width="280" height="20" fill="url(#trailO)"/><circle cx="850" cy="940" r="13" fill="#FF6B1A"/></g>
+<g transform="rotate(-10 120 1010)"><rect x="0" y="1000" width="260" height="20" fill="url(#trailW)"/><polygon points="262,988 310,1014 262,1040" fill="#FFFFFF"/></g>
+<rect x="380" y="430" width="46" height="46" fill="#FF6B1A" transform="rotate(30 403 453)"/>
+<rect x="720" y="180" width="40" height="40" fill="#FFFFFF" transform="rotate(15 740 200)"/>
+<circle cx="480" cy="660" r="24" fill="#FFFFFF"/>
+<polygon points="200,240 240,300 160,300" fill="#FF6B1A"/>
+<polygon points="640,780 684,846 596,846" fill="#FFFFFF"/>
+</g>
+
+<g transform="translate(1500,540)">
+<circle r="230" fill="url(#hubGlow)"/>
+</g>
+
+<g filter="url(#b3)" opacity="0.35">
+<rect x="1020" y="80" width="26" height="26" fill="#FFFFFF" transform="rotate(20 1033 93)"/>
+<circle cx="1180" cy="60" r="14" fill="#FF6B1A"/>
+<rect x="1360" y="100" width="80" height="6" fill="url(#flowW)" transform="rotate(8 1400 103)"/>
+<polygon points="1600,60 1620,90 1580,90" fill="#FFFFFF"/>
+<circle cx="1820" cy="120" r="12" fill="#FFFFFF"/>
+<rect x="1050" y="940" width="70" height="6" fill="url(#flowW)" transform="rotate(-10 1085 943)"/>
+<circle cx="1250" cy="1000" r="14" fill="#FF6B1A"/>
+<polygon points="1440,960 1462,992 1418,992" fill="#FFFFFF"/>
+<rect x="1780" y="980" width="60" height="6" fill="#FFFFFF" transform="rotate(15 1810 983)"/>
+</g>
+
+<g opacity="0.55" filter="url(#b2)">
+<line x1="1000" y1="140" x2="1452" y2="492" stroke="url(#flowW)" stroke-width="4" transform="rotate(0 1000 140)"/>
+<line x1="1010" y1="320" x2="1460" y2="510" stroke="url(#flowW)" stroke-width="4"/>
+<line x1="1015" y1="540" x2="1462" y2="540" stroke="url(#flowW)" stroke-width="4"/>
+<line x1="1010" y1="760" x2="1460" y2="570" stroke="url(#flowW)" stroke-width="4"/>
+<line x1="1000" y1="940" x2="1452" y2="588" stroke="url(#flowW)" stroke-width="4"/>
+<circle cx="1100" cy="200" r="10" fill="#FFFFFF"/>
+<rect x="1080" y="430" width="18" height="18" fill="#FF6B1A" transform="rotate(30 1089 439)"/>
+<circle cx="1090" cy="700" r="9" fill="#FFFFFF"/>
+<polygon points="1070,860 1090,890 1050,890" fill="#FF6B1A"/>
+</g>
+
+<g opacity="0.8" filter="url(#b1)">
+<line x1="990" y1="200" x2="1448" y2="500" stroke="url(#flowO)" stroke-width="7"/>
+<line x1="1000" y1="400" x2="1452" y2="524" stroke="url(#flowW)" stroke-width="6"/>
+<line x1="1000" y1="680" x2="1452" y2="556" stroke="url(#flowO)" stroke-width="7"/>
+<line x1="990" y1="880" x2="1448" y2="580" stroke="url(#flowW)" stroke-width="6"/>
+<polygon points="1040,180 1064,208 1032,214" fill="#FFFFFF"/>
+<circle cx="1120" cy="330" r="11" fill="#FF6B1A"/>
+<rect x="1100" y="590" width="20" height="20" fill="#FFFFFF" transform="rotate(45 1110 600)"/>
+<circle cx="1120" cy="810" r="11" fill="#FF6B1A"/>
+<polygon points="1180,470 1208,496 1176,504" fill="#FFFFFF"/>
+<polygon points="1180,640 1208,614 1176,606" fill="#FFFFFF"/>
+</g>
+
+<g opacity="1">
+<line x1="980" y1="260" x2="1442" y2="506" stroke="url(#flowO)" stroke-width="12"/>
+<line x1="990" y1="480" x2="1446" y2="534" stroke="url(#flowO)" stroke-width="11"/>
+<line x1="990" y1="600" x2="1446" y2="546" stroke="url(#flowO)" stroke-width="11"/>
+<line x1="980" y1="820" x2="1442" y2="574" stroke="url(#flowO)" stroke-width="12"/>
+<polygon points="1060,250 1096,276 1058,288" fill="#FF6B1A"/>
+<polygon points="1070,470 1106,492 1068,506" fill="#FFFFFF"/>
+<polygon points="1070,610 1106,588 1068,574" fill="#FFFFFF"/>
+<polygon points="1060,830 1096,804 1058,792" fill="#FF6B1A"/>
+<polygon points="1230,330 1272,358 1228,374" fill="#FF6B1A"/>
+<polygon points="1240,500 1282,522 1240,540" fill="#FFFFFF"/>
+<polygon points="1240,580 1282,558 1240,540" fill="#FFFFFF"/>
+<polygon points="1230,750 1272,722 1228,706" fill="#FF6B1A"/>
+<polygon points="1360,460 1412,492 1358,510" fill="#FFFFFF"/>
+<polygon points="1360,620 1412,588 1358,570" fill="#FFFFFF"/>
+<polygon points="1380,528 1432,540 1380,552" fill="#FF6B1A"/>
+<rect x="1000" y="40" width="130" height="9" fill="url(#flowW)" transform="rotate(6 1065 44)"/>
+<rect x="1000" y="1030" width="130" height="9" fill="url(#flowW)" transform="rotate(-6 1065 1034)"/>
+</g>
+
+<g transform="translate(1500,540)">
+<circle r="88" fill="url(#hubGlow)"/>
+<polygon points="0,-70 61,-35 61,35 0,70 -61,35 -61,-35" fill="#FF6B1A"/>
+<polygon points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23" fill="#FFFFFF"/>
+<polygon points="0,-20 17,-10 17,10 0,20 -17,10 -17,-10" fill="#0B1F3A"/>
+<circle r="104" fill="none" stroke="#FF6B1A" stroke-width="3" opacity="0.7"/>
+<circle r="126" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.35"/>
+</g>
+
+<g opacity="0.95">
+<line x1="1572" y1="540" x2="1900" y2="180" stroke="url(#trailO)" stroke-width="10" transform="rotate(0 1572 540) scale(-1,1) translate(-3472,0)"/>
+<path d="M1572,540 L1900,180" stroke="#FF6B1A" stroke-width="10" opacity="0"/>
+<line x1="1572" y1="540" x2="1900" y2="180" stroke="url(#flowO)" stroke-width="9"/>
+<line x1="1572" y1="540" x2="1900" y2="380" stroke="url(#flowO)" stroke-width="9"/>
+<line x1="1572" y1="540" x2="1900" y2="540" stroke="url(#flowO)" stroke-width="9"/>
+<line x1="1572" y1="540" x2="1900" y2="700" stroke="url(#flowO)" stroke-width="9"/>
+<line x1="1572" y1="540" x2="1900" y2="900" stroke="url(#flowO)" stroke-width="9"/>
+<polygon points="1850,146 1912,180 1850,214" fill="#FF6B1A"/>
+<polygon points="1850,346 1912,380 1850,414" fill="#FF6B1A"/>
+<polygon points="1850,506 1912,540 1850,574" fill="#FF6B1A"/>
+<polygon points="1850,666 1912,700 1850,734" fill="#FF6B1A"/>
+<polygon points="1850,866 1912,900 1850,934" fill="#FF6B1A"/>
+<circle cx="1700" cy="440" r="8" fill="#FFFFFF"/>
+<circle cx="1720" cy="540" r="8" fill="#FFFFFF"/>
+<circle cx="1700" cy="640" r="8" fill="#FFFFFF"/>
+</g>
+
+<rect width="1920" height="1080" fill="url(#vign)" opacity="0.55"/>
+</svg>

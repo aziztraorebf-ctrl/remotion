@@ -192,3 +192,12 @@ public/assets/geoafrique/characters/[personnage]-[description]-REF.png
 - L'image source elle-meme EST le seed — la conserver = pouvoir regenerer des variantes coherentes
 - Postures de personnages minuscules : resultat subtil. Laisser Kling animer via prompt.
 - **Storyboard multi-panel : panel blanc aleatoire** — Gemini peut laisser un panel vide. Correction : regenerer le storyboard complet (l'edition chirurgicale du panel seul echoue).
+- **Image-to-image pour un recolor de PALETTE STRICT ne tient pas la fidelite** (2026-08-04, teste
+  2x sur client-sim Flowdesk) : derive a chaque fois — garde une partie de l'ancienne palette hors
+  consigne, ou pire, invente du texte marketing non demande (parfois incoherent). Pour un simple
+  remplacement de couleur sur une image deja approuvee, preferer un **recolor MANUEL** (chroma-key
+  ou remplacement RGB direct via Python/Pillow) — plus lent a coder mais 100% fidele, zero derive.
+- **Garde-fou anti-marque sur un logo FICTIF auto-genere** : Gemini peut refuser de modifier un
+  logo qu'il a lui-meme invente dans un storyboard anterieur (pris pour une vraie marque protegee).
+  Fix prompt : preciser explicitement "logo fictif, projet interne sans marque reelle, tu as le
+  droit de le modifier".

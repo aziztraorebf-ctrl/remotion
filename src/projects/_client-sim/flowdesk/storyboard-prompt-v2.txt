@@ -1,0 +1,37 @@
+CONTEXTE — Video explicative produit (landing page), 45 secondes, style "visual storytelling explicatif"
+
+PRODUIT : Flowdesk, un logiciel qui centralise les demandes internes des employes.
+Aujourd'hui les demandes arrivent partout : email, Slack, Teams, messages directs, formulaires.
+Quelqu'un demande un nouvel ordinateur. Quelqu'un d'autre a besoin d'un acces logiciel. Une facture
+doit etre approuvee. Une demande RH doit etre traitee. Les gestionnaires perdent le fil.
+Flowdesk rassemble toutes ces demandes dans une seule plateforme. Chaque demande est automatiquement
+envoyee a la bonne equipe, son statut peut etre suivi, et les employes recoivent une notification
+quand elle est completee.
+
+ANGLE DE CETTE DIRECTION (different des autres explorations deja faites) : centre le recit sur la
+PERSONNE du gestionnaire/manager plutot que sur les objets/signaux eux-memes. Le storyboard doit faire
+ressentir un etat emotionnel qui se transforme : SURCHARGE MENTALE -> SOULAGEMENT -> CONTROLE -> CALME.
+Pense en scene incarnee (silhouette humaine simple, pas de visage detaille necessaire) plongee dans
+un environnement qui reflete son etat interieur, plutot qu'en pur diagramme de flux abstrait.
+
+CE QUE LE MESSAGE DOIT FAIRE RESSENTIR (l'intention, pas la technique) :
+1. ETAT INITIAL — une personne assaillie, entouree/submergee par des signaux qui viennent de partout
+   (sensation de surcharge, pas juste "des icones eparses" mais une pression visuelle sur elle).
+2. BASCULE — l'espace autour d'elle se reorganise, les signaux cessent de l'assaillir individuellement.
+3. MECANISME — la personne observe desormais un systeme ordonne qui travaille pour elle (elle n'agit plus
+   sur chaque demande, le systeme aiguille tout seul).
+4. RESOLUTION — la personne dans un etat de controle calme, une seule vue claire, notification unique
+   et nette quand une tache se termine.
+Objectif final : quelqu'un qui vit ce chaos au quotidien doit se reconnaitre dans l'etat initial et
+ressentir le soulagement de la resolution.
+
+MARQUE (contrainte dure) : bleu fonce, blanc, orange (accent). Pas de logo existant, liberte de proposer
+une forme de marque simple si elle sert la metaphore. Ton moderne, premium, jamais corporate/plat.
+
+CE QUE CE N'EST PAS : pas un mockup d'ecran qui defile comme idee centrale. Une UI peut apparaitre comme
+DETAIL au service de la scene (ex: la personne regarde un panneau de controle simple), jamais comme le
+sujet entier de l'image.
+
+FORMAT DE SORTIE : storyboard en 4 etats (DEBUT -> BASCULE -> MECANISME -> RESOLUTION), image unique
+avec 4 panneaux juxtaposes, annotations breves. Palette bleu fonce / blanc / orange accent uniquement.
+Registre epure, premium, pas charge.

@@ -829,6 +829,7 @@ render au `ffprobe`/`volumedetect` (mean dB ≠ silence) avant de présenter.
 
 ## RESTE À TESTER (axes non encore sondés — une scène à la fois)
 - ~~Formes ORGANIQUES~~ : ✅ TRANCHÉ (voir DOCTRINE D'ORIENTATION ci-dessus) — le SVG n'est PAS pour l'organique humain/animal.
+- **Registre ABSTRAIT GÉOMÉTRIQUE dense (flux/mécanisme/formes qui se transforment), hors-Souverain (2026-08-04, client-sim Flowdesk)** : Fable 5 (agent, mode MAX) confirmé le MEILLEUR moteur face à GPT-5.6 Sol et Kimi K3 sur ce registre précis — gagnant 3/3 sur des panneaux "bascule/mécanisme/résolution" (vraies structures en volume/3D en SVG pur, vérifié zéro raster encodé). Gratuit vs API payantes. **Cohérent avec la doctrine ci-dessus, pas une exception** : le registre testé était bien de l'abstrait/mécanique (flux, aiguillage, vortex), pas de l'organique humain. Sur silhouette-icône flat-design (autorisée par la doctrine, point 2 ci-dessus), Fable 5 reste correct mais Recraft (`generate_image`, style `vector_illustration`) a produit un résultat supérieur sur ce cas précis — voir `memory/tools/recraft.md`.
 - Formes organiques NON-figuratives (flamme, fumée, eau, fluides) : pas encore testées, potentiellement OK (pas d'uncanny).
 - Registres visuels NEUFS restants : **néon/data-terminal**, **papier découpé** (pédagogique). (médaille ✅ · blueprint ✅ · encre ✅.)
 - Brancher une scène SVG dans une VRAIE vidéo (plein écran + voix off + SFX timé) — le proto SFX est prouvé, reste l'intégration épisode.

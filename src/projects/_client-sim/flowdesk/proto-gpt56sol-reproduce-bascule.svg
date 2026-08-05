@@ -1,0 +1,211 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1080" width="960" height="1080">
+  <defs>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="2.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="frame">
+      <rect width="960" height="1080"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#frame)">
+    <rect width="960" height="1080" fill="#0B1F3A"/>
+
+    <text x="40" y="72" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="400" letter-spacing=".3">BASCULE — CONVERGENCE ET CAPTURE</text>
+
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round">
+      <path d="M58 197 C214 356 326 437 493 465 C590 482 660 461 735 370" stroke-width="1.5" opacity=".23"/>
+      <path d="M32 250 C202 397 329 473 493 491 C595 502 663 473 737 384" stroke-width="2" opacity=".43"/>
+      <path d="M25 327 C183 431 324 492 491 511 C590 522 660 493 738 399" stroke-width="2.2" opacity=".62"/>
+      <path d="M36 400 C204 473 333 511 493 526 C594 535 665 510 741 413" stroke-width="2.4" opacity=".78"/>
+      <path d="M47 477 C225 505 352 529 500 539 C594 545 667 529 744 426" stroke-width="2.6" opacity=".9"/>
+      <path d="M48 564 C222 554 355 550 500 548 C595 547 669 545 746 440" stroke-width="2.6" opacity=".92"/>
+      <path d="M42 652 C211 602 343 571 493 560 C595 552 670 561 744 653" stroke-width="2.6" opacity=".88"/>
+      <path d="M35 734 C198 641 326 591 489 574 C590 563 662 579 740 671" stroke-width="2.3" opacity=".7"/>
+      <path d="M33 814 C185 677 316 611 488 587 C590 573 659 598 738 690" stroke-width="2" opacity=".45"/>
+      <path d="M62 889 C204 700 326 624 494 599 C595 584 664 615 738 708" stroke-width="1.5" opacity=".22"/>
+
+      <path d="M103 302 C260 424 386 476 528 493 C625 504 684 473 745 390" stroke-width="1.4" opacity=".35"/>
+      <path d="M91 759 C254 633 381 589 525 574 C623 565 683 592 743 680" stroke-width="1.4" opacity=".35"/>
+
+      <path d="M398 444 C510 479 582 500 637 514 C692 528 713 491 752 426" stroke-width="1.6" opacity=".85"/>
+      <path d="M384 633 C500 596 576 579 635 566 C687 555 714 590 751 655" stroke-width="1.6" opacity=".82"/>
+    </g>
+
+    <g fill="none" stroke="#FFFFFF">
+      <path d="M482 468 C602 489 676 483 739 375 C760 339 775 303 788 272" stroke-width="3" opacity=".95"/>
+      <path d="M486 490 C608 505 681 499 743 394 C762 362 779 325 790 292" stroke-width="2.8" opacity=".92"/>
+      <path d="M490 511 C611 520 687 515 747 416 C769 380 783 345 792 314" stroke-width="2.5" opacity=".88"/>
+      <path d="M493 530 C614 534 691 531 750 440 C770 408 785 373 794 337" stroke-width="2.2" opacity=".84"/>
+      <path d="M495 548 C616 547 694 549 751 638 C772 670 786 705 794 741" stroke-width="2.2" opacity=".84"/>
+      <path d="M491 567 C612 559 689 565 748 661 C769 695 783 729 792 762" stroke-width="2.5" opacity=".88"/>
+      <path d="M487 588 C608 574 684 580 744 682 C765 716 780 751 790 784" stroke-width="2.8" opacity=".92"/>
+      <path d="M483 610 C602 590 677 596 740 700 C761 735 776 772 788 804" stroke-width="3" opacity=".95"/>
+    </g>
+
+    <g fill="none" stroke="#FFFFFF">
+      <ellipse cx="797" cy="538" rx="93" ry="273" stroke-width="1.8" opacity=".72"/>
+      <ellipse cx="794" cy="538" rx="76" ry="222" stroke-width="2.4" opacity=".88"/>
+      <ellipse cx="792" cy="538" rx="61" ry="177" stroke-width="2.8" opacity=".96"/>
+      <ellipse cx="790" cy="538" rx="49" ry="145" stroke-width="2.2" opacity=".8"/>
+      <ellipse cx="789" cy="538" rx="39" ry="117" stroke-width="2.4" opacity=".94"/>
+      <ellipse cx="788" cy="538" rx="30" ry="91" stroke-width="1.8" opacity=".76"/>
+      <ellipse cx="787" cy="538" rx="22" ry="65" stroke-width="2.1" opacity=".9"/>
+      <ellipse cx="786" cy="538" rx="14" ry="39" stroke-width="1.7" opacity=".72"/>
+      <path d="M787 472 C811 486 816 514 807 535 C798 558 777 561 769 545 C760 527 773 508 790 513 C805 518 804 539 792 547 C779 555 769 543 773 532" stroke-width="2.2" opacity=".9"/>
+    </g>
+
+    <g fill="#FFFFFF" filter="url(#softGlow)">
+      <circle cx="790" cy="538" r="6"/>
+      <circle cx="778" cy="459" r="7"/>
+      <circle cx="814" cy="602" r="6"/>
+      <circle cx="802" cy="655" r="4"/>
+      <circle cx="775" cy="700" r="3"/>
+      <circle cx="823" cy="512" r="3"/>
+      <circle cx="767" cy="574" r="3"/>
+      <circle cx="804" cy="430" r="2.5"/>
+    </g>
+
+    <g fill="#FFFFFF">
+      <polygon points="842,438 868,425 854,455" opacity=".94"/>
+      <polygon points="857,517 884,531 858,540" opacity=".98"/>
+      <polygon points="829,579 847,570 843,589" opacity=".9"/>
+      <polygon points="765,427 777,435 766,447" opacity=".92"/>
+      <polygon points="770,496 780,486 786,502" opacity=".86"/>
+      <polygon points="778,622 790,628 779,640" opacity=".85"/>
+      <polygon points="810,707 825,713 814,722" opacity=".7"/>
+    </g>
+
+    <g fill="#FFFFFF">
+      <circle cx="76" cy="476" r="4" opacity=".9"/>
+      <circle cx="88" cy="594" r="10" filter="url(#glow)"/>
+      <circle cx="106" cy="389" r="3"/>
+      <circle cx="113" cy="672" r="4"/>
+      <circle cx="126" cy="518" r="5"/>
+      <circle cx="137" cy="451" r="3"/>
+      <circle cx="145" cy="622" r="7" filter="url(#softGlow)"/>
+      <circle cx="155" cy="357" r="4"/>
+      <circle cx="164" cy="538" r="3"/>
+      <circle cx="174" cy="705" r="8" filter="url(#softGlow)"/>
+      <circle cx="184" cy="481" r="4"/>
+      <circle cx="192" cy="601" r="5"/>
+      <circle cx="205" cy="423" r="7" filter="url(#softGlow)"/>
+      <circle cx="216" cy="534" r="3"/>
+      <circle cx="224" cy="666" r="4"/>
+      <circle cx="238" cy="462" r="5"/>
+      <circle cx="248" cy="587" r="9" filter="url(#softGlow)"/>
+      <circle cx="264" cy="516" r="3"/>
+      <circle cx="275" cy="398" r="4"/>
+      <circle cx="286" cy="631" r="5"/>
+      <circle cx="298" cy="489" r="7" filter="url(#softGlow)"/>
+      <circle cx="310" cy="553" r="3"/>
+      <circle cx="322" cy="683" r="4"/>
+      <circle cx="334" cy="453" r="4"/>
+      <circle cx="347" cy="585" r="6"/>
+      <circle cx="360" cy="513" r="4"/>
+      <circle cx="374" cy="639" r="3"/>
+      <circle cx="388" cy="475" r="8" filter="url(#softGlow)"/>
+      <circle cx="402" cy="548" r="4"/>
+      <circle cx="417" cy="607" r="5"/>
+      <circle cx="432" cy="501" r="3"/>
+      <circle cx="448" cy="570" r="7" filter="url(#softGlow)"/>
+      <circle cx="464" cy="533" r="4"/>
+      <circle cx="480" cy="591" r="3"/>
+      <circle cx="497" cy="516" r="6"/>
+      <circle cx="514" cy="558" r="4"/>
+      <circle cx="532" cy="535" r="8" filter="url(#softGlow)"/>
+      <circle cx="551" cy="563" r="3"/>
+      <circle cx="569" cy="526" r="5"/>
+      <circle cx="587" cy="551" r="7" filter="url(#softGlow)"/>
+      <circle cx="607" cy="530" r="3"/>
+      <circle cx="628" cy="548" r="5"/>
+    </g>
+
+    <g fill="#FFFFFF">
+      <polygon points="54,305 81,316 61,329" opacity=".55"/>
+      <polygon points="68,350 91,342 90,366" opacity=".45"/>
+      <polygon points="80,726 103,708 97,738" opacity=".9"/>
+      <polygon points="102,548 121,534 117,558"/>
+      <polygon points="113,413 127,422 116,437"/>
+      <polygon points="121,648 142,636 136,659" opacity=".86"/>
+      <polygon points="135,489 148,475 156,493"/>
+      <polygon points="147,576 170,566 160,588"/>
+      <polygon points="157,749 179,727 174,757" opacity=".72"/>
+      <polygon points="170,387 186,395 174,411"/>
+      <polygon points="181,523 202,507 195,534"/>
+      <polygon points="190,670 213,657 205,681"/>
+      <polygon points="203,454 218,441 224,461"/>
+      <polygon points="215,564 236,556 227,576"/>
+      <polygon points="225,723 246,700 241,732"/>
+      <polygon points="239,410 254,422 239,431"/>
+      <polygon points="249,496 273,482 262,510"/>
+      <polygon points="259,615 280,602 273,626"/>
+      <polygon points="275,450 289,440 294,458"/>
+      <polygon points="287,541 308,528 301,552"/>
+      <polygon points="298,693 319,672 313,702"/>
+      <polygon points="310,386 324,397 311,407"/>
+      <polygon points="323,477 345,462 337,489"/>
+      <polygon points="335,588 356,575 348,600"/>
+      <polygon points="348,427 361,418 366,435"/>
+      <polygon points="362,527 382,517 375,539"/>
+      <polygon points="376,661 396,642 391,669"/>
+      <polygon points="391,464 407,454 411,473"/>
+      <polygon points="406,563 428,551 419,576"/>
+      <polygon points="421,690 440,672 436,698" opacity=".8"/>
+      <polygon points="437,491 453,481 458,499"/>
+      <polygon points="452,619 471,605 466,629"/>
+      <polygon points="469,449 482,442 486,457"/>
+      <polygon points="485,548 505,538 498,559"/>
+      <polygon points="501,642 520,626 516,650"/>
+      <polygon points="519,493 534,484 538,501"/>
+      <polygon points="536,579 555,568 550,590"/>
+      <polygon points="553,517 566,510 570,524"/>
+      <polygon points="574,610 592,596 588,618"/>
+      <polygon points="592,535 605,527 608,542"/>
+      <polygon points="615,572 632,561 628,581"/>
+      <polygon points="642,524 655,518 658,531"/>
+    </g>
+
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="round" opacity=".72">
+      <path d="M78 236 l28 27" stroke-width="1"/>
+      <path d="M101 286 l22 17" stroke-width="1.4"/>
+      <path d="M119 779 l29 -42" stroke-width="1.3"/>
+      <path d="M144 331 l34 29" stroke-width="1.5"/>
+      <path d="M166 693 l31 -27" stroke-width="1.3"/>
+      <path d="M190 369 l38 31" stroke-width="1"/>
+      <path d="M218 755 l30 -39" stroke-width="1.5"/>
+      <path d="M240 339 l38 38" stroke-width="1.2"/>
+      <path d="M264 682 l42 -31" stroke-width="1.4"/>
+      <path d="M293 403 l43 31" stroke-width="1.1"/>
+      <path d="M327 731 l37 -45" stroke-width="1.3"/>
+      <path d="M348 375 l46 49" stroke-width="1"/>
+      <path d="M385 675 l45 -31" stroke-width="1.4"/>
+      <path d="M419 418 l41 32" stroke-width="1.2"/>
+      <path d="M458 651 l42 -27" stroke-width="1.2"/>
+      <path d="M494 452 l39 24" stroke-width="1.3"/>
+      <path d="M535 618 l39 -21" stroke-width="1.2"/>
+    </g>
+
+    <g fill="#FFFFFF" filter="url(#softGlow)">
+      <circle cx="338" cy="470" r="10"/>
+      <circle cx="399" cy="523" r="9"/>
+      <circle cx="455" cy="545" r="8"/>
+      <circle cx="503" cy="543" r="7"/>
+      <circle cx="548" cy="541" r="6"/>
+      <circle cx="593" cy="540" r="5"/>
+      <circle cx="637" cy="538" r="4"/>
+      <circle cx="680" cy="538" r="3.5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <title>Flowdesk - etat initial : silhouette assise au bureau (reproduction reference, contour unique)</title>
+
+  <!--
+    LOGIQUE DE CONSTRUCTION (calquee sur storyboard-v2-gpt.png, panneau 1 "ETAT INITIAL")
+
+    Principe : la figure n'est PAS un assemblage de segments anatomiques articules
+    (bras / avant-bras / main calcules separement). C'est UN SEUL contour ferme,
+    trace comme une decoupe papier, parcouru en une seule boucle :
+
+      crane -> front -> arcade -> nez -> menton -> gorge
+      -> bosse du poing (a hauteur de menton, = le bras ABSORBE dans le contour)
+      -> avant du torse -> assise (ligne du bureau)
+      -> longue courbe convexe unique du dos -> epaule -> nuque -> retour au crane
+
+    Le bras n'existe pas comme forme propre : le "coude pose / main au menton" est
+    seulement une INFLEXION de la ligne avant du torse. Une unique respiration interne
+    (petit V) suggere le pli du poignet. Rien d'autre.
+
+    Proportions relevees au pixel sur la reference (bbox figure 335..526 x 248..452) :
+      - tete = 25% de la hauteur totale de la figure
+      - dos = arc convexe a courbure FRONT-LOADED : chute rapide juste apres l'epaule
+        puis aplatissement progressif jusqu'a l'assise
+      - largeur totale = ~94% de la hauteur
+
+    Ordre de dessin = ordre de profondeur : chaise (fond) -> figure -> bureau -> laptop
+    (le laptop et le plateau passent DEVANT la figure, comme dans la reference).
+  -->
+
+  <rect width="1920" height="1080" fill="#0B1F3A"/>
+
+  <g fill="none" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- ================================================================
+         1. CHAISE — simple crosse en arriere-plan, derriere la figure
+         ================================================================ -->
+    <path d="M 1298 470
+             C 1298 424, 1345 407, 1371 435
+             C 1389 454, 1390 481, 1390 513
+             L 1390 900"/>
+
+    <!-- ================================================================
+         2. FIGURE — CONTOUR UNIQUE FERME
+            (parcours : crane -> face -> poing -> torse -> assise -> dos -> nuque)
+         ================================================================ -->
+    <path d="M 905 218
+             C 858 220, 822 246, 822 280
+             C 822 302, 829 320, 840 332
+             C 826 341, 820 351, 823 361
+             C 826 371, 836 375, 848 373
+             C 850 390, 856 404, 868 412
+             C 880 420, 898 423, 918 424
+             L 962 428
+             L 906 536
+             C 898 508, 890 486, 880 474
+             C 866 458, 854 472, 849 508
+             C 843 552, 841 624, 841 678
+             L 841 700
+             L 1223 700
+             C 1221 668, 1215 620, 1205 584
+             C 1193 540, 1179 500, 1163 464
+             C 1147 430, 1127 400, 1103 384
+             C 1073 364, 1041 354, 1013 350
+             C 1002 348, 996 344, 995 336
+             C 993 318, 990 298, 988 280
+             C 988 246, 952 220, 905 218 Z"/>
+
+    <!-- 3. RESPIRATION INTERNE — pli du poignet (unique detail, trace ouvert) -->
+    <path d="M 878 466
+             L 884 512"/>
+
+    <!-- ================================================================
+         4. BUREAU — plateau + pieds, passe DEVANT la figure
+         ================================================================ -->
+    <path d="M 250 706 L 1215 706"/>
+    <path d="M 366 726 L 366 940"/>
+    <path d="M 1099 726 L 1099 940"/>
+
+    <!-- ================================================================
+         5. ORDINATEUR PORTABLE — ecran incline + base, a gauche, devant
+         ================================================================ -->
+    <path d="M 372 682
+             L 428 446
+             C 431 436, 438 430, 449 430
+             L 640 430
+             C 651 430, 657 438, 657 448
+             L 657 670
+             C 657 680, 650 686, 639 686
+             L 386 686 Z"/>
+    <path d="M 657 686
+             L 786 686
+             C 796 686, 802 680, 802 670
+             L 802 650"/>
+
+  </g>
+</svg>

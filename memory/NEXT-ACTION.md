@@ -167,6 +167,12 @@ dessin progressif) : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore produit. Repère sujet :
 `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
+> ⚠️ **Aparté 2026-08-04** : un test client simulé "Flowdesk" (positionnement freelance) a été
+> exploré en parallèle (storyboard + comparatif SVG multi-moteurs tranchés, session d'animation
+> PAS encore faite) — n'annule PAS la priorité Gazoduc Acte 3 ci-dessus. Si on reprend ce fil :
+> `src/projects/_client-sim/flowdesk/BRIEF-PASSATION-ANIMATION.md`. **Lequel reprendre en premier
+> à la prochaine session reste à décider avec Aziz — pas tranché ici.**
+
 ---
 
 ## ⏳ ACTIONS OUVERTES

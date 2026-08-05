@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="1080" viewBox="0 0 960 1080">
+  <defs>
+    <linearGradient id="trailGradient" x1="110" y1="810" x2="580" y2="662" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FF6B1A" stop-opacity="0"/>
+      <stop offset="0.45" stop-color="#FF6B1A" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="1"/>
+    </linearGradient>
+
+    <radialGradient id="impactHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.96"/>
+      <stop offset="0.12" stop-color="#FF6B1A" stop-opacity="0.95"/>
+      <stop offset="0.42" stop-color="#FF6B1A" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="sealHalo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#FF6B1A" stop-opacity="0.16"/>
+      <stop offset="0.58" stop-color="#FF6B1A" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="trailBlur" x="-30%" y="-80%" width="160%" height="260%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+
+    <filter id="ringGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FF6B1A" flood-opacity="0.9"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#FF6B1A" flood-opacity="0.42"/>
+    </filter>
+
+    <filter id="impactGlow" x="-180%" y="-180%" width="460%" height="460%">
+      <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#FFFFFF" flood-opacity="1"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="17" flood-color="#FF6B1A" flood-opacity="1"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="38" flood-color="#FF6B1A" flood-opacity="0.72"/>
+    </filter>
+  </defs>
+
+  <rect width="960" height="1080" fill="#0B1F3A"/>
+
+  <text x="64" y="72"
+        fill="#FFFFFF"
+        font-family="Arial, Helvetica, sans-serif"
+        font-size="15"
+        font-weight="600"
+        letter-spacing="1.8">RESOLUTION — BOUCLE FERMEE ET CONFIRMATION</text>
+
+  <circle cx="676" cy="573" r="235" fill="url(#sealHalo)"/>
+
+  <path d="M110 810 C245 805 386 745 580 662"
+        fill="none"
+        stroke="url(#trailGradient)"
+        stroke-width="25"
+        stroke-linecap="round"
+        filter="url(#trailBlur)"
+        opacity="0.72"/>
+
+  <path d="M110 810 C245 805 386 745 580 662"
+        fill="none"
+        stroke="url(#trailGradient)"
+        stroke-width="6"
+        stroke-linecap="round"/>
+
+  <path d="M195 797 C320 777 440 722 580 662"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="1.5"
+        stroke-linecap="round"
+        opacity="0.62"/>
+
+  <circle cx="580" cy="662" r="112" fill="url(#impactHalo)"/>
+
+  <circle cx="676" cy="573" r="154"
+          fill="none"
+          stroke="#FF6B1A"
+          stroke-width="2"
+          opacity="0.18"/>
+
+  <circle cx="676" cy="573" r="112"
+          fill="#0B1F3A"
+          stroke="#FFFFFF"
+          stroke-width="2"
+          opacity="0.78"/>
+
+  <path d="M569.2 650.6
+           A132 132 0 1 1 591.1 674.1"
+        fill="none"
+        stroke="#FF6B1A"
+        stroke-width="18"
+        stroke-linecap="round"
+        filter="url(#ringGlow)"/>
+
+  <path d="M569.2 650.6
+           A132 132 0 1 1 591.1 674.1"
+        fill="none"
+        stroke="#FFFFFF"
+        stroke-width="3"
+        stroke-linecap="round"
+        opacity="0.92"/>
+
+  <circle cx="676" cy="573" r="72"
+          fill="none"
+          stroke="#FF6B1A"
+          stroke-width="3"
+          opacity="0.72"/>
+
+  <circle cx="676" cy="573" r="37"
+          fill="#0B1F3A"
+          stroke="#FFFFFF"
+          stroke-width="3"/>
+
+  <circle cx="676" cy="573" r="13"
+          fill="#FF6B1A"
+          filter="url(#ringGlow)"/>
+
+  <circle cx="676" cy="573" r="4.5" fill="#FFFFFF"/>
+
+  <g fill="none" stroke="#FF6B1A" stroke-linecap="round">
+    <path d="M580 618 L580 594" stroke-width="5" opacity="0.88"/>
+    <path d="M613 628 L630 611" stroke-width="4" opacity="0.72"/>
+    <path d="M624 662 L649 662" stroke-width="5" opacity="0.9"/>
+    <path d="M612 695 L629 712" stroke-width="4" opacity="0.68"/>
+    <path d="M580 706 L580 731" stroke-width="5" opacity="0.82"/>
+    <path d="M547 695 L529 713" stroke-width="4" opacity="0.6"/>
+    <path d="M536 662 L510 662" stroke-width="5" opacity="0.76"/>
+    <path d="M548 629 L531 612" stroke-width="4" opacity="0.58"/>
+  </g>
+
+  <circle cx="580" cy="662" r="47"
+          fill="none"
+          stroke="#FF6B1A"
+          stroke-width="2"
+          opacity="0.42"/>
+
+  <g transform="translate(580 662) rotate(-20)" filter="url(#impactGlow)">
+    <path d="M0 -25 L22 0 L0 25 L-22 0 Z"
+          fill="#FF6B1A"
+          stroke="#FFFFFF"
+          stroke-width="3"/>
+    <path d="M0 -10 L9 0 L0 10 L-9 0 Z"
+          fill="#FFFFFF"/>
+  </g>
+</svg>

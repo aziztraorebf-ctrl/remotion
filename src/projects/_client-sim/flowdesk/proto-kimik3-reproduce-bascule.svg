@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1080" width="960" height="1080">
+<defs>
+<radialGradient id="glow" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.9"/>
+<stop offset="40%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+<stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+<radialGradient id="core" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#FFFFFF" stop-opacity="1"/>
+<stop offset="25%" stop-color="#FFFFFF" stop-opacity="0.7"/>
+<stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="960" height="1080" fill="#0B1F3A"/>
+<text x="38" y="66" font-family="Helvetica Neue, Arial, sans-serif" font-size="32" letter-spacing="3" fill="#FFFFFF">BASCULE — CONVERGENCE ET CAPTURE</text>
+<g fill="none" stroke="#FFFFFF" stroke-width="1.6">
+<path d="M -20 40 C 220 140 460 300 700 448" opacity="0.22"/>
+<path d="M -20 150 C 200 220 440 340 695 455" opacity="0.28"/>
+<path d="M -20 270 C 190 300 430 390 690 462" opacity="0.32"/>
+<path d="M -20 420 C 180 420 420 440 688 468" opacity="0.35"/>
+<path d="M -20 560 C 190 540 430 505 688 474" opacity="0.33"/>
+<path d="M -20 700 C 200 640 440 555 692 482" opacity="0.28"/>
+<path d="M -20 840 C 220 730 460 610 696 492" opacity="0.24"/>
+<path d="M -20 960 C 240 820 480 670 700 502" opacity="0.18"/>
+</g>
+<g fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round">
+<path d="M 498 236 C 580 330 645 412 702 452" opacity="0.65"/>
+<path d="M 498 726 C 582 642 648 542 702 482" opacity="0.65"/>
+</g>
+<g fill="none" stroke="#FFFFFF" stroke-width="2">
+<path d="M 545 296 Q 588 470 545 652" opacity="0.30"/>
+<path d="M 576 328 Q 616 468 576 616" opacity="0.34"/>
+<path d="M 603 360 Q 640 466 603 586" opacity="0.38"/>
+<path d="M 627 388 Q 661 465 627 560" opacity="0.42"/>
+<path d="M 649 413 Q 678 464 649 536" opacity="0.46"/>
+<path d="M 667 433 Q 691 463 667 512" opacity="0.5"/>
+</g>
+<g fill="none" stroke="#FFFFFF">
+<ellipse cx="812" cy="478" rx="150" ry="382" stroke-width="2.5" opacity="0.55"/>
+<ellipse cx="792" cy="477" rx="128" ry="332" stroke-width="2.5" opacity="0.6"/>
+<ellipse cx="774" cy="476" rx="106" ry="284" stroke-width="2.5" opacity="0.65"/>
+<ellipse cx="758" cy="475" rx="86" ry="238" stroke-width="2.5" opacity="0.7"/>
+<ellipse cx="744" cy="474" rx="68" ry="194" stroke-width="2.5" opacity="0.75"/>
+<ellipse cx="732" cy="473" rx="53" ry="154" stroke-width="2.5" opacity="0.8"/>
+<ellipse cx="722" cy="471" rx="40" ry="118" stroke-width="2.5" opacity="0.85"/>
+<ellipse cx="714" cy="470" rx="29" ry="87" stroke-width="2.5" opacity="0.9"/>
+<ellipse cx="708" cy="469" rx="20" ry="61" stroke-width="2.5" opacity="0.92"/>
+<ellipse cx="703" cy="467" rx="13" ry="40" stroke-width="2.5" opacity="0.95"/>
+<ellipse cx="700" cy="466" rx="7" ry="22" stroke-width="2.5" opacity="1"/>
+</g>
+<g fill="#FFFFFF">
+<circle cx="585" cy="140" r="18" fill="url(#glow)"/><circle cx="585" cy="140" r="6"/>
+<circle cx="520" cy="225" r="20" fill="url(#glow)"/><circle cx="520" cy="225" r="7"/>
+<circle cx="610" cy="255" r="17" fill="url(#glow)"/><circle cx="610" cy="255" r="6"/>
+<circle cx="470" cy="290" r="15" fill="url(#glow)"/><circle cx="470" cy="290" r="5"/>
+<circle cx="430" cy="360" r="17" fill="url(#glow)"/><circle cx="430" cy="360" r="6"/>
+<circle cx="490" cy="420" r="19" fill="url(#glow)"/><circle cx="490" cy="420" r="7"/>
+<circle cx="560" cy="430" r="14" fill="url(#glow)"/><circle cx="560" cy="430" r="5"/>
+<circle cx="640" cy="440" r="17" fill="url(#glow)"/><circle cx="640" cy="440" r="6"/>
+<circle cx="600" cy="520" r="14" fill="url(#glow)"/><circle cx="600" cy="520" r="5"/>
+<circle cx="520" cy="540" r="17" fill="url(#glow)"/><circle cx="520" cy="540" r="6"/>
+<circle cx="450" cy="500" r="12" fill="url(#glow)"/><circle cx="450" cy="500" r="4"/>
+<circle cx="380" cy="430" r="14" fill="url(#glow)"/><circle cx="380" cy="430" r="5"/>
+<circle cx="320" cy="350" r="17" fill="url(#glow)"/><circle cx="320" cy="350" r="6"/>
+<circle cx="250" cy="300" r="14" fill="url(#glow)"/><circle cx="250" cy="300" r="5"/>
+<circle cx="180" cy="380" r="12" fill="url(#glow)"/><circle cx="180" cy="380" r="4"/>
+<circle cx="120" cy="300" r="14" fill="url(#glow)"/><circle cx="120" cy="300" r="5"/>
+<circle cx="60" cy="420" r="12" fill="url(#glow)"/><circle cx="60" cy="420" r="4"/>
+<circle cx="140" cy="520" r="14" fill="url(#glow)"/><circle cx="140" cy="520" r="5"/>
+<circle cx="220" cy="470" r="12" fill="url(#glow)"/><circle cx="220" cy="470" r="4"/>
+<circle cx="300" cy="560" r="14" fill="url(#glow)"/><circle cx="300" cy="560" r="5"/>
+<circle cx="380" cy="610" r="12" fill="url(#glow)"/><circle cx="380" cy="610" r="4"/>
+<circle cx="280" cy="650" r="11" fill="url(#glow)"/><circle cx="280" cy="650" r="4"/>
+<circle cx="180" cy="640" r="14" fill="url(#glow)"/><circle cx="180" cy="640" r="5"/>
+<circle cx="90" cy="580" r="11" fill="url(#glow)"/><circle cx="90" cy="580" r="4"/>
+<circle cx="240" cy="180" r="12" fill="url(#glow)"/><circle cx="240" cy="180" r="4"/>
+<circle cx="340" cy="200" r="12" fill="url(#glow)"/><circle cx="340" cy="200" r="4"/>
+<circle cx="80" cy="720" r="12" fill="url(#glow)"/><circle cx="80" cy="720" r="4"/>
+<circle cx="520" cy="640" r="12" fill="url(#glow)"/><circle cx="520" cy="640" r="4"/>
+<circle cx="600" cy="600" r="12" fill="url(#glow)"/><circle cx="600" cy="600" r="4"/>
+<circle cx="660" cy="520" r="12" fill="url(#glow)"/><circle cx="660" cy="520" r="4"/>
+<circle cx="680" cy="380" r="12" fill="url(#glow)"/><circle cx="680" cy="380" r="4"/>
+<circle cx="420" cy="140" r="10" fill="url(#glow)"/><circle cx="420" cy="140" r="3"/>
+<circle cx="140" cy="160" r="10" fill="url(#glow)"/><circle cx="140" cy="160" r="3"/>
+<circle cx="160" cy="760" r="10" fill="url(#glow)"/><circle cx="160" cy="760" r="3"/>
+<circle cx="560" cy="310" r="14" fill="url(#glow)"/><circle cx="560" cy="310" r="5"/>
+</g>
+<g fill="#FFFFFF">
+<polygon points="0,-10 9,7 -8,6" transform="translate(520 120) rotate(20)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(450 190) rotate(-30)"/>
+<polygon points="0,-11 9,7 -8,6" transform="translate(380 250) rotate(45)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(300 300) rotate(-15)"/>
+<polygon points="0,-12 10,8 -9,7" transform="translate(200 240) rotate(60)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(110 220) rotate(-40)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(60 340) rotate(15)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(160 460) rotate(-55)"/>
+<polygon points="0,-11 9,7 -8,6" transform="translate(260 400) rotate(25)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(350 480) rotate(-20)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(430 540) rotate(40)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(540 480) rotate(-10)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(620 400) rotate(30)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(655 350) rotate(-25)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(600 300) rotate(50)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(480 340) rotate(-35)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(560 560) rotate(15)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(480 620) rotate(-45)"/>
+<polygon points="0,-11 9,7 -8,6" transform="translate(390 680) rotate(30)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(300 720) rotate(-15)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(210 700) rotate(40)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(120 640) rotate(-30)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(60 520) rotate(20)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(90 180) rotate(-10)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(30 260) rotate(35)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(330 120) rotate(-50)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(230 110) rotate(25)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(680 300) rotate(-20)"/>
+<polygon points="0,-6 6,5 -5,4" transform="translate(640 470) rotate(10)"/>
+<polygon points="0,-6 6,5 -5,4" transform="translate(690 430) rotate(-15)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(350 380) rotate(55)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(270 520) rotate(-35)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(420 260) rotate(15)"/>
+<polygon points="0,-10 9,7 -8,6" transform="translate(170 320) rotate(-45)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(240 590) rotate(30)"/>
+<polygon points="0,-9 8,6 -7,5" transform="translate(140 420) rotate(-20)"/>
+<polygon points="0,-8 7,6 -6,5" transform="translate(510 380) rotate(45)"/>
+<polygon points="0,-7 6,5 -5,4" transform="translate(580 480) rotate(-30)"/>
+<polygon points="0,-7 6,5 -5,4" transform="translate(620 555) rotate(20)"/>
+<polygon points="0,-16 4,0 0,16 -3,0" transform="translate(410 470) rotate(70)"/>
+<polygon points="0,-14 4,0 0,14 -3,0" transform="translate(310 430) rotate(75)"/>
+<polygon points="0,-15 4,0 0,15 -3,0" transform="translate(500 240) rotate(50)"/>
+<polygon points="0,-13 4,0 0,13 -3,0" transform="translate(220 560) rotate(105)"/>
+<polygon points="0,-14 4,0 0,14 -3,0" transform="translate(590 370) rotate(35)"/>
+<polygon points="0,-12 4,0 0,12 -3,0" transform="translate(130 480) rotate(85)"/>
+</g>
+<g fill="#FFFFFF" opacity="0.85">
+<circle cx="440" cy="220" r="2"/><circle cx="370" cy="170" r="1.8"/><circle cx="290" cy="220" r="2"/>
+<circle cx="210" cy="150" r="1.8"/><circle cx="150" cy="250" r="2"/><circle cx="90" cy="380" r="1.8"/>
+<circle cx="190" cy="560" r="2"/><circle cx="260" cy="610" r="1.8"/><circle cx="350" cy="560" r="2"/>
+<circle cx="430" cy="600" r="1.8"/><circle cx="490" cy="560" r="2"/><circle cx="560" cy="500" r="1.8"/>
+<circle cx="630" cy="500" r="2"/><circle cx="660" cy="420" r="1.8"/><circle cx="570" cy="360" r="2"/>
+<circle cx="500" cy="320" r="1.8"/><circle cx="420" cy="420" r="2"/><circle cx="330" cy="480" r="1.8"/>
+<circle cx="250" cy="440" r="2"/><circle cx="60" cy="640" r="1.8"/><circle cx="120" cy="760" r="2"/>
+<circle cx="240" cy="790" r="1.8"/><circle cx="330" cy="760" r="2"/><circle cx="550" cy="690" r="1.8"/>
+<circle cx="620" cy="640" r="2"/><circle cx="30" cy="180" r="1.8"/><circle cx="480" cy="120" r="2"/>
+</g>
+<circle cx="700" cy="466" r="90" fill="url(#core)" opacity="0.9"/>
+<circle cx="700" cy="466" r="34" fill="url(#core)"/>
+<circle cx="700" cy="466" r="9" fill="#FFFFFF"/>
+<circle cx="700" cy="466" r="3.5" fill="#FFFFFF"/>
+</svg>

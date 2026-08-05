@@ -1,0 +1,372 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <linearGradient id="trailW" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0"/>
+      <stop offset="0.72" stop-color="#FFFFFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="trailO" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF6B1A" stop-opacity="0"/>
+      <stop offset="0.7" stop-color="#FF6B1A" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="beamW" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.04"/>
+      <stop offset="0.75" stop-color="#FFFFFF" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.82"/>
+    </linearGradient>
+    <linearGradient id="beamO" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#FF6B1A" stop-opacity="0.02"/>
+      <stop offset="0.72" stop-color="#FF6B1A" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="hubGlow">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.95"/>
+      <stop offset="0.12" stop-color="#FF6B1A" stop-opacity="0.94"/>
+      <stop offset="0.42" stop-color="#FF6B1A" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#FF6B1A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="softWhite">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur2" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="blur6" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <filter id="blur12" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12"/>
+    </filter>
+    <filter id="blur24" x="-70%" y="-70%" width="240%" height="240%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+    <filter id="hubShadow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="b"/>
+      <feFlood flood-color="#FF6B1A" flood-opacity="0.85" result="c"/>
+      <feComposite in="c" in2="b" operator="in" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <clipPath id="leftClip">
+      <rect width="960" height="1080"/>
+    </clipPath>
+    <clipPath id="rightClip">
+      <rect x="960" width="960" height="1080"/>
+    </clipPath>
+    <g id="packetW">
+      <rect x="-170" y="-4" width="154" height="8" rx="4" fill="url(#trailW)"/>
+      <polygon points="-18,-12 2,0 -18,12 -36,0" fill="#FFFFFF"/>
+      <circle cx="-7" cy="0" r="3" fill="#FF6B1A"/>
+    </g>
+    <g id="packetO">
+      <rect x="-185" y="-5" width="166" height="10" rx="5" fill="url(#trailO)"/>
+      <polygon points="-21,-14 3,0 -21,14 -42,0" fill="#FF6B1A"/>
+      <circle cx="-9" cy="0" r="3.5" fill="#FFFFFF"/>
+    </g>
+    <g id="dartW">
+      <polygon points="-110,-7 -18,-7 6,0 -18,7 -110,7 -70,0" fill="url(#trailW)"/>
+      <polygon points="-19,-13 7,0 -19,13 -34,0" fill="#FFFFFF"/>
+    </g>
+    <g id="dartO">
+      <polygon points="-130,-8 -20,-8 8,0 -20,8 -130,8 -80,0" fill="url(#trailO)"/>
+      <polygon points="-22,-15 9,0 -22,15 -40,0" fill="#FF6B1A"/>
+    </g>
+    <g id="diamondW">
+      <polygon points="0,-17 17,0 0,17 -17,0" fill="#FFFFFF"/>
+      <polygon points="0,-8 8,0 0,8 -8,0" fill="#0B1F3A"/>
+    </g>
+    <g id="diamondO">
+      <polygon points="0,-18 18,0 0,18 -18,0" fill="#FF6B1A"/>
+      <polygon points="0,-7 7,0 0,7 -7,0" fill="#FFFFFF"/>
+    </g>
+  </defs>
+
+  <rect width="1920" height="1080" fill="#0B1F3A"/>
+
+  <g clip-path="url(#leftClip)">
+    <ellipse cx="180" cy="160" rx="410" ry="260" fill="url(#softWhite)" opacity="0.32" filter="url(#blur24)"/>
+    <ellipse cx="760" cy="870" rx="390" ry="300" fill="url(#hubGlow)" opacity="0.18" filter="url(#blur24)"/>
+    <polygon points="-120,150 390,-80 590,30 10,315" fill="#FFFFFF" opacity="0.025"/>
+    <polygon points="280,1080 720,650 1030,735 700,1080" fill="#FF6B1A" opacity="0.035"/>
+    <polygon points="-100,690 330,440 510,570 80,835" fill="#FFFFFF" opacity="0.025"/>
+    <path d="M-80 360 L280 250 L560 405 L840 150 L1040 250" fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.08"/>
+    <path d="M-60 870 L230 690 L430 920 L690 710 L1010 900" fill="none" stroke="#FF6B1A" stroke-width="4" opacity="0.1"/>
+
+    <g opacity="0.18" filter="url(#blur12)">
+      <use href="#packetW" transform="translate(145 130) rotate(-24) scale(1.9)"/>
+      <use href="#packetO" transform="translate(420 120) rotate(148) scale(1.45)"/>
+      <use href="#packetW" transform="translate(745 150) rotate(62) scale(1.7)"/>
+      <use href="#dartO" transform="translate(875 320) rotate(-151) scale(1.5)"/>
+      <use href="#packetW" transform="translate(250 390) rotate(116) scale(1.65)"/>
+      <use href="#packetO" transform="translate(590 400) rotate(-38) scale(1.35)"/>
+      <use href="#dartW" transform="translate(100 635) rotate(21) scale(1.8)"/>
+      <use href="#packetO" transform="translate(430 700) rotate(166) scale(1.65)"/>
+      <use href="#packetW" transform="translate(790 670) rotate(-92) scale(1.5)"/>
+      <use href="#dartO" transform="translate(835 940) rotate(35) scale(1.65)"/>
+      <use href="#packetW" transform="translate(315 975) rotate(-56) scale(1.8)"/>
+      <use href="#diamondW" transform="translate(650 250) scale(1.8)"/>
+      <use href="#diamondO" transform="translate(110 870) scale(1.55)"/>
+      <circle cx="525" cy="870" r="32" fill="none" stroke="#FFFFFF" stroke-width="8"/>
+      <polygon points="850,515 902,544 875,600 813,582" fill="#FF6B1A"/>
+    </g>
+
+    <g opacity="0.36" filter="url(#blur6)">
+      <use href="#packetO" transform="translate(95 245) rotate(77) scale(1.1)"/>
+      <use href="#dartW" transform="translate(250 185) rotate(-11) scale(1.25)"/>
+      <use href="#packetW" transform="translate(520 215) rotate(202) scale(1.15)"/>
+      <use href="#dartO" transform="translate(820 95) rotate(130) scale(1.1)"/>
+      <use href="#packetW" transform="translate(890 245) rotate(-58) scale(1.25)"/>
+      <use href="#packetO" transform="translate(135 470) rotate(-132) scale(1.2)"/>
+      <use href="#dartW" transform="translate(365 360) rotate(47) scale(1.15)"/>
+      <use href="#packetO" transform="translate(705 365) rotate(100) scale(1.08)"/>
+      <use href="#packetW" transform="translate(880 505) rotate(178) scale(1.25)"/>
+      <use href="#dartO" transform="translate(190 760) rotate(-72) scale(1.15)"/>
+      <use href="#packetW" transform="translate(370 595) rotate(151) scale(1.15)"/>
+      <use href="#packetO" transform="translate(600 640) rotate(19) scale(1.18)"/>
+      <use href="#dartW" transform="translate(875 760) rotate(-113) scale(1.22)"/>
+      <use href="#packetO" transform="translate(105 1000) rotate(-8) scale(1.15)"/>
+      <use href="#packetW" transform="translate(580 930) rotate(124) scale(1.25)"/>
+      <use href="#dartO" transform="translate(760 1025) rotate(196) scale(1.15)"/>
+      <circle cx="470" cy="505" r="19" fill="#FFFFFF"/>
+      <circle cx="750" cy="845" r="16" fill="#FF6B1A"/>
+      <polygon points="30,580 58,548 91,576 58,614" fill="#FFFFFF"/>
+      <polygon points="560,70 590,42 625,68 600,106" fill="#FF6B1A"/>
+    </g>
+
+    <g opacity="0.72" filter="url(#blur2)">
+      <use href="#packetW" transform="translate(170 80) rotate(34) scale(.72)"/>
+      <use href="#packetO" transform="translate(340 95) rotate(-145) scale(.82)"/>
+      <use href="#dartW" transform="translate(610 105) rotate(12) scale(.88)"/>
+      <use href="#packetO" transform="translate(785 205) rotate(94) scale(.8)"/>
+      <use href="#packetW" transform="translate(90 350) rotate(-35) scale(.9)"/>
+      <use href="#dartO" transform="translate(290 285) rotate(156) scale(.83)"/>
+      <use href="#packetW" transform="translate(500 330) rotate(-102) scale(.88)"/>
+      <use href="#packetO" transform="translate(695 285) rotate(43) scale(.86)"/>
+      <use href="#dartW" transform="translate(910 390) rotate(211) scale(.92)"/>
+      <use href="#packetO" transform="translate(80 555) rotate(128) scale(.8)"/>
+      <use href="#packetW" transform="translate(275 500) rotate(-3) scale(.86)"/>
+      <use href="#dartO" transform="translate(515 525) rotate(-167) scale(.92)"/>
+      <use href="#packetW" transform="translate(730 520) rotate(78) scale(.86)"/>
+      <use href="#packetO" transform="translate(930 620) rotate(-51) scale(.9)"/>
+      <use href="#dartW" transform="translate(125 700) rotate(22) scale(.82)"/>
+      <use href="#packetO" transform="translate(335 745) rotate(-117) scale(.88)"/>
+      <use href="#packetW" transform="translate(550 735) rotate(173) scale(.9)"/>
+      <use href="#dartO" transform="translate(745 700) rotate(-26) scale(.86)"/>
+      <use href="#packetW" transform="translate(890 840) rotate(119) scale(.88)"/>
+      <use href="#packetO" transform="translate(190 930) rotate(-79) scale(.92)"/>
+      <use href="#dartW" transform="translate(410 915) rotate(55) scale(.84)"/>
+      <use href="#packetO" transform="translate(650 965) rotate(185) scale(.86)"/>
+      <use href="#packetW" transform="translate(885 1010) rotate(-15) scale(.9)"/>
+    </g>
+
+    <g>
+      <use href="#packetO" transform="translate(175 205) rotate(-18) scale(1.22)"/>
+      <use href="#packetW" transform="translate(450 175) rotate(71) scale(1.12)"/>
+      <use href="#dartO" transform="translate(710 170) rotate(-138) scale(1.18)"/>
+      <use href="#packetW" transform="translate(880 110) rotate(165) scale(1.05)"/>
+      <use href="#dartW" transform="translate(205 425) rotate(105) scale(1.25)"/>
+      <use href="#packetO" transform="translate(440 410) rotate(-41) scale(1.18)"/>
+      <use href="#packetW" transform="translate(660 450) rotate(197) scale(1.22)"/>
+      <use href="#dartO" transform="translate(850 470) rotate(66) scale(1.16)"/>
+      <use href="#packetW" transform="translate(180 625) rotate(-157) scale(1.3)"/>
+      <use href="#packetO" transform="translate(410 640) rotate(27) scale(1.22)"/>
+      <use href="#dartW" transform="translate(650 615) rotate(-91) scale(1.28)"/>
+      <use href="#packetO" transform="translate(865 690) rotate(142) scale(1.2)"/>
+      <use href="#packetW" transform="translate(245 860) rotate(58) scale(1.18)"/>
+      <use href="#dartO" transform="translate(485 835) rotate(-172) scale(1.3)"/>
+      <use href="#packetW" transform="translate(705 875) rotate(-32) scale(1.22)"/>
+      <use href="#packetO" transform="translate(900 935) rotate(102) scale(1.28)"/>
+      <use href="#diamondW" transform="translate(85 165) scale(1.3) rotate(18)"/>
+      <use href="#diamondO" transform="translate(350 245) scale(1.15) rotate(31)"/>
+      <use href="#diamondW" transform="translate(575 285) scale(1.25)"/>
+      <use href="#diamondO" transform="translate(815 375) scale(1.35) rotate(15)"/>
+      <use href="#diamondW" transform="translate(95 815) scale(1.2)"/>
+      <use href="#diamondO" transform="translate(575 805) scale(1.3) rotate(28)"/>
+      <polygon points="300,545 326,513 366,522 378,562 346,588 306,578" fill="#FFFFFF"/>
+      <polygon points="760,775 793,747 833,768 827,812 786,826 752,808" fill="#FF6B1A"/>
+      <circle cx="535" cy="105" r="13" fill="#FFFFFF"/>
+      <circle cx="920" cy="285" r="15" fill="#FF6B1A"/>
+      <circle cx="55" cy="660" r="11" fill="#FF6B1A"/>
+      <circle cx="455" cy="1015" r="14" fill="#FFFFFF"/>
+    </g>
+
+    <path d="M0 510 L155 468 L295 500" fill="none" stroke="#FFFFFF" stroke-width="7" opacity="0.45"/>
+    <path d="M540 1080 L585 930 L530 790" fill="none" stroke="#FF6B1A" stroke-width="8" opacity="0.55"/>
+    <path d="M960 290 L825 320 L745 250" fill="none" stroke="#FFFFFF" stroke-width="6" opacity="0.4"/>
+  </g>
+
+  <g clip-path="url(#rightClip)">
+    <ellipse cx="1465" cy="540" rx="510" ry="440" fill="url(#hubGlow)" opacity="0.08" filter="url(#blur24)"/>
+    <polygon points="960,0 1310,0 1510,430 1425,510" fill="#FFFFFF" opacity="0.025"/>
+    <polygon points="960,1080 1260,1080 1470,645 1390,585" fill="#FF6B1A" opacity="0.035"/>
+    <polygon points="1480,500 1920,170 1920,315 1520,548" fill="#FFFFFF" opacity="0.028"/>
+    <polygon points="1490,580 1920,850 1920,1010 1470,625" fill="#FF6B1A" opacity="0.03"/>
+
+    <g opacity="0.15" filter="url(#blur12)">
+      <path d="M920 55 C1170 100 1300 310 1480 525" fill="none" stroke="#FFFFFF" stroke-width="32"/>
+      <path d="M920 250 C1190 260 1335 395 1480 530" fill="none" stroke="#FF6B1A" stroke-width="26"/>
+      <path d="M920 470 C1190 475 1330 505 1480 540" fill="none" stroke="#FFFFFF" stroke-width="30"/>
+      <path d="M920 730 C1190 700 1335 615 1480 550" fill="none" stroke="#FF6B1A" stroke-width="28"/>
+      <path d="M920 1025 C1180 930 1310 735 1480 560" fill="none" stroke="#FFFFFF" stroke-width="34"/>
+      <path d="M1510 535 C1660 410 1770 260 1950 120" fill="none" stroke="#FFFFFF" stroke-width="28"/>
+      <path d="M1515 545 C1690 500 1800 430 1950 385" fill="none" stroke="#FF6B1A" stroke-width="25"/>
+      <path d="M1515 555 C1700 570 1810 610 1950 650" fill="none" stroke="#FFFFFF" stroke-width="28"/>
+      <path d="M1510 565 C1680 690 1790 830 1950 980" fill="none" stroke="#FF6B1A" stroke-width="30"/>
+    </g>
+
+    <g fill="none" stroke-linecap="round">
+      <path d="M940 55 C1160 105 1290 280 1485 525" stroke="#FFFFFF" stroke-width="3" opacity="0.22"/>
+      <path d="M940 145 C1170 175 1320 330 1485 528" stroke="#FF6B1A" stroke-width="5" opacity="0.52"/>
+      <path d="M940 240 C1170 260 1320 390 1485 532" stroke="#FFFFFF" stroke-width="4" opacity="0.42"/>
+      <path d="M940 340 C1190 355 1335 435 1485 536" stroke="#FF6B1A" stroke-width="6" opacity="0.62"/>
+      <path d="M940 445 C1195 450 1345 490 1485 540" stroke="#FFFFFF" stroke-width="5" opacity="0.55"/>
+      <path d="M940 540 C1190 540 1335 540 1485 544" stroke="#FF6B1A" stroke-width="7" opacity="0.72"/>
+      <path d="M940 640 C1190 630 1335 590 1485 548" stroke="#FFFFFF" stroke-width="5" opacity="0.55"/>
+      <path d="M940 745 C1180 720 1320 645 1485 552" stroke="#FF6B1A" stroke-width="6" opacity="0.62"/>
+      <path d="M940 845 C1170 800 1305 700 1485 556" stroke="#FFFFFF" stroke-width="4" opacity="0.44"/>
+      <path d="M940 950 C1150 885 1290 750 1485 560" stroke="#FF6B1A" stroke-width="5" opacity="0.52"/>
+      <path d="M940 1040 C1140 950 1270 805 1485 563" stroke="#FFFFFF" stroke-width="3" opacity="0.28"/>
+    </g>
+
+    <g opacity="0.32" filter="url(#blur6)">
+      <use href="#packetW" transform="translate(1120 95) rotate(25) scale(1.3)"/>
+      <use href="#packetO" transform="translate(1260 205) rotate(34) scale(1.2)"/>
+      <use href="#packetW" transform="translate(1380 360) rotate(43) scale(1.15)"/>
+      <use href="#packetO" transform="translate(1100 315) rotate(18) scale(1.25)"/>
+      <use href="#packetW" transform="translate(1250 410) rotate(22) scale(1.25)"/>
+      <use href="#packetO" transform="translate(1380 475) rotate(16) scale(1.18)"/>
+      <use href="#packetW" transform="translate(1100 555) rotate(0) scale(1.3)"/>
+      <use href="#packetO" transform="translate(1265 548) rotate(0) scale(1.28)"/>
+      <use href="#packetW" transform="translate(1385 545) rotate(0) scale(1.2)"/>
+      <use href="#packetO" transform="translate(1100 790) rotate(-20) scale(1.25)"/>
+      <use href="#packetW" transform="translate(1260 690) rotate(-24) scale(1.22)"/>
+      <use href="#packetO" transform="translate(1385 610) rotate(-18) scale(1.2)"/>
+      <use href="#packetW" transform="translate(1110 990) rotate(-31) scale(1.3)"/>
+      <use href="#packetO" transform="translate(1280 825) rotate(-38) scale(1.2)"/>
+      <use href="#packetW" transform="translate(1390 690) rotate(-43) scale(1.18)"/>
+      <use href="#dartO" transform="translate(1710 330) rotate(-38) scale(1.35)"/>
+      <use href="#dartW" transform="translate(1810 455) rotate(-17) scale(1.35)"/>
+      <use href="#dartO" transform="translate(1775 650) rotate(14) scale(1.35)"/>
+      <use href="#dartW" transform="translate(1715 805) rotate(38) scale(1.35)"/>
+    </g>
+
+    <g opacity="0.72" filter="url(#blur2)">
+      <use href="#dartW" transform="translate(1030 155) rotate(18) scale(.82)"/>
+      <use href="#packetO" transform="translate(1160 205) rotate(26) scale(.85)"/>
+      <use href="#dartW" transform="translate(1300 315) rotate(35) scale(.88)"/>
+      <use href="#packetO" transform="translate(1410 435) rotate(43) scale(.9)"/>
+      <use href="#dartO" transform="translate(1015 275) rotate(10) scale(.84)"/>
+      <use href="#packetW" transform="translate(1175 350) rotate(18) scale(.88)"/>
+      <use href="#dartO" transform="translate(1320 430) rotate(24) scale(.9)"/>
+      <use href="#packetW" transform="translate(1430 500) rotate(27) scale(.92)"/>
+      <use href="#dartW" transform="translate(1020 465) rotate(2) scale(.86)"/>
+      <use href="#packetO" transform="translate(1180 480) rotate(8) scale(.9)"/>
+      <use href="#dartW" transform="translate(1325 515) rotate(12) scale(.92)"/>
+      <use href="#packetO" transform="translate(1435 535) rotate(8) scale(.94)"/>
+      <use href="#dartO" transform="translate(1020 640) rotate(-3) scale(.88)"/>
+      <use href="#packetW" transform="translate(1180 620) rotate(-8) scale(.9)"/>
+      <use href="#dartO" transform="translate(1325 585) rotate(-13) scale(.92)"/>
+      <use href="#packetW" transform="translate(1435 555) rotate(-10) scale(.94)"/>
+      <use href="#dartW" transform="translate(1020 815) rotate(-15) scale(.85)"/>
+      <use href="#packetO" transform="translate(1175 750) rotate(-23) scale(.88)"/>
+      <use href="#dartW" transform="translate(1315 670) rotate(-28) scale(.9)"/>
+      <use href="#packetO" transform="translate(1425 590) rotate(-31) scale(.94)"/>
+      <use href="#dartO" transform="translate(1030 975) rotate(-25) scale(.84)"/>
+      <use href="#packetW" transform="translate(1170 880) rotate(-34) scale(.87)"/>
+      <use href="#dartO" transform="translate(1310 755) rotate(-39) scale(.9)"/>
+      <use href="#packetW" transform="translate(1415 625) rotate(-42) scale(.94)"/>
+    </g>
+
+    <g>
+      <use href="#packetW" transform="translate(1090 120) rotate(22) scale(1.12)"/>
+      <use href="#packetO" transform="translate(1250 245) rotate(31) scale(1.18)"/>
+      <use href="#packetW" transform="translate(1375 385) rotate(40) scale(1.22)"/>
+      <use href="#packetO" transform="translate(1080 285) rotate(13) scale(1.13)"/>
+      <use href="#packetW" transform="translate(1245 375) rotate(20) scale(1.18)"/>
+      <use href="#packetO" transform="translate(1380 470) rotate(27) scale(1.24)"/>
+      <use href="#packetW" transform="translate(1080 450) rotate(4) scale(1.15)"/>
+      <use href="#packetO" transform="translate(1245 490) rotate(9) scale(1.2)"/>
+      <use href="#packetW" transform="translate(1385 525) rotate(13) scale(1.26)"/>
+      <use href="#packetO" transform="translate(1080 570) rotate(0) scale(1.16)"/>
+      <use href="#packetW" transform="translate(1245 560) rotate(-2) scale(1.22)"/>
+      <use href="#packetO" transform="translate(1385 548) rotate(-3) scale(1.28)"/>
+      <use href="#packetW" transform="translate(1080 700) rotate(-8) scale(1.14)"/>
+      <use href="#packetO" transform="translate(1245 650) rotate(-14) scale(1.2)"/>
+      <use href="#packetW" transform="translate(1385 580) rotate(-18) scale(1.26)"/>
+      <use href="#packetO" transform="translate(1085 855) rotate(-18) scale(1.13)"/>
+      <use href="#packetW" transform="translate(1245 755) rotate(-27) scale(1.18)"/>
+      <use href="#packetO" transform="translate(1380 620) rotate(-32) scale(1.24)"/>
+      <use href="#packetW" transform="translate(1095 1010) rotate(-29) scale(1.12)"/>
+      <use href="#packetO" transform="translate(1250 865) rotate(-37) scale(1.18)"/>
+      <use href="#packetW" transform="translate(1375 680) rotate(-42) scale(1.22)"/>
+    </g>
+
+    <g opacity="0.7">
+      <use href="#diamondW" transform="translate(1015 90) scale(.72)"/>
+      <use href="#diamondO" transform="translate(1015 230) scale(.78)"/>
+      <use href="#diamondW" transform="translate(1015 390) scale(.82)"/>
+      <use href="#diamondO" transform="translate(1015 540) scale(.88)"/>
+      <use href="#diamondW" transform="translate(1015 685) scale(.82)"/>
+      <use href="#diamondO" transform="translate(1015 845) scale(.78)"/>
+      <use href="#diamondW" transform="translate(1015 1000) scale(.72)"/>
+      <circle cx="1190" cy="190" r="8" fill="#FFFFFF"/>
+      <circle cx="1190" cy="430" r="9" fill="#FF6B1A"/>
+      <circle cx="1190" cy="550" r="10" fill="#FFFFFF"/>
+      <circle cx="1190" cy="680" r="9" fill="#FF6B1A"/>
+      <circle cx="1190" cy="900" r="8" fill="#FFFFFF"/>
+    </g>
+
+    <g>
+      <circle cx="1495" cy="545" r="170" fill="url(#hubGlow)" opacity="0.8" filter="url(#blur12)"/>
+      <circle cx="1495" cy="545" r="93" fill="none" stroke="#FF6B1A" stroke-width="3" opacity="0.28"/>
+      <circle cx="1495" cy="545" r="72" fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.35"/>
+      <polygon points="1495,482 1558,545 1495,608 1432,545" fill="#FF6B1A" opacity="0.2" filter="url(#hubShadow)"/>
+      <polygon points="1495,497 1543,545 1495,593 1447,545" fill="#FF6B1A" stroke="#FFFFFF" stroke-width="4"/>
+      <polygon points="1495,516 1524,545 1495,574 1466,545" fill="#FFFFFF"/>
+      <polygon points="1495,530 1510,545 1495,560 1480,545" fill="#0B1F3A"/>
+      <circle cx="1495" cy="545" r="7" fill="#FF6B1A"/>
+    </g>
+
+    <g fill="none" stroke-linecap="round">
+      <path d="M1530 520 C1650 415 1775 275 1940 120" stroke="#FFFFFF" stroke-width="8" opacity="0.85"/>
+      <path d="M1540 532 C1670 470 1800 405 1940 350" stroke="#FF6B1A" stroke-width="10" opacity="0.95"/>
+      <path d="M1542 545 C1685 545 1810 545 1940 545" stroke="#FFFFFF" stroke-width="9" opacity="0.9"/>
+      <path d="M1540 558 C1675 615 1800 685 1940 750" stroke="#FF6B1A" stroke-width="10" opacity="0.95"/>
+      <path d="M1530 570 C1650 680 1775 825 1940 990" stroke="#FFFFFF" stroke-width="8" opacity="0.85"/>
+      <path d="M1540 520 C1670 410 1785 285 1940 145" stroke="#FF6B1A" stroke-width="2" opacity="0.48"/>
+      <path d="M1545 535 C1680 480 1805 430 1940 385" stroke="#FFFFFF" stroke-width="3" opacity="0.5"/>
+      <path d="M1545 555 C1685 600 1810 650 1940 700" stroke="#FFFFFF" stroke-width="3" opacity="0.5"/>
+      <path d="M1540 570 C1665 695 1785 835 1940 1015" stroke="#FF6B1A" stroke-width="2" opacity="0.48"/>
+    </g>
+
+    <g>
+      <use href="#dartW" transform="translate(1640 415) rotate(-41) scale(1.15)"/>
+      <use href="#packetO" transform="translate(1770 280) rotate(-43) scale(1.18)"/>
+      <use href="#dartW" transform="translate(1890 165) rotate(-45) scale(1.22)"/>
+      <use href="#packetO" transform="translate(1645 485) rotate(-23) scale(1.18)"/>
+      <use href="#dartO" transform="translate(1790 420) rotate(-21) scale(1.22)"/>
+      <use href="#packetW" transform="translate(1900 370) rotate(-19) scale(1.25)"/>
+      <use href="#dartW" transform="translate(1650 545) rotate(0) scale(1.2)"/>
+      <use href="#packetO" transform="translate(1800 545) rotate(0) scale(1.25)"/>
+      <use href="#dartW" transform="translate(1920 545) rotate(0) scale(1.3)"/>
+      <use href="#packetO" transform="translate(1645 605) rotate(23) scale(1.18)"/>
+      <use href="#dartO" transform="translate(1790 675) rotate(24) scale(1.22)"/>
+      <use href="#packetW" transform="translate(1900 730) rotate(25) scale(1.25)"/>
+      <use href="#dartW" transform="translate(1640 675) rotate(41) scale(1.15)"/>
+      <use href="#packetO" transform="translate(1770 820) rotate(44) scale(1.18)"/>
+      <use href="#dartW" transform="translate(1890 955) rotate(46) scale(1.22)"/>
+      <use href="#diamondO" transform="translate(1720 345) scale(1.05)"/>
+      <use href="#diamondW" transform="translate(1835 545) scale(1.1)"/>
+      <use href="#diamondO" transform="translate(1720 745) scale(1.05)"/>
+      <circle cx="1870" cy="265" r="12" fill="#FFFFFF"/>
+      <circle cx="1870" cy="825" r="12" fill="#FF6B1A"/>
+    </g>
+  </g>
+
+  <rect x="956" y="70" width="2" height="940" fill="#FFFFFF" opacity="0.1"/>
+  <rect x="962" y="150" width="3" height="780" fill="#FF6B1A" opacity="0.16"/>
+</svg>

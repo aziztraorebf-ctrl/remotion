@@ -81,3 +81,13 @@ commentaires en meme temps que le payload.
 
 Voisin : [[feedback_code-existant-vs-decision-documentee]] · `memory/tools/openrouter-svg.md`
 (§ piege `reasoning.max_tokens`) · `memory/tools/kimi-review-bug.md` (plancher 16000).
+
+## ⚠️ `reasoning.effort` (imbrique) vs `reasoning.max_tokens` — MUTUELLEMENT EXCLUSIFS (2026-08-04)
+
+Distinct du `reasoning_effort` top-level documente dans `openrouter-svg.md` (§ MUR LEVE 2026-07-20).
+Si on passe **les deux champs dans le meme objet** `reasoning` (`{"max_tokens": 2000, "effort": "high"}`),
+OpenRouter renvoie **HTTP 400** : `"Only one of \"reasoning.effort\" and \"reasoning.max_tokens\" can
+be specified"`. Pour pousser l'effort au max sans la borne standard : `"reasoning": {"effort": "high"}`
+**seul**, sans `max_tokens` dans le meme objet (le `max_tokens` global top-level reste ok a cote).
+Verifie sur un test SVG reel (client-sim Flowdesk) : `effort:"high"` seul a produit un resultat nettement
+plus riche que la borne standard `max_tokens:2000` (10600 chars vs 578 chars sur le meme prompt).

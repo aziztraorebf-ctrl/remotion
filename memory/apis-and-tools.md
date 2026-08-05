@@ -178,3 +178,16 @@ originSessionId: ce6f8686-595b-4c06-97cf-65f9ba224146
 - **Pattern** : utility-only — voir `memory/feedbacks/feedback_d3-pattern-utility-only.md`
 - **Référence prototype** : `src/projects/souverain/senegal-petrole-gaz/prototypes/PrototypeD3StackedBars.tsx`
 - **Anti-pattern** : laisser D3 manipuler le DOM (`.append()`, `.selectAll()`) — conflit React reconciler
+
+---
+
+## LottieFiles Creator MCP — évalué et ÉCARTÉ (2026-08-04)
+
+Doc officielle vérifiée via WebFetch (jamais installé/testé concrètement). **Ce n'est PAS un
+générateur d'illustration organique/personnages** — c'est un assistant d'ÉDITION d'animation :
+importer un SVG existant, puis retoucher position/timing/couleurs/courbes via IA en langage naturel.
+Registre = formes abstraites/UI (spinners, progress bars, icônes), pas personnages organiques.
+
+**Conclusion** : pas nécessaire pour le pipeline Remotion actuel — le socle spring/interpolate fait
+déjà ce rôle, un import Lottie ajouterait une couche de conversion sans gain net. Aucune mention de
+limite gratuit/payant dans la doc consultée — à revérifier si le sujet revient concrètement.
