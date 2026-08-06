@@ -71,6 +71,28 @@ Ne pas recopier ici. Résumé pointeur :
      venant de scripts différents). Après tout mix manuel : une passe de nettoyage CIBLÉE (uniquement les
      doublons/trous, ne pas retoucher les choix de phrase d'Aziz) est un service à rendre systématiquement,
      pas à attendre qu'Aziz les repère lui-même.
+   - **⭐⭐ RAFFINEMENT "3 PASSES" (validé 2026-08-06, refonte script AES post-échec publication)** : sur un
+     script déjà PUBLIÉ et raté (pas un V1 jamais sorti), une seule passe jury+mix ne suffit pas toujours —
+     itérer en 3 passes distinctes bat 1 passe unique quand l'enjeu est un script à refaire de zéro plutôt
+     qu'un V1 à blinder avant 1ère publication :
+     1. **Passe diagnostic** (le protocole standard ci-dessus, 4 modèles, script complet, réécriture incluse)
+        — identifie LES problèmes, sert à choisir 2 juges complémentaires pour la suite (ex. un juge
+        structure/rigueur + un juge punch/personnalité — pas figé, dépend des styles observés).
+     2. **Passe comparaison** (script ad hoc, PAS `jury-script-creatif-llm.py` tel quel) : brief qui montre
+        V1 ET V2 (mix manuel Aziz) ensemble, demande explicitement "les corrections de la passe 1
+        sont-elles reprises ?". 2 juges seulement (ceux choisis en passe 1), pas 4 — la comparaison cible
+        est plus utile qu'un nouveau diagnostic large à ce stade.
+     3. **Passe vérification stricte** : mêmes 2 juges, brief qui exige une NOTE PAR ACTE (pas qu'une note
+        globale — une moyenne haute peut masquer un seul acte faible) + réécriture CIBLÉE de 2-4 phrases
+        max si besoin (jamais une réécriture complète à ce stade, le script est déjà bon).
+     Détail complet + preuve (script AES V1→V4, 3-4.9/10 → 8.8/10) : `feedback_hook-retention-premiere-minute.md`
+     § "méthode validée — refonte en 3 passes".
+   - **⛔⛔ TOUTE MODIFICATION MANUELLE POST-JURY DOIT REPASSER PAR L'ÉTAPE 9 (fact-check), MÊME CIBLÉE** :
+     vécu sur l'AES (2026-08-06) — une correction manuelle de 2 phrases (réchauffer le ton d'un passage)
+     a introduit une erreur factuelle de chronologie (lien causal faux entre 2 événements espacés d'1 an)
+     qu'AUCUN des 2 juges de la passe suivante n'a détectée à la première lecture (1 des 2 seulement, à la
+     relecture). Une modif manuelle, même 2 phrases, n'est pas exemptée du fact-check parce qu'elle "a l'air
+     mineure" — c'est justement le genre de rustine ajoutée vite qui échappe à la vérification systématique.
 
 **9. FACT-CHECK 3 NIVEAUX SUR LE TEXTE FINAL (formulations exactes, pas les faits déjà vérifiés en
    amont) → [[FACT-CHECK-DEEP-RESEARCH-VS-SONAR]] pour le routage outil.**

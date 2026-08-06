@@ -35,8 +35,8 @@
 > |---|---|
 > | 🇸🇳 Sénégal Pétrole & Gaz (longue) | ✅ **PUBLIÉ** le 2026-07-30 |
 > | 🇸🇳 Sénégal (Short 9:16) | ✅ **PROGRAMMÉ** 2026-08-01 15h30 UTC (2 posts TryPost) |
-> | ⚔️ War-Map Sahel AES (longue) | 🗓️ **PROGRAMMÉ** 2026-08-04 |
-> | ⚔️ AES (Short 90s) | ✅ **PROGRAMMÉ** 2026-08-04 19h UTC (2 posts TryPost) |
+> | ⚔️ War-Map Sahel AES (longue) | ⛔ **PUBLIÉE 2026-08-04, ÉCHEC (5 vues/24h, VPH 0.19) — REFONTE EN COURS, voir bloc ci-dessous** |
+> | ⚔️ AES (Short 90s) | ✅ **PROGRAMMÉ** 2026-08-04 19h UTC (2 posts TryPost) — CTA renvoie vers la longue, à re-vérifier après refonte |
 > | 💰 Franc CFA (longue) | 🗓️ **PROGRAMMÉ** 2026-08-11 |
 > | 💰 Franc CFA (Short 9:16) | ✅ **PROGRAMMÉ** 2026-08-11 15h UTC (2 posts TryPost) |
 > | 🇸🇩 Soudan mid-form (longue) | 🗓️ **PROGRAMMÉ** 2026-08-20 (titre/thumbnail/description faits le 2026-07-31) |
@@ -72,6 +72,14 @@
 > validés (ton casual, assume l'IA franchement) — Aziz doit encore les coller manuellement sur son
 > profil (aucun outil ne peut éditer un profil LinkedIn). Vérifier si fait avant de proposer le
 > premier post — cf `memory/freelance-linkedin/STRATEGIE-LINKEDIN-FREELANCE.md`.
+
+---
+
+## ⚔️ REFONTE AES — script V4 prêt (8.8-9/10), audio hook testé validé
+
+> Vidéo AES publiée 04/08 a échoué (5 vues/24h) — script réécrit + test audio validé. Reste : découpe en
+> actes + tagging complet + test Acte 1 + retiming + miniature/titre + republication.
+> Détail complet + ordre des étapes : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06).
 
 ---
 

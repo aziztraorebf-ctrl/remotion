@@ -1,6 +1,40 @@
 # War-Map Sahel AES — STATUS
 
-**Dernière mise à jour :** 2026-07-05 — ✅✅✅ **VIDÉO LONGUE VALIDÉE AZIZ, PROMUE `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`.** Reste 2 points avant publication effective : **thumbnail** + **titre** (prochaine session). Voir section "✅✅✅ SESSION C — ÉTAT (2026-07-05)" juste ci-dessous.
+> ⛔⛔ **BANDEAU D'ÉTAT 2026-08-06 — LIRE AVANT TOUT LE RESTE DE CE FICHIER (le corps ci-dessous s'arrête au
+> 2026-07-05, avant la publication).** La vidéo longue a été publiée le 2026-08-04 avec le titre "Comment
+> l'AES a brisé 60 ans de statu quo au Sahel" — **ÉCHEC** : 5 vues/24h, VPH 0.19 (vs 0.56 pour la vidéo
+> Sénégal précédente sur la même chaîne, publiée 5 jours plus tôt). Diagnostic complet (titre publié
+> différent du titre validé par jury 4 modèles, miniature vidIQ 35/100, script jugé trop institutionnel par
+> jury créatif 4 modèles) : `feedback_hook-retention-premiere-minute.md`. **Script réécrit en 3 passes de
+> jury (Gemini+Grok), V4 final noté 8.8-9/10** : `memory/episodes/warmap-sahel/SCRIPT-V6-REFONTE-2026-08-06.txt`.
+> Test audio (nouveau pipeline voix Harmonie→STS GéoAfrique, remplace Océane depuis 01/08) validé sur
+> hook+passage Moura (73.7s, ~2111 crédits) — "Africa Corps" bien prononcé (pas un artefact, confirmé
+> après écoute isolée), CAPS retenues : retirées sur "pauvres" (trop appuyé), gardées sur "GAGNENT"
+> (emphase voulue), déjà appliqué dans le fichier de test scratchpad `test-voix-hook-moura.txt` (à
+> reproduire, pas encore committé dans le repo).
+>
+> **⏭️ PROCHAINE SESSION (dans cet ordre)** :
+> 1. Découper `SCRIPT-V6-REFONTE-2026-08-06.txt` en actes avec marqueurs `### PARTIE N — titre` (le
+>    script V4 n'en a AUCUN actuellement — nécessaire pour générer/régénérer acte par acte, règle
+>    doctrine "jamais tout le script en un bloc").
+> 2. Tagger l'intégralité du texte (actuellement seuls hook+Moura sont tagués) selon
+>    `PIPELINE-VOIX-VIVANTE-VALIDE.md` (paragraphes fusionnés, tags de ton, CAPS ciblées 1-2/paragraphe,
+>    `[pause]` natif) — pas juste copier les tags de l'ancien `SCRIPT-V5-TAGGED.txt`, le texte a changé.
+> 3. **Test conclusif proposé par Aziz** : générer l'Acte 1 COMPLET (pas juste hook) en premier, valider
+>    à l'écoute avant de réserver la génération des actes 2-4 pour la suite.
+> 4. Retiming Remotion sur les visuels Mapbox/SVG existants (storyboarder + audio-director) — dans une
+>    session fraîche, vérifier si la durée totale reste proche du V1 (445.9s) ou diverge (le corps de ce
+>    fichier ci-dessous reste la référence technique du montage actuel — Mapbox/SVG/caméra/SFX ne
+>    changent pas, seul le texte/timing narratif change).
+> 5. Nouvelle miniature (score 35/100 actuel, logo AES illisible, aucun guide visuel) · nouveau titre ·
+>    supprimer la vidéo actuelle PUIS republier (jamais les 2 en simultané).
+>
+> ⚠️ **Après refonte** : appliquer la même méthode jury 3-passes sur CFA (déjà écrit) et Soudan
+> (verrouillé) AVANT publication — moins cher de corriger un script qu'une vidéo déjà en ligne.
+
+---
+
+**Dernière mise à jour (historique technique ci-dessous) :** 2026-07-05 — ✅✅✅ **VIDÉO LONGUE VALIDÉE AZIZ, PROMUE `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`.** Reste 2 points avant publication effective : **thumbnail** + **titre** (prochaine session). Voir section "✅✅✅ SESSION C — ÉTAT (2026-07-05)" juste ci-dessous.
 **✅✅ Chantier Short "L'AES en 90s" — SESSION 2026-07-08 CONCLUANTE : VIDÉO COMPLÈTE 92s PRODUITE, validée visuellement par Aziz.** Après les 4 échecs du 2026-07-07 (table rase), reprise RÉUSSIE via carte vivante d3-geo PUR (registre totalement différent de la vidéo longue Mapbox, mais qui s'y raccorde — style qu'on maîtrise). Livrable : `out/episodes/warmap-sahel/aes-short-90s-FINAL.mp4` (92s ; catbox https://files.catbox.moe/8ms702.mp4). Code : `src/projects/warmap/shorts/aes-short-90s/`, composition Remotion `AES-Short-Full` (assemble Part1 0-36s + Part2 36-92s). **RESTE 2 finitions (prochaine session) : (1) MUSIQUE — reprendre celle de la vidéo LONGUE War-Map AES + (2) SFX — ping/ding sur apparitions d'éléments + 1-2 SFX bien placés (aucun son actuellement à part la narration). Vérifier aussi la luminosité au soleil.** Socle + décisions figées : `.claude/.../memory/aes-short-socle-valide.md`. Détail complet : `memory/episodes/warmap-sahel/SHORT-90S-PRODUCTION-2026-07-08.md`.
 **Branche :** `fix/senegal-v3-passe-finition` (⚠️ nom historique trompeur — toute la Session B War-Map Sahel
 a été faite ici, pas sur une branche dédiée `feat/warmap-aes-hook-integration` qui n'a en réalité jamais

@@ -56,7 +56,9 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Sujet | Fichier |
 |---|---|
 | **« Quel SCRIPT lancer pour faire X ? » (render/audio/publish/gen/review/data)** | `scripts/SCRIPTS-INDEX.md` ⭐ index des scripts par cas d'usage. Review : `scripts/tools/REVIEW-TOOLS-INDEX.md`. |
-| **Chaîne complète idée→script blindé (valider sujet → écrire → fact-check → jury)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ 9 étapes. Enchaîne `SUJET-PRIME` (0-6) + script + fact-check 3 niveaux + jury. |
+| **Chaîne complète idée→script blindé (valider sujet → écrire → fact-check → jury)** | `memory/doctrines/RECHERCHE-PRESCRIPT-UNIFIEE.md` ⭐⭐ 9 étapes. Enchaîne `SUJET-PRIME` (0-6) + script + fact-check 3 niveaux + jury. Inclut le raffinement "3 passes" (script déjà publié/raté à refaire) § étape 8. |
+| **Refonte d'un script déjà publié qui a flop (avant CFA/Soudan) + script gold-standard de référence** | script AES V4 : `memory/episodes/warmap-sahel/SCRIPT-V6-REFONTE-2026-08-06.txt` (sujet complexe multi-acteurs, noté 8.8-9/10 par jury 2 modèles après 3 passes) — comparatif à consulter AVANT d'écrire/refaire un script sur un sujet dense. Méthode complète : `feedback_hook-retention-premiere-minute.md`. |
+| **Diagnostiquer POURQUOI une vidéo publiée ne décolle pas** | `memory/doctrines/DIAGNOSTIC-FLOP-VIDEO.md` ⭐ triage titre/miniature/script en 3 dimensions INDÉPENDANTES (vidIQ + jury script) — ne jamais s'arrêter au premier problème repéré. |
 | Écrire/valider TOUT script narratif (couche orale universelle) | `memory/doctrines/DOCTRINE-SCRIPT-UNIFIEE.md` ⭐ 16 règles (clarté/incarnation/rétention) |
 | Script Short narratif (Héros Oubliés, conte, tragédie) | `memory/templates/script-ebauche-v1.md` |
 | Script Atlas (géo, taille, richesse-record, comparaison) | `memory/templates/script-atlas-v1.md` |
