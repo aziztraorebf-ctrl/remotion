@@ -1,0 +1,224 @@
+// Groupes SVG extraits de v3-chaos.svg (source Fable 5, statique).
+// Doctrine SVG-SCENES-GENERATIVES : matiere LLM figee ici, animation en JSX cote composant.
+// Genere par scripts/extract-svg-groups.py -- ne pas editer a la main, regenerer si le SVG source change.
+//
+// *_ATTRS : attributs portes par la balise <g id=...> source (opacity/fill/stroke/filter/
+// transform/stroke-linecap...) -- HERITAGE CRITIQUE (ex fill="none" sur le <g> => les enfants
+// sans fill explicite en heritent). A reappliquer sur le <g> wrapper qui injecte le contenu,
+// sinon un cercle "stroke only" bascule vers le fill noir par defaut SVG.
+
+export const CHAOSV3_DEFS = `<radialGradient id="c-bgv" cx="0.5" cy="0.5" r="0.75">
+    <stop offset="0" stop-color="#16305A"/><stop offset="0.55" stop-color="#0F274A"/>
+    <stop offset="1" stop-color="#0B1F3A"/>
+  </radialGradient>
+  <linearGradient id="c-trailW" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.35"/>
+  </linearGradient>
+  <linearGradient id="c-trailO" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#FF6B1A" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0.45"/>
+  </linearGradient>
+  <filter id="c-blur6" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="6"/></filter>
+  <filter id="c-blur2" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2"/></filter>
+  <filter id="c-glow" x="-120%" y="-120%" width="340%" height="340%">
+    <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#FF6B1A" flood-opacity="0.7"/>
+  </filter>
+
+  <!-- symboles nommes, chaque icone dessinee simple/net, taille de base 64x64, centre (0,0) -->
+  <g id="ic-email">
+    <rect x="-30" y="-22" width="60" height="44" rx="6" fill="#FFFFFF"/>
+    <path d="M -30 -18 L 0 4 L 30 -18" fill="none" stroke="#0B1F3A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <g id="ic-chat">
+    <path d="M -30 -22 h60 a8 8 0 0 1 8 8 v20 a8 8 0 0 1 -8 8 h-38 l-14 12 v-12 h-8 a8 8 0 0 1 -8 -8 v-20 a8 8 0 0 1 8 -8 Z" fill="#FFFFFF"/>
+    <circle cx="-12" cy="-4" r="4" fill="#0B1F3A"/><circle cx="0" cy="-4" r="4" fill="#0B1F3A"/><circle cx="12" cy="-4" r="4" fill="#0B1F3A"/>
+  </g>
+  <g id="ic-sheet">
+    <rect x="-28" y="-30" width="56" height="60" rx="5" fill="#FFFFFF"/>
+    <line x1="-28" y1="-10" x2="28" y2="-10" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-28" y1="10" x2="28" y2="10" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-6" y1="-30" x2="-6" y2="30" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="14" y1="-30" x2="14" y2="30" stroke="#0B1F3A" stroke-width="3"/>
+  </g>
+  <g id="ic-phone">
+    <rect x="-18" y="-32" width="36" height="64" rx="9" fill="#FFFFFF"/>
+    <circle cx="0" cy="24" r="4" fill="#0B1F3A"/>
+    <rect x="-10" y="-24" width="20" height="38" rx="2" fill="#0B1F3A"/>
+  </g>
+  <g id="ic-doc">
+    <path d="M -24 -32 h32 l16 16 v48 h-48 Z" fill="#FFFFFF"/>
+    <path d="M 8 -32 l16 16 h-16 Z" fill="#DCE8FA"/>
+    <line x1="-14" y1="0" x2="14" y2="0" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-14" y1="12" x2="14" y2="12" stroke="#0B1F3A" stroke-width="3"/>
+  </g>
+  <g id="ic-bell">
+    <path d="M 0 -28 a20 20 0 0 1 20 20 v10 l8 12 h-56 l8 -12 v-10 a20 20 0 0 1 20 -20 Z" fill="#FF6B1A"/>
+    <circle cx="0" cy="24" r="6" fill="#FF6B1A"/>
+  </g>`;
+
+export const CHAOSV3_IC_EMAIL = `<rect x="-30" y="-22" width="60" height="44" rx="6" fill="#FFFFFF"/>
+    <path d="M -30 -18 L 0 4 L 30 -18" fill="none" stroke="#0B1F3A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+export const CHAOSV3_IC_CHAT = `<path d="M -30 -22 h60 a8 8 0 0 1 8 8 v20 a8 8 0 0 1 -8 8 h-38 l-14 12 v-12 h-8 a8 8 0 0 1 -8 -8 v-20 a8 8 0 0 1 8 -8 Z" fill="#FFFFFF"/>
+    <circle cx="-12" cy="-4" r="4" fill="#0B1F3A"/><circle cx="0" cy="-4" r="4" fill="#0B1F3A"/><circle cx="12" cy="-4" r="4" fill="#0B1F3A"/>`;
+
+export const CHAOSV3_IC_SHEET = `<rect x="-28" y="-30" width="56" height="60" rx="5" fill="#FFFFFF"/>
+    <line x1="-28" y1="-10" x2="28" y2="-10" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-28" y1="10" x2="28" y2="10" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-6" y1="-30" x2="-6" y2="30" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="14" y1="-30" x2="14" y2="30" stroke="#0B1F3A" stroke-width="3"/>`;
+
+export const CHAOSV3_IC_PHONE = `<rect x="-18" y="-32" width="36" height="64" rx="9" fill="#FFFFFF"/>
+    <circle cx="0" cy="24" r="4" fill="#0B1F3A"/>
+    <rect x="-10" y="-24" width="20" height="38" rx="2" fill="#0B1F3A"/>`;
+
+export const CHAOSV3_IC_DOC = `<path d="M -24 -32 h32 l16 16 v48 h-48 Z" fill="#FFFFFF"/>
+    <path d="M 8 -32 l16 16 h-16 Z" fill="#DCE8FA"/>
+    <line x1="-14" y1="0" x2="14" y2="0" stroke="#0B1F3A" stroke-width="3"/>
+    <line x1="-14" y1="12" x2="14" y2="12" stroke="#0B1F3A" stroke-width="3"/>`;
+
+export const CHAOSV3_IC_BELL = `<path d="M 0 -28 a20 20 0 0 1 20 20 v10 l8 12 h-56 l8 -12 v-10 a20 20 0 0 1 20 -20 Z" fill="#FF6B1A"/>
+    <circle cx="0" cy="24" r="6" fill="#FF6B1A"/>`;
+
+export const CHAOSV3_CHAOS_GRID = `<path d="M 0 540 L 1920 540" stroke-width="1"/>
+  <path d="M 960 0 L 960 1080" stroke-width="1"/>
+  <circle cx="960" cy="540" r="220" stroke-width="1"/>
+  <circle cx="960" cy="540" r="440" stroke-width="1"/>
+  <circle cx="960" cy="540" r="660" stroke-width="1"/>
+  <circle cx="960" cy="540" r="880" stroke-width="1"/>`;
+export const CHAOSV3_CHAOS_GRID_ATTRS = { "opacity": "0.14", "stroke": "#FFFFFF", "fill": "none" } as const;
+
+export const CHAOSV3_CHAOS_DUST = `<line x1="60" y1="120" x2="220" y2="180" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.4"/>
+  <line x1="1700" y1="90" x2="1860" y2="160" stroke="#FF6B1A" stroke-opacity="0.2" stroke-width="1.4"/>
+  <line x1="120" y1="900" x2="300" y2="960" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2"/>
+  <line x1="1600" y1="920" x2="1780" y2="980" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2"/>
+  <line x1="500" y1="60" x2="620" y2="130" stroke="#FFFFFF" stroke-opacity="0.14" stroke-width="1"/>
+  <line x1="1300" y1="1000" x2="1420" y2="1050" stroke="#FF6B1A" stroke-opacity="0.16" stroke-width="1"/>`;
+export const CHAOSV3_CHAOS_DUST_ATTRS = { "opacity": "0.5" } as const;
+
+export const CHAOSV3_CHAOS_ITEMS = `<g id="ic-item-0" transform="translate(180 160) rotate(-8)">
+    <line x1="0" y1="0" x2="220" y2="130" stroke="url(#c-trailW)" stroke-width="10"/>
+    <use href="#ic-email" filter="url(#c-blur2)" opacity="0.95"/>
+  </g>
+  <g id="ic-item-1" transform="translate(1720 190) rotate(10)">
+    <line x1="0" y1="0" x2="-230" y2="140" stroke="url(#c-trailO)" stroke-width="10"/>
+    <use href="#ic-chat" opacity="0.95"/>
+  </g>
+  <g id="ic-item-2" transform="translate(320 850) rotate(6)">
+    <line x1="0" y1="0" x2="200" y2="-140" stroke="url(#c-trailW)" stroke-width="10"/>
+    <use href="#ic-sheet" opacity="0.9"/>
+  </g>
+  <g id="ic-item-3" transform="translate(1620 870) rotate(-12)">
+    <line x1="0" y1="0" x2="-210" y2="-150" stroke="url(#c-trailO)" stroke-width="10"/>
+    <use href="#ic-phone" opacity="0.9"/>
+  </g>
+  <g id="ic-item-4" transform="translate(960 110) rotate(0)">
+    <line x1="0" y1="0" x2="0" y2="230" stroke="url(#c-trailW)" stroke-width="9"/>
+    <use href="#ic-doc" opacity="0.9"/>
+  </g>
+  <g id="ic-item-5" transform="translate(960 970) rotate(0)">
+    <line x1="0" y1="0" x2="0" y2="-230" stroke="url(#c-trailW)" stroke-width="9"/>
+    <use href="#ic-bell" opacity="0.85"/>
+  </g>
+  <g id="ic-item-6" transform="translate(90 500) rotate(4)">
+    <line x1="0" y1="0" x2="260" y2="20" stroke="url(#c-trailW)" stroke-width="9"/>
+    <use href="#ic-chat" opacity="0.85"/>
+  </g>
+  <g id="ic-item-7" transform="translate(1830 540) rotate(-4)">
+    <line x1="0" y1="0" x2="-260" y2="-10" stroke="url(#c-trailO)" stroke-width="9"/>
+    <use href="#ic-email" opacity="0.85"/>
+  </g>
+  <g id="ic-item-8" transform="translate(560 280) rotate(14)">
+    <line x1="0" y1="0" x2="160" y2="120" stroke="url(#c-trailW)" stroke-width="8"/>
+    <use href="#ic-phone" opacity="0.8"/>
+  </g>
+  <g id="ic-item-9" transform="translate(1350 260) rotate(-16)">
+    <line x1="0" y1="0" x2="-160" y2="130" stroke="url(#c-trailO)" stroke-width="8"/>
+    <use href="#ic-sheet" opacity="0.8"/>
+  </g>
+  <g id="ic-item-10" transform="translate(500 780) rotate(-10)">
+    <line x1="0" y1="0" x2="180" y2="-110" stroke="url(#c-trailW)" stroke-width="8"/>
+    <use href="#ic-doc" opacity="0.75"/>
+  </g>
+  <g id="ic-item-11" transform="translate(1400 800) rotate(12)">
+    <line x1="0" y1="0" x2="-180" y2="-120" stroke="url(#c-trailO)" stroke-width="8"/>
+    <use href="#ic-email" opacity="0.75"/>
+  </g>
+  <g id="ic-item-12" transform="translate(700 550) rotate(0) scale(0.75)">
+    <line x1="0" y1="0" x2="130" y2="-6" stroke="url(#c-trailW)" stroke-width="7"/>
+    <use href="#ic-chat" opacity="0.7"/>
+  </g>
+  <g id="ic-item-13" transform="translate(1220 550) rotate(0) scale(0.75)">
+    <line x1="0" y1="0" x2="-130" y2="6" stroke="url(#c-trailO)" stroke-width="7"/>
+    <use href="#ic-sheet" opacity="0.7"/>
+  </g>`;
+
+export const CHAOSV3_CHAOS_RING2 = `<g id="ic-ring2-0" transform="translate(1479 620) rotate(-14) scale(0.50)">
+    <line x1="0" y1="0" x2="-182" y2="-28" stroke="url(#c-trailO)" stroke-width="6"/>
+    <use href="#ic-email" opacity="0.6"/>
+  </g>
+  <g id="ic-ring2-1" transform="translate(1300 767) rotate(5) scale(0.60)">
+    <line x1="0" y1="0" x2="-119" y2="-79" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-chat" opacity="0.57"/>
+  </g>
+  <g id="ic-ring2-2" transform="translate(967 786) rotate(-14) scale(0.49)">
+    <line x1="0" y1="0" x2="-2" y2="-86" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-sheet" opacity="0.67"/>
+  </g>
+  <g id="ic-ring2-3" transform="translate(732 702) rotate(-9) scale(0.56)">
+    <line x1="0" y1="0" x2="80" y2="-57" stroke="url(#c-trailO)" stroke-width="6"/>
+    <use href="#ic-phone" opacity="0.68"/>
+  </g>
+  <g id="ic-ring2-4" transform="translate(541 611) rotate(3) scale(0.59)">
+    <line x1="0" y1="0" x2="147" y2="-25" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-doc" opacity="0.55"/>
+  </g>
+  <g id="ic-ring2-5" transform="translate(403 454) rotate(6) scale(0.51)">
+    <line x1="0" y1="0" x2="195" y2="30" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-bell" opacity="0.59"/>
+  </g>
+  <g id="ic-ring2-6" transform="translate(589 292) rotate(-5) scale(0.47)">
+    <line x1="0" y1="0" x2="130" y2="87" stroke="url(#c-trailO)" stroke-width="6"/>
+    <use href="#ic-email" opacity="0.57"/>
+  </g>
+  <g id="ic-ring2-7" transform="translate(952 243) rotate(3) scale(0.59)">
+    <line x1="0" y1="0" x2="3" y2="104" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-chat" opacity="0.72"/>
+  </g>
+  <g id="ic-ring2-8" transform="translate(1259 328) rotate(14) scale(0.51)">
+    <line x1="0" y1="0" x2="-105" y2="74" stroke="url(#c-trailW)" stroke-width="6"/>
+    <use href="#ic-sheet" opacity="0.68"/>
+  </g>
+  <g id="ic-ring2-9" transform="translate(1518 445) rotate(4) scale(0.60)">
+    <line x1="0" y1="0" x2="-195" y2="33" stroke="url(#c-trailO)" stroke-width="6"/>
+    <use href="#ic-phone" opacity="0.68"/>
+  </g>`;
+
+export const CHAOSV3_CHAOS_SHARDS = `<rect x="-5.4" y="-12.0" width="10.9" height="24.0" rx="2.2" fill="#FF6B1A" opacity="0.13" transform="translate(898 427) rotate(82)"/>
+  <rect x="-7.2" y="-15.8" width="14.4" height="31.6" rx="2.9" fill="#FFFFFF" opacity="0.18" transform="translate(988 676) rotate(100)"/>
+  <rect x="-8.7" y="-19.1" width="17.4" height="38.2" rx="3.5" fill="#FFFFFF" opacity="0.22" transform="translate(737 666) rotate(96)"/>
+  <rect x="-4.8" y="-10.6" width="9.6" height="21.2" rx="1.9" fill="#FFFFFF" opacity="0.18" transform="translate(727 439) rotate(262)"/>
+  <rect x="-7.4" y="-16.3" width="14.8" height="32.7" rx="3.0" fill="#FF6B1A" opacity="0.25" transform="translate(1560 519) rotate(201)"/>
+  <rect x="-5.6" y="-12.3" width="11.2" height="24.5" rx="2.2" fill="#FFFFFF" opacity="0.16" transform="translate(1015 363) rotate(12)"/>
+  <rect x="-5.6" y="-12.3" width="11.1" height="24.5" rx="2.2" fill="#FFFFFF" opacity="0.22" transform="translate(1153 950) rotate(315)"/>
+  <rect x="-5.3" y="-11.7" width="10.6" height="23.4" rx="2.1" fill="#FFFFFF" opacity="0.16" transform="translate(344 792) rotate(165)"/>
+  <rect x="-8.5" y="-18.7" width="17.0" height="37.4" rx="3.4" fill="#FF6B1A" opacity="0.18" transform="translate(626 468) rotate(210)"/>
+  <rect x="-4.5" y="-9.8" width="8.9" height="19.6" rx="1.8" fill="#FFFFFF" opacity="0.13" transform="translate(1119 973) rotate(183)"/>
+  <rect x="-6.1" y="-13.4" width="12.2" height="26.9" rx="2.4" fill="#FFFFFF" opacity="0.13" transform="translate(1418 740) rotate(285)"/>
+  <rect x="-8.9" y="-19.5" width="17.7" height="39.0" rx="3.5" fill="#FFFFFF" opacity="0.26" transform="translate(350 838) rotate(190)"/>
+  <rect x="-6.7" y="-14.7" width="13.4" height="29.4" rx="2.7" fill="#FF6B1A" opacity="0.16" transform="translate(1612 565) rotate(245)"/>
+  <rect x="-6.3" y="-13.8" width="12.5" height="27.6" rx="2.5" fill="#FFFFFF" opacity="0.27" transform="translate(793 432) rotate(157)"/>
+  <rect x="-4.9" y="-10.8" width="9.8" height="21.5" rx="2.0" fill="#FFFFFF" opacity="0.27" transform="translate(1216 405) rotate(180)"/>
+  <rect x="-7.0" y="-15.5" width="14.1" height="31.0" rx="2.8" fill="#FFFFFF" opacity="0.14" transform="translate(1223 392) rotate(230)"/>
+  <rect x="-6.7" y="-14.6" width="13.3" height="29.3" rx="2.7" fill="#FF6B1A" opacity="0.12" transform="translate(1002 255) rotate(280)"/>
+  <rect x="-8.4" y="-18.5" width="16.8" height="36.9" rx="3.4" fill="#FFFFFF" opacity="0.25" transform="translate(868 637) rotate(334)"/>
+  <rect x="-8.7" y="-19.2" width="17.5" height="38.4" rx="3.5" fill="#FFFFFF" opacity="0.13" transform="translate(879 654) rotate(316)"/>
+  <rect x="-7.8" y="-17.2" width="15.7" height="34.4" rx="3.1" fill="#FFFFFF" opacity="0.14" transform="translate(725 551) rotate(274)"/>
+  <rect x="-8.4" y="-18.4" width="16.7" height="36.8" rx="3.3" fill="#FF6B1A" opacity="0.19" transform="translate(423 585) rotate(95)"/>
+  <rect x="-5.0" y="-11.0" width="10.0" height="22.0" rx="2.0" fill="#FFFFFF" opacity="0.17" transform="translate(1088 817) rotate(263)"/>
+  <rect x="-6.6" y="-14.5" width="13.2" height="29.0" rx="2.6" fill="#FFFFFF" opacity="0.14" transform="translate(1568 530) rotate(158)"/>
+  <rect x="-5.2" y="-11.3" width="10.3" height="22.7" rx="2.1" fill="#FFFFFF" opacity="0.16" transform="translate(1025 754) rotate(212)"/>`;
+export const CHAOSV3_CHAOS_SHARDS_ATTRS = { "opacity": "0.9" } as const;
+
+export const CHAOSV3_GROUP_IDS = ["ic-email", "ic-chat", "ic-sheet", "ic-phone", "ic-doc", "ic-bell", "chaos-grid", "chaos-dust", "chaos-items", "chaos-ring2", "chaos-shards"];

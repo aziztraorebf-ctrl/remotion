@@ -18,38 +18,99 @@
   et corrigés (transform hérité écrasé décentrant badge+icône ; anneau qui ne se refermait jamais).
   Validé techniquement (pas de gel, transitions fluides), uploadé. **Jugement sémantique d'Aziz PAS
   encore reçu** avant qu'il ne parte sur V4 — probable version de repli si V4 n'aboutit pas à temps.
-- **V4** (`FlowdeskAbstraitV4.tsx`, nouveau fichier, EN COURS, PAS TERMINÉ) : hybride 2A+2B —
-  intègre 2 clips vidéo vectoriels du registre 2B (produits par l'autre session) dans les
-  panneaux 1 et 4 du registre abstrait.
+- **V4** (`FlowdeskAbstraitV4.tsx`) : hybride 2A+2B, **CLOSE — livrable final validé
+  (2026-08-06, 4 passes)** — 4 panneaux complets, composition assemblée avec transitions
+  whip-pan (identiques V3), SFX intégrés, render complet validé (49.1s, 1474 frames, aucun gel
+  détecté par hash dense).
+  **⭐ LIVRABLE FINAL — celui à regarder en premier (marqué sans ambiguïté FINAL, ne pas
+  confondre avec les rendus intermédiaires v1/v2/v3 ci-dessous) :**
+  https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/abstrait-v4-chT0OJSJAcfDDErUCEnRNYhQOEfnej.mp4
+  (fallback disque `out/_client-sim/flowdesk/abstrait-v4-FINAL.mp4`).
+  Historique (rendus intermédiaires PAS supprimés, gardés pour comparaison — pas de fichier
+  local correspondant à v1-v3 de cette liste, seulement le v1/v2 nommés `abstrait-v4-v*.mp4`
+  ont été écrasés en cours de route, cf conversation) : 1ère passe complète → 4 corrections de
+  dosage Aziz (icônes P1 2x/plus nombreuses, vortex P2 5-bras visible, 2 icônes/destination P3,
+  anneau+cadenas P4) → da-brief downstream 3 modèles + retouches (P3 refonte, vortex qui dérive,
+  ordre TRAITÉ) → **fix final stroke-dasharray imperceptible (ease-in-out→linéaire, root cause
+  détaillée ci-dessous)**.
 
-## Où V4 s'est arrêté précisément (PRIORITÉ 1 prochaine session)
+## V4 — détail des 4 panneaux (terminé 2026-08-06)
 
-Seul le **Panneau 1** est codé (`PanneauChaosV4` dans `FlowdeskAbstraitV4.tsx`), avec un helper
-vidéo réutilisable `videoLoop.tsx` (`LoopedVideo`, `LoopedImageSequence`). Un bug de caméra CSS a
-été trouvé et corrigé en fin de session (mélange d'un système `focusTx/focusTy` pensé pour du SVG
-avec un `AbsoluteFill` HTML — le personnage n'occupait qu'un quart du cadre). Le type-check passait
-juste avant l'arrêt, **MAIS le rendu de vérification n'a PAS été relancé après ce dernier fix** —
-à VÉRIFIER EN PREMIER à la reprise :
-```
-npx remotion still src/index.ts Flowdesk-V4-Panel1-Preview out/_client-sim/flowdesk/v4-panel1-check.png --frame=60
-```
-Composition temporaire `Flowdesk-V4-Panel1-Preview` dans `Root.tsx` — à retirer une fois V4
-complète, ou garder si utile pour tester panneau par panneau (juger sur place).
+1. **Panneau 1** (chaos) : bug caméra CSS corrigé (mélange focusTx/Ty SVG appliqué à tort sur
+   AbsoluteFill HTML). Géométrie d'orbite entièrement recalculée après 2 échecs de calibration —
+   **une orbite fermée était géométriquement IMPOSSIBLE** (personnage collé au bord bas du cadre,
+   confirmé par agent dédié, balayage exhaustif = 0 solution avec ≥60px de dégagement). Solution :
+   arc elliptique OUVERT (170°→370°, jamais sous le personnage) avec 6 anneaux concentriques à
+   rayons strictement distincts (deux icônes sur le même anneau se croisent forcément). Résultat
+   validé : aucune icône ne touche le personnage, aucune collision inter-icônes, aucun débordement
+   de cadre sur 6 échantillons temporels.
+2. **Panneau 2** (bascule) : logo simple (cercle marine + cerclage orange + "F") ajouté à côté du
+   mot FLOWDESK (lockup). Vortex d'aspiration agrandi (rayons 200-750, la 1ère version à 40-180
+   était invisible à l'échelle réelle du panneau) + anneau pointillé. Icônes en cycle perpétuel
+   spirale→capture→éjection vers la droite ; bug de fade prématuré corrigé (le fade démarrait à
+   70% du trajet, l'icône n'avait pas encore quitté le cadre — corrigé pour ne fader qu'une fois
+   x > 1920).
+3. **Panneau 3** (mécanisme) : mouvement réel le long des paths SVG Bézier existants via
+   `getPointAtLength`/`getLength` (`@remotion/paths`, mesure géométrique fiable — pas l'heuristique
+   de comptage de commandes bannie ailleurs dans le projet). 3 phases par icône : glisse
+   inflow→module, traverse le module (translation continue, jamais de saut), glisse
+   module→destination puis RESTE (pulsation légère, pas de disparition). Vérifié : les 5
+   destinations (IT/RH/FINANCE/SUPPORT/DIRECTION) sont toutes peuplées et visibles à la frame finale.
+4. **Panneau 4** (résolution) : bug de contraste découvert — le clip clavier a le personnage tracé
+   en MARINE (#0B1F3A) sur fond blanc chroma-keyé transparent (inverse du panel1), donc invisible
+   sur le fond marine du panneau sans un disque clair derrière. Corrigé (disque `#F4F7FB` circulaire
+   + léger glow). 6 icônes du chaos P1 réutilisées, rangées en cercle organisé et quasi-immobiles
+   (contraste délibéré avec l'orbite jamais figée du P1 — boucle narrative). Angles décalés pour
+   qu'aucune icône ne chevauche le mot TRAITÉ.
 
-**Panneaux 2, 3, 4 entièrement à écrire**, consignes précises d'Aziz :
-1. **Panneau 1** (chaos) : personnage découragé au centre, icônes plus grosses/espacées qui
-   orbitent en CONTINU autour de lui sans jamais le toucher ni se figer (défaut de V3 : icônes qui
-   arrivent puis restent statiques).
-2. **Panneau 2** (bascule) : icône Flowdesk à côté du mot, vortex d'aspiration VISIBLE (pas un
-   fade), icônes qui sortent par la DROITE du cadre.
-3. **Panneau 3** (mécanisme) : icônes qui GLISSENT le long des lignes, traversent le logo central,
-   arrivent à leur destination nommée et Y RESTENT (pas de disparition).
-4. **Panneau 4** (résolution) : clip personnage calme+clavier en boucle au centre, "TRAITÉ"
-   au-dessus, icônes rangées en CERCLE ORGANISÉ autour de lui (boucle narrative avec le chaos du
-   panneau 1 — mêmes icônes, dispersées puis rangées).
+**Review Gemini** : score 4.5/10 (NEEDS_WORK) — **faux positif structurel tracé**, override écrit
+dans `abstrait-v4-FINAL.review-override.md`. `scripts/visual_review.py --palette navy` est calibré pour
+la palette Souverain (Gold/Bebas Neue) ; Flowdesk a sa PROPRE identité de marque (orange #FF6B1A,
+Helvetica) héritée de V1/V2/V3, pas Souverain. Vérification manuelle détaillée faite à la place
+(frame par frame, chaque consigne croisée avec le rendu réel).
 
-SFX déjà disponibles dans `audio/sfx/` (email/generic-sharp/generic-soft/slack/tableur/tension-bed)
-+ `audio/panel2-keyboard-sfx.mp3` déjà calé sur le clip clavier — **rien à générer**.
+## V4 v3 — retouches issues du da-brief downstream (2026-08-06)
+
+Après validation de la v2 par Aziz, un **da-brief downstream** a été lancé sur le rendu complet
+(Gemini + Kimi K2.5 en vidéo native, GPT-5.6 Sol sur 8 frames extraites) via
+`scripts/tools/da-brief-video-3voix.py`, avec un brief dédié (contexte Flowdesk, script timé
+par panneau, contraintes dures : ne pas toucher clips vidéo/script/palette). Sorties brutes :
+`/tmp/da-refs/da-flowdesk-v4-downstream-{gemini,kimi,gpt56sol}.md` (non versionnées, ephemeral).
+
+**Convergence forte (3 modèles indépendamment)** : Panneau 3 trop chargé (labels coupés, 5
+destinations simultanées illisibles) ; transitions "cut" plutôt que causales ; idée créative
+identique proposée 3x sans concertation — les trajectoires P3 devraient se courber en l'anneau
+P4 (jugée hors de portée sûre pour cette session, cf ci-dessous).
+
+Retouches appliquées et vérifiées :
+- **P2** : vortex qui SE DESSINE (stroke-dasharray/dashoffset, exploite la "signature SVG" du
+  registre au lieu d'un simple fade) + centre du cyclone qui DÉRIVE vers la gauche sur toute
+  la durée du panneau (idée Aziz, tranchée en "déplacement physique" plutôt que rotation seule).
+- **P3** : refonte — routes reculées (marge bord droit 166-186px vs 36-56px), labels EXTERNES
+  aux cercles (plus jamais recouverts), staging séquentiel STRICT (1 route active orange à la
+  fois, les autres attenuées), routes+inflow qui se dessinent, cercles concentriques décoratifs
+  retirés (jugés "bruit visuel" par les 3 modèles).
+- **P4** : ordre de révélation corrigé (TRAITÉ apparaissait AVANT la fermeture de l'anneau —
+  contredisait sa fonction de confirmation finale ; décalé après le cadenas). Easing de l'anneau
+  passé en ease-out cubique pur (décélération longue, vend mieux "le calme qui s'installe").
+- **P1** : irrégularité ajoutée à la vitesse angulaire (modulation ±20% par icône) — corrige le
+  défaut "orbite mécanique / screensaver" relevé par Kimi.
+- **Transitions causales** : évaluées, NON implémentées en fusion géométrique de paths (aurait
+  demandé de faire cohabiter deux panneaux dans une fenêtre de rendu partagée — risque jugé trop
+  élevé de casser le système `TransitionLayer` déjà validé sur 3 versions). Cohérence
+  directionnelle déjà présente nativement (vortex P2 dérive vers x=1150, proche du module P3 à
+  x=960 ; le point de départ natif du tracé d'ellipse P4 tombe côté droit, cohérent avec la
+  sortie du P3 à droite) — retenue comme suffisante pour cette session.
+
+**Review Gemini** : score 4.5/10 (NEEDS_WORK) — **faux positif structurel tracé**, override écrit
+dans `abstrait-v4-FINAL.review-override.md`. `scripts/visual_review.py --palette navy` est calibré pour
+la palette Souverain (Gold/Bebas Neue) ; Flowdesk a sa PROPRE identité de marque (orange #FF6B1A,
+Helvetica) héritée de V1/V2/V3, pas Souverain. Vérification manuelle détaillée faite à la place
+(frame par frame, chaque consigne croisée avec le rendu réel).
+
+SFX intégrés : 6 SFX ponctuels sur l'apparition des icônes P1 (email/slack/tableur/generic),
+5 SFX d'arrivée sur le P3 (generic-soft), SFX clavier en boucle sur le P4 — tous depuis
+`audio/sfx/` déjà disponible, rien généré.
 
 ## Découverte technique à retenir — webm+alpha peu fiable
 
@@ -64,10 +125,16 @@ Utilisée dans `videoLoop.tsx` (`LoopedImageSequence`) pour le clip panel2
 (`public/_client-sim/flowdesk/video/panel2-frames/`, 124 PNG, 22 Mo).
 Le clip panel1 n'a pas ce problème (fond déjà `#0B1F3A`, joué en MP4 direct via `LoopedVideo`).
 
+**Piège inverse découvert sur le clip panel2 (2026-08-06)** : le personnage de CE clip est tracé
+en MARINE sur fond BLANC chroma-keyé (l'inverse du panel1, personnage blanc sur fond marine déjà
+en dur) — invisible une fois composé sur le fond marine du panneau sans un disque de fond clair
+derrière lui. Toujours vérifier visuellement le contraste réel d'un clip alpha une fois composé
+sur SON fond de destination, pas seulement sur fond neutre/blanc du visualiseur.
+
 ## Fichiers clés (actifs, ne pas supprimer)
 
 - `FlowdeskAbstrait2A.tsx` (V1, référence historique) · `FlowdeskAbstraitV3.tsx` (V3, dernière
-  version complète validée techniquement) · `FlowdeskAbstraitV4.tsx` (V4, en cours)
+  version complète validée techniquement) · `FlowdeskAbstraitV4.tsx` (V4, TERMINÉE)
 - `camera.ts` (helpers caméra SVG : `focusTx`/`focusTy`/`cameraShake`/`elementDrift`)
 - `videoLoop.tsx` (helpers vidéo : `LoopedVideo`, `LoopedImageSequence`)
 - `v3-chaos.svg`, `v3-bascule.svg`, `v3-mecanisme.svg`, `v3-resolution.svg` (sources V3)
@@ -77,8 +144,8 @@ Le clip panel1 n'a pas ce problème (fond déjà `#0B1F3A`, joué en MP4 direct 
 - `audio/`, `public/_client-sim/flowdesk/` (assets copiés pour Remotion)
 - `da-brief-2a-mouvement.txt` + `da-brief-2a-mouvement-out/` (brief 3-modèles ayant produit V2,
   trace de décision)
-- `out/_client-sim/flowdesk/*.mp4` + `.review-override.md` (3 rendus comparatifs V1/V2/V3, overrides
-  légitimes et tracés — ne pas supprimer)
+- `out/_client-sim/flowdesk/*.mp4` + `.review-override.md` (4 rendus comparatifs V1/V2/V3/V4,
+  overrides légitimes et tracés — ne pas supprimer)
 - `BRIEF-PASSATION-ANIMATION.md` : brief de passation de la session PRÉCÉDENTE (avant celle-ci),
   couvre seulement V1-V3 — **ce STATUS.md le remplace comme guide d'action**, garder l'ancien
   seulement comme trace historique.
@@ -102,15 +169,12 @@ source + v9-check/, utilisés en LECTURE par V4 mais produits par cette session)
 (iconsInline.ts v1 + iconsInlineV2.ts, TOUJOURS les deux actifs, pas un remplacement complet) ·
 `videoPingPong.ts` · `scripts/generate-sfx-flowdesk.py`.
 
-⚠️ **Décision d'Aziz en attente** : comparer 2A (V3 ou V4 selon avancement) et 2B (v9) une fois les
-deux complets, pour choisir le registre final ou un hybride — pas encore tranché à la clôture de
-cette session (2026-08-06).
-
 ## Prochaine priorité précise
 
-1. Vérifier visuellement le Panneau 1 V4 corrigé (render `Flowdesk-V4-Panel1-Preview`, actuellement
-   non confirmé visuellement après le dernier fix caméra).
-2. Écrire les Panneaux 2/3/4 selon les 4 consignes ci-dessus.
-3. Intégrer les SFX déjà disponibles.
-4. Render complet + vérification + comparer avec V3 et avec le registre 2B pour la décision finale
-   d'Aziz (lequel devient le livrable, ou hybride).
+1. **Décision d'Aziz en attente** : comparer 2A V4 (terminée, livrable ci-dessus) et 2B v9
+   (panneaux 1+2 seulement, 3+4 restent à faire côté 2B) pour choisir le registre final ou un
+   hybride — pas encore tranché.
+2. Si V4 est retenue : possibilité d'itérer sur les 2 points mineurs relevés en review manuelle
+   (léger frôlement email/phone au P2, chevauchement optique bell/email au P4 dû à l'ellipse
+   aplatie) — non bloquants, à discuter avec Aziz plutôt qu'à corriger d'office.
+3. Si 2B est retenue ou hybride : reste à produire les panneaux 3+4 côté 2B (voir section 2B).

@@ -1,0 +1,88 @@
+// Groupes SVG extraits de v3-bascule.svg (source Fable 5, statique).
+// Doctrine SVG-SCENES-GENERATIVES : matiere LLM figee ici, animation en JSX cote composant.
+// Genere par scripts/extract-svg-groups.py -- ne pas editer a la main, regenerer si le SVG source change.
+//
+// *_ATTRS : attributs portes par la balise <g id=...> source (opacity/fill/stroke/filter/
+// transform/stroke-linecap...) -- HERITAGE CRITIQUE (ex fill="none" sur le <g> => les enfants
+// sans fill explicite en heritent). A reappliquer sur le <g> wrapper qui injecte le contenu,
+// sinon un cercle "stroke only" bascule vers le fill noir par defaut SVG.
+
+export const BASCULEV3_DEFS = `<radialGradient id="b-bgv" cx="0.72" cy="0.5" r="0.85">
+    <stop offset="0" stop-color="#1A3A68" stop-opacity="0.85"/>
+    <stop offset="0.5" stop-color="#122B4E" stop-opacity="0.4"/>
+    <stop offset="1" stop-color="#0B1F3A" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="b-focusGlow">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
+    <stop offset="18%" stop-color="#FFE2C6" stop-opacity="0.6"/>
+    <stop offset="45%" stop-color="#FF6B1A" stop-opacity="0.22"/>
+    <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="b-trailW" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+  </linearGradient>
+  <linearGradient id="b-trailO" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#FF6B1A" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0.6"/>
+  </linearGradient>
+  <filter id="b-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.2"/></filter>
+
+  <g id="b-ic-email"><rect x="-16" y="-12" width="32" height="24" rx="3" fill="#FFFFFF"/><path d="M -16 -10 L 0 2 L 16 -10" fill="none" stroke="#0B1F3A" stroke-width="2.2" stroke-linecap="round"/></g>
+  <g id="b-ic-chat"><path d="M -16 -12 h32 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-20 l-8 7 v-7 h-4 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 Z" fill="#FFFFFF"/></g>
+  <g id="b-ic-sheet"><rect x="-15" y="-16" width="30" height="32" rx="3" fill="#FFFFFF"/><line x1="-15" y1="-5" x2="15" y2="-5" stroke="#0B1F3A" stroke-width="1.6"/><line x1="-15" y1="6" x2="15" y2="6" stroke="#0B1F3A" stroke-width="1.6"/></g>
+  <g id="b-ic-phone"><rect x="-9" y="-17" width="18" height="34" rx="5" fill="#FFFFFF"/><circle cx="0" cy="13" r="2.2" fill="#0B1F3A"/></g>`;
+
+export const BASCULEV3_B_IC_EMAIL = `<rect x="-16" y="-12" width="32" height="24" rx="3" fill="#FFFFFF"/><path d="M -16 -10 L 0 2 L 16 -10" fill="none" stroke="#0B1F3A" stroke-width="2.2" stroke-linecap="round"/>`;
+
+export const BASCULEV3_B_IC_CHAT = `<path d="M -16 -12 h32 a4 4 0 0 1 4 4 v11 a4 4 0 0 1 -4 4 h-20 l-8 7 v-7 h-4 a4 4 0 0 1 -4 -4 v-11 a4 4 0 0 1 4 -4 Z" fill="#FFFFFF"/>`;
+
+export const BASCULEV3_B_IC_SHEET = `<rect x="-15" y="-16" width="30" height="32" rx="3" fill="#FFFFFF"/><line x1="-15" y1="-5" x2="15" y2="-5" stroke="#0B1F3A" stroke-width="1.6"/><line x1="-15" y1="6" x2="15" y2="6" stroke="#0B1F3A" stroke-width="1.6"/>`;
+
+export const BASCULEV3_B_IC_PHONE = `<rect x="-9" y="-17" width="18" height="34" rx="5" fill="#FFFFFF"/><circle cx="0" cy="13" r="2.2" fill="#0B1F3A"/>`;
+
+export const BASCULEV3_BASCULE_GRID = `<line x1="0" y1="200" x2="1500" y2="540" stroke-width="1"/>
+  <line x1="0" y1="880" x2="1500" y2="540" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1920" y2="540" stroke-width="1"/>
+  <circle cx="1500" cy="540" r="120" stroke-width="1"/>
+  <circle cx="1500" cy="540" r="260" stroke-width="1"/>
+  <circle cx="1500" cy="540" r="420" stroke-width="1"/>`;
+export const BASCULEV3_BASCULE_GRID_ATTRS = { "opacity": "0.12", "stroke": "#FFFFFF", "fill": "none" } as const;
+
+export const BASCULEV3_BASCULE_HORN = `<ellipse cx="180" cy="0" rx="130" ry="150" stroke="#FFFFFF" stroke-width="1.6" opacity="0.55"/>
+  <ellipse cx="160" cy="0" rx="112" ry="128" stroke="#FFFFFF" stroke-width="1.5" opacity="0.5"/>
+  <ellipse cx="140" cy="0" rx="94" ry="106" stroke="#FFFFFF" stroke-width="1.4" opacity="0.45"/>
+  <ellipse cx="120" cy="0" rx="76" ry="86" stroke="#FFFFFF" stroke-width="1.3" opacity="0.4"/>
+  <ellipse cx="100" cy="0" rx="58" ry="66" stroke="#FFFFFF" stroke-width="1.2" opacity="0.35"/>
+  <ellipse cx="80" cy="0" rx="40" ry="46" stroke="#FFFFFF" stroke-width="1.1" opacity="0.3"/>
+  <path d="M -650 -420 C -300 -300 -50 -80 0 0" stroke="#FFFFFF" stroke-width="1" opacity="0.25"/>
+  <path d="M -650 420 C -300 300 -50 80 0 0" stroke="#FFFFFF" stroke-width="1" opacity="0.25"/>
+  <path d="M -650 -250 C -300 -180 -50 -50 0 0" stroke="#FFFFFF" stroke-width="1" opacity="0.2"/>
+  <path d="M -650 250 C -300 180 -50 50 0 0" stroke="#FFFFFF" stroke-width="1" opacity="0.2"/>`;
+export const BASCULEV3_BASCULE_HORN_ATTRS = { "transform": "translate(1500 540) rotate(-6)", "fill": "none", "opacity": "0.85" } as const;
+
+export const BASCULEV3_BASCULE_RINGS = `<circle r="90" stroke-width="1.4" opacity="0.35"/>
+  <circle r="150" stroke-width="1.2" opacity="0.28"/>
+  <circle r="220" stroke-width="1.1" opacity="0.2"/>
+  <circle r="300" stroke-width="1" opacity="0.14"/>`;
+export const BASCULEV3_BASCULE_RINGS_ATTRS = { "transform": "translate(1500 540)", "fill": "none", "stroke": "#FFFFFF" } as const;
+
+export const BASCULEV3_BASCULE_ITEMS = `<g id="bic-0" transform="translate(120 140)"><line x1="0" y1="0" x2="1200" y2="380" stroke="url(#b-trailW)" stroke-width="3"/><use href="#b-ic-email" opacity="0.9"/></g>
+  <g id="bic-1" transform="translate(200 940)"><line x1="0" y1="0" x2="1150" y2="-380" stroke="url(#b-trailO)" stroke-width="3"/><use href="#b-ic-chat" opacity="0.9"/></g>
+  <g id="bic-2" transform="translate(60 500)"><line x1="0" y1="0" x2="1300" y2="35" stroke="url(#b-trailW)" stroke-width="3"/><use href="#b-ic-sheet" opacity="0.9"/></g>
+  <g id="bic-3" transform="translate(90 780)"><line x1="0" y1="0" x2="1280" y2="-230" stroke="url(#b-trailW)" stroke-width="2.6"/><use href="#b-ic-phone" opacity="0.85"/></g>
+  <g id="bic-4" transform="translate(150 320)"><line x1="0" y1="0" x2="1250" y2="215" stroke="url(#b-trailO)" stroke-width="2.6"/><use href="#b-ic-email" opacity="0.85"/></g>
+  <g id="bic-5" transform="translate(400 90)"><line x1="0" y1="0" x2="1000" y2="440" stroke="url(#b-trailW)" stroke-width="2.4"/><use href="#b-ic-chat" opacity="0.8"/></g>
+  <g id="bic-6" transform="translate(450 990)"><line x1="0" y1="0" x2="950" y2="-440" stroke="url(#b-trailO)" stroke-width="2.4"/><use href="#b-ic-sheet" opacity="0.8"/></g>
+  <g id="bic-7" transform="translate(700 150)"><line x1="0" y1="0" x2="750" y2="380" stroke="url(#b-trailW)" stroke-width="2.2"/><use href="#b-ic-phone" opacity="0.75"/></g>
+  <g id="bic-8" transform="translate(750 930)"><line x1="0" y1="0" x2="700" y2="-380" stroke="url(#b-trailW)" stroke-width="2.2"/><use href="#b-ic-email" opacity="0.75"/></g>
+  <g id="bic-9" transform="translate(950 220)" transform-origin="0 0"><line x1="0" y1="0" x2="500" y2="290" stroke="url(#b-trailO)" stroke-width="2"/><use href="#b-ic-chat" opacity="0.7" transform="scale(0.85)"/></g>
+  <g id="bic-10" transform="translate(1000 850)"><line x1="0" y1="0" x2="450" y2="-290" stroke="url(#b-trailW)" stroke-width="2"/><use href="#b-ic-sheet" opacity="0.7" transform="scale(0.85)"/></g>
+  <g id="bic-11" transform="translate(1180 460)"><line x1="0" y1="0" x2="280" y2="70" stroke="url(#b-trailW)" stroke-width="1.8"/><use href="#b-ic-phone" opacity="0.65" transform="scale(0.75)"/></g>`;
+
+export const BASCULEV3_BASCULE_FOCUS = `<circle r="70" fill="url(#b-focusGlow)"/>
+  <rect x="-165" y="-38" width="330" height="76" rx="38" fill="#FFFFFF"/>
+  <text id="bascule-wordmark" x="0" y="14" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="46" font-weight="700" letter-spacing="1" fill="#0B1F3A">FLOWDESK</text>`;
+export const BASCULEV3_BASCULE_FOCUS_ATTRS = { "transform": "translate(1500 540)" } as const;
+
+export const BASCULEV3_GROUP_IDS = ["b-ic-email", "b-ic-chat", "b-ic-sheet", "b-ic-phone", "bascule-grid", "bascule-horn", "bascule-rings", "bascule-items", "bascule-focus"];

@@ -38,6 +38,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Doute catalogue Atlas** | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ |
 | **Doute catalogue / démarrer War-Map** | `src/projects/warmap/WARMAP-INDEX.md` ⭐ (LA réf = `SudanWarMapEpic60`) |
 | **Assets / templates / refs (source unique)** | `public/_shared/ASSETS-INDEX.md` |
+| **Tests client-sim (SaaS, hors-Souverain — Flowdesk, NorthShield...)** | `memory/client-sim-tests/INDEX.md` ⭐ sujet SECONDAIRE volontairement isolé de `MEMORY.md` (qui garde juste un pointeur) pour ne pas diluer le thème principal YouTube/Souverain. Méthode standard (Direction A/B, grille INFORMATION/REPRÉSENTATION/MEDIUM/SEMANTIC TEST, règle draw-on/mouvement/vie) + tests réalisés/en préparation y sont listés. |
 
 ### 📤 Publier une vidéo (titre · miniature · calendrier)
 

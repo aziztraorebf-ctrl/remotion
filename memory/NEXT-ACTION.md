@@ -175,12 +175,11 @@ dessin progressif) : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
 verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore produit. Repère sujet :
 `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
-> ⚠️ **Aparté 2026-08-06** : le test client simulé "Flowdesk" avance sur 2 registres en parallèle —
-> n'annule PAS la priorité Gazoduc Acte 3 ci-dessus. Registre 2A abstrait : V1→V4, V4 en cours
-> (Panneau 1 seul codé). Registre 2B personnage (MiniMax H3) : **panneaux 1+2 TERMINÉS ET VALIDÉS**
-> (livrable v9, lien dans STATUS.md), panneaux 3+4 restants. Pour reprendre : `memory/episodes/
-> _client-sim/flowdesk/STATUS.md` (source de vérité). **Quel registre finaliser en premier reste à
-> décider avec Aziz — pas tranché ici.**
+> ✅ **Test client-sim "Flowdesk" CLOS (2026-08-06)** — sujet secondaire, détail isolé de ce
+> fichier → `memory/client-sim-tests/INDEX.md`. Brief du prochain test client-sim ("NorthShield",
+> cybersécurité, PAS démarré) sauvegardé dans `memory/client-sim-tests/noteshield/BRIEF-CLIENT.md`
+> — à lancer sur demande explicite d'Aziz uniquement. Ne change rien à la priorité Gazoduc Acte 3
+> ci-dessus (le sujet principal reste YouTube/Souverain).
 
 ---
 

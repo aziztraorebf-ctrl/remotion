@@ -485,7 +485,7 @@ import { SceneCreancier, CREANCIER_FRAMES } from "./projects/_rnd/fable-libre/Sc
 import { SceneUnSeulPecheur, UN_SEUL_PECHEUR_FRAMES } from "./projects/_rnd/fable-libre/SceneUnSeulPecheur";
 import { FlowdeskAbstrait2A, FLOWDESK_ABSTRAIT_FRAMES, FLOWDESK_ABSTRAIT_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstrait2A";
 import { FlowdeskAbstraitV3, FLOWDESK_V3_FRAMES, FLOWDESK_V3_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV3";
-import { FlowdeskV4Panel1Preview, FLOWDESK_V4_PANEL1_PREVIEW_FRAMES } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV4";
+import { FlowdeskAbstraitV4, FLOWDESK_V4_FRAMES, FLOWDESK_V4_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV4";
 import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } from "./projects/_client-sim/flowdesk/FlowdeskPersonne2B";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
@@ -3806,13 +3806,20 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
-        {/* ACTE 1 FINAL — version reconstruite (plan validé upstream + socle 6 mécaniques).
-            Compo isolée f0-2299 (77s), Actes 2-5 alignés dans une passe ultérieure. */}
+        {/* ACTE 1 FINAL — hook pur (retiming V6 2026-08-06). Le decoupage narratif a BOUGE entre
+            V5 et V6 : en V5, PARTIE 0 (hook) contenait deja les groupes JNIM/EIGS, PARTIE 1
+            commencait a "2012". En V6, JNIM/EIGS ont migre DANS le texte de PARTIE 1 (juste apres
+            "Tout commence en 2012"). Le CODE JNIM/EIGS n'a pas bouge (reste dans SahelWarMapEngine,
+            actif via isFinalLook qui couvre acte1Final ET partie1) -- seule la FRONTIERE DE RENDER
+            entre les 2 segments a change : Acte1 s'arrete maintenant a la fin du hook pur (avant
+            "2012", ~f1130), Partie1 (composition separee) couvre 2012+JNIM/EIGS+vide d'Etat.
+            Render utile : --frames=0-1103 (etait 0-2299 en V5) — jonction jointive avec SahelPartie1
+            (0 trou/0 chevauchement), vérifiée par check-frame-continuity.py 2026-08-06. */}
         <Composition
           id="SahelActe1-Final"
           component={SahelWarMapEngine}
           defaultProps={{ acte1Final: true }}
-          durationInFrames={2126}
+          durationInFrames={1150}
           fps={30}
           width={1920}
           height={1080}
@@ -3858,7 +3865,13 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         {/* PARTIE 1 Sahel — canari/origine 2012 (refactor V5, direction soustraction).
-            Look Acte 1 + couche <Partie1Origine>. Legacy B1 (acte2) OFF. */}
+            Look Acte 1 + couche <Partie1Origine>. Legacy B1 (acte2) OFF.
+            Retiming V6 (2026-08-06) : couvre maintenant AUSSI JNIM/EIGS (migres du hook vers cette
+            partie dans le nouveau texte, cf commentaire SahelActe1-Final ci-dessus). Render utile :
+            --frames=1103-2895 (etait 2055-2939 en V5 -- la partie demarre bien plus tot car le
+            hook V6 est beaucoup plus compact ; fin=2895=exactement le marker "### PARTIE 2" mesure
+            dans narration-v6-full.alignment.json). Jonction jointive verifiee (check-frame-continuity.py)
+            avec SahelActe1-Final (debut) et SahelPartie2 (fin). durationInFrames=2940 reste suffisant. */}
         <Composition
           id="SahelPartie1"
           component={SahelWarMapEngine}
@@ -3870,37 +3883,43 @@ export const RemotionRoot: React.FC = () => {
         />
         {/* PARTIE 2 Sahel — le blocage (intervention FR/ONU qui échoue 10 ans).
             Look Acte 1 + couche <Partie2Blocage>. Points rigides sur surfaces fluides.
-            durationInFrames étendu 5700→6119 (2026-07-01) : couvre le beat CEDEAO (menace d'intervention
-            armée) jusqu'au relais exact de P3 (F_BAMAKO=6118) — sans cette extension, le render s'arrêtait
-            à 5699 et coupait ~14s de narration avant que P3 ne prenne le relais (bug trous de jonction). */}
+            durationInFrames étendu 5700→6119 (2026-07-01) puis 6119→7111 (retiming V6 2026-08-06) :
+            couvre maintenant jusqu'au marker "### PARTIE 3" (f7111, mesuré directement dans
+            narration-v6-full.alignment.json) — jonction jointive 0 trou/0 chevauchement avec
+            SahelPartie3, vérifiée par check-frame-continuity.py. Render utile : --frames=2895-7111. */}
         <Composition
           id="SahelPartie2"
           component={SahelWarMapEngine}
           defaultProps={{ partie2: true }}
-          durationInFrames={6119}
+          durationInFrames={7111}
           fps={30}
           width={1920}
           height={1080}
         />
         {/* PARTIE 3 Sahel — la rupture (AES naît, Kidal repris, Moura, attaques 2026 repoussées).
-            Look Acte 1 + couche <Partie3Rupture>. Inversion chromatique : l'avancée FAMa colore en BLEU. */}
+            Look Acte 1 + couche <Partie3Rupture>. Inversion chromatique : l'avancée FAMa colore en BLEU.
+            durationInFrames 9410->10794 (retiming V6 2026-08-06) : F_END recalé sur le nouveau texte/audio
+            (marker "### PARTIE 4" mesuré juste après "autre."). Voir Partie3Rupture.tsx tête de fichier. */}
         <Composition
           id="SahelPartie3"
           component={SahelWarMapEngine}
           defaultProps={{ partie3: true }}
-          durationInFrames={9410}
+          durationInFrames={10794}
           fps={30}
           width={1920}
           height={1080}
         />
         {/* PARTIE 4 Sahel — le coût, le levier, la perspective (DERNIÈRE partie). Look Acte 1 + couche
             <Partie4Cout>. Arc 3 mouvements : coût humain (réfugiés/chiffre) → levier (or/uranium/pétrole) →
-            perspective (confédération/CFA/dézoom) → extinction au noir. Render utile : --frames=9416-13440. */}
+            perspective (confédération/CFA/dézoom) → extinction au noir. Render utile : --frames=10432-15019.
+            durationInFrames 13500->15019 (retiming V6 2026-08-06) : F_END recalé sur le nouveau texte/audio
+            (script V6 réécrit, +~50s vs V5 sur cette dernière partie ; offset audio corrigé +2895, pas
+            +3196 — voir Partie4Cout.tsx tête de fichier, MÊME BIAIS probable sur SahelPartie3 à vérifier). */}
         <Composition
           id="SahelPartie4"
           component={SahelWarMapEngine}
           defaultProps={{ partie4: true }}
-          durationInFrames={13500}
+          durationInFrames={15019}
           fps={30}
           width={1920}
           height={1080}
@@ -4424,12 +4443,12 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
 
-      {/* Client-sim Flowdesk — V4 Panneau 1 seul (preview de validation avant les 3 autres panneaux). */}
+      {/* Client-sim Flowdesk — V4, hybride 2A+2B (clips video personnage integres dans le registre abstrait). */}
       <Composition
-        id="Flowdesk-V4-Panel1-Preview"
-        component={FlowdeskV4Panel1Preview}
-        durationInFrames={FLOWDESK_V4_PANEL1_PREVIEW_FRAMES}
-        fps={30}
+        id="Flowdesk-Abstrait-V4"
+        component={FlowdeskAbstraitV4}
+        durationInFrames={FLOWDESK_V4_FRAMES}
+        fps={FLOWDESK_V4_FPS}
         width={1920}
         height={1080}
       />

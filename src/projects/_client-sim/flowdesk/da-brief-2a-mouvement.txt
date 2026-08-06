@@ -1,0 +1,110 @@
+=== RÔLE ===
+Tu es directeur artistique motion design, spécialisé pubs SaaS/tech courtes (YouTube pre-roll,
+LinkedIn Ads, site produit) — le registre "abstrait geométrique premium" (type Stripe, Linear,
+Framer, Vercel — data qui coule, formes vectorielles nettes, mouvement continu qui ne s'arrête
+jamais). On te montre une DIRECTION VISUELLE DÉJÀ VALIDÉE (storyboard, 4 images ci-jointes) —
+ta mission est de BONIFIER le MOUVEMENT de cette direction, pas de réinventer les formes.
+
+=== SUJET + FORMAT ===
+Pub produit "Flowdesk" (outil SaaS fictif de gestion de flux de travail — emails/chat/documents
+dispersés → système unifié). Format 1920x1080 (16:9), destinée YouTube/site produit — PAS un
+Short/Reel. Durée cible stricte : 45-48 secondes, pas plus. C'est un test client simulé
+(positionnement freelance), premier essai sur ce registre visuel pour notre studio.
+
+=== SCRIPT VOIX (calé sur l'audio déjà généré, timing en frames à 30fps) ===
+Narration (voix féminine, ton dynamique, tags d'intention entre crochets) :
+
+[tense] Emails, Slack, tableurs, demandes urgentes. Chaque canal crie plus fort que le précédent,
+et rien ne se parle entre eux.
+[deliberate] Et si un seul flux absorbait tout ça — sans que vous ayez à courir après chaque
+message ?
+[curious] Flowdesk prend le chaos et le fait BASCULER. Chaque demande trouve sa place, chaque
+canal se range dans un seul système.
+[serious] En dessous, un mécanisme simple fait le tri. Email, chat, document — chacun trouve son
+chemin, automatiquement.
+[calm] Le résultat ? Une boucle qui se referme. Plus de bruit — un CONTRÔLE calme s'installe.
+[proud] Flowdesk. L'ordre, enfin visible.
+
+Découpage temporel réel (mesuré par forced-alignment sur l'audio, PAS une estimation) :
+- Panneau 1 CHAOS : frame 0 → 495 (0s → 16.5s)
+- Panneau 2 BASCULE : frame 495 → 810 (16.5s → 27s)
+- Panneau 3 MÉCANISME : frame 810 → 1105 (27s → 36.8s)
+- Panneau 4 RÉSOLUTION : frame 1105 → 1474 (36.8s → 49.1s)
+30fps.
+
+=== IDENTITÉ VISUELLE — socle non-négociable ===
+Palette stricte : #0B1F3A (bleu foncé, fond) / #FFFFFF (blanc) / #FF6B1A (orange accent).
+NE PAS proposer d'autres couleurs. Style déjà choisi : géométrique vectoriel épuré (formes
+simples — losanges, éclats, cercles, anneaux — PAS d'illustration organique/personnages sur ce
+registre). Les 4 images ci-jointes sont les vrais SVG sources actuels, déjà produits et validés
+sur le FOND (composition/formes) — ce qui doit changer c'est UNIQUEMENT le mouvement.
+
+=== CE QUI EST DÉJÀ CODÉ (V1, REJETÉ par le client — À CORRIGER) ===
+Notre 1er passage d'animation a été jugé "un slideshow avec un fondu, pas une vraie animation".
+Constat exact du client : "chaque panneau est complètement figé au lieu d'être ultra dynamique.
+Il n'y a qu'un mouvement minimal de wiggle." Chaque panneau actuellement : apparition en fondu
+(spring 20-45 frames), PUIS QUASI RIEN ne bouge jusqu'à la transition suivante (16 à 20 secondes
+de quasi-statisme par panneau). Seul le panneau 4 (Résolution) a un vrai geste (un paquet qui
+voyage le long d'une trajectoire jusqu'à un anneau qui se referme) — les 3 autres n'ont presque
+aucun mouvement continu. PROBLÈME SUPPLÉMENTAIRE signalé sur le panneau 3 (Mécanisme, image
+jointe) : le module/connecteur est collé à DROITE du cadre 1920x1080, toute la moitié GAUCHE est
+vide (fond bleu uni, rien dedans) — ça doit être résolu, par recomposition ET/OU par du mouvement
+qui occupe cet espace (pas juste un recadrage statique).
+
+=== CE QUI EST DEMANDÉ (le vrai brief) ===
+HYPERDYNAMISME. Le client (patron studio) est explicite : "ça ne doit JAMAIS ressembler à un
+slideshow statique". Chaque panneau doit avoir un MOUVEMENT CONTINU du début à la fin de sa
+séquence (pas juste une apparition puis un arrêt) — quelque chose doit toujours être en train de
+bouger, dériver, pulser, tracer, tourner. Référence de ton : les meilleures pubs SaaS/tech
+premium YouTube actuelles (Linear, Stripe, Framer, Vercel, Notion — motion design vectoriel qui
+ne s'arrête jamais, formes qui dérivent en continu, parallaxe de profondeur, pulsations
+rythmiques). Registre "légèrement TikTok dans l'énergie/le rythme de coupe, mais l'exécution
+reste PROFESSIONNELLE premium" — pas criard, pas amateur, pas de clignotement gratuit. On veut
+un effet "waouh" dès les 3 premières secondes (c'est une pub, zéro temps mort toléré).
+
+L'ENCHAÎNEMENT DOIT RACONTER UNE HISTOIRE CONTINUE — pas 4 cartes indépendantes qui se
+succèdent. Réfléchis aux TRANSITIONS entre panneaux autant qu'au mouvement À L'INTÉRIEUR de
+chaque panneau : est-ce qu'un élément du panneau N peut se transformer/glisser vers le panneau
+N+1 plutôt qu'un cut sec ? Le fil narratif est chaos → bascule/capture → tri automatique →
+résolution calme — le mouvement doit physiquement RACONTER cette progression (ex: la vitesse/
+l'agitation diminue globalement du panneau 1 au panneau 4, pas juste la forme qui change).
+
+=== NOTRE BOÎTE À OUTILS EXACTE (contrainte technique réelle) ===
+Remotion (React), rendu frame-driven ; les 4 visuels sont du VRAI SVG VECTORIEL (paths/cercles/
+ellipses, PAS des images raster) — donc PARFAITEMENT manipulable élément par élément en code :
+- Chaque forme/groupe du SVG peut être animé individuellement : position (translate), rotation,
+  scale, opacity, stroke-dashoffset (tracé progressif d'un path), couleur — piloté par spring()
+  ou interpolate() en fonction de la frame courante. AUCUNE limite d'AE/CSS keyframes ici : tout
+  est calculé frame par frame, donc des boucles infinies, des dérives continues, des pulsations
+  perpétuelles sont TRIVIALES à coder (ex: `rotate(frame * 0.3)`, `sin(frame/20)` pour un flottement).
+- Parallaxe de profondeur : plusieurs couches (fond/mid/premier plan) qui bougent à des vitesses
+  différentes = effet 3D/profondeur gratuit, déjà standard dans notre stack.
+- Caméra virtuelle : on peut simuler un zoom/pan/dérive lente sur TOUT le cadre SVG (viewBox ou
+  transform du groupe racine), pas seulement sur les éléments internes.
+- Transitions : whip pan (flou de mouvement + vitesse), morph d'un élément qui glisse d'un
+  panneau à l'autre, wipe/clip-path animé, growth/shrink d'une forme commune entre 2 panneaux.
+- INTERDIT : After Effects, 3D réelle/WebGL, particules physiques complexes, blur CSS lourd,
+  volumetric/lens flare. Tout doit être 100% SVG + code frame-driven Remotion.
+
+=== LIBERTÉ CRÉATIVE CADRÉE ===
+Tu PEUX proposer des effets qu'on n'a pas encore codés, tant qu'ils sont faisables avec la boîte
+à outils ci-dessus (SVG animé + spring/interpolate + transform). Pour chaque proposition, indique
+le statut : "déjà faisable directement" ou "faisable mais demande plus de code". Ne propose RIEN
+qui sorte de cette contrainte (pas de suggestion 3D/AE/particules).
+
+=== SORTIE STRUCTURÉE IMPOSÉE (pas de prose libre) ===
+PARTIE A — Pour CHAQUE panneau (Chaos / Bascule / Mécanisme / Résolution), un tableau :
+  | Élément du SVG à animer | Mouvement précis proposé | Durée/rythme | Statut (déjà faisable / à coder) |
+  Vise AU MOINS 3-4 mouvements continus DIFFÉRENTS par panneau (pas juste 1 fade + 1 wiggle).
+
+PARTIE B — TRANSITIONS : pour les 3 coupures entre panneaux, propose un enchaînement concret
+(pas juste un cut) qui fait sentir la continuité de l'histoire.
+
+PARTIE C — LE MOMENT FORT : où mettre le plus d'énergie visuelle sur ces 45-48 secondes (le
+"waouh" qu'un spectateur YouTube doit ressentir dans les 3 premières secondes ET la clôture) ?
+
+PARTIE D — 3 idées bonus qui élèveraient l'ensemble à un niveau "référence du genre" (Stripe/
+Linear/Framer), faisables dans notre stack.
+
+PARTIE E — SPÉCIFIQUE PANNEAU MÉCANISME : comment résoudre concrètement le vide à gauche du
+cadre (composition ET/OU mouvement) sans juste recadrer statiquement.

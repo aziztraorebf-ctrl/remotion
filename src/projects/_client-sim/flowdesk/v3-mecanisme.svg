@@ -1,0 +1,117 @@
+<!-- Fable 5 (mode MAX) - panneau 3 "MECANISME" V3 (2026-08-05, refonte semantique + plein cadre). -->
+<!-- Module central FLOWDESK, 5 sorties NOMMEES (IT / RH / Finance / Support / Direction), -->
+<!-- reponse a la critique GPT : "les destinations doivent etre nommees pour que le tri se lise". -->
+<!-- Module CENTRE (960,540), pas colle a droite (le vide gauche etait le defaut structurel -->
+<!-- signale par Aziz sur les 2 iterations precedentes, corrige a la source ici). -->
+<!-- Palette stricte : #0B1F3A fond / #FFFFFF / #FF6B1A accent. -->
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
+<defs>
+  <radialGradient id="m-bgv" cx="0.5" cy="0.5" r="0.8">
+    <stop offset="0" stop-color="#16305A"/><stop offset="0.55" stop-color="#0F274A"/>
+    <stop offset="1" stop-color="#0B1F3A"/>
+  </radialGradient>
+  <radialGradient id="m-nodeGlow">
+    <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.5"/>
+    <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"/>
+  </radialGradient>
+  <linearGradient id="m-trailO" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#FF6B1A" stop-opacity="0.85"/>
+    <stop offset="100%" stop-color="#FF6B1A" stop-opacity="0.15"/>
+  </linearGradient>
+  <filter id="m-glow" x="-120%" y="-120%" width="340%" height="340%">
+    <feDropShadow dx="0" dy="0" stdDeviation="7" flood-color="#FF6B1A" flood-opacity="0.7"/>
+  </filter>
+
+  <g id="m-ic-email"><rect x="-13" y="-9" width="26" height="18" rx="2.5" fill="#FFFFFF"/><path d="M -13 -7 L 0 3 L 13 -7" fill="none" stroke="#0B1F3A" stroke-width="1.8" stroke-linecap="round"/></g>
+  <g id="m-ic-chat"><path d="M -12 -9 h24 a3 3 0 0 1 3 3 v9 a3 3 0 0 1 -3 3 h-15 l-6 5 v-5 h-3 a3 3 0 0 1 -3 -3 v-9 a3 3 0 0 1 3 -3 Z" fill="#FFFFFF"/></g>
+  <g id="m-ic-doc"><path d="M -11 -15 h15 l8 8 v22 h-23 Z" fill="#FFFFFF"/><path d="M 4 -15 l8 8 h-8 Z" fill="#DCE8FA"/></g>
+</defs>
+
+<rect width="1920" height="1080" fill="#0B1F3A"/>
+<rect width="1920" height="1080" fill="url(#m-bgv)"/>
+
+<!-- grille perspective plein cadre centree sur le module -->
+<g id="mec-grid" opacity="0.13" stroke="#FFFFFF" fill="none">
+  <circle cx="960" cy="540" r="180" stroke-width="1"/>
+  <circle cx="960" cy="540" r="360" stroke-width="1"/>
+  <circle cx="960" cy="540" r="560" stroke-width="1"/>
+  <line x1="0" y1="540" x2="1920" y2="540" stroke-width="1"/>
+</g>
+
+<!-- architecture lointaine (petits rectangles fantomes, texture de fond, plein cadre),
+     positionnee en bas, hors des zones de labels/routes pour ne pas chevaucher le texte -->
+<g id="mec-far-arch" opacity="0.35">
+  <rect x="120" y="960" width="30" height="70" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <rect x="180" y="990" width="24" height="40" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <rect x="1720" y="990" width="28" height="55" fill="none" stroke="#FFFFFF" stroke-width="1"/>
+  <line x1="0" y1="1030" x2="1920" y2="1030" stroke="#FFFFFF" stroke-width="0.8" opacity="0.5"/>
+</g>
+
+<!-- FLUX ENTRANT : 3 icones nommees a gauche qui arrivent vers le module central -->
+<g id="mec-inflow">
+  <g id="mec-in-0" transform="translate(140 340)">
+    <line x1="0" y1="0" x2="640" y2="200" stroke="url(#m-trailO)" stroke-width="3"/>
+    <use href="#m-ic-email"/>
+  </g>
+  <g id="mec-in-1" transform="translate(100 540)">
+    <line x1="0" y1="0" x2="680" y2="0" stroke="url(#m-trailO)" stroke-width="3"/>
+    <use href="#m-ic-chat"/>
+  </g>
+  <g id="mec-in-2" transform="translate(140 760)">
+    <line x1="0" y1="0" x2="640" y2="-220" stroke="url(#m-trailO)" stroke-width="3"/>
+    <use href="#m-ic-doc"/>
+  </g>
+</g>
+
+<!-- MODULE CENTRAL FLOWDESK, au centre du cadre (960,540), pas colle a droite -->
+<g id="mec-module" transform="translate(960 540)">
+  <ellipse rx="200" ry="230" fill="url(#m-nodeGlow)" opacity="0.5"/>
+  <path d="M -70 -160 L 70 -130 L 70 130 L -70 160 Z" fill="#0B1F3A" fill-opacity="0.6" stroke="#FFFFFF" stroke-opacity="0.4" stroke-width="1.5"/>
+  <line x1="-70" y1="-96" x2="70" y2="-78" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+  <line x1="-70" y1="-32" x2="70" y2="-26" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+  <line x1="-70" y1="32" x2="70" y2="26" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+  <line x1="-70" y1="96" x2="70" y2="78" stroke="#FFFFFF" stroke-opacity="0.12" stroke-width="1"/>
+  <!-- 5 slots d'aiguillage internes (traits orange, un par sortie) -->
+  <g id="mec-slots" stroke-linecap="round">
+    <line x1="-45" y1="-105" x2="30" y2="-88" stroke="#FF6B1A" stroke-width="7" stroke-opacity="0.9"/>
+    <line x1="-45" y1="-52" x2="30" y2="-45" stroke="#FF6B1A" stroke-width="7" stroke-opacity="0.9"/>
+    <line x1="-45" y1="0" x2="30" y2="0" stroke="#FF6B1A" stroke-width="7" stroke-opacity="0.9"/>
+    <line x1="-45" y1="52" x2="30" y2="46" stroke="#FF6B1A" stroke-width="7" stroke-opacity="0.9"/>
+    <line x1="-45" y1="105" x2="30" y2="90" stroke="#FF6B1A" stroke-width="7" stroke-opacity="0.9"/>
+  </g>
+  <rect x="-96" y="-26" width="192" height="52" rx="26" fill="#FFFFFF"/>
+  <text x="0" y="8" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="26" font-weight="700" letter-spacing="0.5" fill="#0B1F3A">FLOWDESK</text>
+</g>
+
+<!-- 5 SORTIES NOMMEES, reparties en eventail a droite, plein cadre jusqu'au bord -->
+<g id="mec-routes">
+  <g id="mec-route-0" data-label="IT">
+    <path d="M 1160 400 C 1350 300 1550 220 1780 165" fill="none" stroke="url(#m-trailO)" stroke-width="3"/>
+    <circle cx="1800" cy="160" r="46" fill="#0B1F3A" stroke="#FF6B1A" stroke-width="2.5"/>
+    <text x="1800" y="168" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">IT</text>
+  </g>
+  <g id="mec-route-1" data-label="RH">
+    <path d="M 1170 470 C 1380 420 1580 400 1790 385" fill="none" stroke="url(#m-trailO)" stroke-width="3"/>
+    <circle cx="1810" cy="385" r="46" fill="#0B1F3A" stroke="#FF6B1A" stroke-width="2.5"/>
+    <text x="1810" y="393" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF">RH</text>
+  </g>
+  <g id="mec-route-2" data-label="FINANCE">
+    <path d="M 1180 540 C 1400 540 1600 540 1800 540" fill="none" stroke="url(#m-trailO)" stroke-width="3.4"/>
+    <circle cx="1820" cy="540" r="52" fill="#0B1F3A" stroke="#FF6B1A" stroke-width="2.5"/>
+    <text x="1820" y="546" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF">FINANCE</text>
+  </g>
+  <g id="mec-route-3" data-label="SUPPORT">
+    <path d="M 1170 610 C 1380 660 1580 680 1790 695" fill="none" stroke="url(#m-trailO)" stroke-width="3"/>
+    <circle cx="1810" cy="695" r="46" fill="#0B1F3A" stroke="#FF6B1A" stroke-width="2.5"/>
+    <text x="1810" y="700" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#FFFFFF">SUPPORT</text>
+  </g>
+  <g id="mec-route-4" data-label="DIRECTION">
+    <path d="M 1160 680 C 1350 780 1550 860 1780 915" fill="none" stroke="url(#m-trailO)" stroke-width="3"/>
+    <circle cx="1800" cy="920" r="46" fill="#0B1F3A" stroke="#FF6B1A" stroke-width="2.5"/>
+    <text x="1800" y="912" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">DIREC-</text>
+    <text x="1800" y="928" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="11" font-weight="700" fill="#FFFFFF">TION</text>
+  </g>
+</g>
+
+<rect x="0" y="0" width="1920" height="1080" fill="url(#m-bgv)" opacity="0.1" style="mix-blend-mode:overlay"/>
+</svg>

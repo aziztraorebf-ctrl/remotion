@@ -985,6 +985,36 @@ groupes `<g id>`), le publier sur here.now (jamais Vercel Blob/catbox pour du HT
 valider le PLACEMENT par Aziz avant d'investir le travail de code d'animation — a évité 2× de coder
 une animation sur un placement qui aurait été rejeté, sur ce même chantier.
 
+## Easing sur `strokeDashoffset` doit être LINÉAIRE, jamais ease-in-out/spring — 2026-08-06 (Flowdesk)
+
+Complément à la règle "dessiner plutôt que fondre" (ci-dessus, Gazoduc Acte 2) : le CHOIX de
+l'easing appliqué au `dashoffset` compte autant que le principe. Un `dashoffset` enveloppé dans un
+easing `ease-in-out` (ou `spring`) pensé pour un fade/pop détruit la perception de "dessin en
+train de se faire" — le trait reste quasi invisible sur le premier tiers de la fenêtre d'animation
+puis "explose" à sa longueur quasi complète en quelques frames au milieu (lecture en POP soudain,
+pas en tracé continu). Root cause diagnostiquée par extraction dense 10fps (pas des stills espacés
+de plusieurs secondes, qui ne révèlent pas le problème).
+
+**Règle** : pour tout `strokeDashoffset` voulant représenter un tracé/dessin progressif, utiliser
+un `interpolate` LINÉAIRE pur sur toute la fenêtre — jamais un easing d'apparence. Vérifier par
+extraction de frames denses (10fps sur la fenêtre de dessin) que le trait progresse visiblement
+d'une frame à l'autre avant de considérer la technique "acquise". Règle transversale à tout futur
+SVG narratif (Gazoduc, Souverain, tout registre), pas spécifique à Flowdesk.
+
+## `transform="rotate()"` sur une `<ellipse>` à rx≠ry pivote la FORME, pas le point de départ du tracé — 2026-08-06 (Flowdesk)
+
+Piège SVG générique (pas spécifique à Remotion) : appliquer `rotate(-90)` à une `<ellipse>` pour
+faire démarrer un tracé `strokeDasharray`/`strokeDashoffset` à un autre point que 3h (angle 0 SVG
+standard) fait pivoter la FORME elle-même — rx et ry s'échangent visuellement — pas seulement le
+point de départ du tracé. Bug constaté : un anneau rendu 420x278 tournait en 278x420, bien plus
+étroit/haut que le disque qu'il devait entourer, débordant du cadre.
+
+**Règle** : ne jamais utiliser `rotate()` pour repositionner le point de départ d'un tracé
+`strokeDashoffset` sur une ellipse à rx≠ry. Si le point de départ natif (3h) convient
+géométriquement à la composition, le garder tel quel plutôt que de forcer une rotation. Si un
+autre point de départ est nécessaire, le construire via un `<path>` explicite (commandes M/A) qui
+démarre où voulu, jamais via rotation d'une primitive `<ellipse>`.
+
 ## Wrapper `<div>` sans `position` = hauteur 0 si tous ses enfants sont en `position:absolute` — 2026-08-06 (Flowdesk)
 
 Piège CSS générique (pas spécifique à Remotion), rencontré sur `FlowdeskPersonne2B.tsx` : un
