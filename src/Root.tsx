@@ -487,6 +487,8 @@ import { FlowdeskAbstrait2A, FLOWDESK_ABSTRAIT_FRAMES, FLOWDESK_ABSTRAIT_FPS } f
 import { FlowdeskAbstraitV3, FLOWDESK_V3_FRAMES, FLOWDESK_V3_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV3";
 import { FlowdeskAbstraitV4, FLOWDESK_V4_FRAMES, FLOWDESK_V4_FPS } from "./projects/_client-sim/flowdesk/FlowdeskAbstraitV4";
 import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } from "./projects/_client-sim/flowdesk/FlowdeskPersonne2B";
+import { DashboardLowRiskStill, DashboardHighRiskStill, DashboardLowRiskLaptopStill, DashboardHighRiskLaptopStill, NS_DASHBOARD_FRAMES, NS_DASHBOARD_FPS } from "./projects/_client-sim/noteshield/ui/DashboardScreenStill";
+import { CursorTestComp, NS_CURSOR_TEST_FRAMES, NS_CURSOR_TEST_FPS } from "./projects/_client-sim/noteshield/ui/CursorTestComp";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -4459,6 +4461,48 @@ export const RemotionRoot: React.FC = () => {
         component={FlowdeskPersonne2B}
         durationInFrames={FLOWDESK_PERSONNE_FRAMES}
         fps={FLOWDESK_PERSONNE_FPS}
+        width={1920}
+        height={1080}
+      />
+
+      {/* Client-sim NorthShield — Ecrans UI dashboard fictifs (reference visuelle avant storyboard). */}
+      <Composition
+        id="NorthShield-Dashboard-LowRisk"
+        component={DashboardLowRiskStill}
+        durationInFrames={NS_DASHBOARD_FRAMES}
+        fps={NS_DASHBOARD_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShield-Dashboard-HighRisk"
+        component={DashboardHighRiskStill}
+        durationInFrames={NS_DASHBOARD_FRAMES}
+        fps={NS_DASHBOARD_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShield-Dashboard-LowRisk-Laptop"
+        component={DashboardLowRiskLaptopStill}
+        durationInFrames={NS_DASHBOARD_FRAMES}
+        fps={NS_DASHBOARD_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShield-Dashboard-HighRisk-Laptop"
+        component={DashboardHighRiskLaptopStill}
+        durationInFrames={NS_DASHBOARD_FRAMES}
+        fps={NS_DASHBOARD_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShield-Cursor-Test"
+        component={CursorTestComp}
+        durationInFrames={NS_CURSOR_TEST_FRAMES}
+        fps={NS_CURSOR_TEST_FPS}
         width={1920}
         height={1080}
       />

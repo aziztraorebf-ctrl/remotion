@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <!--
+    NorthShield laptop mockup - static SVG, no animation.
+    Camera: slightly left and above (3/4 light perspective).
+    Screen panel is kept strictly frontal so that screen-area is a clean rectangle.
+    SCREEN AREA (insert dashboard content here): x=515 y=140 width=940 height=588
+    Palette: #0A1628 #0F1F38 #F4F1EA #00D9FF
+  -->
+  <defs>
+    <linearGradient id="gLidBack" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#030910"/>
+      <stop offset="1" stop-color="#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gLidFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#15284C"/>
+      <stop offset="1" stop-color="#0C1B33"/>
+    </linearGradient>
+    <linearGradient id="gDeck" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#223D63"/>
+      <stop offset="1" stop-color="#16294A"/>
+    </linearGradient>
+    <linearGradient id="gKb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0A1730"/>
+      <stop offset="1" stop-color="#0D1C36"/>
+    </linearGradient>
+    <linearGradient id="gFront" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0C1A31"/>
+      <stop offset="1" stop-color="#060F1E"/>
+    </linearGradient>
+    <linearGradient id="gSide" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#08132A"/>
+      <stop offset="1" stop-color="#050D1C"/>
+    </linearGradient>
+    <linearGradient id="gHinge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#061020"/>
+      <stop offset="0.5" stop-color="#33517F"/>
+      <stop offset="1" stop-color="#040C18"/>
+    </linearGradient>
+    <linearGradient id="gTrackpad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1B3054"/>
+      <stop offset="1" stop-color="#142645"/>
+    </linearGradient>
+    <linearGradient id="gStreak" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F4F1EA" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#F4F1EA" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="rAmbient" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#00D9FF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#00D9FF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="pBrushed" width="6" height="6" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="3" x2="6" y2="3" stroke="#F4F1EA" stroke-opacity="0.035" stroke-width="1"/>
+    </pattern>
+    <filter id="fShadow" x="-40%" y="-200%" width="180%" height="500%">
+      <feGaussianBlur stdDeviation="16"/>
+    </filter>
+    <filter id="fSoft" x="-50%" y="-150%" width="200%" height="400%">
+      <feGaussianBlur stdDeviation="5"/>
+    </filter>
+    <filter id="fGlow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+    <mask id="bezelMask">
+      <rect x="470" y="96" width="1030" height="676" rx="24" fill="#fff"/>
+      <rect x="515" y="140" width="940" height="588" fill="#000"/>
+    </mask>
+  </defs>
+
+  <g id="ambient-glow">
+    <ellipse cx="960" cy="480" rx="720" ry="430" fill="url(#rAmbient)"/>
+  </g>
+
+  <g id="ground-shadow">
+    <ellipse cx="968" cy="948" rx="640" ry="36" fill="#000000" opacity="0.42" filter="url(#fShadow)"/>
+    <ellipse cx="966" cy="944" rx="510" ry="20" fill="#000000" opacity="0.5" filter="url(#fSoft)"/>
+  </g>
+
+  <g id="hinge">
+    <rect x="580" y="760" width="810" height="34" rx="15" fill="url(#gHinge)"/>
+    <rect x="580" y="760" width="58" height="34" rx="15" fill="#060F1E"/>
+    <rect x="1332" y="760" width="58" height="34" rx="15" fill="#060F1E"/>
+    <line x1="646" y1="777" x2="1326" y2="777" stroke="#00D9FF" stroke-opacity="0.14" stroke-width="1"/>
+  </g>
+
+  <g id="lid">
+    <g id="lid-back">
+      <rect x="454" y="88" width="1030" height="676" rx="26" fill="url(#gLidBack)"/>
+      <line x1="455.5" y1="122" x2="455.5" y2="736" stroke="#00D9FF" stroke-opacity="0.25" stroke-width="1.5"/>
+    </g>
+    <g id="lid-front">
+      <rect x="470" y="96" width="1030" height="676" rx="24" fill="url(#gLidFront)" stroke="#F4F1EA" stroke-opacity="0.07" stroke-width="1"/>
+    </g>
+    <g id="bezel-details">
+      <circle cx="985" cy="118" r="4" fill="#081120"/>
+      <circle cx="985" cy="118" r="1.7" fill="#00D9FF" fill-opacity="0.55"/>
+      <line x1="925" y1="750" x2="1045" y2="750" stroke="#00D9FF" stroke-opacity="0.28" stroke-width="2"/>
+      <g mask="url(#bezelMask)">
+        <polygon points="470,96 830,96 470,470" fill="url(#gStreak)"/>
+        <polygon points="880,96 990,96 470,620 470,510" fill="url(#gStreak)" opacity="0.6"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- SCREEN AREA: x=515 y=140 width=940 height=588 - keep empty, single flat fill -->
+  <g id="screen-area">
+    <rect x="515" y="140" width="940" height="588" fill="#0A1628"/>
+  </g>
+
+  <g id="screen-rim">
+    <rect x="509" y="134" width="952" height="600" rx="4" fill="none" stroke="#00D9FF" stroke-opacity="0.10" stroke-width="4" filter="url(#fGlow)"/>
+    <rect x="513" y="138" width="944" height="592" rx="2" fill="none" stroke="#00D9FF" stroke-opacity="0.32" stroke-width="1.5"/>
+  </g>
+
+  <g id="base">
+    <g id="base-deck">
+      <path d="M470,790 L1500,790 L1552,922 L372,922 Z" fill="url(#gDeck)"/>
+      <path d="M470,790 L1500,790 L1552,922 L372,922 Z" fill="url(#pBrushed)"/>
+      <rect x="480" y="788" width="1010" height="10" fill="#000000" opacity="0.35" filter="url(#fSoft)"/>
+      <line x1="470" y1="790" x2="1500" y2="790" stroke="#00D9FF" stroke-opacity="0.25" stroke-width="1.2"/>
+      <line x1="620" y1="798" x2="880" y2="798" stroke="#081426" stroke-width="6" stroke-dasharray="2 5" stroke-linecap="round" opacity="0.85"/>
+      <line x1="1090" y1="798" x2="1350" y2="798" stroke="#081426" stroke-width="6" stroke-dasharray="2 5" stroke-linecap="round" opacity="0.85"/>
+    </g>
+    <g id="keyboard">
+      <path d="M598,806 L1374,806 L1396,872 L568,872 Z" fill="url(#gKb)" stroke="#050D1A" stroke-width="2"/>
+      <g stroke="#F4F1EA" stroke-opacity="0.10" stroke-width="1">
+        <line x1="592" y1="819.2" x2="1378.4" y2="819.2"/>
+        <line x1="586" y1="832.4" x2="1382.8" y2="832.4"/>
+        <line x1="580" y1="845.6" x2="1387.2" y2="845.6"/>
+        <line x1="574" y1="858.8" x2="1391.6" y2="858.8"/>
+        <line x1="657.7" y1="806" x2="631.7" y2="872"/>
+        <line x1="717.4" y1="806" x2="695.4" y2="872"/>
+        <line x1="777.1" y1="806" x2="759.1" y2="872"/>
+        <line x1="836.8" y1="806" x2="822.8" y2="872"/>
+        <line x1="896.4" y1="806" x2="886.4" y2="872"/>
+        <line x1="956.1" y1="806" x2="950.2" y2="872"/>
+        <line x1="1015.8" y1="806" x2="1013.9" y2="872"/>
+        <line x1="1075.5" y1="806" x2="1077.6" y2="872"/>
+        <line x1="1135.2" y1="806" x2="1141.3" y2="872"/>
+        <line x1="1194.9" y1="806" x2="1205.0" y2="872"/>
+        <line x1="1254.6" y1="806" x2="1268.6" y2="872"/>
+        <line x1="1314.3" y1="806" x2="1332.3" y2="872"/>
+      </g>
+    </g>
+    <g id="trackpad">
+      <path d="M860,880 L1110,880 L1118,914 L852,914 Z" fill="url(#gTrackpad)" stroke="#F4F1EA" stroke-opacity="0.10" stroke-width="1"/>
+      <line x1="860" y1="880" x2="1110" y2="880" stroke="#F4F1EA" stroke-opacity="0.14" stroke-width="1"/>
+    </g>
+    <g id="base-front">
+      <path d="M372,922 L1552,922 L1546,952 L378,952 Z" fill="url(#gFront)"/>
+      <line x1="372" y1="922" x2="1552" y2="922" stroke="#F4F1EA" stroke-opacity="0.22" stroke-width="1"/>
+      <path d="M892,922 Q962,938 1032,922 Z" fill="#0A1727"/>
+      <path d="M892,922 Q962,938 1032,922" fill="none" stroke="#00D9FF" stroke-opacity="0.18" stroke-width="1.2"/>
+    </g>
+    <g id="base-side">
+      <path d="M470,790 L372,922 L378,952 L476,814 Z" fill="url(#gSide)"/>
+      <line x1="470" y1="790" x2="372" y2="922" stroke="#00D9FF" stroke-opacity="0.20" stroke-width="1"/>
+    </g>
+    <g id="ports">
+      <rect x="430.7" y="839.7" width="26" height="5" rx="2.5" fill="#04101F" stroke="#00D9FF" stroke-opacity="0.30" stroke-width="0.6" transform="rotate(126.6 443.7 842.2)"/>
+      <rect x="414" y="862.1" width="26" height="5" rx="2.5" fill="#04101F" stroke="#00D9FF" stroke-opacity="0.30" stroke-width="0.6" transform="rotate(126.6 427 864.6)"/>
+    </g>
+    <g id="vents">
+      <g fill="#04101F" opacity="0.85">
+        <rect x="1380" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1392" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1404" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1416" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1428" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1440" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1452" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1464" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1476" y="928" width="3" height="14" rx="1.5"/>
+        <rect x="1488" y="928" width="3" height="14" rx="1.5"/>
+      </g>
+    </g>
+    <g id="status-led">
+      <circle cx="1450" cy="906" r="6" fill="#00D9FF" opacity="0.30" filter="url(#fGlow)"/>
+      <circle cx="1450" cy="906" r="2.4" fill="#00D9FF"/>
+    </g>
+  </g>
+</svg>

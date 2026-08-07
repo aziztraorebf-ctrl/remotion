@@ -20,16 +20,16 @@
   [STATUS](../episodes/_client-sim/flowdesk/STATUS.md).
   Code : `src/projects/_client-sim/flowdesk/`.
 
-## Test en préparation (PAS démarré)
+## Test en cours — design figé, reste l'animation (2026-08-07)
 
-- ⭐ **NorthShield / "Noteshield" (SaaS cybersécurité, scoring de risque de connexion) —
-  BRIEF SAUVEGARDÉ 2026-08-06, à démarrer prochaine session.** Objectif : tester
-  HUMAN + SYSTEM + PRODUCT (Flowdesk n'avait testé que HUMAN + SYSTEM) — chaîne situation
-  humaine → mécanisme invisible rendu visible → preuve dans une VRAIE interface produit fictive
-  → conséquence utilisateur. Domaine plus exigeant : représenter l'invisible/probabiliste sans
-  les clichés du genre (garde-fou explicite : pas de hoodie, Matrix, cadenas géant, bouclier,
-  pluie de 0/1). Brief client complet + méthode détaillée :
-  [BRIEF-CLIENT](noteshield/BRIEF-CLIENT.md).
+- ⭐⭐ **NorthShield (SaaS cybersécurité, scoring de risque de connexion).** Objectif testé :
+  HUMAN + SYSTEM + PRODUCT (Flowdesk n'avait testé que HUMAN + SYSTEM). **Storyboard Direction A
+  (Narrative/Human, Gemini 3.1 Flash) + Direction B (System/Conceptual, Fable MAX) COMPLETS,
+  Mix & Match tranché, Semantic Test croisé fait, panneau P1 corrigé.** Reste à coder :
+  l'animation Remotion. Point d'entrée unique pour reprendre :
+  [PROMPT-REPRISE-SESSION](noteshield/PROMPT-REPRISE-SESSION.md) (liste l'ordre de lecture des
+  autres fichiers : PLAN-ANIMATION, MIX-AND-MATCH, storyboards, prototype souris).
+  Brief client original : [BRIEF-CLIENT](noteshield/BRIEF-CLIENT.md).
 
 ## Méthode standard pour tout nouveau test client-sim
 
@@ -61,3 +61,54 @@ pour le détail complet), affinée pour NorthShield (voir [BRIEF-CLIENT](noteshi
    est une offre à tester APRÈS validation complète du 16:9, jamais avant/en même temps.
 9. Pipeline complet formalisé dans [flowdesk-client-sim-conclusions](../projects/flowdesk-client-sim-conclusions.md)
    § "Pipeline SaaS V1".
+
+## ⭐⭐ Outils & pièges techniques (à lire AVANT de lancer un nouveau test — évite de redécouvrir ces 3 pièges)
+
+Vécu sur NorthShield (2026-08-06/07), 3 blocages qui ont coûté du temps et sont désormais évitables :
+
+### 0. Pipeline audio TTS — même chaîne que le reste du projet
+Aucun script dédié client-sim n'existe pour la voix — réutiliser directement
+`scripts/generate-narration-expressive.py` (pipeline Harmonie V3 → STS GéoAfrique, doc complète
+`memory/tools/PIPELINE-VOIX-VIVANTE-VALIDE.md`). Pas besoin de le redécouvrir : c'est le même
+pipeline que Souverain/Atlas, testé sur Flowdesk et NorthShield sans adaptation.
+
+### 1. Script voix — jury créatif 2 modèles (Gemini + Grok)
+`scripts/tools/jury-script-saas-llm.py --brief script.md --label X --models gemini,grok` — variante
+SaaS de `jury-script-creatif-llm.py` (celui-ci est calibré documentaire géopolitique long-form, PAS
+adapté à un script pub court). Brief axé show-don't-tell/dynamisme motion-design/personnalité de
+ton, pas narration factuelle. Limité à Gemini+Grok par choix (complémentaires : Grok = personnalité,
+Gemini = rigueur/détection d'erreurs) — PAS les 4 modèles du script narratif.
+
+### 2. Storyboard visuel — DEUX registres, DEUX pipelines DIFFÉRENTS
+- **Direction Human/Narrative (silhouettes, personnages simplifiés)** → **Gemini 3.1 Flash Image**
+  en appel direct (`gemini-3.1-flash-image-preview`, via `scripts/tools/storyboard-dual-gen.py
+  --models gemini`). PAS de génération SVG pour les silhouettes — testé, perd en qualité vs Gemini
+  direct sur ce type de sujet.
+- **Direction System/Conceptual (abstrait, dataviz, motion design pur)** → **Fable 5 en agent
+  Claude Code, mode raisonnement MAX** + optionnellement panel `scripts/tools/svg-scene-abstrait.py`
+  (Gemini/GPT/Kimi) pour comparer. ⛔ **NE JAMAIS utiliser `svg-scene-narrative.py` pour un brief
+  abstrait** — détail complet + cause racine + exemple :
+  `memory/doctrines/SVG-SCENES-GENERATIVES.md` § GATE AMONT (source de vérité, ne pas dupliquer
+  ici).
+
+### 2bis. ⛔⛔ Fable MODE MAX — la formule doit être répétée à CHAQUE appel Agent, jamais implicite
+Chaque appel du tool Agent est indépendant : dire "mode MAX" dans le premier prompt d'une série ne
+fait PAS persister le mode pour les appels suivants. Vécu : 5 appels Fable consécutifs sur les
+panneaux d'un même storyboard, MAX formulé seulement dans le 1er (le mockup laptop) → les 5
+suivants sont tournés en effort normal (durée ~1-3min au lieu des 6-9min attendus pour MAX, poids
+SVG résultant 10-50x plus léger que la référence Flowdesk MAX). Symptôme repérable : un rendu SVG
+"correct mais clairsemé", qui ressemble à "3 lignes fines sur fond vide" plutôt qu'à une
+composition dense. **Réflexe** : inclure la phrase complète "Tu es Fable, appelé en mode
+RAISONNEMENT MAXIMUM (MAX) — prends tout le temps nécessaire (6-9 minutes), ne te presse pas" dans
+CHAQUE prompt Agent séparé qui appelle Fable, sans exception, même si le précédent l'avait déjà.
+
+### 3. Image-cible = capturer l'ÉVÉNEMENT narratif, pas un état neutre
+Avant de lancer la génération d'un panneau, relire la phrase du script + la colonne REPRÉSENTATION
+du storyboard et se demander explicitement : "est-ce que mon brief décrit un ÉTAT (une chose qui
+existe) ou un ÉVÉNEMENT (quelque chose qui arrive/change) ?" Un brief qui ne capture que l'état
+("un flux de traits qui défile") produit une image qui ne raconte rien au Semantic Test, même
+techniquement irréprochable — vécu sur NorthShield P1 (script décrivait une barre qui BLOQUE un
+flux + embouteillage qui se forme ; le premier brief ne demandait que "traits qui défilent",
+oubliant l'événement de blocage — corrigé en explicitant la barre + l'embouteillage compressé dans
+le brief v2, Semantic Test passé ensuite). **Toujours faire le Semantic Test soi-même sur le rendu
+avant de le présenter** — 5 secondes, sans texte, "qu'est-ce que je comprends ?".

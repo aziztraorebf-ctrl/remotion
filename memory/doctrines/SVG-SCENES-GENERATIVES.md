@@ -168,6 +168,16 @@ Aziz AVANT de coder. ✅ Toujours légitime (brouillon jetable). N'entre JAMAIS 
 **TEST DE CONFIRMATION (secondaire)** : « pourrais-je (ou Claude) coder ça à la main sans peine ? » OUI → code-main ;
 NON (masse organique riche) → LLM. En cas de doute, pencher code-main (réversible, zéro coût, zéro déformation).
 
+**⭐ CHOIX DU SCRIPT SELON LE REGISTRE (ajout 2026-08-06, NorthShield)** : `svg-scene-narrative.py` a un brief
+interne câblé « scène qui raconte, 4-6 objets-héros, paysage/personnage » — sur un brief ABSTRAIT/conceptuel
+(lignes, flux, courbes, dataviz), les 3 modèles API (GPT/Kimi/Gemini) IGNORENT le brief et hallucinent une
+scène narrative hors-sujet (vécu : brief « flux de traits de connexions » → désert nocturne + personnage + épée).
+→ Pour tout brief CONCEPTUEL/ABSTRAIT (motion design SaaS, visualisation de données, diagramme vivant, PAS de
+paysage/personnage), utiliser `scripts/tools/svg-scene-abstrait.py` à la place (même mécanique/providers,
+brief interne neutre). Décider AVANT l'appel : « est-ce que je demande un paysage/objet-héros qui raconte, ou
+une composition géométrique qui représente un concept ? » — le mauvais script produit du déchet crédible (SVG
+valide, JSON valide, mais hors-sujet).
+
 **⛔ RÈGLE GÉO (non-négociable)** — le continent/pays ne se génère JAMAIS par LLM (les modèles DÉFORMENT la géo :
 Gambie fausse, côtes approximatives). Pour toute vraie carte/pays : **réutiliser un PATH d3-geo / Natural Earth
 EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui se dessine au trait par
@@ -180,6 +190,16 @@ EXISTANT** (ex `SENEGAL_PATH` de `src/projects/_proto-16-9/senegalPath.ts`, qui 
 
 1. **INTENTION** (1 verbe : ce qu'on veut faire RESSENTIR) → **FORME** (le geste visuel) → **REGISTRE** (palette).
    Jamais l'inverse. (Doctrine [[CONTINUITE-SCENE-INTENTION-DABORD]].)
+   ⭐⭐ **Vérifier que le brief capture un ÉVÉNEMENT, pas un ÉTAT** (gravé 2026-08-07, NorthShield) :
+   avant de lancer la génération, relire la phrase du script/storyboard et se demander explicitement
+   « mon brief décrit-il un ÉTAT (une chose qui existe, stable) ou un ÉVÉNEMENT (quelque chose qui
+   arrive/change) ? ». Un brief qui ne capture que l'état produit une image techniquement
+   irréprochable mais qui ne raconte rien au Semantic Test. Vécu (NorthShield P1) : le script
+   décrivait une barre qui BLOQUE un flux + un embouteillage qui se forme ; le 1er brief ne
+   demandait que « des traits qui défilent » (l'état), oubliant l'événement — corrigé en explicitant
+   la barre + l'embouteillage compressé, Semantic Test passé ensuite. **Toujours faire le Semantic
+   Test soi-même sur le rendu avant de le présenter** (5s, sans texte : « qu'est-ce que je
+   comprends ? »). Détail : `memory/client-sim-tests/noteshield/MIX-AND-MATCH-DIRECTION-B.md` § P1.
 2. **ÉPURE D'ABORD** : 3-4 éléments HÉROS max, chacun lisible en <1s et porteur d'UN sens (§ DOCTRINE D'ÉPURE). Pas
    d'illustration chargée (sinon Seedance ferait mieux). Zéro organique vivant (objets manufacturés OK).
 3. **AJOUTER scène + registre** au générateur (`SCENES` + `SCENE_REGISTRE` ; créer le registre dans `REGISTRES` si neuf).
@@ -300,12 +320,31 @@ a les codes sources sous la main, c'est de l'ÉDITION. Détail et le pourquoi (v
 déjà, se demander : **création (→ appel justifié) ou édition/assemblage (→ je le fais moi-même)** ?
 Fusion, repositionnement, collision, changement de couleur, renommage de groupes = TOUJOURS Claude.
 
+⛔ **RAPATRIER LES JSON/SVG DE `/tmp/svg-refs/` VERS UN EMPLACEMENT STABLE DÈS QU'UNE VERSION EST
+RETENUE** (gravé 2026-08-07, NorthShield) : les sorties de `svg-image-cible-compare.py` et des
+agents Fable vivent par défaut dans `/tmp/svg-refs/`, qui peut être nettoyé à tout moment par le
+système — pas un stockage de session. Dès qu'un panneau/élément est choisi en Mix & Match, `cp` le
+JSON/SVG source vers `public/_rnd/fable-svg/<projet>/` (ou équivalent) AVANT de continuer sur le
+panneau suivant, pas en fin de session. Vécu : 3 fichiers retenus (Kimi/Gemini de référence pour
+fusion) ont failli être perdus faute de rapatriement immédiat, retrouvés de justesse encore
+présents dans `/tmp` en fin de session.
+
 **OUTILS** (la mécanique, pour ne pas la réécrire à chaque scène) :
 - `scripts/tools/svg-image-cible-compare.py` — brief → N modèles en parallèle → SVG → PNG →
   planche comparative labellisée → upload, en un geste. `--assemble-only` re-assemble sans
   rappeler les API (pour intégrer le JSON de Fable, déposé sous `<label>-fable.json`).
   ⚠️ Fable n'y est pas : c'est un agent Claude Code (`model: "fable"`), pas une API — le lancer
   en parallèle avec le MÊME brief.
+  ⛔⛔ **Fable en mode MAX — la formule doit être répétée dans CHAQUE appel Agent séparé, jamais
+  implicite/persistante** (gravé 2026-08-07, NorthShield). Chaque appel du tool Agent est
+  indépendant : dire « mode MAX » dans le 1er prompt d'une série d'appels ne fait PAS persister le
+  mode pour les suivants. Vécu : 5 appels Fable consécutifs sur les panneaux d'un storyboard, MAX
+  formulé seulement au 1er → les 5 suivants tournés en effort normal (durée ~1-3min au lieu de
+  6-9min attendues, SVG 10-50x plus léger). Symptôme repérable : rendu « correct mais clairsemé »
+  (3 lignes fines sur fond vide) au lieu d'une composition dense. **Réflexe** : inclure la phrase
+  complète « Tu es Fable, appelé en mode RAISONNEMENT MAXIMUM (MAX) — prends tout le temps
+  nécessaire (6-9 minutes), ne te presse pas » dans CHAQUE prompt Agent séparé qui appelle Fable,
+  sans exception, même si le précédent l'avait déjà.
 - `scripts/tools/forced-align.py` — audio + texte → timestamps mot-par-mot et **frames des
   repères narratifs**, pour caler le bloc `T` sur la voix réelle. Moteur ElevenLabs (fiable même
   quand le quota Whisper/OpenAI saute). Une durée estimée "au nombre de mots" se trompe de ~20%.

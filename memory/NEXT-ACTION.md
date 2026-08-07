@@ -75,11 +75,13 @@
 
 ---
 
-## ⚔️ REFONTE AES — script V4 prêt (8.8-9/10), audio hook testé validé
+## ⚔️ REFONTE AES — retiming V6 fait, PAS ENCORE assemblé/render final
 
-> Vidéo AES publiée 04/08 a échoué (5 vues/24h) — script réécrit + test audio validé. Reste : découpe en
-> actes + tagging complet + test Acte 1 + retiming + miniature/titre + republication.
-> Détail complet + ordre des étapes : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06).
+> Script V6 découpé+tagué+généré (audio complet validé Aziz), retiming complet des constantes F_* +
+> bornes de segments fait et VALIDÉ par check-frame-continuity.py (0 trou/0 chevauchement). RIEN commité.
+> ⛔ Piège trouvé cette session : `SahelActe1-Final` ≠ FINAL publié, utiliser `SahelActe1-Refonte`.
+> Reste : render complet 5 segments + assemblage + validation Aziz + miniature/titre + republication.
+> Détail complet + ordre des étapes : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
 
 ---
 
@@ -176,9 +178,10 @@ verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore prod
 `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 > ✅ **Test client-sim "Flowdesk" CLOS (2026-08-06)** — sujet secondaire, détail isolé de ce
-> fichier → `memory/client-sim-tests/INDEX.md`. Brief du prochain test client-sim ("NorthShield",
-> cybersécurité, PAS démarré) sauvegardé dans `memory/client-sim-tests/noteshield/BRIEF-CLIENT.md`
-> — à lancer sur demande explicite d'Aziz uniquement. Ne change rien à la priorité Gazoduc Acte 3
+> fichier → `memory/client-sim-tests/INDEX.md`. Test client-sim "NorthShield" (cybersécurité) :
+> **design Direction A+B FIGÉ** (storyboard, Mix & Match, Semantic Test faits, 2026-08-07), reste
+> l'animation Remotion à coder — reprise via `memory/client-sim-tests/noteshield/PROMPT-REPRISE-SESSION.md`,
+> sur demande explicite d'Aziz uniquement. Ne change rien à la priorité Gazoduc Acte 3
 > ci-dessus (le sujet principal reste YouTube/Souverain).
 
 ---
