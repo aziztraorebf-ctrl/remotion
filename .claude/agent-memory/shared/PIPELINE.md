@@ -22,7 +22,7 @@
 | Vidéo | Production | Diffusion |
 |---|---|---|
 | Sénégal Pétrole & Gaz (long) | ✅ livré | ✅ **PUBLIÉ 2026-07-30** |
-| War-Map Sahel AES (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-04** |
+| War-Map Sahel AES (long) | ⛔ REFONTE V6 en cours (non commité) | ⛔ **PUBLIÉ 2026-08-04, ÉCHEC** (5 vues/24h) |
 | Franc CFA (mid-form) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-11** |
 | Soudan mid-form (long) | ✅ livré | 🗓️ **PROGRAMMÉ 2026-08-20** (titre/miniature/description faits 2026-07-31) |
 | Short Sénégal D3 · Short AES 90s · Short CFA | ✅ TOUS PROGRAMMÉS via TryPost (2026-08-01/04/11) | CTA corrigé "EN BIO" — reste Short Soudan à construire |
@@ -34,6 +34,20 @@
 ---
 
 ## ÉTAT DES PROJETS VIVANTS
+
+### War-Map Sahel AES — ⛔ REFONTE V6 EN COURS (2026-08-06, non commité)
+**Source de vérité** : `memory/episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
+Vidéo longue publiée 2026-08-04, ÉCHEC (5 vues/24h, VPH 0.19). Script réécrit (V6), audio généré +
+validé Aziz, retiming complet des constantes de timing fait et vérifié (check-frame-continuity.py, 0
+trou/0 chevauchement). **RIEN commité**, aucun render complet fait. Reste : render + assemblage +
+validation Aziz + republication.
+
+⛔⛔ **Piège trouvé cette session, même famille que Soudan Actes 3/4 ci-dessous** : `Root.tsx` enregistre
+2 compositions quasi-identiques pour l'Acte 1 (`SahelActe1-Final` et `SahelActe1-Refonte`) — SEULE
+`SahelActe1-Refonte` correspond au FINAL réellement publié (vérifié pixel par pixel contre
+`out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`, MD5 confirmé). `SahelActe1-Final` affiche un vieux
+carton titre orphelin ("Tout a changé en trois ans") absent du FINAL — seul indice visuel entre les
+deux. Détail : `feedback_deux-compositions-remotion-verifier-vs-livrable-reel.md`.
 
 ### Soudan mid-form — 🏁 TERMINÉ, v7 promue FINAL (2026-07-31)
 **Source de vérité** : `memory/episodes/soudan-midform/STATUS.md`.
@@ -101,6 +115,15 @@ Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→
 ⚠️ Pas de branche dédiée (sur `feat/gazoduc-acte1-hook-globe`, hérité d'un autre chantier).
 Décision finale (2A vs 2B vs hybride) EN ATTENTE d'Aziz. Source de vérité :
 `memory/episodes/_client-sim/flowdesk/STATUS.md`.
+
+### NorthShield (test client simulé) — Direction B rejetée sur le fond, pivot storyboard V3
+Hors registre Souverain. Direction B (100% abstraite) codée deux fois (v1 puis v2, motion
+corrigé après jury 4 modèles LLM) puis **REJETÉE SUR LE FOND** par Aziz (2026-08-07) : cliché
+"pluie de données" déguisé (panneau 1) + absence totale d'incarnation humaine, violant la chaîne
+HUMAN→SYSTEM→PRODUCT du brief client. **Pivot décidé : storyboard V3 mixte** (7 panneaux,
+personnage Sarah incarné en MiniMax H3, pas SVG), pas encore codé. ⚠️ Pas de branche dédiée
+(même anomalie que Flowdesk, `feat/gazoduc-acte1-hook-globe`). Source de vérité :
+`memory/episodes/_client-sim/noteshield/STATUS.md`.
 
 ### 💤 Dormants
 Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience) · Maroc Batteries

@@ -20,15 +20,17 @@
   [STATUS](../episodes/_client-sim/flowdesk/STATUS.md).
   Code : `src/projects/_client-sim/flowdesk/`.
 
-## Test en cours — design figé, reste l'animation (2026-08-07)
+## Test en cours — pivot vers un storyboard incarné (2026-08-07)
 
-- ⭐⭐ **NorthShield (SaaS cybersécurité, scoring de risque de connexion).** Objectif testé :
-  HUMAN + SYSTEM + PRODUCT (Flowdesk n'avait testé que HUMAN + SYSTEM). **Storyboard Direction A
-  (Narrative/Human, Gemini 3.1 Flash) + Direction B (System/Conceptual, Fable MAX) COMPLETS,
-  Mix & Match tranché, Semantic Test croisé fait, panneau P1 corrigé.** Reste à coder :
-  l'animation Remotion. Point d'entrée unique pour reprendre :
-  [PROMPT-REPRISE-SESSION](noteshield/PROMPT-REPRISE-SESSION.md) (liste l'ordre de lecture des
-  autres fichiers : PLAN-ANIMATION, MIX-AND-MATCH, storyboards, prototype souris).
+- ⭐⭐⭐ **NorthShield (SaaS cybersécurité, scoring de risque de connexion).** Objectif testé :
+  HUMAN + SYSTEM + PRODUCT. **Direction B pure (100% abstraite) codée en v1 puis v2 (motion
+  corrigé après rejet unanime d'un jury à 4 modèles) — mais REJETÉE SUR LE FOND par Aziz après
+  visionnage v2** : le flux P1 reformule le cliché "pluie de données" interdit par le brief, et
+  l'absence d'incarnation humaine viole la chaîne HUMAN→SYSTEM→PRODUCT. **Pivot décidé : storyboard
+  V3 mixte** (Direction A incarnée + Direction B mécanisme + apports d'un storyboard GPT externe),
+  personnage Sarah en MiniMax H3 (pas SVG). Détail complet + code v2 réutilisable :
+  [STATUS](../episodes/_client-sim/noteshield/STATUS.md). Storyboard à coder la prochaine
+  session : [STORYBOARD-V3-MIX-INCARNE](noteshield/STORYBOARD-V3-MIX-INCARNE.md).
   Brief client original : [BRIEF-CLIENT](noteshield/BRIEF-CLIENT.md).
 
 ## Méthode standard pour tout nouveau test client-sim
@@ -46,7 +48,15 @@ pour le détail complet), affinée pour NorthShield (voir [BRIEF-CLIENT](noteshi
    autre ?) / MEDIUM (SVG/illustration/vidéo/UI/typo/autre ?) / SEMANTIC TEST (que comprend-on
    en 5s sans narration ?) — évite de refaire une direction faible comme Flowdesk 2B seule.
 3. **Semantic Test** avant toute animation coûteuse : que comprend-on de chaque storyboard sans
-   narration ?
+   narration ? **⛔⛔ C'est un GATE, pas une note informative** (leçon NorthShield, 2026-08-07) :
+   si le test révèle une asymétrie nette entre deux directions concurrentes (une "comprise
+   immédiatement", l'autre "partiellement comprise") sur un panneau critique, traiter ça comme un
+   motif d'ARRÊT avant tout code — pas comme "à garder en tête" pendant qu'on code la direction
+   faible quand même. Vécu : signal ignoré → ~2 sessions de motion design (v1+v2, jury 4 modèles)
+   pour corriger un problème qui n'a jamais été le motion, mais la direction créative elle-même
+   (rejet sur le fond après coup). Corollaire : "le motion design est-il bon" et "cette direction
+   répond-elle au brief" sont deux questions INDÉPENDANTES — poser explicitement les deux à tout
+   jury de review, ne jamais supposer que la première couvre la seconde.
 4. **Mix & Match** scène par scène plutôt qu'un registre unique sur toute la durée.
 5. Si l'abstraction (Direction B) est utilisée seule à un moment : s'assurer qu'elle est
    **ancrée par du concret avant/après** (structure CONCRET→ABSTRAIT→CONCRET) — l'abstraction
@@ -112,3 +122,14 @@ flux + embouteillage qui se forme ; le premier brief ne demandait que "traits qu
 oubliant l'événement de blocage — corrigé en explicitant la barre + l'embouteillage compressé dans
 le brief v2, Semantic Test passé ensuite). **Toujours faire le Semantic Test soi-même sur le rendu
 avant de le présenter** — 5 secondes, sans texte, "qu'est-ce que je comprends ?".
+
+### 4. Deux gotchas motion design (v2 NorthShield, 2026-08-07)
+- **`splitByTag` (dans `svgGroupExtractor.ts`)** : quand un groupe SVG mélange un label texte
+  statique et une géométrie animée qui NE DOIVENT PAS suivre la même transformation (ex un
+  `translateY` de convergence qui ne doit déplacer QUE le tracé, pas son label) — séparer les deux
+  avant d'animer, sinon le label suit le mouvement et finit superposé/illisible.
+- **Le hook `pre-presentation-review.sh` + `visual_review.py --palette navy` est câblé pour la
+  palette Souverain (navy/gold/ivory)** — pas applicable aux projets client-sim à charte
+  différente (vu 2 fois : Flowdesk, NorthShield). Nécessite un override tracé
+  (`<mp4>.review-override.md`) à chaque fois tant qu'aucun mode de review paramétrable par
+  palette n'existe pour client-sim.

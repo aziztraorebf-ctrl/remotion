@@ -178,8 +178,20 @@ function Row({
   );
 }
 
-export const DashboardScreen: React.FC<{ riskCase: RiskCase }> = ({ riskCase }) => {
-  const data = CASES[riskCase];
+type RowOverride = {
+  user: string;
+  time: string;
+  device: string;
+  location: string;
+  score: number;
+  action: string;
+};
+
+export const DashboardScreen: React.FC<{ riskCase: RiskCase; overrideRow?: RowOverride }> = ({
+  riskCase,
+  overrideRow,
+}) => {
+  const data = overrideRow ?? CASES[riskCase];
 
   return (
     <div

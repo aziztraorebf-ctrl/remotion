@@ -66,6 +66,11 @@ import { GazoducActe2AAGP, GAZODUC_A2_FRAMES } from "./projects/souverain/gazodu
 import { GazoducActe2SignatureFreetown, GazoducActe2SignatureFlashback, GAZODUC_A2_SIGNATURE_FREETOWN_FRAMES, GAZODUC_A2_SIGNATURE_FLASHBACK_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Signature";
 import { GazoducActe2Financement, GAZODUC_A2_FINANCEMENT_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Financement";
 import { GazoducActe2Montage, GAZODUC_A2_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Montage";
+import { GazoducActe3CarteTSGP } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP";
+import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
+import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
+import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
+import { GAZODUC_A3_CARTE_TSGP_FRAMES, GAZODUC_A3_INSERT_SECURITE_FRAMES, GAZODUC_A3_INSERT_PARADOXE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing";
 import { ProtoA2CameraProche, ProtoA2VoisinsVisibles, ProtoA2Mix, ProtoA2CameraContinueSurMix, ProtoA2CameraContinue13Jalons, PROTO_A2_COMPARE_FRAMES, PROTO_A2_13JALONS_FRAMES } from "./projects/_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins";
 import { DuelKimiGlm } from "./projects/_rnd/svg-scenes/DuelKimiGlm";
 import { BlueprintDerrickK3 } from "./projects/_rnd/svg-scenes/BlueprintDerrickK3";
@@ -489,6 +494,7 @@ import { FlowdeskAbstraitV4, FLOWDESK_V4_FRAMES, FLOWDESK_V4_FPS } from "./proje
 import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } from "./projects/_client-sim/flowdesk/FlowdeskPersonne2B";
 import { DashboardLowRiskStill, DashboardHighRiskStill, DashboardLowRiskLaptopStill, DashboardHighRiskLaptopStill, NS_DASHBOARD_FRAMES, NS_DASHBOARD_FPS } from "./projects/_client-sim/noteshield/ui/DashboardScreenStill";
 import { CursorTestComp, NS_CURSOR_TEST_FRAMES, NS_CURSOR_TEST_FPS } from "./projects/_client-sim/noteshield/ui/CursorTestComp";
+import { NorthShieldDirectionB, NS_DIRECTION_B_FRAMES, NS_DIRECTION_B_FPS } from "./projects/_client-sim/noteshield/direction-b/NorthShieldDirectionB";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -1157,6 +1163,48 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte2-Montage"
           component={GazoducActe2Montage}
           durationInFrames={GAZODUC_A2_MONTAGE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 3 "TSGP" (Partie 3 script) — carte D3 tracé Nigeria->Niger->Algérie (cyan,
+            micro-haltes caméra + comparateur financier), réutilise le mécanisme exact de l'Acte 2. */}
+        <Composition
+          id="D3-Gazoduc-Acte3-CarteTSGP"
+          component={GazoducActe3CarteTSGP}
+          durationInFrames={GAZODUC_A3_CARTE_TSGP_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 3 — Insert SVG scène-lieu "aéroport de Niamey" (décor architectural qui vit
+            puis se fige au climax "35 morts"). Revirement Aziz 2026-08-05 : remplace la carte
+            abstraite du 1er DA-brief par une vraie scène-lieu, cf PLAN-ACTES2-5.md § SEGMENT B. */}
+        <Composition
+          id="D3-Gazoduc-Acte3-InsertSecurite"
+          component={GazoducActe3InsertSecurite}
+          durationInFrames={GAZODUC_A3_INSERT_SECURITE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 3 — Insert SVG clôture "paradoxe" Maroc/Algérie, split-screen clipPath sur
+            la carte déjà tracée (DA-brief-gate tranché : évite la redite avec le dispositif
+            "médaillons/cadenas" déjà utilisé ailleurs dans le projet). */}
+        <Composition
+          id="D3-Gazoduc-Acte3-InsertParadoxe"
+          component={GazoducActe3InsertParadoxe}
+          durationInFrames={GAZODUC_A3_INSERT_PARADOXE_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 3 — MONTAGE FINAL des 3 segments (Carte TSGP → Insert Sécurité → Insert
+            Paradoxe), audio narration-p3.mp3 synchronisé par segment (startFrom réel). */}
+        <Composition
+          id="D3-Gazoduc-Acte3-Montage"
+          component={GazoducActe3Montage}
+          durationInFrames={GAZODUC_A3_MONTAGE_FRAMES}
           fps={30}
           width={1920}
           height={1080}
@@ -4503,6 +4551,14 @@ export const RemotionRoot: React.FC = () => {
         component={CursorTestComp}
         durationInFrames={NS_CURSOR_TEST_FRAMES}
         fps={NS_CURSOR_TEST_FPS}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="NorthShield-Direction-B"
+        component={NorthShieldDirectionB}
+        durationInFrames={NS_DIRECTION_B_FRAMES}
+        fps={NS_DIRECTION_B_FPS}
         width={1920}
         height={1080}
       />

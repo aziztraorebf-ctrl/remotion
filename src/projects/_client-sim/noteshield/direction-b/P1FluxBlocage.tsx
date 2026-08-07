@@ -1,106 +1,192 @@
-// P1 — "On traite encore toutes les connexions de la meme maniere" / "ralentit tout le monde" /
-// "croise les doigts". 0 -> 10.9s. Flux indifferencie qui percute une barriere et s'embouteille,
-// puis repart trop vite (traits rouges non filtres qui filent avec le reste).
+// P1 v2 — "On traite encore toutes les connexions de la meme maniere" / "ralentit tout le
+// monde" / "croise les doigts". 0 -> 10.9s.
 //
-// Le SVG Fable v3 fournit DEJA les deux etats (flux_arrivant libre / flux_bloque compresse) dans
-// le meme cadre de coordonnees — on ne fait QUE piloter opacite/position selon la frame, jamais
-// interpoler entre deux fichiers SVG separes (cf. PLAN-ANIMATION-DIRECTION-B.md § P1).
-import React from "react";
+// REFONTE POST-JURY (2026-08-07, rejet v1 unanime 4/4 : Gemini/Kimi/GPT/Grok — "diaporama
+// statique"). Cause racine identifiee : le flux v1 utilisait le SVG Fable (image DEJA figee de
+// traits positionnes), anime seulement en opacite/translation de bloc — jamais de vrai mouvement
+// continu. v2 genere 120 traits PROCEDURALEMENT en code, chacun avec sa propre vitesse/longueur/
+// phase, en boucle perpetuelle — le flux ne s'arrete JAMAIS de bouger du debut a la fin du
+// panneau (regle n°1 du jury : rien de statique > 1s). Le decor (grille, vignette) reste le SVG
+// Fable (matiere statique legitime). Cf memory/client-sim-tests/noteshield/
+// SCRIPT-ANIMATION-V2-SYNTHESE-JURY.md § P1 pour le detail du brief retenu.
+import React, { useMemo } from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { P1_FLUX_SVG } from "./bodies/P1FluxBody";
 import { extractGroup, extractDefs } from "./svgGroupExtractor";
 
 const clamp = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
+const W = 1920;
+const H = 1080;
+const BARRIER_X = 1240;
 
 const DEFS = extractDefs(P1_FLUX_SVG);
-
 const G = {
   bg: extractGroup(P1_FLUX_SVG, "bg"),
   structureGrid: extractGroup(P1_FLUX_SVG, "structure_grid"),
-  horizonDormant: extractGroup(P1_FLUX_SVG, "horizon_dormant"),
-  speedHairlines: extractGroup(P1_FLUX_SVG, "speed_hairlines"),
-  fluxArrivant: extractGroup(P1_FLUX_SVG, "flux_arrivant"),
-  barriere: extractGroup(P1_FLUX_SVG, "barriere"),
-  fluxBloque: extractGroup(P1_FLUX_SVG, "flux_bloque"),
-  traitsRouges: extractGroup(P1_FLUX_SVG, "traits_rouges"),
-  zoneVideDroite: extractGroup(P1_FLUX_SVG, "zone_vide_droite"),
-  dustParticles: extractGroup(P1_FLUX_SVG, "dust_particles"),
   vignette: extractGroup(P1_FLUX_SVG, "vignette"),
 };
-
-const Raw: React.FC<{ body: string; opacity?: number; transform?: string }> = ({ body, opacity, transform }) => (
-  <g opacity={opacity} transform={transform} dangerouslySetInnerHTML={{ __html: body }} />
+const Raw: React.FC<{ body: string; opacity?: number }> = ({ body, opacity }) => (
+  <g opacity={opacity} dangerouslySetInnerHTML={{ __html: body }} />
 );
 
-// Timings relatifs au debut du panneau (P1 commence a 0s dans la composition globale).
-// "ralentit" : 4.319 -> 4.859s (mot-cle blocage). "doigts." : 9.099 -> 9.319s (mot-cle liberation).
+// "ralentit" : 4.319 -> 4.859s (blocage). "doigts." : 9.099 -> 9.319s (liberation).
 const T_BARRIERE_IN = 4.319;
-const T_BARRIERE_HOLD_END = 8.4; // la barriere tient jusqu'a juste avant "doigts"
-const T_BARRIERE_OUT = 8.6; // disparition rapide, juste avant/pendant "doigts" (9.099-9.319)
-const T_FUITE_START = 8.7; // le flux repart en vitesse juste apres la barriere
+const T_BARRIERE_OUT = 9.099;
+
+type Trait = {
+  y: number;
+  len: number;
+  speed: number; // px/frame en phase libre
+  phase: number; // decalage temporel (frames) pour desynchroniser
+  isRed: boolean;
+  lane: "far" | "mid" | "near"; // profondeur -> opacite/epaisseur
+  packJitter: number;
+};
+
+// 120 traits generes deterministiquement (seed fixe -> meme resultat a chaque render).
+function makeTraits(count: number, redIndices: number[]): Trait[] {
+  const traits: Trait[] = [];
+  for (let i = 0; i < count; i++) {
+    // pseudo-random deterministe base sur i (pas de Math.random -- jamais entre renders).
+    const seed = (i * 9301 + 49297) % 233280;
+    const rnd = seed / 233280;
+    const rnd2 = ((i * 3571 + 1013) % 233280) / 233280;
+    const lane: Trait["lane"] = i % 3 === 0 ? "far" : i % 3 === 1 ? "mid" : "near";
+    traits.push({
+      y: 60 + rnd * (H - 120),
+      len: 40 + rnd2 * 90,
+      speed: lane === "far" ? 6 + rnd * 3 : lane === "mid" ? 10 + rnd * 5 : 15 + rnd * 8,
+      phase: Math.floor(rnd * 400),
+      isRed: redIndices.includes(i),
+      lane,
+      packJitter: rnd * 70, // decale la compression contre la barriere pour eviter l'effet grille
+    });
+  }
+  return traits;
+}
+
+const LANE_STYLE = {
+  far: { opacity: 0.35, height: 3, blur: 1.8 },
+  mid: { opacity: 0.6, height: 5, blur: 0.6 },
+  near: { opacity: 0.9, height: 7, blur: 0 },
+};
 
 export const P1FluxBlocage: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
 
-  // Barriere : apparition spring a T_BARRIERE_IN, disparition rapide a T_BARRIERE_OUT.
+  const traits = useMemo(() => makeTraits(120, [17, 53, 89]), []);
+
   const barriereIn = spring({
     frame: frame - T_BARRIERE_IN * fps,
     fps,
-    config: { damping: 14, stiffness: 120 },
+    config: { damping: 11, stiffness: 170 },
   });
-  const barriereOut = interpolate(t, [T_BARRIERE_OUT, T_BARRIERE_OUT + 0.25], [1, 0], clamp);
+  const barriereOut = interpolate(t, [T_BARRIERE_OUT, T_BARRIERE_OUT + 0.06], [1, 0], clamp);
   const barriereOpacity = Math.min(barriereIn, barriereOut);
-  const barriereScaleY = interpolate(barriereIn, [0, 1], [0.3, 1]);
-
-  // Flux arrivant (libre) visible avant le blocage, puis re-visible en fuite acceleree apres.
-  const fluxArrivantOpacityBeforeBlock = interpolate(t, [T_BARRIERE_IN - 0.3, T_BARRIERE_IN], [1, 0], clamp);
-  const fluxArrivantOpacityFuite = interpolate(t, [T_FUITE_START, T_FUITE_START + 0.2], [0, 1], clamp);
-  const fluxArrivantOpacity = Math.max(fluxArrivantOpacityBeforeBlock, fluxArrivantOpacityFuite);
-  // Translation de sortie rapide en fuite : easing "in" (accelere), tout part d'un coup.
-  const fuiteProgress = interpolate(t, [T_FUITE_START, 10.9], [0, 1], clamp);
-  const fluxArrivantTranslateX = fuiteProgress > 0 ? interpolate(fuiteProgress, [0, 1], [0, 260], {
+  const barriereScaleY = interpolate(barriereIn, [0, 0.7, 1], [0.2, 1.08, 1], clamp);
+  const barriereFlash = interpolate(t, [T_BARRIERE_IN, T_BARRIERE_IN + 0.12], [1, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const isBlocked = t >= T_BARRIERE_IN && t < T_BARRIERE_OUT;
+  const isFleeing = t >= T_BARRIERE_OUT;
+  const fuiteProgress = interpolate(t, [T_BARRIERE_OUT, T_BARRIERE_OUT + 1.1], [0, 1], {
     ...clamp,
-    easing: (x) => x * x,
-  }) : 0;
+    easing: (x) => x * x * x,
+  });
 
-  // Flux bloque (compresse) : apparait au moment du blocage, disparait a la fuite.
-  const fluxBloqueOpacity = interpolate(
-    t,
-    [T_BARRIERE_IN, T_BARRIERE_IN + 0.4, T_BARRIERE_OUT, T_BARRIERE_OUT + 0.15],
-    [0, 1, 1, 0],
-    clamp,
-  );
-
-  // Traits rouges : noyes dans l'embouteillage, puis filent avec la fuite sans etre arretes.
-  const traitsRougesOpacity = interpolate(t, [T_BARRIERE_IN + 0.4, T_BARRIERE_IN + 0.6], [0, 1], clamp);
-
-  // Horizon dormant : fil cyan constant en arriere-plan, leger sursaut de luminosite au blocage.
-  const horizonPulse = interpolate(t, [T_BARRIERE_IN, T_BARRIERE_IN + 0.5, T_BARRIERE_IN + 1.2], [1, 1.4, 1], clamp);
+  // Densification progressive du flux jusqu'au blocage (1.5-3.8s dans le brief jury).
+  const densityRamp = interpolate(t, [0, 1.5, 3.8], [0.5, 0.75, 1], clamp);
 
   return (
     <AbsoluteFill style={{ background: "#0A1628" }}>
-      <svg viewBox="0 0 1920 1080" width="100%" height="100%">
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%">
         <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
         <Raw body={G.bg} />
         <Raw body={G.structureGrid} />
-        <Raw body={G.horizonDormant} opacity={horizonPulse} />
-        <Raw body={G.speedHairlines} />
-        <Raw
-          body={G.fluxArrivant}
-          opacity={fluxArrivantOpacity}
-          transform={fuiteProgress > 0 ? `translate(${fluxArrivantTranslateX}, 0)` : undefined}
-        />
-        <Raw
-          body={G.barriere}
-          opacity={barriereOpacity}
-          transform={`translate(1240, 540) scale(1, ${barriereScaleY}) translate(-1240, -540)`}
-        />
-        <Raw body={G.fluxBloque} opacity={fluxBloqueOpacity} />
-        <Raw body={G.traitsRouges} opacity={traitsRougesOpacity * fluxBloqueOpacity} />
-        <Raw body={G.zoneVideDroite} />
-        <Raw body={G.dustParticles} />
+
+        {traits.map((tr, i) => {
+          const style = LANE_STYLE[tr.lane];
+          let x: number;
+          let opacity = style.opacity * densityRamp;
+
+          if (!isBlocked && !isFleeing) {
+            // Flux libre continu : boucle perpetuelle de la droite du cadre... non, gauche->droite,
+            // repart a gauche des qu'il sort a droite (avant blocage) ou juste avant la barriere.
+            const cycle = (W + tr.len * 2) / tr.speed;
+            const localFrame = (frame + tr.phase) % cycle;
+            x = -tr.len + localFrame * tr.speed;
+            if (x > BARRIER_X - 20) x = BARRIER_X - 20 - ((x - (BARRIER_X - 20)) % (BARRIER_X - 20 + tr.len));
+          } else if (isBlocked) {
+            // Compression contre la barriere : la position d'equilibre depend du lane (near = plus
+            // proche du mur) + packJitter (par-trait, evite l'effet grille) + jitter perpetuel
+            // (photo jamais figee tant que le blocage dure).
+            const laneOffset = tr.lane === "near" ? 6 : tr.lane === "mid" ? 90 : 180;
+            const jitter = Math.sin((frame + tr.phase) * 0.15) * 2.5;
+            const settle = interpolate(t, [T_BARRIERE_IN, T_BARRIERE_IN + 0.5], [220, 0], clamp);
+            x = BARRIER_X - 30 - laneOffset - tr.packJitter + jitter + settle;
+            opacity = style.opacity;
+          } else {
+            // Fuite : acceleration exponentielle vers la droite, sort du cadre.
+            const laneOffset = tr.lane === "near" ? 6 : tr.lane === "mid" ? 90 : 180;
+            const startX = BARRIER_X - 30 - laneOffset - tr.packJitter;
+            const speedMul = tr.isRed ? 1.6 : 1;
+            x = startX + fuiteProgress * (W - startX + 400) * speedMul;
+            opacity = style.opacity;
+          }
+
+          const color = tr.isRed ? "#F43F5E" : tr.lane === "far" ? "#7FA8C9" : "#00D9FF";
+          const trailColor = tr.isRed ? "#F43F5E" : "#F4F1EA";
+
+          return (
+            <g key={i} opacity={opacity}>
+              <rect
+                x={x}
+                y={tr.y}
+                width={tr.len * (isFleeing ? 1.6 : 1)}
+                height={style.height}
+                rx={style.height / 2}
+                fill={color}
+                filter={style.blur > 0 ? `blur(${style.blur}px)` : undefined}
+              />
+              <rect
+                x={x + tr.len * (isFleeing ? 1.6 : 1) - 10}
+                y={tr.y}
+                width={10}
+                height={style.height}
+                rx={style.height / 2}
+                fill={trailColor}
+              />
+            </g>
+          );
+        })}
+
+        {/* Barriere : jaillit avec overshoot + flash d'impact, disparait net. */}
+        <g opacity={barriereOpacity}>
+          <rect
+            x={BARRIER_X - 4}
+            y={540 - 470 * barriereScaleY}
+            width={8}
+            height={940 * barriereScaleY}
+            rx={4}
+            fill="#F4F1EA"
+          />
+          <rect
+            x={BARRIER_X - 14}
+            y={540 - 470 * barriereScaleY}
+            width={28}
+            height={940 * barriereScaleY}
+            rx={14}
+            fill="#00D9FF"
+            opacity={0.25}
+          />
+        </g>
+        {barriereFlash > 0 && (
+          <circle cx={BARRIER_X} cy={540} r={40 + (1 - barriereFlash) * 200} fill="#F4F1EA" opacity={barriereFlash * 0.5} />
+        )}
+
         <Raw body={G.vignette} />
       </svg>
     </AbsoluteFill>

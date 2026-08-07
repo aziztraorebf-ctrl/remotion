@@ -1,42 +1,49 @@
-# Prompt de reprise — NorthShield Direction B (animation)
+# Prompt de reprise — NorthShield Storyboard V3 (mix incarné)
 
 Copier-coller ce prompt pour reprendre le chantier NorthShield à la prochaine session.
 
 ---
 
-On reprend le chantier client-sim NorthShield (SaaS cybersécurité, test positionnement freelance).
-Le design de Direction B (System/Conceptual, métaphore "le seuil qui respire") est **entièrement
-figé** — storyboard complet P1-P6, Mix & Match tranché, Semantic Test validé, P1 corrigé (capture
-maintenant l'événement barre+embouteillage, pas un état neutre). Reste à FAIRE : coder l'animation
-Remotion.
+On reprend le chantier client-sim NorthShield (SaaS cybersécurité, test positionnement
+freelance). La Direction B pure (100% abstraite) a été codée deux fois (v1 puis v2, motion
+corrigé après rejet unanime d'un jury à 4 modèles LLM) mais **rejetée sur le fond** après
+visionnage : le flux du panneau 1 reformule le cliché "pluie de données" interdit par le brief
+client, et l'absence totale d'incarnation humaine viole la chaîne HUMAN→SYSTEM→PRODUCT demandée.
+
+**Décision prise : storyboard V3 mixte, 7 panneaux**, combinant Direction A (incarnation,
+structure de pull-back), Direction B (mécanisme des 4 signaux, cascade Berlin, signature — tout
+ça fonctionnait déjà bien et est conservé), et deux apports d'un storyboard généré en externe par
+GPT (slider "trop strict/trop laxe" en P2, ancrage produit plus visible). Le personnage Sarah sera
+incarné via **MiniMax H3** (image-to-video, PAS Seedance — déjà prouvé sur Flowdesk), pas en
+SVG/silhouette.
 
 Lire dans cet ordre avant de commencer :
-1. `memory/client-sim-tests/noteshield/PLAN-ANIMATION-DIRECTION-B.md` — le plan technique complet
-   (timing exact par panneau, groupes SVG réels, technique d'animation recommandée par panneau,
-   ordre de codage conseillé : P1 → P3 → P2/P6 → P4/P5 → assemblage).
-2. `memory/client-sim-tests/noteshield/MIX-AND-MATCH-DIRECTION-B.md` — pourquoi chaque choix
-   design a été retenu (utile si une retouche est nécessaire en cours de codage).
-3. `memory/client-sim-tests/INDEX.md` § "Outils & pièges techniques" — 3 pièges déjà rencontrés et
-   résolus cette session (script narratif vs abstrait, mode MAX Fable à répéter à chaque appel,
-   capturer l'événement pas l'état) — à ne pas re-découvrir si un nouveau visuel doit être régénéré.
+1. `memory/episodes/_client-sim/noteshield/STATUS.md` — état exact, ce qui est gardé vs à
+   remplacer, ce qui reste à trancher.
+2. `memory/client-sim-tests/noteshield/STORYBOARD-V3-MIX-INCARNE.md` — le storyboard complet
+   panneau par panneau (INFORMATION/REPRÉSENTATION/MEDIUM/SEMANTIC TEST + moteur tranché pour
+   chacun : SVG maison vs MiniMax H3).
+3. `memory/tools/minimax.md` § MiniMax H3 — détail technique du pipeline image-to-video (coût,
+   limitations, pattern déjà validé sur Flowdesk).
 
-Fichiers sources prêts à l'emploi :
-- `public/_rnd/fable-svg/northshield-direction-b/` — 6 SVG JSON (P1 v3, P2, P3, P5, P6 avec
-  fusions Mix & Match déjà appliquées).
-- `src/projects/_client-sim/noteshield/ui/` — `DashboardScreen.tsx`, `LaptopMockup.tsx`,
-  `VirtualCursor.tsx` + `CursorTestComp.tsx` (prototype souris validé, pas encore intégré).
-- `src/projects/_client-sim/noteshield/audio/narration.alignment.json` — timing mot-par-mot.
-- ✅ **`src/projects/_client-sim/noteshield/direction-b/` — P1 DÉJÀ CODÉ** (`P1FluxBlocage.tsx`,
-  compile propre, `tsc --noEmit -p tsconfig.json` sans erreur). Implémente exactement le plan :
-  extraction des groupes SVG Fable v3 via `svgGroupExtractor.ts` (pattern repris de
-  `src/projects/_rnd/svg-scenes/PiliersGouffre16x9.tsx`), timings calés sur les mots-clés
-  "ralentit"/"doigts" de l'alignment audio, `flux_arrivant`/`flux_bloque` pilotés par opacité (pas
-  d'interpolation entre 2 fichiers SVG séparés, cf plan). **Vérifier ce fichier en premier avant
-  de recoder P1** — un render de contrôle (`npx remotion render` ou still sur quelques frames) n'a
-  PAS encore été fait, à faire avant de continuer sur P2-P6.
+Fichiers de code à réutiliser TELS QUELS (ne pas recoder) :
+- `src/projects/_client-sim/noteshield/direction-b/P2SeuilNait.tsx`,
+  `P3QuatreSignaux.tsx` (devient P4 en V3), `P6Signature.tsx` (devient P7 en V3).
+- `src/projects/_client-sim/noteshield/ui/DashboardScreen.tsx` (prop `overrideRow`),
+  `LaptopMockup.tsx`, `VirtualCursor.tsx`.
 
-Explicitement HORS SCOPE pour cette session (décision Aziz) : intégration complète souris virtuelle
-+ SFX — à faire APRÈS une première version complète de la vidéo, pas avant.
+Fichiers à REMPLACER par les nouveaux plans MiniMax H3 (garder la mécanique de cascade de
+données de l'ex-P5 v2, juste le support change) :
+- `P1FluxBlocage.tsx`, `P4DashboardReveal.tsx`, `P5DashboardMorphBosse.tsx`.
 
-Objectif de la session : avoir une composition Remotion assemblée avec les 6 panneaux dans les
-bonnes `<Sequence>`, animée selon le plan, prête pour une première passe de review visuelle.
+4 points à trancher AVANT de coder quoi que ce soit :
+1. Générer l'image de référence Sarah (Gemini/Recraft, registre 2D flat — PAS photoréaliste),
+   une seule image réutilisée sur les 3 plans H3 (P1, P5, P6) pour la cohérence du personnage.
+2. Tester si le pull-back caméra (P5) est crédible en un seul plan H3, sinon prévoir un raccord
+   vers `LaptopMockup` React.
+3. Calibrer les durées des 3 plans H3 avant génération (coût ~$1.30/5s en 2K) — prévisualiser
+   avant tout appel payant.
+4. Recalculer les timings précis des 7 panneaux depuis `narration.alignment.json`.
+
+Script voix verrouillé (V3, ne pas retoucher) : `src/projects/_client-sim/noteshield/SCRIPT-VOIX.md`.
+Audio déjà généré, 63.34s. Brief client original : `memory/client-sim-tests/noteshield/BRIEF-CLIENT.md`.

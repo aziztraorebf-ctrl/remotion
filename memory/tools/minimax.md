@@ -24,6 +24,14 @@ personne/émotion, panneaux "Chaos" et "Bascule" — voir `src/projects/_client-
 - Fichiers de référence dans le repo : `src/projects/_client-sim/flowdesk/videoPingPong.ts`
   (wrapper Remotion ping-pong) et `src/projects/_client-sim/flowdesk/test-minimax-h3/` (itérations
   de test v1→v9).
+- **⭐ Personnage récurrent sur plusieurs plans : UNE SEULE image de référence, réutilisée comme
+  input à chaque appel H3** — ne jamais régénérer une nouvelle image de référence par plan/scène
+  pour le même personnage (risque de dérive visuelle, le personnage ne se ressemble plus d'un
+  plan à l'autre). Tranché explicitement par Aziz sur NorthShield (2026-08-07, personnage Sarah
+  sur 3 plans). H3 est *image-to-video* (pas un prompt texte pur comme Seedance) : l'image de
+  référence doit être générée en amont (Gemini/Recraft) avant tout appel H3.
+- Choisi pour son coût (le moins cher testé pour ce registre personne/émotion à date) — pas
+  verrouillé : tester d'autres générateurs vidéo (Seedance, etc.) si H3 échoue sur un cas donné.
 
 ## Minimax TTS — speech-2.8-hd (validé 2026-05-24)
 

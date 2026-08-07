@@ -29,3 +29,13 @@ export const extractDefs = (svg: string): string => {
   const m = /<defs>([\s\S]*?)<\/defs>/.exec(svg);
   return m ? m[1] : "";
 };
+
+// Separe le contenu d'un groupe en "elements <tagName>" vs "le reste" — utile quand un groupe
+// melange un label texte statique (qui ne doit pas suivre une animation appliquee au reste,
+// ex: convergence verticale) et une geometrie animee (les <path> qui portent deja le mouvement).
+export const splitByTag = (groupContent: string, tagName: string): { matched: string; rest: string } => {
+  const re = new RegExp(`<${tagName}\\b[^>]*(?:/>|>[^<]*</${tagName}>)`, "g");
+  const matched = (groupContent.match(re) || []).join("");
+  const rest = groupContent.replace(re, "");
+  return { matched, rest };
+};

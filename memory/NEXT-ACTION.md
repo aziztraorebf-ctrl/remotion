@@ -179,8 +179,10 @@ verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore prod
 
 > ✅ **Test client-sim "Flowdesk" CLOS (2026-08-06)** — sujet secondaire, détail isolé de ce
 > fichier → `memory/client-sim-tests/INDEX.md`. Test client-sim "NorthShield" (cybersécurité) :
-> **design Direction A+B FIGÉ** (storyboard, Mix & Match, Semantic Test faits, 2026-08-07), reste
-> l'animation Remotion à coder — reprise via `memory/client-sim-tests/noteshield/PROMPT-REPRISE-SESSION.md`,
+> **Direction B pure codée (v1+v2) puis REJETÉE SUR LE FOND** (2026-08-07) — cliché "pluie de
+> données" déguisé + absence d'incarnation humaine violant la chaîne HUMAN→SYSTEM→PRODUCT du
+> brief. **Pivot décidé : storyboard V3 mixte** (7 panneaux, personnage Sarah en MiniMax H3),
+> pas encore codé — reprise via `memory/client-sim-tests/noteshield/PROMPT-REPRISE-SESSION.md`,
 > sur demande explicite d'Aziz uniquement. Ne change rien à la priorité Gazoduc Acte 3
 > ci-dessus (le sujet principal reste YouTube/Souverain).
 
