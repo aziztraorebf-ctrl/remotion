@@ -26,6 +26,26 @@
 
 ---
 
+## ⭐⭐ DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07 — À TRANCHER EN PRIORITÉ
+
+**1. Gazoduc Acte 3 (TSGP)** : rendu v2 corrigé après DA-brief critique, lien
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte3-v2-Sw435S8sYbHTbgMbmvDkRfPMdkyhFT.mp4
+— Aziz doit le revoir. ⚠️ Analyse comparative Soudan/AES faite AVANT ce rendu : nos jetons/décors
+restent en dessous du registre déjà prouvé (drapeaux réels, icônes-ressources, jetons état-major
+mobiles façon `KhartoumEtatMajorSVG`/AES) — probable 3e passage nécessaire, ne PAS scanner
+`MAPBOX-COMPOSANTS.md`/`COMPOSANTS-INDEX.md` après coup, AVANT de recoder. Détail : PLAN-ACTES2-5.md.
+
+**2. Session dédiée "studio réutilisable"** (chantier séparé, priorité proche) : le vrai problème
+n'est pas l'absence de briques (catalogues existent : MAPBOX-COMPOSANTS.md, CATALOGUE-CARTE-VIVANTE.md,
+COMPOSANTS-INDEX.md, INTENTION-FORME-INDEX.md) mais l'absence de MÉCANIQUE D'EXÉCUTION qui force leur
+consultation avant de coder (contrairement au DA-brief-gate, qui force un arrêt réel). Méthode actée
+avec Aziz : audit INTERNE d'abord (agents Claude Code contexte vierge, accès direct au workspace,
+effort élevé, N agents en parallèle sur des angles différents), PUIS audit externe nourri par le
+résumé textuel produit par l'audit interne (jamais l'inverse — un LLM externe ne peut pas lire le
+vrai code). Objectif : diagnostiquer les trous de mécanique, pas de contenu.
+
+---
+
 ## 📤 PUBLICATION — LA PRIORITÉ ACTIVE
 
 > ⭐⭐ **La chaîne publie enfin.** Après 25 jours de blocage, la publication est démarrée. **Vider le
@@ -163,19 +183,13 @@ Les 5 autres beats (Hook, Phosphate, Cailloux, Acteurs, Question) sont FINAUX.
 
 ---
 
-## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1 ET ACTE 2 TERMINÉS, ACTE 3 À DÉMARRER
+## ⭐⭐ GAZODUC (AAGP vs TSGP) — ACTE 1+2 TERMINÉS, ACTE 3 CODÉ v1→v2, EN ATTENTE REVUE AZIZ
 
-**État (2026-08-04)** : Acte 1 (hook, globe D3, 84.68s) validé par Aziz comme base de production
-(render v6) — `GazoducActe1Hook.tsx`, 3 polish mineurs reportés à la passe finale
-(`POLISH-TODO-FINAL-RENDER.md`). **Acte 2 produit et validé en finale** :
-`out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s), 4 segments montés bout à bout (insert
-signature Freetown 22s → carte D3 tracé AAGP 20.8s → insert flashback genèse 2016 33.4s → insert
-financement manquant 51.3s). Détail complet (mix de modèles retenus, bugs corrigés, technique
-dessin progressif) : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
-
-**Prochaine priorité : Acte 3 (TSGP, gazoduc transsaharien algérien)** — script Partie 3 déjà
-verrouillé, audio `narration-p3.mp3` déjà généré, aucun visuel encore produit. Repère sujet :
-`memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
+**État (2026-08-07)** : Acte 1 (hook, globe D3, 84.68s) et Acte 2 (127.4s, 4 segments) validés en
+finale — détail : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`. **Acte 3 (TSGP) : voir
+section en tête de ce fichier** ("DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07") pour l'état à jour
+et le lien du rendu v2 — ne pas se fier à l'ancienne mention "à démarrer" ci-dessous, périmée.
+Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
 > ✅ **Test client-sim "Flowdesk" CLOS (2026-08-06)** — sujet secondaire, détail isolé de ce
 > fichier → `memory/client-sim-tests/INDEX.md`. Test client-sim "NorthShield" (cybersécurité) :

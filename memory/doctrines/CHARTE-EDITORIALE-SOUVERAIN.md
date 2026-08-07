@@ -120,6 +120,18 @@ Le positionnement militant plafonne sur AdSense diaspora et coupe la moitié sup
 
 ---
 
+## Climax dramatique (violence/attaque/mort) — dispositif validé (2026-08-07)
+
+Sur le registre analyste strict : jamais de figuration directe (avion, personnage, arme). Dispositif
+validé (Gazoduc Acte 3, attaque terroriste) : extinction PROGRESSIVE d'un système physique lié au
+lieu (lumières d'un aéroport, feux → tour → terminal, vacillement organique avant extinction — pas
+un fondu linéaire uniforme), PUIS le chiffre/fait apparaît sur fond presque noir mais JAMAIS
+totalement noir (garder le décor en filigrane, opacité résiduelle ~0.05-0.08, pour que le lien
+lieu↔drame reste visible). Root cause du premier jet raté : la question "qu'est-ce qu'on essaie de
+représenter au juste ?" n'avait pas été posée avant de coder, alors que la doctrine
+[[CONTINUITE-SCENE-INTENTION-DABORD]] couvre déjà ce principe — à re-vérifier explicitement à chaque
+climax narratif, pas seulement en début de scène.
+
 ## Références internes (détails)
 
 - `memory/rules/rules-souverain-editorial.md` — règles complètes (sources, couleurs, grammaire, Type B, format-fit, vulgarisation universelle, motivations visibles)

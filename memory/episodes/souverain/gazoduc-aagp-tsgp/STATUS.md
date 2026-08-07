@@ -1,6 +1,19 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-04
+**Mis à jour** : 2026-08-07
+
+## État — ACTE 3 (TSGP) CODÉ v1→v2, EN ATTENTE REVUE AZIZ (2026-08-07)
+
+3 segments (A carte D3 tracé Nigeria→Niger→Algérie, B insert sécurité aéroport Niamey, C insert
+paradoxe Maroc/Algérie) + montage codés et rendus deux fois : v1 jugé "catastrophique" par Aziz
+(diaporama, à refaire), puis refonte complète après 3 DA-briefs critiques ciblés (Gemini+Kimi+
+DeepSeek) — v2 rendu et uploadé, en attente de revue Aziz. Détail complet (synthèse DA-brief,
+décisions tranchées, correctifs appliqués) : `PLAN-ACTES2-5.md`. Lien rendu v2 + priorités :
+`memory/NEXT-ACTION.md` (section "DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07"). Analyse
+comparative Soudan/AES faite en fin de session : registre visuel (jetons/décors) reste sous le
+niveau déjà prouvé ailleurs dans le projet — probable 3e passage à venir, pas encore fait.
+
+---
 
 ## État — ACTE 2 TERMINÉ ET VALIDÉ (finale produite le 2026-08-04)
 
@@ -35,10 +48,10 @@ Les 20 SVG candidats "liberté créative" (12 sauvegardés initialement + 8 des 
 ajoutés) sont dans `memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`
 (copie persistante). Script réutilisable : `scripts/tools/gazoduc-svg-inserts-gen-libre.py`.
 
-## Prochaine priorité : Acte 3 (TSGP, gazoduc transsaharien algérien)
+## Acte 3 (TSGP) — voir État en tête de fichier
 
-Script Partie 3 déjà verrouillé, audio `narration-p3.mp3` déjà généré. **Aucun visuel encore
-produit** — à démarrer en session fraîche (storyboard/breakdown avant code, cf `SYSTEME-AGENTIQUE.md`).
+Section déplacée en tête (2026-08-07) — ne plus se fier à la mention "aucun visuel encore produit"
+ci-dessous, périmée depuis le codage v1→v2.
 
 ---
 

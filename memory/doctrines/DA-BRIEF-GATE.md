@@ -91,6 +91,12 @@ Le brief envoyé aux DEUX modèles contient, dans cet ordre :
 5. **MAX 1 appel par modèle par acte.** Pas de boucle brief→fix→brief. On synthétise, on code.
 6. **Si un modèle échoue** (quota, API) : ne pas bloquer. 1 modèle solide suffit pour avancer ;
    on croisera le 2e plus tard si pertinent.
+7. **Sur une review CRITIQUE multi-chantiers (Aziz demande explicitement "sois critique, sans
+   concession") : 1 brief SÉPARÉ par chantier distinct, pas un brief global** (validé 2026-08-07,
+   Gazoduc Acte 3 — 3 chantiers, 3 briefs dédiés, convergence forte 3/3 obtenue sur chacun). Exiger
+   explicitement dans le prompt l'ancrage au stack existant ("solutions qui marchent avec ce qu'on a,
+   jamais un effet qu'on ne pourrait pas produire") — sinon les modèles proposent des idées génériques
+   hors stack, ce qui dilue la review.
 
 ---
 

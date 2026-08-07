@@ -89,17 +89,16 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1 et 2 TERMINÉS, Acte 3 à démarrer
+### Gazoduc — Actes 1+2 TERMINÉS, Acte 3 codé v1→v2, en attente revue Aziz
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz comme base de production (render v6, 2026-08-03).
 Acte 2 **produit et validé en finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4`
-(127.4s), 4 segments montés bout à bout (insert signature Freetown → carte D3 tracé AAGP courte →
-insert flashback genèse 2016 → insert financement manquant). 20 SVG candidats "liberté créative"
-(5 modèles) sauvegardés (`memory/episodes/souverain/gazoduc-aagp-tsgp/svg-inserts-acte2-candidats/`).
-**Acte 3 (TSGP) — timing.ts LIVRÉ 2026-08-04** (Stage 2 storyboarder COMPLETE, voir HANDOFF LOG) :
-`src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing.ts`, 3 segments (A carte D3 tracé
-Nigeria→Niger→Algérie 73.93s, B insert sécurité JNIM/EI+Niamey 31.87s, C insert paradoxe Maroc/
-Algérie 17.27s), 123.07s total. Aucun visuel encore produit — prochaine étape : da-brief-gate puis
-code des 3 composants. Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md`.
+(127.4s), 4 segments montés bout à bout. **Acte 3 (TSGP) : 3 segments + montage codés et RENDUS deux
+fois** (v1 rejeté par Aziz — "catastrophique" — puis refonte complète v2 après 3 DA-briefs critiques
+ciblés Gemini+Kimi+DeepSeek). Rendu v2 uploadé, lien + détail dans `memory/NEXT-ACTION.md` (section
+"DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07"). Reste : revue Aziz du rendu v2 à la prochaine
+session, probable 3e passage sur le registre visuel (jetons/décors sous le niveau déjà prouvé
+Soudan/AES). Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
+`PLAN-ACTES2-5.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion
@@ -203,27 +202,6 @@ TodoWrite cross-agent.
 > Format : `## Stage N — Agent — Projet — Date [COMPLETE / IN PROGRESS / BLOCKED]`
 > Un agent ajoute son entrée en terminant son stage. **Elle se supprime** une fois le stage suivant
 > engagé — l'état durable va dans `memory/episodes/<ep>/STATUS.md`.
-
-## Stage 2 — storyboarder — Gazoduc Acte 3 (TSGP) — 2026-08-04 [COMPLETE]
-- Input : audio mesuré `out/episodes/gazoduc-aagp-tsgp/narration-p3.mp3` — 123.065760s (ffprobe),
-  LOCKED. Alignement mot-à-mot réel (forced-align ElevenLabs) `narration-NEW.alignment.json`, 2105
-  mots sur le fichier concaténé complet, offset P3 = 223.572086s.
-- Output : `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing.ts`
-- Format : 3 segments montés bout à bout (même moule que l'Acte 2 — PAS un monolithe) : A carte D3
-  tracé TSGP (2218f/73.93s), B insert sécurité JNIM/EI+Niamey (956f/31.87s), C insert paradoxe
-  Maroc/Algérie (518f/17.27s).
-- FPS : 30 | TOTAL_FRAMES contenu : 3692 (123.07s) | AUDIO_SAFETY_MARGIN_F : +9f par segment (pattern
-  Acte 2 repris à l'identique).
-- BEATS : 11 (segment A) + 12 (segment B) + 6 (segment C) frames-repères, tous vérifiés contre le
-  forced-align réel, aucun inventé.
-- Écart signalé (non bloquant) : dernier mot "conflit." se termine à 123.148s dans le forced-align,
-  82ms après la durée mesurée réelle (123.06576s) — mot légèrement clippé en fin d'audio, absorbé
-  par la marge de sécurité +9f comme sur tous les segments Acte 2.
-- Note convention : ce projet embarque normalement le timing en constantes inline PAR fichier de
-  scène (pas de timing.ts centralisé) — ce fichier séparé est un contrat pré-code explicite,
-  à copier/adapter dans les 3 fichiers de scène lors du codage (pas à importer tel quel si ça
-  casse la convention existante du projet).
-- Status : READY FOR STAGE 3 (da-brief-gate puis code des 3 composants — remotion-composer).
 
 ## Stage 2 — storyboarder — Soudan Short — 2026-08-01 [COMPLETE]
 - Input : audio mesuré `public/_shared/audio/soudan-short/narration-v1-pauses-v2.mp3` — 111.337506s
