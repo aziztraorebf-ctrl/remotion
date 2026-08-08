@@ -26,6 +26,36 @@
 
 ---
 
+## ⭐⭐ NOUVEAU CHANTIER OUVERT 2026-08-08 SOIR — MiniMax H3 via Comfy Cloud (self-host gratuit)
+
+**Découverte de session** : H3 open-weight tourne gratuitement (inclus abonnement, ~$1.46 pour 11
+clips/110s ce soir) via Comfy Cloud MCP — 5-23x moins cher que Seedance 2.0 pour un résultat
+comparable, si le prompt est écrit avec la même rigueur que Seedance (voir découverte clé ci-dessous).
+Setup + détails complets : `memory/tools/minimax.md` § Comfy Cloud (tout en haut du fichier).
+
+**⭐⭐⭐ Découverte clé** : le laxisme du prompt (pas H3 lui-même) est la cause des hallucinations et
+désynchronisations observées. Toujours passer par l'agent `visual-producer` (discipline Seedance
+2.0 : séquençage temporel par tranches + clause négative répétée + décor verrouillé) plutôt que
+composer un prompt H3 à la volée — prouvé en A/B sur la scène Sonjata (bâton halluciné disparu,
+timing dramatique respecté à la seconde près une fois le prompt rigoureux).
+
+**Prochaine session — 4 pistes proposées, par ordre d'impact** :
+1. Style Sonjata/papercraft sur un ENCHAÎNEMENT de 2-3 scènes du même arc narratif (pas un clip
+   isolé) — test le plus proche de l'objectif réel "héros oubliés" abandonné pour coût Seedance.
+2. Isoler la réaction de foule (nommer 1-2 personnages précis, pas "the crowd" en bloc) — la
+   réaction collective simultanée reste jugée "un peu exagérée" même sur le prompt rigoureux.
+3. Tester la génération d'IMAGE pure via H3/Comfy Cloud (pas juste l'animation) — pourrait remplacer
+   une partie du pipeline Gemini/Recraft pour ce style, dans le même écosystème gratuit.
+4. Cohérence de personnage à travers 2 générations séparées (chaîner : dernière frame du clip N
+   comme référence du clip N+1) — répond à la question Flux 3 vs H3 explorée en début de session,
+   avec un vrai test au lieu d'une hypothèse théorique.
+
+Assets déjà utilisés pour les tests : image `panel1-surcharge-source.png` (Flowdesk), `p1-couloir-
+file.jpg` (NoteShield), `scene2-humiliation-v2-13s.mp4`/frame extraite (Sonjata) — le projet Sonjata
+complet (28 clips papercraft) vit dans `public/assets/sonjata-papercraft/clips/`.
+
+---
+
 ## ⭐⭐ GAZODUC ACTE 3 (TSGP) — À TRANCHER EN PRIORITÉ
 
 Rendu v2 corrigé après DA-brief critique, lien

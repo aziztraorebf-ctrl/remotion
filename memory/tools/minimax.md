@@ -1,15 +1,217 @@
 # Minimax — Guide complet (Music + TTS + H3 image-to-video)
 
-> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3)
+> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3 API fal.ai) + 2026-08-08 (H3 open-weight via Comfy Cloud MCP)
 > Endpoint musique : `fal-ai/minimax-music/v2.6`
 > Endpoint TTS : `fal-ai/minimax/speech-2.8-hd` (validé 2026-05-24)
 > **Note** : consulter ce fichier AVANT tout appel Minimax
 
-## ⭐ MiniMax H3 — image-to-video (produit DISTINCT, validé 2026-08-06)
+## ⭐⭐ MiniMax H3 via Comfy Cloud (open-weight, INCLUS DANS L'ABONNEMENT, validé 2026-08-08) — PRÉFÉRER À L'API fal.ai
+
+> Découverte de session : H3-Base (le modèle sous-jacent, pas juste le wrapper API) est **open-weight
+> depuis début août 2026** et tourne sur Comfy Cloud (`cloud.comfy.org`) via un plugin Claude Code
+> officiel. Coûte ~1.30$/5s sur fal.ai (section ci-dessous) pour EXACTEMENT le même modèle self-hosted
+> ici, sans surcoût par génération. **Toujours essayer cette voie en premier**, garder fal.ai en
+> fallback si Comfy Cloud est down/saturé.
+>
+> ⚠️ **CORRECTION (2026-08-08, même session) : "0 crédit" ≠ gratuit, c'est "inclus dans l'allocation
+> d'heures GPU mensuelle du forfait".** `estimate_credits` affiche 0 pour la variante open-weight (pas
+> de surcoût crédits *au-delà* du forfait), mais le job consomme du vrai temps GPU décompté du
+> forfait — confirmé via `get_usage_report` : $0.173 dépensés sur nos 4 premiers tests (~$0.043/clip
+> en moyenne, clips 8-15s), catégorie "GPU Hours Product". **Le vrai mécanisme de facturation** :
+> 0.39 crédit/seconde de GPU actif → Standard (4200 créd./mois) ≈ **4.4h de GPU/mois**, Creator (7400
+> créd./mois) ≈ **7.7h/mois**. Reste très avantageux vs fal.ai (~26x moins cher au clip), mais ce
+> n'est PAS un puits sans fond — surveiller la conso cumulée si beaucoup de tests s'enchaînent.
+> Détail limite technique (pas liée à ce budget) : **30 min max par exécution unique** (1h sur Pro),
+> job annulé automatiquement au-delà — sans rapport avec l'allocation mensuelle, aucun de nos tests
+> n'en a approché la moitié.
+
+### ⭐⭐ Prototypage rapide multi-variantes EN PARALLÈLE (validé 2026-08-08)
+Envoyer **plusieurs appels `run_template` dans le même message** (pas un `for` séquentiel) — les jobs
+tournent en parallèle côté serveur Comfy Cloud, récupérables tous en même temps ensuite. Testé : 3
+variantes de prompt (même image de référence, seed différent par variante) sur la scène pêcheur,
+lancées ensemble, toutes complétées en ~1 cycle d'attente au lieu de 3 séquentiels. **Usage
+recommandé** : tester 3-4 directions de prompt/mise en scène sur la MÊME image avant de committer à
+une version — le coût marginal par variante (~$0.04) rend ce prototypage quasi négligeable comparé à
+la valeur de voir plusieurs options avant de choisir.
+⚠️ `submit_batch` (l'outil batch officiel, un seul appel groupé) a échoué 2x sur ce test précis
+(`validation.schema` avec le JSON complet du template R2V, 23 nodes) — probablement un format
+attendu différent pour le workflow imbriqué en item de batch, pas creusé plus (JSON trop volumineux
+pour itérer à l'aveugle). **La méthode qui marche à coup sûr : plusieurs `run_template` en un seul
+message, pas `submit_batch`.** À revisiter si `submit_batch` devient nécessaire pour un vrai gros lot
+(20+ variantes).
+
+### ⭐ Comportement d'interprétation créative fidèle au DESIGN de l'objet, pas au verbe littéral
+Sur un test "la barrière se ferme brusquement" (scène NoteShield, objet de référence = tube lumineux
+cyan continu, PAS une barrière mécanique articulée) : H3 n'a pas produit de mouvement mécanique de
+fermeture — il a plutôt **éteint la lumière du tube** pour signifier "bloqué/accès refusé". Résultat
+jugé par Aziz comme un succès partiel, pas un échec : la marche/réaction de surprise fonctionnent,
+seul le verbe "se ferme" a été réinterprété selon la logique visuelle de l'objet réellement dessiné
+dans l'image de référence (pas d'articulation mécanique visible = pas de mouvement mécanique inventé).
+**Leçon prompt** : si un comportement mécanique précis est requis sur un objet dont le design ne le
+suggère pas visuellement, le décrire de façon plus explicite et littérale ("the light bar physically
+drops down") plutôt que d'utiliser un verbe générique ("closes/shuts") laissé à l'interprétation du
+modèle.
+
+### ⭐⭐⭐ DÉCOUVERTE MAJEURE — prompt laxiste = cause racine des échecs H3, pas le modèle (2026-08-08)
+Test A/B contrôlé, même image de référence (Sonjata scene2-humiliation), même durée (10s), même
+mouvement demandé (le jeune Sundiata se relève) — SEULE variable changée : la rigueur du prompt.
+
+**Prompt A (laxiste, écrit vite par Claude)** : mentionnait "gripping a wooden staff that appears in
+his hands" — un bâton **halluciné dès la conception du prompt**, pas un artefact H3. Résultat :
+bâton halluciné apparaît quasi immédiatement (~4s sur 10s), et **toute la foule (8 personnages)
+réagit en choc collectif et simultané dès ~6.6s**, AVANT que le garçon ait visiblement fini de se
+lever — la réaction précède la cause, désynchronisation dramatique complète.
+
+**Prompt B (rigoureux, composé par l'agent `visual-producer` avec sa discipline Seedance 2.0)** :
+séquençage strict par tranches de 2s ("0-2s: head slowly rises... 2-4s: back begins to
+straighten... 4-6s: plants one foot... 6-8s: rises fully... 8-10s: stands upright"), **clause
+négative répétée et explicite** ("NO staff, NO cane, NO stick... His hands are empty throughout" +
+un bloc final "STRICT NEGATIVE: no staff, no cane, no crutch, no stick, no spear, no walking aid,
+no weapon..."), décor verrouillé explicitement ("Nothing changes in the environment: same X, same Y,
+same Z..."), et foule cadrée en mouvement minimal ("static feet, no walking, no repositioning").
+Résultat : **zéro bâton, zéro morphing, timing respecté à la seconde près (vérifié par Aziz), foule
+qui ne réagit qu'au bon moment**, respiration lourde du personnage pendant l'effort — comparaison
+frame-par-frame confirme le contraste (voir captures scratch de session, non conservées).
+
+**Conclusion actionnable, la plus importante de la session** : **le vrai levier de qualité H3 n'est
+PAS le modèle, c'est la discipline d'écriture du prompt** — exactement le même principe que Seedance
+2.0. Un prompt "one-shot" écrit vite (quelques phrases descriptives) produit des hallucinations et
+une désynchronisation du timing dramatique. Un prompt structuré avec (1) séquençage temporel explicite
+par tranches, (2) clause négative répétée pour tout élément à NE PAS faire apparaître, (3) décor
+verrouillé explicitement, (4) sujets de réaction nommés précisément (pas "the crowd" en bloc si un
+contrôle fin est voulu) élimine la quasi-totalité des défauts observés sur les tests précédents de
+cette même session (Flowdesk, Pêcheur, NoteShield 1er essai — tous avec des prompts plus courts/lâches).
+
+**⭐ Pour toute future génération H3 avec un enjeu narratif précis** : **toujours passer par l'agent
+`visual-producer`** (pas composer le prompt soi-même à la volée) — il applique déjà la discipline
+Seedance 2.0 (mots-rouges-verts, granularité micro-moment, clause négative) documentée dans
+`.claude/agents/visual-producer.md` et `memory/tools/seedance-rules.md`/`seedance-prompts.md`, et ces
+mêmes principes se transfèrent directement à H3 malgré les deux étant des modèles différents.
+Piste à creuser : isoler quel(s) personnage(s) précis doit réagir plutôt que "the crowd"/"the group"
+en bloc — Aziz a noté que la réaction collective simultanée reste "un peu exagérée" même sur le
+prompt B, hypothèse que H3 a un biais à intensifier une réaction de groupe non individualisée.
+
+### Setup (déjà fait sur ce repo, one-time)
+```
+claude plugin marketplace add Comfy-Org/comfy-skills
+claude plugin install comfy-cloud@comfy-skills
+/mcp   # sélectionner comfy-cloud → Authenticate (flow OAuth navigateur)
+```
+Auth OAuth par session Claude Code (pas de clé API statique dans `.mcp.json` — tenté puis abandonné,
+le serveur MCP exige OAuth, voir `auth_state` via `get_server_info`). Après authentification, 39
+outils MCP disponibles (`mcp__claude_ai_Comfy_Cloud_MCP__*` ou nom équivalent selon la session).
+
+### Workflow validé (T2V et R2V)
+1. `search_templates(q: "MiniMax H3")` → 2 familles par tâche : `video_minimax_h3_*` (open-weight,
+   **0 crédit**) vs `api_minimax_h3_*` (repasse par l'API MiniMax hébergée, ~136 crédits/génération
+   sur le forfait mensuel — réservé au 2K/Context-IR non open). **Toujours choisir la variante SANS
+   préfixe `api_`** pour l'usage gratuit.
+2. `estimate_credits(template_name: ...)` AVANT de lancer — confirme 0 crédit pour la variante open.
+3. Pour R2V (image de référence) : `upload_file(file_path: <chemin local>)` → renvoie une commande
+   `curl PUT` à exécuter via Bash (pas d'upload direct par l'outil) → renvoie un `name` (ex.
+   `abc123....jpg`) à réutiliser comme valeur du node `LoadImage`.
+4. `run_template(name, input_overrides, wait_for_output: true, client_os: "darwin")`. **Ne PAS
+   utiliser le prompt par défaut du template T2V** — buggé (mismatch de type INT/STRING sur le node
+   `MiniMaxH3ImageToVideo`, erreur `return_type_mismatch`). Toujours override le node prompt avec son
+   propre texte.
+5. Si le job dépasse la fenêtre inline (~25s, cas fréquent pour R2V/15s) : `wait_for_job(prompt_id)`
+   en boucle jusqu'à `status: "succeeded"` (aucun sleep manuel — l'outil bloque ~25s par appel).
+6. `get_output(prompt_id, client_os, inline_urls: true)` → URL signée temporaire (Google Cloud
+   Storage, ~6h) + commande curl prête à l'emploi. Télécharger avec `curl -sL`, puis upload
+   `scripts/tools/upload-to-blob.py` pour partager avec Aziz (règle upload standard du projet).
+
+### Node IDs du template R2V (`video_minimax_h3_r2v`) — pour `input_overrides`
+- **137** : `LoadImage`, champ `image` = le `name` retourné par `upload_file` (1re référence)
+- **138** : `PrimitiveStringMultiline`, champ `value` = le prompt (référencer l'image par
+  `<Picture 1>` dans le texte — la doc du template le confirme, ordre de connexion = ordre des tags)
+- **132** : `PrimitiveFloat`, champ `value` = durée en secondes (voir limite d'arrondi ci-dessous)
+- **139** : 2e slot `LoadImage` optionnel (ref_image_1) — **⚠️ contient par défaut une image de
+  démo sans rapport** ("mecha_dragon_lightning.png" observé) ; si non utilisé, écraser ou ignorer
+  mais noter comme facteur de confusion possible si le résultat dérive un peu du prompt.
+- Template T2V (`video_minimax_h3_t2v`) : mêmes principes, node prompt = **104** (`prompt` input).
+
+### Durée réelle vs durée demandée
+H3 arrondit la durée à sa grille interne (multiples de 17 frames à 24fps, cf `ComfyMathExpression`
+dans le JSON du template : `max(5, round(a*24)) + (5 - (max(5,round(a*24))%17))%17`). Observé :
+demander `10` → obtenu `8.0s` ; demander `15` → obtenu `15.08s` (pile la borne haute annoncée du
+modèle). **Ne pas viser une durée exacte, viser une fourchette** — 15s semble être le point
+d'arrondi le plus fiable pour un "plein format".
+
+### Résultat qualité — test Flowdesk panel1 (15s, image source `panel1-surcharge-source.png`)
+Verdict Aziz (2026-08-08), séquence 5 beats d'action distincts sur 15s (tape → se frotte les yeux →
+recul fatigué/soupir → mains sur le visage → reprend) : **« parfaitement tenu du début à la fin,
+aucun morphing, aucun artefact bizarre, le dessin reste parfaitement juste »**. Points forts
+observés :
+- **Continuité de style totale sur 15s** (3x la durée testée en 2026-08-06 sur fal.ai) — pas de
+  drift même après 8-10s, zone où beaucoup de modèles vidéo décrochent.
+- **Compréhension physique implicite** : quand le personnage s'appuie en arrière, la chaise bouge
+  avec son poids — cohérence physique non scriptée explicitement dans le prompt.
+- **Mains à 5 doigts sans artefact**, y compris en contact avec le visage (zone classiquement
+  fragile pour la génération vidéo IA).
+- Seul point faible : **le SFX généré ne convient pas** (bruit de barrière/pas jugé "bizarre" sur un
+  autre test le même jour, NoteShield). ⭐ Parade déjà identifiée : le mix descend de toute façon la
+  vidéo générée avec le son coupé et remplace par nos propres SFX/narration — non bloquant.
+
+### R2V validé aussi sur NoteShield (2026-08-08)
+Image source `src/projects/_client-sim/noteshield/refs/p1-couloir-file.jpg` (foule stick-figure
+devant barrière), consigne "la foule marche calmement au lieu de courir" → résultat conforme,
+style maintenu, mouvement cohérent. Confirme que R2V respecte fidèlement des consignes de
+**changement de comportement** par rapport à une vidéo de référence existante (pas seulement
+anime une image statique).
+
+### ⭐⭐ R2V validé sur le cas "réputé difficile" : PecheurSurpeche16x9 (2026-08-08)
+Test ciblé sur la scène jugée la plus exigeante à ce jour (bateau + geste répétitif de lancer de
+filet + action fine main→panier), après un échec Seedance antérieur sur la même scène (cf commentaire
+code `PecheurSurpeche16x9.tsx` ligne 224-227, frame de référence prévue précisément pour ce test).
+Image source : frame Remotion rendue via `npx remotion still RND-PecheurSurpeche16x9 --frame=N`.
+
+**Verdict Aziz — concluant, malgré 3 défauts mineurs identifiés :**
+- ✅ Style (ink/hachures) tenu du début à la fin, cohérence globale de la scène.
+- ✅ Geste de lancer du filet crédible, poissons récupérés du filet, **déposés dans le panier de
+  façon visible** (un objet ajouté au panier après le geste) — c'était le point le plus incertain
+  du test (action fine, petit objet, cible précise).
+- ✅ Le bateau prend un léger mouvement de tangage haut/bas (non demandé explicitement dans le
+  prompt, mais cohérent/bienvenu — hypothèse : dérivé implicitement de "boat gently rocking" dans
+  le prompt testé, à vérifier si reproductible sans cette clause).
+- ⚠️ Petits morphings localisés à deux moments : quand la main sort le poisson du filet, et quand
+  la tête tourne vers le panier. Jugé par Aziz comme un défaut **récurrent tous générateurs
+  vidéo confondus** sur ce style de dessin précis (hypothèse : pas spécifique à H3, plutôt une
+  limite générale sur les mains/rotations fines en style ink/SVG-like) — pas un rejet de H3.
+
+**⭐⭐⭐ Découverte comportementale clé — H3 est LITTÉRAL, il ne corrige pas les défauts de l'image
+source :**
+- Sur l'image de référence utilisée, les pieds du personnage flottent légèrement au-dessus du
+  bateau (défaut de positionnement du rig SVG d'origine, pas du contact sol parfaitement calé) —
+  **H3 a reproduit fidèlement ce décalage plutôt que de le corriger**. Comportement observé
+  cohérent avec le reste de la scène : fond figé (soleil, nuages, océan restent quasi-statiques,
+  seule une fine ligne d'eau bouge) — **H3 anime précisément ce que le prompt décrit et laisse le
+  reste de l'image tel quel**, plutôt que d'improviser du mouvement ambiant non demandé.
+- **Implication directe pour la prod** : soigner la précision géométrique de l'image de référence
+  AVANT l'appel H3 (contact pieds/sol, alignement objets) — ne pas compter sur le modèle pour
+  "corriger au passage" un défaut de positionnement SVG. Hypothèse d'Aziz (non testée) : un modèle
+  comme Seedance pourrait corriger ce genre de défaut automatiquement — à vérifier si comparaison
+  utile un jour, mais pas prioritaire vu le résultat global H3 déjà jugé concluant.
+
+**⚠️ Gotcha méthode (pas H3, erreur de sélection de frame)** : la frame de référence choisie pour ce
+test était en plein milieu d'un cycle narratif (après le 1er lancer de filet dans la composition
+Remotion d'origine, `cast1WindUp=60` → frame choisie 220 → `cast1Hold=260`), donc l'image contenait
+déjà 3 poissons visibles dans l'eau et les éclaboussures du 1er lancer AVANT même le lancer généré
+par H3. Résultat : la vidéo générée semble démarrer avec "des poissons déjà là avant le lancer" —
+ce n'est pas un artefact H3, c'est un choix de frame de référence imprécis. **Pour un test propre
+"scène qui démarre de zéro" : choisir une frame AVANT le début du geste (`frame < T.cast1WindUp`,
+donc < 60), jamais une frame en plein cycle narratif.**
+
+---
+
+## MiniMax H3 — image-to-video via API fal.ai (payant, validé 2026-08-06)
 
 ⚠️ Ne pas confondre avec Minimax Music/TTS ci-dessous — H3 est un modèle **vidéo**, sorti fin
 juillet/début août 2026, testé pour la première fois sur le projet Flowdesk (_client-sim, registre
 personne/émotion, panneaux "Chaos" et "Bascule" — voir `src/projects/_client-sim/flowdesk/`).
+**Depuis le 2026-08-08, préférer la voie Comfy Cloud ci-dessus (même modèle, gratuit)** — garder
+cette section pour le fallback si Comfy Cloud est indisponible, ou pour le tier 2K/Context-IR
+non-open (variantes `api_minimax_h3_*` sur Comfy Cloud consomment aussi des crédits, donc revenir
+ici reste équivalent en coût si le 2K est strictement nécessaire).
 
 - **Endpoint** : `minimax/h3/image-to-video` (fal.ai)
 - **Coût observé** : ~$1.30 pour 5s de vidéo en 2K
@@ -29,7 +231,8 @@ personne/émotion, panneaux "Chaos" et "Bascule" — voir `src/projects/_client-
   pour le même personnage (risque de dérive visuelle, le personnage ne se ressemble plus d'un
   plan à l'autre). Tranché explicitement par Aziz sur NorthShield (2026-08-07, personnage Sarah
   sur 3 plans). H3 est *image-to-video* (pas un prompt texte pur comme Seedance) : l'image de
-  référence doit être générée en amont (Gemini/Recraft) avant tout appel H3.
+  référence doit être générée en amont (Gemini/Recraft) avant tout appel H3. Vaut aussi pour la
+  voie Comfy Cloud ci-dessus (le paramètre R2V `ref_images` fonctionne identiquement).
 - Choisi pour son coût (le moins cher testé pour ce registre personne/émotion à date) — pas
   verrouillé : tester d'autres générateurs vidéo (Seedance, etc.) si H3 échoue sur un cas donné.
 
