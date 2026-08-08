@@ -147,11 +147,14 @@ dans le vide.
 réussite de la sécurité est son invisibilité.
 
 **REPRÉSENTATION** : Plan filmé (MiniMax H3) — Sarah à son bureau, plan large ou mi-plan, geste
-naturel bref (elle tape, elle ouvre son laptop), PAS de gros plan visage prolongé (évite tout
-risque d'expression figée ou de lip-sync inutile — elle n'a aucune ligne de dialogue). Pull-back
-caméra (dans le plan H3 si le mouvement de caméra est crédible en une seule génération, sinon
-raccord vers notre `LaptopMockup` existant côté Remotion) qui révèle son écran, où le dashboard
-`DashboardScreen riskCase="low"` apparaît, ligne Sarah illuminée en vert, score 18.
+naturel bref (elle tape, elle sourit légèrement), PAS de gros plan visage prolongé (évite tout
+risque d'expression figée ou de lip-sync inutile — elle n'a aucune ligne de dialogue). **Écran du
+laptop volontairement flou/hors-focus ou hors-cadre dans le plan H3** (décision Aziz 2026-08-07 :
+un modèle vidéo qui doit à la fois animer un personnage ET rendre un écran lisible risque
+d'halluciner un écran blanc ou un UI générique inventé — même piège que le texte généré dans un
+plan vidéo, déjà proscrit). Le plan H3 reste centré sur Sarah uniquement. Cut (pas de pull-back
+caméra complexe) vers notre `LaptopMockup`/`DashboardScreen riskCase="low"` React existant, qui
+seul affiche l'écran réel : ligne Sarah illuminée en vert, score 18.
 
 **Pourquoi ce choix** : c'est le maillon HUMAN qui manquait entièrement dans la Direction B —
 directement identifié par Aziz comme la vraie cause du problème ("ça manque de l'incarner").
@@ -172,25 +175,40 @@ friction perçue par l'utilisatrice.
 
 ## P6 — Berlin : l'anomalie (~44s → ~59.5s, ~15.5s)
 
-**INFORMATION** : Même personne, contexte incompatible — le contexte décide, pas l'identité.
+**INFORMATION** : Même COMPTE, personne différente — le contexte/comportement décide, pas
+la déclaration d'identité.
 
-**REPRÉSENTATION** : INCHANGÉ dans sa mécanique vs la v2 déjà codée (`P5DashboardMorphBosse.tsx`)
+> ⛔ **Correction 2026-08-07 (retour Aziz, après visionnage du plan H3 initial)** : la version
+> précédente de ce panneau ("même personne, contexte incompatible") demandait de montrer
+> **Sarah elle-même** à Berlin — exécuté tel quel en H3, mais Aziz a signalé à juste titre que
+> ça n'a AUCUN sens logique (Toronto→Berlin en 3h = impossible) et contredit le script lui-même,
+> qui dit explicitement "**même compte**, un appareil inconnu" — PAS "Sarah se reconnecte
+> ailleurs". Le mécanisme produit réel est : quelqu'un d'AUTRE utilise les identifiants de
+> Sarah. Montrer Sarah physiquement à Berlin brouille ce message. Corrigé ci-dessous.
+
+**REPRÉSENTATION** : Mécanique dashboard INCHANGÉE vs la v2 déjà codée (`P5DashboardMorphBosse.tsx`)
 — cascade de champs avec transition floutée (pas de cut binaire), score qui grimpe visiblement
 18→82, plan serré sur la ligne de vigilance avec bosse rouge tenue ~1.4s (corrige explicitement
 le défaut "je n'ai même pas vu le pic"), retour dashboard, encart téléphone, curseur qui confirme.
-Seul ajout : un bref plan MiniMax H3 (même référence Sarah) en ouverture du panneau — un contexte
-visuel très court (elle est ailleurs, différent de son bureau habituel — pas besoin de "Berlin"
-littéral, juste un cadre différent) avant de basculer sur le dashboard qui porte toute la tension.
+Plan MiniMax H3 en ouverture du panneau : **un personnage DIFFÉRENT de Sarah** (registre neutre,
+banal, même style flat/palette, PAS de mise en scène suspecte — ni hoodie, ni geste furtif, ni
+éclairage dramatique — la menace doit se lire dans le CONTRASTE avec Sarah et dans le dashboard
+qui grimpe, pas dans le personnage lui-même) à un bureau/poste quelconque, différent du bureau de
+Sarah — avant de basculer sur le dashboard qui porte toute la tension.
 
-**Pourquoi ce choix** : c'est la partie de notre travail qui fonctionnait déjà bien selon notre
-propre vérification (mouvement continu, bosse enfin visible, curseur acteur) — on ne la jette
-pas, on l'ancre juste avec un instant d'incarnation en ouverture pour rester cohérent avec P5.
+**Pourquoi ce choix** : fidèle au texte ("même compte, appareil inconnu") et au mécanisme produit
+réel (détection par comportement/appareil, pas par visage) — évite la confusion narrative du plan
+initial tout en gardant l'ancrage humain qui a motivé le pivot vers la V3 (ce n'est plus Sarah,
+mais reste une scène humaine incarnée, pas un retour à l'abstraction pure).
 
-**MEDIUM** : MiniMax H3 (plan bref, même référence Sarah) + `DashboardScreen`/SVG existants
-(code déjà vivant, aucun changement nécessaire).
+**MEDIUM** : MiniMax H3 (plan bref, NOUVELLE référence image — personnage distinct de Sarah,
+même registre visuel) + `DashboardScreen`/SVG existants (code déjà vivant, aucun changement
+nécessaire).
 
-**SEMANTIC TEST (cible)** : "Même personne, ailleurs ; son score grimpe en rouge, une vérification
-est demandée." → Contexte anormal détecté, réponse proportionnée, pas de panique.
+**SEMANTIC TEST (cible)** : "Quelqu'un d'autre, ailleurs, utilise les mêmes identifiants ; le
+score grimpe en rouge, une vérification est demandée." → Le système détecte l'anomalie de
+comportement/contexte, pas une usurpation d'identité visuelle — réponse proportionnée, pas de
+panique.
 
 ---
 

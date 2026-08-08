@@ -13,6 +13,7 @@
 |---|---|---|---|---|---|
 | `gemini-video-review-custom.py <video> <brief.txt> <out.md>` | Gemini 3.1 Pro (Files API) | 1 vidéo full (pas de downscale) | Review 1 vidéo, **brief LIBRE** (fichier) | ✅ OUI (3e arg) | ✅ corrigé 2026-07-19 |
 | `gemini-video-da-brief.py <video> [--out]` | Gemini 3.1 Pro | 1 vidéo full | DA-brief à brief HARDCODÉ (câblé Sénégal) — non générique | ❌ non | ✅ corrigé 2026-07-19 |
+| `da-brief-video-3voix.py --brief <f> --label <l> --video <v> --frame <f1> --frame <f2>...` | **3 voix en parallèle** : Gemini 3.1 Pro (vidéo native) + Kimi K2.5 (vidéo native, API Moonshot directe) + GPT-5.6 Sol (frames denses, vidéo refusée par OpenRouter) | 1 vidéo (Gemini/Kimi) + N frames (GPT) | Breakdown 3 voix avec les **6 angles obligatoires** (spectateur lambda, narration/synchro, transitions vs états, AI-slop, expert du métier) injectés automatiquement dans TOUS les briefs | ✅ (`--brief` fichier libre, angles ajoutés en plus) | ✅ déjà (import force_ipv4) |
 | `da-compare.py --ref <A> --new <B> ...` | Gemini 3.1 Pro | 2 vidéos | COMPARATIF (temps 1 downstream) : réf-qui-marche vs nouveau | template | ✅ avait déjà |
 | `kimi-video-compare.py --ref <A> --new <B> --label L [--question Q] [--max-tokens N]` | Kimi K2.5 (Moonshot NATIF, base64) | 2 vidéos 720p | Équivalent Kimi du comparatif ; `--question` = brief libre | ✅ (`--question`) | ✅ natif (l.18) |
 
@@ -33,6 +34,14 @@
   comparaison, review cette scène". Prouvé 2026-07-19 (review globe D3).
 - **Bug 16:9 Kimi** : le bug safe-zone-vertical touche `visual_review.py --model kimi` (frames), PAS
   `kimi-video-compare.py`. Mais sur du 16:9, écarter tout retour Kimi parlant de "safe-zone mobile / UI verticale".
+- **`da-brief-video-3voix.py` : ne PAS utiliser `gemini-video-review-custom.py` avec un brief ad hoc** pour un
+  breakdown "riche" — ce dernier n'injecte AUCUN des 6 angles obligatoires (spectateur lambda/narration/
+  transitions/AI-slop/expert), il faut les écrire à la main dans le brief à chaque fois. `da-brief-video-3voix.py`
+  les injecte automatiquement (constaté 2026-08-08 : breakdown Gemini "nu" très inférieur à GPT-5.6 Sol sur la
+  même vidéo, uniquement parce que GPT a reçu les angles via ce script et pas Gemini via l'autre). **Par défaut**
+  le bloc EXPERT est générique (`EXPERT_BLOCK_EXTERNAL_REF`, pour toute référence externe déjà finie — portfolio
+  Fiverr, concurrent, etc.) — passer `--cartographic-upstream` UNIQUEMENT pour un prototype interne Souverain
+  16s→84.68s (sinon le modèle hallucine une extension cartographique hors-sujet, vu sur un test MOCH-IT/feel-good).
 
 ## Commande type — review 1 scène 16:9 sans storyboard (les 2 en parallèle)
 

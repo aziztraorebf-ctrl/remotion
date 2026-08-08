@@ -624,6 +624,12 @@ ici reste équivalent en coût si le 2K est strictement nécessaire).
   sur 3 plans). H3 est *image-to-video* (pas un prompt texte pur comme Seedance) : l'image de
   référence doit être générée en amont (Gemini/Recraft) avant tout appel H3. Vaut aussi pour la
   voie Comfy Cloud ci-dessus (le paramètre R2V `ref_images` fonctionne identiquement).
+- **⭐ Gotcha "objet mécanique sans articulation visible" (barrière, levier, interrupteur)** :
+  détail complet + exemples avant/après dans `.claude/agent-memory/visual-producer/GOTCHAS-TOOLS.md`
+  — en résumé, un verbe d'impact seul ("stops abruptly", "closes abruptly") produit un clip figé
+  ou un simple changement de lumière, PAS de mouvement mécanique ; il faut comparer explicitement
+  à un objet mécanique réel connu ("swinging down fast like a real parking-lot barrier arm") pour
+  que H3 improvise une trajectoire physique cohérente.
 - Choisi pour son coût (le moins cher testé pour ce registre personne/émotion à date) — pas
   verrouillé : tester d'autres générateurs vidéo (Seedance, etc.) si H3 échoue sur un cas donné.
 

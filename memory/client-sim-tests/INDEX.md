@@ -20,18 +20,15 @@
   [STATUS](../episodes/_client-sim/flowdesk/STATUS.md).
   Code : `src/projects/_client-sim/flowdesk/`.
 
-## Test en cours — pivot vers un storyboard incarné (2026-08-07)
-
-- ⭐⭐⭐ **NorthShield (SaaS cybersécurité, scoring de risque de connexion).** Objectif testé :
-  HUMAN + SYSTEM + PRODUCT. **Direction B pure (100% abstraite) codée en v1 puis v2 (motion
-  corrigé après rejet unanime d'un jury à 4 modèles) — mais REJETÉE SUR LE FOND par Aziz après
-  visionnage v2** : le flux P1 reformule le cliché "pluie de données" interdit par le brief, et
-  l'absence d'incarnation humaine viole la chaîne HUMAN→SYSTEM→PRODUCT. **Pivot décidé : storyboard
-  V3 mixte** (Direction A incarnée + Direction B mécanisme + apports d'un storyboard GPT externe),
-  personnage Sarah en MiniMax H3 (pas SVG). Détail complet + code v2 réutilisable :
-  [STATUS](../episodes/_client-sim/noteshield/STATUS.md). Storyboard à coder la prochaine
-  session : [STORYBOARD-V3-MIX-INCARNE](noteshield/STORYBOARD-V3-MIX-INCARNE.md).
-  Brief client original : [BRIEF-CLIENT](noteshield/BRIEF-CLIENT.md).
+- ⭐⭐⭐ **NorthShield (SaaS cybersécurité, scoring de risque de connexion) — CLOS 2026-08-08.**
+  Objectif testé et ATTEINT : HUMAN + SYSTEM + PRODUCT. Parcours : Direction B pure (100%
+  abstraite) codée v1→v2, REJETÉE SUR LE FOND (cliché "pluie de données" + zéro incarnation
+  humaine) malgré motion corrigé → pivot storyboard V3 mixte (incarnation MiniMax H3 + mécanisme
+  SVG existant) → 1er montage 7 panneaux → retour détaillé Aziz → refonte 5 panneaux (deltas
+  visibles P4, pattern disque/anneau Flowdesk P5/P6, VirtualCursor intégré, bug laptop corrigé)
+  → validé "la v3 est bonne". Livrable : `out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`.
+  Détail complet : [STATUS](../episodes/_client-sim/noteshield/STATUS.md).
+  Conclusions stratégiques transversales : pas encore écrites (à faire, cf modèle Flowdesk).
 
 ## Méthode standard pour tout nouveau test client-sim
 

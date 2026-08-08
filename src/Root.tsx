@@ -494,7 +494,7 @@ import { FlowdeskAbstraitV4, FLOWDESK_V4_FRAMES, FLOWDESK_V4_FPS } from "./proje
 import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } from "./projects/_client-sim/flowdesk/FlowdeskPersonne2B";
 import { DashboardLowRiskStill, DashboardHighRiskStill, DashboardLowRiskLaptopStill, DashboardHighRiskLaptopStill, NS_DASHBOARD_FRAMES, NS_DASHBOARD_FPS } from "./projects/_client-sim/noteshield/ui/DashboardScreenStill";
 import { CursorTestComp, NS_CURSOR_TEST_FRAMES, NS_CURSOR_TEST_FPS } from "./projects/_client-sim/noteshield/ui/CursorTestComp";
-import { NorthShieldDirectionB, NS_DIRECTION_B_FRAMES, NS_DIRECTION_B_FPS } from "./projects/_client-sim/noteshield/direction-b/NorthShieldDirectionB";
+import { NorthShieldV3, NS_V3_FRAMES, NS_V3_FPS } from "./projects/_client-sim/noteshield/NorthShieldV3";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -4555,10 +4555,10 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="NorthShield-Direction-B"
-        component={NorthShieldDirectionB}
-        durationInFrames={NS_DIRECTION_B_FRAMES}
-        fps={NS_DIRECTION_B_FPS}
+        id="NorthShield-V3"
+        component={NorthShieldV3}
+        durationInFrames={NS_V3_FRAMES}
+        fps={NS_V3_FPS}
         width={1920}
         height={1080}
       />

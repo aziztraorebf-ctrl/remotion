@@ -36,6 +36,17 @@ PIPELINE.md ecrit ?
   9 beats, 94.96s, READY FOR STAGE 3.
 - **Soudan Short** — LOCKED 2026-08-01. `src/projects/warmap/shorts/soudan-short/timing.ts`,
   7 blocs, 111.34s, 26 beats geo-reperes, READY FOR STAGE 3 (attend adaptation GlobeRecitProto 9:16).
+- **Gazoduc Acte 3 (TSGP)** — LOCKED 2026-08-04.
+  `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Timing.ts`, 3 segments (A carte D3 2218f/
+  73.93s, B insert securite 956f/31.87s, C insert paradoxe 518f/17.27s), 123.07s total, FPS 30,
+  READY FOR STAGE 3 (da-brief-gate puis code). Decision non-evidente : ce projet embarque
+  normalement le timing en constantes inline PAR fichier de scene (BEAT_T/S()/AUDIO_SAFETY_MARGIN_F,
+  cf Acte 2) plutot qu'un timing.ts centralise — j'ai produit un timing.ts separe quand meme car
+  demande explicitement dans le brief (contrat pre-code), a copier/adapter dans les 3 fichiers de
+  scene une fois codes, PAS a importer tel quel comme source de verite permanente si ca casse la
+  convention du projet. Frontiere A/B et B/C tranchees sur la regle "jamais couper une phrase
+  pivot" (le brief donnait des reperes approximatifs qui coupaient au milieu de 2 phrases-pivot
+  distinctes) — verifie contre le forced-align reel, pas invente.
 
 ## Archives
 Peste 1347 (abandonne 2026-02-21) — voir PROJECTS.md.

@@ -116,14 +116,16 @@ Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→
 Décision finale (2A vs 2B vs hybride) EN ATTENTE d'Aziz. Source de vérité :
 `memory/episodes/_client-sim/flowdesk/STATUS.md`.
 
-### NorthShield (test client simulé) — Direction B rejetée sur le fond, pivot storyboard V3
-Hors registre Souverain. Direction B (100% abstraite) codée deux fois (v1 puis v2, motion
-corrigé après jury 4 modèles LLM) puis **REJETÉE SUR LE FOND** par Aziz (2026-08-07) : cliché
-"pluie de données" déguisé (panneau 1) + absence totale d'incarnation humaine, violant la chaîne
-HUMAN→SYSTEM→PRODUCT du brief client. **Pivot décidé : storyboard V3 mixte** (7 panneaux,
-personnage Sarah incarné en MiniMax H3, pas SVG), pas encore codé. ⚠️ Pas de branche dédiée
-(même anomalie que Flowdesk, `feat/gazoduc-acte1-hook-globe`). Source de vérité :
-`memory/episodes/_client-sim/noteshield/STATUS.md`.
+### ✅ NorthShield (test client simulé) — CLOS 2026-08-08
+Hors registre Souverain. Direction B (100% abstraite) rejetée sur le fond (2026-08-07). Storyboard
+V3 mixte codé/assemblé (7 panneaux), refondu à 5 panneaux (2026-08-08) après retour détaillé
+d'Aziz sur le 1er montage (P2/P3 supprimés, compteur P1 agrandi, deltas visibles P4, disque/anneau
+P5+P6, bug LaptopMockup `width*1.3` corrigé, curseur actif + pic d'anomalie dramatisé en P6).
+Validation Aziz directe obtenue ("la v3 est bonne") — pas de passage formel par Stage 6
+quality-reviewer, la validation humaine prime. Livrable final :
+`out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`. Améliorations mineures identifiées
+mais non traitées (trou VirtualCursor ~4s en P6, bonus P7) — décision Aziz de clore tel quel.
+Source de vérité : `memory/episodes/_client-sim/noteshield/STATUS.md`.
 
 ### 💤 Dormants
 Hannibal (Beat 2 Phase C non codée) · Xénophobie SA (gelé, gate audience) · Maroc Batteries
@@ -223,3 +225,18 @@ TodoWrite cross-agent.
   n'existe QUE sur le worktree `remotion-soudan` (branche `feat/soudan-passe-finale-6lots`), PAS sur
   master — devra être adapté au format 9:16 avant utilisation dans ce Short.
 - Status : READY FOR STAGE 3 (visual-producer/remotion-composer).
+
+(Stage 5 NorthShield V3 retiré du log — projet CLOS 2026-08-08, cf section Dormants/CLOS
+ci-dessus. Détail technique complet conservé dans `memory/episodes/_client-sim/noteshield/STATUS.md`.)
+  - P7 non touché (bonus non fait, pas de spec précise donnée par Aziz).
+- Validation : `npx tsc --noEmit` clean sur tous les fichiers touchés (2 erreurs pré-existantes
+  ailleurs dans le repo, sans lien). 1 bug d'accent trouvé et corrigé pendant le scan systématique
+  (`"Horaire coherent"` → `"Horaire cohérent"`). 29 stills ciblés rendus via
+  `.scratch-composer/render-stills.mjs`, choisis précisément sur les événements internes calculés
+  (ex. frame du punch-in dérivée de `T_VIGILANCE_CUT_IN + 0.22s`), tous inspectés visuellement.
+  Résultat : compteur P1 net, deltas P4 lisibles en transit vers le score, disque/anneau P5+P6
+  fonctionnels (chassis laptop entier visible), cascade+curseur P6 visibles tout du long, pic
+  d'anomalie désormais net (spike rouge + shockwave, frame ~1560) — corrige le défaut initial
+  "je n'ai même pas vu le pic".
+- Statut : READY FOR STAGE 6 (quality-reviewer). Dev server non lancé (validation stills ciblés
+  jugée suffisante, cf justification Option A dans RULES-ACTIVE.md pour ce projet mixte complexe).

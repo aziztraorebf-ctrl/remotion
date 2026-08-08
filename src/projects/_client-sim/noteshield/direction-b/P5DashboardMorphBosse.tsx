@@ -13,6 +13,17 @@
 // (scale + glow amplifies), et un curseur vient "confirmer" l'encart telephone en fin de
 // panneau (boucle la boucle du curseur-acteur introduit en P4). Cf
 // SCRIPT-ANIMATION-V2-SYNTHESE-JURY.md § P5.
+//
+// REFONTE 2026-08-08 (retour Aziz sur le montage 7->5 panneaux) : la bosse reste le beat
+// principal mais Aziz la trouve encore "pas assez vivante/visible" au 2e visionnage. 3 ajouts
+// SANS toucher au timing interne deja cale (T_VIGILANCE_CUT_IN/HOLD/OUT inchanges) :
+// 1. Punch-in camera (scale global tres bref) pile au sommet de la montee -- vend physiquement
+//    l'impact, pas juste le tracé qui grimpe.
+// 2. Onde de choc radiale (cercle qui s'etend et s'estompe) centree sur le pic, synchronisee sur
+//    le meme spring que la bosse -- lecture immediate meme en un coup d'oeil.
+// 3. Glow du pic pulse plus fort et plus vite pendant la tenue (au lieu d'un pulse constant
+//    discret).
+// Bug LaptopMockup CORRIGE ici aussi (`width * 1.3` -> `width * 0.8`, meme bug que P5VideoSarah).
 import React from "react";
 import { AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { DashboardScreen } from "../ui/DashboardScreen";
@@ -45,6 +56,18 @@ const T_LOCATION_START = 2.6; // le moment le plus important -> le plus de respi
 const T_SCORE_RAMP_START = 3.4;
 const T_SCORE_RAMP_END = 5.6; // score qui grimpe visiblement sur 2.2s, pas un saut instantane
 const FIELD_TRANSITION_DUR = 0.5;
+
+// Curseur actif DES LE DEBUT du plan dashboard (retour Aziz : "doit etre visible tout du long
+// du plan dashboard, pas juste apparaitre a la toute fin"). Reprend le pattern de
+// CursorTestComp.tsx (entree haut-droite -> survole une ligne de contexte -> descend vers la
+// ligne Sarah -> clique) -- MEMES coordonnees deja validees dans ce prototype (targetX=1443,
+// targetY=690 = centre du badge ActionPill, ligne Sarah highlighted dans DashboardScreen).
+const T_CURSOR_INTRO_START = 0.3;
+const T_CURSOR_HOVER_CONTEXT = 1.6; // survole d'abord une ligne de contexte (Amina T.)
+const T_CURSOR_TO_SARAH_START = 2.2;
+const T_CURSOR_TO_SARAH_ARRIVE = 3.6;
+const T_CURSOR_CLICK_SARAH = 3.6;
+const T_CURSOR_INTRO_HOLD_END = 5.2; // le curseur reste pose sur Sarah un moment, avant de s'estomper
 
 // "NorthShield le voit." : 49.559 -> 49.919s absolu -> 8.66 -> 9.02s relatif (in a 40.9s).
 const T_VIGILANCE_CUT_IN = 8.3;
@@ -134,7 +157,9 @@ export const P5DashboardMorphBosse: React.FC = () => {
     fps,
     config: { damping: 10, stiffness: 160 },
   });
-  const bosseHoldPulse = 1 + Math.sin((t - T_VIGILANCE_CUT_IN) * (Math.PI * 2) / 0.5) * 0.06;
+  // Pulse de tenue AMPLIFIE (0.06 -> 0.11, cycle 0.5s->0.38s) -- "pas assez vivante" (retour
+  // Aziz 2e visionnage) -- plus visible sans devenir un tremblement incontrolable.
+  const bosseHoldPulse = 1 + Math.sin((t - T_VIGILANCE_CUT_IN) * (Math.PI * 2) / 0.38) * 0.11;
   const bosseScale = interpolate(bosseSpring, [0, 1], [0.3, 1], clamp) * bosseHoldPulse;
   const bosseOpacity = interpolate(
     t,
@@ -142,6 +167,24 @@ export const P5DashboardMorphBosse: React.FC = () => {
     [0, 1, 1],
     clamp,
   );
+
+  // Punch-in camera : zoom bref (scale global du plan serre) pile au sommet de la montee du
+  // spring (bosseSpring proche de 1 pour la 1ere fois) -- vend physiquement l'impact plutot
+  // qu'un trace geometrique qui grimpe sans consequence visuelle sur le cadre.
+  const punchInStart = T_VIGILANCE_CUT_IN + 0.22; // le spring (damping 10) atteint son pic ~0.22s apres le declenchement
+  const cameraPunch = interpolate(
+    t,
+    [punchInStart, punchInStart + 0.1, punchInStart + 0.5],
+    [1, 1.06, 1],
+    { ...clamp, easing: (x) => 1 - Math.pow(1 - x, 2) },
+  );
+
+  // Onde de choc radiale centree sur le pic (1152,300 dans le viewBox source) -- un cercle qui
+  // s'etend et s'estompe au meme instant que le punch-in, lecture immediate meme en un coup
+  // d'oeil (retour Aziz : "je n'ai meme pas vu le pic").
+  const shockwaveProgress = interpolate(t, [punchInStart, punchInStart + 0.55], [0, 1], clamp);
+  const shockwaveRadius = 20 + shockwaveProgress * 220;
+  const shockwaveOpacity = interpolate(shockwaveProgress, [0, 0.15, 1], [0, 0.55, 0], clamp);
 
   const phoneOpacity = interpolate(t, [T_PHONE_IN, T_PHONE_IN + 0.4], [0, 1], clamp);
   const phoneSlide = interpolate(t, [T_PHONE_IN, T_PHONE_IN + 0.5], [40, 0], {
@@ -169,6 +212,47 @@ export const P5DashboardMorphBosse: React.FC = () => {
   const clicking = cursorProgress >= 1;
   const clickProgress = clicking ? interpolate(t, [T_CURSOR_CONFIRM_ARRIVE, T_CURSOR_CONFIRM_ARRIVE + 0.3], [0, 1], clamp) : 0;
 
+  // Curseur d'INTRO (nouveau) : entre en haut-droite -> survole une ligne de contexte (Amina T.,
+  // 2e ligne de contexte affichee dans DashboardScreen) -- puis descend vers la ligne Sarah
+  // (highlighted) et clique. MEMES coordonnees que CursorTestComp.tsx (deja valide visuellement).
+  const introFromX = width - 220;
+  const introFromY = 200;
+  const introHoverX = 1443; // approx colonne action, ligne de contexte au-dessus de Sarah
+  const introHoverY = 610;
+  const introSarahX = 1443;
+  const introSarahY = 690;
+
+  const introToHoverProgress = interpolate(t, [T_CURSOR_INTRO_START, T_CURSOR_HOVER_CONTEXT], [0, 1], {
+    ...clamp,
+    easing: (x) => 1 - Math.pow(1 - x, 2.4),
+  });
+  const introToSarahProgress = interpolate(t, [T_CURSOR_TO_SARAH_START, T_CURSOR_TO_SARAH_ARRIVE], [0, 1], {
+    ...clamp,
+    easing: (x) => 1 - Math.pow(1 - x, 2.4),
+  });
+
+  let introCx = introFromX;
+  let introCy = introFromY;
+  if (t < T_CURSOR_TO_SARAH_START) {
+    introCx = introFromX + (introHoverX - introFromX) * introToHoverProgress;
+    introCy = introFromY + (introHoverY - introFromY) * introToHoverProgress;
+  } else {
+    introCx = introHoverX + (introSarahX - introHoverX) * introToSarahProgress;
+    introCy = introHoverY + (introSarahY - introHoverY) * introToSarahProgress;
+  }
+
+  const introVisible = t >= T_CURSOR_INTRO_START && t < T_CURSOR_INTRO_HOLD_END;
+  const introOpacity = interpolate(
+    t,
+    [T_CURSOR_INTRO_START, T_CURSOR_INTRO_START + 0.2, T_CURSOR_INTRO_HOLD_END - 0.4, T_CURSOR_INTRO_HOLD_END],
+    [0, 1, 1, 0],
+    clamp,
+  );
+  const introClicking = t >= T_CURSOR_CLICK_SARAH && t < T_CURSOR_CLICK_SARAH + 0.35;
+  const introClickProgress = introClicking
+    ? interpolate(t, [T_CURSOR_CLICK_SARAH, T_CURSOR_CLICK_SARAH + 0.35], [0, 1], clamp)
+    : 0;
+
   return (
     <AbsoluteFill
       style={{
@@ -186,7 +270,7 @@ export const P5DashboardMorphBosse: React.FC = () => {
         }}
       >
         <LaptopMockup
-          width={width * 1.3}
+          width={width * 0.8}
           screenContent={<DashboardScreen riskCase="low" overrideRow={overrideRow} />}
         />
         {alertPulse > 0 && (
@@ -233,11 +317,24 @@ export const P5DashboardMorphBosse: React.FC = () => {
         </div>
       )}
 
+      {introVisible && (
+        <div style={{ opacity: introOpacity, position: "absolute", inset: 0 }}>
+          <VirtualCursor x={introCx} y={introCy} clicking={introClicking} clickProgress={introClickProgress} />
+        </div>
+      )}
+
       {cursorVisible && <VirtualCursor x={cx} y={cy} clicking={clicking} clickProgress={clickProgress} />}
 
-      {/* Plan serre : la ligne de vigilance seule, bosse haute et etroite sous la connexion. */}
+      {/* Plan serre : la ligne de vigilance seule, bosse haute et etroite sous la connexion.
+          Punch-in camera (cameraPunch) applique au <svg> entier -- vend physiquement l'impact
+          pile au sommet de la montee, pas juste un trace qui grimpe sans consequence sur le cadre. */}
       <AbsoluteFill style={{ opacity: vigilanceCutOpacity, background: "#0A1628" }}>
-        <svg viewBox="0 0 1920 1080" width="100%" height="100%">
+        <svg
+          viewBox="0 0 1920 1080"
+          width="100%"
+          height="100%"
+          style={{ transform: `scale(${cameraPunch})`, transformOrigin: "60% 28%" }}
+        >
           <defs dangerouslySetInnerHTML={{ __html: DEFS }} />
           <Raw body={G.fond} />
           <Raw body={G.grilleMesure} />
@@ -250,6 +347,19 @@ export const P5DashboardMorphBosse: React.FC = () => {
           <g opacity={bosseOpacity}>
             <g dangerouslySetInnerHTML={{ __html: G.marqueurPic }} />
           </g>
+          {/* Onde de choc radiale centree sur le pic (1152,300, mesure dans marqueur_pic du SVG
+              source) -- rend l'impact lisible en un coup d'oeil, pas seulement un trace geometrique. */}
+          {shockwaveOpacity > 0 && (
+            <circle
+              cx={1152}
+              cy={300}
+              r={shockwaveRadius}
+              fill="none"
+              stroke={NS_COLORS.red}
+              strokeWidth={4}
+              opacity={shockwaveOpacity}
+            />
+          )}
         </svg>
       </AbsoluteFill>
     </AbsoluteFill>

@@ -13,6 +13,11 @@ Usage :
     --brief path/to/brief.txt --label gazoduc-acte1 --video path/to/proto.mp4 \\
     --frame path/to/f1.jpg --frame path/to/f2.jpg ... (frames pour GPT-5.6 Sol)
 
+Bloc EXPERT : générique par défaut (EXPERT_BLOCK_EXTERNAL_REF, pour breakdown d'une référence
+externe déjà finie — ex. portfolio Fiverr). Ajouter --cartographic-upstream pour le bloc
+cartographique Souverain (prototype interne 16s -> acte 84.68s) — sinon le modèle hallucine une
+extension cartographique hors-sujet (constaté 2026-08-08, test breakdown MOCH-IT).
+
 Sorties : /tmp/da-refs/da-<label>-{gemini,kimi,gpt56sol}.md
 """
 import sys
@@ -71,6 +76,27 @@ projection orthographique 2D, PAS de 3D/WebGL/After Effects/particules volumétr
 l'INTENTION visuelle, jamais de code — nous traduisons nous-mêmes dans notre stack.
 """
 
+# Générique (repris tel quel de da-brief.py EXPERT_BLOCK, PAS la variante _UPSTREAM ci-dessus qui
+# est câblée pour un PROTOTYPE INTERNE cartographique Souverain 84.68s). À utiliser pour breakdown
+# d'une RÉFÉRENCE EXTERNE déjà finie (ex. portfolio Fiverr) — sinon le modèle hallucine une
+# extension cartographique hors-sujet (constaté 2026-08-08, test breakdown MOCH-IT/feel-good).
+EXPERT_BLOCK_EXTERNAL_REF = """
+
+=== SECTION OBLIGATOIRE — POINT DE VUE DE L'EXPERT ===
+Joue le rôle d'un EXPERT reconnu du motion design (le genre des meilleures productions du domaine).
+Sans concession. Réponds à DEUX points de vue distincts :
+1. L'EXPERT qui connaît le métier : qu'est-ce qu'il regarderait en premier ? Quelles parties
+   il jugerait ratées / amateures ? Qu'est-ce qui manque qui ferait la différence pro/amateur ?
+   Quelles animations/transitions un pro mettrait là où on ne met rien (ou l'inverse) ?
+2. LE SPECTATEUR lambda : qu'est-ce qu'il cherche, comprend, ressent ? Où décroche-t-il ?
+CONTRAINTE ABSOLUE : reste dans NOTRE boîte à outils — (1) SVG animé frame-driven (formes géométriques
+dessinées maison, déformation de paths, jauges/compteurs/cascades), (2) ICÔNES LUCIDE (lucide-react installé,
+~1500 icônes nettes posables/animables), (3) sprites Gemini + PixelLab, opacité/couleurs/timing/caméra frame-driven,
+(4) clips MiniMax H3 (image-to-video) pour l'incarnation humaine si le sujet l'exige. NE PROPOSE PAS de 3D,
+geo-layers, particules volumétriques, After Effects. L'expertise s'exprime DANS nos contraintes — ce qu'un pro
+ferait de mieux AVEC LES MÊMES OUTILS, pas un rêve infaisable.
+"""
+
 
 def load_env():
     env = os.path.join(ROOT, ".env")
@@ -97,10 +123,10 @@ def b64_file(path):
     return base64.b64encode(open(path, "rb").read()).decode()
 
 
-def build_prompt(brief_path):
+def build_prompt(brief_path, cartographic_upstream=False):
     prompt = open(brief_path, encoding="utf-8").read()
     prompt += ANGLES_BLOCK
-    prompt += EXPERT_BLOCK_UPSTREAM
+    prompt += EXPERT_BLOCK_UPSTREAM if cartographic_upstream else EXPERT_BLOCK_EXTERNAL_REF
     return prompt
 
 
@@ -208,6 +234,10 @@ def main():
     ap.add_argument("--frame", action="append", default=[], help="Frame pour GPT-5.6 Sol (repetable)")
     ap.add_argument("--max-tokens", type=int, default=16000)
     ap.add_argument("--only", choices=["gemini", "kimi", "gpt56sol"], default=None)
+    ap.add_argument("--cartographic-upstream", action="store_true",
+                     help="Bloc EXPERT cartographique Souverain (prototype 16s -> acte 84.68s). "
+                          "SANS ce flag (défaut) : bloc EXPERT générique, pour breakdown de "
+                          "référence externe déjà finie (ex. portfolio Fiverr).")
     args = ap.parse_args()
 
     load_env()
@@ -223,7 +253,7 @@ def main():
         frames_sm.append(downscale_frame(fp))
     print(f"[frames] {len(frames_sm)} frame(s) downscalees pour GPT-5.6 Sol")
 
-    prompt = build_prompt(args.brief)
+    prompt = build_prompt(args.brief, cartographic_upstream=args.cartographic_upstream)
     print(f"\n[brief] {len(prompt)} chars -> gemini(video) + kimi(video) + gpt56sol({len(frames_sm)} frames)\n")
 
     results = {}

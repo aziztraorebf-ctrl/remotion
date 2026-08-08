@@ -2,7 +2,7 @@
 
 > Persistent memory across sessions. Updated after every invocation.
 > Detail lourd (code complet, sessions archivees) -> `memory/tools/remotion.md` + `RULES-ACTIVE.md`.
-> Last updated: 2026-07-22 (correction SourcePlaque : migration fichiers perimes -> fichiers actifs)
+> Last updated: 2026-08-08 (NorthShieldV3, refonte 7->5 panneaux apres retour Aziz)
 
 ---
 
@@ -42,29 +42,64 @@ impact · `damping:100,mass:1.5` = intro longue.
 - HOOK PATTERN (Sonjata) : hook Sequence from=0 durationInFrames=HOOK_FRAMES, scenes decalees de
   HOOK_FRAMES, musique silence pendant hook (Option B). Reference : `SonjataShortFull.tsx`, template
   `memory/templates/hook-short.md`. OffthreadVideo `muted` obligatoire si clip source a deja de l'audio.
+- **Mini-render multi-frames sur gros `public/`** : `npx remotion still/render` CLI recopie tout
+  `public/` a chaque appel (>2min si 2.6+ Go) -> script Node local (`.scratch-composer/render-
+  stills.mjs`, `@remotion/bundler`+`@remotion/renderer`, bundle() une fois puis N renderStill()
+  dans le meme process). Doit vivre DANS le repo (pas `/tmp`) pour resoudre `node_modules`.
 
 ---
 
-## Pattern SourcePlaque (bandeau source bas-droite) — 2026-07-22
+## Pattern SourcePlaque (bandeau source bas-droite)
 
-Composant recopie a l'identique (pas d'export cross-fichier sauf si `export const` present) dans
-chaque fichier d'acte. Fade in 10f / hold 54f / fade out 12f (~1.8s). `right/bottom:40`,
-`maxWidth:620`, fond parchemin `rgba(242,229,200,0.86)`, Georgia 20px `#3A2A18`. Prop optionnel
-`rightOffset` si l'acte a un insert plein-ecran avec cadre decoratif proche du bord (defaut ne suffit
-pas). Format texte : 1 SEULE source courte "Nom, date", jamais de liste, jamais "Source:". Reference
-complete + code : `src/projects/warmap/soudan-acte4/SoudanActe4.tsx` (fonction `SourcePlaque`).
+Composant recopie a l'identique dans chaque fichier d'acte. Fade in 10f / hold 54f / fade out 12f
+(~1.8s). `right/bottom:40`, `maxWidth:620`, fond parchemin `rgba(242,229,200,0.86)`, Georgia 20px
+`#3A2A18`. Prop `rightOffset` si insert plein-ecran a cadre decoratif proche du bord. 1 SEULE
+source courte "Nom, date". Reference : `src/projects/warmap/soudan-acte4/SoudanActe4.tsx`
+(`SourcePlaque`). Gotchas : `whiteSpace:nowrap` deborde au lieu de clipper si texte trop long
+(verifier en mini-render, noms >30 caracteres a risque) · frames absolues multi-Sequence = offset
+section + F_local (la frame JSX reste locale, seule la conversion pour cibler `--frames=X-Y`
+change) · fichiers actifs vs R&D perimes : SEUL Root.tsx (`id=`+`component=`) dit lequel est actif,
+prefixe `D3-` = variante de test jamais assemblee au montage final.
 
-**Gotchas** :
-- `whiteSpace:nowrap` ne clippe PAS un texte trop long — il deborde visuellement sur les elements
-  sous-jacents au lieu d'etre tronque. Verifier en mini-render, surtout noms de source composes
-  (>30 caracteres = risque avec un cadre decoratif a marge <40px).
-- Frames absolues multi-Sequence : chaque section a un timing LOCAL (frame 0 = debut section). Frame
-  absolue = `offset_section + F_local`. Ne jamais confondre avec la frame locale utilisee dans le JSX
-  (celle-la reste correcte telle quelle, c'est seulement pour cibler un mini-render `--frames=X-Y`
-  qu'il faut la conversion).
-- Fichiers actifs vs R&D perimes : plusieurs projets ont des fichiers `_rnd/*` aux noms proches des
-  fichiers reellement montes. SEUL Root.tsx (`id="CompId"` + `component={...}`) dit lequel est actif.
-  Prefixe `D3-` dans l'id = variante de test isolee, jamais assemblee au montage final.
+---
+
+## NorthShieldV3 — mix video H3 + SVG + refonte apres retour realisateur (2026-08-07/08)
+
+**Session 1 (assemblage initial, 7 panneaux, mix H3+SVG)** :
+- Splitter un plan H3 en 2 sous-clips complementaires : mesurer les cues audio (`alignment.json`)
+  pour placer le cut, sauf si les 2 clips sont deja litteralement complementaires (verifie par
+  extraction de frames avant de coder).
+- Composant d'animation existant (ex P5DashboardMorphBosse) reutilise apres un clip H3 d'intro :
+  le nester dans sa PROPRE `<Sequence from={clipDur-fade}>` pour que son `useCurrentFrame()`
+  reparte a 0 — sinon tous ses seuils T_XXX internes tombent au mauvais moment.
+- Budget de frames insuffisant pour un composant repris tel quel : COMPRESSER le clip d'intro (pas
+  le composant), le beat le plus important doit rester entierement dans le budget (verifier en
+  extrayant une frame pile sur ce beat).
+- Extraire des frames du clip H3 AVANT de coder le split/overlay (`ffmpeg -vf select`) : seule
+  facon fiable de savoir ou est cadre le personnage pour placer les annotations sans superposition.
+
+**Session 2 (refonte majeure 7->5 panneaux apres retour Aziz detaille)** :
+- Supprimer des panneaux redistribue les frames (toutes vers un panneau juge trop court), ne les
+  retire pas de la composition totale — decision explicite a confirmer, pas a deduire seul.
+- Un playbackRate peut changer de SENS (accelere->ralenti) quand la fenetre change : meme clip,
+  fenetre elargie -> le clip devient plus court que la fenetre -> recalculer le rapport a chaque
+  changement, ne jamais assumer le sens.
+- Un bug de dimensionnement (`width * 1.3` debordant le cadre) peut etre duplique dans 2 fichiers
+  differents qui partagent un composant (LaptopMockup, present tel quel dans P5VideoSarah ET
+  P5DashboardMorphBosse) : grep le nom du composant partage dans TOUT le projet des qu'un bug de
+  ce type est signale, pas seulement le fichier explicitement cite dans le brief.
+- Extraire un pattern reference (ex disque+anneau Flowdesk) en composant partage (`ui/DiscFrame.tsx`)
+  AVANT de le dupliquer dans 2 endroits — evite la divergence, fix futur a 1 seul endroit.
+- Rendre un mecanisme "abstrait" visible = faire voyager un delta numerique vers un compteur, pas
+  juste ajouter du texte statique. Dupliquer EN LECTURE SEULE les constantes de timing du
+  composant source dans le wrapper (jamais diverger) pour rester synchronise.
+- "Vivant" = ajouter une consequence visuelle physique (camera punch-in sur le `<svg>` global +
+  onde de choc radiale separee), pas seulement augmenter l'amplitude d'un pulse existant deja
+  present — un pulse ampli seul (0.06->0.11) n'aurait probablement pas suffi a rendre un pic
+  "impossible a manquer".
+- Mini-render "stills cibles" : choisir les frames PRECISEMENT sur les evenements internes
+  calcules (ex frame du punch-in derivee de `T_X + 0.22s` -> frame absolue), pas juste
+  debut/mid/fin generique — necessaire pour verifier un beat ponctuel (<0.5s dans une seq de 15s).
 
 ---
 
@@ -73,30 +108,15 @@ complete + code : `src/projects/warmap/soudan-acte4/SoudanActe4.tsx` (fonction `
 - 2026-04-13 : setup initial, 8 regles non-negociables.
 - 2026-04-22 : Sonjata, pattern Hook + Option B musique valide.
 - 2026-04-24/25 : refactor memoire (RULES-ACTIVE.md, CHECKLIST-PRE-COMPOSE.md), safe zones tranchees.
-- 2026-06-28 : Cacao Short VB — pattern transfusion cross-composition (raccord couleur+Y entre 2
+- 2026-06-28 : Cacao Short VB — transfusion cross-composition (raccord couleur+Y entre 2
   compositions separees), remplissage silhouette qui se VIDE (fillUp puis drain, jamais simultanes).
-- 2026-07-17 : Kosti Acte4 K3 (station+drone SVG) — SVG dans son propre viewBox recale via
-  `<g transform="translate(DX DY)">` ; wrapper `<svg>` pour corps SVG anime dans un `<div>` positionne
-  (un div ne contient pas de SVG brut) ; gotcha "creux a l'impact" (droneOp=0 ET flashOp=0 pile a
-  impactAt, tester impactAt+20 pour voir l'effet).
-- 2026-07-22 (A) : Soudan A4->A5 continuite — élément persistant d'un acte precedent = pleine opacite
-  des frame 0 (jamais fade-in, ca lirait comme une apparition), fade-out doux au pivot narratif propre.
-- 2026-07-22 (B) : Soudan plaques SOURCE Actes 1-4 (8 plaques, voir PIPELINE.md pour le detail
-  fait/source/frame) — pattern SourcePlaque documente ci-dessus, issu de cette session.
-- 2026-07-22 (C) : CORRECTION — 2 des 4 fichiers edites en (B) etaient les REGISTRES MAPBOX PERIMES
-  (`soudan-acte3/SoudanActe3.tsx`, `soudan-acte4/SoudanActe4.tsx`, remplaces par le globe D3 selon
-  STATUS.md, confirme par extraction frames a3.mp4/a4.mp4 = globe orthographique visible). `git checkout
-  --` a suffi pour revert (diff propre, 26 et 29 lignes ajoutees, 0 residu apres). Plaques REAPPLIQUEES
-  sur les vrais fichiers actifs : `SoudanActe3Section1Globe.tsx` (fait "milliard" Jebel Amer, ancrage
-  local `F.milliard=595`), `SoudanActe3GlobeInsert.tsx` (fait "EAU 1er importateur", 4e plaque ajoutee a
-  cote des 3 deja presentes, ancrage `T.b3PremierImportateur` deja defini dans
-  soudanActe3GlobeInsertTiming.ts — PAS invente, repris tel quel), `SoudanActe4B1toB4Globe.tsx` (fait
-  "base navale", ancrage `T.soudanPasSigne` deja defini), `soudan-acte4/KostiInsertSVG.tsx` (fait "drone
-  Kosti", ancrage local `impactAt = f4.droneFrappe`, ce fichier N'ETAIT PAS perime — reutilise tel quel
-  dans `Kosti-Beat5-Standalone` de Root.tsx). Mini-renders `npx remotion still` sur les 4 emplacements =
-  tous OK, aucun chevauchement (KostiInsertSVG a un cadre decoratif jusqu'a x=1892/1920 -> rightOffset=68
-  necessaire, deja documente dans le gotcha ci-dessus).
-  **LECON METHODE** : avant d'editer un fichier "acte" dans un projet avec plusieurs generations de
-  moteur (Mapbox -> D3), TOUJOURS verifier STATUS.md du projet ET croiser avec une frame extraite du
-  rendu reel AVANT d'assumer qu'un fichier au nom evident (`SoudanActeN.tsx`) est le fichier actif —
-  Root.tsx peut encore l'enregistrer comme composition de test isolee sans qu'il soit dans le montage.
+- 2026-07-17 : Kosti Acte4 K3 — SVG recale via `<g transform="translate(DX DY)">` dans son propre
+  viewBox ; wrapper `<svg>` obligatoire pour corps SVG anime dans un `<div>` positionne ; gotcha
+  "creux a l'impact" (droneOp=0 ET flashOp=0 pile a impactAt, tester impactAt+20).
+- 2026-07-22 : Soudan A4->A5 continuite (element persistant = pleine opacite des frame 0, jamais
+  fade-in) · 8 plaques SOURCE Actes 1-4 (pattern SourcePlaque ci-dessus) · correction : 2 fichiers
+  edites etaient des REGISTRES MAPBOX PERIMES (remplaces par le globe D3) — `git checkout --` a
+  suffi pour revert, plaques reappliquees sur les vrais fichiers actifs. Lecon methode : avant
+  d'editer un fichier "acte" multi-generations (Mapbox->D3), TOUJOURS croiser STATUS.md + une
+  frame extraite du rendu reel avant d'assumer qu'un fichier au nom evident est actif — Root.tsx
+  peut l'enregistrer comme composition de test isolee sans qu'il soit dans le montage.

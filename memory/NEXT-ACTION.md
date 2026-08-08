@@ -260,14 +260,13 @@ section en tête de ce fichier** ("DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-0
 et le lien du rendu v2 — ne pas se fier à l'ancienne mention "à démarrer" ci-dessous, périmée.
 Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
-> ✅ **Test client-sim "Flowdesk" CLOS (2026-08-06)** — sujet secondaire, détail isolé de ce
-> fichier → `memory/client-sim-tests/INDEX.md`. Test client-sim "NorthShield" (cybersécurité) :
-> **Direction B pure codée (v1+v2) puis REJETÉE SUR LE FOND** (2026-08-07) — cliché "pluie de
-> données" déguisé + absence d'incarnation humaine violant la chaîne HUMAN→SYSTEM→PRODUCT du
-> brief. **Pivot décidé : storyboard V3 mixte** (7 panneaux, personnage Sarah en MiniMax H3),
-> pas encore codé — reprise via `memory/client-sim-tests/noteshield/PROMPT-REPRISE-SESSION.md`,
-> sur demande explicite d'Aziz uniquement. Ne change rien à la priorité Gazoduc Acte 3
-> ci-dessus (le sujet principal reste YouTube/Souverain).
+> ✅ **Tests client-sim "Flowdesk" (2026-08-06) et "NorthShield" (2026-08-08) — TOUS DEUX CLOS**,
+> sujet secondaire, détail isolé de ce fichier → `memory/client-sim-tests/INDEX.md`. NorthShield :
+> livrable final `out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`, validé par Aziz.
+> Ne change rien à la priorité Gazoduc Acte 3 ci-dessus (le sujet principal reste YouTube/Souverain).
+> Nouvelle méthode de test décidée pour la suite (pas encore démarrée) : reproduire une vraie
+> vidéo de référence externe (portfolio Fiverr) au lieu d'inventer un brief fictif — breakdown
+> déjà fait (Gemini + GPT-5.6 Sol) sur une pub "MOCH-IT", dans `/tmp/da-refs/da-feelgood-moch-it-*.md`.
 
 ---
 
