@@ -24,6 +24,14 @@
 > Détail limite technique (pas liée à ce budget) : **30 min max par exécution unique** (1h sur Pro),
 > job annulé automatiquement au-delà — sans rapport avec l'allocation mensuelle, aucun de nos tests
 > n'en a approché la moitié.
+>
+> ⭐ **Suivi de coût — préférence Aziz (2026-08-08)** : rapporter en priorité la **consommation GPU
+> réelle** (minutes/heures, via le mécanisme 0.39 crédit/seconde documenté ci-dessus) plutôt que
+> marteler un montant en dollars à chaque test. Le dollar reste la métrique de secours fiable tant
+> qu'aucun endpoint `get_usage_report` ne renvoie directement une durée GPU exploitable (vérifié
+> 2026-08-08 : l'outil ne renvoie que des dollars, pas de minutes — ne PAS halluciner de taux de
+> conversion crédit→GPU pour combler ce manque, le signaler explicitement à la place). Objectif :
+> savoir combien de temps GPU réel a été utilisé sur Comfy Cloud, pas juste le prix payé.
 
 ### ⭐⭐ Prototypage rapide multi-variantes EN PARALLÈLE (validé 2026-08-08)
 Envoyer **plusieurs appels `run_template` dans le même message** (pas un `for` séquentiel) — les jobs
@@ -90,6 +98,389 @@ mêmes principes se transfèrent directement à H3 malgré les deux étant des m
 Piste à creuser : isoler quel(s) personnage(s) précis doit réagir plutôt que "the crowd"/"the group"
 en bloc — Aziz a noté que la réaction collective simultanée reste "un peu exagérée" même sur le
 prompt B, hypothèse que H3 a un biais à intensifier une réaction de groupe non individualisée.
+
+### ⛔⛔ TOUJOURS logger le `prompt_id` de chaque `run_template` (règle née d'un incident non résolu, 2026-08-08)
+
+Sur le dernier test de la session du 08/08 (orbite caméra, tentative finale), le job est revenu
+`succeeded` mais a livré un contenu totalement étranger au prompt envoyé (scène super-héros/robot
+géant au lieu de Sonjata — voir § "Diagnostic forensique post-mortem" plus bas). Le diagnostic a
+confirmé que rien de notre côté n'expliquait l'anomalie (prompt, image, overrides tous vérifiés
+corrects), mais l'enquête a buté sur un point : **le `prompt_id` de ce run n'avait jamais été noté
+nulle part**, rendant impossible toute vérification a posteriori côté serveur (`get_job_status`/
+`get_queue`).
+
+**Règle** : à chaque `run_template`, noter le `prompt_id` retourné (dans la réponse texte au minimum,
+idéalement dans un sidecar `.txt` à côté du clip téléchargé) — avant même de savoir si le résultat sera
+bon. Si un contenu aberrant apparaît malgré un statut "succeeded", ça permet de comparer via
+`get_job_status`/`get_queue` et de distinguer un glitch ponctuel d'un vrai bug structurel Comfy Cloud,
+plutôt que de repartir sans aucune trace exploitable.
+
+---
+
+### ⭐⭐⭐ Test enchaînement multi-plans (Sonjata scene2→plan2, 2026-08-08) — R2V confirme la continuité inter-plans
+
+Objectif : vérifier si H3 débloque la série "héros oubliés" (abandonnée pour coût Seedance) en testant
+un enchaînement narratif de 2 plans consécutifs (pas un clip isolé). Image de référence = dernière
+frame réelle du clip Seedance publié `scene2-humiliation-v2-13s.mp4` (garçon à quatre pattes, mère qui
+pointe, foule figée, style papercraft). Plan 2 demandé : relève fragile (PAS un exploit héroïque —
+Sundiata historique se relève lentement, dignité pas triomphe), séquençage 2s, clause négative stricte
+(mains vides, pas de bâton), décor verrouillé, foule quasi-statique.
+
+**Test A/B contrôlé, 2 prompts rigoureux quasi-identiques (même discipline, séquençage légèrement
+différent), même image source, même durée (15s demandé → 15.08s obtenu, conforme à la règle
+d'arrondi) :**
+- **Prompt B (séquence : hésitation des yeux d'abord → tête → dos → genou planté) : SUCCÈS NET.**
+  Style intact 15s, décor verrouillé à 100%, mains vides sur toute la durée (clause négative
+  respectée), progression du mouvement dans le bon sens (quatre-pattes → tête levée → buste redressé
+  → stabilisé sur un genou, PAS debout), conforme à la contrainte "fragile dignity not triumph".
+  Défaut mineur : mouvement plus subtil/lent que le séquençage détaillé du prompt (bras de la mère ne
+  s'abaisse pas nettement, pas de vraie hésitation initiale visible) — fidélité approximative au
+  script temporel fin, pas un échec.
+- **Prompt A (séquence : tête d'abord → main plantée → genou → tenue → réaction villageoise nommée) :
+  ÉCHEC TECHNIQUE, à écarter.** Pattern de moiré/quadrillage régulier sur 100% des frames (0 à 15s),
+  rendant visages/mains illisibles. **Confirmé comme vrai défaut de génération, pas un artefact
+  d'extraction ffmpeg** (reproduit avec 2 méthodes d'extraction différentes : filtre `select` ET
+  `-ss`+`-frames:v`). Absent du clip B généré dans les mêmes conditions au même moment → hypothèse
+  instabilité aléatoire du sampler sur ce run précis (seed/bruit), PAS un problème de discipline de
+  prompt (les deux prompts suivaient la même rigueur validée le 08/08 matin). **Leçon : même avec un
+  prompt rigoureux, un run peut sortir un artefact de moiré sévère — toujours générer ≥2 variantes en
+  parallèle et inspecter chacune avant de choisir, ne jamais committer sur un seul run.**
+
+**⚠️ Découverte non documentée avant ce test — écart de format d'aspect** : image source 720×1280
+(portrait 9:16), les DEUX clips générés sortent en 864×480 (paysage 16:9). Le template R2V ne
+préserve PAS automatiquement le ratio de l'image de référence. Non creusé plus (hors scope de ce
+test ciblé continuité perso/mouvement) — **si un prochain test vise un format vertical précis,
+chercher un param `aspect_ratio`/`resolution` sur le node R2V avant de lancer, ne pas assumer que
+la ref image pilote le format de sortie.**
+
+**⭐⭐⭐ CAUSE RACINE CONFIRMÉE + FIX validé (2026-08-08, même jour, test correctif dédié) :**
+le format 864×480 forcé venait du node `ResolutionSelector` (id 115) câblé en dur sur
+`"16:9 (Widescreen)"` (widgets_values `["16:9 (Widescreen)", 0.4, 32]`) et **relié par lien**
+(`link`, pas un widget libre) aux entrées `width`/`height` du node `MiniMaxH3ReferenceToVideo`
+(id 136). Le sélecteur n'a AUCUNE option portrait/9:16 dans sa liste (uniquement des ratios 16:9,
+voir tableau `MarkdownNote` id 140 du template) — donc pour un output portrait il est **inutile de
+le retoucher**, il faut contourner le lien.
+
+**Fix qui marche** : dans `run_template(input_overrides=...)`, passer directement
+`{"136": {"width": 480, "height": 864}}` — l'override s'applique **après conversion**, au niveau du
+widget du node 136 lui-même, indépendamment du lien entrant depuis 115. Confirmé par les warnings de
+soumission (`"override_not_embedded" ... "input is connected, not a widget" — mais "ran on the
+executed graph"` : l'exécution a bien pris le override, seul le ré-affichage UI du workflow ne peut
+pas l'incruster visuellement, sans impact). **Résultat mesuré** : sortie 480×864 exacte, confirmé
+`ffprobe` (`width=480 height=864`), zéro bande noire/pillarbox sur les 8 frames échantillonnées.
+Respecte la contrainte multiple-de-32 du modèle (480/32=15, 864/32=27 — cf tooltip `width`/`height`
+du node, min 32 max 16384).
+
+**Choix de résolution portrait** : le tableau de `ResolutionSelector` ne couvrant que du 16:9, pour
+un ratio 9:16 calculer soi-même une paire proche d'un ratio cible et multiple de 32 des deux côtés
+(ex. 480×864 ≈ 0.555, cible 9:16=0.5625 — écart minime, accepté). Pas de table de référence portrait
+équivalente trouvée dans le template ; à construire au besoin si d'autres ratios portrait sont
+requis (ex. 576×1024 pour un fullHD-ready plus grand).
+
+**Rythme resserré (2e correction demandée le même jour)** : passer d'un séquençage en tranches de 2s
+sur 15s à des tranches de 1s sur 8s (durée input `132.value = 8.0` → formule d'arrondi produit
+exactement 192 frames = 8.00s réels, valeur pivot nette car `192 % 17 == 5`) **fonctionne** — le
+mouvement (quatre-pattes → tête → buste redressé → genou planté → bras de la mère qui s'abaisse) est
+visiblement 2x plus véloce à l'écran, sans perdre la contrainte "fragile dignity not triumph" (le
+garçon reste bien agenouillé, ne se lève pas debout). Les tranches d'1s sont bien respectées dans
+l'ordre (vérifié par extraction de frames à t=0,2,4,6,7s). **Leçon generalisable** : la granularité du
+séquençage temporel dans le prompt (durée de chaque tranche) pilote directement la perception de
+vitesse de l'action, indépendamment de la durée totale du clip — diviser la durée totale par le même
+nombre de beats resserre mécaniquement le rythme.
+
+**Prompt validé (résumé)** : mêmes 4 piliers que le prompt B du test précédent (séquençage temporel
+strict, clause négative répétée mains vides/pas de bâton, décor verrouillé explicitement, foule
+figée sauf micro-détail sur un seul personnage nommé) + ajout d'une clause de cadrage portrait
+("Frame the scene to fill the full vertical 9:16 frame, subject centered, no empty margins on the
+sides") — présente dans le prompt en plus du fix technique width/height, defense-in-depth utile si
+jamais un prochain template n'a pas d'override direct possible.
+
+Fichiers scratchpad (non conservés dans le repo, R&D pur) : prompt final + clip 480×864/8s +
+8 frames d'auto-review, uploadé Vercel Blob pour présentation (URL temporaire, à re-télécharger si
+le plan doit être réutilisé en prod).
+
+**Coût réel** : `get_usage_report` cumulé mensuel $2.06 (tous tests confondus, pas de ventilation par
+job) — cohérent avec l'estimation ~$0.04-0.17/clip déjà documentée plus haut.
+
+**Fichiers** : prompts dans scratchpad session (non conservés dans le repo, R&D pur) ; clips uploadés
+Vercel Blob (URLs temporaires, non pérennes — si le test est validé et doit être réutilisé,
+re-télécharger et ranger dans `public/assets/` avant que le lien expire).
+
+### ⭐⭐⭐ Test 15s multi-strates (mère + 1 figurant nommé + ambiance) — 2026-08-08, même chaîne
+
+Suite directe du test 8s ci-dessus. Retour Aziz sur le clip 8s : dynamisme du garçon corrigé, mais
+**arrière-plan figé** — demande explicite de pousser à 15s avec plusieurs strates de vie simultanées
+(garçon qui se relève + mère qui réagit au-delà du bras + UN figurant nommé qui bouge + nuages qui
+dérivent + feuillage du baobab qui frémit), en respectant la règle déjà documentée plus haut
+("nommer précisément qui bouge, jamais 'the crowd'/'the group' en bloc").
+
+**Prompt** : même structure que le prompt 8s validé (séquençage temporel strict, clause négative
+mains vides répétée, décor verrouillé) + 3 ajouts : (1) le vieil homme chauve au châle, identifié
+et décrit par sa position exacte ("standing directly behind the mother") reçoit 3 micro-beats
+dédiés sur 15s (poids qui se déplace → tête qui s'incline → main portée près du menton) ; (2) la
+mère reçoit un ajout au bras qui s'abaisse déjà validé : adoucissement progressif du regard/mâchoire,
+sans sourire ni pardon explicite (cohérence arc narratif) ; (3) une section "CONTINUOUS AMBIENT
+MOTION" séparée des beats de personnages, décrivant nuages qui dérivent lentement + feuillage du
+baobab qui frémit sous la brise, explicitement en continu sur toute la durée (pas de séquençage par
+tranche pour ces deux éléments).
+
+**Exécution** : `run_template(video_minimax_h3_r2v)`, mêmes node IDs que le test précédent (137
+LoadImage, 138 prompt, 132 duration=15, 136 width/height override 480×864, 139 écrasé avec la même
+image pour éviter le facteur de confusion "mecha dragon" par défaut). Job long (~9 `wait_for_job`
+successifs avant complétion, sensiblement plus long que le clip 8s — cohérent avec un job 2x plus
+long en frames).
+
+**Résultat mesuré (ffprobe)** : 480×864 confirmé, durée 15.083s (conforme à la règle d'arrondi déjà
+documentée : viser 15s comme point d'arrondi fiable). Zéro bande noire.
+
+**Vérification frame-par-frame (12 frames extraites, t=0,1,2,3,4.5,5.5,6,7,8,9,12,14.9)** :
+
+- ✅ **Format** : 480×864 sur toute la durée, aucun pillarbox.
+- ⚠️ **Rythme du garçon — PAS celui demandé** : contrairement à la consigne ("densité perceptible en
+  permanence, progrès visible toutes les 2-3s, jamais de hold long au milieu"), le mouvement réel
+  est resté **quasi invisible de t=0 à t=6-7** (le garçon est visuellement identique à la frame
+  source jusque-là) puis **s'est résolu en bloc entre t=7 et t=9** (passage quatre-pattes → genou
+  planté en ~2s), puis **hold figé de t=9 à t=15** (6 dernières secondes, aucun changement visible
+  de pose). C'est l'inverse du défaut du tout premier test (lenteur générale) mais un nouveau
+  défaut de la même famille : le modèle continue de préférer compresser l'action utile dans une
+  fenêtre courte plutôt que de l'étaler uniformément, même quand le prompt demande explicitement
+  un rythme régulier par tranches de 2-3s sur toute la durée.
+- ✅ **Le figurant nommé (vieil homme chauve au châle) bouge de façon visible et discrète** : main
+  basse à t=0, main portée progressivement vers le menton entre t=6 et t=9, posture tenue ensuite —
+  seul changement de posture visible dans le reste du groupe, conforme à la consigne "pas de vedette
+  volée au garçon".
+- ⚠️ **Mère** : bras déjà bas dès t=9 (comme le garçon, résolu tôt puis figé) ; l'adoucissement
+  d'expression demandé est marginal à l'œil sur les frames extraites — présent en négatif (la mère
+  ne redevient jamais plus sévère) mais pas clairement lisible comme un mouvement facial en soi.
+- ❌ **Nuages** : AUCUNE dérive perceptible entre t=0 et t=14.9 sur crop dédié (comparaison directe
+  ciel haut-image) — position quasi identique.
+- ❌ **Feuillage du baobab** : AUCUN frémissement perceptible entre t=0 et t=9 sur crop dédié
+  (silhouette du feuillage strictement superposable, contours identiques) — la clause "CONTINUOUS
+  AMBIENT MOTION" séparée du séquençage par beats n'a pas été suivie par le modèle sur ces deux
+  éléments d'arrière-plan pur (sans personnage).
+- ✅ **Pas d'hallucination d'objet** dans les mains du garçon sur aucune frame observée, pas de
+  morphing grave visible sur les visages/mains dans l'échantillon de 12 frames.
+
+**⚠️ CORRECTION AZIZ (2026-08-08, immédiatement après ce test) — le diagnostic de l'agent ci-dessus était
+FAUX sur plusieurs points, à ne pas reproduire.** Erreur de personnification d'abord : le personnage qui
+pointe du doigt n'est PAS "la mère" mais **la matrone/marâtre qui insulte Sundiata** ("il va ramper pour
+toujours") ; la vraie mère de Sundiata est **le personnage à droite avec les deux jeunes enfants**, qui
+ne réagit qu'en toute fin de séquence. Sur le fond, le rendu est **nettement meilleur que ce que l'agent a
+rapporté** :
+- Le mouvement n'est PAS "compressé puis gelé" — c'est une vraie chorégraphie enchaînée : la matrone
+  baisse le doigt progressivement en affichant un petit sourire mauvais à la fin ; la mère réagit à la
+  toute fin par une légère inclinaison ; Sundiata regarde la matrone → se lève (genoux à terre) → regarde
+  à nouveau la matrone. Rien n'est figé, l'agent a mal lu les frames extraites.
+- **Ombres portées cohérentes avec le mouvement — point technique fort, non détecté par l'agent** :
+  l'ombre de Sundiata au sol suit son changement de posture (courbé → mains levées/genoux) en temps réel ;
+  l'ombre du villageois qui se déplace suit également son déplacement. Comportement physique crédible,
+  à retenir comme un point fort de H3 pour cette scène.
+- **Villageois nommé (vieil homme au châle)** : avance depuis l'arrière-plan, se met les mains sur le
+  visage en réaction choquée, pendant que les autres villageois restent immobiles — confirmé comme
+  fonctionnel et bien exécuté (2e validation consécutive du principe "nommer précisément qui bouge").
+- **Nuages** : mouvement réel mais très lent ("quasi stop-motion") — pas un échec, un mouvement trop
+  subtil à accélérer si besoin, pas absent comme rapporté.
+- **Aucune déformation ni morphing sur les 15s** — Aziz note l'hypothèse que ça tient au fait que la
+  caméra reste statique (pas de cut, pas de mouvement) ; à vérifier si ça tient sur un test avec
+  mouvement de caméra (cf section orbite ci-dessous).
+
+**Leçon méthode pour la mémoire** : l'auto-review d'un agent sur des frames extraites peut sous-évaluer
+un mouvement réel si l'échantillonnage de frames est trop espacé ou si la trame narrative (qui est qui,
+quelle réaction appartient à quel personnage) n'est pas vérifiée contre le script/l'histoire réelle
+AVANT de juger le rendu. Toujours confronter au script narratif d'origine, pas seulement au rendu brut.
+
+**Verdict global (révisé)** : test concluant, pas juste "progrès partiel" — **le diagnostic "rythme
+compressé puis gelé" du premier passage est INVALIDÉ par la correction Aziz ci-dessus**, à ne pas
+reprendre comme acquis (cf le test orbite plus bas, qui cite ce diagnostic par analogie — sa propre
+observation de rythme reste à évaluer indépendamment, pas comme une confirmation d'un biais déjà
+"documenté" ici). Le figurant nommé fonctionne (2e validation consécutive de la règle "nommer
+précisément"). Les 2 éléments d'ambiance pure (nuages, feuillage) sans porteur de mouvement de
+personnage n'ont montré aucun effet malgré une clause dédiée explicite — **hypothèse à tester** : H3
+semble mieux répondre aux clauses attachées à un sujet/beat temporel qu'à une clause "continue"
+générique détachée du séquençage par tranche.
+
+**Piste à creuser (prochain test)** : pour les nuages/feuillage, essayer une clause attachée à
+CHAQUE tranche temporelle (répéter "clouds drift slightly, leaves tremble" dans les 6 beats du
+garçon) plutôt qu'une section séparée — cohérent avec l'hypothèse ci-dessus.
+
+**Coût réel** : `get_usage_report` cumulé mensuel passé de $2.06 à $3.29 après ce clip → **~$1.23**
+pour ce seul clip 15s (vs $0.04-0.17 pour les clips 8s courts précédents — cohérent, ~2x la durée
+en frames et un ratio de coût supérieur à 2x, à surveiller si les clips 15s se multiplient).
+
+**Fichiers** : prompt + clip 480×864/15.08s + 12 frames d'auto-review dans scratchpad session (non
+conservés dans le repo) ; clip uploadé Vercel Blob (URL temporaire).
+
+### ⭐⭐⭐ Test mouvement de caméra orbital (Sonjata scene4 "barre de fer", 2026-08-08) — PREMIER test caméra en mouvement sur ce projet, verdict MITIGÉ
+
+Tous les tests H3 précédents sur ce projet utilisaient une **caméra statique**. Premier test avec un
+mouvement de caméra actif (orbite ~180°), sur une scène différente (`scene4-final-keepandduck.mp4`,
+clip déjà publié — le garçon force sur une barre de fer qui se déforme en arc pendant qu'il se relève,
+foule autour). Image de référence : frame extraite à t=6s du clip publié (garçon agenouillé, barre
+quasi droite, caméra encore de face) — **vérifiée visuellement avant usage** (comparaison de plusieurs
+frames t=3 à t=11 du clip original a montré que le pivot caméra réel du clip publié était déjà bien
+engagé dès t=7, soit ~1s après la frame de référence choisie — la fenêtre pour reproduire l'intégralité
+de l'orbite était donc plus resserrée que prévu au départ).
+
+**Prompt** : même discipline validée cette session (séquençage temporel strict par tranches de 2s,
+clause négative répétée contre toute hallucination d'objet/personnage, décor verrouillé explicitement)
++ description explicite d'une orbite caméra continue ~180° synchronisée avec (1) la déformation
+progressive de la barre droite→arc complet et (2) le redressement du garçon agenouillé→debout. 606
+mots (plus dense que le style minimal "voxelplot" documenté dans la doctrine Seedance storyboard, mais
+cohérent avec la discipline H3 validée le matin même sur ce projet — pas testé en A/B contre une
+version minimaliste sur ce cas précis).
+
+**Exécution** : `run_template(video_minimax_h3_r2v)`, durée demandée 10s, override
+`{"136":{"width":480,"height":864}}` (fix portrait déjà validé). **Durée réelle obtenue : 10.125s
+(243 frames, 24fps)** — différent du "10→8.0s" documenté précédemment dans ce fichier pour un autre
+test ; l'arrondi H3 ne semble donc pas strictement déterministe pour une même valeur d'input d'un test
+à l'autre, ou dépend d'un facteur non identifié (contenu du prompt ? seed ?) — **à ne pas considérer
+comme une table de correspondance fixe**, toujours vérifier `ffprobe` après coup plutôt que d'assumer.
+
+**Vérification frame-par-frame (11 frames, t=0 à 10s, pas de 1s)** :
+- ✅ **(a) Mouvement de caméra orbital réel et net** — confirmé, pas un zoom ni un pan. Signal le
+  plus fort : le garçon lui-même passe de vu-de-face (t=0) à vu-de-dos (t=3-7) puis retour vu-de-face
+  (t=8-10), avec l'arrière-plan (huttes, baobab) qui apparaît/disparaît/change de position de façon
+  cohérente avec une vraie rotation autour du sujet. **Premier signal positif fort sur ce point** —
+  H3 comprend et exécute une instruction de mouvement de caméra orbital, pas seulement un sujet qui
+  bouge devant une caméra fixe.
+- ⚠️ **Rythme de l'orbite non uniforme** — contrairement au séquençage demandé (progression linéaire
+  sur 10s), la rotation semble déjà bien avancée dès t=3s (~90-180° parcourus en 30% du temps), puis
+  la composition se stabilise/fige quasiment entre t=8 et t=10 (dernières 20% du temps, quasi aucun
+  changement visible). **Observation propre à ce test, sur ses propres frames** — ⚠️ ne PAS la
+  présenter comme une 2e confirmation du "biais résout-vite-puis-fige" du test 15s précédent : ce
+  diagnostic-là a été en partie invalidé par Aziz (cf correction plus haut dans ce fichier, le
+  mouvement du garçon/de la matrone y était en fait une chorégraphie enchaînée, pas un gel). Les deux
+  observations sont indépendantes ; celle-ci sur l'orbite tient sur ses propres mesures de timing
+  (90-180° en 30% du temps, stable sur les 20% finaux) et reste valable en tant que telle.
+- ✅ **(b) Déformation de la barre cohérente et progressive** — droite (t=0-1) → torsion (t=2-4) →
+  courbe nette (t=5-6) → arc quasi complet (t=7) → arc complet (t=8-10). Aucun morphing brutal ni
+  téléportation de forme observée.
+- ⚠️ **(c) Garçon agenouillé→debout crédible mais très compressé** — reste accroupi/courbé de t=0 à
+  t=7 (70% du clip), puis se redresse et se retrouve debout bras levés entre t=7 et t=8 (moins d'1s).
+  Transition visuellement propre (pas de morphing) mais timing très éloigné du séquençage demandé
+  (qui prévoyait un redressement progressif dès 2-4s).
+- ✅ **(d) Décor cohérent pendant la rotation** — pas de téléportation illogique, apparitions/
+  disparitions des huttes et du baobab cohérentes avec un mouvement de caméra. Point à noter : la
+  disposition exacte des huttes varie assez fortement d'une frame à l'autre (plus qu'une orbite
+  stricte autour d'un point fixe ne le produirait dans un village réel) — hypothèse que le modèle
+  réinvente partiellement la géométrie du décor plutôt que de maintenir un espace 3D rigoureux,
+  sans que ça choque à l'œil en lecture normale.
+- ✅ **(e) Aucune hallucination d'objet ni morphing facial grave** sur l'échantillon de 11 frames.
+  Seul point mineur : la transition dos→face du garçon entre t=7 et t=8 est un peu abrupte, presque
+  perçue comme un cut caché dans un mouvement par ailleurs continu.
+
+**Verdict : MITIGÉ, pas un échec — premier signal important et globalement positif sur la capacité
+orbite, mais avec le même défaut de rythme "compression puis hold" déjà vu sur l'action de personnage,
+désormais confirmé sur un mouvement de caméra aussi.** À l'inverse de l'hypothèse d'Aziz notée dans le
+test 15s précédent ("le fait que la caméra reste statique explique l'absence totale de morphing sur
+15s") — ici, MALGRÉ un mouvement de caméra actif, aucun morphing grave n'a été détecté non plus. Cette
+hypothèse spécifique (caméra statique = condition nécessaire à l'absence de morphing) n'est donc PAS
+confirmée par ce test — au contraire, elle est plutôt infirmée sur l'échantillon observé (à confirmer
+sur d'autres tests caméra mobile avant de trancher définitivement).
+
+**Piste à creuser (prochain test)** : reprendre la contrainte anti-compression déjà notée dans le test
+15s précédent ("do NOT complete the orbit before Xs", "the camera must still be mid-rotation at
+Xs") appliquée cette fois au mouvement de caméra lui-même, pas seulement à la pose du personnage —
+hypothèse que le biais "résout vite puis fige" est un comportement général du modèle indépendant du
+type de mouvement (personnage OU caméra), donc la même parade devrait s'appliquer aux deux.
+
+**Coût** : bucket horaire `get_usage_report` correspondant à ce job = **$1.227432** (cohérent avec le
+coût du clip 15s précédent à $1.23, logique vu la durée proche 10.1s vs 15.08s). Cumul mensuel total
+après ce test : **$3.285296**. ⚠️ **`get_usage_report` ne renvoie que des dollars, pas des heures/
+minutes GPU directement** — aucune conversion fiable en minutes GPU n'a pu être produite à partir de
+cet outil pour ce test (le taux 0.39 crédit/seconde documenté plus haut permettrait de calculer un
+temps GPU si le taux $/crédit était connu avec certitude, mais ce taux n'a pas été reconfirmé cette
+session — ne pas extrapoler une conversion sans le vérifier).
+
+**Fichiers** : prompt + clip 480×864/10.125s + 11 frames d'auto-review dans scratchpad session (non
+conservés dans le repo) ; clip uploadé Vercel Blob :
+`https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/clip-orbit-BjMafiqK5qtwSN8JqQYVBkkW0TR57B.mp4`
+(URL temporaire, re-télécharger si le plan doit être réutilisé en prod). Image de référence source :
+frame t=6s de `public/assets/sonjata-papercraft/clips/scene4-final-keepandduck.mp4`.
+
+### ⭐⭐⭐ Test corrigé — causalité barre + dot-eyes + sans audio (2026-08-08) — 2/3 défauts RÉSOLUS, 1 NOUVEAU défaut critique découvert (bandeau noir)
+
+Suite directe du test orbite ci-dessus. Aziz avait identifié 3 défauts précis sur le clip précédent
+(barre qui se tord "toute seule" sans main visible dessus au moment du pop, villageois en "googly
+eyes" au lieu de dot-eyes, audio généré non désiré). Objectif : corriger les 3 AVANT tout nouveau
+test créatif.
+
+**Défaut 1 — causalité barre/mains** : ✅ **RÉSOLU**. Root cause confirmée visuellement avant fix :
+sur le clip précédent, à t=2.0s la barre était déjà tordue en arc quasi complet alors qu'aucune main
+n'était visible dessus (garçon juste appuyé torse contre la barre plus bas). Fix : clause CAUSALITY
+dédiée en tête de prompt ("the bar bends ONLY as a direct, visible, physically caused result of the
+boy's own two hands... hands STAY VISIBLY IN CONTACT... NEVER a bend that appears before the hands
+are shown gripping") + rappel dans chaque tranche temporelle ("hands never leaving the bar", "hands
+still locked on the bar") + rappel dans la clause négative finale. Résultat vérifié sur 14 frames
+réparties (t=0.5 à 14.9s) : mains visiblement en contact avec la barre à chaque frame inspectée où
+le grip est pertinent, déformation progressive et crédible (droite à t=0.5-1.5s → premier arc léger
+t=2.5-3.6s → arc net t=7.5-8.5s → arc complet overhead t=12-14.9s), aucun saut de forme sans main
+visible. **La formule causale explicite (chaîne de contact permanent + interdiction de saut hors-champ
+répétée 3x dans le prompt) fonctionne** — à réutiliser comme template pour toute déformation d'objet
+causée par un personnage sur ce projet.
+
+**Défaut 2 — googly eyes** : ✅ **RÉSOLU en 2 temps**. (1) Diagnostic confirmé sur l'image de
+référence elle-même (pas seulement le prompt) : `ref-t6.png` (frame source du test précédent)
+montrait bien des villageois avec grands yeux blancs ovales + pupille noire ronde + sourcils — pas
+des dot-eyes. Le garçon au premier plan n'était PAS concerné (yeux fermés/plissés par l'effort).
+(2) Edit chirurgical Gemini 3.1 Flash Image AVANT le R2V (formule R-EDIT-CHIRURGICAL-PRESERVE-FIRST :
+CHANGE ONLY les yeux des villageois de fond → ronds noirs pleins, PRESERVE EXACTLY tout le reste dont
+le garçon, temperature=0.5). Résultat vérifié par crop 2x zoomé avant usage : yeux bien devenus des
+ronds noirs pleins sans sclère blanche visible, reste de l'image intact. Image corrigée réutilisée
+comme référence R2V. (3) Clause EYES dédiée dans le prompt en plus du fix image ("ALL characters keep
+simple solid black dot-eyes... NEVER googly eyes... shock expressed through body language only").
+Résultat sur le clip généré : dot-eyes noirs pleins maintenus sur toutes les frames inspectées,
+réactions de choc bien portées par les mains-à-la-bouche/posture, pas par les yeux. **Double
+correction (image + prompt) confirmée nécessaire et suffisante** — corriger seulement le prompt sans
+corriger l'image source aurait probablement laissé les villageois déjà mal dessinés en base.
+
+**Défaut 3 — audio généré non désiré** : traité en aval, pas de paramètre natif trouvé pour désactiver
+l'audio dans le template `video_minimax_h3_r2v` (aucun des node IDs connus — 132/136/137/138/139 —
+n'expose un flag audio ; pas creusé plus loin côté JSON du workflow faute de nécessité, `ffmpeg -an`
+suffit). Méthode utilisée : `ffmpeg -c:v copy -an` sur le clip téléchargé, piste AAC confirmée
+retirée par `ffprobe` après coup (1 seul stream video restant). Fichier final sans audio :
+`clip-orbit-v2-noaudio.mp4` (scratchpad, non uploadé — voir défaut ci-dessous).
+
+**⚠️ NOUVEAU DÉFAUT CRITIQUE découvert, non anticipé dans le brief — bandeau noir progressif** :
+à partir de t≈3.7s, un triangle noir opaque apparaît en coin supérieur gauche du cadre et grandit en
+fondu jusqu'à couvrir environ le tiers supérieur de l'image (zone ciel/cimes des arbres) vers t=5s,
+puis **reste stable à cette taille pour tout le reste du clip jusqu'à t=15s** (~10 des 15 secondes,
+soit les 2/3 du clip, confirmé par planche-contact sur 10 frames t=5 à t=15). Comportement : fondu
+progressif (pas un glitch d'1 frame), zone stable une fois établie (pas de morphing ni de flicker),
+mais **rend le clip non livrable tel quel** — masque une portion significative du cadre pendant la
+majorité du clip. Hypothèse non vérifiée : lié à l'override `136.width/height` (480×864, ratio non
+natif au template) — les warnings `override_not_embedded` sur ce node à chaque run (déjà observés sur
+2 tests consécutifs, celui-ci et le précédent) indiquent que l'override s'applique bien à l'exécution
+mais n'est pas un chemin "propre" dans le graphe ; possible que H3 gère mal les bords du cadre sur un
+ratio forcé plutôt que nativement supporté, en particulier pendant un mouvement de caméra orbital qui
+sollicite tout le cadre (le test précédent, orbite aussi, n'avait pas ce défaut documenté — donc pas
+strictement systématique, à confirmer si récurrent sur un 3e test). **Autre hypothèse non vérifiée** :
+le modèle interprète une portion de l'orbite comme un point de vue "ciel nocturne" incohérent avec la
+palette sepia/jour demandée — mais le bord du bandeau est net et géométrique (triangle/bande), pas une
+texture de ciel, ce qui penche plutôt vers un artefact de cadre que vers une hallucination de contenu.
+**Piste prochain test** : essayer sans l'override 136 (accepter le ratio natif du template puis
+recadrer en post) pour isoler si le bandeau noir est bien lié à cet override, ou tester avec une durée
+plus courte (8-10s) pour voir si le défaut apparaît toujours à un timing proportionnel similaire
+(~25-30% du clip) ou à un timing absolu fixe (~3.7s peu importe la durée totale).
+
+**Verdict global** : 2/3 défauts du brief résolus avec succès et méthode réutilisable documentée
+ci-dessus (causalité + dot-eyes). Défaut 3 (audio) traité en post-traitement faute d'option native.
+Mais **clip NON livré à Aziz comme asset final** — le nouveau défaut du bandeau noir est apparu
+pendant la vérification frame-par-frame obligatoire et rend ce clip précis inexploitable, malgré la
+réussite des 2 corrections demandées. Ne pas répéter cette configuration (même ratio + même durée +
+même type de mouvement orbite) sans d'abord tester la piste de la ligne ci-dessus.
+
+**Coût** : cumul mensuel `get_usage_report` = **$3.285296** au moment de la vérification (delta vs
+$3.29 déjà enregistré en fin de session précédente non isolable proprement — l'outil ne permet pas de
+distinguer le coût unitaire de CE job dans l'agrégat journalier consulté ; ne pas confabuler un
+chiffre précis pour ce clip seul, contrairement au test précédent où le bucket horaire avait permis
+un chiffre net).
+
+**Fichiers** : `ref-t6-doteyes-fixed.png` (image de référence corrigée), `prompt-v2.txt` (prompt
+complet 6696 caractères), `clip-orbit-v2.mp4` (avec audio) / `clip-orbit-v2-noaudio.mp4` (sans audio),
+14 frames de vérification (`check-v2/`) + planche-contact bandeau noir (`contact-sheet-5to15.jpg`) —
+tous dans scratchpad session, non conservés dans le repo, non uploadés Vercel Blob (clip non livrable
+en l'état).
 
 ### Setup (déjà fait sur ce repo, one-time)
 ```
@@ -664,3 +1055,128 @@ CFA à 5.5 dB imposait un fondu de 4 s).
 uniques déjà produites, toutes mesurées (durée · amplitude · bande 200 Hz–2 kHz de la voix · écart de
 boucle). Générer sans l'avoir lu, c'est re-payer ce qu'on possède : 4 groupes de doublons binaires
 exacts y ont été trouvés (24.8 Mo), dont 3 pistes stockées deux fois sous des noms différents.
+
+### ⛔ Test final session — clip livré ne correspond PAS au prompt envoyé (2026-08-08, dernier appel session)
+
+Objectif : corriger le défaut "triangle noir progressif" du test orbite v2 (cause diagnostiquée :
+durée proche du plafond 15s + prompt ne couvrant explicitement que "8-10s (extend proportionally if
+longer)", laissant les 5 dernières secondes sans instruction précise). Fix tenté : prompt v3 recalibré
+strictement pour **10 secondes**, tranches explicites SECOND 0-1 à SECOND 9-10 couvrant 100% de la
+durée sans aucune clause vague, + clause négative explicite anti-bandeau noir ("No black band, no dark
+triangle, no vignette, no frame corner darkening... entire frame stays fully lit and clean from edge
+to edge for all 10 seconds").
+
+**Prérequis vérifiés avant l'appel (tous corrects)** :
+- Image de référence `ref-t6-doteyes-fixed.png` **confirmée être un JPEG déguisé en `.png`** (gotcha
+  anticipé, exactement comme documenté) — `PIL Image.open().format` = `JPEG`, résolution 768×1365 ≠
+  résolution input original 720×1280. Reconvertie proprement : `ref-t6-doteyes-fixed-clean.png`, PNG
+  RGB réel, 720×1280, LANCZOS resize. Vérifiée visuellement après reconversion : dot-eyes intacts,
+  mains sur la barre bien visibles, aucune dégradation de style. **Root cause du gotcha reconfirmée
+  : `fix-dot-eyes.py` (édition Gemini) sauvegarde parfois un JPEG ré-encodé sous extension `.png` —
+  toujours vérifier `PIL.Image.format` avant réutilisation d'un fichier "corrigé" par ce script.**
+- Upload Comfy Cloud réussi (`26478e6e...ec.png`).
+- `estimate_credits` : 0 crédit (cohérent, open-weight).
+- Overrides envoyés : `132.value=10`, `136.width/height=480/864`, `137.image` + `139.image` = la
+  référence corrigée, `138.text` = prompt v3 complet. Warnings de soumission identiques aux runs
+  précédents (`override_not_embedded` sur 136/138 — normal, déjà documenté comme sans impact réel).
+
+**Résultat obtenu — ÉCHEC D'INFRASTRUCTURE, pas un échec de prompt** : `get_job_status` a rapporté
+`succeeded/completed` sans aucune erreur. Le fichier vidéo livré (480×864, 10.125s, 243 frames @
+24fps — mêmes caractéristiques techniques attendues) contient un **contenu totalement différent du
+prompt envoyé** : un jeune garçon en super-héros (cape rouge, style comics/manhwa) sur un toit
+d'immeuble urbain de nuit, avec du texte incrusté "GET READY TO MEET YOUR MAKER", suivi d'un robot/
+mecha géant aux yeux et bouche lumineux rouges façon kaiju. **Zéro élément du prompt Sonjata présent**
+— pas de village, pas de barre de fer, pas de style papercraft sépia/ocre, pas de dot-eyes, pas
+d'orbite caméra autour d'un personnage agenouillé. Confirmé par extraction directe de frames à t=0
+ET t=9.8s (pas seulement un artefact de planche-contact) — le contenu erroné couvre l'intégralité du
+clip, pas une portion.
+
+**Diagnostic** : ce n'est pas un problème de discipline de prompt (le prompt v3 était rigoureux, sur
+le modèle validé plus tôt cette session) ni un problème de format de l'image de référence (corrigé et
+vérifié avant l'appel). C'est une anomalie d'exécution côté Comfy Cloud — soit une collision de sortie
+avec un job d'une autre session/un autre utilisateur, soit le node LoadImage/prompt text n'a pas
+réellement reçu les valeurs override malgré le warning "ran on the executed graph" habituel (à
+reconsidérer : peut-être que ce warning ne garantit PAS toujours une prise en compte réelle, contraire
+à l'hypothèse jusqu'ici acceptée sur ce projet). **Aucune corrélation avec le contenu Sonjata que ce
+soit — le clip livré ressemble à un template de démo/exemple générique du service ("GET READY TO MEET
+YOUR MAKER" a l'air d'un texte de stock/placeholder), hypothèse à vérifier : output peut-être un
+sample par défaut renvoyé en cas de défaillance silencieuse du pipeline, pas un vrai résultat H3 sur
+nos inputs.**
+
+**Décision** : clip NON livré à Aziz — non uploadé sur Vercel Blob (conforme à la règle "ne pas
+uploader un clip cassé"). Aucun nouvel appel relancé (dernier appel autorisé de la session R&D).
+
+**Coût** : bucket horaire 16h-17h UTC du 2026-08-08 = $0.548394. Cumul mensuel total après ce test :
+$3.833690 (`get_usage_report`).
+
+**À faire en prochaine session avant de retenter** :
+1. Relancer EXACTEMENT ce même appel (même prompt v3, même image, mêmes overrides) pour voir si
+   l'anomalie se reproduit — si oui, c'est structurel (mauvais mapping node/template) ; si non, c'était
+   un glitch ponctuel d'infrastructure (cache/routing serveur).
+2. Si ça se reproduit : vérifier via `get_template(video_minimax_h3_r2v, summary_only=true)` que les
+   node IDs 132/136/137/138/139 utilisés depuis le début de session correspondent toujours à la bonne
+   version du template (un template peut avoir été mis à jour côté Comfy Cloud entre le premier test
+   du matin et ce dernier test du soir, changeant silencieusement le mapping des IDs).
+3. Ne PAS reconsidérer la correction du bandeau noir (prompt v3, séquençage 0-10s serré) comme
+   validée ou invalidée — ce test n'a rien testé côté contenu réel, à refaire proprement.
+
+**Bilan complet de la session R&D MiniMax H3 (7 appels)** : voir sections précédentes de ce fichier
+pour le détail complet. Résumé : (1) causalité geste→objet et (2) dot-eyes = techniques de prompt
+validées et réutilisables (formule causale répétée 3x + double correction image+prompt). (3) Biais
+modèle "résout vite puis fige" confirmé sur 2 types de mouvement différents (action perso ET caméra),
+non résolu malgré tranches temporelles égales dans le prompt. (4) Défaut bandeau noir sur clip 15s
+proche du plafond durée — hypothèse de cause posée mais NON validée (dernier test invalidé par
+l'anomalie d'infrastructure ci-dessus, pas par le contenu). (5) Anomalie d'infrastructure inédite
+découverte en toute fin de session — à surveiller/reproduire avant de faire confiance à un run H3
+"succeeded" sans vérification frame-par-flow systématique du contenu réel, pas seulement du format
+technique (résolution/durée/codec).
+
+### ⭐⭐ Diagnostic forensique post-mortem (agent dédié, 2026-08-08, session suivante) — AUCUN nouvel appel payant
+
+Investigation demandée par Aziz avant tout nouveau test : notre côté ou Comfy Cloud ? Reconstitution
+complète sans relancer `run_template` (clip + prompt + ref encore en scratchpad, exploitables).
+
+**Vérifications faites — tout disculpe notre pipeline** :
+1. **Prompt v3** (`prompt-v3.txt`, relu intégralement) : rigoureux, structure seconde-par-seconde
+   0→10s, clause causale barre/mains, clause dot-eyes stricte, clause anti-bandeau noir. Rien à voir
+   avec un super-héros/robot. Pas un problème de discipline de prompt.
+2. **Image de référence** (`ref-t6-doteyes-fixed-clean.png`, relue visuellement) : bien conforme —
+   village africain, dot-eyes, garçon agenouillé tenant la barre, palette sépia/ocre. PNG réel
+   720×1280 (le gotcha JPEG-déguisé avait déjà été corrigé et vérifié avant l'appel). L'upload n'est
+   pas la source du problème.
+3. **Overrides envoyés** (`132.value=10`, `136.width/height=480/864`, `137.image`+`139.image` = la
+   même ref Sonjata, `138.text` = prompt v3) : **identiques en structure** aux appels précédents
+   réussis de la même session (Flowdesk 15s, NoteShield, PecheurSurpeche16x9). Pas de champ manquant,
+   pas de node oublié.
+4. **Point central : le node 139 a bien été neutralisé/overridé** avec la même image que 137 (voir
+   ligne "Overrides envoyés" ci-dessus) — **l'hypothèse "override 139 manqué → fuite de l'image démo
+   mecha_dragon_lightning.png" est INFIRMÉE**. On avait bien couvert ce node précis, conformément à
+   la règle déjà écrite plus haut dans ce fichier. Le contenu mecha/super-héros ressemble à du
+   contenu par-défaut du template, mais sa présence dans un run où l'override a été soumis pointe vers
+   un **échec du serveur à appliquer réellement l'override malgré le `succeeded` sans erreur** — pas
+   vers un oubli côté `input_overrides`.
+5. **Lacune de méthode identifiée** : le `prompt_id` retourné par ce `run_template` n'a été journalisé
+   nulle part (ni scratchpad, ni `minimax.md`). Impossible de confirmer a posteriori via
+   `get_job_status`/`get_queue` s'il y a eu mismatch d'ID ou collision avec un autre job — l'identifiant
+   n'existe plus pour vérification. Aucune tentative de deviner/reconstituer un `prompt_id` pour
+   interroger l'API a posteriori (aurait été spéculatif, hors mission diagnostic).
+
+**Verdict** : cause la plus probable = **incident infrastructure Comfy Cloud** (collision de sortie
+avec un autre job, ou non-application silencieuse des overrides serveur malgré statut `succeeded`
+sans erreur). Chaque facteur normalement imputable à notre pipeline (prompt, ref, structure d'appel,
+node 139) a été vérifié et disculpé. Pas une certitude à 100% (aurait fallu le `prompt_id` loggé +
+`get_job_status` immédiat pour preuve définitive), mais aucun signal ne pointe vers notre `run_template`.
+
+**Actions pour éviter la récidive** :
+- **Toujours logger le `prompt_id`** retourné par `run_template` dans un fichier sidecar
+  (`<clip>.job-id.txt`) au moment même de l'appel — absent cette fois, c'est ce qui bloque toute
+  vérification a posteriori. Règle à appliquer dès le prochain appel H3.
+- **Vérification frame-par-frame systématique avant tout upload/livraison** — déjà la pratique de
+  fait (c'est elle qui a détecté cette anomalie), formalisée ici comme non-négociable : un `succeeded`
+  serveur ne garantit PAS que le contenu correspond aux inputs.
+- **Si récidive sur un prochain test** : comparer deux runs consécutifs strictement identiques
+  (même prompt, même image, mêmes overrides) — reproductible = bug structurel de mapping ;
+  non-reproductible = glitch ponctuel d'infra. Test à faire au prochain appel autorisé par Aziz,
+  PAS relancé de façon autonome ici (mission = diagnostic seul).
+- Si reproductible : signalement à Comfy Cloud avec `prompt_id` en preuve (nécessite le point de
+  logging ci-dessus pour être actionnable la prochaine fois).

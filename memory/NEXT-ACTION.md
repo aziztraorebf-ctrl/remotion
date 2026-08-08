@@ -26,33 +26,55 @@
 
 ---
 
-## ⭐⭐ NOUVEAU CHANTIER OUVERT 2026-08-08 SOIR — MiniMax H3 via Comfy Cloud (self-host gratuit)
+## ⭐⭐ MiniMax H3 via Comfy Cloud — SESSION D'ENCHAÎNEMENT FAITE (2026-08-08), prototypes archivés
 
-**Découverte de session** : H3 open-weight tourne gratuitement (inclus abonnement, ~$1.46 pour 11
-clips/110s ce soir) via Comfy Cloud MCP — 5-23x moins cher que Seedance 2.0 pour un résultat
-comparable, si le prompt est écrit avec la même rigueur que Seedance (voir découverte clé ci-dessous).
-Setup + détails complets : `memory/tools/minimax.md` § Comfy Cloud (tout en haut du fichier).
+**Découverte de session** : H3 open-weight tourne gratuitement (inclus abonnement, ~$3.83 pour 7 clips
+ce soir) via Comfy Cloud MCP — 5-23x moins cher que Seedance 2.0 pour un résultat comparable, si le
+prompt est écrit avec la même rigueur que Seedance. Setup + bilan complet : `memory/tools/minimax.md`
+§ Comfy Cloud (tout en haut du fichier).
 
-**⭐⭐⭐ Découverte clé** : le laxisme du prompt (pas H3 lui-même) est la cause des hallucinations et
-désynchronisations observées. Toujours passer par l'agent `visual-producer` (discipline Seedance
-2.0 : séquençage temporel par tranches + clause négative répétée + décor verrouillé) plutôt que
-composer un prompt H3 à la volée — prouvé en A/B sur la scène Sonjata (bâton halluciné disparu,
-timing dramatique respecté à la seconde près une fois le prompt rigoureux).
+**⭐⭐⭐ Découverte clé confirmée sur toute la session** : le laxisme du prompt (pas H3 lui-même) est la
+cause des hallucinations/désynchronisations. Toujours passer par `visual-producer` (discipline
+Seedance 2.0 : séquençage par tranches + clause négative répétée + décor verrouillé + **clause de
+causalité explicite pour tout objet manipulé** — ajout de cette session, corrige le défaut "objet qui
+se déforme sans main visible").
 
-**Prochaine session — 4 pistes proposées, par ordre d'impact** :
-1. Style Sonjata/papercraft sur un ENCHAÎNEMENT de 2-3 scènes du même arc narratif (pas un clip
-   isolé) — test le plus proche de l'objectif réel "héros oubliés" abandonné pour coût Seedance.
-2. Isoler la réaction de foule (nommer 1-2 personnages précis, pas "the crowd" en bloc) — la
-   réaction collective simultanée reste jugée "un peu exagérée" même sur le prompt rigoureux.
-3. Tester la génération d'IMAGE pure via H3/Comfy Cloud (pas juste l'animation) — pourrait remplacer
-   une partie du pipeline Gemini/Recraft pour ce style, dans le même écosystème gratuit.
-4. Cohérence de personnage à travers 2 générations séparées (chaîner : dernière frame du clip N
-   comme référence du clip N+1) — répond à la question Flux 3 vs H3 explorée en début de session,
-   avec un vrai test au lieu d'une hypothèse théorique.
+**✅ 2 prototypes validés par Aziz, archivés comme référence** :
+`out/_r-and-d/minimax-h3-prototypes/sonjata-vertical/` (2 clips + prompts exacts + image source +
+README). Prouvent : ratio vertical natif 480x864 fiable, nommer précisément qui réagit > "the crowd",
+ombres portées cohérentes avec le mouvement. Piste #1 (enchaînement 2 plans) et #2 (foule nommée) de
+la session précédente = FAITES, ne pas refaire.
 
-Assets déjà utilisés pour les tests : image `panel1-surcharge-source.png` (Flowdesk), `p1-couloir-
-file.jpg` (NoteShield), `scene2-humiliation-v2-13s.mp4`/frame extraite (Sonjata) — le projet Sonjata
-complet (28 clips papercraft) vit dans `public/assets/sonjata-papercraft/clips/`.
+⛔ **Limite trouvée** : au-delà de ~12-15s (proche du plafond documenté H3) ou avec des tranches
+temporelles qui ne couvrent pas toute la durée réelle, artefact de dégradation progressive possible
+(triangle noir observé). Rester sous ~10-12s ou couvrir explicitement 100% de la durée en tranches.
+⚠️ **Incident non résolu** : un run a livré un contenu totalement étranger au prompt (statut
+"succeeded" mais scène aberrante) — diagnostic a écarté toute cause de notre côté, probable incident
+Comfy Cloud. Règle ajoutée : toujours logger le `prompt_id` de chaque `run_template` (voir
+`minimax.md` tout en haut) pour pouvoir enquêter si ça se reproduit.
+
+**Prochaine session H3 — 3 pistes reformulées par Aziz (2026-08-08 soir), à tester sur IMAGE INÉDITE
+(pas une frame recyclée d'une vidéo déjà publiée — évite d'hériter des défauts de l'image source,
+cf `feedback` H3 littéral qui ne corrige pas les défauts de la ref) :**
+1. **Workflow "personnages posés puis animés"** (à revalider — Aziz ne se souvient plus du détail
+   exact du workflow utilisé par le passé) : générer une image fraîche avec tous les
+   personnages/éléments en place (façon plan de scène), PUIS les faire bouger — plutôt que de
+   repartir d'une frame héritée. Demander à `visual-producer` de préciser ce pattern s'il le
+   reconnaît (probablement proche du workflow storyboard→breakdown déjà en place).
+2. **Multi-référence façon Seedance 2.0 Omni** (`reference-to-video`, 9 images possibles en Seedance) :
+   tester si H3/Comfy Cloud tient le même pattern — image 1 = personnage A, image 2 = personnage B,
+   prompt qui les fait interagir. Vérifier d'abord si le template H3 R2V accepte plusieurs refs
+   (le node 139, 2e slot LoadImage optionnel, existe déjà — jamais testé comme vraie 2e référence
+   utile, seulement neutralisé jusqu'ici).
+3. **Format HORIZONTAL** : tout testé jusqu'ici est vertical (9:16). Tester si le style storybook/
+   papercraft (ou un autre style) tient aussi bien en horizontal, en particulier sur les détails,
+   le déplacement des personnages et les mouvements de caméra (l'orbite ~180° a été validée en
+   vertical cette session — à revérifier en horizontal, terrain différent).
+
+Assets déjà utilisés pour les tests archivés : `scene2-humiliation-v2-13s.mp4`/frame extraite (Sonjata,
+prototypes validés), `scene4-final-keepandduck.mp4` (orbite barre de fer, résultat mitigé — voir
+minimax.md pour le détail complet). Le projet Sonjata complet (28 clips papercraft) vit dans
+`public/assets/sonjata-papercraft/clips/`.
 
 ---
 
@@ -176,7 +198,11 @@ réévaluer si c'est suffisant avant de l'activer. Rien d'urgent ici, juste obse
 ## 🎭🎭 SCÈNES À PERSONNAGES — SOCLE COMPLET, R&D CLOSE
 
 > ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`** — tout y est détaillé.
-> ✅ **MERGÉ DANS `master` le 2026-07-29** (fast-forward) — disponible pour tout le monde.
+> ✅ **Socle de base MERGÉ DANS `master` le 2026-07-29** (fast-forward) — disponible pour tout le monde.
+> ⚠️ **Le 2e cas d'usage du 2026-08-03 (héritage de pose, commit `14990278`) n'est PAS dans ce merge** —
+> vérifié 2026-08-08 : ce commit vit uniquement sur la branche de travail courante à ce moment-là
+> (`feat/gazoduc-acte1-hook-globe`), absent de `master` (figé au 2026-07-31). Ne pas supposer ce
+> 2e cas disponible partout tant qu'il n'a pas été explicitement porté/mergé.
 >
 > ### ⛔ DÉCISION DE FIN DE SESSION (Aziz) : ON ARRÊTE LA R&D, ON PASSE À LA PRODUCTION
 > « Continuer éternellement pourrait être un piège pour faire ce qui est le plus important : créer
