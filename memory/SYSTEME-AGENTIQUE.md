@@ -136,6 +136,10 @@ Ex : refonte Sénégal V3 (voix V3), refonte AES, ou toute scène à refaire. Su
    technique ni cocher une checklist.
 3. **Déléguer à un agent frais** : un contexte vierge bat un contexte saturé pour produire/vérifier. Claude =
    chef d'orchestre, pas exécutant de chaque pixel.
+   ⚠️ **Prompt multi-agents parallèles = préciser explicitement l'indépendance** ("toi seul, mission
+   autonome, ne pas attendre/mentionner d'autres agents") — vécu 2026-08-07 (session studio réutilisable) :
+   2 agents sur 4 lancés en parallèle se sont mis en "attente des autres agents" au lieu de produire leur
+   rapport solo, faute de cette précision dans le prompt. Coût : relance nécessaire, tokens perdus.
 
 ---
 

@@ -107,11 +107,28 @@ brancheront donc PAS directement (pas de friction de projection nulle) — mais 
 | **Portrait-commandant** (le "qui", FAIBLE densité seulement) | `CommanderMedallion` | idem | ⚠️ règle densité (voir ci-dessous). |
 | **Habillage** (cadre, cartouche, légende, sous-titre) | `EmFrame`/`FactionLegend`/`EmSubtitle`/`EmDefs` | idem | Réutilisable. |
 
-**2 variantes d'habillage validées** (= preuve que le moteur est réutilisable) :
+**5 variantes d'habillage validées** (= preuve que le moteur est réutilisable) :
 - **`KhartoumChocSVG`** (compo Root) — assaut ponctuel : RSF prend le palais, SAF défend puis submergée.
   `out/_rnd/warmap-choc/khartoum-choc-v6.mp4` · catbox `k552fw`.
 - **`FrontOuvertSVG`** (compo Root) — front qui bouge : impasse → tenaille qui encercle une poche SAF.
   **Brique directe pour l'Acte 2 Soudan** (impasse militaire). `front-ouvert-v5.mp4` · catbox `1ed8vp`.
+- **`TwoFaceToken`** (`warmap/soudan-acte2/TwoFaceToken.tsx`, prouvé, rattrapage 2026-08-07) — alliance de
+  2 factions qui fusionne (2 demi-visages soudés) puis se scinde (faille dorée qui vibre → 2 jetons
+  distincts). "Une alliance qui fusionne puis rompt" — actuellement câblé sur 2 portraits en dur
+  (`faceImg()`), généralisable en passant les 2 sprites en props.
+- **`BlocImpasseB6`** (`warmap/soudan-acte2/BlocImpasseB6.tsx`, prouvé, rattrapage 2026-08-07) — colonne de
+  chars qui avance en formation, bute sur un front qui se déforme (cloche gaussienne) puis reflue à sa
+  position initiale : "une offensive matérielle qui échoue malgré la supériorité de feu". Réutilise déjà
+  le socle `warmapChoc.tsx` (EmDefs/EmFrame/ManeuverArrow/ClashSparks/Impact/Sonar).
+- ⚠️ **`BlocRapportForce`** (`warmap/soudan-acte2/BlocRapportForce.tsx`, proto — rendu final non confirmé,
+  c'est `BlocImpasseB6` ci-dessus qui a été monté dans le livrable) — variante 100% vectorielle/abstraite
+  (pas de sprites raster) : "un rapport de force sans lieu précis" — 2 masses géométriques opposées
+  séparées par un front qui encaisse 3 vagues et rebondit sans céder. Doctrine "concept sans lieu → BLOC
+  pas carte" déjà documentée dans le code.
+- **`KhartoumEtatMajorSVG`** (`warmap/KhartoumEtatMajorSVG.tsx`, prouvé, rattrapage 2026-08-07) — insert
+  plein écran 856 lignes : "une capitale qui tombe en une seule journée" — 3 cibles fixes frappées en
+  séquence STRICTE (jamais simultané), colonne qui converge, impact+fumée+sceau à chaque prise. Isolable
+  moyennant généralisation des cibles/positions/fond (actuellement Khartoum 15 avril 2023 en dur).
 
 **3 règles gravées** (détail : doctrine) : (1) une flèche annonce toujours un mouvement ; (2) SweepZone
 seulement pour un vrai basculement territorial ; (3) pion-visage à faible densité / bloc abstrait en nombre
@@ -121,6 +138,39 @@ seulement pour un vrai basculement territorial ; (3) pion-visage à faible densi
 SVG parchemin/encre "l'or du Darfour" (pelle+lingot+fumée de guerre+traînée d'or), pose le fil rouge de
 l'épisode. Reskin par remap couleur (`orDarfourGroups.ts`, zéro LLM). Commit `9920643`. À finir (reformuler
 accroche, pelle-drapeau, colorisation séquencée). Détail : `memory/projects/soudan-midform-STORYBOARD-ACTE1.md` § HOOK.
+
+## 🗺️ RÉVÉLATION TERRITORIALE SVG 9:16 (Short AES 90s, rattrapage 2026-08-07)
+
+| Quand tu veux... | Composant | Où | Notes |
+|---|---|---|---|
+| **Révéler une zone territoriale stratégique** (bande frontalière, bassin transfrontalier) | `TerritoryRevealSVG9x16` (généralisation de `LiptakoRevealSVG9x16`) | `warmap/shorts/aes-short-90s/LiptakoRevealSVG9x16.tsx` | Prouvé. Contour qui se dessine + remplissage/surbrillance de zone, carte SVG pure 9:16. Isolable moyennant remplacement du path Liptako-Gourma + labels voisins par props. |
+| **Établir le contexte continental avant de recentrer sur une sous-région** | `ContinentOpeningSVG9x16` (généralisation de `AfriqueOpening`) | `warmap/shorts/aes-short-90s/AfriqueOpening.tsx` | Prouvé. Silhouette Afrique qui apparaît puis zoome vers la sous-région du sujet. |
+
+---
+
+## 🌐 GLOBE D3 — briques réutilisables (rattrapage 2026-08-07, Gazoduc + Soudan Actes 3/4/5/6)
+
+> ⛔ **Section absente jusqu'ici** — ce catalogue ne couvrait que le registre Mapbox alors que Gazoduc et
+> Soudan utilisent massivement un globe D3 orthographique en SVG pur (projection différente, pas de
+> `map.project()`). Socle commun (déjà réutilisé par 3 projets, à ne PAS reproposer comme candidat neuf) :
+> `GlobeFlagFill`, `BorderPulse`, `ShockRing`, `SiegeRings`, `DestPoint`, `GeoPlaqueSVG`, `FlagToken`,
+> `windingPathD`/`pointAlongWinding` — vivent dans `SoudanActe3GlobeProto16x9.tsx` et `geoArc.ts`
+> (`src/projects/_rnd/d3-16x9/`), importés tels quels par Gazoduc et les Actes 3/4/5/6 Soudan.
+
+| Quand tu veux... | Composant | Où | Notes |
+|---|---|---|---|
+| **Révéler un pays avant qu'un tracé n'en parte/arrive** | `GlobeCountryTraceReveal` | `souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (`PaysTrace`, L167-256) | Prouvé. Contour qui se trace lentement (10s) puis se remplit. Utilisé 3× (Nigeria/Maroc/Algérie). |
+| **⭐ Rivalité entre 2 tracés concurrents** (2 propositions, 2 routes) | `GlobeArcTravelerMarker` | `souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (L278-331, L602-617) | Prouvé. Trajet segmenté sur jalons géo réels + marker "tête de trace" voyageur + label ancré mobile + anti-collision. **Découverte la plus transférable du chantier Gazoduc** — le stagger temporel + couleurs différenciées EST le langage visuel de la rivalité géographique. |
+| **Bloc régional multi-pays comme cible commune** (marché, zone de couverture) | `GlobeRegionMaskReveal` | `souverain/gazoduc-aagp-tsgp/GazoducActe1Hook.tsx` (L491-533) | Prouvé. Assombrit tout le globe puis laisse percer la zone avec glow — plus fort qu'un simple contour qui pulse. Itération V2 après retour Aziz ("vu de loin, le glow ne montre pas qu'on parle de l'Europe"). |
+| **Caméra qui suit un tracé long automatiquement** (pas de keyframes manuelles) | `MapContinuousFollowCamera` | `souverain/gazoduc-aagp-tsgp/GazoducActe2AAGP.tsx` (`camFor`/`buildFullPathSamples`/`windowBBox`, L155-276) | Prouvé. Bbox glissante recalculée à chaque frame, 4 phases (approche/suivi/ralenti-climax/dézoom). S'adapte à n'importe quelle géométrie de tracé sans recalibrage. |
+| **"Qui arme qui"** — N sources convergent vers 1 point | `GlobeArcConvergenceOcclusion` | `_rnd/d3-16x9/SoudanActe4B6Globe.tsx` (L295-410) | Proto. Occlusion 3D réelle (rare en SVG pur) + onde de choc convergente. Généralisable via props `sources[]` + `target`. |
+| **Un acteur nommé reste "actif" après nomination** | Frontière qui respire (`BorderPulse` one-shot + glow sinusoïdal persistant) | Répété identique 3× : `SoudanActe4B1toB4Globe.tsx`, `SoudanActe4B6Globe.tsx`, `SoudanActe6Globe.tsx` | Prouvé — répétition 3× SANS jamais être remis en cause = preuve de maturité. Extraction triviale en hook `useBreathingBorder(feature, path, onAt, color)`. |
+| **Chef de guerre/acteur nommé incarné sur le globe** | `PortraitToken` (globe) | `_rnd/d3-16x9/SoudanActe5Globe.tsx` (source canonique — dupliqué ensuite dans Acte3/Acte4, doublon confirmé) | Prouvé — répété identiquement 3× (preuve de portabilité forte). Cercle parchemin + bordure couleur-camp + portrait clippé + pulse d'arrivée. |
+| **⭐ Route de trafic (or/armes/carburant)** — priorité haute pour Sahel/AES | Corridor de contrebande sinueux (artère + 2 pistes secondaires + checkpoints + convois en boucle) | `_rnd/d3-16x9/SoudanActe5Globe.tsx` (L192-230 calcul + L435-483 rendu) | Proto (système complet à extraire en 1 composant composite `SmugglingCorridor{from,to,waypoints[],checkpointFractions[]}`). Tracé qui SERPENTE (pas un arc géodésique "trop GPS"). Aucun équivalent dans les catalogues — `RefugeeFlow` est un flux de population, forme et intention différentes (corridor = contrôle, pas déplacement humain). |
+| **Blocage institutionnel incarné** (UA, CEDEAO, Conseil de sécurité) | `VoteBlockedByVeto` (onde physique + X qui se trace + marteau) | `_rnd/d3-16x9/SoudanActe6VoteInsert.tsx` (216 lignes) | Prouvé — fruit documenté d'une passe DA-brief (Gemini+Kimi, convergence), validé et ajusté après retour Aziz ("trop rapide"). Cascade par distance réelle depuis le siège bloquant, pas un délai arbitraire. |
+| **Objet mobile crédible à toute distance caméra** (véhicule sur globe) | Pattern de calibration proportionnelle au zoom (`scale = baseScale * (camScale/calibScale) * reveal`) | `_rnd/d3-16x9/SoudanActe4B1toB4Globe.tsx` (`NavireEncreAuGlobe`, L245-302) | Proto — la vraie valeur est la FORMULE de calibration, généralisable à tout objet posé sur un globe D3 qui doit rester cohérent au zoom (pas le SVG du navire lui-même, déjà indexé ailleurs). |
+
+---
 
 ## 📐 CONVENTION DE RANGEMENT (où mettre une nouvelle brique)
 

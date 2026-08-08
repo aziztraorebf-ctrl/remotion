@@ -13,6 +13,15 @@ décisions tranchées, correctifs appliqués) : `PLAN-ACTES2-5.md`. Lien rendu v
 comparative Soudan/AES faite en fin de session : registre visuel (jetons/décors) reste sous le
 niveau déjà prouvé ailleurs dans le projet — probable 3e passage à venir, pas encore fait.
 
+⭐⭐ **PLAN DE REFONTE v3 PRODUIT PAR 4 AGENTS VIERGES (2026-08-07)** — détail complet, diagnostic
+transversal, et point de goût non tranché (registre Segment B) : `PLAN-ACTES2-5.md` § "TEST STUDIO
+RÉUTILISABLE — 4 AGENTS VIERGES SUR L'ACTE 3 v2". Résumé : le rythme caméra n'est PAS le problème
+(déjà bon) ; le vrai défaut = jetons/icônes des 3 segments dessinés à la main au lieu de générés par
+un modèle SVG (Règle N°0 violée, incohérence avec le Segment B qui, lui, a reçu ce traitement). Point
+en attente de décision Aziz : Segment B doit-il rester "vie qui s'éteint sans acteur" (choix éditorial
+DA-brief antérieur) ou une variante du registre état-major Soudan (multi-cibles même site, sans
+acteur armé) mérite-t-elle d'être réexaminée ?
+
 ---
 
 ## État — ACTE 2 TERMINÉ ET VALIDÉ (finale produite le 2026-08-04)

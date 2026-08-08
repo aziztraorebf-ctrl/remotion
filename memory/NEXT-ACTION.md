@@ -26,23 +26,36 @@
 
 ---
 
-## ⭐⭐ DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07 — À TRANCHER EN PRIORITÉ
+## ⭐⭐ GAZODUC ACTE 3 (TSGP) — À TRANCHER EN PRIORITÉ
 
-**1. Gazoduc Acte 3 (TSGP)** : rendu v2 corrigé après DA-brief critique, lien
+Rendu v2 corrigé après DA-brief critique, lien
 https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte3-v2-Sw435S8sYbHTbgMbmvDkRfPMdkyhFT.mp4
-— Aziz doit le revoir. ⚠️ Analyse comparative Soudan/AES faite AVANT ce rendu : nos jetons/décors
-restent en dessous du registre déjà prouvé (drapeaux réels, icônes-ressources, jetons état-major
-mobiles façon `KhartoumEtatMajorSVG`/AES) — probable 3e passage nécessaire, ne PAS scanner
-`MAPBOX-COMPOSANTS.md`/`COMPOSANTS-INDEX.md` après coup, AVANT de recoder. Détail : PLAN-ACTES2-5.md.
+— Aziz doit le revoir. ⭐⭐ **Plan de refonte v3 produit par 4 agents vierges (2026-08-07)**, diagnostic
+transversal + point de goût Segment B non tranché (registre "vie qui s'éteint sans acteur" vs variante
+état-major) : `memory/episodes/souverain/gazoduc-aagp-tsgp/PLAN-ACTES2-5.md` § "TEST STUDIO RÉUTILISABLE".
+Ne PAS scanner `MAPBOX-COMPOSANTS.md`/`COMPOSANTS-INDEX.md` après coup, AVANT de recoder — déjà fait par
+le plan v3, à lire d'abord.
 
-**2. Session dédiée "studio réutilisable"** (chantier séparé, priorité proche) : le vrai problème
-n'est pas l'absence de briques (catalogues existent : MAPBOX-COMPOSANTS.md, CATALOGUE-CARTE-VIVANTE.md,
-COMPOSANTS-INDEX.md, INTENTION-FORME-INDEX.md) mais l'absence de MÉCANIQUE D'EXÉCUTION qui force leur
-consultation avant de coder (contrairement au DA-brief-gate, qui force un arrêt réel). Méthode actée
-avec Aziz : audit INTERNE d'abord (agents Claude Code contexte vierge, accès direct au workspace,
-effort élevé, N agents en parallèle sur des angles différents), PUIS audit externe nourri par le
-résumé textuel produit par l'audit interne (jamais l'inverse — un LLM externe ne peut pas lire le
-vrai code). Objectif : diagnostiquer les trous de mécanique, pas de contenu.
+---
+
+## 🔧 BACKLOG — Studio réutilisable (Mécanisme 1 Gardien, pas urgent)
+
+✅ **Mécanisme 2 (Extracteur) codé et validé fonctionnel** (2026-08-07) — rattrapage rétroactif fait
+(Soudan, CFA, AES, Sénégal Short D3, Gazoduc Actes 1+2, Peste 1347, Flowdesk : ~30 briques indexées dans
+`COMPOSANTS-INDEX.md`, `WARMAP-COMPOSANTS-INDEX.md` + nouvelle section Globe D3, nouveau
+`_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md`) + test de découvrabilité 6 agents concluant (convergence
+3/3, section Globe D3 retrouvée sans être nommée). Détail complet : `memory/doctrines/
+STUDIO-REUTILISABLE-GATE.md` + leçon méthodologique `feedback_catalogue-position-liste-et-brief-restrictif-
+cachent-brique-existante.md`.
+⚠️ **5 entrées catalogue corrigées le 2026-08-07** (détectées par les agents de test, pas par moi en
+écrivant) : `PriceTagImpact` (chemin faux) + `ImpactStamp`/`TetherFlow`/`PopulationDots`/
+`SelfWritingSignatures` (noms de composants inventés, jamais isolés sous ce nom dans le code réel — marqués
+⚠️ dans `COMPOSANTS-INDEX.md`, à réexaminer avant toute extraction réelle).
+⚠️ **Point d'hygiène toujours non tranché** : le CFA mid-form vit dans un worktree `remotion-cfa` (branche
+`feat/cfa-nuit1994-svg-mix`) jamais mergé — plusieurs briques CFA indexées pointent vers ce worktree. À
+trancher avec Aziz (merger ou fermer) avant de promouvoir ces briques vers `_shared/`.
+**Mécanisme 1 (Gardien)** : toujours pas codé, volontairement — catalogues mieux peuplés maintenant, à
+réévaluer si c'est suffisant avant de l'activer. Rien d'urgent ici, juste observer 1-2 sessions.
 
 ---
 

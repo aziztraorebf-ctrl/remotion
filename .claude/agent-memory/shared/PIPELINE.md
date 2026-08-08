@@ -95,9 +95,10 @@ Acte 2 **produit et validé en finale (2026-08-04)** : `out/episodes/gazoduc-aag
 (127.4s), 4 segments montés bout à bout. **Acte 3 (TSGP) : 3 segments + montage codés et RENDUS deux
 fois** (v1 rejeté par Aziz — "catastrophique" — puis refonte complète v2 après 3 DA-briefs critiques
 ciblés Gemini+Kimi+DeepSeek). Rendu v2 uploadé, lien + détail dans `memory/NEXT-ACTION.md` (section
-"DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07"). Reste : revue Aziz du rendu v2 à la prochaine
-session, probable 3e passage sur le registre visuel (jetons/décors sous le niveau déjà prouvé
-Soudan/AES). Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
+"⭐⭐ GAZODUC ACTE 3"). **Plan de refonte v3 produit par 4 agents vierges (2026-08-07)** — diagnostic
+transversal + point de goût Segment B non tranché, détail dans `PLAN-ACTES2-5.md` § "TEST STUDIO
+RÉUTILISABLE". Reste : revue Aziz du plan v3 + du rendu v2 à la prochaine session (session parallèle
+déjà en cours côté Aziz). Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
 `PLAN-ACTES2-5.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage

@@ -460,3 +460,78 @@ un rideau sur carte unique coupait le territoire algérien en 2 à cause d'un ch
 avec le Maroc, remplacé par 2 `<svg>` séparés avec caméra propre par pays) + montage
 (`GazoducActe3Montage.tsx`) + enregistrement Root.tsx (4 nouvelles compositions). Aucun rendu vidéo
 complet avec audio n'a encore été fait — seulement des mini-renders de validation ciblés par segment.
+
+---
+
+## ⭐⭐ TEST "STUDIO RÉUTILISABLE" — 4 AGENTS VIERGES SUR L'ACTE 3 v2 (2026-08-07)
+
+> Session distincte du recodage v1→v2 ci-dessus. Contexte : le même jour, un chantier séparé
+> ("session dédiée studio réutilisable") a produit un rattrapage d'indexation des catalogues
+> (`WARMAP-COMPOSANTS-INDEX.md` § Globe D3 créée, `COMPOSANTS-INDEX.md` enrichi — détail :
+> `memory/doctrines/STUDIO-REUTILISABLE-GATE.md`). Pour tester si ce rattrapage rend les briques
+> vraiment DÉCOUVRABLES par un agent qui ne les connaît pas déjà, 4 agents Claude Code contexte
+> vierge (effort élevé) ont reçu pour mission de produire un PLAN DE REFONTE de l'Acte 3 v2 (jugé
+> "en dessous du niveau prouvé ailleurs" par Aziz) — SANS qu'aucun nom de composant/catalogue ne
+> leur soit donné, seulement l'intention méthodologique (intention→forme→catalogue, doctrine
+> `CONTINUITE-SCENE-INTENTION-DABORD.md`) et le contexte factuel du script/code v2.
+
+### Verdict transversal — CONVERGENCE FORTE 3/3 (agents A, B, C, indépendants)
+
+Le rythme caméra du v2 (5 mouvements Segment A) **n'est PAS le problème** — déjà corrigé, réutilise
+fidèlement `MapContinuousFollowCamera` (brique Acte 2, indexée section Globe D3). **Le vrai défaut,
+identifié indépendamment par les 3 agents** : plusieurs jetons/icônes ont été **dessinés à la main**
+en primitives SVG (cercles/rects/paths géométriques) au lieu d'être générés par un modèle SVG (Règle
+N°0 du studio, `memory/doctrines/SVG-SCENES-GENERATIVES.md` — "le modèle dessine, nous animons") —
+alors que cette même règle avait déjà été appliquée et corrigée sur le Segment B (décor Fable 5) le
+même jour. C'est une incohérence de traitement DANS le même acte, pas un défaut de dispositif narratif.
+
+**3 zones précises identifiées (code, pas supposition)** :
+1. **Segment A, jetons financement** (`GazoducActe3CarteTSGP.tsx` L171-215, `JetonEtat`/
+   `JetonBanqueRejetee`) — dessin main, à régénérer via pipeline SVG maison. C'est le point de
+   convergence le plus fort des 4 agents.
+2. **Segment A, moment "pelleteuses sur le terrain" (33-45s, Adrar)** — signalé par l'agent C
+   (seul des 4 à l'avoir vu) : la voix décrit un fait matériel concret ("les pelleteuses sont déjà
+   sur le terrain") mais RIEN à l'écran ne le montre — trou factuel, pas juste esthétique. À
+   vérifier toi-même sur le rendu avant de trancher si ça mérite un ajout.
+3. **Segment C, icônes de tension** (`GazoducActe3InsertParadoxe.tsx` L125-155, `BarreTension`) —
+   même travers (cadenas/coche dessinés main).
+
+**Recommandation transversale des 4 agents (à valider par toi, pas déjà tranché)** : ne PAS refondre
+les dispositifs narratifs eux-mêmes (5 mouvements caméra Segment A, "vie qui s'éteint" Segment B,
+split-screen 2-indicateurs Segment C — tous confirmés par 3 tours de DA-brief antérieurs). Le geste
+correct serait une **finition ciblée** : régénérer les jetons/icônes des 3 segments via le pipeline
+SVG maison (Fable 5 mode élevé, objets/jetons — pas MAX), garder le squelette d'animation (pulse,
+ancrage géo, séquençage) qui est déjà jugé bon par les 4 agents.
+
+### ⚠️ Point non tranché — l'intuition Aziz sur le Segment B (registre "état-major" Soudan)
+
+Aziz a soulevé une question de fond après les 3 premiers agents : aucun n'avait mentionné
+`KhartoumEtatMajorSVG.tsx` (5e et dernière variante listée dans `WARMAP-COMPOSANTS-INDEX.md` §
+"MOTEUR D'AFFRONTEMENT 2 FACTIONS" — "prise de ville en médaillon plein écran", 3 cibles fixes
+frappées en séquence stricte, jamais simultané) pour le Segment B (aéroport Niamey). Un **4e agent**,
+brief élargi (poids égal aux 3 segments + instruction explicite "lis les listes de catalogue jusqu'au
+bout") a bien trouvé cette brique cette fois — confirmant que le trou initial venait du brief trop
+restreint ("focus Segment A"), PAS d'un défaut du catalogue lui-même.
+
+**Mais l'agent D l'a quand même écartée pour le Segment B**, avec ce raisonnement (à évaluer, pas
+acquis) : `KhartoumEtatMajorSVG` encode une intention de **conquête militaire multi-sites par un
+acteur visible qui avance physiquement** (RSF qui prend successivement aéroport/palais/tour TV à
+Khartoum) — alors que le Segment B Niamey a une intention différente, actée par un DA-brief antérieur
+(2026-08-05, voir section "SEGMENT B — MISE À JOUR" plus haut dans ce fichier) : **un lieu unique qui
+bascule d'un état à un autre (vie→mort) en un instant, SANS acteur montré** ("PAS de figuration de
+l'attaque, ni avion, ni personnage" — décision éditoriale explicite pour rester factuel/neutre).
+L'agent D juge que réintroduire un dispositif de jetons qui avancent/frappent réintroduirait
+littéralement la figuration de violence que ce DA-brief antérieur a écartée.
+
+**Décision Aziz (2026-08-07, en cours)** : pas encore tranché entre (a) confirmer ce choix éditorial
+passé et garder "vie qui s'éteint" sans acteur, ou (b) réexaminer si une VARIANTE du registre
+état-major (plusieurs points qui basculent en séquence sur le MÊME site — tour de contrôle→terminal
+→piste — sans acteur armé visible) pourrait combiner le meilleur des deux. **À trancher en priorité
+à la reprise de la session Acte 3** — c'est un point de goût/vision, pas une question technique.
+
+### Fichiers/agents sources (pour audit, pas à relire sauf besoin de détail)
+Rapports complets des 4 agents (texte intégral, non archivés en fichier séparé — récupérables via
+l'historique de conversation du 2026-08-07 si le détail exact des citations de code est nécessaire) :
+agents A/B/C (brief focus Segment A) + agent D (brief élargi, confirme le trou de brief initial).
+Prochaine étape suggérée par Aziz (non encore lancée) : 2 agents supplémentaires sur des SUJETS
+FICTIFS (pas Gazoduc) pour tester la découvrabilité sans aucun biais de mémoire de session.

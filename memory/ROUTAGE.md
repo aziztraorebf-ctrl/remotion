@@ -38,7 +38,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | **Doute catalogue Atlas** | `src/projects/atlas/_shared/ATLAS-INDEX-DES-INDEX.md` ⭐ |
 | **Doute catalogue / démarrer War-Map** | `src/projects/warmap/WARMAP-INDEX.md` ⭐ (LA réf = `SudanWarMapEpic60`) |
 | **Assets / templates / refs (source unique)** | `public/_shared/ASSETS-INDEX.md` |
-| **Tests client-sim (SaaS, hors-Souverain — Flowdesk, NorthShield...)** | `memory/client-sim-tests/INDEX.md` ⭐ sujet SECONDAIRE volontairement isolé de `MEMORY.md` (qui garde juste un pointeur) pour ne pas diluer le thème principal YouTube/Souverain. Méthode standard (Direction A/B, grille INFORMATION/REPRÉSENTATION/MEDIUM/SEMANTIC TEST, règle draw-on/mouvement/vie) + tests réalisés/en préparation y sont listés. |
+| **Tests client-sim (SaaS, hors-Souverain — Flowdesk, NorthShield...)** | `memory/client-sim-tests/INDEX.md` ⭐ sujet SECONDAIRE volontairement isolé de `MEMORY.md` (qui garde juste un pointeur) pour ne pas diluer le thème principal YouTube/Souverain. Méthode standard (Direction A/B, grille INFORMATION/REPRÉSENTATION/MEDIUM/SEMANTIC TEST, règle draw-on/mouvement/vie) + tests réalisés/en préparation y sont listés. Composants réutilisables (registre SaaS/dashboard, distinct du cartographique/narratif) : `src/projects/_client-sim/CLIENT-SIM-COMPOSANTS-INDEX.md` (créé rattrapage 2026-08-07). |
 
 ### 📤 Publier une vidéo (titre · miniature · calendrier)
 
@@ -138,6 +138,12 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 > pour un beat/scène, SCANNER les catalogues du besoin et présenter à Aziz les templates pertinents + ≥2
 > combinaisons. Le gate scriptée n'existe QUE dans les sessions beat — en session libre, c'est ma discipline
 > qui l'applique. Aziz ne mémorise pas les composants, moi oui. Jamais coder un effet custom sans vérifier l'existant.
+>
+> ⭐⭐ **Cette règle est un aveu documenté de son propre trou (diagnostic 2026-08-07)** : aucun artefact
+> vérifiable ne prouve qu'elle est appliquée, contrairement au DA-brief-gate. Conception d'un vrai gate
+> technique (prouver l'USAGE d'une brique, pas la lecture) + d'un agent d'extraction en fin de session
+> (fait vivre les catalogues, aujourd'hui pauvres pour Gazoduc/Soudan/AES) : `memory/doctrines/
+> STUDIO-REUTILISABLE-GATE.md`. Conception validée Aziz, code pas encore écrit.
 
 **Les 6 catalogues de templates (par besoin) :**
 

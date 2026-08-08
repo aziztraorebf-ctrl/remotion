@@ -316,6 +316,36 @@
 
 ---
 
+## RATTRAPAGE 2026-08-07 — briques extraites rétroactivement (Soudan/CFA/AES/Sénégal/Peste)
+
+> Ces composants vivent encore dans leur dossier d'épisode d'origine (`souverain/…`, `atlas/…`, `warmap/…`),
+> **pas encore déplacés vers `_shared/`**. Import : ouvrir le fichier cité, copier le code (ou déplacer
+> physiquement au moment du 2e usage réel — doctrine `INTENTION-FORME-INDEX.md` § promotion proto→brique).
+> ⚠️ = statut `proto` (pas encore réutilisé ailleurs, ou 2 versions divergentes à trancher avant extraction
+> propre) — tout le reste est `prouvé` (validé sur un épisode publié). Détail complet du rattrapage :
+> conversation 2026-08-07, non archivée en fichier séparé (retrouvable via `git log` sur cette section si besoin).
+
+| Composant | Import (chemin réel, pas encore `_shared`) | Quand Aziz dit... |
+|---|---|---|
+| `ShortCtaCard` (à fusionner — 3 copies quasi-identiques) | `souverain/cfa-short-9x16/SceneCta.tsx` (ou `warmap/shorts/aes-short-90s/CtaCard.tsx`, ou `souverain/senegal-petrole-gaz-short-d3/Scene5Cta.tsx` — les 3 s'auto-déclarent "calque" l'un de l'autre) | "le CTA de fin de Short" — cartouche pop + titre 2 lignes + 3 accroches séquentielles synchro voix + bandeau final. **Extraction prioritaire : 1 seul composant réglerait 3 doublons actifs.** |
+| `ControlLever` + helper `buttee()` | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe5bLevier16x9.tsx` (worktree séparé, pas mergé) | "la souveraineté/le contrôle perdu ou gardé" — 2 glissières symétriques, l'une absorbe un choc (actif), l'autre butée sèche zéro-rebond (verrouillé). Le composant le plus transversal du lot : monétaire (CFA), territorial (AES), ressource (Sénégal). |
+| ⚠️ "ImpactStamp" (NOM NON VÉRIFIÉ — pas de fonction de ce nom dans le fichier, corrigé 2026-08-07) | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe4Cle16x9.tsx` (worktree séparé — mécanisme probablement inline autour de `Mvt3Signature`/`KeyGlyph`, ~L138-460, à réexaminer avant extraction, ne PAS grep ce nom littéralement) | "un coup final / un verdict qui tombe" — tampon chute gravité réelle + rebond + flash + micro-shake. |
+| ⚠️ "TetherFlow"/"BidirectionalFlow" (NOM NON VÉRIFIÉ, corrigé 2026-08-07) | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe4Cle16x9.tsx` (worktree séparé — mécanisme probablement inline, pas de fonction isolée sous ce nom, à relire le fichier en entier avant extraction) | "un flux d'argent/de valeur entre 2 pôles" — courbe Bézier + particules directionnelles + pulsation périodique. |
+| ⚠️ "PopulationDots" (NOM NON VÉRIFIÉ, corrigé 2026-08-07) | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe2Carte16x9.tsx` (worktree séparé — seules fonctions réelles trouvées dans ce fichier : `Coin`, `ZonePlaque` ; le mécanisme "nuage de points" n'est pas isolé sous ce nom, à relire avant extraction) | "une population affectée" — nuage de points clippé à une silhouette de territoire, loi gaussienne. |
+| `SnapLock` | `remotion-cfa/.../CfaActe3PariteGpt16x9.tsx` (worktree séparé — non revérifié dans cette passe de correction) | "une garantie/un accord qui se scelle" — cadenas spring avec overshoot puis clic. |
+| ⚠️ "SelfWritingSignatures" (NOM NON VÉRIFIÉ, corrigé 2026-08-07) | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe4Cle16x9.tsx` (worktree séparé — la fonction réelle s'appelle `Mvt3Signature`, L427 ; grep `Mvt3Signature`, pas ce nom) | "un accord ratifié par plusieurs parties" — signatures qui s'écrivent seules, sans main visible. |
+| `ActiveConstraintChain` | `remotion-cfa/.../CfaActe5bLevier16x9.tsx` (worktree séparé) | "une contrainte activement maintenue, pas figée" — cadenas + chaîne + impulsions dorées descendantes en boucle. |
+| `CollapsingPileToken` | `remotion-cfa/.../CfaActe6bPrixV2_16x9.tsx` (worktree séparé) | "plusieurs piliers qui cèdent un par un" — pile de pièces qui basculent en ordre précis, changent de teinte en tombant. |
+| ⚠️ `PriceTagImpact` (2 versions à fusionner) | `remotion-cfa/src/projects/_rnd/fable-svg/CfaActe5aMarche16x9.tsx` ET `CfaActe6bPrixV2_16x9.tsx` (worktree séparé, pas mergé — vérifié 2026-08-07 après signalement d'un agent de test découvrabilité : les chemins `souverain/cfa-short-9x16/` étaient FAUX, corrigés ici) | "un prix qui encaisse un choc externe" — étiquette suspendue qui pulse et rougit. |
+| `CoffreFortAnime` | `souverain/senegal-petrole-gaz-short-d3/Scene3Comparaison.tsx` | "la richesse est-elle sécurisée ou pillée" — coffre-fort, porte qui se verrouille (réussite) ou reste ouverte (échec). |
+| `PaysPanel` + helper `fitScale()` | `souverain/senegal-petrole-gaz-short-d3/Scene3Comparaison.tsx` | "Norvège a réussi, le Congo a raté — même ressource, verdicts opposés" — panneau pays répété : contour tracé à la longueur réelle (jamais un pays qui "semble sauter"), drapeau clippé exact, verdict. |
+| `CalebasseDettePartagee` | `souverain/senegal-petrole-gaz-short-d3/CalebasseDettePartagee.tsx` | "une dette qui s'accumule puis déborde" — objet culturel qui se remplit et déborde physiquement, temps absolu partagé entre 2 beats. |
+| `StatParchment` (catalogué à tort "AtlasStatParchment", corrigé 2026-08-07 — pas de préfixe "Atlas" dans le code) | `atlas/peste-1347/Beat3Densite.tsx` (dupliqué identique `Beat4Climax.tsx`) | "un chiffre-choc sur fond carte historique" — cartouche parchemin slide-in + glow-pulse synchro thud audio. |
+| ⚠️ `AtlasHandwrittenTextReveal` (calcul longueur path fragile) | `atlas/peste-1347/Beat6Conclusion.tsx` | "une phrase de conclusion écrite à la plume" — contour qui se trace façon calligraphie puis se remplit d'encre. |
+| `AtlasExpandingWaveCircle` | `atlas/peste-1347/Beat4Climax.tsx` (variante simple `Beat2Setup.tsx`) | "une propagation qui grandit depuis un point" — cercle radial clippé, distance précalculée déclenche un événement au contact (ville qui s'allume). |
+
+---
+
 ## Import type
 
 ```tsx
