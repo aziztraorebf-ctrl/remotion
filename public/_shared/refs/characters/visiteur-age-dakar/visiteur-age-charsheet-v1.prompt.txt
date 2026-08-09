@@ -1,0 +1,36 @@
+Model: gemini-3.1-flash-image-preview
+Date: 2026-08-09
+Style ref: /Users/clawdbot/Workspace/remotion/public/_shared/refs/characters/mariama-ba/mariama-ba-charsheet-CANONICAL.png
+
+Prompt:
+CHARACTER SHEET -- generate a NEW original character, matching the exact art style of the reference image provided.
+
+STYLE REFERENCE PROVIDED: a character sheet of a Senegalese woman in cartoon-flat style. Copy this EXACT rendering technique: clean confident black outlines, flat color fills (no gradients, no painterly shading), simple SIMPLIFIED FACIAL FEATURES with small dot-like eyes with a tiny visible pupil dot, warm brown uniform skin tone, iconic/stylized (not photo-realistic) proportions, 3-view turnaround layout (front, three-quarter, profile).
+
+CHARACTER TO GENERATE:
+A dignified elderly Senegalese man, respected elder/family authority figure, 1970s Dakar setting. Distinctive attributes:
+- Traditional embroidered brimless cap (kufi-style), dark brown or deep green with subtle gold embroidery pattern
+- Long flowing traditional boubou robe, deep indigo blue or forest green, with a lighter embroidered panel down the chest
+- A short, neatly trimmed grey/white beard
+- Calm, warm, composed expression -- a slight kind smile
+- Slim-to-average elder build, upright dignified posture, walks with a plain wooden cane held in one hand (not a weapon, a simple support cane)
+- Simple leather sandals visible at the bottom
+
+LAYOUT -- 3 full body figures aligned HORIZONTALLY in a single row across the canvas, all standing on the same baseline:
+- LEFT figure: front view (facing forward)
+- CENTER figure: three-quarters view (turned slightly right)
+- RIGHT figure: profile view (fully facing right)
+All 3 figures wear the IDENTICAL costume and have the IDENTICAL calm standing pose (cane in hand), just shown from 3 angles. Same character, 3 views.
+
+Wide horizontal canvas. Plain warm cream/beige background matching the style reference. Subtle soft shadow under each figure. Figures clearly separated, no overlap.
+
+STYLE RULES (NON-NEGOTIABLE, matching reference exactly):
+- Small simple dot-style eyes as in the reference -- NOT realistic detailed eyes
+- Fine confident black outlines -- NOT thick BD/comic outlines
+- Flat color fills -- NOT painted illustration with shading or gradients
+- Uniform warm brown skin tone, no modeling
+- Iconic stylized face -- NOT portrait-realistic
+
+NO scenery. NO text. NO labels. NO captions. NO writing. NO annotations of any kind anywhere in the image.
+
+Output format: wide horizontal sheet, plain cream background, 3 full body figures of the same character side by side, matching the exact art style of the reference image.

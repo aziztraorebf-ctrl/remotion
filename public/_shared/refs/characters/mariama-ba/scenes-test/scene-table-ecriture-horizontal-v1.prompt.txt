@@ -1,0 +1,52 @@
+Model: gemini-3.1-flash-image-preview
+Date: 2026-08-08
+Refs:
+  CHARACTER: /Users/clawdbot/Workspace/remotion/public/_shared/refs/characters/mariama-ba/mariama-ba-charsheet-CANONICAL.png
+  STYLE_PAPERCRAFT: /Users/clawdbot/Workspace/remotion/_public-archive/seedance/_archive-deprecated/style-refs-sonjata-papercraft/scene3-ref-env-village.png
+
+Prompt:
+Generate a NEW scene image, HORIZONTAL WIDESCREEN orientation (16:9 ratio, 1920x1080), in the GeoAfrique papercraft sepia style.
+
+REFERENCE IMAGES PROVIDED:
+1. CHARACTER REFERENCE (charsheet of an adult Senegalese woman with tall ochre-and-brown geometric-pattern gele headwrap, cream/white boubou with thin gold neckline trim, gold hoop earrings, slim dignified build): copy this exact character -- her face, her costume, her body proportions. She is the sole subject of this scene.
+2. PAPERCRAFT STYLE REFERENCE (village scene): copy this exact rendering technique -- fine confident black outlines, flat color fills, visible paper grain texture throughout, layered cut-paper depth (foreground/midground/background read as distinct paper layers), warm sepia/ochre/terracotta palette, soft paper-shadow under objects.
+
+CRITICAL STYLE RULE -- DOT EYES, NOT REALISTIC EYES:
+The character must have DOT EYES -- small black filled dots only. NO iris, NO pupil, NO eye-white, NO realistic eye rendering. Iconic papercraft face.
+
+SCENE -- Mariama Ba writing at her table, 1970s Dakar, WIDE HORIZONTAL COMPOSITION:
+
+Because the frame is wide (16:9), compose it as a full room interior, not a tight portrait crop -- leave visible space to the LEFT and RIGHT of the subject so the room breathes.
+
+CENTER-LEFT: the woman from the charsheet reference, seated at a small simple wooden writing table, three-quarter view turned slightly toward the right side of the frame. Right hand holds a fountain pen poised over a sheet of paper on the table. Left hand rests calmly on the table beside the paper. Calm composed expression, small closed mouth, dot eyes looking down at the paper.
+
+TABLE (in front of her): small simple wooden writing table, warm brown wood with visible paper-grain wood texture. On the table: one sheet of off-white paper with faint suggested handwriting lines (NO actual readable text, NO letters), a small terracotta ceramic teacup, a small ink bottle.
+
+CHAIR: simple wooden chair under her, partially visible.
+
+RIGHT SIDE OF FRAME: a tall open window taking a good portion of the right third of the composition. Through the window: a Dakar rooftop skyline in pale ochre/dusty blue late-afternoon light, one papercraft-cut silhouette of a palm tree, low sandstone buildings in the distance. A thin cream curtain frames the window edge.
+
+LEFT SIDE OF FRAME: a plain warm cream interior wall, a suggestion of a wooden shelf with a few closed books (no visible text/titles), giving the wide frame a sense of a lived-in study without crowding the subject.
+
+FLOOR: warm earth-brown tone, visible paper-grain texture, extending across the full width of the frame.
+
+LIGHTING: warm late-afternoon light entering from the window on the right side, falling softly across her face, hands and the paper. NO harsh shadows. Flat papercraft sepia palette throughout.
+
+PALETTE (NON-NEGOTIABLE):
+- Dominant: warm ochres, terracotta, cream
+- Soft accents: dusty pale blue (sky through window only), warm brown (wood, earth, shelf)
+- Skin: uniform warm brown, no shading gradients
+- NO bright saturated colors, NO realistic photographic shading
+
+STYLE RULES (NON-NEGOTIABLE):
+- DOT EYES only -- never realistic eyes
+- Fine confident black outlines -- NOT thick BD/comic outlines
+- Flat color fills -- NOT painted illustration with shading
+- Layered paper depth -- figure clearly cut from background, background clearly cut from window/sky
+- Iconic stylized rendering -- NOT portrait-realistic
+- Paper grain texture visible everywhere (walls, floor, table, sky)
+- WIDE 16:9 composition with clear negative space left and right of the subject -- do NOT produce a tight vertical-feeling crop
+
+NO text. NO labels. NO captions. NO readable writing anywhere. NO annotations of any kind.
+
+Calm intimate scene of an intellectual woman writing at her desk in a wide, breathing room composition -- NOT dramatic, NOT tragic, NOT epic. Patient, warm, contemplative mood.

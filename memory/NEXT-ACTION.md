@@ -53,28 +53,23 @@ temporelles qui ne couvrent pas toute la durée réelle, artefact de dégradatio
 Comfy Cloud. Règle ajoutée : toujours logger le `prompt_id` de chaque `run_template` (voir
 `minimax.md` tout en haut) pour pouvoir enquêter si ça se reproduit.
 
-**Prochaine session H3 — 3 pistes reformulées par Aziz (2026-08-08 soir), à tester sur IMAGE INÉDITE
-(pas une frame recyclée d'une vidéo déjà publiée — évite d'hériter des défauts de l'image source,
-cf `feedback` H3 littéral qui ne corrige pas les défauts de la ref) :**
-1. **Workflow "personnages posés puis animés"** (à revalider — Aziz ne se souvient plus du détail
-   exact du workflow utilisé par le passé) : générer une image fraîche avec tous les
-   personnages/éléments en place (façon plan de scène), PUIS les faire bouger — plutôt que de
-   repartir d'une frame héritée. Demander à `visual-producer` de préciser ce pattern s'il le
-   reconnaît (probablement proche du workflow storyboard→breakdown déjà en place).
-2. **Multi-référence façon Seedance 2.0 Omni** (`reference-to-video`, 9 images possibles en Seedance) :
-   tester si H3/Comfy Cloud tient le même pattern — image 1 = personnage A, image 2 = personnage B,
-   prompt qui les fait interagir. Vérifier d'abord si le template H3 R2V accepte plusieurs refs
-   (le node 139, 2e slot LoadImage optionnel, existe déjà — jamais testé comme vraie 2e référence
-   utile, seulement neutralisé jusqu'ici).
-3. **Format HORIZONTAL** : tout testé jusqu'ici est vertical (9:16). Tester si le style storybook/
-   papercraft (ou un autre style) tient aussi bien en horizontal, en particulier sur les détails,
-   le déplacement des personnages et les mouvements de caméra (l'orbite ~180° a été validée en
-   vertical cette session — à revérifier en horizontal, terrain différent).
+**Session 2026-08-09 — les 3 pistes ci-dessus sont FAITES, ne pas les re-proposer comme "à tester" :**
+1. Workflow "personnages posés puis animés" — testé indirectement (scène composée avant animation), fonctionne.
+2. Multi-référence façon Seedance Omni (node 139 comme vraie 2e référence) — CONFIRMÉ FONCTIONNEL.
+3. Format horizontal — CONFIRMÉ FONCTIONNEL, natif sans fix requis.
+Détail complet + prompts + vitesse par résolution : `memory/tools/minimax.md` § Comfy Cloud.
+
+**⭐ Nouvelle piste ouverte, non résolue — storyboard multi-panneaux séquentiel** : le prompt seul,
+même segmenté par blocs de temps, atténue mais NE RÉSOUT PAS le blending entre panneaux (les
+panneaux d'un storyboard-grille se mélangent visuellement au lieu de rester distincts). Prochaine
+étape : recherche communautaire dédiée (YouTube "last 30 days") avant de retenter un essai de prompt
+à l'aveugle. Détail : `memory/tools/minimax.md` § storyboard multi-panneaux.
 
 Assets déjà utilisés pour les tests archivés : `scene2-humiliation-v2-13s.mp4`/frame extraite (Sonjata,
 prototypes validés), `scene4-final-keepandduck.mp4` (orbite barre de fer, résultat mitigé — voir
 minimax.md pour le détail complet). Le projet Sonjata complet (28 clips papercraft) vit dans
-`public/assets/sonjata-papercraft/clips/`.
+`public/assets/sonjata-papercraft/clips/`. Nouveau personnage créé cette session : "visiteur-age-dakar"
+(homme âgé, cape verte, robe indigo, canne), registre `public/_shared/refs/characters/visiteur-age-dakar/`.
 
 ---
 

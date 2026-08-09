@@ -47,8 +47,9 @@ Deux styles actifs, extraits directement des vidéos PRET-PUBLICATION.
 | `abou-bakari/` | character-sheet-v1.png, throne-lastframe.png | Roi du Mali XIV, robes or, bonnet brodé |
 | `sonjata/` | sonjata-ironbar-scene.png | Sonjata enfant, sash rouge, cheveux courts |
 | `amanirenas/` | warrior-type-REF-canonical.png, portrait-REF-v4-patch.png | Reine guerrière koushite |
-| `mariama-ba/` | mariama-ba-charsheet-CANONICAL.png | Femme sénégalaise, tenue blanche, turban |
+| `mariama-ba/` | mariama-ba-charsheet-CANONICAL.png (+ v4-noshadow.png sans ombre parasite, cf minimax.md) | Femme sénégalaise, tenue blanche, turban |
 | `moussa/` | mansa-moussa-character-sheet-v1.png | Mansa Moussa, robes impériales |
+| `visiteur-age-dakar/` | visiteur-age-charsheet-v1.png (+ v2-noshadow.png) | Homme âgé Dakar 1970s, bonnet vert brodé, robe indigo, canne — créé 2026-08-09 pour test H3 multi-référence |
 
 **Règle : toujours joindre le character sheet du personnage principal comme référence d'identité dans tout prompt.**
 

@@ -1,6 +1,6 @@
 # Minimax — Guide complet (Music + TTS + H3 image-to-video)
 
-> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3 API fal.ai) + 2026-08-08 (H3 open-weight via Comfy Cloud MCP)
+> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3 API fal.ai) + 2026-08-08 (H3 open-weight via Comfy Cloud MCP) + 2026-08-09 (multi-référence + horizontal confirmés, vitesse/résolution, storyboard ouvert)
 > Endpoint musique : `fal-ai/minimax-music/v2.6`
 > Endpoint TTS : `fal-ai/minimax/speech-2.8-hd` (validé 2026-05-24)
 > **Note** : consulter ce fichier AVANT tout appel Minimax
@@ -32,6 +32,68 @@
 > 2026-08-08 : l'outil ne renvoie que des dollars, pas de minutes — ne PAS halluciner de taux de
 > conversion crédit→GPU pour combler ce manque, le signaler explicitement à la place). Objectif :
 > savoir combien de temps GPU réel a été utilisé sur Comfy Cloud, pas juste le prix payé.
+
+### ⭐⭐⭐ Vitesse par résolution + ralentissement en parallèle (mesuré, 2026-08-09)
+
+Même scène (poignée de main, 2 personnages, R2V) générée en 480p, 720p, 1080p pour comparer vitesse ET qualité.
+
+| Résolution | Dimensions | Temps SOLO (1 seul job) |
+|---|---|---|
+| 480p | 864×480 | ~141s |
+| 720p | 1280×720 | ~473-502s (~8min) — **"sweet spot" qualité/vitesse selon Aziz** |
+| 1080p | 1920×1072 (override manuel width/height node 136) | ~19min |
+
+- **Qualité 480p surprenamment nette** pour le style cartoon-flat/papercraft (aplats de couleur,
+  contours nets) — tolère beaucoup mieux la basse résolution qu'un style photoréaliste, moins de
+  gradients/détails fins à préserver. Utile pour du prototypage rapide multi-variantes.
+- **Ratio temps/résolution non-linéaire** : 1080p ne fait que ~2.25x plus de pixels que 720p mais
+  prend ~2.4x plus de temps — cohérent, mais l'écart absolu (8min → 19min) est significatif à budgéter.
+
+**⛔⛔ DÉCOUVERTE — ralentissement 3-4x quand 2 jobs H3 tournent EN PARALLÈLE (même compte)** : un job
+480p qui prend normalement ~141s solo est passé à ~502s (~3.5x plus lent) quand lancé en même temps
+qu'un autre job. **La parallélisation ne réduit PAS le temps total pour obtenir 2 résultats** sur ce
+compte — hypothèse : allocation GPU partagée/limitée plutôt que jobs concurrents sur ressources
+séparées. **Nuance la recommandation "prototypage rapide multi-variantes EN PARALLÈLE" ci-dessous**
+(2026-08-08) : reste valable pour la LATENCE PERÇUE (tout finit "en même temps" plutôt qu'en séquence
+stricte), mais PAS pour le temps GPU total consommé, qui grimpe. **Non confirmé si structurel au
+compte ou lié à une charge weekend du service Comfy Cloud** — à revérifier un jour de semaine avant de
+trancher définitivement. Ne pas assumer une parallélisation gratuite pour la planification de futurs
+tests tant que ce n'est pas clarifié.
+
+### ⚠️ Storyboard multi-panneaux (grille) comme référence H3 — PISTE OUVERTE, non résolue (2026-08-09)
+
+Exploration (suggestion Aziz, hors brief initial) : utiliser une image-grille multi-panneaux (ex. 2x2)
+comme référence unique pour raconter une séquence en plusieurs temps dans un seul clip H3.
+
+**Recherche communautaire (Tavily)** :
+- La communauté MiniMax H3 utilise bien des grilles storyboard comme référence — traitées comme
+  n'importe quelle image de référence, **pas de node/template officiel dédié** pour H3 sur Comfy Cloud
+  (contrairement à Seedance 2.0 qui A un template officiel `template_seedance2_storyboard_to_video`,
+  mais payant/API, pas open-weight comme H3).
+- Failure mode documenté par la communauté : **le modèle blend les panneaux simultanément quand le
+  prompt est ambigu**. Fix recommandé = segmentation temporelle STRICTE et explicite par panneau
+  (ex. "0-2s: EXACTEMENT panel 1, HOLD, ne pas transitionner encore").
+
+**Résultats des 2 tests menés** :
+- Test 1 (prompt "transitions smoothly", sans segmentation stricte) : ÉCHEC — dérive au-delà de la
+  consigne (accolade complète au lieu de poignée de main simple), 4 panneaux traités de façon floue/
+  simultanée. Job aussi plus lent (12min) que l'équivalent image simple (7-8min) à même résolution —
+  indice qu'une grille multi-panneaux est plus coûteuse en calcul à traiter.
+- Test 2 (prompt corrigé, segmentation stricte par blocs de 2s + clause "STOP à la poignée de main, no
+  hug, no embrace") : AMÉLIORATION nette — dérive vers l'accolade évitée, progression plus fidèle aux
+  4 panneaux. MAIS le problème de fond N'EST PAS résolu — Aziz signale que les 4 panneaux restent
+  "animés chacun en même temps" plutôt que vraiment séquentiels. Job plus rapide (7min), cohérent avec
+  l'hypothèse charge parallèle (ce test tournait en même temps qu'un autre job — cf section vitesse
+  ci-dessus, à ne pas confondre avec un vrai gain de la technique elle-même).
+
+**DÉCISION AZIZ** : arrêter d'itérer sur le storyboard par essais de prompt seul. La vraie méthode
+reste à découvrir via une **recherche communautaire dédiée** (YouTube "last 30 days", ou liens fournis
+par Aziz en session future) — **PAS en continuant à deviner des formulations de prompt** sans nouvelle
+source d'information.
+
+**Pour la prochaine session sur ce sujet** : chercher d'abord si une méthode/paramètre spécifique
+(node caché, syntaxe de prompt particulière, ordre de tags `<Picture N>`) existe côté communauté H3
+avant de retenter un 3e essai de formulation à l'aveugle.
 
 ### ⭐⭐ Prototypage rapide multi-variantes EN PARALLÈLE (validé 2026-08-08)
 Envoyer **plusieurs appels `run_template` dans le même message** (pas un `for` séquentiel) — les jobs
@@ -519,6 +581,11 @@ outils MCP disponibles (`mcp__claude_ai_Comfy_Cloud_MCP__*` ou nom équivalent s
 - **139** : 2e slot `LoadImage` optionnel (ref_image_1) — **⚠️ contient par défaut une image de
   démo sans rapport** ("mecha_dragon_lightning.png" observé) ; si non utilisé, écraser ou ignorer
   mais noter comme facteur de confusion possible si le résultat dérive un peu du prompt.
+  **⭐⭐ CONFIRMÉ FONCTIONNEL comme vraie 2e référence utile (2026-08-09)** : utilisé façon
+  Seedance 2.0 Omni — image 1 (137) = personnage A + décor, image 2 (139) = personnage B inédit
+  (généré séparément, même registre visuel), prompt qui les fait interagir (référencer les 2 comme
+  `<Picture 1>`/`<Picture 2>`). Le 2e personnage, absent de l'image 137 de départ, apparaît et entre
+  dans le cadre en respectant fidèlement son propre charsheet — plus seulement un slot à neutraliser.
 - Template T2V (`video_minimax_h3_t2v`) : mêmes principes, node prompt = **104** (`prompt` input).
 
 ### Durée réelle vs durée demandée
@@ -591,6 +658,30 @@ par H3. Résultat : la vidéo générée semble démarrer avec "des poissons dé
 ce n'est pas un artefact H3, c'est un choix de frame de référence imprécis. **Pour un test propre
 "scène qui démarre de zéro" : choisir une frame AVANT le début du geste (`frame < T.cast1WindUp`,
 donc < 60), jamais une frame en plein cycle narratif.**
+
+### ⭐⭐ Ombre générique de charsheet Gemini → défaut d'ombre parasite en vidéo (généralisable, 2026-08-09)
+
+Confirme et généralise la découverte "H3 est littéral" ci-dessus sur un nouveau cas : une **ombre
+elliptique générique** apparaissait sous les pieds d'un personnage dans un clip R2V. Root cause tracée
+jusqu'à **l'image source, pas au moteur vidéo** — Gemini génère systématiquement, sur un charsheet
+multi-pose, une ombre de type "character sheet" (ellipse plate sous chaque pose, artefact de mise en
+page du charsheet plutôt qu'une vraie ombre portée cohérente avec une scène) — H3 se contente de
+reproduire fidèlement cette ombre plutôt que de la corriger ou de l'adapter à la scène cible.
+
+**Confirmé sur 2 personnages différents** (même test), donc pas un cas isolé — pattern probable sur
+tout charsheet Gemini multi-pose utilisé comme référence R2V.
+
+**Fix qui marche** : edit chirurgical Gemini (formule R-EDIT-CHIRURGICAL-PRESERVE-FIRST, déjà validée
+ailleurs sur ce projet pour le fix dot-eyes) pour retirer l'ombre du charsheet **avant** tout usage en
+R2V. Confirmé fonctionnel sur les 2 personnages testés. **Script générique déjà existant pour ça**
+(pas besoin d'en écrire un one-off à chaque fois, erreur faite cette session) :
+`scripts/tools/gemini-i2i.py --ref CHARSHEET.png --prompt "CHANGE ONLY: ... PRESERVE EXACTLY: ..." --output OUT.png`.
+
+**Règle générale à en tirer** : avant d'utiliser un charsheet Gemini comme référence H3/vidéo, vérifier
+visuellement (zoom sur les pieds/base de chaque pose) si une ombre elliptique générique de mise en page
+est présente — et la retirer en amont plutôt que d'espérer que le moteur vidéo la corrige ou la
+"comprenne" comme non désirée. Cohérent avec le principe déjà documenté : H3 anime fidèlement ce qui
+est dans l'image, y compris ses défauts.
 
 ---
 
