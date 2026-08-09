@@ -495,6 +495,11 @@ import { FlowdeskPersonne2B, FLOWDESK_PERSONNE_FRAMES, FLOWDESK_PERSONNE_FPS } f
 import { DashboardLowRiskStill, DashboardHighRiskStill, DashboardLowRiskLaptopStill, DashboardHighRiskLaptopStill, NS_DASHBOARD_FRAMES, NS_DASHBOARD_FPS } from "./projects/_client-sim/noteshield/ui/DashboardScreenStill";
 import { CursorTestComp, NS_CURSOR_TEST_FRAMES, NS_CURSOR_TEST_FPS } from "./projects/_client-sim/noteshield/ui/CursorTestComp";
 import { NorthShieldV3, NS_V3_FRAMES, NS_V3_FPS } from "./projects/_client-sim/noteshield/NorthShieldV3";
+import { P1Pivot } from "./projects/_client-sim/mochit/P1Pivot";
+import { P2Workflow } from "./projects/_client-sim/mochit/P2Workflow";
+import { P3Cta } from "./projects/_client-sim/mochit/P3Cta";
+import { MochItComplete, MI_TOTAL_FRAMES, MI_TOTAL_FPS } from "./projects/_client-sim/mochit/MochItComplete";
+import { MI_WIDTH, MI_HEIGHT, MI_FPS } from "./projects/_client-sim/mochit/theme";
 
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
@@ -4561,6 +4566,39 @@ export const RemotionRoot: React.FC = () => {
         fps={NS_V3_FPS}
         width={1920}
         height={1080}
+      />
+
+      <Composition
+        id="MochIt-P1-Pivot"
+        component={P1Pivot}
+        durationInFrames={93}
+        fps={MI_FPS}
+        width={MI_WIDTH}
+        height={MI_HEIGHT}
+      />
+      <Composition
+        id="MochIt-P2-Workflow"
+        component={P2Workflow}
+        durationInFrames={90}
+        fps={MI_FPS}
+        width={MI_WIDTH}
+        height={MI_HEIGHT}
+      />
+      <Composition
+        id="MochIt-P3-Cta"
+        component={P3Cta}
+        durationInFrames={69}
+        fps={MI_FPS}
+        width={MI_WIDTH}
+        height={MI_HEIGHT}
+      />
+      <Composition
+        id="MochIt-Complete"
+        component={MochItComplete}
+        durationInFrames={MI_TOTAL_FRAMES}
+        fps={MI_TOTAL_FPS}
+        width={MI_WIDTH}
+        height={MI_HEIGHT}
       />
 
     </>

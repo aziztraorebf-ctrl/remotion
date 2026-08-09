@@ -30,6 +30,23 @@
   Détail complet : [STATUS](../episodes/_client-sim/noteshield/STATUS.md).
   Conclusions stratégiques transversales : pas encore écrites (à faire, cf modèle Flowdesk).
 
+- ⭐⭐⭐ **MOCH-IT (test système A→Z, reproduction/dépassement d'une pub Fiverr existante) — CLOS 2026-08-09.**
+  Objectif différent des tests précédents : pas un brief client fictif, mais une mesure objective
+  (reproduire/dépasser un livrable déjà payé et approuvé, pub 15.5s). Parcours : breakdown 3-modèles
+  → storyboard visuel mix&match (Gemini/GPT/Kimi par panneau) → plans d'animation 3-modèles (12
+  principes Disney) → V1 codée → 2 passes de correction suite retours Aziz (V3 : abandon du morph
+  PEOPLE→PROCESS et du compteur DUPLICATES, tous deux des sur-ingénieries — retour à la structure
+  simple de l'original avec exécution premium ; V4 : doublon "WE DESIGN" retiré, avatars ajoutés,
+  pills→rectangles, letterbox ; V5 : icônes/avatars agrandis ×2 + bicolores + spring overshoot,
+  suite à un **breakdown comparatif 2-vidéos** (référence + notre rendu envoyés ensemble à
+  Gemini+Kimi, script dédié `da-brief-compare-2videos.py`). Enseignements transversaux (3 mémoires
+  créées) : [[script-texte-avant-code-meme-sans-audio]] (script AVANT storyboard visuel, même sans
+  audio), [[depasser-executer-pas-ajouter-geste]] (dépasser = mieux exécuter, pas ajouter un
+  mécanisme), [[format-vertical-etire-viewbox-fond-simple]] (viewBox étendu + fond en rectangle
+  plein pour tout format vertical non-standard). Code : `src/projects/_client-sim/mochit/`.
+  Script réutilisable : `scripts/tools/da-brief-compare-2videos.py` (breakdown comparatif A/B avec
+  2 vidéos natives Gemini+Kimi — utile pour tout futur test "reproduire une référence").
+
 ## Méthode standard pour tout nouveau test client-sim
 
 Issue du débrief Flowdesk (voir [flowdesk-client-sim-conclusions](../projects/flowdesk-client-sim-conclusions.md)

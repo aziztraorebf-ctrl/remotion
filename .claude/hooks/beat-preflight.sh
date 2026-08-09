@@ -27,10 +27,20 @@ if [[ "$FILE_PATH" == *.tsx ]] && [[ "$FILE_PATH" == *"/projects/"* ]]; then
   echo "------------------------------------------------------------"
 fi
 
-# Rappel LÉGER (non bloquant) pour toute scène CARTE qui n'est pas un Beat d'épisode
+# Le preflight lourd ci-dessous est reserve aux Beat*.tsx du pipeline SOUVERAIN uniquement.
+# Fix 2026-08-09 (session MOCH-IT) : l'ancien test `$FILE_PATH != *Beat*.tsx` matchait TOUT
+# fichier contenant "Beat" n'importe ou dans le chemin (ex. src/projects/_client-sim/mochit/
+# Beat1Accumulation.tsx), hors-Souverain -> declenchement errone, contourne par renommage cette
+# session. Desormais restreint au chemin souverain/ explicitement.
+IS_SOUVERAIN_BEAT=false
+if [[ "$FILE_PATH" == *"/souverain/"* ]] && [[ "$FILE_PATH" == *"Beat"*".tsx" ]]; then
+  IS_SOUVERAIN_BEAT=true
+fi
+
+# Rappel LÉGER (non bloquant) pour toute scène CARTE qui n'est pas un Beat d'épisode Souverain
 # (protos _rnd, Scene*.tsx...). Le preflight lourd ci-dessous reste réservé aux Beat*.tsx Souverain.
 # Comble A3 : un proto carte nommé autrement que Beat* échappait à tout rappel de règle.
-if [[ "$FILE_PATH" != *"Beat"*".tsx" ]]; then
+if [[ "$IS_SOUVERAIN_BEAT" == false ]]; then
   if [[ "$FILE_PATH" == *.tsx ]] && echo "$CONTENT" | grep -qE "mapbox|MapboxBase|useClipFlags|WavingFlagFill|getCam"; then
     echo "[rappel carte] Scène Mapbox détectée (hors Beat d'épisode)."
     echo "  - AVANT présentation : python3 scripts/tools/mapbox-selfreview.py $FILE_PATH (0 erreur)."

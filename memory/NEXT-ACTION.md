@@ -260,13 +260,16 @@ section en tête de ce fichier** ("DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-0
 et le lien du rendu v2 — ne pas se fier à l'ancienne mention "à démarrer" ci-dessous, périmée.
 Repère sujet : `memory/projects/GAZODUC-MEGAPROJETS-SUJET.md`.
 
-> ✅ **Tests client-sim "Flowdesk" (2026-08-06) et "NorthShield" (2026-08-08) — TOUS DEUX CLOS**,
-> sujet secondaire, détail isolé de ce fichier → `memory/client-sim-tests/INDEX.md`. NorthShield :
-> livrable final `out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`, validé par Aziz.
-> Ne change rien à la priorité Gazoduc Acte 3 ci-dessus (le sujet principal reste YouTube/Souverain).
-> Nouvelle méthode de test décidée pour la suite (pas encore démarrée) : reproduire une vraie
-> vidéo de référence externe (portfolio Fiverr) au lieu d'inventer un brief fictif — breakdown
-> déjà fait (Gemini + GPT-5.6 Sol) sur une pub "MOCH-IT", dans `/tmp/da-refs/da-feelgood-moch-it-*.md`.
+> ✅ **Tests client-sim "Flowdesk" (2026-08-06), "NorthShield" (2026-08-08) et "MOCH-IT"
+> (2026-08-09) — TOUS CLOS**, sujet secondaire, détail isolé de ce fichier →
+> `memory/client-sim-tests/INDEX.md`. NorthShield : livrable final
+> `out/_client-sim/noteshield/FINAL/northshield-v3-FINAL.mp4`, validé par Aziz. MOCH-IT : nouvelle
+> méthode de test prouvée — reproduire/dépasser une vraie vidéo de référence externe (pub Fiverr)
+> au lieu d'inventer un brief fictif, avec un **breakdown comparatif 2-vidéos** (référence + notre
+> rendu envoyés ensemble à Gemini+Kimi, script réutilisable `scripts/tools/da-brief-compare-2videos.py`)
+> pour corriger les écarts avec des mesures chiffrées plutôt qu'un jugement à l'œil. Livrable final
+> uploadé sur Vercel Blob (pas de fichier local conservé). Ne change rien à la priorité Gazoduc
+> Acte 3 ci-dessus (le sujet principal reste YouTube/Souverain).
 
 ---
 
