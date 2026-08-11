@@ -1,0 +1,24 @@
+Picture 1 (from Shot 1) aligns with the 0.00-second mark of the target video; Picture 2 (from Shot 1) aligns with the 15.00-second mark of the target video.
+
+subject_definitions:
+<Subject 1> (S1) is the woman speaking at the podium in <Picture 1> and <Picture 2>, wearing a tall ochre and brown geometric-patterned turban, a long cream boubou dress with a thin gold-trimmed neckline, small gold hoop earrings, and sandals, standing behind a wooden podium with a microphone, one hand resting on the podium's surface.
+<Subject 2> is the seated audience shared by both pictures, made up mostly of women with a couple of men mixed among them, seen from behind or in profile, wearing varied 1970s clothing including traditional boubous with headwraps and simpler everyday outfits without headwraps.
+<Subject 3> is the room environment shared by both pictures: the wooden podium, the microphone on its stand, the patterned cloth banner on the wall behind Subject 1, the warm ochre wall, and the row of chairs.
+
+summary:
+[keyframe completion] The target video shows Subject 1 delivering a line of her speech from the podium while the seated audience, initially calm, grows visibly more engaged and moved, some reaching toward each other, by the end of the shot. Picture 1 anchors the opening calm audience pose and Picture 2 anchors the final more engaged, emotionally reactive audience pose, both sharing the same room environment defined by Subject 3.
+
+retention_analysis:
+<Subject 1> (appears in [Shot 1]): fully_preserved - her turban, dress, earrings, podium position, and hand on the podium are retained throughout; her expression and pose remain composed and dignified as she speaks.
+<Subject 2> (appears in [Shot 1]): partially_preserved - the same audience members, clothing, and hairstyles are retained, but their body language transitions from calm stillness to visibly more engaged and emotional poses, including two figures clasping hands and one figure with hands raised near her face, as shown across Picture 1 and Picture 2.
+<Subject 3> (appears in [Shot 1]): fully_preserved - the podium, microphone, wall banner, wall color, and chairs keep their exact positions and appearance throughout.
+<Picture 1> ([Shot 1] first frame): fully_preserved - the calm audience pose, composition, and lighting are retained as the exact starting point.
+<Picture 2> ([Shot 1] last frame): fully_preserved - the engaged, reactive audience pose, composition, and lighting are retained as the exact ending point.
+
+detailed_description:
+The target video is a flat papercraft-style 2D illustration with a warm ochre, cream, and brown color palette, a textured paper and cardboard look, and a vertical 9:16 portrait framing.
+[Shot 1] A static shot begins from <Picture 1>: Subject 1 stands composed behind the podium, one hand resting on its surface, the seated audience calm and still in front of her. Subject 1 (S1) speaks clearly into the microphone, her expression steady and dignified, and says, <d>[French] Nous avons trop longtemps appris à nos filles à se taire. Il est temps qu'elles apprennent à parler.</d> As she speaks, the audience begins to react: partway through her words, one seated woman on the left slowly raises both hands toward her face, visibly moved. Around the same time, two audience members in the front row gradually turn toward each other and clasp hands together. Other audience members subtly shift their posture, leaning slightly forward or turning their heads toward one another, the difference between their poses and the final composition of <Picture 2> narrowing steadily until the crowd settles into the exact engaged, reactive arrangement shown in <Picture 2>. Subject 1 remains steady and unmoving at the podium throughout, her hand never leaving its resting position, her expression calm even as the crowd's energy shifts around her.
+
+overall_soundscape: A quiet room tone fills the space between words, with the faint rustle of fabric as audience members shift in their seats. A soft, single intake of breath is audible from the woman who raises her hands to her face.
+
+non_diegetic_music: N/A

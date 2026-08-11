@@ -1,6 +1,6 @@
 # Minimax — Guide complet (Music + TTS + H3 image-to-video)
 
-> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3 API fal.ai) + 2026-08-08 (H3 open-weight via Comfy Cloud MCP) + 2026-08-09 (multi-référence + horizontal confirmés, vitesse/résolution, storyboard ouvert)
+> Mise a jour : 2026-05-24 (Music/TTS) + 2026-08-06 (H3 API fal.ai) + 2026-08-08 (H3 open-weight via Comfy Cloud MCP) + 2026-08-09 (multi-référence + horizontal confirmés, vitesse/résolution, storyboard ouvert) + 2026-08-09 (veille 4 transcripts YouTube — voir section dédiée) + 2026-08-10 (guide de prompting officiel MiniMax trouvé + tests réels FLF2V — ⛔ défaut non résolu "personnage qui disparaît + écran noir karaoké" sur scène multi-personnages, seuil de délégation atteint, voir § TEST RÉEL 4/5)
 > Endpoint musique : `fal-ai/minimax-music/v2.6`
 > Endpoint TTS : `fal-ai/minimax/speech-2.8-hd` (validé 2026-05-24)
 > **Note** : consulter ce fichier AVANT tout appel Minimax
@@ -94,6 +94,55 @@ source d'information.
 **Pour la prochaine session sur ce sujet** : chercher d'abord si une méthode/paramètre spécifique
 (node caché, syntaxe de prompt particulière, ordre de tags `<Picture N>`) existe côté communauté H3
 avant de retenter un 3e essai de formulation à l'aveugle.
+
+**⭐⭐ PISTE NEUVE (2026-08-09, analyse 4 transcripts YouTube H3)** : nos 2 tests précédents utilisaient
+tous les deux **UNE seule image composite multi-panneaux** (grille 2x2 dans une image) comme référence.
+Une vidéo (« How To Use MiniMax H3 in ComfyUI », creator anonyme) rapporte un succès (« pulled it off
+beautifully ») avec un « comic collage » animé « comme l'ouverture d'un thriller » + timestamps par
+élément — MAIS le transcript (auto-caption, imprécis) ne permet pas de trancher s'il s'agissait d'une
+image composite unique ou de **plusieurs frames séparées connectées chacune à un node `LoadImage`
+distinct** (le node R2V accepte jusqu'à 9-12 références simultanées, cf section multi-référence
+ci-dessous — largement assez pour 4 panneaux). Cette 2e hypothèse est un test que nous n'avons PAS
+encore fait (nos 2 essais = toujours 1 seule image grille) et diffère structurellement : le modèle
+recevrait 4 images numérotées distinctes (`<Picture 1>`...`<Picture 4>`) plutôt qu'une image à décoder
+lui-même en sous-régions. **Prochain test recommandé** : découper le storyboard en N fichiers séparés
+(un crop par panneau), les uploader comme N `LoadImage` distincts (nodes 137/139/+ éventuels slots
+additionnels), prompt avec segmentation stricte par tranche + référencer chaque `<Picture N>` dans
+l'ordre — avant de conclure que la piste storyboard est morte pour de bon.
+
+**⭐⭐⭐ CONFIRMATION + architecture précise (2026-08-09, vidéo dédiée « Free StoryBoard Workflow »,
+GeekatplayStudio)** : la piste "N images séparées" ci-dessus est CONFIRMÉE par une vidéo qui traite
+frontalement ce sujet — mais l'architecture réelle est différente de ce qu'on imaginait (pas N images
+simultanées référencées `<Picture 1..N>` dans un seul prompt/run). C'est un **enchaînement de segments
+first/last-frame**, pas une segmentation temporelle interne à un run unique :
+- Workflow custom gratuit, **téléchargeable tel quel** :
+  `https://github.com/GeekatplayStudio/ComfyUI-MiniMax-H3-StoryBoard` (pas un template officiel
+  Comfy Cloud — à importer/adapter si on veut le reproduire).
+- Architecture : un node **"Storyboard Manager"** central + N **"Panels"**, chaque panel = 1 image
+  importée + un champ texte ("story panel") qui décrit action/scénographie/découpage temporel. **Le
+  panel N+1 sert de last-frame au panel N** — donc c'est une chaîne de segments R2V (chacun avec son
+  propre couple first/last-frame) mise bout à bout par le manager, PAS un seul run H3 qui reçoit 4
+  images numérotées à traiter en une passe. Ça correspond structurellement à notre outil existant
+  (node 139 = 2e slot LoadImage pour interpolation first/last, déjà documenté plus haut) répété N fois
+  en chaîne plutôt qu'utilisé une fois.
+- **2 modes de sortie** : (a) fusion en 1 seul clip long (testé dans la vidéo, 5 panels × 10s ≈ 1min)
+  — (b) export de chaque segment séparément, **recommandé par l'auteur lui-même** ("the segments work
+  little bit better, they are seamless, you can assemble them afterward") — cohérent avec notre
+  pratique Remotion existante (on monte déjà par segments/beats).
+- **Résultat honnête, pas une solution magique** : même avec cette architecture correcte, l'auteur
+  observe des artefacts À CHAQUE JONCTION — petit "jump"/sursaut visuel à la transition, un cas de
+  ralentissement local non voulu (arbres qui repoussent au ralenti), un cas de doublement de
+  personnage (attribué par l'auteur à une erreur de son placement first/last-frame, pas au modèle).
+  Conclusion de l'auteur : prometteur mais pas encore lisse, encore en développement de son côté.
+- **Implication pour nous** : le chaînage first/last-frame répété (mode segments séparés) est
+  probablement la meilleure piste réaliste pour une continuité multi-plans H3 — mais **prévoir un
+  raccord/lissage en post (Remotion) systématiquement**, ne pas viser un rendu H3 100% propre en sortie
+  brute. Reste à tester chez nous : chaîner 2-3 segments R2V nous-mêmes (image de fin du plan N = image
+  de départ/référence du plan N+1, déjà notre pratique de continuité inter-plans validée le 2026-08-08
+  sur Sonjata scene2→plan2) plutôt que retenter une image composite multi-panneaux.
+- Autre détail utile de la même vidéo : qualité du **texte-à-vidéo pur jugée faible** ("missing
+  details") — confirme notre pratique déjà systématique de toujours partir d'une image de référence
+  générée séparément plutôt que de laisser H3 générer le premier frame en T2V pur.
 
 ### ⭐⭐ Prototypage rapide multi-variantes EN PARALLÈLE (validé 2026-08-08)
 Envoyer **plusieurs appels `run_template` dans le même message** (pas un `for` séquentiel) — les jobs
@@ -543,6 +592,636 @@ complet 6696 caractères), `clip-orbit-v2.mp4` (avec audio) / `clip-orbit-v2-noa
 14 frames de vérification (`check-v2/`) + planche-contact bandeau noir (`contact-sheet-5to15.jpg`) —
 tous dans scratchpad session, non conservés dans le repo, non uploadés Vercel Blob (clip non livrable
 en l'état).
+
+### ⭐ Veille communautaire — 4 transcripts YouTube H3 analysés (2026-08-09)
+
+Analyse de 4 vidéos (transcripts auto-captions, pas de frames) : "MiniMax H3 is the new FREE video AI
+king", "Minimax H3 is a Local AI Video BEAST", "How To Use MiniMax H3 in ComfyUI", "How to Make MiniMax
+H3 30% Faster Than LTX 2.3". Une 5e ("Matrix Fight Scene RTX 5090") sans sous-titres, pure démo, écartée.
+
+**Confirmé par la communauté** (renforce nos observations, pas besoin de retester) :
+- **H3 est littéral / dérive vers son prior appris** sur un détail atypique de l'image de référence,
+  même quand le prompt demande explicitement de le préserver (test communautaire : créature stylisée
+  "tigre ailé" → dérive vers tigre normal en <2s, ne garde que les ailes). Généralise notre observation
+  "reproduit fidèlement les défauts" en "ne préserve pas non plus fidèlement les atypies stylisées
+  demandées explicitement" — soigner l'image de référence reste le vrai levier, pas le prompt seul.
+- **Multi-référence (2e image, type Seedance Omni)** massivement confirmé et utilisé par la
+  communauté : jusqu'à 3 personnages simultanés, character sheet + décor, vidéo de référence, ET audio
+  de référence combinés dans un seul run — "very much the Seedance vibe".
+- **Palier de résolution 480p/720p/1080p** confirmé comme standard communautaire, 720p = sweet spot.
+- **Durée max 15s, 24fps natif** confirmé.
+- **Workflow recommandé par 2 vidéos indépendantes : générer à 720p puis upscaler en post** (LTX 2.3
+  "video enhancer", upscale+enhance simultané) plutôt que générer directement en 1080p — écart de
+  qualité/mouvement jugé minime, gain de temps important. **À tester sur notre pipeline** si un clip
+  1080p natif (~19min) devient un goulot d'étranglement récurrent.
+
+**Nouveau, actionnable** :
+- **Limite de références multi-input : 9 à 12 médias combinés** (image+vidéo+audio) selon la source —
+  largement suffisant pour nos usages actuels (2 images). Règle confirmée : référencer dans le prompt
+  dans le MÊME ORDRE que la connexion des nodes (`<Picture 1>`, `<Picture 2>`...), même logique
+  séparée pour vidéos et audio de référence.
+- **Syntaxe timestamps confirmée** : format `"0 to 2 second, shot one, 2 to 4 second, shot two"` —
+  cohérent avec notre séquençage par tranches déjà pratiqué, rien à changer.
+- **Piste créative transférable — reveal progressif d'une image-cible** : uploader une image finale
+  (ex. graphique, carte, UI) et prompter un cadre vide au départ, éléments qui apparaissent un par un
+  jusqu'à recomposer l'image complète. Directement applicable à notre registre infographie/carte
+  éditoriale (ex. une carte qui se construit territoire par territoire, un chiffre-clé qui se compose
+  élément par élément).
+- **Storyboard multi-panneaux — piste neuve identifiée, voir section dédiée plus haut** (N images
+  séparées par node plutôt qu'1 image composite grille — pas encore testé chez nous).
+- **Si retour au local ComfyUI un jour** (actuellement non prioritaire, Comfy Cloud suffit) : 4 nodes
+  d'accélération (`LightX2V MiniMax H3 Turbo` LoRA, `Patch Sage Attention KJ`, `MiniMax H3 Sigma
+  Shift`, `Spectrum Apply MiniMax H3`) + `Patch SoulAt` (kernels Triton Nvidia), 10 steps recommandés
+  → vitesse comparable LTX 2.3. Nécessite ComfyUI ≥0.30 en install séparée (risque conflits). Turbo
+  LoRA officiel MiniMax en cours d'entraînement, déjà 20→8 steps utilisable en early access.
+
+**Non confirmé ni infirmé par la communauté** (silence, pas une preuve) : notre biais "compression puis
+hold" (rythme qui se résout vite puis fige) — aucune des 4 vidéos ne le mentionne ni ne semble le
+montrer, malgré des démos avec mouvements de caméra complexes. Signal faible seulement, à garder en tête
+sans le considérer réfuté.
+
+**Écarté (hors sujet pour nous)** : détails légaux/licence, comparatifs marché LTX/Flux/WAN non liés à
+un paramètre H3 actionnable, installeurs locaux Windows/RunPod (on reste sur Comfy Cloud managé),
+variantes non censurées.
+
+**Ajout 2026-08-09 (2 vidéos de plus, dont la vidéo storyboard ci-dessus)** :
+- **`reference_strength` = 0.7 recommandé** sur le workflow R2V officiel multi-images (8 images testées
+  par un créateur : 1 sujet + accessoires séparés) — paramètre qu'on n'avait pas identifié/documenté
+  chez nous. **À chercher sur nos templates Comfy Cloud** (`video_minimax_h3_r2v`) si un node/widget
+  équivalent existe — potentiellement utile pour calibrer la fidélité aux images de référence vs liberté
+  du modèle, en particulier sur les cas d'ombre parasite/défaut d'image déjà documentés plus haut.
+- **Sampler `Res Multistep` > `Euler simple` pour la consistance du visage** sur plusieurs frames (le
+  reste — accessoires, vêtements — reste stable avec les deux) ; confirme/précise que le choix de
+  sampler a un impact spécifiquement sur la stabilité faciale, pas juste la vitesse/qualité générale.
+- **Easy Cache déconseillé explicitement** par ce créateur ("terrible results" dans ses tests) malgré
+  sa présence dans le workflow par défaut — à garder en tête si jamais on retrouve un node équivalent
+  sur nos templates Comfy Cloud, ne pas l'activer par défaut sans re-tester.
+- **"Sol/Soul Attention"** (patch d'attention, distinct de Sage Attention) : ~-50% de temps de rendu
+  mesuré (34min vs 60-65min pour un clip 8s/1080p sur Runway Hub) contre une perte de netteté "légère
+  mais visible" sur le visage/détails fins. Compromis vitesse/qualitéà garder en tête seulement si on
+  repasse un jour par un ComfyUI local — non vérifié si un équivalent existe sur nos templates Comfy
+  Cloud actuels.
+
+### ⭐⭐⭐ VÉRIFICATION DIRECTE DU CATALOGUE COMFY CLOUD (2026-08-09) — ce qui existe réellement, pas ce que les vidéos décrivent
+
+Après la veille vidéo (sections ci-dessus, majoritairement ComfyUI **local**), vérification via
+`search_templates`/`search_nodes`/`get_node` de ce qui est VRAIMENT disponible sur Comfy Cloud pour H3.
+Plusieurs découvertes changent notre plan de test pour le storyboard.
+
+**⭐⭐⭐ Template officiel FLF2V H3 existe déjà — `api_minimax_h3_flf2v`** (non identifié avant cette
+vérification, jamais utilisé chez nous) : 2 images en input (`first_frame`, `last_frame` sur le node
+`MinimaxHailuo03FirstLastFrameNode`, catégorie `partner/video/MiniMax`), génère une transition fluide
+entre les deux. **C'est structurellement identique au mécanisme interne du "Storyboard Manager" custom
+de la vidéo GeekatplayStudio** (chaque panel = un segment R2V dont l'image de fin sert de first-frame
+au segment suivant) — sauf que chez nous c'est un template OFFICIEL prêt à l'emploi, pas un workflow
+tiers à récupérer sur GitHub et adapter. **Piste de test la plus directe pour le storyboard multi-plans** :
+chaîner plusieurs appels `run_template(api_minimax_h3_flf2v)` — plan N se termine sur une frame,
+cette frame devient `first_frame` du plan N+1 (avec son propre `last_frame` visé) — plutôt que de
+chercher une solution "tout-en-un" via `video_minimax_h3_r2v`. Note : `api_minimax_h3_flf2v` est un
+template `api_` (passe par l'API MiniMax hébergée, PAS open-weight gratuit comme `video_minimax_h3_*`)
+— vérifier le coût crédits avec `estimate_credits` avant de tester à l'échelle.
+
+**⭐⭐ Règles de prompting FLF2V — vérifiées sur le prompt-exemple officiel du template (2026-08-09)** :
+confirmé que ce N'EST PAS un simple "donner 2 images et laisser le modèle inventer" — même discipline
+que R2V. Prompt-exemple officiel (`api_minimax_h3_flf2v`, scène ange guerrier) :
+
+> "Use Image 1 as the first frame and Image 2 as the last frame. One continuous cinematic fantasy shot.
+> The angel warrior finishes fighting demons in the smoke, then turns and points her spear at the
+> remaining enemies below. End in a triumphant low-angle hero pose. Same character, same style, smooth
+> motion, no cuts, no text."
+
+Décompose en 4 éléments, tous déjà dans notre pratique R2V habituelle :
+1. **Référence explicite aux 2 images** ("Image 1 as the first frame and Image 2 as the last frame")
+   — équivalent de nos `<Picture 1>`/`<Picture 2>`.
+2. **Décrire l'ACTION entre les deux frames**, pas les images elles-mêmes ("finishes fighting... then
+   turns and points... End in a triumphant pose") — narration du mouvement, pas description statique.
+3. **Clause de continuité** ("Same character, same style, smooth motion") — équivalent décor verrouillé.
+4. **Clause négative** ("no cuts, no text") — notre pratique habituelle de clause négative répétée.
+
+**Conclusion actionnable** : pour notre usage (last-frame générée séparément, ex. via Gemini 3.1 Flash,
+puis chaînage FLF2V), garder notre discipline de prompt habituelle (séquençage temporel par tranches,
+clause négative répétée, décor verrouillé) — le node FLF2V n'a pas de champ dédié pour un séquençage
+par tranches (contrairement à R2V/T2V où on utilise `"0-2s: ... 2-4s: ..."` dans le texte libre), tout
+passe par le même champ prompt texte libre. Pas de paramètre `reference_strength` ni équivalent sur ce
+node non plus (2 champs seulement : `first_frame`, `last_frame` optionnel, prompt, resolution, duration
+5-15s) — la fidélité aux 2 images est déterminée uniquement par la qualité de la description de l'action
+dans le prompt, pas par un curseur numérique.
+
+### ⭐⭐⭐ TEST RÉEL 1 — Sonjata scene2→plan2 via `api_minimax_h3_flf2v` (2026-08-10) — la `last_frame` prime sur le texte du prompt en cas de conflit
+
+Premier vrai test du chaînage first/last-frame sur un cas de production. `first_frame` = dernière frame
+du clip `prototype-2-15s-multistrate-vivant.mp4` (garçon agenouillé sur un genou, regard vers la mère,
+bras de la mère abaissé — cf section prototypes plus haut). `last_frame` générée par edit i2i Gemini
+3.1 Flash (`scripts/tools/gemini-i2i.py`) : garçon debout. **2 tentatives i2i pour obtenir un garçon
+tourné à 90° vers la foule ont toutes deux échoué** — Gemini a un biais fort à préserver le regard
+mère-fils de l'image source malgré des instructions de rotation très explicites et répétées 2x avec
+formulations différentes (métaphore "horloge 12h→3h" en 2e tentative, toujours sans effet). **Décision
+Aziz** : ne pas insister sur la rotation dans l'IMAGE — la garder simple (debout, toujours face à la
+mère) et déléguer la rotation au TEXTE du prompt vidéo à la place ("il se lève, se détourne, regarde
+les villageois").
+
+**Résultat H3 (10s demandé → 10.125s obtenu, 768×1376 vertical confirmé, prompt_id `ca1b3b94-3998-
+4d1e-929b-2f9cc272c5ba`, coût réel 272 crédits pour 10s/768P — pas 136, l'estimation par défaut
+`estimate_credits` suppose 5s)** : vérifié sur les 11 frames (0 à 10s, chacune à pleine résolution, pas
+une planche-contact miniature qui trompe l'œil — leçon déjà documentée ailleurs, reconfirmée ici) :
+- 0-1s agenouillé (position `first_frame` respectée) → 2-5s se lève, face à la mère → **6-8s dos
+  tourné, fait bien face à la foule (la rotation demandée dans le texte a été exécutée)** → **9-10s
+  RE-tourné face à la mère**, soit la pose exacte de la `last_frame` fournie.
+- **Aucun objet halluciné, aucun morphing, décor et personnages secondaires parfaitement stables sur
+  tout le clip** — le mécanisme first/last-frame est solide techniquement.
+
+**Découverte comportementale nouvelle, pas documentée avant ce test** : quand le TEXTE du prompt décrit
+une action finale ("end facing the crowd, no longer looking at his mother") qui CONTREDIT la pose de
+l'image `last_frame` fournie (ici : debout face à la mère, faute d'avoir pu générer une image tournée),
+**H3 a exécuté les deux dans l'ordre — la rotation demandée par le texte EN MILIEU de clip, puis un
+retour à la pose de la `last_frame` en toute fin** — plutôt que d'ignorer l'image ou d'ignorer le texte.
+**La `last_frame` semble donc avoir un poids plus fort que le texte pour déterminer la pose de la
+TOUTE FIN du clip**, même quand le texte dit explicitement le contraire. Cohérent avec le principe déjà
+documenté "H3 est littéral" (section ombre de charsheet plus haut), mais c'est la première fois qu'on
+l'observe sur un CONFLIT direct texte vs image plutôt que sur une image qui n'est simplement pas
+corrigée.
+
+**Implication actionnable directe** : sur FLF2V, si la pose finale exacte compte pour la suite du
+montage (raccord avec le plan suivant), **soigner l'image `last_frame` elle-même est plus fiable que
+d'essayer de la corriger via le texte du prompt** — ne pas compter sur le texte pour "réparer" une
+image imparfaite comme on le fait sur R2V. Si l'image de la pose voulue est difficile à générer (cf
+échec Gemini rotation ci-dessus), il vaut mieux persister sur l'image (3e tentative i2i, angle
+différent, ou génération from scratch plutôt qu'edit) qu'accepter une image simplifiée et compter sur
+le texte pour combler l'écart.
+
+**Verdict global** : test concluant sur le plan technique (mécanisme FLF2V fiable, ratio/durée/stabilité
+tous corrects), mais **pas concluant sur l'objectif narratif initial** (pose finale "tourné vers le
+village" pas obtenue en dernière frame) — à cause d'un choix amont (image simplifiée) assumé
+consciemment, pas d'un défaut du modèle. Reste à tester : la même chaîne avec une `last_frame` qui
+montre vraiment la pose finale voulue (nécessite de résoudre d'abord le blocage Gemini sur la rotation,
+ou de générer l'image autrement — from scratch plutôt qu'edit, ou prise de vue/角度 différente dès le
+prompt initial plutôt qu'un edit a posteriori).
+
+**Confirmation qu'un usage storyboard multi-panneaux est un cas d'usage officiellement anticipé** :
+le template `api_minimax_h3_r2v` (Reference-to-Video, variante API) a pour image d'exemple officielle
+`9panel_storyboard_golden_hour_clay_court.png` — MiniMax/Comfy présente eux-mêmes un storyboard 9
+panneaux comme cas d'usage typique du node `MinimaxHailuo03ReferenceNode`
+(`model.reference_images.image_1` à `image_9`, référencés dans le prompt comme "Image 1".."Image 9"
+dans l'ordre de connexion — même logique que `<Picture N>` déjà documentée pour le node core). Ça
+va dans le sens d'une image storyboard multi-panneaux **envoyée en une fois comme SEULE référence
+"Image 1"** OU en 9 images séparées width chacune un panel dédié — **l'exemple officiel ne tranche pas
+lequel des deux usages est visé**, mais confirme que le cas d'usage storyboard est pris en charge
+d'une manière ou d'une autre par ce node. À tester directement plutôt que de deviner.
+
+**Existe aussi côté Seedance (déjà su, confirmé)** : `template_seedance2_storyboard_to_video` — génère
+un storyboard 8-panneaux depuis un prompt texte PUIS l'utilise comme base Seedance 2.0. Structurellement
+différent (le storyboard est généré par le template lui-même, pas fourni par nous) — pas directement
+adaptable à H3 tel quel, mais confirme que Comfy Cloud a un vrai précédent de pipeline
+storyboard-vers-vidéo pour un autre modèle, à consulter (`get_template`) si on veut s'en inspirer pour
+construire un équivalent H3 maison.
+
+**2 versions du node reference-to-video existent, à ne pas confondre** :
+- `MiniMaxH3ReferenceToVideo` (id 136 dans notre template `video_minimax_h3_r2v`, catégorie
+  `model/conditioning/minimax`, pack `core`) — **celui qu'on utilise déjà**, gratuit/open-weight,
+  paramètre `ref_image_size` (`match` vs `max` — `max` = jusqu'à plusieurs fois plus lent, meilleure
+  fidélité d'identité, upscale au pipeline de référence 2048px côté court) au lieu d'un
+  `reference_strength` (ce paramètre de vid8, sur workflow local différent, **n'existe pas** sur notre
+  node — à ne pas chercher).
+- `MinimaxHailuo03ReferenceNode` (catégorie `partner/video/MiniMax`, `api_node: true`) — version API
+  payante utilisée par les templates `api_minimax_h3_*`, jusqu'à 9 images + 3 vidéos + 3 audios,
+  syntaxe prompt "Image 1"/"Video 1"/"Audio 1" (pas `<Picture N>`).
+
+**Confirmation positive vid7 (Basic Guider = pas de CFG)** : notre template `video_minimax_h3_r2v`
+utilise DÉJÀ `BasicGuider` (pas `CFGGuider`) — exactement le setup optimisé mémoire que vid7
+recommandait de construire soi-même en local. On a ça gratuitement par défaut sur Comfy Cloud, rien à
+changer. Confirme qu'il n'y a pas de negative prompt disponible sur ce template (cohérent avec ce
+qu'on pratique déjà).
+
+**Sage Attention et Easy Cache existent bien dans le catalogue Comfy Cloud** (`PathchSageAttentionKJ`,
+pack `ComfyUI-KJNodes` ; `EasyCache`, pack `core`) mais **ne sont PAS câblés par défaut** dans
+`video_minimax_h3_r2v` — à ajouter soi-même via `submit_workflow` (édition structurelle du graphe, pas
+un simple `input_overrides`) si on veut tester le gain de vitesse. `MiniMaxH3SigmaShift` (déjà
+documenté) existe aussi mais n'est pas non plus câblé par défaut sur ce template précis — à vérifier
+si un autre template H3 le contient déjà avant de le rajouter à la main.
+
+### ⭐⭐⭐ Deep dive 54min "Fine-tuning Friday" (Oxen.ai, Phil de Machine Delusions + Greg) — 2026-08-10
+
+Vidéo la plus dense et la plus experte analysée à ce jour sur H3 — un praticien diffusion pro (~15
+ans d'expérience, studios VFX/anime) + un des créateurs d'outils H3 communautaires. Résumé des points
+qui changent ou affinent notre pratique.
+
+**⭐⭐⭐ Le plafond de netteté natif à 768px est structurel, pas un réglage** : la pipeline officielle
+MiniMax a 3 étages — (1) tokenisation de toutes les références, (2) le "768 pipe" = la partie
+effectivement open-source, (3) une passe de refinement 2K **jamais publiée** (façon GAN/adapter en
+sortie du DIT, non confirmé). Tous les benchmarks publics "SOTA" (Design Arena, etc.) reflètent la
+variante fermée AVEC ce refiner caché — pas ce qu'on obtient avec les poids ouverts. **Implication
+directe** : nos templates gratuits `video_minimax_h3_*` (open-weight) plafonnent probablement en
+netteté à ce palier 768, quel que soit le `width`/`height` demandé en sortie — la variante `api_*`
+(payante, ~136-272 crédits) appelle probablement la vraie pipeline fermée avec refiner, d'où une
+netteté supérieure attendue. À vérifier par comparaison directe si la netteté devient un point bloquant.
+
+**⭐⭐⭐ Stratégie d'itération validée par un pro : motion-check en basse résolution AVANT tout upscale.**
+Rendre d'abord à 512px côté long — le mouvement y est déjà excellent, la netteté n'a aucune importance
+à ce stade — puis upscaler/re-passer au sampler SEULEMENT une fois la direction/mise en scène validée.
+Principe : le mouvement est la partie la plus difficile à obtenir, le nettoyage est un problème
+résolu séparément. Directement transposable à notre pratique R2V/FLF2V : tester en 480p (déjà notre
+palier le plus rapide, cf section vitesse), ne monter en 720p/1080p qu'après validation du geste.
+
+**⭐⭐ Nuance sur la fidélité image de référence vs texte** : sur un test multi-référence (character
+sheets + katana, plusieurs angles), le modèle **n'a PAS suivi les images littéralement** — il les a
+traitées comme guide stylistique tout en réinterprétant le mouvement/la scène selon le texte. Sur un
+swap de personnage complet dans une vidéo de danse (pose transfer), succès total avec des personnages
+très différents visuellement de l'original. **Ça semble contredire notre observation du 2026-08-10 sur
+FLF2V** (la `last_frame` fournie avait primé sur le texte contradictoire, cf test Sonjata) — mais ce
+n'est probablement PAS une vraie contradiction : le mécanisme FLF2V a une contrainte structurelle de
+point d'arrivée (la dernière frame doit ressembler à l'image donnée, c'est sa fonction même), alors que
+le multi-référence R2V classique traite les images comme guidance stylistique plus lâche. **Ne pas
+généraliser un principe unique "images vs texte" entre les deux mécanismes** — traiter FLF2V et R2V
+multi-référence comme deux comportements de fidélité distincts jusqu'à preuve du contraire.
+
+**⭐⭐ Dialogue : le prompt brut produit un audio en charabia, la structure complète le corrige.**
+Démonstration directe dans la vidéo : même prompt de base ("Jim and Dwight discuss autonomous coding
+agents"), envoyé brut vs envoyé après enrichissement automatique (un outil maison qui utilise le guide
+officiel HuggingFace comme contexte pour réécrire le prompt). Version brute → dialogue audio
+incompréhensible/langue non identifiable. Version structurée (crochets, séparation description
+multimodale / soundscape / musique, **balises de langue `<D>...</D>` pour le dialogue — 11 langues
+supportées**) → dialogue clair et correctement localisé. **Actionnable directement** : pour tout clip
+H3 avec dialogue parlé chez nous, structurer explicitement avec ces sections plutôt qu'une description
+continue — guide officiel à consulter : HuggingFace repo MiniMax H3 → Files and versions → docs.
+
+**⭐⭐ Durée du clip doit être dimensionnée au volume de dialogue demandé.** Preuve concrète : même
+prompt élaboré avec dialogue scripté, rendu en 5s vs 12s — la version 5s tronque/déforme visiblement le
+texte de la réplique pour tenir dans le temps imparti. Si un prompt contient du dialogue conséquent,
+prévoir une durée généreuse (viser la fourchette haute plutôt que la basse) plutôt que de compresser.
+
+**⭐ Limite de "frame buckets" fixes, confirmée avec exemple chiffré** : le modèle n'accepte pas
+n'importe quelle longueur de rendu en frames — seulement des valeurs par paliers fixes (hypothèse liée
+à la compression du VAE, non confirmée à 100% par le créateur). Exemple cité : demander 37 frames →
+le système impose 39 (palier valide le plus proche) → il faut crop 2 frames en post. **Cohérent avec
+notre propre observation déjà documentée** (arrondi non strictement déterministe d'un test à l'autre,
+cf section durée réelle vs demandée plus haut) — confirme qu'il ne faut jamais viser une durée exacte
+en frames sans vérifier `ffprobe` après coup, quel que soit le mécanisme de calcul utilisé en amont.
+
+**⭐ Contrainte structurelle : H3 exige toujours un input visuel, même pour un usage 100% audio-first.**
+Le modèle refuse un audio de référence seul sans image/vidéo d'accompagnement — "fondamentalement
+entraîné ainsi", pas une limite d'interface. Contournement : une image neutre/blanche suffit à satisfaire
+la contrainte si le vrai driver souhaité est l'audio seul. À garder en tête si on explore un jour un
+pipeline piloté par la narration audio plutôt que par une image de scène.
+
+**Repères secondaires** : audio natif à 32kHz (proche qualité MP3, supérieur à des modèles audio dédiés
+type Step ~24kHz) · setup GPU pro observé pour référence : 2× GPU 48Go VRAM (text encoder Qwen 32B
+int8 ≈27Go sur un GPU, diffusion model pruned int8 sur l'autre) — H3 confirmé aussi tournable sur du
+matériel modeste (RTX A4500 20Go, MacBook M5 via MLX ~45min/clip) · modèle confirmé "fully uncensored"
+par les deux intervenants (violence/gore/explicite) — non pertinent pour notre registre éditorial mais
+confirme l'absence de filtre côté poids ouverts · test de rupture de mouvement (salto/gymnastique, tête
+qui se confond avec les pieds à un moment précis) **partagé avec Seedance** sur ce cas précis — pas un
+point faible spécifique à H3 · pipeline "image unique → time-lapse" façon édition d'image (Nano Banana)
+testé et **jugé peu fiable** (échec net sur le premier cas, résultat mitigé sur le second) — ne pas
+prioriser cette approche chez nous · argument ROI fine-tuning cité : un rendu Seedance 2.0 de 30s coûte
+10-15$ API, comparable au coût total d'un fine-tuning H3 local pour un usage de niche répété — piste
+à garder en tête si un registre visuel récurrent chez nous (ex. cartes/jetons stylisés) justifiait un
+jour l'investissement, mais non prioritaire actuellement (dataset de démo ~100 clips jugé
+sous-dimensionné par les intervenants eux-mêmes pour un résultat robuste).
+
+### ⭐⭐⭐ GUIDE DE PROMPTING OFFICIEL MiniMax — trouvé sur le repo GitHub, PAS deviné (2026-08-10)
+
+Aziz a demandé explicitement d'aller lire le guide officiel plutôt que de continuer à improviser une
+discipline de prompt par nous-mêmes. Trouvé sur le repo officiel `MiniMax-AI/MiniMax-H3` (GitHub),
+sous forme d'un **skill installable** avec deux fichiers de référence texte :
+- `skills/h3-prompt-writing/references/base-en.txt` — modes T2VA / I2VA / FL2VA / **L2VA** (4e mode
+  qu'on ignorait, image de fin seule sans image de départ — le modèle invente un état de départ
+  plausible et y converge).
+- `skills/h3-prompt-writing/references/ref-en.txt` — mode multi-référence (Ref2VA), **notre usage
+  principal actuel**.
+
+Installable directement : `npx skills add https://github.com/MiniMax-AI/MiniMax-H3 --skill
+h3-prompt-writing`. Format Markdown pur, aucun appel API — lisible/adaptable par n'importe quel agent.
+
+**⛔⛔ Notre discipline de prompt actuelle (séquençage libre par tranches de temps, un seul bloc de
+texte) N'EST PAS le format officiel attendu par le modèle** — elle fonctionne (nos tests ont donné de
+bons résultats), mais le format officiel est beaucoup plus structuré et normé. À adopter progressivement
+sur les prochains tests pour vérifier si ça améliore la fidélité, en particulier sur les points de
+friction déjà rencontrés (dialogue, poids image/texte).
+
+#### Structure officielle — modes de base (T2VA/I2VA/FL2VA/L2VA)
+
+Le prompt final a TOUJOURS 2 parties :
+1. **Une ligne d'alignement obligatoire en tête** (sauf T2VA qui n'en a pas), format imposé selon le
+   mode. Pour FL2VA par exemple : *"Picture 1 (from Shot 1) aligns with the 0.00-second mark of the
+   target video; Picture 2 (from Shot N) aligns with the S.SS-second mark of the target video."*
+   (S.SS = durée réelle du clip à exactement 2 décimales). **On ne mettait jamais cette ligne** —
+   à tester : est-ce qu'elle améliore la fidélité au timing/à la convergence vers la last_frame ?
+2. **3 champs séparés, chacun introduit par son nom** : `integrated_multimodal_description:` (le corps
+   principal, tout le visuel/action/dialogue/son synchronisé) → `overall_soundscape:` (1-4 phrases,
+   ambiance/sons physiques, PAS le dialogue) → `non_diegetic_music:` (1-3 phrases, musique
+   d'accompagnement inaudible par les personnages ; `N/A` si aucune). **On écrivait tout en un seul
+   bloc sans cette séparation** — à adopter systématiquement.
+
+**⭐⭐⭐ Nuance importante sur notre découverte du 2026-08-10 (test Sonjata FLF2V, "la last_frame prime
+sur le texte")** : le guide officiel dit explicitement que FL2VA doit décrire une **convergence
+PROGRESSIVE** vers l'image 2 ("progressively narrowing differences → last-frame state"), structure
+recommandée : état de départ → changements intermédiaires observables → **écart qui se resserre
+progressivement** → état final. Notre prompt de test demandait l'inverse (rotation franche vers la
+foule au milieu, PUIS retour à la pose de la last_frame) — ce n'est pas la structure recommandée.
+**Hypothèse à tester** : notre "aller-retour" observé vient peut-être du fait qu'on a mal structuré la
+convergence (changement brutal non-monotone) plutôt que d'un vrai conflit fondamental image/texte —
+à revérifier avec un prompt qui décrit une convergence progressive et continue vers la pose finale
+voulue, structuré selon ce guide, avant de conclure quoi que ce soit de définitif sur "qui prime".
+
+**Vocabulaire de mouvement de caméra normalisé** (liste fermée, 3 dimensions à combiner) :
+- Type : `Zoom In/Out`, `Push In/Pull Out`, `Pan Left/Right`, `Truck Left/Right`, `Tilt Up/Down`,
+  `Pedestal Up/Down`, `Arc Shot`, `Tracking Shot`, `Static Shot`, `Shake Slightly/Strongly`, `POV`,
+  `Roll Clockwise/Counterclockwise`.
+- Amplitude : `with small amplitude` / `with large amplitude` (omettre si amplitude moyenne).
+- Vitesse : `at slow speed` / `at fast speed` (omettre si vitesse normale).
+- Écrit en phrase naturelle dans le plan, pas empilé en tags séparés : *"The camera pushes in with
+  small amplitude at slow speed toward..."*. **On utilisait des descriptions libres de caméra** — ce
+  vocabulaire fermé est probablement plus fiable, à tester sur le prochain test avec mouvement caméra.
+
+**Format des coupures de plan** : `[Shot 1]` sans timestamp pour le premier plan, puis
+`[Shot 2] At 00:03.500, the camera cuts to...` (timestamp précision milliseconde, formulations
+imposées : `cuts to`/`shot transitions to`/`shot changes to`/`shot switches to`). Une coupure doit
+apporter une info nouvelle (sujet/espace/état/point de vue/temps) — sinon préférer un mouvement de
+caméra continu plutôt qu'une coupure.
+
+**Dialogue — syntaxe précise, différente de notre pratique** :
+- ID de locuteur stable `(S1)`, `(S2)` etc., réutilisé à travers tous les plans où ce personnage parle.
+  Combiner en `(S1,S2)` si plusieurs parlent ensemble. Un personnage qui ne parle jamais n'a pas d'ID.
+- Syntaxe du dialogue : `<d>[English] texte exact</d>` — préserver mot pour mot et ponctuation
+  d'origine, ne jamais traduire/reformuler à l'intérieur des balises. **On utilisait des guillemets
+  simples sans balise de langue** — cohérent avec la découverte de la vidéo deep-dive (balises
+  `<D>...</D>` par langue, 11 langues supportées).
+- Voix off : formule exacte imposée `says in an off-screen voiceover`, suivie obligatoirement d'une
+  précision que les lèvres du personnage à l'écran restent fermées.
+- Dialogue qui traverse une coupure : `<scenetrans>` aux points de jonction + préciser explicitement
+  la continuité audio. `<cutoff>` si la réplique est tronquée par la fin de la vidéo.
+
+**Texte à l'écran** : entre guillemets anglais doubles, texte et ponctuation d'origine préservés sans
+traduction (ex: bannière/néon/panneau visible).
+
+#### Structure officielle — mode multi-référence (Ref2VA, NOTRE USAGE PRINCIPAL)
+
+**6 sections dans cet ordre strict** (très différent de notre pratique actuelle en un seul bloc) :
+1. **`subject_definitions`** — définit CHAQUE élément référencé séparément avec 4 types de labels :
+   - `<Subject N>` : contenu visuel réutilisable (personnage, décor, costume, style, action, pose) —
+     PAS le fichier source lui-même, l'élément qui sera effectivement utilisé dans la vidéo cible.
+   - `<Picture N>` : une image de référence utilisée comme frame concret (première/dernière frame,
+     ancre de composition) — si l'image sert juste à définir un personnage/décor/style sans être un
+     frame concret, ne PAS créer d'entrée `<Picture N>` séparée, la citer dans la définition du
+     `<Subject N>` correspondant à la place.
+   - `<Video N>` : relation avec une vidéo entière (édition, continuation, structure/rythme/coupures
+     de référence) — PAS utilisé si on réutilise juste un personnage/objet visible dedans (ça reste
+     `<Subject N>`).
+   - `<Audio N>` : signal audio autonome ou piste synchronisée d'une vidéo de référence (copie,
+     référence de timbre de voix, référence de rythme/style musical).
+   - Une fois un label assigné, il garde le même sens dans toutes les sections suivantes.
+2. **`summary`** — un court paragraphe résumant la tâche et les relations de référence, commence par un
+   préfixe de type de tâche entre crochets (ex: `[reference generation]`, `[video editing + audio
+   reuse]`) — liste fermée de types : `keyframe completion`, `reference generation`, `video editing`,
+   `video continuation`, `audio reuse`, `audio reference`, combinables avec ` + `.
+3. **`retention_analysis`** — une ligne par label référencé, avec un marqueur de relation FIXE :
+   pour le visuel (`<Subject N>`/`<Picture N>`/`<Video N>`) : `fully_preserved` / `partially_preserved`
+   / `attribute_transfer` / `weak_reference`. Pour l'audio (`<Audio N>`) : `fully_copy` /
+   `partially_copy` / `reference` / `weak_reference`.
+4. **`detailed_description`** — le corps principal (équivalent du `integrated_multimodal_description`
+   des modes de base), 350-500 mots recommandés pour une tâche de génération, avec les labels de
+   référence insérés à leur première apparition claire et partout où leur rôle s'applique. Ouverture en
+   1-2 phrases de style AVANT `[Shot 1]` (pas après comme en T2VA).
+5. **`overall_soundscape`** — même règle que les modes de base.
+6. **`non_diegetic_music`** — même règle que les modes de base.
+
+**⭐⭐⭐ Implication directe et immédiate pour nous** : notre usage R2V actuel (node
+`MiniMaxH3ReferenceToVideo`, `<Picture 1>`/`<Picture 2>` dans un bloc de texte libre avec séquençage
+par tranches) ne suit AUCUNE de ces 6 sections. On écrit l'équivalent d'un `detailed_description` seul,
+sans `subject_definitions` (donc sans définir explicitement CE QUE chaque image représente et COMMENT
+elle doit être préservée), sans `retention_analysis` (donc sans dire explicitement au modèle "préserve
+entièrement ce personnage" vs "transfère juste le style").
+
+**⭐⭐⭐ TEST RÉEL 2 — même cas Sonjata, format officiel 6 sections + dialogue français (2026-08-10)** :
+même paire d'images qu'au Test 1 (`prompt_id ca1b3b94`), même durée/résolution (10s, 768×1376), mais
+prompt entièrement réécrit selon le format officiel `Ref2VA`-like (adapté au node FLF2V qui n'a qu'un
+champ texte libre — les 6 sections tiennent dans ce seul champ), avec en plus une réplique de dialogue
+ajoutée pour la matrone : *"Au moins mon fils peut cueillir des feuilles de baobab, le tien ne peut
+même pas se lever."* (`prompt_id 5e70ff6e-6129-4435-ae1b-bc01c2f6f9f5`, 272 crédits, même coût que le
+Test 1). Vérifié frame par frame (11 frames 0-10s, pleine résolution) + **transcription réelle de
+l'audio via `scripts/tools/transcribe-openai.py`** (API Whisper OpenAI, pas d'estimation à l'oreille) :
+
+- ✅ **Convergence propre, PAS d'aller-retour cette fois** — contrairement au Test 1 (rotation franche
+  au milieu puis retour brusque à la pose de la last_frame), ici le garçon se lève entre 6-7s et sa
+  pose se STABILISE ensuite jusqu'à 10s. La clause de convergence progressive du format officiel
+  ("narrowing differences") semble avoir résolu le défaut observé au Test 1.
+- ✅✅✅ **Dialogue parfait, vérifié par transcription automatique** : Whisper retranscrit la réplique
+  **mot pour mot identique** au texte du prompt, sur le créneau 0.00s-4.74s, aucune déformation ni
+  troncature. Confirme que la syntaxe `<d>[French] texte</d>` avec locuteur `(S1)` identifié fonctionne
+  telle quelle sur le node FLF2V malgré le guide officiel écrit pour Ref2VA — transposition réussie.
+- ✅ **Fidélité mère/foule/décor parfaite** sur les 11 frames — aucun élément déplacé/modifié.
+- ⚠️ **Rotation "vers la foule" pas franchement exécutée** : le garçon finit en position frontale/
+  légèrement de profil plutôt qu'une vraie rotation à 90°, cohérent avec la `last_frame` fournie qui
+  elle-même n'était pas tournée (blocage Gemini du Test 1, jamais résolu). **La limite vient de l'image
+  de référence, pas du prompt** — confirme qu'il faut soigner l'image `last_frame` en amont plutôt que
+  compter sur le texte pour forcer une pose qu'elle ne montre pas.
+
+**Conclusion actionnable** : le format officiel à 6 sections **résout concrètement et mesurablement**
+le défaut de convergence non-monotone observé au Test 1, ET permet un dialogue synchronisé fiable et
+fidèle en français. **Adopter ce format par défaut pour tout prochain test FLF2V/R2V avec dialogue**,
+en particulier la clause de convergence progressive pour FLF2V et la syntaxe `<d>[Language]...</d>` +
+`(Sx)` pour tout dialogue. Reste à tester : le même format sur le node R2V multi-référence classique
+(pas juste FLF2V) pour voir si le gain de fidélité se confirme aussi sur ce mécanisme.
+
+**Note sur les fichiers sources** : guide texte intégral non reproduit ici (contenu propriétaire
+MiniMax) — se référer directement au repo GitHub `MiniMax-AI/MiniMax-H3` (fichiers
+`skills/h3-prompt-writing/references/{base-en,ref-en}.txt`) pour les exemples complets et la formulation
+exacte avant tout prompt à enjeu narratif important, plutôt que de travailler uniquement depuis ce
+résumé.
+
+### ⭐⭐ TEST RÉEL 3 — hypothèse "yeux expressifs = hiérarchie visuelle héros" (Mariama Bâ, 2026-08-10)
+
+Hypothèse d'Aziz née de l'observation des tests Sonjata : sur ces clips, seul le personnage principal
+(Sundiata) a des yeux avec iris/regard mobile ; les figurants ont des dot-eyes classiques du style
+GeoAfrique et H3 anime bien les deux rendus de façon crédible et distincte. Hypothèse : utiliser des
+yeux expressifs UNIQUEMENT pour le héros d'une scène pourrait servir de signal visuel de hiérarchie
+narrative (qui est le protagoniste), en plus/au lieu d'autres conventions déjà documentées
+(`hierarchie-figurant-heros` en mémoire globale du projet).
+
+**Protocole de test** : personnage Mariama Bâ (charsheet canonique en dot-eyes strict, voir
+`public/_shared/refs/characters/mariama-ba/`), scène "table d'écriture" existante réutilisée comme
+base (`scenes-test/scene-table-ecriture-v1.png`). Edit i2i (Gemini 3.1 Flash, méthode
+CHANGE-ONLY-PRESERVE-EXACTLY déjà validée) pour ajouter un iris/pupille simple aux yeux SANS changer
+le reste du rendu papercraft — appliqué à la fois sur la `first_frame` (elle écrit) et la `last_frame`
+(elle s'arrête, regarde par la fenêtre) pour isoler la variable "yeux expressifs" du reste. **Prototype
+sciemment isolé dans un sous-dossier séparé et taggé** (pas dans le charsheet canonique) pour éviter
+toute confusion future avec le personnage standard dot-eyes du projet.
+
+**⚠️ Gotcha methode Gemini i2i, déjà vu sur Sonjata, confirmé ici** : la 1ère tentative de changement de
+pose (main levée du stylo) a échoué — Gemini a gardé la main en position d'écriture active malgré
+l'instruction. Correction qui a marché : simplifier au maximum la formulation ("the pen is resting on
+the table... her hands are flat and relaxed") plutôt qu'une description plus longue/indirecte. **Leçon
+generalisable** : pour un edit i2i de pose de main, préférer une instruction courte et concrète
+("pen resting on table, hands flat") à une description elaborée.
+
+**⚠️ Correction Aziz sur mon propre jugement visuel** : sur la 1ère tentative, j'ai affirmé à tort que
+le regard n'était pas tourné vers la fenêtre — Aziz a confirmé de visu que si, c'était bien le cas,
+seule la main posait problème. Rappel de la règle déjà documentée (vérifier avant d'affirmer) : mon
+jugement visuel sur une image n'est pas infaillible, à confronter au jugement d'Aziz plutôt qu'à
+imposer comme fait établi.
+
+**Résultat H3 (10s, 768×1344, `prompt_id 0005acfd-1b7b-4fa2-82f0-d42178567126`, 272 crédits)**, vérifié
+frame par frame (11 frames 0-10s pleine résolution) + transcription Whisper réelle :
+- ✅ **Iris/regard mobile maintenu sur tout le clip** — direction du regard change de façon cohérente
+  (lettre → fenêtre), contrairement à un dot-eyes qui n'a pas d'information directionnelle. Bouche
+  animée avec plusieurs expressions distinctes pendant la réplique (légère surprise, sourire).
+- ✅ **Convergence propre et monotone** vers la last_frame — pas d'aller-retour, cohérent avec le
+  Test 2 Sonjata (même structure de prompt officielle).
+- ✅ **Dialogue parfait** — phrase originale composée pour ce test (« Certaines vérités ne s'écrivent
+  qu'une fois qu'on a cessé d'avoir peur de les dire », PAS une citation de l'œuvre réelle de l'autrice
+  historique), transcrite par Whisper mot pour mot identique, sur 5.10-9.42s.
+- ✅ **Décor stable** sur les 11 frames (table, lettre, tasse, encrier, fenêtre, palmier, silhouette
+  urbaine, rideau).
+
+**Ce que ce test prouve, et ce qu'il NE prouve PAS encore** : confirme que H3 anime de façon crédible et
+stable des yeux à iris sur un personnage seul, sur toute la durée d'un plan — prérequis technique de
+l'hypothèse validé. **Ne prouve pas encore l'effet de contraste hiérarchique** (pas de figurant en
+dot-eyes présent dans cette scène pour comparer côte à côte) — pour trancher réellement l'hypothèse
+"yeux expressifs = lisibilité héros vs figurants", il faudrait un prochain test avec Mariama Bâ (ou tout
+héros) ET au moins un figurant secondaire en dot-eyes dans le même plan.
+
+### ⭐⭐⭐ TEST RÉEL 4 — discours podium Mariama Bâ, partie 1/4 (2026-08-10) — verdict initial TROP OPTIMISTE, corrigé ci-dessous (voir Test 5)
+
+Suite du test précédent, sur la base du bilan détaillé d'Aziz après visionnage du Test 3 (voir points
+1-6 ci-dessous, tous confirmés/traités).
+
+**Leçons méthode retenues du bilan Aziz sur le Test 3 (Mariama Bâ table d'écriture)** :
+1. **Disparition d'objet non désirée détectée** : sur ce clip précédent, l'écriture visible sur la
+   lettre disparaissait après qu'elle pose le stylo — artefact non demandé. **Correction appliquée sur
+   ce test** : `retention_analysis` marque explicitement `fully_preserved` pour chaque objet du décor
+   (podium, micro, banderole) avec la clause "keep their exact positions and appearance throughout" —
+   vérifié efficace, aucune disparition observée sur ce nouveau clip.
+2. **Choix d'image de référence pour les yeux** : Aziz observe qu'un des deux dessins d'yeux
+   "expressifs" (l'image où elle lève les yeux vers la fenêtre) semblait visuellement plus cohérent/
+   robuste à l'animation que l'autre (position penchée sur l'écriture) — possible piste : un dessin
+   d'yeux plus simple/net à la base est plus facile à animer sans dérive. Pas encore isolé
+   scientifiquement, à garder en tête pour choisir quelle pose de référence utiliser en priorité.
+3. Mouvement d'ambiance (arbre, rideau) concentré en fin de clip plutôt que réparti sur toute la durée —
+   cohérent avec le biais déjà documenté (H3 tend à concentrer l'action vers la fin/le milieu plutôt que
+   répartir uniformément), pas un défaut nouveau.
+4. Qualité vocale confirmée bonne (voix posée, bien prononcée, lip-sync fidèle) — cohérent avec les
+   tests précédents.
+
+**⭐ Gotcha méthode Gemini i2i sur scène multi-personnages, nouveau** : générer une scène de foule/public
+varié (ratio hommes/femmes, diversité de tenues) a demandé PLUSIEURS itérations avant validation — la
+première tentative avec une longue description a dérivé (mauvais ratio, un vêtement mal rendu à
+l'envers) ; revenir à l'image de base et appliquer une instruction courte et ciblée ("make most of them
+women, 1-2 men only, mixed in the same rows") a donné un meilleur résultat que d'empiler des corrections
+successives sur une image déjà dérivée. **Leçon generalisable, cohérente avec la leçon Test 3** :
+pour un edit i2i qui ne prend pas, repartir de l'image de base validée plutôt que de corriger en
+cascade une version déjà dérivée.
+
+**Scène** : décor neuf généré (pas réutilisé de Sonjata, décision Aziz) — podium en bois, micro,
+banderole murale à motif bogolan, public varié (majorité femmes, 1-2 hommes mêlés dans les rangs, tenues
+variées traditionnelles/modernes 1970s). Personnage Mariama Bâ avec les yeux expressifs validés au
+Test 3. Discours en 4 parties prévu par Aziz — ce test couvre la **partie 1/4** seulement (décision
+consciente de scoper à une seule scène avant d'enchaîner, pour ne pas propager un défaut non détecté
+aux 3 parties suivantes).
+
+**Résultat H3 (15s, 768×1344, `prompt_id ef2dd2eb-7d86-4f63-a639-7a82b556135d`, 407 crédits pour
+15s/768P — coût confirmé proportionnel à la durée, cohérent avec le ratio déjà observé 10s→272cr)**,
+vérifié sur 16 frames (0-15s, pleine résolution) + transcription Whisper réelle :
+- ✅ **Mariama Bâ parfaitement stable** — position, expression, yeux cohérents sur toute la durée.
+- ✅ **Progression du public crédible et bien temporisée** : la femme aux mains levées vers le visage
+  apparaît vers t=8-10s, les deux personnages mains jointes apparaissent et se STABILISENT (pas
+  d'aller-retour) jusqu'à t=15s — convergence propre vers la last_frame, cohérente avec le Test 2/3.
+- ✅ **Aucune disparition d'objet** — micro, podium, banderole tous stables sur les 16 frames vérifiées.
+  Confirme que la clause `retention_analysis` explicite par objet corrige bien le défaut noté au Test 3.
+- ✅ **Dialogue parfait** — transcrit par Whisper en 2 segments naturels (0.00-4.84s, 7.18-9.56s)
+  correspondant exactement aux deux phrases du texte original composé pour ce test (PAS une citation
+  de l'œuvre réelle de l'autrice historique — phrase inventée pour ce prototype, cohérente avec ses
+  combats connus pour l'éducation des femmes).
+
+**Verdict global** : test concluant sur tous les points vérifiés — confirme que la discipline de
+`retention_analysis` explicite (marquer chaque objet du décor comme `fully_preserved` avec description)
+est le fix efficace contre la disparition d'objets non désirée. Scène + personnage établis comme base
+réutilisable si Aziz veut enchaîner les parties 2/3/4 du discours dans une prochaine session (chaîner
+via la même méthode FLF2V, dernière frame de la partie N = première frame de la partie N+1).
+
+**Fichiers** : `public/_shared/refs/characters/mariama-ba/_prototype-expressive-eyes-rnd/discours-podium/`
+(images de scène + prompt + clip + audio + frames de vérification) — dossier sciemment séparé du
+charsheet canonique Mariama Bâ pour éviter toute confusion (yeux expressifs = variante prototype, pas
+le standard dot-eyes du projet).
+
+**⚠️ CORRECTION AZIZ après visionnage réel (2026-08-10) — le verdict "franc succès" ci-dessus était
+TROP GÉNÉREUX, à ne pas reprendre tel quel.** Défauts réels repérés par Aziz que la vérification frame
+par frame de l'agent avait manqués (leçon méthode : comparer explicitement le NOMBRE de personnages
+visibles d'une frame à l'autre dans les zones de geste complexe, pas juste juger chaque frame isolément
+comme "ça a l'air bien") :
+1. **Personnage central disparaît au moment où 2 figurants voisins se joignent les mains** — vérifié
+   frame par frame (t=11s : 4 têtes visibles : ; t=12s à t=15s : seulement 3, le personnage entre les
+   deux mains a disparu, fondu dans le geste). PAS un artefact isolé.
+2. Pause artificielle dans le dialogue (2 segments Whisper séparés par un silence) — jugée par Aziz
+   comme un "effet étrange", pas voulu.
+
+**⭐⭐⭐ TEST RÉEL 5 — tentative de correction, ÉCHEC PARTIEL sur le point critique (2026-08-10,
+`prompt_id b143db43-4133-4846-99bb-104a8808f485`, 407 crédits, 2e dépense sur cette même scène)** :
+correction tentée via (a) nommer explicitement le personnage central comme `<Subject 3>` avec clause
+`fully_preserved` répétée 2x (dans `retention_analysis` ET dans `detailed_description` au moment précis
+du geste — "his head and shoulders never disappearing or fading from view even as the two hands come
+together just in front of his chest"), (b) fusionner le dialogue en une seule phrase continue sans
+pause interne.
+
+**Résultat, vérifié frame par frame avec comparaison explicite du nombre de têtes (leçon méthode
+appliquée) :**
+- ❌ **ÉCHEC — le personnage central disparaît TOUJOURS, au même moment précis (t≈12s), malgré la
+  clause de préservation nommée et répétée.** Nommer explicitement un personnage et demander sa
+  préservation ne suffit PAS à empêcher sa disparition quand un geste de contact physique (mains
+  jointes) se forme dans son espace visuel immédiat — hypothèse à approfondir : le geste de contact
+  entre 2 figures semble structurellement prioritaire sur la préservation d'une 3e figure occupant
+  le même espace de composition, indépendamment de l'insistance textuelle du prompt.
+- ✅ **RÉUSSI — dialogue en 1 seul segment continu** (Whisper : un seul bloc 0.00-5.72s, plus de
+  coupure en deux parties) — cette partie de la correction a bien fonctionné.
+
+**⛔ Seuil "2 échecs sur le même problème" atteint sur ce défaut précis** (Test 4 = échec initial,
+Test 5 = échec de la correction ciblée) — cohérent avec le protocole projet de délégation à un agent de
+diagnostic dédié après 2 tentatives infructueuses. **Ne PAS retenter un 3e essai de formulation à
+l'aveugle sur ce même geste.** Deux pistes pour une prochaine session, non testées : (1) investigation
+dédiée pour déterminer si le défaut est spécifique au geste "mains jointes entre 3 personnages
+resserrés" ou plus général à toute composition dense en resserrement, (2) contournement pragmatique —
+remplacer le geste de mains jointes par une réaction de groupe qui n'implique pas de superposition
+bras/main sur l'espace d'un 3e personnage (ex. têtes qui se tournent, sans contact physique croisé).
+
+**Fichiers additionnels** : `discours-partie1-v2.mp4` + `discours-partie1-v2-audio.mp3` +
+`frames-v2/` + `prompt-partie1-v2.txt` dans le même dossier prototype que le Test 4.
+
+**⛔⛔⛔ NOUVEAU DÉFAUT CRITIQUE, plus grave que la disparition de personnage — écran noir avec
+sous-titres karaoké au lieu de la scène (2026-08-10, même job `prompt_id b143db43-4133-4846-99bb-
+104a8808f485`)** : signalé par Aziz après un second visionnage plus attentif du clip Test 5 — l'agent
+avait vérifié les frames t=8-15s (zone du geste mains jointes) mais PAS la zone t=1-7s, ratant un défaut
+bien plus grave en début de clip.
+
+**Fait vérifié directement sur les frames (pas une supposition)** : de t≈1s jusqu'à au moins t=7s, le
+clip est un **écran totalement noir** avec le texte de la réplique affiché en incrustation blanche,
+façon sous-titre karaoké qui s'écrit mot par mot au fil du temps ("Nous avons" → "Nous avons trop
+longtemps appris" → ... → phrase complète à t=7s). **Aucun élément de la scène demandée (podium,
+Mariama Bâ, public) n'est visible pendant cette fenêtre.** Le rendu revient à la scène normale
+seulement après t=7s (à vérifier précisément où — pas encore fait).
+
+**Ce qui a été vérifié comme n'étant PAS la cause** : le prompt source (`prompt-partie1-v2.txt`) ne
+contient AUCUNE instruction demandant un affichage de texte à l'écran — au contraire, le dialogue est
+correctement encapsulé dans `<d>[French]...</d>`, syntaxe réservée à l'audio parlé selon le guide
+officiel, jamais à du texte visible. Ce n'est donc pas une erreur d'instruction de notre part.
+
+**Hypothèses NON confirmées, à ne pas prendre pour acquises avant un test dédié** :
+- Possible corrélation avec le seul changement structurel entre v1 (réussi visuellement) et v2 (ce
+  défaut) : le dialogue est passé de 2 phrases séparées par une pause à 1 seule phrase longue et
+  continue. Pourrait avoir déclenché un mode de rendu différent chez H3 (ex. le modèle interprétant la
+  consigne "dialogue continu, sans coupure" comme une invitation à produire un rendu type "lyric video"
+  plutôt qu'une scène jouée) — **pure spéculation, une seule occurrence, aucune preuve causale**.
+- Pourrait aussi être un glitch ponctuel serveur/modèle sans rapport avec le contenu du prompt — cf
+  précédent similaire déjà documenté plus haut dans ce fichier (§ "TOUJOURS logger le prompt_id") où un
+  run `succeeded` avait livré un contenu totalement étranger au prompt (scène super-héros au lieu de
+  Sonjata) sans cause identifiable côté prompt/image.
+
+**⛔ Seuil de délégation largement dépassé sur cette scène précise** (Test 4 = défaut personnage, Test 5
+= même défaut personnage NON résolu + CE nouveau défaut bien plus grave) — ne pas retenter un 3e essai
+de prompt sur cette scène sans investigation dédiée au préalable. Si cette piste "discours podium
+multi-personnages" est reprise dans une future session : (1) tester d'abord un dialogue à 1 seule
+phrase longue SEUL (sans le changement de personnage central) pour isoler si c'est bien la longueur/
+continuité du dialogue qui cause l'écran noir, (2) vérifier systématiquement TOUTES les frames d'un
+clip (pas seulement la zone jugée à risque a priori) avant de livrer un verdict, leçon désormais
+répétée 2 fois cette session (once sur le nombre de personnages, once sur la zone temporelle vérifiée).
 
 ### Setup (déjà fait sur ce repo, one-time)
 ```

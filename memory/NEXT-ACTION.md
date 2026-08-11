@@ -26,50 +26,33 @@
 
 ---
 
-## ⭐⭐ MiniMax H3 via Comfy Cloud — SESSION D'ENCHAÎNEMENT FAITE (2026-08-08), prototypes archivés
+## 🔧 BACKLOG TECHNIQUE — MiniMax H3 (Comfy Cloud), pistes en attente
 
-**Découverte de session** : H3 open-weight tourne gratuitement (inclus abonnement, ~$3.83 pour 7 clips
-ce soir) via Comfy Cloud MCP — 5-23x moins cher que Seedance 2.0 pour un résultat comparable, si le
-prompt est écrit avec la même rigueur que Seedance. Setup + bilan complet : `memory/tools/minimax.md`
-§ Comfy Cloud (tout en haut du fichier).
+Setup + tous les prototypes/tests détaillés : `memory/tools/minimax.md` (tout en haut du fichier).
+- Setup + 2 prototypes validés Aziz (2026-08-08) : `out/_r-and-d/minimax-h3-prototypes/sonjata-vertical/`.
+- Guide de prompting **officiel** MiniMax trouvé et partiellement testé (2026-08-10) — structure à 6
+  sections (Ref2VA) et 4 modes (T2VA/I2VA/FL2VA/L2VA), très différente de notre ancien prompt libre.
+  À généraliser sur R2V classique si repris — détail `minimax.md` § GUIDE DE PROMPTING OFFICIEL.
+- Piste storyboard multi-panneaux : partiellement confirmée via chaînage first-last-frame
+  (template officiel `api_minimax_h3_flf2v` identifié 2026-08-10) — voir `minimax.md` § TEST RÉEL 1-2.
 
-**⭐⭐⭐ Découverte clé confirmée sur toute la session** : le laxisme du prompt (pas H3 lui-même) est la
-cause des hallucinations/désynchronisations. Toujours passer par `visual-producer` (discipline
-Seedance 2.0 : séquençage par tranches + clause négative répétée + décor verrouillé + **clause de
-causalité explicite pour tout objet manipulé** — ajout de cette session, corrige le défaut "objet qui
-se déforme sans main visible").
+⚠️ **Voir aussi la section dédiée juste en dessous** pour un défaut non résolu qui bloque toute
+nouvelle scène multi-personnages tant qu'il n'est pas traité.
 
-**✅ 2 prototypes validés par Aziz, archivés comme référence** :
-`out/_r-and-d/minimax-h3-prototypes/sonjata-vertical/` (2 clips + prompts exacts + image source +
-README). Prouvent : ratio vertical natif 480x864 fiable, nommer précisément qui réagit > "the crowd",
-ombres portées cohérentes avec le mouvement. Piste #1 (enchaînement 2 plans) et #2 (foule nommée) de
-la session précédente = FAITES, ne pas refaire.
+---
 
-⛔ **Limite trouvée** : au-delà de ~12-15s (proche du plafond documenté H3) ou avec des tranches
-temporelles qui ne couvrent pas toute la durée réelle, artefact de dégradation progressive possible
-(triangle noir observé). Rester sous ~10-12s ou couvrir explicitement 100% de la durée en tranches.
-⚠️ **Incident non résolu** : un run a livré un contenu totalement étranger au prompt (statut
-"succeeded" mais scène aberrante) — diagnostic a écarté toute cause de notre côté, probable incident
-Comfy Cloud. Règle ajoutée : toujours logger le `prompt_id` de chaque `run_template` (voir
-`minimax.md` tout en haut) pour pouvoir enquêter si ça se reproduit.
+## ⚠️ MiniMax H3 — défaut non résolu, en attente de décision (2026-08-10)
 
-**Session 2026-08-09 — les 3 pistes ci-dessus sont FAITES, ne pas les re-proposer comme "à tester" :**
-1. Workflow "personnages posés puis animés" — testé indirectement (scène composée avant animation), fonctionne.
-2. Multi-référence façon Seedance Omni (node 139 comme vraie 2e référence) — CONFIRMÉ FONCTIONNEL.
-3. Format horizontal — CONFIRMÉ FONCTIONNEL, natif sans fix requis.
-Détail complet + prompts + vitesse par résolution : `memory/tools/minimax.md` § Comfy Cloud.
-
-**⭐ Nouvelle piste ouverte, non résolue — storyboard multi-panneaux séquentiel** : le prompt seul,
-même segmenté par blocs de temps, atténue mais NE RÉSOUT PAS le blending entre panneaux (les
-panneaux d'un storyboard-grille se mélangent visuellement au lieu de rester distincts). Prochaine
-étape : recherche communautaire dédiée (YouTube "last 30 days") avant de retenter un essai de prompt
-à l'aveugle. Détail : `memory/tools/minimax.md` § storyboard multi-panneaux.
-
-Assets déjà utilisés pour les tests archivés : `scene2-humiliation-v2-13s.mp4`/frame extraite (Sonjata,
-prototypes validés), `scene4-final-keepandduck.mp4` (orbite barre de fer, résultat mitigé — voir
-minimax.md pour le détail complet). Le projet Sonjata complet (28 clips papercraft) vit dans
-`public/assets/sonjata-papercraft/clips/`. Nouveau personnage créé cette session : "visiteur-age-dakar"
-(homme âgé, cape verte, robe indigo, canne), registre `public/_shared/refs/characters/visiteur-age-dakar/`.
+Scène "discours podium" Mariama Bâ (multi-personnages) : 2 échecs consécutifs sur le même défaut
+(personnage central qui disparaît quand 2 figurants voisins joignent les mains, t≈12s) — seuil de
+délégation à un agent de diagnostic dédié ATTEINT et NON déclenché cette session. Découverte
+additionnelle plus grave sur le même run : écran noir avec sous-titres karaoké de t≈1s à t≈7s
+(cause non identifiée, hypothèse dialogue continu vs pause interne, non confirmée).
+**Décision en attente** : soit déléguer un agent de diagnostic dédié (protocole CLAUDE.md, 2+ échecs
+sur le même problème) avant tout 3e essai de prompt, soit contourner (remplacer le geste mains-jointes
+par une réaction sans contact physique croisé, piste déjà identifiée). Détail complet :
+`memory/tools/minimax.md` § TEST RÉEL 4/5. Fichiers de test conservés (décision Aziz) :
+`public/_shared/refs/characters/mariama-ba/_prototype-expressive-eyes-rnd/discours-podium/`.
 
 ---
 
@@ -190,7 +173,7 @@ réévaluer si c'est suffisant avant de l'activer. Rien d'urgent ici, juste obse
 
 ---
 
-## 🎭🎭 SCÈNES À PERSONNAGES — SOCLE COMPLET, R&D CLOSE
+## ✅ SYSTÈME GRAVÉ — Scènes à personnages (socle complet, R&D close)
 
 > ⭐⭐⭐ **LIRE `memory/doctrines/SCENE-DEMONSTRATIVE-PERSONNAGE.md`** — tout y est détaillé.
 > ✅ **Socle de base MERGÉ DANS `master` le 2026-07-29** (fast-forward) — disponible pour tout le monde.
