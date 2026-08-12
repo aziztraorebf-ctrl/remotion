@@ -26,7 +26,11 @@ Virage strategique discute et acte avec Aziz le 2026-06-06.
 - **3 methodes des createurs** : (1) format-jacking (rejouer un format viral sur sa niche) ;
   (2) outlier hunting (videos qui font x5-x10 leur chaine = signal) ; (3) demand validation (Google Trends).
 - **Outils du marche** : VidIQ/TubeBuddy/1of10/ViewStats = jardins fermes, PAS d'API -> inutiles pour
-  pipeline agentique. **TubeLab** = seul dev-friendly avec MCP officiel Claude (public-api.tubelab.net/mcp)
+  pipeline agentique. ⚠️ **CORRIGÉ 2026-08-12** : cette affirmation sur VidIQ est FAUSSE, contredite par
+  l'usage réel — `mcp__claude_ai_vid_iq__vidiq_channel_analytics` donne un accès direct à l'API YouTube
+  Analytics officielle (retention, traffic_sources, demographics, geography, top_videos, shorts_vs_longform)
+  + `vidiq_score_title`/`vidiq_score_thumbnail` déjà utilisés dans [[DIAGNOSTIC-FLOP-VIDEO]]. Détail complet :
+  [[tools/vidiq]]. Ligne gardée pour traçabilité de la décision initiale, ne plus s'y fier. **TubeLab** = seul dev-friendly avec MCP officiel Claude (public-api.tubelab.net/mcp)
   + API + base 400k chaines/4M outliers. ~29$/mois Pro (300 credits). **YouTube Data API v3** = plomberie
   brute gratuite (10k unites/jour, search.list=100 unites) mais AUCUN calcul d'outlier (a faire soi-meme).
 - **`scripts/tools/outlier-scan.py` CODE cette session** : ScrapeCreators (search + channel-videos),

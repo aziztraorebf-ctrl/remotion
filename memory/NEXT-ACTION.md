@@ -26,6 +26,17 @@
 
 ---
 
+## ⭐ KORA & CARTES — piste de sujet en exploration (2026-08-12)
+
+Diagnostic analytics complet fait (CTR/rétention/démographie, outillage vidIQ API — détail
+`doctrines/DIAGNOSTIC-FLOP-VIDEO.md`). Plusieurs pistes de sujet explorées/rejetées (Aksoum, ton-seul-sur-
+conflit) — piste retenue = "pourquoi l'Afrique évolue / pays qui montent" (entrepreneuriat, démographie),
+PAS encore de script/positionnement écrit dessus. Relancer SUJET-PRIME 6 étapes sur cette piste en
+priorité. Détail complet du parcours : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § session
+2026-08-12.
+
+---
+
 ## 🔧 BACKLOG TECHNIQUE — MiniMax H3 (Comfy Cloud), pistes en attente
 
 Setup + tous les prototypes/tests détaillés : `memory/tools/minimax.md` (tout en haut du fichier).

@@ -80,6 +80,16 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    - `get_video_comments` (yt-dlp gratuit de préférence) → ce que le public VALIDE / REPROCHE / RÉCLAME = matière à angle.
    - transcript (yt-dlp gratuit) → quel angle est DÉJÀ pris → donc lequel est LIBRE pour nous.
    - ⚠️ plafonner à 2-3 vidéos max (coût/temps). Ne pas remonter le fil sur tout.
+   - **Variante — remonter le fil sur un CATALOGUE ENTIER (preuve 2026-08-12, TED-Ed)** : quand la question
+     porte sur un PATTERN de chaîne plutôt qu'un sujet précis ("ce concurrent réussit sur tous ses sujets,
+     pourquoi ?"), une seule vidéo ne suffit pas — utiliser `TubeLab get_channel` pour lire un échantillon
+     large (ex. 120 vidéos/an) et chercher le dénominateur commun. Cas vécu : analyser tout le catalogue
+     annuel de TED-Ed a révélé que le succès venait de la FORMULATION du titre (question-curiosité
+     universelle), pas des sujets eux-mêmes (aucun sujet Afrique/actualité dans le top 40 de l'année) —
+     invisible en examinant les vidéos une à une. Ça a permis de trancher une hypothèse qu'Aziz soupçonnait
+     fausse sans pouvoir le prouver ("garder un sujet conflit + juste changer le ton"). Distingue "cette
+     vidéo a marché" (1 point, bruit possible) de "ce pattern marche systématiquement" (tout le catalogue,
+     signal). Détail complet du cas : [[EXPLORATION-DIVERSIFICATION-CHAINES]] § session 2026-08-12.
 
 **4. SYNTHÈSE ANGLE (~10 min)** — croiser last30days + commentaires + transcripts :
    - l'angle FRAIS du moment (l'actu qui relance le sujet) + l'angle analyste LIBRE (camp 2, PAS militant — cf.
