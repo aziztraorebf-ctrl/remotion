@@ -3,6 +3,69 @@
 > ⭐ Brique TRANSVERSALE (tous projets). Un personnage d'encre stylisé, animé 100% par CODE (frame-driven),
 > qui marche / se penche / ramasse — SANS sprites, SANS frame-by-frame. Validé à 100% par Aziz le 2026-06-30
 > (prouvé sur le cacao). Si Aziz dit « une scène où le perso se penche et ramasse » → PARTIR D'ICI, pas de zéro.
+
+## ⭐⭐⭐⭐ LA VRAIE RÉFÉRENCE CANONIQUE — `stick-figure-svg/identite/Roles.tsx` (dossier FRÈRE, PAS ce dossier-ci)
+
+> ⛔⛔ **CORRECTIF IMPORTANT (2026-08-12, corrigé une 2e fois le même jour après audit)** — tout ce
+> fichier `PERSONNAGE-VIVANT-INDEX.md` documente le registre `StickRig`/`capsuleSegment` (rig
+> historique, torse-polygone simple). **Ce n'est PAS le registre "enrichi" avec vêtements complets que
+> la production utilise le plus.** Ce dernier vit dans un dossier FRÈRE,
+> `src/projects/_shared/stick-figure-svg/` (pas `personnage-vivant-svg/` où on est ici), et son
+> fichier d'index dédié est `stick-figure-svg/STICK-FIGURE-INDEX.md` — LE LIRE EN PREMIER pour tout
+> besoin de personnage habillé/en marche/gestes riches.
+>
+> ✅ **CE SOCLE EST DÉJÀ SUR LA BRANCHE COURANTE, PAS BESOIN DE WORKTREE** pour `STICK-FIGURE-INDEX.md`,
+> `StickFigure.tsx`, `habillage.ts`, `identite/Roles.tsx` (les 4 rôles habillés) — vérifié présents sur
+> `HEAD` (commits `675882cc`/`66ad70f8`/`8d6c726c`). **Seul un worktree correction précédente de cette
+> même note affirmait à tort que TOUT le registre nécessitait un worktree — c'était faux, corrigé après
+> audit** (`git ls-tree HEAD -- src/projects/_shared/stick-figure-svg/` confirme leur présence directe).
+>
+> ⚠️ Ce qui reste RÉELLEMENT confiné à la branche `rnd/stick-figures-gestes` (non mergée, commit
+> `fffde192`) : la scène de DÉMO `RolesDemo16x9.tsx` (composition `Stick-Roles-Demo`, absente de
+> `Root.tsx` sur `HEAD`) et le catalogue plus large `gestes/*`/`interactions/*` (marche/porter/pousser/
+> tirer/tomber/s'asseoir en planches de démonstration). Pour CES fichiers précis seulement, un worktree
+> reste nécessaire (commande ci-dessous). Pour utiliser `Roles.tsx` dans une vraie scène de production,
+> l'importer directement depuis `HEAD`, aucun worktree requis.
+>
+> Erreur vécue cette session : ~5 allers-retours à chercher le mauvais registre avant de le retrouver
+> (Aziz : "on dirait que c'est perdu quelque part dans ta mémoire") — la cause était une recherche
+> confinée à CE dossier (`personnage-vivant-svg/`) alors que le bon registre est le dossier frère
+> `stick-figure-svg/`. **Pattern plus large, 4e occurrence confirmée** (registre canonique/validé qui
+> vit sur une branche R&D jamais mergée, invisible à une recherche fichier sur la branche courante) —
+> voir `[[feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent]]` si ce fichier
+> existe, sinon chercher les 3 cas précédents dans `memory/feedbacks/`.
+
+**Galerie visuelle** — 3 PNG, rendus RÉELS (pas des mockups), à ouvrir (Read) avant de chercher un
+fichier .tsx à l'aveugle :
+
+| Fichier PNG | Scène source (.tsx) | Composition Root.tsx | Ce qu'on voit |
+|---|---|---|---|
+| `_reference-gallery/RolesDemo-4-personnages-enrichis-frame45.png` ⭐⭐⭐ | `stick-figure-svg/identite/RolesDemo16x9.tsx` (⚠️ scène de DÉMO, branche `rnd/stick-figures-gestes` seulement) | `Stick-Roles-Demo` | **LA vraie référence visuelle "personnage enrichi"** — 4 rôles habillés (mineur casque+combinaison bleue, commerçante robe rose/turquoise, fonctionnaire costume-cravate, agriculteur gilet vert+chapeau paille), 5 carnations, en marche, profil. Socle = `identite/Roles.tsx`, LUI DÉJÀ sur `HEAD` (PAS `StickRig.tsx` de ce dossier-ci) |
+| `_reference-gallery/PasserObjetMainAMain-frame150.png` | `personnage-vivant-svg/scenes-proto/PasserObjetMainAMain.tsx` (registre CE dossier, `StickRig`) | `PersoVivant-PasserObjetMainAMain` | 2 personnages face à face, chapeaux distincts (paille conique / casquette), échange d'objet main-à-main — registre plus simple, PAS le même que Roles.tsx |
+| `_reference-gallery/PortDechargement-frame300.png` | `_rnd/svg-scenes/PortDechargement16x9.tsx` (registre CE dossier, `StickRig`) | `RND-PortDechargement16x9` | 1 docker, gilet haute-visibilité orange, posture immobile — registre plus simple |
+
+**Pour utiliser `Roles.tsx` en production (import direct, HEAD, PAS de worktree requis)** :
+```tsx
+import { PersonnageRole, CARNATIONS, ROLE_LABEL } from "src/projects/_shared/stick-figure-svg/identite/Roles";
+```
+
+**Pour retrouver/rendre uniquement `RolesDemo16x9.tsx` ou le catalogue gestes/interactions** (ceux-là
+seuls exigent la branche non mergée) :
+```
+git worktree add <chemin-scratchpad> rnd/stick-figures-gestes
+ln -s <repo-principal>/node_modules <worktree>/node_modules   # évite un npm install complet
+cd <worktree> && npx remotion still Stick-Roles-Demo <out.png> --frame=45
+```
+
+**Angle mort connu, même après correction** : aucun des 2 registres (`StickRig` ici, ni `StickFigure`
+de `stick-figure-svg/`) n'a de scène montrant un geste "pousser/tirer une charrette" AVEC vêtement —
+`STICK-FIGURE-INDEX.md` confirme que porter/pousser/tirer existe bien comme GESTE validé
+(`gestes/GestesLocomotion16x9.tsx`) mais separement de l'habillage (`identite/Roles.tsx`) ; les deux
+ne sont pas encore combinés dans une scène. À créer si besoin.
+
+**Candidats de CE dossier déjà écartés** (personnage trop petit à l'échelle du cadre) :
+`RetourAuChamp16x9.tsx` (échelle 0.34, quasi invisible) et `CacaoChaineValeur16x9.tsx` (sans
+`tunicColor`, torse quasi blanc peu distinctif).
 >
 > ⭐ **Nouveau registre 2026-07-10 : VISAGE riggé animable (GPT-5.6 Sol)** — clignement/parole/expressions
 > (neutral/angry/surprised) testés avec succès, complémentaire au rig CORPOREL Gemini ci-dessous (le corps

@@ -226,6 +226,107 @@ bon. Si un contenu aberrant apparaît malgré un statut "succeeded", ça permet 
 `get_job_status`/`get_queue` et de distinguer un glitch ponctuel d'un vrai bug structurel Comfy Cloud,
 plutôt que de repartir sans aucune trace exploitable.
 
+### ⛔⛔⛔⛔ CAUSE RACINE TROUVÉE ET CORRIGÉE — `input_overrides` sur `run_template` NE S'APPLIQUE PAS de façon fiable sur `video_minimax_h3_r2v` (2026-08-11, invalide l'hypothèse "glitch infrastructure" du 08/08)
+
+**Contexte** : test dédié (mix SVG statique + H3, piste gig freelance entrée de gamme, image de
+référence "entrepreneur inquiet à son bureau" générée par Gemini 3.1 Flash Image, prompt R2V rigoureux
+352 mots suivant la discipline validée le 08/08). **2 runs consécutifs via `run_template` +
+`input_overrides` (nodeId→{inputName:value}), prompt_id différents
+(`a81c2c89-adbb-4cb2-9b4a-f5d946d87ecb` puis `fe40ce2f-9650-4834-96e2-229a48ad35b1`), mêmes inputs
+exacts** → **les 2 clips retournés sont IDENTIQUES frame pour frame** au contenu de DÉMONSTRATION
+intégré au template (un enfant en cape de super-héros → texte "GET READY TO MEET YOUR MAKER" → robot
+noir menaçant) — ZÉRO rapport avec notre image/prompt. `get_job_status` ne montrait rien d'anormal
+dans les 2 cas (statut "completed" propre), symptôme identique au run super-héros/robot déjà rencontré
+le 08/08 (§ ci-dessous) qui avait alors été attribué, faute de preuve, à un "incident infrastructure
+Comfy Cloud" hors de notre contrôle.
+
+**Aziz a challengé ce diagnostic** ("c'est impossible, on a déjà généré sans problème sur Sonjata/
+Flowdesk — creusons ce qui ne marche pas") — bonne intuition, confirmée par l'investigation :
+
+**Root cause réelle** : le warning `conversion_warning: "Node 137/139 (LoadImage): 1 extra widget
+values not mapped"`, présent sur les 2 runs cassés et lu à tort comme bénin, signalait que
+**`input_overrides` n'a PAS réussi à appliquer nos valeurs** sur les nodes `LoadImage` (137/139) ET
+`PrimitiveStringMultiline` (138) de ce template précis — malgré un statut `succeeded_with_warnings`
+qui donnait l'illusion que tout allait bien. Le template est retombé sur ses `widgets_values` par
+défaut EMBARQUÉS dans le JSON du template lui-même : node 137 = `"red_superboy_on_city_roof.png"`,
+node 138 = un prompt de démo mot-pour-mot le clip super-héros/mecha (vérifié en lisant le JSON complet
+via `get_template` SANS `summary_only`), node 139 = `"mecha_dragon_lightning.png"` (déjà documenté
+plus bas dans ce fichier comme "image de démo par défaut" — mais jusqu'ici jamais confirmé comme LA
+cause d'un run cassé, seulement noté comme un risque théorique).
+
+**Preuve définitive (test de contrôle)** : reconstruction du MÊME graphe en format API pur
+(node-id → `class_type` + `inputs`, valeurs câblées EN DUR dans chaque node, aucun `input_overrides`)
+soumis via `submit_workflow`. **1er essai** : `dry_run` local passe (0 warning) mais soumission réelle
+rejetée PROPREMENT par le serveur AVANT tout calcul GPU (`node_errors` sur 131/`ComfyMathExpression` :
+`required_input_missing`, `values.a` — le nom exact du input `a` dans ce node est `values.a`, pas `a`,
+visible dans le JSON save-format d'origine mais pas dans le message d'erreur du run précédent). Fix
+appliqué (`"values.a": ["132",0]` au lieu de `"a": ["132",0]`), **2e essai réussi, 0 warning, clip
+CONFORME au prompt/image envoyés** — le personnage entrepreneur, chorégraphie main-qui-descend →
+tête-qui-se-lève → sourire de soulagement, exactement comme spécifié dans le prompt (vérifié
+frame-par-frame à t≈4/6/9s).
+
+**Implication générale, au-delà de ce seul incident** : sur ce template (`video_minimax_h3_r2v`),
+`input_overrides` via `run_template` n'est PAS fiable pour les nodes `LoadImage` (137/139) ni
+`PrimitiveStringMultiline` (138) — silently retombe sur le contenu par défaut du template sans
+erreur bloquante, juste un warning `conversion_warning` facile à négliger. **`submit_workflow` avec
+un graphe API construit à la main (valeurs en dur, pas d'override) est la méthode fiable** pour ce
+template précis. Reste à vérifier si ce défaut de mapping touche d'autres templates H3
+(`video_minimax_h3_t2v`, `video_minimax_h3_i2v`) ou seulement `r2v` — non testé.
+
+**⛔ Correction rétroactive du diagnostic du 08/08** (§ "Test corrigé — causalité barre..." plus haut
+dans ce fichier, run orbite caméra Sonjata) : l'hypothèse retenue à l'époque ("incident infrastructure
+Comfy Cloud, notre pipeline disculpé") était **probablement fausse** — le même symptôme exact
+(contenu super-héros/robot malgré overrides envoyés) a désormais une explication vérifiée et
+reproductible côté `input_overrides`, sans avoir besoin d'invoquer un bug serveur externe. Le run du
+08/08 n'a pas pu être ré-analysé a posteriori (prompt_id non loggé à l'époque), donc pas de certitude
+absolue que c'était EXACTEMENT ce même défaut de mapping — mais c'est maintenant l'hypothèse la plus
+probable, largement au-dessus de "glitch infrastructure aléatoire".
+
+**Point technique résolu** (même session, 2e itération) : le clip de contrôle initial était sorti en
+640×640 (carré) au lieu du 864×480 attendu — `ResolutionSelector` en graphe API pur ne calculait pas
+les bonnes dimensions. **Fix confirmé** : passer `width`/`height` en dur directement sur les inputs du
+node 136 (`"width": 864, "height": 480`, valeurs INT littérales, pas de link vers 115) plutôt que de
+piloter via `ResolutionSelector` — résultat vérifié `ffprobe` conforme (864×480 exact) sur le 2e test.
+
+### ⭐ Leçon prompt — "mouth opens... as if about to speak" génère un cycle de parole silencieuse non désiré (2026-08-11)
+
+Sur le test de contrôle réussi (entrepreneur, image corrigée en vue 3/4 avec dos d'écran visible —
+voir plus haut § cause racine `input_overrides`), Aziz a repéré à la revue que la bouche du personnage
+s'ouvre/se referme de façon répétée autour de t≈6.5-7s (vérifié par crop serré + planche-contact
+30+ frames consécutives) — un petit cycle façon "parle sans son", pas juste l'entrouvrement statique
+voulu. Cause probable : le prompt contenait la clause "mouth opens slightly **as if about to speak**"
+pour le beat de réalisation (6-8s) — H3 semble avoir interprété "as if about to speak" plus
+littéralement qu'attendu, générant un mouvement labial cyclique de type parole plutôt qu'un simple
+entrouvrement figé. **Décision Aziz : ne pas re-générer, le clip prouve déjà ce qu'on cherchait
+(procédé mix SVG+H3 validé) — mais retenir la leçon de prompt.**
+
+**Leçon actionnable pour un futur prompt de réaction faciale sans dialogue voulu** : éviter toute
+formulation contenant "speak"/"talk"/"say" même en comparaison ("as if about to speak") si aucun
+mouvement de bouche articulé n'est désiré — préférer une description purement posturale de
+l'entrouverture ("lips part slightly, mouth stays otherwise still, no talking motion") avec une clause
+négative explicite ("NOT talking, NOT mouthing words, lips move minimally and only once") si le risque
+existe. Cohérent avec la leçon déjà documentée plus haut dans ce fichier (§ prompt A/B Sonjata) : H3
+suit le sens littéral des mots choisis, pas seulement l'intention globale.
+
+**Méthode de diagnostic qui a payé** (à réutiliser si un futur run "succeeded" livre un contenu
+aberrant) : (1) ne PAS accepter "warnings bénins" sans lire leur texte exact — un
+`conversion_warning` sur un node précis pointe souvent la vraie cause ; (2) `get_template` SANS
+`summary_only` pour lire les `widgets_values` par défaut réels du template et les comparer au contenu
+aberrant reçu (ici, match exact avec le prompt de démo) ; (3) `dry_run` sur `submit_workflow` pour
+valider gratuitement un graphe reconstruit à la main avant tout run réel ; (4) en cas d'erreur de
+nommage de champ, le serveur rejette proprement AVANT calcul GPU (`node_errors`) — pas de gaspillage.
+
+**Coût réel de toute la session de diagnostic** : 0 crédit mensuel consommé sur tous les essais
+(template GPU open-weight, `estimate_credits` confirme 0 avant envoi) — seul coût = temps GPU du
+forfait sur les 2 runs cassés + le run de contrôle réussi.
+
+**Fichiers scratch (non conservés dans le repo)** : `ref-scene1-desk-worried.png` (image de référence,
+propre, non en cause) + `prompt-scene1.txt` + `build_api_graph.py` (script de reconstruction du
+graphe API) + `api_graph_v2.json` (graphe final fonctionnel, réutilisable comme gabarit) +
+`clip-scene1-h3.mp4`/`clip-scene1-h3-attempt2.mp4` (les 2 clips cassés identiques, contenu démo) +
+`clip-scene1-h3-graph.mp4` (le clip CORRECT, conforme au prompt) + frames de vérification
+(`check_*.jpg`, `v2_*.jpg`, `g_*.jpg`).
+
 ---
 
 ### ⭐⭐⭐ Test enchaînement multi-plans (Sonjata scene2→plan2, 2026-08-08) — R2V confirme la continuité inter-plans
@@ -551,6 +652,45 @@ n'expose un flag audio ; pas creusé plus loin côté JSON du workflow faute de 
 suffit). Méthode utilisée : `ffmpeg -c:v copy -an` sur le clip téléchargé, piste AAC confirmée
 retirée par `ffprobe` après coup (1 seul stream video restant). Fichier final sans audio :
 `clip-orbit-v2-noaudio.mp4` (scratchpad, non uploadé — voir défaut ci-dessous).
+
+**⚠️ Précision 2026-08-11/12 (test dialogue supermarché 2-personnages)** : confirmé que ce n'est PAS
+seulement de la musique parasite ajoutée à côté du dialogue — H3 mixe voix parlée (via `<d>[Lang]...
+</d>`) ET musique/son ambiant dans **UNE SEULE piste audio stéréo** (`ffprobe` : 1 stream AAC unique,
+pas de pistes séparées). Donc `ffmpeg -an` retire TOUT (voix comprise), pas juste la musique — il n'y
+a pas de moyen simple d'isoler/garder la voix générée en coupant seulement la musique (demanderait une
+vraie séparation de source audio, non tentée, hors scope).
+
+**Verdict Aziz sur ce même test (2026-08-12) : l'audio généré (voix + musique) était BON sur les 2
+clips de dialogue** — à ne pas traiter comme un défaut systématique à éliminer. **Décision retenue :
+jugement au cas par cas, pas de règle automatique.** Écouter chaque clip généré : si la voix/musique
+convient, la garder telle quelle (gain de temps, pas de resonorisation nécessaire) ; si elle ne
+convient pas ou qu'un clip 100% muet est voulu pour intégrer notre propre pipeline (ElevenLabs +
+`INDEX-MUSIQUES.md`), le signaler explicitement et couper avec `ffmpeg -an`. Ne jamais assumer par
+défaut qu'il faut couper — c'est une option parmi d'autres, pas la règle.
+
+### ⚠️ Écran noir en TOUTE FIN de clip — 2e occurrence, cette fois sur R2V simple 1-personnage (2026-08-12)
+
+Test du pipeline complet "décor SVG maison → composition Gemini (perso `Roles.tsx`, agriculteur
+chapeau paille + gilet vert) → animation H3" (marche vers un bateau, village de pêcheurs, 5s
+demandées). Résultat : **les ~4 dernières frames du clip (864×480, 5.17s obtenus) tombent en écran
+NOIR TOTAL** (luminosité moyenne mesurée = 0.0/255, confirmé par script Python sur les 124 frames
+extraites) — malgré une clause anti-écran-noir explicite dans le prompt ("No black screen at any
+point... must remain visible for the ENTIRE duration"). Le corps du clip (frames 1 à ~120, 97% de la
+durée) est propre : marche crédible, décor stable, personnage fidèle, aucune dérive.
+
+**Différence avec le précédent défaut similaire** (§ "NOUVEAU DÉFAUT CRITIQUE — bandeau noir
+progressif" plus bas, 2026-08-08) : celui-là étalait un triangle noir progressif sur le TIERS
+supérieur du cadre pendant 2/3 du clip (durée 15s, ratio forcé 480×864 non natif) ; celui-ci est un
+CUT SEC total sur les toutes dernières frames seulement (durée 5s, ratio 864×480 natif). Symptômes
+distincts (progressif+partiel vs cut+total, positions différentes dans la timeline) — **pas assez de
+données pour conclure à une cause commune**, mais ça confirme qu'un écran noir en fin/pendant un clip
+H3 R2V n'est pas un accident isolé, à surveiller systématiquement (vérification exhaustive de TOUTES
+les frames, pas un échantillonnage, comme fait ici via mesure de luminosité automatisée).
+
+**Pas encore testé/à creuser si reproduit** : réduire la durée demandée (le cut arrive tout en fin —
+est-ce lié à un seuil de durée précis ?), retirer le HOLD final du prompt (le clip demandait un arrêt
+net sur la dernière demi-seconde — coïncidence avec le crash ou cause possible ?), tester si un ratio
+16:9 natif (pas d'override width/height) évite le défaut.
 
 **⚠️ NOUVEAU DÉFAUT CRITIQUE découvert, non anticipé dans le brief — bandeau noir progressif** :
 à partir de t≈3.7s, un triangle noir opaque apparaît en coin supérieur gauche du cadre et grandit en
@@ -1233,7 +1373,20 @@ Auth OAuth par session Claude Code (pas de clé API statique dans `.mcp.json` �
 le serveur MCP exige OAuth, voir `auth_state` via `get_server_info`). Après authentification, 39
 outils MCP disponibles (`mcp__claude_ai_Comfy_Cloud_MCP__*` ou nom équivalent selon la session).
 
-### Workflow validé (T2V et R2V)
+### ⛔⛔⛔ Workflow validé (T2V et R2V) — MÉTHODE CORRIGÉE 2026-08-11, `run_template`+`input_overrides` ABANDONNÉ pour R2V
+
+**⛔ NE PAS utiliser `run_template` + `input_overrides` pour `video_minimax_h3_r2v`** — confirmé
+non-fiable le 2026-08-11 (§ "CAUSE RACINE TROUVÉE ET CORRIGÉE" plus bas dans ce fichier) : les
+overrides sur les nodes `LoadImage` (137/139) et `PrimitiveStringMultiline` (138) peuvent être
+silencieusement ignorés (job `succeeded_with_warnings`, warning `conversion_warning: "1 extra widget
+values not mapped"` facile à négliger) — le template retombe alors sur son contenu de DÉMO intégré
+(image/prompt par défaut, aucun rapport avec l'input envoyé), reproduit 2x à l'identique sur des
+prompt_id différents. **Utiliser `submit_workflow` avec un graphe API construit à la main à la
+place** (méthode ci-dessous) — ⭐ **gabarit prêt à l'emploi, CONSERVÉ dans le repo** :
+`scripts/tools/comfy-graphs/minimax-h3-r2v-graph-template.json` (graphe fonctionnel complet, testé
+2026-08-11 — remplacer juste les valeurs `image` des nodes 137/139, `value` du node 138 (prompt),
+et `value` du node 132 (durée en secondes) avant de soumettre via `submit_workflow`).
+
 1. `search_templates(q: "MiniMax H3")` → 2 familles par tâche : `video_minimax_h3_*` (open-weight,
    **0 crédit**) vs `api_minimax_h3_*` (repasse par l'API MiniMax hébergée, ~136 crédits/génération
    sur le forfait mensuel — réservé au 2K/Context-IR non open). **Toujours choisir la variante SANS
@@ -1242,15 +1395,35 @@ outils MCP disponibles (`mcp__claude_ai_Comfy_Cloud_MCP__*` ou nom équivalent s
 3. Pour R2V (image de référence) : `upload_file(file_path: <chemin local>)` → renvoie une commande
    `curl PUT` à exécuter via Bash (pas d'upload direct par l'outil) → renvoie un `name` (ex.
    `abc123....jpg`) à réutiliser comme valeur du node `LoadImage`.
-4. `run_template(name, input_overrides, wait_for_output: true, client_os: "darwin")`. **Ne PAS
-   utiliser le prompt par défaut du template T2V** — buggé (mismatch de type INT/STRING sur le node
-   `MiniMaxH3ImageToVideo`, erreur `return_type_mismatch`). Toujours override le node prompt avec son
-   propre texte.
-5. Si le job dépasse la fenêtre inline (~25s, cas fréquent pour R2V/15s) : `wait_for_job(prompt_id)`
+4. **Construire le graphe API à la main** (node-id → `{class_type, inputs}`, valeurs câblées EN DUR,
+   PAS d'`input_overrides`) : `get_template(template_id, summary_only=false)` une fois pour récupérer
+   la structure complète (nodes + links + `widgets_values` par défaut), puis reproduire chaque node
+   en format API avec les vraies valeurs directement dans `inputs` — voir squelette de 20 nodes
+   documenté § "CAUSE RACINE" plus bas (nodes 92/115/119-139, hors `MarkdownNote` non connectés).
+   Points de vigilance connus : (a) node 131 `ComfyMathExpression` attend l'input nommé `values.a`,
+   PAS `a` (le message d'erreur serveur le confirme si oublié — rejeté proprement AVANT tout GPU,
+   pas de gaspillage) ; (b) fixer `width`/`height` en INT littéraux directement sur le node 136
+   (ex. `864`/`480`) plutôt que de piloter via un link vers `ResolutionSelector` (115) — sinon
+   résolution incorrecte (640×640 observé) ; (c) `submit_workflow(dry_run: true)` d'abord (gratuit,
+   0 GPU) pour valider la structure avant tout run réel.
+5. **Ne PAS utiliser le prompt par défaut du template T2V** — buggé (mismatch de type INT/STRING sur
+   le node `MiniMaxH3ImageToVideo`, erreur `return_type_mismatch`). Toujours écrire son propre texte
+   dans le node prompt (138 pour R2V / 104 pour T2V).
+6. Si le job dépasse la fenêtre inline (~25s, cas fréquent pour R2V/15s) : `wait_for_job(prompt_id)`
    en boucle jusqu'à `status: "succeeded"` (aucun sleep manuel — l'outil bloque ~25s par appel).
-6. `get_output(prompt_id, client_os, inline_urls: true)` → URL signée temporaire (Google Cloud
-   Storage, ~6h) + commande curl prête à l'emploi. Télécharger avec `curl -sL`, puis upload
-   `scripts/tools/upload-to-blob.py` pour partager avec Aziz (règle upload standard du projet).
+   **Toujours noter le `prompt_id` retourné** (règle déjà en place plus bas dans ce fichier).
+7. `get_output(prompt_id, client_os, inline_urls: true)` → URL signée temporaire (Google Cloud
+   Storage, ~6h) + commande curl prête à l'emploi. Télécharger avec `curl -sL`, **puis TOUJOURS
+   vérifier le contenu réel par extraction de frames (`ffmpeg -vf select=...`) avant de considérer
+   le clip valide** — un statut "succeeded" ne garantit PAS que le contenu correspond au prompt
+   envoyé (leçon du 2026-08-11). Puis upload `scripts/tools/upload-to-blob.py` pour partager avec
+   Aziz (règle upload standard du projet).
+
+**Si `run_template`+`input_overrides` doit être retenté malgré tout** (ex. pour T2V ou I2V, non
+testés avec la méthode graphe-à-la-main) : surveiller spécifiquement le warning
+`conversion_warning: "N extra widget values not mapped"` — s'il apparaît sur un node qui porte une
+valeur importante (image, prompt), ne PAS faire confiance au statut "succeeded" et vérifier le
+contenu réel avant tout usage, ou basculer immédiatement sur `submit_workflow`.
 
 ### Node IDs du template R2V (`video_minimax_h3_r2v`) — pour `input_overrides`
 - **137** : `LoadImage`, champ `image` = le `name` retourné par `upload_file` (1re référence)
