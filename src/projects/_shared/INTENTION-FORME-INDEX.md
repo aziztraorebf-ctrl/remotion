@@ -127,6 +127,20 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Un basculement à un moment pivot | timeline qui se fend | `TimelineFracture`, `ParadigmShiftTimeline`, `ProtoEffect_Fracture` | COMPOSANTS § TIMELINE |
 | Hier vs aujourd'hui (comparatif daté) | fiches then/now sur carte | ⭐ `HeraFidele_V04_FlagsOnMap` (drapeaux + valeurs barrées→neuves) | _proto-16-9 |
 
+### Faire RESSENTIR la MATIÈRE / l'ATMOSPHÈRE d'une scène  ← ⭐ CATÉGORIE NOUVELLE (2026-07-25)
+> Répond au cas « ma scène SVG est propre, lisible… et SÈCHE ». Règle de tranchage :
+> **contour dessinable au trait → SVG · diffus et nombreux → canvas · j'hésite → SVG.**
+> ⛔ Ne pas cocher par réflexe : une couche matière ne se pose que si l'intention la demande.
+
+| Intention | Forme | Réponse(s) | Catalogue |
+|---|---|---|---|
+| L'air a du grain / de la profondeur (lieu ancien, étouffant) | poussière en suspension, parallaxe | `AtmosphereCanvas` `mode="dust"` (sous le `<svg>`) | svg-library/elements/effects |
+| Il pleut / la scène est humide, urbaine, nocturne | traînées inclinées + reflets au sol | `AtmosphereCanvas` `mode="rain"` + `GroundReflection` | idem + technique neon-glow |
+| Un objet/titre doit IRRADIER (néon, incandescent, sacré) | tube lumineux multi-couches | `GlowStroke` (4 passes — le cœur blanc est décisif) | ⭐ technique `neon-glow-reflet-trace.md` |
+| Quelque chose est **en train de s'écrire** (pas « apparaît ») | tracé + pointe lumineuse qui court | `DrawnPath` (`getPointAtLength`) | idem |
+| La scène doit avoir un SOL (pas un fond noir) | reflet miroir flouté masqué | `GroundReflection` (opacity ~0.58, blur ~2 — LISIBLE) | idem |
+| Un objet qui se dissout / s'évapore dramatiquement | particules radiales ("Thanos") | `ParticleDissolve` + `ParticleField` | svg-library/elements/effects |
+
 ### Faire RESSENTIR du TEXTE / mettre l'EMPHASE  ← ⭐ CATÉGORIE NOUVELLE (manquait)
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|

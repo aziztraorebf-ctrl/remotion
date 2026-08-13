@@ -24,6 +24,7 @@ Pas 4 piliers parallèles : **3 moteurs visuels posés sur 1 socle**.
 | **COMBIEN (géométrie complexe)** — flux, réseaux, arcs, projection, choropleth | **D3** | Moteur de calcul de géométrie (pas de « graphiques »). SOUS-EXPLOITÉ |
 | **QUOI / COMMENT** — objet, processus, trajet, métaphore | **SVG** | Contrôle total frame-driven, simplifie ce qui serait lourd en After Effects |
 | **⭐ QUI** — un acteur humain, un geste, un rapport de force, une charge subie | **`_shared/stick-figure-svg/` (NOS briques)** | ⛔ **Jamais un modèle, jamais Seedance** : le socle stick figure (profil) est validé en production depuis le 2026-07-28 et bat ce qu'un modèle produit. **AVANT de coder, choisir le RÉGIME** : AMBIANT (figurants qui habitent un lieu) vs **DÉMONSTRATIF** (1 perso qui EST l'argument — plus fort, moins cher, à privilégier). Recette : [[SCENE-DEMONSTRATIVE-PERSONNAGE]]. Habillage : [[brique-habillage-stick-figure]] (ne JAMAIS l'improviser). |
+| **LA MATIÈRE** — pluie, poussière, braises, brume, grain | **Canvas 2D** (couche, pas moteur) | Beaucoup d'éléments diffus SANS contour → § ci-dessous |
 | **LE LIANT** — texte, chiffre-choc, transition, rythme | **Remotion** (socle) | Toujours |
 
 ⚠️ **PIÈGE VÉCU — la géo réutilisée qui contourne cette table** (beat 4 CFA, 2026-07-26).
@@ -39,6 +40,35 @@ habillage, pas une réponse — même si le geste visuel *semble* juste. Ligne *
 → Vérifier le TEXTE avant la FORME, et ne jamais hériter d'une géo par simple continuité.
 Détail : [[feedback_pourquoi-le-beat4-cfa-a-marche-repartition-jugement]] · garde-fou opérationnel
 (comparer géo + caméra + geste entre beats) : checklist § 2bis de [[CONTINUITE-SCENE-INTENTION-DABORD]].
+
+## ⭐⭐ Le SVG porte la FORME, le canvas porte la MATIÈRE
+
+> Règle de tranchage (3 mots, au moment du code — n'ouvre aucun catalogue) :
+> **si ça a un contour qu'on pourrait dessiner au trait → SVG. Si ça n'en a pas et qu'il y en a beaucoup
+> → canvas. Si j'hésite → SVG.**
+
+Établi 2026-07-25 (session « démos Opus 5 »). Origine : une démo virale annoncée « pure HTML canvas »
+(enseigne néon animée) donnait l'impression d'un substrat qu'on n'aurait pas. Vérification frame par frame
+(Aziz) : le tracé montrait une **pointe lumineuse qui court au bout du trait** = `strokeDashoffset` = **SVG**.
+Le substrat était déjà le nôtre ; l'écart tenait à des finitions, pas à une technologie.
+
+| | SVG | Canvas 2D |
+|---|---|---|
+| Nature | formes décrites, chaque élément adressable dans le DOM | surface de pixels repeinte à chaque frame |
+| Excelle sur | contours nets, tracé progressif, objets animés individuellement, texte | grain, halo diffus, milliers de particules, mélange de lumière |
+| Échoue sur | le grain, la lumière volumétrique, 1000+ éléments (DOM saturé) | cibler/animer UNE forme précise |
+| Exemples chez nous | jeton, frontière, carte D3, tube néon, personnage | pluie, poussière, braises, brume |
+
+**Ce n'est PAS un choix exclusif** : les deux couches coexistent dans la même composition Remotion. Un
+`<canvas>` piloté par `useCurrentFrame()` reste frame-driven et déterministe — donc rendable headless, sans
+WebGL. Ordre canonique : fond → couche canvas (matière) → `<svg>` (formes) → UI/texte fixe.
+
+⛔ **Ne PAS en faire une checklist décorative.** On n'ajoute pas de la poussière « parce que la doctrine le
+suggère » — cela contredirait INTENTION→FORME→TEMPLATE et GUIDER SANS BRIDER. La couche matière se pose
+seulement quand l'intention la demande (une scène qui doit se sentir sale, humide, ancienne, étouffante).
+
+**Le vrai gain de cette session n'était pas le canvas, mais 3 finitions 100% SVG** (glow multi-couches,
+reflet au sol, pointe lumineuse de tracé) → fiche `svg-library/techniques/neon-glow-reflet-trace.md`.
 
 ## Les 3 usages du SVG (pas seulement les sprites Gemini)
 

@@ -32,6 +32,8 @@
 | Navire de guerre (composant `.tsx`, silhouette militaire + variante silhouette réduite) | `elements/maritime/NavireGuerreEncre.tsx` | — (doc inline) | Encre narrative, registre militaire | Soudan Acte4 PortSoudanNegociationScene (Beat 2), mix Gemini 3.1 Pro |
 | Port militaire (composant `.tsx`, quais + 2 grues + lumières scintillantes) | `elements/maritime/PortMilitaireEncre.tsx` | — (doc inline) | Encre narrative, registre militaire/nocturne | Soudan Acte4 PortSoudanNegociationScene (Beat 2), GPT-5.6 Sol |
 | Dissolution en particules (composant `.tsx`, "effet Thanos" — objet qui se désagrège radialement) | `elements/effects/ParticleDissolve.tsx` | — (doc inline) | Tout registre (couleurs paramétrables) | CFA mid-form Beat 6a (jeton monnaie Sira qui se dissout au démenti officiel) |
+| ⭐ Tube néon / objet qui irradie (`GlowStroke` 4 passes) + tracé à pointe lumineuse (`DrawnPath`) + grésillement (`flicker`) + reflet au sol (`GroundReflection`) | `elements/effects/NeonSign.tsx` | ⭐ `techniques/neon-glow-reflet-trace.md` | Tout registre sur FOND SOMBRE (le glow additif n'existe pas sur fond clair) | Banc d'essai `_rnd/neon-test/NeonSignTest16x9.tsx` (2026-07-25) |
+| Couche matière : poussière en suspension / pluie (canvas 2D frame-driven, se pose SOUS le `<svg>`) | `elements/effects/AtmosphereCanvas.tsx` | — (doc inline) | Scènes nocturnes ou « trop propres » qui manquent de grain | CFA Beat 6a (dust), banc d'essai néon (rain) |
 
 ---
 
@@ -46,6 +48,7 @@
 | `glow-pulse-sinusoidal.md` | `techniques/` | Un élément respire ou brille en boucle : soleil, lueur de vie, pulsation |
 | `sway-houppier.md` | `techniques/` | Un feuillage se balance au vent : rotation sinusoïdale sur le houppier isolé |
 | `parallaxe-camAt-horizon.md` | `techniques/` | Scène 16:9 voyage/transformation : parallaxe 3 calques, horizon paramétrique 2 silhouettes, palette double-état, séquençage strict jour/nuit — code dans `motion.ts` |
+| ⭐ `neon-glow-reflet-trace.md` | `techniques/` | Une forme doit IRRADIER (glow 4 couches, le cœur blanc est décisif) · un trait doit s'ÉCRIRE (pointe lumineuse) · la scène doit avoir un SOL (reflet miroir). **+ § CAMÉRA en SVG** : `<g transform>` dans un `viewBox` FIXE (jamais animer le viewBox) |
 
 > Les fiches `techniques/*.md` sont créées séparément (agent dédié). Ce tableau en liste les noms définitifs et leur rôle.
 
