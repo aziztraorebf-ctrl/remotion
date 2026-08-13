@@ -461,6 +461,28 @@ import { MarocPhosphateCarte, MAROC_PHOSPHATE_FRAMES } from "./projects/_rnd/cob
 import { MarocPhosphateDataHero, MAROC_DATAHERO_FRAMES } from "./projects/_rnd/cobaye-maroc-phosphate/MarocPhosphateDataHero";
 import { HalftoneDemo } from "./projects/_rnd/cutout-halftone/HalftoneDemo";
 
+// Stick-figures — 9 scenes narratives + 3 planches de demo (registre "QUI" — cf. STICK-FIGURE-INDEX.md)
+import { PecheurDuree16x9, PECHEUR_DUREE_FRAMES } from "./projects/_rnd/stick-figures/PecheurDuree16x9";
+import { PecheurSurpecheStick16x9, PECHEUR_STICK_FRAMES } from "./projects/_rnd/stick-figures/PecheurSurpecheStick16x9";
+import { MarcheMesure16x9, MARCHE_MESURE_FRAMES } from "./projects/_rnd/stick-figures/MarcheMesure16x9";
+import { GareRoutiereDecor16x9, GARE_DECOR_FRAMES } from "./projects/_rnd/stick-figures/GareRoutiereDecor16x9";
+import { GareDepart16x9, GARE_DEPART_FRAMES } from "./projects/_rnd/stick-figures/GareDepart16x9";
+import { MarcheNuitVivant16x9, MARCHE_NUIT_VIVANT_FRAMES } from "./projects/_rnd/stick-figures/MarcheNuitVivant16x9";
+import { MarcheNuitNarratif16x9, MARCHE_NARRATIF_FRAMES } from "./projects/_rnd/stick-figures/MarcheNuitNarratif16x9";
+import { MarcheInformel16x9, MARCHE_INFORMEL_FRAMES } from "./projects/_rnd/stick-figures/MarcheInformel16x9";
+import { Vendeuse16x9, VENDEUSE_FRAMES } from "./projects/_rnd/stick-figures/Vendeuse16x9";
+import { GarePersoParModele16x9, GARE_PERSO_MODELE_FRAMES } from "./projects/_rnd/stick-figures/GarePersoParModele16x9";
+import { MarcheNuitA, MarcheNuitB, MARCHE_NUIT_FRAMES } from "./projects/_rnd/stick-figures/MarcheNuitCompare";
+import { GestesLocomotion16x9, GESTES_LOCOMOTION_FRAMES } from "./projects/_shared/stick-figure-svg/gestes/GestesLocomotion16x9";
+import { GestesExpressifs16x9, GESTES_EXPRESSIFS_FRAMES } from "./projects/_shared/stick-figure-svg/gestes/GestesExpressifs16x9";
+import { GestesEchange16x9, GESTES_ECHANGE_FRAMES } from "./projects/_shared/stick-figure-svg/gestes/GestesEchange16x9";
+import { DuoAsymetrie16x9, DUO_ASYMETRIE_FRAMES } from "./projects/_shared/stick-figure-svg/interactions/DuoAsymetrie16x9";
+import { GroupeFoule16x9, GROUPE_FOULE_FRAMES } from "./projects/_shared/stick-figure-svg/interactions/GroupeFoule16x9";
+import { ObjetEtCarte16x9, OBJET_ET_CARTE_FRAMES } from "./projects/_shared/stick-figure-svg/interactions/ObjetEtCarte16x9";
+import { RolesDemo16x9, ROLES_DEMO_FRAMES } from "./projects/_shared/stick-figure-svg/identite/RolesDemo16x9";
+import { IdentiteEtVues16x9, IDENTITE_ET_VUES_FRAMES } from "./projects/_shared/stick-figure-svg/identite/IdentiteEtVues16x9";
+import { IdentiteV2_16x9, IDENTITE_V2_FRAMES } from "./projects/_shared/stick-figure-svg/identite/IdentiteV2_16x9";
+
 const WordExplodeDemo: React.FC = () => <WordExplode />;
 
 const TypeWriterDemo: React.FC = () => <TypeWriter />;
@@ -4186,6 +4208,36 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
       />
+
+      {/* Stick-figures — registre "QUI" (cf. STICK-FIGURE-INDEX.md). 9 scenes narratives validees
+          Aziz 2026-07/08 + 3 planches de demo (gestes/interactions/identite). Format 1920x1080
+          malgre le suffixe "16x9" du nom de fichier — verifie coherent avec le socle StickFigure.tsx. */}
+      <Composition id="Stick-PecheurDuree" component={PecheurDuree16x9} durationInFrames={PECHEUR_DUREE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-PecheurSurpeche" component={PecheurSurpecheStick16x9} durationInFrames={PECHEUR_STICK_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheMesure" component={MarcheMesure16x9} durationInFrames={MARCHE_MESURE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-GareRoutiereDecor" component={GareRoutiereDecor16x9} durationInFrames={GARE_DECOR_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-GareDepart" component={GareDepart16x9} durationInFrames={GARE_DEPART_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheNuitVivant" component={MarcheNuitVivant16x9} durationInFrames={MARCHE_NUIT_VIVANT_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheNuitNarratif" component={MarcheNuitNarratif16x9} durationInFrames={MARCHE_NARRATIF_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheInformel" component={MarcheInformel16x9} durationInFrames={MARCHE_INFORMEL_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-Vendeuse" component={Vendeuse16x9} durationInFrames={VENDEUSE_FRAMES} fps={30} width={1920} height={1080} />
+      {/* Scenes de TEST (non narratives, comparatifs techniques) */}
+      <Composition id="Stick-GarePersoParModele-TEST" component={GarePersoParModele16x9} durationInFrames={GARE_PERSO_MODELE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheNuit-CandidatA-TEST" component={MarcheNuitA} durationInFrames={MARCHE_NUIT_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-MarcheNuit-CandidatB-TEST" component={MarcheNuitB} durationInFrames={MARCHE_NUIT_FRAMES} fps={30} width={1920} height={1080} />
+      {/* Vague A — les gestes (validee 2026-07-26) */}
+      <Composition id="RND-Stick-Gestes-Locomotion" component={GestesLocomotion16x9} durationInFrames={GESTES_LOCOMOTION_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="RND-Stick-Gestes-Expressifs" component={GestesExpressifs16x9} durationInFrames={GESTES_EXPRESSIFS_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="RND-Stick-Gestes-Echange" component={GestesEchange16x9} durationInFrames={GESTES_ECHANGE_FRAMES} fps={30} width={1920} height={1080} />
+      {/* Vague D — les interactions (validee 2026-07-26) */}
+      <Composition id="Stick-Inter-Duo-Asymetrie" component={DuoAsymetrie16x9} durationInFrames={DUO_ASYMETRIE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-Inter-Groupe" component={GroupeFoule16x9} durationInFrames={GROUPE_FOULE_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-Inter-Objets" component={ObjetEtCarte16x9} durationInFrames={OBJET_ET_CARTE_FRAMES} fps={30} width={1920} height={1080} />
+      {/* Vague B+C fusionnee — identite et vues. IdentiteEtVues16x9 = derive (voir STICK-FIGURE-INDEX.md),
+          IdentiteV2_16x9 fait foi. */}
+      <Composition id="Stick-Roles-Demo" component={RolesDemo16x9} durationInFrames={ROLES_DEMO_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-IdentiteEtVues-DERIVE" component={IdentiteEtVues16x9} durationInFrames={IDENTITE_ET_VUES_FRAMES} fps={30} width={1920} height={1080} />
+      <Composition id="Stick-IdentiteV2" component={IdentiteV2_16x9} durationInFrames={IDENTITE_V2_FRAMES} fps={30} width={1920} height={1080} />
 
     </>
   );
