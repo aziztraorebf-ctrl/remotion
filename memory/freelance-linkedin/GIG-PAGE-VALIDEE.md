@@ -1,4 +1,4 @@
-# Page de gig Fiverr — version validée (2026-08-12)
+# Page de gig Fiverr — version validée (2026-08-12, resserrée solo founder 2026-08-12)
 
 > ⭐⭐ Version approuvée par Aziz ("elle me va assez bien"). C'est la référence à donner telle quelle
 > si demandée dans une future session, peu importe le contexte. Se modifie au fil des itérations —
@@ -11,23 +11,29 @@
 brief § "ce qui reste à trancher"). Délais estimés à partir du pipeline connu, pas encore mesurés sur
 une vraie commande de bout en bout — à valider avant publication réelle.
 
+⭐ **Ciblage resserré vers solo founder/startup en lancement** (recherche marché 2026-08-12, voir
+brief § "Ciblage acheteur"). Persona le mieux prouvé par preuve terrain (pas juste intuition) ET le
+moins servi par la concurrence Fiverr dense (qui vise la PME générique/marketing). Le reste du champ
+(PME marketing, formateurs, créateurs de contenu) reste un acheteur possible mais n'est plus la cible
+du LANGAGE de la page — un founder qui lit doit se reconnaître en 3 secondes.
+
 ---
 
 ## Titre
 
-> I will create a custom explainer video that makes your product easy to understand
+> I will create a launch-ready explainer video for your startup or product
 
 ## Description courte
 
-> Custom-built visuals. Clear storytelling. Fast turnaround.
+> Built for founders who need to explain their product fast — before a launch, a pitch, or a landing page.
 
 ## Description longue
 
-Explainer videos are meant to make things clear — quickly. That's what I focus on.
+You know your product. The problem is explaining it in 30 seconds to someone who's never heard of it — for a landing page, a launch post, or an investor update.
 
-I create videos built specifically around your product: how it works, what it does, and how to present it in a way people understand in seconds. No templates, no recycled scenes. Each video is designed from scratch to match your message.
+I build videos specifically for that moment: how your product works, what problem it solves, why it matters — structured so a stranger gets it immediately. No templates, no stock explainer scenes. Each video is designed from scratch around your product and your message.
 
-If you're not sure how to present your product visually, that's part of what I help with.
+If you're not sure how to present your product visually yet, that's part of what I help with.
 
 ## How it works
 
@@ -88,6 +94,9 @@ Yes — revisions are included, and since you approve one of 2 visual directions
 **Why not just use an AI video generator?**
 Because it doesn't understand your product — it gives you something generic and fast. This is built around what you're actually trying to say, and if you need a change next month, it's a quick fix, not starting over.
 
+**I'm not a founder, can I still order this?**
+Yes — the process works the same for any product or service that needs a clear explainer. It's just built with founders' timelines and budgets in mind first.
+
 ---
 
 ## Historique des révisions
@@ -97,3 +106,10 @@ Because it doesn't understand your product — it gives you something generic an
   Premium dé-défensif, retrait de la comparaison implicite au concurrent whiteboard ; révisions
   gardées à 2/3/3 avec le raisonnement que le vrai garde-fou anti-révisions-infinies est le choix de
   direction visuelle EN AMONT, pas le nombre de révisions lui-même).
+- **2026-08-12 (2)** : titre/description courte/description longue resserrés vers le persona "solo
+  founder/startup en lancement" — issu d'une recherche marché dédiée (voir brief § "Ciblage
+  acheteur") qui a trouvé une preuve terrain concrète (post Indie Hackers d'un founder ayant payé un
+  explainer produit trouvé par recherche organique) confirmant ce persona comme le mieux prouvé et le
+  moins disputé par la concurrence Fiverr (qui vise majoritairement la PME marketing générique). FAQ
+  "not a founder" ajoutée pour ne pas fermer la porte aux autres segments identifiés (PME, formateurs,
+  créateurs) — resserrage du LANGAGE, pas une exclusion de clientèle. Packages/tiers non modifiés.

@@ -26,6 +26,17 @@
 
 ---
 
+## 💼 GIG FIVERR ENTRÉE DE GAMME — page validée, ciblage acheteur tranché (2026-08-12/13)
+
+Page de gig écrite et validée par Aziz (`memory/freelance-linkedin/GIG-PAGE-VALIDEE.md`), resserrée
+vers le persona solo founder/startup en lancement (recherche marché, preuve terrain). Reste ouvert
+avant publication : prix réels non finalisés, nom commercial du style, portfolio de démo. Détail
+complet : `memory/freelance-linkedin/BRIEF-GIG-ENTREE-DE-GAMME.md` § "Ce qui reste à trancher".
+Complémentaire du gig premium carto éditoriale (`projects/freelance-dataviz-fiverr-pro.md`), pas un
+remplacement — 2 gigs séparés.
+
+---
+
 ## ⭐ KORA & CARTES — piste de sujet en exploration (2026-08-12)
 
 Diagnostic analytics complet fait (CTR/rétention/démographie, outillage vidIQ API — détail
@@ -52,17 +63,28 @@ nouvelle scène multi-personnages tant qu'il n'est pas traité.
 
 ---
 
-## ⚠️ MiniMax H3 — défaut non résolu, en attente de décision (2026-08-10)
+## ⚠️ MiniMax H3 — défaut racine non résolu, mais contournement prouvé + risque élargi (2026-08-10/12)
 
-Scène "discours podium" Mariama Bâ (multi-personnages) : 2 échecs consécutifs sur le même défaut
-(personnage central qui disparaît quand 2 figurants voisins joignent les mains, t≈12s) — seuil de
-délégation à un agent de diagnostic dédié ATTEINT et NON déclenché cette session. Découverte
-additionnelle plus grave sur le même run : écran noir avec sous-titres karaoké de t≈1s à t≈7s
-(cause non identifiée, hypothèse dialogue continu vs pause interne, non confirmée).
-**Décision en attente** : soit déléguer un agent de diagnostic dédié (protocole CLAUDE.md, 2+ échecs
-sur le même problème) avant tout 3e essai de prompt, soit contourner (remplacer le geste mains-jointes
-par une réaction sans contact physique croisé, piste déjà identifiée). Détail complet :
-`memory/tools/minimax.md` § TEST RÉEL 4/5. Fichiers de test conservés (décision Aziz) :
+Scène "discours podium" Mariama Bâ (3 personnages, multi-personnages dense) : défaut original
+(personnage central qui disparaît quand 2 figurants voisins joignent les mains, t≈12s + écran noir
+karaoké t≈1-7s) **toujours NON résolu, jamais re-testé depuis le 08-10** — seuil de délégation à un
+agent de diagnostic dédié (protocole CLAUDE.md, 2+ échecs) TOUJOURS atteint et NON déclenché.
+
+⭐ **Contournement PROUVÉ depuis (2026-08-11/12, gig Fiverr § Test 2)** : sur un cas plus restreint
+(2 personnages SEULEMENT, dialogue en un seul segment continu, ZÉRO contact physique croisé) — 4 clips
+testés, succès complet, aucune reproduction du défaut original. Ne règle PAS la cause racine (scène
+dense 3+ personnages avec contact physique), seulement un cas d'usage plus étroit qui l'évite.
+
+⚠️ **Risque élargi (2026-08-12)** : un 2e type d'écran noir (fin de clip, cause différente, 1 seul
+personnage) a été observé sur un cas séparé — confirme que la famille "écran noir H3" n'est pas limitée
+au scénario mains-jointes original, cause toujours non comprise.
+
+**Décision en attente, inchangée** : déléguer un agent de diagnostic dédié avant tout 3e essai sur la
+scène podium originale (3 personnages, contact physique), OU accepter le contournement (2 personnages
+max, zéro contact croisé) comme limite de production durable plutôt que de re-tenter la scène dense.
+Détail complet : `memory/tools/minimax.md` § TEST RÉEL 4/5 (défaut original) + § Test dialogue
+supermarché 08-11/12 (contournement) + § écran noir fin de clip 08-12 (nouveau risque). Fichiers de
+test conservés (décision Aziz) :
 `public/_shared/refs/characters/mariama-ba/_prototype-expressive-eyes-rnd/discours-podium/`.
 
 ---

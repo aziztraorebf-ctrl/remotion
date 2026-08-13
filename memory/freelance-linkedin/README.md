@@ -30,8 +30,10 @@
 
 - Le **prix** : aucun n'a été dit à voix haute à qui que ce soit. La seule hypothèse qui compte, non testée.
 - **Assumer publiquement l'usage de l'IA** dans le process (les 3 posts rédigés le font ; à valider).
-- **Qui achète** concrètement ce type de vidéo, et à qui elle est commandée dans l'organisation.
-  → C'est l'étape la plus actionnable si on reprend le sujet.
+
+✅ **Qui achète** — tranché 2026-08-12 par recherche marché (5 profils, preuve terrain à l'appui) :
+solo founder/startup en lancement = persona le mieux prouvé, page de gig resserrée en conséquence.
+Détail : `BRIEF-GIG-ENTREE-DE-GAMME.md` § "Ciblage acheteur".
 
 ## Durée de vie
 

@@ -192,6 +192,32 @@ open-weight Comfy Cloud, forfait) sur tous les essais, y compris les 2 clips cas
 initial. Seul coût = temps GPU + temps de prompt-engineering humain — un futur usage avec la méthode
 et les prompts déjà validés sera nettement plus rapide qu'un 1er essai from scratch.
 
+## ⭐⭐ Ciblage acheteur — recherche marché (fait 2026-08-12)
+
+Point resté ouvert depuis la création du brief ("qui achète, à qui c'est commandé dans une
+organisation" — README.md le citait comme "l'étape la plus actionnable si on reprend le sujet").
+Tranché par recherche marché dédiée (Tavily, gigs Fiverr concurrents + reviews + forums Reddit/Indie
+Hackers), pas par intuition.
+
+**5 profils identifiés, par force de preuve décroissante** :
+1. **Solo founder / petite startup** (signal le plus fort) — explainer produit pour landing page,
+   premier lancement, validation. Preuve directe : post Indie Hackers d'un founder confirmant qu'un
+   inconnu a payé pour un explainer produit trouvé par recherche organique, zéro démarchage.
+2. **PME/solopreneur marketing** — page produit, pub réseaux sociaux. Volume le plus large sur Fiverr
+   mais concurrence la plus dense (le vendeur whiteboard 2200+ avis analysé au § intro vit ici).
+3. **Formateur/créateur de cours** — modules pédagogiques courts, onboarding interne.
+4. **Créateur de contenu solo** — clips courts réseaux sociaux, priorité vitesse+prix.
+5. **Micro-agence/consultant** — sous-traite en marque blanche, engagement récurrent à l'heure.
+
+**Ce que la recherche NE permet PAS de trancher** (limite honnête) : aucune preuve terrain sur
+crowdfunding/pitch investisseur comme cas d'usage réel — hypothèse plausible, non confirmée. Pas de
+donnée sur la fréquence de rachat/upsell vers un budget plus haut.
+
+**Décision** : resserrer le LANGAGE de la page vers le persona #1 (solo founder/startup en lancement)
+— le mieux prouvé ET le moins disputé par la concurrence Fiverr dense sur PME générique — sans fermer
+la porte aux autres segments (FAQ dédiée ajoutée). Titre/description mis à jour dans
+`GIG-PAGE-VALIDEE.md` (révision 2026-08-12 (2)). Packages/tiers inchangés.
+
 ## Ce qui reste à trancher avant publication (pas décidé dans cette session)
 
 1. **Le nom commercial du style** — le vendeur analysé n'a pas de nom de style distinctif autre que
