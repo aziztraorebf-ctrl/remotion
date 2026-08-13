@@ -70,7 +70,12 @@ Miroir du DA-BRIEF-GATE (visuel) et de /beat, mais pour le CHOIX DU SUJET en amo
    - `search_channels` (niche + faceless + ratio vues/subs élevé) → CHAÎNES qui montent (≠ vidéos).
    → Sortie : 3-4 vidéos/sujets qui SE DÉMARQUENT.
 
-**2. TIMING — éliminer les sujets FROIDS (`last30days` skill, ~10 min)** :
+**2. TIMING — éliminer les sujets FROIDS (`last30days` skill, ~10 min)** — ⚠️ scoper à UN thème ciblé,
+   PAS une liste de 6-8 sujets en un seul appel (vécu 2026-08-13 : un appel `Sahel/AES + CFA + ressources +
+   Wagner + Maroc-Algérie + FMI + Chine-Russie` en une requête a produit un résultat trop large pour
+   décider — le skill last30days est conçu pour approfondir une entité/thème, pas balayer une liste).
+   Si plusieurs sujets candidats existent après l'étape 1, lancer last30days séquentiellement sur les 2-3
+   qui se démarquent le plus, pas en vrac :
    - Une vidéo à succès peut dater de 1 an → sujet refroidi/mort. last30days dit ce qui est CHAUD MAINTENANT
      (Reddit/X/YouTube/TikTok/news). → garder les 2-3 sujets ENCORE vivants, éliminer les froids AVANT de dépenser
      des crédits à remonter les fils. (TubeLab=passé ; last30days=présent.)
@@ -232,7 +237,8 @@ script conforme DOCTRINE-SCRIPT-UNIFIEE → fact-check 3 niveaux → jury LLM). 
 
 Liens : [[CHARTE-EDITORIALE-SOUVERAIN]] · [[feedback_doctrine-titres-youtube-kora-cartes]] · [[ANGLE-MACRO-SOUVERAIN]] ·
 [[DA-BRIEF-GATE]] (miroir visuel) · [[STRATEGIE-DERIVES-SHORT-CARROUSEL]] · [[DECODE-sahel-chronicles]] ·
-[[RECHERCHE-PRESCRIPT-UNIFIEE]] (la suite : script + fact-check + jury).
+[[RECHERCHE-PRESCRIPT-UNIFIEE]] (la suite : script + fact-check + jury) ·
+[[STRUCTURE-OBJET-MECANISME]] (squelette narratif du corps, une fois le sujet validé).
 
 ---
 

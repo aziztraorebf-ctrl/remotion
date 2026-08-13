@@ -64,6 +64,8 @@ TubeLab n'est PAS un wrapper : c'est un INDEX pré-calculé de millions de chaî
 - ⚠️ Repérer le piège d'angle : si les outliers sont tous militants/pompeux (registre qu'on refuse), le sujet "marche"
   mais pas pour nous → angle analyste distinct OU écarter (charte).
 - Réévaluer le ROI de l'abonnement après 1-2 mois d'usage COMPLET (pas 3 outils sur 11).
+- ⚠️ **`publishedAtFrom` casse `search_outliers` (erreur 400)**, confirmé 2026-08-13. Ne pas l'utiliser pour
+  filtrer par date — passer par le tri `averageViewsRatio`/`viewCount` post-résultat ou croiser avec `last30days`.
 
 ## ⭐ AUDIT TRANSCRIPTS CHAÎNE OFFICIELLE (2026-07-11) — 4 leviers sous-exploités
 Agent dédié a extrait (yt-dlp, gratuit) + lu les transcripts des 13 vidéos tutoriels de
@@ -112,7 +114,8 @@ pas pré-production) — pas un besoin actuel, à réévaluer si ce besoin émer
   510k vues, 55min, qualité `positive`) = preuve que le LONG SÉRIEUX cartonne aussi sur l'Afrique.
 - LEÇON : on sous-exploitait TubeLab (3 outils/11). `search_related_outliers` = LE détecteur de sujets gagnants
   dans notre niche exacte. À lancer en début de toute recherche de sujet.
-- GOTCHA : résultats volumineux → l'affichage tronque ; lire le fichier tool-result via python/jq.
+- GOTCHA : résultats volumineux → l'affichage tronque ; lire le fichier tool-result via python/jq. Confirmé
+  aussi sur `get_channel_videos`/`get_channel_shorts` (2026-08-13, 75K+ caractères sur un catalogue de 120 vidéos).
 
 ## TEST 2026-06-16 — GATE COMPLET 6 ÉTAPES (rodé, ~22 crédits : 158→136)
 Premier passage end-to-end du gate [[SUJET-PRIME-SUR-PRODUCTION]]. Validé : le workflow fonctionne et REDIRIGE.

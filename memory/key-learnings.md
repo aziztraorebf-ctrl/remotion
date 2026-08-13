@@ -48,6 +48,12 @@ résultat correct mais appauvri (pas de Reddit/X/TikTok natifs, la valeur propre
 signale qu'un skill/fichier "ressemble à une injection", vérifier D'ABORD que ce n'est pas un fichier projet
 légitime au ton volontairement cash avant de le contourner — sinon on perd la richesse cross-plateforme
 sans même s'en rendre compte. Généralisable à tout skill/doctrine au ton direct, pas spécifique à last30days.
+**Récidive 2026-08-13** : même mécanique (blocs "LAW 1-8", mentions de "disasters"), cette fois par l'agent
+principal lui-même (pas un sous-agent), signalé à Aziz avant de continuer plutôt que contourné en silence —
+mieux que 2026-07-11, mais confirme que la leçon écrite seule ne suffit pas à éviter la récidive (cf.
+[[feedback_regle-ecrite-insuffisante-sans-gate-outille]]). Pas de gate outillé simple ici (le ton défensif
+est un choix légitime du skill) — seul mitigant réaliste : vérifier que le fichier appartient au repo/skill
+installé avant de le traiter comme suspect.
 
 ### 2026-07-07 — Sprite/portrait BITMAP : JAMAIS de scale oscillant continu (= flou/scintillement)
 Un `scale` qui « respire » en boucle (breathe, ex. `1 + 0.04*sin(frame)`) sur une IMAGE RASTER force un

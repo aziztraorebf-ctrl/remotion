@@ -87,4 +87,5 @@ Mécanique : on pose une **boucle ouverte** (open loop) dans les 3 premières se
 
 ---
 
-> Liens : [[feedback_hook-retention-premiere-minute]] (sources tracées) · [[feedback_jetons-symboles-sous-exploites-warmap]] (famille jetons Gemini) · [[remotion-effects-rack-natif]] (3D = niche) · [[DOCTRINE-SOUVERAIN]] (frame-driven, pas flyTo) · WARMAP-GRAMMAIRE / SOUVERAIN-VISUAL-PLAYBOOK (habillage carte).
+> Liens : [[feedback_hook-retention-premiere-minute]] (sources tracées) · [[feedback_jetons-symboles-sous-exploites-warmap]] (famille jetons Gemini) · [[remotion-effects-rack-natif]] (3D = niche) · [[DOCTRINE-SOUVERAIN]] (frame-driven, pas flyTo) · WARMAP-GRAMMAIRE / SOUVERAIN-VISUAL-PLAYBOOK (habillage carte) ·
+[[STRUCTURE-OBJET-MECANISME]] (squelette narratif du corps, après cette 1ère minute).
