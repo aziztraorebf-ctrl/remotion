@@ -18,6 +18,12 @@
 > - **Pipeline agent Fable SVG** : Agent `subagent_type: general-purpose`, `model: "fable"`, brief = scene +
 >   contraintes (viewBox 16:9, `<g id>` nommes animables, camelCase JSX, anti-slop, zero texte). Recuperer le
 >   bloc jsx du resultat, reconstruire en composant Remotion (les defs/gradients se collent tels quels).
+> - ⚠️ **NUANCE (2026-08-13, projet canada-red-bay)** : le statut "Gemini = roi organique" n'est pas une
+>   garantie automatique sur un brief precis — sur un comparatif 5 modeles (Fable5 MAX/Gemini 3.1 Pro/
+>   GPT-5.6 Sol/Kimi K3/GLM-5.2) pour une scene d'ossements de baleine anatomiques, Gemini a produit le
+>   PIRE resultat des 5 (cotes lues comme des voiles/dents, pas anatomiques), Fable5 MAX le meilleur.
+>   Le verdict general reste vrai EN MOYENNE (pas invalide par ce seul contre-exemple) — mais **comparer
+>   systematiquement plutot que supposer** sur un brief organique/anatomique complexe precis.
 
 
 > R&D 2026-06-24 (branche `rnd/svg-qwen3.6-test`). Test de modeles OpenRouter pour generer du SVG

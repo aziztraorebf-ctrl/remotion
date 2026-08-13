@@ -216,3 +216,72 @@ piste 5 ("pourquoi l'Afrique évolue / pays qui montent") pour obtenir un vrai G
 puis écrire son propre fichier POSITIONNEMENT (gabarit [[soudan-midform-POSITIONNEMENT]], même structure
 que la piste 4 dépassée). Aucun script ni positionnement encore écrit sur cette piste — décision explicite
 d'Aziz de reporter la suite, pas un blocage technique.
+
+---
+
+## ⭐⭐⭐ SESSION 2026-08-12/13 — REPRISE de la piste FMI, méthode AJ+ français décodée, squelette narratif prêt
+
+> Suite directe de la piste "Ajustement structurel du FMI" listée comme REJETÉE-provisoire ci-dessus
+> (§ session 2026-08-12) — Aziz l'a explicitement relancée en 2e temps de cette session. **Statut mis à
+> jour : piste FMI/dette REPRISE et avancée jusqu'au squelette narratif, en attente de script.**
+
+**Étape 1 — validation TubeLab de l'angle négatif vs positif** : recherche croisée FR+EN sur les zones
+chaudes (argent/pauvreté/pouvoir/ressources/systèmes invisibles). Résultat net : l'angle négatif/injustice
+("pourquoi pauvre", "le FMI appauvrit") écrase largement l'angle positif ("pays qui montent") en vues
+réelles sur les outliers mesurés — ex. "Why is Africa Still So Poor?" (History Scope, 571K abo) = 5,8M
+vues, ratio 7.8x ; "Why the IMF Makes Every Country It Helps Poorer" et plusieurs chaînes EN dédiées au
+sous-genre "IMF debt trap". Nuance : ça ne remet PAS en cause la piste 5 (pays qui montent, ci-dessus),
+juste un signal supplémentaire que l'angle dette/FMI mérite d'être traité en parallèle, pas exclusif.
+
+**Étape 2 — décodage de la chaîne AJ+ français (@ajplusfrancais, 948K abo)** : sur suggestion d'Aziz
+(5 vidéos données en exemple), 3 agents parallèles ont analysé transcript + structure de chacune, puis un
+passage `TubeLab get_channel` + `get_channel_videos` + `get_channel_shorts` (top-120 long-form + 120
+Shorts) a confirmé le pattern sur l'ensemble du catalogue, pas juste l'échantillon. Résultat : **nouvelle
+doctrine [[doctrines/STRUCTURE-OBJET-MECANISME]]** — squelette narratif en 5 temps (objet concret vérifiable
+→ question qui organise, pas une accusation → creusement du mécanisme en cascade causale → reveal factuel
+chiffré → clôture humaine), durée gagnante 5-6 min (pas 15-20), titres en question-jugement. ⚠️ Décision
+explicite d'Aziz : on garde la STRUCTURE et la clarté du mécanisme révélé, PAS le registre clivant
+"nous contre eux/adversaire externe nommé" de la source (cohérent [[doctrines/CHARTE-EDITORIALE-SOUVERAIN]]
+analyste-pas-militant) — voir la doctrine pour la reformulation "surprise du mécanisme + réversibilité
+encore ouverte" qui remplace "adversaire nommé" sans perdre la tension narrative.
+
+**Étape 3 — 4 angles-titres générés, 1 retenu** (grille objet→mécanisme appliquée à FMI/CFA/dette/ressources) :
+1. Un billet imprimé en France → "pourquoi certains pays ne fabriquent pas leur propre monnaie ?"
+2. Un contrat de prêt FMI → "pourquoi un pays qui reçoit de l'aide peut finir plus pauvre qu'avant ?"
+3. Une cargaison de minerai → "pourquoi le pays qui possède la ressource n'en fixe pas le prix ?"
+4. **⭐ RETENU — une facture de dette qui grossit** → "comment une dette qu'on a remboursée peut ne
+   jamais diminuer ?" — choisi pour son paradoxe arithmétique choc et vérifiable (un pays peut rembourser
+   plus que la somme empruntée et devoir encore plus qu'au départ), plus fort en curiosité épistémique que
+   les 3 autres (moins déjà-couvert que CFA/ressources, moins abstrait que "conditionnalités FMI" seul).
+
+**Squelette narratif complet posé pour l'angle #4 (dette)** :
+0-15s objet d'ouverture = chiffre-choc incarné (montant remboursé vs montant encore dû, qui ne s'annulent
+pas) · 15-30s question qui organise ("comment est-ce mathématiquement possible ?", open loop cf.
+[[doctrines/HOOK-PREMIERE-MINUTE]]) · 1:30-5:00 creusement cascade causale (taux composés, refinancement,
+point de bascule auto-entretenu — construction séquentielle animée, PAS un cut brutal, cf. moteur narratif
+MÉCANISME dans [[doctrines/SUJET-PRIME-SUR-PRODUCTION]]) · vers 5:00 reveal chiffré qui répond à l'énigme
+d'ouverture · dernière minute clôture humaine (impact concret : budget national, hôpital, route — pas de
+dénonciation). Avantage technique noté : le "moment de bascule mathématique" se prête bien à une scène-
+mécanisme animée (jauges/flux/compteur), registre où le moteur SVG/Remotion a un avantage réel.
+
+**⭐ PROCHAINE SESSION — reprendre ICI (priorité sur la piste 5 pays-qui-montent, les deux ne s'excluent
+pas mais celle-ci est plus avancée)** : décision en suspens au moment de la clôture — **script direct sur le
+squelette dette ci-dessus, OU fact-check d'abord du chiffre-choc d'ouverture** (quel pays, quels montants
+précis, quelle source) avant d'écrire. Rien n'est fact-checké ni scripté : le squelette est validé
+structurellement, pas encore sur le contenu factuel. Ne pas re-décoder AJ+ français ni relancer TubeLab sur
+FMI/dette — la matière de recherche est déjà là, direction = fact-check ciblé puis
+[[doctrines/RECHERCHE-PRESCRIPT-UNIFIEE]] (script → fact-check 3 niveaux → jury LLM).
+
+---
+
+## Diagnostic CLOS — flop Short CFA (2026-08-13)
+
+Le Short Franc CFA (`0ILCcgFZRII`) faisait seulement 4 vues (vs 1000+ pour les 2 Shorts précédents,
+CEDEAO et Sénégal). **Cause identifiée** : la miniature YouTube auto-sélectionnée par la plateforme
+était illisible (2 tubes à essai/éprouvettes abstraites, aucun texte lisible en petit format), alors
+que le hook interne du montage ("Franc CFA : divisé par deux en une nuit") était déjà bon — le titre
+et le sujet n'étaient PAS en cause (confirmé par vidIQ, score 95/100 sur le titre long-form). Fix :
+extraction de la frame d'ouverture réelle en pleine résolution, uploadée manuellement comme miniature
+custom par Aziz sur YouTube Studio. Pas de garantie de résultat (pas encore assez de recul pour juger
+l'effet), mais la cause structurelle (vignette auto vs custom) est établie. Diagnostic clos, pas de
+suite programmée — resurveiller les vues du Short si le sujet redevient pertinent.

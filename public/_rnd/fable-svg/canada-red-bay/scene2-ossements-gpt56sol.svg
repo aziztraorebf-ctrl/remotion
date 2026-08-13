@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080">
+  <g id="ciel-froid">
+    <rect x="0" y="0" width="1920" height="530" fill="#76858c"/>
+    <path d="M0 168 C280 128 500 188 760 155 C1010 124 1280 142 1510 188 C1680 221 1810 211 1920 186 L1920 0 L0 0 Z" fill="#879399" opacity="0.56"/>
+    <path d="M0 272 C250 238 455 279 690 251 C950 220 1175 239 1400 276 C1600 309 1760 292 1920 257 L1920 390 L0 390 Z" fill="#687a83" opacity="0.48"/>
+    <ellipse cx="370" cy="332" rx="430" ry="116" fill="#9ca7aa" opacity="0.23"/>
+    <ellipse cx="1330" cy="300" rx="570" ry="132" fill="#a8b1b3" opacity="0.2"/>
+  </g>
+
+  <g id="falaises-lointaines">
+    <path d="M0 454 L120 431 L236 439 L338 401 L430 412 L520 382 L620 402 L720 386 L806 423 L890 426 L890 548 L0 548 Z" fill="#495b61"/>
+    <path d="M0 472 L145 448 L260 459 L352 423 L438 434 L529 406 L628 425 L735 410 L820 438 L890 444 L890 550 L0 550 Z" fill="#56676c"/>
+    <path d="M1410 421 L1512 399 L1606 410 L1702 374 L1802 391 L1920 350 L1920 545 L1398 545 Z" fill="#47595f"/>
+    <path d="M1452 441 L1540 422 L1628 433 L1715 401 L1808 414 L1920 386 L1920 548 L1425 548 Z" fill="#596a6f"/>
+  </g>
+
+  <g id="mer">
+    <rect x="0" y="475" width="1920" height="305" fill="#526b75"/>
+    <path d="M0 522 C280 505 520 541 788 518 C1040 496 1330 526 1600 505 C1725 496 1834 498 1920 507 L1920 560 C1650 548 1405 572 1160 550 C900 527 650 566 390 548 C238 538 112 541 0 550 Z" fill="#657a82" opacity="0.7"/>
+    <path d="M0 606 C245 581 450 623 690 602 C932 581 1160 618 1395 594 C1580 575 1760 592 1920 580 L1920 640 C1704 653 1502 628 1290 648 C1040 671 817 630 572 654 C360 676 174 646 0 662 Z" fill="#455f69" opacity="0.66"/>
+    <path d="M135 695 C360 674 572 705 790 686 C1002 669 1204 701 1420 682 C1594 667 1764 676 1920 665 L1920 725 C1712 738 1518 713 1305 732 C1074 753 846 717 620 739 C430 758 270 737 135 744 Z" fill="#71858a" opacity="0.4"/>
+    <path d="M70 563 C255 550 390 569 550 556" fill="none" stroke="#94a1a3" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+    <path d="M1030 548 C1218 529 1378 558 1548 541" fill="none" stroke="#9ba7a8" stroke-width="8" stroke-linecap="round" opacity="0.36"/>
+  </g>
+
+  <g id="brume-arriere">
+    <ellipse cx="315" cy="505" rx="480" ry="104" fill="#aeb7b8" opacity="0.35"/>
+    <ellipse cx="920" cy="460" rx="560" ry="92" fill="#b4bcbc" opacity="0.25"/>
+    <ellipse cx="1585" cy="500" rx="460" ry="105" fill="#abb5b7" opacity="0.34"/>
+    <path d="M0 474 C312 433 565 487 842 458 C1118 430 1390 480 1648 449 C1755 437 1842 438 1920 445 L1920 516 C1695 503 1512 532 1294 510 C1052 486 834 523 600 506 C384 490 191 520 0 500 Z" fill="#a5b0b2" opacity="0.22"/>
+  </g>
+
+  <g id="cote-plage">
+    <path d="M0 708 C180 678 350 692 530 718 C715 746 850 729 1020 707 C1218 681 1402 697 1575 727 C1702 749 1827 747 1920 728 L1920 1080 L0 1080 Z" fill="#3f4d50"/>
+    <path d="M0 756 C190 718 355 741 520 764 C695 789 848 771 1028 748 C1215 725 1400 745 1572 773 C1702 794 1820 786 1920 764 L1920 1080 L0 1080 Z" fill="#4d5555"/>
+    <path d="M0 803 C175 770 330 785 488 810 C672 839 846 823 1008 803 C1192 780 1380 793 1548 824 C1695 851 1815 840 1920 817 L1920 1080 L0 1080 Z" fill="#59605e"/>
+    <path d="M0 748 C140 723 245 729 348 745 C243 750 144 774 0 792 Z" fill="#8a989a" opacity="0.46"/>
+    <path d="M1480 763 C1640 746 1780 755 1920 733 L1920 786 C1770 796 1634 790 1480 763 Z" fill="#909c9d" opacity="0.36"/>
+  </g>
+
+  <g id="rocher-gauche">
+    <polygon points="0,830 96,764 212,779 286,846 252,932 118,970 0,944" fill="#452f31"/>
+    <polygon points="22,828 103,782 194,793 242,837 147,852" fill="#6e4c49"/>
+    <polygon points="104,854 242,837 272,875 223,927 111,940 58,903" fill="#51383a"/>
+    <path d="M26 860 L105 825 L180 833" fill="none" stroke="#80615e" stroke-width="10" stroke-linecap="round" opacity="0.48"/>
+  </g>
+
+  <g id="rocher-central">
+    <polygon points="224,885 332,791 477,766 612,817 676,908 613,1000 440,1034 284,989" fill="#493234"/>
+    <polygon points="280,863 357,803 467,785 567,821 505,873 385,889" fill="#6e4c49"/>
+    <polygon points="385,889 505,873 640,917 596,980 447,1011 316,975" fill="#543a3b"/>
+    <path d="M323 850 L414 820 L507 832" fill="none" stroke="#856563" stroke-width="12" stroke-linecap="round" opacity="0.42"/>
+  </g>
+
+  <g id="rocher-droit">
+    <polygon points="1290,836 1410,754 1552,739 1660,790 1758,766 1920,820 1920,1080 1280,1080 1228,956" fill="#452f31"/>
+    <polygon points="1325,837 1429,775 1539,760 1626,799 1537,843 1416,859" fill="#6e4c49"/>
+    <polygon points="1600,819 1762,788 1894,828 1920,867 1772,879 1674,857" fill="#624443"/>
+    <polygon points="1280,908 1416,859 1537,843 1668,900 1599,1001 1370,1030 1251,972" fill="#503638"/>
+    <path d="M1370 829 L1462 794 L1544 797" fill="none" stroke="#846360" stroke-width="11" stroke-linecap="round" opacity="0.45"/>
+  </g>
+
+  <g id="ossement-crane">
+    <ellipse cx="681" cy="858" rx="398" ry="55" fill="#29383b" opacity="0.42"/>
+    <path d="M298 704 C389 664 500 632 622 610 L750 568 C833 541 930 553 989 611 C1030 651 1037 708 1002 746 C967 784 905 797 836 785 L690 751 L548 753 L409 773 L313 760 C280 755 268 724 298 704 Z" fill="#c9c4b8"/>
+    <path d="M306 704 C411 681 512 655 626 632 L753 592 C817 572 889 579 933 609 C867 605 809 620 750 651 L628 691 L493 708 L365 735 L291 733 C282 722 287 711 306 704 Z" fill="#ddd7ca"/>
+    <path d="M747 568 C820 535 925 550 988 611 C1019 642 1032 684 1017 716 L945 702 C924 669 896 650 852 644 L779 657 L710 628 Z" fill="#b6b0a1"/>
+    <path d="M655 613 L720 585 L764 608 L728 674 L640 703 L598 670 Z" fill="#596160"/>
+    <path d="M664 625 L714 604 L741 616 L712 653 L658 673 L626 657 Z" fill="#39484a"/>
+    <ellipse cx="868" cy="647" rx="55" ry="48" fill="#455052"/>
+    <ellipse cx="870" cy="647" rx="32" ry="29" fill="#263638"/>
+    <path d="M920 712 C950 715 980 731 991 752 C960 781 914 790 868 783 L829 765 L846 728 Z" fill="#9f9b90"/>
+    <path d="M365 735 L530 698 L675 689 L792 654 L773 710 L650 744 L503 746 L385 764 L306 755 Z" fill="#aba69a"/>
+    <path d="M322 772 C420 791 523 788 622 772 L771 746 C838 735 912 742 984 774 C1002 782 1005 803 987 813 C922 847 840 854 754 843 L606 829 L461 833 L340 816 C302 811 289 783 322 772 Z" fill="#bdb7aa"/>
+    <path d="M341 785 C438 801 527 797 624 784 L770 760 C832 751 886 757 938 778 C867 778 814 792 754 810 L607 809 L461 817 L351 804 C335 801 328 791 341 785 Z" fill="#d6d0c3"/>
+    <path d="M979 775 C1012 784 1037 804 1031 822 C1022 846 969 853 923 836 L887 813 L938 778 Z" fill="#a7a297"/>
+    <path d="M485 674 C541 655 596 642 651 630" fill="none" stroke="#e3ddd0" stroke-width="11" stroke-linecap="round" opacity="0.55"/>
+    <path d="M449 804 C535 810 606 800 682 789" fill="none" stroke="#e1dbce" stroke-width="9" stroke-linecap="round" opacity="0.48"/>
+    <path d="M792 579 C823 568 858 568 888 575" fill="none" stroke="#e0dacd" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
+  </g>
+
+  <g id="ossement-cotes">
+    <path d="M1058 742 C1085 582 1185 475 1320 473 C1439 471 1517 561 1514 732" fill="none" stroke="#343f40" stroke-width="42" stroke-linecap="round" opacity="0.34"/>
+    <path d="M1118 760 C1154 595 1256 505 1381 512 C1490 518 1561 602 1547 758" fill="none" stroke="#343f40" stroke-width="38" stroke-linecap="round" opacity="0.31"/>
+    <path d="M1181 781 C1224 634 1314 556 1423 565 C1519 573 1584 649 1572 789" fill="none" stroke="#343f40" stroke-width="35" stroke-linecap="round" opacity="0.29"/>
+    <path d="M1058 724 C1087 568 1182 486 1313 486 C1423 486 1497 568 1489 723" fill="none" stroke="#bdb8ab" stroke-width="30" stroke-linecap="round"/>
+    <path d="M1118 744 C1155 588 1252 516 1375 524 C1474 531 1537 606 1523 749" fill="none" stroke="#c8c2b5" stroke-width="27" stroke-linecap="round"/>
+    <path d="M1181 765 C1225 627 1311 568 1417 577 C1501 584 1557 652 1547 778" fill="none" stroke="#b8b2a5" stroke-width="25" stroke-linecap="round"/>
+    <path d="M1244 789 C1290 673 1362 623 1448 631 C1519 638 1567 694 1558 798" fill="none" stroke="#c4beb1" stroke-width="23" stroke-linecap="round"/>
+    <path d="M1071 696 C1102 576 1191 507 1304 505" fill="none" stroke="#ddd7ca" stroke-width="8" stroke-linecap="round" opacity="0.58"/>
+    <path d="M1133 716 C1174 602 1260 543 1365 545" fill="none" stroke="#e0dacd" stroke-width="7" stroke-linecap="round" opacity="0.48"/>
+    <path d="M1197 739 C1239 646 1315 600 1404 599" fill="none" stroke="#d8d2c5" stroke-width="7" stroke-linecap="round" opacity="0.45"/>
+  </g>
+
+  <g id="ossement-vertebres">
+    <ellipse cx="1257" cy="827" rx="318" ry="54" fill="#29383b" opacity="0.35"/>
+    <path d="M1024 719 L1045 659 L1070 653 L1080 718 Z" fill="#aaa598"/>
+    <path d="M1111 724 L1135 648 L1161 648 L1167 725 Z" fill="#b9b3a6"/>
+    <path d="M1200 738 L1226 672 L1252 675 L1257 742 Z" fill="#aaa598"/>
+    <path d="M1290 754 L1320 694 L1344 701 L1345 761 Z" fill="#b7b1a4"/>
+    <path d="M1380 773 L1413 722 L1436 731 L1433 784 Z" fill="#a9a497"/>
+    <ellipse cx="1048" cy="745" rx="59" ry="49" fill="#c3bdb0"/>
+    <ellipse cx="1135" cy="753" rx="61" ry="51" fill="#d1cbbd"/>
+    <ellipse cx="1226" cy="765" rx="62" ry="52" fill="#beb8ab"/>
+    <ellipse cx="1319" cy="782" rx="61" ry="51" fill="#cbc5b8"/>
+    <ellipse cx="1409" cy="802" rx="57" ry="48" fill="#b8b2a5"/>
+    <ellipse cx="1048" cy="746" rx="28" ry="23" fill="#77766e"/>
+    <ellipse cx="1135" cy="754" rx="29" ry="24" fill="#85837a"/>
+    <ellipse cx="1226" cy="766" rx="29" ry="24" fill="#73736c"/>
+    <ellipse cx="1319" cy="783" rx="28" ry="23" fill="#817f76"/>
+    <ellipse cx="1409" cy="803" rx="25" ry="21" fill="#6e6f69"/>
+    <path d="M1000 765 L958 794 L970 820 L1030 790 Z" fill="#aaa598"/>
+    <path d="M1083 779 L1047 818 L1065 841 L1120 800 Z" fill="#bcb6a9"/>
+    <path d="M1174 789 L1145 832 L1167 851 L1214 810 Z" fill="#aaa598"/>
+    <path d="M1266 804 L1242 845 L1265 863 L1307 823 Z" fill="#b9b3a6"/>
+    <path d="M1357 822 L1340 860 L1364 874 L1398 839 Z" fill="#aaa598"/>
+    <path d="M1018 728 C1036 714 1062 714 1079 727" fill="none" stroke="#e0dacd" stroke-width="8" stroke-linecap="round" opacity="0.56"/>
+    <path d="M1104 735 C1124 720 1151 721 1168 736" fill="none" stroke="#e3ddd0" stroke-width="8" stroke-linecap="round" opacity="0.55"/>
+    <path d="M1195 749 C1215 735 1242 737 1259 751" fill="none" stroke="#ddd7ca" stroke-width="8" stroke-linecap="round" opacity="0.5"/>
+  </g>
+
+  <g id="pierres-eparses">
+    <ellipse cx="742" cy="944" rx="58" ry="29" fill="#452f31"/>
+    <ellipse cx="738" cy="936" rx="43" ry="18" fill="#654846"/>
+    <ellipse cx="1051" cy="931" rx="73" ry="34" fill="#493335"/>
+    <ellipse cx="1043" cy="921" rx="51" ry="20" fill="#684a48"/>
+    <ellipse cx="1184" cy="989" rx="46" ry="24" fill="#423235"/>
+    <ellipse cx="1785" cy="953" rx="64" ry="31" fill="#53393b"/>
+  </g>
+
+  <g id="brume-premier-plan">
+    <ellipse cx="240" cy="1006" rx="430" ry="82" fill="#aeb7b6" opacity="0.17"/>
+    <ellipse cx="888" cy="968" rx="520" ry="72" fill="#bac0be" opacity="0.13"/>
+    <ellipse cx="1608" cy="1000" rx="470" ry="88" fill="#aab3b2" opacity="0.17"/>
+    <path d="M0 950 C230 918 445 964 660 941 C904 915 1118 963 1351 944 C1558 928 1740 945 1920 925 L1920 1010 C1704 1024 1505 997 1295 1017 C1068 1038 855 1001 633 1023 C405 1045 194 1018 0 1035 Z" fill="#aab3b2" opacity="0.13"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+Painterly animated illustration style, cold documentary-mystery tone, dark blue-grey and slate color palette with a fading warm orange sunset glow on the horizon. Use <Picture 1> as the exact reference for the whale, the boats, the water, and the lighting — do not change the environment, the boat positions, or the color grading established in the reference image.
+
+STATIC CAMERA, no camera movement, no pan, no zoom, no orbit.
+
+0-2s: The bowhead whale's back and blowhole are already breaking the surface, motionless, exactly as shown in the reference image. Water droplets frozen mid-fall from the whale's skin. Small ripples barely moving outward from the whale's body.
+
+2-4s: The whale's blowhole releases a visible burst of misty spray upward, a plume of vapor rising and slowly dispersing into the cold air. The whale's body remains in the same position, only the blowhole spray and the surrounding water surface are in motion.
+
+4-6s: The whale begins a slow, heavy downward roll — the massive dark back starts submerging back beneath the surface, water cascading and rolling off the skin in thick sheets. The motion is slow, weighty, physically massive — NOT fast, NOT a splash, a heavy deliberate submersion.
+
+6-8s: The whale's back continues sinking beneath the water, only the topmost curve of its body still visible, large concentric ripples spreading outward across the water surface from the point of submersion. The two distant Basque rowboats remain stationary, silhouetted, unchanged in position.
+
+STRICT NEGATIVE: no camera movement of any kind, no new characters, no additional whales, no birds, no other animals, no text overlay, no title card, no change in the boats' position or number of rowers, no change in the sky or the sunset color, no jump cuts, no morphing of the whale's shape, no cartoonish bounce, whale motion stays slow and physically heavy throughout.

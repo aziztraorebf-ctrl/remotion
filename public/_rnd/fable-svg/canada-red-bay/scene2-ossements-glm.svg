@@ -1,0 +1,99 @@
+<svg viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad-sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7e8a93"/>
+      <stop offset="60%" stop-color="#94a0a8"/>
+      <stop offset="100%" stop-color="#aeb4b8"/>
+    </linearGradient>
+    <linearGradient id="grad-sea" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5a6670"/>
+      <stop offset="100%" stop-color="#6c7882"/>
+    </linearGradient>
+    <linearGradient id="grad-rock" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6e4c49"/>
+      <stop offset="100%" stop-color="#452f31"/>
+    </linearGradient>
+    <linearGradient id="grad-rock-dark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#452f31"/>
+      <stop offset="100%" stop-color="#2d1e20"/>
+    </linearGradient>
+    <linearGradient id="grad-bone" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ddd7ca"/>
+      <stop offset="100%" stop-color="#b6b0a1"/>
+    </linearGradient>
+    <linearGradient id="grad-fog-back" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#aeb4b8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#aeb4b8" stop-opacity="0.6"/>
+    </linearGradient>
+    <linearGradient id="grad-fog-front" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#94a0a8" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#94a0a8" stop-opacity="0.85"/>
+    </linearGradient>
+  </defs>
+
+  <g id="ciel-et-brume">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#grad-sky)"/>
+    <ellipse cx="960" cy="700" rx="1200" ry="300" fill="#c4c9cb" opacity="0.5"/>
+    <ellipse cx="480" cy="600" rx="600" ry="200" fill="#c4c9cb" opacity="0.3"/>
+    <ellipse cx="1440" cy="650" rx="700" ry="220" fill="#c4c9cb" opacity="0.4"/>
+  </g>
+
+  <g id="mer">
+    <path d="M0,620 Q480,600 960,640 T1920,610 L1920,780 L0,800 Z" fill="url(#grad-sea)"/>
+    <path d="M0,720 Q480,700 960,730 T1920,710 L1920,780 L0,800 Z" fill="#5a6670" opacity="0.5"/>
+  </g>
+
+  <g id="brume-arriere">
+    <rect x="0" y="500" width="1920" height="300" fill="url(#grad-fog-back)"/>
+  </g>
+
+  <g id="cote-plage">
+    <path d="M0,1080 L0,760 Q200,710 400,770 Q600,820 800,750 Q1000,710 1200,770 Q1400,820 1600,750 Q1800,690 1920,730 L1920,1080 Z" fill="url(#grad-rock)"/>
+    <path d="M0,1080 L0,800 Q300,770 600,810 T1200,790 T1920,810 L1920,1080 Z" fill="url(#grad-rock-dark)"/>
+  </g>
+
+  <g id="rocher-1">
+    <path d="M300,920 Q380,820 460,920 Z" fill="#3a2a2c"/>
+    <path d="M310,920 Q370,850 450,920 Z" fill="#4a3835"/>
+  </g>
+
+  <g id="rocher-2">
+    <path d="M1500,950 Q1600,820 1700,950 Z" fill="#3a2a2c"/>
+    <path d="M1510,950 Q1600,850 1690,950 Z" fill="#4a3835"/>
+    <path d="M1620,900 Q1650,870 1680,900 Z" fill="#5e4642"/>
+  </g>
+
+  <g id="ossement-crane">
+    <path d="M550,840 C700,780 900,780 1050,840 C1050,870 1000,890 950,890 C850,850 750,850 650,890 C600,890 550,870 550,840 Z" fill="url(#grad-bone)"/>
+    <path d="M550,840 C700,780 900,780 1050,840 C1050,845 1000,865 950,865 C850,825 750,825 650,865 C600,865 550,845 550,840 Z" fill="#ddd7ca" opacity="0.6"/>
+    <ellipse cx="700" cy="840" rx="30" ry="15" fill="#3a2a2c" transform="rotate(-10 700 840)"/>
+    <ellipse cx="920" cy="840" rx="30" ry="15" fill="#3a2a2c" transform="rotate(10 920 840)"/>
+    <path d="M800,880 C820,900 830,860 850,880 Z" fill="#8f8b80" opacity="0.5"/>
+  </g>
+
+  <g id="ossement-cotes">
+    <path d="M1150,880 C1200,720 1350,680 1400,880 C1350,800 1250,800 1150,880 Z" fill="#c3bcae"/>
+    <path d="M1300,880 C1350,700 1500,660 1550,880 C1500,780 1400,780 1300,880 Z" fill="url(#grad-bone)"/>
+    <path d="M1450,880 C1500,720 1650,680 1700,880 C1650,800 1550,800 1450,880 Z" fill="#c3bcae"/>
+    <path d="M1180,880 C1230,730 1330,700 1370,880 C1330,810 1250,810 1180,880 Z" fill="#ddd7ca" opacity="0.8"/>
+    <path d="M1330,880 C1380,710 1480,680 1520,880 C1480,790 1400,790 1330,880 Z" fill="#ddd7ca" opacity="0.8"/>
+    <path d="M1480,880 C1530,730 1630,700 1670,880 C1630,810 1550,810 1480,880 Z" fill="#ddd7ca" opacity="0.8"/>
+  </g>
+
+  <g id="ossement-vertebres">
+    <ellipse cx="400" cy="960" rx="50" ry="25" fill="url(#grad-bone)"/>
+    <ellipse cx="400" cy="960" rx="35" ry="15" fill="#8f8b80" opacity="0.6"/>
+    <ellipse cx="455" cy="975" rx="50" ry="25" fill="#c3bcae"/>
+    <ellipse cx="455" cy="975" rx="35" ry="15" fill="#8f8b80" opacity="0.6"/>
+    <ellipse cx="510" cy="985" rx="50" ry="25" fill="url(#grad-bone)"/>
+    <ellipse cx="510" cy="985" rx="35" ry="15" fill="#8f8b80" opacity="0.6"/>
+    <ellipse cx="565" cy="990" rx="45" ry="20" fill="#c3bcae"/>
+  </g>
+
+  <g id="brume">
+    <rect x="0" y="600" width="1920" height="480" fill="url(#grad-fog-front)"/>
+    <ellipse cx="960" cy="1080" rx="1200" ry="250" fill="#94a0a8" opacity="0.6"/>
+    <ellipse cx="480" cy="1000" rx="600" ry="150" fill="#aeb4b8" opacity="0.4"/>
+    <ellipse cx="1440" cy="1050" rx="700" ry="180" fill="#aeb4b8" opacity="0.5"/>
+  </g>
+</svg>

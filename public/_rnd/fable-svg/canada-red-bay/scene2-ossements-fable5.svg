@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="gradCiel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8b96a2"/>
+      <stop offset="1" stop-color="#c9cfd2"/>
+    </linearGradient>
+    <linearGradient id="gradMer" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#7d8992"/>
+      <stop offset="1" stop-color="#4f5d67"/>
+    </linearGradient>
+    <linearGradient id="gradPlage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4e3a3b"/>
+      <stop offset="1" stop-color="#302526"/>
+    </linearGradient>
+    <linearGradient id="gradRoche" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6e4c49"/>
+      <stop offset="1" stop-color="#452f31"/>
+    </linearGradient>
+    <linearGradient id="gradOs" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ddd7ca"/>
+      <stop offset="1" stop-color="#b6b0a1"/>
+    </linearGradient>
+    <radialGradient id="gradVignette" cx="0.5" cy="0.45" r="0.75">
+      <stop offset="0" stop-color="#0b1216" stop-opacity="0"/>
+      <stop offset="0.62" stop-color="#0b1216" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0b1216" stop-opacity="0.4"/>
+    </radialGradient>
+    <filter id="flouBrume" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="flouOmbre" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <g id="vertebre-forme">
+      <path d="M -8 -22 C -10 -42, -4 -54, 2 -54 C 8 -54, 12 -42, 8 -22 Z" fill="#b6b0a1"/>
+      <path d="M -30 -8 C -48 -22, -66 -20, -70 -6 C -72 6, -58 12, -34 8 Z" fill="#b6b0a1"/>
+      <path d="M 30 -8 C 48 -22, 66 -20, 70 -6 C 72 6, 58 12, 34 8 Z" fill="#b6b0a1"/>
+      <ellipse cx="0" cy="4" rx="36" ry="28" fill="url(#gradOs)"/>
+      <ellipse cx="0" cy="4" rx="21" ry="16" fill="#b3ad9e"/>
+    </g>
+  </defs>
+
+  <g id="ciel">
+    <rect x="0" y="0" width="1920" height="520" fill="url(#gradCiel)"/>
+    <circle id="soleil-voile-halo" cx="480" cy="210" r="122" fill="#e3e7e8" opacity="0.12"/>
+    <circle id="soleil-voile" cx="480" cy="210" r="76" fill="#e3e7e8" opacity="0.28"/>
+  </g>
+
+  <g id="mer">
+    <rect x="0" y="470" width="1920" height="270" fill="url(#gradMer)"/>
+    <g id="vagues" fill="#97a3ab">
+      <rect x="120" y="506" width="440" height="3" rx="1.5" opacity="0.3"/>
+      <rect x="760" y="528" width="520" height="3" rx="1.5" opacity="0.25"/>
+      <rect x="1420" y="512" width="380" height="3" rx="1.5" opacity="0.3"/>
+      <rect x="300" y="560" width="360" height="3" rx="1.5" opacity="0.2"/>
+      <rect x="1000" y="584" width="560" height="3" rx="1.5" opacity="0.18"/>
+      <rect x="200" y="624" width="480" height="4" rx="2" opacity="0.15"/>
+    </g>
+  </g>
+
+  <g id="falaise-lointaine">
+    <path d="M 1250 470 L 1330 430 L 1420 442 L 1500 415 L 1620 438 L 1720 424 L 1920 452 L 1920 470 Z" fill="#7f8b96" opacity="0.6"/>
+    <path d="M 60 470 L 130 448 L 210 458 L 260 470 Z" fill="#8a95a0" opacity="0.45"/>
+  </g>
+
+  <g id="brume-fond" fill="#dfe4e6" filter="url(#flouBrume)">
+    <ellipse cx="500" cy="500" rx="560" ry="70" opacity="0.5"/>
+    <ellipse cx="1250" cy="470" rx="620" ry="64" opacity="0.45"/>
+    <ellipse cx="1750" cy="520" rx="420" ry="58" opacity="0.4"/>
+  </g>
+
+  <g id="cote-plage">
+    <path d="M 0 700 C 200 676, 420 690, 640 672 C 900 652, 1120 668, 1380 656 C 1600 648, 1780 664, 1920 652 L 1920 1080 L 0 1080 Z" fill="url(#gradPlage)"/>
+    <path id="ligne-ecume" d="M 0 700 C 200 676, 420 690, 640 672 C 900 652, 1120 668, 1380 656 C 1600 648, 1780 664, 1920 652" fill="none" stroke="#aeb9bf" stroke-width="5" opacity="0.3"/>
+  </g>
+
+  <g id="rocher-1">
+    <path d="M 100 764 C 190 700, 350 682, 500 698 C 660 714, 780 756, 820 816 C 844 858, 800 900, 700 916 C 520 940, 260 924, 150 872 C 100 848, 82 800, 100 764 Z" fill="url(#gradRoche)"/>
+    <path d="M 190 724 L 360 700 L 520 712 L 470 742 L 260 752 Z" fill="#7d5654" opacity="0.45"/>
+    <path d="M 150 872 C 260 924, 520 940, 700 916 C 600 938, 340 936, 200 898 Z" fill="#3a292b" opacity="0.55"/>
+    <g id="lichens-1" fill="#667169" opacity="0.5">
+      <circle cx="430" cy="760" r="7"/>
+      <circle cx="470" cy="778" r="4"/>
+      <circle cx="252" cy="792" r="6"/>
+    </g>
+  </g>
+
+  <g id="rocher-2">
+    <path d="M 980 720 C 1100 680, 1300 672, 1460 692 C 1620 712, 1700 756, 1680 804 C 1660 852, 1500 872, 1320 868 C 1140 864, 1000 836, 964 792 C 944 762, 950 736, 980 720 Z" fill="url(#gradRoche)"/>
+    <path d="M 1060 712 L 1260 692 L 1440 704 L 1360 734 L 1120 740 Z" fill="#7d5654" opacity="0.45"/>
+    <path d="M 1000 828 C 1140 862, 1400 870, 1560 852 C 1440 874, 1160 872, 1020 842 Z" fill="#3a292b" opacity="0.55"/>
+    <g id="lichens-2" fill="#667169" opacity="0.5">
+      <circle cx="1240" cy="782" r="6"/>
+      <circle cx="1302" cy="802" r="4"/>
+      <circle cx="1560" cy="790" r="5"/>
+    </g>
+  </g>
+
+  <g id="brume-milieu" fill="#dfe4e6" filter="url(#flouBrume)">
+    <ellipse cx="1300" cy="644" rx="700" ry="58" opacity="0.32"/>
+    <ellipse cx="360" cy="676" rx="480" ry="50" opacity="0.26"/>
+  </g>
+
+  <g id="ossement-cotes">
+    <g id="ombres-cotes" fill="#2e2325" filter="url(#flouOmbre)">
+      <ellipse cx="1086" cy="722" rx="44" ry="10" opacity="0.45"/>
+      <ellipse cx="1170" cy="728" rx="48" ry="10" opacity="0.45"/>
+      <ellipse cx="1266" cy="732" rx="52" ry="11" opacity="0.45"/>
+      <ellipse cx="1358" cy="730" rx="46" ry="10" opacity="0.45"/>
+      <ellipse cx="1450" cy="724" rx="46" ry="10" opacity="0.45"/>
+      <ellipse cx="1530" cy="716" rx="40" ry="9" opacity="0.45"/>
+    </g>
+    <path id="cote-1" d="M 1076 716 C 1040 640, 1016 552, 1020 492 C 1023 462, 1042 452, 1054 466 C 1046 548, 1064 636, 1096 710 C 1090 718, 1082 720, 1076 716 Z" fill="url(#gradOs)"/>
+    <path id="cote-2" d="M 1152 722 C 1112 630, 1090 512, 1102 428 C 1108 392, 1130 380, 1144 396 C 1130 500, 1150 620, 1186 716 C 1174 726, 1160 728, 1152 722 Z" fill="url(#gradOs)"/>
+    <path id="cote-2-ombre" d="M 1144 396 C 1130 500, 1150 620, 1186 716 C 1178 722, 1170 724, 1164 722 C 1132 616, 1116 502, 1130 400 Z" fill="#9b9585" opacity="0.5"/>
+    <path id="cote-3" d="M 1244 728 C 1202 620, 1180 476, 1196 380 C 1203 340, 1228 326, 1242 344 C 1226 462, 1248 606, 1290 720 C 1276 730, 1256 732, 1244 728 Z" fill="url(#gradOs)"/>
+    <path id="cote-3-ombre" d="M 1242 344 C 1226 462, 1248 606, 1290 720 C 1280 726, 1272 728, 1266 726 C 1228 608, 1210 470, 1226 352 Z" fill="#9b9585" opacity="0.5"/>
+    <path id="cote-4-brisee" d="M 1338 726 C 1308 662, 1290 590, 1292 532 L 1316 512 L 1326 534 L 1342 518 C 1338 588, 1356 664, 1380 720 C 1366 728, 1348 730, 1338 726 Z" fill="url(#gradOs)"/>
+    <path id="cote-5" d="M 1430 720 C 1398 630, 1382 516, 1398 428 C 1405 392, 1428 382, 1440 398 C 1424 502, 1440 618, 1472 712 C 1458 722, 1440 724, 1430 720 Z" fill="url(#gradOs)"/>
+    <path id="cote-5-ombre" d="M 1440 398 C 1424 502, 1440 618, 1472 712 C 1464 718, 1456 720, 1450 718 C 1420 620, 1408 508, 1424 404 Z" fill="#9b9585" opacity="0.5"/>
+    <path id="cote-6" d="M 1514 712 C 1488 646, 1476 566, 1486 506 C 1490 476, 1510 468, 1520 482 C 1510 556, 1524 638, 1550 704 C 1540 712, 1524 716, 1514 712 Z" fill="url(#gradOs)"/>
+  </g>
+
+  <g id="ossement-crane">
+    <ellipse id="ombre-crane" cx="580" cy="898" rx="290" ry="26" fill="#2e2325" opacity="0.45" filter="url(#flouOmbre)"/>
+    <path id="crane-silhouette" d="M 292 846 C 380 812, 520 762, 640 728 C 700 712, 770 706, 818 728 C 866 750, 880 800, 852 842 C 826 880, 748 900, 660 900 C 540 900, 400 880, 310 862 C 292 858, 284 850, 292 846 Z" fill="url(#gradOs)"/>
+    <path id="crane-ombre-inferieure" d="M 308 858 C 420 878, 560 892, 680 890 C 770 888, 832 862, 850 838 C 842 872, 772 896, 662 898 C 532 898, 402 878, 306 860 Z" fill="#a49e8f" opacity="0.65"/>
+    <ellipse id="orbite" cx="780" cy="792" rx="26" ry="18" fill="#4d453b" transform="rotate(-15 780 792)"/>
+    <g id="fissures" fill="none" stroke="#938d7e" stroke-width="3" stroke-linecap="round">
+      <path d="M 640 742 C 636 770, 642 800, 634 828"/>
+      <path d="M 720 728 C 726 758, 718 788, 724 814"/>
+      <path d="M 470 800 C 478 818, 472 836, 480 852"/>
+    </g>
+    <path id="machoire" d="M 380 928 C 470 900, 600 892, 720 906 C 740 910, 742 922, 722 926 C 610 914, 480 922, 396 946 C 380 950, 370 936, 380 928 Z" fill="url(#gradOs)"/>
+  </g>
+
+  <g id="ossement-vertebres">
+    <g fill="#2e2325" opacity="0.45" filter="url(#flouOmbre)">
+      <ellipse cx="872" cy="906" rx="66" ry="12"/>
+      <ellipse cx="972" cy="942" rx="56" ry="10"/>
+      <ellipse cx="1058" cy="968" rx="46" ry="9"/>
+    </g>
+    <use id="vertebre-1" href="#vertebre-forme" transform="translate(872 872) rotate(-8)"/>
+    <use id="vertebre-2" href="#vertebre-forme" transform="translate(972 912) rotate(6) scale(0.85)"/>
+    <use id="vertebre-3" href="#vertebre-forme" transform="translate(1058 944) rotate(-4) scale(0.7)"/>
+  </g>
+
+  <g id="rocher-avant">
+    <path d="M 1500 940 C 1620 900, 1800 908, 1920 944 L 1920 1080 L 1440 1080 C 1420 1020, 1440 964, 1500 940 Z" fill="#382a2c"/>
+    <path d="M 0 1000 C 120 968, 300 972, 420 1010 C 470 1026, 460 1080, 460 1080 L 0 1080 Z" fill="#382a2c"/>
+  </g>
+
+  <g id="brume-avant" fill="#dfe4e6" filter="url(#flouBrume)">
+    <ellipse cx="420" cy="980" rx="640" ry="70" opacity="0.22"/>
+    <ellipse cx="1500" cy="1010" rx="700" ry="80" opacity="0.25"/>
+  </g>
+
+  <g id="vignette">
+    <rect x="0" y="0" width="1920" height="1080" fill="url(#gradVignette)"/>
+  </g>
+</svg>

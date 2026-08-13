@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253448
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 8.0
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "c2c6a24d9194c0ba85328927277eb9c480d882a091bd91ea3aeed4921e6fe769.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "Painterly animated illustration style, cold documentary-mystery tone, dark blue-grey and slate color palette with a fading warm orange sunset glow on the horizon. Use <Picture 1> as the exact reference for the whale, the boats, the water, and the lighting \u2014 do not change the environment, the boat positions, or the color grading established in the reference image.\n\nSTATIC CAMERA, no camera movement, no pan, no zoom, no orbit.\n\n0-2s: The bowhead whale's back and blowhole are already breaking the surface, motionless, exactly as shown in the reference image. Water droplets frozen mid-fall from the whale's skin. Small ripples barely moving outward from the whale's body.\n\n2-4s: The whale's blowhole releases a visible burst of misty spray upward, a plume of vapor rising and slowly dispersing into the cold air. The whale's body remains in the same position, only the blowhole spray and the surrounding water surface are in motion.\n\n4-6s: The whale begins a slow, heavy downward roll \u2014 the massive dark back starts submerging back beneath the surface, water cascading and rolling off the skin in thick sheets. The motion is slow, weighty, physically massive \u2014 NOT fast, NOT a splash, a heavy deliberate submersion.\n\n6-8s: The whale's back continues sinking beneath the water, only the topmost curve of its body still visible, large concentric ripples spreading outward across the water surface from the point of submersion. The two distant Basque rowboats remain stationary, silhouetted, unchanged in position.\n\nSTRICT NEGATIVE: no camera movement of any kind, no new characters, no additional whales, no birds, no other animals, no text overlay, no title card, no change in the boats' position or number of rowers, no change in the sky or the sunset color, no jump cuts, no morphing of the whale's shape, no cartoonish bounce, whale motion stays slow and physically heavy throughout."
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "c2c6a24d9194c0ba85328927277eb9c480d882a091bd91ea3aeed4921e6fe769.jpg"
+    }
+  }
+}

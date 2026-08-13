@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="1920" height="1080">
+  <defs>
+    <linearGradient id="sky-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#5a6875" />
+      <stop offset="40%" stop-color="#798995" />
+      <stop offset="80%" stop-color="#9daab5" />
+      <stop offset="100%" stop-color="#c6cfd5" />
+    </linearGradient>
+
+    <linearGradient id="sea-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3c4a56" />
+      <stop offset="30%" stop-color="#495a68" />
+      <stop offset="100%" stop-color="#2d3944" />
+    </linearGradient>
+
+    <linearGradient id="fog-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d8e1e7" stop-opacity="0" />
+      <stop offset="50%" stop-color="#d8e1e7" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#d8e1e7" stop-opacity="0.9" />
+    </linearGradient>
+
+    <linearGradient id="fog-grad-front" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c2cdd5" stop-opacity="0" />
+      <stop offset="100%" stop-color="#c2cdd5" stop-opacity="1" />
+    </linearGradient>
+
+    <filter id="blur-heavy">
+      <feGaussianBlur stdDeviation="40" />
+    </filter>
+    <filter id="blur-medium">
+      <feGaussianBlur stdDeviation="20" />
+    </filter>
+    <filter id="blur-light">
+      <feGaussianBlur stdDeviation="8" />
+    </filter>
+
+    <radialGradient id="sun-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#e0e6eb" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#e0e6eb" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <g id="arriere-plan-ciel">
+    <rect width="1920" height="1080" fill="url(#sky-grad)" />
+    <ellipse cx="600" cy="300" rx="400" ry="250" fill="url(#sun-glow)" filter="url(#blur-heavy)" />
+    <path d="M-100,200 Q400,100 900,250 T2000,150 L2000,-100 L-100,-100 Z" fill="#4d5c69" opacity="0.3" filter="url(#blur-heavy)" />
+  </g>
+
+  <g id="brume-lointaine">
+    <path d="M0,450 Q480,350 960,420 T1920,400 L1920,550 L0,550 Z" fill="url(#fog-grad)" filter="url(#blur-heavy)" opacity="0.8" />
+  </g>
+
+  <g id="cote-plage">
+    <path d="M0,480 Q200,475 400,482 T900,480 T1400,485 T1920,480 L1920,490 L0,490 Z" fill="#32404b" />
+    <path d="M0,470 L200,455 L350,470 L550,460 L700,475 L850,465 L1050,475 L1250,460 L1450,475 L1650,465 L1920,475 L1920,490 L0,490 Z" fill="#43525e" opacity="0.7" />
+  </g>
+
+  <g id="mer">
+    <rect x="0" y="485" width="1920" height="595" fill="url(#sea-grad)" />
+    <path d="M0,500 Q480,495 960,505 T1920,500 L1920,505 Q960,510 0,505 Z" fill="#5c7081" opacity="0.5" />
+    <path d="M200,530 Q600,520 1000,535 T1920,525 L1920,530 Q1000,540 200,535 Z" fill="#5c7081" opacity="0.4" />
+    <path d="M-50,560 Q400,550 850,570 T1800,560 L1800,563 Q850,573 -50,563 Z" fill="#5c7081" opacity="0.3" />
+    <path d="M0,520 Q480,515 960,525 T1920,520 L1920,1080 L0,1080 Z" fill="url(#sea-grad)" opacity="0.4" />
+  </g>
+
+  <g id="rocher-arriere">
+    <!-- Rock Left Background -->
+    <polygon points="-50,750 150,650 250,670 400,720 550,850 -50,850" fill="#362526" />
+    <polygon points="-50,750 150,650 120,700 -50,790" fill="#4a3335" />
+    <polygon points="150,650 250,670 200,730 120,700" fill="#5a3d3c" />
+    
+    <!-- Rock Far Right Background -->
+    <polygon points="1400,800 1600,680 1750,710 1950,780 1950,900 1400,900" fill="#2d1e1f" />
+    <polygon points="1600,680 1750,710 1680,780 1550,750" fill="#4a3335" />
+    <polygon points="1750,710 1950,780 1900,820 1680,780" fill="#3c292a" />
+  </g>
+
+  <g id="brume-milieu-1">
+    <ellipse cx="400" cy="700" rx="500" ry="150" fill="#c6cfd5" opacity="0.4" filter="url(#blur-medium)" />
+    <ellipse cx="1600" cy="750" rx="600" ry="180" fill="#c6cfd5" opacity="0.3" filter="url(#blur-medium)" />
+  </g>
+
+  <g id="ossement-cotes">
+    <!-- Rib 1 (Farthest left) -->
+    <path d="M220,850 C180,600 350,380 480,310 C460,380 340,580 320,850 Z" fill="#9b9385" />
+    <path d="M220,850 C180,600 350,380 480,310 C420,380 270,590 280,850 Z" fill="#b9b2a4" />
+    <path d="M320,850 C340,580 460,380 480,310 C490,325 400,560 360,850 Z" fill="#756f64" />
+
+    <!-- Rib 2 -->
+    <path d="M380,890 C310,550 500,280 650,220 C620,310 460,560 490,890 Z" fill="#a49d8e" />
+    <path d="M380,890 C310,550 500,280 650,220 C570,300 410,560 440,890 Z" fill="#c3bcad" />
+    <path d="M490,890 C460,560 620,310 650,220 C665,240 520,540 530,890 Z" fill="#847e71" />
+
+    <!-- Rib 3 -->
+    <path d="M580,940 C490,600 680,320 860,260 C810,360 660,620 700,940 Z" fill="#afa899" />
+    <path d="M580,940 C490,600 680,320 860,260 C750,360 600,620 650,940 Z" fill="#cec7b8" />
+    <path d="M700,940 C660,620 810,360 860,260 C875,280 730,590 740,940 Z" fill="#918a7c" />
+
+    <!-- Rib 4 (Broken, front) -->
+    <path d="M120,930 C80,780 150,650 250,580 C230,640 180,770 210,930 Z" fill="#a49d8e" />
+    <path d="M120,930 C80,780 150,650 250,580 C190,650 140,780 170,930 Z" fill="#c3bcad" />
+    <path d="M250,580 C240,570 260,575 265,595 C240,640 190,770 210,930 L225,930 C200,760 260,630 265,595 Z" fill="#756f64" />
+    <!-- Broken tip detail -->
+    <polygon points="250,580 230,570 245,555 265,565" fill="#e3ded2" />
+    <polygon points="230,570 245,555 235,585" fill="#b9b2a4" />
+
+    <!-- Rib 5 (Lower angle) -->
+    <path d="M780,980 C700,750 850,550 1000,480 C950,550 850,750 890,980 Z" fill="#9b9385" />
+    <path d="M780,980 C700,750 850,550 1000,480 C910,560 800,760 840,980 Z" fill="#b9b2a4" />
+    <path d="M890,980 C850,750 950,550 1000,480 C1015,495 900,730 925,980 Z" fill="#756f64" />
+  </g>
+
+  <g id="rocher-gauche">
+    <!-- Midground Rocks covering base of ribs -->
+    <polygon points="150,960 300,880 450,920 600,890 750,950 800,1050 150,1050" fill="#362526" />
+    <polygon points="150,960 300,880 350,940 250,1000" fill="#5a3d3c" />
+    <polygon points="300,880 450,920 400,980 350,940" fill="#6e4c49" />
+    <polygon points="450,920 600,890 550,970 400,980" fill="#4a3335" />
+    <polygon points="600,890 750,950 680,1000 550,970" fill="#5a3d3c" />
+    
+    <polygon points="-50,1000 100,920 200,940 250,1050 -50,1050" fill="#2d1e1f" />
+    <polygon points="-50,1000 100,920 120,970 -50,1020" fill="#4a3335" />
+    <polygon points="100,920 200,940 160,1010 120,970" fill="#3c292a" />
+  </g>
+
+  <g id="ossement-vertebres">
+    <!-- Vertebra 1 (Half buried) -->
+    <ellipse cx="900" cy="950" rx="60" ry="35" fill="#c3bcad" />
+    <path d="M840,950 C840,980 860,1000 900,1000 C940,1000 960,980 960,950 L960,920 C960,950 940,970 900,970 C860,970 840,950 840,920 Z" fill="#9b9385" />
+    <ellipse cx="900" cy="920" rx="60" ry="35" fill="#e3ded2" />
+    <ellipse cx="900" cy="920" rx="45" ry="25" fill="#c3bcad" />
+    <ellipse cx="900" cy="920" rx="30" ry="15" fill="#a49d8e" />
+    <!-- Spinous process -->
+    <path d="M880,920 L920,920 L940,840 L870,850 Z" fill="#b9b2a4" />
+    <path d="M920,920 L940,840 L950,860 L935,920 Z" fill="#847e71" />
+    <!-- Transverse processes -->
+    <path d="M840,935 L760,910 L770,940 L840,955 Z" fill="#a49d8e" />
+    <path d="M960,935 L1020,920 L1010,950 L960,955 Z" fill="#847e71" />
+
+    <!-- Vertebra 2 (Tilted) -->
+    <g transform="translate(1080, 930) rotate(-25)">
+      <ellipse cx="0" cy="25" rx="55" ry="30" fill="#9b9385" />
+      <path d="M-55,25 C-55,50 -30,65 0,65 C30,65 55,50 55,25 L55,0 C55,25 30,40 0,40 C-30,40 -55,25 -55,0 Z" fill="#756f64" />
+      <ellipse cx="0" cy="0" rx="55" ry="30" fill="#cec7b8" />
+      <ellipse cx="0" cy="0" rx="40" ry="20" fill="#afa899" />
+      <path d="M-20,0 L20,0 L35,-70 L-25,-60 Z" fill="#a49d8e" />
+      <path d="M20,0 L35,-70 L45,-55 L30,5 Z" fill="#656056" />
+      <path d="M-55,10 L-120,-5 L-110,20 L-55,25 Z" fill="#847e71" />
+    </g>
+
+    <!-- Vertebra 3 (Farthest, small) -->
+    <g transform="translate(1000, 870) rotate(15)">
+      <ellipse cx="0" cy="15" rx="40" ry="20" fill="#847e71" />
+      <path d="M-40,15 C-40,30 -20,40 0,40 C20,40 40,30 40,15 L40,0 C40,15 20,25 0,25 C-20,25 -40,15 -40,0 Z" fill="#656056" />
+      <ellipse cx="0" cy="0" rx="40" ry="20" fill="#a49d8e" />
+      <ellipse cx="0" cy="0" rx="25" ry="12" fill="#847e71" />
+      <path d="M-15,0 L15,0 L20,-50 L-15,-45 Z" fill="#9b9385" />
+    </g>
+  </g>
+
+  <g id="brume-milieu-2">
+    <path d="M200,900 Q600,800 1000,950 T1920,880 L1920,1080 L200,1080 Z" fill="url(#fog-grad)" opacity="0.6" filter="url(#blur-medium)" />
+  </g>
+
+  <g id="ossement-crane">
+    <!-- Main Braincase (Cranium) Base & Shadow -->
+    <path d="M1450,880 C1380,850 1420,720 1520,660 C1650,580 1850,620 1920,680 L1920,950 L1550,950 Z" fill="#847e71" />
+    <!-- Braincase Mid Tone -->
+    <path d="M1470,860 C1410,830 1450,700 1550,640 C1680,560 1850,600 1920,660 L1920,920 L1570,900 Z" fill="#a49d8e" />
+    <!-- Braincase Highlight -->
+    <path d="M1500,840 C1450,800 1480,680 1580,620 C1700,540 1840,580 1920,630 L1920,800 C1800,750 1650,800 1500,840 Z" fill="#c3bcad" />
+    <path d="M1550,780 C1510,750 1530,660 1620,600 C1720,530 1820,560 1900,600 L1900,680 C1780,630 1650,700 1550,780 Z" fill="#e3ded2" />
+
+    <!-- Orbital / Condyle area (Deep Shadows & Grooves) -->
+    <path d="M1520,760 C1550,730 1600,740 1620,770 C1650,820 1580,850 1520,760 Z" fill="#58534a" />
+    <path d="M1530,765 C1555,745 1590,755 1605,775 C1625,810 1575,830 1530,765 Z" fill="#3a3731" />
+    
+    <path d="M1650,680 C1700,650 1780,670 1800,720 C1820,770 1700,800 1650,680 Z" fill="#756f64" />
+    <path d="M1670,690 C1710,670 1760,685 1775,720 C1790,755 1700,775 1670,690 Z" fill="#58534a" />
+
+    <!-- Upper Jaw (Rostrum / Maxilla) -->
+    <!-- Base Shadow -->
+    <path d="M1520,730 C1300,740 1000,820 820,910 C980,880 1250,850 1540,840 Z" fill="#756f64" />
+    <!-- Mid Tone -->
+    <path d="M1520,710 C1300,720 1000,800 820,890 C1000,840 1300,800 1540,810 Z" fill="#a49d8e" />
+    <!-- Highlight -->
+    <path d="M1520,690 C1300,700 1000,780 820,870 C1020,810 1320,760 1540,780 Z" fill="#c3bcad" />
+    <path d="M1520,675 C1320,685 1050,760 850,840 C1050,785 1330,735 1540,755 Z" fill="#e3ded2" />
+    
+    <!-- Maxilla ridges and weathering -->
+    <path d="M900,850 C1100,790 1350,750 1480,750 L1490,765 C1350,765 1100,805 920,865 Z" fill="#9b9385" opacity="0.6" />
+    <path d="M1150,790 C1250,770 1380,755 1450,760 L1460,770 C1380,765 1250,785 1160,805 Z" fill="#656056" opacity="0.4" />
+
+    <!-- Lower Jaw (Mandible) -->
+    <!-- Massive bowed bone resting on rocks -->
+    <!-- Shadow -->
+    <path d="M1600,880 C1350,980 1000,1030 700,970 C950,1020 1300,960 1550,860 Z" fill="#656056" />
+    <!-- Mid Tone -->
+    <path d="M1600,860 C1350,960 1000,1010 700,950 C950,1000 1300,940 1550,840 Z" fill="#9b9385" />
+    <!-- Highlight -->
+    <path d="M1595,840 C1350,940 1000,990 700,930 C950,980 1300,920 1545,820 Z" fill="#b9b2a4" />
+    <path d="M1580,825 C1350,925 1020,970 730,915 C960,960 1280,905 1530,805 Z" fill="#d5cfc1" />
+    
+    <!-- Mandible weathering lines -->
+    <path d="M800,940 C1000,980 1250,940 1450,870 L1440,885 C1250,955 1000,995 820,955 Z" fill="#756f64" opacity="0.5" />
+
+    <!-- Small fragment / shattered bone near the beak -->
+    <polygon points="760,930 790,920 810,940 770,950" fill="#a49d8e" />
+    <polygon points="760,930 790,920 780,910" fill="#c3bcad" />
+    <polygon points="790,920 810,940 805,925" fill="#756f64" />
+  </g>
+
+  <g id="rocher-droite">
+    <!-- Rocks holding the skull and framing right side -->
+    <polygon points="1200,1050 1400,950 1550,980 1700,920 1920,960 1920,1080 1200,1080" fill="#2d1e1f" />
+    <polygon points="1200,1050 1400,950 1450,1020 1300,1080" fill="#4a3335" />
+    <polygon points="1400,950 1550,980 1500,1050 1450,1020" fill="#5a3d3c" />
+    <polygon points="1550,980 1700,920 1650,1000 1500,1050" fill="#6e4c49" />
+    <polygon points="1700,920 1920,960 1850,1040 1650,1000" fill="#4a3335" />
+    
+    <polygon points="1500,1080 1650,990 1800,1020 1920,980 1920,1080" fill="#1e1314" />
+    <polygon points="1500,1080 1650,990 1700,1060" fill="#3c292a" />
+    <polygon points="1650,990 1800,1020 1750,1080 1700,1060" fill="#4a3335" />
+  </g>
+
+  <g id="rocher-premier-plan">
+    <!-- Extreme Foreground Rocks Bottom Left -->
+    <polygon points="-50,1080 50,1000 150,1030 250,980 400,1050 400,1080" fill="#1e1314" />
+    <polygon points="-50,1080 50,1000 80,1060" fill="#3c292a" />
+    <polygon points="50,1000 150,1030 120,1080 80,1060" fill="#2d1e1f" />
+    <polygon points="150,1030 250,980 200,1080 120,1080" fill="#4a3335" />
+    <polygon points="250,980 400,1050 350,1080 200,1080" fill="#3c292a" />
+
+    <!-- Extreme Foreground Rocks Bottom Center -->
+    <polygon points="700,1080 850,1020 1000,1050 1150,1000 1300,1080" fill="#1a1112" />
+    <polygon points="700,1080 850,1020 900,1080" fill="#362526" />
+    <polygon points="850,1020 1000,1050 950,1080 900,1080" fill="#4a3335" />
+    <polygon points="1000,1050 1150,1000 1100,1080 950,1080" fill="#2d1e1f" />
+  </g>
+
+  <g id="brume-premier-plan">
+    <!-- Foreground atmospheric mist hugging the bottom -->
+    <path d="M-100,1080 L-100,950 Q300,850 700,1000 T1500,900 Q1800,950 2020,920 L2020,1080 Z" fill="url(#fog-grad-front)" opacity="0.7" filter="url(#blur-heavy)" />
+    <path d="M-100,1080 L-100,1000 Q400,950 900,1050 T2020,980 L2020,1080 Z" fill="url(#fog-grad-front)" opacity="0.9" filter="url(#blur-medium)" />
+    
+    <!-- Wisps of fog wrapping around the bones -->
+    <ellipse cx="300" cy="980" rx="250" ry="80" fill="#d8e1e7" opacity="0.4" filter="url(#blur-medium)" />
+    <ellipse cx="1400" cy="1000" rx="350" ry="100" fill="#d8e1e7" opacity="0.3" filter="url(#blur-heavy)" />
+    <path d="M600,1020 Q800,980 1100,1040 Q1300,990 1600,1050 L1600,1080 L600,1080 Z" fill="#d8e1e7" opacity="0.5" filter="url(#blur-medium)" />
+  </g>
+</svg>

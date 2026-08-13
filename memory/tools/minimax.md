@@ -210,6 +210,12 @@ Piste à creuser : isoler quel(s) personnage(s) précis doit réagir plutôt que
 en bloc — Aziz a noté que la réaction collective simultanée reste "un peu exagérée" même sur le
 prompt B, hypothèse que H3 a un biais à intensifier une réaction de groupe non individualisée.
 
+**Confirmation supplémentaire (2026-08-13, projet canada-red-bay)** : même pattern (séquençage strict
+par tranches de 2s + clause STRICT NEGATIVE finale listant tout ce qui ne doit pas apparaître/changer
++ décor verrouillé explicitement) appliqué à un sujet totalement différent (baleine boréale qui
+plonge, pas de personnage humain) — succès net, zéro hallucination, séquençage respecté à la lettre.
+2e preuve indépendante que le principe se généralise au-delà des scènes à personnages.
+
 ### ⛔⛔ TOUJOURS logger le `prompt_id` de chaque `run_template` (règle née d'un incident non résolu, 2026-08-08)
 
 Sur le dernier test de la session du 08/08 (orbite caméra, tentative finale), le job est revenu

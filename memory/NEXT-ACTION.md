@@ -46,6 +46,30 @@ PAS encore de script/positionnement écrit dessus. Relancer SUJET-PRIME 6 étape
 priorité. Détail complet du parcours : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § session
 2026-08-12.
 
+**⭐ 2e piste avancée en parallèle (2026-08-12/13) — FMI/dette** : angle + squelette narratif complet posés
+(4 candidats générés, retenu = "comment une dette remboursée peut ne jamais diminuer ?"), méthode décodée
+sur la chaîne AJ+ français → nouvelle doctrine `doctrines/STRUCTURE-OBJET-MECANISME.md`. **Décision en
+suspens** : script direct OU fact-check du chiffre-choc d'ouverture d'abord. Rien n'est fact-checké ni
+scripté. Détail complet : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § session 2026-08-12/13.
+
+**Diagnostic flop Short CFA — CLOS (2026-08-13)** : cause = miniature YouTube auto-sélectionnée illisible
+(pas le titre/sujet, score vidIQ 95/100 confirmé). Vignette custom uploadée par Aziz. Détail :
+`projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § Diagnostic CLOS.
+
+---
+
+## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-13)
+
+TubeLab a validé un marché EN solide : "Canada mégaprojet/mystère/histoire", faceless, long-form,
+RPM élevé (jusqu'à 20$+) — ex. Geography Effect, Hidden Canada, Canadiana (chaîne bilingue, preuve
+directe EN>>FR jusqu'à 300x d'écart sur certaines paires). Script V3 FR écrit et validé par jury 4 LLM
+(sujet "baleine volée de Red Bay", Labrador 1575) — test actuellement en FR/voix GéoAfrique pour
+valider le PIPELINE de prod avant le marché (déjà validé côté EN séparément). **2 tests visuels
+réussis** : SVG Fable5 MAX gagnant sur 5 modèles comparés (vs Gemini/GPT-5.6 Sol/Kimi K3/GLM-5.2),
+clip MiniMax H3 (baleine qui plonge) validé. **Décision à prendre en prochaine session** : construire
+une scène Mapbox réelle (seule brique du stack pas encore testée) ou assembler la première scène
+complète en Remotion. Détail complet : `episodes/_rnd/canada-red-bay/STATUS.md`.
+
 ---
 
 ## 🔧 BACKLOG TECHNIQUE — MiniMax H3 (Comfy Cloud), pistes en attente

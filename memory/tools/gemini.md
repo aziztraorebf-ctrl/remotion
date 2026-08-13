@@ -23,6 +23,12 @@ Toute version Gemini antérieure à 3.1 pour image/vision ; les variantes `pro-i
 
 **Cette regle a ete violee 4+ fois. Elle est definitive.**
 
+⛔ **Comfy Cloud MCP `partner_generate` NE PROPOSE PAS `gemini-3.1-flash-image-preview`** (confirme
+2026-08-13) — ce serveur n'expose que des slugs `vertexai/nano-banana-2/pro/lite` (nommage produit
+different, meme famille Gemini probable mais non confirme comme identique). Pour respecter le modele
+verrouille ci-dessus, passer par l'API Gemini officielle directe (`google.genai`, voir SDK plus bas),
+JAMAIS par Comfy Cloud `partner_generate` quand le modele exact compte.
+
 ---
 
 ## SDK Python — MIGRATION OBLIGATOIRE (2026-05-14)
