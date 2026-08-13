@@ -1,0 +1,27 @@
+subject_definitions:
+<Picture 1>: A hand-drawn pen-and-ink editorial illustration on aged sepia paper, showing three framed panels — a raw whale baleen plate (left), a corset busk made of baleen (middle), and a ruff collar with a closed umbrella made of baleen (right). Sketchy visible linework, loose crosshatching for shading, muted ink wash colors.
+<Subject 1>: The closed umbrella depicted in the right panel of <Picture 1> — its ribs, fabric, and handle.
+
+summary:
+[reference generation] Animate the umbrella (<Subject 1>) from <Picture 1> opening fully, while strictly preserving the hand-drawn ink illustration style, the paper background, and the two other static panels exactly as shown in <Picture 1>.
+
+retention_analysis:
+<Picture 1>: fully_preserved — the drawing style, linework, crosshatching, paper color, panel borders, and the two other panels (baleen plate, corset) must remain pixel-identical to the reference throughout.
+<Subject 1>: fully_preserved — the umbrella's shape, ribs, and material must remain the same object, only its pose changes from closed to open.
+
+detailed_description:
+A static, unmoving camera holds on the three-panel hand-drawn illustration exactly as shown in <Picture 1>.
+
+[Shot 1]
+0-2s: The scene is held completely still, exactly matching <Picture 1> — the raw baleen plate on the left, the corset busk in the middle, and the closed umbrella with the ruff collar on the right, all in the sketchy ink-and-crosshatch style on sepia paper.
+2-4s: <Subject 1> begins to open. Its ribs unfold outward one by one in a smooth, mechanical, hand-drawn animation motion, the fabric panels between the ribs stretching taut as the umbrella opens. The baleen plate and corset panels remain completely static, unchanged pixel for pixel.
+4-6s: <Subject 1> continues opening until fully extended, all ribs fully spread. A few thin hand-drawn motion lines appear briefly around the ribs, drawn in the exact same sketchy ink style as the rest of the illustration, to suggest the unfolding motion.
+6-8s: The fully open umbrella holds still. A subtle hand-drawn paper texture flicker plays across the whole page, like a gently animated flip-book page, but the panel borders, the baleen plate, and the corset stay in their exact original positions from <Picture 1>.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), no new objects, no human hands or figures appearing, no text overlay, no title card, no change in the panel borders or their positions, no change in the sepia paper background color, no jump cuts, no morphing of the baleen plate or the corset, no color shift away from the ink/sepia palette, no shift to a different art style — never flat vector, never 3D render, never photorealistic, the drawing style must stay hand-drawn ink throughout every frame.
+
+overall_soundscape:
+Faint, subtle sound of paper rustling and a soft mechanical creak as the umbrella ribs unfold, very quiet, no music.
+
+non_diegetic_music:
+N/A

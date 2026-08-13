@@ -1,0 +1,35 @@
+subject_definitions:
+<Picture 1>: A flat vector poster illustration split into three vertical panels separated by thin white borders. Left panel (yellow-orange background): Zeus, muscular flat-vector god with white beard, holding a lightning bolt. Middle panel (dark navy background): empty. Right panel (teal-blue background): empty.
+<Picture 2>: The same three-panel split-screen layout, same Zeus identity unchanged in the left panel — but now the middle panel shows Hades, a hooded dark-robed god flanked by two glowing-eyed black hellhound wolves, and the right panel shows Poseidon, a green-robed god holding a golden trident.
+<Subject 1>: Zeus as shown in the left panel of both <Picture 1> and <Picture 2> — same identity, same robe, same face, same lightning bolt throughout, but ALIVE with subtle idle motion from the very first frame, not a frozen static image.
+<Subject 2>: Hades and his two hellhound wolves, as shown in the middle panel of <Picture 2> — this content does not exist in <Picture 1> and must materialize during the shot, then remain ALIVE with subtle idle motion once fully formed.
+<Subject 3>: Poseidon, as shown in the right panel of <Picture 2> — this content does not exist in <Picture 1> and must materialize during the shot, then remain ALIVE with subtle idle motion once fully formed.
+
+summary:
+[keyframe completion] Animate a single continuous three-panel split-screen shot: <Subject 1> (Zeus) is present with subtle idle life-motion in the left panel from frame 0. <Subject 2> (Hades and his wolves) materializes into the empty middle panel and then continues with subtle idle life-motion once formed. <Subject 3> (Poseidon) materializes into the empty right panel and then continues with subtle idle life-motion once formed. Every character that is visible on screen must show continuous subtle motion — no character should ever go fully static once present. This is ONE continuous graphic reveal, not separate cuts or edits.
+
+retention_analysis:
+<Picture 1>: fully_preserved — the three-panel layout, the panel borders, the background colors of all three panels, and Zeus's identity and appearance in the left panel must be present from frame 0.
+<Picture 2>: fully_preserved — this is the exact ending frame; Hades, the two wolves, and Poseidon must match their final poses, colors, and positions precisely.
+<Subject 1>: partially_preserved — Zeus's identity, robe color, and lightning bolt never change, but his pose has continuous subtle idle motion (never a frozen frame) throughout the entire shot.
+<Subject 2>: attribute_transfer — Hades and the wolves do not exist at the start; they are generated during the shot as a flat-vector graphic reveal in the middle panel, then continue with idle motion once formed.
+<Subject 3>: attribute_transfer — Poseidon does not exist at the start; he is generated during the shot as a flat-vector graphic reveal in the right panel, then continues with idle motion once formed.
+
+detailed_description:
+A static, unmoving camera holds on the three-panel split-screen flat vector illustration, bold color-block style, sharp clean edges, diagonal drop-shadow. This is a LIVING poster — every character on screen breathes with subtle motion, never a frozen still image.
+
+[Shot 1]
+0-1.5s: The scene begins close to <Picture 1> — Zeus in the left yellow-orange panel, ALREADY alive with subtle idle motion: the lightning bolt in his hand flickers and crackles gently, his robe shifts slightly as if in a light breeze, a faint idle sway in his stance. The middle navy panel and right teal panel are both completely empty, only their background colors and the white panel borders visible.
+1.5-3.5s: In the middle panel, a subtle dark silhouette begins to form — Hades's hooded shape gradually solidifying out of the darkness, a flat-vector graphic materialization, not a 3D object walking into frame. Zeus continues his idle lightning-flicker and robe-sway motion throughout, uninterrupted.
+3.5-5.5s: Hades's silhouette completes into his full flat-vector form, hooded robe fully rendered. Simultaneously, on either side of him, two smaller dark shapes begin to solidify — the hellhound wolves emerging the same way, their red glowing eyes appearing first as two small points of light before the rest of each wolf's shape resolves. Zeus's idle motion continues in the left panel.
+5.5-7s: The wolves complete their form, flanking Hades, glowing red eyes clearly visible. Once formed, Hades's robe begins a subtle idle sway, and the wolves' red eyes have a faint pulsing glow, both wolves shifting their weight slightly — the middle panel is now alive, not frozen. Zeus continues his own idle motion in the left panel.
+7-9s: In the right panel, Poseidon begins to materialize the same way — his green-robed silhouette solidifying from the teal background, the golden trident appearing last, drawing in as a clean flat-vector line from top to bottom. Zeus and Hades's panels both continue their respective idle motions throughout — no panel goes static.
+9-10.5s: Poseidon's form completes fully, trident in hand, matching <Picture 2>. Once formed, Poseidon's robe sways gently and the trident has a subtle shimmering glow along its prongs. Hold on this final composition — all three panels alive and complete: Zeus with flickering lightning and swaying robe on the left, Hades and his softly-glowing wolves in the middle, Poseidon with his shimmering trident on the right — every character visibly breathing with continuous subtle motion.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), no camera cuts, no jump cuts, no fade-to-black between panels, this is ONE continuous shot not a sequence of separate clips — the panel borders and all three background colors are visible and unchanging from frame 0 to the final frame. No character ever becomes a frozen static image once visible on screen — Zeus, Hades, the wolves, and Poseidon all show continuous subtle idle motion (breathing, robe sway, flickering light, weight shift) at all times they are present in frame. No change in the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic). Hades, the wolves, and Poseidon must materialize as flat 2D graphic elements solidifying into shape — NOT as characters physically walking, running, or jumping into frame from outside the panel. No large or exaggerated movements — all idle motion stays subtle and small-scale. No text overlay, no title card, no change in panel positions or border thickness.
+
+overall_soundscape:
+A low ominous rumble as Hades and the wolves materialize, followed by a rushing water sound as Poseidon appears, with a faint continuous electric crackle from Zeus's lightning bolt throughout.
+
+non_diegetic_music:
+N/A

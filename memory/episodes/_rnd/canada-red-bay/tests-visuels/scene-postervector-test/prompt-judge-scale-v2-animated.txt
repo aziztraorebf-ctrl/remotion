@@ -1,0 +1,33 @@
+subject_definitions:
+<Picture 1>: A flat vector poster illustration of a robed Spanish judge sitting behind an ornate wooden tribunal desk, gavel resting in his hand, flanked by stylized stone columns against a deep navy blue background, bold color-block style with a diagonal drop-shadow, minimal facial detail. Empty space above the judge's head.
+<Picture 2>: The same flat vector illustration, same judge, same desk, same columns, same style — but now a glowing golden scale-of-justice icon is fully materialized and floating above the judge's head, softly glowing.
+<Subject 1>: The judge depicted in <Picture 1> and <Picture 2> — same face, same robe, same desk, same flat vector style. In this shot, unlike the reference images, the judge is ALIVE and ACTIVE: he raises his gavel and strikes it down on the desk.
+<Subject 2>: The golden scale-of-justice icon shown fully formed in <Picture 2> — the graphic element that materializes during the shot, triggered by and synchronized with the judge's gavel strike.
+
+summary:
+[keyframe completion] Animate <Subject 1> raising his gavel and striking it down on the desk — at the exact moment of impact, <Subject 2> begins to materialize above his head as a direct visual consequence of the strike, a golden light bursting outward from the impact and rising to form the scale icon. Ends with the judge settled back in his seated pose (matching <Picture 1>'s posture) and the scale icon fully formed and glowing (matching <Picture 2>).
+
+retention_analysis:
+<Picture 1>: partially_preserved — the judge's identity, robe, desk, columns, and flat vector art style are preserved exactly, but his pose is NOT static here: he actively raises and strikes the gavel before returning to a seated pose similar to the reference.
+<Picture 2>: fully_preserved — this is the target ending frame for the scale icon's final glowing, fully-formed shape and position, and for the judge's final settled pose.
+<Subject 1>: partially_preserved — same character identity and style throughout, but performs an active gavel-strike gesture not shown in either reference image.
+<Subject 2>: attribute_transfer — the scale icon does not exist at the start; it is generated during the shot as a direct visual consequence of the gavel strike, matching the flat vector icon style established in <Picture 2>.
+
+detailed_description:
+A static, unmoving camera holds on the flat vector poster illustration of the judge and courtroom, in a bold color-block motion-graphics style with sharp clean edges and diagonal drop-shadow. This is a LIVING scene — the judge is an active character delivering a verdict, not a frozen illustration.
+
+[Shot 1]
+0-1.5s: The scene begins close to <Picture 1> — the judge seated, gavel held in his hand at rest, empty space above his head, flat color-block background. A brief stillness, like a held breath before the verdict.
+1.5-3s: The judge slowly raises the gavel upward in his hand, a clear, deliberate, weighty gesture — his posture straightens slightly with the motion, still in flat vector style with clean silhouette movement (no 3D rotation, no realistic joint articulation — a graphic, poster-like gesture).
+3-3.8s: The gavel strikes down onto the desk in one decisive motion — at the exact instant of impact, a small flat-vector impact flash or burst (like a comic-style graphic "thud" effect, a few clean radiating lines) appears briefly at the point of contact, then fades within a few frames.
+3.8-5.5s: Synchronized with the strike, a golden light begins to bloom directly above the judge's head — as if the verdict's power radiates upward from the desk to that space. The light grows steadily, a motion-graphics glow, not a physical falling object.
+5.5-7.5s: The golden light resolves into the flat vector shape of the scale of justice, the two pans and central post drawing in cleanly like an icon assembling itself — the pans settle with a small, subtle side-to-side balancing wobble as they lock into their final symmetrical position, a graphic reveal matching the icon style of <Picture 2>.
+7.5-10s: The judge lowers the gavel back down and settles into a calm seated pose, matching <Picture 1>'s posture. The golden scale icon is fully formed and glowing above him, matching <Picture 2> exactly. Hold on this final composition — judge settled and calm below, glowing golden scale icon fully formed above, verdict delivered.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), no change in the judge's identity or the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic), the gavel strike and the judge's gestures stay graphic and poster-like — NOT realistic human joint articulation, NOT rotoscoped realism. The scale icon must materialize as a flat 2D graphic element (like a motion-graphics reveal) directly synchronized with the gavel strike, NOT as a physical 3D object that falls, drops, swings, or tumbles into place independently of the judge's action. No new characters appearing, no text overlay, no title card, no jump cuts, no change in the navy background color or the columns, no change in the desk position.
+
+overall_soundscape:
+A sharp, resonant gavel strike at the moment of impact, followed by a soft magical chime or glowing hum as the icon materializes, otherwise silent courtroom ambience.
+
+non_diegetic_music:
+N/A

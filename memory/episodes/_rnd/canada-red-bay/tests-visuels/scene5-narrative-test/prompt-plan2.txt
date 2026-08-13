@@ -1,0 +1,29 @@
+subject_definitions:
+<Picture 1>: A hand-drawn pen-and-ink illustration of a Basque whaler in a brown hooded cape and checkered tunic, seen from behind, standing at the edge of a rocky cove, looking down calmly at a thick rope tied to a large rock leading into the water.
+<Picture 2>: The same hand-drawn illustration style and same man, same cove, same rock — but the rope end is now frayed and cut, hanging loose over empty water. The whaler stands turned toward camera in three-quarter view, one hand slightly raised in shock, stunned expression.
+<Subject 1>: The Basque whaler depicted in both <Picture 1> and <Picture 2> — same face, same brown hooded cape, same checkered tunic, same build.
+
+summary:
+[keyframe completion] Animate <Subject 1> realizing the whale is gone: starting from the calm unaware pose of <Picture 1>, he notices the cut rope, turns toward camera, and his expression shifts to shock, ending in the exact pose and framing of <Picture 2>.
+
+retention_analysis:
+<Picture 1>: fully_preserved — this is the exact starting frame of the shot.
+<Picture 2>: fully_preserved — this is the exact ending frame of the shot, the character's turned pose, raised hand, and shocked expression must match this precisely by the last frame.
+<Subject 1>: fully_preserved — same character identity, same clothing, same hand-drawn ink illustration style throughout, no style drift.
+
+detailed_description:
+A slow realization shot in hand-drawn pen-and-ink illustration style, sketchy linework, crosshatching, sepia aged-paper background, muted ink wash colors, cold dawn mist.
+
+[Shot 1]
+0-1.5s: The scene begins exactly as <Picture 1> — the whaler standing calmly, seen from behind, looking down at the rope, unaware of anything wrong.
+1.5-3.5s: His head tilts slightly as his eyes follow the rope down toward the water — the rope's frayed, cut end slowly becomes visible, hanging loose. His posture stiffens slightly, the first sign of noticing something is wrong.
+3.5-5.5s: He begins turning his body toward camera, three-quarter view, his expression shifting from calm to concern, one hand starting to rise slightly.
+5.5-8s: He completes the turn, now fully in the pose of <Picture 2> — shocked expression, hand raised, shoulders tense, staring at the empty cove where the whale should be. Hold on this final shocked pose, matching <Picture 2> precisely.
+
+STRICT NEGATIVE: no camera cuts, no jump cuts, no change in art style (stays hand-drawn ink throughout, never flat vector, never 3D, never photorealistic), no change in the whaler's clothing or identity, no new characters appearing, no whale or whale carcass appearing anywhere, no text overlay, no title card, no morphing of the rock or the cove, motion stays slow and deliberate, not exaggerated or cartoonish.
+
+overall_soundscape:
+Faint waves, light wind, a single sharp intake of breath from the whaler at the moment of realization, no dialogue.
+
+non_diegetic_music:
+N/A

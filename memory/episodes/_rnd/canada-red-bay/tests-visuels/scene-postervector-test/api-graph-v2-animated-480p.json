@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253510
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 10.0
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "a62ca8f858c1ddc3feb9721c6b51200e65aa21149622340ddb02fc79e10ec1a3.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "subject_definitions:\n<Picture 1>: A flat vector poster illustration of a robed Spanish judge sitting behind an ornate wooden tribunal desk, gavel resting in his hand, flanked by stylized stone columns against a deep navy blue background, bold color-block style with a diagonal drop-shadow, minimal facial detail. Empty space above the judge's head.\n<Picture 2>: The same flat vector illustration, same judge, same desk, same columns, same style \u2014 but now a glowing golden scale-of-justice icon is fully materialized and floating above the judge's head, softly glowing.\n<Subject 1>: The judge depicted in <Picture 1> and <Picture 2> \u2014 same face, same robe, same desk, same flat vector style. In this shot, unlike the reference images, the judge is ALIVE and ACTIVE: he raises his gavel and strikes it down on the desk.\n<Subject 2>: The golden scale-of-justice icon shown fully formed in <Picture 2> \u2014 the graphic element that materializes during the shot, triggered by and synchronized with the judge's gavel strike.\n\nsummary:\n[keyframe completion] Animate <Subject 1> raising his gavel and striking it down on the desk \u2014 at the exact moment of impact, <Subject 2> begins to materialize above his head as a direct visual consequence of the strike, a golden light bursting outward from the impact and rising to form the scale icon. Ends with the judge settled back in his seated pose (matching <Picture 1>'s posture) and the scale icon fully formed and glowing (matching <Picture 2>).\n\nretention_analysis:\n<Picture 1>: partially_preserved \u2014 the judge's identity, robe, desk, columns, and flat vector art style are preserved exactly, but his pose is NOT static here: he actively raises and strikes the gavel before returning to a seated pose similar to the reference.\n<Picture 2>: fully_preserved \u2014 this is the target ending frame for the scale icon's final glowing, fully-formed shape and position, and for the judge's final settled pose.\n<Subject 1>: partially_preserved \u2014 same character identity and style throughout, but performs an active gavel-strike gesture not shown in either reference image.\n<Subject 2>: attribute_transfer \u2014 the scale icon does not exist at the start; it is generated during the shot as a direct visual consequence of the gavel strike, matching the flat vector icon style established in <Picture 2>.\n\ndetailed_description:\nA static, unmoving camera holds on the flat vector poster illustration of the judge and courtroom, in a bold color-block motion-graphics style with sharp clean edges and diagonal drop-shadow. This is a LIVING scene \u2014 the judge is an active character delivering a verdict, not a frozen illustration.\n\n[Shot 1]\n0-1.5s: The scene begins close to <Picture 1> \u2014 the judge seated, gavel held in his hand at rest, empty space above his head, flat color-block background. A brief stillness, like a held breath before the verdict.\n1.5-3s: The judge slowly raises the gavel upward in his hand, a clear, deliberate, weighty gesture \u2014 his posture straightens slightly with the motion, still in flat vector style with clean silhouette movement (no 3D rotation, no realistic joint articulation \u2014 a graphic, poster-like gesture).\n3-3.8s: The gavel strikes down onto the desk in one decisive motion \u2014 at the exact instant of impact, a small flat-vector impact flash or burst (like a comic-style graphic \"thud\" effect, a few clean radiating lines) appears briefly at the point of contact, then fades within a few frames.\n3.8-5.5s: Synchronized with the strike, a golden light begins to bloom directly above the judge's head \u2014 as if the verdict's power radiates upward from the desk to that space. The light grows steadily, a motion-graphics glow, not a physical falling object.\n5.5-7.5s: The golden light resolves into the flat vector shape of the scale of justice, the two pans and central post drawing in cleanly like an icon assembling itself \u2014 the pans settle with a small, subtle side-to-side balancing wobble as they lock into their final symmetrical position, a graphic reveal matching the icon style of <Picture 2>.\n7.5-10s: The judge lowers the gavel back down and settles into a calm seated pose, matching <Picture 1>'s posture. The golden scale icon is fully formed and glowing above him, matching <Picture 2> exactly. Hold on this final composition \u2014 judge settled and calm below, glowing golden scale icon fully formed above, verdict delivered.\n\nSTRICT NEGATIVE: no camera movement of any kind (Static Shot only), no change in the judge's identity or the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic), the gavel strike and the judge's gestures stay graphic and poster-like \u2014 NOT realistic human joint articulation, NOT rotoscoped realism. The scale icon must materialize as a flat 2D graphic element (like a motion-graphics reveal) directly synchronized with the gavel strike, NOT as a physical 3D object that falls, drops, swings, or tumbles into place independently of the judge's action. No new characters appearing, no text overlay, no title card, no jump cuts, no change in the navy background color or the columns, no change in the desk position.\n\noverall_soundscape:\nA sharp, resonant gavel strike at the moment of impact, followed by a soft magical chime or glowing hum as the icon materializes, otherwise silent courtroom ambience.\n\nnon_diegetic_music:\nN/A"
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "e5972aa1965ecf4b1f539eb969236a404f304582b9f7244ce67a152d470804e2.jpg"
+    }
+  }
+}

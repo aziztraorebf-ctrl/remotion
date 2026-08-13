@@ -91,6 +91,8 @@
 | **(Sahel)** Générer les 5 assets Acte 2 (bases + jetons) | `scripts/warmap/gen-sahel-acte2-assets.py` | Spécifique Sahel. |
 | **(Sahel)** Générer les sprites mobiles B1 (avion + convoi uranium) | `scripts/warmap/gen-sahel-b1-sprites.py` | Spécifique Sahel. |
 | **(Sahel)** Générer les 5 jetons-réfugiés Acte 2 (exode, ethnicité O-Afr.) | `scripts/warmap/gen-sahel-refugies.py` | Spécifique Sahel. |
+| Animer une image de référence en vidéo (MiniMax H3, fal.ai) | `scripts/tools/minimax-h3-image-to-video.py` | `--image REF.jpg --prompt "..." --duration N --output OUT.mp4`. Préférer Comfy Cloud (open-weight, voir `memory/tools/minimax-h3-comfy-cloud.md`) sauf si fal.ai explicitement nécessaire. |
+| Upscaler une vidéo 480p/720p → 1080p/2K/4K (fal.ai ByteDance) | `scripts/tools/fal-bytedance-upscale-video.py` | `--video-url URL --resolution 1080p\|2k\|4k [--pro] --output OUT.mp4`. Le moins cher sur clip court vs SeedVR2/FlashVSR — comparatif complet dans `memory/tools/minimax-h3-styles-tests.md` § Upscale post-génération. |
 
 ---
 

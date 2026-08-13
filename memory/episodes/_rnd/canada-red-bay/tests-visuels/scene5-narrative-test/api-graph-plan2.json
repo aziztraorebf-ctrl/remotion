@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253461
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 8.0
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "55deaf471603dfe3fa2bbff68a56cc85afc68fa99420a66bcf13faf6e844c5bf.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "subject_definitions:\n<Picture 1>: A hand-drawn pen-and-ink illustration of a Basque whaler in a brown hooded cape and checkered tunic, seen from behind, standing at the edge of a rocky cove, looking down calmly at a thick rope tied to a large rock leading into the water.\n<Picture 2>: The same hand-drawn illustration style and same man, same cove, same rock \u2014 but the rope end is now frayed and cut, hanging loose over empty water. The whaler stands turned toward camera in three-quarter view, one hand slightly raised in shock, stunned expression.\n<Subject 1>: The Basque whaler depicted in both <Picture 1> and <Picture 2> \u2014 same face, same brown hooded cape, same checkered tunic, same build.\n\nsummary:\n[keyframe completion] Animate <Subject 1> realizing the whale is gone: starting from the calm unaware pose of <Picture 1>, he notices the cut rope, turns toward camera, and his expression shifts to shock, ending in the exact pose and framing of <Picture 2>.\n\nretention_analysis:\n<Picture 1>: fully_preserved \u2014 this is the exact starting frame of the shot.\n<Picture 2>: fully_preserved \u2014 this is the exact ending frame of the shot, the character's turned pose, raised hand, and shocked expression must match this precisely by the last frame.\n<Subject 1>: fully_preserved \u2014 same character identity, same clothing, same hand-drawn ink illustration style throughout, no style drift.\n\ndetailed_description:\nA slow realization shot in hand-drawn pen-and-ink illustration style, sketchy linework, crosshatching, sepia aged-paper background, muted ink wash colors, cold dawn mist.\n\n[Shot 1]\n0-1.5s: The scene begins exactly as <Picture 1> \u2014 the whaler standing calmly, seen from behind, looking down at the rope, unaware of anything wrong.\n1.5-3.5s: His head tilts slightly as his eyes follow the rope down toward the water \u2014 the rope's frayed, cut end slowly becomes visible, hanging loose. His posture stiffens slightly, the first sign of noticing something is wrong.\n3.5-5.5s: He begins turning his body toward camera, three-quarter view, his expression shifting from calm to concern, one hand starting to rise slightly.\n5.5-8s: He completes the turn, now fully in the pose of <Picture 2> \u2014 shocked expression, hand raised, shoulders tense, staring at the empty cove where the whale should be. Hold on this final shocked pose, matching <Picture 2> precisely.\n\nSTRICT NEGATIVE: no camera cuts, no jump cuts, no change in art style (stays hand-drawn ink throughout, never flat vector, never 3D, never photorealistic), no change in the whaler's clothing or identity, no new characters appearing, no whale or whale carcass appearing anywhere, no text overlay, no title card, no morphing of the rock or the cove, motion stays slow and deliberate, not exaggerated or cartoonish.\n\noverall_soundscape:\nFaint waves, light wind, a single sharp intake of breath from the whaler at the moment of realization, no dialogue.\n\nnon_diegetic_music:\nN/A"
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "06efedfe0ccc423a30efdcdd2d98a888567427cf19d6486a36a7a7cabfb21a16.jpg"
+    }
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253450
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 8.0
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "c91316bf8f205289b4e91c9a3b2cee0bea6822145db391bf2e5ac8b4e22c975f.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "subject_definitions:\n<Picture 1>: A hand-drawn pen-and-ink editorial illustration on aged sepia paper, showing three framed panels \u2014 a raw whale baleen plate (left), a corset busk made of baleen (middle), and a ruff collar with a closed umbrella made of baleen (right). Sketchy visible linework, loose crosshatching for shading, muted ink wash colors.\n<Subject 1>: The closed umbrella depicted in the right panel of <Picture 1> \u2014 its ribs, fabric, and handle.\n\nsummary:\n[reference generation] Animate the umbrella (<Subject 1>) from <Picture 1> opening fully, while strictly preserving the hand-drawn ink illustration style, the paper background, and the two other static panels exactly as shown in <Picture 1>.\n\nretention_analysis:\n<Picture 1>: fully_preserved \u2014 the drawing style, linework, crosshatching, paper color, panel borders, and the two other panels (baleen plate, corset) must remain pixel-identical to the reference throughout.\n<Subject 1>: fully_preserved \u2014 the umbrella's shape, ribs, and material must remain the same object, only its pose changes from closed to open.\n\ndetailed_description:\nA static, unmoving camera holds on the three-panel hand-drawn illustration exactly as shown in <Picture 1>.\n\n[Shot 1]\n0-2s: The scene is held completely still, exactly matching <Picture 1> \u2014 the raw baleen plate on the left, the corset busk in the middle, and the closed umbrella with the ruff collar on the right, all in the sketchy ink-and-crosshatch style on sepia paper.\n2-4s: <Subject 1> begins to open. Its ribs unfold outward one by one in a smooth, mechanical, hand-drawn animation motion, the fabric panels between the ribs stretching taut as the umbrella opens. The baleen plate and corset panels remain completely static, unchanged pixel for pixel.\n4-6s: <Subject 1> continues opening until fully extended, all ribs fully spread. A few thin hand-drawn motion lines appear briefly around the ribs, drawn in the exact same sketchy ink style as the rest of the illustration, to suggest the unfolding motion.\n6-8s: The fully open umbrella holds still. A subtle hand-drawn paper texture flicker plays across the whole page, like a gently animated flip-book page, but the panel borders, the baleen plate, and the corset stay in their exact original positions from <Picture 1>.\n\nSTRICT NEGATIVE: no camera movement of any kind (Static Shot only), no new objects, no human hands or figures appearing, no text overlay, no title card, no change in the panel borders or their positions, no change in the sepia paper background color, no jump cuts, no morphing of the baleen plate or the corset, no color shift away from the ink/sepia palette, no shift to a different art style \u2014 never flat vector, never 3D render, never photorealistic, the drawing style must stay hand-drawn ink throughout every frame.\n\noverall_soundscape:\nFaint, subtle sound of paper rustling and a soft mechanical creak as the umbrella ribs unfold, very quiet, no music.\n\nnon_diegetic_music:\nN/A"
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "c91316bf8f205289b4e91c9a3b2cee0bea6822145db391bf2e5ac8b4e22c975f.jpg"
+    }
+  }
+}

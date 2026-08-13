@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253470
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 8.0
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "9c573416082380ab9ec18c0686bfdf47b7154dcfbb4f8fde63469c77833cce80.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "subject_definitions:\n<Picture 1>: A hand-drawn pen-and-ink illustration of a Basque whaler in a brown hooded cape and checkered tunic, seen from behind, standing calmly at the edge of a rocky cove. The rope tied to the rock is ALREADY frayed and cut, its loose end hanging over completely empty water \u2014 the whale is already gone, nothing in the water. The whaler has not reacted yet, still calm, unaware.\n<Picture 2>: The same hand-drawn illustration style and same man, same cove, same rock, same cut rope, same empty water \u2014 but now the whaler's body has turned, shown in profile from the side (never facing the camera), one hand raised partway in a gesture of alarm, shoulders tense, staring in profile at the empty water with a shocked, disbelieving expression.\n<Subject 1>: The Basque whaler depicted in both <Picture 1> and <Picture 2> \u2014 same face, same brown hooded cape, same checkered tunic, same build.\n\nsummary:\n[keyframe completion] Animate <Subject 1> realizing the whale is gone: the rope and empty cove are already established from the very first frame \u2014 nothing appears or disappears during the shot. Only the whaler's posture and expression change, from calm unaware (<Picture 1>) to shocked realization (<Picture 2>), turning his body into profile view.\n\nretention_analysis:\n<Picture 1>: fully_preserved \u2014 this is the exact starting frame, including the already-cut rope and already-empty water, which must NOT change or animate during the shot.\n<Picture 2>: fully_preserved \u2014 this is the exact ending frame, the character's profile turn, raised hand, and shocked expression must match this precisely by the last frame, always in profile, never facing camera.\n<Subject 1>: fully_preserved \u2014 same character identity, same clothing, same hand-drawn ink illustration style throughout, no style drift.\n\ndetailed_description:\nA slow realization shot in hand-drawn pen-and-ink illustration style, sketchy linework, crosshatching, sepia aged-paper background, muted ink wash colors, cold dawn mist. The rope is already cut and the cove is already empty from the very first frame \u2014 this is a fixed, unchanging fact of the scene, not something that happens during the shot.\n\n[Shot 1]\n0-2s: The scene begins exactly as <Picture 1> \u2014 the whaler standing calmly, seen from behind, looking down at the already-empty water and the already-cut rope, still unaware, posture relaxed.\n2-4s: His head tilts slightly, beginning to register that something is wrong \u2014 the rope end and the emptiness of the water are already visible in frame, nothing changes in the environment, only his attention sharpens.\n4-6s: He begins turning his body sideways into profile view (never toward camera), his posture stiffening, one hand starting to rise in a gesture of alarm.\n6-8s: He completes the turn into full profile, now fully in the pose of <Picture 2> \u2014 hand raised, shoulders tense, shocked disbelieving expression shown in profile. Hold on this final pose, matching <Picture 2> precisely. His face is NEVER shown facing the camera at any point in the shot.\n\nSTRICT NEGATIVE: the rope and the empty water do NOT change, appear, or disappear at any point \u2014 they are already in their final state from frame 0. No camera cuts, no jump cuts, no change in art style (stays hand-drawn ink throughout, never flat vector, never 3D, never photorealistic), no change in the whaler's clothing or identity, no new characters appearing, no whale or whale carcass appearing or disappearing anywhere, the whaler's face NEVER turns toward the camera, no direct eye contact with viewer, no text overlay, no title card, no morphing of the rock or the cove, motion stays slow and deliberate, not exaggerated or cartoonish.\n\noverall_soundscape:\nFaint waves, light wind, a single sharp intake of breath from the whaler at the moment of realization, no dialogue.\n\nnon_diegetic_music:\nN/A"
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "cde97a26612a2cd1cfd6d53eb2ace14bafea01c0a6aaea63152a9987b83d352f.jpg"
+    }
+  }
+}

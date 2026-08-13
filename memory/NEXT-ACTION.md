@@ -48,8 +48,12 @@ Détail complet des 3 : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § ses
 ## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-13)
 
 Marché EN validé (TubeLab, RPM jusqu'à 20$+). Script V3 FR validé jury 4 LLM ("baleine volée de Red
-Bay"), 2 tests visuels réussis (SVG Fable5 MAX, clip MiniMax H3). Décision à prendre : scène Mapbox
-réelle ou assembler la 1ère scène complète. Détail : `episodes/_rnd/canada-red-bay/STATUS.md`.
+Bay"), 2 tests visuels réussis (SVG Fable5 MAX, clip MiniMax H3) + **2 styles H3 testés et validés
+(Hand Drawn, Poster Vector) avec workflow standard confirmé (480p direction → 720p/upscale ByteDance
+1080p)** — détail `tools/minimax-h3-styles-tests.md`, clips de référence dans
+`episodes/_rnd/canada-red-bay/reference-styles-h3/`. Reste à tester : Whiteboard Doodle (référence
+prête). Décision à prendre : scène Mapbox réelle ou assembler la 1ère scène complète. Détail :
+`episodes/_rnd/canada-red-bay/STATUS.md`.
 
 ---
 
@@ -58,7 +62,7 @@ réelle ou assembler la 1ère scène complète. Détail : `episodes/_rnd/canada-
 Scène multi-personnages dense (3+, contact physique) : écran noir/personnage disparaît, **toujours NON
 résolu** — seuil de délégation agent dédié atteint et non déclenché. Contournement PROUVÉ : 2
 personnages max, zéro contact croisé (4 clips testés, succès complet). Guide de prompting officiel +
-storyboard multi-panneaux également testés. Détail complet : `tools/minimax.md`.
+storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h3-comfy-cloud.md`.
 
 ---
 

@@ -1,0 +1,222 @@
+{
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": [
+        "130",
+        0
+      ],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "115": {
+    "class_type": "ResolutionSelector",
+    "inputs": {
+      "aspect_ratio": "16:9 (Widescreen)",
+      "megapixels": 0.4,
+      "multiple_of": 32
+    }
+  },
+  "119": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    }
+  },
+  "120": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    }
+  },
+  "121": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "120",
+        0
+      ]
+    }
+  },
+  "122": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "125",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ]
+    }
+  },
+  "123": {
+    "class_type": "KSamplerSelect",
+    "inputs": {
+      "sampler_name": "res_multistep"
+    }
+  },
+  "124": {
+    "class_type": "BasicScheduler",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1
+    }
+  },
+  "125": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": [
+        "129",
+        0
+      ],
+      "guider": [
+        "126",
+        0
+      ],
+      "sampler": [
+        "123",
+        0
+      ],
+      "sigmas": [
+        "124",
+        0
+      ],
+      "latent_image": [
+        "136",
+        1
+      ]
+    }
+  },
+  "126": {
+    "class_type": "BasicGuider",
+    "inputs": {
+      "model": [
+        "127",
+        0
+      ],
+      "conditioning": [
+        "136",
+        0
+      ]
+    }
+  },
+  "127": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_ref2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "128": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "129": {
+    "class_type": "RandomNoise",
+    "inputs": {
+      "noise_seed": 157368968253520
+    }
+  },
+  "130": {
+    "class_type": "CreateVideo",
+    "inputs": {
+      "images": [
+        "122",
+        0
+      ],
+      "audio": [
+        "121",
+        0
+      ],
+      "fps": 24,
+      "loop_count": 8
+    }
+  },
+  "131": {
+    "class_type": "ComfyMathExpression",
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "132",
+        0
+      ]
+    }
+  },
+  "132": {
+    "class_type": "PrimitiveFloat",
+    "inputs": {
+      "value": 10.5
+    }
+  },
+  "136": {
+    "class_type": "MiniMaxH3ReferenceToVideo",
+    "inputs": {
+      "clip": [
+        "128",
+        0
+      ],
+      "vae": [
+        "119",
+        0
+      ],
+      "audio_vae": [
+        "120",
+        0
+      ],
+      "ref_images.ref_image_0": [
+        "137",
+        0
+      ],
+      "ref_images.ref_image_1": [
+        "139",
+        0
+      ],
+      "prompt": [
+        "138",
+        0
+      ],
+      "width": 864,
+      "height": 480,
+      "length": [
+        "131",
+        1
+      ],
+      "ref_image_size": "match"
+    }
+  },
+  "137": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "9c3c0a02da5c8a2c0331232b21299dd863e6ae13baf2d1a67d2f5dc1b2ee981d.jpg"
+    }
+  },
+  "138": {
+    "class_type": "PrimitiveStringMultiline",
+    "inputs": {
+      "value": "subject_definitions:\n<Picture 1>: A flat vector poster illustration split into three vertical panels separated by thin white borders. Left panel (yellow-orange background): Zeus, muscular flat-vector god with white beard, holding a lightning bolt. Middle panel (dark navy background): empty. Right panel (teal-blue background): empty.\n<Picture 2>: The same three-panel split-screen layout, same Zeus unchanged in the left panel \u2014 but now the middle panel shows Hades, a hooded dark-robed god flanked by two glowing-eyed black hellhound wolves, and the right panel shows Poseidon, a green-robed god holding a golden trident.\n<Subject 1>: Zeus as shown in the left panel of both <Picture 1> and <Picture 2> \u2014 stays completely unchanged throughout.\n<Subject 2>: Hades and his two hellhound wolves, as shown in the middle panel of <Picture 2> \u2014 this content does not exist in <Picture 1> and must materialize during the shot.\n<Subject 3>: Poseidon, as shown in the right panel of <Picture 2> \u2014 this content does not exist in <Picture 1> and must materialize during the shot.\n\nsummary:\n[keyframe completion] Animate a single continuous three-panel split-screen shot: <Subject 1> (Zeus) remains static and unchanged in the left panel throughout. <Subject 2> (Hades and his wolves) materializes into the empty middle panel, and <Subject 3> (Poseidon) materializes into the empty right panel \u2014 both appearing as part of ONE continuous graphic reveal, not as separate cuts or edits. The panel borders and background colors are present from the first frame.\n\nretention_analysis:\n<Picture 1>: fully_preserved \u2014 the three-panel layout, the panel borders, the background colors of all three panels, and Zeus's exact pose and appearance in the left panel must be present from frame 0 and never change.\n<Picture 2>: fully_preserved \u2014 this is the exact ending frame; Hades, the two wolves, and Poseidon must match their final poses, colors, and positions precisely.\n<Subject 1>: fully_preserved \u2014 Zeus never moves or changes throughout the entire shot.\n<Subject 2>: attribute_transfer \u2014 Hades and the wolves do not exist at the start; they are generated during the shot as a flat-vector graphic reveal in the middle panel.\n<Subject 3>: attribute_transfer \u2014 Poseidon does not exist at the start; he is generated during the shot as a flat-vector graphic reveal in the right panel.\n\ndetailed_description:\nA static, unmoving camera holds on the three-panel split-screen flat vector illustration, bold color-block style, sharp clean edges, diagonal drop-shadow, exactly as shown in <Picture 1> at the start.\n\n[Shot 1]\n0-1.5s: The scene begins exactly as <Picture 1> \u2014 Zeus static in the left yellow-orange panel, the middle navy panel and right teal panel both completely empty, only their background colors and the white panel borders visible.\n1.5-3.5s: In the middle panel, a subtle dark silhouette begins to form \u2014 Hades's hooded shape gradually solidifying out of the darkness, a flat-vector graphic materialization, not a 3D object walking into frame.\n3.5-5.5s: Hades's silhouette completes into his full flat-vector form, hooded robe fully rendered. Simultaneously, on either side of him, two smaller dark shapes begin to solidify \u2014 the hellhound wolves emerging the same way, their red glowing eyes appearing first as two small points of light before the rest of each wolf's shape resolves.\n5.5-7s: The wolves complete their form, flanking Hades, glowing red eyes clearly visible. The middle panel now fully matches its state in <Picture 2>. Zeus remains completely unchanged in the left panel throughout this entire time.\n7-9s: In the right panel, Poseidon begins to materialize the same way \u2014 his green-robed silhouette solidifying from the teal background, the golden trident appearing last, drawing in as a clean flat-vector line from top to bottom.\n9-10.5s: Poseidon's form completes fully, trident in hand, matching <Picture 2> exactly. Hold on this final composition \u2014 all three panels now complete: Zeus static and unchanged on the left, Hades and his two wolves in the middle, Poseidon with his trident on the right.\n\nSTRICT NEGATIVE: no camera movement of any kind (Static Shot only), no camera cuts, no jump cuts, no fade-to-black between panels, this is ONE continuous shot not a sequence of separate clips \u2014 the panel borders and all three background colors are visible and unchanging from frame 0 to the final frame. Zeus in the left panel NEVER moves, changes pose, or changes appearance at any point. No change in the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic). Hades, the wolves, and Poseidon must materialize as flat 2D graphic elements solidifying into shape \u2014 NOT as characters physically walking, running, or jumping into frame from outside the panel. No text overlay, no title card, no change in panel positions or border thickness.\n\noverall_soundscape:\nA low ominous rumble as Hades and the wolves materialize, followed by a rushing water sound as Poseidon appears, otherwise silent.\n\nnon_diegetic_music:\nN/A"
+    }
+  },
+  "139": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "a025925203d090fcbf956c1c2891b45f15acc355cf89784f8f3af0af61190264.jpg"
+    }
+  }
+}

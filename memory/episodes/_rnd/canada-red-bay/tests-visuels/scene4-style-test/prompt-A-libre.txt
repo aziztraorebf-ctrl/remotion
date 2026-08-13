@@ -1,0 +1,13 @@
+Hand-drawn pen-and-ink editorial illustration style, sketchy visible linework, loose crosshatching for shading, warm aged-paper sepia background, muted ink wash colors — exactly matching the style of <Picture 1>. Do not change the drawing style, the linework, or the color palette established in the reference image.
+
+STATIC CAMERA, no camera movement, no pan, no zoom, no orbit.
+
+0-2s: The three framed panels are shown exactly as in the reference image — raw baleen plate on the left, corset busk in the middle, ruff collar and closed umbrella on the right. Nothing moves yet, held still.
+
+2-4s: The umbrella on the right panel slowly begins to open, its ribs unfolding outward one by one in a smooth mechanical motion, the fabric panels between the ribs stretching taut as it opens. The other two panels remain completely static.
+
+4-6s: The umbrella continues opening until fully extended, ribs fully spread. A few thin hand-drawn motion lines appear briefly around the ribs to suggest the unfolding motion, in the same sketchy ink style as the rest of the illustration.
+
+6-8s: The fully open umbrella holds still. The whole page has a subtle hand-drawn paper texture flicker, like a page gently animated in a flip-book, but the composition, panel borders, and objects stay in their exact positions.
+
+STRICT NEGATIVE: no camera movement of any kind, no new objects, no human hands or figures appearing, no text overlay, no title card, no change in the panel borders or their positions, no change in the paper background color, no jump cuts, no morphing of the baleen plate or the corset, no color shift away from the sepia/ink palette, no shift to a different art style (no flat vector, no 3D, no photorealism).

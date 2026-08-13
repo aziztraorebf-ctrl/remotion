@@ -1,0 +1,29 @@
+subject_definitions:
+<Picture 1>: A hand-drawn pen-and-ink illustration of a Basque whaler in a brown hooded cape and checkered tunic, seen from behind, walking with a wooden staff along a rocky Labrador shoreline at dawn, far from the cove, cold mist over grey water.
+<Picture 2>: The same hand-drawn illustration style and same man, now much closer, standing at the edge of a small rocky cove, seen from behind, looking down at a thick rope tied to a large rock leading into the water.
+<Subject 1>: The Basque whaler depicted in both <Picture 1> and <Picture 2> — same face, same brown hooded cape, same checkered tunic, same build.
+
+summary:
+[keyframe completion] Animate <Subject 1> walking from the position and distance shown in <Picture 1> to the position shown in <Picture 2>, in one continuous shot, progressively narrowing the distance and framing until the final frame matches <Picture 2> exactly.
+
+retention_analysis:
+<Picture 1>: fully_preserved — this is the exact starting frame of the shot, held for the first moment before motion begins.
+<Picture 2>: fully_preserved — this is the exact ending frame of the shot, the camera and subject must arrive at this precise framing and pose by the last frame.
+<Subject 1>: fully_preserved — same character identity, same clothing, same hand-drawn ink illustration style throughout, no style drift.
+
+detailed_description:
+A slow, continuous walking shot in hand-drawn pen-and-ink illustration style, sketchy linework, crosshatching, sepia aged-paper background, muted ink wash colors, cold dawn mist.
+
+[Shot 1]
+0-2s: The scene begins exactly as <Picture 1> — the whaler walking along the distant rocky shoreline, small within the wide landscape, staff in hand, steady walking pace, seen from behind.
+2-5s: The whaler continues walking forward, the camera slowly closing the distance, the cove becoming visible ahead, mist drifting slowly. His walking motion is natural and steady, weight shifting with each step, staff tapping the ground periodically.
+5-7s: The whaler approaches the edge of the cove, slowing his pace as he nears the rock with the rope, the framing progressively narrowing toward the composition of <Picture 2>.
+7-8s: The whaler comes to a stop at the exact position and framing of <Picture 2>, looking down at the rope tied to the rock, his posture calm and unaware, matching <Picture 2> precisely in the final frame.
+
+STRICT NEGATIVE: no camera cuts, no jump cuts, no change in art style (stays hand-drawn ink throughout, never flat vector, never 3D, never photorealistic), no change in the whaler's clothing or identity, no new characters appearing, no text overlay, no title card, no running or sudden movement — walking pace stays natural and unhurried throughout, no morphing of the landscape.
+
+overall_soundscape:
+Faint sound of footsteps on rocky ground, distant waves, light wind, no dialogue.
+
+non_diegetic_music:
+N/A

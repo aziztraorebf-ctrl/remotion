@@ -1,0 +1,29 @@
+subject_definitions:
+<Picture 1>: A hand-drawn pen-and-ink illustration of a Basque whaler in a brown hooded cape and checkered tunic, seen from behind, standing calmly at the edge of a rocky cove. The rope tied to the rock is ALREADY frayed and cut, its loose end hanging over completely empty water — the whale is already gone, nothing in the water. The whaler has not reacted yet, still calm, unaware.
+<Picture 2>: The same hand-drawn illustration style and same man, same cove, same rock, same cut rope, same empty water — the whaler's body has turned slightly, shown in profile from the side (never facing the camera), quietly puzzled, one hand raised to scratch the back of his head or rub his beard in confusion, staring at the empty water with quiet disbelief — not alarm, not shouting, just quiet confusion.
+<Subject 1>: The Basque whaler depicted in both <Picture 1> and <Picture 2> — same face, same brown hooded cape, same checkered tunic, same build.
+
+summary:
+[keyframe completion] Animate <Subject 1> quietly noticing the whale is gone: the rope and empty cove are already established from the very first frame — nothing appears or disappears during the shot. Only the whaler's posture changes, from calm unaware (<Picture 1>) to quiet, puzzled confusion (<Picture 2>), turning his body slightly into profile view. This is a subtle, understated reaction — NOT a shout, NOT alarm, NOT a dramatic gesture.
+
+retention_analysis:
+<Picture 1>: fully_preserved — this is the exact starting frame, including the already-cut rope and already-empty water, which must NOT change or animate during the shot.
+<Picture 2>: fully_preserved — this is the exact ending frame, the character's quiet profile turn and puzzled posture must match this precisely by the last frame, always in profile, never facing camera.
+<Subject 1>: fully_preserved — same character identity, same clothing, same hand-drawn ink illustration style throughout, no style drift.
+
+detailed_description:
+A slow, quiet, understated realization shot in hand-drawn pen-and-ink illustration style, sketchy linework, crosshatching, sepia aged-paper background, muted ink wash colors, cold dawn mist. The rope is already cut and the cove is already empty from the very first frame — this is a fixed, unchanging fact of the scene, not something that happens during the shot.
+
+[Shot 1]
+0-2.5s: The scene begins exactly as <Picture 1> — the whaler standing calmly, seen from behind, looking down at the already-empty water and the already-cut rope, still relaxed, unaware.
+2.5-4.5s: His head tilts slightly as he studies the rope and the empty water, a small, subtle sign of noticing something is off — no sudden movement, just quiet attention.
+4.5-6.5s: He slowly turns his body sideways into profile view (never toward camera), one hand slowly rising to scratch the back of his head or rub his beard, a gesture of quiet confusion and puzzlement — not shock, not alarm.
+6.5-8s: He settles into the full profile pose of <Picture 2> — quietly puzzled, staring at the empty water in confusion, calm but bewildered. Hold on this final pose, matching <Picture 2> precisely. His face is NEVER shown facing the camera at any point in the shot.
+
+STRICT NEGATIVE: no shouting, no dramatic raised arms, no wide-open panicked expression, no exaggerated gesture — the reaction stays quiet, subtle, and understated throughout, a puzzled headscratch, not alarm. The rope and the empty water do NOT change, appear, or disappear at any point — they are already in their final state from frame 0. No camera cuts, no jump cuts, no change in art style (stays hand-drawn ink throughout, never flat vector, never 3D, never photorealistic), no change in the whaler's clothing or identity, no new characters appearing, no whale or whale carcass appearing or disappearing anywhere, the whaler's face NEVER turns toward the camera, no direct eye contact with viewer, no text overlay, no title card, no morphing of the rock or the cove, motion stays slow and deliberate.
+
+overall_soundscape:
+Faint waves, light wind, no dialogue, no gasp.
+
+non_diegetic_music:
+N/A

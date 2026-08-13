@@ -24,6 +24,14 @@ Conclusion : le registre "mystère historique canadien" tourne bien dans le pipe
 (Mapbox/D3/SVG Fable5/génération vidéo), sans brique manquante. Fable5 confirmé meilleur choix
 SVG scène organique sur ce projet.
 
+**⭐⭐⭐ 2 styles H3 testés et VALIDÉS en aval de ce test pipeline (même session, 2026-08-13)** : Hand
+Drawn (marche+réaction narrative, 2 plans) et Poster Vector (reveal d'icône synchronisé + split-screen
+3 panneaux) — workflow standard confirmé (480p direction → 720p natif ou upscale ByteDance 1080p,
+~$0.007/s). Détail complet : `tools/minimax-h3-styles-tests.md`. Clips finaux
++ références Higgsfield consolidés : `reference-styles-h3/README.md` (LIRE EN PREMIER — contient une
+correction d'étiquetage importante). Reste à tester : Whiteboard Doodle (référence prête dans ce même
+dossier). Prompt de reprise dédié : `PROMPT-REPRISE-SESSION-H3-STYLES.md`.
+
 ## Pourquoi (contexte décision)
 Diversification hors Kora & Cartes (8 vues sur dernier long-form CFA, doute niche). TubeLab a
 validé un signal fort : marché EN "Canada mégaprojet/mystère/histoire", faceless, long-form

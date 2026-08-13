@@ -1,0 +1,31 @@
+subject_definitions:
+<Picture 1>: A flat vector poster illustration of a robed Spanish judge sitting behind an ornate wooden tribunal desk, flanked by stylized stone columns against a deep navy blue background, bold color-block style with a diagonal drop-shadow, minimal facial detail. Empty space above the judge's head.
+<Picture 2>: The same flat vector illustration, same judge, same desk, same columns, same style — but now a glowing golden scale-of-justice icon is fully materialized and floating above the judge's head, softly glowing.
+<Subject 1>: The judge and courtroom scene depicted in both <Picture 1> and <Picture 2> — same pose, same desk, same columns, same flat vector style.
+<Subject 2>: The golden scale-of-justice icon shown fully formed in <Picture 2> — the graphic element that materializes during the shot.
+
+summary:
+[keyframe completion] Animate the golden scale icon (<Subject 2>) materializing in the empty space above the judge (<Subject 1>), starting from nothing visible in <Picture 1> and ending fully formed and glowing exactly as shown in <Picture 2>. The judge and courtroom stay almost completely static — motionless silhouette — throughout the shot; the icon materializing is the entire subject of the motion.
+
+retention_analysis:
+<Picture 1>: fully_preserved — the judge's pose, the desk, the columns, and the flat color-block background must remain exactly as shown, static, throughout the entire shot.
+<Picture 2>: fully_preserved — this is the exact ending frame, the golden scale icon must match this final glowing, fully-formed shape and position precisely by the last frame.
+<Subject 1>: fully_preserved — the judge and courtroom never move or change pose during the shot.
+<Subject 2>: attribute_transfer — the scale icon does not exist at the start; it is generated during the shot as a graphic motion-design element, matching the flat vector icon style established in <Picture 2>.
+
+detailed_description:
+A static, unmoving camera holds on the flat vector poster illustration of the judge and courtroom, exactly as shown in <Picture 1>, in a bold color-block motion-graphics style with sharp clean edges and diagonal drop-shadow.
+
+[Shot 1]
+0-1.5s: The scene is held completely still, exactly matching <Picture 1> — the judge motionless behind his desk, empty space above his head, flat color-block background.
+1.5-3s: A faint golden light begins to bloom in the empty space above the judge's head, like a graphic element fading in — no scale shape yet, just a soft glow starting to appear, motion-graphics style, not a physical object falling or dropping.
+3-5s: The golden light resolves into the flat vector shape of the scale of justice, the two pans and the central post drawing in cleanly like an icon assembling itself, matching the exact flat vector icon style of the rest of the illustration — a graphic reveal, not a 3D object rotating or falling into place.
+5-6.5s: The scale icon completes its shape, fully formed and glowing, matching <Picture 2> exactly. Hold on this final composition — judge motionless below, glowing golden scale icon fully formed above.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), the judge and desk NEVER move, no change in the judge's pose or facial expression, no change in the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic), the scale icon must materialize as a flat 2D graphic element (like a motion-graphics reveal), NOT as a physical 3D object that falls, drops, swings, or tumbles into place, no new characters appearing, no text overlay, no title card, no jump cuts, no change in the navy background color or the columns.
+
+overall_soundscape:
+A soft magical chime or glowing hum as the icon materializes, otherwise silent courtroom ambience.
+
+non_diegetic_music:
+N/A
