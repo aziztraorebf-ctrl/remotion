@@ -463,6 +463,19 @@ def phase_scan(episode: str, beat_num: int) -> None:
     print(">>>   8 principes (chiffre-evenement, secondary motion, metaphore physique, transitions seamless...)")
     print(">>>   Briques HERO DATA pretes : CountUp(bounce), HeroMirrorBars, FloatingHeroObject,")
     print(">>>   Badge(satellite), CountdownReveal(pingNode), TextChoc, SubtitleBarSouverain.\n")
+    print(">>> * REGLE CAPACITE NON UTILISEE (NON-NEGOTIABLE — ajoutee 2026-07-25) :")
+    print(">>>   Le scan repond a 'qu'est-ce qu'on A ?'. Il DOIT aussi repondre a 'qu'est-ce qui MANQUE ?'.")
+    print(">>>   Signaler a Aziz UNE capacite non utilisee — celle qui aurait le plus d'effet sur CE beat.")
+    print(">>>   UNE seule, ciblee, jamais un catalogue. Format doctrine :")
+    print(">>>     « Je remarque [X]. Reco : [Y]. On en discute avant que je code ? »")
+    print(">>>   Pourquoi : nos scenes sont jugees 'ca marche', jamais 'ca pourrait etre mieux'. Le pipeline")
+    print(">>>   VALIDE, il ne cherche pas ce qui est ABSENT. Aziz ne peut pas demander ce qu'il ignore —")
+    print(">>>   c'est a Claude de proposer (doctrine 'signalement ET proposition proactifs').")
+    print(">>>   Pistes deja documentees comme sous-exploitees : Mapbox/D3 et bloc SVG")
+    print(">>>   (MOTEURS-VISUELS-ET-SOCLE) · finitions matiere : glow multi-couches, reflet au sol,")
+    print(">>>   pointe de trace, couche atmosphere (svg-library/techniques/neon-glow-reflet-trace.md)")
+    print(">>>   · mouvement de camera SVG (g transform dans un viewBox FIXE).")
+    print(">>>   Si rien ne manque VRAIMENT sur ce beat : l'ecrire explicitement ('RAS, et pourquoi').\n")
     print(f">>> Ecrire le scan dans : {output}")
     print(">>> Format attendu (rempli par Claude, puis valide par Aziz) :")
     print("""
@@ -491,7 +504,13 @@ def phase_scan(episode: str, beat_num: int) -> None:
             f"## Combinaisons proposees (>= 2, plusieurs templates assembles)\n"
             f"- Option A : [corps] + [insert] + [overlay] + [sous-titre]\n"
             f"- Option B : [alternative]\n\n"
-            f"## Recommandation\n(choix + justification doctrine playbook)\n"
+            f"## Recommandation\n(choix + justification doctrine playbook)\n\n"
+            f"## * Capacite NON UTILISEE (obligatoire — 1 seule, la plus utile a CE beat)\n"
+            f"> Ce que le scan ci-dessus ne dit pas : ce qui MANQUE. Repondre meme si la reponse est RAS.\n"
+            f"- Je remarque : (ce qui rendrait cette scene meilleure et qu'on n'utilise pas)\n"
+            f"- Reco : (la capacite + l'effet attendu, en 1 phrase)\n"
+            f"- Cout : (temps / API / risque) et QUAND l'appliquer (ce beat ou plus tard)\n"
+            f"- [ ] presente a Aziz AVANT de coder\n"
         )
         print(f"\n[OK] Squelette scan cree : {output}")
         print(f"     Claude le remplit (scan COMPLET + >=2 combinaisons), le presente a Aziz,")
