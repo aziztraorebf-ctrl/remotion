@@ -53,6 +53,9 @@ appréciée par Aziz — comparable à notre pratique SVG maison). Défaut rési
 "morphé" en 480p) confirmé être un simple artefact de basse résolution, réglé par l'upscale — pas un
 vrai défaut H3. Détail technique complet + prompts reproductibles + syntaxe dialogue validée :
 `tools/minimax-h3-styles-tests.md`. Assets : `episodes/_rnd/kora-cartes-mythologie/tests-visuels/`.
+(ces tests du 2026-08-13 utilisaient le format 6-sections, depuis remplacé par le format officiel
+H3-Base — voir `tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" avant de reproduire
+cette méthode sur un nouveau sujet).
 **Reste ouvert** : décision de format (insert dans vidéo Mapbox/D3 existante vs vidéo complète) — pas
 encore tranché, sujet pas encore choisi non plus (piste A "pays qui montent" vs mythe reste à trancher).
 
@@ -89,15 +92,14 @@ systématiquement dès qu'une scène carte D3/Mapbox est jugée plate/statique**
 
 ---
 
-## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-13)
+## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-14)
 
-Marché EN validé (TubeLab, RPM jusqu'à 20$+). Script V3 FR validé jury 4 LLM ("baleine volée de Red
-Bay"), 2 tests visuels réussis (SVG Fable5 MAX, clip MiniMax H3) + **2 styles H3 testés et validés
-(Hand Drawn, Poster Vector) avec workflow standard confirmé (480p direction → 720p/upscale ByteDance
-1080p)** — détail `tools/minimax-h3-styles-tests.md`, clips de référence dans
-`episodes/_rnd/canada-red-bay/reference-styles-h3/`. Reste à tester : Whiteboard Doodle (référence
-prête). Décision à prendre : scène Mapbox réelle ou assembler la 1ère scène complète. Détail :
-`episodes/_rnd/canada-red-bay/STATUS.md`.
+Marché EN validé (TubeLab, RPM jusqu'à 20$+). Script V3 FR validé jury 4 LLM. **3 styles H3 validés**
+(Hand Drawn, Poster Vector narratif + Poster Vector SaaS/logo/scène-2-personnages) + **format de prompt
+H3 officiel découvert et adopté par défaut** (l'ancien format 6-sections n'était pas le vrai format
+documenté) — détail `tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL". Reste à tester :
+Whiteboard Doodle. Décision à prendre : scène Mapbox réelle ou assembler la 1ère scène complète.
+Détail : `episodes/_rnd/canada-red-bay/STATUS.md`.
 
 ---
 

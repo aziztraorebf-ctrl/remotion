@@ -24,13 +24,30 @@ Conclusion : le registre "mystère historique canadien" tourne bien dans le pipe
 (Mapbox/D3/SVG Fable5/génération vidéo), sans brique manquante. Fable5 confirmé meilleur choix
 SVG scène organique sur ce projet.
 
-**⭐⭐⭐ 2 styles H3 testés et VALIDÉS en aval de ce test pipeline (même session, 2026-08-13)** : Hand
+**⭐⭐⭐ 2 styles H3 testés et VALIDÉS en aval de ce test pipeline (2026-08-13)** : Hand
 Drawn (marche+réaction narrative, 2 plans) et Poster Vector (reveal d'icône synchronisé + split-screen
 3 panneaux) — workflow standard confirmé (480p direction → 720p natif ou upscale ByteDance 1080p,
 ~$0.007/s). Détail complet : `tools/minimax-h3-styles-tests.md`. Clips finaux
 + références Higgsfield consolidés : `reference-styles-h3/README.md` (LIRE EN PREMIER — contient une
 correction d'étiquetage importante). Reste à tester : Whiteboard Doodle (référence prête dans ce même
 dossier). Prompt de reprise dédié : `PROMPT-REPRISE-SESSION-H3-STYLES.md`.
+
+**⭐⭐⭐ Session 2026-08-14 — registre SaaS/corporate exploré, format de prompt H3 corrigé.** Point de
+départ : Aziz a montré une vidéo portfolio Fiverr SaaS ("Datana") comme preuve que le registre Poster
+Vector pouvait aller au-delà du narratif mythologique. 3 tests menés : (1) logo texte+symbole qui se
+matérialise depuis zéro — VALIDÉ, texte net et non déformé même après upscale (voir
+`reference-styles-h3/logo-materialize/`) ; (2) scène supermarché 2 personnages (marche→caisse→scan) —
+échec en 1 seul clip (mouvements cumulés dilués, scanner dupliqué, expression figée), corrigé en
+découpant en 2 clips à 1 mouvement chacun ; (3) **découverte majeure** : le format de prompt "6-sections"
+utilisé sur TOUTE la session (Hadès, juge, logo, supermarché) n'est PAS le format officiel documenté
+pour le node H3-Base gratuit — c'est une invention communautaire. Le vrai format officiel
+(`integrated_multimodal_description`/timestamps absolus/pas de section négative dogmatique) a été
+reconstruit et testé — combiné à 2 techniques (image de référence à expression neutre + trajet
+main→objet explicite), résultat jugé "beaucoup mieux" par Aziz (scanner non dupliqué, expression
+progressive). **Format officiel adopté par défaut pour tout futur prompt H3**, détail complet +
+comparaison dans `tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" (en tête de fichier).
+Défaut restant noté pour un futur test : la caissière devrait prendre visiblement un article DANS le
+panier avant de scanner (actuellement elle scanne "dans le vide" à côté).
 
 ## Pourquoi (contexte décision)
 Diversification hors Kora & Cartes (8 vues sur dernier long-form CFA, doute niche). TubeLab a

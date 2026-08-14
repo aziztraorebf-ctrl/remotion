@@ -24,6 +24,7 @@ Le vrai 2e style Hand Drawn (`ref3.mov`, grayscale crayon) vit dans `hand-drawn-
 | **Poster Vector** | `poster-vector/00-reference-originale-higgsfield.mov` | ✅ `poster-vector/01-notre-clip-final-1080p-VALIDE.mp4` + `tests-visuels/scene-postervector-coinrain-v2/clip-testC-v2-1080p-bytedance.mp4` | **VALIDÉ** — split-screen 3 panneaux (reveal + vie continue) ET personnage assis + pluie de particules + interaction physique séquentielle (pluie→saisie). Détail méthode : `tools/minimax-h3-styles-tests.md` § "TEST POSTER VECTOR #3". |
 | **Whiteboard Doodle** | `whiteboard-doodle/00-reference-originale-higgsfield.mov` | ❌ Pas encore testé | À faire en session future |
 | **Hand Drawn grayscale (2e variante)** | `hand-drawn-grayscale-untested/00-reference-originale-higgsfield-MAL-ETIQUETE-AVANT.mov` | ❌ Jamais testé, découvert par erreur d'étiquetage | Optionnel, style différent du Hand Drawn déjà validé |
+| **Logo materialize** (Poster Vector, registre SaaS/corporate) | Portfolio Fiverr "Datana" (vidéo envoyée par Aziz 2026-08-14, pas Higgsfield) | ✅ `logo-materialize/01-notre-clip-final-1080p-VALIDE.mp4` | **VALIDÉ** — logo texte+symbole (ailes+arc+wordmark "DATANA") qui se matérialise depuis un fond vide, texte net et non déformé confirmé en zoom. Détail méthode : `tools/minimax-h3-styles-tests.md` § "TEST LOGO". |
 
 ## Contenu de chaque dossier
 

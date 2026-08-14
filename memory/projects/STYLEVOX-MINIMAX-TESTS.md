@@ -574,9 +574,9 @@ appliqué en le poussant plus loin — au lieu de coder le staging d'éléments 
 `VoxPapercutAvion16x9.tsx`, cf [[REVERSE-STYLE-VIDEO-VERS-ASSETS]]), déléguer le staging ENTIER à H3 via
 son mode Ref2VA multi-référence (jusqu'à 9-12 `<Picture N>`, ici 3 testés : fond crique vide, rocher
 isolé, corde tranchée isolée — tous générés séparément en papercraft Gemini 3.1 Flash Image, palette et
-grain cohérents). Prompt au format officiel 6 sections (`subject_definitions` → `summary` →
+grain cohérents). Prompt au format 6 sections (`subject_definitions` → `summary` →
 `retention_analysis` → `detailed_description` avec `[Shot N] At 00:0X.000s` par élément → `overall_soundscape`
-→ `non_diegetic_music`), séquençage explicite 0-2s fond seul / 2-4s rocher qui se pose / 4-6s corde qui
+→ `non_diegetic_music`) — ⚠️ ce format n'est plus considéré comme le format officiel du node H3-Base local depuis la correction du 2026-08-14, voir `memory/tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" — séquençage explicite 0-2s fond seul / 2-4s rocher qui se pose / 4-6s corde qui
 apparaît / 6-8s hold. Graphe API étendu à 3 `LoadImage` (`ref_images.ref_image_0/1/2` sur
 `MiniMaxH3ReferenceToVideo` — c'est un slot `COMFY_AUTOGROW_V3`, pas limité à 2 malgré le template par
 défaut n'en câblant que 2 ; confirmé extensible via `get_node`, dry_run 0 warning). Prompt complet :

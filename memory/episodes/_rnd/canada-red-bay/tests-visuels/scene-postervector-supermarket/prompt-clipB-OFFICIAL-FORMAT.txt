@@ -1,0 +1,11 @@
+integrated_multimodal_description:
+
+[Shot 1] Flat vector poster illustration style, bold color-block motion-graphics rendering, sharp clean vector edges, soft diagonal drop-shadow, bright vivid mid-tone blue background, warm golden-yellow accents, static unmoving camera. Checkout counter area of a small convenience store: a female cashier with glasses and long hair stands behind the counter, a handheld barcode scanner (gun-shaped, distinct dark silhouette) resting upright on its stand, connected by a coiled cord to the register. <Picture 1> shows the male customer standing completely still directly at the counter, feet planted flat, holding a shopping basket at his side with one hand; the cashier's face is calm and neutral, mouth closed, relaxed, watching him. From this exact starting pose, the customer swings the basket up in one quick, energetic, ordinary motion and sets it down on the counter surface, clear visible contact between basket and counter. As the basket settles, the cashier's neutral expression warms into a genuine, natural smile, and at the same moment her arm reaches to the scanner's stand; her fingers close around its handle, she lifts it clearly off the stand so the stand is visibly empty the instant the scanner leaves it, quickly passes a single item from the basket in front of it, a small clean flat-vector scan-flash marking the exact point of contact between item and scanner, then returns the same scanner to its stand in one continuous motion, the stand receiving it back. Both characters settle into a calm, natural final pose, the cashier still smiling. At 00:04.000, hold on this final composition.
+
+overall_soundscape:
+Soft ambient store hum, a quick thud as the basket lands, a small mechanical click as the scanner lifts off its stand, a clean electronic beep at the scan-flash, a soft click as it returns.
+
+non_diegetic_music:
+N/A
+
+negative_keywords: slow motion, floating scanner, duplicate scanner, second scanner, scanner appearing from nowhere, empty stand not shown, basket already on counter, static frozen smile, unchanging expression, camera movement, style drift, painterly, hand-drawn, 3D, photorealistic, dark desaturated colors, jump cuts, new characters, text overlay

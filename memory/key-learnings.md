@@ -1056,3 +1056,62 @@ quelques heures), nettoyer les uploads de vérification intermédiaires AU FIL D
 (`scripts/tools/cleanup-blob.py <prefix>` après chaque itération validée/dépassée), pas seulement
 en fin de session. Le quota Hobby (1GB) est petit face à des vidéos 2K de plusieurs Mo chacune —
 une dizaine d'itérations suffit à le saturer.
+
+---
+
+## Prompt vidéo I2V multi-actions = mouvement dilué/ralenti — généralisable au-delà de H3 — 2026-08-14 (canada-red-bay, scène supermarché)
+
+Un prompt qui cumule plusieurs actions distinctes dans un seul clip vidéo généré (marche + pose d'un
+objet + geste d'un 2e personnage) produit un mouvement perçu comme "au ralenti", confirmé par recherche
+externe (LTX blog, AIVid) : le modèle répartit le "budget de mouvement" disponible sur toute la durée
+demandée plutôt que d'exécuter chaque action à son rythme naturel. Vérifié empiriquement : 1 clip de 10s
+à 3 actions cumulées → lenteur perçue + duplication d'un objet manipulé + expression figée ; découpage en
+2 clips à 1 action principale chacun → net gain de vitesse perçue, plus de duplication.
+
+**Règle généralisable (pas spécifique à MiniMax H3 — probablement valable sur Seedance/Kling aussi)** :
+au moment d'écrire un prompt vidéo I2V, découper toute séquence multi-actions en clips séparés à 1
+mouvement principal chacun, PAR DÉFAUT — pas seulement comme correctif après un premier échec. Assembler
+les clips séparément en post (Remotion/ffmpeg) plutôt que de compter sur un seul prompt long pour
+enchaîner plusieurs beats.
+
+## Image de référence à expression NEUTRE pour tout personnage devant transitionner d'état — 2026-08-14 (canada-red-bay)
+
+Pour qu'un personnage secondaire montre une transition crédible (expression neutre→sourire, posture
+calme→active) pendant un clip I2V généré, l'image de référence de départ doit capturer l'état INITIAL
+neutre — pas déjà l'état final attendu. Vécu : une caissière de référence déjà souriante a produit un
+clip avec un sourire figé identique du début à la fin (le modèle n'a rien à transitionner vers). Régénérée
+en expression neutre, la même scène a produit une vraie transition progressive vers le sourire pendant
+le clip.
+
+**Généralisable** à tout portrait/personnage de référence I2V où un changement d'état émotionnel ou
+postural est attendu pendant le clip — y compris probablement pour le registre stick-figure/personnage
+vivant qui gère aussi des expressions (`src/projects/_shared/stick-figure-svg/`).
+
+## Trajet main→objet explicite obligatoire pour éviter la duplication d'un objet manipulé — 2026-08-14 (canada-red-bay)
+
+Un prompt I2V qui décrit seulement l'action finale ("elle scanne l'article") sans décrire le TRAJET
+physique complet (main qui s'approche → contact avec l'objet → objet soulevé de son support → geste →
+objet reposé) a tendance à faire apparaître une 2e instance de l'objet plutôt que de déplacer l'unique
+instance existante — vécu sur un scanner de caisse dupliqué (visible à la fois sur son support ET dans la
+main de la caissière). Fix : décrire explicitement chaque étape du trajet, y compris le moment où le
+support redevient visiblement vide au moment où l'objet est saisi.
+
+Distinct du principe déjà documenté "geste attraper en l'air = échec" (`tools/minimax-h3-styles-tests.md`
+§ TEST POSTER VECTOR #3, pluie de pièces) : celui-ci porte sur la DUPLICATION d'un objet déjà posé et
+statique, pas sur la matérialisation d'un objet en mouvement dans les airs — même famille de défaut
+(objet mal ancré physiquement dans la scène) mais déclenché différemment.
+
+## Feedback méthode Aziz — tester plusieurs variables combinées quand demandé explicitement, pas isolées par défaut — 2026-08-14 (canada-red-bay)
+
+Sur le test du format de prompt H3 officiel, un test isolé (format seul, même image/action) avait montré
+"aucune différence" de vitesse de marche. Aziz a ensuite demandé explicitement de "voir si tout ce qu'on
+a appris change quelque chose" — ce qui voulait dire tester le format officiel COMBINÉ à 2 autres
+changements simultanément (image de référence à expression neutre + trajet main→objet explicite), pas
+une nouvelle batterie de tests isolés variable par variable. Le résultat combiné a été jugé "beaucoup
+mieux", sans qu'on puisse attribuer la cause exacte à une seule des 3 variables — accepté consciemment
+par Aziz ("ne pas conclure que le format seul a causé ce gain").
+
+**Règle** : isoler chaque variable reste le bon réflexe par défaut pour diagnostiquer une cause précise,
+SAUF quand Aziz demande explicitement de voir l'effet cumulé de plusieurs apprentissages à la fois — dans
+ce cas, suivre sa demande même si ça sacrifie la capacité à identifier quelle variable précise a produit
+le gain.

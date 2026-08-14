@@ -1,7 +1,7 @@
 # MiniMax H3 — Comfy Cloud (mécanique, node IDs, guide officiel, tests réels)
 
 > Fichier scindé depuis `minimax.md` le 2026-08-13. Sommaire général : `minimax.md`. Tests de styles (Hand Drawn, Poster Vector) : `minimax-h3-styles-tests.md`. API fal.ai payante : `minimax-h3-api-fal.md`.
-> Contenu : template open-weight `video_minimax_h3_r2v`/`video_minimax_h3_t2v` via Comfy Cloud (inclus dans l'abonnement), guide de prompting officiel MiniMax, format 6-sections, workflow validé `submit_workflow`, tous les tests réels (Sonjata, NoteShield, Flowdesk, Pêcheur, Mariama Bâ...).
+> Contenu : template open-weight `video_minimax_h3_r2v`/`video_minimax_h3_t2v` via Comfy Cloud (inclus dans l'abonnement), guide de prompting officiel MiniMax, format 6-sections (⚠️ voir correction 2026-08-14 dans `minimax-h3-styles-tests.md` avant d'appliquer — ce format est officiel pour l'API hébergée payante, pas confirmé pour notre node local gratuit), workflow validé `submit_workflow`, tous les tests réels (Sonjata, NoteShield, Flowdesk, Pêcheur, Mariama Bâ...).
 
 ## ⭐⭐ MiniMax H3 via Comfy Cloud (open-weight, INCLUS DANS L'ABONNEMENT, validé 2026-08-08) — PRÉFÉRER À L'API fal.ai
 
@@ -1099,6 +1099,8 @@ caméra continu plutôt qu'une coupure.
 traduction (ex: bannière/néon/panneau visible).
 
 #### Structure officielle — mode multi-référence (Ref2VA, NOTRE USAGE PRINCIPAL)
+
+**⛔⛔⭐⭐⭐ CORRECTION 2026-08-14** : ce format 6-sections documenté par le guide GitHub MiniMax-AI est officiel pour l'API Ref2VA **HÉBERGÉE PAYANTE** — **PAS confirmé comme le format attendu par le node H3-Base open-weight local** qu'on utilise réellement via Comfy Cloud (`video_minimax_h3_r2v`, notre usage principal réel malgré le titre de cette section). Testé côte à côte le 2026-08-14 sur le même cas : aucune preuve que ce format apporte un avantage sur notre pipeline gratuit, et un vrai désalignement structurel identifié avec le format que le node local attend (`integrated_multimodal_description`, timestamps absolus, pas de section négative dogmatique). **Voir `memory/tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" (en tête de fichier) avant tout nouveau prompt** — le contenu ci-dessous reste une référence valide du guide GitHub en tant que tel, mais ne plus le traiter comme "notre format à suivre" par défaut.
 
 **6 sections dans cet ordre strict** (très différent de notre pratique actuelle en un seul bloc) :
 1. **`subject_definitions`** — définit CHAQUE élément référencé séparément avec 4 types de labels :

@@ -7,7 +7,7 @@ Colle ce prompt en début de prochaine session pour reprendre exactement où on 
 On a testé et VALIDÉ 2 styles Higgsfield Explainer avec MiniMax H3 (Hand Drawn, Poster Vector) — workflow complet documenté dans `memory/tools/minimax-h3-styles-tests.md` (sommaire général : `memory/tools/minimax.md`). Résultats consolidés dans `memory/episodes/_rnd/canada-red-bay/reference-styles-h3/` — LIRE LE README EN PREMIER (contient une correction d'étiquetage importante sur les 3 vidéos de référence Aziz).
 
 **Ce qui reste à faire** :
-1. **Whiteboard Doodle** — jamais testé. Référence prête dans `reference-styles-h3/whiteboard-doodle/`. Appliquer le même workflow validé (480p pour la direction → 720p ou upscale ByteDance 1080p pour la finition), format officiel H3 6-sections (`subject_definitions`/`retention_analysis` avec `attribute_transfer` pour les éléments qui apparaissent).
+1. **Whiteboard Doodle** — jamais testé. Référence prête dans `reference-styles-h3/whiteboard-doodle/`. Appliquer le même workflow validé (480p pour la direction → 720p ou upscale ByteDance 1080p pour la finition), format de prompt H3 officiel (`integrated_multimodal_description`, voir `memory/tools/minimax-h3-styles-tests.md` § "FORMAT DE PROMPT OFFICIEL" en tête de fichier, corrigé le 2026-08-14 — NE PLUS utiliser le format 6-sections `subject_definitions`/`retention_analysis`).
 2. **Hand Drawn grayscale (2e variante)** — optionnel, découvert par erreur d'étiquetage. Référence dans `reference-styles-h3/hand-drawn-grayscale-untested/`. Différent du Hand Drawn sépia/encre couleur déjà validé.
 
 **Workflow standard confirmé (à réutiliser tel quel)** :

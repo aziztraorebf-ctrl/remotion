@@ -1,0 +1,9 @@
+integrated_multimodal_description:
+
+[Shot 1] Flat vector poster illustration style, bold color-block motion-graphics rendering, sharp clean vector edges, soft diagonal drop-shadow, bright vivid mid-tone blue background, warm golden-yellow accents, cheerful well-lit retail poster energy. Interior of a small convenience store, static unmoving camera, wide framing: on the left, shelving stocked with colorful products and a "SALE" sign, a tall glass-door refrigerator; on the right, a checkout counter with a glass partition, a smiling female cashier standing behind it, a handheld barcode scanner resting on its stand on the counter. <Picture 1> shows the male customer already mid-stride, weight on his forward foot, a shopping basket swinging slightly in his hand, seen in profile. From this exact pose, he walks briskly across the frame toward the checkout counter at a real, normal, energetic human walking pace: each step shows clear heel-first ground contact rolling forward through the foot, weight transferring fully from one leg to the other, the opposite leg swinging through with natural momentum, arms swinging opposite the legs, torso leaning very slightly forward like someone with a purpose, not strolling. He covers the full remaining distance to the counter within a few brisk strides, arrives directly in front of it, and comes to a quick, natural stop, both feet settling flat on the ground, facing the cashier, basket held steady at his side. The cashier remains still behind the counter throughout, smiling, watching him approach. The walk must read as brisk and grounded, never slow-motion, never gliding, never floating in place.
+
+overall_soundscape:
+Soft ambient store background hum, clear brisk footsteps landing on the floor in rhythm with each stride, fading as the customer comes to a stop.
+
+non_diegetic_music:
+N/A
