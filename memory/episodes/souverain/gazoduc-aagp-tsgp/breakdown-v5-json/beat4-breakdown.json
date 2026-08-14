@@ -1,0 +1,1871 @@
+{
+  "breakdown_id": "V5_final_beat_paradoxe_maroc_algerie",
+  "language": "fr",
+  "format": "D3.js + Remotion, SVG/Canvas 2D uniquement, GeoJSON réel, aucune 3D, aucun After Effects",
+  "narration_beat": "Paradoxe final : le Maroc reste stable sécuritairement mais avec un financement suspendu ; l’Algérie est autonome financièrement mais traverse une zone de conflit. Le beat clôt le segment sur ce contraste.",
+  "continuity": {
+    "cut": false,
+    "description": "Le beat démarre en continuité directe avec la carte déjà tracée précédemment. Les deux tracés TSGP et AAGP sont déjà visibles à l’image au premier frame de ce beat.",
+    "initial_state_at_t0": {
+      "map_geojson": "déjà visible",
+      "countries_strokes": "déjà dessinés et remplis",
+      "TSGP_route": "visible en cyan",
+      "AAGP_route": "visible en doré",
+      "camera": "déjà en mouvement lent, jamais figée"
+    }
+  },
+  "render_settings": {
+    "resolution": {
+      "width": 1920,
+      "height": 1080,
+      "fps": 30
+    },
+    "projection": {
+      "type": "d3.geoMercator",
+      "base_fit": "Afrique du Nord + Afrique de l’Ouest + Méditerranée occidentale",
+      "camera_transform": "scale + translate interpolés par Remotion, avec center_lonlat et zoom_factor"
+    },
+    "background": {
+      "type": "rect + radial gradients",
+      "base_color": "#061A2F",
+      "deep_ocean_gradient": [
+        "#04111F",
+        "#06213A",
+        "#0A2B47"
+      ]
+    },
+    "palette": {
+      "navy_bg": "#061A2F",
+      "navy_panel": "#071B2E",
+      "map_land_fill": "#123553",
+      "map_land_fill_dimmed": "#0A2035",
+      "map_country_stroke": "#5E7F98",
+      "map_country_stroke_soft": "#3E607A",
+      "cyan": "#20D6FF",
+      "cyan_soft": "#73E7FF",
+      "cyan_dark": "#0E7FA3",
+      "gold": "#F6C545",
+      "gold_soft": "#FFE38A",
+      "gold_dark": "#B98214",
+      "red": "#FF4B45",
+      "red_soft": "#FF9A8E",
+      "red_dark": "#A8171E",
+      "white": "#EAF7FF",
+      "muted_text": "#AFC7D8",
+      "card_fill": "rgba(5, 20, 35, 0.88)",
+      "card_stroke_cyan": "#20D6FF",
+      "card_stroke_gold": "#F6C545",
+      "dim_overlay": "rgba(0, 8, 18, 0.46)",
+      "vignette": "rgba(0, 0, 0, 0.35)"
+    },
+    "global_effects": {
+      "route_glow_filter": {
+        "type": "SVG filter",
+        "blur": 7,
+        "opacity": 0.65
+      },
+      "pin_halo": {
+        "type": "SVG circle",
+        "animation": "scale + opacity loop",
+        "duration_seconds": 1.35
+      },
+      "deathFlicker": {
+        "already_available": true,
+        "usage_in_this_beat": "utilisé sur le segment algérien du TSGP au panneau 03 pour provoquer un vacillement organique irrégulier avant bascule en rouge instable",
+        "expected_signature": "deathFlicker(frame, fps, seed, intensity, decay)",
+        "constraint": "ne jamais utiliser comme fondu linéaire ; vacillement irrégulier uniquement"
+      }
+    }
+  },
+  "geo_data": {
+    "country_labels_allowed_for_this_beat": [
+      {
+        "country": "Maroc",
+        "label_text": "Maroc",
+        "anchor_lonlat": [
+          -6.8,
+          31.8
+        ]
+      },
+      {
+        "country": "Algérie",
+        "label_text": "Algérie",
+        "anchor_lonlat": [
+          2.2,
+          28.5
+        ]
+      },
+      {
+        "country": "Niger",
+        "label_text": "Niger",
+        "anchor_lonlat": [
+          8.1,
+          17.4
+        ]
+      }
+    ],
+    "country_labels_removed_to_respect_rule_3": [
+      {
+        "country": "Nigeria",
+        "reason": "non affiché en label texte dans la version animée finale afin de rester à 2-3 pays narrativement pertinents pour ce beat"
+      }
+    ],
+    "routes": {
+      "AAGP_rival_vers_maroc": {
+        "id": "route_aagp",
+        "meaning": "tracé rival vers le Maroc, stable sécuritairement mais financement suspendu",
+        "color_initial": "#F6C545",
+        "color_final": "#F6C545",
+        "stroke_width_px": 5,
+        "glow_color": "#F6C545",
+        "points_lonlat": [
+          [
+            3.38,
+            6.52
+          ],
+          [
+            2.43,
+            6.37
+          ],
+          [
+            1.22,
+            6.13
+          ],
+          [
+            -0.18,
+            5.56
+          ],
+          [
+            -4.03,
+            5.36
+          ],
+          [
+            -7.98,
+            12.64
+          ],
+          [
+            -11.5,
+            18.1
+          ],
+          [
+            -13.2,
+            23.7
+          ],
+          [
+            -9.6,
+            30.4
+          ],
+          [
+            -6.0,
+            34.0
+          ],
+          [
+            -5.8,
+            35.77
+          ],
+          [
+            -3.8,
+            36.4
+          ]
+        ],
+        "pin_points_lonlat": [
+          [
+            -4.03,
+            5.36
+          ],
+          [
+            -7.98,
+            12.64
+          ],
+          [
+            -13.2,
+            23.7
+          ],
+          [
+            -9.6,
+            30.4
+          ],
+          [
+            -6.0,
+            34.0
+          ]
+        ]
+      },
+      "TSGP_nigeria_niger_algerie": {
+        "id": "route_tsgp",
+        "meaning": "tracé Nigeria → Niger → Algérie, autonome financièrement mais exposé à une zone de conflit",
+        "color_initial": "#20D6FF",
+        "color_warning": "#F6C545",
+        "color_conflict_final": "#FF4B45",
+        "stroke_width_px": 5,
+        "glow_color_initial": "#20D6FF",
+        "points_lonlat": [
+          [
+            5.3,
+            5.4
+          ],
+          [
+            7.49,
+            9.06
+          ],
+          [
+            8.52,
+            12.0
+          ],
+          [
+            7.99,
+            16.97
+          ],
+          [
+            7.39,
+            18.74
+          ],
+          [
+            5.8,
+            22.4
+          ],
+          [
+            2.46,
+            27.2
+          ],
+          [
+            3.05,
+            30.1
+          ],
+          [
+            3.28,
+            32.94
+          ],
+          [
+            3.05,
+            36.75
+          ],
+          [
+            12.5,
+            37.5
+          ]
+        ],
+        "conflict_segment_lonlat": [
+          [
+            2.46,
+            27.2
+          ],
+          [
+            3.05,
+            30.1
+          ],
+          [
+            3.28,
+            32.94
+          ],
+          [
+            3.05,
+            36.75
+          ]
+        ],
+        "pin_points_lonlat": [
+          [
+            5.3,
+            5.4
+          ],
+          [
+            7.99,
+            16.97
+          ],
+          [
+            2.46,
+            27.2
+          ],
+          [
+            3.28,
+            32.94
+          ],
+          [
+            3.05,
+            36.75
+          ]
+        ]
+      }
+    }
+  },
+  "panels": [
+    {
+      "panel_id": "01",
+      "time_range_seconds": [
+        0,
+        4.8
+      ],
+      "intent": "Réinstaller le plan large : les deux tracés coexistent déjà, de poids visuel équivalent, sans hiérarchie encore forcée.",
+      "camera": {
+        "movement_type": "léger push-in continu avec micro-glissement ouest",
+        "never_static": true,
+        "keyframes": [
+          {
+            "t": 0,
+            "center_lonlat": [
+              -0.8,
+              22.0
+            ],
+            "zoom_factor": 1.18,
+            "easing_to_next": "easeInOutCubic"
+          },
+          {
+            "t": 2.4,
+            "center_lonlat": [
+              -3.4,
+              22.6
+            ],
+            "zoom_factor": 1.22,
+            "easing_to_next": "easeInOutCubic"
+          },
+          {
+            "t": 4.8,
+            "center_lonlat": [
+              -5.8,
+              23.0
+            ],
+            "zoom_factor": 1.27,
+            "easing_to_next": "continuous_into_panel_02"
+          }
+        ],
+        "framing_goal": "Garder simultanément visibles le Maroc, l’Algérie, le Niger et le départ des lignes au sud, avec Méditerranée en haut et Afrique de l’Ouest en bas gauche."
+      },
+      "elements": [
+        {
+          "id": "base_map_geojson",
+          "type": "geojson_country_paths",
+          "render": true,
+          "z_index": 0,
+          "geometry": {
+            "source": "real_geojson_countries",
+            "visible_region": "Afrique du Nord, Afrique de l’Ouest, Méditerranée occidentale"
+          },
+          "style": {
+            "fill": "#123553",
+            "stroke": "#5E7F98",
+            "stroke_width_px": 1.1,
+            "opacity": 1
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "suit le mouvement caméra de t=0 à t=4.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "country_label_maroc",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            -6.8,
+            31.8
+          ],
+          "text": "Maroc",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(246, 197, 69, 0.45)",
+            "radius_px": 6
+          },
+          "style": {
+            "font_family": "monospace",
+            "font_size_px": 18,
+            "letter_spacing_px": 0.4,
+            "fill": "#EAF7FF"
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "suit son ancrage géographique",
+            "disappear": "reste visible jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "country_label_algerie",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            2.2,
+            28.5
+          ],
+          "text": "Algérie",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(32, 214, 255, 0.45)",
+            "radius_px": 6
+          },
+          "style": {
+            "font_family": "monospace",
+            "font_size_px": 18,
+            "letter_spacing_px": 0.4,
+            "fill": "#EAF7FF"
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "suit son ancrage géographique",
+            "disappear": "reste visible jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "route_aagp_gold",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 12,
+          "route_ref": "AAGP_rival_vers_maroc",
+          "style": {
+            "stroke": "#F6C545",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#F6C545",
+            "opacity": 1
+          },
+          "animation": {
+            "dash_draw": "déjà complété avant t=0",
+            "flow_highlight": {
+              "type": "moving_dash",
+              "color": "#FFE38A",
+              "length_px": 90,
+              "speed_px_per_second": 105,
+              "opacity": 0.85
+            }
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "léger glow pulse de t=0 à t=4.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "route_tsgp_cyan",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 12,
+          "route_ref": "TSGP_nigeria_niger_algerie",
+          "style": {
+            "stroke": "#20D6FF",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#20D6FF",
+            "opacity": 1
+          },
+          "animation": {
+            "dash_draw": "déjà complété avant t=0",
+            "flow_highlight": {
+              "type": "moving_dash",
+              "color": "#73E7FF",
+              "length_px": 90,
+              "speed_px_per_second": 105,
+              "opacity": 0.85
+            }
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "léger glow pulse de t=0 à t=4.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "pins_aagp",
+          "type": "geo_anchored_circular_pins",
+          "render": true,
+          "z_index": 16,
+          "points_ref": "AAGP_rival_vers_maroc.pin_points_lonlat",
+          "style": {
+            "core_radius_px": 5,
+            "core_fill": "#FFE38A",
+            "core_stroke": "#F6C545",
+            "halo_color": "#F6C545",
+            "halo_max_radius_px": 18,
+            "halo_opacity": 0.38
+          },
+          "animation": {
+            "halo_loop_seconds": 1.35,
+            "stagger_seconds": 0.12
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "halo régulier t=0 à t=4.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "pins_tsgp",
+          "type": "geo_anchored_circular_pins",
+          "render": true,
+          "z_index": 16,
+          "points_ref": "TSGP_nigeria_niger_algerie.pin_points_lonlat",
+          "style": {
+            "core_radius_px": 5,
+            "core_fill": "#73E7FF",
+            "core_stroke": "#20D6FF",
+            "halo_color": "#20D6FF",
+            "halo_max_radius_px": 18,
+            "halo_opacity": 0.38
+          },
+          "animation": {
+            "halo_loop_seconds": 1.35,
+            "stagger_seconds": 0.12
+          },
+          "timing_estimate": {
+            "appear": "déjà visible à t=0",
+            "transform": "halo régulier t=0 à t=4.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "annotation_panel_01_badge",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "01",
+          "reason_not_rendered": "badge de storyboard uniquement"
+        },
+        {
+          "id": "annotation_panel_01_note",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "PLAN LARGE — les deux tracés coexistent, même poids visuel",
+          "reason_not_rendered": "note de storyboard en coin ; non rendue pour respecter la règle interdisant les widgets/panneaux en coin"
+        },
+        {
+          "id": "annotation_panel_01_push_in",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "léger push-in",
+          "reason_not_rendered": "note technique de storyboard uniquement"
+        }
+      ],
+      "timing_estimate": [
+        {
+          "t": "0.0-1.2",
+          "action": "continuité directe : carte et routes déjà visibles ; aucune apparition brutale"
+        },
+        {
+          "t": "1.2-3.6",
+          "action": "push-in lent ; égalité visuelle stricte entre le tracé doré Maroc et le tracé cyan Algérie"
+        },
+        {
+          "t": "3.6-4.8",
+          "action": "préparation du point de bascule : légère augmentation de vignette à 0.12 pour annoncer les overlays du panneau 02"
+        }
+      ],
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord": {
+          "status": "respecté",
+          "details": "Les notes de storyboard visibles sur l’image ne sont pas rendues. Aucun panneau final en coin d’écran."
+        },
+        "regle_2_aucun_texte_sans_support": {
+          "status": "respecté",
+          "details": "Les labels Maroc et Algérie sont des nameplates ancrées géographiquement avec fond et bordure."
+        },
+        "regle_3_label_2_3_pays_max": {
+          "status": "respecté",
+          "details": "Seulement Maroc et Algérie sont labellisés dans ce panneau. Nigeria est explicitement retiré."
+        },
+        "regle_4_camera_jamais_figee_plus_5s": {
+          "status": "respecté",
+          "details": "Push-in continu de t=0 à t=4.8."
+        }
+      }
+    },
+    {
+      "panel_id": "02",
+      "time_range_seconds": [
+        4.8,
+        10.8
+      ],
+      "intent": "Point de bascule : mêmes tuyaux, contraintes opposées. Correction explicite du storyboard : les deux inserts ne doivent pas être simultanément en blocs latéraux qui repoussent le plan large.",
+      "correction_explicitement_appliquee": {
+        "problem_in_storyboard_image": "Le panneau 02 de l’image montre deux inserts latéraux simultanés : financement à gauche et chantier à protéger à droite. Cette disposition pousse visuellement la géographie et enfreint la règle de chantier.",
+        "solution_finale": "Les inserts apparaissent en séquence, un seul à la fois, sous forme de cartes-overlay composées ancrées à leur point de carte respectif avec connecteur et dim de la carte derrière. Aucun insert ne repousse la géographie."
+      },
+      "camera": {
+        "movement_type": "glissement ouest-est très lent avec micro push-in, jamais une vraie pause",
+        "never_static": true,
+        "keyframes": [
+          {
+            "t": 4.8,
+            "center_lonlat": [
+              -5.8,
+              23.0
+            ],
+            "zoom_factor": 1.27,
+            "easing_to_next": "easeInOutSine"
+          },
+          {
+            "t": 7.2,
+            "center_lonlat": [
+              -4.2,
+              23.4
+            ],
+            "zoom_factor": 1.31,
+            "easing_to_next": "easeInOutSine"
+          },
+          {
+            "t": 10.8,
+            "center_lonlat": [
+              -2.0,
+              24.2
+            ],
+            "zoom_factor": 1.36,
+            "easing_to_next": "continuous_into_panel_03"
+          }
+        ],
+        "framing_goal": "Conserver les deux tracés dans le même cadre pendant que les contraintes apparaissent successivement, sans pousser la carte sur le côté."
+      },
+      "elements": [
+        {
+          "id": "base_map_geojson_continued",
+          "type": "geojson_country_paths",
+          "render": true,
+          "z_index": 0,
+          "style": {
+            "fill": "#123553",
+            "stroke": "#5E7F98",
+            "stroke_width_px": 1.1,
+            "opacity": 1
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 01",
+            "transform": "suit le glissement caméra de t=4.8 à t=10.8",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "dim_overlay_for_cards",
+          "type": "fullscreen_dim_overlay",
+          "render": true,
+          "z_index": 20,
+          "style": {
+            "fill": "#000812",
+            "opacity": 0
+          },
+          "animation": {
+            "opacity_keyframes": [
+              {
+                "t": 4.8,
+                "opacity": 0
+              },
+              {
+                "t": 5.05,
+                "opacity": 0.46
+              },
+              {
+                "t": 7.05,
+                "opacity": 0.46
+              },
+              {
+                "t": 7.2,
+                "opacity": 0
+              },
+              {
+                "t": 7.35,
+                "opacity": 0.46
+              },
+              {
+                "t": 10.45,
+                "opacity": 0.46
+              },
+              {
+                "t": 10.8,
+                "opacity": 0.16
+              }
+            ]
+          },
+          "timing_estimate": {
+            "appear": "fade-in t=4.8 à t=5.05",
+            "transform": "reste derrière chaque carte-overlay uniquement",
+            "disappear": "redescend à 0.16 à t=10.8 pour transition panneau 03"
+          }
+        },
+        {
+          "id": "route_aagp_gold_continued",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 12,
+          "route_ref": "AAGP_rival_vers_maroc",
+          "style": {
+            "stroke": "#F6C545",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#F6C545",
+            "opacity": 1
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 01",
+            "transform": "reste stable ; glow réduit à 0.72 pendant dim overlay pour lisibilité des cartes",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "route_tsgp_cyan_continued",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 12,
+          "route_ref": "TSGP_nigeria_niger_algerie",
+          "style": {
+            "stroke": "#20D6FF",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#20D6FF",
+            "opacity": 1
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 01",
+            "transform": "cyan maintenu jusqu’à la bascule du panneau 03",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "country_label_maroc_continued",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            -6.8,
+            31.8
+          ],
+          "text": "Maroc",
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "opacité abaissée à 0.62 pendant les cartes-overlay",
+            "disappear": "reste visible"
+          }
+        },
+        {
+          "id": "country_label_algerie_continued",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            2.2,
+            28.5
+          ],
+          "text": "Algérie",
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "opacité abaissée à 0.62 pendant les cartes-overlay",
+            "disappear": "reste visible"
+          }
+        },
+        {
+          "id": "country_label_niger",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            8.1,
+            17.4
+          ],
+          "text": "Niger",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(32, 214, 255, 0.38)",
+            "radius_px": 6
+          },
+          "style": {
+            "font_family": "monospace",
+            "font_size_px": 17,
+            "letter_spacing_px": 0.4,
+            "fill": "#EAF7FF"
+          },
+          "timing_estimate": {
+            "appear": "fade-in t=7.35 à t=7.65 pendant l’insert chantier",
+            "transform": "suit son ancrage géographique",
+            "disappear": "reste visible jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "overlay_financement_maroc",
+          "type": "anchored_composite_overlay_card",
+          "render": true,
+          "z_index": 30,
+          "anchor_lonlat": [
+            -6.0,
+            34.0
+          ],
+          "screen_offset_px_from_anchor": [
+            -210,
+            -145
+          ],
+          "size_px": [
+            390,
+            190
+          ],
+          "connector": {
+            "type": "polyline",
+            "stroke": "#F6C545",
+            "stroke_width_px": 2,
+            "dasharray": "6 4",
+            "from": "card_right_mid",
+            "to_anchor_lonlat": [
+              -6.0,
+              34.0
+            ],
+            "terminal_dot_radius_px": 5
+          },
+          "card_style": {
+            "fill": "rgba(5, 20, 35, 0.88)",
+            "stroke": "#F6C545",
+            "stroke_width_px": 1.6,
+            "corner_cut_px": 18,
+            "shadow": "0 0 22px rgba(246,197,69,0.22)"
+          },
+          "contents": [
+            {
+              "type": "text",
+              "text": "FINANCEMENT INT’L",
+              "position_px": [
+                195,
+                34
+              ],
+              "align": "center",
+              "style": {
+                "font_family": "monospace",
+                "font_size_px": 22,
+                "font_weight": 700,
+                "fill": "#EAF7FF"
+              }
+            },
+            {
+              "type": "text",
+              "text": "accord en attente",
+              "position_px": [
+                195,
+                62
+              ],
+              "align": "center",
+              "style": {
+                "font_family": "monospace",
+                "font_size_px": 15,
+                "fill": "#AFC7D8"
+              }
+            },
+            {
+              "type": "icon_bank",
+              "position_px": [
+                80,
+                118
+              ],
+              "size_px": [
+                76,
+                60
+              ],
+              "stroke": "#20D6FF",
+              "fill": "none",
+              "stroke_width_px": 2
+            },
+            {
+              "type": "icon_coin_stack",
+              "position_px": [
+                160,
+                120
+              ],
+              "size_px": [
+                42,
+                58
+              ],
+              "stroke": "#20D6FF",
+              "fill": "none",
+              "stroke_width_px": 2
+            },
+            {
+              "type": "circular_gauge",
+              "position_px": [
+                292,
+                119
+              ],
+              "radius_px": 48,
+              "value": 0.52,
+              "track_stroke": "rgba(234,247,255,0.22)",
+              "value_stroke": "#20D6FF",
+              "stroke_width_px": 10,
+              "text_center": "52%",
+              "text_sub": "EN ATTENTE",
+              "text_style": {
+                "fill": "#EAF7FF",
+                "font_family": "monospace"
+              }
+            }
+          ],
+          "animation": {
+            "enter": {
+              "t_start": 4.95,
+              "t_end": 5.25,
+              "opacity": [
+                0,
+                1
+              ],
+              "scale": [
+                0.96,
+                1
+              ]
+            },
+            "gauge_draw": {
+              "t_start": 5.25,
+              "t_end": 6.1,
+              "from_value": 0,
+              "to_value": 0.52
+            },
+            "hold": [
+              6.1,
+              6.95
+            ],
+            "exit": {
+              "t_start": 6.95,
+              "t_end": 7.2,
+              "opacity": [
+                1,
+                0
+              ],
+              "scale": [
+                1,
+                0.98
+              ]
+            }
+          },
+          "timing_estimate": {
+            "appear": "t=4.95",
+            "transform": "jauge 0→52% entre t=5.25 et t=6.1",
+            "disappear": "t=7.2, avant apparition de l’insert chantier"
+          }
+        },
+        {
+          "id": "overlay_chantier_algerie",
+          "type": "anchored_composite_overlay_card",
+          "render": true,
+          "z_index": 30,
+          "anchor_lonlat": [
+            3.05,
+            30.1
+          ],
+          "screen_offset_px_from_anchor": [
+            240,
+            20
+          ],
+          "size_px": [
+            430,
+            200
+          ],
+          "connector": {
+            "type": "polyline",
+            "stroke": "#20D6FF",
+            "stroke_width_px": 2,
+            "dasharray": "6 4",
+            "from": "card_left_mid",
+            "to_anchor_lonlat": [
+              3.05,
+              30.1
+            ],
+            "terminal_dot_radius_px": 5
+          },
+          "card_style": {
+            "fill": "rgba(5, 20, 35, 0.90)",
+            "stroke": "#20D6FF",
+            "stroke_width_px": 1.6,
+            "corner_cut_px": 18,
+            "shadow": "0 0 22px rgba(32,214,255,0.20)"
+          },
+          "contents": [
+            {
+              "type": "text",
+              "text": "CHANTIER À PROTÉGER",
+              "position_px": [
+                215,
+                34
+              ],
+              "align": "center",
+              "style": {
+                "font_family": "monospace",
+                "font_size_px": 21,
+                "font_weight": 700,
+                "fill": "#EAF7FF"
+              }
+            },
+            {
+              "type": "text",
+              "text": "zone de conflit",
+              "position_px": [
+                215,
+                62
+              ],
+              "align": "center",
+              "style": {
+                "font_family": "monospace",
+                "font_size_px": 15,
+                "fill": "#AFC7D8"
+              }
+            },
+            {
+              "type": "icon_shield",
+              "position_px": [
+                68,
+                124
+              ],
+              "size_px": [
+                60,
+                76
+              ],
+              "stroke": "#20D6FF",
+              "fill": "rgba(32,214,255,0.08)",
+              "stroke_width_px": 3
+            },
+            {
+              "type": "icon_warning_triangle",
+              "position_px": [
+                145,
+                125
+              ],
+              "size_px": [
+                52,
+                52
+              ],
+              "stroke": "#FF4B45",
+              "fill": "none",
+              "stroke_width_px": 3
+            },
+            {
+              "type": "pipeline_detail",
+              "position_px": [
+                260,
+                132
+              ],
+              "size_px": [
+                250,
+                42
+              ],
+              "stroke": "#20D6FF",
+              "fill": "none",
+              "stroke_width_px": 4,
+              "joints": 7
+            },
+            {
+              "type": "conflict_cracks_background",
+              "position_px": [
+                296,
+                128
+              ],
+              "size_px": [
+                240,
+                120
+              ],
+              "stroke": "#FF4B45",
+              "stroke_width_px": 1.2,
+              "opacity": 0.55
+            },
+            {
+              "type": "sparks",
+              "count": 5,
+              "position_area_px": [
+                210,
+                88,
+                380,
+                164
+              ],
+              "stroke": "#F6C545",
+              "opacity": 0.8
+            }
+          ],
+          "animation": {
+            "enter": {
+              "t_start": 7.35,
+              "t_end": 7.65,
+              "opacity": [
+                0,
+                1
+              ],
+              "scale": [
+                0.96,
+                1
+              ]
+            },
+            "pipeline_scan": {
+              "t_start": 7.75,
+              "t_end": 8.8,
+              "type": "cyan_scan_left_to_right"
+            },
+            "red_cracks_pulse": {
+              "t_start": 8.1,
+              "t_end": 10.45,
+              "opacity_range": [
+                0.25,
+                0.75
+              ],
+              "speed": "irrégulier léger"
+            },
+            "exit": {
+              "t_start": 10.45,
+              "t_end": 10.8,
+              "opacity": [
+                1,
+                0
+              ],
+              "scale": [
+                1,
+                0.98
+              ]
+            }
+          },
+          "timing_estimate": {
+            "appear": "t=7.35, après disparition complète de l’insert financement",
+            "transform": "scan cyan du tuyau t=7.75 à t=8.8 puis fissures rouges pulsées",
+            "disappear": "t=10.8"
+          }
+        },
+        {
+          "id": "annotation_panel_02_badge",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "02",
+          "reason_not_rendered": "badge de storyboard uniquement"
+        },
+        {
+          "id": "annotation_panel_02_note",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "POINT DE BASCULE — mêmes tuyaux, contraintes opposées",
+          "reason_not_rendered": "note de storyboard en coin ; non rendue pour respecter la règle interdisant les panneaux en coin"
+        },
+        {
+          "id": "annotation_panel_02_pause_camera",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "pause caméra + vignette",
+          "reason_not_rendered": "remplacé par micro-glissement continu ; la caméra ne doit pas être figée"
+        }
+      ],
+      "timing_estimate": [
+        {
+          "t": "4.8-5.05",
+          "action": "la carte s’assombrit derrière le premier overlay, sans cut"
+        },
+        {
+          "t": "5.05-7.2",
+          "action": "overlay financement ancré au Maroc ; texte affiché : FINANCEMENT INT’L / accord en attente / 52% / EN ATTENTE"
+        },
+        {
+          "t": "7.2-7.35",
+          "action": "interstice sans carte latérale ; retour bref de la carte comme respiration"
+        },
+        {
+          "t": "7.35-10.8",
+          "action": "overlay chantier ancré au segment algérien ; texte affiché : CHANTIER À PROTÉGER / zone de conflit"
+        }
+      ],
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord": {
+          "status": "corrigé et respecté",
+          "details": "Les deux inserts du storyboard ne sont pas rendus simultanément en blocs latéraux. Ils apparaissent en séquence, ancrés à des points de carte, avec connecteurs, sans repousser la géographie."
+        },
+        "regle_2_aucun_texte_sans_support": {
+          "status": "respecté",
+          "details": "Tous les textes sont dans des cartes composées ou nameplates, jamais nus dans l’océan ou le vide."
+        },
+        "regle_3_label_2_3_pays_max": {
+          "status": "respecté",
+          "details": "Pays labellisés dans ce panneau : Maroc, Algérie, Niger. Pas de liste complète des pays traversés."
+        },
+        "regle_4_camera_jamais_figee_plus_5s": {
+          "status": "respecté",
+          "details": "La mention storyboard 'pause caméra' est corrigée : glissement ouest-est continu de t=4.8 à t=10.8."
+        }
+      }
+    },
+    {
+      "panel_id": "03",
+      "time_range_seconds": [
+        10.8,
+        15.2
+      ],
+      "intent": "Résolution finale par divergence pure de couleur et de texture : doré stable côté Maroc, rouge instable + boucliers côté Algérie.",
+      "confirmation_geste_fort": {
+        "confirmed": true,
+        "statement": "Le panneau 03 est bien le geste le plus fort du storyboard V5 : le contraste doit être lisible sans explication textuelle finale. La résolution repose d’abord sur la divergence de couleur, de texture et de rythme lumineux des deux tracés."
+      },
+      "camera": {
+        "movement_type": "zoom final progressif sur la divergence des lignes, avec dérive nord-est continue",
+        "never_static": true,
+        "keyframes": [
+          {
+            "t": 10.8,
+            "center_lonlat": [
+              -2.0,
+              24.2
+            ],
+            "zoom_factor": 1.36,
+            "easing_to_next": "easeInOutCubic"
+          },
+          {
+            "t": 12.4,
+            "center_lonlat": [
+              -1.0,
+              25.4
+            ],
+            "zoom_factor": 1.46,
+            "easing_to_next": "easeOutCubic"
+          },
+          {
+            "t": 15.2,
+            "center_lonlat": [
+              0.3,
+              26.8
+            ],
+            "zoom_factor": 1.58,
+            "easing_to_next": "end_hold_not_static"
+          }
+        ],
+        "framing_goal": "Cadrer simultanément le couloir doré marocain à gauche et le segment algérien qui vire au rouge à droite, en gardant la divergence lisible."
+      },
+      "elements": [
+        {
+          "id": "base_map_geojson_final_dim",
+          "type": "geojson_country_paths",
+          "render": true,
+          "z_index": 0,
+          "style": {
+            "fill": "#0A2035",
+            "stroke": "#3E607A",
+            "stroke_width_px": 1,
+            "opacity": 0.92
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 02",
+            "transform": "carte légèrement assombrie pour laisser les lignes porter le sens",
+            "disappear": "ne disparaît pas avant fin beat"
+          }
+        },
+        {
+          "id": "final_vignette",
+          "type": "fullscreen_radial_vignette",
+          "render": true,
+          "z_index": 4,
+          "style": {
+            "center_clear": "rgba(0,0,0,0)",
+            "edge_color": "rgba(0,0,0,0.35)",
+            "opacity": 0.48
+          },
+          "animation": {
+            "opacity_keyframes": [
+              {
+                "t": 10.8,
+                "opacity": 0.16
+              },
+              {
+                "t": 12.0,
+                "opacity": 0.34
+              },
+              {
+                "t": 15.2,
+                "opacity": 0.48
+              }
+            ]
+          },
+          "timing_estimate": {
+            "appear": "continue depuis le dim du panneau 02",
+            "transform": "se convertit en vignette finale",
+            "disappear": "reste jusqu’à la fin du beat"
+          }
+        },
+        {
+          "id": "country_label_maroc_final",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            -6.8,
+            31.8
+          ],
+          "text": "Maroc",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(246, 197, 69, 0.45)",
+            "radius_px": 6
+          },
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "reste lisible mais secondaire",
+            "disappear": "reste jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "country_label_algerie_final",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            2.2,
+            28.5
+          ],
+          "text": "Algérie",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(255, 75, 69, 0.45)",
+            "radius_px": 6
+          },
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "bordure passe de cyan à rouge entre t=11.7 et t=12.1",
+            "disappear": "reste jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "country_label_niger_final",
+          "type": "anchored_country_nameplate",
+          "render": true,
+          "z_index": 8,
+          "anchor_lonlat": [
+            8.1,
+            17.4
+          ],
+          "text": "Niger",
+          "support_visual": {
+            "type": "rounded_rect",
+            "padding_px": [
+              8,
+              4
+            ],
+            "fill": "rgba(5, 20, 35, 0.62)",
+            "stroke": "rgba(32, 214, 255, 0.38)",
+            "radius_px": 6
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 02",
+            "transform": "reste à opacité 0.82",
+            "disappear": "reste jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "route_aagp_gold_final_stable",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 14,
+          "route_ref": "AAGP_rival_vers_maroc",
+          "style": {
+            "stroke": "#F6C545",
+            "stroke_width_px": 6,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#F6C545",
+            "opacity": 1
+          },
+          "texture": {
+            "type": "clean_continuous_line",
+            "dasharray": "none",
+            "meaning": "stabilité sécuritaire"
+          },
+          "animation": {
+            "stability_pulse": {
+              "t_start": 10.8,
+              "t_end": 15.2,
+              "glow_opacity_range": [
+                0.55,
+                0.78
+              ],
+              "period_seconds": 1.8,
+              "curve": "sine_smooth"
+            },
+            "gold_reinforcement_sweep": {
+              "t_start": 11.0,
+              "t_end": 12.1,
+              "direction": "south_to_north",
+              "highlight_color": "#FFE38A",
+              "highlight_width_px": 9
+            }
+          },
+          "timing_estimate": {
+            "appear": "continu depuis panneau 02",
+            "transform": "renforcement doré stable t=11.0 à t=12.1 ; aucune rupture de texture",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "pins_aagp_final_gold_halos",
+          "type": "geo_anchored_circular_pins",
+          "render": true,
+          "z_index": 18,
+          "points_ref": "AAGP_rival_vers_maroc.pin_points_lonlat",
+          "style": {
+            "core_radius_px": 6,
+            "core_fill": "#FFE38A",
+            "core_stroke": "#F6C545",
+            "halo_color": "#F6C545",
+            "halo_max_radius_px": 24,
+            "halo_opacity": 0.46
+          },
+          "animation": {
+            "halo_loop_seconds": 1.55,
+            "stagger_seconds": 0.1,
+            "regularity": "parfaitement régulier, non anxiogène"
+          },
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "halos dorés synchronisés et calmes t=10.8 à t=15.2",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "route_tsgp_base_cyan_remaining",
+          "type": "svg_geo_path_route",
+          "render": true,
+          "z_index": 12,
+          "route_ref": "TSGP_nigeria_niger_algerie",
+          "style": {
+            "stroke": "#20D6FF",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "fill": "none",
+            "filter": "route_glow_filter",
+            "glow_color": "#20D6FF",
+            "opacity": 0.86
+          },
+          "mask": {
+            "exclude_segment_ref": "TSGP_nigeria_niger_algerie.conflict_segment_lonlat",
+            "description": "Le reste du tracé TSGP demeure cyan, sauf le segment algérien qui reçoit la couche rouge instable."
+          },
+          "timing_estimate": {
+            "appear": "continu",
+            "transform": "opacité abaissée à 0.86 à partir de t=11.2 pour laisser le conflit rouge dominer",
+            "disappear": "ne disparaît pas"
+          }
+        },
+        {
+          "id": "route_tsgp_algeria_conflict_transition",
+          "type": "svg_geo_path_route_segment",
+          "render": true,
+          "z_index": 16,
+          "segment_ref": "TSGP_nigeria_niger_algerie.conflict_segment_lonlat",
+          "style_initial": {
+            "stroke": "#20D6FF",
+            "stroke_width_px": 5,
+            "glow_color": "#20D6FF",
+            "opacity": 1,
+            "dasharray": "none"
+          },
+          "style_warning": {
+            "stroke": "#F6C545",
+            "stroke_width_px": 6,
+            "glow_color": "#F6C545",
+            "opacity": 1,
+            "dasharray": "none"
+          },
+          "style_final": {
+            "stroke": "#FF4B45",
+            "stroke_width_px": 6,
+            "glow_color": "#FF4B45",
+            "opacity": 1,
+            "dasharray": "12 7",
+            "stroke_linecap": "round"
+          },
+          "animation_exacte_couleur_texture": {
+            "phase_1_cyan_to_gold_warning": {
+              "t_start": 11.05,
+              "t_end": 11.55,
+              "method": "linearGradient stroke animé le long du path, du sud vers le nord",
+              "color_interpolation": [
+                {
+                  "at": 0,
+                  "color": "#20D6FF"
+                },
+                {
+                  "at": 0.55,
+                  "color": "#F6C545"
+                },
+                {
+                  "at": 1,
+                  "color": "#F6C545"
+                }
+              ],
+              "meaning": "le tracé algérien quitte la neutralité cyan et passe en état d’alerte doré"
+            },
+            "phase_2_deathFlicker_warning_to_red": {
+              "t_start": 11.55,
+              "t_end": 12.35,
+              "method": "superposer une stroke rouge dont l’opacité et le glow sont modulés par deathFlicker ; le doré vacille puis cède",
+              "deathFlicker_call": {
+                "seed": 7319,
+                "intensity": 0.92,
+                "decay": 0.18,
+                "applies_to": [
+                  "stroke_opacity_red",
+                  "glow_radius_red",
+                  "micro_gaps_dash_offset",
+                  "cyan_underlay_opacity"
+                ]
+              },
+              "opacity_behavior": {
+                "cyan_underlay": "1.0 → 0.18 avec vacillement irrégulier, jamais fondu linéaire",
+                "gold_warning": "0.95 → 0.0 avec vacillements courts",
+                "red_conflict": "0.0 → 1.0 par flashes organiques"
+              },
+              "meaning": "le segment algérien devient instable et conflictuel"
+            },
+            "phase_3_red_broken_hold": {
+              "t_start": 12.35,
+              "t_end": 15.2,
+              "stroke": "#FF4B45",
+              "dasharray": "12 7",
+              "dashoffset_animation": "jitter lent ±4px avec noise déterministe",
+              "glow": "rouge irrégulier, pulsation non sinusoïdale",
+              "meaning": "zone de conflit persistante"
+            }
+          },
+          "timing_estimate": {
+            "appear": "segment déjà présent en cyan sous le tracé TSGP",
+            "transform": "cyan → doré d’alerte t=11.05-11.55, puis doré → rouge instable avec deathFlicker t=11.55-12.35",
+            "disappear": "ne disparaît pas ; reste rouge cassé jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "shield_markers_algeria_conflict",
+          "type": "geo_anchored_icon_markers",
+          "render": true,
+          "z_index": 22,
+          "icon": "shield_outline",
+          "points_lonlat": [
+            [
+              2.75,
+              33.5
+            ],
+            [
+              3.05,
+              31.1
+            ],
+            [
+              2.85,
+              28.8
+            ],
+            [
+              5.9,
+              22.0
+            ]
+          ],
+          "style": {
+            "stroke_initial": "#20D6FF",
+            "stroke_final": "#73E7FF",
+            "fill": "rgba(32,214,255,0.10)",
+            "stroke_width_px": 2.4,
+            "size_px": 34,
+            "glow_color": "#20D6FF"
+          },
+          "animation": {
+            "appear_stagger": {
+              "t_start": 11.65,
+              "interval_seconds": 0.16,
+              "opacity": [
+                0,
+                1
+              ],
+              "scale": [
+                0.78,
+                1
+              ]
+            },
+            "organic_warning_pulse": {
+              "t_start": 12.2,
+              "t_end": 15.2,
+              "method": "deathFlicker léger seulement sur glow, pas extinction complète",
+              "deathFlicker_call": {
+                "seed": 4192,
+                "intensity": 0.35,
+                "decay": 0.08
+              }
+            }
+          },
+          "timing_estimate": {
+            "appear": "t=11.65 à t=12.13 en cascade",
+            "transform": "glow cyan protecteur vacillant légèrement devant le segment rouge",
+            "disappear": "reste jusqu’à t=15.2"
+          }
+        },
+        {
+          "id": "red_sparks_and_cracks_on_algeria_segment",
+          "type": "geo_path_attached_particles",
+          "render": true,
+          "z_index": 21,
+          "attached_to_segment_ref": "TSGP_nigeria_niger_algerie.conflict_segment_lonlat",
+          "style": {
+            "spark_color": "#F6C545",
+            "crack_color": "#FF4B45",
+            "spark_count": 18,
+            "crack_count": 9,
+            "opacity_max": 0.8
+          },
+          "animation": {
+            "spawn": {
+              "t_start": 11.8,
+              "t_end": 12.8,
+              "distribution": "aléatoire déterministe le long du segment"
+            },
+            "hold": {
+              "t_start": 12.8,
+              "t_end": 15.2,
+              "opacity_modulation": "noise lent"
+            }
+          },
+          "timing_estimate": {
+            "appear": "t=11.8",
+            "transform": "particules courtes puis fissures persistantes",
+            "disappear": "particules individuelles durent 0.25-0.5s ; fissures restent à faible opacité"
+          }
+        },
+        {
+          "id": "morocco_status_icon_card",
+          "type": "anchored_composite_overlay_card",
+          "render": true,
+          "z_index": 28,
+          "anchor_lonlat": [
+            -6.0,
+            34.0
+          ],
+          "screen_offset_px_from_anchor": [
+            -205,
+            -160
+          ],
+          "size_px": [
+            340,
+            112
+          ],
+          "connector": {
+            "type": "polyline",
+            "stroke": "#F6C545",
+            "stroke_width_px": 2,
+            "from": "card_right_mid",
+            "to_anchor_lonlat": [
+              -6.0,
+              34.0
+            ],
+            "terminal_dot_radius_px": 5
+          },
+          "card_style": {
+            "fill": "rgba(5, 20, 35, 0.82)",
+            "stroke": "#F6C545",
+            "stroke_width_px": 1.4,
+            "corner_cut_px": 16
+          },
+          "contents": [
+            {
+              "type": "icon_bank",
+              "position_px": [
+                62,
+                56
+              ],
+              "size_px": [
+                62,
+                52
+              ],
+              "stroke": "#F6C545",
+              "fill": "none"
+            },
+            {
+              "type": "icon_freeze",
+              "position_px": [
+                170,
+                56
+              ],
+              "size_px": [
+                66,
+                66
+              ],
+              "stroke": "#20D6FF",
+              "fill": "rgba(32,214,255,0.10)"
+            },
+            {
+              "type": "icon_lock",
+              "position_px": [
+                276,
+                56
+              ],
+              "size_px": [
+                58,
+                66
+              ],
+              "stroke": "#F6C545",
+              "fill": "none"
+            }
+          ],
+          "animation": {
+            "enter": {
+              "t_start": 10.9,
+              "t_end": 11.25,
+              "opacity": [
+                0,
+                1
+              ],
+              "scale": [
+                0.96,
+                1
+              ]
+            },
+            "hold": [
+              11.25,
+              13.1
+            ],
+            "exit": {
+              "t_start": 13.1,
+              "t_end": 13.45,
+              "opacity": [
+                1,
+                0
+              ],
+              "scale": [
+                1,
+                0.98
+              ]
+            }
+          },
+          "timing_estimate": {
+            "appear": "t=10.9",
+            "transform": "icônes stables, pas de texte explicatif",
+            "disappear": "t=13.45 pour laisser la résolution finale purement visuelle"
+          }
+        },
+        {
+          "id": "final_no_text_contrast_hold",
+          "type": "compositional_state",
+          "render": true,
+          "z_index": 40,
+          "description": "De t=13.45 à t=15.2, aucun nouvel insert textuel : seulement le tracé marocain doré stable et le segment algérien rouge cassé avec boucliers.",
+          "timing_estimate": {
+            "appear": "t=13.45",
+            "transform": "la caméra continue de zoomer légèrement sur la divergence",
+            "disappear": "fin du beat t=15.2"
+          }
+        },
+        {
+          "id": "annotation_panel_03_badge",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "03",
+          "reason_not_rendered": "badge de storyboard uniquement"
+        },
+        {
+          "id": "annotation_panel_03_note",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "FIN — contraste lisible sans explication",
+          "reason_not_rendered": "note de storyboard en coin ; le concept est rendu par la couleur/texture, pas par un panneau texte final"
+        },
+        {
+          "id": "annotation_panel_03_zoom",
+          "type": "storyboard_annotation",
+          "render": false,
+          "text": "zoom final sur la divergence des lignes",
+          "reason_not_rendered": "note technique de storyboard uniquement ; traduite en trajectoire caméra réelle"
+        }
+      ],
+      "timing_estimate": [
+        {
+          "t": "10.8-11.25",
+          "action": "sortie des overlays du panneau 02 ; petite carte-iconographie ancrée au Maroc apparaît brièvement"
+        },
+        {
+          "t": "11.05-11.55",
+          "action": "le segment algérien du TSGP passe de cyan à doré d’alerte via un sweep sud→nord"
+        },
+        {
+          "t": "11.55-12.35",
+          "action": "deathFlicker organique : le doré d’alerte vacille et se remplace par rouge #FF4B45, avec texture cassée"
+        },
+        {
+          "t": "11.65-12.13",
+          "action": "apparition en cascade des boucliers autour du segment algérien"
+        },
+        {
+          "t": "12.35-13.45",
+          "action": "contraste complet : ligne Maroc dorée continue et stable ; ligne Algérie rouge cassée et vacillante"
+        },
+        {
+          "t": "13.45-15.2",
+          "action": "plus aucun insert explicatif ; maintien final du contraste lisible sans explication"
+        }
+      ],
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord": {
+          "status": "respecté",
+          "details": "La petite carte d’icônes Maroc est ancrée à un point de carte avec connecteur et disparaît avant le hold final. Aucun widget en coin, aucun panneau latéral."
+        },
+        "regle_2_aucun_texte_sans_support": {
+          "status": "respecté",
+          "details": "Aucun texte nu. Les seuls textes sont les nameplates de pays, chacune avec support visuel. Le final de t=13.45 à t=15.2 est sans texte explicatif."
+        },
+        "regle_3_label_2_3_pays_max": {
+          "status": "respecté",
+          "details": "Pays labellisés : Maroc, Algérie, Niger. Aucun autre pays traversé n’est listé."
+        },
+        "regle_4_camera_jamais_figee_plus_5s": {
+          "status": "respecté",
+          "details": "Zoom final continu de t=10.8 à t=15.2 ; aucune image figée."
+        },
+        "regle_geste_panneau_03": {
+          "status": "confirmé",
+          "details": "Le geste final est bien la divergence pure : doré stable Maroc versus rouge cassé + boucliers Algérie. Le deathFlicker est utilisé pour le vacillement organique de la bascule algérienne."
+        }
+      }
+    }
+  ],
+  "global_rule_verification": {
+    "rule_1_no_corner_or_side_widgets": {
+      "status": "passed",
+      "implementation": "Tous les inserts rendus sont soit ancrés à un point de carte avec connecteur, soit absents. Les panneaux latéraux simultanés du storyboard 02 sont remplacés par une séquence d’overlays ancrés."
+    },
+    "rule_2_no_unsupported_text": {
+      "status": "passed",
+      "implementation": "Aucun texte flottant. Les textes sont dans des cartes, des nameplates ou des jauges intégrées à des overlays composés."
+    },
+    "rule_3_only_2_to_3_relevant_country_labels": {
+      "status": "passed",
+      "implementation": "Labels autorisés pour ce beat : Maroc, Algérie, Niger. Nigeria et autres pays traversés ne sont pas labellisés."
+    },
+    "rule_4_camera_never_static_more_than_5s": {
+      "status": "passed",
+      "implementation": "Mouvement continu sur toute la plage t=0 à t=15.2 : push-in, glissement ouest-est, puis zoom final."
+    },
+    "panel_02_correction": {
+      "status": "passed",
+      "implementation": "Financement t=5.05-7.2 puis chantier t=7.35-10.8 ; jamais deux gros blocs simultanés en bord d’écran."
+    },
+    "panel_03_color_divergence": {
+      "status": "passed",
+      "implementation": "AAGP reste doré stable #F6C545. Segment algérien TSGP : cyan #20D6FF → doré d’alerte #F6C545 → rouge conflictuel #FF4B45 via deathFlicker, puis texture cassée + boucliers."
+    }
+  }
+}

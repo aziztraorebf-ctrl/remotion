@@ -318,6 +318,8 @@ import { ProtoAtlasMondePalimpseste, PROTO_ATLAS_MONDE_PALIMPSESTE_FRAMES } from
 import { ProtoAtlasMondeCameraTest, PROTO_ATLAS_MONDE_CAMERA_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeCameraTest";
 import { ProtoMapboxMondeGrisTest, PROTO_MAPBOX_MONDE_GRIS_TEST_FRAMES } from "./projects/_rnd/svg-scenes/ProtoMapboxMondeGrisTest";
 import { ProtoAtlasMondeGrisSVG, PROTO_ATLAS_MONDE_GRIS_SVG_FRAMES } from "./projects/_rnd/svg-scenes/ProtoAtlasMondeGrisSVG";
+import { GazoducH3IntegrationTest, GAZODUC_H3_INTEGRATION_TEST_FRAMES } from "./projects/_rnd/svg-scenes/GazoducH3IntegrationTest";
+import { GazoducH3IntegrationTestReal, GAZODUC_H3_INTEGRATION_TEST_REAL_FRAMES } from "./projects/_rnd/svg-scenes/GazoducH3IntegrationTestReal";
 import { ProtoEffect_TypewriterStock } from "./projects/_proto-16-9/ProtoEffect_TypewriterStock";
 import { ProtoEffect_Newspaper3D } from "./projects/_proto-16-9/ProtoEffect_Newspaper3D";
 import { ProtoEffect_Loupe3D } from "./projects/_proto-16-9/ProtoEffect_Loupe3D";
@@ -2889,6 +2891,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
         <Composition id="RND-GazoducAeroportFable5Test" component={GazoducAeroportFable5Test} durationInFrames={GAZODUC_AEROPORT_FABLE5_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-GazoducH3IntegrationTest" component={GazoducH3IntegrationTest} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-GazoducH3IntegrationTestReal" component={GazoducH3IntegrationTestReal} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_REAL_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />

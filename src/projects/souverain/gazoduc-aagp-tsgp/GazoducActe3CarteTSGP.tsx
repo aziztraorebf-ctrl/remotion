@@ -20,7 +20,7 @@
 // + Dispositif financement/banques ANCRÉ SUR LA CARTE (jetons Lucide aux coordonnées géographiques),
 //   remplace la jauge coin d'écran de la V1 — jamais un widget déconnecté de la géographie.
 import React from "react";
-import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig } from "remotion";
+import { AbsoluteFill, useCurrentFrame, interpolate, spring, useVideoConfig, Loop, OffthreadVideo, staticFile } from "remotion";
 import geoData from "../../_rnd/d3-16x9/gazoducGeoElargie.json";
 import { GeoCountryPlaque } from "../../_shared/mapbox/GeoCountryPlaque";
 import { BEATS_A, GAZODUC_A3_CARTE_TSGP_FRAMES } from "./GazoducActe3Timing";
@@ -103,7 +103,7 @@ function quadD(a: [number, number], ctrl: [number, number], b: [number, number])
 const NIGERIA = (geoData.centroids as unknown as Record<string, [number, number]>).Nigeria;
 const ALGERIA = (geoData.centroids as unknown as Record<string, [number, number]>).Algeria;
 const TSGP_COUNTRY_NAMES = ["Nigeria", "Niger", "Algeria"] as const;
-const TSGP_COUNTRY_LABELS_FR: Record<string, string> = { Nigeria: "Nigeria", Niger: "Niger", Algeria: "Algérie" };
+const TSGP_COUNTRY_LABELS_FR: Record<string, string> = { Nigeria: "NIGERIA", Niger: "NIGER", Algeria: "ALGÉRIE" };
 const tsgpCountries = TSGP_COUNTRY_NAMES.map((n) => byName(n)).filter((c): c is CountryGeo => !!c);
 const tsgpJalons: [number, number][] = tsgpCountries.map((c) => bboxCentroid(c.d));
 const tsgpSegLens = tsgpJalons.slice(0, -1).map((a, i) => Math.hypot(tsgpJalons[i + 1][0] - a[0], tsgpJalons[i + 1][1] - a[1]));
@@ -152,13 +152,24 @@ function windowBBox(samples: [number, number][], centerIdx: number, backCount: n
 }
 const tsgpFullPath = buildFullPathSamples(tsgpJalons, 14, 60);
 
+// ===== Dessin trait-par-trait du continent (Segment 1 du Beat 1, 2026-08-14) — repris du principe déjà
+// prouvé dans AfriqueOpening.tsx (Short AES 90s) : chaque pays se trace en strokeDashoffset avec un
+// décalage progressif ouest→est, PAS un simple fade global. Longueurs précalculées une fois (module).
+const countriesSorted = [...countries]
+  .map((c) => ({ ...c, cx: bboxCentroid(c.d)[0], len: cachedPathLen(c.d) }))
+  .sort((a, b) => a.cx - b.cx);
+
 // ===== Caméras-clés des 5 mouvements (retour DA-brief, convergence 3/3) =====
-const camNigeriaClose = camFor(NIGERIA, 3.2); // Mouvement 1 : zoom SERRÉ (pas juste 1.3->2.3 comme V1)
 const camSaharaWide = camFor(
   [(tsgpJalons[1][0] + tsgpJalons[2][0]) / 2, (tsgpJalons[1][1] + tsgpJalons[2][1]) / 2 - 15],
   1.1, // Mouvement 3 : dézoom qui révèle VRAIMENT l'immensité (plus large que V1)
 );
-const camAdrarAggressive = camFor(ALGERIA, 6.5); // Mouvement 4 : zoom AGRESSIF x5-8 (V1 n'était qu'à 2.1)
+// Mouvement 4 : zoom AGRESSIF x5-8 (V1 n'était qu'à 2.1), MAIS décalé horizontalement pour que le point
+// Adrar se projette à ~36% de la largeur au lieu du centre — sinon la carte-insert chantier (47%->85%)
+// le recouvre et l'ancrage géographique disparaît (mesuré : pin à x=966 pile sous l'insert).
+// Décalage repris du prototype validé GazoducH3IntegrationTestReal.tsx.
+const camAdrarCentered = camFor(ALGERIA, 6.5);
+const camAdrarAggressive: Cam = { ...camAdrarCentered, tx: camAdrarCentered.tx - (0.5 - 0.36) * W };
 const camDataOverlay = camFor(
   [(NIGERIA[0] + ALGERIA[0]) / 2, (NIGERIA[1] + ALGERIA[1]) / 2],
   1.3, // Mouvement 5 : dézoom large pour laisser respirer le dispositif jetons
@@ -257,39 +268,9 @@ function deathFlickerLoop(frame: number, seed: number): number {
   return flicker;
 }
 
-// ===== Insert chantier Adrar — flat-vector pur SVG géométrique (PAS 3D), pelleteuse + tranchée
-// schématique, cohérent avec le registre trait/aplat du reste de la carte (breakdown Beat 2). =====
-const ChantierAdrar: React.FC<{ x: number; y: number; reveal: number; frame: number }> = ({ x, y, reveal, frame }) => {
-  if (reveal <= 0.01) return null;
-  const bras = -18 + Math.sin(frame * 0.09) * 6; // léger mouvement de bras, jamais figé
-  // Échelle x3 vs le premier jet (0.9) — à ce niveau de zoom caméra (x6.5 sur Adrar), un insert à 0.9
-  // lisait comme un point illisible à côté de la plaque pays (vérifié au mini-render, cf rapport).
-  return (
-    <g transform={`translate(${x} ${y}) scale(${2.7 * reveal})`} opacity={reveal}>
-      {/* Tranchée schématique — trait pointillé creusé au sol */}
-      <line x1={-70} y1={34} x2={70} y2={34} stroke="#0e192e" strokeWidth={10} strokeLinecap="round" opacity={0.85} />
-      <line x1={-70} y1={34} x2={70} y2={34} stroke="#2a3f66" strokeWidth={10} strokeDasharray="4 6" strokeLinecap="round" opacity={0.6} />
-      {/* Pelleteuse — silhouette géométrique aplats, pas de dégradé photoréaliste */}
-      <g id="pelleteuse">
-        <rect x={-8} y={6} width={34} height={16} rx={3} fill="#FFC742" stroke="#0e192e" strokeWidth={1.4} />
-        <circle cx={-2} cy={24} r={8} fill="#0e192e" />
-        <circle cx={20} cy={24} r={8} fill="#0e192e" />
-        <circle cx={-2} cy={24} r={3.4} fill="#2a3f66" />
-        <circle cx={20} cy={24} r={3.4} fill="#2a3f66" />
-        <rect x={-4} y={-4} width={16} height={12} rx={2} fill="#FFC742" stroke="#0e192e" strokeWidth={1.4} />
-        <rect x={-8} y={-2} width={6} height={6} fill="#0e192e" opacity={0.5} />
-        {/* Bras + godet, angle qui oscille légèrement */}
-        <g transform={`translate(4 -2) rotate(${bras})`}>
-          <rect x={0} y={-2.5} width={30} height={5} rx={2.5} fill="#0e192e" />
-          <g transform="translate(30 0) rotate(35)">
-            <rect x={0} y={-2} width={20} height={4} rx={2} fill="#0e192e" />
-            <path d="M 20 -3 L 30 0 L 20 8 L 14 4 Z" fill="#0e192e" stroke="#FFC742" strokeWidth={1} />
-          </g>
-        </g>
-      </g>
-    </g>
-  );
-};
+// (Insert chantier flat-vector supprimé le 2026-08-14 — remplacé par la carte-insert composée avec
+// clip MiniMax H3, conforme au storyboard V5. L'ancien pictogramme posé nu sur la carte avait été
+// rejeté : "réduit à une icône posée sur la carte, pas un vrai insert composé".)
 
 // ===== Icône "$" qui suit le tracé — geste "financement qui coule" (breakdown Beat 2). Réutilise
 // `pointOnQuad` déjà défini plus haut dans ce fichier (mécanisme de position-sur-tracé existant),
@@ -328,19 +309,41 @@ const CadranComparateur: React.FC<{ frame: number; startFrame: number; countUp: 
   const [xF, yF] = arcPoint(fillT);
   const largeFill = (endAngle - startAngle) * fillT > 180 ? 1 : 0;
   const fillD = `M ${x0} ${y0} A ${R} ${R} 0 ${largeFill} 1 ${xF} ${yF}`;
-  // Placé en HUD coin haut-droit (jamais centre-carte) : évite la collision écran avec les JetonEtat
-  // (Nigeria/Niger/Algérie, ancrés aux coordonnées géo réelles) qui traversent cette zone pendant le
-  // dézoom Mouvement 5 — collision constatée au mini-render avec le cadran en position centrale.
+  // Bloc CENTRÉ, superposé à la carte assombrie (storyboard V5 beat3-financement-libre.png panneau 02).
+  // ⛔ NE PLUS le placer en coin d'écran : la version précédente était calée en `translate(W-150, 340)`
+  // pour "éviter une collision" avec les jetons — ce contournement a produit exactement le défaut que
+  // les 3 breakdowns interdisent (widget de bord, texte "VS 26 Mds$ AAGP" coupé hors cadre, constaté au
+  // rendu 2026-08-14). La bonne réponse au problème de collision est l'assombrissement de la carte
+  // derrière le bloc, pas la fuite vers le bord.
+  const CX_SCREEN = W * 0.5;
+  const CY_SCREEN = H * 0.46;
+  // Panneau encadré (storyboard V5) : sans lui le texte flotte à même la carte et se superpose aux
+  // jetons — "jamais de texte/label flottant sans support visuel" (règle 2 des breakdowns).
+  const PW = 980, PH = 300;
   return (
-    <g transform={`translate(${W - 150} 340)`} opacity={opacity}>
-      <path d={trackD} fill="none" stroke="#1c2b4a" strokeWidth={14} strokeLinecap="round" />
-      <path d={fillD} fill="none" stroke={CYAN} strokeWidth={14} strokeLinecap="round" />
-      <text x={0} y={-2} textAnchor="middle" fill="#e8ecf5" fontSize={40} fontWeight={800}
-        fontFamily="'IBM Plex Mono', monospace">{countUp}</text>
-      <text x={0} y={24} textAnchor="middle" fill={CYAN} fontSize={16} fontWeight={700}
-        fontFamily="'IBM Plex Mono', monospace" letterSpacing="0.05em">Mds$</text>
-      <text x={0} y={54} textAnchor="middle" fill="#8fa0bb" fontSize={13}
-        fontFamily="'IBM Plex Mono', monospace" letterSpacing="0.08em">VS 26 Mds$ AAGP</text>
+    <g opacity={opacity}>
+      <rect x={CX_SCREEN - PW / 2} y={CY_SCREEN - PH / 2} width={PW} height={PH} rx={10}
+        fill="rgba(7, 24, 45, 0.96)" stroke={CYAN} strokeWidth={1.5} />
+      <rect x={CX_SCREEN - PW / 2 + 6} y={CY_SCREEN - PH / 2 + 6} width={PW - 12} height={PH - 12} rx={7}
+        fill="none" stroke={CYAN} strokeWidth={0.8} opacity={0.3} />
+      <g transform={`translate(${CX_SCREEN - 250} ${CY_SCREEN})`}>
+        <path d={trackD} fill="none" stroke="#1c2b4a" strokeWidth={14} strokeLinecap="round" />
+        <path d={fillD} fill="none" stroke={CYAN} strokeWidth={14} strokeLinecap="round" />
+        <text x={0} y={-2} textAnchor="middle" fill="#e8ecf5" fontSize={54} fontWeight={800}
+          fontFamily="'IBM Plex Mono', monospace">{countUp}</text>
+        <text x={0} y={30} textAnchor="middle" fill={CYAN} fontSize={20} fontWeight={700}
+          fontFamily="'IBM Plex Mono', monospace" letterSpacing="0.05em">Mds$</text>
+      </g>
+      {/* Séparateur + "x2 moins cher que l'AAGP (26 Mds$)" — à DROITE du cadran, dans le même bloc
+          centré, jamais rejeté au bord de l'écran. */}
+      <line x1={CX_SCREEN - 110} y1={CY_SCREEN - 70} x2={CX_SCREEN - 110} y2={CY_SCREEN + 70}
+        stroke="#5E789A" strokeWidth={1} opacity={0.45} />
+      <text x={CX_SCREEN - 70} y={CY_SCREEN - 18} fill="#e8ecf5" fontSize={46} fontWeight={800}
+        fontFamily="'IBM Plex Mono', monospace">x2</text>
+      <text x={CX_SCREEN + 10} y={CY_SCREEN - 26} fill="#e8ecf5" fontSize={20}
+        fontFamily="'IBM Plex Mono', monospace">moins cher que</text>
+      <text x={CX_SCREEN + 10} y={CY_SCREEN + 2} fill="#e8ecf5" fontSize={20}
+        fontFamily="'IBM Plex Mono', monospace">l&apos;AAGP (26 Mds$)</text>
     </g>
   );
 };
@@ -366,48 +369,99 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
   const globalFadeIn = interpolate(frame, [0, S(0.5)], [0, 1], clampB);
   const globalFadeOut = interpolate(frame, [B.segEnd + 9 - S(0.3), B.segEnd + 9], [1, 0], clampB);
 
-  const nigeriaCountry = byName("Nigeria");
-  const nigeriaLen = nigeriaCountry ? cachedPathLen(nigeriaCountry.d) : 0;
-  const nigeriaTrace = interpolate(frame, [S(0.1), S(1.2)], [0, 1], clampB);
-  const nigeriaFill = interpolate(frame, [S(0.6), S(1.6)], [0, 1], clampB);
+  // ===== BEAT 1 RÉÉCRIT v5 (2026-08-14, retour Aziz sur v4) — 4 corrections :
+  // 1. Dessin trait-par-trait étendu à TOUS les pays visibles (pas que l'Afrique) — countriesSorted
+  //    couvre déjà countries entier (monde), seule la fenêtre temporelle était trop courte.
+  // 2. Palette de fond INCHANGÉE (identique à l'Acte 2 validé, BG_TOP/BG_BOT/LAND jamais modifiés) —
+  //    l'écart perçu venait du stroke renforcé pendant le dessin (0.85 vs 0.32 en régime établi).
+  // 3. Caméra CONTINUE (une seule trajectoire lissée 0->22.2s, pas de paliers par mot) + tracé TSGP qui
+  //    démarre à TRACE_START (~6.3s, une respiration après la fin du dessin — pas pile à S1_END, pour
+  //    laisser le théâtre "se poser" avant que l'action ne reparte), PAS synchronisé au mot "Nigeria"
+  //    (16.9s) — le trajet complet Nigeria->Niger doit avoir le temps de se jouer sur le temps restant.
+  // 4. Nigeria traité EXACTEMENT comme Niger/Algérie (countryState générique, contour qui s'allume au
+  //    passage de la ligne) — suppression du pin/label spécial et du reveal synchronisé au mot exact.
+  const S1_END = S(5.0); // dessin du monde visible, un peu plus long qu'avant (3.8s) pour laisser respirer
+  const TRACE_START = S(6.3); // micro-pause active après le dessin, avant que le tracé ne parte
 
+  // Segment 1 : dessin trait-par-trait de TOUS les pays (monde), mais le STAGGER est calibré sur la
+  // plage de longitudes de l'AFRIQUE seule, pas du monde entier — sinon la vague ouest->est démarre
+  // au large du Brésil et il ne se passe visiblement rien au centre du cadre pendant ~1.5s (mesuré :
+  // 0.4-0.7% de pixels modifiés entre frames de 0.75s à 1.5s). Les pays hors de cette plage (Brésil à
+  // l'ouest, Arabie à l'est) sont simplement clampés aux extrémités de la vague.
+  const continentDrawProgress = (cx: number, minCx: number, maxCx: number): number => {
+    const spanCx = Math.max(1, maxCx - minCx);
+    const rel = Math.max(0, Math.min(1, (cx - minCx) / spanCx));
+    const t0 = rel * (S1_END - S(1.2)); // stagger ouest->est, dernier pays démarre avant S1_END-1.2s
+    return interpolate(frame, [t0, t0 + S(1.2)], [0, 1], clampB);
+  };
+  // Bornes = enveloppe longitudinale de l'Afrique (Sénégal/Mauritanie à l'ouest -> Somalie à l'est),
+  // dérivée des pays réels plutôt que codée en dur.
+  const continentCxRange = (() => {
+    const west = byName("Senegal"), east = byName("Somalia");
+    const mn = west ? bboxCentroid(west.d)[0] : 0;
+    const mx = east ? bboxCentroid(east.d)[0] : W;
+    return [mn, mx] as [number, number];
+  })();
+
+  // Le tracé TSGP démarre à TRACE_START (~6.3s) et progresse en continu jusqu'à la frontière Niger à
+  // 22.2s (B.traceNigerStart) — plus d'attente du mot "Nigeria", le trajet occupe la fenêtre disponible
+  // pour être visible et lisible pendant qu'il se joue (retour Aziz : "on ne voit même pas le trajet
+  // [...] on dessine et on fait jouer la scène").
   const traceGlobalT = interpolate(
     frame,
-    [B.traceNigerStart, B.traceSaharaStart, B.traceAlgerieApproach, B.adrarArriveEnd],
-    [0, tsgpSegStarts[1] * 0.5, tsgpSegStarts[1], 1],
+    [TRACE_START, B.traceNigerStart, B.traceSaharaStart, B.traceAlgerieApproach, B.adrarArriveEnd],
+    [0, 0.96 * tsgpSegStarts[1], tsgpSegStarts[1] * 1.05, tsgpSegStarts[1] * 1.4, 1],
     clampB,
   );
 
-  // ===== 5 MOUVEMENTS DE CAMÉRA DISTINCTS (retour DA-brief, convergence 3/3) =====
+  // ===== CAMÉRA BEAT 1 — CONTINUE, mécanisme PROUVÉ et déjà en production dans la scène jumelle :
+  // GazoducActe2AAGP.tsx L220-278 (validée par Aziz), prototype d'origine ProtoGazoducA2CameraVsVoisins.tsx
+  // (ProtoA2CameraContinue L246-317, écrit précisément pour ce problème le 2026-08-03).
+  //
+  // ⛔⛔ NE JAMAIS revenir à une liste de points de contrôle + easeInOut PAR SEGMENT (3 itérations
+  // perdues là-dessus, 2026-08-14) : easeInOut a une dérivée NULLE à ses 2 extrémités, donc appliqué
+  // par segment il met la vitesse caméra à EXACTEMENT 0 à chaque point de passage. Mesuré sur la
+  // version rejetée : 7 arrêts complets en 22s (v=0.00 px/frame aux 7 keypoints, zoom d(scale)=0.0000).
+  // La position restait continue (aucun saut visible) mais la VITESSE était discontinue — c'est
+  // exactement le "elle approche, stop, elle approche, stop" décrit par Aziz. Ce n'est PAS un problème
+  // de dosage : retoucher les valeurs des points ne corrige jamais ce symptôme.
+  //
+  // Phase 1 [0 -> TRACE_START] : UN SEUL zoom continu monde -> Nigeria, un seul easing sur toute la
+  //                              phase (easeOut : part franc, ralentit en arrivant), donc UNE seule
+  //                              décélération, à la fin.
+  // Phase 2 [TRACE_START -> traceSaharaStart] : la caméra SUIT la tête du tracé, position recalculée
+  //                              CHAQUE FRAME (fenêtre de sillage + anticipation) — aucun palier
+  //                              possible par construction.
+  // Position EXACTE de la tête du tracé, interpolée en continu le long des samples (pas d'index
+  // arrondi : l'index entier ferait avancer la caméra par paliers d'un sample, mesuré à 765 px/frame
+  // de pic sur une variante bbox+Math.round — le remède serait pire que le mal).
+  const headAt = (t: number): [number, number] => {
+    const fi = Math.max(0, Math.min(1, t)) * (tsgpFullPath.length - 1);
+    const i0 = Math.floor(fi), i1 = Math.min(tsgpFullPath.length - 1, i0 + 1);
+    const fr = fi - i0;
+    const a = tsgpFullPath[i0], b = tsgpFullPath[i1];
+    return [a[0] + (b[0] - a[0]) * fr, a[1] + (b[1] - a[1]) * fr];
+  };
+  const camWideStart = camFor(NIGERIA, 1.0);
   let cam: Cam;
-  if (frame < B.traceNigerStart) {
-    // MOUVEMENT 1 [0→traceNigerStart, ≈22.2s réel — PAS 8s, cf timing frame-précis] : zoom serré
-    // Nigeria, spring pour un vrai "arrivée" pas un lerp mou. Le spring converge en <1s ; sans drift,
-    // la caméra restait figée ~21s (bug trouvé au rendu complet 2026-08-12 — vérif mouvement, pas
-    // frames isolées : hash identique de f≈30 à f≈660). Même pattern que le hold Adrar plus bas
-    // (ligne ~305) : léger drift continu une fois le spring arrivé, jamais un cadre totalement figé.
-    const p = spring({ frame, fps, config: { damping: 18, mass: 1 } });
-    const arrived = Math.min(1, p);
-    const camArrived = lerpCam(camFor(NIGERIA, 1.1), camNigeriaClose, arrived);
-    const driftT = frame * 0.01;
-    const driftAmount = interpolate(frame, [S(1), S(1.6)], [0, 1], clampB); // fondu-in du drift après l'arrivée spring
-    cam = {
-      ...camArrived,
-      tx: camArrived.tx + Math.sin(driftT) * 5 * driftAmount,
-      ty: camArrived.ty + Math.cos(driftT * 0.65) * 3.5 * driftAmount,
-    };
-  } else if (frame < B.traceSaharaStart) {
-    // MOUVEMENT 2 [8-22s] : travel tracking — la caméra SUIT la tête du tracé, recalculée chaque frame.
-    const tAhead = Math.min(1, traceGlobalT + 0.06);
-    const idx = Math.round(tAhead * (tsgpFullPath.length - 1));
-    const backWindow = Math.round(tsgpFullPath.length * 0.35);
-    const bbox = windowBBox(tsgpFullPath, idx, backWindow, Math.round(tsgpFullPath.length * 0.08));
-    const center: [number, number] = [(bbox.minX + bbox.maxX) / 2, (bbox.minY + bbox.maxY) / 2];
-    const spanX = Math.max(80, bbox.maxX - bbox.minX), spanY = Math.max(80, bbox.maxY - bbox.minY);
-    const scaleFit = Math.min((W * 0.55) / spanX, (H * 0.55) / spanY, 3.5);
-    const camTrack = camFor(center, Math.max(2.2, scaleFit));
-    const p = easeInOut(Math.min(1, (frame - B.traceNigerStart) / S(1.5)));
-    cam = lerpCam(camNigeriaClose, camTrack, p);
+  if (frame < B.traceSaharaStart) {
+    // UNE SEULE formulation continue pour toute la fenêtre 0 -> 23.9s, sans aucun branchement interne :
+    //  - le zoom est une fonction MONOTONE du temps (jamais de palier, jamais de retour en arrière) ;
+    //  - le centre glisse du Nigeria vers la tête du tracé, qui est elle-même continue.
+    // La vitesse ne peut donc jamais tomber à zéro en cours de route.
+    const zoom = interpolate(frame, [0, TRACE_START, B.traceSaharaStart], [1.0, 2.2, 3.0], {
+      ...clampB,
+      easing: (t) => 1 - Math.pow(1 - t, 2.2), // un seul easing, sur toute la plage
+    });
+    const head = headAt(traceGlobalT);
+    // Avant TRACE_START le centre reste le Nigeria ; après, il rejoint progressivement la tête du
+    // tracé sur ~1.2s puis la suit exactement — transition douce, sans saut de cadrage.
+    const followBlend = interpolate(frame, [TRACE_START, TRACE_START + S(1.2)], [0, 1], clampB);
+    const center: [number, number] = [
+      NIGERIA[0] + (head[0] - NIGERIA[0]) * followBlend,
+      NIGERIA[1] + (head[1] - NIGERIA[1]) * followBlend,
+    ];
+    cam = camFor(center, zoom);
   } else if (frame < B.traceAlgerieApproach) {
     // MOUVEMENT 3 [22-33s] : dézoom actif qui révèle le Sahara comme obstacle — la caméra RECULE,
     // ce n'est jamais un cadre figé même si le sujet est le vide.
@@ -422,23 +476,65 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
     cam = lerpCam(camTrackStart, camSaharaWide, p);
   } else if (frame < B.adrarArriveEnd) {
     // MOUVEMENT 4 [33-45s] : ZOOM AGRESSIF sur Adrar, spring raide pour un vrai impact d'arrivée.
-    const p = spring({ frame: frame - B.traceAlgerieApproach, fps, config: { damping: 22, mass: 1.4 } });
-    cam = lerpCam(camSaharaWide, camAdrarAggressive, Math.min(1, p));
+    // FIX (2026-08-14) : le spring convergeait en ~2s puis la caméra restait immobile jusqu'à la fin du
+    // mouvement (contribuait au trou de 12s mesuré autour de 28.7s). On étale l'arrivée sur toute la
+    // fenêtre et on ajoute une poussée continue qui ne sature jamais.
+    const p = spring({ frame: frame - B.traceAlgerieApproach, fps, config: { damping: 26, mass: 2.6 } });
+    const camArr = lerpCam(camSaharaWide, camAdrarAggressive, Math.min(1, p));
+    const t4 = Math.max(0, frame - B.traceAlgerieApproach);
+    const push4 = interpolate(t4, [0, B.adrarArriveEnd - B.traceAlgerieApproach], [0, 1], clampB);
+    cam = {
+      scale: camArr.scale * (1 + 0.07 * push4),
+      tx: camArr.tx - push4 * 40 + Math.sin(t4 * 0.007) * 10,
+      ty: camArr.ty + push4 * 22 + Math.cos(t4 * 0.006) * 8,
+    };
   } else if (frame < B.coutEmphaseStart) {
-    // Hold sur Adrar pendant chantier/Sonatrach — léger drift pour ne jamais être totalement figé.
-    const driftT = (frame - B.adrarArriveEnd) * 0.008;
-    cam = { ...camAdrarAggressive, tx: camAdrarAggressive.tx + Math.sin(driftT) * 6, ty: camAdrarAggressive.ty + Math.cos(driftT * 0.7) * 4 };
+    // Hold sur Adrar pendant chantier/Sonatrach. Le drift d'origine (±6px) était trop faible pour se
+    // lire comme du mouvement : push-in continu ajouté par-dessus, jamais figé (règle >5s).
+    const tH = frame - B.adrarArriveEnd;
+    const holdSpan = Math.max(1, B.coutEmphaseStart - B.adrarArriveEnd);
+    const holdPush = interpolate(tH, [0, holdSpan], [0, 1], clampB);
+    const driftT = tH * 0.008;
+    cam = {
+      scale: camAdrarAggressive.scale * (1 + 0.085 * holdPush),
+      tx: camAdrarAggressive.tx + Math.sin(driftT) * 14 - holdPush * 30,
+      ty: camAdrarAggressive.ty + Math.cos(driftT * 0.7) * 10 + holdPush * 18,
+    };
   } else {
     // MOUVEMENT 5 [45-72s] : dézoom pour la comparaison financière, le dispositif jetons prend le relais.
-    const p = easeInOut(Math.min(1, (frame - B.coutEmphaseStart) / S(3)));
-    cam = lerpCam(camAdrarAggressive, camDataOverlay, p);
+    // FIX (2026-08-14) : le dézoom se terminait en 3s puis la caméra restait FIGÉE ~14s pendant tout le
+    // panneau financier (mesuré : 14.0s consécutives sous 0.5% de pixels modifiés à partir de 58.2s).
+    // Le dézoom s'étale maintenant sur toute la durée du beat et se prolonge par une dérive lente et
+    // continue — jamais d'arrêt net, conformément à la règle "rien de statique >5s".
+    const beatDur = Math.max(1, B.financementEtatsEnd - B.coutEmphaseStart);
+    const p = easeInOut(Math.min(1, (frame - B.coutEmphaseStart) / (beatDur * 0.55)));
+    const camBase5 = lerpCam(camAdrarAggressive, camDataOverlay, p);
+    // Dérive continue : léger recul + glissement, actif sur toute la fenêtre (y compris après p=1).
+    const t5 = Math.max(0, frame - B.coutEmphaseStart);
+    const creep = interpolate(t5, [0, beatDur], [0, 1], clampB);
+    cam = {
+      scale: camBase5.scale * (1 - 0.06 * creep),
+      tx: camBase5.tx + Math.sin(t5 * 0.006) * 26 + creep * 34,
+      ty: camBase5.ty + Math.cos(t5 * 0.0045) * 18 - creep * 16,
+    };
   }
-
   const continentReveal = interpolate(frame, [0, S(0.7)], [0, 1], clampB);
 
-  function countryState(idx: number): "inactive" | "approached" | "active" | "destination" {
+  // Nigeria traité EXACTEMENT comme Niger/Algérie (retour Aziz 2026-08-14) : plus de reveal spécial
+  // synchronisé au mot exact — le contour s'allume au passage du tracé, piloté par traceGlobalT comme
+  // les 2 autres pays du trajet.
+  // FIX (même session) : un pays déjà traversé ("traversed") RESTE marqué en continu au lieu de
+  // s'éteindre après la fenêtre "active" — sinon le trait s'illumine puis s'éteint derrière la tête du
+  // tracé, ce qui contredit "quelque chose de physique qui se passe [...] jusqu'à la destination finale"
+  // (retour Aziz). Seul le dernier pays (Algérie) garde un état "destination" distinct, plus marqué.
+  function countryState(idx: number): "inactive" | "approached" | "active" | "traversed" | "destination" {
+    // Rien ne s'allume tant que le tracé n'est pas parti : traceGlobalT est clampé à 0 avant
+    // TRACE_START, donc sans ce garde le Nigeria (tsgpSegStarts[0]=0) serait "active" dès la frame 0,
+    // pendant le dessin du continent (constaté au rendu : pays déjà cyan à 1.3s).
+    if (frame < TRACE_START) return "inactive";
     if (idx === tsgpCountries.length - 1 && traceGlobalT >= tsgpSegStarts[idx] - 0.03) return "destination";
     const segT = tsgpSegStarts[idx];
+    if (traceGlobalT >= segT + 0.1) return "traversed"; // déjà passé, reste marqué (discret) jusqu'à la fin
     if (traceGlobalT >= segT - 0.06 && traceGlobalT < segT + 0.1) return "active";
     if (traceGlobalT >= segT - 0.22 && traceGlobalT < segT - 0.06) return "approached"; // fenêtre élargie (retour DA-brief : "approached" jamais utilisé en V1)
     return "inactive";
@@ -446,10 +542,16 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
 
   const NIGERIA_IDX = 0;
   const ALGERIA_IDX = tsgpCountries.length - 1;
+  // ===== Fenêtres de labels — Nigeria suit maintenant le même principe que Niger/Algérie : apparaît
+  // quand le tracé atteint/quitte le pays (traceGlobalT), plus de fenêtre fixe par mot narré.
   function plaqueWindow(idx: number): { appearAt: number; hideAt: number } | null {
-    if (idx === NIGERIA_IDX) return { appearAt: S(0.3), hideAt: S(2.6) };
-    if (idx === ALGERIA_IDX) return { appearAt: B.adrarArriveEnd - S(1), hideAt: B.coutEmphaseStart };
-    return { appearAt: B.traceSaharaStart, hideAt: B.traceAlgerieApproach + S(1) };
+    // Nigeria : ~2s à l'écran puis s'efface (retour Aziz 2026-08-14 — il restait 17s affiché, il
+    // encombrait le cadre pendant tout le voyage alors que le pays reste marqué par son contour).
+    if (idx === NIGERIA_IDX) return { appearAt: S1_END + S(0.3), hideAt: S1_END + S(2.6) };
+    if (idx === ALGERIA_IDX) return { appearAt: B.traceSaharaStart + S(1.55), hideAt: B.adrarArriveEnd - S(1) };
+    // Niger : label court du Mouvement 2 (breakdown p02_label_niger, 22.45s->27.6s), s'efface avant le
+    // hold Adrar pour ne pas polluer le cadre serré du Mouvement 4.
+    return { appearAt: B.traceNigerStart + S(0.2), hideAt: B.adrarArriveEnd - S(1) };
   }
 
   // ===== Dispositif jetons financement — ANCRÉ SUR LA CARTE, jamais un widget coin d'écran =====
@@ -477,6 +579,24 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
     clampB,
   );
   const chantierReveal = interpolate(frame, [beat2Start, beat2Start + S(0.8)], [0, 1], clampB);
+
+  // ===== Insert chantier COMPOSÉ (storyboard V5 beat2-chantier-libre.png, panneau TURNING_POINT) =====
+  // Remplace l'ancien pictogramme flat-vector posé nu sur la carte (rejeté : "réduit à une icône posée
+  // sur la carte, pas un vrai insert composé"). Mécanique reprise TELLE QUELLE du prototype validé
+  // src/projects/_rnd/svg-scenes/GazoducH3IntegrationTestReal.tsx : carte-overlay encadrée contenant le
+  // clip MiniMax H3 en boucle (pelleteuse réelle en action), badge date, jauge circulaire de chantier,
+  // badge d'activité, reliée au pin Adrar par un connecteur doré, carte assombrie derrière.
+  const insertStart = beat2Start + S(1.0);
+  const insertEnd = beat2GestureEnd;
+  const insertCardIn = interpolate(frame, [insertStart, insertStart + S(0.45)], [0, 1], clampB);
+  const insertCardOut = interpolate(frame, [insertEnd - S(0.35), insertEnd], [1, 0], clampB);
+  const insertCardOpacity = frame < insertEnd - S(0.35) ? insertCardIn : insertCardOut;
+  const insertCardScale = interpolate(insertCardIn, [0, 1], [0.94, 1]);
+  const insertConnectorDraw = interpolate(frame, [insertStart, insertStart + S(0.4)], [0, 1], clampB);
+  // Jauge : 0 -> 37% (chiffre du storyboard V5, "TRAVAUX EN COURS").
+  const insertProgress = interpolate(frame, [insertStart + S(0.7), insertStart + S(1.7)], [0, 0.37], clampB);
+  const insertBadgeOpacity = interpolate(frame, [insertStart + S(1.15), insertStart + S(1.4)], [0, 1], clampB);
+
   // Icônes $ qui descendent le long du tracé depuis Algérie ET Nigeria vers Adrar (breakdown : "les
   // États eux-mêmes payent"). 3 icônes échelonnées, 2 depuis l'Algérie (segment le plus proche d'Adrar)
   // + 1 depuis le Nigeria (parcourt tout le tracé), convergent visuellement sur Adrar.
@@ -547,23 +667,47 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
     <AbsoluteFill style={{ background: `linear-gradient(180deg, ${BG_TOP} 0%, ${BG_BOT} 100%)`, opacity: globalFadeIn * globalFadeOut }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0 }}>
         <g transform={`translate(${cam.tx + whipPanX} ${cam.ty}) scale(${cam.scale})`}>
-          {countries.map((c, i) => (
-            <path key={`land-${i}`} d={c.d} fill={LAND} fillOpacity={0.5 * continentReveal}
-              stroke={LAND_STROKE} strokeOpacity={0.32 * continentReveal} strokeWidth={0.85} />
-          ))}
+          {countriesSorted.map((c, i) => {
+            // Segment 1 (0-3.8s) : dessin trait-par-trait ouest->est (cf continentDrawProgress) — au-delà
+            // de S1_END le pays reste simplement affiché plein (continentReveal legacy pour beats suivants).
+            const drawP = frame < S1_END
+              ? continentDrawProgress(c.cx, continentCxRange[0], continentCxRange[1])
+              : 1;
+            const fillOp = frame < S1_END ? 0.5 * drawP : 0.5 * continentReveal;
+            const strokeOp = frame < S1_END ? 0.85 * drawP : 0.32 * continentReveal;
+            if (drawP <= 0) return null;
+            return (
+              <path key={`land-${i}`} d={c.d} fill={LAND} fillOpacity={fillOp}
+                stroke={LAND_STROKE} strokeOpacity={strokeOp} strokeWidth={0.85}
+                strokeDasharray={frame < S1_END ? c.len : undefined}
+                strokeDashoffset={frame < S1_END ? c.len * (1 - drawP) : undefined} />
+            );
+          })}
           {/* AAGP (Maroc) — filigrane 0.16 par défaut, boosté LOCALEMENT au Beat 4 pour le contraste
               stable(Maroc)/vacillant(Algérie) demandé par le breakdown (jamais boosté globalement). */}
           <path d={aagpFullD} fill="none" stroke={GOLD} strokeWidth={beat4Active ? 3.2 : 2.2}
             strokeOpacity={beat4Active ? aagpBeat4Opacity : 0.16 * continentReveal} strokeLinecap="round" />
 
-          {nigeriaCountry && nigeriaTrace > 0 && (
-            <g>
-              {nigeriaFill > 0.01 && <path d={nigeriaCountry.d} fill={CYAN} fillOpacity={0.32 * nigeriaFill} stroke="none" />}
-              <path d={nigeriaCountry.d} fill="none" stroke={CYAN} strokeWidth={2.6}
-                strokeLinecap="round" strokeLinejoin="round"
-                strokeDasharray={nigeriaLen} strokeDashoffset={nigeriaLen * (1 - nigeriaTrace)} />
-            </g>
-          )}
+          {/* Nigeria traité comme Niger/Algérie via tsgpCountries.map ci-dessous — plus de rendu dédié
+              (retour Aziz 2026-08-14 : contour qui s'allume au passage du tracé, pas de reveal spécial). */}
+
+          {/* Point de départ du tracé, ancré au centroïde Nigeria — l'origine physique doit être visible
+              avant que la ligne ne parte (retour Aziz 2026-08-14 : "on remet un point de départ à
+              l'intérieur du Nigeria, où la flèche se trace"). Discret : c'est une amorce, pas le pin
+              pulsé "traitement spécial" écarté plus tôt. Rayon divisé par cam.scale => taille écran
+              constante malgré le zoom continu (piège classique, cf GoldRouteAtlasZoom). */}
+          {(() => {
+            const originReveal = interpolate(frame, [TRACE_START - S(0.8), TRACE_START], [0, 1], clampB);
+            if (originReveal <= 0.01) return null;
+            const [ox, oy] = tsgpJalons[0];
+            const rBase = 3.2 / cam.scale;
+            return (
+              <g opacity={originReveal}>
+                <circle cx={ox} cy={oy} r={rBase * 2.6} fill={CYAN} fillOpacity={0.18} />
+                <circle cx={ox} cy={oy} r={rBase} fill={CYAN} />
+              </g>
+            );
+          })()}
 
           {tsgpJalons.slice(0, -1).map((a, i) => {
             const b = tsgpJalons[i + 1];
@@ -619,6 +763,11 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
                 </g>
               );
             }
+            if (state === "traversed") {
+              // Pays déjà passé : reste marqué, contour discret (pas le pic "active") — la trace du
+              // trajet physique ne doit jamais s'effacer derrière la tête de ligne.
+              return <path key={`c-${i}`} d={c.d} fill="none" stroke={CYAN} strokeOpacity={0.45} strokeWidth={1.6} />;
+            }
             const reveal = interpolate(traceGlobalT, [tsgpSegStarts[i] - 0.03, tsgpSegStarts[i] + 0.05], [0, 1], clampB);
             return (
               <g key={`c-${i}`}>
@@ -648,15 +797,128 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
         <div style={{ position: "absolute", inset: 0, background: "#050b20", opacity: chantierDarken, pointerEvents: "none" }} />
       )}
 
-      {/* Insert chantier Adrar — flat-vector (pelleteuse + tranchée), ancré au point Adrar (=ALGERIA
-          en écran, cadre du zoom Mouvement 4). Geste financement : icônes $ qui convergent depuis les
-          pins Algérie/Nigeria (breakdown Beat 2). */}
+      {/* Connecteur doré pin Adrar -> carte-insert + geste financement (icônes $ qui convergent depuis
+          les pins Algérie/Nigeria, breakdown Beat 2). Dessiné AU-DESSUS du voile d'assombrissement :
+          l'ancrage visuel vers l'insert doit traverser le voile, pas disparaître dessous. */}
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        <ChantierAdrar x={adrarSX + 130} y={adrarSY + 170} reveal={chantierReveal * (1 - interpolate(frame, [beat2GestureEnd, beat2GestureEnd + S(0.6)], [0, 1], clampB))} frame={frame} />
+        {insertCardOpacity > 0.01 && (
+          <>
+            <path
+              d={`M ${adrarSX} ${adrarSY} L ${adrarSX + W * 0.07} ${adrarSY - H * 0.05} L ${W * 0.47} ${H * 0.46}`}
+              stroke={GOLD} strokeWidth={2.4} strokeDasharray="7 6" fill="none"
+              opacity={0.95 * insertCardOpacity} pathLength={1} strokeDashoffset={1 - insertConnectorDraw}
+            />
+            <g transform={`translate(${adrarSX} ${adrarSY})`} opacity={insertCardOpacity}>
+              {(() => {
+                const per = S(1.6);
+                const t1 = (frame % per) / per;
+                const t2 = ((frame + per / 2) % per) / per;
+                return (
+                  <>
+                    <circle r={12 + t1 * 34} fill="none" stroke={CYAN} strokeWidth={1.5} opacity={(1 - t1) * 0.6} />
+                    <circle r={12 + t2 * 34} fill="none" stroke={CYAN} strokeWidth={1.5} opacity={(1 - t2) * 0.6} />
+                  </>
+                );
+              })()}
+              <circle r={40} fill="none" stroke={GOLD} strokeWidth={1.4} strokeDasharray="5 5" opacity={0.9}
+                transform={`rotate(${frame * 0.66})`} />
+              <circle r={8} fill={BG_BOT} stroke={CYAN} strokeWidth={2.6} />
+              <circle r={3.6} fill={CYAN} />
+            </g>
+          </>
+        )}
         <IconeFinancement pos={coinAlgerie1Pos} opacity={coinAlgerie1Op} color={CYAN} />
         <IconeFinancement pos={coinAlgerie2Pos} opacity={coinAlgerie2Op} color={CYAN} />
         <IconeFinancement pos={coinNigeria1Pos} opacity={coinNigeria1Op} color={CYAN} />
       </svg>
+
+      {/* ===== Carte-insert chantier Adrar (storyboard V5) — clip MiniMax H3 en boucle dans un cadre
+          composé, avec badge date, jauge de chantier et badge d'activité. Mécanique validée en R&D
+          (GazoducH3IntegrationTestReal.tsx). Positionnée à droite du pin, superposée à la carte —
+          jamais collée à un bord (règle : l'insert se superpose à la carte, ne la pousse pas). */}
+      {insertCardOpacity > 0.01 && (
+        <div
+          style={{
+            position: "absolute",
+            left: "47%", top: "24%", width: "38%", height: "44%",
+            opacity: insertCardOpacity,
+            transform: `scale(${insertCardScale})`,
+            background: "rgba(7, 24, 45, 0.96)",
+            border: `1.5px solid ${CYAN}`,
+            borderRadius: 6,
+            boxShadow: "0 0 22px rgba(0, 196, 255, 0.22)",
+            padding: "2.6% 3%",
+            display: "flex",
+            flexDirection: "column",
+            pointerEvents: "none",
+          }}
+        >
+          <div style={{
+            alignSelf: "flex-start", background: "rgba(14, 32, 48, 0.95)",
+            border: `1.4px solid ${GOLD}`, borderRadius: 4, padding: "6px 14px",
+            color: "#FFD06A", fontFamily: "'IBM Plex Mono', monospace", fontSize: 15,
+            fontWeight: 700, letterSpacing: "0.06em", marginBottom: 12,
+          }}>
+            4 JUIN 2026
+          </div>
+
+          <div style={{
+            position: "relative", width: "100%", flex: "0 0 52%",
+            borderRadius: 4, overflow: "hidden", border: `1px solid ${CYAN}44`, background: "#000",
+          }}>
+            <Loop durationInFrames={Math.floor(5.13 * FPS)}>
+              <OffthreadVideo
+                src={staticFile("_rnd/minimax-h3-tests/gazoduc-pelleteuse/pelleteuse-1080p-v1.mp4")}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                muted
+              />
+            </Loop>
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", marginTop: "4%", gap: 16 }}>
+            <div style={{ position: "relative", width: 56, height: 56, flexShrink: 0 }}>
+              <svg width={56} height={56} viewBox="0 0 56 56">
+                <circle cx={28} cy={28} r={22} fill="none" stroke="#263C55" strokeWidth={8} />
+                <circle cx={28} cy={28} r={22} fill="none" stroke={CYAN} strokeWidth={8}
+                  strokeDasharray={2 * Math.PI * 22}
+                  strokeDashoffset={2 * Math.PI * 22 * (1 - insertProgress)}
+                  transform="rotate(-90 28 28)" strokeLinecap="round" />
+              </svg>
+              <div style={{
+                position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#EAF6FF", fontFamily: "'IBM Plex Mono', monospace", fontSize: 13, fontWeight: 700,
+              }}>
+                {Math.round(insertProgress * 100)}%
+              </div>
+            </div>
+            <div>
+              <div style={{ color: CYAN, fontFamily: "'IBM Plex Mono', monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.05em" }}>
+                TRAVAUX EN COURS
+              </div>
+              <div style={{ display: "flex", gap: 3, marginTop: 6 }}>
+                {Array.from({ length: 16 }).map((_, i) => (
+                  <div key={i} style={{ width: 5, height: 21, background: i < Math.round(insertProgress * 16) ? CYAN : "#263C55" }} />
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 1, alignSelf: "stretch", background: "#5E789A", opacity: 0.5, marginLeft: 8 }} />
+            <div style={{ display: "flex", alignItems: "center", gap: 10, opacity: insertBadgeOpacity }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: "50%", border: `1.5px solid ${CYAN}`,
+                background: "rgba(0,196,255,0.08)", display: "flex", alignItems: "center",
+                justifyContent: "center", flexShrink: 0,
+              }}>
+                <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke={CYAN} strokeWidth={2}>
+                  <path d="M4 20 L4 12 L12 4 L20 12 L20 20 Z" />
+                </svg>
+              </div>
+              <div style={{ color: "#EAF6FF", fontFamily: "'IBM Plex Mono', monospace", fontSize: 12, fontWeight: 700, lineHeight: 1.3 }}>
+                ACTIVITÉ<br />ÉLEVÉE
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Dispositif jetons financement — ancré aux coordonnées géographiques réelles, jamais un widget
           coin d'écran (retour DA-brief unanime). 3 jetons "État" (Nigeria/Niger/Algérie) qui pulsent
@@ -666,14 +928,24 @@ export const GazoducActe3CarteTSGP: React.FC = () => {
         <JetonEtat x={nigeriaSX} y={nigeriaSY - 60} reveal={jetonEtatReveal * jetonEtatOut} frame={frame} label="NIGERIA" />
         <JetonEtat x={nigerSX} y={nigerSY - 60} reveal={jetonEtatReveal * jetonEtatOut} frame={frame} label="NIGER" />
         <JetonEtat x={algeriaSX} y={algeriaSY - 60} reveal={jetonEtatReveal * jetonEtatOut} frame={frame} label="ALGÉRIE" />
-        <JetonBanqueRejetee x={W - 220} y={140} targetX={algeriaSX} targetY={algeriaSY} reveal={banqueReveal} breakProgress={banqueBreak} />
+        {/* Banque internationale écartée : ramenée DANS le cadre (x = 82% de la largeur) — était à
+            W-220 avec son label, ce qui coupait "BANQUE INT'L" au bord droit (constaté au rendu). */}
+        <JetonBanqueRejetee x={W * 0.82} y={H * 0.2} targetX={algeriaSX} targetY={algeriaSY} reveal={banqueReveal} breakProgress={banqueBreak} />
       </svg>
 
-      {/* Comparateur "13 Mds$" — cadran circulaire animé (DÉCISION AZIZ, remplace le rectangle HUD plat). */}
+      {/* Comparateur "13 Mds$" — bloc CENTRÉ sur carte assombrie (storyboard V5 panneau 02), jamais un
+          widget de bord. L'assombrissement remplace l'ancien contournement "cadran poussé en coin pour
+          éviter la collision avec les jetons". */}
       {coutLabelOpacity > 0.01 && (
-        <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-          <CadranComparateur frame={frame} startFrame={B.coutEmphaseStart} countUp={treizeCountUp} opacity={coutLabelOpacity} />
-        </svg>
+        <>
+          <div style={{
+            position: "absolute", inset: 0, background: "#050b20",
+            opacity: 0.62 * coutLabelOpacity, pointerEvents: "none",
+          }} />
+          <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+            <CadranComparateur frame={frame} startFrame={B.coutEmphaseStart} countUp={treizeCountUp} opacity={coutLabelOpacity} />
+          </svg>
+        </>
       )}
 
       {/* Beat 4 — labels courts MAXIMUM 2, "minimal on-map text" (breakdown). */}

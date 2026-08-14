@@ -1,0 +1,221 @@
+{
+  "reference_style": {
+    "nom": "Kora et Cartes / Vox Atlas, version sobre et géopolitique",
+    "justification": "Style de carte plate, lisible, sans sur-effets 3D, avec une hiérarchie claire entre fond géographique, pays-climax et tracé stratégique. L’inspiration vient surtout de la synchronisation très stricte entre narration et apparition visuelle : le Nigeria n’est pas révélé avant le mot, puis le pipeline devient le moteur du travelling."
+  },
+  "segment_1_continent": {
+    "time_range": "0.0s → 3.8s",
+    "description": "Le continent africain se dessine trait par trait en outline SVG, sans aucun remplissage pays et sans label. L’effet est purement géographique : on installe le théâtre continental avant que le concurrent ne soit nommé.",
+    "ordre_dessin": "Balayage ouest → est, avec une légère priorité visuelle sur la façade atlantique puis diffusion vers le centre et l’est. Les pays côtiers d’Afrique de l’Ouest commencent tôt, mais sans insistance ni couleur spécifique.",
+    "timing": {
+      "0.0s_0.4s": "Apparition très légère des premiers contours, stroke opacity de 0 à 1.",
+      "0.4s_2.8s": "Dessin principal des frontières pays par pays avec décalage progressif, strokeDashoffset animé. Les pays ne partent pas tous exactement ensemble : léger effet de propagation.",
+      "2.8s_3.8s": "Finalisation des derniers contours, stabilisation du trait, apparition discrète des frontières internes restantes."
+    },
+    "camera": {
+      "choix": "Très léger push-in, presque imperceptible, pour éviter un plan complètement statique tout en gardant le geste cartographique lisible.",
+      "zoom_scale_start": 1.0,
+      "zoom_scale_end": 1.05,
+      "center_offset_x_start": 0,
+      "center_offset_y_start": 0,
+      "center_offset_x_end": -10,
+      "center_offset_y_end": 6
+    },
+    "couleur": {
+      "fond": "bleu nuit / anthracite documentaire",
+      "frontieres": "gris clair légèrement bleuté",
+      "pays_colores": "aucun",
+      "labels": "aucun"
+    }
+  },
+  "segment_2_convergence": {
+    "time_range": "3.8s → 16.9s",
+    "intention": "Longue convergence vers l’Afrique de l’Ouest et le Nigeria, mais sans révéler/colorer le Nigeria avant 16.9s. Le mouvement est continu avec de petites respirations actives : la caméra ne s’arrête jamais franchement, elle ralentit sur les informations importantes puis reprend sa convergence.",
+    "justification_rythme": "Le segment dure plus de 13 secondes ; un zoom linéaire pur serait monotone. Le choix retenu est une convergence par paliers fluides : léger zoom au moment où le concurrent est annoncé, resserrement au nom 'gazoduc transsaharien', puis approche plus précise vers le point de départ sans colorer le pays avant le mot 'Nigeria'.",
+    "trajectoire_timestamps": [
+      {
+        "t": 3.8,
+        "zoom_scale": 1.05,
+        "center_offset_x": -10,
+        "center_offset_y": 6,
+        "description": "Fin du dessin continental. La caméra commence à quitter le plan Afrique globale, sans encore indiquer de pays."
+      },
+      {
+        "t": 5.6,
+        "zoom_scale": 1.16,
+        "center_offset_x": -28,
+        "center_offset_y": 16,
+        "description": "Début de convergence douce vers l’ouest du continent. Mouvement perceptible mais calme, cohérent avec 'un concurrent direct'."
+      },
+      {
+        "t": 7.4,
+        "zoom_scale": 1.31,
+        "center_offset_x": -48,
+        "center_offset_y": 30,
+        "description": "Le cadrage favorise davantage l’Afrique de l’Ouest. Aucun remplissage pays, seulement frontières visibles."
+      },
+      {
+        "t": 9.2,
+        "zoom_scale": 1.48,
+        "center_offset_x": -70,
+        "center_offset_y": 47,
+        "description": "Approche plus marquée pendant 'n’attend plus'. La caméra garde une inertie lente, comme une mise sous tension."
+      },
+      {
+        "t": 10.6,
+        "zoom_scale": 1.64,
+        "center_offset_x": -88,
+        "center_offset_y": 60,
+        "description": "Sur 'Il s’appelle le gazoduc transsaharien', le cadrage est déjà ouest-africain mais reste assez large pour comprendre la logique transsaharienne à venir."
+      },
+      {
+        "t": 12.0,
+        "zoom_scale": 1.79,
+        "center_offset_x": -102,
+        "center_offset_y": 72,
+        "description": "Micro-ralenti actif après le nom du projet : on sent que la caméra cherche le point de départ, sans révélation graphique."
+      },
+      {
+        "t": 13.8,
+        "zoom_scale": 1.98,
+        "center_offset_x": -118,
+        "center_offset_y": 84,
+        "description": "Sur 'Son point de départ', la caméra resserre davantage vers la zone Nigeria / golfe de Guinée, mais aucun pays ne s’allume."
+      },
+      {
+        "t": 15.3,
+        "zoom_scale": 2.18,
+        "center_offset_x": -128,
+        "center_offset_y": 92,
+        "description": "Préparation du climax. Le Nigeria est dans la zone de regard du spectateur mais toujours traité comme les autres pays : contour seulement."
+      },
+      {
+        "t": 16.9,
+        "zoom_scale": 2.42,
+        "center_offset_x": -136,
+        "center_offset_y": 98,
+        "description": "Arrivée exactement sur le cadrage de révélation. Le Nigeria est visible et prêt à être coloré au mot prononcé."
+      }
+    ],
+    "etat_graphique": {
+      "nigeria_avant_16_9s": "non coloré, non labellisé, non isolé",
+      "pipeline_avant_16_9s": "absent",
+      "pins_avant_16_9s": "absents"
+    }
+  },
+  "segment_3_reveal": {
+    "time_range": "exactement à 16.9s",
+    "declencheur": "Mot 'Nigeria'",
+    "description": "Le Nigeria s’allume précisément à 16.9s, sans anticipation. C’est le premier pays coloré du beat.",
+    "effet_remplissage": {
+      "durée": "0.28s",
+      "animation": "Fill opacity 0 → 1 avec léger brighten sur le contour. Le remplissage part d’un jaune-or doux vers un orange doré documentaire.",
+      "easing": "easeOutCubic",
+      "couleur_fill": "#D99A2B",
+      "couleur_stroke": "#FFD166"
+    },
+    "pin": {
+      "apparition": "16.9s",
+      "ancrage": "centroïde visuel du Nigeria, légèrement ajusté vers le sud pour évoquer le point de départ gazier sans sur-précision technique",
+      "effet": "pulse circulaire doré en 2 ondes : première onde 16.90s → 17.25s, deuxième onde 17.25s → 17.75s",
+      "taille": "point central 10px à 14px, halo jusqu’à 52px puis fade"
+    },
+    "label": {
+      "texte": "Nigeria",
+      "apparition": "16.98s",
+      "style": "petit label blanc cassé, fond sombre semi-transparent, apparition en fade/slide de 8px",
+      "durée_animation": "0.20s"
+    }
+  },
+  "segment_4_tracking": {
+    "time_range": "16.9s → 22.2s",
+    "intention": "Le pipeline devient le moteur du plan. La ligne dorée sort du Nigeria, progresse vers le nord, et la caméra suit réellement la tête du tracé plutôt que de rester centrée sur le pays.",
+    "description_trace": "Ligne dorée avec glow subtil, dessinée par strokeDashoffset. Le tracé n’est pas encore toute la route transsaharienne : il couvre uniquement le départ Nigeria → frontière du Niger dans cette fenêtre.",
+    "trajectoire_timestamps": [
+      {
+        "t": 16.9,
+        "zoom_scale": 2.42,
+        "center_offset_x": -136,
+        "center_offset_y": 98,
+        "trace_progress": 0.0,
+        "description": "Départ exact au moment du reveal Nigeria. Le pipeline n’a pas encore avancé, il naît au niveau du pin."
+      },
+      {
+        "t": 17.7,
+        "zoom_scale": 2.5,
+        "center_offset_x": -130,
+        "center_offset_y": 72,
+        "trace_progress": 0.13,
+        "description": "La ligne dorée sort du Nigeria vers le nord. La caméra commence à décrocher du pays pour accompagner la tête du tracé."
+      },
+      {
+        "t": 18.6,
+        "zoom_scale": 2.6,
+        "center_offset_x": -121,
+        "center_offset_y": 36,
+        "trace_progress": 0.28,
+        "description": "Travelling nord progressif. Le Nigeria reste visible en bas du cadre, tandis que la tête du pipeline prend l’attention."
+      },
+      {
+        "t": 19.5,
+        "zoom_scale": 2.7,
+        "center_offset_x": -110,
+        "center_offset_y": -4,
+        "trace_progress": 0.43,
+        "description": "Sur 'au lieu de faire le grand tour', la ligne affirme visuellement qu’elle ne part pas vers la côte : elle monte directement vers l’intérieur."
+      },
+      {
+        "t": 20.3,
+        "zoom_scale": 2.8,
+        "center_offset_x": -96,
+        "center_offset_y": -45,
+        "trace_progress": 0.58,
+        "description": "Le tracé a quitté clairement la logique côtière. La caméra suit la tête, avec le Nigeria encore partiellement présent dans le tiers inférieur."
+      },
+      {
+        "t": 21.3,
+        "zoom_scale": 2.92,
+        "center_offset_x": -78,
+        "center_offset_y": -100,
+        "trace_progress": 0.78,
+        "description": "Sur 'il traverse', la tête du tracé approche la zone frontalière. Le mouvement devient plus direct, légèrement plus rapide."
+      },
+      {
+        "t": 22.2,
+        "zoom_scale": 3.02,
+        "center_offset_x": -58,
+        "center_offset_y": -150,
+        "trace_progress": 0.96,
+        "description": "Sur le mot 'Niger', la tête du pipeline arrive à la frontière ou vient de la toucher. Le Niger peut recevoir un très léger contour doré ou halo frontalier, mais pas encore un reveal complet si la suite doit le traiter."
+      }
+    ],
+    "effets_secondaires": {
+      "pipeline": "stroke #F2B84B, épaisseur écran stable 5px à 6px, glow doux opacity 0.35",
+      "tete_du_trace": "petit point lumineux de 9px suivant le dashoffset, halo bref à chaque accélération",
+      "niger_a_22_2s": "micro-accent de frontière possible au moment du mot 'Niger' : stroke doré 0.25s, sans remplissage massif pour laisser la suite continuer."
+    }
+  },
+  "verification_anti_immobilite": {
+    "aucune_fenetre_plus_de_5s_sans_mouvement": true,
+    "details": "Segment 1 comporte un léger push-in de 0.0s à 3.8s. Segment 2 possède des points caméra espacés de 1.4s à 1.8s, avec zoom et offsets qui évoluent en continu de 3.8s à 16.9s. Segment 4 possède des points toutes les 0.8s à 1.0s, avec travelling caméra et progression du tracé. Il n’existe donc aucune fenêtre de plus de 5 secondes consécutives avec mouvement nul.",
+    "nigeria_visible": true,
+    "verification_cadrage_nigeria": {
+      "principe": "Les offsets restent modérés pendant la convergence et le tracking. Même au zoom maximum de 3.02, le travelling nord ne décale pas assez la carte pour expulser le Nigeria du cadre : il reste dans la moitié inférieure ou le tiers inférieur du plan pendant le suivi du pipeline.",
+      "offsets_max": {
+        "center_offset_x_min": -136,
+        "center_offset_x_max": -58,
+        "center_offset_y_min": -150,
+        "center_offset_y_max": 98,
+        "zoom_scale_max": 3.02
+      },
+      "estimation_ecran": "Avec ces valeurs, le centroïde visuel du Nigeria reste approximativement entre x=780px et x=980px, et entre y=560px et y=820px sur un canvas 1920×1080. Il ne sort donc jamais du cadre, y compris pendant le travelling vers la frontière du Niger.",
+      "marge_securite": "Les valeurs évitent les offsets extrêmes ; elles gardent le Nigeria visible tout en permettant à la tête du pipeline d’être suivie vers le nord."
+    },
+    "respect_synchro_texte": {
+      "nigeria_colore_avant_16_9s": false,
+      "reveal_nigeria_a_16_9s": true,
+      "pipeline_demarre_apres_16_9s": true,
+      "arrivee_frontiere_niger_a_22_2s": true
+    }
+  }
+}

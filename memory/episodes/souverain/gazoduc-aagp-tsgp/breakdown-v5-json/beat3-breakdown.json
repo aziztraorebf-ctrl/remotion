@@ -1,0 +1,2238 @@
+{
+  "project_context": {
+    "role": "motion_designer_senior_auteur_du_storyboard",
+    "stack_cible": [
+      "D3.js",
+      "Remotion",
+      "SVG",
+      "GeoJSON réel",
+      "aucune 3D",
+      "aucun After Effects"
+    ],
+    "fps": 30,
+    "beat": {
+      "start_seconds": 55.0,
+      "start_frame": 1650,
+      "end_seconds": 72.3,
+      "end_frame": 2169,
+      "duration_seconds": 17.3,
+      "texte_narre": "...DEUX FOIS MOINS CHER [55s, emphase] [...] environ treize milliards de dollars [59.3s] [...] pour démarrer [fin à 72.3s]."
+    },
+    "format_ecran": {
+      "width": 1920,
+      "height": 1080,
+      "coordinate_system": "pixels écran 1920x1080, origine en haut à gauche"
+    },
+    "palette": {
+      "navy_background": "#061B33",
+      "deep_navy": "#031225",
+      "map_land_fill": "#102C4F",
+      "map_land_fill_dimmed": "#07192E",
+      "country_stroke": "#6D829D",
+      "country_stroke_dimmed": "#2F435B",
+      "cyan_primary": "#18D8FF",
+      "cyan_secondary": "#00A6D6",
+      "cyan_glow": "#39E8FF",
+      "cyan_fill": "#0C9ED0",
+      "gold_primary": "#E2A93A",
+      "gold_secondary": "#B77A1D",
+      "white": "#F4F8FF",
+      "text_muted": "#AFC0D4",
+      "panel_fill": "#071A2D",
+      "panel_stroke": "#7AA7C7",
+      "danger_red": "#FF4D4D",
+      "dim_overlay": "rgba(0, 8, 20, 0.68)",
+      "vignette": "rgba(0, 0, 0, 0.42)"
+    },
+    "geo_anchors": {
+      "algerie_hub": {
+        "lon": 3.28,
+        "lat": 32.93,
+        "label": "ALGÉRIE"
+      },
+      "nigeria_hub": {
+        "lon": 7.49,
+        "lat": 9.08,
+        "label": "NIGERIA"
+      },
+      "niger_midpoint": {
+        "lon": 8.0,
+        "lat": 17.5,
+        "label": "NIGER"
+      },
+      "corridor_finance_anchor": {
+        "lon": 7.8,
+        "lat": 20.0,
+        "label": "ANCRAGE OVERLAY COMPARATEUR"
+      },
+      "autofinance_overlay_anchor": {
+        "lon": 10.6,
+        "lat": 15.2,
+        "label": "ANCRAGE OVERLAY AUTOFINANCÉ"
+      }
+    },
+    "pipeline_polyline_geo": [
+      {
+        "lon": 3.28,
+        "lat": 32.93
+      },
+      {
+        "lon": 4.8,
+        "lat": 29.7
+      },
+      {
+        "lon": 6.3,
+        "lat": 25.4
+      },
+      {
+        "lon": 7.8,
+        "lat": 21.2
+      },
+      {
+        "lon": 8.0,
+        "lat": 17.5
+      },
+      {
+        "lon": 7.8,
+        "lat": 13.5
+      },
+      {
+        "lon": 7.49,
+        "lat": 9.08
+      }
+    ],
+    "decision_panneau_02": {
+      "doit_etre_scinde": true,
+      "raison": "Le bloc comparateur contient 4 informations distinctes : montant 13 Mds$, ratio x2 moins cher, flux Algérie/Nigeria vers le tuyau central, banque internationale barrée. Pour éviter la surcharge cognitive, l'overlay centré reste le même, mais son contenu est révélé en 2 temps successifs : d'abord montant + ratio, puis flux + banque barrée.",
+      "pattern_confirme": "Le panneau 02 reste un overlay centré, composé, ancré au tracé de la carte par un connecteur supérieur, avec la carte assombrie derrière. Il ne devient jamais un widget en coin et ne repousse jamais la géographie."
+    }
+  },
+  "panels": [
+    {
+      "panel_id": "01",
+      "narrative_function": "Installer le corridor Algérie-Niger-Nigeria déjà visible avant l'arrivée du comparateur financier.",
+      "time_range": {
+        "start_seconds": 55.0,
+        "start_frame": 1650,
+        "end_seconds": 59.3,
+        "end_frame": 1779
+      },
+      "camera": {
+        "type": "d3_geo_projection_with_remotion_camera_transform",
+        "projection": "geoMercator",
+        "trajectory_description": "Pan lent vers l'est avec léger zoom-in continu. La caméra ne se fige jamais : elle commence légèrement plus large sur Afrique de l'Ouest et glisse vers le corridor Algérie-Nigeria pour préparer l'overlay financier.",
+        "keyframes": [
+          {
+            "time_seconds": 55.0,
+            "frame": 1650,
+            "projection_center_lon_lat": [
+              1.5,
+              18.5
+            ],
+            "zoom": 1.0,
+            "screen_translate_px": [
+              0,
+              0
+            ],
+            "easing_to_next": "easeInOutCubic"
+          },
+          {
+            "time_seconds": 57.1,
+            "frame": 1713,
+            "projection_center_lon_lat": [
+              4.4,
+              19.7
+            ],
+            "zoom": 1.055,
+            "screen_translate_px": [
+              -18,
+              6
+            ],
+            "easing_to_next": "linear"
+          },
+          {
+            "time_seconds": 59.3,
+            "frame": 1779,
+            "projection_center_lon_lat": [
+              7.2,
+              20.3
+            ],
+            "zoom": 1.11,
+            "screen_translate_px": [
+              -34,
+              12
+            ],
+            "easing_to_next": "easeInOutCubic"
+          }
+        ]
+      },
+      "elements": [
+        {
+          "id": "base_map_land",
+          "type_technique": "svg_path_collection_from_GeoJSON_d3_geoPath",
+          "render_layer": 0,
+          "description": "Fond de carte Afrique du Nord, Afrique de l'Ouest, Méditerranée orientale et Moyen-Orient partiel.",
+          "geojson_sources": [
+            "countries.geojson"
+          ],
+          "position": {
+            "mode": "geo_projected_full_frame",
+            "screen_bbox_px_approx": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "style": {
+            "fill": "#102C4F",
+            "stroke": "#6D829D",
+            "stroke_width_px": 1.2,
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 55.0,
+            "appear_frame": 1650,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "présent dès le début du panneau"
+          }
+        },
+        {
+          "id": "map_vignette",
+          "type_technique": "svg_rect_radial_gradient_overlay",
+          "render_layer": 1,
+          "description": "Vignette d'assombrissement périphérique pour concentrer le regard sur le corridor.",
+          "position": {
+            "mode": "screen",
+            "x_px": 0,
+            "y_px": 0,
+            "width_px": 1920,
+            "height_px": 1080
+          },
+          "style": {
+            "fill": "radial-gradient(circle at 50% 48%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.14) 58%, rgba(0,0,0,0.42) 100%)",
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 55.0,
+            "appear_frame": 1650,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779
+          }
+        },
+        {
+          "id": "highlight_algeria_fill",
+          "type_technique": "svg_path_country_fill_from_GeoJSON_ISO_DZA",
+          "render_layer": 2,
+          "description": "Algérie mise en surbrillance cyan.",
+          "position": {
+            "mode": "geo_projected_country",
+            "iso_a3": "DZA"
+          },
+          "style": {
+            "fill": "#0C9ED0",
+            "opacity": 0.68,
+            "stroke": "#18D8FF",
+            "stroke_width_px": 1.8,
+            "filter": "drop-shadow(0 0 16px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 55.1,
+            "appear_frame": 1653,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "fade_in 10 frames après tracé de contour déjà en place"
+          }
+        },
+        {
+          "id": "highlight_nigeria_fill",
+          "type_technique": "svg_path_country_fill_from_GeoJSON_ISO_NGA",
+          "render_layer": 2,
+          "description": "Nigeria mis en surbrillance cyan.",
+          "position": {
+            "mode": "geo_projected_country",
+            "iso_a3": "NGA"
+          },
+          "style": {
+            "fill": "#0C9ED0",
+            "opacity": 0.64,
+            "stroke": "#18D8FF",
+            "stroke_width_px": 1.8,
+            "filter": "drop-shadow(0 0 16px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 55.16,
+            "appear_frame": 1655,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "fade_in 10 frames"
+          }
+        },
+        {
+          "id": "pipeline_main_glow",
+          "type_technique": "svg_path_geo_polyline_d3_line_with_strokeDashoffset",
+          "render_layer": 4,
+          "description": "Tuyau principal Algérie-Niger-Nigeria, tracé cyan lumineux déjà en place au début du beat.",
+          "geo_points": [
+            {
+              "lon": 3.28,
+              "lat": 32.93
+            },
+            {
+              "lon": 4.8,
+              "lat": 29.7
+            },
+            {
+              "lon": 6.3,
+              "lat": 25.4
+            },
+            {
+              "lon": 7.8,
+              "lat": 21.2
+            },
+            {
+              "lon": 8.0,
+              "lat": 17.5
+            },
+            {
+              "lon": 7.8,
+              "lat": 13.5
+            },
+            {
+              "lon": 7.49,
+              "lat": 9.08
+            }
+          ],
+          "position": {
+            "mode": "geo_projected_polyline",
+            "screen_bbox_px_approx_at_mid_panel": {
+              "x": 820,
+              "y": 165,
+              "width": 190,
+              "height": 610
+            }
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 5,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "filter": "drop-shadow(0 0 12px #18D8FF) drop-shadow(0 0 28px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 55.0,
+            "appear_frame": 1650,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "strokeDashoffset déjà complété à 100%, pulse_glow léger en boucle de 42 frames"
+          }
+        },
+        {
+          "id": "pipeline_core",
+          "type_technique": "svg_path_geo_polyline_d3_line",
+          "render_layer": 5,
+          "description": "Cœur blanc-cyan du tuyau.",
+          "geo_points_ref": "pipeline_polyline_geo",
+          "position": {
+            "mode": "geo_projected_polyline"
+          },
+          "style": {
+            "stroke": "#E9FCFF",
+            "stroke_width_px": 1.8,
+            "stroke_linecap": "round",
+            "opacity": 0.92
+          },
+          "timing": {
+            "appear_seconds": 55.0,
+            "appear_frame": 1650,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779
+          }
+        },
+        {
+          "id": "west_africa_existing_route",
+          "type_technique": "svg_path_geo_polyline_d3_line_with_circular_nodes",
+          "render_layer": 3,
+          "description": "Tracé doré déjà en place sur la côte ouest africaine, utilisé comme contexte comparatif mais non labellisé.",
+          "geo_points": [
+            {
+              "lon": -16.3,
+              "lat": 31.8
+            },
+            {
+              "lon": -16.9,
+              "lat": 27.7
+            },
+            {
+              "lon": -17.1,
+              "lat": 22.0
+            },
+            {
+              "lon": -15.8,
+              "lat": 17.2
+            },
+            {
+              "lon": -14.6,
+              "lat": 14.7
+            },
+            {
+              "lon": -12.2,
+              "lat": 11.4
+            },
+            {
+              "lon": -8.5,
+              "lat": 9.6
+            },
+            {
+              "lon": -4.2,
+              "lat": 8.2
+            },
+            {
+              "lon": -0.2,
+              "lat": 6.2
+            }
+          ],
+          "position": {
+            "mode": "geo_projected_polyline",
+            "screen_bbox_px_approx_at_mid_panel": {
+              "x": 430,
+              "y": 275,
+              "width": 390,
+              "height": 480
+            }
+          },
+          "style": {
+            "stroke": "#E2A93A",
+            "stroke_width_px": 3,
+            "stroke_linecap": "round",
+            "opacity": 0.95,
+            "node_radius_px": 5,
+            "node_fill": "#102C4F",
+            "node_stroke": "#E2A93A",
+            "node_stroke_width_px": 2
+          },
+          "timing": {
+            "appear_seconds": 55.0,
+            "appear_frame": 1650,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "tracé déjà en place, aucun nouveau dessin pendant ce panneau"
+          }
+        },
+        {
+          "id": "pin_algerie",
+          "type_technique": "svg_group_geo_anchored_circle_pin_with_icon_and_halo",
+          "render_layer": 6,
+          "geo_anchor": {
+            "lon": 3.28,
+            "lat": 32.93
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 880,
+              "y": 175
+            }
+          },
+          "style": {
+            "outer_halo_fill": "rgba(24,216,255,0.18)",
+            "outer_halo_radius_px": 34,
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_radius_px": 23,
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "icon_size_px": 24,
+            "filter": "drop-shadow(0 0 14px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 55.2,
+            "appear_frame": 1656,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "scale 0.7->1.0 sur 12 frames, halo pulse boucle 48 frames"
+          }
+        },
+        {
+          "id": "pin_nigeria",
+          "type_technique": "svg_group_geo_anchored_circle_pin_with_icon_and_halo",
+          "render_layer": 6,
+          "geo_anchor": {
+            "lon": 7.49,
+            "lat": 9.08
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1005,
+              "y": 690
+            }
+          },
+          "style": {
+            "outer_halo_fill": "rgba(24,216,255,0.18)",
+            "outer_halo_radius_px": 34,
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_radius_px": 23,
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "icon_size_px": 24,
+            "filter": "drop-shadow(0 0 14px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 55.28,
+            "appear_frame": 1658,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "scale 0.7->1.0 sur 12 frames, halo pulse boucle 48 frames"
+          }
+        },
+        {
+          "id": "label_algerie",
+          "type_technique": "svg_group_geo_anchored_label_card_with_connector",
+          "render_layer": 7,
+          "text": "ALGÉRIE",
+          "geo_anchor": {
+            "lon": 3.28,
+            "lat": 32.93
+          },
+          "position": {
+            "mode": "geo_anchored_with_screen_offset",
+            "offset_px": {
+              "x": 125,
+              "y": 4
+            },
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1005,
+              "y": 179
+            },
+            "card_size_px": {
+              "width": 128,
+              "height": 42
+            }
+          },
+          "style": {
+            "card_fill": "#071A2D",
+            "card_stroke": "#7AA7C7",
+            "card_stroke_width_px": 1.4,
+            "corner_radius_px": 3,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 18,
+            "font_weight": 700,
+            "connector_stroke": "#7AA7C7",
+            "connector_width_px": 1.4
+          },
+          "timing": {
+            "appear_seconds": 55.55,
+            "appear_frame": 1667,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "fade_in + slide_x 8px sur 10 frames"
+          }
+        },
+        {
+          "id": "label_nigeria",
+          "type_technique": "svg_group_geo_anchored_label_card_with_connector",
+          "render_layer": 7,
+          "text": "NIGERIA",
+          "geo_anchor": {
+            "lon": 7.49,
+            "lat": 9.08
+          },
+          "position": {
+            "mode": "geo_anchored_with_screen_offset",
+            "offset_px": {
+              "x": 126,
+              "y": 0
+            },
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1131,
+              "y": 690
+            },
+            "card_size_px": {
+              "width": 132,
+              "height": 42
+            }
+          },
+          "style": {
+            "card_fill": "#071A2D",
+            "card_stroke": "#7AA7C7",
+            "card_stroke_width_px": 1.4,
+            "corner_radius_px": 3,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 18,
+            "font_weight": 700,
+            "connector_stroke": "#7AA7C7",
+            "connector_width_px": 1.4
+          },
+          "timing": {
+            "appear_seconds": 55.65,
+            "appear_frame": 1670,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "fade_in + slide_x 8px sur 10 frames"
+          }
+        },
+        {
+          "id": "label_niger",
+          "type_technique": "svg_group_geo_anchored_micro_label_pill",
+          "render_layer": 7,
+          "text": "NIGER",
+          "geo_anchor": {
+            "lon": 8.0,
+            "lat": 17.5
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 988,
+              "y": 497
+            },
+            "card_size_px": {
+              "width": 82,
+              "height": 30
+            }
+          },
+          "style": {
+            "card_fill": "rgba(7,26,45,0.72)",
+            "card_stroke": "rgba(122,167,199,0.55)",
+            "card_stroke_width_px": 1,
+            "corner_radius_px": 15,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 16,
+            "font_weight": 700,
+            "letter_spacing_px": 1
+          },
+          "timing": {
+            "appear_seconds": 55.75,
+            "appear_frame": 1673,
+            "disappear_seconds": 59.3,
+            "disappear_frame": 1779,
+            "animation": "fade_in 8 frames"
+          }
+        }
+      ],
+      "timing_estimate": {
+        "summary": "Panneau 01 de 55.0s à 59.3s. Le corridor et les pays pertinents restent visibles pendant que la caméra avance lentement. Aucun nouveau panneau financier n'apparaît encore.",
+        "beats": [
+          {
+            "time_seconds": 55.0,
+            "frame": 1650,
+            "event": "Entrée sur carte large, tracé cyan déjà lisible."
+          },
+          {
+            "time_seconds": 55.2,
+            "frame": 1656,
+            "event": "Pins Algérie et Nigeria pop avec halo."
+          },
+          {
+            "time_seconds": 55.55,
+            "frame": 1667,
+            "event": "Labels encadrés ALGÉRIE puis NIGERIA."
+          },
+          {
+            "time_seconds": 55.75,
+            "frame": 1673,
+            "event": "Micro-label encadré NIGER."
+          },
+          {
+            "time_seconds": 59.3,
+            "frame": 1779,
+            "event": "Préparation transition vers overlay comparateur."
+          }
+        ],
+        "storyboard_annotations": {
+          "rendered_in_final": false,
+          "removed_elements": [
+            "numéro 01",
+            "cartouche de note en bas à gauche : PAN LENT + LÉGER ZOOM / TRACÉ DÉJÀ EN PLACE",
+            "bordures blanches de présentation storyboard"
+          ],
+          "reason": "Ces annotations sont uniquement des notes de storyboard et violeraient la règle des panneaux en coin si elles étaient rendues."
+        }
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord_poussant_carte": {
+          "respectee": true,
+          "confirmation": "Aucun widget final en coin. Les seules cartes visibles sont des labels géo-ancrés aux pins. Les notes storyboard en bas à gauche ne sont pas rendues."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "confirmation": "ALGÉRIE et NIGERIA sont dans des cartes avec connecteur. NIGER est dans une micro-pastille ancrée au pays, pas en texte nu."
+        },
+        "regle_3_labels_limites_aux_pays_pertinents": {
+          "respectee": true,
+          "confirmation": "Seulement 3 labels pays : ALGÉRIE, NIGERIA, NIGER, tous narrativement liés au corridor financier."
+        },
+        "regle_4_camera_jamais_figee_plus_de_5s": {
+          "respectee": true,
+          "confirmation": "Pan/zoom continu de 55.0s à 59.3s, aucune immobilité."
+        }
+      }
+    },
+    {
+      "panel_id": "02",
+      "narrative_function": "Comparateur financier central : 13 Mds$, deux fois moins cher que l'AAGP, puis explication de l'autofinancement sans accord bancaire international.",
+      "time_range": {
+        "start_seconds": 59.3,
+        "start_frame": 1779,
+        "end_seconds": 68.5,
+        "end_frame": 2055
+      },
+      "split": {
+        "is_split_into_two_successive_times": true,
+        "phase_A": {
+          "name": "montant_plus_ratio",
+          "start_seconds": 59.3,
+          "start_frame": 1779,
+          "end_seconds": 64.1,
+          "end_frame": 1923,
+          "visible_information": [
+            "13 Mds$",
+            "x2 moins cher que l'AAGP (26 Mds$)",
+            "icônes de comparaison cyan/doré"
+          ]
+        },
+        "phase_B": {
+          "name": "flux_plus_banque_barree",
+          "start_seconds": 64.1,
+          "start_frame": 1923,
+          "end_seconds": 68.5,
+          "end_frame": 2055,
+          "visible_information": [
+            "flux Algérie et Nigeria vers tuyau central",
+            "banque internationale barrée",
+            "SANS ACCORD BANCAIRE INTERNATIONAL"
+          ]
+        }
+      },
+      "camera": {
+        "type": "d3_geo_projection_with_remotion_camera_transform",
+        "projection": "geoMercator",
+        "trajectory_description": "La carte reste derrière l'overlay, assombrie, mais la caméra continue un très lent drift diagonal nord-est et un micro zoom-in. Le mouvement reste volontairement subtil pour ne pas perturber la lecture du comparateur.",
+        "keyframes": [
+          {
+            "time_seconds": 59.3,
+            "frame": 1779,
+            "projection_center_lon_lat": [
+              7.2,
+              20.3
+            ],
+            "zoom": 1.11,
+            "screen_translate_px": [
+              -34,
+              12
+            ],
+            "easing_to_next": "linear"
+          },
+          {
+            "time_seconds": 63.9,
+            "frame": 1917,
+            "projection_center_lon_lat": [
+              8.6,
+              20.9
+            ],
+            "zoom": 1.135,
+            "screen_translate_px": [
+              -48,
+              18
+            ],
+            "easing_to_next": "linear"
+          },
+          {
+            "time_seconds": 68.5,
+            "frame": 2055,
+            "projection_center_lon_lat": [
+              10.1,
+              21.2
+            ],
+            "zoom": 1.16,
+            "screen_translate_px": [
+              -60,
+              25
+            ],
+            "easing_to_next": "easeInOutCubic"
+          }
+        ]
+      },
+      "elements": [
+        {
+          "id": "base_map_dimmed",
+          "type_technique": "svg_path_collection_from_GeoJSON_d3_geoPath",
+          "render_layer": 0,
+          "description": "Même carte que le panneau 01, visible en arrière-plan et fortement assombrie.",
+          "position": {
+            "mode": "geo_projected_full_frame",
+            "screen_bbox_px_approx": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "style": {
+            "fill": "#07192E",
+            "stroke": "#2F435B",
+            "stroke_width_px": 1.1,
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 59.3,
+            "appear_frame": 1779,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "dim_overlay_for_center_card",
+          "type_technique": "svg_rect_fullscreen_overlay",
+          "render_layer": 2,
+          "description": "Assombrissement global derrière l'overlay centré.",
+          "position": {
+            "mode": "screen",
+            "x_px": 0,
+            "y_px": 0,
+            "width_px": 1920,
+            "height_px": 1080
+          },
+          "style": {
+            "fill": "rgba(0, 8, 20, 0.68)",
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 59.3,
+            "appear_frame": 1779,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "fade_in 10 frames, fade_out 10 frames"
+          }
+        },
+        {
+          "id": "pipeline_background_muted",
+          "type_technique": "svg_path_geo_polyline_d3_line",
+          "render_layer": 1,
+          "geo_points_ref": "pipeline_polyline_geo",
+          "description": "Tracé corridor encore visible sous l'overlay, atténué.",
+          "position": {
+            "mode": "geo_projected_polyline"
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 4,
+            "opacity": 0.28,
+            "filter": "drop-shadow(0 0 10px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 59.3,
+            "appear_frame": 1779,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "overlay_anchor_connector_top",
+          "type_technique": "svg_path_geo_anchor_to_screen_card_connector",
+          "render_layer": 4,
+          "description": "Petit connecteur cyan reliant le haut du comparateur au tracé de carte, pour confirmer que l'overlay est ancré au corridor.",
+          "geo_anchor": {
+            "lon": 7.8,
+            "lat": 20.0
+          },
+          "position": {
+            "mode": "geo_to_screen",
+            "screen_end_xy_px": {
+              "x": 960,
+              "y": 255
+            }
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 3,
+            "stroke_linecap": "round",
+            "filter": "drop-shadow(0 0 10px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 59.45,
+            "appear_frame": 1784,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "strokeDashoffset 100%->0% sur 12 frames"
+          }
+        },
+        {
+          "id": "center_finance_card_outer",
+          "type_technique": "svg_group_screen_centered_card",
+          "render_layer": 5,
+          "description": "Carte-overlay financière composée, centrée, non flottante car reliée au tracé par le connecteur supérieur.",
+          "position": {
+            "mode": "screen",
+            "anchor": "center",
+            "x_px": 960,
+            "y_px": 540,
+            "width_px": 860,
+            "height_px": 440
+          },
+          "style": {
+            "fill": "#071A2D",
+            "fill_opacity": 0.94,
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 2,
+            "corner_radius_px": 18,
+            "filter": "drop-shadow(0 0 24px rgba(24,216,255,0.22))"
+          },
+          "timing": {
+            "appear_seconds": 59.35,
+            "appear_frame": 1781,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "scale 0.96->1.0 + opacity 0->1 sur 14 frames"
+          }
+        },
+        {
+          "id": "center_finance_card_inner_double_stroke",
+          "type_technique": "svg_rounded_rect_double_stroke",
+          "render_layer": 6,
+          "position": {
+            "mode": "screen",
+            "x_px": 545,
+            "y_px": 335,
+            "width_px": 830,
+            "height_px": 410
+          },
+          "style": {
+            "fill": "transparent",
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 1.2,
+            "corner_radius_px": 14,
+            "opacity": 0.85
+          },
+          "timing": {
+            "appear_seconds": 59.37,
+            "appear_frame": 1781,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "amount_13",
+          "type_technique": "remotion_text_svg",
+          "render_layer": 7,
+          "text": "13",
+          "position": {
+            "mode": "screen",
+            "x_px": 650,
+            "y_px": 410,
+            "width_px": 180,
+            "height_px": 118,
+            "text_anchor": "start"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 104,
+            "font_weight": 800,
+            "fill": "#18D8FF",
+            "letter_spacing_px": -4,
+            "filter": "drop-shadow(0 0 12px rgba(24,216,255,0.55))"
+          },
+          "timing": {
+            "appear_seconds": 59.55,
+            "appear_frame": 1787,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "count_reveal vertical mask 12 frames"
+          }
+        },
+        {
+          "id": "amount_mds",
+          "type_technique": "remotion_text_svg",
+          "render_layer": 7,
+          "text": "Mds$",
+          "position": {
+            "mode": "screen",
+            "x_px": 654,
+            "y_px": 528,
+            "width_px": 190,
+            "height_px": 58,
+            "text_anchor": "start"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 52,
+            "font_weight": 800,
+            "fill": "#18D8FF",
+            "letter_spacing_px": -2
+          },
+          "timing": {
+            "appear_seconds": 59.65,
+            "appear_frame": 1790,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "fade_in + slight_y 10px->0 sur 10 frames"
+          }
+        },
+        {
+          "id": "vertical_separator_top",
+          "type_technique": "svg_line",
+          "render_layer": 7,
+          "position": {
+            "mode": "screen",
+            "x1_px": 855,
+            "y1_px": 365,
+            "x2_px": 855,
+            "y2_px": 555
+          },
+          "style": {
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 1.4,
+            "opacity": 0.6
+          },
+          "timing": {
+            "appear_seconds": 59.7,
+            "appear_frame": 1791,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "ratio_x2",
+          "type_technique": "remotion_text_svg",
+          "render_layer": 7,
+          "text": "x2",
+          "position": {
+            "mode": "screen",
+            "x_px": 920,
+            "y_px": 398,
+            "width_px": 96,
+            "height_px": 62,
+            "text_anchor": "start"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 58,
+            "font_weight": 800,
+            "fill": "#18D8FF"
+          },
+          "timing": {
+            "appear_seconds": 60.0,
+            "appear_frame": 1800,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "scale 1.18->1.0 sur 10 frames"
+          }
+        },
+        {
+          "id": "ratio_text",
+          "type_technique": "remotion_text_svg_multiline",
+          "render_layer": 7,
+          "text": "moins cher que\nl’AAGP (26 Mds$)",
+          "position": {
+            "mode": "screen",
+            "x_px": 1025,
+            "y_px": 399,
+            "width_px": 320,
+            "height_px": 70,
+            "text_anchor": "start"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 24,
+            "line_height_px": 31,
+            "font_weight": 600,
+            "fill": "#F4F8FF"
+          },
+          "timing": {
+            "appear_seconds": 60.08,
+            "appear_frame": 1802,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "fade_in 10 frames"
+          }
+        },
+        {
+          "id": "comparison_cylinder_cyan",
+          "type_technique": "svg_icon_database_cylinder",
+          "render_layer": 7,
+          "description": "Pile cyan représentant le coût du corridor.",
+          "position": {
+            "mode": "screen",
+            "x_px": 950,
+            "y_px": 515,
+            "width_px": 66,
+            "height_px": 58
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "fill": "rgba(24,216,255,0.18)",
+            "stroke_width_px": 2
+          },
+          "timing": {
+            "appear_seconds": 60.45,
+            "appear_frame": 1814,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "draw_icon_strokes 14 frames"
+          }
+        },
+        {
+          "id": "comparison_dotted_line",
+          "type_technique": "svg_line_dashed",
+          "render_layer": 7,
+          "position": {
+            "mode": "screen",
+            "x1_px": 1025,
+            "y1_px": 544,
+            "x2_px": 1170,
+            "y2_px": 544
+          },
+          "style": {
+            "stroke": "#F4F8FF",
+            "stroke_width_px": 1.5,
+            "stroke_dasharray": "4 6",
+            "opacity": 0.8
+          },
+          "timing": {
+            "appear_seconds": 60.62,
+            "appear_frame": 1819,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "strokeDashoffset 100%->0% sur 12 frames"
+          }
+        },
+        {
+          "id": "comparison_cylinder_gold",
+          "type_technique": "svg_icon_database_cylinder",
+          "render_layer": 7,
+          "description": "Pile dorée représentant l'AAGP plus cher.",
+          "position": {
+            "mode": "screen",
+            "x_px": 1180,
+            "y_px": 490,
+            "width_px": 78,
+            "height_px": 92
+          },
+          "style": {
+            "stroke": "#E2A93A",
+            "fill": "rgba(226,169,58,0.18)",
+            "stroke_width_px": 2
+          },
+          "timing": {
+            "appear_seconds": 60.78,
+            "appear_frame": 1823,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "draw_icon_strokes 14 frames"
+          }
+        },
+        {
+          "id": "horizontal_separator_mid",
+          "type_technique": "svg_line",
+          "render_layer": 7,
+          "position": {
+            "mode": "screen",
+            "x1_px": 610,
+            "y1_px": 620,
+            "x2_px": 1315,
+            "y2_px": 620
+          },
+          "style": {
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 1.2,
+            "opacity": 0.55
+          },
+          "timing": {
+            "appear_seconds": 61.0,
+            "appear_frame": 1830,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "bottom_finance_group_mask",
+          "type_technique": "svg_group",
+          "render_layer": 7,
+          "description": "Groupe révélé uniquement en phase B pour alléger la phase A.",
+          "position": {
+            "mode": "screen",
+            "x_px": 610,
+            "y_px": 640,
+            "width_px": 705,
+            "height_px": 120
+          },
+          "style": {
+            "opacity_phase_A": 0,
+            "opacity_phase_B": 1
+          },
+          "timing": {
+            "appear_seconds": 64.1,
+            "appear_frame": 1923,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "fade_in group 12 frames"
+          }
+        },
+        {
+          "id": "mini_pin_algerie_overlay",
+          "type_technique": "svg_group_screen_circle_pin_with_bank_icon",
+          "render_layer": 8,
+          "text": "ALGÉRIE",
+          "position": {
+            "mode": "screen",
+            "circle_center_px": {
+              "x": 675,
+              "y": 700
+            },
+            "circle_radius_px": 45,
+            "label_xy_px": {
+              "x": 628,
+              "y": 762
+            }
+          },
+          "style": {
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_stroke_width_px": 2,
+            "halo_fill": "rgba(24,216,255,0.14)",
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "label_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 20,
+            "font_weight": 700
+          },
+          "timing": {
+            "appear_seconds": 64.1,
+            "appear_frame": 1923,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "scale 0.8->1.0 sur 10 frames"
+          }
+        },
+        {
+          "id": "mini_pin_nigeria_overlay",
+          "type_technique": "svg_group_screen_circle_pin_with_bank_icon",
+          "render_layer": 8,
+          "text": "NIGERIA",
+          "position": {
+            "mode": "screen",
+            "circle_center_px": {
+              "x": 1040,
+              "y": 700
+            },
+            "circle_radius_px": 45,
+            "label_xy_px": {
+              "x": 994,
+              "y": 762
+            }
+          },
+          "style": {
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_stroke_width_px": 2,
+            "halo_fill": "rgba(24,216,255,0.14)",
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "label_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 20,
+            "font_weight": 700
+          },
+          "timing": {
+            "appear_seconds": 64.18,
+            "appear_frame": 1925,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "scale 0.8->1.0 sur 10 frames"
+          }
+        },
+        {
+          "id": "central_pipe_icon",
+          "type_technique": "svg_icon_pipeline_valve",
+          "render_layer": 8,
+          "position": {
+            "mode": "screen",
+            "x_px": 815,
+            "y_px": 674,
+            "width_px": 86,
+            "height_px": 64
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "fill": "rgba(24,216,255,0.08)",
+            "stroke_width_px": 2.2,
+            "filter": "drop-shadow(0 0 8px rgba(24,216,255,0.55))"
+          },
+          "timing": {
+            "appear_seconds": 64.28,
+            "appear_frame": 1928,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "draw_icon_strokes 16 frames"
+          }
+        },
+        {
+          "id": "flow_arrow_algerie_to_pipe",
+          "type_technique": "svg_line_arrow_animated",
+          "render_layer": 8,
+          "position": {
+            "mode": "screen",
+            "x1_px": 724,
+            "y1_px": 700,
+            "x2_px": 807,
+            "y2_px": 700
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 3,
+            "marker_end": "arrow_cyan",
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 64.42,
+            "appear_frame": 1933,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "strokeDashoffset 100%->0% sur 14 frames, moving_dash_loop 36 frames"
+          }
+        },
+        {
+          "id": "flow_arrow_nigeria_to_pipe",
+          "type_technique": "svg_line_arrow_animated",
+          "render_layer": 8,
+          "position": {
+            "mode": "screen",
+            "x1_px": 995,
+            "y1_px": 700,
+            "x2_px": 908,
+            "y2_px": 700
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 3,
+            "marker_end": "arrow_cyan_left",
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 64.42,
+            "appear_frame": 1933,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "strokeDashoffset 100%->0% sur 14 frames, moving_dash_loop 36 frames"
+          }
+        },
+        {
+          "id": "vertical_separator_bottom",
+          "type_technique": "svg_line",
+          "render_layer": 8,
+          "position": {
+            "mode": "screen",
+            "x1_px": 1134,
+            "y1_px": 635,
+            "x2_px": 1134,
+            "y2_px": 758
+          },
+          "style": {
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 1.2,
+            "opacity": 0.55
+          },
+          "timing": {
+            "appear_seconds": 64.55,
+            "appear_frame": 1937,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055
+          }
+        },
+        {
+          "id": "bank_no_international_card",
+          "type_technique": "svg_group_screen_dashed_card_with_icon_crossed",
+          "render_layer": 8,
+          "position": {
+            "mode": "screen",
+            "x_px": 1170,
+            "y_px": 640,
+            "width_px": 145,
+            "height_px": 120
+          },
+          "style": {
+            "card_fill": "rgba(7,26,45,0.34)",
+            "card_stroke": "#7AA7C7",
+            "card_stroke_width_px": 1.5,
+            "card_stroke_dasharray": "8 7",
+            "corner_radius_px": 8,
+            "icon": "bank_building",
+            "icon_color": "#7AA7C7",
+            "icon_size_px": 62,
+            "cross_stroke": "#FF4D4D",
+            "cross_width_px": 4
+          },
+          "timing": {
+            "appear_seconds": 64.7,
+            "appear_frame": 1941,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "card fade_in 8 frames, red_cross draw 10 frames"
+          }
+        },
+        {
+          "id": "bank_no_international_text",
+          "type_technique": "remotion_text_svg_multiline",
+          "render_layer": 9,
+          "text": "SANS ACCORD\nBANCAIRE\nINTERNATIONAL",
+          "position": {
+            "mode": "screen",
+            "x_px": 1192,
+            "y_px": 717,
+            "width_px": 102,
+            "height_px": 42,
+            "text_anchor": "middle"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 12,
+            "line_height_px": 14,
+            "font_weight": 800,
+            "fill": "#F4F8FF",
+            "letter_spacing_px": 0.2
+          },
+          "timing": {
+            "appear_seconds": 64.9,
+            "appear_frame": 1947,
+            "disappear_seconds": 68.5,
+            "disappear_frame": 2055,
+            "animation": "fade_in 8 frames"
+          }
+        }
+      ],
+      "timing_estimate": {
+        "summary": "Panneau 02 découpé en deux temps pour réduire la surcharge cognitive tout en conservant le même overlay centré et dimmé.",
+        "phase_A_montant_ratio": {
+          "start_seconds": 59.3,
+          "start_frame": 1779,
+          "end_seconds": 64.1,
+          "end_frame": 1923,
+          "events": [
+            {
+              "time_seconds": 59.3,
+              "frame": 1779,
+              "event": "La carte s'assombrit."
+            },
+            {
+              "time_seconds": 59.35,
+              "frame": 1781,
+              "event": "Carte-overlay centrée apparaît, reliée au tracé par connecteur supérieur."
+            },
+            {
+              "time_seconds": 59.55,
+              "frame": 1787,
+              "event": "Révélation du montant : 13 Mds$."
+            },
+            {
+              "time_seconds": 60.0,
+              "frame": 1800,
+              "event": "Révélation du ratio : x2 moins cher que l’AAGP (26 Mds$)."
+            },
+            {
+              "time_seconds": 60.45,
+              "frame": 1814,
+              "event": "Icônes de comparaison cyan/doré apparaissent."
+            }
+          ]
+        },
+        "phase_B_flux_banque_barree": {
+          "start_seconds": 64.1,
+          "start_frame": 1923,
+          "end_seconds": 68.5,
+          "end_frame": 2055,
+          "events": [
+            {
+              "time_seconds": 64.1,
+              "frame": 1923,
+              "event": "Révélation du bas de la carte : ALGÉRIE, NIGERIA et tuyau central."
+            },
+            {
+              "time_seconds": 64.42,
+              "frame": 1933,
+              "event": "Flèches de flux Algérie et Nigeria convergent vers le tuyau central."
+            },
+            {
+              "time_seconds": 64.7,
+              "frame": 1941,
+              "event": "Carte pointillée banque internationale apparaît."
+            },
+            {
+              "time_seconds": 64.9,
+              "frame": 1947,
+              "event": "Croix rouge et texte : SANS ACCORD BANCAIRE INTERNATIONAL."
+            },
+            {
+              "time_seconds": 68.5,
+              "frame": 2055,
+              "event": "Sortie de l'overlay vers retour carte lumineuse."
+            }
+          ]
+        },
+        "storyboard_annotations": {
+          "rendered_in_final": false,
+          "removed_elements": [
+            "numéro 02",
+            "cartouche de note en bas à gauche : LE FOND S’ASSOMBRIT / CARTE INFO ANCRÉE AU TRACÉ",
+            "bordures blanches de présentation storyboard"
+          ],
+          "reason": "Ces annotations sont uniquement des notes de storyboard et ne doivent pas apparaître dans le rendu."
+        }
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord_poussant_carte": {
+          "respectee": true,
+          "confirmation": "Le comparateur financier est explicitement un overlay centré, composé, ancré au tracé par connecteur supérieur. La carte est assombrie derrière. Aucun panneau en coin ou latéral ne pousse la géographie."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "confirmation": "Tous les textes sont dans la carte-overlay ou dans des sous-cartes/icônes encadrées. Aucun texte nu dans l'océan ou dans le vide."
+        },
+        "regle_3_labels_limites_aux_pays_pertinents": {
+          "respectee": true,
+          "confirmation": "Dans l'overlay, seuls ALGÉRIE et NIGERIA sont nommés. Aucun inventaire des pays traversés."
+        },
+        "regle_4_camera_jamais_figee_plus_de_5s": {
+          "respectee": true,
+          "confirmation": "Même pendant la lecture du comparateur, la carte arrière continue un micro pan/zoom de 59.3s à 68.5s."
+        }
+      }
+    },
+    {
+      "panel_id": "03",
+      "narrative_function": "Retour à la carte : le corridor se rallume et l'information 'autofinancé par les États' est ancrée à la zone du tracé.",
+      "time_range": {
+        "start_seconds": 68.5,
+        "start_frame": 2055,
+        "end_seconds": 72.3,
+        "end_frame": 2169
+      },
+      "camera": {
+        "type": "d3_geo_projection_with_remotion_camera_transform",
+        "projection": "geoMercator",
+        "trajectory_description": "Sortie de l'overlay vers une vue carte rééclairée. La caméra continue un pan très lent vers le sud-est avec micro zoom-out pour redonner de l'air au corridor et accueillir la carte ancrée 'AUTOFINANCÉ'.",
+        "keyframes": [
+          {
+            "time_seconds": 68.5,
+            "frame": 2055,
+            "projection_center_lon_lat": [
+              10.1,
+              21.2
+            ],
+            "zoom": 1.16,
+            "screen_translate_px": [
+              -60,
+              25
+            ],
+            "easing_to_next": "easeOutCubic"
+          },
+          {
+            "time_seconds": 70.4,
+            "frame": 2112,
+            "projection_center_lon_lat": [
+              9.4,
+              19.6
+            ],
+            "zoom": 1.13,
+            "screen_translate_px": [
+              -42,
+              18
+            ],
+            "easing_to_next": "linear"
+          },
+          {
+            "time_seconds": 72.3,
+            "frame": 2169,
+            "projection_center_lon_lat": [
+              8.8,
+              18.5
+            ],
+            "zoom": 1.105,
+            "screen_translate_px": [
+              -28,
+              10
+            ],
+            "easing_to_next": "none"
+          }
+        ]
+      },
+      "elements": [
+        {
+          "id": "base_map_land_return",
+          "type_technique": "svg_path_collection_from_GeoJSON_d3_geoPath",
+          "render_layer": 0,
+          "description": "Retour au fond de carte clair après disparition du comparateur.",
+          "position": {
+            "mode": "geo_projected_full_frame",
+            "screen_bbox_px_approx": {
+              "x": 0,
+              "y": 0,
+              "width": 1920,
+              "height": 1080
+            }
+          },
+          "style": {
+            "fill": "#102C4F",
+            "stroke": "#6D829D",
+            "stroke_width_px": 1.2,
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 68.5,
+            "appear_frame": 2055,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "brightness 0.55->1.0 sur 18 frames"
+          }
+        },
+        {
+          "id": "map_vignette_return",
+          "type_technique": "svg_rect_radial_gradient_overlay",
+          "render_layer": 1,
+          "position": {
+            "mode": "screen",
+            "x_px": 0,
+            "y_px": 0,
+            "width_px": 1920,
+            "height_px": 1080
+          },
+          "style": {
+            "fill": "radial-gradient(circle at 50% 48%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 58%, rgba(0,0,0,0.40) 100%)",
+            "opacity": 1
+          },
+          "timing": {
+            "appear_seconds": 68.5,
+            "appear_frame": 2055,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169
+          }
+        },
+        {
+          "id": "highlight_algeria_fill_return",
+          "type_technique": "svg_path_country_fill_from_GeoJSON_ISO_DZA",
+          "render_layer": 2,
+          "position": {
+            "mode": "geo_projected_country",
+            "iso_a3": "DZA"
+          },
+          "style": {
+            "fill": "#0C9ED0",
+            "opacity": 0.68,
+            "stroke": "#18D8FF",
+            "stroke_width_px": 1.8,
+            "filter": "drop-shadow(0 0 16px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.55,
+            "appear_frame": 2057,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in depuis état dimmé sur 12 frames"
+          }
+        },
+        {
+          "id": "highlight_nigeria_fill_return",
+          "type_technique": "svg_path_country_fill_from_GeoJSON_ISO_NGA",
+          "render_layer": 2,
+          "position": {
+            "mode": "geo_projected_country",
+            "iso_a3": "NGA"
+          },
+          "style": {
+            "fill": "#0C9ED0",
+            "opacity": 0.64,
+            "stroke": "#18D8FF",
+            "stroke_width_px": 1.8,
+            "filter": "drop-shadow(0 0 16px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.55,
+            "appear_frame": 2057,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in depuis état dimmé sur 12 frames"
+          }
+        },
+        {
+          "id": "west_africa_existing_route_return",
+          "type_technique": "svg_path_geo_polyline_d3_line_with_circular_nodes",
+          "render_layer": 3,
+          "description": "Tracé doré de contexte toujours visible mais secondaire.",
+          "geo_points": [
+            {
+              "lon": -16.3,
+              "lat": 31.8
+            },
+            {
+              "lon": -16.9,
+              "lat": 27.7
+            },
+            {
+              "lon": -17.1,
+              "lat": 22.0
+            },
+            {
+              "lon": -15.8,
+              "lat": 17.2
+            },
+            {
+              "lon": -14.6,
+              "lat": 14.7
+            },
+            {
+              "lon": -12.2,
+              "lat": 11.4
+            },
+            {
+              "lon": -8.5,
+              "lat": 9.6
+            },
+            {
+              "lon": -4.2,
+              "lat": 8.2
+            },
+            {
+              "lon": -0.2,
+              "lat": 6.2
+            }
+          ],
+          "position": {
+            "mode": "geo_projected_polyline",
+            "screen_bbox_px_approx_at_mid_panel": {
+              "x": 415,
+              "y": 270,
+              "width": 400,
+              "height": 490
+            }
+          },
+          "style": {
+            "stroke": "#E2A93A",
+            "stroke_width_px": 3,
+            "stroke_linecap": "round",
+            "opacity": 0.86,
+            "node_radius_px": 5,
+            "node_fill": "#102C4F",
+            "node_stroke": "#E2A93A",
+            "node_stroke_width_px": 2
+          },
+          "timing": {
+            "appear_seconds": 68.5,
+            "appear_frame": 2055,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169
+          }
+        },
+        {
+          "id": "pipeline_relight_glow",
+          "type_technique": "svg_path_geo_polyline_d3_line_with_strokeDashoffset_and_energy_bursts",
+          "render_layer": 4,
+          "geo_points_ref": "pipeline_polyline_geo",
+          "description": "Retour lumière sur le corridor, avec impulsions énergétiques vers le centre.",
+          "position": {
+            "mode": "geo_projected_polyline",
+            "screen_bbox_px_approx_at_mid_panel": {
+              "x": 835,
+              "y": 160,
+              "width": 190,
+              "height": 620
+            }
+          },
+          "style": {
+            "stroke": "#18D8FF",
+            "stroke_width_px": 6,
+            "stroke_linecap": "round",
+            "stroke_linejoin": "round",
+            "filter": "drop-shadow(0 0 14px #18D8FF) drop-shadow(0 0 32px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.55,
+            "appear_frame": 2057,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "glow intensity 0.35->1.0 sur 18 frames, pulse_loop 36 frames"
+          }
+        },
+        {
+          "id": "pipeline_core_return",
+          "type_technique": "svg_path_geo_polyline_d3_line",
+          "render_layer": 5,
+          "geo_points_ref": "pipeline_polyline_geo",
+          "position": {
+            "mode": "geo_projected_polyline"
+          },
+          "style": {
+            "stroke": "#E9FCFF",
+            "stroke_width_px": 2,
+            "stroke_linecap": "round",
+            "opacity": 0.94
+          },
+          "timing": {
+            "appear_seconds": 68.55,
+            "appear_frame": 2057,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169
+          }
+        },
+        {
+          "id": "pipeline_energy_chevrons",
+          "type_technique": "svg_marker_or_small_arrowheads_along_geo_path_animated",
+          "render_layer": 6,
+          "description": "Petites flèches/éclats cyan animés le long du corridor, visibles dans le panneau 03.",
+          "position": {
+            "mode": "geo_path_relative",
+            "path_ref": "pipeline_polyline_geo",
+            "relative_positions": [
+              0.36,
+              0.48,
+              0.6,
+              0.72
+            ]
+          },
+          "style": {
+            "stroke": "#E9FCFF",
+            "fill": "#18D8FF",
+            "size_px": 16,
+            "filter": "drop-shadow(0 0 10px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.9,
+            "appear_frame": 2067,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "offset le long du path + fade cycle 30 frames"
+          }
+        },
+        {
+          "id": "pin_algerie_return",
+          "type_technique": "svg_group_geo_anchored_circle_pin_with_icon_and_halo",
+          "render_layer": 7,
+          "geo_anchor": {
+            "lon": 3.28,
+            "lat": 32.93
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 875,
+              "y": 172
+            }
+          },
+          "style": {
+            "outer_halo_fill": "rgba(24,216,255,0.18)",
+            "outer_halo_radius_px": 34,
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_radius_px": 23,
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "icon_size_px": 24,
+            "filter": "drop-shadow(0 0 14px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.6,
+            "appear_frame": 2058,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "halo pulse boucle 48 frames"
+          }
+        },
+        {
+          "id": "pin_nigeria_return",
+          "type_technique": "svg_group_geo_anchored_circle_pin_with_icon_and_halo",
+          "render_layer": 7,
+          "geo_anchor": {
+            "lon": 7.49,
+            "lat": 9.08
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1015,
+              "y": 692
+            }
+          },
+          "style": {
+            "outer_halo_fill": "rgba(24,216,255,0.18)",
+            "outer_halo_radius_px": 34,
+            "circle_fill": "#061B33",
+            "circle_stroke": "#18D8FF",
+            "circle_radius_px": 23,
+            "icon": "bank_building",
+            "icon_color": "#18D8FF",
+            "icon_size_px": 24,
+            "filter": "drop-shadow(0 0 14px #18D8FF)"
+          },
+          "timing": {
+            "appear_seconds": 68.6,
+            "appear_frame": 2058,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "halo pulse boucle 48 frames"
+          }
+        },
+        {
+          "id": "label_algerie_return",
+          "type_technique": "svg_group_geo_anchored_label_card_with_connector",
+          "render_layer": 8,
+          "text": "ALGÉRIE",
+          "geo_anchor": {
+            "lon": 3.28,
+            "lat": 32.93
+          },
+          "position": {
+            "mode": "geo_anchored_with_screen_offset",
+            "offset_px": {
+              "x": 125,
+              "y": 4
+            },
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1000,
+              "y": 176
+            },
+            "card_size_px": {
+              "width": 128,
+              "height": 42
+            }
+          },
+          "style": {
+            "card_fill": "#071A2D",
+            "card_stroke": "#7AA7C7",
+            "card_stroke_width_px": 1.4,
+            "corner_radius_px": 3,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 18,
+            "font_weight": 700,
+            "connector_stroke": "#7AA7C7",
+            "connector_width_px": 1.4
+          },
+          "timing": {
+            "appear_seconds": 68.75,
+            "appear_frame": 2063,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in 8 frames"
+          }
+        },
+        {
+          "id": "label_nigeria_return",
+          "type_technique": "svg_group_geo_anchored_label_card_with_connector",
+          "render_layer": 8,
+          "text": "NIGERIA",
+          "geo_anchor": {
+            "lon": 7.49,
+            "lat": 9.08
+          },
+          "position": {
+            "mode": "geo_anchored_with_screen_offset",
+            "offset_px": {
+              "x": 126,
+              "y": 0
+            },
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1141,
+              "y": 692
+            },
+            "card_size_px": {
+              "width": 132,
+              "height": 42
+            }
+          },
+          "style": {
+            "card_fill": "#071A2D",
+            "card_stroke": "#7AA7C7",
+            "card_stroke_width_px": 1.4,
+            "corner_radius_px": 3,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 18,
+            "font_weight": 700,
+            "connector_stroke": "#7AA7C7",
+            "connector_width_px": 1.4
+          },
+          "timing": {
+            "appear_seconds": 68.8,
+            "appear_frame": 2064,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in 8 frames"
+          }
+        },
+        {
+          "id": "label_niger_return",
+          "type_technique": "svg_group_geo_anchored_micro_label_pill",
+          "render_layer": 8,
+          "text": "NIGER",
+          "geo_anchor": {
+            "lon": 8.0,
+            "lat": 17.5
+          },
+          "position": {
+            "mode": "geo_anchored",
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 997,
+              "y": 500
+            },
+            "card_size_px": {
+              "width": 82,
+              "height": 30
+            }
+          },
+          "style": {
+            "card_fill": "rgba(7,26,45,0.72)",
+            "card_stroke": "rgba(122,167,199,0.55)",
+            "card_stroke_width_px": 1,
+            "corner_radius_px": 15,
+            "text_color": "#F4F8FF",
+            "font_family": "JetBrains Mono",
+            "font_size_px": 16,
+            "font_weight": 700,
+            "letter_spacing_px": 1
+          },
+          "timing": {
+            "appear_seconds": 68.85,
+            "appear_frame": 2066,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in 8 frames"
+          }
+        },
+        {
+          "id": "autofinance_overlay_connector",
+          "type_technique": "svg_path_geo_anchor_to_screen_card_connector",
+          "render_layer": 9,
+          "description": "Connecteur reliant le corridor au cartouche 'AUTOFINANCÉ PAR LES ÉTATS'.",
+          "geo_anchor": {
+            "lon": 10.6,
+            "lat": 15.2
+          },
+          "position": {
+            "mode": "geo_to_screen",
+            "screen_end_xy_px": {
+              "x": 1168,
+              "y": 580
+            },
+            "screen_bend_xy_px": {
+              "x": 1088,
+              "y": 580
+            }
+          },
+          "style": {
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 1.6,
+            "fill": "none",
+            "endpoint_dot_radius_px": 5,
+            "endpoint_dot_fill": "#18D8FF"
+          },
+          "timing": {
+            "appear_seconds": 69.05,
+            "appear_frame": 2072,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "strokeDashoffset 100%->0% sur 14 frames"
+          }
+        },
+        {
+          "id": "autofinance_overlay_card",
+          "type_technique": "svg_group_geo_anchored_overlay_card",
+          "render_layer": 10,
+          "description": "Cartouche composé ancré au tracé, pas un widget flottant. La carte reste visible derrière avec vignette mais n'est pas repoussée.",
+          "geo_anchor": {
+            "lon": 10.6,
+            "lat": 15.2
+          },
+          "position": {
+            "mode": "geo_anchored_with_screen_offset",
+            "offset_px": {
+              "x": 230,
+              "y": -58
+            },
+            "screen_xy_px_approx_at_mid_panel": {
+              "x": 1330,
+              "y": 545
+            },
+            "card_size_px": {
+              "width": 370,
+              "height": 150
+            }
+          },
+          "style": {
+            "fill": "#071A2D",
+            "fill_opacity": 0.94,
+            "stroke": "#7AA7C7",
+            "stroke_width_px": 2,
+            "corner_radius_px": 10,
+            "filter": "drop-shadow(0 0 18px rgba(24,216,255,0.20))"
+          },
+          "timing": {
+            "appear_seconds": 69.15,
+            "appear_frame": 2075,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "scale 0.96->1.0 + fade_in sur 12 frames"
+          }
+        },
+        {
+          "id": "autofinance_gauge",
+          "type_technique": "svg_circular_gauge_composed_HUD_inside_overlay",
+          "render_layer": 11,
+          "position": {
+            "mode": "screen_inside_parent_card",
+            "center_px": {
+              "x": 1228,
+              "y": 545
+            },
+            "radius_px": 52
+          },
+          "style": {
+            "track_stroke": "rgba(122,167,199,0.28)",
+            "track_width_px": 10,
+            "progress_stroke": "#18D8FF",
+            "progress_width_px": 10,
+            "progress_value": 0.72,
+            "stroke_linecap": "round",
+            "inner_icon": "bank_building",
+            "inner_icon_color": "#F4F8FF",
+            "inner_icon_size_px": 46
+          },
+          "timing": {
+            "appear_seconds": 69.3,
+            "appear_frame": 2079,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "gauge strokeDashoffset 0->72% sur 20 frames"
+          }
+        },
+        {
+          "id": "autofinance_text",
+          "type_technique": "remotion_text_svg_multiline",
+          "render_layer": 11,
+          "text": "AUTOFINANCÉ\nPAR LES ÉTATS",
+          "position": {
+            "mode": "screen",
+            "x_px": 1314,
+            "y_px": 512,
+            "width_px": 245,
+            "height_px": 66,
+            "text_anchor": "start"
+          },
+          "style": {
+            "font_family": "JetBrains Mono",
+            "font_size_px": 24,
+            "line_height_px": 34,
+            "font_weight": 800,
+            "fill": "#F4F8FF",
+            "letter_spacing_px": 0.4
+          },
+          "timing": {
+            "appear_seconds": 69.42,
+            "appear_frame": 2083,
+            "disappear_seconds": 72.3,
+            "disappear_frame": 2169,
+            "animation": "fade_in + slide_x 8px->0 sur 10 frames"
+          }
+        }
+      ],
+      "timing_estimate": {
+        "summary": "Panneau 03 de 68.5s à 72.3s : retour lumière sur le corridor, puis cartouche ancré 'AUTOFINANCÉ PAR LES ÉTATS'.",
+        "beats": [
+          {
+            "time_seconds": 68.5,
+            "frame": 2055,
+            "event": "Overlay comparateur disparu, carte rééclairée."
+          },
+          {
+            "time_seconds": 68.55,
+            "frame": 2057,
+            "event": "Corridor cyan reprend son glow complet."
+          },
+          {
+            "time_seconds": 68.9,
+            "frame": 2067,
+            "event": "Chevrons/impulsions énergétiques sur le corridor."
+          },
+          {
+            "time_seconds": 69.05,
+            "frame": 2072,
+            "event": "Connecteur vers cartouche autofinancement se dessine depuis la carte."
+          },
+          {
+            "time_seconds": 69.15,
+            "frame": 2075,
+            "event": "Cartouche ancré apparaît à droite du corridor, sans pousser la carte."
+          },
+          {
+            "time_seconds": 69.3,
+            "frame": 2079,
+            "event": "Jauge circulaire se remplit."
+          },
+          {
+            "time_seconds": 69.42,
+            "frame": 2083,
+            "event": "Texte AUTOFINANCÉ PAR LES ÉTATS apparaît."
+          },
+          {
+            "time_seconds": 72.3,
+            "frame": 2169,
+            "event": "Fin du beat sur corridor et autofinancement lisibles."
+          }
+        ],
+        "storyboard_annotations": {
+          "rendered_in_final": false,
+          "removed_elements": [
+            "numéro 03",
+            "cartouche de note en bas à gauche : RETOUR LUMIÈRE / GLOW SUR LE CORRIDOR",
+            "bordures blanches de présentation storyboard"
+          ],
+          "reason": "Ces annotations sont des repères de storyboard, pas des éléments de rendu."
+        }
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_bord_poussant_carte": {
+          "respectee": true,
+          "confirmation": "Le cartouche 'AUTOFINANCÉ PAR LES ÉTATS' est ancré au corridor par connecteur. Il n'est ni en coin ni en bordure latérale et ne pousse pas la carte."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "confirmation": "Le texte d'autofinancement est dans un cartouche. Les labels pays sont dans des cartes/pastilles reliées ou ancrées."
+        },
+        "regle_3_labels_limites_aux_pays_pertinents": {
+          "respectee": true,
+          "confirmation": "Seulement ALGÉRIE, NIGERIA et NIGER restent labellisés."
+        },
+        "regle_4_camera_jamais_figee_plus_de_5s": {
+          "respectee": true,
+          "confirmation": "Pan lent et micro zoom-out continu de 68.5s à 72.3s."
+        }
+      }
+    }
+  ],
+  "global_verification_contre_regles": {
+    "regle_1_aucun_widget_coin_ou_bord_poussant_carte": {
+      "respectee": true,
+      "confirmation": "Aucun élément final n'est placé en coin d'écran comme widget informatif. Le panneau 02 conserve le bon pattern : overlay centré avec carte assombrie derrière et ancrage au tracé. Le panneau 03 utilise un overlay ancré au tracé, pas un panneau latéral."
+    },
+    "regle_2_aucun_texte_flottant_sans_support": {
+      "respectee": true,
+      "confirmation": "Tous les textes sont portés par une carte, une pastille, une icône composée ou un connecteur géo-ancré."
+    },
+    "regle_3_labels_limites_aux_pays_pertinents": {
+      "respectee": true,
+      "confirmation": "Seulement trois pays maximum sont nommés sur la carte : Algérie, Niger, Nigeria. Le comparateur ne nomme que Algérie et Nigeria."
+    },
+    "regle_4_camera_jamais_figee_plus_de_5s": {
+      "respectee": true,
+      "confirmation": "La caméra est continuellement animée sur les 17.3 secondes du beat, y compris pendant la phase d'overlay dimmé du panneau 02."
+    },
+    "contraintes_stack": {
+      "respectee": true,
+      "confirmation": "Tous les éléments sont réalisables en D3.js + Remotion via GeoJSON, SVG paths, strokeDashoffset, fills, filtres glow, groupes overlay et textes SVG. Aucun élément ne nécessite 3D ou After Effects."
+    }
+  }
+}

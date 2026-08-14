@@ -1,0 +1,1543 @@
+{
+  "beat": {
+    "id": "transsaharan_competitor_beat",
+    "duration_sec": 27.6,
+    "narration": "Ce concurrent, le gazoduc transsaharien, part du Nigeria [0.2s], il traverse le Niger [22.2s], remonte le Sahara [23.9s], se connecte directement aux réseaux algériens [27.1s] qui pompent déjà du gaz vers l'Europe.",
+    "visual_style": {
+      "stack": "D3.js + Remotion, SVG/Canvas 2D uniquement, pas de 3D, pas d'After Effects",
+      "projection": "geoMercator",
+      "geo_source": "GeoJSON réel pays Afrique / Europe / Moyen-Orient",
+      "palette": {
+        "background_navy": "#06172A",
+        "deep_navy": "#041120",
+        "land_base": "#102B49",
+        "land_secondary": "#0B213B",
+        "country_stroke": "#3B536B",
+        "country_stroke_dim": "#263D55",
+        "cyan_primary": "#31E8FF",
+        "cyan_secondary": "#16BFEA",
+        "cyan_fill": "#123F66",
+        "cyan_glow": "#39F2FF",
+        "gold_primary": "#FFD36A",
+        "gold_secondary": "#F7A93B",
+        "gold_glow": "#FFE08A",
+        "white_text": "#EAF7FF",
+        "muted_text": "#9DB4C8",
+        "panel_stroke": "#3C5870",
+        "overlay_fill": "#071A2E",
+        "overlay_fill_translucent": "rgba(7, 26, 46, 0.88)",
+        "map_dim": "rgba(1, 8, 18, 0.46)"
+      },
+      "typography": {
+        "primary": "IBM Plex Mono, JetBrains Mono ou équivalent monospace",
+        "country_label_case": "uppercase",
+        "letter_spacing": "0.08em"
+      },
+      "coordinate_system": "Toutes les positions screen sont relatives au panneau courant: x 0.0 = bord gauche du panneau, x 1.0 = bord droit, y 0.0 = haut du panneau, y 1.0 = bas du panneau."
+    }
+  },
+  "panels": [
+    {
+      "panel_id": "01",
+      "time_range_sec": {
+        "start": 0,
+        "end": 22.2
+      },
+      "story_intent": "Installer le concurrent en isolant le Nigeria comme point de départ. Le monde reste sombre, la caméra pousse lentement vers le pays, le Nigeria se trace puis se remplit en cyan.",
+      "camera": {
+        "type": "continuous_push_in_with_subtle_eastward_pan",
+        "projection": "geoMercator",
+        "viewport_relative": {
+          "x": 0,
+          "y": 0,
+          "width": 1,
+          "height": 1
+        },
+        "path": [
+          {
+            "time_sec": 0,
+            "center_lonlat": [
+              18,
+              10
+            ],
+            "zoom": 1,
+            "description": "Vue large Afrique de l'Ouest / Afrique centrale / Corne de l'Afrique, Nigeria proche du centre horizontal."
+          },
+          {
+            "time_sec": 0.2,
+            "center_lonlat": [
+              14.8,
+              9.4
+            ],
+            "zoom": 1.05,
+            "description": "Début du push-in synchronisé avec 'part du Nigeria'."
+          },
+          {
+            "time_sec": 6,
+            "center_lonlat": [
+              11.5,
+              8.9
+            ],
+            "zoom": 1.16,
+            "description": "Nigeria stabilisé visuellement dans le tiers central, sans arrêt caméra."
+          },
+          {
+            "time_sec": 14,
+            "center_lonlat": [
+              9.6,
+              8.7
+            ],
+            "zoom": 1.24,
+            "description": "Très lent push-in, légère dérive vers l'ouest pour garder le Nigeria dominant."
+          },
+          {
+            "time_sec": 22.2,
+            "center_lonlat": [
+              8.7,
+              8.9
+            ],
+            "zoom": 1.32,
+            "description": "Fin panneau, Nigeria plus présent mais la carte reste assez large pour préparer le zoom-out du panneau 02."
+          }
+        ],
+        "easing": "easeInOutCubic sur le push-in global, micro-jitter nul, aucun hold complet supérieur à 5 secondes"
+      },
+      "elements": [
+        {
+          "id": "p01_base_map",
+          "type_technique": "carte GeoJSON réelle rendue en SVG D3, pays en paths, remplissage sombre, frontières fines",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          },
+          "geo_scope": "Afrique de l'Ouest, Afrique centrale, Sahara oriental, Corne de l'Afrique partielle",
+          "colors": {
+            "land_fill": "#102B49",
+            "country_stroke": "#3B536B",
+            "water_fill": "#06172A"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 0,
+            "disappear_sec": 22.2,
+            "animation": "visible dès le premier frame, suit la caméra en continu"
+          }
+        },
+        {
+          "id": "p01_vignette",
+          "type_technique": "vignette d'assombrissement radiale en overlay SVG/HTML absolute, pointer-events none",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            },
+            "focus_relative": {
+              "x": 0.49,
+              "y": 0.43
+            }
+          },
+          "colors": {
+            "center": "rgba(6, 23, 42, 0)",
+            "edges": "rgba(1, 8, 18, 0.62)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 0,
+            "disappear_sec": 22.2,
+            "animation": "opacité constante 1"
+          }
+        },
+        {
+          "id": "p01_nigeria_country_draw",
+          "type_technique": "pays Nigeria qui se trace en strokeDashoffset puis se remplit",
+          "geojson_feature": "Nigeria",
+          "anchor_geo_lonlat": [
+            8.6753,
+            9.082
+          ],
+          "position_screen": {
+            "centroid_relative_at_key_time": {
+              "time_sec": 2.8,
+              "x": 0.47,
+              "y": 0.43
+            }
+          },
+          "colors": {
+            "stroke_initial": "#31E8FF",
+            "stroke_glow": "#39F2FF",
+            "fill_final": "rgba(18, 63, 102, 0.78)",
+            "fill_glow": "rgba(49, 232, 255, 0.18)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 0.2,
+            "disappear_sec": 22.2,
+            "animation": "strokeDashoffset 100%→0% de 0.2s à 1.6s, fill opacity 0→0.78 de 1.25s à 2.2s, halo de bordure pulse très léger ensuite"
+          }
+        },
+        {
+          "id": "p01_nigeria_pin",
+          "type_technique": "pin circulaire ancré à coordonnée géo avec halo pulsant",
+          "anchor_geo_lonlat": [
+            8.6753,
+            9.082
+          ],
+          "position_screen": {
+            "relative_at_appear": {
+              "x": 0.47,
+              "y": 0.41
+            },
+            "anchor_behavior": "reste projeté sur la coordonnée géo pendant le mouvement caméra"
+          },
+          "geometry": {
+            "outer_radius_px_at_1920w": 14,
+            "inner_radius_px_at_1920w": 5,
+            "halo_radius_px_at_1920w": 24
+          },
+          "colors": {
+            "stroke": "#BFF8FF",
+            "inner_fill": "#31E8FF",
+            "halo": "rgba(49, 232, 255, 0.32)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 0.65,
+            "disappear_sec": 22.2,
+            "animation": "scale 0→1 de 0.65s à 0.95s, halo pulse sinusoidal période 1.4s"
+          }
+        },
+        {
+          "id": "p01_label_nigeria",
+          "type_technique": "label pays en pastille rectangulaire ancrée au pin via court connecteur vertical, pas de texte nu",
+          "anchor_geo_lonlat": [
+            8.6753,
+            9.082
+          ],
+          "position_screen": {
+            "relative_at_appear": {
+              "x": 0.47,
+              "y": 0.535
+            },
+            "offset_from_anchor_px_at_1920w": {
+              "x": 0,
+              "y": 34
+            },
+            "size_px_at_1920w": {
+              "width": 110,
+              "height": 34
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "connector": "#7EEFFF",
+            "text": "#EAF7FF"
+          },
+          "text": "NIGERIA",
+          "timing_estimate": {
+            "appear_sec": 0.9,
+            "disappear_sec": 22.2,
+            "animation": "opacity 0→1 et translateY -6px→0 de 0.9s à 1.25s"
+          }
+        },
+        {
+          "id": "p01_bottom_caption",
+          "type_technique": "cartouche texte centré en bas, overlay supporté par cadre, ne repousse pas la carte",
+          "position_screen": {
+            "center_relative": {
+              "x": 0.5,
+              "y": 0.93
+            },
+            "size_relative": {
+              "width": 0.29,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.86)",
+            "box_stroke": "#5F768B",
+            "text": "#EAF7FF"
+          },
+          "text": "PUSH IN / NIGERIA SEUL, FOND ÉTEINT",
+          "timing_estimate": {
+            "appear_sec": 0.1,
+            "disappear_sec": 22.0,
+            "animation": "opacity 0→1 de 0.1s à 0.35s, opacity 1→0 de 21.6s à 22.0s"
+          }
+        },
+        {
+          "id": "p01_storyboard_index_badge",
+          "type_technique": "badge de repérage storyboard non narratif, à désactiver en rendu final",
+          "render_in_final": false,
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0.012,
+              "y": 0.035,
+              "width": 0.03,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.55)",
+            "box_stroke": "#8CA3B8",
+            "text": "#EAF7FF"
+          },
+          "text": "01",
+          "timing_estimate": {
+            "appear_sec": 0,
+            "disappear_sec": 22.2,
+            "animation": "aucune, production only"
+          }
+        }
+      ]
+    },
+    {
+      "panel_id": "02",
+      "time_range_sec": {
+        "start": 22.2,
+        "end": 25.9
+      },
+      "story_intent": "Révéler la contrainte terrestre: le tracé quitte le Nigeria, traverse le Niger, puis remonte le Sahara vers l'Algérie. Le zoom-out fait apparaître le corridor et l'insert composé ancré à la zone saharienne.",
+      "camera": {
+        "type": "zoom_out_then_northwest_pan",
+        "projection": "geoMercator",
+        "path": [
+          {
+            "time_sec": 22.2,
+            "center_lonlat": [
+              8.7,
+              8.9
+            ],
+            "zoom": 1.32,
+            "description": "Reprise depuis le cadrage Nigeria du panneau 01."
+          },
+          {
+            "time_sec": 23.0,
+            "center_lonlat": [
+              8.3,
+              13.3
+            ],
+            "zoom": 1.08,
+            "description": "Dézoom rapide pour intégrer le Niger au-dessus du Nigeria."
+          },
+          {
+            "time_sec": 23.9,
+            "center_lonlat": [
+              7.4,
+              18.6
+            ],
+            "zoom": 0.92,
+            "description": "Pan nord, Sahara visible, route en cours de remontée."
+          },
+          {
+            "time_sec": 25.9,
+            "center_lonlat": [
+              6.2,
+              22.5
+            ],
+            "zoom": 0.86,
+            "description": "Vue Afrique de l'Ouest / Maghreb central, Algérie et Niger lisibles, insert Sahara ancré sans déplacer la carte."
+          }
+        ],
+        "easing": "easeInOutCubic pour le dézoom 22.2→23.0, puis linear-smooth pan nord 23.0→25.9",
+        "no_static_hold": true
+      },
+      "elements": [
+        {
+          "id": "p02_base_map",
+          "type_technique": "carte GeoJSON réelle rendue en SVG D3, pays en paths, frontières fines",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          },
+          "geo_scope": "Afrique de l'Ouest, Sahara, Maghreb central, Méditerranée occidentale partielle, Moyen-Orient à droite en fond",
+          "colors": {
+            "land_fill": "#102B49",
+            "country_stroke": "#3B536B",
+            "water_fill": "#06172A"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "suit le zoom-out et le pan"
+          }
+        },
+        {
+          "id": "p02_global_dim_behind_insert",
+          "type_technique": "overlay d'assombrissement carte derrière l'insert composé, avec masque radial plus clair autour du corridor",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            },
+            "clear_focus_polyline": "autour du tracé Nigeria-Niger-Algérie"
+          },
+          "colors": {
+            "dim": "rgba(1, 8, 18, 0.34)",
+            "clear_zone": "rgba(1, 8, 18, 0)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.65,
+            "disappear_sec": 25.75,
+            "animation": "opacity 0→1 de 22.65s à 22.9s, 1→0 de 25.55s à 25.75s"
+          }
+        },
+        {
+          "id": "p02_country_highlight_nigeria",
+          "type_technique": "pays Nigeria déjà tracé, fill cyan atténué, bordure lumineuse",
+          "geojson_feature": "Nigeria",
+          "anchor_geo_lonlat": [
+            8.6753,
+            9.082
+          ],
+          "position_screen": {
+            "centroid_relative_at_23_5s": {
+              "x": 0.53,
+              "y": 0.72
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.66)",
+            "glow": "rgba(49, 232, 255, 0.22)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "continuité depuis panneau 01, légère baisse opacité à 22.6s pour laisser le tracé dominer"
+          }
+        },
+        {
+          "id": "p02_country_highlight_niger",
+          "type_technique": "pays Niger qui se trace en strokeDashoffset puis se remplit",
+          "geojson_feature": "Niger",
+          "anchor_geo_lonlat": [
+            8.0817,
+            17.6078
+          ],
+          "position_screen": {
+            "centroid_relative_at_23_0s": {
+              "x": 0.55,
+              "y": 0.52
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.72)",
+            "glow": "rgba(49, 232, 255, 0.24)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "strokeDashoffset 100%→0% de 22.2s à 22.85s, fill opacity 0→0.72 de 22.65s à 23.05s, synchronisé avec 'il traverse le Niger'"
+          }
+        },
+        {
+          "id": "p02_country_highlight_algeria",
+          "type_technique": "pays Algérie en fill cyan atténué, bordure cyan déjà visible car destination du corridor",
+          "geojson_feature": "Algeria",
+          "anchor_geo_lonlat": [
+            1.6596,
+            28.0339
+          ],
+          "position_screen": {
+            "centroid_relative_at_24_5s": {
+              "x": 0.49,
+              "y": 0.29
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.58)",
+            "glow": "rgba(49, 232, 255, 0.2)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 23.55,
+            "disappear_sec": 25.9,
+            "animation": "strokeDashoffset 100%→0% de 23.55s à 24.15s, fill opacity 0→0.58 de 23.9s à 24.3s"
+          }
+        },
+        {
+          "id": "p02_pipeline_route_gold",
+          "type_technique": "ligne de flux géographique animée entre plusieurs points, strokeDashoffset + particules lumineuses",
+          "route_geo_lonlat": [
+            [
+              5.75,
+              5.52
+            ],
+            [
+              7.49,
+              9.06
+            ],
+            [
+              8.52,
+              12.0
+            ],
+            [
+              8.98,
+              16.97
+            ],
+            [
+              7.99,
+              20.5
+            ],
+            [
+              5.45,
+              24.7
+            ],
+            [
+              3.0,
+              28.05
+            ]
+          ],
+          "position_screen": {
+            "start_relative_at_22_4s": {
+              "x": 0.53,
+              "y": 0.76
+            },
+            "mid_relative_at_23_9s": {
+              "x": 0.51,
+              "y": 0.42
+            },
+            "end_relative_at_25_0s": {
+              "x": 0.48,
+              "y": 0.26
+            }
+          },
+          "colors": {
+            "stroke": "#FFD36A",
+            "stroke_outer_glow": "rgba(255, 211, 106, 0.46)",
+            "moving_dot": "#FFE08A"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.25,
+            "disappear_sec": 25.9,
+            "animation": "dash reveal Nigeria→Niger de 22.25s à 22.95s, Niger→Sahara de 22.95s à 23.9s, Sahara→Algérie de 23.9s à 25.05s; particule gold boucle le long du tracé après révélation"
+          }
+        },
+        {
+          "id": "p02_origin_pin_nigeria",
+          "type_technique": "pin circulaire ancré à la route au Nigeria avec halo pulsant",
+          "anchor_geo_lonlat": [
+            5.75,
+            5.52
+          ],
+          "position_screen": {
+            "relative_at_23_2s": {
+              "x": 0.53,
+              "y": 0.76
+            }
+          },
+          "geometry": {
+            "outer_radius_px_at_1920w": 13,
+            "inner_radius_px_at_1920w": 5
+          },
+          "colors": {
+            "stroke": "#BFF8FF",
+            "inner_fill": "#31E8FF",
+            "halo": "rgba(49, 232, 255, 0.3)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "visible dès entrée panneau, halo pulse période 1.2s"
+          }
+        },
+        {
+          "id": "p02_sahara_pin_gold",
+          "type_technique": "pin circulaire doré ancré au segment saharien du tracé, point d'appel de l'insert",
+          "anchor_geo_lonlat": [
+            6.25,
+            22.6
+          ],
+          "position_screen": {
+            "relative_at_24_0s": {
+              "x": 0.49,
+              "y": 0.32
+            }
+          },
+          "geometry": {
+            "outer_radius_px_at_1920w": 12,
+            "inner_radius_px_at_1920w": 4
+          },
+          "colors": {
+            "stroke": "#FFE08A",
+            "inner_fill": "#FFD36A",
+            "halo": "rgba(255, 211, 106, 0.42)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 23.55,
+            "disappear_sec": 25.9,
+            "animation": "scale 0→1 de 23.55s à 23.75s, pulse accentué à 23.9s sur 'remonte le Sahara'"
+          }
+        },
+        {
+          "id": "p02_label_algerie",
+          "type_technique": "label pays en pastille ancrée au centroïde Algérie, avec connecteur court",
+          "anchor_geo_lonlat": [
+            2.5,
+            28.0
+          ],
+          "position_screen": {
+            "relative_at_24_5s": {
+              "x": 0.5,
+              "y": 0.17
+            },
+            "size_px_at_1920w": {
+              "width": 96,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "ALGÉRIE",
+          "timing_estimate": {
+            "appear_sec": 23.8,
+            "disappear_sec": 25.9,
+            "animation": "opacity 0→1 de 23.8s à 24.05s"
+          }
+        },
+        {
+          "id": "p02_label_niger",
+          "type_technique": "label pays en pastille ancrée au Niger, avec connecteur court",
+          "anchor_geo_lonlat": [
+            8.0817,
+            17.6078
+          ],
+          "position_screen": {
+            "relative_at_23_2s": {
+              "x": 0.55,
+              "y": 0.51
+            },
+            "size_px_at_1920w": {
+              "width": 84,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "NIGER",
+          "timing_estimate": {
+            "appear_sec": 22.45,
+            "disappear_sec": 25.9,
+            "animation": "opacity 0→1 de 22.45s à 22.7s"
+          }
+        },
+        {
+          "id": "p02_label_nigeria",
+          "type_technique": "label pays en pastille ancrée au Nigeria, avec connecteur court",
+          "anchor_geo_lonlat": [
+            5.75,
+            5.52
+          ],
+          "position_screen": {
+            "relative_at_23_2s": {
+              "x": 0.535,
+              "y": 0.85
+            },
+            "size_px_at_1920w": {
+              "width": 100,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "NIGERIA",
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "déjà présent / opacity maintenue"
+          }
+        },
+        {
+          "id": "p02_sahara_insert_card",
+          "type_technique": "insert composé ancré à un point de carte par connecteur, carte assombrie derrière; card SVG/HTML avec image stylisée + jauge circulaire",
+          "anchor_geo_lonlat": [
+            6.25,
+            22.6
+          ],
+          "position_screen": {
+            "card_bounds_relative": {
+              "x": 0.06,
+              "y": 0.18,
+              "width": 0.25,
+              "height": 0.62
+            },
+            "connector_start_relative": {
+              "x": 0.31,
+              "y": 0.49
+            },
+            "connector_end_relative_at_24_0s": {
+              "x": 0.49,
+              "y": 0.32
+            }
+          },
+          "colors": {
+            "card_fill": "rgba(7, 26, 46, 0.90)",
+            "card_stroke": "#8CA3B8",
+            "connector": "#B8D8EA",
+            "title": "#EAF7FF",
+            "subtitle": "#FFD36A",
+            "gauge_bg": "#28445F",
+            "gauge_value": "#FFD36A",
+            "accent": "#31E8FF"
+          },
+          "text": {
+            "title": "TRAVERSÉE DU SAHARA",
+            "subtitle": "CORRIDOR TERRESTRE",
+            "metric_label": "LONGUEUR ESTIMÉE",
+            "metric_value": "~2 000 KM",
+            "footer": "CONTRAINTE MAJEURE"
+          },
+          "internal_elements": [
+            {
+              "id": "p02_insert_desert_pipeline_image",
+              "type_technique": "illustration 2D stylisée dans le card, dunes + pipeline terrestre, pas de 3D",
+              "position_inside_card_relative": {
+                "x": 0.06,
+                "y": 0.27,
+                "width": 0.88,
+                "height": 0.3
+              },
+              "colors": {
+                "sand": "#C79A58",
+                "shadow": "#6D5338",
+                "pipe": "#1B2430",
+                "pipe_gold_rim": "#FFD36A"
+              },
+              "text": null
+            },
+            {
+              "id": "p02_insert_length_gauge",
+              "type_technique": "jauge circulaire HUD composée intégrée au card, arc SVG strokeDasharray",
+              "position_inside_card_relative": {
+                "center_x": 0.2,
+                "center_y": 0.81,
+                "radius": 0.13
+              },
+              "colors": {
+                "arc_bg": "#28445F",
+                "arc_value": "#FFD36A",
+                "tick": "#EAF7FF"
+              },
+              "text": null
+            }
+          ],
+          "timing_estimate": {
+            "appear_sec": 22.75,
+            "disappear_sec": 25.65,
+            "animation": "card opacity 0→1 et scale 0.96→1 de 22.75s à 23.05s; connecteur dessiné de card vers pin de 22.95s à 23.2s; jauge arc 0→68% de 23.1s à 23.9s; fade out 25.45s→25.65s"
+          }
+        },
+        {
+          "id": "p02_bottom_caption",
+          "type_technique": "cartouche texte centré en bas, overlay supporté par cadre, ne repousse pas la carte",
+          "position_screen": {
+            "center_relative": {
+              "x": 0.5,
+              "y": 0.93
+            },
+            "size_relative": {
+              "width": 0.42,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.86)",
+            "box_stroke": "#5F768B",
+            "text": "#EAF7FF"
+          },
+          "text": "ZOOM OUT / LA CONTRAINTE APPARAÎT AVANT L’ARRIVÉE",
+          "timing_estimate": {
+            "appear_sec": 22.25,
+            "disappear_sec": 25.75,
+            "animation": "opacity 0→1 de 22.25s à 22.5s, opacity 1→0 de 25.45s à 25.75s"
+          }
+        },
+        {
+          "id": "p02_storyboard_index_badge",
+          "type_technique": "badge de repérage storyboard non narratif, à désactiver en rendu final",
+          "render_in_final": false,
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0.012,
+              "y": 0.035,
+              "width": 0.03,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.55)",
+            "box_stroke": "#8CA3B8",
+            "text": "#EAF7FF"
+          },
+          "text": "02",
+          "timing_estimate": {
+            "appear_sec": 22.2,
+            "disappear_sec": 25.9,
+            "animation": "aucune, production only"
+          }
+        }
+      ]
+    },
+    {
+      "panel_id": "03",
+      "time_range_sec": {
+        "start": 25.9,
+        "end": 27.6
+      },
+      "story_intent": "Montrer le raccordement direct aux réseaux algériens existants et le flux déjà orienté vers l'Europe. La caméra pan vers le nord, le réseau cyan s'active en Algérie, puis une flèche de flux part vers la Méditerranée / Europe.",
+      "camera": {
+        "type": "north_pan_with_slight_push_in",
+        "projection": "geoMercator",
+        "path": [
+          {
+            "time_sec": 25.9,
+            "center_lonlat": [
+              6.2,
+              22.5
+            ],
+            "zoom": 0.86,
+            "description": "Reprise depuis panneau 02, corridor complet encore visible."
+          },
+          {
+            "time_sec": 26.55,
+            "center_lonlat": [
+              5.2,
+              25.8
+            ],
+            "zoom": 0.9,
+            "description": "Pan nord pour placer l'Algérie et le Sahara central au centre du cadre."
+          },
+          {
+            "time_sec": 27.1,
+            "center_lonlat": [
+              4.4,
+              28.2
+            ],
+            "zoom": 0.94,
+            "description": "Raccordement aux réseaux algériens au moment exact de la narration."
+          },
+          {
+            "time_sec": 27.6,
+            "center_lonlat": [
+              5.4,
+              30.6
+            ],
+            "zoom": 0.98,
+            "description": "Léger push vers le nord-est pour accompagner la flèche qui part vers l'Europe."
+          }
+        ],
+        "easing": "linear-smooth avec easeOut léger après 27.1s",
+        "no_static_hold": true
+      },
+      "elements": [
+        {
+          "id": "p03_base_map",
+          "type_technique": "carte GeoJSON réelle rendue en SVG D3, pays en paths, frontières fines",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            }
+          },
+          "geo_scope": "Algérie, Niger, Nigeria, Méditerranée centrale, Europe du Sud partielle, Égypte / Moyen-Orient en arrière-plan",
+          "colors": {
+            "land_fill": "#102B49",
+            "country_stroke": "#3B536B",
+            "water_fill": "#06172A"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "suit le pan nord et le léger push-in"
+          }
+        },
+        {
+          "id": "p03_vignette",
+          "type_technique": "vignette d'assombrissement radiale concentrant l'œil sur Algérie + corridor",
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0,
+              "y": 0,
+              "width": 1,
+              "height": 1
+            },
+            "focus_relative": {
+              "x": 0.42,
+              "y": 0.33
+            }
+          },
+          "colors": {
+            "center": "rgba(6, 23, 42, 0)",
+            "edges": "rgba(1, 8, 18, 0.66)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacité constante, suit visuellement le focus réseau"
+          }
+        },
+        {
+          "id": "p03_country_highlight_algeria",
+          "type_technique": "pays Algérie rempli cyan avec bordure lumineuse, déjà tracé, intensification à la connexion",
+          "geojson_feature": "Algeria",
+          "anchor_geo_lonlat": [
+            1.6596,
+            28.0339
+          ],
+          "position_screen": {
+            "centroid_relative_at_27_1s": {
+              "x": 0.34,
+              "y": 0.34
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.76)",
+            "glow": "rgba(49, 232, 255, 0.32)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "présent dès entrée panneau; glow pulse fort de 27.05s à 27.25s"
+          }
+        },
+        {
+          "id": "p03_country_highlight_niger",
+          "type_technique": "pays Niger rempli cyan atténué, bordure lumineuse",
+          "geojson_feature": "Niger",
+          "anchor_geo_lonlat": [
+            8.0817,
+            17.6078
+          ],
+          "position_screen": {
+            "centroid_relative_at_26_6s": {
+              "x": 0.44,
+              "y": 0.61
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.58)",
+            "glow": "rgba(49, 232, 255, 0.18)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacité stable, secondaire par rapport à l'Algérie"
+          }
+        },
+        {
+          "id": "p03_country_highlight_nigeria",
+          "type_technique": "pays Nigeria rempli cyan atténué, origine du tracé",
+          "geojson_feature": "Nigeria",
+          "anchor_geo_lonlat": [
+            8.6753,
+            9.082
+          ],
+          "position_screen": {
+            "centroid_relative_at_26_6s": {
+              "x": 0.41,
+              "y": 0.82
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "fill": "rgba(18, 63, 102, 0.5)",
+            "glow": "rgba(49, 232, 255, 0.16)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacité stable, origine visible en bas du corridor"
+          }
+        },
+        {
+          "id": "p03_pipeline_route_gold_full",
+          "type_technique": "ligne de flux géographique complète Nigeria→Niger→Algérie, stroke doré avec particules",
+          "route_geo_lonlat": [
+            [
+              5.75,
+              5.52
+            ],
+            [
+              7.49,
+              9.06
+            ],
+            [
+              8.52,
+              12.0
+            ],
+            [
+              8.98,
+              16.97
+            ],
+            [
+              7.99,
+              20.5
+            ],
+            [
+              5.45,
+              24.7
+            ],
+            [
+              3.0,
+              28.05
+            ]
+          ],
+          "position_screen": {
+            "start_relative_at_26_6s": {
+              "x": 0.415,
+              "y": 0.82
+            },
+            "end_relative_at_27_1s": {
+              "x": 0.385,
+              "y": 0.265
+            }
+          },
+          "colors": {
+            "stroke": "#FFD36A",
+            "stroke_outer_glow": "rgba(255, 211, 106, 0.52)",
+            "moving_dot": "#FFE08A"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "ligne déjà révélée; particule dorée monte du Nigeria vers le point de raccordement de 26.0s à 27.1s; pulse du tracé à 27.1s"
+          }
+        },
+        {
+          "id": "p03_connection_pin_hassi_rmel",
+          "type_technique": "pin circulaire doré/cyan ancré au hub algérien de raccordement",
+          "anchor_geo_lonlat": [
+            3.0,
+            32.93
+          ],
+          "position_screen": {
+            "relative_at_27_1s": {
+              "x": 0.385,
+              "y": 0.265
+            }
+          },
+          "geometry": {
+            "outer_radius_px_at_1920w": 16,
+            "inner_radius_px_at_1920w": 6,
+            "halo_radius_px_at_1920w": 34
+          },
+          "colors": {
+            "stroke": "#FFE08A",
+            "inner_fill": "#FFD36A",
+            "secondary_ring": "#31E8FF",
+            "halo": "rgba(255, 211, 106, 0.5)"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 26.55,
+            "disappear_sec": 27.6,
+            "animation": "scale 0→1 de 26.55s à 26.75s; flash raccordement à 27.1s; halo expansion 16px→46px puis fade de 27.1s à 27.35s"
+          }
+        },
+        {
+          "id": "p03_algerian_network_nodes",
+          "type_technique": "réseau 2D de lignes et nœuds cyan ancré à des coordonnées géo algériennes, reveal par strokeDashoffset et scale des nœuds",
+          "network_geo": {
+            "nodes": [
+              {
+                "id": "hassi_rmel",
+                "lonlat": [
+                  3.0,
+                  32.93
+                ]
+              },
+              {
+                "id": "algiers",
+                "lonlat": [
+                  3.0588,
+                  36.7538
+                ]
+              },
+              {
+                "id": "oran",
+                "lonlat": [
+                  -0.6337,
+                  35.6971
+                ]
+              },
+              {
+                "id": "skikda",
+                "lonlat": [
+                  6.9094,
+                  36.8796
+                ]
+              },
+              {
+                "id": "annaba",
+                "lonlat": [
+                  7.7667,
+                  36.9
+                ]
+              },
+              {
+                "id": "in_salah",
+                "lonlat": [
+                  2.46,
+                  27.19
+                ]
+              },
+              {
+                "id": "adrar",
+                "lonlat": [
+                  -0.29,
+                  27.87
+                ]
+              },
+              {
+                "id": "ghardaia",
+                "lonlat": [
+                  3.67,
+                  32.49
+                ]
+              }
+            ],
+            "edges": [
+              [
+                "hassi_rmel",
+                "algiers"
+              ],
+              [
+                "hassi_rmel",
+                "oran"
+              ],
+              [
+                "hassi_rmel",
+                "skikda"
+              ],
+              [
+                "skikda",
+                "annaba"
+              ],
+              [
+                "hassi_rmel",
+                "ghardaia"
+              ],
+              [
+                "ghardaia",
+                "in_salah"
+              ],
+              [
+                "in_salah",
+                "adrar"
+              ]
+            ]
+          },
+          "position_screen": {
+            "network_bounds_relative_at_27_1s": {
+              "x_min": 0.28,
+              "y_min": 0.12,
+              "x_max": 0.47,
+              "y_max": 0.45
+            }
+          },
+          "colors": {
+            "edge_stroke": "#31E8FF",
+            "edge_glow": "rgba(49, 232, 255, 0.36)",
+            "node_fill": "#31E8FF",
+            "node_core": "#EAF7FF"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 26.45,
+            "disappear_sec": 27.6,
+            "animation": "edges draw depuis le hub de 26.45s à 27.05s; nodes scale 0→1 en cascade 26.55s→27.1s; tous les nœuds pulse à 27.1s"
+          }
+        },
+        {
+          "id": "p03_flow_arrow_to_europe",
+          "type_technique": "flèche/ligne de flux animée cyan entre le hub algérien et l'Europe du Sud, courbe SVG géo-projetée avec tête de flèche et particules",
+          "route_geo_lonlat": [
+            [
+              3.0,
+              32.93
+            ],
+            [
+              6.0,
+              35.5
+            ],
+            [
+              9.5,
+              38.0
+            ],
+            [
+              13.0,
+              41.5
+            ]
+          ],
+          "position_screen": {
+            "start_relative_at_27_1s": {
+              "x": 0.385,
+              "y": 0.265
+            },
+            "end_relative_at_27_6s": {
+              "x": 0.535,
+              "y": 0.04
+            }
+          },
+          "colors": {
+            "stroke": "#31E8FF",
+            "stroke_glow": "rgba(49, 232, 255, 0.55)",
+            "arrow_head": "#31E8FF",
+            "particles": "#BFF8FF"
+          },
+          "text": null,
+          "timing_estimate": {
+            "appear_sec": 27.05,
+            "disappear_sec": 27.6,
+            "animation": "strokeDashoffset 100%→0% de 27.05s à 27.45s; tête de flèche scale 0.8→1 à l'extrémité de 27.38s à 27.5s; particules continuent vers l'Europe jusqu'à 27.6s"
+          }
+        },
+        {
+          "id": "p03_connection_callout",
+          "type_technique": "callout composé ancré au hub algérien, avec icône réseau circulaire + texte; carte localement assombrie derrière le callout",
+          "anchor_geo_lonlat": [
+            3.0,
+            32.93
+          ],
+          "position_screen": {
+            "card_bounds_relative_at_27_1s": {
+              "x": 0.505,
+              "y": 0.25,
+              "width": 0.16,
+              "height": 0.13
+            },
+            "connector_start_relative_at_27_1s": {
+              "x": 0.505,
+              "y": 0.315
+            },
+            "connector_end_relative_at_27_1s": {
+              "x": 0.385,
+              "y": 0.265
+            },
+            "dim_patch_bounds_relative": {
+              "x": 0.485,
+              "y": 0.22,
+              "width": 0.2,
+              "height": 0.18
+            }
+          },
+          "colors": {
+            "dim_patch": "rgba(1, 8, 18, 0.36)",
+            "card_fill": "rgba(7, 26, 46, 0.91)",
+            "card_stroke": "#7EEFFF",
+            "connector": "#B8D8EA",
+            "icon_circle_stroke": "#31E8FF",
+            "icon_line": "#31E8FF",
+            "text": "#EAF7FF"
+          },
+          "text": "RACCORDÉ AUX\nRÉSEAUX ALGÉRIENS",
+          "internal_elements": [
+            {
+              "id": "p03_callout_network_icon",
+              "type_technique": "icône réseau SVG 2D dans cercle, nodes + edges cyan",
+              "position_inside_card_relative": {
+                "center_x": 0.17,
+                "center_y": 0.5,
+                "radius": 0.22
+              },
+              "colors": {
+                "circle_stroke": "#31E8FF",
+                "nodes": "#31E8FF",
+                "edges": "#31E8FF"
+              },
+              "text": null
+            }
+          ],
+          "timing_estimate": {
+            "appear_sec": 26.75,
+            "disappear_sec": 27.6,
+            "animation": "dim patch opacity 0→1 de 26.75s à 26.9s; card opacity 0→1 et translateX -8px→0 de 26.82s à 27.05s; connecteur dessiné de 26.95s à 27.1s; icône pulse à 27.1s"
+          }
+        },
+        {
+          "id": "p03_label_algerie",
+          "type_technique": "label pays en pastille ancrée à l'Algérie, support visuel obligatoire",
+          "anchor_geo_lonlat": [
+            1.6596,
+            28.0339
+          ],
+          "position_screen": {
+            "relative_at_27_1s": {
+              "x": 0.305,
+              "y": 0.36
+            },
+            "size_px_at_1920w": {
+              "width": 96,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "ALGÉRIE",
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacity maintenue; léger pulse stroke à 27.1s"
+          }
+        },
+        {
+          "id": "p03_label_niger",
+          "type_technique": "label pays en pastille ancrée au Niger, support visuel obligatoire",
+          "anchor_geo_lonlat": [
+            8.0817,
+            17.6078
+          ],
+          "position_screen": {
+            "relative_at_27_1s": {
+              "x": 0.455,
+              "y": 0.56
+            },
+            "size_px_at_1920w": {
+              "width": 84,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "NIGER",
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacity stable"
+          }
+        },
+        {
+          "id": "p03_label_nigeria",
+          "type_technique": "label pays en pastille ancrée au Nigeria, support visuel obligatoire",
+          "anchor_geo_lonlat": [
+            5.75,
+            5.52
+          ],
+          "position_screen": {
+            "relative_at_27_1s": {
+              "x": 0.385,
+              "y": 0.85
+            },
+            "size_px_at_1920w": {
+              "width": 100,
+              "height": 30
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.92)",
+            "box_stroke": "#7EEFFF",
+            "text": "#EAF7FF",
+            "connector": "#7EEFFF"
+          },
+          "text": "NIGERIA",
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "opacity stable"
+          }
+        },
+        {
+          "id": "p03_bottom_caption",
+          "type_technique": "cartouche texte centré en bas, overlay supporté par cadre, ne repousse pas la carte",
+          "position_screen": {
+            "center_relative": {
+              "x": 0.5,
+              "y": 0.93
+            },
+            "size_relative": {
+              "width": 0.37,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.86)",
+            "box_stroke": "#5F768B",
+            "text": "#EAF7FF"
+          },
+          "text": "PAN NORD / RACCORDEMENT AUX RÉSEAUX EXISTANTS",
+          "timing_estimate": {
+            "appear_sec": 25.95,
+            "disappear_sec": 27.55,
+            "animation": "opacity 0→1 de 25.95s à 26.15s, opacity 1→0 de 27.35s à 27.55s"
+          }
+        },
+        {
+          "id": "p03_storyboard_index_badge",
+          "type_technique": "badge de repérage storyboard non narratif, à désactiver en rendu final",
+          "render_in_final": false,
+          "position_screen": {
+            "bounds_relative": {
+              "x": 0.012,
+              "y": 0.035,
+              "width": 0.03,
+              "height": 0.075
+            }
+          },
+          "colors": {
+            "box_fill": "rgba(7, 26, 46, 0.55)",
+            "box_stroke": "#8CA3B8",
+            "text": "#EAF7FF"
+          },
+          "text": "03",
+          "timing_estimate": {
+            "appear_sec": 25.9,
+            "disappear_sec": 27.6,
+            "animation": "aucune, production only"
+          }
+        }
+      ]
+    }
+  ],
+  "global_animation_notes": {
+    "route_semantics": {
+      "pipeline_name": "Gazoduc transsaharien",
+      "real_world_intent": "Nigeria → Niger → Algérie → réseaux algériens → Europe",
+      "displayed_country_labels_only": [
+        "NIGERIA",
+        "NIGER",
+        "ALGÉRIE"
+      ],
+      "do_not_label": [
+        "Mali",
+        "Libye",
+        "Tchad",
+        "Soudan",
+        "Égypte",
+        "Maroc",
+        "Tunisie",
+        "Europe"
+      ]
+    },
+    "remotion_frame_mapping_at_30fps": {
+      "duration_frames": 828,
+      "cue_frames": {
+        "nigeria_start_0_2s": 6,
+        "niger_crossing_22_2s": 666,
+        "sahara_23_9s": 717,
+        "algerian_network_connection_27_1s": 813
+      },
+      "panel_ranges_frames": {
+        "01": [
+          0,
+          666
+        ],
+        "02": [
+          666,
+          777
+        ],
+        "03": [
+          777,
+          828
+        ]
+      }
+    },
+    "implementation_constraints": {
+      "country_draw": "Utiliser path.getTotalLength() puis strokeDasharray/strokeDashoffset pour les pays mis en avant.",
+      "fills": "Fill opacity animé après fin partielle du stroke reveal.",
+      "pins": "Pins projetés via projection([lon,lat]) à chaque frame, jamais positionnés en pixels fixes.",
+      "labels": "Labels projetés à partir d'un anchor_geo_lonlat + offset pixel, avec connecteur SVG.",
+      "insert_cards": "Cards en overlay absolu mais obligatoirement reliées à un point géographique par connecteur; activation d'un dim overlay derrière pendant leur visibilité.",
+      "camera": "Interpoler center_lonlat et zoom à chaque frame; aucun segment caméra ne doit produire un plan totalement statique."
+    }
+  },
+  "verification_contre_regles": {
+    "regle_1_aucun_widget_coin_ou_bord_lateral_qui_pousse_la_carte": {
+      "status": "respectee",
+      "details": [
+        "Aucun insert narratif ne pousse la carte ou ne crée de layout latéral.",
+        "Le card Sahara du panneau 02 est un overlay ancré à un point de carte par connecteur vers le segment saharien; la carte est assombrie derrière pendant sa visibilité.",
+        "Le callout réseaux algériens du panneau 03 est ancré au hub algérien par connecteur et dispose d'un patch d'assombrissement local derrière lui.",
+        "Les cartouches bas sont centrés et superposés; ils ne déplacent pas la géographie.",
+        "Les badges 01/02/03 visibles dans l'image sont déclarés render_in_final=false: ce sont des repères storyboard, pas des widgets narratifs à rendre dans le montage final."
+      ]
+    },
+    "regle_2_aucun_texte_label_flottant_sans_support": {
+      "status": "respectee",
+      "details": [
+        "Tous les pays nommés sont dans des pastilles avec contour et connecteur ancré à une coordonnée géo.",
+        "Les textes des captions sont dans des cadres centrés.",
+        "Les textes de l'insert Sahara sont à l'intérieur d'un card composé.",
+        "Le texte 'RACCORDÉ AUX RÉSEAUX ALGÉRIENS' est dans un callout encadré avec icône et connecteur au hub algérien.",
+        "Aucun texte n'est placé nu dans l'océan, le désert ou le vide."
+      ]
+    },
+    "regle_3_labelliser_seulement_2_3_pays_pertinents": {
+      "status": "respectee",
+      "details": [
+        "Seuls trois pays sont labellisés: NIGERIA, NIGER, ALGÉRIE.",
+        "Ces trois labels correspondent exactement aux moments narratifs du beat: départ, traversée, connexion.",
+        "Les autres pays restent visibles uniquement comme GeoJSON de contexte sans label."
+      ]
+    },
+    "regle_4_camera_jamais_figee_plus_de_5s": {
+      "status": "respectee",
+      "details": [
+        "Panneau 01: push-in continu de 0.0s à 22.2s avec pan subtil; aucun hold fixe.",
+        "Panneau 02: zoom-out puis pan nord-ouest de 22.2s à 25.9s; aucun hold fixe.",
+        "Panneau 03: pan nord avec léger push-in de 25.9s à 27.6s; aucun hold fixe.",
+        "Tous les labels, pins et overlays restent reprojetés ou composés pendant le mouvement caméra."
+      ]
+    },
+    "regles_stack_technique": {
+      "status": "respectee",
+      "details": [
+        "Tous les éléments sont réalisables en D3.js + Remotion: paths GeoJSON, strokeDashoffset, fills, pins SVG, halos, lignes de flux, cards HTML/SVG et overlays d'assombrissement.",
+        "Aucune 3D n'est utilisée.",
+        "Aucun élément After Effects n'est requis.",
+        "Les réseaux algériens sont représentés par nodes/edges SVG géo-ancrés, pas par une animation 3D."
+      ]
+    }
+  }
+}

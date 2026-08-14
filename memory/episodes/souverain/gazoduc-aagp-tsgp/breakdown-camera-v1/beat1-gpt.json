@@ -1,0 +1,136 @@
+{
+  "reference_style": {
+    "nom": "Wendover Productions / RealLifeLore — flat-map punch-ins et recompositions successives",
+    "justification": "Pour un passage long où l’information narrative est très simple — « le gazoduc part du Nigeria » — ce style est adapté parce qu’il transforme une seule donnée cartographique en plusieurs micro-plans lisibles : établissement régional, zoom d’identification, recentrage sur le pays, puis préparation directionnelle vers le nord. L’inspiration n’est pas un travelling continu très lissé, mais une succession de poussées caméra franches, de petits recadrages assumés et de pauses très courtes qui donnent l’impression que la carte « travaille » même si l’objet narratif reste le Nigeria."
+  },
+  "rythme_global": {
+    "description": "Je propose 7 mouvements distincts sur 22.2 secondes, avec un rythme volontairement segmenté plutôt qu’un seul zoom continu. 0.0–2.2s : approche rapide depuis un cadrage Afrique de l’Ouest pour que le Nigeria devienne immédiatement le sujet. 2.2–6.4s : mouvement de suivi du contour, avec dérive latérale et zoom progressif, pour accompagner le tracé au lieu de le laisser seul. 6.4–9.0s : punch-in plus marqué au moment où le contour se referme. 9.0–12.0s : léger pull-back/recomposition pour laisser respirer le remplissage cyan. 12.0–15.0s : micro-punch sur le label « NIGERIA » pour créer un vrai temps d’identification. 15.0–18.4s : décalage vers le nord et léger dézoom pour placer le Nigeria en bas du cadre et amorcer mentalement la remontée transsaharienne. 18.4–22.2s : pré-transition dynamique vers le Niger, sans encore le mettre en scène comme sujet principal, avec une dernière poussée nord pour que le basculement à 22.2s soit naturel.",
+    "nombre_de_mouvements_distincts": 7,
+    "intention": "Le dynamisme recherché est celui d’une carte éditoriale qui découpe une information simple en plusieurs intentions visuelles courtes : situer, identifier, confirmer, puis préparer la direction du tracé. Aucun mouvement décoratif ou shake aléatoire : chaque déplacement sert soit la lecture du Nigeria, soit la préparation géographique vers le nord."
+  },
+  "trajectoire_timestamps": [
+    {
+      "t": 0,
+      "zoom_scale": 1,
+      "center_offset_x": -360,
+      "center_offset_y": -180,
+      "description": "Cadrage large Afrique de l’Ouest. Le Nigeria n’est pas encore plein centre : il est placé légèrement dans le quadrant bas-droit pour laisser sentir le contexte régional. Début d’un push-in dès la première frame, pas de hold introductif."
+    },
+    {
+      "t": 1,
+      "zoom_scale": 1.18,
+      "center_offset_x": -260,
+      "center_offset_y": -130,
+      "description": "La caméra avance déjà nettement vers le Golfe de Guinée. Le contour progressif du Nigeria démarre autour de 0.2s, synchronisé avec la mention « Nigeria » dans la voix."
+    },
+    {
+      "t": 2.2,
+      "zoom_scale": 1.55,
+      "center_offset_x": -160,
+      "center_offset_y": -70,
+      "description": "Premier palier d’identification : le Nigeria devient clairement le point d’attention. Le tracé du contour est visible sur une portion significative, mais le pays n’est pas encore rempli."
+    },
+    {
+      "t": 3.6,
+      "zoom_scale": 1.95,
+      "center_offset_x": -40,
+      "center_offset_y": -10,
+      "description": "Poussée plus serrée. Le centre caméra se rapproche du centre géographique du Nigeria, ce qui transforme le simple contour en sujet principal. Le dessin du stroke continue de progresser."
+    },
+    {
+      "t": 5,
+      "zoom_scale": 2.35,
+      "center_offset_x": 90,
+      "center_offset_y": 45,
+      "description": "Recomposition latérale volontaire : la caméra glisse légèrement de l’autre côté du pays pendant que le contour poursuit son tracé. Ce mouvement évite l’impression d’un zoom passif et donne une sensation de scan cartographique."
+    },
+    {
+      "t": 6.4,
+      "zoom_scale": 2.75,
+      "center_offset_x": -80,
+      "center_offset_y": 70,
+      "description": "Contre-mouvement court : le cadrage corrige vers l’ouest/sud-ouest du pays, comme un suivi de périmètre. Le contour est presque complet ; la caméra continue d’être active."
+    },
+    {
+      "t": 7.8,
+      "zoom_scale": 3.05,
+      "center_offset_x": 25,
+      "center_offset_y": -30,
+      "description": "Recentrage sur le Nigeria. Le contour arrive à sa fermeture ; la caméra prépare le moment de remplissage en stabilisant brièvement le pays au centre, sans arrêt prolongé."
+    },
+    {
+      "t": 9,
+      "zoom_scale": 3.35,
+      "center_offset_x": 0,
+      "center_offset_y": 0,
+      "description": "Punch-in d’impact : le contour est fermé et le remplissage cyan commence ou atteint son pic visuel. Le Nigeria occupe maintenant fortement le cadre ; c’est le temps d’affirmation du point de départ."
+    },
+    {
+      "t": 10.4,
+      "zoom_scale": 3.1,
+      "center_offset_x": -140,
+      "center_offset_y": 85,
+      "description": "Petit pull-back et décentrement pour éviter de rester figé après le remplissage. Le cyan est installé ; on crée de l’espace visuel pour l’apparition prochaine de la pastille label."
+    },
+    {
+      "t": 12,
+      "zoom_scale": 3.3,
+      "center_offset_x": 120,
+      "center_offset_y": 20,
+      "description": "Retour en push léger au moment où la pastille « NIGERIA » apparaît. Le label devient le nouveau point d’impact, avec un cadrage plus serré que le pull-back précédent."
+    },
+    {
+      "t": 13.4,
+      "zoom_scale": 3.55,
+      "center_offset_x": 30,
+      "center_offset_y": -15,
+      "description": "Micro-punch d’identification : le label et le remplissage cyan sont pleinement lisibles. Ce mouvement court remplace le hold classique sur un nom de pays."
+    },
+    {
+      "t": 15,
+      "zoom_scale": 3.25,
+      "center_offset_x": 20,
+      "center_offset_y": -150,
+      "description": "Début de la préparation directionnelle : la caméra commence à remonter vers le nord. Le Nigeria descend légèrement dans le cadre, ce qui suggère déjà que le prochain mouvement narratif partira vers le Niger."
+    },
+    {
+      "t": 16.8,
+      "zoom_scale": 2.92,
+      "center_offset_x": 10,
+      "center_offset_y": -260,
+      "description": "Dézoom contrôlé et montée du centre caméra. Le Nigeria reste clairement coloré et identifié, mais il n’est plus enfermé dans un gros plan ; on ouvre l’espace au-dessus du pays."
+    },
+    {
+      "t": 18.4,
+      "zoom_scale": 2.7,
+      "center_offset_x": 20,
+      "center_offset_y": -350,
+      "description": "Cadrage de pré-corridor : le Nigeria se place davantage en bas du cadre. On ne raconte pas encore le Niger, mais la géographie du nord commence à devenir disponible visuellement."
+    },
+    {
+      "t": 20,
+      "zoom_scale": 2.92,
+      "center_offset_x": -60,
+      "center_offset_y": -300,
+      "description": "Nouvelle poussée légère, avec un petit déplacement latéral pour maintenir de l’énergie. Le label « NIGERIA » reste lisible ; le pays demeure l’ancre visuelle du beat."
+    },
+    {
+      "t": 21.2,
+      "zoom_scale": 3.15,
+      "center_offset_x": 35,
+      "center_offset_y": -360,
+      "description": "Accélération préparatoire avant la bascule narrative. Le cadre se tend vers le nord tout en gardant le Nigeria en référence basse, comme un point de départ prêt à lancer le tracé."
+    },
+    {
+      "t": 22.2,
+      "zoom_scale": 3.35,
+      "center_offset_x": 70,
+      "center_offset_y": -420,
+      "description": "Position de sortie du beat : le Nigeria est établi, cyan et labellisé, mais il est maintenant composé en bas du cadre. Le haut de l’image est prêt pour la transition vers « il traverse le Niger »."
+    }
+  ],
+  "verification_anti_immobilite": {
+    "confirmation": "Oui : aucune fenêtre de plus de 3 secondes consécutives ne présente un delta de zoom_scale et de position quasi nul.",
+    "details": "Les points sont espacés de 1.0 à 1.8 seconde au maximum avant 22.2s, et chaque segment combine soit un changement de zoom visible, soit un déplacement de centre supérieur à quelques dizaines de pixels. Les seuls moments qui peuvent se lire comme des respirations sont autour de 7.8–9.0s et 12.0–13.4s, mais ils sont courts et accompagnent respectivement la fermeture/remplissage du Nigeria puis l’apparition du label. Il n’y a aucun hold prolongé de type 15 secondes où le point bleu resterait immobile."
+  }
+}

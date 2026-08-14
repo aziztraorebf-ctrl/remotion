@@ -1,0 +1,1509 @@
+{
+  "beat": {
+    "nom": "Climax géographique local — arrivée sur Adrar puis révélation chantier",
+    "timecode_global": {
+      "debut_s": 42.8,
+      "fin_s": 55.0,
+      "duree_s": 12.2,
+      "fps": 30,
+      "frame_debut": 1284,
+      "frame_fin": 1650
+    },
+    "projection": {
+      "type": "d3.geoMercator",
+      "geojson": "real_country_geojson",
+      "camera_model": "projection translate + scale interpolés en continu",
+      "camera_lock_max_s": 0,
+      "note": "La caméra est animée sur toute la durée du beat par micro-pan ou micro-zoom, jamais totalement figée."
+    },
+    "palette": {
+      "fond_ocean": "#06172B",
+      "fond_carte": "#0B2745",
+      "pays_remplissage_base": "#102E4D",
+      "pays_remplissage_algerie": "#143B61",
+      "frontieres_base": "#5E789A",
+      "frontieres_actives": "#2CD7FF",
+      "cyan_principal": "#2CD7FF",
+      "cyan_secondaire": "#19BCE8",
+      "cyan_sombre": "#0B5C7A",
+      "dore": "#D9A13B",
+      "dore_sombre": "#9E6C20",
+      "blanc": "#EAF6FF",
+      "texte_secondaire": "#B8CBE0",
+      "noir_overlay": "rgba(0, 8, 18, 0.62)",
+      "vignette": "radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 100%)"
+    },
+    "coordonnees_geo_references": {
+      "adrar": {
+        "nom": "Adrar",
+        "pays": "Algérie",
+        "lon": -0.2939,
+        "lat": 27.8743
+      },
+      "centre_algerie": {
+        "lon": 2.6,
+        "lat": 28.0
+      },
+      "centre_depart_large": {
+        "lon": 9.5,
+        "lat": 31.5
+      }
+    },
+    "contraintes_de_production_appliquees": {
+      "pas_de_3d": true,
+      "pas_after_effects": true,
+      "d3_geojson_reel": true,
+      "svg_remotion_uniquement": true,
+      "strokeDashoffset_pour_traces": true,
+      "pins_ancres_geo": true,
+      "overlays_ancres_ou_centres": true,
+      "aucun_widget_lateral": true,
+      "aucun_label_nu": true
+    }
+  },
+  "panneaux": [
+    {
+      "id": "START",
+      "numero_storyboard": 1,
+      "timecode": {
+        "debut_s": 42.8,
+        "fin_s": 46.2,
+        "duree_s": 3.4,
+        "frame_debut": 1284,
+        "frame_fin": 1386
+      },
+      "intention": "Arriver sur le sud-ouest algérien et verrouiller visuellement Adrar comme point géographique actif.",
+      "camera": {
+        "type": "pan_zoom_continu",
+        "projection": "d3.geoMercator",
+        "easing": "easeInOutCubic",
+        "trajectoire": [
+          {
+            "time_s": 42.8,
+            "frame": 1284,
+            "center_lonlat": {
+              "lon": 9.5,
+              "lat": 31.5
+            },
+            "zoom_scale_relative": 1.0,
+            "description": "Vue large Afrique du Nord / Méditerranée, Algérie visible mais non encore dominante."
+          },
+          {
+            "time_s": 44.2,
+            "frame": 1326,
+            "center_lonlat": {
+              "lon": 5.2,
+              "lat": 30.0
+            },
+            "zoom_scale_relative": 1.23,
+            "description": "Pan doux vers le sud-ouest de l'Algérie."
+          },
+          {
+            "time_s": 46.2,
+            "frame": 1386,
+            "center_lonlat": {
+              "lon": 1.15,
+              "lat": 28.3
+            },
+            "zoom_scale_relative": 1.58,
+            "description": "Adrar arrive dans le tiers inférieur gauche-centre, prêt pour la révélation chantier."
+          }
+        ],
+        "mouvement_residuel": {
+          "actif": true,
+          "description": "Même après apparition du pin, la caméra continue un micro-zoom de +2.5% entre 45.4s et 46.2s."
+        }
+      },
+      "elements": [
+        {
+          "id": "background_ocean",
+          "type_technique": "rect_svg_fullscreen",
+          "position_ecran_normalisee": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "couleur": "#06172B",
+          "timing_estimate": {
+            "apparition_s": 42.8,
+            "disparition_s": 55.0
+          },
+          "animation": "statique"
+        },
+        {
+          "id": "vignette_globale",
+          "type_technique": "overlay_css_radial_gradient",
+          "position_ecran_normalisee": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "couleur": "radial-gradient(circle at 50% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.28) 100%)",
+          "timing_estimate": {
+            "apparition_s": 42.8,
+            "disparition_s": 55.0
+          },
+          "animation": "statique"
+        },
+        {
+          "id": "countries_base_paths",
+          "type_technique": "svg_path_geojson_pays",
+          "position": {
+            "mode": "geo_projected",
+            "source": "GeoJSON pays Afrique du Nord + Méditerranée"
+          },
+          "couleur": {
+            "fill": "#102E4D",
+            "stroke": "#5E789A",
+            "stroke_width_px": 1.1,
+            "opacity": 0.62
+          },
+          "timing_estimate": {
+            "apparition_s": 42.8,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "strokeDashoffset_then_fill",
+            "draw_start_s": 42.8,
+            "draw_end_s": 44.4,
+            "fill_opacity_start": 0.0,
+            "fill_opacity_end": 0.82,
+            "fill_start_s": 43.5,
+            "fill_end_s": 44.6
+          }
+        },
+        {
+          "id": "algeria_highlight_path",
+          "type_technique": "svg_path_geojson_feature",
+          "geo_feature": "DZA",
+          "position": {
+            "mode": "geo_projected"
+          },
+          "couleur": {
+            "fill": "#143B61",
+            "fill_opacity": 0.92,
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1.8,
+            "stroke_opacity": 1
+          },
+          "timing_estimate": {
+            "apparition_s": 43.15,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "strokeDashoffset_then_fill",
+            "draw_start_s": 43.15,
+            "draw_end_s": 44.95,
+            "fill_start_s": 44.1,
+            "fill_end_s": 45.0
+          }
+        },
+        {
+          "id": "label_algerie",
+          "type_technique": "svg_g_label_rect_text_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": 2.6,
+            "lat": 31.0
+          },
+          "position_ecran_estimee_a_45s": {
+            "x": 0.515,
+            "y": 0.285
+          },
+          "boite": {
+            "w": 0.076,
+            "h": 0.032,
+            "rx_px": 4,
+            "fill": "rgba(5, 18, 35, 0.82)",
+            "stroke": "#EAF6FF",
+            "stroke_width_px": 1
+          },
+          "texte": {
+            "contenu": "ALGÉRIE",
+            "font_family": "monospace",
+            "font_size_px": 15,
+            "font_weight": 700,
+            "letter_spacing_px": 1.2,
+            "fill": "#EAF6FF",
+            "align": "center"
+          },
+          "couleur": "#EAF6FF",
+          "timing_estimate": {
+            "apparition_s": 44.4,
+            "disparition_s": 51.4
+          },
+          "animation": {
+            "type": "fade_in_scale",
+            "fade_duration_s": 0.25,
+            "scale_from": 0.94,
+            "scale_to": 1
+          }
+        },
+        {
+          "id": "adrar_pin",
+          "type_technique": "svg_g_pin_circulaire_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "position_ecran_estimee_a_46_0s": {
+            "x": 0.424,
+            "y": 0.69
+          },
+          "formes": [
+            {
+              "type": "circle",
+              "r_px": 9,
+              "fill": "#06172B",
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 3
+            },
+            {
+              "type": "line",
+              "from": {
+                "x_px": 0,
+                "y_px": 9
+              },
+              "to": {
+                "x_px": 0,
+                "y_px": 25
+              },
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 3,
+              "stroke_linecap": "round"
+            },
+            {
+              "type": "circle",
+              "r_px": 21,
+              "fill": "none",
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 2,
+              "opacity": 0.32
+            }
+          ],
+          "couleur": "#2CD7FF",
+          "timing_estimate": {
+            "apparition_s": 44.85,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "scale_pop_then_pulse",
+            "scale_pop_start_s": 44.85,
+            "scale_pop_end_s": 45.15,
+            "pulse_period_s": 1.15,
+            "pulse_radius_px": {
+              "from": 21,
+              "to": 34
+            },
+            "pulse_opacity": {
+              "from": 0.42,
+              "to": 0
+            }
+          }
+        },
+        {
+          "id": "adrar_label",
+          "type_technique": "svg_g_label_rect_text_anchor_geo_with_offset",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "offset_px": {
+            "x": 0,
+            "y": 34
+          },
+          "position_ecran_estimee_a_46_0s": {
+            "x": 0.424,
+            "y": 0.736
+          },
+          "boite": {
+            "w": 0.058,
+            "h": 0.031,
+            "rx_px": 3,
+            "fill": "rgba(5, 18, 35, 0.92)",
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1.4
+          },
+          "texte": {
+            "contenu": "ADRAR",
+            "font_family": "monospace",
+            "font_size_px": 13,
+            "font_weight": 700,
+            "letter_spacing_px": 1,
+            "fill": "#EAF6FF",
+            "align": "center"
+          },
+          "couleur": "#EAF6FF",
+          "timing_estimate": {
+            "apparition_s": 45.05,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "fade_in_up",
+            "duration_s": 0.25,
+            "from_offset_y_px": 42,
+            "to_offset_y_px": 34
+          }
+        },
+        {
+          "id": "adrar_dashed_target_ring_gold",
+          "type_technique": "svg_circle_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "position_ecran_estimee_a_46_0s": {
+            "x": 0.424,
+            "y": 0.69
+          },
+          "couleur": {
+            "stroke": "#D9A13B",
+            "fill": "none",
+            "stroke_width_px": 1.5,
+            "stroke_dasharray": "5 5",
+            "opacity": 0.95
+          },
+          "rayon_px": 45,
+          "timing_estimate": {
+            "apparition_s": 45.15,
+            "disparition_s": 47.4
+          },
+          "animation": {
+            "type": "dash_rotate_and_fade",
+            "rotation_deg_per_s": 18,
+            "fade_out_start_s": 47.0,
+            "fade_out_end_s": 47.4
+          }
+        },
+        {
+          "id": "gold_connector_algerie_to_adrar",
+          "type_technique": "svg_polyline_anchor_geo_to_label",
+          "from_geo_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "to_element_id": "label_algerie",
+          "path_screen_control_points_at_46s": [
+            {
+              "x": 0.424,
+              "y": 0.69
+            },
+            {
+              "x": 0.488,
+              "y": 0.58
+            },
+            {
+              "x": 0.488,
+              "y": 0.335
+            }
+          ],
+          "couleur": {
+            "stroke": "#D9A13B",
+            "stroke_width_px": 1.4,
+            "stroke_dasharray": "5 5",
+            "fill": "none"
+          },
+          "timing_estimate": {
+            "apparition_s": 45.35,
+            "disparition_s": 51.4
+          },
+          "animation": {
+            "type": "strokeDashoffset_draw",
+            "draw_start_s": 45.35,
+            "draw_end_s": 45.75
+          }
+        }
+      ],
+      "timing_estimate": {
+        "resume": "42.8-44.4 tracé de carte; 43.15-45.0 l'Algérie se dessine et se remplit; 44.85 pin Adrar; 45.35 connecteur doré; caméra pan/zoom continu jusqu'au panneau suivant."
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_lateral": {
+          "respectee": true,
+          "details": "Les panneaux d'annotation visibles dans le storyboard source à gauche sont considérés comme annotations de storyboard et sont explicitement exclus du rendu final. Aucun widget de production n'est placé en coin ou en bordure."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "details": "ALGÉRIE et ADRAR sont dans des boîtes SVG; ADRAR est ancré au pin géographique."
+        },
+        "regle_3_labels_limites": {
+          "respectee": true,
+          "details": "Seuls ALGÉRIE et ADRAR sont affichés. Aucun autre pays traversé n'est labellisé."
+        },
+        "regle_4_camera_jamais_figee": {
+          "respectee": true,
+          "details": "Pan/zoom continu de 42.8s à 46.2s, puis micro-zoom résiduel."
+        },
+        "correction_storyboard_original": {
+          "necessaire": true,
+          "details": "Le bloc latéral START du storyboard original n'est pas rendu. Il reste uniquement comme note de conception hors image."
+        }
+      }
+    },
+    {
+      "id": "TURNING_POINT",
+      "numero_storyboard": 2,
+      "timecode": {
+        "debut_s": 46.2,
+        "fin_s": 51.6,
+        "duree_s": 5.4,
+        "frame_debut": 1386,
+        "frame_fin": 1548
+      },
+      "intention": "Transformer le point Adrar en preuve visuelle: le chantier est déjà lancé, avec pelleteuse, terrassement, poussière, jauge d'avancement et statut d'activité.",
+      "camera": {
+        "type": "slow_push_in_with_anchor_overlay",
+        "projection": "d3.geoMercator",
+        "easing": "linear_micro_motion",
+        "trajectoire": [
+          {
+            "time_s": 46.2,
+            "frame": 1386,
+            "center_lonlat": {
+              "lon": 1.15,
+              "lat": 28.3
+            },
+            "zoom_scale_relative": 1.58,
+            "description": "Début focus Adrar, carte encore lisible."
+          },
+          {
+            "time_s": 48.8,
+            "frame": 1464,
+            "center_lonlat": {
+              "lon": 0.25,
+              "lat": 28.05
+            },
+            "zoom_scale_relative": 1.72,
+            "description": "Push-in léger pendant l'apparition de l'overlay chantier."
+          },
+          {
+            "time_s": 51.6,
+            "frame": 1548,
+            "center_lonlat": {
+              "lon": -0.05,
+              "lat": 27.95
+            },
+            "zoom_scale_relative": 1.78,
+            "description": "Adrar reste dans le tiers gauche inférieur, overlay centré/ancré visible."
+          }
+        ],
+        "mouvement_residuel": {
+          "actif": true,
+          "description": "La carte sous l'overlay continue un pan très lent de 0.3° longitude et un zoom +3.5% sur la durée du panneau."
+        }
+      },
+      "elements": [
+        {
+          "id": "map_dim_overlay",
+          "type_technique": "rect_svg_fullscreen",
+          "position_ecran_normalisee": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "couleur": "rgba(0, 8, 18, 0.62)",
+          "timing_estimate": {
+            "apparition_s": 46.2,
+            "disparition_s": 51.6
+          },
+          "animation": {
+            "type": "fade",
+            "fade_in_start_s": 46.2,
+            "fade_in_end_s": 46.55,
+            "opacity_max": 0.62,
+            "fade_out_start_s": 51.2,
+            "fade_out_end_s": 51.6
+          }
+        },
+        {
+          "id": "adrar_pin_under_overlay",
+          "type_technique": "svg_g_pin_circulaire_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "position_ecran_estimee_a_48s": {
+            "x": 0.365,
+            "y": 0.665
+          },
+          "couleur": "#2CD7FF",
+          "timing_estimate": {
+            "apparition_s": 46.2,
+            "disparition_s": 51.6
+          },
+          "animation": {
+            "type": "pulse_visible_through_dim",
+            "pulse_period_s": 1.0,
+            "halo_radius_px": {
+              "from": 24,
+              "to": 42
+            },
+            "halo_opacity": {
+              "from": 0.5,
+              "to": 0
+            }
+          }
+        },
+        {
+          "id": "adrar_dashed_target_ring_gold_turning",
+          "type_technique": "svg_circle_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "position_ecran_estimee_a_48s": {
+            "x": 0.365,
+            "y": 0.665
+          },
+          "rayon_px": 48,
+          "couleur": {
+            "stroke": "#D9A13B",
+            "fill": "none",
+            "stroke_width_px": 1.5,
+            "stroke_dasharray": "5 5",
+            "opacity": 0.92
+          },
+          "timing_estimate": {
+            "apparition_s": 46.2,
+            "disparition_s": 51.0
+          },
+          "animation": {
+            "type": "dash_rotate",
+            "rotation_deg_per_s": 20
+          }
+        },
+        {
+          "id": "chantier_overlay_card",
+          "type_technique": "svg_g_composed_overlay_card_anchor_geo_with_connector",
+          "ancrage": {
+            "mode": "geo_anchor_with_screen_card",
+            "geo_anchor_lonlat": {
+              "lon": -0.2939,
+              "lat": 27.8743
+            },
+            "card_center_screen_normalisee": {
+              "x": 0.61,
+              "y": 0.505
+            },
+            "connector_attach_card_normalisee": {
+              "x": 0.455,
+              "y": 0.515
+            },
+            "connector_path_screen_at_48s": [
+              {
+                "x": 0.365,
+                "y": 0.665
+              },
+              {
+                "x": 0.425,
+                "y": 0.61
+              },
+              {
+                "x": 0.455,
+                "y": 0.515
+              }
+            ]
+          },
+          "position_ecran_normalisee": {
+            "x": 0.46,
+            "y": 0.205,
+            "w": 0.4,
+            "h": 0.46
+          },
+          "couleur": {
+            "fill": "rgba(7, 24, 45, 0.96)",
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1.5,
+            "drop_shadow": "0 0 22px rgba(44, 215, 255, 0.22)"
+          },
+          "timing_estimate": {
+            "apparition_s": 46.55,
+            "disparition_s": 51.25
+          },
+          "animation": {
+            "type": "fade_in_scale_from_anchor",
+            "fade_in_start_s": 46.55,
+            "fade_in_end_s": 47.0,
+            "scale_from": 0.94,
+            "scale_to": 1,
+            "fade_out_start_s": 50.95,
+            "fade_out_end_s": 51.25
+          },
+          "children": [
+            {
+              "id": "card_background",
+              "type_technique": "svg_rect",
+              "position_dans_card_normalisee": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "couleur": {
+                "fill": "#07182D",
+                "stroke": "#2CD7FF"
+              }
+            },
+            {
+              "id": "card_top_date_badge",
+              "type_technique": "svg_rect_text",
+              "position_dans_card_normalisee": {
+                "x": 0.035,
+                "y": 0.045,
+                "w": 0.27,
+                "h": 0.09
+              },
+              "boite": {
+                "fill": "rgba(14, 32, 48, 0.95)",
+                "stroke": "#D9A13B",
+                "stroke_width_px": 1.4,
+                "rx_px": 4
+              },
+              "texte": {
+                "contenu": "4 JUIN 2026",
+                "font_family": "monospace",
+                "font_size_px": 15,
+                "font_weight": 700,
+                "letter_spacing_px": 1,
+                "fill": "#FFD06A",
+                "align": "center"
+              },
+              "couleur": "#FFD06A",
+              "timing_estimate": {
+                "apparition_s": 47.0,
+                "disparition_s": 51.25
+              },
+              "animation": {
+                "type": "fade_in",
+                "duration_s": 0.2
+              }
+            },
+            {
+              "id": "flat_vector_chantier_scene",
+              "type_technique": "svg_group_flat_vector",
+              "position_dans_card_normalisee": {
+                "x": 0.035,
+                "y": 0.155,
+                "w": 0.93,
+                "h": 0.49
+              },
+              "description_visuelle": "Scène vectorielle plate: pelleteuse jaune sur chenilles, godet abaissé dans une tranchée, tas de sable, poussière animée, barrière de chantier rayée noir/doré, cônes de signalisation, silhouettes de dunes en arrière-plan.",
+              "couleurs": {
+                "ciel_nuit": "#0B2745",
+                "dunes_lointaines": "#153856",
+                "sol": "#1B2B35",
+                "tranchee": "#07111E",
+                "pelleteuse_jaune": "#D9A13B",
+                "pelleteuse_lumiere": "#FFC95E",
+                "pelleteuse_ombre": "#8E5D1B",
+                "chenilles": "#1C3042",
+                "cabine": "#102E4D",
+                "vitres": "#2CD7FF",
+                "poussiere": "rgba(217, 161, 59, 0.38)",
+                "barriere": "#D9A13B",
+                "rayures_barriere": "#07111E",
+                "cones": "#D97A3B"
+              },
+              "formes": [
+                {
+                  "id": "dune_back_1",
+                  "type": "path",
+                  "path_normalise": "M0,0.58 C0.18,0.43 0.34,0.51 0.48,0.44 C0.63,0.37 0.79,0.44 1,0.34 L1,1 L0,1 Z",
+                  "fill": "#153856"
+                },
+                {
+                  "id": "ground",
+                  "type": "path",
+                  "path_normalise": "M0,0.70 L1,0.67 L1,1 L0,1 Z",
+                  "fill": "#1B2B35"
+                },
+                {
+                  "id": "trench",
+                  "type": "path",
+                  "path_normalise": "M0.1,0.78 C0.32,0.72 0.55,0.74 0.82,0.69 L0.96,0.82 C0.67,0.88 0.36,0.86 0.06,0.92 Z",
+                  "fill": "#07111E"
+                },
+                {
+                  "id": "excavator_tracks",
+                  "type": "rounded_rect",
+                  "x": 0.14,
+                  "y": 0.62,
+                  "w": 0.24,
+                  "h": 0.075,
+                  "rx": 0.025,
+                  "fill": "#1C3042",
+                  "stroke": "#5E789A"
+                },
+                {
+                  "id": "excavator_body",
+                  "type": "path",
+                  "path_normalise": "M0.18,0.50 L0.34,0.50 L0.39,0.59 L0.15,0.59 Z",
+                  "fill": "#D9A13B",
+                  "stroke": "#FFC95E"
+                },
+                {
+                  "id": "excavator_cabin",
+                  "type": "path",
+                  "path_normalise": "M0.29,0.40 L0.39,0.43 L0.39,0.58 L0.30,0.58 Z",
+                  "fill": "#102E4D",
+                  "stroke": "#D9A13B"
+                },
+                {
+                  "id": "excavator_cabin_window",
+                  "type": "path",
+                  "path_normalise": "M0.315,0.425 L0.37,0.445 L0.37,0.545 L0.315,0.545 Z",
+                  "fill": "rgba(44,215,255,0.35)",
+                  "stroke": "#2CD7FF"
+                },
+                {
+                  "id": "excavator_boom",
+                  "type": "polyline",
+                  "points_normalises": [
+                    {
+                      "x": 0.39,
+                      "y": 0.43
+                    },
+                    {
+                      "x": 0.58,
+                      "y": 0.23
+                    },
+                    {
+                      "x": 0.72,
+                      "y": 0.53
+                    }
+                  ],
+                  "stroke": "#D9A13B",
+                  "stroke_width_normalised": 0.035,
+                  "stroke_linecap": "round"
+                },
+                {
+                  "id": "excavator_bucket",
+                  "type": "path",
+                  "path_normalise": "M0.70,0.53 C0.77,0.55 0.78,0.64 0.71,0.68 C0.67,0.64 0.66,0.58 0.70,0.53 Z",
+                  "fill": "#8E5D1B",
+                  "stroke": "#FFC95E"
+                },
+                {
+                  "id": "dust_clouds",
+                  "type": "circles_group",
+                  "circles": [
+                    {
+                      "cx": 0.72,
+                      "cy": 0.66,
+                      "r": 0.045
+                    },
+                    {
+                      "cx": 0.77,
+                      "cy": 0.64,
+                      "r": 0.055
+                    },
+                    {
+                      "cx": 0.83,
+                      "cy": 0.67,
+                      "r": 0.04
+                    }
+                  ],
+                  "fill": "rgba(217, 161, 59, 0.38)"
+                },
+                {
+                  "id": "work_barrier",
+                  "type": "rect_with_diagonal_stripes",
+                  "x": 0.72,
+                  "y": 0.62,
+                  "w": 0.19,
+                  "h": 0.055,
+                  "fill": "#D9A13B",
+                  "stripe_fill": "#07111E"
+                },
+                {
+                  "id": "safety_cone",
+                  "type": "path",
+                  "path_normalise": "M0.94,0.68 L0.97,0.68 L0.955,0.61 Z",
+                  "fill": "#D97A3B",
+                  "stroke": "#FFD06A"
+                }
+              ],
+              "timing_estimate": {
+                "apparition_s": 46.85,
+                "disparition_s": 51.25
+              },
+              "animation": {
+                "type": "flat_vector_micro_animation",
+                "excavator_boom_rotation_deg": {
+                  "from": -2,
+                  "to": 4,
+                  "period_s": 1.8
+                },
+                "bucket_rotation_deg": {
+                  "from": 0,
+                  "to": -7,
+                  "period_s": 1.8
+                },
+                "dust_opacity": {
+                  "from": 0.18,
+                  "to": 0.52,
+                  "period_s": 1.1
+                },
+                "dust_translate_px": {
+                  "x": 8,
+                  "y": -4
+                }
+              }
+            },
+            {
+              "id": "progress_hud_composed",
+              "type_technique": "svg_group_hud_jauge_circulaire_et_barres",
+              "position_dans_card_normalisee": {
+                "x": 0.05,
+                "y": 0.72,
+                "w": 0.56,
+                "h": 0.18
+              },
+              "couleur": {
+                "background": "#0A2038",
+                "cyan": "#2CD7FF",
+                "inactive": "#263C55",
+                "text": "#EAF6FF"
+              },
+              "children": [
+                {
+                  "id": "progress_circle",
+                  "type": "svg_circle_progress",
+                  "center_normalise": {
+                    "x": 0.12,
+                    "y": 0.5
+                  },
+                  "radius_normalise": 0.17,
+                  "stroke_width_px": 8,
+                  "progress_value": 0.37,
+                  "track_color": "#263C55",
+                  "progress_color": "#2CD7FF",
+                  "texte": "37%"
+                },
+                {
+                  "id": "progress_label",
+                  "type": "svg_text",
+                  "position_normalise": {
+                    "x": 0.31,
+                    "y": 0.32
+                  },
+                  "texte": "TRAVAUX EN COURS",
+                  "font_family": "monospace",
+                  "font_size_px": 13,
+                  "font_weight": 700,
+                  "fill": "#2CD7FF"
+                },
+                {
+                  "id": "progress_bars",
+                  "type": "svg_rect_bars_sequence",
+                  "position_normalise": {
+                    "x": 0.31,
+                    "y": 0.58
+                  },
+                  "bar_count": 16,
+                  "bar_w_px": 5,
+                  "bar_h_px": 21,
+                  "gap_px": 5,
+                  "active_bars": 6,
+                  "active_color": "#2CD7FF",
+                  "inactive_color": "#263C55"
+                }
+              ],
+              "timing_estimate": {
+                "apparition_s": 47.3,
+                "disparition_s": 51.25
+              },
+              "animation": {
+                "type": "count_up_and_draw",
+                "progress_from": 0,
+                "progress_to": 0.37,
+                "start_s": 47.3,
+                "end_s": 48.3
+              }
+            },
+            {
+              "id": "activity_hud_composed",
+              "type_technique": "svg_group_status_icon_text",
+              "position_dans_card_normalisee": {
+                "x": 0.64,
+                "y": 0.72,
+                "w": 0.31,
+                "h": 0.18
+              },
+              "children": [
+                {
+                  "id": "vertical_separator",
+                  "type": "svg_line",
+                  "from_normalise": {
+                    "x": 0,
+                    "y": 0.05
+                  },
+                  "to_normalise": {
+                    "x": 0,
+                    "y": 0.95
+                  },
+                  "stroke": "#5E789A",
+                  "stroke_width_px": 1
+                },
+                {
+                  "id": "helmet_icon_circle",
+                  "type": "svg_circle_icon",
+                  "center_normalise": {
+                    "x": 0.25,
+                    "y": 0.5
+                  },
+                  "radius_normalise": 0.23,
+                  "stroke": "#2CD7FF",
+                  "fill": "rgba(44,215,255,0.08)",
+                  "icon": "hard_hat_svg_path",
+                  "icon_fill": "none",
+                  "icon_stroke": "#2CD7FF"
+                },
+                {
+                  "id": "activity_text",
+                  "type": "svg_text_multiline",
+                  "position_normalise": {
+                    "x": 0.48,
+                    "y": 0.38
+                  },
+                  "texte_lignes": [
+                    "ACTIVITÉ",
+                    "ÉLEVÉE"
+                  ],
+                  "font_family": "monospace",
+                  "font_size_px": 12,
+                  "font_weight": 700,
+                  "fill": "#EAF6FF"
+                }
+              ],
+              "timing_estimate": {
+                "apparition_s": 47.55,
+                "disparition_s": 51.25
+              },
+              "animation": {
+                "type": "fade_in_then_icon_pulse",
+                "pulse_period_s": 1.2,
+                "pulse_scale": {
+                  "from": 1,
+                  "to": 1.06
+                }
+              }
+            }
+          ]
+        },
+        {
+          "id": "chantier_connector_gold",
+          "type_technique": "svg_polyline_anchor_geo_to_card",
+          "from_geo_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "to_card_id": "chantier_overlay_card",
+          "path_screen_at_48s": [
+            {
+              "x": 0.365,
+              "y": 0.665
+            },
+            {
+              "x": 0.425,
+              "y": 0.61
+            },
+            {
+              "x": 0.455,
+              "y": 0.515
+            }
+          ],
+          "couleur": {
+            "stroke": "#D9A13B",
+            "stroke_width_px": 1.5,
+            "stroke_dasharray": "5 5",
+            "fill": "none"
+          },
+          "timing_estimate": {
+            "apparition_s": 46.55,
+            "disparition_s": 51.25
+          },
+          "animation": {
+            "type": "strokeDashoffset_draw",
+            "draw_start_s": 46.55,
+            "draw_end_s": 46.95
+          }
+        }
+      ],
+      "timing_estimate": {
+        "resume": "46.2 carte assombrie; 46.55 carte-overlay chantier ancrée à Adrar; 46.85 pelleteuse vectorielle visible; 47.3 jauge 37%; 47.55 activité élevée; 50.95-51.6 disparition progressive de l'overlay."
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_lateral": {
+          "respectee": true,
+          "details": "Correction explicite du storyboard source: l'ancien bloc latéral gauche et l'ancien insert droit sont supprimés. L'insert chantier est une carte-overlay composée, centrée à x=0.61 y=0.505, ancrée au point Adrar par un connecteur doré, avec carte dimmée derrière. Il ne pousse jamais la carte hors cadre."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "details": "Tous les textes visibles sont dans la carte-overlay ou dans des labels encadrés reliés à Adrar."
+        },
+        "regle_3_labels_limites": {
+          "respectee": true,
+          "details": "Aucun nouveau pays n'est labellisé. Le beat reste centré sur Algérie / Adrar."
+        },
+        "regle_4_camera_jamais_figee": {
+          "respectee": true,
+          "details": "Sous l'overlay, la carte continue un micro-pan et un micro-zoom de 46.2s à 51.6s."
+        },
+        "correction_storyboard_original": {
+          "necessaire": true,
+          "details": "Le panneau TURNING POINT original enfreignait la règle par un bloc annotation gauche et un bloc chantier à droite. Version corrigée: aucune annotation latérale en production; overlay chantier centré/ancré à Adrar."
+        }
+      },
+      "trou_factuel_pelleteuses": {
+        "probleme_identifie": "Le rendu actuel n'illustre pas la phrase narrée « Les pelleteuses sont déjà sur le terrain ».",
+        "solution_integree": {
+          "element_principal": "flat_vector_chantier_scene",
+          "moment_exact": {
+            "apparition_s": 46.85,
+            "frame": 1406
+          },
+          "description": "Pelleteuse jaune vectorielle sur chenilles, godet abaissé dans une tranchée, poussière animée et barrière de chantier. La scène est placée dans une carte-overlay ancrée à Adrar, avec la carte assombrie derrière.",
+          "coherence_stack": "SVG flat-vector animé dans Remotion; aucun rendu 3D; aucun After Effects; connecteur D3/GeoJSON au point Adrar."
+        }
+      }
+    },
+    {
+      "id": "END",
+      "numero_storyboard": 3,
+      "timecode": {
+        "debut_s": 51.6,
+        "fin_s": 55.0,
+        "duree_s": 3.4,
+        "frame_debut": 1548,
+        "frame_fin": 1650
+      },
+      "intention": "Revenir à la carte complète avec Adrar marqué comme site actif avant transition vers l'emphase financière.",
+      "camera": {
+        "type": "return_map_slight_zoom_out_recenter",
+        "projection": "d3.geoMercator",
+        "easing": "easeOutCubic",
+        "trajectoire": [
+          {
+            "time_s": 51.6,
+            "frame": 1548,
+            "center_lonlat": {
+              "lon": -0.05,
+              "lat": 27.95
+            },
+            "zoom_scale_relative": 1.78,
+            "description": "Overlay chantier disparu, Adrar encore proche."
+          },
+          {
+            "time_s": 53.4,
+            "frame": 1602,
+            "center_lonlat": {
+              "lon": 0.75,
+              "lat": 28.25
+            },
+            "zoom_scale_relative": 1.68,
+            "description": "Léger recul pour redonner de l'air à la silhouette de l'Algérie."
+          },
+          {
+            "time_s": 55.0,
+            "frame": 1650,
+            "center_lonlat": {
+              "lon": 1.25,
+              "lat": 28.45
+            },
+            "zoom_scale_relative": 1.62,
+            "description": "Adrar reste actif, prêt à recevoir l'information financière suivante."
+          }
+        ],
+        "mouvement_residuel": {
+          "actif": true,
+          "description": "Recentrage continu de 51.6s à 55.0s, aucune pause."
+        }
+      },
+      "elements": [
+        {
+          "id": "map_undim",
+          "type_technique": "rect_svg_fullscreen_opacity_transition",
+          "position_ecran_normalisee": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "couleur": "rgba(0, 8, 18, 0.62)",
+          "timing_estimate": {
+            "apparition_s": 51.2,
+            "disparition_s": 51.6
+          },
+          "animation": {
+            "type": "fade_out",
+            "opacity_from": 0.62,
+            "opacity_to": 0,
+            "start_s": 51.2,
+            "end_s": 51.6
+          }
+        },
+        {
+          "id": "algeria_active_outline",
+          "type_technique": "svg_path_geojson_feature",
+          "geo_feature": "DZA",
+          "position": {
+            "mode": "geo_projected"
+          },
+          "couleur": {
+            "fill": "#143B61",
+            "fill_opacity": 0.88,
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 2.1,
+            "stroke_opacity": 1
+          },
+          "timing_estimate": {
+            "apparition_s": 51.6,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "subtle_glow_pulse",
+            "period_s": 1.8,
+            "stroke_width_px": {
+              "from": 1.8,
+              "to": 2.4
+            },
+            "filter_glow_opacity": {
+              "from": 0.15,
+              "to": 0.36
+            }
+          }
+        },
+        {
+          "id": "label_algerie_end",
+          "type_technique": "svg_g_label_rect_text_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": 2.6,
+            "lat": 31.0
+          },
+          "position_ecran_estimee_a_53s": {
+            "x": 0.515,
+            "y": 0.285
+          },
+          "boite": {
+            "w": 0.076,
+            "h": 0.032,
+            "rx_px": 4,
+            "fill": "rgba(5, 18, 35, 0.82)",
+            "stroke": "#EAF6FF",
+            "stroke_width_px": 1
+          },
+          "texte": {
+            "contenu": "ALGÉRIE",
+            "font_family": "monospace",
+            "font_size_px": 15,
+            "font_weight": 700,
+            "letter_spacing_px": 1.2,
+            "fill": "#EAF6FF",
+            "align": "center"
+          },
+          "couleur": "#EAF6FF",
+          "timing_estimate": {
+            "apparition_s": 51.6,
+            "disparition_s": 55.0
+          },
+          "animation": "maintien_avec_camera"
+        },
+        {
+          "id": "adrar_pin_active",
+          "type_technique": "svg_g_pin_circulaire_anchor_geo",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "position_ecran_estimee_a_53s": {
+            "x": 0.392,
+            "y": 0.645
+          },
+          "formes": [
+            {
+              "type": "circle",
+              "r_px": 11,
+              "fill": "#06172B",
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 3
+            },
+            {
+              "type": "line",
+              "from": {
+                "x_px": 0,
+                "y_px": 10
+              },
+              "to": {
+                "x_px": 0,
+                "y_px": 30
+              },
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 3,
+              "stroke_linecap": "round"
+            },
+            {
+              "type": "circle",
+              "r_px": 28,
+              "fill": "rgba(44,215,255,0.08)",
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 2,
+              "opacity": 0.8
+            },
+            {
+              "type": "circle",
+              "r_px": 42,
+              "fill": "none",
+              "stroke": "#2CD7FF",
+              "stroke_width_px": 1.5,
+              "stroke_dasharray": "4 6",
+              "opacity": 0.56
+            }
+          ],
+          "couleur": "#2CD7FF",
+          "timing_estimate": {
+            "apparition_s": 51.6,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "active_site_pulse",
+            "pulse_period_s": 1.0,
+            "outer_ring_radius_px": {
+              "from": 34,
+              "to": 54
+            },
+            "outer_ring_opacity": {
+              "from": 0.5,
+              "to": 0
+            }
+          }
+        },
+        {
+          "id": "adrar_label_end",
+          "type_technique": "svg_g_label_rect_text_anchor_geo_with_offset",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "offset_px": {
+            "x": 48,
+            "y": 24
+          },
+          "position_ecran_estimee_a_53s": {
+            "x": 0.439,
+            "y": 0.676
+          },
+          "boite": {
+            "w": 0.058,
+            "h": 0.031,
+            "rx_px": 3,
+            "fill": "rgba(5, 18, 35, 0.92)",
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1.4
+          },
+          "texte": {
+            "contenu": "ADRAR",
+            "font_family": "monospace",
+            "font_size_px": 13,
+            "font_weight": 700,
+            "letter_spacing_px": 1,
+            "fill": "#EAF6FF",
+            "align": "center"
+          },
+          "couleur": "#EAF6FF",
+          "timing_estimate": {
+            "apparition_s": 51.6,
+            "disparition_s": 55.0
+          },
+          "animation": "maintien_avec_camera"
+        },
+        {
+          "id": "site_actif_badge",
+          "type_technique": "svg_g_badge_rect_text_anchor_geo_with_connector",
+          "geo_anchor_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "offset_px": {
+            "x": -20,
+            "y": 78
+          },
+          "position_ecran_estimee_a_53s": {
+            "x": 0.372,
+            "y": 0.742
+          },
+          "connector": {
+            "type": "svg_line",
+            "from_anchor": "adrar_pin_active",
+            "to_badge_top_center": true,
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1,
+            "opacity": 0.85
+          },
+          "boite": {
+            "w": 0.105,
+            "h": 0.034,
+            "rx_px": 4,
+            "fill": "rgba(5, 18, 35, 0.94)",
+            "stroke": "#2CD7FF",
+            "stroke_width_px": 1.3
+          },
+          "icone": {
+            "type": "circle",
+            "r_px": 6,
+            "fill": "#2CD7FF",
+            "position_in_badge_px": {
+              "x": 14,
+              "y": 17
+            }
+          },
+          "texte": {
+            "contenu": "SITE ACTIF",
+            "font_family": "monospace",
+            "font_size_px": 13,
+            "font_weight": 700,
+            "letter_spacing_px": 1,
+            "fill": "#EAF6FF",
+            "align": "left",
+            "x_px": 29,
+            "y_px": 21
+          },
+          "couleur": "#EAF6FF",
+          "timing_estimate": {
+            "apparition_s": 52.05,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "fade_in_from_anchor",
+            "fade_in_start_s": 52.05,
+            "fade_in_end_s": 52.35
+          }
+        },
+        {
+          "id": "gold_connector_algerie_to_adrar_end",
+          "type_technique": "svg_polyline_anchor_geo_to_label",
+          "from_geo_lonlat": {
+            "lon": -0.2939,
+            "lat": 27.8743
+          },
+          "to_element_id": "label_algerie_end",
+          "path_screen_control_points_at_53s": [
+            {
+              "x": 0.392,
+              "y": 0.645
+            },
+            {
+              "x": 0.485,
+              "y": 0.55
+            },
+            {
+              "x": 0.485,
+              "y": 0.335
+            }
+          ],
+          "couleur": {
+            "stroke": "#D9A13B",
+            "stroke_width_px": 1.3,
+            "stroke_dasharray": "5 5",
+            "fill": "none"
+          },
+          "timing_estimate": {
+            "apparition_s": 51.8,
+            "disparition_s": 55.0
+          },
+          "animation": {
+            "type": "fade_in",
+            "duration_s": 0.25
+          }
+        }
+      ],
+      "timing_estimate": {
+        "resume": "51.6 retour carte non assombrie; 52.05 badge SITE ACTIF; 51.6-55.0 léger zoom-out/recentrage continu vers Adrar actif."
+      },
+      "verification_contre_regles": {
+        "regle_1_aucun_widget_coin_ou_lateral": {
+          "respectee": true,
+          "details": "Le badge SITE ACTIF est ancré au point Adrar par connecteur. Aucun panneau n'est placé en coin ou sur un bord."
+        },
+        "regle_2_aucun_texte_flottant_sans_support": {
+          "respectee": true,
+          "details": "ADRAR, ALGÉRIE et SITE ACTIF sont dans des boîtes/pastilles avec ancrage ou connecteur."
+        },
+        "regle_3_labels_limites": {
+          "respectee": true,
+          "details": "Seulement ALGÉRIE, ADRAR et le statut SITE ACTIF. Aucun autre pays n'est nommé."
+        },
+        "regle_4_camera_jamais_figee": {
+          "respectee": true,
+          "details": "Zoom-out/recentrage continu de 51.6s à 55.0s."
+        },
+        "correction_storyboard_original": {
+          "necessaire": true,
+          "details": "Le bloc latéral END du storyboard source est exclu du rendu final. Le statut est remplacé par un badge ancré à Adrar."
+        }
+      }
+    }
+  ],
+  "elements_exclus_du_rendu_final_car_annotations_storyboard": [
+    {
+      "id": "left_annotation_panel_start",
+      "raison_exclusion": "Widget latéral de storyboard, enfreint la règle de production si rendu tel quel."
+    },
+    {
+      "id": "left_annotation_panel_turning_point",
+      "raison_exclusion": "Widget latéral de storyboard, explicitement corrigé en overlay centré/ancré."
+    },
+    {
+      "id": "left_annotation_panel_end",
+      "raison_exclusion": "Widget latéral de storyboard, remplacé par badge ancré à Adrar."
+    },
+    {
+      "id": "storyboard_numbers_and_titles",
+      "raison_exclusion": "Repères de storyboard START/TURNING POINT/END non narratifs; non rendus dans la vidéo finale."
+    }
+  ],
+  "trou_factuel_pelleteuses": {
+    "etat": "comble_dans_ce_breakdown",
+    "representation": {
+      "type_technique": "svg_group_flat_vector_dans_overlay_compose_anchor_geo",
+      "element_id": "flat_vector_chantier_scene",
+      "apparition_s": 46.85,
+      "disparition_s": 51.25,
+      "ancrage": "Adrar lon -0.2939 lat 27.8743 via connecteur doré",
+      "contenu_visuel": [
+        "pelleteuse jaune sur chenilles",
+        "godet en action dans une tranchée",
+        "poussière animée",
+        "barrière de chantier rayée",
+        "cônes de signalisation",
+        "jauge TRAVAUX EN COURS 37%",
+        "statut ACTIVITÉ ÉLEVÉE"
+      ],
+      "justification_narrative": "La phrase « Les pelleteuses sont déjà sur le terrain » est visualisée au moment du climax local par une preuve de chantier active, pas par un simple label."
+    }
+  },
+  "verification_contre_regles_globale": {
+    "regle_1_aucun_widget_panneau_hud_coin_ou_bord_lateral": {
+      "respectee": true,
+      "preuve": "Tous les inserts narratifs sont soit ancrés à Adrar, soit centrés comme overlay composé avec carte assombrie derrière. Les panneaux latéraux du storyboard source sont explicitement exclus."
+    },
+    "regle_2_aucun_texte_label_flottant_sans_support": {
+      "respectee": true,
+      "preuve": "Chaque texte est contenu dans une boîte, pastille ou carte-overlay, avec connecteur ou ancrage géographique."
+    },
+    "regle_3_labeliser_seulement_2_3_pays_pertinents": {
+      "respectee": true,
+      "preuve": "Le seul pays labellisé est ALGÉRIE. Le point local ADRAR est labellisé. Aucun pays périphérique n'est nommé."
+    },
+    "regle_4_camera_jamais_figee_plus_de_5s": {
+      "respectee": true,
+      "preuve": "La caméra évolue continuellement de 42.8s à 55.0s: pan/zoom d'arrivée, micro-push sous overlay, puis léger zoom-out/recentrage."
+    },
+    "correction_du_panneau_turning_point_original": {
+      "respectee": true,
+      "preuve": "L'ancien insert chantier latéral droit est remplacé par une carte-overlay centrée à x=0.61 y=0.505, w=0.40 h=0.46, reliée au point Adrar. L'ancien bloc annotation gauche est retiré."
+    }
+  }
+}

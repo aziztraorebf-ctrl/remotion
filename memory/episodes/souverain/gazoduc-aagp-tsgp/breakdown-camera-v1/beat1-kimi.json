@@ -1,0 +1,98 @@
+{
+  "reference_style": "CaspianReport (Shirvan) — Ce style est reconnu pour ses zooms 'staccato' et ses accélérations brutales qui évitent tout temps mort. Pour ce beat sur le 'point de départ' nigérian, cette approche crée un impact immédiat : au lieu d'une approche douce, la caméra 'frappe' le Nigeria pour l'imposer comme acteur principal dès les premières secondes, puis maintient la tension par des micro-ajustements nerveux jamais figés, évitant ainsi le piège du 'point bleu statique' dénoncé par le réalisateur.",
+  "rythme_global": "Trois mouvements distincts séparés par de courts paliers actifs (jamais >2s). Phase 1 (0-6s) : approche agressive en deux accélérations (coup de boost initial à t=1.5s, puis arrivée sèche à t=4.5s) pour synchroniser avec le mot 'Nigeria'. Phase 2 (6-14s) : 'inspection' terrain avec travelling latéral sud-nord pendant le tracé du contour, suivi d'un pullback préparatoire. Phase 3 (14-22.2s) : resserrement immersif pour le remplissage couleur et pose du label, puis ouverture anticipatrice vers le nord-est (direction du Niger) pour préparer le cut suivant. Aucun hold ; les 'pauses' sont des dérives continues à vitesse réduite mais perceptibles.",
+  "trajectoire_timestamps": [
+    {
+      "t": 0.0,
+      "zoom_scale": 1.0,
+      "center_offset_x": 0,
+      "center_offset_y": 0,
+      "description": "Ouverture large Afrique de l'Ouest. Nigeria visible comme zone côtière parmi d'autres."
+    },
+    {
+      "t": 1.5,
+      "zoom_scale": 1.7,
+      "center_offset_x": -50,
+      "center_offset_y": 20,
+      "description": "Première accélération linéaire vers le Nigeria (coup de boost CaspianReport)."
+    },
+    {
+      "t": 3.0,
+      "zoom_scale": 2.9,
+      "center_offset_x": -110,
+      "center_offset_y": 40,
+      "description": "Zoom continu, le pays occupe progressivement l'écran."
+    },
+    {
+      "t": 4.5,
+      "zoom_scale": 4.3,
+      "center_offset_x": -140,
+      "center_offset_y": 55,
+      "description": "Arrivée sèche et freinage brutal. Début du tracé contour (stroke). Vue sur le sud-ouest/Lagos."
+    },
+    {
+      "t": 6.0,
+      "zoom_scale": 4.1,
+      "center_offset_x": -135,
+      "center_offset_y": 50,
+      "description": "Micro-recul actif de 0.2x pendant que le contour se poursuit."
+    },
+    {
+      "t": 8.0,
+      "zoom_scale": 4.4,
+      "center_offset_x": -145,
+      "center_offset_y": 30,
+      "description": "Travelling nord (y diminue) pour inspecter la portion centrale du pays, contour progresse."
+    },
+    {
+      "t": 10.0,
+      "zoom_scale": 4.0,
+      "center_offset_x": -130,
+      "center_offset_y": 15,
+      "description": "Pull-back vers 4.0x et recentrage préparatoire pour la phase remplissage."
+    },
+    {
+      "t": 12.0,
+      "zoom_scale": 3.8,
+      "center_offset_x": -115,
+      "center_offset_y": 10,
+      "description": "Micro-drift vers le nord-est (anticipation direction Niger) pendant que le remplissage cyan démarre."
+    },
+    {
+      "t": 14.0,
+      "zoom_scale": 4.6,
+      "center_offset_x": -125,
+      "center_offset_y": 35,
+      "description": "Re-zoom agressif (punch) pour le remplissage complet et l'apparition du label 'NIGERIA'."
+    },
+    {
+      "t": 16.0,
+      "zoom_scale": 4.7,
+      "center_offset_x": -128,
+      "center_offset_y": 38,
+      "description": "Pic de zoom pour lisibilité maximale du label, légère dérive vers l'est."
+    },
+    {
+      "t": 18.0,
+      "zoom_scale": 4.3,
+      "center_offset_x": -90,
+      "center_offset_y": 25,
+      "description": "Ouverture progressive vers l'est (préparation visuelle au Niger), dézoom contrôlé."
+    },
+    {
+      "t": 20.0,
+      "zoom_scale": 3.9,
+      "center_offset_x": -50,
+      "center_offset_y": 15,
+      "description": "Continuité de l'ouverture nord-est, espace libéré à droite pour la suite du pipeline."
+    },
+    {
+      "t": 22.2,
+      "zoom_scale": 3.5,
+      "center_offset_x": -10,
+      "center_offset_y": 5,
+      "description": "Frame de transition : Nigeria ancré à gauche, espace ouvert à droite révélant la frontière nigérienne (prêt pour le mot 'Niger')."
+    }
+  ],
+  "verification_anti_immobilite": "Confirmé : aucune fenêtre de 3 secondes consécutives ne présente un delta quasi-nul. Sur l'intervalle 4.5s-6.0s (1.5s), le zoom varie de 4.3 à 4.1 et la position dérive de 5px/5px. Sur 10.0s-12.0s (2s), le zoom change de 0.2x et le centre bouge de 15px. Sur 16.0s-18.0s (2s), le zoom chute de 0.4x et le déplacement est de 38px en x et 13px en y. Tous les autres intervalles montrent des variations supérieures à 0.3x en zoom et 20px en position. Le delta minimal cumulé (zoom + déplacement) sur toute période de 3s dépasse largement le seuil de perception de l'immobilité, éliminant le risque de 'point bleu statique'."
+}
