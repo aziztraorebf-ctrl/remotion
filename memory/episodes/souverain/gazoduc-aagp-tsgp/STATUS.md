@@ -1,8 +1,62 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-13
+**Mis à jour** : 2026-08-14
 
-## ⭐⭐⭐ ACTION DIRECTE — Segment B (aéroport Niamey) : nouveau décor SVG PRÊT À INTÉGRER (2026-08-13)
+## 🧭 OÙ ON EN EST (2026-08-14, fin de session) — lire ceci en premier
+
+**Commit de référence** : `9e302fb2` sur `feat/gazoduc-acte1-hook-globe`. Tout est versionné
+(breakdowns V5, breakdown caméra, clip H3, audio p3 — ils étaient non suivis par git avant ce commit).
+
+### Ce qui est FAIT et VALIDÉ par Aziz
+- **Acte 3 / Segment A / Beat 1 (0→22.2s)** — VALIDÉ. Caméra continue, dessin trait-par-trait,
+  tracé qui part à 6.3s, pays qui restent marqués après passage.
+  Render : `beat1-v8-AUDIO` (lien Vercel Blob dans l'historique de session).
+- **Acte 3 / Segment B (aéroport Niamey)** — décor Fable5 porté sur la logique d'animation existante,
+  vérifié par mini-renders. (L'ancien bloc « à intégrer » de ce STATUS était périmé.)
+
+### Ce qui est FAIT mais PAS ENCORE VALIDÉ par Aziz
+- **Beat 2 (chantier Adrar)** refait depuis le storyboard V5 : carte-insert composée avec le clip
+  MiniMax H3 (pelleteuse), badge date, jauge 37%, badge activité, connecteur vers pin Adrar.
+- **Beat 3 (financement)** : comparateur ramené du bord droit vers un panneau encadré centré.
+- **Immobilité** corrigée sur 3 mouvements (plus longue série figée 12.0s → 0.0s sur 22→74s).
+- Render : `suite-v12-AUDIO` (22.2→74.2s). **À faire regarder à Aziz au début de la prochaine session.**
+
+### ⛔ Ce qui RESTE à faire sur l'Acte 3
+1. **Beat 3** : le panneau est correct mais incomplet — la V5 y met aussi le robinet
+   (Algérie→vanne←Nigeria) et la banque barrée DANS le même bloc. Actuellement moitié droite vide.
+2. **Beat 4 (paradoxe)** : jamais repris depuis la V5. Doit être la divergence visuelle pure du même
+   tracé — Maroc doré stable vs Algérie qui vire au rouge avec icônes bouclier le long du trajet.
+   Le code actuel est encore de la v3.
+3. Décider du sort de `GazoducActe3InsertParadoxe.tsx` (rendu obsolète si Beat 4 intégré à la carte).
+
+### ⛔ Ce qui n'existe PAS ENCORE (vérifié : aucun fichier, aucune composition)
+- **Acte 4 — Conséquences** (Partie 4 du script) : Nigeria incapable de remplir les 2 tuyaux,
+  **70% de la production siphonnée** (le plan l'identifie comme un PIC DE RUPTURE DE FORME
+  carte→insert physique, pas un beat mineur), objectifs opposés Maroc/Algérie, calendrier européen
+  qui se retourne (demande en baisse d'ici 2030).
+- **Acte 5 — Implication** (Partie 5 du script) : la facture européenne, **le robinet géant avec
+  mains stylisées** (idée Kimi, `PLAN-ACTES2-5.md` ligne 118 — c'est là que vit la « scène du
+  robinet », à ne pas confondre avec le petit robinet du Beat 3), chute « d'autres ont déjà
+  commencé à CREUSER ».
+- ⚠️ **Audio Parties 4/5 non vérifié** : seuls `narration-p2.mp3` (139s) et `narration-p3.mp3` (123s)
+  existent par partie. `narration.mp3` fait 516s et couvre probablement tout — À VÉRIFIER avant de
+  supposer qu'il faut regénérer.
+
+### 🔑 Leçons de méthode de cette session (coûteuses, ne pas les reperdre)
+- **Un mouvement « par à-coups » n'est presque jamais un problème de dosage.** 3 itérations perdues à
+  retoucher des valeurs. Cause réelle : `easeInOut` appliqué PAR SEGMENT a une dérivée nulle à ses
+  2 extrémités → vitesse exactement 0 à chaque point de passage. **Mesurer la vitesse caméra frame à
+  frame AVANT de retoucher quoi que ce soit.**
+- **Chercher la brique existante AVANT de coder** : le mécanisme de caméra continue existait déjà
+  (Acte 2 validé + prototype dédié), et le fichier importait même déjà la moitié des helpers.
+- **Vérifier visuellement un livrable hérité avant de bâtir dessus** : les Beats 2/3/4 étaient la v3
+  explicitement rejetée, avec une note « ne PAS repartir du code v3 actuel » dans le doc de fusion.
+- **Le hash anti-gel ne suffit pas** : mesurer le % de pixels modifiés entre frames espacées, et la
+  plus longue série consécutive sous seuil.
+
+---
+
+## (ARCHIVE) Segment B (aéroport Niamey) : nouveau décor SVG — FAIT le 2026-08-14
 
 **Décision Aziz explicite : ce nouveau décor doit remplacer le décor actuel dans la vidéo de l'Acte 3.**
 Jugé par Aziz visuellement supérieur au rendu existant (tour+radar, lune, halos lumineux, véhicule

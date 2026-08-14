@@ -112,37 +112,29 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC — Segment B (aéroport) SVG prêt à intégrer · Segment A (carte) storyboard V5 validé, breakdown+code à refaire (2026-08-14)
+## ⭐⭐⭐ GAZODUC — Acte 3 : Beat 1 VALIDÉ, Beats 2/3 refaits (à faire valider), Beat 4 + Actes 4/5 à faire (2026-08-14)
 
-**Segment B (aéroport Niamey)** : décor SVG régénéré par Fable5 mode MAX, jugé par Aziz supérieur au
-décor actuel — **à intégrer dans la prod** (porter l'animation existante de
-`GazoducActe3InsertSecurite.tsx` sur les nouveaux groupes de `GazoducAeroportFable5Test.tsx`, timing/
-beats déjà résolus, ne pas repartir de zéro). Détail : STATUS.md § en tête.
+**Commit `9e302fb2`** (`feat/gazoduc-acte1-hook-globe`). Starter prêt :
+`memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md`. État détaillé :
+`episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "OÙ ON EN EST (2026-08-14)".
 
-**Segment A (carte trajet+chantier+financement+paradoxe)** : v3 codé à partir d'un 1er breakdown a été
-**REJETÉ par Aziz** (widgets flottants en coin d'écran, texte sans support, ~15-22s de vide en tout
-début, régression sur une règle DA-brief déjà actée). 2e passage storyboard réussi (2026-08-14) :
-**GPT Image 2 en "libre créative" (structure légère 3-états, pas de mise en scène dictée) a produit un
-résultat nettement supérieur au brief prescriptif détaillé** — retenu comme base. 4 images validées +
-prompt squelette réutilisable. Détail complet + les 4 images :
-`episodes/souverain/gazoduc-aagp-tsgp/BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md` § "V4/V5 — 2e passage".
+**PREMIÈRE ACTION prochaine session** : faire regarder à Aziz le render `suite-v12` (22.2→74.2s) —
+Beat 2 (insert chantier composé avec clip H3) et Beat 3 (comparateur recentré) refaits depuis le
+storyboard V5 mais PAS ENCORE VALIDÉS. Segment B (aéroport) : décor Fable5 porté, fait.
 
-**3 points tranchés par Claude (2026-08-14), à appliquer dans le prochain prompt de breakdown/storyboard** :
-1. **Inserts qui débordent latéralement du cadre 16:9** = vrai défaut de composition (viole "carte
-   d'abord"), pas un non-sujet du format large. Fix : ajouter explicitement "insert overlays the map,
-   never pushes it aside" dans les règles non-négociables du prochain prompt.
-2. **Densité de texte (Beat 3 financement le plus chargé)** : pas de règle générale — demander au
-   breakdown (fait par le modèle qui a généré l'image) de juger lui-même si un insert dense doit être
-   scindé en 2 temps successifs, plutôt que trancher à l'aveugle avant d'avoir le détail.
-3. **Inserts en clip H3 stylisé** (chantier/zone de conflit, contenu à fort détail) : génération déjà
-   maîtrisée (styles validés cette session sur Anansi/Nyame), le vrai défi est l'INTÉGRATION (poser un
-   clip dans un cadre SVG animé, gérer boucle/durée vs temps d'affichage de l'insert) — chantier
-   technique à tester ISOLÉMENT, ne pas bloquer le recodage du Segment A dessus.
+**Reste sur l'Acte 3** : (1) Beat 3 incomplet — moitié droite du panneau vide, la V5 y met le robinet
+Algérie→vanne←Nigeria + la banque barrée ; (2) **Beat 4 encore en code v3 rejeté**, à refaire depuis
+`beat4-paradoxe-libre.png` (divergence pure du même tracé : Maroc doré stable vs Algérie rouge).
 
-**Prochaine étape actée** : breakdown JSON complet via GPT Image 2 sur chaque image V5 (le modèle qui a
-généré l'image fait son propre breakdown — zéro ambiguïté/devinette), en intégrant les 3 points ci-dessus
-dans le prompt, PUIS recoder `GazoducActe3CarteTSGP.tsx`.
-Ne PAS repartir du code v3 actuel sans ce nouveau breakdown.
+**Actes 4 et 5 : rien n'existe** (vérifié — aucun fichier, aucune composition). Acte 4 = conséquences,
+avec les **70% de production siphonnée en pic de rupture de forme** carte→insert physique. Acte 5 =
+implication, avec **le robinet géant + mains stylisées** (`PLAN-ACTES2-5.md` L118). ⚠️ Avant de croire
+l'audio manquant : `narration.mp3` (516s) couvre probablement les 5 parties.
+
+**Leçon caméra (3 itérations perdues)** : un mouvement « par à-coups » n'est presque jamais un problème
+de dosage. `easeInOut` appliqué PAR SEGMENT met la vitesse à exactement 0 à chaque point de passage.
+**Mesurer la vitesse frame à frame avant de retoucher une valeur**, et chercher la brique existante
+(le mécanisme continu était déjà dans l'Acte 2 validé + un prototype dédié).
 
 Rendu v2 corrigé après DA-brief critique :
 https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte3-v2-Sw435S8sYbHTbgMbmvDkRfPMdkyhFT.mp4
