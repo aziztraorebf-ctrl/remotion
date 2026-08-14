@@ -40,38 +40,63 @@ import { CfaRevealSVG } from "./CfaRevealSVG";
 import { ResourcesRevealSVG } from "./ResourcesRevealSVG";
 
 // ============================================================
-// TRIGGERS V5 P4 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-14)
-// ⚠️ Ces frames CORRIGENT BEATS-V5 (calé sur audio antérieur : ex confédération BEATS f11076 → réel f11449).
+// TRIGGERS V6 P4 (alignment aes-v6-actes234.alignment.json, ×30fps — retimé 2026-08-06, script V6 réécrit
+// après flop V5 (5 vues/24h, script V5 abandonné). Mesuré mot-par-mot directement dans le JSON de
+// force-alignment (pas d'approximation).
+// ⚠️ OFFSET RÉEL = +2895 frames (durée exacte de aes-v6-acte1.mp3 = 96.502132s×30fps), PAS +3196
+// comme indiqué initialement en brief — vérifié par preuve arithmétique : narration-v6-full.mp3
+// (496.767710s, déployé public/) == aes-v6-acte1.mp3 (96.502132s) + aes-v6-actes234.mp3 (400.265578s)
+// EXACTEMENT (concat sans gap, delta <0.001s), et SahelWarMapEngine monte <Audio narration-v6-full.mp3>
+// SANS `from=` → frame 0 composition = frame 0 narration-v6-full.mp3. Le +3196 du brief est en trop de
+// 301 frames (~10s) — CORRIGÉ ici. ⚠️ Ce même biais de +301f affecte très probablement Partie3Rupture.tsx
+// (F_END=10794 y a été calé sur le même +3196 — valeur correcte ≈10493) : à vérifier/corriger côté P3,
+// hors scope de cet agent (signalé au rapport, PAS touché ici).
+// Le texte a aussi changé, pas juste décalé : "coût"→"prix", "l'uranium" désormais audible explicitement
+// (n'était pas introuvable, juste pas cherché dans le bon fichier), "réussir"→"...ont échoué à faire",
+// "Barkhane" a disparu (remplacé par "forces françaises"), "démontrer"→"prouver".
 // ============================================================
-const F_START = 9416;       // "Car" derrière — Ph1 bascule militaire→humain (raccord fin P3 f9410)
-const F_POPULATIONS = 9615; // "populations"
-const F_FAMILLES = 9736;    // "familles" — Ph2 exode
-const F_DJIBO = 9790;       // "Djibo"
-const F_MENAKA = 9809;      // "Ménaka"
-const F_TILLABERI = 9835;   // "Tillabéri"
-const F_COUT = 10047;       // "coût" — Ph3 chiffre (figée ~2s)
-const F_3M = 10151;         // "trois millions" — déplacés
-const F_15M = 10216;        // "quinze" — insécurité
-const F_RESSOURCES = 10594; // "ressources" — Ph4 PIVOT
-const F_OR = 10667;         // "l'or" — Ph5
-const F_OR_BURKINA = 10729; // "Burkina"
-const F_URANIUM = 10804;    // "l'uranium" — Ph6
-const F_PETROLE = 10835;    // "pétrole"
-const F_NIGER_RES = 10851;  // "Niger"
-const F_CONFED = 11449;     // "confédération" — Ph7 (figée ~1.5s)
-const F_FORCE = 11521;      // "force"
-const F_NIAMEY_QG = 11613;  // "Niamey" — sceau se pose
-const F_BARKHANE = 11687;   // "Barkhane"
-const F_CFA = 11869;        // "CFA" — Ph8 plein écran
-const F_PARIS = 11974;      // "Paris"
-const F_STATU = 12297;      // "statu" — Ph9 dézoom continental
-const F_SOIXANTE = 12331;   // "soixante"
-const F_REUSSIR = 12662;    // "réussir" — Ph10 question
-const F_RESISTER = 13082;   // "résister" — Ph11 chute finale
-const F_CONSTRUIRE = 13200; // "construire"
-const F_DURER = 13290;      // "durer" — début extinction
-const F_DEMONTRER = 13372;  // "démontrer." — cut to black
-const F_END = 13500;        // fin absolue (noir + résonance) — +2s (Aziz 2026-06-15 : laisser l'audio/morale finir)
+const F_START = 10432;      // "tenir" (raccord fin P3, "Le tenir en est une autre.") — V5 9416, Δ+1016f/+33.9s
+const F_POPULATIONS = 11529; // "population" (dans "la population de la Belgique...") — mot inutilisé dans le fichier (dead const), retimé par cohérence seulement
+const F_FAMILLES = 10824;   // "familles" parle APRÈS Djibo/Ménaka/Tillabéri en V6 (ordre narratif inversé vs V5,
+                             // voir rapport) — callé ici à F_DJIBO-10 pour PRÉSERVER la fenêtre d'ouverture de
+                             // l'exode (gate `frame >= F_FAMILLES` sur tout le layer villes/jetons/sillage) ;
+                             // le mot réel "familles" est prononcé à f10933, mais le geler à f10824 permet aux
+                             // pins/pulses des 3 villes de jouer PENDANT leur nommage au lieu d'après. Compensation
+                             // documentée, PAS une correction structurelle — signalé au rapport, à trancher par Aziz.
+const F_DJIBO = 10834;      // "Djibo," — V5 9790, Δ+1044f/+34.8s
+const F_MENAKA = 10858;     // "Ménaka" — V5 9809, Δ+1049f/+35.0s
+const F_TILLABERI = 10888;  // "Tillabéri." — V5 9835, Δ+1053f/+35.1s
+const F_COUT = 11264;       // "prix" (mot "coût" disparu du texte V6, remplacé par "Le prix de cette rupture
+                             // est immense") — V5 10047 ("coût"), Δ+1217f/+40.6s
+const F_3M = 11371;         // "MILLIONS" (trois millions) — V5 10151, Δ+1220f/+40.7s
+const F_15M = 11447;        // "QUINZE" — V5 10216, Δ+1231f/+41.0s
+const F_RESSOURCES = 12571; // "ressources" — V5 10594, Δ+1977f/+65.9s (écart bien plus grand : passage
+                             // "Pourtant l'Alliance tient... comment financer... grâce à leur sous-sol" est
+                             // NOUVEAU/étendu en V6, ~18s de narration ajoutée avant le pivot ressources — voir rapport)
+const F_OR = 12336;         // "l'or," — V5 10667, Δ+1669f/+55.6s
+const F_OR_BURKINA = 12382; // "Burkina." — V5 10729, Δ+1653f/+55.1s
+const F_URANIUM = 12426;    // "l'uranium," — trouvé directement dans le JSON (pas d'artefact de transcription
+                             // contrairement à l'hypothèse initiale) — V5 10804, Δ+1622f/+54.1s
+const F_PETROLE = 12483;    // "pétrole," — V5 10835, Δ+1648f/+55.0s
+const F_NIGER_RES = 12512;  // "Niger." (contexte ressources) — V5 10851, Δ+1661f/+55.4s
+const F_CONFED = 13096;     // "Confédération." — V5 11449, Δ+1647f/+54.9s
+const F_FORCE = 13181;      // "force" (dans "force armée commune") — V5 11521, Δ+1660f/+55.4s
+const F_NIAMEY_QG = 13319;  // "Niamey..." — V5 11613, Δ+1706f/+56.9s
+const F_BARKHANE = 13391;   // dead const (jamais utilisé) — mot "Barkhane" disparu du texte V6, repositionné
+                             // sur "forces" (dans "forces françaises", contexte équivalent le plus proche)
+const F_CFA = 13555;        // "CFA," — V5 11869, Δ+1686f/+56.2s
+const F_PARIS = 13610;      // "Paris." — V5 11974, Δ+1636f/+54.5s
+const F_STATU = 13894;      // "statu" — V5 12297, Δ+1597f/+53.2s
+const F_SOIXANTE = 13866;   // "soixante" — V5 12331, Δ+1535f/+51.2s
+const F_REUSSIR = 14227;    // "échoué" (mot "réussir" disparu, texte V6 dit "...ont échoué à faire" à la place
+                             // de "réussir là où... avaient échoué") — V5 12662, Δ+1565f/+52.2s
+const F_RESISTER = 14630;   // "Résister," — V5 13082, Δ+1548f/+51.6s
+const F_CONSTRUIRE = 14713; // "Construire…" — V5 13200, Δ+1513f/+50.4s
+const F_DURER = 14815;      // "Durer…" — V5 13290, Δ+1525f/+50.8s
+const F_DEMONTRER = 14891;  // "prouver." (mot "démontrer" disparu, remplacé par "c'est ce qu'il reste à
+                             // prouver.") — V5 13372, Δ+1519f/+50.6s
+const F_END = 15019;        // fin absolue (noir + résonance) — marge de 128f/4.27s après F_DEMONTRER, IDENTIQUE
+                             // à la marge V5 (13500-13372=128f) pour garder la même proportion de tenue au noir
 
 // ── Palette P4 ──
 const OR_AES = "#C9A24B";       // levier / AES (continuité P3)
@@ -152,40 +177,44 @@ const RESOURCES: { id: string; coord: [number, number]; at: number; icon: string
 const GREEN_AES = "#4E8C7D";     // bordure jeton soldat AES
 const THREAT_RED = "#8B0000";    // rouge sang menace (jamais #FF0000)
 
-// Phase 1 — DIRIGEANTS (chacun dans sa capitale), apparition séquentielle ~f12640+
+// Phase 1 — DIRIGEANTS (chacun dans sa capitale), apparition séquentielle ~f14205+
+// Retimé V6 2026-08-06 : DELTA uniforme +1565f (= même delta que F_REUSSIR→"échoué", cohérent avec le
+// reste de la séquence "fin habitée" qui suit immédiatement le pivot question "...ont échoué à faire").
+// (Corrigé 2026-08-06 : offset audio +2895, pas +3196 — voir tête de fichier.)
 const LEADERS: { id: string; name: string; role: string; coord: [number, number]; at: number; sprite: string }[] = [
-  { id: "ml", name: "ASSIMI GOÏTA", role: "Mali", coord: BAMAKO, at: 12640, sprite: "leader-mali" },
-  { id: "bf", name: "IBRAHIM TRAORÉ", role: "Burkina Faso", coord: OUAGA, at: 12700, sprite: "leader-burkina" },
-  { id: "ne", name: "ABDOURAHAMANE TIANI", role: "Niger", coord: NIAMEY, at: 12760, sprite: "leader-niger" },
+  { id: "ml", name: "ASSIMI GOÏTA", role: "Mali", coord: BAMAKO, at: 14205, sprite: "leader-mali" },
+  { id: "bf", name: "IBRAHIM TRAORÉ", role: "Burkina Faso", coord: OUAGA, at: 14265, sprite: "leader-burkina" },
+  { id: "ne", name: "ABDOURAHAMANE TIANI", role: "Niger", coord: NIAMEY, at: 14325, sprite: "leader-niger" },
 ];
 
-// Phase 2 — SOLDATS qui tiennent (2/pays), se posent ~f12820+ (sur "sécuriser/stabiliser")
+// Phase 2 — SOLDATS qui tiennent (2/pays), se posent ~f14385+ (sur "sécuriser/stabiliser")
 const SOLDIERS: { id: string; coord: [number, number]; at: number }[] = [
-  { id: "s-gao", coord: [-0.04, 16.27], at: 12820 },     // Gao (Mali nord)
-  { id: "s-menaka", coord: [2.40, 15.92], at: 12850 },   // Ménaka (Mali est)
-  { id: "s-djibo", coord: [-1.63, 14.10], at: 12880 },   // Djibo (Burkina nord)
-  { id: "s-dori", coord: [-0.03, 14.03], at: 12910 },    // Dori (Burkina nord-est)
-  { id: "s-tillaberi", coord: [1.45, 14.21], at: 12940 },// Tillabéri (Niger ouest)
-  { id: "s-tahoua", coord: [5.27, 14.89], at: 12970 },   // Tahoua (Niger centre)
+  { id: "s-gao", coord: [-0.04, 16.27], at: 14385 },     // Gao (Mali nord)
+  { id: "s-menaka", coord: [2.40, 15.92], at: 14415 },   // Ménaka (Mali est)
+  { id: "s-djibo", coord: [-1.63, 14.10], at: 14445 },   // Djibo (Burkina nord)
+  { id: "s-dori", coord: [-0.03, 14.03], at: 14475 },    // Dori (Burkina nord-est)
+  { id: "s-tillaberi", coord: [1.45, 14.21], at: 14505 },// Tillabéri (Niger ouest)
+  { id: "s-tahoua", coord: [5.27, 14.89], at: 14535 },   // Tahoua (Niger centre)
 ];
 
 // Phase 3 — MENACE RÉSIDUELLE : zones CONNUES d'activité JNIM/EIGS (pas positions OSINT exactes — démonstration
-// plausible, Aziz). DISPERSÉES sur tout le Sahel (plus de cluster central). Pulsent en séquence ~f13000+.
+// plausible, Aziz). DISPERSÉES sur tout le Sahel (plus de cluster central). Pulsent en séquence ~f14565+
 const THREAT_ZONES: { id: string; coord: [number, number]; r: number; at: number; label: string }[] = [
-  { id: "t-mopti", coord: [-3.95, 14.6], r: 0.085, at: 13000, label: "JNIM" },    // centre Mali (Mopti)
-  { id: "t-tombouctou", coord: [-3.0, 16.6], r: 0.075, at: 13015, label: "JNIM" },// nord Mali (Tombouctou/Gourma)
-  { id: "t-sahel-bf", coord: [-0.8, 14.1], r: 0.07, at: 13030, label: "JNIM" },   // nord Burkina (Sahel/Soum)
-  { id: "t-est-bf", coord: [1.0, 12.5], r: 0.065, at: 13045, label: "JNIM" },     // est Burkina (Gourma/Est)
-  { id: "t-tripoint", coord: [1.2, 14.9], r: 0.075, at: 13060, label: "EIGS" },   // trois-frontières
-  { id: "t-tillaberi", coord: [1.6, 14.0], r: 0.065, at: 13075, label: "EIGS" },  // ouest Niger (Tillabéri)
-  { id: "t-diffa", coord: [12.6, 13.3], r: 0.07, at: 13090, label: "EIGS" },      // sud-est Niger (Diffa, lac Tchad)
+  { id: "t-mopti", coord: [-3.95, 14.6], r: 0.085, at: 14565, label: "JNIM" },    // centre Mali (Mopti)
+  { id: "t-tombouctou", coord: [-3.0, 16.6], r: 0.075, at: 14580, label: "JNIM" },// nord Mali (Tombouctou/Gourma)
+  { id: "t-sahel-bf", coord: [-0.8, 14.1], r: 0.07, at: 14595, label: "JNIM" },   // nord Burkina (Sahel/Soum)
+  { id: "t-est-bf", coord: [1.0, 12.5], r: 0.065, at: 14610, label: "JNIM" },     // est Burkina (Gourma/Est)
+  { id: "t-tripoint", coord: [1.2, 14.9], r: 0.075, at: 14625, label: "EIGS" },   // trois-frontières
+  { id: "t-tillaberi", coord: [1.6, 14.0], r: 0.065, at: 14640, label: "EIGS" },  // ouest Niger (Tillabéri)
+  { id: "t-diffa", coord: [12.6, 13.3], r: 0.07, at: 14655, label: "EIGS" },      // sud-est Niger (Diffa, lac Tchad)
 ];
 
-// Frames clés de la fin habitée
-const F_LEADERS = 12640;   // dirigeants commencent (réussir / institutions)
-const F_SOLDIERS = 12820;  // soldats (sécuriser/stabiliser)
-const F_THREAT = 13000;    // menace résiduelle (faire tenir)
-const F_EXT_HABITED = 13290; // début extinction sur "durer..."
+// Frames clés de la fin habitée — V6 : F_LEADERS calé -22f avant F_REUSSIR("échoué")=14227, même offset
+// relatif que V5 (F_LEADERS était à REUSSIR-22 aussi). F_EXT_HABITED = F_DURER (identique en V5 aussi).
+const F_LEADERS = 14205;   // dirigeants commencent (question "...ont échoué à faire" / institutions)
+const F_SOLDIERS = 14385;  // soldats (sécuriser/stabiliser)
+const F_THREAT = 14565;    // menace résiduelle (faire tenir)
+const F_EXT_HABITED = 14815; // début extinction sur "Durer…" (= F_DURER)
 
 // ============================================================
 // CONFEDERATION REVEAL — overlay PLEIN ÉCRAN solide (doctrine WARMAP-CARTE-VS-OVERLAY 2026-06-14).
@@ -1154,10 +1183,12 @@ export const Partie4Cout: React.FC<{ ctx: SahelRenderContext | null; map?: mapbo
       {blackT > 0.005 && <AbsoluteFill style={{ background: "#0a0805", opacity: blackT }} />}
 
       {/* ════ M3 Ph11 : phrase-morale FINALE — 1 seule ligne en typewriter monospace (Aziz 2026-06-15)
-           « Durer — reste à le démontrer. » se dessine caractère par caractère sous les contours AES.
-           Allongé : démarre à F_DURER (≈ début extinction) et tient jusqu'à F_END (~5s de présence). ════ */}
+           « Durer — reste à le prouver. » se dessine caractère par caractère sous les contours AES.
+           Allongé : démarre à F_DURER (≈ début extinction) et tient jusqu'à F_END (~5s de présence).
+           Texte mis à jour V6 2026-08-06 (mot "démontrer" disparu du script, remplacé par "prouver" —
+           narration dit désormais "c'est ce qu'il reste à prouver."). ════ */}
       {(() => {
-        const FINAL_TXT = "Durer — reste à le démontrer.";
+        const FINAL_TXT = "Durer — reste à le prouver.";
         const TW_START = F_DURER + 30;          // commence quand le noir est déjà bien installé (texte sur fond noir)
         const TW_CPS = 0.55;                     // caractères par frame (≈ 16 chars/s, posé)
         const nChars = Math.max(0, Math.min(FINAL_TXT.length, Math.floor((frame - TW_START) * TW_CPS)));

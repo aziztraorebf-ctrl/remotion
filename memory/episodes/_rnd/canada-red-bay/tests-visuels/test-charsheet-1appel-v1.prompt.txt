@@ -1,0 +1,54 @@
+Model: gemini-3.1-flash-image-preview (text-to-image, aucune référence — test 1-appel from scratch)
+Date: 2026-08-13
+Test: comparer 1 appel (7 vues d'un coup) vs 2 appels (3 vues puis extension i2i à 7, cf Mariama Bâ)
+Sujet neutre: personnage fictif nouveau, même style GeoAfrique papercraft, pour comparaison propre
+sans polluer un personnage canonique existant du projet.
+
+Prompt:
+CHARACTER SHEET — generate a NEW original character in the GeoAfrique papercraft style, complete
+7-view reference sheet in a single image, wide 16:9 canvas, plain warm cream/beige paper background
+throughout.
+
+CRITICAL STYLE RULE — DOT EYES, NOT REALISTIC EYES:
+The character must have DOT EYES (small black filled dots, no iris, no pupil, no realistic eye) — the
+GeoAfrique papercraft signature. Fine confident black outlines, flat ochre/terracotta/cream/soft brown
+palette only, uniform skin tone, papercraft paper grain texture visible.
+
+CHARACTER TO GENERATE:
+An elderly West African griot (oral historian/storyteller), male, dignified bearing. Distinctive
+attributes: a simple round embroidered cap (kufi), a long flowing boubou robe in deep indigo blue with
+thin ochre trim at the collar, a small hand-held kora-like stringed instrument carried against his
+chest with both hands, a short grey beard rendered in simple flat shapes, standing upright with calm
+authority, bare feet or simple leather sandals visible.
+
+LAYOUT — 3 large full-body figures across the TOP ROW, 4 smaller detail panels across the BOTTOM ROW,
+7 panels total, each clearly separated with no overlap, consistent character across all 7:
+
+TOP ROW (large, full body, standing, same pose — holding the instrument — shown from 3 angles):
+1. FRONT VIEW — facing forward.
+2. THREE-QUARTER VIEW — turned slightly right.
+3. PROFILE VIEW — fully facing right.
+
+BOTTOM ROW (smaller detail panels, new angles/framings not covered above):
+4. BACK VIEW — full body, seen from directly behind, showing the back of the cap and the back drape
+   of the robe, same standing posture, instrument strap or edge visible from behind if applicable.
+5. MEDIUM SHOT / BUST — from waist up, three-quarter angle, showing collar/trim detail and the top of
+   the instrument.
+6. CLOSE-UP OF THE FACE — front angle, face large and clearly showing the dot-eyes, beard, cap detail.
+7. CLOSE-UP OF THE HANDS AND INSTRUMENT — close framing on both hands holding the instrument.
+
+Each of the 7 panels must have a short plain text caption directly beneath it, matching exactly what
+is described above (FRONT VIEW / THREE-QUARTER VIEW / PROFILE VIEW / BACK VIEW / MEDIUM SHOT - BUST /
+CLOSE-UP - FACE / CLOSE-UP - HANDS). No other text, no title, no decorative elements anywhere else in
+the image.
+
+STYLE RULES (NON-NEGOTIABLE):
+- DOT EYES only — never realistic eyes, in every panel where the face is visible.
+- Fine confident black outlines — not thick comic outlines, not thin hesitant lines.
+- Flat ochre/terracotta/cream/deep-indigo palette only — no bright green, no gradients or realistic
+  shading beyond simple flat cel-shading.
+- Iconic stylized rendering throughout, perfectly consistent character identity across all 7 panels —
+  this must read as ONE character sheet describing ONE person, not seven different illustrations.
+
+Plain cream/beige paper background throughout, subtle soft paper shadow under each figure, panels
+clearly separated, no overlap between panels.

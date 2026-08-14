@@ -1,17 +1,59 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-07
+**Mis à jour** : 2026-08-13
 
-## État — ACTE 3 (TSGP) CODÉ v1→v2, EN ATTENTE REVUE AZIZ (2026-08-07)
+## ⭐⭐⭐ ACTION DIRECTE — Segment B (aéroport Niamey) : nouveau décor SVG PRÊT À INTÉGRER (2026-08-13)
+
+**Décision Aziz explicite : ce nouveau décor doit remplacer le décor actuel dans la vidéo de l'Acte 3.**
+Jugé par Aziz visuellement supérieur au rendu existant (tour+radar, lune, halos lumineux, véhicule
+de piste et avion au sol notamment "quasiment identiques à l'image Gemini de référence").
+
+- **Composant source** : `src/projects/_rnd/svg-scenes/GazoducAeroportFable5Test.tsx` (composition
+  Root `RND-GazoducAeroportFable5Test`, 1920×1080). SVG pur, zéro raster base64, groupes déjà nommés
+  et adressables (`ciel/etoiles/lune/nuages/sol/routes/piste/balisage/projecteurs/terminal/
+  tour_controle/vehicule_piste/avion/manche_air`) — prêt à recevoir l'animation (radar rotatif,
+  flicker des feux, manche à air, roulage avion, extinction climax) selon la même logique déjà
+  câblée dans le fichier de PRODUCTION actuel `GazoducActe3InsertSecurite.tsx` (585 lignes, timing/
+  beats/extinction déjà tous résolus — cf `deathFlicker`, `tourStaccado`, `RadarTour`, `VehiculePiste`,
+  `AvionRoulage`).
+- **Ce qu'il reste à faire (pas encore fait)** : porter les fonctions d'animation existantes de
+  `GazoducActe3InsertSecurite.tsx` sur les NOUVEAUX groupes SVG de `GazoducAeroportFable5Test.tsx` —
+  soit en remplaçant le décor statique dans le fichier de prod par les nouveaux groupes (en gardant
+  toute la logique de timing/`BEATS_B`/extinction/climax intacte), soit en portant les callbacks
+  d'animation dans le nouveau fichier. Ne PAS repartir de zéro sur le timing — tout est déjà résolu
+  et validé (4 DA-briefs + verdict Aziz sur le v3 actuel), seul le DÉCOR change.
+- ⛔ **Contrainte éditoriale à préserver strictement en portant l'animation** : toujours AUCUNE
+  figuration humaine (déjà respecté dans le nouveau SVG, vérifié par l'agent) — le lieu bascule seul,
+  pas d'acteur montré. Cf décision antérieure documentée plus bas dans ce fichier et dans
+  `PLAN-ACTES2-5.md`.
+- **Images de comparaison** (référence Gemini + rendu SVG Fable5 + rendu actuel) :
+  `memory/episodes/_rnd/kora-cartes-mythologie/tests-visuels/gazoduc-aeroport-ref/`
+  (`scene-frame150.png` = actuel, `gemini-reference-v1.png` = cible Gemini, `gazoduc-aeroport-svg-fable5-test.png` = résultat Fable5 validé).
+- **Méthode reproductible** (si un autre segment Gazoduc a besoin du même traitement) : voir
+  `memory/NEXT-ACTION.md` § piste "SVG codé direct (Fable5, sans jury)" pour le protocole complet
+  (image Gemini de référence → agent Fable5 mode MAX qui reproduit en SVG codé).
+
+---
+
+## État — ACTE 3 (TSGP) : Segment A REJETÉ en v3, Segment B/C historique v1→v2 (dernier commit propre)
+
+⛔⛔ **Segment A (carte) — le fichier `GazoducActe3CarteTSGP.tsx` est MODIFIÉ SUR DISQUE (non commité)
+dans un état v3 REJETÉ par Aziz le 2026-08-14** — NE PAS repartir de ce code tel quel. Défauts du rejet :
+widgets HUD en coin d'écran (viole une règle DA-brief déjà actée le 2026-08-04/07 : "financement/
+banques = dispositif SUR la carte, jamais un widget coin d'écran"), texte flottant sans support visuel,
+insert chantier appauvri, ~15-22s de vide en tout début de segment. Storyboard V4/V5 (2e passage GPT
+Image 2, mode "libre créative") validé comme nouvelle base — prochaine étape : breakdown JSON par GPT
+Image 2 lui-même sur les 4 images V5, PUIS recoder. Détail complet : `BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md`.
+Dernier commit propre du fichier (avant le v3 non commité) : `07785c28` (v2).
 
 3 segments (A carte D3 tracé Nigeria→Niger→Algérie, B insert sécurité aéroport Niamey, C insert
 paradoxe Maroc/Algérie) + montage codés et rendus deux fois : v1 jugé "catastrophique" par Aziz
 (diaporama, à refaire), puis refonte complète après 3 DA-briefs critiques ciblés (Gemini+Kimi+
-DeepSeek) — v2 rendu et uploadé, en attente de revue Aziz. Détail complet (synthèse DA-brief,
-décisions tranchées, correctifs appliqués) : `PLAN-ACTES2-5.md`. Lien rendu v2 + priorités :
-`memory/NEXT-ACTION.md` (section "DEUX CHANTIERS SÉPARÉS OUVERTS LE 2026-08-07"). Analyse
-comparative Soudan/AES faite en fin de session : registre visuel (jetons/décors) reste sous le
-niveau déjà prouvé ailleurs dans le projet — probable 3e passage à venir, pas encore fait.
+DeepSeek) — v2 rendu et uploadé (commit `07785c28`, c'est la dernière version propre committée pour
+les 3 segments). Détail complet (synthèse DA-brief, décisions tranchées, correctifs appliqués) :
+`PLAN-ACTES2-5.md`. Analyse comparative Soudan/AES faite en fin de session : registre visuel
+(jetons/décors) reste sous le niveau déjà prouvé ailleurs dans le projet — probable 3e passage à
+venir, pas encore fait (Segment B depuis remplacé, voir bloc en tête de fichier).
 
 ⭐⭐ **PLAN DE REFONTE v3 PRODUIT PAR 4 AGENTS VIERGES (2026-08-07)** — détail complet, diagnostic
 transversal, et point de goût non tranché (registre Segment B) : `PLAN-ACTES2-5.md` § "TEST STUDIO

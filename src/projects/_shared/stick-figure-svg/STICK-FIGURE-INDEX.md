@@ -1,16 +1,31 @@
 # STICK FIGURE SVG — INDEX
 
-> ## ⭐⭐ ÉTAT — LE REGISTRE EST **EN PRODUCTION** (2026-07-28)
+> ## ⭐⭐ ÉTAT — LE REGISTRE EST **EN PRODUCTION** (2026-07-28, complété 2026-08-13)
 >
-> **6 scènes narratives produites et jugées sur rendu par Aziz** : « le socle en tant que tel est
-> validé, ça fonctionne, le placement, les distances — il y a juste quelques améliorations à faire
-> plus tard. » Le programme R&D 4 vagues est derrière nous (trace en bas de fichier).
+> **9 scènes narratives produites et jugées sur rendu par Aziz** (6 initiales + 3 mergées après coup,
+> 2026-08-13 — cf. § MERGE TARDIF ci-dessous) : « le socle en tant que tel est validé, ça fonctionne,
+> le placement, les distances — il y a juste quelques améliorations à faire plus tard. » Le programme
+> R&D 4 vagues est derrière nous (trace en bas de fichier).
 >
-> **Code** : `src/projects/_rnd/stick-figures/` — 12 fichiers, compositions `Stick-*` dans `Root.tsx`.
+> **Code** : `src/projects/_rnd/stick-figures/` — compositions `Stick-*` dans `Root.tsx`.
 > `PecheurDuree` (la durée se lit sur le corps) · `PecheurSurpecheStick` · `MarcheMesure` (objet à
 > états) · `GareRoutiereDecor` + `GareDepart` (échange à deux) · `MarcheNuitVivant` (foule) ·
-> `MarcheNuitNarratif` (marchands de face + apparition dessinée + bulles). Plus 2 scènes de TEST :
+> `MarcheNuitNarratif` (marchands de face + apparition dessinée + bulles) · `MarcheInformel` (1re
+> scène pilotée par la VOIX, timing dérivé du forced-align) · `Vendeuse` (refonte après verdict Aziz
+> sur MarcheInformel — 1 héros, 4 gestes amples, apparition dessinée retirée). Plus 2 scènes de TEST :
 > `GarePersoParModele` et `MarcheNuitCompare`. Commits `25cab1c9` · `5aeafd85` · `3a137d74`.
+>
+> **⚠️ MERGE TARDIF (2026-08-13)** : `MarcheInformel16x9`, `Vendeuse16x9`,
+> `identite/IdentiteEtVues16x9.tsx`, `identite/IdentiteV2_16x9.tsx` sont restés sur la branche R&D
+> `rnd/stick-figures-gestes` (jamais mergée) pendant plus d'une semaine après leur production — 6e
+> occurrence du pattern [[feedback_registre-canonique-branche-rnd-jamais-mergee-pattern-recurrent]].
+> Extraits et mergés dans `master` (commit `d38afc9c`), socle `StickFigure.tsx`/`habillage.ts` EXCLU
+> du merge (la version déjà sur master, avec la brique n°7 héritage de pose, est plus avancée que
+> celle de la branche R&D). ⛔ **`IdentiteEtVues16x9.tsx` contient un bug de dérive DÉTECTÉ par
+> Aziz** : il recopiait les constantes du socle au lieu de les importer, produisant une marche
+> perceptiblement moins naturelle — corrigé dans `IdentiteV2_16x9.tsx` qui IMPORTE le socle sans
+> rien redéfinir (règle désormais explicite dans ce dernier fichier). Ne pas repartir de
+> `IdentiteEtVues16x9.tsx` comme référence ; `IdentiteV2_16x9.tsx` fait foi.
 >
 > **⏭️ NEXT** : la scène avec **NARRATION** — aujourd'hui tous les timings sont codés à la main, il
 > faut les DÉRIVER du forced-align. → `memory/starters/STARTER-PROMPT-stick-figure-scene-narree.md`
@@ -46,7 +61,7 @@ juge pas sur une frame** — il faut rendre en vidéo, ou au minimum comparer de
 
 ---
 
-## LES 6 PLANCHES V1 DES VAGUES A ET D (sur 8 au total — les vagues B et C ont les 2 autres)
+## LES 6 PLANCHES V1 DES VAGUES A ET D + LA PLANCHE FUSIONNÉE B+C (8 au total)
 
 **VAGUE A — LES GESTES** (validée 2026-07-26)
 
@@ -63,6 +78,16 @@ juge pas sur une frame** — il faut rendre en vidéo, ou au minimum comparer de
 | `interactions/DuoAsymetrie16x9.tsx` | `Stick-Inter-Duo-Asymetrie` | 5 différenciateurs comparés · négocier · l'un part l'autre reste · imposer/se soumettre | `.../stick-inter-duo-asymetrie-V1.mp4` |
 | `interactions/GroupeFoule16x9.tsx` | `Stick-Inter-Groupe` | groupe qui attend (FIGÉ) · un qui se détache · exode 5 et 12 persos, 3 rangées de profondeur | `.../stick-inter-groupe-V1.mp4` |
 | `interactions/ObjetEtCarte16x9.tsx` | `Stick-Inter-Objets` | sac (porté/posé/relevage) · pièce · caisse · pioche · soulever · marteler | `.../stick-inter-objets-V1.mp4` |
+
+**VAGUES B+C FUSIONNÉES — IDENTITÉ ET VUES** (mergées tardivement le 2026-08-13, cf. bandeau MERGE
+TARDIF en tête de fichier — question d'Aziz : « vêtements, accessoires, couleurs de peau
+différentes » + « peut-on faire une vue trois-quarts, une vue de dos ? »)
+
+| Fichier | Compo Remotion | Contenu | Statut |
+|---|---|---|---|
+| `identite/RolesDemo16x9.tsx` | `Stick-Roles-Demo` | 4 rôles en marche, sans objet — démo du système `role` (scale/strokeW/couleur/voûte/accessoire) | Démo du socle `Roles.tsx` |
+| `identite/IdentiteEtVues16x9.tsx` | `Stick-IdentiteEtVues-DERIVE` | 4 niveaux de détail (v0 trait nu → v3 détaillé, tous en marche) | ⛔ **DÉRIVE** — recopie les constantes du socle au lieu de les importer, marche perceptiblement moins naturelle (détecté par Aziz). Gardé pour trace, ne pas repartir de ce fichier. |
+| `identite/IdentiteV2_16x9.tsx` | `Stick-IdentiteV2` | Couleur (5 carnations sans liseré) + motifs boubou, accessoires de profil (chapeau/casquette/casque/foulard/cravate/sacoche) solidaires du buste en mouvement, comparatif visage de profil | ✅ **FAIT FOI** — importe `StickFigure.tsx` sans redéfinir aucune longueur de membre ; règle d'import stricte désormais explicite dans ce fichier |
 
 ### ⭐ RÉSULTAT-CLÉ VAGUE D — L'ASYMÉTRIE (la question d'Aziz : « pas juste deux bonshommes identiques »)
 

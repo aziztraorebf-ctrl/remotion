@@ -1,0 +1,29 @@
+subject_definitions:
+<Picture 1>: A flat vector poster illustration of Hades, a hooded dark-robed figure with a pale gaunt face, sitting enthroned on an ornate dark stone throne beneath a tall stone archway, flanked by classical stone columns, against a deep navy blue background. Both hands rest calmly on the throne's armrests. The floor and throne base are completely empty and clean, no coins anywhere. Bold flat color-block style, sharp clean vector edges, diagonal drop-shadow, minimal facial detail.
+<Picture 2>: The same flat vector illustration, same Hades, same throne, same archway, same columns, same style — but now a large mound of glowing gold coins has piled up around the throne's base and armrests. Hades' right hand is raised near shoulder height, palm open, with a small cascade of gold coins caught mid-slip through his fingers. His left hand still rests on the armrest.
+
+summary:
+[keyframe completion] Animate <Subject 1> as gold coins begin raining down from above the archway and piling up around the throne — as the pile builds, Hades slowly raises his right hand and lets a stream of coins slip calmly through his open fingers, a sovereign gesture of quiet possession, never grasping or reaching. Ends matching <Picture 2> exactly: coins fully piled, hand raised mid-gesture with coins slipping through.
+
+retention_analysis:
+<Picture 1>: partially_preserved — Hades' identity, robe, throne, columns, archway, and flat vector art style are preserved exactly, but this is the starting pose only: his right hand will move during the shot.
+<Picture 2>: fully_preserved — this is the target ending frame for the final coin pile height, the glow of the gold, and Hades' raised-hand gesture.
+<Subject 1>: partially_preserved — same character identity, face, robe, and flat vector style throughout, but his right hand is NOT static: it slowly rises from the armrest to shoulder height over the course of the shot, and his head performs a small, slow, continuous idle motion throughout (a slight downward tilt as if watching the coins, never fully still, never turning toward camera).
+
+detailed_description:
+A static, unmoving camera holds on the flat vector poster illustration of Hades enthroned, in a bold color-block motion-graphics style with sharp clean edges and diagonal drop-shadow. This is a LIVING scene — gold is actively accumulating and Hades is a subtly active character, not a frozen illustration.
+
+[Shot 1]
+0-1s: The scene begins matching <Picture 1> — Hades seated, both hands on the armrests, throne base completely empty, flat color-block background, stone archway above. A brief stillness.
+1-4s: Gold coins begin appearing from the top of the archway and falling in a steady graphic stream, like a flat-vector particle rain — clean flat gold coin shapes, no 3D physics realism, tumbling with a simple graphic rotation as they fall. They land at the base of the throne and start forming a small pile, coins softly glowing.
+4-7s: The coin rain continues and intensifies slightly, the pile growing visibly larger, spreading around the throne's base and up onto the lower armrests, matching the pile shape and height of <Picture 2>. Throughout this entire time, Hades' head performs slow, subtle idle motion — a faint downward tilt, never static, never looking at camera, in profile or three-quarter view only.
+7-8.5s: As the pile approaches its final height, Hades' right hand begins to slowly lift off the armrest, rising deliberately toward shoulder height — a calm, weighty, sovereign gesture, not sudden.
+8.5-10s: The coin rain fades to a last few falling coins as the pile settles into its final <Picture 2> shape. Hades' right hand reaches shoulder height, palm open, and a small stream of coins slips calmly through his open fingers, catching the light. Hold on this final composition matching <Picture 2> — full glowing coin pile below, Hades' hand raised with coins slipping through, calm and sovereign.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), no change in Hades' identity or the flat vector art style at any point (never painterly, never hand-drawn, never 3D, never photorealistic), the coin rain stays a flat 2D graphic motion-graphics element, NOT physically realistic 3D falling objects with complex physics, no camera shake, Hades' face never turns toward the camera, no dramatic or shocked expression, his gesture stays slow and sovereign — NOT a sudden grasping or reaching motion, no new characters appearing, no text overlay, no title card, no jump cuts, no change in the navy background color, columns, or archway.
+
+overall_soundscape:
+A soft continuous cascade of clinking gold coins throughout the fall, settling into a gentle metallic shimmer as the pile stabilizes, with a subtle warm chime as the coins slip through Hades' fingers at the end.
+
+non_diegetic_music:
+N/A

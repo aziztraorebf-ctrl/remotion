@@ -1,33 +1,55 @@
 # War-Map Sahel AES — STATUS
 
-> ⛔⛔ **BANDEAU D'ÉTAT 2026-08-06 — LIRE AVANT TOUT LE RESTE DE CE FICHIER (le corps ci-dessous s'arrête au
-> 2026-07-05, avant la publication).** La vidéo longue a été publiée le 2026-08-04 avec le titre "Comment
-> l'AES a brisé 60 ans de statu quo au Sahel" — **ÉCHEC** : 5 vues/24h, VPH 0.19 (vs 0.56 pour la vidéo
-> Sénégal précédente sur la même chaîne, publiée 5 jours plus tôt). Diagnostic complet (titre publié
-> différent du titre validé par jury 4 modèles, miniature vidIQ 35/100, script jugé trop institutionnel par
-> jury créatif 4 modèles) : `feedback_hook-retention-premiere-minute.md`. **Script réécrit en 3 passes de
-> jury (Gemini+Grok), V4 final noté 8.8-9/10** : `memory/episodes/warmap-sahel/SCRIPT-V6-REFONTE-2026-08-06.txt`.
-> Test audio (nouveau pipeline voix Harmonie→STS GéoAfrique, remplace Océane depuis 01/08) validé sur
-> hook+passage Moura (73.7s, ~2111 crédits) — "Africa Corps" bien prononcé (pas un artefact, confirmé
-> après écoute isolée), CAPS retenues : retirées sur "pauvres" (trop appuyé), gardées sur "GAGNENT"
-> (emphase voulue), déjà appliqué dans le fichier de test scratchpad `test-voix-hook-moura.txt` (à
-> reproduire, pas encore committé dans le repo).
+> ⛔⛔⛔ **BANDEAU D'ÉTAT 2026-08-06 SOIR — LIRE AVANT TOUT LE RESTE DE CE FICHIER.** Session de retiming
+> V6 en cours, INTERROMPUE avant render complet — RIEN N'EST COMMITÉ, tout est sur disque tel quel.
+>
+> **⛔⛔ PIÈGE DÉCOUVERT CETTE SESSION (À NE JAMAIS RETOMBER DEDANS) : `SahelActe1-Final` (props
+> `acte1Final:true`) N'EST PAS la composition qui a produit le FINAL publié.** La bonne composition est
+> `SahelActe1-Refonte` (props `acte1Refonte:true`) — vérifié pixel par pixel contre
+> `out/PRET-PUBLICATION/warmap-sahel-aes-FINAL.mp4`. `SahelActe1-Final` affiche un vieux carton titre
+> "Sahel / Tout a changé en trois ans / 2020—2026" (code présent depuis le tout premier commit du moteur,
+> 7 juin, jamais retiré) qui est MASQUÉ en mode Refonte (`{!isPartie && !acte1Refonte && (...)}`,
+> `SahelWarMapEngine.tsx` ~ligne 3050) — c'est le seul indice visuel de la confusion, tout le reste
+> (jetons JNIM/EIGS, palette, contours) est IDENTIQUE dans les 2 compositions. Toujours rendre/vérifier
+> `SahelActe1-Refonte` pour l'Acte 1, jamais `SahelActe1-Final` (qui reste utile seulement comme filet
+> de comparaison A/B historique).
+>
+> **Régression trouvée + corrigée cette session** : le retiming de `F_HOOK_MALI` (145→10, hook V6 plus
+> compact) a cassé un `interpolate(frame, [80, F_HOOK_MALI, F_HOOK_NIGER+40], ...)` hardcodé
+> (`SahelWarMapEngine.tsx` ~ligne 1818, `vOp` en mode `acte1RefonteProp`) — crash "inputRange non
+> monotone". Corrigé en repère relatif `Math.max(0, F_HOOK_MALI-10)`. Invisible tant qu'on ne teste QUE
+> `SahelActe1-Final` (qui ne passe pas par cette branche de code) — leçon : toujours tester la composition
+> RÉELLEMENT utilisée pour l'assemblage, pas une composition sœur qui "a l'air pareille".
+>
+> **Travail fait cette session (non commité)** :
+> - Script V6 découpé + tagué intégralement : `memory/episodes/warmap-sahel/SCRIPT-V6-TAGGED.txt` (5
+>   parties, tags de ton, CAPS, `[pause]` natif).
+> - Audio complet généré + validé Aziz : `memory/episodes/warmap-sahel/audio-fixes/aes-v6-FULL.mp3` +
+>   copié dans `public/_shared/audio/sahel-warmap/narration-v6-full.mp3` (496.8s, branché dans
+>   `SahelWarMapEngine.tsx`, remplace narration-v5-expressive.mp3).
+> - Retiming complet des constantes F_* : `Partie1Origine.tsx`, `Partie2Blocage.tsx`,
+>   `Partie3Rupture.tsx`, `Partie4Cout.tsx`, `SahelTimings.tsx` — mesurés par force-alignment réel
+>   (`public/_shared/audio/sahel-warmap/narration-v6-full.alignment.json`).
+> - **Bornes de segments recalculées et VALIDÉES par `check-frame-continuity.py` (100% couverture, 0
+>   trou, 0 chevauchement)** : Acte1 `0-1103` (hook pur, JNIM/EIGS ont MIGRÉ dans le texte V6 vers la
+>   Partie1 — plus besoin de bouger le code, `isFinalLook` couvre déjà `acte1Refonte` ET `partie1`) ·
+>   Partie1 `1103-2895` · Partie2 `2895-7111` · Partie3 `7111-10432` · Partie4 `10432-15019`.
+> - Durées de composition mises à jour dans `Root.tsx` (`SahelActe1-Final`→1150, `SahelPartie2`→7111,
+>   `SahelPartie3`→10432 déjà par un agent, `SahelPartie4`→15019 déjà par un agent).
+> - Erreur d'offset (-301f) que l'orchestrateur avait introduite dans le brief initial des agents
+>   P2/P3 (offset +3196 au lieu de +2895, l'agent P4 l'a détectée le premier et corrigée sur son
+>   périmètre), propagée et corrigée sur Partie2/Partie3 aussi.
 >
 > **⏭️ PROCHAINE SESSION (dans cet ordre)** :
-> 1. Découper `SCRIPT-V6-REFONTE-2026-08-06.txt` en actes avec marqueurs `### PARTIE N — titre` (le
->    script V4 n'en a AUCUN actuellement — nécessaire pour générer/régénérer acte par acte, règle
->    doctrine "jamais tout le script en un bloc").
-> 2. Tagger l'intégralité du texte (actuellement seuls hook+Moura sont tagués) selon
->    `PIPELINE-VOIX-VIVANTE-VALIDE.md` (paragraphes fusionnés, tags de ton, CAPS ciblées 1-2/paragraphe,
->    `[pause]` natif) — pas juste copier les tags de l'ancien `SCRIPT-V5-TAGGED.txt`, le texte a changé.
-> 3. **Test conclusif proposé par Aziz** : générer l'Acte 1 COMPLET (pas juste hook) en premier, valider
->    à l'écoute avant de réserver la génération des actes 2-4 pour la suite.
-> 4. Retiming Remotion sur les visuels Mapbox/SVG existants (storyboarder + audio-director) — dans une
->    session fraîche, vérifier si la durée totale reste proche du V1 (445.9s) ou diverge (le corps de ce
->    fichier ci-dessous reste la référence technique du montage actuel — Mapbox/SVG/caméra/SFX ne
->    changent pas, seul le texte/timing narratif change).
-> 5. Nouvelle miniature (score 35/100 actuel, logo AES illisible, aucun guide visuel) · nouveau titre ·
->    supprimer la vidéo actuelle PUIS republier (jamais les 2 en simultané).
+> 1. Re-vérifier que TOUS les mini-renders de contrôle utilisent `SahelActe1-Refonte` (pas `-Final`).
+> 2. Render complet des 5 segments avec les bonnes bornes ci-dessus (`--frames=` exactes), assembler
+>    (ffmpeg concat re-encode), re-vérifier `check-frame-continuity.py` sur le fichier final assemblé.
+> 3. Décision Aziz en attente : `F_REPOUSSE` (Partie3, séquence "printemps 2026" disparue du texte V6,
+>    fallback calculé non tranché — voir commentaire dans `Partie3Rupture.tsx`).
+> 4. Vérifier l'inversion d'ordre narratif signalée par les agents (Partie2 : Burkina/40% avant
+>    villes/campagnes ; Partie4 : familles après Djibo/Ménaka/Tillabéri) — chorégraphie intacte mais
+>    ordre d'apparition visuel inversé vs V5, pas encore validé Aziz visuellement.
+> 5. Écoute complète + validation Aziz du render assemblé avant nouvelle miniature/titre/republication.
 >
 > ⚠️ **Après refonte** : appliquer la même méthode jury 3-passes sur CFA (déjà écrit) et Soudan
 > (verrouillé) AVANT publication — moins cher de corriger un script qu'une vidéo déjà en ligne.

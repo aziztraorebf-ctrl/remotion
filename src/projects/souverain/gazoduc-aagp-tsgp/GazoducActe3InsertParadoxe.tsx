@@ -121,27 +121,60 @@ const CAM_ALGERIE = fitCam(ALGERIA_BBOX, HALF_W, H, 2.0);
 
 // ===== Barre-jauge de tension — pleine/stable OU brisée/fragmentée, avec icône et libellé intégrés
 // (jamais un cartouche de texte séparé, retour DA-brief : "les cartouches sont la preuve que le
-// visuel a échoué"). =====
+// visuel a échoué"). Icônes régénérées Fable 5 (v3, correctif "dessin main" studio réutilisable) :
+// bouclier+pause (Maroc, "stable mais suspendu") / pièce fracturée d'un éclair (tremble, "autonome
+// mais instable") — sources : public/_rnd/fable-svg/gazoduc-acte3-v3-finition/icone-{maroc,algerie}-*.svg =====
+const IconeBouclierPause: React.FC<{ color: string; opacity: number }> = ({ color, opacity }) => (
+  <g id="maroc_stable_suspendu" transform="translate(-16 0) scale(1.5)" stroke={color} fill="none" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" opacity={opacity}>
+    <g id="bouclier_contour">
+      <path d="M0,-12 C3,-10.4 6.3,-9.6 9.5,-9.3 C9.5,-1.8 7.8,4.8 0,11.5 C-7.8,4.8 -9.5,-1.8 -9.5,-9.3 C-6.3,-9.6 -3,-10.4 0,-12 Z" />
+    </g>
+    <g id="bouclier_filet_interieur" strokeWidth={1} opacity={0.9}>
+      <path d="M0,-9.4 C2.4,-8.2 4.6,-7.6 7.1,-7.3 C7.1,-1.5 5.8,3.6 0,8.9 C-5.8,3.6 -7.1,-1.5 -7.1,-7.3 C-4.6,-7.6 -2.4,-8.2 0,-9.4 Z" />
+    </g>
+    <g id="pause_suspension" stroke="none" fill={color}>
+      <rect x={-3.4} y={-4.6} width={2.2} height={8} rx={1.1} />
+      <rect x={1.2} y={-4.6} width={2.2} height={8} rx={1.1} />
+    </g>
+  </g>
+);
+const IconePieceEclair: React.FC<{ color: string; opacity: number }> = ({ color, opacity }) => (
+  <g id="algerie_autonome_instable" transform="translate(-16 0) scale(1.5)" stroke={color} fill="none" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" opacity={opacity}>
+    <g id="piece_contour">
+      <circle cx={0} cy={0} r={11} />
+    </g>
+    <g id="piece_anneau_frappe" strokeWidth={1}>
+      <path d="M2.1,-7.7 A8,8 0 0 1 2.1,7.7" />
+      <path d="M-2.1,7.7 A8,8 0 0 1 -2.1,-7.7" />
+    </g>
+    <g id="piece_crans" strokeWidth={1}>
+      <line x1={6.3} y1={-6.3} x2={7.2} y2={-7.2} />
+      <line x1={6.3} y1={6.3} x2={7.2} y2={7.2} />
+      <line x1={-6.3} y1={6.3} x2={-7.2} y2={7.2} />
+      <line x1={-6.3} y1={-6.3} x2={-7.2} y2={-7.2} />
+    </g>
+    <g id="eclair_instabilite" stroke="none" fill={color}>
+      <path d="M2.8,-9.5 L-2.4,0.6 L0.8,0.6 L-2.8,9.6 L3.0,-1.0 L-0.2,-1.0 Z" />
+    </g>
+  </g>
+);
 const BarreTension: React.FC<{
-  x: number; y: number; width: number; color: string; label: string;
+  x: number; y: number; width: number; color: string; label: string; country: "maroc" | "algerie";
   reveal: number; broken: boolean; breakProgress: number; tremble: boolean; frame: number;
-}> = ({ x, y, width, color, label, reveal, broken, breakProgress, tremble, frame }) => {
+}> = ({ x, y, width, color, label, country, reveal, broken, breakProgress, tremble, frame }) => {
   if (reveal <= 0.01) return null;
   const trembleX = tremble ? Math.sin(frame * 2.3) * 3 * reveal : 0;
   const trembleY = tremble ? Math.cos(frame * 1.7) * 1.5 * reveal : 0;
   const barW = width * reveal;
   const gapStart = broken ? barW * 0.42 : barW;
   const gapEnd = broken ? barW * 0.58 : barW;
+  const iconOpacity = broken ? interpolate(breakProgress, [0, 0.3], [0, 1], clampB) : reveal;
   return (
     <g transform={`translate(${x + trembleX} ${y + trembleY})`}>
-      {/* Icône intégrée : cadenas simple (broken) ou coche pleine (stable), formes géométriques pures */}
-      {broken ? (
-        <g opacity={interpolate(breakProgress, [0, 0.3], [0, 1], clampB)}>
-          <rect x={-28} y={-8} width={14} height={11} rx={2} fill="none" stroke={color} strokeWidth={2} />
-          <path d={`M -25 -8 L -25 -14 A 4 4 0 0 1 -17 -14 L -17 ${-8 - breakProgress * 4}`} fill="none" stroke={color} strokeWidth={2} />
-        </g>
+      {country === "maroc" ? (
+        <IconeBouclierPause color={color} opacity={iconOpacity} />
       ) : (
-        <path d="M -28 -2 L -23 4 L -14 -8" fill="none" stroke={color} strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" opacity={reveal} />
+        <IconePieceEclair color={color} opacity={iconOpacity} />
       )}
       <rect x={0} y={-6} width={gapStart} height={12} rx={3} fill={color} opacity={0.85} />
       {broken && breakProgress > 0.15 && (
@@ -200,9 +233,9 @@ export const GazoducActe3InsertParadoxe: React.FC = () => {
               <path key={`aagp-${i}`} d={c.d} fill={GOLD} fillOpacity={0.24} stroke={GOLD} strokeOpacity={0.75} strokeWidth={1} />
             ))}
           </g>
-          <BarreTension x={70} y={100} width={260} color={GOLD} label="SÉCURITÉ · PACIFIÉ"
+          <BarreTension x={70} y={100} width={260} color={GOLD} label="SÉCURITÉ · PACIFIÉ" country="maroc"
             reveal={marocSecuriteReveal} broken={false} breakProgress={0} tremble={false} frame={frame} />
-          <BarreTension x={70} y={150} width={260} color={GOLD} label="FINANCEMENT · SUSPENDU"
+          <BarreTension x={70} y={150} width={260} color={GOLD} label="FINANCEMENT · SUSPENDU" country="maroc"
             reveal={marocFinanceReveal} broken={true} breakProgress={marocBreakProgress} tremble={false} frame={frame} />
         </svg>
       </div>
@@ -228,9 +261,9 @@ export const GazoducActe3InsertParadoxe: React.FC = () => {
               <path key={`tsgp-${i}`} d={c.d} fill={CYAN} fillOpacity={0.24} stroke={CYAN} strokeOpacity={0.75} strokeWidth={1} />
             ))}
           </g>
-          <BarreTension x={70} y={100} width={260} color={CYAN} label="AUTONOMIE · FONDS PROPRES"
+          <BarreTension x={70} y={100} width={260} color={CYAN} label="AUTONOMIE · FONDS PROPRES" country="algerie"
             reveal={algerieAutonomieReveal} broken={false} breakProgress={0} tremble={false} frame={frame} />
-          <BarreTension x={70} y={150} width={260} color={CYAN} label="SÉCURITÉ · ZONE DE CONFLIT"
+          <BarreTension x={70} y={150} width={260} color={CYAN} label="SÉCURITÉ · ZONE DE CONFLIT" country="algerie"
             reveal={algerieSecuriteReveal} broken={false} breakProgress={0} tremble={algerieTremble} frame={frame} />
         </svg>
       </div>

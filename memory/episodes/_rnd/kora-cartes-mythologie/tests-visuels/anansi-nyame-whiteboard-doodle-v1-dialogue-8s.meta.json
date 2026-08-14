@@ -1,0 +1,16 @@
+{
+  "tool": "MiniMax H3 via Comfy Cloud (video_minimax_h3_r2v, open-weight, submit_workflow method)",
+  "prompt_id": "f6792a4d-169c-4534-855d-db4d3f595f65",
+  "source_image": "anansi-nyame-whiteboard-doodle-v2.png",
+  "requested_duration_s": 8.0,
+  "actual_duration_s": 8.0,
+  "resolution": "864x480",
+  "fps": 24,
+  "nb_frames": 192,
+  "seed": 552037941826,
+  "credits_cost": 0,
+  "date": "2026-08-13",
+  "iteration": "v1 - premier test du mecanisme H3 R2V sur le registre Whiteboard Doodle (nouveau, distinct du registre Poster Vector deja valide V1/V2 sur le meme beat)",
+  "context": "Meme beat narratif (pacte Anansi/Nyame, dialogue de negociation) que le test Poster Vector reussi (anansi-nyame-pacte-negociation-v2-dialogue-8s.mp4), meme methode technique (submit_workflow graphe API en dur, PAS run_template+input_overrides), meme structure de prompt (SUBJECT DEFINITIONS / SUMMARY / RETENTION ANALYSIS / ATTRIBUTE TRANSFER / SEQUENCE par tranches de 2s / STRICT NEGATIVE), memes 3 mecanismes cles du V2 Poster Vector reussi (dialogue <d>[French]...</d>+(S1), geste Anansi en poses contrastees par tranche, orbite doree continue). Ajouts specifiques Whiteboard Doodle: clause COLOR LOCK stricte (noir/blanc partout SAUF jaune/dore Nyame et bleu Anansi), decor tableau blanc/smudge/trait marqueur, idle motion Nyame (leger hochement de tete + sway du trait de robe).",
+  "verdict": "MITIGE. REUSSI: couleur selective stricte noir/blanc + jaune-Nyame/bleu-Anansi respectee sur les 20 frames verifiees (aucune couleur parasite, aucune perte de couleur) ; orbite doree continue nette ; pulse d'orbe final lisible ~7.2-7.6s ; dialogue confirme mot pour mot par forced-alignment ElevenLabs (loss global 0.055, fenetre 1.16-6.30s, aucun mot parasite apres) ; aucun texte parasite ni morphing anatomique. ECHEC: geste de negociation d'Anansi quasi invariant sur les 20 frames (mains deja hautes et ecartees des f_01/t=0s, pas de contraste bas->haut visible) - cause probable: l'image source Whiteboard Doodle montre Anansi DEJA en posture ouverte mains levees (contrairement a l'image source Poster Vector qui le montrait mains basses), donc la clause de poses contrastees du prompt n'avait pas d'amplitude de depart a exploiter. Meme symptome que le V1 Poster Vector d'origine (avant corrections V2), pas la version corrigee. NON CONCLUANT: idle motion Nyame (hochement de tete/sway robe) non clairement visible sur l'echantillonnage 0.4s - possible que le mouvement demande etait trop subtil pour cet echantillonnage, aucune derive/morphing detecte en tout cas."
+}

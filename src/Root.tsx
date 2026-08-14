@@ -19,6 +19,7 @@ import { HistoirePlanteur, HISTOIRE_PLANTEUR_FRAMES } from "./projects/souverain
 import { HistoireGGW, HISTOIRE_GGW_FRAMES } from "./projects/_rnd/svg-scenes/HistoireGGW";
 import { CacaoChaineValeur16x9, CACAO_CHAINE_16X9_FRAMES } from "./projects/_rnd/svg-scenes/CacaoChaineValeur16x9";
 import { VoxPapercutAvion16x9, VOX_PAPERCUT_AVION_FRAMES } from "./projects/_rnd/svg-scenes/VoxPapercutAvion16x9";
+import { DetteFmiMecanismeSVG, DETTE_FMI_MECANISME_FRAMES } from "./projects/_rnd/svg-scenes/DetteFmiMecanismeSVG";
 import { GlobeSahel16x9, GLOBE_SAHEL_FRAMES } from "./projects/_rnd/d3-16x9/GlobeSahel16x9";
 import { GlobeToParchemin16x9, GLOBE_PARCHEMIN_FRAMES } from "./projects/_rnd/d3-16x9/GlobeToParchemin16x9";
 import { SahelJetonsDezoom16x9, SAHEL_JETONS_FRAMES } from "./projects/_rnd/d3-16x9/SahelJetonsDezoom16x9";
@@ -45,6 +46,7 @@ import { FlammeAnime16x9, FLAMME_ANIME_FRAMES } from "./projects/_rnd/fable-svg/
 import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-svg/PecheurPersoAnime";
 import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
+import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
 import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDecorTest16x9";
 import { PorteurCharge16x9, PORTEUR_CHARGE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurCharge16x9";
@@ -2886,6 +2888,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-B7MosaiqueFinal" component={B7MosaiqueFinal} durationInFrames={642} fps={30} width={1080} height={1920} />
         <Composition id="RND-WhiteboardTest" component={WhiteboardTest} durationInFrames={200} fps={30} width={1080} height={1920} />
         <Composition id="RND-FoyerColorTest" component={FoyerColorTest} durationInFrames={180} fps={30} width={1080} height={1920} />
+        <Composition id="RND-GazoducAeroportFable5Test" component={GazoducAeroportFable5Test} durationInFrames={GAZODUC_AEROPORT_FABLE5_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />
@@ -4274,6 +4277,14 @@ export const RemotionRoot: React.FC = () => {
           id="Vox-Papercut-Avion-16x9"
           component={VoxPapercutAvion16x9}
           durationInFrames={VOX_PAPERCUT_AVION_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="RND-DetteFmiMecanismeSVG"
+          component={DetteFmiMecanismeSVG}
+          durationInFrames={DETTE_FMI_MECANISME_FRAMES}
           fps={30}
           width={1920}
           height={1080}

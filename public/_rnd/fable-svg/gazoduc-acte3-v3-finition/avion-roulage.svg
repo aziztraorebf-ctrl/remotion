@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-60 -25 120 50">
+  <defs>
+    <path id="fuselage_path" d="M 52 0.2
+      C 51.2 -1.8, 49 -3.4, 45 -4.1
+      C 30 -4.45, -10 -4.45, -27 -4.3
+      C -34 -4.15, -41 -3.3, -46.5 -2.1
+      C -46.9 -1.9, -46.9 -1.4, -46.4 -1.2
+      C -40 -0.1, -32 2.2, -25 4.2
+      C -5 4.55, 25 4.55, 37 4.35
+      C 43 4.1, 49.5 2.4, 52 0.2 Z"/>
+    <clipPath id="clip_fuselage"><use href="#fuselage_path"/></clipPath>
+  </defs>
+
+  <g id="avion_taxi">
+
+    <g id="ombre_sol">
+      <ellipse cx="0" cy="16.5" rx="46" ry="2" fill="#050b1a" opacity="0.5"/>
+      <ellipse cx="-1" cy="15.9" rx="7" ry="0.9" fill="#04091a" opacity="0.55"/>
+      <ellipse cx="40" cy="15.9" rx="4" ry="0.8" fill="#04091a" opacity="0.5"/>
+    </g>
+
+    <g id="train_atterrissage">
+      <path d="M 40 3.5 L 40 12.3" stroke="#101c38" stroke-width="1.1" fill="none"/>
+      <circle cx="40" cy="13.9" r="1.9" fill="#0b1530" stroke="#223354" stroke-width="0.5"/>
+      <circle cx="40" cy="13.9" r="0.6" fill="#1d2f52"/>
+      <circle cx="-1.4" cy="13.1" r="2" fill="#081026"/>
+      <circle cx="2.4" cy="13.1" r="2" fill="#081026"/>
+      <path d="M -1 4 L -1 12" stroke="#101c38" stroke-width="1.2" fill="none"/>
+      <path d="M -3.4 12.4 L 1.4 12.4" stroke="#101c38" stroke-width="1" fill="none"/>
+      <circle cx="-2.9" cy="13.7" r="2.1" fill="#0b1530" stroke="#223354" stroke-width="0.5"/>
+      <circle cx="0.9" cy="13.7" r="2.1" fill="#0b1530" stroke="#223354" stroke-width="0.5"/>
+      <circle cx="-2.9" cy="13.7" r="0.7" fill="#1d2f52"/>
+      <circle cx="0.9" cy="13.7" r="0.7" fill="#1d2f52"/>
+    </g>
+
+    <g id="ailes">
+      <path d="M 4 -4 L -17 -9.6 L -19 -10.4 L -17.6 -8.4 L -1.5 -3.4 Z" fill="#16213a"/>
+      <path d="M 12.5 1.6 L -18.5 10.2
+        C -21 11, -22.6 11.6, -22.8 11.9
+        C -22.9 12.3, -22 12.3, -20.6 11.9
+        L -1.5 4.6 C 3 3.6, 9 2.4, 12.5 1.6 Z" fill="#35507f"/>
+      <path d="M -22.8 11.9 L -24.6 9.7 L -23.6 9.5 L -21.8 11.2 Z" fill="#1d2f52"/>
+      <ellipse cx="6" cy="4.2" rx="8" ry="1.5" fill="#24385f"/>
+    </g>
+
+    <g id="reacteurs">
+      <rect x="16" y="4.6" width="8" height="2.2" rx="1.1" fill="#101c38"/>
+      <path d="M 5 5.9 L 10.5 5.9 L 9.5 4.4 L 6.4 4.6 Z" fill="#22355c"/>
+      <rect x="2.5" y="5.6" width="10.5" height="4.4" rx="2.2" fill="#1b2c50"/>
+      <ellipse cx="12.6" cy="7.8" rx="1.1" ry="2.15" fill="#0a1428" stroke="#3d5a8c" stroke-width="0.4" opacity="0.9"/>
+      <ellipse cx="3.1" cy="7.8" rx="0.7" ry="1.6" fill="#0a1428"/>
+      <path d="M 4 5.9 C 7 5.3, 10 5.3, 12.2 5.9" stroke="#46648f" stroke-width="0.4" fill="none" opacity="0.6"/>
+    </g>
+
+    <g id="fuselage">
+      <use href="#fuselage_path" fill="#2a3f66"/>
+      <rect x="-47" y="0.9" width="100" height="4.2" fill="#1e3050" clip-path="url(#clip_fuselage)"/>
+      <path d="M 45 -4.1 C 30 -4.45, -10 -4.45, -27 -4.3" stroke="#4a6aa0" stroke-width="0.5" fill="none" opacity="0.6"/>
+      <path d="M 48.6 -2 L 44.6 -3.5 L 43.2 -2.7 L 47.4 -1.1 C 48.2 -1.3, 48.5 -1.6, 48.6 -2 Z" fill="#0b1732"/>
+      <path d="M 45 -3.1 L 47.6 -2.1" stroke="#a9c6ff" stroke-width="0.35" opacity="0.5" fill="none"/>
+      <rect x="35.6" y="-2" width="0.9" height="2.2" rx="0.3" fill="#1b2c4f"/>
+      <rect x="-20.5" y="-2" width="0.9" height="2.2" rx="0.3" fill="#1b2c4f"/>
+    </g>
+
+    <g id="empennage">
+      <path d="M -36.5 -2.6 L -48 -6.8 L -49.6 -6.6 L -47.4 -4.9 L -39.5 -1.6 Z" fill="#1b2c50"/>
+      <path d="M -29 -4 L -38.8 -15.6
+        C -39.2 -16.2, -40.4 -16.4, -41 -16
+        L -45.8 -2.6 C -41 -3.6, -34 -4, -29 -4 Z" fill="#24385f"/>
+      <path d="M -29.5 -4.1 L -39 -15.7" stroke="#46648f" stroke-width="0.4" opacity="0.5" fill="none"/>
+    </g>
+
+    <g id="hublots" fill="#ffdf9e">
+      <circle cx="-21" cy="-1.1" r="0.62" opacity="0.75"/>
+      <circle cx="-17.5" cy="-1.1" r="0.62" opacity="0.55"/>
+      <circle cx="-14" cy="-1.1" r="0.62" opacity="0.7"/>
+      <circle cx="-10.5" cy="-1.1" r="0.62" opacity="0.35"/>
+      <circle cx="-7" cy="-1.1" r="0.62" opacity="0.65"/>
+      <circle cx="-3.5" cy="-1.1" r="0.62" opacity="0.75"/>
+      <circle cx="0" cy="-1.1" r="0.62" opacity="0.5"/>
+      <circle cx="3.5" cy="-1.1" r="0.62" opacity="0.7"/>
+      <circle cx="7" cy="-1.1" r="0.62" opacity="0.6"/>
+      <circle cx="10.5" cy="-1.1" r="0.62" opacity="0.35"/>
+      <circle cx="14" cy="-1.1" r="0.62" opacity="0.75"/>
+      <circle cx="17.5" cy="-1.1" r="0.62" opacity="0.65"/>
+      <circle cx="21" cy="-1.1" r="0.62" opacity="0.5"/>
+      <circle cx="24.5" cy="-1.1" r="0.62" opacity="0.7"/>
+      <circle cx="28" cy="-1.1" r="0.62" opacity="0.55"/>
+      <circle cx="31.5" cy="-1.1" r="0.62" opacity="0.65"/>
+    </g>
+
+    <g id="feux_navigation">
+      <g id="feu_rouge_gauche">
+        <circle cx="-23.2" cy="11.6" r="3" fill="#ff5a4d" opacity="0.16"/>
+        <circle cx="-23.2" cy="11.6" r="1.5" fill="#ff5a4d" opacity="0.4"/>
+        <circle cx="-23.2" cy="11.6" r="0.75" fill="#ff5a4d"/>
+        <circle cx="-23.2" cy="11.6" r="0.3" fill="#ffe3df"/>
+      </g>
+      <g id="feu_vert_droit">
+        <circle cx="-19.2" cy="-10.5" r="3" fill="#7de08a" opacity="0.16"/>
+        <circle cx="-19.2" cy="-10.5" r="1.5" fill="#7de08a" opacity="0.4"/>
+        <circle cx="-19.2" cy="-10.5" r="0.75" fill="#7de08a"/>
+        <circle cx="-19.2" cy="-10.5" r="0.3" fill="#eaffee"/>
+      </g>
+      <g id="feu_blanc_queue">
+        <circle cx="-46.9" cy="-1.6" r="2" fill="#fff2d8" opacity="0.18"/>
+        <circle cx="-46.9" cy="-1.6" r="0.6" fill="#fff6e6"/>
+      </g>
+      <g id="beacon_rouge_dorsal">
+        <circle cx="6" cy="-4.7" r="1.8" fill="#ff5a4d" opacity="0.2"/>
+        <circle cx="6" cy="-4.7" r="0.55" fill="#ff5a4d" opacity="0.9"/>
+      </g>
+      <g id="feu_taxi">
+        <path d="M 41.5 11.2 L 59 8.6 L 59 13.4 Z" fill="#ffe9b8" opacity="0.07"/>
+        <circle cx="41.2" cy="11.2" r="1.8" fill="#fff3d9" opacity="0.25"/>
+        <circle cx="41.2" cy="11.2" r="0.8" fill="#fff3d9" opacity="0.9"/>
+      </g>
+    </g>
+
+  </g>
+</svg>

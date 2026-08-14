@@ -1,0 +1,35 @@
+CONTEXT — YOU ARE BRIEFED AS A SENIOR MOTION DESIGNER for a geopolitical documentary YouTube channel (French, style close to Vox Atlas / Kurzgesagt / DW explainer maps). This is a REAL frame from our existing map animation pipeline: D3.js + Remotion, real GeoJSON country borders, deterministic code (no AI video, no 3D, no After Effects). Palette: deep navy blue background, thin light-grey inactive borders, cyan/blue fill for traced/active countries, gold/tan pipeline route lines, monospace typography.
+
+⛔ SIX NON-NEGOTIABLE RULES:
+1. CARTOGRAPHY FIRST — the map remains the dominant, clearly readable visual element.
+2. NEVER FLOATING ELEMENTS — every icon, label, gauge, or text MUST have a clear visual "support": anchored on a map point with a connector, OR inside a proper COMPOSED OVERLAY CARD, OR shown while the map is dimmed behind it. Nothing floats loose with no container.
+3. EVERYTHING CENTERED OR MAP-ANCHORED, NEVER SCATTERED AT SCREEN EDGES.
+4. REAL COMPOSED INSERT CARDS for schematic content (like a proper illustrated vignette with its own frame), not a bare icon.
+5. NO TEXT LABEL EVER APPEARS WITHOUT A VISUAL CONTAINER.
+6. RELENTLESS MOTION — nothing static for more than ~5 seconds of story-time.
+
+⛔⛔ NEW RULE (critical, a prior attempt violated this) — MINIMIZE ON-MAP TEXT/LABELS OVERALL. Do NOT
+label every single country the route passes through (e.g. do not write out Mauritanie/Sénégal/Gambie/
+Guinée/Sierra Leone/Liberia/Côte d'Ivoire/Ghana/Togo/Bénin one by one along a route) — this clutters
+the map and reads as amateur. Only label the 2-3 countries that are NARRATIVELY relevant to THIS beat
+(the ones actually named in the narration), never every country a line happens to visually pass near.
+When in doubt, fewer labels, more silent visual color/glow to imply the rest.
+
+OUR REAL TECHNICAL CAPABILITIES (design ONLY within these):
+- Country borders/fills that TRACE progressively and fill with color once traced.
+- Camera that pans/zooms smoothly, pauses at points of interest.
+- Circular icon pins anchored to geo-coordinates, glow halos.
+- Animated arrows/flow-lines between two points with glowing gradient strokes.
+- COMPOSED overlay insert cards anchored to a map point (flat vector mini-illustration inside a bordered card, map dims behind) — THIS WORKED WELL in a prior test, the director specifically liked this and wants MORE of it (a composed insert card showing a cost/financial comparator, similar to a small info-graphic panel, is very achievable in our Remotion+SVG pipeline and should be leaned into).
+- Circular arc gauges / counters as a composed HUD element.
+- Vignette/darkening overlay to dim the map and focus attention on an active overlay.
+
+REFERENCE PRINCIPLE (Vox Atlas producer Sam Ellis): show what forces look like ON THE GROUND. Kurzgesagt discipline: FEWER elements, reused, better timed. Show, don't tell.
+
+CREATIVE FREEDOM FOR THIS PASS: unlike a prior attempt, you are NOT given a prescribed shot-by-shot staging. You get only a light 3-state structure (starting state → turning point → ending state) for this beat, and the narration. INVENT your own visual staging entirely — surprise the director with an idea they might not have thought of, as long as you respect the 6 rules above and our real technical capabilities. Do not just repeat the same staging patterns as a typical dry documentary map; be bold.
+
+THIS BEAT'S 3-STATE STRUCTURE: START: the map is centered on Nigeria alone, mostly dark/unlit elsewhere. TURNING POINT: something must visually happen even before the trace itself completes its journey (invent how). END: the route has reached Algeria and connects visually to existing infrastructure there.
+
+NARRATION for this beat (French, for your understanding only): 'Ce concurrent, le gazoduc transsaharien, part du Nigeria, traverse le Niger, remonte le Sahara, et se connecte aux réseaux algériens qui pompent déjà du gaz vers l'Europe.'
+
+TASK: GENERATE AN IMAGE (not a text description) — a single storyboard sheet containing 2-3 sequential visual panels covering this beat's journey from the starting state to the ending state, through your own invented turning point. Render the panels directly as pixels in the image, each 16:9, fully readable at high resolution, stacked or arranged clearly. Include brief director's-note camera-movement annotations as small text captions WITHIN the image (like a real storyboard sheet), not as your written response. Output the image now.

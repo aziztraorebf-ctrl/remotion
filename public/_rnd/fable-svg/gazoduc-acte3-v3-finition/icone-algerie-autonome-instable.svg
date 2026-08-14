@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-15 -15 30 30" fill="none" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+  <g id="algerie_autonome_instable">
+    <g id="piece_contour">
+      <circle cx="0" cy="0" r="11"/>
+    </g>
+    <g id="piece_anneau_frappe" stroke-width="1">
+      <path d="M2.1,-7.7 A8,8 0 0 1 2.1,7.7"/>
+      <path d="M-2.1,7.7 A8,8 0 0 1 -2.1,-7.7"/>
+    </g>
+    <g id="piece_crans" stroke-width="1">
+      <line x1="6.3" y1="-6.3" x2="7.2" y2="-7.2"/>
+      <line x1="6.3" y1="6.3" x2="7.2" y2="7.2"/>
+      <line x1="-6.3" y1="6.3" x2="-7.2" y2="7.2"/>
+      <line x1="-6.3" y1="-6.3" x2="-7.2" y2="-7.2"/>
+    </g>
+    <g id="eclair_instabilite" stroke="none" fill="#FFFFFF">
+      <path d="M2.8,-9.5 L-2.4,0.6 L0.8,0.6 L-2.8,9.6 L3.0,-1.0 L-0.2,-1.0 Z"/>
+    </g>
+  </g>
+</svg>

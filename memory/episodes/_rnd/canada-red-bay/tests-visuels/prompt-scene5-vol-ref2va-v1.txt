@@ -1,0 +1,34 @@
+subject_definitions:
+<Picture 1>: the empty background environment plate — a rocky Labrador cove at dawn, layered charcoal cliff silhouettes framing a still blue-grey sea, warm amber dawn glow low on the horizon, flat paper-cutout collage style with hand-torn edges and halftone grain texture.
+<Subject 1>: the environment shown in <Picture 1> — cliffs, sea, sky, and dawn light. fully_preserved throughout the entire video, this is the base layer everything else is placed onto.
+<Picture 2>: an isolated dark granite rock prop, flat paper-cutout style, jagged torn silhouette edges, halftone texture, shown on a plain white background for compositing reference.
+<Subject 2>: the rock shown in <Picture 2> — its shape, texture, and paper-cutout material. fully_preserved, to be composited into the foreground of the cove scene, resting on the shoreline slightly left of center.
+<Picture 3>: an isolated thick coiled rope prop, flat paper-cutout style with visible twisted rope texture, cut cleanly in the middle with a frayed severed end, shown on a plain white background for compositing reference.
+<Subject 3>: the rope shown in <Picture 3> — its coiled shape, cut/frayed texture, and paper-cutout material. fully_preserved, to be composited on top of the rock once the rock is in place.
+
+summary:
+[reference generation] Compose a single continuous shot that builds a Vox-style paper-cutout collage scene by revealing three separate reference layers in sequence — background environment first, then a rock prop settling onto the shoreline, then a severed rope prop appearing coiled on top of the rock — culminating in a still composed frame of a rope that was cut, on a rock, in an empty dawn cove.
+
+retention_analysis:
+<Subject 1>: fully_preserved
+<Subject 2>: fully_preserved
+<Subject 3>: fully_preserved
+
+detailed_description:
+A slow, quiet reveal in the flat paper-cutout collage style of <Picture 1>, <Picture 2>, and <Picture 3> — hand-torn paper edges, subtle grain and halftone shading throughout, muted cold slate blue-grey and charcoal palette with one warm amber sliver of dawn light on the horizon. Static Shot, camera does not move at any point.
+
+[Shot 1] 0.00-2.00s: Only <Subject 1>, the empty cove environment from <Picture 1>, is visible — layered cliff silhouettes, still sea, overcast sky, amber dawn glow on the horizon. Nothing else is present yet. Subtle ambient motion only: the flat paper-cut sea surface has a faint, slow shimmer of light across its texture, and the paper grain has a gentle continuous stop-motion boil, as if the whole image is a physical paper collage lit under natural light.
+
+[Shot 2] At 00:02.000, <Subject 2>, the rock from <Picture 2>, settles into place in the foreground shoreline area of the cove, slightly left of center — it does not fly in or bounce, it appears to have physically always been there and the "camera attention" simply reveals it, like a paper cutout being set down gently onto the collage by an unseen hand, casting a soft flat drop-shadow onto the shoreline beneath it. The rock's own torn-paper texture and halftone shading remain exactly as shown in <Picture 2>. The background from Shot 1 remains completely unchanged and still visible behind and around the rock.
+
+[Shot 3] At 00:04.000, <Subject 3>, the coiled and severed rope from <Picture 3>, appears resting on top of the rock, coiled naturally across its upper surface, casting its own soft flat drop-shadow onto the rock beneath it. The frayed, cut end of the rope is clearly visible and unchanged from <Picture 3> — the rope does not uncoil, does not move on its own, it is simply now present, as if placed there. Both the rock and the background remain completely unchanged and still visible.
+
+[Shot 4] At 00:06.000, the full composed scene — background, rock, and severed rope — holds completely still in composition. Only the continuous ambient paper-grain boil and the faint shimmer on the sea surface continue, giving the image a quiet, physically-present, hand-crafted stop-motion stillness rather than a static photograph. The scene reads as an empty cove at dawn where something is conspicuously, quietly absent.
+
+STRICT NEGATIVE: no camera movement of any kind, no pan, no zoom, no orbit, no cuts or jump cuts between shots (each new subject appears within the continuous shot, not via an edit), no characters, no boats, no whale, no birds, no other animals, no text overlay, no title card, no additional props beyond the three defined subjects, the rock never moves or slides after it appears, the rope never uncoils or moves after it appears, no bouncing or spring-in motion on the rock or rope appearances — they appear as a gentle, settled presence, not a pop-in animation, no change to the sky or the dawn light color, no photorealism, no 3D rendering, no morphing of any shape.
+
+overall_soundscape:
+A very faint, low ambient soundscape: a distant, barely audible slow swell of cold sea water against rock, and a soft, almost imperceptible paper-rustle texture underlying the whole shot, like wind moving gently over paper.
+
+non_diegetic_music:
+N/A

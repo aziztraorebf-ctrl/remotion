@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1408 792" width="1408" height="792">
+  <!-- DATANA logo - Poster Vector register (flat vector, night blue bg, warm gold, diagonal flat shadow) -->
+  <defs>
+    <!-- Soft glow behind the emblem (radial gradient, no heavy filter) -->
+    <radialGradient id="glow" cx="704" cy="322" r="315" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f5c15d" stop-opacity="0.30"/>
+      <stop offset="0.45" stop-color="#f5c15d" stop-opacity="0.13"/>
+      <stop offset="1" stop-color="#f5c15d" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Warm gold, lighter at top / deeper at bottom for flat volume -->
+    <linearGradient id="wingGrad" x1="0" y1="172" x2="0" y2="466" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffdc93"/>
+      <stop offset="0.55" stop-color="#f5c15d"/>
+      <stop offset="1" stop-color="#d28f2a"/>
+    </linearGradient>
+
+    <!-- Left wing blade (right wing is a mirror around x=704) -->
+    <path id="wingL" stroke="none"
+      d="M 676,460
+         C 574,436 504,352 488,238
+         C 484,214 487,196 496,178
+         C 512,222 542,290 588,346
+         C 618,382 646,424 676,460 Z"/>
+
+    <!-- Single shallow data-pulse arc, aligned with the wing tips -->
+    <path id="pulse" fill="none" stroke-linecap="round"
+      d="M 622,242 A 125,125 0 0 1 786,242"/>
+
+    <!-- Wordmark glyphs, hand-built paths (cap height 76, no font dependency) -->
+    <path id="gD" fill-rule="evenodd"
+      d="M0 0 L30 0 C52 0 62 16 62 38 C62 60 52 76 30 76 L0 76 Z
+         M16 15 L29 15 C41 15 46 25 46 38 C46 51 41 61 29 61 L16 61 Z"/>
+    <path id="gA" fill-rule="evenodd"
+      d="M30 0 L46 0 L76 76 L59 76 L52.5 59 L23.5 59 L17 76 L0 76 Z
+         M38 20 L47.5 45 L28.5 45 Z"/>
+    <path id="gT" d="M0 0 L64 0 L64 16 L40 16 L40 76 L24 76 L24 16 L0 16 Z"/>
+    <path id="gN" d="M0 76 L0 0 L16 0 L48 49 L48 0 L64 0 L64 76 L48 76 L16 27 L16 76 Z"/>
+
+    <g id="wordmark">
+      <use href="#gD"/>
+      <use href="#gA" x="86"/>
+      <use href="#gT" x="186"/>
+      <use href="#gA" x="274"/>
+      <use href="#gN" x="374"/>
+      <use href="#gA" x="462"/>
+    </g>
+  </defs>
+
+  <!-- Night blue background -->
+  <rect x="0" y="0" width="1408" height="792" fill="#16213a"/>
+
+  <!-- Glow halo -->
+  <circle cx="704" cy="322" r="315" fill="url(#glow)"/>
+
+  <!-- Flat diagonal drop shadow (offset solid shape, poster-vector style) -->
+  <g transform="translate(16 16)" opacity="0.55">
+    <use href="#wingL" fill="#0c1428"/>
+    <use href="#wingL" transform="matrix(-1 0 0 1 1408 0)" fill="#0c1428"/>
+    <use href="#pulse" stroke="#0c1428" stroke-width="22"/>
+  </g>
+  <use href="#wordmark" transform="translate(545.2 583) scale(0.62)" fill="#0c1428" opacity="0.55"/>
+
+  <!-- Gold emblem: two wings + pulse arc (crisp flat edges, no outline) -->
+  <use href="#wingL" fill="url(#wingGrad)"/>
+  <use href="#wingL" transform="matrix(-1 0 0 1 1408 0)" fill="url(#wingGrad)"/>
+  <use href="#pulse" stroke="url(#wingGrad)" stroke-width="22"/>
+
+  <!-- Wordmark DATANA -->
+  <use href="#wordmark" transform="translate(537.2 575) scale(0.62)" fill="#f5c15d"/>
+</svg>

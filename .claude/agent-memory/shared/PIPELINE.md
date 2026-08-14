@@ -108,6 +108,31 @@ Seul **A5 Géographie** (Mapbox) reste à produire — et son état « stub/plac
 le 3 juin est LUI AUSSI faux (`Beat4Geographie.tsx` fait 417 lignes, Mapbox complet). **Rendre et
 regarder le beat avant de conclure quoi que ce soit.**
 
+### Kora & Cartes — piste mythologie africaine (R&D exploratoire, 2026-08-13)
+2 registres visuels testés sur le même beat (pacte/négociation Anansi/Nyame, Akan/Ghana), même
+méthode H3 R2V (`submit_workflow` graphe API en dur).
+
+**Registre "Poster Vector"** (flat vector explainer style Kurzgesagt) : V1 MITIGÉ (décor OK, geste
+Anansi trop peu animé) → V2 **RÉUSSI sur les 3 axes corrigés** (dialogue FR `<d>[French]...</d>`
+vérifié Whisper mot pour mot, étoiles scintillantes confirmées, geste Anansi nettement renforcé via
+poses contrastées par tranche). Livrable V2 :
+`memory/episodes/_rnd/kora-cartes-mythologie/tests-visuels/anansi-nyame-pacte-negociation-v2-dialogue-8s.mp4`.
+
+**Registre "Whiteboard Doodle"** (trait marqueur noir + couleur sélective jaune/bleu, RSA-Animate/
+TED-Ed) : V1 **MITIGÉ** — couleur sélective strictement respectée (aucune couleur parasite),
+orbite dorée + pulse final OK, dialogue confirmé par forced-alignment (loss 0.055) — MAIS geste
+Anansi quasi invariant (mains déjà hautes dès t=0 dans l'image source, la clause de contraste
+n'a pas d'amplitude à exploiter contrairement au Poster Vector où l'image source partait mains
+basses). Idle motion Nyame non concluante (trop subtile pour l'échantillonnage). Livrable :
+`memory/episodes/_rnd/kora-cartes-mythologie/tests-visuels/anansi-nyame-whiteboard-doodle-v1-dialogue-8s.mp4`.
+
+Détail technique complet des 3 runs : `.claude/agent-memory/visual-producer/GOTCHAS-TOOLS.md`.
+**[STAGE-4] visual-producer kora-cartes-mythologie — BLOCKED : Whiteboard Doodle V1 mitigé (même
+défaut geste Anansi que le Poster Vector V1) → attend verdict Aziz : (a) régénérer l'image source
+Whiteboard Doodle avec Anansi en pose basse/repliée comme le Poster Vector avant de retenter le
+même correctif V2, (b) accepter le geste tel quel et trancher entre les 2 registres visuels sur la
+base de la couleur sélective/decor, ou (c) explorer une autre piste.**
+
 ### Flowdesk (test client simulé) — EN COURS, 2 registres en comparaison
 Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→V3 tranchées, V4
 (hybride 2A+2B vidéo) en cours, Panneau 1 seul codé. Registre 2B (personnage, MiniMax H3) :

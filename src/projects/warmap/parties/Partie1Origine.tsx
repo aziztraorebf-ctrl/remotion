@@ -18,20 +18,20 @@ import type { SahelRenderContext } from "../engine/SahelContext";
 import { LIBYE_RING } from "./sahelCountries";
 
 // ============================================================
-// TRIGGERS V5 (alignment narration-v5-alignment.json, x30fps)
-//   "bascule"     f2102  -> board clearing (moteur) + "2012" s'inscrit
-//   "Libye"       f2178  -> repere LIBYE
-//   "s'effondre"  f2210  / "effondrement" f2272 -> pulse Libye (beat 1.1)
-//   "flot"        f2305  / "d'armes" f2311      -> trait + taches (beat 1.2)
-//   "absent"      f2743  -> vide d'Etat (beat 1.3)
-//   "tensions"    f2844  -> hachures
+// TRIGGERS V6 (alignment aes-v6-acte1.alignment.json, x30fps, force-align 2026-08-06)
+// Script reecrit (echec vues video V5) - mots-cles changent, structure du texte identique.
+//   "commence"    f1153  -> board clearing (moteur) + "2012" s'inscrit  (V5: "bascule" f2102, -949f)
+//   "Kadhafi/Libye" f1284 -> repere LIBYE + pulse effondrement          (V5: "Libye" f2178 / "s'effondre" f2210)
+//   "arsenal/armes" f1397-1506 -> trait d'encre Libye->Mali + taches    (V5: "flot d'armes" f2305)
+//   "vide"        f2155  -> vide d'Etat (1er signal, avant "deja")      (V5: "absent" f2743)
+//   "rancoeurs"   f2740  -> hachures tensions (equivalent le + proche)  (V5: "tensions" f2844)
 // ============================================================
-const F_2012 = 2102;   // "bascule"
-const F_LIBYE = 2178;  // "Libye"
-const F_PULSE = 2210;  // "s'effondre" -> pulse Libye (effondrement)
-const F_TRAIT = 2305;  // "flot d'armes" -> trait d'encre Libye->Mali + taches
-const F_ABSENT = 2743; // "absent" -> vide d'Etat (gere par le moteur via partieVoid)
-const F_TENSIONS = 2844; // "tensions" -> hachures dans le vide
+const F_2012 = 1153;   // "commence" (etait "bascule" f2102, delta -949f/-31.6s)
+const F_LIBYE = 1284;  // "Kadhafi tombe en Libye" (etait f2178, delta -894f/-29.8s)
+const F_PULSE = 1350;  // pulse effondrement - entre Libye(1284) et arsenal(1397), pas de mot dedie en V6
+const F_TRAIT = 1450;  // "arsenal...armes" -> trait d'encre Libye->Mali + taches (etait f2305, delta -855f/-28.5s)
+const F_ABSENT = 2155; // "vide" (etait "absent" f2743, delta -588f/-19.6s)
+const F_TENSIONS = 2740; // "rancoeurs" (etait "tensions" f2844, delta -104f/-3.5s)
 
 // Encre parchemin (coherence palette Sahel)
 const INK = "#3A2A18";

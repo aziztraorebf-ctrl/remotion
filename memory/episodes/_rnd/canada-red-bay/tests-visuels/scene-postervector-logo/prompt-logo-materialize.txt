@@ -1,0 +1,29 @@
+subject_definitions:
+<Picture 1>: A flat vector poster illustration background, deep navy blue (#16213a), completely empty — no logo, no symbol, no text, no shapes of any kind, just a clean uniform dark navy canvas with a very subtle vignette.
+<Picture 2>: The same flat vector poster illustration background, same navy blue color, same framing — but now a company logo is fully formed and centered: an abstract golden symbol made of two curved wing-like shapes opening outward on left and right, with a single curved arc nested between them at the top center suggesting a signal or pulse, rendered in warm glowing gold with a soft golden glow behind it. Below the symbol, the word "DATANA" in bold clean sans-serif gold capital letters, centered, smaller than the symbol above it.
+
+summary:
+[keyframe completion] Starting from the empty navy background in <Picture 1>, animate the golden logo materializing into existence at the center of the frame — the wing-shaped symbol draws itself into being first (like a glowing golden line tracing its own outline then filling in solid), followed by the signal arc appearing above it, followed by the wordmark "DATANA" resolving into sharp, fully legible focus below. Ends exactly matching <Picture 2> — the complete logo, symbol and text, fully formed, glowing softly, perfectly still.
+
+retention_analysis:
+<Picture 1>: fully_preserved — this is the exact starting frame, empty background, held briefly before anything begins to appear.
+<Picture 2>: fully_preserved — this is the exact target ending frame, the logo's final shape, color, glow, and the wordmark's final legible text must match this exactly, pixel-precise on the lettering.
+
+detailed_description:
+A static, unmoving camera holds on a flat vector poster illustration background, bold motion-graphics style. This is a clean brand-reveal animation — a logo materializing from nothing into a fully formed, glowing mark, in a single unbroken shot.
+
+[Shot 1]
+0-1s: The scene begins exactly matching <Picture 1> — a completely empty, uniform deep navy blue canvas, no shapes, no text, nothing visible. A brief stillness, like a held breath before a reveal.
+1-3s: A thin glowing golden outline begins tracing itself in the center of the frame, drawing the silhouette of the two wing-like shapes — first the left wing's outline appears, drawn as if by an invisible pen from top to bottom, then the right wing's outline mirrors it. The line stays thin and bright gold throughout this stage, not yet filled in.
+3-4.5s: The traced wing outlines fill in smoothly with solid warm gold color, growing from a thin glowing line into the full solid wing shape shown in <Picture 2>, with a soft golden glow blooming softly behind them as they solidify.
+4.5-6s: The single curved signal arc appears above the wings, drawn quickly left-to-right in one clean glowing stroke, settling into its exact final position and thickness matching <Picture 2>.
+6-8s: The wordmark "DATANA" fades and sharpens into view below the symbol — starting as a soft, barely-visible golden blur directly beneath the symbol, then rapidly resolving letter-shape by letter-shape into crisp, fully legible, sharp-edged capital letters, matching the exact typography, spacing, and position shown in <Picture 2>. No letter ever appears distorted, mirrored, or malformed during this resolve — each letterform sharpens cleanly into its correct final shape.
+8-10s: Hold on the final composition, exactly matching <Picture 2> — the complete golden logo, symbol and wordmark, fully formed, softly glowing, centered, perfectly still and stable.
+
+STRICT NEGATIVE: no camera movement of any kind (Static Shot only), no change in the navy background color at any point, no change in the flat vector art style (never painterly, never hand-drawn, never 3D, never photorealistic), the symbol must never deform, wobble, or change proportions once solid, the wordmark letters must never appear garbled, misspelled, mirrored, or malformed at any point — if letters are shown resolving from blur they must resolve into the EXACT correct spelling "DATANA" with correct letterforms, no extra characters, no missing characters, no new elements appearing beyond the symbol and wordmark, no text overlay besides the wordmark itself, no title card, no jump cuts, no particles or coins or unrelated imagery, no camera shake, no flicker or strobing.
+
+overall_soundscape:
+A soft rising synth swell as the symbol traces and fills, a subtle bright chime as the signal arc completes, and a clean soft "settle" tone as the wordmark sharpens into final focus.
+
+non_diegetic_music:
+N/A

@@ -1,0 +1,25 @@
+SUBJECT DEFINITIONS:
+<Subject 1> = Nyame, the Akan sky god, seated on his cloud throne, wearing a deep indigo robe with golden Adinkra patterns (including Gye Nyame symbol), long white beard, calm but withholding expression. Surrounded by glowing golden orbs and ribbons representing the stories of the world, orbiting around him.
+<Subject 2> = Anansi, the trickster spider, human-spider hybrid — cunning human face with a mischievous grin, four extra spider legs emerging from his torso, kneeling at the base of the throne, one hand/leg raised mid-gesture, negotiating.
+
+SUMMARY: Nyame sits on his celestial cloud throne holding all the world's stories as glowing golden orbs and ribbons that continuously orbit him. Below, Anansi the trickster spider negotiates with an animated, insistent gesture, trying to convince Nyame to strike the bargain. Flat vector illustration style, thick black outlines, cel-shaded gold glow, navy night sky with golden stars in the background.
+
+RETENTION ANALYSIS:
+<Subject 1> Nyame: partially_preserved — his pose on the throne stays fundamentally the same (seated, regal), but he is NOT static: his robe fabric has continuous idle motion (slow fabric sway), and the golden orbs/ribbons around him orbit continuously and slowly throughout the entire clip. His face keeps a calm, appraising, not-yet-convinced expression.
+<Subject 2> Anansi: partially_preserved — same design, same position at the base of the throne, but his negotiating gesture animates: his raised hand/leg insists, his head tilts, his expression shifts subtly (more pleading/persuasive), his extra spider legs shift weight slightly.
+
+ATTRIBUTE TRANSFER:
+<Subject 1> keeps exactly: indigo robe with Gye Nyame and Adinkra patterns, cloud throne shape, white beard, golden orb/ribbon motif design, navy starry sky background.
+<Subject 2> keeps exactly: human-spider hybrid design, brown skin tone, four extra spider legs, cunning facial features, position at throne base.
+
+SEQUENCE (locked timeline, 0 to 8 seconds):
+
+0 to 2 seconds: Nyame sits still on his throne, golden orbs and ribbons ALREADY gently orbiting around him at a slow steady pace, his robe fabric softly shifting. Anansi kneels below, one hand/leg raised mid-gesture exactly as in the reference image, grin steady.
+
+2 to 4 seconds: Anansi's raised hand/leg pushes forward slightly, insisting on his proposal — his head tilts to one side, eyebrows raise persuasively. Nyame's orbs and ribbons continue their slow continuous orbit uninterrupted. Nyame's expression stays calm, unmoved, listening.
+
+4 to 6 seconds: Anansi leans in slightly closer, his four spider legs shift weight beneath him, his expression becomes more insistent and sly, mouth curling into a wider confident grin — NO talking motion, lips do not move as if speaking, this is a silent, physical, insistent gesture only. Nyame tilts his head very slightly downward toward Anansi, still appraising, still not fully convinced. His robe and orbs keep moving continuously.
+
+6 to 8 seconds: One of the golden orbs nearest to Nyame's hand pulses and glimmers brighter for a moment, as if the pact is almost within reach — a subtle flicker of light, not a transformation, not a new object, not a burst. Nyame's expression softens very slightly at the edges but remains guarded and thoughtful, not yet a full smile or agreement. Anansi's gesture holds steady, hopeful, watching the orb glimmer. Robe, ribbons, and remaining orbs continue their same slow continuous orbiting motion throughout, uninterrupted.
+
+STRICT NEGATIVE: Nyame is NEVER fully static or frozen — his robe and the golden orbs/ribbons around him must show continuous slow motion in every single second of the clip, never holding perfectly still. Do NOT let Nyame's pose, throne, or background change or drift. No new characters appear. No dialogue, no talking mouths, no lips moving as if speaking, no words, no text, no subtitles, no banners, no signs, no writing visible anywhere. No camera movement — camera stays completely static throughout, no pan, no zoom, no orbit. The Adinkra patterns on Nyame's robe and the cloud throne shape never change or morph. Anansi's four spider legs and human face never distort or add/lose limbs. The overall pact is NOT sealed and NOT resolved within this clip — this is only the negotiation moment, no major transformation, no explosion of light, no full embrace or handshake. No music, no sound effects, no ambient audio needed.

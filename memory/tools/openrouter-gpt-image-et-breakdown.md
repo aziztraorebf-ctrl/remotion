@@ -30,3 +30,16 @@ hors cadre réel), (2) ESTIME les tailles à l'œil (sous-dimensionne — picto 
 Prompt de référence prêt : `memory/doctrines/templates/PROMPT-BREAKDOWN-DATAVIZ.txt`. GPT-5.5 sert AUSSI à faire
 le **DIFF cible-vs-render** (planche A|B → écarts mesurés + corrections Tailwind, 1 passe) :
 `templates/PROMPT-DIFF-CIBLE-RENDER.txt`. Pipeline complet : [[WORKFLOW-DATAVIZ]].
+
+## ⛔⛔ GOTCHA — GPT Image 2 peut répondre en TEXTE au lieu d'une image (2026-08-14)
+
+Sur un prompt de storyboard formulé "TASK: Show 2-3 panels..." (verbe qui invite à décrire plutôt qu'à
+générer), GPT Image 2 via `openrouter-img2img.py` a répondu par une description narrative en prose
+(très détaillée et de bonne qualité conceptuelle, mais ZÉRO image produite) — sans erreur HTTP, le
+script "réussit" silencieusement en écrivant seulement un `.response.json` de dump, pas de `.png`.
+**Fix** : formuler la tâche en forçant explicitement la sortie image, ex. "TASK: GENERATE AN IMAGE
+(not a text description) — render the panels directly as pixels... Output the image now." **Garde-fou
+obligatoire** : après tout appel storyboard/breakdown visuel, vérifier qu'un fichier `.png` réel existe
+sur disque (pas seulement un `.response.json`) avant de considérer l'appel réussi — même logique que
+"un agent qui rapporte terminé n'a pas forcément produit le fichier", mais au niveau d'un appel API
+individuel plutôt que d'un agent.

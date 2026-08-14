@@ -20,6 +20,13 @@
 //
 // Couche PURE par-dessus la carte (pattern <PartieX>). Reçoit SahelRenderContext + l'instance map (pour
 // SahelAttackArrow/TerritorialExpansion qui projettent via map.project()). Ne possède PAS la map.
+//
+// ⚠️ RETIMING V6 (2026-08-06) : le script V6 NE MENTIONNE PLUS "printemps 2026" ni "repousse" — la phrase
+// Ph9 est remplacée par "Et malgré Kidal, la guerre n'est pas finie [...] Le tenir en est une autre.", un
+// ton plus incertain qu'une victoire répétée. F_REPOUSSE (séquence Ph9 : jihadistes qui chargent, sont
+// bloqués par les FAMa et repoussés) N'A PLUS de mot-ancre dans le texte — recalée sur un fallback calculé
+// (voir déclaration de F_REPOUSSE). DÉCISION EN ATTENTE (Aziz) : garder Ph9 telle quelle sur ce fallback,
+// la raccourcir, ou la retirer — voir rapport agent pour les options détaillées, NON TRANCHÉ ici.
 
 import React from "react";
 import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing } from "remotion";
@@ -35,22 +42,67 @@ import { TerritorialExpansion, type ExpansionRegion } from "../_shared/Territori
 import { LiptakoRevealSVG } from "./LiptakoRevealSVG";
 
 // ============================================================
-// TRIGGERS V5 P3 (alignment narration-v5, ×30fps — VÉRIFIÉS contre narration-v5-alignment.json 2026-06-12)
+// TRIGGERS V6 P3 (alignment aes-v6-actes234.alignment.json, ×30fps, force-align 2026-08-05/06).
+// Script réécrit (V6, échec vues vidéo V5 publiée 04/08) — mots-clés changent, structure narrative
+// identique jusqu'à Ph8 ; Ph9 ("printemps 2026 / repousse") N'A PLUS D'ÉQUIVALENT TEXTE en V6 (le
+// texte enchaîne directement "malgré Kidal, la guerre n'est pas finie [...] le tenir en est une autre").
+// F_REPOUSSE conservé en fallback calculé (voir note sous sa déclaration) : signalé à Aziz, PAS tranché.
+//
+// ⛔⛔ CORRECTION OFFSET (2026-08-06, 2e passe) : toutes les valeurs ci-dessous utilisaient l'offset
+// +3196 (erreur initiale du brief, -301f/-10.0s de trop). Offset RÉEL = +2895 (durée exacte
+// aes-v6-acte1.mp3 = 96.502132s×30fps, découverte et vérifiée par l'agent Partie4Cout.tsx en
+// croisant l'arithmétique narration-v6-full.mp3 = aes-v6-acte1.mp3 + aes-v6-actes234.mp3). TOUTES
+// les constantes ci-dessous CORRIGÉES (-301f chacune) par l'orchestrateur après coup — vérifié que
+// la jonction P2→P3→P4 est maintenant sans trou ni chevauchement (check-frame-continuity.py).
+//
+// ⛔ CORRECTION 2026-08-06 (auto-détectée en re-croisant le JSON) : les mots "Bamako"/"Ouagadougou"
+// N'EXISTENT PLUS DU TOUT dans le texte de Partie 3 V6 (le nouveau texte d'ouverture — "Face à la menace
+// d'une invasion, le Mali et le Burkina Faso lancent un message clair...") ne nomme aucune capitale. Une
+// 1ère passe avait pris par erreur la 1ère occurrence globale de "Bamako" dans le JSON, qui appartient en
+// réalité à un passage de PARTIE 2 ("des militaires prennent le pouvoir à Bamako, puis à Ouagadougou",
+// f6211/f6264) — vérifié faux par relecture du contexte mot-à-mot (### PARTIE 3 démarre à f7414, bien
+// après). F_BAMAKO/F_OUAGA sont réancrés sur le vrai début de Ph1 : "Face" (marker ### PARTIE 3, f7414)
+// et "Mali"/"Burkina" (les 2 pays qui "lancent un message clair", f7478/f7499) — rôle sémantique inchangé
+// (déclenche cedeaoBreak/aesGold/LiptakoRevealSVG.inAt), juste plus d'ancrage littéral sur un nom de ville.
+//   "Face" (### PARTIE 3, ouverture Ph1) — V5 "Bamako" f6118, 1ère passe V6 FAUSSE f6211 (mauvais
+//     segment, voir note ci-dessus) -> VALEUR RETENUE f7414 (+1296f / +43.2s vs V5)
+//   "Burkina" (2e pays nommé, cascade) — V5 "Ouagadougou" f6138, 1ère passe V6 FAUSSE f6264 -> VALEUR
+//     RETENUE f7499 (+1361f / +45.4s vs V5)
+//   "Liptako-Gourma"  f6616 -> f7820   (+1204f / +40.1s)
+//   "testée" (ex "mis à l'épreuve") f6800 -> f8070  (+1270f / +42.3s)
+//   "Kidal." (isolé)  f7083 -> f8203   (+1120f / +37.3s)
+//   "touarègues"      f7319 -> f8466   (+1147f / +38.2s)
+//   "bagage" (ex "retire") f7673 -> f8776 (+1103f / +36.8s)
+//   "Africa" (1ère occ., "paramilitaires russes d'Africa Corps") f7794 -> f8927 (+1133f / +37.8s) —
+//     RE-VÉRIFIÉ sur le JSON : "Africa" apparaît 3x en V6 (f8927, f9622, f10164) car le mot revient dans
+//     "reprendre le terrain avec Africa Corps" (Ph8, unrelated) et une 3e fois après Moura. La mesure
+//     brute donnée en amont (f9622) captait la 2e occurrence, hors-séquence pour Ph6 (offensive FAMa) —
+//     corrigé ici sur la 1ère occurrence, seule cohérente avec F_RETIRE(8776) < F_AFRICA < F_FLOTTE(9222).
+//   "flotte" (majuscules "FLOTTE" dans le texte) f8132 -> f9222 (+1090f / +36.3s)
+//   "Moura"           f8580 -> f9948  (+1368f / +45.6s)
+//   "tenir" (ex "conserver", "Le tenir en est une autre") f9372 -> f10733 (+1361f / +45.4s)
+//   fin P3 (marker "### PARTIE 4" dans le texte source, juste après "autre.") -> f10794
 // ============================================================
-const F_BAMAKO = 6118;     // "Bamako" — Ph1 union AES, CEDEAO se brise
-const F_OUAGA = 6138;      // "Ouagadougou"
-const F_LIPTAKO = 6616;    // "Liptako-Gourma" — Ph2 naissance AES (figée 2s)
-const F_EPREUVE = 6800;    // "mis à l'épreuve" — Ph3 transition zoom Kidal (approx)
-const F_KIDAL = 7083;      // "Kidal." — Ph4 (figée 1s, silence)
-const F_TOUAREGS = 7319;   // "touaregs" — Ph5 statu quo 2012
-const F_RETIRE = 7673;     // "retire" — Ph6 ONU se retire
-const F_AFRICA = 7794;     // "Africa" Corps — Ph6 offensive FAMa
-const F_FLOTTE = 8132;     // "flotte" — Ph7 reprise Kidal (figée 2s)
-const F_MOURA = 8580;      // "Moura" — Ph8 flashback mars 2022
-const F_REPOUSSE = 9121;   // "repousse" — Ph9 attaques 2026 refoulées
-const F_CONSERVER = 9372;  // "conserver en est une autre" — fin de la phrase-morale = FIN P3
-const F_END = 9410;        // fin P3 : ~1.3s après la morale pour la laisser résonner, puis coupe. PAS de
-                           // débordement dans la P4 (réfugiés f9366+ = compo P4 séparée). Décision Aziz 2026-06-12.
+const F_BAMAKO = 7113;     // "Face" (marker ### PARTIE 3, ouverture Ph1) — Ph1 union AES, CEDEAO se brise — offset corrige (-301f, cf note tete de fichier)
+                           // (nom conservé pour limiter le diff — plus de mot "Bamako" réel, voir note ci-dessus)
+const F_OUAGA = 7198;      // "Burkina" (2e pays cité, cascade) — (nom conservé, plus de mot "Ouaga" réel) — offset corrige
+const F_LIPTAKO = 7519;    // "Liptako-Gourma." — Ph2 naissance AES (figée 2s) — offset corrige
+const F_EPREUVE = 7769;    // "testée" — Ph3 transition zoom Kidal — offset corrige
+const F_KIDAL = 7902;      // "Kidal." (isolé, précédé d'un [pause] natif) — Ph4 — offset corrige
+const F_TOUAREGS = 8165;   // "touarègues," — Ph5 statu quo 2012 — offset corrige
+const F_RETIRE = 8475;     // "bagage." (ONU "plient bagage") — Ph6 ONU se retire — offset corrige
+const F_AFRICA = 8626;     // "Africa" Corps, 1ère occurrence — Ph6 offensive FAMa (voir note ci-dessus) — offset corrige
+const F_FLOTTE = 8921;     // "FLOTTE" — Ph7 reprise Kidal (figée 2s) — offset corrige
+const F_MOURA = 9647;      // "Moura," — Ph8 flashback mars 2022 — offset corrige
+// F_REPOUSSE : PLUS DE MOT ÉQUIVALENT EN V6 (ni "printemps 2026" ni "repousse" dans le nouveau texte —
+// remplacés par "Et malgré Kidal, la guerre n'est pas finie. Les groupes armés continuent d'attaquer.
+// Prendre un territoire est une chose. Le tenir en est une autre."). Valeur ci-dessous = fallback calculé
+// (mot "malgré", léger retrait pour laisser respirer la fin Moura) — SIGNALÉ, pas une mesure
+// texte. Décision Aziz en attente sur le sort de la séquence Ph9 (voir rapport agent).
+const F_REPOUSSE = 10119;  // fallback calculé (voir note ci-dessus) — PAS un mot mesuré en V6 — offset corrige
+const F_CONSERVER = 10432; // "Le tenir en est une autre" — fin de la phrase-morale = FIN P3 (ex "conserver") — offset corrige
+const F_END = 10432;       // fin P3 = EXACTEMENT F_START de Partie4Cout.tsx (jonction jointive,
+                           // 0 trou/0 chevauchement, verifie par check-frame-continuity.py 2026-08-06).
 
 // ============================================================
 // COORDONNÉES (lon, lat)
@@ -114,7 +166,11 @@ const TOUAREG_JETONS: Jeton[] = [
 // Jetons offensive (Ph6 AVANCENT vers Kidal). RACCORD CAUSAL : démarrent PENDANT le retrait ONU. DUO FAMa
 // (bleu) + Africa Corps mercenaire (gris). EN TENAILLE (Aziz 2026-06-12) : ils ne s'empilent PAS au centre,
 // ils se positionnent à 3 EXTRÉMITÉS de la région Kidal (ouest, sud, est) = ils TIENNENT/encerclent le territoire.
-const F_FAMA_START = 7720;
+const F_FAMA_START = 8522; // recalé V6 = F_RETIRE(8475)+47, même delta relatif qu'en V5 (7673+47=7720) — offset corrige
+                           // BUG évité : la valeur V5 hardcodée (7720) tombait AVANT F_KIDAL(8203)/F_TOUAREGS(8466)
+                           // en V6 — les FAMa auraient chargé vers Kidal avant même que la ville soit nommée à
+                           // l'écran. Doit rester entre F_RETIRE et F_AFRICA (contrainte causale : retrait ONU
+                           // -> offensive FAMa -> Africa Corps en appui).
 type OffJeton = Jeton & { faction: "fama" | "africacorps" };
 const FAMA_JETONS: OffJeton[] = [
   // FAMa #1 → tient le FLANC OUEST de Kidal

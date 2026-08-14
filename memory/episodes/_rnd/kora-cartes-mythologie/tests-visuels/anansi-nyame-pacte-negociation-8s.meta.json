@@ -1,0 +1,15 @@
+{
+  "tool": "MiniMax H3 via Comfy Cloud (video_minimax_h3_r2v, open-weight, submit_workflow method)",
+  "prompt_id": "ff578261-fb78-4d41-bbcb-c2726943bad4",
+  "source_image": "anansi-nyame-pacte-v2-hybride.png",
+  "requested_duration_s": 8.0,
+  "actual_duration_s": 8.0,
+  "resolution": "864x480",
+  "fps": 24,
+  "nb_frames": 192,
+  "seed": 482917364501,
+  "credits_cost": 0,
+  "date": "2026-08-13",
+  "job_wall_time_approx_min": 21,
+  "verdict": "MITIGE - decor/idle-motion Nyame reussis, geste de negociation Anansi trop peu anime, leger drift camera malgre clause statique, pulse d'orbe final peu lisible"
+}

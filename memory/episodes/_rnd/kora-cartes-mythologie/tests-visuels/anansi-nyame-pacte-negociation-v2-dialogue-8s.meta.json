@@ -1,0 +1,20 @@
+{
+  "tool": "MiniMax H3 via Comfy Cloud (video_minimax_h3_r2v, open-weight, submit_workflow method)",
+  "prompt_id": "22520b8e-9575-40a0-8ca4-dee52deb0899",
+  "source_image": "anansi-nyame-pacte-v2-hybride.png",
+  "requested_duration_s": 8.0,
+  "actual_duration_s": 8.0,
+  "resolution": "864x480",
+  "fps": 24,
+  "nb_frames": 192,
+  "seed": 731905248617,
+  "credits_cost": 0,
+  "date": "2026-08-13",
+  "iteration": "v2 - 2 corrections ciblées sur V1 (prompt_id ff578261)",
+  "changes_vs_v1": [
+    "dialogue francais reel via <d>[French]...</d> + locuteur (S1)=Anansi, Nyame explicitement silencieux (clause SUBJECT DEFINITIONS + STRICT NEGATIVE)",
+    "etoiles scintillantes: clause 'soft continuous brightness pulse per star, no position change, no new stars, no firework burst'",
+    "geste Anansi renforce: 'CLEARLY different position at each stage (not a subtle shift)' + poses contrastees explicites par tranche de 2s"
+  ],
+  "verdict": "REUSSI sur les 3 axes - dialogue transcrit mot pour mot par Whisper (0.92-5.56s, aucune deformation/troncature/mot parasite), etoiles scintillement confirme visuellement (variation nette d'intensite/position des sparkles entre frames), geste Anansi desormais nettement anime (mains basses repliees en debut -> mains hautes ecartees et maintenues des ~2s), decor/orbite doree/Adinkra/trone parfaitement stables identiques au V1, pulse d'orbe final visible et lisible ~6.8-7.2s, aucun texte parasite, aucun morphing anatomique"
+}

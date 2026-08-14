@@ -13,9 +13,46 @@
 //
 // Couche PURE par-dessus la carte (pattern <PartieX>). Reçoit SahelRenderContext. Ne possède PAS la map.
 //
-// Triggers V5 (alignment, ×30fps) :
-//   2.1 Serval/Barkhane f3196/f3268 · 2.2 présence f3419 · 2.3 MINUSMA f3660 · 2.4 échec f3887
-//   2.5 villes/campagnes f4384 · 2.6 Burkina f4955 · Niger f5380 · CEDEAO f5639
+// ============================================================
+// TRIGGERS V6 (retiming 2026-08-06, script reecrit apres flop V5 5vues/24h, jury LLM 8.8-9/10).
+// Force-alignment sur l'audio reel V6 (aes-v6-actes234.alignment.json).
+// ⚠️ CORRECTION OFFSET (2026-08-06, 2e passe) : offset absolu REEL = +2895 (duree exacte
+// aes-v6-acte1.mp3 = 96.502132s×30fps, verifiee arithmetiquement — cf Partie4Cout.tsx tete de
+// fichier qui a decouvert et corrige cette meme erreur). Les valeurs ci-dessous utilisaient
+// +3196 (erreur initiale de -301f/-10.0s propagee depuis le brief) — TOUTES CORRIGEES ici.
+// Colonne V5 = ancienne valeur (code avant tout retiming), pour audit futur.
+//
+//   "Barkhane"        f3187  (V5: F_SERVAL f3196 + F_BARKHANE f3268, delta -9f/-0.3s — quasi stable)
+//                      -> mot "Serval" DISPARU du script V6. F_SERVAL fusionne dans F_BARKHANE
+//                         (plus de setup Serval->Barkhane distinct, un seul beat "Barkhane").
+//   "region." (fin)   f3293  (V5: F_PRESENTE f3419) -> pas de mot-ancre direct en V6 pour la
+//                         "presence FR pre-positionnee" (retour Aziz #). Choix : pause naturelle
+//                         apres "bases historiques dans la region." et avant "De son cote, l'ONU..."
+//   "MINUSMA."        f3458  (V5: f3660, delta -202f/-6.7s)
+//   "ans" (dix ans...) f3861  (V5: F_ECHEC f3887, delta -26f/-0.9s) — "Mais dix ans plus tard...
+//                         c'est le constat d'echec total."
+//   "debordé."        f4322  (V5: F_DEBORDENT f4955, delta -633f/-21.1s) — "le chaos a debordé."
+//                         Anchor NOUVEAU plus precis que l'ancien F_DEBORDENT (qui n'avait pas de
+//                         mot-ancre direct en V5, calé empiriquement pres de Burkina).
+//   "burkinabè"       f4675  (V5: F_BURKINA f4976, delta -301f/-10.0s)
+//                         role SEMANTIQUE inchangé : "quarante pour cent du territoire burkinabè" =
+//                         fin du remplissage 40% du contour Burkina, cf burkinaFill = interpolate(...,
+//                         [F_DEBORDENT, F_BURKINA+90], ...)).
+//   "villes."         f5047  (V5: F_VILLES f4384, delta +663f/+22.1s)
+//   "campagnes,"       f5106  (V5: F_CAMPAGNES f4421, delta +685f/+22.8s)
+//   "Niger" (bascule) f6163  (V5: F_NIGER f5380, delta +783f/+26.1s)
+//   "CEDEAO."          f6427  (V5: F_CEDEAO f5639, delta +788f/+26.3s)
+//
+// ⚠️ ORDRE NARRATIF INVERSE vs V5 (signalé à Aziz, PAS corrigé seul — choréo intacte) :
+//   V5 : villes/campagnes (2.5) AVANT Burkina/40% (2.6). V6 : Burkina/40% (débordé f4623 ->
+//   burkinabè f4976) AVANT villes/campagnes (f5348-5407). Le texte V6 parle du debordement
+//   Burkina PUIS revient en arriere expliquer POURQUOI (forces onusiennes tenaient les villes,
+//   pas les campagnes) — structure "consequence puis explication causale", pas chronologique.
+//   La chorégraphie de code (JETONS phase A Mali -> Burkina fill -> HELD_CITIES fenêtre) est
+//   RETIMÉE sur les nouvelles frames dans le MÊME ordre de code qu'avant (Mali jetons ->
+//   Burkina -> villes tenues), donc les villes tenues s'affichent maintenant APRÈS le
+//   remplissage Burkina au lieu d'avant — décision de chorégraphie, pas tranchée ici.
+// ============================================================
 
 import React from "react";
 import { AbsoluteFill, interpolate, spring, staticFile, useVideoConfig, Easing } from "remotion";
@@ -27,27 +64,28 @@ import { NIGER_RING, BURKINA_RING, MALI_RING, BENIN_RING, NIGERIA_RING, GHANA_RI
 import { WarMapPlaque } from "./WarMapPlaque";
 
 // ============================================================
-// TRIGGERS V5
+// TRIGGERS V6 (retimés 2026-08-06 — voir bloc de commentaires en tête de fichier pour le détail
+// V5->V6 mot par mot). F_SERVAL supprimé (mot "Serval" disparu du script V6, fusionné dans
+// F_BARKHANE — tous les anciens usages F_SERVAL+n redirigés vers F_BARKHANE+n ci-dessous).
 // ============================================================
-const F_SERVAL = 3196;
-const F_BARKHANE = 3268;
-const F_PRESENTE = 3419;
-const F_MINUSMA = 3660;
-const F_ECHEC = 3887;     // "dix ans plus tard" — début de l'avancée jihadiste
-const F_VILLES = 4384;
-const F_CAMPAGNES = 4421;
-const F_DEBORDENT = 4955;
-const F_BURKINA = 4976;
-const F_NIGER = 5380;
-const F_CEDEAO = 5639;
+const F_BARKHANE = 3187;  // "Barkhane" (ex-F_SERVAL 3196 fusionné ici, Serval disparu du texte) — offset corrige
+const F_PRESENTE = 3293;  // fin de "...bases historiques dans la région." (pas de mot-ancre direct) — offset corrige
+const F_MINUSMA = 3458;   // "MINUSMA." — offset corrige
+const F_ECHEC = 3861;     // "dix ans plus tard" — début de l'avancée jihadiste — offset corrige
+const F_DEBORDENT = 4322; // "débordé." (le chaos a débordé) — AVANT Burkina/40% et AVANT villes/campagnes en V6 — offset corrige
+const F_BURKINA = 4675;   // "burkinabè" (quarante pour cent du territoire burkinabè) — fin remplissage 40% — offset corrige
+const F_VILLES = 5047;    // "villes." — APRÈS Burkina/40% en V6 (ordre inversé vs V5, cf commentaire en tête) — offset corrige
+const F_CAMPAGNES = 5106; // "campagnes," — offset corrige
+const F_NIGER = 6163;     // "Niger" (bascule à son tour) — offset corrige
+const F_CEDEAO = 6427;    // "CEDEAO." — offset corrige
 
 // ============================================================
 // LIEUX (sprites Gemini ancrés carte)
 // ============================================================
 type Base = { id: string; name: string; coord: [number, number]; appearAt: number; fallAt: number };
 const FR_BASES: Base[] = [
-  { id: "gao", name: "GAO", coord: [-0.04, 16.27], appearAt: F_SERVAL + 12, fallAt: F_ECHEC + 150 },
-  { id: "menaka", name: "MÉNAKA", coord: [2.40, 15.92], appearAt: F_SERVAL + 30, fallAt: F_ECHEC + 230 },
+  { id: "gao", name: "GAO", coord: [-0.04, 16.27], appearAt: F_BARKHANE + 12, fallAt: F_ECHEC + 150 },
+  { id: "menaka", name: "MÉNAKA", coord: [2.40, 15.92], appearAt: F_BARKHANE + 30, fallAt: F_ECHEC + 230 },
   { id: "tessalit", name: "TESSALIT", coord: [1.01, 20.20], appearAt: F_BARKHANE + 12, fallAt: F_ECHEC + 310 },
 ];
 // MINUSMA part dès la FIN du 2.4 (Aziz : alléger le 2.5, les ONU ont joué leur rôle 2.3-2.4).
@@ -205,9 +243,16 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
   // Remplacé par un pulse rouge/ambre sur le contour MÊME des 3 pays AES (menace qui pèse sur eux,
   // pas de nouvelle géo CEDEAO montrée) — cf bloc plus bas.
   const cedeaoT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 30], [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  // Pulse jusqu'à la fin de P2 (f6118, cf Root.tsx durationInFrames=6119) : dure toute la zone
-  // où la voix parle de la CEDEAO/menace, avant le relais de P3.
-  const cedeaoEndT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 40, 6080, 6118], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+  // Pulse jusqu'à la fin RÉELLE de P2 dans le texte V6. ⚠️ RETIMING V6 (2026-08-06) : les anciennes
+  // bornes [6080, 6118] venaient de Root.tsx durationInFrames=6119 (V5), collées à l'ancien F_CEDEAO=5639.
+  // Vérifié dans l'alignment V6 (aes-v6-actes234.alignment.json) : le marker "### PARTIE 3" tombe à
+  // f7412 (juste après "...précipiter la création d'un nouveau bloc."), PAS f6118/6119/6211. Le texte P2
+  // continue en réalité jusque-là ("C'est à ce moment précis que tout bascule... nouveau bloc.") — cf
+  // bloc CEDEAO/climax dans le script V6 fourni. Bornes recalées sur cette fin réelle (marge 8f avant
+  // le marker). ⛔ Root.tsx (SahelPartie2 durationInFrames=6119) ET Partie3Rupture.tsx (F_BAMAKO=6211)
+  // semblent DÉSYNCHRONISÉS avec cette frontière réelle — signalé à l'orchestrateur, pas corrigé ici
+  // (hors du fichier confié, décision cross-agent).
+  const cedeaoEndT = interpolate(frame, [F_CEDEAO, F_CEDEAO + 40, 7360, 7404], [0, 1, 1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── Hiérarchie du regard : assombrir légèrement pendant l'avancée (2.4) ──
   const dim = interpolate(frame, [F_ECHEC - 10, F_ECHEC + 30, F_DEBORDENT, F_DEBORDENT + 60], [0, 0.18, 0.18, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
@@ -416,11 +461,19 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
 
         {/* ============ VILLES TENUES (2.5) — points clairs NOMMÉS qui RÉSISTENT dans le rouge (retour Aziz :
              plus de sprite-bâtiment ambigu). Halo bleu-acier qui pulse (la ville tient) + nom géo-ancré.
-             Présentes 2.5 → estompent quand le Burkina commence. ============ */}
-        {frame >= F_VILLES && frame < F_DEBORDENT && HELD_CITIES.map((c, i) => {
+             ⚠️ RETIMING V6 (2026-08-06) : en V5, "villes/campagnes" (2.5) précédait "Burkina/40%" (2.6) —
+             la fenêtre d'affichage était [F_VILLES, F_DEBORDENT) et s'estompait QUAND le Burkina commençait.
+             En V6 l'ORDRE NARRATIF EST INVERSÉ (Burkina/débordement f4623-4976 AVANT villes/campagnes
+             f5348-5407, cf commentaire tête de fichier) — la condition [F_VILLES, F_DEBORDENT) devenait
+             TOUJOURS FAUSSE (F_VILLES=5348 > F_DEBORDENT=4623), ce qui supprimait silencieusement tout le
+             beat "villes tenues". Fix MINIMAL (pas une décision de chorégraphie, une condition cassée) :
+             fenêtre repointée sur les 2 bornes adjacentes désormais correctes dans le nouvel ordre —
+             [F_VILLES, F_NIGER) — même logique spring/fade, bornes différentes. À VALIDER visuellement :
+             la ville tenue s'affiche maintenant APRÈS le remplissage Burkina au lieu d'avant. ============ */}
+        {frame >= F_VILLES && frame < F_NIGER && HELD_CITIES.map((c, i) => {
           const p = project(c.coord[0], c.coord[1]);
           const ap = spring({ frame: frame - (c.appearAt + i * 6), fps, config: { damping: 13 }, durationInFrames: 16 });
-          const out = interpolate(frame, [F_DEBORDENT - 50, F_DEBORDENT], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
+          const out = interpolate(frame, [F_NIGER - 50, F_NIGER], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
           const op = ap * out;
           if (op <= 0.02) return null;
           const pulse = 1 + 0.12 * Math.sin((frame - c.appearAt) * 0.11);
@@ -442,12 +495,13 @@ export const Partie2Blocage: React.FC<Props> = ({ ctx }) => {
       {FR_BASES.map((b) => renderBase(b, baseSprite, BASE_DEG, BASE_RATIO))}
 
       {/* ============ PLAQUES DE NOMS (WarMapPlaque parchemin élégante) ============ */}
-      {/* Villes tenues (2.5) */}
+      {/* Villes tenues (2.5) — hideAt repointé F_DEBORDENT->F_NIGER (même fix que le halo SVG ci-dessus,
+          ordre villes/Burkina inversé en V6, cf commentaire tête de fichier). */}
       {HELD_CITIES.map((c, i) => {
         const p = project(c.coord[0], c.coord[1]);
         return (
           <WarMapPlaque key={`plaque-${c.id}`} frame={frame} name={c.name} pos={p}
-            appearAt={c.appearAt + i * 6 + 8} hideAt={F_DEBORDENT} accent={PAL.STEEL} size={17} yOffset={26} />
+            appearAt={c.appearAt + i * 6 + 8} hideAt={F_NIGER} accent={PAL.STEEL} size={17} yOffset={26} />
         );
       })}
       {/* Burkina (2.6) — plaque pays seule (stat retirée, Aziz : l'encadré 2015/40% n'a pas lieu d'être) */}

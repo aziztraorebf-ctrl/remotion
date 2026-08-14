@@ -43,6 +43,50 @@ posés ("comment une dette remboursée peut ne jamais diminuer ?"), décision en
 OU fact-check du chiffre-choc d'abord. Diagnostic flop Short CFA CLOS (miniature illisible, fixé).
 Détail complet des 3 : `projects/EXPLORATION-DIVERSIFICATION-CHAINES.md` § sessions 2026-08-12 et 2026-08-12/13.
 
+**⭐⭐ Piste Poster Vector/Whiteboard Doodle pour Kora & Cartes — 2 styles VALIDÉS sur mythe Anansi, dialogue+animation OK (2026-08-13)**
+Test complet mené sur le mythe Anansi/Nyame (Akan/Ghana, pacte des histoires du monde — angle
+"ruse > force pour capturer la valeur", mythologie africaine pure retenue vs piste A/pays-qui-montent).
+2 styles H3 VALIDÉS bout en bout par Aziz, chacun en V2 corrigée (dialogue FR propre + geste
+animé + upscale 1080p sans passer par le 720p) : **Poster Vector** (flat vector, orbite dorée continue)
+et **Whiteboard Doodle** (couleur sélective jaune/bleu choisie spontanément par le modèle, très
+appréciée par Aziz — comparable à notre pratique SVG maison). Défaut résiduel (œil qui semblait
+"morphé" en 480p) confirmé être un simple artefact de basse résolution, réglé par l'upscale — pas un
+vrai défaut H3. Détail technique complet + prompts reproductibles + syntaxe dialogue validée :
+`tools/minimax-h3-styles-tests.md`. Assets : `episodes/_rnd/kora-cartes-mythologie/tests-visuels/`.
+**Reste ouvert** : décision de format (insert dans vidéo Mapbox/D3 existante vs vidéo complète) — pas
+encore tranché, sujet pas encore choisi non plus (piste A "pays qui montent" vs mythe reste à trancher).
+
+**⭐⭐ SVG codé direct (Fable5 mode MAX, sans jury LLM) — VALIDÉ sur 2 cas distincts, méthode fiable (2026-08-13)**
+Hypothèse d'Aziz confirmée deux fois : un agent Claude en mode MAX, codant DIRECTEMENT en SVG en
+observant une image de référence Gemini (zéro appel API externe, zéro jury), produit un résultat au
+niveau ou au-dessus de la référence — ET produit des groupes SVG adressables/animables (avantage net
+sur une image figée). **Cas 1** (scène dette/FMI, objets fabriqués simples — piles de billets,
+factures, flèches, pièces) : réussi, mais géographie réelle (continent Afrique) a échoué 2× à main
+levée avant de pivoter vers de vraies données `d3-geo`/Natural Earth — **jamais dessiner un contour de
+pays à l'œil, même dans une scène par ailleurs simple**, règle confirmée sur ce 2e cas aussi. **Cas 2**
+(décor complet aéroport Niamey Gazoduc Acte 3 — architecture + atmosphère nocturne + lumières
+multiples, PAS juste des objets simples) : jugé par Aziz supérieur au décor existant, **action directe
+prise** — voir bloc GAZODUC ci-dessous. Composants sources : `src/projects/_rnd/svg-scenes/
+DetteFmiMecanismeSVG.tsx` + `GazoducAeroportFable5Test.tsx`. Réserve d'Aziz : pas encore un pilier
+du workflow, à retester sur plusieurs styles/registres dans une session dédiée avant de généraliser
+davantage — mais déjà utilisable au cas par cas dès maintenant (2 preuves suffisantes pour un test
+ponctuel, pas encore pour une automatisation).
+
+**⭐⭐⭐ Storyboard cartographique multi-modèles (Gemini+GPT) — méthode NOUVELLE, documentée, 1er usage réel en cours (2026-08-13)**
+Découverte majeure de session : un DA-brief textuel seul (3 voix, `da-brief.py`) ne suffit PAS à éviter
+un rendu de carte plat — le storyboard VISUEL reste nécessaire même après un brief écrit soigné (constat
+direct d'Aziz sur l'Acte 3 Gazoduc, "tracés plats qui ne représentent pas grand-chose" malgré 3 DA-briefs
+déjà faits). Méthode découverte et validée : donner à Gemini/GPT une frame réelle de NOTRE carte +
+nos capacités techniques listées explicitement + le texte du script + des références de chaînes connues
+(Vox Atlas "montrer le terrain", discipline Kurzgesagt "peu d'éléments bien timés") → 3 concepts
+DISTINCTS (1 image = 1 concept, jamais un montage multi-concepts en une image basse résolution) →
+Aziz choisit/mix-and-match les meilleures idées → Claude écrit directement le breakdown de fusion
+(pas de 3e aller-retour image). **Verdict comparatif GPT Image 2 vs Gemini** : GPT supérieur pour ce
+type de storyboard annoté (français propre, annotations caméra réalisateur explicites et utiles —
+ne PAS les brider, les encourager explicitement dans le prompt). Doctrine complète mise à jour :
+`doctrines/STORYBOARD-MAPBOX.md` § "EXTENSION D3 + VERDICT GPT vs GEMINI" (2026-08-13) — **à proposer
+systématiquement dès qu'une scène carte D3/Mapbox est jugée plate/statique**, référencé dans ROUTAGE.md.
+
 ---
 
 ## ⭐⭐ NOUVELLE CHAÎNE CANADA EN — test PIPELINE en cours (2026-08-13)
@@ -66,7 +110,37 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐ GAZODUC — Acte 1+2 TERMINÉS, Acte 3 codé v1→v2, EN ATTENTE REVUE AZIZ
+## ⭐⭐⭐ GAZODUC — Segment B (aéroport) SVG prêt à intégrer · Segment A (carte) storyboard V5 validé, breakdown+code à refaire (2026-08-14)
+
+**Segment B (aéroport Niamey)** : décor SVG régénéré par Fable5 mode MAX, jugé par Aziz supérieur au
+décor actuel — **à intégrer dans la prod** (porter l'animation existante de
+`GazoducActe3InsertSecurite.tsx` sur les nouveaux groupes de `GazoducAeroportFable5Test.tsx`, timing/
+beats déjà résolus, ne pas repartir de zéro). Détail : STATUS.md § en tête.
+
+**Segment A (carte trajet+chantier+financement+paradoxe)** : v3 codé à partir d'un 1er breakdown a été
+**REJETÉ par Aziz** (widgets flottants en coin d'écran, texte sans support, ~15-22s de vide en tout
+début, régression sur une règle DA-brief déjà actée). 2e passage storyboard réussi (2026-08-14) :
+**GPT Image 2 en "libre créative" (structure légère 3-états, pas de mise en scène dictée) a produit un
+résultat nettement supérieur au brief prescriptif détaillé** — retenu comme base. 4 images validées +
+prompt squelette réutilisable. Détail complet + les 4 images :
+`episodes/souverain/gazoduc-aagp-tsgp/BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md` § "V4/V5 — 2e passage".
+
+**3 points tranchés par Claude (2026-08-14), à appliquer dans le prochain prompt de breakdown/storyboard** :
+1. **Inserts qui débordent latéralement du cadre 16:9** = vrai défaut de composition (viole "carte
+   d'abord"), pas un non-sujet du format large. Fix : ajouter explicitement "insert overlays the map,
+   never pushes it aside" dans les règles non-négociables du prochain prompt.
+2. **Densité de texte (Beat 3 financement le plus chargé)** : pas de règle générale — demander au
+   breakdown (fait par le modèle qui a généré l'image) de juger lui-même si un insert dense doit être
+   scindé en 2 temps successifs, plutôt que trancher à l'aveugle avant d'avoir le détail.
+3. **Inserts en clip H3 stylisé** (chantier/zone de conflit, contenu à fort détail) : génération déjà
+   maîtrisée (styles validés cette session sur Anansi/Nyame), le vrai défi est l'INTÉGRATION (poser un
+   clip dans un cadre SVG animé, gérer boucle/durée vs temps d'affichage de l'insert) — chantier
+   technique à tester ISOLÉMENT, ne pas bloquer le recodage du Segment A dessus.
+
+**Prochaine étape actée** : breakdown JSON complet via GPT Image 2 sur chaque image V5 (le modèle qui a
+généré l'image fait son propre breakdown — zéro ambiguïté/devinette), en intégrant les 3 points ci-dessus
+dans le prompt, PUIS recoder `GazoducActe3CarteTSGP.tsx`.
+Ne PAS repartir du code v3 actuel sans ce nouveau breakdown.
 
 Rendu v2 corrigé après DA-brief critique :
 https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte3-v2-Sw435S8sYbHTbgMbmvDkRfPMdkyhFT.mp4

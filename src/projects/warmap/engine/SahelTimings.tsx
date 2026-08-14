@@ -12,24 +12,53 @@ import { interpolate } from "remotion";
 import React from "react";
 
 // ============================================================
-// ACTE 1 — triggers RÉELS (forced-alignment narration V5, 2026-06-15)
+// ACTE 1 — TRIGGERS V6 (retiming 2026-08-06, script reecrit apres echec vues
+// video V5 5vues/24h). Force-align sur aes-v6-acte1.alignment.json (offset 0,
+// l'Acte1 demarre a f0 dans le moteur). Colonne V5 = ancienne valeur, pour audit.
+//
+// "Mali/Burkina/Niger" f10/32/70 (V5: 145/217/286, groupes cites ensemble en une
+//   seule phrase en V6 au lieu d'un rythme separe -> beaucoup plus tot/compact)
+// "bloc regional"/"creent...alliance" f359/488 (V5: CEDEAO f361/LIPTAKO f477) --
+//   ⚠️ le texte V6 NE NOMME PLUS "CEDEAO" ni "Liptako-Gourma" dans le hook (dit
+//   juste "ils claquent la porte de leur propre bloc regional...creent leur
+//   propre alliance") -- meme INTENTION narrative (rupture bloc -> alliance),
+//   recale sur les mots les plus proches. Ecart V5(361->477=116f) tres proche de
+//   V6(359->488=129f) -- structure temporelle interne du hook globalement stable
+//   ici malgre le texte reecrit.
+// "Al-Qaida" f1886 / "Daech" f1942 (V5: "JNIM" f1132 / "EIGS" f1461) -- ⚠️ le
+//   texte V6 NE NOMME PLUS les sigles JNIM/EIGS (dit "l'une liee a Al-Qaida,
+//   l'autre a Daech") -- decision Aziz 2026-08-06 : GARDER les cartouches
+//   visuels JNIM/EIGS, recales sur le nom du groupe parent le plus proche.
+// "detestent/combattent" f1994 (V5: FRICTION f1840)
+// "decennies" f2680 (V5: END f2096) -- proxy zone vide/rancoeurs, fin Acte1 (pas
+//   de mot exact "rancoeurs" trouve par force-align, "decennies" juste avant)
 // ============================================================
 export const A1 = {
-  MALI: 145, BURKINA: 217, NIGER: 286, CEDEAO: 361, LIPTAKO: 477,
+  MALI: 10, BURKINA: 32, NIGER: 70, CEDEAO: 359, LIPTAKO: 488,
   FREEZE: 539, FREEZE_END: 599, DRIFT: 684,
-  JNIM: 1132, EIGS: 1461, FRICTION: 1840, END: 2096,
+  JNIM: 1886, EIGS: 1942, FRICTION: 1994, END: 2680,
 } as const;
 
 // ============================================================
 // ACTE 1 FINAL — PULSE RÉGION-PRÉCISE AU NOMMAGE
+//
+// ⚠️ RETIMING V6 (2026-08-06) : le texte V5 nommait JNIM/EIGS en 2 PHRASES
+// SÉPARÉES ("Le premier s'appelle le JNIM...Le second s'appelle l'EIGS"),
+// laissant 329f/11s entre A1.JNIM et A1.EIGS pour dérouler les 4 pulses en
+// séquence (jnim-mali -> jnim-bfa -> eigs-3f -> eigs-niger). Le texte V6 dit
+// "l'une liée à Al-Qaïda, l'autre à Daech" en UNE SEULE phrase rapide (56f/1.9s
+// entre A1.JNIM=1886 et A1.EIGS=1942) -- le séquencement V5 chevaucherait.
+// Décision Aziz (2026-08-06) : FUSIONNER en 2 pulses SIMULTANÉS par faction
+// (jnim-mali + jnim-bfa ensemble sur "Al-Qaïda", eigs-3f + eigs-niger ensemble
+// sur "Daech") au lieu de 4 pulses séquentiels -- respecte le nouveau rythme.
 // ============================================================
 export type RegionPulse = { key: string; faction: "jnim" | "eigs"; trigger: number; dur: number; regions: string[] };
 
 export const A1_REGION_PULSES: RegionPulse[] = [
-  { key: "jnim-mali", faction: "jnim", trigger: 1411, dur: 80, regions: ["Mopti", "Ségou"] },
-  { key: "jnim-bfa", faction: "jnim", trigger: 1454, dur: 90, regions: ["Sahel", "Nord", "Centre-Nord"] },
+  { key: "jnim-mali", faction: "jnim", trigger: 1886, dur: 80, regions: ["Mopti", "Ségou"] },
+  { key: "jnim-bfa", faction: "jnim", trigger: 1886, dur: 90, regions: ["Sahel", "Nord", "Centre-Nord"] },
   { key: "eigs-3f", faction: "eigs", trigger: 1942, dur: 80, regions: ["Ménaka", "Tillabéri"] },
-  { key: "eigs-niger", faction: "eigs", trigger: 2009, dur: 85, regions: ["Tillabéri", "Tahoua"] },
+  { key: "eigs-niger", faction: "eigs", trigger: 1942, dur: 85, regions: ["Tillabéri", "Tahoua"] },
 ];
 
 // B1 V3 — ACTE 2 pulses de régions
@@ -39,20 +68,28 @@ export const ACTE2_REGION_PULSES: RegionPulse[] = [
 ];
 
 // ============================================================
-// TRIGGERS AUDIO (depuis TIMING-V1-2026-06-07.md)
+// TRIGGERS AUDIO V6 (retiming 2026-08-06, voir bloc A1 ci-dessus pour le detail
+// du texte). F_JNIM_ZONE = doublon historique de A1.JNIM, alignes ensemble.
+// F_BURKINA/F_NIGER (Acte1, apparition label Ouagadougou) : AUCUNE ville n'est
+// nommee dans le hook V6 -- fallback proportionnel (ratio A1.END 2680/2096=1.28
+// applique aux anciennes valeurs), pas une mesure texte. F_NIGER semble inutilise
+// dans le moteur (aucun usage trouve hors CITY_SCHEDULE indirect) -- garde par
+// coherence, a verifier si mort au prochain nettoyage.
+// F_AES_NEE..F_SAHELIENS : zone Partie2/3/4, mesures via aes-v6-actes234
+// (offset absolu +3196, coherent avec Partie2Blocage.tsx/Partie3Rupture.tsx).
 // ============================================================
-export const F_JNIM_ZONE     = 1132;
-export const F_BURKINA       = 1375;
-export const F_NIGER         = 1690;
-export const F_AES_NEE       = 7014;
-export const F_KIDAL_ALONE   = 7279;
-export const F_KIDAL_FLAG    = 8683;
-export const F_REF_DJIBO     = 10294;
-export const F_REF_MENAKA    = 10349;
-export const F_REF_TILLABERI = 10783;
-export const F_ICON_OR       = 11032;
-export const F_ICON_PETRO    = 11122;
-export const F_SAHELIENS     = 12183;
+export const F_JNIM_ZONE     = 1886; // = A1.JNIM (etait 1132, doublon historique)
+export const F_BURKINA       = 1758; // fallback proportionnel (etait 1375, pas de mot-ancre V6)
+export const F_NIGER         = 2161; // fallback proportionnel (etait 1690, pas de mot-ancre V6, semble inutilise)
+export const F_AES_NEE       = 8070; // "testee" (etait 7014, +1056f/+35.2s -- meme mot-ancre que F_EPREUVE de Partie3Rupture.tsx)
+export const F_KIDAL_ALONE   = 8203; // "Kidal." isole (etait 7279, +924f/+30.8s -- meme mot-ancre que F_KIDAL de Partie3Rupture.tsx)
+export const F_KIDAL_FLAG    = 9222; // "FLOTTE" (etait 8683, +539f/+18.0s -- meme mot-ancre que F_FLOTTE de Partie3Rupture.tsx)
+export const F_REF_DJIBO     = 11135; // "Djibo" (etait 10294, +841f/+28.0s -- meme mot-ancre que F_DJIBO de Partie4Cout.tsx)
+export const F_REF_MENAKA    = 11159; // "Menaka" (etait 10349, +810f/+27.0s -- meme mot-ancre que F_MENAKA de Partie4Cout.tsx)
+export const F_REF_TILLABERI = 11189; // "Tillaberi" (etait 10783, +406f/+13.5s -- meme mot-ancre que F_TILLABERI de Partie4Cout.tsx)
+export const F_ICON_OR       = 12637; // "l'or" (etait 11032, +1605f/+53.5s -- mesure isolement, distinct de F_ICON_PETRO)
+export const F_ICON_PETRO    = 12784; // "petrole" (etait 11122, +1662f/+55.4s -- meme mot-ancre que F_PETROLE de Partie4Cout.tsx)
+export const F_SAHELIENS     = 14528; // "echoue" proxy (etait 12183, +2345f/+78.2s -- pas de mot "sahéliens" isole trouve, proxy zone perspective finale, cf F_REUSSIR de Partie4Cout.tsx)
 
 // Triggers villes additionnels
 export const F_GAO           = 3989;
@@ -84,13 +121,14 @@ export const LIBYE_COORD  = [13.18, 32.90] as [number, number];
 export const NORD_MALI_COORD = [1.44, 18.43] as [number, number];
 
 // ============================================================
-// TRIGGERS HOOK — Acte 1 (forced alignment narration-v1, recalés V5)
+// TRIGGERS HOOK — Acte 1 V6 (retiming 2026-08-06, memes valeurs que le bloc A1
+// ci-dessus -- F_HOOK_* est le jeu REELLEMENT consomme par le moteur, cf usages).
 // ============================================================
-export const F_HOOK_MALI     = 145;
-export const F_HOOK_BURKINA  = 217;
-export const F_HOOK_NIGER    = 286;
-export const F_HOOK_CEDEAO   = 361;
-export const F_HOOK_LIPTAKO  = 477;
+export const F_HOOK_MALI     = 10;
+export const F_HOOK_BURKINA  = 32;
+export const F_HOOK_NIGER    = 70;
+export const F_HOOK_CEDEAO   = 359;
+export const F_HOOK_LIPTAKO  = 488;
 export const F_HOOK_FREEZE   = 539;
 export const F_HOOK_DRIFT    = 684;
 

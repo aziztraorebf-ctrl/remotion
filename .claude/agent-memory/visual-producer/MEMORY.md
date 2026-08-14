@@ -23,6 +23,15 @@
 
 ## ETAT PROJETS ACTIFS
 
+### Kora & Cartes — piste mythologie africaine (R&D, 2026-08-13)
+V1 : test mecanisme anime H3 R2V sur image Anansi/Nyame (pacte, Akan/Ghana) — verdict MITIGE (decor +
+idle motion Nyame OK, geste Anansi trop peu anime, dialogue charabia non demande, etoiles statiques).
+V2 (meme jour) : 3 corrections ciblees (dialogue FR reel <d>[French]...</d> verifie Whisper mot pour
+mot, etoiles scintillantes confirmees visuellement, geste Anansi nettement renforce via poses
+contrastees par tranche) — **TOUTES REUSSIES**, decor/orbite/style non regresses. Livrable V2 :
+`memory/episodes/_rnd/kora-cartes-mythologie/tests-visuels/anansi-nyame-pacte-negociation-v2-dialogue-8s.mp4`.
+Detail complet : `GOTCHAS-TOOLS.md`.
+
 ### NorthShield/NoteShield (client-sim)
 - Storyboard V3 : `memory/client-sim-tests/noteshield/STORYBOARD-V3-MIX-INCARNE.md`
 - Style anchor Sarah : `src/projects/_client-sim/noteshield/refs/sarah-candidat-B-v3-final.jpg`
@@ -124,24 +133,12 @@ remotion-composer possible sans passer par Claude principal. `/goal` et `/bg` di
 
 ---
 
-## REVISION LOG (recent — historique complet dans archive)
+## REVISION LOG (recent — historique complet dans archive/tools files)
 
-- 2026-08-08 (2e passe) : Sonjata scene4 orbite — test corrigé (causalité barre + dot-eyes + sans
-  audio). 2/3 défauts du brief RÉSOLUS avec méthode réutilisable (clause causale explicite + double
-  fix image Gemini edit + clause prompt pour dot-eyes). Défaut audio traité par `ffmpeg -an` (aucun
-  param natif trouvé). MAIS nouveau défaut critique NON anticipé découvert en review : bandeau noir
-  progressif couvrant le tiers supérieur du cadre de t=3.7s à t=15s (~2/3 du clip) — clip NON livré
-  à Aziz, non uploadé. Détail complet + hypothèses cause + piste prochain test :
-  `memory/tools/minimax.md` section "Test corrigé — causalité barre + dot-eyes + sans audio".
-- 2026-08-08 : Sonjata plan2 H3 chain — test 15s multi-strates (mère+figurant nommé+ambiance).
-  Format/durée OK (480x864, 15.08s). Figurant nommé (vieil homme au châle) validé 2e fois — la
-  règle "nommer précisément qui bouge" continue de fonctionner. Nuages+feuillage baobab : ÉCHEC,
-  aucun mouvement malgré clause dédiée "CONTINUOUS AMBIENT MOTION" séparée. Rythme garçon/mère :
-  compression en bloc t7-9 puis hold figé 9-15 (défaut inverse du 1er test, pas résolu). Détail
-  complet + pistes prochain test : `memory/tools/minimax.md` section "Test 15s multi-strates".
-  Coût ce clip : ~$1.23 (cumul mensuel $2.06→$3.29).
-- 2026-08-07 (2e passe) : gotchas détaillés déplacés vers `GOTCHAS-TOOLS.md` (nouveau fichier),
-  MEMORY.md resserré sous 140 lignes. P6 NorthShield livré (perso distinct de Sarah, style-matché
-  via image-to-image, clip H3 validé 0 drift).
-- 2026-08-07 : compaction 323→~140 lignes (plafond dur 200 lignes/25000 octets). Détail Sonjata/
-  Thiaroye/Abou Bakari déplacé vers `archive/projets-detail-pre-2026-08.md`.
+- 2026-08-13 : Kora & Cartes Anansi/Nyame H3 R2V V2 — 3 corrections ciblées (dialogue FR, étoiles
+  scintillantes, geste renforcé) toutes réussies, vérifié Whisper + frames denses. `GOTCHAS-TOOLS.md`.
+- 2026-08-13 : Kora & Cartes test Anansi/Nyame H3 R2V V1 — verdict mitigé, detail `GOTCHAS-TOOLS.md`.
+- 2026-08-08 : Sonjata scene4 orbite (bandeau noir non anticipé, non livré) + plan2 H3 chain 15s
+  multi-strates (figurant nommé OK, nuages/feuillage échec) — détail `memory/tools/minimax.md`.
+- 2026-08-07 : gotchas détaillés déplacés vers `GOTCHAS-TOOLS.md`. P6 NorthShield livré (0 drift).
+- 2026-08-07 : compaction 323→~140 lignes. Détail Sonjata/Thiaroye/Abou Bakari → `archive/`.

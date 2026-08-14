@@ -1,0 +1,56 @@
+Model: gemini-3.1-flash-image-preview (image-to-image, ref = mariama-ba-charsheet-CANONICAL.png)
+Date: 2026-08-13
+Test: charsheet 6-vues grille 3x2 (inspiré du principe "Soul ID" documenté dans le repo communautaire
+OSideMedia/higgsfield-ai-prompt-skill — adaptation, pas une copie du prompt Higgsfield qu'on n'a pas lu).
+But: voir si un seul appel image peut produire les 3 vues manquantes (dos, buste, mains, gros-plan visage)
+en plus des 3 vues déjà couvertes (face, 3/4, profil) par la charsheet CANONICAL existante.
+
+Prompt:
+CHARACTER SHEET EXPANSION — using the attached reference image as the EXACT character, style, and
+costume to preserve, generate a complete 6-panel character reference sheet in a 3x2 grid layout
+(3 columns, 2 rows), wide 16:9 canvas, plain warm cream/beige paper background throughout.
+
+CRITICAL — PRESERVE EXACTLY from the reference image:
+- DOT EYES only (small black filled dots, no iris, no pupil, no realistic eye) — the GeoAfrique
+  papercraft signature, non-negotiable.
+- Fine confident black outlines, flat ochre/terracotta/cream/soft brown palette only, uniform skin
+  tone, paper grain texture, papercraft sepia texture.
+- The exact same costume: tall GELE headwrap with geometric ochre/brown pattern, cream BOUBOU dress
+  with thin decorative neckline band, small gold hoop earrings, small closed book held in her hands.
+- The exact same character identity (same face proportions, same build) — this is the SAME woman
+  shown from new angles, not a new character.
+
+GRID LAYOUT (3 columns x 2 rows, each panel clearly separated, no overlap, consistent panel size):
+
+Row 1 (already-established angles, reproduce consistent with reference):
+- Panel 1 (top-left): FRONT VIEW, full body, standing, facing forward, hands joined holding book
+  (matches reference image's front pose).
+- Panel 2 (top-center): THREE-QUARTER VIEW, full body, standing, turned slightly right, same pose.
+- Panel 3 (top-right): PROFILE VIEW, full body, standing, fully facing right, same pose.
+
+Row 2 (NEW angles, not in the reference — the actual test):
+- Panel 4 (bottom-left): BACK VIEW, full body, standing, seen from directly behind — show the back
+  of the gele headwrap's geometric wrap pattern, the back drape of the boubou dress, same standing
+  posture as the front view, arms in the same joined-in-front position (hands not visible from behind,
+  which is correct and expected).
+- Panel 5 (bottom-center): MEDIUM SHOT / BUST, from waist up, three-quarter angle, same costume detail
+  at the visible neckline and shoulders, hands and book visible at the bottom of frame.
+- Panel 6 (bottom-right): CLOSE-UP, two views combined side by side within this single panel — a
+  close-up of the FACE (front angle, showing the dot-eyes, eyebrows, nose line, mouth clearly and
+  larger than in the other panels) on the left half of the panel, and a close-up of the HANDS holding
+  the closed book on the right half of the panel, both rendered in the same flat papercraft style with
+  visible paper grain and fine outlines.
+
+STYLE RULES (NON-NEGOTIABLE, same as established character):
+- DOT EYES only — never realistic eyes, in every panel where the face is visible.
+- Fine confident black outlines — not thick comic outlines, not thin hesitant lines.
+- Flat ochre/terracotta/cream/soft brown palette only — no blue, no bright green, no gradients or
+  realistic shading.
+- Iconic stylized rendering throughout, consistent across all 6 panels — this must read as ONE
+  character sheet, not six different illustrations.
+
+NO scenery, no background elements beyond the plain cream paper, no text, no labels, no captions, no
+panel numbers or annotations anywhere in the image.
+
+Output format: single wide 16:9 image, 3x2 grid of 6 panels, plain cream paper background throughout,
+consistent character across all panels.

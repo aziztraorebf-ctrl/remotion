@@ -1486,10 +1486,10 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
     <AbsoluteFill style={{ backgroundColor: SAHEL_COLORS.ocean, fontFamily: "'Cormorant Garamond', Georgia, serif" }}>
       <MapboxBrandingHide />
 
-      {/* Narration principale — audio V5 (narration-v2.mp3 supprimé au ménage 2026-06-10).
-          NB : l'Acte 1 est encore calé sur les triggers V1/V2 ; la SYNCHRO V5 sera recalée en Task 8.
-          Pour le baseline non-régression on render --muted (audio sans effet sur les pixels). */}
-      <Audio src={staticFile("_shared/audio/sahel-warmap/narration-v5-expressive.mp3")} />
+      {/* Narration V6 (refonte 2026-08-06, script reecrit apres echec vues video V5 publiee 04/08).
+          Remplace narration-v5-expressive.mp3 — tous les triggers F_* des 4 Parties + Acte1
+          sont en cours de retiming sur cette narration (voir memory/episodes/warmap-sahel/STATUS.md). */}
+      <Audio src={staticFile("_shared/audio/sahel-warmap/narration-v6-full.mp3")} />
 
       {/* Musique de fond (score Soudan reutilise, 60s -> loop sur 439s).
           Volume bas pour laisser respirer voix + SFX. */}
@@ -1813,10 +1813,14 @@ export const SahelWarMapEngine: React.FC<SahelTestProps> = ({
           ====================================================== */}
       {effVignette && aesPaths.length > 0 && (() => {
         // DÉTACHEMENT (Aziz 2026-06-19) : en acte1Refonte, le fond RECULE PROGRESSIVEMENT.
-        // Avant le 1er detachement (f145) : vignette faible (les 3 pays "dans la masse").
-        // Au fil des detachements f145->f286 : le fond s'assombrit -> les 3 pays ressortent SEULS.
+        // Avant le 1er detachement (F_HOOK_MALI) : vignette faible (les 3 pays "dans la masse").
+        // Au fil des detachements F_HOOK_MALI->F_HOOK_NIGER : le fond s'assombrit -> les 3 pays ressortent SEULS.
+        // ⚠️ RETIMING V6 (2026-08-06) : le "80" hardcodé (marge avant F_HOOK_MALI) était calé sur l'ancien
+        // F_HOOK_MALI=145 (80<145, ordre respecté). Le nouveau F_HOOK_MALI=10 (hook V6 beaucoup plus
+        // compact) rendait ce point de repère decroissant -> crash "inputRange non monotone". Corrigé en
+        // repère relatif (F_HOOK_MALI-10, garde toujours l'ordre croissant quelle que soit la valeur).
         const vOp = acte1RefonteProp
-          ? effVignetteOp * interpolate(frame, [80, F_HOOK_MALI, F_HOOK_NIGER + 40], [0.18, 0.4, 1],
+          ? effVignetteOp * interpolate(frame, [Math.max(0, F_HOOK_MALI - 10), F_HOOK_MALI, F_HOOK_NIGER + 40], [0.18, 0.4, 1],
               { extrapolateLeft: "clamp", extrapolateRight: "clamp" })
           : effVignetteOp;
         return (

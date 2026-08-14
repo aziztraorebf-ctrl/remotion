@@ -145,12 +145,94 @@ au très dynamique) beaucoup plus vite qu'en re-codant à l'aveugle.
   Faisable (outil `static_map_image_tool` + SVG composé), MAIS ça illustre une direction QUE NOUS imposons —
   or le but est que le MODÈLE propose la créativité. On garde donc le modèle-propose. (La vraie carte = au code.)
 
+## ⭐⭐⭐ EXTENSION D3 + VERDICT GPT vs GEMINI + MIX-AND-MATCH (2026-08-13, Gazoduc Acte 3 Segment A)
+
+> Première application RÉELLE bout-en-bout de la chaîne storyboard→breakdown→code sur une carte **D3**
+> (pas Mapbox — le principe generalise, le préambule ci-dessus s'applique tel quel). Déclenchée par un
+> constat direct d'Aziz sur le rendu Acte 3 existant : "très statique, tracés plats qui ne représentent
+> pas grand-chose" — le DA-brief textuel (3 voix, `da-brief.py`) déjà fait sur ce chantier n'avait PAS
+> remplacé un vrai storyboard VISUEL, d'où la dérive vers un rendu plat malgré un brief écrit soigné.
+> **Leçon : un DA-brief textuel seul ne suffit pas pour un beat carte — le storyboard IMAGE reste
+> nécessaire même après un brief écrit détaillé.**
+
+> ⛔ **Gate supplémentaire (2026-08-14, même chantier) : même avec un storyboard image validé, le
+> BREAKDOWN écrit à la main (Claude, pas le modèle qui a généré l'image) doit être vérifié contre les
+> règles DÉJÀ TRANCHÉES du même chantier avant de faire coder** — pas seulement contre l'image. Vécu :
+> un breakdown fusionnant 2 images de storyboard a réintroduit un widget HUD en coin d'écran, alors
+> qu'une règle DA-brief antérieure du même projet l'interdisait déjà explicitement ("financement/
+> banques = dispositif SUR la carte, jamais un widget coin d'écran"). Le code écrit à partir de ce
+> breakdown a été rejeté par Aziz. Réflexe à prendre : avant d'écrire un breakdown, relire les DA-briefs
+> déjà actés sur CE segment précis, pas seulement regarder l'image de référence.
+
+### ⭐⭐⭐ VERDICT GPT Image 2 vs Gemini 3.1 Flash — GPT SUPÉRIEUR pour le storyboard carte annoté
+
+Sur un MÊME brief exact (texte identique, même image de référence jointe), GPT Image 2
+(`openrouter-img2img.py --model openai/gpt-5.4-image-2`) a produit un storyboard nettement plus
+exploitable que Gemini 3.1 Flash Image sur ce cas précis :
+- **Français natif propre** dans les libellés (Gemini mixait franglais/anglais dans les labels).
+- **Annotations de mise en scène explicites et utiles** : à chaque panneau, une mini-légende avec icône
+  caméra + description du mouvement suggéré ("📷 zoom progressif du Nigeria vers l'Europe le long du
+  tracé", "pause courte sur Adrar, vignette, le reste s'assombrit", "whip-pan ou glissement ouest-est").
+  Gemini ne donnait quasi aucune indication caméra explicite.
+- **Structure séquentielle numérotée** (panneaux 1→2→3→4→5 par concept) plus proche d'un vrai storyboard
+  de tournage qu'un simple jeu d'images isolées.
+
+**⭐ RÈGLE POUR LA PROCHAINE FOIS — ne pas trop brider GPT sur les annotations.** Le 1er appel GPT
+(brief riche, sans consigne anti-texte) a spontanément produit ces annotations réalisateur de grande
+qualité — à EXPLICITEMENT demander/encourager dans le prompt à l'avenir ("include director's-style
+camera movement annotations for each beat"), ne pas les considérer comme du bruit à éliminer d'office.
+**Nuance importante** : un 2e appel (brief "1 seul concept par image, minimal texte, show-don't-tell")
+a ensuite été fait sur Gemini pour corriger un défaut DIFFÉRENT (surcharge/illisibilité à cause d'un
+montage 3-concepts-en-1-image à seulement 1024×1024) — les deux leçons ne se contredisent pas : le
+problème n'était pas "trop d'annotations", c'était "trop de contenu dense dans une seule image trop
+petite". Isoler UN concept par image + garder les annotations caméra réalisateur = la bonne combinaison.
+
+**⚠️ Toujours vérifier la résolution réelle du fichier reçu avant de juger la lisibilité** (`PIL Image.size`
+ou équivalent) — le 1er storyboard GPT semblait "surchargé/illisible" mais était surtout en 1024×1024
+carré (pas le 16:9 demandé), ce qui rend N'IMPORTE QUEL texte dense illisible indépendamment de la
+qualité du contenu. Uploader en ligne pour zoom réel avant de conclure à un échec de contenu.
+
+### ⭐⭐⭐ MIX-AND-MATCH inter-modèles — même principe que le SVG génératif, appliqué au storyboard carte
+
+Cohérent avec la doctrine SVG déjà validée (`SVG-SCENES-GENERATIVES.md` § svg-generatif-2-appels-fusion-
+par-claude) : générer plusieurs concepts VISUELS SÉPARÉS (1 image = 1 concept, jamais un montage
+multi-concepts en une image basse résolution), éventuellement sur PLUSIEURS modèles (Gemini + GPT).
+Méthode initiale testée : Claude regarde les 2-3 meilleures images choisies par Aziz et écrit
+directement un breakdown texte détaillé qui combine les meilleures idées dans NOTRE stack réel.
+
+⛔⛔ **CORRIGÉ (2026-08-14) — cette méthode initiale a produit un breakdown fautif, code rejeté par
+Aziz.** Le breakdown écrit par Claude à partir des images a réintroduit un défaut (widget HUD en coin
+d'écran) qu'une règle DA-brief antérieure du même chantier interdisait déjà — Claude n'avait pas
+recroisé le breakdown contre les règles déjà tranchées avant d'écrire (cf § gate ajouté plus haut dans
+ce fichier). **Méthode corrigée et validée à la place** : demander le breakdown JSON complet au MODÈLE
+QUI A GÉNÉRÉ L'IMAGE lui-même (pas à Claude qui doit interpréter/deviner) — il connaît exactement ce
+qu'il a voulu représenter, zéro ambiguïté. Détail complet du cas réel (V3 rejeté → V4/V5 storyboard
+corrigé → prochaine étape breakdown-par-le-modèle) :
+`episodes/souverain/gazoduc-aagp-tsgp/BREAKDOWN-SEGMENT-A-STORYBOARD-FUSION.md`.
+
+**Prompt squelette réutilisable** (structure légère 3-états + 6 règles de composition non-négociables +
+règle anti-surcharge texte — a produit le meilleur résultat de la session, supérieur à un brief
+prescriptif détaillé) : `episodes/souverain/gazoduc-aagp-tsgp/PROMPT-SQUELETTE-STORYBOARD-LIBRE-CREATIVE.txt`.
+À adapter (narration + structure 3-états du beat) pour tout futur segment carte D3/Mapbox.
+
+### ⛔ Piège confirmé — ne jamais laisser un modèle d'image "dessiner" une vraie géographie complexe
+
+Distinct du storyboard (où l'approximation géo est tolérée, cf § principe ci-dessus) : si le TEST final
+passe par un agent qui CODE en s'inspirant du storyboard (pas juste le storyboard lui-même), la règle
+"la vraie géo arrive au CODE, jamais copiée pixel par pixel" doit être appliquée strictement — un test
+Fable5 SVG distinct (scène dette/FMI, même session) a confirmé qu'un continent dessiné à main levée
+échoue systématiquement (2 tentatives ratées) et nécessite un pivot vers de vraies données `d3-geo`/
+Natural Earth. Le storyboard peut approximer la géo, le CODE final jamais.
+
 ## STATUT
 ✅ Chaînes de référence + directive CARTE VIVANTE remplies (Aziz 2026-06-20).
 ✅ **FORMAT BREAKDOWN CARTE défini + éprouvé** (2026-06-20, agent réel sur beat AES « confédération » avec piège
    créatif volontaire) : le format protège l'idée inédite via `si_nouveau` sans la raboter. 3 champs auto-portants
    ajoutés (`forme_couvre_tout`/`ce_qui_manque`, `cout_estime`, `fallback_si_echec`).
-⏳ Le PRÉAMBULE storyboard (notre carte + chaînes + directive carte vivante) reste à tester sur un cas réel
-   (génération d'image), pour valider qu'il produit une direction premium et non plate.
-⏳ Reste à éprouver : la chaîne COMPLÈTE storyboard→breakdown→code sur une mini-vidéo cobaye (orchestration bout-en-bout).
+✅ **Chaîne COMPLÈTE storyboard→breakdown→code éprouvée sur D3** (2026-08-13, Gazoduc Acte 3 Segment A) —
+   voir section ci-dessus. Verdict GPT>Gemini pour ce type de storyboard annoté, méthode mix-and-match
+   documentée, gabarit de breakdown réel disponible.
+⏳ Le PRÉAMBULE storyboard (notre carte + chaînes + directive carte vivante) reste à tester sur Mapbox
+   proprement dit (le test 2026-08-13 était sur D3, principe transposable mais pas encore vérifié sur
+   Mapbox spécifiquement).
 Branché dans : `MEMORY.md`, `SYSTEME-AGENTIQUE.md` (étape 5).
