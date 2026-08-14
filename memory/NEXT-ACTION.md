@@ -136,12 +136,13 @@ de dosage. `easeInOut` appliqué PAR SEGMENT met la vitesse à exactement 0 à c
 **Mesurer la vitesse frame à frame avant de retoucher une valeur**, et chercher la brique existante
 (le mécanisme continu était déjà dans l'Acte 2 validé + un prototype dédié).
 
-Rendu v2 corrigé après DA-brief critique :
-https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/acte3-v2-Sw435S8sYbHTbgMbmvDkRfPMdkyhFT.mp4
-— Aziz doit le revoir. Plan de refonte v3 (4 agents vierges) + point de goût Segment B non tranché :
-`episodes/souverain/gazoduc-aagp-tsgp/PLAN-ACTES2-5.md` § "TEST STUDIO RÉUTILISABLE" (lire avant de
-recoder, ne pas rescanner les catalogues, déjà fait). Tests client-sim (Flowdesk/NorthShield/MOCH-IT)
-TOUS CLOS, détail isolé `client-sim-tests/INDEX.md`. Repère sujet : `projects/GAZODUC-MEGAPROJETS-SUJET.md`.
+(ARCHIVE — approche abandonnée, ne pas repartir dessus) Le rendu v2 et le plan de refonte v3 par 4 agents
+vierges (`PLAN-ACTES2-5.md` § "TEST STUDIO RÉUTILISABLE") ont été DÉPASSÉS le 2026-08-14 : on repart
+désormais du storyboard V5 + ses 4 breakdowns JSON, directement. Le v3 a été explicitement rejeté par
+Aziz. Point de goût Segment B : tranché (décor Fable5 porté, fait).
+
+Repère sujet : `projects/GAZODUC-MEGAPROJETS-SUJET.md`. Tests client-sim (Flowdesk/NorthShield/MOCH-IT)
+TOUS CLOS, détail isolé `client-sim-tests/INDEX.md`.
 
 ---
 

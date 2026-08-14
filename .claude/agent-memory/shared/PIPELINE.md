@@ -89,17 +89,25 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2 TERMINÉS, Acte 3 codé v1→v2, en attente revue Aziz
-Acte 1 (hook, 84.68s, globe D3) validé par Aziz comme base de production (render v6, 2026-08-03).
-Acte 2 **produit et validé en finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4`
-(127.4s), 4 segments montés bout à bout. **Acte 3 (TSGP) : 3 segments + montage codés et RENDUS deux
-fois** (v1 rejeté par Aziz — "catastrophique" — puis refonte complète v2 après 3 DA-briefs critiques
-ciblés Gemini+Kimi+DeepSeek). Rendu v2 uploadé, lien + détail dans `memory/NEXT-ACTION.md` (section
-"⭐⭐ GAZODUC ACTE 3"). **Plan de refonte v3 produit par 4 agents vierges (2026-08-07)** — diagnostic
-transversal + point de goût Segment B non tranché, détail dans `PLAN-ACTES2-5.md` § "TEST STUDIO
-RÉUTILISABLE". Reste : revue Aziz du plan v3 + du rendu v2 à la prochaine session (session parallèle
-déjà en cours côté Aziz). Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` +
-`PLAN-ACTES2-5.md`.
+### Gazoduc — Actes 1+2 TERMINÉS · Acte 3 : Beat 1 VALIDÉ, Beats 2/3 à faire valider, Beat 4 + Actes 4/5 à faire
+Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
+finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
+
+**Acte 3 — état au 2026-08-14** (commits `9e302fb2` + `5379a454`, branche `feat/gazoduc-acte1-hook-globe`) :
+- **Segment A / Beat 1 (0→22.2s) : VALIDÉ par Aziz.** Caméra continue (zoom monotone + centre qui suit la
+  tête du tracé), dessin trait-par-trait, pays qui restent marqués après passage.
+- **Beats 2 (chantier Adrar, clip MiniMax H3 dans une carte-insert composée) et 3 (comparateur recentré) :
+  refaits depuis le storyboard V5, PAS ENCORE VALIDÉS** — render `suite-v12` à faire regarder à Aziz en
+  ouverture de la prochaine session.
+- **Beat 4 (paradoxe) : encore en code v3 rejeté**, à refaire depuis `beat4-paradoxe-libre.png`.
+- **Segment B (aéroport Niamey) : FAIT** (décor Fable5 porté sur la logique d'animation existante).
+- ⛔ Le v1 et le v2/v3 ont été rejetés par Aziz. **Ne pas repartir du code v3 ni du plan de refonte par
+  4 agents** (`PLAN-ACTES2-5.md` § TEST STUDIO RÉUTILISABLE) — approche dépassée. La source est le
+  storyboard V5 + ses 4 breakdowns JSON (`breakdown-v5-json/`).
+- **Actes 4 et 5 : n'existent pas** (vérifié — aucun fichier, aucune composition).
+
+Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "OÙ ON EN EST (2026-08-14)".
+Starter prêt : `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md`.
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion

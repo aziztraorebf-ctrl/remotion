@@ -30,6 +30,28 @@
 | **RapidFireCountries** | Rafale de pays (drapeau+nom, cut sec) puis freeze sur LE pays | Énergie d'introduction d'un pays | `flash[]`, `focus`, `cutFrames` | [V](https://files.catbox.moe/a09vsm.mp4) [H](https://files.catbox.moe/yamy5v.mp4) |
 | **ClassifiedRedactReveal** | Écran TOP SECRET + censure qui glisse → révèle carte + target lock | Révélation, ton investigation | `stampText`, `teaseText`, `focusIso`, `revealAt` | [V](https://files.catbox.moe/z95wbs.mp4) [H](https://files.catbox.moe/noljgi.mp4) |
 
+## 📍 PREUVE ANCRÉE — montrer qu'il se passe quelque chose de concret à un point précis
+
+| Template | Ce qu'il fait | Quand l'utiliser | Props clés | Statut |
+|---|---|---|---|---|
+| **Carte-insert vidéo ancrée** (proto, pas encore extrait) | Cartouche composé superposé à la carte assombrie : badge date + clip vidéo en boucle + jauge circulaire % + barres de progression + badge d'activité, relié par un connecteur pointillé doré à un pin pulsé posé sur le point géo | Prouver visuellement qu'un événement est EN COURS à un endroit (chantier, activité, opération) sans quitter la carte — remplace le pictogramme posé nu, qui lit comme un jouet | ancre écran du pin, `videoSrc` (staticFile + `Loop`+`OffthreadVideo`), `dateLabel`, `progress` (pilote jauge+barres+%), `activityLabel`, `connectorDraw` | **proto** — concept validé Aziz 2026-08-14 sur le prototype R&D ; en production dans `souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP.tsx` (Beat 2) et `_rnd/svg-scenes/GazoducH3IntegrationTestReal.tsx`. ⚠️ Codé 2× en dur, jamais extrait en composant partagé — à extraire au 3e usage. |
+
+⚠️ **Piège mesuré (2026-08-14)** : à fort zoom, le pin d'ancrage peut se projeter PILE SOUS le cartouche
+(donc invisible, l'insert semble flotter sans ancrage). Mesurer la position écran du pin et décaler la
+caméra pour le projeter hors de la zone du cartouche (~36 % de la largeur si l'insert occupe 47→85 %).
+
+## 🎥 CAMÉRA — travelling continu le long d'un tracé
+
+| Template | Ce qu'il fait | Quand l'utiliser | Props clés | Statut |
+|---|---|---|---|---|
+| **Caméra continue qui suit la tête d'un tracé** | Zoom monotone unique sur toute la durée + centre interpolé en continu vers la position de la tête du tracé. Aucun point de contrôle discret, donc aucun palier possible | Tout travelling qui accompagne une ligne qui se dessine (pipeline, route, front). Remplace toute liste de keyframes | `camFor(center, scale)`, `lerpCam`, `buildFullPathSamples`, `windowBBox` (déjà présents dans les 3 fichiers) | **prouvé** — 3 usages : `GazoducActe2AAGP.tsx` L220-278 (validé Aziz), `GazoducActe3CarteTSGP.tsx` Beat 1 (validé Aziz 2026-08-14), `_rnd/d3-16x9/ProtoGazoducA2CameraVsVoisins.tsx` (`ProtoA2CameraContinue`) |
+
+⛔⛔ **NE JAMAIS remplacer ce mécanisme par une liste de points de contrôle + `easeInOut` PAR SEGMENT** :
+`easeInOut` a une dérivée nulle à ses 2 extrémités → la vitesse tombe à EXACTEMENT 0 à chaque point
+(mesuré : 7 arrêts complets en 22 s). Le symptôme « la caméra avance par à-coups » n'est alors PAS un
+problème de dosage — 3 itérations perdues à retoucher les valeurs le 2026-08-14. Détail :
+`feedback_camera-a-coups-easeinout-par-segment-pas-un-dosage`.
+
 ## 🌍 TERRITOIRE — couleur/drapeau/zone dans les pays (corps de vidéo)
 
 | Template | Ce qu'il fait | Quand l'utiliser | Props clés | Preview |
