@@ -79,6 +79,14 @@ d'abord, revenir sur 3 ensuite.
   **70% de la production siphonnée** (le plan l'identifie comme un PIC DE RUPTURE DE FORME
   carte→insert physique, pas un beat mineur), objectifs opposés Maroc/Algérie, calendrier européen
   qui se retourne (demande en baisse d'ici 2030).
+  > ⭐⭐ **BRIQUE DÉJÀ PRÊTE POUR CE PIC — `ProtoInsertMatiereConduite`** (validée Aziz 2026-08-15).
+  > La « rupture de forme carte→insert physique » demandée par le plan EXISTE déjà en prototype
+  > rendu : insert « coupe de conduite » (clip H3 en boucle) ancré sur le tracé TSGP réel, avec
+  > impulsions cyan qui circulent le long du tracé + bande claire qui donne le sens du transit.
+  > **Ne pas re-concevoir cette forme depuis zéro** — partir du proto et l'extraire en composant.
+  > Fiche complète (4 briques, règle de partage H3/SVG, seuils voile 0.40 & zoom ~2.0) :
+  > `src/projects/_shared/INTENTION-FORME-INDEX.md` § INSERT MATIÈRE.
+  > Pertinence directe pour les 70% : une conduite à moitié vide se MONTRE dans la coupe.
 - **Acte 5 — Implication** (Partie 5 du script) : la facture européenne, **le robinet géant avec
   mains stylisées** (idée Kimi, `PLAN-ACTES2-5.md` ligne 118 — c'est là que vit la « scène du
   robinet », à ne pas confondre avec le petit robinet du Beat 3), chute « d'autres ont déjà

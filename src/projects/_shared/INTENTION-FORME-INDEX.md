@@ -117,6 +117,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Des flux/connexions/corridors entre lieux | arcs / route animée + sprite | [C] `GeoFlowConnection` (route+caméra suit), `GlobalPulse`, `FlowArrowsMap` | CATALOGUE l.143 |
 | Données ancrées à un point sur la carte | popup geo | [C] `GlassmorphismGeoPopup` | CATALOGUE-CARTE-VIVANTE |
 | Couper vers un insert puis revenir à la carte | cutaway plein écran (4 modes) | [C] `MapCutaway` (texte/stat/image/flag, typewriter) | CATALOGUE l.28 |
+| **Montrer CE QUI TRANSITE dans un tracé** (gaz, pétrole, minerai) — la carte ne montre qu'une ligne | insert « coupe » ancré sur le tracé + impulsions qui circulent | [P] ⭐ **`ProtoInsertMatiereConduite`** (clip H3 en boucle dans un cadre + sens de lecture SVG) — proto validé, à extraire en composant au 1er vrai usage | INSERT-MATIERE ci-dessous |
 | Distinguer N pays sans charger la carte | 1 contour coloré par pays + pulse | [WM] `SAHEL_COUNTRY_COLORS` (moteur, contours tracé-in) | WARMAP-COMPOSANTS |
 > ⚠️ Carte/contour/contagion : **toujours préférer Mapbox 3D frame-driven** (mouvement caméra) aux repros SVG plates. Hooks d'ouverture carto : `KineticMaskSlam`, `FiberOpticFlagInvade` (voir hooks-lib).
 
@@ -217,6 +218,42 @@ n'offre le registre voulu, le signaler/l'ajouter — ne pas silencieusement basc
 - **Sprites PixelLab pour jetons trait-fin** → effets denses chaotiques. → Gemini (trait fin) ou SVG animé par code.
 
 **En attente d'arbitrage Aziz (ni acquis ni rejet) :** jetons en losange/octogone vs cercle (test A/B non tranché).
+
+---
+
+## ⭐⭐ INSERT MATIÈRE — montrer ce qui TRANSITE dans un tracé (proto validé 2026-08-15)
+
+> **Intention** : une carte ne montre qu'une **ligne**. Elle ne dit jamais ce qui passe DEDANS — le gaz
+> sous pression, le pétrole, le minerai. L'insert matière ouvre la conduite sans quitter la carte.
+> **Statut : PROTO validé, pas encore composant.** À extraire en composant paramétré au 1er vrai usage
+> en épisode (règle : on généralise après un 2e cas réel, pas sur un seul exemple).
+>
+> Fichier : `src/projects/_rnd/svg-scenes/ProtoInsertMatiereConduite.tsx` · composition Remotion
+> `Proto-InsertMatiere-Conduite` · rendu de référence :
+> https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/proto-insert-matiere-v2-U9B1wXTxnFniC3p65Vi3hPpeTFMjpd.mp4
+
+**Les 4 briques qui font l'effet** (c'est la COMBINAISON qui marche, pas le clip seul) :
+1. **Le clip H3 en boucle** dans un cadre ancré — la turbulence de la matière, seule chose que H3
+   apporte vraiment (`<Loop>` sous la durée réelle du clip, jamais la dernière frame → écran noir).
+2. **Le pin géo-ancré sur le TRACÉ** (pas sur une ville) + connecteur tracé jusqu'au cadre : c'est la
+   conduite qu'on ouvre, à un point qui existe réellement sur la géométrie.
+3. ⭐ **Les impulsions qui circulent le long du tracé** (petits cercles cyan, période commune avec le
+   balayage) — c'est ce qui fait lire le tracé comme *vivant et orienté*, pas comme un trait mort.
+4. ⭐ **La bande claire qui balaie la coupe** (`linear-gradient` + `mixBlendMode: screen`) — donne le
+   SENS DU TRANSIT que le clip ne porte pas (H3 fait bouillonner sur place, cf `minimax-h3-comfy-cloud.md`).
+
+**⛔ La règle de partage qui fait tenir l'ensemble** : **turbulence + matière = H3** ·
+**composition + géométrie + DIRECTION = NOUS** (SVG déterministe). Tout ce qui est géométrique
+(translation, sens de lecture, tracé qui se dessine, compteur) se code — ne jamais le négocier avec le
+modèle : coût GPU, résultat incertain, et non réglable à la frame.
+
+**⚠️ Voile à 0.40, PAS ≥0.62** — ne contredit pas la règle War-Map ci-dessus (« voile ≥ 0.62 »), qui vise
+un overlay qui doit **remplacer** la lecture de la carte. Ici l'insert se **superpose** : la carte doit
+rester lisible derrière pour que l'ancrage géographique survive. Cas d'usage différent, seuil différent.
+Corollaire mesuré : au-delà de ~2.0× de zoom sur un tracé saharien, le cadre finit sur du vide sans repère.
+
+**Familles ouvertes par la même chaîne** (non encore testées) : pétrole qui remplit, billets qui
+défilent/se consument, minerai sur tapis, eau derrière un barrage, fumée d'usine, torchère.
 
 ---
 
