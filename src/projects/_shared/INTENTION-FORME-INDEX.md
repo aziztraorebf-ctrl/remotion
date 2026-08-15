@@ -252,8 +252,30 @@ un overlay qui doit **remplacer** la lecture de la carte. Ici l'insert se **supe
 rester lisible derrière pour que l'ancrage géographique survive. Cas d'usage différent, seuil différent.
 Corollaire mesuré : au-delà de ~2.0× de zoom sur un tracé saharien, le cadre finit sur du vide sans repère.
 
-**Familles ouvertes par la même chaîne** (non encore testées) : pétrole qui remplit, billets qui
-défilent/se consument, minerai sur tapis, eau derrière un barrage, fumée d'usine, torchère.
+### 📦 ASSETS INSERT DÉJÀ PRODUITS ET VALIDÉS — réutiliser avant d'en générer un nouveau
+
+> Tous dans `public/_rnd/minimax-h3-tests/insert-matiere/` (image source `*-source*.png` + clip
+> `*-r2v-v1.mp4`). **Garder l'image source** : c'est elle qui permet de re-générer une variante
+> cohérente plus tard, et c'est elle qui verrouille la composition.
+
+| Asset | Fichier clip | Statut | Sert |
+|---|---|---|---|
+| **Gaz sous pression** (conduite pleine) | `conduite-gaz-r2v-v1.mp4` | ✅ validé — 75× décor/matière | Gazoduc Actes 2-3, « ce qui transite » |
+| **Billets qui se consument** | `billets-r2v-v1.mp4` | ✅ validé — flammes+fumée, fond 0.03 | Acte 5 (facture européenne), coût d'un projet |
+| **Conduite qui se vide** | `conduite-vide-r2v-v1.mp4` | ✅ retenu (dérive assumée) | ⭐ Acte 4 Gazoduc — les 70% siphonnés |
+
+⭐⭐ **CONTINUITÉ VISUELLE — réutiliser la MÊME image source d'un insert à l'autre** (retour Aziz
+2026-08-15) : `conduite-gaz` et `conduite-vide` partent du même objet dessiné dans le même registre,
+seule l'animation diffère. Résultat : les deux inserts se répondent et **construisent un langage
+visuel** au lieu d'être deux vignettes isolées. Appliquer par défaut — décliner une image source
+existante (même objet, autre état) plutôt que d'en générer une repartant de zéro.
+
+⚠️ **H3 génère TOUJOURS une piste audio** (node `VAEDecodeAudio` du graphe) — musique/SFX parasites
+sans rapport. **Toujours monter le clip muet** (`<OffthreadVideo muted />`, déjà le cas dans le proto) :
+notre son vient de notre propre pipeline. Non bloquant, mais ne jamais l'oublier à l'intégration.
+
+**Familles ouvertes par la même chaîne** (non encore testées) : pétrole qui remplit, minerai sur tapis,
+eau derrière un barrage, fumée d'usine, torchère.
 
 ---
 
