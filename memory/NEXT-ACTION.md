@@ -33,7 +33,7 @@ Vidéo démo du savoir-faire, **double usage** : index visuel interne (exhaustif
 « j'ai oublié ce qu'on a » sur 640 compositions) PUIS cut vente 60-90 s extrait du même montage.
 Sélection **par CAPACITÉ**, 8-10 blocs, meilleur exemple de chaque. Le matériau est déjà produit et
 publié — c'est du montage, pas de la création. ⚠️ Tension à trancher : matériau géopolitique vs cible
-freelance SaaS. → **[SHOWCASE-CAPACITES.md](projects/SHOWCASE-CAPACITES.md)**
+freelance SaaS. → **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)**
 
 ## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
 
