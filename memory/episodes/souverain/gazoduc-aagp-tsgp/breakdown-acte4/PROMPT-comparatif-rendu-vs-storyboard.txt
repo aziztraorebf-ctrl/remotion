@@ -1,0 +1,36 @@
+You are a TECHNICAL DIRECTOR doing a GAP ANALYSIS between an approved storyboard and the actual coded render that was built from it.
+
+The attached image contains TWO stacked sections:
+- SECTION A (top) = THE STORYBOARD you yourself produced and that the director approved. This is the TARGET. It has 4 panels: opening, peak (pipe cutaway insert, "OPTION A"), a discarded alternative ("OPTION B" — IGNORE that panel entirely, it was not selected), and the sober verdict.
+- SECTION B (bottom) = 6 frames extracted from OUR ACTUAL CODED RENDER, in chronological order (7s / 12s / 19s / 24s / 30s / 38s of a 41-second sequence). This is what we actually built.
+
+YOUR TASK: tell us precisely WHAT IS MISSING or WEAKER in B compared to A, and exactly how to fix each gap in code. The director wants B to get as close to A as possible.
+
+⛔⛔ OUT OF SCOPE — DO NOT COMMENT ON THIS (it will waste your answer):
+The BASE MAP STYLE itself — the background colour, the land fill tone, the country border rendering, the overall map "look". We know it differs from your storyboard. That is a separate, deliberate decision: our base map must stay consistent with three already-produced episodes in the same series. Do NOT recommend changing the base map palette, the ocean colour, the land tone, or the border style. Assume the base map is FIXED and untouchable.
+
+✅ IN SCOPE — everything drawn ON TOP of the base map, and the framing:
+- The highlighted/active countries (in your storyboard, Nigeria, Morocco and Algeria are clearly filled in a lighter blue that separates them from the neutral countries — our render does not do this at all).
+- The route lines: their thickness, glow, colour, and especially the TRAVELLING IMPULSES along them. In your storyboard the impulses read as elongated, energetic, directional streaks with real luminosity; in our render they are small round dots that read as timid beads. Tell us exactly how to make them read like yours: shape, length, tapering, glow layers, spacing, opacity falloff, blur radius, how many, and how they should behave.
+- The source point on Nigeria: yours is far brighter and more alive. Give the exact layered construction (how many rings, radii, opacities, blur, colour stops) to match your version.
+- THE FRAMING / CAMERA SCALE: your storyboard is noticeably TIGHTER — it shows North-West Africa and the Mediterranean, whereas our render is zoomed out so far that South America and the whole African continent are visible, which weakens everything. Tell us what geographic extent should actually be framed at each of the three states, and how the camera should move between them.
+- The insert card at the peak: proportions, internal layout, border treatment, the connector to the source, and how the "~70%" figure is presented.
+- The verdict state: what exactly should look different from the opening (you specified a permanently weakened map — tell us precisely which properties change and by how much).
+
+FOR EVERY GAP, GIVE US:
+1. `gap_id` — short name.
+2. `severity` — "high" (clearly damages the beat) / "medium" / "low" (polish).
+3. `what_the_storyboard_shows` — one sentence.
+4. `what_our_render_does_instead` — one sentence, based on what you actually see in section B.
+5. `fix` — the concrete implementable change, with NUMBERS (sizes in px, opacities, durations in frames at 30fps, colour hex values, blur stdDeviation, counts). Not "make it more vivid" but the actual values to type.
+
+OUR TECHNICAL CONSTRAINTS (the fix must be buildable within these):
+- React + Remotion, deterministic SVG, frame-driven only: every value comes from useCurrentFrame() via interpolate() or spring(). No CSS transitions, no @keyframes, no requestAnimationFrame.
+- d3-geo projected GeoJSON paths; camera is an SVG <g> with translate()/scale() interpolated per frame (never animate viewBox).
+- SVG filters (feGaussianBlur, feMerge), gradients (linearGradient/radialGradient), strokeDasharray/strokeDashoffset, per-frame element positioning along a sampled polyline.
+- Video clips composited via Remotion <Loop> + <OffthreadVideo>.
+- 1920x1080, 30fps. The sequence is 41.4s / 1242 frames.
+
+Rank your gaps by severity, most damaging first. Be specific and unsparing — the director explicitly wants to know what we missed.
+
+OUTPUT FORMAT: valid JSON only, no prose outside the JSON. Top-level keys: "verdict_summary" (2-3 sentences on the overall gap), "gaps" (array, ranked), and "priority_order" (array of gap_ids in the order we should implement them).

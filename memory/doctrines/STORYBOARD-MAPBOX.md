@@ -224,7 +224,99 @@ Fable5 SVG distinct (scène dette/FMI, même session) a confirmé qu'un continen
 échoue systématiquement (2 tentatives ratées) et nécessite un pivot vers de vraies données `d3-geo`/
 Natural Earth. Le storyboard peut approximer la géo, le CODE final jamais.
 
+## ⭐⭐⭐ LA BOUCLE FERMÉE — 3e appel COMPARATIF rendu-vs-storyboard (2026-08-15, Gazoduc Acte 4 / 4A)
+
+> **Le maillon qui manquait.** Cette doctrine décrivait storyboard → validation → breakdown → code.
+> Elle s'arrêtait au code. Or **le code est le premier brouillon, pas la fin** : entre le storyboard
+> validé et le rendu, il se perd systématiquement des choses — pas par négligence, mais parce qu'on
+> code ce qu'on a compris, et qu'on ne voit plus l'écart une fois le nez dans le fichier.
+> **Le 3e appel referme la boucle** : on renvoie au modèle SON PROPRE storyboard + notre rendu réel,
+> et on lui demande de mesurer l'écart. Gain mesuré sur 4A : 13 écarts trouvés dont 6 majeurs, et
+> l'activité visuelle a doublé (médiane de pixels modifiés 5.75 % → 10.28 %).
+
+**Le flux complet devient :**
+`storyboard (N appels, modèles concurrents)` → **validation Aziz** → `breakdown JSON` → `CODE` →
+**`3e appel COMPARATIF`** → `corrections` → re-render.
+
+### Comment monter l'appel comparatif (recette exacte, reproductible)
+
+1. **Extraire 5-6 frames** du rendu aux moments qui correspondent aux ÉTATS du storyboard (pas au
+   hasard : ouverture / avant-pic / pic / verdict / fin).
+2. **Monter une planche unique** (PIL, grille 2×3 avec un libellé + timecode sur chaque vignette).
+   Un modèle compare bien mieux une planche qu'une rafale d'images séparées.
+3. **Composer une image A/B verticale** : storyboard cible EN HAUT, planche du rendu EN BAS, chacune
+   avec un bandeau de titre explicite. C'est CETTE image qu'on envoie.
+4. **Appeler `openrouter-vision-breakdown.py --model openai/gpt-5.5`** (texte+vision, PAS le modèle
+   image — on veut du JSON d'analyse, pas un dessin).
+5. Demander un JSON avec, PAR écart : `gap_id`, `severity`, `what_the_storyboard_shows`,
+   `what_our_render_does_instead`, `fix` **chiffré**, + un `priority_order` global.
+
+### ⛔ Les 3 règles qui font marcher cet appel (chacune payée par un raté)
+
+1. **DÉCLARER EXPLICITEMENT CE QUI EST HORS-SCOPE.** Sans ça, le modèle dépense son analyse à
+   critiquer le fond de carte (palette, teinte des terres, style des frontières) — verrouillé chez
+   nous par cohérence de série. Formule qui marche : *« The base map is FIXED and untouchable. Do NOT
+   recommend changing it. »* Anticipé par Aziz avant l'appel, et effectivement neutralisé.
+2. **EXIGER DES NOMBRES, PAS DES ADJECTIFS.** Demander littéralement *« not "make it more vivid" but
+   the actual values to type »*. On obtient alors `stdDeviation: 14`, `fill_opacity: 0.46`,
+   `length_px: 132` — directement implémentable. Sans cette phrase : « rendre plus dynamique »,
+   inutilisable.
+3. ⛔⛔ **VÉRIFIER CHAQUE GAP CONTRE NOS DÉCISIONS AVANT DE L'APPLIQUER — le modèle ignore notre
+   projet.** Sur 4A, GPT a classé HIGH un gap « la route marocaine longe trop la côte » et fourni des
+   coordonnées de remplacement passant par le Sahara. Or l'AAGP **est** un gazoduc côtier, et cette
+   géométrie vient des Actes 1-2 déjà validés : appliquer le fix aurait introduit une **erreur
+   factuelle** et cassé la cohérence de la série. Un gap plausible n'est pas un gap vrai.
+   → Réflexe : tout gap qui touche la GÉO, un CHIFFRE, ou une décision déjà tranchée = suspect par
+   défaut, à confronter au code/script avant application. (Cas particulier de « Gemini = signal,
+   jamais juge », appliqué au comparatif.)
+
+### Ce que le comparatif trouve que NOUS ne voyons pas
+
+Les écarts que ni Aziz ni Claude n'avaient relevés à l'œil, et qui étaient pourtant structurants :
+- **Le retour à l'état neutre** : les tracés restaient aussi vifs au verdict qu'à l'ouverture, ce qui
+  annulait le contraste voulu. Un pic n'existe que si l'état d'après est visiblement plus faible.
+- **Le chevauchement de deux états** : l'insert du pic traînait sur le verdict et écrasait le 3e
+  temps. Corollaire : *la sobriété d'un verdict n'existe que si le pic a vraiment quitté l'écran.*
+
+Ces deux-là sont des défauts de RYTHME, invisibles sur une frame isolée et difficiles à nommer en
+regardant la vidéo — mais évidents pour un modèle qui compare état par état à une cible.
+
+### Le modèle ne voit pas la vidéo — et ce n'est pas un problème ici
+
+`gpt-5.5` n'accepte pas la vidéo, seulement des images. Pour comparer une COMPOSITION à un storyboard,
+c'est sans importance (on compare des états). Ce qu'on perd, c'est le jugement sur le MOUVEMENT →
+si c'est le rythme qu'on veut juger, passer par **Gemini 3.1 Pro qui accepte l'upload vidéo réel**
+(cf `memory/tools/gemini-video-upload-fiable.md`). Les deux sont complémentaires, pas concurrents.
+
+**Artefacts de référence de cette session** (gabarits réutilisables tels quels) :
+- prompt storyboard : `episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/PROMPT-storyboard-4A-v2.txt`
+- prompt breakdown : `.../breakdown-acte4/PROMPT-breakdown-4A.txt`
+- ⭐ **prompt comparatif (LE gabarit à copier)** :
+  `.../breakdown-acte4/PROMPT-comparatif-rendu-vs-storyboard.txt`
+- sortie réelle : `.../breakdown-acte4/4A-breakdown-V2-gaps.json` (13 gaps classés)
+
+### ⭐ Corollaire amont : la RÉFÉRENCE-IMAGE dicte la COMPOSITION, pas seulement le style
+
+Découvert au 1er essai de 4A, avant même le comparatif. En joignant comme référence une frame
+contenant un **insert composé**, les DEUX modèles ont produit des storyboards où chaque idée arrivait
+dans un panneau encadré avec du texte — 6 panneaux, presque autant d'inserts. Ce n'était pas leur
+créativité, c'était le mimétisme de l'amorce.
+
+En rejouant le MÊME brief avec (1) une frame de **carte pure** et (2) une consigne inversée
+explicite — *« THE MAP CARRIES THIS BEAT. AT MOST ONE composed insert card in this ENTIRE beat »* —
+les deux modèles ont basculé vers de vraies propositions cartographiques, et leurs notes de direction
+se sont mises à décrire **ce que fait la carte** au lieu de mouvements de caméra.
+
+⛔ **Règle** : choisir la frame de référence pour la COMPOSITION qu'elle amorce, pas seulement pour sa
+palette. Et quand un dispositif est nouveau (comme l'insert matière), **poser un plafond chiffré**
+dans le brief — sinon il devient le régime normal et cesse de faire rupture. (Raison d'Aziz, plus
+forte que la sobriété : *un insert qui survient toutes les 20 s ne surprend plus, et le climax n'a
+alors plus rien à rompre.*)
+
 ## STATUT
+✅ **BOUCLE FERMÉE storyboard→code→comparatif→corrections éprouvée** (2026-08-15, Gazoduc Acte 4 / 4A) —
+   voir section ci-dessus. 3 règles de brief + garde-fou « vérifier chaque gap contre nos décisions »,
+   gabarits de prompts disponibles. Gain mesuré : activité visuelle ×1.8, 6 gaps majeurs corrigés.
 ✅ Chaînes de référence + directive CARTE VIVANTE remplies (Aziz 2026-06-20).
 ✅ **FORMAT BREAKDOWN CARTE défini + éprouvé** (2026-06-20, agent réel sur beat AES « confédération » avec piège
    créatif volontaire) : le format protège l'idée inédite via `si_nouveau` sans la raboter. 3 champs auto-portants
