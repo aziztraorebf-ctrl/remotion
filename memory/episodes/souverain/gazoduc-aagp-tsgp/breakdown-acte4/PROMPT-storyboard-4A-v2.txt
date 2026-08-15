@@ -1,0 +1,45 @@
+CONTEXT — YOU ARE BRIEFED AS A SENIOR MOTION DESIGNER for a geopolitical documentary YouTube channel (French, style close to Vox Atlas / Kurzgesagt / DW explainer maps). The attached image is a REAL frame from our existing pipeline: D3.js + Remotion, real GeoJSON country borders, deterministic code (no AI video, no 3D, no After Effects). Palette: deep navy background, thin light-grey inactive borders, cyan/blue fill for active countries, gold/tan pipeline route lines, monospace typography, small dark country nameplates with a cyan border.
+
+⛔⛔⛔ THE SINGLE MOST IMPORTANT INSTRUCTION — READ TWICE:
+THE MAP CARRIES THIS BEAT. A previous attempt at this same brief failed because every idea was delivered as a rectangular bordered panel with text inside, one after another — the result was cluttered, repetitive, and the map became mere wallpaper behind a stack of info-cards. DO NOT DO THAT.
+- Your PRIMARY tool is the MAP ITSELF changing over time: routes that draw progressively, country fills that gain or lose colour, stroke thickness that grows or thins, pulses that travel along a route, glow that intensifies or dies, borders that light up, a source point that visibly drains.
+- ⛔ AT MOST **ONE** composed insert card in this ENTIRE beat. Not one per panel — ONE TOTAL, and only if it earns its place. If you can say it on the map, say it on the map.
+- ⛔ NO stacking of text panels. NO HUD-style info-card in every panel. NO large text banner laid across the image.
+- Text on screen: the absolute minimum. Short nameplates for at most 2-3 narratively relevant countries (Nigeria, Morocco, Algeria). One key figure, ONCE, at the peak — not a figure in every panel.
+
+⛔ OTHER NON-NEGOTIABLE RULES:
+1. CARTOGRAPHY FIRST — the map is the dominant, clearly readable visual element at all times.
+2. NEVER FLOATING ELEMENTS — anything that is not the map must be anchored to a geo point with a connector, or centred over a deliberately dimmed map. Nothing floats loose.
+3. NEVER SCATTER ELEMENTS AT SCREEN EDGES OR CORNERS.
+4. NO TEXT LABEL WITHOUT A VISUAL CONTAINER.
+5. RELENTLESS MOTION — nothing static for more than ~5 seconds of story-time.
+6. Do NOT label every country a route passes near — only the narratively relevant ones.
+
+OUR REAL TECHNICAL CAPABILITIES (design ONLY within these):
+- Country borders/fills that TRACE progressively and fill with colour once traced.
+- Camera that pans/zooms smoothly and pauses at points of interest (never frozen).
+- Routes that draw progressively, vary in thickness, brightness, colour, or dashed texture.
+- Small pulses/particles that travel ALONG a route to show flow, direction, and INTENSITY of flow (more pulses = more flow, fewer/slower = starving).
+- Circular icon pins anchored to geo-coordinates, with glow halos that can pulse or fade.
+- Vignette/darkening overlay to focus attention on one region of the map.
+- Arc gauges and counters (use SPARINGLY — at most once in this beat).
+- A "MATTER INSERT" (use AT MOST ONCE, only if you choose option A below): a cutaway cross-section of the PIPE ITSELF inside an anchored card, revealing what flows — or fails to flow — inside. We own a validated looping cutaway of a HALF-EMPTY pipe.
+
+REFERENCE PRINCIPLE (Vox Atlas producer Sam Ellis): show what forces look like ON THE GROUND. Kurzgesagt discipline: FEWER elements, reused, better timed. Show, don't tell.
+
+⭐⭐ THE CREATIVE QUESTION WE ACTUALLY NEED YOU TO ANSWER:
+The emotional peak of this beat is the line "they would siphon nearly SEVENTY PERCENT of Nigerian production". We are genuinely undecided about how to stage that peak, and we want YOU to answer it by showing BOTH options in your storyboard sheet:
+- **OPTION A — RUPTURE OF FORM**: at the peak we leave the map entirely and cut to physical matter (the pipe cutaway running half-empty). The shock comes from the change of register.
+- **OPTION B — THE MAP ALONE CARRIES IT**: we never leave the map; the peak is achieved purely through cartographic means (the source visibly draining, flow pulses starving, colour retreating, whatever you invent). The shock comes from the map itself doing something we have never seen it do.
+Show BOTH so the director can compare them side by side. Label them clearly "OPTION A" and "OPTION B". Be genuinely bold on OPTION B — it is the one we cannot yet picture, and the one that would prove the map can carry a quantity.
+
+⚠️ FACTUAL ACCURACY: the only figure that may appear on screen is ~70% (seventy percent). Do NOT invent other statistics, volumes, dates, or Bcm/year numbers — invented figures are unusable for us.
+
+THIS BEAT'S 3-STATE STRUCTURE:
+START: one single source — Nigeria's gas production — with TWO rival pipelines drawing from it (one heading west/Atlantic toward Morocco, one north across the Sahara toward Algeria). They must read as competing for the SAME limited resource, not as two independent routes.
+TURNING POINT: the seventy-percent reveal — together they would take nearly 70% of the source. Make the viewer FEEL a quantity that cannot be shared. (This is where OPTION A and OPTION B diverge.)
+END: the verdict — these projects are NOT complementary; they fight over one limited resource. The map remains, changed by what we just saw.
+
+NARRATION for this beat (French, for your understanding only): "On pourrait se dire : au fond, pourquoi ne pas construire les deux ? Sur le papier, cela a l'air simple. Mais le Nigeria n'a tout simplement pas la capacite de remplir ces deux gazoducs en meme temps. S'ils voyaient tous les deux le jour, ils siphonneraient a eux seuls pres de SOIXANTE-DIX POUR CENT de la production nigeriane. En clair : ces projets ne sont pas complementaires. Ils se battent pour une meme ressource limitee."
+
+TASK: GENERATE AN IMAGE (not a text description) — a single storyboard sheet. Show the beat's opening state, then the peak staged TWICE (once as OPTION A, once as OPTION B), then the closing verdict state. Render the panels directly as pixels, each 16:9, fully readable at high resolution, clearly arranged and labelled. In the small director's-note caption under each panel, describe WHAT THE MAP IS DOING (the specific cartographic animation), not just the camera move. Output the image now.

@@ -71,6 +71,8 @@ import { GazoducActe2SignatureFreetown, GazoducActe2SignatureFlashback, GAZODUC_
 import { GazoducActe2Financement, GAZODUC_A2_FINANCEMENT_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Financement";
 import { GazoducActe2Montage, GAZODUC_A2_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Montage";
 import { GazoducActe3CarteTSGP } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP";
+import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4RessourceUnique";
+import { GAZODUC_A4_SEGA_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
 import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
@@ -1184,6 +1186,18 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte3-CarteTSGP"
           component={GazoducActe3CarteTSGP}
           durationInFrames={GAZODUC_A3_CARTE_TSGP_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 4 — Mouvement A "une ressource, deux tuyaux" (Partie 4 du script, 0->41.1s).
+            Storyboard verrouillé Aziz 2026-08-15 (acte4-4A/4A-v2-gpt.png) : la CARTE porte le beat
+            (impulsions qui s'affament + source qui s'épuise), UN SEUL insert au pic des 70%, verdict
+            sobre. Timing dérivé du forced-align réel, cf GazoducActe4Timing.ts. */}
+        <Composition
+          id="D3-Gazoduc-Acte4-RessourceUnique"
+          component={GazoducActe4RessourceUnique}
+          durationInFrames={GAZODUC_A4_SEGA_FRAMES}
           fps={30}
           width={1920}
           height={1080}

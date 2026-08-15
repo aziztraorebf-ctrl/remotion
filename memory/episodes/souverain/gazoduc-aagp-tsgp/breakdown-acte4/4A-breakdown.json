@@ -1,0 +1,683 @@
+{
+  "beat_id": "geopolitical_gas_routes_nigeria_peak_insert_verdict_locked",
+  "render_settings": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "duration_frames": 540,
+    "duration_seconds": 18,
+    "renderer": "React + Remotion deterministic SVG",
+    "animation_rules": {
+      "frame_source": "useCurrentFrame() only",
+      "allowed_value_functions": [
+        "interpolate()",
+        "spring()"
+      ],
+      "forbidden": [
+        "CSS transitions",
+        "@keyframes",
+        "setTimeout",
+        "requestAnimationFrame",
+        "animated viewBox"
+      ],
+      "camera_mechanism": "SVG <g id=\"camera_g\"> transform=\"translate(tx ty) scale(s)\"; tx and ty computed per frame from projected geographic camera centre; viewBox remains 0 0 1920 1080",
+      "route_drawing_mechanism": "strokeDasharray = pathLength; strokeDashoffset animated from pathLength to 0",
+      "travelling_pulse_mechanism": "for each pulse, compute point at normalized path position t on SVG path each frame and place SVG circle/short dash there"
+    },
+    "projection": {
+      "library": "d3-geo geoMercator",
+      "base_fit": "fitExtent([[60,40],[1860,1040]], GeoJSON subset covering West Africa, North Africa and Western Mediterranean)",
+      "primary_geo_anchors": {
+        "nigeria_source": [
+          6.85,
+          5.25
+        ],
+        "morocco_route_end": [
+          -6.75,
+          33.75
+        ],
+        "algeria_route_end": [
+          3.15,
+          31.85
+        ],
+        "morocco_label": [
+          -6.0,
+          31.8
+        ],
+        "algeria_label": [
+          2.6,
+          28.2
+        ],
+        "nigeria_label": [
+          8.7,
+          8.6
+        ]
+      },
+      "route_waypoints_geo": {
+        "route_to_morocco": [
+          [
+            6.85,
+            5.25
+          ],
+          [
+            4.0,
+            7.6
+          ],
+          [
+            1.5,
+            10.9
+          ],
+          [
+            -1.2,
+            14.6
+          ],
+          [
+            -2.2,
+            18.7
+          ],
+          [
+            -4.7,
+            23.8
+          ],
+          [
+            -6.25,
+            29.5
+          ],
+          [
+            -6.75,
+            33.75
+          ]
+        ],
+        "route_to_algeria": [
+          [
+            6.85,
+            5.25
+          ],
+          [
+            6.8,
+            9.0
+          ],
+          [
+            6.2,
+            13.4
+          ],
+          [
+            5.2,
+            17.8
+          ],
+          [
+            4.25,
+            22.6
+          ],
+          [
+            3.55,
+            27.0
+          ],
+          [
+            3.15,
+            31.85
+          ]
+        ]
+      }
+    },
+    "easing": {
+      "standard": "easeInOutCubic",
+      "soft_out": "easeOutCubic",
+      "soft_in": "easeInCubic",
+      "linear": "linear",
+      "spring_card": "spring({frame: localFrame, fps: 30, config: {damping: 18, stiffness: 120, mass: 0.9}})"
+    }
+  },
+  "palette": {
+    "ocean_deep": "#061726",
+    "ocean_mid": "#0A2A45",
+    "land_base": "#102A3F",
+    "land_dim": "#0B1B29",
+    "country_border": "#6E7F8D",
+    "country_border_dim": "#3E4D58",
+    "country_fill_highlight": "#0E5E7A",
+    "country_fill_highlight_dim": "#0A3C4F",
+    "route_gold": "#FFC766",
+    "route_gold_core": "#FFE3A0",
+    "route_gold_dim": "#9A7340",
+    "route_gold_verdict": "#A6783B",
+    "pulse_gold": "#FFD982",
+    "pulse_gold_hot": "#FFF2BF",
+    "source_cyan": "#35D8FF",
+    "source_cyan_core": "#B8F5FF",
+    "source_cyan_dim": "#1E8CAA",
+    "card_bg": "#071015",
+    "card_border": "#19D7F2",
+    "card_border_dim": "#0E8CA0",
+    "card_inner_stroke": "#2E414B",
+    "veil": "#02080D",
+    "label_bg": "#03090E",
+    "label_border": "#23B7D0",
+    "label_text": "#F4FAFF",
+    "text_muted": "#B7C5CE",
+    "pipe_metal": "#4B5961",
+    "shadow": "#000000"
+  },
+  "camera": {
+    "mechanism": "A single SVG group wraps all projected map geography, routes, source point and geo-anchored connector start. The card and nameplates marked screen-positioned are outside or counter-scaled as specified. For each keyframe, compute projected point of centre_lonlat, then set camera_g transform to translate(960 - projectedX * zoom, 540 - projectedY * zoom) scale(zoom). Interpolate centre_lonlat and zoom per frame; never animate SVG viewBox.",
+    "keyframes": [
+      {
+        "frame": 0,
+        "centre_lonlat": [
+          0.0,
+          19.0
+        ],
+        "zoom": 1.03,
+        "easing_to_next": "easeInOutCubic"
+      },
+      {
+        "frame": 120,
+        "centre_lonlat": [
+          0.6,
+          18.1
+        ],
+        "zoom": 1.08,
+        "easing_to_next": "easeInOutCubic"
+      },
+      {
+        "frame": 184,
+        "centre_lonlat": [
+          2.5,
+          17.2
+        ],
+        "zoom": 1.13,
+        "easing_to_next": "easeInOutCubic"
+      },
+      {
+        "frame": 300,
+        "centre_lonlat": [
+          3.2,
+          16.4
+        ],
+        "zoom": 1.16,
+        "easing_to_next": "easeInOutCubic"
+      },
+      {
+        "frame": 378,
+        "centre_lonlat": [
+          1.8,
+          17.0
+        ],
+        "zoom": 1.1,
+        "easing_to_next": "easeInOutCubic"
+      },
+      {
+        "frame": 539,
+        "centre_lonlat": [
+          0.7,
+          17.8
+        ],
+        "zoom": 1.07,
+        "easing_to_next": "easeInOutCubic"
+      }
+    ]
+  },
+  "panels": [
+    {
+      "panel_id": "opening_ouverture_panel_1_with_panel_3_impulse_vocabulary",
+      "intent": "Use panel 1 staging exactly: readable geopolitical map with Nigeria as source and two golden routes reaching Morocco and Algeria. Upgrade only the route animation vocabulary with lively dashed travelling impulses on both routes and a pulsing cyan halo on the Nigeria source point.",
+      "time_share": 0.34,
+      "elements": [
+        {
+          "id": "bg_ocean_gradient",
+          "technical": "SVG rect 1920x1080 filled with radialGradient from palette.ocean_mid at centre-left to palette.ocean_deep at edges; static background behind projected map.",
+          "position": "screen position: x=0 y=0 width=1920 height=1080",
+          "animation": "opacity fixed at 1 from frame 0 to 183.",
+          "z_order": "0, bottommost"
+        },
+        {
+          "id": "map_land_countries",
+          "technical": "SVG group of d3-geo projected GeoJSON country paths; fill palette.land_base; stroke palette.country_border; strokeWidth 1.4 divided by camera zoom to keep visual weight stable.",
+          "position": "geographic anchor: all visible West Africa, North Africa, Mediterranean-adjacent country borders projected with geoMercator inside camera_g",
+          "animation": "opacity 0 -> 1 over frames 0-18 using easeOutCubic; stroke opacity 0.62 throughout opening; no individual country motion.",
+          "z_order": "10, above ocean below highlights/routes"
+        },
+        {
+          "id": "country_highlight_morocco",
+          "technical": "SVG path from Morocco GeoJSON; fill palette.country_fill_highlight; stroke palette.label_border at 1.6/zoom; subtle outer glow filter glow_cyan_soft with feGaussianBlur stdDeviation 3.",
+          "position": "geographic anchor: Morocco country polygon",
+          "animation": "fill opacity 0 -> 0.58 frames 12-42 easeOutCubic; remains 0.58 through frame 183.",
+          "z_order": "18, above base countries below route lines"
+        },
+        {
+          "id": "country_highlight_algeria",
+          "technical": "SVG path from Algeria GeoJSON; fill palette.country_fill_highlight; stroke palette.label_border at 1.6/zoom; subtle outer glow filter glow_cyan_soft with feGaussianBlur stdDeviation 3.",
+          "position": "geographic anchor: Algeria country polygon",
+          "animation": "fill opacity 0 -> 0.52 frames 18-48 easeOutCubic; remains 0.52 through frame 183.",
+          "z_order": "18, above base countries below route lines"
+        },
+        {
+          "id": "country_highlight_nigeria",
+          "technical": "SVG path from Nigeria GeoJSON; fill palette.country_fill_highlight; stroke palette.label_border at 1.6/zoom; stronger local cyan glow filter glow_cyan_medium stdDeviation 5.",
+          "position": "geographic anchor: Nigeria country polygon",
+          "animation": "fill opacity 0 -> 0.66 frames 0-30 easeOutCubic; glow opacity 0.65 + 0.15 * sin(2π * frame / 48) through opening.",
+          "z_order": "18, above base countries below route lines"
+        },
+        {
+          "id": "route_morocco_base_glow",
+          "technical": "SVG path generated as Catmull-Rom or cubic-smoothed path through route_to_morocco waypoints; no fill; stroke palette.route_gold; strokeLinecap round; strokeLinejoin round; filter drop-shadow/gold blur stdDeviation 8.",
+          "position": "geographic anchor: route_to_morocco from Nigeria source [6.85,5.25] to Morocco endpoint [-6.75,33.75]",
+          "animation": "Let len = path.getTotalLength(). strokeDasharray = len. strokeDashoffset len -> 0 over frames 18-96 using easeInOutCubic. Stroke width 7/zoom. Stroke opacity 0 -> 0.72 frames 18-42 easeOutCubic, then interpolates 0.72 -> 0.58 frames 120-183 linear to begin starvation.",
+          "z_order": "30, above countries below route core and pulses"
+        },
+        {
+          "id": "route_morocco_core",
+          "technical": "SVG path identical to route_morocco_base_glow; no fill; stroke palette.route_gold_core; strokeLinecap round; strokeLinejoin round.",
+          "position": "geographic anchor: same as route_morocco_base_glow",
+          "animation": "strokeDasharray = len. strokeDashoffset len -> 0 over frames 22-102 using easeInOutCubic. Stroke width 2.4/zoom. Stroke opacity 0 -> 1 frames 22-52 easeOutCubic, then 1 -> 0.72 frames 120-183 linear.",
+          "z_order": "32, above route glow below travelling impulses"
+        },
+        {
+          "id": "route_algeria_base_glow",
+          "technical": "SVG path generated as Catmull-Rom or cubic-smoothed path through route_to_algeria waypoints; no fill; stroke palette.route_gold; strokeLinecap round; strokeLinejoin round; filter drop-shadow/gold blur stdDeviation 8.",
+          "position": "geographic anchor: route_to_algeria from Nigeria source [6.85,5.25] to Algeria endpoint [3.15,31.85]",
+          "animation": "Let len = path.getTotalLength(). strokeDasharray = len. strokeDashoffset len -> 0 over frames 26-100 using easeInOutCubic. Stroke width 7/zoom. Stroke opacity 0 -> 0.72 frames 26-50 easeOutCubic, then interpolates 0.72 -> 0.58 frames 120-183 linear.",
+          "z_order": "30, above countries below route core and pulses"
+        },
+        {
+          "id": "route_algeria_core",
+          "technical": "SVG path identical to route_algeria_base_glow; no fill; stroke palette.route_gold_core; strokeLinecap round; strokeLinejoin round.",
+          "position": "geographic anchor: same as route_algeria_base_glow",
+          "animation": "strokeDasharray = len. strokeDashoffset len -> 0 over frames 30-106 using easeInOutCubic. Stroke width 2.4/zoom. Stroke opacity 0 -> 1 frames 30-58 easeOutCubic, then 1 -> 0.72 frames 120-183 linear.",
+          "z_order": "32, above route glow below travelling impulses"
+        },
+        {
+          "id": "travelling_impulses_morocco",
+          "technical": "SVG group of pulse particles travelling along route_morocco_core. Each particle is a short dash plus hot core: draw a mini path segment tangent to the route, length 18/zoom, stroke palette.pulse_gold_hot width 3/zoom with round caps, plus centre circle r 3.5/zoom fill palette.pulse_gold and glow filter gold_pulse_blur stdDeviation 5. Use computed point and tangent from normalized path position.",
+          "position": "geographic anchor: particles placed per-frame on route_to_morocco path from Nigeria source toward Morocco",
+          "animation": "Frames 42-183. Starvation factor s = interpolate(frame,[42,183],[0,1],linear). activeCount = floor(interpolate(s,[0,1],[10,5])). spacing = 1 / activeCount. speed = interpolate(s,[0,1],[0.0115,0.0065]) normalized path units per frame. For particle i in 0..9, visible only if i < activeCount. tRaw = (speed * (frame - 42) + i * spacing) % 1. t = tRaw. End fade = smoothstep(0.025,0.11,t) * (1 - smoothstep(0.89,0.985,t)). Spawn fade = interpolate(frame,[42,58],[0,1],easeOutCubic). opacity = endFade * spawnFade * interpolate(s,[0,1],[0.95,0.52]). Dash length = interpolate(s,[0,1],[20,12]) / zoom. Circle radius = interpolate(s,[0,1],[4.2,2.8]) / zoom. To show starving, inter-pulse gaps visibly widen because count drops from 10 to 5 while speed slows by 43%; no new particles are created after count cutoff, they fade out over 8 frames using opacity interpolation.",
+          "z_order": "40, above both route strokes below country nameplates and source core"
+        },
+        {
+          "id": "travelling_impulses_algeria",
+          "technical": "SVG group of pulse particles travelling along route_algeria_core. Each particle is a short dash plus hot core: mini tangent segment length 18/zoom, stroke palette.pulse_gold_hot width 3/zoom with round caps, plus centre circle r 3.5/zoom fill palette.pulse_gold and glow filter gold_pulse_blur stdDeviation 5.",
+          "position": "geographic anchor: particles placed per-frame on route_to_algeria path from Nigeria source toward Algeria",
+          "animation": "Frames 48-183. Starvation factor s = interpolate(frame,[48,183],[0,1],linear). activeCount = floor(interpolate(s,[0,1],[10,5])). spacing = 1 / activeCount. speed = interpolate(s,[0,1],[0.011,0.0062]) normalized path units per frame. For particle i in 0..9, visible only if i < activeCount. tRaw = (speed * (frame - 48) + i * spacing + 0.045) % 1. End fade = smoothstep(0.025,0.11,tRaw) * (1 - smoothstep(0.89,0.985,tRaw)). Spawn fade = interpolate(frame,[48,64],[0,1],easeOutCubic). opacity = endFade * spawnFade * interpolate(s,[0,1],[0.95,0.52]). Dash length = interpolate(s,[0,1],[20,12]) / zoom. Circle radius = interpolate(s,[0,1],[4.2,2.8]) / zoom. Same starvation read: particle count halves and movement slows before the peak begins.",
+          "z_order": "40, above both route strokes below country nameplates and source core"
+        },
+        {
+          "id": "nigeria_source_outer_pulse_a",
+          "technical": "SVG circle with no fill, stroke palette.source_cyan, strokeWidth 3/zoom, filter cyan_halo_blur stdDeviation 7.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "Visible frames 0-183. Pulse period = 36 frames. phase = ((frame - 0) % 36) / 36. radius = interpolate(phase,[0,1],[10,42],easeOutCubic) / zoom. opacity = interpolate(phase,[0,0.72,1],[0.62,0.22,0],easeOutCubic). Overall opacity multiplied by interpolate(frame,[0,18],[0,1],easeOutCubic).",
+          "z_order": "48, above route pulses below source core"
+        },
+        {
+          "id": "nigeria_source_outer_pulse_b",
+          "technical": "SVG circle with no fill, stroke palette.source_cyan, strokeWidth 2.5/zoom, filter cyan_halo_blur stdDeviation 7.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "Visible frames 18-183. Pulse period = 36 frames. phase = ((frame - 18) % 36) / 36. radius = interpolate(phase,[0,1],[10,38],easeOutCubic) / zoom. opacity = interpolate(phase,[0,0.72,1],[0.46,0.16,0],easeOutCubic).",
+          "z_order": "48, above route pulses below source core"
+        },
+        {
+          "id": "nigeria_source_inner_halo",
+          "technical": "SVG circle fill palette.source_cyan with radialGradient cyan_source_gradient from palette.source_cyan_core at centre to transparent edge; filter cyan_halo_blur stdDeviation 5.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "radius = (18 + 3 * sin(2π * frame / 36)) / zoom. opacity 0 -> 0.72 frames 0-18 easeOutCubic, then opacity = 0.72 + 0.08 * sin(2π * frame / 36) through frame 183.",
+          "z_order": "49, above pulse rings below source core"
+        },
+        {
+          "id": "nigeria_source_core",
+          "technical": "SVG circle fill palette.source_cyan_core, stroke palette.source_cyan, strokeWidth 2.5/zoom, filter drop-shadow cyan stdDeviation 4.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "radius 0 -> 7.5/zoom frames 0-15 using spring({damping:18,stiffness:130}); radius then 7.5/zoom + 0.9/zoom * sin(2π * frame / 36). opacity fixed 1 after frame 15.",
+          "z_order": "50, above all route pulses and below labels"
+        },
+        {
+          "id": "label_morocco",
+          "technical": "SVG group nameplate: rect with rx=3, fill palette.label_bg opacity 0.92, stroke palette.label_border width 1.2; text 'MAROC' in uppercase monospaced white, letterSpacing 2px, fontSize 18. Counter-scale by 1/zoom so label size remains screen-stable.",
+          "position": "geographic anchor: label centre at Morocco label coordinate [-6.0,31.8]",
+          "animation": "opacity 0 -> 1 frames 28-44 easeOutCubic; y offset -6px -> 0px frames 28-44 easeOutCubic.",
+          "z_order": "60, above routes/source"
+        },
+        {
+          "id": "label_algeria",
+          "technical": "SVG group nameplate: rect with rx=3, fill palette.label_bg opacity 0.92, stroke palette.label_border width 1.2; text 'ALGÉRIE' in uppercase monospaced white, letterSpacing 2px, fontSize 18. Counter-scale by 1/zoom.",
+          "position": "geographic anchor: label centre at Algeria label coordinate [2.6,28.2]",
+          "animation": "opacity 0 -> 1 frames 34-50 easeOutCubic; y offset -6px -> 0px frames 34-50 easeOutCubic.",
+          "z_order": "60, above routes/source"
+        },
+        {
+          "id": "label_nigeria",
+          "technical": "SVG group nameplate: rect with rx=3, fill palette.label_bg opacity 0.92, stroke palette.label_border width 1.2; text 'NIGERIA' in uppercase monospaced white, letterSpacing 2px, fontSize 18. Counter-scale by 1/zoom.",
+          "position": "geographic anchor: label centre at Nigeria label coordinate [8.7,8.6]",
+          "animation": "opacity 0 -> 1 frames 20-36 easeOutCubic; x offset 8px -> 0px frames 20-36 easeOutCubic.",
+          "z_order": "60, above routes/source"
+        }
+      ]
+    },
+    {
+      "panel_id": "peak_option_a_rupture_de_forme_pipe_cutaway_insert",
+      "intent": "Use panel 2 peak exactly: dim the map but keep it readable; superimpose a bordered card containing the owned looping gas-pipe cutaway video; anchor the card to the Nigeria source by a drawn connector; show the only on-screen figure, '~70%', once in this insert.",
+      "time_share": 0.36,
+      "elements": [
+        {
+          "id": "peak_map_continuity_group",
+          "technical": "Same SVG map, country highlights, routes, labels and Nigeria source from opening, kept in camera_g behind veil. Strokes and fills use their opening geometry but are globally dimmed by the veil and by reduced internal opacities.",
+          "position": "geographic anchor: entire projected map and both route paths",
+          "animation": "Frames 184-377. Internal route opacity continues starving: route core opacity 0.70 -> 0.46 frames 184-377 linear; route glow opacity 0.50 -> 0.30 linear. Country highlight opacity Morocco 0.46, Algeria 0.42, Nigeria 0.55 at frame 184, then Nigeria 0.55 -> 0.38 by frame 377 linear. Map remains readable under separate veil.",
+          "z_order": "10-60, below dimming veil and below insert"
+        },
+        {
+          "id": "peak_residual_impulses_morocco",
+          "technical": "Same pulse particle system as opening on route_to_morocco, but smaller and fewer; circle plus short tangent dash, palette.pulse_gold with palette.pulse_gold_hot core, blur stdDeviation 3.",
+          "position": "geographic anchor: route_to_morocco path from Nigeria source toward Morocco",
+          "animation": "Frames 184-377. activeCount = 4 until frame 270, then 3 until frame 377. speed = interpolate(frame,[184,377],[0.0055,0.0038],linear). For i in 0..3, t = (0.0055 * 142 + speed * (frame - 184) + i / activeCount) % 1. End fade = smoothstep(0.035,0.12,t) * (1 - smoothstep(0.86,0.98,t)). opacity = endFade * interpolate(frame,[184,377],[0.36,0.20],linear). radius = interpolate(frame,[184,377],[2.6,1.8],linear) / zoom. Dash length = interpolate(frame,[184,377],[11,7],linear) / zoom. The starving state is explicit: only 4 then 3 pulses remain, movement is less than half opening speed, and gaps are large.",
+          "z_order": "42, above route strokes but below veil; visually muted by veil"
+        },
+        {
+          "id": "peak_residual_impulses_algeria",
+          "technical": "Same pulse particle system as opening on route_to_algeria, smaller and fewer; circle plus short tangent dash, palette.pulse_gold with palette.pulse_gold_hot core, blur stdDeviation 3.",
+          "position": "geographic anchor: route_to_algeria path from Nigeria source toward Algeria",
+          "animation": "Frames 184-377. activeCount = 4 until frame 270, then 3 until frame 377. speed = interpolate(frame,[184,377],[0.0052,0.0036],linear). For i in 0..3, t = (0.0052 * 136 + speed * (frame - 184) + i / activeCount + 0.05) % 1. End fade = smoothstep(0.035,0.12,t) * (1 - smoothstep(0.86,0.98,t)). opacity = endFade * interpolate(frame,[184,377],[0.36,0.20],linear). radius = interpolate(frame,[184,377],[2.6,1.8],linear) / zoom. Dash length = interpolate(frame,[184,377],[11,7],linear) / zoom.",
+          "z_order": "42, above route strokes but below veil; visually muted by veil"
+        },
+        {
+          "id": "peak_nigeria_source_pulse",
+          "technical": "Layered source point remains active behind connector: core circle, inner cyan radial halo, and one outer pulse ring. Uses palette.source_cyan and palette.source_cyan_core.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "Frames 184-377. Source weakening starts here. Core radius interpolates 7.5/zoom -> 5.5/zoom linear. Core opacity 1 -> 0.78 linear. Inner halo radius = interpolate(frame,[184,377],[17,12],linear)/zoom + 1.5/zoom * sin(2π * frame / 42). Inner halo opacity 0.62 -> 0.38 linear. Outer pulse period slows from 42 to 48 frames; phase = ((frame - 184) % 48) / 48; outer ring radius interpolate phase [0,1] from 9/zoom to interpolate(frame,[184,377],[30,22],linear)/zoom; outer ring opacity interpolate phase [0,0.75,1] [0.32,0.10,0].",
+          "z_order": "50, above route pulses below veil and connector"
+        },
+        {
+          "id": "peak_dimming_veil",
+          "technical": "SVG rect filled palette.veil over the full frame; pointer-events none; no blur. It sits above all map layers and below connector/card. Target opacity 0.40 so the map remains readable.",
+          "position": "screen position: x=0 y=0 width=1920 height=1080",
+          "animation": "opacity 0 -> 0.40 frames 170-194 easeInOutCubic; holds 0.40 frames 194-358; then 0.40 -> 0.18 frames 358-377 easeInOutCubic to prepare verdict transition without fully clearing yet.",
+          "z_order": "80, above map below connector and insert"
+        },
+        {
+          "id": "peak_connector_line",
+          "technical": "SVG polyline/path with no fill; stroke palette.card_border; strokeWidth 2; strokeLinecap round; strokeDasharray 4 6 after draw completes; subtle cyan glow filter stdDeviation 2. Path starts at projected Nigeria source, then doglegs upward-left to the bottom edge of the insert card. The connector is screen-space after computing source projection each frame so it remains attached while camera moves.",
+          "position": "mixed position: geographic anchor start at Nigeria source [6.85,5.25]; screen-positioned end at card bottom anchor [960,626]",
+          "animation": "Let connectorLen = path length for current frame. strokeDasharray for reveal = connectorLen; strokeDashoffset connectorLen -> 0 frames 190-212 easeOutCubic. After frame 212 switch visual dash pattern to 4 6 with dashOffset = -0.6 * (frame - 212) for subtle flow toward card. Opacity 0 -> 1 frames 188-204 easeOutCubic; opacity 1 -> 0 frames 358-374 easeInCubic.",
+          "z_order": "90, above veil below card"
+        },
+        {
+          "id": "peak_insert_card_shadow",
+          "technical": "SVG rounded rect shadow behind card; fill palette.shadow; opacity 0.45; blur filter stdDeviation 18.",
+          "position": "screen position: x=638 y=280 width=644 height=356 rx=10",
+          "animation": "Frames 184-377. Card entrance progress p = spring_card evaluated from frame 188. opacity 0 -> 0.45 frames 188-206 easeOutCubic. scale 0.965 -> 1 using p; y offset 16px -> 0 using p. Exit opacity 0.45 -> 0 frames 356-374 easeInCubic; y offset 0 -> -10px frames 356-374 easeInCubic.",
+          "z_order": "99, above connector below card body"
+        },
+        {
+          "id": "peak_insert_card_body",
+          "technical": "SVG rounded rect card; fill palette.card_bg opacity 0.96; stroke palette.card_border width 2; rx=8; inner thin stroke palette.card_inner_stroke inset by 8px. Card clips all internal video/text with clipPath rounded to rx=8.",
+          "position": "screen position: x=640 y=282 width=640 height=352 rx=8",
+          "animation": "Frames 184-377. Entrance starts frame 188. opacity 0 -> 1 frames 188-206 easeOutCubic. scale 0.965 -> 1 using spring_card. transform origin [960,458]. Exit opacity 1 -> 0 frames 356-374 easeInCubic; scale 1 -> 0.985 frames 356-374 easeInCubic.",
+          "z_order": "100, above shadow and connector"
+        },
+        {
+          "id": "peak_insert_title",
+          "technical": "SVG text in card header; content 'CONDUITE DE GAZ — COUPE TECHNIQUE'; fontFamily monospace; fontSize 16; letterSpacing 1.8; fill palette.label_text; no numeric content.",
+          "position": "screen position: centered at x=960 y=318 inside card header",
+          "animation": "opacity 0 -> 1 frames 198-214 easeOutCubic; follows card exit opacity 1 -> 0 frames 356-370 easeInCubic.",
+          "z_order": "105, above card body below video edge overlays"
+        },
+        {
+          "id": "peak_pipe_video_clip",
+          "technical": "Remotion <Loop> wrapping <OffthreadVideo src=owned_validated_gas_pipe_cutaway_loop>. The video is composited in an SVG foreignObject or absolute-positioned layer clipped to a rounded rect. It shows the existing gas-pipe cutaway cross-section asset; no newly designed pipe asset is created.",
+          "position": "screen position: x=705 y=342 width=510 height=166, clipped with rx=6 within card",
+          "animation": "Video playback loops continuously while mounted. Layer opacity 0 -> 1 frames 200-216 easeOutCubic; scale follows parent card. Exit opacity 1 -> 0 frames 356-370 easeInCubic. No time-based playback manipulation other than Remotion deterministic frame selection.",
+          "z_order": "106, inside card above body"
+        },
+        {
+          "id": "peak_pipe_video_border",
+          "technical": "SVG rounded rect over video; no fill; stroke palette.card_inner_stroke width 1.5; subtle inner highlight line at top stroke palette.text_muted opacity 0.28.",
+          "position": "screen position: x=705 y=342 width=510 height=166 rx=6",
+          "animation": "opacity 0 -> 1 frames 202-216 easeOutCubic; opacity 1 -> 0 frames 356-370 easeInCubic.",
+          "z_order": "107, above video"
+        },
+        {
+          "id": "peak_percent_badge",
+          "technical": "SVG rounded rect badge plus text. Badge rect fill palette.label_bg opacity 0.96; stroke palette.card_border width 2; rx=5. Text content exactly '~70%' in monospace, fontSize 34, fill palette.label_text. This is the only on-screen figure in the beat and appears only in this element.",
+          "position": "screen position: badge x=882 y=529 width=156 height=58; text centered at [960,568]",
+          "animation": "Entrance delayed after card: badge opacity 0 -> 1 frames 216-230 easeOutCubic; badge scale 0.92 -> 1.0 frames 216-234 using spring({damping:14,stiffness:150}). Hold opacity 1 frames 230-348. Exit opacity 1 -> 0 frames 348-362 easeInCubic; scale 1 -> 0.96 frames 348-362 easeInCubic.",
+          "z_order": "110, topmost within card"
+        },
+        {
+          "id": "peak_country_nameplates",
+          "technical": "Same MAROC, ALGÉRIE and NIGERIA SVG nameplates as opening, counter-scaled by 1/zoom; fill palette.label_bg, stroke palette.label_border, text palette.label_text.",
+          "position": "geographic anchor: Morocco [-6.0,31.8], Algeria [2.6,28.2], Nigeria [8.7,8.6]",
+          "animation": "Opacity remains 0.78 under veil from frames 184-377; if overlapped by card, card occludes due to higher z-order. No numeric labels.",
+          "z_order": "60, below veil/card"
+        }
+      ]
+    },
+    {
+      "panel_id": "verdict_panel_4_sober_changed_map",
+      "intent": "Use panel 4 exactly: no insert, no figure, no standalone panel 3 staging. The map remains permanently changed: Nigeria source weakened, rival routes dimmer and sober, with sparse residual direction markers only.",
+      "time_share": 0.3,
+      "elements": [
+        {
+          "id": "verdict_bg_ocean_gradient",
+          "technical": "Same SVG ocean rect and radialGradient as opening, slightly darker by overlaying palette.ocean_deep at opacity 0.18.",
+          "position": "screen position: x=0 y=0 width=1920 height=1080",
+          "animation": "opacity fixed at 1 frames 378-539; darker overlay opacity 0.18 -> 0.24 frames 378-539 linear.",
+          "z_order": "0, bottommost"
+        },
+        {
+          "id": "verdict_map_land_countries",
+          "technical": "SVG group of projected GeoJSON country paths; fill palette.land_base; stroke palette.country_border_dim; strokeWidth 1.2/zoom.",
+          "position": "geographic anchor: all visible map countries inside camera_g",
+          "animation": "opacity 1; border opacity 0.48 -> 0.42 frames 378-539 linear. No fade to black; map stays readable.",
+          "z_order": "10, above ocean below highlights/routes"
+        },
+        {
+          "id": "verdict_country_highlight_morocco",
+          "technical": "SVG Morocco GeoJSON path; fill palette.country_fill_highlight_dim; stroke palette.card_border_dim width 1.2/zoom.",
+          "position": "geographic anchor: Morocco country polygon",
+          "animation": "fill opacity 0.34 at frame 378 then 0.30 by frame 539 linear; no glow pulse.",
+          "z_order": "18, above base countries below routes"
+        },
+        {
+          "id": "verdict_country_highlight_algeria",
+          "technical": "SVG Algeria GeoJSON path; fill palette.country_fill_highlight_dim; stroke palette.card_border_dim width 1.2/zoom.",
+          "position": "geographic anchor: Algeria country polygon",
+          "animation": "fill opacity 0.32 at frame 378 then 0.28 by frame 539 linear; no glow pulse.",
+          "z_order": "18, above base countries below routes"
+        },
+        {
+          "id": "verdict_country_highlight_nigeria_weakened",
+          "technical": "SVG Nigeria GeoJSON path; fill palette.country_fill_highlight_dim; stroke palette.source_cyan_dim width 1.2/zoom.",
+          "position": "geographic anchor: Nigeria country polygon",
+          "animation": "fill opacity 0.32 -> 0.24 frames 378-539 linear; stroke opacity 0.55 -> 0.38 linear. This is the permanent changed state.",
+          "z_order": "18, above base countries below routes/source"
+        },
+        {
+          "id": "verdict_route_morocco_dim_line",
+          "technical": "SVG path identical to route_to_morocco; no fill; stroke palette.route_gold_verdict; strokeLinecap round; strokeLinejoin round; very soft glow filter stdDeviation 3.",
+          "position": "geographic anchor: route_to_morocco from Nigeria source to Morocco",
+          "animation": "No redraw. strokeDasharray none. Stroke width 4.2/zoom -> 3.4/zoom frames 378-539 linear. Stroke opacity 0.48 -> 0.34 frames 378-539 linear. Glow opacity 0.22 -> 0.12 linear. The route remains present but visibly depleted.",
+          "z_order": "30, above country highlights below residual direction ticks/source"
+        },
+        {
+          "id": "verdict_route_algeria_dim_line",
+          "technical": "SVG path identical to route_to_algeria; no fill; stroke palette.route_gold_verdict; strokeLinecap round; strokeLinejoin round; very soft glow filter stdDeviation 3.",
+          "position": "geographic anchor: route_to_algeria from Nigeria source to Algeria",
+          "animation": "No redraw. strokeDasharray none. Stroke width 4.2/zoom -> 3.4/zoom frames 378-539 linear. Stroke opacity 0.48 -> 0.34 frames 378-539 linear. Glow opacity 0.22 -> 0.12 linear.",
+          "z_order": "30, above country highlights below residual direction ticks/source"
+        },
+        {
+          "id": "verdict_route_morocco_sober_direction_ticks",
+          "technical": "SVG group of 3 small chevron/tangent dash markers on route_to_morocco; each marker uses two short strokes forming an arrow-chevron aligned to route tangent; stroke palette.route_gold_dim; strokeWidth 2/zoom; no bright core.",
+          "position": "geographic anchor: fixed normalized positions along Morocco route at t=[0.28,0.55,0.78]",
+          "animation": "Frames 378-539. Each marker has a slow drift of +0.025 normalized units over the entire verdict: t = baseT + interpolate(frame,[378,539],[0,0.025],linear), clamped below 0.92. Opacity = 0.34 + 0.08 * sin(2π * (frame - 378 + index*13) / 72), then overall fades to 0.26 by frame 539. This is not the lively panel 3 staging; it is sparse residual flow.",
+          "z_order": "36, above dim route line below source and labels"
+        },
+        {
+          "id": "verdict_route_algeria_sober_direction_ticks",
+          "technical": "SVG group of 3 small chevron/tangent dash markers on route_to_algeria; each marker uses two short strokes forming an arrow-chevron aligned to route tangent; stroke palette.route_gold_dim; strokeWidth 2/zoom; no bright core.",
+          "position": "geographic anchor: fixed normalized positions along Algeria route at t=[0.24,0.52,0.76]",
+          "animation": "Frames 378-539. Each marker drifts +0.025 normalized units over the verdict: t = baseT + interpolate(frame,[378,539],[0,0.025],linear), clamped below 0.92. Opacity = 0.34 + 0.08 * sin(2π * (frame - 378 + index*17) / 72), then overall fades to 0.26 by frame 539.",
+          "z_order": "36, above dim route line below source and labels"
+        },
+        {
+          "id": "verdict_residual_impulse_morocco_starved",
+          "technical": "Optional residual particle layer required to finish the starvation arc: 2 tiny non-glowing dots only, fill palette.route_gold_dim, no dash, no hot core, blur disabled.",
+          "position": "geographic anchor: route_to_morocco path from Nigeria source toward Morocco",
+          "animation": "Frames 378-470 only. activeCount = 2. speed = 0.0022 normalized units per frame. For i in 0..1, t = (0.62 + speed * (frame - 378) + i * 0.42) % 1. End fade = smoothstep(0.06,0.16,t) * (1 - smoothstep(0.78,0.94,t)). opacity = endFade * interpolate(frame,[378,470],[0.22,0],easeInCubic). radius = 1.6/zoom. Fully gone after frame 470, leaving only sober route and ticks.",
+          "z_order": "38, above route line below source"
+        },
+        {
+          "id": "verdict_residual_impulse_algeria_starved",
+          "technical": "Optional residual particle layer required to finish the starvation arc: 2 tiny non-glowing dots only, fill palette.route_gold_dim, no dash, no hot core, blur disabled.",
+          "position": "geographic anchor: route_to_algeria path from Nigeria source toward Algeria",
+          "animation": "Frames 378-470 only. activeCount = 2. speed = 0.0020 normalized units per frame. For i in 0..1, t = (0.58 + speed * (frame - 378) + i * 0.42 + 0.05) % 1. End fade = smoothstep(0.06,0.16,t) * (1 - smoothstep(0.78,0.94,t)). opacity = endFade * interpolate(frame,[378,470],[0.22,0],easeInCubic). radius = 1.6/zoom. Fully gone after frame 470.",
+          "z_order": "38, above route line below source"
+        },
+        {
+          "id": "verdict_nigeria_source_outer_pulse_weakened",
+          "technical": "Single faint SVG circle ring; no fill; stroke palette.source_cyan_dim; strokeWidth 1.6/zoom; soft blur stdDeviation 3.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "Frames 378-539. Pulse period = 54 frames. phase = ((frame - 378) % 54) / 54. Maximum halo has contracted from opening: radius = interpolate(phase,[0,1],[7,19],easeOutCubic) / zoom. opacity = interpolate(phase,[0,0.68,1],[0.22,0.07,0],easeOutCubic). Overall opacity also interpolates 1 -> 0.72 frames 378-539 linear.",
+          "z_order": "48, above residual particles below inner source"
+        },
+        {
+          "id": "verdict_nigeria_source_inner_halo_weakened",
+          "technical": "SVG circle filled with radialGradient from palette.source_cyan_dim to transparent; blur stdDeviation 3.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "radius = (9 + 1.0 * sin(2π * (frame - 378) / 54)) / zoom. opacity 0.34 -> 0.24 frames 378-539 linear. The halo is contracted and no longer dominates the map.",
+          "z_order": "49, above faint pulse below core"
+        },
+        {
+          "id": "verdict_nigeria_source_core_weakened",
+          "technical": "SVG circle fill palette.source_cyan_dim, stroke palette.source_cyan_core strokeWidth 1.4/zoom; no strong drop shadow.",
+          "position": "geographic anchor: Nigeria source point [6.85,5.25]",
+          "animation": "radius 5.2/zoom -> 4.0/zoom frames 378-539 easeInOutCubic. opacity 0.78 -> 0.56 frames 378-539 linear.",
+          "z_order": "50, above routes below labels"
+        },
+        {
+          "id": "verdict_label_morocco",
+          "technical": "SVG nameplate rect and text 'MAROC'; fill palette.label_bg opacity 0.88; stroke palette.card_border_dim; text palette.label_text; counter-scaled by 1/zoom.",
+          "position": "geographic anchor: Morocco label coordinate [-6.0,31.8]",
+          "animation": "opacity 0.92 -> 0.84 frames 378-539 linear; no motion other than camera drift.",
+          "z_order": "60, above source/routes"
+        },
+        {
+          "id": "verdict_label_algeria",
+          "technical": "SVG nameplate rect and text 'ALGÉRIE'; fill palette.label_bg opacity 0.88; stroke palette.card_border_dim; text palette.label_text; counter-scaled by 1/zoom.",
+          "position": "geographic anchor: Algeria label coordinate [2.6,28.2]",
+          "animation": "opacity 0.92 -> 0.84 frames 378-539 linear; no motion other than camera drift.",
+          "z_order": "60, above source/routes"
+        },
+        {
+          "id": "verdict_label_nigeria",
+          "technical": "SVG nameplate rect and text 'NIGERIA'; fill palette.label_bg opacity 0.88; stroke palette.card_border_dim; text palette.label_text; counter-scaled by 1/zoom.",
+          "position": "geographic anchor: Nigeria label coordinate [8.7,8.6]",
+          "animation": "opacity 0.88 -> 0.78 frames 378-539 linear; no motion other than camera drift.",
+          "z_order": "60, above source/routes"
+        }
+      ]
+    }
+  ],
+  "transitions": {
+    "opening_to_peak": {
+      "frame_window": [
+        164,
+        206
+      ],
+      "description": "The map does not cut. The lively opening route treatment visibly begins starving before the insert arrives. The dimming veil rises, the connector draws from Nigeria source to the card, and the owned pipe cutaway card scales/fades in over the still-readable map.",
+      "steps": [
+        {
+          "frames": [
+            120,
+            183
+          ],
+          "action": "Pre-transition starvation: opening travelling impulses reduce from 10 to 5 per route, speed drops from about 0.011 normalized path units/frame to about 0.006, opacity drops from 0.95 to 0.52, dash length drops from 20px to 12px."
+        },
+        {
+          "frames": [
+            170,
+            194
+          ],
+          "action": "peak_dimming_veil opacity interpolates 0 -> 0.40 using easeInOutCubic."
+        },
+        {
+          "frames": [
+            188,
+            206
+          ],
+          "action": "peak_insert_card_body and shadow enter: opacity 0 -> 1, scale 0.965 -> 1 using spring_card, y offset 16px -> 0."
+        },
+        {
+          "frames": [
+            190,
+            212
+          ],
+          "action": "peak_connector_line draws from Nigeria source to card bottom: strokeDashoffset connectorLen -> 0 using easeOutCubic."
+        },
+        {
+          "frames": [
+            200,
+            216
+          ],
+          "action": "owned pipe cutaway video layer opacity 0 -> 1 inside the card."
+        },
+        {
+          "frames": [
+            216,
+            234
+          ],
+          "action": "The single figure badge appears: '~70%' opacity 0 -> 1 and scale 0.92 -> 1. No other figures are introduced anywhere."
+        }
+      ]
+    },
+    "peak_to_verdict": {
+      "frame_window": [
+        348,
+        390
+      ],
+      "description": "The figure leaves first, then the card and connector withdraw. The veil clears only after the insert is gone. The underlying map is not restored to the opening state; it resolves into the permanently weakened verdict state.",
+      "steps": [
+        {
+          "frames": [
+            348,
+            362
+          ],
+          "action": "peak_percent_badge '~70%' opacity 1 -> 0 using easeInCubic; after frame 362 the figure is unmounted and never appears again."
+        },
+        {
+          "frames": [
+            356,
+            374
+          ],
+          "action": "peak_insert_card_body, shadow, title, pipe video and video border opacity 1 -> 0; card scale 1 -> 0.985 and y offset 0 -> -10px."
+        },
+        {
+          "frames": [
+            358,
+            374
+          ],
+          "action": "peak_connector_line opacity 1 -> 0; dash flow stops when opacity reaches 0."
+        },
+        {
+          "frames": [
+            358,
+            390
+          ],
+          "action": "dimming veil opacity 0.40 -> 0 using easeInOutCubic. During this clearance, route opacities and source radii interpolate into verdict values rather than returning to opening values."
+        },
+        {
+          "frames": [
+            378,
+            470
+          ],
+          "action": "Only two tiny residual particles per route remain, moving at about 0.002 normalized path units/frame and fading to zero. Sober direction ticks and dim route lines remain after particles vanish."
+        },
+        {
+          "frames": [
+            378,
+            539
+          ],
+          "action": "Verdict source pulse is contracted: one ring only, period 54 frames, radius 7px -> 19px, max opacity 0.22; core radius decreases to 4px and opacity to 0.56 by the end."
+        }
+      ]
+    }
+  }
+}

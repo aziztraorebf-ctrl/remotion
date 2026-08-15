@@ -1,0 +1,38 @@
+You are a TECHNICAL DIRECTOR writing an implementation breakdown for a motion-design team. The attached image is OUR OWN validated storyboard sheet for one beat of a geopolitical documentary. The director has now LOCKED the following choices, and your breakdown must describe exactly these — do not propose alternatives, do not redesign:
+
+- OPENING = storyboard panel 1 ("OUVERTURE") exactly as drawn, BUT upgraded with the livelier route/pulse treatment visible in panel 3 (the dashed travelling impulses along both routes, and the pulsing halo on the Nigeria source point). Panel 1's staging + panel 3's animation vocabulary.
+- PEAK = storyboard panel 2 ("OPTION A — RUPTURE DE FORME"): the anchored pipe-cutaway insert with the map dimmed behind it. The ~70% figure appears ONLY here, once.
+- VERDICT = storyboard panel 4 exactly as drawn: no insert, sober, the map left permanently changed (weakened source, dimmer rival routes).
+- Storyboard panel 3 as a standalone staging is NOT used — only its animation vocabulary is borrowed for the opening.
+
+OUR EXACT TECHNICAL STACK (design ONLY within this — this is not a wish list, it is what we actually run):
+- React + Remotion, rendering deterministic SVG. Frame-driven only: every animated value is computed from useCurrentFrame() via interpolate() or spring(). ⛔ FORBIDDEN: CSS transitions, @keyframes, setTimeout, requestAnimationFrame — they do not exist in our renderer.
+- d3-geo (geoMercator) projecting real GeoJSON country borders to SVG paths. Camera = an SVG <g> with translate()/scale() interpolated per frame. NEVER animate the viewBox.
+- Progressive line drawing via strokeDasharray + strokeDashoffset.
+- Travelling pulses along a path: we can compute a point at a normalised position along an SVG path and place elements there per frame.
+- SVG filters (feGaussianBlur / drop-shadow) for glow, radial gradients, opacity ramps.
+- Video clips can be composited inside an SVG/absolute-positioned frame via Remotion's <OffthreadVideo> wrapped in <Loop>.
+- 1920x1080, 30fps.
+
+⭐ THE PEAK INSERT USES AN ASSET WE ALREADY OWN — do not invent a new one:
+A validated looping video clip of a gas-pipe cutaway cross-section. It must be composited inside a bordered card, geo-anchored to the Nigeria source point by a drawn connector line, with the map dimmed behind (dimming veil around 0.40 opacity — the map must stay readable, the insert is superimposed, it never replaces the map).
+
+WHAT WE NEED FROM YOU — a precise, buildable implementation breakdown. For EVERY visual element in the three locked panels, specify:
+1. `id` — a short stable name.
+2. What it is technically (SVG path / circle / group / gradient / filter / video card / text nameplate).
+3. Its position: either a geographic anchor (which country or point on the route) or a screen position, and which of the two it is.
+4. Its ANIMATION, described as a function of time: what value changes, from what to what, over which time window, with which easing. Be explicit about the mechanism (e.g. "strokeDashoffset from len to 0", "opacity 0 -> 1", "r from 6 to 14 then back, looping every N frames", "N pulse dots at normalised positions t = phase + i/N along the path, phase advancing linearly").
+5. Its z-order relative to the other elements.
+
+CRITICAL — THE TWO THINGS WE MOST NEED SPECIFIED IN DETAIL, because they carry the whole beat:
+(a) THE TRAVELLING IMPULSES along the two routes: how many, what shape and size, what spacing, what speed, how they fade in/out at the ends of the route, how they are made to look like they are STARVING (thinning out, slowing, or spacing apart) as the beat progresses. Give concrete numbers we can code.
+(b) THE PULSING SOURCE POINT on Nigeria: exact layered structure (how many concentric circles, radii, opacities), the pulse period in frames, and how the halo contracts/weakens by the verdict panel.
+
+Also specify, for the whole beat:
+- The camera trajectory (a small number of keyframes: centre + zoom + the easing between them), keeping in mind our rule that nothing may sit static for more than ~5 seconds.
+- The exact transition INTO the peak insert and OUT of it (how the veil comes up, how the insert card enters, how everything returns for the verdict).
+- The colour palette values used, per element.
+
+⚠️ FACTUAL CONSTRAINT: the only on-screen figure allowed in this whole beat is "~70%", appearing once, in the peak panel. Do not introduce any other statistic, volume, or date.
+
+OUTPUT FORMAT: valid JSON only, no prose outside the JSON. Top-level keys: "beat_id", "render_settings", "palette", "camera", "panels" (an array of the three locked panels, each with "panel_id", "intent", "time_share" as a fraction of the beat, and "elements"), and "transitions". Each element follows the 5 fields above. Be exhaustive: a developer must be able to build the beat from your JSON alone, without seeing the storyboard image.
