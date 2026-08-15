@@ -7,6 +7,10 @@ dist/
 *.webm
 *.wav
 *.mp3
+# Exception : les clips d'insert H3 validés (480p, ~1.5 Mo pièce). Ils sont référencés par
+# staticFile() dans les protos — sans eux le code ne rend pas, et ils ne sont reproductibles
+# qu'en re-consommant du GPU. Assez légers pour vivre dans le repo, contrairement à un render.
+!public/_rnd/minimax-h3-tests/**/*.mp4
 public/audio/
 tmp_*
 
