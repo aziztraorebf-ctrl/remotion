@@ -1,5 +1,8 @@
 # MiniMax H3 — Comfy Cloud (mécanique, node IDs, guide officiel, tests réels)
 
+> ⭐⭐ **Blocs de prompt prêts à copier (SIZE/ANCHOR/LIGHT/EMPTINESS LOCK) : `memory/tools/H3-PROMPT-BLOCKS.md`**
+> ⭐ **Mesurer un clip avant de le juger : `scripts/tools/measure-insert-clip.py`**
+>
 > Fichier scindé depuis `minimax.md` le 2026-08-13. Sommaire général : `minimax.md`. Tests de styles (Hand Drawn, Poster Vector) : `minimax-h3-styles-tests.md`. API fal.ai payante : `minimax-h3-api-fal.md`.
 > Contenu : template open-weight `video_minimax_h3_r2v`/`video_minimax_h3_t2v` via Comfy Cloud (inclus dans l'abonnement), guide de prompting officiel MiniMax, format 6-sections (⚠️ voir correction 2026-08-14 dans `minimax-h3-styles-tests.md` avant d'appliquer — ce format est officiel pour l'API hébergée payante, pas confirmé pour notre node local gratuit), workflow validé `submit_workflow`, tous les tests réels (Sonjata, NoteShield, Flowdesk, Pêcheur, Mariama Bâ...).
 

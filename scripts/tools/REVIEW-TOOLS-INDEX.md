@@ -113,3 +113,15 @@ Bloc-prompt réutilisable templates carte (à coller dans un prompt Gemini) : `m
 ## Archivés (ad-hoc de session, ne pas relancer)
 
 - `scripts/tools/_archive/gemini-p3-review.py` — hardcodé P3 Sahel (12 juin). Le standard généralisé = `REVIEW-PREMIUM-TEMPLATE.md`.
+
+## measure-insert-clip.py — mesure objective d'un clip d'insert (2026-08-15)
+
+`python3 scripts/tools/measure-insert-clip.py <clip.mp4> --zone nom:y0,y1,x0,x1 [...]`
+
+Mesure : mouvement median global et par zone (separation cadre/matiere), derive horizontale de la
+structure, ratio de boucle, ecran noir en fin, derive de luminosite.
+
+⛔ **A lancer AVANT de juger un clip d'insert a l'oeil** : a detecte 3 defauts invisibles a
+l'inspection visuelle (gaz qui se vide, navire qui derive de 15 px, raccord de boucle franc).
+Gabarits de prompt pour corriger ce qu'il revele : `memory/tools/H3-PROMPT-BLOCKS.md`.
+
