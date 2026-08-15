@@ -45,6 +45,7 @@ import { PecheurVisageAnimeV2, PECHEUR_VISAGE_V2_FRAMES } from "./projects/_rnd/
 import { FlammeAnime16x9, FLAMME_ANIME_FRAMES } from "./projects/_rnd/fable-svg/FlammeAnime16x9";
 import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-svg/PecheurPersoAnime";
 import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
+import { ProtoInsertMatiereConduite, PROTO_INSERT_MATIERE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertMatiereConduite";
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
 import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
@@ -4614,6 +4615,16 @@ export const RemotionRoot: React.FC = () => {
         fps={MI_TOTAL_FPS}
         width={MI_WIDTH}
         height={MI_HEIGHT}
+      />
+
+      {/* PROTOTYPE R&D jetable (2026-08-14) — insert H3 "matière" sur carte. À supprimer si non retenu. */}
+      <Composition
+        id="Proto-InsertMatiere-Conduite"
+        component={ProtoInsertMatiereConduite}
+        durationInFrames={PROTO_INSERT_MATIERE_FRAMES}
+        fps={30}
+        width={1920}
+        height={1080}
       />
 
     </>

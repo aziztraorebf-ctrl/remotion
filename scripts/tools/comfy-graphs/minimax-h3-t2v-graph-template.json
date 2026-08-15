@@ -1,0 +1,109 @@
+{
+  "_README": [
+    "MiniMax H3 Text-to-Video — graphe API a plat (subgraph aplati), valide 2026-08-14.",
+    "POURQUOI CE FICHIER : run_template('video_minimax_h3_t2v', slot_overrides) echoue toujours en",
+    "validation.reference — le subgraph (node 105) cable first_frame/last_frame en interne vers le",
+    "node 104 alors qu'ils sont non branches a l'exterieur, ce qui laisse des liens morts.",
+    "Ici ces deux entrees sont simplement ABSENTES des inputs du node 104 : plus de lien mort.",
+    "",
+    "USAGE : submit_workflow(workflow: <ce JSON sans les cles _README/_PARAMS>, dry_run: true)",
+    "puis relancer sans dry_run. Cout : 0 credit (variante open-weight, pas de prefixe api_).",
+    "",
+    "A REMPLACER : node 104 -> prompt / width / height / length ; node 15 -> noise_seed.",
+    "",
+    "DUREE : le champ 'length' du node 104 est en FRAMES, pas en secondes.",
+    "  length = max(5, round(sec*24)) puis arrondi SUPERIEUR a la grille 17k+5 du modele.",
+    "  6s -> 141 frames. 10s -> 243 frames. 15s -> 362 frames.",
+    "",
+    "RESOLUTION 16:9 (short edge 768 max, multiple de 32) : 864x480 (0.4MP, test rapide),",
+    "  1152x640 (0.7MP), 1344x768 (0.98MP, max qualite).",
+    "",
+    "FORMAT DE PROMPT : voir memory/tools/minimax-h3-styles-tests.md, section FORMAT DE PROMPT",
+    "OFFICIEL. Negatifs en mots-cles COURTS (negative_keywords: a, b, c), jamais en phrases."
+  ],
+  "_PARAMS": {
+    "duration_formula": "length = max(5, round(sec*24)) arrondi sup. grille 17k+5",
+    "examples": { "6s": 141, "10s": 243, "15s": 362 }
+  },
+  "6": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "9": {
+    "class_type": "BasicScheduler",
+    "inputs": { "model": ["6", 0], "scheduler": "simple", "steps": 20, "denoise": 1 }
+  },
+  "10": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["14", 0], "vae": ["11", 0] }
+  },
+  "11": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "minimax_h3_video_vae_fp16.safetensors" }
+  },
+  "13": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+      "type": "minimax",
+      "device": "default"
+    }
+  },
+  "14": {
+    "class_type": "SamplerCustomAdvanced",
+    "inputs": {
+      "noise": ["15", 0],
+      "guider": ["16", 0],
+      "sampler": ["17", 0],
+      "sigmas": ["9", 0],
+      "latent_image": ["104", 1]
+    }
+  },
+  "15": {
+    "class_type": "RandomNoise",
+    "inputs": { "noise_seed": 556589502035082 }
+  },
+  "16": {
+    "class_type": "BasicGuider",
+    "inputs": { "model": ["6", 0], "conditioning": ["104", 0] }
+  },
+  "17": {
+    "class_type": "KSamplerSelect",
+    "inputs": { "sampler_name": "res_multistep" }
+  },
+  "23": {
+    "class_type": "VAEDecodeAudio",
+    "inputs": { "samples": ["14", 0], "vae": ["24", 0] }
+  },
+  "24": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "minimax_h3_audio_vae_fp32.safetensors" }
+  },
+  "91": {
+    "class_type": "CreateVideo",
+    "inputs": { "images": ["10", 0], "audio": ["23", 0], "fps": 24, "quality": 8 }
+  },
+  "92": {
+    "class_type": "SaveVideo",
+    "inputs": {
+      "video": ["91", 0],
+      "filename_prefix": "video/MiniMax_H3",
+      "format": "auto",
+      "codec": "auto"
+    }
+  },
+  "104": {
+    "class_type": "MiniMaxH3ImageToVideo",
+    "inputs": {
+      "clip": ["13", 0],
+      "vae": ["11", 0],
+      "prompt": "REMPLACER — voir FORMAT DE PROMPT OFFICIEL dans minimax-h3-styles-tests.md",
+      "width": 864,
+      "height": 480,
+      "length": 141
+    }
+  }
+}

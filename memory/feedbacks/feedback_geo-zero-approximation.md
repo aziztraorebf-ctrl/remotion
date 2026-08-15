@@ -87,3 +87,27 @@ n'a pas été vérifiée pour autant contre la source de vérité narrative.
 session précédente) doit être re-vérifiée contre le script verrouillé AU MOMENT de la production,
 pas juste reprise telle quelle sous prétexte qu'elle fonctionnait dans le prototype. Grep le nom
 du lieu dans le script verrouillé avant d'écrire la constante géo dans le fichier de production.
+
+## Corollaire 2 — le TRACÉ ENTRE deux points, pas seulement ses extrémités (2026-08-15, proto insert matière)
+
+Le corollaire ci-dessus couvre la DESTINATION d'un tracé. Ce cas-ci couvre le CHEMIN lui-même.
+
+Cas vécu : prototype d'insert H3 sur carte D3 du Gazoduc — le tracé du gazoduc était codé
+`M ${nigX} ${nigY} L ${algX} ${algY}`, un **segment droit entre les centroïdes Nigeria et Algérie**.
+Les deux extrémités étaient justes ; le chemin entre elles était inventé. Or le TSGP réel passe par
+le **NIGER**, et ce tracé exact (3 jalons + courbure `ctrlOf(a,b,14,0.5)`) existait déjà, codé et
+rendu, dans `GazoducActe3CarteTSGP.tsx` — à deux dossiers de distance.
+
+**Cause racine** : un tracé à 2 points "a l'air" géographique parce que ses extrémités sont réelles.
+L'approximation se cache dans le segment, là où on ne la cherche pas — contrairement à un contour de
+pays faux, qui saute aux yeux immédiatement.
+
+**Règle** : avant de coder un tracé (pipeline, route, flux, frontière, câble), **grep le nom du
+projet/tracé dans `src/projects/` pour voir si la géométrie existe déjà** — un tracé déjà rendu dans
+un Acte est une source de vérité, pas un doublon à réinventer. Si elle n'existe pas : lister les
+pays réellement traversés AVANT d'écrire le path, jamais relier les extrémités en ligne droite.
+
+**Corollaire de vérification** : contrôler qu'un point posé sur un tracé tombe bien dans le pays
+attendu se fait **par mesure, pas à l'œil** (test bbox en Node, 10 lignes). Sur ce même proto, ma
+lecture visuelle du point d'ouverture était fausse — la mesure a montré qu'il tombait correctement
+dans la zone Niger/sud-algérien alors que je m'apprêtais à le "corriger" à tort.

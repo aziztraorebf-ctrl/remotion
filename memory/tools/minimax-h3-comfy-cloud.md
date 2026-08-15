@@ -1379,6 +1379,117 @@ Auth OAuth par session Claude Code (pas de clé API statique dans `.mcp.json` �
 le serveur MCP exige OAuth, voir `auth_state` via `get_server_info`). Après authentification, 39
 outils MCP disponibles (`mcp__claude_ai_Comfy_Cloud_MCP__*` ou nom équivalent selon la session).
 
+### ⛔⛔⭐⭐ T2V (`video_minimax_h3_t2v`) — `slot_overrides` NE MARCHE PAS, graphe à plat obligatoire (2026-08-14)
+
+**Symptôme** : `run_template(name: "video_minimax_h3_t2v", slot_overrides: {...})` échoue
+systématiquement en `{"status":"tool_error","error_type":"validation.reference"}` — y compris avec le
+seul `105.prompt` surchargé (donc pas un problème de valeur envoyée). Reproduit 2×.
+
+**Cause** : ce template est bâti autour d'un **subgraph** (node 105, type
+`4c314f31-ecda-4b08-ae98-faaba1bf613f`). Ses entrées `first_frame`/`last_frame` sont optionnelles et
+non branchées à l'extérieur (`link: null`), mais le subgraph les câble quand même en interne vers le
+node 104 (liens 195/196). Le validateur voit des liens pointant vers des entrées mortes et rejette
+tout le graphe, quelles que soient les surcharges.
+
+**Fix (validé, clip produit)** : ne pas passer par `run_template`. Reconstruire le graphe **à plat en
+format API** (14 nodes, subgraph aplati) et le soumettre via `submit_workflow` — `first_frame` et
+`last_frame` sont alors simplement absents des `inputs` du node 104, plus aucun lien mort.
+⭐ **Gabarit conservé** : `scripts/tools/comfy-graphs/minimax-h3-t2v-graph-template.json`
+(remplacer `prompt`/`width`/`height`/`length` du node 104 et `noise_seed` du node 15).
+Toujours `submit_workflow(dry_run: true)` d'abord — gratuit, 0 GPU, valide la structure.
+
+**⭐ Formule de durée (node `ComfyMathExpression` du template, à appliquer soi-même sur graphe à plat)** :
+`length = max(5, round(sec*24))` puis arrondi SUPÉRIEUR à la grille 17k+5 exigée par le modèle.
+Concrètement : **6s → 141 frames** (144 → 141). Le champ `length` du node 104 attend des FRAMES, pas
+des secondes. Résolution 16:9 : `864×480` (0.4 MP) pour un test, table complète dans la note du template.
+
+**Coût** : 0 crédit confirmé par `estimate_credits` (variante open-weight sans préfixe `api_`).
+
+### ⭐⭐ Négatifs COURTS confirmés une 2e fois + limite « H3 anime le physique, pas l'abstrait » (2026-08-14)
+
+Test mené sur une **texture d'ambiance en boucle** (idée : passer un clip H3 en couche de fond sous une
+carte D3). Deux clips T2V, 6s, Poster Vector, sans personnage ni dialogue.
+
+**V1** (`prompt_id de821b43`, négatifs formulés EN PHRASE dans le corps : *"No horizon line, no ground,
+no sky…"`) → **négatifs ignorés**, le modèle produit un paysage de dunes complet avec horizon. Mais
+excellent par ailleurs : mouvement médian **12%** de pixels modifiés/0.25s, aucun gel, **aucun écran
+noir en fin** (le défaut documenté 2× ne s'est pas produit), boucle ratio 2.8× (raccord discret),
+registre Poster Vector parfaitement tenu.
+
+**V2** (`prompt_id f1107c91`, mêmes interdits en `negative_keywords:` mots-clés courts en tête de
+prompt + suppression de tout mot évoquant un lieu — `desert`/`dust`/`heat` retirés) → **négatifs
+RESPECTÉS** : horizon, ciel, sol, dunes tous éliminés. ✅ **Confirme sur un 2e cas la règle du
+2026-08-14 (`minimax-h3-styles-tests.md`) : négatifs en mots-clés courts, jamais en phrases noyées
+dans le texte narratif.**
+
+**⚠️ MAIS — limite à retenir** : V2 chute à **3.9%** de mouvement médian (3× moins que V1) et sa boucle
+passe à **14×** (raccord franc, inutilisable tel quel). En retirant tout référent physique, on retire
+ce qui MOTIVE le mouvement : **H3 anime bien un phénomène physique qu'il comprend (sable qui souffle,
+fumée, houle), il anime mal une abstraction géométrique pure** (bandes de couleur qui dérivent).
+Corollaire de prompt : garder un ancrage physique nommé même pour une texture, et écarter le décor par
+`negative_keywords` plutôt qu'en désincarnant la description.
+
+**Verdict d'usage** : piste « texture de fond neutre sous carte » **ABANDONNÉE** — soit figuratif et en
+conflit visuel avec la carte (V1), soit abstrait et mou (V2) ; un fond de ce type est mieux fait en SVG
+animé maison (vitesse contrôlée, boucle parfaite par construction). **En revanche V1 démontre une
+capacité voisine réelle** : décor d'ambiance stylisé en boucle, sans personnage, sans dérive — utile
+derrière un titre/une citation/un chiffre-choc, pas sous une carte. Clips :
+`texture-sahel-v1` https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/texture-sahel-v1-FA74rayF61d1Jhace409lH9LiKQHW0.mp4
+· `texture-abstraite-v2` https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/texture-abstraite-v2-1ULSkyvnwGaRnWWGQOAqJzFXXS4WE1.mp4
+
+### ⭐⭐⭐ INSERT MATIÈRE — chaîne Gemini (composition) → H3 R2V (turbulence) VALIDÉE, 75× de séparation décor/matière (2026-08-14)
+
+**Contexte** : après 2 échecs T2V (§ ci-dessus), Aziz corrige la méthode — *« pourquoi tout en T2V ?
+On génère l'image d'abord, puis on l'anime, comme d'habitude »*. **Il avait raison, et pour une raison
+mesurable** : en T2V le modèle recompose la scène entière à chaque essai (d'où dunes non voulues puis
+abstrait mou) ; en R2V la composition est VERROUILLÉE par l'image, il ne reste qu'un degré de liberté —
+le mouvement. Cohérent avec le Test Réel 2 déjà documenté (« la limite vient de l'image de référence,
+pas du prompt »). ⛔ **Ne plus partir en T2V pour un insert : image d'abord, animation ensuite.**
+
+**Chaîne testée** : `gemini-gen-image.py` (`gemini-3.1-flash-image-preview`, coupe de conduite Poster
+Vector, palette navy `#16213a`/or, cadrage centré sans décor) → `upload_file` Comfy Cloud →
+`submit_workflow` graphe R2V à plat (gabarit `minimax-h3-r2v-graph-template.json`, node 136
+`ref_image_size: "match"`, **un seul slot `ref_images.ref_image_0`** — `ref_image_1` OMIS pour éviter
+l'image de démo parasite). `prompt_id 7e99bcbb`. 0 crédit.
+
+**Résultats mesurés (141 frames, 864×480, 5.875s)** :
+| Mesure | Valeur | Lecture |
+|---|---|---|
+| Mouvement médian | 8.65% | 2× le T2V abstrait |
+| **Décor (bande fond navy)** | **0.13** | quasi immobile |
+| **Matière (centre)** | **9.74** | **75× le décor** |
+| Boucle | **0.4×** | meilleur que « parfait » — `<Loop>` sans crossfade |
+| Écran noir fin | absent | luminosité 61.3→61.7 |
+
+⭐ **Le chiffre qui compte est le rapport 75× décor/matière** : c'est LE comportement recherché pour un
+insert — cadre rigoureusement stable, seule la matière vit. Le T2V ne savait pas faire ça.
+
+**⭐⭐ Règle de partage qui en découle (à appliquer par défaut)** :
+**composition + géométrie = NOUS** (Gemini ou SVG maison, déterministe) · **turbulence + matière = H3**.
+Corollaire : si le mouvement est géométrique (translation, rotation, tracé qui se dessine, compteur)
+→ SVG maison TOUJOURS, H3 n'apporte rien et fait perdre le déterministe. H3 ne vaut le détour que pour
+le désordonné : fluide, fumée, poussière, granulaire, remous, flamme.
+
+**⚠️ Défaut résiduel** : le gaz **bouillonne sur place** au lieu de **transiter** gauche→droite malgré
+un prompt explicite sur la direction. Acceptable pour « matière sous pression », insuffisant si le sens
+de lecture porte du sens (le gaz qui part VERS l'Europe).
+
+**✅ RÉSOLU (2026-08-15) — le sens de lecture se PORTE EN SVG, on ne le renégocie pas avec H3.**
+Fix appliqué sur `ProtoInsertMatiereConduite.tsx` : un `linear-gradient` clair (`backgroundSize: 55%`,
+`backgroundPositionX` de -55% à 100%, `mixBlendMode: screen`) balaie la coupe par-dessus le clip, en
+boucle sur la même période que les impulsions du tracé. Vérifié au rendu (crops t=5.0/5.3/5.6/5.9s :
+la bande progresse bien vers la droite). **Zéro GPU, déterministe, réglable à la frame** — vs une
+re-génération au résultat incertain. C'est l'application directe de la règle de partage ci-dessus :
+la direction est de la GÉOMÉTRIE, donc elle nous revient ; H3 ne garde que la turbulence.
+⭐ **Généralisable à toute la famille d'inserts matière** : pétrole qui monte, minerai sur tapis,
+billets qui défilent — si le sens de lecture porte du sens, le coder en SVG par-dessus dès le départ
+plutôt que de l'espérer du prompt.
+
+**Familles d'inserts que cette chaîne ouvre** (même mécanique, non encore testées) : pétrole qui
+remplit, billets qui défilent/se consument, minerai sur tapis, eau derrière un barrage, fumée d'usine,
+torchère. Assets : image `conduite-coupe-v1.png` + clip
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/conduite-r2v-jT45QmBgKwK6kv0eIBikqbFSTooqys.mp4
+
 ### ⛔⛔⛔ Workflow validé (T2V et R2V) — MÉTHODE CORRIGÉE 2026-08-11, `run_template`+`input_overrides` ABANDONNÉ pour R2V
 
 **⛔ NE PAS utiliser `run_template` + `input_overrides` pour `video_minimax_h3_r2v`** — confirmé
