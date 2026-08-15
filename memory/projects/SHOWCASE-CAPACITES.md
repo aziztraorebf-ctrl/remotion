@@ -29,7 +29,7 @@ War-Map Soudan pense « très beau, mais ce n'est pas mon domaine ».
 
 Deux voies, non tranchées :
 - **assumer le créneau « cartographie éditoriale/géopolitique »** — réellement différenciant, cf
-  [freelance-dataviz-fiverr-pro](freelance-dataviz-fiverr-pro.md) ;
+  [[freelance-dataviz-fiverr-pro]] (auto-mémoire) ;
 - **montrer les FORMES en masquant le sujet** — un flux entre deux points sert autant une chaîne
   d'approvisionnement qu'un gazoduc.
 
@@ -112,7 +112,13 @@ Mapbox — le pattern [[feedback_catalogue-position-liste-et-brief-restrictif]] 
   « rare, personne en vulga FR ») · Cartogramme · Sankey · ForceNetwork (réseau qui se recompose
   physiquement) · PieMorph · + Globe2 (occlusion 3D réelle + terminateur jour/nuit).
 - **Pipeline 3D Three.js** validé de bout en bout (Gemini → Trellis → .glb → @remotion/three), jamais
-  réutilisé depuis juin. ⚠️ tension : `DOCTRINE-SOUVERAIN` pose « pas de 3D, plat encre » → arbitrer.
+  réutilisé depuis juin. ✅ **Pas de tension à arbitrer — le cadre d'usage est déjà tranché** (Aziz
+  2026-06-17, `memory/feedbacks/remotion-effects-rack-natif.md` § CADRE D'USAGE 3D) : le 3D est un
+  **réhausseur de niche** (jetons/objets posés sur une carte, géométrie simple), jamais un décor ni
+  une carte — et le test A/B jetons plat vs 3D a conclu que **le plat gagne**.
+  ⚠️ La « tension » signalée par l'agent d'inventaire venait d'une **citation fantôme** :
+  `DOCTRINE-SOUVERAIN` ne dit nulle part « pas de 3D, plat encre » (vérifié) — elle recommande
+  `@remotion/three`. Source de l'erreur corrigée dans `feedback_gemini-review-workflow-correct.md`.
 - **Templates carte ⭐⭐ du catalogue à zéro usage épisode** : `MapCutaway` (pourtant « le plus
   réutilisable »), `HeatGradientFill`, `ContagionFlagSpread`, `FiberOpticFlagInvade`.
 - **Registre client-sim** (MochIt, NorthShield, Flowdesk) : volontairement isolé, mais c'est **le seul

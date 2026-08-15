@@ -208,6 +208,7 @@ n'offre le registre voulu, le signaler/l'ajouter — ne pas silencieusement basc
 
 **War-Map / overlay :**
 - **`semitransp` (voile < 0.5)** → « on voit la carte à travers ». Voile ≥ 0.62 ou plein écran opaque.
+  ⚠️ Vaut pour un **OVERLAY qui REMPLACE** la lecture de la carte. Un **INSERT qui s'y SUPERPOSE** obéit à un autre seuil (0.40 unique · 0.22 multi) — voir § INSERT MATIÈRE / § INSERT LIEU plus bas. Ce n'est pas une violation de cette règle.
 - **Forcer un concept ABSTRAIT sur la carte** (métaphores plaquées, liens qui se tracent pour un accord) → faible. → sortir en `WarMapDimmedOverlay`.
 - **SVG plat monochrome sur carte** (1ère passe P2) → rejeté 4/10. → grammaire causale (jetons + sillage + contour).
 - **Légende factions / timeline graduée permanentes** (Acte1 legacy) → registre dashboard, tue le hook. Supprimées.
@@ -265,7 +266,7 @@ Corollaire mesuré : au-delà de ~2.0× de zoom sur un tracé saharien, le cadre
 | **Conduite qui se vide** | `conduite-vide-r2v-v1.mp4` | ✅ retenu (dérive assumée) | ⭐ Acte 4 Gazoduc — les 70% siphonnés |
 | **Torchère** (gaz brûlé en pure perte) | `torchere-r2v-v1.mp4` | ✅✅ meilleur score — 36× flamme/tour, taille ±6%, boucle 1.1× | Gaz gaspillé faute d'export, gisement qui brûle |
 
-⭐⭐ **VERROUILLER UN NIVEAU / UNE TAILLE = interdire les DEUX sens** (leçon payée sur `conduite-vide`,
+⭐⭐ **VERROUILLER UN NIVEAU / UNE TAILLE = interdire les DEUX sens** *(gabarit copiable : `memory/tools/H3-PROMPT-BLOCKS.md` — source de vérité du TEXTE de prompt ; ici on garde le POURQUOI)* (leçon payée sur `conduite-vide`,
 validée du 1er coup sur `torchere`) : n'interdire que « never grows » laisse le modèle faire décroître.
 Écrire un bloc **SIZE LOCK** explicite (« same size in the last frame as in the first frame, never grows
 AND never shrinks ») + **jamais d'adjectif de jugement** (insufficient, scarce, failing) — un adjectif

@@ -38,7 +38,14 @@ appliquer en bloc. Lire chaque point → vérifier contre 3 critères de rejet �
    seule la marchandise glisse). Adaptation acceptée : oiseaux qui montent + fade avant le bord.
 2. **Interdit Remotion** → REJET ou TRADUCTION. Ex : `@keyframes`/`animation-delay`/`requestAnimationFrame` CSS →
    traduire en `interpolate`/`Math.sin(frame)`/`spring()` natifs (jamais le CSS brut).
-3. **Contraire à la doctrine** → REJET. Ex : parallaxe multi-couches / faux-3D (DOCTRINE-SOUVERAIN : pas de 3D, plat encre).
+3. **Contraire à la doctrine** → REJET. Ex : parallaxe multi-couches / faux-3D.
+   ⚠️ **CORRECTION 2026-08-15** : la formule « DOCTRINE-SOUVERAIN : pas de 3D, plat encre » écrite ici
+   était FAUSSE — vérifié, cette phrase n'existe nulle part dans `DOCTRINE-SOUVERAIN.md`, qui
+   RECOMMANDE au contraire `@remotion/three` « pour 3D premium » (L267). La vraie règle est le
+   **cadre d'usage tranché par Aziz le 2026-06-17** (`feedback_remotion-effects-rack-natif.md`
+   § CADRE D'USAGE 3D) : le 3D est un **réhausseur de niche** — ✅ jetons/objets 3D posés sur une
+   carte, géométrie simple · ❌ cartes Mapbox en 3D, backgrounds génératifs, formes organiques.
+   Le test A/B jetons plat vs 3D a conclu que **le plat gagne**. Citer la source réelle, pas celle-ci.
 GARDÉS cette session (passent les 3) : croissance des arbres (vs pop binaire), couche de vie permanente, squash&stretch,
 tracé ordonné de l'usine. Le diagnostic de fond de Gemini ("scène trop statique") était JUSTE — c'est le tri des
 SOLUTIONS qui compte. Gemini = signal sur le problème, pas juge des solutions.

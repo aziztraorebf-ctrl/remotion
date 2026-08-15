@@ -27,3 +27,31 @@ la cause exacte plutôt que de se contenter de "ça a l'air d'avoir bougé".
 (curseur, animation conditionnelle), l'échantillonnage anti-gel seul (hash de frames) suffit à
 détecter l'absence de mouvement — mais SEULE la lecture du code explique pourquoi, et permet de
 juger si c'est un vrai bug ou un choix de timing acceptable.
+
+---
+
+## 2e cas — la même règle appliquée à un FICHIER MÉMOIRE, pas à un render (2026-08-15)
+
+La règle mère (« un fichier de navigation peut être faux — vérifier l'état réel avant d'agir sur sa
+base ») vaut aussi quand la source est une note de MÉMOIRE et non un rapport d'agent ou un render.
+
+**Cas** : en fin de session, j'ai affirmé à Aziz qu'« un FINAL non publié dormait » et je le lui ai
+présenté comme un point de douleur, en m'appuyant sur une alerte de mémoire (« si une session démarre
+une prod alors qu'un FINAL non publié dort → le signaler »). **C'était faux** : cette alerte décrivait
+le blocage de 25 jours de JUILLET, résolu depuis. Le calendrier réel
+(`memory/calendrier-publication-2026-08.md`) montrait Sénégal publié, AES publié, CFA et Soudan
+**programmés**. Aziz a dû demander « qu'est-ce qui est le final non publié ? » pour que je vérifie.
+
+**Ce qui rend l'erreur pernicieuse** : la note n'était pas fausse *en soi* — elle était **vraie à la
+date où elle a été écrite**. Une alerte formulée à l'impératif (« signaler si… ») se lit comme
+intemporelle alors qu'elle décrit un état daté.
+
+**Réflexe** : avant de présenter un CONSTAT D'ÉTAT tiré de la mémoire (« X dort », « Y est bloqué »,
+« Z n'est pas fait »), ouvrir la source qui fait autorité sur cet état — ici le calendrier de
+publication, ailleurs un STATUS d'épisode ou `git log`. Une note de mémoire dit ce qui ÉTAIT vrai ;
+elle ne dit jamais ce qui EST vrai. Vaut particulièrement pour les alertes formulées comme des
+consignes permanentes.
+
+⚠️ Corollaire de rédaction : quand on écrit une alerte d'état en mémoire, **la dater dans son texte**
+(« au 2026-07-30, 2 FINAL dorment ») plutôt que de la formuler intemporellement — sinon elle survit à
+la situation qui l'a motivée.

@@ -128,4 +128,24 @@ metadata:
   dans un autre worktree, le signaler explicitement dans NEXT-ACTION.md avec les 2 chemins et l'état
   de chacun** — pas seulement le laisser à la découverte du prochain `/wrap`.
 
+- ⛔⛔ **2 SESSIONS DANS LE MÊME RÉPERTOIRE, SANS WORKTREE — le cas que `git worktree list` NE MONTRE
+  PAS** (vécu 2026-08-15). Aziz travaillait sur le Gazoduc Acte 4 dans une session parallèle, sur la
+  branche `feat/gazoduc-acte1-hook-globe`, **dans le répertoire principal** (pas un worktree). J'ai
+  travaillé toute une session de R&D sur la même branche sans m'en rendre compte, et posé **7 commits
+  R&D sur sa branche d'épisode** — alors qu'Aziz m'avait prévenu dès le départ qu'une session tournait.
+  `git worktree list` ne montrait qu'un seul arbre : **l'absence de worktree ne prouve PAS l'absence de
+  session concurrente**.
+  → **Réflexe correct, AVANT le premier commit d'une session** : `git branch --show-current` +
+  `git log -1 --format=%cd` sur la branche. Une branche d'épisode commitée **aujourd'hui** = session
+  active dessus → créer sa propre branche AVANT de commiter, pas après.
+  → **Réparation sans risque** (appliquée) : créer la branche R&D **depuis l'état courant**
+  (`git branch feat/xxx-rnd`) puis y basculer — les commits sont préservés, aucun `reset` n'est
+  nécessaire. ⛔ **Ne JAMAIS `reset` la branche partagée pendant que l'autre session tourne** : ça
+  changerait les fichiers sous ses pieds. Le nettoyage de la branche se fait quand l'autre session est
+  finie, pas pendant.
+  → Symptôme qui doit alerter en cours de session : des commits ou des fichiers non trackés qui
+  apparaissent dans `git status` **sans que je les aie créés** (ici : `GazoducActe4Timing.ts`, un proto
+  de palette, un `Root.tsx` modifié). Les regarder AVANT de committer ou de nettoyer quoi que ce soit —
+  et ne jamais les emporter dans son propre commit.
+
 Lié : [[chercher-outil-existant-avant-improviser]] · voir aussi `memory/tools/mapbox-effets-et-tests.md` (render-mapbox.sh + still WebGL).
