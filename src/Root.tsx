@@ -72,6 +72,7 @@ import { GazoducActe2Financement, GAZODUC_A2_FINANCEMENT_FRAMES } from "./projec
 import { GazoducActe2Montage, GAZODUC_A2_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe2Montage";
 import { GazoducActe3CarteTSGP } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP";
 import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4RessourceUnique";
+import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule, PROTO_CARTE_PALETTE_GPT_FRAMES } from "./projects/_rnd/d3-16x9/ProtoCartePaletteGPT";
 import { GAZODUC_A4_SEGA_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
@@ -1190,6 +1191,20 @@ export const RemotionRoot: React.FC = () => {
           width={1920}
           height={1080}
         />
+        {/* PROTO comparatif de fond de carte : notre palette de serie vs celle du storyboard GPT,
+            meme geometrie/traces/timing, split ecran. Question ouverte d'Aziz 2026-08-15. */}
+        <Composition
+          id="RND-ProtoCartePaletteGPT"
+          component={ProtoCartePaletteGPT}
+          durationInFrames={PROTO_CARTE_PALETTE_GPT_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition id="RND-ProtoCartePalette-A-Nous" component={ProtoCartePaletteNous}
+          durationInFrames={PROTO_CARTE_PALETTE_GPT_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-ProtoCartePalette-B-GPT" component={ProtoCartePaletteGPTSeule}
+          durationInFrames={PROTO_CARTE_PALETTE_GPT_FRAMES} fps={30} width={1920} height={1080} />
         {/* Gazoduc Acte 4 — Mouvement A "une ressource, deux tuyaux" (Partie 4 du script, 0->41.1s).
             Storyboard verrouillé Aziz 2026-08-15 (acte4-4A/4A-v2-gpt.png) : la CARTE porte le beat
             (impulsions qui s'affament + source qui s'épuise), UN SEUL insert au pic des 70%, verdict
