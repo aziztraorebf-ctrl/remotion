@@ -263,6 +263,13 @@ Corollaire mesuré : au-delà de ~2.0× de zoom sur un tracé saharien, le cadre
 | **Gaz sous pression** (conduite pleine) | `conduite-gaz-r2v-v1.mp4` | ✅ validé — 75× décor/matière | Gazoduc Actes 2-3, « ce qui transite » |
 | **Billets qui se consument** | `billets-r2v-v1.mp4` | ✅ validé — flammes+fumée, fond 0.03 | Acte 5 (facture européenne), coût d'un projet |
 | **Conduite qui se vide** | `conduite-vide-r2v-v1.mp4` | ✅ retenu (dérive assumée) | ⭐ Acte 4 Gazoduc — les 70% siphonnés |
+| **Torchère** (gaz brûlé en pure perte) | `torchere-r2v-v1.mp4` | ✅✅ meilleur score — 36× flamme/tour, taille ±6%, boucle 1.1× | Gaz gaspillé faute d'export, gisement qui brûle |
+
+⭐⭐ **VERROUILLER UN NIVEAU / UNE TAILLE = interdire les DEUX sens** (leçon payée sur `conduite-vide`,
+validée du 1er coup sur `torchere`) : n'interdire que « never grows » laisse le modèle faire décroître.
+Écrire un bloc **SIZE LOCK** explicite (« same size in the last frame as in the first frame, never grows
+AND never shrinks ») + **jamais d'adjectif de jugement** (insufficient, scarce, failing) — un adjectif
+d'état est joué par le modèle comme une ACTION à mettre en scène.
 
 ⭐⭐ **CONTINUITÉ VISUELLE — réutiliser la MÊME image source d'un insert à l'autre** (retour Aziz
 2026-08-15) : `conduite-gaz` et `conduite-vide` partent du même objet dessiné dans le même registre,

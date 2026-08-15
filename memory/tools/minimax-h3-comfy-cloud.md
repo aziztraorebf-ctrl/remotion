@@ -1495,8 +1495,33 @@ la direction est de la GÉOMÉTRIE, donc elle nous revient ; H3 ne garde que la 
 billets qui défilent — si le sens de lecture porte du sens, le coder en SVG par-dessus dès le départ
 plutôt que de l'espérer du prompt.
 
-**Familles d'inserts que cette chaîne ouvre** (même mécanique) : pétrole qui remplit, billets qui
-défilent/se consument ✅ TESTÉ, minerai sur tapis, eau derrière un barrage, fumée d'usine, torchère.
+**Familles d'inserts que cette chaîne ouvre** (même mécanique) : billets qui se consument ✅ TESTÉ ·
+torchère ✅ TESTÉ · pétrole qui remplit, minerai sur tapis, eau derrière un barrage, fumée d'usine (non testés).
+
+### ⭐⭐⭐ 4e insert — TORCHÈRE : meilleur score de la série, la leçon SIZE LOCK validée (2026-08-15)
+
+`prompt_id 635b56ec`, 864×480, 124f. Généré juste après l'échec de niveau de `conduite-vide`, en
+appliquant sa leçon — **succès du premier coup, sans itération** :
+
+| Mesure | Valeur | Lecture |
+|---|---|---|
+| Flamme vs tour | **8.36 vs 0.23** | **36× de séparation** — cadre stable, seule la matière vit |
+| Taille de flamme début→fin | **+6% / −4%** | le SIZE LOCK a tenu dans les DEUX sens |
+| Boucle (écart dernière/première) | **1.1×** | `<Loop>` sans crossfade |
+| Luminosité | 32.2 → 32.4 | aucun écran noir |
+
+⭐ **Ce qui a fait la différence dans le prompt** (à reprendre tel quel pour tout insert où une quantité
+doit rester constante) : un bloc **SIZE LOCK** dédié — *« the flame keeps EXACTLY the same overall size,
+height and position throughout... It is the SAME size in the last frame as in the first frame. It never
+grows, never expands, AND never shrinks, never dies down, never goes out. Only its internal shape churns
+and flickers in place »* — plus un STRICT NEGATIVE listant les deux dérives (`no growing flame, no
+shrinking flame, no flame going out`). Clip :
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/torchere-r2v-v1-vYe9K38yCkjuaGhSVRk3MXt3ymcZN5.mp4
+
+⭐ **Bilan des 4 inserts** : H3 réussit très bien le **désordonné à quantité constante** (gaz sous
+pression, flamme, combustion). Le seul échec de la série (`conduite-vide`) portait sur une QUANTITÉ QUI
+DEVAIT RESTER STABLE, pas sur la matière elle-même — donc un problème de prompt, corrigé et re-validé,
+pas une limite du modèle.
 
 ### ⭐⭐ 2e et 3e insert testés (2026-08-15) — billets ✅ / conduite à moitié vide ⚠️ dérive utile
 
