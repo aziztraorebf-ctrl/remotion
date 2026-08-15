@@ -27,13 +27,15 @@
 
 ---
 
-## 🎬 Showcase des capacités — cadrage validé, inventaire en cours (2026-08-15)
+## 🎬 Showcase des capacités — inventaire LIVRÉ, planche-contact en ligne (2026-08-15)
 
-Vidéo démo du savoir-faire, **double usage** : index visuel interne (exhaustif, 3-4 min, résout
-« j'ai oublié ce qu'on a » sur 640 compositions) PUIS cut vente 60-90 s extrait du même montage.
-Sélection **par CAPACITÉ**, 8-10 blocs, meilleur exemple de chaque. Le matériau est déjà produit et
-publié — c'est du montage, pas de la création. ⚠️ Tension à trancher : matériau géopolitique vs cible
-freelance SaaS. → **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)**
+Vidéo démo du savoir-faire, **double usage** : index visuel interne PUIS cut vente 60-90 s.
+Inventaire agent livré + **planche-contact des 53 renders dormants en ligne**.
+⏸️ **REPRISE = Aziz parcourt les 2 planches et marque ce qui tient** (sans ça, pas de montage
+possible : renders de mai-juin jamais revus). ⚠️ Tension à trancher plus tard : matériau
+géopolitique vs cible freelance SaaS.
+→ **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)** ·
+**[planche-contact](memory/projects/SHOWCASE-PLANCHE-CONTACT.md)**
 
 ## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
 

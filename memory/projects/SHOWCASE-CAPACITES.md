@@ -55,11 +55,13 @@ pas de création — quelques jours, pas quelques semaines. Sources : `out/PRET-
 
 ## État
 
-- **2026-08-15** : cadrage validé (double usage + sélection par capacité). Inventaire des capacités
-  lancé en agent (liste des 8-12 capacités + meilleur exemple de chaque + **ce qui est oublié** +
-  rejets à éviter + trous du catalogue). Rien n'est encore monté.
-- Prochaine étape après l'inventaire : Aziz arbitre la liste, puis on écrit le déroulé (ordre des
-  blocs, durée par bloc, musique) avant tout montage.
+- **2026-08-15** : cadrage validé (double usage + sélection par capacité) · inventaire agent livré
+  (voir plus bas) · **planche-contact des 53 renders produite et en ligne** →
+  [SHOWCASE-PLANCHE-CONTACT.md](memory/projects/SHOWCASE-PLANCHE-CONTACT.md). Rien n'est monté.
+- ⏸️ **EN ATTENTE D'AZIZ — c'est le point de reprise** : parcourir les 2 planches et marquer ce qui
+  tient encore. Sans cet arbitrage, on ne peut pas monter : les renders datent de mai-juin et la
+  plupart des templates n'ont jamais été jugés visuellement (candidats à DÉCOUVRIR, pas à montrer).
+- Ensuite seulement : déroulé (ordre des blocs, durée, musique), puis montage de l'index, puis cut vente.
 
 ---
 
