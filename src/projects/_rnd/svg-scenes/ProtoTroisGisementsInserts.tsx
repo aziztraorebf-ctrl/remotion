@@ -56,9 +56,26 @@ type Field = {
   sub: string;
   lonlat: [number, number];
   clip: string;
-  // position du cadre en fraction d'écran
-  card: { x: number; y: number; w: number; h: number };
+  // position du cadre en fraction d'écran — la HAUTEUR est calculée depuis le ratio du clip,
+  // jamais fixée à la main (cf CARD_H ci-dessous).
+  card: { x: number; y: number; w: number };
   active: boolean; // false = pas d'installation (Yakaar)
+};
+
+// ⭐⭐ Le cadre se DÉDUIT du ratio réel du clip — on ne fixe plus une hauteur arbitraire.
+// V3 imposait h=0.245 pour w=0.30, soit une zone vidéo en 2.64:1 pour un clip en 16:9 :
+// `objectFit: cover` rognait alors 32% de chaque clip (haut + bas) — mesuré. Un tiers de l'image
+// générée ne s'affichait jamais (ciel de GTA, une partie de la digue).
+const CLIP_AR = 864 / 480; // 16:9, format de sortie H3
+const PAD_FRAC = 0.016; // padding intérieur du cadre, en fraction de sa LARGEUR
+const LABEL_H_PX = 30; // bandeau label sous la vidéo
+// hauteur totale du cadre, en fraction de H, pour que la zone vidéo soit exactement au ratio du clip
+const cardH = (wFrac: number) => {
+  const cw = wFrac * W;
+  const pad = PAD_FRAC * cw;
+  const videoW = cw - 2 * pad;
+  const videoH = videoW / CLIP_AR;
+  return (videoH + 2 * pad + LABEL_H_PX) / H;
 };
 
 const FIELDS: Field[] = [
@@ -68,7 +85,7 @@ const FIELDS: Field[] = [
     sub: "GAZ — EN PRODUCTION",
     lonlat: GTA,
     clip: "_rnd/minimax-h3-tests/insert-lieux/gta-clair-r2v.mp4",
-    card: { x: 0.055, y: 0.055, w: 0.30, h: 0.245 },
+    card: { x: 0.055, y: 0.06, w: 0.315 },
     active: true,
   },
   {
@@ -77,7 +94,7 @@ const FIELDS: Field[] = [
     sub: "PÉTROLE — EN PRODUCTION",
     lonlat: SANGOMAR,
     clip: "_rnd/minimax-h3-tests/insert-lieux/sangomar-clair-r2v.mp4",
-    card: { x: 0.645, y: 0.315, w: 0.30, h: 0.245 },
+    card: { x: 0.635, y: 0.35, w: 0.315 },
     active: true,
   },
   {
@@ -86,7 +103,7 @@ const FIELDS: Field[] = [
     sub: "GAZ — NON EXPLOITÉ",
     lonlat: YAKAAR,
     clip: "_rnd/minimax-h3-tests/insert-lieux/yakaar-clair-r2v.mp4",
-    card: { x: 0.055, y: 0.665, w: 0.30, h: 0.245 },
+    card: { x: 0.055, y: 0.585, w: 0.315 },
     active: false,
   },
 ];
@@ -100,6 +117,8 @@ const MiniInsert: React.FC<{ f: Field; frame: number; appear: number }> = ({ f, 
   const { card } = f;
   const scale = interpolate(appear, [0, 1], [0.93, 1]);
   const accent = f.active ? CYAN : GOLD;
+  const videoW = card.w * W - 2 * (PAD_FRAC * card.w * W);
+  const videoH = videoW / CLIP_AR;
   return (
     <div
       style={{
@@ -107,14 +126,16 @@ const MiniInsert: React.FC<{ f: Field; frame: number; appear: number }> = ({ f, 
         left: `${card.x * 100}%`,
         top: `${card.y * 100}%`,
         width: `${card.w * 100}%`,
-        height: `${card.h * 100}%`,
+        height: `${cardH(card.w) * 100}%`,
         opacity: appear,
         transform: `scale(${scale})`,
         background: "rgba(7, 24, 45, 0.96)",
         border: `1.5px solid ${accent}`,
         borderRadius: 5,
         boxShadow: `0 0 18px ${f.active ? "rgba(44,215,255,0.20)" : "rgba(217,161,59,0.18)"}`,
-        padding: "1.6%",
+        // padding en PX (pas en %) : mêmes unités que le calcul de cardH, sinon la zone vidéo
+        // n'atterrit pas exactement au ratio du clip et `contain` laisse des bandes noires.
+        padding: PAD_FRAC * card.w * W,
         display: "flex",
         flexDirection: "column",
       }}
@@ -122,8 +143,11 @@ const MiniInsert: React.FC<{ f: Field; frame: number; appear: number }> = ({ f, 
       <div
         style={{
           position: "relative",
-          width: "100%",
-          flex: "1 1 auto",
+          // dimensions FIGÉES au ratio exact du clip : la vidéo remplit la zone au pixel près,
+          // aucune bande résiduelle possible.
+          width: videoW,
+          height: videoH,
+          flex: "0 0 auto",
           borderRadius: 3,
           overflow: "hidden",
           border: `1px solid ${accent}44`,
@@ -131,9 +155,12 @@ const MiniInsert: React.FC<{ f: Field; frame: number; appear: number }> = ({ f, 
         }}
       >
         <Loop durationInFrames={CLIP_LOOP}>
+          {/* La zone est taillée au ratio EXACT du clip, donc `cover` ne rogne rien (0.0%) et évite
+              la bande d'un pixel qu'un arrondi sous-pixel laisserait avec `contain`.
+              ⚠️ Si un futur clip n'est PAS en 16:9, ajuster CLIP_AR — ne pas "réparer" avec contain. */}
           <OffthreadVideo
             src={staticFile(f.clip)}
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
             muted
           />
         </Loop>
@@ -142,7 +169,17 @@ const MiniInsert: React.FC<{ f: Field; frame: number; appear: number }> = ({ f, 
             vignette illisible — le vide doit être VISIBLE pour signifier, pas caché. */}
       </div>
 
-      <div style={{ marginTop: "3.5%", display: "flex", alignItems: "baseline", gap: 10 }}>
+      {/* Hauteur FIXE en px (pas en %) : elle entre telle quelle dans le calcul de cardH ci-dessus.
+          Un bandeau en % rendrait la hauteur du cadre circulaire et re-décalerait le ratio vidéo. */}
+      <div
+        style={{
+          height: LABEL_H_PX,
+          display: "flex",
+          alignItems: "center",
+          gap: 10,
+          flex: "0 0 auto",
+        }}
+      >
         <span
           style={{
             color: "#EAF6FF",
@@ -215,7 +252,7 @@ export const ProtoTroisGisementsInserts: React.FC = () => {
           const accent = f.active ? CYAN : GOLD;
           // point d'accroche du connecteur : bord du cadre le plus proche du jeton
           const cx = (f.card.x + (f.card.x < 0.5 ? f.card.w : 0)) * W;
-          const cy = (f.card.y + f.card.h * 0.5) * H;
+          const cy = (f.card.y + cardH(f.card.w) * 0.5) * H;
           const draw = interpolate(frame, [t0 + S(0.1), t0 + S(0.5)], [0, 1], clampB);
 
           // Pulse : seuls les champs EN PRODUCTION pulsent. Yakaar ne fait rien — il attend.

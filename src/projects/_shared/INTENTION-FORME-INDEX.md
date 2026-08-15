@@ -322,9 +322,21 @@ marchent justement parce que le fond sombre fait ressortir l'incandescence.
 Méthode : `gemini-i2i.py` en CHANGE ONLY (lumière) / PRESERVE EXACTLY (composition, objets, style).
 
 **⚠️ Réglages propres au multi-insert** : voile à **0.22** (et non 0.40 comme pour un insert unique) —
-avec 3 ancrages, la carte est le LIANT entre les vignettes, elle ne peut pas reculer autant. Cadres
-réduits (~30% de large), cascade d'apparition (~1.1 s d'écart) pour que l'œil prenne chaque insert,
-puis coexistence : c'est là que la comparaison opère.
+avec 3 ancrages, la carte est le LIANT entre les vignettes, elle ne peut pas reculer autant. Cascade
+d'apparition (~1.1 s d'écart) pour que l'œil prenne chaque insert, puis coexistence : c'est là que la
+comparaison opère.
+
+**⛔⛔ LE CADRE SE DÉDUIT DU RATIO DU CLIP — ne JAMAIS fixer sa hauteur à la main** (relevé par Aziz
+2026-08-15 : « les vidéos ne prennent pas toute la place »). Une hauteur choisie à l'œil donnait une
+zone vidéo en 2.64:1 pour un clip en 16:9 → `objectFit: cover` **rognait 32 % de chaque clip**
+(haut + bas, mesuré) : un tiers de l'image générée ne s'affichait jamais. Formule :
+`videoW = cardW - 2*pad` · `videoH = videoW / CLIP_AR` · `cardH = videoH + 2*pad + labelH`.
+Deux pièges qui laissent des bandes noires malgré la formule : (1) mélanger les unités —
+padding en `%` (calculé sur la LARGEUR pour les 4 côtés en CSS) avec un label en px ; tout figer en
+**px** ; (2) laisser la zone vidéo en `flex: 1 1 auto` — lui donner `width`/`height` **explicites**.
+Vérifier au rendu en comptant les lignes/colonnes quasi-noires dans la zone, pas à l'œil.
+⭐ Effet : images entières, nettement plus lisibles et plus premium — un asset payé doit s'afficher
+en entier.
 
 **⚠️ ANCHOR LOCK — un navire est un objet qui GLISSE de façon crédible** : le SIZE LOCK ne suffit pas,
 H3 fait naviguer le bateau (mesuré : −15 px de dérive sur GTA v1). Fix validé : nommer un **repère fixe
