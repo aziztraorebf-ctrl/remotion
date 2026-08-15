@@ -47,6 +47,16 @@ Même scène (poignée de main, 2 personnages, R2V) générée en 480p, 720p, 10
 - **Ratio temps/résolution non-linéaire** : 1080p ne fait que ~2.25x plus de pixels que 720p mais
   prend ~2.4x plus de temps — cohérent, mais l'écart absolu (8min → 19min) est significatif à budgéter.
 
+> ⭐⭐ **MESURE CONTRADICTOIRE (2026-08-15, 480p, 2 jobs R2V 5s lancés dans le même message)** :
+> **2 clips livrés en 132s au TOTAL** (1er à 79s, 2e à 132s) — soit MOINS que les ~141s annoncés
+> ci-dessous pour UN SEUL clip 480p solo. Le ralentissement 3.5× décrit juste après **ne s'est pas
+> reproduit**. Les 2 jobs : `55948042` (conduite) + `4e8d57b5` (billets), 864×480, 124 frames chacun.
+> Hypothèse la plus probable : la mesure du 09/08 tombait un weekend (charge du service), pas une
+> limite structurelle du compte — cohérent avec le doute déjà exprimé ci-dessous (« non confirmé si
+> structurel au compte ou lié à une charge weekend »). **En pratique : lancer 2 jobs courts en
+> parallèle est rentable**, ne pas s'en priver par précaution. À re-mesurer si un jour 2 jobs longs
+> (15s) sont lancés ensemble — non testé à cette échelle.
+
 **⛔⛔ DÉCOUVERTE — ralentissement 3-4x quand 2 jobs H3 tournent EN PARALLÈLE (même compte)** : un job
 480p qui prend normalement ~141s solo est passé à ~502s (~3.5x plus lent) quand lancé en même temps
 qu'un autre job. **La parallélisation ne réduit PAS le temps total pour obtenir 2 résultats** sur ce
@@ -1485,9 +1495,38 @@ la direction est de la GÉOMÉTRIE, donc elle nous revient ; H3 ne garde que la 
 billets qui défilent — si le sens de lecture porte du sens, le coder en SVG par-dessus dès le départ
 plutôt que de l'espérer du prompt.
 
-**Familles d'inserts que cette chaîne ouvre** (même mécanique, non encore testées) : pétrole qui
-remplit, billets qui défilent/se consument, minerai sur tapis, eau derrière un barrage, fumée d'usine,
-torchère. Assets : image `conduite-coupe-v1.png` + clip
+**Familles d'inserts que cette chaîne ouvre** (même mécanique) : pétrole qui remplit, billets qui
+défilent/se consument ✅ TESTÉ, minerai sur tapis, eau derrière un barrage, fumée d'usine, torchère.
+
+### ⭐⭐ 2e et 3e insert testés (2026-08-15) — billets ✅ / conduite à moitié vide ⚠️ dérive utile
+
+**Billets qui se consument — SUCCÈS NET** (`prompt_id 4e8d57b5`, 864×480, 124f/5.17s). Flammes qui
+montent, embers qui pulsent, fumée qui s'élève franchement ; **liasse et fond rigoureusement stables**
+(fond 0.03 de mouvement médian). Aucun texte/chiffre halluciné sur les billets — obtenu en générant
+l'image source avec des billets VOLONTAIREMENT VIERGES (guilloches abstraites seules, aucune devise
+ni inscription) + `negative_keywords` sur text/numbers/currency. ⭐ **À refaire systématiquement pour
+tout asset "argent"** : un billet sans inscription évite d'un coup les artefacts de texte ET toute
+contrefaçon graphique inutile. Clip :
+https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/billets-r2v-v1-c20j23j3NVFEqpUb2aVvwduXi7rakK.mp4
+
+**⚠️⚠️ Conduite à moitié vide — LEÇON DE PROMPT (`prompt_id 55948042`)** : le prompt verrouillait
+« the cloud NEVER rises, NEVER fills the pipe » + « the gas is thin, sparse and **insufficient** ».
+Résultat : le gaz **se vide progressivement** sur les 5s (tiers inférieur bien rempli à t=0 → mince
+filet à t=5). Mesure qui l'a révélé AVANT l'œil : la zone censée rester VIDE bougeait **17× plus** que
+la zone GAZ (2.34 vs 0.14) — l'inverse exact de la séparation recherchée ; luminosité 48.4→38.4.
+
+⭐ **La leçon, généralisable à tout insert matière** : verrouiller un niveau demande d'interdire les
+**DEUX** sens. J'avais interdit de monter/remplir, jamais de DESCENDRE — et « insufficient », adjectif
+d'état, a été joué par le modèle comme une ACTION à accomplir. **Ne jamais décrire un niveau par un
+adjectif de jugement** (insufficient, scarce, failing) : le modèle cherche à le mettre en scène.
+Décrire une quantité *constante* et l'interdire dans les deux sens (« the level stays exactly where it
+is, it never rises AND never drops, the amount of gas is identical in the first and last frame »).
+
+**MAIS le résultat est narrativement PLUS FORT que la commande** : une conduite qui SE VIDE sous les
+yeux sert mieux l'Acte 4 Gazoduc (« 70% siphonnés ») qu'un niveau bas figé. ⭐ Décision Aziz en
+attente : garder la dérive comme effet voulu, ou re-générer un niveau stable. Cas d'école de la règle
+« un défaut mesuré n'est pas forcément un défaut narratif — le signaler, laisser Aziz trancher ».
+Clip : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/conduite-vide-r2v-v1-nR2l1mfzuTqKS6bl9NwOK5Vs8ttKCr.mp4 Assets : image `conduite-coupe-v1.png` + clip
 https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/conduite-r2v-jT45QmBgKwK6kv0eIBikqbFSTooqys.mp4
 
 ### ⛔⛔⛔ Workflow validé (T2V et R2V) — MÉTHODE CORRIGÉE 2026-08-11, `run_template`+`input_overrides` ABANDONNÉ pour R2V
