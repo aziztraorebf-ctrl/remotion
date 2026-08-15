@@ -60,3 +60,91 @@ pas de création — quelques jours, pas quelques semaines. Sources : `out/PRET-
   rejets à éviter + trous du catalogue). Rien n'est encore monté.
 - Prochaine étape après l'inventaire : Aziz arbitre la liste, puis on écrit le déroulé (ordre des
   blocs, durée par bloc, musique) avant tout montage.
+
+---
+
+## 📋 INVENTAIRE (agent, 2026-08-15) — résultats clés
+
+> Rapport complet produit par agent dédié (lecture des 7 catalogues + 640 `id=` de Root.tsx +
+> croisement usage réel par grep + dates de commit). **Vérifié : 53 renders dans
+> `out/templates-souverain/` + 110 dans `out/_r-and-d/` existent bien sur disque.**
+
+### ⭐⭐⭐ Le constat qui structure tout : le repo a DEUX ÂGES
+
+Un socle de ~71 composants Remotion/Tailwind bâti **en mai 2026, jamais retouché**, et une production
+vivante (juin→août) qui n'en utilise presque rien — elle tourne sur Mapbox, globe D3 et SVG codé.
+**C'est la zone exacte de l'oubli d'Aziz**, et c'est structurel, pas accidentel.
+Cause identifiée : ces composants sont **en bas** de `COMPOSANTS-INDEX.md`, sous une longue table
+Mapbox — le pattern [[feedback_catalogue-position-liste-et-brief-restrictif]] qui se rejoue.
+
+### Les 10 capacités retenues (meilleur exemple de chaque)
+
+1. **Un territoire prend une couleur/un camp** → `ResourceTextureFill` (le pays se remplit de sa
+   RESSOURCE, pas d'un aplat) · publié Sénégal
+2. **Le drapeau réel épouse le pays, même en relief** → `MapboxCountryFlagDecal` · publié Sénégal V3
+3. **La caméra plonge du globe vers un point** → `D3-A1K1-GlobeToParchemin16x9` (globe → carte
+   parchemin en une seule projection) · validé Aziz
+4. **La caméra accompagne un tracé, en continu** → `D3-Gazoduc-Acte2-AAGP` (bbox glissante, zéro
+   à-coup) · validé 3×
+5. **Un flux relie deux lieux** → `GeoFlowConnection` · publié Soudan (Actes 3/4/5)
+6. **Un insert ouvre la conduite / montre le lieu** → `Proto-TroisGisements-Inserts` · validé
+   2026-08-15, ⚠️ jamais monté en épisode
+7. **Un chiffre frappe** → `Senegal-Beat0-Accroche` (OdometerFlip) · publié
+8. **Deux mondes se comparent** → `WarMapSplitScreen` 3 volets à ratios animés · publié AES
+9. **Un concept s'impose sans quitter la carte** → `WarMapDimmedOverlay` · publié AES + Soudan
+10. **Un personnage vit une scène** → `Cacao-FULL` / `PersoVivant-RecolteAuSol` · publié, validé 100%
+
+### ⭐⭐⭐ CE QUI EST OUBLIÉ (la vraie valeur du rapport)
+
+- **53 MP4 déjà rendus** dans `out/templates-souverain/` (426 Mo) : OdometerFlip, CoinFlip, BarRace,
+  TimelineFracture, ShatterReform, MosaiqueWax, OrigamiCarto, PassationPouvoir… → **la showcase se
+  monte en grande partie sans un seul render**.
+- **30 composants aboutis à ZÉRO usage** (aucun fichier hors `_shared/`), tous datés du 20-23 mai :
+  `SurfaceComparison` (pays à leur vraie taille, façon thetruesize) · `CountryStackComparison`
+  (« la France rentre 4× dans la RDC ») · `WealthScale` (balance riche-en-ressources /
+  pauvre-en-revenus) · **`CrossSection`** (coupe en tranches) · `GoldVein` (zoom Equal Earth→Mercator
+  + veines depuis une mine) · `EmpireOverlay` · `TickerTapeHistory` · `EntityDiagram` ·
+  `OsintSplitScreen` · `SmallMultiplesGrid` · `MilitaryMarchLine` · + 19 autres.
+- **5 formes data-viz D3 jamais montées** (renders dans `out/_r-and-d/`) : ⭐⭐ **Chartogram** (le
+  contour réel d'un pays SE DÉFORME en barre proportionnelle — « la carte DEVIENT la donnée », noté
+  « rare, personne en vulga FR ») · Cartogramme · Sankey · ForceNetwork (réseau qui se recompose
+  physiquement) · PieMorph · + Globe2 (occlusion 3D réelle + terminateur jour/nuit).
+- **Pipeline 3D Three.js** validé de bout en bout (Gemini → Trellis → .glb → @remotion/three), jamais
+  réutilisé depuis juin. ⚠️ tension : `DOCTRINE-SOUVERAIN` pose « pas de 3D, plat encre » → arbitrer.
+- **Templates carte ⭐⭐ du catalogue à zéro usage épisode** : `MapCutaway` (pourtant « le plus
+  réutilisable »), `HeatGradientFill`, `ContagionFlagSpread`, `FiberOpticFlagInvade`.
+- **Registre client-sim** (MochIt, NorthShield, Flowdesk) : volontairement isolé, mais c'est **le seul
+  matériau NON-géopolitique du repo** → directement pertinent pour le cut vente freelance.
+
+### ⛔ REJETS — ne pas remontrer (le piège évité)
+
+⛔⛔ **Gazoduc Acte 3 = GELÉ EN WIP NON VALIDÉ** (Aziz 2026-08-14) : panneau financement 40% vide,
+quasi-immobilité 64→72 s, Beat 4 encore du code v3 rejeté. **Seuls le Beat 1 et le Segment B sont
+validés** — ne PAS montrer les compositions `D3-Gazoduc-Acte3-*` telles quelles.
+Autres : `drawFlagCanvas` · `flyTo`/`easeTo` headless · filtre pays par `'name'` · textures/grain sur
+carte · voile < 0.5 en overlay (≠ insert, cas légitime différent) · SVG plat monochrome sur carte
+(4/10) · pions réalistes War-Map · panneaux flottants du Soudan Acte 3 · `FractureReveal` (supprimé) ·
+bataille en rectangles top-down · sprites PixelLab pour jetons trait-fin.
+
+### 🕳️ LES TROUS DU CATALOGUE
+
+1. ⭐⭐ **L'ÉCHELLE HUMAINE — trou n°1.** Rien ne rapporte un chiffre à une expérience vécue. Seuls
+   candidats (`WealthScale`, `CountryStackComparison`) : **jamais servi**. ⭐ **Convergence
+   indépendante** : l'agent d'analyse Soudan pointait le même manque sur le beat de Kosti.
+2. **L'avant/après temporel sur un même plan** (pas deux entités : un même lieu à deux dates).
+3. **Le mécanisme en coupe** — `CrossSection` existe, jamais servi.
+4. **Le morphing géométrique continu** (le `Chartogram` prouve que c'est possible, jamais généralisé).
+5. **La contre-plongée / le point de vue au sol** — tout est en vue de dessus ou de face.
+6. **Le texte comme matière** — TypeWriter/TypeReveal/SplitFlap/WordExplode : aucun usage épisode.
+7. **Le son visualisé** — rien, alors que le pipeline audio est très mature.
+8. **La transition entre deux registres visuels** — `GlobeToParchemin` est le SEUL raccord
+   inter-registre ; carte→scène SVG se fait au cut sec.
+
+## ⛔ Garde-fou avant tout montage (posé par l'agent, repris ici)
+
+Les 53 renders datent de mai-juin et **les 30 composants oubliés n'ont, pour la plupart, jamais été
+jugés visuellement par Aziz**. Ce sont des candidats à **DÉCOUVRIR**, pas à montrer directement.
+→ Étape suivante proposée : **planche-contact** des renders existants (grille légendée, parcourue en
+quelques minutes) pour qu'Aziz marque ce qui tient encore. Sert deux fois : alimente la showcase ET
+rend le catalogue visible. Règle applicable : *un décor qu'on n'a pas vu n'est pas un acquis, c'est
+une dette.*
