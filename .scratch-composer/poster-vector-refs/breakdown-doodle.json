@@ -1,0 +1,153 @@
+{
+  "registre_identifie": "Whiteboard animation / doodle dessin animé à la main. Style rappelant RSA Animate ou AsapSCIENCE, avec des traits de marqueur effaçable à sec sur un tableau blanc.",
+  "mecanismes_animation": [
+    {
+      "type": "reveal",
+      "description": "Apparition progressive des éléments dessinés, simulant un tracé au marqueur (bien que la main ne soit pas visible).",
+      "reproductible_minimax_h3": "partiel. MiniMax H3 peut générer l'animation de tracé si guidé par des images clés (FLF2V), mais un rendu parfait de 'dessin en train de se faire' sans la main est complexe. Un outil spécialisé (VideoScribe) ou du SVG path animation (Remotion) est plus adapté."
+    },
+    {
+      "type": "transition",
+      "description": "Whip pan (panoramique rapide) vers la droite à 0:04 pour révéler une nouvelle scène, puis retour rapide à gauche à 0:06.",
+      "reproductible_minimax_h3": "oui. Les mouvements de caméra rapides (whip pan) sont gérables via des prompts de mouvement de caméra ou en générant des plans séparés et en les montant avec un effet de flou directionnel."
+    },
+    {
+      "type": "vie_continue",
+      "description": "Les personnages ont des micro-mouvements (idle animation) : clignement des yeux, légers tremblements des traits, respiration.",
+      "reproductible_minimax_h3": "oui. MiniMax H3 excelle dans la création de micro-mouvements organiques (idle motion) à partir d'une image fixe (R2V)."
+    },
+    {
+      "type": "sync_geste_evenement",
+      "description": "Le bâillement du personnage bleu déclenche l'apparition de 'Zzz' et d'une flèche vers le personnage vert, qui bâille à son tour (contagion).",
+      "reproductible_minimax_h3": "oui. En utilisant des images de référence (FLF2V) pour marquer les états clés (bouche fermée -> bouche ouverte -> apparition des Zzz)."
+    }
+  ],
+  "elements": [
+    {
+      "id": "perso_bleu",
+      "label": "Personnage bleu stylisé",
+      "nature": "image_generee",
+      "pourquoi": "Style de dessin à main levée avec des variations d'épaisseur de trait et des micro-mouvements organiques difficiles à coder parfaitement en SVG.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft (pour le style vectoriel/doodle) ou MiniMax H3 (pour l'animation)",
+        "prompt_exact": "A simple, cute, blue line-art doodle character drawn on a whiteboard with a dry-erase marker. The character is yawning widely. Minimalist style, thick marker strokes.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "perso_vert",
+      "label": "Personnage vert stylisé",
+      "nature": "image_generee",
+      "pourquoi": "Même raison que le personnage bleu.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft ou MiniMax H3",
+        "prompt_exact": "A simple, cute, green line-art doodle character drawn on a whiteboard with a dry-erase marker. The character is looking surprised. Minimalist style, thick marker strokes.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "cerveau_rose",
+      "label": "Dessin de cerveau rose",
+      "nature": "image_generee",
+      "pourquoi": "Dessin complexe à main levée.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft",
+        "prompt_exact": "A simple line-art doodle of a human brain drawn in pink dry-erase marker on a whiteboard.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "texte_too_warm",
+      "label": "Texte 'too warm?'",
+      "nature": "overlay_code",
+      "pourquoi": "Texte simple, bien qu'il imite l'écriture manuscrite, il peut être reproduit avec une police adaptée.",
+      "si_overlay_code": {
+        "police": "Caveat ou Permanent Marker (Google Fonts)",
+        "couleur": "#D81B60",
+        "position": "Haut centre-droit",
+        "animation": "typewriter ou tracé SVG",
+        "comment_remotion": "Utiliser une police manuscrite et animer l'opacité ou utiliser un masque pour simuler l'écriture."
+      }
+    },
+    {
+      "id": "texte_contagious",
+      "label": "Texte 'it's CONTAGIOUS'",
+      "nature": "overlay_code",
+      "pourquoi": "Texte simple.",
+      "si_overlay_code": {
+        "police": "Caveat ou Permanent Marker",
+        "couleur": "#00897B",
+        "position": "Haut droite",
+        "animation": "typewriter",
+        "comment_remotion": "Idem."
+      }
+    },
+    {
+      "id": "thermometre",
+      "label": "Dessin de thermomètre",
+      "nature": "image_generee",
+      "pourquoi": "Dessin à main levée avec remplissage partiel.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft",
+        "prompt_exact": "A simple line-art doodle of a thermometer drawn in red and blue dry-erase marker on a whiteboard.",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "note": "Texture de tableau blanc avec de légères traces d'effacement (smudges) pour le réalisme. Reste constant mais subit les mouvements de caméra (whip pan)."
+  },
+  "palette": [
+    "#0D47A1",
+    "#D81B60",
+    "#00897B",
+    "#FBC02D",
+    "#E65100"
+  ],
+  "grammaire_animation": "Apparition séquentielle des éléments simulant un dessin en direct. Micro-mouvements constants (boiling lines) typiques de l'animation traditionnelle pour donner vie aux dessins statiques. Mouvements de caméra rapides pour changer de scène.",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:04",
+      "description": "Le personnage bleu bâille, un cerveau rose apparaît au-dessus avec 'too warm?'. Un personnage vert apparaît, le bâillement se transmet ('it's CONTAGIOUS').",
+      "mecanisme_ids": [
+        "reveal",
+        "vie_continue",
+        "sync_geste_evenement"
+      ],
+      "texte_exact_ecran": "too warm? still a mystery! it's CONTAGIOUS big yawn Zzz",
+      "transition_sortie": "whip pan"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:04",
+      "t_end": "0:06",
+      "description": "Panoramique rapide vers la droite révélant un autre personnage bleu qui dit '...you too?'.",
+      "mecanisme_ids": [
+        "transition",
+        "vie_continue"
+      ],
+      "texte_exact_ecran": "...you too?",
+      "transition_sortie": "whip pan"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:06",
+      "t_end": "0:18",
+      "description": "Retour sur le premier personnage. Le texte 'Why do we YAWN?' apparaît. Différentes théories sont illustrées (thermomètre, air frais) avant de revenir à la conclusion 'still a mystery!' et la contagion.",
+      "mecanisme_ids": [
+        "reveal",
+        "vie_continue"
+      ],
+      "texte_exact_ecran": "Why do we YAWN? too warm? cool air in still a mystery! it's CONTAGIOUS big yawn Zzz",
+      "transition_sortie": "cut"
+    }
+  ],
+  "verdict_kora_cartes": "Ce style 'whiteboard doodle' est excellent pour la vulgarisation didactique et l'explication de concepts complexes étape par étape. Pour Kora & Cartes, il serait parfait pour décomposer un mécanisme économique abstrait (ex: l'inflation) ou illustrer les rouages d'une stratégie historique de manière accessible et ludique."
+}

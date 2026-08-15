@@ -1,3 +1,18 @@
+# ⛔⛔ PÉRIMÉ (2026-08-15) — NE PAS UTILISER CE STARTER
+
+> **L'Acte 3 a été GELÉ par Aziz le 2026-08-15.** Ce starter fait reprendre l'Acte 3 : le suivre
+> irait à l'encontre de la décision. La priorité est désormais l'**Acte 4** (mouvement A fait,
+> B et C à produire), puis l'Acte 5.
+>
+> **Aller à** : `memory/NEXT-ACTION.md` § « GAZODUC ACTE 4 — REPRENDRE ICI ».
+> Raison du gel + ce qui reste à faire sur l'Acte 3 quand on y reviendra :
+> `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § « ACTE 3 — GELÉ EN WIP ».
+>
+> (Conservé pour trace : le contenu ci-dessous reste exact sur l'ÉTAT de l'Acte 3 au 2026-08-14,
+> seule sa consigne « reprendre l'Acte 3 » est caduque.)
+
+---
+
 # STARTER — Gazoduc Acte 3 (suite) + Actes 4 et 5
 
 > Écrit le 2026-08-14 en fin de session. Commit de référence : `9e302fb2` sur

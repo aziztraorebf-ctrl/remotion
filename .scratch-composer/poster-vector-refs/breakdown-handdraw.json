@@ -1,0 +1,161 @@
+{
+  "registre_identifie": "hand-drawn crayon, doodle style, grayscale with minimal shading, similar to RSA Animate or simple whiteboard animations",
+  "mecanismes_animation": [
+    {
+      "type": "transition",
+      "description": "Cut from a room full of boxes to a store scene (0:01)",
+      "reproductible_minimax_h3": "oui, simple cut transition"
+    },
+    {
+      "type": "transition",
+      "description": "Cut from store scene to close-up of a transaction (0:04)",
+      "reproductible_minimax_h3": "oui, simple cut transition"
+    },
+    {
+      "type": "transition",
+      "description": "Cut from transaction to a person sitting at a desk with a printer (0:07)",
+      "reproductible_minimax_h3": "oui, simple cut transition"
+    },
+    {
+      "type": "transition",
+      "description": "Cut from person at desk to extreme close-up of a hand holding a cartridge (0:10)",
+      "reproductible_minimax_h3": "oui, simple cut transition"
+    },
+    {
+      "type": "transition",
+      "description": "Cut from close-up back to the initial room full of boxes, with boxes falling from above (0:13)",
+      "reproductible_minimax_h3": "oui, simple cut transition"
+    },
+    {
+      "type": "particules",
+      "description": "Boxes falling from the ceiling onto the pile (0:13-0:15)",
+      "reproductible_minimax_h3": "partiel, physics simulation of falling objects might be tricky to get perfectly right with pure video generation, might need 2D physics engine overlay"
+    },
+    {
+      "type": "vie_continue",
+      "description": "Characters have subtle idle motions (blinking, slight head movements, hand gestures during transaction)",
+      "reproductible_minimax_h3": "oui, standard video generation capability"
+    }
+  ],
+  "elements": [
+    {
+      "id": "char-boy",
+      "label": "Boy with glasses",
+      "nature": "image_generee",
+      "pourquoi": "Hand-drawn style with shading and specific character design",
+      "si_image_generee": {
+        "moteur_conseille": "MiniMax H3",
+        "prompt_exact": "Hand-drawn doodle style, grayscale, boy with glasses, simple sweater, standing, neutral expression",
+        "fond": "plein",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "char-salesman",
+      "label": "Salesman in suit",
+      "nature": "image_generee",
+      "pourquoi": "Hand-drawn style with shading and specific character design",
+      "si_image_generee": {
+        "moteur_conseille": "MiniMax H3",
+        "prompt_exact": "Hand-drawn doodle style, grayscale, salesman in suit, smiling, pointing",
+        "fond": "plein",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "boxes",
+      "label": "Pile of boxes",
+      "nature": "image_generee",
+      "pourquoi": "Complex arrangement of hand-drawn boxes with shading",
+      "si_image_generee": {
+        "moteur_conseille": "MiniMax H3",
+        "prompt_exact": "Hand-drawn doodle style, grayscale, large pile of cardboard boxes",
+        "fond": "plein",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "text-overlay",
+      "label": "Text box overlay",
+      "nature": "overlay_code",
+      "pourquoi": "Simple rectangular box with text, easily reproducible in code",
+      "si_overlay_code": {
+        "police": "Arial or similar sans-serif, regular",
+        "couleur": "#000000",
+        "position": "bottom center",
+        "animation": "cut",
+        "comment_remotion": "Simple div with background color and text, positioned absolutely"
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "note": "Changes between scenes (room, store, desk, close-up), all in the same hand-drawn grayscale style"
+  },
+  "palette": [
+    "#ffffff",
+    "#000000",
+    "#808080",
+    "#cccccc"
+  ],
+  "grammaire_animation": "Simple cuts between scenes, subtle idle animations for characters, text overlays appearing instantly.",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:01",
+      "description": "Boy standing in a room full of boxes.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "You bought a subscription",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:01",
+      "t_end": "0:04",
+      "description": "Salesman pointing at a printer box in a store, boy looking on.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "This printer costs less than refilling it",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:04",
+      "t_end": "0:07",
+      "description": "Close-up of transaction: handing over money for a box.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "Sold below cost",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 4,
+      "t_start": "0:07",
+      "t_end": "0:10",
+      "description": "Boy sitting at a desk with a printer.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "Deliberately",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 5,
+      "t_start": "0:10",
+      "t_end": "0:13",
+      "description": "Extreme close-up of a hand holding a small cartridge with a price tag.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "The cartridge is the business",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 6,
+      "t_start": "0:13",
+      "t_end": "0:17",
+      "description": "Back to the boy in the room, boxes falling from above.",
+      "mecanisme_ids": [
+        "particules"
+      ],
+      "texte_exact_ecran": "You didn't buy a printer",
+      "transition_sortie": "cut"
+    }
+  ],
+  "verdict_kora_cartes": "This hand-drawn, doodle style is excellent for explaining complex economic or historical concepts in a simple, accessible way. It would be highly effective for Kora & Cartes when breaking down abstract ideas or illustrating cause-and-effect relationships, as the visual simplicity keeps the focus on the narrative."
+}

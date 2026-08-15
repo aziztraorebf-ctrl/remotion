@@ -156,6 +156,31 @@ opacity ~0.52 + trou radial autour du point focus, rendus validés Aziz).
 - **Opacité « couleurs nationales » dépend du PITCH** : ~0.78 à plat, mais à fort pitch (38+) baisser vers ~0.6 pour
   ne pas écraser le relief. Valeur à ajuster selon le pitch de la scène, pas une constante.
 
+## ⭐⭐⭐ FOND SOMBRE + DÉGRADÉ RADIAL = LA HIÉRARCHIE VIENT DE LA LUMINANCE (validé Aziz 2026-08-15)
+
+> **Le principe** : sur une carte à éléments porteurs (tracés, flux, halos), un fond CLAIR met les pays
+> neutres au même niveau de contraste que ce qui porte le sens — tout est également visible, donc rien
+> ne ressort, et l'œil doit trier. Un fond SOMBRE fait reculer le terrain neutre et avancer les
+> éléments lumineux. **La hiérarchie vient de l'écart de luminance, pas de la richesse du dessin.**
+> Corollaire immédiat : un bloom/glow ambré ne « porte » que sur fond sombre — sur fond clair il se
+> dilue et le tracé redevient une annotation plate.
+
+C'est la même logique que l'assombrissement déjà tranché plus haut pour les overlays (§ « TRANCHÉ —
+assombrissement »), mais appliquée en **régime permanent** plutôt qu'au moment d'un insert.
+
+**Les 5 leviers** (isolés par comparatif direct : même géométrie, mêmes tracés, même cadrage — seule
+la palette changeait) : fond nettement plus sombre · dégradé **RADIAL** centré sur la zone d'intérêt
+(jamais linéaire : il assombrit les bords et ramène le regard) · pays inactifs discrets, jamais
+massifs · frontières fines et sombres — **mais pas invisibles**, c'est le réglage le plus délicat ·
+flèches directionnelles en bout de flux.
+
+⛔ **Les valeurs hex ne sont PAS recopiées ici** (une palette dupliquée dans 2 fichiers diverge) —
+source de vérité unique : `src/projects/_rnd/d3-16x9/ProtoCartePaletteGPT.tsx` → constante `PAL_GPT`,
+avec les 2 compositions de comparaison `RND-ProtoCartePalette-A-Nous` / `-B-GPT` pour rejuger à l'œil.
+
+**Portée** : adopté pour le Gazoduc Acte 4 et la suite. Les Actes 1/2/3 restent en palette claire
+jusqu'à la passe finale d'assemblage — ⛔ ne pas rétro-appliquer acte par acte.
+
 ## Références
 - Cible : `src/projects/_shared/mapbox/CartoSouverainV5.tsx` (3 modes caméra, drift P5).
 - Briques : `GisementTokens.tsx` · `MapboxCountryFlagDecal.tsx` · `MapboxBase.tsx` (`addCountryFlagFill` = fill-pattern, marqué « carrelle au dézoom »).

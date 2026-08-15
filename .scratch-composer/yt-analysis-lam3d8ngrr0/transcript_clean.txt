@@ -1,0 +1,380 @@
+[panting]
+&gt;&gt; You have been following me since the
+river.
+&gt;&gt; Adesa,
+it is me.
+&gt;&gt; [sighs and gasps]
+&gt;&gt; You let me run.
+&gt;&gt; If I called out, they would have heard.
+&gt;&gt; [snorts]
+&gt;&gt; That was one generation, not six clips
+stitched together, no timeline, and
+nothing edited after the fact. And if
+you have ever made an animated video
+with AI, you already know why that
+matters. Because the part that eats your
+whole day was never the generating, it
+was everything after it. Matching clips
+that will not match, cutting around the
+one shot where the face drifted, then
+laying the voice over the top and
+dragging it into sync. What changed is
+Stability 2.5. It holds 30 seconds in
+one shot with several different shots
+living inside it. And it generates the
+voice and the sound in the same pass, so
+there is nothing left to sync. And it
+takes up to 50 reference images, which
+is what makes everything after this
+possible. So let me walk you through the
+whole build, five steps from character
+sheets to finished video. I am doing all
+of it inside Higgsfield, and the link is
+in the description if you want to follow
+along. Let's get into it. Now, before we
+start building, I already generated the
+story and every prompt I used in this
+video. So, here is what we are building.
+A woman warrior is being hunted through
+a rainforest. And when she finally turns
+and draws on whatever is chasing her, it
+pushes its mask off and it is someone
+she knows. And for this build, I am
+generating two characters, Adiaze, the
+warrior, and Okonkwo, the man behind the
+mask. Two people, two faces, two voices,
+all held across 30 seconds. That is the
+thing SeaArt's 2.5 changed. All right,
+let's start. Now, the first step is to
+generate the sheets. And the reason we
+start with character sheets is that
+SeaArt's 2.5 holds character consistency
+from reference images alone. So, that is
+what we are building first. Seven sheets
+and it will carry all of them through 30
+seconds. Once you come into the
+platform, go to image. Once you click on
+image, drop your prompt into the box and
+set the model to GPT image 2. That is
+the most advanced one available right
+now. Now, this first prompt is the hero
+frame. One picture, one character, and
+everything else in this build gets
+generated from it. Set the aspect ratio
+to 3:4 and go ahead and click on
+generate. We will wait for it to finish
+and there she is. That is Adiaze. Now,
+look at these two settings because this
+is where most sheets go wrong. Quality
+and resolution are separate controls
+here. Quality opens on low, resolution
+opens on 1K, and I have set mine to high
+and 2K. Set them once at the start and
+the platform holds them. And it matters
+because a six-panel sheet at 1K gives
+each panel about 400 pixels across. Far
+too small for the model to read a face
+out of. At 2K, it is closer to 900. Same
+prompt, same model, completely different
+result. And here's the thing, this is
+the one rule that decides everything
+going forward. Text alone does not carry
+a style. You can write the most careful
+description you have ever written and
+get six sheets back in six different
+visual worlds. The look lives in the
+picture, so you lock it once in a hero
+frame and you pass that frame into a
+every sheet after it. The text describes
+what changes, the image holds what stays
+and that is exactly why Sideways 2.5
+giving you 50 reference slots matters.
+Now, the next step is to clear the
+prompt and drop in a new one. And the
+important part is attaching that hero
+picture. Skip the attachment and the
+model has no idea what you are trying to
+build. Now, for the aspect ratio I am
+putting it at 16 9 because this one is a
+sheet and it needs the width. Go ahead
+and click on generate. That is the model
+sheet. Six full body views of the same
+person, front, 3/4, a side and two
+close-ups. And look at what the
+attachment did. Same face, same braids,
+same harness, same wrap skirt across all
+six panels. Now, let me go ahead and
+generate the rest of the sheets. And
+here you go, expressions, poses,
+Okonkwo, the props and the forest all
+done. And in every sheet I attached the
+same hero frame and character sheet, so
+they all came back in the same world.
+You might ask why I did not just draw a
+storyboard? Because a storyboard only
+locks the one sequence it was drawn for.
+The moment the scene changes you are
+drawing another one. And we do not need
+one here because Sideways 2.5 carries
+character consistency from the sheets
+alone instead of you mapping out every
+sequence. So, the next step is video.
+Click on video at the top panel and drop
+your prompt in and this is the part that
+actually matters. So, you do not burn
+through credits. Let me walk you through
+it. The prompt is written in timestamp
+blocks, 0 to 5, 6 to 10 and so on. One
+story beat per stretch. That is the
+entire film written before anything gets
+generated. Here's the truth. Most of
+what people call a prompting problem is
+a structure problem. So, here are the
+six rules I ended up with. One, put your
+character style and location at the top
+above the timestamps. Describe them once
+and they hold for all 30 seconds. Two,
+every block needs the action and the
+camera. Leave the camera out and the
+model picks one for you. Three, dialogue
+goes inside its timestamp in quotation
+marks at the second it happens. Four,
+and this one cost me a generation. Never
+put an accent next to a quoted line.
+Mine said she speaks in Nigerian English
+sharp and out of breath. And then the
+line and the character said the words
+Nigerian English out loud in the video.
+Anything sitting beside quotation marks
+gets read as speech. So, the accent goes
+in its own block and you add a line
+saying the only words spoken are the
+ones inside quotes. And Sidans 2.5 does
+handle harder accents now including the
+one I am using in this build. Not
+perfectly but it gets there. Five, when
+two people speak voices get their own
+block. Say they must sound like clearly
+different people. Six, audio gets its
+own block in time order. Breathing,
+footsteps, the bowstring, the silence.
+And say no music or you get generic
+music. Now, go ahead and click on add
+references. Then click on image
+generations. Sidans 2.5 can now take up
+to 50 of these. I am using seven. Now,
+just attach them in the exact order you
+generated them. First image, second,
+third, fourth, fifth, sixth, seventh in
+sequence. Now, if you see these red
+markings in the prompt, this is the
+important part. Click on this one and it
+becomes image one. Click on the next
+one, image two. Then image three. And
+the reason we are doing this is that the
+reference order is positional. The tag
+image five does not mean Okonkwo. It
+means Okonkwo because he is the fifth
+file attached. Change that order and
+image five stops pointing at the person
+your prompt thinks it is pointing at and
+the whole generation drifts. That is the
+key. So, here is the new character being
+introduced. Click on image five and that
+is the exact sheet we built for him.
+Then it asks for the props. So, let's
+attach the props. And the forest
+location is exactly as shown here. So,
+click on this and add the background.
+Once you do that, everywhere image one
+is written, it takes that picture as the
+source of truth. And down here you have
+the timestamps, the spoken lines, and
+the voice block. SeeDante 2.5 generates
+the audio in the same pass. And that is
+exactly why all of this has to live
+inside the prompt instead of being
+recorded afterwards. Quick thing before
+we generate. Every prompt you have
+watched me build is written out properly
+with the timing and the dialogue and the
+sound the laid out the way I structured
+them. Comment SeeDante and I will send
+it over. So, the prompt is in and the
+references are locked. Therefore, the
+only thing left is the settings. And
+there is one in there that will quietly
+cost you the best feature in the tool.
+So, let's click on model and select
+SeeDante 2.5. Aspect ratio 16:9. Now,
+look at the duration. 28 seconds, not
+30, and that is deliberate. The
+30-second limit applies to both sides,
+what you generate and what you can feed
+back in later. So, when you ask for 30,
+the file comes back a little over 30.
+Mine came back at 30.08
+and then the extension rejects it
+because the clip you are feeding in is
+now too long. So, if you plan to extend,
+make part 1 28 seconds. That's the move.
+And resolution is 720p,
+and that is the ceiling right now. I am
+not going to hide that. It is where the
+model is today. Higher resolutions are
+coming, and for a faceless channel, 720p
+is already publishable. Bit rate high,
+and then go ahead and click on generate.
+We will wait for it to finish.
+&gt;&gt; You have been following me since the
+river.
+&gt;&gt; Adesha,
+it is me.
+&gt;&gt; So, when you see the output, it turned
+out very clean. Watch the cuts here.
+Watch one shot flow straight into the
+next. Those are several different shots,
+and all of them came out of one
+generation. There is no seam anywhere
+because there was never a cut. And
+listen to the sound. It came out already
+locked to the picture. Nobody synced
+anything. That is six or seven clips, a
+timeline, and a recorded voice. All
+gone. One honest note. I have been on
+this model a few days, and the
+generation time is all over the place.
+Same settings, very different weights.
+So, if you are planning a day of work
+around it, leave yourself room. But any
+output looks good until you try to
+change it. So, let's change it. Now,
+this is the other thing. Students 2.5
+opened up. You can move the whole scene
+into a different world without
+regenerating the story. So, let's take
+this out of the forest and put it here
+instead. If you see here, all the things
+are attached. And in image seven, this
+is the picture it is showing now. It
+went ahead and kept everything we
+already fed it. But here is the part
+people get wrong. If you are changing
+the location, you have to change the
+prompt as well. The scene has moved from
+a rainforest to a frozen Arctic sea ice
+field, so the action has to move with
+it. Now, if you only swap the picture
+and leave the action language alone, it
+will go ahead and give you roughly the
+same output you already had. Let's click
+on generate and we will wait for it to
+finish.
+[panting]
+[sighs and gasps]
+&gt;&gt; You have been following me since the
+river.
+&gt;&gt; I did.
+The tension goes out of shoulders. It is
+me.
+&gt;&gt; Now, if you see here, the video is done.
+Same two characters, same faces, same
+action, same timing. The only thing that
+moved is the world around them, and the
+light and the clothing [music] adapted
+to it instead of being pasted on top.
+Sidans 2.5 kept both characters, both
+faces, and the timing, and only rebuilt
+the world. And if you are running a
+channel instead of making a film, that
+is the part that matters. One scene
+becomes several settings without
+regenerating the story. Now, let me be
+honest because this one drifted. It
+added dialogue we never asked for and
+changed a couple of things on its own.
+So, go ahead and click on edit video,
+drop this video in, and change that one
+stretch. Everything either side of it
+stays exactly as it was. Before this,
+one bad second meant regenerating all
+30. And if you want to change the voice,
+just click on change voice, and you will
+see options there. Now, the reason why
+our build has a specific Nigerian accent
+is that I mentioned it in the prompt, so
+the scene can move, the take can be
+repaired, the voice can change, but this
+is done and none of it makes the video
+longer. Step five, extending it now in
+Gen-2.5, you can also extend the story.
+Click on extend video on the right-hand
+side, then add video to extend and
+choose the clip you want to carry on
+from. This is the first generation I
+did, then you change the prompt. Every
+image that was mentioned before is
+already here in the same order and the
+story moves forward from where it
+stopped.
+&gt;&gt; [music]
+&gt;&gt; Select Gen-2.5, {comma} then extend
+video, then generate. You do not need to
+pick another model for this. It becomes
+the extended version on its own. Let's
+go ahead for now and wait for the
+extension to finish.
+&gt;&gt; You let me run.
+&gt;&gt; If I called out, they would have heard.
+&gt;&gt; And it looks like the continuation of
+the first video. Now, here's why
+extension beats stitching. Nothing in
+that second part reestablishes the
+world. The model already knows the cast,
+the location, and the pacing, so it
+spends the whole budget on new action
+instead of rebuilding what it already
+had. It looks like a finished project
+because it is one. That is the whole
+build. Sheets prompt generation,
+changing it, extending it. So, here's
+the real takeaway. Before this, 30
+seconds meant 66 generations, a
+timeline, and a voice recorded on top of
+all of it. Gen-2.5 takes 50 references,
+holds every character across the whole
+thing, generates the audio in the same
+pass, swaps the entire world without
+touching the story, and carries past 30
+seconds without stitching. Every job the
+edit used to do now happens before you
+press generate. You are not repairing a
+video afterwards anymore. You are
+deciding what it is going to be and
+letting it arrive that way. And there
+are three things I did not even need for
+this build. You can hand it footage of a
+movement instead of describing it. You
+can drop a performance into a completely
+different place and have the light and
+the clothing follow it. And you can
+apply a reference to something you have
+already made. None of those was needed
+here, and all of them are sitting there
+when you do need them. Everything you
+just watched was built inside Higgs
+Field, who sponsored this video. The
+link is in the description if you want
+to build one alongside me. And every
+prompt I used is written out properly
+with the timing and the dialogue and the
+sound laid out the way I structured
+them. Comment "students" and I will send
+them over. But before you open anything
+web, you write your story first. Every
+sheet, every prompt, every generation in
+this video came out of a document I
+wrote before I touched the tool. Decided
+there, and the rest of this is just
+execution. I will see you in the next
+one.

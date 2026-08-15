@@ -1,0 +1,537 @@
+Kurzgesagt have some of the best
+educational animations ever. And if
+you've spent any time on YouTube, you
+have likely seen one of their videos.
+Now, you might not believe this, but one
+of their videos can take over 1,200
+hours to create. However, what if I told
+you that I actually managed to recreate
+one of their entire animation sequences
+all just by using AI. So, in this video,
+I'll show you exactly how to create
+videos like Kurzgesagt. And by watching
+this video till the end, you're also
+going to learn how to apply this skill
+set to replicate any channel that you
+want on YouTube. And so, in this video,
+I'm going to show you multiple different
+processes. I'm not just going to show
+you how to create the images. We're
+going to go over ideas, scripts, image
+styles, visual prompts, voice-overs,
+image generation, and finally, we're
+going to animate everything together in
+order to create these videos. And so, we
+have quite a lot to cover in this video,
+but firstly, we have to go over ideas.
+And in order to do this, I'm just going
+to use Claude. And all I'm going to do
+is send this prompt. Give me 50
+educational video ideas in Kurzgesagt's
+style. So, I'll open up Claude, use Opus
+4.6, and send it off. And while that's
+generating, I want to show you the
+results one more time because these
+honestly came out so much better than I
+could have imagined. I mean, these are
+all results that took me literally 5
+minutes to create, and they created such
+nice animations fully done by AI. This
+is honestly such a good skill worth
+having in 2026, no matter your career
+professional, and you can also learn
+this as a complete beginner. And okay,
+as you can see, we have our 50
+educational ideas. So, some examples are
+What if the moon suddenly vanished
+tonight? Why can't we grow a new teeth?
+Some animals can. AI doesn't think,
+here's what it actually does. What
+happens inside of a nuclear explosion?
+And I mean, we have 50 other ideas
+basically that we can generate in a
+matter of seconds. So, that's how you
+get the idea for one of these videos.
+Next, we are going to need to create a
+script for the voice-over. Now, look, I
+could show you like the lazy way to do
+this, just going into Claude, telling it
+to create a Kurzgesagt idea script using
+this topic. But if you're subscribed to
+this channel, which by the way, if you
+haven't already, make sure to subscribe.
+95% of you guys are not subscribed. And
+if you subscribe, you're going to get
+more videos like this in your for you
+page. So, make sure you subscribe down
+below. But with that being said, I went
+ahead and got the the of five different
+Kurzgesagt videos in order to
+essentially fine-tune a model on the
+actual scriptwriting process so that it
+can pick up on certain trends tactics
+used by the scriptwriters at Kurzgesagt
+so that we can create the best possible
+script. If you want to do this yourself,
+all you have to do is scroll down a
+little bit, open up the description,
+click here on show transcript, and then
+copy the transcript. You're going to
+have to have VidIQ installed, which you
+can use completely for free. This isn't
+sponsored, by the way. I did used to
+work with these guys, but they honestly
+just have a really good tool, that's why
+I'm recommending it. So, once you have
+it, you can simply go up here, copy and
+then you can paste it into Google Doc.
+By the way, if you want these
+transcripts, I mean, you can do it
+yourself, or I'm going to leave these,
+and I'm going to leave every single
+prompt below the video. So, just click
+on the link below. But, once you have
+the transcripts, I recommend getting a
+couple just so that I can actually pick
+up on the patterns. The next thing you
+want to do is we want to send off this
+prompt along with the transcripts into
+any AI model of your choice. I recommend
+Opus 4.6 because it has personally the
+best copywriting. And so, for context,
+this prompt just basically tells about
+the transcripts, and then we're asking
+for the exact structure so that I can
+paste it into any AI model, and it will
+give me an eight- to 12-minute story in
+the same style. So, again, we're not
+generating the script right now. We are
+generating a format, a repeatable
+pattern that we can use for every single
+video moving forward. So, all I went
+ahead and done is paste this prompt into
+Cloud and paste it into the doc, which
+is this thing you see here, basically
+five different transcripts from YouTube
+videos from Kurzgesagt, and we're going
+to send it off. And so, this was the
+result. It's quite long, so I'm not
+going to go through all of it, but let
+me just break it down really quick. So,
+at the very start, we have a very basic
+prompt engineering technique, which is
+giving some sort of a role to the AI,
+then giving it a task. And then further
+down, we have more context on what the
+actual script itself should be like. So,
+we have the target length, structure,
+curiosity hook. We have essential
+question, and we also have timestamps to
+each one of these points so that it has
+some sort of a reference to go off. Then
+we have more context and setup,
+explanation of the journey. And since we
+gave it five different transcripts, it
+has a lot of analogies and a lot lot as
+you can see, for every single one of
+these processes. So, look, I'm going to
+just scroll through if you want to just
+watch the video, copy it, and paste it
+in yourself. But again, if you want the
+whole entire thing, then I'm just going
+to leave it linked below the video for
+you to be able to just simply copy and
+paste it into your workflow. But anyway,
+the important part that you need to
+understand, I mean, all these topics are
+cool and all, but down at the bottom, we
+have topic. This is the only thing that
+we need to actually customize in this
+prompt. And so, I'll show you the actual
+generation process in a minute, but this
+is just the first part of the format
+that we need. The second part is going
+to be the image style. So, the first
+thing I've done is I took a few
+screenshots from Kirill Sacks' videos
+from many different scenes so that I
+will understand the style better, as you
+can see. And then once again, you can
+use ChatGPT, Gemini, Claude, Quinn,
+Kimi, doesn't matter. Just paste this
+prompt in along with the screenshots,
+and then simply send it off. And so,
+inside of the prompt, let me just read
+it real quick, we are giving context
+about the screenshots, and then we're
+telling it to define the animation
+style, and we simply want it to give us
+a prompt based on the idea that would
+allow me to generate AI images in the
+exact same style. This should be
+universal for every type of image idea.
+So again, these are super simple
+prompts, very short sentences, and very
+simple English that you can paste, and
+then you can get this in return, which
+is a much more advanced, much more
+sophisticated, and just better overall
+prompt engineered prompt. And so, once
+again, this is the result. You can read
+it if you want. Again, it's going to be
+linked below. And so, once we have the
+image style and we have the script
+format, we now move on to creating the
+visual prompts. And so, I tried to
+illustrate this in the easiest way
+possible. Basically, we have the style
+reference, which is this thing that we
+have over here, the image style. That
+will not change. Then we have the script
+prompt with your idea, which once again,
+it's this entire section down here with
+inserting your topic down at the very
+bottom. And then we have a new prompt,
+which once again, as always, just linked
+down below, which you can see on screen
+right here. And so, the idea that I will
+go with is, "How many bones are in the
+human body?" Super straightforward. And
+so, let's craft this prompt. So, once
+again, we can go back here and copy this
+entire thing. Then I'm going to go back
+in the Claude, and I'm just going to
+make a new chat so that we have fresh
+context. Paste that entire thing in.
+Then I'm going to get the image style
+reference, so I'll copy that one again.
+I'm going to wrap it in XML tags, image
+style. This just helps the AI model
+understand and break down the prompt
+better. And then I'm just going to copy
+this new prompt that I have over here,
+and I'm going to paste that down in the
+bottom. Now, one thing I forgot to do is
+change the topic down in the very
+bottom, so make sure you actually change
+this because this is very important. So,
+I'm just going to change this and then
+I'm going to send off this prompt. And
+once it generates, it's going to look
+something like this. We're going to get
+a result with a bunch of different
+visual directions and a bunch of
+different little scripts. Obviously, we
+can customize this to our own liking if
+we want, change some small stuff around,
+but in general this is going to be 80 if
+not 90% done. Because there has been a
+lot of time put into actually creating
+this prompt. This isn't just an AI
+generated prompt. There has been lots of
+tweaks, lots of optimization, and
+fine-tuning of these prompts to make
+them as good as possible so that you can
+literally just copy and paste. So again,
+AI models are not deterministic, meaning
+they're not going to give you the same
+result every time. They might not even
+give you the same exact format every
+time. So, this might look slightly
+different, but in general, what we have
+here is the topic up the very top, the
+timestamp, the script, and then the
+visual direction for the script. if you
+can connect the dots, basically we're
+going to use this in order to create the
+AI voice over, and we're going to use
+this in order to create the AI images.
+Now, the AI voice over, which is the
+next section, is done on 11 Labs, mainly
+because this is the best company for AI
+voice at the moment. And it is super
+straightforward. I'm not going to go too
+deep into this because I'm sure you
+already know how to create voices with
+11 Labs. But for those that don't know,
+all you got to do is sign in to 11 Labs,
+link down below. Again, not sponsored,
+obviously. Then, on the left you can
+click on text to speech, and then here
+I'm going to basically add the first
+section, which is "Your body contains
+206 bones blah blah blah." Paste that
+into here. Now, up here I actually have
+my own voice because in one of my recent
+videos I actually went ahead and showed
+you how to recreate yourself as a clone
+and recreate your voice. So look, if you
+are subscribed, you would have seen
+this. But regardless, on the right over
+here, I'll just move my camera, you
+basically have a bunch of different
+settings, speed, stability. I'm sure you
+understand what this all means. So,
+change it to your likings, pick the
+voice you like, and then to the left of
+my camera we can just click on generate
+speech, send that off, and then you have
+your voice over. It's as easy as that.
+You can do this completely for free if
+you want. And so over here I have the
+entire script, as you can see. So, what
+we need to do next is cut this up into
+the different visual segments. Because
+we have the entire script here, now I
+need to know how long each section is,
+so that I can direct the animations
+later in the video to match the same
+length as the voice over works. That's
+the pattern I'll be talking about. So, I
+cut it down. I also trimmed it down a
+little bit because I thought it was a
+little bit long, and it looks something
+like this with some cuts in between
+here. So, I know this is one animation,
+this is another, this is another, etc.
+Here's a better visual for this. So, for
+example, this script might be these two
+cuts, this script might be this cut, and
+this script might be this cut. I colored
+them over here just so that you can see
+it visually better. But once you have
+the script laid out and labeled, the
+next thing we need to do is create a
+images. So, I like to use Nanobana 2 for
+this because it's very good at
+reasoning, it has consistency, it's very
+good at editing the images, you can use
+style references, and it's good for many
+different styles. So, which website do I
+use? Google AI Studio, Gemini, Hexfield,
+Freepik? I mean, I made videos on pretty
+much all of these. So, which one should
+you use? It doesn't really matter. I'm
+just going to use Hexfield simply
+because they had a really good deal at
+the moment and had a bunch of credits,
+but it doesn't matter. You just need to
+use Nanobana 2 Pro, in my opinion. I
+would probably lean towards Google AI
+Studio instead of Gemini, so I guess
+I'll remove Gemini from here because it
+has watermarks, which we don't want. And
+so, it's going to be the same process
+that applies as we've done previously.
+We basically take what we have here,
+copy it over, and paste it as the visual
+reference. Now, again, I'm going to
+leave a link for every single tool that
+I am using, and they are going to be
+affiliate links, meaning if you do click
+on them, you're going to save yourself
+money, and you're going to support me by
+using the affiliate link. So, win-win, I
+guess. And so, inside of Hexfield, I'm
+going to go up here to image, create
+image, and down here we have basically
+the prompt box. All we need to do is
+change auto to Nanobana 2. We're going
+to change the aspect ratio to 16 by 9,
+meaning it's a horizontal video. Going
+to keep it at 1K quality, and we're
+going to keep the batch size at 1. And
+then, we're going to just go back to the
+result we had over here, copy the visual
+direction down here, which was basically
+the first animation, and simply paste it
+into Hexfield. Click on generate, and
+then we see it loading over here. And
+so, to save you time, I'm basically
+going to just show you the results I got
+for every single of these. So, for the
+first one, you can read the prompt if
+you want. I got this result of the blob
+next to the skeleton. For the second
+one, it was this baby blob. Then for
+this one, we had the baby blob, but as
+you seen, I transformed one word in the
+prompt and it turned into this nicer
+blob instead. And the reason I basically
+turned it into this blob was for
+consistency because if we're continuing
+with a blob like this, we don't want to
+just change it into a baby all of a
+sudden. So, that's why Nanobot 2 is so
+good is because of the image
+consistency. Anyway, for the second last
+prompt, we had this one which was the
+blob with a bunch of crash max and
+bones. And then for the last one, we had
+these bones next to a solidified bone.
+Again, this was super straightforward
+and really easy to do. All you do is
+just copy the prompt and paste it into
+Hexfield. Now, for possibly the most
+important section of the video, it's the
+animations. I can't stress enough how
+many people create a good AI images,
+create a good voice over, they create
+the script, the idea, whatever, but then
+they fail on the animations because of a
+few key steps which I'm about to show
+you. Firstly, which video model? Well, I
+recommend VO3.1 Fast. It has very good
+prompt understanding, very good motion
+quality, a bunch of different styles,
+very consistent, and it's faster than
+VO3.1 because when you're generating
+these videos, it's such a pain to just
+sit there and wait and wait and wait and
+basically ruin your flow state because
+you are trying to generate this video
+and all you're doing is waiting. It
+pisses me off, so that's why I'm using
+fast and it's also really good. And so,
+again, going back into Hexfield, this
+time I'm going to go up to video and
+then create video and I'm going to zoom
+in a bit and let me show you what's
+actually important in here. So, the
+first thing I'm going to do is I'm going
+to scroll down to model, click on model,
+type in VO3.1 Fast with the audio,
+select that. Then, we have the frames.
+So, once again, we can go back and copy
+basically this image, add it as the
+first frame, copy the second image, and
+then add it as the last frame. I'm going
+to leave the prompt box empty cuz it
+doesn't really matter. Quality, I can
+leave it 1080p or 4K, up to you. Change
+this to 16x9 once again. And now, this
+is important. The time here should match
+your voice over as closely as possible.
+So, over here, you can see that the
+first animation is roughly 5 seconds
+long, meaning I shouldn't generate an
+8-second transition. It should be closer
+to 4 or 6. Now, since this is just over
+5, so it's closer to 6, I'm going to go
+back and make this a six-second
+transition. And then I'm going to just
+click on generate and send it off. And
+by the way, just before I show you what
+actually came out, if you're confused
+with how to actually use this tool,
+which is Premiere Pro, even though I
+think AI is making the work of editors
+faster and faster and making it so much
+easier for us, it's important to
+understand the fundamentals so that you
+can do stuff like this. Because in a
+second, I'm going to show you the major
+mistake that people do when they get to
+the second animation. But if you want to
+learn how to create AI animations, how
+to trim with AI, how to actually use
+Premiere Pro, how to use After Effects,
+how to land clients. I basically cover
+all of this inside of the Editing
+Evolution. If you want to learn more,
+you can just click the link down below
+and watch the video that I have made
+explaining what Editing Evolution
+actually is. But anyway, let's check out
+our animation.
+&gt;&gt; Your body contains 206 bones, but here's
+the strange part. A newborn baby
+&gt;&gt; I mean, this is a really good animation.
+It's super high quality. We can also
+upscale this or create this in 4K, but I
+mean, yeah, this is really nice. Even
+the transition from blue to purple, the
+fact that it goes past the skeleton
+really nicely. I mean, this would take
+so much time to master and learn. I
+don't think you guys understand how long
+this would take to actually create with
+Illustrator, then pasting into After
+Effects, then rigging the whole
+characters. There's so much to this. It
+used to take, you know, a whole team and
+thousands of hours, literally, to create
+one of these videos. But now, you can do
+this as a one-man team, if you're
+obviously dedicated enough with these
+kind of tools. But anyway, let me show
+you now the major mistake. The major
+mistake people do is that they do like a
+completely new animation now for the
+second part. That is not what you should
+do. What you should do is you should use
+the last frame of the first video as the
+first frame of the next video so that
+you can continue this smooth transition
+cycle. And this is what I'm going to
+show you. So, going back into the
+six-field, I'm basically going to swap
+these, delete these, and I'm going to go
+down here and use the third frame this
+time. Then I'm going to paste it in, and
+once again, same settings as before,
+click on generate, and then this is the
+transition that we're going to get. So,
+I'm going to add a small default
+transition here. It's very small because
+there's a bit of a twitch with it, but
+this is what you're going to get.
+&gt;&gt; A newborn baby has around 270 bones.
+&gt;&gt; In my opinion, this is much better than
+just completely restarting from scratch
+a new animation every time. And you can
+do this for the third, fourth, fifth,
+sixth, and basically through the whole
+entire video. And you can do this in two
+ways. If you don't have this last frame
+for whatever reason, you can just click
+on this button down here, export last
+frame, and then you can use this as the
+frame which will generate that image at
+the very end. But anyways, let me
+quickly show you the animation. So, we
+have the start over here that I just
+showed you. Then we have this section of
+the baby going out.
+Then it transforms.
+&gt;&gt; pieces. So, what happened to them?
+Did we lose them? Did they break? Or did
+something far stranger happen inside our
+bodies?
+How do 270 bones somehow become 206?
+&gt;&gt; And keep in mind, this is also on point
+with the actual script itself because it
+has reasoning and it understands the
+context of the script. And since we
+optimized these prompts so heavily and
+since we went over everything so many
+times, this is honestly the best system
+I could find for creating these style
+animations. Again, you can use this for
+literally whatever creator you want.
+Now, if you made it this far, all I ask
+is you subscribe to this channel because
+94% of you guys are not subscribed. And
+I just want to get this number down. So,
+if you're enjoying the content, make
+sure to subscribe. And if you want to
+learn how you can use AI for every
+single use case that comes to video
+editing, then I highly suggest you watch
+this video next. It covers like 16
+different use cases that you can use AI
+for as a video editor. And even if
+you're not a video editor, I do think
+it's a very interesting video to watch.
+So, go watch that next. I'll see you
+there.

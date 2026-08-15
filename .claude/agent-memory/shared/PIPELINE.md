@@ -89,25 +89,37 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2 TERMINÉS · Acte 3 : Beat 1 VALIDÉ, Beats 2/3 à faire valider, Beat 4 + Actes 4/5 à faire
+### Gazoduc — Actes 1+2 TERMINÉS · ⛔ Acte 3 GELÉ · ⭐ Acte 4 EN COURS (mouvement A fait, B+C à faire)
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 
-**Acte 3 — état au 2026-08-14** (commits `9e302fb2` + `5379a454`, branche `feat/gazoduc-acte1-hook-globe`) :
-- **Segment A / Beat 1 (0→22.2s) : VALIDÉ par Aziz.** Caméra continue (zoom monotone + centre qui suit la
-  tête du tracé), dessin trait-par-trait, pays qui restent marqués après passage.
-- **Beats 2 (chantier Adrar, clip MiniMax H3 dans une carte-insert composée) et 3 (comparateur recentré) :
-  refaits depuis le storyboard V5, PAS ENCORE VALIDÉS** — render `suite-v12` à faire regarder à Aziz en
-  ouverture de la prochaine session.
-- **Beat 4 (paradoxe) : encore en code v3 rejeté**, à refaire depuis `beat4-paradoxe-libre.png`.
-- **Segment B (aéroport Niamey) : FAIT** (décor Fable5 porté sur la logique d'animation existante).
-- ⛔ Le v1 et le v2/v3 ont été rejetés par Aziz. **Ne pas repartir du code v3 ni du plan de refonte par
-  4 agents** (`PLAN-ACTES2-5.md` § TEST STUDIO RÉUTILISABLE) — approche dépassée. La source est le
-  storyboard V5 + ses 4 breakdowns JSON (`breakdown-v5-json/`).
-- **Actes 4 et 5 : n'existent pas** (vérifié — aucun fichier, aucune composition).
+**⛔⛔ Acte 3 — GELÉ EN WIP (décision Aziz 2026-08-15). NE PAS LE REPRENDRE.** Il n'est pas validé et il
+reste du travail, mais on s'acharnait dessus depuis trop de sessions (même pattern que le Soudan Acte 4 :
+un acte du MILIEU se juge par rapport à ses voisins, or ses voisins 4/5 n'existaient pas). **On produit
+les Actes 4 et 5 d'abord.** Acquis à ne pas refaire : Beat 1 validé · Beat 2 = vrai insert composé (clip
+H3 + jauge + connecteur) · Segment B (aéroport) fait. État complet + ce qui reste cassé (mesuré) :
+`memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête).
+⚠️ `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est PÉRIMÉ (il fait reprendre l'Acte 3).
 
-Source de vérité : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "OÙ ON EN EST (2026-08-14)".
-Starter prêt : `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md`.
+**⭐ Acte 4 — état au 2026-08-15** (commits `6aabb1d9` code · `aff4adeb` doctrine · `76ecfdf8` palette) :
+- Audio `narration-p4.mp3` mesuré (124.04s), copié dans `public/`, timing des **3 mouvements** dérivé du
+  forced-align réel : `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing.ts`.
+- **Mouvement A « une ressource, deux tuyaux » (0→41.1s) : CODÉ ET RENDU**, corrigé sur 6 gaps HIGH
+  (`GazoducActe4RessourceUnique.tsx`, compo `D3-Gazoduc-Acte4-RessourceUnique`). Impulsions-comètes qui
+  s'affament + source Nigeria qui s'épuise + UN seul insert au pic des 70% + verdict sobre.
+  Render : `out/_r-and-d/gazoduc-acte4/4A-v5-AUDIO.mp4`.
+- **Mouvements B (objectifs opposés, 41.1→74.5s) et C (calendrier qui se retourne, 74.5→124s) : à faire.**
+  Timing déjà calé (`BEATS_4B` / `BEATS_4C`), storyboard pas encore fait.
+- ⭐ **Nouvelle palette de carte SOMBRE adoptée** pour l'Acte 4 et la suite (source de vérité :
+  `src/projects/_rnd/d3-16x9/ProtoCartePaletteGPT.tsx` → `PAL_GPT`). **1re action de la reprise = re-rendre
+  4A avec cette palette, et RIEN D'AUTRE.** Actes 1/2/3 : re-render à la passe finale, pas acte par acte.
+- **Méthode à rejouer pour B et C** (elle a produit A) : storyboard libre créative 2 modèles → validation
+  Aziz → breakdown JSON → code → **3e appel comparatif rendu-vs-storyboard** → corrections. Gabarits de
+  prompts prêts : `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/`. Doctrine :
+  `memory/doctrines/STORYBOARD-MAPBOX.md` § LA BOUCLE FERMÉE.
+- **Acte 5 : n'existe pas** (robinet géant + mains stylisées, cf `PLAN-ACTES2-5.md` L118).
+
+Source de vérité : `memory/NEXT-ACTION.md` § "GAZODUC ACTE 4 — REPRENDRE ICI".
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion

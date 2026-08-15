@@ -1,0 +1,113 @@
+[1/4] Start resumable upload (4.7 Mo, IPv4, video/quicktime)...
+[2/4] Upload bytes + finalize...
+      files/geazkfpol65g state=PROCESSING
+[3/4] Poll ACTIVE...
+      ACTIVE en 3s
+[4/4] generateContent (breakdown JSON)...
+
+finishReason: STOP
+============================================================
+{
+  "registre_identifie": "Whiteboard doodle, dessin au marqueur sur tableau blanc. Référence: ASAPScience, RSA Animate.",
+  "mecanismes_animation": [
+    {
+      "type": "reveal",
+      "description": "Apparition séquentielle des éléments (dessins et textes) par pop soudain ou tracé progressif.",
+      "reproductible_minimax_h3": "non (MiniMax génère du mouvement fluide, ce style requiert des apparitions discrètes/stop-motion, idéal en Remotion)."
+    },
+    {
+      "type": "transition",
+      "description": "Panoramique 2D (whip pan) glissant sur le tableau pour révéler une nouvelle zone (0:04).",
+      "reproductible_minimax_h3": "partiel (possible en promptant un pan, mais plus précis via un grand canvas dans Remotion)."
+    },
+    {
+      "type": "vie_continue",
+      "description": "Changement d'état des personnages (bouche ouverte/fermée, sourire) par substitution d'images statiques.",
+      "reproductible_minimax_h3": "non (préférer le swap d'assets PNG dans Remotion)."
+    }
+  ],
+  "elements": [
+    {
+      "id": "char_blue",
+      "label": "Personnage bleu",
+      "nature": "image_generee",
+      "pourquoi": "Nécessite la texture spécifique du marqueur effaçable et les irrégularités du dessin à main levée.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft",
+        "prompt_exact": "whiteboard marker drawing of a simple cute blue blob character, dry-erase style, thick outlines",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "props_science",
+      "label": "Cerveau et thermomètre",
+      "nature": "image_generee",
+      "pourquoi": "Style doodle texturé cohérent avec les personnages.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft",
+        "prompt_exact": "whiteboard marker drawing of a pink brain and a thermometer, dry-erase style",
+        "fond": "transparent",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "texte_manuscrit",
+      "label": "Textes explicatifs",
+      "nature": "overlay_code",
+      "pourquoi": "Reproductible avec une police web manuscrite pour faciliter l'édition et l'animation.",
+      "si_overlay_code": {
+        "police": "Kalam ou Permanent Marker, bold",
+        "couleur": "#00008B",
+        "position": "libre",
+        "animation": "mask reveal (tracé)",
+        "comment_remotion": "Utiliser un SVG path drawing ou un simple mask wipe pour simuler l'écriture."
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "note": "Texture de tableau blanc avec légères traces d'effaçage. Fixe, la caméra se déplace dessus."
+  },
+  "palette": [
+    "#00008B",
+    "#FF1493",
+    "#008000",
+    "#FFA500",
+    "#FF0000"
+  ],
+  "grammaire_animation": "Accumulation étape par étape. Apparitions cut ou par tracé. Mouvements limités à des substitutions d'images (stop-motion) et des panoramiques de caméra sur un grand canvas.",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:03",
+      "description": "Bâillement du perso bleu, apparition du perso vert qui est contaminé.",
+      "mecanisme_ids": ["reveal", "vie_continue"],
+      "texte_exact_ecran": "too warm? still a mystery! Zzz it's CONTAGIOUS big yawn",
+      "transition_sortie": "whip pan"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:04",
+      "t_end": "0:06",
+      "description": "Panoramique vers la droite sur un perso bleu surpris.",
+      "mecanisme_ids": ["transition"],
+      "texte_exact_ecran": "...you too?",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:07",
+      "t_end": "0:18",
+      "description": "Explication didactique : titre, thermomètre, cerveau, air frais, puis retour à la contagion.",
+      "mecanisme_ids": ["reveal", "vie_continue"],
+      "texte_exact_ecran": "Why do we YAWN? too warm? cool air in Zzz still a mystery! it's CONTAGIOUS big yawn",
+      "transition_sortie": "none"
+    }
+  ],
+  "verdict_kora_cartes": "Registre idéal pour la vulgarisation didactique (ex: expliquer un mécanisme économique complexe étape par étape). Moins adapté pour une narration mythologique épique, à réserver aux interludes explicatifs."
+}
+============================================================
+
+-> ecrit dans .scratch-composer/poster-vector-refs/breakdown-doodle.json

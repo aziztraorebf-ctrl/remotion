@@ -1,0 +1,162 @@
+[1/4] Start resumable upload (3.3 Mo, IPv4, video/quicktime)...
+[2/4] Upload bytes + finalize...
+      files/18bmmjr5f3ih state=PROCESSING
+[3/4] Poll ACTIVE...
+      ACTIVE en 3s
+[4/4] generateContent (breakdown JSON)...
+
+finishReason: STOP
+============================================================
+{
+  "registre_identifie": "Hand-drawn doodle animation, black and white with grayscale shading, reminiscent of RSA Animate or simple whiteboard explainer videos.",
+  "mecanismes_animation": [
+    {
+      "type": "transition",
+      "description": "Hard cut between scenes (0:00 to 0:01, 0:03 to 0:04, 0:06 to 0:07, 0:09 to 0:10, 0:12 to 0:13).",
+      "reproductible_minimax_h3": "oui - Simple cuts are easily handled in post-production or by stringing together separate generations."
+    },
+    {
+      "type": "vie_continue",
+      "description": "Subtle idle motion on characters (blinking, slight head movements, arm gestures) throughout the video.",
+      "reproductible_minimax_h3": "oui - MiniMax H3 excels at maintaining consistent character identity while adding subtle, continuous motion."
+    },
+    {
+      "type": "particules",
+      "description": "Boxes falling from the ceiling onto a pile (0:13-0:15).",
+      "reproductible_minimax_h3": "partiel - While it can generate falling objects, precise control over physics and collision (stacking boxes) might be inconsistent."
+    },
+    {
+      "type": "sync_geste_evenement",
+      "description": "Salesman handing a box to the customer, exchanging money (0:04-0:06).",
+      "reproductible_minimax_h3": "partiel - Complex interactions between two characters (handing over an object) can sometimes result in morphing or anatomical errors in current AI video models."
+    }
+  ],
+  "elements": [
+    {
+      "id": "char-customer",
+      "label": "Customer character (glasses, sweater)",
+      "nature": "image_generee",
+      "pourquoi": "Hand-drawn style with shading and continuous subtle animation.",
+      "si_image_generee": {
+        "moteur_conseille": "MiniMax H3",
+        "prompt_exact": "Hand-drawn doodle style animation, black and white, grayscale shading. A man with round glasses and a sweater standing still, looking slightly confused or overwhelmed.",
+        "fond": "plein",
+        "reutilisable": false
+      }
+    },
+    {
+      "id": "char-salesman",
+      "label": "Salesman character (suit, smiling)",
+      "nature": "image_generee",
+      "pourquoi": "Hand-drawn style with shading and continuous subtle animation.",
+      "si_image_generee": {
+        "moteur_conseille": "MiniMax H3",
+        "prompt_exact": "Hand-drawn doodle style animation, black and white, grayscale shading. A salesman in a suit, smiling broadly, pointing at a product.",
+        "fond": "plein",
+        "reutilisable": false
+      }
+    },
+    {
+      "id": "text-overlay",
+      "label": "Subtitle text box",
+      "nature": "overlay_code",
+      "pourquoi": "Simple text in a semi-transparent box, easily reproducible with code.",
+      "si_overlay_code": {
+        "police": "Arial or similar sans-serif, regular",
+        "couleur": "#000000",
+        "position": "bottom center",
+        "animation": "cut",
+        "comment_remotion": "Use a div with a semi-transparent white background and black text, positioned absolutely at the bottom."
+      }
+    },
+    {
+      "id": "watermark-hand-drawn",
+      "label": "HAND DRAWN watermark",
+      "nature": "overlay_code",
+      "pourquoi": "Static text overlay.",
+      "si_overlay_code": {
+        "police": "Arial or similar sans-serif, bold",
+        "couleur": "#FFFFFF",
+        "position": "bottom left",
+        "animation": "none",
+        "comment_remotion": "Simple text element positioned bottom left."
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "note": "Changes per scene (room with boxes, store aisle, close-up desk, extreme close-up). All in the same hand-drawn grayscale style."
+  },
+  "palette": [
+    "#000000",
+    "#FFFFFF",
+    "#808080",
+    "#A0A0A0",
+    "#C0C0C0"
+  ],
+  "grammaire_animation": "Static camera with hard cuts between scenes. Characters exhibit subtle, continuous idle motion (blinking, slight swaying). Action is driven by character gestures (pointing, handing over items).",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:01",
+      "description": "Customer standing in a room filled with boxes.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "HAND DRAWN\nYou bought a subscription",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:01",
+      "t_end": "0:03",
+      "description": "Salesman in a store pointing at a printer box, customer looking on.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "HAND DRAWN\nThis printer costs less than refilling it",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:04",
+      "t_end": "0:06",
+      "description": "Close-up of salesman handing a printer box to the customer in exchange for cash.",
+      "mecanisme_ids": [
+        "sync_geste_evenement"
+      ],
+      "texte_exact_ecran": "HAND DRAWN\nSold below cost",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 4,
+      "t_start": "0:07",
+      "t_end": "0:09",
+      "description": "Customer sitting at a desk looking sadly at a printer.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "HAND DRAWN\nDeliberately\nThe machine is only the hook",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 5,
+      "t_start": "0:10",
+      "t_end": "0:12",
+      "description": "Extreme close-up of a hand holding a tiny ink cartridge with a large price tag, customer looking shocked.",
+      "mecanisme_ids": [],
+      "texte_exact_ecran": "HAND DRAWN\nThe cartridge is the business",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 6,
+      "t_start": "0:13",
+      "t_end": "0:17",
+      "description": "Return to the first scene, more boxes falling from the ceiling onto the pile.",
+      "mecanisme_ids": [
+        "particules"
+      ],
+      "texte_exact_ecran": "HAND DRAWN\nYou didn't buy a printer\nYou bought a subscription\nThis printer costs less than refilling it",
+      "transition_sortie": "cut"
+    }
+  ],
+  "verdict_kora_cartes": "This hand-drawn, slightly cynical explainer style is excellent for breaking down complex economic concepts or historical machinations in a relatable, accessible way. It would be highly effective for Kora & Cartes when explaining the 'hidden mechanics' of a situation, such as a trade monopoly or a deceptive political treaty, using visual metaphors like the 'razor and blades' model shown here."
+}
+============================================================
+
+-> ecrit dans .scratch-composer/poster-vector-refs/breakdown-handdraw.json

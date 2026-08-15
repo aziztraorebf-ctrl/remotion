@@ -24,7 +24,11 @@ from google import genai
 from google.genai import types
 from PIL import Image
 
-PROJECT_ROOT = Path(__file__).resolve().parents[3]
+# parents[2] = racine du repo (le fichier est dans scripts/tools/). Etait parents[3] : le .env etait
+# cherche AU-DESSUS du workspace, donc GEMINI_API_KEY n'etait jamais chargee et le script mourait sur
+# "Missing key inputs argument" (constate 2026-08-15, contourne a la main). Les scripts voisins
+# (openrouter-*.py) utilisent bien parents[2].
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 load_dotenv(PROJECT_ROOT / ".env")
 
 MODEL = "gemini-3.1-flash-image-preview"

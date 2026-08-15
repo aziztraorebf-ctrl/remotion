@@ -1,0 +1,154 @@
+{
+  "registre_identifie": "Flat vector poster, formes géométriques nettes, aplats de couleur, ombres portées marquées, style proche de Kurzgesagt ou Infographics Show.",
+  "mecanismes_animation": [
+    {
+      "type": "particules",
+      "description": "Pièces d'or tombant du haut de l'écran et s'accumulant au sol (0:00 - 0:02).",
+      "reproductible_minimax_h3": "partiel (MiniMax peut générer des particules, mais l'accumulation précise au sol est difficile à contrôler, mieux vaut du code ou un moteur physique 2D)."
+    },
+    {
+      "type": "reveal",
+      "description": "Apparition d'une clé dorée brillante au-dessus du trône (0:02 - 0:03).",
+      "reproductible_minimax_h3": "oui (avec un prompt de glow/apparition)."
+    },
+    {
+      "type": "transition",
+      "description": "Cut dur vers un nouveau décor (0:03).",
+      "reproductible_minimax_h3": "oui (montage classique)."
+    },
+    {
+      "type": "reveal",
+      "description": "Trois mains apparaissent du bas de l'écran, chacune tenant un jeton (0:05 - 0:06).",
+      "reproductible_minimax_h3": "oui (mouvement de translation simple)."
+    },
+    {
+      "type": "split_screen",
+      "description": "L'écran se divise en trois panneaux verticaux, révélant trois personnages (Zeus, Hadès, Poséidon) (0:07 - 0:09).",
+      "reproductible_minimax_h3": "non (le split-screen dynamique avec des animations indépendantes par zone est complexe pour MiniMax, mieux vaut composer en post-prod)."
+    },
+    {
+      "type": "reveal",
+      "description": "Apparition d'une grande croix rouge (X) sur le personnage central (0:10).",
+      "reproductible_minimax_h3": "oui (overlay simple)."
+    },
+    {
+      "type": "transition",
+      "description": "La croix disparaît, remplacée par des barreaux de prison et des têtes de Cerbère (0:11 - 0:12).",
+      "reproductible_minimax_h3": "oui (cut ou morphing rapide)."
+    },
+    {
+      "type": "transition",
+      "description": "Cut vers un bouclier avec une clé, puis une balance (0:13 - 0:14).",
+      "reproductible_minimax_h3": "oui (montage)."
+    },
+    {
+      "type": "transition",
+      "description": "Retour au plan initial du trône (0:15).",
+      "reproductible_minimax_h3": "oui (montage)."
+    }
+  ],
+  "elements": [
+    {
+      "id": "hades_throne",
+      "label": "Personnage encapuchonné sur un trône",
+      "nature": "image_generee",
+      "pourquoi": "Design complexe avec ombres et détails, difficile à coder en pur SVG.",
+      "si_image_generee": {
+        "moteur_conseille": "Recraft",
+        "prompt_exact": "Flat vector illustration of a hooded figure in black robes sitting on a dark stone throne, dark blue background, sharp shadows, minimalist style.",
+        "fond": "plein",
+        "reutilisable": true
+      }
+    },
+    {
+      "id": "gold_coins",
+      "label": "Pièces d'or",
+      "nature": "overlay_code",
+      "pourquoi": "Formes circulaires simples, facilement animables en code (particules).",
+      "si_overlay_code": {
+        "police": "N/A",
+        "couleur": "#FFD700",
+        "position": "falling from top",
+        "animation": "physics-based falling",
+        "comment_remotion": "Utiliser une librairie de particules ou animer des cercles SVG avec gravité."
+      }
+    },
+    {
+      "id": "subtitles",
+      "label": "Sous-titres en bas d'écran",
+      "nature": "overlay_code",
+      "pourquoi": "Texte brut sur fond semi-transparent.",
+      "si_overlay_code": {
+        "police": "Roboto ou Arial, regular",
+        "couleur": "#FFFFFF",
+        "position": "bottom center",
+        "animation": "cut",
+        "comment_remotion": "Composant texte standard avec background-color rgba."
+      }
+    }
+  ],
+  "background": {
+    "nature": "image_generee",
+    "note": "Change selon les plans (temple sombre, temple lumineux, fonds colorés unis pour le split-screen)."
+  },
+  "palette": [
+    "#1A2B4C",
+    "#FFD700",
+    "#FFFFFF",
+    "#000000",
+    "#E53935",
+    "#4CAF50",
+    "#2196F3"
+  ],
+  "grammaire_animation": "Mouvements rigides, translations rectilignes, apparitions soudaines (pop), utilisation de masques et de split-screens pour structurer l'information.",
+  "timeline": [
+    {
+      "plan": 1,
+      "t_start": "0:00",
+      "t_end": "0:03",
+      "description": "Hadès sur son trône, pluie de pièces d'or, apparition d'une clé.",
+      "mecanisme_ids": [
+        "particules",
+        "reveal"
+      ],
+      "texte_exact_ecran": "Greeks called him Pluto the god of wealth",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 2,
+      "t_start": "0:03",
+      "t_end": "0:06",
+      "description": "Trois trônes vides, trois mains tirent au sort avec des jetons.",
+      "mecanisme_ids": [
+        "reveal"
+      ],
+      "texte_exact_ecran": "Hades was never the devil of Greece / The three brothers drew lots",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 3,
+      "t_start": "0:06",
+      "t_end": "0:12",
+      "description": "Split-screen révélant Zeus, Hadès et Poséidon. Focus sur Hadès avec une croix rouge puis des barreaux et Cerbère.",
+      "mecanisme_ids": [
+        "split_screen",
+        "reveal",
+        "transition"
+      ],
+      "texte_exact_ecran": "Zeus got the sky / Poseidon got the sea / and Hades got the world of the dead / He never tortured souls / he just guarded the gates",
+      "transition_sortie": "cut"
+    },
+    {
+      "plan": 4,
+      "t_start": "0:13",
+      "t_end": "0:17",
+      "description": "Symboles (bouclier, clé, balance) puis retour au plan initial d'Hadès sur son trône.",
+      "mecanisme_ids": [
+        "transition"
+      ],
+      "texte_exact_ecran": "but fair a keeper holding the keys / Greeks called him Pluto the god of wealth",
+      "transition_sortie": "cut"
+    }
+  ],
+  "verdict_kora_cartes": "Ce registre 'flat vector' didactique est excellent pour expliquer des concepts complexes ou démystifier des figures historiques/mythologiques de manière claire et accessible. Le mécanisme de split-screen est particulièrement utile pour comparer des entités (ex: différents dieux, différentes forces économiques)."
+}

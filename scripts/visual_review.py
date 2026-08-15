@@ -150,15 +150,21 @@ JSON attendu :
   "idea": "1 idée d'amélioration dans nos contraintes"
 }"""
 
-KIMI_NARRATIVE_PROMPT = """Evaluate this Short YouTube vertical video (1080x1920) for the "Souverain" series by GéoAfrique — African data journalism.
+# ⛔ CE PROMPT ETAIT CABLE EN DUR SUR "Short vertical 1080x1920" et ignorait --ratio : sur tout render
+# 16:9 long-form, Kimi jugeait des safe zones de Shorts, la lisibilite "mobile <6 pouces" et le
+# thumb-stopping — verdict inexploitable (score null). Bug constate 3x (2026-07-17 SoudanActe5,
+# puis 2026-08-15 Gazoduc Acte 3) et documente dans memory/tools/kimi-review-hardcode-vertical-bug.md
+# SANS jamais etre corrige : une note ne bloque rien, seul le code corrige bloque.
+# Le prompt est desormais parametre par {fmt}/{hook_line}, comme les autres modeles (cf fmt_map).
+KIMI_NARRATIVE_PROMPT = """Evaluate this {fmt} video for the "Souverain" series by GéoAfrique — African data journalism.
 
 Assess:
-1. SCROLL HOOK: Does the first frame stop the scroll in 0.8s on mobile?
+1. {hook_line}
 2. VISUAL HIERARCHY: Are the key data points immediately readable?
 3. MOTION QUALITY: Permanent micro-motion? Max 8s without visible change?
 4. PALETTE: navy #112240, gold #c8a951, ivory #f0e8d8 respected?
 5. EMOTIONAL IMPACT: Does the animation reinforce the narrative message?
-6. LAYOUT: Elements within safe zones? Nothing cropped?
+6. LAYOUT: Elements within safe zones for THIS format? Nothing cropped?
 
 Provide:
 - VERDICT: Score /10 with one-line reasoning
@@ -626,7 +632,22 @@ Exemples:
         prompt = args.prompt or QWEN_JSON_PROMPT
         result = review_qwen(args.file, prompt, args.frames, args.offset)
     else:
-        prompt = args.prompt or KIMI_NARRATIVE_PROMPT
+        # Injecter le FORMAT REEL dans le prompt Kimi (meme fmt_map que review_gemini) — sinon il juge
+        # un 16:9 long-form comme un Short vertical : safe zones Shorts, "lisible sur mobile <6 pouces",
+        # thumb-stopping. Verdict inexploitable. Cf memory/tools/kimi-review-hardcode-vertical-bug.md
+        _fmt_map = {"16:9": "16:9 horizontal 1920x1080 long-form", "9:16": "Short YouTube vertical 1080x1920", "1:1": "carre 1080x1080"}
+        _hook_map = {
+            "9:16": "SCROLL HOOK: Does the first frame stop the scroll in 0.8s on mobile?",
+            "16:9": "OPENING: Does the first shot establish the subject clearly on a large screen?",
+            "1:1": "OPENING: Does the first frame read immediately in a feed?",
+        }
+        if args.prompt:
+            prompt = args.prompt
+        else:
+            prompt = KIMI_NARRATIVE_PROMPT.format(
+                fmt=_fmt_map.get(args.ratio, _fmt_map["16:9"]),
+                hook_line=_hook_map.get(args.ratio, _hook_map["16:9"]),
+            )
         result = review_kimi(args.file, prompt, args.frames, args.offset)
 
     if result is None:
