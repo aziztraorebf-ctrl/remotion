@@ -2,6 +2,51 @@
 
 **Mis à jour** : 2026-08-14
 
+## ⛔⛔ ACTE 3 — GELÉ EN WIP (décision Aziz, 2026-08-14). NE PAS LE REPRENDRE EN L'ÉTAT.
+
+**L'Acte 3 n'est PAS validé.** Il reste beaucoup de travail dessus. Décision explicite d'Aziz :
+on arrête de s'acharner, on le met de côté, **on produit les Actes 4 et 5 d'abord**, et on revient
+compléter l'Acte 3 ensuite — probablement quand le reste de la vidéo existera.
+
+**Rendu de référence de l'état gelé** (Segment A, 22.2→74.2s, audio muxé) :
+`out/episodes/gazoduc-aagp-tsgp/versions/acte3-segmentA-suite-V12-WIP.mp4`
+Lien : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/suite-v12-AUDIO-punmGmdzHKM1IHLX8asNgVytLsq8Pb.mp4
+Code correspondant : commit `9e302fb2` (branche `feat/gazoduc-acte1-hook-globe`).
+
+### Ce qui EST acquis dans cet état gelé (à ne pas refaire, c'est du gagné)
+- **Beat 1** (0→22.2s) validé Aziz : caméra continue, dessin trait-par-trait, tracé qui part à 6.3s.
+- **Beat 2 (chantier Adrar)** : vrai insert COMPOSÉ (cadre + clip H3 pelleteuse + badge date + jauge
+  37% + badge activité + connecteur vers le pin Adrar + carte assombrie). Le principe de l'insert
+  composé est acquis et fonctionne — c'est le gain principal de ces sessions.
+- **Segment B (aéroport Niamey)** : décor Fable5 porté sur la logique d'animation existante.
+
+### ⛔ Ce qui reste CASSÉ / à faire (mesuré, pas supposé — ne pas re-diagnostiquer de zéro)
+1. **Beat 3, panneau financement incomplet** : ~40% du bloc est vide à droite ; la banque barrée est
+   HORS panneau (`W*0.82, H*0.2` dans le code = widget de bord, le défaut v3 déjà rejeté) ; le robinet
+   Algérie→vanne←Nigeria du storyboard V5 n'existe pas. La V5 veut les deux DANS le bloc (phase B du
+   breakdown, 64.1→68.5s).
+2. **Quasi-immobilité 64.2→71.7s** (7.5s à 0.45-0.99% de pixels modifiés, sous le seuil de 1%) —
+   MÊME cause que le point 1 : rien ne se joue dans le panneau pendant que la narration continue.
+3. **Beat 4 (paradoxe) jamais repris depuis la V5** : le code est encore du v3 rejeté (labels
+   `PACIFIÉ`/`ZONE ACTIVE` en texte nu sans support visuel, lignes ~951-965).
+4. ⚠️ **Conflit de budget temporel non tranché** : le breakdown V5 dimensionne le Beat 4 sur **15.2s**,
+   or le Segment A n'a que **1.9s** de tail après `financementEtatsEnd` (verrouillé sur l'audio).
+   Reco Claude (NON validée par Aziz, à re-décider à la reprise) : coder le Beat 4 dans le **Segment C**
+   (17.5s, dont le texte narré est justement "Le Maroc mise sur… / L'Algérie mise sur…"), en y mettant
+   la carte avec la divergence des tracés à la place de l'insert SVG séparé — ce qui tranche du même
+   coup le sort de `GazoducActe3InsertParadoxe.tsx`. Coût : un cut A→C.
+   **Cette décision sera plus facile APRÈS l'Acte 4** (dont le climax "70% de la production siphonnée"
+   détermine ce que la fin de l'Acte 3 doit préparer) — c'est une des raisons du gel.
+
+### 🔑 Pourquoi on gèle (leçon de méthode, vaut au-delà du Gazoduc)
+Même pattern que le **Soudan Acte 4** : plusieurs sessions d'acharnement sur un acte du MILIEU, avec
+des moments de doute et de non-avancement. Un acte du milieu se juge par rapport à ses voisins — ici
+l'Acte 3 est coincé entre un Acte 2 validé et des Actes 4/5 **qui n'existent pas**, donc sa fin se
+juge dans le vide. Le conflit de budget du point 4 en est la preuve littérale. Produire 4 et 5
+d'abord, revenir sur 3 ensuite.
+
+---
+
 ## 🧭 OÙ ON EN EST (2026-08-14, fin de session) — lire ceci en premier
 
 **Commit de référence** : `9e302fb2` sur `feat/gazoduc-acte1-hook-globe`. Tout est versionné

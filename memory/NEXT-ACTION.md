@@ -112,19 +112,28 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC — Acte 3 : Beat 1 VALIDÉ, Beats 2/3 refaits (à faire valider), Beat 4 + Actes 4/5 à faire (2026-08-14)
+## ⛔⛔ GAZODUC — ACTE 3 GELÉ EN WIP (décision Aziz 2026-08-14). PROCHAINE ÉTAPE = ACTE 4, PAS L'ACTE 3.
 
-**Commit `9e302fb2`** (`feat/gazoduc-acte1-hook-globe`). Starter prêt :
-`memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md`. État détaillé :
-`episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "OÙ ON EN EST (2026-08-14)".
+**NE PAS reprendre l'Acte 3 à la prochaine session.** Aziz a explicitement décidé de l'arrêter en
+l'état : il n'est pas validé, il reste beaucoup de travail, et on s'acharne dessus depuis trop de
+sessions (même pattern que le **Soudan Acte 4** : doute + non-avancement sur un acte du milieu).
+**On produit les Actes 4 et 5 d'abord, on revient compléter l'Acte 3 après.**
 
-**PREMIÈRE ACTION prochaine session** : faire regarder à Aziz le render `suite-v12` (22.2→74.2s) —
-Beat 2 (insert chantier composé avec clip H3) et Beat 3 (comparateur recentré) refaits depuis le
-storyboard V5 mais PAS ENCORE VALIDÉS. Segment B (aéroport) : décor Fable5 porté, fait.
+Raison structurelle (pas seulement de la fatigue) : un acte du milieu se juge par rapport à ses
+voisins. L'Acte 3 est coincé entre un Acte 2 validé et des Actes 4/5 inexistants, donc sa fin se
+juge dans le vide — le conflit de budget du Beat 4 (15.2s demandés vs 1.9s disponibles) en est la
+preuve directe, et il se tranchera bien mieux une fois le climax de l'Acte 4 écrit.
 
-**Reste sur l'Acte 3** : (1) Beat 3 incomplet — moitié droite du panneau vide, la V5 y met le robinet
-Algérie→vanne←Nigeria + la banque barrée ; (2) **Beat 4 encore en code v3 rejeté**, à refaire depuis
-`beat4-paradoxe-libre.png` (divergence pure du même tracé : Maroc doré stable vs Algérie rouge).
+État gelé complet (acquis + ce qui reste cassé, mesuré) : `episodes/souverain/gazoduc-aagp-tsgp/
+STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête de fichier). Rendu de référence :
+`out/episodes/gazoduc-aagp-tsgp/versions/acte3-segmentA-suite-V12-WIP.mp4`.
+Commit `9e302fb2` (`feat/gazoduc-acte1-hook-globe`).
+⚠️ Le starter `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est PÉRIMÉ (il fait reprendre
+l'Acte 3) — ne pas l'utiliser tel quel à la reprise.
+
+**Acquis à ne PAS refaire** : Beat 1 validé (caméra continue) · Beat 2 = vrai insert composé (clip H3,
+jauge, badge, connecteur) — le principe de l'insert composé est le gain de ces sessions · Segment B
+décor Fable5 porté.
 
 **Actes 4 et 5 : rien n'existe** (vérifié — aucun fichier, aucune composition). Acte 4 = conséquences,
 avec les **70% de production siphonnée en pic de rupture de forme** carte→insert physique. Acte 5 =
