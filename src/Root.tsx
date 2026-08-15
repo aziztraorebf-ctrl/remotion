@@ -46,6 +46,7 @@ import { FlammeAnime16x9, FLAMME_ANIME_FRAMES } from "./projects/_rnd/fable-svg/
 import { PecheurPersoAnime, PECHEUR_PERSO_FRAMES } from "./projects/_rnd/fable-svg/PecheurPersoAnime";
 import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd/fable-svg/VillageParallaxeAnime";
 import { ProtoInsertMatiereConduite, PROTO_INSERT_MATIERE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertMatiereConduite";
+import { ProtoTroisGisementsInserts, PROTO_TROIS_GISEMENTS_FRAMES } from "./projects/_rnd/svg-scenes/ProtoTroisGisementsInserts";
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
 import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
@@ -4622,6 +4623,16 @@ export const RemotionRoot: React.FC = () => {
         id="Proto-InsertMatiere-Conduite"
         component={ProtoInsertMatiereConduite}
         durationInFrames={PROTO_INSERT_MATIERE_FRAMES}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* PROTOTYPE R&D jetable (2026-08-15) — 3 mini-inserts SIMULTANÉS (gisements Sénégal). */}
+      <Composition
+        id="Proto-TroisGisements-Inserts"
+        component={ProtoTroisGisementsInserts}
+        durationInFrames={PROTO_TROIS_GISEMENTS_FRAMES}
         fps={30}
         width={1920}
         height={1080}

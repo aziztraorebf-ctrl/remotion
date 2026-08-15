@@ -282,7 +282,54 @@ sans rapport. **Toujours monter le clip muet** (`<OffthreadVideo muted />`, déj
 notre son vient de notre propre pipeline. Non bloquant, mais ne jamais l'oublier à l'intégration.
 
 **Familles ouvertes par la même chaîne** (non encore testées) : pétrole qui remplit, minerai sur tapis,
-eau derrière un barrage, fumée d'usine, torchère.
+eau derrière un barrage, fumée d'usine.
+
+---
+
+## ⭐⭐⭐ INSERT LIEU — montrer l'INSTALLATION, pas la matière (validé 2026-08-15)
+
+> **La correction la plus importante de la série d'inserts** (Aziz) : pour un GISEMENT, un SITE, un
+> PORT, un barrage — ce n'est pas une matière qu'on montre, c'est un **lieu équipé**. Trois vignettes
+> de fluide (gaz doré, pétrole noir) se ressemblent ; **trois installations se distinguent par leur
+> SILHOUETTE avant même la couleur**. L'insert matière reste juste pour une conduite (une conduite
+> n'a rien d'autre à montrer que son contenu) — pas pour un lieu.
+>
+> Proto : `src/projects/_rnd/svg-scenes/ProtoTroisGisementsInserts.tsx` · composition
+> `Proto-TroisGisements-Inserts` · rendu :
+> https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/proto-3gisements-v3-YiniVLBAxDYlWglL6DhtIHhmr3nhdW.mp4
+
+**⭐ N INSERTS SIMULTANÉS : ça marche.** Question posée : 3 mini-inserts côte à côte deviennent-ils une
+bouillie ? Non — à condition que **chaque vignette montre un objet de silhouette différente**. Vérifié
+sur les 3 champs du Sénégal (assets dans `public/_rnd/minimax-h3-tests/insert-lieux/`) :
+
+| Champ | Installation RÉELLE (vérifiée par recherche) | Ce qui la rend reconnaissable |
+|---|---|---|
+| **Sangomar** | FPSO *Léopold Sédar Senghor*, VLCC converti, ancré, ~780 m de fond | long navire bas, **seul en pleine mer** |
+| **GTA** | FLNG *Gimi* derrière un **hub brise-lames en dur**, ~10 km au large, 30 m | trapu, cuves sphériques, **digue devant** |
+| **Yakaar-Teranga** | **jamais développé** | **mer vide + une bouée** |
+
+⭐⭐ **Le plan le plus fort est celui où il n'y a RIEN.** Yakaar (une bouée sur une mer vide, à côté de
+deux usines) dit *« personne n'a décidé, il attend »* sans un mot. **Un insert peut porter une ABSENCE** —
+et le vide doit alors être VISIBLE (ne pas l'assombrir « pour faire triste » : première version
+désaturée = vignette illisible, l'information disparaissait avec la lumière).
+
+**⭐⭐ TEINTE CLAIRE > teinte sombre pour un insert de LIEU** (test A/B mené sur les 3, retour Aziz) :
+la version jour est ~3.5× plus lumineuse (161/165/148 vs 42/44/28) et **révèle des détails invisibles
+en nuit** (coque bicolore, cuves, blocs de la digue) — décisif en MINI-insert, où une vignette sombre
+devient un rectangle noir. ⛔ **Ne PAS généraliser aux inserts MATIÈRE** : conduite/billets/torchère
+marchent justement parce que le fond sombre fait ressortir l'incandescence.
+**Règle : matière incandescente → nuit · lieu / installation → jour.**
+Méthode : `gemini-i2i.py` en CHANGE ONLY (lumière) / PRESERVE EXACTLY (composition, objets, style).
+
+**⚠️ Réglages propres au multi-insert** : voile à **0.22** (et non 0.40 comme pour un insert unique) —
+avec 3 ancrages, la carte est le LIANT entre les vignettes, elle ne peut pas reculer autant. Cadres
+réduits (~30% de large), cascade d'apparition (~1.1 s d'écart) pour que l'œil prenne chaque insert,
+puis coexistence : c'est là que la comparaison opère.
+
+**⚠️ ANCHOR LOCK — un navire est un objet qui GLISSE de façon crédible** : le SIZE LOCK ne suffit pas,
+H3 fait naviguer le bateau (mesuré : −15 px de dérive sur GTA v1). Fix validé : nommer un **repère fixe
+de la scène** dans le prompt — *« its distance to the breakwater stays EXACTLY THE SAME in every frame,
+bow and stern at the same horizontal pixel positions, it is tied up, not underway »* → dérive 0 px.
 
 ---
 
