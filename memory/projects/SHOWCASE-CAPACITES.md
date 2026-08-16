@@ -157,6 +157,17 @@ verrouillé, à écrire avant tout montage :
 
 ⛔ Ne PAS coder de composant neuf pour ça. C'est de la direction artistique appliquée à de l'existant.
 
+> ✅ **FAIT (2026-08-15)** → [`memory/doctrines/CHARTE-DA-FREELANCE.md`](../doctrines/CHARTE-DA-FREELANCE.md).
+> Écrite sur des valeurs **mesurées dans le code** (palette `PAL_GPT` du Gazoduc Acte 4 ; Georgia
+> ≈511 occurrences dans `src/`), pas sur des souvenirs. Zéro composant codé, comme prescrit.
+> Un fichier neuf plutôt qu'un enrichissement de `CHARTE-EDITORIALE-SOUVERAIN.md` : celle-ci est
+> **éditoriale** (positionnement analyste, sources, titres), n'a aucune section visuelle, et couvre
+> la chaîne YouTube — pas le cut vente.
+> ⭐ **Découverte en l'écrivant** : `northshield-v3-FINAL.mp4` (63 s, revu au visionnage) tient déjà
+> **3 registres** — personnages flat / carton typo / dataviz-UI — sur un fond navy sombre avec un
+> unique accent cyan. C'est-à-dire la discipline d'Aikido, déjà appliquée par nous. La charte ne
+> demande donc rien d'inédit : elle demande de le tenir **partout**.
+
 ---
 
 ## 📋 INVENTAIRE (agent, 2026-08-15) — résultats clés

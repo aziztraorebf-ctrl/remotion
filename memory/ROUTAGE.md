@@ -85,6 +85,7 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Démarrer/coder un Short Souverain Mapbox (point d'entrée) | `memory/doctrines/SOUVERAIN-SHORT-DEMARRAGE.md` ⭐ 7 étapes → puis `SOUVERAIN-SHORT-SKELETON.md` |
 | Doctrine Souverain (durable) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` (LIRE en entier avant tout code Souverain) |
 | Règles éditoriales Souverain (sources, couleurs, script Type B) | `memory/rules/rules-souverain-editorial.md` |
+| **Direction artistique du CUT VENTE / showcase / livrable client freelance** (palette 4 couleurs, 1 typo, fond dégradé, enchaînement de registres) | `memory/doctrines/CHARTE-DA-FREELANCE.md` ⭐⭐ posée 2026-08-15 sur valeurs **mesurées** (`PAL_GPT` + Georgia). ⛔ Périmètre freelance/showcase UNIQUEMENT — ne remplace pas `CHARTE-EDITORIALE-SOUVERAIN.md` (éditoriale, chaîne YouTube). Réponse à « pourquoi la concurrence fait plus premium » : c'est une discipline de DA, pas une brique manquante. |
 | Tailwind (tokens gold/navy/ivory) — TOUT composant Souverain | `memory/feedbacks/feedback_tailwind-remotion-setup.md` · Framer Motion INTERDIT · lire `tailwind.config.ts` |
 | SplitScreen 50/50, entité vs entité | `src/projects/_shared/components/layouts/SplitScreenSouverain.tsx` |
 | Data-viz Souverain (StackedBars, ProcessFlow, comparaisons $) | `memory/doctrines/DOCTRINE-SOUVERAIN.md` §9 + `PrototypeD3StackedBars.tsx` (D3 utility-only) |
