@@ -181,6 +181,28 @@ avec les 2 compositions de comparaison `RND-ProtoCartePalette-A-Nous` / `-B-GPT`
 **Portée** : adopté pour le Gazoduc Acte 4 et la suite. Les Actes 1/2/3 restent en palette claire
 jusqu'à la passe finale d'assemblage — ⛔ ne pas rétro-appliquer acte par acte.
 
+### ⭐⭐ Le test « est-ce lisible dehors / sur mobile ? » — MESURER, ne pas deviner (2026-08-15)
+
+Question d'Aziz après l'adoption de la palette sombre. Méthode reproductible, ~10 min :
+1. Simuler le **voile de réflexion additif en espace LINÉAIRE** (jamais en sRGB direct) sur des frames
+   réelles : `sortie = écran × (1 − v) + v`, avec v ≈ 0 (intérieur), 0.12 (ombre dehors), 0.35 (plein soleil).
+2. Mesurer le **contraste de Michelson** entre les paires qui portent la hiérarchie (terre/océan,
+   pays actif/inactif, tracé porteur/fond).
+
+**Résultat sur la palette sombre** : en plein soleil, terre/océan −97 %, actif/inactif −82 %, tracé
+doré −74 %. **MAIS** le doré garde 0.356 de contraste absolu → **ce qui porte le récit survit ; seul le
+décor s'efface.** Verdict : dégradation **gracieuse**, ne rien changer. Dehors, le plan devient plus
+sélectif (tracés + pays actifs flottent sur un fond neutre) — le comportement souhaitable.
+
+⛔ **Le piège, et la vraie leçon** : ma 1re recommandation (« remonter le plancher de luminance ») a été
+**invalidée par la mesure elle-même**. En plein soleil le voile domine le dénominateur, donc le contraste
+dépend de l'**écart ABSOLU** de luminance, pas du rapport : tenir la lecture terre/océan exigerait une
+terre à ~sRGB 100, soit **plus clair que l'ancienne palette claire** = renoncer à la carte sombre. Ce
+n'est pas un réglage, c'est un autre parti pris. → **Mesurer AVANT de proposer un fix** : l'intuition sur
+un problème de contraste perceptif est souvent fausse, y compris la mienne.
+⚠️ Limite du modèle : voile additif uniforme, sans boost auto de luminosité ni traitement anti-reflet.
+L'ordre de grandeur tient, la valeur exacte non — un téléphone récent s'en tire mieux.
+
 ## Références
 - Cible : `src/projects/_shared/mapbox/CartoSouverainV5.tsx` (3 modes caméra, drift P5).
 - Briques : `GisementTokens.tsx` · `MapboxCountryFlagDecal.tsx` · `MapboxBase.tsx` (`addCountryFlagFill` = fill-pattern, marqué « carrelle au dézoom »).

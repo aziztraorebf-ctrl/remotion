@@ -89,11 +89,11 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2 TERMINÉS · ⛔ Acte 3 GELÉ · ⭐ Acte 4 EN COURS (mouvement A fait, B+C à faire)
+### Gazoduc — Actes 1+2 TERMINÉS · ⛔ Acte 3 GELÉ · ⭐ Acte 4 EN COURS (mouvements A+B faits, C à faire)
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 
-**⛔⛔ Acte 3 — GELÉ EN WIP (décision Aziz 2026-08-15). NE PAS LE REPRENDRE.** Il n'est pas validé et il
+**⛔⛔ Acte 3 — GELÉ EN WIP (décision Aziz 2026-08-14). NE PAS LE REPRENDRE.** Il n'est pas validé et il
 reste du travail, mais on s'acharnait dessus depuis trop de sessions (même pattern que le Soudan Acte 4 :
 un acte du MILIEU se juge par rapport à ses voisins, or ses voisins 4/5 n'existaient pas). **On produit
 les Actes 4 et 5 d'abord.** Acquis à ne pas refaire : Beat 1 validé · Beat 2 = vrai insert composé (clip
@@ -101,25 +101,32 @@ H3 + jauge + connecteur) · Segment B (aéroport) fait. État complet + ce qui r
 `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § "ACTE 3 — GELÉ EN WIP" (en tête).
 ⚠️ `memory/starters/STARTER-PROMPT-gazoduc-acte3-suite.md` est PÉRIMÉ (il fait reprendre l'Acte 3).
 
-**⭐ Acte 4 — état au 2026-08-15** (commits `6aabb1d9` code · `aff4adeb` doctrine · `76ecfdf8` palette) :
+**⭐ Acte 4 — état au 2026-08-15 soir** :
 - Audio `narration-p4.mp3` mesuré (124.04s), copié dans `public/`, timing des **3 mouvements** dérivé du
   forced-align réel : `src/projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing.ts`.
-- **Mouvement A « une ressource, deux tuyaux » (0→41.1s) : CODÉ ET RENDU**, corrigé sur 6 gaps HIGH
-  (`GazoducActe4RessourceUnique.tsx`, compo `D3-Gazoduc-Acte4-RessourceUnique`). Impulsions-comètes qui
-  s'affament + source Nigeria qui s'épuise + UN seul insert au pic des 70% + verdict sobre.
-  Render : `out/_r-and-d/gazoduc-acte4/4A-v5-AUDIO.mp4`.
-- **Mouvements B (objectifs opposés, 41.1→74.5s) et C (calendrier qui se retourne, 74.5→124s) : à faire.**
-  Timing déjà calé (`BEATS_4B` / `BEATS_4C`), storyboard pas encore fait.
-- ⭐ **Nouvelle palette de carte SOMBRE adoptée** pour l'Acte 4 et la suite (source de vérité :
-  `src/projects/_rnd/d3-16x9/ProtoCartePaletteGPT.tsx` → `PAL_GPT`). **1re action de la reprise = re-rendre
-  4A avec cette palette, et RIEN D'AUTRE.** Actes 1/2/3 : re-render à la passe finale, pas acte par acte.
-- **Méthode à rejouer pour B et C** (elle a produit A) : storyboard libre créative 2 modèles → validation
+- **Mouvement A « une ressource, deux tuyaux » (0→41.1s) : CODÉ, RENDU EN PALETTE SOMBRE, VALIDÉ Aziz.**
+  Palette `PAL_GPT` (fond dégradé radial sombre) portée dans `GazoducActe4RessourceUnique.tsx`
+  (constantes `BG_TOP/BG_BOT/LAND/LAND_STROKE`, compo `D3-Gazoduc-Acte4-RessourceUnique`).
+  Livrable FINAL : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4`.
+- **Mouvement B « objectifs opposés » (41.1→74.5s) : CODÉ ET VALIDÉ (v3, arcs schématiques).**
+  `GazoducActe4Objectifs.tsx`, compo `D3-Gazoduc-Acte4-Objectifs`. v3 préférée à v4 (géométrie réelle
+  Medgaz) — décision Aziz explicite. Storyboard→insert SVG (`LevierPouvoirFable.tsx`)→code, méthode
+  complète rejouée de bout en bout. Livrable FINAL : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementB-FINAL.mp4`.
+- **Mouvement C (calendrier qui se retourne, 74.5→124s) : à faire.** Timing déjà calé (`BEATS_4C`),
+  storyboard pas encore fait. **PROCHAINE PRIORITÉ.**
+- ⭐ Palette carte SOMBRE `PAL_GPT` confirmée adoptée pour l'Acte 4 et la suite. Actes 1/2/3 : re-render
+  à la passe finale, pas acte par acte.
+- **Méthode à rejouer pour C** (elle a produit A et B) : storyboard libre créative 2 modèles → validation
   Aziz → breakdown JSON → code → **3e appel comparatif rendu-vs-storyboard** → corrections. Gabarits de
   prompts prêts : `memory/episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/`. Doctrine :
   `memory/doctrines/STORYBOARD-MAPBOX.md` § LA BOUCLE FERMÉE.
 - **Acte 5 : n'existe pas** (robinet géant + mains stylisées, cf `PLAN-ACTES2-5.md` L118).
+- ⭐ **Gate outillé "moteur visuel"** créé cette session : `.claude/hooks/moteur-visuel-gate.sh` +
+  test de non-régression `tests/hooks/test-moteur-visuel-gate.sh`. Doctrine associée enrichie :
+  `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md` (5 moteurs + amplitude prouvée + 8 trous).
 
-Source de vérité : `memory/NEXT-ACTION.md` § "GAZODUC ACTE 4 — REPRENDRE ICI".
+Source de vérité : `memory/NEXT-ACTION.md` § "GAZODUC ACTE 4" (à rafraîchir en Phase 3 — le bloc actuel
+décrit encore l'état PRÉ-session, 4A "à re-rendre").
 
 ### Maroc Batteries Short — reste A5 Géographie + assemblage
 ⚠️ Le NEXT historique de ce fichier annonçait « Beat 2 Cailloux à produire » / « bloc Remotion

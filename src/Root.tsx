@@ -48,6 +48,7 @@ import { VillageParallaxeAnime, VILLAGE_PARALLAXE_FRAMES } from "./projects/_rnd
 import { ProtoInsertMatiereConduite, PROTO_INSERT_MATIERE_FRAMES } from "./projects/_rnd/svg-scenes/ProtoInsertMatiereConduite";
 import { ProtoTroisGisementsInserts, PROTO_TROIS_GISEMENTS_FRAMES } from "./projects/_rnd/svg-scenes/ProtoTroisGisementsInserts";
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
+import { LevierPouvoirFable } from "./projects/_rnd/svg-scenes/LevierPouvoirFable";
 import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
 import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDecorTest16x9";
@@ -73,7 +74,8 @@ import { GazoducActe2Montage, GAZODUC_A2_MONTAGE_FRAMES } from "./projects/souve
 import { GazoducActe3CarteTSGP } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP";
 import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4RessourceUnique";
 import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule, PROTO_CARTE_PALETTE_GPT_FRAMES } from "./projects/_rnd/d3-16x9/ProtoCartePaletteGPT";
-import { GAZODUC_A4_SEGA_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
+import { GazoducActe4Objectifs } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs";
+import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
 import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
@@ -859,6 +861,14 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
+          id="RND-LevierPouvoirFable"
+          component={LevierPouvoirFable}
+          durationInFrames={90}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
           id="RND-PortVivant16x9"
           component={PortVivant16x9}
           durationInFrames={PORT_VIVANT_FRAMES}
@@ -1213,6 +1223,17 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte4-RessourceUnique"
           component={GazoducActe4RessourceUnique}
           durationInFrames={GAZODUC_A4_SEGA_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 4 — MOUVEMENT B "objectifs opposés" (33.4s). Carte (continuité 4A) → insert
+            SVG "levier de pouvoir" (concept Gemini, exécuté par Fable 5) → retour carte : l'Algérie
+            s'affirme puis vire au rouge sur "contournée". Timings calés au mot sur le forced-align. */}
+        <Composition
+          id="D3-Gazoduc-Acte4-Objectifs"
+          component={GazoducActe4Objectifs}
+          durationInFrames={GAZODUC_A4_SEGB_FRAMES}
           fps={30}
           width={1920}
           height={1080}

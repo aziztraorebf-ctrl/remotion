@@ -1,0 +1,48 @@
+CONTEXT — YOU ARE BRIEFED AS A SENIOR MOTION DESIGNER for a geopolitical documentary YouTube channel (French, style close to Vox Atlas / Kurzgesagt / DW explainer maps). The attached image is a REAL frame from our existing pipeline: D3.js + Remotion, real GeoJSON country borders, deterministic code (no AI video, no 3D, no After Effects). Palette: very dark navy background with a RADIAL gradient, thin desaturated blue borders, cyan/blue fill for active countries, gold/amber pipeline route lines, monospace typography, small dark country nameplates with a cyan border.
+
+⛔⛔⛔ THE SINGLE MOST IMPORTANT INSTRUCTION — READ TWICE:
+THE MAP CARRIES THIS BEAT. A previous attempt at a neighbouring beat failed because every idea was delivered as a rectangular bordered panel with text inside, one after another — the result was cluttered, repetitive, and the map became mere wallpaper behind a stack of info-cards. DO NOT DO THAT.
+- Your PRIMARY tool is the MAP ITSELF changing over time: routes that draw progressively, country fills that gain or lose colour, stroke thickness that grows or thins, pulses that travel along a route, glow that intensifies or dies, borders that light up, territory that reads as a barrier or as a gateway.
+- ⛔ ZERO composed insert cards in this beat. The PREVIOUS beat already used its single allowed insert (a pipe cutaway at its peak). If this beat opens another insert, the insert stops being an exception and the earlier climax loses its power. Everything here must be said ON THE MAP.
+- ⛔ NO stacking of text panels. NO HUD-style info-card. NO large text banner laid across the image.
+- Text on screen: the absolute minimum. Short nameplates for at most 2-3 narratively relevant countries (Morocco, Algeria, Nigeria). NO figures at all in this beat — see FACTUAL ACCURACY below.
+
+⛔ OTHER NON-NEGOTIABLE RULES:
+1. CARTOGRAPHY FIRST — the map is the dominant, clearly readable visual element at all times.
+2. NEVER FLOATING ELEMENTS — anything that is not the map must be anchored to a geo point with a connector, or centred over a deliberately dimmed map. Nothing floats loose.
+3. NEVER SCATTER ELEMENTS AT SCREEN EDGES OR CORNERS.
+4. NO TEXT LABEL WITHOUT A VISUAL CONTAINER.
+5. RELENTLESS MOTION — nothing static for more than ~5 seconds of story-time.
+6. Do NOT label every country a route passes near — only the narratively relevant ones.
+7. GEOGRAPHY IS LOCKED — the Moroccan route (AAGP) is a COASTAL pipeline following the West African Atlantic shoreline; the Algerian route (TSGP) crosses the Sahara. These geometries are validated in earlier acts and must not be redrawn.
+
+OUR REAL TECHNICAL CAPABILITIES (design ONLY within these):
+- Country borders/fills that TRACE progressively and fill with colour once traced.
+- Camera that pans/zooms smoothly and pauses at points of interest (never frozen).
+- Routes that draw progressively, vary in thickness, brightness, colour, or dashed texture.
+- Small pulses/particles that travel ALONG a route to show flow, direction, and INTENSITY of flow.
+- Circular icon pins anchored to geo-coordinates, with glow halos that can pulse or fade.
+- Vignette/darkening overlay to focus attention on one region of the map.
+- We can draw the EUROPEAN destination (Spain/Europe) at the top of the frame — the demand that both routes are competing to serve.
+- We can show a route being BYPASSED: an existing corridor that loses its pulses while another gains them.
+
+REFERENCE PRINCIPLE (Vox Atlas producer Sam Ellis): show what forces look like ON THE GROUND. Kurzgesagt discipline: FEWER elements, reused, better timed. Show, don't tell.
+
+⭐⭐ THE CREATIVE QUESTION WE ACTUALLY NEED YOU TO ANSWER:
+This beat is about TWO OPPOSITE INTENTIONS over the SAME geography. Morocco wants to BECOME something (the compulsory gateway); Algeria wants to PREVENT something (losing a monopoly it already holds). One is an ambition to gain; the other is a fear of loss. That asymmetry is the whole beat — and it is genuinely hard to draw.
+
+Show us how the MAP can express that asymmetry, by presenting TWO DISTINCT approaches, clearly labelled "OPTION A" and "OPTION B":
+- **OPTION A — TERRITORY AS ROLE**: the countries themselves change meaning. Morocco's territory becomes a gateway/hinge that everything must pass through; Algeria's existing corridor to Europe is shown as an established possession now under threat. The drama comes from what the LANDMASSES signify.
+- **OPTION B — THE FLOW DECIDES**: nothing changes about the territories; the story is told purely by where the pulses GO. Europe's demand at the top pulls; the Atlantic route starts capturing what used to travel the Algerian corridor, and we watch the old corridor thin out. The drama comes from MOVEMENT and diversion.
+Be genuinely bold on OPTION B — it is the one we cannot yet picture. Do not make the two options cosmetic variations of one another; they should imply different code.
+
+⚠️ FACTUAL ACCURACY: this beat contains NO figures. Do NOT invent statistics, volumes, dates, percentages or Bcm/year numbers — invented figures are unusable for us. The only proper nouns available are Morocco/Rabat, Algeria, Nigeria, Europe, Atlantic.
+
+THIS BEAT'S 3-STATE STRUCTURE (total ~33s):
+START (0 -> 7.3s): MOROCCO'S AMBITION. The Atlantic route is the instrument. Establish that if it succeeds, everything from West Africa to Europe must pass through Moroccan territory.
+TURNING POINT (7.3 -> 23.7s): RABAT AS THE COMPULSORY GATEWAY — "un levier de pouvoir colossal" (a colossal lever of power). This is Morocco's peak: the gateway must read as power, not merely as a location.
+PIVOT + END (23.7 -> 33.4s): ALGERIA'S EXACT OPPOSITE. Cut to the other intention: protect an inherited monopoly as Europe's African supplier, and avoid BEING BYPASSED by an Atlantic route. The final accent is on "contournée" (bypassed) at 29.6s — the beat must land on that word visually.
+
+NARRATION for this beat (French, for your understanding only): "Pour le Maroc, ce gazoduc est l'outil géopolitique ultime. S'il aboutit, Rabat devient le point de passage indispensable entre l'Afrique de l'Ouest et l'Europe : un levier de pouvoir colossal. Pour l'Algérie, l'objectif est exactement inverse : il s'agit de protéger son monopole historique de fournisseur africain de l'Europe, et d'éviter d'être contournée par un tracé qui passe par l'Atlantique."
+
+TASK: GENERATE AN IMAGE (not a text description) — a single storyboard sheet. Show the beat's opening state (Morocco's ambition), then the gateway peak, then the Algerian pivot, staged TWICE overall so that OPTION A and OPTION B can be compared side by side. Render the panels directly as pixels, each 16:9, fully readable at high resolution, clearly arranged and labelled. In the small director's-note caption under each panel, describe WHAT THE MAP IS DOING (the specific cartographic animation), not just the camera move. Output the image now.

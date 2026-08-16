@@ -46,6 +46,25 @@ poser une tension / révéler un chiffre / annoncer un fait / **faire basculer**
 statique) ni une comparaison (face-à-face, équilibré) : c'est un **renversement**. D'où la forme codée
 (la carte se FEND, les moitiés se décalent) — qui n'existait dans aucun template. Tombé juste **du 1er coup**.
 
+> ⛔⛔ **CONTRE-PREUVE — coder des ÉTATS quand la voix décrit des GESTES** (Gazoduc 4B, 2026-08-15).
+> Symétrique exact de la preuve ci-dessus, et bien plus coûteux : deux allers-retours complets.
+> La narration disait « l'objectif est exactement **INVERSE** », « fournisseur de **l'EUROPE** »,
+> « éviter d'être **CONTOURNÉE** ». J'ai codé trois **états** de couleur (bleu → bleu clair → rouge).
+> Rendu propre, mesuré, sans immobilité — et pourtant Aziz : *« je ne vois pas comment ça a rapport
+> avec la narration »*. Trois manques du même type :
+> 1. **Le sujet du litige était absent** : l'Europe (le client qu'on se dispute) n'était pas à l'écran,
+>    donc « fournisseur de l'Europe » ne pouvait rien vouloir dire.
+> 2. **Un verbe de MOUVEMENT rendu par une couleur** : *contourner* = passer À CÔTÉ DE quelque chose.
+>    Personne ne voyait passer quoi que ce soit.
+> 3. **Une opposition annoncée mais jamais montrée** : « exactement inverse » sans aucun face-à-face.
+>
+> **La checklist qui l'évite** (30 s, avant de coder un beat) : relire la phrase narrée et souligner
+> — ses **NOMS** (qui/quoi est en jeu ? *chacun doit être À L'ÉCRAN*) — ses **VERBES** (chacun décrit-il
+> un ÉTAT → couleur/fade licite, ou une RELATION SPATIALE / un MOUVEMENT → trajectoire, cible présente,
+> geste qui traverse le cadre ?).
+> **Un état constate ; seul un geste raconte.** Distinct de la règle « un objet inerte ne glisse jamais »
+> (qui dit COMMENT animer un objet immobile) : ici c'est le TEXTE qui exige un mouvement.
+
 ### 2. CONTINUITÉ > NOUVEAUTÉ (le vrai capital réutilisable)
 Une scène = **UN MONDE qui se transforme**, pas une succession d'écrans. Le premium vient de RESTER
 dans le même monde et de le faire évoluer. Mot exact d'Aziz : *« on n'a pas changé de template, on a

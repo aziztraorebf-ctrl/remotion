@@ -36,6 +36,7 @@
 | `SurfaceComparison` | inserts | "Voici la vraie taille de l'Afrique" — pays superposés exactement (thetruesize) |
 | `CountryStackComparison` | inserts | "On peut faire rentrer la France 4x dans la RDC" — silhouettes empilées |
 | `ScaleTilt` | layouts | Deux poids sur une balance qui bascule |
+| `InsertLevier` ⭐ | souverain/gazoduc-aagp-tsgp/`GazoducActe4Objectifs.tsx` (composant interne, **à extraire**) | "un acteur devient le POINT DE PASSAGE OBLIGÉ / détient un levier de pouvoir disproportionné" — pivot central qui **SUPPORTE un flux traversant** deux masses. ⚠️ **≠ `ScaleTilt`/`WealthScale`** (balance qui PENCHE = comparer deux poids) : ici les masses sont ÉGALES et tout le sens est dans le PIVOT que le flux doit franchir. Micro-anims : bras qui fléchit sous la charge puis revient, socle qui encaisse, pivot qui respire, masses qui se posent (jamais un pop). SVG généré par Fable 5 (`_rnd/svg-scenes/LevierPouvoirFable.tsx`) puis **animé à la main**. Validé Aziz, promu FINAL 2026-08-15 (Gazoduc 4B). **proto** — 1 seul usage, pas encore extrait. |
 | `ScaleShock` | layouts | Révélation d'échelle avec effet choc (avant/après) |
 
 ---

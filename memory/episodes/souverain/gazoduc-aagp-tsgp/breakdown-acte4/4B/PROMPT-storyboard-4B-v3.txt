@@ -1,0 +1,56 @@
+CONTEXT — YOU ARE A SENIOR VISUAL DIRECTOR for a French geopolitical documentary YouTube channel (real GeoJSON cartography, React/Remotion, everything coded frame by frame, deterministic).
+
+The attached image shows TWO REAL FRAMES from our production, stacked:
+  A (top) = OUR MAP — real GeoJSON borders, our dark palette.
+  B (bottom) = OUR SVG INSERT — a real production frame from a previous act.
+LOOK AT B CAREFULLY. That is exactly what our "SVG" looks like: FLAT SHAPES, simple gradients, clean strokes, generous empty space. It is a schematic, not a rendered object.
+
+WHAT WE ARE ASKING YOU
+Conceive the scene below. Propose 3 DISTINCT concepts, each built on a different visual approach, and say which one YOU defend and why. We are not asking you to illustrate an idea we already have — the concepts must be yours.
+
+⛔⛔ THE MISTAKE TO AVOID — WE MADE IT LAST TIME, IT COST US
+On a previous round, a model proposed a beautiful mechanism rendered with metallic bevels, volumetric lighting and depth — and labelled it "100% codable in SVG". It was NOT codable by us: reproducing it would have produced something far flatter than the image, and the gap would have been the actual deliverable. A concept we cannot execute at the quality you draw it is worse than no concept.
+So: DRAW IN THE MATERIAL OF IMAGE B. Flat fills, simple gradients, clean lines, strong composition.
+⛔ FORBIDDEN, in every concept: metallic bevels, volumetric or cinematic lighting, photoreal reflections, perspective/vanishing-point scenes, 3D-rendered objects, raster textures, interiors with depth, crowds of characters.
+This is a constraint of MATERIAL, not of ambition. Be as bold as you like WITHIN it — elegance here comes from composition and timing, not from render quality.
+
+WHAT WE CAN ACTUALLY BUILD (registers, no hierarchy — none is the "default" one)
+- REAL CARTOGRAPHY — territories that fill, trace, change colour; borders that light up; a country filled with the resource it holds; a real flag hugging a country's silhouette; camera that pans and zooms continuously.
+- COMPUTED GEOMETRY (D3) — orthographic globe with real occlusion; continuous zoom from globe to flat map; choropleth; CARTOGRAM (a country's size distorted by its value); CHARTOGRAM (a country's real outline morphing into a proportional bar — "the map BECOMES the data"); flows and networks that recompose.
+- FLAT SVG SCHEMATIC (like image B) — a mechanism, an object, a metaphor, a cross-section, a scale/balance, a comparison of sizes. Full-screen or anchored on the map.
+- A HUMAN FIGURE — simple coded ink stick-figures performing ONE clear gesture. Used sparingly, to give human scale.
+- FILMED MATTER — we can generate real filmed material and anchor it in a frame. Costly; if you use it, say what it shows that a drawing cannot.
+- EDITING / RUPTURE — a 33-second beat need not be one continuous shot. You may cut away from the map, go full-screen on a schematic, then return to the map changed. Our proven grammar is: THE MAP SETS UP -> AN INSERT EXPLAINS -> THE MAP RETURNS, TRANSFORMED. You may use it, or justify departing from it.
+
+HARD CONSTRAINTS (facts, not preferences)
+1. GEOGRAPHY IS LOCKED: the Moroccan route (AAGP) is COASTAL, following the West African Atlantic shoreline; the Algerian route (TSGP) crosses the Sahara. Never redraw them.
+2. NO INVENTED FIGURES — this beat has no statistics. No numbers, volumes, dates or percentages on screen. Proper nouns available: Morocco/Rabat, Algeria, Nigeria, Europe, Atlantic.
+3. Text minimal, always inside a small container, never floating, never in screen corners.
+4. Nothing static for more than ~5 seconds.
+5. Palette: background #0d1f38 -> #050c1a (radial), active countries cyan #2E9FD4 with #7FD8FF stroke, route/accent amber #FFC742, text #e8ecf5 on dark plates with cyan border, monospace type.
+
+⛔ DO NOT REPEAT THE PREVIOUS BEAT
+The beat just before this one was carried ENTIRELY by animated route lines: gold routes drawing progressively, pulses travelling along them, a draining source. That was right there, because that beat was about FLOW — gas physically moving. THIS beat is not about flow. If you answer with travelling pulses again it reads as repetitive AND it retroactively weakens the previous beat (when every idea is a moving line, a moving line stops meaning "something circulates").
+Route lines may still appear to hold CONTINUITY at the opening — but in at least 2 of your 3 concepts they must NOT be the device that carries the idea.
+
+THE BEAT — what it must make the viewer feel (~33s)
+TWO OPPOSITE INTENTIONS over the same geography.
+- Morocco wants to BECOME something: if its pipeline succeeds, Rabat becomes the compulsory gateway between West Africa and Europe — "a colossal lever of power".
+- Algeria wants to PREVENT something: it already holds the position of Europe's historic African supplier, and fears being BYPASSED by an Atlantic route.
+One is an ambition to GAIN, the other a fear of LOSS. That asymmetry is the heart of the beat. A gain and a fear probably should not be drawn in the same visual language.
+
+STRUCTURE (3 states)
+- 0 -> 7.3s: Morocco's ambition is established.
+- 7.3 -> 23.7s: THE PEAK — Rabat as compulsory gateway, "a colossal lever of power". This peak belongs to Morocco.
+- 23.7 -> 33.4s: THE PIVOT — Algeria's opposite intention. The beat must LAND visually on the word "contournée" (bypassed) at 29.6s.
+
+NARRATION (French, for understanding only): "Pour le Maroc, ce gazoduc est l'outil géopolitique ultime. S'il aboutit, Rabat devient le point de passage indispensable entre l'Afrique de l'Ouest et l'Europe : un levier de pouvoir colossal. Pour l'Algérie, l'objectif est exactement inverse : il s'agit de protéger son monopole historique de fournisseur africain de l'Europe, et d'éviter d'être contournée par un tracé qui passe par l'Atlantique."
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description)
+One storyboard sheet, 3 concepts, each shown in 4 panels (opening / peak / pivot / final state), each panel 16:9 and readable at high resolution. Give each concept a SHORT NAME and name the REGISTER it uses.
+Under each concept, a short director's note with:
+  (a) WHAT THE IMAGE IS DOING — the specific animation, not a camera move.
+  (b) THE ONE GESTURE PER PANEL — name, for each of the 4 panels, the SINGLE visual gesture that carries it (e.g. "the territory fills", "the outline deforms into a bar", "the colour drains"). If a panel needs three gestures to be described, it is too expensive: simplify it before submitting.
+  (c) YOUR REFERENCE — what existing visual work, technique or tradition inspired this concept (a documentary, an infographic school, a data-visualisation practice, an atlas, a designer), and what specifically you borrowed. Name it concretely.
+Finally: state which concept you DEFEND and why it serves the ambition-versus-fear asymmetry better than the other two.
+Output the image now.

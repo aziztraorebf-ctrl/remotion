@@ -204,3 +204,23 @@ Pour 80s scene complete (extrapolation) : ~15-25 min render. Pour scene narrativ
   `src/projects/_rnd/d3-16x9/gazoducGeoElargie.json` — 76 pays (Afrique + voisins : Bresil/Venezuela,
   Europe complete, Moyen-Orient) vs les 54 pays de l'original Afrique seule, meme fitExtent. Reutilisable
   pour tout futur beat carte D3 necessitant un cadrage plus large que l'Afrique stricte.
+
+## ⛔ GOTCHA — lookup par nom : l'ACCENT fait partie de la clef (echec SILENCIEUX)
+
+Les noms de pays du GeoJSON sont accentues tels quels : **`"Côte d'Ivoire"`**, pas `"Cote d'Ivoire"`.
+Un `byName("Cote d'Ivoire")` renvoie `undefined` **sans aucune erreur** — le `.filter(Boolean)` habituel
+l'absorbe, le trace se construit quand meme, et le pays est simplement **saute en silence**. Aucun crash,
+aucun warning : le seul symptome est un pays manquant a l'ecran, invisible si on ne compare pas au script.
+(Vecu 2026-08-15, Gazoduc Acte 4B : le trace cotier AAGP sautait la Cote d'Ivoire.)
+
+**Reflexe** : apres tout ajout de pays par NOM dans une carte D3, verifier VISUELLEMENT que chacun est
+bien la — ne pas se contenter de « le code ne plante pas ». En cas de doute :
+`node -e "console.log(JSON.parse(require('fs').readFileSync('<geo>.json')).countries.map(c=>c.name))"`.
+
+## ⭐ Projeter de VRAIES coordonnees lon/lat dans un fond de carte deja genere
+
+Pour poser un point reel (ville, terminal, champ) sur un fond `gazoducGeoElargie.json`, il faut rejouer
+**EXACTEMENT** la projection du generateur — toute autre projection decale les points :
+`geoMercator().fitExtent([[80, 90], [1840, 918]], <FeatureCollection AFRIQUE SEULE>)`.
+Les voisins (Europe, Moyen-Orient) sont projetes avec cette meme fonction et debordent naturellement.
+⛔ Ne jamais placer un repere geo « a l'oeil » sur la carte (regle geo-zero-approximation).

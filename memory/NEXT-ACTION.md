@@ -125,39 +125,33 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC ACTE 4 — REPRENDRE ICI (session 2026-08-15, 4A fait / 4B+4C à faire)
+## ⭐⭐⭐ GAZODUC ACTE 4 — mouvements A+B FINAUX. REPRENDRE SUR 4C (2026-08-15)
 
-**PREMIÈRE ACTION prochaine session** : re-rendre le mouvement **4A** avec la NOUVELLE PALETTE
-(décision Aziz 2026-08-15). ⛔ **On ne touche À RIEN D'AUTRE que la palette** — la scène est validée.
+**FAIT ET VALIDÉ AZIZ** — `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4` (palette sombre
+portée) + `acte4-mouvementB-FINAL.mp4` (objectifs opposés). Code : `GazoducActe4RessourceUnique.tsx` (A)
++ `GazoducActe4Objectifs.tsx` (B). Palette sombre `PAL_GPT` adoptée pour l'Acte 4 **et la suite** ;
+Actes 1/2/3 restent clairs → re-render à la passe finale d'assemblage, ⛔ PAS acte par acte.
 
-**La palette adoptée** (fond sombre, dérivée du storyboard GPT, jugée plus premium que notre palette
-de série) est dans `src/projects/_rnd/d3-16x9/ProtoCartePaletteGPT.tsx` → constante `PAL_GPT`,
-frontières DÉJÀ ajustées selon le retour d'Aziz ("un tout petit peu plus lumineuses") :
-`bgTop #0d1f38 · bgBot #050c1a · dégradé RADIAL · land #16304f/0.92 · stroke #58809f/0.72 largeur
-0.75 · actifs #2E9FD4/0.72 stroke #7FD8FF`. Compositions de comparaison : `RND-ProtoCartePaletteGPT`
-(split), `RND-ProtoCartePalette-A-Nous`, `RND-ProtoCartePalette-B-GPT`.
-→ à porter dans `GazoducActe4RessourceUnique.tsx` (constantes `BG_TOP/BG_BOT/LAND/LAND_STROKE` +
-passer le fond en dégradé radial), puis re-render + upload.
+**PROCHAINE ACTION = mouvement 4C** « le calendrier se retourne » (74.5→124.04s) : l'Europe se presse
+alors que sa demande baissera d'ici 2030. Ancres : « calendrier » 78.4s · « enterrer des milliards »
+95.0s · « RÉTRÉCIT » 117.06s (dernier accent avant l'Acte 5). Timing DÉJÀ calé (`GazoducActe4Timing.ts`
+→ `BEATS_4C`). Rien d'autre n'existe : ni code, ni storyboard. **Puis Acte 5** (robinet géant + mains
+stylisées, `PLAN-ACTES2-5.md` L118).
 
-⚠️ **Portée du changement** : palette adoptée pour l'**Acte 4 et la suite**. Les Actes 1/2/3 restent
-en palette claire → re-render à la passe finale d'assemblage (cf `POLISH-TODO-FINAL-RENDER.md`),
-PAS acte par acte. Ne pas réengager les actes déjà produits sans décision explicite.
+**Méthode qui a produit A et B** (la rejouer) : storyboard libre créative 2 modèles → validation Aziz →
+breakdown → code → 3e appel comparatif rendu-vs-storyboard → corrections. Gabarits :
+`episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/` (dont `4B/` : brief v3 + prompt d'insert SVG).
+⭐ Les 4 leviers pour cadrer un brief (ne PAS écrire les concepts soi-même · montrer une frame RÉELLE de
+notre SVG · exiger « un geste unique par panneau » · contraindre le MATÉRIAU jamais l'AMBITION) :
+`doctrines/STORYBOARD-MAPBOX.md` § CADRER UN BRIEF.
 
-**Ensuite : 4B puis 4C** (l'Acte 4 fait 3 mouvements, seul 4A est codé) :
-- **4B — objectifs opposés** (41.1→74.5s) : Maroc = devenir le passage obligé / Algérie = protéger
-  son monopole et éviter d'être contournée par l'Atlantique. Ancre forte : "contournée" à 70.66s.
-- **4C — le calendrier se retourne** (74.5→124.04s) : l'Europe se presse alors que sa demande
-  baissera d'ici 2030. Ancres : "calendrier" 78.4s · "enterrer des milliards" 95.0s · "RÉTRÉCIT"
-  117.06s (CAPS script, dernier accent avant l'Acte 5).
-- Timing des deux DÉJÀ calé sur le forced-align : `GazoducActe4Timing.ts` (`BEATS_4B` / `BEATS_4C`).
-- **Méthode à rejouer telle quelle** (elle a produit 4A) : storyboard libre créative 2 modèles
-  (GPT + Gemini, même brief) → validation Aziz → breakdown JSON → code → **3e appel comparatif
-  rendu-vs-storyboard** → corrections. Gabarits de prompts prêts dans
-  `episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/`. Doctrine : `STORYBOARD-MAPBOX.md`
-  § LA BOUCLE FERMÉE.
+⛔ **Gate actif depuis le 2026-08-15** : tout nouveau `.tsx` de scène doit déclarer
+`// MOTEUR: <registre> — <pourquoi>` en en-tête, sinon l'écriture est BLOQUÉE
+(`.claude/hooks/moteur-visuel-gate.sh`, 19 tests dans `tests/hooks/`). Idem un brief de storyboard bridé.
 
-**État 4A** : codé, rendu, corrigé sur 6 gaps HIGH. Commits `6aabb1d9` (code) + `aff4adeb` (doctrine).
-Render : https://t6olmi2nloe9nhkg.public.blob.vercel-storage.com/4A-v5-AUDIO-GJgWrrn1IakI4lCwh7gVwWZ2vhr88D.mp4
+⚠️ **Décision de goût à ne pas défaire** : 4B v3 (arcs schématiques) a été PRÉFÉRÉE à v4 (géométrie
+réelle Medgaz Hassi R'Mel→Beni Saf→Almería, codée puis écartée) — le vrai tracé part de l'intérieur des
+terres et se lit moins bien. Choix de LISIBILITÉ, pas un oubli d'exactitude.
 
 ## ⛔⛔ GAZODUC — ACTE 3 GELÉ EN WIP (décision Aziz 2026-08-14). L'ACTE 4 PASSE AVANT.
 

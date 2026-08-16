@@ -313,6 +313,62 @@ dans le brief — sinon il devient le régime normal et cesse de faire rupture. 
 forte que la sobriété : *un insert qui survient toutes les 20 s ne surprend plus, et le climax n'a
 alors plus rien à rompre.*)
 
+## ⭐⭐⭐ CADRER UN BRIEF DE STORYBOARD — 4 leviers prouvés (2026-08-15, Gazoduc 4B, 3 versions comparées)
+
+> **Preuve directe** : même beat, même modèle (GPT Image 2), 3 briefs successifs. v1 → 6 panneaux de
+> flèches. v2 → concepts originaux mais **infaisables** (perspective 3D, couloirs, personnages).
+> v3 → 3 concepts originaux ET codables en aplats. Ce n'est pas le modèle qui a changé, c'est le brief.
+
+### 1. ⛔ NE JAMAIS ÉCRIRE LES CONCEPTS SOI-MÊME
+Le brief v1 contenait « OPTION A — … / OPTION B — … » rédigées par nous. Les 2 modèles ont **illustré**
+nos idées au lieu d'en concevoir. Comme nos 2 options étaient toutes deux linéaires, les 2 colonnes du
+storyboard l'étaient aussi. **Demander : « propose 3 concepts DISTINCTS, dis lequel tu défends et
+pourquoi ».** Le modèle doit CONCEVOIR, sinon on n'obtient que le reflet de nos propres angles morts.
+
+### 2. ⭐ MONTRER LE MATÉRIAU RÉEL, PAS LE NOMMER
+Dire « SVG » ne suffit pas : le mot laisse imaginer du rendu 3D. Le v2 a produit un mécanisme à biseaux
+métalliques et éclairage volumétrique, auto-évalué « 100 % codable en SVG » — **faux**, et je l'ai repris
+sans vérifier (erreur : une note de faisabilité écrite par le modèle n'est pas une faisabilité).
+**Fix v3 : joindre une image DOUBLE — (A) une frame de notre carte + (B) une frame d'un insert SVG de
+production réel** — avec la légende « voilà à quoi ressemble notre SVG : aplats, dégradés simples ».
+Résultat immédiat : plus aucun rendu 3D dans les 3 concepts.
+⛔ Corollaire : lister explicitement les INTERDITS de matière (biseaux, éclairage volumétrique, reflets
+photoréalistes, perspective, textures raster, intérieurs en profondeur, foules).
+
+### 3. ⭐⭐ EXIGER « UN GESTE UNIQUE PAR PANNEAU » (le test de coût qui marche)
+Ne PAS demander au modèle d'auto-évaluer la faisabilité (il se trompe systématiquement, dans le sens
+optimiste). Demander à la place, pour CHAQUE panneau : **« nomme LE geste visuel unique qui le porte »**
+(« le territoire se remplit », « le contour se déforme en barre », « la couleur se retire »).
+*« Si un panneau demande trois gestes pour être décrit, il est trop cher : simplifie-le avant de rendre. »*
+Le coût devient visible dans la réponse elle-même, sans jugement technique du modèle.
+
+### 4. ⛔ CONTRAINDRE LE MATÉRIAU, JAMAIS L'AMBITION
+Tentation à écarter (tranchée par Aziz) : demander « fais simple ». **Non** — on obtiendrait des images
+plates et on perdrait les propositions neuves. La contrainte porte sur **ce dont l'image est faite**
+(aplats, nos briques, nos moteurs), pas sur son ambition. Un modèle peut être très ambitieux DANS un
+matériau contraint — Gemini l'a prouvé sans qu'on le lui demande.
+
+### ⭐ Ce que le recadrage a produit (bénéfice mesuré)
+Les 2 modèles ont **convergé spontanément** sur le même dispositif (un LEVIER dont le Maroc tient le
+pivot) en partant de briefs identiques et sans se connaître — signal fort (cf convergence 2 modèles).
+Et GPT v3 a fourni la pièce qui manquait au mix : donner à l'ambition et à la peur **deux langages
+visuels différents** (gain = amplification/levier ; peur = évitement/contournement).
+
+### ⭐⭐ COROLLAIRE AVAL — storyboard basse résolution → SVG codé premium (prouvé 3×)
+Une planche de storyboard est une **intention**, jamais une exécution. Une fois le concept validé,
+**recadrer l'image du panneau retenu et la renvoyer comme référence** à des modèles SVG, avec :
+l'intention en mots (pas seulement l'image), les **corrections obligatoires** des défauts de la source
+(libellés corrompus, rapports de tailles contre-intuitifs), la palette imposée, et l'exigence de
+**groupes nommés/adressables** pour l'animation. Les 3 modèles (Fable 5, GPT-5.5, Gemini 3.1 Pro) ont
+tous produit **nettement mieux que la source**. ⭐ **Fable 5 a gagné** — seul à avoir résolu le problème
+CONCEPTUEL (faire passer le flux PAR le pivot, au lieu d'équilibrer deux poids), pas seulement le rendu.
+Gabarit : `episodes/souverain/gazoduc-aagp-tsgp/breakdown-acte4/4B/PROMPT-INSERT-levier.txt`.
+
+### 🚦 Gate outillé associé
+`.claude/hooks/moteur-visuel-gate.sh` bloque un brief de storyboard qui ferme un registre entier,
+contient des concepts pré-écrits (« OPTION A/B »), n'a pas de vraie question ouverte, ou parle
+mono-registre. Testé contre le vrai brief fautif de 4B (19 cas). Cf [[MOTEURS-VISUELS-ET-SOCLE]].
+
 ## STATUT
 ✅ **BOUCLE FERMÉE storyboard→code→comparatif→corrections éprouvée** (2026-08-15, Gazoduc Acte 4 / 4A) —
    voir section ci-dessus. 3 règles de brief + garde-fou « vérifier chaque gap contre nos décisions »,

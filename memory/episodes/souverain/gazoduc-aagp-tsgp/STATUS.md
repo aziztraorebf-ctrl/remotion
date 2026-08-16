@@ -1,6 +1,29 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-14
+**Mis à jour** : 2026-08-15
+
+## ⭐ ACTE 4 — mouvements A et B FINAUX (2026-08-15)
+
+**Mouvement A** « une ressource, deux tuyaux » (0→41.1s) : **FINAL**, palette sombre `PAL_GPT` portée
+(fond radial `#0d1f38`→`#050c1a`, pays inactifs 0.92, frontières `#58809f`/0.72).
+**Mouvement B** « objectifs opposés » (41.1→74.5s) : **FINAL**, validé Aziz. Carte (continuité 4A) →
+**insert SVG « levier de pouvoir »** (concept Gemini, exécuté par Fable 5, animé par nous : bras qui
+fléchit sous la charge, socle qui encaisse, pivot qui respire) → retour carte : l'Europe apparaît comme
+destination, l'Algérie s'affirme en bloc clair puis **une comète contourne visiblement son territoire**
+pour rejoindre l'Europe pendant que sa route se vide. Tous les timings calés **au mot** sur le
+forced-align (règle Aziz : compréhensible en moins de 2 s → un élément apparaît quand le mot le nomme).
+
+Livrables : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4` + `acte4-mouvementB-FINAL.mp4`.
+Code : `GazoducActe4RessourceUnique.tsx` + `GazoducActe4Objectifs.tsx`.
+
+**RESTE** : mouvement **4C** « le calendrier se retourne » (74.5→124.04s) — timing calé (`BEATS_4C`),
+aucun code ni storyboard. Puis **Acte 5**. Détail : `memory/NEXT-ACTION.md` § GAZODUC ACTE 4.
+
+⚠️ 2 décisions à ne pas défaire : (1) palette sombre = Acte 4 **et la suite**, Actes 1/2/3 re-rendus
+seulement à la passe finale ; (2) 4B **v3 (arcs schématiques) préférée à v4** (géométrie réelle Medgaz,
+codée puis écartée pour lisibilité).
+
+---
 
 ## ⛔⛔ ACTE 3 — GELÉ EN WIP (décision Aziz, 2026-08-14). NE PAS LE REPRENDRE EN L'ÉTAT.
 

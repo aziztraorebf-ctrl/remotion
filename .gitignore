@@ -139,3 +139,6 @@ scripts/warmap/fixtures/ucdp/*.csv
 # Scratchpad de session a la racine du repo (le vrai scratchpad vit sous /private/tmp)
 scratchpad/
 scratchpad-yt/
+
+# Zooms/crops derives des storyboards (reproductibles avec PIL, ne pas versionner)
+memory/episodes/**/breakdown-acte*/**/zoom-*.png

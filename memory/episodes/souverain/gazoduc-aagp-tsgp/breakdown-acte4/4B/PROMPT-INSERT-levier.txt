@@ -1,0 +1,40 @@
+MISSION — REPRODUIRE ET AMÉLIORER UN INSERT SVG DÉJÀ CONÇU
+
+Le concept est DÉJÀ TRANCHÉ et validé. Tu ne proposes pas une autre idée : tu exécutes CELLE-CI, en mieux.
+L'image jointe est un storyboard basse résolution produit par un modèle — c'est une INTENTION, pas une exécution. Ton travail est d'en produire la version premium, propre, prête à animer.
+
+LE DISPOSITIF À REPRODUIRE (image jointe)
+Un LEVIER / UNE BALANCE, vu de côté, en coupe schématique :
+- Au PIVOT, au centre : le MAROC (libellé RABAT). C'est lui qui tient le point d'appui — c'est le sens de toute l'image.
+- Sur le bras GAUCHE : l'AFRIQUE DE L'OUEST (la ressource, l'origine).
+- Sur le bras DROIT : l'EUROPE (la demande, la destination).
+- Sous le pivot : le NIGERIA comme masse-source qui alimente l'ensemble.
+- Une étiquette : « LEVIER DE POUVOIR ».
+
+L'IDÉE QUE L'IMAGE DOIT FAIRE COMPRENDRE (plus important que la copie exacte)
+Le Maroc, s'il obtient ce gazoduc, devient le POINT DE PASSAGE OBLIGÉ entre l'Afrique de l'Ouest et l'Europe : rien ne circule sans passer par son point d'appui. Ce n'est pas un équilibre neutre entre deux poids — c'est UN ACTEUR QUI TIENT LE PIVOT et acquiert par là un pouvoir démesuré par rapport à sa taille réelle. Le levier est une métaphore de CONTRÔLE, pas de comparaison de masses.
+
+⛔ CORRECTIONS OBLIGATOIRES PAR RAPPORT À L'IMAGE JOINTE (ne pas recopier ses défauts)
+1. Les libellés de l'image source sont CORROMPUS (« AFRIQUE BE L'OUEST », « BUROPE », « RABAT » déformé). Écrire les textes CORRECTEMENT, en français, avec les accents : « AFRIQUE DE L'OUEST », « EUROPE », « RABAT », « NIGERIA », « LEVIER DE POUVOIR ».
+2. Le rapport de masses de l'image source est contre-intuitif (petite bille à gauche, gros disque à droite : on croit que l'Europe pèse plus). Rééquilibrer pour que la lecture immédiate soit « le Maroc TIENT le point d'appui », pas « l'Europe est plus lourde ». À toi de trouver la meilleure disposition — c'est le point où tu peux améliorer le plus.
+3. Composition à revoir librement : l'image source est sommaire (formes géométriques nues, aucune matière). Tu peux enrichir : épaisseur et matière du bras de levier, socle/point d'appui crédible, hiérarchie visuelle claire, respiration dans la mise en page.
+
+NOTRE STYLE — CONTRAINTES DE MATIÈRE (non négociables)
+- Le rendu doit être en APLATS : formes pleines, dégradés simples, traits nets. C'est un schéma élégant, pas une image 3D.
+- ⛔ INTERDIT : biseaux métalliques, éclairage volumétrique, reflets photoréalistes, perspective photographique, textures raster. Tout ce qui ressemble à du rendu 3D est hors sujet et inutilisable.
+- Palette imposée (fond sombre de notre série) : fond #0d1f38 vers #050c1a (dégradé radial), formes actives en bleu cyan #2E9FD4 avec contour #7FD8FF, accent doré/ambre #FFC742 pour l'élément porteur (le bras du levier), texte crème #e8ecf5 sur petites plaques sombres à bordure cyan.
+- Typographie : police monospace, libellés courts en capitales, toujours dans un petit conteneur (jamais de texte flottant nu).
+- Format : 1920x1080, 16:9.
+
+DESTINATION TECHNIQUE — ÇA DOIT ÊTRE ANIMABLE
+Ce visuel sera animé image par image dans Remotion (React), en code déterministe. Donc :
+- Produire du SVG PUR : aucune image raster, aucun base64, aucun filtre lourd.
+- GROUPER ET NOMMER les éléments de façon explicite et adressable, par exemple :
+  <g id="socle">, <g id="pivot">, <g id="bras">, <g id="plateau_gauche">, <g id="plateau_droit">,
+  <g id="masse_afrique_ouest">, <g id="masse_europe">, <g id="masse_nigeria">,
+  <g id="label_rabat">, <g id="label_levier_pouvoir">
+- Le BRAS et les PLATEAUX doivent pouvoir pivoter autour du point d'appui : placer le pivot à une origine de rotation propre, et éviter les transformations imbriquées qui rendraient l'animation impossible.
+- Prévoir que chaque masse puisse apparaître/grossir indépendamment (le récit les révèle l'une après l'autre).
+
+CE QUE TU LIVRES
+Le code SVG complet, autonome, prêt à être collé dans un composant React. Rien d'autre.

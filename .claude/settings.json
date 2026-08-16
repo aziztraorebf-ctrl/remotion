@@ -81,6 +81,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/gemini-model-guard.sh",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/moteur-visuel-gate.sh",
+            "timeout": 10
           }
         ]
       },
@@ -116,6 +121,11 @@
             "type": "command",
             "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/gemini-model-guard.sh",
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "bash /Users/clawdbot/Workspace/remotion/.claude/hooks/moteur-visuel-gate.sh",
+            "timeout": 10
           }
         ]
       }

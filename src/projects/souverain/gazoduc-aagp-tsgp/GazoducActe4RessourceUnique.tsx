@@ -33,11 +33,17 @@ const FPS = 30;
 const clampB = { extrapolateLeft: "clamp" as const, extrapolateRight: "clamp" as const };
 const S = (sec: number) => Math.round(sec * FPS);
 
-// Palette identique aux Actes 2/3 (jamais redefinie localement — coherence de serie).
-const BG_TOP = "#3a5488";
-const BG_BOT = "#2a3f66";
-const LAND = "#4a608e";
-const LAND_STROKE = "#e8ecf5";
+// ⭐ PALETTE SOMBRE (adoptee par Aziz 2026-08-15, dérivée du storyboard GPT de l'Acte 4).
+// Source de verite : src/projects/_rnd/d3-16x9/ProtoCartePaletteGPT.tsx -> PAL_GPT.
+// 5 differences avec l'ancienne palette de serie : fond bien plus sombre · degrade RADIAL (concentre
+// le regard au centre au lieu d'un dessus/dessous neutre) · pays inactifs discrets · frontieres fines
+// et sombres · pays actifs qui ressortent par la luminance.
+// ⚠️ Portee : Acte 4 ET LA SUITE. Les Actes 1/2/3 restent en palette claire — leur re-render se fait
+// a la passe finale d'assemblage (cf POLISH-TODO-FINAL-RENDER.md), PAS acte par acte.
+const BG_TOP = "#0d1f38";
+const BG_BOT = "#050c1a";
+const LAND = "#16304f";
+const LAND_STROKE = "#58809f";
 const GOLD = "#FFC742";
 const CYAN = "#00C4FF";
 const RED_WARN = "#ff5a3c";
@@ -345,7 +351,7 @@ export const GazoducActe4RessourceUnique: React.FC = () => {
   const [srcSX, srcSY] = screenOf(NIGERIA);
 
   return (
-    <AbsoluteFill style={{ background: `linear-gradient(180deg, ${BG_TOP} 0%, ${BG_BOT} 100%)`, opacity: globalFadeIn * globalFadeOut }}>
+    <AbsoluteFill style={{ background: `radial-gradient(ellipse 72% 72% at 50% 46%, ${BG_TOP} 0%, ${BG_BOT} 100%)`, opacity: globalFadeIn * globalFadeOut }}>
       <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{ position: "absolute", inset: 0 }}>
         <defs>
           <filter id="a4-glow" x="-60%" y="-60%" width="220%" height="220%">
@@ -382,8 +388,8 @@ export const GazoducActe4RessourceUnique: React.FC = () => {
         <g transform={`translate(${cam.tx} ${cam.ty}) scale(${cam.scale})`}>
           {/* Fond de carte — pays neutres, jamais tous colores (hierarchie du regard). */}
           {countries.map((c, i) => (
-            <path key={`land-${i}`} d={c.d} fill={LAND} fillOpacity={0.5}
-              stroke={LAND_STROKE} strokeOpacity={0.3} strokeWidth={0.85} />
+            <path key={`land-${i}`} d={c.d} fill={LAND} fillOpacity={0.92}
+              stroke={LAND_STROKE} strokeOpacity={0.72} strokeWidth={0.75} />
           ))}
 
           {/* ⭐ PAYS ACTIFS (gap "active_countries_missing", HIGH) — Nigeria/Maroc/Algerie remplis en

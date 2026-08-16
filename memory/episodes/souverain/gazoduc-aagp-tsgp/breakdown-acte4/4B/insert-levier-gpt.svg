@@ -1,0 +1,165 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080" role="img" aria-labelledby="title desc">
+  <title id="title">Levier de pouvoir — Maroc, Afrique de l'Ouest, Europe, Nigeria</title>
+  <desc id="desc">Schéma en aplats montrant le Maroc, libellé Rabat, tenant le pivot d'un levier entre l'Afrique de l'Ouest et l'Europe, alimenté par le Nigeria.</desc>
+
+  <defs>
+    <radialGradient id="bg_radial" cx="50%" cy="44%" r="78%">
+      <stop offset="0%" stop-color="#0d1f38"/>
+      <stop offset="58%" stop-color="#08162a"/>
+      <stop offset="100%" stop-color="#050c1a"/>
+    </radialGradient>
+
+    <linearGradient id="gold_bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#b98219"/>
+      <stop offset="18%" stop-color="#FFC742"/>
+      <stop offset="50%" stop-color="#ffd86a"/>
+      <stop offset="82%" stop-color="#FFC742"/>
+      <stop offset="100%" stop-color="#b98219"/>
+    </linearGradient>
+
+    <linearGradient id="cyan_fill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2E9FD4"/>
+      <stop offset="100%" stop-color="#1b6f99"/>
+    </linearGradient>
+
+    <linearGradient id="dark_plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#102843"/>
+      <stop offset="100%" stop-color="#071222"/>
+    </linearGradient>
+
+    <style>
+      .label-text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-weight: 800;
+        letter-spacing: 2.5px;
+        fill: #e8ecf5;
+      }
+      .tiny-text {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-weight: 800;
+        letter-spacing: 2px;
+        fill: #e8ecf5;
+      }
+      .plate {
+        fill: url(#dark_plate);
+        stroke: #7FD8FF;
+        stroke-width: 4;
+      }
+      .cyan-shape {
+        fill: url(#cyan_fill);
+        stroke: #7FD8FF;
+        stroke-width: 5;
+      }
+      .cyan-line {
+        stroke: #7FD8FF;
+        stroke-width: 5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .gold-stroke {
+        stroke: #FFC742;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+
+  <g id="fond">
+    <rect id="background" width="1920" height="1080" fill="url(#bg_radial)"/>
+    <path id="horizon_schema" d="M240 785 H1680" stroke="#12385d" stroke-width="2" opacity="0.55"/>
+    <path id="grille_discrete_1" d="M300 240 H1620 M300 840 H1620" stroke="#12385d" stroke-width="2" opacity="0.18"/>
+    <path id="grille_discrete_2" d="M420 180 V900 M1500 180 V900" stroke="#12385d" stroke-width="2" opacity="0.12"/>
+  </g>
+
+  <g id="masse_nigeria" data-anim-origin="960 775">
+    <circle id="nigeria_halo" cx="960" cy="775" r="205" fill="#2E9FD4" opacity="0.12"/>
+    <circle id="nigeria_reservoir" cx="960" cy="775" r="162" class="cyan-shape" opacity="0.9"/>
+    <path id="nigeria_inner_arc" d="M825 820 C850 890 912 928 988 925 C1060 922 1118 878 1138 812" fill="none" stroke="#7FD8FF" stroke-width="4" opacity="0.35" stroke-linecap="round"/>
+    <g id="label_nigeria">
+      <rect x="842" y="728" width="236" height="58" rx="8" class="plate"/>
+      <text x="960" y="766" text-anchor="middle" class="label-text" font-size="31">NIGERIA</text>
+    </g>
+  </g>
+
+  <g id="flux_nigeria_vers_pivot">
+    <path id="conduit_source" d="M960 610 V530" stroke="#2E9FD4" stroke-width="20" opacity="0.35" stroke-linecap="round"/>
+    <path id="conduit_source_lumiere" d="M960 610 V530" stroke="#7FD8FF" stroke-width="6" opacity="0.85" stroke-linecap="round" stroke-dasharray="24 18"/>
+  </g>
+
+  <g id="socle">
+    <path id="socle_base" d="M770 910 H1150 L1092 842 H828 Z" fill="#0a1728" stroke="#7FD8FF" stroke-width="4" opacity="0.95"/>
+    <path id="socle_ligne_cyan" d="M820 842 H1100" stroke="#7FD8FF" stroke-width="5" stroke-linecap="round" opacity="0.85"/>
+    <path id="socle_colonne_maroc" d="M880 842 L930 560 H990 L1040 842 Z" fill="#143552" stroke="#7FD8FF" stroke-width="5"/>
+    <path id="socle_colonne_reflet" d="M940 585 L918 815" stroke="#7FD8FF" stroke-width="4" opacity="0.25" stroke-linecap="round"/>
+  </g>
+
+  <g id="ensemble_pivotant" data-pivot-x="960" data-pivot-y="520" style="transform-box:view-box;transform-origin:960px 520px">
+    <g id="bras" data-pivot-x="960" data-pivot-y="520">
+      <rect id="bras_ombre" x="350" y="528" width="1220" height="34" rx="12" fill="#050c1a" opacity="0.45"/>
+      <rect id="bras_principal" x="340" y="493" width="1240" height="52" rx="13" fill="url(#gold_bar)" stroke="#FFC742" stroke-width="5"/>
+      <rect id="bras_creux" x="362" y="509" width="1196" height="20" rx="8" fill="#5d4215" opacity="0.55"/>
+      <path id="bras_ligne_haute" d="M365 505 H1555" class="gold-stroke" stroke-width="4" opacity="0.7"/>
+      <path id="bras_ligne_basse" d="M365 533 H1555" class="gold-stroke" stroke-width="4" opacity="0.55"/>
+    </g>
+
+    <g id="plateau_gauche" data-pivot-x="960" data-pivot-y="520">
+      <path id="suspente_gauche_1" d="M560 545 V622" class="cyan-line" opacity="0.85"/>
+      <path id="suspente_gauche_2" d="M700 545 V622" class="cyan-line" opacity="0.85"/>
+      <path id="plateau_gauche_coupelle" d="M500 628 H760 L724 674 H536 Z" fill="#102843" stroke="#7FD8FF" stroke-width="5" stroke-linejoin="round"/>
+      <path id="plateau_gauche_ligne" d="M522 628 H738" stroke="#2E9FD4" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+    </g>
+
+    <g id="plateau_droit" data-pivot-x="960" data-pivot-y="520">
+      <path id="suspente_droite_1" d="M1220 545 V622" class="cyan-line" opacity="0.85"/>
+      <path id="suspente_droite_2" d="M1360 545 V622" class="cyan-line" opacity="0.85"/>
+      <path id="plateau_droit_coupelle" d="M1160 628 H1420 L1384 674 H1196 Z" fill="#102843" stroke="#7FD8FF" stroke-width="5" stroke-linejoin="round"/>
+      <path id="plateau_droit_ligne" d="M1182 628 H1398" stroke="#2E9FD4" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
+    </g>
+
+    <g id="masse_afrique_ouest" data-anim-origin="630 560">
+      <circle id="afrique_ouest_noeud_1" cx="590" cy="452" r="48" class="cyan-shape" opacity="0.92"/>
+      <circle id="afrique_ouest_noeud_2" cx="668" cy="454" r="38" class="cyan-shape" opacity="0.82"/>
+      <circle id="afrique_ouest_noeud_3" cx="630" cy="395" r="34" class="cyan-shape" opacity="0.76"/>
+      <path id="afrique_ouest_lien" d="M592 500 V628 M668 492 V628" stroke="#7FD8FF" stroke-width="4" opacity="0.45" stroke-linecap="round"/>
+      <g id="label_afrique_ouest">
+        <rect x="426" y="287" width="408" height="74" rx="10" class="plate"/>
+        <text x="630" y="333" text-anchor="middle" class="label-text" font-size="31">AFRIQUE DE L&apos;OUEST</text>
+      </g>
+    </g>
+
+    <g id="masse_europe" data-anim-origin="1290 560">
+      <circle id="europe_disque" cx="1290" cy="445" r="72" class="cyan-shape" opacity="0.88"/>
+      <path id="europe_arc_demande" d="M1258 414 C1287 392 1330 406 1342 442 C1352 475 1326 502 1290 503" fill="none" stroke="#7FD8FF" stroke-width="5" opacity="0.55" stroke-linecap="round"/>
+      <path id="europe_lien" d="M1290 517 V628" stroke="#7FD8FF" stroke-width="4" opacity="0.45" stroke-linecap="round"/>
+      <g id="label_europe">
+        <rect x="1185" y="288" width="210" height="68" rx="10" class="plate"/>
+        <text x="1290" y="331" text-anchor="middle" class="label-text" font-size="32">EUROPE</text>
+      </g>
+    </g>
+  </g>
+
+  <g id="pivot" data-pivot-x="960" data-pivot-y="520">
+    <circle id="pivot_halo_externe" cx="960" cy="520" r="54" fill="#2E9FD4" opacity="0.18"/>
+    <circle id="pivot_halo_interne" cx="960" cy="520" r="34" fill="#7FD8FF" opacity="0.24"/>
+    <circle id="pivot_point_appui" cx="960" cy="520" r="18" fill="#7FD8FF"/>
+    <circle id="pivot_coeur" cx="960" cy="520" r="8" fill="#e8ecf5"/>
+  </g>
+
+  <g id="label_rabat" data-anim-origin="960 590">
+    <rect x="873" y="570" width="174" height="60" rx="8" class="plate"/>
+    <text x="960" y="610" text-anchor="middle" class="label-text" font-size="32">RABAT</text>
+  </g>
+
+  <g id="label_levier_pouvoir" data-anim-origin="1238 548">
+    <path id="pointeur_levier_pouvoir" d="M1040 548 H1118 L1152 585" fill="none" stroke="#7FD8FF" stroke-width="4" opacity="0.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="1146" y="558" width="440" height="68" rx="10" class="plate"/>
+    <text x="1366" y="601" text-anchor="middle" class="label-text" font-size="31">LEVIER DE POUVOIR</text>
+  </g>
+
+  <g id="indicateurs_controle">
+    <path id="route_ouest_pivot" d="M760 520 H915" stroke="#7FD8FF" stroke-width="4" opacity="0.42" stroke-linecap="round" stroke-dasharray="12 14"/>
+    <path id="route_pivot_europe" d="M1005 520 H1160" stroke="#7FD8FF" stroke-width="4" opacity="0.42" stroke-linecap="round" stroke-dasharray="12 14"/>
+    <path id="verrou_pivot" d="M932 476 H988 V514 H932 Z" fill="#071222" stroke="#7FD8FF" stroke-width="4" opacity="0.95"/>
+    <path id="anse_verrou" d="M946 476 V458 C946 440 974 440 974 458 V476" fill="none" stroke="#7FD8FF" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

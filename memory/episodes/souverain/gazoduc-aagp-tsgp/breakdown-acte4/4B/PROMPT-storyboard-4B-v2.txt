@@ -1,0 +1,48 @@
+CONTEXT — YOU ARE BRIEFED AS A SENIOR MOTION DESIGNER / VISUAL DIRECTOR for a French geopolitical documentary YouTube channel. The attached image is a REAL frame from our pipeline, so you know our palette and level of finish: deep navy background with a radial gradient, thin desaturated blue borders, cyan/blue fill for active countries, gold/amber route lines, monospace typography, small dark nameplates with a cyan border.
+
+WHAT WE ARE ASKING YOU — READ THIS FIRST
+We are NOT asking you to illustrate an idea we already had. We are asking you to CONCEIVE the scene.
+Propose 3 DISTINCT concepts for the beat described below, each built on a DIFFERENT visual register, and tell us which one YOU defend and why. If two of your concepts could be coded from the same file with minor changes, they are not distinct enough — start again on one of them.
+
+WHAT WE CAN ACTUALLY BUILD (these are REGISTERS, not a checklist — no hierarchy, none is the "normal" one)
+Everything is React/Remotion, deterministic, frame-driven, rendered in code. Within that:
+- REAL CARTOGRAPHY — real GeoJSON borders. Territories that fill, trace, change colour or texture; borders that light up; a country filled with the actual RESOURCE it holds rather than a flat colour; a real flag that hugs a country's silhouette.
+- COMPUTED GEOMETRY (D3) — orthographic globe with real occlusion; continuous zoom from globe to flat map in a single projection; choropleth; CARTOGRAM (a country's size distorted by its value); CHARTOGRAM (a country's real outline morphing into a proportional bar — "the map BECOMES the data"); Sankey flows; force networks that physically recompose.
+- DRAWN OBJECT / PROCESS / METAPHOR (SVG, coded by us) — full-screen narrative scenes (we have built a full night airport, a finance mechanism); CROSS-SECTIONS and cutaways; schematics; tokens and objects; scale comparisons (true country size, "X fits 4 times into Y"), a balance/scale weighing two quantities.
+- A HUMAN ACTOR — coded stick-figure characters (ink style) performing a gesture, carrying a load, walking. Used to give human scale to an abstraction.
+- FILMED MATTER (MiniMax H3) — we generate real filmed/photographic material and anchor it in the frame: a texture, a physical gesture, a place. Costly and non-deterministic, so it must earn its place — if you use it, say what it shows that a drawing could not.
+- EDITING / RUPTURE OF REGISTER — this is a capability, not a detail. A 33-second beat does NOT have to be one continuous shot on a map. You may CUT away from the map entirely, go full-screen on another register, alternate, or break scale. Our known weakness is that we almost always stay on one continuous map — feel free to exploit that.
+
+HARD CONSTRAINTS (these are facts, not preferences)
+1. Deterministic code only: no 3D engine, no AI-generated video other than the filmed-matter register above, no After Effects.
+2. GEOGRAPHY IS LOCKED where it appears: the Moroccan route (AAGP) is a COASTAL pipeline following the West African Atlantic shoreline; the Algerian route (TSGP) crosses the Sahara. Validated in earlier acts, never redraw them.
+3. NO INVENTED FIGURES. This beat contains no statistics at all. Do not put numbers, volumes, dates or percentages on screen. Available proper nouns: Morocco/Rabat, Algeria, Nigeria, Europe, Atlantic.
+4. Text on screen stays minimal and always has a visual container — never a floating label, never elements scattered in screen corners.
+5. Nothing static for more than ~5 seconds of story time.
+
+⛔ THE ONE THING TO AVOID — DO NOT REPEAT THE PREVIOUS BEAT
+The beat immediately before this one was carried ENTIRELY by animated route lines on a map: gold routes drawing progressively, pulses travelling along them, a source point draining, one anchored insert at the climax. It worked there, because that beat was literally about FLOW — gas physically moving through pipes.
+This beat is NOT about flow. If you answer it with travelling pulses and drawing lines again, two things break: it reads as repetitive, AND it retroactively weakens the previous beat (when every idea is a moving line, a moving line stops meaning "something is circulating"). At least 2 of your 3 concepts must NOT rely on animated route lines as their main device.
+
+THE BEAT — what it must make the viewer feel (~33s)
+The subject is TWO OPPOSITE INTENTIONS over the same geography.
+- Morocco wants to BECOME something: if its pipeline succeeds, Rabat becomes the compulsory gateway between West Africa and Europe — described in the script as "a colossal lever of power".
+- Algeria wants to PREVENT something: it already holds the position of Europe's historic African gas supplier, and wants to avoid being BYPASSED by an Atlantic route.
+One is an ambition to GAIN. The other is a fear of LOSS. That asymmetry is the heart of the beat, and it is genuinely hard to draw — a gain and a fear should probably not be drawn in the same visual language.
+
+STRUCTURE (3 states, ~33s total)
+- 0 → 7.3s — Morocco's ambition is established.
+- 7.3 → 23.7s — THE PEAK: Rabat as the compulsory gateway, "a colossal lever of power". This is the beat's high point and it belongs to Morocco.
+- 23.7 → 33.4s — THE PIVOT: Algeria's exact opposite intention. The beat must LAND visually on the word "contournée" (bypassed) at 29.6s.
+
+NARRATION (French, for your understanding only): "Pour le Maroc, ce gazoduc est l'outil géopolitique ultime. S'il aboutit, Rabat devient le point de passage indispensable entre l'Afrique de l'Ouest et l'Europe : un levier de pouvoir colossal. Pour l'Algérie, l'objectif est exactement inverse : il s'agit de protéger son monopole historique de fournisseur africain de l'Europe, et d'éviter d'être contournée par un tracé qui passe par l'Atlantique."
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description)
+One storyboard sheet presenting your 3 concepts. For EACH concept, show the beat in 4 panels (opening / peak / pivot / final state), each panel 16:9 and readable at high resolution.
+Label each concept with a SHORT NAME and the REGISTER it uses.
+Under each concept, in a short director's note, write:
+  (a) WHAT THE IMAGE IS DOING — the specific animation, not just a camera move;
+  (b) YOUR REFERENCE — what existing visual work, technique or tradition inspired this concept (a documentary, an infographic style, a data-visualisation practice, an atlas, a film), and what specifically you borrowed from it. Be concrete and name it; we want to know where your idea comes from.
+  (c) FEASIBILITY — one line confirming it can be coded deterministically, and flagging the hardest part.
+Finally, state clearly which of the 3 concepts you DEFEND, and why it serves the ambition-versus-fear asymmetry better than the other two.
+Output the image now.

@@ -21,7 +21,8 @@ Quand Aziz parle d'un sujet, **charger le fichier correspondant AVANT d'écrire 
 | Doute sur si le SVG sera LISIBLE (forme nouvelle, angle incertain) ? | → **SVG-FAISABILITE-AMONT** obligatoire AVANT tout code |
 | Organique humain/animal réaliste, émotion de visage, scène filmée ? | → image générée (Gemini/Recraft/Seedance), pas SVG |
 
-> ⭐ **Vue d'ensemble « quel moteur pour quelle nature de contenu » (3 moteurs D3/SVG/Mapbox sur 1 socle Remotion, combos signatures, Mapbox+D3 sous-exploités, décision AU SCRIPT)** : `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`. Cet arbre en est la version rapide « trancher ici » ; la doctrine donne le raisonnement complet.
+> ⭐⭐ **Vue d'ensemble « quel moteur pour quelle nature de contenu » — LES 5 MOTEURS (Mapbox / D3 / SVG+Fable5 / stick-figure / matière filmée H3) sur 1 socle Remotion, + le RACCORD (montage) comme capacité à part entière** : `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`. Cet arbre en est la version rapide « trancher ici » ; la doctrine donne le raisonnement complet et **l'AMPLITUDE PROUVÉE de chaque moteur** (ce jusqu'où c'est allé, pas ce à quoi c'est limité).
+> ⛔ **À ouvrir aussi quand une scène part en redite** (« encore des flèches/lignes ») : un moteur oublié = une scène rabattue sur la carte par défaut. Un moteur est un REGISTRE D'EXPRESSION, jamais un catalogue de templates.
 
 ---
 

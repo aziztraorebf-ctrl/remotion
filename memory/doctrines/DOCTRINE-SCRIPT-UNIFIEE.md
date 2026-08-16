@@ -13,6 +13,13 @@
 > **Comment l'utiliser :** la doctrine de PILIER te dit QUOI raconter et dans quel ordre.
 > CETTE doctrine te dit COMMENT l'écrire pour que ça s'écoute bien. Les DEUX ensemble, toujours.
 > S'applique à TOUTES les chaînes (Kora et Cartes ET futures chaînes hors catégorie), TOUS les formats.
+>
+> ⭐⭐ **AU MOMENT DU SCRIPT, poser aussi le MOTEUR VISUEL de chaque acte/scène** →
+> `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md` (§ « QUAND appliquer : AU SCRIPT, pas à la production »).
+> Le moteur dominant devient une **COLONNE du script/storyboard**, décidée ici — pas découverte au
+> codage. Deux bénéfices : vision d'ensemble (on voit tout de suite si 3 actes d'affilée tournent sur
+> le même registre = **lassitude**), et traçabilité (« tenté en carte, c'était plat → passé en insert
+> SVG »). ⛔ Une vidéo entière dans un seul moteur est un signal d'alarme, pas une signature.
 
 ---
 
