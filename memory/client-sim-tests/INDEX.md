@@ -46,6 +46,12 @@
   plein pour tout format vertical non-standard). Code : `src/projects/_client-sim/mochit/`.
   Script réutilisable : `scripts/tools/da-brief-compare-2videos.py` (breakdown comparatif A/B avec
   2 vidéos natives Gemini+Kimi — utile pour tout futur test "reproduire une référence").
+  **Livrable : `out/_client-sim/mochit/FINAL/mochit-v5-FINAL.mp4`** (15,552 s · 465 f · 1080×2460 ·
+  audio) — re-rendu le 2026-08-16 depuis la composition `MochIt-Complete`.
+  > ⚠️ **Leçon (2026-08-16)** : à la clôture du 2026-08-09, le livrable final avait été **uploadé
+  > (Vercel Blob) sans jamais être conservé en local** — plus aucun MP4 sur disque ni dans git, alors
+  > que la note disait "livrable final uploadé". Un lien d'upload n'est PAS une archive : le render
+  > local est la source. **Garder le MP4 dans `out/.../FINAL/` avant tout upload**, pour les 3 tests.
 
 ## Méthode standard pour tout nouveau test client-sim
 
