@@ -59,5 +59,32 @@ On passe le background voulu comme **référence + description** au générateur
    « cost/bad », labels d'un autre épisode) → le modèle les dessine. Décrire SEULEMENT ce qu'on veut à l'écran.
 3. **Toujours les 2 modèles**, jamais se limiter à un selon le registre : on compare deux intentions de direction.
 
+---
+
+## ⭐⭐ FOND DÉGRADÉ VIVANT — ajout 2026-08-15 (le fond n'est plus forcément un aplat)
+
+> ⛔ **Divergence corrigée** : cette palette ne proposait que des fonds PLATS ou texturés statiques, alors
+> que la production est déjà passée au dégradé (Gazoduc Acte 4, palette `PAL_GPT` adoptée le 2026-08-14).
+> Sans cette entrée, les futurs storyboards/agents continuaient de produire des aplats.
+
+**Règle générale** : un fond de scène premium est un **dégradé qui vit lentement**, pas un aplat.
+L'aplat reste acceptable sous une carte Mapbox pleine page (le fond n'y est presque pas visible) et
+pour un registre volontairement graphique/plat. Partout ailleurs, préférer le dégradé.
+
+**Entrée n°5 — `navy-degrade-radial`** (valeurs mesurées, `PAL_GPT` Gazoduc Acte 4) :
+- haut `#0d1f38` → bas `#050c1a`, en **dégradé RADIAL** (pas linéaire — le radial crée un centre de
+  lumière, donc un point de focalisation)
+- option **halos dérivants** : 1-2 taches de lumière très diffuses qui se déplacent LENTEMENT
+  (frame-driven, `interpolate` sur toute la durée du beat, jamais une boucle rapide)
+
+**Pourquoi** (benchmark 3 références Fiverr, 2026-08-15) : les 3 vidéos analysées utilisent toutes un
+fond TRAITÉ. Tugger (teaser SaaS) construit sa scène entière sur un dégradé sombre + halos, quasi sans
+objet — **la lumière EST le décor**. C'est le détail le moins coûteux de toute l'analyse (aucune brique
+à coder, un `radialGradient` + un mouvement lent) et c'est ce qui sépare « propre » de « premium ».
+Détail : `memory/projects/SHOWCASE-CAPACITES.md` § Benchmark ÉLARGI.
+
+⚠️ Gazoduc : les Actes 1/2/3 restent en palette CLAIRE. Le passage au sombre se juge à la passe finale
+d'assemblage, jamais acte par acte.
+
 ## Évolution
 - Élargir avec d'autres teintes/variantes validées au fil des prods (rester une palette FERMÉE, pas un fourre-tout).

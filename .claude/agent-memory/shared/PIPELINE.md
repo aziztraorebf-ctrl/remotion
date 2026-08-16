@@ -153,13 +153,15 @@ Whiteboard Doodle avec Anansi en pose basse/repliée comme le Poster Vector avan
 même correctif V2, (b) accepter le geste tel quel et trancher entre les 2 registres visuels sur la
 base de la couleur sélective/decor, ou (c) explorer une autre piste.**
 
-### Flowdesk (test client simulé) — EN COURS, 2 registres en comparaison
-Hors registre Souverain (positionnement freelance). Registre 2A abstrait : V1→V3 tranchées, V4
-(hybride 2A+2B vidéo) en cours, Panneau 1 seul codé. Registre 2B (personnage, MiniMax H3) :
-**panneaux 1+2 TERMINÉS ET VALIDÉS** (livrable v9, lien dans STATUS.md), panneaux 3+4 restants.
-⚠️ Pas de branche dédiée (sur `feat/gazoduc-acte1-hook-globe`, hérité d'un autre chantier).
-Décision finale (2A vs 2B vs hybride) EN ATTENTE d'Aziz. Source de vérité :
-`memory/episodes/_client-sim/flowdesk/STATUS.md`.
+### ✅ Flowdesk (test client simulé) — CLOS 2026-08-06 (corrigé au wrap du 2026-08-15)
+Hors registre Souverain (positionnement freelance). **V4 hybride 2A+2B = livrable final validé**
+(render complet 49.1s / 1474 frames, aucun gel) : `out/_client-sim/flowdesk/abstrait-v4-FINAL.mp4`.
+⚠️ Ce bloc annonçait « EN COURS / décision EN ATTENTE d'Aziz » pendant 9 jours alors que 3 fichiers
+concordants le donnaient clos — corrigé au wrap.
+⚠️ Reste vrai et utile : **pas de branche dédiée** (sur `feat/gazoduc-acte1-hook-globe`, hérité d'un
+autre chantier). Source de vérité : `memory/episodes/_client-sim/flowdesk/STATUS.md`.
+⭐ Ce registre client-sim est le **seul matériau non-géopolitique du repo** → directement pertinent
+pour le cut vente freelance (cf. `memory/projects/SHOWCASE-CAPACITES.md` § Benchmark ÉLARGI).
 
 ### ✅ NorthShield (test client simulé) — CLOS 2026-08-08
 Hors registre Souverain. Direction B (100% abstraite) rejetée sur le fond (2026-08-07). Storyboard

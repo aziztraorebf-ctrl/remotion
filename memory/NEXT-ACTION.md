@@ -27,15 +27,18 @@
 
 ---
 
-## 🎬 Showcase des capacités — inventaire LIVRÉ, planche-contact en ligne (2026-08-15)
+## 🎬 Showcase des capacités — VIRAGE : source = production vivante publiée (2026-08-15 soir)
 
-Vidéo démo du savoir-faire, **double usage** : index visuel interne PUIS cut vente 60-90 s.
-Inventaire agent livré + **planche-contact des 53 renders dormants en ligne**.
-⏸️ **REPRISE = Aziz parcourt les 2 planches et marque ce qui tient** (sans ça, pas de montage
-possible : renders de mai-juin jamais revus). ⚠️ Tension à trancher plus tard : matériau
-géopolitique vs cible freelance SaaS.
-→ **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)** ·
-**[planche-contact](memory/projects/SHOWCASE-PLANCHE-CONTACT.md)**
+⛔ **L'arbitrage des 2 planches-contact est ANNULÉ** — ne PAS le redemander à Aziz. Les 53 templates
+sont **archivés** (consultables, pas supprimés) : ils ne sont plus la source de la showcase (« des
+templates qui défilent sans intention ne veulent rien dire »). Nouvelle source = **production vivante
+publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2 ; ⛔ Acte 3 exclu, gelé non validé).
+⏭️ **PROCHAINE ACTION = écrire la CHARTE DE DA** (palette 4 couleurs + 1 typo + fond en dégradé
+vivant à halos au lieu d'aplat `#16213a`) — ~1/2 journée, ⛔ **zéro composant neuf à coder**. C'est le
+chaînon manquant du cut vente, identifié par le benchmark de 3 références Fiverr. Ensuite seulement :
+déroulé (ordre/durée/musique) → index interne 3-4 min → cut vente 60-90 s.
+→ **[SHOWCASE-CAPACITES.md](memory/projects/SHOWCASE-CAPACITES.md)** (§ Benchmark ÉLARGI + § CE QUI
+MANQUE VRAIMENT) · **[planche-contact = archive](memory/projects/SHOWCASE-PLANCHE-CONTACT.md)**
 
 ## 💼 GIG FIVERR ENTRÉE DE GAMME (2026-08-12/13)
 
@@ -267,7 +270,10 @@ spécifiques Remotion, traces d'usage réel, doublons fonctionnels, agents-vierg
 - **Peste 1347 mid-form horizontal** — concept validé, backlog après AES + Maroc Batteries.
   Fiche : `projects/peste-1347-midform.md`. 2 chantiers actés (narration voix vivante, multi-agent
   post-fix) : `episodes/peste-1347/STATUS.md`.
-- **`GeoFlowConnection`** (pipeline Mapbox) — lignes/arcs animés entre pays. À coder au 1er sujet à flux.
+- ~~**`GeoFlowConnection`** — « à coder au 1er sujet à flux »~~ ⛔ **LIGNE PÉRIMÉE, retirée 2026-08-15** :
+  le composant EXISTE et est **publié** (Soudan Actes 3/4/5 + `SoudanWarMapEngine`, vérifié par grep).
+  ⚠️ Attention, **DEUX** fichiers portent ce nom, contrats opposés : `warmap/_shared/` = marqueur nu
+  (publié) · `_shared/mapbox/` = sprite orienté (dormant). Détail : `INTENTION-FORME-INDEX.md`.
 - **Patterns `_reference-atlas-poc/` non portés** : `AtlasParcheminGlobe.tsx` · `AnimatedCaravan.tsx` ·
   `atlas-parchemin-mande.json`.
 - **Vox Papercraft** — pipeline officialisé (`doctrines/REVERSE-STYLE-VIDEO-VERS-ASSETS.md`). Reste :
