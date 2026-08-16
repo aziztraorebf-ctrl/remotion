@@ -95,6 +95,68 @@ CNN »). Notre palette carte sombre vient d'être adoptée pour l'Acte 4 — c'e
 (intention→forme→template, timing dérivé de l'audio, storyboards multi-modèles). Lui vend des *plans*,
 nous produisons des *récits*. La showcase doit démontrer ça — d'où l'abandon des templates isolés.
 
+## 🔎🔎 Benchmark ÉLARGI — 3 références analysées (2026-08-15)
+
+> Méthode : `ffprobe` + extraction de frames sur toute la durée (jamais 1 frame au hasard), lecture
+> plan par plan. Les 3 vidéos sont des gigs/livrables Fiverr fournis par Aziz. Registres VOLONTAIREMENT
+> distincts — c'est la comparaison croisée qui produit le verdict, pas chaque vidéo isolément.
+
+| | **[1] Gig cartes** | **[2] Aikido** | **[3] Tugger** |
+|---|---|---|---|
+| Nature | reel de capacités, 20 plans | livrable client B2B complet | teaser produit SaaS |
+| Durée | 75 s | 142 s | 30 s |
+| Fond | satellite photoréaliste (Esri) | bleu très clair `#DDF0F2` | **noir + dégradé/halos bleus** |
+| Moteur | plans qui défilent | voix off + structure narrative | **typographie + interface** |
+| Outil probable | Google Earth Studio + AE | AE, illustration flat | AE / motion + mockups |
+
+**[2] Aikido** (logiciel ferroviaire UK, client Network Rail). Structure explainer B2B canonique :
+problème (3 laptops, budgets £680m/£720m/£650m + alertes) → terrain (carte UK, région rouge, tracé) →
+solution (logo au centre, 6 sources en pointillés : Oracle P6, Excel, PDF, Power BI, SharePoint, base) →
+produit (mockup UI en perspective + spinner + 3 bénéfices) → preuve (4 postes + orbite) → humain
+(réunion flat-design) → bénéfices (bandeaux à coches) → valeurs (grille 7 icônes) → logos + URL.
+⭐ **Sa vraie force = la discipline chromatique** : 4 couleurs seulement + 1 typo tiennent ensemble
+**4 registres visuels** (illustration flat / carte vectorielle / diagramme conceptuel / mockup UI)
+sans qu'on voie les coutures. Ce n'est pas un effet, c'est une charte.
+
+**[3] Tugger** (« Ask your business data anything »). Accroche typo → texte animé sur dégradé → logo →
+**split-screen d'intégration avec encoche découpée** (ancien logo / connecteur central / nouveau) →
+l'UI de chat se compose, la question **se tape en direct** (« Which of our projects is most over
+budget? ») → réponse déroulée + graphique → carton final.
+⭐ 3 forces : **la lumière EST le décor** (quasi zéro objet, dégradé sombre + halos qui dérivent) ·
+**le texte qui se tape en direct N'EST PAS décoratif — c'est la démo du produit** (on comprend l'outil
+en le voyant fonctionner, zéro mot d'explication) · le split à encoche.
+
+### ⭐⭐⭐ LE VERDICT CROISÉ (le résultat de fond de la session)
+
+**Aucune des 3 ne repose sur une technique qu'on ne maîtrise pas.** Ce qui les distingue est à chaque
+fois une **discipline de direction artistique**, pas une capacité : la charte 4 couleurs (Aikido), la
+lumière et le vide (Tugger), l'imagerie satellite (gig cartes).
+
+Deux constats reviennent dans les 3, indépendamment :
+1. ⭐⭐ **Notre matériau le plus vendeur DORT dans le registre client-sim** (NorthShield, Flowdesk,
+   MochIt). `northshield-v3-FINAL.mp4` est déjà dans ce langage — le mockup UI + curseur + cascade de
+   données de NorthShield P6 fait ce que font [2] ET [3], avec en plus un pic d'anomalie dramatisé
+   qu'aucun des deux n'a. C'est le seul matériau non-géopolitique du repo → il tranche en grande
+   partie la tension de positionnement du § ci-dessus.
+2. ⭐⭐ **Nos briques « texte comme matière » n'ont JAMAIS servi** (`TypeWriter`, `TypeReveal`,
+   `SplitFlap`, `WordExplode` : rendus, catalogués, zéro usage épisode) alors que 2 des 3 références
+   s'appuient dessus. C'est exactement le trou n°6 de l'inventaire — désormais confirmé par le marché.
+
+Ce qu'on fait et qu'aucune des 3 ne fait : **faire DURER un geste** (caméra continue de l'Acte 2 AAGP,
+zéro à-coup). Elles assemblent des plans ; nous tenons un mouvement. Sur un teaser 30 s ce n'est pas un
+défaut de leur part — c'est le format. Sur du long, c'est notre avantage.
+
+### 🎯 CE QUI MANQUE VRAIMENT — une CHARTE, pas une brique (~1/2 journée)
+
+Le chaînon manquant pour le cut vente freelance n'est **pas technique**. C'est un document de DA
+verrouillé, à écrire avant tout montage :
+- **palette restreinte** (4 couleurs max, cf. Aikido) + **1 typo** tenues sur toute la durée ;
+- **traitement du fond** : dégradé vivant avec halos qui dérivent, PAS un aplat. Nos fonds sont des
+  aplats (`#16213a`) — c'est ce qui sépare « propre » de « premium », et c'est peu de travail ;
+- règle d'enchaînement entre registres (carte → diagramme → mockup → personnages) sans couture visible.
+
+⛔ Ne PAS coder de composant neuf pour ça. C'est de la direction artistique appliquée à de l'existant.
+
 ---
 
 ## 📋 INVENTAIRE (agent, 2026-08-15) — résultats clés
