@@ -132,6 +132,39 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Distinguer N pays sans charger la carte | 1 contour coloré par pays + pulse | [WM] `SAHEL_COUNTRY_COLORS` (moteur, contours tracé-in) | WARMAP-COMPOSANTS |
 > ⚠️ Carte/contour/contagion : **toujours préférer Mapbox 3D frame-driven** (mouvement caméra) aux repros SVG plates. Hooks d'ouverture carto : `KineticMaskSlam`, `FiberOpticFlagInvade` (voir hooks-lib).
 
+#### INSERT-MATIERE — clip vidéo ancré géographiquement sur une carte (pattern, PAS encore un composant)
+
+**Le pattern** : carte assombrie + **pin/point géo-ancré qui pulse** (projection réelle, suit la caméra)
++ **connecteur pointillé qui se trace** du point vers le cadre + **cadre insert** contenant un clip en
+`<Loop>` + `<OffthreadVideo>`. L'insert se SUPERPOSE à la carte, il ne la pousse jamais.
+
+⛔ **Copié-collé à la main dans 3 fichiers, jamais importé** (audit EXTRACTOR 2026-08-14) :
+`_rnd/svg-scenes/GazoducH3IntegrationTestReal.tsx` (R&D de référence) → `souverain/gazoduc-aagp-tsgp/GazoducActe3CarteTSGP.tsx`
+L794+ (**production**, commentaire au code : « mécanique reprise TELLE QUELLE du prototype validé ») →
+`_rnd/svg-scenes/ProtoInsertMatiereConduite.tsx` (cette session, variante : ancrage sur le **TRACÉ**
+plutôt que sur une ville). **3e occurrence = seuil de duplication dépassé — extraire en composant au
+prochain usage réel**, pas dans le vide (même règle que les 4 implémentations de sprite-sur-chemin
+ci-dessus). ⚠️ Ne PAS coder une 4e variante sans extraire.
+
+**Ce qui va DANS le cadre** — familles identifiées, seule la n°1 est testée :
+1. ⭐ **La matière** (testé, validé) : ce qui transite dans le tuyau — gaz, pétrole, minerai, grain.
+2. Le mécanisme en coupe : vanne, compresseur, turbine, écluse (cf `STRUCTURE-OBJET-MECANISME`).
+3. L'échelle humaine ponctuelle : silhouette qui donne la mesure — ⛔ jamais de visage lisible, jamais
+   de dialogue (écarté par Aziz : « faudrait faire attention avec ça »).
+4. La conséquence (contrechamp) : compteur, facture, station à sec — la carte montre la cause,
+   l'insert montre l'effet chez les gens.
+5. Transition d'échelle carte → insert plein cadre → carte : **climax de rythme, à garder rare**.
+
+**Produire l'asset** : chaîne **Gemini 3.1 Flash image (composition verrouillée) → MiniMax H3 R2V
+(turbulence seule)**, 0 crédit. ⛔ **Jamais en T2V** — le modèle recompose la scène et on ne contrôle
+plus rien. Règle de partage : **composition + géométrie = NOUS** (déterministe) · **turbulence +
+matière = H3**. Si le mouvement est géométrique (translation, tracé, compteur) → SVG maison, H3
+n'apporte rien. Détail + mesures + gotchas : `memory/tools/minimax-h3-comfy-cloud.md` § INSERT MATIÈRE.
+
+⚠️ **Le sens de lecture ne se négocie pas avec le modèle** : H3 fait *bouillonner* la matière mais ne
+tient pas une direction demandée. Porter la direction en SVG déterministe par-dessus (impulsions le
+long du tracé, flèche, dégradé qui progresse) — c'est ce que fait `ProtoInsertMatiereConduite`.
+
 ### Faire RESSENTIR le TEMPS / une séquence  ← (catégorie renforcée)
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|

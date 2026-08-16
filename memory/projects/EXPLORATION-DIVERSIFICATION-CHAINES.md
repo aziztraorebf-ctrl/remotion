@@ -285,3 +285,38 @@ extraction de la frame d'ouverture réelle en pleine résolution, uploadée manu
 custom par Aziz sur YouTube Studio. Pas de garantie de résultat (pas encore assez de recul pour juger
 l'effet), mais la cause structurelle (vignette auto vs custom) est établie. Diagnostic clos, pas de
 suite programmée — resurveiller les vues du Short si le sujet redevient pertinent.
+
+---
+
+## ⛔⛔⭐⭐ CHANGEMENT YOUTUBE PARTNER PROGRAM — seuils DOUBLÉS au 1er février 2027 (annonce du 2026-08-10)
+
+**À lire avant toute décision de format pour une NOUVELLE chaîne** (piste Canada EN, piste « pays qui
+montent », toute diversification) — l'arbitrage long-format vs Shorts n'a plus le même coût qu'avant.
+
+| | Actuel (jusqu'au 31 jan 2027) | **Dès le 1er fév 2027** |
+|---|---|---|
+| Abonnés | 1 000 | 1 000 (inchangé) |
+| Voie long-format | 4 000 h / 12 mois | **8 000 h** |
+| Voie Shorts | 10 M vues / 90 j | **20 M vues** |
+
+Plus une règle de **MAINTIEN inédite** : à partir de février 2027, il faut conserver **10 M vues Shorts
+sur les 90 derniers jours glissants** pour continuer à toucher la part de revenus Shorts. En dessous,
+les gains Shorts se coupent — la chaîne reste dans le YPP et continue de gagner sur le long-format, et
+la rémunération Shorts reprend automatiquement si on repasse le seuil.
+
+**✅ Les chaînes DÉJÀ monétisées sont intégralement préservées** (grandfathered) — il faut simplement
+accepter les nouvelles conditions avant le 31 janvier 2027. Le durcissement vise les NOUVEAUX entrants.
+
+**⭐ Implication stratégique pour nous** : la voie Shorts double en absolu **ET** ajoute une contrainte
+de maintien continue, alors que le long-format garde un seuil d'entrée simple (×2 mais sans maintien).
+**Le long-format devient proportionnellement la voie la MOINS durcie** — ce qui conforte le format
+principal de Kora & Cartes. Les Shorts gardent leur valeur d'entonnoir/découverte, mais miser sur eux
+comme source de revenu direct devient nettement plus dur pour une chaîne qui démarre.
+
+**Contexte plateforme** : ce durcissement complète la politique « inauthentic content » du 2025-07-15
+(contenu produit en masse, compilations, re-uploads TikTok démonétisés). Justification officielle
+YouTube neutre (« récompenser les créateurs actifs, garder le YPP soutenable ») — aucun lien déclaré
+avec l'IA/le spam, mais la mécanique frappe exactement ce profil.
+
+⚠️ Source : recherche web du 2026-08-14 (ma knowledge cutoff est en retard sur les annonces YouTube
+2026). Re-vérifier si une décision à fort enjeu en dépend.
