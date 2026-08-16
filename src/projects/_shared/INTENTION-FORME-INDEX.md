@@ -9,8 +9,17 @@
 > Si oui → on adapte. Si non → l'intention est claire, on code (on sait EXACTEMENT quoi).
 >
 > Procédure (checklist doctrine, 30s) : 1.Intention (1 verbe) · 2.Continuité (quel monde est déjà à
-> l'écran ? je le PROLONGE) · 3.Forme (quel geste porte l'intention ?) · 4.Template (ici) · 5.Épure
-> (retirer ce que la voix dit déjà) · 6.Calage (image ~1s avant le mot-clé).
+> l'écran ? je le PROLONGE) · 3.Forme (quel geste porte l'intention ?) · **3bis.MOTEUR** ·
+> 4.Template (ici) · 5.Épure (retirer ce que la voix dit déjà) · 6.Calage (image ~1s avant le mot-clé).
+>
+> ⛔⛔ **ÉTAPE 3bis — QUEL MOTEUR ? À NE JAMAIS SAUTER** → `memory/doctrines/MOTEURS-VISUELS-ET-SOCLE.md`
+> Entre la FORME et le TEMPLATE, il y a le **REGISTRE D'EXPRESSION** : carte réelle (Mapbox) · géométrie
+> calculée (D3) · objet/processus/métaphore (SVG) · un acteur humain (stick-figure) · **matière filmée
+> (MiniMax H3)** · **le RACCORD / le montage** (on a le droit de QUITTER la carte, de couper, d'alterner).
+> Sauter cette étape = rabattre la scène sur le moteur déjà en tête, et produire une redite du beat
+> précédent. **Vécu 2026-08-15** (storyboard Gazoduc 4B entièrement en tracés/flèches : le brief
+> n'ouvrait aucune autre porte, donc les modèles n'en ont trouvé aucune).
+> La doctrine donne l'**AMPLITUDE PROUVÉE** de chaque moteur + les **8 trous** que rien ne couvre.
 
 ---
 
@@ -114,7 +123,8 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Zone de tension/conflit qui respire | pulse région | [C] `PulsingRegionFill` | CATALOGUE N3.4 |
 | Révéler un pays avec dynamisme (scanner) | faisceau qui traverse | [C] `SweepRevealTerritory` | CATALOGUE l.77 |
 | Isoler un pays + zone (spotlight) | pays bright, reste assombri + hachures | [C] `MapboxIsolateZone` | CATALOGUE l.38 |
-| Des flux/connexions/corridors entre lieux | arcs / route animée + sprite | [C] `GeoFlowConnection` (route+caméra suit), `GlobalPulse`, `FlowArrowsMap` | CATALOGUE l.143 |
+| Des flux/connexions/corridors entre lieux | arcs / route animée + sprite | [C] ⛔ **DEUX composants portent le nom `GeoFlowConnection`, contrats OPPOSÉS** : `_shared/mapbox/GeoFlowConnection` = sprite **orienté** (`sprite="plane"\|"cargo"\|"dot"\|"none"`, cargo top-view, exige **pitch≈0**), dormant · `warmap/_shared/GeoFlowConnection` = marqueur **NON orienté** (point lumineux, `markerProgress` découplé du tracé), **publié Soudan**. Vérifier le chemin d'import. Aussi : `GlobalPulse`, `FlowArrowsMap` | CATALOGUE l.143 |
+| **Un OBJET (navire/avion/véhicule) se déplace le long d'un chemin** | sprite positionné + **orienté par la tangente** du tracé | ⚠️ **4 implémentations indépendantes, aucune n'est le canon** (audit 2026-08-15) : [1] `_shared/templates/travel-map/pathUtils.ts` (`pointOnPath`+`bearingOnPath`, % écran, **la plus propre** — modèle abouti = `GoldRoute8Dir` sprite 8 directions + walk-cycle) · [2] `atlas/_shared/geoUtils.ts` (`positionAlongRoute`/`bearingAlongRoute`, lon-lat turf, ✅ **livré** Peste 1347) · [3] `_shared/mapbox/GeoFlowConnection` (`map.project()`) · [4] `MilitaryMarchLine` (9:16 figé, objet = emoji ⛔ R-OBJ-2). **Manque réel** = l'adaptateur entre espaces (% écran ↔ lon-lat ↔ coords d3 pré-projetées type `aagpFullPath` du Gazoduc Acte 2) + l'ancrage taille au zoom (R-OBJ-1). ⛔ **Ne PAS coder une 5e version** : unifier au 1er vrai usage (Acte 4/5), jamais dans le vide | ce fichier |
 | Données ancrées à un point sur la carte | popup geo | [C] `GlassmorphismGeoPopup` | CATALOGUE-CARTE-VIVANTE |
 | Couper vers un insert puis revenir à la carte | cutaway plein écran (4 modes) | [C] `MapCutaway` (texte/stat/image/flag, typewriter) | CATALOGUE l.28 |
 | **Montrer CE QUI TRANSITE dans un tracé** (gaz, pétrole, minerai) — la carte ne montre qu'une ligne | insert « coupe » ancré sur le tracé + impulsions qui circulent | [P] ⭐ **`ProtoInsertMatiereConduite`** (clip H3 en boucle dans un cadre + sens de lecture SVG) — proto validé, à extraire en composant au 1er vrai usage | INSERT-MATIERE ci-dessous |
@@ -148,7 +158,7 @@ Tag pilier : [S]=Souverain · [WM]=War-Map · [A]=Atlas · [C]=Carte vivante Map
 | Intention | Forme | Réponse(s) | Catalogue |
 |---|---|---|---|
 | Incarner un acteur sur un trajet (A→B) | sprite walk-cycle ancré-pied + caméra suit | [A] `AtlasPixelChar` + blueprint `WalkToDestination` | ATLAS-COMPOSANTS §3 |
-| Un cortège/caravane traverse un territoire | file de sprites décalés sur path courbe | [A] **canonique** : `caravanePositions()` (`atlas/_shared/geoUtils.ts`) + `FormationMarch` (`_blueprints/formation-march/`) OU templates `_shared/templates/travel-map/GoldRoute*`. ⛔ `AnimatedCaravan.tsx` = fichier FANTÔME (cité en mémoire, n'existe pas) | ATLAS-COMPOSANTS §3 |
+| Un cortège/caravane traverse un territoire | file de sprites décalés sur path courbe | [A] **canonique** : `caravanePositions()` (`atlas/_shared/geoUtils.ts`) + `FormationMarch` (`src/projects/atlas/_blueprints/formation-march/`) OU templates `_shared/templates/travel-map/GoldRoute*`. ⚠️ `_reference-atlas-poc/composants-tsx/AnimatedCaravan.tsx` EXISTE (contrairement à ce que disait cette ligne avant le 2026-08-15) mais reste **POC hors-prod, non porté délibérément** : imports locaux au POC non résolus depuis `src/`, rend des dots (viole R-OBJ-2). Sa fonction utile est déjà extraite dans `geoUtils.ts` — ne pas le porter | ATLAS-COMPOSANTS §3 |
 | Voyage multi-villes (A→B→C→D) | waypoints + sprite tourne par direction | [A] blueprint `WaypointMarch` | _blueprints |
 | Un affrontement / 2 forces convergent | chorégraphie file→ligne→charge→clash, OU confrontation face-à-face | [A] `AtlasV2ArmyDeployScene`, `AtlasV2ConfrontationScene`, blueprint `Alliance` | ATLAS-PLAYBOOK §3 |
 | Un mouvement tactique (flèche, tenaille) | arc géodésique marching-ants + tête mobile | [A] `AtlasAttackArrow`, `AtlasEncirclement` | _shared atlas |

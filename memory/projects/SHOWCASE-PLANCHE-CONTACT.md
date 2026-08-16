@@ -1,5 +1,24 @@
 # Planche-contact des 53 templates déjà rendus (2026-08-15)
 
+> ## 🗄️ STATUT : ARCHIVE CONSULTABLE — PAS la source de la showcase (décision Aziz, 2026-08-15)
+>
+> **Rien n'est supprimé** : les 53 MP4 restent dans `out/templates-souverain/`, les 2 planches restent
+> en ligne (liens ci-dessous), cette légende reste la clé de lecture. On consulte ce fichier quand on
+> cherche « est-ce qu'on avait déjà fait un truc comme ça ? ».
+>
+> **Ce qui change** : ces templates ne seront PAS le matériau de la vidéo showcase, et l'arbitrage
+> d'Aziz (« lesquels tiennent encore ? ») est **annulé** — inutile de parcourir les planches pour ça.
+>
+> **Pourquoi** (constat d'Aziz, en regardant un gig Fiverr concurrent) : *« voir des templates qui
+> défilent sans intention derrière, ne veut rien dire du tout »*. La pratique a mûri vers le sur-mesure
+> — chaque vidéo part désormais d'un storyboard original, plus d'un catalogue de templates. Un
+> concurrent qui vend 20 effets interchangeables se bat sur le terrain où nous ne sommes plus.
+> La showcase se montera donc sur la **production vivante publiée** (Sénégal, Soudan, AES, CFA,
+> Gazoduc Actes 1-2) : des scènes complètes où il se passe quelque chose, pas des briques isolées.
+>
+> Ces renders gardent 2 usages : (1) retrouver une forme déjà explorée, (2) témoigner de l'âge
+> « socle mai 2026 » du repo. Voir `SHOWCASE-CAPACITES.md` § inventaire.
+
 > **But** : rendre visible d'un coup d'œil ce qui dort dans `out/templates-souverain/` (53 MP4, 426 Mo,
 > rendus mai-juin 2026 et jamais revus depuis). Chaque vignette = 4 s du template, à ~15% de sa durée.
 > Règle appliquée : *un décor qu'on n'a pas vu n'est pas un acquis, c'est une dette.*

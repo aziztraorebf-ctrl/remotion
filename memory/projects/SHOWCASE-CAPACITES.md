@@ -55,13 +55,45 @@ pas de création — quelques jours, pas quelques semaines. Sources : `out/PRET-
 
 ## État
 
-- **2026-08-15** : cadrage validé (double usage + sélection par capacité) · inventaire agent livré
-  (voir plus bas) · **planche-contact des 53 renders produite et en ligne** →
-  [SHOWCASE-PLANCHE-CONTACT.md](memory/projects/SHOWCASE-PLANCHE-CONTACT.md). Rien n'est monté.
-- ⏸️ **EN ATTENTE D'AZIZ — c'est le point de reprise** : parcourir les 2 planches et marquer ce qui
-  tient encore. Sans cet arbitrage, on ne peut pas monter : les renders datent de mai-juin et la
-  plupart des templates n'ont jamais été jugés visuellement (candidats à DÉCOUVRIR, pas à montrer).
-- Ensuite seulement : déroulé (ordre des blocs, durée, musique), puis montage de l'index, puis cut vente.
+- **2026-08-15 (matin)** : cadrage validé (double usage + sélection par capacité) · inventaire agent
+  livré (voir plus bas) · planche-contact des 53 renders produite et en ligne.
+- ⭐⭐ **2026-08-15 (soir) — VIRAGE : les 53 templates sont ÉCARTÉS comme source de la showcase.**
+  L'arbitrage d'Aziz sur les planches est **annulé** (il n'a plus lieu d'être). Les renders sont
+  **archivés, pas supprimés** → [SHOWCASE-PLANCHE-CONTACT.md](SHOWCASE-PLANCHE-CONTACT.md) § statut archive.
+  Déclencheur : Aziz analyse un gig Fiverr concurrent et formule le constat —
+  *« voir des templates qui défiler sans intention derrière, ne veut rien dire du tout »*. Le repo a
+  dépassé le stade du catalogue : chaque vidéo part d'un storyboard original.
+  **Nouvelle source = la production vivante publiée** (Sénégal, Soudan, AES, CFA, Gazoduc Actes 1-2) :
+  des scènes complètes où il se passe quelque chose. ⛔ Gazoduc Acte 3 reste exclu (gelé, non validé).
+- Reste à faire, dans l'ordre : déroulé (ordre des blocs, durée, musique) → montage de l'index →
+  cut vente. La tension géopolitique/SaaS (§ ci-dessus) ne bloque que le cut vente.
+
+## 🔎 Benchmark concurrent Fiverr (2026-08-15) — où on se situe vraiment
+
+Reel de gig analysé (75 s, 20 plans, Google Earth Studio + After Effects, imagerie satellite Esri).
+Capacités vendues : `REVEAL MAPS`/`FLY IN` · `ANIMATE ANY ELEMENTS` (arrows, aircrafts, rocket) ·
+`HIGHLIGHT ANY AREA` · `DIFFERENT MAP STYLES` · `MILITARY BASE` · `BATTLE SCENE` · `OVERVIEW MAP`.
+
+**Verdict : à parité ou devant sur 6 capacités sur 8** (pays qui se remplit → `FlagFill`/
+`ResourceTextureFill` ; fly-in globe→point → `GlobeToParchemin` ; caméra qui suit un tracé →
+Acte 2 AAGP, **meilleur** car continu là où lui coupe ; flux → `GeoFlowConnection` ; zone hachurée →
+`WarMapDimmedOverlay` ; split overview → `WarMapSplitScreen` 3 volets, **meilleur** que ses 2 volets figés).
+
+Les 2 écarts réels :
+1. **Objets qui traversent la carte** — il les fait en un clic (calque AE auto-orient). Chez nous :
+   4 implémentations éparpillées, aucune canonique (cf. INTENTION-FORME-INDEX ligne « Un OBJET se
+   déplace le long d'un chemin »). ⚠️ Ce n'est PAS un trou de capacité, c'est une dette d'unification.
+2. **Battle scene** — ses chars top-down avancent SUR la carte ; notre équivalent Soudan est un
+   insert SVG hors carte (rupture de registre). Formes différentes, même intention. La nôtre est plus
+   lisible ; la sienne est le plan le plus faible de son reel (chars minuscules, explosion générique,
+   fond rouge saturé = registre qu'on a explicitement rejeté).
+
+Écart assumé, pas un manque : il utilise de l'imagerie **satellite photoréaliste** (look « broadcast
+CNN »). Notre palette carte sombre vient d'être adoptée pour l'Acte 4 — c'est un choix de DA.
+
+⭐ **Enseignement de fond** : notre avantage n'est pas la liste d'effets, c'est le **système**
+(intention→forme→template, timing dérivé de l'audio, storyboards multi-modèles). Lui vend des *plans*,
+nous produisons des *récits*. La showcase doit démontrer ça — d'où l'abandon des templates isolés.
 
 ---
 
