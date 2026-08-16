@@ -72,15 +72,27 @@ MOMENTS = {
 }
 
 
-def gen_gemini(prompt: str, refs: list, out: Path):
+def gen_gemini(prompt: str, refs: list, out: Path, edit: bool = False):
     # prompt = EXACTEMENT ce qui part au modele (aucun registre injecte). Les refs sont des images
     # d'ancrage de registre/fond (ex: un background de la palette) — facultatives.
-    parts = [{"text": prompt}]
+    #
+    # ⛔⛔ ORDRE DES PARTS = COMPORTEMENT COMPLETEMENT DIFFERENT (bug trouve 2026-08-16, Acte 5) :
+    #   TEXTE puis IMAGE  -> GENERATION : le modele suit le texte, l'image n'est qu'une inspiration
+    #                        faible. C'est le bon mode pour "cree une planche de storyboard".
+    #   IMAGE puis TEXTE  -> EDITION : le modele RETOUCHE l'image fournie et garde tout le reste
+    #                        identique. C'est le SEUL mode qui marche pour "enleve les ecritures et
+    #                        ne touche a rien d'autre".
+    # Vecu : 3 tentatives d'edition en mode TEXTE-puis-IMAGE ont rendu du hors-sujet total (une coupe
+    # anatomique de tete, un schema de rein, une photo de circuit imprime) alors que le modele DECRIT
+    # parfaitement l'image quand on l'interroge — la vision marchait, c'est l'ordre qui etait faux.
+    # => Passer edit=True pour toute retouche d'une image existante.
+    img_parts = []
     for r in refs:
         r = Path(r)
         if r.exists():
             mime = "image/png" if r.suffix.lower() == ".png" else "image/jpeg"
-            parts.append({"inline_data": {"mime_type": mime, "data": base64.b64encode(r.read_bytes()).decode()}})
+            img_parts.append({"inline_data": {"mime_type": mime, "data": base64.b64encode(r.read_bytes()).decode()}})
+    parts = ([*img_parts, {"text": prompt}] if edit else [{"text": prompt}, *img_parts])
     payload = {"contents": [{"parts": parts}], "generationConfig": {"responseModalities": ["image", "text"], "temperature": 0.6}}
     r = requests.post(GEMINI_URL, json=payload, timeout=180)
     if r.status_code != 200:

@@ -50,6 +50,8 @@ import { ProtoTroisGisementsInserts, PROTO_TROIS_GISEMENTS_FRAMES } from "./proj
 import { PortDecorStatique } from "./projects/_rnd/svg-scenes/PortDecorStatique";
 import { LevierPouvoirFable } from "./projects/_rnd/svg-scenes/LevierPouvoirFable";
 import { GazoducAeroportFable5Test, GAZODUC_AEROPORT_FABLE5_FRAMES } from "./projects/_rnd/svg-scenes/GazoducAeroportFable5Test";
+import { Acte5NegocierCreuserFable } from "./projects/_rnd/svg-scenes/Acte5NegocierCreuserFable";
+import { Acte5FailleFinaleFable } from "./projects/_rnd/svg-scenes/Acte5FailleFinaleFable";
 import { PortVivant16x9, PORT_VIVANT_FRAMES } from "./projects/_rnd/svg-scenes/PortVivant16x9";
 import { FunambuleDecorTest16x9 } from "./projects/_rnd/svg-scenes/FunambuleDecorTest16x9";
 import { PorteurCharge16x9, PORTEUR_CHARGE_FRAMES } from "./projects/_rnd/svg-scenes/PorteurCharge16x9";
@@ -76,6 +78,7 @@ import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-t
 import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule, PROTO_CARTE_PALETTE_GPT_FRAMES } from "./projects/_rnd/d3-16x9/ProtoCartePaletteGPT";
 import { GazoducActe4Objectifs } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs";
 import { GazoducActe4Calendrier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Calendrier";
+import { GazoducActe5Faille } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe5Faille";
 import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES, GAZODUC_A4_SEGC_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
@@ -1248,6 +1251,16 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte4-Calendrier"
           component={GazoducActe4Calendrier}
           durationInFrames={GAZODUC_A4_SEGC_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 5 — DERNIER PLAN de l'episode : le coin plante, la terre qui se fend.
+            Dessin issu du concours SVG 4 modeles (choix Aziz : GPT-5.5) ; l'animation est de nous. */}
+        <Composition
+          id="D3-Gazoduc-Acte5-Faille"
+          component={GazoducActe5Faille}
+          durationInFrames={240}
           fps={30}
           width={1920}
           height={1080}
@@ -2959,6 +2972,8 @@ export const RemotionRoot: React.FC = () => {
         <Composition id="RND-GazoducAeroportFable5Test" component={GazoducAeroportFable5Test} durationInFrames={GAZODUC_AEROPORT_FABLE5_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GazoducH3IntegrationTest" component={GazoducH3IntegrationTest} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_FRAMES} fps={30} width={1920} height={1080} />
         <Composition id="RND-GazoducH3IntegrationTestReal" component={GazoducH3IntegrationTestReal} durationInFrames={GAZODUC_H3_INTEGRATION_TEST_REAL_FRAMES} fps={30} width={1920} height={1080} />
+        <Composition id="RND-Acte5-NegocierCreuser-Fable" component={Acte5NegocierCreuserFable} durationInFrames={450} fps={30} width={1920} height={1080} />
+        <Composition id="RND-Acte5-FailleFinale-Fable" component={Acte5FailleFinaleFable} durationInFrames={240} fps={30} width={1920} height={1080} />
         <Composition id="RND-FluxPetroleAnimee" component={FluxPetroleAnimee} durationInFrames={210} fps={30} width={1080} height={1080} />
         <Composition id="RND-JetonsQwenDemo" component={JetonsQwenDemo} durationInFrames={150} fps={30} width={1000} height={640} />
         <Composition id="RND-JetonsGlmDemo" component={JetonsGlmDemo} durationInFrames={150} fps={30} width={1000} height={640} />

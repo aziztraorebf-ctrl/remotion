@@ -1,0 +1,69 @@
+CONTEXT — YOU ARE A SENIOR VISUAL DIRECTOR for a French geopolitical documentary YouTube channel (real GeoJSON cartography, React/Remotion, everything coded frame by frame, deterministic).
+
+The attached image shows TWO REAL FRAMES from our production, stacked:
+  A (top) = OUR MAP — real GeoJSON borders, our dark palette, two gas routes in amber.
+  B (bottom) = OUR FLAT SVG INSERT — a real production frame from this same episode.
+LOOK AT B CAREFULLY. That is exactly what our vector work looks like: FLAT SHAPES, simple gradients, clean strokes, generous empty space, one idea per screen. It is a schematic, not a rendered object.
+
+WHAT WE ARE ASKING YOU
+Conceive the scene below. Propose 3 DISTINCT concepts, each built on a different visual approach, and say which one YOU defend and why. We are not asking you to illustrate an idea we already have — the concepts must be yours.
+
+⛔⛔ THE MISTAKE TO AVOID — WE MADE IT BEFORE, IT COST US
+A model once proposed a beautiful mechanism rendered with metallic bevels, volumetric lighting and depth, labelled "100% codable in SVG". It was NOT codable by us: reproducing it would have produced something far flatter, and the gap would have been the actual deliverable.
+So: DRAW IN THE MATERIAL OF IMAGE B. Flat fills, simple gradients, clean lines, strong composition.
+⛔ FORBIDDEN in every concept: metallic bevels, volumetric or cinematic lighting, photoreal reflections, perspective/vanishing-point scenes, 3D-rendered objects, raster textures, CSS 3D transforms.
+This is a constraint of MATERIAL, not of ambition. Be as bold as you like WITHIN it.
+
+WHAT WE CAN ACTUALLY BUILD (registers open to you — none is the default, combine them freely)
+- REAL CARTOGRAPHY — territories that fill or change colour, borders that light up, continuous camera over real GeoJSON.
+- COMPUTED GEOMETRY (D3) — axes and curves from real values, areas that grow or collapse, a shape whose SIZE encodes a quantity, cartogram, choropleth, free deformation of a shape, proportional rings, timelines, networks that recompose.
+- FLAT SVG SCHEMATIC (like image B) — a mechanism, an object, a metaphor, a cross-section, a valve, a comparison of sizes, a machine seen from the side.
+- A HUMAN FIGURE — simple coded ink stick-figures. CHEAP when holding ONE clear static pose (gives human scale). EXPENSIVE when manipulating objects with multi-limb organic motion — if a concept needs hands that grip, twist or lift something, say so explicitly so we can price it.
+- MONTAGE / RUPTURE — a 46s beat need not be one continuous shot. You may CUT, go FULL-SCREEN on a schematic, alternate two spaces, ZOOM OUT to reveal a wider frame. Rupture of form is available and often the strongest tool in a closing beat.
+- FILMED MATTER — we can generate real filmed footage and anchor it in a frame. Costly; if you use it, say what it shows that a drawing cannot.
+
+WHERE THIS BEAT SITS — IT IS THE FINAL ACT OF THE EPISODE
+This is the LAST of five acts. The viewer has just watched, in order:
+  - Act 1-3: the two rival pipeline projects, on THE MAP (real cartography, amber routes).
+  - Act 4 movement A + B: still THE MAP — the two routes fighting over one insufficient resource, then the opposite intentions of Morocco and Algeria (with one flat SVG insert: a lever of power).
+  - Act 4 movement C: we DELIBERATELY LEFT THE MAP for pure data geometry — a time axis, a falling demand curve, two amber pipes of investment that lock in place. It ends on: what was built is far too big for the market that remains.
+So: the map has carried most of the episode; the beat immediately before this one was an abstract graph.
+⭐ Your concept must CLOSE the episode. Think about what the last image of a 9-minute documentary should be.
+
+THE BEAT — what it must make the viewer feel (~46s)
+Three movements, in the narration's own order:
+  1. IMPLICATION (0 -> 9.3s) — it suddenly concerns YOU. "If you heat your home with gas in France, Spain, Italy or Germany, this silent rivalry will one day end up on YOUR BILL." After 9 minutes of African geopolitics, the viewer is pulled into the story.
+  2. THE STAKE (9.3 -> 27s) — "What is being played out on the maps of West Africa is WHO WILL HAVE THEIR HAND ON EUROPE'S NEXT GREAT TAP. And above all, according to WHICH MODEL: that of international financing, or that of SOVEREIGN STATES."
+     ⭐ This is the thematic summit of the whole episode. "SOUVERAINS" (sovereign) is capitalised in our script AND is the name of our series. Two competing models is the real subject.
+  3. THE CLOSE (27 -> 46.16s) — "Nobody yet knows which of these two routes will go all the way. Perhaps neither will ever reach the Mediterranean. But one thing is certain: while some are still negotiating over who will pay… OTHERS HAVE ALREADY STARTED DIGGING."
+     ⭐ "CREUSER" (to dig) is the FINAL WORD of the entire episode, landing at 45.74s — only 0.4s of audio remains after it. The last image must be ready for it.
+
+⭐ THE CRAFT PROBLEM WE MOST NEED YOU TO SOLVE
+The closing line opposes TWO POSTURES, not two territories: those still NEGOTIATING (talk, paperwork, delay) against those already DIGGING (action, ground, irreversibility). Find a way to make that opposition VISIBLE and final, in our flat material. Solve that and the episode lands.
+Note: the "hand on the tap" is the narration's own metaphor — you may use it or reject it, but if you build on it, remember that animated gripping hands are expensive for us (see registers above). Say what your concept costs.
+
+HARD CONSTRAINTS (facts, not preferences)
+1. GEOGRAPHY IS LOCKED if you show it: the Moroccan route (AAGP) is COASTAL along the West African Atlantic shoreline; the Algerian route (TSGP) crosses the Sahara. Never redraw them differently.
+2. NO INVENTED FIGURES. This beat has no statistics at all. Proper nouns available: France, Spain, Italy, Germany, Europe, Morocco, Algeria, Nigeria, Mediterranean.
+3. ⛔ THE TEXT ON SCREEN MUST NEVER REPEAT THE NARRATION. Writing a word on screen at the exact moment the voice says it is disguised subtitling — we removed four such labels from the previous beat. Text may only NAME what the image cannot say (a place, an axis, a source). If information is missing, propose a GESTURE, not a caption.
+4. ⛔ NO TREMBLING, NO FLASHING. No pulsing halos, no frame shake, no impact flashes, no permanent vibration. A premium graphic does not tremble. Movement must be intentional and readable.
+5. Nothing static for more than ~5 seconds.
+6. Palette: background #0d1f38 -> #050c1a (radial), cyan #2E9FD4 with #7FD8FF stroke, accent amber #FFC742, text #e8ecf5 on dark plates with cyan border, monospace type.
+
+STRUCTURE (timings locked to the real narration — forced-aligned, not estimated)
+- 0 -> 9.3s: IMPLICATION. "facture" (bill) lands at 9.32s.
+- 9.3 -> 27s: THE STAKE. "robinet" (tap) at 17.96s · "modèle" at 22.06s · "SOUVERAINS" at 27.04s.
+- 27 -> 46.16s: THE CLOSE. "Méditerranée" at 35.50s · "payer" (pay) at 42.08s · "CREUSER" (dig) at 45.74s.
+
+NARRATION (French, for understanding only): "Si vous vous chauffez au gaz en France, en Espagne, en Italie ou en Allemagne, cette rivalité silencieuse finira un jour sur votre facture. Ce qui se joue actuellement sur les cartes de l'Afrique de l'Ouest, c'est de savoir qui aura la main sur le prochain grand robinet de l'Europe. Et surtout, selon quel modèle : celui des financements internationaux, ou celui des États SOUVERAINS. Personne ne sait encore lequel de ces deux tracés ira jusqu'au bout. Peut-être qu'aucun des deux ne verra jamais la Méditerranée. Mais une chose est sûre : pendant que certains négocient encore pour savoir qui va payer… d'autres ont déjà commencé à CREUSER."
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description)
+One storyboard sheet, 3 concepts, each shown in 4 panels (implication / the stake / the close / FINAL IMAGE), each panel 16:9 and readable at high resolution. Give each concept a SHORT NAME and name the REGISTER it uses.
+Under each concept, a short director's note with:
+  (a) WHAT THE IMAGE IS DOING — the specific animation, not a camera move.
+  (b) THE ONE GESTURE PER PANEL — the SINGLE visual gesture carrying each panel. If a panel needs three gestures to describe, it is too expensive: simplify it.
+  (c) NEGOTIATING vs DIGGING — how your concept makes that final opposition visible without writing it.
+  (d) THE LAST IMAGE — what exactly is frozen on screen when the word "CREUSER" lands, and why it is a worthy end to a 9-minute film.
+  (e) COST FLAG — name anything in your concept that needs animated hands, organic motion or filmed matter.
+Finally: state which concept you DEFEND and why it closes the episode better than the other two.
+Output the image now.
