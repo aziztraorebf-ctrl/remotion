@@ -1,0 +1,112 @@
+{
+  "beat": "Gazoduc Acte 4 — Mouvement C — 'Le calendrier se retourne'",
+  "duree_s": 49.541,
+  "fps": 30,
+  "moteur": "geometrie-d3",
+  "moteur_pourquoi": "Le beat porte sur le TEMPS et la QUANTITE (2030, dizaines de milliards, marche qui retrecit), pas sur l'espace. La carte a porte les mouvements A et B du meme acte : un 3e beat cartographique serait une redite. Choix valide par Aziz apres 2 rounds de storyboard.",
+  "concept": "UN axe de temps. UNE courbe (demande europeenne) qui reste vivante et s'en va. UNE barre ambre (les milliards) qui s'empile puis se fige pour toujours. Le sens est porte par le CONTRASTE DE MOUVEMENT : l'argent bouge puis se verrouille, la demande continue de glisser. Le pic du beat est l'instant precis ou la courbe passe SOUS le sommet de la barre.",
+
+  "regle_5s": "CONTRAINTE DURE (Aziz, 2026-08-15) : jamais plus de 5s sans evenement visuel. Chaque phase ci-dessous liste ses evenements avec leur ecart max.",
+
+  "palette": {
+    "bg_top": "#0d1f38",
+    "bg_bot": "#050c1a",
+    "cyan": "#2E9FD4",
+    "cyan_light": "#7FD8FF",
+    "amber": "#FFC742",
+    "text": "#e8ecf5",
+    "note": "Palette PAL_GPT sombre, identique aux mouvements A et B de l'Acte 4."
+  },
+
+  "accents_obligatoires": ["RETRECIT -> RÉTRÉCIT", "EUROPEENNE -> EUROPÉENNE", "AGENCE INTERNATIONALE DE L'ENERGIE -> ÉNERGIE"],
+
+  "elements_permanents": {
+    "axe": "Ligne horizontale fine cyan, tiers inferieur. Ancrages AUJOURD'HUI (gauche) et 2030 (droite) dans des plaques sombres a bord cyan.",
+    "tete_de_lecture": "Marqueur vertical fin qui progresse de AUJOURD'HUI vers 2030 sur toute la duree du beat. Respire (pulse lent). C'est le garant de 'le temps avance' meme dans les phases calmes.",
+    "courbe": "Demande europeenne. Toujours VIVANTE : leger frémissement permanent (bruit de faible amplitude) — un marche n'est jamais une ligne morte.",
+    "aire": "Sous la courbe, cyan translucide. PRESENTE DES LE DEBUT (marche actuel plein), se contracte a la fin. Decision Aziz.",
+    "barre_ambre": "A l'ancrage AUJOURD'HUI. S'empile par increments, puis se VERROUILLE et ne bouge plus jamais."
+  },
+
+  "phases": [
+    {
+      "id": "P1",
+      "nom": "LE CALENDRIER",
+      "start_s": 0.0,
+      "end_s": 10.122,
+      "intention": "Installer le temps comme sujet. Le spectateur doit comprendre en 3s qu'on regarde une duree, pas un lieu.",
+      "evenements": [
+        {"t_s": 0.0, "geste": "L'axe se trace de gauche a droite (draw-on, 1.1s)."},
+        {"t_s": 0.9, "geste": "Les graduations d'annees apparaissent en cascade rapide, une a une."},
+        {"t_s": 2.2, "geste": "Plaques AUJOURD'HUI / 2030. La tete de lecture se pose et commence a respirer + avancer."},
+        {"t_s": 3.902, "ancre_audio": "'c'est le calendrier.'", "geste": "VAGUE d'illumination des graduations, de gauche a droite : le temps se reveille."},
+        {"t_s": 3.9, "geste": "La courbe de la demande se dessine, haute et plate. Frémissement actif des l'apparition."},
+        {"t_s": 5.8, "geste": "L'aire cyan se remplit sous la courbe (le marche actuel, plein). Label DEMANDE EUROPÉENNE."}
+      ],
+      "ecart_max_s": 1.7,
+      "correction_v1": "La v1 mesurait 7.5s sans changement notable ici (mesure objective par diff de frames a 2 fps) — violation de la regle des 5s. Les evenements ont ete rapproches ET leur amplitude augmentee : un evenement present dans le code mais invisible a l'ecran ne compte pas."
+    },
+    {
+      "id": "P2",
+      "nom": "L'EMPRESSEMENT",
+      "start_s": 10.122,
+      "end_s": 24.242,
+      "intention": "L'argent s'engage. C'ETAIT LE TROU DE 14s de la v1 : ici l'argent ne se plante pas d'un bloc, il S'EMPILE par decisions successives.",
+      "evenements": [
+        {"t_s": 10.122, "ancre_audio": "'remplacer le gaz russe'", "geste": "Une trace fantome (gris froid) se retire du haut de la courbe et sort par la gauche : le fournisseur qu'on remplace."},
+        {"t_s": 12.6, "geste": "1re tranche de la barre ambre : elle monte depuis l'axe avec un choc bref."},
+        {"t_s": 15.4, "geste": "2e tranche. La barre s'opacifie (l'argent durcit)."},
+        {"t_s": 18.2, "geste": "3e tranche + plaque DES DIZAINES DE MILLIARDS qui apparait a cote."},
+        {"t_s": 21.0, "geste": "4e tranche, la plus haute. La barre depasse desormais nettement la hauteur de la courbe."},
+        {"t_s": 23.2, "geste": "Micro-pulse d'attente sur la barre — suspension avant le retournement."}
+      ],
+      "ecart_max_s": 2.8,
+      "note": "La demande NE MONTE PAS ici. Le script dit que l'Europe cherche des fournisseurs en urgence, pas que la demande augmente. C'est l'EMPRESSEMENT qui monte (la barre), pas le marche."
+    },
+    {
+      "id": "P3",
+      "nom": "LE RETOURNEMENT",
+      "start_s": 24.242,
+      "end_s": 42.562,
+      "intention": "LE PIC. L'argent devient irreversible, puis la demande s'en va. Le croisement courbe-sous-barre EST le pic.",
+      "evenements": [
+        {"t_s": 24.242, "geste": "Le sable/la mer : le pied de la barre s'enfonce sous l'axe (elle est enterree, pas posee)."},
+        {"t_s": 26.4, "ancre_audio": "'enterrer des dizaines de milliards' (20.542s local)", "geste": "VERROUILLAGE : la barre cesse net de bouger, un lisere se ferme autour d'elle. Evenement, pas absence. Elle ne bougera plus jamais."},
+        {"t_s": 29.842, "ancre_audio": "'la demande va, elle, decliner'", "geste": "DECROCHAGE : la courbe commence son glissement continu vers le bas. Decision Aziz : glissement continu, PAS de paliers."},
+        {"t_s": 33.0, "geste": "Le badge AIE apparait (source du chiffre), ancre pres de la courbe."},
+        {"t_s": 35.8, "ancre_audio": "croisement", "geste": "⭐ LE PIC : la courbe passe SOUS le sommet de la barre ambre. Flash bref + leger resserrement du cadrage. L'instant est marque."},
+        {"t_s": 38.102, "ancre_audio": "'vouee a baisser d'ici deux mille trente'", "geste": "La tete de lecture atteint la zone 2030, qui s'allume."},
+        {"t_s": 40.5, "geste": "La courbe finit sa descente, basse. L'ecart avec le sommet de la barre est maintenant flagrant."}
+      ],
+      "ecart_max_s": 3.4
+    },
+    {
+      "id": "P4",
+      "nom": "RÉTRÉCIT",
+      "start_s": 42.562,
+      "end_s": 49.541,
+      "intention": "Le verdict. Un seul tuyau aurait suffi. Ouvrir l'Acte 5 sans le griller.",
+      "evenements": [
+        {"t_s": 42.562, "ancre_audio": "'Un marche qui RÉTRÉCIT' (CAPS script)", "geste": "L'aire cyan se CONTRACTE visiblement (compression verticale). Plaque UN MARCHÉ QUI RÉTRÉCIT."},
+        {"t_s": 45.4, "geste": "La barre ambre reste EXACTEMENT a sa taille. Un repere fin marque son sommet : l'ecart devient l'image."},
+        {"t_s": 47.062, "ancre_audio": "'un seul de ces deux tuyaux suffirait'", "geste": "Un 2e trait ambre fin se detache de la barre et vient epouser PILE la bande cyan restante : voila ce qu'un seul tuyau aurait rempli."}
+      ],
+      "ecart_max_s": 2.8,
+      "sortie": "Fin sur l'ecart barre/bande, sans fermeture definitive : l'Acte 5 (robinet geant + mains) doit avoir ou aller."
+    }
+  ],
+
+  "interdits": [
+    "Aucune donnee chiffree inventee : la baisse est QUALITATIVE (pas de graduations de valeurs sur l'axe vertical).",
+    "Pas de carte, pas de tuyaux dessines, pas de fleches de flux, pas de personnages.",
+    "Aucun element statique plus de 5s (contrainte Aziz).",
+    "Chiffres autorises : 2030, 'des dizaines de milliards', AIE. Rien d'autre."
+  ],
+
+  "sources_decision": {
+    "storyboard_round1": "PROMPT-storyboard-4C.txt (3 concepts, sablier/chartogramme/trajectoires — ecartes)",
+    "storyboard_round2": "PROMPT-storyboard-4C-v2.txt (chateau de cartes/entonnoir/cartogramme — ecartes, trop complexes)",
+    "concept_retenu": "Proposition Claude mise au propre : acte4-4C-claude-gemini.png. Aziz : 'revenir a la charte, la barre qui monte ou qui descend'.",
+    "correction_aziz": "v1 avait 14s d'immobilite en P2 — rejete. La regle des 5s est une contrainte dure."
+  }
+}

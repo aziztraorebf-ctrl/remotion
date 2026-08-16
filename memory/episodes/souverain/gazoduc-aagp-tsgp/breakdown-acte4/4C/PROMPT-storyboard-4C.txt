@@ -1,0 +1,73 @@
+CONTEXT — YOU ARE A SENIOR VISUAL DIRECTOR for a French geopolitical documentary YouTube channel (real GeoJSON cartography, React/Remotion, everything coded frame by frame, deterministic).
+
+The attached image shows TWO REAL FRAMES from our production, stacked:
+  A (top) = OUR MAP — real GeoJSON borders, our dark palette, the two gas routes in amber.
+  B (bottom) = OUR SVG INSERT — a real production frame from the beat immediately before this one.
+LOOK AT B CAREFULLY. That is exactly what our "SVG" looks like: FLAT SHAPES, simple gradients, clean strokes, generous empty space, one idea per screen. It is a schematic, not a rendered object.
+
+WHAT WE ARE ASKING YOU
+Conceive the scene below. Propose 3 DISTINCT concepts, each built on a different visual approach, and say which one YOU defend and why. We are not asking you to illustrate an idea we already have — the concepts must be yours.
+
+⛔⛔ THE MISTAKE TO AVOID — WE MADE IT BEFORE, IT COST US
+On a previous round, a model proposed a beautiful mechanism rendered with metallic bevels, volumetric lighting and depth — and labelled it "100% codable in SVG". It was NOT codable by us: reproducing it would have produced something far flatter than the image, and the gap would have been the actual deliverable. A concept we cannot execute at the quality you draw it is worse than no concept.
+So: DRAW IN THE MATERIAL OF IMAGE B. Flat fills, simple gradients, clean lines, strong composition.
+⛔ FORBIDDEN, in every concept: metallic bevels, volumetric or cinematic lighting, photoreal reflections, perspective/vanishing-point scenes, 3D-rendered objects, raster textures, interiors with depth, crowds of characters.
+This is a constraint of MATERIAL, not of ambition. Be as bold as you like WITHIN it — elegance here comes from composition and timing, not from render quality.
+
+WHAT WE CAN ACTUALLY BUILD (registers, no hierarchy — none is the "default" one)
+- REAL CARTOGRAPHY — territories that fill, trace, change colour; borders that light up; camera that pans and zooms continuously.
+- COMPUTED GEOMETRY (D3) — this is a full drawing engine, not just charts: axes and curves built from real values, areas that grow and shrink, a shape whose SIZE encodes a quantity, CARTOGRAM (a country's size distorted by its value), CHARTOGRAM (a country's real outline morphing into a proportional bar — "the map BECOMES the data"), timelines, intersecting trajectories, networks that recompose.
+- FLAT SVG SCHEMATIC (like image B) — a mechanism, an object, a metaphor, a cross-section, a scale/balance, a comparison of sizes. Full-screen or anchored on the map.
+- A HUMAN FIGURE — simple coded ink stick-figures performing ONE clear gesture. Used sparingly, to give human scale.
+- FILMED MATTER — we can generate real filmed material and anchor it in a frame. Costly; if you use it, say what it shows that a drawing cannot.
+- EDITING / RUPTURE — a 49-second beat need not be one continuous shot. You may cut, go full-screen on a schematic, alternate. Our proven grammar is: THE MAP SETS UP -> AN INSERT EXPLAINS -> THE MAP RETURNS, TRANSFORMED. You may use it, or justify departing from it.
+
+⛔⛔ DO NOT REPEAT THE TWO PREVIOUS BEATS — THIS IS THE HARDEST CONSTRAINT HERE
+This beat closes a three-beat act. The two beats before it are DONE and the viewer has just watched them:
+  - Beat 1 was carried by THE MAP with the two amber routes drawing themselves and pulses travelling along them (see image A).
+  - Beat 2 alternated a full-screen FLAT SVG LEVER/BALANCE (see image B) with THAT SAME MAP, Europe added.
+So the map with amber routes has already carried two consecutive beats, and the "flat symbolic object centred on black" has just been used.
+⛔ In at least 2 of your 3 concepts, the map must NOT be the device that carries the idea, and travelling pulses along routes must not reappear as the main gesture.
+Reason, not preference: this beat is NOT about space and NOT about flow. It is about TIME. Drawing time on the same map would say "here is more geography" when the point is "the clock is working against them".
+
+THE BEAT — what it must make the viewer feel (~49.5s)
+THE CALENDAR TURNS AGAINST BOTH CAMPS. This is the beat where the whole act reverses.
+The logic, in three moves:
+  1. URGENCY NOW — Europe is scrambling to replace Russian gas and secure new suppliers, which is exactly why both camps are rushing to build.
+  2. THE TRAP — at the very moment these countries are about to bury tens of billions of dollars in the sand or under the sea, their customer's demand is going to DECLINE. The International Energy Agency is categorical: European demand is bound to fall by 2030.
+  3. THE VERDICT — a market that is SHRINKING, and for which a single one of these two pipelines would be amply enough in the long run.
+The emotional core is a MISMATCH IN TIME: the money is committed now, permanently, into the ground; the demand it was built for evaporates later. Two opposite directions on the same clock. Whatever you draw, the viewer must FEEL that the two things are out of phase — not merely be told it.
+
+⭐ WHAT MAKES THIS BEAT DIFFERENT FROM THE PREVIOUS ONE (read this before choosing your device)
+The previous beat forbade all figures. THIS beat is the opposite: it is the ONLY beat of the act that legitimately owns numbers and a date. You are allowed, and encouraged, to put quantity and time on screen — that is the material of this beat.
+AUTHORISED ON SCREEN (these are real, from the script — do not invent others):
+  - the date 2030
+  - "des dizaines de milliards" (tens of billions of dollars) — as an order of magnitude, never a fake precise figure
+  - the notion of European demand DECLINING, and of a market that SHRINKS
+  - proper nouns: Europe, Morocco, Algeria, Nigeria, Atlantic, Sahara, IEA (Agence internationale de l'énergie)
+⛔ NO other invented statistics, percentages, volumes or curves-with-fake-values. If your concept shows a curve, its shape must be qualitative (it falls), never a fabricated dataset with precise gradations.
+
+HARD CONSTRAINTS (facts, not preferences)
+1. GEOGRAPHY IS LOCKED if you show it: the Moroccan route (AAGP) is COASTAL, following the West African Atlantic shoreline; the Algerian route (TSGP) crosses the Sahara. Never redraw them differently.
+2. Text minimal, always inside a small container, never floating, never in screen corners.
+3. Nothing static for more than ~5 seconds.
+4. Palette: background #0d1f38 -> #050c1a (radial), active countries cyan #2E9FD4 with #7FD8FF stroke, route/accent amber #FFC742, text #e8ecf5 on dark plates with cyan border, monospace type.
+5. This is the LAST beat before the final act, which will open on a giant tap/valve with stylised hands. Do not close on something so final that the next act has nowhere to go.
+
+STRUCTURE (4 states, timings are locked to the real narration)
+- 0 -> 10.1s: THE PROBLEM IS NAMED — "the problem with this arm-wrestle is the calendar". Urgency is established.
+- 10.1 -> 24.2s: THE RUSH — Europe urgently replacing Russian gas; both camps hurrying to build.
+- 24.2 -> 42.5s: THE REVERSAL — the money goes into the sand and the sea while demand is heading down towards 2030. This is the PEAK of the beat.
+- 42.5 -> 49.5s: THE VERDICT — "a market that SHRINKS", and a single pipeline would suffice. Lands on the word "RÉTRÉCIT" (shrinks) at 42.5s.
+
+NARRATION (French, for understanding only): "Le problème de ce bras de fer, c'est le calendrier. Aujourd'hui, l'Europe cherche en urgence à remplacer le gaz russe et à sécuriser de nouveaux fournisseurs, d'où l'empressement des deux camps à construire. Mais au moment même où ces pays s'apprêtent à enterrer des dizaines de milliards de dollars dans le sable ou sous la mer, la demande de gaz de leur client va, elle, décliner : l'Agence internationale de l'énergie est formelle, la demande européenne est vouée à baisser d'ici deux mille trente. Un marché qui RÉTRÉCIT, et pour lequel un seul de ces deux tuyaux suffirait largement à long terme."
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description)
+One storyboard sheet, 3 concepts, each shown in 4 panels (problem / rush / reversal / verdict), each panel 16:9 and readable at high resolution. Give each concept a SHORT NAME and name the REGISTER it uses.
+Under each concept, a short director's note with:
+  (a) WHAT THE IMAGE IS DOING — the specific animation, not a camera move.
+  (b) THE ONE GESTURE PER PANEL — name, for each of the 4 panels, the SINGLE visual gesture that carries it (e.g. "the area collapses", "the outline morphs into a bar", "the colour drains"). If a panel needs three gestures to be described, it is too expensive: simplify it before submitting.
+  (c) HOW TIME IS READ — say explicitly what on screen tells the viewer WHEN we are, and how the out-of-phase mismatch between spending-now and demand-later becomes visible rather than stated.
+  (d) YOUR REFERENCE — what existing visual work, technique or tradition inspired this concept (a documentary, an infographic school, a data-visualisation practice, an atlas, a designer), and what specifically you borrowed. Name it concretely.
+Finally: state which concept you DEFEND and why it lands the reversal better than the other two.
+Output the image now.

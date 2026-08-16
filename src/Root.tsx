@@ -75,7 +75,8 @@ import { GazoducActe3CarteTSGP } from "./projects/souverain/gazoduc-aagp-tsgp/Ga
 import { GazoducActe4RessourceUnique } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4RessourceUnique";
 import { ProtoCartePaletteGPT, ProtoCartePaletteNous, ProtoCartePaletteGPTSeule, PROTO_CARTE_PALETTE_GPT_FRAMES } from "./projects/_rnd/d3-16x9/ProtoCartePaletteGPT";
 import { GazoducActe4Objectifs } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Objectifs";
-import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
+import { GazoducActe4Calendrier } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Calendrier";
+import { GAZODUC_A4_SEGA_FRAMES, GAZODUC_A4_SEGB_FRAMES, GAZODUC_A4_SEGC_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe4Timing";
 import { GazoducActe3InsertSecurite } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertSecurite";
 import { GazoducActe3InsertParadoxe } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3InsertParadoxe";
 import { GazoducActe3Montage, GAZODUC_A3_MONTAGE_FRAMES } from "./projects/souverain/gazoduc-aagp-tsgp/GazoducActe3Montage";
@@ -1234,6 +1235,19 @@ export const RemotionRoot: React.FC = () => {
           id="D3-Gazoduc-Acte4-Objectifs"
           component={GazoducActe4Objectifs}
           durationInFrames={GAZODUC_A4_SEGB_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        {/* Gazoduc Acte 4 — MOUVEMENT C "le calendrier se retourne" (49.5s). Registre GÉOMÉTRIE D3
+            (axe temporel), PAS la carte : le beat porte sur le temps et la quantité, et la carte a
+            déjà porté 4A et 4B. Concept validé Aziz après 2 rounds de storyboard : une courbe qui
+            reste vivante et s'en va, une barre ambre qui s'empile puis se fige. Règle des 5s tenue
+            (aucun élément statique plus de ~3.4s), cf breakdown-acte4/4C/4C-breakdown.json. */}
+        <Composition
+          id="D3-Gazoduc-Acte4-Calendrier"
+          component={GazoducActe4Calendrier}
+          durationInFrames={GAZODUC_A4_SEGC_FRAMES}
           fps={30}
           width={1920}
           height={1080}

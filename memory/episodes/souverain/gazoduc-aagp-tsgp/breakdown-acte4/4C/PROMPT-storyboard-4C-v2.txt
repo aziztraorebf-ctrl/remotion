@@ -1,0 +1,78 @@
+CONTEXT — YOU ARE A SENIOR VISUAL DIRECTOR for a French geopolitical documentary YouTube channel (real GeoJSON cartography, React/Remotion, everything coded frame by frame, deterministic).
+
+The attached image shows TWO REAL FRAMES from our production, stacked:
+  A (top) = OUR MAP — real GeoJSON borders, our dark palette, the two gas routes in amber.
+  B (bottom) = OUR SVG INSERT — a real production frame from a previous beat.
+LOOK AT B CAREFULLY. That is exactly what our vector work looks like: FLAT SHAPES, simple gradients, clean strokes, generous empty space, one idea per screen. It is a schematic, not a rendered object. Whatever you draw must live in THAT material.
+
+⭐ THIS IS A SECOND ROUND. READ THIS BEFORE ANYTHING ELSE.
+We already ran a first round on this beat and the director chose a DIRECTION, not a finished concept. We are coming back to you because we want the direction PUSHED FURTHER by you, not merely executed.
+
+WHAT WON, AND WHY (this is the ground you build on)
+The director picked, out of everything proposed, the simplest image on the sheet: a GRAPH read for itself — quantity and time, shown plainly. His exact reasoning: "sometimes making it simple is the easiest and most effective way to explain a concept. A chart is far easier to understand, and above all more effective, than everything else we have seen: the map with arrows, the cones, and so on."
+So the centre of gravity for this beat is DATA seen as data. That is a starting point, not a finished concept.
+
+WHAT THE PREVIOUS ROUND TAUGHT US — costs and saturation, stated honestly
+These are not bans on your imagination. They are real costs. Any of these registers may still appear if it EARNS its place — but if you use one, say in your director's note what it does that a plain data image cannot, and keep it to a short moment rather than the spine of the beat.
+1. THE MAP is SATURATED here. The two beats immediately before this one were both carried by our map with amber routes (image A). A third map-led beat in the same act reads as repetition — and this beat is about time, not space. If you bring the map back, it must be brief and must do something the previous two did not.
+2. CHARACTERS HANDLING OBJECTS are EXPENSIVE for us. A concept where figures lift boxes into an hourglass needs multi-limb organic motion with object contact — our weakest register, and the director rejected it on that ground, not on taste. A human figure holding ONE clear static pose to give scale remains cheap and available.
+3. MULTIPLE ARROW-GRAMMARS AT ONCE cost the viewer. Growing cones plus a shrinking arrow plus converging trajectories was three moving vocabularies in one beat, after two beats already full of drawn routes. One clear moving idea beats three competing ones.
+
+⭐⭐ NOW — WHERE WE ACTUALLY NEED YOU (the reason for this second round)
+"A chart" is a REGISTER, not yet a concept. Inside and around that register we do NOT know what the strongest form is, and that is exactly what we are asking you to invent.
+A falling line is the obvious answer. It may well be the right one. But it is the FIRST thing anyone thinks of, and this beat is the reversal of the whole act — it deserves the best form available, not the default one.
+So explore widely and propose what YOU think lands this beat hardest. Areas that collapse. A donut or a ring that empties. A proportional shape that shrinks. A gauge running down. A stacked area losing a layer. A slope chart. A single number degrading. A shape whose SIZE is the quantity. Small multiples. A vessel that turns out to be far too big for what must fill it. A physical object read as a quantity. Something we have not listed and would not have thought of.
+You may absolutely defend the plain falling line if you believe it beats everything else — but then defend it against the alternatives rather than defaulting to it.
+⛔ DO NOT propose three variants of the same chart. Three concepts, three genuinely different ideas.
+
+WHAT WE CAN ACTUALLY BUILD (registers open to you — none is the default, combine them freely)
+- COMPUTED GEOMETRY (D3) — a full drawing engine, not just charts: axes and curves from real values, areas that grow and collapse, a shape whose SIZE encodes a quantity, CARTOGRAM (a territory's size distorted by its value), CHOROPLETH, free DEFORMATION of a shape, a proportional ring or donut, small multiples, a chartogram where an outline morphs into a proportional bar — "the image BECOMES the data".
+- FLAT SVG SCHEMATIC (like image B) — a mechanism, an object, a metaphor, a CROSS-SECTION, a vessel, a comparison of sizes, a gauge. Full-screen or anchored.
+- MONTAGE / RUPTURE — a 49.5s beat need not be one continuous shot. You may CUT, go FULL-SCREEN on a schematic, alternate two spaces, ZOOM OUT to reveal a bigger frame around what we were watching. Rupture of form is available to you and is often the strongest tool in a reversal beat.
+- REAL CARTOGRAPHY — territories that fill or change colour, borders that light up, continuous camera. Available, but saturated in this act (see above) — use only if it earns its place.
+- A HUMAN FIGURE — a simple coded ink stick-figure holding ONE clear pose, to give human scale. Cheap when static; expensive when it manipulates objects.
+- FILMED MATTER — we can generate real filmed footage and anchor it in a frame. Costly; if you use it, say what it shows that a drawing cannot.
+
+THE BEAT — what it must make the viewer feel (~49.5s)
+THE CALENDAR TURNS AGAINST BOTH CAMPS. This is where the whole act reverses.
+  1. URGENCY NOW — Europe is scrambling to replace Russian gas and secure new suppliers; that is exactly why both camps are rushing to build.
+  2. THE TRAP — at the very moment these countries are about to bury tens of billions of dollars in the sand or under the sea, their customer's demand is going to DECLINE. The International Energy Agency is categorical: European demand is bound to fall by 2030.
+  3. THE VERDICT — a market that is SHRINKING, and for which a single one of these two pipelines would be amply enough in the long run.
+The emotional core is a MISMATCH IN TIME: the money is committed NOW, permanently, into the ground; the demand it was built for evaporates LATER. The viewer must FEEL those two things are out of phase — not merely be told it.
+⭐ The hardest craft problem, and the one we will judge you on: THE MONEY IS SPENT AT A MOMENT AND STAYS THERE, WHILE THE DEMAND KEEPS MOVING DOWN. Two different kinds of time on one screen. Solve that elegantly and the beat is won.
+
+⭐ THIS BEAT OWNS NUMBERS — unlike its neighbours
+The previous beat forbade all figures. THIS one is the opposite: it is the only beat of the act that legitimately owns quantity and a date. Put them on screen.
+AUTHORISED (real, from the script — invent nothing else):
+  - the date 2030, and the notion of "today / now"
+  - "des dizaines de milliards" (tens of billions of dollars) — an order of magnitude, never a fake precise figure
+  - European demand DECLINING; a market that SHRINKS
+  - the IEA (Agence internationale de l'énergie) as the source
+  - proper nouns if needed: Europe, Morocco, Algeria, Nigeria
+⛔ No other invented statistics or percentages. If your concept shows a curve, its shape is qualitative (it falls) — never a fabricated dataset with precise gradations.
+
+HARD CONSTRAINTS (facts, not preferences)
+1. Flat vector material only, like image B. ⛔ FORBIDDEN: metallic bevels, volumetric or cinematic lighting, photoreal reflections, perspective/vanishing-point scenes, 3D-rendered objects, raster textures. This is a constraint of MATERIAL, not of ambition — be as bold as you like within it.
+2. Text minimal, always inside a small container, never floating, never in screen corners.
+3. Nothing static for more than ~5 seconds.
+4. Palette: background #0d1f38 -> #050c1a (radial), cyan #2E9FD4 with #7FD8FF stroke, accent amber #FFC742, text #e8ecf5 on dark plates with cyan border, monospace type.
+5. This is the LAST beat before the final act, which opens on a giant tap/valve with stylised hands. Do not close on something so final that the next act has nowhere to go.
+
+STRUCTURE (4 states, timings locked to the real narration)
+- 0 -> 10.1s: THE PROBLEM IS NAMED — "the problem with this arm-wrestle is the calendar". The word "calendrier" lands at 3.9s.
+- 10.1 -> 24.2s: THE RUSH — Europe urgently replacing Russian gas; both camps hurrying to build.
+- 24.2 -> 42.5s: THE REVERSAL — the money goes into the sand and the sea while demand heads down towards 2030. PEAK of the beat. "enterrer des milliards" lands at 20.5s into this segment.
+- 42.5 -> 49.5s: THE VERDICT — "a market that SHRINKS", one pipeline would suffice. Lands on "RÉTRÉCIT" at 42.5s.
+
+NARRATION (French, for understanding only): "Le problème de ce bras de fer, c'est le calendrier. Aujourd'hui, l'Europe cherche en urgence à remplacer le gaz russe et à sécuriser de nouveaux fournisseurs, d'où l'empressement des deux camps à construire. Mais au moment même où ces pays s'apprêtent à enterrer des dizaines de milliards de dollars dans le sable ou sous la mer, la demande de gaz de leur client va, elle, décliner : l'Agence internationale de l'énergie est formelle, la demande européenne est vouée à baisser d'ici deux mille trente. Un marché qui RÉTRÉCIT, et pour lequel un seul de ces deux tuyaux suffirait largement à long terme."
+
+DELIVERABLE — GENERATE AN IMAGE (not a text description)
+One storyboard sheet, 3 concepts, each shown in 4 panels (problem / rush / reversal / verdict), each panel 16:9 and readable at high resolution. Give each concept a SHORT NAME and name the DATA-VISUALISATION FORM it uses (be precise: "collapsing area", "emptying ring", "proportional square", not just "a chart").
+Under each concept, a short director's note with:
+  (a) WHAT THE IMAGE IS DOING — the specific animation, not a camera move.
+  (b) THE ONE GESTURE PER PANEL — for each of the 4 panels, the SINGLE visual gesture that carries it. If a panel needs three gestures to describe, it is too expensive: simplify it before submitting.
+  (c) THE TWO KINDS OF TIME — state exactly how your concept shows money frozen at one moment WHILE demand keeps sliding down. This is the crux; answer it concretely.
+  (d) WHY THIS BEATS THE PLAIN FALLING LINE — one sentence. If your concept IS the plain falling line, say what you added to make it more than the obvious.
+  (e) YOUR REFERENCE — what existing data-visualisation work, school or designer inspired it, and what specifically you borrowed. Name it concretely.
+Finally: state which concept you DEFEND and why it lands the reversal better than the other two.
+Output the image now.

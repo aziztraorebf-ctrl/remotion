@@ -125,18 +125,29 @@ storyboard multi-panneaux également testés. Détail complet : `tools/minimax-h
 
 ---
 
-## ⭐⭐⭐ GAZODUC ACTE 4 — mouvements A+B FINAUX. REPRENDRE SUR 4C (2026-08-15)
+## ⭐⭐⭐ GAZODUC — ACTE 4 COMPLET (A+B+C FINAUX). PROCHAINE ACTION = ACTE 5 (2026-08-16)
 
-**FAIT ET VALIDÉ AZIZ** — `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4` (palette sombre
-portée) + `acte4-mouvementB-FINAL.mp4` (objectifs opposés). Code : `GazoducActe4RessourceUnique.tsx` (A)
-+ `GazoducActe4Objectifs.tsx` (B). Palette sombre `PAL_GPT` adoptée pour l'Acte 4 **et la suite** ;
-Actes 1/2/3 restent clairs → re-render à la passe finale d'assemblage, ⛔ PAS acte par acte.
+**ACTE 4 TERMINÉ ET VALIDÉ AZIZ** — 3 mouvements FINAUX dans `out/episodes/gazoduc-aagp-tsgp/` :
+`acte4-mouvementA-FINAL.mp4` · `acte4-mouvementB-FINAL.mp4` · `acte4-mouvementC-FINAL.mp4`.
+Code : `GazoducActe4RessourceUnique.tsx` · `GazoducActe4Objectifs.tsx` · `GazoducActe4Calendrier.tsx`.
+Palette sombre `PAL_GPT` = Acte 4 **et la suite** ; Actes 1/2/3 re-rendus à la passe finale, ⛔ PAS
+acte par acte.
 
-**PROCHAINE ACTION = mouvement 4C** « le calendrier se retourne » (74.5→124.04s) : l'Europe se presse
-alors que sa demande baissera d'ici 2030. Ancres : « calendrier » 78.4s · « enterrer des milliards »
-95.0s · « RÉTRÉCIT » 117.06s (dernier accent avant l'Acte 5). Timing DÉJÀ calé (`GazoducActe4Timing.ts`
-→ `BEATS_4C`). Rien d'autre n'existe : ni code, ni storyboard. **Puis Acte 5** (robinet géant + mains
-stylisées, `PLAN-ACTES2-5.md` L118).
+**⏭️ PROCHAINE ACTION = ACTE 5** (implication, dernier acte) : **robinet géant + mains stylisées**
+(`PLAN-ACTES2-5.md` L118). Rien n'existe : ni storyboard, ni code. Audio `narration-p5.mp3` présent
+(`out/episodes/gazoduc-aagp-tsgp/`), timing à dériver du forced-align comme pour l'Acte 4.
+
+⭐ **3 leçons du 4C à rejouer sur l'Acte 5** (elles ont produit le résultat validé) :
+1. **Le texte ne répète jamais la narration** — écrire à l'écran ce que la voix dit au même instant est
+   du sous-titrage déguisé. Ne garder que l'indéductible (repère, identité, source) ; le reste passe
+   au GESTE graphique.
+2. **Zéro tremblement/flash** — pas de scale du cadre, pas de pulse permanent, pas d'onde d'impact.
+   Un graphe premium ne tremble pas.
+3. **Le simple gagne** — 2 rounds de storyboards LLM (sablier, château de cartes, entonnoir,
+   cartogramme, trajectoires) écartés au profit d'un simple graphe. Proposer le simple TÔT.
+⚠️ **Limite d'outil à connaître** : le détecteur d'immobilité (diff de vignettes 320px) est aveugle aux
+mouvements LENTS et LOCALISÉS — il a signalé 10s « figées » là où 400-1000 px changeaient à chaque
+frame. Utile pour trouver un vrai trou, mais mesurer finement + REGARDER avant d'itérer sur son verdict.
 
 **Méthode qui a produit A et B** (la rejouer) : storyboard libre créative 2 modèles → validation Aziz →
 breakdown → code → 3e appel comparatif rendu-vs-storyboard → corrections. Gabarits :

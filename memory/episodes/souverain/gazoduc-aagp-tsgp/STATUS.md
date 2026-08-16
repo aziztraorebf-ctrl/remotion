@@ -1,8 +1,34 @@
 # Gazoduc AAGP vs TSGP — STATUS
 
-**Mis à jour** : 2026-08-15
+**Mis à jour** : 2026-08-16
 
-## ⭐ ACTE 4 — mouvements A et B FINAUX (2026-08-15)
+## 🏁 ACTE 4 — COMPLET : mouvements A, B et C tous FINAUX (2026-08-16)
+
+**Mouvement C** « le calendrier se retourne » (74.5→124.04s) : **FINAL, validé Aziz**.
+Livrable `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementC-FINAL.mp4` · code `GazoducActe4Calendrier.tsx`
+(compo `D3-Gazoduc-Acte4-Calendrier`) · breakdown `breakdown-acte4/4C/4C-breakdown.json`.
+
+⭐ **MOTEUR = GÉOMÉTRIE D3, pas la carte** — 1er beat de l'épisode à quitter la carte. Le beat parle du
+TEMPS et de la QUANTITÉ (2030, « dizaines de milliards », marché qui rétrécit), pas de l'espace, et la
+carte avait déjà porté 4A et 4B. Décision d'Aziz après 2 rounds de storyboard.
+
+**Le concept, en une phrase** : un axe de temps · UNE courbe (la demande) qui reste vivante et s'en va ·
+DEUX conduites ambre (les milliards) qui s'empilent puis se figent. Le sens est porté par le CONTRASTE
+DE MOUVEMENT — l'argent bouge puis se verrouille, la demande continue de glisser. À la fin, **une
+conduite s'éteint** : « un seul suffirait », sans un mot pour le dire.
+
+⚠️ **3 décisions à ne pas défaire sur ce beat** :
+1. **Le texte ne répète JAMAIS la narration.** 4 plaques supprimées (« des dizaines de milliards », « un
+   marché qui rétrécit », « un seul suffirait », « AIE ») : c'était du sous-titrage déguisé. Il ne reste
+   que l'indéductible : `AUJOURD'HUI` · `2030` · `DEMANDE EUROPÉENNE`. Leur sens est passé au GRAPHISME.
+2. **Zéro tremblement, zéro flash.** 8 effets retirés (scale de cadre, pulses, flashs, ondes d'impact,
+   frémissement animé de la courbe). Mesuré : agitation en phase calme 0.538 → 0.236. Un graphe premium
+   ne tremble pas ; le relief de la courbe reste irrégulier mais FIGÉ dans l'espace.
+3. **Storyboard : c'est le SIMPLE qui a gagné.** 2 rounds de propositions LLM (sablier, château de
+   cartes, entonnoir, cartogramme, trajectoires croisées) tous écartés par Aziz au profit d'un simple
+   graphe — « parfois faire simple est la manière la plus efficace d'expliquer un concept ».
+
+## ⭐ Mouvements A et B — FINAUX (2026-08-15)
 
 **Mouvement A** « une ressource, deux tuyaux » (0→41.1s) : **FINAL**, palette sombre `PAL_GPT` portée
 (fond radial `#0d1f38`→`#050c1a`, pays inactifs 0.92, frontières `#58809f`/0.72).
@@ -16,8 +42,9 @@ forced-align (règle Aziz : compréhensible en moins de 2 s → un élément app
 Livrables : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementA-FINAL.mp4` + `acte4-mouvementB-FINAL.mp4`.
 Code : `GazoducActe4RessourceUnique.tsx` + `GazoducActe4Objectifs.tsx`.
 
-**RESTE** : mouvement **4C** « le calendrier se retourne » (74.5→124.04s) — timing calé (`BEATS_4C`),
-aucun code ni storyboard. Puis **Acte 5**. Détail : `memory/NEXT-ACTION.md` § GAZODUC ACTE 4.
+**RESTE de l'épisode** : **ACTE 5** (implication — robinet géant + mains stylisées, `PLAN-ACTES2-5.md`
+L118) : rien n'existe, ni storyboard ni code. Puis l'Acte 3 gelé (voir plus bas) et la passe finale
+d'assemblage (re-render des Actes 1/2/3 en palette sombre — ⛔ PAS acte par acte).
 
 ⚠️ 2 décisions à ne pas défaire : (1) palette sombre = Acte 4 **et la suite**, Actes 1/2/3 re-rendus
 seulement à la passe finale ; (2) 4B **v3 (arcs schématiques) préférée à v4** (géométrie réelle Medgaz,

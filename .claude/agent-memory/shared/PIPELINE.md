@@ -89,7 +89,7 @@ revalider 6 planches).
 repo principal** (`14990278`, branche courante, PAS ce worktree) — distinct des 6 scènes sources,
 voir `src/projects/_shared/stick-figure-svg/STICK-FIGURE-INDEX.md` brique n°7 + `NEXT-ACTION.md`.
 
-### Gazoduc — Actes 1+2 TERMINÉS · ⛔ Acte 3 GELÉ · ⭐ Acte 4 EN COURS (mouvements A+B faits, C à faire)
+### Gazoduc — Actes 1+2+4 TERMINÉS · ⛔ Acte 3 GELÉ · ⏭️ Acte 5 = PROCHAINE PRIORITÉ (rien n'existe)
 Acte 1 (hook, 84.68s, globe D3) validé par Aziz (render v6, 2026-08-03). Acte 2 **produit et validé en
 finale (2026-08-04)** : `out/episodes/gazoduc-aagp-tsgp/acte2-FINAL.mp4` (127.4s).
 
@@ -112,8 +112,15 @@ H3 + jauge + connecteur) · Segment B (aéroport) fait. État complet + ce qui r
   `GazoducActe4Objectifs.tsx`, compo `D3-Gazoduc-Acte4-Objectifs`. v3 préférée à v4 (géométrie réelle
   Medgaz) — décision Aziz explicite. Storyboard→insert SVG (`LevierPouvoirFable.tsx`)→code, méthode
   complète rejouée de bout en bout. Livrable FINAL : `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementB-FINAL.mp4`.
-- **Mouvement C (calendrier qui se retourne, 74.5→124s) : à faire.** Timing déjà calé (`BEATS_4C`),
-  storyboard pas encore fait. **PROCHAINE PRIORITÉ.**
+- **Mouvement C « le calendrier se retourne » (74.5→124s) : CODÉ, RENDU, VALIDÉ AZIZ (2026-08-16).**
+  `GazoducActe4Calendrier.tsx`, compo `D3-Gazoduc-Acte4-Calendrier`. Livrable FINAL :
+  `out/episodes/gazoduc-aagp-tsgp/acte4-mouvementC-FINAL.mp4`.
+  ⭐ **1er beat de l'épisode hors carte** — moteur GÉOMÉTRIE D3 (axe temporel + courbe + 2 conduites) :
+  le beat parle du temps et de la quantité, et la carte avait déjà porté 4A et 4B. 2 rounds de
+  storyboard LLM écartés au profit du plus SIMPLE (décision Aziz).
+  ⚠️ 2 règles posées sur ce beat, à rejouer sur l'Acte 5 : **le texte ne répète jamais la narration**
+  (4 plaques supprimées, dont "AIE") · **zéro tremblement/flash** (8 effets retirés, agitation mesurée
+  0.538→0.236). Détail : `memory/episodes/souverain/gazoduc-aagp-tsgp/STATUS.md` § ACTE 4.
 - ⭐ Palette carte SOMBRE `PAL_GPT` confirmée adoptée pour l'Acte 4 et la suite. Actes 1/2/3 : re-render
   à la passe finale, pas acte par acte.
 - **Méthode à rejouer pour C** (elle a produit A et B) : storyboard libre créative 2 modèles → validation
