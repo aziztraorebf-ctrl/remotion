@@ -366,12 +366,16 @@ ou fermer le worktree si le repo principal fait foi. Un futur re-render depuis c
 
 ---
 
-## ⚔️ REFONTE AES — retiming V6 fait, PAS ENCORE assemblé/render final
+## ✅ AES — ABANDONNÉ VOLONTAIREMENT (décision Aziz 2026-08-17). PAS une dette.
 
-Script V6 découpé+tagué+généré (audio validé Aziz), retiming complet validé par
-check-frame-continuity.py (0 trou/0 chevauchement). RIEN commité. Reste : render 5 segments +
-assemblage + validation Aziz + miniature/titre + republication. Détail :
-`episodes/warmap-sahel/STATUS.md` (bandeau 2026-08-06 soir).
+⛔ **Ne plus le proposer en début de session, ne plus le compter dans le reste-à-faire.**
+La refonte V6 (script découpé/tagué/généré, audio validé, retiming vérifié) ne sera PAS assemblée
+ni republiée. **Raison, et c'est elle qui généralise** : l'échec à 5 vues/24h est un problème de
+TITRE / MINIATURE / SUJET, pas de production. Republier une version améliorée sur une vidéo morte
+ne rachète pas la distribution — l'historique de non-distribution reste attaché à la vidéo.
+✅ Ce qui reste utile : le **script V6 comme gold-standard de script dense** (pointeur conservé dans
+`ROUTAGE.md`), et les leçons de production, qui partent dans les prochaines vidéos.
+Détail historique : `episodes/warmap-sahel/STATUS.md`.
 
 ---
 

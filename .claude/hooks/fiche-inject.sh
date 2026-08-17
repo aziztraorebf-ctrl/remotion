@@ -9,9 +9,13 @@
 # ⛔ NE JAMAIS passer a exit 2 ici : la doc precise qu'exit 2 bloque meme avec un JSON
 # "allow". Un hook informatif sort TOUJOURS en 0, JSON sur STDOUT (pas stderr).
 #
-# ANTI-REPETITION : 1 injection par fiche par fichier par session. Ce n'est PAS un
-# confort — c'est la condition de viabilite. Sans elle : plusieurs dizaines de milliers
-# de tokens/jour. Avec : ~4500 tokens/jour typique (mesure : 7,5 fichiers SVG/jour).
+# ANTI-REPETITION : 1 injection par fiche par cible par session. Ce n'est PAS un
+# confort — c'est la condition de viabilite.
+# Cout RE-MESURE 2026-08-17 (wc -c sur les 6 fiches, ~2 fiches par fichier touche) :
+#   jour typique 7,5 fichiers  -> ~24 000 tokens
+#   pire jour observe 28 fichiers -> ~91 000 tokens
+# ⚠️ Ne JAMAIS deduire ce chiffre : 2 estimations ecrites le meme jour (4500 et 18000)
+# etaient fausses, toutes deux comptaient UNE fiche alors qu'elles se cumulent.
 
 INPUT=$(cat)
 FICHES_DIR="${FICHES_DIR:-/Users/clawdbot/Workspace/remotion/memory/fiches}"
